@@ -24,9 +24,9 @@ import olStyleStyle from 'ol/style/Style.js';
  * then the default behaviour occurs depending on the measure type.
  * @property {number} [decimals] Defines the number of decimals to keep in the measurement. If not defined,
  * then the default behaviour occurs depending on the measure type.
- * @property {import("ol/style/Style.js").default|Array.<import("ol/style/Style.js").default>|import('ol/style/Style.js').StyleFunction} [style] The style to be used when
+ * @property {import("ol/style/Style.js").StyleLike} [style] The style to be used when
  * drawing is finished.
- * @property {import("ol/style/Style.js").default|Array.<import("ol/style/Style.js").default>|import('ol/style/Style.js').StyleFunction} [sketchStyle] The style to be used
+ * @property {import("ol/style/Style.js").StyleLike} [sketchStyle] The style to be used
  * while drawing.
  */
 
@@ -37,7 +37,7 @@ import olStyleStyle from 'ol/style/Style.js';
   */
 
 /**
- * @typedef {ngeo.CustomEvent<MeasureEventItem>} MeasureEvent
+ * @typedef {import('ngeo/CustomEvent.js').default<MeasureEventItem>} MeasureEvent
  */
 
 
@@ -55,7 +55,7 @@ class Measure extends olInteractionInteraction {
 
     /**
      * The help tooltip element.
-     * @type {Element}
+     * @type {HTMLElement}
      * @private
      */
     this.helpTooltipElement_ = null;
@@ -70,7 +70,7 @@ class Measure extends olInteractionInteraction {
 
     /**
      * The measure tooltip element.
-     * @type {Element}
+     * @type {HTMLElement}
      * @private
      */
     this.measureTooltipElement_ = null;
@@ -190,7 +190,7 @@ class Measure extends olInteractionInteraction {
      * @private
      */
     this.drawInteraction_ = this.createDrawInteraction(options.sketchStyle,
-      this.vectorLayer_.getSource());
+      /** @type {olSourceVector} */(this.vectorLayer_.getSource()));
 
     /**
      * @type {boolean}
@@ -217,13 +217,15 @@ class Measure extends olInteractionInteraction {
    * Creates the draw interaction.
    *
    * @abstract
-   * @param {import("ol/style/Style.js").default|Array.<import("ol/style/Style.js").default>|import('ol/style/Style.js').StyleFunction|undefined}
+   * @param {import("ol/style/Style.js").StyleLike|undefined}
    *     style The sketchStyle used for the drawing interaction.
    * @param {import("ol/source/Vector.js").default} source Vector source.
    * @return {import("ol/interaction/Draw.js").default|import("ngeo/interaction/DrawAzimut.js").default|import("ngeo/interaction/MobileDraw.js").default} The interaction
    * @protected
    */
-  createDrawInteraction(style, source) {}
+  createDrawInteraction(style, source) {
+    return undefined;
+  }
 
 
   /**
@@ -248,12 +250,13 @@ class Measure extends olInteractionInteraction {
 
   /**
    * Handle draw interaction `drawstart` event.
-   * @param {import("ol/interaction/Draw/Event.js").default|DrawEvent} evt Event.
+   * @param { import('ol/events/Event.js').default|import('ngeo/interaction/common.js').DrawEvent} evt Event.
    * @private
    */
   onDrawStart_(evt) {
+    // @ts-ignore: evt should be of type {import('ol/interaction/Draw.js').DrawEvent but he is private
     this.sketchFeature = evt.feature || evt.detail.feature;
-    this.vectorLayer_.getSource().clear(true);
+    /** @type {olSourceVector} */(this.vectorLayer_.getSource()).clear(true);
     this.createMeasureTooltip_();
 
     const geometry = this.sketchFeature.getGeometry();
@@ -276,7 +279,7 @@ class Measure extends olInteractionInteraction {
 
   /**
    * Handle draw interaction `drawend` event.
-   * @param {import("ol/interaction/Draw/Event.js").default|DrawEvent} evt Event.
+   * @param {import('ol/events/Event.js').default|import('ngeo/interaction/common.js').DrawEvent} evt Event.
    * @private
    */
   onDrawEnd_(evt) {
@@ -386,7 +389,7 @@ class Measure extends olInteractionInteraction {
         this.createHelpTooltip_();
       }
     } else {
-      this.vectorLayer_.getSource().clear(true);
+      /** @type {olSourceVector} */(this.vectorLayer_.getSource()).clear(true);
       this.getMap().removeOverlay(this.measureTooltipOverlay_);
       this.removeMeasureTooltip_();
       this.removeHelpTooltip_();
@@ -400,7 +403,7 @@ class Measure extends olInteractionInteraction {
    * where to place the tooltip and determine which help message to display.
    *
    * @abstract
-   * @param {function(string, ?import("ol/coordinate.js").Coordinate)} callback The function
+   * @param {function(string, ?import("ol/coordinate.js").Coordinate): void} callback The function
    *     to be called.
    * @protected
    */
@@ -431,18 +434,12 @@ class Measure extends olInteractionInteraction {
 
 
 /**
- * @const
- * @type {import("ol/Sphere.js").default}
- */
-
-
-/**
  * Calculate the area of the passed polygon and return a formatted string
  * of the area.
  * @param {!import("ol/geom/Polygon.js").default} polygon Polygon.
  * @param {!import("ol/proj/Projection.js").default} projection Projection of the polygon coords.
  * @param {number|undefined} precision Precision.
- * @param {!unitPrefix} format The format function.
+ * @param {!import('ngeo/misc/filters.js').unitPrefix} format The format function.
  * @return {string} Formatted string of the area.
  * @this {import("ngeo/interaction/Measure.js").default}
  */
@@ -458,7 +455,7 @@ export function getFormattedArea(polygon, projection, precision, format) {
  * of the area.
  * @param {!import("ol/geom/Circle.js").default} circle Circle
  * @param {number|undefined} precision Precision.
- * @param {!unitPrefix} format The format function.
+ * @param {!import('ngeo/misc/filters.js').unitPrefix} format The format function.
  * @return {string} Formatted string of the area.
  */
 export function getFormattedCircleArea(circle, precision, format) {
@@ -473,7 +470,7 @@ export function getFormattedCircleArea(circle, precision, format) {
  * @param {!import("ol/geom/LineString.js").default} lineString Line string.
  * @param {!import("ol/proj/Projection.js").default} projection Projection of the line string coords.
  * @param {number|undefined} precision Precision.
- * @param {!unitPrefix} format The format function.
+ * @param {!import('ngeo/misc/filters.js').unitPrefix} format The format function.
  * @return {string} Formatted string of length.
  */
 export function getFormattedLength(lineString, projection, precision, format) {
@@ -492,7 +489,7 @@ export function getFormattedLength(lineString, projection, precision, format) {
  * Return a formatted string of the point.
  * @param {!import("ol/geom/Point.js").default} point Point.
  * @param {number|undefined} decimals Decimals.
- * @param {!numberCoordinates} format A function to format coordinate into text
+ * @param {!import('ngeo/misc/filters.js').numberCoordinates} format A function to format coordinate into text
  * @param {string=} opt_template The template.
  * @return {string} Formatted string of coordinate.
  */

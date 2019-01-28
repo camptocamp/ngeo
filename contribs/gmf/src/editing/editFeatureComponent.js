@@ -133,7 +133,7 @@ module.run(/* @ngInject */ ($templateCache) => {
  * @htmlAttribute {boolean} gmf-editfeature-dirty Flag that is toggled as soon
  *     as the feature changes, i.e. if any of its properties change, which
  *     includes the geometry.
- * @htmlAttribute {import("ngeo/layertree/Controller.js").default} gmf-editfeature-editabletreectrl
+ * @htmlAttribute {import("ngeo/layertree/Controller.js").LayertreeController} gmf-editfeature-editabletreectrl
  *     A reference to the editable Layertree controller, which contains a
  *     a reference to the node and WMS layer.
  * @htmlAttribute {import("ol/Map.js").default} gmf-editfeature-map The map.
@@ -204,7 +204,7 @@ function Controller($element, $q, $scope, $timeout,
   this.dirty;
 
   /**
-   * @type {import("ngeo/layertree/Controller.js").default}
+   * @type {import("ngeo/layertree/Controller.js").LayertreeController}
    * @export
    */
   this.editableTreeCtrl;
@@ -527,7 +527,7 @@ Controller.prototype.$onInit = function() {
   this.dirty = this.dirty === true;
   this.editableNode_ = /** @type {import(gmf/themes.js).GmfLayer} */ (
     this.editableTreeCtrl.node);
-  this.features = this.vectorLayer.getSource().getFeaturesCollection();
+  this.features = /** @type {olSourceVector} */(this.vectorLayer.getSource()).getFeaturesCollection();
   this.tolerance = this.tolerance !== undefined ? this.tolerance : 10;
 
   // (1.1) Set editable WMS layer

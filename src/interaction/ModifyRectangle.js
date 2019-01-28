@@ -15,7 +15,7 @@ import olSourceVector from 'ol/source/Vector.js';
  */
 class ModifyRectangle extends olInteractionPointer {
   /**
-   * @param {olx.interaction.ModifyOptions} options Options.
+   * @param {import('ol/interaction/Modify.js').Options} options Options.
    * @fires import("ngeo/interaction/ModifyCircleEvent.js").default
    */
   constructor(options) {
@@ -104,7 +104,7 @@ class ModifyRectangle extends olInteractionPointer {
         return;
       }
 
-      const pointSource = this.vectorPoints_.getSource();
+      const pointSource = /** @type {olSourceVector} */(this.vectorPoints_.getSource());
 
       // from each corners, create a point feature and add it to the point layer.
       // each point is then associated with 2 siblings in order to update the
@@ -171,7 +171,6 @@ class ModifyRectangle extends olInteractionPointer {
   willModifyFeatures_(evt) {
     if (!this.modified_) {
       this.modified_ = true;
-      /** @type {ModifyEvent} */
       const event = new ngeoCustomEvent('modifystart', {features: this.features_});
       this.dispatchEvent(event);
       this.params_ = this.initializeParams_();
@@ -255,7 +254,7 @@ class ModifyRectangle extends olInteractionPointer {
     const item = this.cache_[uid];
     const corners = item.corners;
     for (let i = 0; i < corners.length; i++) {
-      this.vectorPoints_.getSource().removeFeature(corners[i]);
+      /** @type {olSourceVector} */(this.vectorPoints_.getSource()).removeFeature(corners[i]);
     }
     this.feature_ = null;
     corners.length = 0;
@@ -298,8 +297,8 @@ class ModifyRectangle extends olInteractionPointer {
   handleDown_(evt) {
     const map = evt.map;
 
-    const feature = map.forEachFeatureAtPixel(evt.pixel, feature =>
-      (feature.get('siblingX') && feature.get('siblingY') ? feature : undefined)
+    const feature = /** @type {olFeature} */(map.forEachFeatureAtPixel(evt.pixel, feature =>
+      (feature.get('siblingX') && feature.get('siblingY') ? feature : undefined))
     );
 
     if (feature) {
@@ -358,10 +357,10 @@ class ModifyRectangle extends olInteractionPointer {
   /**
    * Calculate the new position of a point as projected on a vector from origin to
    * destination.
-   * @param {import("ol/Pixel.js").default} origin Pixel of origin (opposite of the drag handle)
-   * @param {import("ol/Pixel.js").default} destination Pixel of destination (the handle we dragged)
-   * @param {import("ol/Pixel.js").default} vector The normalized vector to the point
-   * @return {import("ol/Pixel.js").default} The new pixel of the point
+   * @param {import("ol/pixel.js").Pixel} origin Pixel of origin (opposite of the drag handle)
+   * @param {import("ol/pixel.js").Pixel} destination Pixel of destination (the handle we dragged)
+   * @param {import("ol/pixel.js").Pixel} vector The normalized vector to the point
+   * @return {import("ol/pixel.js").Pixel} The new pixel of the point
    * @private
    */
   calculateNewPixel_(
@@ -387,7 +386,6 @@ class ModifyRectangle extends olInteractionPointer {
    */
   handleUp_(evt) {
     if (this.modified_) {
-      /** @type {ModifyEvent} */
       const event = new ngeoCustomEvent('modifyend', {features: this.features_});
       this.dispatchEvent(event);
       this.params_ = null;
@@ -406,7 +404,7 @@ class ModifyRectangle extends olInteractionPointer {
 /**
  * @typedef {Object} ModifyParams
  * @property {import("ol/coordinate.js").Coordinate} originCoordinate
- * @property {import("ol/Pixel.js").default} originPixel
+ * @property {import("ol/pixel.js").Pixel} originPixel
  * @property {import("ol/geom/Point.js").default} siblingXPoint
  * @property {import("ol/geom/Point.js").default} siblingYPoint
  * @property {Array<number>} vectorX

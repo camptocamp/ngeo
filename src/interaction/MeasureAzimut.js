@@ -59,7 +59,9 @@ export default class extends ngeoInteractionMeasure {
    */
   handleMeasure(callback) {
     const geom = this.sketchFeature.getGeometry();
-    const line = geom.getGeometries()[0];
+    const line = /** @type {import('ol/geom/LineString.js').default} */(
+      /** @type {import('ol/geom/GeometryCollection.js').default} */(geom).getGeometries()[0]
+    );
     const output = getFormattedAzimutRadius(
       line, this.getMap().getView().getProjection(),
       this.decimals, this.precision, this.unitPrefixFormat, this.numberFormat);

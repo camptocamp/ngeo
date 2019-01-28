@@ -198,7 +198,7 @@ EditingSnappingService.prototype.handleThemesChange_ = function() {
  * create and add a cache item with every configuration required to do the
  * snapping. It becomes active when its state is set to 'on'.
  *
- * @param {import("ngeo/layertree/Controller.js").default} treeCtrl Layertree controller to register
+ * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl Layertree controller to register
  * @private
  */
 EditingSnappingService.prototype.registerTreeCtrl_ = function(treeCtrl) {
@@ -267,7 +267,7 @@ EditingSnappingService.prototype.unregisterAllTreeCtrl_ = function() {
 /**
  * Get the OGC server.
  *
- * @param {import("ngeo/layertree/Controller.js").default} treeCtrl The layer tree controller
+ * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl The layer tree controller
  * @return {?import(gmf/themes.js).GmfOgcServers} The OGC server.
  * @private
  */
@@ -307,7 +307,7 @@ EditingSnappingService.prototype.getOGCServer_ = function(treeCtrl) {
  *    to `true`
  * 4) the ogcServer defined in 3) has the `wfsSupport` property set to `true`.
  *
- * @param {import("ngeo/layertree/Controller.js").default} treeCtrl The layer tree controller
+ * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl The layer tree controller
  * @return {?WFSConfig} The configuration object.
  * @private
  */
@@ -357,7 +357,7 @@ EditingSnappingService.prototype.getWFSConfig_ = function(treeCtrl) {
 
 
 /**
- * @param {import("ngeo/layertree/Controller.js").default} treeCtrl The layer tree controller
+ * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl The layer tree controller
  * @param {string|undefined} newVal New state value
  * @private
  */

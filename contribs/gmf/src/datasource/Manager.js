@@ -329,7 +329,7 @@ export class DatasourceManager {
    * are added or removed, pushing it to the cache or removing it from the
    * cache.
    *
-   * @param {Array.<import("ngeo/layertree/Controller.js").default>|undefined} value List of tree
+   * @param {Array.<import("ngeo/layertree/Controller.js").LayertreeController>|undefined} value List of tree
    *     controllers.
    * @private
    */
@@ -593,7 +593,7 @@ export class DatasourceManager {
    * Also, set its according data source. Finally, add the data source to
    * the ngeo collection.
    *
-   * @param {import("ngeo/layertree/Controller.js").default} treeCtrl Layertree controller to add
+   * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl Layertree controller to add
    * @private
    */
   addTreeCtrlToCache_(treeCtrl) {
@@ -702,7 +702,7 @@ export class DatasourceManager {
    * Note: The possible states can only be 'on' or 'off', because the
    * layertree controller being a 'leaf'.
    *
-   * @param {import("ngeo/layertree/Controller.js").default} treeCtrl The layer tree controller
+   * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl The layer tree controller
    * @param {string|undefined} newVal New state value
    * @private
    */
@@ -725,7 +725,7 @@ export class DatasourceManager {
   /**
    * Returns a layertree controller cache item, if it exists.
    *
-   * @param {import("ngeo/layertree/Controller.js").default} treeCtrl The layer tree controller
+   * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl The layer tree controller
    * @return {ManagerTreeCtrlCacheItem} Cache item
    * @private
    */

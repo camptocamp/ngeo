@@ -54,7 +54,7 @@ export function SyncLayertreeMap($rootScope, ngeoLayerHelper, ngeoWMSTime, gmfTh
 /**
  * Create, insert (or update) and return a layer from the GmfGroup or the
  * GmfLayer of the given treeCtrl.
- * @param {import("ngeo/layertree/Controller.js").default} treeCtrl ngeo layertree controller.
+ * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl ngeo layertree controller.
  * @param {import("ol/Map.js").default} map A map that contains the group to insert the not first
  *     level group layer.
  * @param {import("ol/layer/Group.js").default} dataLayerGroup the layer group to insert the first
@@ -95,7 +95,7 @@ SyncLayertreeMap.prototype.createLayer = function(treeCtrl, map, dataLayerGroup,
  * Synchronise the state of each layers corresponding to the given tree and
  * all its children.
  * @param {import("ol/Map.js").default} map A map that contains the layers.
- * @param {import("ngeo/layertree/Controller.js").default} treeCtrl ngeo layertree controller.
+ * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl ngeo layertree controller.
  * @private
  */
 SyncLayertreeMap.prototype.sync_ = function(map, treeCtrl) {
@@ -110,7 +110,7 @@ SyncLayertreeMap.prototype.sync_ = function(map, treeCtrl) {
 /**
  * Set the active state of a layer based on its treeCtrl state.
  * @param {import("ol/layer/Tile.js").default|import("ol/layer/Image.js").default} layer A layer.
- * @param {import("ngeo/layertree/Controller.js").default} treeCtrl ngeo layertree controller.
+ * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl ngeo layertree controller.
  * @private
  */
 SyncLayertreeMap.prototype.updateLayerState_ = function(layer, treeCtrl) {
@@ -151,7 +151,7 @@ SyncLayertreeMap.prototype.updateLayerState_ = function(layer, treeCtrl) {
  * Create insert and return a layer group (for not mixed case) or a wmsLayer (for
  * mixed case). Take care about the insertion order in the map in case of first
  * level group.
- * @param {import("ngeo/layertree/Controller.js").default} treeCtrl ngeo layertree controller.
+ * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl ngeo layertree controller.
  * @param {import("ol/Map.js").default} map A map that contains the group to insert the not first
  *     level group layer.
  * @param {import("ol/layer/Group.js").default} dataLayerGroup the layer group to insert the first
@@ -196,7 +196,7 @@ SyncLayertreeMap.prototype.createGroup_ = function(treeCtrl, map,
 /**
  * Create, insert and return a layer group (for not mixed case) or a wmsLayer
  * for mixed case).
- * @param {import("ngeo/layertree/Controller.js").default} treeCtrl ngeo layertree controller.
+ * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl ngeo layertree controller.
  * @param {boolean} mixed True for a group layer, false for a WMS layer.
  * @return {import("ol/layer/Image.js").default|import("ol/layer/Group.js").default} a new layer.
  * @private
@@ -242,7 +242,7 @@ SyncLayertreeMap.prototype.createLayerFromGroup_ = function(treeCtrl,
 
 /**
  * Create and insert a layer from a leaf in a mixed group.
- * @param {import("ngeo/layertree/Controller.js").default} treeCtrl ngeo layertree controller.
+ * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl ngeo layertree controller.
  * @param {import("ol/Map.js").default} map A map that contains the group to insert the layer.
  * @return {import("ol/layer/Tile.js").default|import("ol/layer/Image.js").default} a new layer.
  * @private
@@ -295,7 +295,7 @@ SyncLayertreeMap.prototype.createLeafInAMixedGroup_ = function(treeCtrl, map) {
  * Update a WMS layer with the given treeCtrl node information. Assumes that
  * the first parent with ogcServer information is linked to the layer to update
  * and that this treeCtrl node is a leafNode.
- * @param {import("ngeo/layertree/Controller.js").default} treeCtrl ngeo layertree controller.
+ * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl ngeo layertree controller.
  * @param {import("ol/Map.js").default} map A map that contains the layer to update.
  * @private
  */
@@ -360,7 +360,7 @@ SyncLayertreeMap.prototype.updateLayerReferences_ = function(leafNode, layer) {
 /**
  * Get the time parameter for a WMS Layer. If it's a group and it doesn't have
  * time, get the first time parameter available in any child.
- * @param {import("ngeo/layertree/Controller.js").default} treeCtrl ngeo layertree controller.
+ * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl ngeo layertree controller.
  * @return {string|undefined} A wms time param.
  * @private
  */
@@ -391,7 +391,7 @@ SyncLayertreeMap.prototype.getTimeParam_ = function(treeCtrl) {
 
 /**
  * Return true if a parent tree is mixed, based on its node.
- * @param {import("ngeo/layertree/Controller.js").default} treeCtrl ngeo layertree controller.
+ * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl ngeo layertree controller.
  * @return {boolean} True is any parent is mixed. False Otherwise.
  * @private
  */
@@ -409,8 +409,8 @@ SyncLayertreeMap.prototype.isOneParentNotMixed_ = function(treeCtrl) {
 
 /**
  * Return the first parent, from the root parent, that is not mixed.
- * @param {import("ngeo/layertree/Controller.js").default} treeCtrl ngeo layertree controller.
- * @return {import("ngeo/layertree/Controller.js").default} The first not mixed parent.
+ * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl ngeo layertree controller.
+ * @return {import("ngeo/layertree/Controller.js").LayertreeController} The first not mixed parent.
  * @private
  */
 SyncLayertreeMap.prototype.getFirstLevelGroupCtrl_ = function(
@@ -425,7 +425,7 @@ SyncLayertreeMap.prototype.getFirstLevelGroupCtrl_ = function(
 
 /**
  * Return the layer used by the given treeCtrl.
- * @param {import("ngeo/layertree/Controller.js").default} treeCtrl ngeo layertree controller.
+ * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl ngeo layertree controller.
  * @return {import("ol/layer/Base.js").default} The layer.
  * @public
  */

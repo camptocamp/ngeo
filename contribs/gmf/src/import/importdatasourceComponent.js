@@ -183,10 +183,10 @@ class Controller {
     this.pending = false;
 
     /**
-     * @type {!unitPrefix}
+     * @type {!import('ngeo/misc/filters.js').unitPrefix}
      * @private
      */
-    this.unitPrefixFormat_ = /** @type {unitPrefix} */ (
+    this.unitPrefixFormat_ = /** @type {import('ngeo/misc/filters.js').unitPrefix} */ (
       $filter('ngeoUnitPrefix'));
 
     /**

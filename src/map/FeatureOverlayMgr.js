@@ -150,7 +150,7 @@ FeatureOverlayMgr.prototype.init = function(map) {
 
 
 /**
- * @param {import("ol/style/Style.js").default|Array.<import("ol/style/Style.js").default>|import("ol/style/Style.js").StyleFunction} style
+ * @param {import("ol/style/Style.js").StyleLike} style
  * Style.
  * @param {number} groupIndex Group index.
  * @export

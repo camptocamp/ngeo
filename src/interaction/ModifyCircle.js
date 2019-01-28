@@ -1,7 +1,7 @@
 import ngeoCustomEvent from 'ngeo/CustomEvent.js';
 import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties.js';
 import {getDefaultModifyStyleFunction} from 'ngeo/interaction/common.js';
-import ngeoInteractionMeasureAzimut from 'ngeo/interaction/MeasureAzimut.js';
+import {getAzimut} from 'ngeo/interaction/MeasureAzimut.js';
 import {getUid as olUtilGetUid} from 'ol/util.js';
 import olFeature from 'ol/Feature.js';
 import olMapBrowserPointerEvent from 'ol/MapBrowserPointerEvent.js';
@@ -23,16 +23,17 @@ import olStructsRBush from 'ol/structs/RBush.js';
  */
 export default class extends olInteractionPointer {
   /**
-   * @param {olx.interaction.ModifyOptions} options Options.
+   * @param {import('ol/interaction/Modify.js').Options} options Options.
    * @fires import("ngeo/interaction/ModifyCircleEvent.js").default
    */
   constructor(options) {
-    super({
-      handleDownEvent: handleDownEvent_,
-      handleDragEvent: handleDragEvent_,
-      handleEvent: handleEvent,
-      handleUpEvent: handleUpEvent_
-    });
+    super();
+
+    this.handleDownEvent = this.handleDownEvent_;
+    this.handleDragEvent = this.handleDragEvent_;
+    this.handleEvent = this.handleEvent;
+    this.handleUpEvent = this.handleUpEvent_;
+
     console.assert(options.features);
 
     /**
@@ -43,7 +44,7 @@ export default class extends olInteractionPointer {
     this.vertexFeature_ = null;
 
     /**
-     * @type {import("ol/Pixel.js").default}
+     * @type {import("ol/pixel.js").Pixel}
      * @private
      */
     this.lastPixel_ = [0, 0];
@@ -56,7 +57,7 @@ export default class extends olInteractionPointer {
 
     /**
      * Segment RTree for each layer
-     * @type {import("ol/structs/RBush.js").default.<import("ol/ModifySegmentDataType.js").default>}
+     * @type {import("ol/structs/RBush.js").default.<import("ol/interaction/Modify.js").SegmentData>}
      * @private
      */
     this.rBush_ = new olStructsRBush();
@@ -139,7 +140,6 @@ export default class extends olInteractionPointer {
   willModifyFeatures_(evt) {
     if (!this.modified_) {
       this.modified_ = true;
-      /** @type {ModifyEvent} */
       const event = new ngeoCustomEvent('modifystart', {features: this.features_});
       this.dispatchEvent(event);
     }
@@ -154,7 +154,7 @@ export default class extends olInteractionPointer {
     // Remove the vertex feature if the collection of canditate features
     // is empty.
     if (this.vertexFeature_ && this.features_.getLength() === 0) {
-      this.overlay_.getSource().removeFeature(this.vertexFeature_);
+      /** @type {olSourceVector} */(this.overlay_.getSource()).removeFeature(this.vertexFeature_);
       this.vertexFeature_ = null;
     }
   }
@@ -165,10 +165,10 @@ export default class extends olInteractionPointer {
    */
   removeFeatureSegmentData_(feature) {
     const rBush = this.rBush_;
-    const /** @type {Array.<import("ol/ModifySegmentDataType.js").default>} */ nodesToRemove = [];
+    const /** @type {Array.<import("ol/interaction/Modify.js").SegmentData>} */ nodesToRemove = [];
     rBush.forEach(
       /**
-         * @param {import("ol/ModifySegmentDataType.js").default} node RTree node.
+         * @param {import("ol/interaction/Modify.js").SegmentData} node RTree node.
          */
       (node) => {
         if (feature === node.feature) {
@@ -219,7 +219,7 @@ export default class extends olInteractionPointer {
       coordinates = rings[j];
       for (i = 0, ii = coordinates.length - 1; i < ii; ++i) {
         segment = coordinates.slice(i, i + 2);
-        segmentData = /** @type {import("ol/ModifySegmentDataType.js").default} */ ({
+        segmentData = /** @type {import("ol/interaction/Modify.js").SegmentData} */ ({
           feature: feature,
           geometry: geometry,
           depth: [j],
@@ -241,7 +241,7 @@ export default class extends olInteractionPointer {
     if (!vertexFeature) {
       vertexFeature = new olFeature(new olGeomPoint(coordinates));
       this.vertexFeature_ = vertexFeature;
-      this.overlay_.getSource().addFeature(vertexFeature);
+      /** @type {olSourceVector} */(this.overlay_.getSource()).addFeature(vertexFeature);
     } else {
       const geometry = /** @type {import("ol/geom/Point.js").default} */ (vertexFeature.getGeometry());
       geometry.setCoordinates(coordinates);
@@ -259,7 +259,7 @@ export default class extends olInteractionPointer {
   }
 
   /**
-   * @param {import("ol/Pixel.js").default} pixel Pixel
+   * @param {import("ol/pixel.js").Pixel} pixel Pixel
    * @param {import("ol/PluggableMap.js").default} map Map.
    * @private
    */
@@ -316,7 +316,7 @@ export default class extends olInteractionPointer {
       }
     }
     if (this.vertexFeature_) {
-      this.overlay_.getSource().removeFeature(this.vertexFeature_);
+      /** @type {olSourceVector} */(this.overlay_.getSource()).removeFeature(this.vertexFeature_);
       this.vertexFeature_ = null;
     }
   }
@@ -331,130 +331,120 @@ export default class extends olInteractionPointer {
     geometry.setCoordinates(coordinates);
     this.changingFeature_ = false;
   }
+
+  /**
+   * @param {import("ol/MapBrowserPointerEvent.js").default} evt Event.
+   * @return {boolean} Start drag sequence?
+   * @private
+   */
+  handleDownEvent_(evt) {
+    this.handlePointerAtPixel_(evt.pixel, evt.map);
+    this.dragSegments_ = [];
+    this.modified_ = false;
+    const vertexFeature = this.vertexFeature_;
+    if (vertexFeature) {
+      const geometry = /** @type {import("ol/geom/Point.js").default} */ (vertexFeature.getGeometry());
+      const vertex = geometry.getCoordinates();
+      const vertexExtent = olExtent.boundingExtent([vertex]);
+      const segmentDataMatches = this.rBush_.getInExtent(vertexExtent);
+      const componentSegments = {};
+      segmentDataMatches.sort(compareIndexes);
+      for (let i = 0, ii = segmentDataMatches.length; i < ii; ++i) {
+        const segmentDataMatch = segmentDataMatches[i];
+        const segment = segmentDataMatch.segment;
+        let uid = olUtilGetUid(segmentDataMatch.feature);
+        const depth = segmentDataMatch.depth;
+        if (depth) {
+          uid += `-${depth.join('-')}`; // separate feature components
+        }
+        if (!componentSegments[uid]) {
+          componentSegments[uid] = new Array(2);
+        }
+        if (olCoordinate.equals(segment[0], vertex) &&
+            !componentSegments[uid][0]) {
+          this.dragSegments_.push([segmentDataMatch, 0]);
+          componentSegments[uid][0] = segmentDataMatch;
+        } else if (olCoordinate.equals(segment[1], vertex) &&
+            !componentSegments[uid][1]) {
+          this.dragSegments_.push([segmentDataMatch, 1]);
+          componentSegments[uid][1] = segmentDataMatch;
+        }
+      }
+    }
+    return !!this.vertexFeature_;
+  }
+
+  /**
+   * @param {import("ol/MapBrowserPointerEvent.js").default} evt Event.
+   * @private
+   */
+  handleDragEvent_(evt) {
+    this.willModifyFeatures_(evt);
+    const vertex = evt.coordinate;
+    const geometry = /** @type {import("ol/geom/Polygon.js").default}*/ (this.dragSegments_[0][0].geometry);
+    const center = olExtent.getCenter(geometry.getExtent());
+
+    const line = new olGeomLineString([center, vertex]);
+
+
+    /**
+     * @type {import("ol/geom/Circle.js").default}
+     */
+    const circle = new olGeomCircle(center, line.getLength());
+    const coordinates = fromCircle(circle, 64).getCoordinates();
+    this.setGeometryCoordinates_(geometry, coordinates);
+
+
+    const azimut = getAzimut(line);
+    this.features_.getArray()[0].set(ngeoFormatFeatureProperties.AZIMUT, azimut);
+
+    this.createOrUpdateVertexFeature_(vertex);
+  }
+
+  /**
+   * @param {import("ol/MapBrowserPointerEvent.js").default} evt Event.
+   * @return {boolean} Stop drag sequence?
+   * @private
+   */
+  handleUpEvent_(evt) {
+    this.rBush_.clear();
+    this.writeCircleGeometry_(this.dragSegments_[0][0].feature,
+      this.dragSegments_[0][0].geometry);
+
+    if (this.modified_) {
+      const event = new ngeoCustomEvent('modifyend', {features: this.features_});
+      this.dispatchEvent(event);
+      this.modified_ = false;
+    }
+    return false;
+  }
+
+  /**
+   * Handles the {@link import("ol/MapBrowserEvent.js").default map browser event} and may modify the
+   * geometry.
+   * @param {import("ol/MapBrowserEvent.js").default} mapBrowserEvent Map browser event.
+   * @return {boolean} `false` to stop event propagation.
+   */
+  handleEvent(mapBrowserEvent) {
+    if (!(mapBrowserEvent instanceof olMapBrowserPointerEvent)) {
+      return true;
+    }
+
+    let handled;
+    if (!mapBrowserEvent.map.getView().getInteracting() &&
+        mapBrowserEvent.type == 'pointermove' && !this.handlingDownUpSequence) {
+      this.handlePointerMove_(mapBrowserEvent);
+    }
+
+    return olInteractionPointer.prototype.handleEvent.call(this, mapBrowserEvent) && !handled;
+  }
 }
 
 /**
- * @param {import("ol/ModifySegmentDataType.js").default} a The first segment data.
- * @param {import("ol/ModifySegmentDataType.js").default} b The second segment data.
+ * @param {import("ol/interaction/Modify.js").SegmentData} a The first segment data.
+ * @param {import("ol/interaction/Modify.js").SegmentData} b The second segment data.
  * @return {number} The difference in indexes.
  */
 function compareIndexes(a, b) {
   return a.index - b.index;
-}
-
-
-/**
- * @param {import("ol/MapBrowserPointerEvent.js").default} evt Event.
- * @return {boolean} Start drag sequence?
- * @this {import("ngeo/interaction/ModifyCircle.js").default}
- * @private
- */
-function handleDownEvent_(evt) {
-  this.handlePointerAtPixel_(evt.pixel, evt.map);
-  this.dragSegments_ = [];
-  this.modified_ = false;
-  const vertexFeature = this.vertexFeature_;
-  if (vertexFeature) {
-    const geometry = /** @type {import("ol/geom/Point.js").default} */ (vertexFeature.getGeometry());
-    const vertex = geometry.getCoordinates();
-    const vertexExtent = olExtent.boundingExtent([vertex]);
-    const segmentDataMatches = this.rBush_.getInExtent(vertexExtent);
-    const componentSegments = {};
-    segmentDataMatches.sort(compareIndexes);
-    for (let i = 0, ii = segmentDataMatches.length; i < ii; ++i) {
-      const segmentDataMatch = segmentDataMatches[i];
-      const segment = segmentDataMatch.segment;
-      let uid = olUtilGetUid(segmentDataMatch.feature);
-      const depth = segmentDataMatch.depth;
-      if (depth) {
-        uid += `-${depth.join('-')}`; // separate feature components
-      }
-      if (!componentSegments[uid]) {
-        componentSegments[uid] = new Array(2);
-      }
-      if (olCoordinate.equals(segment[0], vertex) &&
-          !componentSegments[uid][0]) {
-        this.dragSegments_.push([segmentDataMatch, 0]);
-        componentSegments[uid][0] = segmentDataMatch;
-      } else if (olCoordinate.equals(segment[1], vertex) &&
-          !componentSegments[uid][1]) {
-        this.dragSegments_.push([segmentDataMatch, 1]);
-        componentSegments[uid][1] = segmentDataMatch;
-      }
-    }
-  }
-  return !!this.vertexFeature_;
-}
-
-
-/**
- * @param {import("ol/MapBrowserPointerEvent.js").default} evt Event.
- * @this {import("ngeo/interaction/ModifyCircle.js").default}
- * @private
- */
-function handleDragEvent_(evt) {
-  this.willModifyFeatures_(evt);
-  const vertex = evt.coordinate;
-  const geometry = /** @type {import("ol/geom/Polygon.js").default}*/ (this.dragSegments_[0][0].geometry);
-  const center = olExtent.getCenter(geometry.getExtent());
-
-  const line = new olGeomLineString([center, vertex]);
-
-
-  /**
-   * @type {import("ol/geom/Circle.js").default}
-   */
-  const circle = new olGeomCircle(center, line.getLength());
-  const coordinates = fromCircle(circle, 64).getCoordinates();
-  this.setGeometryCoordinates_(geometry, coordinates);
-
-
-  const azimut = ngeoInteractionMeasureAzimut.getAzimut(line);
-  this.features_.getArray()[0].set(ngeoFormatFeatureProperties.AZIMUT, azimut);
-
-  this.createOrUpdateVertexFeature_(vertex);
-}
-
-
-/**
- * @param {import("ol/MapBrowserPointerEvent.js").default} evt Event.
- * @return {boolean} Stop drag sequence?
- * @this {import("ngeo/interaction/ModifyCircle.js").default}
- * @private
- */
-function handleUpEvent_(evt) {
-  this.rBush_.clear();
-  this.writeCircleGeometry_(this.dragSegments_[0][0].feature,
-    this.dragSegments_[0][0].geometry);
-
-  if (this.modified_) {
-    /** @type {ModifyEvent} */
-    const event = new ngeoCustomEvent('modifyend', {features: this.features_});
-    this.dispatchEvent(event);
-    this.modified_ = false;
-  }
-  return false;
-}
-
-
-/**
- * Handles the {@link import("ol/MapBrowserEvent.js").default map browser event} and may modify the
- * geometry.
- * @param {import("ol/MapBrowserEvent.js").default} mapBrowserEvent Map browser event.
- * @return {boolean} `false` to stop event propagation.
- * @this {import("ngeo/interaction/ModifyCircle.js").default}
- * @api
- */
-function handleEvent(mapBrowserEvent) {
-  if (!(mapBrowserEvent instanceof olMapBrowserPointerEvent)) {
-    return true;
-  }
-
-  let handled;
-  if (!mapBrowserEvent.map.getView().getInteracting() &&
-      mapBrowserEvent.type == 'pointermove' && !this.handlingDownUpSequence) {
-    this.handlePointerMove_(mapBrowserEvent);
-  }
-
-  return olInteractionPointer.prototype.handleEvent.call(this, mapBrowserEvent) && !handled;
 }

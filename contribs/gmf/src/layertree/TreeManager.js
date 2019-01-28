@@ -94,7 +94,7 @@ export function LayertreeTreeManager($timeout, $injector, gettextCatalog, ngeoLa
    * The controller of the (unique) root layer tree.
    * The array of top level layer trees is available through `rootCtrl.children`.
    * The order doesn't match with the ordre of the displayed layertree.
-   * @type {import("ngeo/layertree/Controller.js").default}
+   * @type {import("ngeo/layertree/Controller.js").LayertreeController}
    * @export
    */
   this.rootCtrl = null;
@@ -462,7 +462,7 @@ LayertreeTreeManager.prototype.notifyCantAddGroups_ = function(groups) {
 /**
  * Get a treeCtrl based on it's node id.
  * @param {number} id the id of a GMFThemesGroup or a GMFThemesLeaf.
- * @return {import("ngeo/layertree/Controller.js").default?} treeCtrl The associated controller or null.
+ * @return {import("ngeo/layertree/Controller.js").LayertreeController?} treeCtrl The associated controller or null.
  * @public
  */
 LayertreeTreeManager.prototype.getTreeCtrlByNodeId = function(id) {
@@ -481,7 +481,7 @@ LayertreeTreeManager.prototype.getTreeCtrlByNodeId = function(id) {
 
 /**
  * Get the OGC server.
- * @param {import("ngeo/layertree/Controller.js").default} treeCtrl ngeo layertree controller, from
+ * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl ngeo layertree controller, from
  *     the current node.
  * @return {import(gmf/themes.js).GmfOgcServer} The OGC server.
  */
@@ -551,7 +551,7 @@ LayertreeTreeManager.prototype.refreshFirstLevelGroups_ = function(themes) {
 /**
  * Return a TreeManagerFullState that keeps the state of the given
  * treeCtrl including the state of its children.
- * @param {import("ngeo/layertree/Controller.js").default} treeCtrl the ngeo layertree controller to
+ * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl the ngeo layertree controller to
  *     save.
  * @return {TreeManagerFullState!} the fullState object.
  * @private

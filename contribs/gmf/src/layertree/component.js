@@ -311,7 +311,7 @@ Controller.prototype.$onInit = function() {
 
 
 /**
- * @param {import("ngeo/layertree/Controller.js").default} treeCtrl Layer tree controller.
+ * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl Layer tree controller.
  * @private
  */
 Controller.prototype.updateDimensions_ = function(treeCtrl) {
@@ -366,7 +366,7 @@ Controller.prototype.updateLayerDimensions_ = function(layer, node) {
  * treeCtrl. The layer will be inserted into the map. The layer can be null
  * if the treeCtrl is based on a node inside a mixed node. It this case, the
  * layer will be in the first parent declared as a mixed node.
- * @param {import("ngeo/layertree/Controller.js").default} treeCtrl tree controller of the node
+ * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl tree controller of the node
  * @return {import("ol/layer/Base.js").default|import("ol/layer/Group.js").default|null} The OpenLayers layer or group
  *     for the node.
  * @export
@@ -396,7 +396,7 @@ Controller.prototype.getLayer = function(treeCtrl) {
  * Remove layer from this component's layergroup (and then, from the map) on
  * a ngeo layertree destroy event.
  * @param {angular.IScope} scope treeCtrl scope.
- * @param {import("ngeo/layertree/Controller.js").default} treeCtrl ngeo layertree controller, from
+ * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl ngeo layertree controller, from
  *     the current node.
  * @export
  */
@@ -410,7 +410,7 @@ Controller.prototype.listeners = function(scope, treeCtrl) {
 
 /**
  * Toggle the state of treeCtrl's node.
- * @param {import("ngeo/layertree/Controller.js").default} treeCtrl ngeo layertree controller, from
+ * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl ngeo layertree controller, from
  *     the current node.
  * @export
  */
@@ -429,7 +429,7 @@ Controller.prototype.toggleActive = function(treeCtrl) {
 /**
  * Return the current state of the given treeCtrl's node.
  * Return a class name that match with the current node activation state.
- * @param {import("ngeo/layertree/Controller.js").default} treeCtrl ngeo layertree controller, from
+ * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl ngeo layertree controller, from
  *     the current node.
  * @return {string} 'on' or 'off' or 'indeterminate'.
  * @export
@@ -449,7 +449,7 @@ Controller.prototype.getNodeState = function(treeCtrl) {
  * `gmf.datasource.Manager` service
  *
  * LayertreeController.prototype.updateWMSTimeLayerState - description
- * @param {import("ngeo/layertree/Controller.js").default} layertreeCtrl ngeo layertree controller
+ * @param {import("ngeo/layertree/Controller.js").LayertreeController} layertreeCtrl ngeo layertree controller
  * @param {{start : number, end : number}} time The start
  * and optionally the end datetime (for time range selection) selected by user
  * @export
@@ -473,7 +473,7 @@ Controller.prototype.updateWMSTimeLayerState = function(layertreeCtrl, time) {
 /**
  * Get the icon image URL for the given treeCtrl's layer. It can only return a
  * string for internal WMS layers without multiple childlayers in the node.
- * @param {import("ngeo/layertree/Controller.js").default} treeCtrl ngeo layertree controller, from
+ * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl ngeo layertree controller, from
  *     the current node.
  * @return {string|undefined} The icon legend URL or undefined.
  * @export
@@ -514,7 +514,7 @@ Controller.prototype.getLegendIconURL = function(treeCtrl) {
 
 /**
  * Get the legends object (<LayerName: url> for each layer) for the given treeCtrl.
- * @param {import("ngeo/layertree/Controller.js").default} treeCtrl ngeo layertree controller, from
+ * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl ngeo layertree controller, from
  *     the current node.
  * @return {Object.<string, string>} A <layerName: url> object that provides a
  *     layer for each layer.
@@ -561,7 +561,7 @@ Controller.prototype.getLegendsObject = function(treeCtrl) {
 
 /**
  * Get the number of legends object for this layertree controller.
- * @param {import("ngeo/layertree/Controller.js").default} treeCtrl ngeo layertree controller, from
+ * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl ngeo layertree controller, from
  *     the current node.
  * @return {number} The number of Legends object.
  * @export
@@ -588,7 +588,7 @@ Controller.prototype.getScale_ = function() {
 
 /**
  * Opens a openIframePopup with the content of the metadata url of a node.
- * @param {import("ngeo/layertree/Controller.js").default} treeCtrl ngeo layertree controller, from
+ * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl ngeo layertree controller, from
  *     the current node.
  * @export
  */
@@ -690,7 +690,7 @@ Controller.prototype.getResolutionStyle = function(gmfLayer) {
 
 /**
  * Set the resolution of the map with the max or min resolution of the node.
- * @param {import("ngeo/layertree/Controller.js").default} treeCtrl ngeo layertree controller, from
+ * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl ngeo layertree controller, from
  *     the current node.
  * @export
  */
@@ -754,7 +754,7 @@ Controller.prototype.isNodeLegendVisible = function(legendNodeId) {
  *   - it supports legend
  *   - it supports having the layer opacity being changed
  *
- * @param {!import("ngeo/layertree/Controller.js").default} treeCtrl Ngeo tree controller.
+ * @param {!import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl Ngeo tree controller.
  * @return {boolean} Whether the layer tree controller supports being
  *     "customized" or not.
  * @export
@@ -769,7 +769,7 @@ Controller.prototype.supportsCustomization = function(treeCtrl) {
 
 
 /**
- * @param {!import("ngeo/layertree/Controller.js").default} treeCtrl Ngeo tree controller.
+ * @param {!import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl Ngeo tree controller.
  * @return {boolean} Whether the layer tree controller supports having a
  *     legend being shown.
  * @export
@@ -783,7 +783,7 @@ Controller.prototype.supportsLegend = function(treeCtrl) {
 
 
 /**
- * @param {!import("ngeo/layertree/Controller.js").default} treeCtrl Ngeo tree controller.
+ * @param {!import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl Ngeo tree controller.
  * @return {boolean} Whether the layer tree controller supports having its
  *     layer opacity being changed or not.
  * @export

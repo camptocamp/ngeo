@@ -85,7 +85,7 @@ function MainController() {
    * @export
    */
   this.interaction = new ngeoInteractionModifyCircle(
-    /** @type {olx.interaction.ModifyOptions} */({
+    /** @type {import('ol/interaction/Modify.js').Options} */({
       features: this.features
     }));
 

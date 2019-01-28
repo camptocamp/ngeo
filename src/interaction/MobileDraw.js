@@ -18,7 +18,7 @@ import olSourceVector from 'ol/source/Vector.js';
  * @typedef {Object} MobileDrawOptions
  * @property {number} [minPoints] The number of points that must be drawn before a polygon ring or line
  * string can be finished. Default is `3` for polygon rings and `2` for line strings.
- * @property {import("ol/style/Style.js").default|Array.<import("ol/style/Style.js").default>|import('ol/style/Style.js').StyleFunction} [style] Style for sketch features.
+ * @property {import("ol/style/Style.js").StyleLike} [style] Style for sketch features.
  * @property {import("ol/geom/GeometryType.js").default} type Drawing type ('Point' or 'LineString'.
  * @property {boolean} [wrapX] Wrap the world horizontally on the sketch overlay. Default is `false`.
  */
@@ -36,7 +36,6 @@ import olSourceVector from 'ol/source/Vector.js';
  *
  * @constructor
  * @fires DrawEvent
- * @extends {import("ol/interaction/Interaction.js").default}
  * @param {MobileDrawOptions} options Options
  */
 export default class extends olInteractionInteraction {
@@ -206,13 +205,13 @@ export default class extends olInteractionInteraction {
     if (this.type_ === 'Point') {
       if (!this.sketchFeature_) {
         this.sketchFeature_ = new olFeature(new olGeomPoint(coordinate));
-        /** @type {DrawEvent} */
         const event = new ngeoCustomEvent('drawstart', {feature: this.sketchFeature_});
         this.dispatchEvent(event);
       }
       sketchFeatureGeom = this.sketchFeature_.getGeometry();
-      console.assert(sketchFeatureGeom instanceof olGeomSimpleGeometry);
-      sketchFeatureGeom.setCoordinates(coordinate);
+      if (sketchFeatureGeom instanceof olGeomSimpleGeometry) {
+        sketchFeatureGeom.setCoordinates(coordinate);
+      }
       return;
     }
 
@@ -222,15 +221,15 @@ export default class extends olInteractionInteraction {
       if (!this.sketchFeature_) {
         coordinates = [coordinate.slice(), coordinate.slice()];
         this.sketchFeature_ = new olFeature(new olGeomLineString(coordinates));
-        /** @type {DrawEvent} */
         const event = new ngeoCustomEvent('drawstart', {feature: this.sketchFeature_});
         this.dispatchEvent(event);
       } else {
         sketchFeatureGeom = this.sketchFeature_.getGeometry();
-        console.assert(sketchFeatureGeom instanceof olGeomSimpleGeometry);
-        coordinates = sketchFeatureGeom.getCoordinates();
-        coordinates.push(coordinate.slice());
-        sketchFeatureGeom.setCoordinates(coordinates);
+        if (sketchFeatureGeom instanceof olGeomSimpleGeometry) {
+          coordinates = sketchFeatureGeom.getCoordinates();
+          coordinates.push(coordinate.slice());
+          sketchFeatureGeom.setCoordinates(coordinates);
+        }
       }
     }
 
@@ -240,7 +239,6 @@ export default class extends olInteractionInteraction {
       if (!this.sketchFeature_) {
         coordinates = [coordinate.slice(), coordinate.slice(), coordinate.slice()];
         this.sketchFeature_ = new olFeature(new olGeomPolygon([coordinates]));
-        /** @type {DrawEvent} */
         const event = new ngeoCustomEvent(
           'drawstart',
           {
@@ -250,11 +248,12 @@ export default class extends olInteractionInteraction {
         this.dispatchEvent(event);
       } else {
         sketchFeatureGeom = this.sketchFeature_.getGeometry();
-        console.assert(sketchFeatureGeom instanceof olGeomPolygon);
-        const coordinatess = sketchFeatureGeom.getCoordinates();
-        coordinates = coordinatess[0];
-        coordinates.push(coordinate.slice());
-        sketchFeatureGeom.setCoordinates(coordinatess);
+        if (sketchFeatureGeom instanceof olGeomPolygon) {
+          const coordinatess = sketchFeatureGeom.getCoordinates();
+          coordinates = coordinatess[0];
+          coordinates.push(coordinate.slice());
+          sketchFeatureGeom.setCoordinates(coordinatess);
+        }
       }
     }
 
@@ -310,7 +309,6 @@ export default class extends olInteractionInteraction {
 
     this.set('drawing', false);
 
-    /** @type {DrawEvent} */
     const event = new ngeoCustomEvent('drawend', {feature: this.sketchFeature_});
     this.dispatchEvent(event);
   }
@@ -346,19 +344,21 @@ export default class extends olInteractionInteraction {
 
     if (this.type_ === 'LineString') {
       const sketchFeatureGeom = this.sketchFeature_.getGeometry();
-      console.assert(sketchFeatureGeom instanceof olGeomSimpleGeometry);
-      const coordinates = sketchFeatureGeom.getCoordinates();
-      coordinates.pop();
-      coordinates.push(center);
-      sketchFeatureGeom.setCoordinates(coordinates);
+      if (sketchFeatureGeom instanceof olGeomSimpleGeometry) {
+        const coordinates = sketchFeatureGeom.getCoordinates();
+        coordinates.pop();
+        coordinates.push(center);
+        sketchFeatureGeom.setCoordinates(coordinates);
+      }
     } else if (this.type_ === 'Polygon') {
       const sketchFeatureGeom = this.sketchFeature_.getGeometry();
-      console.assert(sketchFeatureGeom instanceof olGeomPolygon);
-      const coordinatess = sketchFeatureGeom.getCoordinates();
-      const coordinates = coordinatess[0];
-      coordinates.pop();
-      coordinates.push(center);
-      sketchFeatureGeom.setCoordinates([coordinates]);
+      if (sketchFeatureGeom instanceof olGeomPolygon) {
+        const coordinatess = sketchFeatureGeom.getCoordinates();
+        const coordinates = coordinatess[0];
+        coordinates.pop();
+        coordinates.push(center);
+        sketchFeatureGeom.setCoordinates([coordinates]);
+      }
     }
 
     const dirty = this.getDirty();
@@ -377,7 +377,7 @@ export default class extends olInteractionInteraction {
     if (sketchFeature || this.sketchPoints_.length > 0) {
       this.sketchFeature_ = null;
       this.sketchPoint_ = null;
-      this.overlay_.getSource().clear(true);
+      /** @type {olSourceVector} */(this.overlay_.getSource()).clear(true);
     }
     this.sketchPoints_ = [];
     this.set('dirty', false);
@@ -449,7 +449,7 @@ export default class extends olInteractionInteraction {
     if (this.sketchPoint_) {
       sketchFeatures.push(this.sketchPoint_);
     }
-    const overlaySource = this.overlay_.getSource();
+    const overlaySource = /** @type {olSourceVector} */(this.overlay_.getSource());
     overlaySource.clear(true);
     overlaySource.addFeatures(sketchFeatures);
     overlaySource.addFeatures(this.sketchPoints_);
@@ -463,8 +463,11 @@ export default class extends olInteractionInteraction {
   getSketchPointGeometry_() {
     console.assert(this.sketchPoint_, 'sketch point should be thruty');
     const geometry = this.sketchPoint_.getGeometry();
-    console.assert(geometry instanceof olGeomPoint);
-    return geometry;
+    if (geometry instanceof olGeomPoint) {
+      return geometry;
+    } else {
+      throw 'Wrong geometry type';
+    }
   }
 
   /**

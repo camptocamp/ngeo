@@ -39,7 +39,7 @@ import olFeature from 'ol/Feature.js';
  */
 export default class extends olInteractionInteraction {
   /**
-   * @param {olx.interaction.ModifyOptions} options Options.
+   * @param {import('ol/interaction/Modify.js').Options} options Options.
    */
   constructor(options) {
     super({
