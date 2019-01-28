@@ -174,12 +174,12 @@ DrawController.prototype.handleActiveChange = function(event) {
  */
 DrawController.prototype.handleDrawEnd = function(type, event) {
   let sketch;
+  // @ts-ignore: evt should be of type {import('ol/interaction/Draw.js').DrawEvent but he is private
   if (event.feature) {
-    // ol.interaction.Draw.Event
+    // @ts-ignore: evt should be of type {import('ol/interaction/Draw.js').DrawEvent but he is private
     sketch = event.feature;
   } else {
-    // MeasureEvent
-    sketch = event.detail.feature;
+    sketch = /** @type {import('ngeo/interaction/Measure.js').MeasureEvent} */(event).detail.feature;
   }
   console.assert(sketch);
 
