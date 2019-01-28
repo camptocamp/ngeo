@@ -695,7 +695,7 @@ Controller.prototype.downloadCsv = function() {
     return;
   }
 
-  /** @type {Array.<GridColumnDef>} */
+  /** @type {Array.<import('ngeo/download/Csv.js').GridColumnDef>} */
   const headers = [];
   let hasDistance = false;
   const firstPoint = this.profileData[0];
