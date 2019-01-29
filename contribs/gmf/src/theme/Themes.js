@@ -505,7 +505,7 @@ function getFlatInternalNodes(node, nodes) {
  * @param {import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer} node Layertree node.
  * @param {Array.<import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer>} nodes An array.
  */
-function getFlatNodes(node, nodes) {
+export function getFlatNodes(node, nodes) {
   // @ts-ignore: children only on GmfGroup
   const children = node.children;
   if (children !== undefined) {

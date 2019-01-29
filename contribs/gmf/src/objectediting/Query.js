@@ -1,8 +1,9 @@
 import angular from 'angular';
-import gmfThemeThemes from 'gmf/theme/Themes.js';
+import gmfThemeThemes, {getFlatNodes} from 'gmf/theme/Themes.js';
 import {WMSInfoFormat} from 'ngeo/datasource/OGC.js';
 import olFormatWMSGetFeatureInfo from 'ol/format/WMSGetFeatureInfo.js';
 import olSourceImageWMS from 'ol/source/ImageWMS.js';
+
 
 /**
  * A service that collects all queryable layer nodes from all themes, stores
@@ -90,7 +91,7 @@ ObjectEditingQuery.prototype.getQueryableLayersInfo = function() {
  *
  * @param {Array.<import('gmf/themes.js').GmfTheme>} themes List of theme nodes.
  * @param {import('gmf/themes.js').GmfOgcServers} ogcServers List of ogc servers
- * @return {Array.<ObjectEditingQueryableLayerInfo>} List of
+ * @return {Array.<import('gmf/objectediting/toolsComponent.js').ObjectEditingQueryableLayerInfo>} List of
  *     queryable layers information.
  * @export
  */
@@ -101,7 +102,6 @@ function getQueryableLayersInfoFromThemes(
   let theme;
   let group;
   let nodes;
-  let node;
 
   for (let i = 0, ii = themes.length; i < ii; i++) {
     theme = /** @type {import('gmf/themes.js').GmfTheme} */ (themes[i]);
@@ -114,23 +114,23 @@ function getQueryableLayersInfoFromThemes(
       }
 
       nodes = [];
-      gmfThemeThemes.getFlatNodes(group, nodes);
+      getFlatNodes(group, nodes);
 
       for (let k = 0, kk = nodes.length; k < kk; k++) {
-        node = /** @type {import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayerWMS} */ (
-          nodes[k]);
-
+        const nodeGroup = /** @type {import('gmf/themes.js').GmfGroup} */ (nodes[k]);
         // Skip groups within groups
-        if (node.children && node.children.length) {
+        if (nodeGroup.children && nodeGroup.children.length) {
           continue;
         }
 
-        if (node.childLayers &&
-          node.childLayers[0] &&
-          node.childLayers[0].queryable
+        const nodeWMS = /** @type {import('gmf/themes.js').GmfLayerWMS} */ (nodes[k]);
+
+        if (nodeWMS.childLayers &&
+          nodeWMS.childLayers[0] &&
+          nodeWMS.childLayers[0].queryable
         ) {
           queryableLayersInfo.push({
-            layerNode: node,
+            layerNode: nodeWMS,
             ogcServer: ogcServers[group.ogcServer]
           });
         }
@@ -148,7 +148,7 @@ function getQueryableLayersInfoFromThemes(
  * specific map to fetch a single feature. If no feature is found, a `null`
  * value is returned.
  *
- * @param {ObjectEditingQueryableLayerInfo} layerInfo Queryable layer
+ * @param {import('gmf/objectediting/toolsComponent.js').ObjectEditingQueryableLayerInfo} layerInfo Queryable layer
  *     information.
  * @param {import("ol/coordinate.js").Coordinate} coordinate Coordinate.
  * @param {import("ol/Map.js").default} map Map.
@@ -170,6 +170,7 @@ ObjectEditingQuery.prototype.getFeatureInfo = function(layerInfo, coordinate, ma
 
   const wmsSource = new olSourceImageWMS({
     url: ogcServer.url,
+    projection: undefined,
     params: {
       layers: layersParam
     }

@@ -92,16 +92,11 @@ ObjecteditingManagerService.prototype.getFeature = function() {
   if (!this.getFeatureDefered_) {
     this.getFeatureDefered_ = this.q_.defer();
 
-    const geomType = this.ngeoLocation_.getParam(
-      ObjecteditingParam.GEOM_TYPE);
-    const id = this.ngeoLocation_.getParam(
-      ObjecteditingParam.ID);
-    const layer = this.ngeoLocation_.getParam(
-      ObjecteditingParam.LAYER);
-    const property = this.ngeoLocation_.getParam(
-      ObjecteditingParam.PROPERTY);
-    const theme = this.ngeoLocation_.getParam(
-      ObjecteditingParam.THEME);
+    const geomType = this.ngeoLocation_.getParam(ObjecteditingParam.GEOM_TYPE);
+    const id = this.ngeoLocation_.getParam(ObjecteditingParam.ID);
+    const layer = this.ngeoLocation_.getParam(ObjecteditingParam.LAYER);
+    const property = this.ngeoLocation_.getParam(ObjecteditingParam.PROPERTY);
+    const theme = this.ngeoLocation_.getParam(ObjecteditingParam.THEME);
 
     if (geomType && id && layer && property && theme) {
       this.gmfEditFeature_.getFeaturesWithComparisonFilters(

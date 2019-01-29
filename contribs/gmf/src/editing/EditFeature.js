@@ -71,13 +71,11 @@ EditingEditFeature.prototype.getFeaturesInExtent = function(layerIds, extent) {
  * define the url to the GMF Protocol (layers) a dummy promise returns an
  * empty array of features if the url is not defined.
  *
- * @param {!Array.<number>} layerIds List of layer ids to get the features from.
+ * @param {!Array.<string>} layerIds List of layer ids to get the features from.
  * @param {!Array.<!ComparisonFilter>} filters List of comparison filters
  * @return {angular.IPromise} Promise.
  */
-EditingEditFeature.prototype.getFeaturesWithComparisonFilters = function(
-  layerIds, filters
-) {
+EditingEditFeature.prototype.getFeaturesWithComparisonFilters = function(layerIds, filters) {
   const properties = [];
   const params = {};
 

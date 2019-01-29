@@ -679,11 +679,11 @@ export class ExternalDatSourcesManager {
  * using the `ol.getUid` method, plus a million.
  *
  * @param {!Object} layer WMS/WMTS Capability Layer object.
- * @return {number} Data source id.
+ * @return {string} Data source id.
  * @export
  */
 function getId(layer) {
-  return olUtilGetUid(layer) + 1000000;
+  return `${olUtilGetUid(layer)}+1000000`;
 }
 
 

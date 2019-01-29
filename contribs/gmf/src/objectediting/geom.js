@@ -1,4 +1,4 @@
-import {toXY as coordinateToXY} from 'gmf/objectediting/coordinate.js';
+import {coordinatesToXY0, coordinatesToXY1, coordinatesToXY2, coordinatesToXY3} from 'gmf/objectediting/coordinate.js';
 import olGeomLineString from 'ol/geom/LineString.js';
 import olGeomMultiLineString from 'ol/geom/MultiLineString.js';
 import olGeomMultiPoint from 'ol/geom/MultiPoint.js';
@@ -35,21 +35,17 @@ export function isEmpty(geom) {
  */
 export function toXY(geom) {
   if (geom instanceof olGeomPoint) {
-    geom.setCoordinates(coordinateToXY(geom.getCoordinates(), 0)
-    );
-  } else if (geom instanceof olGeomMultiPoint ||
-             geom instanceof olGeomLineString
-  ) {
-    geom.setCoordinates(coordinateToXY(geom.getCoordinates(), 1)
-    );
-  } else if (geom instanceof olGeomMultiLineString ||
-             geom instanceof olGeomPolygon
-  ) {
-    geom.setCoordinates(coordinateToXY(geom.getCoordinates(), 2)
-    );
+    geom.setCoordinates(coordinatesToXY0(geom.getCoordinates()));
+  } else if (geom instanceof olGeomMultiPoint) {
+    geom.setCoordinates(coordinatesToXY1(geom.getCoordinates()));
+  } else if (geom instanceof olGeomLineString) {
+    geom.setCoordinates(coordinatesToXY1(geom.getCoordinates()));
+  } else if (geom instanceof olGeomMultiLineString) {
+    geom.setCoordinates(coordinatesToXY2(geom.getCoordinates()));
+  } else if (geom instanceof olGeomPolygon) {
+    geom.setCoordinates(coordinatesToXY2(geom.getCoordinates()));
   } else if (geom instanceof olGeomMultiPolygon) {
-    geom.setCoordinates(coordinateToXY(geom.getCoordinates(), 3)
-    );
+    geom.setCoordinates(coordinatesToXY3(geom.getCoordinates()));
   } else {
     throw 'gmf.objectediting.geom.toXY - unsupported geometry type';
   }
