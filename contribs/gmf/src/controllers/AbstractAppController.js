@@ -771,7 +771,7 @@ AbstractAppController.prototype.initLanguage = function() {
 
 
 /**
- * @param {import(gmf/themes.js).GmfTheme} theme Theme.
+ * @param {import('gmf/themes.js').GmfTheme} theme Theme.
  * @private
  */
 AbstractAppController.prototype.setDefaultBackground_ = function(theme) {

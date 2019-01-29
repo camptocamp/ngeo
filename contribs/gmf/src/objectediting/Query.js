@@ -88,8 +88,8 @@ ObjectEditingQuery.prototype.getQueryableLayersInfo = function() {
  * A list of OGC servers is given in order to bind each queryable layer node
  * to its associated server and be able to build requests.
  *
- * @param {Array.<import(gmf/themes.js).GmfTheme>} themes List of theme nodes.
- * @param {import(gmf/themes.js).GmfOgcServers} ogcServers List of ogc servers
+ * @param {Array.<import('gmf/themes.js').GmfTheme>} themes List of theme nodes.
+ * @param {import('gmf/themes.js').GmfOgcServers} ogcServers List of ogc servers
  * @return {Array.<ObjectEditingQueryableLayerInfo>} List of
  *     queryable layers information.
  * @export
@@ -104,9 +104,9 @@ function getQueryableLayersInfoFromThemes(
   let node;
 
   for (let i = 0, ii = themes.length; i < ii; i++) {
-    theme = /** @type {import(gmf/themes.js).GmfTheme} */ (themes[i]);
+    theme = /** @type {import('gmf/themes.js').GmfTheme} */ (themes[i]);
     for (let j = 0, jj = theme.children.length; j < jj; j++) {
-      group = /** @type {import(gmf/themes.js).GmfGroup} */ (theme.children[j]);
+      group = /** @type {import('gmf/themes.js').GmfGroup} */ (theme.children[j]);
 
       // Skip groups that don't have an ogcServer set
       if (!group.ogcServer) {
@@ -117,7 +117,7 @@ function getQueryableLayersInfoFromThemes(
       gmfThemeThemes.getFlatNodes(group, nodes);
 
       for (let k = 0, kk = nodes.length; k < kk; k++) {
-        node = /** @type {import(gmf/themes.js).GmfGroup|import(gmf/themes.js).GmfLayerWMS} */ (
+        node = /** @type {import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayerWMS} */ (
           nodes[k]);
 
         // Skip groups within groups

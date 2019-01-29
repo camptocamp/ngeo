@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import ngeoDatasourceModule from 'ngeo/datasource/module.js';
 import ngeoDownloadModule from 'ngeo/download/module.js';

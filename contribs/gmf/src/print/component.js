@@ -542,13 +542,13 @@ class Controller {
     this.capabilities_;
 
     /**
-     * @type {import(gmf/themes.js).GmfOgcServers}
+     * @type {import('gmf/themes.js').GmfOgcServers}
      * @private
      */
     this.ogcServers_;
 
     /**
-     * @type {Array.<import(gmf/themes.js).GmfTheme>}
+     * @type {Array.<import('gmf/themes.js').GmfTheme>}
      * @private
      */
     this.currentThemes_;

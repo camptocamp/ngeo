@@ -55,7 +55,7 @@
  * @property {!GmfMetaData} metadata (GmfBaseNode)
  * @property {string} name (GmfBaseNode)
  * @property {!Array.<!GmfGroup|!GmfLayer>} children
- * @property {!Dimensions} dimensions The dimensions managed by the OpenLayers layer, if the value is null we will take the dimension from the application.
+ * @property {!import('ngeo/datasource/OGC.js').Dimensions} dimensions The dimensions managed by the OpenLayers layer, if the value is null we will take the dimension from the application.
  * This is present only on non mixed first level group.
  * @property {boolean} mixed A mixed group is a group on which one the layers comes from different sources,
  * then all the sub GeoMapFish layers (leaf) will be an OpenLayers layer.
@@ -78,9 +78,9 @@
  * @property {number} id (GmfBaseNode)
  * @property {!GmfMetaData} metadata (GmfBaseNode)
  * @property {string} name (GmfBaseNode)
- * @property {!Dimensions} dimensions The dimensions managed by the layer, if the value is null we will take the dimension from the application.
+ * @property {!import('ngeo/datasource/OGC.js').Dimensions} dimensions The dimensions managed by the layer, if the value is null we will take the dimension from the application.
  * Present only on layer in a mixed group.
- * @property {!DimensionsFiltersConfig} dimensionsFilters The dimensions applied by filters on the layer configuration, if the value
+ * @property {!import('ngeo/datasource/OGC.js').DimensionsFiltersConfig} dimensionsFilters The dimensions applied by filters on the layer configuration, if the value
  * is null we will take the dimension from the application.
  * @property {boolean} [editable]
  * @property {string} [style]
@@ -94,8 +94,8 @@
  * @property {number} id (GmfBaseNode)
  * @property {!GmfMetaData} metadata (GmfBaseNode)
  * @property {string} name (GmfBaseNode)
- * @property {!Dimensions} dimensions (GmfLayer)
- * @property {!DimensionsFiltersConfig} dimensionsFilters (GmfLayer)
+ * @property {!import('ngeo/datasource/OGC.js').Dimensions} dimensions (GmfLayer)
+ * @property {!import('ngeo/datasource/OGC.js').DimensionsFiltersConfig} dimensionsFilters (GmfLayer)
  * @property {boolean} [editable] (GmfLayer)
  * @property {string} [style] (GmfLayer)
  * @property {string} type (GmfLayer)
@@ -115,8 +115,8 @@
  * @property {number} id (GmfBaseNode)
  * @property {!GmfMetaData} metadata (GmfBaseNode)
  * @property {string} name (GmfBaseNode)
- * @property {!Dimensions} dimensions (GmfLayer)
- * @property {!DimensionsFiltersConfig} dimensionsFilters (GmfLayer)
+ * @property {!import('ngeo/datasource/OGC.js').Dimensions} dimensions (GmfLayer)
+ * @property {!import('ngeo/datasource/OGC.js').DimensionsFiltersConfig} dimensionsFilters (GmfLayer)
  * @property {boolean} [editable] (GmfLayer)
  * @property {string} [style] (GmfLayer)
  * @property {string} type (GmfLayer)
@@ -233,3 +233,5 @@
  * @property {string} label
  * @property {string} value
  */
+
+export default null;

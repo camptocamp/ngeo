@@ -1,20 +1,13 @@
-/**
- */
 import angular from 'angular';
 
 import ngeoDrawController from 'ngeo/draw/Controller.js';
-
 import ngeoDrawPoint from 'ngeo/draw/point.js';
-
 import ngeoDrawRectangle from 'ngeo/draw/rectangle.js';
-
 import ngeoDrawText from 'ngeo/draw/text.js';
-
 import ngeoMeasureArea from 'ngeo/measure/area.js';
-
 import ngeoMeasureAzimut from 'ngeo/measure/azimut.js';
-
 import ngeoMeasureLength from 'ngeo/measure/length.js';
+
 
 /**
  * @type {!angular.IModule}

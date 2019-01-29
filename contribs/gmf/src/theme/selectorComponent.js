@@ -135,7 +135,7 @@ function Controller($scope, gmfThemeManager, gmfThemes) {
   this.themes;
 
   /**
-   * @type {Function|undefined}
+   * @type {function(import('gmf/themes.js').GmfTheme): boolean|undefined}
    * @export
    */
   this.filter;
@@ -166,7 +166,7 @@ Controller.prototype.setThemes_ = function() {
 
 
 /**
- * @param {import(gmf/themes.js).GmfTheme} theme Theme.
+ * @param {import('gmf/themes.js').GmfTheme} theme Theme.
  * @param {boolean=} opt_silent if true it will be no user message if
  *     the theme should be added but it's already added.
  * @export

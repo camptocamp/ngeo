@@ -166,7 +166,7 @@ export class DatasourceManager {
 
     /**
      * A reference to the dimensions object.
-     * @type {Dimensions|undefined}
+     * @type {import('ngeo/datasource/OGC.js').Dimensions|undefined}
      * @private
      */
     this.dimensions_;
@@ -218,7 +218,7 @@ export class DatasourceManager {
   }
 
   /**
-   * @param {!Dimensions} dimensions A reference to the dimensions
+   * @param {!import('ngeo/datasource/OGC.js').Dimensions} dimensions A reference to the dimensions
    *     object to keep a reference of in this service.
    */
   setDimensions(dimensions) {
@@ -345,7 +345,7 @@ export class DatasourceManager {
       // (2) Collect 'leaf' treeCtrls
       const newTreeCtrls = [];
       const visitor = (treeCtrls, treeCtrl) => {
-        const node = /** @type {!import(gmf/themes.js).GmfGroup|!import(gmf/themes.js).GmfLayer} */ (
+        const node = /** @type {!import('gmf/themes.js').GmfGroup|!import('gmf/themes.js').GmfLayer} */ (
           treeCtrl.node);
         const children = node.children;
         if (!children) {
@@ -406,10 +406,10 @@ export class DatasourceManager {
    *
    * Once a data source is created, it is added to the data sources cache.
    *
-   * @param {import(gmf/themes.js).GmfGroup} firstLevelGroup The first level group node.
-   * @param {!import(gmf/themes.js).GmfGroup|!import(gmf/themes.js).GmfLayer} node The node, which
+   * @param {import('gmf/themes.js').GmfGroup} firstLevelGroup The first level group node.
+   * @param {!import('gmf/themes.js').GmfGroup|!import('gmf/themes.js').GmfLayer} node The node, which
    *     may have children or not.
-   * @param {!import(gmf/themes.js).GmfOgcServers} ogcServers OGC servers.
+   * @param {!import('gmf/themes.js').GmfOgcServers} ogcServers OGC servers.
    * @private
    */
   createDataSource_(firstLevelGroup, node, ogcServers) {
@@ -428,7 +428,7 @@ export class DatasourceManager {
     }
 
     // From there on, the node is a layer node.
-    const gmfLayer = /** @type import(gmf/themes.js).GmfLayer */ (node);
+    const gmfLayer = /** @type import('gmf/themes.js').GmfLayer */ (node);
 
     // (2) Skip layer node if a data source with the same id exists
     const id = olUtilGetUid(gmfLayer);
@@ -450,7 +450,7 @@ export class DatasourceManager {
 
     if (ogcType === ThemeNodeType.WMTS) {
       // (3) Manage WMTS
-      const gmfLayerWMTS = /** @type {import(gmf/themes.js).GmfLayerWMTS} */ (gmfLayer);
+      const gmfLayerWMTS = /** @type {import('gmf/themes.js').GmfLayerWMTS} */ (gmfLayer);
 
       // Common options for WMTS
       wmtsLayer = gmfLayerWMTS.layer;
@@ -478,7 +478,7 @@ export class DatasourceManager {
       ogcImageType = gmfLayerWMTS.imageType;
     } else if (ogcType === ThemeNodeType.WMS) {
       // (4) Manage WMS
-      const gmfLayerWMS = /** @type {import(gmf/themes.js).GmfLayerWMS} */ (gmfLayer);
+      const gmfLayerWMS = /** @type {import('gmf/themes.js').GmfLayerWMS} */ (gmfLayer);
 
       // Common options for WMS
       maxResolution = gmfLayerWMS.maxResolutionHint;
