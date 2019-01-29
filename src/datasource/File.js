@@ -7,10 +7,19 @@ import olSourceVector from 'ol/source/Vector.js';
 /**
  * The options required to create a `File`.
  *
- * @typedef {Object} DataSourceOptions
+ * extends DataSourceOptions
+ * @typedef {Object} FileOptions
  * @property {import("ol/Collection.js").default.<!import("ol/Feature.js").default>} [features] Collection of `import("ol/Feature.js").default` objects.
- * @extends DataSourceOptions
- */
+ * @property {Array.<import('ngeo/format/Attribute.js').Attribute>} [attributes] (DataSourceOptions)
+ * @property {import('ngeo/datasource/OGC.js').DimensionsFiltersConfig} [dimensionsFiltersConfig] (DataSourceOptions)
+ * @property {number} id (DataSourceOptions)
+ * @property {string} [identifierAttribute] (DataSourceOptions)
+ * @property {boolean} [inRange] (DataSourceOptions)
+ * @property {number} [minResolution] (DataSourceOptions)
+ * @property {number} [maxResolution] (DataSourceOptions)
+ * @property {string} name (DataSourceOptions)
+ * @property {boolean} [visible=false] (DataSourceOptions)
+*/
 
 export default class extends ngeoDatasourceDataSource {
 

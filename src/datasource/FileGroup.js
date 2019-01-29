@@ -5,8 +5,11 @@ import ngeoDatasourceGroup from 'ngeo/datasource/Group.js';
 /**
  * The options required to create a `FileGroup`.
  *
- * @typedef {Object} GroupOptions
+ * extends GroupOptions
+ * @typedef {Object} FileGroupOptions
  * @property {!angular.auto.IInjectorService} injector Angular main injector.
+ * @property {!Array.<!import('ngeo/datasource/DataSource.js').default>} dataSources (GroupOptions)
+ * @property {string} title (GroupOptions)
  */
 
 

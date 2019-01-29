@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import olCollection from 'ol/Collection.js';
 

@@ -52,7 +52,7 @@ class DataSource {
      * required for the `inRange` property to be dynamic, otherwise its
      * value is always `true` by default.
      *
-     * The synchronization is made in the `ngeo.datasource.DataSources`
+     * The synchronization is made in the `import('ngeo/datasource/DataSource.js').DataSources`
      * service.
      *
      * @type {boolean}

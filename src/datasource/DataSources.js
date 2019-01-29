@@ -24,7 +24,7 @@ export class DataSource {
   constructor() {
 
     /**
-     * @type {DataSources}
+     * @type {import('ngeo/datasource/DataSource.js').DataSources}
      * @private
      */
     this.collection_ = new olCollection();
@@ -105,10 +105,11 @@ export class DataSource {
    */
   handleViewResolutionChange_(evt) {
     const view = evt.target;
-    console.assert(view instanceof olView);
-    const resolution = view.getResolution();
-    console.assert(typeof resolution == 'number');
-    this.syncDataSourcesToResolution_(resolution);
+    if (view instanceof olView) {
+      const resolution = view.getResolution();
+      console.assert(typeof resolution == 'number');
+      this.syncDataSourcesToResolution_(resolution);
+    }
   }
 
   /**

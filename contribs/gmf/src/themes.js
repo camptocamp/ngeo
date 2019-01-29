@@ -1,17 +1,5 @@
 /**
- * Externs for the GeoMapFish "themes" web service.
- */
-
-/**
- * @typedef {Object} DimensionFilterConfig
- * @property {string} field
- * @property {string} [value]
- */
-
-
-/**
- * Dimensions applied by filters configuration.
- * @typedef {Object.<string, DimensionFilterConfig>} DimensionsFiltersConfig
+ * The GeoMapFish "themes" web service.
  */
 
 

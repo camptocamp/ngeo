@@ -72,7 +72,7 @@ class Controller {
     this.scope_ = $scope;
 
     /**
-     * @type {!DataSources}
+     * @type {!import('ngeo/datasource/DataSource.js').DataSources}
      * @private
      */
     this.dataSources_ = ngeoDataSources.collection;
@@ -105,7 +105,7 @@ class Controller {
   }
 
   /**
-   * Remove all data sources from the `ngeo.datasource.DataSources` collection, which
+   * Remove all data sources from the `import('ngeo/datasource/DataSource.js').DataSources` collection, which
    * will automatically remove them from the Group. The group itself
    * is going to be removed as well, destroying this component in the process.
    * @export
@@ -118,7 +118,7 @@ class Controller {
 
   /**
    * @param {!import("ngeo/datasource/DataSource.js").default} dataSource Data source to remove from
-   *     the `ngeo.DataSources` collection.
+   *     the `import('ngeo/datasource/DataSource.js').DataSources` collection.
    * @export
    */
   removeDataSource(dataSource) {

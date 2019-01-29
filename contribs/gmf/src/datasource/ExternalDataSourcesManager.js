@@ -70,7 +70,7 @@ export class ExternalDatSourcesManager {
     /**
      * The collection of DataSources from ngeo. When this service creates
      * a data source, its gets added to that collection.
-     * @type {!DataSources}
+     * @type {!import('ngeo/datasource/DataSource.js').DataSources}
      * @private
      */
     this.dataSources_ = ngeoDataSources.collection;
@@ -374,7 +374,7 @@ export class ExternalDatSourcesManager {
 
 
     // (2) Add data source in WMS group, unless it's already in there.
-    //     Will also add the data source to the `ngeo.DataSources` collection.
+    //     Will also add the data source to the `import('ngeo/datasource/DataSource.js').DataSources` collection.
     //     If the group is created, its inner OL layer is also added to the map.
     let wmsGroup = this.getWMSGroup(url);
     if (wmsGroup) {
