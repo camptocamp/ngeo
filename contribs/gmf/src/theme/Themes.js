@@ -464,7 +464,7 @@ export function findGroupByName(themes, name) {
  * @return {T} The object or null.
  * @template T
  */
-function findObjectByName(objects, objectName) {
+export function findObjectByName(objects, objectName) {
   return olArray.find(objects, object => object['name'] === objectName);
 }
 

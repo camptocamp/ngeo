@@ -4,12 +4,12 @@ import {DATALAYERGROUP_NAME} from 'gmf/index.js';
 
 import gmfAuthenticationService from 'gmf/authentication/Service.js';
 
-import gmfThemeThemes from 'gmf/theme/Themes.js';
+import gmfThemeThemes, {findGroupByLayerNodeName, findObjectByName} from 'gmf/theme/Themes.js';
 import ngeoMapLayerHelper from 'ngeo/map/LayerHelper.js';
 import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr.js';
 import ngeoMiscFeatureHelper, {getFilteredFeatureValues} from 'ngeo/misc/FeatureHelper.js';
 import ngeoPrintService from 'ngeo/print/Service.js';
-import ngeoPrintUtils from 'ngeo/print/Utils.js';
+import ngeoPrintUtils, {INCHES_PER_METER, DOTS_PER_INCH} from 'ngeo/print/Utils.js';
 import ngeoQueryMapQuerent from 'ngeo/query/MapQuerent.js';
 import * as olEvents from 'ol/events.js';
 import olLayerImage from 'ol/layer/Image.js';
@@ -19,6 +19,15 @@ import olMap from 'ol/Map.js';
 import * as olMath from 'ol/math.js';
 
 import 'bootstrap/js/src/dropdown.js';
+
+
+/**
+ * @typedef {Object} PrintSimpleAttributes
+ * @property {string|boolean|number} [default] Default value of the form field.
+ * @property {string} name Name of the form field.
+ * @property {string} value
+ * @property {string} type Type of the field. Can be 'String', 'Boolean' or 'Number'.
+ */
 
 
 /**
@@ -131,8 +140,14 @@ const PrintStateEnum = {
 };
 
 
+/**
+ * @typedef {Object} PrintState
+ * @property {PrintStateEnum} state
+ */
+
+
 module.value('gmfPrintState', {
-  'state': PrintStateEnum.CAPABILITIES_NOT_LOADED
+  state: PrintStateEnum.CAPABILITIES_NOT_LOADED
 });
 
 
@@ -244,13 +259,13 @@ class Controller {
    * @param {import("ngeo/map/LayerHelper.js").LayerHelper} ngeoLayerHelper The ngeo Layer Helper service.
    * @param {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr Ngeo Feature Overlay
    *     Manager service.
-   * @param {import("ngeo/print/Utils.js").default} ngeoPrintUtils The ngeo PrintUtils service.
-   * @param {CreatePrint} ngeoCreatePrint The ngeo Create Print function.
+   * @param {import("ngeo/print/Utils.js").PrintUtils} ngeoPrintUtils The ngeo PrintUtils service.
+   * @param {import("ngeo/print/Service.js").CreatePrint} ngeoCreatePrint The ngeo Create Print function.
    * @param {string} gmfPrintUrl A MapFishPrint url.
    * @param {import("gmf/authentication/Service.js").AuthenticationService} gmfAuthenticationService The authentication service.
    * @param {import('ngeo/query/MapQuerent.js').QueryResult} ngeoQueryResult ngeo query result.
    * @param {angular.IFilterService} $filter Angular $filter service.
-   * @param {import("gmf/print/component.js").PrintStateEnum} gmfPrintState GMF print state.
+   * @param {PrintState} gmfPrintState GMF print state.
    * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes The gmf Themes service.
    * @private
    * @ngInject
@@ -263,7 +278,7 @@ class Controller {
     $filter, gmfPrintState, gmfThemes) {
 
     /**
-     * @type {import("gmf/print/component.js").default.PrintStateEnum}
+     * @type {PrintState}
      * @private
      */
     this.gmfPrintState_ = gmfPrintState;
@@ -299,7 +314,7 @@ class Controller {
     this.fieldValues = {};
 
     /**
-     * @type {Array.<string>}
+     * @type {Array.<PrintSimpleAttributes>}
      * @export
      */
     this.attributesOut;
@@ -347,13 +362,13 @@ class Controller {
     this.featureOverlayLayer_ = ngeoFeatureOverlayMgr.getLayer();
 
     /**
-     * @type {import("ngeo/print/Utils.js").default}
+     * @type {import("ngeo/print/Utils.js").PrintUtils}
      * @private
      */
     this.ngeoPrintUtils_ = ngeoPrintUtils;
 
     /**
-     * @type {import("ngeo/print/Service.js").default}
+     * @type {import("ngeo/print/Service.js").PrintService}
      * @private
      */
     this.ngeoPrint_ = ngeoCreatePrint(gmfPrintUrl);
@@ -531,7 +546,7 @@ class Controller {
     });
 
     /**
-     * @type {function(import("ol/render/Event.js").default)}
+     * @type {function((Event|import("ol/events/Event.js").default)): (void|boolean)}
      */
     this.postcomposeListener_;
 
@@ -606,7 +621,7 @@ class Controller {
 
 
   /**
-   * @param {olx.FrameState} frameState Frame state.
+   * @param {import('ol/PluggableMap.js').FrameState} frameState Frame state.
    * @return {number} Scale of the map to print.
    */
   getScaleFn(frameState) {
@@ -744,7 +759,7 @@ class Controller {
       this.layoutInfo.formats[format] = true;
     });
 
-    this.attributesOut = this.layoutInfo['simpleAttributes'];
+    this.attributesOut = this.layoutInfo.simpleAttributes;
 
     // Force the update of the mask
     this.map.render();
@@ -797,11 +812,11 @@ class Controller {
           }
         });
 
-        this.layoutInfo.simpleAttributes.push(/** PrintSimpleAttributes */ ({
+        this.layoutInfo.simpleAttributes.push({
           name,
           type,
           value
-        }));
+        });
       }
     });
   }
@@ -852,7 +867,7 @@ class Controller {
    * @private
    */
   onPointerDrag_(e) {
-    const originalEvent = e.originalEvent;
+    const originalEvent = /** @type {KeyboardEvent} */(e.originalEvent);
     const mapCenter = this.map.getView().getCenter();
     if (this.active && originalEvent.altKey && originalEvent.shiftKey && mapCenter) {
       const center = this.map.getPixelFromCoordinate(mapCenter);
@@ -921,8 +936,8 @@ class Controller {
 
     if (this.layoutInfo.legend) {
       const center = this.map.getView().getCenter();
-      const deltaX = this.paperSize_[0] * scale / 2 / ngeoPrintUtils.INCHES_PER_METER_ / ngeoPrintUtils.DOTS_PER_INCH_;
-      const deltaY = this.paperSize_[1] * scale / 2 / ngeoPrintUtils.INCHES_PER_METER_ / ngeoPrintUtils.DOTS_PER_INCH_;
+      const deltaX = this.paperSize_[0] * scale / 2 / INCHES_PER_METER / DOTS_PER_INCH;
+      const deltaY = this.paperSize_[1] * scale / 2 / INCHES_PER_METER / DOTS_PER_INCH;
       const bbox = [
         center[0] - deltaX,
         center[1] - deltaY,
@@ -974,10 +989,11 @@ class Controller {
 
       new_ol_layers.push(layer);
     }
-    map.setLayerGroup(new olLayerGroup({
+    const group = new olLayerGroup({
       layers: new_ol_layers,
-      'printNativeAngle': print_native_angle
-    }));
+    });
+    group.set('printNativeAngle', print_native_angle);
+    map.setLayerGroup(group);
 
     const spec = this.ngeoPrint_.createSpec(map, scale, this.layoutInfo.dpi,
       this.layoutInfo.layout, format, customAttributes);
@@ -1027,7 +1043,7 @@ class Controller {
 
 
   /**
-   * @param {import("gmf/print/component.js").default.PrintStateEnum=} opt_printState the print state.
+   * @param {PrintStateEnum=} opt_printState the print state.
    * @private
    */
   resetPrintStates_(opt_printState) {
@@ -1160,7 +1176,7 @@ class Controller {
   /**
    * @param {number} scale The scale to get the legend (for wms layers only).
    * @param {number} dpi The DPI.
-   * @param {Array.number} bbox The bbox.
+   * @param {Array<number>} bbox The bbox.
    * @return {Object?} Legend object for print report or null.
    * @private
    */
@@ -1201,17 +1217,17 @@ class Controller {
                 scale, undefined, undefined, undefined, source.serverType_, dpi,
                 this.gmfLegendOptions_.useBbox ? bbox : undefined,
                 this.map.getView().getProjection().getCode(),
-                this.gmfLegendOptions_.params[layer.getSource().serverType_]
+                this.gmfLegendOptions_.params[layer.getSource().get('serverType_')]
               );
             }
             // Don't add classes without legend url or from layers without any
             // active name.
             if (icons && name.length !== 0) {
               classes.push(Object.assign({
-                'name': this.gmfLegendOptions_.label[layer.getSource().serverType_] === false ? '' :
+                'name': this.gmfLegendOptions_.label[layer.getSource().get('serverType_')] === false ? '' :
                   gettextCatalog.getString(name),
                 'icons': [icons]
-              }, layer.getSource().serverType_ === 'qgis' ? {
+              }, layer.getSource().get('serverType_') === 'qgis' ? {
                 'dpi': dpi,
               } : {}));
             }
@@ -1238,10 +1254,10 @@ class Controller {
    * @private
    */
   getMetadataLegendImage_(layerName) {
-    const groupNode = gmfThemeThemes.findGroupByLayerNodeName(this.currentThemes_, layerName);
+    const groupNode = findGroupByLayerNodeName(this.currentThemes_, layerName);
     let node;
     if (groupNode && groupNode.children) {
-      node = gmfThemeThemes.findObjectByName(groupNode.children, layerName);
+      node = findObjectByName(groupNode.children, layerName);
     }
     let legendImage;
     if (node && node.metadata) {
