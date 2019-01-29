@@ -61,7 +61,7 @@ import olFormatWFS from 'ol/format/WFS.js';
 /**
  * @typedef {Object} WfsPermalinkFilter
  * @property {string} property
- * @property {string|Array.<string>} condition
+ * @property {Array.<string>} condition
  */
 
 /**

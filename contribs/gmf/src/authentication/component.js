@@ -139,7 +139,7 @@ class AuthenticationController {
    * @param {!JQuery} $element Element.
    * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
    * @param {import("gmf/authentication/Service.js").AuthenticationService} gmfAuthenticationService GMF Authentication service
-   * @param {User} gmfUser User.
+   * @param {import('gmf/authentication/Service.js').User} gmfUser User.
    * @param {import("ngeo/message/Notification.js").MessageNotification} ngeoNotification Ngeo notification service.
    * @ngInject
    * @ngdoc controller
@@ -154,7 +154,7 @@ class AuthenticationController {
     this.$element_ = $element;
 
     /**
-     * @type {User}
+     * @type {import('gmf/authentication/Service.js').User}
      * @export
      */
     this.gmfUser = gmfUser;

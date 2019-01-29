@@ -1,6 +1,3 @@
-/**
- */
-
 import angular from 'angular';
 import appURL from './url.js';
 import './editfeatureselector.css';
@@ -54,7 +51,7 @@ module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
  * @param {!angular.IScope} $scope Angular scope.
  * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes The gmf themes service.
  * @param {import("gmf/layertree/TreeManager.js").LayertreeTreeManager} gmfTreeManager gmf Tree Manager service.
- * @param {User} gmfUser User.
+ * @param {import('gmf/authentication/Service.js').User} gmfUser User.
  * @param {import("ngeo/misc/FeatureHelper.js").FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
  * @param {import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
  *     service.
@@ -71,7 +68,7 @@ function MainController($scope, gmfThemes, gmfTreeManager, gmfUser,
   this.scope_ = $scope;
 
   /**
-   * @type {User}
+   * @type {import('gmf/authentication/Service.js').User}
    * @export
    */
   this.gmfUser = gmfUser;

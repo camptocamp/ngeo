@@ -249,8 +249,7 @@ export class ExternalDatSourcesManager {
   }
 
   /**
-   * @return {!Array.<!import("ngeo/datasource/OGCGroup.js").default>} List of groups for WMTS data
-   *     sources.
+   * @return {!Array.<!import("ngeo/datasource/OGCGroup.js").default>} List of groups for WMTS data sources.
    * @export
    */
   get wmtsGroups() {

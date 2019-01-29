@@ -425,7 +425,7 @@ export function AbstractAppController(config, map, $scope, $injector) {
   this.drawProfilePanelActive = false;
 
   /**
-   * @type {User}
+   * @type {import('gmf/authentication/Service.js').User}
    * @export
    */
   this.gmfUser = $injector.get('gmfUser');

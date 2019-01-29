@@ -37,8 +37,7 @@ import olLayerGroup from 'ol/layer/Group.js';
 /**
  * Configuration options for the permalink service.
  * @typedef {Object} PermalinkOptions
- * @property crosshairStyle {Array<(null|import("ol/style/Style.js").default)>|null|
- * import("ol/FeatureStyleFunction.js").default|import("ol/style/Style.js").default|undefined} An alternate
+ * @property {import("ol/style/Style.js").StyleLike} [crosshairStyle] An alternate
  * style for the crosshair feature added by the permalink service.
  * @property {boolean} [crosshairEnabledByDefault] Display the crosshair, gets overridden by the
  * `map_crosshair` parameter. Default is `false`.
@@ -350,8 +349,7 @@ export function PermalinkService($q, $timeout, $rootScope, $injector, ngeoDeboun
    * The options to configure the gmf permalink service with.
    * @type {!PermalinkOptions}
    */
-  const gmfPermalinkOptions = $injector.has('gmfPermalinkOptions') ?
-    $injector.get('gmfPermalinkOptions') : {};
+  const gmfPermalinkOptions = $injector.has('gmfPermalinkOptions') ? $injector.get('gmfPermalinkOptions') : {};
   if (gmfPermalinkOptions.useLocalStorage === true) {
     // localStorage is deactivated by default
     this.ngeoStateManager_.setUseLocalStorage(true);
@@ -374,7 +372,7 @@ export function PermalinkService($q, $timeout, $rootScope, $injector, ngeoDeboun
    * @private
    */
   this.gmfExternalDataSourcesManager_ = $injector.has('gmfExternalDataSourcesManager') ?
-      $injector.get('gmfExternalDataSourcesManager') : null;
+    $injector.get('gmfExternalDataSourcesManager') : null;
 
   /**
    * @type {?import("gmf/theme/Themes.js").ThemesService}
@@ -416,13 +414,13 @@ export function PermalinkService($q, $timeout, $rootScope, $injector, ngeoDeboun
   this.ngeoLocation_ = ngeoLocation;
 
   /**
-   * @type {?import("ngeo/statemanager/WfsPermalink.js").default}
+   * @type {?import("ngeo/statemanager/WfsPermalink.js").WfsPermalinkService}
    * @private
    */
   this.ngeoWfsPermalink_ = $injector.has('ngeoWfsPermalink') ? $injector.get('ngeoWfsPermalink') : null;
 
   /**
-   * @type {?User}
+   * @type {?import('gmf/authentication/Service.js').User}
    * @export
    */
   this.gmfUser_ = $injector.has('gmfUser') ? $injector.get('gmfUser') : null;
@@ -460,7 +458,7 @@ export function PermalinkService($q, $timeout, $rootScope, $injector, ngeoDeboun
   this.crosshairFeature_ = null;
 
   /**
-   * @type {Array<(null|import("ol/style/Style.js").default)>|null|import("ol/FeatureStyleFunction.js").default|import("ol/style/Style.js").default}
+   * @type {import("ol/style/Style.js").StyleLike}
    * @private
    */
   this.crosshairStyle_;
@@ -541,6 +539,7 @@ export function PermalinkService($q, $timeout, $rootScope, $injector, ngeoDeboun
 
   // visibility
   this.rootScope_.$on('ngeo-layertree-state', (event, treeCtrl, firstParent) => {
+    /** @type {!Object.<string, string>} */
     const newState = {};
     if (firstParent.node.mixed) {
       const state = treeCtrl.getState();
@@ -549,7 +548,7 @@ export function PermalinkService($q, $timeout, $rootScope, $injector, ngeoDeboun
       treeCtrl.traverseDepthFirst((ctrl) => {
         if (ctrl.node.children === undefined) {
           const param = ParamPrefix.TREE_ENABLE + ctrl.node.name;
-          newState[param] = visible;
+          newState[param] = `${visible}`;
         }
       });
     } else {
@@ -564,6 +563,7 @@ export function PermalinkService($q, $timeout, $rootScope, $injector, ngeoDeboun
     this.ngeoStateManager_.updateState(newState);
   });
   this.rootScope_.$on('ngeo-layertree-opacity', (event, treeCtrl) => {
+    /** @type {!Object.<string, string>} */
     const newState = {};
     const opacity = treeCtrl.layer.getOpacity();
     const stateName = (treeCtrl.parent.node.mixed ?
@@ -815,6 +815,7 @@ PermalinkService.prototype.setDimensions = function(dimensions) {
   }
 
   this.rootScope_.$watchCollection(() => dimensions, (dimensions) => {
+    /** @type {!Object.<string, string>} */
     const params = {};
     for (const key in dimensions) {
       params[ParamPrefix.DIMENSIONS + key] = dimensions[key];
@@ -908,10 +909,11 @@ PermalinkService.prototype.registerMap_ = function(map, oeFeature) {
     this.ngeoDebounce_(() => {
       const center = view.getCenter();
       const zoom = view.getZoom();
+      /** @type {!Object.<string, string>} */
       const object = {};
-      object[PermalinkParam.MAP_X] = Math.round(center[0]);
-      object[PermalinkParam.MAP_Y] = Math.round(center[1]);
-      object[PermalinkParam.MAP_Z] = zoom;
+      object[PermalinkParam.MAP_X] = `${Math.round(center[0])}`;
+      object[PermalinkParam.MAP_Y] = `${Math.round(center[1])}`;
+      object[PermalinkParam.MAP_Z] = `${zoom}`;
       this.ngeoStateManager_.updateState(object);
     }, 300, /* invokeApply */ true),
     this);
@@ -986,6 +988,7 @@ PermalinkService.prototype.handleBackgroundLayerManagerChange_ = function() {
   console.assert(typeof layerName == 'string');
 
   // set it in state
+  /** @type {!Object.<string, string>} */
   const object = {};
   object[PermalinkParam.BG_LAYER] = layerName;
   this.ngeoStateManager_.updateState(object);
@@ -1009,6 +1012,7 @@ PermalinkService.prototype.refreshFirstLevelGroups = function() {
   const orderedNames = groupNodes.map(node => node.name);
 
   // set it in state
+  /** @type {!Object.<string, string>} */
   const object = {};
   object[PermalinkParam.TREE_GROUPS] = orderedNames.join(',');
   this.ngeoStateManager_.updateState(object);
@@ -1158,10 +1162,15 @@ PermalinkService.prototype.initLayers_ = function() {
         }
         return;
       }
-      // Enable the layers and set the opacity
-      this.gmfTreeManager_.rootCtrl.traverseDepthFirst((treeCtrl) => {
+
+      /**
+       * Enable the layers and set the opacity
+       * @param {import('ngeo/layertree/Controller.js').LayertreeController} treeCtrl Controller
+       * @return {LayertreeVisitorDecision|undefined} the result
+       */
+      const visitor = (treeCtrl) => {
         if (treeCtrl.isRoot) {
-          return;
+          return undefined;
         }
 
         const opacity = this.ngeoStateManager_.getInitialNumberValue((
@@ -1187,7 +1196,13 @@ PermalinkService.prototype.initLayers_ = function() {
           );
           if (groupLayers !== undefined) {
             const groupLayersArray = groupLayers == '' ? [] : groupLayers.split(',');
-            treeCtrl.traverseDepthFirst((treeCtrl) => {
+
+            /**
+             * Enable the layers and set the opacity
+             * @param {import('ngeo/layertree/Controller.js').LayertreeController} treeCtrl Controller
+             * @return {LayertreeVisitorDecision|undefined} the result
+             */
+            const visitor = (treeCtrl) => {
               if (treeCtrl.node.children === undefined) {
                 const enable = groupLayersArray.includes(treeCtrl.node.name);
                 if (enable) {
@@ -1195,13 +1210,16 @@ PermalinkService.prototype.initLayers_ = function() {
                 }
                 treeCtrl.setState(enable ? 'on' : 'off', false);
               }
-            });
+              return undefined;
+            };
+            treeCtrl.traverseDepthFirst(visitor);
             if (groupLayersArray.length > 0) {
               authenticationRequired = true;
             }
           }
         }
-      });
+      };
+      this.gmfTreeManager_.rootCtrl.traverseDepthFirst(visitor);
       const firstParents = this.gmfTreeManager_.rootCtrl.children;
       firstParents.forEach((firstParent) => {
         firstParent.traverseDepthFirst((treeCtrl) => {
@@ -1286,6 +1304,7 @@ PermalinkService.prototype.handleNgeoFeaturesChange_ = function() {
   const features = this.ngeoFeatures_.getArray();
   const data = this.featureHashFormat_.writeFeatures(features);
 
+  /** @type {Object<string, string>} */
   const object = {};
   object[PermalinkParam.FEATURES] = data;
   this.ngeoStateManager_.updateState(object);
@@ -1294,7 +1313,7 @@ PermalinkService.prototype.handleNgeoFeaturesChange_ = function() {
 
 /**
  * Get the query data for a WFS permalink.
- * @return {?WfsPermalinkData} The query data.
+ * @return {?import('ngeo/statemanager/WfsPermalink.js').WfsPermalinkData} The query data.
  * @private
  */
 PermalinkService.prototype.getWfsPermalinkData_ = function() {
@@ -1344,12 +1363,12 @@ PermalinkService.prototype.getWfsPermalinkData_ = function() {
  * Create a filter group for a given prefix from the query params.
  * @param {string} prefix E.g. `wfs_` or `wfs_0_`.
  * @param {Array.<string>} paramKeys All param keys starting with `wfs_`.
- * @return {WfsPermalinkFilterGroup|null} A filter group.
+ * @return {import('ngeo/statemanager/WfsPermalink.js').WfsPermalinkFilterGroup|null} A filter group.
  * @private
  */
 PermalinkService.prototype.createFilterGroup_ = function(prefix, paramKeys) {
   /**
-   * @type {Array.<WfsPermalinkFilter>}
+   * @type {Array.<import('ngeo/statemanager/WfsPermalink.js').WfsPermalinkFilter>}
    */
   const filters = [];
 
@@ -1363,11 +1382,7 @@ PermalinkService.prototype.createFilterGroup_ = function(prefix, paramKeys) {
       return;
     }
 
-    let condition = value;
-    if (value.indexOf(',') > -1) {
-      condition = value.split(',');
-    }
-
+    const condition = value.split(',');
     const filter = {
       property: paramKey.replace(prefix, ''),
       condition: condition
@@ -1631,13 +1646,13 @@ PermalinkService.prototype.setExternalDataSourcesState_ = function() {
       // (1b) layer names
       const wmsGroupLayerNames = [];
       for (const wmsDataSource of wmsGroup.dataSources) {
-        console.assert(wmsDataSource instanceof ngeoDatasourceOGC);
-
-        // External WMS data sources always have only one OGC layer name,
-        // as they are created using a single Capability Layer object that
-        // has only 1 layer name
-        const layerName = wmsDataSource.getOGCLayerNames()[0];
-        wmsGroupLayerNames.push(layerName);
+        if (wmsDataSource instanceof ngeoDatasourceOGC) {
+          // External WMS data sources always have only one OGC layer name,
+          // as they are created using a single Capability Layer object that
+          // has only 1 layer name
+          const layerName = wmsDataSource.getOGCLayerNames()[0];
+          wmsGroupLayerNames.push(layerName);
+        }
       }
       names.push(wmsGroupLayerNames.join(ExtDSSeparator.NAMES));
     }
@@ -1650,7 +1665,7 @@ PermalinkService.prototype.setExternalDataSourcesState_ = function() {
 
       // (2b) layer names
       const wmtsGroupLayerNames = [];
-      for (const wmtsDataSource of wmtsGroup.dataSources) {
+      for (const wmtsDataSource of /** @type {Array<import('ngeo/datasource/OGC').default>} */(wmtsGroup.dataSources)) {
         console.assert(wmtsDataSource.wmtsLayer);
         wmtsGroupLayerNames.push(wmtsDataSource.wmtsLayer);
       }
