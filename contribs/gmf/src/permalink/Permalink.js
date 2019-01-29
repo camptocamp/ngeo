@@ -91,6 +91,153 @@ const ParamPrefix = {
  * - whether to add a crosshair feature in the map or not
  * - the dimensions value
  *
+ * It can also be used to add different types of things in the map,
+ * such as features, external data sources, etc.
+ *
+ * This is made using parameters in the url, which can be static
+ * (i.e. parameters that always have the same name) or dynamic
+ * (i.e. parameters that have a static prefix but with a full name
+ * being dynamic).
+ *
+ * Here's a complete list of possible parameters and what they do. But
+ * first, a legend
+ *
+ * === Parameters [type] ===
+ *
+ * - `[paramameter_name]` (type)
+ *     [parameter documentation]
+ *
+ *
+ * === Parameters (static) ===
+ *
+ * A static parameter always have the same name.
+ *
+ * - `baselayer_ref` - "string"
+ *     The name of the base layer that should be set visible as
+ *     default in the map. If none is set, then the default one in the
+ *     loaded theme is set instead.
+ *
+ * - `eds_n` (string), `eds_u` (string)
+ *     These parameters stand for:
+ *      - eds_n: "External Data Sources Names"
+ *      - eds_u: "External Data Sources Urls"
+ *     These parameters define external WMS/WMTS data sources to add
+ *     to the map upon initialization. Both values are comma-separated
+ *     lists, `eds_u` containing the urls to the services and `eds_n`
+ *     the layer names (separated by `;`). Here's an example:
+ *     &eds_n=a;b;c,d,e&eds_u=host1.com,host2.com,host3.com, which reads as:
+ *      - host1.com - layers: a, b and c
+ *      - host2.com - layers: d
+ *      - host3.com - layers: e
+ *     For these parameters to work properly, they must define the
+ *     same number of elements, i.e. same number of names and urls.
+ *
+ * - `map_crossair` (boolean)
+ *     If this parameter set to `true`, then a crosshair marker will be
+ *     added to the center of the map upon initialization. The marker
+ *     will stay at this location.
+ *
+ * - `map_tooltip` (string)
+ *     If set, then the text defined in this parameter will be added
+ *     as a tooltip at center of the map upon initialization.
+ *
+ * - `map_x` (number), `map_y` (number)
+ *     These two parameters define a coordinate the map view should be
+ *     centered to upon initialization. The value must be in the map
+ *     view projection.
+ *
+ * - `map_zoom` (number)
+ *     Defines the zoom level the map view should be zoomed to upon
+ *     initialitation.
+ *
+ * - `rl_features` (string)
+ *     This parameter defines vector features to add to the map upon
+ *     initializaiton. In addition, if the application includes the
+ *     draw tool, the features added can be modified. The draw tool
+ *     can also be used to add new features, which are automatically
+ *     added in the url.
+ *
+ * - `tree_groups` (string)
+ *     Defines the layer groups that should be added to the layer tree
+ *     upon application initialization as a comma-separated list. For
+ *     example: Layers,Filters,Externals
+ *
+ * - `wfs_layer` (string)
+ *     If set, this parameter defines the name of a layer that
+ *     supports WFS to use to fetch features and add them to the map
+ *     upon initialization. The dynamic parameter `wfs_[]` is
+ *     required to identify the features to fetch.
+ *
+ * - `wfs_ngroups` (number)
+ *     If set, then `wfs_layer` represents the name of a group and
+ *     this property defines how many layers are in it. Requires
+ *     `wfs_layer` to be set.
+ *
+ * - `wfs_show_features` (boolean)
+ *     If set to `false` or `0`, then the features returned by the
+ *     `wfs_layer` parameter will not be shown in the map.
+ *
+ *
+ * === Parameters (dynamic) ===
+ *
+ * Dynamic parameters have variable names, which is always composed of:
+ *  - a static prefix
+ *  - a variable suffix
+ *
+ * The same dynamic parameter can be set multiple times, with
+ * different suffix values as name.
+ *
+ * For example: `&wfs_a=&wfs_b=`.
+ * - `wfs_` is the static prefix
+ * - the name used as reference for this dynamic parameter is `wfs_[]`
+ * - therefore, this example has 2 `wfs_[]` parameters set, with `a`
+ *   and `b` being the variable suffix
+ *
+ *
+ * - `dim_[]` (string)
+ *     Variable suffix: the name of a dimension
+ *     Value: *
+ *     Defines the value of a specific dimension to set upon loading
+ *     the application. For example: `&dim_time=2019-01-25T14:45:51.986Z`.
+ *     WMS data sources that support the dimension set will be
+ *     initialized with its value.
+ *
+ * - `tree_enable_[]` (boolean)
+ *     Variable suffix: the name of a layer group
+ *     Value: whether the group should be enabled or not in the layer tree
+ *     For example: `&tree_enable_polygon=true&tree_enable_point=false`
+ *     means that the group `polygon` will be enabled in the layer
+ *     tree, but not `point`.
+ *
+ * - `tree_group_layers_[]` (string)
+ *     Variable suffix: the name of a layer group
+ *     Value: a comma-separated list of layers within the group that
+ *     should be enabled upon initialization.
+ *     For example: `&tree_group_layers_polygon=forest,lake` means
+ *     that only the layers `forest` and `lake` within the group
+ *     `polygon` would be enabled upon initialization.
+ *
+ * - `tree_opacity_[]` (number)
+ *     Variable suffix: the name of a layer group
+ *     Value: Number between 0 (transparent) and 1 (opaque)
+ *     Defines the opacity of a layer group upon initialization.
+ *
+ * - `wfs_[]` (string)
+ *     Variable suffix: the name of an attribute
+ *     Value: A comma-separated list of values for the attribute
+ *     This parameter requires `wfs_layer` in order to work
+ *     properly. If set, it defines the filters to build to fetch the
+ *     features to add to the map. For example:
+ *     `&wfs_layer=fuel&wfs_osm_id=1420918679,441134960` the layer
+ *     `fuel` will be fetched features with the attribute `osm_id`
+ *     equal to `1420918679` or `441134960`.
+ *     If `wfs_ngroups` is set, then an index is added to after the
+ *     prefix of the `wfs_[]` parameter, for example:
+ *     `wfs_ngroups=2&wfs_0_[]=&wfs_1_[]=`
+ *
+ *
+ * === More documentation ===
+ *
  * To have the whole possibilities offer by the permalink, these services
  * should be instantiated: ngeoBackgroundLayerMgr, ngeoFeatureOverlayMgr,
  * ngeoFeatureHelper, gmfPermalinkOptions, gmfThemes, gmfObjectEditingManager,
