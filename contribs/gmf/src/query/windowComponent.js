@@ -188,7 +188,7 @@ function Controller($element, $scope, ngeoQueryResult, ngeoMapQuerent, ngeoFeatu
   this.ngeoMapQuerent_ = ngeoMapQuerent;
 
   /**
-   * @type {?QueryResultSource}
+   * @type {?import('ngeo/statemanager/WfsPermalink.js').QueryResultSource}
    * @export
    */
   this.selectedSource = null;
@@ -212,7 +212,7 @@ function Controller($element, $scope, ngeoQueryResult, ngeoMapQuerent, ngeoFeatu
   this.highlightFeatures_ = new olCollection();
 
   /**
-   * @type {?QueryResultSource}
+   * @type {?import('ngeo/statemanager/WfsPermalink.js').QueryResultSource}
    * @export
    */
   this.source = null;
@@ -565,7 +565,7 @@ Controller.prototype.clear = function() {
 
 
 /**
- * @param {QueryResultSource} source The source to select.
+ * @param {import('ngeo/statemanager/WfsPermalink.js').QueryResultSource} source The source to select.
  * @export
  */
 Controller.prototype.setSelectedSource = function(source) {

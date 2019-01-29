@@ -63,7 +63,7 @@ module.run(/* @ngInject */ ($templateCache) => {
  * @htmlAttribute {import("ol/Map.js").default} gmf-mobile-measurepoint-map The map.
  * @htmlAttribute {import("ol/style/Style.js").StyleLike=}
  *     gmf-mobile-measurepoint-sketchstyle A style for the measure point.
- * @param {string|function(!JQuery=, !angular.IAttributes=)}
+ * @param {string|function(!JQuery=, !angular.IAttributes=): string}
  *     gmfMobileMeasurePointTemplateUrl Template URL for the directive.
  * @return {angular.IDirective} The Directive Definition Object.
  * @ngInject
@@ -88,7 +88,7 @@ function component(gmfMobileMeasurePointTemplateUrl) {
      * @param {!angular.IScope} scope Scope.
      * @param {!JQuery} element Element.
      * @param {!angular.IAttributes} attrs Attributes.
-     * @param {!import("gmf/mobile/measure.js").default.pointComponent.Controller_} controller Controller.
+     * @param {!MobileMeasurePointController} controller Controller.
      */
     link: (scope, element, attrs, controller) => {
       controller.init();
@@ -104,7 +104,7 @@ module.directive('gmfMobileMeasurepoint', component);
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @param {!angular.IScope} $scope Angular scope.
  * @param {angular.IFilterService} $filter Angular filter service.
- * @param {import("gmf/raster/RasterService.js").default} gmfRaster gmf Raster service.
+ * @param {import("gmf/raster/RasterService.js").RasterService} gmfRaster gmf Raster service.
  * @param {import("ngeo/misc/debounce.js").miscDebounce<function(): void>} ngeoDebounce ngeo Debounce factory.
  * @constructor
  * @private
@@ -112,10 +112,10 @@ module.directive('gmfMobileMeasurepoint', component);
  * @ngdoc controller
  * @ngname GmfMobileMeasurePointController
  */
-function Controller(gettextCatalog, $scope, $filter, gmfRaster, ngeoDebounce) {
+export function MobileMeasurePointController(gettextCatalog, $scope, $filter, gmfRaster, ngeoDebounce) {
 
   /**
-   * @type {import("gmf/raster/RasterService.js").default}
+   * @type {import("gmf/raster/RasterService.js").RasterService}
    * @private
    */
   this.gmfRaster_ = gmfRaster;
@@ -227,7 +227,7 @@ function Controller(gettextCatalog, $scope, $filter, gmfRaster, ngeoDebounce) {
 /**
  * Initialise the controller.
  */
-Controller.prototype.init = function() {
+MobileMeasurePointController.prototype.init = function() {
   this.measure = new ngeoInteractionMeasurePointMobile(
     /** @type {import('ngeo/misc/filters.js').numberCoordinates} */ (this.$filter_('ngeoNumberCoordinates')),
     this.format || '{x}, {y}',
@@ -253,7 +253,7 @@ Controller.prototype.init = function() {
  * Deactivate the directive.
  * @export
  */
-Controller.prototype.deactivate = function() {
+MobileMeasurePointController.prototype.deactivate = function() {
   this.active = false;
 };
 
@@ -263,7 +263,7 @@ Controller.prototype.deactivate = function() {
  * @return {string} The translated text.
  * @export
  */
-Controller.prototype.translate = function(str) {
+MobileMeasurePointController.prototype.translate = function(str) {
   return this.gettextCatalog_.getString(str);
 };
 
@@ -275,7 +275,7 @@ Controller.prototype.translate = function(str) {
  * - on deactivate, unlisten
  * @private
  */
-Controller.prototype.handleMeasureActiveChange_ = function() {
+MobileMeasurePointController.prototype.handleMeasureActiveChange_ = function() {
   if (this.measure.getActive()) {
     const view = this.map.getView();
     this.mapViewPropertyChangeEventKey_ = olEvents.listen(
@@ -297,7 +297,7 @@ Controller.prototype.handleMeasureActiveChange_ = function() {
  * the current map center location.
  * @private
  */
-Controller.prototype.getMeasure_ = function() {
+MobileMeasurePointController.prototype.getMeasure_ = function() {
   const center = this.map.getView().getCenter();
   console.assert(Array.isArray(center));
   const params = {
@@ -316,7 +316,7 @@ Controller.prototype.getMeasure_ = function() {
         const childEl = document.createElement('div');
         childEl.className = `gmf-mobile-measure-point-${key}`;
         const unit = config.unit || '';
-        const decimals = config.decimals && config.decimals > 0 || 0;
+        const decimals = config.decimals > 0 ? config.decimals : 0;
         value = this.$filter_('number')(value, decimals);
         childEl.innerHTML = [this.translate(key), ': ', value, ' ', unit].join('');
         ctn.appendChild(childEl);
@@ -333,7 +333,7 @@ Controller.prototype.getMeasure_ = function() {
 };
 
 
-module.controller('GmfMobileMeasurePointController', Controller);
+module.controller('GmfMobileMeasurePointController', MobileMeasurePointController);
 
 /**
  * @typedef {Object} LayerConfig

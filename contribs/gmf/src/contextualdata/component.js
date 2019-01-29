@@ -61,7 +61,7 @@ function directive() {
      * @param {angular.IScope} scope Scope.
      * @param {JQuery} element Element.
      * @param {angular.IAttributes} attrs Attributes.
-     * @param {import("gmf/contextualdata/component.js").default.Controller_} controller Controller.
+     * @param {ContextualdataController} controller Controller.
      */
     link: (scope, element, attrs, controller) => {
       controller.init();
@@ -77,14 +77,14 @@ module.directive('gmfContextualdata', directive);
  * @param {angular.ICompileService} $compile Angular compile service.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @param {!angular.IScope} $scope Scope.
- * @param {import("gmf/raster/RasterService.js").default} gmfRaster Gmf Raster service
+ * @param {import("gmf/raster/RasterService.js").RasterService} gmfRaster Gmf Raster service
  *
  * @constructor
  * @private
  * @ngdoc controller
  * @ngInject
  */
-function Controller($compile, $timeout, $scope, gmfRaster) {
+export function ContextualdataController($compile, $timeout, $scope, gmfRaster) {
 
   /**
    * @type {import("ol/Map.js").default}
@@ -129,7 +129,7 @@ function Controller($compile, $timeout, $scope, gmfRaster) {
   this.$scope_ = $scope;
 
   /**
-   * @type {import("gmf/raster/RasterService.js").default}
+   * @type {import("gmf/raster/RasterService.js").RasterService}
    * @private
    */
   this.gmfRaster_ = gmfRaster;
@@ -140,7 +140,7 @@ function Controller($compile, $timeout, $scope, gmfRaster) {
 /**
  *
  */
-Controller.prototype.init = function() {
+ContextualdataController.prototype.init = function() {
   this.preparePopover_();
 
   const mapDiv = this.map.getTargetElement();
@@ -154,7 +154,7 @@ Controller.prototype.init = function() {
  * @param {!Event} event Event.
  * @private
  */
-Controller.prototype.handleMapContextMenu_ = function(event) {
+ContextualdataController.prototype.handleMapContextMenu_ = function(event) {
   this.$scope_.$apply(() => {
     const pixel = this.map.getEventPixel(event);
     const coordinate = this.map.getCoordinateFromPixel(pixel);
@@ -170,7 +170,7 @@ Controller.prototype.handleMapContextMenu_ = function(event) {
   });
 };
 
-Controller.prototype.setContent_ = function(coordinate) {
+ContextualdataController.prototype.setContent_ = function(coordinate) {
   const scope = this.$scope_.$new(true);
   this.$compile_(this.content_)(scope);
 
@@ -201,7 +201,7 @@ Controller.prototype.setContent_ = function(coordinate) {
 /**
  * @private
  */
-Controller.prototype.preparePopover_ = function() {
+ContextualdataController.prototype.preparePopover_ = function() {
 
   const container = document.createElement('DIV');
   container.classList.add('popover');
@@ -220,7 +220,7 @@ Controller.prototype.preparePopover_ = function() {
     element: container,
     stopEvent: true,
     autoPan: true,
-    autoPanAnimation: /** @type {olx.animation.PanOptions} */ ({
+    autoPanAnimation: /** @type {import('ol/Overlay.js').PanOptions} */ ({
       duration: 250
     }),
     positioning: 'top-center'
@@ -228,17 +228,17 @@ Controller.prototype.preparePopover_ = function() {
   this.map.addOverlay(this.overlay_);
 };
 
-Controller.prototype.showPopover = function() {
+ContextualdataController.prototype.showPopover = function() {
   const element = /** @type {Object} */ (this.overlay_.getElement());
   angular.element(element).css('display', 'block');
 };
 
-Controller.prototype.hidePopover = function() {
+ContextualdataController.prototype.hidePopover = function() {
   const element = /** @type {Object} */ (this.overlay_.getElement());
   angular.element(element).css('display', 'none');
 };
 
-module.controller('GmfContextualdataController', Controller);
+module.controller('GmfContextualdataController', ContextualdataController);
 
 
 /**
