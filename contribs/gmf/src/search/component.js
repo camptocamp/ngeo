@@ -2,7 +2,7 @@ import angular from 'angular';
 import {COORDINATES_LAYER_NAME} from 'gmf/index.js';
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
 import gmfSearchFulltextSearch from 'gmf/search/FulltextSearch.js';
-import gmfThemeThemes from 'gmf/theme/Themes.js';
+import gmfThemeThemes, {findThemeByName} from 'gmf/theme/Themes.js';
 import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr.js';
 import ngeoMiscAutoProjection from 'ngeo/misc/AutoProjection.js';
 
@@ -27,7 +27,7 @@ import {appendParams as olUriAppendParams} from 'ol/uri.js';
 /**
  * Datasource configuration options for the search directive.
  * @typedef {Object} SearchComponentDatasource
- * @property {BloodhoundOptions} [bloodhoundOptions] The optional Bloodhound configuration for this
+ * @property {Bloodhound.BloodhoundOptions} [bloodhoundOptions] The optional Bloodhound configuration for this
  * data set. See: https://github.com/twitter/typeahead.js/blob/master/doc/bloodhound.md
  * @property {string} labelKey The name of a corresponding GeoJSON property key in the current dataset.
  * The bound value of this property key will be used as label.
@@ -40,6 +40,7 @@ import {appendParams as olUriAppendParams} from 'ol/uri.js';
  * this dataset. See: https://github.com/twitter/typeahead.js/blob/master/
  * @property {string} url URL of the search service. Must contain a '%QUERY' term that will be
  * replaced by the input string.
+ * @property {string} datasetTitle
  * }}
  */
 
@@ -319,7 +320,7 @@ class SearchController {
     this.styles_ = {};
 
     /**
-     * @type {function()}
+     * @type {function(): void}
      * @export
      */
     this.onInitCallback;
@@ -359,10 +360,17 @@ class SearchController {
 
     /**
      * Supported projections for coordinates search.
-     * @type {Array.<import("ol/proj/Projection.js").default>}
+     * @type {Array.<string>}
      * @export
      */
     this.coordinatesProjections;
+
+    /**
+     * Supported projections for coordinates search.
+     * @type {Array.<olProj.Projection>}
+     * @export
+     */
+    this.coordinatesProjectionsInstances;
 
     /**
      * @type {import("ngeo/map/FeatureOverlay.js").FeatureOverlay}
@@ -447,16 +455,10 @@ class SearchController {
     this.placeholder = this.placeholder !== undefined ? this.placeholder :
       gettextCatalog.getString('Search…');
 
-    // Init coordinates projections
-    let coordProj = this.coordinatesProjections;
-    if (coordProj === undefined) {
-      coordProj = [this.map.getView().getProjection()];
-    } else {
-      coordProj = this.ngeoAutoProjection_.getProjectionList(
-        /** @type {Array.<string>} */ (coordProj)
-      );
-    }
-    this.coordinatesProjections = coordProj;
+    // Init coordinates projections instances
+    this.coordinatesProjectionsInstances = this.coordinatesProjections === undefined ?
+      [this.map.getView().getProjection()] :
+      this.ngeoAutoProjection_.getProjectionList(this.coordinatesProjections);
 
     if (!this.clearButton) {
       // Empty the search field on focus and blur.
@@ -654,7 +656,7 @@ class SearchController {
           html += `<p class="gmf-search-group" translate>${feature.get('layer_name') ||
                   config.datasetTitle}</p>`;
           html = `<div class="gmf-search-datum">${html}</div>`;
-          return compile(html)(scope);
+          return compile(html)(scope).html();
         }
       })
     });
@@ -738,16 +740,17 @@ class SearchController {
 
 
   /**
-   * @return {BloodhoundRemoteOptions} Options.
+   * @return {Bloodhound.RemoteOptions} Options.
    * @private
    */
   getBloodhoudRemoteOptions_() {
     const gettextCatalog = this.gettextCatalog_;
     return {
       rateLimitWait: this.delay,
+      url: undefined,
       prepare: (query, settings) => {
         const url = settings.url;
-        const lang = gettextCatalog.currentLanguage;
+        const lang = gettextCatalog.getCurrentLanguage();
         settings.xhrFields = {
           withCredentials: true
         };
@@ -976,7 +979,7 @@ class SearchController {
         const actionData = action['data'];
         if (actionName == 'add_theme') {
           this.gmfThemes_.getThemesObject().then((themes) => {
-            const theme = gmfThemeThemes.findThemeByName(themes, actionData);
+            const theme = findThemeByName(themes, actionData);
             if (theme) {
               this.gmfTreeManager_.addFirstLevelGroups(theme.children);
             }
@@ -1078,13 +1081,13 @@ class SearchController {
     if (resultIndex < 1) { // can't be lower than one
       resultIndex = 1;
     }
-    this.fullTextSearch_.search(query, {'limit': resultIndex})
+    this.fullTextSearch_.search(query, {limit: `${resultIndex}`})
       .then((data) => {
         if (data && data.features[resultIndex - 1]) {
           const format = new olFormatGeoJSON();
           const feature = format.readFeature(data.features[resultIndex - 1]);
           this.featureOverlay_.addFeature(feature);
-          const fitOptions = /** @type {olx.view.FitOptions} */ ({});
+          const fitOptions = /** @type {import('ol/View.js').FitOptions} */ ({});
           if (opt_zoom !== undefined) {
             fitOptions.maxZoom = opt_zoom;
             fitOptions.size = this.map.getSize();
