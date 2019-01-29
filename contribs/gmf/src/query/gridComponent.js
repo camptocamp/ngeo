@@ -148,7 +148,7 @@ module.component('gmfDisplayquerygrid', component);
  *
  * @param {!angular.auto.IInjectorService} $injector Main injector.
  * @param {!angular.IScope} $scope Angular scope.
- * @param {!QueryResult} ngeoQueryResult ngeo query result.
+ * @param {!import('ngeo/query/MapQuerent.js').QueryResult} ngeoQueryResult ngeo query result.
  * @param {!import("ngeo/query/MapQuerent.js").MapQuerent} ngeoMapQuerent ngeo map querent service.
  * @param {!import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
@@ -181,7 +181,7 @@ function Controller($injector, $scope, ngeoQueryResult, ngeoMapQuerent,
   this.$timeout_ = $timeout;
 
   /**
-   * @type {!QueryResult}
+   * @type {!import('ngeo/query/MapQuerent.js').QueryResult}
    * @export
    */
   this.ngeoQueryResult = ngeoQueryResult;
@@ -314,7 +314,7 @@ function Controller($injector, $scope, ngeoQueryResult, ngeoMapQuerent,
   /**
    * An unregister function returned from `$scope.$watchCollection` for
    * "on-select" changes (when rows are selected/unselected).
-   * @type {?function()}
+   * @type {?function(): void}
    * @private
    */
   this.unregisterSelectWatcher_ = null;
@@ -445,7 +445,7 @@ Controller.prototype.hasOneWithTooManyResults_ = function() {
  */
 Controller.prototype.escapeValue = function(value) {
   // Work-around for Number.isInteger() when not always getting a number ...
-  if (Number.isInteger(/** @type {number} */ (value))) {
+  if (typeof value == 'number') {
     return value;
   } else {
     const toEscape = /[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\ |]/g;
@@ -574,6 +574,7 @@ Controller.prototype.collectData_ = function(source) {
   const features = source.features;
   const allProperties = [];
   const featureGeometriesNames = [];
+  /** @type {Object<string, !import("ol/Feature.js").default>} */
   const featuresForSource = {};
   let properties, featureGeometryName;
   features.forEach((feature) => {

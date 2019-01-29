@@ -68,14 +68,14 @@ module.component('appQueryresult', queryresultComponent);
 
 /**
  * Demo, NOT USED.
- * @param {QueryResult} ngeoQueryResult Query service.
+ * @param {import('ngeo/query/MapQuerent.js').QueryResult} ngeoQueryResult Query service.
  * @constructor
  * @ngInject
  */
 function QueryresultController(ngeoQueryResult) {
 
   /**
-   * @type {QueryResult}
+   * @type {import('ngeo/query/MapQuerent.js').QueryResult}
    * @export
    */
   this.result = ngeoQueryResult;

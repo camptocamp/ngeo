@@ -248,7 +248,7 @@ class Controller {
    * @param {CreatePrint} ngeoCreatePrint The ngeo Create Print function.
    * @param {string} gmfPrintUrl A MapFishPrint url.
    * @param {import("gmf/authentication/Service.js").AuthenticationService} gmfAuthenticationService The authentication service.
-   * @param {QueryResult} ngeoQueryResult ngeo query result.
+   * @param {import('ngeo/query/MapQuerent.js').QueryResult} ngeoQueryResult ngeo query result.
    * @param {angular.IFilterService} $filter Angular $filter service.
    * @param {import("gmf/print/component.js").PrintStateEnum} gmfPrintState GMF print state.
    * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes The gmf Themes service.
@@ -359,7 +359,7 @@ class Controller {
     this.ngeoPrint_ = ngeoCreatePrint(gmfPrintUrl);
 
     /**
-     * @type {QueryResult}
+     * @type {import('ngeo/query/MapQuerent.js').QueryResult}
      * @private
      */
     this.ngeoQueryResult_ = ngeoQueryResult;
