@@ -5,9 +5,7 @@ import olOverlay from 'ol/Overlay.js';
  * An openlayers overlay that uses bootstrap popover to produce a popup
  * for maps.
  *
- * @constructor
- * @extends {import("ol/Overlay.js").default}
- * @param {olx.OverlayOptions=} opt_options Overlay options.
+ * @param {import('ol/Overlay.js').Options=} opt_options Overlay options.
  */
 export default class extends olOverlay {
   constructor(options = {}) {
@@ -60,18 +58,17 @@ export default class extends olOverlay {
       window.setTimeout(() => {
         $(element)
           .popover({
-            'content': contentEl,
-            'html': true,
-            'placement': 'top',
-            'template': [
+            content: contentEl.get()[0],
+            html: true,
+            placement: 'top',
+            template: [
               '<div class="popover ngeo-popover" role="tooltip">',
               '  <div class="arrow"></div>',
               '  <h3 class="popover-header"></h3>',
               '  <div class="popover-body"></div>',
               '</div>'
             ].join('')
-          })
-          .popover('show');
+          }).popover('show');
       }, 0);
 
       this.closeEl_.one('click', () => {
