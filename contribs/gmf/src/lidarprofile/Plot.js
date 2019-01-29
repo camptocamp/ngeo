@@ -1,5 +1,3 @@
-/**
- */
 import olFeature from 'ol/Feature.js';
 import olGeomPoint from 'ol/geom/Point.js';
 import olStyleCircle from 'ol/style/Circle.js';

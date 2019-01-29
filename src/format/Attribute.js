@@ -18,7 +18,11 @@ import ngeoFormatAttributeType from 'ngeo/format/AttributeType.js';
 /**
  * A feature attribute definition.
  *
+ * extends AttributeBase
  * @typedef {Object} Attribute
+ * @property {string} [geomType] (AttributeBase)
+ * @property {string} [numType] (AttributeBase)
+ * @property {string} [type] (AttributeBase)
  * @property {Array.<string>} [choices] The list of possible values for the attribute.
  * @property {number} [maxLength] Specifies the maximum number of character for the attribute value.
  * @property {string|null} name The attribute name.
@@ -29,7 +33,6 @@ import ngeoFormatAttributeType from 'ngeo/format/AttributeType.js';
  * @property {string} type The attribute type, which determines how to render it.
  * @property {string} [format] The format used in the date, time and datetime type.
  * @property {string} [mask] The mask used in the date, time and datetime type.
- * @extends AttributeBase
  */
 
 
@@ -62,3 +65,5 @@ export function setGeometryType(attribute, type) {
   }
   return !!attribute.type && !!attribute.geomType;
 }
+
+export default null;

@@ -478,7 +478,7 @@ function Controller($element, $q, $scope, $timeout,
   this.listenerKeys_ = [];
 
   /**
-   * @type {?Array.<!Attribute>}
+   * @type {?Array.<!import('ngeo/format/Attribute.js').Attribute>}
    * @export
    */
   this.attributes = null;
@@ -840,7 +840,7 @@ Controller.prototype.handleEditFeature_ = function(resp) {
 
 
 /**
- * @param {!Array.<Attribute>} attributes Attributes.
+ * @param {!Array.<import('ngeo/format/Attribute.js').Attribute>} attributes Attributes.
  * @private
  */
 Controller.prototype.setAttributes_ = function(attributes) {
@@ -1251,7 +1251,7 @@ Controller.prototype.handleFeatureGeometryChange_ = function() {
 
 
 /**
- * @param {MenuEvent} evt Event.
+ * @param {import('ngeo/filter/ruleComponent.js').MenuEvent} evt Event.
  * @private
  */
 Controller.prototype.handleMenuActionClick_ = function(evt) {
@@ -1273,7 +1273,7 @@ Controller.prototype.handleMenuActionClick_ = function(evt) {
 
 
 /**
- * @param {MenuEvent} evt Event.
+ * @param {import('ngeo/filter/ruleComponent.js').MenuEvent} evt Event.
  * @private
  */
 Controller.prototype.handleMenuVertexActionClick_ = function(evt) {
@@ -1303,7 +1303,7 @@ Controller.prototype.handleTranslateEnd_ = function(evt) {
 
 
 /**
- * @param {!RotateEvent} evt Event.
+ * @param {!import('ngeo/interaction/Rotate.js').RotateEvent} evt Event.
  * @private
  */
 Controller.prototype.handleRotateEnd_ = function(evt) {

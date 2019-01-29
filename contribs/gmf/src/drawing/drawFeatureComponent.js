@@ -712,7 +712,7 @@ Controller.prototype.handleMapContextMenu_ = function(evt) {
 /**
  * @param {?Array.<number>} vertexInfo Vertex information, in case a
  *     vertex was clicked using the right button.
- * @param {!MenuEvent} evt Event.
+ * @param {!import('ngeo/filter/ruleComponent.js').MenuEvent} evt Event.
  * @private
  */
 Controller.prototype.handleMenuActionClick_ = function(vertexInfo, evt) {
@@ -756,7 +756,7 @@ Controller.prototype.handleTranslateEnd_ = function(evt) {
 
 
 /**
- * @param {!RotateEvent} evt Event.
+ * @param {!import('ngeo/interaction/Rotate.js').RotateEvent} evt Event.
  * @private
  */
 Controller.prototype.handleRotateEnd_ = function(evt) {

@@ -1,6 +1,3 @@
-/**
- */
-
 import './modifyrectangle.css';
 import angular from 'angular';
 import ngeoInteractionModifyRectangle from 'ngeo/interaction/ModifyRectangle.js';

@@ -157,7 +157,7 @@ DrawController.prototype.registerInteraction = function(
  * Called when any of the draw or measure interaction active property changes.
  * Set the active property of this directive accordingly, i.e. if at least
  * one of the draw or measure is active then the active property is set to true.
- * @param {import("ol/Object/Event.js").default} event Event.
+ * @param {import("ol/events/Event.js").default} event Event.
  * @export
  */
 DrawController.prototype.handleActiveChange = function(event) {

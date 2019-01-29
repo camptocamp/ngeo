@@ -1,13 +1,12 @@
-import angular from 'angular';
 import {getUid as olUtilGetUid} from 'ol/util.js';
 
 /**
  * @param {Array.<Object>|undefined} data Entries/objects to be shown in a grid.
- * @param {Array.<GridColumnDef>|undefined} columnDefs Column definition of a grid.
+ * @param {Array.<import('ngeo/download/Csv.js').GridColumnDef>|undefined} columnDefs Column definition of a grid.
  * @constructor
  * @export
  */
-export function GridConfig(data, columnDefs) {
+function GridConfig(data, columnDefs) {
   /**
    * @type {Array.<Object>|undefined}
    * @export
@@ -15,7 +14,7 @@ export function GridConfig(data, columnDefs) {
   this.data = data;
 
   /**
-   * @type {Array.<GridColumnDef>|undefined}
+   * @type {Array.<import('ngeo/download/Csv.js').GridColumnDef>|undefined}
    * @export
    */
   this.columnDefs = columnDefs;
@@ -127,10 +126,5 @@ GridConfig.prototype.invertSelection = function() {
   });
 };
 
-/**
- * @type {!angular.IModule}
- */
-const module = angular.module('ngeoGridConfig', []);
 
-
-export default module;
+export default GridConfig;

@@ -1,10 +1,6 @@
-/**
- */
-
 import './grid.css';
 import angular from 'angular';
 import ngeoGridConfig from 'ngeo/grid/Config.js';
-
 import ngeoGridModule from 'ngeo/grid/module.js';
 
 

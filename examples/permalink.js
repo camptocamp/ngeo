@@ -97,7 +97,7 @@ MapComponentController.prototype.$onInit = function() {
   view.on('propertychange',
     this.ngeoDebounce_(
       /**
-       * @param {import("ol/Object/Event.js").default} e Object event.
+       * @param {import("ol/events/Event.js").default} e Object event.
        */
       (e) => {
         const center = view.getCenter();

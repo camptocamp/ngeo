@@ -116,7 +116,7 @@ function Controller($scope, $element, ngeoFeatureOverlayMgr, ngeoNotification) {
   this.notification_ = ngeoNotification;
 
   /**
-   * @type {import("ngeo/map/FeatureOverlay.js").default}
+   * @type {import("ngeo/map/FeatureOverlay.js").FeatureOverlay}
    * @private
    */
   this.featureOverlay_ = ngeoFeatureOverlayMgr.getFeatureOverlay();
@@ -130,11 +130,11 @@ function Controller($scope, $element, ngeoFeatureOverlayMgr, ngeoNotification) {
   });
 
   // handle geolocation error.
-  this.geolocation_.on('error', function(error) {
+  this.geolocation_.on('error', (error) => {
     this.deactivate_();
     this.notification_.error(error.message);
     $scope.$emit(GeolocationEventType.ERROR, error);
-  }, this);
+  });
 
   /**
    * @type {import("ol/Feature.js").default}
@@ -172,7 +172,8 @@ function Controller($scope, $element, ngeoFeatureOverlayMgr, ngeoNotification) {
     this.accuracyFeature_.setGeometry(this.geolocation_.getAccuracyGeometry());
   });
 
-  olEvents.listen(this.geolocation_, 'change:position', (event) => {
+  olEvents.listen(this.geolocation_, 'change:position', (evt) => {
+    const event = /** @type {import("ol/events/Event.js").default} */(evt);
     this.setPosition_(event);
   });
 
@@ -213,7 +214,7 @@ Controller.prototype.deactivate_ = function() {
 
 
 /**
- * @param {import("ol/Object/Event.js").default} event Event.
+ * @param {import("ol/events/Event.js").default} event Event.
  * @private
  */
 Controller.prototype.setPosition_ = function(event) {

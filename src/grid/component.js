@@ -1,6 +1,6 @@
 import angular from 'angular';
 import ngeoMiscFilters from 'ngeo/misc/filters.js';
-import ngeoGridConfig, {getRowUid} from 'ngeo/grid/Config.js';
+import {getRowUid} from 'ngeo/grid/Config.js';
 import * as olHas from 'ol/has.js';
 
 import 'floatthead';
@@ -12,7 +12,6 @@ import 'ngeo/sass/font.scss';
  * @type {!angular.IModule}
  */
 const module = angular.module('ngeoGrid', [
-  ngeoGridConfig.name,
   ngeoMiscFilters.name,
   'floatThead',
 ]);

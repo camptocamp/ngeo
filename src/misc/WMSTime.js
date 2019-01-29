@@ -74,7 +74,7 @@ export class WMSTime extends Time {
   /**
    * Format time to be used as a WMS Time query parameter
    * @param  {import('ngeo/datasource/OGC.js').TimeProperty} wmsTimeProperty a wmstime property from a node
-   * @param  {{start : number, end : (number|undefined)}} times start & end time selected (in ms format)
+   * @param  {import('ngeo/datasource/OGC.js').TimeRange} times start & end time selected (in ms format)
    * @param  {boolean=} opt_toUTC to get the UTC date
    * @return {string} ISO-8601 date string ready to be used as a query parameter for a
    * WMS request

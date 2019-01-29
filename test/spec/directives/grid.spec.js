@@ -1,4 +1,4 @@
-import {GridConfig} from 'ngeo/grid/Config.js';
+import GridConfig from 'ngeo/grid/Config.js';
 
 describe('ngeo.grid.component', () => {
 

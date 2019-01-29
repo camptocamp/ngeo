@@ -183,7 +183,7 @@ function Controller($scope, $http, $element, $filter, gettextCatalog, ngeoFeatur
   this.gettextCatalog_ = gettextCatalog;
 
   /**
-   * @type {import("ngeo/map/FeatureOverlay.js").default}
+   * @type {import("ngeo/map/FeatureOverlay.js").FeatureOverlay}
    * @private
    */
   this.pointHoverOverlay_ = ngeoFeatureOverlayMgr.getFeatureOverlay();
@@ -695,7 +695,7 @@ Controller.prototype.downloadCsv = function() {
     return;
   }
 
-  /** @type {Array.<GridColumnDef>} */
+  /** @type {Array.<import('ngeo/download/Csv.js').GridColumnDef>} */
   const headers = [];
   let hasDistance = false;
   const firstPoint = this.profileData[0];

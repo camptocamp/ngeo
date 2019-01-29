@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import ngeoGooglestreetviewComponent from 'ngeo/googlestreetview/component.js';
 

@@ -6,7 +6,7 @@ import ngeoDownloadService from 'ngeo/download/service.js';
 
 import ngeoGridComponent from 'ngeo/grid/component.js';
 
-import ngeoGridConfig, {getRowUid, GridConfig} from 'ngeo/grid/Config.js';
+import ngeoGridConfig, {getRowUid} from 'ngeo/grid/Config.js';
 import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr.js';
 
 import ngeoQueryMapQuerent from 'ngeo/query/MapQuerent.js';
@@ -49,7 +49,6 @@ const module = angular.module('gmfQueryGridComponent', [
   ngeoDownloadCsv.name,
   ngeoDownloadService.name,
   ngeoGridComponent.name,
-  ngeoGridConfig.name,
   ngeoMapFeatureOverlayMgr.name,
   ngeoQueryMapQuerent.name,
 ]);
@@ -694,16 +693,16 @@ Controller.prototype.getGridConfiguration_ = function(data) {
   delete clone.ol_uid;
   const columns = Object.keys(clone);
 
-  /** @type {Array.<GridColumnDef>} */
+  /** @type {Array.<import('ngeo/download/Csv.js').GridColumnDef>} */
   const columnDefs = [];
   columns.forEach((column) => {
-    columnDefs.push(/** @type {GridColumnDef} */ ({
+    columnDefs.push(/** @type {import('ngeo/download/Csv.js').GridColumnDef} */ ({
       name: column
     }));
   });
 
   if (columnDefs.length > 0) {
-    return new GridConfig(data, columnDefs);
+    return new ngeoGridConfig(data, columnDefs);
   } else {
     // no columns, do not show grid
     return null;

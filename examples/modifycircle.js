@@ -1,6 +1,3 @@
-/**
- */
-
 import './modifycircle.css';
 import angular from 'angular';
 import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties.js';

@@ -365,7 +365,7 @@ class SearchController {
     this.coordinatesProjections;
 
     /**
-     * @type {import("ngeo/map/FeatureOverlay.js").default}
+     * @type {import("ngeo/map/FeatureOverlay.js").FeatureOverlay}
      * @private
      */
     this.featureOverlay_ = ngeoFeatureOverlayMgr.getFeatureOverlay();

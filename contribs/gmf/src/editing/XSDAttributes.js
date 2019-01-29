@@ -49,7 +49,7 @@ EditingXSDAttributeService.prototype.getAttributes = function(id) {
 
 /**
  * @param {angular.IHttpResponse} resp Ajax response.
- * @return {Array.<Attribute>} List of attributes.
+ * @return {Array.<import('ngeo/format/Attribute.js').Attribute>} List of attributes.
  * @export
  */
 EditingXSDAttributeService.prototype.handleGetAttributes_ = function(resp) {
