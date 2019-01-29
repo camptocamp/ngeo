@@ -264,7 +264,7 @@ function Controller($scope, $http, $element, $filter, gettextCatalog, ngeoFeatur
 
   /**
    * The measure tooltip element.
-   * @type {Element}
+   * @type {HTMLElement}
    * @private
    */
   this.measureTooltipElement_ = null;
@@ -277,7 +277,7 @@ function Controller($scope, $http, $element, $filter, gettextCatalog, ngeoFeatur
   this.pointHoverOverlay_.addFeature(this.snappedPoint_);
 
   /**
-   * @type {I18n}
+   * @type {import('ngeo/profile/elevationComponent.js').I18n}
    * @private
    */
   this.profileLabels_ = {
