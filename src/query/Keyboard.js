@@ -10,8 +10,9 @@ class Keyboard {
    * Listens to the keyboard `keydown` and `keyup` events to keep
    * track of the query action to do depending on the key being
    * pressed.
+   * @param {angular.IScope} $rootScope .
    */
-  constructor() {
+  constructor($rootScope) {
 
     // Constants
 
@@ -45,6 +46,12 @@ class Keyboard {
      */
     this.activeKey_ = null;
 
+    /**
+     * @type {angular.IScope}
+     * @private
+     */
+    this.rootScope_ = $rootScope;
+
     // Event listeners
     olEventsListen(document, 'keydown', this.handleKeyDown_, this);
     olEventsListen(document, 'keyup', this.handleKeyUp_, this);
@@ -68,6 +75,17 @@ class Keyboard {
     return action;
   }
 
+  // Setters
+
+  /**
+   * @param {?string} key Key as active.
+   * @private
+   */
+  set activeKey(key) {
+    this.activeKey_ = key;
+    this.rootScope_.$apply();
+  }
+
   // Handlers
 
   /**
@@ -76,7 +94,7 @@ class Keyboard {
    */
   handleKeyDown_(evt) {
     if (!this.activeKey_ && this.keys_.includes(evt.key)) {
-      this.activeKey_ = evt.key;
+      this.activeKey = evt.key;
     }
   }
 
@@ -86,9 +104,17 @@ class Keyboard {
    */
   handleKeyUp_(evt) {
     if (this.activeKey_ && this.activeKey_ === evt.key) {
-      this.activeKey_ = null;
+      this.activeKey = null;
     }
   }
 }
 
-export default new Keyboard();
+/**
+ * @type {!angular.IModule}
+ */
+const module = angular.module('ngeoQueryKeyboard', [
+]);
+module.service('ngeoQueryKeyboard', Keyboard);
+
+
+export default module;

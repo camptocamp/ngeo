@@ -8,6 +8,7 @@ import {
 } from 'ol/events.js';
 
 const module = angular.module('ngeoMapQuery', [
+  ngeoQueryKeyboard.name,
   ngeoQueryMapQuerent.name,
 ]);
 
@@ -35,13 +36,14 @@ const module = angular.module('ngeoMapQuery', [
  * See our live example: [../examples/mapquery.html](../examples/mapquery.html)
  *
  * @param {import("ngeo/query/MapQuerent.js").MapQuerent} ngeoMapQuerent The ngeo map querent service.
+ * @param {import("ngeo/query/Keyboard.js").Keyboard} ngeoQueryKeyboard The ngeo query keyboard service.
  * @param {angular.auto.IInjectorService} $injector Main injector.
  * @return {angular.IDirective} The Directive Definition Object.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoMapQuery
  */
-function directive(ngeoMapQuerent, $injector) {
+function directive(ngeoMapQuerent, ngeoQueryKeyboard, $injector) {
   return {
     restrict: 'A',
     scope: false,

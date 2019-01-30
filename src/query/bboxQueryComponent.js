@@ -1,4 +1,5 @@
 import angular from 'angular';
+import ngeoQueryAction from 'ngeo/query/Action.js';
 import ngeoQueryMapQuerent from 'ngeo/query/MapQuerent.js';
 import ngeoQueryKeyboard from 'ngeo/query/Keyboard.js';
 
@@ -8,6 +9,7 @@ import {VOID} from 'ol/functions.js';
 
 
 const module = angular.module('ngeoBboxQuery', [
+  ngeoQueryKeyboard.name,
   ngeoQueryMapQuerent.name,
 ]);
 
@@ -35,13 +37,15 @@ const module = angular.module('ngeoBboxQuery', [
  *
  * See the live example: [../examples/bboxquery.html](../examples/bboxquery.html)
  *
+ * @param {angular.IScope} $rootScope The root scope.
  * @param {import("ngeo/query/MapQuerent.js").MapQuerent} ngeoMapQuerent The ngeo map querent service.
+ * @param {import("ngeo/query/Keyboard.js").Keyboard} ngeoQueryKeyboard The ngeo query keyboard service.
  * @return {angular.IDirective} The Directive Definition Object.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoBboxQuery
  */
-function directive(ngeoMapQuerent) {
+function directive($rootScope, ngeoMapQuerent, ngeoQueryKeyboard) {
   return {
     restrict: 'A',
     scope: false,
@@ -51,6 +55,8 @@ function directive(ngeoMapQuerent) {
        */
       const map = scope.$eval(attrs['ngeoBboxQueryMap']);
 
+      let active;
+
       const interaction = new olInteractionDragBox({
         condition: platformModifierKeyOnly,
         onBoxEnd: VOID
@@ -59,8 +65,9 @@ function directive(ngeoMapQuerent) {
       /**
        * Called when a bbox is drawn while this controller is active. Issue
        * a request to the query service using the extent that was drawn.
+       * @param {!olInteractionDragBox} interaction Drag box interaction
        */
-      const handleBoxEnd = function() {
+      const handleBoxEnd = function(interaction) {
         const action = ngeoQueryKeyboard.action;
         const extent = interaction.getGeometry().getExtent();
         const limit = scope.$eval(attrs['ngeoBboxQueryLimit']);
@@ -71,11 +78,13 @@ function directive(ngeoMapQuerent) {
           map
         });
       };
-      interaction.on('boxend', handleBoxEnd);
+      interaction.on('boxend', handleBoxEnd.bind(this, interaction));
 
       // watch 'active' property -> activate/deactivate accordingly
       scope.$watch(attrs['ngeoBboxQueryActive'],
         (newVal, oldVal) => {
+          active = newVal;
+
           if (newVal) {
             // activate
             map.addInteraction(interaction);
@@ -84,6 +93,36 @@ function directive(ngeoMapQuerent) {
             map.removeInteraction(interaction);
             if (scope.$eval(attrs['ngeoBboxQueryAutoclear']) !== false) {
               ngeoMapQuerent.clear();
+            }
+          }
+        }
+      );
+
+      // This second interaction is not given any condition and is
+      // automatically added to the map while the user presses the
+      // keys to either ADD or REMOVE
+      const interactionWithoutCondition = new olInteractionDragBox({
+        onBoxEnd: VOID
+      });
+      interactionWithoutCondition.on(
+        'boxend', handleBoxEnd.bind(this, interactionWithoutCondition));
+      let added = false;
+      $rootScope.$watch(
+        () => ngeoQueryKeyboard.action,
+        (newVal, oldVal) => {
+          // No need to do anything if directive is not active
+          if (!active) {
+            return;
+          }
+          if (newVal === ngeoQueryAction.REPLACE) {
+            if (added) {
+              map.removeInteraction(interactionWithoutCondition);
+              added = false;
+            }
+          } else {
+            if (!added) {
+              map.addInteraction(interactionWithoutCondition);
+              added = true;
             }
           }
         }
