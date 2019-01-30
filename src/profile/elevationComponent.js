@@ -88,9 +88,9 @@ const module = angular.module('ngeoProfile', [
  *        ngeo-profile-pois="ctrl.profilePois">
  *      </div>
  *
- * Where "ctrl.profileOptions" is of type {@link ProfileOptions};
- * "ctrl.profileData" and "ctrl.profilePois" are arrays which will be
- * processed by {@link ElevationExtractor} and
+ * Where `ctrl.profileOptions` is of type {@link ProfileOptions}; `ctrl.profileData` and `ctrl.profilePois`
+ * are arrays which will be processed by `distanceExtractor` `{function(Object): number}`,
+ * `linesConfiguration` `{Object.<string, LineConfiguration>}` {@link LineConfiguration} and
  * {@link PoiExtractor}.
  *
  * See our live example: [../examples/profile.html](../examples/profile.html)
