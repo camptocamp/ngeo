@@ -44,7 +44,7 @@ class Helper {
     // === Other properties ===
 
     /**
-     * @type {DataSources}
+     * @type {import('ngeo/datasource/DataSource.js').DataSources}
      * @protected
      */
     this.collection_;
@@ -57,11 +57,11 @@ class Helper {
   }
 
   /**
-   * @return {DataSources} Data sources collection.
+   * @return {import('ngeo/datasource/DataSource.js').DataSources} Data sources collection.
    * @export
    */
   get collection() {
-    return /** @type {DataSources} */ (
+    return /** @type {import('ngeo/datasource/DataSource.js').DataSources} */ (
       this.ngeoDataSourcesHelper_.collection
     );
   }

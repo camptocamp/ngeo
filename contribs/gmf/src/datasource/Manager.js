@@ -124,7 +124,7 @@ export class DatasourceManager {
      * The collection of DataSources from ngeo, which gets updated by this
      * service. When the theme changes, first we remove all data sources, then
      * the 'active' data source are added here.
-     * @type {DataSources}
+     * @type {import('ngeo/datasource/DataSource.js').DataSources}
      * @private
      */
     this.dataSources_ = ngeoDataSources.collection;

@@ -169,17 +169,17 @@ DrawController.prototype.handleActiveChange = function(event) {
  * Called when a feature is finished being drawn. Set the default properties
  * for its style, then set its style and add it to the features collection.
  * @param {string} type Type of geometry being drawn.
- * @param {import('ol/events/Event.js').default|MeasureEvent} event Event.
+ * @param {import('ol/events/Event.js').default|import('ngeo/interaction/Measure.js').MeasureEvent} event Event.
  * @export
  */
 DrawController.prototype.handleDrawEnd = function(type, event) {
   let sketch;
+  // @ts-ignore: evt should be of type {import('ol/interaction/Draw.js').DrawEvent but he is private
   if (event.feature) {
-    // ol.interaction.Draw.Event
+    // @ts-ignore: evt should be of type {import('ol/interaction/Draw.js').DrawEvent but he is private
     sketch = event.feature;
   } else {
-    // MeasureEvent
-    sketch = event.detail.feature;
+    sketch = /** @type {import('ngeo/interaction/Measure.js').MeasureEvent} */(event).detail.feature;
   }
   console.assert(sketch);
 

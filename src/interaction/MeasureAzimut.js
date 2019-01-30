@@ -9,7 +9,7 @@ import ngeoInteractionMeasure, {getFormattedLength} from 'ngeo/interaction/Measu
  */
 export default class extends ngeoInteractionMeasure {
   /**
-   * @fires MeasureEvent
+   * @fires import('ngeo/interaction/Measure.js').MeasureEvent
    * @param {!import('ngeo/misc/filters.js').unitPrefix} unitPrefixFormat The format function
    * @param {!import('ngeo/misc/filters.js').formatNumber} numberFormat The format function
    * @param {!import('ngeo/interaction/Measure.js').MeasureOptions=} options Options

@@ -14,71 +14,83 @@ const NAMESPACE_URIS_ = [
 
 
 /**
+ * @typedef {Object.<string, import("ol/xml.js").Parser>} parserStructure
+ */
+
+
+/**
+ * typedef {Object.<string, parserStructure>} parsersStructure
+ * @typedef {Object<string, Object<string, import("ol/xml.js").Parser>>} parsersStructure
+ */
+
+/**
+ * @param {Array<string>} namespaceURIs Namespace URIs.
+ * @param {parserStructure} structure Structure.
+ * @return {Object<string, parserStructure>} Namespaced structure.
+ */
+function makeStructureNS(namespaceURIs, structure) {
+  return /** @type {parsersStructure} */(/** @type {any} */(olXml.makeStructureNS(namespaceURIs, structure)));
+}
+
+/**
  * @const
- * @type {!Object.<string, !Object.<string, !import("ol/XmlParser.js").default>>}
+ * @type {parsersStructure}
  * @private
  */
-const PARSERS_ = olXml.makeStructureNS(
+const PARSERS_ = makeStructureNS(
   NAMESPACE_URIS_, {
-    'element': olXml.makeObjectPropertyPusher(
-      readElement_
-    ),
-    'complexType': olXml.makeObjectPropertyPusher(
-      readComplexType_
-    )
-  });
+    element: olXml.makeObjectPropertyPusher(readElement_),
+    complexType: olXml.makeObjectPropertyPusher(readComplexType_)
+  }
+);
 
 
 /**
  * @const
- * @type {!Object.<string, !Object.<string, !import("ol/XmlParser.js").default>>}
+ * @type {parsersStructure}
  * @private
  */
-const COMPLEX_TYPE_PARSERS_ = olXml.makeStructureNS(
+const COMPLEX_TYPE_PARSERS_ = makeStructureNS(
   NAMESPACE_URIS_, {
-    'complexContent': olXml.makeObjectPropertySetter(
-      readComplexContent_
-    )
-  });
+    complexContent: olXml.makeObjectPropertySetter(readComplexContent_)
+  }
+);
 
 
 /**
  * @const
- * @type {!Object.<string, !Object.<string, !import("ol/XmlParser.js").default>>}
+ * @type {parsersStructure}
  * @private
  */
-const COMPLEX_CONTENT_PARSERS_ = olXml.makeStructureNS(
+const COMPLEX_CONTENT_PARSERS_ = makeStructureNS(
   NAMESPACE_URIS_, {
-    'extension': olXml.makeObjectPropertySetter(
-      readExtension_
-    )
-  });
+    extension: olXml.makeObjectPropertySetter(readExtension_)
+  }
+);
 
 
 /**
  * @const
- * @type {!Object.<string, !Object.<string, !import("ol/XmlParser.js").default>>}
+ * @type {parsersStructure}
  * @private
  */
-const EXTENSION_PARSERS_ = olXml.makeStructureNS(
+const EXTENSION_PARSERS_ = makeStructureNS(
   NAMESPACE_URIS_, {
-    'sequence': olXml.makeObjectPropertySetter(
-      readSequence_
-    )
-  });
+    sequence: olXml.makeObjectPropertySetter(readSequence_)
+  }
+);
 
 
 /**
  * @const
- * @type {!Object.<string, !Object.<string, !import("ol/XmlParser.js").default>>}
+ * @type {parsersStructure}
  * @private
  */
-const SEQUENCE_PARSERS_ = olXml.makeStructureNS(
+const SEQUENCE_PARSERS_ = makeStructureNS(
   NAMESPACE_URIS_, {
-    'element': olXml.makeObjectPropertyPusher(
-      readElement_
-    )
-  });
+    element: olXml.makeObjectPropertyPusher(readElement_)
+  }
+);
 
 
 /**
@@ -132,11 +144,12 @@ WFSDescribeFeatureType.prototype.readFromNode = function(node) {
 
 /**
  * @private
- * @param {Node} node Node.
+ * @param {Element} node Node.
  * @param {Array.<*>} objectStack Object stack.
  * @return {!Object.<string, string>} Attributes.
  */
 function readElement_(node, objectStack) {
+  /** @type {!Object.<string, string>} */
   const attributes = {};
   for (let i = 0, len = node.attributes.length; i < len; i++) {
     const attribute = node.attributes.item(i);
@@ -152,7 +165,7 @@ function readElement_(node, objectStack) {
 
 /**
  * @private
- * @param {Node} node Node.
+ * @param {Element} node Node.
  * @param {Array.<*>} objectStack Object stack.
  * @return {!Object.<string, string>} Object.
  */
@@ -172,7 +185,7 @@ function readComplexType_(node, objectStack) {
 
 /**
  * @private
- * @param {Node} node Node.
+ * @param {Element} node Node.
  * @param {Array.<*>} objectStack Object stack.
  * @return {!Object.<string, string>} Object.
  */
@@ -190,7 +203,7 @@ function readComplexContent_(
 
 /**
  * @private
- * @param {Node} node Node.
+ * @param {Element} node Node.
  * @param {Array.<*>} objectStack Object stack.
  * @return {!Object.<string, string>} Object.
  */
@@ -206,7 +219,7 @@ function readExtension_(node, objectStack) {
 
 /**
  * @private
- * @param {Node} node Node.
+ * @param {Element} node Node.
  * @param {Array.<*>} objectStack Object stack.
  * @return {!Object.<string, string>} Object.
  */

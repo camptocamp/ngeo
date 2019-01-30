@@ -34,7 +34,7 @@ import olOverlayPositioning from 'ol/OverlayPositioning.js';
 export default class extends olOverlay {
   /**
    * @param {MenuOptions=} menuOptions Menu options.
-   * @param {olx.OverlayOptions=} options Overlay options.
+   * @param {import('ol/Overlay.js').Options=} options Overlay options.
    */
   constructor(menuOptions, options = {}) {
     super(options);
@@ -214,12 +214,8 @@ export default class extends olOverlay {
    */
   handleMapPointerMove_(evt) {
     const target = evt.originalEvent.target;
-    console.assert(target instanceof Element);
-
     const element = this.getElement();
-    console.assert(element instanceof Element);
-
-    if (element.contains(target)) {
+    if (target instanceof Element && element instanceof Element && element.contains(target)) {
       evt.coordinate = [Infinity, Infinity];
       evt.pixel = [Infinity, Infinity];
     }

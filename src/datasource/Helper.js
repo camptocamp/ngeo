@@ -28,7 +28,7 @@ export class Helper {
     this.q_ = $q;
 
     /**
-     * @type {DataSources}
+     * @type {import('ngeo/datasource/DataSource.js').DataSources}
      * @private
      */
     this.collection_ = ngeoDataSources.collection;
@@ -55,7 +55,7 @@ export class Helper {
   }
 
   /**
-   * @return {DataSources} Data sources collection.
+   * @return {import('ngeo/datasource/DataSource.js').DataSources} Data sources collection.
    * @export
    */
   get collection() {
@@ -97,7 +97,7 @@ export class Helper {
         // We know, at this point, that there's only one definition that
         // was returned.  Just to be sure, let's do a bunch of assertions.
         const ogcLayerName = dataSource.getOGCLayerNames()[0];
-        console.assert(typeof ogcLayerName, 'The data source should have only one ogcLayer.' == 'string');
+        console.assert(typeof ogcLayerName == 'string', 'The data source should have only one ogcLayer.');
         for (const element of featureType.element) {
           if (element.name === ogcLayerName) {
             for (const type of featureType.complexType) {

@@ -234,7 +234,7 @@ class Controller {
     this.filtrableLayerNodeNames_ = null;
 
     /**
-     * @type {DataSources}
+     * @type {import('ngeo/datasource/DataSource.js').DataSources}
      * @private
      */
     this.gmfDataSources_ = gmfDataSourcesHelper.collection;

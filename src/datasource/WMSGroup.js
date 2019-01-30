@@ -6,10 +6,13 @@ import * as olArray from 'ol/array.js';
 /**
  * The options required to create a `WMSGroup`.
  *
+ * extends OGCGroupOptions
  * @typedef {Object} WMSGroupOptions
  * @property {!angular.auto.IInjectorService} injector Angular main injector.
- * @extends OGCGroupOptions
- */
+ * @property {string} url (WMSGroupOptions)
+ * @property {!Array.<!import('ngeo/datasource/DataSource.js').default>} dataSources (GroupOptions)
+ * @property {string} title (GroupOptions)
+*/
 
 
 export default class extends ngeoDatasourceOGCGroup {
@@ -72,8 +75,9 @@ export default class extends ngeoDatasourceOGCGroup {
       this.dataSources.length, 'At least one data source is required.');
 
     for (const dataSource of this.dataSources) {
-      console.assert(dataSource instanceof ngeoDatasourceOGC);
-      this.registerDataSource_(dataSource);
+      if (dataSource instanceof ngeoDatasourceOGC) {
+        this.registerDataSource_(dataSource);
+      }
     }
   }
 
@@ -82,8 +86,9 @@ export default class extends ngeoDatasourceOGCGroup {
    */
   destroy() {
     for (const dataSource of this.dataSources) {
-      console.assert(dataSource instanceof ngeoDatasourceOGC);
-      this.unregisterDataSource_(dataSource);
+      if (dataSource instanceof ngeoDatasourceOGC) {
+        this.unregisterDataSource_(dataSource);
+      }
     }
     super.destroy();
   }
@@ -158,8 +163,7 @@ export default class extends ngeoDatasourceOGCGroup {
 
     // (1) Collect layer names from data sources in the group
     for (const dataSource of this.dataSources) {
-      console.assert(dataSource instanceof ngeoDatasourceOGC);
-      if (dataSource.visible) {
+      if (dataSource instanceof ngeoDatasourceOGC && dataSource.visible) {
         layerNames = layerNames.concat(dataSource.getOGCLayerNames());
       }
     }
@@ -173,8 +177,9 @@ export default class extends ngeoDatasourceOGCGroup {
    */
   removeDataSource(dataSource) {
     super.removeDataSource(dataSource);
-    console.assert(dataSource instanceof ngeoDatasourceOGC);
-    this.unregisterDataSource_(dataSource);
+    if (dataSource instanceof ngeoDatasourceOGC) {
+      this.unregisterDataSource_(dataSource);
+    }
   }
 
   /**
