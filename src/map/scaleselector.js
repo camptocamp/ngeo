@@ -80,9 +80,9 @@ module.run(/* @ngInject */ ($templateCache) => {
  * @htmlAttribute {!Array.<number>} ngeo-scaleselector The available scales.
  * @htmlAttribute {import("ol/Map.js").default} ngeo-scaleselector-map The map.
  * @htmlAttribute {ScaleselectorOptions} ngeo-scaleselector-options
- *     Optional. The configuration options.
- * @param {string|function(!JQuery=, !angular.IAttributes=)}
- *     ngeoScaleselectorTemplateUrl Template URL for the directive.
+ *    Optional. The configuration options.
+ * @param {string|function(!JQuery=, !angular.IAttributes=): any} ngeoScaleselectorTemplateUrl Template URL
+ *    for the directive.
  * @return {angular.IDirective} Directive Definition Object.
  * @ngInject
  * @ngdoc directive

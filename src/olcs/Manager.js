@@ -4,7 +4,7 @@ class Manager extends olcsContribManager {
   /**
    * @param {string} url .
    * @param {angular.IScope} $rootScope .
-   * @param {olcsx.contrib.ManagerOptions} options .
+   * @param {import('olcs/contrib/Manager.js').ManagerOptions} options .
    */
   constructor(url, $rootScope, options) {
     super(url, options);
