@@ -1,6 +1,3 @@
-/**
- */
-
 import angular from 'angular';
 import appURL from './url.js';
 import './themeselector.css';
@@ -30,7 +27,7 @@ module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 function MainController($http, gmfThemes, gmfThemeManager) {
 
   /**
-   * @param {import(gmf/themes.js).GmfTheme} theme Theme.
+   * @param {import('gmf/themes.js').GmfTheme} theme Theme.
    * @return {boolean} Theme is 'Enseignement'
    * @export
    */

@@ -36,7 +36,7 @@ export function SyncLayertreeMap($rootScope, ngeoLayerHelper, ngeoWMSTime, gmfTh
   this.ngeoWMSTime_ = ngeoWMSTime;
 
   /**
-   * @type {import(gmf/themes.js).GmfOgcServers}
+   * @type {import('gmf/themes.js').GmfOgcServers}
    * @private
    */
   this.ogcServersObject_;
@@ -163,7 +163,7 @@ SyncLayertreeMap.prototype.updateLayerState_ = function(layer, treeCtrl) {
  */
 SyncLayertreeMap.prototype.createGroup_ = function(treeCtrl, map,
   dataLayerGroup, opt_position) {
-  const groupNode = /** @type {import(gmf/themes.js).GmfGroup} */ (treeCtrl.node);
+  const groupNode = /** @type {import('gmf/themes.js').GmfGroup} */ (treeCtrl.node);
   let layer = null;
   const isFirstLevelGroup = treeCtrl.parent.isRoot;
 
@@ -204,7 +204,7 @@ SyncLayertreeMap.prototype.createGroup_ = function(treeCtrl, map,
 SyncLayertreeMap.prototype.createLayerFromGroup_ = function(treeCtrl,
   mixed) {
   let layer;
-  const groupNode = /** @type {import(gmf/themes.js).GmfGroup} */ (treeCtrl.node);
+  const groupNode = /** @type {import('gmf/themes.js').GmfGroup} */ (treeCtrl.node);
   if (mixed) { // Will be one ol.layer per each node.
     layer = this.layerHelper_.createBasicGroup();
   } else { // Will be one ol.layer for multiple WMS nodes.
@@ -226,7 +226,7 @@ SyncLayertreeMap.prototype.createLayerFromGroup_ = function(treeCtrl,
     let hasActiveChildren = false;
     treeCtrl.traverseDepthFirst((ctrl) => {
       // Update layer information and tree state.
-      this.updateLayerReferences_(/** @type import(gmf/themes.js).GmfLayer */ (ctrl.node), layer);
+      this.updateLayerReferences_(/** @type import('gmf/themes.js').GmfLayer */ (ctrl.node), layer);
       if (ctrl.node.metadata.isChecked) {
         ctrl.setState('on', false);
         this.updateLayerState_(/** @type {import("ol/layer/Image.js").default} */ (layer), ctrl);
@@ -248,13 +248,13 @@ SyncLayertreeMap.prototype.createLayerFromGroup_ = function(treeCtrl,
  * @private
  */
 SyncLayertreeMap.prototype.createLeafInAMixedGroup_ = function(treeCtrl, map) {
-  const gmfLayer = /** @type {import(gmf/themes.js).GmfLayer} */ (treeCtrl.node);
+  const gmfLayer = /** @type {import('gmf/themes.js').GmfLayer} */ (treeCtrl.node);
   let layer;
   // Make layer.
   if (gmfLayer.type === 'WMTS') {
-    layer = this.createWMTSLayer_(/** @type import(gmf/themes.js).GmfLayerWMTS */ (gmfLayer));
+    layer = this.createWMTSLayer_(/** @type import('gmf/themes.js').GmfLayerWMTS */ (gmfLayer));
   } else {
-    const gmfLayerWMS = /** @type import(gmf/themes.js).GmfLayerWMS */ (gmfLayer);
+    const gmfLayerWMS = /** @type import('gmf/themes.js').GmfLayerWMS */ (gmfLayer);
     const timeParam = this.getTimeParam_(treeCtrl);
     const ogcServer = this.ogcServersObject_[/** @type string */ (gmfLayerWMS.ogcServer)];
     console.assert(ogcServer);
@@ -300,7 +300,7 @@ SyncLayertreeMap.prototype.createLeafInAMixedGroup_ = function(treeCtrl, map) {
  * @private
  */
 SyncLayertreeMap.prototype.initGmfLayerInANotMixedGroup_ = function(treeCtrl, map) {
-  const leafNode = /** @type {import(gmf/themes.js).GmfLayer} */ (treeCtrl.node);
+  const leafNode = /** @type {import('gmf/themes.js').GmfLayer} */ (treeCtrl.node);
   const firstLevelGroup = this.getFirstLevelGroupCtrl_(treeCtrl);
   console.assert(firstLevelGroup);
   const layer = /** @type {import("ol/layer/Image.js").default} */ (firstLevelGroup.layer);
@@ -318,7 +318,7 @@ SyncLayertreeMap.prototype.initGmfLayerInANotMixedGroup_ = function(treeCtrl, ma
 
 /**
  * Create and return a Tile layer.
- * @param {import(gmf/themes.js).GmfLayerWMTS} gmfLayerWMTS A leaf node.
+ * @param {import('gmf/themes.js').GmfLayerWMTS} gmfLayerWMTS A leaf node.
  * @return {import("ol/layer/Tile.js").default} a Tile WMTS layer. (Source and capabilities can come
  *     later).
  * @private
@@ -338,7 +338,7 @@ SyncLayertreeMap.prototype.createWMTSLayer_ = function(gmfLayerWMTS) {
 
 /**
  * Update properties of a layer with the node of a given leafNode.
- * @param {import(gmf/themes.js).GmfLayer} leafNode a leaf node.
+ * @param {import('gmf/themes.js').GmfLayer} leafNode a leaf node.
  * @param {import("ol/layer/Base.js").default} layer A layer.
  * @private
  */

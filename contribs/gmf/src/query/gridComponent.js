@@ -26,7 +26,7 @@ import 'bootstrap/js/src/dropdown.js';
  * Configuration for a grid tab.
  * @typedef {Object} GridSource
  * @property {import("ngeo/grid/Config.js").default} configuration Configuration used to initialize a grid.
- * @property {QueryResultSource} source Results of the query source.
+ * @property {import('ngeo/statemanager/WfsPermalink.js').QueryResultSource} source Results of the query source.
  * }}
  */
 
@@ -148,7 +148,7 @@ module.component('gmfDisplayquerygrid', component);
  *
  * @param {!angular.auto.IInjectorService} $injector Main injector.
  * @param {!angular.IScope} $scope Angular scope.
- * @param {!QueryResult} ngeoQueryResult ngeo query result.
+ * @param {!import('ngeo/query/MapQuerent.js').QueryResult} ngeoQueryResult ngeo query result.
  * @param {!import("ngeo/query/MapQuerent.js").MapQuerent} ngeoMapQuerent ngeo map querent service.
  * @param {!import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
@@ -181,7 +181,7 @@ function Controller($injector, $scope, ngeoQueryResult, ngeoMapQuerent,
   this.$timeout_ = $timeout;
 
   /**
-   * @type {!QueryResult}
+   * @type {!import('ngeo/query/MapQuerent.js').QueryResult}
    * @export
    */
   this.ngeoQueryResult = ngeoQueryResult;
@@ -314,7 +314,7 @@ function Controller($injector, $scope, ngeoQueryResult, ngeoMapQuerent,
   /**
    * An unregister function returned from `$scope.$watchCollection` for
    * "on-select" changes (when rows are selected/unselected).
-   * @type {?function()}
+   * @type {?function(): void}
    * @private
    */
   this.unregisterSelectWatcher_ = null;
@@ -445,7 +445,7 @@ Controller.prototype.hasOneWithTooManyResults_ = function() {
  */
 Controller.prototype.escapeValue = function(value) {
   // Work-around for Number.isInteger() when not always getting a number ...
-  if (Number.isInteger(/** @type {number} */ (value))) {
+  if (typeof value == 'number') {
     return value;
   } else {
     const toEscape = /[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\ |]/g;
@@ -471,13 +471,13 @@ Controller.prototype.isSelected = function(gridSource) {
 
 /**
  * Try to merge the mergable sources.
- * @param {Array.<QueryResultSource>} sources Sources.
- * @return {Array.<QueryResultSource>} The merged sources.
+ * @param {Array.<import('ngeo/statemanager/WfsPermalink.js').QueryResultSource>} sources Sources.
+ * @return {Array.<import('ngeo/statemanager/WfsPermalink.js').QueryResultSource>} The merged sources.
  * @private
  */
 Controller.prototype.getMergedSources_ = function(sources) {
   const allSources = [];
-  /** @type {Object.<string, QueryResultSource>} */
+  /** @type {Object.<string, import('ngeo/statemanager/WfsPermalink.js').QueryResultSource>} */
   const mergedSources = {};
 
   sources.forEach((source) => {
@@ -502,9 +502,9 @@ Controller.prototype.getMergedSources_ = function(sources) {
  * Check if the given source should be merged. If so, an artificial source
  * that will contain the features of all mergable sources is returned. If not,
  * `null` is returned.
- * @param {QueryResultSource} source Source.
- * @param {Object.<string, QueryResultSource>} mergedSources Merged sources.
- * @return {?QueryResultSource} A merged source of null if the source should
+ * @param {import('ngeo/statemanager/WfsPermalink.js').QueryResultSource} source Source.
+ * @param {Object.<string, import('ngeo/statemanager/WfsPermalink.js').QueryResultSource>} mergedSources Merged sources.
+ * @return {?import('ngeo/statemanager/WfsPermalink.js').QueryResultSource} A merged source of null if the source should
  *    not be merged.
  * @private
  */
@@ -525,7 +525,7 @@ Controller.prototype.getMergedSource_ = function(source, mergedSources) {
     return null;
   }
 
-  /** @type {QueryResultSource} */
+  /** @type {import('ngeo/statemanager/WfsPermalink.js').QueryResultSource} */
   let mergeSource;
   if (mergeSourceId in mergedSources) {
     mergeSource = mergedSources[mergeSourceId];
@@ -567,13 +567,14 @@ Controller.prototype.getMergedSource_ = function(source, mergedSources) {
 
 /**
  * Collect all features in the queryResult object.
- * @param {QueryResultSource} source Result source.
+ * @param {import('ngeo/statemanager/WfsPermalink.js').QueryResultSource} source Result source.
  * @private
  */
 Controller.prototype.collectData_ = function(source) {
   const features = source.features;
   const allProperties = [];
   const featureGeometriesNames = [];
+  /** @type {Object<string, !import("ol/Feature.js").default>} */
   const featuresForSource = {};
   let properties, featureGeometryName;
   features.forEach((feature) => {
@@ -657,7 +658,7 @@ Controller.prototype.removeEmptyColumnsFn_ = function(allProperties) {
 
 /**
  * @param {?Array.<Object>} data Grid rows.
- * @param {QueryResultSource} source Query source.
+ * @param {import('ngeo/statemanager/WfsPermalink.js').QueryResultSource} source Query source.
  * @return {boolean} Returns true if a grid was created.
  * @private
  */

@@ -80,7 +80,7 @@ export class AuthenticationService extends olEventsEventTarget {
   /**
    * @param {angular.IHttpService} $http Angular http service.
    * @param {angular.auto.IInjectorService} $injector Main injector.
-   * @param {angular.Scope} $rootScope The directive's scope.
+   * @param {angular.IScope} $rootScope The directive's scope.
    * @param {string} authenticationBaseUrl URL to "authentication" web service.
    * @param {User} gmfUser User.
    * @ngInject
@@ -96,7 +96,7 @@ export class AuthenticationService extends olEventsEventTarget {
     this.$http_ = $http;
 
     /**
-     * @type {angular.Scope}
+     * @type {angular.IScope}
      * @private
      */
     this.$rootScope_ = $rootScope;
@@ -289,11 +289,11 @@ const module = angular.module('gmfAuthenticationService', []);
 module.service('gmfAuthenticationService', AuthenticationService);
 
 module.value('gmfUser', {
-  'functionalities': null,
-  'is_password_changed': null,
-  'role_id': null,
-  'role_name': null,
-  'username': null
+  functionalities: null,
+  is_password_changed: null,
+  role_id: null,
+  role_name: null,
+  username: null
 });
 
 

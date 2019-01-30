@@ -19,11 +19,12 @@
         "olcs/*": ["node_modules/ol-cesium/src/olcs/*"],
         "@geoblocks/proj/*": ["node_modules/@geoblocks/proj/*"],
         "moment": ["node_modules/moment/moment.d.ts"],
+        "jsts/*": ["node_modules/@types/jsts/index.d.ts"],
       }
     },
     "include": [
       "src/**/*.js",
-//      "api/src/**/*.js",
-//      "contribs/gmf/src/**/*.js"
+      "api/src/**/*.js",
+      "contribs/gmf/src/**/*.js"
     ]
 }

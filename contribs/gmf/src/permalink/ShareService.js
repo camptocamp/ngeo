@@ -31,7 +31,7 @@ import angular from 'angular';
  * @export
  * @ngname gmfShareService
  */
-function PermalinkShareService($http, gmfShortenerCreateUrl) {
+export function PermalinkShareService($http, gmfShortenerCreateUrl) {
 
   /**
    * @type {angular.IHttpService}

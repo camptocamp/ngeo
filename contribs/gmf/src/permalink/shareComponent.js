@@ -1,5 +1,5 @@
 import angular from 'angular';
-import gmfPermalinkShareService from 'gmf/permalink/ShareService.js';
+import gmfPermalinkShareService, {URL_MAX_LEN, URL_PATH_MAX_LEN} from 'gmf/permalink/ShareService.js';
 import ngeoStatemanagerLocation from 'ngeo/statemanager/Location.js';
 import {getUid as olUtilGetUid} from 'ol/util.js';
 
@@ -39,15 +39,14 @@ function gmfPermalinkShareTemplateUrl($attrs, gmfPermalinkShareTemplateUrl) {
 
 
 /**
- * Component to display a shortened permalink and share it by email
- * Example:
+ * Component to display a shortened permalink and share it by email Example:
  *
  *      <gmf-share
  *        gmf-share-email="true">
  *      </gmf-share>
  *
  * @htmlAttribute {boolean} gmf-share-email Enable emailing capability.
- * @type {!angular.Component}
+ * @type {!angular.IComponentOptions}
  */
 const component = {
   bindings: {
@@ -75,7 +74,7 @@ class ShareComponentController {
   constructor($scope, ngeoLocation, gmfShareService, $q, $attrs) {
 
     /**
-     * @type {number}
+     * @type {string}
      * @export
      */
     this.uid = olUtilGetUid(this);
@@ -138,8 +137,8 @@ class ShareComponentController {
      * @type {boolean}
      * @export
      */
-    this.showLengthWarning = this.permalink_.length > gmfPermalinkShareService.URL_MAX_LEN ||
-    ngeoLocation.getPath() > gmfPermalinkShareService.URL_PATH_MAX_LEN;
+    this.showLengthWarning = this.permalink_.length > URL_MAX_LEN ||
+      ngeoLocation.getPath().length > URL_PATH_MAX_LEN;
 
     /**
      * @type {boolean}
@@ -169,10 +168,10 @@ class ShareComponentController {
   getShortUrl() {
     this.$q_.when(this.gmfShareService_.getShortUrl(this.permalink_))
       .then((resp) => {
-        this.shortLink = resp.data.short_url;
+        this.shortLink = /** @type {angular.IHttpResponse} */(resp).data.short_url;
         this.errorOnGetShortUrl = false;
       }, (resp) => {
-        this.shortLink = this.permalink;
+        this.shortLink = this.permalink_;
         this.errorOnGetShortUrl = true;
       });
   }

@@ -126,7 +126,7 @@ module.directive('gmfElevation', component);
  * @param {!angular.IScope} $scope Scope.
  * @param {!angular.IFilterService} $filter Angular filter.
  * @param {!import("ngeo/misc/debounce.js").miscDebounce<function(): void>} ngeoDebounce Ngeo debounce factory
- * @param {!import("gmf/raster/RasterService.js").default} gmfRaster Gmf Raster service
+ * @param {!import("gmf/raster/RasterService.js").RasterService} gmfRaster Gmf Raster service
  * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @constructor
  * @private
@@ -149,7 +149,7 @@ function Controller($scope, $filter, ngeoDebounce, gmfRaster, gettextCatalog) {
   this.ngeoDebounce_ = ngeoDebounce;
 
   /**
-   * @type {import("gmf/raster/RasterService.js").default}
+   * @type {import("gmf/raster/RasterService.js").RasterService}
    * @private
    */
   this.gmfRaster_ = gmfRaster;
@@ -164,7 +164,7 @@ function Controller($scope, $filter, ngeoDebounce, gmfRaster, gettextCatalog) {
    * @type {!Object.<string, LayerConfig>}
    * @private
    */
-  this.layersConfig;
+  this.layersconfig;
 
   /**
    * @type {boolean}
@@ -223,14 +223,18 @@ Controller.prototype.toggleActive_ = function(active) {
     console.assert(this.listenerKeys_.length === 0);
 
     // Moving the mouse clears previously displayed elevation
-    this.listenerKeys_.push(olEvents.listen(this.map, 'pointermove',
-      function(e) {
-        this.scope_.$apply(() => {
-          this.inViewport_ = true;
-          this.elevation = undefined;
-          this.loading = false;
-        });
-      }, this));
+    /**
+     * @param {Event|import("ol/events/Event.js").default} event The event
+     * @return {void}
+     */
+    const listen = (event) => {
+      this.scope_.$apply(() => {
+        this.inViewport_ = true;
+        this.elevation = undefined;
+        this.loading = false;
+      });
+    };
+    this.listenerKeys_.push(olEvents.listen(this.map, 'pointermove', listen));
 
     // Launch the elevation service request when the user stops moving the
     // mouse for less short delay

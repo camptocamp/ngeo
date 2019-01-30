@@ -79,7 +79,7 @@ class Controller {
    * @param {import("gmf/datasource/Helper.js").Helper} gmfDataSourcesHelper Gmf data
    *     sources helper service.
    * @param {import("gmf/filters/SavedFilters.js").SavedFilter} gmfSavedFilters Gmf saved filters service.
-   * @param {User} gmfUser User.
+   * @param {import('gmf/authentication/Service.js').User} gmfUser User.
    * @param {import("ngeo/message/Notification.js").MessageNotification} ngeoNotification Ngeo notification service.
    * @param {!import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr Ngeo FeatureOverlay
    *     manager
@@ -172,7 +172,7 @@ class Controller {
     );
 
     /**
-     * @type {User}
+     * @type {import('gmf/authentication/Service.js').User}
      * @private
      */
     this.gmfUser_ = gmfUser;

@@ -37,7 +37,7 @@ module.config(['$animateProvider',
   /**
    * For performance reason, only perform animation on elements that have the
    * `gmf-animatable` css class.
-   * @param {angular.$animateProvider} $animateProvider animate provider.
+   * @param {angular.animate.IAnimateProvider} $animateProvider animate provider.
    */
   function($animateProvider) {
     $animateProvider.classNameFilter(/gmf-animatable/);
@@ -126,7 +126,7 @@ module.component('gmfDisplayquerywindow', component);
 /**
  * @param {!JQuery} $element Element.
  * @param {!angular.IScope} $scope Angular scope.
- * @param {!QueryResult} ngeoQueryResult ngeo query result.
+ * @param {!import('ngeo/query/MapQuerent.js').QueryResult} ngeoQueryResult ngeo query result.
  * @param {!import("ngeo/query/MapQuerent.js").MapQuerent} ngeoMapQuerent ngeo map querent service.
  * @param {!import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
@@ -172,7 +172,7 @@ function Controller($element, $scope, ngeoQueryResult, ngeoMapQuerent, ngeoFeatu
   this.sourcesFilter = {'queried': true};
 
   /**
-   * @type {QueryResult}
+   * @type {import('ngeo/query/MapQuerent.js').QueryResult}
    * @export
    */
   this.ngeoQueryResult = {
@@ -188,7 +188,7 @@ function Controller($element, $scope, ngeoQueryResult, ngeoMapQuerent, ngeoFeatu
   this.ngeoMapQuerent_ = ngeoMapQuerent;
 
   /**
-   * @type {?QueryResultSource}
+   * @type {?import('ngeo/statemanager/WfsPermalink.js').QueryResultSource}
    * @export
    */
   this.selectedSource = null;
@@ -212,7 +212,7 @@ function Controller($element, $scope, ngeoQueryResult, ngeoMapQuerent, ngeoFeatu
   this.highlightFeatures_ = new olCollection();
 
   /**
-   * @type {?QueryResultSource}
+   * @type {?import('ngeo/statemanager/WfsPermalink.js').QueryResultSource}
    * @export
    */
   this.source = null;
@@ -421,7 +421,7 @@ Controller.prototype.next = function() {
 
 /**
  * Remove features without properties from the query result.
- * @param {QueryResult} queryResult ngeo query result.
+ * @param {import('ngeo/query/MapQuerent.js').QueryResult} queryResult ngeo query result.
  * @private
  */
 Controller.prototype.updateQueryResult_ = function(queryResult) {
@@ -565,7 +565,7 @@ Controller.prototype.clear = function() {
 
 
 /**
- * @param {QueryResultSource} source The source to select.
+ * @param {import('ngeo/statemanager/WfsPermalink.js').QueryResultSource} source The source to select.
  * @export
  */
 Controller.prototype.setSelectedSource = function(source) {

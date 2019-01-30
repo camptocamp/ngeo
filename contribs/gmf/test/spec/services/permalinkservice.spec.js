@@ -65,7 +65,7 @@ describe('Permalink service', () => {
             filters: [
               {
                 property: 'osm_id',
-                condition: '1420918679'
+                condition: ['1420918679']
               }
             ]
           }
@@ -108,15 +108,15 @@ describe('Permalink service', () => {
             filters: [
               {
                 property: 'highway',
-                condition: 'bus_stop'
+                condition: ['bus_stop']
               },
               {
                 property: 'name',
-                condition: 'Grand-Pont'
+                condition: ['Grand-Pont']
               },
               {
                 property: 'operator',
-                condition: 'TL'
+                condition: ['TL']
               }
             ]
           }
@@ -141,15 +141,15 @@ describe('Permalink service', () => {
             filters: [
               {
                 property: 'ele',
-                condition: '380'
+                condition: ['380']
               },
               {
                 property: 'highway',
-                condition: 'bus_stop'
+                condition: ['bus_stop']
               },
               {
                 property: 'operator',
-                condition: 'TL'
+                condition: ['TL']
               }
             ]
           },
@@ -157,15 +157,15 @@ describe('Permalink service', () => {
             filters: [
               {
                 property: 'highway',
-                condition: 'bus_stop'
+                condition: ['bus_stop']
               },
               {
                 property: 'name',
-                condition: 'Grand-Pont'
+                condition: ['Grand-Pont']
               },
               {
                 property: 'operator',
-                condition: 'TL'
+                condition: ['TL']
               }
             ]
           }

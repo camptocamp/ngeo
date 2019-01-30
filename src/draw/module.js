@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import ngeoDrawComponent from 'ngeo/draw/component.js';
 import ngeoDrawController from 'ngeo/draw/Controller.js';

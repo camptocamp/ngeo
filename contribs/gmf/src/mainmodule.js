@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import gmfAuthenticationModule from 'gmf/authentication/module.js';
 import gmfBackgroundlayerselectorModule from 'gmf/backgroundlayerselector/module.js';

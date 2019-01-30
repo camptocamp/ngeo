@@ -1,6 +1,6 @@
 import angular from 'angular';
 import gmfEditingEditFeature from 'gmf/editing/EditFeature.js';
-import gmfLayertreeSyncLayertreeMap from 'gmf/layertree/SyncLayertreeMap.js';
+import gmfLayertreeSyncLayertreeMap, {getLayer as syncLayertreeMapGetLayer} from 'gmf/layertree/SyncLayertreeMap.js';
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
 import {isEmpty, toXY} from 'gmf/objectediting/geom.js';
 import gmfObjecteditingQuery from 'gmf/objectediting/Query.js';
@@ -28,12 +28,7 @@ import olStyleFill from 'ol/style/Fill.js';
 import olStyleStroke from 'ol/style/Stroke.js';
 import olStyleStyle from 'ol/style/Style.js';
 
-import {OL3Parser} from 'jsts/io';
-const jsts = {
-  io: {
-    OL3Parser,
-  },
-};
+import jsts from 'jsts';
 
 
 /**
@@ -48,6 +43,13 @@ const ObjecteditingState = {
   INSERT: 'insert',
   UPDATE: 'update'
 };
+
+
+/**
+ * @const
+ * @private
+ */
+export const NAMESPACE = 'oe';
 
 
 /**
@@ -233,13 +235,13 @@ function Controller($scope, $timeout, gettextCatalog,
   this.gmfObjectEditingQuery_ = gmfObjectEditingQuery;
 
   /**
-   * @type {Array.<!ObjectEditingQueryableLayerInfo>}
+   * @type {Array.<!import('gmf/objectediting/toolsComponent.js').ObjectEditingQueryableLayerInfo>}
    * @export
    */
   this.queryableLayersInfo;
 
   /**
-   * @type {ObjectEditingQueryableLayerInfo}
+   * @type {import('gmf/objectediting/toolsComponent.js').ObjectEditingQueryableLayerInfo}
    * @export
    */
   this.selectedQueryableLayerInfo;
@@ -578,7 +580,7 @@ Controller.prototype.undo = function() {
   this.skipGeometryChange_ = true;
 
   this.geometryChanges_.pop();
-  const clone = Controller.cloneGeometry_(
+  const clone = cloneGeometry(
     this.geometryChanges_[this.geometryChanges_.length - 1]);
 
   this.feature.setGeometry(clone);
@@ -681,7 +683,7 @@ Controller.prototype.unregisterInteractions_ = function() {
 Controller.prototype.toggle_ = function(active) {
 
   const keys = this.listenerKeys_;
-  const uid = `${Controller.NAMESPACE_}-${olUtilGetUid(this)}`;
+  const uid = `${NAMESPACE}-${olUtilGetUid(this)}`;
   const toolMgr = this.ngeoToolActivateMgr_;
 
   if (active) {
@@ -717,6 +719,7 @@ Controller.prototype.toggle_ = function(active) {
       olEvents.listen(
         window,
         'beforeunload',
+        // @ts-ignore: strange API
         this.handleWindowBeforeUnload_,
         this
       )
@@ -758,7 +761,7 @@ Controller.prototype.toggle_ = function(active) {
  * @private
  */
 Controller.prototype.undoAllChanges_ = function() {
-  const clone = Controller.cloneGeometry_(
+  const clone = cloneGeometry(
     this.geometryChanges_[0]);
   this.feature.setGeometry(clone);
 
@@ -780,7 +783,7 @@ Controller.prototype.resetGeometryChanges_ = function() {
   }
   if (this.geometryChanges_.length === 0) {
     const geometry = this.feature.getGeometry();
-    const clone = Controller.cloneGeometry_(geometry);
+    const clone = cloneGeometry(geometry);
     this.geometryChanges_.push(clone);
   }
 };
@@ -793,7 +796,7 @@ Controller.prototype.resetGeometryChanges_ = function() {
  * geometries intersects with one an other first. Those that does are merged
  * before being pushed to the changes.
  *
- * @param {import("ol/interaction/Modify/Event.js").default} evt Event.
+ * @param {import("ol/interaction/Modify.js").ModifyEvent} evt Event.
  * @private
  */
 Controller.prototype.handleModifyInteractionModifyEnd_ = function(
@@ -803,14 +806,14 @@ Controller.prototype.handleModifyInteractionModifyEnd_ = function(
 
   if (geometry instanceof olGeomMultiPolygon) {
     const jstsGeom = this.jstsOL3Parser_.read(geometry);
-    const jstsBuffered = jstsGeom.buffer(0);
+    const jstsBuffered = jstsGeom.buffer(0, undefined, undefined);
     geometry = toMulti(this.jstsOL3Parser_.write(jstsBuffered));
     this.skipGeometryChange_ = true;
     this.feature.setGeometry(geometry.clone());
     this.skipGeometryChange_ = false;
   }
 
-  const clone = Controller.cloneGeometry_(geometry);
+  const clone = cloneGeometry(geometry);
   console.assert(clone);
   this.geometryChanges_.push(clone);
   this.scope_.$apply();
@@ -841,14 +844,14 @@ Controller.prototype.initializeStyles_ = function(
     fill: new olStyleFill({color: rgbaColor})
   });
 
-  styles['Point'] = new olStyleStyle({
+  styles.Point = new olStyleStyle({
     image
   });
-  styles['MultiPoint'] = new olStyleStyle({
+  styles.MultiPoint = new olStyleStyle({
     image
   });
 
-  styles['LineString'] = [
+  styles.LineString = [
     new olStyleStyle({
       stroke: new olStyleStroke({
         color: color,
@@ -857,11 +860,11 @@ Controller.prototype.initializeStyles_ = function(
     })
   ];
   if (incVertice) {
-    styles['LineString'].push(
+    styles.LineString.push(
       this.ngeoFeatureHelper_.getVertexStyle(true)
     );
   }
-  styles['MultiLineString'] = [
+  styles.MultiLineString = [
     new olStyleStyle({
       stroke: new olStyleStroke({
         color: color,
@@ -870,12 +873,12 @@ Controller.prototype.initializeStyles_ = function(
     })
   ];
   if (incVertice) {
-    styles['MultiLineString'].push(
+    styles.MultiLineString.push(
       this.ngeoFeatureHelper_.getVertexStyle(true)
     );
   }
 
-  styles['Polygon'] = [
+  styles.Polygon = [
     new olStyleStyle({
       stroke: new olStyleStroke({
         color: color,
@@ -887,11 +890,11 @@ Controller.prototype.initializeStyles_ = function(
     })
   ];
   if (incVertice) {
-    styles['Polygon'].push(
+    styles.Polygon.push(
       this.ngeoFeatureHelper_.getVertexStyle(true)
     );
   }
-  styles['MultiPolygon'] = [
+  styles.MultiPolygon = [
     new olStyleStyle({
       stroke: new olStyleStroke({
         color: color,
@@ -903,7 +906,7 @@ Controller.prototype.initializeStyles_ = function(
     })
   ];
   if (incVertice) {
-    styles['MultiPolygon'].push(
+    styles.MultiPolygon.push(
       this.ngeoFeatureHelper_.getVertexStyle(true)
     );
   }
@@ -957,18 +960,18 @@ Controller.prototype.setFeatureStyle_ = function() {
 Controller.prototype.registerTreeCtrl_ = function(treeCtrl) {
 
   // Skip any Layertree controller that has a node that is not a leaf
-  const node = /** @type {import(gmf/themes.js).GmfGroup|import(gmf/themes.js).GmfLayer} */ (
-    treeCtrl.node);
-  if (node.children && node.children.length) {
+  const nodeGroup = /** @type {import('gmf/themes.js').GmfGroup} */ (treeCtrl.node);
+  if (nodeGroup.children && nodeGroup.children.length) {
     return;
   }
 
+  const nodeLayer = /** @type {import('gmf/themes.js').GmfLayer} */ (treeCtrl.node);
   // Set editable WMS layer for refresh purpose
-  if (node.id === this.layerNodeId) {
-    const layer = gmfLayertreeSyncLayertreeMap.getLayer(treeCtrl);
-    console.assert(
-      layer instanceof olLayerImage || layer instanceof olLayerTile);
-    this.editableWMSLayer_ = layer;
+  if (nodeLayer.id === this.layerNodeId) {
+    const layer = syncLayertreeMapGetLayer(treeCtrl);
+    if (layer instanceof olLayerImage || layer instanceof olLayerTile) {
+      this.editableWMSLayer_ = layer;
+    }
   }
 
 };
@@ -1009,6 +1012,7 @@ Controller.prototype.handleWindowBeforeUnload_ = function(e) {
   const gettextCatalog = this.gettextCatalog_;
   if (this.dirty) {
     const msg = gettextCatalog.getString('There are unsaved changes.');
+    // @ts-ignore: strange API
     (e || window.event).returnValue = msg;
     return msg;
   }
@@ -1094,7 +1098,7 @@ Controller.prototype.handleFeatureGeometryChange_ = function() {
 
 
 /**
- * @param {Array.<ObjectEditingQueryableLayerInfo>} layersInfo List
+ * @param {Array.<import('gmf/objectediting/toolsComponent.js').ObjectEditingQueryableLayerInfo>} layersInfo List
  *     of queryable layers information, which contains the node and ogcServer.
  * @private
  */
@@ -1128,20 +1132,13 @@ Controller.prototype.handleDestroy_ = function() {
  * @return {?import("ol/geom/Geometry.js").default} A geometry clone or null value.
  * @private
  */
-export function cloneGeometry(geometry) {
+function cloneGeometry(geometry) {
   let clone = null;
   if (geometry) {
     clone = geometry.clone();
   }
   return clone;
 }
-
-
-/**
- * @const
- * @private
- */
-export const NAMESPACE = 'oe';
 
 
 module.controller('GmfObjecteditingController',

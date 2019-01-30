@@ -425,7 +425,7 @@ export function AbstractAppController(config, map, $scope, $injector) {
   this.drawProfilePanelActive = false;
 
   /**
-   * @type {User}
+   * @type {import('gmf/authentication/Service.js').User}
    * @export
    */
   this.gmfUser = $injector.get('gmfUser');
@@ -771,7 +771,7 @@ AbstractAppController.prototype.initLanguage = function() {
 
 
 /**
- * @param {import(gmf/themes.js).GmfTheme} theme Theme.
+ * @param {import('gmf/themes.js').GmfTheme} theme Theme.
  * @private
  */
 AbstractAppController.prototype.setDefaultBackground_ = function(theme) {

@@ -1,8 +1,6 @@
 import angular from 'angular';
 
 /**
- */
-/**
  * The Raster service.
  * Uses the c2cgeoportal's raster to obtain different kinds of
  * information at a specific coordinate.
@@ -13,7 +11,7 @@ import angular from 'angular';
  * @ngdoc service
  * @ngname gmfRaster
  */
-function RasterService($http, gmfRasterUrl) {
+export function RasterService($http, gmfRasterUrl) {
 
   /**
    * @type {angular.IHttpService}

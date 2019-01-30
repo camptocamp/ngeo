@@ -63,8 +63,8 @@ const PRINT_PAPER_SIZE_ = [555, 675];
 /**
  * @constructor
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
- * @param {CreatePrint} ngeoCreatePrint The ngeo Create Print function.
- * @param {import("ngeo/print/Utils.js").default} ngeoPrintUtils The ngeo PrintUtils service.
+ * @param {import("ngeo/print/Service.js").CreatePrint} ngeoCreatePrint The ngeo Create Print function.
+ * @param {import("ngeo/print/Utils.js").PrintUtils} ngeoPrintUtils The ngeo PrintUtils service.
  * @ngInject
  * @export
  */
@@ -115,13 +115,13 @@ function MainController($timeout, ngeoCreatePrint, ngeoPrintUtils) {
   this.$timeout_ = $timeout;
 
   /**
-   * @type {import("ngeo/print/Service.js").default}
+   * @type {import("ngeo/print/Service.js").PrintService}
    * @private
    */
   this.print_ = ngeoCreatePrint(PRINT_PROXY);
 
   /**
-   * @type {import("ngeo/print/Utils.js").default}
+   * @type {import("ngeo/print/Utils.js").PrintUtils}
    * @private
    */
   this.printUtils_ = ngeoPrintUtils;
@@ -135,7 +135,7 @@ function MainController($timeout, ngeoCreatePrint, ngeoPrintUtils) {
        */
     () => PRINT_PAPER_SIZE_,
     /**
-       * @param {olx.FrameState} frameState Frame state.
+       * @param {import('ol/PluggableMap.js').FrameState} frameState Frame state.
        * @return {number} Scale of the map to print.
        */
     (frameState) => {

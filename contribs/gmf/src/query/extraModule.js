@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import gmfQueryGridComponent from 'gmf/query/gridComponent.js';
 import gmfQueryWindowComponent from 'gmf/query/windowComponent.js';

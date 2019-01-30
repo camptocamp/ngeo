@@ -21,7 +21,7 @@ import ngeoDownloadService from 'ngeo/download/service.js';
  * @ngname ngeoCsvDownload
  * @ngInject
  */
-function DownloadCsvService($injector, gettextCatalog) {
+export function DownloadCsvService($injector, gettextCatalog) {
 
   /**
    * @type {angular.gettext.gettextCatalog}

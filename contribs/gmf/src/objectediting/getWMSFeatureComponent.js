@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import gmfObjecteditingQuery from 'gmf/objectediting/Query.js';
 import * as olEvents from 'ol/events.js';
@@ -30,7 +28,7 @@ const module = angular.module('gmfObjecteditingGetWMSFeatureComponent', [
  *     directive is active or not.
  * @htmlAttribute {import("ol/Collection.js").default} gmf-objecteditinggetwmsfeature-features
  *     The collection of features where to add those created by this directive.
- * @htmlAttribute {ObjectEditingQueryableLayerInfo} gmf-objecteditinggetwmsfeature-layerinfo Queryable layer info.
+ * @htmlAttribute {import('gmf/objectediting/toolsComponent.js').ObjectEditingQueryableLayerInfo} gmf-objecteditinggetwmsfeature-layerinfo Queryable layer info.
  * @htmlAttribute {import("ol/Map.js").default} gmf-objecteditinggetwmsfeature-map The map.
  * @return {angular.IDirective} The directive specs.
  * @ngInject
@@ -85,7 +83,7 @@ function Controller($scope, gmfObjectEditingQuery) {
   this.features;
 
   /**
-   * @type {ObjectEditingQueryableLayerInfo}
+   * @type {import('gmf/objectediting/toolsComponent.js').ObjectEditingQueryableLayerInfo}
    * @export
    */
   this.layerInfo;
