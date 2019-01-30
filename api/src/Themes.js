@@ -117,18 +117,18 @@ export function getOverlayLayers(layerNames) {
  * @return {Promise} Promise.
  */
 export function createWMSLayer(config, ogcServer) {
-  return Promise.resolve(
-    new TileLayer({
-      title: config.name,
-      source: new TileWMS({
-        url: ogcServer.url,
-        params: {
-          'LAYERS': config.layers
-        },
-        serverType: ogcServer.type
-      })
+  const layer = new TileLayer({
+    source: new TileWMS({
+      url: ogcServer.url,
+      projection: undefined,
+      params: {
+        'LAYERS': config.layers
+      },
+      serverType: ogcServer.type
     })
-  );
+  });
+  layer.set('title', config.name);
+  return Promise.resolve(layer);
 }
 
 /**
@@ -145,10 +145,10 @@ export function createWMTSLayer(config) {
     const source = new WMTS(options);
     source.updateDimensions(config.dimensions);
     const layer = new TileLayer({
-      title: config.name,
       preload: Infinity,
       source: source
     });
+    layer.set('title', config.name);
     return layer;
   });
 }
