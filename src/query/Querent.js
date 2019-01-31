@@ -519,6 +519,10 @@ const exports = class {
       let url;
       const params = {};
 
+      if (options.bboxAsGETParam && bbox) {
+        params['bbox'] = bbox.join(',');
+      }
+
       // (3) Build query options
       for (const dataSource of dataSources) {
 
