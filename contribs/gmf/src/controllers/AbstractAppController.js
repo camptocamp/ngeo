@@ -244,14 +244,15 @@ export function AbstractAppController(config, map, $scope, $injector) {
       }
     });
 
-    // Reload theme and background layer when login status changes.
+    // Reload theme when login status changes.
     const previousThemeName = this.gmfThemeManager.getThemeName();
     this.gmfThemeManager.setThemeName('', true);
     if (evt.type !== 'ready') {
       this.updateCurrentTheme_(previousThemeName);
     }
-    // Reload themes when login status changes.
+    // Reload themes and background layer when login status changes.
     this.gmfThemes_.loadThemes(roleId);
+    this.setDefaultBackground_(null);
     this.updateHasEditableLayers_();
   };
 
