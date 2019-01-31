@@ -586,6 +586,7 @@ ngeox.DimensionsActive;
  * The options to use when sending GetFeature/GetFeatureInfo requests using
  * the querent or map query service.
  * @typedef {{
+ *     bboxAsGETParam: (boolean|undefined),
  *     coordinate: (ol.Coordinate|undefined),
  *     dataSources: (Array.<ngeox.DataSource>|undefined),
  *     extent: (ol.Extent|undefined),
@@ -598,6 +599,14 @@ ngeox.DimensionsActive;
  * }}
  */
 ngeox.IssueGetFeaturesOptions;
+
+
+/**
+ * Pass the queried bbox as a parameter of the GET query on WFS requests.
+ * Default to false.
+ * @type {boolean|undefined}
+ */
+ngeox.IssueGetFeaturesOptions.prototype.bboxAsGETParam;
 
 
 /**
@@ -1054,6 +1063,7 @@ ngeox.QueryResultSource.prototype.totalFeatureCount;
 /**
  * The options for the query service.
  * @typedef {{
+ *     bboxAsGETParam: (boolean|undefined),
  *     limit: (number|undefined),
  *     queryCountFirst: (boolean|undefined),
  *     sourceIdsProperty: (string|undefined),
@@ -1064,6 +1074,14 @@ ngeox.QueryResultSource.prototype.totalFeatureCount;
  * }}
  */
 ngeox.QueryOptions;
+
+
+/**
+ * Pass the queried bbox as a parameter of the GET query on WFS requests.
+ * Default to false.
+ * @type {boolean|undefined}
+ */
+ngeox.QueryOptions.prototype.bboxAsGETParam;
 
 
 /**
