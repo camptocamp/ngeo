@@ -34,6 +34,7 @@ import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
  * @property {string} [featurePrefix=feature] The feature prefix for WFS GetFeature requests.
  * @property {string} [geometryName=geom] The name of the geometry property for WFS GetFeature requests.
  * @property {boolean} [cursorHover]
+ * @property {boolean} [bboxAsGETParam=false] Pass the queried bbox as a parameter of the GET query on WFS requests.
  */
 
 
@@ -119,6 +120,12 @@ export class MapQuerent {
       options.tolerance : 3;
 
     /**
+     * @type {boolean}
+     * @private
+     */
+    this.bboxAsGETParam_ = options.bboxAsGETParam || false;
+
+    /**
      * A hash of data source names classified by ids.
      * @type {Object.<number, string>}
      * @private
@@ -161,7 +168,8 @@ export class MapQuerent {
       queryableDataSources: queryableDataSources,
       limit: limit,
       tolerancePx: this.tolerancePx_,
-      wfsCount: this.queryCountFirst_
+      wfsCount: this.queryCountFirst_,
+      bboxAsGETParam: this.bboxAsGETParam_
     });
     this.result_.pending = true;
     this.ngeoQuerent_.issue(options).then(
