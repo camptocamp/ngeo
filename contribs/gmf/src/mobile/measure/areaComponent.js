@@ -44,7 +44,7 @@ module.run(/* @ngInject */ ($templateCache) => {
  *     gmf-mobile-measurearea-sketchstyle A style for the measure area.
  * @param {string|function(!JQuery=, !angular.IAttributes=)}
  *     gmfMobileMeasureAreaTemplateUrl Template URL for the directive.
- * @return {angular.Directive} The Directive Definition Object.
+ * @return {angular.IDirective} The Directive Definition Object.
  * @ngInject
  * @ngdoc directive
  * @ngname gmfMobileMeasureArea
@@ -62,10 +62,10 @@ function component(gmfMobileMeasureAreaTemplateUrl) {
     bindToController: true,
     templateUrl: gmfMobileMeasureAreaTemplateUrl,
     /**
-     * @param {angular.Scope} scope Scope.
+     * @param {angular.IScope} scope Scope.
      * @param {JQuery} element Element.
      * @param {angular.IAttributes} attrs Attributes.
-     * @param {import("gmf/mobile/measure.js").default.areaComponent.Controller_} controller Controller.
+     * @param {Controller} controller Controller.
      */
     link: (scope, element, attrs, controller) => {
       controller.init();
@@ -79,7 +79,7 @@ module.directive('gmfMobileMeasurearea', component);
 
 class Controller extends MeasueMobileBaseController {
   /**
-   * @param {!angular.Scope} $scope Angular scope.
+   * @param {!angular.IScope} $scope Angular scope.
    * @param {!angular.IFilterService} $filter Angular filter
    * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
    * @ngInject
@@ -102,7 +102,7 @@ class Controller extends MeasueMobileBaseController {
       sketchStyle: this.sketchStyle
     });
 
-    super.init(this);
+    super.init();
   }
 
   /**

@@ -280,7 +280,7 @@ class Controller {
 
   /**
    * Get all available point attributes.
-   * @return {Array.<lidarprofileServer.ConfigPointAttributes>|undefined} available point attributes.
+   * @return {Array.<import("gmf/lidarprofile/Config.js").LidarprofileServerConfigPointAttributes>|undefined} available point attributes.
    * @export
    */
   getAvailablePointAttributes() {
@@ -290,8 +290,8 @@ class Controller {
 
   /**
    * Get / Set the selected point attribute
-   * @param {lidarprofileServer.ConfigPointAttributes=} opt_selectedOption the new selected point attribute.
-   * @return {lidarprofileServer.ConfigPointAttributes|undefined} Selected point attribute
+   * @param {import("gmf/lidarprofile/Config.js").LidarprofileServerConfigPointAttribute=} opt_selectedOption the new selected point attribute.
+   * @return {import("gmf/lidarprofile/Config.js").LidarprofileServerConfigPointAttributes|undefined} Selected point attribute
    * @export
    */
   getSetSelectedPointAttribute(opt_selectedOption) {
@@ -306,7 +306,7 @@ class Controller {
   /**
    * Get the available classifications for this dataset
    * @export
-   * @return {lidarprofileServer.ConfigClassifications} classification list
+   * @return {import("gmf/lidarprofile/Config.js").LidarprofileServerConfigClassifications} classification list
    */
   getClassification() {
     return this.profileConfig_.serverConfig.classification_colors;
@@ -316,7 +316,7 @@ class Controller {
   /**
    * Sets the visible classification in the profile
    * @export
-   * @param {lidarprofileServer.ConfigClassification} classification selected value
+   * @param {import("gmf/lidarprofile/Config.js").LidarprofileServerConfigClassification} classification selected value
    * @param {number} key of the classification code
    */
   setClassification(classification, key) {
@@ -336,9 +336,9 @@ class Controller {
     if (this.line) {
       const points = this.profile.utils.getFlatPointsByDistance(this.profile.profilePoints) || {};
       const csvData = this.profile.utils.getCSVData(points);
-      let headerColumns = Object.keys(points[0]);
-      headerColumns = headerColumns.map((column) => {
-        return {'name': column};
+      const headerColumnNames = Object.keys(points[0]);
+      const headerColumns = headerColumnNames.map((columnName) => {
+        return {'name': columnName};
       });
       this.ngeoCsvDownload_.startDownload(csvData, headerColumns, 'LIDAR_profile.csv');
     }

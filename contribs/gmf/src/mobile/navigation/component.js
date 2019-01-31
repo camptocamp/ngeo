@@ -65,7 +65,7 @@ function component() {
      * @param {angular.IScope} scope Scope.
      * @param {JQuery} element Element.
      * @param {angular.IAttributes} attrs Attributes.
-     * @param {import("gmf/mobile/navigation.js").default.component.Controller_} navCtrl Controller.
+     * @param {Controller} navCtrl Controller.
      */
     link: (scope, element, attrs, navCtrl) => {
       navCtrl.init(element);
@@ -277,7 +277,7 @@ function backDirective() {
      * @param {angular.IScope} scope Scope.
      * @param {JQuery} element Element.
      * @param {angular.IAttributes} attrs Attributes.
-     * @param {import("gmf/mobile/navigation.js").default.component.Controller_} navCtrl Controller.
+     * @param {Controller} navCtrl Controller.
      */
     link: (scope, element, attrs, navCtrl) => {
       scope.$watch(attrs['gmfMobileNavBack'], (newVal, oldVal) => {
@@ -319,7 +319,7 @@ function backOnClickDirective() {
      * @param {angular.IScope} scope Scope.
      * @param {JQuery} element Element.
      * @param {angular.IAttributes} attrs Attributes.
-     * @param {import("gmf/mobile/navigation.js").default.component.Controller_} navCtrl Controller.
+     * @param {Controller} navCtrl Controller.
      */
     link: (scope, element, attrs, navCtrl) => {
       element.on('click', () => {
