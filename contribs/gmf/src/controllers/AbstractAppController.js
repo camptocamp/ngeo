@@ -175,8 +175,9 @@ const exports = function(config, $scope, $injector) {
     if (evt.type !== 'ready') {
       this.updateCurrentTheme_(previousThemeName);
     }
-    // Reload themes when login status changes.
+    // Reload themes and background layer when login status changes.
     this.gmfThemes_.loadThemes(roleId);
+    this.setDefaultBackground_(null);
     this.updateHasEditableLayers_();
   };
 
