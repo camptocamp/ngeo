@@ -92,6 +92,12 @@ ngeo.MapQuerent = class {
       options.tolerance : 3;
 
     /**
+     * @type {boolean}
+     * @private
+     */
+    this.bboxAsGETParam_ = options.bboxAsGETParam || false;
+
+    /**
      * A hash of data source names classified by ids.
      * @type {Object.<number, string>}
      * @private
@@ -125,7 +131,8 @@ ngeo.MapQuerent = class {
       queryableDataSources,
       limit,
       tolerancePx: this.tolerancePx_,
-      wfsCount: this.queryCountFirst_
+      wfsCount: this.queryCountFirst_,
+      bboxAsGETParam: this.bboxAsGETParam_
     });
     this.result_.pending = true;
     this.ngeoQuerent_.issue(options).then(this.handleResult_.bind(this));
