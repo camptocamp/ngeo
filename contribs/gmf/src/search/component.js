@@ -745,9 +745,8 @@ class SearchController {
    */
   getBloodhoudRemoteOptions_() {
     const gettextCatalog = this.gettextCatalog_;
-    return {
+    return /** @type {Bloodhound.RemoteOptions} */ ({
       rateLimitWait: this.delay,
-      url: undefined,
       prepare: (query, settings) => {
         const url = settings.url;
         const lang = gettextCatalog.getCurrentLanguage();
@@ -755,12 +754,12 @@ class SearchController {
           withCredentials: true
         };
         settings.url = olUriAppendParams(url, {
-          'query': query,
-          'lang': lang,
+          query: query,
+          lang: lang,
         });
         return settings;
       }
-    };
+    });
   }
 
 
