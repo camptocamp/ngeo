@@ -3,7 +3,7 @@ import {SEARCH} from './url.js';
 import './search.css';
 
 import ngeoMapModule from 'ngeo/map/module.js';
-import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
+import {proj as EPSG21781} from '@geoblocks/proj/src/EPSG_21781.js';
 import ngeoSearchModule from 'ngeo/search/module.js';
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
@@ -109,7 +109,7 @@ function SearchController($element, $rootScope, $compile, ngeoSearchCreateGeoJSO
 
         const html = `<p>${feature.get('label')
         }<button ng-click="click($event)">i</button></p>`;
-        return $compile(html)(scope);
+        return $compile(html)(scope).html();
       }
     }
   }];
@@ -119,7 +119,18 @@ function SearchController($element, $rootScope, $compile, ngeoSearchCreateGeoJSO
    * @export
    */
   this.listeners = /** @type {import('ngeo/search/searchDirective.js').SearchDirectiveListeners} */ ({
-    select: SearchController.select_.bind(this)
+    select: (event, suggestion, dataset) => {
+      const feature = /** @type {import('ol/Feature.js').default} */ (suggestion);
+      const featureGeometry = /** @type {import('ol/geom/SimpleGeometry.js').default} */(feature.getGeometry());
+      const size = this.map.getSize();
+      const source = /** @type {olSourceVector} */(this.vectorLayer_.getSource());
+      source.clear(true);
+      source.addFeature(feature);
+      this.map.getView().fit(featureGeometry, {
+        size: size,
+        maxZoom: 16
+      });
+    }
   });
 }
 

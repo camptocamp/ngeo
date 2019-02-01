@@ -48,7 +48,7 @@ module.component('appMap', mapComponent);
 
 /**
  * @param {import("ngeo/statemanager/Location.js").StatemanagerLocation} ngeoLocation ngeo Location service.
- * @param {import("ngeo/misc/debounce.js").miscDebounce<function(): void>} ngeoDebounce ngeo Debounce factory.
+ * @param {import("ngeo/misc/debounce.js").miscDebounce<function(import("ol/events/Event.js").default): void>} ngeoDebounce ngeo Debounce factory.
  * @constructor
  * @ngInject
  */
@@ -66,7 +66,7 @@ function MapComponentController(ngeoLocation, ngeoDebounce) {
   this.ngeoLocation_ = ngeoLocation;
 
   /**
-   * @type {import("ngeo/misc/debounce.js").miscDebounce<function(): void>}
+   * @type {import("ngeo/misc/debounce.js").miscDebounce<function(import("ol/events/Event.js").default): void>}
    * @private
    */
   this.ngeoDebounce_ = ngeoDebounce;
@@ -77,8 +77,8 @@ module.controller('AppMapController', MapComponentController);
 MapComponentController.prototype.$onInit = function() {
   const view = this.map.getView();
 
-  let zoom = this.ngeoLocation_.getParam('z');
-  zoom = zoom !== undefined ? +zoom : 4;
+  const zoom_ = this.ngeoLocation_.getParam('z');
+  const zoom = zoom_ !== undefined ? +zoom_ : 4;
 
   const x = this.ngeoLocation_.getParam('x');
   const y = this.ngeoLocation_.getParam('y');
@@ -89,9 +89,9 @@ MapComponentController.prototype.$onInit = function() {
   view.setZoom(zoom);
 
   this.ngeoLocation_.updateParams({
-    'z': zoom,
-    'x': Math.round(center[0]),
-    'y': Math.round(center[1])
+    'z': `${zoom}`,
+    'x': `${Math.round(center[0])}`,
+    'y': `${Math.round(center[1])}`
   });
 
   view.on('propertychange',
@@ -102,9 +102,9 @@ MapComponentController.prototype.$onInit = function() {
       (e) => {
         const center = view.getCenter();
         const params = {
-          'z': view.getZoom(),
-          'x': Math.round(center[0]),
-          'y': Math.round(center[1])
+          'z': `${view.getZoom()}`,
+          'x': `${Math.round(center[0])}`,
+          'y': `${Math.round(center[1])}`
         };
         this.ngeoLocation_.updateParams(params);
       }, 300, /* invokeApply */ true));
@@ -189,9 +189,9 @@ DrawComponentController.prototype.$onInit = function() {
   this.map.addInteraction(this.interaction);
   interaction(this.interaction);
 
-  this.interaction.on('drawend', function(e) {
+  this.interaction.on('drawend', (e) => {
     e.feature.set('id', ++this.featureSeq_);
-  }, this);
+  });
 
   // Deal with the encoding and decoding of features in the URL.
 

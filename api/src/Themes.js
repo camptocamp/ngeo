@@ -120,7 +120,7 @@ export function createWMSLayer(config, ogcServer) {
   const layer = new TileLayer({
     source: new TileWMS({
       url: ogcServer.url,
-      projection: undefined,
+      projection: undefined, // should be removed in next OL version
       params: {
         'LAYERS': config.layers
       },

@@ -170,7 +170,7 @@ ObjectEditingQuery.prototype.getFeatureInfo = function(layerInfo, coordinate, ma
 
   const wmsSource = new olSourceImageWMS({
     url: ogcServer.url,
-    projection: undefined,
+    projection: undefined, // should be removed in next OL version
     params: {
       layers: layersParam
     }

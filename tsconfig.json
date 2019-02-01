@@ -25,6 +25,10 @@
     "include": [
       "src/**/*.js",
       "api/src/**/*.js",
-      "contribs/gmf/src/**/*.js"
+      "contribs/gmf/src/**/*.js",
+      //"test/spec/**/*.js",
+      //"contribs/gmf/test/spec/**/*.js",
+      "examples/*.js",
+      //"contribs/gmf/examples/*.js",
     ]
 }

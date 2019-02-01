@@ -99,7 +99,7 @@ MainController.prototype.importKml_ = function(kml) {
   const extent = vectorSource.getExtent();
   const mapSize = map.getSize();
   if (mapSize && !olExtent.isEmpty(extent)) {
-    map.getView().fit(extent, mapSize);
+    map.getView().fit(extent, {size: mapSize});
   }
 };
 

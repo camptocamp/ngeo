@@ -152,6 +152,7 @@ function MainController($scope) {
    */
   const overlay = new olLayerImage({
     source: new olSourceImageWMS({
+      projection: undefined, // should be removed in next OL version
       url: 'https://wms.geo.admin.ch',
       params: {'LAYERS': 'ch.swisstopo.dreiecksvermaschung'},
       serverType: 'mapserver'

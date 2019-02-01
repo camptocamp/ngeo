@@ -104,7 +104,7 @@ function MainController(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
    * @export
    */
   this.drawPoint = new olInteractionDraw(
-    /** @type {olx.interaction.DrawOptions} */ ({
+    /** @type {import('ol/interaction/Draw.js').Options} */ ({
       type: 'Point',
       features: features
     }));
@@ -121,7 +121,7 @@ function MainController(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
    * @export
    */
   this.drawLine = new olInteractionDraw(
-    /** @type {olx.interaction.DrawOptions} */ ({
+    /** @type {import('ol/interaction/Draw.js').Options} */ ({
       type: 'LineString',
       features: features
     }));
@@ -138,7 +138,7 @@ function MainController(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
    * @export
    */
   this.drawPolygon = new olInteractionDraw(
-    /** @type {olx.interaction.DrawOptions} */ ({
+    /** @type {import('ol/interaction/Draw.js').Options} */ ({
       type: 'Polygon',
       features: features
     }));

@@ -95,7 +95,7 @@ function LayertreeController($http, $sce, appGetLayer, ngeoCreatePopup) {
 
   /**
    * @private
-   * @type {import("ngeo/message/Popup.js").default}
+   * @type {import("ngeo/message/Popup.js").MessagePopup}
    */
   this.infoPopup_ = ngeoCreatePopup();
 

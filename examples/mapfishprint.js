@@ -78,6 +78,7 @@ function MainController($timeout, ngeoCreatePrint, ngeoPrintUtils) {
       new olLayerImage({
         source: new olSourceImageWMS({
           url: MAPSERVER_PROXY,
+          projection: undefined, // should be removed in next OL version
           params: {
             'LAYERS': 'osm'
           },
@@ -88,7 +89,7 @@ function MainController($timeout, ngeoCreatePrint, ngeoPrintUtils) {
         source: new olSourceVector({
           url: 'data/polygon-swizerland.json',
           format: new olFormatGeoJSON({
-            defaultDataProjection: EPSG21781
+            dataProjection: EPSG21781
           })
         })
       })

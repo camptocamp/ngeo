@@ -47,7 +47,7 @@ function MainController($scope, ngeoFeatureOverlayMgr) {
   });
 
   /**
-   * @type {DesktopGeolocationDirectiveOptions}
+   * @type {import('ngeo/geolocation/desktop.js').DesktopGeolocationDirectiveOptions}
    * @export
    */
   this.desktopGeolocationOptions = {
