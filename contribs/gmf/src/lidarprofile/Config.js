@@ -1,7 +1,69 @@
 import angular from 'angular';
 
 
-class LidarprofileConfigService {
+/**
+ * @typedef {Object.<number, !LidarprofileServerConfigClassification}
+ *     LidarprofileServerConfigClassifications
+ */
+
+/**
+ * @typedef {Object} LidarprofileServerConfigClassification
+ * @property {string} [color] Color
+ * @property {string} [name] Name
+ * @property {string} [value] Value
+ * @property {boolean} [visible] Visible
+ */
+
+/**
+ * @typedef {Object.<number, !LidarprofileServerConfigLevel}
+ *     LidarprofileServerConfigLevels
+ */
+
+/**
+ * @typedef {Object} LidarprofileServerConfigLevel
+ * @property {number} [max] Max
+ * @property {number} [width] Width
+ */
+
+/**
+ * @typedef {Object.<number, !LidarprofileServerConfigPointAttribute}
+ *     LidarprofileServerConfigPointAttributes
+ */
+
+/**
+ * @typedef {Object} LidarprofileServerConfigPointAttribute
+ * @property {number} [bytes] Bytes
+ * @property {number} [elements] Elements
+ * @property {string} [name] Name
+ * @property {string} [value] Value
+ * @property {number} [visible] Visible
+ */
+
+/**
+ * @typedef {Object} LidarprofileServerConfig
+ * @property {Object.<number, string>} [classes_names_normalized]
+ *     Classes names normalized
+ * @property {Object.<number, string>} [classes_names_standard]
+ *     Classes names standard
+ * @property {LidarprofileServerConfigClassifications}
+ *     [classification_colors] Classification colors
+ * @property {boolean} [debug] Debug
+ * @property {string} [default_attribute] Default attribute
+ * @property {string} [default_color] Default color
+ * @property {string} [default_point_attribute] Default point
+ *     attribute
+ * @property {string} [default_point_cloud] Default point cloud
+ * @property {number} [initialLOD] Initial LOD
+ * @property {number} [minLOD] Min LOD
+ * @property {LidarprofileServerConfigPointAttributes}
+ *     [point_attributes] Point attributes
+ * @property {number} [point_size] Point size
+ * @property {number} [vertical_pan_tolerance] Vertical pan tolerance
+ * @property {number} [width] Width
+ */
+
+
+export class LidarprofileConfigService {
   /**
    * Configuration service to configure the gmf.lidarPanelComponent and gmf.lidarprofile instance
    * Requires a Pytree service: https://github.com/sitn/pytree
@@ -49,7 +111,7 @@ class LidarprofileConfigService {
 
     /**
      * The configuration from the LIDAR server.
-     * @type {lidarprofileServer.Config}
+     * @type {import("gmf/lidarprofile/Config.js").LidarprofileServerConfig}
      */
     this.serverConfig = null;
   }
@@ -63,7 +125,7 @@ class LidarprofileConfigService {
   initProfileConfig() {
     return this.$http_.get(`${this.pytreeLidarprofileJsonUrl}/profile/config`).then((resp) => {
 
-      this.serverConfig = /** @type {lidarprofileServer.Config} */ ({
+      this.serverConfig = /** @type {import("gmf/lidarprofile/Config.js").LidarprofileServerConfig} */ ({
         classification_colors: resp.data['classification_colors'] || null,
         debug: !!resp.data['debug'],
         default_attribute: resp.data['default_attribute'] || '',

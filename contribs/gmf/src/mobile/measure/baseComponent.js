@@ -15,8 +15,8 @@ const module = angular.module('gmfMobileMeasureBase', [
 /**
  * Base controller class for Length and Area components.
  *
- * @param {!angular.Scope} $scope Angular scope.
- * @param {!angular.$filter} $filter Angular filter
+ * @param {!angular.IScope} $scope Angular scope.
+ * @param {!angular.IFilterService} $filter Angular filter
  * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @constructor
  * @ngInject
@@ -145,7 +145,7 @@ MeasueMobileBaseController.prototype.init = function() {
   olEvents.listen(
     drawInteraction,
     'change:dirty',
-    function() {
+    (evt) => {
       this.dirty = drawInteraction.getDirty();
 
       // this is where the angular scope is forced to be applied. We
@@ -161,7 +161,7 @@ MeasueMobileBaseController.prototype.init = function() {
   olEvents.listen(
     drawInteraction,
     'change:drawing',
-    function() {
+    (evt) => {
       this.drawing = drawInteraction.getDrawing();
     },
     this
@@ -170,7 +170,7 @@ MeasueMobileBaseController.prototype.init = function() {
   olEvents.listen(
     drawInteraction,
     'change:valid',
-    function() {
+    (evt) => {
       this.valid = drawInteraction.getValid();
     },
     this

@@ -368,7 +368,7 @@ export default class {
 
   /**
    * @param {LidarPoint} point the concerned point.
-   * @param {lidarprofileServer.ConfigClassification} classification_color the classification
+   * @param {import("gmf/lidarprofile/Config.js").LidarprofileServerConfigClassification} classification_color the classification
    *     object concerning this point.
    * @param {number} distDecimal the number of decimal to keep.
    * @return {string} the text for the html info.
@@ -421,7 +421,7 @@ export default class {
 
   /**
   * Show/Hide classes in the profile
-  * @param {lidarprofileServer.ConfigClassifications} classification value as defined in the Pytree classification_colors
+  * @param {import("gmf/lidarprofile/Config.js").LidarprofileServerConfigClassifications} classification value as defined in the Pytree classification_colors
   *     configuration
   * @param {string} material  value as defined in Pytree attribute configuration
   * @export

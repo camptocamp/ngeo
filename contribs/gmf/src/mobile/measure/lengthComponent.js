@@ -65,7 +65,7 @@ function component(gmfMobileMeasureLengthTemplateUrl) {
      * @param {angular.IScope} scope Scope.
      * @param {JQuery} element Element.
      * @param {angular.IAttributes} attrs Attributes.
-     * @param {import("gmf/mobile/measure.js").default.lengthComponent.Controller_} controller Controller.
+     * @param {Controller} controller Controller.
      */
     link: (scope, element, attrs, controller) => {
       controller.init();

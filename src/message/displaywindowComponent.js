@@ -295,7 +295,7 @@ class Controller {
  *     an url.
  * @htmlAttribute {string=} ngeo-displaywindow-content-template AngularJS template. It gets compiled during runtime
  * with the supplied scope (ngeo-displaywindow-content-scope).
- * @htmlAttribute {angular.Scope=} ngeo-displaywindow-content-scope Scope used for ngeo-displaywindow-content-template.
+ * @htmlAttribute {angular.IScope=} ngeo-displaywindow-content-scope Scope used for ngeo-displaywindow-content-template.
  * @htmlAttribute {boolean=} ngeo-displaywindow-desktop If true, the window is draggable and resizable. If
  *     not set, you must set manually both parameter.
  * @htmlAttribute {boolean=} ngeo-displaywindow-draggable Whether the window is draggable or not.

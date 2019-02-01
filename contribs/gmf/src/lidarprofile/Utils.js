@@ -11,8 +11,8 @@ import {select as d3select} from 'd3';
 /**
  * The lidar point attribute list width default option
  * @typedef {Object} LidarPointAttributeList
- * @property {Array.<lidarprofileServer.ConfigPointAttributes>} [availableOptions]
- * @property {lidarprofileServer.ConfigPointAttributes} [selectedOption]
+ * @property {Array.<import("gmf/lidarprofile/Config.js").LidarprofileServerConfigPointAttributes>} [availableOptions]
+ * @property {import("gmf/lidarprofile/Config.js").LidarprofileServerConfigPointAttributes} [selectedOption]
  */
 
 
@@ -193,7 +193,7 @@ export default class {
    * Get a Level Of Details and with for a given chart span
    * Configuration is set up in Pytree configuration
    * @param {number} span domain extent
-   * @param {lidarprofileServer.ConfigLevels} max_levels levels defined by a LIDAR server
+   * @param {import("gmf/lidarprofile/Config.js").LidarprofileServerConfigLevels} max_levels levels defined by a LIDAR server
    * @return {{maxLOD: number, width: number}} Object with optimized Level Of Details and width for this profile span
    */
   getNiceLOD(span, max_levels) {
@@ -360,7 +360,7 @@ export default class {
    * @param {number} tolerance snap sensibility
    * @param {Function} sx d3.scalelinear x scale
    * @param {Function} sy d3.scalelinear y scale
-   * @param {lidarprofileServer.ConfigClassifications} classification_colors classification colors
+   * @param {import("gmf/lidarprofile/Config.js").LidarprofileServerConfigClassifications} classification_colors classification colors
    * @return {LidarPoint} closestPoint the closest point to the clicked coordinates
    */
   getClosestPoint(points, xs, ys, tolerance, sx, sy, classification_colors) {
@@ -393,7 +393,7 @@ export default class {
     let closestPoint;
 
     if (hP.length > 0) {
-      const minDist = Math.min(distances);
+      const minDist = Math.min.apply(Math, distances);
       const indexMin = distances.indexOf(minDist);
       if (indexMin != -1) {
         closestPoint = hP[indexMin];
