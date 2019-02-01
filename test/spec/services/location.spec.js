@@ -1,3 +1,4 @@
+import angular from 'angular';
 describe('ngeo.statemanager.Location', () => {
   let win;
   let ngeoLocation;

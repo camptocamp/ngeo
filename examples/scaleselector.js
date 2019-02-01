@@ -1,6 +1,3 @@
-/**
- */
-
 import './scaleselector.css';
 import angular from 'angular';
 import ngeoMiscFilters from 'ngeo/misc/filters.js';

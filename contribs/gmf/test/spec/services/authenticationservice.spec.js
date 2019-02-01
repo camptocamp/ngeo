@@ -1,3 +1,4 @@
+import angular from 'angular';
 import {RouteSuffix} from 'gmf/authentication/Service.js';
 import * as olEvents from 'ol/events.js';
 
@@ -34,10 +35,11 @@ describe('gmf.authentication.Service', () => {
 
   it('emits READY after login status check', () => {
     const spy = jasmine.createSpy();
+    /** @type {import('gmf/authentication/Service.js').AuthenticationEvent} */
     let event;
     olEvents.listenOnce(
       gmfAuthentication, 'ready', (evt) => {
-        event = evt;
+        event = /** @type {import('gmf/authentication/Service.js').AuthenticationEvent} */(evt);
         spy();
       }
     );
@@ -55,10 +57,11 @@ describe('gmf.authentication.Service', () => {
 
   it('logins successful', () => {
     const spy = jasmine.createSpy();
+    /** @type {import('gmf/authentication/Service.js').AuthenticationEvent} */
     let event;
     olEvents.listenOnce(
       gmfAuthentication, 'login', (evt) => {
-        event = evt;
+        event = /** @type {import('gmf/authentication/Service.js').AuthenticationEvent} */(evt);
         spy();
       });
 

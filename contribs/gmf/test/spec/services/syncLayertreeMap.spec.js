@@ -1,6 +1,7 @@
+import angular from 'angular';
 import {getLayer as gmfLayertreeSyncLayertreeMapGetLayer} from 'gmf/layertree/SyncLayertreeMap.js';
-import gmfTestDataThemes from 'gmf/test/data/themes.js';
-import gmfTestDataThemescapabilities from 'gmf/test/data/themescapabilities.js';
+import gmfTestDataThemes from '../data/themes.js';
+import gmfTestDataThemescapabilities from '../data/themescapabilities.js';
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
 import olLayerGroup from 'ol/layer/Group.js';

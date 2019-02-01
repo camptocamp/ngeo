@@ -1,3 +1,4 @@
+import angular from 'angular';
 import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
 import * as olProj from 'ol/proj.js';
 

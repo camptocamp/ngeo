@@ -1,3 +1,4 @@
+import angular from 'angular';
 import olMap from 'ol/Map.js';
 import olCollection from 'ol/Collection.js';
 import olFeature from 'ol/Feature.js';

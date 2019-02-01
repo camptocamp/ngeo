@@ -1,4 +1,5 @@
-import gmfTestDataPrintcapabilities from 'gmf/test/data/printcapabilities.js';
+import angular from 'angular';
+import gmfTestDataPrintcapabilities from '../data/printcapabilities.js';
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
 

@@ -1,3 +1,4 @@
+import angular from 'angular';
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
 import * as olProj from 'ol/proj.js';
@@ -5,7 +6,7 @@ import * as olFormatFilter from 'ol/format/filter.js';
 import olFormatFilterEqualTo from 'ol/format/filter/EqualTo.js';
 import olFormatFilterLogicalNary from 'ol/format/filter/LogicalNary.js';
 import {WfsPermalinkService} from 'ngeo/statemanager/WfsPermalink.js';
-import ngeoTestDataMsGMLOutputFuel from 'ngeo/test/data/msGMLOutputFuel.js';
+import ngeoTestDataMsGMLOutputFuel from '../data/msGMLOutputFuel.js';
 
 describe('ngeo.statemanager.WfsPermalink', () => {
 

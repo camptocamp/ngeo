@@ -1,3 +1,4 @@
+import angular from 'angular';
 describe('ngeo.misc.filters', () => {
 
   let $filter;

@@ -1,4 +1,5 @@
-import gmfTestDataThemes from 'gmf/test/data/themes.js';
+import angular from 'angular';
+import gmfTestDataThemes from '../data/themes.js';
 
 describe('gmf.theme.Manager', () => {
   let gmfThemeManager_;

@@ -1,3 +1,4 @@
+import angular from 'angular';
 describe('gmf.permalink.ShareService', () => {
   let $httpBackend;
   const successResponse = {
@@ -11,6 +12,7 @@ describe('gmf.permalink.ShareService', () => {
 
   it('Should get a short version of the permalink', () => {
     let shortenerUrl;
+    /** @type {!import('gmf/permalink/ShareService.js').PermalinkShareService} */
     let gmfShareService;
 
     angular.mock.inject((_$httpBackend_, _gmfShareService_, _gmfShortenerCreateUrl_) => {
@@ -21,7 +23,7 @@ describe('gmf.permalink.ShareService', () => {
     });
 
     const permalink = 'htpp://fake/c2c/permalink';
-    const params = /** @type {ShortenerAPIRequestParams} */ ({
+    const params = /** @type {import('gmf/permalink/ShareService.js').ShortenerAPIRequestParams} */ ({
       url: permalink
     });
 
@@ -38,6 +40,7 @@ describe('gmf.permalink.ShareService', () => {
 
   it('Should return the permalink if no URL for the shorten service has been provided', () => {
     let shortenerUrl;
+    /** @type {!import('gmf/permalink/ShareService.js').PermalinkShareService} */
     let gmfShareService;
 
     angular.mock.module(($provide) => {

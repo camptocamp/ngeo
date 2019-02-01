@@ -1,3 +1,4 @@
+import angular from 'angular';
 import {DOTS_PER_INCH, INCHES_PER_METER} from 'ngeo/print/Utils.js';
 
 describe('ngeo.print.Utils', () => {

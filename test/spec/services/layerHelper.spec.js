@@ -1,8 +1,9 @@
+import angular from 'angular';
 import olLayerGroup from 'ol/layer/Group.js';
 import olLayerImage from 'ol/layer/Image.js';
 import olSourceImageWMS from 'ol/source/ImageWMS.js';
 import olCollection from 'ol/Collection.js';
-import ngeoTestDataWmtsCapabilities from 'ngeo/test/data/wmtsCapabilities.js';
+import ngeoTestDataWmtsCapabilities from '../data/wmtsCapabilities.js';
 
 describe('ngeo.map.LayerHelper', () => {
   let ngeoLayerHelper;

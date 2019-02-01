@@ -1,4 +1,5 @@
-import ngeoTestDataGeoAdminLocationSearch from 'ngeo/test/data/geoAdminLocationSearch.js';
+import angular from 'angular';
+import ngeoTestDataGeoAdminLocationSearch from '../data/geoAdminLocationSearch.js';
 import * as olProj from 'ol/proj.js';
 
 
@@ -23,13 +24,15 @@ describe('ngeo.search.createLocationSearchBloodhound', () => {
     expect(features.length).toBe(5);
 
     const feature = features[0];
-    expect(feature.getId(), '5586');
+    expect(feature.getId()).toBe('5586');
     expect(feature.get('label')).toBe('<i>Populated Place</i> <b>Lausanne</b> (VD) - Lausanne');
     expect(feature.get('label_no_html')).toBe('Populated Place Lausanne (VD) - Lausanne');
     expect(feature.get('label_simple')).toBe('Lausanne');
 
+    // @ts-ignore: arrayToBeCloseTo is a custom matcher
     expect(feature.getGeometry().getCoordinates()).arrayToBeCloseTo(
       [745348.9689, 5869543.2550]);
+    // @ts-ignore: arrayToBeCloseTo is a custom matcher
     expect(feature.get('bbox')).arrayToBeCloseTo(
       [732811.7205, 5861483.7511, 748269.0879, 5877508.3355]);
   });

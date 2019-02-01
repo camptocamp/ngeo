@@ -1,3 +1,4 @@
+import angular from 'angular';
 import olMap from 'ol/Map.js';
 import olStyleStyle from 'ol/style/Style.js';
 import olView from 'ol/View.js';

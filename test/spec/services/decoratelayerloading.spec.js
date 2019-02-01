@@ -1,3 +1,4 @@
+import angular from 'angular';
 import {layerLoading} from 'ngeo/misc/decorate.js';
 import olLayerImage from 'ol/layer/Image.js';
 import olLayerGroup from 'ol/layer/Group.js';
@@ -12,7 +13,9 @@ describe('ngeo.misc.DecorateLayerLoading test suite', () => {
   }));
 
   it('should increment layerLoadingCount recursively', () => {
-    const imageSource = new olSourceImage({});
+    const imageSource = new olSourceImage({
+      projection: undefined, // should be removed in next OL version
+    });
     const layer = new olLayerImage({source: imageSource});
     const lg_1 = new olLayerGroup();
     const lg_2 = new olLayerGroup();

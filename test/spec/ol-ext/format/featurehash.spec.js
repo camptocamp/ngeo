@@ -412,7 +412,6 @@ describe('ngeo.format.FeatureHash', () => {
             width: 2
           }),
           text: new olStyleText({
-            label: 'foo', // not encoded
             font: 'bold 12px Verdana',
             fill: new olStyleFill({
               color: [1, 255, 1, 1]
@@ -503,7 +502,7 @@ describe('ngeo.format.FeatureHash', () => {
     describe('With a user-provided feature properties function', () => {
       it('encodes feature properties as expected', () => {
         fhFormat = new ngeoFormatFeatureHash({
-          'accuracy': 1,
+          accuracy: 1,
           properties(feature) {
             return {foobar: feature.get('foo') + feature.get('bar')};
           }

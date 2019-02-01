@@ -1,3 +1,4 @@
+import angular from 'angular';
 import olCollection from 'ol/Collection.js';
 import olMap from 'ol/Map.js';
 import olLayerGroup from 'ol/layer/Group.js';
