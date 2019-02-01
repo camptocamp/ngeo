@@ -1,3 +1,4 @@
+import angular from 'angular';
 import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
 
 describe('ngeo.misc.ToolActivateMgr', () => {

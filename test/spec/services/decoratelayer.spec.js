@@ -9,9 +9,9 @@ describe('ngeo.misc.DecorateLayer', () => {
       visible: false
     });
     ngeoMiscDecorateLayer(layer);
-    layer.visible = true;
+    layer.set('visible', true);
     expect(layer.getVisible()).toBe(true);
-    layer.visible = false;
+    layer.set('visible', false);
     expect(layer.getVisible()).toBe(false);
   });
 
@@ -21,7 +21,7 @@ describe('ngeo.misc.DecorateLayer', () => {
       opacity: 0.5
     });
     ngeoMiscDecorateLayer(layer);
-    layer.opacity = 0.7;
+    layer.set('opacity', 0.7);
     expect(layer.getOpacity()).toBe(0.7);
   });
 });

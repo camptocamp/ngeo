@@ -1,4 +1,5 @@
-import gmfTestDataThemes from 'gmf/test/data/themes.js';
+import angular from 'angular';
+import gmfTestDataThemes from '../data/themes.js';
 import {DATALAYERGROUP_NAME} from 'gmf/index.js';
 import EPSG2056 from '@geoblocks/proj/src/EPSG_2056.js';
 import olMap from 'ol/Map.js';

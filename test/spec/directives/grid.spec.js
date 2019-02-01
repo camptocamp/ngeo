@@ -1,3 +1,4 @@
+import angular from 'angular';
 import GridConfig from 'ngeo/grid/Config.js';
 
 describe('ngeo.grid.component', () => {

@@ -1,3 +1,4 @@
+import angular from 'angular';
 import olStyleStyle from 'ol/style/Style.js';
 import olFeature from 'ol/Feature.js';
 

@@ -1,3 +1,5 @@
+import angular from 'angular';
+
 describe('ngeo.misc.filereaderComponent', () => {
   let element, rootScope;
 
@@ -13,9 +15,10 @@ describe('ngeo.misc.filereaderComponent', () => {
             result: '<kml></kml>'
           }
         };
+        // @ts-ignore
         this.onload(progressEvent);
       };
-      $provide.value('$window', {FileReader: FileReader, angular: window.angular});
+      $provide.value('$window', {FileReader: FileReader, angular: angular});
     });
 
     angular.mock.inject(($rootScope, $compile) => {

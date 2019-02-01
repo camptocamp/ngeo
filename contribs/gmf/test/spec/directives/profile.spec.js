@@ -1,3 +1,5 @@
+import angular from 'angular';
+
 describe('gmf.GmfProfileController', () => {
 
   let profileController;

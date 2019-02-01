@@ -1,5 +1,6 @@
+import angular from 'angular';
 import {PrintService} from 'ngeo/print/Service.js';
-import * as olBase from 'ol/index.js';
+import {getUid} from 'ol/index.js';
 import olFeature from 'ol/Feature.js';
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
@@ -78,6 +79,7 @@ describe('ngeo.print.Service', () => {
       beforeEach(() => {
         map.addLayer(new olLayerImage({
           source: new olSourceImageWMS({
+            projection: undefined, // should be removed in next OL version
             url: 'http://example.com/wms',
             params: {
               'LAYERS': 'foo,bar',
@@ -138,6 +140,7 @@ describe('ngeo.print.Service', () => {
       beforeEach(() => {
         map.addLayer(new olLayerTile({
           source: new olSourceTileWMS({
+            projection: undefined, // should be removed in next OL version
             url: 'http://example.com/wms',
             params: {
               'LAYERS': 'foo,bar',
@@ -418,11 +421,11 @@ describe('ngeo.print.Service', () => {
         const spec = print.createSpec(map, scale, dpi, layout, format,
           customAttributes);
 
-        const styleId0 = olBase.getUid(style0).toString();
-        const styleId1 = olBase.getUid(style1).toString();
-        const styleId2 = olBase.getUid(style2).toString();
-        const styleId3 = olBase.getUid(style3).toString();
-        const styleId4 = olBase.getUid(style4).toString();
+        const styleId0 = getUid(style0);
+        const styleId1 = getUid(style1);
+        const styleId2 = getUid(style2);
+        const styleId3 = getUid(style3);
+        const styleId4 = getUid(style4);
 
         const expectedStyle = {
           version: 2
@@ -588,6 +591,7 @@ describe('ngeo.print.Service', () => {
       beforeEach(() => {
         map.addLayer(new olLayerImage({
           source: new olSourceImageWMS({
+            projection: undefined, // should be removed in next OL version
             url: 'http://example.com/wms/bottom',
             params: {
               'LAYERS': 'foo,bar',
@@ -598,6 +602,7 @@ describe('ngeo.print.Service', () => {
 
         map.addLayer(new olLayerImage({
           source: new olSourceImageWMS({
+            projection: undefined, // should be removed in next OL version
             url: 'http://example.com/wms/top',
             params: {
               'LAYERS': 'foo,bar',

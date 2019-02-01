@@ -1,3 +1,4 @@
+import angular from 'angular';
 import ngeoMiscSyncArrays from 'ngeo/misc/syncArrays.js';
 
 describe('ngeo.misc.syncArrays', () => {

@@ -24,18 +24,17 @@ import olStyleText from 'ol/style/Text.js';
  * @typedef {Object} FeatureHashOptions
  * @property {number} [accuracy] The encoding and decoding accuracy. Optional. Default value is 1.
  * @property {Object.<string, function(import("ol/Feature.js").default)>} [defaultValues] defaultValues.
- * @property {boolean} [encodeStyles] Encode styles. Optional. Default is `true`.
+ * @property {boolean} [encodeStyles=true] Encode styles. Optional.
  * @property {function(import("ol/Feature.js").default): Object.<string, (string|undefined)>} [properties] A function that
  * returns serializable properties for a feature. Optional. By default the feature properties (as returned
  * by `feature.getProperties()`) are used. To be serializable the returned properties should be numbers or
  * strings.
- * @property {boolean} [setStyle] Determines whether the style defined for each feature is read and converted
+ * @property {boolean} [setStyle=treu] Determines whether the style defined for each feature is read and converted
  * into:
  *   A) an `ol.style.Style` object set in the feature, or
  *   B) an object with key:values that defines the style properties set in the feature and for the
  *      `ngeo.misc.FeatureHelper` to use to style the feature with.
- * Default is `true`, i.e. A).
- * @property {Object.<string, string>} propertiesType
+ * @property {Object.<string, string>} [propertiesType]
  */
 
 

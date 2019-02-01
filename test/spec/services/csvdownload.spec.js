@@ -1,3 +1,4 @@
+import angular from 'angular';
 describe('ngeo.download.Csv', () => {
 
   let ngeoCsvDownload;

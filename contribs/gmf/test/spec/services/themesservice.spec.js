@@ -1,5 +1,6 @@
-import gmfTestDataThemes from 'gmf/test/data/themes.js';
-import gmfTestDataThemescapabilities from 'gmf/test/data/themescapabilities.js';
+import angular from 'angular';
+import gmfTestDataThemes from '../data/themes.js';
+import gmfTestDataThemescapabilities from '../data/themescapabilities.js';
 import * as olEvents from 'ol/events.js';
 
 describe('gmf.theme.Themes', () => {
