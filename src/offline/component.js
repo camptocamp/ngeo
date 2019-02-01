@@ -343,8 +343,8 @@ exports.Controller = class {
   validateExtent() {
     this.progressPercents = 0;
     const extent = this.getDowloadExtent_();
-    this.ngeoOfflineServiceManager_.save(extent, this.map);
     this.downloading = true;
+    this.ngeoOfflineServiceManager_.save(extent, this.map);
   }
 
 

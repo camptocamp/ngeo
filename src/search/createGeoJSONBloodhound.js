@@ -4,8 +4,7 @@
 import olFormatGeoJSON from 'ol/format/GeoJSON.js';
 import * as olObj from 'ol/obj.js';
 
-import Bloodhound from 'corejs-typeahead';
-
+import 'corejs-typeahead';
 
 /**
  * @param {string} url an URL to a search service.

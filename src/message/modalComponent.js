@@ -112,9 +112,7 @@ exports.Controller_ = class {
     this.ngModel;
   }
 
-  $onInit() {
-    this.closable = this.closable !== false;
-
+  $postLink() {
     this.modal_ = this.$element_.children();
 
     if (!this.closable) {
@@ -125,7 +123,9 @@ exports.Controller_ = class {
     this.resizable = !!this.resizable;
 
     const dialog = this.modal_.find('.modal-dialog');
-    dialog.draggable();
+    dialog.draggable({
+      'handle': '.modal-header'
+    });
     if (this.resizable) {
       dialog.resizable();
     }
