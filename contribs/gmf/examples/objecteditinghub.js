@@ -6,7 +6,7 @@ import gmfEditingXSDAttributes from 'gmf/editing/XSDAttributes.js';
 import gmfObjecteditingManager, {ObjecteditingParam} from 'gmf/objectediting/Manager.js';
 import gmfThemeThemes from 'gmf/theme/Themes.js';
 import olFormatWFS from 'ol/format/WFS.js';
-import ngeoFormatXSDAttribute from 'ngeo/format/XSDAttribute.js';
+import {getGeometryAttribute} from 'ngeo/format/XSDAttribute.js';
 
 
 /** @type {!angular.IModule} **/
@@ -404,7 +404,7 @@ MainController.prototype.issueGetAttributesRequest_ = function(
   this.gmfXSDAttributes_.getAttributes(gmfLayerNode.id).then(
     function(gmfLayerNode, attributes) {
       // Get geom type from attributes and set
-      const geomAttr = ngeoFormatXSDAttribute.getGeometryAttribute(attributes);
+      const geomAttr = getGeometryAttribute(attributes);
       if (geomAttr && geomAttr.geomType) {
         this.geomTypeCache_[gmfLayerNode.id] = geomAttr.geomType;
         this.getGeometryTypeDeferred_.resolve();

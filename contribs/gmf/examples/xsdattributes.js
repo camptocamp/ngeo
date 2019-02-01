@@ -5,7 +5,7 @@ import gmfThemeThemes from 'gmf/theme/Themes.js';
 
 import gmfEditingXSDAttributes from 'gmf/editing/XSDAttributes.js';
 import ngeoEditingAttributesComponent from 'ngeo/editing/attributesComponent.js';
-import ngeoFormatXSDAttribute from 'ngeo/format/XSDAttribute.js';
+import {getGeometryAttribute} from 'ngeo/format/XSDAttribute.js';
 import olFeature from 'ol/Feature.js';
 import 'jquery-datetimepicker/jquery.datetimepicker.css';
 
@@ -130,9 +130,7 @@ MainController.prototype.setAttributes_ = function(attributes) {
 MainController.prototype.getGeomType = function() {
   let type = 'N/A';
   if (this.attributes) {
-    const geomAttr = ngeoFormatXSDAttribute.getGeometryAttribute(
-      this.attributes
-    );
+    const geomAttr = getGeometryAttribute(this.attributes);
     if (geomAttr && geomAttr.geomType) {
       type = geomAttr.geomType;
     }

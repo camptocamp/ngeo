@@ -1,7 +1,7 @@
 import angular from 'angular';
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
 import gmfThemeThemes, {ThemeNodeType, getSnappingConfig} from 'gmf/theme/Themes.js';
-import ngeoLayertreeController from 'ngeo/layertree/Controller.js';
+import ngeoLayertreeController, {getFirstParentTree} from 'ngeo/layertree/Controller.js';
 import {getUid as olUtilGetUid} from 'ol/util.js';
 import * as olEvents from 'ol/events.js';
 import olCollection from 'ol/Collection.js';
@@ -283,7 +283,7 @@ EditingSnappingService.prototype.getOGCServer_ = function(treeCtrl) {
   if (gmfGroup.mixed) {
     ogcServerName = gmfLayerWMS.ogcServer;
   } else {
-    const firstTreeCtrl = ngeoLayertreeController.getFirstParentTree(treeCtrl);
+    const firstTreeCtrl = getFirstParentTree(treeCtrl);
     const firstNode = /** @type {import('gmf/themes.js').GmfGroup} */ (firstTreeCtrl.node);
     ogcServerName = firstNode.ogcServer;
   }
