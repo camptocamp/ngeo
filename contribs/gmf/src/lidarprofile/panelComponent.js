@@ -334,7 +334,7 @@ class Controller {
    */
   csvExport() {
     if (this.line) {
-      const points = this.profile.utils.getFlatPointsByDistance(this.profile.profilePoints) || {};
+      const points = this.profile.utils.getFlatPointsByDistance(this.profile.profilePoints) || [];
       const csvData = this.profile.utils.getCSVData(points);
       const headerColumnNames = Object.keys(points[0]);
       const headerColumns = headerColumnNames.map((columnName) => {

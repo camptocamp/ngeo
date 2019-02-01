@@ -87,7 +87,7 @@ export default class {
 
   /**
    * Draw the points to the canvas element
-   * @param {LidarprofilePoints} points of the profile
+   * @param {import("gmf/lidarprofile/Utils.js").LidarprofilePoints} points of the profile
    * @export
    */
   drawPoints(points) {
@@ -341,7 +341,7 @@ export default class {
 
       this.manager_.cartoHighlight.setElement(el);
       this.manager_.cartoHighlight.setPosition([p.coords[0], p.coords[1]]);
-      /** @type {olSourceVector} */(this.manager_.lidarPointHighlight.getSource()).clear();
+      /** @type {import("ol/source/Vector.js").default} */(this.manager_.lidarPointHighlight.getSource()).clear();
       const lidarPointGeom = new olGeomPoint([p.coords[0], p.coords[1]]);
       const lidarPointFeature = new olFeature(lidarPointGeom);
       if (typeof (pointClassification.color) !== undefined) {
@@ -356,9 +356,9 @@ export default class {
         }));
       }
 
-      /** @type {olSourceVector} */(this.manager_.lidarPointHighlight.getSource()).addFeature(lidarPointFeature);
+      /** @type {import("ol/source/Vector.js").default} */(this.manager_.lidarPointHighlight.getSource()).addFeature(lidarPointFeature);
     } else {
-      /** @type {olSourceVector} */(this.manager_.lidarPointHighlight.getSource()).clear();
+      /** @type {import("ol/source/Vector.js").default} */(this.manager_.lidarPointHighlight.getSource()).clear();
       svg.select('#highlightCircle').remove();
       lidarInfo.html('');
       this.manager_.cartoHighlight.setPosition(undefined);
@@ -367,7 +367,7 @@ export default class {
 
 
   /**
-   * @param {LidarPoint} point the concerned point.
+   * @param {import("gmf/lidarprofile/Utils.js").LidarPoint} point the concerned point.
    * @param {import("gmf/lidarprofile/Config.js").LidarprofileServerConfigClassification} classification_color the classification
    *     object concerning this point.
    * @param {number} distDecimal the number of decimal to keep.

@@ -21,7 +21,7 @@ export class LidarprofileManager {
    * @param {angular.IHttpService} $http Angular http service.
    * @param {angular.IFilterService} $filter Angular filter.
    * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
-   * @param {import("ngeo/misc/Debounce.js").miscDebounce} ngeoDebounce ngeo debounce service.
+   * @param {import("ngeo/misc/debounce.js").miscDebounce<function(): void>} ngeoDebounce ngeo debounce service.
    * @ngInject
    * @ngdoc service
    * @ngname gmflidarprofileManager
@@ -44,7 +44,7 @@ export class LidarprofileManager {
     this.gettextCatalog = gettextCatalog;
 
     /**
-     * @type {import("ngeo/misc/Debounce.js").miscDebounce}
+     * @type {import("ngeo/misc/debounce.js").miscDebounce<function(): void>}
      * @private
      */
     this.ngeoDebounce_ = ngeoDebounce;
@@ -113,7 +113,7 @@ export class LidarprofileManager {
 
     /**
      * The variable where all points of the profile are stored
-     * @type {LidarprofilePoints}
+     * @type {import("gmf/lidarprofile/Utils.js").LidarprofilePoints}
      */
     this.profilePoints = this.getEmptyProfilePoints_();
 
@@ -136,7 +136,7 @@ export class LidarprofileManager {
   }
 
   /**
-   * @param {import("gmf/lidarprofile.js").LidarprofileConfigService} config Config
+   * @param {import("gmf/lidarprofile/Config.js").LidarprofileConfigService} config Config
    * @param {import("ol/Map.js").default} map The map.
    */
   init(config, map) {
@@ -179,7 +179,7 @@ export class LidarprofileManager {
   }
 
   /**
-   * @return {LidarprofilePoints} An empty lidarprofile points object.
+   * @return {import("gmf/lidarprofile/Utils.js").LidarprofilePoints} An empty lidarprofile points object.
    * @private
    */
   getEmptyProfilePoints_() {

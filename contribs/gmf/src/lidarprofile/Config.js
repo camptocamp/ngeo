@@ -2,7 +2,7 @@ import angular from 'angular';
 
 
 /**
- * @typedef {Object.<number, !LidarprofileServerConfigClassification}
+ * @typedef {Object.<number, !LidarprofileServerConfigClassification>}
  *     LidarprofileServerConfigClassifications
  */
 
@@ -11,11 +11,11 @@ import angular from 'angular';
  * @property {string} [color] Color
  * @property {string} [name] Name
  * @property {string} [value] Value
- * @property {boolean} [visible] Visible
+ * @property {number} [visible] Visible (Value can be 1 or 0)
  */
 
 /**
- * @typedef {Object.<number, !LidarprofileServerConfigLevel}
+ * @typedef {Object.<number, !LidarprofileServerConfigLevel>}
  *     LidarprofileServerConfigLevels
  */
 
@@ -26,7 +26,7 @@ import angular from 'angular';
  */
 
 /**
- * @typedef {Object.<number, !LidarprofileServerConfigPointAttribute}
+ * @typedef {Object.<number, !LidarprofileServerConfigPointAttribute>}
  *     LidarprofileServerConfigPointAttributes
  */
 
@@ -54,6 +54,8 @@ import angular from 'angular';
  *     attribute
  * @property {string} [default_point_cloud] Default point cloud
  * @property {number} [initialLOD] Initial LOD
+ * @property {LidarprofileServerConfigLevels} [max_levels] Max levels
+ * @property {number} [max_point_number] Max point number
  * @property {number} [minLOD] Min LOD
  * @property {LidarprofileServerConfigPointAttributes}
  *     [point_attributes] Point attributes
@@ -94,7 +96,7 @@ export class LidarprofileConfigService {
 
     /**
      * The client configuration.
-     * @type {LidarprofileClientConfig}
+     * @type {import("gmf/lidarprofile/Utils.js").LidarprofileClientConfig}
      */
     this.clientConfig = {
       autoWidth: true,

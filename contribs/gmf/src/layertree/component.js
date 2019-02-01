@@ -620,7 +620,10 @@ Controller.prototype.afterReorder = function() {
     currentTreeCtrls.some((treeCtrl) => {
       if (treeCtrl.node === node) {
         treeCtrls.push(treeCtrl);
-        return;
+        // TODO - validate this, used to be a plain `return`, which is
+        // not truthy and doesn't break the `some`, but I suspect this
+        // is not the wanted behaviour...
+        return false;
       }
     });
   });
@@ -698,7 +701,7 @@ Controller.prototype.zoomToResolution = function(treeCtrl) {
   const gmfLayer = /** @type {import('gmf/themes.js').GmfLayerWMS} */ (treeCtrl.node);
   const view = this.map.getView();
   const resolution = view.getResolution();
-  const minResolution = gmfThemeThemes.getNodeMinResolution(gmfLayer);
+  const minResolution = getNodeMinResolution(gmfLayer);
   if (minResolution !== undefined && resolution < minResolution) {
     view.setResolution(view.constrainResolution(minResolution, 0, 1));
   } else {
