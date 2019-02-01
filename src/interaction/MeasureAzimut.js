@@ -68,17 +68,6 @@ export default class extends ngeoInteractionMeasure {
     callback(output, line.getLastCoordinate());
   }
 
-  /**
-   * Format measure output of azimut.
-   * @param {!import("ol/geom/LineString.js").default} line LineString.
-   * @param {number|undefined} decimals Decimals.
-   * @param {!import('ngeo/misc/filters.js').formatNumber} format The format function.
-   * @return {string} Formatted measure.
-   */
-  getFormattedAzimut(line, decimals, format) {
-    const azimut = getAzimut(line);
-    return `${format(azimut, decimals)}°`;
-  }
 }
 
 /**
@@ -97,6 +86,18 @@ export function getAzimut(line) {
 
 
 /**
+ * Format measure output of azimut.
+ * @param {!import("ol/geom/LineString.js").default} line LineString.
+ * @param {number|undefined} decimals Decimals.
+ * @param {!import('ngeo/misc/filters.js').formatNumber} format The format function.
+ * @return {string} Formatted measure.
+ */
+function getFormattedAzimut(line, decimals, format) {
+  const azimut = getAzimut(line);
+  return `${format(azimut, decimals)}°`;
+}
+
+/**
  * Format measure output of azimut and radius.
  * @param {!import("ol/geom/LineString.js").default} line LineString.
  * @param {!import("ol/proj/Projection.js").default} projection Projection of the polygon coords.
@@ -109,7 +110,7 @@ export function getAzimut(line) {
 export function getFormattedAzimutRadius(
   line, projection, decimals, precision, formatLength, formatAzimut) {
 
-  let output = this.getFormattedAzimut(line, decimals, formatAzimut);
+  let output = getFormattedAzimut(line, decimals, formatAzimut);
 
   output += `, ${getFormattedLength(line, projection, precision, formatLength)}`;
 
