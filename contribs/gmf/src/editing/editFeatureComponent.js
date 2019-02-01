@@ -4,7 +4,7 @@ import gmfEditingEditFeature from 'gmf/editing/EditFeature.js';
 import gmfEditingSnapping from 'gmf/editing/Snapping.js';
 
 import gmfEditingXSDAttributes from 'gmf/editing/XSDAttributes.js';
-import gmfLayertreeSyncLayertreeMap from 'gmf/layertree/SyncLayertreeMap.js';
+import {getLayer as syncLayertreeMapGetLayer} from 'gmf/layertree/SyncLayertreeMap.js';
 import DateFormatter from 'ngeo/misc/php-date-formatter.js';
 import 'jquery-datetimepicker/jquery.datetimepicker.js';
 import 'jquery-datetimepicker/jquery.datetimepicker.css';
@@ -15,7 +15,7 @@ import ngeoEditingAttributesComponent from 'ngeo/editing/attributesComponent.js'
 import ngeoEditingCreatefeatureComponent from 'ngeo/editing/createfeatureComponent.js';
 
 import {deleteCondition} from 'ngeo/utils.js';
-import ngeoFormatXSDAttribute from 'ngeo/format/XSDAttribute.js';
+import {getGeometryAttribute} from 'ngeo/format/XSDAttribute.js';
 import ngeoGeometryType from 'ngeo/GeometryType.js';
 import ngeoInteractionRotate from 'ngeo/interaction/Rotate.js';
 import ngeoInteractionTranslate from 'ngeo/interaction/Translate.js';
@@ -531,7 +531,7 @@ Controller.prototype.$onInit = function() {
   this.tolerance = this.tolerance !== undefined ? this.tolerance : 10;
 
   // (1.1) Set editable WMS layer
-  const layer = gmfLayertreeSyncLayertreeMap.getLayer(this.editableTreeCtrl);
+  const layer = syncLayertreeMapGetLayer(this.editableTreeCtrl);
   console.assert(
     layer instanceof olLayerImage || layer instanceof olLayerTile);
   this.editableWMSLayer_ = layer;
@@ -860,9 +860,7 @@ Controller.prototype.setAttributes_ = function(attributes) {
   }
 
   // Get geom type from attributes and set
-  const geomAttr = ngeoFormatXSDAttribute.getGeometryAttribute(
-    this.attributes
-  );
+  const geomAttr = getGeometryAttribute(this.attributes);
   if (geomAttr && geomAttr.geomType) {
     this.geomType = geomAttr.geomType;
   }
