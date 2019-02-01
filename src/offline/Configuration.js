@@ -12,6 +12,9 @@ goog.require('ol.source.ImageWMS');
 goog.require('ol.source.TileWMS');
 goog.require('ol.tilegrid');
 const SerializerDeserializer = goog.require('ngeo.offline.SerializerDeserializer');
+const LocalforageCordovaWrapper = goog.require('ngeo.offline.LocalforageCordovaWrapper');
+const LocalforageAndroidWrapper = goog.require('ngeo.offline.LocalforageAndroidWrapper');
+
 
 goog.require('ngeo.CustomEvent');
 
@@ -27,24 +30,14 @@ exports = class extends ol.Observable {
   /**
    * @ngInject
    * @param {!angular.Scope} $rootScope The rootScope provider.
-   * @param {ngeo.map.BackgroundLayerMgr} ngeoBackgroundLayerMgr
-   * @param {number} ngeoOfflineGutter
+   * @param {ngeo.map.BackgroundLayerMgr} ngeoBackgroundLayerMgr .
+   * @param {number} ngeoOfflineGutter .
    */
   constructor($rootScope, ngeoBackgroundLayerMgr, ngeoOfflineGutter) {
     super();
-    localforage.config({
-      'name': 'ngeoOfflineStorage',
-      'version': 1.0,
-      'storeName': 'offlineStorage'
-    });
-    /**
-     * @param {number} progress new progress.
-     */
-    this.dispatchProgress_ = (progress) => {
-      this.dispatchEvent(new ngeo.CustomEvent('progress', {
-        'progress': progress
-      }));
-    };
+
+    this.localforage_ = this.createLocalforage();
+    this.configureLocalforage();
 
     /**
      * @private
@@ -79,6 +72,16 @@ exports = class extends ol.Observable {
   }
 
   /**
+   * @private
+   * @param {number} progress new progress.
+   */
+  dispatchProgress_(progress) {
+    this.dispatchEvent(new ngeo.CustomEvent('progress', {
+      'progress': progress
+    }));
+  }
+
+  /**
    * @protected
    */
   initializeHasOfflineData() {
@@ -86,6 +89,7 @@ exports = class extends ol.Observable {
   }
 
   /**
+   * @export
    * @return {boolean} whether some offline data is available in the storage
    */
   hasOfflineData() {
@@ -105,50 +109,69 @@ exports = class extends ol.Observable {
 
   /**
    * Hook to allow measuring get/set item performance.
-   * @param {string} msg
-   * @param {string} key
-   * @param {Promise<?>} promise
-   * @return {Promise<?>}
+   * @param {string} msg .
+   * @param {string} key .
+   * @param {Promise<?>} promise .
+   * @return {Promise<?>} .
    */
   traceGetSetItem(msg, key, promise) {
     return promise;
   }
 
+  createLocalforage() {
+    if (location.search.includes('cordova')) {
+      console.log('Using cordova localforage');
+      return new LocalforageCordovaWrapper();
+    } else if (location.search.includes('android')) {
+      console.log('Using android localforage');
+      return new LocalforageAndroidWrapper();
+    }
+    return localforage;
+  }
+
+  configureLocalforage() {
+    this.localforage_.config({
+      'name': 'ngeoOfflineStorage',
+      'version': 1.0,
+      'storeName': 'offlineStorage'
+    });
+  }
+
   /**
-   * @param {string} key
-   * @return {Promise<?>}
+   * @param {string} key .
+   * @return {Promise<?>} .
    */
   getItem(key) {
-    return this.traceGetSetItem('getItem', key, localforage.getItem(key));
+    return this.traceGetSetItem('getItem', key, this.localforage_.getItem(key));
   }
 
   /**
-   * @param {string} key
-   * @param {*} value
-   * @return {Promise<?>}
+   * @param {string} key .
+   * @param {*} value .
+   * @return {Promise<?>} .
    */
   setItem(key, value) {
-    return this.traceGetSetItem('setItem', key, localforage.setItem(key, value));
+    return this.traceGetSetItem('setItem', key, this.localforage_.setItem(key, value));
   }
 
   /**
-   * @return {Promise}
+   * @return {Promise} .
    */
   clear() {
     this.setHasOfflineData(false);
-    return this.traceGetSetItem('clear', '', localforage.clear());
+    return this.traceGetSetItem('clear', '', this.localforage_.clear());
   }
 
   /**
-   * @param {!ol.Map} map
-   * @return {number}
+   * @param {!ol.Map} map .
+   * @return {number} .
    */
   estimateLoadDataSize(map) {
     return 50;
   }
 
   /**
-   * @param {ngeox.OfflineLayerMetadata} layerItem
+   * @param {ngeox.OfflineLayerMetadata} layerItem .
    * @return {string} A key identifying an offline layer and used during restore.
    */
   getLayerKey(layerItem) {
@@ -157,9 +180,9 @@ exports = class extends ol.Observable {
 
   /**
    * @override
-   * @param {number} progress
-   * @param {ngeox.OfflineTile} tile
-   * @return {Promise}
+   * @param {number} progress .
+   * @param {ngeox.OfflineTile} tile .
+   * @return {Promise} .
    */
   onTileDownloadSuccess(progress, tile) {
     this.dispatchProgress_(progress);
@@ -172,8 +195,8 @@ exports = class extends ol.Observable {
 
   /**
    * @override
-   * @param {number} progress
-   * @return {Promise}
+   * @param {number} progress .
+   * @return {Promise} .
    */
   onTileDownloadError(progress) {
     this.dispatchProgress_(progress);
@@ -181,11 +204,11 @@ exports = class extends ol.Observable {
   }
 
   /**
-    * @param {ol.Map} map
-    * @param {ol.layer.Layer} layer
-    * @param {Array<ol.layer.Group>} ancestors
+    * @param {ol.Map} map .
+    * @param {ol.layer.Layer} layer .
+    * @param {Array<ol.layer.Group>} ancestors .
     * @param {ol.Extent} userExtent The extent selected by the user.
-    * @return {Array<ngeox.OfflineExtentByZoom>}
+    * @return {Array<ngeox.OfflineExtentByZoom>} .
    */
   getExtentByZoom(map, layer, ancestors, userExtent) {
     const currentZoom = map.getView().getZoom();
@@ -203,9 +226,9 @@ exports = class extends ol.Observable {
 
   /**
    * @protected
-   * @param {ol.source.Source} source
-   * @param {ol.proj.Projection} projection
-   * @return {ol.source.Source}
+   * @param {ol.source.Source} source .
+   * @param {ol.proj.Projection} projection .
+   * @return {ol.source.Source} .
    */
   sourceImageWMSToTileWMS(source, projection) {
     if (source instanceof ol.source.ImageWMS && source.getUrl() && source.getImageLoadFunction() === defaultImageLoadFunction) {
@@ -270,15 +293,15 @@ exports = class extends ol.Observable {
 
   /**
    * @private
-   * @param {ngeox.OfflinePersistentLayer} offlineLayer
-   * @return {function(ol.ImageTile, string)}
+   * @param {ngeox.OfflinePersistentLayer} offlineLayer .
+   * @return {function(ol.ImageTile, string)} .
    */
   createTileLoadFunction_(offlineLayer) {
     const that = this;
     /**
      * Load the tile from persistent storage.
-     * @param {ol.ImageTile} imageTile
-     * @param {string} src
+     * @param {ol.ImageTile} imageTile .
+     * @param {string} src .
      */
     const tileLoadFunction = function(imageTile, src) {
       that.getItem(utils.normalizeURL(src)).then((content) => {
@@ -293,7 +316,7 @@ exports = class extends ol.Observable {
   }
 
   /**
-   * @param {ngeox.OfflinePersistentLayer} offlineLayer
+   * @param {ngeox.OfflinePersistentLayer} offlineLayer .
    * @return {ol.layer.Layer} the layer.
    */
   recreateOfflineLayer(offlineLayer) {
@@ -307,7 +330,7 @@ exports = class extends ol.Observable {
   }
 
   /**
-   * @return {number}
+   * @return {number} .
    */
   getMaxNumberOfParallelDownloads() {
     return 11;
