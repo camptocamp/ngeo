@@ -19,6 +19,7 @@
     .tt-suggestion {
       text-align: left;
       padding: $app-margin;
+      margin: 0;
       border-bottom: solid 0.06rem $border-color;
 
       &:hover, &.tt-cursor {

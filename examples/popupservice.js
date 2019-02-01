@@ -16,7 +16,7 @@ const module = angular.module('app', [
 
 /**
  * @param {angular.ISCEService} $sce Angular sce service.
- * @param {PopupFactory} ngeoCreatePopup Popup service.
+ * @param {import("ngeo/message/Popup.js").PopupFactory} ngeoCreatePopup Popup service.
  * @ngInject
  * @constructor
  */
@@ -30,7 +30,7 @@ function MainController($sce, ngeoCreatePopup) {
 
   /**
    * @private
-   * @type {PopupFactory}
+   * @type {import("ngeo/message/Popup.js").PopupFactory}
    */
   this.createPopup_ = ngeoCreatePopup;
 
