@@ -37,9 +37,9 @@ export default class extends olOverlay {
    * @param {import('ol/Overlay.js').Options=} options Overlay options.
    */
   constructor(menuOptions, options = {}) {
-    super(options);
-
     options.positioning = olOverlayPositioning.TOP_LEFT;
+
+    super(options);
 
     /**
      * @type {Array.<import("ol/events.js").EventsKey>}
