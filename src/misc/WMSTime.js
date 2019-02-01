@@ -53,6 +53,7 @@ exports.prototype.formatTimeValue = function(time, resolution, opt_useISOFormat,
   let yearResolution = 'yyyy';
   let monthResolution = 'yyyy-MM';
   let dayResolution = 'yyyy-MM-dd';
+  let secondResolution = undefined;
 
   // Localized format.
   if (!opt_useISOFormat) {
@@ -60,6 +61,7 @@ exports.prototype.formatTimeValue = function(time, resolution, opt_useISOFormat,
     yearResolution = gettextCatalog.getString('yyyy');
     monthResolution = gettextCatalog.getString('M/yyyy');
     dayResolution = gettextCatalog.getString('M/d/yyyy');
+    secondResolution = gettextCatalog.getString('M/d/yyyy HH:MM:ss');
   }
 
   switch (resolution) {
@@ -69,6 +71,12 @@ exports.prototype.formatTimeValue = function(time, resolution, opt_useISOFormat,
       return this.$filter_('date')(date, monthResolution, utc);
     case 'day':
       return this.$filter_('date')(date, dayResolution, utc);
+    case 'second':
+      if (secondResolution) {
+        return this.$filter_('date')(date, secondResolution, utc);
+      } else {
+        return date.toISOString().replace(/\.\d{3}/, '');
+      }
     default:
       //case "second":
       return date.toISOString().replace(/\.\d{3}/, '');
