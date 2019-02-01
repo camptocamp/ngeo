@@ -25,21 +25,20 @@ module.constant('defaultTheme', 'Demo');
 module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
-module.value('gmfPermalinkOptions',
-  /** @type {PermalinkOptions} */ ({
-    crosshairStyle: new olStyleStyle({
-      image: new olStyleRegularShape({
-        stroke: new olStyleStroke({
-          color: 'rgba(0, 0, 255, 1)',
-          width: 2
-        }),
-        points: 4,
-        radius: 8,
-        radius2: 0,
-        angle: 0
-      })
+module.value('gmfPermalinkOptions', {
+  crosshairStyle: new olStyleStyle({
+    image: new olStyleRegularShape({
+      stroke: new olStyleStroke({
+        color: 'rgba(0, 0, 255, 1)',
+        width: 2
+      }),
+      points: 4,
+      radius: 8,
+      radius2: 0,
+      angle: 0
     })
-  }));
+  })
+});
 
 /**
  * @constructor

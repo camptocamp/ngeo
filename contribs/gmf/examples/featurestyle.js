@@ -185,7 +185,9 @@ function MainController($scope, ngeoFeatureHelper) {
    */
   this.selectedFeature = null;
 
-  this.map.on('singleclick', this.handleMapSingleClick_.bind(this), this);
+  this.map.on('singleclick', (evt) => {
+    this.handleMapSingleClick_.bind(this);
+  });
 }
 
 
@@ -196,7 +198,7 @@ function MainController($scope, ngeoFeatureHelper) {
 MainController.prototype.handleMapSingleClick_ = function(evt) {
   const pixel = evt.pixel;
 
-  const feature = this.map.forEachFeatureAtPixel(pixel, feature => feature);
+  const feature = /** @type {import("ol/Feature.js").default} */(this.map.forEachFeatureAtPixel(pixel, feature => feature));
 
   if (this.selectedFeature) {
     this.featureHelper_.setStyle(this.selectedFeature);

@@ -104,9 +104,13 @@ function MainController($scope, ngeoFeatureHelper, ngeoFeatures,
     () => this.pointerMoveActive,
     (newVal) => {
       if (newVal) {
-        this.map.on('pointermove', this.handleMapPointerMove_, this);
+        this.map.on('pointermove', (evt) => {
+          this.handleMapPointerMove_(evt);
+        });
       } else {
-        this.map.un('pointermove', this.handleMapPointerMove_, this);
+        this.map.un('pointermove', (evt) => {
+          this.handleMapPointerMove_(evt);
+        });
         $('#pointermove-feature').html('');
       }
     }

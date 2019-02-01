@@ -61,22 +61,22 @@ function MainController($http, $q, $scope, gmfThemes, gmfXSDAttributes) {
   this.gmfXSDAttributes_ = gmfXSDAttributes;
 
   /**
-   * @type {Array.<string>} List of example and application urls that contain
+   * @type {Array<Object<string, string>>} List of example and application urls that contain
    *     ObjectEditing tools.
    * @export
    */
   this.urls = [
     {
-      'name': 'oeedit app. (hosted)',
-      'url': 'apps/oeedit/'
+      name: 'oeedit app. (hosted)',
+      url: 'apps/oeedit/'
     },
     {
-      'name': 'oeedit app. (dev)',
-      'url': '../apps/oeedit/'
+      name: 'oeedit app. (dev)',
+      url: '../apps/oeedit/'
     },
     {
-      'name': 'example',
-      'url': 'objectediting.html'
+      name: 'example',
+      url: 'objectediting.html'
     }
   ];
 
@@ -93,7 +93,7 @@ function MainController($http, $q, $scope, gmfThemes, gmfXSDAttributes) {
   this.viewerUrlHosted_ = 'apps/oeview/';
 
   /**
-   * @type {Object.<string, string>}
+   * @type {Object<string, string>}
    * @export
    */
   this.selectedUrl = this.urls[0];
@@ -111,7 +111,7 @@ function MainController($http, $q, $scope, gmfThemes, gmfXSDAttributes) {
   this.gmfServer_;
 
   /**
-   * @type {Array.<import('gmf/themes.js').GmfLayerWMS>}
+   * @type {Array<import('gmf/themes.js').GmfLayerWMS>}
    * @export
    */
   this.gmfLayerNodes = [];
@@ -123,13 +123,13 @@ function MainController($http, $q, $scope, gmfThemes, gmfXSDAttributes) {
   this.selectedGmfLayerNode = null;
 
   /**
-   * @type {Object.<number, Array.<import("ol/Feature.js").default>>}
+   * @type {Object<number, Array.<import("ol/Feature.js").default>>}
    * @export
    */
   this.featuresCache_ = {};
 
   /**
-   * @type {Array.<import("ol/Feature.js").default>}
+   * @type {Array<import("ol/Feature.js").default>}
    * @export
    */
   this.features = null;
@@ -141,7 +141,7 @@ function MainController($http, $q, $scope, gmfThemes, gmfXSDAttributes) {
   this.selectedFeature = null;
 
   /**
-   * @type {Object.<number, string>}
+   * @type {Object<number, string>}
    * @private
    */
   this.geomTypeCache_ = {};
@@ -189,6 +189,7 @@ function MainController($http, $q, $scope, gmfThemes, gmfXSDAttributes) {
       let i, ii;
 
       // (2) Find OE theme
+      /** @type {import('gmf/themes.js').GmfTheme} */
       let theme;
       for (i = 0, ii = themes.length; i < ii; i++) {
         if (themes[i].name === this.themeName) {
@@ -213,10 +214,11 @@ function MainController($http, $q, $scope, gmfThemes, gmfXSDAttributes) {
         return;
       }
 
+      /** @type {Array<import('gmf/themes.js').GmfLayerWMS>} */
       const gmfLayerNodes = [];
       for (i = 0, ii = groupNode.children.length; i < ii; i++) {
         if (groupNode.children[i].metadata.identifierAttributeField) {
-          gmfLayerNodes.push(groupNode.children[i]);
+          gmfLayerNodes.push(/** @type import('gmf/themes.js').GmfLayerWMS} */(groupNode.children[i]));
         }
       }
 
@@ -251,7 +253,7 @@ MainController.prototype.runEditor = function() {
   params[ObjecteditingParam.THEME] = this.themeName;
   params[ObjecteditingParam.PROPERTY] = property;
 
-  const url = MainController.appendParams(this.selectedUrl['url'], params);
+  const url = MainController.appendParams(this.selectedUrl.url, params);
   window.open(url);
 };
 

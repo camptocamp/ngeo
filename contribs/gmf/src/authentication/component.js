@@ -10,7 +10,7 @@ import ngeoMessageModalComponent from 'ngeo/message/modalComponent.js';
  * Password validator function with an error message.
  * Configuration options for the permalink service.
  * @typedef {Object} PasswordValidator
- * @property {function(string): string} isPasswordValid
+ * @property {function(string): boolean} isPasswordValid
  * @property {string} notValidMessage
  */
 
@@ -388,7 +388,7 @@ class AuthenticationController {
     const error = gettextCatalog.getString('An error occurred while resetting the password.');
 
     /**
-     * @param {AuthenticationDefaultResponse} respData Response.
+     * @param {import('gmf/authentication/Service.js').AuthenticationDefaultResponse} respData Response.
      */
     const resetPasswordSuccessFn = function(respData) {
       this.resetPasswordModalShown = true;

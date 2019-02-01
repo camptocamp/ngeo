@@ -185,7 +185,7 @@ function MainController(gmfTreeManager, gmfThemes, gmfThemeManager, ngeoLocation
    */
   this.getDistinctFlatNodes_ = function(node, nodes) {
     let i;
-    const children = node.children;
+    const children = /** @type {import('gmf/themes.js').GmfGroup} */(node).children;
     if (children !== undefined) {
       for (i = 0; i < children.length; i++) {
         this.getDistinctFlatNodes_(children[i], nodes);

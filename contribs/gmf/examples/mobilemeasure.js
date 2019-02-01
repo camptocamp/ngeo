@@ -81,7 +81,7 @@ function MainController(gmfPermalink) {
   this.measureLengthActive = false;
 
   /**
-   * @type {Object.<string, import("gmf/mobile/measure.js").default.pointComponent.LayerConfig>}
+   * @type {Array<import('gmf/mobile/measure/pointComponent.js').LayerConfig>}
    * @export
    */
   this.measurePointLayersConfig = [

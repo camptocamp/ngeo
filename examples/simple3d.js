@@ -25,7 +25,7 @@ const module = angular.module('app', [
  * @constructor
  * @ngInject
  * @param {angular.IScope} $rootScope Root scope.
- * @param {import("ngeo/olcs/Service.js").default} ngeoOlcsService The service.
+ * @param {import("ngeo/olcs/Service.js").OlcsService} ngeoOlcsService The service.
  */
 function MainController($rootScope, ngeoOlcsService) {
 

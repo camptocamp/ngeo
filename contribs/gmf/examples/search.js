@@ -51,19 +51,20 @@ function MainController(gmfThemes, ngeoFeatureOverlayMgr, ngeoNotification) {
   ngeoFeatureOverlayMgr.init(this.map);
 
   /**
-   * @type {Array.<SearchComponentDatasource>}
+   * @type {Array<import('gmf/search/component.js').SearchComponentDatasource>}
    * @export
    */
   this.searchDatasources = [{
+    datasetTitle: 'test',
     groupValues: ['osm', 'district'],
     groupActions: [],
     labelKey: 'label',
     projection: EPSG21781,
-    bloodhoundOptions: {
+    bloodhoundOptions: /** @type {Bloodhound.BloodhoundOptions<any>} */({
       remote: {
         rateLimitWait: 250
       }
-    },
+    }),
     url: appURL.SEARCH
   }];
 

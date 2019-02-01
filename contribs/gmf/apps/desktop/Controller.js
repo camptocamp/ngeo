@@ -37,25 +37,25 @@ class Controller extends AbstractDesktopController {
     }, $scope, $injector);
 
     /**
-     * @type {Array.<string>}
+     * @type {Array<string>}
      * @export
      */
     this.searchCoordinatesProjections = [EPSG21781, EPSG2056, 'EPSG:4326'];
 
     /**
-     * @type {!Array.<number>}
+     * @type {!Array<number>}
      * @export
      */
     this.scaleSelectorValues = [250000, 100000, 50000, 20000, 10000, 5000, 2000, 1000, 500, 250, 100, 50];
 
     /**
-     * @type {Array.<string>}
+     * @type {Array<string>}
      * @export
      */
     this.elevationLayers = ['aster', 'srtm', 'srtm-partial'];
 
     /**
-     * @type {Object.<string, import("gmf/raster/component.js").default.LayerConfig>}
+     * @type {Object<string, import('gmf/mobile/measure/pointComponent.js').LayerConfig>}
      * @export
      */
     this.elevationLayersConfig = {};
@@ -67,7 +67,7 @@ class Controller extends AbstractDesktopController {
     this.selectedElevationLayer = this.elevationLayers[0];
 
     /**
-     * @type {Object.<string, ProfileLineConfiguration>}
+     * @type {Object<string, import('gmf/profile/component.js').ProfileLineConfiguration>}
      * @export
      */
     this.profileLinesconfiguration = {
@@ -77,7 +77,7 @@ class Controller extends AbstractDesktopController {
     };
 
     /**
-     * @type {Array.<MousePositionProjection>}
+     * @type {Array<import('gmf/map/mousepositionComponent.js').MousePositionProjection>}
      * @export
      */
     this.mousePositionProjections = [{

@@ -57,7 +57,7 @@ module.run(/* @ngInject */ ($templateCache) => {
  * or deactivate the component.
  * @htmlAttribute {number=} gmf-mobile-measurepoint-coordinatedecimals number
  *     of decimal to display for the coordinate.
- * @htmlAttribute {Array.<LayerConfig>}
+ * @htmlAttribute {Array<LayerConfig>}
  *     gmf-mobile-measurepoint-layersconfig Raster elevation layers to get
  *     information under the point and its configuaration.
  * @htmlAttribute {import("ol/Map.js").default} gmf-mobile-measurepoint-map The map.
@@ -164,7 +164,7 @@ export function MobileMeasurePointController(gettextCatalog, $scope, $filter, gm
   this.coordinateDecimals = coordinateDecimalsFn ? coordinateDecimalsFn() : 0;
 
   /**
-   * @type {!Array.<LayerConfig>}
+   * @type {!Array<LayerConfig>}
    * @private
    */
   this.layersConfig;

@@ -29,7 +29,7 @@ const module = angular.module('gmfapp', [
 ]);
 
 module.value('ngeoWfsPermalinkOptions',
-  /** @type {WfsPermalinkOptions} */ ({
+  /** @type {import('ngeo/statemanager/WfsPermalink.js').WfsPermalinkOptions} */ ({
     wfsTypes: [
       {featureType: 'fuel', label: 'display_name'},
       {featureType: 'osm_scale', label: 'display_name'}

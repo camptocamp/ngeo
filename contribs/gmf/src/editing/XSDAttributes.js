@@ -10,7 +10,7 @@ import ngeoFormatXSDAttribute from 'ngeo/format/XSDAttribute.js';
  * @param {string} gmfLayersUrl Url to the GeoMapFish layers service.
  * @ngInject
  */
-function EditingXSDAttributeService($http, gmfLayersUrl) {
+export function EditingXSDAttributeService($http, gmfLayersUrl) {
 
   /**
    * @type {angular.IHttpService}
