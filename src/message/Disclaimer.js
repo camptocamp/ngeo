@@ -39,8 +39,6 @@ export class MessageDisclaimerService extends ngeoMessageMessage {
      */
     this.createPopup_ = ngeoCreatePopup;
 
-    ngeoMessageMessage.call(this);
-
     const container = angular.element('<div class="ngeo-disclaimer"></div>');
     angular.element(document.body).append(container);
 

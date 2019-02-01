@@ -26,8 +26,6 @@ export class WMSTime extends Time {
      * @private
      */
     this.gettextCatalog_ = gettextCatalog;
-
-    Time.call(this);
   }
 
 
