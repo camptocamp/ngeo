@@ -12,11 +12,13 @@ import olSourceImageWMS from 'ol/source/ImageWMS.js';
 import olSourceTileWMS from 'ol/source/TileWMS.js';
 import {createForProjection as createTileGridForProjection} from 'ol/tilegrid.js';
 import SerializerDeserializer from 'ngeo/offline/SerializerDeserializer.js';
+import LocalforageCordovaWrapper from 'ngeo/offline/LocalforageCordovaWrapper.js';
+import LocalforageAndroidWrapper from 'ngeo/offline/LocalforageAndroidWrapper.js';
+import LocalforageIosWrapper from 'ngeo/offline/LocalforageIosWrapper.js';
 import ngeoCustomEvent from 'ngeo/CustomEvent.js';
 import utils from 'ngeo/offline/utils.js';
 const defaultImageLoadFunction = olSourceImage.defaultImageLoadFunction;
 
-import * as localforage from 'localforage';
 
 /**
  * @implements {ngeox.OfflineOnTileDownload}
@@ -31,19 +33,9 @@ const exports = class extends olObservable {
    */
   constructor($rootScope, ngeoBackgroundLayerMgr, ngeoOfflineGutter) {
     super();
-    localforage.config({
-      'name': 'ngeoOfflineStorage',
-      'version': 1.0,
-      'storeName': 'offlineStorage'
-    });
-    /**
-     * @param {number} progress new progress.
-     */
-    this.dispatchProgress_ = (progress) => {
-      this.dispatchEvent(new ngeoCustomEvent('progress', {
-        'progress': progress
-      }));
-    };
+
+    this.localforage_ = this.createLocalforage();
+    this.configureLocalforage();
 
     /**
      * @private
@@ -78,6 +70,16 @@ const exports = class extends olObservable {
   }
 
   /**
+   * @private
+   * @param {number} progress new progress.
+   */
+  dispatchProgress_(progress) {
+    this.dispatchEvent(new ngeoCustomEvent('progress', {
+      'progress': progress
+    }));
+  }
+
+  /**
    * @protected
    */
   initializeHasOfflineData() {
@@ -85,6 +87,7 @@ const exports = class extends olObservable {
   }
 
   /**
+   * @export
    * @return {boolean} whether some offline data is available in the storage
    */
   hasOfflineData() {
@@ -113,12 +116,42 @@ const exports = class extends olObservable {
     return promise;
   }
 
+  createLocalforage() {
+    if (location.search.includes('localforage=cordova')) {
+      console.log('Using cordova localforage');
+      return new LocalforageCordovaWrapper();
+    } else if (location.search.includes('localforage=android')) {
+      console.log('Using android localforage');
+      return new LocalforageAndroidWrapper();
+    } else if (location.search.includes('localforage=ios')) {
+      console.log('Using ios localforage');
+      return new LocalforageIosWrapper();
+    }
+    return localforage;
+  }
+
+  configureLocalforage() {
+    this.localforage_.config({
+      'name': 'ngeoOfflineStorage',
+      'version': 1.0,
+      'storeName': 'offlineStorage'
+    });
+  }
+
   /**
    * @param {string} key The key
    * @return {Promise<?>} A promise
    */
   getItem(key) {
-    return this.traceGetSetItem('getItem', key, localforage.getItem(key));
+    return this.traceGetSetItem('getItem', key, this.localforage_.getItem(key));
+  }
+
+  /**
+   * @param {string} key .
+   * @return {Promise<?>} .
+   */
+  removeItem(key) {
+    return this.traceGetSetItem('removeItem', key, this.localforage_.removeItem(key));
   }
 
   /**
@@ -127,7 +160,7 @@ const exports = class extends olObservable {
    * @return {Promise<?>} A promise
    */
   setItem(key, value) {
-    return this.traceGetSetItem('setItem', key, localforage.setItem(key, value));
+    return this.traceGetSetItem('setItem', key, this.localforage_.setItem(key, value));
   }
 
   /**
@@ -135,7 +168,7 @@ const exports = class extends olObservable {
    */
   clear() {
     this.setHasOfflineData(false);
-    return this.traceGetSetItem('clear', '', localforage.clear());
+    return this.traceGetSetItem('clear', '', this.localforage_.clear());
   }
 
   /**

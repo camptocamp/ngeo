@@ -184,8 +184,13 @@ const exports = class {
     });
 
     googAsserts.assert(this.tiles_);
-    for (let i = 0; i < this.maxNumberOfWorkers_; ++i) {
-      this.downloadTile_();
+    if (this.tiles_.length === 0) {
+      this.callbacks_.onTileDownloadError(1); // forcing progress update
+      this.resolvePromise_();
+    } else {
+      for (let i = 0; i < this.maxNumberOfWorkers_; ++i) {
+        this.downloadTile_();
+      }
     }
 
     return this.promise_;

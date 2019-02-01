@@ -13,3 +13,4 @@ globals:
     google: false
     Bloodhound: false
     DateFormatter: false
+    localforage: false
