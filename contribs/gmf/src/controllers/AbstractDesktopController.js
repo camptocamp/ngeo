@@ -147,7 +147,7 @@ export class AbstractDesktopController extends AbstractAPIController {
     ngeoToolActivateMgr.registerTool('mapTools', googleStreetViewActivate, false);
 
     /**
-     * @type {ScaleselectorOptions}
+     * @type {import('ngeo/map/scaleselector.js').ScaleselectorOptions}
      * @export
      */
     this.scaleSelectorOptions = {

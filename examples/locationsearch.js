@@ -39,7 +39,7 @@ appmodule.component('appLocationSearch', locationSearchComponent);
 
 /**
  * @constructor
- * @param {import("ngeo/search/createLocationSearchBloodhound.js").default.Function} ngeoCreateLocationSearchBloodhound Bloodhound service.
+ * @param {import("ngeo/search/createLocationSearchBloodhound.js").Function} ngeoCreateLocationSearchBloodhound Bloodhound service.
  * @ngInject
  */
 function SearchController(ngeoCreateLocationSearchBloodhound) {
@@ -97,7 +97,7 @@ function SearchController(ngeoCreateLocationSearchBloodhound) {
 
 
 /**
- * @param {import("ngeo/search/createLocationSearchBloodhound.js").default.Function} ngeoCreateLocationSearchBloodhound
+ * @param {import("ngeo/search/createLocationSearchBloodhound.js").Function} ngeoCreateLocationSearchBloodhound
  *     Bloodhound service.
  * @param {number} limit Limit.
  * @return {Bloodhound} The bloodhound engine.
@@ -126,8 +126,6 @@ SearchController.prototype.createAndInitBloodhound_ = function(ngeoCreateLocatio
  * @param {JQueryEventObject} event Event.
  * @param {Object} suggestion Suggestion.
  * @param {Twitter.Typeahead.Dataset} dataset Dataset.
- * @this {app.locationsearch.SearchController}
- * @private
  */
 function select_(event, suggestion, dataset) {
   const feature = /** @type {import("ol/Feature.js").default} */ (suggestion);

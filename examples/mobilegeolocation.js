@@ -47,7 +47,7 @@ function MainController($scope, ngeoFeatureOverlayMgr) {
   });
 
   /**
-   * @type {MobileGeolocationDirectiveOptions}
+   * @type {import('ngeo/geolocation/mobile.js').MobileGeolocationDirectiveOptions}
    * @export
    */
   this.mobileGeolocationOptions = {

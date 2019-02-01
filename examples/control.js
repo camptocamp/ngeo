@@ -42,7 +42,7 @@ function MainController() {
   });
 
   /**
-   * @type {import('ol/control/Control.js').default").default}
+   * @type {import('ol/control/Control.js').default}
    * @export
    */
   this.control = new olControlMousePosition({

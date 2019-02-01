@@ -54,7 +54,7 @@ function MainController($scope) {
 
   /**
    * Use the "dropup" variation of the Bootstrap dropdown.
-   * @type {ScaleselectorOptions}
+   * @type {import('ngeo/map/scaleselector.js').ScaleselectorOptions}
    * @export
    */
   this.options = {

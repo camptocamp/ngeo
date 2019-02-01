@@ -47,6 +47,7 @@ function MainController($http, $scope) {
     layers: [
       new olLayerImage({
         source: new olSourceImageWMS({
+          projection: undefined, // should be removed in next OL version
           url: 'http://wms.geo.admin.ch/',
           crossOrigin: 'anonymous',
           attributions: '&copy; ' +
@@ -131,19 +132,17 @@ function MainController($http, $scope) {
    * Factory for creating simple getter functions for extractors.
    * If the value is in a child property, the opt_childKey must be defined.
    * The type parameter is used by closure to type the returned function.
-   * @param {T} type An object of the expected result type.
+   * @param {any} type An object of the expected result type.
    * @param {string} key Key used for retrieving the value.
    * @param {string=} opt_childKey Key of a child object.
-   * @template T
-   * @return {function(Object): T} Getter function.
+   * @return {function(Object): any} Getter function.
    */
   const typedFunctionsFactory = function(type, key, opt_childKey) {
     return (
-    /**
-         * @param {Object} item
-         * @return {T}
-         * @template T
-         */
+      /**
+       * @param {Object} item
+       * @return {any}
+       */
       function(item) {
         if (opt_childKey !== undefined) {
           item = item[opt_childKey];
@@ -169,14 +168,23 @@ function MainController($http, $scope) {
   };
 
 
+  /** @type function({Object}): number */
+  const sort = typedFunctionsFactory(types.number, 'sort');
+  /** @type function({Object}): string */
+  const id = typedFunctionsFactory(types.string, 'id');
+  /** @type function({Object}): number */
+  const dist = typedFunctionsFactory(types.number, 'dist');
+  /** @type function({Object}): string */
+  const title = typedFunctionsFactory(types.string, 'title');
+
   /**
-   * @type {PoiExtractor}
+   * @type {import('ngeo/profile/elevationComponent.js').PoiExtractor}
    */
   const poiExtractor = {
-    sort: typedFunctionsFactory(types.number, 'sort'),
-    id: typedFunctionsFactory(types.string, 'id'),
-    dist: typedFunctionsFactory(types.number, 'dist'),
-    title: typedFunctionsFactory(types.string, 'title'),
+    sort,
+    id,
+    dist,
+    title,
     /**
       * @param {Object} item POI.
       * @param {number=} opt_z Z value.

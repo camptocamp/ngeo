@@ -100,7 +100,7 @@ export class AbstractMobileController extends AbstractAppController {
     });
 
     /**
-     * @type {MobileGeolocationDirectiveOptions}
+     * @type {import('ngeo/geolocation/mobile.js').MobileGeolocationDirectiveOptions}
      * @export
      */
     this.mobileGeolocationOptions = {

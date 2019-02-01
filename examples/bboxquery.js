@@ -87,15 +87,17 @@ function MainController($scope, ngeoDataSources) {
   this.queryActive = true;
 
   const informationLayer = new olLayerImage({
-    'source': new olSourceImageWMS({
-      'url': MAPSERVER_PROXY,
+    source: new olSourceImageWMS({
+      projection: undefined, // should be removed in next OL version
+      url: MAPSERVER_PROXY,
       params: {'LAYERS': 'information'}
     })
   });
 
   const busStopLayer = new olLayerImage({
-    'source': new olSourceImageWMS({
-      'url': MAPSERVER_PROXY,
+    source: new olSourceImageWMS({
+      projection: undefined, // should be removed in next OL version
+      url: MAPSERVER_PROXY,
       params: {'LAYERS': 'bus_stop'}
     })
   });

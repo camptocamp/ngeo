@@ -33,13 +33,14 @@ function ColorPickerController() {
 
   /**
    * The colors set.
-   * @type {Array.<string>}
+   * @type {Array<Array<string>>}
    * @const
    * @export
    */
   this.colors = [
     ['red', 'yellow', 'green', 'lightgreen', 'lightblue', 'orange', 'purple'],
-    ['#ffffff', '#f7f7f7', '#c3c3c3', '#000000']];
+    ['#ffffff', '#f7f7f7', '#c3c3c3', '#000000']
+  ];
 
 }
 
