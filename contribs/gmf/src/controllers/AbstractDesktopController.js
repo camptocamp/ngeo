@@ -111,7 +111,7 @@ export class AbstractDesktopController extends AbstractAPIController {
 
     // deactivate tooltips on touch device
     body.on('touchstart.detectTouch', () => {
-      body.tooltip('destroy');
+      body.tooltip('dispose');
       body.off('touchstart.detectTouch');
     });
 
