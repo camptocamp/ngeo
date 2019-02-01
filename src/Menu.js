@@ -103,7 +103,7 @@ export default class extends olOverlay {
       );
     });
 
-    options.element = contentEl[0];
+    this.setElement(contentEl[0]);
   }
 
   /**
