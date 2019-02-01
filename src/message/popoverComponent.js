@@ -53,7 +53,7 @@ function component() {
       }
 
       scope.$on('$destroy', () => {
-        ngeoPopoverCtrl.anchorElm.popover('destroy');
+        ngeoPopoverCtrl.anchorElm.popover('dispose');
         ngeoPopoverCtrl.anchorElm.unbind('inserted.bs.popover');
         ngeoPopoverCtrl.anchorElm.unbind('hidden.bs.popover');
       });
