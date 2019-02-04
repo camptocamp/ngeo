@@ -42,6 +42,8 @@ import {select as d3select} from 'd3';
 /**
  * Profile point after measure or after parsing of the binary array returned by Pytree
  * @typedef {Object} LidarPoint
+ * @property {number} [cx]
+ * @property {number} [cy]
  * @property {number} [distance]
  * @property {number} [altitude]
  * @property {Array.<number>} [color_packed]
@@ -60,7 +62,12 @@ export default class {
    * @param {import("ol/geom/LineString.js").default} linestring an OpenLayer Linestring
    * @param {number} dLeft domain minimum
    * @param {number} dRight domain maximum
-   * @return {{clippedLine: Array.<import("ol/coordinate.js").Coordinate>, distanceOffset: number}} Object with clipped lined coordinates and left domain value
+   * @return {{
+   *     bufferGeom: olFeature,
+   *     bufferStyle: Array.<olStyleStyle>,
+   *     clippedLine: Array.<import("ol/coordinate.js").Coordinate>,
+   *     distanceOffset: number
+   * }} Object with clipped lined coordinates and left domain value
    */
   clipLineByMeasure(config, map_resolution, linestring, dLeft, dRight) {
 
@@ -287,7 +294,7 @@ export default class {
 
   /**
    * Get the data for a CSV export of the profile.
-   * @param {LidarPoint} points a lidar profile points object.
+   * @param {Array.<LidarPoint>} points A list of lidar profile point objects.
    * @return {Array.<Object>} Objects for a csv export (column: value).
    * @export
    */

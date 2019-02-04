@@ -50,7 +50,7 @@ function directive() {
     controller: 'gmfTimeSliderController as sliderCtrl',
     restrict: 'AE',
     templateUrl: 'gmf/layertree/timesliderComponent',
-    link: /** @type {!angular.LinkingFunctions} */ ({
+    link: {
       pre: function preLink(scope, element, attrs, ctrl) {
         ctrl.init();
 
@@ -85,7 +85,7 @@ function directive() {
           return wmstime;
         }
       }
-    })
+    }
   };
 }
 
@@ -112,7 +112,7 @@ function Controller(ngeoWMSTime) {
 
   /**
    * Function called after date(s) changed/selected
-   * @function
+   * @type {Function}
    * @export
    */
   this.onDateSelected;
@@ -148,7 +148,7 @@ function Controller(ngeoWMSTime) {
 
   /**
    * Used when WMS time object has a property 'values' instead of an interval
-   * @type (?Array<number>)
+   * @type {?Array.<number>}
    */
   this.timeValueList;
 
@@ -279,7 +279,7 @@ Controller.prototype.getClosestValue_ = function(timestamp) {
     const startDate = new Date(this.minValue);
     let bestDate = new Date(this.minValue);
     const maxDate = new Date(this.maxValue);
-    let bestDistance = Math.abs(targetDate - bestDate);
+    let bestDistance = Math.abs(targetDate.getTime() - bestDate.getTime());
 
     for (let i = 1; ; i++) {
       // The start date should always be used as a reference
@@ -295,7 +295,7 @@ Controller.prototype.getClosestValue_ = function(timestamp) {
         break;
       }
 
-      const distance = Math.abs(targetDate - next);
+      const distance = Math.abs(targetDate.getTime() - next.getTime());
       if (distance <= bestDistance) {
         bestDate = next;
         bestDistance = distance;
