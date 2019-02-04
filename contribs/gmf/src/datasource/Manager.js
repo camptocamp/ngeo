@@ -901,7 +901,7 @@ export class DatasourceManager {
    * The `querySourceIds` property in the layer is used to determine the
    * data sources that are bound to the layer.
    *
-   * @param {!BackgroundEvent} evt Event.
+   * @param {!import('ngeo/map/BackgroundLayerMgr.js').BackgroundEvent} evt Event.
    * @private
    */
   handleNgeoBackgroundLayerChange_(evt) {

@@ -31,7 +31,7 @@ function MainController(gettextCatalog) {
    *  - At least one Uppercase letter.
    *  - At least one digit.
    *  - At least one special character.
-   * @type {PasswordValidator} the password validator
+   * @type {import('gmf/authentication/component.js').PasswordValidator} the password validator
    * @export
    */
   this.passwordValidator = {

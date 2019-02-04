@@ -97,7 +97,7 @@ function MainController($scope, gmfThemes, gmfTreeManager, gmfUser,
       wrapX: false,
       features: new olCollection()
     }),
-    style: (feature, resolution) => ngeoFeatureHelper.createEditingStyles(feature)
+    style: (feature, resolution) => ngeoFeatureHelper.createEditingStyles(/** @type {import('ol/Feature.js').default} */(feature))
   });
 
   /**

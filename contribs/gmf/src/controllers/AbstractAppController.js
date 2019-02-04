@@ -261,7 +261,7 @@ export function AbstractAppController(config, map, $scope, $injector) {
   olEvents.listen(gmfAuthentication, 'logout', userChange);
 
   /**
-   * @type {Array.<SearchComponentDatasource>}
+   * @type {Array<import('gmf/search/component.js').SearchComponentDatasource>}
    * @export
    */
   this.searchDatasources = [{

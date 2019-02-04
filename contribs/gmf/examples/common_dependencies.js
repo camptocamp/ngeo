@@ -13,5 +13,5 @@ import 'bootstrap/dist/css/bootstrap.css';
 if (window.location.protocol == 'http:' && window.location.hostname != 'localhost') {
   const restOfUrl = window.location.href.substr(5);
   /** @type {Location} */
-  window.location = `https:${restOfUrl}`;
+  window.location.href = `https:${restOfUrl}`;
 }

@@ -39,7 +39,7 @@ class Controller extends AbstractMobileController {
     }, $scope, $injector);
 
     /**
-     * @type {Array.<import("gmf/mobile/measure.js").default.pointComponent.LayerConfig>}
+     * @type {Array<import('gmf/mobile/measure/pointComponent.js').LayerConfig>}
      * @export
      */
     this.elevationLayersConfig = [
@@ -48,7 +48,7 @@ class Controller extends AbstractMobileController {
     ];
 
     /**
-     * @type {Array.<string>}
+     * @type {Array<string>}
      * @export
      */
     this.searchCoordinatesProjections = [EPSG21781, EPSG2056, 'EPSG:4326'];

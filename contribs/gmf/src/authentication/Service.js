@@ -72,8 +72,6 @@ export const RouteSuffix = {
  * - login
  * - logout
  * - resetPassword
- *
- * @extends {import("ol/events/EventTarget.js").default}
  */
 export class AuthenticationService extends olEventsEventTarget {
 

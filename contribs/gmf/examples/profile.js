@@ -52,7 +52,7 @@ function MainController($scope, ngeoFeatureOverlayMgr) {
   this.profileLine = null;
 
   /**
-   * @type {Object.<string, ProfileLineConfiguration>}
+   * @type {Object.<string, import('gmf/profile/component.js').ProfileLineConfiguration>}
    * @export
    */
   this.profileLinesconfiguration = {

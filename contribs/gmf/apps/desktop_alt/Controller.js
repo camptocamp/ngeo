@@ -71,13 +71,13 @@ class Controller extends AbstractDesktopController {
     this.elevationLayers = ['srtm'];
 
     /**
-     * @type {Object.<string, import("gmf/raster/component.js").default.LayerConfig>}
+     * @type {Object<string, import('gmf/mobile/measure/pointComponent.js').LayerConfig>}
      * @export
      */
     this.elevationLayersConfig = {};
 
     /**
-     * @type {Object.<string, ProfileLineConfiguration>}
+     * @type {Object<string, import('gmf/profile/component.js').ProfileLineConfiguration>}
      * @export
      */
     this.profileLinesconfiguration = {
@@ -85,7 +85,7 @@ class Controller extends AbstractDesktopController {
     };
 
     /**
-     * @type {Array.<MousePositionProjection>}
+     * @type {Array<import('gmf/map/mousepositionComponent.js').MousePositionProjection>}
      * @export
      */
     this.mousePositionProjections = [{
