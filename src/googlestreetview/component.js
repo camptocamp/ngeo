@@ -36,6 +36,7 @@ module.run(/* @ngInject */ ($templateCache) => {
  * @param {!function(!angular.IAttributes): string} ngeoGooglestreetviewTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
+ * @private
  */
 function ngeoGooglestreetviewTemplateUrl($attrs, ngeoGooglestreetviewTemplateUrl) {
   return ngeoGooglestreetviewTemplateUrl($attrs);
@@ -43,9 +44,15 @@ function ngeoGooglestreetviewTemplateUrl($attrs, ngeoGooglestreetviewTemplateUrl
 
 
 /**
- * @private
+ * Example:
+ *
+ *             <ngeo-googlestreetview
+ *                 active="mainCtrl.googleStreetViewActive"
+ *                 feature-style="mainCtrl.googleStreetViewStyle"
+ *                 map="mainCtrl.map">
+ *             </ngeo-googlestreetview>
  */
-class Controller {
+class GoogleStreetviewController {
 
   /**
    * @param {JQuery} $element Element.
@@ -393,7 +400,7 @@ module.component('ngeoGooglestreetview', {
     'map': '<',
     'radius': '<?'
   },
-  controller: Controller,
+  controller: GoogleStreetviewController,
   templateUrl: ngeoGooglestreetviewTemplateUrl
 });
 
