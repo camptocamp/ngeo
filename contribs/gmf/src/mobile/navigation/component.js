@@ -126,17 +126,18 @@ module.controller('gmfMobileNavController', Controller);
 
 /**
  * Initialize the directive with the linked element.
- * @param {JQuery} element Element.
+ * @param {JQuery<HTMLElement>} element Element.
  */
 Controller.prototype.init = function(element) {
   this.active_ = $(element.find(`.${CLASS_NAMES.ACTIVE}.${CLASS_NAMES.SLIDE}`));
   this.header_ = $(element.find('> header'));
   this.backButton_ = $(element.find(`header > .${CLASS_NAMES.GO_BACK}`));
 
-  // watch for clicks on "slide-in" elements
-  element.find('[data-toggle=slide-in]').on('click', (evt) => {
-
-    // the element to slide out is the div.slide parent
+  /**
+   * Watch for clicks on "slide-in" elements
+   * @param {JQuery.ClickEvent<any, any, any, HTMLElement>} evt The event
+   */
+  const onClick = (evt) => {
     const slideOut = $(evt.currentTarget).parents(`.${CLASS_NAMES.SLIDE}`);
     console.assert(slideOut.length === 1);
 
@@ -157,6 +158,9 @@ Controller.prototype.init = function(element) {
     this.updateNavigationHeader_(slideIn, false);
 
     this.active_ = slideIn;
+  };
+  element.find('[data-toggle=slide-in]').on({
+    'click': onClick
   });
 
   // watch for clicks on the header "go-back" link

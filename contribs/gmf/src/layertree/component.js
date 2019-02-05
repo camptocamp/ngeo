@@ -156,7 +156,7 @@ module.component('gmfLayertree', component);
  * @param {JQuery} $element Element.
  * @param {!angular.IScope} $scope Angular scope.
  * @param {!import("ngeo/map/LayerHelper.js").LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
- * @param {DataSourceBeingFiltered} gmfDataSourceBeingFiltered
+ * @param {import('gmf/datasource/DataSourceBeingFiltered.js').DataSourceBeingFiltered} gmfDataSourceBeingFiltered
  *     The Gmf value service that determines the data source currently being
  *     filtered.
  * @param {!import("gmf/datasource/ExternalDataSourcesManager.js").ExternalDatSourcesManager}
@@ -201,7 +201,7 @@ function Controller($element, $scope, ngeoLayerHelper, gmfDataSourceBeingFiltere
   this.layerHelper_ = ngeoLayerHelper;
 
   /**
-   * @type {DataSourceBeingFiltered}
+   * @type {import('gmf/datasource/DataSourceBeingFiltered.js').DataSourceBeingFiltered}
    * @export
    */
   this.gmfDataSourceBeingFiltered = gmfDataSourceBeingFiltered;
@@ -597,6 +597,7 @@ Controller.prototype.displayMetadata = function(treeCtrl) {
   const metadataURL = node.metadata['metadataUrl'];
   if (metadataURL !== undefined) {
     // FIXME layertree should not rely on a window function.
+    // @ts-ignore: gmfx is available, see upper
     const gmfx = window.gmfx;
     if (gmfx.openIframePopup) {
       gmfx.openIframePopup(metadataURL, node.name, undefined, undefined, false);

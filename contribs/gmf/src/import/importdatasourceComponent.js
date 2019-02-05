@@ -225,13 +225,12 @@ class Controller {
          * Borrowed from:
          * https://stackoverflow.com/questions/22059933/twitter-typeahead-js-how-to-return-all-matched-elements-within-a-string
          *
-         * @param {BloodhoundDatum} datum Datum.
+         * @param {string} datum Datum.
          * @return {Array.<string>} List of datum tokenizers.
          */
         datumTokenizer: (datum) => {
           console.assert(typeof datum == 'string');
-          const originalDatumTokenizers = Bloodhound.tokenizers.whitespace(
-            datum);
+          const originalDatumTokenizers = Bloodhound.tokenizers.whitespace(datum);
           console.assert(originalDatumTokenizers);
           const datumTokenizers = [];
           for (const originalDatumTokenizer of originalDatumTokenizers) {

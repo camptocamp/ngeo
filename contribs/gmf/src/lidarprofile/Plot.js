@@ -32,7 +32,7 @@ export default class {
 
     /**
      * d3.scaleLinear X scale.
-     * @type {Function}
+     * @type {d3.ScaleLinear<number, number>}
      */
     this.scaleX;
 
@@ -44,7 +44,7 @@ export default class {
 
     /**
      * d3.scaleLinear Y scale.
-     * @type {Function}
+     * @type {d3.ScaleLinear<number, number>}
      */
     this.scaleY;
 
@@ -170,23 +170,23 @@ export default class {
       const domainScale = rangeRatio / domainRatio;
       const domainScaledWidth = domainProfileWidth * domainScale;
       this.scaleX = d3scaleLinear();
-      this.scaleX['domain']([0, domainScaledWidth]);
-      this.scaleX['range']([0, this.width_]);
+      this.scaleX.domain([0, domainScaledWidth]);
+      this.scaleX.range([0, this.width_]);
       this.scaleY = d3scaleLinear();
-      this.scaleY['domain'](rangeY);
-      this.scaleY['range']([this.height_, 0]);
+      this.scaleY.domain(rangeY);
+      this.scaleY.range([this.height_, 0]);
     } else {
       domainScale = domainRatio / rangeRatio;
       const domainScaledHeight = domainProfileHeight * domainScale;
       const domainHeightCentroid = (rangeY[1] + rangeY[0]) / 2;
       this.scaleX = d3scaleLinear();
-      this.scaleX['domain'](rangeX);
-      this.scaleX['range']([0, this.width_]);
+      this.scaleX.domain(rangeX);
+      this.scaleX.range([0, this.width_]);
       this.scaleY = d3scaleLinear();
-      this.scaleY['domain']([
+      this.scaleY.domain([
         domainHeightCentroid - domainScaledHeight / 2,
         domainHeightCentroid + domainScaledHeight / 2]);
-      this.scaleY['range']([this.height_, 0]);
+      this.scaleY.range([this.height_, 0]);
     }
 
     const zoom = d3zoom()
