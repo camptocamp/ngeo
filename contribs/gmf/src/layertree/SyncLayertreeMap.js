@@ -46,7 +46,7 @@ export function SyncLayertreeMap($rootScope, ngeoLayerHelper, ngeoWMSTime, gmfTh
   });
 
   $rootScope.$on('ngeo-layertree-state', (map, treeCtrl, firstParent) => {
-    this.sync_(/** @type import("ol/Map.js").default */ (map), firstParent);
+    this.sync_(firstParent);
   });
 }
 
@@ -94,14 +94,14 @@ SyncLayertreeMap.prototype.createLayer = function(treeCtrl, map, dataLayerGroup,
 /**
  * Synchronise the state of each layers corresponding to the given tree and
  * all its children.
- * @param {import("ol/Map.js").default} map A map that contains the layers.
  * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl ngeo layertree controller.
  * @private
  */
-SyncLayertreeMap.prototype.sync_ = function(map, treeCtrl) {
+SyncLayertreeMap.prototype.sync_ = function(treeCtrl) {
   treeCtrl.traverseDepthFirst((treeCtrl) => {
     if (treeCtrl.layer && !treeCtrl.node.mixed) {
       this.updateLayerState_(/** @type import("ol/layer/Image.js").default|import("ol/layer/Tile.js").default */ (treeCtrl.layer), treeCtrl);
+      return LayertreeVisitorDecision.DESCEND;
     }
   });
 };
@@ -127,6 +127,7 @@ SyncLayertreeMap.prototype.updateLayerState_ = function(layer, treeCtrl) {
         names.push(treeCtrl.node.layers);
         const style = (treeCtrl.node.style !== undefined) ? treeCtrl.node.style : '';
         styles.push(style);
+        return LayertreeVisitorDecision.DESCEND;
       }
     });
     if (names.length === 0) {
@@ -231,6 +232,7 @@ SyncLayertreeMap.prototype.createLayerFromGroup_ = function(treeCtrl,
         ctrl.setState('on', false);
         this.updateLayerState_(/** @type {import("ol/layer/Image.js").default} */ (layer), ctrl);
         hasActiveChildren = true;
+        return LayertreeVisitorDecision.DESCEND;
       }
     });
     layer.setVisible(hasActiveChildren);

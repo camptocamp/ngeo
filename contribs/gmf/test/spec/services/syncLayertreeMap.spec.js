@@ -151,12 +151,12 @@ describe('gmf.layertree.SyncLayertreeMap', () => {
     const treeLeaf = treeGroup.children[0]; // osm scale;
 
     roottreeCtrl.setState('off');
-    gmfSyncLayertreeMap_.sync_(map, treeGroup);
+    gmfSyncLayertreeMap_.sync_(treeGroup);
     expect(treeLeaf.layer.getVisible()).toBe(false);
 
-    gmfSyncLayertreeMap_.sync_(map, treeGroup);
+    gmfSyncLayertreeMap_.sync_(treeGroup);
     treeLeaf.setState('on');
-    gmfSyncLayertreeMap_.sync_(map, treeLeaf);
+    gmfSyncLayertreeMap_.sync_(treeLeaf);
     const wmsParamLayers = treeLeaf.layer.getSource().getParams()['LAYERS'];
     expect(wmsParamLayers).toBe('osm_scale');
   });
@@ -176,17 +176,17 @@ describe('gmf.layertree.SyncLayertreeMap', () => {
     const treeLeaf = treeGroup.children[0]; // Leaf 'cinema'
 
     roottreeCtrl.setState('off');
-    gmfSyncLayertreeMap_.sync_(map, treeGroup);
+    gmfSyncLayertreeMap_.sync_(treeGroup);
     expect(treeGroup.layer.getVisible()).toBe(false);
 
     treeLeaf.setState('on');
-    gmfSyncLayertreeMap_.sync_(map, treeLeaf);
+    gmfSyncLayertreeMap_.sync_(treeLeaf);
     let wmsParamLayers = treeGroup.layer.getSource().getParams()['LAYERS'];
     expect(wmsParamLayers).toBe('cinema');
 
     // Group is on, original order must be kept.
     treeGroup.setState('on');
-    gmfSyncLayertreeMap_.sync_(map, treeGroup);
+    gmfSyncLayertreeMap_.sync_(treeGroup);
     wmsParamLayers = treeGroup.layer.getSource().getParams()['LAYERS'];
     expect(wmsParamLayers).toEqual('hospitals,sustenance,entertainment,' +
             'osm_time,post_office,police,cinema');
@@ -209,11 +209,11 @@ describe('gmf.layertree.SyncLayertreeMap', () => {
     const treeLeaf = treeGroup.children[4]; // Leaf 'ch.are.alpenkonvention'
 
     treeGroup.setState('off');
-    gmfSyncLayertreeMap_.sync_(map, treeGroup);
+    gmfSyncLayertreeMap_.sync_(treeGroup);
     expect(treeLeaf.layer.getVisible()).toBe(false);
 
     treeLeaf.setState('on');
-    gmfSyncLayertreeMap_.sync_(map, treeLeaf);
+    gmfSyncLayertreeMap_.sync_(treeLeaf);
     expect(treeLeaf.layer.getVisible()).toBe(true);
   });
 });

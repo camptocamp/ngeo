@@ -108,7 +108,7 @@ class Controller {
 
   /**
    * @param {!Object} layer WMS Capability Layer object
-   * @return {number} Unique id for the Capability Layer.
+   * @return {string} Unique id for the Capability Layer.
    * @export
    */
   getUid(layer) {
