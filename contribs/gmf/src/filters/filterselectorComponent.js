@@ -73,7 +73,7 @@ class Controller {
    * @param {!angular.IScope} $scope Angular scope.
    * @param {!angular.ITimeoutService} $timeout Angular timeout service.
    * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
-   * @param {DataSourceBeingFiltered} gmfDataSourceBeingFiltered
+   * @param {import('gmf/datasource/DataSourceBeingFiltered.js').DataSourceBeingFiltered} gmfDataSourceBeingFiltered
    *     The Gmf value service that determines the data source currently being
    *     filtered.
    * @param {import("gmf/datasource/Helper.js").Helper} gmfDataSourcesHelper Gmf data
@@ -138,7 +138,7 @@ class Controller {
      * The data source that can either be selected from the list or have
      * its value set from an external source (for example: the layertree)
      * and that requires to be ready before it can be filtered.
-     * @type {DataSourceBeingFiltered}
+     * @type {import('gmf/datasource/DataSourceBeingFiltered.js').DataSourceBeingFiltered}
      * @export
      */
     this.gmfDataSourceBeingFiltered = gmfDataSourceBeingFiltered;
@@ -541,8 +541,7 @@ class Controller {
   }
 
   /**
-   * @param {?import("gmf/datasource/OGC.js").default} dataSource Newly selected data source
-   *     object.
+   * @param {?import("gmf/datasource/OGC.js").default} dataSource Newly selected data source object.
    * @private
    */
   handleSelectedDataSourceChange_(dataSource) {
@@ -563,12 +562,9 @@ class Controller {
       this.active = true;
     }
 
-    this.gmfDataSourcesHelper_.prepareFiltrableDataSource(
-      dataSource
-    ).then((dataSource) => {
+    this.gmfDataSourcesHelper_.prepareFiltrableDataSource(dataSource).then((dataSource) => {
 
-      // Data source is ready. Get any existing rules or create new ones from
-      // the attributes
+      // Data source is ready. Get any existing rules or create new ones from the attributes
       let item = this.getRuleCacheItem_(dataSource);
       if (!item) {
         item = {
@@ -580,8 +576,7 @@ class Controller {
             dataSource.gmfLayer.metadata.directedFilterAttributes &&
             dataSource.gmfLayer.metadata.directedFilterAttributes.length
         ) {
-          const directedAttributes =
-              dataSource.gmfLayer.metadata.directedFilterAttributes;
+          const directedAttributes = dataSource.gmfLayer.metadata.directedFilterAttributes;
           const attributes = dataSource.attributes;
           for (const attribute of attributes) {
             if (directedAttributes.includes(attribute.name)) {
