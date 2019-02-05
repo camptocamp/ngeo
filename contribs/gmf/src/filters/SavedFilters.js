@@ -234,7 +234,7 @@ SavedFilterItem.prototype.condition;
 
 /**
  * The list of custom rules of the saved filter item.
- * @type {!Array.<!AnyOptions>}
+ * @type {!Array.<!import("ngeo/filter/RuleHelper.js").AnyOptions>}
  * @export
  */
 SavedFilterItem.prototype.customRules;
@@ -250,7 +250,7 @@ SavedFilterItem.prototype.dataSourceId;
 
 /**
  * The list of directed rules of the saved filter item.
- * @type {!Array.<!AnyOptions>}
+ * @type {!Array.<!import("ngeo/filter/RuleHelper.js").AnyOptions>}
  * @export
  */
 SavedFilterItem.prototype.directedRules;

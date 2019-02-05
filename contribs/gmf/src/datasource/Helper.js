@@ -3,7 +3,7 @@ import gmfEditingEnumerateAttribute from 'gmf/editing/EnumerateAttribute.js';
 import ngeoDatasourceHelper from 'ngeo/datasource/Helper.js';
 import ngeoFormatAttributeType from 'ngeo/format/AttributeType.js';
 
-class Helper {
+export class Helper {
 
   /**
    * A service that provides utility methods to manipulate or get GMF data

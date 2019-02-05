@@ -205,7 +205,8 @@ EditingSnappingService.prototype.registerTreeCtrl_ = function(treeCtrl) {
 
   // Skip any Layertree controller that has a node that is not a leaf
   let node = /** @type {import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer} */ (treeCtrl.node);
-  if (node.children) {
+  const groupNode = /** @type import('gmf/themes.js').GmfGroup */ (node);
+  if (groupNode.children) {
     return;
   }
 
@@ -268,7 +269,7 @@ EditingSnappingService.prototype.unregisterAllTreeCtrl_ = function() {
  * Get the OGC server.
  *
  * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl The layer tree controller
- * @return {?import('gmf/themes.js').GmfOgcServers} The OGC server.
+ * @return {?import('gmf/themes.js').GmfOgcServer} The OGC server.
  * @private
  */
 EditingSnappingService.prototype.getOGCServer_ = function(treeCtrl) {

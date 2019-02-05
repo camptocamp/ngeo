@@ -520,21 +520,25 @@ function Controller($element, $q, $scope, $timeout,
  */
 Controller.prototype.$onInit = function() {
   const lang = this.gettextCatalog_.getCurrentLanguage();
+
+  // @ts-ignore: $.datetimepicker is available, as it is imported
   $.datetimepicker.setLocale(lang);
+  // @ts-ignore: $.datetimepicker is available, as it is imported
   $.datetimepicker.setDateFormatter(new DateFormatter());
 
   // (1) Set default values and other properties
   this.dirty = this.dirty === true;
   this.editableNode_ = /** @type {import('gmf/themes.js').GmfLayer} */ (
     this.editableTreeCtrl.node);
-  this.features = /** @type {olSourceVector} */(this.vectorLayer.getSource()).getFeaturesCollection();
+  const source = /** @type {import('ol/source/Vector.js').default} */(this.vectorLayer.getSource());
+  this.features = source.getFeaturesCollection();
   this.tolerance = this.tolerance !== undefined ? this.tolerance : 10;
 
   // (1.1) Set editable WMS layer
   const layer = syncLayertreeMapGetLayer(this.editableTreeCtrl);
   console.assert(
     layer instanceof olLayerImage || layer instanceof olLayerTile);
-  this.editableWMSLayer_ = layer;
+  this.editableWMSLayer_ = /** @type {olLayerImage|olLayerTile} */ (layer);
 
   // (1.2) Create, set and initialize interactions
   this.modify_ = new olInteractionModify({
@@ -1030,14 +1034,15 @@ Controller.prototype.handleMapClick_ = function(evt) {
   const feature = this.map.forEachFeatureAtPixel(
     pixel,
     (feature) => {
-      let ret = false;
+      let ret = null;
       if (this.features.getArray().includes(feature)) {
         ret = feature;
       }
       return ret;
     },
     {
-      hitTolerance: 5
+      hitTolerance: 5,
+      layerFilter: undefined
     }
   );
 
@@ -1081,19 +1086,20 @@ Controller.prototype.handleMapContextMenu_ = function(evt) {
   const pixel = this.map.getEventPixel(evt);
   const coordinate = this.map.getCoordinateFromPixel(pixel);
 
-  let feature = this.map.forEachFeatureAtPixel(
+  let feature = /** @type {olFeature|undefined} */ (this.map.forEachFeatureAtPixel(
     pixel,
     (feature) => {
-      let ret = false;
+      let ret = null;
       if (this.features.getArray().includes(feature)) {
         ret = feature;
       }
       return ret;
     },
     {
-      hitTolerance: 7
+      hitTolerance: 7,
+      layerFilter: undefined
     }
-  );
+  ));
 
   feature = feature ? feature : null;
 
@@ -1291,7 +1297,7 @@ Controller.prototype.handleMenuVertexActionClick_ = function(evt) {
 
 
 /**
- * @param {import("ol/interaction/Translate/Event.js").default} evt Event.
+ * @param {import("ol/interaction/Translate.js").TranslateEvent} evt Event.
  * @private
  */
 Controller.prototype.handleTranslateEnd_ = function(evt) {
