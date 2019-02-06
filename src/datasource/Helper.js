@@ -5,7 +5,7 @@ import ngeoFormatWFSAttribute from 'ngeo/format/WFSAttribute.js';
 import ngeoQueryQuerent from 'ngeo/query/Querent.js';
 import * as olEvents from 'ol/events.js';
 
-export class Helper {
+export class DatasourceHelper {
   /**
    * A service that provides utility methods to manipulate or get data sources.
    *
@@ -153,7 +153,7 @@ const module = angular.module('ngeoDataSourcesHelper', [
   ngeoDatasourceDataSources.name,
   ngeoQueryQuerent.name,
 ]);
-module.service('ngeoDataSourcesHelper', Helper);
+module.service('ngeoDataSourcesHelper', DatasourceHelper);
 
 
 export default module;
