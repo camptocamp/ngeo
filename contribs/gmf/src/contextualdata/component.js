@@ -220,9 +220,9 @@ ContextualdataController.prototype.preparePopover_ = function() {
     element: container,
     stopEvent: true,
     autoPan: true,
-    autoPanAnimation: /** @type {import('ol/Overlay.js').PanOptions} */ ({
+    autoPanAnimation: {
       duration: 250
-    }),
+    },
     positioning: 'top-center'
   });
   this.map.addOverlay(this.overlay_);
