@@ -95,8 +95,8 @@ export class DatasourceHelper {
       // (2) The attribute names that are in the `enumeratedAttributes`
       //     metadata are the ones that need to have their values fetched.
       //     Do that once then set the type to SELECT and the choices.
-      const meta = dataSource.gmfLayer.metadata || {};
-      const enumAttributes = meta.enumeratedAttributes;
+      const enumAttributes = dataSource.gmfLayer.metadata ?
+        dataSource.gmfLayer.metadata.enumeratedAttributes : undefined;
       if (enumAttributes && enumAttributes.length) {
         const promises = [];
         for (const attribute of attributes) {
@@ -114,9 +114,9 @@ export class DatasourceHelper {
             );
           }
         }
-        return this.q_.all(promises).then(
-          prepareFiltrableDataSourceDefer.resolve(dataSource)
-        );
+        return this.q_.all(promises).then(() => {
+          prepareFiltrableDataSourceDefer.resolve(dataSource);
+        });
       } else {
         prepareFiltrableDataSourceDefer.resolve(dataSource);
       }

@@ -38,7 +38,7 @@ import olSourceTileWMS from 'ol/source/TileWMS.js';
  * @property {Function} stateWatcherUnregister
  * @property {Function} [timeLowerValueWatcherUnregister]
  * @property {Function} [timeUpperValueWatcherUnregister]
- * @property {ngeo.layertree.Controller} treeCtrl
+ * @property {import('ngeo/layertree/Controller.js').LayertreeController} treeCtrl
  * @property {import("ol/layer/Image.js").default} [wmsLayer]
  */
 
@@ -248,9 +248,10 @@ export class DatasourceManager {
 
     const dataSources = this.dataSources_.getArray();
     for (const dataSource of dataSources) {
-      if (dataSource.dimensionsFiltersConfig) {
-        for (const key in dataSource.dimensionsFiltersConfig) {
-          if (dataSource.dimensionsFiltersConfig[key].value === null) {
+      const gmfOGCDataSource = /** @type import('gmf/datasource/OGC').default */ (dataSource);
+      if (gmfOGCDataSource.dimensionsFiltersConfig) {
+        for (const key in gmfOGCDataSource.dimensionsFiltersConfig) {
+          if (gmfOGCDataSource.dimensionsFiltersConfig[key].value === null) {
             const layer = this.getDataSourceLayer_(dataSource);
             if (layer == undefined) {
               return;
@@ -347,7 +348,8 @@ export class DatasourceManager {
       const visitor = (treeCtrls, treeCtrl) => {
         const node = /** @type {!import('gmf/themes.js').GmfGroup|!import('gmf/themes.js').GmfLayer} */ (
           treeCtrl.node);
-        const children = node.children;
+        const groupNode = /** @type {!import('gmf/themes.js').GmfGroup} */ (node);
+        const children = groupNode.children;
         if (!children) {
           treeCtrls.push(treeCtrl);
         }
@@ -414,7 +416,8 @@ export class DatasourceManager {
    */
   createDataSource_(firstLevelGroup, node, ogcServers) {
 
-    const children = node.children;
+    const groupNode = /** @type {!import('gmf/themes.js').GmfGroup} */ (node);
+    const children = groupNode.children;
 
     // (1) Group node (node that has children). Loop in the children
     //     individually and create a data source for each one of them. The
@@ -431,7 +434,7 @@ export class DatasourceManager {
     const gmfLayer = /** @type import('gmf/themes.js').GmfLayer */ (node);
 
     // (2) Skip layer node if a data source with the same id exists
-    const id = olUtilGetUid(gmfLayer);
+    const id = Number(olUtilGetUid(gmfLayer));
     if (this.dataSourcesCache_[id]) {
       return;
     }
@@ -531,7 +534,7 @@ export class DatasourceManager {
     // (7) Dimensions
     const dimensions = this.dimensions_;
     const dimensionsConfig = node.dimensions || firstLevelGroup.dimensions;
-    const dimensionsFiltersConfig = node.dimensionsFilters;
+    const dimensionsFiltersConfig = gmfLayer.dimensionsFilters;
 
     // (8) Time values (lower or lower/upper)
     let timeLowerValue;
@@ -735,16 +738,16 @@ export class DatasourceManager {
 
   /**
    * Return the layer corresponding to the data source.
-   * @param {!import("ngeo/DataSource.js").default} dataSource The data source.
+   * @param {!import("ngeo/datasource/DataSource.js").default} dataSource The data source.
    * @return {import("ol/layer/Base.js").default|undefined} The layer.
    * @private
    */
   getDataSourceLayer_(dataSource) {
-    dataSource = /** @type {!import("gmf/DataSource.js").default} */ (dataSource);
-    if (dataSource.gmfLayer == undefined) {
+    const gmfOGCDataSource = /** @type {!import("gmf/datasource/OGC.js").default} */ (dataSource);
+    if (gmfOGCDataSource.gmfLayer == undefined) {
       return;
     }
-    const id = olUtilGetUid(dataSource.gmfLayer);
+    const id = olUtilGetUid(gmfOGCDataSource.gmfLayer);
     if (id == undefined) {
       return;
     }
@@ -768,7 +771,7 @@ export class DatasourceManager {
       layer instanceof olLayerTile
     );
 
-    const source = layer.getSource();
+    const source = /** @type {olLayerImage|olLayerTile} */ (layer).getSource();
     if (!(source instanceof olSourceImageWMS ||
           source instanceof olSourceTileWMS)) {
       return;
@@ -791,11 +794,13 @@ export class DatasourceManager {
         if (dsLayer == undefined) {
           continue;
         }
+        const gmfOGCDataSource = /** @type import('gmf/datasource/OGC.js').default */ (dataSource);
+        const gmfLayerWMS = /** @type import('gmf/themes.js').GmfLayerWMS */ (gmfOGCDataSource.gmfLayer);
         if (olUtilGetUid(dsLayer) == olUtilGetUid(layer) &&
             layer.get('querySourceIds').indexOf(dataSource.id) >= 0 &&
-            dataSource.gmfLayer.layers.split(',').indexOf(wmsLayerName) >= 0) {
+            gmfLayerWMS.layers.split(',').indexOf(wmsLayerName) >= 0) {
 
-          const id = olUtilGetUid(dataSource.gmfLayer);
+          const id = olUtilGetUid(gmfOGCDataSource.gmfLayer);
           const item = this.treeCtrlCache_[id];
           console.assert(item);
           const treeCtrl = item.treeCtrl;

@@ -40,7 +40,7 @@ import {appendParams as olUriAppendParams} from 'ol/uri.js';
  * this dataset. See: https://github.com/twitter/typeahead.js/blob/master/
  * @property {string} url URL of the search service. Must contain a '%QUERY' term that will be
  * replaced by the input string.
- * @property {string} datasetTitle
+ * @property {string|undefined} datasetTitle
  * }}
  */
 

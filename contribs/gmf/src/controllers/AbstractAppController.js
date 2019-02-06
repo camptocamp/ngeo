@@ -30,7 +30,7 @@ import olStyleFill from 'ol/style/Fill.js';
 import olStyleStroke from 'ol/style/Stroke.js';
 import olStyleStyle from 'ol/style/Style.js';
 import {ThemeEventType} from 'gmf/theme/Manager.js';
-import gmfThemeThemes from 'gmf/theme/Themes.js';
+import {findThemeByName} from 'gmf/theme/Themes.js';
 
 
 /**
@@ -40,44 +40,12 @@ import gmfThemeThemes from 'gmf/theme/Themes.js';
  * @property {import("ol/style/Style.js").default} [positionFeatureStyle]
  * @property {import("ol/style/Style.js").default} [accuracyFeatureStyle]
  * @property {number} [geolocationZoom]
- * @property {string} [autorotate]
+ * @property {boolean|undefined} [autorotate]
  * @property {olx.ViewOptions} [mapViewConfig]
  * @property {import("ol/Collection.js").default.<import('ol/control/Control.js').default>|Array.<import('ol/control/Control.js').default>} [mapControls]
  * @property {import("ol/Collection.js").default.<import('"ol/interaction/Interaction.js').default>|Array.<import('ol/interaction/Interaction.js').default>} [mapInteractions]
  * @property {number} [mapPixelRatio]
  * }} Config
- */
-
-
-/**
- * Static function to create a popup with html content.
- * @typedef {Function} openTextPopup
- * @param {string} content (text or html).
- * @param {string} title (text).
- * @param {string=} opt_width CSS width.
- * @param {string=} opt_height CSS height.
- * @param {boolean=} opt_apply If true, trigger the Angular digest loop. Default to true.
- */
-
-
-/**
- * Static function to create a popup with an iframe.
- * @typedef {Function} openInfoWindow
- * @param {string} url an url.
- * @param {string} title (text).
- * @param {string=} opt_width CSS width.
- * @param {string=} opt_height CSS height.
- * @param {boolean=} opt_apply If true, trigger the Angular digest loop. Default to true.
- */
-
-
-/**
- * @typedef {Function} openPopup_
- * @param {import("ngeo/message/Popup.js").default!} popup a ngeoPopup.
- * @param {string} title (text).
- * @param {string=} opt_width CSS width.
- * @param {string=} opt_height CSS height.
- * @param {boolean=} opt_apply If true, trigger the Angular digest loop. Default to true.
  */
 
 
@@ -105,6 +73,7 @@ export function AbstractAppController(config, map, $scope, $injector) {
   this.ngeoLocation = $injector.get('ngeoLocation');
   if (this.ngeoLocation.hasParam('debug')) {
     // make the injector globally available
+    // @ts-ignore: available in debug mode only
     window.injector = $injector;
   }
 
@@ -223,11 +192,11 @@ export function AbstractAppController(config, map, $scope, $injector) {
   });
 
   /**
-   * @param {AuthenticationEvent} evt Event.
+   * @param {import('gmf/authentication/Service.js').AuthenticationEvent} evt Event.
    */
   const userChange = (evt) => {
     if (this.loginRedirectUrl) {
-      window.location = this.loginRedirectUrl;
+      window.location.href = this.loginRedirectUrl;
       return;
     }
     const user = evt.detail.user;
@@ -265,6 +234,7 @@ export function AbstractAppController(config, map, $scope, $injector) {
    * @export
    */
   this.searchDatasources = [{
+    datasetTitle: undefined,
     labelKey: 'label',
     groupValues: /** @type {Array.<string>} **/ ($injector.get('gmfSearchGroups')),
     groupActions: /** @type {Array.<string>} **/ ($injector.get('gmfSearchActions')),
@@ -432,7 +402,7 @@ export function AbstractAppController(config, map, $scope, $injector) {
   this.gmfUser = $injector.get('gmfUser');
 
   /**
-   * @type {miscGetBrowserLanguage}
+   * @type {import('ngeo/misc/getBrowserLanguage.js').miscGetBrowserLanguage}
    */
   this.getBrowserLanguage = $injector.get('ngeoGetBrowserLanguage');
 
@@ -442,7 +412,7 @@ export function AbstractAppController(config, map, $scope, $injector) {
   this.stateManager = $injector.get('ngeoStateManager');
 
   /**
-   * @type {tmhDynamicLocale}
+   * @type {angular.dynamicLocale.tmhDynamicLocaleService}
    */
   this.tmhDynamicLocale = $injector.get('tmhDynamicLocale');
 
@@ -591,6 +561,7 @@ export function AbstractAppController(config, map, $scope, $injector) {
   /**
    * @export
    */
+  // @ts-ignore: todo
   window.gmfx = gmfx;
 
   /**
@@ -643,6 +614,7 @@ export function AbstractAppController(config, map, $scope, $injector) {
   /**
    * @export
    */
+  // @ts-ignore: todo
   window.cgxp = cgxp;
   /**
    * @export
@@ -810,7 +782,7 @@ AbstractAppController.prototype.updateCurrentTheme_ = function(fallbackThemeName
   this.gmfThemes_.getThemesObject().then((themes) => {
     const themeName = this.permalink_.defaultThemeNameFromFunctionalities();
     if (themeName) {
-      const theme = gmfThemeThemes.findThemeByName(themes, /** @type {string} */ (themeName));
+      const theme = findThemeByName(themes, /** @type {string} */ (themeName));
       if (theme) {
         this.gmfThemeManager.addTheme(theme, true);
       }
@@ -822,7 +794,7 @@ AbstractAppController.prototype.updateCurrentTheme_ = function(fallbackThemeName
 
 /**
  * @protected
- * @return {Element} Span element with font-awesome inside of it
+ * @return {HTMLSpanElement} Span element with font-awesome inside of it
  */
 export function getLocationIcon() {
   const arrow = document.createElement('span');
@@ -868,7 +840,8 @@ module.value('ngeoExportFeatureFormats', [
 
 module.config(['tmhDynamicLocaleProvider', 'angularLocaleScript',
   /**
-   * @param {tmhDynamicLocaleProvider} tmhDynamicLocaleProvider angular-dynamic-locale provider.
+   * @param {angular.dynamicLocale.tmhDynamicLocaleProvider} tmhDynamicLocaleProvider
+   *     angular-dynamic-locale provider.
    * @param {string} angularLocaleScript the script.
    */
   function(tmhDynamicLocaleProvider, angularLocaleScript) {

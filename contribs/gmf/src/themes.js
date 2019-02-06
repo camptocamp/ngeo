@@ -148,6 +148,7 @@
  * @property {string|undefined} geometryName Geometry name.
  * @property {string} imageType 'image/png' or 'image/jpeg'.
  * @property {boolean} isSingleTile
+ * @property {string|undefined} namespace Namespace
  * @property {string} type 'mapserver', 'qgisserver', 'geoserver' or 'other'.
  * @property {string} url
  * @property {string} urlWfs The WFS URL.

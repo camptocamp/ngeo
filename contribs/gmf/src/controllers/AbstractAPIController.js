@@ -18,7 +18,7 @@ import * as olInteraction from 'ol/interaction.js';
  */
 export class AbstractAPIController extends AbstractAppController {
   /**
-   * @param {Config} config A part of the application config.
+   * @param {import('gmf/controllers/AbstractAppController.js').Config} config A part of the application
    * @param {angular.IScope} $scope Scope.
    * @param {angular.auto.IInjectorService} $injector Main injector.
    * @ngInject

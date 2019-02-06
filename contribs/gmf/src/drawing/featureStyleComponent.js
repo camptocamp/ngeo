@@ -64,7 +64,7 @@ module.directive('gmfFeaturestyle', directive);
 function Controller($scope, ngeoFeatureHelper) {
 
   /**
-   * @type {number}
+   * @type {string}
    * @export
    */
   this.uid = olUtilGetUid(this);
@@ -209,7 +209,7 @@ Controller.prototype.handleColorSet_ = function(newColor) {
  * @export
  */
 Controller.prototype.getSetAngle = function(value) {
-  return this.getSetProperty_(ngeoFormatFeatureProperties.ANGLE, value);
+  return /** @type number */ (this.getSetProperty_(ngeoFormatFeatureProperties.ANGLE, value));
 };
 
 
@@ -219,7 +219,7 @@ Controller.prototype.getSetAngle = function(value) {
  * @export
  */
 Controller.prototype.getSetName = function(value) {
-  return this.getSetProperty_(ngeoFormatFeatureProperties.NAME, value);
+  return /** @type string */ (this.getSetProperty_(ngeoFormatFeatureProperties.NAME, value));
 };
 
 /**
@@ -229,7 +229,7 @@ Controller.prototype.getSetName = function(value) {
  * @export
  */
 Controller.prototype.getSetShowLabel = function(value) {
-  return typeof this.getSetProperty_(ngeoFormatFeatureProperties.SHOW_LABEL, value);
+  return /** @type boolean */ (this.getSetProperty_(ngeoFormatFeatureProperties.SHOW_LABEL, value));
 };
 
 /**
@@ -238,7 +238,7 @@ Controller.prototype.getSetShowLabel = function(value) {
  * @export
  */
 Controller.prototype.getSetOpacity = function(value) {
-  return typeof this.getSetProperty_(ngeoFormatFeatureProperties.OPACITY, value);
+  return /** @type number */ (this.getSetProperty_(ngeoFormatFeatureProperties.OPACITY, value));
 };
 
 
@@ -249,7 +249,7 @@ Controller.prototype.getSetOpacity = function(value) {
  * @export
  */
 Controller.prototype.getSetShowMeasure = function(value) {
-  return this.getSetProperty_(ngeoFormatFeatureProperties.SHOW_MEASURE, value);
+  return /** @type boolean */ (this.getSetProperty_(ngeoFormatFeatureProperties.SHOW_MEASURE, value));
 };
 
 
@@ -259,7 +259,7 @@ Controller.prototype.getSetShowMeasure = function(value) {
  * @export
  */
 Controller.prototype.getSetSize = function(value) {
-  return this.getSetProperty_(ngeoFormatFeatureProperties.SIZE, value);
+  return /** @type number */ (this.getSetProperty_(ngeoFormatFeatureProperties.SIZE, value));
 };
 
 
@@ -269,7 +269,7 @@ Controller.prototype.getSetSize = function(value) {
  * @export
  */
 Controller.prototype.getSetStroke = function(value) {
-  return this.getSetProperty_(ngeoFormatFeatureProperties.STROKE, value);
+  return /** @type number */ (this.getSetProperty_(ngeoFormatFeatureProperties.STROKE, value));
 };
 
 

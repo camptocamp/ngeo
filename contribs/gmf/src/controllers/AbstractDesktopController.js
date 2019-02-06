@@ -26,7 +26,8 @@ import olStyleText from 'ol/style/Text.js';
  */
 export class AbstractDesktopController extends AbstractAPIController {
   /**
-   * @param {Config} config A part of the application config.
+   * @param {import('gmf/controllers/AbstractAppController.js').Config} config A part of the application
+   *     config.
    * @param {angular.IScope} $scope Scope.
    * @param {angular.auto.IInjectorService} $injector Main injector.
    * @ngInject

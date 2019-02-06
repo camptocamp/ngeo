@@ -576,19 +576,20 @@ Controller.prototype.handleMapClick_ = function(evt) {
 
   const pixel = evt.pixel;
 
-  let feature = this.map.forEachFeatureAtPixel(
+  let feature = /** @type {import('ol/Feature.js').default|undefined} */ (this.map.forEachFeatureAtPixel(
     pixel,
     (feature) => {
-      let ret = false;
-      if (this.features.getArray().includes(feature)) {
+      let ret = null;
+      if (this.features.getArray().includes(/** @type import('ol/Feature.js').default */ (feature))) {
         ret = feature;
       }
       return ret;
     },
     {
-      hitTolerance: 5
+      hitTolerance: 5,
+      layerFilter: undefined
     }
-  );
+  ));
 
   feature = feature ? feature : null;
 
@@ -608,7 +609,7 @@ Controller.prototype.handleMapClick_ = function(evt) {
  * @private
  */
 Controller.prototype.handleMapTouchStart_ = function(evt) {
-  this.longPressTimeout_ = setTimeout(() => {
+  this.longPressTimeout_ = window.setTimeout(() => {
     this.handleMapContextMenu_(evt);
   }, 500);
 };
@@ -632,19 +633,20 @@ Controller.prototype.handleMapContextMenu_ = function(evt) {
   const pixel = this.map.getEventPixel(evt);
   const coordinate = this.map.getCoordinateFromPixel(pixel);
 
-  let feature = this.map.forEachFeatureAtPixel(
+  let feature = /** @type {import('ol/Feature.js').default|undefined} */ (this.map.forEachFeatureAtPixel(
     pixel,
     (feature) => {
-      let ret = false;
-      if (this.features.getArray().includes(feature)) {
+      let ret = null;
+      if (this.features.getArray().includes(/** @type import('ol/Feature.js').default */ (feature))) {
         ret = feature;
       }
       return ret;
     },
     {
-      hitTolerance: 7
+      hitTolerance: 7,
+      layerFilter: undefined
     }
-  );
+  ));
 
   feature = feature ? feature : null;
 
@@ -703,7 +705,7 @@ Controller.prototype.handleMapContextMenu_ = function(evt) {
 
   this.modify_.setActive(true);
 
-  this.selectedFeature = feature;
+  this.selectedFeature = /** @type import('ol/Feature.js').default */ (feature);
 
   this.scope_.$apply();
 };
@@ -746,7 +748,7 @@ Controller.prototype.handleMenuActionClick_ = function(vertexInfo, evt) {
 
 
 /**
- * @param {!import("ol/interaction/Translate/Event.js").default} evt Event.
+ * @param {!import("ol/interaction/Translate.js").TranslateEvent} evt Event.
  * @private
  */
 Controller.prototype.handleTranslateEnd_ = function(evt) {
