@@ -180,13 +180,13 @@ ContextualdataController.prototype.setContent_ = function(coordinate) {
     scope[`coord_${proj}_northern`] = coord[1];
   });
 
-  const getRasterSuccess = function(resp) {
+  const getRasterSuccess = (resp) => {
     Object.assign(scope, resp);
     if (this.callback) {
       Object.assign(scope, this.callback.call(this, coordinate, resp));
     }
-  }.bind(this);
-  const getRasterError = function(resp) {
+  };
+  const getRasterError = () => {
     console.error('Error on getting the raster.');
   };
   this.gmfRaster_.getRaster(coordinate).then(
