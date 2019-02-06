@@ -1,6 +1,8 @@
 /* global DocumentTouch */
 
 import $ from 'jquery';
+import angular from 'angular';
+
 
 function bootstrap(module) {
   const interface_ = $('meta[name=interface]')[0].attributes.content.value;

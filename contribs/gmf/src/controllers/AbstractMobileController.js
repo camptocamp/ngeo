@@ -19,7 +19,7 @@ import olStyleStyle from 'ol/style/Style.js';
 /**
  * Mobile application abstract controller.
  *
- * This file includes `goog.require`'s mobile components/directives used
+ * This file includes `import`'s mobile components/directives used
  * by the HTML page and the controller to provide the configuration.
  */
 export class AbstractMobileController extends AbstractAppController {

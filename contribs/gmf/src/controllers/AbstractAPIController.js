@@ -13,7 +13,7 @@ import * as olInteraction from 'ol/interaction.js';
 /**
  * API application abstract controller.
  *
- * This file includes `goog.require`'s for desktop/api components/directives used
+ * This file includes `import`'s for desktop/api components/directives used
  * by the HTML page and the controller to provide the configuration.
  */
 export class AbstractAPIController extends AbstractAppController {

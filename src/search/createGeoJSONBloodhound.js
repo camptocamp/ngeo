@@ -1,3 +1,5 @@
+/* global Bloodhound */
+
 import angular from 'angular';
 import olFormatGeoJSON from 'ol/format/GeoJSON.js';
 

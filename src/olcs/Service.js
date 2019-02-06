@@ -1,3 +1,5 @@
+/* global Cesium */
+
 import angular from 'angular';
 import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
 import ngeoStatemanagerLocation from 'ngeo/statemanager/Location.js';

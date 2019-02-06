@@ -1,4 +1,3 @@
-const path = require('path');
 const webpack = require('webpack');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
@@ -38,12 +37,6 @@ module.exports = function(UglifyJsPluginCache) {
           }
         })
       ]
-    },
-    resolve: {
-      alias: {
-        'goog/asserts': path.resolve(__dirname, '../src/goog.asserts.prod.js'),
-        'goog/asserts.js': path.resolve(__dirname, '../src/goog.asserts.prod.js'),
-      }
     },
   };
 };

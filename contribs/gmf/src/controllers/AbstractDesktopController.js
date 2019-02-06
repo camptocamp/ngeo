@@ -21,7 +21,7 @@ import olStyleText from 'ol/style/Text.js';
 /**
  * Desktop application abstract controller.
  *
- * This file includes `goog.require`'s for desktop components/directives used
+ * This file includes `import`'s for desktop components/directives used
  * by the HTML page and the controller to provide the configuration.
  */
 export class AbstractDesktopController extends AbstractAPIController {

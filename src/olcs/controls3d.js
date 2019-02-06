@@ -1,3 +1,5 @@
+/* global Cesium */
+
 import angular from 'angular';
 import * as olEasing from 'ol/easing.js';
 import olcsCore from 'olcs/core.js';

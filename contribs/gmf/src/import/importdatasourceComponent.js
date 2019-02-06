@@ -1,3 +1,5 @@
+/* global Bloodhound */
+
 import angular from 'angular';
 
 import gmfDatasourceExternalDataSourcesManager from 'gmf/datasource/ExternalDataSourcesManager.js';

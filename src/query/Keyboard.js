@@ -1,3 +1,4 @@
+import angular from 'angular';
 import ngeoQueryAction from 'ngeo/query/Action.js';
 
 import {listen as olEventsListen} from 'ol/events.js';
