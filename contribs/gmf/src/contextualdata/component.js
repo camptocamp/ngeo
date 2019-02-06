@@ -2,7 +2,6 @@ import angular from 'angular';
 import gmfRasterRasterService from 'gmf/raster/RasterService.js';
 import olOverlay from 'ol/Overlay.js';
 import * as olProj from 'ol/proj.js';
-import * as olEvents from 'ol/events.js';
 
 /**
  * @type {angular.IModule}
@@ -134,7 +133,6 @@ export function ContextualdataController($compile, $timeout, $scope, gmfRaster) 
    */
   this.gmfRaster_ = gmfRaster;
 
-  angular.element('body').on('mousedown', this.hidePopover.bind(this));
 }
 
 /**
@@ -145,9 +143,9 @@ ContextualdataController.prototype.init = function() {
 
   const mapDiv = this.map.getTargetElement();
   console.assert(mapDiv);
+  mapDiv.addEventListener('contextmenu', this.handleMapContextMenu_.bind(this));
 
-  olEvents.listen(mapDiv, 'contextmenu',
-    this.handleMapContextMenu_, this);
+  this.map.on('pointerdown', this.hidePopover.bind(this));
 };
 
 /**
@@ -182,13 +180,13 @@ ContextualdataController.prototype.setContent_ = function(coordinate) {
     scope[`coord_${proj}_northern`] = coord[1];
   });
 
-  const getRasterSuccess = function(resp) {
+  const getRasterSuccess = (resp) => {
     Object.assign(scope, resp);
     if (this.callback) {
       Object.assign(scope, this.callback.call(this, coordinate, resp));
     }
-  }.bind(this);
-  const getRasterError = function(resp) {
+  };
+  const getRasterError = () => {
     console.error('Error on getting the raster.');
   };
   this.gmfRaster_.getRaster(coordinate).then(
@@ -207,7 +205,7 @@ ContextualdataController.prototype.preparePopover_ = function() {
   container.classList.add('popover');
   container.classList.add('bottom');
   container.classList.add('gmf-contextualdata');
-  angular.element(container).css('position', 'relative');
+  container.style.position = 'relative';
   const arrow = document.createElement('DIV');
   arrow.classList.add('arrow');
   container.appendChild(arrow);
@@ -220,22 +218,20 @@ ContextualdataController.prototype.preparePopover_ = function() {
     element: container,
     stopEvent: true,
     autoPan: true,
-    autoPanAnimation: /** @type {import('ol/Overlay.js').PanOptions} */ ({
+    autoPanAnimation: {
       duration: 250
-    }),
+    },
     positioning: 'top-center'
   });
   this.map.addOverlay(this.overlay_);
 };
 
 ContextualdataController.prototype.showPopover = function() {
-  const element = /** @type {Object} */ (this.overlay_.getElement());
-  angular.element(element).css('display', 'block');
+  this.overlay_.getElement().style.display = 'block';
 };
 
 ContextualdataController.prototype.hidePopover = function() {
-  const element = /** @type {Object} */ (this.overlay_.getElement());
-  angular.element(element).css('display', 'none');
+  this.overlay_.getElement().style.display = 'none';
 };
 
 module.controller('GmfContextualdataController', ContextualdataController);
