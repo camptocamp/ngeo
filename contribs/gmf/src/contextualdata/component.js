@@ -207,7 +207,7 @@ ContextualdataController.prototype.preparePopover_ = function() {
   container.classList.add('popover');
   container.classList.add('bottom');
   container.classList.add('gmf-contextualdata');
-  angular.element(container).css('position', 'relative');
+  container.style.position = 'relative';
   const arrow = document.createElement('DIV');
   arrow.classList.add('arrow');
   container.appendChild(arrow);
@@ -229,13 +229,11 @@ ContextualdataController.prototype.preparePopover_ = function() {
 };
 
 ContextualdataController.prototype.showPopover = function() {
-  const element = /** @type {Object} */ (this.overlay_.getElement());
-  angular.element(element).css('display', 'block');
+  this.overlay_.getElement().style.display = 'block';
 };
 
 ContextualdataController.prototype.hidePopover = function() {
-  const element = /** @type {Object} */ (this.overlay_.getElement());
-  angular.element(element).css('display', 'none');
+  this.overlay_.getElement().style.display = 'none';
 };
 
 module.controller('GmfContextualdataController', ContextualdataController);
