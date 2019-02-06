@@ -1,5 +1,3 @@
-/**
- */
 import {mouse as d3mouse, select as d3select} from 'd3';
 
 

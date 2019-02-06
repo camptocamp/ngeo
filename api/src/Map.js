@@ -1,5 +1,9 @@
 // see https://github.com/camptocamp/cgxp/blob/master/core/src/script/CGXP/api/Map.js
 
+/**
+ * @module api/Map.js
+ */
+
 import OLMap from 'ol/Map.js';
 import Feature from 'ol/Feature.js';
 import Overlay from 'ol/Overlay.js';
