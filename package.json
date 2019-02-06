@@ -15,6 +15,7 @@
     "typecheck": "tsc --pretty",
     "doc": "typedoc --name ngeo --out apidoc"
   },
+  "sideEffects": false,
   "repository": {
     "type": "git",
     "url": "git://github.com/camptocamp/ngeo.git"

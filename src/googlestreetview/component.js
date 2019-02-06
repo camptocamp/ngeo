@@ -1,3 +1,5 @@
+/* global google */
+
 import angular from 'angular';
 import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr.js';
 import * as olArray from 'ol/array.js';

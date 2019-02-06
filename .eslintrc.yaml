@@ -15,10 +15,3 @@ rules:
     '@openlayers/valid-tsdoc':
     - error
     - requireReturn: false
-
-globals:
-    angular: false
-    Cesium: false
-    google: false
-    Bloodhound: false
-    DateFormatter: false

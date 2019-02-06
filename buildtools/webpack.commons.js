@@ -162,14 +162,12 @@ const config = function(hardSourceConfig, babelLoaderCacheDirectory) {
       modules: [
         '../node_modules'
       ],
-      mainFields: ['jsnext:main', 'main'],
+      mainFields: ['source', 'module', 'jsnext:main', 'main'],
       alias: {
         'ngeo/test': path.resolve(__dirname, '../test/spec'),
         'gmf/test': path.resolve(__dirname, '../contribs/gmf/test/spec'),
         'ngeo': path.resolve(__dirname, '../src'),
         'gmf': path.resolve(__dirname, '../contribs/gmf/src'),
-        'goog/asserts': path.resolve(__dirname, '../src/goog.asserts.js'),
-        'goog/asserts.js': path.resolve(__dirname, '../src/goog.asserts.js'),
         'jsts': 'jsts/org/locationtech/jts',
         'olcs': 'ol-cesium/src/olcs',
         'jquery-ui/datepicker': 'jquery-ui/ui/widgets/datepicker', // For angular-ui-date
