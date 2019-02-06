@@ -40,7 +40,7 @@ module.run(/* @ngInject */ ($templateCache) => {
  * @ngdoc directive
  * @ngname gmfMap
  */
-function directive() {
+function mapComponent() {
   return {
     scope: {
       'map': '<gmfMapMap',
@@ -53,7 +53,7 @@ function directive() {
   };
 }
 
-module.directive('gmfMap', directive);
+module.directive('gmfMap', mapComponent);
 
 
 /**

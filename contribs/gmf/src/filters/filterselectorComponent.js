@@ -58,6 +58,7 @@ module.value('gmfFilterselectorTemplateUrl',
  * @param {!function(!angular.IAttributes): string} gmfFilterselectorTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
+ * @private
  */
 function gmfFilterselectorTemplateUrl($attrs, gmfFilterselectorTemplateUrl) {
   return gmfFilterselectorTemplateUrl($attrs);
@@ -723,8 +724,6 @@ class Controller {
  * @property {Array.<import('ngeo/rule/Rule.js').default>} customRules
  * @property {Array.<import('ngeo/rule/Rule.js').default>} directedRules
  */
-
-
 module.component('gmfFilterselector', {
   bindings: {
     active: '=',

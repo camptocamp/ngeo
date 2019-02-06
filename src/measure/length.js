@@ -25,7 +25,7 @@ const module = angular.module('ngeoMeasurelength', [
  * @ngdoc directive
  * @ngname ngeoDrawpoint
  */
-function directive($compile, gettextCatalog, $filter, $injector) {
+function measureLengthComponent($compile, gettextCatalog, $filter, $injector) {
   return {
     restrict: 'A',
     require: '^^ngeoDrawfeature',
@@ -69,7 +69,7 @@ function directive($compile, gettextCatalog, $filter, $injector) {
 }
 
 
-module.directive('ngeoMeasurelength', directive);
+module.directive('ngeoMeasurelength', measureLengthComponent);
 
 
 export default module;

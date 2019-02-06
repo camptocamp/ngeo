@@ -39,7 +39,7 @@ const module = angular.module('gmfDrawProfileLine', [
  * @ngdoc directive
  * @ngname gmfDrawprofileline
  */
-function directive() {
+function profileDarwLineComponent() {
   return {
     scope: true,
     controller: 'GmfDrawprofilelineController as ctrl',
@@ -54,7 +54,7 @@ function directive() {
 }
 
 
-module.directive('gmfDrawprofileline', directive);
+module.directive('gmfDrawprofileline', profileDarwLineComponent);
 
 /**
  * @param {!angular.IScope} $scope Scope.

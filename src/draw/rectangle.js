@@ -16,7 +16,7 @@ const module = angular.module('ngeoDrawrectangle', []);
  * @ngdoc directive
  * @ngname ngeoDrawrectangle
  */
-function directive() {
+function drawRectangleComponent() {
   return {
     restrict: 'A',
     require: '^^ngeoDrawfeature',
@@ -65,7 +65,7 @@ function directive() {
 }
 
 
-module.directive('ngeoDrawrectangle', directive);
+module.directive('ngeoDrawrectangle', drawRectangleComponent);
 
 
 export default module;

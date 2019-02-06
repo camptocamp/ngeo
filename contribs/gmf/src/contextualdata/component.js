@@ -46,7 +46,7 @@ const module = angular.module('gmfContextualdata', [
  * @ngdoc directive
  * @ngname gmfContextualdata
  */
-function directive() {
+function contextualDataComponent() {
   return {
     restrict: 'A',
     scope: false,
@@ -68,7 +68,7 @@ function directive() {
   };
 }
 
-module.directive('gmfContextualdata', directive);
+module.directive('gmfContextualdata', contextualDataComponent);
 
 
 /**
@@ -265,7 +265,7 @@ module.controller('GmfContextualdataController', ContextualdataController);
  * @ngdoc directive
  * @ngname gmfContextualdatacontent
  */
-function contentDirective(gmfContextualdatacontentTemplateUrl) {
+function contextualDataComponentContent(gmfContextualdatacontentTemplateUrl) {
   return {
     restrict: 'A',
     scope: true,
@@ -273,7 +273,7 @@ function contentDirective(gmfContextualdatacontentTemplateUrl) {
   };
 }
 
-module.directive('gmfContextualdatacontent', contentDirective);
+module.directive('gmfContextualdatacontent', contextualDataComponentContent);
 
 
 export default module;

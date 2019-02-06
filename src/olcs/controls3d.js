@@ -257,7 +257,7 @@ module.run(/* @ngInject */ ($templateCache) => {
  * @ngdoc component
  * @ngname ngeoOlcsControls3d
  */
-const component = {
+const olscControls3dComponent = {
   bindings: {
     'minTilt': '<?',
     'maxTilt': '<?',
@@ -267,7 +267,7 @@ const component = {
   templateUrl: ngeoOlcsControls3dTemplateUrlInjectable
 };
 
-module.component('ngeoOlcsControls3d', component);
+module.component('ngeoOlcsControls3d', olscControls3dComponent);
 
 module.value('ngeoOlcsControls3dTemplateUrl', '');
 

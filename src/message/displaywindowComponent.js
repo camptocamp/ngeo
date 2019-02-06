@@ -36,6 +36,7 @@ module.value('ngeoMessageDisplaywindowTemplateUrl',
  * @param {!function(!angular.IAttributes): string} ngeoMessageDisplaywindowTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
+ * @private
  */
 function ngeoMessageDisplaywindowTemplateUrl($attrs, ngeoMessageDisplaywindowTemplateUrl) {
   return ngeoMessageDisplaywindowTemplateUrl($attrs);
@@ -310,7 +311,7 @@ class Controller {
  * @ngdoc component
  * @ngname ngeoDisplaywindow
  */
-module.component('ngeoDisplaywindow', {
+const ngeoMessageDisplaywindowComponent = {
   bindings: {
     'clearOnClose': '<?',
     'content': '=?',
@@ -328,7 +329,8 @@ module.component('ngeoDisplaywindow', {
   },
   controller: Controller,
   templateUrl: ngeoMessageDisplaywindowTemplateUrl
-});
+};
+module.component('ngeoDisplaywindow', ngeoMessageDisplaywindowComponent);
 
 
 export default module;

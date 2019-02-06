@@ -60,7 +60,7 @@ const GeolocationEventType = {
  * @ngdoc directive
  * @ngname ngeoDesktopGeolocation
  */
-function directive() {
+function GeolocationDesktopComponent() {
   return {
     restrict: 'A',
     scope: {
@@ -72,7 +72,7 @@ function directive() {
 }
 
 
-module.directive('ngeoDesktopGeolocation', directive);
+module.directive('ngeoDesktopGeolocation', GeolocationDesktopComponent);
 
 
 /**

@@ -39,7 +39,7 @@ const module = angular.module('ngeoMap', []);
  * @ngname ngeoMap
  * @ngInject
  */
-function directive($window) {
+function mapCompnent($window) {
   return {
     restrict: 'A',
     /**
@@ -104,7 +104,7 @@ function directive($window) {
 }
 
 // Register the directive in the module
-module.directive('ngeoMap', directive);
+module.directive('ngeoMap', mapCompnent);
 
 
 export default module;

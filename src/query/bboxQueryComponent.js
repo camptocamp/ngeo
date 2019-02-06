@@ -45,7 +45,7 @@ const module = angular.module('ngeoBboxQuery', [
  * @ngdoc directive
  * @ngname ngeoBboxQuery
  */
-function directive($rootScope, ngeoMapQuerent, ngeoQueryKeyboard) {
+function queryBboxComponent($rootScope, ngeoMapQuerent, ngeoQueryKeyboard) {
   return {
     restrict: 'A',
     scope: false,
@@ -131,7 +131,7 @@ function directive($rootScope, ngeoMapQuerent, ngeoQueryKeyboard) {
   };
 }
 
-module.directive('ngeoBboxQuery', directive);
+module.directive('ngeoBboxQuery', queryBboxComponent);
 
 
 export default module;

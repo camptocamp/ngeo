@@ -96,7 +96,7 @@ const module = angular.module('ngeoDrawfeature', [
  * @ngdoc directive
  * @ngname ngeoDrawfeature
  */
-function directive() {
+function drawComponent() {
   return {
     controller: 'ngeoDrawfeatureController as dfCtrl',
     scope: true,
@@ -109,7 +109,7 @@ function directive() {
   };
 }
 
-module.directive('ngeoDrawfeature', directive);
+module.directive('ngeoDrawfeature', drawComponent);
 
 
 export default module;

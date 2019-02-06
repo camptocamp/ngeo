@@ -15,7 +15,7 @@ const module = angular.module('ngeoDrawtext', []);
  * @ngdoc directive
  * @ngname ngeoDrawtext
  */
-function directive() {
+function drawTextComponent() {
   return {
     restrict: 'A',
     require: '^^ngeoDrawfeature',
@@ -52,7 +52,7 @@ function directive() {
 }
 
 
-module.directive('ngeoDrawtext', directive);
+module.directive('ngeoDrawtext', drawTextComponent);
 
 
 export default module;

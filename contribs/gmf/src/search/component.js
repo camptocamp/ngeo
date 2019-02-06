@@ -64,6 +64,7 @@ const module = angular.module('gmfSearch', [
  * @param {JQuery} element Element.
  * @param {angular.IAttributes} attrs Attributes.
  * @return {string} Template URL.
+ * @private
  */
 function gmfSearchTemplateUrl_(element, attrs) {
   const templateUrl = attrs['gmfSearchTemplateurl'];
@@ -83,6 +84,7 @@ module.run(/* @ngInject */ ($templateCache) => {
  * @param {!function(!JQuery, !angular.IAttributes): string} gmfSearchTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
+ * @private
  */
 function gmfSearchTemplateUrl($element, $attrs, gmfSearchTemplateUrl) {
   return gmfSearchTemplateUrl($element, $attrs);
@@ -173,7 +175,7 @@ function gmfSearchTemplateUrl($element, $attrs, gmfSearchTemplateUrl) {
  * @ngdoc component
  * @ngname gmfSearch
  */
-const component = {
+const searchComponent = {
   bindings: {
     'inputValue': '=?gmfSearchInputValue',
     'placeholder': '@?gmfSearchPlaceholder',
@@ -198,7 +200,7 @@ module.value('gmfSearchTemplateUrl', gmfSearchTemplateUrl_);
 
 
 // Register the controller in the module
-module.component('gmfSearch', component);
+module.component('gmfSearch', searchComponent);
 
 
 /**

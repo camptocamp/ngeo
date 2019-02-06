@@ -29,6 +29,7 @@ const module = angular.module('gmfAuthentication', [
  * @param {JQuery} element Element.
  * @param {angular.IAttributes} attrs Attributes.
  * @return {string} Template URL.
+ * @private
  */
 function gmfAuthenticationTemplateUrl_(element, attrs) {
   const templateUrl = attrs['gmfAuthenticationTemplateurl'];
@@ -49,6 +50,7 @@ module.run(/* @ngInject */ ($templateCache) => {
  * @param {!function(!JQuery, !angular.IAttributes): string} gmfAuthenticationTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
+ * @private
  */
 function gmfAuthenticationTemplateUrl($element, $attrs, gmfAuthenticationTemplateUrl) {
   return gmfAuthenticationTemplateUrl($element, $attrs);
@@ -112,7 +114,7 @@ function gmfAuthenticationTemplateUrl($element, $attrs, gmfAuthenticationTemplat
  * @ngdoc component
  * @ngname gmfAuthentication
  */
-const component = {
+const authenticationComponent = {
   bindings: {
     'allowPasswordReset': '<?gmfAuthenticationAllowPasswordReset',
     'allowPasswordChange': '<?gmfAuthenticationAllowPasswordChange',
@@ -127,7 +129,7 @@ const component = {
 module.value('gmfAuthenticationTemplateUrl',
   gmfAuthenticationTemplateUrl_);
 
-module.component('gmfAuthentication', component);
+module.component('gmfAuthentication', authenticationComponent);
 
 
 /**

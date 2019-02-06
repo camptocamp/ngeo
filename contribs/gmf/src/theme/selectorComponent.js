@@ -38,6 +38,7 @@ module.value('gmfThemeSelectorTemplateUrl',
  * @param {!function(!angular.IAttributes): string} gmfThemeSelectorTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
+ * @private
  */
 function gmfThemeSelectorTemplateUrl($attrs, gmfThemeSelectorTemplateUrl) {
   return gmfThemeSelectorTemplateUrl($attrs);
@@ -93,7 +94,7 @@ function gmfThemeSelectorTemplateUrl($attrs, gmfThemeSelectorTemplateUrl) {
  *
  * @type {!angular.IComponentOptions}
  */
-const component = {
+const themeSelectorComponent = {
   bindings: {
     'filter': '<gmfThemeselectorFilter'
   },
@@ -101,7 +102,7 @@ const component = {
   templateUrl: gmfThemeSelectorTemplateUrl
 };
 
-module.component('gmfThemeselector', component);
+module.component('gmfThemeselector', themeSelectorComponent);
 
 
 /**

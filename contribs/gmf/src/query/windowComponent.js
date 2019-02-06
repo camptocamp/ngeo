@@ -69,6 +69,7 @@ module.run(/* @ngInject */ ($templateCache) => {
  * @param {!function(!JQuery, !angular.IAttributes): string} gmfDisplayquerywindowTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
+ * @private
  */
 function gmfDisplayquerywindowTemplateUrl($element, $attrs, gmfDisplayquerywindowTemplateUrl) {
   return gmfDisplayquerywindowTemplateUrl($element, $attrs);
@@ -106,7 +107,7 @@ function gmfDisplayquerywindowTemplateUrl($element, $attrs, gmfDisplayquerywindo
  * @ngdoc component
  * @ngname gmfDisplayquerywindow
  */
-const component = {
+const queryWindowComponent = {
   controller: 'GmfDisplayquerywindowController as ctrl',
   bindings: {
     'draggableContainment': '<?gmfDisplayquerywindowDraggableContainment',
@@ -120,7 +121,7 @@ const component = {
 };
 
 
-module.component('gmfDisplayquerywindow', component);
+module.component('gmfDisplayquerywindow', queryWindowComponent);
 
 
 /**

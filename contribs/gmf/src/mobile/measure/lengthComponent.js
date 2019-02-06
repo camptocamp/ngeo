@@ -49,7 +49,7 @@ module.run(/* @ngInject */ ($templateCache) => {
  * @ngdoc directive
  * @ngname gmfMobileMeasureLength
  */
-function component(gmfMobileMeasureLengthTemplateUrl) {
+function mobileMeasureLenthComponent(gmfMobileMeasureLengthTemplateUrl) {
   return {
     restrict: 'A',
     scope: {
@@ -74,7 +74,7 @@ function component(gmfMobileMeasureLengthTemplateUrl) {
 }
 
 
-module.directive('gmfMobileMeasurelength', component);
+module.directive('gmfMobileMeasurelength', mobileMeasureLenthComponent);
 
 
 class Controller extends MeasueMobileBaseController {

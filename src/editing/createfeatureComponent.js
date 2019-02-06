@@ -56,7 +56,7 @@ const module = angular.module('ngeoCreatefeature', [
  * @ngdoc directive
  * @ngname ngeoCreatefeature
  */
-function directive() {
+function editingCreateFeatureComponent() {
   return {
     controller: 'ngeoCreatefeatureController',
     bindToController: true,
@@ -69,7 +69,7 @@ function directive() {
   };
 }
 
-module.directive('ngeoCreatefeature', directive);
+module.directive('ngeoCreatefeature', editingCreateFeatureComponent);
 
 
 /**

@@ -35,6 +35,7 @@ module.value('gmfWmtscapabilitylayertreTemplateUrl',
  * @param {!function(!angular.IAttributes): string} gmfWmtscapabilitylayertreTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
+ * @private
  */
 function gmfWmtscapabilitylayertreTemplateUrl($attrs, gmfWmtscapabilitylayertreTemplateUrl) {
   return gmfWmtscapabilitylayertreTemplateUrl($attrs);

@@ -28,7 +28,7 @@ const module = angular.module('ngeoControl', []);
  * @ngdoc directive
  * @ngname ngeoControl
  */
-function component() {
+function controlComponent() {
   return {
     restrict: 'A',
     /**
@@ -53,7 +53,7 @@ function component() {
 }
 
 
-module.directive('ngeoControl', component);
+module.directive('ngeoControl', controlComponent);
 
 
 export default module;

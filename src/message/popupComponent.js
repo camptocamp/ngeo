@@ -40,14 +40,13 @@ module.run(/* @ngInject */ ($templateCache) => {
  * - The directive doesn't create any scope but relies on its parent scope.
  *   Properties like 'content', 'title' or 'open' come from the parent scope.
  *
- * @private
  * @param {string} ngeoPopupTemplateUrl URL to popup template.
  * @return {angular.IDirective} Directive Definition Object.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoPopup
  */
-function directive(ngeoPopupTemplateUrl) {
+function messagePopopComponent(ngeoPopupTemplateUrl) {
   return {
     restrict: 'A',
     templateUrl: ngeoPopupTemplateUrl,
@@ -78,7 +77,7 @@ function directive(ngeoPopupTemplateUrl) {
   };
 }
 
-module.directive('ngeoPopup', directive);
+module.directive('ngeoPopup', messagePopopComponent);
 
 
 export default module;

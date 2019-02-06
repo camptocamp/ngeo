@@ -55,7 +55,7 @@ const CLASS_NAMES = {
  * @return {angular.IDirective} The Directive Definition Object.
  * @ngInject
  */
-function component() {
+function mobileNavigationComponent() {
   return {
     restrict: 'A',
     controller: 'gmfMobileNavController as navCtrl',
@@ -73,7 +73,7 @@ function component() {
   };
 }
 
-module.directive('gmfMobileNav', component);
+module.directive('gmfMobileNav', mobileNavigationComponent);
 
 
 /**
@@ -272,7 +272,7 @@ Controller.prototype.backIfActive = function(element) {
  * @return {angular.IDirective} The Directive Definition Object.
  * @ngInject
  */
-function backDirective() {
+function mobileNavigationBackComponent() {
   return {
     require: '^^gmfMobileNav',
     restrict: 'A',
@@ -293,7 +293,7 @@ function backDirective() {
   };
 }
 
-module.directive('gmfMobileNavBack', backDirective);
+module.directive('gmfMobileNavBack', mobileNavigationBackComponent);
 
 
 /**
@@ -314,7 +314,7 @@ module.directive('gmfMobileNavBack', backDirective);
  * @return {angular.IDirective} The Directive Definition Object.
  * @ngInject
  */
-function backOnClickDirective() {
+function mobileNavigationBackOnClickComponent() {
   return {
     require: '^^gmfMobileNav',
     restrict: 'A',
@@ -333,7 +333,7 @@ function backOnClickDirective() {
   };
 }
 
-module.directive('gmfMobileNavBackOnClick', backOnClickDirective);
+module.directive('gmfMobileNavBackOnClick', mobileNavigationBackOnClickComponent);
 
 
 export default module;

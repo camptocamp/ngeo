@@ -141,7 +141,7 @@ function gmfLayertreeTemplate($element, $attrs, gmfLayertreeTemplate) {
  * @ngdoc component
  * @ngname gmfLayertreeComponent
  */
-const component = {
+const layertreeComponent = {
   controller: 'GmfLayertreeController as gmfLayertreeCtrl',
   bindings: {
     'map': '=gmfLayertreeMap',
@@ -151,7 +151,7 @@ const component = {
   template: gmfLayertreeTemplate
 };
 
-module.component('gmfLayertree', component);
+module.component('gmfLayertree', layertreeComponent);
 
 
 /**

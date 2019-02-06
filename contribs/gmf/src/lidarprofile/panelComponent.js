@@ -46,6 +46,7 @@ module.run(/* @ngInject */ ($templateCache) => {
  *     Template function.
  * @return {string} Template URL.
  * @ngInject
+ * @private
  */
 function gmfLidarprofilePanelTemplateUrl($element, $attrs, gmfLidarprofilePanelTemplateUrl) {
   return gmfLidarprofilePanelTemplateUrl($element, $attrs);
@@ -70,7 +71,7 @@ function gmfLidarprofilePanelTemplateUrl($element, $attrs, gmfLidarprofilePanelT
  * @ngdoc component
  * @ngname gmfLidarprofilePanel
  */
-const component = {
+const lidarprofilePanelComponent = {
   controller: 'gmfLidarprofilePanelController',
   bindings: {
     'active': '=gmfLidarprofilePanelActive',
@@ -81,7 +82,7 @@ const component = {
 };
 
 
-module.component('gmfLidarprofilePanel', component);
+module.component('gmfLidarprofilePanel', lidarprofilePanelComponent);
 
 
 /**

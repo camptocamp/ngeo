@@ -42,7 +42,7 @@ const module = angular.module('ngeoModal', []);
  * @ngname ngeoModal
  * @type {!angular.IComponentOptions}
  */
-const component = {
+const messageModalComponent = {
   template: `<div class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -61,7 +61,7 @@ const component = {
   }
 };
 
-module.component('ngeoModal', component);
+module.component('ngeoModal', messageModalComponent);
 
 class Controller {
   /**

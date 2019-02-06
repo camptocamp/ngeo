@@ -341,7 +341,7 @@ Controller.prototype.closeDisclaimerMessage_ = function(msg) {
  * @ngdoc component
  * @ngname gmfDisclaimer
  */
-const component = {
+const disclamerComponent = {
   controller: Controller,
   bindings: {
     'popup': '<?gmfDisclaimerPopup',
@@ -353,7 +353,7 @@ const component = {
 };
 
 
-module.component('gmfDisclaimer', component);
+module.component('gmfDisclaimer', disclamerComponent);
 
 
 export default module;

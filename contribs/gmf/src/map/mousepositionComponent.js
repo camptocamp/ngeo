@@ -47,6 +47,7 @@ module.value('gmfMapMousepositionTemplateUrl',
  * @param {!function(!angular.IAttributes): string} gmfMapMousepositionTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
+ * @private
  */
 function gmfMapMousepositionTemplateUrl($attrs, gmfMapMousepositionTemplateUrl) {
   return gmfMapMousepositionTemplateUrl($attrs);
@@ -70,7 +71,7 @@ function gmfMapMousepositionTemplateUrl($attrs, gmfMapMousepositionTemplateUrl) 
  * @ngdoc component
  * @ngname gmfMouseposition
  */
-const component = {
+const mapMousepositionComponent = {
   controller: 'gmfMousepositionController as ctrl',
   bindings: {
     'map': '<gmfMousepositionMap',
@@ -79,7 +80,7 @@ const component = {
   templateUrl: gmfMapMousepositionTemplateUrl
 };
 
-module.component('gmfMouseposition', component);
+module.component('gmfMouseposition', mapMousepositionComponent);
 
 
 /**

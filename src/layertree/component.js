@@ -117,7 +117,7 @@ module.run(/* @ngInject */ ($templateCache) => {
  * @ngdoc directive
  * @ngname ngeoLayertree
  */
-function directive(ngeoLayertreeTemplateUrl) {
+function layertreeComponent(ngeoLayertreeTemplateUrl) {
   return {
     restrict: 'A',
     scope: true,
@@ -127,7 +127,7 @@ function directive(ngeoLayertreeTemplateUrl) {
 }
 
 
-module.directive('ngeoLayertree', directive);
+module.directive('ngeoLayertree', layertreeComponent);
 
 
 export default module;

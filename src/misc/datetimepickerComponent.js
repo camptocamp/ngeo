@@ -23,7 +23,7 @@ const module = angular.module('ngeoDateTimePicker', ['gettext']);
  * @ngdoc directive
  * @ngname ngeoDatetimepicker
  */
-function component() {
+function dateTimeComponent() {
   return {
     restrict: 'A',
     controller: Controller,
@@ -34,7 +34,7 @@ function component() {
   };
 }
 
-module.directive('ngeoDatetimepicker', component);
+module.directive('ngeoDatetimepicker', dateTimeComponent);
 
 
 /**

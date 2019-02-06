@@ -29,7 +29,7 @@ const module = angular.module('ngeoResizemap', []);
  * @ngdoc directive
  * @ngname ngeoResizemap
  */
-function directive($window) {
+function mapResizeComponent($window) {
   const /** @type {number} */ duration = 1000;
 
   return {
@@ -79,7 +79,7 @@ function directive($window) {
 }
 
 
-module.directive('ngeoResizemap', directive);
+module.directive('ngeoResizemap', mapResizeComponent);
 
 
 export default module;

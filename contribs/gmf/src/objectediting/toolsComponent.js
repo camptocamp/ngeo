@@ -109,7 +109,7 @@ module.value('gmfObjectEditingToolsOptions', {});
  * @ngdoc directive
  * @ngname gmfObjecteditingtools
  */
-function directive() {
+function objectEditingToolsComponent() {
   return {
     controller: 'GmfObjecteditingtoolsController as oetCtrl',
     scope: {
@@ -129,7 +129,7 @@ function directive() {
   };
 }
 
-module.directive('gmfObjecteditingtools', directive);
+module.directive('gmfObjecteditingtools', objectEditingToolsComponent);
 
 
 /**

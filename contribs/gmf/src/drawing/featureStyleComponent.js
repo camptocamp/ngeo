@@ -37,7 +37,7 @@ module.run(/* @ngInject */ ($templateCache) => {
  * @ngdoc directive
  * @ngname gmfFeaturestyle
  */
-function directive() {
+function drawingDrawFeatureComponent() {
   return {
     controller: 'GmfFeaturestyleController as fsCtrl',
     scope: {
@@ -49,7 +49,7 @@ function directive() {
 }
 
 
-module.directive('gmfFeaturestyle', directive);
+module.directive('gmfFeaturestyle', drawingDrawFeatureComponent);
 
 
 /**

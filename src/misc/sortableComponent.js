@@ -59,7 +59,7 @@ const module = angular.module('ngeoSortable', []);
  * @ngdoc directive
  * @ngname ngeoSortable
  */
-function component($timeout) {
+function sortableComponent($timeout) {
   return {
     restrict: 'A',
     /**
@@ -167,7 +167,7 @@ function component($timeout) {
   };
 }
 
-module.directive('ngeoSortable', component);
+module.directive('ngeoSortable', sortableComponent);
 
 
 export default module;

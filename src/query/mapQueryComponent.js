@@ -43,7 +43,7 @@ const module = angular.module('ngeoMapQuery', [
  * @ngdoc directive
  * @ngname ngeoMapQuery
  */
-function directive(ngeoMapQuerent, ngeoQueryKeyboard, $injector) {
+function queryMapComponent(ngeoMapQuerent, ngeoQueryKeyboard, $injector) {
   return {
     restrict: 'A',
     scope: false,
@@ -130,7 +130,7 @@ function directive(ngeoMapQuerent, ngeoQueryKeyboard, $injector) {
   };
 }
 
-module.directive('ngeoMapQuery', directive);
+module.directive('ngeoMapQuery', queryMapComponent);
 
 
 export default module;

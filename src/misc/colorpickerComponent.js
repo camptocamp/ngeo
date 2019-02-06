@@ -41,7 +41,7 @@ module.run(/* @ngInject */ ($templateCache) => {
  * @ngdoc directive
  * @ngname ngeoColorpicker
  */
-function component(ngeoColorpickerTemplateUrl) {
+function colorPickerComponent(ngeoColorpickerTemplateUrl) {
   return {
     restrict: 'A',
     scope: {
@@ -54,7 +54,7 @@ function component(ngeoColorpickerTemplateUrl) {
   };
 }
 
-module.directive('ngeoColorpicker', component);
+module.directive('ngeoColorpicker', colorPickerComponent);
 
 /**
  * Default colors for the colorpicker
