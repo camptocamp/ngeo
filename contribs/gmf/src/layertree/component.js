@@ -550,7 +550,7 @@ Controller.prototype.getLegendsObject = function(treeCtrl) {
     return wmtsLegendURL ? legendsObject : null;
   } else {
     const gmfLayerWMS = /** @type {import('gmf/themes.js').GmfLayerWMS} */ (gmfLayer);
-    let layersNames = gmfLayerWMS.layers;
+    const layersNames = gmfLayerWMS.layers;
     const gmfOgcServer = this.gmfTreeManager_.getOgcServer(treeCtrl);
     const scale = this.getScale_();
     // QGIS can handle multiple layers natively. Use Multiple URLs for other map
