@@ -2,7 +2,6 @@ import angular from 'angular';
 import gmfRasterRasterService from 'gmf/raster/RasterService.js';
 import olOverlay from 'ol/Overlay.js';
 import * as olProj from 'ol/proj.js';
-import * as olEvents from 'ol/events.js';
 
 /**
  * @type {angular.IModule}
@@ -134,7 +133,6 @@ export function ContextualdataController($compile, $timeout, $scope, gmfRaster) 
    */
   this.gmfRaster_ = gmfRaster;
 
-  angular.element('body').on('mousedown', this.hidePopover.bind(this));
 }
 
 /**
@@ -145,9 +143,9 @@ ContextualdataController.prototype.init = function() {
 
   const mapDiv = this.map.getTargetElement();
   console.assert(mapDiv);
+  mapDiv.addEventListener('contextmenu', this.handleMapContextMenu_.bind(this));
 
-  olEvents.listen(mapDiv, 'contextmenu',
-    this.handleMapContextMenu_, this);
+  this.map.on('pointerdown', this.hidePopover.bind(this));
 };
 
 /**
