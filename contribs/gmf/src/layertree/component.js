@@ -13,7 +13,9 @@ import ngeoDatasourceOGC, {ServerType} from 'ngeo/datasource/OGC.js';
 
 import ngeoLayertreeComponent from 'ngeo/layertree/component.js';
 
-import ngeoLayertreeController from 'ngeo/layertree/Controller.js';
+import ngeoLayertreeController, {
+  LayertreeVisitorDecision
+} from 'ngeo/layertree/Controller.js';
 import ngeoMapLayerHelper from 'ngeo/map/LayerHelper.js';
 import ngeoMiscSyncArrays from 'ngeo/misc/syncArrays.js';
 import ngeoMiscWMSTime from 'ngeo/misc/WMSTime.js';
@@ -173,8 +175,9 @@ module.component('gmfLayertree', component);
  * @ngdoc controller
  * @ngname gmfLayertreeController
  */
-function Controller($element, $scope, ngeoLayerHelper, gmfDataSourceBeingFiltered,
-  gmfExternalDataSourcesManager, gmfPermalink, gmfTreeManager, gmfSyncLayertreeMap, ngeoWMSTime, gmfThemes) {
+function Controller($element, $scope, ngeoLayerHelper,
+  gmfDataSourceBeingFiltered, gmfExternalDataSourcesManager, gmfPermalink,
+  gmfTreeManager, gmfSyncLayertreeMap, ngeoWMSTime, gmfThemes) {
 
   /**
    * @type {?import("ol/Map.js").default}
@@ -319,7 +322,11 @@ Controller.prototype.updateDimensions_ = function(treeCtrl) {
     if (ctrl.node.dimensions) {
       const layer = ctrl.layer;
       console.assert(layer instanceof olLayerLayer);
-      this.updateLayerDimensions_(layer, /** @type import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer */ (ctrl.node));
+      this.updateLayerDimensions_(
+        /** @type olLayerLayer */ (layer),
+        /** @type import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer */ (ctrl.node)
+      );
+      return LayertreeVisitorDecision.DESCEND;
     }
   });
 };
@@ -458,7 +465,8 @@ Controller.prototype.updateWMSTimeLayerState = function(layertreeCtrl, time) {
   if (!time) {
     return;
   }
-  const dataSource = layertreeCtrl.getDataSource();
+  const dataSource = /** @type {?import("ngeo/datasource/OGC").default} */ (
+    layertreeCtrl.getDataSource());
   if (dataSource) {
     console.assert(dataSource instanceof ngeoDatasourceOGC);
     dataSource.timeRangeValue = time;
@@ -521,7 +529,7 @@ Controller.prototype.getLegendIconURL = function(treeCtrl) {
  * @export
  */
 Controller.prototype.getLegendsObject = function(treeCtrl) {
-  const legendsObject = {};
+  const legendsObject = /** @type {Object.<string, string>} */ ({});
   if (/** @type import('gmf/themes.js').GmfGroup */ (treeCtrl.node).children !== undefined) {
     return null;
   }
@@ -536,7 +544,8 @@ Controller.prototype.getLegendsObject = function(treeCtrl) {
   const layer = treeCtrl.layer;
   if (gmfLayer.type === 'WMTS') {
     console.assert(layer instanceof olLayerTile);
-    const wmtsLegendURL = this.layerHelper_.getWMTSLegendURL(layer);
+    const wmtsLegendURL = this.layerHelper_.getWMTSLegendURL(
+      /** @type {import("ol/layer/Tile.js").default} */ (layer));
     legendsObject[gmfLayerDefaultName] = wmtsLegendURL;
     return wmtsLegendURL ? legendsObject : null;
   } else {
@@ -546,12 +555,13 @@ Controller.prototype.getLegendsObject = function(treeCtrl) {
     const scale = this.getScale_();
     // QGIS can handle multiple layers natively. Use Multiple URLs for other map
     // servers
+    let layerNamesList;
     if (gmfOgcServer.type === ServerType.QGISSERVER) {
-      layersNames = [layersNames];
+      layerNamesList = [layersNames];
     } else {
-      layersNames = layersNames.split(',');
+      layerNamesList = layersNames.split(',');
     }
-    layersNames.forEach((layerName) => {
+    layerNamesList.forEach((layerName) => {
       legendsObject[layerName] = this.layerHelper_.getWMSLegendURL(gmfOgcServer.url, layerName, scale);
     });
     return legendsObject;

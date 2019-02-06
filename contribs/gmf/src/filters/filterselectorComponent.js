@@ -76,7 +76,7 @@ class Controller {
    * @param {import('gmf/datasource/DataSourceBeingFiltered.js').DataSourceBeingFiltered} gmfDataSourceBeingFiltered
    *     The Gmf value service that determines the data source currently being
    *     filtered.
-   * @param {import("gmf/datasource/Helper.js").Helper} gmfDataSourcesHelper Gmf data
+   * @param {import("gmf/datasource/Helper.js").DatasourceHelper} gmfDataSourcesHelper Gmf data
    *     sources helper service.
    * @param {import("gmf/filters/SavedFilters.js").SavedFilter} gmfSavedFilters Gmf saved filters service.
    * @param {import('gmf/authentication/Service.js').User} gmfUser User.
@@ -149,7 +149,7 @@ class Controller {
     );
 
     /**
-     * @type {import("gmf/datasource/Helper.js").Helper}
+     * @type {import("gmf/datasource/Helper.js").DatasourceHelper}
      * @private
      */
     this.gmfDataSourcesHelper_ = gmfDataSourcesHelper;

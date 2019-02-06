@@ -248,15 +248,15 @@ class Controller {
           return datumTokenizers;
         },
         queryTokenizer: Bloodhound.tokenizers.whitespace,
-        identify: false,
         local: serverUrls
       });
     }
 
     // Register input[type=file] onchange event, use HTML5 File api
     this.fileInput_.on('change', () => {
-      this.file = this.fileInput_[0].files && this.fileInput_[0].files[0] ?
-        this.fileInput_[0].files[0] : undefined;
+      const fileInput = /** @type HTMLInputElement */ (this.fileInput_[0]);
+      const files = fileInput.files;
+      this.file = files && files[0] ? files[0] : undefined;
       this.scope_.$apply();
     });
   }

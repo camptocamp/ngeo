@@ -8,7 +8,7 @@ export class DatasourceWFSAlias {
    * Service that provides methods to get additional information and actions
    * when performing WFS requests.
    *
-   * @param {import("ngeo/datasource/Helper.js").Helper} ngeoDataSourcesHelper Ngeo data
+   * @param {import("ngeo/datasource/Helper.js").DatasourceHelper} ngeoDataSourcesHelper Ngeo data
    *     source helper service.
    * @ngdoc service
    * @ngname gmfWFSAliases
@@ -19,7 +19,7 @@ export class DatasourceWFSAlias {
     // === Injected properties ===
 
     /**
-     * @type {import("ngeo/datasource/Helper.js").Helper}
+     * @type {import("ngeo/datasource/Helper.js").DatasourceHelper}
      * @private
      */
     this.ngeoDataSourcesHelper_ = ngeoDataSourcesHelper;

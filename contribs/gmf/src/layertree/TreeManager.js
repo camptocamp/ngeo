@@ -202,7 +202,7 @@ LayertreeTreeManager.prototype.addFirstLevelGroups = function(firstLevelGroups,
  * @private
  */
 LayertreeTreeManager.prototype.updateTreeGroupsState_ = function(groups) {
-  const treeGroupsParam = {};
+  const treeGroupsParam = /** @type Object.<string, string> */ ({});
   treeGroupsParam[PermalinkParam.TREE_GROUPS] = groups.map(node => node.name).join(',');
   this.ngeoStateManager_.updateState(treeGroupsParam);
   if (this.$injector_.has('gmfPermalink')) {
@@ -286,11 +286,13 @@ LayertreeTreeManager.prototype.addFirstLevelGroup_ = function(group) {
  * @private
  */
 LayertreeTreeManager.prototype.manageExclusiveGroupSingleChecked_ = function(node, found) {
-  const children = node.children;
+  const groupNode = /** @type import('gmf/themes.js').GmfGroup */ (node);
+  const children = groupNode.children;
   if (children) {
     for (const child of children) {
-      if (child.children) {
-        found = this.manageExclusiveGroupSingleChecked_(child, found);
+      const childGroup = /** @type import('gmf/themes.js').GmfGroup */ (child);
+      if (childGroup.children) {
+        found = this.manageExclusiveGroupSingleChecked_(childGroup, found);
       } else {
         if (child.metadata.isChecked) {
           if (found) {
@@ -342,7 +344,7 @@ LayertreeTreeManager.prototype.addGroupByLayerName = function(layerName, opt_add
           console.warn('Tree controller not found, unable to add the group');
           return;
         }
-        let treeCtrlToActive;
+        let treeCtrlToActive = /** @type import("ngeo/layertree/Controller.js").LayertreeController */ (null);
         treeCtrl.traverseDepthFirst((treeCtrl) => {
           if (treeCtrl.node.name === layerName) {
             treeCtrlToActive = treeCtrl;
@@ -423,12 +425,15 @@ LayertreeTreeManager.prototype.cloneGroupNode_ = function(group, names) {
  * @private
  */
 LayertreeTreeManager.prototype.toggleNodeCheck_ = function(node, names) {
-  if (!node.children) {
+  const groupNode = /** @type import('gmf/themes.js').GmfGroup */ (node);
+  if (!groupNode.children) {
     return;
   }
-  node.children.forEach((childNode) => {
-    if (childNode.children) {
-      this.toggleNodeCheck_(childNode, names);
+  groupNode.children.forEach((childNode) => {
+    const childGroupNode = /** @type import('gmf/themes.js').GmfGroup */ (
+      childNode);
+    if (childGroupNode.children) {
+      this.toggleNodeCheck_(childGroupNode, names);
     } else if (childNode.metadata) {
       childNode.metadata.isChecked = names.includes(childNode.name);
     }
@@ -557,7 +562,7 @@ LayertreeTreeManager.prototype.refreshFirstLevelGroups_ = function(themes) {
  * @private
  */
 LayertreeTreeManager.prototype.getFirstLevelGroupFullState_ = function(treeCtrl) {
-  const children = {};
+  const children = /** @type Object.<string, TreeManagerFullState>} */ ({});
   // Get the state of the treeCtrl children recursively.
   treeCtrl.children.map((child) => {
     children[child.node.name] = this.getFirstLevelGroupFullState_(child);
@@ -610,8 +615,9 @@ LayertreeTreeManager.prototype.setNodeMetadataFromFullState_ = function(node, fu
   }
 
   // Set the metadata of the node children recursively.
-  if (node.children) {
-    node.children.map((child) => {
+  const groupNode = /** @type import('gmf/themes.js').GmfGroup */ (node);
+  if (groupNode.children) {
+    groupNode.children.map((child) => {
       this.setNodeMetadataFromFullState_(child, fullState.children[child.name]);
     });
   }

@@ -216,7 +216,7 @@ class OGC extends ngeoDatasourceDataSource {
      * The filter condition to apply to the filter rules (if any).
      * @type {string}
      */
-    this.filterCondition = options.filterCondition || ngeoFilterCondition.AND;
+    this.filterCondition_ = options.filterCondition || ngeoFilterCondition.AND;
 
     /**
      * A list of filter rules to apply to this data source using the filter
@@ -474,6 +474,22 @@ class OGC extends ngeoDatasourceDataSource {
    */
   get dimensions() {
     return this.dimensions_;
+  }
+
+  /**
+   * @return {string} Filter condition
+   * @export
+   */
+  get filterCondition() {
+    return this.filterCondition_;
+  }
+
+  /**
+   * @param {string} filterCondition Filter condition
+   * @export
+   */
+  set filterCondition(filterCondition) {
+    this.filterCondition_ = filterCondition;
   }
 
   /**
