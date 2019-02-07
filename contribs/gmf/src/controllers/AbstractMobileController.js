@@ -24,7 +24,8 @@ import olStyleStyle from 'ol/style/Style.js';
  */
 export class AbstractMobileController extends AbstractAppController {
   /**
-   * @param {Config} config A part of the application config.
+   * @param {import('gmf/controllers/AbstractAppController.js').Config} config A part of the application
+   *     config.
    * @param {angular.IScope} $scope Scope.
    * @param {angular.auto.IInjectorService} $injector Main injector.
    * @ngInject
@@ -166,7 +167,7 @@ export class AbstractMobileController extends AbstractAppController {
   openNavMenu(target) {
     const navElements = document.getElementsByClassName('gmf-mobile-nav-button');
     for (let i = 0; i < navElements.length; i++) {
-      const element = navElements[i];
+      const element = /** @type HTMLElement */ (navElements[i]);
       if (element.dataset && element.dataset.target === target) {
         element.click();
       }

@@ -10,6 +10,7 @@ import olEventsEventTarget from 'ol/events/Target.js';
  * @property {Array.<string>} default_theme Theme to use by default.
  * @property {Array.<string>} [filtrable_layers] A list of layer names that can be filtered.
  * @property location: {Array.<string>} Availables locations.
+ * @property {Array.<!string>} [open_panel] When set, contains the name of the panel to open upon loading an application.
  */
 
 

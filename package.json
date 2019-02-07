@@ -39,6 +39,7 @@
     "@openlayers/eslint-plugin": "4.0.0-beta.2",
     "@types/angular": "1.6.54",
     "@types/angular-animate": "1.5.10",
+    "@types/angular-dynamic-locale": "0.1.34",
     "@types/angular-gettext": "2.1.34",
     "@types/angular-mocks": "1.7.0",
     "@types/bootstrap": "4.2.1",

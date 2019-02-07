@@ -37,6 +37,7 @@ import moment from 'moment';
  * @property {!Array.<import('ngeo/rule/Rule.js').default>} [filterRules] An alternative list of filter rules to use instead of those that are defined
  * within the data source. Useful when one wants to get the data of a given
  * filter without applying it to the data source.
+ * @property {string} [projCode] Projection code.
  * @property {string} [srsName] The SRS name used with the spatial filters created by the method.
  */
 
