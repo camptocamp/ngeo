@@ -561,7 +561,7 @@ export function AbstractAppController(config, map, $scope, $injector) {
   /**
    * @export
    */
-  // @ts-ignore: todo
+  // @ts-ignore: We do want to define a new property on `window`.
   window.gmfx = gmfx;
 
   /**
@@ -614,7 +614,7 @@ export function AbstractAppController(config, map, $scope, $injector) {
   /**
    * @export
    */
-  // @ts-ignore: todo
+  // @ts-ignore: We do want to define a new property on `window`.
   window.cgxp = cgxp;
   /**
    * @export
