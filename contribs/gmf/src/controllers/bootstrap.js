@@ -1,9 +1,7 @@
-// FIXME DocumentTouch is deprecated, see:
-// https://developer.mozilla.org/en-US/docs/Web/API/DocumentTouch
-/* global DocumentTouch */
 
 import $ from 'jquery';
 import angular from 'angular';
+import {TOUCH} from 'ol/has.js';
 
 function bootstrap(module) {
   const interface_ = $('meta[name=interface]')[0].getAttribute('content');
@@ -21,7 +19,7 @@ function bootstrap(module) {
   request.done((dynamic) => {
     if (dynamic['doRedirect']) {
       const small_screen = window.matchMedia ? window.matchMedia('(max-width: 1024px)') : false;
-      if (small_screen && (('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch)) {
+      if (small_screen && TOUCH) {
         window.location = dynamic['redirectUrl'];
       }
     }
