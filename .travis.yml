@@ -64,8 +64,8 @@ script:
 - buildtools/test_examples.py 1/1
 #- npm run typecheck
 # Generate API doc
-#- npm run doc
-- mkdir apidoc
+- npm install --prefix openlayers_src https://api.github.com/repos/openlayers/openlayers/tarball/v5.3.0
+- npm run doc
 - npm run build-api
 
 deploy:
