@@ -42,11 +42,10 @@ function _compare(str1, str2) {
 
 /**
  * @private
- * @template T
- * @param {T} value Value
+ * @param {Object} value Value
  * @param {number} length Length
- * @param {string} chr Char
- * @returns {T}
+ * @param {string} [chr] Char
+ * @returns {string}
  */
 function _lpad(value, length, chr) {
     const val = value.toString();
@@ -56,7 +55,7 @@ function _lpad(value, length, chr) {
 
 /**
  * @private
- * @param {Object} out Out
+ * @param {Object} [out] Out
  * @returns {Object}
  */
 function _extend(out) {
