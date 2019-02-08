@@ -33,7 +33,7 @@ const module = angular.module('ngeoRecenter', []);
  * @ngdoc directive
  * @ngname ngeoRecenter
  */
-function directive() {
+function mapResenterComponent() {
   return {
     restrict: 'A',
     link: ($scope, $element, $attrs) => {
@@ -71,7 +71,7 @@ function directive() {
 }
 
 // Register the directive in the module
-module.directive('ngeoRecenter', directive);
+module.directive('ngeoRecenter', mapResenterComponent);
 
 
 export default module;

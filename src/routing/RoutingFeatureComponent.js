@@ -47,6 +47,7 @@ module.value('ngeoRoutingFeatureTemplateUrl',
  * @param {!function(!angular.IAttributes): string} ngeoRoutingFeatureTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
+ * @private
  */
 function ngeoRoutingFeatureTemplateUrl($attrs, ngeoRoutingFeatureTemplateUrl) {
   return ngeoRoutingFeatureTemplateUrl($attrs);
@@ -371,7 +372,7 @@ Controller.prototype.getLonLatFromPoint_ = function(point) {
  * @ngdoc directive
  * @ngname ngeoRoutingFeature
  */
-const component = {
+const routingFeatureComponent = {
   controller: Controller,
   bindings: {
     'map': '<ngeoRoutingFeatureMap',
@@ -383,7 +384,7 @@ const component = {
   templateUrl: ngeoRoutingFeatureTemplateUrl
 };
 
-module.component('ngeoRoutingFeature', component);
+module.component('ngeoRoutingFeature', routingFeatureComponent);
 
 
 export default module;

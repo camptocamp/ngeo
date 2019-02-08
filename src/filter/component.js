@@ -54,6 +54,7 @@ module.value('ngeoFilterTemplateUrl',
  * @param {!function(!angular.IAttributes): string} ngeoFilterTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
+ * @private
  */
 function ngeoFilterTemplateUrl($attrs, ngeoFilterTemplateUrl) {
   return ngeoFilterTemplateUrl($attrs);

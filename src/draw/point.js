@@ -15,7 +15,7 @@ const module = angular.module('ngeoDrawpoint', []);
  * @ngdoc directive
  * @ngname ngeoDrawpoint
  */
-function directive() {
+function drawPointComponent() {
   return {
     restrict: 'A',
     require: '^^ngeoDrawfeature',
@@ -52,7 +52,7 @@ function directive() {
 }
 
 
-module.directive('ngeoDrawpoint', directive);
+module.directive('ngeoDrawpoint', drawPointComponent);
 
 
 export default module;

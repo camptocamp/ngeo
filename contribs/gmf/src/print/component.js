@@ -157,6 +157,7 @@ module.value('gmfPrintState', {
  * @param {!function(!JQuery, !angular.IAttributes): string} gmfPrintTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
+ * @private
  */
 function gmfPrintTemplateUrl($element, $attrs, gmfPrintTemplateUrl) {
   return gmfPrintTemplateUrl($element, $attrs);
@@ -210,7 +211,7 @@ function gmfPrintTemplateUrl($element, $attrs, gmfPrintTemplateUrl) {
  * @ngdoc component
  * @ngname gmfPrint
  */
-const component = {
+const printComponent = {
   bindings: {
     'map': '<gmfPrintMap',
     'active': '=gmfPrintActive',
@@ -225,7 +226,7 @@ const component = {
 };
 
 
-module.component('gmfPrint', component);
+module.component('gmfPrint', printComponent);
 
 
 /**

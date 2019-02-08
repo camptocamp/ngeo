@@ -74,6 +74,7 @@ module.value('ngeoRuleTemplateUrl',
  * @param {!function(!angular.IAttributes): string} ngeoRuleTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
+ * @private
  */
 function ngeoRuleTemplateUrl($attrs, ngeoRuleTemplateUrl) {
   return ngeoRuleTemplateUrl($attrs);

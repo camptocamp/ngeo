@@ -35,7 +35,7 @@ const module = angular.module('gmfObjecteditingGetWMSFeatureComponent', [
  * @ngdoc directive
  * @ngname gmfObjecteditinggetwmsfeature
  */
-function directive() {
+function objectEditingGetWMSFeatureComponent() {
   return {
     controller: 'gmfObjecteditinggetwmsfeatureController',
     scope: {
@@ -48,7 +48,7 @@ function directive() {
   };
 }
 
-module.directive('gmfObjecteditinggetwmsfeature', directive);
+module.directive('gmfObjecteditinggetwmsfeature', objectEditingGetWMSFeatureComponent);
 
 
 /**

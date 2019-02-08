@@ -32,6 +32,7 @@ module.value('ngeoAttributesTemplateUrl',
  * @param {!function(!angular.IAttributes): string} ngeoAttributesTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
+ * @private
  */
 function ngeoAttributesTemplateUrl($attrs, ngeoAttributesTemplateUrl) {
   return ngeoAttributesTemplateUrl($attrs);
@@ -57,7 +58,7 @@ function ngeoAttributesTemplateUrl($attrs, ngeoAttributesTemplateUrl) {
  * @ngdoc component
  * @ngname ngeoAttributes
  */
-const component = {
+const editingAttributeComponent = {
   controller: 'ngeoAttributesController as attrCtrl',
   bindings: {
     'attributes': '=ngeoAttributesAttributes',
@@ -70,7 +71,7 @@ const component = {
   templateUrl: ngeoAttributesTemplateUrl
 };
 
-module.component('ngeoAttributes', component);
+module.component('ngeoAttributes', editingAttributeComponent);
 
 
 /**

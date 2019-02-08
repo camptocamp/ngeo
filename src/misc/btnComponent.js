@@ -40,7 +40,7 @@ const module = angular.module('ngeoBtnComponent', []);
  * @ngdoc directive
  * @ngname ngeoBtnGroup
  */
-function btnGroupComponent($parse) {
+function buttonGroupComponent($parse) {
   return {
     restrict: 'A',
     controller: 'ngeoBtnGroupController',
@@ -67,7 +67,7 @@ function btnGroupComponent($parse) {
 }
 
 
-module.directive('ngeoBtnGroup', btnGroupComponent);
+module.directive('ngeoBtnGroup', buttonGroupComponent);
 
 
 /**
@@ -136,7 +136,7 @@ module.controller('ngeoBtnGroupController',
  * @ngdoc directive
  * @ngname ngeoBtn
  */
-function btnComponent($parse) {
+function buttonComponent($parse) {
   return {
     require: ['?^ngeoBtnGroup', 'ngModel'],
     restrict: 'A',
@@ -182,7 +182,7 @@ function btnComponent($parse) {
 }
 
 
-module.directive('ngeoBtn', btnComponent);
+module.directive('ngeoBtn', buttonComponent);
 
 
 export default module;

@@ -32,7 +32,7 @@ const module = angular.module('ngeoExportfeatures', [
  * @ngdoc directive
  * @ngname ngeoExportfeatures
  */
-function directive() {
+function editingExportFeaturesComponent() {
   return {
     controller: 'ngeoExportfeaturesController as efCtrl',
     scope: true,
@@ -43,7 +43,7 @@ function directive() {
 }
 
 
-module.directive('ngeoExportfeatures', directive);
+module.directive('ngeoExportfeatures', editingExportFeaturesComponent);
 
 
 /**

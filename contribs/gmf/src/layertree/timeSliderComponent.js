@@ -40,7 +40,7 @@ module.run(/* @ngInject */ ($templateCache) => {
  * @ngdoc directive
  * @ngname gmfTimeSlider
  */
-function directive() {
+function layertreeTimeSliderComponent() {
   return {
     scope: {
       onDateSelected: '&gmfTimeSliderOnDateSelected',
@@ -90,7 +90,7 @@ function directive() {
 }
 
 
-module.directive('gmfTimeSlider', directive);
+module.directive('gmfTimeSlider', layertreeTimeSliderComponent);
 
 
 /**

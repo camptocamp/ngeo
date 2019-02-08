@@ -35,6 +35,7 @@ module.value('ngeoRoutingNominatimInputComponentTemplateUrl',
  * @param {!function(!angular.IAttributes): string} ngeoRoutingNominatimInputComponentTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
+ * @private
  */
 function ngeoRoutingNominatimInputComponentTemplateUrl($attrs, ngeoRoutingNominatimInputComponentTemplateUrl) {
   return ngeoRoutingNominatimInputComponentTemplateUrl($attrs);
@@ -153,7 +154,7 @@ Controller.prototype.select_ = function(event, suggestion, dataset) {
  * @ngdoc directive
  * @ngname ngeoNominatimInput
  */
-const component = {
+const routingNominatimInputComponent = {
   controller: Controller,
   bindings: {
     'onSelect': '=?ngeoNominatimInputOnSelect',
@@ -163,7 +164,7 @@ const component = {
   templateUrl: ngeoRoutingNominatimInputComponentTemplateUrl
 };
 
-module.component('ngeoNominatimInput', component);
+module.component('ngeoNominatimInput', routingNominatimInputComponent);
 
 
 export default module;

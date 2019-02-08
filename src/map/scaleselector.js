@@ -88,7 +88,7 @@ module.run(/* @ngInject */ ($templateCache) => {
  * @ngdoc directive
  * @ngname ngeoScaleselector
  */
-const directive = function(ngeoScaleselectorTemplateUrl) {
+const mapScaleselectorComponent = function(ngeoScaleselectorTemplateUrl) {
   return {
     restrict: 'A',
     scope: true,
@@ -98,7 +98,7 @@ const directive = function(ngeoScaleselectorTemplateUrl) {
 };
 
 
-module.directive('ngeoScaleselector', directive);
+module.directive('ngeoScaleselector', mapScaleselectorComponent);
 
 
 /**

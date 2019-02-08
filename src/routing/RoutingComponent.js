@@ -56,6 +56,7 @@ module.value('ngeoRoutingTemplateUrl',
  * @param {!function(!angular.IAttributes): string} ngeoRoutingTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
+ * @private
  */
 function ngeoRoutingTemplateUrl($attrs, ngeoRoutingTemplateUrl) {
   return ngeoRoutingTemplateUrl($attrs);

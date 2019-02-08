@@ -148,7 +148,7 @@ module.run(/* @ngInject */ ($templateCache) => {
  * @ngdoc directive
  * @ngname gmfEditfeature
  */
-function component() {
+function editingEditFeatureComponent() {
   return {
     controller: 'GmfEditfeatureController as efCtrl',
     scope: {
@@ -165,7 +165,7 @@ function component() {
 }
 
 
-module.directive('gmfEditfeature', component);
+module.directive('gmfEditfeature', editingEditFeatureComponent);
 
 
 /**

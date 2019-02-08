@@ -40,6 +40,7 @@ module.value('ngeoGridTemplateUrl',
  * @param {!function(!angular.IAttributes): string} ngeoGridTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
+ * @private
  */
 function ngeoGridTemplateUrl($attrs, ngeoGridTemplateUrl) {
   return ngeoGridTemplateUrl($attrs);
@@ -63,7 +64,7 @@ function ngeoGridTemplateUrl($attrs, ngeoGridTemplateUrl) {
  * @ngdoc component
  * @ngname ngeoGrid
  */
-const component = {
+const gridComponent = {
   controller: 'ngeoGridController as ctrl',
   bindings: {
     'configuration': '=ngeoGridConfiguration'
@@ -71,7 +72,7 @@ const component = {
   templateUrl: ngeoGridTemplateUrl
 };
 
-module.component('ngeoGrid', component);
+module.component('ngeoGrid', gridComponent);
 
 
 /**

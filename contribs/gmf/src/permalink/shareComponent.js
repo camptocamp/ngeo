@@ -32,6 +32,7 @@ module.value('gmfPermalinkShareTemplateUrl',
  * @param {!function(!angular.IAttributes): string} gmfPermalinkShareTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
+ * @private
  */
 function gmfPermalinkShareTemplateUrl($attrs, gmfPermalinkShareTemplateUrl) {
   return gmfPermalinkShareTemplateUrl($attrs);
@@ -48,14 +49,14 @@ function gmfPermalinkShareTemplateUrl($attrs, gmfPermalinkShareTemplateUrl) {
  * @htmlAttribute {boolean} gmf-share-email Enable emailing capability.
  * @type {!angular.IComponentOptions}
  */
-const component = {
+const permalinkShareComponent = {
   bindings: {
     'enableEmail': '<gmfShareEmail'
   },
   controller: 'GmfShareController',
   templateUrl: gmfPermalinkShareTemplateUrl
 };
-module.component('gmfShare', component);
+module.component('gmfShare', permalinkShareComponent);
 
 
 class ShareComponentController {

@@ -79,6 +79,7 @@ module.run(/* @ngInject */ ($templateCache) => {
  * @param {!function(!JQuery, !angular.IAttributes): string} gmfDisplayquerygridTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
+ * @private
  */
 function gmfDisplayquerygridTemplateUrl($element, $attrs, gmfDisplayquerygridTemplateUrl) {
   return gmfDisplayquerygridTemplateUrl($element, $attrs);
@@ -124,7 +125,7 @@ function gmfDisplayquerygridTemplateUrl($element, $attrs, gmfDisplayquerygridTem
  * @ngdoc component
  * @ngname gmfDisplayquerygrid
  */
-const component = {
+const queryGridComponent = {
   controller: 'GmfDisplayquerygridController as ctrl',
   bindings: {
     'active': '=?gmfDisplayquerygridActive',
@@ -140,7 +141,7 @@ const component = {
 };
 
 
-module.component('gmfDisplayquerygrid', component);
+module.component('gmfDisplayquerygrid', queryGridComponent);
 
 
 /**

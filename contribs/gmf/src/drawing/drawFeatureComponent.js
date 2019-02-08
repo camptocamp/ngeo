@@ -65,7 +65,7 @@ module.run(/* @ngInject */ ($templateCache) => {
  * @ngdoc directive
  * @ngname gmfDrawfeature
  */
-function component() {
+function drawinfDrawFeatureComponent() {
   return {
     controller: 'GmfDrawfeatureController as efCtrl',
     scope: {
@@ -79,7 +79,7 @@ function component() {
 }
 
 
-module.directive('gmfDrawfeature', component);
+module.directive('gmfDrawfeature', drawinfDrawFeatureComponent);
 
 
 /**

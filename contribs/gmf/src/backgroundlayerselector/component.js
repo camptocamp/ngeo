@@ -38,6 +38,7 @@ module.run(/* @ngInject */ ($templateCache) => {
  * @param {!function(!JQuery, !angular.IAttributes): string} gmfBackgroundlayerselectorTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
+ * @private
  */
 function gmfBackgroundlayerselectorTemplateUrl($element, $attrs, gmfBackgroundlayerselectorTemplateUrl) {
   return gmfBackgroundlayerselectorTemplateUrl($element, $attrs);
@@ -67,7 +68,7 @@ function gmfBackgroundlayerselectorTemplateUrl($element, $attrs, gmfBackgroundla
  * @ngdoc component
  * @ngname gmfBackgroundlayerselector
  */
-const component = {
+const backgroundlayerselectorComponent = {
   controller: 'GmfBackgroundlayerselectorController as ctrl',
   bindings: {
     'map': '=gmfBackgroundlayerselectorMap',
@@ -78,7 +79,7 @@ const component = {
 };
 
 
-module.component('gmfBackgroundlayerselector', component);
+module.component('gmfBackgroundlayerselector', backgroundlayerselectorComponent);
 
 
 /**

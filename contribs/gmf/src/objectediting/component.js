@@ -93,6 +93,7 @@ module.value('gmfObjecteditingTemplateUrl',
  * @param {!function(!JQuery, !angular.IAttributes): string} gmfObjecteditingTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
+ * @private
  */
 function gmfObjecteditingTemplateUrl($element, $attrs, gmfObjecteditingTemplateUrl) {
   return gmfObjecteditingTemplateUrl($element, $attrs);
@@ -125,7 +126,7 @@ function gmfObjecteditingTemplateUrl($element, $attrs, gmfObjecteditingTemplateU
  * @ngdoc component
  * @ngname gmfObjectediting
  */
-const component = {
+const objecteditingComponent = {
   controller: 'GmfObjecteditingController as oeCtrl',
   bindings: {
     'active': '=gmfObjecteditingActive',
@@ -138,7 +139,7 @@ const component = {
   templateUrl: gmfObjecteditingTemplateUrl
 };
 
-module.component('gmfObjectediting', component);
+module.component('gmfObjectediting', objecteditingComponent);
 
 
 /**

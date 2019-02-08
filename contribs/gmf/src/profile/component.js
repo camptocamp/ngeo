@@ -71,6 +71,7 @@ module.run(/* @ngInject */ ($templateCache) => {
  * @param {!function(!JQuery, !angular.IAttributes): string} gmfProfileTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
+ * @private
  */
 function gmfProfileTemplateUrl($element, $attrs, gmfProfileTemplateUrl) {
   return gmfProfileTemplateUrl($element, $attrs);
@@ -116,7 +117,7 @@ function gmfProfileTemplateUrl($element, $attrs, gmfProfileTemplateUrl) {
  * @ngdoc component
  * @ngname gmfProfile
  */
-const component = {
+const profileComponent = {
   controller: 'GmfProfileController as ctrl',
   bindings: {
     'active': '=gmfProfileActive',
@@ -130,7 +131,7 @@ const component = {
   templateUrl: gmfProfileTemplateUrl
 };
 
-module.component('gmfProfile', component);
+module.component('gmfProfile', profileComponent);
 
 
 /**

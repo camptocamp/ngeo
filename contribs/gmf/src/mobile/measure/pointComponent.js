@@ -70,7 +70,7 @@ module.run(/* @ngInject */ ($templateCache) => {
  * @ngdoc directive
  * @ngname gmfMobileMeasurePoint
  */
-function component(gmfMobileMeasurePointTemplateUrl) {
+function mobileMeasurePointComponent(gmfMobileMeasurePointTemplateUrl) {
   return {
     restrict: 'A',
     scope: {
@@ -97,7 +97,7 @@ function component(gmfMobileMeasurePointTemplateUrl) {
 }
 
 
-module.directive('gmfMobileMeasurepoint', component);
+module.directive('gmfMobileMeasurepoint', mobileMeasurePointComponent);
 
 
 /**

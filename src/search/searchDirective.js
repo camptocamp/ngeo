@@ -33,7 +33,7 @@ import angular from 'angular';
  * @ngdoc directive
  * @ngname ngeoSearch
  */
-function searchDirective() {
+function searchComponent() {
   return {
     restrict: 'A',
     /**
@@ -175,7 +175,7 @@ const module = angular.module('ngeoSearchDirective', []);
 
 
 // Register the directive in the module
-module.directive('ngeoSearch', searchDirective);
+module.directive('ngeoSearch', searchComponent);
 
 
 export default module;

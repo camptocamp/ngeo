@@ -50,7 +50,7 @@ module.run(/* @ngInject */ ($templateCache) => {
  * @ngdoc directive
  * @ngname ngeoDatePicker
  */
-function component(ngeoDatePickerTemplateUrl, $timeout) {
+function datePickerComponent(ngeoDatePickerTemplateUrl, $timeout) {
   return {
     scope: {
       onDateSelected: '&',
@@ -102,7 +102,7 @@ function component(ngeoDatePickerTemplateUrl, $timeout) {
   };
 }
 
-module.directive('ngeoDatePicker', component);
+module.directive('ngeoDatePicker', datePickerComponent);
 
 
 /**

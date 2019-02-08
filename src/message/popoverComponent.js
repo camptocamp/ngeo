@@ -26,7 +26,7 @@ const module = angular.module('ngeoPopover', []);
  * @ngname ngeoPopover
  * @return {angular.IDirective} The Directive Definition Object.
  */
-function component() {
+function messagePopoverComponent() {
   return {
     restrict: 'A',
     scope: true,
@@ -67,7 +67,7 @@ function component() {
  * @ngname ngeoPopoverAnchor
  * @return {angular.IDirective} The Directive Definition Object
  */
-function anchorComponent() {
+function messagePopoverAanchorComponent() {
   return {
     restrict: 'A',
     require: '^^ngeoPopover',
@@ -83,7 +83,7 @@ function anchorComponent() {
  * @ngname ngeoPopoverContent
  * @return {angular.IDirective} The Directive Definition Object
  */
-function contentComponent() {
+function messagePopoverContentComponent() {
   return {
     restrict: 'A',
     require: '^^ngeoPopover',
@@ -97,7 +97,6 @@ function contentComponent() {
 /**
  * The controller for the 'popover' directive.
  * @constructor
- * @private
  * @ngInject
  * @ngdoc controller
  * @ngname NgeoPopoverController
@@ -150,9 +149,9 @@ PopoverController.prototype.dismissPopover = function() {
 
 
 module.controller('NgeoPopoverController', PopoverController);
-module.directive('ngeoPopover', component);
-module.directive('ngeoPopoverAnchor', anchorComponent);
-module.directive('ngeoPopoverContent', contentComponent);
+module.directive('ngeoPopover', messagePopoverComponent);
+module.directive('ngeoPopoverAnchor', messagePopoverAanchorComponent);
+module.directive('ngeoPopoverContent', messagePopoverContentComponent);
 
 
 export default module;

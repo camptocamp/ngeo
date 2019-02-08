@@ -52,6 +52,7 @@ module.value('gmfImportdatasourceTemplateUrl',
  * @param {!function(!angular.IAttributes): string} gmfImportdatasourceTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
+ * @private
  */
 function gmfImportdatasourceTemplateUrl($attrs, gmfImportdatasourceTemplateUrl) {
   return gmfImportdatasourceTemplateUrl($attrs);

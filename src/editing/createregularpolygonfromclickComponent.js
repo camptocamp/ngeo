@@ -52,7 +52,7 @@ const module = angular.module('ngeoCreateregularpolygonfromclick', []);
  * @ngdoc directive
  * @ngname ngeoCreateregularpolygonfromclick
  */
-function directive() {
+function editingCreateRegularPolygonFromClickComponent() {
   return {
     controller: 'ngeoCreateregularpolygonfromclickController',
     bindToController: true,
@@ -67,7 +67,7 @@ function directive() {
   };
 }
 
-module.directive('ngeoCreateregularpolygonfromclick', directive);
+module.directive('ngeoCreateregularpolygonfromclick', editingCreateRegularPolygonFromClickComponent);
 
 
 /**

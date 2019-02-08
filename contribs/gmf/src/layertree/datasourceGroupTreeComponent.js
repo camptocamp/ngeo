@@ -33,6 +33,7 @@ module.value('gmfLayertreeDatasourceGroupTreeTemplateUrl',
  * @param {!function(!angular.IAttributes): string} gmfLayertreeDatasourceGroupTreeTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
+ * @private
  */
 function gmfLayertreeDatasourceGroupTreeTemplateUrl($attrs, gmfLayertreeDatasourceGroupTreeTemplateUrl) {
   return gmfLayertreeDatasourceGroupTreeTemplateUrl($attrs);

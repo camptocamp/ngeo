@@ -42,6 +42,7 @@ module.value('gmfElevationwidgetTemplateUrl',
  * @param {!function(!angular.IAttributes): string} gmfElevationwidgetTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
+ * @private
  */
 function gmfElevationwidgetTemplateUrl($attrs, gmfElevationwidgetTemplateUrl) {
   return gmfElevationwidgetTemplateUrl($attrs);
@@ -88,7 +89,7 @@ function gmfElevationwidgetTemplateUrl($attrs, gmfElevationwidgetTemplateUrl) {
  * @ngdoc directive
  * @ngname gmfElevation
  */
-function component() {
+function rasterComponent() {
   return {
     restrict: 'A',
     controller: 'GmfElevationController as ctrl',
@@ -119,7 +120,7 @@ function component() {
 }
 
 
-module.directive('gmfElevation', component);
+module.directive('gmfElevation', rasterComponent);
 
 /**
  * @hidden
@@ -335,7 +336,7 @@ module.controller('GmfElevationController', Controller);
  * @ngdoc component
  * @ngname gmfElevationwidget
  */
-const widgetComponent = {
+const rasterWidgetComponent = {
   controller: 'gmfElevationwidgetController as ctrl',
   bindings: {
     'map': '<gmfElevationwidgetMap',
@@ -345,7 +346,7 @@ const widgetComponent = {
   },
   templateUrl: gmfElevationwidgetTemplateUrl
 };
-module.component('gmfElevationwidget', widgetComponent);
+module.component('gmfElevationwidget', rasterWidgetComponent);
 
 
 /**

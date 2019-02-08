@@ -106,7 +106,7 @@ const module = angular.module('ngeoProfile', [
  * @ngdoc directive
  * @ngname ngeoProfile
  */
-function directive(ngeoDebounce) {
+function profileElevationComponent(ngeoDebounce) {
   return {
     restrict: 'A',
     /**
@@ -195,7 +195,7 @@ function directive(ngeoDebounce) {
   };
 }
 
-module.directive('ngeoProfile', directive);
+module.directive('ngeoProfile', profileElevationComponent);
 
 
 export default module;

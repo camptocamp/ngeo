@@ -38,6 +38,7 @@ module.value('gmfWmscapabilitylayertreenodeTemplateUrl',
  * @param {!function(!angular.IAttributes): string} gmfWmscapabilitylayertreenodeTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
+ * @private
  */
 function gmfWmscapabilitylayertreenodeTemplateUrl($attrs, gmfWmscapabilitylayertreenodeTemplateUrl) {
   return gmfWmscapabilitylayertreenodeTemplateUrl($attrs);
