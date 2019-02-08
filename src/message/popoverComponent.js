@@ -119,7 +119,7 @@ function PopoverController($scope) {
    */
   this.bodyElm = undefined;
 
-  function onMouseDown(clickEvent) {
+  function onClick(clickEvent) {
     if (this.anchorElm[0] !== clickEvent.target &&
       this.bodyElm.parent()[0] !== clickEvent.target &&
       this.bodyElm.parent().find(clickEvent.target).length === 0 && this.shown) {
@@ -127,10 +127,12 @@ function PopoverController($scope) {
     }
   }
 
-  angular.element('body').on('mousedown', onMouseDown.bind(this));
+  const clickHandler = onClick.bind(this);
+
+  angular.element('body').on('click', clickHandler);
 
   $scope.$on('$destroy', () => {
-    angular.element('body').off('mousedown', onMouseDown);
+    angular.element('body').off('click', clickHandler);
   });
 }
 
