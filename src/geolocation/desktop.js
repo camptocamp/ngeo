@@ -181,7 +181,6 @@ function Controller($scope, $element, ngeoFeatureOverlayMgr, ngeoNotification) {
 
 
 /**
- * @export
  */
 Controller.prototype.toggle = function() {
   if (this.active_) {

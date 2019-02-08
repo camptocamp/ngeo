@@ -56,7 +56,6 @@ export class DatasourceHelper {
 
   /**
    * @return {import('ngeo/datasource/DataSource.js').DataSources} Data sources collection.
-   * @export
    */
   get collection() {
     return this.collection_;
@@ -66,7 +65,6 @@ export class DatasourceHelper {
    * Return a data source using its id.
    * @param {number} id Data source id.
    * @return {?import("ngeo/datasource/DataSource.js").default} Data source.
-   * @export
    */
   getDataSource(id) {
     return this.cache_[id] || null;
@@ -82,7 +80,6 @@ export class DatasourceHelper {
    *
    * @param {import("ngeo/datasource/OGC.js").default} dataSource Filtrable data source.
    * @return {angular.IPromise} Promise.
-   * @export
    */
   getDataSourceAttributes(dataSource) {
 

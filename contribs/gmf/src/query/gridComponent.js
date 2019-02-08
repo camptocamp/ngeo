@@ -183,7 +183,6 @@ function Controller($injector, $scope, ngeoQueryResult, ngeoMapQuerent,
 
   /**
    * @type {!import('ngeo/query/MapQuerent.js').QueryResult}
-   * @export
    */
   this.ngeoQueryResult = ngeoQueryResult;
 
@@ -207,39 +206,33 @@ function Controller($injector, $scope, ngeoQueryResult, ngeoMapQuerent,
 
   /**
    * @type {number}
-   * @export
    */
   this.maxResults = queryOptions.limit !== undefined ? queryOptions.limit : 50;
 
   /**
    * @type {boolean}
-   * @export
    */
   this.active = false;
 
   /**
    * @type {boolean}
-   * @export
    */
   this.pending = false;
 
   /**
    * @type {!Object.<string, GridSource>}
-   * @export
    */
   this.gridSources = {};
 
   /**
    * IDs of the grid sources in the order they were loaded.
    * @type {!Array.<string>}
-   * @export
    */
   this.loadedGridSources = [];
 
   /**
    * The id of the currently shown query source.
    * @type {string|number|null}
-   * @export
    */
   this.selectedTab = null;
 
@@ -251,13 +244,11 @@ function Controller($injector, $scope, ngeoQueryResult, ngeoMapQuerent,
 
   /**
    * @type {number|undefined}
-   * @export
    */
   this.maxRecenterZoom;
 
   /**
    * @type {!GridMergeTabs}
-   * @export
    */
   this.mergeTabs = {};
 
@@ -367,7 +358,6 @@ Controller.prototype.$onInit = function() {
 
 /**
  * Returns a list of grid sources in the order they were loaded.
- * @export
  * @return {Array.<GridSource>} Grid sources.
  */
 Controller.prototype.getGridSources = function() {
@@ -442,7 +432,6 @@ Controller.prototype.hasOneWithTooManyResults_ = function() {
  * Returns the value with all symbols and spaces replaced by an underscore.
  * @param {string|number} value A value to escape.
  * @returns {string|number} value An escaped value.
- * @export
  */
 Controller.prototype.escapeValue = function(value) {
   // Work-around for Number.isInteger() when not always getting a number ...
@@ -461,7 +450,6 @@ Controller.prototype.escapeValue = function(value) {
 
 /**
  * Returns if the given grid source is selected?
- * @export
  * @param {GridSource} gridSource Grid source.
  * @return {boolean} Is selected?
  */
@@ -715,7 +703,6 @@ Controller.prototype.getGridConfiguration_ = function(data) {
 /**
  * Remove the current selected feature and source and remove all features
  * from the map.
- * @export
  */
 Controller.prototype.clear = function() {
   this.active = false;
@@ -737,7 +724,6 @@ Controller.prototype.clear = function() {
 /**
  * Select the tab for the given grid source.
  * @param {GridSource} gridSource Grid source.
- * @export
  */
 Controller.prototype.selectTab = function(gridSource) {
   const source = gridSource.source;
@@ -824,7 +810,6 @@ Controller.prototype.updateFeatures_ = function(gridSource) {
 
 /**
  * Get the currently shown grid source.
- * @export
  * @return {GridSource|null} Grid source.
  */
 Controller.prototype.getActiveGridSource = function() {
@@ -838,7 +823,6 @@ Controller.prototype.getActiveGridSource = function() {
 
 /**
  * Returns if a row of the currently active grid is selected?
- * @export
  * @return {boolean} Is one selected?
  */
 Controller.prototype.isOneSelected = function() {
@@ -853,7 +837,6 @@ Controller.prototype.isOneSelected = function() {
 
 /**
  * Returns the number of selected rows of the currently active grid.
- * @export
  * @return {number} The number of selected rows.
  */
 Controller.prototype.getSelectedRowCount = function() {
@@ -868,7 +851,6 @@ Controller.prototype.getSelectedRowCount = function() {
 
 /**
  * Select all rows of the currently active grid.
- * @export
  */
 Controller.prototype.selectAll = function() {
   const source = this.getActiveGridSource();
@@ -880,7 +862,6 @@ Controller.prototype.selectAll = function() {
 
 /**
  * Deselect all rows of the currently active grid.
- * @export
  */
 Controller.prototype.unselectAll = function() {
   const source = this.getActiveGridSource();
@@ -892,7 +873,6 @@ Controller.prototype.unselectAll = function() {
 
 /**
  * Invert the selection of the currently active grid.
- * @export
  */
 Controller.prototype.invertSelection = function() {
   const source = this.getActiveGridSource();
@@ -904,7 +884,6 @@ Controller.prototype.invertSelection = function() {
 
 /**
  * Zoom to the selected features.
- * @export
  */
 Controller.prototype.zoomToSelection = function() {
   const source = this.getActiveGridSource();
@@ -923,7 +902,6 @@ Controller.prototype.zoomToSelection = function() {
 
 /**
  * Start a CSV download for the selected features.
- * @export
  */
 Controller.prototype.downloadCsv = function() {
   const source = this.getActiveGridSource();

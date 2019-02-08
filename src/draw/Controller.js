@@ -26,7 +26,6 @@ export function DrawController($scope, $sce, gettextCatalog,
 
   /**
    * @type {boolean}
-   * @export
    */
   this.active;
 
@@ -38,19 +37,16 @@ export function DrawController($scope, $sce, gettextCatalog,
    * Alternate collection of features in which to push the drawn features.
    * If not defined, then `ngeoFeatures` is used instead.
    * @type {!import("ol/Collection.js").default.<!import("ol/Feature.js").default>|undefined}
-   * @export
    */
   this.features;
 
   /**
    * @type {import("ol/Map.js").default}
-   * @export
    */
   this.map;
 
   /**
    * @type {boolean}
-   * @export
    */
   this.showMeasure;
 
@@ -87,37 +83,31 @@ export function DrawController($scope, $sce, gettextCatalog,
 
   /**
    * @type {import("ol/interaction/Draw.js").default}
-   * @export
    */
   this.drawPoint;
 
   /**
    * @type {import("ngeo/interaction/MeasureLength.js").default}
-   * @export
    */
   this.measureLength;
 
   /**
    * @type {import("ngeo/interaction/MeasureArea.js").default}
-   * @export
    */
   this.measureArea;
 
   /**
    * @type {import("ngeo/interaction/MeasureAzimut.js").default}
-   * @export
    */
   this.measureAzimut;
 
   /**
    * @type {import("ol/interaction/Draw.js").default}
-   * @export
    */
   this.drawRectangle;
 
   /**
    * @type {import("ol/interaction/Draw.js").default}
-   * @export
    */
   this.drawText;
 
@@ -142,7 +132,6 @@ export function DrawController($scope, $sce, gettextCatalog,
  * Register a draw|measure interaction by setting it inactive, decorating it
  * and adding it to the map
  * @param {import("ol/interaction/Interaction.js").default} interaction Interaction to register.
- * @export
  */
 DrawController.prototype.registerInteraction = function(
   interaction) {
@@ -158,7 +147,6 @@ DrawController.prototype.registerInteraction = function(
  * Set the active property of this directive accordingly, i.e. if at least
  * one of the draw or measure is active then the active property is set to true.
  * @param {import("ol/events/Event.js").default} event Event.
- * @export
  */
 DrawController.prototype.handleActiveChange = function(event) {
   this.active = this.interactions_.some(interaction => interaction.getActive(), this);
@@ -170,7 +158,6 @@ DrawController.prototype.handleActiveChange = function(event) {
  * for its style, then set its style and add it to the features collection.
  * @param {string} type Type of geometry being drawn.
  * @param {import('ol/events/Event.js').default|import('ngeo/interaction/Measure.js').MeasureEvent} event Event.
- * @export
  */
 DrawController.prototype.handleDrawEnd = function(type, event) {
   let sketch;

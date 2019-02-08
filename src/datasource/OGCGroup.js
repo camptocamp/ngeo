@@ -32,7 +32,6 @@ export default class extends ngeoDatasourceGroup {
 
   /**
    * @return {string} Url
-   * @export
    */
   get url() {
     return this.url_;

@@ -105,7 +105,6 @@ export function PrintService(url, $http, gettextCatalog, ngeoLayerHelper) {
  * @param {string} ref Print report reference.
  * @param {angular.IRequestShortcutConfig=} opt_httpConfig $http config object.
  * @return {angular.IHttpPromise<Object>} HTTP promise.
- * @export
  */
 PrintService.prototype.cancel = function(ref, opt_httpConfig) {
   const httpConfig = opt_httpConfig !== undefined ? opt_httpConfig :
@@ -125,7 +124,6 @@ PrintService.prototype.cancel = function(ref, opt_httpConfig) {
  * @param {string} format Formats.
  * @param {Object.<string, *>} customAttributes Custom attributes.
  * @return {import('ngeo/print/mapfish-print-v3.js').MapFishPrintSpec} The print spec.
- * @export
  */
 PrintService.prototype.createSpec = function(
   map, scale, dpi, layout, format, customAttributes) {
@@ -421,7 +419,6 @@ PrintService.prototype.getOpacityOrInherited_ = function(layer) {
  * @param {import('ngeo/print/mapfish-print-v3.js').MapFishPrintSpec} printSpec Print specification.
  * @param {angular.IRequestShortcutConfig=} opt_httpConfig $http config object.
  * @return {angular.IHttpPromise<Object>} HTTP promise.
- * @export
  */
 PrintService.prototype.createReport = function(printSpec, opt_httpConfig) {
   const format = printSpec.format || 'pdf';
@@ -442,7 +439,6 @@ PrintService.prototype.createReport = function(printSpec, opt_httpConfig) {
  * @param {string} ref Print report reference.
  * @param {angular.IRequestShortcutConfig=} opt_httpConfig $http config object.
  * @return {angular.IHttpPromise<Object>} HTTP promise.
- * @export
  */
 PrintService.prototype.getStatus = function(ref, opt_httpConfig) {
   const httpConfig = opt_httpConfig !== undefined ? opt_httpConfig :
@@ -456,7 +452,6 @@ PrintService.prototype.getStatus = function(ref, opt_httpConfig) {
  * Get the URL of a report.
  * @param {string} ref Print report reference.
  * @return {string} The report URL for this ref.
- * @export
  */
 PrintService.prototype.getReportUrl = function(ref) {
   return `${this.url_}/report/${ref}`;

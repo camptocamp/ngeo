@@ -61,7 +61,6 @@ export class MessageDisclaimerService extends ngeoMessageMessage {
    * strings or objects.
    * @param {string|import('ngeo/message/Message.js').Message|Array.<string|import('ngeo/message/Message.js').Message>}
    *     object A message or list of messages as text or configuration objects.
-   * @export
    */
   alert(object) {
     this.show(object);
@@ -72,7 +71,6 @@ export class MessageDisclaimerService extends ngeoMessageMessage {
    * strings or objects.
    * @param {string|import('ngeo/message/Message.js').Message|Array.<string|import('ngeo/message/Message.js').Message>}
    *     object A message or list of messages as text or configuration objects.
-   * @export
    */
   close(object) {
     const msgObjects = this.getMessageObjects(object);

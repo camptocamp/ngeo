@@ -96,38 +96,32 @@ function Controller($scope, ngeoBackgroundLayerMgr, gmfThemes) {
 
   /**
    * @type {?import("ol/Map.js").default}
-   * @export
    */
   this.map;
 
   /**
    * @type {!string|undefined}
-   * @export
    */
   this.opacityOptions;
 
   /**
    * Function called when a layer was selected by the user.
    * @type {?Function}
-   * @export
    */
   this.select;
 
   /**
    * @type {?import("ol/layer/Base.js").default}
-   * @export
    */
   this.bgLayer;
 
   /**
    * @type {?Array.<!import("ol/layer/Base.js").default>}
-   * @export
    */
   this.bgLayers;
 
   /**
    * @type {import("ol/layer/Base.js").default}
-   * @export
    */
   this.opacityLayer;
 
@@ -199,7 +193,6 @@ Controller.prototype.handleThemesChange_ = function() {
  * Getter/setter for background layer overlay, used by opacity slider.
  * @param {?number} val The opacity.
  * @returns {number} The background layer opacity.
- * @export
  */
 Controller.prototype.getSetBgLayerOpacity = function(val) {
   if (val) {
@@ -211,7 +204,6 @@ Controller.prototype.getSetBgLayerOpacity = function(val) {
 /**
  * @param {import("ol/layer/Base.js").default} layer Layer.
  * @param {boolean=} opt_silent Do not notify listeners.
- * @export
  */
 Controller.prototype.setLayer = function(layer, opt_silent) {
   this.bgLayer = layer;
@@ -224,7 +216,6 @@ Controller.prototype.setLayer = function(layer, opt_silent) {
 /**
  * Set a background layer overlay, used by the opacity slider.
  * @param {import("ol/layer/Base.js").default} layer The opacity background layer.
- * @export
  */
 Controller.prototype.setOpacityBgLayer = function(layer) {
   this.backgroundLayerMgr_.setOpacityBgLayer(this.map, layer);

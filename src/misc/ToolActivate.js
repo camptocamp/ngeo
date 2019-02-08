@@ -10,14 +10,12 @@
  *      `toolContext` which represents the active state of the tool.
  * @constructor
  * @ngname ngeoToolActivate
- * @export
  */
 export default function(toolContext, activePropertyName) {
 
   /**
    * A getter function to get the active state of the tool.
    * @return {boolean} Is active.
-   * @export
    */
   this.getActive = function() {
     return toolContext[activePropertyName];
@@ -26,7 +24,6 @@ export default function(toolContext, activePropertyName) {
   /**
    * A setter function to set the active state of the tool.
    * @param {boolean} newVal New active state.
-   * @export
    */
   this.setActive = function(newVal) {
     toolContext[activePropertyName] = newVal;

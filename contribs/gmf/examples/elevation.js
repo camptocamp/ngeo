@@ -35,19 +35,16 @@ module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 function MainController() {
   /**
    * @type {Array.<string>}
-   * @export
    */
   this.elevationLayers = ['aster', 'srtm'];
 
   /**
    * @type {string}
-   * @export
    */
   this.selectedElevationLayer = this.elevationLayers[0];
 
   /**
    * @type {import("ol/Map.js").default}
-   * @export
    */
   this.map = new olMap({
     layers: [

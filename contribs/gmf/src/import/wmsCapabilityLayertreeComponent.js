@@ -66,14 +66,12 @@ class Controller {
     /**
      * WMS Capabilities definition
      * @type {!Object}
-     * @export
      */
     this.capabilities;
 
     /**
      * WMS Capability Layer object.
      * @type {!Object}
-     * @export
      */
     this.layer;
 
@@ -81,7 +79,6 @@ class Controller {
      * The original server url that was used to build the WMS GetCapabilities
      * request.
      * @type {string}
-     * @export
      */
     this.url;
 
@@ -97,7 +94,6 @@ class Controller {
 
   /**
    * @param {!Object} layer WMS Capability Layer object
-   * @export
    */
   createAndAddDataSource(layer) {
     this.gmfExternalDataSourcesManager_.createAndAddDataSourceFromWMSCapability(
@@ -110,7 +106,6 @@ class Controller {
   /**
    * @param {!Object} layer WMS Capability Layer object
    * @return {string} Unique id for the Capability Layer.
-   * @export
    */
   getUid(layer) {
     return olUtilGetUid(layer);

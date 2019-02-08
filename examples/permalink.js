@@ -55,7 +55,6 @@ module.component('appMap', mapComponent);
 function MapComponentController(ngeoLocation, ngeoDebounce) {
   /**
    * @type {import("ol/Map.js").default}
-   * @export
    */
   this.map;
 
@@ -136,14 +135,12 @@ module.component('appDraw', drawComponent);
  * @param {!angular.IScope} $scope Scope.
  * @param {!import("ngeo/statemanager/Location.js").StatemanagerLocation} ngeoLocation ngeo Location service.
  * @constructor
- * @export
  * @ngInject
  */
 function DrawComponentController($scope, ngeoLocation) {
 
   /**
    * @type {import("ol/Map.js").default}
-   * @export
    */
   this.map;
 
@@ -172,7 +169,6 @@ function DrawComponentController($scope, ngeoLocation) {
 
   /**
    * @type {import("ol/interaction/Draw.js").default}
-   * @export
    */
   this.interaction;
 }
@@ -223,7 +219,6 @@ DrawComponentController.prototype.$onInit = function() {
 
 /**
  * Clear the vector layer.
- * @export
  */
 DrawComponentController.prototype.clearLayer = function() {
   /** @type {olSourceVector} */(this.layer.getSource()).clear(true);
@@ -241,7 +236,6 @@ function MainController() {
 
   /**
    * @type {import("ol/Map.js").default}
-   * @export
    */
   this.map = new olMap({
     layers: [
@@ -256,7 +250,6 @@ function MainController() {
 
   /**
    * @type {import("ol/layer/Vector.js").default}
-   * @export
    */
   this.vectorLayer = new olLayerVector({
     source: vectorSource

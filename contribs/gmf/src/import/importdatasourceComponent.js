@@ -94,7 +94,6 @@ class Controller {
 
     /**
      * @type {!import("ol/Map.js").default}
-     * @export
      */
     this.map;
 
@@ -136,13 +135,11 @@ class Controller {
 
     /**
      * @type {File|undefined}
-     * @export
      */
     this.file;
 
     /**
      * @type {string|undefined}
-     * @export
      */
     this.url;
 
@@ -157,7 +154,6 @@ class Controller {
 
     /**
      * @type {boolean}
-     * @export
      */
     this.hasError = false;
 
@@ -169,19 +165,16 @@ class Controller {
 
     /**
      * @type {string}
-     * @export
      */
     this.mode = Mode.ONLINE;
 
     /**
      * @type {!Array.<string>}
-     * @export
      */
     this.modes = [Mode.LOCAL, Mode.ONLINE];
 
     /**
      * @type {boolean}
-     * @export
      */
     this.pending = false;
 
@@ -195,14 +188,12 @@ class Controller {
     /**
      * Current WMS Capabilities that were connected.
      * @type {?Object}
-     * @export
      */
     this.wmsCapabilities = null;
 
     /**
      * Current WTMS Capabilities that were connected.
      * @type {?Object}
-     * @export
      */
     this.wmtsCapabilities = null;
 
@@ -298,7 +289,6 @@ class Controller {
 
   /**
    * Triggers a 'click' on the "Browse" button.
-   * @export
    */
   browse() {
     this.hasError = false;
@@ -307,7 +297,6 @@ class Controller {
 
   /**
    * Connect to given online resource URL.
-   * @export
    */
   connect() {
     const url = this.url;
@@ -346,7 +335,6 @@ class Controller {
 
   /**
    * Create data source from file.
-   * @export
    */
   load() {
     const file = this.file;
@@ -359,7 +347,6 @@ class Controller {
 
   /**
    * @return {string} The name of the file and human-readable size.
-   * @export
    */
   get fileNameAndSize() {
     let nameAndSize = '';

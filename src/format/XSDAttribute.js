@@ -5,17 +5,14 @@ import olFormatXML from 'ol/format/XML.js';
 
 /**
  * @enum {string}
- * @export
  */
 export const FormatNumberType = {
   /**
    * @type {string}
-   * @export
    */
   FLOAT: 'float',
   /**
    * @type {string}
-   * @export
    */
   INTEGER: 'integer'
 };

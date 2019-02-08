@@ -141,13 +141,11 @@ function Controller($element, $scope, ngeoQueryResult, ngeoMapQuerent, ngeoFeatu
 
   /**
    * @type {Element|string}
-   * @export
    */
   this.draggableContainment;
 
   /**
    * @type {boolean}
-   * @export
    */
   this.desktop = false;
 
@@ -155,7 +153,6 @@ function Controller($element, $scope, ngeoQueryResult, ngeoMapQuerent, ngeoFeatu
    * Is the window currently collapsed?
    * When used for Desktop, it is shown non-collapsed.
    * @type {boolean}
-   * @export
    */
   this.collapsed = !this.desktop;
 
@@ -168,13 +165,11 @@ function Controller($element, $scope, ngeoQueryResult, ngeoMapQuerent, ngeoFeatu
   /**
    * Object that is used to filter the source list in the template.
    * @type {Object}
-   * @export
    */
   this.sourcesFilter = {'queried': true};
 
   /**
    * @type {import('ngeo/query/MapQuerent.js').QueryResult}
-   * @export
    */
   this.ngeoQueryResult = {
     sources: [],
@@ -190,7 +185,6 @@ function Controller($element, $scope, ngeoQueryResult, ngeoMapQuerent, ngeoFeatu
 
   /**
    * @type {?import('ngeo/statemanager/WfsPermalink.js').QueryResultSource}
-   * @export
    */
   this.selectedSource = null;
 
@@ -214,37 +208,31 @@ function Controller($element, $scope, ngeoQueryResult, ngeoMapQuerent, ngeoFeatu
 
   /**
    * @type {?import('ngeo/statemanager/WfsPermalink.js').QueryResultSource}
-   * @export
    */
   this.source = null;
 
   /**
    * @type {?import("ol/Feature.js").default}
-   * @export
    */
   this.feature = null;
 
   /**
    * @type {number}
-   * @export
    */
   this.currentResult = -1;
 
   /**
    * @type {boolean}
-   * @export
    */
   this.isNext = true;
 
   /**
    * @type {number}
-   * @export
    */
   this.animate = 0;
 
   /**
    * @type {boolean}
-   * @export
    */
   this.open = false;
 
@@ -325,7 +313,6 @@ Controller.prototype.$onInit = function() {
  * Remove current displayed results then get new results from the
  * ngeoQueryResult service. Display all results on the map and display,
  * highlight the first feature.
- * @export
  */
 Controller.prototype.show = function() {
   this.clear();
@@ -388,7 +375,6 @@ Controller.prototype.setCurrentResult_ = function(
 /**
  * Select the logical previous source and feature then highlight this feature on
  * the map.
- * @export
  */
 Controller.prototype.previous = function() {
   let position = this.currentResult - 1;
@@ -405,7 +391,6 @@ Controller.prototype.previous = function() {
 /**
  * Select the logical next source and feature then highlight this feature on
  * the map.
- * @export
  */
 Controller.prototype.next = function() {
   let position = this.currentResult + 1;
@@ -443,7 +428,6 @@ Controller.prototype.updateQueryResult_ = function(queryResult) {
  * Get the total count of features in the result of the query. If a source
  * has been select, only the number of features of that source are returned.
  * @return {number} Total number of features.
- * @export
  */
 Controller.prototype.getResultLength = function() {
   if (this.selectedSource === null) {
@@ -456,7 +440,6 @@ Controller.prototype.getResultLength = function() {
 
 /**
  * @return {boolean} If the first result is active.
- * @export
  */
 Controller.prototype.isFirst = function() {
   return this.currentResult == 0;
@@ -465,7 +448,6 @@ Controller.prototype.isFirst = function() {
 
 /**
  * @return {boolean} If the last result is active.
- * @export
  */
 Controller.prototype.isLast = function() {
   return this.currentResult == this.getResultLength() - 1;
@@ -476,7 +458,6 @@ Controller.prototype.isLast = function() {
  * Delete the unwanted ol3 properties from the current feature then return the
  * properties.
  * @return {Object?} Filtered properties of the current feature or null.
- * @export
  */
 Controller.prototype.getFeatureValues = function() {
   if (!this.feature) {
@@ -541,7 +522,6 @@ Controller.prototype.highlightCurrentFeature_ = function(opt_lastFeature) {
 /**
  * Remove the current selected feature and source and remove all features
  * from the map.
- * @export
  */
 Controller.prototype.close = function() {
   this.open = false;
@@ -553,7 +533,6 @@ Controller.prototype.close = function() {
 /**
  * Remove the current selected feature and source and remove all features
  * from the map.
- * @export
  */
 Controller.prototype.clear = function() {
   this.feature = null;
@@ -567,7 +546,6 @@ Controller.prototype.clear = function() {
 
 /**
  * @param {import('ngeo/statemanager/WfsPermalink.js').QueryResultSource} source The source to select.
- * @export
  */
 Controller.prototype.setSelectedSource = function(source) {
   if (source !== null && source.features.length <= 0) {

@@ -28,7 +28,6 @@ const module = angular.module('app', [
 /**
  * @constructor
  * @param {angular.IScope} $scope Scope.
- * @export
  * @ngInject
  */
 function MainController($scope) {
@@ -49,7 +48,6 @@ function MainController($scope) {
 
   /**
    * @type {import("ol/Map.js").default}
-   * @export
    */
   this.map = new olMap({
     layers: [
@@ -69,13 +67,11 @@ function MainController($scope) {
 
   /**
    * @type {boolean|undefined}
-   * @export
    */
   this.fileReaderSupported = undefined;
 
   /**
    * @type {string}
-   * @export
    */
   this.fileContent = '';
 

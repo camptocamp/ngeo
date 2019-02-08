@@ -90,7 +90,6 @@ function MainController(gmfObjectEditingManager, gmfThemes,
 
   /**
    * @type {import("ol/Collection.js").default.<import("ol/Feature.js").default>}
-   * @export
    */
   this.sketchFeatures = new olCollection();
 
@@ -107,7 +106,6 @@ function MainController(gmfObjectEditingManager, gmfThemes,
 
   /**
    * @type {import("ol/Map.js").default}
-   * @export
    */
   this.map = new olMap({
     layers: [
@@ -133,19 +131,16 @@ function MainController(gmfObjectEditingManager, gmfThemes,
 
   /**
    * @type {string|undefined}
-   * @export
    */
   this.objectEditingGeomType = gmfObjectEditingManager.getGeomType();
 
   /**
    * @type {number|undefined}
-   * @export
    */
   this.objectEditingLayerNodeId = gmfObjectEditingManager.getLayerNodeId();
 
   /**
    * @type {boolean}
-   * @export
    */
   this.objectEditingActive = true;
 
@@ -156,7 +151,6 @@ function MainController(gmfObjectEditingManager, gmfThemes,
 
   /**
    * @type {boolean}
-   * @export
    */
   this.dummyActive = false;
 
@@ -167,7 +161,6 @@ function MainController(gmfObjectEditingManager, gmfThemes,
 
   /**
    * @type {?import("ol/Feature.js").default}
-   * @export
    */
   this.objectEditingFeature = null;
 

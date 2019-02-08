@@ -93,7 +93,6 @@ export class MapBackgroundLayerManager extends olObservable {
    * the map does not have a background layer.
    * @param {import("ol/Map.js").default} map Map.
    * @return {import("ol/layer/Base.js").default} layer The background layer.
-   * @export
    */
   get(map) {
     const mapUid = olUtilGetUid(map).toString();
@@ -107,7 +106,6 @@ export class MapBackgroundLayerManager extends olObservable {
    * @param {import("ol/Map.js").default} map The map.
    * @param {import("ol/layer/Base.js").default} layer The new background layer.
    * @return {import("ol/layer/Base.js").default} The previous background layer.
-   * @export
    */
   set(map, layer) {
     const ZIndex = -200;
@@ -147,7 +145,6 @@ export class MapBackgroundLayerManager extends olObservable {
    * `null` is returned if the map does not have an opacity background layer.
    * @param {import("ol/Map.js").default} map Map.
    * @return {import("ol/layer/Base.js").default} layer The opacity background layer.
-   * @export
    */
   getOpacityBgLayer(map) {
     const mapUid = olUtilGetUid(map).toString();
@@ -159,7 +156,6 @@ export class MapBackgroundLayerManager extends olObservable {
    * Set an background layer overlay, used by the opacity slider.
    * @param {import("ol/Map.js").default} map The map.
    * @param {import("ol/layer/Base.js").default} layer The opacity background layer.
-   * @export
    */
   setOpacityBgLayer(map, layer) {
     const bgGroup = this.ngeoLayerHelper_.getGroupFromMap(map, BACKGROUNDLAYERGROUP_NAME);
@@ -179,7 +175,6 @@ export class MapBackgroundLayerManager extends olObservable {
   /**
    * @param {import("ol/Map.js").default} map The map.
    * @param {Object.<string, string>} dimensions The global dimensions object.
-   * @export
    */
   updateDimensions(map, dimensions) {
     const baseBgLayer = this.get(map);

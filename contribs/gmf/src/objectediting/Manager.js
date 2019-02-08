@@ -6,32 +6,26 @@ import olFeature from 'ol/Feature.js';
 
 /**
  * @enum {string}
- * @export
  */
 export const ObjecteditingParam = {
   /**
    * @type {string}
-   * @export
    */
   GEOM_TYPE: 'objectediting_geomtype',
   /**
    * @type {string}
-   * @export
    */
   ID: 'objectediting_id',
   /**
    * @type {string}
-   * @export
    */
   LAYER: 'objectediting_layer',
   /**
    * @type {string}
-   * @export
    */
   PROPERTY: 'objectediting_property',
   /**
    * @type {string}
-   * @export
    */
   THEME: 'objectediting_theme'
 };
@@ -85,7 +79,6 @@ export function ObjecteditingManagerService($q, gmfEditFeature, ngeoLocation) {
  * property set.
  *
  * @return {angular.IPromise} Promise.
- * @export
  */
 ObjecteditingManagerService.prototype.getFeature = function() {
 
@@ -119,7 +112,6 @@ ObjecteditingManagerService.prototype.getFeature = function() {
 
 /**
  * @return {string|undefined} The geometry type.
- * @export
  */
 ObjecteditingManagerService.prototype.getGeomType = function() {
   return this.ngeoLocation_.getParam(
@@ -129,7 +121,6 @@ ObjecteditingManagerService.prototype.getGeomType = function() {
 
 /**
  * @return {number|undefined} The gmf layer node id.
- * @export
  */
 ObjecteditingManagerService.prototype.getLayerNodeId = function() {
   return this.ngeoLocation_.getParamAsInt(

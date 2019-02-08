@@ -22,7 +22,6 @@ function MainController(ngeoNotification) {
 
   /**
    * @type {import("ngeo/message/Notification.js").MessageNotification}
-   * @export
    */
   this.notification = ngeoNotification;
 
@@ -44,7 +43,6 @@ function MainController(ngeoNotification) {
 /**
  * Demonstrates how to display multiple messages at once with the notification
  * service.
- * @export
  */
 MainController.prototype.notifyMulti = function() {
   this.notification.notify([{
@@ -66,7 +64,6 @@ MainController.prototype.notifyMulti = function() {
 /**
  * Demonstrates how to display a message in an other target than the original
  * one defined by the notification service.
- * @export
  */
 MainController.prototype.notifyTarget = function() {
   this.notification.notify({
@@ -78,7 +75,6 @@ MainController.prototype.notifyTarget = function() {
 
 /**
  * Demonstrates how to display a message for a specific number of seconds.
- * @export
  */
 MainController.prototype.notifyQuick = function() {
   this.notification.notify({

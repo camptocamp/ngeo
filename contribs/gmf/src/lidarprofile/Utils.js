@@ -223,7 +223,6 @@ export default class {
   /**
    * Create a image file by combining SVG and canvas elements and let the user downloads it.
    * @param {LidarprofileClientConfig} profileClientConfig The profile client configuration.
-   * @export
    */
   downloadProfileAsImageFile(profileClientConfig) {
     const profileSVG = d3select('#gmf-lidarprofile-container svg.lidar-svg');
@@ -296,7 +295,6 @@ export default class {
    * Get the data for a CSV export of the profile.
    * @param {Array.<LidarPoint>} points A list of lidar profile point objects.
    * @return {Array.<Object>} Objects for a csv export (column: value).
-   * @export
    */
   getCSVData(points) {
     return points.map((point) => {

@@ -470,7 +470,6 @@ class OGC extends ngeoDatasourceDataSource {
   // ========================================
   /**
    * @return {?Dimensions} Current dimensions to use for this data source
-   * @export
    */
   get dimensions() {
     return this.dimensions_;
@@ -478,7 +477,6 @@ class OGC extends ngeoDatasourceDataSource {
 
   /**
    * @return {string} Filter condition
-   * @export
    */
   get filterCondition() {
     return this.filterCondition_;
@@ -486,7 +484,6 @@ class OGC extends ngeoDatasourceDataSource {
 
   /**
    * @param {string} filterCondition Filter condition
-   * @export
    */
   set filterCondition(filterCondition) {
     this.filterCondition_ = filterCondition;
@@ -494,7 +491,6 @@ class OGC extends ngeoDatasourceDataSource {
 
   /**
    * @return {?TimeRange} Time range value
-   * @export
    */
   get timeRangeValue() {
     let range = null;
@@ -511,7 +507,6 @@ class OGC extends ngeoDatasourceDataSource {
 
   /**
    * @param {?TimeRange} range Time range value
-   * @export
    */
   set timeRangeValue(range) {
     if (range) {
@@ -544,7 +539,6 @@ class OGC extends ngeoDatasourceDataSource {
 
   /**
    * @return {boolean} Copyable
-   * @export
    */
   get copyable() {
     return this.copyable_;
@@ -552,7 +546,6 @@ class OGC extends ngeoDatasourceDataSource {
 
   /**
    * @return {string} Geometry name
-   * @export
    */
   get geometryName() {
     return this.geometryName_;
@@ -560,7 +553,6 @@ class OGC extends ngeoDatasourceDataSource {
 
   /**
    * @return {string} OGC image type
-   * @export
    */
   get ogcImageType() {
     return this.ogcImageType_;
@@ -568,7 +560,6 @@ class OGC extends ngeoDatasourceDataSource {
 
   /**
    * @return {?Array.<!OGCLayer>} OGC layers
-   * @export
    */
   get ogcLayers() {
     return this.ogcLayers_;
@@ -576,7 +567,6 @@ class OGC extends ngeoDatasourceDataSource {
 
   /**
    * @return {string} OGC server type
-   * @export
    */
   get ogcServerType() {
     return this.ogcServerType_;
@@ -584,7 +574,6 @@ class OGC extends ngeoDatasourceDataSource {
 
   /**
    * @return {string} OGC type
-   * @export
    */
   get ogcType() {
     return this.ogcType_;
@@ -592,7 +581,6 @@ class OGC extends ngeoDatasourceDataSource {
 
   /**
    * @return {boolean} Snappable
-   * @export
    */
   get snappable() {
     return this.snappable_;
@@ -600,7 +588,6 @@ class OGC extends ngeoDatasourceDataSource {
 
   /**
    * @return {boolean} Snapping to edges
-   * @export
    */
   get snappingToEdges() {
     return this.snappingToEdges_;
@@ -608,7 +595,6 @@ class OGC extends ngeoDatasourceDataSource {
 
   /**
    * @return {boolean} Snapping to vertices
-   * @export
    */
   get snappingToVertice() {
     return this.snappingToVertice_;
@@ -616,7 +602,6 @@ class OGC extends ngeoDatasourceDataSource {
 
   /**
    * @return {number} Snapping tolerance
-   * @export
    */
   get snappingTolerance() {
     return this.snappingTolerance_;
@@ -624,7 +609,6 @@ class OGC extends ngeoDatasourceDataSource {
 
   /**
    * @return {string|undefined} Time attribute name
-   * @export
    */
   get timeAttributeName() {
     return this.timeAttributeName_;
@@ -632,7 +616,6 @@ class OGC extends ngeoDatasourceDataSource {
 
   /**
    * @return {?TimeProperty} Time property
-   * @export
    */
   get timeProperty() {
     return this.timeProperty_;
@@ -640,7 +623,6 @@ class OGC extends ngeoDatasourceDataSource {
 
   /**
    * @return {string} WFS feature namespace
-   * @export
    */
   get wfsFeatureNS() {
     return this.wfsFeatureNS_;
@@ -648,7 +630,6 @@ class OGC extends ngeoDatasourceDataSource {
 
   /**
    * @return {string} WFS feature prefix
-   * @export
    */
   get wfsFeaturePrefix() {
     return this.wfsFeaturePrefix_;
@@ -656,14 +637,12 @@ class OGC extends ngeoDatasourceDataSource {
 
   /**
    * @return {string} WFS output format
-   * @export
    */
   get wfsOutputFormat() {
     return this.wfsOutputFormat_;
   }
 
   /**
-   * @export
    * @return {string|undefined} WFS url
    */
   get wfsUrl() {
@@ -672,7 +651,6 @@ class OGC extends ngeoDatasourceDataSource {
 
   /**
    * @return {string} WMS info format
-   * @export
    */
   get wmsInfoFormat() {
     return this.wmsInfoFormat_;
@@ -680,7 +658,6 @@ class OGC extends ngeoDatasourceDataSource {
 
   /**
    * @return {boolean} WMS is single tile
-   * @export
    */
   get wmsIsSingleTile() {
     return this.wmsIsSingleTile_;
@@ -688,7 +665,6 @@ class OGC extends ngeoDatasourceDataSource {
 
   /**
    * @return {string|undefined} WMS url
-   * @export
    * @override
    */
   get wmsUrl() {
@@ -697,7 +673,6 @@ class OGC extends ngeoDatasourceDataSource {
 
   /**
    * @return {string|undefined} WMTS layer
-   * @export
    */
   get wmtsLayer() {
     return this.wmtsLayer_;
@@ -705,7 +680,6 @@ class OGC extends ngeoDatasourceDataSource {
 
   /**
    * @return {string|undefined} WMTS url
-   * @export
    * @override
    */
   get wmtsUrl() {
@@ -718,7 +692,6 @@ class OGC extends ngeoDatasourceDataSource {
 
   /**
    * @return {!DimensionsActive} Active dimensions
-   * @export
    */
   get activeDimensions() {
     /** @type {DimensionsActive} */
@@ -748,7 +721,6 @@ class OGC extends ngeoDatasourceDataSource {
    *
    * @return {boolean} Whether the data source can be combined to an other
    *     data source to fetch features in a single WFS request.
-   * @export
    * @override
    */
   get combinableForWFS() {
@@ -764,7 +736,6 @@ class OGC extends ngeoDatasourceDataSource {
    *
    * @return {boolean} Whether the data source can be combined to an other
    *     data source to fetch features in a single WMS request.
-   * @export
    * @override
    */
   get combinableForWMS() {
@@ -775,7 +746,6 @@ class OGC extends ngeoDatasourceDataSource {
    * Whether the data source is queryable or not. For an OGC data source to be
    * queryable, it requires the support of WFS or WMS and at least one ogc
    * layer to be querable.
-   * @export
    */
   get queryable() {
     let queryable = false;
@@ -794,7 +764,6 @@ class OGC extends ngeoDatasourceDataSource {
   /**
    * @return {boolean} Whether the data source supports making WFS requests
    *     or not.
-   * @export
    * @override
    */
   get supportsWFS() {
@@ -811,7 +780,6 @@ class OGC extends ngeoDatasourceDataSource {
    * request, the data source must have only 1 ogcLayer set, which must
    * be queryable.
    * @return {boolean} Supports attributes.
-   * @export
    */
   get supportsAttributes() {
     return this.attributes !== null || (
@@ -825,7 +793,6 @@ class OGC extends ngeoDatasourceDataSource {
   /**
    * @return {boolean} Whether the data source supports making WMS requests
    *     or not.
-   * @export
    * @override
    */
   get supportsWMS() {
@@ -835,7 +802,6 @@ class OGC extends ngeoDatasourceDataSource {
   /**
    * @return {boolean} Whether the data source supports making WTMS requests
    *     or not.
-   * @export
    */
   get supportsWMTS() {
     return this.wmtsUrl !== undefined;
@@ -843,7 +809,6 @@ class OGC extends ngeoDatasourceDataSource {
 
   /**
    * @return {?import("ol/format/WFS.js").default} WFS format.
-   * @export
    */
   get wfsFormat() {
     return this.wfsFormat_;
@@ -851,7 +816,6 @@ class OGC extends ngeoDatasourceDataSource {
 
   /**
    * @return {?import("ol/format/WMSGetFeatureInfo.js").default} WMS format.
-   * @export
    */
   get wmsFormat() {
     return this.wmsFormat_;
@@ -865,7 +829,6 @@ class OGC extends ngeoDatasourceDataSource {
    * @param {OGC} dataSource Data source.
    * @return {boolean} Whether this data source can be combined to the given
    *     other data source to fetch features in a single WFS request.
-   * @export
    * @override
    */
   combinableWithDataSourceForWFS(dataSource) {
@@ -880,7 +843,6 @@ class OGC extends ngeoDatasourceDataSource {
    * @param {OGC} dataSource Data source.
    * @return {boolean} Whether this data source can be combined to the given
    *     other data source to fetch features in a single WMS request.
-   * @export
    * @override
    */
   combinableWithDataSourceForWMS(dataSource) {
@@ -897,7 +859,6 @@ class OGC extends ngeoDatasourceDataSource {
    * @param {boolean} queryableOnly Whether to additionally check if the
    *     OGC layer is queryable as well or not. Defaults to `false`.
    * @return {boolean} At least one OGC layer is in range.
-   * @export
    */
   isAnyOGCLayerInRange(res, queryableOnly = false) {
     return !!(this.getInRangeOGCLayerNames(res, queryableOnly).length);
@@ -910,7 +871,6 @@ class OGC extends ngeoDatasourceDataSource {
    * @param {boolean} queryableOnly Whether to additionally check if the
    *     OGC layer is queryable as well or not. Defaults to `false`.
    * @return {Array.<string>} The OGC layer names that are in range.
-   * @export
    */
   getInRangeOGCLayerNames(res, queryableOnly = false) {
 
@@ -938,7 +898,6 @@ class OGC extends ngeoDatasourceDataSource {
    * @param {boolean} queryableOnly Whether to additionally check if the
    *     OGC layer is queryable as well or not. Defaults to `false`.
    * @return {Array.<string>} The OGC layer names.
-   * @export
    */
   getOGCLayerNames(queryableOnly = false) {
 
@@ -959,7 +918,6 @@ class OGC extends ngeoDatasourceDataSource {
    * Returns the filtrable OGC layer name. This methods asserts that
    * the name exists and is filtrable.
    * @return {string} OGC layer name.
-   * @export
    */
   getFiltrableOGCLayerName() {
     console.assert(this.filtrable);
@@ -995,7 +953,6 @@ class OGC extends ngeoDatasourceDataSource {
    * @return {boolean} Whether the two data sources have the same active
    *     dimensions. If both have no dimensions, they are considered to be
    *     sharing the same dimensions.
-   * @export
    * @override
    */
   haveTheSameActiveDimensions(dataSource) {

@@ -156,61 +156,51 @@ function Controller($injector, $scope, ngeoToolActivateMgr) {
 
   /**
    * @type {boolean}
-   * @export
    */
   this.active;
 
   /**
    * @type {boolean}
-   * @export
    */
   this.copyFromActive;
 
   /**
    * @type {boolean}
-   * @export
    */
   this.deleteFromActive;
 
   /**
    * @type {import("ol/Feature.js").default}
-   * @export
    */
   this.feature;
 
   /**
    * @type {string}
-   * @export
    */
   this.geomType;
 
   /**
    * @type {import("ol/Map.js").default}
-   * @export
    */
   this.map;
 
   /**
    * @type {ObjectEditingQueryableLayerInfo}
-   * @export
    */
   this.queryableLayerInfo;
 
   /**
    * @type {string}
-   * @export
    */
   this.process;
 
   /**
    * @type {boolean}
-   * @export
    */
   this.requiresLayer;
 
   /**
    * @type {import("ol/Collection.js").default.<import("ol/Feature.js").default>}
-   * @export
    */
   this.sketchFeatures;
 
@@ -233,7 +223,6 @@ function Controller($injector, $scope, ngeoToolActivateMgr) {
 
   /**
    * @type {string}
-   * @export
    */
   this.geomTypePolygon = ngeoGeometryType.POLYGON;
 
@@ -245,7 +234,6 @@ function Controller($injector, $scope, ngeoToolActivateMgr) {
 
   /**
    * @type {boolean}
-   * @export
    */
   this.drawActive = false;
 
@@ -254,7 +242,6 @@ function Controller($injector, $scope, ngeoToolActivateMgr) {
 
   /**
    * @type {boolean}
-   * @export
    */
   this.eraseActive = false;
 
@@ -263,13 +250,11 @@ function Controller($injector, $scope, ngeoToolActivateMgr) {
 
   /**
    * @type {boolean}
-   * @export
    */
   this.drawTriangleActive = false;
 
   /**
    * @type {number}
-   * @export
    */
   this.triangleAngle = Math.PI / 180 * 90; // 90 degrees
 
@@ -278,7 +263,6 @@ function Controller($injector, $scope, ngeoToolActivateMgr) {
 
   /**
    * @type {number}
-   * @export
    */
   this.triangleRadius = oeToolsOptions.regularPolygonRadius !== undefined ?
     oeToolsOptions.regularPolygonRadius : 100;

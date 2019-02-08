@@ -44,7 +44,6 @@ function MainController($sce, ngeoCreatePopup) {
 
 
 /**
- * @export
  */
 MainController.prototype.simplePopup = function() {
   const popup = this.createPopup_();
@@ -59,7 +58,6 @@ MainController.prototype.simplePopup = function() {
 
 
 /**
- * @export
  */
 MainController.prototype.iframePopup = function() {
   const popup = this.createPopup_();
@@ -73,7 +71,6 @@ MainController.prototype.iframePopup = function() {
 
 
 /**
- * @export
  */
 MainController.prototype.heavyPopup = function() {
   const popup = this.createPopup_();
@@ -103,7 +100,6 @@ MainController.prototype.heavyPopup = function() {
 
 
 /**
- * @export
  */
 MainController.prototype.openPopupWithContent = function() {
   const popup = this.createPopup_();
@@ -120,7 +116,6 @@ MainController.prototype.openPopupWithContent = function() {
 
 
 /**
- * @export
  */
 MainController.prototype.openPopupWithUrl = function() {
   const popup = this.createPopup_();

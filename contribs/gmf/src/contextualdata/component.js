@@ -87,19 +87,16 @@ export function ContextualdataController($compile, $timeout, $scope, gmfRaster) 
 
   /**
    * @type {import("ol/Map.js").default}
-   * @export
    */
   this.map;
 
   /**
    * @type {Array<number>}
-   * @export
    */
   this.projections;
 
   /**
    * @type {function(import("ol/coordinate.js").Coordinate, Object):Object}
-   * @export
    */
   this.callback;
 

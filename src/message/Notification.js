@@ -58,7 +58,6 @@ export class MessageNotification extends ngeoMessageMessage {
    * objects.
    * @param {string|Array.<string>|import('ngeo/message/Message.js').Message|Array.<import('ngeo/message/Message.js').Message>}
    *     object A message or list of messages as text or configuration objects.
-   * @export
    */
   notify(object) {
     this.show(object);
@@ -66,7 +65,6 @@ export class MessageNotification extends ngeoMessageMessage {
 
   /**
    * Clears all messages that are currently being shown.
-   * @export
    */
   clear() {
     for (const uid in this.cache_) {

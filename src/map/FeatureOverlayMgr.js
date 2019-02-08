@@ -75,7 +75,6 @@ export function FeatureOverlayMgr() {
 /**
  * @param {import("ol/Feature.js").default} feature The feature to add.
  * @param {number} groupIndex The group groupIndex.
- * @export
  */
 FeatureOverlayMgr.prototype.addFeature = function(feature, groupIndex) {
   console.assert(groupIndex >= 0);
@@ -90,7 +89,6 @@ FeatureOverlayMgr.prototype.addFeature = function(feature, groupIndex) {
 /**
  * @param {import("ol/Feature.js").default} feature The feature to add.
  * @param {number} groupIndex The group groupIndex.
- * @export
  */
 FeatureOverlayMgr.prototype.removeFeature = function(feature, groupIndex) {
   console.assert(groupIndex >= 0);
@@ -104,7 +102,6 @@ FeatureOverlayMgr.prototype.removeFeature = function(feature, groupIndex) {
 
 /**
  * @param {number} groupIndex The group groupIndex.
- * @export
  */
 FeatureOverlayMgr.prototype.clear = function(groupIndex) {
   console.assert(groupIndex >= 0);
@@ -119,7 +116,6 @@ FeatureOverlayMgr.prototype.clear = function(groupIndex) {
 
 /**
  * @return {import("ol/layer/Vector.js").default} The vector layer used internally.
- * @export
  */
 FeatureOverlayMgr.prototype.getLayer = function() {
   return this.layer_;
@@ -128,7 +124,6 @@ FeatureOverlayMgr.prototype.getLayer = function() {
 
 /**
  * @return {import("ngeo/map/FeatureOverlay.js").FeatureOverlay} Feature overlay.
- * @export
  */
 FeatureOverlayMgr.prototype.getFeatureOverlay = function() {
   const groupIndex = this.groups_.length;
@@ -142,7 +137,6 @@ FeatureOverlayMgr.prototype.getFeatureOverlay = function() {
 
 /**
  * @param {import("ol/Map.js").default} map Map.
- * @export
  */
 FeatureOverlayMgr.prototype.init = function(map) {
   this.layer_.setMap(map);
@@ -153,7 +147,6 @@ FeatureOverlayMgr.prototype.init = function(map) {
  * @param {import("ol/style/Style.js").StyleLike} style
  * Style.
  * @param {number} groupIndex Group index.
- * @export
  */
 FeatureOverlayMgr.prototype.setStyle = function(style, groupIndex) {
   console.assert(groupIndex >= 0);

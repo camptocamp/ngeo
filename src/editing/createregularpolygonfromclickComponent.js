@@ -84,7 +84,6 @@ function Controller($scope) {
 
   /**
    * @type {boolean}
-   * @export
    */
   this.active = false;
 
@@ -97,31 +96,26 @@ function Controller($scope) {
 
   /**
    * @type {number|undefined}
-   * @export
    */
   this.angle;
 
   /**
    * @type {import("ol/Collection.js").default.<import("ol/Feature.js").default>}
-   * @export
    */
   this.features;
 
   /**
    * @type {import("ol/Map.js").default}
-   * @export
    */
   this.map;
 
   /**
    * @type {number}
-   * @export
    */
   this.radius;
 
   /**
    * @type {number|undefined}
-   * @export
    */
   this.sides;
 

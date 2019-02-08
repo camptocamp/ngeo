@@ -27,7 +27,6 @@ import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
  * @constructor
  * @ngdoc service
  * @ngInject
- * @export
  * @ngname ngeoNominatimService
  * @see https://wiki.openstreetmap.org/wiki/Nominatim
  */
@@ -94,7 +93,6 @@ export function NominatimService($http, $injector, ngeoDebounce) {
  * @param {?Object} params Optional parameters
  * @return {!angular.IHttpPromise<Object>} promise of the Nominatim API request
  * @see https://wiki.openstreetmap.org/wiki/Nominatim#Search
- * @export
  */
 NominatimService.prototype.search = function(query, params) {
   let url = `${this.nominatimUrl_}search?q=${query}`;
@@ -123,7 +121,6 @@ NominatimService.prototype.search = function(query, params) {
  * @param {(Object|undefined)} params Optional parameters
  * @return {!angular.IHttpPromise<Object>} promise of the Nominatim API request
  * @see https://wiki.openstreetmap.org/wiki/Nominatim#Reverse_Geocoding
- * @export
  */
 NominatimService.prototype.reverse = function(coordinate, params) {
   let url = `${this.nominatimUrl_}reverse`;

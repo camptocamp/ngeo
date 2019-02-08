@@ -27,7 +27,6 @@ const module = angular.module('app', [
 /**
  * @param {angular.IScope} $scope Scope.
  * @constructor
- * @export
  * @ngInject
  */
 function MainController($scope) {
@@ -75,7 +74,6 @@ function MainController($scope) {
 
   /**
    * @type {import("ol/Map.js").default}
-   * @export
    */
   this.map = new olMap({
     layers: [
@@ -111,7 +109,6 @@ function MainController($scope) {
   /**
    * @type {Array.<import("ol/layer/Base.js").default>}
    * @const
-   * @export
    */
   this.selectedLayers = [];
 
@@ -144,7 +141,6 @@ function MainController($scope) {
  * @return {boolean|undefined} `true` if the "Roads" layer is in the map,
  *     `false` if the "Roads" layer is not in the map, `undefined` if the
  *     function is used as setter.
- * @export
  */
 MainController.prototype.toggleRoadsLayer = function(val) {
   if (val === undefined) {

@@ -69,7 +69,6 @@ function MainController($scope, gmfThemes, gmfTreeManager, gmfUser,
 
   /**
    * @type {import('gmf/authentication/Service.js').User}
-   * @export
    */
   this.gmfUser = gmfUser;
 
@@ -83,14 +82,12 @@ function MainController($scope, gmfThemes, gmfTreeManager, gmfUser,
 
   /**
    * @type {import("gmf/layertree/TreeManager.js").LayertreeTreeManager}
-   * @export
    */
   this.gmfTreeManager = gmfTreeManager;
 
 
   /**
    * @type {import("ol/layer/Vector.js").default}
-   * @export
    */
   this.vectorLayer = new olLayerVector({
     source: new olSourceVector({
@@ -102,7 +99,6 @@ function MainController($scope, gmfThemes, gmfTreeManager, gmfUser,
 
   /**
    * @type {import("ol/Map.js").default}
-   * @export
    */
   this.map = new olMap({
     layers: [
@@ -135,7 +131,6 @@ function MainController($scope, gmfThemes, gmfTreeManager, gmfUser,
 
   /**
    * @type {boolean}
-   * @export
    */
   this.editFeatureSelectorActive = true;
 
@@ -146,7 +141,6 @@ function MainController($scope, gmfThemes, gmfTreeManager, gmfUser,
 
   /**
    * @type {boolean}
-   * @export
    */
   this.dummyActive = false;
 

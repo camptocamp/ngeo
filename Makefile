@@ -217,7 +217,7 @@ gh-pages: .build/python-venv.timestamp
 		$(GMF_EXAMPLES_JS_FILES) \
 		$(GMF_APPS_JS_FILES) \
 		$(WEBPACK_CONFIG_FILES)
-	./node_modules/.bin/eslint --fix $(filter-out .build/node_modules.timestamp $(ESLINT_CONFIG_FILES), $^)
+	./node_modules/.bin/eslint $(filter-out .build/node_modules.timestamp $(ESLINT_CONFIG_FILES), $^)
 	touch $@
 
 .build/examples-hosted-gmf-apps-deps.timestamp: \

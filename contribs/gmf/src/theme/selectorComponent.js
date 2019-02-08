@@ -119,7 +119,6 @@ function Controller($scope, gmfThemeManager, gmfThemes) {
 
   /**
    * @type {import("gmf/theme/Manager.js").ThemeManagerService}
-   * @export
    */
   this.gmfThemeManager = gmfThemeManager;
 
@@ -131,13 +130,11 @@ function Controller($scope, gmfThemeManager, gmfThemes) {
 
   /**
    * @type {Array.<Object>}
-   * @export
    */
   this.themes;
 
   /**
    * @type {function(import('gmf/themes.js').GmfTheme): boolean|undefined}
-   * @export
    */
   this.filter;
 
@@ -170,7 +167,6 @@ Controller.prototype.setThemes_ = function() {
  * @param {import('gmf/themes.js').GmfTheme} theme Theme.
  * @param {boolean=} opt_silent if true it will be no user message if
  *     the theme should be added but it's already added.
- * @export
  */
 Controller.prototype.setTheme = function(theme, opt_silent) {
   if (theme) {

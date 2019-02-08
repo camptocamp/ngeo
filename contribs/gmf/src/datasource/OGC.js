@@ -94,7 +94,6 @@ class gmfDatasourceOGC extends ngeoDatasourceOGC {
 
   /**
    * @return {import('gmf/themes.js').GmfLayer} GMF layer
-   * @export
    */
   get gmfLayer() {
     return this.gmfLayer_;

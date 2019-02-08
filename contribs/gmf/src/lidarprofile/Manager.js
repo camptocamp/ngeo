@@ -148,7 +148,6 @@ export class LidarprofileManager {
 
   /**
    * Clears the profile footprint
-   * @export
    */
   clearBuffer() {
     if (this.lidarBuffer) {
@@ -160,7 +159,6 @@ export class LidarprofileManager {
   /**
    * Set the line for the profile
    * @param {import("ol/geom/LineString.js").default} line that defines the profile
-   * @export
    */
   setLine(line) {
     this.line_ = line;
@@ -169,7 +167,6 @@ export class LidarprofileManager {
   /**
    * Set the map used by the profile
    * @param {import("ol/Map.js").default} map The map.
-   * @export
    */
   setMap(map) {
     this.map_ = map;
@@ -200,7 +197,6 @@ export class LidarprofileManager {
    * @param {number} distanceOffset the left side of D3 profile domain at current zoom and pan configuration
    * @param {boolean} resetPlot whether to reset D3 plot or not
    * @param {number} minLOD minimum Level Of Detail
-   * @export
    */
   getProfileByLOD(clippedLine, distanceOffset, resetPlot, minLOD) {
 
@@ -445,7 +441,6 @@ export class LidarprofileManager {
   /**
    * Update the profile data according to D3 chart zoom and pan level
    * The update will wait on a 200ms pause on the actions of users before to do the update.
-   * @export
    */
   updateData() {
     this.ngeoDebounce_(this.updateData_.bind(this), 200, true)();

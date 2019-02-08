@@ -37,43 +37,36 @@ export class AbstractDesktopController extends AbstractAPIController {
 
     /**
      * @type {boolean}
-     * @export
      */
     this.dataPanelActive = true;
 
     /**
      * @type {boolean}
-     * @export
      */
     this.loginActive = false;
 
     /**
      * @type {boolean}
-     * @export
      */
     this.toolsActive = false;
 
     /**
      * @type {boolean}
-     * @export
      */
     this.modalShareShown = false;
 
     /**
      * @type {boolean}
-     * @export
      */
     this.editFeatureActive = false;
 
     /**
      * @type {boolean}
-     * @export
      */
     this.routingfeatureActive = false;
 
     /**
      * @type {boolean}
-     * @export
      */
     this.googleStreetViewActive = false;
 
@@ -83,7 +76,6 @@ export class AbstractDesktopController extends AbstractAPIController {
 
     /**
      * @type {!import("ol/style/Style.js").default}
-     * @export
      */
     this.googleStreetViewStyle = new olStyleStyle({
       text: new olStyleText({
@@ -97,7 +89,6 @@ export class AbstractDesktopController extends AbstractAPIController {
 
     /**
      * @type {boolean}
-     * @export
      */
     this.importDataSourceActive = false;
 
@@ -120,7 +111,6 @@ export class AbstractDesktopController extends AbstractAPIController {
 
     /**
      * @type {import("ol/layer/Vector.js").default}
-     * @export
      */
     this.editFeatureVectorLayer = new olLayerVector({
       source: new olSourceVector({
@@ -149,7 +139,6 @@ export class AbstractDesktopController extends AbstractAPIController {
 
     /**
      * @type {import('ngeo/map/scaleselector.js').ScaleselectorOptions}
-     * @export
      */
     this.scaleSelectorOptions = {
       dropup: true
@@ -157,7 +146,6 @@ export class AbstractDesktopController extends AbstractAPIController {
 
     /**
      * @type {import("ol/geom/LineString.js").default}
-     * @export
      */
     this.profileLine = null;
 

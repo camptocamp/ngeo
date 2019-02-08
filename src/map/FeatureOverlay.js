@@ -31,7 +31,6 @@ export function FeatureOverlay(manager, index) {
 /**
  * Add a feature to the feature overlay.
  * @param {import("ol/Feature.js").default} feature The feature to add.
- * @export
  */
 FeatureOverlay.prototype.addFeature = function(feature) {
   this.manager_.addFeature(feature, this.index_);
@@ -41,7 +40,6 @@ FeatureOverlay.prototype.addFeature = function(feature) {
 /**
  * Remove a feature from the feature overlay.
  * @param {import("ol/Feature.js").default} feature The feature to remove.
- * @export
  */
 FeatureOverlay.prototype.removeFeature = function(feature) {
   this.manager_.removeFeature(feature, this.index_);
@@ -50,7 +48,6 @@ FeatureOverlay.prototype.removeFeature = function(feature) {
 
 /**
  * Remove all the features from the feature overlay.
- * @export
  */
 FeatureOverlay.prototype.clear = function() {
   this.manager_.clear(this.index_);
@@ -64,7 +61,6 @@ FeatureOverlay.prototype.clear = function() {
  * collection to add and remove features instead of using the overlay's
  * `addFeature`, `removeFeature` and `clear` functions.
  * @param {import("ol/Collection.js").default.<import("ol/Feature.js").default>} features Feature collection.
- * @export
  */
 FeatureOverlay.prototype.setFeatures = function(features) {
   if (this.features_ !== null) {
@@ -87,7 +83,6 @@ FeatureOverlay.prototype.setFeatures = function(features) {
  * Set a style for the feature overlay.
  * @param {import("ol/style/Style.js").default|Array.<import("ol/style/Style.js").default>|import('ol/style/Style.js').StyleFunction} style
  * Style.
- * @export
  */
 FeatureOverlay.prototype.setStyle = function(style) {
   this.manager_.setStyle(style, this.index_);

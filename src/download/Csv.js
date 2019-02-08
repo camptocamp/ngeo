@@ -84,7 +84,6 @@ export function DownloadCsvService($injector, gettextCatalog) {
  * @param {Array.<Object>} data Entries/objects to include in the CSV.
  * @param {Array.<GridColumnDef>} columnDefs Column definitions.
  * @return {string} The CSV file as string.
- * @export
  */
 DownloadCsvService.prototype.generateCsv = function(data, columnDefs) {
   if (data.length == 0 || columnDefs.length == 0) {
@@ -132,7 +131,6 @@ DownloadCsvService.prototype.getRow_ = function(values) {
  * @param {Array.<Object>} data Entries/objects to include in the CSV.
  * @param {Array.<GridColumnDef>} columnDefs Column definitions.
  * @param {string} fileName The CSV file name, without the extension.
- * @export
  */
 DownloadCsvService.prototype.startDownload = function(data, columnDefs, fileName) {
   const fileContent = this.generateCsv(data, columnDefs);

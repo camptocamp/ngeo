@@ -65,7 +65,6 @@ function MainController() {
 
   /**
    * @type {import("ngeo/grid/Config.js").default}
-   * @export
    */
   this.gridConfig = new ngeoGridConfig(data, columnDefs);
 

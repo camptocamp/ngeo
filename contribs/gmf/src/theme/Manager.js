@@ -54,7 +54,6 @@ export function ThemeManagerService($rootScope, gmfThemes, gmfTreeManagerModeFlu
 
   /**
    * @type {boolean}
-   * @export
    */
   this.modeFlush = gmfTreeManagerModeFlush;
 
@@ -84,7 +83,6 @@ export function ThemeManagerService($rootScope, gmfThemes, gmfTreeManagerModeFlu
  * @param {!import('gmf/themes.js').GmfTheme} theme A theme object.
  * @param {boolean=} opt_silent if true it will be no user message if
  *     the theme should be added but it's already added.
- * @export
  */
 ThemeManagerService.prototype.addTheme = function(theme, opt_silent) {
   if (this.modeFlush) {
@@ -101,7 +99,6 @@ ThemeManagerService.prototype.addTheme = function(theme, opt_silent) {
 
 /**
  * @return {string} The theme name. Will be empty on 'not flush' mode.
- * @export
  */
 ThemeManagerService.prototype.getThemeName = function() {
   return this.themeName_;
@@ -110,7 +107,6 @@ ThemeManagerService.prototype.getThemeName = function() {
 
 /**
  * @return {boolean} true if the theme is loading.
- * @export
  */
 ThemeManagerService.prototype.isLoading = function() {
   return !this.gmfThemes_.loaded;
@@ -130,7 +126,6 @@ ThemeManagerService.prototype.setThemeName = function(name, opt_silent) {
 
 /**
  * Remove all groups.
- * @export
  */
 ThemeManagerService.prototype.removeAll = function() {
   this.gmfTreeManager_.removeAll();

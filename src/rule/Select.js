@@ -50,7 +50,6 @@ export default class extends ngeoRuleRule {
 
   /**
    * @return {Array.<string>} Choices
-   * @export
    */
   get choices() {
     return this.choices_;
@@ -60,7 +59,6 @@ export default class extends ngeoRuleRule {
 
   /**
    * @return {Array.<string>} Selected choices
-   * @export
    */
   get selectedChoices() {
     let selectedChoices;

@@ -47,7 +47,6 @@ export function ObjectEditingQuery($http, $q, gmfThemes) {
 
 /**
  * @return {angular.IPromise} Promise.
- * @export
  */
 ObjectEditingQuery.prototype.getQueryableLayersInfo = function() {
 
@@ -93,7 +92,6 @@ ObjectEditingQuery.prototype.getQueryableLayersInfo = function() {
  * @param {import('gmf/themes.js').GmfOgcServers} ogcServers List of ogc servers
  * @return {Array.<import('gmf/objectediting/toolsComponent.js').ObjectEditingQueryableLayerInfo>} List of
  *     queryable layers information.
- * @export
  */
 function getQueryableLayersInfoFromThemes(
   themes, ogcServers
@@ -153,7 +151,6 @@ function getQueryableLayersInfoFromThemes(
  * @param {import("ol/coordinate.js").Coordinate} coordinate Coordinate.
  * @param {import("ol/Map.js").default} map Map.
  * @return {angular.IPromise} Promise.
- * @export
  */
 ObjectEditingQuery.prototype.getFeatureInfo = function(layerInfo, coordinate, map) {
   const view = map.getView();

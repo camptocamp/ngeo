@@ -41,25 +41,21 @@ function MainController(ngeoToolActivateMgr) {
 
   /**
    * @type {import("ol/Collection.js").default}
-   * @export
    */
   this.features = new olCollection();
 
   /**
    * @type {string}
-   * @export
    */
   this.pointGeomType = ngeoGeometryType.POINT;
 
   /**
    * @type {string}
-   * @export
    */
   this.lineStringGeomType = ngeoGeometryType.LINE_STRING;
 
   /**
    * @type {string}
-   * @export
    */
   this.polygonGeomType = ngeoGeometryType.POLYGON;
 
@@ -72,7 +68,6 @@ function MainController(ngeoToolActivateMgr) {
 
   /**
    * @type {import("ol/Map.js").default}
-   * @export
    */
   this.map = new olMap({
     layers: [
@@ -89,7 +84,6 @@ function MainController(ngeoToolActivateMgr) {
 
   /**
    * @type {boolean}
-   * @export
    */
   this.createPointActive = false;
 
@@ -105,7 +99,6 @@ function MainController(ngeoToolActivateMgr) {
 
   /**
    * @type {boolean}
-   * @export
    */
   this.createLineStringActive = false;
 
@@ -121,7 +114,6 @@ function MainController(ngeoToolActivateMgr) {
 
   /**
    * @type {boolean}
-   * @export
    */
   this.createPolygonActive = false;
 
@@ -137,7 +129,6 @@ function MainController(ngeoToolActivateMgr) {
 
   /**
    * @type {boolean}
-   * @export
    */
   this.dummyActive = true;
 

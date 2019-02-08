@@ -13,27 +13,22 @@
 
 /**
  * @enum {string}
- * @export
  */
 export const MessageType = {
   /**
    * @type {string}
-   * @export
    */
   ERROR: 'error',
   /**
    * @type {string}
-   * @export
    */
   INFORMATION: 'information',
   /**
    * @type {string}
-   * @export
    */
   SUCCESS: 'success',
   /**
    * @type {string}
-   * @export
    */
   WARNING: 'warning'
 };
@@ -63,7 +58,6 @@ export default class {
    *
    * @param {string|Message|Array<string|Message>}
    *     object A message or list of messages as text or configuration objects.
-   * @export
    */
   show(object) {
     const msgObjects = this.getMessageObjects(object);
@@ -74,7 +68,6 @@ export default class {
    * Display the given error message or list of error messages.
    *
    * @param {string|Array.<string>} message Message or list of messages.
-   * @export
    */
   error(message) {
     this.show(this.getMessageObjects(message, MessageType.ERROR));
@@ -83,7 +76,6 @@ export default class {
   /**
    * Display the given info message or list of info messages.
    * @param {string|Array.<string>} message Message or list of messages.
-   * @export
    */
   info(message) {
     this.show(this.getMessageObjects(message, MessageType.INFORMATION));
@@ -92,7 +84,6 @@ export default class {
   /**
    * Display the given success message or list of success messages.
    * @param {string|Array.<string>} message Message or list of messages.
-   * @export
    */
   success(message) {
     this.show(this.getMessageObjects(message, MessageType.SUCCESS));
@@ -101,7 +92,6 @@ export default class {
   /**
    * Display the given warning message or list of warning messages.
    * @param {string|Array.<string>} message Message or list of messages.
-   * @export
    */
   warn(message) {
     this.show(this.getMessageObjects(message, MessageType.WARNING));

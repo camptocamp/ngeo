@@ -26,7 +26,6 @@ function MainController($scope) {
 
   /**
    * @type {import("ol/Map.js").default}
-   * @export
    */
   this.map = new olMap({
     layers: [
@@ -45,14 +44,12 @@ function MainController($scope) {
    * The zoom level/scale map object for the ngeoScaleselector directive.
    * @type {!Array.<number>}
    * @const
-   * @export
    */
   this.scales = [200000000, 100000000, 50000000, 25000000, 12000000];
 
   /**
    * Use the "dropup" variation of the Bootstrap dropdown.
    * @type {import('ngeo/map/scaleselector.js').ScaleselectorOptions}
-   * @export
    */
   this.options = {
     dropup: true

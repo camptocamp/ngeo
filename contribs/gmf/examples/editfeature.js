@@ -53,13 +53,11 @@ function MainController($scope, gmfEditFeature, gmfUser) {
 
   /**
    * @type {import("gmf/editing/EditFeature.js").EditingEditFeature}
-   * @export
    */
   this.editFeature_ = gmfEditFeature;
 
   /**
    * @type {import('gmf/authentication/Service.js').User}
-   * @export
    */
   this.gmfUser = gmfUser;
 
@@ -95,19 +93,16 @@ function MainController($scope, gmfEditFeature, gmfUser) {
 
   /**
    * @type {import("ol/Feature.js").default}
-   * @export
    */
   this.feature = null;
 
   /**
    * @type {boolean}
-   * @export
    */
   this.pending = false;
 
   /**
    * @type {import("ol/Map.js").default}
-   * @export
    */
   this.map = new olMap({
     layers: [
@@ -179,7 +174,6 @@ MainController.prototype.handleGetFeatures_ = function(features) {
 
 /**
  * Insert a new feature at a random location.
- * @export
  */
 MainController.prototype.insertFeature = function() {
 
@@ -227,7 +221,6 @@ MainController.prototype.insertFeature = function() {
 
 /**
  * Update the currently selected feature with a new name.
- * @export
  */
 MainController.prototype.updateFeature = function() {
 
@@ -250,7 +243,6 @@ MainController.prototype.updateFeature = function() {
 
 /**
  * Delete currently selected feature.
- * @export
  */
 MainController.prototype.deleteFeature = function() {
 

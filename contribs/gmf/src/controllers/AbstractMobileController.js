@@ -58,25 +58,21 @@ export class AbstractMobileController extends AbstractAppController {
 
     /**
      * @type {boolean}
-     * @export
      */
     this.leftNavVisible = false;
 
     /**
      * @type {boolean}
-     * @export
      */
     this.rightNavVisible = false;
 
     /**
      * @type {boolean}
-     * @export
      */
     this.searchOverlayVisible = false;
 
     /**
      * @type {import('ngeo/search/searchDirective.js').SearchDirectiveListeners}
-     * @export
      */
     this.searchListeners = /** @type {import('ngeo/search/searchDirective.js').SearchDirectiveListeners} */ ({
       open: function() {
@@ -102,7 +98,6 @@ export class AbstractMobileController extends AbstractAppController {
 
     /**
      * @type {import('ngeo/geolocation/mobile.js').MobileGeolocationDirectiveOptions}
-     * @export
      */
     this.mobileGeolocationOptions = {
       positionFeatureStyle: positionFeatureStyle,
@@ -123,20 +118,17 @@ export class AbstractMobileController extends AbstractAppController {
 
     /**
      * @const {string}
-     * @export
      */
     this.redirectUrl = $injector.get('redirectUrl');
   }
 
   /**
-   * @export
    */
   toggleLeftNavVisibility() {
     this.leftNavVisible = !this.leftNavVisible;
   }
 
   /**
-   * @export
    */
   toggleRightNavVisibility() {
     this.rightNavVisible = !this.rightNavVisible;
@@ -144,7 +136,6 @@ export class AbstractMobileController extends AbstractAppController {
 
   /**
    * Hide both navigation menus.
-   * @export
    */
   hideNav() {
     this.leftNavVisible = this.rightNavVisible = false;
@@ -153,7 +144,6 @@ export class AbstractMobileController extends AbstractAppController {
   /**
    * @return {boolean} Return true if one of the navigation menus is visible,
    * otherwise false.
-   * @export
    */
   navIsVisible() {
     return this.leftNavVisible || this.rightNavVisible;
@@ -162,7 +152,6 @@ export class AbstractMobileController extends AbstractAppController {
   /**
    * Open the menu with corresponding to the data-target attribute value.
    * @param {string} target the data-target value.
-   * @export
    */
   openNavMenu(target) {
     const navElements = document.getElementsByClassName('gmf-mobile-nav-button');

@@ -199,19 +199,16 @@ function Controller($element, $q, $scope, $timeout,
    * Flag that is toggled as soon as the feature changes, i.e. if any of its
    * properties change, which includes the geometry.
    * @type {boolean}
-   * @export
    */
   this.dirty;
 
   /**
    * @type {import("ngeo/layertree/Controller.js").LayertreeController}
-   * @export
    */
   this.editableTreeCtrl;
 
   /**
    * @type {import("ol/Map.js").default}
-   * @export
    */
   this.map;
 
@@ -219,19 +216,16 @@ function Controller($element, $q, $scope, $timeout,
    * The state property shared with the `gmf-editfeatureselector` directive.
    * For more info, see in that directive.
    * @type {string}
-   * @export
    */
   this.state;
 
   /**
    * @type {number}
-   * @export
    */
   this.tolerance;
 
   /**
    * @type {import("ol/layer/Vector.js").default}
-   * @export
    */
   this.vectorLayer;
 
@@ -337,7 +331,6 @@ function Controller($element, $q, $scope, $timeout,
    * Flag that controls the visibility of the modal that manages unsaved
    * modifications.
    * @type {boolean}
-   * @export
    */
   this.unsavedModificationsModalShown = false;
 
@@ -350,37 +343,31 @@ function Controller($element, $q, $scope, $timeout,
 
   /**
    * @type {boolean}
-   * @export
    */
   this.active = true;
 
   /**
    * @type {boolean}
-   * @export
    */
   this.createActive = false;
 
   /**
    * @type {import("ngeo/misc/ToolActivate.js").default}
-   * @export
    */
   this.createToolActivate = new ngeoMiscToolActivate(this, 'createActive');
 
   /**
    * @type {boolean}
-   * @export
    */
   this.mapSelectActive = true;
 
   /**
    * @type {import("ngeo/misc/ToolActivate.js").default}
-   * @export
    */
   this.mapSelectToolActivate = new ngeoMiscToolActivate(this, 'mapSelectActive');
 
   /**
    * @type {?import("ol/Feature.js").default}
-   * @export
    */
   this.feature = null;
 
@@ -391,13 +378,11 @@ function Controller($element, $q, $scope, $timeout,
 
   /**
    * @type {number|string|undefined}
-   * @export
    */
   this.featureId = undefined;
 
   /**
    * @type {import("ol/Collection.js").default}
-   * @export
    */
   this.features;
 
@@ -415,7 +400,6 @@ function Controller($element, $q, $scope, $timeout,
 
   /**
    * @type {import("ngeo/misc/ToolActivate.js").default}
-   * @export
    */
   this.modifyToolActivate;
 
@@ -461,13 +445,11 @@ function Controller($element, $q, $scope, $timeout,
 
   /**
    * @type {!import("ngeo/misc/ToolActivate.js").default}
-   * @export
    */
   this.rotateToolActivate;
 
   /**
    * @type {!import("ngeo/misc/ToolActivate.js").default}
-   * @export
    */
   this.translateToolActivate;
 
@@ -479,31 +461,26 @@ function Controller($element, $q, $scope, $timeout,
 
   /**
    * @type {?Array.<!import('ngeo/format/Attribute.js').Attribute>}
-   * @export
    */
   this.attributes = null;
 
   /**
    * @type {string|undefined}
-   * @export
    */
   this.geomType;
 
   /**
    * @type {boolean}
-   * @export
    */
   this.showServerError = false;
 
   /**
    * @type {?string}
-   * @export
    */
   this.serverErrorMessage = null;
 
   /**
    * @type {?string}
-   * @export
    */
   this.serverErrorType = null;
 
@@ -655,7 +632,6 @@ Controller.prototype.$onInit = function() {
 
 /**
  * Save the currently selected feature modifications.
- * @export
  */
 Controller.prototype.save = function() {
   console.assert(this.attributes);
@@ -717,7 +693,6 @@ Controller.prototype.save = function() {
 
 
 /**
- * @export
  */
 Controller.prototype.cancel = function() {
   this.dirty = false;
@@ -734,7 +709,6 @@ Controller.prototype.cancel = function() {
  * Used by the 'cancel' button in the template.
  * @return {angular.IPromise} The promise attached to the confirm deferred
  *     object.
- * @export
  */
 Controller.prototype.confirmCancel = function() {
   return this.checkForModifications_().then(() => {
@@ -769,7 +743,6 @@ Controller.prototype.checkForModifications_ = function(
 
 
 /**
- * @export
  */
 Controller.prototype.continueWithoutSaving = function() {
   this.cancel();
@@ -778,7 +751,6 @@ Controller.prototype.continueWithoutSaving = function() {
 
 
 /**
- * @export
  */
 Controller.prototype.delete = function() {
   const msg = this.gettextCatalog_.getString(
@@ -816,7 +788,6 @@ Controller.prototype.delete = function() {
  * Called when the modal 'save' button is clicked. Do as if the user had
  * clicked on the 'save' input button in the form, which allows the form
  * to be validated.
- * @export
  */
 Controller.prototype.submit = function() {
   // Use timeout to prevent the digest already in progress

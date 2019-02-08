@@ -52,7 +52,6 @@ export function EditingEditFeature($http, gmfLayersUrl) {
  * @param {Array.<number>} layerIds List of layer ids to get the features from.
  * @param {import("ol/extent.js").Extent} extent The extent where to get the features from.
  * @return {angular.IPromise} Promise.
- * @export
  */
 EditingEditFeature.prototype.getFeaturesInExtent = function(layerIds, extent) {
   const url = olUriAppendParams(`${this.baseUrl_}/${layerIds.join(',')}`, {
@@ -105,7 +104,6 @@ EditingEditFeature.prototype.handleGetFeatures_ = function(resp) {
  * @param {number} layerId The layer id that contains the feature.
  * @param {Array.<import("ol/Feature.js").default>} features List of features to insert.
  * @return {angular.IPromise} Promise.
- * @export
  */
 EditingEditFeature.prototype.insertFeatures = function(layerId, features) {
   const url = `${this.baseUrl_}/${layerId}`;
@@ -121,7 +119,6 @@ EditingEditFeature.prototype.insertFeatures = function(layerId, features) {
  * @param {number} layerId The layer id that contains the feature.
  * @param {import("ol/Feature.js").default} feature The feature to update.
  * @return {angular.IPromise} Promise.
- * @export
  */
 EditingEditFeature.prototype.updateFeature = function(layerId, feature) {
   const url = `${this.baseUrl_}/${layerId.toString()}/${feature.getId()}`;
@@ -137,7 +134,6 @@ EditingEditFeature.prototype.updateFeature = function(layerId, feature) {
  * @param {number} layerId The layer id that contains the feature.
  * @param {import("ol/Feature.js").default} feature The feature to delete.
  * @return {angular.IPromise} Promise.
- * @export
  */
 EditingEditFeature.prototype.deleteFeature = function(layerId, feature) {
   const url = `${this.baseUrl_}/${layerId.toString()}/${feature.getId()}`;

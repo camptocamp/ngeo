@@ -99,31 +99,26 @@ function Controller($scope, $timeout, $q, ngeoNominatimService) {
 
   /**
    * @type {import("ol/Feature.js").default}
-   * @export
    */
   this.feature;
 
   /**
    * @type {string}
-   * @export
    */
   this.featureLabel = '';
 
   /**
    * @type {string}
-   * @export
    */
   this.fillColor;
 
   /**
    * @type {string}
-   * @export
    */
   this.strokeColor;
 
   /**
    * @type {function(import("ol/Feature.js").default): void}
-   * @export
    */
   this.onChange;
 
@@ -182,13 +177,11 @@ function Controller($scope, $timeout, $q, ngeoNominatimService) {
 
   /**
    * @param {import('ngeo/routing/NominatimService').NominatimSearchResult} selected Selected result.
-   * @export
    */
   this.onSelect = this.onSelect_.bind(this);
 
   /**
    * @type {string}
-   * @export
    */
   this.errorMessage = '';
 }
@@ -230,7 +223,6 @@ Controller.prototype.$onDestroy = function() {
 };
 
 /**
- * @export
  */
 Controller.prototype.set = function() {
   if (this.draw_) {

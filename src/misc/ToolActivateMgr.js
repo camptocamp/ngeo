@@ -60,7 +60,6 @@ export function ToolActivateMgr($rootScope) {
  * @param {import("ngeo/misc/ToolActivate.js").default} tool Tool to register.
  * @param {boolean=} opt_defaultActivate If true, this tool will be activated
  *     when all other tools in the group are deactivated.
- * @export
  */
 ToolActivateMgr.prototype.registerTool = function(groupName, tool,
   opt_defaultActivate) {
@@ -94,7 +93,6 @@ ToolActivateMgr.prototype.registerTool = function(groupName, tool,
  * Unregister a tool from a group.
  * @param {string} groupName Name of the group of this tool.
  * @param {import("ngeo/misc/ToolActivate.js").default} tool Tool to unregister.
- * @export
  */
 ToolActivateMgr.prototype.unregisterTool = function(groupName, tool) {
   const entries = this.groups_[groupName];
@@ -113,7 +111,6 @@ ToolActivateMgr.prototype.unregisterTool = function(groupName, tool) {
 /**
  * Unregister each tool from a group.
  * @param {string} groupName Name of the group of tools to unregister.
- * @export
  */
 ToolActivateMgr.prototype.unregisterGroup = function(groupName) {
   const entries = this.groups_[groupName];
@@ -129,7 +126,6 @@ ToolActivateMgr.prototype.unregisterGroup = function(groupName) {
 /**
  * Activate a tool.
  * @param {import("ngeo/misc/ToolActivate.js").default} tool Tool to activate.
- * @export
  */
 ToolActivateMgr.prototype.activateTool = function(tool) {
   tool.setActive(true);
@@ -139,7 +135,6 @@ ToolActivateMgr.prototype.activateTool = function(tool) {
 /**
  * Deactivate a tool.
  * @param {import("ngeo/misc/ToolActivate.js").default} tool Tool to deactivate.
- * @export
  */
 ToolActivateMgr.prototype.deactivateTool = function(tool) {
   tool.setActive(false);

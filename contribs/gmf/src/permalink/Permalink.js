@@ -421,7 +421,6 @@ export function PermalinkService($q, $timeout, $rootScope, $injector, ngeoDeboun
 
   /**
    * @type {?import('gmf/authentication/Service.js').User}
-   * @export
    */
   this.gmfUser_ = $injector.has('gmfUser') ? $injector.get('gmfUser') : null;
 
@@ -662,7 +661,6 @@ export function PermalinkService($q, $timeout, $rootScope, $injector, ngeoDeboun
 /**
  * Get the coordinate to use to initialize the map view from the state manager.
  * @return {?import("ol/coordinate.js").Coordinate} The coordinate for the map view center.
- * @export
  */
 PermalinkService.prototype.getMapCenter = function() {
   const x = this.ngeoStateManager_.getInitialNumberValue(PermalinkParam.MAP_X);
@@ -688,7 +686,6 @@ PermalinkService.prototype.getMapCenter = function() {
 /**
  * Get the zoom level to use to initialize the map view from the state manager.
  * @return {number|undefined} The zoom for the map view.
- * @export
  */
 PermalinkService.prototype.getMapZoom = function() {
   const zoom = this.ngeoStateManager_.getInitialNumberValue(PermalinkParam.MAP_Z);
@@ -702,7 +699,6 @@ PermalinkService.prototype.getMapZoom = function() {
 /**
  * Get the map crosshair property from the state manager, if defined.
  * @return {boolean} Whether map crosshair property is set or not.
- * @export
  */
 PermalinkService.prototype.getMapCrosshair = function() {
   const crosshair = this.ngeoStateManager_.getInitialBooleanValue(PermalinkParam.MAP_CROSSHAIR);
@@ -744,7 +740,6 @@ PermalinkService.prototype.setMapCrosshair = function(opt_center) {
 /**
  * Get the tooltip text from the state manager.
  * @return {string|undefined} Tooltip text.
- * @export
  */
 PermalinkService.prototype.getMapTooltip = function() {
   return this.ngeoStateManager_.getInitialStringValue(PermalinkParam.MAP_TOOLTIP);
@@ -789,7 +784,6 @@ PermalinkService.prototype.setMapTooltip = function(tooltipText, opt_center) {
 /**
  * Get the ngeo features from the state manager for initialization purpose
  * @return {!Array.<!import("ol/Feature.js").default>} The features read from the state manager.
- * @export
  */
 PermalinkService.prototype.getFeatures = function() {
   const f = this.ngeoStateManager_.getInitialStringValue(PermalinkParam.FEATURES);
@@ -802,7 +796,6 @@ PermalinkService.prototype.getFeatures = function() {
 
 /**
  * @param {!Object.<string, string>} dimensions The global dimensions object.
- * @export
  */
 PermalinkService.prototype.setDimensions = function(dimensions) {
   // apply initial state
@@ -833,7 +826,6 @@ PermalinkService.prototype.setDimensions = function(dimensions) {
  * If the service is already bound to a map, those events are unlistened first.
  *
  * @param {?import("ol/Map.js").default} map The ol3 map object.
- * @export
  */
 PermalinkService.prototype.setMap = function(map) {
 
@@ -957,7 +949,6 @@ PermalinkService.prototype.unregisterMap_ = function() {
  * state manager.
  * @param {!Array.<!import("ol/layer/Base.js").default>} layers Array of background layer objects.
  * @return {?import("ol/layer/Base.js").default} Background layer.
- * @export
  */
 PermalinkService.prototype.getBackgroundLayer = function(layers) {
   const layerName = this.ngeoStateManager_.getInitialStringValue(PermalinkParam.BG_LAYER);
@@ -1001,7 +992,6 @@ PermalinkService.prototype.handleBackgroundLayerManagerChange_ = function() {
 /**
  * Get the current first level node names in the tree manager and update the
  * correspondent state of the permalink.
- * @export
  */
 PermalinkService.prototype.refreshFirstLevelGroups = function() {
   if (!this.gmfTreeManager_) {
@@ -1057,7 +1047,6 @@ PermalinkService.prototype.setThemeInUrl_ = function(themeName) {
  * Get the default theme from url, local storage, user functionalities or
  * defaultTheme constant.
  * @return {?string} default theme name.
- * @export
  */
 PermalinkService.prototype.defaultThemeName = function() {
 
@@ -1090,7 +1079,6 @@ PermalinkService.prototype.defaultThemeName = function() {
 /**
  * Get the default theme from user functionalities.
  * @return {?string} default theme name.
- * @export
  */
 PermalinkService.prototype.defaultThemeNameFromFunctionalities = function() {
   //check if we have a theme in the user functionalities

@@ -23,7 +23,6 @@ import angular from 'angular';
  * @constructor
  * @ngdoc service
  * @ngInject
- * @export
  * @ngname ngeoRoutingService
  */
 export function RoutingService($http, $injector) {

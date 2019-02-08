@@ -67,7 +67,6 @@ function Controller($scope, gmfObjectEditingQuery) {
 
   /**
    * @type {boolean}
-   * @export
    */
   this.active;
 
@@ -78,19 +77,16 @@ function Controller($scope, gmfObjectEditingQuery) {
 
   /**
    * @type {import("ol/Collection.js").default}
-   * @export
    */
   this.features;
 
   /**
    * @type {import('gmf/objectediting/toolsComponent.js').ObjectEditingQueryableLayerInfo}
-   * @export
    */
   this.layerInfo;
 
   /**
    * @type {import("ol/Map.js").default}
-   * @export
    */
   this.map;
 

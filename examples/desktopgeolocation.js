@@ -48,7 +48,6 @@ function MainController($scope, ngeoFeatureOverlayMgr) {
 
   /**
    * @type {import('ngeo/geolocation/desktop.js').DesktopGeolocationDirectiveOptions}
-   * @export
    */
   this.desktopGeolocationOptions = {
     positionFeatureStyle: positionFeatureStyle,
@@ -58,7 +57,6 @@ function MainController($scope, ngeoFeatureOverlayMgr) {
 
   /**
    * @type {import("ol/Map.js").default}
-   * @export
    */
   this.map = new olMap({
     layers: [

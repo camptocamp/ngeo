@@ -28,13 +28,11 @@ const Controller = class {
 
     /**
      * @type {import('olcs/contrib/Manager.js').default}
-     * @export
      */
     this.ol3dm;
 
     /**
      * @type {number}
-     * @export
      */
     this.minTilt;
 
@@ -170,7 +168,6 @@ const Controller = class {
 
   /**
    * @param {number} angle Angle in degrees.
-   * @export
    */
   rotate(angle) {
     // @ts-ignore: Cesium
@@ -181,7 +178,6 @@ const Controller = class {
 
   /**
    * @param {number} angle Angle in degrees.
-   * @export
    */
   tilt(angle) {
     // @ts-ignore: Cesium
@@ -199,7 +195,6 @@ const Controller = class {
 
   /**
    * @param {number} delta -1 to zoom out and 1 to zoom in.
-   * @export
    */
   zoom(delta) {
     const view = this.ol3dm.getOlView();

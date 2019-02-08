@@ -63,7 +63,6 @@ function MainController($http, $q, $scope, gmfThemes, gmfXSDAttributes) {
   /**
    * @type {Array<Object<string, string>>} List of example and application urls that contain
    *     ObjectEditing tools.
-   * @export
    */
   this.urls = [
     {
@@ -94,7 +93,6 @@ function MainController($http, $q, $scope, gmfThemes, gmfXSDAttributes) {
 
   /**
    * @type {Object<string, string>}
-   * @export
    */
   this.selectedUrl = this.urls[0];
 
@@ -112,31 +110,26 @@ function MainController($http, $q, $scope, gmfThemes, gmfXSDAttributes) {
 
   /**
    * @type {Array<import('gmf/themes.js').GmfLayerWMS>}
-   * @export
    */
   this.gmfLayerNodes = [];
 
   /**
    * @type {?import('gmf/themes.js').GmfLayerWMS}
-   * @export
    */
   this.selectedGmfLayerNode = null;
 
   /**
    * @type {Object<number, Array.<import("ol/Feature.js").default>>}
-   * @export
    */
   this.featuresCache_ = {};
 
   /**
    * @type {Array<import("ol/Feature.js").default>}
-   * @export
    */
   this.features = null;
 
   /**
    * @type {?import("ol/Feature.js").default}
-   * @export
    */
   this.selectedFeature = null;
 
@@ -148,7 +141,6 @@ function MainController($http, $q, $scope, gmfThemes, gmfXSDAttributes) {
 
   /**
    * @type {string|undefined}
-   * @export
    */
   this.selectedGeomType = undefined;
 
@@ -170,7 +162,6 @@ function MainController($http, $q, $scope, gmfThemes, gmfXSDAttributes) {
 
   /**
    * @type {string}
-   * @export
    */
   this.themeName = 'ObjectEditing';
 
@@ -235,7 +226,6 @@ function MainController($http, $q, $scope, gmfThemes, gmfXSDAttributes) {
 
 
 /**
- * @export
  */
 MainController.prototype.runEditor = function() {
 
@@ -259,7 +249,6 @@ MainController.prototype.runEditor = function() {
 
 
 /**
- * @export
  */
 MainController.prototype.runViewerDev = function() {
   this.runViewer_(this.viewerUrlDev_);
@@ -267,7 +256,6 @@ MainController.prototype.runViewerDev = function() {
 
 
 /**
- * @export
  */
 MainController.prototype.runViewerHosted = function() {
   this.runViewer_(this.viewerUrlHosted_);

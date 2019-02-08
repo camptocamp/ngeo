@@ -50,7 +50,6 @@ function MainController($scope, ngeoFeatures, ngeoToolActivateMgr) {
 
   /**
    * @type {import("ol/Map.js").default}
-   * @export
    */
   this.map = new olMap({
     layers: [
@@ -67,7 +66,6 @@ function MainController($scope, ngeoFeatures, ngeoToolActivateMgr) {
 
   /**
    * @type {boolean}
-   * @export
    */
   this.drawActive = false;
 
@@ -76,7 +74,6 @@ function MainController($scope, ngeoFeatures, ngeoToolActivateMgr) {
 
   /**
    * @type {boolean}
-   * @export
    */
   this.dummyActive = true;
 

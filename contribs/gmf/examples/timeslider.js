@@ -32,7 +32,6 @@ function MainController($scope, ngeoWMSTime) {
 
   /**
    * @type {import('ngeo/datasource/OGC.js').TimeProperty}
-   * @export
    */
   this.wmsTimeRangeMode = {
     widget: TimePropertyWidgetEnum.SLIDER,
@@ -47,7 +46,6 @@ function MainController($scope, ngeoWMSTime) {
 
   /**
    * @type {import('ngeo/datasource/OGC.js').TimeProperty}
-   * @export
    */
   this.wmsTimeValueMode = {
     widget: TimePropertyWidgetEnum.SLIDER,
@@ -62,13 +60,11 @@ function MainController($scope, ngeoWMSTime) {
 
   /**
    * @type {string}
-   * @export
    */
   this.sliderValue;
 
   /**
    * @type {string}
-   * @export
    */
   this.sliderRangeValue;
 

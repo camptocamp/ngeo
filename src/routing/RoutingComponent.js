@@ -112,13 +112,11 @@ function Controller($injector, $scope, ngeoRoutingService, ngeoNominatimService,
    *            }
    *          ]
    * @type {Array<import('ngeo/routing/RoutingService').RoutingProfile>}
-   * @export
    */
   this.routingProfiles = this.routingOptions_.profiles || [];
 
   /**
    * @type {?import('ngeo/routing/RoutingService').RoutingProfile}
-   * @export
    */
   this.selectedRoutingProfile = this.routingProfiles.length > 0 ? this.routingProfiles[0] : null;
 
@@ -135,37 +133,31 @@ function Controller($injector, $scope, ngeoRoutingService, ngeoNominatimService,
 
   /**
    * @type {import("ol/Map.js").default}
-   * @export
    */
   this.map;
 
   /**
    * @type {string}
-   * @export
    */
   this.errorMessage = '';
 
   /**
    * @type {import("ol/Feature.js").default}
-   * @export
    */
   this.startFeature_ = null;
 
   /**
    * @type {import("ol/Feature.js").default}
-   * @export
    */
   this.targetFeature_ = null;
 
   /**
    * @type {Array.<RoutingVia>}
-   * @export
    */
   this.viaArray = [];
 
   /**
    * @type {Object<string, string>}
-   * @export
    */
   this.colors = {
     'start.fill': '#6BE62E',
@@ -204,14 +196,12 @@ function Controller($injector, $scope, ngeoRoutingService, ngeoNominatimService,
   /**
    * Distance of route in meters
    * @type {number}
-   * @export
    */
   this.routeDistance = 0;
 
   /**
    * Duration of route in minutes.
    * @type {?number}
-   * @export
    */
   this.routeDuration = null;
 
@@ -232,7 +222,6 @@ function Controller($injector, $scope, ngeoRoutingService, ngeoNominatimService,
   /**
    * Debounced because in some cases (reverse route) multiple changes are done
    * at once and spam this function.
-   * @export
    * @type {function(): void}
    */
   this.handleChange = ngeoDebounce(this.calculateRoute.bind(this), debounceDelay, true);
@@ -247,7 +236,6 @@ Controller.prototype.$onInit = function() {
 
 /**
  * Clears start, end and vias. Removes features from map.
- * @export
  */
 Controller.prototype.clearRoute = function() {
   this.startFeature_ = null;
@@ -274,7 +262,6 @@ Controller.prototype.getLonLatFromPoint_ = function(point) {
 
 /**
  * Flip start and target and re-calculate route.
- * @export
  */
 Controller.prototype.reverseRoute = function() {
   // swap start and target
@@ -313,7 +300,6 @@ Controller.prototype.parseRoute_ = function(route) {
 };
 
 /**
- * @export
  */
 Controller.prototype.calculateRoute = function() {
   if (this.startFeature_ && this.targetFeature_) {
@@ -378,7 +364,6 @@ Controller.prototype.calculateRoute = function() {
 };
 
 /**
- * @export
  */
 Controller.prototype.addVia = function() {
   this.viaArray.push(/** @type{RoutingVia} */({
@@ -389,7 +374,6 @@ Controller.prototype.addVia = function() {
 
 /**
  * @param {number} index Array index.
- * @export
  */
 Controller.prototype.deleteVia = function(index) {
   if (this.viaArray.length > index) {

@@ -54,26 +54,22 @@ module.component('appBackgroundlayer', backgroundlayerComponent);
  * @param {angular.IHttpService} $http Angular http service.
  * @param {import("ngeo/map/BackgroundLayerMgr.js").MapBackgroundLayerManager} ngeoBackgroundLayerMgr Background layer
  *     manager.
- * @export
  * @ngInject
  */
 function BackgroundlayerController($http, ngeoBackgroundLayerMgr) {
 
   /**
    * @type {import("ol/Map.js").default}
-   * @export
    */
   this.map;
 
   /**
    * @type {Array.<Object>|undefined}
-   * @export
    */
   this.bgLayers = undefined;
 
   /**
    * @type {Object}
-   * @export
    */
   this.bgLayer = null;
 
@@ -96,7 +92,6 @@ function BackgroundlayerController($http, ngeoBackgroundLayerMgr) {
  * Function called when the user selects a new background layer through
  * the select element. The ngChange directive used in the partial calls
  * it.
- * @export
  */
 BackgroundlayerController.prototype.change = function() {
   const layerSpec = this.bgLayer;
@@ -135,7 +130,6 @@ function MainController($scope) {
 
   /**
    * @type {import("ol/Map.js").default}
-   * @export
    */
   this.map = new olMap({
     view: new olView({

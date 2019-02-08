@@ -5,19 +5,16 @@
 
 /**
  * @const
- * @export
  */
 export const DATALAYERGROUP_NAME = 'data';
 
 /**
  * @const
- * @export
  */
 export const EXTERNALLAYERGROUP_NAME = 'external';
 
 /**
  * @const
- * @export
  */
 export const COORDINATES_LAYER_NAME = 'gmfCoordinatesLayerName';
 

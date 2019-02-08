@@ -45,7 +45,6 @@ class Controller extends AbstractDesktopController {
 
     /**
      * @type {boolean}
-     * @export
      */
     this.oeEditActive = false;
 
@@ -86,7 +85,6 @@ class Controller extends AbstractDesktopController {
 
     /**
      * @type {import("ol/Collection.js").default.<import("ol/Feature.js").default>}
-     * @export
      */
     this.sketchFeatures = new olCollection();
 
@@ -122,19 +120,16 @@ class Controller extends AbstractDesktopController {
 
     /**
      * @type {string|undefined}
-     * @export
      */
     this.oeGeomType = gmfObjectEditingManager.getGeomType();
 
     /**
      * @type {number|undefined}
-     * @export
      */
     this.oeLayerNodeId = gmfObjectEditingManager.getLayerNodeId();
 
     /**
      * @type {?import("ol/Feature.js").default}
-     * @export
      */
     this.oeFeature = null;
 
@@ -147,31 +142,26 @@ class Controller extends AbstractDesktopController {
 
     /**
      * @type {Array.<string>}
-     * @export
      */
     this.searchCoordinatesProjections = [EPSG21781, EPSG2056, 'EPSG:4326'];
 
     /**
      * @type {!Array.<number>}
-     * @export
      */
     this.scaleSelectorValues = [250000, 100000, 50000, 20000, 10000, 5000, 2000, 1000, 500, 250, 100, 50];
 
     /**
      * @type {Array.<string>}
-     * @export
      */
     this.elevationLayers = ['aster', 'srtm'];
 
     /**
      * @type {string}
-     * @export
      */
     this.selectedElevationLayer = this.elevationLayers[0];
 
     /**
      * @type {Object<string, import('gmf/profile/component.js').ProfileLineConfiguration>}
-     * @export
      */
     this.profileLinesconfiguration = {
       'aster': {color: '#0000A0'},
@@ -180,7 +170,6 @@ class Controller extends AbstractDesktopController {
 
     /**
      * @type {Array<import('gmf/map/mousepositionComponent.js').MousePositionProjection>}
-     * @export
      */
     this.mousePositionProjections = [{
       code: EPSG2056,

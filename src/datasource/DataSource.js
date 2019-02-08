@@ -76,7 +76,6 @@ class DataSource {
      * to:  See: https://github.com/google/closure-compiler/issues/1089
      *
      * @type {?Array<import('ngeo/format/Attribute.js').Attribute>}
-     * @export
      */
     this.attributes = options.attributes || null;
 
@@ -124,7 +123,6 @@ class DataSource {
 
   /**
    * @return {?Array.<import('ngeo/format/Attribute.js').Attribute>} Attributes
-   * @export
    */
   getAttributes() {
     return this.attributes;
@@ -132,7 +130,6 @@ class DataSource {
 
   /**
    * @param {?Array.<import('ngeo/format/Attribute.js').Attribute>} attributes Attributes
-   * @export
    */
   setAttributes(attributes) {
     this.attributes = attributes;
@@ -140,7 +137,6 @@ class DataSource {
 
   /**
    * @return {number} Id
-   * @export
    */
   get id() {
     return this.id_;
@@ -148,7 +144,6 @@ class DataSource {
 
   /**
    * @return {string|undefined} Identifier attribute
-   * @export
    */
   get identifierAttribute() {
     return this.identifierAttribute_;
@@ -156,7 +151,6 @@ class DataSource {
 
   /**
    * @return {number|undefined} Maximum resolution
-   * @export
    */
   get maxResolution() {
     return this.maxResolution_;
@@ -164,7 +158,6 @@ class DataSource {
 
   /**
    * @return {number|undefined} Minimum resolution
-   * @export
    */
   get minResolution() {
     return this.minResolution_;
@@ -172,7 +165,6 @@ class DataSource {
 
   /**
    * @return {string} Name
-   * @export
    */
   get name() {
     return this.name_;
@@ -186,7 +178,6 @@ class DataSource {
   /**
    * Whether the data source is queryable or not.
    * @return {boolean} Whether the data source is queryable or not.
-   * @export
    */
   get queryable() {
     return false;
@@ -195,7 +186,6 @@ class DataSource {
   /**
    * @return {boolean} Whether the data source supports a dynamic `inRange`
    *     property or not, i.e. whether it can be calculated.
-   * @export
    */
   get supportsDynamicInRange() {
     return this.maxResolution !== null || this.minResolution !== null;

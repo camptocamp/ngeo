@@ -28,13 +28,11 @@ function MainController(ngeoDisclaimer) {
 
   /**
    * @type {import("ngeo/message/Disclaimer.js").MessageDisclaimerService}
-   * @export
    */
   this.disclaimer = ngeoDisclaimer;
 
   /**
    * @type {import("ol/Map.js").default}
-   * @export
    */
   this.map = new olMap({
     layers: [
@@ -91,7 +89,6 @@ function MainController(ngeoDisclaimer) {
 
 
 /**
- * @export
  */
 MainController.prototype.success = function() {
   this.disclaimer.success(this.successMsg_);
@@ -99,7 +96,6 @@ MainController.prototype.success = function() {
 
 
 /**
- * @export
  */
 MainController.prototype.info = function() {
   this.disclaimer.info(this.infoMsg_);
@@ -107,7 +103,6 @@ MainController.prototype.info = function() {
 
 
 /**
- * @export
  */
 MainController.prototype.warn = function() {
   this.disclaimer.warn(this.warningMsg_);
@@ -115,7 +110,6 @@ MainController.prototype.warn = function() {
 
 
 /**
- * @export
  */
 MainController.prototype.error = function() {
   this.disclaimer.error(this.errorMsg_);
@@ -125,7 +119,6 @@ MainController.prototype.error = function() {
 /**
  * Demonstrates how to display a disclaimer message in an other target. In
  * this case, it's shown in the map.
- * @export
  */
 MainController.prototype.inMap = function() {
   this.inMapMsgs_.forEach(function(message) {
@@ -141,7 +134,6 @@ MainController.prototype.inMap = function() {
 /**
  * Demonstrates how to close disclaimer messages using JavaScript, i.e.
  * instead of clicking on the close button.
- * @export
  */
 MainController.prototype.closeAll = function() {
 

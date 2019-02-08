@@ -173,7 +173,6 @@ function Controller($scope, $http, $element, $filter, gettextCatalog, ngeoFeatur
 
   /**
    * @type {angular.IFilterService}
-   * @export
    */
   this.$filter_ = $filter;
 
@@ -227,19 +226,16 @@ function Controller($scope, $http, $element, $filter, gettextCatalog, ngeoFeatur
 
   /**
    * @type {import("ol/geom/LineString.js").default}
-   * @export
    */
   this.line;
 
   /**
    * @type {Array.<Object>}
-   * @export
    */
   this.profileData = [];
 
   /**
    * @type {ProfileHoverPointInformations}
-   * @export
    */
   this.currentPoint = {
     coordinate: undefined,
@@ -252,7 +248,6 @@ function Controller($scope, $http, $element, $filter, gettextCatalog, ngeoFeatur
   /**
    * Distance to highlight on the profile. (Property used in ngeo.Profile.)
    * @type {number}
-   * @export
    */
   this.profileHighlight = -1;
 
@@ -289,13 +284,11 @@ function Controller($scope, $http, $element, $filter, gettextCatalog, ngeoFeatur
 
   /**
    * @type {?import('ngeo/profile/elevationComponent.js').ProfileOptions}
-   * @export
    */
   this.profileOptions = null;
 
   /**
    * @type {boolean}
-   * @export
    */
   this.active = false;
 
@@ -307,7 +300,6 @@ function Controller($scope, $http, $element, $filter, gettextCatalog, ngeoFeatur
 
   /**
    * @type {boolean}
-   * @export
    */
   this.isErrored = false;
 
@@ -575,7 +567,6 @@ Controller.prototype.removeMeasureTooltip_ = function() {
  * Return the styler value of a ProfileLineConfiguration.
  * @param {string} layerName name of the elevation layer.
  * @return {object} The object representation of the style.
- * @export
  */
 Controller.prototype.getStyle = function(layerName) {
   const lineConfiguration = this.linesConfiguration_[layerName];
@@ -591,7 +582,6 @@ Controller.prototype.getStyle = function(layerName) {
 /**
  * Return a copy of the existing layer names.
  * @return {Array.<string>} The names of layers.
- * @export
  */
 Controller.prototype.getLayersNames = function() {
   return this.layersNames_.slice(0);
@@ -689,7 +679,6 @@ Controller.prototype.getProfileDataError_ = function(resp) {
 
 /**
  * Request the csv profile with the current profile data.
- * @export
  */
 Controller.prototype.downloadCsv = function() {
   if (this.profileData.length === 0) {

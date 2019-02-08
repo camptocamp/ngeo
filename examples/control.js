@@ -27,7 +27,6 @@ function MainController() {
 
   /**
    * @type {import("ol/Map.js").default}
-   * @export
    */
   this.map = new olMap({
     layers: [
@@ -43,7 +42,6 @@ function MainController() {
 
   /**
    * @type {import('ol/control/Control.js').default}
-   * @export
    */
   this.control = new olControlMousePosition({
     className: 'mouse-position'

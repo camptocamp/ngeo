@@ -89,25 +89,21 @@ function Controller(gettextCatalog, $compile, $filter, $scope, $timeout, ngeoEve
 
   /**
    * @type {boolean}
-   * @export
    */
   this.active;
 
   /**
    * @type {import("ol/Collection.js").default.<!import("ol/Feature.js").default>|!import("ol/source/Vector.js").default}
-   * @export
    */
   this.features;
 
   /**
    * @type {string}
-   * @export
    */
   this.geomType;
 
   /**
    * @type {!import("ol/Map.js").default}
-   * @export
    */
   this.map;
 
@@ -255,7 +251,6 @@ Controller.prototype.$onInit = function() {
  * Called when a feature is finished being drawn. Add the feature to the
  * collection.
  * @param {import('ol/events/Event.js').default|import('ngeo/interaction/Measure.js').MeasureEvent} event Event.
- * @export
  */
 Controller.prototype.handleDrawEnd_ = function(event) {
   let sketch;

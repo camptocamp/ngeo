@@ -100,43 +100,36 @@ class FilterController {
 
     /**
      * @type {boolean}
-     * @export
      */
     this.aRuleIsActive;
 
     /**
      * @type {Array.<!import("ngeo/rule/Rule.js").default>}
-     * @export
      */
     this.customRules;
 
     /**
      * @type {!import("ngeo/datasource/OGC.js").default}
-     * @export
      */
     this.datasource;
 
     /**
      * @type {Array.<!import("ngeo/rule/Rule.js").default>}
-     * @export
      */
     this.directedRules;
 
     /**
      * @type {!import("ngeo/map/FeatureOverlay.js").FeatureOverlay}
-     * @export
      */
     this.featureOverlay;
 
     /**
      * @type {!import("ol/Map.js").default}
-     * @export
      */
     this.map;
 
     /**
      * @type {string}
-     * @export
      */
     this.toolGroup;
 
@@ -178,7 +171,6 @@ class FilterController {
 
     /**
      * @type {Array.<!FilterCondition>}
-     * @export
      */
     this.conditions = [
       {
@@ -198,14 +190,12 @@ class FilterController {
     /**
      * List of geometry attributes.
      * @type {Array.<!import('ngeo/format/Attribute.js').Attribute>}
-     * @export
      */
     this.geometryAttributes = [];
 
     /**
      * List of other attribute names.
      * @type {Array.<!import('ngeo/format/Attribute.js').Attribute>}
-     * @export
      */
     this.otherAttributes = [];
 
@@ -267,7 +257,6 @@ class FilterController {
 
   /**
    * @return {boolean} True if at least one rule is currently defined.
-   * @export
    */
   hasARule() {
     return [].concat(this.customRules, this.directedRules).length > 0;
@@ -277,7 +266,6 @@ class FilterController {
   /**
    * Loop in all directed and custom rules. Apply the rules that have a proper
    * value inside the data source, in the `filterRules` property.
-   * @export
    */
   apply() {
     // (1) Reset
@@ -298,7 +286,6 @@ class FilterController {
   /**
    * Loop in all directed and custom rules. Issue a request to obtain the data
    * and show the result.
-   * @export
    */
   getData() {
     const filterRules = this.getRulesWithValue_();
@@ -350,7 +337,6 @@ class FilterController {
    * after being created.
    * @param {!import('ngeo/format/Attribute.js').Attribute} attribute Attribute to use to create the custom
    * rule.
-   * @export
    */
   createAndAddCustomRule(attribute) {
     const rule = this.ngeoRuleHelper_.createRuleFromAttribute(attribute, true);
@@ -366,7 +352,6 @@ class FilterController {
 
   /**
    * @param {!FilterCondition} condition Condition to set.
-   * @export
    */
   setCondition(condition) {
     if (this.datasource.filterCondition !== condition.value) {
@@ -378,7 +363,6 @@ class FilterController {
    * Remove a custom rule. Deactivate it first, then give time to the
    * `ngeo-rule` directive to manage the deactivation of the rule.
    * @param {!import("ngeo/rule/Rule.js").default} rule Custom rule to remove.
-   * @export
    */
   removeCustomRule(rule) {
     rule.active = false;
@@ -391,7 +375,6 @@ class FilterController {
 
   /**
    * @param {!import("ngeo/rule/Rule.js").default} rule Rule.
-   * @export
    */
   registerRule_(rule) {
     const uid = olUtilGetUid(rule);
@@ -407,7 +390,6 @@ class FilterController {
 
   /**
    * @param {!import("ngeo/rule/Rule.js").default} rule Rule.
-   * @export
    */
   unregisterRule_(rule) {
     const uid = olUtilGetUid(rule);

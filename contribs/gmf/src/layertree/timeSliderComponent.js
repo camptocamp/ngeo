@@ -113,7 +113,6 @@ function Controller(ngeoWMSTime) {
   /**
    * Function called after date(s) changed/selected
    * @type {Function}
-   * @export
    */
   this.onDateSelected;
 
@@ -121,28 +120,24 @@ function Controller(ngeoWMSTime) {
   /**
    * A time object for directive initialization
    * @type {import('ngeo/datasource/OGC.js').TimeProperty}
-   * @export
    */
   this.time;
 
   /**
    * If the component is used to select a date range
    * @type {boolean}
-   * @export
    */
   this.isModeRange;
 
   /**
    * Minimal value of the slider (time in ms)
    * @type {number}
-   * @export
    */
   this.minValue;
 
   /**
    * Maximal value of the slider (time in ms)
    * @type {number}
-   * @export
    */
   this.maxValue;
 
@@ -159,14 +154,12 @@ function Controller(ngeoWMSTime) {
    *  min : number,
    *  max : number
    * }}
-   * @export
    */
   this.sliderOptions;
 
   /**
    * Model for the ui-slider directive (date in ms format)
    * @type {Array.<number>|number}
-   * @export
    */
   this.dates;
 }
@@ -313,7 +306,6 @@ Controller.prototype.getClosestValue_ = function(timestamp) {
  * Format and localize time regarding a resolution.
  * @param {number} time (in ms format) timestamp to format and localize.
  * @return {string} Localized date string regarding the resolution.
- * @export
  */
 Controller.prototype.getLocalizedDate = function(time) {
   return this.ngeoWMSTime_.formatTimeValue(time, this.time.resolution);

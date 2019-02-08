@@ -18,7 +18,6 @@ class Manager extends olcsContribManager {
 
   /**
    * @override
-   * @export
    */
   toggle3d() {
     // The transition is asynchronous and at the end of it the state of OLCesium is changed.

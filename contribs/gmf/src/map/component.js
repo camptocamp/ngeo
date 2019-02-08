@@ -72,19 +72,16 @@ function Controller(ngeoFeatureOverlayMgr, gmfPermalink, gmfSnapping) {
 
   /**
    * @type {!import("ol/Map.js").default}
-   * @export
    */
   this.map;
 
   /**
    * @type {boolean|undefined}
-   * @export
    */
   this.manageResize;
 
   /**
    * @type {boolean|undefined}
-   * @export
    */
   this.resizeTransition;
 

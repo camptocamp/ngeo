@@ -47,7 +47,7 @@ export class MapQuerent {
    *
    * @param {angular.auto.IInjectorService} $injector Main injector.
    * @param {import("ngeo/datasource/DataSources.js").DataSource} ngeoDataSources Ngeo data sources service.
-   * @param {import("ngeo/datasource/Helper.js").Helper} ngeoDataSourcesHelper Ngeo data
+   * @param {import("ngeo/datasource/Helper.js").DatasourceHelper} ngeoDataSourcesHelper Ngeo data
    *     sources helper service.
    * @param {import("ngeo/misc/FeatureHelper.js").FeatureHelper} ngeoFeatureHelper Ngeo feature
    *     helper service.
@@ -77,7 +77,7 @@ export class MapQuerent {
     this.featureHelper_ = ngeoFeatureHelper;
 
     /**
-     * @type {import("ngeo/datasource/Helper.js").Helper}
+     * @type {import("ngeo/datasource/Helper.js").DatasourceHelper}
      * @private
      */
     this.ngeoDataSourcesHelper_ = ngeoDataSourcesHelper;
@@ -142,7 +142,6 @@ export class MapQuerent {
 
   /**
    * @param {import('ngeo/query/Querent.js').IssueGetFeaturesOptions} options Options.
-   * @export
    */
   issue(options) {
     const action = options.action ? options.action : ngeoQueryAction.REPLACE;
@@ -180,7 +179,6 @@ export class MapQuerent {
    * Clear result, i.e. clear all 'result source' from their features and other
    * information.
    * @param {boolean} keep Whether to keep the existing features and sources
-   * @export
    */
   clear(keep = false) {
 

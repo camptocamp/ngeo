@@ -12,7 +12,6 @@ import olLayerLayer from 'ol/layer/Layer.js';
  * @param {angular.IAttributes} $attrs Attributes.
  * @constructor
  * @ngInject
- * @export
  * @ngdoc controller
  * @ngname NgeoLayertreeController
  */
@@ -22,7 +21,6 @@ export function LayertreeController($scope, $rootScope, $attrs) {
 
   /**
    * @type {boolean}
-   * @export
    */
   this.isRoot = isRoot;
 
@@ -36,7 +34,6 @@ export function LayertreeController($scope, $rootScope, $attrs) {
 
   /**
    * @type {!Object}
-   * @export
    */
   this.properties = {};
 
@@ -48,7 +45,6 @@ export function LayertreeController($scope, $rootScope, $attrs) {
 
   /**
    * @type {!Object}
-   * @export
    */
   this.node;
 
@@ -67,13 +63,11 @@ export function LayertreeController($scope, $rootScope, $attrs) {
 
   /**
    * @type {import("ngeo/layertree/Controller.js").LayertreeController}
-   * @export
    */
   this.parent = $scope.$parent['layertreeCtrl'];
 
   /**
    * @type {Array.<import("ngeo/layertree/Controller.js").LayertreeController>}
-   * @export
    */
   this.children = [];
 
@@ -91,13 +85,11 @@ export function LayertreeController($scope, $rootScope, $attrs) {
 
   /**
    * @type {string}
-   * @export
    */
   this.uid = olUtilGetUid(this);
 
   /**
    * @type {number}
-   * @export
    */
   this.depth = isRoot ? 0 : this.parent.depth + 1;
 
@@ -109,7 +101,6 @@ export function LayertreeController($scope, $rootScope, $attrs) {
 
   /**
    * @type {import("ol/Map.js").default}
-   * @export
    */
   this.map = map;
 
@@ -124,13 +115,11 @@ export function LayertreeController($scope, $rootScope, $attrs) {
 
   /**
    * @type {string}
-   * @export
    */
   this.nodelayerExpr = nodelayerExpr;
 
   /**
    * @type {?import("ol/layer/Layer.js").default|import("ol/layer/Group.js").default}
-   * @export
    */
   this.layer = null;
   if (!isRoot) {
@@ -170,7 +159,6 @@ export function LayertreeController($scope, $rootScope, $attrs) {
 
   /**
    * @type {string|undefined}
-   * @export
    */
   this.listenersExpr = listenersExpr;
 
@@ -186,7 +174,6 @@ export function LayertreeController($scope, $rootScope, $attrs) {
 /**
  * Return the current state.
  * @return {string} 'on', 'off', 'indeterminate'.
- * @export
  */
 LayertreeController.prototype.getState = function() {
   return this.state_;
@@ -198,7 +185,6 @@ LayertreeController.prototype.getState = function() {
  * ask its parent to refresh its state.
  * @param {string} state 'on' or 'off'.
  * @param {boolean=} opt_broadcast Broadcast.
- * @export
  */
 LayertreeController.prototype.setState = function(state, opt_broadcast) {
   if (state === this.state_) {
@@ -289,7 +275,6 @@ LayertreeController.prototype.refreshState = function(opt_onChild, opt_broadcast
 /**
  * Return the current state, calculate on all its children recursively.
  * @return {string} 'on', 'off' or 'indeterminate'.
- * @export
  */
 LayertreeController.prototype.getCalculateState = function() {
   if (this.node.children === undefined) {
@@ -316,7 +301,6 @@ LayertreeController.prototype.getCalculateState = function() {
 /**
  * @param {boolean|undefined} val Value.
  * @return {boolean|undefined} Value.
- * @export
  */
 LayertreeController.prototype.getSetActive = function(val) {
   const layer = this.layer;
@@ -339,7 +323,6 @@ LayertreeController.prototype.getSetActive = function(val) {
 /**
  * @return {?import("ngeo/datasource/DataSource.js").default} dataSource The data source bound to
  *     this layer tree controller.
- * @export
  */
 LayertreeController.prototype.getDataSource = function() {
   return this.dataSource_;
@@ -348,7 +331,6 @@ LayertreeController.prototype.getDataSource = function() {
 
 /**
  * @param {?import("ngeo/datasource/DataSource.js").default} dataSource Data source or null.
- * @export
  */
 LayertreeController.prototype.setDataSource = function(dataSource) {
   this.dataSource_ = dataSource;
@@ -390,7 +372,6 @@ export const LayertreeVisitorDecision = {
  * Recursive method to traverse the layertree controller graph.
  * @param {Visitor} visitor A visitor called for each node.
  * @return {boolean} whether to stop traversing.
- * @export
  */
 LayertreeController.prototype.traverseDepthFirst = function(visitor) {
   // First visit the current controller

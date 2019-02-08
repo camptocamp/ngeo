@@ -89,19 +89,16 @@ class Controller {
     this.modal_;
 
     /**
-     * @export
      * @type {boolean}
      */
     this.closable;
 
     /**
-     * @export
      * @type {boolean}
      */
     this.resizable;
 
     /**
-     * @export
      * @type {angular.INgModelController|null}
      */
     this.ngModel;

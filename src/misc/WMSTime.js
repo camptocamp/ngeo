@@ -76,7 +76,6 @@ export class WMSTime extends Time {
    * @param  {boolean=} opt_toUTC to get the UTC date
    * @return {string} ISO-8601 date string ready to be used as a query parameter for a
    * WMS request
-   * @export
    */
   formatWMSTimeParam(wmsTimeProperty, times, opt_toUTC) {
     console.assert(wmsTimeProperty.resolution !== undefined);

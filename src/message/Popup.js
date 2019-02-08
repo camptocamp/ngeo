@@ -45,7 +45,6 @@ export function MessagePopup($compile, $rootScope, $sce, $timeout) {
   /**
    * The scope the compiled element is link to.
    * @type {angular.IScope}
-   * @export
    */
   this.scope = $rootScope.$new(true);
 
@@ -96,7 +95,6 @@ export function MessagePopup($compile, $rootScope, $sce, $timeout) {
 /**
  * Get the current popup state.
  * @return {boolean} `true` if the popup is currently, otherwise `false`.
- * @export
  */
 MessagePopup.prototype.getOpen = function() {
   return this.scope['open'];
@@ -106,7 +104,6 @@ MessagePopup.prototype.getOpen = function() {
 /**
  * Show/hide the popup.
  * @param {boolean} open `true` to show the popup, `false` to hide it.
- * @export
  */
 MessagePopup.prototype.setOpen = function(open) {
   this.scope['open'] = open;
@@ -115,7 +112,6 @@ MessagePopup.prototype.setOpen = function(open) {
 
 /**
  * Destroy the popup.
- * @export
  */
 MessagePopup.prototype.destroy = function() {
   this.scope.$destroy();
@@ -126,7 +122,6 @@ MessagePopup.prototype.destroy = function() {
 /**
  * Set the popup's title.
  * @param {string} title The title.
- * @export
  */
 MessagePopup.prototype.setTitle = function(title) {
   const trustedTitle = this.sce_.trustAsHtml(title);
@@ -141,7 +136,6 @@ MessagePopup.prototype.setTitle = function(title) {
  * @param {*} content The content.
  * @param {boolean=} opt_trusted Whether the content can be trusted.
  *     Default is false.
- * @export
  */
 MessagePopup.prototype.setContent = function(content, opt_trusted) {
   this.scope['content'] = opt_trusted ? this.sce_.trustAsHtml(/** @type {string} */ (content)) : content;
@@ -151,7 +145,6 @@ MessagePopup.prototype.setContent = function(content, opt_trusted) {
 /**
  * Set the popup's content with an iframe using the given url.
  * @param {string} url The url of the page.
- * @export
  */
 MessagePopup.prototype.setUrl = function(url) {
   const content = this.sce_.trustAsHtml(
@@ -164,7 +157,6 @@ MessagePopup.prototype.setUrl = function(url) {
 /**
  * Set the popup's width.
  * @param {string} width Width the popup should have.
- * @export
  */
 MessagePopup.prototype.setWidth = function(width) {
   this.element_.width(width);
@@ -174,7 +166,6 @@ MessagePopup.prototype.setWidth = function(width) {
 /**
  * Set the popup's height.
  * @param {string} height Height the popup should have.
- * @export
  */
 MessagePopup.prototype.setHeight = function(height) {
   this.element_.height(height);
@@ -185,7 +176,6 @@ MessagePopup.prototype.setHeight = function(height) {
  * Set the popup's width and height.
  * @param {string} width Width the popup should have.
  * @param {string} height Height the popup should have.
- * @export
  */
 MessagePopup.prototype.setSize = function(width, height) {
   this.setWidth(width);
@@ -197,7 +187,6 @@ MessagePopup.prototype.setSize = function(width, height) {
  * Set the popup's autoDestroy property.
  * @param {boolean} autoDestroy Whether to automatically destroy the popup when
  *     being closed or not.
- * @export
  */
 MessagePopup.prototype.setAutoDestroy = function(autoDestroy) {
   this.autoDestroy_ = autoDestroy;
@@ -207,7 +196,6 @@ MessagePopup.prototype.setAutoDestroy = function(autoDestroy) {
 /**
  * Add an extra CSS class name to the popup.
  * @param {string} cls Class name to add to the popup element.
- * @export
  */
 MessagePopup.prototype.addClass = function(cls) {
   this.element_.addClass(cls);
@@ -217,7 +205,6 @@ MessagePopup.prototype.addClass = function(cls) {
 /**
  * Open a popup with the given properties.
  * @param {PopupOptions} options Options.
- * @export
  */
 MessagePopup.prototype.open = function(options) {
 

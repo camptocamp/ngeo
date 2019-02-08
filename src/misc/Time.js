@@ -36,7 +36,6 @@ Time.prototype.getTime = function(date, defaultValue = null) {
  *  maxDate : number,
  *  values : (Array<number>|number)
  * }} - Configuration for the UI components
- * @export
  */
 Time.prototype.getOptions = function(time) {
 
@@ -63,7 +62,6 @@ Time.prototype.getOptions = function(time) {
  *
  * @param  {Object} localDate loacl date object in
  * @return {Object} UTC date
- * @export
  */
 Time.prototype.getUTCDate = function(localDate) {
   return new Date(

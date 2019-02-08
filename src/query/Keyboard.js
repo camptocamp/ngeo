@@ -5,7 +5,7 @@ import {listen as olEventsListen} from 'ol/events.js';
 
 /**
  */
-class Keyboard {
+export class QueryKeyboard {
 
   /**
    * Listens to the keyboard `keydown` and `keyup` events to keep
@@ -115,7 +115,7 @@ class Keyboard {
  */
 const module = angular.module('ngeoQueryKeyboard', [
 ]);
-module.service('ngeoQueryKeyboard', Keyboard);
+module.service('ngeoQueryKeyboard', QueryKeyboard);
 
 
 export default module;

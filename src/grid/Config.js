@@ -4,24 +4,20 @@ import {getUid as olUtilGetUid} from 'ol/util.js';
  * @param {Array.<Object>|undefined} data Entries/objects to be shown in a grid.
  * @param {Array.<import('ngeo/download/Csv.js').GridColumnDef>|undefined} columnDefs Column definition of a grid.
  * @constructor
- * @export
  */
 function GridConfig(data, columnDefs) {
   /**
    * @type {Array.<Object>|undefined}
-   * @export
    */
   this.data = data;
 
   /**
    * @type {Array.<import('ngeo/download/Csv.js').GridColumnDef>|undefined}
-   * @export
    */
   this.columnDefs = columnDefs;
 
   /**
    * @type {!Object.<string, Object>}
-   * @export
    */
   this.selectedRows = {};
 }
@@ -31,7 +27,6 @@ function GridConfig(data, columnDefs) {
  * Get an ID for a row.
  * @param {Object} attributes An entry/row.
  * @return {string} Unique id for this object.
- * @export
  */
 export function getRowUid(attributes) {
   return `${olUtilGetUid(attributes)}`;
@@ -42,7 +37,6 @@ export function getRowUid(attributes) {
  * Is the given row selected?
  * @param {Object} attributes An entry/row.
  * @return {boolean} True if already selected. False otherwise.
- * @export
  */
 GridConfig.prototype.isRowSelected = function(attributes) {
   return !!this.selectedRows[getRowUid(attributes)];
@@ -52,7 +46,6 @@ GridConfig.prototype.isRowSelected = function(attributes) {
 /**
  * Returns the number of selected rows.
  * @return {number} Number of selected rows.
- * @export
  */
 GridConfig.prototype.getSelectedCount = function() {
   return Object.keys(this.selectedRows).length;
@@ -62,7 +55,6 @@ GridConfig.prototype.getSelectedCount = function() {
 /**
  * Returns the selected rows.
  * @return {Array.<Object>} Selected rows in the current ordering.
- * @export
  */
 GridConfig.prototype.getSelectedRows = function() {
   return this.data.filter(row => this.isRowSelected(row));
@@ -96,7 +88,6 @@ GridConfig.prototype.toggleRow = function(attributes) {
 
 /**
  * Select all rows.
- * @export
  */
 GridConfig.prototype.selectAll = function() {
   this.data.forEach((attributes) => {
@@ -107,7 +98,6 @@ GridConfig.prototype.selectAll = function() {
 
 /**
  * Deselect all rows.
- * @export
  */
 GridConfig.prototype.unselectAll = function() {
   for (const rowId in this.selectedRows) {
@@ -118,7 +108,6 @@ GridConfig.prototype.unselectAll = function() {
 
 /**
  * Invert selection.
- * @export
  */
 GridConfig.prototype.invertSelection = function() {
   this.data.forEach((attributes) => {

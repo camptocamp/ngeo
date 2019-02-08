@@ -81,7 +81,6 @@ export class RuleHelper {
    * @param {boolean=} opt_isCustom Whether the created rules should be marked
    *     as custom or not. Defaults to `false`.
    * @return {Array.<!import("ngeo/rule/Rule.js").default>} Rules.
-   * @export
    */
   createRulesFromAttributes(attributes, opt_isCustom) {
     const rules = [];
@@ -96,7 +95,6 @@ export class RuleHelper {
    * @param {boolean=} opt_isCustom Whether the created rule should be marked
    *     as custom or not. Defaults to `false`.
    * @return {!import("ngeo/rule/Rule.js").default} Rule.
-   * @export
    */
   createRuleFromAttribute(attribute, opt_isCustom) {
 
@@ -209,7 +207,6 @@ export class RuleHelper {
   /**
    * @param {!Array.<!import('ngeo/rule/Rule.js').RuleOptions|!import('ngeo/rule/Select.js').SelectOptions>} optionsList List of options
    * @return {Array.<!import("ngeo/rule/Rule.js").default>} Rules.
-   * @export
    */
   createRules(optionsList) {
     const rules = [];
@@ -222,7 +219,6 @@ export class RuleHelper {
   /**
    * @param {!import('ngeo/rule/Rule.js').RuleOptions|!import('ngeo/rule/Select.js').SelectOptions} options Options
    * @return {!import("ngeo/rule/Rule.js").default} Rule.
-   * @export
    */
   createRule(options) {
     let rule;
@@ -251,7 +247,6 @@ export class RuleHelper {
    *
    * @param {!import("ngeo/rule/Rule.js").default} rule Original rule to clone.
    * @return {!import("ngeo/rule/Rule.js").default} A clone rule.
-   * @export
    */
   cloneRule(rule) {
 
@@ -311,7 +306,6 @@ export class RuleHelper {
    *     properties from.
    * @param {!import("ngeo/rule/Rule.js").default} destRule Destination rule where the dynamic
    *     properties are set.
-   * @export
    */
   extendRule(sourceRule, destRule) {
 
@@ -344,7 +338,6 @@ export class RuleHelper {
   /**
    * @param {!Array.<!import("ngeo/rule/Rule.js").default>} rules Rules
    * @return {!Array.<!AnyOptions>} List of serialized rule options.
-   * @export
    */
   serializeRules(rules) {
     return rules.map((rule) => {
@@ -357,7 +350,6 @@ export class RuleHelper {
    * Selialize a rule into options to re-create it later.
    * @param {!import("ngeo/rule/Rule.js").default} rule Rule to serialize.
    * @return {!AnyOptions} Serialized rule options.
-   * @export
    */
   serializeRule(rule) {
     const obj = {
@@ -404,7 +396,6 @@ export class RuleHelper {
    *
    * @param {CreateFilterOptions} options Options.
    * @return {?import("ol/format/filter/Filter.js").default} Filter.
-   * @export
    */
   createFilter(options) {
 
@@ -482,7 +473,6 @@ export class RuleHelper {
   /**
    * @param {CreateFilterOptions} options Options.
    * @return {?string} Filter string.
-   * @export
    */
   createFilterString(options) {
     let filterString = null;

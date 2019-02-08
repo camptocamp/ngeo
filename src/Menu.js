@@ -108,7 +108,6 @@ export default class extends olOverlay {
 
   /**
    * @param {import("ol/PluggableMap.js").default|undefined} map Map.
-   * @export
    * @override
    */
   setMap(map) {
@@ -148,7 +147,6 @@ export default class extends olOverlay {
    * Opens the menu at the desited coordinate. Also starts listening for the
    * clickout if autoClose is enabled.
    * @param {import("ol/coordinate.js").Coordinate} coordinate Where to open the menu.
-   * @export
    */
   open(coordinate) {
     this.setPosition(coordinate);
@@ -163,7 +161,6 @@ export default class extends olOverlay {
   }
 
   /**
-   * @export
    */
   close() {
     this.setPosition(undefined);

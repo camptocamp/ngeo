@@ -41,7 +41,6 @@ function MainController($http, $scope) {
 
   /**
    * @type {import("ol/Map.js").default}
-   * @export
    */
   this.map = new olMap({
     layers: [
@@ -87,7 +86,6 @@ function MainController($http, $scope) {
 
   /**
    * @type {Array.<Object>}
-   * @export
    */
   this.profilePoisData = [
     {sort: 1, dist: 1000, title: 'First POI', id: 12345},
@@ -96,7 +94,6 @@ function MainController($http, $scope) {
 
   /**
    * @type {Object|undefined}
-   * @export
    */
   this.profileData = undefined;
 
@@ -215,7 +212,6 @@ function MainController($http, $scope) {
 
   /**
    * @type {Object}
-   * @export
    */
   this.profileOptions = {
     distanceExtractor,
@@ -227,13 +223,11 @@ function MainController($http, $scope) {
 
   /**
    * @type {Object}
-   * @export
    */
   this.point = null;
 
   /**
    * @type {number|undefined}
-   * @export
    */
   this.profileHighlight = undefined;
 }

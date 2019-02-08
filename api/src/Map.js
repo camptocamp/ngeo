@@ -18,6 +18,7 @@ import {createStringXY} from 'ol/coordinate.js';
 import ScaleLine from 'ol/control/ScaleLine.js';
 import OverviewMap from 'ol/control/OverviewMap.js';
 
+// @ts-ignore there is no existing types for ol-layerswitcher
 import LayerSwitcher from 'ol-layerswitcher';
 
 import {
@@ -280,7 +281,7 @@ class Map {
   selectObject(id) {
     const feature = this.vectorSource_.getFeatureById(id);
     if (feature) {
-      const coordinates = feature.getGeometry().getCoordinates();
+      const coordinates = /** @type {import('ol/geom/Point.js').default} */(feature.getGeometry()).getCoordinates();
       const properties = feature.getProperties();
       const content = this.overlay_.getElement().querySelector('.ol-popup-content');
       content.innerHTML += `<div><b>${properties.title}</b></div>`;

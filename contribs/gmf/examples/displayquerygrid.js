@@ -79,7 +79,6 @@ function QueryresultController(ngeoQueryResult) {
 
   /**
    * @type {import('ngeo/query/MapQuerent.js').QueryResult}
-   * @export
    */
   this.result = ngeoQueryResult;
 
@@ -108,7 +107,6 @@ function MainController(gmfThemes, gmfDataSourcesManager, ngeoFeatureOverlayMgr)
   /**
    * FeatureStyle used by the displayquerygrid directive
    * @type {import("ol/style/Style.js").default}
-   * @export
    */
   this.featureStyle = new olStyleStyle({
     fill: fill,
@@ -122,7 +120,6 @@ function MainController(gmfThemes, gmfDataSourcesManager, ngeoFeatureOverlayMgr)
 
   /**
    * @type {import("ol/Map.js").default}
-   * @export
    */
   this.map = new olMap({
     layers: [
@@ -149,19 +146,16 @@ function MainController(gmfThemes, gmfDataSourcesManager, ngeoFeatureOverlayMgr)
 
   /**
    * @type {Object|undefined}
-   * @export
    */
   this.treeSource = undefined;
 
   /**
    * @type {boolean}
-   * @export
    */
   this.queryActive = true;
 
   /**
    * @type {boolean}
-   * @export
    */
   this.queryGridActive = true;
 

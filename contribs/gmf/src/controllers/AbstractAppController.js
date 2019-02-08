@@ -62,7 +62,6 @@ import {findThemeByName} from 'gmf/theme/Themes.js';
  * @constructor
  * @ngdoc controller
  * @ngInject
- * @export
  */
 export function AbstractAppController(config, map, $scope, $injector) {
 
@@ -79,7 +78,6 @@ export function AbstractAppController(config, map, $scope, $injector) {
 
   /**
    * @type {import("ol/Map.js").default}
-   * @export
    */
   this.map = map;
 
@@ -106,7 +104,6 @@ export function AbstractAppController(config, map, $scope, $injector) {
 
   /**
    * @type {import("gmf/theme/Manager.js").ThemeManagerService}
-   * @export
    */
   this.gmfThemeManager = $injector.get('gmfThemeManager');
 
@@ -126,7 +123,6 @@ export function AbstractAppController(config, map, $scope, $injector) {
   /**
    * Checks if the themes are loaded
    * @type {boolean}
-   * @export
    */
   this.loading = true;
   this.gmfThemes_.getThemesObject().finally((themes) => {
@@ -148,7 +144,6 @@ export function AbstractAppController(config, map, $scope, $injector) {
 
   /**
    * @type {boolean}
-   * @export
    */
   this.hasEditableLayers = false;
 
@@ -231,7 +226,6 @@ export function AbstractAppController(config, map, $scope, $injector) {
 
   /**
    * @type {Array<import('gmf/search/component.js').SearchComponentDatasource>}
-   * @export
    */
   this.searchDatasources = [{
     datasetTitle: undefined,
@@ -244,7 +238,6 @@ export function AbstractAppController(config, map, $scope, $injector) {
 
   /**
    * @type {!Object.<string, string>}
-   * @export
    */
   this.dimensions = {};
 
@@ -285,13 +278,11 @@ export function AbstractAppController(config, map, $scope, $injector) {
 
   /**
    * @type {boolean}
-   * @export
    */
   this.leftNavVisible = false;
 
   /**
    * @type {boolean}
-   * @export
    */
   this.rightNavVisible = false;
 
@@ -301,7 +292,6 @@ export function AbstractAppController(config, map, $scope, $injector) {
   /**
    * FeatureStyle used by the gmf.query.windowComponent
    * @type {import("ol/style/Style.js").default}
-   * @export
    */
   this.queryFeatureStyle = new olStyleStyle({
     fill: queryFill,
@@ -315,33 +305,28 @@ export function AbstractAppController(config, map, $scope, $injector) {
 
   /**
    * @type {boolean}
-   * @export
    */
   this.filterSelectorActive = false;
 
   /**
    * The active state of the ngeo query directive.
    * @type {boolean}
-   * @export
    */
   this.queryActive = true;
 
   /**
    * Set the clearing of the ngeoQuery after the deactivation of the query
    * @type {boolean}
-   * @export
    */
   this.queryAutoClear = true;
 
   /**
    * @type {boolean}
-   * @export
    */
   this.printPanelActive = false;
 
   /**
    * @type {boolean}
-   * @export
    */
   this.printActive = false;
 
@@ -365,39 +350,33 @@ export function AbstractAppController(config, map, $scope, $injector) {
   /**
    * The active state of the directive responsible of area measurements.
    * @type {boolean}
-   * @export
    */
   this.measureAreaActive = false;
 
   /**
    * The active state of the directive responsible of point measurements.
    * @type {boolean}
-   * @export
    */
   this.measurePointActive = false;
 
   /**
    * The active state of the directive responsible of length measurements.
    * @type {boolean}
-   * @export
    */
   this.measureLengthActive = false;
 
   /**
    * @type {boolean}
-   * @export
    */
   this.drawFeatureActive = false;
 
   /**
    * @type {boolean}
-   * @export
    */
   this.drawProfilePanelActive = false;
 
   /**
    * @type {import('gmf/authentication/Service.js').User}
-   * @export
    */
   this.gmfUser = $injector.get('gmfUser');
 
@@ -423,7 +402,6 @@ export function AbstractAppController(config, map, $scope, $injector) {
 
   /**
    * @type {string}
-   * @export
    */
   this.lang;
 
@@ -451,7 +429,6 @@ export function AbstractAppController(config, map, $scope, $injector) {
 
   /**
    * @type {string}
-   * @export
    */
   this.mapToolsGroup = mapTools;
 
@@ -559,7 +536,6 @@ export function AbstractAppController(config, map, $scope, $injector) {
   // we "export" them as externs in the gmfx options file.
   const gmfx = window.gmfx || {};
   /**
-   * @export
    */
   // @ts-ignore: We do want to define a new property on `window`.
   window.gmfx = gmfx;
@@ -571,7 +547,6 @@ export function AbstractAppController(config, map, $scope, $injector) {
    * @param {number=} opt_width CSS width.
    * @param {number=} opt_height CSS height.
    * @param {boolean=} opt_apply If true, trigger the Angular digest loop. Default to true.
-   * @export
    */
   gmfx.openIframePopup = (
     url, title, opt_width, opt_height, opt_apply
@@ -587,7 +562,6 @@ export function AbstractAppController(config, map, $scope, $injector) {
    * @param {number=} opt_width CSS width in pixel.
    * @param {number=} opt_height CSS height in pixel.
    * @param {boolean=} opt_apply If true, trigger the Angular digest loop. Default to true.
-   * @export
    */
   gmfx.openTextPopup = (content, title, opt_width, opt_height, opt_apply) => {
     this.displaywindowContent = content;
@@ -597,7 +571,6 @@ export function AbstractAppController(config, map, $scope, $injector) {
   /**
    * Whether to update the size of the map on browser window resize.
    * @type {boolean}
-   * @export
    */
   this.manageResize = false;
 
@@ -606,18 +579,15 @@ export function AbstractAppController(config, map, $scope, $injector) {
    * containing the map. Used to smoothly resize the map while the animation
    * is in progress.
    * @type {number|undefined}
-   * @export
    */
   this.resizeTransition;
 
   const cgxp = window.cgxp || {};
   /**
-   * @export
    */
   // @ts-ignore: We do want to define a new property on `window`.
   window.cgxp = cgxp;
   /**
-   * @export
    */
   cgxp.tools = window.cgxp.tools || {};
   /**
@@ -627,7 +597,6 @@ export function AbstractAppController(config, map, $scope, $injector) {
    * @param {number=} opt_width CSS width in pixel.
    * @param {number=} opt_height CSS height in pixel.
    * @param {boolean=} opt_apply If true, trigger the Angular digest loop. Default to true.
-   * @export
    */
   cgxp.tools.openInfoWindow = function(url, title, opt_width, opt_height, opt_apply) {
     gmfx.openIframePopup(url, title, opt_width, opt_height, opt_apply);
@@ -635,43 +604,36 @@ export function AbstractAppController(config, map, $scope, $injector) {
 
   /**
    * @type {?string}
-   * @export
    */
   this.displaywindowContent = null;
 
   /**
    * @type {string}
-   * @export
    */
   this.displaywindowDraggableContainment = '.gmf-map';
 
   /**
    * @type {?string}
-   * @export
    */
   this.displaywindowHeight = '50vh';
 
   /**
    * @type {boolean}
-   * @export
    */
   this.displaywindowOpen = false;
 
   /**
    * @type {?string}
-   * @export
    */
   this.displaywindowTitle = null;
 
   /**
    * @type {?string}
-   * @export
    */
   this.displaywindowUrl = null;
 
   /**
    * @type {?string}
-   * @export
    */
   this.displaywindowWidth = '50vw';
 }
@@ -680,7 +642,6 @@ export function AbstractAppController(config, map, $scope, $injector) {
 /**
  * @return {boolean} Return true if a user exists and its 'is_password_changed' value is explicitly set
  *     to false.
- * @export
  */
 AbstractAppController.prototype.userMustChangeItsPassword = function() {
   return this.gmfUser.is_password_changed === false;
@@ -702,7 +663,6 @@ function getLayerByLabels(layers, labels) {
 
 /**
  * @param {string} lang Language code.
- * @export
  */
 AbstractAppController.prototype.switchLanguage = function(lang) {
   console.assert(lang in this.langUrls);

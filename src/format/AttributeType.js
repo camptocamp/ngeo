@@ -3,7 +3,6 @@
 
 /**
  * @enum {string}
- * @export
  */
 export default {
   /**

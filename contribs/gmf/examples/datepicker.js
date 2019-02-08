@@ -32,7 +32,6 @@ function MainController($scope, ngeoWMSTime) {
 
   /**
    * @type {import('ngeo/datasource/OGC.js').TimeProperty}
-   * @export
    */
   this.wmsTimeRangeMode = {
     widget: TimePropertyWidgetEnum.DATEPICKER,
@@ -47,7 +46,6 @@ function MainController($scope, ngeoWMSTime) {
 
   /**
    * @type {import('ngeo/datasource/OGC.js').TimeProperty}
-   * @export
    */
   this.wmsTimeValueMode = {
     widget: /** @type {TimePropertyWidgetEnum} */ ('datepicker'),
@@ -62,13 +60,11 @@ function MainController($scope, ngeoWMSTime) {
 
   /**
    * @type {string}
-   * @export
    */
   this.value;
 
   /**
    * @type {string}
-   * @export
    */
   this.rangeValue;
 

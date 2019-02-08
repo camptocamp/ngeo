@@ -168,37 +168,31 @@ function Controller($scope, $timeout, gettextCatalog,
 
   /**
    * @type {boolean}
-   * @export
    */
   this.active;
 
   /**
    * @type {import("ol/Feature.js").default}
-   * @export
    */
   this.feature;
 
   /**
    * @type {string}
-   * @export
    */
   this.geomType;
 
   /**
    * @type {number}
-   * @export
    */
   this.layerNodeId;
 
   /**
    * @type {import("ol/Map.js").default}
-   * @export
    */
   this.map;
 
   /**
    * @type {import("ol/Collection.js").default.<import("ol/Feature.js").default>}
-   * @export
    */
   this.sketchFeatures;
 
@@ -237,13 +231,11 @@ function Controller($scope, $timeout, gettextCatalog,
 
   /**
    * @type {Array.<!import('gmf/objectediting/toolsComponent.js').ObjectEditingQueryableLayerInfo>}
-   * @export
    */
   this.queryableLayersInfo;
 
   /**
    * @type {import('gmf/objectediting/toolsComponent.js').ObjectEditingQueryableLayerInfo}
-   * @export
    */
   this.selectedQueryableLayerInfo;
 
@@ -252,25 +244,21 @@ function Controller($scope, $timeout, gettextCatalog,
    * when a tool requires it, which is managed in the `gmf-objecteditingtools`
    * component.
    * @type {boolean}
-   * @export
    */
   this.queryableLayerListShown = false;
 
   /**
    * @type {boolean}
-   * @export
    */
   this.copyFromActive = false;
 
   /**
    * @type {boolean}
-   * @export
    */
   this.deleteFromActive = false;
 
   /**
    * @type {boolean}
-   * @export
    */
   this.featureHasGeom;
 
@@ -309,7 +297,6 @@ function Controller($scope, $timeout, gettextCatalog,
 
   /**
    * @type {string}
-   * @export
    */
   this.process = ObjecteditingProcessType.ADD;
 
@@ -366,13 +353,11 @@ function Controller($scope, $timeout, gettextCatalog,
   /**
    * Flag that is toggled while a request is pending.
    * @type {boolean}
-   * @export
    */
   this.pending = false;
 
   /**
    * @type {boolean}
-   * @export
    */
   this.dirty = false;
 
@@ -413,7 +398,6 @@ function Controller($scope, $timeout, gettextCatalog,
 
   /**
    * @type {boolean}
-   * @export
    */
   this.toolsActive = false;
 
@@ -507,7 +491,6 @@ Controller.prototype.$onInit = function() {
 
 /**
  * Delete the feature after asking for a confirmation.
- * @export
  */
 Controller.prototype.delete = function() {
   const gettextCatalog = this.gettextCatalog_;
@@ -531,7 +514,6 @@ Controller.prototype.delete = function() {
 
 /**
  * Save the current modifications.
- * @export
  */
 Controller.prototype.save = function() {
 
@@ -570,7 +552,6 @@ Controller.prototype.save = function() {
 
 /**
  * Undo the latest modifications.
- * @export
  */
 Controller.prototype.undo = function() {
 
@@ -592,7 +573,6 @@ Controller.prototype.undo = function() {
 
 /**
  * @return {boolean} Whether the state is INSERT or not.
- * @export
  */
 Controller.prototype.isStateInsert = function() {
   return this.state_ === ObjecteditingState.INSERT;

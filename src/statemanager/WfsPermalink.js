@@ -175,7 +175,6 @@ export function WfsPermalinkService(
 
 /**
  * Clear the results.
- * @export
  */
 WfsPermalinkService.prototype.clear = function() {
   this.clearResult_();
@@ -188,7 +187,6 @@ WfsPermalinkService.prototype.clear = function() {
  *
  * @param {WfsPermalinkData} queryData Query data for the WFS request.
  * @param {import("ol/Map.js").default} map The ol3 map object to get the current projection from.
- * @export
  */
 WfsPermalinkService.prototype.issue = function(queryData, map) {
   console.assert(this.url_,

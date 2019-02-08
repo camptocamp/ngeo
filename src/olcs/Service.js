@@ -42,7 +42,6 @@ export const OlcsService = class {
   }
 
   /**
-   * @export
    * @param {import('olcs/contrib/Manager.js').default} manager Manager.
    */
   initialize(manager) {
@@ -58,7 +57,6 @@ export const OlcsService = class {
   }
 
   /**
-   * @export
    * @return {import('olcs/contrib/Manager.js').default|undefined} the manager.
    */
   getManager() {

@@ -65,13 +65,11 @@ function Controller($scope, ngeoFeatureHelper) {
 
   /**
    * @type {string}
-   * @export
    */
   this.uid = olUtilGetUid(this);
 
   /**
    * @type {?import("ol/Feature.js").default}
-   * @export
    */
   this.feature;
 
@@ -89,19 +87,16 @@ function Controller($scope, ngeoFeatureHelper) {
 
   /**
    * @type {string|undefined}
-   * @export
    */
   this.color = undefined;
 
   /**
    * @type {string|undefined}
-   * @export
    */
   this.label = undefined;
 
   /**
    * @type {string|undefined}
-   * @export
    */
   this.measure = undefined;
 
@@ -118,7 +113,6 @@ function Controller($scope, ngeoFeatureHelper) {
 
   /**
    * @type {string|undefined}
-   * @export
    */
   this.type;
 
@@ -206,7 +200,6 @@ Controller.prototype.handleColorSet_ = function(newColor) {
 /**
  * @param {number|undefined} value A name value to set or undefined to get.
  * @return {number} The angle of the feature.
- * @export
  */
 Controller.prototype.getSetAngle = function(value) {
   return /** @type number */ (this.getSetProperty_(ngeoFormatFeatureProperties.ANGLE, value));
@@ -216,7 +209,6 @@ Controller.prototype.getSetAngle = function(value) {
 /**
  * @param {string|undefined} value A name value to set or undefined to get.
  * @return {string} The name of the feature.
- * @export
  */
 Controller.prototype.getSetName = function(value) {
   return /** @type string */ (this.getSetProperty_(ngeoFormatFeatureProperties.NAME, value));
@@ -226,7 +218,6 @@ Controller.prototype.getSetName = function(value) {
  * @param {boolean|undefined} value A value to set or undefined for the
  *     purpose of showing the attribute labels or not.
  * @return {boolean} Whether to show the labels or not.
- * @export
  */
 Controller.prototype.getSetShowLabel = function(value) {
   return /** @type boolean */ (this.getSetProperty_(ngeoFormatFeatureProperties.SHOW_LABEL, value));
@@ -235,7 +226,6 @@ Controller.prototype.getSetShowLabel = function(value) {
 /**
  * @param {number|undefined} value A stroke value to set or undefined to get.
  * @return {number} The stroke of the feature.
- * @export
  */
 Controller.prototype.getSetOpacity = function(value) {
   return /** @type number */ (this.getSetProperty_(ngeoFormatFeatureProperties.OPACITY, value));
@@ -246,7 +236,6 @@ Controller.prototype.getSetOpacity = function(value) {
  * @param {boolean|undefined} value A value to set or undefined to get for the
  *     purpose of showing the geometry measurements or not.
  * @return {boolean} Whether to show the measurements or not.
- * @export
  */
 Controller.prototype.getSetShowMeasure = function(value) {
   return /** @type boolean */ (this.getSetProperty_(ngeoFormatFeatureProperties.SHOW_MEASURE, value));
@@ -256,7 +245,6 @@ Controller.prototype.getSetShowMeasure = function(value) {
 /**
  * @param {number|undefined} value A size value to set or undefined to get.
  * @return {number} The size of the feature.
- * @export
  */
 Controller.prototype.getSetSize = function(value) {
   return /** @type number */ (this.getSetProperty_(ngeoFormatFeatureProperties.SIZE, value));
@@ -266,7 +254,6 @@ Controller.prototype.getSetSize = function(value) {
 /**
  * @param {number|undefined} value A stroke value to set or undefined to get.
  * @return {number} The stroke of the feature.
- * @export
  */
 Controller.prototype.getSetStroke = function(value) {
   return /** @type number */ (this.getSetProperty_(ngeoFormatFeatureProperties.STROKE, value));

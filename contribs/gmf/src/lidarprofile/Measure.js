@@ -31,7 +31,6 @@ export default class {
 
   /**
    * Clear the current measure
-   * @export
    */
   clearMeasure() {
     this.pStart_ = {};
@@ -51,7 +50,6 @@ export default class {
 
   /**
    * Activate the measure tool
-   * @export
    */
   setMeasureActive() {
     const svg = d3select('#gmf-lidarprofile-container svg.lidar-svg');

@@ -122,7 +122,6 @@ export class LidarprofileConfigService {
   /**
    * Initialize the service variables from Pytree profile_config_gmf2 route
    * @return {angular.IPromise} configuration values
-   * @export
    */
   initProfileConfig() {
     return this.$http_.get(`${this.pytreeLidarprofileJsonUrl}/profile/config`).then((resp) => {

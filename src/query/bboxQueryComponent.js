@@ -39,7 +39,7 @@ const module = angular.module('ngeoBboxQuery', [
  *
  * @param {angular.IScope} $rootScope The root scope.
  * @param {import("ngeo/query/MapQuerent.js").MapQuerent} ngeoMapQuerent The ngeo map querent service.
- * @param {import("ngeo/query/Keyboard.js").Keyboard} ngeoQueryKeyboard The ngeo query keyboard service.
+ * @param {import("ngeo/query/Keyboard.js").QueryKeyboard} ngeoQueryKeyboard The ngeo query keyboard service.
  * @return {angular.IDirective} The Directive Definition Object.
  * @ngInject
  * @ngdoc directive

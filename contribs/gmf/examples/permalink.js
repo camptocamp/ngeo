@@ -47,7 +47,6 @@ module.value('gmfPermalinkOptions', {
 function MainController() {
   /**
    * @type {import("ol/Map.js").default}
-   * @export
    */
   this.map = new olMap({
     layers: [

@@ -291,7 +291,6 @@ class ModifyRectangle extends olInteractionPointer {
   /**
    * @param {import("ol/MapBrowserPointerEvent.js").default} evt Event.
    * @return {boolean} Start drag sequence?
-   * @this {import("ngeo/interaction/ModifyRectangle.js").default}
    * @private
    */
   handleDown_(evt) {
@@ -312,7 +311,6 @@ class ModifyRectangle extends olInteractionPointer {
 
   /**
    * @param {import("ol/MapBrowserPointerEvent.js").default} evt Event.
-   * @this {import("ngeo/interaction/ModifyRectangle.js").default}
    * @private
    */
   handleDrag_(evt) {
@@ -381,7 +379,6 @@ class ModifyRectangle extends olInteractionPointer {
   /**
    * @param {import("ol/MapBrowserPointerEvent.js").default} evt Event.
    * @return {boolean} Stop drag sequence?
-   * @this {import("ngeo/interaction/ModifyRectangle.js").default}
    * @private
    */
   handleUp_(evt) {

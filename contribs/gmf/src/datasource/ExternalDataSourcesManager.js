@@ -157,7 +157,6 @@ export class ExternalDatSourcesManager {
 
   /**
    * @return {!import("ngeo/datasource/FileGroup.js").default} File group.
-   * @export
    */
   get fileGroup() {
     return this.fileGroup_;
@@ -199,7 +198,6 @@ export class ExternalDatSourcesManager {
 
   /**
    * @return {!Array.<!import("ngeo/datasource/WMSGroup.js").default>} List of WMS groups.
-   * @export
    */
   get wmsGroups() {
     return this.wmsGroupsCollection_.getArray();
@@ -208,7 +206,6 @@ export class ExternalDatSourcesManager {
   /**
    * @return {!import("ol/Collection.js").default.<!import("ngeo/datasource/WMSGroup.js").default>} Collection of WMS
    *     groups.
-   * @export
    */
   get wmsGroupsCollection() {
     return this.wmsGroupsCollection_;
@@ -250,7 +247,6 @@ export class ExternalDatSourcesManager {
 
   /**
    * @return {!Array.<!import("ngeo/datasource/OGCGroup.js").default>} List of groups for WMTS data sources.
-   * @export
    */
   get wmtsGroups() {
     return this.wmtsGroupsCollection_.getArray();
@@ -259,7 +255,6 @@ export class ExternalDatSourcesManager {
   /**
    * @return {!import("ol/Collection.js").default.<!import("ngeo/datasource/OGCGroup.js").default>} Collection of groups
    *     for WMTS data sources.
-   * @export
    */
   get wmtsGroupsCollection() {
     return this.wmtsGroupsCollection_;
@@ -318,7 +313,6 @@ export class ExternalDatSourcesManager {
    * @param {!Object} layer WMS Capability Layer object.
    * @param {!Object} capabilities  WMS Capabilities definition
    * @param {string} url The WMS service url.
-   * @export
    */
   createAndAddDataSourceFromWMSCapability(layer, capabilities, url) {
 
@@ -398,7 +392,6 @@ export class ExternalDatSourcesManager {
    * @param {!Object} layer WTMS Capability Layer object.
    * @param {!Object} capabilities  WMTS Capabilities definition
    * @param {string} wmtsUrl The WMTS capabilities url
-   * @export
    */
   createAndAddDataSourceFromWMTSCapability(layer, capabilities, wmtsUrl) {
     const id = getId(layer);
@@ -472,7 +465,6 @@ export class ExternalDatSourcesManager {
    * @param {!File} file File.
    * @param {function(boolean):*?} opt_callback Callback called with true if the file is loaded and added.
    *     Otherwise with false.
-   * @export
    */
   createAndAddDataSourceFromFile(file, opt_callback) {
     this.getFileDataSource_(file).then(
@@ -680,7 +672,6 @@ export class ExternalDatSourcesManager {
  *
  * @param {!Object} layer WMS/WMTS Capability Layer object.
  * @return {number} Data source id.
- * @export
  */
 function getId(layer) {
   return Number(olUtilGetUid(layer)) + 1000000;

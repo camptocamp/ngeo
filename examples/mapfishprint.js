@@ -66,12 +66,10 @@ const PRINT_PAPER_SIZE_ = [555, 675];
  * @param {import("ngeo/print/Service.js").CreatePrint} ngeoCreatePrint The ngeo Create Print function.
  * @param {import("ngeo/print/Utils.js").PrintUtils} ngeoPrintUtils The ngeo PrintUtils service.
  * @ngInject
- * @export
  */
 function MainController($timeout, ngeoCreatePrint, ngeoPrintUtils) {
   /**
    * @type {import("ol/Map.js").default}
-   * @export
    */
   this.map = new olMap({
     layers: [
@@ -105,7 +103,6 @@ function MainController($timeout, ngeoCreatePrint, ngeoPrintUtils) {
   /**
    * Text to display a "loading" message while waiting for the report.
    * @type {string}
-   * @export
    */
   this.printState = '';
 
@@ -157,7 +154,6 @@ function MainController($timeout, ngeoCreatePrint, ngeoPrintUtils) {
 
 
 /**
- * @export
  */
 MainController.prototype.print = function() {
   const map = this.map;

@@ -7,7 +7,6 @@ import {encodeQueryString, decodeQueryString} from 'ngeo/utils.js';
  * @param {angular.IHttpService} $http Angular http service.
  * @constructor
  * @ngInject
- * @export
  * @ngname gmfFulltextSearch
  */
 export function FulltextSearchService($injector, $http) {

@@ -41,39 +41,33 @@ function Controller($element, $sce, $timeout, gettextCatalog, ngeoCreatePopup, n
 
   /**
    * @type {?import("ol/Map.js").default}
-   * @export
    */
   this.map;
 
   /**
    * @type {boolean|undefined}
-   * @export
    */
   this.external;
 
   /**
    * @type {boolean|undefined}
-   * @export
    */
   this.popup;
 
   /**
    * Visibility that is set to true when a new msg is there.
    * @type {boolean}
-   * @export
    */
   this.visibility = false;
 
   /**
    * Trusted html messages that can be displayed as html.
    * @type {string|undefined}
-   * @export
    */
   this.msg;
 
   /**
    * @type {!Array<string>}
-   * @export
    */
   this.msgs_ = [];
 

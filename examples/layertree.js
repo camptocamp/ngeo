@@ -61,13 +61,11 @@ module.component('appLayertree', layertreeComponent);
  * @param {function(Object):import("ol/layer/Layer.js").default} appGetLayer Get layer service.
  * @param {import("ngeo/message/Popup.js").PopupFactory} ngeoCreatePopup Popup service.
  * @ngInject
- * @export
  */
 function LayertreeController($http, $sce, appGetLayer, ngeoCreatePopup) {
 
   /**
    * @type {Object|undefined}
-   * @export
    */
   this.tree = undefined;
 
@@ -113,7 +111,6 @@ function LayertreeController($http, $sce, appGetLayer, ngeoCreatePopup) {
  * be associated to the node (because it's not a leaf).
  * @param {Object} node Node object.
  * @return {import("ol/layer/Layer.js").default} The layer for this node.
- * @export
  */
 LayertreeController.prototype.getLayer = function(node) {
   return this.getLayer_(node);
@@ -123,7 +120,6 @@ LayertreeController.prototype.getLayer = function(node) {
 /**
  * @param {Object} node Tree node.
  * @param {import("ol/layer/Layer.js").default} layer Layer.
- * @export
  */
 LayertreeController.prototype.onButtonClick = function(node, layer) {
   const layerType = node['layerType'];
@@ -221,7 +217,6 @@ function MainController() {
 
   /**
    * @type {import("ol/Map.js").default}
-   * @export
    */
   this.map = new olMap({
     layers: [

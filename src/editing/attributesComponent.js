@@ -88,21 +88,18 @@ function Controller($scope, ngeoEventHelper) {
   /**
    * The list of attributes to create the form with.
    * @type {Array.<import('ngeo/format/Attribute.js').Attribute>}
-   * @export
    */
   this.attributes;
 
   /**
    * Whether the fieldset should be disabled or not.
    * @type {boolean}
-   * @export
    */
   this.disabled = false;
 
   /**
    * The feature containing the values.
    * @type {import("ol/Feature.js").default}
-   * @export
    */
   this.feature;
 
@@ -110,7 +107,6 @@ function Controller($scope, ngeoEventHelper) {
    * The properties bound to the form, initialized with the inner properties
    * of the feature.
    * @type {?Object.<string, *>}
-   * @export
    */
   this.properties;
 
@@ -158,7 +154,6 @@ Controller.prototype.$onInit = function() {
 /**
  * Called when an input node value changes
  * @param {string} name Attribute name
- * @export
  */
 Controller.prototype.handleInputChange = function(name) {
   this.updating_ = true;

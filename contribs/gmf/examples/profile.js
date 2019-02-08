@@ -47,13 +47,11 @@ module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 function MainController($scope, ngeoFeatureOverlayMgr) {
   /**
    * @type {import("ol/geom/LineString.js").default}
-   * @export
    */
   this.profileLine = null;
 
   /**
    * @type {Object.<string, import('gmf/profile/component.js').ProfileLineConfiguration>}
-   * @export
    */
   this.profileLinesconfiguration = {
     'aster': {
@@ -70,7 +68,6 @@ function MainController($scope, ngeoFeatureOverlayMgr) {
 
   /**
    * @type {import("ol/Map.js").default}
-   * @export
    */
   this.map = new olMap({
     layers: [
@@ -109,7 +106,6 @@ function MainController($scope, ngeoFeatureOverlayMgr) {
   /**
    * Draw line interaction.
    * @type {import("ol/interaction/Draw.js").default}
-   * @export
    */
   this.drawLine = new olInteractionDraw({
     type: /** @type {import("ol/geom/GeometryType.js").default} */ ('LineString'),
@@ -121,7 +117,6 @@ function MainController($scope, ngeoFeatureOverlayMgr) {
 
   /**
    * Toggle activation of the draw line interaction.
-   * @export
    */
   this.toggleDrawLineActive = function() {
     if (this.drawLine.getActive()) {

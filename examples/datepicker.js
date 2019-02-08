@@ -29,7 +29,6 @@ function MainController(ngeoTime) {
 
   /**
    * @type {import('ngeo/datasource/OGC.js').TimeProperty}
-   * @export
    */
   this.timeRangeMode = {
     widget: TimePropertyWidgetEnum.DATEPICKER,
@@ -43,7 +42,6 @@ function MainController(ngeoTime) {
 
   /**
    * @type {import('ngeo/datasource/OGC.js').TimeProperty}
-   * @export
    */
   this.timeValueMode = {
     widget: TimePropertyWidgetEnum.DATEPICKER,
@@ -57,13 +55,11 @@ function MainController(ngeoTime) {
 
   /**
    * @type {string}
-   * @export
    */
   this.value;
 
   /**
    * @type {string}
-   * @export
    */
   this.rangeValue;
 

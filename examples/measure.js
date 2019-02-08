@@ -71,38 +71,32 @@ function MeasuretoolsController($scope, $compile, $sce,
 
   /**
    * @type {import("ol/Map.js").default}
-   * @export
    */
   this.map;
 
   /**
    * @type {string}
-   * @export
    */
   this.lang;
 
   /**
    * @type {Object}
-   * @export
    */
   this.measureStartMsg = null;
 
   /**
    * @type {Object}
-   * @export
    */
   this.measureLengthContinueMsg = null;
 
 
   /**
    * @type {Object}
-   * @export
    */
   this.measureAreaContinueMsg = null;
 
   /**
    * @type {Object}
-   * @export
    */
   this.measureAzimutContinueMsg = null;
 
@@ -173,7 +167,6 @@ function MeasuretoolsController($scope, $compile, $sce,
 
   /**
    * @type {import("ngeo/interaction/MeasureLength.js").default}
-   * @export
    */
   this.measureLength = new ngeoInteractionMeasureLength($filter('ngeoUnitPrefix'), gettextCatalog, {
     sketchStyle: style,
@@ -186,7 +179,6 @@ function MeasuretoolsController($scope, $compile, $sce,
 
   /**
    * @type {import("ngeo/interaction/MeasureArea.js").default}
-   * @export
    */
   this.measureArea = new ngeoInteractionMeasureArea($filter('ngeoUnitPrefix'), gettextCatalog, {
     sketchStyle: style,
@@ -199,7 +191,6 @@ function MeasuretoolsController($scope, $compile, $sce,
 
   /**
    * @type {import("ngeo/interaction/MeasureAzimut.js").default}
-   * @export
    */
   this.measureAzimut = new ngeoInteractionMeasureAzimut(
     $filter('ngeoUnitPrefix'), $filter('ngeoNumber'), {
@@ -237,13 +228,11 @@ function MainController() {
 
   /**
    * @type {string}
-   * @export
    */
   this.lang = 'en';
 
   /**
    * @type {import("ol/Map.js").default}
-   * @export
    */
   this.map = new olMap({
     layers: [

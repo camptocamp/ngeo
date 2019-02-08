@@ -174,7 +174,6 @@ function Controller($scope, $filter, ngeoDebounce, gmfRaster, gettextCatalog) {
 
   /**
    * @type {!string|undefined}
-   * @export
    */
   this.elevation;
 
@@ -208,7 +207,6 @@ function Controller($scope, $filter, ngeoDebounce, gmfRaster, gettextCatalog) {
 
   /**
    * @type {boolean}
-   * @export
    */
   this.loading = false;
 }
@@ -358,13 +356,11 @@ module.component('gmfElevationwidget', rasterWidgetComponent);
 function WidgetController() {
   /**
    * @type {!import("ol/Map.js").default}
-   * @export
    */
   this.map;
 
   /**
    * @type {!Array.<string>}
-   * @export
    */
   this.layers;
 
@@ -376,13 +372,11 @@ function WidgetController() {
 
   /**
    * @type {boolean}
-   * @export
    */
   this.active;
 
   /**
    * @type {string}
-   * @export
    */
   this.selectedElevationLayer;
 }
