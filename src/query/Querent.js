@@ -69,6 +69,7 @@ import olSourceImageWMS from 'ol/source/ImageWMS.js';
  * WFS GetFeature requests with `resultType = 'hits'` are made first. If
  * the number of records for the request would exceed the limit, then
  * no features are returned.
+ * @property {boolean} [bboxAsGETParam=false] Pass the queried bbox as a parameter of the GET query on WFS requests.
  */
 
 

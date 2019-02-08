@@ -50,7 +50,7 @@ function MainController($rootScope, ngeoOlcsService) {
 
   /**
    * @export
-   * @type {olcs.contrib.Manager}
+   * @type {import('olcs/contrib/Manager.js').default}
    */
   this.ol3dm = new ngeoOlcsManager(cesiumUrl, $rootScope, {
     map: this.map

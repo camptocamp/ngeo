@@ -47,7 +47,7 @@ export class MapQuerent {
    *
    * @param {angular.auto.IInjectorService} $injector Main injector.
    * @param {import("ngeo/datasource/DataSources.js").DataSource} ngeoDataSources Ngeo data sources service.
-   * @param {import("ngeo/datasource/Helper.js").Helper} ngeoDataSourcesHelper Ngeo data
+   * @param {import("ngeo/datasource/Helper.js").DatasourceHelper} ngeoDataSourcesHelper Ngeo data
    *     sources helper service.
    * @param {import("ngeo/misc/FeatureHelper.js").FeatureHelper} ngeoFeatureHelper Ngeo feature
    *     helper service.
@@ -77,7 +77,7 @@ export class MapQuerent {
     this.featureHelper_ = ngeoFeatureHelper;
 
     /**
-     * @type {import("ngeo/datasource/Helper.js").Helper}
+     * @type {import("ngeo/datasource/Helper.js").DatasourceHelper}
      * @private
      */
     this.ngeoDataSourcesHelper_ = ngeoDataSourcesHelper;
