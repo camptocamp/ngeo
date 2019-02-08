@@ -26,7 +26,7 @@
       opacity: 1;
     }
   }
-  .popover-content {
+  .popover-body {
     height: 90vh;
     -webkit-overflow-scrolling: touch;
   }
@@ -46,7 +46,7 @@
       max-height: calc(100vh - (#{$fullscreenpopup-tablet-top} + #{$app-margin}));
       height: $fullscreenpopup-tablet-width + $map-tools-size;
     }
-    .popover-content {
+    .popover-body {
       overflow: auto;
       height: calc(100% - 4 * #{$app-margin});
     }
