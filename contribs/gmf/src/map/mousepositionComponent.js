@@ -97,19 +97,16 @@ module.component('gmfMouseposition', mapMousepositionComponent);
 function Controller($element, $filter, $scope, gettextCatalog) {
   /**
    * @type {!import("ol/Map.js").default}
-   * @export
    */
   this.map;
 
   /**
    * @type {!Array.<!MousePositionProjection>}
-   * @export
    */
   this.projections;
 
   /**
    * @type {!MousePositionProjection}
-   * @export
    */
   this.projection;
 
@@ -193,7 +190,6 @@ Controller.prototype.initOlControl_ = function() {
 
 /**
  * @param {MousePositionProjection} projection The new projection to use.
- * @export
  */
 Controller.prototype.setProjection = function(projection) {
   this.control_.setProjection(olProj.get(projection.code));

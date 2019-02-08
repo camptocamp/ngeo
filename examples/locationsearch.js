@@ -46,7 +46,6 @@ function SearchController(ngeoCreateLocationSearchBloodhound) {
 
   /**
    * @type {import("ol/Map.js").default}
-   * @export
    */
   this.map;
 
@@ -57,7 +56,6 @@ function SearchController(ngeoCreateLocationSearchBloodhound) {
 
   /**
    * @type {Twitter.Typeahead.Options}
-   * @export
    */
   this.options = /** @type {Twitter.Typeahead.Options} */ ({
     highlight: true,
@@ -67,7 +65,6 @@ function SearchController(ngeoCreateLocationSearchBloodhound) {
 
   /**
    * @type {Array.<Twitter.Typeahead.Dataset>}
-   * @export
    */
   this.datasets = [{
     source: bloodhoundEngine.ttAdapter(),
@@ -87,7 +84,6 @@ function SearchController(ngeoCreateLocationSearchBloodhound) {
 
   /**
    * @type {import('ngeo/search/searchDirective.js').SearchDirectiveListeners}
-   * @export
    */
   this.listeners = /** @type {import('ngeo/search/searchDirective.js').SearchDirectiveListeners} */ ({
     select: select_.bind(this)
@@ -147,7 +143,6 @@ appmodule.controller('AppSearchController', SearchController);
 function MainController() {
   /**
    * @type {import("ol/Map.js").default}
-   * @export
    */
   this.map = new olMap({
     layers: [

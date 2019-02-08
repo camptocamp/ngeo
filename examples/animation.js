@@ -44,7 +44,6 @@ module.component('appMap', mapComponent);
 function MainController($timeout) {
   /**
    * @type {import("ol/Map.js").default}
-   * @export
    */
   this.map = new olMap({
     layers: [
@@ -60,7 +59,6 @@ function MainController($timeout) {
 
   /**
    * @type {boolean}
-   * @export
    */
   this.open = false;
 

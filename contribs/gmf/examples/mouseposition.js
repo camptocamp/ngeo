@@ -33,7 +33,6 @@ function MainController() {
 
   /**
    * @type {Array<import('gmf/map/mousepositionComponent.js').MousePositionProjection>}
-   * @export
    */
   this.projections = [{
     code: EPSG2056,
@@ -51,7 +50,6 @@ function MainController() {
 
   /**
    * @type {import("ol/Map.js").default}
-   * @export
    */
   this.map = new olMap({
     layers: [

@@ -50,7 +50,6 @@ module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 function MainController() {
   /**
    * @type {import("ol/Map.js").default}
-   * @export
    */
   this.map = new olMap({
     layers: [
@@ -72,7 +71,6 @@ function MainController() {
   /**
    * FeatureStyle used by the gmf.query.windowComponent
    * @type {import("ol/style/Style.js").default}
-   * @export
    */
   this.featureStyle = new olStyleStyle({
     fill: fill,

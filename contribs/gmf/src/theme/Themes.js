@@ -274,7 +274,6 @@ export class ThemesService extends olEventsEventTarget {
    * Get a theme object by its name.
    * @param {string} themeName Theme name.
    * @return {angular.IPromise.<import('gmf/themes.js').GmfTheme>} Promise.
-   * @export
    */
   getThemeObject(themeName) {
     return this.promise_.then(
@@ -290,7 +289,6 @@ export class ThemesService extends olEventsEventTarget {
   /**
    * Get an array of theme objects.
    * @return {angular.IPromise.<!Array.<!import('gmf/themes.js').GmfTheme>>} Promise.
-   * @export
    */
   getThemesObject() {
     return this.promise_.then(
@@ -319,7 +317,6 @@ export class ThemesService extends olEventsEventTarget {
   /**
    * Get the `ogcServers` object.
    * @return {angular.IPromise.<!import('gmf/themes.js').GmfOgcServers>} Promise.
-   * @export
    */
   getOgcServersObject() {
     console.assert(this.promise_ !== null);
@@ -374,7 +371,6 @@ export class ThemesService extends olEventsEventTarget {
   /**
    * @param {number=} opt_roleId The role id to send in the request.
    * Load themes from the "themes" service.
-   * @export
    */
   loadThemes(opt_roleId) {
     console.assert(this.treeUrl_, 'gmfTreeUrl should be defined.');
@@ -521,7 +517,6 @@ export function getFlatNodes(node, nodes) {
  * Get the snapping configuration object from a Layertree controller
  * @param {import('gmf/themes.js').GmfLayer} node Layer node from the theme.
  * @return {?import('gmf/themes.js').GmfSnappingConfig} Snapping configuration, if found.
- * @export
  */
 export function getSnappingConfig(node) {
   const config = (node.metadata && node.metadata.snappingConfig !== undefined) ?

@@ -142,7 +142,6 @@ export class MapQuerent {
 
   /**
    * @param {import('ngeo/query/Querent.js').IssueGetFeaturesOptions} options Options.
-   * @export
    */
   issue(options) {
     const action = options.action ? options.action : ngeoQueryAction.REPLACE;
@@ -180,7 +179,6 @@ export class MapQuerent {
    * Clear result, i.e. clear all 'result source' from their features and other
    * information.
    * @param {boolean} keep Whether to keep the existing features and sources
-   * @export
    */
   clear(keep = false) {
 

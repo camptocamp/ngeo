@@ -93,33 +93,28 @@ function Controller($scope) {
 
   /**
    * @type {import("ngeo/grid/Config.js").default}
-   * @export
    */
   this.configuration;
 
   /**
    * @type {Object.<string, Object>}
-   * @export
    */
   this.selectedRows;
 
   /**
    * The name of the column used to sort the grid.
    * @type {string}
-   * @export
    */
   this.sortedBy;
 
   /**
    * @type {boolean}
-   * @export
    */
   this.sortAscending = true;
 
   /**
    * Configuration object for float-thead.
    * @type {Object}
-   * @export
    */
   this.floatTheadConfig = {
     'scrollContainer': function($table) {
@@ -143,7 +138,6 @@ Controller.prototype.$onInit = function() {
  * on).
  * @param {string} columnName The name of the column that should be used to
  *    sort the data.
- * @export
  */
 Controller.prototype.sort = function(columnName) {
   this.sortAscending = this.sortedBy === columnName ? !this.sortAscending : true;
@@ -166,7 +160,6 @@ Controller.prototype.sort = function(columnName) {
  * Handler for clicks on a row.
  * @param {Object} attributes An entry/row.
  * @param {JQueryEventObject} event Event.
- * @export
  */
 Controller.prototype.clickRow = function(attributes, event) {
   const shiftKey = this.isShiftKeyOnly_(event);
@@ -260,7 +253,6 @@ Controller.prototype.selectRange_ = function(attributes) {
  * Prevent the default browser behaviour of selecting text
  * when selecting multiple rows with SHIFT or CTRL/Meta.
  * @param {JQueryEventObject} event Event.
- * @export
  */
 Controller.prototype.preventTextSelection = function(event) {
   const shiftKey = this.isShiftKeyOnly_(event);

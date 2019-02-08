@@ -48,19 +48,16 @@ function MainController($timeout, gmfThemes, gmfXSDAttributes) {
 
   /**
    * @type {?Array.<import('ngeo/format/Attribute.js').Attribute>}
-   * @export
    */
   this.attributes = null;
 
   /**
    * @type {?import("ol/Feature.js").default}
-   * @export
    */
   this.feature = null;
 
   /**
    * @type {Array.<import('gmf/themes.js').GmfLayer>}
-   * @export
    */
   this.layers = [];
 
@@ -95,7 +92,6 @@ function MainController($timeout, gmfThemes, gmfXSDAttributes) {
 /**
  * @param {import('gmf/themes.js').GmfLayer|undefined} value A layer or undefined to get layers.
  * @return {Array.<import('gmf/themes.js').GmfLayer>} All layers in all themes.
- * @export
  */
 MainController.prototype.getSetLayers = function(value) {
   if (value !== undefined && value !== null) {
@@ -107,7 +103,6 @@ MainController.prototype.getSetLayers = function(value) {
 
 /**
  * @param {Array.<import('ngeo/format/Attribute.js').Attribute>} attributes Attributes.
- * @export
  */
 MainController.prototype.setAttributes_ = function(attributes) {
 
@@ -125,7 +120,6 @@ MainController.prototype.setAttributes_ = function(attributes) {
 
 /**
  * @return {string} Type of geometry.
- * @export
  */
 MainController.prototype.getGeomType = function() {
   let type = 'N/A';
@@ -143,7 +137,6 @@ MainController.prototype.getGeomType = function() {
  * Just for this example
  * @param {import('gmf/themes.js').GmfTheme|import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer} node A theme, group or layer node.
  * @param {Array.<import('gmf/themes.js').GmfTheme|import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer>} nodes An Array of nodes.
- * @export
  */
 MainController.prototype.getDistinctFlatNodes_ = function(node, nodes) {
   let i;

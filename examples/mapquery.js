@@ -67,7 +67,6 @@ function QueryresultController(ngeoQueryResult) {
 
   /**
    * @type {import('ngeo/query/MapQuerent.js').QueryResult}
-   * @export
    */
   this.result = ngeoQueryResult;
 
@@ -89,13 +88,11 @@ function MainController($scope, ngeoDataSources, ngeoToolActivateMgr) {
 
   /**
    * @type {boolean}
-   * @export
    */
   this.dummyActive = false;
 
   /**
    * @type {boolean}
-   * @export
    */
   this.queryActive = true;
 
@@ -117,7 +114,6 @@ function MainController($scope, ngeoDataSources, ngeoToolActivateMgr) {
 
   /**
    * @type {import("ol/Map.js").default}
-   * @export
    */
   this.map = new olMap({
     layers: [
@@ -171,7 +167,6 @@ function MainController($scope, ngeoDataSources, ngeoToolActivateMgr) {
 /**
  * @param {boolean|undefined} val Value.
  * @return {boolean|undefined} Value.
- * @export
  */
 MainController.prototype.getSetDummyActive = function(val) {
   if (val !== undefined) {

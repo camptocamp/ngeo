@@ -73,7 +73,6 @@ const REFRESH_PARAM = 'random';
  * @param {string=} opt_crossOrigin crossOrigin.
  * @param {Object=} opt_customOptions Some initial options.
  * @return {import("ol/layer/Image.js").default} WMS Layer.
- * @export
  */
 LayerHelper.prototype.createBasicWMSLayer = function(sourceURL,
   sourceLayersName, sourceFormat, opt_serverType, opt_time, opt_params, opt_crossOrigin, opt_customOptions) {
@@ -112,7 +111,6 @@ LayerHelper.prototype.createBasicWMSLayer = function(sourceURL,
  * @param {import("ngeo/datasource/OGC.js").default} dataSource OGC data source.
  * @param {string=} opt_crossOrigin crossOrigin.
  * @return {import("ol/layer/Image.js").default} WMS Layer.
- * @export
  */
 LayerHelper.prototype.createBasicWMSLayerFromDataSource = function(
   dataSource, opt_crossOrigin
@@ -159,7 +157,6 @@ LayerHelper.prototype.createBasicWMSLayerFromDataSource = function(
  * @param {Object=} opt_customOptions Some initial options.
  * @return {angular.IPromise.<import("ol/layer/Tile.js").default>} A Promise with a layer (with source) on success,
  *     no layer else.
- * @export
  */
 LayerHelper.prototype.createWMTSLayerFromCapabilitites = function(capabilitiesURL, layerName, opt_matrixSet, opt_dimensions, opt_customOptions) {
   const parser = new olFormatWMTSCapabilities();
@@ -205,7 +202,6 @@ LayerHelper.prototype.createWMTSLayerFromCapabilitites = function(capabilitiesUR
  * @param {!Object} layerCap The layer capability object
  * @param {Object.<string, string>=} opt_dimensions WMTS dimensions.
  * @return {!import("ol/layer/Tile.js").default} WMTS layer
- * @export
  */
 LayerHelper.prototype.createWMTSLayerFromCapabilititesObj = function(
   capabilities, layerCap, opt_dimensions
@@ -238,7 +234,6 @@ LayerHelper.prototype.createWMTSLayerFromCapabilititesObj = function(
  * @param {import("ol/Collection.js").default.<import("ol/layer/Base.js").default>=} opt_layers The layer to add to the
  * returned Group.
  * @return {import("ol/layer/Group.js").default} Layer group.
- * @export
  */
 LayerHelper.prototype.createBasicGroup = function(opt_layers) {
   const group = new olLayerGroup();
@@ -257,7 +252,6 @@ LayerHelper.prototype.createBasicGroup = function(opt_layers) {
  * @param {import("ol/Map.js").default} map A map.
  * @param {string} groupName The name of the group.
  * @return {import("ol/layer/Group.js").default} The group corresponding to the given name.
- * @export
  */
 LayerHelper.prototype.getGroupFromMap = function(map, groupName) {
   const groups = map.getLayerGroup().getLayers();
@@ -284,7 +278,6 @@ LayerHelper.prototype.getGroupFromMap = function(map, groupName) {
  * of others groups.
  * @param {import("ol/layer/Base.js").default} layer The base layer, mostly a group of layers.
  * @return {Array<import("ol/layer/Layer.js").default>} Layers.
- * @export
  */
 LayerHelper.prototype.getFlatLayers = function(layer) {
   if (layer instanceof olLayerGroup) {
@@ -339,7 +332,6 @@ LayerHelper.prototype.getFlatLayers_ = function(layer, array, computedOpacity) {
  * @param {string} layerName The name of the layer we're looking for.
  * @param {Array.<import("ol/layer/Base.js").default>} layers Layers.
  * @return {?import("ol/layer/Base.js").default} Layer.
- * @export
  */
 LayerHelper.prototype.getLayerByName = function(layerName, layers) {
   let found = null;
@@ -362,7 +354,6 @@ LayerHelper.prototype.getLayerByName = function(layerName, layers) {
  * @param {import("ol/layer/Tile.js").default} layer Tile layer as returned by the
  * ngeo layerHelper service.
  * @return {string|undefined} The legend URL or undefined.
- * @export
  */
 LayerHelper.prototype.getWMTSLegendURL = function(layer) {
   // FIXME case of multiple styles ?  case of multiple legendUrl ?
@@ -392,7 +383,6 @@ LayerHelper.prototype.getWMTSLegendURL = function(layer) {
  * @param {string=} opt_srs The projection code.
  * @param {Object.<string, string>=} opt_additionalQueryString Additional query string parameters.
  * @return {string|undefined} The legend URL or undefined.
- * @export
  */
 LayerHelper.prototype.getWMSLegendURL = function(url,
   layerName, opt_scale, opt_legendRule, opt_legendWidth, opt_legendHeight,
@@ -493,7 +483,6 @@ LayerHelper.prototype.setZIndexToFirstLevelChildren = function(element, ZIndex) 
  * @param {string=} opt_time The start
  * and optionally the end datetime (for time range selection) selected by user
  * in a ISO-8601 string datetime or time interval format
- * @export
  */
 LayerHelper.prototype.updateWMSLayerState = function(layer, names, opt_time) {
   // Don't send layer without parameters, hide layer instead;
@@ -515,7 +504,6 @@ LayerHelper.prototype.updateWMSLayerState = function(layer, names, opt_time) {
  * @param {import("ol/layer/Image.js").default} layer The WMS layer.
  * @return {Array.<number>|undefined} List of query source ids, a.k.a.
  *     the data source ids this layer is composed of.
- * @export
  */
 LayerHelper.prototype.getQuerySourceIds = function(layer) {
   return /** @type {Array.<number>|undefined} */ (

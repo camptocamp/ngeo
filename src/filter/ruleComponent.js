@@ -106,26 +106,22 @@ class RuleController {
 
     /**
      * @type {!import("ngeo/map/FeatureOverlay.js").FeatureOverlay}
-     * @export
      */
     this.featureOverlay;
 
     /**
      * @type {!import("ol/Map.js").default}
-     * @export
      */
     this.map;
 
     /**
      * The original rule.
      * @type {!import("ngeo/rule/Rule.js").default}
-     * @export
      */
     this.rule;
 
     /**
      * @type {string}
-     * @export
      */
     this.toolGroup;
 
@@ -176,7 +172,6 @@ class RuleController {
      * Changes in the clone are applied back in the original rule when the
      * apply button is clicked.
      * @type {!import("ngeo/rule/Rule.js").default}
-     * @export
      */
     this.clone;
 
@@ -186,7 +181,6 @@ class RuleController {
 
     /**
      * @type {Object.<string, string>}
-     * @export
      */
     this.operators = {
       [operatorType.EQUAL_TO]: gettextCatalog.getString('Is equal to'),
@@ -209,7 +203,6 @@ class RuleController {
 
     /**
      * @type {Object.<string, string>}
-     * @export
      */
     this.operatorsShortFormat = {
       [operatorType.EQUAL_TO]: '=',
@@ -228,7 +221,6 @@ class RuleController {
      * Time property used when the rule is of type 'date|datetime' and uses
      * a range of date.
      * @type {!import('ngeo/datasource/OGC.js').TimeProperty}
-     * @export
      */
     this.timeRangeMode = {
       widget: 'datepicker',
@@ -244,7 +236,6 @@ class RuleController {
      * Time property used when the rule is of type 'date|datetime' and uses
      * a single date.
      * @type {!import('ngeo/datasource/OGC.js').TimeProperty}
-     * @export
      */
     this.timeValueMode = {
       widget: 'datepicker',
@@ -273,19 +264,16 @@ class RuleController {
 
     /**
      * @type {boolean}
-     * @export
      */
     this.drawActive = false;
 
     /**
      * @type {!import("ngeo/misc/ToolActivate.js").default}
-     * @export
      */
     this.drawToolActivate = new ngeoMiscToolActivate(this, 'drawActive');
 
     /**
      * @type {!import("ol/Collection.js").default.<!import("ol/Feature.js").default>}
-     * @export
      */
     this.drawnFeatures = new olCollection();
 
@@ -297,7 +285,6 @@ class RuleController {
 
     /**
      * @type {!import("ol/Collection.js").default.<!import("ol/Feature.js").default>}
-     * @export
      */
     this.selectedFeatures = new olCollection();
 
@@ -363,7 +350,6 @@ class RuleController {
 
     /**
      * @type {!import("ngeo/misc/ToolActivate.js").default}
-     * @export
      */
     this.modifyToolActivate = new ngeoMiscToolActivate(
       this.modify_,
@@ -372,7 +358,6 @@ class RuleController {
 
     /**
      * @type {import("ngeo/misc/ToolActivate.js").default}
-     * @export
      */
     this.rotateToolActivate = new ngeoMiscToolActivate(
       this.rotate_,
@@ -381,7 +366,6 @@ class RuleController {
 
     /**
      * @type {import("ngeo/misc/ToolActivate.js").default}
-     * @export
      */
     this.translateToolActivate = new ngeoMiscToolActivate(
       this.translate_,
@@ -391,7 +375,6 @@ class RuleController {
     /**
      * The geometry type used by the clone feature.
      * @type {?string}
-     * @export
      */
     this.geomType = null;
   }
@@ -542,7 +525,6 @@ class RuleController {
   }
 
   /**
-   * @export
    */
   toggle() {
     if (this.rule.active) {
@@ -554,7 +536,6 @@ class RuleController {
 
   /**
    * Apply the changes that were made in the original rule.
-   * @export
    */
   apply() {
     this.ngeoRuleHelper_.extendRule(this.clone, this.rule);
@@ -563,7 +544,6 @@ class RuleController {
 
   /**
    * Revert the changes that were made in the clone rule.
-   * @export
    */
   cancel() {
     this.ngeoRuleHelper_.extendRule(this.rule, this.clone);
@@ -572,7 +552,6 @@ class RuleController {
 
   /**
    * Reset both original and clone rules.
-   * @export
    */
   reset() {
     this.clone.reset();
@@ -583,7 +562,6 @@ class RuleController {
    * Called when a choice is clicked, when using a `ngeo.rule.Select` rule type.
    * Add/remove the choice to/from the `expression` of the rule.
    * @param {string} choice Choice that has been clicked.
-   * @export
    */
   toggleChoiceSelection(choice) {
     const rule = this.clone;
@@ -600,7 +578,6 @@ class RuleController {
 
   /**
    * @param {Object} date Date
-   * @export
    */
   onDateSelected(date) {
     this.clone.setExpression(date['start']);
@@ -608,7 +585,6 @@ class RuleController {
 
   /**
    * @param {Object} date Date
-   * @export
    */
   onDateRangeSelected(date) {
     this.clone.lowerBoundary = date['start'];
@@ -643,7 +619,6 @@ class RuleController {
   /**
    * @param {number} time Time.
    * @return {string} Date
-   * @export
    */
   timeToDate(time) {
     const date = new Date(time);
@@ -827,7 +802,6 @@ class RuleController {
   /**
    * Return the type of geometry used by the rule feature. Used in the template.
    * @return {string} Geometry type.
-   * @export
    */
   getRuleGeometryType() {
     const rule = this.rule;

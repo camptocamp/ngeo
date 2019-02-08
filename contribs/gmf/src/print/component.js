@@ -104,37 +104,31 @@ module.run(/* @ngInject */ ($templateCache) => {
 
 /**
  * @enum {string}
- * @export
  */
 const PrintStateEnum = {
 
   /**
    * @type {string}
-   * @export
    */
   NOT_IN_USE: 'notInUse',
 
   /**
    * @type {string}
-   * @export
    */
   PRINTING: 'printing',
 
   /**
    * @type {string}
-   * @export
    */
   ERROR_ON_REPORT: 'errorOnReport',
 
   /**
    * @type {string}
-   * @export
    */
   CAPABILITIES_NOT_LOADED: 'capabilitiesNotLoaded',
 
   /**
    * @type {string}
-   * @export
    */
   ERROR_ON_GETCAPABILITIES: 'errorOnGetCapabilities'
 };
@@ -292,31 +286,26 @@ class Controller {
 
     /**
      * @type {import("ol/Map.js").default}
-     * @export
      */
     this.map;
 
     /**
      * @type {boolean}
-     * @export
      */
     this.active;
 
     /**
      * @type {boolean}
-     * @export
      */
     this.rotateMask = false;
 
     /**
      * @type {Object.<string, string|number|boolean>!}
-     * @export
      */
     this.fieldValues = {};
 
     /**
      * @type {Array.<PrintSimpleAttributes>}
-     * @export
      */
     this.attributesOut;
 
@@ -399,7 +388,6 @@ class Controller {
 
     /**
      * @type {boolean}
-     * @export
      */
     this.scaleInput = false;
 
@@ -504,19 +492,16 @@ class Controller {
 
     /**
      * @type {PrintLayoutInfo}
-     * @export
      */
     this.layoutInfo = {};
 
     /**
      * @type {number}
-     * @export
      */
     this.rotation = 0;
 
     /**
      * @type {Array.<string>}
-     * @export
      */
     this.hiddenAttributeNames;
 
@@ -528,7 +513,6 @@ class Controller {
 
     /**
      * @type {JQuery}
-     * @export
      */
     this.rotationInput_ = $element.find('.gmf-print-rotation-input');
 
@@ -910,7 +894,6 @@ class Controller {
    * Create a print report based on the values of the 'layoutInfo' values.
    * @param {string} format An output format corresponding to one format in the
    *     capabilities document ('pdf', 'png', etc).
-   * @export
    */
   print(format) {
     // Do not print if a print task is already processing.
@@ -1021,7 +1004,6 @@ class Controller {
 
   /**
    * Cancel the current print and reset its state.
-   * @export
    */
   cancel() {
     // Cancel the latest request, if it's not finished yet.
@@ -1272,7 +1254,6 @@ class Controller {
    * Set the current layout and update all layout information with this new layout parameters.
    * @param {string!} layoutName A layout name as existing in the list of
    *     existing layouts.
-   * @export
    */
   setLayout(layoutName) {
     let layout;
@@ -1291,7 +1272,6 @@ class Controller {
    * Get or set the print scale value and adapt the zoom to match with this new scale.
    * @param {number=} opt_scale A scale value as existing in the scales list field.
    * @return {number|undefined} New scale.
-   * @export
    */
   getSetScale(opt_scale) {
     if (opt_scale !== undefined) {
@@ -1311,7 +1291,6 @@ class Controller {
   /**
    * Set the print dpi value.
    * @param {number} dpi A dpi value as existing in the dpis list field.
-   * @export
    */
   setDpi(dpi) {
     this.layoutInfo.dpi = dpi;
@@ -1323,7 +1302,6 @@ class Controller {
    * @param {string} stateEnumKey An enum key from import("gmf/print/component.js").default.PrintStateEnum.
    * @return {boolean} True if the given state matches with the current print
    *     state. False otherwise.
-   * @export
    */
   isState(stateEnumKey) {
     return this.gmfPrintState_.state === PrintStateEnum[stateEnumKey];

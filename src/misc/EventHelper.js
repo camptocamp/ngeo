@@ -26,7 +26,6 @@ export function EventHelper() {
  * to come from `ol.events`.
  * @param {number|string} uid Unique id.
  * @param {import("ol/events.js").EventsKey} key Key.
- * @export
  */
 EventHelper.prototype.addListenerKey = function(uid, key) {
   if (!this.listenerKeys_[uid]) {
@@ -39,7 +38,6 @@ EventHelper.prototype.addListenerKey = function(uid, key) {
 /**
  * Clear all listener keys from the given unique id.
  * @param {number|string} uid Unique id.
- * @export
  */
 EventHelper.prototype.clearListenerKey = function(uid) {
   this.initListenerKey_(uid);

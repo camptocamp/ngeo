@@ -39,13 +39,11 @@ function MainController(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
 
   /**
    * @type {number}
-   * @export
    */
   this.radius = 500;
 
   /**
    * @type {!import("ol/style/Style.js").default}
-   * @export
    */
   this.style = new olStyleStyle({
     text: new olStyleText({
@@ -59,7 +57,6 @@ function MainController(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
 
   /**
    * @type {import("ol/Map.js").default}
-   * @export
    */
   this.map = new olMap({
     layers: [
@@ -77,7 +74,6 @@ function MainController(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
 
   /**
    * @type {boolean}
-   * @export
    */
   this.googleStreetViewActive = true;
 
@@ -93,7 +89,6 @@ function MainController(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
 
   /**
    * @type {boolean}
-   * @export
    */
   this.dummyActive = false;
 

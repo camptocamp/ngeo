@@ -81,7 +81,6 @@ function replaceState(history, state) {
 /**
  * Get the location's current path.
  * @return {string|undefined} The path.
- * @export
  */
 StatemanagerLocation.prototype.getPath = function() {
   return this.path_;
@@ -91,7 +90,6 @@ StatemanagerLocation.prototype.getPath = function() {
 /**
  * Get the location's URI as a string
  * @return {string} The URI.
- * @export
  */
 StatemanagerLocation.prototype.getUriString = function() {
   const out = [];
@@ -134,7 +132,6 @@ StatemanagerLocation.prototype.getUriString = function() {
  * Check if a param exists in the location's URI.
  * @param {string} key Param key.
  * @return {boolean} True if the param exists.
- * @export
  */
 StatemanagerLocation.prototype.hasParam = function(key) {
   return key in this.queryData_;
@@ -145,7 +142,6 @@ StatemanagerLocation.prototype.hasParam = function(key) {
  * Check if a param exists in the fragment of the location's URI.
  * @param {string} key Param key.
  * @return {boolean} True if the param exists.
- * @export
  */
 StatemanagerLocation.prototype.hasFragmentParam = function(key) {
   return key in this.fragment_;
@@ -156,7 +152,6 @@ StatemanagerLocation.prototype.hasFragmentParam = function(key) {
  * Get a param in the location's URI.
  * @param {string} key Param key.
  * @return {string|undefined} Param value.
- * @export
  */
 StatemanagerLocation.prototype.getParam = function(key) {
   return this.queryData_[key];
@@ -167,7 +162,6 @@ StatemanagerLocation.prototype.getParam = function(key) {
  * Get a param from the fragment of the location's URI.
  * @param {string} key Param key.
  * @return {string|undefined} Param value.
- * @export
  */
 StatemanagerLocation.prototype.getFragmentParam = function(key) {
   return this.fragment_[key];
@@ -179,7 +173,6 @@ StatemanagerLocation.prototype.getFragmentParam = function(key) {
  * or if the value can not be parsed as integer, `undefined` is returned.
  * @param {string} key Param key.
  * @return {number|undefined} Param value.
- * @export
  */
 StatemanagerLocation.prototype.getParamAsInt = function(key) {
   const value = this.getParam(key);
@@ -198,7 +191,6 @@ StatemanagerLocation.prototype.getParamAsInt = function(key) {
  * `undefined` is returned.
  * @param {string} key Param key.
  * @return {number|undefined} Param value.
- * @export
  */
 StatemanagerLocation.prototype.getParamAsFloat = function(key) {
   const value = this.getParam(key);
@@ -216,7 +208,6 @@ StatemanagerLocation.prototype.getParamAsFloat = function(key) {
  * does not exist, or if the value can not be parsed as integer, `undefined` is returned.
  * @param {string} key Param key.
  * @return {number|undefined} Param value.
- * @export
  */
 StatemanagerLocation.prototype.getFragmentParamAsInt = function(key) {
   const value = this.getFragmentParam(key);
@@ -232,7 +223,6 @@ StatemanagerLocation.prototype.getFragmentParamAsInt = function(key) {
 /**
  * Get an array with all existing param's keys in the location's URI.
  * @return {Array.<string>} Param keys.
- * @export
  */
 StatemanagerLocation.prototype.getParamKeys = function() {
   const keys = [];
@@ -246,7 +236,6 @@ StatemanagerLocation.prototype.getParamKeys = function() {
 /**
  * Get an array with all existing param's keys from the fragment of the location's URI.
  * @return {Array.<string>} Param keys.
- * @export
  */
 StatemanagerLocation.prototype.getFragmentParamKeys = function() {
   const keys = [];
@@ -262,7 +251,6 @@ StatemanagerLocation.prototype.getFragmentParamKeys = function() {
  * with the given prefix.
  * @param {string} prefix Key prefix.
  * @return {Array.<string>} Param keys.
- * @export
  */
 StatemanagerLocation.prototype.getParamKeysWithPrefix = function(prefix) {
   const keys = [];
@@ -280,7 +268,6 @@ StatemanagerLocation.prototype.getParamKeysWithPrefix = function(prefix) {
  * that start with the given prefix.
  * @param {string} prefix Key prefix.
  * @return {Array.<string>} Param keys.
- * @export
  */
 StatemanagerLocation.prototype.getFragmentParamKeysWithPrefix = function(prefix) {
   const keys = [];
@@ -296,7 +283,6 @@ StatemanagerLocation.prototype.getFragmentParamKeysWithPrefix = function(prefix)
 /**
  * Set or create a param in the location's URI.
  * @param {!Object.<string, string>} params Parameters.
- * @export
  */
 StatemanagerLocation.prototype.updateParams = function(params) {
   for (const key in params) {
@@ -308,7 +294,6 @@ StatemanagerLocation.prototype.updateParams = function(params) {
 /**
  * Set or create a param in the fragment of the location's URI.
  * @param {!Object.<string, string>} params Parameters.
- * @export
  */
 StatemanagerLocation.prototype.updateFragmentParams = function(params) {
   for (const key in params) {
@@ -320,7 +305,6 @@ StatemanagerLocation.prototype.updateFragmentParams = function(params) {
 /**
  * Delete a param in the location's URI.
  * @param {string} key Param key.
- * @export
  */
 StatemanagerLocation.prototype.deleteParam = function(key) {
   delete this.queryData_[key];
@@ -330,7 +314,6 @@ StatemanagerLocation.prototype.deleteParam = function(key) {
 /**
  * Delete a param int the fragment of the location's URI.
  * @param {string} key Param key.
- * @export
  */
 StatemanagerLocation.prototype.deleteFragmentParam = function(key) {
   delete this.fragment_[key];
@@ -339,7 +322,6 @@ StatemanagerLocation.prototype.deleteFragmentParam = function(key) {
 
 /**
  * Refresh the the location's URI.
- * @export
  */
 StatemanagerLocation.prototype.refresh = function() {
   replaceState(this.history_, this.getUriString());
@@ -349,7 +331,6 @@ StatemanagerLocation.prototype.refresh = function() {
 /**
  * Set a new path for this location.
  * @param {string} path Path.
- * @export
  */
 StatemanagerLocation.prototype.setPath = function(path) {
   this.path_ = path;

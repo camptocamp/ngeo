@@ -60,7 +60,6 @@ function SearchController($element, $rootScope, $compile, ngeoSearchCreateGeoJSO
 
   /**
    * @type {import("ol/Map.js").default}
-   * @export
    */
   this.map;
 
@@ -76,7 +75,6 @@ function SearchController($element, $rootScope, $compile, ngeoSearchCreateGeoJSO
 
   /**
    * @type {Twitter.Typeahead.Options}
-   * @export
    */
   this.options = /** @type {Twitter.Typeahead.Options} */ ({
     highlight: true,
@@ -86,7 +84,6 @@ function SearchController($element, $rootScope, $compile, ngeoSearchCreateGeoJSO
 
   /**
    * @type {Array.<Twitter.Typeahead.Dataset>}
-   * @export
    */
   this.datasets = [{
     source: bloodhoundEngine.ttAdapter(),
@@ -116,7 +113,6 @@ function SearchController($element, $rootScope, $compile, ngeoSearchCreateGeoJSO
 
   /**
    * @type {import('ngeo/search/searchDirective.js').SearchDirectiveListeners}
-   * @export
    */
   this.listeners = /** @type {import('ngeo/search/searchDirective.js').SearchDirectiveListeners} */ ({
     select: (event, suggestion, dataset) => {
@@ -136,7 +132,6 @@ function SearchController($element, $rootScope, $compile, ngeoSearchCreateGeoJSO
 
 
 /**
- * @export
  */
 SearchController.prototype.$onInit = function() {
   // Empty the search field on focus and blur.
@@ -186,7 +181,6 @@ module.controller('AppSearchController', SearchController);
 function MainController() {
   /**
    * @type {import("ol/Map.js").default}
-   * @export
    */
   this.map = new olMap({
     layers: [

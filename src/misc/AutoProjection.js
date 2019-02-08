@@ -16,7 +16,6 @@ export function AutoProjectionService() {}
  * must be a two numbers separated by a space.
  * @param {string} str the string to parse.
  * @return {?import("ol/coordinate.js").Coordinate} A coordinate or null if the format is not valid.
- * @export
  */
 AutoProjectionService.prototype.stringToCoordinates = function(str) {
   const coords = str.match(/([\d\.']+)[\s,]+([\d\.']+)/);
@@ -37,7 +36,6 @@ AutoProjectionService.prototype.stringToCoordinates = function(str) {
  * @param {Array.<string>} projectionsCodes EPSG codes (e.g. 'EPSG:3857',
  *     'epsg:3857' or '3857').
  * @return {Array.<import("ol/proj/Projection.js").default>} An array of projections.
- * @export
  */
 AutoProjectionService.prototype.getProjectionList = function(projectionsCodes) {
   let code, proj;
@@ -69,7 +67,6 @@ AutoProjectionService.prototype.getProjectionList = function(projectionsCodes) {
  *     the array.
  * @return {?import("ol/coordinate.js").Coordinate} A coordinates in the view's projection if it matches
  *     in one of the given projections, or null else.
- * @export
  */
 AutoProjectionService.prototype.tryProjections = function(coordinates,
   extent, viewProjection, opt_projections) {
@@ -103,7 +100,6 @@ AutoProjectionService.prototype.tryProjections = function(coordinates,
  *     the array.
  * @return {?import("ol/coordinate.js").Coordinate} A coordinates in the view's projection if it matches
  *     in one of the given projections, or null else.
- * @export
  */
 AutoProjectionService.prototype.tryProjectionsWithInversion = function(
   coordinates, extent, viewProjection, opt_projections) {

@@ -116,7 +116,6 @@ function Controller() {
    * Export the back function already bound to `this`. This makes sure that
    * the function is called on the right context, when it is passed to an
    * attribute in a template
-   * @export
    */
   this.back = this.back_.bind(this);
 }

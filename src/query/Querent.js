@@ -160,7 +160,6 @@ export class Querent {
    *
    * @param {IssueGetFeaturesOptions} options Options.
    * @return {angular.IPromise} Promise.
-   * @export
    */
   issue(options) {
 
@@ -212,7 +211,6 @@ export class Querent {
    * @param {!Array.<import('ngeo/datasource/DataSource.js').default>} dataSources Data sources
    * @param {import("ol/Map.js").default} map Map.
    * @return {!QueryableDataSources} Queryable data sources.
-   * @export
    */
   getQueryableDataSources(dataSources, map) {
 
@@ -245,7 +243,6 @@ export class Querent {
   /**
    * @param {ngeoDatasourceOGC} dataSource Data source.
    * @return {angular.IPromise} Promise.
-   * @export
    */
   wfsDescribeFeatureType(dataSource) {
 
@@ -274,7 +271,6 @@ export class Querent {
    * @param {!Array.<!Object>} layerCapabilities List of WMS layer capabilities
    * @param {string} layerName Name of the WMS layer
    * @return {?Object} Found WMS layer capability
-   * @export
    */
   wmsFindLayerCapability(layerCapabilities, layerName) {
 
@@ -302,7 +298,6 @@ export class Querent {
    *     available. Enabling this will also store the capability when required
    *     for the first time. Defaults to: `true`.
    * @return {!angular.IPromise} Promise.
-   * @export
    */
   wmsGetCapabilities(baseUrl, opt_cache) {
 
@@ -339,7 +334,6 @@ export class Querent {
    * @param {!Array.<!Object>} layerCapabilities List of WMTS layer capabilities
    * @param {string} layerName Name of the WMTS layer, a.k.a. the identifier.
    * @return {?Object} Found WTMS layer capability
-   * @export
    */
   wmtsFindLayerCapability(layerCapabilities, layerName) {
     let found = null;
@@ -359,7 +353,6 @@ export class Querent {
    *     available. Enabling this will also store the capability when required
    *     for the first time. Defaults to: `true`.
    * @return {!angular.IPromise} Promise.
-   * @export
    */
   wmtsGetCapabilities(url, opt_cache) {
 

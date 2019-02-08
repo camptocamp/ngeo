@@ -52,7 +52,6 @@ function MainController(gmfThemes, ngeoFeatureOverlayMgr, ngeoNotification) {
 
   /**
    * @type {Array<import('gmf/search/component.js').SearchComponentDatasource>}
-   * @export
    */
   this.searchDatasources = [{
     datasetTitle: 'test',
@@ -72,7 +71,6 @@ function MainController(gmfThemes, ngeoFeatureOverlayMgr, ngeoNotification) {
   const stroke = new olStyleStroke({color: [255, 0, 0, 1], width: 2});
   /**
    * @type {Object.<string, import("ol/style/Style.js").default>} Map of styles for search overlay.
-   * @export
    */
   this.searchStyles = {
     'osm': new olStyleStyle({
@@ -88,7 +86,6 @@ function MainController(gmfThemes, ngeoFeatureOverlayMgr, ngeoNotification) {
 
   /**
    * @type {Twitter.Typeahead.Options}
-   * @export
    */
   this.searchOptions = {
     minLength: 2
@@ -96,13 +93,11 @@ function MainController(gmfThemes, ngeoFeatureOverlayMgr, ngeoNotification) {
 
   /**
    * @type {string}
-   * @export
    */
   this.inputValue = '';
 
   /**
    * @type {import("ol/Map.js").default}
-   * @export
    */
   this.map = new olMap({
     layers: [
@@ -118,7 +113,6 @@ function MainController(gmfThemes, ngeoFeatureOverlayMgr, ngeoNotification) {
 
   /**
    * @type {function()}
-   * @export
    */
   this.searchIsReady = () => {
     ngeoNotification.notify({

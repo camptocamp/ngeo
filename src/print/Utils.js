@@ -50,7 +50,6 @@ export const DOTS_PER_INCH = 72;
  * returning the scale of the map to print.
  * @return {function(import('ol/render/Event.js').default)} Function to use as a map postcompose
  * listener.
- * @export
  */
 PrintUtils.prototype.createPrintMaskPostcompose = function(getSize, getScale, opt_rotation) {
   const self = this;
@@ -186,7 +185,6 @@ PrintUtils.prototype.drawPrintZoneWithRotation_ = function(context, center,
  * @return {number} The best scale. `-1` is returned if there is no optimal
  * scale, that is the optimal scale is lower than or equal to the first value
  * in `printMapScales`.
- * @export
  */
 PrintUtils.prototype.getOptimalScale = function(
   mapSize, mapResolution, printMapSize, printMapScales) {
@@ -216,7 +214,6 @@ PrintUtils.prototype.getOptimalScale = function(
  * @param {import("ol/size.js").Size} printMapSize Size of the map on the paper (dots).
  * @param {number} printMapScale Map scale on the paper.
  * @return {number} The optimal map resolution.
- * @export
  */
 PrintUtils.prototype.getOptimalResolution = function(mapSize, printMapSize, printMapScale) {
 

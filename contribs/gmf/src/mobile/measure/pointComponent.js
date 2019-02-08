@@ -140,13 +140,11 @@ export function MobileMeasurePointController(gettextCatalog, $scope, $filter, gm
 
   /**
    * @type {import("ol/Map.js").default}
-   * @export
    */
   this.map;
 
   /**
    * @type {boolean}
-   * @export
    */
   this.active;
 
@@ -171,7 +169,6 @@ export function MobileMeasurePointController(gettextCatalog, $scope, $filter, gm
 
   /**
    * @type {import("ol/style/Style.js").StyleLike}
-   * @export
    */
   this.sketchStyle;
 
@@ -205,13 +202,11 @@ export function MobileMeasurePointController(gettextCatalog, $scope, $filter, gm
 
   /**
    * @type {import("ngeo/interaction/MeasurePointMobile.js").default}
-   * @export
    */
   this.measure;
 
   /**
    * @type {import("ngeo/interaction/MobileDraw.js").default}
-   * @export
    */
   this.drawInteraction;
 
@@ -251,7 +246,6 @@ MobileMeasurePointController.prototype.init = function() {
 
 /**
  * Deactivate the directive.
- * @export
  */
 MobileMeasurePointController.prototype.deactivate = function() {
   this.active = false;
@@ -261,7 +255,6 @@ MobileMeasurePointController.prototype.deactivate = function() {
 /**
  * @param {string} str String to translate.
  * @return {string} The translated text.
- * @export
  */
 MobileMeasurePointController.prototype.translate = function(str) {
   return this.gettextCatalog_.getString(str);

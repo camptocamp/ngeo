@@ -143,7 +143,6 @@ export class AuthenticationService extends olEventsEventTarget {
    * @param {string} newPwd New password.
    * @param {string} confPwd New password confirmation.
    * @return {angular.IPromise} Promise.
-   * @export
    */
   changePassword(oldPwd, newPwd, confPwd) {
     const url = `${this.baseUrl_}/${RouteSuffix.CHANGE_PASSWORD}`;
@@ -164,7 +163,6 @@ export class AuthenticationService extends olEventsEventTarget {
    * @param {string} login Login name.
    * @param {string} pwd Password.
    * @return {angular.IPromise} Promise.
-   * @export
    */
   login(login, pwd) {
     const url = `${this.baseUrl_}/${RouteSuffix.LOGIN}`;
@@ -178,7 +176,6 @@ export class AuthenticationService extends olEventsEventTarget {
 
   /**
    * @return {angular.IPromise} Promise.
-   * @export
    */
   logout() {
     const noReload = this.user_['role_name'] === this.noReloadRole_;
@@ -191,7 +188,6 @@ export class AuthenticationService extends olEventsEventTarget {
   /**
    * @param {string} login Login name.
    * @return {angular.IPromise} Promise.
-   * @export
    */
   resetPassword(login) {
     const url = `${this.baseUrl_}/${RouteSuffix.RESET_PASSWORD}`;

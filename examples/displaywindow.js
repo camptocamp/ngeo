@@ -21,13 +21,11 @@ function MainController($scope) {
 
   /**
    * @type {string}
-   * @export
    */
   this.window1Content = 'https://www.camptocamp.com';
 
   /**
    * @type {string}
-   * @export
    */
   this.window2Content = `<p>A window: <ul>
       <li>That have custom dimensions.</li>
@@ -38,19 +36,16 @@ function MainController($scope) {
 
   /**
    * @type {boolean}
-   * @export
    */
   this.window2IsOpen = false;
 
   /**
    * @type {boolean}
-   * @export
    */
   this.window3IsOpen = false;
 
   /**
    * @type {string}
-   * @export
    */
   this.window3Template = `
     <div class="details">
@@ -64,32 +59,27 @@ function MainController($scope) {
 
   /**
    * @type {boolean}
-   * @export
    */
   this.window3FalseValue = false;
 
 
   /**
    * @type {boolean}
-   * @export
    */
   this.window4IsOpen = false;
 
   /**
    * @type {string}
-   * @export
    */
   this.window4Template = angular.element(document.getElementById('window4Template')).html();
 
   /**
    * @type {string}
-   * @export
    */
   this.window4TextBinding = 'This is an AngularJS binding.';
 
   /**
    * @type {angular.IScope}
-   * @export
    */
   this.windowScope = $scope;
 }

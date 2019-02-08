@@ -52,7 +52,6 @@ function MainController(gmfThemes, ngeoFeatureOverlayMgr) {
 
   /**
    * @type {import("ol/Map.js").default}
-   * @export
    */
   this.map = new olMap({
     layers: [
@@ -70,7 +69,6 @@ function MainController(gmfThemes, ngeoFeatureOverlayMgr) {
 
   /**
    * @type {Object.<string, string|number|boolean>}
-   * @export
    */
   this.defaulPrintFieldstValues = {
     'comments': 'Default comments example',
@@ -79,13 +77,11 @@ function MainController(gmfThemes, ngeoFeatureOverlayMgr) {
 
   /**
    * @type {Array.<Object>|undefined}
-   * @export
    */
   this.themes = undefined;
 
   /**
    * @type {Object|undefined}
-   * @export
    */
   this.treeSource = undefined;
 

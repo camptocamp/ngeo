@@ -211,7 +211,6 @@ export class DatasourceManager {
   /**
    * Set the map to use with your datasources.
    * @param {!import("ol/Map.js").default} map The map to use.
-   * @export
    */
   setDatasourceMap(map) {
     this.ngeoDataSources_.map = map;

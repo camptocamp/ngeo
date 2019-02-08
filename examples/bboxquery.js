@@ -61,7 +61,6 @@ function QueryresultController(ngeoQueryResult) {
 
   /**
    * @type {import('ngeo/query/MapQuerent.js').QueryResult}
-   * @export
    */
   this.result = ngeoQueryResult;
 
@@ -82,7 +81,6 @@ function MainController($scope, ngeoDataSources) {
 
   /**
    * @type {boolean}
-   * @export
    */
   this.queryActive = true;
 
@@ -104,7 +102,6 @@ function MainController($scope, ngeoDataSources) {
 
   /**
    * @type {import("ol/Map.js").default}
-   * @export
    */
   this.map = new olMap({
     layers: [

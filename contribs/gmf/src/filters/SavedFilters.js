@@ -89,7 +89,6 @@ export class SavedFilter {
 
   /**
    * @return {!Array.<!SavedFilterItem>} Items
-   * @export
    */
   get currentDataSourceItems() {
     return this.currentDataSourceItems_;
@@ -97,7 +96,6 @@ export class SavedFilter {
 
   /**
    * @param {?number} id Current data source id.
-   * @export
    */
   set currentDataSourceId(id) {
     this.currentDataSourceId_ = id;
@@ -106,7 +104,6 @@ export class SavedFilter {
 
   /**
    * @return {!Array.<!SavedFilterItem>} Items
-   * @export
    */
   get items() {
     return this.items_;
@@ -131,7 +128,6 @@ export class SavedFilter {
    * @param {string} name Name.
    * @param {number} id Data source id.
    * @return {number} The index of the item, if it exists.
-   * @export
    */
   indexOfItem(name, id) {
 
@@ -150,7 +146,6 @@ export class SavedFilter {
 
   /**
    * @param {!SavedFilterItem} item Item.
-   * @export
    */
   save(item) {
 
@@ -170,7 +165,6 @@ export class SavedFilter {
 
   /**
    * @param {!SavedFilterItem} item Item.
-   * @export
    */
   remove(item) {
 
@@ -219,7 +213,6 @@ module.service('gmfSavedFilters', SavedFilter);
 /**
  * The definition of a saved filter item.
  * @constructor
- * @export
  */
 export function SavedFilterItem() {}
 
@@ -227,7 +220,6 @@ export function SavedFilterItem() {}
 /**
  * The condition of the saved filter item.
  * @type {string}
- * @export
  */
 SavedFilterItem.prototype.condition;
 
@@ -235,7 +227,6 @@ SavedFilterItem.prototype.condition;
 /**
  * The list of custom rules of the saved filter item.
  * @type {!Array.<!import("ngeo/filter/RuleHelper.js").AnyOptions>}
- * @export
  */
 SavedFilterItem.prototype.customRules;
 
@@ -243,7 +234,6 @@ SavedFilterItem.prototype.customRules;
 /**
  * The data source id related to the filter.
  * @type {number}
- * @export
  */
 SavedFilterItem.prototype.dataSourceId;
 
@@ -251,7 +241,6 @@ SavedFilterItem.prototype.dataSourceId;
 /**
  * The list of directed rules of the saved filter item.
  * @type {!Array.<!import("ngeo/filter/RuleHelper.js").AnyOptions>}
- * @export
  */
 SavedFilterItem.prototype.directedRules;
 
@@ -259,7 +248,6 @@ SavedFilterItem.prototype.directedRules;
 /**
  * A human-readable name given to the saved filter item.
  * @type {string}
- * @export
  */
 SavedFilterItem.prototype.name;
 

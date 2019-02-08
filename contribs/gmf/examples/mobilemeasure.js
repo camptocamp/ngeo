@@ -50,7 +50,6 @@ function MainController(gmfPermalink) {
 
   /**
    * @type {import("ol/Map.js").default}
-   * @export
    */
   this.map = new olMap({
     layers: [
@@ -70,19 +69,16 @@ function MainController(gmfPermalink) {
 
   /**
    * @type {boolean}
-   * @export
    */
   this.measureAreaActive = false;
 
   /**
    * @type {boolean}
-   * @export
    */
   this.measureLengthActive = false;
 
   /**
    * @type {Array<import('gmf/mobile/measure/pointComponent.js').LayerConfig>}
-   * @export
    */
   this.measurePointLayersConfig = [
     {name: 'aster', unit: 'm', decimals: 2},
@@ -91,7 +87,6 @@ function MainController(gmfPermalink) {
 
   /**
    * @type {boolean}
-   * @export
    */
   this.measurePointActive = false;
 

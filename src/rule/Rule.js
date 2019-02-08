@@ -122,7 +122,6 @@ export default class Rule {
      * it, it can't unless we expose the property directly.
      *
      * @type {?number|string}
-     * @export
      */
     this.expression = options.expression !== undefined ? options.expression : null;
 
@@ -203,7 +202,6 @@ export default class Rule {
    * See: https://github.com/google/closure-compiler/issues/1089
    *
    * @return {?number|string} Expression
-   * @export
    */
   getExpression() {
     return this.expression;
@@ -211,7 +209,6 @@ export default class Rule {
 
   /**
    * @param {?number|string} expression Expression
-   * @export
    */
   setExpression(expression) {
     this.expression = expression;
@@ -221,7 +218,6 @@ export default class Rule {
 
   /**
    * @return {boolean} Is custom.
-   * @export
    */
   get isCustom() {
     return this.isCustom_;
@@ -229,7 +225,6 @@ export default class Rule {
 
   /**
    * @return {string} name
-   * @export
    */
   get name() {
     return this.name_;
@@ -237,7 +232,6 @@ export default class Rule {
 
   /**
    * @return {?Array.<string>} Operators
-   * @export
    */
   get operators() {
     return this.operators_;
@@ -245,7 +239,6 @@ export default class Rule {
 
   /**
    * @return {string} Property name
-   * @export
    */
   get propertyName() {
     return this.propertyName_;
@@ -253,7 +246,6 @@ export default class Rule {
 
   /**
    * @return {string} Type
-   * @export
    */
   get type() {
     return this.type_;
@@ -263,7 +255,6 @@ export default class Rule {
 
   /**
    * @return {?RuleSimpleValue|RuleRangeValue} Value.
-   * @export
    */
   get value() {
     let value = null;
@@ -304,7 +295,6 @@ export default class Rule {
   /**
    * Reset the following properties to `null`: expression, lowerBoundary,
    * upperBoundary.
-   * @export
    */
   reset() {
     if (this.getExpression() !== null) {
@@ -319,7 +309,6 @@ export default class Rule {
   }
 
   /**
-   * @export
    */
   destroy() {
     this.listenerKeys.forEach(olEvents.unlistenByKey);

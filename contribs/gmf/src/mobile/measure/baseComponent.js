@@ -45,13 +45,11 @@ export function MeasueMobileBaseController($scope, $filter, gettextCatalog) {
 
   /**
    * @type {import("ol/Map.js").default}
-   * @export
    */
   this.map;
 
   /**
    * @type {boolean}
-   * @export
    */
   this.active;
 
@@ -61,13 +59,11 @@ export function MeasueMobileBaseController($scope, $filter, gettextCatalog) {
 
   /**
    * @type {number|undefined}
-   * @export
    */
   this.precision;
 
   /**
    * @type {import("ol/style/Style.js").StyleLike}
-   * @export
    */
   this.sketchStyle = new olStyleStyle({
     fill: new olStyleFill({
@@ -92,31 +88,26 @@ export function MeasueMobileBaseController($scope, $filter, gettextCatalog) {
 
   /**
    * @type {import("ngeo/interaction/Measure.js").default}
-   * @export
    */
   this.measure;
 
   /**
    * @type {import("ngeo/interaction/MobileDraw.js").default}
-   * @export
    */
   this.drawInteraction;
 
   /**
    * @type {boolean}
-   * @export
    */
   this.dirty = false;
 
   /**
    * @type {boolean}
-   * @export
    */
   this.drawing = false;
 
   /**
    * @type {boolean}
-   * @export
    */
   this.valid = false;
 }

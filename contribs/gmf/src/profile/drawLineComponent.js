@@ -70,7 +70,6 @@ function Controller($scope, $timeout, ngeoFeatureOverlayMgr) {
 
   /**
    * @type {?import("ol/geom/LineString.js").default}
-   * @export
    */
   this.line;
 
@@ -82,7 +81,6 @@ function Controller($scope, $timeout, ngeoFeatureOverlayMgr) {
 
   /**
    * @type {boolean}
-   * @export
    */
   this.active;
 
@@ -112,7 +110,6 @@ function Controller($scope, $timeout, ngeoFeatureOverlayMgr) {
 
   /**
    * @type {!import("ol/interaction/Draw.js").default}
-   * @export
    */
   this.interaction = new olInteractionDraw({
     type: /** @type {import("ol/geom/GeometryType.js").default} */ ('LineString'),

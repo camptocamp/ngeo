@@ -128,7 +128,6 @@ function Controller($scope, $injector,
 
   /**
    * @type {!import('ngeo/datasource/OGC.js').TimeProperty}
-   * @export
    */
   this.time;
 
@@ -143,7 +142,6 @@ function Controller($scope, $injector,
   /**
    * If the component is used to select a date range
    * @type {boolean}
-   * @export
    */
   this.isModeRange;
 
@@ -151,7 +149,6 @@ function Controller($scope, $injector,
   /**
    * Function called after date(s) changed/selected
    * @type {function({time: {start: number, end: number}}): void}
-   * @export
    */
   this.onDateSelected;
 
@@ -171,7 +168,6 @@ function Controller($scope, $injector,
   /**
    * Datepicker options for the second datepicker (only for range mode)
    * @type {Object}
-   * @export
    */
   this.edateOptions = {
     'changeMonth': true,
@@ -181,7 +177,6 @@ function Controller($scope, $injector,
   /**
    * Datepicker options for the first datepicker
    * @type {Object}
-   * @export
    */
   this.sdateOptions = {
     'changeMonth': true,
@@ -191,14 +186,12 @@ function Controller($scope, $injector,
   /**
    * Start date model for the first date picker
    * @type {Date}
-   * @export
    */
   this.sdate;
 
   /**
    * End date model for the second datepicker (only for range mode)
    * @type {Date}
-   * @export
    */
   this.edate;
 

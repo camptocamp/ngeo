@@ -36,7 +36,6 @@ function MainController(gmfThemes) {
 
   /**
    * @type {import("ol/Map.js").default}
-   * @export
    */
   this.map = new olMap({
     layers: [],

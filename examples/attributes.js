@@ -34,19 +34,16 @@ function MainController($http, $timeout, $scope) {
 
   /**
    * @type {?Array.<import('ngeo/format/Attribute.js').Attribute>}
-   * @export
    */
   this.attributes = null;
 
   /**
    * @type {boolean}
-   * @export
    */
   this.disabled = false;
 
   /**
    * @type {import("ol/Feature.js").default}
-   * @export
    */
   this.feature = new olFeature({
     'name': 'A feature',
@@ -61,7 +58,6 @@ function MainController($http, $timeout, $scope) {
 
   /**
    * @type {string}
-   * @export
    */
   this.log = '';
 
@@ -99,7 +95,6 @@ MainController.prototype.handleXSDAttributeGet_ = function(resp) {
 
 
 /**
- * @export
  */
 MainController.prototype.updateName = function() {
   this.timeout_(() => {

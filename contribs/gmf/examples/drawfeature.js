@@ -67,7 +67,6 @@ function MainController($scope, ngeoFeatureHelper, ngeoFeatures,
 
   /**
    * @type {import("ol/Map.js").default}
-   * @export
    */
   this.map = new olMap({
     layers: [
@@ -80,7 +79,6 @@ function MainController($scope, ngeoFeatureHelper, ngeoFeatures,
 
   /**
    * @type {boolean}
-   * @export
    */
   this.drawFeatureActive = true;
 
@@ -91,7 +89,6 @@ function MainController($scope, ngeoFeatureHelper, ngeoFeatures,
 
   /**
    * @type {boolean}
-   * @export
    */
   this.pointerMoveActive = false;
 

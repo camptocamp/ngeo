@@ -70,7 +70,6 @@ class Group {
 
   /**
    * @return {!import("ol/Collection.js").default.<!import("ngeo/datasource/DataSource.js").default>} Data sources
-   * @export
    */
   get dataSourcesCollection() {
     return this.dataSourcesCollection_;
@@ -83,7 +82,6 @@ class Group {
 
   /**
    * @return {string} Title
-   * @export
    */
   get title() {
     return this.title_;
@@ -96,7 +94,6 @@ class Group {
 
   /**
    * @return {string} Visibility state
-   * @export
    */
   get visibilityState() {
     let state;
@@ -128,7 +125,6 @@ class Group {
   /**
    * @param {!import("ngeo/datasource/DataSource.js").default} dataSource Data source.
    * @return {string} Visible state of a data source
-   * @export
    */
   getDataSourceState(dataSource) {
     return dataSource.visible ?
@@ -138,7 +134,6 @@ class Group {
 
   /**
    * @param {!import("ngeo/datasource/DataSource.js").default} dataSource Data source to add.
-   * @export
    */
   addDataSource(dataSource) {
     this.dataSourcesCollection_.push(dataSource);
@@ -146,7 +141,6 @@ class Group {
 
   /**
    * @param {!import("ngeo/datasource/DataSource.js").default} dataSource Data source to remove.
-   * @export
    */
   removeDataSource(dataSource) {
     this.dataSourcesCollection_.remove(dataSource);
@@ -160,7 +154,6 @@ class Group {
    * - state OFF --> visible true
    * - state IND. --> visible true
    *
-   * @export
    */
   toggleVisibilityState() {
     const visibleToSet =

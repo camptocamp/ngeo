@@ -48,7 +48,6 @@ function MainController($scope, ngeoFeatureOverlayMgr) {
 
   /**
    * @type {import('ngeo/geolocation/mobile.js').MobileGeolocationDirectiveOptions}
-   * @export
    */
   this.mobileGeolocationOptions = {
     positionFeatureStyle: positionFeatureStyle,
@@ -59,7 +58,6 @@ function MainController($scope, ngeoFeatureOverlayMgr) {
 
   /**
    * @type {import("ol/Map.js").default}
-   * @export
    */
   this.map = new olMap({
     layers: [

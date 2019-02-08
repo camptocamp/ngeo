@@ -106,19 +106,16 @@ function PopoverController($scope) {
   /**
    * The state of the popover (displayed or not)
    * @type {boolean}
-   * @export
    */
   this.shown = false;
 
   /**
    * @type {JQuery|undefined}
-   * @export
    */
   this.anchorElm = undefined;
 
   /**
    * @type {JQuery|undefined}
-   * @export
    */
   this.bodyElm = undefined;
 
@@ -140,7 +137,6 @@ function PopoverController($scope) {
 
 /**
  * Dissmiss popover function
- * @export
  */
 PopoverController.prototype.dismissPopover = function() {
   this.shown = false;

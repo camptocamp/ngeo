@@ -120,7 +120,6 @@ export function EditingSnappingService($http, $q, $rootScope, $timeout, gmfTheme
  *
  * This method can be called to make sure the Snap interactions are on top.
  *
- * @export
  */
 EditingSnappingService.prototype.ensureSnapInteractionsOnTop = function() {
   const map = this.map_;
@@ -141,7 +140,6 @@ EditingSnappingService.prototype.ensureSnapInteractionsOnTop = function() {
 /**
  * Bind the snapping service to a map
  * @param {?import("ol/Map.js").default} map Map
- * @export
  */
 EditingSnappingService.prototype.setMap = function(map) {
 

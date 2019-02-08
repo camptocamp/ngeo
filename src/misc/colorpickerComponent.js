@@ -60,7 +60,6 @@ module.directive('ngeoColorpicker', colorPickerComponent);
  * Default colors for the colorpicker
  * @type {Array.<Array.<string>>}
  * @const
- * @export
  */
 const DEFAULT_COLORS = [
   ['#F4EB37', '#CDDC39', '#62AF44', '#009D57', '#0BA9CC', '#4186F0', '#3F5BA9', '#7C3592', '#A61B4A', '#DB4436', '#F8971B', '#F4B400', '#795046'],
@@ -83,21 +82,18 @@ function Controller($scope, $element, $attrs) {
   /**
    * The set of color
    * @type {Array.<Array.<string>>}
-   * @export
    */
   this.colors = this.colors || DEFAULT_COLORS;
 
   /**
    * The selected color
    * @type {undefined|string}
-   * @export
    */
   this.color;
 }
 
 /**
  * @param {string} color The color to select.
- * @export
  */
 Controller.prototype.setColor = function(color) {
   this.color = color;

@@ -86,13 +86,11 @@ class MainController {
 
     /**
      * @type {import("gmf/layertree/TreeManager.js").LayertreeTreeManager}
-     * @export
      */
     this.gmfTreeManager = gmfTreeManager;
 
     /**
      * @type {import("ol/Map.js").default}
-     * @export
      */
     this.map = new olMap({
       layers: [
@@ -125,7 +123,6 @@ class MainController {
 
     /**
      * @type {boolean}
-     * @export
      */
     this.queryActive = true;
 

@@ -88,7 +88,6 @@ export default class {
   /**
    * Draw the points to the canvas element
    * @param {import("gmf/lidarprofile/Utils.js").LidarprofilePoints} points of the profile
-   * @export
    */
   drawPoints(points) {
     let i = -1;
@@ -133,7 +132,6 @@ export default class {
    * Setup the SVG components of the D3 chart
    * @param {Array.<number>} rangeX range of the x scale
    * @param {Array.<number>} rangeY range of the y scale
-   * @export
    */
   setupPlot(rangeX, rangeY) {
     const canvas = d3select('#gmf-lidarprofile-container .lidar-canvas');
@@ -241,7 +239,6 @@ export default class {
 
   /**
    * Update the plot data at the end of the zoom process
-   * @export
    */
   zoomEnd() {
     if (d3event.sourceEvent && this.moved_ === false) {
@@ -257,7 +254,6 @@ export default class {
 
   /**
    * Update the plot axis during the zoom process
-   * @export
    */
   zoomed() {
     if (d3event.sourceEvent && d3event.sourceEvent.type === 'mousemove') {
@@ -297,7 +293,6 @@ export default class {
 
   /**
    * Update the Openlayers overlay that displays point position and attributes values
-   * @export
    */
   pointHighlight() {
 
@@ -372,7 +367,6 @@ export default class {
    *     object concerning this point.
    * @param {number} distDecimal the number of decimal to keep.
    * @return {string} the text for the html info.
-   * @export
    */
   getInfoHTML(point, classification_color, distDecimal) {
     const gettextCatalog = this.manager_.gettextCatalog;
@@ -408,7 +402,6 @@ export default class {
   /**
   * Change the profile style according to the material color
   * @param {string} material value as defined in Pytree attribute configuration
-  * @export
   */
   changeStyle(material) {
     this.material = material;
@@ -424,7 +417,6 @@ export default class {
   * @param {import("gmf/lidarprofile/Config.js").LidarprofileServerConfigClassifications} classification value as defined in the Pytree classification_colors
   *     configuration
   * @param {string} material  value as defined in Pytree attribute configuration
-  * @export
   */
   setClassActive(classification, material) {
     this.manager_.config.serverConfig.classification_colors = classification;

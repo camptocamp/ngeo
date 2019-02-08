@@ -29,7 +29,6 @@ function MainController($http, gmfThemes, gmfThemeManager) {
   /**
    * @param {import('gmf/themes.js').GmfTheme} theme Theme.
    * @return {boolean} Theme is 'Enseignement'
-   * @export
    */
   this.filter = function(theme) {
     return theme.name !== 'Enseignement';
@@ -37,7 +36,6 @@ function MainController($http, gmfThemes, gmfThemeManager) {
 
   /**
    * @type {import("gmf/theme/Manager.js").ThemeManagerService}
-   * @export
    */
   this.manager = gmfThemeManager;
 

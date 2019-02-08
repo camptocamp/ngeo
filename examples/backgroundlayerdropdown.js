@@ -49,7 +49,6 @@ module.component('appBackgroundlayer', backgroundlayerComponent);
  * @param {angular.IHttpService} $http Angular http service.
  * @param {import("ngeo/map/BackgroundLayerMgr.js").MapBackgroundLayerManager} ngeoBackgroundLayerMgr Background layer
  *     manager.
- * @export
  * @ngInject
  */
 function BackgroundlayerController($http, ngeoBackgroundLayerMgr) {
@@ -72,7 +71,6 @@ function BackgroundlayerController($http, ngeoBackgroundLayerMgr) {
  * Function called when the user selects a new background layer in the
  * dropdown. Called by the ng-click directive used in the partial.
  * @param {Object} layerSpec Layer specification object.
- * @export
  */
 BackgroundlayerController.prototype.setLayer = function(layerSpec) {
   this['currentBgLayer'] = layerSpec;

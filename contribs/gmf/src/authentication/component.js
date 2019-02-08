@@ -157,7 +157,6 @@ class AuthenticationController {
 
     /**
      * @type {import('gmf/authentication/Service.js').User}
-     * @export
      */
     this.gmfUser = gmfUser;
 
@@ -181,55 +180,46 @@ class AuthenticationController {
 
     /**
      * @type {boolean}
-     * @export
      */
     this.allowPasswordReset;
 
     /**
      * @type {boolean}
-     * @export
      */
     this.allowPasswordChange;
 
     /**
      * @type {PasswordValidator?}
-     * @export
      */
     this.passwordValidator = null;
 
     /**
      * @type {boolean}
-     * @export
      */
     this.forcePasswordChange;
 
     /**
      * @type {?string}
-     * @export
      */
     this.infoMessage = null;
 
     /**
      * @type {boolean}
-     * @export
      */
     this.changingPassword = false;
 
     /**
      * @type {boolean}
-     * @export
      */
     this.changePasswordModalShown = false;
 
     /**
      * @type {boolean}
-     * @export
      */
     this.resetPasswordModalShown = false;
 
     /**
      * @type {boolean}
-     * @export
      */
     this.error = false;
 
@@ -237,13 +227,11 @@ class AuthenticationController {
 
     /**
      * @type {string}
-     * @export
      */
     this.loginVal = '';
 
     /**
      * @type {string}
-     * @export
      */
     this.pwdVal = '';
 
@@ -251,19 +239,16 @@ class AuthenticationController {
 
     /**
      * @type {string}
-     * @export
      */
     this.oldPwdVal = '';
 
     /**
      * @type {string}
-     * @export
      */
     this.newPwdVal = '';
 
     /**
      * @type {string}
-     * @export
      */
     this.newPwdConfVal = '';
   }
@@ -285,7 +270,6 @@ class AuthenticationController {
 
   /**
    * Calls the authentication service changePassword method.
-   * @export
    */
   changePassword() {
     const gettextCatalog = this.gettextCatalog;
@@ -341,7 +325,6 @@ class AuthenticationController {
 
   /**
    * Calls the authentication service login method.
-   * @export
    */
   login() {
     const gettextCatalog = this.gettextCatalog;
@@ -365,7 +348,6 @@ class AuthenticationController {
 
   /**
    * Calls the authentication service logout method.
-   * @export
    */
   logout() {
     const gettextCatalog = this.gettextCatalog;
@@ -377,7 +359,6 @@ class AuthenticationController {
 
   /**
    * Calls the authentication service resetPassword method.
-   * @export
    */
   resetPassword() {
     const gettextCatalog = this.gettextCatalog;
@@ -408,7 +389,6 @@ class AuthenticationController {
 
   /**
    * Reset the changePassword values and error.
-   * @export
    */
   changePasswordReset() {
     this.resetError_();
@@ -421,7 +401,6 @@ class AuthenticationController {
   /**
    * @return {boolean} True if the user must change is password and if the "forcePasswordChange" option of
    *    this component is set to true.
-   * @export
    */
   userMustChangeItsPassword() {
     return (this.gmfUser.is_password_changed === false && this.forcePasswordChange);

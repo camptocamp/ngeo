@@ -28,7 +28,6 @@ export class DatasourceWFSAlias {
 
   /**
    * @param {import("ngeo/datasource/OGC.js").default} dataSource Data source.
-   * @export
    */
   describe(dataSource) {
     // Only QGIS Server supports WFS aliases

@@ -31,7 +31,6 @@ function MainController($rootScope, ngeoOlcsService) {
 
   /**
    * @type {import("ol/Map.js").default}
-   * @export
    */
   this.map = new olMap({
     layers: [
@@ -49,7 +48,6 @@ function MainController($rootScope, ngeoOlcsService) {
   const cesiumUrl = '../node_modules/@camptocamp/cesium/Build/Cesium/Cesium.js';
 
   /**
-   * @export
    * @type {import('olcs/contrib/Manager.js').default}
    */
   this.ol3dm = new ngeoOlcsManager(cesiumUrl, $rootScope, {

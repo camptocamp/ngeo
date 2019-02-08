@@ -89,7 +89,6 @@ class Controller extends MeasueMobileBaseController {
 
     /**
      * @type {import("ngeo/interaction/MeasureLengthMobile.js").default}
-     * @export
      */
     this.measure;
   }
@@ -108,7 +107,6 @@ class Controller extends MeasueMobileBaseController {
 
   /**
    * Add current sketch point to line measure
-   * @export
    */
   addPoint() {
     this.drawInteraction.addToDrawing();
@@ -116,7 +114,6 @@ class Controller extends MeasueMobileBaseController {
 
   /**
    * Clear the sketch feature
-   * @export
    */
   clear() {
     this.drawInteraction.clearDrawing();
@@ -124,7 +121,6 @@ class Controller extends MeasueMobileBaseController {
 
   /**
    * Finish line measure
-   * @export
    */
   finish() {
     this.drawInteraction.finishDrawing();
@@ -132,7 +128,6 @@ class Controller extends MeasueMobileBaseController {
 
   /**
    * Deactivate the directive.
-   * @export
    */
   deactivate() {
     this.active = false;

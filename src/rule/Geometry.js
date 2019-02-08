@@ -87,7 +87,6 @@ export default class extends ngeoRuleRule {
 
   /**
    * @return {!import("ol/Feature.js").default} Feature.
-   * @export
    */
   get feature() {
     return this.feature_;
@@ -113,7 +112,6 @@ export default class extends ngeoRuleRule {
 
   /**
    * @return {?import("ol/geom/Geometry.js").default} Geometry
-   * @export
    */
   get geometry() {
     return this.feature_.getGeometry() || null;
@@ -121,7 +119,6 @@ export default class extends ngeoRuleRule {
 
   /**
    * @param {?import("ol/geom/Geometry.js").default} geometry Geometry
-   * @export
    */
   set geometry(geometry) {
     this.feature_.setGeometry(geometry);

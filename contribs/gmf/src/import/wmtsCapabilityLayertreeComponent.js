@@ -63,14 +63,12 @@ class Controller {
     /**
      * WMS Capabilities definition
      * @type {!Object}
-     * @export
      */
     this.capabilities;
 
     /**
      * List of WMTS Capability Layer objects.
      * @type {!Array.<!Object>}
-     * @export
      */
     this.layers;
 
@@ -78,7 +76,6 @@ class Controller {
      * The original WMTS GetCapabilities url that was used to fetch the
      * capability layers.
      * @type {string}
-     * @export
      */
     this.url;
 
@@ -94,7 +91,6 @@ class Controller {
 
   /**
    * @param {!Object} layer WMTS Capability Layer object
-   * @export
    */
   createAndAddDataSource(layer) {
     const manager = this.gmfExternalDataSourcesManager_;
@@ -108,7 +104,6 @@ class Controller {
   /**
    * @param {!Object} layer WMTS Capability Layer object
    * @return {string} Unique id for the Capability Layer.
-   * @export
    */
   getUid(layer) {
     return olUtilGetUid(layer);

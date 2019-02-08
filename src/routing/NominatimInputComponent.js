@@ -69,32 +69,27 @@ function Controller($element, $injector, $scope, ngeoNominatimService) {
 
   /**
    * @type {import("ngeo/routing/NominatimService.js").NominatimService}
-   * @export
    */
   this.ngeoNominatimService = ngeoNominatimService;
 
   /**
    * @type {(function(Object): void|undefined)}
-   * @export
    */
   this.onSelect;
 
   /**
    * @type {string}
-   * @export
    */
   this.inputValue;
 
   /**
    * @type {Twitter.Typeahead.Options}
-   * @export
    */
   this.options = /** @type {Twitter.Typeahead.Options} */ ({
   });
 
   /**
    * @type {Array.<Twitter.Typeahead.Dataset>}
-   * @export
    */
   this.datasets = [/** @type {Twitter.Typeahead.Dataset} */({
     name: 'nominatim',
@@ -104,7 +99,6 @@ function Controller($element, $injector, $scope, ngeoNominatimService) {
 
   /**
    * @type {import('ngeo/search/searchDirective.js').SearchDirectiveListeners}
-   * @export
    */
   this.listeners = /** @type {import('ngeo/search/searchDirective.js').SearchDirectiveListeners} */({
     select: this.select_.bind(this)
@@ -112,7 +106,6 @@ function Controller($element, $injector, $scope, ngeoNominatimService) {
 
   /**
    * @type {string}
-   * @export
    */
   this.placeholder = '';
 

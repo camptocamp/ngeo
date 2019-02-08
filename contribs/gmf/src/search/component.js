@@ -311,7 +311,6 @@ class SearchController {
 
     /**
      * @type {!import("ol/Map.js").default}
-     * @export
      */
     this.map;
 
@@ -323,7 +322,6 @@ class SearchController {
 
     /**
      * @type {function(): void}
-     * @export
      */
     this.onInitCallback;
 
@@ -331,46 +329,39 @@ class SearchController {
      * Whether or not to show a button to clear the search text.
      * Default to true.
      * @type {boolean}
-     * @export
      */
     this.clearButton;
 
     /**
      * @type {boolean}
-     * @export
      */
     this.colorChooser;
 
     /**
      * @type {string}
-     * @export
      */
     this.placeholder;
 
     /**
      * @type {number}
-     * @export
      */
     this.delay;
 
     /**
      * The maximum zoom we will zoom on result.
      * @type {number}
-     * @export
      */
     this.maxZoom = 16;
 
     /**
      * Supported projections for coordinates search.
      * @type {Array.<string>}
-     * @export
      */
     this.coordinatesProjections;
 
     /**
      * Supported projections for coordinates search.
      * @type {Array.<olProj.Projection>}
-     * @export
      */
     this.coordinatesProjectionsInstances;
 
@@ -382,19 +373,16 @@ class SearchController {
 
     /**
      * @type {Array.<SearchComponentDatasource>}
-     * @export
      */
     this.datasources = [];
 
     /**
      * @type {Twitter.Typeahead.Options}
-     * @export
      */
     this.typeaheadOptions;
 
     /**
      * @type {Twitter.Typeahead.Options}
-     * @export
      */
     this.options = /** @type {Twitter.Typeahead.Options} */ ({
       highlight: true
@@ -402,43 +390,36 @@ class SearchController {
 
     /**
      * @type {Object.<string, import("ol/style/Style.js").default>}
-     * @export
      */
     this.featuresStyles;
 
     /**
      * @type {Array.<Twitter.Typeahead.Dataset>}
-     * @export
      */
     this.datasets = [];
 
     /**
      * @type {string}
-     * @export
      */
     this.inputValue = '';
 
     /**
      * @type {string}
-     * @export
      */
     this.color;
 
     /**
      * @type {boolean}
-     * @export
      */
     this.displayColorPicker = false;
 
     /**
      * @type {import('ngeo/search/searchDirective.js').SearchDirectiveListeners}
-     * @export
      */
     this.listeners;
 
     /**
      * @type {import('ngeo/search/searchDirective.js').SearchDirectiveListeners}
-     * @export
      */
     this.additionalListeners;
   }
@@ -881,7 +862,6 @@ class SearchController {
   /**
    * Set a new color for the search feature style.
    * @param {string} color The color to set.
-   * @export
    */
   setStyleColor(color) {
     if (color) {
@@ -902,7 +882,6 @@ class SearchController {
 
 
   /**
-   * @export
    */
   onClearButton() {
     this.featureOverlay_.clear();
@@ -911,7 +890,6 @@ class SearchController {
 
 
   /**
-   * @export
    */
   clear() {
     const typeahead = this.element_.find('.twitter-typeahead');
@@ -927,7 +905,6 @@ class SearchController {
 
 
   /**
-   * @export
    */
   blur() {
     const typeahead = this.element_.find('.twitter-typeahead');

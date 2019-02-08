@@ -219,7 +219,6 @@ function Controller($scope, $element, gettextCatalog, ngeoFeatureOverlayMgr, nge
 
 
 /**
- * @export
  */
 Controller.prototype.toggleTracking = function() {
   if (this.geolocation_.getTracking()) {

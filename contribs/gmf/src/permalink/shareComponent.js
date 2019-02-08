@@ -76,7 +76,6 @@ class ShareComponentController {
 
     /**
      * @type {string}
-     * @export
      */
     this.uid = olUtilGetUid(this);
 
@@ -106,25 +105,21 @@ class ShareComponentController {
 
     /**
      * @type {boolean}
-     * @export
      */
     this.enableEmail;
 
     /**
      * @type {string}
-     * @export
      */
     this.shortLink;
 
     /**
      * @type {string}
-     * @export
      */
     this.email;
 
     /**
      * @type {string}
-     * @export
      */
     this.message;
 
@@ -136,26 +131,22 @@ class ShareComponentController {
 
     /**
      * @type {boolean}
-     * @export
      */
     this.showLengthWarning = this.permalink_.length > URL_MAX_LEN ||
       ngeoLocation.getPath().length > URL_PATH_MAX_LEN;
 
     /**
      * @type {boolean}
-     * @export
      */
     this.successfullySent = false;
 
     /**
      * @type {boolean}
-     * @export
      */
     this.errorOnsend = false;
 
     /**
      * @type {boolean}
-     * @export
      */
     this.errorOnGetShortUrl = false;
 
@@ -164,7 +155,6 @@ class ShareComponentController {
 
   /**
    * Get the short version of the permalink if the email is not provided
-   * @export
    */
   getShortUrl() {
     this.$q_.when(this.gmfShareService_.getShortUrl(this.permalink_))
@@ -179,7 +169,6 @@ class ShareComponentController {
 
   /**
    * Send the short version of the permalink if the email is provided
-   * @export
    */
   sendShortUrl() {
     if (this.$scope_['gmfShareForm'].$valid) {

@@ -35,7 +35,6 @@ function ColorPickerController() {
    * The colors set.
    * @type {Array<Array<string>>}
    * @const
-   * @export
    */
   this.colors = [
     ['red', 'yellow', 'green', 'lightgreen', 'lightblue', 'orange', 'purple'],
@@ -58,7 +57,6 @@ function MainController($scope) {
   /**
    * Active color.
    * @type {string}
-   * @export
    */
   this.color = 'red';
 

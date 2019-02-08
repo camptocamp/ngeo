@@ -99,7 +99,6 @@ class Controller {
 
     /**
      * @type {boolean}
-     * @export
      */
     this.active;
 
@@ -110,13 +109,11 @@ class Controller {
 
     /**
      * @type {!import("ol/Map.js").default}
-     * @export
      */
     this.map;
 
     /**
      * @type {string}
-     * @export
      */
     this.toolGroup;
 
@@ -140,7 +137,6 @@ class Controller {
      * its value set from an external source (for example: the layertree)
      * and that requires to be ready before it can be filtered.
      * @type {import('gmf/datasource/DataSourceBeingFiltered.js').DataSourceBeingFiltered}
-     * @export
      */
     this.gmfDataSourceBeingFiltered = gmfDataSourceBeingFiltered;
 
@@ -157,7 +153,6 @@ class Controller {
 
     /**
      * @type {import("gmf/filters/SavedFilters.js").SavedFilter}
-     * @export
      */
     this.gmfSavedFilters = gmfSavedFilters;
 
@@ -191,7 +186,6 @@ class Controller {
 
     /**
      * @type {!import("ngeo/map/FeatureOverlay.js").FeatureOverlay}
-     * @export
      */
     this.featureOverlay = ngeoFeatureOverlayMgr.getFeatureOverlay();
 
@@ -206,25 +200,21 @@ class Controller {
 
     /**
      * @type {boolean}
-     * @export
      */
     this.aRuleIsActive = false;
 
     /**
      * @type {?Array.<!import("ngeo/rule/Rule.js").default>}
-     * @export
      */
     this.customRules = null;
 
     /**
      * @type {?Array.<!import("ngeo/rule/Rule.js").default>}
-     * @export
      */
     this.directedRules = null;
 
     /**
      * @type {Array.<import("gmf/datasource/OGC.js").default>}
-     * @export
      */
     this.filtrableDataSources = [];
 
@@ -250,7 +240,6 @@ class Controller {
      * The data source ready to be filtered, after it has been selected and
      * prepared.
      * @type {?import("gmf/datasource/OGC.js").default}
-     * @export
      */
     this.readyDataSource = null;
 
@@ -262,7 +251,6 @@ class Controller {
 
     /**
      * @type {boolean}
-     * @export
      */
     this.saveFilterSaveModalShown = false;
 
@@ -276,19 +264,16 @@ class Controller {
 
     /**
      * @type {string}
-     * @export
      */
     this.saveFilterName = '';
 
     /**
      * @type {boolean}
-     * @export
      */
     this.saveFilterManageModalShown = false;
 
     /**
      * @type {boolean}
-     * @export
      */
     this.enableDataSourceRegistration_ = false;
 
@@ -616,14 +601,12 @@ class Controller {
   }
 
   /**
-   * @export
    */
   saveFilterShowModal() {
     this.saveFilterSaveModalShown = true;
   }
 
   /**
-   * @export
    */
   saveFilterSave() {
 
@@ -663,7 +646,6 @@ class Controller {
   /**
    * Load a saved filter item, replacing the current rules.
    * @param {!import("gmf/filters/SavedFilters.js").SavedFilterItem} filterItem Filter item.
-   * @export
    */
   saveFilterLoadItem(filterItem) {
 
@@ -696,7 +678,6 @@ class Controller {
   }
 
   /**
-   * @export
    */
   saveFilterManage() {
     this.saveFilterManageModalShown = true;
@@ -705,7 +686,6 @@ class Controller {
   /**
    * Remove a saved filter item.
    * @param {!import("gmf/filters/SavedFilters.js").SavedFilterItem} item Filter item.
-   * @export
    */
   saveFilterRemoveItem(item) {
     this.gmfSavedFilters.remove(item);

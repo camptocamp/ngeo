@@ -64,13 +64,11 @@ class Controller {
 
     /**
      * @type {boolean}
-     * @export
      */
     this.clearOnClose;
 
     /**
      * @type {?string}
-     * @export
      */
     this.content = null;
 
@@ -86,55 +84,46 @@ class Controller {
 
     /**
      * @type {boolean}
-     * @export
      */
     this.draggable;
 
     /**
      * @type {Element|string}
-     * @export
      */
     this.draggableContainment;
 
     /**
      * @type {boolean}
-     * @export
      */
     this.desktop;
 
     /**
      * @type {?string}
-     * @export
      */
     this.height = null;
 
     /**
      * @type {boolean}
-     * @export
      */
     this.open;
 
     /**
      * @type {boolean}
-     * @export
      */
     this.resizable;
 
     /**
      * @type {?string}
-     * @export
      */
     this.title = null;
 
     /**
      * @type {?string}
-     * @export
      */
     this.url = null;
 
     /**
      * @type {?string}
-     * @export
      */
     this.width = null;
 
@@ -225,7 +214,6 @@ class Controller {
   }
 
   /**
-   * @export
    */
   close() {
     this.open = false;
@@ -236,7 +224,6 @@ class Controller {
 
   /**
    * @return {!Object.<string, string>} CSS style when using width/height
-   * @export
    */
   get style() {
     return {
@@ -247,7 +234,6 @@ class Controller {
 
   /**
    * @return {string|undefined} Trusted url.
-   * @export
    */
   get urlTrusted() {
     if (this.url) {
@@ -256,7 +242,6 @@ class Controller {
   }
 
   /**
-   * @export
    */
   clear_() {
     this.content = null;

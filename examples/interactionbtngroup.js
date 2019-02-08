@@ -60,7 +60,6 @@ function MainController(ngeoFeatureOverlayMgr) {
 
   /**
    * @type {import("ol/Map.js").default}
-   * @export
    */
   this.map = new olMap({
     layers: [
@@ -81,7 +80,6 @@ function MainController(ngeoFeatureOverlayMgr) {
 
   /**
    * @type {import("ol/interaction/Draw.js").default}
-   * @export
    */
   this.drawPolygon = new olInteractionDraw(
     /** @type {import('ol/interaction/Draw.js').Options} */ ({
@@ -97,7 +95,6 @@ function MainController(ngeoFeatureOverlayMgr) {
 
   /**
    * @type {import("ol/interaction/Draw.js").default}
-   * @export
    */
   this.drawPoint = new olInteractionDraw(
     /** @type {import('ol/interaction/Draw.js').Options} */ ({
@@ -112,7 +109,6 @@ function MainController(ngeoFeatureOverlayMgr) {
 
   /**
    * @type {import("ol/interaction/Draw.js").default}
-   * @export
    */
   this.drawLine = new olInteractionDraw(
     /** @type {import('ol/interaction/Draw.js').Options} */ ({

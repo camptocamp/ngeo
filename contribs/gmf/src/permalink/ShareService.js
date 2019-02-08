@@ -28,7 +28,6 @@ import angular from 'angular';
  * @param  {string} gmfShortenerCreateUrl URL for the shortener API
  * @constructor
  * @ngInject
- * @export
  * @ngname gmfShareService
  */
 export function PermalinkShareService($http, gmfShortenerCreateUrl) {

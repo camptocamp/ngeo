@@ -72,7 +72,6 @@ class GoogleStreetviewController {
 
     /**
      * @type {boolean}
-     * @export
      */
     this.active;
 
@@ -84,19 +83,16 @@ class GoogleStreetviewController {
     /**
      * Style for the feature.
      * @type {import("ol/style/Style.js").StyleLike|undefined}
-     * @export
      */
     this.featureStyle;
 
     /**
      * @type {!import("ol/Map.js").default}
-     * @export
      */
     this.map;
 
     /**
      * @type {number|undefined}
-     * @export
      */
     this.radius;
 
@@ -140,7 +136,6 @@ class GoogleStreetviewController {
     /**
      * Flag that determines whether there's data at a given location or not.
      * @type {boolean}
-     * @export
      */
     this.noDataAtLocation = false;
 

@@ -118,7 +118,6 @@ const ScaleselectorController = function($scope, $element, $attrs) {
   /**
    * The zoom level/scale map object.
    * @type {!Array.<number>}
-   * @export
    */
   this.scales = /** @type {!Array.<number>} */
     ($scope.$eval(scalesExpr));
@@ -126,7 +125,6 @@ const ScaleselectorController = function($scope, $element, $attrs) {
 
   /**
    * @type {Array.<number>}
-   * @export
    */
   this.zoomLevels;
 
@@ -149,7 +147,6 @@ const ScaleselectorController = function($scope, $element, $attrs) {
 
   /**
    * @type {!ScaleselectorOptions}
-   * @export
    */
   this.options = ScaleselectorController.getOptions_(options);
 
@@ -167,7 +164,6 @@ const ScaleselectorController = function($scope, $element, $attrs) {
 
   /**
    * @type {number|undefined}
-   * @export
    */
   this.currentScale = undefined;
 
@@ -207,7 +203,6 @@ ScaleselectorController.getOptions_ = function(options) {
 /**
  * @param {number} zoom Zoom level.
  * @return {number} Scale.
- * @export
  */
 ScaleselectorController.prototype.getScale = function(zoom) {
   return this.scales[zoom];
@@ -216,7 +211,6 @@ ScaleselectorController.prototype.getScale = function(zoom) {
 
 /**
  * @param {number} zoom Zoom level.
- * @export
  */
 ScaleselectorController.prototype.changeZoom = function(zoom) {
   this.map_.getView().setZoom(zoom);

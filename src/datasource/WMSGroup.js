@@ -100,7 +100,6 @@ export default class extends ngeoDatasourceOGCGroup {
 
   /**
    * @return {import("ol/layer/Image.js").default} layer
-   * @export
    */
   get layer() {
     return this.layer_;

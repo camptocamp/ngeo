@@ -58,7 +58,6 @@ export class DatasourceHelper {
 
   /**
    * @return {import('ngeo/datasource/DataSource.js').DataSources} Data sources collection.
-   * @export
    */
   get collection() {
     return /** @type {import('ngeo/datasource/DataSource.js').DataSources} */ (
@@ -70,7 +69,6 @@ export class DatasourceHelper {
    * Return a data source using its id.
    * @param {number} id Data source id.
    * @return {?import("gmf/datasource/OGC.js").default} Data source.
-   * @export
    */
   getDataSource(id) {
     return /** @type {?import("gmf/datasource/OGC.js").default} */ (
@@ -81,7 +79,6 @@ export class DatasourceHelper {
   /**
    * @param {import("gmf/datasource/OGC.js").default} dataSource Filtrable data source.
    * @return {angular.IPromise} Promise.
-   * @export
    */
   prepareFiltrableDataSource(dataSource) {
 

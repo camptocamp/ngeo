@@ -40,7 +40,6 @@ const Param = {
  * @param {import("ol/coordinate.js").Coordinate} coordinate Coordinate.
  * @param {Object=} opt_params Optional parameters for the request.
  * @return {angular.IPromise} Promise.
- * @export
  */
 RasterService.prototype.getRaster = function(coordinate, opt_params) {
 

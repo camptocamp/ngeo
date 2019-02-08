@@ -95,7 +95,6 @@ export function LayertreeTreeManager($timeout, $injector, gettextCatalog, ngeoLa
    * The array of top level layer trees is available through `rootCtrl.children`.
    * The order doesn't match with the ordre of the displayed layertree.
    * @type {import("ngeo/layertree/Controller.js").LayertreeController}
-   * @export
    */
   this.rootCtrl = null;
 
@@ -160,7 +159,6 @@ LayertreeTreeManager.prototype.handleThemesChange_ = function() {
  * already in the tree.
  * @param {Array.<import('gmf/themes.js').GmfGroup>} firstLevelGroups An array of gmf theme group.
  * @return {boolean} True if the group has been added. False otherwise.
- * @export
  */
 LayertreeTreeManager.prototype.setFirstLevelGroups = function(firstLevelGroups) {
   this.root.children.length = 0;
@@ -177,7 +175,6 @@ LayertreeTreeManager.prototype.setFirstLevelGroups = function(firstLevelGroups) 
  * @param {boolean=} opt_add if true, force to use the 'add' mode this time.
  * @param {boolean=} opt_silent if true notifyCantAddGroups_ is not called.
  * @return{boolean} True if the group has been added. False otherwise.
- * @export
  */
 LayertreeTreeManager.prototype.addFirstLevelGroups = function(firstLevelGroups,
   opt_add, opt_silent) {
@@ -312,7 +309,6 @@ LayertreeTreeManager.prototype.manageExclusiveGroupSingleChecked_ = function(nod
  * if any corresponding group is found.
  * @param {string} groupName Name of the group to add.
  * @param {boolean=} opt_add if true, force to use the 'add' mode this time.
- * @export
  */
 LayertreeTreeManager.prototype.addGroupByName = function(groupName, opt_add) {
   this.gmfThemes_.getThemesObject().then((themes) => {
@@ -331,7 +327,6 @@ LayertreeTreeManager.prototype.addGroupByName = function(groupName, opt_add) {
  * @param {string} layerName Name of the layer inside the group to add.
  * @param {boolean=} opt_add if true, force to use the 'add' mode this time.
  * @param {boolean=} opt_silent if true notifyCantAddGroups_ is not called
- * @export
  */
 LayertreeTreeManager.prototype.addGroupByLayerName = function(layerName, opt_add, opt_silent) {
   this.gmfThemes_.getThemesObject().then((themes) => {
@@ -371,7 +366,6 @@ LayertreeTreeManager.prototype.addGroupByLayerName = function(layerName, opt_add
  * Remove a group from this tree's children. The first group that is found (
  * based on its name) will be removed. If any is found, nothing will append.
  * @param {import('gmf/themes.js').GmfGroup} group The group to remove.
- * @export
  */
 LayertreeTreeManager.prototype.removeGroup = function(group) {
   const children = this.root.children;
@@ -391,7 +385,6 @@ LayertreeTreeManager.prototype.removeGroup = function(group) {
 
 /**
  * Remove all groups.
- * @export
  */
 LayertreeTreeManager.prototype.removeAll = function() {
   while (this.root.children.length) {

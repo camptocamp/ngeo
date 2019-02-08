@@ -66,7 +66,6 @@ export default class extends ngeoDatasourceDataSource {
 
   /**
    * @return {!Array.<!import("ol/Feature.js").default>} Features
-   * @export
    */
   get features() {
     return this.featuresCollection_.getArray();
@@ -79,7 +78,6 @@ export default class extends ngeoDatasourceDataSource {
 
   /**
    * @return {!import("ol/Collection.js").default.<!import("ol/Feature.js").default>} Features collection
-   * @export
    */
   get featuresCollection() {
     return this.featuresCollection_;
@@ -87,7 +85,6 @@ export default class extends ngeoDatasourceDataSource {
 
   /**
    * @return {!import("ol/layer/Vector.js").default} Vector layer.
-   * @export
    */
   get layer() {
     return this.layer_;
@@ -100,7 +97,6 @@ export default class extends ngeoDatasourceDataSource {
 
   /**
    * @return {import("ol/extent.js").Extent} Extent.
-   * @export
    */
   get extent() {
     return this.source_.getExtent();

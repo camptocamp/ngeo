@@ -59,7 +59,6 @@ class Controller {
 
     /**
      * @type {!import("ngeo/datasource/Group.js").default}
-     * @export
      */
     this.group;
 
@@ -81,7 +80,6 @@ class Controller {
 
   /**
    * @return {string} Group uid.
-   * @export
    */
   getGroupUid() {
     return `datasourcegrouptree-${olUtilGetUid(this.group)}`;
@@ -89,7 +87,6 @@ class Controller {
 
   /**
    * Toggle visibility of the group itself, i.e. its visibility state.
-   * @export
    */
   toggle() {
     this.group.toggleVisibilityState();
@@ -99,7 +96,6 @@ class Controller {
    * Toggle visible property of a data source.
    * @param {import("ngeo/datasource/DataSource.js").default} dataSource Data source to toggle the
    * visibility
-   * @export
    */
   toggleDataSource(dataSource) {
     dataSource.visible = !dataSource.visible;
@@ -109,7 +105,6 @@ class Controller {
    * Remove all data sources from the `import('ngeo/datasource/DataSource.js').DataSources` collection, which
    * will automatically remove them from the Group. The group itself
    * is going to be removed as well, destroying this component in the process.
-   * @export
    */
   remove() {
     for (let i = this.group.dataSources.length - 1, ii = 0; i >= ii; i--) {
@@ -120,7 +115,6 @@ class Controller {
   /**
    * @param {!import("ngeo/datasource/DataSource.js").default} dataSource Data source to remove from
    *     the `import('ngeo/datasource/DataSource.js').DataSources` collection.
-   * @export
    */
   removeDataSource(dataSource) {
     this.dataSources_.remove(dataSource);

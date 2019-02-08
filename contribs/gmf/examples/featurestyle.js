@@ -162,7 +162,6 @@ function MainController($scope, ngeoFeatureHelper) {
 
   /**
    * @type {import("ol/Map.js").default}
-   * @export
    */
   this.map = new olMap({
     layers: [
@@ -181,7 +180,6 @@ function MainController($scope, ngeoFeatureHelper) {
 
   /**
    * @type {?import("ol/Feature.js").default}
-   * @export
    */
   this.selectedFeature = null;
 

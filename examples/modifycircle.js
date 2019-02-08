@@ -31,7 +31,6 @@ function MainController() {
 
   /**
    * @type {import("ol/Map.js").default}
-   * @export
    */
   this.map = new olMap({
     layers: [
@@ -51,7 +50,6 @@ function MainController() {
 
   /**
    * @type {import("ol/Collection.js").default.<import("ol/Feature.js").default>}
-   * @export
    */
   this.features = new olCollection();
 
@@ -79,7 +77,6 @@ function MainController() {
 
   /**
    * @type {import("ngeo/interaction/ModifyCircle.js").default}
-   * @export
    */
   this.interaction = new ngeoInteractionModifyCircle(
     /** @type {import('ol/interaction/Modify.js').Options} */({

@@ -1,6 +1,5 @@
 /**
  * @enum {string}
- * @export
  */
 export default {
   LINE_STRING: 'LineString',

@@ -82,7 +82,6 @@ function Controller($scope, $timeout, gmfThemes, gmfTreeManager) {
 
   /**
    * @type {boolean}
-   * @export
    */
   this.active = this.active === true;
 
@@ -93,19 +92,16 @@ function Controller($scope, $timeout, gmfThemes, gmfTreeManager) {
 
   /**
    * @type {import("ol/Map.js").default}
-   * @export
    */
   this.map;
 
   /**
    * @type {number|undefined}
-   * @export
    */
   this.tolerance;
 
   /**
    * @type {import("ol/layer/Vector.js").default}
-   * @export
    */
   this.vectorLayer;
 
@@ -174,21 +170,18 @@ function Controller($scope, $timeout, gmfThemes, gmfTreeManager) {
    * Flag shared with the `gmf-editfeature` directive used to determine if it
    * has unsaved changes or not.
    * @type {boolean}
-   * @export
    */
   this.dirty = false;
 
   /**
    * List of editable Layertree controllers.
    * @type {Array.<import("ngeo/layertree/Controller.js").LayertreeController>}
-   * @export
    */
   this.editableTreeCtrls = [];
 
   /**
    * The currently selected Layertree controller.
    * @type {?import("ngeo/layertree/Controller.js").LayertreeController}
-   * @export
    */
   this.selectedEditableTreeCtrl = null;
 
@@ -207,7 +200,6 @@ function Controller($scope, $timeout, gmfThemes, gmfTreeManager) {
    * directive checks if it has unsaved changes and allow this directive to
    * continue the action that was made or not.
    * @type {string}
-   * @export
    */
   this.state = EditingState.IDLE;
 
@@ -233,7 +225,6 @@ function Controller($scope, $timeout, gmfThemes, gmfTreeManager) {
  * Called when the 'stop editing' button is clicked. Set the 'state'
  * variable to 'pending' allow the editfeature directive to check if it can
  * stop or if it requires confirmation due to unsaved modifications.
- * @export
  */
 Controller.prototype.stopEditing = function() {
   this.state = EditingState.STOP_EDITING_PENDING;

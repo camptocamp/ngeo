@@ -21,7 +21,6 @@ function MainController() {
 
   /**
    * @type {boolean}
-   * @export
    */
   this.modalShown = false;
 }

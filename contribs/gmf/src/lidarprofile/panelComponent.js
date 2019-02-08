@@ -106,7 +106,6 @@ class Controller {
 
     /**
      * @type {boolean}
-     * @export
      */
     this.ready = false;
 
@@ -123,27 +122,23 @@ class Controller {
 
     /**
      * @type {boolean}
-     * @export
      */
     this.active = false;
 
     /**
      * @type {import("ol/Map.js").default}
-     * @export
      */
     this.map = null;
 
     /**
      * The Openlayers LineString geometry of the profle
      * @type {import("ol/geom/LineString.js").default}
-     * @export
      */
     this.line;
 
     /**
      * State of the measure tool
      * @type {boolean}
-     * @export
      */
     this.measureActive = false;
 
@@ -235,7 +230,6 @@ class Controller {
 
   /**
    * Clear the LIDAR profile tool.
-   * @export
    */
   clearAll() {
     this.line = null;
@@ -248,7 +242,6 @@ class Controller {
 
   /**
    * Activate the measure tool
-   * @export
    */
   setMeasureActive() {
     this.measureActive = true;
@@ -259,7 +252,6 @@ class Controller {
 
   /**
    * Clear the current measure
-   * @export
    */
   clearMeasure() {
     this.measureActive = false;
@@ -269,7 +261,6 @@ class Controller {
 
   /**
    * Reload and reset the plot for the current profile (reloads data)
-   * @export
    */
   resetPlot() {
     this.profile.clearBuffer();
@@ -282,7 +273,6 @@ class Controller {
   /**
    * Get all available point attributes.
    * @return {Array.<import("gmf/lidarprofile/Config.js").LidarprofileServerConfigPointAttributes>|undefined} available point attributes.
-   * @export
    */
   getAvailablePointAttributes() {
     return this.profileConfig_.clientConfig.pointAttributes.availableOptions;
@@ -293,7 +283,6 @@ class Controller {
    * Get / Set the selected point attribute
    * @param {import("gmf/lidarprofile/Config.js").LidarprofileServerConfigPointAttribute=} opt_selectedOption the new selected point attribute.
    * @return {import("gmf/lidarprofile/Config.js").LidarprofileServerConfigPointAttributes|undefined} Selected point attribute
-   * @export
    */
   getSetSelectedPointAttribute(opt_selectedOption) {
     if (opt_selectedOption !== undefined) {
@@ -306,7 +295,6 @@ class Controller {
 
   /**
    * Get the available classifications for this dataset
-   * @export
    * @return {import("gmf/lidarprofile/Config.js").LidarprofileServerConfigClassifications} classification list
    */
   getClassification() {
@@ -316,7 +304,6 @@ class Controller {
 
   /**
    * Sets the visible classification in the profile
-   * @export
    * @param {import("gmf/lidarprofile/Config.js").LidarprofileServerConfigClassification} classification selected value
    * @param {number} key of the classification code
    */
@@ -331,7 +318,6 @@ class Controller {
 
   /**
    * Export the profile data to CSV file
-   * @export
    */
   csvExport() {
     if (this.line) {
@@ -348,7 +334,6 @@ class Controller {
 
   /**
    * Export the current d3 chart to PNG file
-   * @export
    */
   pngExport() {
     if (this.line) {

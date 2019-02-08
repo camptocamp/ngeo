@@ -100,13 +100,11 @@ function Controller($scope, $timeout, gettextCatalog, ngeoFeatureHelper, ngeoFea
 
   /**
    * @type {!import("ol/Map.js").default}
-   * @export
    */
   this.map;
 
   /**
    * @type {boolean}
-   * @export
    */
   this.active;
 
@@ -116,19 +114,16 @@ function Controller($scope, $timeout, gettextCatalog, ngeoFeatureHelper, ngeoFea
 
   /**
    * @type {boolean}
-   * @export
    */
   this.drawActive = false;
 
   /**
    * @type {!import("ngeo/misc/ToolActivate.js").default}
-   * @export
    */
   this.drawToolActivate = new ngeoMiscToolActivate(this, 'drawActive');
 
   /**
    * @type {boolean}
-   * @export
    */
   this.mapSelectActive = true;
 
@@ -140,7 +135,6 @@ function Controller($scope, $timeout, gettextCatalog, ngeoFeatureHelper, ngeoFea
 
   /**
    * @type {!import("ngeo/misc/ToolActivate.js").default}
-   * @export
    */
   this.mapSelectToolActivate = new ngeoMiscToolActivate(this, 'mapSelectActive');
 
@@ -164,7 +158,6 @@ function Controller($scope, $timeout, gettextCatalog, ngeoFeatureHelper, ngeoFea
 
   /**
    * @type {!import("ol/Collection.js").default.<!import("ol/Feature.js").default>}
-   * @export
    */
   this.features = ngeoFeatures;
 
@@ -176,13 +169,11 @@ function Controller($scope, $timeout, gettextCatalog, ngeoFeatureHelper, ngeoFea
 
   /**
    * @type {?import("ol/Feature.js").default}
-   * @export
    */
   this.selectedFeature = null;
 
   /**
    * @type {!import("ol/Collection.js").default.<!import("ol/Feature.js").default>}
-   * @export
    */
   this.selectedFeatures = new olCollection();
 
@@ -217,7 +208,6 @@ function Controller($scope, $timeout, gettextCatalog, ngeoFeatureHelper, ngeoFea
 
   /**
    * @type {!import("ngeo/misc/ToolActivate.js").default}
-   * @export
    */
   this.modifyToolActivate = new ngeoMiscToolActivate(this.modify_, 'active');
 
@@ -261,13 +251,11 @@ function Controller($scope, $timeout, gettextCatalog, ngeoFeatureHelper, ngeoFea
 
   /**
    * @type {!import("ngeo/misc/ToolActivate.js").default}
-   * @export
    */
   this.rotateToolActivate = new ngeoMiscToolActivate(this.rotate_, 'active');
 
   /**
    * @type {!import("ngeo/misc/ToolActivate.js").default}
-   * @export
    */
   this.translateToolActivate = new ngeoMiscToolActivate(this.translate_, 'active');
 
@@ -329,7 +317,6 @@ function Controller($scope, $timeout, gettextCatalog, ngeoFeatureHelper, ngeoFea
 
   /**
    * @type {string}
-   * @export
    */
   this.nameProperty = ngeoFormatFeatureProperties.NAME;
 
@@ -454,7 +441,6 @@ Controller.prototype.handleActiveChange_ = function(active) {
  * the list of features is clicked. Called from the template, so no need to
  * update Angular's scope.
  * @param {!import("ol/Feature.js").default} feature Feature to select.
- * @export
  */
 Controller.prototype.selectFeatureFromList = function(feature) {
   this.listSelectionInProgress_ = true;
@@ -465,7 +451,6 @@ Controller.prototype.selectFeatureFromList = function(feature) {
 
 /**
  * @return {!Array.<!import("ol/Feature.js").default>} Array.
- * @export
  */
 Controller.prototype.getFeaturesArray = function() {
   return this.features.getArray();
@@ -473,7 +458,6 @@ Controller.prototype.getFeaturesArray = function() {
 
 
 /**
- * @export
  */
 Controller.prototype.clearFeatures = function() {
   const gettextCatalog = this.gettextCatalog_;
@@ -487,7 +471,6 @@ Controller.prototype.clearFeatures = function() {
 
 /**
  * @param {!import("ol/Feature.js").default} feature The feature to remove from the selection.
- * @export
  */
 Controller.prototype.removeFeature = function(feature) {
   const gettextCatalog = this.gettextCatalog_;
