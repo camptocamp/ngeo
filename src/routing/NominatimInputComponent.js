@@ -122,7 +122,6 @@ function Controller($element, $injector, $scope, ngeoNominatimService) {
  * @param {JQueryEventObject} event Event.
  * @param {import('ngeo/routing/NominatimService').NominatimSearchResult} suggestion Suggestion.
  * @param {Twitter.Typeahead.Dataset} dataset Dataset.
- * @this {import("ngeo/routing/NominatimInputComponent.js").default.Controller}
  * @private
  */
 Controller.prototype.select_ = function(event, suggestion, dataset) {

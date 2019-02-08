@@ -441,7 +441,6 @@ class Measure extends olInteractionInteraction {
  * @param {number|undefined} precision Precision.
  * @param {!import('ngeo/misc/filters.js').unitPrefix} format The format function.
  * @return {string} Formatted string of the area.
- * @this {import("ngeo/interaction/Measure.js").default}
  */
 export function getFormattedArea(polygon, projection, precision, format) {
   const geom = /** @type {import("ol/geom/Polygon.js").default} */ (polygon.clone().transform(projection, 'EPSG:4326'));
@@ -502,7 +501,6 @@ export function getFormattedPoint(point, decimals, format, opt_template) {
  * Handle map browser event.
  * @param {import("ol/MapBrowserEvent.js").default} evt Map browser event.
  * @return {boolean} `false` if event propagation should be stopped.
- * @this {import("ngeo/interaction/Measure.js").default}
  * @private
  */
 function handleEvent_(evt) {
