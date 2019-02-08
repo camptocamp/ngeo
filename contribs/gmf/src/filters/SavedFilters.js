@@ -1,6 +1,10 @@
 import angular from 'angular';
 import * as olArray from 'ol/array.js';
 
+
+/**
+ * @hidden
+ */
 export class SavedFilter {
 
   /**
@@ -205,6 +209,10 @@ export class SavedFilter {
 }
 
 
+/**
+ * @type {!angular.IModule}
+ * @hidden
+ */
 const module = angular.module('gmfSavedFilters', []);
 
 module.service('gmfSavedFilters', SavedFilter);
@@ -213,6 +221,7 @@ module.service('gmfSavedFilters', SavedFilter);
 /**
  * The definition of a saved filter item.
  * @constructor
+ * @hidden
  */
 export function SavedFilterItem() {}
 

@@ -2,8 +2,10 @@ import angular from 'angular';
 import 'bootstrap/js/src/tooltip.js';
 import 'bootstrap/js/src/popover.js';
 
+
 /**
- * @type {angular.IModule}
+ * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('ngeoPopover', []);
 
@@ -101,6 +103,7 @@ function messagePopoverContentComponent() {
  * @ngdoc controller
  * @ngname NgeoPopoverController
  * @param {angular.IScope} $scope Scope.
+ * @private
  */
 function PopoverController($scope) {
   /**

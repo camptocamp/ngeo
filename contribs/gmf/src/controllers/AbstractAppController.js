@@ -652,6 +652,7 @@ AbstractAppController.prototype.userMustChangeItsPassword = function() {
  * @param {Array.<import("ol/layer/Base.js").default>} layers Layers list.
  * @param {Array.<string>} labels default_basemap list.
  * @return {import("ol/layer/Base.js").default} layer or null
+ * @private
  */
 function getLayerByLabels(layers, labels) {
   if (labels && labels.length > 0) {
@@ -766,6 +767,10 @@ export function getLocationIcon() {
 }
 
 
+/**
+ * @type {!angular.IModule}
+ * @hidden
+ */
 const module = angular.module('GmfAbstractAppControllerModule', [
   'gettext',
   'tmh.dynamicLocale',

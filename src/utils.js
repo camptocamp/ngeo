@@ -12,6 +12,7 @@ import olGeomPolygon from 'ol/geom/Polygon.js';
  * the geometry itself is already multi, it is returned as-is.
  * @param {import("ol/geom/Geometry.js").default} geometry A geometry
  * @return {import("ol/geom/Geometry.js").default} A multi geometry
+ * @hidden
  */
 export function toMulti(geometry) {
   /** @type {import("ol/geom/Geometry.js").default} */
@@ -37,6 +38,7 @@ export function toMulti(geometry) {
 /**
  * Checks if on Safari.
  * @return {boolean} True if on Safari.
+ * @hidden
  */
 export function isSafari() {
   return navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1;
@@ -47,6 +49,7 @@ export function isSafari() {
  * @param {string} hex Hex value to prepend if single digit.
  * @return {string} hex value prepended with zero if it was single digit,
  *     otherwise the same value that was passed in.
+ * @hidden
  */
 export function colorZeroPadding(hex) {
   return hex.length == 1 ? `0${hex}` : hex;
@@ -56,6 +59,7 @@ export function colorZeroPadding(hex) {
  * Converts a color from RGB to hex representation.
  * @param {!Array.<number>} rgb rgb representation of the color.
  * @return {string} hex representation of the color.
+ * @hidden
  */
 export function rgbArrayToHex(rgb) {
   const r = rgb[0];
@@ -74,6 +78,7 @@ export function rgbArrayToHex(rgb) {
  * Decode the encoded query string into a query data dictionary.
  * @param {string|undefined} queryString The queryString.
  * @return {!Object.<string, string>} The result.
+ * @hidden
  */
 export function decodeQueryString(queryString) {
   /** @type {Object.<string, string>} */
@@ -98,6 +103,7 @@ export function decodeQueryString(queryString) {
  * Encode the query data dictionary into an encoded query string.
  * @param {!Object.<string, string>} queryData The queryData,
  * @return {string} The result.
+ * @hidden
  */
 export function encodeQueryString(queryData) {
   const queryItem = [];
@@ -113,6 +119,7 @@ export function encodeQueryString(queryData) {
  * Delete condition passed to the modify interaction
  * @param {import("ol/MapBrowserEvent.js").default} event Browser event.
  * @return {boolean} The result.
+ * @hidden
  */
 export function deleteCondition(event) {
   return platformModifierKeyOnly(event) && singleClick(event);

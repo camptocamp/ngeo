@@ -10,6 +10,7 @@ import 'ngeo/sass/font.scss';
 
 /**
  * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('ngeoGrid', [
   ngeoMiscFilters.name,

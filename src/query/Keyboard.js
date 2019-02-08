@@ -3,7 +3,9 @@ import ngeoQueryAction from 'ngeo/query/Action.js';
 
 import {listen as olEventsListen} from 'ol/events.js';
 
+
 /**
+ * @hidden
  */
 export class QueryKeyboard {
 
@@ -110,8 +112,10 @@ export class QueryKeyboard {
   }
 }
 
+
 /**
  * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('ngeoQueryKeyboard', [
 ]);

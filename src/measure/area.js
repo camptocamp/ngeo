@@ -8,6 +8,7 @@ import olStyleStyle from 'ol/style/Style.js';
 
 /**
  * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('ngeoMeasurearea', [
   ngeoDrawController.name

@@ -21,6 +21,10 @@ if (!window.requestAnimationFrame) {
   window.location = 'http://geomapfish.org/';
 }
 
+
+/**
+ * @private
+ */
 class Controller extends AbstractDesktopController {
   /**
    * @param {angular.IScope} $scope Scope.
@@ -104,6 +108,9 @@ class Controller extends AbstractDesktopController {
   }
 }
 
+/**
+ * @hidden
+ */
 const module = angular.module('Appdesktop', [
   appBase.name,
   gmfControllersAbstractDesktopController.name,

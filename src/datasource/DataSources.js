@@ -4,6 +4,9 @@ import * as olEvents from 'ol/events.js';
 import olView from 'ol/View.js';
 
 
+/**
+ * @hidden
+ */
 export class DataSource {
 
   /**
@@ -170,6 +173,7 @@ export class DataSource {
 
 /**
  * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('ngeoDataSources', []);
 // DataSources with the DataSources type.

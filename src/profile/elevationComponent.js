@@ -71,6 +71,7 @@ import {select as d3select} from 'd3';
 
 /**
  * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('ngeoProfile', [
   ngeoMiscDebounce.name

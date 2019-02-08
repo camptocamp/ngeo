@@ -1,7 +1,9 @@
 import angular from 'angular';
 
+
 /**
  * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('gmfLidarprofile', []);
 

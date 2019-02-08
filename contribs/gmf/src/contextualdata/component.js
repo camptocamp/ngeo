@@ -5,6 +5,7 @@ import * as olProj from 'ol/proj.js';
 
 /**
  * @type {angular.IModule}
+ * @hidden
  */
 const module = angular.module('gmfContextualdata', [
   gmfRasterRasterService.name,
@@ -72,14 +73,13 @@ module.directive('gmfContextualdata', contextualDataComponent);
 
 
 /**
- *
  * @param {angular.ICompileService} $compile Angular compile service.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @param {!angular.IScope} $scope Scope.
  * @param {import("gmf/raster/RasterService.js").RasterService} gmfRaster Gmf Raster service
  *
  * @constructor
- * @private
+ * @hidden
  * @ngdoc controller
  * @ngInject
  */

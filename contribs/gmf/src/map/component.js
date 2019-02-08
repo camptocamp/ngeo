@@ -4,8 +4,10 @@ import gmfEditingSnapping from 'gmf/editing/Snapping.js';
 import ngeoMapModule from 'ngeo/map/module.js';
 import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr.js';
 
+
 /**
  * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('gmfMapComponent', [
   gmfPermalinkModule.name,
@@ -40,7 +42,7 @@ module.run(/* @ngInject */ ($templateCache) => {
  * @ngdoc directive
  * @ngname gmfMap
  */
-function mapComponent() {
+function gmfMapComponent() {
   return {
     scope: {
       'map': '<gmfMapMap',
@@ -53,7 +55,7 @@ function mapComponent() {
   };
 }
 
-module.directive('gmfMap', mapComponent);
+module.directive('gmfMap', gmfMapComponent);
 
 
 /**

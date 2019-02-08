@@ -21,6 +21,10 @@ import {guessServiceTypeByUrl, Type} from 'ngeo/datasource/OGC.js';
  */
 
 
+/**
+ * @type {!angular.IModule}
+ * @hidden
+ */
 const module = angular.module('gmfImportdatasource', [
   gmfDatasourceExternalDataSourcesManager.name,
   gmfImportWmsCapabilityLayertreeComponent.name,
@@ -60,6 +64,7 @@ function gmfImportdatasourceTemplateUrl($attrs, gmfImportdatasourceTemplateUrl) 
 
 /**
  * @enum {string}
+ * @hidden
  */
 const Mode = {
   LOCAL: 'Local',

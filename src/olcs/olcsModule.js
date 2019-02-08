@@ -5,6 +5,7 @@ import control from 'ngeo/olcs/controls3d.js';
 
 /**
  * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('ngeoOlcsModule', [
   control.name,

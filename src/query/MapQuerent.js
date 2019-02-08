@@ -38,6 +38,9 @@ import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
  */
 
 
+/**
+ * @hidden
+ */
 export class MapQuerent {
 
   /**
@@ -320,6 +323,7 @@ export class MapQuerent {
 
 /**
  * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('ngeoMapQuerent', [
   ngeoDatasourceDataSources.name,

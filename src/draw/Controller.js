@@ -5,7 +5,7 @@ import ngeoDrawFeatures from 'ngeo/draw/features.js';
 import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties.js';
 import ngeoGeometryType from 'ngeo/GeometryType.js';
 import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent.js';
-import {interaction as ngeoMiscDecorateInteraction} from 'ngeo/misc/decorate.js';
+import {interactionDecoration as ngeoMiscDecorateInteraction} from 'ngeo/misc/decorate.js';
 import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
 import olFeature from 'ol/Feature.js';
 
@@ -20,6 +20,7 @@ import olFeature from 'ol/Feature.js';
  * @ngInject
  * @ngdoc controller
  * @ngname ngeoDrawfeatureController
+ * @hidden
  */
 export function DrawController($scope, $sce, gettextCatalog,
   ngeoFeatureHelper, ngeoFeatures) {
@@ -224,6 +225,7 @@ DrawController.prototype.handleDrawEnd = function(type, event) {
 
 /**
  * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('ngeoDrawfeatureController', [
   ngeoDrawFeatures.name,

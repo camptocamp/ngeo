@@ -3,6 +3,11 @@ import gmfPermalinkShareService, {URL_MAX_LEN, URL_PATH_MAX_LEN} from 'gmf/perma
 import ngeoStatemanagerLocation from 'ngeo/statemanager/Location.js';
 import {getUid as olUtilGetUid} from 'ol/util.js';
 
+
+/**
+ * @type {!angular.IModule}
+ * @hidden
+ */
 const module = angular.module('gmfPermalinkShareComponent', [
   gmfPermalinkShareService.name,
   ngeoStatemanagerLocation.name,
@@ -59,6 +64,9 @@ const permalinkShareComponent = {
 module.component('gmfShare', permalinkShareComponent);
 
 
+/**
+ * @private
+ */
 class ShareComponentController {
   /**
    * The controller for the share component

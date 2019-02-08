@@ -8,6 +8,7 @@ import {encodeQueryString, decodeQueryString} from 'ngeo/utils.js';
  * @constructor
  * @ngInject
  * @ngname gmfFulltextSearch
+ * @hidden
  */
 export function FulltextSearchService($injector, $http) {
 
@@ -60,6 +61,7 @@ FulltextSearchService.prototype.search = function(query, params) {
 
 /**
  * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('gmfSearchFulltextSearch', []);
 module.service('gmfSearchFulltextSearch', FulltextSearchService);

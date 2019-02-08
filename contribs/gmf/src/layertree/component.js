@@ -42,6 +42,7 @@ import 'bootstrap/js/src/collapse.js';
 
 /**
  * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('gmfLayertreeComponent', [
   gmfDatasourceDataSourceBeingFiltered.name,
@@ -98,6 +99,7 @@ module.value('gmfLayertreeTemplate',
  * @param {!function(!JQuery, !angular.IAttributes): string} gmfLayertreeTemplate Template function.
  * @return {string} Template.
  * @ngInject
+ * @private
  */
 function gmfLayertreeTemplate($element, $attrs, gmfLayertreeTemplate) {
   return gmfLayertreeTemplate($element, $attrs);

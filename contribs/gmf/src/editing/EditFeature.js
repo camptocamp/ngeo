@@ -23,6 +23,7 @@ import {appendParams as olUriAppendParams} from 'ol/uri.js';
  * @param {angular.IHttpService} $http Angular http service.
  * @param {string} gmfLayersUrl Url to the GeoMapFish layers service.
  * @ngInject
+ * @hidden
  */
 export function EditingEditFeature($http, gmfLayersUrl) {
 
@@ -146,6 +147,7 @@ EditingEditFeature.prototype.deleteFeature = function(layerId, feature) {
 
 /**
  * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('gmfEditFeature', []);
 module.service('gmfEditFeature', EditingEditFeature);

@@ -3,6 +3,7 @@ import olEventsEvent from 'ol/events/Event.js';
 
 /**
  * @template T
+ * @hidden
  */
 export default class extends olEventsEvent {
   /**

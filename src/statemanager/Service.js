@@ -8,6 +8,7 @@ import ngeoStatemanagerLocation from 'ngeo/statemanager/Location.js';
  * @param {!import("ngeo/statemanager/Location.js").StatemanagerLocation} ngeoLocation ngeo location service.
  * @param {!Array.<!RegExp>} ngeoUsedKeyRegexp regexp used to identify the used keys.
  * @ngInject
+ * @hidden
  */
 export function StatemanagerService(ngeoLocation, ngeoUsedKeyRegexp) {
 
@@ -183,6 +184,7 @@ StatemanagerService.prototype.deleteParam = function(key) {
 
 /**
  * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('ngeoStateManager', [
   ngeoStatemanagerLocation.name

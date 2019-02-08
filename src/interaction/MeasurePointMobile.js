@@ -4,6 +4,7 @@ import ngeoInteractionMobileDraw from 'ngeo/interaction/MobileDraw.js';
 
 /**
  * Interaction dedicated to measure by coordinate (point) on mobile devices.
+ * @hidden
  */
 export default class extends ngeoInteractionMeasure {
   /**

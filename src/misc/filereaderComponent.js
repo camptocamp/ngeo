@@ -1,7 +1,9 @@
 import angular from 'angular';
 
+
 /**
  * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('ngeoFilereader', []);
 
@@ -26,6 +28,7 @@ const module = angular.module('ngeoFilereader', []);
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoFilereader
+ * @private
  */
 function filereaderComponent($window) {
   return {

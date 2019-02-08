@@ -2,10 +2,10 @@ import olOverlay from 'ol/Overlay.js';
 
 /**
  * @classdesc
- * An openlayers overlay that uses bootstrap popover to produce a popup
- * for maps.
+ * An openlayers overlay that uses bootstrap popover to produce a popup for maps.
  *
  * @param {import('ol/Overlay.js').Options=} opt_options Overlay options.
+ * @hidden
  */
 export default class extends olOverlay {
   constructor(options = {}) {

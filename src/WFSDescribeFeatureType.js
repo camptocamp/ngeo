@@ -27,6 +27,7 @@ const NAMESPACE_URIS_ = [
  * @param {Array<string>} namespaceURIs Namespace URIs.
  * @param {parserStructure} structure Structure.
  * @return {Object<string, parserStructure>} Namespaced structure.
+ * @private
  */
 function makeStructureNS(namespaceURIs, structure) {
   return /** @type {parsersStructure} */(/** @type {any} */(olXml.makeStructureNS(namespaceURIs, structure)));
@@ -95,6 +96,7 @@ const SEQUENCE_PARSERS_ = makeStructureNS(
 
 /**
  * Format for reading WFS DescribeFeatureType data.
+ * @private
  */
 class WFSDescribeFeatureType extends olFormatXML {
   constructor() {

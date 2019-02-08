@@ -33,6 +33,7 @@ import {getUid as olUtilGetUid} from 'ol/util.js';
 
 /**
  * @enum {string}
+ * @hidden
  */
 export const ObjecteditingProcessType = {
   ADD: 'add',
@@ -42,6 +43,7 @@ export const ObjecteditingProcessType = {
 
 /**
  * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('gmfObjecteditingToolsComponent', [
   gmfObjecteditingGetWMSFeatureComponent.name,

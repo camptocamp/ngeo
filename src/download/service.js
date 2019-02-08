@@ -9,6 +9,7 @@ import {saveAs} from 'file-saver';
 
 /**
  * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('ngeoDownload', []);
 
@@ -18,6 +19,7 @@ const module = angular.module('ngeoDownload', []);
  * @return {Download} The download function.
  * @ngdoc service
  * @ngname ngeoDownload
+ * @private
  */
 function factory() {
   /**

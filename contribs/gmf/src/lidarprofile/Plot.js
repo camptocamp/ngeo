@@ -14,6 +14,9 @@ import {
 } from 'd3';
 
 
+/**
+ * @hidden
+ */
 export default class {
 
   /**

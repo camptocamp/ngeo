@@ -19,8 +19,12 @@ import olSourceVector from 'ol/source/Vector.js';
  * @property {number} [maxResolution] (DataSourceOptions)
  * @property {string} name (DataSourceOptions)
  * @property {boolean} [visible=false] (DataSourceOptions)
-*/
+ */
 
+
+/**
+ * @hidden
+ */
 export default class extends ngeoDatasourceDataSource {
 
   /**

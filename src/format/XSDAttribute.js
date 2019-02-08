@@ -5,6 +5,7 @@ import olFormatXML from 'ol/format/XML.js';
 
 /**
  * @enum {string}
+ * @hidden
  */
 export const FormatNumberType = {
   /**
@@ -20,6 +21,7 @@ export const FormatNumberType = {
 
 /**
  * Reads attributes that are defined in XSD format and return them as a list.
+ * @private
  */
 class XSDAttribute extends olFormatXML {
   constructor() {
@@ -198,6 +200,7 @@ class XSDAttribute extends olFormatXML {
  * Returns the first geometry attribute among a given list of attributes.
  * @param {Array.<import('ngeo/format/Attribute.js').Attribute>} attributes The list of attributes.
  * @return {?import('ngeo/format/Attribute.js').Attribute} A geometry attribute object.
+ * @hidden
  */
 export function getGeometryAttribute(attributes) {
   let geomAttribute = null;

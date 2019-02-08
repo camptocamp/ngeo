@@ -4,8 +4,10 @@ import * as olEvents from 'ol/events.js';
 import olInteractionDraw from 'ol/interaction/Draw.js';
 import olGeomPolygon from 'ol/geom/Polygon.js';
 
+
 /**
  * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('ngeoDrawrectangle', []);
 

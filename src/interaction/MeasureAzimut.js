@@ -74,6 +74,7 @@ export default class extends ngeoInteractionMeasure {
  * Compute azimut from a 2 points line.
  * @param {import("ol/geom/LineString.js").default} line LineString.
  * @return {number} Azimut value.
+ * @hidden
  */
 export function getAzimut(line) {
   const coords = line.getCoordinates();
@@ -91,6 +92,7 @@ export function getAzimut(line) {
  * @param {number|undefined} decimals Decimals.
  * @param {!import('ngeo/misc/filters.js').formatNumber} format The format function.
  * @return {string} Formatted measure.
+ * @private
  */
 function getFormattedAzimut(line, decimals, format) {
   const azimut = getAzimut(line);
@@ -106,6 +108,7 @@ function getFormattedAzimut(line, decimals, format) {
  * @param {!import('ngeo/misc/filters.js').unitPrefix} formatLength The format function.
  * @param {!import('ngeo/misc/filters.js').formatNumber} formatAzimut The format function.
  * @return {string} Formatted measure.
+ * @hidden
  */
 export function getFormattedAzimutRadius(
   line, projection, decimals, precision, formatLength, formatAzimut) {

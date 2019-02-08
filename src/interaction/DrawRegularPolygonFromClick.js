@@ -20,6 +20,7 @@ import olInteractionInteraction from 'ol/interaction/Interaction.js';
 /**
  * This interactions allows drawing regular polygons of a pre-determined number
  * of sides and size a a clicked location on the map.
+ * @hidden
  */
 export default class extends olInteractionInteraction {
   /**

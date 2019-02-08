@@ -13,6 +13,9 @@ import ngeoDatasourceGroup from 'ngeo/datasource/Group.js';
  */
 
 
+/**
+ * @hidden
+ */
 export default class extends ngeoDatasourceGroup {
 
   /**

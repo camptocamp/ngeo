@@ -3,6 +3,7 @@ import ngeoInteractionMobileDraw from 'ngeo/interaction/MobileDraw.js';
 
 /**
  * Interaction dedicated to measure length on mobile devices.
+ * @hidden
  */
 export default class extends ngeoInteractionMeasureLength {
   /**

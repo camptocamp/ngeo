@@ -6,6 +6,9 @@ import ngeoStatemanagerLocation from 'ngeo/statemanager/Location.js';
 import {Permalink3dParam} from 'ngeo/olcs/constants.js';
 import ngeoStatemanagerService from 'ngeo/statemanager/Service.js';
 
+/**
+ * @hidden
+ */
 export const OlcsService = class {
 
   /**
@@ -124,6 +127,11 @@ export const OlcsService = class {
 
 };
 
+
+/**
+ * @type {!angular.IModule}
+ * @hidden
+ */
 const module = angular.module(name, [
   ngeoMiscDebounce.name,
   ngeoStatemanagerLocation.name,

@@ -1,5 +1,5 @@
 import angular from 'angular';
-import {interaction} from 'ngeo/misc/decorate.js';
+import {interactionDecoration} from 'ngeo/misc/decorate.js';
 import ngeoMiscFilters from 'ngeo/misc/filters.js';
 import * as olEvents from 'ol/events.js';
 import olStyleFill from 'ol/style/Fill.js';
@@ -7,6 +7,11 @@ import olStyleRegularShape from 'ol/style/RegularShape.js';
 import olStyleStroke from 'ol/style/Stroke.js';
 import olStyleStyle from 'ol/style/Style.js';
 
+
+/**
+ * @type {!angular.IModule}
+ * @hidden
+ */
 const module = angular.module('gmfMobileMeasureBase', [
   ngeoMiscFilters.name,
 ]);
@@ -22,6 +27,7 @@ const module = angular.module('gmfMobileMeasureBase', [
  * @ngInject
  * @ngdoc controller
  * @ngname GmfMobileMeasureBaseController
+ * @hidden
  */
 export function MeasueMobileBaseController($scope, $filter, gettextCatalog) {
 
@@ -119,13 +125,13 @@ export function MeasueMobileBaseController($scope, $filter, gettextCatalog) {
 MeasueMobileBaseController.prototype.init = function() {
 
   this.measure.setActive(this.active);
-  interaction(this.measure);
+  interactionDecoration(this.measure);
 
   this.drawInteraction = /** @type {import("ngeo/interaction/MobileDraw.js").default} */ (
     this.measure.getDrawInteraction());
 
   const drawInteraction = this.drawInteraction;
-  interaction(drawInteraction);
+  interactionDecoration(drawInteraction);
 
   Object.defineProperty(this, 'hasPoints', {
     get() {

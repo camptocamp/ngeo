@@ -65,6 +65,10 @@ import {padNumber} from 'ol/string.js';
  */
 
 
+/**
+ * @type {!angular.IModule}
+ * @hidden
+ */
 const module = angular.module('ngeoAngularFilters', []);
 
 /**
@@ -85,7 +89,7 @@ const module = angular.module('ngeoAngularFilters', []);
  * @ngdoc filter
  * @ngname ngeoScalify
  */
-function Scalify($filter) {
+function ScalifyFilter($filter) {
   const numberFilter = $filter('number');
   const filterFn = function(scale) {
     const text = numberFilter(scale, 0);
@@ -95,7 +99,7 @@ function Scalify($filter) {
   return filterFn;
 }
 
-module.filter('ngeoScalify', Scalify);
+module.filter('ngeoScalify', ScalifyFilter);
 
 /**
  * A filter used to format a number with a precision, using the locale.
@@ -117,7 +121,7 @@ module.filter('ngeoScalify', Scalify);
  * @ngdoc filter
  * @ngname ngeoNumber
  */
-function Number($locale) {
+function NumberFilter($locale) {
   const formats = $locale.NUMBER_FORMATS;
 
   /**
@@ -177,7 +181,7 @@ function Number($locale) {
   return result;
 }
 
-module.filter('ngeoNumber', Number);
+module.filter('ngeoNumber', NumberFilter);
 
 /**
  * A filter used to format a number with the prefix and unit
@@ -201,7 +205,7 @@ module.filter('ngeoNumber', Number);
  * @ngdoc filter
  * @ngname ngeoUnitPrefix
  */
-function UnitPrefix($filter) {
+function UnitPrefixFilter($filter) {
   const numberFilter = $filter('ngeoNumber');
   const standardPrefix = ['', 'k', 'M', 'G', 'T', 'P'];
   const binaryPrefix = ['', 'Ki', 'Mi', 'Gi', 'Ti', 'Pi'];
@@ -239,7 +243,7 @@ function UnitPrefix($filter) {
   return result;
 }
 
-module.filter('ngeoUnitPrefix', UnitPrefix);
+module.filter('ngeoUnitPrefix', UnitPrefixFilter);
 
 /**
  * Format a couple of numbers as number coordinates.
@@ -269,7 +273,7 @@ module.filter('ngeoUnitPrefix', UnitPrefix);
  * @ngdoc filter
  * @ngname ngeoNumberCoordinates
  */
-function NumberCoordinates($filter) {
+function NumberCoordinatesFilter($filter) {
   /**
    * @param {import("ol/coordinate.js").Coordinate} coordinates Array of two numbers.
    * @param {(number|string)=} opt_fractionDigits Optional number of digit.
@@ -292,7 +296,7 @@ function NumberCoordinates($filter) {
   return filterFn;
 }
 
-module.filter('ngeoNumberCoordinates', NumberCoordinates);
+module.filter('ngeoNumberCoordinates', NumberCoordinatesFilter);
 
 
 /**
@@ -313,7 +317,7 @@ module.filter('ngeoNumberCoordinates', NumberCoordinates);
  * @ngdoc filter
  * @ngname ngeoDMSCoordinates
  */
-function DMSCoordinates() {
+function DMSCoordinatesFilter() {
   const degreesToStringHDMS = function(degrees, hemispheres, fractionDigits) {
     const normalizedDegrees = modulo(degrees + 180, 360) - 180;
     const dms = Math.abs(3600 * normalizedDegrees);
@@ -350,7 +354,7 @@ function DMSCoordinates() {
   return filterFn;
 }
 
-module.filter('ngeoDMSCoordinates', DMSCoordinates);
+module.filter('ngeoDMSCoordinates', DMSCoordinatesFilter);
 
 
 /**
@@ -438,7 +442,7 @@ module.filter('ngeoTrustHtmlAuto', trustHtmlAutoFilter);
  * @ngdoc filter
  * @ngname ngeoDuration
  */
-function Duration(gettextCatalog) {
+function DurationFilter(gettextCatalog) {
   // time unit enum
   const TimeUnits = Object.freeze({
     SECONDS: Symbol('seconds'),
@@ -522,12 +526,13 @@ function Duration(gettextCatalog) {
   return result;
 }
 
-module.filter('ngeoDuration', Duration);
+module.filter('ngeoDuration', DurationFilter);
 
 
 /**
  * @type {!Array.<!StringToHtmlReplacement>}
  * @ngname ngeoStringToHtmlReplacements
+ * @hidden
  */
 const StringToHtmlReplacements = [
   // Hyperlink
@@ -549,9 +554,9 @@ module.constant('ngeoStringToHtmlReplacements', StringToHtmlReplacements);
  * A filter used to remove the CDATA prefix and postfix.
  *
  * @return {function(string): string} Retult string
- * @ngInject
  * @ngdoc filter
  * @ngname ngeoDuration
+ * @hidden
  */
 const removeCDATA = function() {
   return function(input) {

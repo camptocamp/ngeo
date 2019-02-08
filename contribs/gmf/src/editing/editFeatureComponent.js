@@ -26,7 +26,7 @@ import ngeoMessageModalComponent from 'ngeo/message/modalComponent.js';
 
 import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent.js';
 
-import {interaction as ngeoMiscDecorateInteraction} from 'ngeo/misc/decorate.js';
+import {interactionDecoration as ngeoMiscDecorateInteraction} from 'ngeo/misc/decorate.js';
 import ngeoMiscEventHelper from 'ngeo/misc/EventHelper.js';
 import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
 import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
@@ -50,6 +50,7 @@ import olStyleText from 'ol/style/Text.js';
 /**
  * The different possible values of the `state` inner property.
  * @enum {string}
+ * @hidden
  */
 export const EditingState = {
   /**
@@ -86,6 +87,7 @@ export const EditingState = {
 
 /**
  * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('GmfEditingFeatureComponent', [
   gmfEditingEditFeature.name,

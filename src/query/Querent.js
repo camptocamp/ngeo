@@ -73,6 +73,9 @@ import olSourceImageWMS from 'ol/source/ImageWMS.js';
  */
 
 
+/**
+ * @hidden
+ */
 export class Querent {
 
   /**
@@ -1011,6 +1014,7 @@ export class Querent {
 
 /**
  * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('ngeoQuerent', [
   ngeoFilterRuleHelper.name,

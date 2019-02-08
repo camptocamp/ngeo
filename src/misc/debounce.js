@@ -1,7 +1,9 @@
 import angular from 'angular';
 
+
 /**
  * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('ngeoDebounce', []);
 
@@ -19,6 +21,7 @@ const module = angular.module('ngeoDebounce', []);
  * @param {boolean} invokeApply Whether the call to `func` is wrapped into an `$apply` call.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @return {T} The wrapper function.
+ * @private
  */
 function debounce(func, wait, invokeApply, $timeout) {
   /**
@@ -52,6 +55,7 @@ function debounce(func, wait, invokeApply, $timeout) {
  * @ngdoc service
  * @ngname ngeoDebounce
  * @ngInject
+ * @private
  */
 function factory($timeout) {
   /** @type {function(T, number, boolean, angular.ITimeoutService): T} */

@@ -5,6 +5,7 @@ import ngeoRoutingNominatimService from 'ngeo/routing/NominatimService.js';
 
 /**
  * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('ngeoRoutingNominatimInputComponent', [
   ngeoSearchSearchDirective.name,

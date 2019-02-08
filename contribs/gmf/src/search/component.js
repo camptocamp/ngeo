@@ -47,6 +47,7 @@ import {appendParams as olUriAppendParams} from 'ol/uri.js';
 
 /**
  * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('gmfSearch', [
   gmfLayertreeTreeManager.name,

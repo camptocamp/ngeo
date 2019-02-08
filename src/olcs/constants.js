@@ -1,5 +1,6 @@
 /**
  * @enum {string}
+ * @hidden
  */
 export const Permalink3dParam = {
   /**

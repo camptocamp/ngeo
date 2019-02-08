@@ -26,6 +26,7 @@ import olSourceVector from 'ol/source/Vector.js';
 
 /**
  * Interaction to rotate features.
+ * @hidden
  */
 export default class extends olInteractionPointer {
   /**

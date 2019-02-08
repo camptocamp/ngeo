@@ -54,6 +54,9 @@ import {select as d3select} from 'd3';
  */
 
 
+/**
+ * @hidden
+ */
 export default class {
   /**
    * Clip a linstring with start and end measure given by D3 Chart domain

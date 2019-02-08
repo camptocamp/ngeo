@@ -3,8 +3,10 @@ import ngeoGeometryType from 'ngeo/GeometryType.js';
 import * as olEvents from 'ol/events.js';
 import olInteractionDraw from 'ol/interaction/Draw.js';
 
+
 /**
  * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('ngeoDrawtext', []);
 

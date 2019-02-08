@@ -36,6 +36,7 @@ import angular from 'angular';
  * @ngdoc service
  * @ngname ngeoToolActivateMgr
  * @ngInject
+ * @hidden
  */
 export function ToolActivateMgr($rootScope) {
 
@@ -183,6 +184,10 @@ ToolActivateMgr.prototype.activateDefault_ = function(groupName) {
 };
 
 
+/**
+ * @type {!angular.IModule}
+ * @hidden
+ */
 const module = angular.module('ngeoToolActivateMgr', []);
 module.service('ngeoToolActivateMgr', ToolActivateMgr);
 

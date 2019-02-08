@@ -3,6 +3,7 @@ import angular from 'angular';
 
 /**
  * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('ngeoBtnComponent', []);
 
@@ -76,6 +77,7 @@ module.directive('ngeoBtnGroup', buttonGroupComponent);
  * @ngInject
  * @ngdoc controller
  * @ngname ngeoBtnGroupController
+ * @private
  */
 function BtnGroupController($scope) {
   /**

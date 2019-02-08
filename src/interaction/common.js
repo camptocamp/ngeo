@@ -14,6 +14,7 @@ import {createEditingStyle} from 'ol/style/Style.js';
 
 /**
  * @return {import('ol/style/Style.js').StyleFunction} Styles.
+ * @hidden
  */
 export function getDefaultDrawStyleFunction() {
   const style = createEditingStyle();
@@ -25,6 +26,7 @@ export function getDefaultDrawStyleFunction() {
 
 /**
  * @return {import('ol/style/Style.js').StyleFunction} Styles.
+ * @hidden
  */
 export function getDefaultModifyStyleFunction() {
   const style = createEditingStyle();

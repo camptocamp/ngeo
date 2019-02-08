@@ -30,6 +30,7 @@ import 'corejs-typeahead';
 /**
  * @param {LocationSearchOptions=} opt_options Options.
  * @return {Bloodhound} The Bloodhound object.
+ * @private
  */
 function createLocationSearchBloodhound(opt_options) {
   /** @type {LocationSearchOptions} */
@@ -148,6 +149,7 @@ function createLocationSearchBloodhound(opt_options) {
 
 /**
  * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('ngeoCreateLocationSearchBloodhound', []);
 
@@ -172,8 +174,9 @@ module.value('ngeoCreateLocationSearchBloodhound', createLocationSearchBloodhoun
  * @typedef {function(LocationSearchOptions=):Bloodhound}
  * @ngdoc service
  * @ngname search.createLocationSearchBloodhound
+ * @private
  */
-export function Function() {}
+export function createLocationSearchBloodhoundFunction() {}
 
 
 export default module;

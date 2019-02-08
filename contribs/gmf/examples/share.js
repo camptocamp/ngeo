@@ -1,6 +1,3 @@
-/**
- */
-
 import angular from 'angular';
 import appURL from './url.js';
 import './share.css';
@@ -9,7 +6,10 @@ import gmfPermalinkShareComponent from 'gmf/permalink/shareComponent.js';
 import ngeoMessageModalComponent from 'ngeo/message/modalComponent.js';
 
 
-/** @type {!angular.IModule} **/
+/**
+ * @type {!angular.IModule}
+ * @hidden
+ */
 const module = angular.module('gmfapp', [
   'gettext',
   ngeoMessageModalComponent.name,

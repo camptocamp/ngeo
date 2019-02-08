@@ -8,8 +8,10 @@ import olFeature from 'ol/Feature.js';
 import {fromCircle} from 'ol/geom/Polygon.js';
 import olStyleStyle from 'ol/style/Style.js';
 
+
 /**
  * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('ngeoMeasureazimut', [
   ngeoDrawController.name,

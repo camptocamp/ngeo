@@ -17,6 +17,7 @@ import olGeomSimpleGeometry from 'ol/geom/SimpleGeometry.js';
  * @param {?import("ol/geom/Geometry.js").default|undefined} geom Geometry.
  * @return {boolean} Whether the given geometry is empty or not. A null or
  *     undefined geometry is considered empty.
+ * @hidden
  */
 export function isEmpty(geom) {
   let isEmpty = true;
@@ -32,6 +33,7 @@ export function isEmpty(geom) {
  * extra dimension other than X and Y to the coordinates of a geometry.
  *
  * @param {import("ol/geom/Geometry.js").default} geom Geometry
+ * @hidden
  */
 export function toXY(geom) {
   if (geom instanceof olGeomPoint) {

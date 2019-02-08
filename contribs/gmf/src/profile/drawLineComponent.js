@@ -5,10 +5,12 @@ import olMap from 'ol/Map.js';
 import olStyleStyle from 'ol/style/Style.js';
 import olStyleStroke from 'ol/style/Stroke.js';
 import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr.js';
-import {interaction} from 'ngeo/misc/decorate.js';
+import {interactionDecoration} from 'ngeo/misc/decorate.js';
+
 
 /**
  * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('gmfDrawProfileLine', [
   ngeoMapFeatureOverlayMgr.name,
@@ -116,7 +118,7 @@ function Controller($scope, $timeout, ngeoFeatureOverlayMgr) {
     features: this.features_
   });
 
-  interaction(this.interaction);
+  interactionDecoration(this.interaction);
 
   // Clear the line as soon as the interaction is activated.
   this.interaction.on('change:active', () => {

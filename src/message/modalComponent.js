@@ -2,8 +2,10 @@ import angular from 'angular';
 import 'jquery-ui/ui/widgets/draggable.js';
 import 'bootstrap/js/src/modal.js';
 
+
 /**
- * @type {angular.IModule}
+ * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('ngeoModal', []);
 
@@ -63,6 +65,10 @@ const messageModalComponent = {
 
 module.component('ngeoModal', messageModalComponent);
 
+
+/**
+ * @private
+ */
 class Controller {
   /**
    * @ngInject

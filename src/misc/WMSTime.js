@@ -5,6 +5,7 @@ import ngeoMiscTime, {Time} from 'ngeo/misc/Time.js';
  * ngeo - WMS time service
  * @ngdoc service
  * @ngname ngeoWMSTime
+ * @hidden
  */
 export class WMSTime extends Time {
   /**
@@ -94,6 +95,7 @@ export class WMSTime extends Time {
 
 /**
  * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('ngeoWMSTime', [
   ngeoMiscTime.name,

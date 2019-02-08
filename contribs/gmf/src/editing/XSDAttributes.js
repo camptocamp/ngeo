@@ -9,6 +9,7 @@ import ngeoFormatXSDAttribute from 'ngeo/format/XSDAttribute.js';
  * @param {angular.IHttpService} $http Angular http service.
  * @param {string} gmfLayersUrl Url to the GeoMapFish layers service.
  * @ngInject
+ * @hidden
  */
 export function EditingXSDAttributeService($http, gmfLayersUrl) {
 
@@ -57,6 +58,7 @@ EditingXSDAttributeService.prototype.handleGetAttributes_ = function(resp) {
 
 /**
  * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('gmfXSDAttributes', []);
 module.service('gmfXSDAttributes', EditingXSDAttributeService);

@@ -13,6 +13,7 @@ import 'jquery-ui-touch-punch';
 
 /**
  * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('ngeoSortable', []);
 

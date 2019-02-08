@@ -4,7 +4,7 @@ import ngeoFormatFeatureHash from 'ngeo/format/FeatureHash.js';
 
 import ngeoMapModule from 'ngeo/map/module.js';
 import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
-import {interaction} from 'ngeo/misc/decorate.js';
+import {interactionDecoration} from 'ngeo/misc/decorate.js';
 import ngeoStatemanagerModule from 'ngeo/statemanager/module.js';
 import olMap from 'ol/Map.js';
 import olInteractionDraw from 'ol/interaction/Draw.js';
@@ -183,7 +183,7 @@ DrawComponentController.prototype.$onInit = function() {
 
   this.interaction.setActive(false);
   this.map.addInteraction(this.interaction);
-  interaction(this.interaction);
+  interactionDecoration(this.interaction);
 
   this.interaction.on('drawend', (e) => {
     e.feature.set('id', ++this.featureSeq_);

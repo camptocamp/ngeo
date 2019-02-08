@@ -5,8 +5,10 @@ import gmfEditingEditFeatureComponent, {EditingState} from 'gmf/editing/editFeat
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
 import gmfThemeThemes from 'gmf/theme/Themes.js';
 
+
 /**
  * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('GmfEditingFeatureSelectorComponent', [
   gmfEditingEditFeatureComponent.name,

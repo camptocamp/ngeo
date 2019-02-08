@@ -1,5 +1,5 @@
 import angular from 'angular';
-import {layerLoading, layer} from 'ngeo/misc/decorate.js';
+import {layerLoading, layerDecoration} from 'ngeo/misc/decorate.js';
 import {getUid as olUtilGetUid} from 'ol/util.js';
 import * as olEvents from 'ol/events.js';
 import olLayerGroup from 'ol/layer/Group.js';
@@ -14,6 +14,7 @@ import olLayerLayer from 'ol/layer/Layer.js';
  * @ngInject
  * @ngdoc controller
  * @ngname NgeoLayertreeController
+ * @hidden
  */
 export function LayertreeController($scope, $rootScope, $attrs) {
 
@@ -140,7 +141,7 @@ export function LayertreeController($scope, $rootScope, $attrs) {
 
   if (this.layer) {
     layerLoading(this.layer, $scope);
-    layer(this.layer);
+    layerDecoration(this.layer);
 
     olEvents.listen(this.layer, 'change:opacity', () => {
       this.rootScope_.$broadcast('ngeo-layertree-opacity', this);
@@ -343,6 +344,7 @@ LayertreeController.prototype.setDataSource = function(dataSource) {
  * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl ngeo layertree controller.
  * @return {import("ngeo/layertree/Controller.js").LayertreeController} the top level layertree.
  * @public
+ * @hidden
  */
 export function getFirstParentTree(treeCtrl) {
   let tree = treeCtrl;
@@ -355,6 +357,7 @@ export function getFirstParentTree(treeCtrl) {
 
 /**
  * @enum {string}
+ * @hidden
  */
 export const LayertreeVisitorDecision = {
   STOP: 'STOP',
@@ -399,6 +402,7 @@ LayertreeController.prototype.traverseDepthFirst = function(visitor) {
 
 /**
  * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('ngeoLayertreeController', []);
 module.controller('ngeoLayertreeController', LayertreeController);

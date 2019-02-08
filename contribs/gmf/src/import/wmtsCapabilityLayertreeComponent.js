@@ -6,6 +6,11 @@ import ngeoMessagePopup from 'ngeo/message/Popup.js';
 
 import {getUid as olUtilGetUid} from 'ol/util.js';
 
+
+/**
+ * @type {!angular.IModule}
+ * @hidden
+ */
 const module = angular.module('gmfWmtscapabilitylayertree', [
   gmfDatasourceExternalDataSourcesManager.name,
   ngeoMessagePopup.name,

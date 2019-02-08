@@ -18,6 +18,7 @@ import {encodeQueryString, decodeQueryString} from 'ngeo/utils.js';
  * @constructor
  * @ngdoc service
  * @ngname ngeoLocation
+ * @hidden
  */
 export function StatemanagerLocation(location, history) {
   /**
@@ -67,6 +68,7 @@ export function StatemanagerLocation(location, history) {
 /**
  * @param {History} history History.
  * @param {string} state State.
+ * @private
  */
 function replaceState(history, state) {
   try {
@@ -344,6 +346,7 @@ StatemanagerLocation.prototype.setPath = function(path) {
  * @param {angular.IWindowService} $window Angular window service.
  * @return {StatemanagerLocation} The ngeo location service.
  * @ngInject
+ * @private
  */
 function LocationFactory($rootScope, $window) {
   const history = $window.history;
@@ -369,6 +372,7 @@ function LocationFactory($rootScope, $window) {
 
 /**
  * @type {!angular.IModule}
+ * @hidden
  * FIXME add utils dependencies.
  */
 const module = angular.module('ngeoLocation', []);

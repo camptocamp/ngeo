@@ -4,23 +4,24 @@
  */
 
 /**
- * @const
+ * @hidden
  */
 export const DATALAYERGROUP_NAME = 'data';
 
 /**
- * @const
+ * @hidden
  */
 export const EXTERNALLAYERGROUP_NAME = 'external';
 
 /**
- * @const
+ * @hidden
  */
 export const COORDINATES_LAYER_NAME = 'gmfCoordinatesLayerName';
 
 
 /**
  * @enum {string}
+ * @hidden
  */
 export const PermalinkParam = {
   BG_LAYER: 'baselayer_ref',

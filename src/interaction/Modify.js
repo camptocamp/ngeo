@@ -36,6 +36,7 @@ import olFeature from 'ol/Feature.js';
  * interactions follow the `active` property of this interaction, i.e. when
  * this interaction is activated, so do the inner interactions. Since they will
  * never share the same feature, they don't collide with one an other.
+ * @hidden
  */
 export default class extends olInteractionInteraction {
   /**

@@ -40,6 +40,7 @@ import * as olEvents from 'ol/events.js';
  * @ngInject
  * @ngdoc service
  * @ngname gmfTreeManager
+ * @hidden
  */
 export function LayertreeTreeManager($timeout, $injector, gettextCatalog, ngeoLayerHelper,
   ngeoNotification, gmfThemes, ngeoStateManager) {
@@ -627,6 +628,7 @@ LayertreeTreeManager.prototype.setNodeMetadataFromFullState_ = function(node, fu
 
 /**
  * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('gmfTreeManager', [
   gmfThemeThemes.name,

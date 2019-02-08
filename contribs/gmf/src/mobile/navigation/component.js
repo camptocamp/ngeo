@@ -1,12 +1,16 @@
-/**
- */
 import angular from 'angular';
-const module = angular.module('gmfMobileNav', []);
+
+
+/**
+ * @type {!angular.IModule}
+ * @hidden
+ */const module = angular.module('gmfMobileNav', []);
 
 
 /**
  * CSS class names toggled by the controller.
  * @enum {string}
+ * @hidden
  */
 const CLASS_NAMES = {
   ACTIVE: 'gmf-mobile-nav-active',

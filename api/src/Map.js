@@ -35,6 +35,9 @@ import {getFeaturesFromLayer} from './Querent.js';
 import * as themes from './Themes.js';
 
 
+/**
+ * @private
+ */
 class Map {
 
   /**
@@ -299,6 +302,7 @@ class Map {
  * @param {Array.<string>} keys Keys.
  * @param {Array.<*>} values Values.
  * @returns {Object<string, *>} Object.
+ * @private
  */
 function zip(keys, values) {
   const obj = {};
@@ -313,6 +317,7 @@ function zip(keys, values) {
  * @param {Object.<string, *>} obj Object.
  * @param {Array.<string>} keys keys.
  * @returns {Object<string, *>} Object.
+ * @private
  */
 function filterByKeys(obj, keys) {
   const filtered = {};

@@ -19,6 +19,9 @@ import ngeoRuleRule, {RuleOperatorType} from 'ngeo/rule/Rule.js';
  */
 
 
+/**
+ * @hidden
+ */
 export default class extends ngeoRuleRule {
 
   /**

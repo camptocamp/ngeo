@@ -21,6 +21,10 @@ if (!window.requestAnimationFrame) {
   window.location = 'http://geomapfish.org/';
 }
 
+
+/**
+ * @private
+ */
 class Controller extends AbstractMobileController {
   /**
    * @param {angular.IScope} $scope Scope.
@@ -61,6 +65,9 @@ class Controller extends AbstractMobileController {
   }
 }
 
+/**
+ * @hidden
+ */
 const module = angular.module('Appmobile', [
   appBase.name,
   gmfControllersAbstractMobileController.name,

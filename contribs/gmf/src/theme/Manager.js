@@ -6,6 +6,7 @@ import ngeoStatemanagerService from 'ngeo/statemanager/Service.js';
 
 /**
  * @enum {string}
+ * @hidden
  */
 export const ThemeEventType = {
   /**
@@ -36,6 +37,7 @@ export const ThemeEventType = {
  * @ngInject
  * @ngdoc service
  * @ngname gmfTreeManager
+ * @hidden
  */
 export function ThemeManagerService($rootScope, gmfThemes, gmfTreeManagerModeFlush,
   gmfTreeManager, ngeoStateManager) {
@@ -134,6 +136,7 @@ ThemeManagerService.prototype.removeAll = function() {
 
 /**
  * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('gmfThemeManager', [
   gmfLayertreeTreeManager.name,

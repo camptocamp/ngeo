@@ -10,6 +10,7 @@ import 'ngeo/sass/font.scss';
  * Provides methods to display any sort of messages, disclaimers, errors,
  * etc. Requires Bootstrap library (both CSS and JS) to display the alerts
  * properly.
+ * @hidden
  */
 export class MessageDisclaimerService extends ngeoMessageMessage {
   /**
@@ -208,8 +209,10 @@ export class MessageDisclaimerService extends ngeoMessageMessage {
   }
 }
 
+
 /**
- * @type {angular.IModule}
+ * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('ngeoDisclaimer', [
   ngeoMessagePopup.name,

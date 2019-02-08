@@ -40,6 +40,7 @@ module.component('appMap', mapComponent);
  *
  * @constructor
  * @ngInject
+ * @private
  */
 function MainController($timeout) {
   /**

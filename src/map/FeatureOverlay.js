@@ -5,6 +5,7 @@ import * as olEvents from 'ol/events.js';
  * @constructor
  * @param {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} manager The feature overlay manager.
  * @param {number} index This feature overlay's index.
+ * @hidden
  */
 export function FeatureOverlay(manager, index) {
 
@@ -108,8 +109,10 @@ FeatureOverlay.prototype.handleFeatureRemove_ = function(evt) {
   this.removeFeature(feature);
 };
 
+
 /**
  * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('ngeoFeatureOverlay', []);
 

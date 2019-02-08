@@ -9,9 +9,12 @@ import ngeoDatasourceGroup from 'ngeo/datasource/Group.js';
  * @property {string} url The OGC service url. Used as a unique identifier for the group object itself.
  * @property {!Array.<!import('ngeo/datasource/DataSource.js').default>} dataSources (GroupOptions)
  * @property {string} title (GroupOptions)
-*/
+ */
 
 
+/**
+ * @hidden
+ */
 export default class extends ngeoDatasourceGroup {
 
   /**

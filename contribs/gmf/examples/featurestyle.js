@@ -22,7 +22,10 @@ import olSourceOSM from 'ol/source/OSM.js';
 import olSourceVector from 'ol/source/Vector.js';
 
 
-/** @type {!angular.IModule} **/
+/**
+ * @type {!angular.IModule}
+ * @hidden
+ */
 const module = angular.module('gmfapp', [
   'gettext',
   gmfDrawingFeatureStyleComponent.name,

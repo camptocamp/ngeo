@@ -1,4 +1,4 @@
-import {layer as ngeoMiscDecorateLayer} from 'ngeo/misc/decorate.js';
+import {layerDecoration as ngeoMiscDecorateLayer} from 'ngeo/misc/decorate.js';
 import olLayerTile from 'ol/layer/Tile.js';
 import olSourceOSM from 'ol/source/OSM.js';
 

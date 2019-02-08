@@ -25,7 +25,9 @@ import olFormatKML from 'ol/format/KML.js';
  * @property {Function} unregister
  */
 
-
+/**
+ * @hidden
+ */
 export class ExternalDatSourcesManager {
 
   /**
@@ -672,12 +674,17 @@ export class ExternalDatSourcesManager {
  *
  * @param {!Object} layer WMS/WMTS Capability Layer object.
  * @return {number} Data source id.
+ * @private
  */
 function getId(layer) {
   return Number(olUtilGetUid(layer)) + 1000000;
 }
 
 
+/**
+ * @type {!angular.IModule}
+ * @hidden
+ */
 const module = angular.module('gmfExternalDataSourcesManager', [
   ngeoMapLayerHelper.name,
   ngeoMiscFile.name,

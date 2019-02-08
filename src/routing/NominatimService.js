@@ -29,6 +29,7 @@ import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
  * @ngInject
  * @ngname ngeoNominatimService
  * @see https://wiki.openstreetmap.org/wiki/Nominatim
+ * @hidden
  */
 export function NominatimService($http, $injector, ngeoDebounce) {
 
@@ -175,8 +176,10 @@ NominatimService.prototype.typeaheadSource_ = function(query, syncResults, async
   this.search(query, {}).then(onSuccess_, onError_);
 };
 
+
 /**
  * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('ngeoNominatimService', [
   ngeoMiscDebounce.name

@@ -9,6 +9,10 @@ import {getUid as olUtilGetUid} from 'ol/util.js';
 import 'bootstrap/js/src/collapse.js';
 
 
+/**
+ * @type {!angular.IModule}
+ * @hidden
+ */
 const module = angular.module('gmfWmscapabilitylayertreenode', [
   gmfDatasourceExternalDataSourcesManager.name,
   ngeoMessagePopup.name,

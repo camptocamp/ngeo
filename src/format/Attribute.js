@@ -43,6 +43,7 @@ import ngeoFormatAttributeType from 'ngeo/format/AttributeType.js';
  * @param {AttributeBase} attribute Attribute.
  * @param {string} type Type.
  * @return {boolean} Whether both attribute type and geomType were set.
+ * @hidden
  */
 export function setGeometryType(attribute, type) {
   const geomRegex =

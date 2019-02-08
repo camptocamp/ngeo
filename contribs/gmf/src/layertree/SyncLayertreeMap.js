@@ -20,6 +20,7 @@ import olLayerTile from 'ol/layer/Tile.js';
  * @ngInject
  * @ngdoc service
  * @ngname gmfSyncLayertreeMap
+ * @hidden
  */
 export function SyncLayertreeMap($rootScope, ngeoLayerHelper, ngeoWMSTime, gmfThemes) {
 
@@ -429,7 +430,7 @@ SyncLayertreeMap.prototype.getFirstLevelGroupCtrl_ = function(
  * Return the layer used by the given treeCtrl.
  * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl ngeo layertree controller.
  * @return {import("ol/layer/Base.js").default} The layer.
- * @public
+ * @hidden
  */
 export function getLayer(treeCtrl) {
   let tree = treeCtrl;
@@ -446,6 +447,7 @@ export function getLayer(treeCtrl) {
 
 /**
  * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('gmfSyncLayertreeMap', [
   gmfThemeThemes.name,

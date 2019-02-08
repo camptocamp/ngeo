@@ -1,7 +1,9 @@
 import angular from 'angular';
 
+
 /**
  * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('ngeoColorpicker', []);
 
@@ -59,7 +61,7 @@ module.directive('ngeoColorpicker', colorPickerComponent);
 /**
  * Default colors for the colorpicker
  * @type {Array.<Array.<string>>}
- * @const
+ * @private
  */
 const DEFAULT_COLORS = [
   ['#F4EB37', '#CDDC39', '#62AF44', '#009D57', '#0BA9CC', '#4186F0', '#3F5BA9', '#7C3592', '#A61B4A', '#DB4436', '#F8971B', '#F4B400', '#795046'],

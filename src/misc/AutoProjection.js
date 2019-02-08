@@ -7,6 +7,7 @@ import * as olExtent from 'ol/extent.js';
  * @constructor
  * @ngdoc service
  * @ngname ngeoAutoProjection
+ * @hidden
  */
 export function AutoProjectionService() {}
 
@@ -115,6 +116,7 @@ AutoProjectionService.prototype.tryProjectionsWithInversion = function(
 
 /**
  * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('ngeoAutoProjection', []);
 module.service('ngeoAutoProjection', AutoProjectionService);

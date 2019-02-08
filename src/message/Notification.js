@@ -8,6 +8,7 @@ import {getUid as olUtilGetUid} from 'ol/util.js';
 /**
  * Default delay (in milliseconds) a message should be displayed.
  * @type {number}
+ * @private
  */
 const DEFAULT_DELAY = 7000;
 
@@ -17,6 +18,7 @@ const DEFAULT_DELAY = 7000;
  * etc. Requires Bootstrap library (both CSS and JS) to display the alerts
  * properly.
  * @abstract
+ * @hidden
  */
 export class MessageNotification extends ngeoMessageMessage {
   /**
@@ -156,7 +158,8 @@ export class MessageNotification extends ngeoMessageMessage {
 
 
 /**
- * @type {angular.IModule}
+ * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('ngeoNotification', []);
 

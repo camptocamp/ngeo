@@ -43,6 +43,9 @@ import olSourceTileWMS from 'ol/source/TileWMS.js';
  */
 
 
+/**
+ * @hidden
+ */
 export class DatasourceManager {
 
   /**
@@ -947,6 +950,7 @@ export class DatasourceManager {
 
 /**
  * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('gmfDataSourcesManager', [
   gmfDatasourceWFSAliases.name,

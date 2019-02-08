@@ -25,7 +25,10 @@ import olStyleStyle from 'ol/style/Style.js';
 import ngeoMapModule from 'ngeo/map/module.js';
 
 
-/** @type {!angular.IModule} **/
+/**
+ * @type {!angular.IModule}
+ * @hidden
+ */
 const module = angular.module('gmfapp', [
   'gettext',
   gmfDatasourceManager.name,
@@ -56,6 +59,7 @@ module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
  * A sample component to display the result.
  *
  * @type {!angular.IComponentOptions}
+ * @hidden
  */
 const queryresultComponent = {
   controller: 'AppQueryresultController',

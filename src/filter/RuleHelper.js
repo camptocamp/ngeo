@@ -42,6 +42,9 @@ import moment from 'moment';
  */
 
 
+/**
+ * @hidden
+ */
 export class RuleHelper {
 
   /**
@@ -778,6 +781,7 @@ export class RuleHelper {
 
 /**
  * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('ngeoRuleHelper', [
   ngeoMiscFeatureHelper.name,

@@ -8,6 +8,7 @@ import 'angular-sanitize';
 
 /**
  * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('ngeoMessageDisplaywindowComponent', [
   'ngSanitize',

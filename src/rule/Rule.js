@@ -42,6 +42,7 @@ import * as olEvents from 'ol/events.js';
 
 /**
  * @enum {string}
+ * @hidden
  */
 export const RuleOperatorType = {
   BETWEEN: '..',
@@ -57,6 +58,7 @@ export const RuleOperatorType = {
 
 /**
  * @enum {string}
+ * @hidden
  */
 export const RuleSpatialOperatorType = {
   CONTAINS: 'contains',
@@ -67,6 +69,7 @@ export const RuleSpatialOperatorType = {
 
 /**
  * @enum {string}
+ * @hidden
  */
 export const RuleTemporalOperatorType = {
   BEGINS: 'time_start',
@@ -76,6 +79,9 @@ export const RuleTemporalOperatorType = {
 };
 
 
+/**
+ * @hidden
+ */
 export default class Rule {
 
   /**

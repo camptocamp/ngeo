@@ -2,8 +2,10 @@ import angular from 'angular';
 import gmfObjecteditingQuery from 'gmf/objectediting/Query.js';
 import * as olEvents from 'ol/events.js';
 
+
 /**
  * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('gmfObjecteditingGetWMSFeatureComponent', [
   gmfObjecteditingQuery.name,

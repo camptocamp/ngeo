@@ -16,7 +16,8 @@ import angular from 'angular';
 
 
 /**
- * Service to provide access to a [Open Source Routing Machine (OSRM) backend](https://github.com/Project-OSRM/osrm-backend)
+ * Service to provide access to a
+ * [Open Source Routing Machine (OSRM) backend](https://github.com/Project-OSRM/osrm-backend)
  * of version 5.8 and higher and its features.
  * @param {angular.IHttpService} $http Angular http service.
  * @param {angular.auto.IInjectorService} $injector Main injector.
@@ -24,6 +25,7 @@ import angular from 'angular';
  * @ngdoc service
  * @ngInject
  * @ngname ngeoRoutingService
+ * @hidden
  */
 export function RoutingService($http, $injector) {
 
@@ -168,6 +170,7 @@ RoutingService.prototype.getNearest = function(coordinate, config) {
 
 /**
  * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('ngeoRoutingService', [
 ]);

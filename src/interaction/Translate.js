@@ -27,6 +27,7 @@ import olSourceVector from 'ol/source/Vector.js';
  * - show a small arrow icon in the middle of the features allowing a visual
  *   aspect that tells the user "this feature can be moved"
  * - pressing the ESC key automatically deactivate the interaction.
+ * @hidden
  */
 export default class extends olInteractionTranslate {
   /**

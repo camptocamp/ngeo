@@ -5,8 +5,10 @@ import 'jquery-ui/ui/widgets/slider.js';
 import 'angular-ui-slider';
 import './timeslider.scss';
 
+
 /**
  * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('gmfLayertreeTimeSliderComponent', [
   ngeoMiscWMSTime.name,

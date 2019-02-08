@@ -10,6 +10,7 @@ import * as olColor from 'ol/color.js';
 
 /**
  * @constructor
+ * @private
  */
 function VectorEncoder() {
   /**
@@ -21,6 +22,7 @@ function VectorEncoder() {
 
 /**
  * @enum {string}
+ * @private
  */
 const PrintStyleType = {
   LINE_STRING: 'LineString',
@@ -31,6 +33,7 @@ const PrintStyleType = {
 
 /**
  * @type {Object.<import("ol/geom/GeometryType.js").default, PrintStyleType>}
+ * @private
  */
 const PRINT_STYLE_TYPES = {
   'LineString': PrintStyleType.LINE_STRING,
