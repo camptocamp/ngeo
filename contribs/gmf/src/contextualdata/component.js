@@ -200,7 +200,7 @@ ContextualdataController.prototype.preparePopover_ = function() {
 
   const container = document.createElement('DIV');
   container.classList.add('popover');
-  container.classList.add('bottom');
+  container.classList.add('bs-popover-bottom');
   container.classList.add('gmf-contextualdata');
   container.style.position = 'relative';
   const arrow = document.createElement('DIV');
@@ -208,7 +208,7 @@ ContextualdataController.prototype.preparePopover_ = function() {
   container.appendChild(arrow);
   this.content_ = document.createElement('DIV');
   this.content_.setAttribute('gmf-contextualdatacontent', '');
-  this.content_.classList.add('popover-content');
+  this.content_.classList.add('popover-body');
   container.appendChild(this.content_);
 
   this.overlay_ = new olOverlay({

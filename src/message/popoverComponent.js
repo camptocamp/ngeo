@@ -13,7 +13,7 @@ const module = angular.module('ngeoPopover', []);
  *
  *<div ngeo-popover>
  *  <a ngeo-popover-anchor class="btn btn-info">anchor 1</a>
- *  <div ngeo-popover-content>
+ *  <div ngeo-popover-body>
  *    <ul>
  *      <li>action 1:
  *        <input type="range"/>
