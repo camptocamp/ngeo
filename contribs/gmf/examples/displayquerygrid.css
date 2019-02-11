@@ -47,14 +47,6 @@ gmf-map > div {
   margin-right: 0px;
 }
 
-.navbar {
-  height: 3rem;
-  padding-top: .5rem;
-}
-
-.navbar-right {
-  margin-right: 0;
-}
 .navbar-text {
   padding: 1px 5px;
   margin: 0;
