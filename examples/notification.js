@@ -68,7 +68,7 @@ MainController.prototype.notifyMulti = function() {
 MainController.prototype.notifyTarget = function() {
   this.notification.notify({
     msg: 'Error in an other target',
-    target: angular.element('#my-messages'),
+    target: '#my-messages',
     type: MessageType.ERROR
   });
 };
