@@ -162,7 +162,7 @@ const config = function(hardSourceConfig, babelLoaderCacheDirectory) {
       modules: [
         '../node_modules'
       ],
-      mainFields: ['source', 'module', 'jsnext:main', 'main'],
+      mainFields: ['geoblocks_src', 'module', 'jsnext:main', 'main'],
       alias: {
         'ngeo/test': path.resolve(__dirname, '../test/spec'),
         'gmf/test': path.resolve(__dirname, '../contribs/gmf/test/spec'),
