@@ -2,6 +2,10 @@ import angular from 'angular';
 import ngeoDatasourceHelper from 'ngeo/datasource/Helper.js';
 import {ServerType} from 'ngeo/datasource/OGC.js';
 
+
+/**
+ * @hidden
+ */
 export class DatasourceWFSAlias {
 
   /**
@@ -43,6 +47,10 @@ export class DatasourceWFSAlias {
 }
 
 
+/**
+ * @type {!angular.IModule}
+ * @hidden
+ */
 const module = angular.module('gmfDatasourceWFSAliases', [
   ngeoDatasourceHelper.name,
 ]);

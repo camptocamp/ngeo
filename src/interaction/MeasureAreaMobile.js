@@ -9,6 +9,7 @@ import ngeoInteractionMobileDraw from 'ngeo/interaction/MobileDraw.js';
  * @param {!import('ngeo/misc/filters.js').unitPrefix} format The format function
  * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @param {import('ngeo/interaction/Measure.js').MeasureOptions=} options Options
+ * @private
  */
 class MeasureAreaMobile extends ngeoInteractionMeasureArea {
   constructor(format, gettextCatalog, options = {}) {

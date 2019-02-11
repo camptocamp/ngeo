@@ -5,6 +5,7 @@ import * as olEvents from 'ol/events.js';
 
 /**
  * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('gmfBackgroundlayerselector', [
   gmfThemeThemes.name,
@@ -91,6 +92,7 @@ module.component('gmfBackgroundlayerselector', backgroundlayerselectorComponent)
  * @ngInject
  * @ngdoc controller
  * @ngname GmfBackgroundlayerselectorController
+ * @private
  */
 function Controller($scope, ngeoBackgroundLayerMgr, gmfThemes) {
 

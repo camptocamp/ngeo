@@ -360,6 +360,7 @@ WfsPermalinkService.prototype.clearResult_ = function() {
 
 /**
  * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('ngeoWfsPermalink', [
   // FIXME add dependencies

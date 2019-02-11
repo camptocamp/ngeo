@@ -16,6 +16,7 @@ import olFormatWMSGetFeatureInfo from 'ol/format/WMSGetFeatureInfo.js';
 /**
  * Available OGC server types.
  * @enum {string}
+ * @hidden
  */
 export const ServerType = {
   GEOSERVER: 'geoserver',
@@ -27,6 +28,7 @@ export const ServerType = {
 /**
  * Available OGC types.
  * @enum {string}
+ * @hidden
  */
 export const Type = {
   WMS: 'WMS',
@@ -37,6 +39,7 @@ export const Type = {
 /**
  * Available Feature prefix for WFS requests.
  * @enum {string}
+ * @private
  */
 const WFSFeaturePrefix = {
   FEATURE: 'feature'
@@ -46,6 +49,7 @@ const WFSFeaturePrefix = {
 /**
  * Available OutputFormat for WFS requests.
  * @enum {string}
+ * @hidden
  */
 export const WFSOutputFormat = {
   GML2: 'GML2',
@@ -56,6 +60,7 @@ export const WFSOutputFormat = {
 /**
  * Available InfoFormat for WMS requests.
  * @enum {string}
+ * @hidden
  */
 export const WMSInfoFormat = {
   GML: 'application/vnd.ogc.gml'
@@ -174,10 +179,14 @@ export const WMSInfoFormat = {
 /**
  * Default name of the geometry attribute.
  * @type {string}
+ * @private
  */
 const DEFAULT_GEOMETRY_NAME = 'geom';
 
 
+/**
+ * @private
+ */
 class OGC extends ngeoDatasourceDataSource {
 
   /**
@@ -983,10 +992,10 @@ class OGC extends ngeoDatasourceDataSource {
 
 
 /**
- * Guess the type of OGC service from a given url. Default returned value is
- * WMS.
+ * Guess the type of OGC service from a given url. Default returned value is WMS.
  * @param {string} url Url
  * @return {string} Guessed OGC service type.
+ * @hidden
  */
 export function guessServiceTypeByUrl(url) {
   let type;
@@ -1005,6 +1014,7 @@ export function guessServiceTypeByUrl(url) {
  * Enum for the time property widget
  * Type of the widget to use
  * @enum {string}
+ * @hidden
  */
 export const TimePropertyWidgetEnum = {
   SLIDER: 'slider',
@@ -1014,6 +1024,7 @@ export const TimePropertyWidgetEnum = {
 /**
  * Mode of the widget
  * @enum {string}
+ * @hidden
  */
 export const TimePropertyModeEnum = {
   RANGE: 'range',
@@ -1024,6 +1035,7 @@ export const TimePropertyModeEnum = {
 /**
  * resolution of the widget
  * @enum {string}
+ * @hidden
  */
 export const TimePropertyResolutionEnum = {
   DAY: 'day',

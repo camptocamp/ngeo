@@ -1,11 +1,11 @@
-/**
- */
 import angular from 'angular';
 import * as olEvents from 'ol/events.js';
 import olMap from 'ol/Map.js';
 
+
 /**
  * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('ngeoMap', []);
 
@@ -39,7 +39,7 @@ const module = angular.module('ngeoMap', []);
  * @ngname ngeoMap
  * @ngInject
  */
-function mapCompnent($window) {
+function mapComponent($window) {
   return {
     restrict: 'A',
     /**
@@ -104,7 +104,7 @@ function mapCompnent($window) {
 }
 
 // Register the directive in the module
-module.directive('ngeoMap', mapCompnent);
+module.directive('ngeoMap', mapComponent);
 
 
 export default module;

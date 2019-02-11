@@ -12,9 +12,12 @@ import * as olArray from 'ol/array.js';
  * @property {string} url (WMSGroupOptions)
  * @property {!Array.<!import('ngeo/datasource/DataSource.js').default>} dataSources (GroupOptions)
  * @property {string} title (GroupOptions)
-*/
+ */
 
 
+/**
+ * @hidden
+ */
 export default class extends ngeoDatasourceOGCGroup {
 
   /**

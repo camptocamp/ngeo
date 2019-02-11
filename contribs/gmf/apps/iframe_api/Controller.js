@@ -21,6 +21,10 @@ if (!window.requestAnimationFrame) {
   window.location = 'http://geomapfish.org/';
 }
 
+
+/**
+ * @private
+ */
 class Controller extends AbstractAPIController {
   /**
    * @param {angular.IScope} $scope Scope.
@@ -50,6 +54,9 @@ class Controller extends AbstractAPIController {
   }
 }
 
+/**
+ * @hidden
+ */
 const module = angular.module('Appiframe_api', [
   appBase.name,
   gmfControllersAbstractAPIController.name,

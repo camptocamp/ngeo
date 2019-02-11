@@ -2,6 +2,10 @@ import {setGeometryType} from 'ngeo/format/Attribute.js';
 import ngeoFormatAttributeType from 'ngeo/format/AttributeType.js';
 import {FormatNumberType} from 'ngeo/format/XSDAttribute.js';
 
+
+/**
+ * @hidden
+ */
 export default class {
 
 

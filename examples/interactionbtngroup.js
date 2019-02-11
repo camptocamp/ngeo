@@ -4,7 +4,7 @@ import ngeoMapModule from 'ngeo/map/module.js';
 
 import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent.js';
 
-import {interaction} from 'ngeo/misc/decorate.js';
+import {interactionDecoration} from 'ngeo/misc/decorate.js';
 import olCollection from 'ol/Collection.js';
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
@@ -90,7 +90,7 @@ function MainController(ngeoFeatureOverlayMgr) {
   const drawPolygon = this.drawPolygon;
 
   drawPolygon.setActive(false);
-  interaction(drawPolygon);
+  interactionDecoration(drawPolygon);
   map.addInteraction(drawPolygon);
 
   /**
@@ -104,7 +104,7 @@ function MainController(ngeoFeatureOverlayMgr) {
 
   const drawPoint = this.drawPoint;
   drawPoint.setActive(false);
-  interaction(drawPoint);
+  interactionDecoration(drawPoint);
   map.addInteraction(drawPoint);
 
   /**
@@ -118,7 +118,7 @@ function MainController(ngeoFeatureOverlayMgr) {
 
   const drawLine = this.drawLine;
   drawLine.setActive(false);
-  interaction(drawLine);
+  interactionDecoration(drawLine);
   map.addInteraction(drawLine);
 
 }

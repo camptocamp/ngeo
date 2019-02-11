@@ -10,7 +10,8 @@ import olTilegridWMTS from 'ol/tilegrid/WMTS.js';
 
 
 /**
- * @const {!Array.<number>}
+ * @type {!Array.<number>}
+ * @private
  */
 const asitVDResolutions = [
   4000, 3750, 3500, 3250, 3000, 2750, 2500, 2250, 2000, 1750, 1500, 1250,
@@ -19,7 +20,8 @@ const asitVDResolutions = [
 
 
 /**
- * @const {import("ol/tilegrid/WMTS.js").default}
+ * @type {import("ol/tilegrid/WMTS.js").default}
+ * @private
  */
 const asitVDTileGrid = new olTilegridWMTS({
   extent: [420000, 30000, 900000, 350000],
@@ -31,7 +33,7 @@ const asitVDTileGrid = new olTilegridWMTS({
 /**
  * Layer source for the ASIT VD tile server.
  * @see https://www.asitvd.ch/chercher/geoservices/fond-de-plan-asit-vd.html
- *
+ * @hidden
  */
 export default class extends olSourceWMTS {
 

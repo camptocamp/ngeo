@@ -85,6 +85,7 @@
  * @property {boolean} [editable]
  * @property {string} [style]
  * @property {string} type WMS or WMTS.
+ * @property {string} [ogcServer]
  */
 
 

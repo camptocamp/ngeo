@@ -38,6 +38,7 @@ const VertexStyleRegularShapeRadius = 6;
 /**
  * Format types
  * @enum {string}
+ * @hidden
  */
 export const FeatureFormatType = {
   /**
@@ -62,6 +63,7 @@ export const FeatureFormatType = {
  * @ngdoc service
  * @ngname ngeoFeatureHelper
  * @ngInject
+ * @hidden
  */
 export function FeatureHelper($injector, $filter) {
 
@@ -902,11 +904,11 @@ FeatureHelper.prototype.getHaloStyle_ = function(feature) {
 // === PROPERTY GETTERS ===
 
 /**
- * Delete the unwanted ol3 properties from the current feature then return the
- * properties.
+ * Delete the unwanted ol3 properties from the current feature then return the properties.
  * Also delete the 'ngeo_feature_type_' from the ngeo query system.
  * @param {!import("ol/Feature.js").default} feature Feature.
  * @return {!Object.<string, *>} Filtered properties of the current feature.
+ * @hidden
  */
 export function getFilteredFeatureValues(feature) {
   const properties = feature.getProperties();
@@ -1391,6 +1393,7 @@ FeatureHelper.prototype.findFeatureIndexByFid = function(features, fid) {
 
 /**
  * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('ngeoFeatureHelper', [
   ngeoDownloadService.name,

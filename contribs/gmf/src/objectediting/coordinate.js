@@ -9,6 +9,7 @@
  *
  * @param {Coordinate} coordinates Coordinates
  * @return {Coordinate} Converted coordinates.
+ * @hidden
  */
 export function coordinatesToXY0(coordinates) {
   if (coordinates.length > 2) {
@@ -26,6 +27,7 @@ export function coordinatesToXY0(coordinates) {
  * @param {Array<T>} coordinates Coordinates
  * @param {number} nesting Nesting level.
  * @return {Array<T>} Converted coordinates.
+ * @private
  */
 function toXY(coordinates, nesting) {
   if (nesting === 0) {
@@ -46,6 +48,7 @@ function toXY(coordinates, nesting) {
  *
  * @param {Array<import("ol/coordinate.js").Coordinate>} coordinates Coordinates
  * @return {Array<import("ol/coordinate.js").Coordinate>} Converted coordinates.
+ * @hidden
  */
 export function coordinatesToXY1(coordinates) {
   return toXY(coordinates, 1);
@@ -58,6 +61,7 @@ export function coordinatesToXY1(coordinates) {
  *
  * @param {Array<Array<import("ol/coordinate.js").Coordinate>>} coordinates Coordinates
  * @return {Array<Array<import("ol/coordinate.js").Coordinate>>} Converted coordinates.
+ * @hidden
  */
 export function coordinatesToXY2(coordinates) {
   return toXY(coordinates, 2);
@@ -70,6 +74,7 @@ export function coordinatesToXY2(coordinates) {
  *
  * @param {Array<Array<Array<import("ol/coordinate.js").Coordinate>>>} coordinates Coordinates
  * @return {Array<Array<Array<import("ol/coordinate.js").Coordinate>>>} Converted coordinates.
+ * @hidden
  */
 export function coordinatesToXY3(coordinates) {
   return toXY(coordinates, 3);

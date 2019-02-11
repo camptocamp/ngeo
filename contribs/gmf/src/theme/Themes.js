@@ -18,6 +18,7 @@ import olLayerTile from 'ol/layer/Tile.js';
  * The Themes service. This service interacts
  * with c2cgeoportal's "themes" web service and exposes functions that return
  * objects in the tree returned by the "themes" web service.
+ * @hidden
  */
 export class ThemesService extends olEventsEventTarget {
   /**
@@ -415,6 +416,7 @@ export class ThemesService extends olEventsEventTarget {
  * @param {Array.<import('gmf/themes.js').GmfTheme>} themes Array of "theme" objects.
  * @param {string} name The layer name.
  * @return {import('gmf/themes.js').GmfGroup} The group.
+ * @hidden
  */
 export function findGroupByLayerNodeName(themes, name) {
   for (let i = 0, ii = themes.length; i < ii; i++) {
@@ -436,6 +438,7 @@ export function findGroupByLayerNodeName(themes, name) {
  * @param {Array.<import('gmf/themes.js').GmfTheme>} themes Array of "theme" objects.
  * @param {string} name The group name.
  * @return {import('gmf/themes.js').GmfGroup} The group.
+ * @hidden
  */
 export function findGroupByName(themes, name) {
   for (let i = 0, ii = themes.length; i < ii; i++) {
@@ -459,6 +462,7 @@ export function findGroupByName(themes, name) {
  * @param {string} objectName The object name.
  * @return {T} The object or null.
  * @template T
+ * @hidden
  */
 export function findObjectByName(objects, objectName) {
   return olArray.find(objects, object => object['name'] === objectName);
@@ -470,6 +474,7 @@ export function findObjectByName(objects, objectName) {
  * @param {Array.<import('gmf/themes.js').GmfTheme>} themes Array of "theme" objects.
  * @param {string} themeName The theme name.
  * @return {import('gmf/themes.js').GmfTheme} The theme object or null.
+ * @hidden
  */
 export function findThemeByName(themes, themeName) {
   return findObjectByName(themes, themeName);
@@ -477,11 +482,11 @@ export function findThemeByName(themes, themeName) {
 
 
 /**
- * Fill the given "nodes" array with all internal nodes (non-leaf nones) in
- * the given node.
+ * Fill the given "nodes" array with all internal nodes (non-leaf nones) in the given node.
  *
  * @param {import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer} node Layertree node.
  * @param {Array.<import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer>} nodes An array.
+ * @private
  */
 function getFlatInternalNodes(node, nodes) {
   // @ts-ignore: children only on GmfGroup
@@ -500,6 +505,7 @@ function getFlatInternalNodes(node, nodes) {
  *
  * @param {import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer} node Layertree node.
  * @param {Array.<import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer>} nodes An array.
+ * @hidden
  */
 export function getFlatNodes(node, nodes) {
   // @ts-ignore: children only on GmfGroup
@@ -517,6 +523,7 @@ export function getFlatNodes(node, nodes) {
  * Get the snapping configuration object from a Layertree controller
  * @param {import('gmf/themes.js').GmfLayer} node Layer node from the theme.
  * @return {?import('gmf/themes.js').GmfSnappingConfig} Snapping configuration, if found.
+ * @hidden
  */
 export function getSnappingConfig(node) {
   const config = (node.metadata && node.metadata.snappingConfig !== undefined) ?
@@ -533,6 +540,7 @@ export function getSnappingConfig(node) {
  *     useless tests to know if a maxResolutionHint property can exist
  *     on the node).
  * @return {number|undefined} the max resolution or undefined if any.
+ * @hidden
  */
 export function getNodeMaxResolution(gmfLayer) {
   const metadata = gmfLayer.metadata;
@@ -552,6 +560,7 @@ export function getNodeMaxResolution(gmfLayer) {
  *     useless tests to know if a minResolutionHint property can exist
  *     on the node).
  * @return {number|undefined} the min resolution or undefined if any.
+ * @hidden
  */
 export function getNodeMinResolution(gmfLayer) {
   const metadata = gmfLayer.metadata;
@@ -564,6 +573,7 @@ export function getNodeMinResolution(gmfLayer) {
 
 /**
  * @enum {string}
+ * @hidden
  */
 export const ThemeNodeType = {
   MIXED_GROUP: 'MixedGroup',
@@ -575,6 +585,7 @@ export const ThemeNodeType = {
 
 /**
  * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('gmfThemes', [
   ngeoMapLayerHelper.name,

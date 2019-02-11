@@ -2,6 +2,10 @@ import angular from 'angular';
 import 'angular-sanitize';
 
 
+/**
+ * @type {!angular.IModule}
+ * @hidden
+ */
 const module = angular.module('ngeoPopup', [
   'ngSanitize',
 ]);

@@ -6,8 +6,10 @@ import ngeoInteractionMeasureLength from 'ngeo/interaction/MeasureLength.js';
 import * as olEvents from 'ol/events.js';
 import olStyleStyle from 'ol/style/Style.js';
 
+
 /**
  * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('ngeoMeasurelength', [
   ngeoDrawController.name,

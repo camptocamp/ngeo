@@ -37,6 +37,7 @@ import olSourceVector from 'ol/source/Vector.js';
  * @constructor
  * @fires DrawEvent
  * @param {MobileDrawOptions} options Options
+ * @hidden
  */
 export default class extends olInteractionInteraction {
   constructor(options) {

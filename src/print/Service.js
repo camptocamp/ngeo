@@ -60,6 +60,7 @@ import olTilegridWMTS from 'ol/tilegrid/WMTS.js';
  * @param {angular.IHttpService} $http Angular $http service.
  * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext service.
  * @param {import("ngeo/map/LayerHelper.js").LayerHelper} ngeoLayerHelper Ngeo Layer Helper service.
+ * @hidden
  */
 export function PrintService(url, $http, gettextCatalog, ngeoLayerHelper) {
   /**
@@ -294,6 +295,7 @@ PrintService.prototype.encodeWmsLayer_ = function(arr, layer, url, params) {
  * @param {string} url URL.
  * @return {string} Absolute URL.
  * @private
+ * @private
  */
 function getAbsoluteUrl_(url) {
   const a = document.createElement('a');
@@ -481,6 +483,7 @@ PrintService.prototype.getCapabilities = function(opt_httpConfig) {
  * @ngInject
  * @ngdoc service
  * @ngname ngeoCreatePrint
+ * @private
  */
 function createPrintServiceFactory($http, gettextCatalog, ngeoLayerHelper) {
   return (
@@ -494,8 +497,10 @@ function createPrintServiceFactory($http, gettextCatalog, ngeoLayerHelper) {
   );
 }
 
+
 /**
  * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('ngeoPrint', [
   ngeoMapLayerHelper.name

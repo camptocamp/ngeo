@@ -1,10 +1,10 @@
-/**
- */
 import angular from 'angular';
 import olMap from 'ol/Map.js';
 
+
 /**
  * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('ngeoResizemap', []);
 

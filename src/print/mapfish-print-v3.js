@@ -184,4 +184,7 @@
  * @property {string} fontColor
  */
 
+/**
+ * @hidden
+ */
 export const nothing = null;

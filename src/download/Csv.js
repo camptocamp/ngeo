@@ -20,6 +20,7 @@ import ngeoDownloadService from 'ngeo/download/service.js';
  * @ngdoc service
  * @ngname ngeoCsvDownload
  * @ngInject
+ * @hidden
  */
 export function DownloadCsvService($injector, gettextCatalog) {
 
@@ -140,6 +141,7 @@ DownloadCsvService.prototype.startDownload = function(data, columnDefs, fileName
 
 /**
  * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('ngeoCsvDownload', [
   ngeoDownloadService.name

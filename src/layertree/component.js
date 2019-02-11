@@ -6,6 +6,7 @@ import 'bootstrap/js/src/collapse.js'; // needed to collapse a layertree
 
 /**
  * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('ngeoLayertree', [
   ngeoLayertreeController.name

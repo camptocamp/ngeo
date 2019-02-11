@@ -10,6 +10,7 @@ import angular from 'angular';
  * @ngInject
  * @ngdoc service
  * @ngname gmfRaster
+ * @hidden
  */
 export function RasterService($http, gmfRasterUrl) {
 
@@ -29,6 +30,7 @@ export function RasterService($http, gmfRasterUrl) {
 
 /**
  * @enum {string}
+ * @hidden
  */
 const Param = {
   X: 'lon',
@@ -65,6 +67,7 @@ RasterService.prototype.handleGetRaster_ = function(resp) {
 
 /**
  * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('gmfRaster', []);
 module.service('gmfRaster', RasterService);

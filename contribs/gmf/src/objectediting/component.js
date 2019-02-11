@@ -8,7 +8,7 @@ import gmfObjecteditingQuery from 'gmf/objectediting/Query.js';
 import gmfObjecteditingToolsComponent, {ObjecteditingProcessType} from 'gmf/objectediting/toolsComponent.js';
 
 import ngeoMapLayerHelper from 'ngeo/map/LayerHelper.js';
-import {interaction as ngeoMiscDecorateInteraction} from 'ngeo/misc/decorate.js';
+import {interactionDecoration as ngeoMiscDecorateInteraction} from 'ngeo/misc/decorate.js';
 import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
 import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
 
@@ -38,6 +38,7 @@ import jsts from 'jsts';
 
 /**
  * @enum {string}
+ * @hidden
  */
 const ObjecteditingState = {
   INSERT: 'insert',
@@ -46,14 +47,14 @@ const ObjecteditingState = {
 
 
 /**
- * @const
- * @private
+ * @hidden
  */
 export const NAMESPACE = 'oe';
 
 
 /**
  * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('gmfObjectEditingComponent', [
   gmfEditingEditFeature.name,

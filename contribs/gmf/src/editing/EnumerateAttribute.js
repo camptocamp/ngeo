@@ -1,6 +1,9 @@
 import angular from 'angular';
 
 
+/**
+ * @hidden
+ */
 export class EditingEnumerateAttributeService {
 
   /**
@@ -68,6 +71,7 @@ export class EditingEnumerateAttributeService {
 
 /**
  * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('gmfEnumerateAttribute', []);
 module.service('gmfEnumerateAttribute', EditingEnumerateAttributeService);

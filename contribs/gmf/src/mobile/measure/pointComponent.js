@@ -2,13 +2,18 @@ import angular from 'angular';
 import gmfRasterRasterService from 'gmf/raster/RasterService.js';
 import ngeoInteractionMeasurePointMobile from 'ngeo/interaction/MeasurePointMobile.js';
 import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
-import {interaction} from 'ngeo/misc/decorate.js';
+import {interactionDecoration} from 'ngeo/misc/decorate.js';
 import * as olEvents from 'ol/events.js';
 import olStyleFill from 'ol/style/Fill.js';
 import olStyleRegularShape from 'ol/style/RegularShape.js';
 import olStyleStroke from 'ol/style/Stroke.js';
 import olStyleStyle from 'ol/style/Style.js';
 
+
+/**
+ * @type {!angular.IModule}
+ * @hidden
+ */
 const module = angular.module('gmfMobileMeasurePoint', [
   gmfRasterRasterService.name,
   ngeoMiscDebounce.name,
@@ -107,7 +112,7 @@ module.directive('gmfMobileMeasurepoint', mobileMeasurePointComponent);
  * @param {import("gmf/raster/RasterService.js").RasterService} gmfRaster gmf Raster service.
  * @param {import("ngeo/misc/debounce.js").miscDebounce<function(): void>} ngeoDebounce ngeo Debounce factory.
  * @constructor
- * @private
+ * @hidden
  * @ngInject
  * @ngdoc controller
  * @ngname GmfMobileMeasurePointController
@@ -232,9 +237,9 @@ MobileMeasurePointController.prototype.init = function() {
     }
   );
   this.measure.setActive(this.active);
-  interaction(this.measure);
+  interactionDecoration(this.measure);
   this.drawInteraction = /** @type {import("ngeo/interaction/MobileDraw.js").default} */ (this.measure.getDrawInteraction());
-  interaction(this.drawInteraction);
+  interactionDecoration(this.drawInteraction);
 
   const layersConfig = this['getLayersConfigFn']();
   console.assert(Array.isArray(layersConfig));

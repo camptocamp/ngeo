@@ -8,8 +8,10 @@ import * as olProj from 'ol/proj.js';
 import olFeature from 'ol/Feature.js';
 import olGeomPoint from 'ol/geom/Point.js';
 
+
 /**
  * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('ngeoGooglestreetview', [
   ngeoMapFeatureOverlayMgr.name

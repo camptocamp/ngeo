@@ -24,6 +24,9 @@
  */
 
 
+/**
+ * @private
+ */
 class DataSource {
 
   /**

@@ -11,6 +11,7 @@ import ngeoMeasureLength from 'ngeo/measure/length.js';
 
 /**
  * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('ngeoDrawfeature', [
   ngeoDrawController.name,

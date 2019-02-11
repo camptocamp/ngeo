@@ -23,6 +23,7 @@ import {ServerType} from 'ngeo/datasource/OGC.js';
  * @ngdoc service
  * @ngname ngeoLayerHelper
  * @ngInject
+ * @hidden
  */
 export function LayerHelper($q, $http, ngeoTilesPreloadingLimit) {
 
@@ -48,13 +49,13 @@ export function LayerHelper($q, $http, ngeoTilesPreloadingLimit) {
 
 
 /**
- * @const
+ * @private
  */
 const GROUP_KEY = 'groupName';
 
 
 /**
- * @const
+ * @private
  */
 const REFRESH_PARAM = 'random';
 
@@ -513,6 +514,7 @@ LayerHelper.prototype.getQuerySourceIds = function(layer) {
 
 /**
  * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('ngeoLayerHelper', []);
 module.service('ngeoLayerHelper', LayerHelper);

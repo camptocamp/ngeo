@@ -21,6 +21,7 @@ import olSourceVector from 'ol/source/Vector.js';
 
 /**
  * Interaction dedicated to measure azimut.
+ * @private
  */
 class DrawAzimut extends olInteractionPointer {
   /**

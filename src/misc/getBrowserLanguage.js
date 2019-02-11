@@ -1,9 +1,9 @@
-/**
- */
 import angular from 'angular';
+
 
 /**
  * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('ngeoGetBrowserLanguage', []);
 
@@ -27,6 +27,7 @@ const module = angular.module('ngeoGetBrowserLanguage', []);
  * @ngdoc service
  * @ngname ngeoGetBrowserLanguage
  * @ngInject
+ * @private
  */
 function factory($window) {
   return (

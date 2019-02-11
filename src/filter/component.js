@@ -23,6 +23,7 @@ import 'ngeo/sass/font.scss';
 
 /**
  * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('ngeoFilter', [
   ngeoFilterRuleHelper.name,

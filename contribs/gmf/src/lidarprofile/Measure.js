@@ -1,6 +1,9 @@
 import {mouse as d3mouse, select as d3select} from 'd3';
 
 
+/**
+ * @hidden
+ */
 export default class {
 
   /**

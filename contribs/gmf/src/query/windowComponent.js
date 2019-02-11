@@ -22,6 +22,7 @@ import 'bootstrap/js/src/dropdown.js';
 
 /**
  * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('gmfQueryWindowComponent', [
   ngeoMapFeatureOverlayMgr.name,

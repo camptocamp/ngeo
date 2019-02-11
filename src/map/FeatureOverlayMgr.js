@@ -35,6 +35,7 @@ import {toFunction as toStyleFunction, createDefaultStyle as olStyleDefaultFunct
  * @constructor
  * @ngdoc service
  * @ngname ngeoFeatureOverlayMgr
+ * @hidden
  */
 export function FeatureOverlayMgr() {
 
@@ -172,6 +173,7 @@ FeatureOverlayMgr.prototype.styleFunction_ = function(feature, resolution) {
 
 /**
  * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('ngeoFeatureOverlayMgr', [
   ngeoMapFeatureOverlay.name

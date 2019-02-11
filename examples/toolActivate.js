@@ -4,7 +4,7 @@ import ngeoMapModule from 'ngeo/map/module.js';
 
 import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent.js';
 
-import {interaction} from 'ngeo/misc/decorate.js';
+import {interactionDecoration} from 'ngeo/misc/decorate.js';
 import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
 import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr.js';
 import olCollection from 'ol/Collection.js';
@@ -107,7 +107,7 @@ function MainController(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
       features: features
     }));
   this.drawPoint.setActive(false);
-  interaction(this.drawPoint);
+  interactionDecoration(this.drawPoint);
   map.addInteraction(this.drawPoint);
 
   const drawPointTool = new ngeoMiscToolActivate(this.drawPoint, 'active');
@@ -123,7 +123,7 @@ function MainController(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
       features: features
     }));
   this.drawLine.setActive(false);
-  interaction(this.drawLine);
+  interactionDecoration(this.drawLine);
   map.addInteraction(this.drawLine);
 
   const drawLineTool = new ngeoMiscToolActivate(this.drawLine, 'active');
@@ -139,7 +139,7 @@ function MainController(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
       features: features
     }));
   this.drawPolygon.setActive(false);
-  interaction(this.drawPolygon);
+  interactionDecoration(this.drawPolygon);
   map.addInteraction(this.drawPolygon);
 
   const drawPolygonTool = new ngeoMiscToolActivate(this.drawPolygon, 'active');

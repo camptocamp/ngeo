@@ -6,7 +6,10 @@ import ngeoMiscWMSTime from 'ngeo/misc/WMSTime.js';
 import {TimePropertyWidgetEnum, TimePropertyResolutionEnum, TimePropertyModeEnum} from 'ngeo/datasource/OGC.js';
 
 
-/** @type {!angular.IModule} **/
+/**
+ * @type {!angular.IModule}
+ * @hidden
+ */
 const module = angular.module('gmfapp', [
   'gettext',
   ngeoMiscDatepickerComponent.name,

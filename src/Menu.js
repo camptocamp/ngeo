@@ -30,6 +30,7 @@ import olOverlayPositioning from 'ol/OverlayPositioning.js';
  * An OpenLayers overlay that shows a contextual menu with configurable actions
  * anchored from its top left to a specific location. An event is fired when
  * any of the action is clicked.
+ * @hidden
  */
 export default class extends olOverlay {
   /**

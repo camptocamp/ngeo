@@ -2,8 +2,10 @@ import angular from 'angular';
 import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources.js';
 import {getUid as olUtilGetUid} from 'ol/util.js';
 
+
 /**
  * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('gmfLayertreeDatasourceGroupTreeComponent', [
   ngeoDatasourceDataSources.name,

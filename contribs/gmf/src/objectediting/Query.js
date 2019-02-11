@@ -16,6 +16,7 @@ import olSourceImageWMS from 'ol/source/ImageWMS.js';
  * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes The gmf themes service.
  * @constructor
  * @ngInject
+ * @hidden
  */
 export function ObjectEditingQuery($http, $q, gmfThemes) {
 
@@ -92,6 +93,7 @@ ObjectEditingQuery.prototype.getQueryableLayersInfo = function() {
  * @param {import('gmf/themes.js').GmfOgcServers} ogcServers List of ogc servers
  * @return {Array.<import('gmf/objectediting/toolsComponent.js').ObjectEditingQueryableLayerInfo>} List of
  *     queryable layers information.
+ * @private
  */
 function getQueryableLayersInfoFromThemes(
   themes, ogcServers
@@ -192,6 +194,7 @@ ObjectEditingQuery.prototype.getFeatureInfo = function(layerInfo, coordinate, ma
 
 /**
  * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('gmfObjectEditingQuery', [
   gmfThemeThemes.name,

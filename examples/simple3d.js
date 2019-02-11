@@ -1,6 +1,3 @@
-/**
- */
-
 import './simple3d.css';
 import angular from 'angular';
 import olMap from 'ol/Map.js';

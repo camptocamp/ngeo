@@ -3,6 +3,11 @@ import ngeoMiscFilters from 'ngeo/misc/filters.js';
 import ngeoInteractionMeasureAreaMobile from 'ngeo/interaction/MeasureAreaMobile.js';
 import {MeasueMobileBaseController} from 'gmf/mobile/measure/baseComponent.js';
 
+
+/**
+ * @type {!angular.IModule}
+ * @hidden
+ */
 const module = angular.module('gmfMobileMeasureArea', [
   ngeoMiscFilters.name,
 ]);
@@ -77,6 +82,9 @@ function mobileMeasureAreaComponent(gmfMobileMeasureAreaTemplateUrl) {
 module.directive('gmfMobileMeasurearea', mobileMeasureAreaComponent);
 
 
+/**
+ * @private
+ */
 class Controller extends MeasueMobileBaseController {
   /**
    * @param {!angular.IScope} $scope Angular scope.

@@ -26,7 +26,10 @@ import olLayerTile from 'ol/layer/Tile.js';
 import olSourceOSM from 'ol/source/OSM.js';
 
 
-/** @type {!angular.IModule} **/
+/**
+ * @type {!angular.IModule}
+ * @hidden
+ */
 const module = angular.module('gmfapp', [
   'gettext',
   gmfAuthenticationModule.name,
@@ -51,6 +54,9 @@ module.constant('defaultTheme', 'Filters');
 module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
+/**
+ * @private
+ */
 class MainController {
 
   /**

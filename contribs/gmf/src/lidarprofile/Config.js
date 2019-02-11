@@ -65,6 +65,9 @@ import angular from 'angular';
  */
 
 
+/**
+ * @hidden
+ */
 export class LidarprofileConfigService {
   /**
    * Configuration service to configure the gmf.lidarPanelComponent and gmf.lidarprofile instance
@@ -162,6 +165,7 @@ export class LidarprofileConfigService {
 
 /**
  * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('gmfLidarprofileConfig', []);
 module.service('gmfLidarprofileConfig', LidarprofileConfigService);

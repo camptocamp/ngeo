@@ -249,6 +249,10 @@ export class AbstractDesktopController extends AbstractAPIController {
   }
 }
 
+/**
+ * @type {!angular.IModule}
+ * @hidden
+ */
 const module = angular.module('GmfAbstractDesktopControllerModule', [
   gmfControllersAbstractAPIController.name,
   gmfContextualdataModule.name,

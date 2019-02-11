@@ -61,6 +61,7 @@ import {
  *
  * @return {Object} D3js component.
  * @param {import('ngeo/profile/elevationComponent.js').ProfileOptions} options Profile options.
+ * @private
  */
 function d3Elevation(options) {
   /**

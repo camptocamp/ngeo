@@ -13,6 +13,7 @@
 
 /**
  * @enum {string}
+ * @hidden
  */
 export const MessageType = {
   /**
@@ -39,6 +40,7 @@ export const MessageType = {
  *
  * @constructor
  * @abstract
+ * @hidden
  */
 export default class {
   constructor() {}

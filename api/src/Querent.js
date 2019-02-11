@@ -15,12 +15,14 @@ import olFormatWFS from 'ol/format/WFS.js';
  *
  * @param {!string} layer Name of the layer to query
  * @param {Array.<string>} ids List of ids
- * @return {!Promise} Promise.
+ * @return {!Promise<Array<import('ol/Feature.js').default>>} Promise.
+ * @hidden
  */
 export function getFeaturesFromLayer(layer, ids) {
   return new Promise((resolve, reject) => {
     getOverlayDefs().then((overlayDefs) => {
 
+      /** Array<import('ol/Feature.js').default> */
       let features = [];
       const overlayDef = overlayDefs.get(layer);
 
@@ -33,7 +35,7 @@ export function getFeaturesFromLayer(layer, ids) {
         !overlayDef.ogcServer ||
         !overlayDef.ogcServer.wfsSupport ||
         !overlayDef.ogcServer.urlWfs ||
-        overlayDef.config.type !== 'WMS'
+        overlayDef.layer.type !== 'WMS'
       ) {
         reject(`Layer "${layer}" does not support WFS.`);
         return;

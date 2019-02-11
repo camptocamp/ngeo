@@ -9,7 +9,10 @@ import olFormatWFS from 'ol/format/WFS.js';
 import {getGeometryAttribute} from 'ngeo/format/XSDAttribute.js';
 
 
-/** @type {!angular.IModule} **/
+/**
+ * @type {!angular.IModule}
+ * @hidden
+ */
 const module = angular.module('gmfapp', [
   'gettext',
   gmfEditingXSDAttributes.name,

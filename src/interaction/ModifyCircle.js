@@ -20,6 +20,7 @@ import olStructsRBush from 'ol/structs/RBush.js';
 
 /**
  * Interaction for modifying feature geometries.
+ * @hidden
  */
 export default class extends olInteractionPointer {
   /**
@@ -444,6 +445,7 @@ export default class extends olInteractionPointer {
  * @param {import("ol/interaction/Modify.js").SegmentData} a The first segment data.
  * @param {import("ol/interaction/Modify.js").SegmentData} b The second segment data.
  * @return {number} The difference in indexes.
+ * @private
  */
 function compareIndexes(a, b) {
   return a.index - b.index;

@@ -7,6 +7,11 @@ import {
   unlistenByKey as olEventsUnlistenByKey
 } from 'ol/events.js';
 
+
+/**
+ * @type {!angular.IModule}
+ * @hidden
+ */
 const module = angular.module('ngeoMapQuery', [
   ngeoQueryKeyboard.name,
   ngeoQueryMapQuerent.name,

@@ -11,8 +11,10 @@ import ngeoMiscEventHelper from 'ngeo/misc/EventHelper.js';
 
 import 'angular-sanitize';
 
+
 /**
- * @type {angular.IModule}
+ * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('gmfDisclaimer', [
   'ngSanitize',

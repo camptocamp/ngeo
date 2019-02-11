@@ -12,6 +12,9 @@ import olStyleStyle from 'ol/style/Style.js';
 import {select as d3select} from 'd3';
 
 
+/**
+ * @hidden
+ */
 export class LidarprofileManager {
 
   /**
@@ -485,6 +488,7 @@ export class LidarprofileManager {
 
 /**
  * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('gmfLidarprofileManager', [
   ngeoMiscDebounce.name,

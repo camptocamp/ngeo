@@ -21,17 +21,44 @@
 
 "use strict";
 
+/**
+ * @private
+ */
 const DAY = 1000 * 60 * 60 * 24;
+/**
+ * @private
+ */
 const HOUR = 3600;
 
+/**
+ * @private
+ * @param {string} str1 String 1
+ * @param {string} str2 String 2
+ * @returns {boolean}
+ */
 function _compare(str1, str2) {
     return typeof str1 === 'string' && typeof str2 === 'string' && str1.toLowerCase() === str2.toLowerCase();
 }
+
+/**
+ * @private
+ * @template T
+ * @param {T} value Value
+ * @param {number} length Length
+ * @param {string} chr Char
+ * @returns {T}
+ */
 function _lpad(value, length, chr) {
     const val = value.toString();
     chr = chr || '0';
     return val.length < length ? _lpad(chr + val, length) : val;
 }
+
+/**
+ * @private
+ * @param {Object} out Out
+ * @returns {Object}
+ */
 function _extend(out) {
     out = out || {};
     for (let i = 1; i < arguments.length; i++) {
@@ -51,6 +78,13 @@ function _extend(out) {
     }
     return out;
 }
+
+/**
+ * @private
+ * @param {string} val Value
+ * @param {Array<string>} arr Argument
+ * @returns {number}
+ */
 function _indexOf(val, arr) {
     for (let i = 0; i < arr.length; i++) {
         if (arr[i].toLowerCase() === val.toLowerCase()) {
@@ -59,6 +93,10 @@ function _indexOf(val, arr) {
     }
     return -1;
 }
+
+/**
+ * @private
+ */
 const defaultSettings = {
     dateSettings: {
         days: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
@@ -81,6 +119,10 @@ const defaultSettings = {
     tzClip: /[^-+\dA-Z]/g
 };
 
+
+/**
+ * @hidden
+ */
 export default class DateFormatter {
     constructor(options) {
         const self = this, config = _extend(defaultSettings, options);

@@ -7,6 +7,7 @@ import angular from 'angular';
  * @param {angular.IHttpService} $http .
  * @param {angular.gettext.gettextFunction} gettext .
  * @ngInject
+ * @hidden
  */
 export function FileService($q, $http, gettext) {
   let fileReader, canceler;
@@ -92,6 +93,10 @@ export function FileService($q, $http, gettext) {
   };
 }
 
+/**
+ * @type {!angular.IModule}
+ * @hidden
+ */
 const module = angular.module('ngeoFile', []);
 
 module.service('ngeoFile', FileService);

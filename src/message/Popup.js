@@ -39,6 +39,7 @@ import ngeoMessagePopupComponent from 'ngeo/message/popupComponent.js';
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @ngdoc service
  * @ngname ngeoCreatePopup
+ * @hidden
  */
 export function MessagePopup($compile, $rootScope, $sce, $timeout) {
 
@@ -247,6 +248,7 @@ MessagePopup.prototype.open = function(options) {
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @return {PopupFactory} The function to create a popup.
  * @ngInject
+ * @private
  */
 function Factory($compile, $rootScope, $sce, $timeout) {
   return (
@@ -259,8 +261,10 @@ function Factory($compile, $rootScope, $sce, $timeout) {
   );
 }
 
+
 /**
- * @type {angular.IModule}
+ * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('ngeoCreatePopup', [
   ngeoMessagePopupComponent.name,

@@ -52,6 +52,7 @@ import olEventsEventTarget from 'ol/events/Target.js';
 
 /**
  * @enum {string}
+ * @hidden
  */
 export const RouteSuffix = {
   CHANGE_PASSWORD: 'loginchange',
@@ -73,6 +74,7 @@ export const RouteSuffix = {
  * - login
  * - logout
  * - resetPassword
+ * @hidden
  */
 export class AuthenticationService extends olEventsEventTarget {
 
@@ -279,6 +281,7 @@ export class AuthenticationService extends olEventsEventTarget {
 
 /**
  * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('gmfAuthenticationService', []);
 module.service('gmfAuthenticationService', AuthenticationService);

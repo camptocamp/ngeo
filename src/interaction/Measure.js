@@ -43,6 +43,7 @@ import olStyleStyle from 'ol/style/Style.js';
 
 /**
  * Interaction that allows measuring (length, area, ...).
+ * @private
  */
 class Measure extends olInteractionInteraction {
   /**
@@ -441,6 +442,7 @@ class Measure extends olInteractionInteraction {
  * @param {number|undefined} precision Precision.
  * @param {!import('ngeo/misc/filters.js').unitPrefix} format The format function.
  * @return {string} Formatted string of the area.
+ * @hidden
  */
 export function getFormattedArea(polygon, projection, precision, format) {
   const geom = /** @type {import("ol/geom/Polygon.js").default} */ (polygon.clone().transform(projection, 'EPSG:4326'));
@@ -450,12 +452,12 @@ export function getFormattedArea(polygon, projection, precision, format) {
 
 
 /**
- * Calculate the area of the passed circle and return a formatted string
- * of the area.
+ * Calculate the area of the passed circle and return a formatted string of the area.
  * @param {!import("ol/geom/Circle.js").default} circle Circle
  * @param {number|undefined} precision Precision.
  * @param {!import('ngeo/misc/filters.js').unitPrefix} format The format function.
  * @return {string} Formatted string of the area.
+ * @hidden
  */
 export function getFormattedCircleArea(circle, precision, format) {
   const area = Math.PI * Math.pow(circle.getRadius(), 2);
@@ -471,6 +473,7 @@ export function getFormattedCircleArea(circle, precision, format) {
  * @param {number|undefined} precision Precision.
  * @param {!import('ngeo/misc/filters.js').unitPrefix} format The format function.
  * @return {string} Formatted string of length.
+ * @hidden
  */
 export function getFormattedLength(lineString, projection, precision, format) {
   let length = 0;
@@ -488,9 +491,11 @@ export function getFormattedLength(lineString, projection, precision, format) {
  * Return a formatted string of the point.
  * @param {!import("ol/geom/Point.js").default} point Point.
  * @param {number|undefined} decimals Decimals.
- * @param {!import('ngeo/misc/filters.js').numberCoordinates} format A function to format coordinate into text
+ * @param {!import('ngeo/misc/filters.js').numberCoordinates} format A function to format coordinate into
+ * text
  * @param {string=} opt_template The template.
  * @return {string} Formatted string of coordinate.
+ * @hidden
  */
 export function getFormattedPoint(point, decimals, format, opt_template) {
   return format(point.getCoordinates(), decimals, opt_template);

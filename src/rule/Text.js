@@ -27,6 +27,10 @@ import ngeoRuleRule, {RuleOperatorType} from 'ngeo/rule/Rule.js';
  * @property {number} [upperBoundary] (RuleOptions)
  */
 
+
+/**
+ * @hidden
+ */
 export default class extends ngeoRuleRule {
 
   /**

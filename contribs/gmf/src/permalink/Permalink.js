@@ -52,6 +52,7 @@ import olLayerGroup from 'ol/layer/Group.js';
 
 /**
  * @enum {string}
+ * @hidden
  */
 export const OpenLayersLayerProperties = {
   OPACITY: 'opacity'
@@ -61,6 +62,7 @@ export const OpenLayersLayerProperties = {
 /**
  * External data source separators
  * @enum {string}
+ * @hidden
  */
 const ExtDSSeparator = {
   LIST: ',',
@@ -70,6 +72,7 @@ const ExtDSSeparator = {
 
 /**
  * @enum {string}
+ * @hidden
  */
 const ParamPrefix = {
   DIMENSIONS: 'dim_',
@@ -256,6 +259,7 @@ const ParamPrefix = {
  * @ngInject
  * @ngdoc service
  * @ngname gmfPermalink
+ * @hidden
  */
 export function PermalinkService($q, $timeout, $rootScope, $injector, ngeoDebounce, gettextCatalog, ngeoEventHelper,
   ngeoStateManager, ngeoLocation) {
@@ -1726,6 +1730,10 @@ PermalinkService.prototype.cleanParams = function(groups) {
 };
 
 
+/**
+ * @type {!angular.IModule}
+ * @hidden
+ */
 const module = angular.module('gmfPermalink', [
   gmfAuthenticationService.name,
   gmfThemeManager.name,

@@ -23,7 +23,7 @@ import ngeoLayerHelper from 'ngeo/map/LayerHelper.js';
 
 
 /**
- * @const
+ * @private
  */
 const BACKGROUNDLAYERGROUP_NAME = 'background';
 
@@ -65,6 +65,7 @@ const BACKGROUNDLAYERGROUP_NAME = 'background';
  * See our live examples:
  * [../examples/backgroundlayer.html](../examples/backgroundlayer.html)
  * [../examples/backgroundlayerdropdown.html](../examples/backgroundlayerdropdown.html)
+ * @hidden
  */
 export class MapBackgroundLayerManager extends olObservable {
   /**
@@ -214,6 +215,7 @@ export class MapBackgroundLayerManager extends olObservable {
 
 /**
  * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('ngeoBackgroundLayerMgr', [
   ngeoLayerHelper.name

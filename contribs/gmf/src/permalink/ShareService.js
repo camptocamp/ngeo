@@ -29,6 +29,7 @@ import angular from 'angular';
  * @constructor
  * @ngInject
  * @ngname gmfShareService
+ * @hidden
  */
 export function PermalinkShareService($http, gmfShortenerCreateUrl) {
 
@@ -111,19 +112,24 @@ PermalinkShareService.prototype.postShortUrl_ = function(params) {
 /**
  * Max length defined for the complete url.
  * Check IE limits, see {@link http://support.microsoft.com/kb/208427}
- * @constant
  * @type {number}
+ * @hidden
  */
 export const URL_MAX_LEN = 2083;
 
 /**
  * Max length defined for the url parth section.
  * Check IE limits, see {@link http://support.microsoft.com/kb/208427}
- * @constant
  * @type {number}
+ * @hidden
  */
 export const URL_PATH_MAX_LEN = 2048;
 
+
+/**
+ * @type {!angular.IModule}
+ * @hidden
+ */
 const module = angular.module('gmfShareService', []);
 
 module.service('gmfShareService', PermalinkShareService);

@@ -6,6 +6,7 @@ import angular from 'angular';
  * @ngInject
  * @ngdoc service
  * @ngname ngeoTime
+ * @hidden
  */
 export function Time() {}
 
@@ -73,6 +74,7 @@ Time.prototype.getUTCDate = function(localDate) {
 
 /**
  * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('ngeoTime', []);
 module.service('ngeoTime', Time);

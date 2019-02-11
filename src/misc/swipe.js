@@ -1,7 +1,9 @@
 import angular from 'angular';
 
+
 /**
  * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('ngeoMiscSwipe', []);
 
@@ -203,6 +205,14 @@ module.factory('$verticalSwipe', [function() {
   };
 }]);
 
+
+/**
+ * @private
+ * @param {string} directiveName Directive name
+ * @param {number} direction Direction
+ * @param {string} eventName Event name
+ * @returns {void}
+ */
 function makeSwipeDirective_(directiveName, direction, eventName) {
   module.directive(directiveName, ['$parse', '$verticalSwipe', function($parse, $verticalSwipe) {
     // The maximum horizontal delta for a swipe should be less than 75px.

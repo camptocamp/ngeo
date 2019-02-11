@@ -17,7 +17,7 @@ import olSourceTile from 'ol/source/Tile.js';
  *
  * @param {import("ol/interaction/Interaction.js").default} interaction Interaction to decorate.
  */
-export function interaction(interaction) {
+export function interactionDecoration(interaction) {
   console.assert(interaction instanceof olInteractionInteraction);
 
   Object.defineProperty(interaction, 'active', {
@@ -40,7 +40,7 @@ export function interaction(interaction) {
  *
  * @param {import("ol/layer/Base.js").default} layer Layer to decorate.
  */
-export function layer(layer) {
+export function layerDecoration(layer) {
   console.assert(layer instanceof olLayerBase);
 
   Object.defineProperty(layer, 'visible', {

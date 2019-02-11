@@ -4,6 +4,7 @@ import {getUid as olUtilGetUid} from 'ol/util.js';
  * @param {Array.<Object>|undefined} data Entries/objects to be shown in a grid.
  * @param {Array.<import('ngeo/download/Csv.js').GridColumnDef>|undefined} columnDefs Column definition of a grid.
  * @constructor
+ * @private
  */
 function GridConfig(data, columnDefs) {
   /**
@@ -27,6 +28,7 @@ function GridConfig(data, columnDefs) {
  * Get an ID for a row.
  * @param {Object} attributes An entry/row.
  * @return {string} Unique id for this object.
+ * @hidden
  */
 export function getRowUid(attributes) {
   return `${olUtilGetUid(attributes)}`;

@@ -8,6 +8,7 @@ import {toRadians} from 'ol/math.js';
  * @constructor
  * @ngdoc service
  * @ngname ngeoPrintUtils
+ * @hidden
  */
 export function PrintUtils() {
 
@@ -27,13 +28,13 @@ export function PrintUtils() {
 
 
 /**
- * @const
+ * @hidden
  */
 export const INCHES_PER_METER = 39.37;
 
 
 /**
- * @const
+ * @hidden
  */
 export const DOTS_PER_INCH = 72;
 
@@ -271,8 +272,10 @@ PrintUtils.prototype.getUpRightCorner = function(mapCenter) {
     mapCenter[1] + this.extentHalfVerticalDistance_];
 };
 
+
 /**
  * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('ngeoPrintUtils', []);
 module.service('ngeoPrintUtils', PrintUtils);

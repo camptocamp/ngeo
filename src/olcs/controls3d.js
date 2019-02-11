@@ -3,14 +3,29 @@
 import angular from 'angular';
 import * as olEasing from 'ol/easing.js';
 import olcsCore from 'olcs/core.js';
+
+
+/**
+ * @type {!angular.IModule}
+ * @hidden
+ */
 const module = angular.module('ngeoOlcsControls3d', []);
 
 
+/**
+ * @private
+ * @param {number} older Older
+ * @param {number} newer Newer
+ * @returns {boolean} ?
+ */
 function shouldUpdate(older, newer) {
   return Number.isFinite(newer) && (!Number.isFinite(older) || Math.abs(newer - older) > 0.05);
 }
 
 
+/**
+ * @private
+ */
 const Controller = class {
 
   /**
@@ -217,6 +232,7 @@ const Controller = class {
  * @param {!string} ngeoOlcsControls3dTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
+ * @private
  */
 function ngeoOlcsControls3dTemplateUrlInjectable($attrs, ngeoOlcsControls3dTemplateUrl) {
   if (ngeoOlcsControls3dTemplateUrl) {

@@ -350,7 +350,6 @@ module.component('gmfElevationwidget', rasterWidgetComponent);
 /**
  * @constructor
  * @private
- * @hidden
  * @ngdoc controller
  */
 function WidgetController() {

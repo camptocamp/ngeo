@@ -30,6 +30,7 @@ import olInteractionSnap from 'ol/interaction/Snap.js';
  * @ngInject
  * @ngdoc service
  * @ngname gmfSnapping
+ * @hidden
  */
 export function EditingSnappingService($http, $q, $rootScope, $timeout, gmfThemes, gmfTreeManager) {
 
@@ -575,6 +576,7 @@ EditingSnappingService.prototype.handleMapMoveEnd_ = function() {
 
 /**
  * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('gmfSnapping', [
   gmfLayertreeTreeManager.name,

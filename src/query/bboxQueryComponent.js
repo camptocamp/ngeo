@@ -8,6 +8,10 @@ import {platformModifierKeyOnly} from 'ol/events/condition.js';
 import {VOID} from 'ol/functions.js';
 
 
+/**
+ * @type {!angular.IModule}
+ * @hidden
+ */
 const module = angular.module('ngeoBboxQuery', [
   ngeoQueryKeyboard.name,
   ngeoQueryMapQuerent.name,

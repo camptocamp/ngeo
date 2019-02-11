@@ -68,6 +68,9 @@ import ngeoDatasourceOGC from 'ngeo/datasource/OGC.js';
  */
 
 
+/**
+ * @private
+ */
 class gmfDatasourceOGC extends ngeoDatasourceOGC {
 
   /**

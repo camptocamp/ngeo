@@ -2,8 +2,10 @@ import angular from 'angular';
 import olMap from 'ol/Map.js';
 import olControlControl from 'ol/control/Control.js';
 
+
 /**
  * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('ngeoControl', []);
 

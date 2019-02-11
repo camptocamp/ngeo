@@ -14,7 +14,7 @@ import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties.js';
 import ngeoInteractionModify from 'ngeo/interaction/Modify.js';
 import ngeoInteractionRotate from 'ngeo/interaction/Rotate.js';
 import ngeoInteractionTranslate from 'ngeo/interaction/Translate.js';
-import {interaction as ngeoMiscDecorateInteraction} from 'ngeo/misc/decorate.js';
+import {interactionDecoration as ngeoMiscDecorateInteraction} from 'ngeo/misc/decorate.js';
 import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
 import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
 import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr.js';
@@ -30,6 +30,7 @@ import 'bootstrap/js/src/dropdown.js';
 
 /**
  * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('GmfDrawFeatureComponent', [
   gmfDrawingFeatureStyleComponent.name,

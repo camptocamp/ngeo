@@ -39,7 +39,7 @@ appmodule.component('appLocationSearch', locationSearchComponent);
 
 /**
  * @constructor
- * @param {import("ngeo/search/createLocationSearchBloodhound.js").Function} ngeoCreateLocationSearchBloodhound Bloodhound service.
+ * @param {import("ngeo/search/createLocationSearchBloodhound.js").createLocationSearchBloodhoundFunction} ngeoCreateLocationSearchBloodhound Bloodhound service.
  * @ngInject
  */
 function SearchController(ngeoCreateLocationSearchBloodhound) {
@@ -93,7 +93,7 @@ function SearchController(ngeoCreateLocationSearchBloodhound) {
 
 
 /**
- * @param {import("ngeo/search/createLocationSearchBloodhound.js").Function} ngeoCreateLocationSearchBloodhound
+ * @param {import("ngeo/search/createLocationSearchBloodhound.js").createLocationSearchBloodhoundFunction} ngeoCreateLocationSearchBloodhound
  *     Bloodhound service.
  * @param {number} limit Limit.
  * @return {Bloodhound} The bloodhound engine.

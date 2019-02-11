@@ -7,8 +7,10 @@ import ngeoMiscColorpickerComponent from 'ngeo/misc/colorpickerComponent.js';
 
 import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
 
+
 /**
  * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('gmfDrawingFeatureStyle', [
   ngeoMiscColorpickerComponent.name,

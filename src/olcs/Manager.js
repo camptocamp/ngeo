@@ -1,5 +1,9 @@
 import olcsContribManager from 'olcs/contrib/Manager.js';
 
+
+/**
+ * @private
+ */
 class Manager extends olcsContribManager {
   /**
    * @param {string} url .

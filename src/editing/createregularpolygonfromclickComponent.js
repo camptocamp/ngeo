@@ -4,6 +4,10 @@ import * as olEvents from 'ol/events.js';
 import olFeature from 'ol/Feature.js';
 
 
+/**
+ * @type {!angular.IModule}
+ * @hidden
+ */
 const module = angular.module('ngeoCreateregularpolygonfromclick', []);
 
 

@@ -9,6 +9,7 @@ import * as olEvents from 'ol/events.js';
  * @ngdoc service
  * @ngname ngeoEventHelper
  * @ngInject
+ * @hidden
  */
 export function EventHelper() {
 
@@ -67,6 +68,7 @@ EventHelper.prototype.initListenerKey_ = function(uid) {
 
 /**
  * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('ngeoEventHelper', []);
 module.service('ngeoEventHelper', EventHelper);

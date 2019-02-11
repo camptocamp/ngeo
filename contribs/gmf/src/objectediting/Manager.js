@@ -6,6 +6,7 @@ import olFeature from 'ol/Feature.js';
 
 /**
  * @enum {string}
+ * @hidden
  */
 export const ObjecteditingParam = {
   /**
@@ -40,6 +41,7 @@ export const ObjecteditingParam = {
  * @param {import("ngeo/statemanager/Location.js").StatemanagerLocation} ngeoLocation ngeo location service.
  * @constructor
  * @ngInject
+ * @hidden
  */
 export function ObjecteditingManagerService($q, gmfEditFeature, ngeoLocation) {
 
@@ -157,6 +159,7 @@ ObjecteditingManagerService.prototype.handleGetFeatures_ = function(key, value, 
 
 /**
  * @type {!angular.IModule}
+ * @hidden
  */
 const module = angular.module('gmfObjectEditingManager', [
   gmfEditingEditFeature.name,

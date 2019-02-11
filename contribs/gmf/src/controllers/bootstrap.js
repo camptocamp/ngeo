@@ -3,6 +3,12 @@ import $ from 'jquery';
 import angular from 'angular';
 import {TOUCH} from 'ol/has.js';
 
+
+/**
+ * @private
+ * @param {angular.IModule} module The module
+ * @return {void}
+ */
 function bootstrap(module) {
   const interface_ = $('meta[name=interface]')[0].getAttribute('content');
   const dynamicUrl_ = $('meta[name=dynamicUrl]')[0].getAttribute('content');

@@ -26,6 +26,7 @@
  * @param {function(T):boolean} filter Filter function.
  * @return {function()} Function to call to stop synchronization
  * @template T
+ * @private
  */
 function syncArrays(arr1, arr2, reverse, scope, filter) {
 

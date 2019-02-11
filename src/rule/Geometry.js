@@ -22,6 +22,9 @@ import olFormatGeoJSON from 'ol/format/GeoJSON.js';
  */
 
 
+/**
+ * @hidden
+ */
 export default class extends ngeoRuleRule {
 
   /**
