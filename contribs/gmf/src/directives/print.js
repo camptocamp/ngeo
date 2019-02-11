@@ -199,14 +199,13 @@ gmf.PrintController = function($element, $rootScope, $scope, $timeout, $q, $inje
    * @type {boolean}
    * @private
    */
-  this.rotateMask_ = this['rotateMask'] ? this['rotateMask']() : false;
+  this.rotateMask_ = false;
 
   /**
    * @type {Object.<string, string|number|boolean>!}
    * @private
    */
-  this.fieldValues_ = this['fieldValues'] ?
-    this['fieldValues']() : {};
+  this.fieldValues_ = {};
 
   /**
    * @type {angular.Scope}
@@ -473,6 +472,15 @@ gmf.PrintController = function($element, $rootScope, $scope, $timeout, $q, $inje
 
 
 /**
+ * Init the controller
+ */
+gmf.PrintController.prototype.$onInit = function() {
+  this.rotateMask_ = this['rotateMask'] ? this['rotateMask']() : false;
+  this.fieldValues_ = this['fieldValues'] ? this['fieldValues']() : {};
+};
+
+
+/**
  * @param {boolean} active True to listen events related to the print and get
  *     capabilities. False to stop listen them and set rotation to 0.
  * @private
@@ -572,11 +580,7 @@ gmf.PrintController.prototype.updateFields_ = function() {
 
   this.updateCustomFields_();
 
-  const legend = this.isAttributeInCurrentLayout_('legend');
-  if (this.layoutInfo.legend === undefined) {
-    this.layoutInfo.legend = !!(legend !== undefined ?
-      legend : this.fieldValues_['legend']);
-  }
+  this.layoutInfo.legend = this.fieldValues_['legend'] !== false;
 
   this.layoutInfo.scales = clientInfo['scales'] || [];
   this.layoutInfo.dpis = clientInfo['dpiSuggestions'] || [];
