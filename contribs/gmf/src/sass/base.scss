@@ -108,17 +108,19 @@ i, cite, em, var, address, dfn {
   font-size: inherit;
 }
 
-.ui-draggable {
+.ui-draggable-handle {
   cursor: grab;
   cursor: -webkit-grab;
   cursor:-moz-grab;
+}
 
-  &.ui-draggable-dragging {
+.ui-draggable-dragging {
+  .ui-draggable-handle {
     cursor: move;
+  }
 
-    iframe {
-      display: none;
-    }
+  iframe {
+    display: none;
   }
 }
 

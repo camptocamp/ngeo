@@ -36,6 +36,8 @@ const module = angular.module('ngeoModal', []);
  *
  * See our live example: [../examples/modal.html](../examples/modal.html)
  *
+ * @htmlAttribute {string} ngeo-draggable-handle The jquery selector that define the element
+ *     that can starts the dragging sequence. Defaults to `.modal-header`.
  * @htmlAttribute {boolean} ngeo-modal-resizable Whether the modal can be
  *     resized or not. Defaults to `false`.
  * @htmlAttribute {boolean} ngeo-modal-closable Whether the modal can be
@@ -58,6 +60,7 @@ const messageModalComponent = {
   transclude: true,
   controller: 'ngeoModalController',
   bindings: {
+    'draggableHandle': '=?ngeodraggableHandle',
     'resizable': '<ngeoModalResizable',
     'closable': '<ngeoModalClosable'
   }
@@ -95,6 +98,11 @@ class Controller {
     this.modal_;
 
     /**
+     * @type {string}
+     */
+    this.draggableHandle;
+
+    /**
      * @type {boolean}
      */
     this.closable;
@@ -113,6 +121,12 @@ class Controller {
   $onInit() {
     this.closable = this.closable !== false;
 
+    this.resizable = !!this.resizable;
+
+    this.draggableHandle = this.draggableHandle || '.modal-header';
+  }
+
+  $postLink() {
     this.modal_ = this.$element_.children();
 
     if (!this.closable) {
@@ -120,10 +134,11 @@ class Controller {
       this.modal_.attr('data-backdrop', 'static');
     }
 
-    this.resizable = !!this.resizable;
 
     const dialog = this.modal_.find('.modal-dialog');
-    dialog.draggable();
+    dialog.draggable({
+      handle: this.draggableHandle
+    });
     if (this.resizable) {
       dialog.resizable();
     }
