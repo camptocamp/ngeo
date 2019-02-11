@@ -124,7 +124,7 @@ MainController.prototype.inMap = function() {
   this.inMapMsgs_.forEach(function(message) {
     this.disclaimer.alert({
       msg: message,
-      target: angular.element('#disclaimers-in-map'),
+      target: '#disclaimers-in-map',
       type: MessageType.WARNING
     });
   }, this);

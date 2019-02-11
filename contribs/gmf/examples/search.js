@@ -117,7 +117,7 @@ function MainController(gmfThemes, ngeoFeatureOverlayMgr, ngeoNotification) {
   this.searchIsReady = () => {
     ngeoNotification.notify({
       msg: 'gmf-search initialized',
-      target: angular.element('#message'),
+      target: '#message',
       type: MessageType.SUCCESS
     });
   };
