@@ -687,12 +687,7 @@ exports.Controller_ = class {
 
     this.updateCustomFields_();
 
-    const legend = this.isAttributeInCurrentLayout_('legend');
-    if (this.layoutInfo.legend === undefined) {
-      this.layoutInfo.legend = !!(legend !== undefined ?
-        legend : this.fieldValues['legend']);
-    }
-
+    this.layoutInfo.legend = this.fieldValues['legend'] !== false;
     this.layoutInfo.scales = clientInfo['scales'] || [];
     this.layoutInfo.dpis = clientInfo['dpiSuggestions'] || [];
 
