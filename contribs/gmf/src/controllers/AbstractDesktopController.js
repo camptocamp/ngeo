@@ -3,7 +3,7 @@ import gmfControllersAbstractAPIController, {AbstractAPIController} from 'gmf/co
 import gmfContextualdataModule from 'gmf/contextualdata/module.js';
 import gmfEditingModule from 'gmf/editing/module.js';
 import gmfPermalinkShareComponent from 'gmf/permalink/shareComponent.js';
-import gmfPrintComponent from 'gmf/print/component.js';
+import gmfPrintModule from 'gmf/print/module.js';
 import gmfProfileModule from 'gmf/profile/module.js';
 import gmfRasterComponent from 'gmf/raster/component.js';
 import ngeoDrawFeatures from 'ngeo/draw/features.js';
@@ -258,7 +258,7 @@ const module = angular.module('GmfAbstractDesktopControllerModule', [
   gmfContextualdataModule.name,
   gmfEditingModule.name,
   gmfPermalinkShareComponent.name,
-  gmfPrintComponent.name,
+  gmfPrintModule.name,
   gmfProfileModule.name,
   gmfRasterComponent.name,
   ngeoDrawFeatures.name,

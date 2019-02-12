@@ -503,16 +503,28 @@ class Controller {
     this.rotation = 0;
 
     /**
+     * The email of the user to which send the file. Obtained from the
+     * authentication service.
      * @type {?string}
      */
     this.smtpEmail = null;
 
     /**
+     * Whether to send the printed file by email or not.
      * @type {boolean}
      */
     this.smtpEnabled = false;
 
     /**
+     * Flag that determines whether to show a message notifying the
+     * user about his upcomping file or not.
+     * @type {boolean}
+     */
+    this.smtpMessage = false;
+
+    /**
+     * Whether sending file by email is supported or not. Obtained
+     * from the print capabilities.
      * @type {boolean}
      */
     this.smtpSupported = false;
@@ -1161,6 +1173,10 @@ class Controller {
         // The report is ready. Open it by changing the window location.
         window.location.href = this.ngeoPrint_.getReportUrl(ref);
         this.resetPrintStates_();
+        // If the file was sent by email, show message
+        if (this.smtpSupported && this.smtpEmail && this.smtpEnabled) {
+          this.smtpMessage = true;
+        }
       } else {
         console.error(mfResp.error);
         this.handleCreateReportError_();
@@ -1331,6 +1347,13 @@ class Controller {
    */
   isState(stateEnumKey) {
     return this.gmfPrintState_.state === PrintStateEnum[stateEnumKey];
+  }
+
+  /**
+   * Close the SMTP message
+   */
+  closeSmtpMessage() {
+    this.smtpMessage = false;
   }
 }
 

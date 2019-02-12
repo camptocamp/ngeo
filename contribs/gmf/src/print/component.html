@@ -229,4 +229,13 @@
     class="gmf-print-error-capabilities form-group pull-left text-danger">
     <p>{{'The print server is unavailable. Please, try later.' | translate}}</p>
   </div>
+
+  <div
+    ng-show="$ctrl.smtpMessage"
+    class="gmf-print-smtp-message form-group pull-left">
+    <button
+      class="btn prime"
+      ng-click="$ctrl.closeSmtpMessage()" translate>Close</button>
+    <p>{{'The file will be sent to your email when ready.' | translate}}</p>
+  </div>
 </div>
