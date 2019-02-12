@@ -30,7 +30,7 @@ exports.MAPSERVER_WFS_FEATURE_NS = 'http://mapserver.gis.umn.edu/mapserver';
  * MapServer proxy
  * @type {string}
  */
-exports.MAPSERVER_PROXY = `${exports.GMF_DEMO}mapserv_proxy`;
+exports.MAPSERVER_PROXY = `${exports.GMF_DEMO}mapserv_proxy?ogcserver=Main+PNG`;
 
 /**
  * MapServer proxy

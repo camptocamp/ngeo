@@ -17,7 +17,7 @@ export const MAPSERVER_WFS_FEATURE_NS = 'http://mapserver.gis.umn.edu/mapserver'
  * @type {string}
  * @hidden
  */
-export const MAPSERVER_PROXY = `${GMF_DEMO}mapserv_proxy`;
+export const MAPSERVER_PROXY = `${GMF_DEMO}mapserv_proxy?ogcserver=Main+PNG`;
 
 /**
  * MapServer proxy
