@@ -16,6 +16,7 @@ import olEventsEventTarget from 'ol/events/Target.js';
 
 /**
  * @typedef {Object} User
+ * @property {string|null} email User's email address
  * @property {AuthenticationFunctionalities|null} functionalities Configured functionalities of the user
  * @property {boolean|null} is_password_changed True if the password of the user has been changed. False otherwise.
  * @property {number|null} role_id the role id of the user.
@@ -207,6 +208,13 @@ export class AuthenticationService extends olEventsEventTarget {
     return this.$http_.post(url, $.param({'login': login}), {
       headers: {'Content-Type': 'application/x-www-form-urlencoded'}
     }).then(successFn);
+  }
+
+  /**
+   * @return {string|null} User's email
+   */
+  getEmail() {
+    return this.user_.email || null;
   }
 
   /**

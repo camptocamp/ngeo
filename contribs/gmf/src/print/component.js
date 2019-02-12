@@ -503,6 +503,21 @@ class Controller {
     this.rotation = 0;
 
     /**
+     * @type {?string}
+     */
+    this.smtpEmail = null;
+
+    /**
+     * @type {boolean}
+     */
+    this.smtpEnabled = false;
+
+    /**
+     * @type {boolean}
+     */
+    this.smtpSupported = false;
+
+    /**
      * @type {Array.<string>}
      */
     this.hiddenAttributeNames;
@@ -565,6 +580,11 @@ class Controller {
     this.$scope_.$watch(() => this.gmfAuthenticationService_.getRoleId(), () => {
       this.gmfPrintState_.state = PrintStateEnum.CAPABILITIES_NOT_LOADED;
       this.capabilities_ = null;
+    });
+
+    // Store user email
+    this.$scope_.$watch(() => this.gmfAuthenticationService_.getEmail(), (newValue) => {
+      this.smtpEmail = newValue;
     });
 
     this.$scope_.$watch(() => this.active, (active) => {
@@ -700,6 +720,8 @@ class Controller {
     this.layouts_.forEach((layout) => {
       this.layoutInfo.layouts.push(layout.name);
     });
+
+    this.smtpSupported = data['smtp'] && data['smtp']['enabled'];
 
     this.updateFields_();
   }
@@ -981,8 +1003,10 @@ class Controller {
     group.set('printNativeAngle', print_native_angle);
     map.setLayerGroup(group);
 
+    const email = this.smtpSupported && this.smtpEmail && this.smtpEnabled ? this.smtpEmail : undefined;
+
     const spec = this.ngeoPrint_.createSpec(map, scale, this.layoutInfo.dpi,
-      this.layoutInfo.layout, format, customAttributes);
+      this.layoutInfo.layout, format, customAttributes, email);
 
     // Add feature overlay layer to print spec.
     const layers = [];
