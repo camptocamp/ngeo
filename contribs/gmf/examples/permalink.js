@@ -1,6 +1,3 @@
-/**
- */
-
 import './permalink.css';
 import angular from 'angular';
 import gmfMapModule from 'gmf/map/module.js';

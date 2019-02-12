@@ -4,7 +4,8 @@ import angular from 'angular';
 /**
  * @type {!angular.IModule}
  * @hidden
- */const module = angular.module('gmfMobileNav', []);
+ */
+const module = angular.module('gmfMobileNav', []);
 
 
 /**

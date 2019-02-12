@@ -1,6 +1,3 @@
-/**
- */
-
 import './lidarprofile.css';
 import angular from 'angular';
 import gmfMapComponent from 'gmf/map/component.js';
