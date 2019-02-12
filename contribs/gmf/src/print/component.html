@@ -179,6 +179,7 @@
       class="gmf-print-smtp checkbox">
       <label>
         <input
+          ng-disabled="$ctrl.isState('PRINTING')"
           ng-model="$ctrl.smtpEnabled"
           type="checkbox">
         <span translate>Send file by email</span>
