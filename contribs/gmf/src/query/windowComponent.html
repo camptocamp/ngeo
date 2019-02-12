@@ -1,10 +1,7 @@
 <div
   class="gmf-displayquerywindow"
   ng-class="{'desktop': ctrl.desktop, 'mobile': !ctrl.desktop}"
-  ng-show="ctrl.open"
-  ng-swipe-disable-mouse
-  ng-swipe-left="ctrl.next()"
-  ng-swipe-right="ctrl.previous()">
+  ng-show="ctrl.open">
 
   <button
     class="collapse-button"
@@ -17,7 +14,11 @@
     ng-class="[ctrl.collapsed ? 'collapse-button-up' : 'collapse-button-down']">
   </button>
 
-  <div class="windowcontainer">
+  <div
+  class="windowcontainer"
+  ng-swipe-disable-mouse
+  ng-swipe-left="ctrl.next()"
+  ng-swipe-right="ctrl.previous()">
 
     <button
       type="button"
