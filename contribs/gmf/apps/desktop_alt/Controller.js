@@ -18,6 +18,7 @@ import ngeoProjEPSG2056 from 'ngeo/proj/EPSG2056.js';
 import ngeoProjEPSG21781 from 'ngeo/proj/EPSG21781.js';
 import ngeoStatemanagerWfsPermalink from 'ngeo/statemanager/WfsPermalink.js';
 import * as olBase from 'ol/index.js';
+import {Circle, Fill, Stroke, Style} from 'ol/style';
 import Raven from 'raven-js/src/raven.js';
 import RavenPluginsAngular from 'raven-js/plugins/angular.js';
 
@@ -119,6 +120,24 @@ const exports = function($scope, $injector, ngeoFile, gettext, $q) {
     'OSM_time_merged': ['osm_time', 'osm_time2'],
     'transport (merged)': ['fuel', 'parking'],
     'Learning [merged]': ['information', 'bus_stop']
+  };
+
+  const radius = 5;
+  const fill = new Fill({color: [255, 255, 255, 0.6]});
+  const stroke = new Stroke({color: [255, 0, 0, 1], width: 2});
+  const image = new Circle({fill, radius, stroke});
+  const default_search_style = new Style({
+    fill,
+    image,
+    stroke
+  });
+
+  /**
+   * @type {Object.<string, ol.style.Style>} Map of styles for search overlay.
+   * @export
+   */
+  this.searchStyles = {
+    'default': default_search_style
   };
 
   // Allow angular-gettext-tools to collect the strings to translate
