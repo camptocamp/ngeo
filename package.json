@@ -34,7 +34,7 @@
     "@babel/preset-env": "7.3.1",
     "@camptocamp/babel-plugin-angularjs-annotate": "0.8.2",
     "@camptocamp/cesium": "1.54.0",
-    "@fortawesome/fontawesome-free": "5.6.3",
+    "@fortawesome/fontawesome-free": "5.7.2",
     "@geoblocks/proj": "0.4.0",
     "@openlayers/eslint-plugin": "4.0.0-beta.2",
     "@types/angular": "1.6.54",
