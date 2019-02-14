@@ -44,7 +44,7 @@
     "@types/angular-mocks": "1.7.0",
     "@types/bootstrap": "4.2.1",
     "@types/cesium": "1.47.3",
-    "@types/d3": "5.7.0",
+    "@types/d3": "5.7.1",
     "@types/file-saver": "2.0.0",
     "@types/googlemaps": "3.30.16",
     "@types/jasmine": "3.3.8",
