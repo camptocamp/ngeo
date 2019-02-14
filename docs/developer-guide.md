@@ -66,12 +66,15 @@ fdescribe('...', function() {
 Checkout the latest version
 
 ```
-git checkout master
+git checkout <release-branch>
 git fetch origin
-git reset --hard origin/master
+git reset --hard origin/<release-branche>
 ```
 
-Create a tag named the same as the version.
+Where `<release-branch>` stand for `2.x`.
+
+Verify that the `<version>` (`2.x.x`) in package.json match with the tag you'll
+create. Then create a tag named the same as the version.
 ```
 git tag <version>
 git push origin <version>
@@ -79,17 +82,16 @@ git push origin <version>
 
 Travis will create a new package on npm.
 
-
 If you create a new release, bump version in the package.json file:
 ```
 git checkout -b bump
 vi package.json
 git add package.json
-git commit -m "Bump version to 2.4.x+1"
+git commit -m "Bump version to <version + 1>"
 git push origin bump
 ```
 
-Do the pull request
+Do the pull request on branch `<release-branche>`
 
 ## Create a new stabilisation branch
 
