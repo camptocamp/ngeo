@@ -100,13 +100,15 @@ ngeo.message.modalComponent.Controller_ = class {
     this.ngModel;
   }
 
-  $onInit() {
+  $postLink() {
     this.modal_ = this.$element_.children();
 
     this.resizable = !!this.resizable;
 
     const dialog = this.modal_.find('.modal-dialog');
-    dialog.draggable();
+    dialog.draggable({
+      'handle': '.modal-header'
+    });
     if (this.resizable) {
       dialog.resizable();
     }
