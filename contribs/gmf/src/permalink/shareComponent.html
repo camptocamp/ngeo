@@ -17,7 +17,7 @@
         {{'Error, cannot get the shortened URL.' | translate}}
       </p>
     </div>
-    <hr>
+    <hr ng-if="::$ctrl.enableEmail">
     <div class="gmf-share-email" ng-if="::$ctrl.enableEmail">
       <div class="form-group">
         <label for="gmfShareInputEmail-{{::$ctrl.uid}}" translate>Send this link to</label>
