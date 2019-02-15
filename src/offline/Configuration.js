@@ -14,6 +14,7 @@ goog.require('ol.tilegrid');
 const SerializerDeserializer = goog.require('ngeo.offline.SerializerDeserializer');
 const LocalforageCordovaWrapper = goog.require('ngeo.offline.LocalforageCordovaWrapper');
 const LocalforageAndroidWrapper = goog.require('ngeo.offline.LocalforageAndroidWrapper');
+const LocalforageIosWrapper = goog.require('ngeo.offline.LocalforageIosWrapper');
 
 
 goog.require('ngeo.CustomEvent');
@@ -119,12 +120,15 @@ exports = class extends ol.Observable {
   }
 
   createLocalforage() {
-    if (location.search.includes('cordova')) {
+    if (location.search.includes('localforage=cordova')) {
       console.log('Using cordova localforage');
       return new LocalforageCordovaWrapper();
-    } else if (location.search.includes('android')) {
+    } else if (location.search.includes('localforage=android')) {
       console.log('Using android localforage');
       return new LocalforageAndroidWrapper();
+    } else if (location.search.includes('localforage=ios')) {
+      console.log('Using ios localforage');
+      return new LocalforageIosWrapper();
     }
     return localforage;
   }
