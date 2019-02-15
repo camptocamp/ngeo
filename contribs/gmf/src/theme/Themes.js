@@ -487,6 +487,7 @@ export function findThemeByName(themes, themeName) {
  * @param {import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer} node Layertree node.
  * @param {Array.<import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer>} nodes An array.
  * @private
+ * @hidden
  */
 function getFlatInternalNodes(node, nodes) {
   // @ts-ignore: children only on GmfGroup

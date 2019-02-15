@@ -82,12 +82,13 @@ module.directive('gmfMobileNav', mobileNavigationComponent);
 
 
 /**
-* @constructor
-* @private
-* @ngInject
-* @ngdoc controller
-* @ngname gmfMobileNavController
-*/
+ * @constructor
+ * @private
+ * @hidden
+ * @ngInject
+ * @ngdoc controller
+ * @ngname gmfMobileNavController
+ */
 function Controller() {
   /**
    * Stack of slid-in items.

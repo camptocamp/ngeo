@@ -59,6 +59,7 @@ module.directive('gmfObjecteditinggetwmsfeature', objectEditingGetWMSFeatureComp
  *     query service.
  * @constructor
  * @private
+ * @hidden
  * @ngInject
  * @ngdoc controller
  * @ngname GmfObjecteditinggetwmsfeatureController

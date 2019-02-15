@@ -208,6 +208,7 @@ module.factory('$verticalSwipe', [function() {
 
 /**
  * @private
+ * @hidden
  * @param {string} directiveName Directive name
  * @param {number} direction Direction
  * @param {string} eventName Event name

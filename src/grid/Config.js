@@ -5,6 +5,7 @@ import {getUid as olUtilGetUid} from 'ol/util.js';
  * @param {Array.<import('ngeo/download/Csv.js').GridColumnDef>|undefined} columnDefs Column definition of a grid.
  * @constructor
  * @private
+ * @hidden
  */
 function GridConfig(data, columnDefs) {
   /**

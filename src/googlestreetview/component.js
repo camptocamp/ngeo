@@ -41,6 +41,7 @@ module.run(/* @ngInject */ ($templateCache) => {
  * @return {string} Template URL.
  * @ngInject
  * @private
+ * @hidden
  */
 function ngeoGooglestreetviewTemplateUrl($attrs, ngeoGooglestreetviewTemplateUrl) {
   return ngeoGooglestreetviewTemplateUrl($attrs);

@@ -42,6 +42,7 @@ module.value('ngeoGridTemplateUrl',
  * @return {string} Template URL.
  * @ngInject
  * @private
+ * @hidden
  */
 function ngeoGridTemplateUrl($attrs, ngeoGridTemplateUrl) {
   return ngeoGridTemplateUrl($attrs);
@@ -80,6 +81,7 @@ module.component('ngeoGrid', gridComponent);
  * @param {!angular.IScope} $scope Angular scope.
  * @constructor
  * @private
+ * @hidden
  * @ngInject
  * @ngdoc controller
  * @ngname ngeoGridController

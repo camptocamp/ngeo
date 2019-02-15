@@ -49,6 +49,7 @@ module.value('gmfMapMousepositionTemplateUrl',
  * @return {string} Template URL.
  * @ngInject
  * @private
+ * @hidden
  */
 function gmfMapMousepositionTemplateUrl($attrs, gmfMapMousepositionTemplateUrl) {
   return gmfMapMousepositionTemplateUrl($attrs);
@@ -91,6 +92,7 @@ module.component('gmfMouseposition', mapMousepositionComponent);
  * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @constructor
  * @private
+ * @hidden
  * @ngInject
  * @ngdoc controller
  * @ngname gmfMousepositionController

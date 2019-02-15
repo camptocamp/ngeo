@@ -73,6 +73,7 @@ module.run(/* @ngInject */ ($templateCache) => {
  * @return {string} Template URL.
  * @ngInject
  * @private
+ * @hidden
  */
 function gmfProfileTemplateUrl($element, $attrs, gmfProfileTemplateUrl) {
   return gmfProfileTemplateUrl($element, $attrs);
@@ -147,6 +148,7 @@ module.component('gmfProfile', profileComponent);
  * @param {import("ngeo/download/Csv.js").DownloadCsvService} ngeoCsvDownload CSV Download service.
  * @constructor
  * @private
+ * @hidden
  * @ngInject
  * @ngdoc controller
  * @ngname GmfProfileController

@@ -219,6 +219,7 @@ module.run(/* @ngInject */ ($templateCache) => {
  * @param {!function(!JQuery, !angular.IAttributes): string} gmfDisplayquerywindowTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
+ * @hidden
  */
 function gmfDisplayquerywindowTemplateUrl($element, $attrs, ngeoModuleComponentTemplateUrl) {
   return gmfDisplayquerywindowTemplateUrl($element, $attrs);

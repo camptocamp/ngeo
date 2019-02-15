@@ -86,6 +86,7 @@ module.directive('ngeoCreatefeature', editingCreateFeatureComponent);
  * @param {!import("ngeo/misc/EventHelper.js").EventHelper} ngeoEventHelper Ngeo event helper service
  * @constructor
  * @private
+ * @hidden
  * @ngInject
  * @ngdoc controller
  * @ngname ngeoCreatefeatureController

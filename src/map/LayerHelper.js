@@ -50,12 +50,14 @@ export function LayerHelper($q, $http, ngeoTilesPreloadingLimit) {
 
 /**
  * @private
+ * @hidden
  */
 const GROUP_KEY = 'groupName';
 
 
 /**
  * @private
+ * @hidden
  */
 const REFRESH_PARAM = 'random';
 

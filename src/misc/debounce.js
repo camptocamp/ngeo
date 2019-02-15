@@ -22,6 +22,7 @@ const module = angular.module('ngeoDebounce', []);
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @return {T} The wrapper function.
  * @private
+ * @hidden
  */
 function debounce(func, wait, invokeApply, $timeout) {
   /**
@@ -56,6 +57,7 @@ function debounce(func, wait, invokeApply, $timeout) {
  * @ngname ngeoDebounce
  * @ngInject
  * @private
+ * @hidden
  */
 function factory($timeout) {
   /** @type {function(T, number, boolean, angular.ITimeoutService): T} */

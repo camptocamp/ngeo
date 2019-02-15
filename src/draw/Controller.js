@@ -16,7 +16,7 @@ import olFeature from 'ol/Feature.js';
  * @param {import("ngeo/misc/FeatureHelper.js").FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
  * @param {import("ol/Collection.js").default.<import("ol/Feature.js").default>} ngeoFeatures Collection of features.
  * @constructor
- * @private
+ * @hidden
  * @ngInject
  * @ngdoc controller
  * @ngname ngeoDrawfeatureController

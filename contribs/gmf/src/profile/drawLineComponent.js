@@ -64,6 +64,7 @@ module.directive('gmfDrawprofileline', profileDarwLineComponent);
  * @param {!import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr Feature overlay manager.
  * @constructor
  * @private
+ * @hidden
  * @ngInject
  * @ngdoc controller
  * @ngname gmfDrawprofilelineController

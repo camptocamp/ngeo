@@ -74,6 +74,7 @@ module.directive('gmfEditfeatureselector', editingEditFeatureComponent);
  * @param {import("gmf/layertree/TreeManager.js").LayertreeTreeManager} gmfTreeManager The gmf TreeManager service.
  * @constructor
  * @private
+ * @hidden
  * @ngInject
  * @ngdoc controller
  * @ngname GmfEditfeatureselectorController

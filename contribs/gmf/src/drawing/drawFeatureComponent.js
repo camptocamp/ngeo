@@ -93,6 +93,7 @@ module.directive('gmfDrawfeature', drawinfDrawFeatureComponent);
  *     service.
  * @constructor
  * @private
+ * @hidden
  * @ngInject
  * @ngdoc controller
  * @ngname GmfDrawfeatureController
@@ -331,6 +332,7 @@ function Controller($scope, $timeout, gettextCatalog, ngeoFeatureHelper, ngeoFea
 /**
  * Close menu, if it exists.
  * @private
+ * @hidden
  */
 Controller.prototype.closeMenu_ = function() {
   if (this.menu_) {

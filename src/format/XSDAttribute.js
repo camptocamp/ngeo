@@ -22,6 +22,7 @@ export const FormatNumberType = {
 /**
  * Reads attributes that are defined in XSD format and return them as a list.
  * @private
+ * @hidden
  */
 class XSDAttribute extends olFormatXML {
   constructor() {

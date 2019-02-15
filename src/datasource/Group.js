@@ -15,6 +15,7 @@ import olCollection from 'ol/Collection.js';
 /**
  * @enum {string}
  * @private
+ * @hidden
  */
 const VisibilityState = {
   INDETERMINATE: 'indeterminate',
@@ -25,6 +26,7 @@ const VisibilityState = {
 
 /**
  * @private
+ * @hidden
  */
 class Group {
 

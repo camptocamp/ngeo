@@ -3,8 +3,8 @@ import * as olXml from 'ol/xml.js';
 
 
 /**
- * @const
  * @private
+ * @hidden
  * @type {Array.<string>}
  */
 const NAMESPACE_URIS_ = [
@@ -28,15 +28,16 @@ const NAMESPACE_URIS_ = [
  * @param {parserStructure} structure Structure.
  * @return {Object<string, parserStructure>} Namespaced structure.
  * @private
+ * @hidden
  */
 function makeStructureNS(namespaceURIs, structure) {
   return /** @type {parsersStructure} */(/** @type {any} */(olXml.makeStructureNS(namespaceURIs, structure)));
 }
 
 /**
- * @const
  * @type {parsersStructure}
  * @private
+ * @hidden
  */
 const PARSERS_ = makeStructureNS(
   NAMESPACE_URIS_, {
@@ -47,9 +48,9 @@ const PARSERS_ = makeStructureNS(
 
 
 /**
- * @const
  * @type {parsersStructure}
  * @private
+ * @hidden
  */
 const COMPLEX_TYPE_PARSERS_ = makeStructureNS(
   NAMESPACE_URIS_, {
@@ -59,9 +60,9 @@ const COMPLEX_TYPE_PARSERS_ = makeStructureNS(
 
 
 /**
- * @const
  * @type {parsersStructure}
  * @private
+ * @hidden
  */
 const COMPLEX_CONTENT_PARSERS_ = makeStructureNS(
   NAMESPACE_URIS_, {
@@ -71,9 +72,9 @@ const COMPLEX_CONTENT_PARSERS_ = makeStructureNS(
 
 
 /**
- * @const
  * @type {parsersStructure}
  * @private
+ * @hidden
  */
 const EXTENSION_PARSERS_ = makeStructureNS(
   NAMESPACE_URIS_, {
@@ -83,9 +84,9 @@ const EXTENSION_PARSERS_ = makeStructureNS(
 
 
 /**
- * @const
  * @type {parsersStructure}
  * @private
+ * @hidden
  */
 const SEQUENCE_PARSERS_ = makeStructureNS(
   NAMESPACE_URIS_, {
@@ -97,6 +98,7 @@ const SEQUENCE_PARSERS_ = makeStructureNS(
 /**
  * Format for reading WFS DescribeFeatureType data.
  * @private
+ * @hidden
  */
 class WFSDescribeFeatureType extends olFormatXML {
   constructor() {
@@ -145,6 +147,7 @@ WFSDescribeFeatureType.prototype.readFromNode = function(node) {
 
 /**
  * @private
+ * @hidden
  * @param {Element} node Node.
  * @param {Array.<*>} objectStack Object stack.
  * @return {!Object.<string, string>} Attributes.
@@ -166,6 +169,7 @@ function readElement_(node, objectStack) {
 
 /**
  * @private
+ * @hidden
  * @param {Element} node Node.
  * @param {Array.<*>} objectStack Object stack.
  * @return {!Object.<string, string>} Object.
@@ -186,6 +190,7 @@ function readComplexType_(node, objectStack) {
 
 /**
  * @private
+ * @hidden
  * @param {Element} node Node.
  * @param {Array.<*>} objectStack Object stack.
  * @return {!Object.<string, string>} Object.
@@ -204,6 +209,7 @@ function readComplexContent_(
 
 /**
  * @private
+ * @hidden
  * @param {Element} node Node.
  * @param {Array.<*>} objectStack Object stack.
  * @return {!Object.<string, string>} Object.
@@ -220,6 +226,7 @@ function readExtension_(node, objectStack) {
 
 /**
  * @private
+ * @hidden
  * @param {Element} node Node.
  * @param {Array.<*>} objectStack Object stack.
  * @return {!Object.<string, string>} Object.

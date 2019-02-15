@@ -186,6 +186,7 @@ module.directive('gmfEditfeature', editingEditFeatureComponent);
  *     service.
  * @constructor
  * @private
+ * @hidden
  * @ngInject
  * @ngdoc controller
  * @ngname GmfEditfeatureController

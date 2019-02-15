@@ -69,6 +69,7 @@ export function StatemanagerLocation(location, history) {
  * @param {History} history History.
  * @param {string} state State.
  * @private
+ * @hidden
  */
 function replaceState(history, state) {
   try {
@@ -347,6 +348,7 @@ StatemanagerLocation.prototype.setPath = function(path) {
  * @return {StatemanagerLocation} The ngeo location service.
  * @ngInject
  * @private
+ * @hidden
  */
 function LocationFactory($rootScope, $window) {
   const history = $window.history;

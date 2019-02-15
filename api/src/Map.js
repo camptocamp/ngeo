@@ -37,6 +37,7 @@ import * as themes from './Themes.js';
 
 /**
  * @private
+ * @hidden
  */
 class Map {
 
@@ -303,6 +304,7 @@ class Map {
  * @param {Array.<*>} values Values.
  * @returns {Object<string, *>} Object.
  * @private
+ * @hidden
  */
 function zip(keys, values) {
   const obj = {};
@@ -318,6 +320,7 @@ function zip(keys, values) {
  * @param {Array.<string>} keys keys.
  * @returns {Object<string, *>} Object.
  * @private
+ * @hidden
  */
 function filterByKeys(obj, keys) {
   const filtered = {};

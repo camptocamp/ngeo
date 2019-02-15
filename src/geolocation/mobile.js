@@ -35,6 +35,7 @@ const module = angular.module('ngeoMobileGeolocation', [
 /**
  * @enum {string}
  * @private
+ * @hidden
  */
 const GeolocationEventType = {
   /**
@@ -80,6 +81,7 @@ module.directive('ngeoMobileGeolocation', geolocationMobileComponent);
 /**
  * @constructor
  * @private
+ * @hidden
  * @param {angular.IScope} $scope The directive's scope.
  * @param {JQuery} $element Element.
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext service.

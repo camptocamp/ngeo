@@ -44,6 +44,7 @@ import olStyleStyle from 'ol/style/Style.js';
 /**
  * Interaction that allows measuring (length, area, ...).
  * @private
+ * @hidden
  */
 class Measure extends olInteractionInteraction {
   /**
@@ -507,6 +508,7 @@ export function getFormattedPoint(point, decimals, format, opt_template) {
  * @param {import("ol/MapBrowserEvent.js").default} evt Map browser event.
  * @return {boolean} `false` if event propagation should be stopped.
  * @private
+ * @hidden
  */
 function handleEvent_(evt) {
   if (evt.type != 'pointermove' || evt.dragging) {

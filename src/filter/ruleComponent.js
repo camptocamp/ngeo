@@ -76,6 +76,7 @@ module.value('ngeoRuleTemplateUrl',
  * @return {string} Template URL.
  * @ngInject
  * @private
+ * @hidden
  */
 function ngeoRuleTemplateUrl($attrs, ngeoRuleTemplateUrl) {
   return ngeoRuleTemplateUrl($attrs);
@@ -84,6 +85,7 @@ function ngeoRuleTemplateUrl($attrs, ngeoRuleTemplateUrl) {
 
 /**
  * @private
+ * @hidden
  */
 class RuleController {
 

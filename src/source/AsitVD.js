@@ -12,6 +12,7 @@ import olTilegridWMTS from 'ol/tilegrid/WMTS.js';
 /**
  * @type {!Array.<number>}
  * @private
+ * @hidden
  */
 const asitVDResolutions = [
   4000, 3750, 3500, 3250, 3000, 2750, 2500, 2250, 2000, 1750, 1500, 1250,
@@ -22,6 +23,7 @@ const asitVDResolutions = [
 /**
  * @type {import("ol/tilegrid/WMTS.js").default}
  * @private
+ * @hidden
  */
 const asitVDTileGrid = new olTilegridWMTS({
   extent: [420000, 30000, 900000, 350000],

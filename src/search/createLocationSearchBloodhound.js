@@ -31,6 +31,7 @@ import 'corejs-typeahead';
  * @param {LocationSearchOptions=} opt_options Options.
  * @return {Bloodhound} The Bloodhound object.
  * @private
+ * @hidden
  */
 function createLocationSearchBloodhound(opt_options) {
   /** @type {LocationSearchOptions} */

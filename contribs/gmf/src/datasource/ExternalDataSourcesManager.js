@@ -675,6 +675,7 @@ export class ExternalDatSourcesManager {
  * @param {!Object} layer WMS/WMTS Capability Layer object.
  * @return {number} Data source id.
  * @private
+ * @hidden
  */
 function getId(layer) {
   return Number(olUtilGetUid(layer)) + 1000000;

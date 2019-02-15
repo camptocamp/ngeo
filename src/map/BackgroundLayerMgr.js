@@ -24,6 +24,7 @@ import ngeoLayerHelper from 'ngeo/map/LayerHelper.js';
 
 /**
  * @private
+ * @hidden
  */
 const BACKGROUNDLAYERGROUP_NAME = 'background';
 

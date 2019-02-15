@@ -25,37 +25,37 @@ const appmodule = angular.module('app', [
 
 
 /**
- * @const
  * @private
+ * @hidden
  */
 const PRINT_SCALES_ = [100, 250, 500, 2500, 5000, 10000, 25000, 50000,
   100000, 500000];
 
 
 /**
- * @const
  * @private
+ * @hidden
  */
 const PRINT_FORMAT_ = 'pdf';
 
 
 /**
- * @const
  * @private
+ * @hidden
  */
 const PRINT_LAYOUT_ = '1 A4 portrait';
 
 
 /**
- * @const
  * @private
+ * @hidden
  */
 const PRINT_DPI_ = 72;
 
 
 /**
- * @const
  * @private
+ * @hidden
  */
 const PRINT_PAPER_SIZE_ = [555, 675];
 
@@ -66,6 +66,7 @@ const PRINT_PAPER_SIZE_ = [555, 675];
  * @param {import("ngeo/print/Service.js").CreatePrint} ngeoCreatePrint The ngeo Create Print function.
  * @param {import("ngeo/print/Utils.js").PrintUtils} ngeoPrintUtils The ngeo PrintUtils service.
  * @ngInject
+ * @hidden
  */
 function MainController($timeout, ngeoCreatePrint, ngeoPrintUtils) {
   /**

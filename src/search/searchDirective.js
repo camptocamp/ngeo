@@ -135,6 +135,7 @@ function searchComponent() {
  * @param {SearchDirectiveListeners} object Object.
  * @return {SearchDirectiveListeners} The listeners object.
  * @private
+ * @hidden
  */
 function adaptListeners_(object) {
   /** @type {SearchDirectiveListeners} */

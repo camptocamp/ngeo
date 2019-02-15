@@ -38,6 +38,7 @@ module.value('gmfPermalinkShareTemplateUrl',
  * @return {string} Template URL.
  * @ngInject
  * @private
+ * @hidden
  */
 function gmfPermalinkShareTemplateUrl($attrs, gmfPermalinkShareTemplateUrl) {
   return gmfPermalinkShareTemplateUrl($attrs);
@@ -66,6 +67,7 @@ module.component('gmfShare', permalinkShareComponent);
 
 /**
  * @private
+ * @hidden
  */
 class ShareComponentController {
   /**

@@ -105,6 +105,7 @@ module.directive('ngeoScaleselector', mapScaleselectorComponent);
 /**
  * @constructor
  * @private
+ * @hidden
  * @param {angular.IScope} $scope Directive scope.
  * @param {JQuery} $element Element.
  * @param {angular.IAttributes} $attrs Attributes.

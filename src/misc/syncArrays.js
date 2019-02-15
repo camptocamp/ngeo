@@ -27,6 +27,7 @@
  * @return {function()} Function to call to stop synchronization
  * @template T
  * @private
+ * @hidden
  */
 function syncArrays(arr1, arr2, reverse, scope, filter) {
 

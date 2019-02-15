@@ -31,6 +31,7 @@ const module = angular.module('gmfAuthentication', [
  * @param {angular.IAttributes} attrs Attributes.
  * @return {string} Template URL.
  * @private
+ * @hidden
  */
 function gmfAuthenticationTemplateUrl_(element, attrs) {
   const templateUrl = attrs['gmfAuthenticationTemplateurl'];
@@ -52,6 +53,7 @@ module.run(/* @ngInject */ ($templateCache) => {
  * @return {string} Template URL.
  * @ngInject
  * @private
+ * @hidden
  */
 function gmfAuthenticationTemplateUrl($element, $attrs, gmfAuthenticationTemplateUrl) {
   return gmfAuthenticationTemplateUrl($element, $attrs);
@@ -135,10 +137,10 @@ module.component('gmfAuthentication', authenticationComponent);
 
 /**
  * @private
+ * @hidden
  */
 class AuthenticationController {
   /**
-   * @private
    * @param {!JQuery} $element Element.
    * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
    * @param {import("gmf/authentication/Service.js").AuthenticationService} gmfAuthenticationService GMF Authentication service

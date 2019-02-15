@@ -446,6 +446,7 @@ export default class extends olInteractionPointer {
  * @param {import("ol/interaction/Modify.js").SegmentData} b The second segment data.
  * @return {number} The difference in indexes.
  * @private
+ * @hidden
  */
 function compareIndexes(a, b) {
   return a.index - b.index;

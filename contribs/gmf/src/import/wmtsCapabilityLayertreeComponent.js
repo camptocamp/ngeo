@@ -41,6 +41,7 @@ module.value('gmfWmtscapabilitylayertreTemplateUrl',
  * @return {string} Template URL.
  * @ngInject
  * @private
+ * @hidden
  */
 function gmfWmtscapabilitylayertreTemplateUrl($attrs, gmfWmtscapabilitylayertreTemplateUrl) {
   return gmfWmtscapabilitylayertreTemplateUrl($attrs);
@@ -49,6 +50,7 @@ function gmfWmtscapabilitylayertreTemplateUrl($attrs, gmfWmtscapabilitylayertreT
 
 /**
  * @private
+ * @hidden
  */
 class Controller {
 

@@ -84,6 +84,7 @@ module.directive('gmfMobileMeasurearea', mobileMeasureAreaComponent);
 
 /**
  * @private
+ * @hidden
  */
 class Controller extends MeasueMobileBaseController {
   /**

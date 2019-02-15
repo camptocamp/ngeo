@@ -94,6 +94,7 @@ ObjectEditingQuery.prototype.getQueryableLayersInfo = function() {
  * @return {Array.<import('gmf/objectediting/toolsComponent.js').ObjectEditingQueryableLayerInfo>} List of
  *     queryable layers information.
  * @private
+ * @hidden
  */
 function getQueryableLayersInfoFromThemes(
   themes, ogcServers
