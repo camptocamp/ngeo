@@ -4,6 +4,7 @@
  * @property {string} layout
  * @property {string} format
  * @property {string} lang
+ * @property {MapFishPrintSMTP} [smtp] STMP object definition
  */
 
 
@@ -183,6 +184,13 @@
  * @property {number} haloRadius
  * @property {string} fontColor
  */
+
+
+/**
+ * @typedef {Object} MapFishPrintSMTP
+ * @property {string} to Email address
+ */
+
 
 /**
  * @hidden

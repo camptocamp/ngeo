@@ -124,10 +124,11 @@ PrintService.prototype.cancel = function(ref, opt_httpConfig) {
  * @param {string} layout Layout.
  * @param {string} format Formats.
  * @param {Object.<string, *>} customAttributes Custom attributes.
+ * @param {string=} email Email to send the file to.
  * @return {import('ngeo/print/mapfish-print-v3.js').MapFishPrintSpec} The print spec.
  */
 PrintService.prototype.createSpec = function(
-  map, scale, dpi, layout, format, customAttributes) {
+  map, scale, dpi, layout, format, customAttributes, email) {
 
   const specMap = /** @type {import('ngeo/print/mapfish-print-v3.js').MapFishPrintMap} */ ({
     dpi: dpi,
@@ -151,6 +152,10 @@ PrintService.prototype.createSpec = function(
     lang,
     layout
   };
+
+  if (email) {
+    spec.smtp = {to: email};
+  }
 
   return spec;
 };

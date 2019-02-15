@@ -4,3 +4,17 @@
     width: 5rem;
   }
 }
+
+.gmf-print-smtp-message {
+  background-color: white;
+  clear: both;
+  padding: 10px;
+
+  button {
+    float: right;
+  }
+
+  p {
+    margin: 0;
+  }
+}
