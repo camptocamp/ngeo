@@ -58,6 +58,7 @@ module.directive('ngeoExportfeatures', editingExportFeaturesComponent);
  * @param {import("ngeo/misc/FeatureHelper.js").FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
  * @constructor
  * @private
+ * @hidden
  * @ngInject
  * @ngdoc controller
  * @ngname ngeoExportfeaturesController

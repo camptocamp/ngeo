@@ -95,6 +95,7 @@ module.value('gmfObjecteditingTemplateUrl',
  * @return {string} Template URL.
  * @ngInject
  * @private
+ * @hidden
  */
 function gmfObjecteditingTemplateUrl($element, $attrs, gmfObjecteditingTemplateUrl) {
   return gmfObjecteditingTemplateUrl($element, $attrs);
@@ -157,6 +158,7 @@ module.component('gmfObjectediting', objecteditingComponent);
  *     service.
  * @constructor
  * @private
+ * @hidden
  * @ngInject
  * @ngdoc controller
  * @ngname GmfObjecteditingController
@@ -1113,6 +1115,7 @@ Controller.prototype.handleDestroy_ = function() {
  *     null value.
  * @return {?import("ol/geom/Geometry.js").default} A geometry clone or null value.
  * @private
+ * @hidden
  */
 function cloneGeometry(geometry) {
   let clone = null;

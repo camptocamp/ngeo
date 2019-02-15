@@ -193,6 +193,7 @@ const capabilities = new Map();
 
 /**
  * @private
+ * @hidden
  * @param {string} url The URL
  * @return {Object} Any
  */

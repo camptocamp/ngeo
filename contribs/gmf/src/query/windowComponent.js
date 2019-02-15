@@ -71,6 +71,7 @@ module.run(/* @ngInject */ ($templateCache) => {
  * @return {string} Template URL.
  * @ngInject
  * @private
+ * @hidden
  */
 function gmfDisplayquerywindowTemplateUrl($element, $attrs, gmfDisplayquerywindowTemplateUrl) {
   return gmfDisplayquerywindowTemplateUrl($element, $attrs);
@@ -134,6 +135,7 @@ module.component('gmfDisplayquerywindow', queryWindowComponent);
  *     overlay manager service.
  * @constructor
  * @private
+ * @hidden
  * @ngInject
  * @ngdoc controller
  * @ngname GmfDisplayquerywindowController

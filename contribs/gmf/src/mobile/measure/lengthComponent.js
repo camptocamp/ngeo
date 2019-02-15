@@ -84,6 +84,7 @@ module.directive('gmfMobileMeasurelength', mobileMeasureLenthComponent);
 
 /**
  * @private
+ * @hidden
  */
 class Controller extends MeasueMobileBaseController {
   /**

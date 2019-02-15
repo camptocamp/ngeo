@@ -37,6 +37,7 @@ module.value('ngeoRoutingNominatimInputComponentTemplateUrl',
  * @return {string} Template URL.
  * @ngInject
  * @private
+ * @hidden
  */
 function ngeoRoutingNominatimInputComponentTemplateUrl($attrs, ngeoRoutingNominatimInputComponentTemplateUrl) {
   return ngeoRoutingNominatimInputComponentTemplateUrl($attrs);
@@ -50,6 +51,7 @@ function ngeoRoutingNominatimInputComponentTemplateUrl($attrs, ngeoRoutingNomina
  * @param {!import("ngeo/routing/NominatimService.js").NominatimService} ngeoNominatimService service for Nominatim
  * @constructor
  * @private
+ * @hidden
  * @ngInject
  * @ngdoc controller
  * @ngname NgeoNominatimInputController
@@ -117,6 +119,7 @@ function Controller($element, $injector, $scope, ngeoNominatimService) {
  * @param {import('ngeo/routing/NominatimService').NominatimSearchResult} suggestion Suggestion.
  * @param {Twitter.Typeahead.Dataset} dataset Dataset.
  * @private
+ * @hidden
  */
 Controller.prototype.select_ = function(event, suggestion, dataset) {
   if (this.onSelect) {

@@ -27,6 +27,7 @@ const module = angular.module('gmfDisclaimer', [
 /**
  * @constructor
  * @private
+ * @hidden
  * @param {!JQuery} $element Element.
  * @param {!angular.ISCEService} $sce Angular sce service.
  * @param {!angular.ITimeoutService} $timeout Angular timeout service.

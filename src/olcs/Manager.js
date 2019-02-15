@@ -3,6 +3,7 @@ import olcsContribManager from 'olcs/contrib/Manager.js';
 
 /**
  * @private
+ * @hidden
  */
 class Manager extends olcsContribManager {
   /**

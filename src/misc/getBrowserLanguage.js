@@ -28,6 +28,7 @@ const module = angular.module('ngeoGetBrowserLanguage', []);
  * @ngname ngeoGetBrowserLanguage
  * @ngInject
  * @private
+ * @hidden
  */
 function factory($window) {
   return (

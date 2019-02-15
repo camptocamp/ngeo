@@ -78,6 +78,7 @@ module.directive('ngeoBtnGroup', buttonGroupComponent);
  * @ngdoc controller
  * @ngname ngeoBtnGroupController
  * @private
+ * @hidden
  */
 function BtnGroupController($scope) {
   /**

@@ -272,6 +272,7 @@ MobileMeasurePointController.prototype.translate = function(str) {
  *   service.
  * - on deactivate, unlisten
  * @private
+ * @hidden
  */
 MobileMeasurePointController.prototype.handleMeasureActiveChange_ = function() {
   if (this.measure.getActive()) {
@@ -294,6 +295,7 @@ MobileMeasurePointController.prototype.handleMeasureActiveChange_ = function() {
  * Call the elevation service to get information about the measure at
  * the current map center location.
  * @private
+ * @hidden
  */
 MobileMeasurePointController.prototype.getMeasure_ = function() {
   const center = this.map.getView().getCenter();

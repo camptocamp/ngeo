@@ -300,7 +300,7 @@ PrintService.prototype.encodeWmsLayer_ = function(arr, layer, url, params) {
  * @param {string} url URL.
  * @return {string} Absolute URL.
  * @private
- * @private
+ * @hidden
  */
 function getAbsoluteUrl_(url) {
   const a = document.createElement('a');
@@ -489,6 +489,7 @@ PrintService.prototype.getCapabilities = function(opt_httpConfig) {
  * @ngdoc service
  * @ngname ngeoCreatePrint
  * @private
+ * @hidden
  */
 function createPrintServiceFactory($http, gettextCatalog, ngeoLayerHelper) {
   return (

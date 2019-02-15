@@ -49,6 +49,7 @@ module.value('ngeoRoutingFeatureTemplateUrl',
  * @return {string} Template URL.
  * @ngInject
  * @private
+ * @hidden
  */
 function ngeoRoutingFeatureTemplateUrl($attrs, ngeoRoutingFeatureTemplateUrl) {
   return ngeoRoutingFeatureTemplateUrl($attrs);
@@ -62,6 +63,7 @@ function ngeoRoutingFeatureTemplateUrl($attrs, ngeoRoutingFeatureTemplateUrl) {
  * @param {!import("ngeo/routing/NominatimService.js").NominatimService} ngeoNominatimService service for Nominatim
  * @constructor
  * @private
+ * @hidden
  * @ngInject
  * @ngdoc controller
  * @ngname NgeoRoutingFeatureController

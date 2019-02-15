@@ -56,6 +56,7 @@ module.value('ngeoFilterTemplateUrl',
  * @return {string} Template URL.
  * @ngInject
  * @private
+ * @hidden
  */
 function ngeoFilterTemplateUrl($attrs, ngeoFilterTemplateUrl) {
   return ngeoFilterTemplateUrl($attrs);
@@ -80,6 +81,7 @@ module.component('ngeoFilter', {
 
 /**
  * @private
+ * @hidden
  */
 class FilterController {
 

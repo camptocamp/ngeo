@@ -13,6 +13,7 @@ import olSourceVector from 'ol/source/Vector.js';
 /**
  * Interaction for modifying feature geometries.
  * @private
+ * @hidden
  */
 class ModifyRectangle extends olInteractionPointer {
   /**

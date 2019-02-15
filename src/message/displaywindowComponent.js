@@ -38,6 +38,7 @@ module.value('ngeoMessageDisplaywindowTemplateUrl',
  * @return {string} Template URL.
  * @ngInject
  * @private
+ * @hidden
  */
 function ngeoMessageDisplaywindowTemplateUrl($attrs, ngeoMessageDisplaywindowTemplateUrl) {
   return ngeoMessageDisplaywindowTemplateUrl($attrs);
@@ -46,6 +47,7 @@ function ngeoMessageDisplaywindowTemplateUrl($attrs, ngeoMessageDisplaywindowTem
 
 /**
  * @private
+ * @hidden
  */
 class Controller {
 

@@ -71,6 +71,7 @@ module.component('ngeoModal', messageModalComponent);
 
 /**
  * @private
+ * @hidden
  */
 class Controller {
   /**

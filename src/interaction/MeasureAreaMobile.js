@@ -10,6 +10,7 @@ import ngeoInteractionMobileDraw from 'ngeo/interaction/MobileDraw.js';
  * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @param {import('ngeo/interaction/Measure.js').MeasureOptions=} options Options
  * @private
+ * @hidden
  */
 class MeasureAreaMobile extends ngeoInteractionMeasureArea {
   constructor(format, gettextCatalog, options = {}) {

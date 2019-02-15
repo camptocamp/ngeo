@@ -249,6 +249,7 @@ MessagePopup.prototype.open = function(options) {
  * @return {PopupFactory} The function to create a popup.
  * @ngInject
  * @private
+ * @hidden
  */
 function Factory($compile, $rootScope, $sce, $timeout) {
   return (

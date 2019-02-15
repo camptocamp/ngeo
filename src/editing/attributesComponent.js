@@ -38,6 +38,7 @@ module.value('ngeoAttributesTemplateUrl',
  * @return {string} Template URL.
  * @ngInject
  * @private
+ * @hidden
  */
 function ngeoAttributesTemplateUrl($attrs, ngeoAttributesTemplateUrl) {
   return ngeoAttributesTemplateUrl($attrs);
@@ -84,6 +85,7 @@ module.component('ngeoAttributes', editingAttributeComponent);
  * @param {!import("ngeo/misc/EventHelper.js").EventHelper} ngeoEventHelper Ngeo event helper service
  * @constructor
  * @private
+ * @hidden
  * @ngInject
  * @ngdoc controller
  * @ngname ngeoAttributesController

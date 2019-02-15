@@ -63,6 +63,7 @@ module.value('gmfFilterselectorTemplateUrl',
  * @return {string} Template URL.
  * @ngInject
  * @private
+ * @hidden
  */
 function gmfFilterselectorTemplateUrl($attrs, gmfFilterselectorTemplateUrl) {
   return gmfFilterselectorTemplateUrl($attrs);
@@ -71,6 +72,7 @@ function gmfFilterselectorTemplateUrl($attrs, gmfFilterselectorTemplateUrl) {
 
 /**
  * @private
+ * @hidden
  */
 class Controller {
 

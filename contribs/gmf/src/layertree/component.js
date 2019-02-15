@@ -100,6 +100,7 @@ module.value('gmfLayertreeTemplate',
  * @return {string} Template.
  * @ngInject
  * @private
+ * @hidden
  */
 function gmfLayertreeTemplate($element, $attrs, gmfLayertreeTemplate) {
   return gmfLayertreeTemplate($element, $attrs);
@@ -173,6 +174,7 @@ module.component('gmfLayertree', layertreeComponent);
  * @param {!import("gmf/theme/Themes.js").ThemesService} gmfThemes The gmf Themes service.
  * @constructor
  * @private
+ * @hidden
  * @ngInject
  * @ngdoc controller
  * @ngname gmfLayertreeController

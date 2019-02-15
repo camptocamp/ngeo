@@ -64,6 +64,7 @@ module.directive('gmfMap', gmfMapComponent);
  * @param {!import("gmf/editing/Snapping.js").EditingSnappingService} gmfSnapping The gmf snapping service.
  * @constructor
  * @private
+ * @hidden
  * @ngInject
  * @ngdoc controller
  * @ngname GmfMapController

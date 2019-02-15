@@ -41,6 +41,7 @@ import olStyleText from 'ol/style/Text.js';
 /**
  * @type {Object.<string, string>}
  * @private
+ * @hidden
  */
 let LegacyProperties_ = {};
 
@@ -48,6 +49,7 @@ let LegacyProperties_ = {};
 /**
  * @const
  * @private
+ * @hidden
  */
 const DEFAULT_ACCURACY = 0.1;
 
@@ -55,6 +57,7 @@ const DEFAULT_ACCURACY = 0.1;
 /**
  * @type {Object.<import("ol/geom/GeometryType.js").default, import("ngeo/format/FeatureHashStyleType.js").default>}
  * @private
+ * @hidden
  */
 const StyleTypes_ = {
   'LineString': ngeoFormatFeatureHashStyleType.LINE_STRING,
@@ -72,6 +75,7 @@ const StyleTypes_ = {
  * example to separate the coordinates from the feature properties).
  * @const
  * @private
+ * @hidden
  */
 const CHAR64_ =
     '.-_!*ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghjkmnpqrstuvwxyz';
@@ -80,6 +84,7 @@ const CHAR64_ =
 /**
  * @const
  * @private
+ * @hidden
  * @type {Object.<string, function(string):import("ol/geom/Geometry.js").default>}
  */
 const GEOMETRY_READERS_ = {
@@ -95,6 +100,7 @@ const GEOMETRY_READERS_ = {
 /**
  * @const
  * @private
+ * @hidden
  * @type {Object.<string, function(import("ol/geom/Geometry.js").default):string>}
  */
 const GEOMETRY_WRITERS_ = {
@@ -238,6 +244,7 @@ export default class extends olFormatTextFeature {
    * @param {number} end End.
    * @return {string} String.
    * @private
+ * @hidden
    */
   encodeCoordinates_(flatCoordinates, stride, offset, end) {
     let encodedCoordinates = '';
@@ -475,6 +482,7 @@ export default class extends olFormatTextFeature {
  * @return {Object.<string, (string|number)>} The feature properties to
  * serialize.
  * @private
+ * @hidden
  */
 function defaultPropertiesFunction_(feature) {
   return feature.getProperties();
@@ -485,6 +493,7 @@ function defaultPropertiesFunction_(feature) {
  * @param {number} num Number.
  * @return {string} String.
  * @private
+ * @hidden
  */
 function encodeSignedNumber_(num) {
   let signedNum = num << 1;
@@ -499,6 +508,7 @@ function encodeSignedNumber_(num) {
  * @param {number} num Number.
  * @return {string} String.
  * @private
+ * @hidden
  */
 function encodeNumber_(num) {
   let encodedNumber = '';
@@ -519,6 +529,7 @@ function encodeNumber_(num) {
  * @param {import("ol/geom/GeometryType.js").default} geometryType Geometry type.
  * @param {Array.<string>} encodedStyles Encoded styles array.
  * @private
+ * @hidden
  */
 function encodeStyles_(styles, geometryType, encodedStyles) {
   const styleType = StyleTypes_[geometryType];
@@ -555,6 +566,7 @@ function encodeStyles_(styles, geometryType, encodedStyles) {
  * @param {import("ol/style/Stroke.js").default} strokeStyle Stroke style.
  * @param {Array.<string>} encodedStyles Encoded styles array.
  * @private
+ * @hidden
  */
 function encodeStyleLine_(strokeStyle, encodedStyles) {
   encodeStyleStroke_(strokeStyle, encodedStyles);
@@ -566,6 +578,7 @@ function encodeStyleLine_(strokeStyle, encodedStyles) {
  * @param {import("ol/style/Image.js").default} imageStyle Image style.
  * @param {Array.<string>} encodedStyles Encoded styles array.
  * @private
+ * @hidden
  */
 function encodeStylePoint_(imageStyle, encodedStyles) {
   if (imageStyle instanceof olStyleCircle) {
@@ -593,6 +606,7 @@ function encodeStylePoint_(imageStyle, encodedStyles) {
  * @param {import("ol/style/Stroke.js").default} strokeStyle Stroke style.
  * @param {Array.<string>} encodedStyles Encoded styles array.
  * @private
+ * @hidden
  */
 function encodeStylePolygon_(fillStyle, strokeStyle, encodedStyles) {
   encodeStyleFill_(fillStyle, encodedStyles);
@@ -609,6 +623,7 @@ function encodeStylePolygon_(fillStyle, strokeStyle, encodedStyles) {
  * @param {Array.<string>} encodedStyles Encoded styles array.
  * @param {string=} opt_propertyName Property name.
  * @private
+ * @hidden
  */
 function encodeStyleFill_(fillStyle, encodedStyles, opt_propertyName) {
   const propertyName = opt_propertyName !== undefined ?
@@ -634,6 +649,7 @@ function encodeStyleFill_(fillStyle, encodedStyles, opt_propertyName) {
  * @param {import("ol/style/Stroke.js").default} strokeStyle Stroke style.
  * @param {Array.<string>} encodedStyles Encoded styles array.
  * @private
+ * @hidden
  */
 function encodeStyleStroke_(strokeStyle, encodedStyles) {
   const strokeColor = strokeStyle.getColor();
@@ -661,6 +677,7 @@ function encodeStyleStroke_(strokeStyle, encodedStyles) {
  * @param {import("ol/style/Text.js").default} textStyle Text style.
  * @param {Array.<string>} encodedStyles Encoded styles array.
  * @private
+ * @hidden
  */
 function encodeStyleText_(textStyle, encodedStyles) {
   const fontStyle = textStyle.getFont();
@@ -686,6 +703,7 @@ function encodeStyleText_(textStyle, encodedStyles) {
  * @param {string} text Text.
  * @return {import("ol/geom/LineString.js").default} Line string.
  * @private
+ * @hidden
  */
 function readLineStringGeometry_(text) {
   console.assert(text.substring(0, 2) === 'l(');
@@ -701,6 +719,7 @@ function readLineStringGeometry_(text) {
  * @param {string} text Text.
  * @return {import("ol/geom/MultiLineString.js").default} Line string.
  * @private
+ * @hidden
  */
 function readMultiLineStringGeometry_(text) {
   console.assert(text.substring(0, 2) === 'L(');
@@ -722,6 +741,7 @@ function readMultiLineStringGeometry_(text) {
  * @param {string} text Text.
  * @return {import("ol/geom/Point.js").default} Point.
  * @private
+ * @hidden
  */
 function readPointGeometry_(text) {
   console.assert(text.substring(0, 2) === 'p(');
@@ -738,6 +758,7 @@ function readPointGeometry_(text) {
  * @param {string} text Text.
  * @return {import("ol/geom/MultiPoint.js").default} MultiPoint.
  * @private
+ * @hidden
  */
 function readMultiPointGeometry_(text) {
   console.assert(text.substring(0, 2) === 'P(');
@@ -753,6 +774,7 @@ function readMultiPointGeometry_(text) {
  * @param {string} text Text.
  * @return {import("ol/geom/Polygon.js").default} Polygon.
  * @private
+ * @hidden
  */
 function readPolygonGeometry_(text) {
   console.assert(text.substring(0, 2) === 'a(');
@@ -782,6 +804,7 @@ function readPolygonGeometry_(text) {
  * @param {string} text Text.
  * @return {import("ol/geom/MultiPolygon.js").default} MultiPolygon.
  * @private
+ * @hidden
  */
 function readMultiPolygonGeometry_(text) {
   console.assert(text.substring(0, 2) === 'A(');
@@ -818,6 +841,7 @@ function readMultiPolygonGeometry_(text) {
  * @param {string} text Text.
  * @param {import("ol/Feature.js").default} feature Feature.
  * @private
+ * @hidden
  */
 function setStyleInFeature_(text, feature) {
   if (text == '') {
@@ -878,6 +902,7 @@ function setStyleInFeature_(text, feature) {
  * @param {string} text Text.
  * @param {import("ol/Feature.js").default} feature Feature.
  * @private
+ * @hidden
  */
 function setStyleProperties_(text, feature) {
 
@@ -934,6 +959,8 @@ function setStyleProperties_(text, feature) {
  * @param {string} value Value.
  * @return {number|boolean|string} The casted value corresponding to the key.
  * @private
+ * @hidden
+ * @hidden
  */
 function castValue_(key, value) {
   const numProperties = [
@@ -976,6 +1003,7 @@ function castValue_(key, value) {
  * @return {Object.<string, boolean|number|string>} The style properties for
  *     the feature.
  * @private
+ * @hidden
  */
 function getStyleProperties_(text, feature) {
   const parts = text.split('\'');
@@ -1001,6 +1029,7 @@ function getStyleProperties_(text, feature) {
  * @param {import("ol/geom/Geometry.js").default} geometry Geometry.
  * @return {string} Encoded geometry.
  * @private
+ * @hidden
  */
 function writeLineStringGeometry_(geometry) {
   if (geometry instanceof olGeomLineString) {
@@ -1017,6 +1046,7 @@ function writeLineStringGeometry_(geometry) {
  * @param {import("ol/geom/Geometry.js").default} geometry Geometry.
  * @return {string} Encoded geometry.
  * @private
+ * @hidden
  */
 function writeMultiLineStringGeometry_(geometry) {
   if (geometry instanceof olGeomMultiLineString) {
@@ -1046,6 +1076,7 @@ function writeMultiLineStringGeometry_(geometry) {
  * @param {import("ol/geom/Geometry.js").default} geometry Geometry.
  * @return {string} Encoded geometry.
  * @private
+ * @hidden
  */
 function writePointGeometry_(geometry) {
   if (geometry instanceof olGeomPoint) {
@@ -1062,6 +1093,7 @@ function writePointGeometry_(geometry) {
  * @param {import("ol/geom/Geometry.js").default} geometry Geometry.
  * @return {string} Encoded geometry.
  * @private
+ * @hidden
  */
 function writeMultiPointGeometry_(geometry) {
   if (geometry instanceof olGeomMultiPoint) {
@@ -1081,6 +1113,7 @@ function writeMultiPointGeometry_(geometry) {
  * @param {Array.<string>} textArray Text array.
  * @return {number} The new offset.
  * @private
+ * @hidden
  */
 function encodeRings_(flatCoordinates, stride, offset, ends, textArray) {
   const linearRingCount = ends.length;
@@ -1103,6 +1136,7 @@ function encodeRings_(flatCoordinates, stride, offset, ends, textArray) {
  * @param {import("ol/geom/Geometry.js").default} geometry Geometry.
  * @return {string} Encoded geometry.
  * @private
+ * @hidden
  */
 function writePolygonGeometry_(geometry) {
   if (geometry instanceof olGeomPolygon) {
@@ -1125,6 +1159,7 @@ function writePolygonGeometry_(geometry) {
  * @param {import("ol/geom/Geometry.js").default} geometry Geometry.
  * @return {string} Encoded geometry.
  * @private
+ * @hidden
  */
 function writeMultiPolygonGeometry_(geometry) {
   if (geometry instanceof olGeomMultiPolygon) {

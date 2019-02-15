@@ -61,6 +61,7 @@ module.value('ngeoRoutingTemplateUrl',
  * @return {string} Template URL.
  * @ngInject
  * @private
+ * @hidden
  */
 function ngeoRoutingTemplateUrl($attrs, ngeoRoutingTemplateUrl) {
   return ngeoRoutingTemplateUrl($attrs);
@@ -77,6 +78,7 @@ function ngeoRoutingTemplateUrl($attrs, ngeoRoutingTemplateUrl) {
  * @param {import("ngeo/misc/debounce.js").miscDebounce<function(): void>} ngeoDebounce ngeo Debounce service.
  * @constructor
  * @private
+ * @hidden
  * @ngInject
  * @ngdoc controller
  * @ngname NgeoRoutingController

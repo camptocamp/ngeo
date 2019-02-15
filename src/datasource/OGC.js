@@ -40,6 +40,7 @@ export const Type = {
  * Available Feature prefix for WFS requests.
  * @enum {string}
  * @private
+ * @hidden
  */
 const WFSFeaturePrefix = {
   FEATURE: 'feature'
@@ -180,12 +181,14 @@ export const WMSInfoFormat = {
  * Default name of the geometry attribute.
  * @type {string}
  * @private
+ * @hidden
  */
 const DEFAULT_GEOMETRY_NAME = 'geom';
 
 
 /**
  * @private
+ * @hidden
  */
 class OGC extends ngeoDatasourceDataSource {
 

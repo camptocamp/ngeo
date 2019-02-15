@@ -154,6 +154,7 @@ module.value('gmfPrintState', {
  * @return {string} Template URL.
  * @ngInject
  * @private
+ * @hidden
  */
 function gmfPrintTemplateUrl($element, $attrs, gmfPrintTemplateUrl) {
   return gmfPrintTemplateUrl($element, $attrs);
@@ -242,6 +243,7 @@ module.component('gmfPrint', printComponent);
 
 /**
  * @private
+ * @hidden
  */
 class Controller {
 

@@ -40,6 +40,7 @@ module.value('gmfThemeSelectorTemplateUrl',
  * @return {string} Template URL.
  * @ngInject
  * @private
+ * @hidden
  */
 function gmfThemeSelectorTemplateUrl($attrs, gmfThemeSelectorTemplateUrl) {
   return gmfThemeSelectorTemplateUrl($attrs);
@@ -112,6 +113,7 @@ module.component('gmfThemeselector', themeSelectorComponent);
  * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes Themes service.
  * @constructor
  * @private
+ * @hidden
  * @ngInject
  * @ngdoc controller
  * @ngname gmfThemeselectorController

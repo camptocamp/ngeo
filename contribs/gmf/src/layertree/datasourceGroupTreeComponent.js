@@ -36,6 +36,7 @@ module.value('gmfLayertreeDatasourceGroupTreeTemplateUrl',
  * @return {string} Template URL.
  * @ngInject
  * @private
+ * @hidden
  */
 function gmfLayertreeDatasourceGroupTreeTemplateUrl($attrs, gmfLayertreeDatasourceGroupTreeTemplateUrl) {
   return gmfLayertreeDatasourceGroupTreeTemplateUrl($attrs);
@@ -43,6 +44,7 @@ function gmfLayertreeDatasourceGroupTreeTemplateUrl($attrs, gmfLayertreeDatasour
 
 /**
  * @private
+ * @hidden
  */
 class Controller {
 

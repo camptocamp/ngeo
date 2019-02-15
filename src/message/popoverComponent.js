@@ -104,6 +104,7 @@ function messagePopoverContentComponent() {
  * @ngname NgeoPopoverController
  * @param {angular.IScope} $scope Scope.
  * @private
+ * @hidden
  */
 function PopoverController($scope) {
   /**

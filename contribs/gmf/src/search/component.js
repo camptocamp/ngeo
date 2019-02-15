@@ -66,6 +66,7 @@ const module = angular.module('gmfSearch', [
  * @param {angular.IAttributes} attrs Attributes.
  * @return {string} Template URL.
  * @private
+ * @hidden
  */
 function gmfSearchTemplateUrl_(element, attrs) {
   const templateUrl = attrs['gmfSearchTemplateurl'];
@@ -86,6 +87,7 @@ module.run(/* @ngInject */ ($templateCache) => {
  * @return {string} Template URL.
  * @ngInject
  * @private
+ * @hidden
  */
 function gmfSearchTemplateUrl($element, $attrs, gmfSearchTemplateUrl) {
   return gmfSearchTemplateUrl($element, $attrs);
@@ -206,6 +208,7 @@ module.component('gmfSearch', searchComponent);
 
 /**
  * @private
+ * @hidden
  */
 class SearchController {
 

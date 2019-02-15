@@ -9,6 +9,7 @@ import {getUid as olUtilGetUid} from 'ol/util.js';
  * Default delay (in milliseconds) a message should be displayed.
  * @type {number}
  * @private
+ * @hidden
  */
 const DEFAULT_DELAY = 7000;
 

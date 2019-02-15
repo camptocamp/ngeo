@@ -20,6 +20,7 @@ const module = angular.module('ngeoDownload', []);
  * @ngdoc service
  * @ngname ngeoDownload
  * @private
+ * @hidden
  */
 function factory() {
   /**

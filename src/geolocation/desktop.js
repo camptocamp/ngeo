@@ -34,6 +34,7 @@ const module = angular.module('ngeoDesktopGeolocation', [
 /**
  * @enum {string}
  * @private
+ * @hidden
  */
 const GeolocationEventType = {
   /**
@@ -80,6 +81,7 @@ module.directive('ngeoDesktopGeolocation', GeolocationDesktopComponent);
 /**
  * @constructor
  * @private
+ * @hidden
  * @param {angular.IScope} $scope The directive's scope.
  * @param {JQuery} $element Element.
  * @param {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature

@@ -33,6 +33,7 @@ module.run(/* @ngInject */ ($templateCache) => {
  * @return {string} Template URL.
  * @ngInject
  * @private
+ * @hidden
  */
 function gmfLidarprofileTemplateUrl($element, $attrs, gmfLidarprofileTemplateUrl) {
   return gmfLidarprofileTemplateUrl($element, $attrs);
@@ -67,6 +68,7 @@ module.component('gmfLidarprofile', lidarprofileComponent);
 
 /**
  * @private
+ * @hidden
  */
 class Controller {
 

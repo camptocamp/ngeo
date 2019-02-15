@@ -100,6 +100,7 @@ module.directive('gmfTimeSlider', layertreeTimeSliderComponent);
  * @param {import("ngeo/misc/WMSTime.js").WMSTime} ngeoWMSTime WMSTime service.
  * @constructor
  * @private
+ * @hidden
  * @ngInject
  * @ngdoc controller
  * @ngname gmfTimeSliderController

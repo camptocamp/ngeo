@@ -20,7 +20,7 @@ To know more about ngeo take a look at:
 * The [examples](https://camptocamp.github.io/ngeo/master/examples)
 * The [simple API help](https://camptocamp.github.io/ngeo/master/api/apihelp.html)
 * The documentation can be found in each file. There is currently no API web-documentation for this
-  version (you may also use [API documentation (2.2)](https://camptocamp.github.io/ngeo/2.2/apidoc/index.html)).
+  version (you may also use [API documentation](https://camptocamp.github.io/ngeo/master/apidoc/index.html)).
 
 ngeo also includes a [contribs](contribs) directory where non-core
 contributions may be placed. ngeo currently includes one contrib: `gmf`.  That

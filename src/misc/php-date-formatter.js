@@ -23,15 +23,18 @@
 
 /**
  * @private
+ * @hidden
  */
 const DAY = 1000 * 60 * 60 * 24;
 /**
  * @private
+ * @hidden
  */
 const HOUR = 3600;
 
 /**
  * @private
+ * @hidden
  * @param {string} str1 String 1
  * @param {string} str2 String 2
  * @returns {boolean}
@@ -42,6 +45,7 @@ function _compare(str1, str2) {
 
 /**
  * @private
+ * @hidden
  * @param {Object} value Value
  * @param {number} length Length
  * @param {string} [chr] Char
@@ -55,6 +59,7 @@ function _lpad(value, length, chr) {
 
 /**
  * @private
+ * @hidden
  * @param {Object} [out] Out
  * @returns {Object}
  */
@@ -80,6 +85,7 @@ function _extend(out) {
 
 /**
  * @private
+ * @hidden
  * @param {string} val Value
  * @param {Array<string>} arr Argument
  * @returns {number}
@@ -95,6 +101,7 @@ function _indexOf(val, arr) {
 
 /**
  * @private
+ * @hidden
  */
 const defaultSettings = {
     dateSettings: {

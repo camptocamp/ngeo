@@ -653,6 +653,7 @@ AbstractAppController.prototype.userMustChangeItsPassword = function() {
  * @param {Array.<string>} labels default_basemap list.
  * @return {import("ol/layer/Base.js").default} layer or null
  * @private
+ * @hidden
  */
 function getLayerByLabels(layers, labels) {
   if (labels && labels.length > 0) {

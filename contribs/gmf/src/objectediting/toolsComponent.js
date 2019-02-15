@@ -135,8 +135,8 @@ module.directive('gmfObjecteditingtools', objectEditingToolsComponent);
 
 
 /**
- * @const
  * @private
+ * @hidden
  */
 const NAMESPACE = 'oet';
 
@@ -148,6 +148,7 @@ const NAMESPACE = 'oet';
  *     service.
  * @constructor
  * @private
+ * @hidden
  * @ngInject
  * @ngdoc controller
  * @ngname GmfObjecteditingtoolsController

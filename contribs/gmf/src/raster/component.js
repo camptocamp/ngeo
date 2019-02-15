@@ -43,6 +43,7 @@ module.value('gmfElevationwidgetTemplateUrl',
  * @return {string} Template URL.
  * @ngInject
  * @private
+ * @hidden
  */
 function gmfElevationwidgetTemplateUrl($attrs, gmfElevationwidgetTemplateUrl) {
   return gmfElevationwidgetTemplateUrl($attrs);
@@ -131,6 +132,7 @@ module.directive('gmfElevation', rasterComponent);
  * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @constructor
  * @private
+ * @hidden
  * @ngInject
  * @ngdoc controller
  * @ngname gmfElevationController
@@ -350,6 +352,7 @@ module.component('gmfElevationwidget', rasterWidgetComponent);
 /**
  * @constructor
  * @private
+ * @hidden
  * @ngdoc controller
  */
 function WidgetController() {

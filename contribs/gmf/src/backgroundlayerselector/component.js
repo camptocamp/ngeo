@@ -40,6 +40,7 @@ module.run(/* @ngInject */ ($templateCache) => {
  * @return {string} Template URL.
  * @ngInject
  * @private
+ * @hidden
  */
 function gmfBackgroundlayerselectorTemplateUrl($element, $attrs, gmfBackgroundlayerselectorTemplateUrl) {
   return gmfBackgroundlayerselectorTemplateUrl($element, $attrs);
@@ -86,13 +87,13 @@ module.component('gmfBackgroundlayerselector', backgroundlayerselectorComponent)
 /**
  * @constructor
  * @private
+ * @hidden
  * @param {!angular.IScope} $scope Angular scope.
  * @param {!import("ngeo/map/BackgroundLayerMgr.js").MapBackgroundLayerManager} ngeoBackgroundLayerMgr Background layer manager.
  * @param {!import("gmf/theme/Themes.js").ThemesService} gmfThemes Themes service.
  * @ngInject
  * @ngdoc controller
  * @ngname GmfBackgroundlayerselectorController
- * @private
  */
 function Controller($scope, ngeoBackgroundLayerMgr, gmfThemes) {
 

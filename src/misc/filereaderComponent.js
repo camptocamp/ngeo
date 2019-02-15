@@ -29,6 +29,7 @@ const module = angular.module('ngeoFilereader', []);
  * @ngdoc directive
  * @ngname ngeoFilereader
  * @private
+ * @hidden
  */
 function filereaderComponent($window) {
   return {

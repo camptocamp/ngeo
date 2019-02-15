@@ -6,6 +6,7 @@ import {TOUCH} from 'ol/has.js';
 
 /**
  * @private
+ * @hidden
  * @param {angular.IModule} module The module
  * @return {void}
  */

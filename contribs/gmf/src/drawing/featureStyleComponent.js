@@ -59,6 +59,7 @@ module.directive('gmfFeaturestyle', drawingDrawFeatureComponent);
  * @param {import("ngeo/misc/FeatureHelper.js").FeatureHelper} ngeoFeatureHelper Gmf feature helper service.
  * @constructor
  * @private
+ * @hidden
  * @ngInject
  * @ngdoc controller
  * @ngname GmfFeaturestyleController

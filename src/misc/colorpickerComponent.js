@@ -62,6 +62,7 @@ module.directive('ngeoColorpicker', colorPickerComponent);
  * Default colors for the colorpicker
  * @type {Array.<Array.<string>>}
  * @private
+ * @hidden
  */
 const DEFAULT_COLORS = [
   ['#F4EB37', '#CDDC39', '#62AF44', '#009D57', '#0BA9CC', '#4186F0', '#3F5BA9', '#7C3592', '#A61B4A', '#DB4436', '#F8971B', '#F4B400', '#795046'],
@@ -72,6 +73,7 @@ const DEFAULT_COLORS = [
 /**
  * @constructor
  * @private
+ * @hidden
  * @param {angular.IScope} $scope Directive scope.
  * @param {JQuery} $element Element.
  * @param {angular.IAttributes} $attrs Attributes.

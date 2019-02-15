@@ -57,6 +57,7 @@ module.value('gmfImportdatasourceTemplateUrl',
  * @return {string} Template URL.
  * @ngInject
  * @private
+ * @hidden
  */
 function gmfImportdatasourceTemplateUrl($attrs, gmfImportdatasourceTemplateUrl) {
   return gmfImportdatasourceTemplateUrl($attrs);
@@ -74,6 +75,7 @@ const Mode = {
 
 /**
  * @private
+ * @hidden
  */
 class Controller {
 

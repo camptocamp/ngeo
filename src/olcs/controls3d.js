@@ -14,6 +14,7 @@ const module = angular.module('ngeoOlcsControls3d', []);
 
 /**
  * @private
+ * @hidden
  * @param {number} older Older
  * @param {number} newer Newer
  * @returns {boolean} ?
@@ -25,6 +26,7 @@ function shouldUpdate(older, newer) {
 
 /**
  * @private
+ * @hidden
  */
 const Controller = class {
 
@@ -233,6 +235,7 @@ const Controller = class {
  * @return {string} Template URL.
  * @ngInject
  * @private
+ * @hidden
  */
 function ngeoOlcsControls3dTemplateUrlInjectable($attrs, ngeoOlcsControls3dTemplateUrl) {
   if (ngeoOlcsControls3dTemplateUrl) {

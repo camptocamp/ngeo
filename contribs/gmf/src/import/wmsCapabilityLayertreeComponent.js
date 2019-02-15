@@ -43,6 +43,7 @@ module.value('gmfWmscapabilitylayertreenodeTemplateUrl',
  * @return {string} Template URL.
  * @ngInject
  * @private
+ * @hidden
  */
 function gmfWmscapabilitylayertreenodeTemplateUrl($attrs, gmfWmscapabilitylayertreenodeTemplateUrl) {
   return gmfWmscapabilitylayertreenodeTemplateUrl($attrs);
@@ -51,6 +52,7 @@ function gmfWmscapabilitylayertreenodeTemplateUrl($attrs, gmfWmscapabilitylayert
 
 /**
  * @private
+ * @hidden
  */
 class Controller {
 

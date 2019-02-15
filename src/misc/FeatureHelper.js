@@ -31,6 +31,7 @@ import olStyleText from 'ol/style/Text.js';
  * The radius, in pixels, of the regular shape rendered as style for
  * the vertex of a feature while it's being edited.
  * @private
+ * @hidden
  */
 const VertexStyleRegularShapeRadius = 6;
 
