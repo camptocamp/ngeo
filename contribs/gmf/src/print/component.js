@@ -1132,11 +1132,18 @@ class Controller {
    * @private
    */
   handleCreateReportSuccess_(resp) {
-    const mfResp = /** @type {import('ngeo/print/mapfish-print-v3.js').MapFishPrintReportResponse} */ (resp.data);
-    const ref = mfResp.ref;
-    console.assert(ref.length > 0);
-    this.curRef_ = ref;
-    this.getStatus_(ref);
+    // If the file was sent by email, there's no need to get status. A
+    // message is immediately shown and print states are reset.
+    if (this.smtpSupported && this.smtpEmail && this.smtpEnabled) {
+      this.smtpMessage = true;
+      this.resetPrintStates_();
+    } else {
+      const mfResp = /** @type {import('ngeo/print/mapfish-print-v3.js').MapFishPrintReportResponse} */ (resp.data);
+      const ref = mfResp.ref;
+      console.assert(ref.length > 0);
+      this.curRef_ = ref;
+      this.getStatus_(ref);
+    }
   }
 
 
@@ -1168,10 +1175,6 @@ class Controller {
         // The report is ready. Open it by changing the window location.
         window.location.href = this.ngeoPrint_.getReportUrl(ref);
         this.resetPrintStates_();
-        // If the file was sent by email, show message
-        if (this.smtpSupported && this.smtpEmail && this.smtpEnabled) {
-          this.smtpMessage = true;
-        }
       } else {
         console.error(mfResp.error);
         this.handleCreateReportError_();
