@@ -12,15 +12,12 @@
       "paths": {
         "ngeo/*": ["src/*"],
         "gmf/*": ["contribs/gmf/src/*"],
-        // "ol/*": ["node_modules/ol/*"],
-        // Temporary, run that to use it:
-        // npm install --prefix openlayers_src https://api.github.com/repos/openlayers/openlayers/tarball/v5.3.1
-        "localforage/*": ["node_modules/localforage/*"],
-        "ol/*": ["openlayers_src/node_modules/ol/src/ol/*"],
+        "ol/*": ["node_modules/ol/src/*"],
         "olcs/*": ["node_modules/ol-cesium/src/olcs/*"],
         "@geoblocks/proj/*": ["node_modules/@geoblocks/proj/*"],
         "moment": ["node_modules/moment/moment.d.ts"],
         "jsts/*": ["node_modules/@types/jsts/index.d.ts"],
+        "localforage/*": ["node_modules/localforage/*"],
       }
     },
     "include": [
@@ -31,5 +28,8 @@
       "contribs/gmf/test/spec/**/*.js",
       "examples/*.js",
       "contribs/gmf/examples/*.js",
+    ],
+    "files": [
+      "types/dom.d.ts"
     ]
 }
