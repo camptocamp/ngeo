@@ -721,11 +721,15 @@ exports.Controller_ = class {
     if (!this.layoutInfo.simpleAttributes) {
       this.layoutInfo.simpleAttributes = [];
     }
+    if (!this.layoutInfo.attributes) {
+      this.layoutInfo.attributes = [];
+    }
     const simpleAttributes = this.layoutInfo.simpleAttributes;
     const previousAttributes = simpleAttributes.splice(0, simpleAttributes.length);
 
     // The attributes without 'clientParams' are the custom layout information (defined by end user).
     this.layout_.attributes.forEach((attribute) => {
+      this.layoutInfo.attributes.push(attribute.name);
       if (!attribute['clientParams']) {
         name = `${attribute.name}`;
         const defaultValue = attribute.default;
@@ -869,9 +873,11 @@ exports.Controller_ = class {
     const scale = this.layoutInfo.scale || this.getOptimalScale_(mapSize, viewResolution);
     const datasource = this.getDataSource_();
 
-    const customAttributes = {
-      'datasource': datasource
-    };
+    const customAttributes = {};
+
+    if (this.layoutInfo.attributes.indexOf('datasource') >= 0) {
+      customAttributes['datasource'] = datasource;
+    }
 
     if (this.layoutInfo.simpleAttributes) {
       this.layoutInfo.simpleAttributes.forEach((field) => {

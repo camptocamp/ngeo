@@ -297,6 +297,7 @@ gmfx.PermalinkOptions.prototype.pointRecenterZoom
  * of the gmf print panel.
  * @typedef {{
  *   simpleAttributes: (Array.<gmfx.PrintSimpleAttributes>|undefined),
+ *   attributes: (Array<string>),
  *   dpi: (number|undefined),
  *   dpis: (Array.<number>|undefined),
  *   formats: (Object.<string, boolean>|undefined),
