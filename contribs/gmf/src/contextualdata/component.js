@@ -83,13 +83,14 @@ exports.directive('gmfContextualdata',
  * @param {angular.$timeout} $timeout Angular timeout service.
  * @param {!angular.Scope} $scope Scope.
  * @param {gmf.raster.RasterService} gmfRaster Gmf Raster service
+ * @param {angular.$injector} $injector Angular injector service.
  *
  * @constructor
  * @private
  * @ngdoc controller
  * @ngInject
  */
-exports.Controller_ = function($compile, $timeout, $scope, gmfRaster) {
+exports.Controller_ = function($compile, $timeout, $scope, gmfRaster, $injector) {
 
   /**
    * @type {ol.Map}
@@ -138,6 +139,13 @@ exports.Controller_ = function($compile, $timeout, $scope, gmfRaster) {
    * @private
    */
   this.gmfRaster_ = gmfRaster;
+
+  /**
+   * @type {Object}
+   * @private
+   */
+  this.gmfContextualdataOptions_ = $injector.has('gmfContextualdataOptions') ?
+    $injector.get('gmfContextualdataOptions') : {};
 
   angular.element('body').on('mousedown', this.hidePopover.bind(this));
 };
@@ -196,7 +204,7 @@ exports.Controller_.prototype.setContent_ = function(coordinate) {
   const getRasterError = function(resp) {
     console.error('Error on getting the raster.');
   };
-  this.gmfRaster_.getRaster(coordinate).then(
+  this.gmfRaster_.getRaster(coordinate, this.gmfContextualdataOptions_.rasterParams).then(
     getRasterSuccess,
     getRasterError
   );
