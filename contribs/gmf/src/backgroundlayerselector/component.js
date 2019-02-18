@@ -198,7 +198,7 @@ Controller.prototype.handleThemesChange_ = function() {
  * @returns {number} The background layer opacity.
  */
 Controller.prototype.getSetBgLayerOpacity = function(val) {
-  if (val) {
+  if (val !== undefined) {
     this.opacityLayer.setOpacity(val);
   }
   return this.opacityLayer.getOpacity();
