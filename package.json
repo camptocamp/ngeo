@@ -72,7 +72,6 @@
     "console-control-strings": "1.1.0",
     "copy-webpack-plugin": "4.6.0",
     "corejs-typeahead": "1.2.1",
-    "coveralls": "3.0.2",
     "css-loader": "2.1.0",
     "d3": "5.9.1",
     "ejs-loader": "0.3.1",

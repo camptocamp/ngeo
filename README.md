@@ -83,4 +83,3 @@ http://localhost:3000/contribs/gmf/apps/desktop.html
 ## Other docs related to ngeo:
 * [Transifex](https://www.transifex.com/camptocamp/ngeo/) – Translation platform.
 * [Travis](https://travis-ci.org/camptocamp/ngeo) – Continuous integration.
-* [coveralls](https://coveralls.io/github/camptocamp/ngeo) – Test coverage.
