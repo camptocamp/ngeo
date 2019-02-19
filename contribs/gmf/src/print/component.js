@@ -1242,17 +1242,17 @@ class Controller {
                 scale, undefined, undefined, undefined, source.serverType_, dpi,
                 this.gmfLegendOptions_.useBbox ? bbox : undefined,
                 this.map.getView().getProjection().getCode(),
-                this.gmfLegendOptions_.params[layer.getSource().get('serverType_')]
+                this.gmfLegendOptions_.params[source.serverType_]
               );
             }
             // Don't add classes without legend url or from layers without any
             // active name.
             if (icons && name.length !== 0) {
               classes.push(Object.assign({
-                'name': this.gmfLegendOptions_.label[layer.getSource().get('serverType_')] === false ? '' :
+                'name': this.gmfLegendOptions_.label[source.serverType_] === false ? '' :
                   gettextCatalog.getString(name),
                 'icons': [icons]
-              }, layer.getSource().get('serverType_') === 'qgis' ? {
+              }, source.serverType_ === 'qgis' ? {
                 'dpi': dpi,
               } : {}));
             }
