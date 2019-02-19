@@ -88,9 +88,10 @@ module.directive('gmfDrawfeature', drawinfDrawFeatureComponent);
  * @param {!angular.ITimeoutService} $timeout Angular timeout service.
  * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @param {!import("ngeo/misc/FeatureHelper.js").FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
- * @param {!import("ol/Collection.js").default.<!import("ol/Feature.js").default>} ngeoFeatures Collection of features.
- * @param {!import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
- *     service.
+ * @param {!import("ol/Collection.js").default.<!import("ol/Feature.js").default>} ngeoFeatures Collection
+ *    of features.
+ * @param {!import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate
+ *    manager service.
  * @constructor
  * @private
  * @hidden

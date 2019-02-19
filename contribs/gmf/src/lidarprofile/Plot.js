@@ -23,7 +23,8 @@ export default class {
    * Provides a service to create an SVG element with defined axis and a LIDAR
    * point drawing mechanism.
    *
-   * @param {import("gmf/lidarprofile/Manager.js").LidarprofileManager} gmfLidarprofileManagerInstance gmf lidar profile manager instance
+   * @param {import("gmf/lidarprofile/Manager.js").LidarprofileManager} gmfLidarprofileManagerInstance
+   *    gmf lidar profile manager instance
    */
   constructor(gmfLidarprofileManagerInstance) {
 
@@ -309,8 +310,10 @@ export default class {
     const classification_colors = this.manager_.config.serverConfig.classification_colors;
 
     let cx, cy;
-    const p = this.manager_.utils.getClosestPoint(this.manager_.profilePoints,
-      canvasCoordinates[0], canvasCoordinates[1], tolerance, this.updateScaleX, this.updateScaleY, classification_colors);
+    const p = this.manager_.utils.getClosestPoint(
+      this.manager_.profilePoints, canvasCoordinates[0], canvasCoordinates[1], tolerance,
+      this.updateScaleX, this.updateScaleY, classification_colors
+    );
 
     if (p != undefined) {
 
@@ -339,7 +342,8 @@ export default class {
 
       this.manager_.cartoHighlight.setElement(el);
       this.manager_.cartoHighlight.setPosition([p.coords[0], p.coords[1]]);
-      /** @type {import("ol/source/Vector.js").default} */(this.manager_.lidarPointHighlight.getSource()).clear();
+      /** @type {import("ol/source/Vector.js").default} */(this.manager_.lidarPointHighlight.getSource())
+        .clear();
       const lidarPointGeom = new olGeomPoint([p.coords[0], p.coords[1]]);
       const lidarPointFeature = new olFeature(lidarPointGeom);
       if (typeof (pointClassification.color) !== undefined) {
@@ -354,9 +358,13 @@ export default class {
         }));
       }
 
-      /** @type {import("ol/source/Vector.js").default} */(this.manager_.lidarPointHighlight.getSource()).addFeature(lidarPointFeature);
+      /** @type {import("ol/source/Vector.js").default} */(
+        this.manager_.lidarPointHighlight.getSource()
+      ).addFeature(lidarPointFeature);
     } else {
-      /** @type {import("ol/source/Vector.js").default} */(this.manager_.lidarPointHighlight.getSource()).clear();
+      /** @type {import("ol/source/Vector.js").default} */(
+        this.manager_.lidarPointHighlight.getSource()
+      ).clear();
       svg.select('#highlightCircle').remove();
       lidarInfo.html('');
       this.manager_.cartoHighlight.setPosition(undefined);
@@ -366,8 +374,8 @@ export default class {
 
   /**
    * @param {import("gmf/lidarprofile/Utils.js").LidarPoint} point the concerned point.
-   * @param {import("gmf/lidarprofile/Config.js").LidarprofileServerConfigClassification} classification_color the classification
-   *     object concerning this point.
+   * @param {import("gmf/lidarprofile/Config.js").LidarprofileServerConfigClassification} classification_color
+   *    the classification object concerning this point.
    * @param {number} distDecimal the number of decimal to keep.
    * @return {string} the text for the html info.
    */
@@ -417,8 +425,8 @@ export default class {
 
   /**
   * Show/Hide classes in the profile
-  * @param {import("gmf/lidarprofile/Config.js").LidarprofileServerConfigClassifications} classification value as defined in the Pytree classification_colors
-  *     configuration
+  * @param {import("gmf/lidarprofile/Config.js").LidarprofileServerConfigClassifications} classification
+  *   value as defined in the Pytree classification_colors configuration
   * @param {string} material  value as defined in Pytree attribute configuration
   */
   setClassActive(classification, material) {

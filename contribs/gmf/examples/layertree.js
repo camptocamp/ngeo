@@ -1,3 +1,5 @@
+/* eslint max-len: ["error", { "code": 110, "ignoreComments": true }] */
+
 import angular from 'angular';
 import appURL from './url.js';
 import './layertree.css';
@@ -44,7 +46,8 @@ module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 /**
  * @constructor
- * @param {import("gmf/layertree/TreeManager.js").LayertreeTreeManager} gmfTreeManager gmf Tree Manager service.
+ * @param {import("gmf/layertree/TreeManager.js").LayertreeTreeManager} gmfTreeManager gmf Tree Manager
+ *    service.
  * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes The gmf themes service.
  * @param {import("gmf/theme/Manager.js").ThemeManagerService} gmfThemeManager gmf Theme Manager service.
  * @param {import("ngeo/statemanager/Location.js").StatemanagerLocation} ngeoLocation ngeo location service.
@@ -172,8 +175,10 @@ function MainController(gmfTreeManager, gmfThemes, gmfThemeManager, ngeoLocation
 
   /**
    * Just for this example
-   * @param {import('gmf/themes.js').GmfTheme|import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer} node A theme, group or layer node.
-   * @param {Array.<import('gmf/themes.js').GmfTheme|import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer>} nodes An Array of nodes.
+   * @param {import('gmf/themes.js').GmfTheme|import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer} node
+   *    A theme, group or layer node.
+   * @param {Array.<import('gmf/themes.js').GmfTheme|import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer>} nodes
+   *    An Array of nodes.
    */
   this.getDistinctFlatNodes_ = function(node, nodes) {
     let i;

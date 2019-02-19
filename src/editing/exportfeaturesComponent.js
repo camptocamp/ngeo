@@ -30,8 +30,8 @@ const module = angular.module('ngeoExportfeatures', [
  *       ngeo-exportfeatures-features="ctrl.features"
  *       class="btn btn-link">Export</button>
  *
- * @htmlAttribute {import("ol/Collection.js").default.<import("ol/Feature.js").default>} ngeo-exportfeatures-features The
- *     features to export
+ * @htmlAttribute {import("ol/Collection.js").default.<import("ol/Feature.js").default>}
+ *    ngeo-exportfeatures-features The features to export
  * @return {angular.IDirective} The directive specs.
  * @ngInject
  * @ngdoc directive

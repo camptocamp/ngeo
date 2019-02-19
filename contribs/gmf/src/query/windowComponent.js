@@ -67,7 +67,8 @@ module.run(/* @ngInject */ ($templateCache) => {
 /**
  * @param {!JQuery} $element Element.
  * @param {!angular.IAttributes} $attrs Attributes.
- * @param {!function(!JQuery, !angular.IAttributes): string} gmfDisplayquerywindowTemplateUrl Template function.
+ * @param {!function(!JQuery, !angular.IAttributes): string} gmfDisplayquerywindowTemplateUrl Template
+ *    function.
  * @return {string} Template URL.
  * @ngInject
  * @private
@@ -80,7 +81,8 @@ function gmfDisplayquerywindowTemplateUrl($element, $attrs, gmfDisplayquerywindo
 
 /**
  * Provide a component to display results of the {@link import("ngeo/queryResult.js").default}
- * and shows related features on the map using the {@link import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr}.
+ * and shows related features on the map using the
+ * {@link import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr}.
  *
  * You can override the default component's template by setting the
  * value `gmfDisplayquerywindowTemplateUrl`.

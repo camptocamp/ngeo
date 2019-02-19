@@ -285,7 +285,9 @@ class Map {
   selectObject(id) {
     const feature = this.vectorSource_.getFeatureById(id);
     if (feature) {
-      const coordinates = /** @type {import('ol/geom/Point.js').default} */(feature.getGeometry()).getCoordinates();
+      const coordinates = /** @type {import('ol/geom/Point.js').default} */(
+        feature.getGeometry()
+      ).getCoordinates();
       const properties = feature.getProperties();
       const content = this.overlay_.getElement().querySelector('.ol-popup-content');
       content.innerHTML += `<div><b>${properties.title}</b></div>`;

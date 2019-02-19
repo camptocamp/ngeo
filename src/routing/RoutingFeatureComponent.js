@@ -60,7 +60,8 @@ function ngeoRoutingFeatureTemplateUrl($attrs, ngeoRoutingFeatureTemplateUrl) {
  * @param {!angular.IScope} $scope Angular scope.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @param {!angular.IQService} $q Angular q service
- * @param {!import("ngeo/routing/NominatimService.js").NominatimService} ngeoNominatimService service for Nominatim
+ * @param {!import("ngeo/routing/NominatimService.js").NominatimService} ngeoNominatimService service for
+ *    Nominatim
  * @constructor
  * @private
  * @hidden
@@ -296,7 +297,8 @@ Controller.prototype.onSelect_ = function(selected) {
   const coordinate = selected.coordinate.map(parseFloat);
   const label = selected.label;
   this.setFeature_(coordinate, label);
-  const newCoordinates = /** @type{import("ol/geom/Point.js").default} */(this.feature.getGeometry()).getCoordinates();
+  const newCoordinates = /** @type{import("ol/geom/Point.js").default} */(this.feature.getGeometry())
+    .getCoordinates();
   this.map.getView().setCenter(newCoordinates);
 };
 
@@ -342,9 +344,11 @@ Controller.prototype.getLonLatFromPoint_ = function(point) {
 
 
 /**
- * Provides a text input and draw interaction to allow a user to create and modify a ol.Feature (point geometry).
+ * Provides a text input and draw interaction to allow a user to create and modify a ol.Feature
+ * (point geometry).
  *
- * The text input is provided by {@link import("ngeo/nominatimInputComponent.js").default} and includes Nominatim search.
+ * The text input is provided by {@link import("ngeo/nominatimInputComponent.js").default} and includes
+ * Nominatim search.
  *
  * Example:
  *
@@ -363,7 +367,8 @@ Controller.prototype.getLonLatFromPoint_ = function(point) {
  * @htmlAttribute {import("ol/Feature.js").default} ngeo-routing-feature-feature The feature.
  * @htmlAttribute {string} ngeo-routing-feature-fill-color The marker fill color.
  * @htmlAttribute {string} ngeo-routing-feature-stroke-color The marker stroke color.
- * @htmlAttribute {function(import("ol/Feature.js").default)} ngeo-routing-feature-on-change Event fired when feature changes.
+ * @htmlAttribute {function(import("ol/Feature.js").default)} ngeo-routing-feature-on-change Event fired when
+ *    feature changes.
  * @ngdoc directive
  * @ngname ngeoRoutingFeature
  */

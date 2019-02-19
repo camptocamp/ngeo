@@ -158,10 +158,12 @@ LayerHelper.prototype.createBasicWMSLayerFromDataSource = function(
  * @param {string=} opt_matrixSet Optional WMTS matrix set.
  * @param {Object.<string, string>=} opt_dimensions WMTS dimensions.
  * @param {Object=} opt_customOptions Some initial options.
- * @return {angular.IPromise.<import("ol/layer/Tile.js").default>} A Promise with a layer (with source) on success,
- *     no layer else.
+ * @return {angular.IPromise.<import("ol/layer/Tile.js").default>} A Promise with a layer (with source) on
+ *    success, no layer else.
  */
-LayerHelper.prototype.createWMTSLayerFromCapabilitites = function(capabilitiesURL, layerName, opt_matrixSet, opt_dimensions, opt_customOptions) {
+LayerHelper.prototype.createWMTSLayerFromCapabilitites = function(
+  capabilitiesURL, layerName, opt_matrixSet, opt_dimensions, opt_customOptions
+) {
   const parser = new olFormatWMTSCapabilities();
   const layer = new olLayerTile({
     preload: this.tilesPreloadingLimit_
@@ -234,8 +236,8 @@ LayerHelper.prototype.createWMTSLayerFromCapabilititesObj = function(
 /**
  * Create and return an ol.layer.Group. You can pass a collection of layers to
  * directly add them in the returned group.
- * @param {import("ol/Collection.js").default.<import("ol/layer/Base.js").default>=} opt_layers The layer to add to the
- * returned Group.
+ * @param {import("ol/Collection.js").default.<import("ol/layer/Base.js").default>=} opt_layers The layer to
+ *    add to the returned Group.
  * @return {import("ol/layer/Group.js").default} Layer group.
  */
 LayerHelper.prototype.createBasicGroup = function(opt_layers) {
@@ -417,7 +419,13 @@ LayerHelper.prototype.getWMSLegendURL = function(url,
     if (opt_dpi != undefined) {
       queryString['DPI'] = opt_dpi;
     }
-    if (opt_bbox != undefined && opt_srs != undefined && opt_scale != undefined && opt_dpi != undefined && opt_legendRule == undefined) {
+    if (
+      opt_bbox != undefined
+      && opt_srs != undefined
+      && opt_scale != undefined
+      && opt_dpi != undefined
+      && opt_legendRule == undefined
+    ) {
       queryString['BBOX'] = opt_bbox.join(',');
       queryString['SRS'] = opt_srs;
       queryString['WIDTH'] = Math.round((opt_bbox[2] - opt_bbox[0]) / opt_scale * 39.37 * opt_dpi);
@@ -458,7 +466,8 @@ LayerHelper.prototype.refreshWMSLayer = function(layer) {
     source_ instanceof olSourceImageWMS ||
     source_ instanceof olSourceTileWMS
   );
-  const source = /** @type {import("ol/source/ImageWMS.js").default|import("ol/source/TileWMS.js").default} */ (source_);
+  const source =
+    /** @type {import("ol/source/ImageWMS.js").default|import("ol/source/TileWMS.js").default} */ (source_);
   const params = source.getParams();
   params[REFRESH_PARAM] = Math.random();
   source.updateParams(params);
@@ -467,7 +476,8 @@ LayerHelper.prototype.refreshWMSLayer = function(layer) {
 
 /**
  * Set ZIndex property to first level children elements
- * @param {import("ol/layer/Group.js").default|import("ol/layer/Base.js").default} element The group of layer with first level children layers.
+ * @param {import("ol/layer/Group.js").default|import("ol/layer/Base.js").default} element The group of
+ *    layer with first level children layers.
  * @param {number} ZIndex The ZIndex for children element.
  */
 LayerHelper.prototype.setZIndexToFirstLevelChildren = function(element, ZIndex) {

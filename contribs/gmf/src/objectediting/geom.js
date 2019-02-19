@@ -1,4 +1,5 @@
-import {coordinatesToXY0, coordinatesToXY1, coordinatesToXY2, coordinatesToXY3} from 'gmf/objectediting/coordinate.js';
+import {coordinatesToXY0, coordinatesToXY1, coordinatesToXY2, coordinatesToXY3}
+  from 'gmf/objectediting/coordinate.js';
 import olGeomLineString from 'ol/geom/LineString.js';
 import olGeomMultiLineString from 'ol/geom/MultiLineString.js';
 import olGeomMultiPoint from 'ol/geom/MultiPoint.js';

@@ -1,10 +1,13 @@
+/* eslint max-len: ["error", { "code": 110, "ignoreComments": true }] */
+
 import angular from 'angular';
 
 import gmfObjecteditingGetWMSFeatureComponent from 'gmf/objectediting/getWMSFeatureComponent.js';
 
 import ngeoEditingCreatefeatureComponent from 'ngeo/editing/createfeatureComponent.js';
 
-import ngeoEditingCreateregularpolygonfromclickComponent from 'ngeo/editing/createregularpolygonfromclickComponent.js';
+import ngeoEditingCreateregularpolygonfromclickComponent from
+  'ngeo/editing/createregularpolygonfromclickComponent.js';
 
 import ngeoGeometryType from 'ngeo/GeometryType.js';
 
@@ -144,8 +147,8 @@ const NAMESPACE = 'oet';
 /**
  * @param {angular.auto.IInjectorService} $injector Main injector.
  * @param {!angular.IScope} $scope Scope.
- * @param {import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
- *     service.
+ * @param {import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate
+ *    manager service.
  * @constructor
  * @private
  * @hidden

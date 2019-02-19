@@ -62,12 +62,13 @@ class MainController {
   /**
    * @param {!angular.IScope} $scope Angular scope.
    * @param {import("gmf/datasource/Manager.js").DatasourceManager} gmfDataSourcesManager The gmf
-   *     data sources manager service.
+   *    data sources manager service.
    * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes The gmf themes service.
-   * @param {import("gmf/layertree/TreeManager.js").LayertreeTreeManager} gmfTreeManager gmf Tree Manager service.
+   * @param {import("gmf/layertree/TreeManager.js").LayertreeTreeManager} gmfTreeManager gmf Tree Manager
+   *    service.
    * @param {import("ngeo/datasource/DataSources.js").DataSource} ngeoDataSources Ngeo data sources service.
-   * @param {import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
-   *     service.
+   * @param {import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate
+   *    manager service.
    * @ngInject
    */
   constructor($scope, gmfDataSourcesManager, gmfThemes, gmfTreeManager,

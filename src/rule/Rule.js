@@ -4,15 +4,18 @@ import * as olEvents from 'ol/events.js';
 /**
  * @typedef {Object} RuleOptions
  * @property {boolean} [active=false] Whether the rule is active or not. Used by the `ngeo-rule` component.
- * @property {number|string} [expression] The expression of the rule. The expression and boundaries are mutually exclusives.
+ * @property {number|string} [expression] The expression of the rule. The expression and boundaries are
+ *    mutually exclusives.
  * @property {boolean} [isCustom] Whether the rule is a custom one or not. Defaults to `true`.
- * @property {number} [lowerBoundary] The lower boundary of the rule. The expression and boundaries are mutually exclusives.
+ * @property {number} [lowerBoundary] The lower boundary of the rule. The expression and boundaries are
+ *    mutually exclusives.
  * @property {string} name The human-readable name of the rule.
  * @property {string} [operator] The rule operator.
  * @property {Array.<string>} [operators] The rule operators.
  * @property {string} propertyName The property name (a.k.a. the attribute name).
  * @property {string} [type] The type of rule.
- * @property {number} [upperBoundary] The upper boundary of the rule. The expression and boundaries are mutually exclusives.
+ * @property {number} [upperBoundary] The upper boundary of the rule. The expression and boundaries are
+ *    mutually exclusives.
  */
 
 

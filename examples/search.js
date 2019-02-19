@@ -1,3 +1,5 @@
+/* eslint max-len: ["error", { "code": 110, "ignoreComments": true }] */
+
 import angular from 'angular';
 import {SEARCH} from './url.js';
 import './search.css';
@@ -46,8 +48,8 @@ module.component('appSearch', searchComponent);
  * @param {JQuery} $element Element.
  * @param {angular.IScope} $rootScope Angular root scope.
  * @param {angular.ICompileService} $compile Angular compile service.
- * @param {import("ngeo/search/createGeoJSONBloodhound.js").createGeoJSONBloodhound} ngeoSearchCreateGeoJSONBloodhound The ngeo
- *     create GeoJSON Bloodhound service.
+ * @param {import("ngeo/search/createGeoJSONBloodhound.js").createGeoJSONBloodhound} ngeoSearchCreateGeoJSONBloodhound
+ *    The ngeo create GeoJSON Bloodhound service.
  * @ngInject
  */
 function SearchController($element, $rootScope, $compile, ngeoSearchCreateGeoJSONBloodhound) {
@@ -117,7 +119,9 @@ function SearchController($element, $rootScope, $compile, ngeoSearchCreateGeoJSO
   this.listeners = /** @type {import('ngeo/search/searchDirective.js').SearchDirectiveListeners} */ ({
     select: (event, suggestion, dataset) => {
       const feature = /** @type {import('ol/Feature.js').default} */ (suggestion);
-      const featureGeometry = /** @type {import('ol/geom/SimpleGeometry.js').default} */(feature.getGeometry());
+      const featureGeometry = /** @type {import('ol/geom/SimpleGeometry.js').default} */(
+        feature.getGeometry()
+      );
       const size = this.map.getSize();
       const source = /** @type {olSourceVector} */(this.vectorLayer_.getSource());
       source.clear(true);
@@ -158,8 +162,8 @@ SearchController.prototype.createVectorLayer_ = function() {
 
 
 /**
- * @param {import("ngeo/search/createGeoJSONBloodhound.js").createGeoJSONBloodhound} ngeoSearchCreateGeoJSONBloodhound The ngeo
- *     create GeoJSON Bloodhound service.
+ * @param {import("ngeo/search/createGeoJSONBloodhound.js").createGeoJSONBloodhound} ngeoSearchCreateGeoJSONBloodhound
+ *    The ngeo create GeoJSON Bloodhound service.
  * @return {Bloodhound} The bloodhound engine.
  * @private
  */

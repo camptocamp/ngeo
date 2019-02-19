@@ -9,9 +9,11 @@ import olSourceVector from 'ol/source/Vector.js';
  *
  * extends DataSourceOptions
  * @typedef {Object} FileOptions
- * @property {import("ol/Collection.js").default.<!import("ol/Feature.js").default>} [features] Collection of `import("ol/Feature.js").default` objects.
+ * @property {import("ol/Collection.js").default.<!import("ol/Feature.js").default>} [features]
+ *    Collection of `import("ol/Feature.js").default` objects.
  * @property {Array.<import('ngeo/format/Attribute.js').Attribute>} [attributes] (DataSourceOptions)
- * @property {import('ngeo/datasource/OGC.js').DimensionsFiltersConfig} [dimensionsFiltersConfig] (DataSourceOptions)
+ * @property {import('ngeo/datasource/OGC.js').DimensionsFiltersConfig} [dimensionsFiltersConfig]
+ *    (DataSourceOptions)
  * @property {number} id (DataSourceOptions)
  * @property {string} [identifierAttribute] (DataSourceOptions)
  * @property {boolean} [inRange] (DataSourceOptions)

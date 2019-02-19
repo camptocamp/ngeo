@@ -2,7 +2,8 @@ import {getUid as olUtilGetUid} from 'ol/util.js';
 
 /**
  * @param {Array.<Object>|undefined} data Entries/objects to be shown in a grid.
- * @param {Array.<import('ngeo/download/Csv.js').GridColumnDef>|undefined} columnDefs Column definition of a grid.
+ * @param {Array.<import('ngeo/download/Csv.js').GridColumnDef>|undefined} columnDefs Column definition of a
+ *    grid.
  * @constructor
  * @private
  * @hidden

@@ -1,3 +1,5 @@
+/* eslint max-len: ["error", { "code": 110, "ignoreComments": true }] */
+
 import angular from 'angular';
 import {DATALAYERGROUP_NAME} from 'gmf/index.js';
 import gmfDatasourceDataSourceBeingFiltered from 'gmf/datasource/DataSourceBeingFiltered.js';
@@ -162,14 +164,16 @@ module.component('gmfLayertree', layertreeComponent);
  * @param {!angular.IScope} $scope Angular scope.
  * @param {!import("ngeo/map/LayerHelper.js").LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @param {import('gmf/datasource/DataSourceBeingFiltered.js').DataSourceBeingFiltered} gmfDataSourceBeingFiltered
- *     The Gmf value service that determines the data source currently being
- *     filtered.
+ *    The Gmf value service that determines the data source currently being
+ *    filtered.
  * @param {!import("gmf/datasource/ExternalDataSourcesManager.js").ExternalDatSourcesManager}
- *     gmfExternalDataSourcesManager The Gmf external data sources manager
- *     service. Used here to fetch the external WMS groups.
+ *    gmfExternalDataSourcesManager The Gmf external data sources manager
+ *    service. Used here to fetch the external WMS groups.
  * @param {!import("gmf/permalink/Permalink.js").PermalinkService} gmfPermalink The gmf permalink service.
- * @param {!import("gmf/layertree/TreeManager.js").LayertreeTreeManager} gmfTreeManager gmf Tree Manager service.
- * @param {!import("gmf/layertree/SyncLayertreeMap.js").SyncLayertreeMap} gmfSyncLayertreeMap gmfSyncLayertreeMap service.
+ * @param {!import("gmf/layertree/TreeManager.js").LayertreeTreeManager} gmfTreeManager
+ *    gmf Tree Manager service.
+ * @param {!import("gmf/layertree/SyncLayertreeMap.js").SyncLayertreeMap} gmfSyncLayertreeMap
+ *    gmfSyncLayertreeMap service.
  * @param {!import("ngeo/misc/WMSTime.js").WMSTime} ngeoWMSTime wms time service.
  * @param {!import("gmf/theme/Themes.js").ThemesService} gmfThemes The gmf Themes service.
  * @constructor
@@ -370,9 +374,10 @@ Controller.prototype.updateLayerDimensions_ = function(layer, node) {
  * treeCtrl. The layer will be inserted into the map. The layer can be null
  * if the treeCtrl is based on a node inside a mixed node. It this case, the
  * layer will be in the first parent declared as a mixed node.
- * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl tree controller of the node
- * @return {import("ol/layer/Base.js").default|import("ol/layer/Group.js").default|null} The OpenLayers layer or group
- *     for the node.
+ * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl tree controller of the
+ *    node.
+ * @return {import("ol/layer/Base.js").default|import("ol/layer/Group.js").default|null} The OpenLayers
+ *    layer or group for the node.
  */
 Controller.prototype.getLayer = function(treeCtrl) {
   let opt_position;
@@ -387,7 +392,9 @@ Controller.prototype.getLayer = function(treeCtrl) {
     this.dataLayerGroup_, opt_position);
 
   if (layer instanceof olLayerLayer) {
-    const node = /** @type {import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer} */ (treeCtrl.node);
+    const node = /** @type {import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer} */ (
+      treeCtrl.node
+    );
     this.updateLayerDimensions_(layer, node);
   }
 
@@ -399,8 +406,8 @@ Controller.prototype.getLayer = function(treeCtrl) {
  * Remove layer from this component's layergroup (and then, from the map) on
  * a ngeo layertree destroy event.
  * @param {angular.IScope} scope treeCtrl scope.
- * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl ngeo layertree controller, from
- *     the current node.
+ * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl ngeo layertree controller,
+ *    from the current node.
  */
 Controller.prototype.listeners = function(scope, treeCtrl) {
   const dataLayerGroup = this.dataLayerGroup_;
@@ -412,8 +419,8 @@ Controller.prototype.listeners = function(scope, treeCtrl) {
 
 /**
  * Toggle the state of treeCtrl's node.
- * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl ngeo layertree controller, from
- *     the current node.
+ * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl ngeo layertree controller,
+ *    from the current node.
  */
 Controller.prototype.toggleActive = function(treeCtrl) {
   const state = treeCtrl.getState();
@@ -430,8 +437,8 @@ Controller.prototype.toggleActive = function(treeCtrl) {
 /**
  * Return the current state of the given treeCtrl's node.
  * Return a class name that match with the current node activation state.
- * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl ngeo layertree controller, from
- *     the current node.
+ * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl ngeo layertree controller,
+ *    from the current node.
  * @return {string} 'on' or 'off' or 'indeterminate'.
  */
 Controller.prototype.getNodeState = function(treeCtrl) {
@@ -473,8 +480,8 @@ Controller.prototype.updateWMSTimeLayerState = function(layertreeCtrl, time) {
 /**
  * Get the icon image URL for the given treeCtrl's layer. It can only return a
  * string for internal WMS layers without multiple childlayers in the node.
- * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl ngeo layertree controller, from
- *     the current node.
+ * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl ngeo layertree controller,
+ *    from the current node.
  * @return {string|undefined} The icon legend URL or undefined.
  */
 Controller.prototype.getLegendIconURL = function(treeCtrl) {
@@ -513,8 +520,8 @@ Controller.prototype.getLegendIconURL = function(treeCtrl) {
 
 /**
  * Get the legends object (<LayerName: url> for each layer) for the given treeCtrl.
- * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl ngeo layertree controller, from
- *     the current node.
+ * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl ngeo layertree controller,
+ *    from the current node.
  * @return {Object.<string, string>} A <layerName: url> object that provides a
  *     layer for each layer.
  */
@@ -561,8 +568,8 @@ Controller.prototype.getLegendsObject = function(treeCtrl) {
 
 /**
  * Get the number of legends object for this layertree controller.
- * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl ngeo layertree controller, from
- *     the current node.
+ * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl ngeo layertree controller,
+ *    from the current node.
  * @return {number} The number of Legends object.
  */
 Controller.prototype.getNumberOfLegendsObject = function(treeCtrl) {
@@ -587,8 +594,8 @@ Controller.prototype.getScale_ = function() {
 
 /**
  * Opens a openIframePopup with the content of the metadata url of a node.
- * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl ngeo layertree controller, from
- *     the current node.
+ * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl ngeo layertree controller,
+ *    from the current node.
  */
 Controller.prototype.displayMetadata = function(treeCtrl) {
   const node = treeCtrl.node;
@@ -687,8 +694,8 @@ Controller.prototype.getResolutionStyle = function(gmfLayer) {
 
 /**
  * Set the resolution of the map with the max or min resolution of the node.
- * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl ngeo layertree controller, from
- *     the current node.
+ * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl ngeo layertree controller,
+ *    from the current node.
  */
 Controller.prototype.zoomToResolution = function(treeCtrl) {
   const gmfLayer = /** @type {import('gmf/themes.js').GmfLayerWMS} */ (treeCtrl.node);

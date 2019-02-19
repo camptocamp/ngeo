@@ -14,7 +14,8 @@ import olFeature from 'ol/Feature.js';
  * @param {angular.ISCEService} $sce Angular sce service.
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext service.
  * @param {import("ngeo/misc/FeatureHelper.js").FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
- * @param {import("ol/Collection.js").default.<import("ol/Feature.js").default>} ngeoFeatures Collection of features.
+ * @param {import("ol/Collection.js").default.<import("ol/Feature.js").default>} ngeoFeatures Collection of
+ *    features.
  * @constructor
  * @hidden
  * @ngInject
@@ -158,7 +159,8 @@ DrawController.prototype.handleActiveChange = function(event) {
  * Called when a feature is finished being drawn. Set the default properties
  * for its style, then set its style and add it to the features collection.
  * @param {string} type Type of geometry being drawn.
- * @param {import('ol/events/Event.js').default|import('ngeo/interaction/Measure.js').MeasureEvent} event Event.
+ * @param {import('ol/events/Event.js').default|import('ngeo/interaction/Measure.js').MeasureEvent} event
+ *    Event.
  */
 DrawController.prototype.handleDrawEnd = function(type, event) {
   let sketch;

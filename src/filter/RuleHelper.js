@@ -1,3 +1,5 @@
+/* eslint max-len: ["error", { "code": 110, "ignoreComments": true }] */
+
 import angular from 'angular';
 import ngeoFilterCondition from 'ngeo/filter/Condition.js';
 import ngeoFormatAttributeType from 'ngeo/format/AttributeType.js';
@@ -5,7 +7,8 @@ import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
 import ngeoMiscWMSTime from 'ngeo/misc/WMSTime.js';
 import ngeoRuleDate from 'ngeo/rule/Date.js';
 import ngeoRuleGeometry from 'ngeo/rule/Geometry.js';
-import ngeoRuleRule, {RuleOperatorType, RuleSpatialOperatorType, RuleTemporalOperatorType} from 'ngeo/rule/Rule.js';
+import ngeoRuleRule, {RuleOperatorType, RuleSpatialOperatorType, RuleTemporalOperatorType}
+  from 'ngeo/rule/Rule.js';
 import ngeoRuleSelect from 'ngeo/rule/Select.js';
 import ngeoRuleText from 'ngeo/rule/Text.js';
 import {writeFilter} from 'ol/format/WFS.js';
@@ -24,19 +27,20 @@ import moment from 'moment';
  * service.
  *
  * @typedef {Object} CreateFilterOptions
- * @property {import('ngeo/datasource/DataSource.js').default} dataSource The data source from which to get the filterRules that will be used to
- * create the OL filter object.
+ * @property {import('ngeo/datasource/DataSource.js').default} dataSource The data source from which to get
+ *    the filterRules that will be used to create the OL filter object.
  * @property {boolean} [incDimensions] Whether to include the dimensions related filters. Default to `true`.
  * @property {boolean} [incTime] Whether to include the data source's time values in the filter created. The
- * property that contains those values is `timeRangeValue`. Defaults to `false`.
- * When building a filter for WMS, it should not be included as it is given as
- * the TIME parameter of the query instead. When used for a WFS request, it
- * should be included in the filter.
- * @property {import("ol/format/filter/Filter.js").default} [filter] A filter that is directly given the the method instead of creating one.
- * Useful to automatically combine the time values.
- * @property {!Array.<import('ngeo/rule/Rule.js').default>} [filterRules] An alternative list of filter rules to use instead of those that are defined
- * within the data source. Useful when one wants to get the data of a given
- * filter without applying it to the data source.
+ *    property that contains those values is `timeRangeValue`. Defaults to `false`.
+ *    When building a filter for WMS, it should not be included as it is given as
+ *    the TIME parameter of the query instead. When used for a WFS request, it
+ *    should be included in the filter.
+ * @property {import("ol/format/filter/Filter.js").default} [filter] A filter that is directly given the
+ *    method instead of creating one.
+ *    Useful to automatically combine the time values.
+ * @property {!Array.<import('ngeo/rule/Rule.js').default>} [filterRules] An alternative list of filter rules
+ *    to use instead of those that are defined within the data source. Useful when one wants to get the data
+ *    of a given filter without applying it to the data source.
  * @property {string} [projCode] Projection code.
  * @property {string} [srsName] The SRS name used with the spatial filters created by the method.
  */
@@ -52,7 +56,8 @@ export class RuleHelper {
    * objects.
    *
    * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext service.
-   * @param {!import("ngeo/misc/FeatureHelper.js").FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
+   * @param {!import("ngeo/misc/FeatureHelper.js").FeatureHelper} ngeoFeatureHelper Ngeo feature helper
+   *    service.
    * @param {!import("ngeo/misc/WMSTime.js").WMSTime} ngeoWMSTime wms time service.
    * @ngdoc service
    * @ngname ngeoRuleHelper
@@ -208,7 +213,8 @@ export class RuleHelper {
   }
 
   /**
-   * @param {!Array.<!import('ngeo/rule/Rule.js').RuleOptions|!import('ngeo/rule/Select.js').SelectOptions>} optionsList List of options
+   * @param {!Array.<!import('ngeo/rule/Rule.js').RuleOptions|!import('ngeo/rule/Select.js').SelectOptions>} optionsList
+   *    List of options
    * @return {Array.<!import("ngeo/rule/Rule.js").default>} Rules.
    */
   createRules(optionsList) {
@@ -220,7 +226,8 @@ export class RuleHelper {
   }
 
   /**
-   * @param {!import('ngeo/rule/Rule.js').RuleOptions|!import('ngeo/rule/Select.js').SelectOptions} options Options
+   * @param {!import('ngeo/rule/Rule.js').RuleOptions|!import('ngeo/rule/Select.js').SelectOptions} options
+   *    Options
    * @return {!import("ngeo/rule/Rule.js").default} Rule.
    */
   createRule(options) {

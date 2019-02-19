@@ -1,3 +1,5 @@
+/* eslint max-len: ["error", { "code": 110, "ignoreComments": true }] */
+
 import angular from 'angular';
 import ngeoMiscFilters from 'ngeo/misc/filters.js';
 import ngeoGeometryType from 'ngeo/GeometryType.js';
@@ -256,7 +258,8 @@ Controller.prototype.$onInit = function() {
 /**
  * Called when a feature is finished being drawn. Add the feature to the
  * collection.
- * @param {import('ol/events/Event.js').default|import('ngeo/interaction/Measure.js').MeasureEvent} event Event.
+ * @param {import('ol/events/Event.js').default|import('ngeo/interaction/Measure.js').MeasureEvent} event
+ *    Event.
  */
 Controller.prototype.handleDrawEnd_ = function(event) {
   let sketch;

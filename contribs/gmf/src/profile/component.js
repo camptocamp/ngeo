@@ -32,7 +32,8 @@ import 'bootstrap/js/src/dropdown.js';
  * @typedef {Object} ProfileHoverPointInformations
  * @property {import("ol/coordinate.js").Coordinate} [coordinate] Coordinate of the point.
  * @property {number} [distance] distance of the point on the line. Can be in meters or kilometers.
- * @property {Object.<string, number>} [elevations] Elevations of the point (example: {aster: 556.5, srtm: 560}).
+ * @property {Object.<string, number>} [elevations] Elevations of the point (example:
+ *    {aster: 556.5, srtm: 560}).
  * @property {string} [xUnits] Units of the x axis.
  * @property {string} [yUnits] Units of the y axis.
  */

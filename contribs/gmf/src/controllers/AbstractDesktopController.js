@@ -1,5 +1,6 @@
 import angular from 'angular';
-import gmfControllersAbstractAPIController, {AbstractAPIController} from 'gmf/controllers/AbstractAPIController.js';
+import gmfControllersAbstractAPIController, {AbstractAPIController}
+  from 'gmf/controllers/AbstractAPIController.js';
 import gmfContextualdataModule from 'gmf/contextualdata/module.js';
 import gmfEditingModule from 'gmf/editing/module.js';
 import gmfPermalinkShareComponent from 'gmf/permalink/shareComponent.js';

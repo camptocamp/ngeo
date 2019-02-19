@@ -104,7 +104,8 @@ function * mergeSources(opts, entry, resolve, level) {
           return `url(${left}${file}${right})`;
         }
         const absoluteFile = path.normalize(path.resolve(entryDir, file));
-        let relativeFile = path.relative(opts.baseEntryDir, absoluteFile).replace(/\\/g, '/'); // fix for windows path
+        // fix for windows path
+        let relativeFile = path.relative(opts.baseEntryDir, absoluteFile).replace(/\\/g, '/');
 
         if (relativeFile[0] !== '.') {
           relativeFile = `./${relativeFile}`;
@@ -208,7 +209,9 @@ function resolver(ctx) {
   };
 }
 
-function fillDependency(pluginOptions, usedContext, compilation, assetName, assetUrl, queryString, replacements) {
+function fillDependency(
+  pluginOptions, usedContext, compilation, assetName, assetUrl, queryString, replacements
+) {
   return (resolve, reject) => {
     if (assetUrl.startsWith('~')) {
       usedContext.resolve(usedContext.resourcePath, assetName, (err, resolvedFile) => {
@@ -304,7 +307,9 @@ function manageContent(pluginOptions, usedContext, compilation, chunk, resolve, 
             }
           }
 
-          promises.push(new Promise(fillDependency(pluginOptions, usedContext, compilation, assetName, assetUrl, queryString, replacements)));
+          promises.push(new Promise(fillDependency(
+            pluginOptions, usedContext, compilation, assetName, assetUrl, queryString, replacements
+          )));
         } catch (e) {
           console.error(e.stack || e);
           callback(`SCSS plugin error, ${e}`);
@@ -430,7 +435,9 @@ class SassPlugin {
             const usedContext = files.length > 0 ? sassLoader.entries[files[0]].ctx : undefined;
             const promise = new Promise(processAsset(files));
 
-            promise.then(manageContent(pluginOptions, usedContext, compilation, chunk, resolve, callback), (error) => {
+            promise.then(manageContent(
+              pluginOptions, usedContext, compilation, chunk, resolve, callback
+            ), (error) => {
               callback(`SCSS dependencies error, ${error}`);
             });
           });

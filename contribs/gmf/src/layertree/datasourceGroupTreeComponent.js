@@ -13,8 +13,10 @@ const module = angular.module('gmfLayertreeDatasourceGroupTreeComponent', [
 
 
 module.run(/* @ngInject */ ($templateCache) => {
-  // @ts-ignore: webpack
-  $templateCache.put('gmf/layertree/datasourceGroupTreeComponent', require('./datasourceGroupTreeComponent.html'));
+  $templateCache.put(
+    // @ts-ignore: webpack
+    'gmf/layertree/datasourceGroupTreeComponent', require('./datasourceGroupTreeComponent.html')
+  );
 });
 
 
@@ -32,7 +34,8 @@ module.value('gmfLayertreeDatasourceGroupTreeTemplateUrl',
 
 /**
  * @param {!angular.IAttributes} $attrs Attributes.
- * @param {!function(!angular.IAttributes): string} gmfLayertreeDatasourceGroupTreeTemplateUrl Template function.
+ * @param {!function(!angular.IAttributes): string} gmfLayertreeDatasourceGroupTreeTemplateUrl
+ *    Template function.
  * @return {string} Template URL.
  * @ngInject
  * @private

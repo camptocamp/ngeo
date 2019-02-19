@@ -72,8 +72,10 @@ function ngeoRoutingTemplateUrl($attrs, ngeoRoutingTemplateUrl) {
  * The controller for the routing directive.
  * @param {angular.auto.IInjectorService} $injector Main injector.
  * @param {!angular.IScope} $scope Scope.
- * @param {!import("ngeo/routing/RoutingService.js").RoutingService} ngeoRoutingService service for OSRM routing
- * @param {!import("ngeo/routing/NominatimService.js").NominatimService} ngeoNominatimService service for Nominatim
+ * @param {!import("ngeo/routing/RoutingService.js").RoutingService} ngeoRoutingService service for OSRM
+ *    routing.
+ * @param {!import("ngeo/routing/NominatimService.js").NominatimService} ngeoNominatimService service for
+ *    Nominatim.
  * @param {!angular.IQService} $q Angular q service
  * @param {import("ngeo/misc/debounce.js").miscDebounce<function(): void>} ngeoDebounce ngeo Debounce service.
  * @constructor
@@ -295,7 +297,9 @@ Controller.prototype.parseRoute_ = function(route) {
   };
   // if there are is useful "legs" data, parse this
   if (route.legs) {
-    parsedRoutes = route.legs.map(leg => leg.steps.map(step => new olFeature({geometry: format.readGeometry(step.geometry, formatConfig)})));
+    parsedRoutes = route.legs.map(leg => leg.steps.map(step => new olFeature({
+      geometry: format.readGeometry(step.geometry, formatConfig)
+    })));
     // flatten
     parsedRoutes = [].concat(...parsedRoutes);
   } else if (route.geometry) {
@@ -314,7 +318,9 @@ Controller.prototype.calculateRoute = function() {
 
     const coordFrom = this.getLonLatFromPoint_(this.startFeature_);
     const coordTo = this.getLonLatFromPoint_(this.targetFeature_);
-    const vias = this.viaArray.filter(via => via.feature !== null).map(via => this.getLonLatFromPoint_(via.feature));
+    const vias = this.viaArray.filter(via => via.feature !== null).map(
+      via => this.getLonLatFromPoint_(via.feature)
+    );
     const route = [coordFrom].concat(vias, [coordTo]);
 
     const onSuccess_ = (function(resp) {
@@ -332,12 +338,20 @@ Controller.prototype.calculateRoute = function() {
       this.routeDuration = resp.data.routes[0].duration;
 
       // get first and last coordinate of route
-      const startRoute = /** @type{import("ol/geom/LineString.js").default} */(features[0].getGeometry()).getCoordinateAt(0);
-      const endRoute = /** @type{import("ol/geom/LineString.js").default} */(features[features.length - 1].getGeometry()).getCoordinateAt(1);
+      const startRoute = /** @type{import("ol/geom/LineString.js").default} */(
+        features[0].getGeometry()
+      ).getCoordinateAt(0);
+      const endRoute = /** @type{import("ol/geom/LineString.js").default} */(
+        features[features.length - 1].getGeometry()
+      ).getCoordinateAt(1);
 
       // build geometries to connect route to start and end point of query
-      const startToRoute = [/** @type {import("ol/geom/Point.js").default} */(this.startFeature_.getGeometry()).getCoordinates(), startRoute];
-      const routeToEnd = [endRoute, /** @type {import("ol/geom/Point.js").default} */(this.targetFeature_.getGeometry()).getCoordinates()];
+      const startToRoute = [/** @type {import("ol/geom/Point.js").default} */(
+        this.startFeature_.getGeometry()
+      ).getCoordinates(), startRoute];
+      const routeToEnd = [endRoute, /** @type {import("ol/geom/Point.js").default} */(
+        this.targetFeature_.getGeometry()
+      ).getCoordinates()];
       const routeConnections = [
         new olFeature(new olGeomLineString(startToRoute)),
         new olFeature(new olGeomLineString(routeToEnd))

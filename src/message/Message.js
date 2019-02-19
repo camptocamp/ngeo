@@ -5,8 +5,8 @@
  * @property {number} [delay=7000] The delay in milliseconds the message is shown
  * @property {boolean} [popup=false] Whether the message should be displayed inside a popup window or not.
  * @property {string} msg The message text to display.
- * @property {JQuery|Element|string} [target] The target element (or selector to get the element) in which to display the
- * message. If not defined, then the default target of the notification service is used.
+ * @property {JQuery|Element|string} [target] The target element (or selector to get the element) in which
+ *    to display the message. If not defined, then the default target of the notification service is used.
  * @property {string} [type] The type of message. Defaults to `info`.
  */
 

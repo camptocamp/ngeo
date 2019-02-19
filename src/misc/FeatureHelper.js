@@ -101,12 +101,14 @@ export function FeatureHelper($injector, $filter) {
   /**
    * @type {!import('ngeo/misc/filters.js').unitPrefix}
    */
-  this.unitPrefixFormat_ = /** @type {import('ngeo/misc/filters.js').unitPrefix} */ ($filter('ngeoUnitPrefix'));
+  this.unitPrefixFormat_ =
+    /** @type {import('ngeo/misc/filters.js').unitPrefix} */ ($filter('ngeoUnitPrefix'));
 
   /**
    * @type {!import('ngeo/misc/filters.js').numberCoordinates}
    */
-  this.ngeoNumberCoordinates_ = /** @type {import('ngeo/misc/filters.js').numberCoordinates} */ ($filter('ngeoNumberCoordinates'));
+  this.ngeoNumberCoordinates_ =
+    /** @type {import('ngeo/misc/filters.js').numberCoordinates} */ ($filter('ngeoNumberCoordinates'));
 
   /**
    * Filter function to display point coordinates or null to don't use any filter.
@@ -1172,7 +1174,9 @@ FeatureHelper.prototype.getMeasure = function(feature) {
     } else {
       const coordinates = geometry.getCoordinates();
       if (this.pointFilterArgs_.length > 1) {
-        measure = this.pointFilterFn_(coordinates, this.pointFilterArgs_[0], this.pointFilterArgs_[1]).join(', ');
+        measure = this.pointFilterFn_(
+          coordinates, this.pointFilterArgs_[0], this.pointFilterArgs_[1]
+        ).join(', ');
       } else {
         measure = this.pointFilterFn_(coordinates, this.pointFilterArgs_[0]).join(', ');
       }

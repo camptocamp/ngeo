@@ -49,7 +49,8 @@ function measureAzimutComponent($compile, gettextCatalog, $filter, $injector) {
           style: new olStyleStyle(),
           startMsg: $compile(`<div translate>${helpMsg}</div>`)($scope)[0],
           continueMsg: $compile(`<div translate>${contMsg}</div>`)($scope)[0],
-          precision: $injector.has('ngeoMeasurePrecision') ? $injector.get('ngeoMeasurePrecision') : undefined,
+          precision: $injector.has('ngeoMeasurePrecision') ?
+            $injector.get('ngeoMeasurePrecision') : undefined,
           decimals: $injector.has('ngeoMeasureDecimals') ? $injector.get('ngeoMeasureDecimals') : undefined
         });
 

@@ -85,8 +85,9 @@ module.directive('ngeoDesktopGeolocation', GeolocationDesktopComponent);
  * @param {angular.IScope} $scope The directive's scope.
  * @param {JQuery} $element Element.
  * @param {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
- *     overlay manager service.
- * @param {import("ngeo/message/Notification.js").MessageNotification} ngeoNotification Ngeo notification service.
+ *    overlay manager service.
+ * @param {import("ngeo/message/Notification.js").MessageNotification} ngeoNotification Ngeo notification
+ *    service.
  * @ngInject
  * @ngdoc controller
  * @ngname NgeoDesktopGeolocationController

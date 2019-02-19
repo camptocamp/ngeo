@@ -1,5 +1,6 @@
 import angular from 'angular';
-import gmfControllersAbstractAppController, {AbstractAppController, getLocationIcon} from 'gmf/controllers/AbstractAppController.js';
+import gmfControllersAbstractAppController, {AbstractAppController, getLocationIcon}
+  from 'gmf/controllers/AbstractAppController.js';
 import ngeoQueryBboxQueryComponent from 'ngeo/query/bboxQueryComponent.js';
 import ngeoMapResizemap from 'ngeo/map/resizemap.js';
 import * as olProj from 'ol/proj.js';

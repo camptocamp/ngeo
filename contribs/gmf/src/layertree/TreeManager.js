@@ -34,9 +34,11 @@ import * as olEvents from 'ol/events.js';
  * @param {angular.auto.IInjectorService} $injector Angular injector service.
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @param {import("ngeo/map/LayerHelper.js").LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
- * @param {import("ngeo/message/Notification.js").MessageNotification} ngeoNotification Ngeo notification service.
+ * @param {import("ngeo/message/Notification.js").MessageNotification} ngeoNotification
+ *    Ngeo notification service.
  * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes gmf Themes service.
- * @param {import("ngeo/statemanager/Service.js").StatemanagerService} ngeoStateManager The ngeo statemanager service.
+ * @param {import("ngeo/statemanager/Service.js").StatemanagerService} ngeoStateManager The ngeo
+ *    statemanager service.
  * @ngInject
  * @ngdoc service
  * @ngname gmfTreeManager
@@ -204,7 +206,9 @@ LayertreeTreeManager.prototype.updateTreeGroupsState_ = function(groups) {
   treeGroupsParam[PermalinkParam.TREE_GROUPS] = groups.map(node => node.name).join(',');
   this.ngeoStateManager_.updateState(treeGroupsParam);
   if (this.$injector_.has('gmfPermalink')) {
-    /** @type {import("gmf/permalink/Permalink.js").PermalinkService} */(this.$injector_.get('gmfPermalink')).cleanParams(groups);
+    /** @type {import("gmf/permalink/Permalink.js").PermalinkService} */(
+      this.$injector_.get('gmfPermalink')
+    ).cleanParams(groups);
   }
 };
 
@@ -461,7 +465,8 @@ LayertreeTreeManager.prototype.notifyCantAddGroups_ = function(groups) {
 /**
  * Get a treeCtrl based on it's node id.
  * @param {number} id the id of a GMFThemesGroup or a GMFThemesLeaf.
- * @return {import("ngeo/layertree/Controller.js").LayertreeController?} treeCtrl The associated controller or null.
+ * @return {import("ngeo/layertree/Controller.js").LayertreeController?} treeCtrl The associated controller
+ *    or null.
  * @public
  */
 LayertreeTreeManager.prototype.getTreeCtrlByNodeId = function(id) {
@@ -480,8 +485,8 @@ LayertreeTreeManager.prototype.getTreeCtrlByNodeId = function(id) {
 
 /**
  * Get the OGC server.
- * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl ngeo layertree controller, from
- *     the current node.
+ * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl ngeo layertree controller,
+ *    from the current node.
  * @return {import('gmf/themes.js').GmfOgcServer} The OGC server.
  */
 LayertreeTreeManager.prototype.getOgcServer = function(treeCtrl) {
@@ -550,8 +555,8 @@ LayertreeTreeManager.prototype.refreshFirstLevelGroups_ = function(themes) {
 /**
  * Return a TreeManagerFullState that keeps the state of the given
  * treeCtrl including the state of its children.
- * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl the ngeo layertree controller to
- *     save.
+ * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl the ngeo layertree
+ *    controller to save.
  * @return {TreeManagerFullState!} the fullState object.
  * @private
  */

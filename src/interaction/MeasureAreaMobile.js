@@ -19,7 +19,8 @@ class MeasureAreaMobile extends ngeoInteractionMeasureArea {
   }
 
   /**
-   * @param {import("ol/style/Style.js").StyleLike|undefined} style The sketchStyle used for the drawing interaction.
+   * @param {import("ol/style/Style.js").StyleLike|undefined} style The sketchStyle used for the drawing
+   *    interaction.
    * @param {import("ol/source/Vector.js").default} source Vector source.
    * @return {ngeoInteractionMobileDraw} The interaction
    */

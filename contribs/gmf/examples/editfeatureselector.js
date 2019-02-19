@@ -53,11 +53,12 @@ module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 /**
  * @param {!angular.IScope} $scope Angular scope.
  * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes The gmf themes service.
- * @param {import("gmf/layertree/TreeManager.js").LayertreeTreeManager} gmfTreeManager gmf Tree Manager service.
+ * @param {import("gmf/layertree/TreeManager.js").LayertreeTreeManager} gmfTreeManager gmf Tree Manager
+ *    service.
  * @param {import('gmf/authentication/Service.js').User} gmfUser User.
  * @param {import("ngeo/misc/FeatureHelper.js").FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
- * @param {import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
- *     service.
+ * @param {import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate
+ *    manager service.
  * @ngInject
  * @constructor
  */
@@ -97,7 +98,9 @@ function MainController($scope, gmfThemes, gmfTreeManager, gmfUser,
       wrapX: false,
       features: new olCollection()
     }),
-    style: (feature, resolution) => ngeoFeatureHelper.createEditingStyles(/** @type {import('ol/Feature.js').default} */(feature))
+    style: (feature, resolution) => ngeoFeatureHelper.createEditingStyles(
+      /** @type {import('ol/Feature.js').default} */(feature)
+    )
   });
 
   /**

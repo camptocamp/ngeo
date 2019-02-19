@@ -95,9 +95,12 @@ class Controller {
 
   /**
    * @param {angular.IScope} $scope Angular scope.
-   * @param {import("gmf/lidarprofile/Manager.js").LidarprofileManager} gmfLidarprofileManager gmf gmfLidarprofileManager.
-   * @param {import("gmf/lidarprofile/Config.js").LidarprofileConfigService} gmfLidarprofileConfig gmf Lidar profile config.
-   * @param {import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager service
+   * @param {import("gmf/lidarprofile/Manager.js").LidarprofileManager} gmfLidarprofileManager gmf
+   *    gmfLidarprofileManager.
+   * @param {import("gmf/lidarprofile/Config.js").LidarprofileConfigService} gmfLidarprofileConfig gmf Lidar
+   *    profile config.
+   * @param {import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate
+   *    manager service
    * @param {import("ngeo/download/Csv.js").DownloadCsvService} ngeoCsvDownload CSV Download service.
    * @private
    * @ngInject
@@ -275,7 +278,8 @@ class Controller {
 
   /**
    * Get all available point attributes.
-   * @return {Array.<import("gmf/lidarprofile/Config.js").LidarprofileServerConfigPointAttributes>|undefined} available point attributes.
+   * @return {Array<import("gmf/lidarprofile/Config.js").LidarprofileServerConfigPointAttributes>|undefined}
+   *    Available point attributes.
    */
   getAvailablePointAttributes() {
     return this.profileConfig_.clientConfig.pointAttributes.availableOptions;
@@ -284,8 +288,10 @@ class Controller {
 
   /**
    * Get / Set the selected point attribute
-   * @param {import("gmf/lidarprofile/Config.js").LidarprofileServerConfigPointAttribute=} opt_selectedOption the new selected point attribute.
-   * @return {import("gmf/lidarprofile/Config.js").LidarprofileServerConfigPointAttributes|undefined} Selected point attribute
+   * @param {import("gmf/lidarprofile/Config.js").LidarprofileServerConfigPointAttribute=} opt_selectedOption
+   *    The new selected point attribute.
+   * @return {import("gmf/lidarprofile/Config.js").LidarprofileServerConfigPointAttributes|undefined}
+   *    Selected point attribute
    */
   getSetSelectedPointAttribute(opt_selectedOption) {
     if (opt_selectedOption !== undefined) {
@@ -298,7 +304,8 @@ class Controller {
 
   /**
    * Get the available classifications for this dataset
-   * @return {import("gmf/lidarprofile/Config.js").LidarprofileServerConfigClassifications} classification list
+   * @return {import("gmf/lidarprofile/Config.js").LidarprofileServerConfigClassifications}
+   *    classification list
    */
   getClassification() {
     return this.profileConfig_.serverConfig.classification_colors;
@@ -307,7 +314,8 @@ class Controller {
 
   /**
    * Sets the visible classification in the profile
-   * @param {import("gmf/lidarprofile/Config.js").LidarprofileServerConfigClassification} classification selected value
+   * @param {import("gmf/lidarprofile/Config.js").LidarprofileServerConfigClassification} classification
+   *    selected value
    * @param {number} key of the classification code
    */
   setClassification(classification, key) {

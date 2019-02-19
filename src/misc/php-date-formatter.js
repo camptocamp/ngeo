@@ -1,9 +1,13 @@
+/* eslint max-len: 0 */
+
 /*!
  * @copyright Copyright &copy; Kartik Visweswaran, Krajee.com, 2014 - 2017
  * @version 1.3.4
  *
- * Date formatter utility library that allows formatting date/time variables or Date objects using PHP DateTime format.
- * This library is a standalone javascript library and does not depend on other libraries or plugins like jQuery.
+ * Date formatter utility library that allows formatting date/time variables or Date objects using PHP
+ * DateTime format.
+ * This library is a standalone javascript library and does not depend on other libraries or plugins like
+ * jQuery.
  *
  * @see http://php.net/manual/en/function.date.php
  *
@@ -194,7 +198,8 @@ export default class DateFormatter {
                 case 'Y':
                     if (iDatePart) {
                         const len = vDatePart.length;
-                        out.year = len === 2 ? parseInt((iDatePart < 70 ? '20' : '19') + vDatePart) : iDatePart;
+                        out.year = len === 2 ? parseInt((iDatePart < 70 ? '20' : '19') + vDatePart) :
+                            iDatePart;
                     } else {
                         return null;
                     }
@@ -294,10 +299,12 @@ export default class DateFormatter {
         if (typeof vDateStr !== 'string') {
             return vDateStr;
         }
+        const self = this;
         // @ts-ignore: not checked file
-        const self = this, vParts = vDateStr.replace(self.separators, '\0').split('\0'), vPattern = /^[djmn]/g,
-            // @ts-ignore: not checked file
-            vFormatParts = vFormat.match(self.validParts), vDate = new Date();
+        const vParts = vDateStr.replace(self.separators, '\0').split('\0'), vPattern = /^[djmn]/g;
+        // @ts-ignore: not checked file
+        const vFormatParts = vFormat.match(self.validParts);
+        const vDate = new Date();
 
         if (!vPattern.test(vFormatParts[0])) {
             return vDateStr;
@@ -329,7 +336,9 @@ export default class DateFormatter {
                     let vYear = vDate.getFullYear();
                     const len = iPart.length;
                     vDigit = len < 4 ? len : 4;
-                    vYear = parseInt(len < 4 ? vYear.toString().substr(0, 4 - len) + iPart : iPart.substr(0, 4));
+                    vYear = parseInt(
+                        len < 4 ? vYear.toString().substr(0, 4 - len) + iPart : iPart.substr(0, 4)
+                    );
                     if (!vYear) {
                         return null;
                     }
@@ -422,7 +431,8 @@ export default class DateFormatter {
              * @return {number}
              */
             W() {
-                const a = new Date(fmt.Y(), fmt.n() - 1, fmt.j() - fmt.N() + 3), b = new Date(a.getFullYear(), 0, 4);
+                const a = new Date(fmt.Y(), fmt.n() - 1, fmt.j() - fmt.N() + 3);
+                const b = new Date(a.getFullYear(), 0, 4);
                 // @ts-ignore: not checked file
                 return _lpad(1 + Math.round((a - b) / DAY / 7), 2);
             },
@@ -523,7 +533,9 @@ export default class DateFormatter {
              * @return {string}
              */
             B() {
-                const H = vDate.getUTCHours() * HOUR, i = vDate.getUTCMinutes() * 60, s = vDate.getUTCSeconds();
+                const H = vDate.getUTCHours() * HOUR;
+                const i = vDate.getUTCMinutes() * 60;
+                const s = vDate.getUTCSeconds();
                 return _lpad(Math.floor((H + i + s + HOUR) / 86.4) % 1000, 3);
             },
             /**

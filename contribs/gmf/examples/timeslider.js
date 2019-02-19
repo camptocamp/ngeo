@@ -3,7 +3,8 @@ import angular from 'angular';
 import gmfLayertreeTimeSliderComponent from 'gmf/layertree/timeSliderComponent.js';
 
 import ngeoMiscWMSTime from 'ngeo/misc/WMSTime.js';
-import {TimePropertyWidgetEnum, TimePropertyResolutionEnum, TimePropertyModeEnum} from 'ngeo/datasource/OGC.js';
+import {TimePropertyWidgetEnum, TimePropertyResolutionEnum, TimePropertyModeEnum}
+  from 'ngeo/datasource/OGC.js';
 
 
 /** @type {!angular.IModule} **/

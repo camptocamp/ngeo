@@ -53,8 +53,8 @@ export function PermalinkShareService($http, gmfShortenerCreateUrl) {
  * Get a short URL of the permalink by calling the url shortener service.
  * - If no shortener API url have been specified, it returns the permalink itself.
  * @param  {string} url the permalink
- * @return {ShortenerAPIResponse|angular.IHttpPromise<Object>} an object containing the permalink not shortened or
- * the promise attached to the shortener API request
+ * @return {ShortenerAPIResponse|angular.IHttpPromise<Object>} an object containing the permalink not
+ *    shortened or the promise attached to the shortener API request
  */
 PermalinkShareService.prototype.getShortUrl = function(url) {
   const params = /** @type {ShortenerAPIRequestParams} */ ({

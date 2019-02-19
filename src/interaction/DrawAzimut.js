@@ -172,7 +172,9 @@ class DrawAzimut extends olInteractionPointer {
    */
   modifyDrawing_(event) {
     const coordinate = event.coordinate;
-    const geometry = /** @type {import('ol/geom/GeometryCollection.js').default} */(this.sketchFeature_.getGeometry());
+    const geometry = /** @type {import('ol/geom/GeometryCollection.js').default} */(
+      this.sketchFeature_.getGeometry()
+    );
     const geometries = geometry.getGeometriesArray();
     const line = geometries[0];
     if (line instanceof olGeomLineString) {

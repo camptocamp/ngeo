@@ -33,7 +33,8 @@ module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
  * @param {angular.IQService} $q Angular $q service.
  * @param {!angular.IScope} $scope Angular scope.
  * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes The gmf themes service.
- * @param {import("gmf/editing/XSDAttributes.js").EditingXSDAttributeService} gmfXSDAttributes The gmf XSDAttributes service.
+ * @param {import("gmf/editing/XSDAttributes.js").EditingXSDAttributeService} gmfXSDAttributes
+ *    The gmf XSDAttributes service.
  * @constructor
  * @ngInject
  */

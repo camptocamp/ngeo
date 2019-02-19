@@ -26,7 +26,8 @@ import olInteractionSnap from 'ol/interaction/Snap.js';
  * @param {!angular.IScope} $rootScope Angular rootScope.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes The gmf Themes service.
- * @param {import("gmf/layertree/TreeManager.js").LayertreeTreeManager} gmfTreeManager The gmf TreeManager service.
+ * @param {import("gmf/layertree/TreeManager.js").LayertreeTreeManager} gmfTreeManager The gmf TreeManager
+ *    service.
  * @ngInject
  * @ngdoc service
  * @ngname gmfSnapping
@@ -197,7 +198,8 @@ EditingSnappingService.prototype.handleThemesChange_ = function() {
  * create and add a cache item with every configuration required to do the
  * snapping. It becomes active when its state is set to 'on'.
  *
- * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl Layertree controller to register
+ * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl Layertree controller to
+ *    register
  * @private
  */
 EditingSnappingService.prototype.registerTreeCtrl_ = function(treeCtrl) {

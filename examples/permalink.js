@@ -1,3 +1,5 @@
+/* eslint max-len: ["error", { "code": 110, "ignoreComments": true }] */
+
 import './permalink.css';
 import angular from 'angular';
 import ngeoFormatFeatureHash from 'ngeo/format/FeatureHash.js';
@@ -48,7 +50,8 @@ module.component('appMap', mapComponent);
 
 /**
  * @param {import("ngeo/statemanager/Location.js").StatemanagerLocation} ngeoLocation ngeo Location service.
- * @param {import("ngeo/misc/debounce.js").miscDebounce<function(import("ol/events/Event.js").default): void>} ngeoDebounce ngeo Debounce factory.
+ * @param {import("ngeo/misc/debounce.js").miscDebounce<function(import("ol/events/Event.js").default): void>} ngeoDebounce
+ *    ngeo Debounce factory.
  * @constructor
  * @ngInject
  */

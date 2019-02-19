@@ -6,21 +6,24 @@
  *
  *
  * @typedef {Object} DataSourceOptions
- * @property {Array.<import('ngeo/format/Attribute.js').Attribute>} [attributes] The attributes of the data source.
- * @property {import('ngeo/datasource/OGC.js').DimensionsFiltersConfig} [dimensionsFiltersConfig] The dimensions filters configuration,
- * which determines dimensions supported by this data source using filters and give the corresponding field
- * and whether they should use a static value or the one defined in the dimensions.
+ * @property {Array.<import('ngeo/format/Attribute.js').Attribute>} [attributes] The attributes of the data
+ *    source.
+ * @property {import('ngeo/datasource/OGC.js').DimensionsFiltersConfig} [dimensionsFiltersConfig]
+ *    The dimensions filters configuration, which determines dimensions supported by this data source using
+ *    filters and give the corresponding field and whether they should use a static value or the one defined
+ *    in the dimensions.
  * @property {number} id The data source id.
  * @property {string} [identifierAttribute] The name of an attribute among the attributes of the data source.
- * The value of that attribute, in records, can be used to identify each record individually.
+ *    The value of that attribute, in records, can be used to identify each record individually.
  * @property {boolean} [inRange] A data source is considered 'in range' when it is synchronized to
- * a map view and the resolution of that view is within the range of the `maxResolution` and
- * `minResolution`. These 2 properties are required for the `inRange` property to be dynamic, otherwise its
- * value is always `true` by default.
+ *    a map view and the resolution of that view is within the range of the `maxResolution` and
+ *    `minResolution`. These 2 properties are required for the `inRange` property to be dynamic, otherwise its
+ *    value is always `true` by default.
  * @property {number} [minResolution] Minimum resolution where the data source can be displayed or queried.
  * @property {number} [maxResolution] Maximum resolution where the data source can be displayed or queried.
  * @property {string} name A human-readable name for the data source.
- * @property {boolean} [visible=false] Whether the data source is visible or not, i.e. whether its is ON or OFF.
+ * @property {boolean} [visible=false] Whether the data source is visible or not, i.e.
+ *    whether its is ON or OFF.
  */
 
 

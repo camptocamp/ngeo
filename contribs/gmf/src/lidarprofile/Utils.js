@@ -1,3 +1,5 @@
+/* eslint max-len: ["error", { "code": 110, "ignoreComments": true }] */
+
 import olFeature from 'ol/Feature.js';
 import olGeomLineString from 'ol/geom/LineString.js';
 import olGeomPoint from 'ol/geom/Point.js';
@@ -60,7 +62,8 @@ import {select as d3select} from 'd3';
 export default class {
   /**
    * Clip a linstring with start and end measure given by D3 Chart domain
-   * @param {import("gmf/lidarprofile/Config.js").LidarprofileConfigService} config the LIDAR profile config instance
+   * @param {import("gmf/lidarprofile/Config.js").LidarprofileConfigService} config the LIDAR profile config
+   *    instance
    * @param {number} map_resolution the current resolution of the map
    * @param {import("ol/geom/LineString.js").default} linestring an OpenLayer Linestring
    * @param {number} dLeft domain minimum
@@ -203,7 +206,8 @@ export default class {
    * Get a Level Of Details and with for a given chart span
    * Configuration is set up in Pytree configuration
    * @param {number} span domain extent
-   * @param {import("gmf/lidarprofile/Config.js").LidarprofileServerConfigLevels} max_levels levels defined by a LIDAR server
+   * @param {import("gmf/lidarprofile/Config.js").LidarprofileServerConfigLevels} max_levels levels defined
+   *    by a LIDAR server
    * @return {{maxLOD: number, width: number}} Object with optimized Level Of Details and width for this profile span
    */
   getNiceLOD(span, max_levels) {
@@ -368,7 +372,8 @@ export default class {
    * @param {number} tolerance snap sensibility
    * @param {Function} sx d3.scalelinear x scale
    * @param {Function} sy d3.scalelinear y scale
-   * @param {import("gmf/lidarprofile/Config.js").LidarprofileServerConfigClassifications} classification_colors classification colors
+   * @param {import("gmf/lidarprofile/Config.js").LidarprofileServerConfigClassifications} classification_colors
+   *    classification colors
    * @return {LidarPoint} closestPoint the closest point to the clicked coordinates
    */
   getClosestPoint(points, xs, ys, tolerance, sx, sy, classification_colors) {
@@ -379,8 +384,12 @@ export default class {
 
     for (let i = 0; i < d.distance.length; i++) {
 
-      if (sx(d.distance[i]) < xs + tol && sx(d.distance[i]) > xs - tol && sy(d.altitude[i]) < ys + tol && sy(d.altitude[i]) > ys - tol) {
-        const pDistance = Math.sqrt(Math.pow((sx(d.distance[i]) - xs), 2) + Math.pow((sy(d.altitude[i]) - ys), 2));
+      if (sx(d.distance[i]) < xs + tol && sx(d.distance[i]) > xs - tol && sy(d.altitude[i]) <
+        ys + tol && sy(d.altitude[i]) > ys - tol
+      ) {
+        const pDistance = Math.sqrt(
+          Math.pow((sx(d.distance[i]) - xs), 2) + Math.pow((sy(d.altitude[i]) - ys), 2)
+        );
         const cClassif = classification_colors[d.classification[i]];
         if (cClassif && cClassif.visible == 1) {
 

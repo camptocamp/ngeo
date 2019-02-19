@@ -11,7 +11,8 @@ import ngeoMessagePopupComponent from 'ngeo/message/popupComponent.js';
  * The options for a popup created by the popup factory.
  *
  * @typedef {Object} PopupOptions
- * @property {boolean} [autoDestroy=false] Whether the popup should be automatically destroyed when hidden or not.
+ * @property {boolean} [autoDestroy=false] Whether the popup should be automatically destroyed when hidden
+ *    or not.
  * @property {string} [cls] Extra class name to add to the popup.
  * @property {*} [content] The content of the popup. Either the content or URL must be set.
  * @property {string} [height] The height of the popup.

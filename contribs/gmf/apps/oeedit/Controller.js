@@ -6,7 +6,8 @@
  */
 
 import angular from 'angular';
-import gmfControllersAbstractDesktopController, {AbstractDesktopController} from 'gmf/controllers/AbstractDesktopController.js';
+import gmfControllersAbstractDesktopController, {AbstractDesktopController}
+  from 'gmf/controllers/AbstractDesktopController.js';
 import './sass/oeedit.scss';
 import appBase from '../appmodule.js';
 import gmfObjecteditingModule from 'gmf/objectediting/module.js';
@@ -21,8 +22,10 @@ import RavenPluginsAngular from 'raven-js/plugins/angular.js';
 
 if (!window.requestAnimationFrame) {
   alert('Your browser is not supported, please update it or use another one. You will be redirected.\n\n'
-    + 'Votre navigateur n\'est pas supporté, veuillez le mettre à jour ou en utiliser un autre. Vous allez être redirigé.\n\n'
-    + 'Ihr Browser wird nicht unterstützt, bitte aktualisieren Sie ihn oder verwenden Sie einen anderen. Sie werden weitergeleitet.');
+    + 'Votre navigateur n\'est pas supporté, veuillez le mettre à jour ou en utiliser un autre. '
+    + 'Vous allez être redirigé.\n\n'
+    + 'Ihr Browser wird nicht unterstützt, bitte aktualisieren Sie ihn oder verwenden Sie einen anderen. '
+    + 'Sie werden weitergeleitet.');
   window.location = 'http://geomapfish.org/';
 }
 
@@ -117,8 +120,8 @@ class Controller extends AbstractDesktopController {
     });
 
     /**
-     * @type {import("gmf/objectediting/Manager.js").ObjecteditingManagerService} gmfObjectEditingManager The gmf
-     *     ObjectEditing manager service.
+     * @type {import("gmf/objectediting/Manager.js").ObjecteditingManagerService} gmfObjectEditingManager
+     *    The gmf ObjectEditing manager service.
      */
     const gmfObjectEditingManager = $injector.get('gmfObjectEditingManager');
 

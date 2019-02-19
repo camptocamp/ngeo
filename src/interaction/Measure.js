@@ -1,3 +1,5 @@
+/* eslint max-len: ["error", { "code": 110, "ignoreComments": true }] */
+
 import ngeoCustomEvent from 'ngeo/CustomEvent.js';
 import * as olDom from 'ol/dom.js';
 import * as olProj from 'ol/proj.js';
@@ -208,7 +210,8 @@ class Measure extends olInteractionInteraction {
   }
 
   /**
-   * @return {import("ol/interaction/Draw.js").default|import("ngeo/interaction/DrawAzimut.js").default|import("ngeo/interaction/MobileDraw.js").default} The draw interaction.
+   * @return {import("ol/interaction/Draw.js").default|import("ngeo/interaction/DrawAzimut.js").default|import("ngeo/interaction/MobileDraw.js").default}
+   *    The draw interaction.
    */
   getDrawInteraction() {
     return this.drawInteraction_;
@@ -222,7 +225,8 @@ class Measure extends olInteractionInteraction {
    * @param {import("ol/style/Style.js").StyleLike|undefined}
    *     style The sketchStyle used for the drawing interaction.
    * @param {import("ol/source/Vector.js").default} source Vector source.
-   * @return {import("ol/interaction/Draw.js").default|import("ngeo/interaction/DrawAzimut.js").default|import("ngeo/interaction/MobileDraw.js").default} The interaction
+   * @return {import("ol/interaction/Draw.js").default|import("ngeo/interaction/DrawAzimut.js").default|import("ngeo/interaction/MobileDraw.js").default}
+   *    The interaction
    * @protected
    */
   createDrawInteraction(style, source) {
@@ -446,7 +450,9 @@ class Measure extends olInteractionInteraction {
  * @hidden
  */
 export function getFormattedArea(polygon, projection, precision, format) {
-  const geom = /** @type {import("ol/geom/Polygon.js").default} */ (polygon.clone().transform(projection, 'EPSG:4326'));
+  const geom = /** @type {import("ol/geom/Polygon.js").default} */ (
+    polygon.clone().transform(projection, 'EPSG:4326')
+  );
   const area = Math.abs(olSphere.getArea(geom, {'projection': 'EPSG:4326'}));
   return format(area, 'm²', 'square', precision);
 }

@@ -1,5 +1,6 @@
 import angular from 'angular';
-import gmfControllersAbstractAppController, {AbstractAppController, getLocationIcon} from 'gmf/controllers/AbstractAppController.js';
+import gmfControllersAbstractAppController, {AbstractAppController, getLocationIcon}
+  from 'gmf/controllers/AbstractAppController.js';
 import gmfMobileMeasureModule from 'gmf/mobile/measure/module.js';
 import gmfMobileNavigationModule from 'gmf/mobile/navigation/module.js';
 import gmfQueryWindowComponent from 'gmf/query/windowComponent.js';

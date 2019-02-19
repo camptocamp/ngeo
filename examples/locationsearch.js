@@ -1,3 +1,5 @@
+/* eslint max-len: ["error", { "code": 110, "ignoreComments": true }] */
+
 import './locationsearch.css';
 import angular from 'angular';
 
@@ -39,7 +41,8 @@ appmodule.component('appLocationSearch', locationSearchComponent);
 
 /**
  * @constructor
- * @param {import("ngeo/search/createLocationSearchBloodhound.js").createLocationSearchBloodhoundFunction} ngeoCreateLocationSearchBloodhound Bloodhound service.
+ * @param {import("ngeo/search/createLocationSearchBloodhound.js").createLocationSearchBloodhoundFunction} ngeoCreateLocationSearchBloodhound
+ *    Bloodhound service.
  * @ngInject
  */
 function SearchController(ngeoCreateLocationSearchBloodhound) {

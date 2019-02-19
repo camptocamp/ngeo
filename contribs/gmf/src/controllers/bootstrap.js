@@ -13,7 +13,9 @@ import {TOUCH} from 'ol/has.js';
 function bootstrap(module) {
   const interface_ = $('meta[name=interface]')[0].getAttribute('content');
   const dynamicUrl_ = $('meta[name=dynamicUrl]')[0].getAttribute('content');
-  const dynamicUrl = `${dynamicUrl_}?interface=${interface_}&query=${encodeURIComponent(document.location.search)}`;
+  const dynamicUrl = `${dynamicUrl_}?interface=${interface_}&query=${encodeURIComponent(
+    document.location.search
+  )}`;
   const request = $.ajax(dynamicUrl, {
     'dataType': 'json',
     'xhrFields': {

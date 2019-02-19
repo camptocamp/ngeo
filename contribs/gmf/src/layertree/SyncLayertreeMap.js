@@ -101,7 +101,10 @@ SyncLayertreeMap.prototype.createLayer = function(treeCtrl, map, dataLayerGroup,
 SyncLayertreeMap.prototype.sync_ = function(treeCtrl) {
   treeCtrl.traverseDepthFirst((treeCtrl) => {
     if (treeCtrl.layer && !treeCtrl.node.mixed) {
-      this.updateLayerState_(/** @type import("ol/layer/Image.js").default|import("ol/layer/Tile.js").default */ (treeCtrl.layer), treeCtrl);
+      this.updateLayerState_(
+        /** @type import("ol/layer/Image.js").default|import("ol/layer/Tile.js").default */ (treeCtrl.layer),
+        treeCtrl
+      );
       return LayertreeVisitorDecision.DESCEND;
     }
   });

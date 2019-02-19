@@ -1,3 +1,5 @@
+/* eslint max-len: ["error", { "code": 110, "ignoreComments": true }] */
+
 import angular from 'angular';
 import appURL from './url.js';
 import './xsdattributes.css';
@@ -28,7 +30,8 @@ module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 /**
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes The gmf themes service.
- * @param {import("gmf/editing/XSDAttributes.js").EditingXSDAttributeService} gmfXSDAttributes The gmf XSDAttributes service.
+ * @param {import("gmf/editing/XSDAttributes.js").EditingXSDAttributeService} gmfXSDAttributes
+ *    The gmf XSDAttributes service.
  * @constructor
  * @ngInject
  */
@@ -135,8 +138,10 @@ MainController.prototype.getGeomType = function() {
 
 /**
  * Just for this example
- * @param {import('gmf/themes.js').GmfTheme|import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer} node A theme, group or layer node.
- * @param {Array.<import('gmf/themes.js').GmfTheme|import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer>} nodes An Array of nodes.
+ * @param {import('gmf/themes.js').GmfTheme|import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer} node
+ *    A theme, group or layer node.
+ * @param {Array.<import('gmf/themes.js').GmfTheme|import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer>} nodes
+ *    An Array of nodes.
  */
 MainController.prototype.getDistinctFlatNodes_ = function(node, nodes) {
   let i;

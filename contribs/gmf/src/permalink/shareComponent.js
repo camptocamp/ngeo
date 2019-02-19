@@ -74,7 +74,8 @@ class ShareComponentController {
    * The controller for the share component
    * @param {angular.IScope} $scope Scope.
    * @param {import("ngeo/statemanager/Location.js").StatemanagerLocation} ngeoLocation ngeo Location service.
-   * @param {import("gmf/permalink/ShareService.js").PermalinkShareService} gmfShareService service for sharing map.
+   * @param {import("gmf/permalink/ShareService.js").PermalinkShareService} gmfShareService service for
+   *    sharing map.
    * @param {angular.IQService} $q Angular q service
    * @param {angular.IAttributes} $attrs Attributes.
    * @constructor

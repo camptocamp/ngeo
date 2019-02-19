@@ -48,7 +48,8 @@ function gmfThemeSelectorTemplateUrl($attrs, gmfThemeSelectorTemplateUrl) {
 
 
 /**
- * Note that this component works with the {@link import("gmf/layertree/TreeManager.js").LayertreeTreeManager}.
+ * Note that this component works with the
+ * {@link import("gmf/layertree/TreeManager.js").LayertreeTreeManager}.
  * Setting the theme will update the "tree" object of
  * this {@link import("gmf/layertree/TreeManager.js").LayertreeTreeManager}.
  *
@@ -59,7 +60,9 @@ function gmfThemeSelectorTemplateUrl($attrs, gmfThemeSelectorTemplateUrl) {
  *          <span ng-if="mainCtrl.gmfThemeManager.modeFlush">
  *            <span translate>Theme:</span>
  *            <b ng-if="!mainCtrl.gmfThemeManager.getThemeName()" translate>Loading...</b>
- *            <b ng-if="mainCtrl.gmfThemeManager.getThemeName()">{{mainCtrl.gmfThemeManager.getThemeName()|translate}}</b>
+ *            <b ng-if="mainCtrl.gmfThemeManager.getThemeName()">
+ *              {{mainCtrl.gmfThemeManager.getThemeName()|translate}}
+ *            </b>
  *          </span>
  *          <span ng-if="!mainCtrl.gmfThemeManager.modeFlush">
  *            <b ng-if="!mainCtrl.gmfThemeManager.themeName" translate>Themes</b>
@@ -72,7 +75,8 @@ function gmfThemeSelectorTemplateUrl($attrs, gmfThemeSelectorTemplateUrl) {
  *      </gmf-themeselector>
  *
  * The theme selector can operate in a 'flush' (as above) or 'add' mode. For more information
- * about these modes, refer to the documentation of {@link import("gmf/layertree/TreeManager.js").LayertreeTreeManager}.
+ * about these modes, refer to the documentation of
+ * {@link import("gmf/layertree/TreeManager.js").LayertreeTreeManager}.
  *
  * Example in 'add' mode:
  *

@@ -1,3 +1,5 @@
+/* eslint max-len: ["error", { "code": 110, "ignoreComments": true }] */
+
 // TODO - MaxScaleDenominator
 // TODO - MinScaleDenominator
 
@@ -206,8 +208,8 @@ export class ExternalDatSourcesManager {
   }
 
   /**
-   * @return {!import("ol/Collection.js").default.<!import("ngeo/datasource/WMSGroup.js").default>} Collection of WMS
-   *     groups.
+   * @return {!import("ol/Collection.js").default.<!import("ngeo/datasource/WMSGroup.js").default>}
+   *    Collection of WMS groups.
    */
   get wmsGroupsCollection() {
     return this.wmsGroupsCollection_;
@@ -255,8 +257,8 @@ export class ExternalDatSourcesManager {
   }
 
   /**
-   * @return {!import("ol/Collection.js").default.<!import("ngeo/datasource/OGCGroup.js").default>} Collection of groups
-   *     for WMTS data sources.
+   * @return {!import("ol/Collection.js").default.<!import("ngeo/datasource/OGCGroup.js").default>}
+   *    Collection of groups for WMTS data sources.
    */
   get wmtsGroupsCollection() {
     return this.wmtsGroupsCollection_;
@@ -369,7 +371,8 @@ export class ExternalDatSourcesManager {
 
 
     // (2) Add data source in WMS group, unless it's already in there.
-    //     Will also add the data source to the `import('ngeo/datasource/DataSource.js').DataSources` collection.
+    //     Will also add the data source to the `import('ngeo/datasource/DataSource.js').DataSources`
+    //     collection.
     //     If the group is created, its inner OL layer is also added to the map.
     let wmsGroup = this.getWMSGroup(url);
     if (wmsGroup) {
@@ -490,7 +493,8 @@ export class ExternalDatSourcesManager {
           // (3) Add it to the file group
           fileGroup.addDataSource(dataSource);
 
-          // (4) Recenter the map view onto its extent if there is at least one geometry (and so a valid extent)
+          // (4) Recenter the map view onto its extent if there is at least one geometry (and so a valid
+          // extent)
           this.map_.getView().fit(dataSource.extent);
 
           // (5) Finally, add it to the ngeo collection

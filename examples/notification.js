@@ -14,7 +14,8 @@ const module = angular.module('app', [
 
 
 /**
- * @param {import("ngeo/message/Notification.js").MessageNotification} ngeoNotification Ngeo notification service.
+ * @param {import("ngeo/message/Notification.js").MessageNotification} ngeoNotification
+ *    Ngeo notification service.
  * @ngInject
  * @constructor
  */

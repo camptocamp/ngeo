@@ -62,8 +62,8 @@ class GoogleStreetviewController {
   /**
    * @param {JQuery} $element Element.
    * @param {!angular.IScope} $scope Scope.
-   * @param {!import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr Ngeo FeatureOverlay
-   *     manager.
+   * @param {!import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr Ngeo
+   *    FeatureOverlay manager.
    * @private
    * @ngInject
    * @ngdoc controller
