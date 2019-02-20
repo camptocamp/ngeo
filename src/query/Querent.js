@@ -664,6 +664,8 @@ export class Querent {
       );
 
       // (4.1) Count, if required
+      /** @type {angular.IPromise<number|void>} */
+      let countPromise;
       if (wfsCount) {
         /** @type {import('ol/format/WFS.js').WriteGetFeatureOptions} */
         const getCountOptions = Object.assign(
@@ -676,8 +678,7 @@ export class Querent {
         const featureCountRequest = xmlSerializer.serializeToString(
           featureCountXml);
         const canceler = this.registerCanceler_();
-        /** @type {angular.IPromise<number>} */
-        const countPromise = this.http_.post(
+        countPromise = this.http_.post(
           url,
           featureCountRequest,
           {
@@ -691,50 +692,52 @@ export class Querent {
           );
           return meta['numberOfFeatures'];
         });
-
-        // (4.2) After count, do GetFeature (if required)
-        /**
-         * @param {number} numberOfFeatures value
-         * @returns {angular.IPromise<never>} undefined
-         */
-        const then_ = (numberOfFeatures) => {
-          // `true` is returned if a count request was made AND there would
-          // be too many features.
-          if (numberOfFeatures === undefined || numberOfFeatures < maxFeatures) {
-
-            /** @type {import('ol/format/WFS.js').WriteGetFeatureOptions} */
-            const getFeatureOptions = Object.assign(
-              {
-                maxFeatures
-              },
-              getFeatureCommonOptions
-            );
-            const featureRequestXml = wfsFormat.writeGetFeature(
-              getFeatureOptions);
-            const featureRequest = xmlSerializer.serializeToString(
-              featureRequestXml);
-            console.assert(typeof url == 'string');
-            const canceler = this.registerCanceler_();
-            this.http_.post(
-              url,
-              featureRequest,
-              {
-                params: params,
-                headers: {'Content-Type': 'text/xml; charset=UTF-8'},
-                timeout: canceler.promise
-              }
-            ).then((response) => {
-              getFeatureDefer.resolve(response);
-            });
-
-          } else {
-            getFeatureDefer.resolve(numberOfFeatures);
-          }
-
-          return undefined;
-        };
-        countPromise.then(then_);
+      } else {
+        countPromise = this.q_.resolve();
       }
+
+      // (4.2) After count, do GetFeature (if required)
+      /**
+       * @param {number} numberOfFeatures value
+       * @returns {angular.IPromise<never>} undefined
+       */
+      const afterCount_ = (numberOfFeatures) => {
+        // `true` is returned if a count request was made AND there would
+        // be too many features.
+        if (numberOfFeatures === undefined || numberOfFeatures < maxFeatures) {
+
+          /** @type {import('ol/format/WFS.js').WriteGetFeatureOptions} */
+          const getFeatureOptions = Object.assign(
+            {
+              maxFeatures
+            },
+            getFeatureCommonOptions
+          );
+          const featureRequestXml = wfsFormat.writeGetFeature(
+            getFeatureOptions);
+          const featureRequest = xmlSerializer.serializeToString(
+            featureRequestXml);
+          console.assert(typeof url == 'string');
+          const canceler = this.registerCanceler_();
+          this.http_.post(
+            url,
+            featureRequest,
+            {
+              params: params,
+              headers: {'Content-Type': 'text/xml; charset=UTF-8'},
+              timeout: canceler.promise
+            }
+          ).then((response) => {
+            getFeatureDefer.resolve(response);
+          });
+
+        } else {
+          getFeatureDefer.resolve(numberOfFeatures);
+        }
+
+        return undefined;
+      };
+      countPromise.then(afterCount_);
     }
 
     return this.q_.all(promises).then(
