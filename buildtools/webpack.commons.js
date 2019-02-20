@@ -160,7 +160,8 @@ const config = function(hardSourceConfig, babelLoaderCacheDirectory) {
     ],
     resolve: {
       modules: [
-        '../node_modules'
+        '../node_modules',
+        '../node_modules/d3/node_modules',
       ],
       mainFields: ['geoblocks_src', 'module', 'jsnext:main', 'main'],
       alias: {
