@@ -664,6 +664,7 @@ export class Querent {
       );
 
       // (4.1) Count, if required
+      /** @type {angular.IPromise<number|void>} */
       let countPromise;
       if (wfsCount) {
         /** @type {import('ol/format/WFS.js').WriteGetFeatureOptions} */
@@ -677,7 +678,6 @@ export class Querent {
         const featureCountRequest = xmlSerializer.serializeToString(
           featureCountXml);
         const canceler = this.registerCanceler_();
-        /** @type {angular.IPromise<number>} */
         countPromise = this.http_.post(
           url,
           featureCountRequest,
