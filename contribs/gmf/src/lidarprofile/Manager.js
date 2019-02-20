@@ -24,7 +24,8 @@ export class LidarprofileManager {
    * @param {angular.IHttpService} $http Angular http service.
    * @param {angular.IFilterService} $filter Angular filter.
    * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
-   * @param {import("ngeo/misc/debounce.js").miscDebounce<function(): void>} ngeoDebounce ngeo debounce service.
+   * @param {import("ngeo/misc/debounce.js").miscDebounce<function(): void>} ngeoDebounce ngeo debounce
+   *    service.
    * @ngInject
    * @ngdoc service
    * @ngname gmflidarprofileManager
@@ -244,13 +245,20 @@ export class LidarprofileManager {
 
     for (let i = 0; i < maxLODWith.maxLOD; i++) {
       if (i == 0) {
-        this.queryPytree_(minLOD, this.config.serverConfig.initialLOD, i, pytreeLinestring, distanceOffset, lastLOD, profileWidth, resetPlot);
+        this.queryPytree_(
+          minLOD, this.config.serverConfig.initialLOD, i, pytreeLinestring, distanceOffset, lastLOD,
+          profileWidth, resetPlot
+        );
         i += this.config.serverConfig.initialLOD - 1;
       } else if (i < maxLODWith.maxLOD - 1) {
-        this.queryPytree_(minLOD + i, minLOD + i + 1, i, pytreeLinestring, distanceOffset, lastLOD, profileWidth, false);
+        this.queryPytree_(
+          minLOD + i, minLOD + i + 1, i, pytreeLinestring, distanceOffset, lastLOD, profileWidth, false
+        );
       } else {
         lastLOD = true;
-        this.queryPytree_(minLOD + i, minLOD + i + 1, i, pytreeLinestring, distanceOffset, lastLOD, profileWidth, false);
+        this.queryPytree_(
+          minLOD + i, minLOD + i + 1, i, pytreeLinestring, distanceOffset, lastLOD, profileWidth, false
+        );
       }
     }
   }
@@ -430,8 +438,12 @@ export class LidarprofileManager {
     const gettextCatalog = this.gettextCatalog;
     const errorInfoTxt = gettextCatalog.getString('Lidar profile service error');
     const errorOfflineTxt = gettextCatalog.getString('It might be offline');
-    const errorOutsideTxt = gettextCatalog.getString('Or did you attempt to draw a profile outside data extent?');
-    const errorNoPointError = gettextCatalog.getString('Or did you attempt to draw such a small profile that no point was returned?');
+    const errorOutsideTxt = gettextCatalog.getString(
+      'Or did you attempt to draw a profile outside data extent?'
+    );
+    const errorNoPointError = gettextCatalog.getString(
+      'Or did you attempt to draw such a small profile that no point was returned?'
+    );
     return `
       <div class="lidarprofile-error">
       <p class="bold">${errorInfoTxt}</p>

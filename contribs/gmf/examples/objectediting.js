@@ -50,11 +50,12 @@ module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 /**
  * @param {import("gmf/objectediting/Manager.js").ObjecteditingManagerService} gmfObjectEditingManager The gmf
- *     ObjectEditing manager service.
+ *    ObjectEditing manager service.
  * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes The gmf themes service.
- * @param {import("gmf/layertree/TreeManager.js").LayertreeTreeManager} gmfTreeManager gmf Tree Manager service.
- * @param {import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
- *     service.
+ * @param {import("gmf/layertree/TreeManager.js").LayertreeTreeManager} gmfTreeManager gmf Tree Manager
+ *    service.
+ * @param {import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate
+ *    manager service.
  * @constructor
  * @ngInject
  */

@@ -30,7 +30,8 @@ const module = angular.module('gmfObjecteditingGetWMSFeatureComponent', [
  *     directive is active or not.
  * @htmlAttribute {import("ol/Collection.js").default} gmf-objecteditinggetwmsfeature-features
  *     The collection of features where to add those created by this directive.
- * @htmlAttribute {import('gmf/objectediting/toolsComponent.js').ObjectEditingQueryableLayerInfo} gmf-objecteditinggetwmsfeature-layerinfo Queryable layer info.
+ * @htmlAttribute {import('gmf/objectediting/toolsComponent.js').ObjectEditingQueryableLayerInfo}
+ *     gmf-objecteditinggetwmsfeature-layerinfo Queryable layer info.
  * @htmlAttribute {import("ol/Map.js").default} gmf-objecteditinggetwmsfeature-map The map.
  * @return {angular.IDirective} The directive specs.
  * @ngInject

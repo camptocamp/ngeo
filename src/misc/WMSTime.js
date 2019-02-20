@@ -33,7 +33,8 @@ export class WMSTime extends Time {
   /**
    * Format time regarding a resolution
    * @param  {number} time (in ms format) timestamp to format
-   * @param  {import('ngeo/datasource/OGC.js').TimePropertyResolutionEnum|undefined} resolution resolution to use
+   * @param  {import('ngeo/datasource/OGC.js').TimePropertyResolutionEnum|undefined} resolution resolution to
+   *    use.
    * @param  {boolean=} opt_useISOFormat True to a ISO-8601 date string that can be used
    *     as a WMS-T Parameter. Otherwise, use a localized date format.
    * @param  {boolean=} opt_toUTC to get the UTC date

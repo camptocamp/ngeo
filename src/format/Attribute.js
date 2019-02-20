@@ -28,8 +28,9 @@ import ngeoFormatAttributeType from 'ngeo/format/AttributeType.js';
  * @property {string|null} name The attribute name.
  * @property {string|null} alias The attribute alias
  * @property {boolean} [readonly] Whether the attribute's value should be prevented from being edited
- * or not. Defaults to `false`.
- * @property {boolean} [required] Whether the attribute is required to have a value set or not. Defaults to `false`.
+ *    or not. Defaults to `false`.
+ * @property {boolean} [required] Whether the attribute is required to have a value set or not.
+ *    Defaults to `false`.
  * @property {string} type The attribute type, which determines how to render it.
  * @property {string} [format] The format used in the date, time and datetime type.
  * @property {string} [mask] The mask used in the date, time and datetime type.

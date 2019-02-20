@@ -1,3 +1,5 @@
+/* eslint max-len: ["error", { "code": 110, "ignoreComments": true }] */
+
 import angular from 'angular';
 import gmfEditingEditFeature from 'gmf/editing/EditFeature.js';
 
@@ -178,12 +180,13 @@ module.directive('gmfEditfeature', editingEditFeatureComponent);
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @param {import("gmf/editing/EditFeature.js").EditingEditFeature} gmfEditFeature Gmf edit feature service.
  * @param {import("gmf/editing/Snapping.js").EditingSnappingService} gmfSnapping The gmf snapping service.
- * @param {import("gmf/editing/XSDAttributes.js").EditingXSDAttributeService} gmfXSDAttributes The gmf XSDAttributes service.
+ * @param {import("gmf/editing/XSDAttributes.js").EditingXSDAttributeService} gmfXSDAttributes The gmf
+ *    XSDAttributes service.
  * @param {import("ngeo/misc/EventHelper.js").EventHelper} ngeoEventHelper Ngeo Event Helper.
  * @param {import("ngeo/misc/FeatureHelper.js").FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
  * @param {import("ngeo/map/LayerHelper.js").LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
- * @param {import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
- *     service.
+ * @param {import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate
+ *    manager service.
  * @constructor
  * @private
  * @hidden

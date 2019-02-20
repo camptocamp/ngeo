@@ -93,7 +93,8 @@ class RuleController {
    * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext service.
    * @param {!angular.IScope} $scope Angular scope.
    * @param {!angular.ITimeoutService} $timeout Angular timeout service.
-   * @param {!import("ngeo/misc/FeatureHelper.js").FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
+   * @param {!import("ngeo/misc/FeatureHelper.js").FeatureHelper} ngeoFeatureHelper Ngeo feature helper
+   *    service.
    * @param {!import("ngeo/filter/RuleHelper.js").RuleHelper} ngeoRuleHelper Ngeo rule helper service.
    * @param {!import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate
    *     manager service.
@@ -831,7 +832,9 @@ class RuleController {
       (feature) => {
         /** @type {import('ol/Feature.js').default} */
         let ret = null;
-        if (this.selectedFeatures.getArray().includes(/** @type {import('ol/Feature.js').default} */(feature))) {
+        if (this.selectedFeatures.getArray().includes(
+          /** @type {import('ol/Feature.js').default} */(feature)
+        )) {
           ret = /** @type {import('ol/Feature.js').default} */(feature);
         }
         return ret;

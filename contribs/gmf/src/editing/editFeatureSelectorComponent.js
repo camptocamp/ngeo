@@ -18,8 +18,10 @@ const module = angular.module('GmfEditingFeatureSelectorComponent', [
 
 
 module.run(/* @ngInject */ ($templateCache) => {
-  // @ts-ignore: webpack
-  $templateCache.put('gmf/editing/editFeatureSelectorComponent', require('./editFeatureSelectorComponent.html'));
+  $templateCache.put(
+    // @ts-ignore: webpack
+    'gmf/editing/editFeatureSelectorComponent', require('./editFeatureSelectorComponent.html')
+  );
 });
 
 
@@ -71,7 +73,8 @@ module.directive('gmfEditfeatureselector', editingEditFeatureComponent);
  * @param {!angular.IScope} $scope Angular scope.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes The gmf Themes service.
- * @param {import("gmf/layertree/TreeManager.js").LayertreeTreeManager} gmfTreeManager The gmf TreeManager service.
+ * @param {import("gmf/layertree/TreeManager.js").LayertreeTreeManager} gmfTreeManager The gmf TreeManager
+ *    service.
  * @constructor
  * @private
  * @hidden
@@ -136,7 +139,8 @@ function Controller($scope, $timeout, gmfThemes, gmfTreeManager) {
   this.gmfTreeManager_ = gmfTreeManager;
 
   /**
-   * @param {Array.<import("ngeo/layertree/Controller.js").LayertreeController>} value First level controllers.
+   * @param {Array.<import("ngeo/layertree/Controller.js").LayertreeController>} value First level
+   *    controllers.
    */
   const updateEditableTreeCtrls = function(value) {
     // Timeout required, because the collection event is fired before the

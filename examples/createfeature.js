@@ -1,6 +1,3 @@
-/**
- */
-
 import './createfeature.css';
 import angular from 'angular';
 import ngeoEditingCreatefeatureComponent from 'ngeo/editing/createfeatureComponent.js';
@@ -32,8 +29,8 @@ const module = angular.module('app', [
 
 
 /**
- * @param {import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
- *     service.
+ * @param {import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate
+ *    manager service.
  * @constructor
  * @ngInject
  */

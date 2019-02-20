@@ -33,13 +33,16 @@ module.value('ngeoRoutingNominatimInputComponentTemplateUrl',
 
 /**
  * @param {!angular.IAttributes} $attrs Attributes.
- * @param {!function(!angular.IAttributes): string} ngeoRoutingNominatimInputComponentTemplateUrl Template function.
+ * @param {!function(!angular.IAttributes): string} ngeoRoutingNominatimInputComponentTemplateUrl
+ *    Template function.
  * @return {string} Template URL.
  * @ngInject
  * @private
  * @hidden
  */
-function ngeoRoutingNominatimInputComponentTemplateUrl($attrs, ngeoRoutingNominatimInputComponentTemplateUrl) {
+function ngeoRoutingNominatimInputComponentTemplateUrl(
+  $attrs, ngeoRoutingNominatimInputComponentTemplateUrl
+) {
   return ngeoRoutingNominatimInputComponentTemplateUrl($attrs);
 }
 
@@ -48,7 +51,8 @@ function ngeoRoutingNominatimInputComponentTemplateUrl($attrs, ngeoRoutingNomina
  * @param {!JQuery} $element Element.
  * @param {angular.auto.IInjectorService} $injector Main injector.
  * @param {!angular.IScope} $scope Scope.
- * @param {!import("ngeo/routing/NominatimService.js").NominatimService} ngeoNominatimService service for Nominatim
+ * @param {!import("ngeo/routing/NominatimService.js").NominatimService} ngeoNominatimService service for
+ *    Nominatim
  * @constructor
  * @private
  * @hidden
@@ -128,7 +132,8 @@ Controller.prototype.select_ = function(event, suggestion, dataset) {
 };
 
 /**
- * Input form field which provides Nominatim typeahead lookup using {@link import("ngeo/routing/NominatimService.js").default}.
+ * Input form field which provides Nominatim typeahead lookup using
+ * {@link import("ngeo/routing/NominatimService.js").default}.
  *
  * Example:
  *
@@ -141,8 +146,8 @@ Controller.prototype.select_ = function(event, suggestion, dataset) {
  *
  * See the [../examples/routing.html](../examples/routing.html) example to see it in action.
  *
- * @htmlAttribute {function(import('ngeo/routing/NominatimService').NominatimSearchResult)} ngeo-nominatim-input-on-select
- *  Event fired when user selects a new suggestion.
+ * @htmlAttribute {function(import('ngeo/routing/NominatimService').NominatimSearchResult)}
+ *    ngeo-nominatim-input-on-select Event fired when user selects a new suggestion.
  * @htmlAttribute {string} ngeo-nominatim-input-value
  *  Value of input field, will be set to the label of the search result.
  * @htmlAttribute {string} ngeo-nominatim-input-placeholder

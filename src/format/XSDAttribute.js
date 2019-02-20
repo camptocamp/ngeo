@@ -36,7 +36,9 @@ class XSDAttribute extends olFormatXML {
    */
   read(source) {
     return (
-      /** @type {Array.<import('ngeo/format/Attribute.js').Attribute>} */ olFormatXML.prototype.read.call(this, source)
+      /** @type {Array.<import('ngeo/format/Attribute.js').Attribute>} */ olFormatXML.prototype.read.call(
+        this, source
+      )
     );
   }
 

@@ -33,7 +33,8 @@ export const ThemeEventType = {
  * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes gmf Themes service.
  * @param {boolean} gmfTreeManagerModeFlush Flush mode active?
  * @param {import("gmf/layertree/TreeManager.js").LayertreeTreeManager} gmfTreeManager the tree manager.
- * @param {import("ngeo/statemanager/Service.js").StatemanagerService} ngeoStateManager The ngeo statemanager service.
+ * @param {import("ngeo/statemanager/Service.js").StatemanagerService} ngeoStateManager The ngeo statemanager
+ *    service.
  * @ngInject
  * @ngdoc service
  * @ngname gmfTreeManager

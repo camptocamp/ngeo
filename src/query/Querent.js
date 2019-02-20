@@ -42,34 +42,36 @@ import olSourceImageWMS from 'ol/source/ImageWMS.js';
  *
  * @typedef {Object} IssueGetFeaturesOptions
  * @property {string} [action=replace] The action the MapQuerent should take regarding the queried
- * features. Possible values are:
+ *    features. Possible values are:
  *
- * - `replace`: newly queried features are used as result
- * - `add`:     newly queried features are added to the existing ones
- * - `remove`:  newly queried features are removed from the existing ones
- * @property {import("ol/coordinate.js").Coordinate} [coordinate] The coordinate to issue the requests with, which can end up with either
- * WMS or WFS requests.
- * @property {Array.<import('ngeo/datasource/DataSource.js').default>} [dataSources] ist of data sources to query. Only those that meet the requirements will
- * actually be queried. The querent service requires either the `dataSources`
- * or `queryableDataSources` property to be set.
- * @property {import("ol/extent.js").Extent} [extent] The extent to issue the requests with, which can end up with WFS requests
- * only.
- * @property {import("ol/format/filter/Filter.js").default} [filter] A filter to additionally use with the query. Only used by WFS requests.
- * If a filter is defined, then it is used instead of the data source's filter rules.
+ *    - `replace`: newly queried features are used as result
+ *    - `add`:     newly queried features are added to the existing ones
+ *    - `remove`:  newly queried features are removed from the existing ones
+ * @property {import("ol/coordinate.js").Coordinate} [coordinate] The coordinate to issue the requests with,
+ *    which can end up with either WMS or WFS requests.
+ * @property {Array.<import('ngeo/datasource/DataSource.js').default>} [dataSources] ist of data sources to
+ *    query. Only those that meet the requirements will actually be queried. The querent service requires
+ *    either the `dataSources` or `queryableDataSources` property to be set.
+ * @property {import("ol/extent.js").Extent} [extent] The extent to issue the requests with, which can end up
+ *    with WFS requests only.
+ * @property {import("ol/format/filter/Filter.js").default} [filter] A filter to additionally use with the
+ *    query. Only used by WFS requests.
+ *    If a filter is defined, then it is used instead of the data source's filter rules.
  * @property {number} [limit] The maximum number of features to get per request.
- * @property {import("ol/Map.js").default} map The ol3 map object. Used to fill some parameters of the queries, such as
- * 'srs' and filter the queryable layers within the data sources.
- * @property {QueryableDataSources} [queryableDataSources] A hash of queryable data sources, which must meet all requirements. The
- * querent service requires either the `dataSources` or `queryableDataSources`
- * property to be set.
+ * @property {import("ol/Map.js").default} map The ol3 map object. Used to fill some parameters of the
+ *    queries, such as 'srs' and filter the queryable layers within the data sources.
+ * @property {QueryableDataSources} [queryableDataSources] A hash of queryable data sources, which must meet
+ *    all requirements. The querent service requires either the `dataSources` or `queryableDataSources`
+ *    property to be set.
  *
  * @property {number} [tolerancePx] A tolerance value in pixels used to create an extent from a coordinate
- * to issue WFS requests.
+ *    to issue WFS requests.
  * @property {boolean} [wfsCount] When set, before making WFS GetFeature requests to fetch features,
- * WFS GetFeature requests with `resultType = 'hits'` are made first. If
- * the number of records for the request would exceed the limit, then
- * no features are returned.
- * @property {boolean} [bboxAsGETParam=false] Pass the queried bbox as a parameter of the GET query on WFS requests.
+ *    WFS GetFeature requests with `resultType = 'hits'` are made first. If
+ *    the number of records for the request would exceed the limit, then
+ *    no features are returned.
+ * @property {boolean} [bboxAsGETParam=false] Pass the queried bbox as a parameter of the GET query on WFS
+ *    requests.
  */
 
 
@@ -617,7 +619,9 @@ export class Querent {
           });
         } else if ((dataSource.filterRules && dataSource.filterRules.length) ||
             dataSource.timeRangeValue ||
-            (dataSource.dimensionsFiltersConfig && Object.keys(dataSource.dimensionsFiltersConfig).length > 0)) {
+            (dataSource.dimensionsFiltersConfig && Object.keys(
+              dataSource.dimensionsFiltersConfig
+            ).length > 0)) {
 
           console.assert(
             dataSources.length === 1,

@@ -18,7 +18,9 @@ describe('gmf.contextualdata.component', () => {
     $httpBackend = _$httpBackend_;
 
     const element = angular.element(
-      '<gmf-map gmf-map-map="map" gmf-contextualdata="" gmf-contextualdata-map="::map" gmf-contextualdata-projections="[4326,3857]" gmf-contextualdata-callback="callback"></gmf-map>');
+      '<gmf-map gmf-map-map="map" gmf-contextualdata="" gmf-contextualdata-map="::map" '
+      + 'gmf-contextualdata-projections="[4326,3857]" gmf-contextualdata-callback="callback"></gmf-map>'
+    );
     element.css({
       position: 'absolute',
       top: 10,

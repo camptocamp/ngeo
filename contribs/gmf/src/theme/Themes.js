@@ -10,7 +10,8 @@ import olLayerTile from 'ol/layer/Tile.js';
 /**
  * Configuration options for the themes service.
  * @typedef {Object} ThemesOptions
- * @property {boolean} [addBlankBackgroundLayer] Whether to add a blank background layer to the list of available backgrounds.
+ * @property {boolean} [addBlankBackgroundLayer] Whether to add a blank background layer to the list of
+ *    available backgrounds.
  */
 
 
@@ -156,7 +157,8 @@ export class ThemesService extends olEventsEventTarget {
     /**
      * @param {import('gmf/themes.js').GmfOgcServers} ogcServers The ogc servers.
      * @param {import('gmf/themes.js').GmfLayer} gmfLayer The item.
-     * @return {angular.IPromise.<import("ol/layer/Base.js").default>|import("ol/layer/Base.js").default} the created layer.
+     * @return {angular.IPromise.<import("ol/layer/Base.js").default>|import("ol/layer/Base.js").default}
+     *    The created layer.
      */
     const layerLayerCreationFn = function(ogcServers, gmfLayer) {
       if (gmfLayer.type === 'WMTS') {
@@ -169,7 +171,8 @@ export class ThemesService extends olEventsEventTarget {
           gmfLayer.dimensions,
           gmfLayerWMTS.metadata['customOpenLayersOptions']
         ).then(callback.bind(null, gmfLayer)).then(null, (response) => {
-          let message = `Unable to build layer "${gmfLayerWMTS.layer}" from WMTSCapabilities: ${gmfLayerWMTS.url}\n`;
+          let message = `Unable to build layer "${gmfLayerWMTS.layer}" `
+            + `from WMTSCapabilities: ${gmfLayerWMTS.url}\n`;
           message += `OpenLayers error is "${response['message']}`;
           console.error(message);
           // Continue even if some layers have failed loading.
@@ -212,7 +215,8 @@ export class ThemesService extends olEventsEventTarget {
      */
     const layerGroupCreationFn = function(ogcServers, item) {
       // We assume no child is a layer group.
-      const orderedChildren = item.children.map(x => x).reverse(); // the order of insertion in OL3 is the contrary of the theme
+      // The order of insertion in OL3 is the contrary of the theme
+      const orderedChildren = item.children.map(x => x).reverse();
       const promises = orderedChildren.map(layerLayerCreationFn.bind(null, ogcServers));
       return $q.all(promises).then((layers) => {
         let collection;

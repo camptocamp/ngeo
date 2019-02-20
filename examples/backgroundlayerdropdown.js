@@ -47,8 +47,8 @@ module.component('appBackgroundlayer', backgroundlayerComponent);
 /**
  * @constructor
  * @param {angular.IHttpService} $http Angular http service.
- * @param {import("ngeo/map/BackgroundLayerMgr.js").MapBackgroundLayerManager} ngeoBackgroundLayerMgr Background layer
- *     manager.
+ * @param {import("ngeo/map/BackgroundLayerMgr.js").MapBackgroundLayerManager} ngeoBackgroundLayerMgr
+ *    Background layer manager.
  * @ngInject
  */
 function BackgroundlayerController($http, ngeoBackgroundLayerMgr) {

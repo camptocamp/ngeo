@@ -256,12 +256,13 @@ class Controller {
    * @param {angular.auto.IInjectorService} $injector Main injector.
    * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
    * @param {import("ngeo/map/LayerHelper.js").LayerHelper} ngeoLayerHelper The ngeo Layer Helper service.
-   * @param {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr Ngeo Feature Overlay
-   *     Manager service.
+   * @param {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr Ngeo Feature
+   *    Overlay Manager service.
    * @param {import("ngeo/print/Utils.js").PrintUtils} ngeoPrintUtils The ngeo PrintUtils service.
    * @param {import("ngeo/print/Service.js").CreatePrint} ngeoCreatePrint The ngeo Create Print function.
    * @param {string} gmfPrintUrl A MapFishPrint url.
-   * @param {import("gmf/authentication/Service.js").AuthenticationService} gmfAuthenticationService The authentication service.
+   * @param {import("gmf/authentication/Service.js").AuthenticationService} gmfAuthenticationService
+   *    The authentication service.
    * @param {import('ngeo/query/MapQuerent.js').QueryResult} ngeoQueryResult ngeo query result.
    * @param {angular.IFilterService} $filter Angular $filter service.
    * @param {PrintState} gmfPrintState GMF print state.
@@ -1140,7 +1141,8 @@ class Controller {
       this.smtpMessage = true;
       this.resetPrintStates_();
     } else {
-      const mfResp = /** @type {import('ngeo/print/mapfish-print-v3.js').MapFishPrintReportResponse} */ (resp.data);
+      const mfResp = /** @type {import('ngeo/print/mapfish-print-v3.js').MapFishPrintReportResponse} */ (
+        resp.data);
       const ref = mfResp.ref;
       console.assert(ref.length > 0);
       this.curRef_ = ref;
@@ -1170,7 +1172,8 @@ class Controller {
    * @private
    */
   handleGetStatusSuccess_(ref, resp) {
-    const mfResp = /** @type {import('ngeo/print/mapfish-print-v3.js').MapFishPrintStatusResponse} */ (resp.data);
+    const mfResp = /** @type {import('ngeo/print/mapfish-print-v3.js').MapFishPrintStatusResponse} */ (
+      resp.data);
     const done = mfResp.done;
     if (done) {
       if (mfResp.status != 'error') {

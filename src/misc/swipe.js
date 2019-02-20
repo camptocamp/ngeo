@@ -62,7 +62,9 @@ module.factory('$verticalSwipe', [function() {
 
   function getCoordinates(event) {
     const originalEvent = event.originalEvent || event;
-    const touches = originalEvent.touches && originalEvent.touches.length ? originalEvent.touches : [originalEvent];
+    const touches = originalEvent.touches && originalEvent.touches.length ?
+      originalEvent.touches :
+      [originalEvent];
     const e = (originalEvent.changedTouches && originalEvent.changedTouches[0]) || touches[0];
 
     return {
@@ -101,22 +103,22 @@ module.factory('$verticalSwipe', [function() {
      * receive as a parameter a coordinates object of the form `{ x: 150, y: 310 }` and the raw
      * `event`. `cancel` receives the raw `event` as its single parameter.
      *
-     * `start` is called on either `mousedown`, `touchstart` or `pointerdown`. After this event, `$verticalSwipe` is
-     * watching for `touchmove`, `mousemove` or `pointermove` events. These events are ignored until the total
-     * distance moved in either dimension exceeds a small threshold.
+     * `start` is called on either `mousedown`, `touchstart` or `pointerdown`. After this event,
+     * `$verticalSwipe` is watching for `touchmove`, `mousemove` or `pointermove` events. These events are
+     * ignored until the total distance moved in either dimension exceeds a small threshold.
      *
      * Once this threshold is exceeded, either the vertical or vertical delta is greater.
      * - If the vertical distance is greater, this is a swipe and `move` and `end` events follow.
      * - If the horizontal distance is greater, this is a scroll, and we let the browser take over.
      *   A `cancel` event is sent.
      *
-     * `move` is called on `mousemove`, `touchmove` and `pointermove` after the above logic has determined that
-     * a swipe is in progress.
+     * `move` is called on `mousemove`, `touchmove` and `pointermove` after the above logic has determined
+     * that a swipe is in progress.
      *
      * `end` is called when a swipe is successfully completed with a `touchend`, `mouseup` or `pointerup`.
      *
-     * `cancel` is called either on a `touchcancel` or `pointercancel`  from the browser, or when we begin scrolling
-     * as described above.
+     * `cancel` is called either on a `touchcancel` or `pointercancel`  from the browser, or when we begin
+     * scrolling as described above.
      *
      */
     bind(element, eventHandlers, pointerTypes) {

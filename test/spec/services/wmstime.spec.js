@@ -1,5 +1,6 @@
 import angular from 'angular';
-import {TimePropertyWidgetEnum, TimePropertyResolutionEnum, TimePropertyModeEnum} from 'ngeo/datasource/OGC.js';
+import {TimePropertyWidgetEnum, TimePropertyResolutionEnum, TimePropertyModeEnum}
+  from 'ngeo/datasource/OGC.js';
 
 describe('ngeo.misc.WMSTime service', () => {
   let ngeoWMSTime;

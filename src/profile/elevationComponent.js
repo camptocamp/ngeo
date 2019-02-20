@@ -1,3 +1,5 @@
+/* eslint max-len: ["error", { "code": 110, "ignoreComments": true }] */
+
 import angular from 'angular';
 import * as olEvents from 'ol/events.js';
 import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
@@ -100,8 +102,9 @@ const module = angular.module('ngeoProfile', [
  * @htmlAttribute {ProfileOptions} ngeo-profile-options The options.
  * @htmlAttribute {?Array} ngeo-profile-pois The data for POIs.
  * @htmlAttribute {*} ngeo-profile-highlight Any property on the scope which
- * evaluated value may correspond to distance from origin.
- * @param {import("ngeo/misc/debounce.js").miscDebounce<function(import('ol/events/Event.js').default): void>} ngeoDebounce ngeo Debounce factory.
+ *    evaluated value may correspond to distance from origin.
+ * @param {import("ngeo/misc/debounce.js").miscDebounce<function(import('ol/events/Event.js').default): void>} ngeoDebounce
+ *    ngeo Debounce factory.
  * @return {angular.IDirective} Directive Definition Object.
  * @ngInject
  * @ngdoc directive

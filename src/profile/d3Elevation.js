@@ -421,12 +421,16 @@ function d3Elevation(options) {
       xUnits = xDomain[1] > 2000 ? 'km' : 'm';
 
       if (!light) {
-        xAxis.tickFormat((domainValue) => /** @type {string} */(formatter.xtick(/** @type {number} */(domainValue) / xFactor, xUnits)));
+        xAxis.tickFormat((domainValue) => /** @type {string} */(formatter.xtick(/** @type {number} */(
+          domainValue
+        ) / xFactor, xUnits)));
         if (lightXAxis) {
           xAxis.tickValues([0, x.domain()[1]]);
         }
 
-        yAxis.tickFormat((dommainValue) => /** @type {string} */(formatter.ytick(/** @type {number} */(dommainValue), 'm')));
+        yAxis.tickFormat((dommainValue) => /** @type {string} */(formatter.ytick(/** @type {number} */(
+          dommainValue
+        ), 'm')));
 
         g.select('.x.axis')
           .transition()

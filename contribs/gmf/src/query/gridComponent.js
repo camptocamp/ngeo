@@ -26,7 +26,8 @@ import 'bootstrap/js/src/dropdown.js';
  * Configuration for a grid tab.
  * @typedef {Object} GridSource
  * @property {import("ngeo/grid/Config.js").default} configuration Configuration used to initialize a grid.
- * @property {import('ngeo/statemanager/WfsPermalink.js').QueryResultSource} source Results of the query source.
+ * @property {import('ngeo/statemanager/WfsPermalink.js').QueryResultSource} source Results of the query
+ *    source.
  * }}
  */
 
@@ -101,7 +102,10 @@ function gmfDisplayquerygridTemplateUrl($element, $attrs, gmfDisplayquerygridTem
  *
  * Note: the following ng-class need to be present in the interface <body> element to display the footer
  * when the grid is active (initially there should be the code for the profile tool):
- *      <body ng-class="{'gmf-profile-chart-active': !!profileChartActive, 'gmf-query-grid-active': !!queryGridActive}">
+ *      <body ng-class="{
+ *        'gmf-profile-chart-active': !!profileChartActive,
+ *        'gmf-query-grid-active': !!queryGridActive
+ *      }">
  *
  * Example:
  *
@@ -495,9 +499,10 @@ Controller.prototype.getMergedSources_ = function(sources) {
  * that will contain the features of all mergable sources is returned. If not,
  * `null` is returned.
  * @param {import('ngeo/statemanager/WfsPermalink.js').QueryResultSource} source Source.
- * @param {Object.<string, import('ngeo/statemanager/WfsPermalink.js').QueryResultSource>} mergedSources Merged sources.
- * @return {?import('ngeo/statemanager/WfsPermalink.js').QueryResultSource} A merged source of null if the source should
- *    not be merged.
+ * @param {Object.<string, import('ngeo/statemanager/WfsPermalink.js').QueryResultSource>} mergedSources
+ *    Merged sources.
+ * @return {?import('ngeo/statemanager/WfsPermalink.js').QueryResultSource} A merged source of null if the
+ *    source should not be merged.
  * @private
  */
 Controller.prototype.getMergedSource_ = function(source, mergedSources) {

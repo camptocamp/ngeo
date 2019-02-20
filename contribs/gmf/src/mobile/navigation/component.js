@@ -303,7 +303,8 @@ module.directive('gmfMobileNavBack', mobileNavigationBackComponent);
 
 /**
  * A directive to be used in conjunction with {@link import("gmf/mobile/navigation.js").default.component}.
- * The directive can be set on a slide element of {@link import("gmf/mobile/navigation.js").default.component}.
+ * The directive can be set on a slide element of
+ * {@link import("gmf/mobile/navigation.js").default.component}.
  * When the element is clicked, the navigation returns to the previous slide if
  * the slide is currently active.
  *

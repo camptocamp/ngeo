@@ -1,3 +1,5 @@
+/* eslint max-len: ["error", { "code": 110, "ignoreComments": true }] */
+
 import angular from 'angular';
 import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
 
@@ -23,7 +25,8 @@ import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
  * OSM data by name and address.
  * @param {angular.IHttpService} $http Angular http service.
  * @param {angular.auto.IInjectorService} $injector Main injector.
- * @param {import("ngeo/misc/debounce.js").miscDebounce<function(string, function(Array<Object>): void, function(Array<NominatimSearchResult>): void): void>}  ngeoDebounce ngeo Debounce service.
+ * @param {import("ngeo/misc/debounce.js").miscDebounce<function(string, function(Array<Object>): void, function(Array<NominatimSearchResult>): void): void>}  ngeoDebounce
+ *    ngeo Debounce service.
  * @constructor
  * @ngdoc service
  * @ngInject

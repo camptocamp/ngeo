@@ -149,8 +149,8 @@ function getQueryableLayersInfoFromThemes(
  * specific map to fetch a single feature. If no feature is found, a `null`
  * value is returned.
  *
- * @param {import('gmf/objectediting/toolsComponent.js').ObjectEditingQueryableLayerInfo} layerInfo Queryable layer
- *     information.
+ * @param {import('gmf/objectediting/toolsComponent.js').ObjectEditingQueryableLayerInfo} layerInfo
+ *    Queryable layer information.
  * @param {import("ol/coordinate.js").Coordinate} coordinate Coordinate.
  * @param {import("ol/Map.js").default} map Map.
  * @return {angular.IPromise} Promise.

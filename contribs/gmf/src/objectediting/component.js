@@ -1,6 +1,9 @@
+/* eslint max-len: ["error", { "code": 110, "ignoreComments": true }] */
+
 import angular from 'angular';
 import gmfEditingEditFeature from 'gmf/editing/EditFeature.js';
-import gmfLayertreeSyncLayertreeMap, {getLayer as syncLayertreeMapGetLayer} from 'gmf/layertree/SyncLayertreeMap.js';
+import gmfLayertreeSyncLayertreeMap, {getLayer as syncLayertreeMapGetLayer}
+  from 'gmf/layertree/SyncLayertreeMap.js';
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
 import {isEmpty, toXY} from 'gmf/objectediting/geom.js';
 import gmfObjecteditingQuery from 'gmf/objectediting/Query.js';
@@ -151,11 +154,12 @@ module.component('gmfObjectediting', objecteditingComponent);
  * @param {!import("gmf/editing/EditFeature.js").EditingEditFeature} gmfEditFeature Gmf edit feature service.
  * @param {!import("gmf/objectediting/Query.js").ObjectEditingQuery} gmfObjectEditingQuery Gmf ObjectEditing
  *     query service.
- * @param {!import("gmf/layertree/TreeManager.js").LayertreeTreeManager} gmfTreeManager The gmf TreeManager service.
+ * @param {!import("gmf/layertree/TreeManager.js").LayertreeTreeManager} gmfTreeManager The gmf TreeManager
+ *    service.
  * @param {!import("ngeo/misc/FeatureHelper.js").FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
  * @param {!import("ngeo/map/LayerHelper.js").LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
- * @param {!import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
- *     service.
+ * @param {!import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate
+ *    manager service.
  * @constructor
  * @private
  * @hidden
@@ -938,7 +942,8 @@ Controller.prototype.setFeatureStyle_ = function() {
  * with this component, then find the WMS layer associated with it for
  * for refresh purpose.
  *
- * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl Layertree controller to register
+ * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl Layertree controller
+ *    to register
  * @private
  */
 Controller.prototype.registerTreeCtrl_ = function(treeCtrl) {
@@ -1082,8 +1087,8 @@ Controller.prototype.handleFeatureGeometryChange_ = function() {
 
 
 /**
- * @param {Array.<import('gmf/objectediting/toolsComponent.js').ObjectEditingQueryableLayerInfo>} layersInfo List
- *     of queryable layers information, which contains the node and ogcServer.
+ * @param {Array.<import('gmf/objectediting/toolsComponent.js').ObjectEditingQueryableLayerInfo>} layersInfo
+ *    List of queryable layers information, which contains the node and ogcServer.
  * @private
  */
 Controller.prototype.handleGetQueryableLayersInfo_ = function(layersInfo) {

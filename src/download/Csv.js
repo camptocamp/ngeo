@@ -91,7 +91,9 @@ DownloadCsvService.prototype.generateCsv = function(data, columnDefs) {
     return '';
   }
 
-  const translatedColumnHeaders = columnDefs.map(columnHeader => this.gettextCatalog_.getString(columnHeader.name));
+  const translatedColumnHeaders = columnDefs.map(
+    columnHeader => this.gettextCatalog_.getString(columnHeader.name)
+  );
 
   const header = this.getRow_(translatedColumnHeaders);
   const dataRows = data.map((values) => {

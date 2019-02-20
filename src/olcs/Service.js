@@ -13,9 +13,12 @@ export const OlcsService = class {
 
   /**
    * @ngInject
-   * @param {!import("ngeo/misc/debounce.js").miscDebounce<function(): void>} ngeoDebounce ngeo debounce service.
-   * @param {!import("ngeo/statemanager/Location.js").StatemanagerLocation} ngeoLocation ngeo location service.
-   * @param {import("ngeo/statemanager/Service.js").StatemanagerService} ngeoStateManager The ngeo StateManager service.
+   * @param {!import("ngeo/misc/debounce.js").miscDebounce<function(): void>} ngeoDebounce ngeo debounce
+   *    service.
+   * @param {!import("ngeo/statemanager/Location.js").StatemanagerLocation} ngeoLocation ngeo location
+   *    service.
+   * @param {import("ngeo/statemanager/Service.js").StatemanagerService} ngeoStateManager The ngeo
+   *    StateManager service.
    */
   constructor(ngeoDebounce, ngeoLocation, ngeoStateManager) {
     /**

@@ -254,15 +254,18 @@ const ParamPrefix = {
  * @param {import("ngeo/misc/debounce.js").miscDebounce<function(): void>} ngeoDebounce ngeo Debounce factory.
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext service.
  * @param {import("ngeo/misc/EventHelper.js").EventHelper} ngeoEventHelper Ngeo event helper service
- * @param {import("ngeo/statemanager/Service.js").StatemanagerService} ngeoStateManager The ngeo statemanager service.
+ * @param {import("ngeo/statemanager/Service.js").StatemanagerService} ngeoStateManager The ngeo statemanager
+ *    service.
  * @param {import("ngeo/statemanager/Location.js").StatemanagerLocation} ngeoLocation ngeo location service.
  * @ngInject
  * @ngdoc service
  * @ngname gmfPermalink
  * @hidden
  */
-export function PermalinkService($q, $timeout, $rootScope, $injector, ngeoDebounce, gettextCatalog, ngeoEventHelper,
-  ngeoStateManager, ngeoLocation) {
+export function PermalinkService(
+  $q, $timeout, $rootScope, $injector, ngeoDebounce, gettextCatalog, ngeoEventHelper, ngeoStateManager,
+  ngeoLocation
+) {
 
   /**
    * @type {!angular.IQService}
@@ -353,7 +356,10 @@ export function PermalinkService($q, $timeout, $rootScope, $injector, ngeoDeboun
    * The options to configure the gmf permalink service with.
    * @type {!PermalinkOptions}
    */
-  const gmfPermalinkOptions = $injector.has('gmfPermalinkOptions') ? $injector.get('gmfPermalinkOptions') : {};
+  const gmfPermalinkOptions =
+    $injector.has('gmfPermalinkOptions') ?
+      $injector.get('gmfPermalinkOptions') :
+      {};
   if (gmfPermalinkOptions.useLocalStorage === true) {
     // localStorage is deactivated by default
     this.ngeoStateManager_.setUseLocalStorage(true);
@@ -1657,7 +1663,9 @@ PermalinkService.prototype.setExternalDataSourcesState_ = function() {
 
       // (2b) layer names
       const wmtsGroupLayerNames = [];
-      for (const wmtsDataSource of /** @type {Array<import('ngeo/datasource/OGC').default>} */(wmtsGroup.dataSources)) {
+      for (const wmtsDataSource of
+        /** @type {Array<import('ngeo/datasource/OGC').default>} */(wmtsGroup.dataSources)
+      ) {
         console.assert(wmtsDataSource.wmtsLayer);
         wmtsGroupLayerNames.push(wmtsDataSource.wmtsLayer);
       }

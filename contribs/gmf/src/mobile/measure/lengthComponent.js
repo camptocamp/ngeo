@@ -106,10 +106,12 @@ class Controller extends MeasueMobileBaseController {
    * Initialise the controller.
    */
   init() {
-    this.measure = new ngeoInteractionMeasureLengthMobile(this.filter('ngeoUnitPrefix'), this.gettextCatalog, {
-      precision: this.precision,
-      sketchStyle: this.sketchStyle
-    });
+    this.measure = new ngeoInteractionMeasureLengthMobile(
+      this.filter('ngeoUnitPrefix'), this.gettextCatalog, {
+        precision: this.precision,
+        sketchStyle: this.sketchStyle
+      }
+    );
 
     super.init();
   }

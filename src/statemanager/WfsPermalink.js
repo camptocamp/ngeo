@@ -1,3 +1,5 @@
+/* eslint max-len: ["error", { "code": 110, "ignoreComments": true }] */
+
 import angular from 'angular';
 import * as olExtent from 'ol/extent.js';
 import {equalTo, and, or} from 'ol/format/filter.js';
@@ -13,11 +15,14 @@ import olFormatWFS from 'ol/format/WFS.js';
  * @property {Array.<import("ol/Feature.js").default>} features The matching features for this source.
  * @property {number|string} id Identifier (can be not unique).
  * @property {string} label Label.
- * @property {number} [limit] The maximum number of features that can be returned for a query with this source.
+ * @property {number} [limit] The maximum number of features that can be returned for a query with this
+ *    source.
  * @property {boolean} pending Is the request for this source still ongoing?
  * @property {boolean} [queried] Has this source been queried for the last query request?
- * @property {boolean} [tooManyResults] If the last query for this source would return more features than the configured limit.
- * @property {number} [totalFeatureCount] If `tooManyResults` is `true`, this contains the total number of features.
+ * @property {boolean} [tooManyResults] If the last query for this source would return more features than the
+ *    configured limit.
+ * @property {number} [totalFeatureCount] If `tooManyResults` is `true`, this contains the total number of
+ *    features.
  */
 
 
@@ -28,13 +33,13 @@ import olFormatWFS from 'ol/format/WFS.js';
  * @property {string} featureType The feature type name. Required.
  * @property {string} [label] The field of a feature used as label.
  * @property {string} [featureNS] The namespace URI used for features. If not given, the default namespace set
- * in {@link WfsPermalinkOptions} will be used.
- * @property {string} [featurePrefix] The prefix for the feature namespace. If not given, the default prefix set
- * in {@link WfsPermalinkOptions} will be used.
- * @property {string} [defaultFeatureNS] The default namespace URI used for features. This will be used if no custom
- * namespace is given for a WFS type.
- * @property {string} [defaultFeaturePrefix] The default prefix for the feature namespace. This will be used if no custom
- * prefix is given for a WFS type.
+ *    in {@link WfsPermalinkOptions} will be used.
+ * @property {string} [featurePrefix] The prefix for the feature namespace. If not given, the default prefix
+ *    set in {@link WfsPermalinkOptions} will be used.
+ * @property {string} [defaultFeatureNS] The default namespace URI used for features. This will be used if no
+ *    custom namespace is given for a WFS type.
+ * @property {string} [defaultFeaturePrefix] The default prefix for the feature namespace. This will be used
+ *    if no custom prefix is given for a WFS type.
  */
 
 
@@ -43,8 +48,8 @@ import olFormatWFS from 'ol/format/WFS.js';
  *
  * @typedef {Object} WfsPermalinkOptions
  * @property {!Array.<WfsType>} wfsTypes The queryable WFS types.
- * @property {number} [pointRecenterZoom] Zoom level to use when result is a single point feature. If not set the map
- * is not zoomed to a specific zoom level.
+ * @property {number} [pointRecenterZoom] Zoom level to use when result is a single point feature. If not set
+ *    the map is not zoomed to a specific zoom level.
  * @property {number} [maxFeatures=50] The maximum number of records per request the query service should ask.
  * @property {string} defaultFeatureNS
  * @property {string} defaultFeaturePrefix
@@ -271,7 +276,9 @@ WfsPermalinkService.prototype.issueRequest_ = function(wfsType, filter, map, sho
  * @private
  */
 WfsPermalinkService.prototype.getExtent_ = function(features) {
-  return features.reduce((extent, feature) => olExtent.extend(extent, feature.getGeometry().getExtent()), olExtent.createEmpty());
+  return features.reduce(
+    (extent, feature) => olExtent.extend(extent, feature.getGeometry().getExtent()), olExtent.createEmpty()
+  );
 };
 
 /**
@@ -328,8 +335,8 @@ WfsPermalinkService.or_ = function(filters) {
  * Join a list of filters with a given join function.
  *
  * @param {Array.<import("ol/format/filter/Filter.js").default>} filters The filters to join.
- * @param {function(!import("ol/format/filter/Filter.js").default, !import("ol/format/filter/Filter.js").default):
- *    import("ol/format/filter/Filter.js").default} joinFn The function to join two filters.
+ * @param {function(!import("ol/format/filter/Filter.js").default, !import("ol/format/filter/Filter.js").default): import("ol/format/filter/Filter.js").default} joinFn
+ *    The function to join two filters.
  * @return {import("ol/format/filter/Filter.js").default} The joined filters.
  * @private
  */

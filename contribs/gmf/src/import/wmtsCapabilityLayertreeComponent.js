@@ -18,8 +18,10 @@ const module = angular.module('gmfWmtscapabilitylayertree', [
 
 
 module.run(/* @ngInject */ ($templateCache) => {
-  // @ts-ignore: webpack
-  $templateCache.put('ngeo/import/wmtsCapabilityLayertreeComponent', require('./wmtsCapabilityLayertreeComponent.html'));
+  $templateCache.put(
+    // @ts-ignore: webpack
+    'ngeo/import/wmtsCapabilityLayertreeComponent', require('./wmtsCapabilityLayertreeComponent.html')
+  );
 });
 
 

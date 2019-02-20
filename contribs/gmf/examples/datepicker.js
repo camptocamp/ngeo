@@ -3,7 +3,8 @@ import './datepicker.css';
 import ngeoMiscDatepickerComponent from 'ngeo/misc/datepickerComponent.js';
 
 import ngeoMiscWMSTime from 'ngeo/misc/WMSTime.js';
-import {TimePropertyWidgetEnum, TimePropertyResolutionEnum, TimePropertyModeEnum} from 'ngeo/datasource/OGC.js';
+import {TimePropertyWidgetEnum, TimePropertyResolutionEnum, TimePropertyModeEnum}
+  from 'ngeo/datasource/OGC.js';
 
 
 /**

@@ -36,7 +36,8 @@ const module = angular.module('gmfContextualdata', [
  * the clicked point and the response data from the server. It is intended to
  * return an object of additional properties to add to the scope.
  *
- * See the [../examples/contribs/gmf/contextualdata.html](../examples/contribs/gmf/contextualdata.html) example for a usage sample.
+ * See the [../examples/contribs/gmf/contextualdata.html](../examples/contribs/gmf/contextualdata.html)
+ * example for a usage sample.
  *
  * @htmlAttribute {import("ol/Map.js").default} map The map.
  * @htmlAttribute {Array<number>} projections The list of projections.
@@ -254,7 +255,8 @@ module.controller('GmfContextualdataController', ContextualdataController);
  * integrators can also use `{{xxxx}}` where `xxxx` will be replaced by
  * the name of the raster layers (for example 'srtm').
  *
- * See the [../examples/contribs/gmf/contextualdata.html](../examples/contribs/gmf/contextualdata.html) example for a usage sample.
+ * See the [../examples/contribs/gmf/contextualdata.html](../examples/contribs/gmf/contextualdata.html)
+ * example for a usage sample.
  *
  * @param {string} gmfContextualdatacontentTemplateUrl Url to template.
  * @return {angular.IDirective} The Directive Definition Object.

@@ -40,7 +40,8 @@ describe('gmf.layertree.SyncLayertreeMap', () => {
       const reGmfTreeUrl = new RegExp(`^${gmfTreeUrl}`);
       // Prepare request simulation
       $httpBackend.when('GET', reGmfTreeUrl).respond(gmfTestDataThemes);
-      $httpBackend.when('GET', 'https://wmts.geo.admin.ch/1.0.0/WMTSCapabilities.xml?lang=fr').respond(gmfTestDataThemescapabilities.swisstopo);
+      $httpBackend.when('GET', 'https://wmts.geo.admin.ch/1.0.0/WMTSCapabilities.xml?lang=fr')
+        .respond(gmfTestDataThemescapabilities.swisstopo);
 
       // Prepare themes
       $httpBackend.expectGET(reGmfTreeUrl);

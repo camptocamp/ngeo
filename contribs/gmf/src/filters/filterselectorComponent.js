@@ -1,3 +1,5 @@
+/* eslint max-len: ["error", { "code": 110, "ignoreComments": true }] */
+
 import angular from 'angular';
 import gmfAuthenticationService from 'gmf/authentication/Service.js';
 
@@ -81,15 +83,15 @@ class Controller {
    * @param {!angular.ITimeoutService} $timeout Angular timeout service.
    * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
    * @param {import('gmf/datasource/DataSourceBeingFiltered.js').DataSourceBeingFiltered} gmfDataSourceBeingFiltered
-   *     The Gmf value service that determines the data source currently being
-   *     filtered.
+   *     The Gmf value service that determines the data source currently being filtered.
    * @param {import("gmf/datasource/Helper.js").DatasourceHelper} gmfDataSourcesHelper Gmf data
    *     sources helper service.
    * @param {import("gmf/filters/SavedFilters.js").SavedFilter} gmfSavedFilters Gmf saved filters service.
    * @param {import('gmf/authentication/Service.js').User} gmfUser User.
-   * @param {import("ngeo/message/Notification.js").MessageNotification} ngeoNotification Ngeo notification service.
-   * @param {!import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr Ngeo FeatureOverlay
-   *     manager
+   * @param {import("ngeo/message/Notification.js").MessageNotification} ngeoNotification Ngeo notification
+   *    service.
+   * @param {!import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr Ngeo
+   *    FeatureOverlay manager
    * @param {!import("ngeo/filter/RuleHelper.js").RuleHelper} ngeoRuleHelper Ngeo rule helper service.
    * @private
    * @ngInject

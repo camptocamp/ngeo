@@ -214,7 +214,8 @@ export default class extends olInteractionInteraction {
 
   /**
    * @param {import("ol/Feature.js").default} feature Feature.
-   * @return {import("ol/Collection.js").default.<import("ol/Feature.js").default>} Collection of features for this feature.
+   * @return {import("ol/Collection.js").default.<import("ol/Feature.js").default>} Collection of features for
+   *    this feature.
    * @private
    */
   getFeatureCollection_(feature) {

@@ -1,3 +1,5 @@
+/* eslint max-len: ["error", { "code": 110, "ignoreComments": true }] */
+
 import angular from 'angular';
 import {COORDINATES_LAYER_NAME} from 'gmf/index.js';
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
@@ -36,8 +38,8 @@ import {appendParams as olUriAppendParams} from 'ol/uri.js';
  * @property {Array.<string>} [groupActions] List of allowed actions. The list may contain a
  * combination of `add_theme`, `add_group` or `add_layer`
  * @property {string} [projection] The geometry's projection for this set of data.
- * @property {Twitter.Typeahead.Dataset} [typeaheadDatasetOptions] The optional Twitter.Typeahead. configuration for
- * this dataset. See: https://github.com/twitter/typeahead.js/blob/master/
+ * @property {Twitter.Typeahead.Dataset} [typeaheadDatasetOptions] The optional Twitter.Typeahead.
+ *    configuration for this dataset. See: https://github.com/twitter/typeahead.js/blob/master/
  * @property {string} url URL of the search service. Must contain a '%QUERY' term that will be
  * replaced by the input string.
  * @property {string} [datasetTitle]
@@ -116,7 +118,9 @@ function gmfSearchTemplateUrl($element, $attrs, gmfSearchTemplateUrl) {
  *      <script>
  *        (function() {
  *          let module = angular.module('app');
- *          module.value('fulltextsearchUrl', '${request.route_url('fulltextsearch', _query={"limit": 20}) | n}');
+ *          module.value('fulltextsearchUrl', '${request.route_url(
+ *            'fulltextsearch', _query={"limit": 20}
+ *          ) | n}');
  *          module.value('gmfSearchGroups', []);
  *          module.constant('gmfSearchActions', [
  *                {action: 'add_theme', title: 'Add a theme'},
@@ -137,7 +141,10 @@ function gmfSearchTemplateUrl($element, $attrs, gmfSearchTemplateUrl) {
  *      <script>
  *        (function() {
  *          let module = angular.module('app');
- *          module.value('fulltextsearchUrl', '${request.route_url('fulltextsearch', _query={"limit": 30, "partitionlimit": 5}) | n}');
+ *          module.value('fulltextsearchUrl', '${request.route_url(
+ *            'fulltextsearch',
+ *            _query={"limit": 30, "partitionlimit": 5}
+ *          ) | n}');
  *          module.value('gmfSearchGroups', ${dumps(fulltextsearch_groups) | n});
  *          module.value('gmfSearchActions', []);
  *        })();
@@ -154,25 +161,27 @@ function gmfSearchTemplateUrl($element, $attrs, gmfSearchTemplateUrl) {
  *
  * @htmlAttribute {string} gmf-search-input-value The input value (read only).
  * @htmlAttribute {import("ol/Map.js").default} gmf-search-map The map.
- * @htmlAttribute {Twitter.Typeahead.Options|undefined} gmf-search-options Addition Twitter.Typeahead. options.
+ * @htmlAttribute {Twitter.Typeahead.Options|undefined} gmf-search-options Addition Twitter.Typeahead.
+ *    options.
  * @htmlAttribute {SearchComponentDatasource} gmf-search-datasource
- *      The datasources.
+ *    The datasources.
  * @htmlAttribute {Object.<string, import("ol/style/Style.js").default>}
- *      gmf-search-styles A map of styles to apply on searched features. Keys
- *      must be the 'layer_name' property of features except for coordinates
- *      where the key ifor its style is the value of the constant
- *      'gmf.COORDINATES_LAYER_NAME'. The 'default' key is used to apply the
- *      default style.
+ *    gmf-search-styles A map of styles to apply on searched features. Keys
+ *    must be the 'layer_name' property of features except for coordinates
+ *    where the key ifor its style is the value of the constant
+ *    'gmf.COORDINATES_LAYER_NAME'. The 'default' key is used to apply the
+ *    default style.
  * @htmlAttribute {Array.<string>} gmf-search-coordinatesprojections codes
- *      of supported projections for coordinates search (projections must be
- *      defined in ol3). If not provided, only the map's view projection
- *      format will be supported.
+ *    of supported projections for coordinates search (projections must be
+ *    defined in ol3). If not provided, only the map's view projection
+ *    format will be supported.
  * @htmlAttribute {SearchComponentListeners} gmf-search-listeners
- *      The listeners.
- * @htmlAttribute {boolean=} gmf-search-clearbutton Optional clear button in the input search. Default to true.
+ *    The listeners.
+ * @htmlAttribute {boolean=} gmf-search-clearbutton Optional clear button in the input search.
+ *    Default to true.
  * @htmlAttribute {number=} gmf-search-delay Optional bloodhound request delay in ms. Default to 50 ms.
  * @htmlAttribute {boolean=} gmf-search-colorchooser Optional. Whether to let the user
- *      change the style of the feature on the map. Default is false.
+ *    change the style of the feature on the map. Default is false.
  * @htmlAttribute {number=} gmf-search-maxzoom Optional maximum zoom we will zoom on result, default is 16.
  * @htmlAttribute {function=} gmf-search-on-init Optional function called when the component is initialized.
  * @ngdoc component
@@ -220,14 +229,17 @@ class SearchController {
    * @param {angular.ITimeoutService} $timeout Angular timeout service.
    * @param {angular.auto.IInjectorService} $injector Main injector.
    * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
-   * @param {import("ngeo/misc/AutoProjection.js").AutoProjectionService} ngeoAutoProjection The ngeo coordinates service.
-   * @param {import("ngeo/search/createGeoJSONBloodhound.js").createGeoJSONBloodhound} ngeoSearchCreateGeoJSONBloodhound The ngeo
-   *     create GeoJSON Bloodhound service.
+   * @param {import("ngeo/misc/AutoProjection.js").AutoProjectionService} ngeoAutoProjection The ngeo
+   *    coordinates service.
+   * @param {import("ngeo/search/createGeoJSONBloodhound.js").createGeoJSONBloodhound} ngeoSearchCreateGeoJSONBloodhound
+   *    The ngeo create GeoJSON Bloodhound service.
    * @param {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
    *     overlay manager service.
    * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes gmf Themes service.
-   * @param {import("gmf/layertree/TreeManager.js").LayertreeTreeManager} gmfTreeManager gmf Tree Manager service.
-   * @param {import("gmf/search/FulltextSearch.js").FulltextSearchService} gmfSearchFulltextSearch gmf Full text search service.
+   * @param {import("gmf/layertree/TreeManager.js").LayertreeTreeManager} gmfTreeManager gmf Tree Manager
+   *    service.
+   * @param {import("gmf/search/FulltextSearch.js").FulltextSearchService} gmfSearchFulltextSearch
+   *    gmf Full text search service.
    * @ngInject
    * @ngdoc controller
    * @ngname GmfSearchController
@@ -504,8 +516,8 @@ class SearchController {
   /**
    * Merges the custom listeners received via the component attributes and the
    * listeners that are needed for this controller to function (close and select).
-   * @param {import('ngeo/search/searchDirective.js').SearchDirectiveListeners} additionalListeners Custom provided
-   *    listeners.
+   * @param {import('ngeo/search/searchDirective.js').SearchDirectiveListeners} additionalListeners
+   *    Custom provided listeners.
    * @param {import('ngeo/search/searchDirective.js').SearchDirectiveListeners} listeners Default listeners.
    * @return {import('ngeo/search/searchDirective.js').SearchDirectiveListeners} Merged listeners.
    * @private
@@ -818,7 +830,8 @@ class SearchController {
 
   /**
    * Style for search results.
-   * @param {null|import("ol/Feature.js").default|import("ol/render/Feature.js").default} feature The searched feature.
+   * @param {null|import("ol/Feature.js").default|import("ol/render/Feature.js").default} feature
+   *    The searched feature.
    * @param {number} resolution The current resolution of the map.
    * @return {import("ol/style/Style.js").default} A style for this kind of features.
    * @private

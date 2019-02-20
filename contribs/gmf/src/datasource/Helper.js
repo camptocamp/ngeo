@@ -1,3 +1,5 @@
+/* eslint max-len: ["error", { "code": 110, "ignoreComments": true }] */
+
 import angular from 'angular';
 import gmfEditingEnumerateAttribute from 'gmf/editing/EnumerateAttribute.js';
 import ngeoDatasourceHelper from 'ngeo/datasource/Helper.js';
@@ -14,8 +16,8 @@ export class DatasourceHelper {
    * sources.
    *
    * @param {angular.IQService} $q The Angular $q service.
-   * @param {import("gmf/editing/EnumerateAttribute.js").EditingEnumerateAttributeService} gmfEnumerateAttribute The Gmf enumerate
-   *     attribute service.
+   * @param {import("gmf/editing/EnumerateAttribute.js").EditingEnumerateAttributeService} gmfEnumerateAttribute
+   *    The Gmf enumerate attribute service.
    * @param {import("ngeo/datasource/Helper.js").DatasourceHelper} ngeoDataSourcesHelper Ngeo data
    *     source helper service.
    * @ngdoc service

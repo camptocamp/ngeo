@@ -36,7 +36,8 @@ module.run(/* @ngInject */ ($templateCache) => {
 /**
  * @param {!JQuery} $element Element.
  * @param {!angular.IAttributes} $attrs Attributes.
- * @param {!function(!JQuery, !angular.IAttributes): string} gmfBackgroundlayerselectorTemplateUrl Template function.
+ * @param {!function(!JQuery, !angular.IAttributes): string} gmfBackgroundlayerselectorTemplateUrl
+ *    Template function.
  * @return {string} Template URL.
  * @ngInject
  * @private
@@ -89,7 +90,8 @@ module.component('gmfBackgroundlayerselector', backgroundlayerselectorComponent)
  * @private
  * @hidden
  * @param {!angular.IScope} $scope Angular scope.
- * @param {!import("ngeo/map/BackgroundLayerMgr.js").MapBackgroundLayerManager} ngeoBackgroundLayerMgr Background layer manager.
+ * @param {!import("ngeo/map/BackgroundLayerMgr.js").MapBackgroundLayerManager} ngeoBackgroundLayerMgr
+ *    Background layer manager.
  * @param {!import("gmf/theme/Themes.js").ThemesService} gmfThemes Themes service.
  * @ngInject
  * @ngdoc controller

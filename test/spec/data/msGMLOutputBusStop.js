@@ -1,3 +1,5 @@
+/* eslint max-len: ["error", { "code": 110, "ignoreStrings": true }] */
+
 export default '<?xml version="1.0" encoding="UTF-8"?>' +
 '<msGMLOutput ' +
 '	 xmlns:gml="http://www.opengis.net/gml"' +

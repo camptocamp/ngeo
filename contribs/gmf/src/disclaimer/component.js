@@ -33,14 +33,17 @@ const module = angular.module('gmfDisclaimer', [
  * @param {!angular.ITimeoutService} $timeout Angular timeout service.
  * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @param {!import("ngeo/message/Popup.js").PopupFactory} ngeoCreatePopup Popup service.
- * @param {!import("ngeo/message/Disclaimer.js").MessageDisclaimerService} ngeoDisclaimer Ngeo Disclaimer service.
+ * @param {!import("ngeo/message/Disclaimer.js").MessageDisclaimerService} ngeoDisclaimer Ngeo Disclaimer
+ *    service.
  * @param {!import("ngeo/misc/EventHelper.js").EventHelper} ngeoEventHelper Ngeo Event Helper.
  * @param {!import("ngeo/map/LayerHelper.js").LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @ngInject
  * @ngdoc controller
  * @ngname GmfDisclaimerController
  */
-function Controller($element, $sce, $timeout, gettextCatalog, ngeoCreatePopup, ngeoDisclaimer, ngeoEventHelper, ngeoLayerHelper) {
+function Controller(
+  $element, $sce, $timeout, gettextCatalog, ngeoCreatePopup, ngeoDisclaimer, ngeoEventHelper, ngeoLayerHelper
+) {
 
   /**
    * @type {?import("ol/Map.js").default}

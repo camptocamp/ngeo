@@ -193,7 +193,9 @@ MainController.prototype.print = function() {
  * @private
  */
 MainController.prototype.handleCreateReportSuccess_ = function(resp) {
-  const mfResp = /** @type {import('ngeo/print/mapfish-print-v3.js').MapFishPrintReportResponse} */ (resp.data);
+  const mfResp = /** @type {import('ngeo/print/mapfish-print-v3.js').MapFishPrintReportResponse} */ (
+    resp.data
+  );
   this.getStatus_(mfResp.ref);
 };
 
@@ -225,7 +227,9 @@ MainController.prototype.handleCreateReportError_ = function(resp) {
  * @private
  */
 MainController.prototype.handleGetStatusSuccess_ = function(ref, resp) {
-  const mfResp = /** @type {import('ngeo/print/mapfish-print-v3.js').MapFishPrintStatusResponse} */ (resp.data);
+  const mfResp = /** @type {import('ngeo/print/mapfish-print-v3.js').MapFishPrintStatusResponse} */ (
+    resp.data
+  );
   const done = mfResp.done;
   if (done) {
     // The report is ready. Open it by changing the window location.

@@ -1,6 +1,3 @@
-/**
- */
-
 import './drawfeature.css';
 import angular from 'angular';
 import ngeoDrawModule from 'ngeo/draw/module.js';
@@ -27,9 +24,10 @@ const module = angular.module('app', [
 
 /**
  * @param {!angular.IScope} $scope Angular scope.
- * @param {import("ol/Collection.js").default.<import("ol/Feature.js").default>} ngeoFeatures Collection of features.
- * @param {import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
- *     service.
+ * @param {import("ol/Collection.js").default.<import("ol/Feature.js").default>} ngeoFeatures Collection
+ *    of features.
+ * @param {import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate
+ *    manager service.
  * @ngInject
  * @constructor
  */

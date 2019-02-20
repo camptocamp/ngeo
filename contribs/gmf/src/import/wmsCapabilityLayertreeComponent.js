@@ -20,8 +20,10 @@ const module = angular.module('gmfWmscapabilitylayertreenode', [
 
 
 module.run(/* @ngInject */ ($templateCache) => {
-  // @ts-ignore: webpack
-  $templateCache.put('gmf/import/wmsCapabilityLayertreeComponent', require('./wmsCapabilityLayertreeComponent.html'));
+  $templateCache.put(
+    // @ts-ignore: webpack
+    'gmf/import/wmsCapabilityLayertreeComponent', require('./wmsCapabilityLayertreeComponent.html')
+  );
 });
 
 
@@ -39,7 +41,8 @@ module.value('gmfWmscapabilitylayertreenodeTemplateUrl',
 
 /**
  * @param {!angular.IAttributes} $attrs Attributes.
- * @param {!function(!angular.IAttributes): string} gmfWmscapabilitylayertreenodeTemplateUrl Template function.
+ * @param {!function(!angular.IAttributes): string} gmfWmscapabilitylayertreenodeTemplateUrl Template
+ *    function.
  * @return {string} Template URL.
  * @ngInject
  * @private

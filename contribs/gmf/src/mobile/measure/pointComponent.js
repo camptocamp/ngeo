@@ -238,7 +238,8 @@ MobileMeasurePointController.prototype.init = function() {
   );
   this.measure.setActive(this.active);
   interactionDecoration(this.measure);
-  this.drawInteraction = /** @type {import("ngeo/interaction/MobileDraw.js").default} */ (this.measure.getDrawInteraction());
+  this.drawInteraction = /** @type {import("ngeo/interaction/MobileDraw.js").default} */ (
+    this.measure.getDrawInteraction());
   interactionDecoration(this.drawInteraction);
 
   const layersConfig = this['getLayersConfigFn']();

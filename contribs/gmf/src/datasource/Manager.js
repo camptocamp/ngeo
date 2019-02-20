@@ -61,15 +61,17 @@ export class DatasourceManager {
    * @param {!angular.IScope} $rootScope Angular rootScope.
    * @param {angular.ITimeoutService} $timeout Angular timeout service.
    * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes The gmf Themes service.
-   * @param {import("gmf/layertree/TreeManager.js").LayertreeTreeManager} gmfTreeManager The gmf TreeManager service.
-   * @param {!import("ngeo/map/BackgroundLayerMgr.js").MapBackgroundLayerManager} ngeoBackgroundLayerMgr Background layer
-   *     manager.
+   * @param {import("gmf/layertree/TreeManager.js").LayertreeTreeManager} gmfTreeManager The gmf TreeManager
+   *    service.
+   * @param {!import("ngeo/map/BackgroundLayerMgr.js").MapBackgroundLayerManager} ngeoBackgroundLayerMgr
+   *    Background layer manager.
    * @param {import("ngeo/datasource/DataSources.js").DataSource} ngeoDataSources Ngeo data sources service.
    *     data sources service.
    * @param {!import("ngeo/map/LayerHelper.js").LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
    * @param {!import("ngeo/filter/RuleHelper.js").RuleHelper} ngeoRuleHelper Ngeo rule helper service.
    * @param {!import("ngeo/misc/WMSTime.js").WMSTime} ngeoWMSTime wms time service.
-   * @param {!import("gmf/datasource/WFSAliases.js").DatasourceWFSAlias} gmfWFSAliases Gmf WFS aliases service.
+   * @param {!import("gmf/datasource/WFSAliases.js").DatasourceWFSAlias} gmfWFSAliases Gmf WFS aliases
+   *    service.
    * @ngInject
    * @ngdoc service
    * @ngname gmfDataSourcesManager
