@@ -91,6 +91,7 @@ main {
     color: $color;
     padding: $input-btn-padding-y $input-btn-padding-x;
     display: block;
+    white-space: nowrap;
     &:hover {
       text-decoration: none;
       background-color: $onhover-color;
