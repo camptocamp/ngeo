@@ -7,7 +7,7 @@
     gmf-elevation-layersconfig="ctrl.layersconfig"
     gmf-elevation-map="::ctrl.map">
   <a type="button" class="btn btn-default" aria-expanded="false"
-    ng-class="::{'dropdown-toggle': ctrl.layers.length > 1}"
+    ng-class="::ctrl.layers.length > 1 ? 'dropdown-toggle' : 'disabled'"
     ng-attr-data-toggle="{{::(ctrl.layers.length > 1) ? 'dropdown' : ''}}"
     >
     <span class="gmf-elevationwidget-value">
