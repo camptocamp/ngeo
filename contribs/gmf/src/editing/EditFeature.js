@@ -110,7 +110,7 @@ EditingEditFeature.prototype.insertFeatures = function(layerId, features) {
   const url = `${this.baseUrl_}/${layerId}`;
   const geoJSON = new olFormatGeoJSON().writeFeatures(features);
   return this.http_.post(url, geoJSON, {
-    headers: {'Content-Type': 'application/json'},
+    headers: {'Content-Type': 'application/geo+json'},
     withCredentials: true
   });
 };
@@ -125,7 +125,7 @@ EditingEditFeature.prototype.updateFeature = function(layerId, feature) {
   const url = `${this.baseUrl_}/${layerId.toString()}/${feature.getId()}`;
   const geoJSON = new olFormatGeoJSON().writeFeature(feature);
   return this.http_.put(url, geoJSON, {
-    headers: {'Content-Type': 'application/json'},
+    headers: {'Content-Type': 'application/geo+json'},
     withCredentials: true
   });
 };
@@ -139,7 +139,6 @@ EditingEditFeature.prototype.updateFeature = function(layerId, feature) {
 EditingEditFeature.prototype.deleteFeature = function(layerId, feature) {
   const url = `${this.baseUrl_}/${layerId.toString()}/${feature.getId()}`;
   return this.http_.delete(url, {
-    headers: {'Content-Type': 'application/json'},
     withCredentials: true
   });
 };

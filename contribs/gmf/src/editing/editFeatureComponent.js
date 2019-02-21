@@ -681,20 +681,20 @@ Controller.prototype.save = function() {
       this.editableNode_.id,
       [feature]
     );
-  promise.then(
-    (response) => {
+  promise
+    .then((response) => {
       this.dirty = false;
-      this.pending = false;
       this.handleEditFeature_(response);
       this.gmfSnapping_.refresh();
-    },
-    (response) => {
+    })
+    .catch((response) => {
       this.showServerError = true;
-      this.pending = false;
       this.serverErrorType = `error type : ${response.data['error_type']}`;
       this.serverErrorMessage = `error message : ${response.data['message']}`;
-    }
-  );
+    })
+    .finally(() => {
+      this.pending = false;
+    });
 };
 
 
