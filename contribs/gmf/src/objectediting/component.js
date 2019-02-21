@@ -22,7 +22,6 @@ import {getUid as olUtilGetUid} from 'ol/util.js';
 import olCollection from 'ol/Collection.js';
 import * as olEvents from 'ol/events.js';
 import olFormatGeoJSON from 'ol/format/GeoJSON.js';
-import olGeomMultiPolygon from 'ol/geom/MultiPolygon.js';
 import olLayerImage from 'ol/layer/Image.js';
 import olLayerTile from 'ol/layer/Tile.js';
 import olInteractionModify from 'ol/interaction/Modify.js';
@@ -793,7 +792,7 @@ Controller.prototype.handleModifyInteractionModifyEnd_ = function(
 ) {
   let geometry = this.feature.getGeometry();
 
-  if (geometry instanceof olGeomMultiPolygon) {
+  if (geometry.getType() === 'MultiPolygon') {
     const jstsGeom = this.jstsOL3Parser_.read(geometry);
     const jstsBuffered = jstsGeom.buffer(0, undefined, undefined);
     geometry = toMulti(this.jstsOL3Parser_.write(jstsBuffered));
