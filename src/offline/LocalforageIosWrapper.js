@@ -14,7 +14,9 @@ exports = class IosWrapper extends AbstractWrapper {
    * @override
    */
   postToBackend(action) {
-    action['args'] = (action['args'] || []).map(item => JSON.stringify(item));
+    if (action['command'] === 'setItem')  {
+      action['args'][1] = JSON.stringify(action['args'][1]);
+    }
     const stringified = JSON.stringify(action);
     window['webkit']['messageHandlers']['ios']['postMessage'](stringified);
   }
