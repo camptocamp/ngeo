@@ -5,7 +5,7 @@
  * by the HTML page and the controller to provide the configuration.
  */
 
-import 'gmf/controllers/desktop.scss';
+import './sass/desktop.scss';
 import angular from 'angular';
 import gmfControllersAbstractDesktopController, {AbstractDesktopController}
   from 'gmf/controllers/AbstractDesktopController.js';

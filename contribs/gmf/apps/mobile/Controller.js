@@ -8,7 +8,7 @@
 import angular from 'angular';
 import gmfControllersAbstractMobileController, {AbstractMobileController}
   from 'gmf/controllers/AbstractMobileController.js';
-import 'gmf/controllers/mobile.scss';
+import './sass/mobile.scss';
 import appBase from '../appmodule.js';
 import EPSG2056 from '@geoblocks/proj/src/EPSG_2056.js';
 import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
