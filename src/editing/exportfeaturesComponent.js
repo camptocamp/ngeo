@@ -1,8 +1,6 @@
 import angular from 'angular';
 import ngeoMiscFeatureHelper, {FeatureFormatType} from 'ngeo/misc/FeatureHelper.js';
 import {getUid as olUtilGetUid} from 'ol/util.js';
-import olGeomPoint from 'ol/geom/Point.js';
-import olGeomLineString from 'ol/geom/LineString.js';
 
 
 /**
@@ -169,13 +167,12 @@ Controller.prototype.handleElementClick_ = function() {
     this.featureHelper_.export(features, this.formats_[0]);
   } else if (features.length === 1) {
     const feature = features[0];
-    const geom = feature.getGeometry();
+    const geometryType = feature.getGeometry().getType();
     let $item;
     this.formats_.forEach((format, i) => {
       $item = this.items_[i];
       if (format === FeatureFormatType.GPX) {
-        if (geom instanceof olGeomPoint ||
-            geom instanceof olGeomLineString) {
+        if (geometryType === 'Point' || geometryType === 'LineString') {
           $item.removeClass('disabled');
         } else {
           $item.addClass('disabled');
