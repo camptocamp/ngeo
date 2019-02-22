@@ -9,7 +9,18 @@ import constants from './constants.js';
  * @type {Promise<import('gmf/themes.js').GmfThemesResponse>}
  * @hidden
  */
-const themesPromise = fetch(constants.themesUrl).then(response => response.json());
+let themesPromise;
+
+/**
+ * @hidden
+ * @returns {Promise<import('gmf/themes.js').GmfThemesResponse>} Promise
+ */
+function getThemesPromise() {
+  if (!themesPromise) {
+    themesPromise = fetch(constants.themesUrl).then(response => response.json());
+  }
+  return themesPromise;
+}
 
 /**
  * @type {Promise<Map<string, overlayDefinition>>|undefined}
@@ -22,7 +33,7 @@ let overlayDefPromise;
  * @returns {Promise<Array<TileLayer>>} Promise
  */
 export function getBackgroundLayers() {
-  return themesPromise.then((themes) => {
+  return getThemesPromise().then((themes) => {
     const promises = [];
     for (const config of themes.background_layers) {
       if (config.type === 'WMTS') {
@@ -69,7 +80,7 @@ const overlayDefs = new Map();
 export function getOverlayDefs() {
   if (!overlayDefPromise) {
     overlayDefPromise = new Promise((resolve, reject) => {
-      themesPromise.then((themes) => {
+      getThemesPromise().then((themes) => {
         for (const theme of themes.themes) {
           writeOverlayDefs(theme, themes.ogcServers);
         }
