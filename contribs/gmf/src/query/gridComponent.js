@@ -377,7 +377,13 @@ Controller.prototype.getGridSources = function() {
  */
 Controller.prototype.updateData_ = function() {
   // close if there are no results
-  if (this.ngeoQueryResult.total === 0 && !this.hasOneWithTooManyResults_()) {
+  if (
+    (
+      this.ngeoQueryResult.pending ||
+      this.ngeoQueryResult.total === 0
+    ) &&
+    !this.hasOneWithTooManyResults_()
+  ) {
     const oldActive = this.active;
     this.clear();
     if (oldActive) {
