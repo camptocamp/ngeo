@@ -34,15 +34,16 @@ import 'bootstrap/js/src/dropdown.js';
  * Fields that can come from a print v3 server and can be used in the partial
  * of the gmf print panel.
  * @typedef {Object} PrintLayoutInfo
- * @property {Array.<PrintSimpleAttributes>} [simpleAttributes] Custom print layoutInfo.
+ * @property {Array<PrintSimpleAttributes>} [simpleAttributes] Custom print layoutInfo.
+ * @property {Array<string>} [attributes] The list of all the attributes name.
  * @property {number} [dpi] The selected 'dpi'.
- * @property {Array.<number>} [dpis] The list of 'dpis'.
- * @property {Object.<string, boolean>} [formats] The list of active 'formats' (png, pdf, ...).
+ * @property {Array<number>} [dpis] The list of 'dpis'.
+ * @property {Object<string, boolean>} [formats] The list of active 'formats' (png, pdf, ...).
  * @property {string} [layout] The selected 'layout'.
- * @property {Array.<string>} [layouts] The list of 'layouts'.
+ * @property {Array<string>} [layouts] The list of 'layouts'.
  * @property {boolean} [legend] The legend checkbox.
  * @property {number} [scale] The selected 'scale'.
- * @property {Array.<number>} [scales] The list of 'scales'
+ * @property {Array<number>} [scales] The list of 'scales'
  */
 
 
@@ -795,11 +796,15 @@ class Controller {
     if (!this.layoutInfo.simpleAttributes) {
       this.layoutInfo.simpleAttributes = [];
     }
+    if (!this.layoutInfo.attributes) {
+      this.layoutInfo.attributes = [];
+    }
     const simpleAttributes = this.layoutInfo.simpleAttributes;
     const previousAttributes = simpleAttributes.splice(0, simpleAttributes.length);
 
     // The attributes without 'clientParams' are the custom layout information (defined by end user).
     this.layout_.attributes.forEach((attribute) => {
+      this.layoutInfo.attributes.push(attribute.name);
       if (!attribute['clientParams']) {
         name = `${attribute.name}`;
         const defaultValue = attribute.default;
@@ -942,9 +947,11 @@ class Controller {
     const scale = this.layoutInfo.scale || this.getOptimalScale_(mapSize, viewResolution);
     const datasource = this.getDataSource_();
 
-    const customAttributes = {
-      'datasource': datasource
-    };
+    const customAttributes = {};
+
+    if (this.layoutInfo.attributes.indexOf('datasource') >= 0) {
+      customAttributes['datasource'] = datasource;
+    }
 
     if (this.layoutInfo.simpleAttributes) {
       this.layoutInfo.simpleAttributes.forEach((field) => {
