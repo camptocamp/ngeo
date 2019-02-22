@@ -122,7 +122,7 @@ gmf-map {
   right: $app-margin;
   left: auto;
   .ol-zoom-in, .ol-zoom-out {
-    font-size: 1.25rem;
+    font-size: $icon-font-size;
     border-radius: $border-radius-base;
   }
 }
@@ -189,7 +189,7 @@ main div.ngeo-displaywindow {
 gmf-search {
   span.twitter-typeahead {
     &::before {
-      font-size: 2rem;
+      font-size: $icon-font-size;
     }
   }
 }

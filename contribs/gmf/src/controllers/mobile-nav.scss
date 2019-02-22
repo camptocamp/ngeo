@@ -282,11 +282,8 @@ nav.gmf-mobile-nav-right {
   z-index: $above-search-index;
   height: $map-tools-size;
   border: 0.06rem solid $border-color;
-  .fa {
-    font-size: 1.25rem;
-  }
-  svg {
-    font-size: 1.25rem;
+  .fa, svg {
+    font-size: $icon-font-size;
   }
 }
 

@@ -97,7 +97,7 @@
   }
 
   .gmf-layertree-layer-icon {
-    width: 1.25rem;
+    width: $icon-font-size;
     padding: 0;
     display: flex;
 
@@ -105,7 +105,7 @@
       // Don't let the legend icons images to break the layout by being too
       // tall or too large
       max-width: 100%;
-      max-height: 1.25rem;
+      max-height: $icon-font-size;
       vertical-align: initial;
       margin-left: auto;
       margin-right: auto;

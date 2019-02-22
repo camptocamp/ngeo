@@ -63,7 +63,7 @@ button[ngeo-mobile-geolocation] {
   border: solid 0.06rem $border-color;
   color: $map-tools-color;
   .fa {
-    font-size: 1.25rem;
+    font-size: $icon-font-size;
   }
 }
 
