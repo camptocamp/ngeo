@@ -3,13 +3,13 @@ import TileWMS from 'ol/source/TileWMS.js';
 import WMTS, {optionsFromCapabilities} from 'ol/source/WMTS.js';
 import TileLayer from 'ol/layer/Tile.js';
 
-import {themesUrl} from './constants.js';
+import constants from './constants.js';
 
 /**
  * @type {Promise<import('gmf/themes.js').GmfThemesResponse>}
  * @hidden
  */
-const themesPromise = fetch(themesUrl).then(response => response.json());
+const themesPromise = fetch(constants.themesUrl).then(response => response.json());
 
 /**
  * @type {Promise<Map<string, overlayDefinition>>|undefined}

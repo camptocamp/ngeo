@@ -29,7 +29,7 @@ import {
 } from 'ol/extent.js';
 import {get as getProjection} from 'ol/proj.js';
 
-import * as constants from './constants.js';
+import constants from './constants.js';
 
 import {getFeaturesFromLayer} from './Querent.js';
 import * as themes from './Themes.js';
