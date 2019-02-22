@@ -3,7 +3,6 @@
  */
 
 $map-tools-size: 1.9rem !default;
-$button-size: 2.5rem !default;
 $left-panel-width: 20rem !default;
 $right-panel-width: 17.5rem !default;
 $streeview-width: 25rem !default;
@@ -282,11 +281,11 @@ gmf-search {
   }
 
   .gmf-app-data-panel-toggle-btn {
-    height: 2.5rem;
+    height: 2 * $icon-font-size;
     left: -1px;
     padding: 0.8rem 0.25rem;
     position: relative;
-    top: calc(50% - 1.25rem);
+    top: calc(50% - #{$icon-font-size});
   }
 
   .ui-resizable-e {
