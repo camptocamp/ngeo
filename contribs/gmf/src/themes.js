@@ -175,8 +175,6 @@
 
 /**
  * @typedef {Object} GmfMetaData
- * @property {Array.<string>} [copy_to] Names of layers on which the geometry can be copied to (in the
- *      edition mode). For WMS layers and only for CGXP ! (Use "copyable" in NGEO.).
  * @property {boolean} [copyable=false] Whether the geometry from this data source can be copied to other data
  *      sources or not. For WMS layers.
  * @property {Array.<string>} [directedFilterAttributes] List of attribute names which should have rules
