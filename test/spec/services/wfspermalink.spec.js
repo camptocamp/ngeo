@@ -17,7 +17,7 @@ describe('ngeo.statemanager.WfsPermalink', () => {
     angular.mock.module('ngeo', ($provide) => {
       $provide.value(
         'ngeoPermalinkOgcserverUrl',
-        'https://geomapfish-demo-dc.camptocamp.com/2.4/mapserv_proxy'
+        'https://geomapfish-demo-2-4.camptocamp.com/mapserv_proxy'
       );
       $provide.value('ngeoWfsPermalinkOptions', {
         wfsTypes: [{featureType: 'fuel'}, {featureType: 'highway'}],
@@ -42,7 +42,7 @@ describe('ngeo.statemanager.WfsPermalink', () => {
     let map;
 
     beforeEach(() => {
-      const url = 'https://geomapfish-demo-dc.camptocamp.com/2.4/mapserv_proxy';
+      const url = 'https://geomapfish-demo-2-4.camptocamp.com/mapserv_proxy';
       angular.mock.inject((_$httpBackend_) => {
         $httpBackend = _$httpBackend_;
         $httpBackend.when('POST', url).respond(ngeoTestDataMsGMLOutputFuel);
