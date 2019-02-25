@@ -29,7 +29,7 @@ function bootstrap(module) {
     if (dynamic['doRedirect']) {
       const small_screen = window.matchMedia ? window.matchMedia('(max-width: 1024px)') : false;
       if (small_screen && TOUCH) {
-        window.location = dynamic['redirectUrl'];
+        window.location.href = dynamic['redirectUrl'];
       }
     }
 

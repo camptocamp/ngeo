@@ -25,7 +25,7 @@ To know more about ngeo take a look at:
 ngeo also includes a [contribs](contribs) directory where non-core
 contributions may be placed. ngeo currently includes one contrib: `gmf`.  That
 contrib includes components specific to the
-[GeoMapFish](http://geomapfish.org/) project, that is components that rely on
+[GeoMapFish](https://geomapfish.org/) project, that is components that rely on
 GeoMapFish-specific web services. The `gmf` contrib examples are also available
 [online](https://camptocamp.github.io/ngeo/master/examples/contribs/gmf/).
 
