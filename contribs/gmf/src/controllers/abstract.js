@@ -147,11 +147,20 @@ gmf.AbstractController = function(config, $scope, $injector) {
     // Reload theme when login status changes.
     const previousThemeName = this.gmfThemeManager.getThemeName();
     this.gmfThemeManager.setThemeName('', true);
-    if (evt.type !== gmf.AuthenticationEventType.READY) {
-      this.updateCurrentTheme_(previousThemeName);
-    }
+
     // Reload themes and background layer when login status changes.
     this.gmfThemes_.loadThemes(roleId);
+
+    if (evt.type !== gmf.AuthenticationEventType.READY) {
+      let listenerKey;
+      const themesLoaded = () => {
+        ol.events.unlistenByKey(listenerKey);
+        this.updateCurrentTheme_(previousThemeName);
+      };
+      listenerKey = ol.events.listen(this.gmfThemes_,
+        gmf.ThemesEventType.CHANGE, themesLoaded, this);
+    }
+
     this.setDefaultBackground_(null);
     this.updateHasEditableLayers_();
   };
