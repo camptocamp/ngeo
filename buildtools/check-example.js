@@ -51,7 +51,7 @@ page.onResourceError = function(resourceError) {
   }
 };
 page.onResourceTimeout = page.onResourceError;
-page.settings.resourceTimeout = 3000;
+page.settings.resourceTimeout = 4000;
 page.onUrlChanged = function(url) {
   console.log('URL changed: ' + url);
 };
