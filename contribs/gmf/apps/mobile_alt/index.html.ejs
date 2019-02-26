@@ -35,14 +35,6 @@
       </gmf-displayquerywindow>
       <div
         class="gmf-mobile-measure"
-        gmf-mobile-measurearea
-        gmf-mobile-measurearea-active="mainCtrl.measureAreaActive"
-        gmf-mobile-measurearea-precision="2"
-        gmf-mobile-measurearea-sketchstyle="::mainCtrl.customMeasureStyle"
-        gmf-mobile-measurearea-map="::mainCtrl.map">
-      </div>
-      <div
-        class="gmf-mobile-measure"
         gmf-mobile-measurelength
         gmf-mobile-measurelength-active="mainCtrl.measureLengthActive"
         gmf-mobile-measurelength-precision="2"
@@ -172,15 +164,6 @@
               ng-model="mainCtrl.measureLengthActive">
               <span class="fa fa-fw" ng-class="{'fa-check': mainCtrl.measureLengthActive}"></span>
               {{'Length' | translate}}
-            </a>
-          </li>
-          <li>
-            <a ngeo-btn
-              ng-click="mainCtrl.hideNav()"
-              class="gmf-mobile-nav-button"
-              ng-model="mainCtrl.measureAreaActive">
-              <span class="fa fa-fw" ng-class="{'fa-check': mainCtrl.measureAreaActive}"></span>
-              {{'Area' | translate}}
             </a>
           </li>
         </ul>
