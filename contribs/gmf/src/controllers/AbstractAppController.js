@@ -170,6 +170,12 @@ export function AbstractAppController(config, map, $scope, $injector) {
    */
   this.loginInfoMessage = null;
 
+  /**
+   * @type {boolean}
+   * @export
+   */
+  this.userMustChangeItsPassword = false;
+
   $scope.$on('authenticationrequired', (event, args) => {
     /** @type {angular.gettext.gettextCatalog} */
     const gettextCatalog = $injector.get('gettextCatalog');
@@ -381,6 +387,12 @@ export function AbstractAppController(config, map, $scope, $injector) {
    * @type {import('gmf/authentication/Service.js').User}
    */
   this.gmfUser = $injector.get('gmfUser');
+  $scope.$watch(
+    () => this.gmfUser.is_password_changed,
+    (value) => {
+      this.userMustChangeItsPassword = value === false;
+    }
+  );
 
   /**
    * @type {import('ngeo/misc/getBrowserLanguage.js').miscGetBrowserLanguage}
@@ -642,17 +654,8 @@ export function AbstractAppController(config, map, $scope, $injector) {
 
 
 /**
- * @return {boolean} Return true if a user exists and its 'is_password_changed' value is explicitly set
- *     to false.
- */
-AbstractAppController.prototype.userMustChangeItsPassword = function() {
-  return this.gmfUser.is_password_changed === false;
-};
-
-
-/**
- * @param {Array.<import("ol/layer/Base.js").default>} layers Layers list.
- * @param {Array.<string>} labels default_basemap list.
+ * @param {Array<import("ol/layer/Base.js").default>} layers Layers list.
+ * @param {Array<string>} labels default_basemap list.
  * @return {import("ol/layer/Base.js").default} layer or null
  * @private
  * @hidden
