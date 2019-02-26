@@ -6,7 +6,7 @@ const exports = {};
  * Base url for the GeoMapFish demo server.
  * @type {string}
  */
-exports.GMF_DEMO = 'https://geomapfish-demo-dc.camptocamp.com/2.4/';
+exports.GMF_DEMO = 'https://geomapfish-demo-2-4.camptocamp.com/';
 
 /**
  * Base url for the GeoMapFish demo server.

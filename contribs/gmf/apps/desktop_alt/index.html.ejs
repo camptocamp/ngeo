@@ -4,7 +4,7 @@
     <title ng-bind-template="{{'Alternative Desktop Application'|translate}}">GeoMapFish</title>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
-    <meta name="dynamicUrl" content="https://geomapfish-demo-dc.camptocamp.com/2.4/dynamic.json">
+    <meta name="dynamicUrl" content="https://geomapfish-demo-2-4.camptocamp.com/dynamic.json">
     <meta name="interface" content="desktop_alt">
     <link rel="shortcut icon" href="<%=require("./image/favicon.ico")%>" />
     <% for (var css in htmlWebpackPlugin.files.css) { %>
@@ -367,7 +367,7 @@
     <% } %>
     <script>
     document.write(
-      '<script src="https://geomapfish-demo-dc.camptocamp.com/2.4/dynamic.js?' +
+      '<script src="https://geomapfish-demo-2-4.camptocamp.com/dynamic.js?' +
       'interface=desktop_alt&' +
       'query=' + encodeURIComponent(document.location.search) +
       '"><' + '/script>');
