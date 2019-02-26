@@ -129,6 +129,12 @@ const exports = function(config, $scope, $injector) {
    */
   this.loginInfoMessage = null;
 
+  /**
+   * @type {boolean}
+   * @export
+   */
+  this.userMustChangeItsPassword = false;
+
   $scope.$on('authenticationrequired', (event, args) => {
     /** @type {angularGettext.Catalog} */
     const gettextCatalog = $injector.get('gettextCatalog');
@@ -348,6 +354,12 @@ const exports = function(config, $scope, $injector) {
    * @export
    */
   this.gmfUser = $injector.get('gmfUser');
+  $scope.$watch(
+    () => this.gmfUser.is_password_changed,
+    (value) => {
+      this.userMustChangeItsPassword = value === false;
+    }
+  );
 
   /**
    * @type {ngeox.miscGetBrowserLanguage}
@@ -619,16 +631,6 @@ const exports = function(config, $scope, $injector) {
    * @export
    */
   this.displaywindowWidth = '50vw';
-};
-
-
-/**
- * @return {boolean} Return true if a user exists and its 'is_password_changed' value is explicitly set
- *     to false.
- * @export
- */
-exports.prototype.userMustChangeItsPassword = function() {
-  return this.gmfUser.is_password_changed === false;
 };
 
 
