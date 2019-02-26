@@ -173,7 +173,7 @@ export class ThemesService extends olEventsEventTarget {
         ).then(callback.bind(null, gmfLayer)).then(null, (response) => {
           let message = `Unable to build layer "${gmfLayerWMTS.layer}" `
             + `from WMTSCapabilities: ${gmfLayerWMTS.url}\n`;
-          message += `OpenLayers error is "${response['message']}`;
+          message += `OpenLayers error is "${response['message']}"`;
           console.error(message);
           // Continue even if some layers have failed loading.
           return $q.resolve(undefined);
@@ -388,13 +388,16 @@ export class ThemesService extends olEventsEventTarget {
       this.loaded = false;
     }
 
+    const params = {
+      'cache_version': this.cacheVersion_,
+      'foobar': new Date().getTime()
+    };
+    if (opt_roleId !== undefined) {
+      params['role'] = opt_roleId;
+    }
+
     this.$http_.get(this.treeUrl_, {
-      params: opt_roleId !== undefined ? {
-        'role': opt_roleId,
-        'cache_version': this.cacheVersion_
-      } : {
-        'cache_version': this.cacheVersion_
-      },
+      params: params,
       cache: false,
       withCredentials: true
     }).then((response) => {
