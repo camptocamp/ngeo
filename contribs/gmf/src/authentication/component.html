@@ -69,41 +69,18 @@
           type="button"
           class="form-control btn btn-default"
           value="{{'Cancel' | translate}}"
-          ng-if="!$ctrl.userMustChangeItsPassword()"
+          ng-if="!$ctrl.userMustChangeItsPassword"
           ng-click="$ctrl.changePasswordReset()" />
       <input
           type="button"
           class="form-control btn btn-default"
           value="{{'Logout' | translate}}"
-          ng-if="$ctrl.userMustChangeItsPassword()"
+          ng-if="$ctrl.userMustChangeItsPassword"
           ng-click="$ctrl.logout()" />
     </div>
   </form>
 
   <div ng-show="$ctrl.error" class="gmf-authentication-error help-block"></div>
-
-  <ngeo-modal
-      ng-model="$ctrl.changePasswordModalShown">
-    <div class="modal-header">
-      <button type="button"
-              class="close"
-              data-dismiss="modal"
-              aria-label="{{'Close' | translate}}">
-        <span aria-hidden="true">&times;</span>
-      </button>
-      <h4 class="modal-title">
-        {{'Password Changed' | translate}}
-      </h4>
-    </div>
-    <div class="modal-body">
-      {{'Your password has successfully been changed.' | translate}}
-    </div>
-    <div class="modal-footer">
-      <button type="button"
-              class="btn btn-default"
-              data-dismiss="modal">{{'OK' | translate}}</button>
-    </div>
-  </ngeo-modal>
 </div>
 
 <div ng-if="!$ctrl.gmfUser.username">
