@@ -26,7 +26,7 @@ if (!window.requestAnimationFrame) {
     + 'Vous allez être redirigé.\n\n'
     + 'Ihr Browser wird nicht unterstützt, bitte aktualisieren Sie ihn oder verwenden Sie einen anderen. '
     + 'Sie werden weitergeleitet.');
-  window.location = 'http://geomapfish.org/';
+  window.location.href = 'https://geomapfish.org/';
 }
 
 

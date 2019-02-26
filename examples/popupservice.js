@@ -64,7 +64,7 @@ MainController.prototype.iframePopup = function() {
   popup.setAutoDestroy(true);
   popup.addClass('popup-with-iframe');
   popup.setTitle('Iframe popup');
-  popup.setUrl('http://geomapfish.org/');
+  popup.setUrl('https://geomapfish.org/');
   popup.setSize('400px', '300px');
   popup.setOpen(true);
 };
@@ -124,7 +124,7 @@ MainController.prototype.openPopupWithUrl = function() {
     cls: 'popup-with-iframe',
     height: '300px',
     title: 'Opened with "open" and "iframe"',
-    url: 'http://geomapfish.org/',
+    url: 'https://geomapfish.org/',
     width: '400px'
   });
 };
