@@ -801,7 +801,7 @@ export class DatasourceManager {
         const gmfOGCDataSource = /** @type import('gmf/datasource/OGC.js').default */ (dataSource);
         const gmfLayerWMS = /** @type import('gmf/themes.js').GmfLayerWMS */ (gmfOGCDataSource.gmfLayer);
         if (olUtilGetUid(dsLayer) == olUtilGetUid(layer) &&
-            layer.get('querySourceIds').indexOf(dataSource.id) >= 0 &&
+            layer.get('querySourceIds').indexOf(String(dataSource.id)) >= 0 &&
             gmfLayerWMS.layers.split(',').indexOf(wmsLayerName) >= 0) {
 
           const id = olUtilGetUid(gmfOGCDataSource.gmfLayer);
