@@ -152,15 +152,10 @@ gmf.AbstractController = function(config, $scope, $injector) {
     this.gmfThemes_.loadThemes(roleId);
 
     if (evt.type !== gmf.AuthenticationEventType.READY) {
-      let listenerKey;
-      const themesLoaded = () => {
-        ol.events.unlistenByKey(listenerKey);
+      this.gmfThemes_.getThemesObject().then(() => {
         this.updateCurrentTheme_(previousThemeName);
-      };
-      listenerKey = ol.events.listen(this.gmfThemes_,
-        gmf.ThemesEventType.CHANGE, themesLoaded, this);
+      });
     }
-
     this.setDefaultBackground_(null);
     this.updateHasEditableLayers_();
   };
