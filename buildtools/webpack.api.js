@@ -1,6 +1,6 @@
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 
 const dest = path.resolve(__dirname, '../api/dist/');
 
@@ -40,10 +40,10 @@ module.exports = (env, argv) => {
     },
     optimization: {
       minimizer: [
-        new UglifyJsPlugin({
+        new TerserPlugin({
           parallel: true,
           sourceMap: true,
-          uglifyOptions: {
+          terserOptions: {
             compress: false
           }
         })
