@@ -369,7 +369,7 @@ export class ThemesService extends olEventsEventTarget {
   }
 
   /**
-   * @param {number=} opt_roleId The role id to send in the request.
+   * @param {string=} opt_roleId The role id to send in the request.
    * Load themes from the "themes" service.
    */
   loadThemes(opt_roleId) {

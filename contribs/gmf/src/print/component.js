@@ -592,8 +592,8 @@ class Controller {
    * Init the controller
    */
   $onInit() {
-    // Clear the capabilities if the roleId changes
-    this.$scope_.$watch(() => this.gmfAuthenticationService_.getRoleId(), () => {
+    // Clear the capabilities if the roles changes
+    this.$scope_.$watch(() => this.gmfAuthenticationService_.getRolesIds().join(','), () => {
       this.gmfPrintState_.state = PrintStateEnum.CAPABILITIES_NOT_LOADED;
       this.capabilities_ = null;
     });

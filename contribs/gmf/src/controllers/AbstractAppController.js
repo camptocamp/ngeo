@@ -202,8 +202,7 @@ export function AbstractAppController(config, map, $scope, $injector) {
       window.location.href = this.loginRedirectUrl;
       return;
     }
-    const user = evt.detail.user;
-    const roleId = (user.username !== null) ? user.role_id : undefined;
+    const roleId = gmfAuthentication.getRolesIds().join(',');
 
     // Open filter panel if 'open_panel' is set in functionalities and
     // has 'layer_filter' as first value
