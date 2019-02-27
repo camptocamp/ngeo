@@ -64,11 +64,6 @@ export class ThemesService extends olEventsEventTarget {
       this.treeUrl_ = $injector.get('gmfTreeUrl');
     }
 
-    this.cacheVersion_ = '0';
-    if ($injector.has('cacheVersion')) {
-      this.cacheVersion_ = $injector.get('cacheVersion');
-    }
-
     /**
      * @type {?import("ngeo/statemanager/Location.js").StatemanagerLocation}
      * @private
@@ -390,11 +385,8 @@ export class ThemesService extends olEventsEventTarget {
 
     this.$http_.get(this.treeUrl_, {
       params: opt_roleId !== undefined ? {
-        'role': opt_roleId,
-        'cache_version': this.cacheVersion_
-      } : {
-        'cache_version': this.cacheVersion_
-      },
+        'role': opt_roleId
+      } : {},
       cache: false,
       withCredentials: true
     }).then((response) => {

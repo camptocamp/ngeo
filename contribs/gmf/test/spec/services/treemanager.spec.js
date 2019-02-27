@@ -13,7 +13,7 @@ describe('gmf.layertree.TreeManager', () => {
       $timeout = _$timeout_;
       gmfTreeManager = _gmfTreeManager_;
       gmfThemes = _gmfThemes_;
-      treeUrl = `${_gmfTreeUrl_}?cache_version=0`;
+      treeUrl = _gmfTreeUrl_;
       $httpBackend = _$httpBackend_;
       $httpBackend.when('GET', treeUrl).respond(gmfTestDataThemes);
     });
