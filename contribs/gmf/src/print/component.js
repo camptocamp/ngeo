@@ -592,8 +592,8 @@ class Controller {
    * Init the controller
    */
   $onInit() {
-    // Clear the capabilities if the roleId changes
-    this.$scope_.$watch(() => this.gmfAuthenticationService_.getRoleId(), () => {
+    // Clear the capabilities if the roles changes
+    this.$scope_.$watch(() => this.gmfAuthenticationService_.getRolesIds().join(','), () => {
       this.gmfPrintState_.state = PrintStateEnum.CAPABILITIES_NOT_LOADED;
       this.capabilities_ = null;
     });
@@ -670,7 +670,7 @@ class Controller {
   togglePrintPanel_(active) {
     if (active) {
       if (!this.capabilities_) {
-        this.getCapabilities_();
+        this.getCapabilities_(this.gmfAuthenticationService_.getRolesIds().join(','));
       }
       this.capabilities_.then((resp) => {
         // make sure the panel is still open
@@ -703,17 +703,15 @@ class Controller {
 
   /**
    * Gets the print capabilities.
-   * @param {number|null=} opt_roleId The role id.
+   * @param {string} roleId The roles ids.
    * @private
    */
-  getCapabilities_(opt_roleId) {
+  getCapabilities_(roleId) {
     this.capabilities_ = this.ngeoPrint_.getCapabilities(
       /** @type {angular.IRequestShortcutConfig} */ ({
         withCredentials: true,
-        params: opt_roleId ? {
-          'role': opt_roleId,
-          'cache_version': this.cacheVersion_
-        } : {
+        params: {
+          'role': roleId,
           'cache_version': this.cacheVersion_
         }
       }));

@@ -1155,7 +1155,7 @@ PermalinkService.prototype.initLayers_ = function() {
     this.$timeout_(() => {
       if (!this.gmfTreeManager_ || !this.gmfTreeManager_.rootCtrl) {
         // we don't have any layertree
-        if (authenticationRequired && this.gmfUser_ && this.gmfUser_.role_id === null) {
+        if (authenticationRequired && this.gmfUser_ && this.gmfUser_.roles === null) {
           this.rootScope_.$broadcast('authenticationrequired', {url: initialUri});
         }
         return;
@@ -1228,7 +1228,7 @@ PermalinkService.prototype.initLayers_ = function() {
         });
       });
 
-      if (authenticationRequired && this.gmfUser_ && this.gmfUser_.role_id === null) {
+      if (authenticationRequired && this.gmfUser_ && this.gmfUser_.roles === null) {
         this.rootScope_.$broadcast('authenticationrequired', {url: initialUri});
       }
     });

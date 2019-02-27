@@ -11,7 +11,7 @@ describe('gmf.theme.Themes', () => {
   beforeEach(() => {
     angular.mock.inject((_gmfThemes_, _gmfTreeUrl_, _$httpBackend_) => {
       gmfThemes = _gmfThemes_;
-      treeUrl = `${_gmfTreeUrl_}?cache_version=0`;
+      treeUrl = _gmfTreeUrl_;
       $httpBackend = _$httpBackend_;
       $httpBackend.when('GET', treeUrl).respond(gmfTestDataThemes);
     });

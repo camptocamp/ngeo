@@ -14,6 +14,11 @@ import olEventsEventTarget from 'ol/events/Target.js';
  *    an application.
  */
 
+/**
+ * @typedef {Object} RoleInfo
+ * @property {number} id Role identifier.
+ * @property {string} name Role name.
+ */
 
 /**
  * @typedef {Object} User
@@ -21,8 +26,7 @@ import olEventsEventTarget from 'ol/events/Target.js';
  * @property {AuthenticationFunctionalities|null} functionalities Configured functionalities of the user
  * @property {boolean|null} is_password_changed True if the password of the user has been changed.
  *    False otherwise.
- * @property {number|null} role_id the role id of the user.
- * @property {string|null} role_name The role name of the user.
+ * @property {Array<RoleInfo>} roles Roles information.
  * @property {string|null} username The name of the user.
  */
 
@@ -41,8 +45,7 @@ import olEventsEventTarget from 'ol/events/Target.js';
  * @typedef {Object} AuthenticationLoginResponse
  * @property {AuthenticationFunctionalities} [functionalities]
  * @property {boolean} [is_password_changed]
- * @property {number} [role_id]
- * @property {string} [role_name]
+ * @property {Array<RoleInfo>} [roles]
  * @property {string} [username]
  */
 
@@ -183,7 +186,7 @@ export class AuthenticationService extends olEventsEventTarget {
    * @return {angular.IPromise} Promise.
    */
   logout() {
-    const noReload = this.user_['role_name'] === this.noReloadRole_;
+    const noReload = this.getRolesNames().indexOf(this.noReloadRole_) !== -1;
     const url = `${this.baseUrl_}/${RouteSuffix.LOGOUT}`;
     return this.$http_.get(url, {withCredentials: true}).then(() => {
       this.resetUser_(noReload);
@@ -220,17 +223,17 @@ export class AuthenticationService extends olEventsEventTarget {
   }
 
   /**
-   * @return {?AuthenticationFunctionalities} The role functionalities.
+   * @return {!Array<number>} The roles IDs.
    */
-  getFunctionalities() {
-    return this.user_.functionalities;
+  getRolesIds() {
+    return this.user_.roles ? this.user_.roles.map((role) => role.id) : [];
   }
 
   /**
-   * @return {number|null} The role ID.
+   * @return {!Array<string>} The roles names.
    */
-  getRoleId() {
-    return this.user_.role_id;
+  getRolesNames() {
+    return this.user_.roles ? this.user_.roles.map((role) => role.name) : [];
   }
 
   /**
@@ -299,8 +302,7 @@ module.service('gmfAuthenticationService', AuthenticationService);
 module.value('gmfUser', {
   functionalities: null,
   is_password_changed: null,
-  role_id: null,
-  role_name: null,
+  roles: null,
   username: null
 });
 
