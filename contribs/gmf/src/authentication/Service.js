@@ -26,7 +26,7 @@ import olEventsEventTarget from 'ol/events/Target.js';
  * @property {AuthenticationFunctionalities|null} functionalities Configured functionalities of the user
  * @property {boolean|null} is_password_changed True if the password of the user has been changed.
  *    False otherwise.
- * @property {Array<RoleInfo>} roles Roles informations.
+ * @property {Array<RoleInfo>} roles Roles information.
  * @property {string|null} username The name of the user.
  */
 
