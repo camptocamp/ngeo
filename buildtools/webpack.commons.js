@@ -174,7 +174,10 @@ const config = function(hardSourceConfig, babelLoaderCacheDirectory) {
         'jquery-ui/datepicker': 'jquery-ui/ui/widgets/datepicker', // For angular-ui-date
         'proj4': 'proj4/lib',
       }
-    }
+    },
+    optimization: {
+      sideEffects: false,
+    },
   };
 };
 
