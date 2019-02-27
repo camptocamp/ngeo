@@ -1,5 +1,5 @@
 const webpack = require('webpack');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 
 
 const resourcesRule = {
@@ -12,7 +12,7 @@ const resourcesRule = {
   }
 };
 
-module.exports = function(UglifyJsPluginCache) {
+module.exports = function(TerserPluginCache) {
   return {
     mode: 'production',
     output: {
@@ -28,11 +28,11 @@ module.exports = function(UglifyJsPluginCache) {
     },
     optimization: {
       minimizer: [
-        new UglifyJsPlugin({
-          cache: UglifyJsPluginCache,
+        new TerserPlugin({
+          cache: TerserPluginCache,
           parallel: true,
           sourceMap: true,
-          uglifyOptions: {
+          terserOptions: {
             compress: false
           }
         })
