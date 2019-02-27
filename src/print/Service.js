@@ -189,7 +189,7 @@ PrintService.prototype.encodeMap_ = function(map, scale, object) {
   let layers = this.ngeoLayerHelper_.getFlatLayers(mapLayerGroup);
 
   // Sort the layer by ZIndex
-  olArray.stableSort(layers, (layer_a, layer_b) => layer_a.getZIndex() - layer_b.getZIndex());
+  olArray.stableSort(layers, (layer_a, layer_b) => (layer_a.getZIndex() || 0) - (layer_b.getZIndex() || 0));
   layers = layers.slice().reverse();
 
   layers.forEach((layer) => {
