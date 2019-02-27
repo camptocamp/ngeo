@@ -223,13 +223,6 @@ export class AuthenticationService extends olEventsEventTarget {
   }
 
   /**
-   * @return {?AuthenticationFunctionalities} The role functionalities.
-   */
-  getFunctionalities() {
-    return this.user_.functionalities;
-  }
-
-  /**
    * @return {!Array<number>} The roles IDs.
    */
   getRolesIds() {
