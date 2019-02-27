@@ -56,7 +56,7 @@ class Controller extends AbstractDesktopController {
     /**
      * @type {Array<string>}
      */
-    this.elevationLayers = ['aster', 'srtm', 'srtm-partial'];
+    this.elevationLayers = ['aster', 'srtm'];
 
     /**
      * @type {Object<string, import('gmf/mobile/measure/pointComponent.js').LayerConfig>}
@@ -74,7 +74,6 @@ class Controller extends AbstractDesktopController {
     this.profileLinesconfiguration = {
       'aster': {color: '#0000A0'},
       'srtm': {color: '#00A000'},
-      'srtm-partial': {color: '#FF66FF'},
     };
 
     /**
