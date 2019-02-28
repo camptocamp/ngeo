@@ -214,6 +214,10 @@ function Controller($scope, $element, gettextCatalog, ngeoFeatureOverlayMgr, nge
     this.setPosition_();
   });
 
+  olEvents.listen(this.geolocation_, 'change:heading', () => {
+    //this.setHeading_();
+  });
+
   const view = map.getView();
 
   olEvents.listen(view, 'change:center', this.handleViewChange_, this);
@@ -299,6 +303,23 @@ Controller.prototype.setPosition_ = function() {
 
 
 /**
+ * @private
+ */
+Controller.prototype.setHeading_ = function() {
+  const heading = /** @type {number|undefined} */ (this.geolocation_.getHeading());
+  if (this.follow_) {
+    this.viewChangedByMe_ = true;
+    this.map_.getView().animate({
+      rotation: heading,
+      duration: 350,
+      easing: olEasing.linear
+    });
+    this.viewChangedByMe_ = false;
+  }
+};
+
+
+/**
  * @param {import("ol/events/Event.js").default} event Event.
  * @private
  */
@@ -309,47 +330,35 @@ Controller.prototype.handleViewChange_ = function(event) {
 };
 
 
-// Orientation control events
-Controller.prototype.autorotateListener = function() {
-  let currentAlpha = 0;
-  if (window.hasOwnProperty('ondeviceorientationabsolute')) {
-    window.addEventListener('deviceorientationabsolute', (evt) => {
-      const event = /** @type {DeviceOrientationEvent} */(evt);
-      currentAlpha = this.handleRotate_(event.alpha, currentAlpha);
-    }, true);
-  } else if (window.hasOwnProperty('ondeviceorientation')) {
-    window.addEventListener('deviceorientation', (evt) => {
-      // @ts-ignore: ios only
-      if (evt.webkitCompassHeading) { // check for iOS property
-        // @ts-ignore: ios only
-        currentAlpha = this.handleRotate_(-evt.webkitCompassHeading, currentAlpha);
-      } else { // non iOS
-        currentAlpha = this.handleRotate_(evt.alpha - 270, currentAlpha);
-      }
-    }, true);
-  } else {
-    console.error('Orientation is not supported on this device');
-  }
-};
-
 /**
- * Handle rotation.
- * @param {number} eventAlpha .
- * @param {number} currentAlpha .
- * @return {number} .
+ * Listen deviceorientation to animate view rotation accordingly.
+ * Only works on devices with integrated compass.
  * @private
  */
-Controller.prototype.handleRotate_ = function(eventAlpha, currentAlpha) {
-  if (this.geolocation_.getTracking() && Math.abs(eventAlpha - currentAlpha) > 0.2) {
-    currentAlpha = eventAlpha;
-    const radAlpha = currentAlpha * Math.PI / 180;
+Controller.prototype.autorotateListener = function() {
+  let previousAlpha = 0;
+
+  window.addEventListener('deviceorientation', (evt) => {
+    const event = /** @type {DeviceOrientationEvent} */(evt);
+
+    if (!this.geolocation_.getTracking()) {
+      return;
+    }
+    if (!event.absolute) {
+      //return;
+    }
+    if (Math.abs(event.alpha - previousAlpha) < 1) {
+      return;
+    }
+
     this.map_.getView().animate({
-      rotation: radAlpha,
+      rotation: event.alpha * Math.PI / 180,
       duration: 350,
       easing: olEasing.linear
     });
-  }
-  return currentAlpha;
+
+    previousAlpha = event.alpha;
+  }, true);
 };
 
 
