@@ -603,13 +603,27 @@ Controller.prototype.$onInit = function() {
     (newValue, oldValue) => {
       const state = EditingState;
       if (newValue === state.STOP_EDITING_PENDING) {
-        this.confirmCancel().then(() => {
+        if (this.feature && this.dirty) {
+          this.confirmCancel().then(() => {
+            this.timeout_(() => {
+              this.state = state.STOP_EDITING_EXECUTE;
+              this.scope_.$apply();
+            }, 500);
+          });
+        } else {
           this.state = state.STOP_EDITING_EXECUTE;
-        });
+        }
       } else if (newValue === state.DEACTIVATE_PENDING) {
-        this.confirmCancel().then(() => {
+        if (this.feature && this.dirty) {
+          this.confirmCancel().then(() => {
+            this.timeout_(() => {
+              this.state = state.DEACTIVATE_EXECUTE;
+              this.scope_.$apply();
+            }, 500);
+          });
+        } else {
           this.state = state.DEACTIVATE_EXECUTE;
-        });
+        }
       }
     }
   );
