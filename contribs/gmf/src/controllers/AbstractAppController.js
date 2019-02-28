@@ -218,11 +218,13 @@ export function AbstractAppController(config, map, $scope, $injector) {
     // Reload theme when login status changes.
     const previousThemeName = this.gmfThemeManager.getThemeName();
     this.gmfThemeManager.setThemeName('', true);
+
+    // Reload themes and background layer when login status changes.
+    this.gmfThemes_.loadThemes(roleId);
+
     if (evt.type !== 'ready') {
       this.updateCurrentTheme_(previousThemeName);
     }
-    // Reload themes and background layer when login status changes.
-    this.gmfThemes_.loadThemes(roleId);
     this.setDefaultBackground_(null);
     this.updateHasEditableLayers_();
   };
