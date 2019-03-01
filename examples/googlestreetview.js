@@ -48,7 +48,7 @@ function MainController(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
   this.style = new olStyleStyle({
     text: new olStyleText({
       fill: new olStyleFill({color: '#279B61'}),
-      font: 'normal 30px FontAwesome',
+      font: '900 30px "Font Awesome 5 Free"',
       offsetY: -15,
       stroke: new olStyleStroke({color: '#ffffff', width: 3}),
       text: '\uf041'
