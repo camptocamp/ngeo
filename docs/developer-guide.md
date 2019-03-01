@@ -170,3 +170,5 @@ Create the new localisation resource:
 rm .tx/config
 make transifex-init
 ```
+
+Update the references in the `index.html` file of the `gh-pages` branch.
