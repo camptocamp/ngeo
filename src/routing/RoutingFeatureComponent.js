@@ -152,7 +152,7 @@ function Controller($scope, $timeout, $q, ngeoNominatimService) {
           fill: new olStyleFill({
             color: this.fillColor || '#000000'
           }),
-          font: 'normal 30px FontAwesome',
+          font: '900 30px "Font Awesome 5 Free"',
           offsetY: -15,
           stroke: new olStyleStroke({
             width: 3,

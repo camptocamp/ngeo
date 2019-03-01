@@ -361,7 +361,7 @@ describe('ngeo.print.Service', () => {
 
         style3 = new olStyleStyle({
           text: new olStyleText({
-            font: 'normal 16px "sans serif"',
+            font: '900 16px "sans serif"',
             text: 'Ngeo',
             textAlign: 'left',
             offsetX: 42,
@@ -375,7 +375,7 @@ describe('ngeo.print.Service', () => {
         // Here to check that textAlign default value is set.
         style4 = new olStyleStyle({
           text: new olStyleText({
-            font: 'normal 16px "sans serif"',
+            font: '900 16px "sans serif"',
             text: 'Ngeo',
             offsetX: 42,
             offsetY: -42,
@@ -479,7 +479,7 @@ describe('ngeo.print.Service', () => {
           symbolizers: [{
             type: 'Text',
             fontColor: '#030303',
-            fontWeight: 'normal',
+            fontWeight: '900',
             fontSize: '16px',
             fontFamily: '"sans serif"',
             label: 'Ngeo',
@@ -492,7 +492,7 @@ describe('ngeo.print.Service', () => {
           symbolizers: [{
             type: 'Text',
             fontColor: '#030303',
-            fontWeight: 'normal',
+            fontWeight: '900',
             fontSize: '16px',
             fontFamily: '"sans serif"',
             label: 'Ngeo',
