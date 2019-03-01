@@ -96,11 +96,14 @@ export class AbstractDesktopController extends AbstractAPIController {
     const body = $('body');
 
     // initialize tooltips
-    body.tooltip({
+    body.tooltip(/** @type {Bootstrap.TooltipOption} */ ({
       container: 'body',
       trigger: 'hover',
-      selector: '[data-toggle="tooltip"]'
-    });
+      selector: '[data-toggle="tooltip"]',
+
+      // Avoid error in config type checking with IE11
+      sanitizeFn: $injector.get('$sanitize')
+    }));
 
     // deactivate tooltips on touch device
     body.on('touchstart.detectTouch', () => {
