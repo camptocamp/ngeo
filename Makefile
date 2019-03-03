@@ -153,7 +153,6 @@ eof-newline:
 .PHONY: test
 test: .build/node_modules.timestamp
 	TS_NODE_PROJECT=disable.json ./node_modules/karma/bin/karma start karma-conf.js --single-run
-	@echo "\nFull coverage report in: .build/coverage/lcov-report"
 
 .PHONY: test-debug
 test-debug: .build/node_modules.timestamp .build/node_modules_karma-chrome-launcher.timestamp
