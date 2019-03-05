@@ -176,7 +176,12 @@ button[ngeo-mobile-geolocation] {
 
 /** Disclaimer, and tablet redirect */
 main .gmf-app-map-messages {
+  bottom: 50px;
   text-align: left;
+
+  .alert.fade:not(.show) {
+    display: none;
+  }
 }
 
 /** ngeo-displayquery-window */
