@@ -164,10 +164,18 @@ const exports = function(config, $scope, $injector) {
     const user = evt.detail.user;
     const roleId = (user.username !== null) ? user.role_id : undefined;
 
+    const functionalities = this.gmfUser.functionalities;
+
+    // Enable filter tool in toolbar
+    if (functionalities &&
+        'filterable_layers' in functionalities &&
+        functionalities['filterable_layers'].length > 0) {
+      this.filterSelectorEnabled = true;
+    }
+
     // Open filter panel if 'open_panel' is set in functionalities and
     // has 'layer_filter' as first value
     this.gmfThemes_.getThemesObject().then((themes) => {
-      const functionalities = this.gmfUser.functionalities;
       if (functionalities &&
           functionalities.open_panel &&
           functionalities.open_panel[0] === 'layer_filter') {
@@ -275,6 +283,12 @@ const exports = function(config, $scope, $injector) {
     }),
     stroke: queryStroke
   });
+
+  /**
+   * @type {boolean}
+   * @export
+   */
+  this.filterSelectorEnabled = false;
 
   /**
    * @type {boolean}
