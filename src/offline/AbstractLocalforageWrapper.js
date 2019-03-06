@@ -20,6 +20,7 @@ let Action;
 exports = class AbstractLocalforageWrapper {
   constructor() {
     this.waitingPromises_ = new window.Map();
+    this.currentId_ = 0;
   }
 
   setItem(...args) {
@@ -45,7 +46,7 @@ exports = class AbstractLocalforageWrapper {
    * @return {Promise} .
    */
   createAction(command, ...args) {
-    const id = Math.random();
+    const id = ++this.currentId_;
     /**
      * @type {Action}
      */
