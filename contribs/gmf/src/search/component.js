@@ -489,6 +489,7 @@ class SearchController {
       this.additionalListeners,
       /** @type {import('ngeo/search/searchDirective.js').SearchDirectiveListeners} */ ({
         select: this.select_.bind(this),
+        change: this.handleChange_.bind(this),
         close: this.close_.bind(this),
         datasetsempty: this.datasetsempty_.bind(this)
       })
@@ -533,6 +534,7 @@ class SearchController {
           listeners.close();
           additionalListeners.close();
         },
+      change: additionalListeners.change,
       cursorchange: additionalListeners.cursorchange,
       datasetsempty: additionalListeners.datasetsempty,
       select: additionalListeners.select === undefined ?
@@ -1091,6 +1093,21 @@ class SearchController {
           this.inputValue = /** @type {string} */ (feature.get('label'));
         }
       });
+  }
+
+  /**
+   * @param {JQueryEventObject} event Event.
+   * @param {string} query Query.
+   * @private
+   */
+  handleChange_(event, query) {
+    // On change, if there's a query then no need to do anything
+    if (query) {
+      return;
+    }
+
+    // There's no query, hide the no result message
+    this.datasetsempty_(event, query, false);
   }
 }
 

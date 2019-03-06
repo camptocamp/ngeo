@@ -9,6 +9,7 @@ import angular from 'angular';
  * @property {function(JQueryEventObject, Object, Twitter.Typeahead.Dataset): void} [select]
  * @property {function(JQueryEventObject, Object, Twitter.Typeahead.Dataset): void} [autocomplete]
  * @property {function(JQueryEventObject, string, boolean): void} [datasetsempty]
+ * @property {function(JQueryEventObject, string): void} [change]
  */
 
 
@@ -124,6 +125,17 @@ function searchComponent() {
           });
         });
 
+      element.on('typeahead:change',
+        /**
+         * @param {JQueryEventObject} event Event.
+         */
+        (event) => {
+          scope.$apply(() => {
+            const query = element.data('tt-typeahead')['input']['query'];
+            typeaheadListeners.change(event, query);
+          });
+        });
+
     }
   };
 }
@@ -147,7 +159,8 @@ function adaptListeners_(object) {
       cursorchange() {},
       datasetsempty() {},
       select() {},
-      autocomplete() {}
+      autocomplete() {},
+      change() {}
     };
   } else {
     typeaheadListeners = {
@@ -162,7 +175,9 @@ function adaptListeners_(object) {
       select: object.select !== undefined ?
         object.select : () => {},
       autocomplete: object.autocomplete !== undefined ?
-        object.autocomplete : () => {}
+        object.autocomplete : () => {},
+      change: object.change !== undefined ?
+        object.change : () => {}
     };
   }
   return typeaheadListeners;
