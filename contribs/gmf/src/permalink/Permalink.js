@@ -32,8 +32,7 @@ import * as olEvents from 'ol/events.js';
 import olFeature from 'ol/Feature.js';
 import olGeomMultiPoint from 'ol/geom/MultiPoint.js';
 import olGeomPoint from 'ol/geom/Point.js';
-import olStyleStroke from 'ol/style/Stroke.js';
-import olStyleRegularShape from 'ol/style/RegularShape.js';
+import olStyleIcon from 'ol/style/Icon.js';
 import olStyleStyle from 'ol/style/Style.js';
 import olLayerGroup from 'ol/layer/Group.js';
 
@@ -294,26 +293,8 @@ const exports = function($q, $timeout, $rootScope, $injector, ngeoDebounce, gett
     this.crosshairStyle_ = gmfPermalinkOptions.crosshairStyle;
   } else {
     this.crosshairStyle_ = [new olStyleStyle({
-      image: new olStyleRegularShape({
-        stroke: new olStyleStroke({
-          color: 'rgba(255, 255, 255, 0.8)',
-          width: 5
-        }),
-        points: 4,
-        radius: 8,
-        radius2: 0,
-        angle: 0
-      })
-    }), new olStyleStyle({
-      image: new olStyleRegularShape({
-        stroke: new olStyleStroke({
-          color: 'rgba(255, 0, 0, 1)',
-          width: 2
-        }),
-        points: 4,
-        radius: 8,
-        radius2: 0,
-        angle: 0
+      image: new olStyleIcon({
+        src: require('gmf/permalink/crosshair.svg')
       })
     })];
   }
