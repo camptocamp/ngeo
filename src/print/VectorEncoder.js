@@ -244,7 +244,7 @@ VectorEncoder.prototype.encodeVectorStylePoint = function(symbolizers, imageStyl
       this.encodeVectorStyleStroke(symbolizer, strokeStyle);
     }
   } else if (imageStyle instanceof olStyleIcon) {
-    const src = imageStyle.getSrc();
+    const src = new URL(imageStyle.getSrc(), window.location.href).href;
     if (src !== undefined) {
       symbolizer = /** @type {import('ngeo/print/mapfish-print-v3.js').MapFishPrintSymbolizerPoint} */ ({
         type: 'point',
