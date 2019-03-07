@@ -347,10 +347,13 @@ class AuthenticationController {
     if (errors.length) {
       this.setError_(errors);
     } else {
-      const error = gettextCatalog.getString('Incorrect credentials or disabled account.');
-      this.gmfAuthenticationService_.login(this.loginVal, this.pwdVal).then(
-        this.resetError_.bind(this),
-        this.setError_.bind(this, error));
+      this.gmfAuthenticationService_.login(this.loginVal, this.pwdVal)
+        .then(() => {
+          this.resetError_();
+        })
+        .catch(() => {
+          this.setError_(gettextCatalog.getString('Incorrect credentials or disabled account.'));
+        });
     }
   }
 
@@ -359,10 +362,13 @@ class AuthenticationController {
    */
   logout() {
     const gettextCatalog = this.gettextCatalog;
-    const error = gettextCatalog.getString('Could not log out.');
-    this.gmfAuthenticationService_.logout().then(
-      this.resetError_.bind(this),
-      this.setError_.bind(this, error));
+    this.gmfAuthenticationService_.logout()
+      .then(() => {
+        this.resetError_();
+      })
+      .catch(() => {
+        this.setError_(gettextCatalog.getString('Could not log out.'));
+      });
   }
 
   /**
@@ -376,20 +382,15 @@ class AuthenticationController {
       return;
     }
 
-    const error = gettextCatalog.getString('An error occurred while resetting the password.');
+    this.gmfAuthenticationService_.resetPassword(this.loginVal)
+      .then(() => {
+        this.resetPasswordModalShown = true;
+        this.resetError_();
+      })
+      .catch(() => {
+        this.setError_(gettextCatalog.getString('An error occurred while resetting the password.'));
+      });
 
-    /**
-     * @param {import('gmf/authentication/Service.js').AuthenticationDefaultResponse} respData Response.
-     */
-    const resetPasswordSuccessFn = function(respData) {
-      this.resetPasswordModalShown = true;
-      this.resetError_();
-    }.bind(this);
-
-    this.gmfAuthenticationService_.resetPassword(this.loginVal).then(
-      resetPasswordSuccessFn,
-      this.setError_.bind(this, error)
-    );
   }
 
 
