@@ -20,7 +20,7 @@ GMF_EXAMPLES_JS_FILES := $(GMF_EXAMPLES_HTML_FILES:.html=.js)
 
 GMF_APPS += mobile desktop desktop_alt iframe_api mobile_alt oeedit oeview
 GMF_APPS_JS_FILES = $(shell find contribs/gmf/apps/ -type f -name '*.js')
-GMF_APPS_PARTIALS_FILES = $(shell find contribs/gmf/apps/ -type f -name '*.html')
+GMF_APPS_PARTIALS_FILES = $(shell find contribs/gmf/apps/ -type f -name '*.html' -or -name '*.html.ejs')
 GMF_APPS_ALL_FILES = $(shell find contribs/gmf/apps/ -type f) $(GMF_ALL_SRC_FILES)
 
 CHECK_EXAMPLE_CHECKER := $(patsubst test/check-example/%.html,.build/test-check-example/%.check.timestamp,$(shell ls -1 test/check-example/*.html))
