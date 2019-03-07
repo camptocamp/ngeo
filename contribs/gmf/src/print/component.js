@@ -760,7 +760,8 @@ class Controller {
 
     this.updateCustomFields_();
 
-    this.layoutInfo.legend = this.fieldValues['legend'] !== false;
+    this.layoutInfo.legend = this.layoutInfo.attributes.indexOf('legend') >= 0 ?
+      this.fieldValues['legend'] !== false : undefined;
     this.layoutInfo.scales = clientInfo['scales'] || [];
     this.layoutInfo.dpis = clientInfo['dpiSuggestions'] || [];
 
@@ -794,9 +795,8 @@ class Controller {
     if (!this.layoutInfo.simpleAttributes) {
       this.layoutInfo.simpleAttributes = [];
     }
-    if (!this.layoutInfo.attributes) {
-      this.layoutInfo.attributes = [];
-    }
+    this.layoutInfo.attributes = [];
+
     const simpleAttributes = this.layoutInfo.simpleAttributes;
     const previousAttributes = simpleAttributes.splice(0, simpleAttributes.length);
 
