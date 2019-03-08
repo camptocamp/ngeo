@@ -5,15 +5,17 @@ This document lists ngeo's features and if they are visible/configurable in the 
 Feature | Sub-feature | Desktop | Mobile
 ------- | ----------- | ------- | ------
 Navigation | Zoom&pan | X | X
-. | Map rotation | (2.3) | (2.3)
+. | Map rotation | 2.3 | 2.3
 . | Geolocation | X | X
 . | Info bar | X | -
+. | Feedback window | (2.5) | -
+. | Offline | - | (2.5)
 Full-text search | Data | X | X
 . | Layers/groups/themes | X | -
 . | Coordinates | X | X
 Data | Background selector | X | X
 . | Themes (flush) | X | X
-. | Themes (non-flush) | X | (2.3)
+. | Themes (non-flush) | X | 2.3
 Layers | (Un)select layer/group | X | X
 . | Clear all groups | X | X
 . | Remove group | X | X
@@ -21,12 +23,16 @@ Layers | (Un)select layer/group | X | X
 . | Legend | X | X
 . | Go to scale | X | X
 . | Info on layer | X | X
-. | Opacity | X | (2.3)
+. | Opacity | X | 2.3
 . | Time layers | X | -
+. | Map swiper | (2.5) | -
 Query | Point query | X | X
 . | Rectangular query | X | -
+. | Polygon query | (2.5) | -
+. | Add/remove query | 2.4 | -
 . | Results window | X | X
 . | Results window filter | X | -
+. | Results window export | (2.5) | -
 . | Results grid | X | -
 . | Results grid zoom to | X | -
 . | Results grid export | X | -
@@ -56,11 +62,11 @@ Editing | Edit point | X | -
 Profile | Draw profile | X | -
 . | CSV export | X | -
 StreetView | StreetView panel | X | -
-External layers | Online WMS | (2.3) | -
-. | Online WMTS | (2.3) | -
-. | Local KML | (2.3) | -
-. | Local GPX | (2.3) | -
-. | Query point on WMS | (2.3) | -
+External layers | Online WMS | 2.3 | -
+. | Online WMTS | 2.3 | -
+. | Local KML | 2.3 | -
+. | Local GPX | 2.3 | -
+. | Query point on WMS | 2.3 | -
 Permalink | Share window | X | -
 . | Parameter location | X | X
 . | Parameter layers/groups/themes/background | X | X
@@ -68,8 +74,8 @@ Permalink | Share window | X | -
 . | Parameter tooltip | X | X
 . | Parameter dimensions | X | X
 . | Parameter WFS | X | X
-. | Parameter drawing | X | (2.4?)
-. | Parameter external layers | (2.3) | -
+. | Parameter drawing | X | 2.4
+. | Parameter external layers | 2.3 | -
 . | Short URL | X | X
 Object editing | Edit one feature | X | -
 . | Add new parts | X | -
@@ -79,4 +85,4 @@ Object editing | Edit one feature | X | -
 . | Cut from | X | -
 . | Query other features | X | -
 
-("X" = working, "-" = not working, "(<version>)" = targeted version for solving)
+("X" = available, "-" = not available, "<version>" = available from this version, "(<version>)" = should be available from this version)
