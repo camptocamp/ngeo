@@ -55,7 +55,7 @@
     "@types/proj4": "2.5.0",
     "@types/typeahead": "0.11.32",
     "angular": "1.7.8",
-    "angular-animate": "1.7.6",
+    "angular-animate": "1.7.8",
     "angular-dynamic-locale": "0.1.37",
     "angular-float-thead": "0.1.2",
     "angular-gettext": "2.4.1",
