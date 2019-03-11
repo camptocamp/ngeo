@@ -1,5 +1,5 @@
 import './notification.css';
-import 'jquery-ui/ui/widgets/tooltip.js';
+import 'bootstrap/js/src/tooltip.js';
 import angular from 'angular';
 import {MessageType} from 'ngeo/message/Message.js';
 

@@ -1,6 +1,6 @@
 import angular from 'angular';
 import './drawfeature.css';
-import 'jquery-ui/ui/widgets/tooltip.js';
+import 'bootstrap/js/src/tooltip.js';
 import gmfMapComponent from 'gmf/map/component.js';
 
 import gmfDrawingModule from 'gmf/drawing/module.js';
