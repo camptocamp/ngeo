@@ -12,5 +12,5 @@ export default {
    * The name of the layer to use as background. May be a single value
    * (WMTS) or a comma-separated list of layer names (WMS).
    */
-  backgroundLayer: 'Test aus Olten',
+  backgroundLayer: 'OSM map',
 };
