@@ -1,5 +1,5 @@
 import './disclaimer.css';
-import 'jquery-ui/ui/widgets/tooltip.js';
+import 'bootstrap/js/src/tooltip.js';
 import angular from 'angular';
 import ngeoMessageDisclaimer from 'ngeo/message/Disclaimer.js';
 

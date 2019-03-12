@@ -13,16 +13,17 @@ const module = angular.module('ngeoPopover', []);
 /**
  * Provides a directive used to display a Bootstrap popover.
  *
- *<div ngeo-popover>
- *  <a ngeo-popover-anchor class="btn btn-info">anchor 1</a>
- *  <div ngeo-popover-body>
- *    <ul>
- *      <li>action 1:
- *        <input type="range"/>
- *      </li>
- *    </ul>
- *  </div>
- *</div>
+ *    <div ngeo-popover>
+ *      <a ngeo-popover-anchor class="btn btn-info">anchor 1</a>
+ *      <div ngeo-popover-body>
+ *        <ul>
+ *          <li>action 1:
+ *            <input type="range"/>
+ *          </li>
+ *        </ul>
+ *      </div>
+ *    </div>
+ *
  * @ngdoc directive
  * @ngInject
  * @ngname ngeoPopover

@@ -2,7 +2,7 @@
 import angular from 'angular';
 import appURL from './url.js';
 import './importdatasource.css';
-import 'jquery-ui/ui/widgets/tooltip.js';
+import 'bootstrap/js/src/tooltip.js';
 import gmfDatasourceManager from 'gmf/datasource/Manager.js';
 
 import gmfImportImportdatasourceComponent from 'gmf/import/importdatasourceComponent.js';

@@ -2,7 +2,7 @@
 import angular from 'angular';
 import appURL from './url.js';
 import './filterselector.css';
-import 'jquery-ui/ui/widgets/tooltip.js';
+import 'bootstrap/js/src/tooltip.js';
 import gmfAuthenticationModule from 'gmf/authentication/module.js';
 
 import gmfDatasourceManager from 'gmf/datasource/Manager.js';
