@@ -727,8 +727,8 @@ const exports = class {
         }
 
         if (momentEnd) {
-          const startValue = moment(value).format('YYYY-MM-DD HH:mm:ss');
-          const endValue = momentEnd.format('YYYY-MM-DD HH:mm:ss');
+          const startValue = moment(value).utc().format('YYYY-MM-DD HH:mm:ss');
+          const endValue = momentEnd.utc().format('YYYY-MM-DD HH:mm:ss');
           filter = olFormatFilter.during(name, startValue, endValue);
         }
       }
