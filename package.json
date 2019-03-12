@@ -109,6 +109,7 @@
     "ol-layerswitcher": "3.2.0",
     "phantomjs-polyfill-string-includes": "1.0.0",
     "phantomjs-prebuilt": "2.1.16",
+    "popper.js": "1.14.6",
     "proj4": "2.5.0",
     "raven-js": "3.27.0",
     "simple-html-tokenizer": "0.1.1",
