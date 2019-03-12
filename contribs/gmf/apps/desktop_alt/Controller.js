@@ -142,7 +142,7 @@ class Controller extends AbstractDesktopController {
     /**
      * @type {string}
      */
-    this.bgOpacityOptions = 'Test aus Olten';
+    this.bgOpacityOptions = 'orthophoto';
 
     if ($injector.has('sentryUrl')) {
       const options = $injector.has('sentryOptions') ? $injector.get('sentryOptions') : undefined;
