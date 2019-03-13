@@ -56,9 +56,9 @@ PrintUtils.prototype.createPrintMaskPostcompose = function(getSize, getScale, op
   const self = this;
 
   return (
-  /**
-        * @param {import("ol/render/Event.js").default} evt Postcompose event.
-        */
+    /**
+     * @param {import("ol/render/Event.js").default} evt Postcompose event.
+     */
     function(evt) {
       const context = evt.context;
       const frameState = evt.frameState;

@@ -365,12 +365,5 @@
     <% for (var chunk in htmlWebpackPlugin.files.chunks) { %>
     <script src="<%= htmlWebpackPlugin.files.chunks[chunk].entry %>"></script>
     <% } %>
-    <script>
-    document.write(
-      '<script src="https://geomapfish-demo-2-4.camptocamp.com/dynamic.js?' +
-      'interface=desktop_alt&' +
-      'query=' + encodeURIComponent(document.location.search) +
-      '"><' + '/script>');
-    </script>
   </body>
 </html>
