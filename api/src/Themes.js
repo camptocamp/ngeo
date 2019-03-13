@@ -1,7 +1,8 @@
 import WMTSCapabilities from 'ol/format/WMTSCapabilities.js';
-import TileWMS from 'ol/source/TileWMS.js';
+import ImageWMS from 'ol/source/ImageWMS.js';
 import WMTS, {optionsFromCapabilities} from 'ol/source/WMTS.js';
 import TileLayer from 'ol/layer/Tile.js';
+import ImageLayer from 'ol/layer/Image.js';
 
 import constants from './constants.js';
 
@@ -30,7 +31,7 @@ let overlayDefPromise;
 
 /**
  * @hidden
- * @returns {Promise<Array<TileLayer>>} Promise
+ * @returns {Promise<Array<TileLayer|ImageLayer>>} Promise
  */
 export function getBackgroundLayers() {
   return getThemesPromise().then((themes) => {
@@ -155,12 +156,12 @@ export function getOverlayLayers(layerNames) {
 /**
  * @param {import('gmf/themes.js').GmfLayerWMS} config Layer config (i.e. gmf layer node)
  * @param {import('gmf/themes.js').GmfOgcServer} ogcServer OGC server configuration used to create the layer.
- * @return {Promise<TileLayer>} Promise.
+ * @return {Promise<ImageLayer>} Promise.
  * @hidden
  */
 export function createWMSLayer(config, ogcServer) {
-  const layer = new TileLayer({
-    source: new TileWMS({
+  const layer = new ImageLayer({
+    source: new ImageWMS({
       url: ogcServer.url,
       projection: undefined, // should be removed in next OL version
       params: {
