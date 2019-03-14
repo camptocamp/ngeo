@@ -398,6 +398,12 @@ export class ThemesService extends olEventsEventTarget {
           window.alert(message);
         }
       }
+
+      // set default values
+      Object.values(response.data.ogcServers).forEach((server) => {
+        server.geometryName = server.geometryName || 'geometry';
+      });
+
       this.deferred_.resolve(response.data);
       this.dispatchEvent('change');
       this.loaded = true;

@@ -150,7 +150,7 @@
 /**
  * @typedef {Object} GmfOgcServer
  * @property {boolean} credential
- * @property {string|undefined} geometryName Geometry name.
+ * @property {string} [geometryName='geometry'] Geometry name.
  * @property {string} imageType 'image/png' or 'image/jpeg'.
  * @property {boolean} isSingleTile
  * @property {string} [namespace] Namespace
