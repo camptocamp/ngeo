@@ -151,6 +151,14 @@ exports = class extends ol.Observable {
 
   /**
    * @param {string} key .
+   * @return {Promise<?>} .
+   */
+  removeItem(key) {
+    return this.traceGetSetItem('removeItem', key, this.localforage_.removeItem(key));
+  }
+
+  /**
+   * @param {string} key .
    * @param {*} value .
    * @return {Promise<?>} .
    */
