@@ -923,7 +923,12 @@ exports.Controller_ = class {
               server.url,
               layer_names,
               server.imageType,
-              server.type
+              server.type,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              {opacity: ol_layers.opacity}
             );
             layer.setZIndex(-200);
           } else {
