@@ -14,6 +14,7 @@ import olControlRotate from 'ol/control/Rotate.js';
 import * as olInteraction from 'ol/interaction.js';
 import olStyleCircle from 'ol/style/Circle.js';
 import olStyleFill from 'ol/style/Fill.js';
+import olStyleRegularShape from 'ol/style/RegularShape.js';
 import olStyleStroke from 'ol/style/Stroke.js';
 import olStyleStyle from 'ol/style/Style.js';
 
@@ -56,6 +57,31 @@ export class AbstractMobileController extends AbstractAppController {
           config.mapInteractions ||
           olInteraction.defaults({pinchRotate: true})
     }), $scope, $injector);
+
+
+    /**
+     * @type {import("ol/style/Style.js").default}
+     */
+    this.customMeasureStyle = new olStyleStyle({
+      fill: new olStyleFill({
+        color: 'rgba(255, 128, 128, 0.2)'
+      }),
+      stroke: new olStyleStroke({
+        color: 'rgba(255, 0, 0, 0.5)',
+        lineDash: [10, 10],
+        width: 2
+      }),
+      image: new olStyleRegularShape({
+        stroke: new olStyleStroke({
+          color: 'rgba(255, 0, 0, 0.7)',
+          width: 2
+        }),
+        points: 4,
+        radius: 8,
+        radius2: 0,
+        angle: 0
+      })
+    });
 
     /**
      * @type {boolean}

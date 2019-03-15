@@ -12,10 +12,6 @@ import './sass/mobile_alt.scss';
 import appBase from '../appmodule.js';
 import EPSG2056 from '@geoblocks/proj/src/EPSG_2056.js';
 import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
-import olStyleFill from 'ol/style/Fill.js';
-import olStyleRegularShape from 'ol/style/RegularShape.js';
-import olStyleStroke from 'ol/style/Stroke.js';
-import olStyleStyle from 'ol/style/Style.js';
 import Raven from 'raven-js/src/raven.js';
 import RavenPluginsAngular from 'raven-js/plugins/angular.js';
 
@@ -67,31 +63,6 @@ class Controller extends AbstractMobileController {
      * @type {Array.<string>}
      */
     this.searchCoordinatesProjections = [EPSG21781, EPSG2056, 'EPSG:4326'];
-
-
-    /**
-     * @type {import("ol/style/Style.js").default}
-     */
-    this.customMeasureStyle = new olStyleStyle({
-      fill: new olStyleFill({
-        color: 'rgba(255, 128, 128, 0.2)'
-      }),
-      stroke: new olStyleStroke({
-        color: 'rgba(255, 0, 0, 0.5)',
-        lineDash: [10, 10],
-        width: 2
-      }),
-      image: new olStyleRegularShape({
-        stroke: new olStyleStroke({
-          color: 'rgba(255, 0, 0, 0.7)',
-          width: 2
-        }),
-        points: 4,
-        radius: 8,
-        radius2: 0,
-        angle: 0
-      })
-    });
 
     if ($injector.has('sentryUrl')) {
       const options = $injector.has('sentryOptions') ? $injector.get('sentryOptions') : undefined;
