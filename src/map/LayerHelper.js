@@ -73,12 +73,14 @@ exports.REFRESH_PARAM = 'random';
  * @param {string=} opt_time time parameter for layer queryable by time/periode
  * @param {Object.<string, string>=} opt_params WMS parameters.
  * @param {string=} opt_crossOrigin crossOrigin.
- * @param {Object=} opt_customOptions Some initial options.
+ * @param {Object=} opt_customSourceOptions Some initial options.
+ * @param {Object=} opt_customLayerOptions The layer opacity.
  * @return {ol.layer.Image} WMS Layer.
  * @export
  */
 exports.prototype.createBasicWMSLayer = function(sourceURL,
-  sourceLayersName, sourceFormat, opt_serverType, opt_time, opt_params, opt_crossOrigin, opt_customOptions) {
+  sourceLayersName, sourceFormat, opt_serverType, opt_time, opt_params, opt_crossOrigin,
+  opt_customSourceOptions, opt_customLayerOptions) {
 
   const params = {
     'FORMAT': sourceFormat,
@@ -93,7 +95,7 @@ exports.prototype.createBasicWMSLayer = function(sourceURL,
     // OpenLayers expects 'qgis' insteads of 'qgisserver'
     olServerType = opt_serverType.replace('qgisserver', 'qgis');
   }
-  const options = Object.assign({}, opt_customOptions, {
+  const options = Object.assign({}, opt_customSourceOptions, {
     url: sourceURL,
     params: params,
     serverType: olServerType,
@@ -104,7 +106,8 @@ exports.prototype.createBasicWMSLayer = function(sourceURL,
     source.updateParams(opt_params);
   }
 
-  return new olLayerImage({source});
+  const layerOptions = Object.assign({}, opt_customLayerOptions, {source});
+  return new olLayerImage(layerOptions);
 };
 
 
