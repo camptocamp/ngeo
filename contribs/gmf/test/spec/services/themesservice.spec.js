@@ -41,7 +41,7 @@ describe('gmf.theme.Themes', () => {
     $httpBackend.flush();
 
     expect(spy.calls.count()).toBe(1);
-    const response = spy.calls.mostRecent().args[0];
+    const response = /** @type {Array<import("ol/layer/Base.js").default>} */(spy.calls.mostRecent().args[0]);
     expect(response.length).toBe(4);
     const responseFirstBgName = response[1].get('label');
     const firstBgName = gmfTestDataThemes.background_layers[0].name;
@@ -84,7 +84,7 @@ describe('gmf.theme.Themes', () => {
     $httpBackend.flush();
 
     expect(spy.calls.count()).toBe(1);
-    const data = spy.calls.mostRecent().args[0];
+    const data = /** @type {import('gmf/themes.js').GmfTheme} */(spy.calls.mostRecent().args[0]);
     expect(Object.keys(data)[0]).toBe(Object.keys(gmfTestDataThemes)[0]);
   });
 
@@ -97,7 +97,7 @@ describe('gmf.theme.Themes', () => {
     $httpBackend.flush();
 
     expect(spy.calls.count()).toBe(1);
-    const resultThemes = spy.calls.mostRecent().args[0];
+    const resultThemes = /** @type {import('gmf/themes.js').GmfTheme} */(spy.calls.mostRecent().args[0]);
     const dataFirstKey = Object.keys(resultThemes[0])[0];
     const themesThemesFirstKey = Object.keys(gmfTestDataThemes.themes[0])[0];
     expect(dataFirstKey).toBe(themesThemesFirstKey);
@@ -113,7 +113,7 @@ describe('gmf.theme.Themes', () => {
     $httpBackend.flush();
 
     expect(spy.calls.count()).toBe(1);
-    const resultTheme = spy.calls.mostRecent().args[0];
+    const resultTheme = /** @type {import('gmf/themes.js').GmfTheme} */(spy.calls.mostRecent().args[0]);
     expect(resultTheme.name).toBe(themeName);
   });
 });

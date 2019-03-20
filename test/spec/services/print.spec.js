@@ -23,6 +23,12 @@ import olStyleText from 'ol/style/Text.js';
 import olStyleFill from 'ol/style/Fill.js';
 import olTilegridWMTS from 'ol/tilegrid/WMTS.js';
 
+
+/**
+ * @typedef {import('ngeo/print/mapfish-print-v3').MapFishPrintStatusResponse} MapFishPrintStatusResponse
+ * @typedef {import('ngeo/print/mapfish-print-v3').MapFishPrintReportResponse} MapFishPrintReportResponse
+ */
+
 describe('ngeo.print.Service', () => {
 
   let ngeoCreatePrint;
@@ -689,7 +695,9 @@ describe('ngeo.print.Service', () => {
       $httpBackend.flush();
 
       expect(spy.calls.count()).toBe(1);
-      expect(spy.calls.mostRecent().args[0].data).toEqual({
+      const response = /** @type {angular.IHttpResponse<MapFishPrintReportResponse>} */(
+        spy.calls.mostRecent().args[0]).data;
+      expect(response).toEqual({
         ref: 'deadbeef',
         statusURL: '/print/status/deadbeef.json',
         downloadURL: '/print/report/deadbeef.json'
@@ -746,7 +754,9 @@ describe('ngeo.print.Service', () => {
       $httpBackend.flush();
 
       expect(spy.calls.count()).toBe(1);
-      expect(spy.calls.mostRecent().args[0].data).toEqual({
+      const response = /** @type {angular.IHttpResponse<MapFishPrintStatusResponse>} */(
+        spy.calls.mostRecent().args[0]).data;
+      expect(response).toEqual({
         done: false,
         downloadURL: '/print/report/deadbeef.json'
       });
@@ -825,7 +835,9 @@ describe('ngeo.print.Service', () => {
       $httpBackend.flush();
 
       expect(spy.calls.count()).toBe(1);
-      expect(spy.calls.mostRecent().args[0].status).toEqual(200);
+      const response = /** @type {angular.IHttpResponse<MapFishPrintStatusResponse>} */(
+        spy.calls.mostRecent().args[0]);
+      expect(response.status).toEqual(200);
     });
   });
 });
