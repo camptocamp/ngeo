@@ -995,7 +995,12 @@ class Controller {
               server.url,
               layer_names,
               server.imageType,
-              server.type
+              server.type,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              {opacity: layer.get('opacity')}
             );
             layer.setZIndex(-200);
           } else {
