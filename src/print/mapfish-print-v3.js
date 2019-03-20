@@ -96,17 +96,17 @@
 /**
  * @typedef {Object} MapFishPrintReportResponse
  * @property {string} ref
- * @property {string} statusURL
- * @property {string} downloadURL
+ * @property {string} [statusURL]
+ * @property {string} [downloadURL]
  */
 
 
 /**
  * @typedef {Object} MapFishPrintStatusResponse
  * @property {boolean} done
- * @property {string} status
- * @property {string} error
- * @property {string} downloadURL
+ * @property {string} [status]
+ * @property {string} [error]
+ * @property {string} [downloadURL]
  */
 
 

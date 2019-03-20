@@ -7,7 +7,6 @@ import ngeoTestDataWmtsCapabilities from '../data/wmtsCapabilities.js';
 
 describe('ngeo.map.LayerHelper', () => {
   let ngeoLayerHelper;
-  let layer;
   const wmtsSrc = 'http://fake/wmts/capabilities.xml';
   const wmtsName = 'layer-7328';
   let $httpBackend;
@@ -26,7 +25,7 @@ describe('ngeo.map.LayerHelper', () => {
   });
 
   it('Create a basic WMS layer', () => {
-    layer = ngeoLayerHelper.createBasicWMSLayer('http://example.com/', 'a,b,c', 'image/jpeg');
+    const layer = ngeoLayerHelper.createBasicWMSLayer('http://example.com/', 'a,b,c', 'image/jpeg');
     expect(layer.constructor).toBe(olLayerImage);
     const source = layer.getSource();
     expect(source.constructor).toBe(olSourceImageWMS);
@@ -44,12 +43,13 @@ describe('ngeo.map.LayerHelper', () => {
     $httpBackend.flush();
 
     expect(spy.calls.count()).toBe(1);
-    layer = spy.calls.mostRecent().args[0];
-    expect(layer.getSource().getLayer()).toBe(wmtsName);
+    const layer = /** @type {import("ol/layer/Tile.js").default} */(spy.calls.mostRecent().args[0]);
+    const source = /** @type {import("ol/source/WMTS.js").default} */(layer.getSource());
+    expect(source.getLayer()).toBe(wmtsName);
   });
 
   it('Create a layergroup with layers', () => {
-    layer = ngeoLayerHelper.createBasicWMSLayer('', '');
+    const layer = ngeoLayerHelper.createBasicWMSLayer('', '');
     const collection = new olCollection();
     collection.push(layer);
     const group = ngeoLayerHelper.createBasicGroup(collection);
@@ -57,7 +57,7 @@ describe('ngeo.map.LayerHelper', () => {
   });
 
   it('Get an array of layer from a group', () => {
-    layer = ngeoLayerHelper.createBasicWMSLayer('', '');
+    const layer = ngeoLayerHelper.createBasicWMSLayer('', '');
     const collection = new olCollection();
     collection.push(layer);
     const group = new olLayerGroup();
@@ -93,7 +93,7 @@ describe('ngeo.map.LayerHelper', () => {
     $httpBackend.flush();
 
     expect(spy.calls.count()).toBe(1);
-    layer = spy.calls.mostRecent().args[0];
+    const layer = /** @type {import("ol/layer/Tile.js").default} */(spy.calls.mostRecent().args[0]);
     const capabilitiesStyles = [{legendURL: [{href: 'http://legendURL'}]}];
     layer.set('capabilitiesStyles', capabilitiesStyles);
     const legend = ngeoLayerHelper.getWMTSLegendURL(layer);
