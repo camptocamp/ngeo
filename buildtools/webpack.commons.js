@@ -184,7 +184,7 @@ const config = function(hardSourceConfig, babelLoaderCacheDirectory) {
       providePlugin,
       new ExtractTextPlugin({
           ignoreOrder: true,
-          filename: devMode ? '[name].css' : '[name].[chunkhash:6].css'
+          filename: devMode ? '[name].css' : '[name].[hash:6].css'
       }),
       new webpack.IgnorePlugin(/^\.\/locale$/, /node_modules\/moment\/src\/lib\/locale$/),
       new HardSourceWebpackPlugin(hardSourceConfig || {}),
