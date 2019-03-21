@@ -24,10 +24,10 @@ const module = angular.module('gmfLidarprofilePanel', [
 
 module.value('gmfLidarprofilePanelTemplateUrl',
   /**
-     * @param {!JQuery} $element Element.
-     * @param {!angular.IAttributes} $attrs Attributes.
-     * @return {string} Template.
-     */
+   * @param {!JQuery} $element Element.
+   * @param {!angular.IAttributes} $attrs Attributes.
+   * @return {string} Template.
+   */
   ($element, $attrs) => {
     const templateUrl = $attrs['gmfLidarprofilePanelTemplateUrl'];
     return templateUrl !== undefined ? templateUrl :
