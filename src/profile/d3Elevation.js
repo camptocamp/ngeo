@@ -276,7 +276,7 @@ function d3Elevation(options) {
       }
 
       // Select the svg element, if it exists.
-      let svg = d3select(this).selectAll('svg').data([data]);
+      svg = d3select(this).selectAll('svg').data([data]);
       // Otherwise, create the skeletal chart.
       const svgEnter = svg.enter().append('svg');
       // Then select it again to get the complete object.
