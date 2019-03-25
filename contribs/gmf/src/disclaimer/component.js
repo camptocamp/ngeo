@@ -32,7 +32,6 @@ const module = angular.module('gmfDisclaimer', [
  * @param {!angular.ISCEService} $sce Angular sce service.
  * @param {!angular.ITimeoutService} $timeout Angular timeout service.
  * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
- * @param {!import("ngeo/message/Popup.js").PopupFactory} ngeoCreatePopup Popup service.
  * @param {!import("ngeo/message/Disclaimer.js").MessageDisclaimerService} ngeoDisclaimer Ngeo Disclaimer
  *    service.
  * @param {!import("ngeo/misc/EventHelper.js").EventHelper} ngeoEventHelper Ngeo Event Helper.
@@ -42,7 +41,7 @@ const module = angular.module('gmfDisclaimer', [
  * @ngname GmfDisclaimerController
  */
 function Controller(
-  $element, $sce, $timeout, gettextCatalog, ngeoCreatePopup, ngeoDisclaimer, ngeoEventHelper, ngeoLayerHelper
+  $element, $sce, $timeout, gettextCatalog, ngeoDisclaimer, ngeoEventHelper, ngeoLayerHelper
 ) {
 
   /**
@@ -100,12 +99,6 @@ function Controller(
    * @private
    */
   this.element_ = $element;
-
-  /**
-   * @type {!import("ngeo/message/Popup.js").PopupFactory}
-   * @private
-   */
-  this.createPopup_ = ngeoCreatePopup;
 
   /**
    * @type {!import("ngeo/message/Disclaimer.js").MessageDisclaimerService}
