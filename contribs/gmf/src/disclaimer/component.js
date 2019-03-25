@@ -25,6 +25,19 @@ const module = angular.module('gmfDisclaimer', [
 
 
 /**
+ *
+ * @param {import("ol/layer/Base.js").default} layer Layer
+ * @param {function(string):void} func Function
+ */
+function forEachDisclaimer(layer, func) {
+  const disclaimers = layer.get('disclaimers');
+  if (disclaimers && Array.isArray(disclaimers)) {
+    disclaimers.forEach(func);
+  }
+}
+
+
+/**
  * @constructor
  * @private
  * @hidden
@@ -48,6 +61,11 @@ function Controller(
    * @type {?import("ol/Map.js").default}
    */
   this.map;
+
+  /**
+   * @type {boolean|undefined}
+   */
+  this.layerVisibility;
 
   /**
    * @type {boolean|undefined}
@@ -130,6 +148,8 @@ function Controller(
  * Initialise the controller.
  */
 Controller.prototype.$onInit = function() {
+  this.layerVisibility = this.layerVisibility !== undefined ? this.layerVisibility : true;
+
   this.dataLayerGroup_ = this.ngeoLayerHelper_.getGroupFromMap(this.map, DATALAYERGROUP_NAME);
   this.registerLayer_(this.dataLayerGroup_);
 };
@@ -195,10 +215,30 @@ Controller.prototype.registerLayer_ = function(layer) {
 
   } else {
 
-    // Show disclaimer messages for this layer
-    const disclaimers = layer.get('disclaimers');
-    if (disclaimers && Array.isArray(disclaimers)) {
-      disclaimers.forEach((disclaimer) => {
+    if (this.layerVisibility) {
+      // Show disclaimer messages for this layer
+      forEachDisclaimer(layer, (disclaimer) => {
+        if (layer.getVisible()) {
+          this.showDisclaimerMessage_(disclaimer);
+        }
+      });
+
+      const listenerKey = olEvents.listen(layer, 'change:visible', (event) => {
+        const layer = event.target;
+        if (layer.getVisible()) {
+          forEachDisclaimer(layer, (disclaimer) => {
+            this.showDisclaimerMessage_(disclaimer);
+          });
+        } else {
+          forEachDisclaimer(layer, (disclaimer) => {
+            this.closeDisclaimerMessage_(disclaimer);
+          });
+        }
+      });
+      this.eventHelper_.addListenerKey(layerUid, listenerKey);
+    } else {
+      // Show disclaimer messages for this layer
+      forEachDisclaimer(layer, (disclaimer) => {
         this.showDisclaimerMessage_(disclaimer);
       });
     }
@@ -225,12 +265,9 @@ Controller.prototype.unregisterLayer_ = function(layer) {
   } else {
 
     // Close disclaimer messages for this layer
-    const disclaimers = layer.get('disclaimers');
-    if (disclaimers && Array.isArray(disclaimers)) {
-      disclaimers.forEach((disclaimer) => {
-        this.closeDisclaimerMessage_(disclaimer);
-      });
-    }
+    forEachDisclaimer(layer, (disclaimer) => {
+      this.closeDisclaimerMessage_(disclaimer);
+    });
   }
 
 };
@@ -317,6 +354,8 @@ Controller.prototype.closeDisclaimerMessage_ = function(msg) {
  *       </div>
  *     </ngeo-modal>
  *
+ * @htmlAttribute {boolean?} gmf-disclaimer-layer-visibility Only display the disclaimer
+ *     if the layer is visible. Defaults to `true`.
  * @htmlAttribute {boolean} gmf-disclaimer-popup Whether to show the disclaimer
  *     messages in popups or not. Defaults to `false`.
  * @htmlAttribute {boolean?} gmf-disclaimer-external Whether to use disclaimer
@@ -334,9 +373,10 @@ Controller.prototype.closeDisclaimerMessage_ = function(msg) {
  * @ngdoc component
  * @ngname gmfDisclaimer
  */
-const disclamerComponent = {
+const disclaimerComponent = {
   controller: Controller,
   bindings: {
+    'layerVisibility': '<?gmfDisclaimerLayerVisibility',
     'popup': '<?gmfDisclaimerPopup',
     'map': '=gmfDisclaimerMap',
     'external': '<?gmfDisclaimerExternal',
@@ -346,7 +386,7 @@ const disclamerComponent = {
 };
 
 
-module.component('gmfDisclaimer', disclamerComponent);
+module.component('gmfDisclaimer', disclaimerComponent);
 
 
 export default module;
