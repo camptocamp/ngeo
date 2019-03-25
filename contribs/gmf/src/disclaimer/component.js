@@ -29,7 +29,7 @@ const module = angular.module('gmfDisclaimer', [
  * @param {import("ol/layer/Base.js").default} layer Layer
  * @param {function(string):void} func Function
  */
-function forEachDisclamer(layer, func) {
+function forEachDisclaimer(layer, func) {
   const disclaimers = layer.get('disclaimers');
   if (disclaimers && Array.isArray(disclaimers)) {
     disclaimers.forEach(func);
@@ -217,7 +217,7 @@ Controller.prototype.registerLayer_ = function(layer) {
 
     if (this.layerVisibility) {
       // Show disclaimer messages for this layer
-      forEachDisclamer(layer, (disclaimer) => {
+      forEachDisclaimer(layer, (disclaimer) => {
         if (layer.getVisible()) {
           this.showDisclaimerMessage_(disclaimer);
         }
@@ -226,11 +226,11 @@ Controller.prototype.registerLayer_ = function(layer) {
       const listenerKey = olEvents.listen(layer, 'change:visible', (event) => {
         const layer = event.target;
         if (layer.getVisible()) {
-          forEachDisclamer(layer, (disclaimer) => {
+          forEachDisclaimer(layer, (disclaimer) => {
             this.showDisclaimerMessage_(disclaimer);
           });
         } else {
-          forEachDisclamer(layer, (disclaimer) => {
+          forEachDisclaimer(layer, (disclaimer) => {
             this.closeDisclaimerMessage_(disclaimer);
           });
         }
@@ -238,7 +238,7 @@ Controller.prototype.registerLayer_ = function(layer) {
       this.eventHelper_.addListenerKey(layerUid, listenerKey);
     } else {
       // Show disclaimer messages for this layer
-      forEachDisclamer(layer, (disclaimer) => {
+      forEachDisclaimer(layer, (disclaimer) => {
         this.showDisclaimerMessage_(disclaimer);
       });
     }
@@ -265,7 +265,7 @@ Controller.prototype.unregisterLayer_ = function(layer) {
   } else {
 
     // Close disclaimer messages for this layer
-    forEachDisclamer(layer, (disclaimer) => {
+    forEachDisclaimer(layer, (disclaimer) => {
       this.closeDisclaimerMessage_(disclaimer);
     });
   }
@@ -354,7 +354,7 @@ Controller.prototype.closeDisclaimerMessage_ = function(msg) {
  *       </div>
  *     </ngeo-modal>
  *
- * @htmlAttribute {boolean?} gmf-disclaimer-layer-visibility Only display the disclamer
+ * @htmlAttribute {boolean?} gmf-disclaimer-layer-visibility Only display the disclaimer
  *     if the layer is visible. Defaults to `true`.
  * @htmlAttribute {boolean} gmf-disclaimer-popup Whether to show the disclaimer
  *     messages in popups or not. Defaults to `false`.
@@ -373,7 +373,7 @@ Controller.prototype.closeDisclaimerMessage_ = function(msg) {
  * @ngdoc component
  * @ngname gmfDisclaimer
  */
-const disclamerComponent = {
+const disclaimerComponent = {
   controller: Controller,
   bindings: {
     'layerVisibility': '<?gmfDisclaimerLayerVisibility',
@@ -386,7 +386,7 @@ const disclamerComponent = {
 };
 
 
-module.component('gmfDisclaimer', disclamerComponent);
+module.component('gmfDisclaimer', disclaimerComponent);
 
 
 export default module;
