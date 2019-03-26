@@ -163,13 +163,12 @@ module.component('gmfDisplayquerygrid', queryGridComponent);
  * @param {!import("ngeo/download/Csv.js").DownloadCsvService} ngeoCsvDownload CSV download service.
  * @param {!JQuery} $element Element.
  * @constructor
- * @private
  * @hidden
  * @ngInject
  * @ngdoc controller
  * @ngname GmfDisplayquerygridController
  */
-function Controller($injector, $scope, ngeoQueryResult, ngeoMapQuerent,
+export function Controller($injector, $scope, ngeoQueryResult, ngeoMapQuerent,
   ngeoFeatureOverlayMgr, $timeout, ngeoCsvDownload, $element) {
 
   const queryOptions = /** @type {import('ngeo/query/MapQuerent.js').QueryOptions} */ (
