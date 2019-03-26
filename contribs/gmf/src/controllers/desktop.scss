@@ -83,6 +83,10 @@ main {
   padding: $half-app-margin $app-margin
 }
 
+.close {
+  cursor: pointer;
+}
+
 .dropdown-menu {
   box-shadow: $eavy-box-shadow;
   min-width: 100%;
@@ -356,8 +360,6 @@ $theme-selector-columns: 2;
 
     .close {
       padding: 0;
-      line-height: $half-app-margin;
-      margin-bottom: $app-margin;
     }
 
     textarea {
@@ -534,10 +536,6 @@ gmf-featurestyle {
 .ngeo-colorpicker-palette {
   border-collapse: separate;
   border-spacing: 0;
-
-  tr {
-    cursor: default;
-  }
 
   td {
     position: relative;
