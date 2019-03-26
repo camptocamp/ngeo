@@ -83,6 +83,10 @@ main {
   padding: $half-app-margin $app-margin
 }
 
+.close {
+  cursor: pointer;
+}
+
 .dropdown-menu {
   box-shadow: $eavy-box-shadow;
   min-width: 100%;
