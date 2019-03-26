@@ -458,6 +458,10 @@ function d3Elevation(options) {
         .style('stroke', '#ccc')
         .style('opacity', 0.7);
 
+      // remove the text, it was already added in '.y.axis'
+      g.select('.grid-y').selectAll('.tick text')
+        .remove();
+
       g.selectAll('.axis').selectAll('path, line')
         .style('fill', 'none')
         .style('stroke', '#000')
