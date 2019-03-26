@@ -136,13 +136,12 @@ module.component('gmfDisplayquerywindow', queryWindowComponent);
  * @param {!import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
  * @constructor
- * @private
  * @hidden
  * @ngInject
  * @ngdoc controller
  * @ngname GmfDisplayquerywindowController
  */
-function Controller($element, $scope, ngeoQueryResult, ngeoMapQuerent, ngeoFeatureOverlayMgr) {
+export function Controller($element, $scope, ngeoQueryResult, ngeoMapQuerent, ngeoFeatureOverlayMgr) {
 
   /**
    * @type {Element|string}
