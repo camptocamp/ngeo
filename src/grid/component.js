@@ -165,8 +165,8 @@ Controller.prototype.sort = function(columnName) {
  * @param {JQueryEventObject} event Event.
  */
 Controller.prototype.clickRow = function(attributes, event) {
-  const shiftKey = this.isShiftKeyOnly_(event);
-  const platformModifierKey = this.isPlatformModifierKeyOnly_(event);
+  const shiftKey = isShiftKeyOnly(event);
+  const platformModifierKey = isPlatformModifierKeyOnly(event);
 
   this.clickRow_(attributes, shiftKey, platformModifierKey);
 };
@@ -258,8 +258,8 @@ Controller.prototype.selectRange_ = function(attributes) {
  * @param {JQueryEventObject} event Event.
  */
 Controller.prototype.preventTextSelection = function(event) {
-  const shiftKey = this.isShiftKeyOnly_(event);
-  const platformModifierKey = this.isPlatformModifierKeyOnly_(event);
+  const shiftKey = isShiftKeyOnly(event);
+  const platformModifierKey = isPlatformModifierKeyOnly(event);
 
   if (shiftKey || platformModifierKey) {
     event.preventDefault();
@@ -273,11 +273,11 @@ Controller.prototype.preventTextSelection = function(event) {
  * @return {boolean} True if only the platform modifier key is pressed.
  * @private
  */
-Controller.prototype.isPlatformModifierKeyOnly_ = function(event) {
+function isPlatformModifierKeyOnly(event) {
   return !event.altKey &&
     (olHas.MAC ? event.metaKey : event.ctrlKey) &&
     !event.shiftKey;
-};
+}
 
 
 /**
@@ -286,12 +286,12 @@ Controller.prototype.isPlatformModifierKeyOnly_ = function(event) {
  * @return {boolean} True if only the shift key is pressed.
  * @private
  */
-Controller.prototype.isShiftKeyOnly_ = function(event) {
+function isShiftKeyOnly(event) {
   return (
     !event.altKey &&
       !(event.metaKey || event.ctrlKey) &&
       event.shiftKey);
-};
+}
 
 
 module.controller('ngeoGridController', Controller);
