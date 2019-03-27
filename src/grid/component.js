@@ -67,7 +67,7 @@ function ngeoGridTemplateUrl($attrs, ngeoGridTemplateUrl) {
  * @ngname ngeoGrid
  */
 const gridComponent = {
-  controller: 'ngeoGridController as ctrl',
+  controller: Controller,
   bindings: {
     'configuration': '=ngeoGridConfiguration'
   },
