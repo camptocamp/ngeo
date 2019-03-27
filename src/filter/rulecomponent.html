@@ -12,7 +12,6 @@
 
     <select
         class="form-control ngeo-rule-operators-list"
-        ng-disabled="$ctrl.drawActive"
         ng-if="::$ctrl.clone.operators"
         ng-model="$ctrl.clone.operator"
         ng-options="$ctrl.operators[operator] | translate for operator in ::$ctrl.clone.operators track by operator">
