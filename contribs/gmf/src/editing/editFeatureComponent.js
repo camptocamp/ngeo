@@ -549,7 +549,7 @@ Controller.prototype.$onInit = function() {
     features: this.features,
     style: new olStyleStyle({
       text: new olStyleText({
-        text: '\uf047',
+        text: '\uf0b2',
         font: '900 18px "Font Awesome 5 Free"',
         fill: new olStyleFill({
           color: '#7a7a7a'
