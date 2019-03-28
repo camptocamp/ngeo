@@ -143,7 +143,7 @@ export class RuleHelper {
       case ngeoFormatAttributeType.GEOMETRY:
         rule = new ngeoRuleGeometry({
           name: name,
-          operator: RuleSpatialOperatorType.WITHIN,
+          operator: RuleSpatialOperatorType.INTERSECTS,
           operators: [
             RuleSpatialOperatorType.CONTAINS,
             RuleSpatialOperatorType.INTERSECTS,

@@ -446,9 +446,8 @@ class RuleController {
       this.unlisteners_.push(this.scope_.$watch(
         () => this.clone.operator,
         (newVal) => {
-          if (newVal &&
-              newVal === RuleSpatialOperatorType.CONTAINS
-          ) {
+          this.drawActive = false;
+          if (newVal && newVal === RuleSpatialOperatorType.CONTAINS) {
             const clone = this.clone;
             if (clone instanceof ngeoRuleGeometry) {
               const geometry = clone.feature.getGeometry();
