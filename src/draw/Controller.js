@@ -11,7 +11,6 @@ import olFeature from 'ol/Feature.js';
 
 /**
  * @param {!angular.IScope} $scope Scope.
- * @param {angular.ISCEService} $sce Angular sce service.
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext service.
  * @param {import("ngeo/misc/FeatureHelper.js").FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
  * @param {import("ol/Collection.js").default.<import("ol/Feature.js").default>} ngeoFeatures Collection of
@@ -23,8 +22,7 @@ import olFeature from 'ol/Feature.js';
  * @ngname ngeoDrawfeatureController
  * @hidden
  */
-export function DrawController($scope, $sce, gettextCatalog,
-  ngeoFeatureHelper, ngeoFeatures) {
+export function DrawController($scope, gettextCatalog, ngeoFeatureHelper, ngeoFeatures) {
 
   /**
    * @type {boolean}
