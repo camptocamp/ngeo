@@ -557,16 +557,15 @@ function d3Elevation(options) {
       .style('text-anchor', right ? 'end' : 'start')
       .attr('transform', `translate(${xtranslate},${height - 10})`);
 
-    const yUnits = 'm';
     // Display altitude on guides only if there is one line.
     if (numberOfLines === 1) {
-      const text = elevations[0] === null ? 'no value' : formatter.yhover(elevations[0], 'm');
+      const hasValue = Number.isFinite(elevations[0]);
       g.select('.y.grid-hover text')
-        .text(text)
+        .text(hasValue ? formatter.yhover(elevations[0], 'm') : 'no value')
         .style('text-anchor', right ? 'end' : 'start')
-        .attr('transform', `translate(${xtranslate},${y(elevations[0]) - 10})`);
+        .attr('transform', `translate(${xtranslate},${hasValue ? y(elevations[0]) - 10 : 0})`);
     }
-    hoverCallback.call(null, point, dist / xFactor, xUnits, elevationsRef, yUnits);
+    hoverCallback.call(null, point, dist / xFactor, xUnits, elevationsRef, 'm');
   };
 
 
