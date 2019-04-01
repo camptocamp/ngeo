@@ -21,10 +21,11 @@
 
         <div
             ng-switch-when="boolean"
-            class="checkbox">
-          <label>
+            class="form-check">
+          <label class="form-check-label">
             <input
                 name="{{::attribute.name}}"
+                class="form-check-input"
                 ng-model="attrCtrl.properties[attribute.name]"
                 ng-change="attrCtrl.handleInputChange(attribute.name);"
                 type="checkbox">
