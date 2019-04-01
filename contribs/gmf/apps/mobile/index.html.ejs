@@ -52,7 +52,11 @@
         ng-click="mainCtrl.toggleRightNavVisibility()">
         <i class="fa fa-wrench"></i>
       </button>
-      <div class="overlay" ng-click="mainCtrl.hideNav()"></div>
+      <div class="overlay"
+        ng-swipe-disable-mouse
+        ng-swipe-left="mainCtrl.hideNav()"
+        ng-swipe-right="mainCtrl.hideNav()"
+        ng-click="mainCtrl.hideNav()"></div>
       <div
         class="gmf-search-overlay"
         ng-click="mainCtrl.hideSearchOverlay()">
