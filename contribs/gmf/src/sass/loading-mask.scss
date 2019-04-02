@@ -1,0 +1,15 @@
+.loading-mask {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height:100%;
+  padding: 10px;
+  img {
+    max-width: 100%;
+  }
+}
+.spinner-loading-mask {
+  color: red;
+  font-size: 3rem;
+}
