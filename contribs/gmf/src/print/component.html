@@ -28,9 +28,10 @@
 
         <div
           ng-if="attribute.type === 'checkbox'"
-          class="checkbox">
-          <label>
+          class="form-check">
+          <label class="form-check-label">
             <input
+              class="form-check-input"
               ng-model="attribute.value"
               type="checkbox">
             <span>{{attribute.name | translate}}</span>

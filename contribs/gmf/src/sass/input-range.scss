@@ -19,13 +19,11 @@ input[type=range] {
   border: 0;
   background-color: transparent;
 
-  &,
-  &:focus {
+  &:hover, &:focus {
+    outline: none;
     box-shadow: none;
+    background-color: transparent;
   }
-}
-input[type=range]:focus {
-  outline: none;
 }
 input[type=range]::-webkit-slider-runnable-track {
   width: 100%;
