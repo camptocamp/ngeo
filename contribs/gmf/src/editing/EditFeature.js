@@ -9,7 +9,6 @@ import {appendParams as olUriAppendParams} from 'ol/uri.js';
  * @property {string} operator The name of the property for the comparison filter.
  * @property {string} value The value for the comparison filter that must match the combinaison of
  * the operator and property.
- * }}
  */
 
 
