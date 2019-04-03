@@ -75,6 +75,28 @@ const svgRule = {
   ]
 };
 
+function get_comp(firsts, lasts) {
+  return (f1, f2) => {
+    for (const pattern of firsts) {
+      if (f1.indexOf(pattern) >= 0) {
+        return -1;
+      }
+      if (f2.indexOf(pattern) >= 0) {
+        return 1;
+      }
+    }
+    for (const pattern of lasts) {
+      if (f1.indexOf(pattern) >= 0) {
+        return 1;
+      }
+      if (f2.indexOf(pattern) >= 0) {
+        return -1;
+      }
+    }
+    return 0;
+  };
+}
+
 const config = function(hardSourceConfig, babelLoaderCacheDirectory) {
 
   const ngeoRule = {
@@ -136,23 +158,16 @@ const config = function(hardSourceConfig, babelLoaderCacheDirectory) {
           const files = chunksFiles.commons
             ? chunksFiles[chunk.name].concat(chunksFiles.commons)
             : chunksFiles[chunk.name];
-          files.sort((f1, f2) => {
-            for (const reg of [
-              '/apps/',
-              '/controllers/',
-              '/vars.scss',
-              '/vars_only.scss',
-              '/common_dependencies.scss',
-            ]) {
-              if (f1.indexOf(reg) >= 0) {
-                return -1;
-              }
-              if (f2.indexOf(reg) >= 0) {
-                return 1;
-              }
-            }
-            return 0;
-          });
+          files.sort(get_comp([
+            '/apps/sass/var',
+            '/controllers/',
+            '/vars.scss',
+            '/vars_only.scss',
+            '/common_dependencies.scss',
+          ], [
+            '/apps/',
+          ]));
+          //console.log(files);
           return files;
         }
       }),

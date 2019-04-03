@@ -5,10 +5,13 @@
  * by the HTML page and the controller to provide the configuration.
  */
 
+import './sass/vars_oeedit.scss';
+import 'gmf/controllers/desktop.scss';
+import './sass/oeedit.scss';
+
 import angular from 'angular';
 import gmfControllersAbstractDesktopController, {AbstractDesktopController}
   from 'gmf/controllers/AbstractDesktopController.js';
-import './sass/oeedit.scss';
 import appBase from '../appmodule.js';
 import gmfObjecteditingModule from 'gmf/objectediting/module.js';
 import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
