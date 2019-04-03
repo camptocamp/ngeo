@@ -25,7 +25,7 @@ const exports = class {
 
   /**
    * External data sources come remote online resources, such as WMS/WMTS
-   * servers, and also files such as KML/GXP. This service is responsible of
+   * servers, and also files such as KML/GPX. This service is responsible of
    * creating, storing and managing them.
    *
    * @param {!angularGettext.Catalog} gettextCatalog service.
@@ -321,6 +321,8 @@ const exports = class {
 
     const id = exports.getId(layer);
     const service = capabilities['Service'];
+
+    url = service['OnlineResource'] || url;
 
     let dataSource;
 

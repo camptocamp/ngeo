@@ -87,9 +87,9 @@ const exports = function(url, $http, gettextCatalog, ngeoLayerHelper) {
 
   /**
    * @type {ngeo.print.VectorEncoder}
-   * @private
+   * @protected
    */
-  this.vectorEncoder_ = new ngeoPrintVectorEncoder();
+  this.vectorEncoder = new ngeoPrintVectorEncoder();
 
   /**
    * @type {boolean}
@@ -205,10 +205,18 @@ exports.prototype.encodeLayer = function(arr, layer, resolution) {
   } else if (layer instanceof olLayerTile) {
     this.encodeTileLayer_(arr, layer);
   } else if (layer instanceof olLayerVector) {
-    this.vectorEncoder_.encodeVectorLayer(arr, layer, resolution);
+    this.encodeVectorLayer(arr, layer, resolution);
   }
 };
 
+/**
+ * @param {Array.<MapFishPrintLayer>} arr Array.
+ * @param {ol.layer.Vector} layer Layer.
+ * @param {number} resolution Resolution.
+ */
+exports.prototype.encodeVectorLayer = function(arr, layer, resolution) {
+  this.vectorEncoder.encodeVectorLayer(arr, layer, resolution);
+};
 
 /**
  * @param {Array.<MapFishPrintLayer>} arr Array.
@@ -257,9 +265,9 @@ exports.prototype.encodeWmsLayer_ = function(arr, layer, url, params) {
   const url_url = new URL(url);
   const customParams = {'TRANSPARENT': true};
   if (url_url.searchParams) {
-    for (const element of url_url.searchParams) {
-      customParams[element[0]] = element[1];
-    }
+    /** @type {Object} */ (url_url.searchParams).forEach((value, key) => {
+      customParams[key] = value;
+    });
   }
   for (const key in params) {
     const value = params[key];

@@ -687,12 +687,7 @@ exports.Controller_ = class {
 
     this.updateCustomFields_();
 
-    const legend = this.isAttributeInCurrentLayout_('legend');
-    if (this.layoutInfo.legend === undefined) {
-      this.layoutInfo.legend = !!(legend !== undefined ?
-        legend : this.fieldValues['legend']);
-    }
-
+    this.layoutInfo.legend = this.fieldValues['legend'] !== false;
     this.layoutInfo.scales = clientInfo['scales'] || [];
     this.layoutInfo.dpis = clientInfo['dpiSuggestions'] || [];
 
@@ -726,11 +721,15 @@ exports.Controller_ = class {
     if (!this.layoutInfo.simpleAttributes) {
       this.layoutInfo.simpleAttributes = [];
     }
+    if (!this.layoutInfo.attributes) {
+      this.layoutInfo.attributes = [];
+    }
     const simpleAttributes = this.layoutInfo.simpleAttributes;
     const previousAttributes = simpleAttributes.splice(0, simpleAttributes.length);
 
     // The attributes without 'clientParams' are the custom layout information (defined by end user).
     this.layout_.attributes.forEach((attribute) => {
+      this.layoutInfo.attributes.push(attribute.name);
       if (!attribute['clientParams']) {
         name = `${attribute.name}`;
         const defaultValue = attribute.default;
@@ -874,9 +873,11 @@ exports.Controller_ = class {
     const scale = this.layoutInfo.scale || this.getOptimalScale_(mapSize, viewResolution);
     const datasource = this.getDataSource_();
 
-    const customAttributes = {
-      'datasource': datasource
-    };
+    const customAttributes = {};
+
+    if (this.layoutInfo.attributes.indexOf('datasource') >= 0) {
+      customAttributes['datasource'] = datasource;
+    }
 
     if (this.layoutInfo.simpleAttributes) {
       this.layoutInfo.simpleAttributes.forEach((field) => {
@@ -922,7 +923,12 @@ exports.Controller_ = class {
               server.url,
               layer_names,
               server.imageType,
-              server.type
+              server.type,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              {opacity: ol_layers.opacity}
             );
             layer.setZIndex(-200);
           } else {

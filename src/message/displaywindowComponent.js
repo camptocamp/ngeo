@@ -205,11 +205,24 @@ exports.Controller_ = class {
     }
 
     if (this.contentTemplate) {
-      const scope = googAsserts.assert(this.contentScope || this.scope_);
-      const compiled = this.compile_(this.contentTemplate)(scope);
-      const displayWindow = this.element_.find('.ngeo-displaywindow .windowcontainer .animation-container');
-      displayWindow.append(/** @type {?} */ (compiled));
+      this.updateContentTemplate_();
     }
+
+    this.scope_.$watch(
+      () => this.contentTemplate,
+      () => this.updateContentTemplate_()
+    );
+  }
+
+  /**
+   *  @private
+   */
+  updateContentTemplate_() {
+    const scope = googAsserts.assert(this.contentScope || this.scope_);
+    const compiled = this.compile_(this.contentTemplate)(scope);
+    const displayWindow = this.element_.find('.ngeo-displaywindow .windowcontainer .animation-container .content-template-container');
+    displayWindow.empty();
+    displayWindow.append(/** @type {?} */ (compiled));
   }
 
   /**
@@ -303,7 +316,7 @@ exports.component('ngeoDisplaywindow', {
   bindings: {
     'clearOnClose': '<?',
     'content': '=?',
-    'contentTemplate': '<?',
+    'contentTemplate': '=?',
     'contentScope': '<?',
     'desktop': '<?',
     'draggable': '<?',

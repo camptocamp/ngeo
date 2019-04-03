@@ -52,7 +52,11 @@
         ng-click="mainCtrl.toggleRightNavVisibility()">
         <i class="fa fa-wrench"></i>
       </button>
-      <div class="overlay" ng-click="mainCtrl.hideNav()"></div>
+      <div class="overlay"
+        ng-swipe-disable-mouse
+        ng-swipe-left="mainCtrl.hideNav()"
+        ng-swipe-right="mainCtrl.hideNav()"
+        ng-click="mainCtrl.hideNav()"></div>
       <div
         class="gmf-search-overlay"
         ng-click="mainCtrl.hideSearchOverlay()">
@@ -73,7 +77,7 @@
       ></ngeo-displaywindow>
       <div class="gmf-app-map-messages">
         <gmf-disclaimer gmf-disclaimer-map="::mainCtrl.map"></gmf-disclaimer>
-        <div class="alert alert-info alert-dismissible fade in hidden-xs" role="alert">
+        <div class="alert alert-info alert-dismissible fade in hidden-xs" role="alert" ng-if="::mainCtrl.redirectUrl !== ''">
           <button type="button" class="close" data-dismiss="alert" aria-label="{{'Close' | translate }}"><span aria-hidden="true" class="fa fa-times"></span></button>
           <span translate
             translate-params-url="::mainCtrl.redirectUrl">
@@ -157,8 +161,7 @@
       </gmf-authentication>
     </nav>
     <ngeo-modal
-        ng-model="mainCtrl.userMustChangeItsPassword()"
-        ng-model-options="{getterSetter: true}">
+        ng-model="mainCtrl.userMustChangeItsPassword">
       <div class="modal-header">
         <h4 class="modal-title">
           {{'You must change your password' | translate}}
@@ -170,7 +173,7 @@
         </gmf-authentication>
       </div>
     </ngeo-modal>
-    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=es6,default-3.6,Array.prototype.includes"></script>
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=es6,default-3.6,Array.prototype.includes,Object.entries"></script>
     <% for (var chunk in htmlWebpackPlugin.files.chunks) { %>
     <script src="<%= htmlWebpackPlugin.files.chunks[chunk].entry %>"></script>
     <% } %>

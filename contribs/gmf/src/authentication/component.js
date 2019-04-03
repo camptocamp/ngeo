@@ -87,8 +87,7 @@ function gmfAuthenticationTemplateUrl($element, $attrs, gmfAuthenticationTemplat
  *
  *     <ngeo-modal
  *         ngeo-modal-closable="false"
- *         ng-model="mainCtrl.userMustChangeItsPassword()"
- *         ng-model-options="{getterSetter: true}">
+ *         ng-model="mainCtrl.userMustChangeItsPassword">
  *       <div class="modal-header">
  *         <h4 class="modal-title">
  *           {{'You must change your password' | translate}}
@@ -209,7 +208,7 @@ exports.AuthenticationController_ = class {
      * @type {boolean}
      * @export
      */
-    this.changePasswordModalShown = false;
+    this.userMustChangeItsPassword = false;
 
     /**
      * @type {boolean}
@@ -268,6 +267,7 @@ exports.AuthenticationController_ = class {
     if (this.forcePasswordChange) {
       this.changingPassword = true;
     }
+    this.userMustChangeItsPassword = (this.gmfUser.is_password_changed === false && this.forcePasswordChange);
   }
 
 
@@ -317,13 +317,17 @@ exports.AuthenticationController_ = class {
         this.setError_(errors);
       } else {
         // Send request with current credentials, which may fail if the old password given is incorrect.
-        const error = gettextCatalog.getString('Incorrect old password.');
-        this.gmfAuthenticationService_.changePassword(oldPwd, newPwd, confPwd).then(
-          () => {
-            this.changePasswordModalShown = true;
+        this.gmfAuthenticationService_.changePassword(oldPwd, newPwd, confPwd)
+          .then(() => {
             this.changePasswordReset();
-          },
-          this.setError_.bind(this, error));
+            this.setError_(
+              [gettextCatalog.getString('Your password has successfully been changed.')],
+              ngeoMessageMessage.Type.INFORMATION
+            );
+          })
+          .catch((err) => {
+            this.setError_(gettextCatalog.getString('Incorrect old password.'));
+          });
       }
     }
   }
@@ -408,19 +412,14 @@ exports.AuthenticationController_ = class {
   }
 
   /**
-   * @return {boolean} True if the user must change is password and if the "forcePasswordChange" option of
-   *    this component is set to true.
-   * @export
-   */
-  userMustChangeItsPassword() {
-    return (this.gmfUser.is_password_changed === false && this.forcePasswordChange);
-  }
-
-  /**
    * @param {string|Array.<string>} errors Errors.
+   * @param {ngeoMessageMessage.Type} [messageType] Type.
    * @private
    */
-  setError_(errors) {
+  setError_(errors, messageType) {
+    if (messageType == undefined) {
+      messageType = ngeoMessageMessage.Type.ERROR;
+    }
     if (this.error) {
       this.resetError_();
     }
@@ -437,7 +436,7 @@ exports.AuthenticationController_ = class {
       this.notification_.notify({
         msg: error,
         target: container,
-        type: ngeoMessageMessage.Type.ERROR
+        type: messageType
       });
     }, this);
   }

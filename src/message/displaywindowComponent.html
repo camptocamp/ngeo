@@ -2,6 +2,7 @@
   class="ngeo-displaywindow"
   ng-show="$ctrl.open"
   ng-style="$ctrl.style"
+  title=""
 >
 
   <div class="windowcontainer">
@@ -34,6 +35,7 @@
             width="100%"
             ng-src="{{ $ctrl.urlTrusted }}"></iframe>
         </div>
+        <div class="content-template-container"></div>
       </div>
     </div>
 

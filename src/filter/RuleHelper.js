@@ -518,42 +518,21 @@ const exports = class {
         beginValue = moment(lowerBoundary).format('YYYY-MM-DD');
         endValue = moment(upperBoundary).format('YYYY-MM-DD');
       } else if (operator === rtot.EQUALS) {
-        beginValue = moment(
-          expression
-        ).format(
-          'YYYY-MM-DD HH:mm:ss'
-        );
-        endValue = moment(
-          expression
-        ).add(
-          1, 'days'
-        ).subtract(
-          1, 'seconds'
-        ).format(
-          'YYYY-MM-DD HH:mm:ss'
-        );
+        beginValue = moment(expression)
+          .format('YYYY-MM-DD');
+        endValue = beginValue;
       } else if (operator === rtot.BEGINS) {
-        beginValue = moment(
-          expression
-        ).format(
-          'YYYY-MM-DD'
-        );
+        beginValue = moment(expression)
+          .format('YYYY-MM-DD');
         // NOTE: end value is CURRENT + 30 years
-        endValue = moment(
-          expression
-        ).add(
-          30, 'years'
-        ).format(
-          'YYYY-MM-DD'
-        );
+        endValue = moment(expression)
+          .add(30, 'years')
+          .format('YYYY-MM-DD');
       } else if (operator === rtot.ENDS) {
         // NOTE: begin value is hardcoded to 1970-01-01
         beginValue = '1970-01-01';
-        endValue = moment(
-          expression
-        ).format(
-          'YYYY-MM-DD'
-        );
+        endValue = moment(expression)
+          .format('YYYY-MM-DD');
       }
       if (beginValue && endValue) {
         filter = olFormatFilter.during(
@@ -748,8 +727,8 @@ const exports = class {
         }
 
         if (momentEnd) {
-          const startValue = moment(value).format('YYYY-MM-DD HH:mm:ss');
-          const endValue = momentEnd.format('YYYY-MM-DD HH:mm:ss');
+          const startValue = moment(value).utc().format('YYYY-MM-DD HH:mm:ss');
+          const endValue = momentEnd.utc().format('YYYY-MM-DD HH:mm:ss');
           filter = olFormatFilter.during(name, startValue, endValue);
         }
       }

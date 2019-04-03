@@ -61,7 +61,7 @@
               data-toggle="tooltip" data-placement="left" data-original-title="{{'Draw and Measure'|translate}}">
               <span class="fa fa-paint-brush"></span>
             </button>
-            <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.filterSelectorActive"
+            <button ngeo-btn class="btn btn-default" ng-if="mainCtrl.filterSelectorEnabled" ng-model="mainCtrl.filterSelectorActive"
               data-toggle="tooltip" data-placement="left" data-original-title="{{'Filter'|translate}}">
               <span class="fa fa-filter"></span>
             </button>
@@ -280,8 +280,7 @@
       </ngeo-modal>
       <ngeo-modal
           ngeo-modal-closable="false"
-          ng-model="mainCtrl.userMustChangeItsPassword()"
-          ng-model-options="{getterSetter: true}">
+          ng-model="mainCtrl.userMustChangeItsPassword">
         <div class="modal-header">
           <h4 class="modal-title">
             {{'You must change your password' | translate}}
@@ -304,7 +303,7 @@
         ngeo-resizemap-state="profileChartActive">
       </gmf-profile>
     </footer>
-    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=es6,default-3.6,Array.prototype.includes"></script>
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=es6,default-3.6,Array.prototype.includes,Object.entries"></script>
     <% for (var chunk in htmlWebpackPlugin.files.chunks) { %>
     <script src="<%= htmlWebpackPlugin.files.chunks[chunk].entry %>"></script>
     <% } %>

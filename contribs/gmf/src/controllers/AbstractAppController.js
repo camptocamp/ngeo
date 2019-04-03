@@ -129,6 +129,12 @@ const exports = function(config, $scope, $injector) {
    */
   this.loginInfoMessage = null;
 
+  /**
+   * @type {boolean}
+   * @export
+   */
+  this.userMustChangeItsPassword = false;
+
   $scope.$on('authenticationrequired', (event, args) => {
     /** @type {angularGettext.Catalog} */
     const gettextCatalog = $injector.get('gettextCatalog');
@@ -158,10 +164,18 @@ const exports = function(config, $scope, $injector) {
     const user = evt.detail.user;
     const roleId = (user.username !== null) ? user.role_id : undefined;
 
+    const functionalities = this.gmfUser.functionalities;
+
+    // Enable filter tool in toolbar
+    if (functionalities &&
+        'filterable_layers' in functionalities &&
+        functionalities['filterable_layers'].length > 0) {
+      this.filterSelectorEnabled = true;
+    }
+
     // Open filter panel if 'open_panel' is set in functionalities and
     // has 'layer_filter' as first value
     this.gmfThemes_.getThemesObject().then((themes) => {
-      const functionalities = this.gmfUser.functionalities;
       if (functionalities &&
           functionalities.open_panel &&
           functionalities.open_panel[0] === 'layer_filter') {
@@ -169,14 +183,17 @@ const exports = function(config, $scope, $injector) {
       }
     });
 
-    // Reload theme and background layer when login status changes.
+    // Reload theme when login status changes.
     const previousThemeName = this.gmfThemeManager.getThemeName();
     this.gmfThemeManager.setThemeName('', true);
+
+    // Reload themes and background layer when login status changes.
+    this.gmfThemes_.loadThemes(roleId);
+
     if (evt.type !== 'ready') {
       this.updateCurrentTheme_(previousThemeName);
     }
-    // Reload themes when login status changes.
-    this.gmfThemes_.loadThemes(roleId);
+    this.setDefaultBackground_(null);
     this.updateHasEditableLayers_();
   };
 
@@ -271,6 +288,12 @@ const exports = function(config, $scope, $injector) {
    * @type {boolean}
    * @export
    */
+  this.filterSelectorEnabled = false;
+
+  /**
+   * @type {boolean}
+   * @export
+   */
   this.filterSelectorActive = false;
 
   /**
@@ -347,6 +370,12 @@ const exports = function(config, $scope, $injector) {
    * @export
    */
   this.gmfUser = $injector.get('gmfUser');
+  $scope.$watch(
+    () => this.gmfUser.is_password_changed,
+    (value) => {
+      this.userMustChangeItsPassword = value === false;
+    }
+  );
 
   /**
    * @type {ngeox.miscGetBrowserLanguage}
@@ -618,16 +647,6 @@ const exports = function(config, $scope, $injector) {
    * @export
    */
   this.displaywindowWidth = '50vw';
-};
-
-
-/**
- * @return {boolean} Return true if a user exists and its 'is_password_changed' value is explicitly set
- *     to false.
- * @export
- */
-exports.prototype.userMustChangeItsPassword = function() {
-  return this.gmfUser.is_password_changed === false;
 };
 
 

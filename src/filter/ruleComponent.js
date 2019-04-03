@@ -424,21 +424,21 @@ exports.RuleController_ = class {
       this.unlisteners_.push(this.scope_.$watch(
         () => this.clone.getExpression(),
         (newVal) => {
-          this.timeValueMode.minValue = newVal;
+          this.timeValueMode.minDefValue = newVal || this.createDate_();
         }
       ));
       // Watch 'lowerBoundary'
       this.unlisteners_.push(this.scope_.$watch(
         () => this.clone.lowerBoundary,
         (newVal) => {
-          this.timeRangeMode.minValue = newVal;
+          this.timeRangeMode.minDefValue = newVal || this.createWeekAgoDate_();
         }
       ));
       // Watch 'upperBoundary'
       this.unlisteners_.push(this.scope_.$watch(
         () => this.clone.upperBoundary,
         (newVal) => {
-          this.timeRangeMode.maxValue = newVal;
+          this.timeRangeMode.maxDefValue = newVal || this.createDate_();
         }
       ));
     } else if (this.clone.type === ngeoFormatAttributeType.GEOMETRY) {

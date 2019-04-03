@@ -238,7 +238,7 @@ exports.prototype.encodeVectorStylePoint = function(symbolizers, imageStyle) {
       this.encodeVectorStyleStroke(symbolizer, strokeStyle);
     }
   } else if (imageStyle instanceof olStyleIcon) {
-    const src = imageStyle.getSrc();
+    const src = new URL(imageStyle.getSrc(), window.location.href).href;
     if (src !== undefined) {
       symbolizer = /** @type {MapFishPrintSymbolizerPoint} */ ({
         type: 'point',
