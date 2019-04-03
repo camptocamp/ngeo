@@ -109,7 +109,6 @@ module.directive('ngeoDatePicker', datePickerComponent);
 /**
  * DatePickerController - directive conttroller
  * @param {!angular.IScope} $scope Angular scope.
- * @param {!angular.auto.IInjectorService} $injector injector.
  * @param {!import("ngeo/misc/Time.js").Time} ngeoTime time service.
  * @param {!angular.gettext.gettextCatalog} gettextCatalog service.
  * @constructor
@@ -119,8 +118,7 @@ module.directive('ngeoDatePicker', datePickerComponent);
  * @ngdoc controller
  * @ngname ngeoDatePickerController
  */
-function Controller($scope, $injector,
-  ngeoTime, gettextCatalog) {
+function Controller($scope, ngeoTime, gettextCatalog) {
 
   /**
    * @type {!import("ngeo/misc/Time.js").Time}
