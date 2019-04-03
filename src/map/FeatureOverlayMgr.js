@@ -2,7 +2,7 @@ import angular from 'angular';
 import ngeoMapFeatureOverlay, {FeatureOverlay} from 'ngeo/map/FeatureOverlay.js';
 import {getUid as olUtilGetUid} from 'ol/util.js';
 import olLayerVector from 'ol/layer/Vector.js';
-import * as olObj from 'ol/obj.js';
+import {isEmpty} from 'ol/obj.js';
 import olSourceVector from 'ol/source/Vector.js';
 import {toFunction as toStyleFunction, createDefaultStyle as olStyleDefaultFunction} from 'ol/style/Style.js';
 
@@ -111,7 +111,7 @@ FeatureOverlayMgr.prototype.clear = function(groupIndex) {
   for (const featureUid in group.features) {
     this.removeFeature(group.features[featureUid], groupIndex);
   }
-  console.assert(olObj.isEmpty(group.features));
+  console.assert(isEmpty(group.features));
 };
 
 

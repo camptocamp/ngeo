@@ -1,6 +1,6 @@
 import ngeoDatasourceOGCGroup from 'ngeo/datasource/OGCGroup.js';
 import ngeoDatasourceOGC from 'ngeo/datasource/OGC.js';
-import * as olArray from 'ol/array.js';
+import {remove as removeFromArray} from 'ol/array.js';
 
 
 /**
@@ -199,12 +199,12 @@ export default class extends ngeoDatasourceOGCGroup {
     delete this.wmsDataSourceUnregister_[id];
 
     // Remove DS from the group
-    olArray.remove(this.dataSources, dataSource);
+    removeFromArray(this.dataSources, dataSource);
 
     // Remove query source id
     const ids = this.ngeoLayerHelper_.getQuerySourceIds(layer);
     if (ids) {
-      olArray.remove(ids, id);
+      removeFromArray(ids, id);
     }
 
     if (this.dataSources.length) {

@@ -1,7 +1,7 @@
 import angular from 'angular';
 import ngeoPrintVectorEncoder from 'ngeo/print/VectorEncoder.js';
 import ngeoMapLayerHelper from 'ngeo/map/LayerHelper.js';
-import * as olArray from 'ol/array.js';
+import {stableSort} from 'ol/array.js';
 import olLayerImage from 'ol/layer/Image.js';
 import olLayerTile from 'ol/layer/Tile.js';
 import olLayerVector from 'ol/layer/Vector.js';
@@ -189,7 +189,7 @@ PrintService.prototype.encodeMap_ = function(map, scale, object) {
   let layers = this.ngeoLayerHelper_.getFlatLayers(mapLayerGroup);
 
   // Sort the layer by ZIndex
-  olArray.stableSort(layers, (layer_a, layer_b) => (layer_a.getZIndex() || 0) - (layer_b.getZIndex() || 0));
+  stableSort(layers, (layer_a, layer_b) => (layer_a.getZIndex() || 0) - (layer_b.getZIndex() || 0));
   layers = layers.slice().reverse();
 
   layers.forEach((layer) => {

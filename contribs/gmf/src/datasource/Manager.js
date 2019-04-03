@@ -16,7 +16,7 @@ import ngeoMiscWMSTime from 'ngeo/misc/WMSTime.js';
 import {getUid as olUtilGetUid} from 'ol/util.js';
 import * as olEvents from 'ol/events.js';
 import olLayerTile from 'ol/layer/Tile.js';
-import * as olObj from 'ol/obj.js';
+import {clear as clearObject} from 'ol/obj.js';
 import olLayerImage from 'ol/layer/Image.js';
 import olSourceImageWMS from 'ol/source/ImageWMS.js';
 import olSourceTileWMS from 'ol/source/TileWMS.js';
@@ -401,7 +401,7 @@ export class DatasourceManager {
     }
 
     // (2) Clear the cache
-    olObj.clear(this.dataSourcesCache_);
+    clearObject(this.dataSourcesCache_);
   }
 
   /**

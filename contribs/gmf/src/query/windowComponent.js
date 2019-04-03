@@ -7,7 +7,7 @@ import ngeoMiscSwipe from 'ngeo/misc/swipe.js';
 import ngeoQueryMapQuerent from 'ngeo/query/MapQuerent.js';
 
 import olCollection from 'ol/Collection.js';
-import * as olObj from 'ol/obj.js';
+import {isEmpty} from 'ol/obj.js';
 import olStyleCircle from 'ol/style/Circle.js';
 import olStyleFill from 'ol/style/Fill.js';
 import olStyleStroke from 'ol/style/Stroke.js';
@@ -422,7 +422,7 @@ QueryWindowController.prototype.updateQueryResult_ = function(queryResult) {
     const source = queryResult.sources[i];
     source.features = source.features.filter((feature) => {
       console.assert(feature);
-      return !olObj.isEmpty(getFilteredFeatureValues(feature));
+      return !isEmpty(getFilteredFeatureValues(feature));
     });
     this.ngeoQueryResult.sources.push(source);
     this.ngeoQueryResult.total += source.features.length;
