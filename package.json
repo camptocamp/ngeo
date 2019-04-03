@@ -68,7 +68,7 @@
     "babel-loader": "8.0.5",
     "bootstrap": "4.3.1",
     "co": "4.6.0",
-    "commander": "2.19.0",
+    "commander": "2.20.0",
     "console-control-strings": "1.1.0",
     "copy-webpack-plugin": "5.0.2",
     "corejs-typeahead": "1.2.1",
