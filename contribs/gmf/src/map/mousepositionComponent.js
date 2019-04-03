@@ -1,7 +1,6 @@
 import angular from 'angular';
 import ngeoMiscFilters from 'ngeo/misc/filters.js';
 import olControlMousePosition from 'ol/control/MousePosition.js';
-import * as olProj from 'ol/proj.js';
 
 import 'bootstrap/js/src/dropdown.js';
 
@@ -195,7 +194,7 @@ Controller.prototype.initOlControl_ = function() {
  * @param {MousePositionProjection} projection The new projection to use.
  */
 Controller.prototype.setProjection = function(projection) {
-  this.control_.setProjection(olProj.get(projection.code));
+  this.control_.setProjection(projection.code);
   this.projection = projection;
 };
 

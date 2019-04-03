@@ -41,7 +41,7 @@ import olSourceImageWMS from 'ol/source/ImageWMS.js';
  * the querent or map query service.
  *
  * @typedef {Object} IssueGetFeaturesOptions
- * @property {string} [action=replace] The action the MapQuerent should take regarding the queried
+ * @property {string} [action='replace'] The action the MapQuerent should take regarding the queried
  *    features. Possible values are:
  *
  *    - `replace`: newly queried features are used as result

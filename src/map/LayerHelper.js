@@ -5,7 +5,7 @@ import olLayerGroup from 'ol/layer/Group.js';
 import olLayerImage from 'ol/layer/Image.js';
 import olLayerTile from 'ol/layer/Tile.js';
 import olLayerLayer from 'ol/layer/Layer.js';
-import * as olObj from 'ol/obj.js';
+import {isEmpty} from 'ol/obj.js';
 import olSourceImageWMS from 'ol/source/ImageWMS.js';
 import olSourceTileWMS from 'ol/source/TileWMS.js';
 import olSourceWMTS, {optionsFromCapabilities} from 'ol/source/WMTS.js';
@@ -185,7 +185,7 @@ LayerHelper.prototype.createWMTSLayerFromCapabilitites = function(
         layer: layerName
       }));
       const source = new olSourceWMTS(/** @type {import('ol/source/WMTS.js').Options} */ (options));
-      if (opt_dimensions && !olObj.isEmpty(opt_dimensions)) {
+      if (opt_dimensions && !isEmpty(opt_dimensions)) {
         source.updateDimensions(opt_dimensions);
       }
       layer.setSource(source);
@@ -223,7 +223,7 @@ LayerHelper.prototype.createWMTSLayerFromCapabilititesObj = function(
   console.assert(options);
   const source = new olSourceWMTS(/** @type {import('ol/source/WMTS.js').Options} */(options));
 
-  if (opt_dimensions && !olObj.isEmpty(opt_dimensions)) {
+  if (opt_dimensions && !isEmpty(opt_dimensions)) {
     source.updateDimensions(opt_dimensions);
   }
 

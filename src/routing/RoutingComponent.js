@@ -10,7 +10,7 @@ import olLayerVector from 'ol/layer/Vector.js';
 import olStyleStyle from 'ol/style/Style.js';
 import olStyleFill from 'ol/style/Fill.js';
 import olStyleStroke from 'ol/style/Stroke.js';
-import * as olProj from 'ol/proj.js';
+import {toLonLat} from 'ol/proj.js';
 import olFeature from 'ol/Feature.js';
 import olGeomLineString from 'ol/geom/LineString.js';
 import 'ngeo/sass/font.scss';
@@ -265,7 +265,7 @@ Controller.prototype.getLonLatFromPoint_ = function(point) {
   const geometry = /** @type {import("ol/geom/Point.js").default} */ (point.getGeometry());
   const coords = geometry.getCoordinates();
   const projection = this.map.getView().getProjection();
-  return olProj.toLonLat(coords, projection);
+  return toLonLat(coords, projection);
 };
 
 /**

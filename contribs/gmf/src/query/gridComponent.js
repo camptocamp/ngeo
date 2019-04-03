@@ -28,7 +28,6 @@ import 'bootstrap/js/src/dropdown.js';
  * @property {import("ngeo/grid/Config.js").default} configuration Configuration used to initialize a grid.
  * @property {import('ngeo/statemanager/WfsPermalink.js').QueryResultSource} source Results of the query
  *    source.
- * }}
  */
 
 

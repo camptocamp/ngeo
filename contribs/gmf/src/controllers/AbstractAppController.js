@@ -47,7 +47,6 @@ import {findThemeByName} from 'gmf/theme/Themes.js';
  * @property {import("ol/Collection.js").default.<import('ol/control/Control.js').default>|Array.<import('ol/control/Control.js').default>} [mapControls]
  * @property {import("ol/Collection.js").default.<import('"ol/interaction/Interaction.js').default>|Array.<import('ol/interaction/Interaction.js').default>} [mapInteractions]
  * @property {number} [mapPixelRatio]
- * }} Config
  */
 
 

@@ -10,7 +10,7 @@ import ngeoFormatAttributeType from 'ngeo/format/AttributeType.js';
 import ngeoRuleGeometry from 'ngeo/rule/Geometry.js';
 import ngeoMapFeatureOverlay from 'ngeo/map/FeatureOverlay.js';
 import {getUid as olUtilGetUid} from 'ol/util.js';
-import * as olArray from 'ol/array.js';
+import {remove as removeFromArray} from 'ol/array.js';
 import 'ngeo/sass/font.scss';
 
 
@@ -370,7 +370,7 @@ class FilterController {
   removeCustomRule(rule) {
     rule.active = false;
     this.timeout_(() => {
-      olArray.remove(this.customRules, rule);
+      removeFromArray(this.customRules, rule);
       this.unregisterRule_(rule);
       rule.destroy();
     });

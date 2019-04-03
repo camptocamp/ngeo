@@ -19,7 +19,7 @@ import ngeoFilterRuleHelper from 'ngeo/filter/RuleHelper.js';
 
 import ngeoFilterComponent from 'ngeo/filter/component.js';
 import * as olEvents from 'ol/events.js';
-import * as olArray from 'ol/array.js';
+import {remove as removeFromArray} from 'ol/array.js';
 import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr.js';
 
 import 'bootstrap/js/src/dropdown.js';
@@ -444,7 +444,7 @@ class Controller {
    */
   unregisterDataSource_(dataSource) {
     if (dataSource.filtrable) {
-      olArray.remove(this.filtrableDataSources, dataSource);
+      removeFromArray(this.filtrableDataSources, dataSource);
 
       if (this.gmfDataSourceBeingFiltered.dataSource === dataSource) {
         this.gmfDataSourceBeingFiltered.dataSource = null;

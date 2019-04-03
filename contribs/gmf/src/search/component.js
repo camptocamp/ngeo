@@ -14,7 +14,7 @@ import ngeoMessagePopoverComponent from 'ngeo/message/popoverComponent.js';
 
 import ngeoSearchModule from 'ngeo/search/module.js';
 import olFeature from 'ol/Feature.js';
-import * as olColor from 'ol/color.js';
+import {asArray as asColorArray} from 'ol/color.js';
 import olGeomPoint from 'ol/geom/Point.js';
 import olFormatGeoJSON from 'ol/format/GeoJSON.js';
 import * as olProj from 'ol/proj.js';
@@ -43,7 +43,6 @@ import {appendParams as olUriAppendParams} from 'ol/uri.js';
  * @property {string} url URL of the search service. Must contain a '%QUERY' term that will be
  * replaced by the input string.
  * @property {string} [datasetTitle]
- * }}
  */
 
 
@@ -842,7 +841,7 @@ class SearchController {
     console.assert(feature);
     const style = this.styles_[feature.get('layer_name')] || this.styles_['default'];
     if (this.color) {
-      const color = olColor.asArray(this.color);
+      const color = asColorArray(this.color);
 
       const strokeColor = color.slice();
       // 100% opacity for the stroke color

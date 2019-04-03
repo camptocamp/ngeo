@@ -23,7 +23,7 @@ import ngeoMiscSyncArrays from 'ngeo/misc/syncArrays.js';
 import ngeoMiscWMSTime from 'ngeo/misc/WMSTime.js';
 import olLayerTile from 'ol/layer/Tile.js';
 import olLayerLayer from 'ol/layer/Layer.js';
-import * as olObj from 'ol/obj.js';
+import {isEmpty} from 'ol/obj.js';
 import olSourceImageWMS from 'ol/source/ImageWMS.js';
 import olSourceTileWMS from 'ol/source/TileWMS.js';
 import olSourceWMTS from 'ol/source/WMTS.js';
@@ -351,7 +351,7 @@ Controller.prototype.updateLayerDimensions_ = function(layer, node) {
         dimensions[key] = node.dimensions[key];
       }
     }
-    if (!olObj.isEmpty(dimensions)) {
+    if (!isEmpty(dimensions)) {
       const source = layer.getSource();
       if (source instanceof olSourceWMTS) {
         source.updateDimensions(dimensions);

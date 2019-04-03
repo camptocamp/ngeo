@@ -80,14 +80,11 @@ const DEFAULT_COLORS = [
  * @constructor
  * @private
  * @hidden
- * @param {angular.IScope} $scope Directive scope.
- * @param {JQuery} $element Element.
- * @param {angular.IAttributes} $attrs Attributes.
  * @ngInject
  * @ngdoc controller
  * @ngname NgeoScaleselectorController
  */
-function Controller($scope, $element, $attrs) {
+function Controller() {
 
   /**
    * The set of color

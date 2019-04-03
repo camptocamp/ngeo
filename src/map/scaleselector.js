@@ -1,5 +1,5 @@
 import angular from 'angular';
-import * as olArray from 'ol/array.js';
+import {numberSafeCompareFunction} from 'ol/array.js';
 import olMap from 'ol/Map.js';
 import * as olEvents from 'ol/events.js';
 import 'bootstrap/js/src/dropdown.js';
@@ -82,7 +82,7 @@ module.run(/* @ngInject */ ($templateCache) => {
  * @htmlAttribute {import("ol/Map.js").default} ngeo-scaleselector-map The map.
  * @htmlAttribute {ScaleselectorOptions} ngeo-scaleselector-options
  *    Optional. The configuration options.
- * @param {string|function(!JQuery=, !angular.IAttributes=): any} ngeoScaleselectorTemplateUrl Template URL
+ * @param {string|function(!JQuery=, !angular.IAttributes=): string} ngeoScaleselectorTemplateUrl Template URL
  *    for the directive.
  * @return {angular.IDirective} Directive Definition Object.
  * @ngInject
@@ -132,7 +132,7 @@ const ScaleselectorController = function($scope, $element, $attrs) {
 
   $scope.$watch(() => Object.keys(this.scales).length, (newLength) => {
     this.zoomLevels = Object.keys(this.scales).map(Number);
-    this.zoomLevels.sort(olArray.numberSafeCompareFunction);
+    this.zoomLevels.sort(numberSafeCompareFunction);
   });
 
   const mapExpr = $attrs['ngeoScaleselectorMap'];

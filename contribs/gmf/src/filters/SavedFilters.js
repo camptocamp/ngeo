@@ -1,5 +1,5 @@
 import angular from 'angular';
-import * as olArray from 'ol/array.js';
+import {remove as removeFromArray} from 'ol/array.js';
 
 
 /**
@@ -173,7 +173,7 @@ export class SavedFilter {
   remove(item) {
 
     // (1) Remove the item
-    const found = olArray.remove(this.items, item);
+    const found = removeFromArray(this.items, item);
 
     // (2) Update local storage
     if (found && this.useLocalStorage_) {
