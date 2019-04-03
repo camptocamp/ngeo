@@ -47,7 +47,7 @@ module.run(/* @ngInject */ ($templateCache) => {
  * @htmlAttribute {import("ol/Map.js").default} gmf-mobile-measurelength-map The map.
  * @htmlAttribute {import("ol/style/Style.js").StyleLike=}
  *     gmf-mobile-measurelength-sketchstyle A style for the measure length.
- * @param {string|function(!JQuery=, !angular.IAttributes=)}
+ * @param {string|function(!JQuery=, !angular.IAttributes=):string}
  *     gmfMobileMeasureLengthTemplateUrl Template URL for the directive.
  * @return {angular.IDirective} The Directive Definition Object.
  * @ngInject
