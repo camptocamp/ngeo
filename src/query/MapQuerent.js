@@ -26,7 +26,7 @@ import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
  *    apply to those.
  * @property {boolean} [queryCountFirst=false] For WFS sources, should the number of features first be
  *    requested with `resultType=hits` before requesting the actual features in an seconds request?
- * @property {string} [sourceIdsProperty=querySourceIds] Defines the name of the layer property that holds
+ * @property {string} [sourceIdsProperty='querySourceIds'] Defines the name of the layer property that holds
  *    the ids of the sources.
  *    Use this if you have more than one source bound to a layer.
  * @property {number} [tolerance=3] When issuing an identify feature request at a click position, either a
@@ -34,8 +34,8 @@ import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
  *    around the position. This `tolerance` in pixel determines the size of the bbox.
  * @property {string} [featureNS='http://mapserver.gis.umn.edu/mapserver'] The feature namespace for WFS
  *    GetFeature requests.
- * @property {string} [featurePrefix=feature] The feature prefix for WFS GetFeature requests.
- * @property {string} [geometryName=geom] The name of the geometry property for WFS GetFeature requests.
+ * @property {string} [featurePrefix='feature'] The feature prefix for WFS GetFeature requests.
+ * @property {string} [geometryName='geom'] The name of the geometry property for WFS GetFeature requests.
  * @property {boolean} [cursorHover]
  * @property {boolean} [bboxAsGETParam=false] Pass the queried bbox as a parameter of the GET query on WFS
  *    requests.
