@@ -8,7 +8,7 @@ import olStyleRegularShape from 'ol/style/RegularShape.js';
 import {toDegrees} from 'ol/math.js';
 import olStyleIcon from 'ol/style/Icon.js';
 import olStyleCircle from 'ol/style/Circle.js';
-import * as olColor from 'ol/color.js';
+import {asArray as asColorArray} from 'ol/color.js';
 
 /**
  * @constructor
@@ -199,7 +199,7 @@ VectorEncoder.prototype.encodeVectorStyleFill = function(symbolizer, fillStyle) 
   let fillColor = /** @type {import('ol/color.js').Color} */(fillStyle.getColor());
   if (fillColor !== null) {
     console.assert(typeof fillColor === 'string' || Array.isArray(fillColor));
-    fillColor = olColor.asArray(fillColor);
+    fillColor = asColorArray(fillColor);
     console.assert(Array.isArray(fillColor), 'only supporting fill colors');
     symbolizer.fillColor = rgbArrayToHex(fillColor);
     symbolizer.fillOpacity = fillColor[3];
@@ -346,7 +346,7 @@ VectorEncoder.prototype.encodeVectorStyleStroke = function(symbolizer, strokeSty
   const strokeColor = /** @type {import('ol/color.js').Color} */(strokeStyle.getColor());
   if (strokeColor !== null) {
     console.assert(typeof strokeColor === 'string' || Array.isArray(strokeColor));
-    const strokeColorRgba = olColor.asArray(strokeColor);
+    const strokeColorRgba = asColorArray(strokeColor);
     console.assert(Array.isArray(strokeColorRgba), 'only supporting stroke colors');
     symbolizer.strokeColor = rgbArrayToHex(strokeColorRgba);
     symbolizer.strokeOpacity = strokeColorRgba[3];
@@ -423,7 +423,7 @@ VectorEncoder.prototype.encodeTextStyle = function(symbolizers, textStyle) {
     if (strokeStyle !== null) {
       const strokeColor = /** @type {import('ol/color.js').Color} */(strokeStyle.getColor());
       console.assert(typeof strokeColor === 'string' || Array.isArray(strokeColor));
-      const strokeColorRgba = olColor.asArray(strokeColor);
+      const strokeColorRgba = asColorArray(strokeColor);
       console.assert(Array.isArray(strokeColorRgba), 'only supporting stroke colors');
       symbolizer.haloColor = rgbArrayToHex(strokeColorRgba);
       symbolizer.haloOpacity = strokeColorRgba[3];
@@ -438,7 +438,7 @@ VectorEncoder.prototype.encodeTextStyle = function(symbolizers, textStyle) {
     if (fillStyle !== null) {
       const fillColor = /** @type {import('ol/color.js').Color} */(fillStyle.getColor());
       console.assert(typeof fillColor === 'string' || Array.isArray(fillColor));
-      const fillColorRgba = olColor.asArray(fillColor);
+      const fillColorRgba = asColorArray(fillColor);
       console.assert(Array.isArray(fillColorRgba), 'only supporting fill colors');
       symbolizer.fontColor = rgbArrayToHex(fillColorRgba);
     }

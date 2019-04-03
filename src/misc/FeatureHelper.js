@@ -7,7 +7,7 @@ import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties.js';
 import ngeoGeometryType from 'ngeo/GeometryType.js';
 import {getFormattedLength, getFormattedArea, getFormattedPoint} from 'ngeo/interaction/Measure.js';
 import {getFormattedAzimutRadius} from 'ngeo/interaction/MeasureAzimut.js';
-import * as olColor from 'ol/color.js';
+import {fromString as colorFromString} from 'ol/color.js';
 import * as olExtent from 'ol/extent.js';
 import olFeature from 'ol/Feature.js';
 import olGeomLineString from 'ol/geom/LineString.js';
@@ -952,7 +952,7 @@ FeatureHelper.prototype.getColorProperty = function(feature) {
  * @return {import('ol/color.js').Color} Color.
  */
 FeatureHelper.prototype.getRGBAColorProperty = function(feature) {
-  return olColor.fromString(this.getColorProperty(feature));
+  return colorFromString(this.getColorProperty(feature));
 };
 
 
