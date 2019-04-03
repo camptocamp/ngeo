@@ -28,19 +28,10 @@ $border-color: darken($brand-primary, $standard-variation) !default;
 @import '~gmf/sass/popover.scss';
 @import '~gmf/sass/datepicker.scss';
 @import '~gmf/sass/fullscreenpopup.scss';
+@import '~gmf/sass/loading-mask.scss';
 
 @import '~gmf/layertree/desktop.scss';
 
-.loading-mask {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height:100%;
-}
-.spinner-loading-mask {
-  color: red;
-  font-size: 125px;
-}
 
 html, body {
   position: relative;

@@ -17,6 +17,7 @@ $border-color: black !default;
 @import '~gmf/sass/input-range.scss';
 @import '~gmf/sass/fullscreenpopup.scss';
 @import '~gmf/sass/iphone.scss';
+@import '~gmf/sass/loading-mask.scss';
 @import '~gmf/controllers/mobile-nav.scss';
 @import '~gmf/search/mobile.scss';
 
@@ -27,22 +28,6 @@ $border-color: black !default;
  * Mobile specific css only !
  * Please, use shared less files to describe desktop-mobile shared css
  */
-.spinner-loading-mask {
-  color: red;
-  font-size: 3rem;
-}
-
-.loading-mask {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 10px;
-  height:100%;
-  img {
-    max-width: 100%;
-  }
-}
 
 main>* {
   position: absolute;
