@@ -217,11 +217,11 @@ PrintService.prototype.encodeLayer = function(arr, layer, resolution) {
 };
 
 /**
- * @param {Array.<MapFishPrintLayer>} arr Array.
- * @param {ol.layer.Vector} layer Layer.
+ * @param {Array.<import('ngeo/print/mapfish-print-v3.js').MapFishPrintLayer>} arr Array.
+ * @param {olLayerVector} layer Layer.
  * @param {number} resolution Resolution.
  */
-exports.prototype.encodeVectorLayer = function(arr, layer, resolution) {
+PrintService.prototype.encodeVectorLayer = function(arr, layer, resolution) {
   this.vectorEncoder.encodeVectorLayer(arr, layer, resolution);
 };
 
