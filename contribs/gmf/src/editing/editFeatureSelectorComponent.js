@@ -47,6 +47,8 @@ module.run(/* @ngInject */ ($templateCache) => {
  *     buffer in pixels to use when making queries to get the features.
  * @htmlAttribute {import("ol/layer/Vector.js").default} gmf-editfeatureselector-vector The vector
  *     layer where the selected or created features are drawn.
+ * @htmlAttribute {ngeo.layertree.Controller} gmf-editfeatureselector-tree The
+ *     layertree controller handling the selectable editable layers list.
  * @return {angular.IDirective} The directive specs.
  * @ngdoc directive
  * @ngname gmfEditfeatureselector
@@ -58,7 +60,8 @@ function editingEditFeatureComponent() {
       'active': '=gmfEditfeatureselectorActive',
       'map': '<gmfEditfeatureselectorMap',
       'tolerance': '<?gmfEditfeatureselectorTolerance',
-      'vectorLayer': '<gmfEditfeatureselectorVector'
+      'vectorLayer': '<gmfEditfeatureselectorVector',
+      'selectedEditableTreeCtrl': '=?gmfEditfeatureselectorTree'
     },
     bindToController: true,
     templateUrl: 'gmf/editing/editFeatureSelectorComponent'

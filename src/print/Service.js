@@ -89,9 +89,9 @@ export function PrintService(url, $http, gettextCatalog, ngeoLayerHelper) {
 
   /**
    * @type {import("ngeo/print/VectorEncoder.js").default}
-   * @private
+   * @protected
    */
-  this.vectorEncoder_ = new ngeoPrintVectorEncoder();
+  this.vectorEncoder = new ngeoPrintVectorEncoder();
 
   /**
    * @type {boolean}
@@ -212,10 +212,18 @@ PrintService.prototype.encodeLayer = function(arr, layer, resolution) {
   } else if (layer instanceof olLayerTile) {
     this.encodeTileLayer_(arr, layer);
   } else if (layer instanceof olLayerVector) {
-    this.vectorEncoder_.encodeVectorLayer(arr, layer, resolution);
+    this.encodeVectorLayer(arr, layer, resolution);
   }
 };
 
+/**
+ * @param {Array.<import('ngeo/print/mapfish-print-v3.js').MapFishPrintLayer>} arr Array.
+ * @param {olLayerVector} layer Layer.
+ * @param {number} resolution Resolution.
+ */
+PrintService.prototype.encodeVectorLayer = function(arr, layer, resolution) {
+  this.vectorEncoder.encodeVectorLayer(arr, layer, resolution);
+};
 
 /**
  * @param {Array.<import('ngeo/print/mapfish-print-v3.js').MapFishPrintLayer>} arr Array.

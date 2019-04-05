@@ -34,7 +34,7 @@ export class ExternalDatSourcesManager {
 
   /**
    * External data sources come remote online resources, such as WMS/WMTS
-   * servers, and also files such as KML/GXP. This service is responsible of
+   * servers, and also files such as KML/GPX. This service is responsible of
    * creating, storing and managing them.
    *
    * @param {!angular.gettext.gettextCatalog} gettextCatalog service.
