@@ -4,8 +4,12 @@
  * This file includes `import`'s for all the components/directives used
  * by the HTML page and the controller to provide the configuration.
  */
-import angular from 'angular';
+
 import './sass/desktop_alt.scss';
+import 'gmf/controllers/desktop.scss';
+import './sass/vars_desktop_alt.scss';
+
+import angular from 'angular';
 import gmfControllersAbstractDesktopController, {AbstractDesktopController}
   from 'gmf/controllers/AbstractDesktopController.js';
 import appBase from '../appmodule.js';

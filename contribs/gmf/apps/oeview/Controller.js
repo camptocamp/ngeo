@@ -5,10 +5,13 @@
  * by the HTML page and the controller to provide the configuration.
  */
 
+import './sass/vars_oeview.scss';
+import 'gmf/controllers/desktop.scss';
+import './sass/oeview.scss';
+
 import angular from 'angular';
 import gmfControllersAbstractDesktopController, {AbstractDesktopController}
   from 'gmf/controllers/AbstractDesktopController.js';
-import './sass/oeview.scss';
 import appBase from '../appmodule.js';
 import EPSG2056 from '@geoblocks/proj/src/EPSG_2056.js';
 import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
