@@ -89,12 +89,10 @@ function gmfThemeSelectorTemplateUrl($attrs, gmfThemeSelectorTemplateUrl) {
  *         data-header-title="Themes"
  *         gmf-themeselector-filter="::mainCtrl.filter">
  *      </gmf-themeselector>
- *      <script>
- *        (function() {
- *          let module = angular.module('app');
- *          module.value('gmfTreeManagerModeFlush', false);
- *        })();
- *      </script>
+ *
+ * Add in interfaces_config/<interface>/constants:
+ *
+ *    gmfTreeManagerModeFlush: false
  *
  * @htmlAttribute {Function} gmf-themeselector-filter The themes filter.
  *
