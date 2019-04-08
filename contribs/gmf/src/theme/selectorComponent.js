@@ -68,29 +68,16 @@ function gmfThemeSelectorTemplateUrl($attrs, gmfThemeSelectorTemplateUrl) {
  *            <b ng-if="!mainCtrl.gmfThemeManager.themeName" translate>Themes</b>
  *          </span>
  *      </a>
- *      <gmf-themeselector
- *         id="themes"
- *         data-header-title="Themes"
- *         gmf-themeselector-filter="::mainCtrl.filter">
+ *      <gmf-themeselector class="dropdown-menu"
+           gmf-themeselector-currenttheme="mainCtrl.theme"
+           gmf-themeselector-filter="::mainCtrl.filter">
  *      </gmf-themeselector>
  *
  * The theme selector can operate in a 'flush' (as above) or 'add' mode. For more information
  * about these modes, refer to the documentation of
  * {@link import("gmf/layertree/TreeManager.js").LayertreeTreeManager}.
  *
- * Example in 'add' mode:
- *
- *      <a href class="btn btn-block btn-primary dropdown-toggle" data-toggle="dropdown">
- *          <span class="fa fa-grid"></span>
- *          <span translate>Themes</span>
- *      </a>
- *      <gmf-themeselector
- *         id="themes"
- *         data-header-title="Themes"
- *         gmf-themeselector-filter="::mainCtrl.filter">
- *      </gmf-themeselector>
- *
- * Add in interfaces_config/<interface>/constants:
+ * To use the 'add' mode just add the constants:
  *
  *    gmfTreeManagerModeFlush: false
  *
