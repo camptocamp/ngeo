@@ -139,7 +139,7 @@ export function ContextualdataController($compile, $timeout, $scope, gmfRaster, 
   this.gmfContextualdataOptions_ = $injector.has('gmfContextualdataOptions') ?
     $injector.get('gmfContextualdataOptions') : {};
 
-  angular.element('body').on('mousedown', this.hidePopover.bind(this));
+  document.body.addEventListener('mousedown', this.hidePopover.bind(this));
 }
 
 /**

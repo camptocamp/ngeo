@@ -9,7 +9,7 @@ import olGeomPoint from 'ol/geom/Point.js';
 
 
 /**
- * Options for the mobile geolocations directive.
+ * Options for the desktop geolocations directive.
  *
  * @typedef {Object} DesktopGeolocationDirectiveOptions
  * @property {import("ol/style/Style.js").StyleLike} [accuracyFeatureStyle] The style to
