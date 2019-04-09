@@ -180,7 +180,7 @@ Controller.prototype.initOlControl_ = function() {
   this.control_ = new olControlMousePosition({
     className: 'gmf-mouseposition-control',
     coordinateFormat: formatFn.bind(this),
-    target: angular.element('.gmf-mouseposition-control-target', this.$element_)[0],
+    target: this.$element_.find('.gmf-mouseposition-control-target').get(0),
     undefinedHTML: gettextCatalog.getString('Coordinates')
   });
 

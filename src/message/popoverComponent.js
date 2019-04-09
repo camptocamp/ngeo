@@ -134,10 +134,10 @@ function PopoverController($scope) {
 
   const clickHandler = onClick.bind(this);
 
-  angular.element('body').on('click', clickHandler);
+  document.body.addEventListener('click', clickHandler);
 
   $scope.$on('$destroy', () => {
-    angular.element('body').off('click', clickHandler);
+    document.body.removeEventListener('click', clickHandler);
   });
 }
 
