@@ -12,6 +12,7 @@ import olEventsEventTarget from 'ol/events/Target.js';
  * @property location: {Array.<string>} Availables locations.
  * @property {Array.<!string>} [open_panel] When set, contains the name of the panel to open upon loading
  *    an application.
+ * @property {Array.<string>} [preset_layer_filter] Default filtrable datasource name.
  */
 
 /**

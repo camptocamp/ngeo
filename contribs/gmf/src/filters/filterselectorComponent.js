@@ -308,16 +308,13 @@ class Controller {
    */
   handleGmfUserFunctionalitiesChange_() {
     const usrFunc = this.gmfUser_.functionalities;
-    if (usrFunc && usrFunc['filterable_layers']) {
-      this.filtrableLayerNodeNames_ = usrFunc['filterable_layers'];
+    if (usrFunc && usrFunc.filterable_layers) {
+      this.filtrableLayerNodeNames_ = usrFunc.filterable_layers;
     } else {
       this.filtrableLayerNodeNames_ = null;
     }
-    if (usrFunc &&
-        usrFunc['preset_layer_filter'] &&
-        usrFunc['preset_layer_filter'][0]
-    ) {
-      this.defaultFiltrableDataSourceName_ = usrFunc['preset_layer_filter'][0];
+    if (usrFunc && usrFunc.preset_layer_filter && usrFunc.preset_layer_filter[0]) {
+      this.defaultFiltrableDataSourceName_ = usrFunc.preset_layer_filter[0];
     } else {
       this.defaultFiltrableDataSourceName_ = undefined;
     }
