@@ -349,10 +349,6 @@ $theme-selector-columns: 2;
       margin-right: 0;
     }
 
-    .close {
-      padding: 0;
-    }
-
     textarea {
       resize: vertical;
     }
@@ -363,6 +359,9 @@ $theme-selector-columns: 2;
       margin-bottom: $app-margin;
       margin-top: $grid-gutter-width / 2;
       border-bottom: 0.06rem solid $color-light;
+      .close {
+        padding: 0;
+      }
     }
 
     .profile-panel button {
@@ -707,11 +706,6 @@ gmf-objecteditingtools {
 }
 
 .gmf-filterselector-managefilter-modal {
-  .modal-header .close {
-    padding: 1rem;
-    line-height: inherit;
-    margin: -1rem -1rem -1rem auto;
-  }
   .modal-body {
     padding: 0 $app-margin;
 

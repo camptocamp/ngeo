@@ -88,6 +88,7 @@
   </div>
   <ngeo-modal ng-model="efCtrl.unsavedModificationsModalShown">
     <div class="modal-header">
+      <h4 class="modal-title">{{'Unsaved modifications!' | translate}}</h4>
       <button
           type="button"
           class="close"
@@ -95,9 +96,6 @@
           aria-label="{{'Close' | translate}}">
         <span aria-hidden="true">&times;</span>
       </button>
-      <h4 class="modal-title">
-        {{'Unsaved modifications!' | translate}}
-      </h4>
     </div>
     <div class="modal-body">
       {{'There are unsaved changes.' | translate}}
