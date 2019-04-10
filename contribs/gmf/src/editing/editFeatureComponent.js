@@ -99,6 +99,7 @@ exports.run(/* @ngInject */ ($templateCache) => {
  *         gmf-editfeature-state="efsCtrl.state"
  *         gmf-editfeature-tolerance="::ctrl.tolerance"
  *         gmf-editfeature-vector="::ctrl.vectorLayer">
+ *         gmf-editfeature-closeaftersave="::ctrl.closeaftersave">
  *     </gmf-editfeature>
  *
  * @htmlAttribute {boolean} gmf-editfeature-dirty Flag that is toggled as soon
@@ -115,6 +116,8 @@ exports.run(/* @ngInject */ ($templateCache) => {
  *     buffer in pixels to use when making queries to get the features.
  * @htmlAttribute {ol.layer.Vector} gmf-editfeature-vector The vector layer in
  *     which to draw the vector features.
+ * @htmlAttribute {boolean} gmf-editfeatureselector-closeaftersave If true,
+ *     immediately return to the main edit panel after save. Default is false.
  * @return {angular.Directive} The directive specs.
  * @ngdoc directive
  * @ngname gmfEditfeature
@@ -128,7 +131,8 @@ exports.component_ = function() {
       'map': '<gmfEditfeatureMap',
       'state': '=gmfEditfeatureState',
       'tolerance': '<?gmfEditfeatureTolerance',
-      'vectorLayer': '<gmfEditfeatureVector'
+      'vectorLayer': '<gmfEditfeatureVector',
+      'closeAfterSave': '=?gmfEditfeatureCloseaftersave'
     },
     bindToController: true,
     templateUrl: 'gmf/editing/editFeatureComponent'
@@ -207,6 +211,11 @@ exports.Controller_ = function($element, $q, $scope, $timeout,
    */
   this.vectorLayer;
 
+  /**
+   * @type {boolean}
+   * @export
+   */
+  this.closeAfterSave = false;
 
   // === Injected properties ===
 
@@ -654,6 +663,9 @@ exports.Controller_.prototype.save = function() {
       this.pending = false;
       this.handleEditFeature_(response);
       this.gmfSnapping_.refresh();
+      if (this.closeAfterSave) {
+        this.cancel();
+      }
     },
     (response) => {
       this.showServerError = true;
