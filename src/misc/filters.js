@@ -555,14 +555,14 @@ module.constant('ngeoStringToHtmlReplacements', StringToHtmlReplacements);
 /**
  * A filter used to remove the CDATA prefix and postfix.
  *
- * @return {function(string): string} Retult string
+ * @return {function(string): string} Result string
  * @ngdoc filter
  * @ngname ngeoDuration
  * @hidden
  */
 const removeCDATA = function() {
   return function(input) {
-    if (input) {
+    if (input.replace) {
       return input.replace(/<!\[CDATA\[(.*)\]\]>/, '$1');
     }
   };
