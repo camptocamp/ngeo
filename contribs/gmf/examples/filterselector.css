@@ -93,11 +93,6 @@ gmf-filterselector {
   text-decoration: none;
 }
 
-.ngeo-filter-condition-criteria-header {
-  color: #999999;
-  padding: 0.3rem 2rem;
-}
-
 .ngeo-filter-condition-criteria {
   opacity: 0;
 }

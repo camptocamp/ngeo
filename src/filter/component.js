@@ -177,15 +177,15 @@ class FilterController {
      */
     this.conditions = [
       {
-        text: gettextCatalog.getString('All'),
+        text: gettextCatalog.getString('Match all criteria'),
         value: ngeoFilterCondition.AND
       },
       {
-        text: gettextCatalog.getString('At least one'),
+        text: gettextCatalog.getString('Match at least one criterion'),
         value: ngeoFilterCondition.OR
       },
       {
-        text: gettextCatalog.getString('None'),
+        text: gettextCatalog.getString('Does not match any criterion'),
         value: ngeoFilterCondition.NOT
       }
     ];
