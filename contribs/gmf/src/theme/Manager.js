@@ -107,6 +107,33 @@ exports.prototype.isLoading = function() {
   return !this.gmfThemes_.loaded;
 };
 
+
+/**
+ * @param {string} themeName wanted theme name.
+ * @param {string} fallbackThemeName fallback theme name.
+ * @export
+ */
+exports.prototype.updateCurrentTheme = function(themeName, fallbackThemeName) {
+  this.gmfThemes_.getThemesObject().then((themes) => {
+    if (!themeName && this.modeFlush) {
+      // In flush mode load current theme private groups
+      const fallbackTheme = gmfThemeThemes.findThemeByName(themes, /** @type {string} */ (fallbackThemeName));
+      if (fallbackTheme) {
+        this.gmfTreeManager_.addFirstLevelGroups(fallbackTheme.children, false, false);
+      }
+    }
+    if (themeName) {
+      const theme = gmfThemeThemes.findThemeByName(themes, /** @type {string} */ (themeName));
+      if (theme) {
+        this.addTheme(theme, true);
+      }
+    } else {
+      this.setThemeName(fallbackThemeName);
+    }
+  });
+};
+
+
 /**
  * @param {string} name The new theme name.
  * @param {boolean=} opt_silent Don't emit a theme change event, default is false.
