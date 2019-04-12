@@ -37,7 +37,9 @@ module.run(/* @ngInject */ ($templateCache) => {
  *         gmf-editfeatureselector-active="ctrl.editFeatureSelectorActive"
  *         gmf-editfeatureselector-map="::ctrl.map"
  *         gmf-editfeatureselector-tolerance="::ctrl.tolerance"
- *         gmf-editfeatureselector-vector="::ctrl.vectorLayer">
+ *         gmf-editfeatureselector-vector="::ctrl.vectorLayer"
+ *         gmf-editfeatureselector-tree="ctrl.selectedEditableTreeCtrl"
+ *         gmf-editfeatureselector-closeaftersave="::true">
  *     </gmf-editfeatureselector>
  *
  * @htmlAttribute {boolean} gmf-editfeatureselector-active Whether the
@@ -49,6 +51,8 @@ module.run(/* @ngInject */ ($templateCache) => {
  *     layer where the selected or created features are drawn.
  * @htmlAttribute {ngeo.layertree.Controller} gmf-editfeatureselector-tree The
  *     layertree controller handling the selectable editable layers list.
+ * @htmlAttribute {boolean} gmf-editfeatureselector-closeaftersave If true,
+ *     immediately return to the main edit panel after save. Default is false.
  * @return {angular.IDirective} The directive specs.
  * @ngdoc directive
  * @ngname gmfEditfeatureselector
@@ -61,7 +65,8 @@ function editingEditFeatureComponent() {
       'map': '<gmfEditfeatureselectorMap',
       'tolerance': '<?gmfEditfeatureselectorTolerance',
       'vectorLayer': '<gmfEditfeatureselectorVector',
-      'selectedEditableTreeCtrl': '=?gmfEditfeatureselectorTree'
+      'selectedEditableTreeCtrl': '=?gmfEditfeatureselectorTree',
+      'closeAfterSave': '=?gmfEditfeatureselectorCloseaftersave'
     },
     bindToController: true,
     templateUrl: 'gmf/editing/editFeatureSelectorComponent'
@@ -114,6 +119,11 @@ function Controller($scope, $timeout, gmfThemes, gmfTreeManager) {
    */
   this.vectorLayer;
 
+  /**
+   * @type {boolean}
+   * @export
+   */
+  this.closeAfterSave;
 
   // === Injected services ===
 
