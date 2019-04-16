@@ -115,7 +115,7 @@
     "raven-js": "3.27.0",
     "simple-html-tokenizer": "0.1.1",
     "svg-inline-loader": "0.8.0",
-    "svgo": "1.2.1",
+    "svgo": "1.2.2",
     "svgo-loader": "2.2.0",
     "terser": "3.17.0",
     "terser-webpack-plugin": "1.2.3",
