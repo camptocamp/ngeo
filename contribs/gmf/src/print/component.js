@@ -1176,14 +1176,16 @@ exports.Controller_ = class {
                 this.gmfLegendOptions_.params[layer.getSource().serverType_]
               );
             }
+            const type = icons ? 'image' : source.serverType_;
+
             // Don't add classes without legend url or from layers without any
             // active name.
             if (icons && name.length !== 0) {
               classes.push(Object.assign({
-                'name': this.gmfLegendOptions_.label[layer.getSource().serverType_] === false ? '' :
+                'name': this.gmfLegendOptions_.label[type] === false ? '' :
                   gettextCatalog.getString(name),
                 'icons': [icons]
-              }, layer.getSource().serverType_ === 'qgis' ? {
+              }, type === 'qgis' ? {
                 'dpi': dpi,
               } : {}));
             }
