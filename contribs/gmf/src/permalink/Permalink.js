@@ -477,7 +477,7 @@ export function PermalinkService(
     this.crosshairStyle_ = [new olStyleStyle({
       image: new olStyleIcon({
         // @ts-ignore: webpack
-        src: require('gmf/permalink/crosshair.svg')
+        src: require('!!file-loader!gmf/permalink/crosshair.svg')
       })
     })];
   }
