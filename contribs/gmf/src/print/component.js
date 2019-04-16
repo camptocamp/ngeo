@@ -1233,15 +1233,21 @@ class Controller {
         // For WMTS layers.
         if (layer instanceof olLayerTile) {
           const layerName = `${layer.get('layerNodeName')}`;
-          let icons = this.getMetadataLegendImage_(layerName);
-          if (!icons) {
-            icons = this.ngeoLayerHelper_.getWMTSLegendURL(layer);
+          let icon_dpi = this.getMetadataLegendImage_(layerName, dpi);
+          if (!icon_dpi) {
+            const url = this.ngeoLayerHelper_.getWMTSLegendURL(layer);
+            if (url) {
+              icon_dpi = {
+                'url': this.ngeoLayerHelper_.getWMTSLegendURL(layer),
+                'dpi': 72
+              };
+            }
           }
           // Don't add classes without legend url.
-          if (icons) {
+          if (icon_dpi) {
             classes.push({
               'name': gettextCatalog.getString(layerName),
-              'icons': [icons]
+              'icons': [icon_dpi.url]
             });
           }
         } else {
@@ -1249,24 +1255,29 @@ class Controller {
           // For each name in a WMS layer.
           const layerNames = source.getParams()['LAYERS'].split(',');
           layerNames.forEach((name) => {
-            let icons = this.getMetadataLegendImage_(name);
-            if (!icons) {
-              icons = this.ngeoLayerHelper_.getWMSLegendURL(source.getUrl(), name,
-                scale, undefined, undefined, undefined, source.serverType_, dpi,
-                this.gmfLegendOptions_.useBbox ? bbox : undefined,
-                this.map.getView().getProjection().getCode(),
-                this.gmfLegendOptions_.params[source.serverType_]
-              );
+            let icon_dpi = this.getMetadataLegendImage_(name, dpi);
+            const type = icon_dpi ? 'image' : source.serverType_;
+            if (!icon_dpi) {
+              icon_dpi = {
+                'url': this.ngeoLayerHelper_.getWMSLegendURL(source.getUrl(), name,
+                  scale, undefined, undefined, undefined, source.serverType_, dpi,
+                  this.gmfLegendOptions_.useBbox ? bbox : undefined,
+                  this.map.getView().getProjection().getCode(),
+                  this.gmfLegendOptions_.params[source.serverType_]
+                ),
+                'dpi': type === 'qgis' ? dpi : 72,
+              };
             }
+
             // Don't add classes without legend url or from layers without any
             // active name.
-            if (icons && name.length !== 0) {
+            if (icon_dpi && name.length !== 0) {
               classes.push(Object.assign({
-                'name': this.gmfLegendOptions_.label[source.serverType_] === false ? '' :
+                'name': this.gmfLegendOptions_.label[type] === false ? '' :
                   gettextCatalog.getString(name),
-                'icons': [icons]
-              }, source.serverType_ === 'qgis' ? {
-                'dpi': dpi,
+                'icons': [icon_dpi.url]
+              }, icon_dpi.dpi != 72 ? {
+                'dpi': icon_dpi.dpi,
               } : {}));
             }
           });
@@ -1283,25 +1294,51 @@ class Controller {
     return legend['classes'].length > 0 ? legend : null;
   }
 
+  /**
+   * @typedef {Object} LegendURLDPI
+   * @property {string} url The URL
+   * @property {number} dpi The DPI
+   */
 
   /**
    * Return the metadata legendImage of a layer from the found corresponding node
    * or undefined.
    * @param {string} layerName a layer name.
-   * @return {string|undefined} The legendImage or undefined.
+   * @param {number} [dpi=72] the image DPI.
+   * @return {LegendURLDPI|undefined} The legendImage with selected DPI or undefined.
    * @private
    */
-  getMetadataLegendImage_(layerName) {
+  getMetadataLegendImage_(layerName, dpi = 72) {
     const groupNode = findGroupByLayerNodeName(this.currentThemes_, layerName);
     let node;
     if (groupNode && groupNode.children) {
       node = findObjectByName(groupNode.children, layerName);
     }
     let legendImage;
+    let hiDPILegendImages;
     if (node && node.metadata) {
       legendImage = node.metadata.legendImage;
+      hiDPILegendImages = node.metadata.hiDPILegendImages;
     }
-    return legendImage;
+    let dist = Number.MAX_VALUE;
+    if (legendImage) {
+      dist = Math.abs(Math.log(72 / dpi));
+    }
+    if (hiDPILegendImages) {
+      for (const str_dpi in hiDPILegendImages) {
+        const new_dpi = parseFloat(str_dpi);
+        const new_dist = Math.abs(Math.log(new_dpi / dpi));
+        if (new_dist < dist) {
+          dist = new_dist;
+          dpi = new_dpi;
+          legendImage = hiDPILegendImages[str_dpi];
+        }
+      }
+    }
+    return {
+      'url': legendImage,
+      'dpi': dpi,
+    };
   }
 
 
