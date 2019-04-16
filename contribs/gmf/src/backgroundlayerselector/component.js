@@ -204,7 +204,7 @@ exports.Controller_.prototype.handleThemesChange_ = function() {
  * @export
  */
 exports.Controller_.prototype.getSetBgLayerOpacity = function(val) {
-  if (val) {
+  if (val !== undefined) {
     this.opacityLayer.setOpacity(val);
   }
   return this.opacityLayer.getOpacity();
