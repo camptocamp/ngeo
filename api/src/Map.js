@@ -12,6 +12,7 @@ import {Icon, Style} from 'ol/style.js';
 import View from 'ol/View.js';
 import VectorSource from 'ol/source/Vector.js';
 import VectorLayer from 'ol/layer/Vector.js';
+import SelectInteraction from 'ol/interaction/Select.js';
 
 import MousePosition from 'ol/control/MousePosition.js';
 import {createStringXY} from 'ol/coordinate.js';
@@ -145,6 +146,23 @@ class Map {
 
     this.map_.addLayer(this.vectorLayer_);
 
+    this.selectInteraction_ = new SelectInteraction({
+      filter: (feature) => {
+        const hasId = feature.getId() !== undefined;
+        const hasTitle = feature.get('title') !== undefined;
+        const hasDescription = feature.get('description') !== undefined;
+        return hasId && hasTitle && hasDescription;
+      },
+      style: () => null
+    });
+    this.map_.addInteraction(this.selectInteraction_);
+
+    this.selectInteraction_.on('select', (event) => {
+      const selected = event.selected[0];
+      if (selected) {
+        this.selectObject(selected.getId());
+      }
+    });
   }
 
   /**
@@ -157,6 +175,9 @@ class Map {
     const overlayCloser = document.createElement('div');
     overlayCloser.className = 'ol-popup-closer';
     overlayCloser.addEventListener('click', (event) => {
+      // clear the selected features
+      this.selectInteraction_.getFeatures().clear();
+      // hide the overlay
       this.overlay_.setPosition(undefined);
       return false;
     });
@@ -290,6 +311,7 @@ class Map {
       ).getCoordinates();
       const properties = feature.getProperties();
       const content = this.overlay_.getElement().querySelector('.ol-popup-content');
+      content.innerHTML = '';
       content.innerHTML += `<div><b>${properties.title}</b></div>`;
       content.innerHTML += `<p>${properties.description}</p>`;
       this.overlay_.setPosition(coordinates);
