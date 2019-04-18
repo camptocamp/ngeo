@@ -65,7 +65,7 @@ class Map {
 
     if (options.center !== undefined) {
       this.view_.setCenter(options.center);
-    } else {
+    } else if (constants.extent !== undefined) {
       this.view_.setCenter(getCenter(constants.extent));
     }
 
