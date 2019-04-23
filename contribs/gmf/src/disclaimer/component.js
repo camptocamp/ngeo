@@ -8,6 +8,7 @@ import ngeoMapLayerHelper from 'ngeo/map/LayerHelper.js';
 import {MessageType} from 'ngeo/message/Message.js';
 import ngeoMessageDisclaimer from 'ngeo/message/Disclaimer.js';
 import ngeoMiscEventHelper from 'ngeo/misc/EventHelper.js';
+import {CollectionEvent} from 'ol/Collection.js';
 
 import 'angular-sanitize';
 
@@ -155,26 +156,30 @@ Controller.prototype.$onInit = function() {
 };
 
 /**
- * @param {import("ol/Collection.js").CollectionEvent} evt Event.
+ * @param {Event|import('ol/events/Event.js').default} evt Event.
  * @private
  */
 Controller.prototype.handleLayersAdd_ = function(evt) {
-  this.timeout_(() => {
-    const layer = evt.element;
-    console.assert(layer instanceof olLayerBase);
-    this.registerLayer_(layer);
-  });
+  if (evt instanceof CollectionEvent) {
+    this.timeout_(() => {
+      const layer = evt.element;
+      console.assert(layer instanceof olLayerBase);
+      this.registerLayer_(layer);
+    });
+  }
 };
 
 
 /**
- * @param {import("ol/Collection.js").CollectionEvent} evt Event.
+ * @param {Event|import('ol/events/Event.js').default} evt Event.
  * @private
  */
 Controller.prototype.handleLayersRemove_ = function(evt) {
-  const layer = evt.element;
-  console.assert(layer instanceof olLayerBase);
-  this.unregisterLayer_(layer);
+  if (evt instanceof CollectionEvent) {
+    const layer = evt.element;
+    console.assert(layer instanceof olLayerBase);
+    this.unregisterLayer_(layer);
+  }
 };
 
 

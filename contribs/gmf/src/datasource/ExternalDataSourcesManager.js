@@ -19,6 +19,7 @@ import * as olEvents from 'ol/events.js';
 import olCollection from 'ol/Collection.js';
 import olFormatGPX from 'ol/format/GPX.js';
 import olFormatKML from 'ol/format/KML.js';
+import {CollectionEvent} from 'ol/Collection.js';
 
 
 /**
@@ -580,16 +581,18 @@ export class ExternalDatSourcesManager {
    * Called when a data source is removed from the collection of ngeo data
    * sources. If it's an external data source, remove it from its WMS Group
    *
-   * @param {import("ol/Collection.js").CollectionEvent} evt Collection event.
+   * @param {Event|import('ol/events/Event.js').default} evt Collection event.
    * @private
    */
   handleDataSourcesRemove_(evt) {
-    const dataSource = evt.element;
-    if (this.extDataSources_[dataSource.id] === dataSource) {
-      if (dataSource instanceof ngeoDatasourceFile) {
-        this.removeFileDataSource_(dataSource);
-      } else if (dataSource instanceof ngeoDatasourceOGC) {
-        this.removeOGCDataSource_(dataSource);
+    if (evt instanceof CollectionEvent) {
+      const dataSource = evt.element;
+      if (this.extDataSources_[dataSource.id] === dataSource) {
+        if (dataSource instanceof ngeoDatasourceFile) {
+          this.removeFileDataSource_(dataSource);
+        } else if (dataSource instanceof ngeoDatasourceOGC) {
+          this.removeOGCDataSource_(dataSource);
+        }
       }
     }
   }

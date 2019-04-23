@@ -299,7 +299,7 @@ Controller.prototype.setPosition_ = function() {
 
 
 /**
- * @param {import("ol/events/Event.js").default} event Event.
+ * @param {Event|import("ol/events/Event.js").default} event Event.
  * @private
  */
 Controller.prototype.handleViewChange_ = function(event) {

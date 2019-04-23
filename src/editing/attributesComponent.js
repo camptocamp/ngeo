@@ -3,7 +3,7 @@ import {getUid as olUtilGetUid} from 'ol/util.js';
 import * as olEvents from 'ol/events.js';
 import ngeoMiscEventHelper from 'ngeo/misc/EventHelper.js';
 import ngeoMiscDatetimepickerComponent from 'ngeo/misc/datetimepickerComponent.js';
-
+import {ObjectEvent} from 'ol/Object.js';
 
 /**
  * @type {!angular.IModule}
@@ -180,15 +180,17 @@ Controller.prototype.$onDestroy = function() {
 
 
 /**
- * @param {import("ol/Object.js").ObjectEvent} evt Event.
+ * @param {Event|import('ol/events/Event.js').default} evt Event.
  * @private
  */
 Controller.prototype.handleFeaturePropertyChange_ = function(evt) {
-  if (this.updating_) {
-    return;
+  if (evt instanceof ObjectEvent) {
+    if (this.updating_) {
+      return;
+    }
+    this.properties[evt.key] = evt.target.get(evt.key);
+    this.scope_.$apply();
   }
-  this.properties[evt.key] = evt.target.get(evt.key);
-  this.scope_.$apply();
 };
 
 

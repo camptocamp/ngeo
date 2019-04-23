@@ -172,7 +172,7 @@ export default class extends olOverlay {
 
   /**
    * @param {string} action The action name that was clicked.
-   * @param {Event} evt Event.
+   * @param {Event|import("ol/events/Event.js").default} evt Event.
    * @private
    */
   handleActionClick_(action, evt) {
@@ -190,7 +190,7 @@ export default class extends olOverlay {
 
   /**
    * Handles clicks out of the menu. If the menu is visible, close it.
-   * @param {Event} evt Event.
+   * @param {Event|import("ol/events/Event.js").default} evt Event.
    * @private
    */
   handleClickOut_(evt) {
@@ -206,15 +206,16 @@ export default class extends olOverlay {
    * map. This prevents behaviours such as vertex still appearing while mouse
    * hovering edges of features bound to an active modify control while the
    * cursor is on top of the menu.
-   * @param {import("ol/MapBrowserEvent.js").default} evt Event.
+   * @param {Event|import("ol/events/Event.js").default} evt Event.
    * @private
    */
   handleMapPointerMove_(evt) {
-    const target = evt.originalEvent.target;
+    const myEvent = /** @type{import("ol/MapBrowserEvent.js").default} */(evt);
+    const target = myEvent.originalEvent.target;
     const element = this.getElement();
     if (target instanceof Element && element instanceof Element && element.contains(target)) {
-      evt.coordinate = [Infinity, Infinity];
-      evt.pixel = [Infinity, Infinity];
+      myEvent.coordinate = [Infinity, Infinity];
+      myEvent.pixel = [Infinity, Infinity];
     }
   }
 }

@@ -17,7 +17,7 @@ import olLayerTile from 'ol/layer/Tile.js';
 import olLayerGroup from 'ol/layer/Group.js';
 import olMap from 'ol/Map.js';
 import * as olMath from 'ol/math.js';
-
+import MapBrowserPointerEvent from 'ol/MapBrowserPointerEvent.js';
 import 'bootstrap/js/src/dropdown.js';
 
 
@@ -885,44 +885,48 @@ class Controller {
    * Calculate the angle and the sense of rotation between two lines. One from the
    * center of the map and the point of the last call to this function and one
    * from the same center and the point of the current call.
-   * @param {import("ol/MapBrowserPointerEvent.js").default} e An ol map browser pointer event.
+   * @param {event|import("ol/events/Event.js").default} e An ol map browser pointer event.
    * @private
    */
   onPointerDrag_(e) {
-    const originalEvent = /** @type {KeyboardEvent} */(e.originalEvent);
-    const mapCenter = this.map.getView().getCenter();
-    if (this.active && originalEvent.altKey && originalEvent.shiftKey && mapCenter) {
-      const center = this.map.getPixelFromCoordinate(mapCenter);
-      const pixel = e.pixel;
-      // Reset previous position between two different sessions of drags events.
-      if (this.rotationTimeoutPromise_ === null) {
-        this.onDragPreviousMousePosition_ = null;
-      } else {
-        // Cancel the timeout to keep this session of drags event
-        this.$timeout_.cancel(this.rotationTimeoutPromise_);
-        // Calculate angle and sense of rotation.
-        const p0x = this.onDragPreviousMousePosition_[0] - center[0];
-        const p0y = this.onDragPreviousMousePosition_[1] - center[1];
-        const p1x = pixel[0] - center[0];
-        const p1y = pixel[1] - center[1];
-        const centerToP0 = Math.sqrt(Math.pow(p0x, 2) + Math.pow(p0y, 2));
-        const centerToP1 = Math.sqrt(Math.pow(p1x, 2) + Math.pow(p1y, 2));
-        const sense = (p0x * p1y - p0y * p1x) > 0 ? 1 : -1;
-        let angle = (p0x * p1x + p0y * p1y) / (centerToP0 * centerToP1);
-        angle = angle <= 1 ? sense * Math.acos(angle) : 0;
-        const boost = centerToP1 / 200;
-        const increment = Math.round(olMath.toDegrees(angle) * boost);
+    if (e instanceof MapBrowserPointerEvent) {
+      const originalEvent = e.originalEvent;
+      if (originalEvent instanceof KeyboardEvent) {
+        const mapCenter = this.map.getView().getCenter();
+        if (this.active && originalEvent.altKey && originalEvent.shiftKey && mapCenter) {
+          const center = this.map.getPixelFromCoordinate(mapCenter);
+          const pixel = e.pixel;
+          // Reset previous position between two different sessions of drags events.
+          if (this.rotationTimeoutPromise_ === null) {
+            this.onDragPreviousMousePosition_ = null;
+          } else {
+            // Cancel the timeout to keep this session of drags event
+            this.$timeout_.cancel(this.rotationTimeoutPromise_);
+            // Calculate angle and sense of rotation.
+            const p0x = this.onDragPreviousMousePosition_[0] - center[0];
+            const p0y = this.onDragPreviousMousePosition_[1] - center[1];
+            const p1x = pixel[0] - center[0];
+            const p1y = pixel[1] - center[1];
+            const centerToP0 = Math.sqrt(Math.pow(p0x, 2) + Math.pow(p0y, 2));
+            const centerToP1 = Math.sqrt(Math.pow(p1x, 2) + Math.pow(p1y, 2));
+            const sense = (p0x * p1y - p0y * p1x) > 0 ? 1 : -1;
+            let angle = (p0x * p1x + p0y * p1y) / (centerToP0 * centerToP1);
+            angle = angle <= 1 ? sense * Math.acos(angle) : 0;
+            const boost = centerToP1 / 200;
+            const increment = Math.round(olMath.toDegrees(angle) * boost);
 
-        // Set rotation then update the view.
-        this.setRotation(this.rotation + increment);
-        this.$scope_.$digest();
+            // Set rotation then update the view.
+            this.setRotation(this.rotation + increment);
+            this.$scope_.$digest();
+          }
+          // Prepare the removal of this session of drags events
+          this.rotationTimeoutPromise_ = this.$timeout_(() => {
+            this.rotationTimeoutPromise_ = null;
+          }, 500);
+          // Keep the current position for the next calculation.
+          this.onDragPreviousMousePosition_ = pixel;
+        }
       }
-      // Prepare the removal of this session of drags events
-      this.rotationTimeoutPromise_ = this.$timeout_(() => {
-        this.rotationTimeoutPromise_ = null;
-      }, 500);
-      // Keep the current position for the next calculation.
-      this.onDragPreviousMousePosition_ = pixel;
     }
   }
 

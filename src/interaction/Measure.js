@@ -256,7 +256,7 @@ class Measure extends olInteractionInteraction {
 
   /**
    * Handle draw interaction `drawstart` event.
-   * @param { import('ol/events/Event.js').default|import('ngeo/interaction/common.js').DrawEvent} evt Event.
+   * @param {Event|import('ol/events/Event.js').default|import('ngeo/interaction/common.js').DrawEvent} evt Event.
    * @private
    */
   onDrawStart_(evt) {
@@ -285,7 +285,7 @@ class Measure extends olInteractionInteraction {
 
   /**
    * Handle draw interaction `drawend` event.
-   * @param {import('ol/events/Event.js').default|import('ngeo/interaction/common.js').DrawEvent} evt Event.
+   * @param {Event|import('ol/events/Event.js').default|import('ngeo/interaction/common.js').DrawEvent} evt Event.
    * @private
    */
   onDrawEnd_(evt) {

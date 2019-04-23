@@ -4,6 +4,7 @@ import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources.js';
 import ngeoFormatWFSAttribute from 'ngeo/format/WFSAttribute.js';
 import ngeoQueryQuerent from 'ngeo/query/Querent.js';
 import * as olEvents from 'ol/events.js';
+import {CollectionEvent} from 'ol/Collection.js';
 
 
 /**
@@ -124,24 +125,28 @@ export class DatasourceHelper {
   /**
    * Called when a new data source is added to the ngeo collection. Add it
    * to the cache.
-   * @param {import("ol/Collection.js").CollectionEvent} evt Event
+   * @param {Event|import("ol/events/Event.js").default} evt Event
    * @private
    */
   handleDataSourcesAdd_(evt) {
-    const dataSource = evt.element;
-    console.assert(dataSource instanceof ngeoDatasourceDataSource);
-    this.cache_[dataSource.id] = dataSource;
+    if (evt instanceof CollectionEvent) {
+      const dataSource = evt.element;
+      console.assert(dataSource instanceof ngeoDatasourceDataSource);
+      this.cache_[dataSource.id] = dataSource;
+    }
   }
 
   /**
    * Called when a data source is removed from the ngeo collection. Remove it
    * from the cache.
-   * @param {import("ol/Collection.js").CollectionEvent} evt Event
+   * @param {Event|import("ol/events/Event.js").default} evt Event
    * @private
    */
   handleDataSourcesRemove_(evt) {
-    const dataSource = evt.element;
-    delete this.cache_[dataSource.id];
+    if (evt instanceof CollectionEvent) {
+      const dataSource = evt.element;
+      delete this.cache_[dataSource.id];
+    }
   }
 
 }

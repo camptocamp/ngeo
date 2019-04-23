@@ -1,7 +1,7 @@
 import angular from 'angular';
 import gmfObjecteditingQuery from 'gmf/objectediting/Query.js';
 import * as olEvents from 'ol/events.js';
-
+import MapBrowserEvent from 'ol/MapBrowserEvent.js';
 
 /**
  * @type {!angular.IModule}
@@ -130,19 +130,21 @@ Controller.prototype.handleActiveChange_ = function(active) {
 
 
 /**
- * @param {import("ol/MapBrowserEvent.js").default} evt Event.
+ * @param {Event|import('ol/events/Event.js').default} evt Event.
  * @private
  */
 Controller.prototype.handleMapClick_ = function(evt) {
-  this.gmfObjectEditingQuery_.getFeatureInfo(
-    this.layerInfo,
-    evt.coordinate,
-    this.map
-  ).then((feature) => {
-    if (feature) {
-      this.features.push(feature);
-    }
-  });
+  if (evt instanceof MapBrowserEvent) {
+    this.gmfObjectEditingQuery_.getFeatureInfo(
+      this.layerInfo,
+      evt.coordinate,
+      this.map
+    ).then((feature) => {
+      if (feature) {
+        this.features.push(feature);
+      }
+    });
+  }
 };
 
 module.controller('gmfObjecteditinggetwmsfeatureController', Controller);

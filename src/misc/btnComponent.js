@@ -49,7 +49,7 @@ function buttonGroupComponent($parse) {
      * @param {!angular.IScope} scope Scope.
      * @param {!JQuery=} element Element.
      * @param {!angular.IAttributes=} attrs Attributes.
-     * @param {!BtnGroupController=} controller Controller.
+     * @param {!angular.IController=} controller Controller.
      */
     link: (scope, element, attrs, controller) => {
       const setActive = $parse(attrs['ngeoBtnGroupActive']).assign;
@@ -72,53 +72,53 @@ module.directive('ngeoBtnGroup', buttonGroupComponent);
 
 
 /**
- * @param {!angular.IScope} $scope Scope.
- * @constructor
- * @ngInject
- * @ngdoc controller
- * @ngname ngeoBtnGroupController
  * @private
  * @hidden
+ * @type {angular.IController}
  */
-function BtnGroupController($scope) {
+class BtnGroupController {
   /**
-   * @type {!Array.<!angular.ICompiledExpression>}
-   * @private
+   * @param {!angular.IScope} $scope Scope.
+   * @ngInject
+   * @hidden
    */
-  this.buttons_ = [];
+  constructor($scope) {
+    /**
+     * @type {!Array.<!angular.ICompiledExpression>}
+     * @private
+     */
+    this.buttons_ = [];
+
+    /**
+     * @type {!angular.IScope}
+     * @private
+     */
+    this.scope_ = $scope;
+  }
 
   /**
-   * @type {!angular.IScope}
-   * @private
+   * @param {number} index Index of the button in buttons array.
    */
-  this.scope_ = $scope;
+  activate(index) {
+    this.buttons_.forEach((expressionFn, i) => {
+      if (i != index) {
+        expressionFn.assign(this.scope_, false);
+      }
+    });
+  }
+
+  /**
+   * @param {angular.ICompiledExpression} expressionFn Expression function.
+   * @return {number} Index of the pushed setter.
+   */
+  addButton(expressionFn) {
+    this.buttons_.push(expressionFn);
+    return this.buttons_.length - 1;
+  }
 }
 
 
-/**
- * @param {number} index Index of the button in buttons array.
- */
-BtnGroupController.prototype.activate = function(index) {
-  this.buttons_.forEach((expressionFn, i) => {
-    if (i != index) {
-      expressionFn.assign(this.scope_, false);
-    }
-  });
-};
-
-
-/**
- * @param {angular.ICompiledExpression} expressionFn Expression function.
- * @return {number} Index of the pushed setter.
- */
-BtnGroupController.prototype.addButton = function(expressionFn) {
-  this.buttons_.push(expressionFn);
-  return this.buttons_.length - 1;
-};
-
-
-module.controller('ngeoBtnGroupController',
-  BtnGroupController);
+module.controller('ngeoBtnGroupController', BtnGroupController);
 
 
 /**
@@ -145,9 +145,9 @@ function buttonComponent($parse) {
     restrict: 'A',
     /**
      * @param {!angular.IScope} scope Scope.
-     * @param {!JQuery=} element Element.
-     * @param {!angular.IAttributes=} attrs Attributes.
-     * @param {!Array.<!Object>=} ctrls Controller.
+     * @param {!JQuery} element Element.
+     * @param {!angular.IAttributes} attrs Attributes.
+     * @param {!angular.IController} ctrls Controller.
      */
     link: (scope, element, attrs, ctrls) => {
       const buttonsCtrl = ctrls[0];

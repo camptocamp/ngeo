@@ -66,9 +66,7 @@ export class DatasourceHelper {
    * @return {import('ngeo/datasource/DataSource.js').DataSources} Data sources collection.
    */
   get collection() {
-    return /** @type {import('ngeo/datasource/DataSource.js').DataSources} */ (
-      this.ngeoDataSourcesHelper_.collection
-    );
+    return this.ngeoDataSourcesHelper_.collection;
   }
 
   /**

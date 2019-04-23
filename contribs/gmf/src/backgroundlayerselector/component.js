@@ -152,10 +152,11 @@ function Controller($scope, ngeoBackgroundLayerMgr, gmfThemes) {
 
   this.listenerKeys_.push(olEvents.listen(this.backgroundLayerMgr_, 'change',
     /**
-     * @param {!import('ngeo/map/BackgroundLayerMgr.js').BackgroundEvent} event Event.
+     * @param {Event|import('ol/events/Event.js').default} event Event.
      */
     (event) => {
-      this.bgLayer = event.detail.current;
+      this.bgLayer = /** @type{import('ngeo/map/BackgroundLayerMgr.js').BackgroundEvent} */
+          (event).detail.current;
     }));
 
   $scope.$on('$destroy', this.handleDestroy_.bind(this));

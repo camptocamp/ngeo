@@ -5,7 +5,7 @@ import {TRUE} from 'ol/functions.js';
 import olGeomCircle from 'ol/geom/Circle.js';
 import {fromCircle, makeRegular} from 'ol/geom/Polygon.js';
 import olInteractionInteraction from 'ol/interaction/Interaction.js';
-
+import MapBrowserEvent from 'ol/MapBrowserEvent.js';
 
 /**
  * DrawRegularPolygonFromClick Interaction.
@@ -119,19 +119,21 @@ export default class extends olInteractionInteraction {
   /**
    * Called the the map is clicked. Create a regular polygon at the clicked
    * location using the configuration
-   * @param {import("ol/MapBrowserEvent.js").default} evt Map browser event.
+   * @param {Event|import('ol/events/Event.js').default} evt Map browser event.
    * @private
    */
   handleMapClick_(evt) {
-    const center = evt.coordinate;
-    const geometry = fromCircle(
-      new olGeomCircle(center), this.sides_
-    );
+    if (evt instanceof MapBrowserEvent) {
+      const center = evt.coordinate;
+      const geometry = fromCircle(
+        new olGeomCircle(center), this.sides_
+      );
 
-    makeRegular(geometry, center, this.radius_, this.angle_);
+      makeRegular(geometry, center, this.radius_, this.angle_);
 
-    /** @type {import('ngeo/interaction/common.js').DrawEvent} */
-    const event = new ngeoCustomEvent('drawend', {feature: new olFeature(geometry)});
-    this.dispatchEvent(event);
+      /** @type {import('ngeo/interaction/common.js').DrawEvent} */
+      const event = new ngeoCustomEvent('drawend', {feature: new olFeature(geometry)});
+      this.dispatchEvent(event);
+    }
   }
 }

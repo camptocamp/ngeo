@@ -61,7 +61,7 @@ import {select as d3select} from 'd3';
  * @property {PoiExtractor} [poiExtractor] Extractor for parsing POI data.
  * @property {boolean} [light] Show a simplified profile when true.
  * @property {boolean} [lightXAxis] Show a simplified x axis with only both end ticks.
- * @property {function(function(), function(), number, number)} [scaleModifier] Allows to modify the raw x
+ * @property {function(function, function, number, number): void} [scaleModifier] Allows to modify the raw x
  * and y scales. Notably, it is possible to modify the y domain according to XY ratio rules,
  * add padding or enforce y lower bound.
  * @property {function(Object)} [hoverCallback] A callback called from the profile when the mouse moves over
@@ -103,7 +103,7 @@ const module = angular.module('ngeoProfile', [
  * @htmlAttribute {?Array} ngeo-profile-pois The data for POIs.
  * @htmlAttribute {*} ngeo-profile-highlight Any property on the scope which
  *    evaluated value may correspond to distance from origin.
- * @param {import("ngeo/misc/debounce.js").miscDebounce<function(import('ol/events/Event.js').default): void>} ngeoDebounce
+ * @param {import("ngeo/misc/debounce.js").miscDebounce<function((Event|import('ol/events/Event.js').default)): void>} ngeoDebounce
  *    ngeo Debounce factory.
  * @return {angular.IDirective} Directive Definition Object.
  * @ngInject
@@ -187,7 +187,10 @@ function profileElevationComponent(ngeoDebounce) {
 
       olEvents.listen(window, 'resize', ngeoDebounce(refreshData, 50, true));
 
-      function refreshData() {
+      /**
+       * @param {Event|import("ol/events/Event.js").default=} evt Event
+       */
+      function refreshData(evt) {
         if (profile !== undefined) {
           selection.datum(elevationData).call(profile);
           if (elevationData !== undefined) {

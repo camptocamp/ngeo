@@ -7,6 +7,7 @@ import * as olEvents from 'ol/events.js';
 import * as olProj from 'ol/proj.js';
 import olFeature from 'ol/Feature.js';
 import olGeomPoint from 'ol/geom/Point.js';
+import MapBrowserEvent from 'ol/MapBrowserEvent.js';
 
 
 /**
@@ -299,12 +300,14 @@ class GoogleStreetviewController {
   /**
    * Called when the map is clicked while this component is active. Update the
    * location accordingly.
-   * @param {import("ol/MapBrowserEvent.js").default} evt The map browser event being fired.
+   * @param {Event|import('ol/events/Event.js').default} evt The map browser event being fired.
    * @private
    */
   handleMapClick_(evt) {
-    this.location = evt.coordinate;
-    this.scope_.$apply();
+    if (evt instanceof MapBrowserEvent) {
+      this.location = evt.coordinate;
+      this.scope_.$apply();
+    }
   }
 
   /**

@@ -31,6 +31,7 @@ import olGeomPoint from 'ol/geom/Point.js';
 import olStyleIcon from 'ol/style/Icon.js';
 import olStyleStyle from 'ol/style/Style.js';
 import olLayerGroup from 'ol/layer/Group.js';
+import {CollectionEvent} from 'ol/Collection.js';
 
 
 /**
@@ -1222,24 +1223,28 @@ PermalinkService.prototype.initLayers_ = function() {
 
 
 /**
- * @param {import("ol/Collection.js").CollectionEvent} event Collection event.
+ * @param {Event|import('ol/events/Event.js').default} event Collection event.
  * @private
  */
 PermalinkService.prototype.handleNgeoFeaturesAdd_ = function(event) {
-  const feature = event.element;
-  console.assert(feature instanceof olFeature);
-  this.addNgeoFeature_(feature);
+  if (event instanceof CollectionEvent) {
+    const feature = event.element;
+    console.assert(feature instanceof olFeature);
+    this.addNgeoFeature_(feature);
+  }
 };
 
 
 /**
- * @param {import("ol/Collection.js").CollectionEvent} event Collection event.
+ * @param {Event|import('ol/events/Event.js').default} event Collection event.
  * @private
  */
 PermalinkService.prototype.handleNgeoFeaturesRemove_ = function(event) {
-  const feature = event.element;
-  console.assert(feature instanceof olFeature);
-  this.removeNgeoFeature_(feature);
+  if (event instanceof CollectionEvent) {
+    const feature = event.element;
+    console.assert(feature instanceof olFeature);
+    this.removeNgeoFeature_(feature);
+  }
 };
 
 
@@ -1519,14 +1524,16 @@ PermalinkService.prototype.initExternalDataSources_ = function() {
 
 
 /**
- * @param {!import("ol/Collection.js").CollectionEvent} evt Collection event.
+ * @param {Event|import('ol/events/Event.js').default} evt Collection event.
  * @private
  */
 PermalinkService.prototype.handleExternalDSGroupCollectionAdd_ = function(evt) {
-  const group = evt.element;
-  console.assert(group instanceof ngeoDatasourceGroup);
-  this.registerExternalDSGroup_(group);
-  this.setExternalDataSourcesState_();
+  if (evt instanceof CollectionEvent) {
+    const group = evt.element;
+    console.assert(group instanceof ngeoDatasourceGroup);
+    this.registerExternalDSGroup_(group);
+    this.setExternalDataSourcesState_();
+  }
 };
 
 
@@ -1572,14 +1579,16 @@ PermalinkService.prototype.containsLayerName = function(layer, name) {
 
 
 /**
- * @param {!import("ol/Collection.js").CollectionEvent} evt Collection event.
+ * @param {Event|import('ol/events/Event.js').default} evt Collection event.
  * @private
  */
 PermalinkService.prototype.handleExternalDSGroupCollectionRemove_ = function(evt) {
-  const group = evt.element;
-  console.assert(group instanceof ngeoDatasourceGroup);
-  this.unregisterExternalDSGroup_(group);
-  this.setExternalDataSourcesState_();
+  if (evt instanceof CollectionEvent) {
+    const group = evt.element;
+    console.assert(group instanceof ngeoDatasourceGroup);
+    this.unregisterExternalDSGroup_(group);
+    this.setExternalDataSourcesState_();
+  }
 };
 
 

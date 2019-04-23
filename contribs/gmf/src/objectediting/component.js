@@ -29,6 +29,7 @@ import olStyleCircle from 'ol/style/Circle.js';
 import olStyleFill from 'ol/style/Fill.js';
 import olStyleStroke from 'ol/style/Stroke.js';
 import olStyleStyle from 'ol/style/Style.js';
+import {CollectionEvent} from 'ol/Collection.js';
 
 // @ts-ignore: not supported import
 import {OL3Parser} from 'jsts/io';
@@ -784,12 +785,10 @@ Controller.prototype.resetGeometryChanges_ = function() {
  * geometries intersects with one an other first. Those that does are merged
  * before being pushed to the changes.
  *
- * @param {import("ol/interaction/Modify.js").ModifyEvent} evt Event.
+ * @param {Event|import('ol/events/Event.js').default} evt Event.
  * @private
  */
-Controller.prototype.handleModifyInteractionModifyEnd_ = function(
-  evt
-) {
+Controller.prototype.handleModifyInteractionModifyEnd_ = function(evt) {
   let geometry = this.feature.getGeometry();
 
   if (geometry.getType() === 'MultiPolygon') {
@@ -1014,40 +1013,41 @@ Controller.prototype.handleWindowBeforeUnload_ = function(e) {
  * Depending on the current behaviour, use the added sketch feature to process
  * the existing geometry.
  *
- * @param {import("ol/Collection.js").CollectionEvent} evt Event.
+ * @param {Event|import('ol/events/Event.js').default} evt Event.
  * @private
  */
 Controller.prototype.handleSketchFeaturesAdd_ = function(evt) {
-  const sketchFeature = /** @type {import("ol/Feature.js").default} */ (evt.element);
-  const sketchGeom = /** @type {import("ol/geom/Geometry.js").default} */ (
-    sketchFeature.getGeometry());
+  if (evt instanceof CollectionEvent) {
+    const sketchFeature = evt.element;
+    const sketchGeom = sketchFeature.getGeometry();
 
-  const geom = this.feature.getGeometry();
+    const geom = this.feature.getGeometry();
 
-  if (geom) {
-    const jstsGeom = this.jstsOL3Parser_.read(geom);
-    const jstsSketchGeom = this.jstsOL3Parser_.read(sketchGeom);
-    let jstsProcessedGeom;
+    if (geom) {
+      const jstsGeom = this.jstsOL3Parser_.read(geom);
+      const jstsSketchGeom = this.jstsOL3Parser_.read(sketchGeom);
+      let jstsProcessedGeom;
 
-    if (this.process === ObjecteditingProcessType.ADD) {
-      jstsProcessedGeom = jstsGeom.union(jstsSketchGeom);
-    } else {
-      if (jstsGeom.intersects(jstsSketchGeom)) {
-        jstsProcessedGeom = jstsGeom.difference(jstsSketchGeom);
+      if (this.process === ObjecteditingProcessType.ADD) {
+        jstsProcessedGeom = jstsGeom.union(jstsSketchGeom);
+      } else {
+        if (jstsGeom.intersects(jstsSketchGeom)) {
+          jstsProcessedGeom = jstsGeom.difference(jstsSketchGeom);
+        }
       }
+
+      if (jstsProcessedGeom) {
+        const processedGeom = this.jstsOL3Parser_.write(jstsProcessedGeom);
+        const multiGeom = toMulti(processedGeom);
+        this.feature.setGeometry(multiGeom.clone());
+      }
+
+    } else if (this.process === ObjecteditingProcessType.ADD) {
+      this.feature.setGeometry(toMulti(sketchGeom.clone()));
     }
 
-    if (jstsProcessedGeom) {
-      const processedGeom = this.jstsOL3Parser_.write(jstsProcessedGeom);
-      const multiGeom = toMulti(processedGeom);
-      this.feature.setGeometry(multiGeom.clone());
-    }
-
-  } else if (this.process === ObjecteditingProcessType.ADD) {
-    this.feature.setGeometry(toMulti(sketchGeom.clone()));
+    this.sketchFeatures.clear();
   }
-
-  this.sketchFeatures.clear();
 };
 
 

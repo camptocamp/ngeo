@@ -2,6 +2,7 @@
 
 import angular from 'angular';
 import * as olEvents from 'ol/events.js';
+import {CollectionEvent} from 'ol/Collection.js';
 
 /**
  * @constructor
@@ -93,22 +94,26 @@ FeatureOverlay.prototype.setStyle = function(style) {
 
 
 /**
- * @param {import("ol/Collection.js").CollectionEvent} evt Feature collection event.
+ * @param {Event|import('ol/events/Event.js').default} evt Feature collection event.
  * @private
  */
 FeatureOverlay.prototype.handleFeatureAdd_ = function(evt) {
-  const feature = /** @type {import("ol/Feature.js").default} */ (evt.element);
-  this.addFeature(feature);
+  if (evt instanceof CollectionEvent) {
+    const feature = /** @type {import("ol/Feature.js").default} */ (evt.element);
+    this.addFeature(feature);
+  }
 };
 
 
 /**
- * @param {import("ol/Collection.js").CollectionEvent} evt Feature collection event.
+ * @param {Event|import('ol/events/Event.js').default} evt Feature collection event.
  * @private
  */
 FeatureOverlay.prototype.handleFeatureRemove_ = function(evt) {
-  const feature = /** @type {import("ol/Feature.js").default} */ (evt.element);
-  this.removeFeature(feature);
+  if (evt instanceof CollectionEvent) {
+    const feature = /** @type {import("ol/Feature.js").default} */ (evt.element);
+    this.removeFeature(feature);
+  }
 };
 
 
