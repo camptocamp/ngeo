@@ -26,7 +26,7 @@ module.value('gmfPermalinkShareTemplateUrl',
    * @return {string} The template url.
    */
   ($attrs) => {
-    const templateUrl = $attrs['gmfPermalinkShareTemplateUrl'];
+    const templateUrl = $attrs.gmfPermalinkShareTemplateUrl;
     return templateUrl !== undefined ? templateUrl :
       'gmf/permalink/shareComponent';
   });
@@ -117,22 +117,22 @@ class ShareComponentController {
     /**
      * @type {boolean}
      */
-    this.enableEmail;
+    this.enableEmail = false;
 
     /**
      * @type {string}
      */
-    this.shortLink;
+    this.shortLink = '';
 
     /**
      * @type {string}
      */
-    this.email;
+    this.email = '';
 
     /**
      * @type {string}
      */
-    this.message;
+    this.message = '';
 
     /**
      * @type {string}
@@ -140,11 +140,15 @@ class ShareComponentController {
      */
     this.permalink_ = this.ngeoLocation_.getUriString();
 
+    const path = ngeoLocation.getPath();
+    if (!path) {
+      throw new Error('Missing path');
+    }
     /**
      * @type {boolean}
      */
     this.showLengthWarning = this.permalink_.length > URL_MAX_LEN ||
-      ngeoLocation.getPath().length > URL_PATH_MAX_LEN;
+      path.length > URL_PATH_MAX_LEN;
 
     /**
      * @type {boolean}

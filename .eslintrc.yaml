@@ -12,9 +12,6 @@ rules:
   comma-dangle: 0
   import/no-unresolved: 0
   valid-jsdoc: 0
-  '@openlayers/valid-tsdoc':
-    - error
-    - requireReturn: false
   max-len:
     - error
     - code: 110

@@ -32,19 +32,18 @@ export default class {
    */
   readFromComplexTypeElement_(object) {
 
-    const name = object['name'];
-    const alias = 'alias' in object ? object['alias'] : null;
-    const required = object['minOccurs'] != '0';
+    const name = object.name;
+    const alias = object.alias || null;
+    const required = object.minOccurs != '0';
 
     /** @type {import('ngeo/format/Attribute.js').Attribute} */
     const attribute = {
-      type: null,
       name,
       alias,
       required
     };
 
-    const type = object['type'];
+    const type = object.type;
 
     if (!setGeometryType(attribute, type)) {
       if (type === 'gml:TimeInstantType' || type === 'dateTime') {

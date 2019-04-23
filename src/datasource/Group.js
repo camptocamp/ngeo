@@ -120,8 +120,9 @@ class Group {
       }
     }
 
-    console.assert(typeof state == 'string');
-
+    if (typeof state != 'string') {
+      throw new Error('missing state');
+    }
     return state;
   }
 

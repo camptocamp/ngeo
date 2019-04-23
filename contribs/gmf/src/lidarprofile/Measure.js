@@ -66,6 +66,12 @@ export default class {
    * Measure and display height after two click on the profile.
    */
   measureHeigt() {
+    if (!this.manager_.config) {
+      throw new Error('Missing manager.config');
+    }
+    if (!this.manager_.plot) {
+      throw new Error('Missing manager.plot');
+    }
     const svg = d3select('#gmf-lidarprofile-container svg.lidar-svg');
     const svgCoordinates = d3mouse(svg.node());
     const canvasCoordinates = d3mouse(d3select('#gmf-lidarprofile-container .lidar-canvas').node());
@@ -76,6 +82,9 @@ export default class {
     const sx = this.manager_.plot.updateScaleX;
     const sy = this.manager_.plot.updateScaleY;
     const pointSize = 3;
+    if (!this.manager_.config.serverConfig) {
+      throw new Error('Missing manager_.config.serverConfig');
+    }
     const p = this.manager_.utils.getClosestPoint(
       this.manager_.profilePoints,
       canvasCoordinates[0],
@@ -87,7 +96,7 @@ export default class {
 
     if (!this.pStart_.set) {
 
-      if (p !== undefined) {
+      if (p !== null) {
         this.pStart_.distance = p.distance;
         this.pStart_.altitude = p.altitude;
         this.pStart_.cx = sx(p.distance) + margin.left;
@@ -108,7 +117,7 @@ export default class {
         .style('fill', 'red');
 
     } else if (!this.pEnd_.set) {
-      if (p !== undefined) {
+      if (p !== null) {
 
         this.pEnd_.distance = p.distance;
         this.pEnd_.altitude = p.altitude;

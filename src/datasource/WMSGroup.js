@@ -41,10 +41,10 @@ export default class extends ngeoDatasourceOGCGroup {
     // === PRIVATE properties ===
 
     /**
-     * @type {import("ol/layer/Image.js").default}
+     * @type {?import("ol/layer/Image.js").default}
      * @private
      */
-    this.layer_;
+    this.layer_ = null;
 
     /**
      * @type {!import("ngeo/map/LayerHelper.js").LayerHelper}
@@ -105,6 +105,9 @@ export default class extends ngeoDatasourceOGCGroup {
    * @return {import("ol/layer/Image.js").default} layer
    */
   get layer() {
+    if (!this.layer_) {
+      throw new Error('Missing layer');
+    }
     return this.layer_;
   }
 

@@ -95,49 +95,52 @@ function Controller($scope) {
   $scope.$watch(
     () => this.active,
     (newVal) => {
+      if (!this.interaction_) {
+        throw new Error('Missing interaction');
+      }
       this.interaction_.setActive(newVal);
     }
   );
 
   /**
-   * @type {number|undefined}
+   * @type {?number}
    */
-  this.angle;
+  this.angle = null;
 
   /**
-   * @type {import("ol/Collection.js").default.<import("ol/Feature.js").default>}
+   * @type {?import("ol/Collection.js").default.<import("ol/Feature.js").default>}
    */
-  this.features;
+  this.features = null;
 
   /**
-   * @type {import("ol/Map.js").default}
+   * @type {?import("ol/Map.js").default}
    */
-  this.map;
+  this.map = null;
 
   /**
    * @type {number}
    */
-  this.radius;
+  this.radius = -1;
 
   /**
-   * @type {number|undefined}
+   * @type {?number}
    */
-  this.sides;
+  this.sides = null;
 
 
   // == Other properties ==
 
   /**
-   * @type {import("ngeo/interaction/DrawRegularPolygonFromClick.js").default}
+   * @type {?import("ngeo/interaction/DrawRegularPolygonFromClick.js").default}
    * @private
    */
-  this.interaction_;
+  this.interaction_ = null;
 
   /**
-   * @type {import("ol/events.js").EventsKey}
+   * @type {?import("ol/events.js").EventsKey}
    * @private
    */
-  this.interactionListenerKey_;
+  this.interactionListenerKey_ = null;
 
   $scope.$on('$destroy', this.handleDestroy_.bind(this));
 }
@@ -147,12 +150,16 @@ function Controller($scope) {
  * Initialize the directive.
  */
 Controller.prototype.$onInit = function() {
-
-  this.interaction_ = new ngeoInteractionDrawRegularPolygonFromClick({
-    angle: this.angle,
+  const options = {
     radius: this.radius,
-    sides: this.sides
-  });
+  };
+  if (this.angle !== undefined) {
+    options.angle = this.angle;
+  }
+  if (this.sides !== undefined) {
+    options.sides = this.sides;
+  }
+  this.interaction_ = new ngeoInteractionDrawRegularPolygonFromClick(options);
   this.interaction_.setActive(this.active);
 
   this.interactionListenerKey_ = olEvents.listen(
@@ -162,6 +169,9 @@ Controller.prototype.$onInit = function() {
     this
   );
 
+  if (!this.map) {
+    throw new Error('Missing map');
+  }
   this.map.addInteraction(this.interaction_);
 };
 
@@ -173,6 +183,9 @@ Controller.prototype.$onInit = function() {
  * @private
  */
 Controller.prototype.handleDrawEnd_ = function(evt) {
+  if (!this.features) {
+    throw new Error('Missing features');
+  }
   // @ts-ignore: evt should be of type {import('ol/interaction/Draw.js').DrawEvent but he is private
   const feature = new olFeature(evt.feature.getGeometry());
   this.features.push(feature);
@@ -184,6 +197,15 @@ Controller.prototype.handleDrawEnd_ = function(evt) {
  * @private
  */
 Controller.prototype.handleDestroy_ = function() {
+  if (!this.map) {
+    throw new Error('Missing map');
+  }
+  if (!this.interactionListenerKey_) {
+    throw new Error('Missing interactionListenerKey');
+  }
+  if (!this.interaction_) {
+    throw new Error('Missing interaction');
+  }
   olEvents.unlistenByKey(this.interactionListenerKey_);
   this.interaction_.setActive(false);
   this.map.removeInteraction(this.interaction_);

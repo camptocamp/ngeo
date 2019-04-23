@@ -53,7 +53,7 @@ module.value('gmfDisplayquerywindowTemplateUrl',
    * @return {string} Template.
    */
   ($element, $attrs) => {
-    const templateUrl = $attrs['gmfDisplayquerywindowTemplateurl'];
+    const templateUrl = $attrs.gmfDisplayquerywindowTemplateurl;
     return templateUrl !== undefined ? templateUrl :
       'gmf/query/windowComponent';
   });
@@ -147,7 +147,7 @@ export function QueryWindowController(
   /**
    * @type {Element|string}
    */
-  this.draggableContainment;
+  this.draggableContainment = '';
 
   /**
    * @type {boolean}
@@ -247,6 +247,13 @@ export function QueryWindowController(
    */
   this.element_ = $element;
 
+  this.defaultCollapsedFn = () => !this.desktop;
+
+  this.showUnqueriedLayers = false;
+
+  this.featuresStyleFn = null;
+  this.selectedFeatureStyleFn = null;
+
   $scope.$watchCollection(
     () => ngeoQueryResult,
     (newQueryResult, oldQueryResult) => {
@@ -265,17 +272,15 @@ export function QueryWindowController(
 QueryWindowController.prototype.$onInit = function() {
   this.draggableContainment = this.draggableContainment || 'document';
   this.desktop = this.desktop;
-  this.collapsed = this['defaultCollapsedFn'] ?
-    this['defaultCollapsedFn']() === true : !this.desktop;
+  this.collapsed = this.defaultCollapsedFn();
 
-  this.showUnqueriedLayers_ = this['showUnqueriedLayers'] ?
-    this['showUnqueriedLayers'] === true : false;
+  this.showUnqueriedLayers_ = this.showUnqueriedLayers;
 
   this.sourcesFilter = this.showUnqueriedLayers_ ? {} : {'queried': true};
 
   const featuresOverlay = this.ngeoFeatureOverlayMgr_.getFeatureOverlay();
   featuresOverlay.setFeatures(this.features_);
-  const featuresStyle = this['featuresStyleFn']();
+  const featuresStyle = this.featuresStyleFn();
   if (featuresStyle !== undefined) {
     console.assert(featuresStyle instanceof olStyleStyle);
     featuresOverlay.setStyle(featuresStyle);
@@ -283,7 +288,7 @@ QueryWindowController.prototype.$onInit = function() {
 
   const highlightFeaturesOverlay = this.ngeoFeatureOverlayMgr_.getFeatureOverlay();
   highlightFeaturesOverlay.setFeatures(this.highlightFeatures_);
-  let highlightFeatureStyle = this['selectedFeatureStyleFn']();
+  let highlightFeatureStyle = this.selectedFeatureStyleFn();
   if (highlightFeatureStyle !== undefined) {
     console.assert(highlightFeatureStyle instanceof olStyleStyle);
   } else {
@@ -370,7 +375,7 @@ QueryWindowController.prototype.setCurrentResult_ = function(
       }
     }
     if (setHighlight) {
-      this.highlightCurrentFeature_(lastFeature);
+      this.highlightCurrentFeature_(lastFeature || undefined);
     }
   }
   return hasChanged;

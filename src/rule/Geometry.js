@@ -124,7 +124,7 @@ export default class extends ngeoRuleRule {
    * @param {?import("ol/geom/Geometry.js").default} geometry Geometry
    */
   set geometry(geometry) {
-    this.feature_.setGeometry(geometry);
+    this.feature_.setGeometry(geometry || undefined);
   }
 
   // === Other methods ===

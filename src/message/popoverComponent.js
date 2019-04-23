@@ -35,6 +35,9 @@ function messagePopoverComponent() {
     scope: true,
     controller: 'NgeoPopoverController as popoverCtrl',
     link: (scope, elem, attrs, ngeoPopoverCtrl) => {
+      if (!ngeoPopoverCtrl) {
+        throw new Error('Missing ngeoPopoverCtrl');
+      }
 
       ngeoPopoverCtrl.anchorElm.on('inserted.bs.popover', () => {
         ngeoPopoverCtrl.bodyElm.show();
@@ -75,6 +78,9 @@ function messagePopoverAnchorComponent() {
     restrict: 'A',
     require: '^^ngeoPopover',
     link: (scope, elem, attrs, ngeoPopoverCtrl) => {
+      if (!ngeoPopoverCtrl) {
+        throw new Error('Missing ngeoPopoverCtrl');
+      }
       ngeoPopoverCtrl.anchorElm = elem;
     }
   };
@@ -91,6 +97,9 @@ function messagePopoverContentComponent() {
     restrict: 'A',
     require: '^^ngeoPopover',
     link: (scope, elem, attrs, ngeoPopoverCtrl) => {
+      if (!ngeoPopoverCtrl) {
+        throw new Error('Missing ngeoPopoverCtrl');
+      }
       ngeoPopoverCtrl.bodyElm = elem;
       elem.hide();
     }
@@ -115,16 +124,22 @@ function PopoverController($scope) {
   this.shown = false;
 
   /**
-   * @type {JQuery|undefined}
+   * @type {?JQuery}
    */
-  this.anchorElm = undefined;
+  this.anchorElm = null;
 
   /**
-   * @type {JQuery|undefined}
+   * @type {?JQuery}
    */
-  this.bodyElm = undefined;
+  this.bodyElm = null;
 
   const clickHandler = (clickEvent) => {
+    if (!this.anchorElm) {
+      throw new Error('Missing anchorElm');
+    }
+    if (!this.bodyElm) {
+      throw new Error('Missing bodyElm');
+    }
     if (this.anchorElm[0] !== clickEvent.target &&
       this.bodyElm.parent()[0] !== clickEvent.target &&
       this.bodyElm.parent().find(clickEvent.target).length === 0 && this.shown) {
@@ -144,6 +159,9 @@ function PopoverController($scope) {
  * Dissmiss popover function
  */
 PopoverController.prototype.dismissPopover = function() {
+  if (!this.anchorElm) {
+    throw new Error('Missing anchorElm');
+  }
   this.shown = false;
   this.anchorElm.popover('hide');
 };

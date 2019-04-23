@@ -122,7 +122,7 @@ LayertreeController.prototype.getLayer = function(node) {
  * @param {import("ol/layer/Layer.js").default} layer Layer.
  */
 LayertreeController.prototype.onButtonClick = function(node, layer) {
-  const layerType = node['layerType'];
+  const layerType = node.layerType;
   if (!(layerType in this.promises_)) {
     this.promises_[layerType] = this.http_.get('data/metadata.html').then(
       (resp) => {
@@ -133,7 +133,7 @@ LayertreeController.prototype.onButtonClick = function(node, layer) {
   }
   const infoPopup = this.infoPopup_;
   this.promises_[layerType].then((html) => {
-    infoPopup.setTitle(node['name']);
+    infoPopup.setTitle(node.name);
     infoPopup.setContent(html);
     infoPopup.setOpen(true);
   });
@@ -159,14 +159,14 @@ const getLayer = (function() {
   const layerCache = {};
   return (
     /**
-         * @param {Object} node Tree node.
-         * @return {import("ol/layer/Layer.js").default} Layer.
-         */
+     * @param {Object} node Tree node.
+     * @return {?import("ol/layer/Layer.js").default} Layer.
+     */
     function(node) {
       if (!('layerType' in node)) {
         return null;
       }
-      const type = node['layerType'];
+      const type = node.layerType;
       if (type in layerCache) {
         return layerCache[type];
       }

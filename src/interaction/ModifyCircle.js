@@ -40,7 +40,7 @@ export default class extends olInteractionPointer {
 
     /**
      * Editing vertex.
-     * @type {import("ol/Feature.js").default}
+     * @type {?import("ol/Feature.js").default}
      * @private
      */
     this.vertexFeature_ = null;
@@ -89,7 +89,7 @@ export default class extends olInteractionPointer {
      * @type {Array}
      * @private
      */
-    this.dragSegments_ = null;
+    this.dragSegments_ = [];
 
     /**
      * Draw overlay where sketch features are drawn.
@@ -123,7 +123,11 @@ export default class extends olInteractionPointer {
    * @private
    */
   addFeature_(feature) {
-    if (feature.getGeometry().getType() === 'Polygon' &&
+    const geometry = feature.getGeometry();
+    if (!geometry) {
+      throw new Error('Missing geometry');
+    }
+    if (geometry.getType() === 'Polygon' &&
         !!feature.get(ngeoFormatFeatureProperties.IS_CIRCLE)) {
       const geometry = /** @type {import("ol/geom/Polygon.js").default}*/ (feature.getGeometry());
       this.writeCircleGeometry_(feature, geometry);

@@ -61,9 +61,9 @@ function SearchController($element, $rootScope, $compile, ngeoSearchCreateGeoJSO
 
 
   /**
-   * @type {import("ol/Map.js").default}
+   * @type {?import("ol/Map.js").default}
    */
-  this.map;
+  this.map = null;
 
   /**
    * @type {import("ol/layer/Vector.js").default}
@@ -118,11 +118,17 @@ function SearchController($element, $rootScope, $compile, ngeoSearchCreateGeoJSO
    */
   this.listeners = /** @type {import('ngeo/search/searchDirective.js').SearchDirectiveListeners} */ ({
     select: (event, suggestion, dataset) => {
+      if (!this.map) {
+        throw new Error('Missing map');
+      }
       const feature = /** @type {import('ol/Feature.js').default} */ (suggestion);
       const featureGeometry = /** @type {import('ol/geom/SimpleGeometry.js').default} */(
         feature.getGeometry()
       );
       const size = this.map.getSize();
+      if (!size) {
+        throw new Error('Missing size');
+      }
       const source = /** @type {olSourceVector} */(this.vectorLayer_.getSource());
       source.clear(true);
       source.addFeature(feature);
@@ -151,6 +157,9 @@ SearchController.prototype.$onInit = function() {
  * @private
  */
 SearchController.prototype.createVectorLayer_ = function() {
+  if (!this.map) {
+    throw new Error('Missing map');
+  }
   const vectorLayer = new olLayerVector({
     source: new olSourceVector()
   });

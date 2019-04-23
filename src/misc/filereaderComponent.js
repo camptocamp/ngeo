@@ -65,7 +65,11 @@ function filereaderComponent($window) {
               scope['fileContent'] = target.result;
             });
           });
-        fileReader.readAsText(changeEvent.target.files[0]);
+        const files = changeEvent.target.files;
+        if (!files) {
+          throw new Error('Missing files');
+        }
+        fileReader.readAsText(files[0]);
       };
       element.on({change: ce});
     }

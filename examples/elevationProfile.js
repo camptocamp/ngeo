@@ -38,26 +38,28 @@ function MainController($http, $scope) {
   this.scope_ = $scope;
 
   const source = new olSourceVector();
+  const source2 = new olSourceImageWMS({
+    projection: undefined, // should be removed in next OL version
+    url: 'http://wms.geo.admin.ch/',
+    crossOrigin: 'anonymous',
+    attributions: '&copy; ' +
+      '<a href="http://www.geo.admin.ch/internet/geoportal/' +
+      'en/home.html">Pixelmap 1:500000 / geo.admin.ch</a>',
+    params: {
+      'LAYERS': 'ch.swisstopo.pixelkarte-farbe-pk1000.noscale',
+      'FORMAT': 'image/jpeg'
+    },
+    serverType: /** @type {import("ol/source/WMSServerType.js").default} */ ('mapserver')
+  });
 
   /**
    * @type {import("ol/Map.js").default}
    */
   this.map = new olMap({
     layers: [
+      // @ts-ignore: OL issue
       new olLayerImage({
-        source: new olSourceImageWMS({
-          projection: undefined, // should be removed in next OL version
-          url: 'http://wms.geo.admin.ch/',
-          crossOrigin: 'anonymous',
-          attributions: '&copy; ' +
-            '<a href="http://www.geo.admin.ch/internet/geoportal/' +
-            'en/home.html">Pixelmap 1:500000 / geo.admin.ch</a>',
-          params: {
-            'LAYERS': 'ch.swisstopo.pixelkarte-farbe-pk1000.noscale',
-            'FORMAT': 'image/jpeg'
-          },
-          serverType: /** @type {import("ol/source/WMSServerType.js").default} */ ('mapserver')
-        })
+        source: source2
       }),
       new olLayerVector({
         source
@@ -98,7 +100,7 @@ function MainController($http, $scope) {
   this.profileData = undefined;
 
   $http.get('data/profile.json').then((resp) => {
-    const data = resp.data['profile'];
+    const data = resp.data.profile;
     this.profileData = data;
 
     let i;
@@ -121,7 +123,11 @@ function MainController($http, $scope) {
       return;
     }
     const coordinate = map.getEventCoordinate(evt.originalEvent);
-    this.snapToGeometry(coordinate, source.getFeatures()[0].getGeometry());
+    const geometry = source.getFeatures()[0].getGeometry();
+    if (!geometry) {
+      throw new Error('Missing geometry');
+    }
+    this.snapToGeometry(coordinate, geometry);
   });
 
 
@@ -189,9 +195,9 @@ function MainController($http, $scope) {
       */
     z: (item, opt_z) => {
       if (opt_z !== undefined) {
-        item['z'] = opt_z;
+        item.z = opt_z;
       }
-      return item['z'];
+      return item.z;
     }
   };
 
@@ -206,7 +212,7 @@ function MainController($http, $scope) {
 
   const outCallback = () => {
     this.point = null;
-    this.snappedPoint_.setGeometry(null);
+    this.snappedPoint_.setGeometry(undefined);
   };
 
 
@@ -235,15 +241,22 @@ function MainController($http, $scope) {
 
 /**
  * @param {import("ol/coordinate.js").Coordinate} coordinate The current pointer coordinate.
- * @param {import("ol/geom/Geometry.js").default|undefined} geometry The geometry to snap to.
+ * @param {import("ol/geom/Geometry.js").default} geometry The geometry to snap to.
  */
 MainController.prototype.snapToGeometry = function(coordinate, geometry) {
+  if (!this.map) {
+    throw new Error('Missing map');
+  }
   const closestPoint = geometry.getClosestPoint(coordinate);
   // compute distance to line in pixels
   const dx = closestPoint[0] - coordinate[0];
   const dy = closestPoint[1] - coordinate[1];
   const dist = Math.sqrt(dx * dx + dy * dy);
-  const pixelDist = dist / this.map.getView().getResolution();
+  const resolution = this.map.getView().getResolution();
+  if (!resolution) {
+    throw new Error('Missing resolution');
+  }
+  const pixelDist = dist / resolution;
 
   if (pixelDist < 8) {
     this.profileHighlight = closestPoint[2];

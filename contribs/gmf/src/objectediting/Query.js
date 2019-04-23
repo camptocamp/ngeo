@@ -58,6 +58,9 @@ ObjectEditingQuery.prototype.getQueryableLayersInfo = function() {
         if (!themes) {
           return;
         }
+        if (!this.getQueryableLayerNodesDefered_) {
+          throw new Error('Missing getQueryableLayerNodesDefered');
+        }
 
         // Get all queryable nodes
         const allQueryableLayersInfo =

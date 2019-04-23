@@ -149,10 +149,13 @@ ObjecteditingManagerService.prototype.handleGetFeatures_ = function(key, value, 
   } else {
     const featureProperties = {};
     featureProperties[key] = value;
-    featureProperties['geometry'] = null;
+    featureProperties.geometry = null;
     feature = new olFeature(featureProperties);
   }
 
+  if (!this.getFeatureDefered_) {
+    throw new Error('Missing getFeatureDefered');
+  }
   this.getFeatureDefered_.resolve(feature);
 };
 

@@ -72,7 +72,7 @@ const REFRESH_PARAM = 'random';
  * @param {string=} opt_serverType Type of the server ("mapserver",
  *     "geoserver", "qgisserver", …).
  * @param {string=} opt_time time parameter for layer queryable by time/periode
- * @param {Object.<string, string>=} opt_params WMS parameters.
+ * @param {Object<string, string>=} opt_params WMS parameters.
  * @param {string=} opt_crossOrigin crossOrigin.
  * @param {Object=} opt_customSourceOptions Some initial options.
  * @param {Object=} opt_customLayerOptions The layer opacity.
@@ -88,10 +88,10 @@ LayerHelper.prototype.createBasicWMSLayer = function(sourceURL,
   };
   let olServerType;
   if (opt_time) {
-    params['TIME'] = opt_time;
+    params.TIME = opt_time;
   }
   if (opt_serverType) {
-    params['SERVERTYPE'] = opt_serverType;
+    params.SERVERTYPE = opt_serverType;
     // OpenLayers expects 'qgis' insteads of 'qgisserver'
     olServerType = opt_serverType.replace(ServerType.QGISSERVER, 'qgis');
   }
@@ -122,7 +122,9 @@ LayerHelper.prototype.createBasicWMSLayerFromDataSource = function(
   dataSource, opt_crossOrigin
 ) {
   const url = dataSource.wmsUrl;
-  console.assert(url);
+  if (url === undefined) {
+    throw new Error('Missing url');
+  }
 
   const layerNames = dataSource.getOGCLayerNames().join(',');
   const serverType = dataSource.ogcServerType;
@@ -159,9 +161,9 @@ LayerHelper.prototype.createBasicWMSLayerFromDataSource = function(
  * @param {string} capabilitiesURL The getCapabilities url.
  * @param {string} layerName The name of the layer.
  * @param {string=} opt_matrixSet Optional WMTS matrix set.
- * @param {Object.<string, string>=} opt_dimensions WMTS dimensions.
+ * @param {Object<string, ?string>=} opt_dimensions WMTS dimensions.
  * @param {Object=} opt_customOptions Some initial options.
- * @return {angular.IPromise.<import("ol/layer/Tile.js").default>} A Promise with a layer (with source) on
+ * @return {angular.IPromise<import("ol/layer/Tile.js").default>} A Promise with a layer (with source) on
  *    success, no layer else.
  */
 LayerHelper.prototype.createWMTSLayerFromCapabilitites = function(
@@ -191,9 +193,12 @@ LayerHelper.prototype.createWMTSLayerFromCapabilitites = function(
       layer.setSource(source);
 
       // Add styles from capabilities as param of the layer
-      const layers = result['Contents']['Layer'];
-      const l = olArray.find(layers, (elt, index, array) => elt['Identifier'] == layerName);
-      layer.set('capabilitiesStyles', l['Style']);
+      const layers = result.Contents.Layer;
+      const l = olArray.find(layers, (elt, index, array) => elt.Identifier == layerName);
+      if (!l) {
+        return $q.reject(`Layer ${layerName} not abalable in WMTS capabilities from ${capabilitiesURL}`);
+      }
+      layer.set('capabilitiesStyles', l.Style);
 
       return $q.resolve(layer);
     }
@@ -217,7 +222,7 @@ LayerHelper.prototype.createWMTSLayerFromCapabilititesObj = function(
 
   const options = optionsFromCapabilities(capabilities, {
     crossOrigin: 'anonymous',
-    layer: layerCap['Identifier']
+    layer: layerCap.Identifier
   });
 
   console.assert(options);
@@ -231,7 +236,7 @@ LayerHelper.prototype.createWMTSLayerFromCapabilititesObj = function(
     preload: Infinity,
     source: source
   });
-  result.set('capabilitiesStyles', layerCap['Style']);
+  result.set('capabilitiesStyles', layerCap.Style);
   return result;
 };
 
@@ -368,9 +373,9 @@ LayerHelper.prototype.getWMTSLegendURL = function(layer) {
   let url;
   const styles = layer.get('capabilitiesStyles');
   if (styles !== undefined) {
-    const legendURL = styles[0]['legendURL'];
+    const legendURL = styles[0].legendURL;
     if (legendURL !== undefined) {
-      url = legendURL[0]['href'];
+      url = legendURL[0].href;
     }
   }
   return url;
@@ -407,20 +412,20 @@ LayerHelper.prototype.getWMSLegendURL = function(url,
     'LAYER': layerName
   };
   if (opt_scale !== undefined) {
-    queryString['SCALE'] = opt_scale;
+    queryString.SCALE = opt_scale;
   }
   if (opt_legendRule !== undefined) {
-    queryString['RULE'] = opt_legendRule;
+    queryString.RULE = opt_legendRule;
     if (opt_legendWidth !== undefined) {
-      queryString['WIDTH'] = opt_legendWidth;
+      queryString.WIDTH = opt_legendWidth;
     }
     if (opt_legendHeight !== undefined) {
-      queryString['HEIGHT'] = opt_legendHeight;
+      queryString.HEIGHT = opt_legendHeight;
     }
   }
   if (opt_servertype == 'qgis') {
     if (opt_dpi != undefined) {
-      queryString['DPI'] = opt_dpi;
+      queryString.DPI = opt_dpi;
     }
     if (
       opt_bbox != undefined
@@ -429,10 +434,10 @@ LayerHelper.prototype.getWMSLegendURL = function(url,
       && opt_dpi != undefined
       && opt_legendRule == undefined
     ) {
-      queryString['BBOX'] = opt_bbox.join(',');
-      queryString['SRS'] = opt_srs;
-      queryString['WIDTH'] = Math.round((opt_bbox[2] - opt_bbox[0]) / opt_scale * 39.37 * opt_dpi);
-      queryString['HEIGHT'] = Math.round((opt_bbox[3] - opt_bbox[1]) / opt_scale * 39.37 * opt_dpi);
+      queryString.BBOX = opt_bbox.join(',');
+      queryString.SRS = opt_srs;
+      queryString.WIDTH = Math.round((opt_bbox[2] - opt_bbox[0]) / opt_scale * 39.37 * opt_dpi);
+      queryString.HEIGHT = Math.round((opt_bbox[3] - opt_bbox[1]) / opt_scale * 39.37 * opt_dpi);
     }
   }
   if (opt_additionalQueryString) {
@@ -454,6 +459,9 @@ LayerHelper.prototype.isLayerVisible = function(layer, map) {
   }
 
   const currentResolution = map.getView().getResolution();
+  if (currentResolution === undefined) {
+    throw new Error('Missing resolution');
+  }
   return currentResolution > layer.getMinResolution() &&
       currentResolution < layer.getMaxResolution();
 };

@@ -34,7 +34,7 @@ const module = angular.module('gmfAuthentication', [
  * @hidden
  */
 function gmfAuthenticationTemplateUrl_(element, attrs) {
-  const templateUrl = attrs['gmfAuthenticationTemplateurl'];
+  const templateUrl = attrs.gmfAuthenticationTemplateurl;
   return templateUrl !== undefined ? templateUrl :
     'gmf/authentication';
 }
@@ -185,12 +185,12 @@ class AuthenticationController {
     /**
      * @type {boolean}
      */
-    this.allowPasswordReset;
+    this.allowPasswordReset = false;
 
     /**
      * @type {boolean}
      */
-    this.allowPasswordChange;
+    this.allowPasswordChange = false;
 
     /**
      * @type {PasswordValidator?}
@@ -200,7 +200,7 @@ class AuthenticationController {
     /**
      * @type {boolean}
      */
-    this.forcePasswordChange;
+    this.forcePasswordChange = false;
 
     /**
      * @type {?string}
@@ -429,11 +429,14 @@ class AuthenticationController {
     }
 
     errors.forEach((error) => {
-      this.notification_.notify({
+      const options = {
         msg: error,
         target: container,
-        type: messageType
-      });
+      };
+      if (messageType) {
+        options.type = messageType;
+      }
+      this.notification_.notify(options);
     });
   }
 

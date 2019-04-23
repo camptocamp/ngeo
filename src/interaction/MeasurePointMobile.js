@@ -1,6 +1,6 @@
 import ngeoInteractionMeasure, {getFormattedPoint} from 'ngeo/interaction/Measure.js';
 import ngeoInteractionMobileDraw from 'ngeo/interaction/MobileDraw.js';
-
+import Point from 'ol/geom/Point.js';
 
 /**
  * Interaction dedicated to measure by coordinate (point) on mobile devices.
@@ -35,7 +35,7 @@ export default class extends ngeoInteractionMeasure {
    */
   createDrawInteraction(style, source) {
     return new ngeoInteractionMobileDraw({
-      type: /** @type {import("ol/geom/GeometryType.js").default} */ ('Point'),
+      type: 'Point',
       style: style,
       source: source,
     });
@@ -45,7 +45,13 @@ export default class extends ngeoInteractionMeasure {
    * @inheritDoc
    */
   handleMeasure(callback) {
-    const geom = /** @type {import('ol/geom/Point.js').default} */(this.sketchFeature.getGeometry());
+    if (!this.sketchFeature) {
+      throw new Error('Missing sketchFeature');
+    }
+    const geom = this.sketchFeature.getGeometry();
+    if (!(geom instanceof Point)) {
+      throw new Error('Missing geometry');
+    }
     const dec = this.decimals;
     const output = getFormattedPoint(geom, dec, this.format_, this.coordFormat_);
     const coord = geom.getLastCoordinate();

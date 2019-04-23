@@ -74,7 +74,7 @@ function Controller($scope, ngeoFeatureHelper) {
   /**
    * @type {?import("ol/Feature.js").default}
    */
-  this.feature;
+  this.feature = null;
 
   /**
    * @type {!angular.IScope}
@@ -168,7 +168,9 @@ Controller.prototype.handleFeatureSet_ = function(newFeature, previousFeature) {
     });
 
     const geometry = newFeature.getGeometry();
-    console.assert(geometry, 'Geometry should be thruthy');
+    if (!geometry) {
+      throw new Error('Missing geometry');
+    }
 
     keys.push(
       olEvents.listen(
@@ -271,6 +273,9 @@ Controller.prototype.getSetStroke = function(value) {
  * @private
  */
 Controller.prototype.getSetProperty_ = function(key, value) {
+  if (!this.feature) {
+    throw new Error('Missing feature');
+  }
   if (value !== undefined) {
     this.feature.set(key, value);
   }
@@ -296,7 +301,9 @@ Controller.prototype.handleFeatureChange_ = function() {
  * @private
  */
 Controller.prototype.handleGeometryChange_ = function() {
-  console.assert(this.feature);
+  if (!this.feature) {
+    throw new Error('Missing feature');
+  }
   this.measure = this.featureHelper_.getMeasure(this.feature);
 
   const showMeasure = this.featureHelper_.getShowMeasureProperty(this.feature);

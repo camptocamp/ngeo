@@ -283,10 +283,11 @@ export class ExternalDatSourcesManager {
    *     this service.
    */
   get layerGroup() {
-    const map = this.map_;
-    console.assert(map);
+    if (!this.map_) {
+      throw new Error('Missing map');
+    }
     return this.ngeoLayerHelper_.getGroupFromMap(
-      map,
+      this.map_,
       EXTERNALLAYERGROUP_NAME
     );
   }
@@ -322,9 +323,9 @@ export class ExternalDatSourcesManager {
   createAndAddDataSourceFromWMSCapability(layer, capabilities, url) {
 
     const id = getId(layer);
-    const service = capabilities['Service'];
+    const service = capabilities.Service;
 
-    url = service['OnlineResource'] || url;
+    url = service.OnlineResource || url;
 
     let dataSource;
 
@@ -332,39 +333,42 @@ export class ExternalDatSourcesManager {
     if (this.extDataSources_[id]) {
       dataSource = this.extDataSources_[id];
     } else {
-      const req = capabilities['Capability']['Request'];
+      const req = capabilities.Capability.Request;
 
       // ogcImageType
-      const formats = req['GetMap']['Format'];
+      const formats = req.GetMap.Format;
       const imagePngType = 'image/png';
       const ogcImageType = formats.includes(imagePngType) ?
         imagePngType : formats[0];
 
       // wmsInfoFormat
-      const infoFormats = req['GetFeatureInfo']['Format'];
+      const infoFormats = req.GetFeatureInfo.Format;
       const wmsInfoFormat = infoFormats.includes(
         WMSInfoFormat.GML
       ) ? WMSInfoFormat.GML : undefined;
 
       // queryable
-      const queryable = layer['queryable'] === true &&
+      const queryable = layer.queryable === true &&
           wmsInfoFormat !== undefined;
 
       // TODO - MaxScaleDenominator
       // TODO - MinScaleDenominator
-      dataSource = new ngeoDatasourceOGC({
+      const options = {
         id: id,
-        name: layer['Title'],
+        name: layer.Title,
         ogcImageType: ogcImageType,
         ogcLayers: [{
-          name: layer['Name'],
+          name: layer.Name,
           queryable: queryable
         }],
         ogcType: Type.WMS,
         visible: true,
-        wmsInfoFormat: wmsInfoFormat,
         wmsUrl: url
-      });
+      };
+      if (wmsInfoFormat) {
+        options.wmsInfoFormat = wmsInfoFormat;
+      }
+      dataSource = new ngeoDatasourceOGC(options);
 
       // Keep a reference to the external data source in the cache
       this.extDataSources_[id] = dataSource;
@@ -385,7 +389,7 @@ export class ExternalDatSourcesManager {
       wmsGroup = new ngeoDatasourceWMSGroup({
         dataSources: [dataSource],
         injector: this.injector_,
-        title: service['Title'],
+        title: service.Title,
         url: url
       }, this.ngeoLayerHelper_);
       this.addLayer_(wmsGroup.layer);
@@ -415,8 +419,8 @@ export class ExternalDatSourcesManager {
       dataSource = this.extDataSources_[id];
     } else {
 
-      const name = typeof layer['Title'];
-      const wmtsLayer = typeof layer['Identifier'];
+      const name = typeof layer.Title;
+      const wmtsLayer = typeof layer.Identifier;
 
       // TODO - MaxScaleDenominator
       // TODO - MinScaleDenominator
@@ -438,7 +442,7 @@ export class ExternalDatSourcesManager {
     if (!wmtsGroup) {
       wmtsGroup = new ngeoDatasourceOGCGroup({
         dataSources: [],
-        title: capabilities['ServiceIdentification']['Title'],
+        title: capabilities.ServiceIdentification.Title,
         url: wmtsUrl
       });
       this.addWMTSGroup_(wmtsGroup);
@@ -483,6 +487,9 @@ export class ExternalDatSourcesManager {
           success = false;
 
         } else {
+          if (!this.map_) {
+            throw new Error('Missing map');
+          }
           // (1) No need to do anything if the file has already been added...
           if (fileGroup.dataSources.includes(dataSource)) {
             return;
@@ -530,6 +537,9 @@ export class ExternalDatSourcesManager {
     } else {
       const ngeoFile = this.ngeoFile_;
       ngeoFile.read(file).then((content) => {
+        if (!this.map_) {
+          throw new Error('Missing map');
+        }
         let features;
         const readOptions = {
           featureProjection: this.map_.getView().getProjection()
@@ -625,10 +635,11 @@ export class ExternalDatSourcesManager {
   removeOGCDataSource_(dataSource) {
     if (dataSource.ogcType === Type.WMS) {
       // WMS data source
-      const url = dataSource.wmsUrl;
-      console.assert(url);
+      if (!dataSource.wmsUrl) {
+        throw new Error('Missing dataSource.wmsUrl');
+      }
 
-      const wmsGroup = this.getWMSGroup(url);
+      const wmsGroup = this.getWMSGroup(dataSource.wmsUrl);
       if (wmsGroup && wmsGroup.dataSources.includes(dataSource)) {
         // Remove from group
         wmsGroup.removeDataSource(dataSource);
@@ -643,10 +654,11 @@ export class ExternalDatSourcesManager {
       }
     } else if (dataSource.ogcType === Type.WMTS) {
       // WMTS data source
-      const url = dataSource.wmtsUrl;
-      console.assert(url);
+      if (!dataSource.wmtsUrl) {
+        throw new Error('Missing dataSource.wmsUrl');
+      }
 
-      const wmtsGroup = this.getWMTSGroup(url);
+      const wmtsGroup = this.getWMTSGroup(dataSource.wmtsUrl);
       if (wmtsGroup && wmtsGroup.dataSources.includes(dataSource)) {
         // Remove from group
         wmtsGroup.removeDataSource(dataSource);

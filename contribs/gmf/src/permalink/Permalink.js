@@ -470,11 +470,12 @@ export function PermalinkService(
    * @type {import("ol/style/Style.js").StyleLike}
    * @private
    */
-  this.crosshairStyle_;
+  this.crosshairStyle_ = [];
 
   if (gmfPermalinkOptions.crosshairStyle !== undefined) {
     this.crosshairStyle_ = gmfPermalinkOptions.crosshairStyle;
   } else {
+    // @ts-ignore: OL issue
     this.crosshairStyle_ = [new olStyleStyle({
       image: new olStyleIcon({
         // @ts-ignore: webpack
@@ -512,7 +513,13 @@ export function PermalinkService(
       'strokeWidth': ngeoFormatFeatureProperties.STROKE
     },
     defaultValues: {
-      'name': feature => gettextCatalog.getString(feature.getGeometry().getType()),
+      'name': feature => {
+        const geometry = feature.getGeometry();
+        if (!geometry) {
+          throw new Error('Missing geometry');
+        }
+        return gettextCatalog.getString(geometry.getType());
+      },
       'fillOpacity': () => 0.5,
       'showLabel': () => false,
       'showMeasure': () => false
@@ -585,6 +592,9 @@ export function PermalinkService(
   if (this.featureHelper_) {
     this.rootScope_.$on('$localeChangeSuccess', () => {
       features.forEach((feature) => {
+        if (!this.featureHelper_) {
+          throw new Error('Missing featureHelper');
+        }
         this.featureHelper_.setStyle(feature);
       });
     });
@@ -607,6 +617,9 @@ export function PermalinkService(
   if (this.ngeoQuerent_ && this.gmfExternalDataSourcesManager_) {
     // First, load the external data sources that are defined in the url
     this.initExternalDataSources_().then(() => {
+      if (!this.gmfExternalDataSourcesManager_) {
+        throw new Error('Missing gmfExternalDataSourcesManager');
+      }
       // Then, listen to the changes made to the external data sources to
       // update the url accordingly.
       olEvents.listen(
@@ -656,10 +669,13 @@ export function PermalinkService(
  * @return {?import("ol/coordinate.js").Coordinate} The coordinate for the map view center.
  */
 PermalinkService.prototype.getMapCenter = function() {
+  if (!this.map_) {
+    throw new Error('Missing map');
+  }
   const x = this.ngeoStateManager_.getInitialNumberValue(PermalinkParam.MAP_X);
   const y = this.ngeoStateManager_.getInitialNumberValue(PermalinkParam.MAP_Y);
 
-  if (!isNaN(x) && !isNaN(y)) {
+  if (x !== undefined && y !== undefined && !isNaN(x) && !isNaN(y)) {
     const center = [x, y];
     if (this.sourceProjections_ !== null && this.ngeoAutoProjection_) {
       const targetProjection = this.map_.getView().getProjection();
@@ -682,7 +698,7 @@ PermalinkService.prototype.getMapCenter = function() {
  */
 PermalinkService.prototype.getMapZoom = function() {
   const zoom = this.ngeoStateManager_.getInitialNumberValue(PermalinkParam.MAP_Z);
-  return isNaN(zoom) ? undefined : zoom;
+  return zoom !== undefined && isNaN(zoom) ? undefined : zoom;
 };
 
 
@@ -705,21 +721,28 @@ PermalinkService.prototype.getMapCrosshair = function() {
  * @param {?import("ol/coordinate.js").Coordinate=} opt_center Optional center coordinate.
  */
 PermalinkService.prototype.setMapCrosshair = function(opt_center) {
+  if (!this.map_) {
+    throw new Error('Missing map');
+  }
+  if (!this.featureOverlay_) {
+    throw new Error('Missing featureOverlay');
+  }
   let crosshairCoordinate;
   if (opt_center) {
     crosshairCoordinate = opt_center;
   } else {
     crosshairCoordinate = this.map_.getView().getCenter();
   }
-  console.assert(Array.isArray(crosshairCoordinate));
+  if (!Array.isArray(crosshairCoordinate)) {
+    throw new Error('Wrong crosshairCoordinate');
+  }
 
   // remove existing crosshair first
   if (this.crosshairFeature_) {
     this.featureOverlay_.removeFeature(this.crosshairFeature_);
   }
   // set new crosshair
-  this.crosshairFeature_ = new olFeature(
-    new olGeomPoint(crosshairCoordinate));
+  this.crosshairFeature_ = new olFeature(new olGeomPoint(crosshairCoordinate));
   this.crosshairFeature_.setStyle(this.crosshairStyle_);
 
   // add to overlay
@@ -745,6 +768,9 @@ PermalinkService.prototype.getMapTooltip = function() {
  * @param {?import("ol/coordinate.js").Coordinate=} opt_center Optional center coordinate.
  */
 PermalinkService.prototype.setMapTooltip = function(tooltipText, opt_center) {
+  if (!this.map_) {
+    throw new Error('Missing map');
+  }
   let tooltipPosition;
   if (opt_center) {
     tooltipPosition = opt_center;
@@ -788,7 +814,7 @@ PermalinkService.prototype.getFeatures = function() {
 
 
 /**
- * @param {!Object.<string, string>} dimensions The global dimensions object.
+ * @param {Object<string, string>} dimensions The global dimensions object.
  */
 PermalinkService.prototype.setDimensions = function(dimensions) {
   // apply initial state
@@ -796,7 +822,9 @@ PermalinkService.prototype.setDimensions = function(dimensions) {
   for (let i = 0; i < keys.length; i++) {
     const key = keys[i];
     const value = this.ngeoLocation_.getParam(key);
-    console.assert(value);
+    if (!value) {
+      throw new Error('Missing value');
+    }
     dimensions[key.slice(ParamPrefix.DIMENSIONS.length)] = value;
   }
 
@@ -862,15 +890,20 @@ PermalinkService.prototype.registerMap_ = function(map, oeFeature) {
   const geom = typeof oeFeature !== 'undefined' && oeFeature !== null ? oeFeature.getGeometry() : undefined;
   if (geom) {
     const size = map.getSize();
-    console.assert(size);
+    if (!size) {
+      throw new Error('Missing size');
+    }
     let maxZoom;
     if (geom instanceof olGeomPoint || geom instanceof olGeomMultiPoint) {
       maxZoom = this.pointRecenterZoom_;
     }
-    view.fit(geom.getExtent(), {
+    const options = {
       size,
-      maxZoom
-    });
+    };
+    if (maxZoom) {
+      options.maxZoom = maxZoom;
+    }
+    view.fit(geom.getExtent(), options);
   } else {
     const enabled3d = this.ngeoStateManager_.getInitialBooleanValue(Permalink3dParam.ENABLED);
     if (!enabled3d) {
@@ -885,7 +918,6 @@ PermalinkService.prototype.registerMap_ = function(map, oeFeature) {
     }
   }
 
-
   // (2) Listen to any property changes within the view and apply them to
   //     the permalink service
   this.mapViewPropertyChangeEventKey_ = olEvents.listen(
@@ -893,8 +925,11 @@ PermalinkService.prototype.registerMap_ = function(map, oeFeature) {
     'propertychange',
     this.ngeoDebounce_(() => {
       const center = view.getCenter();
+      if (!center) {
+        throw new Error('Missing center');
+      }
       const zoom = view.getZoom();
-      /** @type {!Object.<string, string>} */
+      /** @type {Object<string, string>} */
       const object = {};
       object[PermalinkParam.MAP_X] = `${Math.round(center[0])}`;
       object[PermalinkParam.MAP_Y] = `${Math.round(center[1])}`;
@@ -927,8 +962,9 @@ PermalinkService.prototype.registerMap_ = function(map, oeFeature) {
  * @private
  */
 PermalinkService.prototype.unregisterMap_ = function() {
-  console.assert(
-    this.mapViewPropertyChangeEventKey_, 'Key should be thruthy');
+  if (!this.mapViewPropertyChangeEventKey_) {
+    throw new Error('Missing mapViewPropertyChangeEventKey');
+  }
   olEvents.unlistenByKey(this.mapViewPropertyChangeEventKey_);
   this.mapViewPropertyChangeEventKey_ = null;
 };
@@ -968,6 +1004,9 @@ PermalinkService.prototype.handleBackgroundLayerManagerChange_ = function() {
 
   // get layer label, i.e its name
   const layer = this.ngeoBackgroundLayerMgr_.get(this.map_);
+  if (!layer) {
+    throw new Error('Missing layer');
+  }
   const layerName = layer.get('label');
   console.assert(typeof layerName == 'string');
 
@@ -989,6 +1028,9 @@ PermalinkService.prototype.handleBackgroundLayerManagerChange_ = function() {
 PermalinkService.prototype.refreshFirstLevelGroups = function() {
   if (!this.gmfTreeManager_) {
     return;
+  }
+  if (!this.gmfTreeManager_.rootCtrl) {
+    throw new Error('Missing gmfTreeManager_.rootCtrl');
   }
   // Get first-level-groups order
   const groupNodes = this.gmfTreeManager_.rootCtrl.node.children;
@@ -1019,8 +1061,12 @@ PermalinkService.prototype.themeInUrl_ = function(pathElements) {
  * @private
  */
 PermalinkService.prototype.setThemeInUrl_ = function(themeName) {
+  const path = this.ngeoLocation_.getPath();
+  if (!path) {
+    throw new Error('Missing path');
+  }
   if (themeName) {
-    const pathElements = this.ngeoLocation_.getPath().split('/');
+    const pathElements = path.split('/');
     console.assert(pathElements.length > 1);
     if (pathElements[pathElements.length - 1] === '') {
       // case where the path is just "/"
@@ -1042,9 +1088,12 @@ PermalinkService.prototype.setThemeInUrl_ = function(themeName) {
  * @return {?string} default theme name.
  */
 PermalinkService.prototype.defaultThemeName = function() {
-
+  const path = this.ngeoLocation_.getPath();
+  if (!path) {
+    throw new Error('Missing path');
+  }
   // check if we have a theme in url
-  const pathElements = this.ngeoLocation_.getPath().split('/');
+  const pathElements = path.split('/');
   if (this.themeInUrl_(pathElements)) {
     return decodeURI(pathElements[pathElements.length - 1]);
   }
@@ -1101,7 +1150,9 @@ PermalinkService.prototype.initLayers_ = function() {
   }
   this.gmfThemes_.getThemesObject().then((themes) => {
     const themeName = this.defaultThemeName();
-    console.assert(themeName !== null);
+    if (themeName === null) {
+      throw new Error('Missing themeName');
+    }
 
     if (this.gmfThemeManager_) {
       this.gmfThemeManager_.setThemeName(this.gmfThemeManager_.modeFlush ? themeName : '');
@@ -1388,7 +1439,12 @@ PermalinkService.prototype.createFilterGroup_ = function(prefix, paramKeys) {
  */
 
 PermalinkService.prototype.initExternalDataSources_ = function() {
-
+  if (!this.ngeoQuerent_) {
+    throw new Error('Missing ngeoQuerent');
+  }
+  if (!this.gmfExternalDataSourcesManager_) {
+    throw new Error('Missing gmfExternalDataSourcesManager');
+  }
   const ngeoQuerent = this.ngeoQuerent_;
   const gmfExtDSManager = this.gmfExternalDataSourcesManager_;
 
@@ -1480,7 +1536,7 @@ PermalinkService.prototype.initExternalDataSources_ = function() {
         if (response.serviceType === Type.WMS) {
           for (const layerName of response.groupLayerNames) {
             const layerCap = ngeoQuerent.wmsFindLayerCapability(
-              response.capabilities['Capability']['Layer']['Layer'],
+              response.capabilities.Capability.Layer.Layer,
               layerName
             );
             if (layerCap) {
@@ -1500,7 +1556,7 @@ PermalinkService.prototype.initExternalDataSources_ = function() {
           //        create the data source
           for (const layerName of response.groupLayerNames) {
             const layerCap = ngeoQuerent.wmtsFindLayerCapability(
-              response.capabilities['Contents']['Layer'],
+              response.capabilities.Contents.Layer,
               layerName
             );
             if (layerCap) {
@@ -1623,6 +1679,9 @@ PermalinkService.prototype.setExternalDataSourcesState_ = function() {
   }
 
   this.setExternalDataSourcesStatePromise_ = this.$timeout_(() => {
+    if (!this.gmfExternalDataSourcesManager_) {
+      throw new Error('Missing gmfExternalDataSourcesManager');
+    }
     const names = [];
     const urls = [];
 

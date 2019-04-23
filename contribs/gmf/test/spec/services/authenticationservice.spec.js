@@ -35,11 +35,11 @@ describe('gmf.authentication.Service', () => {
 
   it('emits READY after login status check', () => {
     const spy = jasmine.createSpy();
-    /** @type {import('gmf/authentication/Service.js').AuthenticationEvent} */
-    let event;
+    /** @type {?import('gmf/authentication/Service.js').AuthenticationEvent} */
+    let event_ = null;
     olEvents.listenOnce(
       gmfAuthentication, 'ready', (evt) => {
-        event = /** @type {import('gmf/authentication/Service.js').AuthenticationEvent} */(evt);
+        event_ = /** @type {import('gmf/authentication/Service.js').AuthenticationEvent} */(evt);
         spy();
       }
     );
@@ -50,20 +50,26 @@ describe('gmf.authentication.Service', () => {
     $httpBackend.flush();
 
     expect(spy.calls.count()).toBe(1);
-    expect(event).toBeDefined();
-    expect(event.type).toBe('ready');
-    expect(event.detail.user.username).toBe(null);
+    expect(event_).toBeDefined();
+    if (!event_) {
+      throw new Error('Missing event_');
+    }
+    // @ts-ignore: ???
+    expect(event_.type).toBe('ready');
+    // @ts-ignore: ???
+    expect(event_.detail.user.username).toBe(null);
   });
 
   it('logins successful', () => {
     const spy = jasmine.createSpy();
-    /** @type {import('gmf/authentication/Service.js').AuthenticationEvent} */
-    let event;
+    /** @type {?import('gmf/authentication/Service.js').AuthenticationEvent} */
+    let event_ = null;
     olEvents.listenOnce(
       gmfAuthentication, 'login', (evt) => {
-        event = /** @type {import('gmf/authentication/Service.js').AuthenticationEvent} */(evt);
+        event_ = /** @type {import('gmf/authentication/Service.js').AuthenticationEvent} */(evt);
         spy();
-      });
+      }
+    );
 
     $httpBackend.when('POST', loginUrl).respond({'username': 'user'});
 
@@ -71,9 +77,14 @@ describe('gmf.authentication.Service', () => {
     $httpBackend.flush();
 
     expect(spy.calls.count()).toBe(1);
-    expect(event).toBeDefined();
-    expect(event.type).toBe('login');
-    expect(event.detail.user.username).toBe('user');
+    expect(event_).toBeDefined();
+    if (!event_) {
+      throw new Error('Missing event_');
+    }
+    // @ts-ignore: ???
+    expect(event_.type).toBe('login');
+    // @ts-ignore: ???
+    expect(event_.detail.user.username).toBe('user');
   });
 
   it('trys to login with wrong credentials', () => {

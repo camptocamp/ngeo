@@ -37,22 +37,29 @@ function measureAzimutComponent($compile, gettextCatalog, $filter, $injector) {
      * @param {!angular.IScope} $scope Scope.
      * @param {JQuery} element Element.
      * @param {angular.IAttributes} attrs Attributes.
-     * @param {angular.IController} drawFeatureCtrl Controller.
+     * @param {angular.IController=} drawFeatureCtrl Controller.
      */
     link: ($scope, element, attrs, drawFeatureCtrl) => {
+      if (!drawFeatureCtrl) {
+        throw new Error('Missing drawFeatureCtrl');
+      }
 
       const helpMsg = gettextCatalog.getString('Click to start drawing circle');
       const contMsg = gettextCatalog.getString('Click to finish');
 
+      const options = {
+        style: new olStyleStyle(),
+        startMsg: $compile(`<div translate>${helpMsg}</div>`)($scope)[0],
+        continueMsg: $compile(`<div translate>${contMsg}</div>`)($scope)[0],
+      };
+      if ($injector.get('ngeoMeasurePrecision')) {
+        options.precision = $injector.get('ngeoMeasurePrecision');
+      }
+      if ($injector.get('ngeoMeasureDecimals')) {
+        options.decimals = $injector.get('ngeoMeasureDecimals');
+      }
       const measureAzimut = new ngeoInteractionMeasureAzimut(
-        $filter('ngeoUnitPrefix'), $filter('number'), {
-          style: new olStyleStyle(),
-          startMsg: $compile(`<div translate>${helpMsg}</div>`)($scope)[0],
-          continueMsg: $compile(`<div translate>${contMsg}</div>`)($scope)[0],
-          precision: $injector.has('ngeoMeasurePrecision') ?
-            $injector.get('ngeoMeasurePrecision') : undefined,
-          decimals: $injector.has('ngeoMeasureDecimals') ? $injector.get('ngeoMeasureDecimals') : undefined
-        });
+        $filter('ngeoUnitPrefix'), $filter('number'), options);
 
       drawFeatureCtrl.registerInteraction(measureAzimut);
       drawFeatureCtrl.measureAzimut = measureAzimut;

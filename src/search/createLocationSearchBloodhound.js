@@ -75,12 +75,14 @@ function createLocationSearchBloodhound(opt_options) {
     remote: {
       url: 'https://api3.geo.admin.ch/rest/services/api/SearchServer?type=locations&searchText=%QUERY',
       prepare: (query, settings) => {
-        settings.url = settings.url.replace('%QUERY', query);
-        if (options.limit !== undefined) {
-          settings.url += `&limit=${options.limit}`;
-        }
-        if (options.origins !== undefined) {
-          settings.url += `&origins=${options.origins}`;
+        if (settings.url) {
+          settings.url = settings.url.replace('%QUERY', query);
+          if (options.limit !== undefined) {
+            settings.url += `&limit=${options.limit}`;
+          }
+          if (options.origins !== undefined) {
+            settings.url += `&origins=${options.origins}`;
+          }
         }
 
         return (options.prepare !== undefined) ?

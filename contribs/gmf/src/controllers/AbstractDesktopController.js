@@ -149,7 +149,7 @@ export class AbstractDesktopController extends AbstractAPIController {
     };
 
     /**
-     * @type {import("ol/geom/LineString.js").default}
+     * @type {?import("ol/geom/LineString.js").default}
      */
     this.profileLine = null;
 
@@ -246,7 +246,11 @@ export class AbstractDesktopController extends AbstractAPIController {
 
     this.$dataPanel_.resizable('option', 'maxWidth', maxWidth);
 
-    if (this.$dataPanel_.width() > maxWidth) {
+    const width = this.$dataPanel_.width();
+    if (!width) {
+      throw new Error('Missing width');
+    }
+    if (width > maxWidth) {
       this.$dataPanel_.width(maxWidth);
       this.map.updateSize();
     }

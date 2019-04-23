@@ -32,7 +32,7 @@ module.value('pytreeLidarprofileJsonUrl', 'https://sitn.ne.ch/pytree');
  */
 function MainController($scope) {
   /**
-   * @type {import("ol/geom/LineString.js").default}
+   * @type {?import("ol/geom/LineString.js").default}
    */
   this.profileLine = null;
 

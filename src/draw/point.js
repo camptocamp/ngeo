@@ -22,12 +22,15 @@ function drawPointComponent() {
     restrict: 'A',
     require: '^^ngeoDrawfeature',
     /**
-     * @param {!angular.IScope} $scope Scope.
+     * @param {angular.IScope} $scope Scope.
      * @param {JQuery} element Element.
      * @param {angular.IAttributes} attrs Attributes.
-     * @param {angular.IController} drawFeatureCtrl Controller.
+     * @param {angular.IController=} drawFeatureCtrl Controller.
      */
     link: ($scope, element, attrs, drawFeatureCtrl) => {
+      if (!drawFeatureCtrl) {
+        throw new Error('Missing drawFeatureCtrl');
+      }
 
       const drawPoint = new olInteractionDraw({
         type: /** @type {import("ol/geom/GeometryType.js").default} */ ('Point')

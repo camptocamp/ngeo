@@ -124,14 +124,18 @@ export function EditingSnappingService($http, $q, $rootScope, $timeout, gmfTheme
  *
  */
 EditingSnappingService.prototype.ensureSnapInteractionsOnTop = function() {
+  if (!this.map_) {
+    throw new Error('Missing map');
+  }
   const map = this.map_;
-  console.assert(map);
 
   let item;
   for (const uid in this.cache_) {
     item = this.cache_[+uid];
     if (item.active) {
-      console.assert(item.interaction);
+      if (!item.interaction) {
+        throw new Error('Missing item.interaction');
+      }
       map.removeInteraction(item.interaction);
       map.addInteraction(item.interaction);
     }
@@ -148,6 +152,9 @@ EditingSnappingService.prototype.setMap = function(map) {
   const keys = this.listenerKeys_;
 
   if (this.map_) {
+    if (!this.treeCtrlsUnregister_) {
+      throw new Error('Missing treeCtrlsUnregister');
+    }
     this.treeCtrlsUnregister_();
     this.unregisterAllTreeCtrl_();
     keys.forEach(olEvents.unlistenByKey);
@@ -166,6 +173,9 @@ EditingSnappingService.prototype.setMap = function(map) {
       // leaf nodes are created and they are the ones we're looking for here.
       this.timeout_(() => {
         if (value) {
+          if (!this.gmfTreeManager_.rootCtrl) {
+            throw new Error('Missing gmfTreeManager_.rootCtrl');
+          }
           this.unregisterAllTreeCtrl_();
           this.gmfTreeManager_.rootCtrl.traverseDepthFirst(this.registerTreeCtrl_.bind(this));
         }
@@ -226,6 +236,9 @@ EditingSnappingService.prototype.registerTreeCtrl_ = function(treeCtrl) {
       );
 
       const ogcServer = this.getOGCServer_(treeCtrl);
+      if (!ogcServer) {
+        throw new Error('Missing ogcServer');
+      }
       this.cache_[uid] = {
         active: false,
         featureNS: ogcServer.wfsFeatureNS,
@@ -291,6 +304,9 @@ EditingSnappingService.prototype.getOGCServer_ = function(treeCtrl) {
   }
   if (!ogcServerName) {
     return null;
+  }
+  if (!this.ogcServers_) {
+    throw new Error('Missing ogcServers');
   }
   return this.ogcServers_[ogcServerName];
 };
@@ -386,6 +402,9 @@ EditingSnappingService.prototype.handleTreeCtrlStateChange_ = function(treeCtrl,
  * @private
  */
 EditingSnappingService.prototype.activateItem_ = function(item) {
+  if (!this.map_) {
+    throw new Error('Missing map');
+  }
 
   // No need to do anything if item is already active
   if (item.active) {
@@ -420,6 +439,9 @@ EditingSnappingService.prototype.activateItem_ = function(item) {
  * @private
  */
 EditingSnappingService.prototype.deactivateItem_ = function(item) {
+  if (!this.map_) {
+    throw new Error('Missing map');
+  }
 
   // No need to do anything if item is already inactive
   if (!item.active) {
@@ -427,9 +449,11 @@ EditingSnappingService.prototype.deactivateItem_ = function(item) {
   }
 
   const map = this.map_;
-  console.assert(map);
 
   const interaction = item.interaction;
+  if (!interaction) {
+    throw new Error('Missing interaction');
+  }
   map.removeInteraction(interaction);
 
   item.interaction = null;
@@ -477,6 +501,9 @@ EditingSnappingService.prototype.refresh = function() {
  * @private
  */
 EditingSnappingService.prototype.loadItemFeatures_ = function(item) {
+  if (!this.map_) {
+    throw new Error('Missing map');
+  }
 
   // If a previous request is still running, cancel it.
   if (item.requestDeferred) {

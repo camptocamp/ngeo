@@ -33,20 +33,26 @@ function measureAreaComponent($compile, gettextCatalog, $filter, $injector) {
      * @param {!angular.IScope} $scope Scope.
      * @param {JQuery} element Element.
      * @param {angular.IAttributes} attrs Attributes.
-     * @param {angular.IController} drawFeatureCtrl Controller.
+     * @param {angular.IController=} drawFeatureCtrl Controller.
      */
     link: ($scope, element, attrs, drawFeatureCtrl) => {
+      if (!drawFeatureCtrl) {
+        throw new Error('Missing drawFeatureCtrl');
+      }
 
       const helpMsg = gettextCatalog.getString('Click to start drawing polygon');
       const contMsg = gettextCatalog.getString('Click to continue drawing<br>' +
           'Double-click or click starting point to finish');
 
-      const measureArea = new ngeoInteractionMeasureArea($filter('ngeoUnitPrefix'), gettextCatalog, {
+      const options = {
         style: new olStyleStyle(),
         startMsg: $compile(`<div translate>${helpMsg}</div>`)($scope)[0],
         continueMsg: $compile(`<div translate>${contMsg}</div>`)($scope)[0],
-        precision: $injector.has('ngeoMeasurePrecision') ? $injector.get('ngeoMeasurePrecision') : undefined
-      });
+      };
+      if ($injector.has('ngeoMeasurePrecision')) {
+        options.precision = $injector.get('ngeoMeasurePrecision');
+      }
+      const measureArea = new ngeoInteractionMeasureArea($filter('ngeoUnitPrefix'), gettextCatalog, options);
 
       drawFeatureCtrl.registerInteraction(measureArea);
       drawFeatureCtrl.measureArea = measureArea;

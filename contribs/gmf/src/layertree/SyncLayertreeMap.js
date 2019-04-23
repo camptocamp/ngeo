@@ -37,10 +37,10 @@ export function SyncLayertreeMap($rootScope, ngeoLayerHelper, ngeoWMSTime, gmfTh
   this.ngeoWMSTime_ = ngeoWMSTime;
 
   /**
-   * @type {import('gmf/themes.js').GmfOgcServers}
+   * @type {?import('gmf/themes.js').GmfOgcServers}
    * @private
    */
-  this.ogcServersObject_;
+  this.ogcServersObject_ = null;
 
   gmfThemes.getOgcServersObject().then((ogcServersObject) => {
     this.ogcServersObject_ = ogcServersObject;
@@ -62,12 +62,12 @@ export function SyncLayertreeMap($rootScope, ngeoLayerHelper, ngeoWMSTime, gmfTh
  *     level group layer.
  * @param {number=} opt_position for first level Group, you can precise the
  *     position to add the group in the array of layers of the dataLayerGroup.
- * @return {import("ol/layer/Base.js").default|import("ol/layer/Group.js").default} a new layer.
+ * @return {?import("ol/layer/Base.js").default|import("ol/layer/Group.js").default} a new layer.
  * @public
  */
 SyncLayertreeMap.prototype.createLayer = function(treeCtrl, map, dataLayerGroup, opt_position) {
   /**
-   * @type {import("ol/layer/Base.js").default|import("ol/layer/Group.js").default}
+   * @type {?import("ol/layer/Base.js").default|import("ol/layer/Group.js").default}
    */
   let layer = null;
   if (treeCtrl.node.children !== undefined && treeCtrl.node.mixed) {
@@ -180,7 +180,7 @@ SyncLayertreeMap.prototype.createGroup_ = function(treeCtrl, map,
   if (isFirstLevelGroup) { // First level group
     layer = this.createLayerFromGroup_(treeCtrl, !!groupNode.mixed);
     // Insert the layer at the right place
-    const position = opt_position | 0;
+    const position = opt_position || 0;
     dataLayerGroup.getLayers().insertAt(position, layer);
 
   } else { // Other Groups, create a group layer only in mixed groups
@@ -193,6 +193,9 @@ SyncLayertreeMap.prototype.createGroup_ = function(treeCtrl, map,
     }
   }
 
+  if (!layer) {
+    throw new Error('Missing layer');
+  }
   layer.set('printNativeAngle', printNativeAngle);
   return layer;
 };
@@ -206,13 +209,15 @@ SyncLayertreeMap.prototype.createGroup_ = function(treeCtrl, map,
  * @return {import("ol/layer/Image.js").default|import("ol/layer/Group.js").default} a new layer.
  * @private
  */
-SyncLayertreeMap.prototype.createLayerFromGroup_ = function(treeCtrl,
-  mixed) {
+SyncLayertreeMap.prototype.createLayerFromGroup_ = function(treeCtrl, mixed) {
   let layer;
   const groupNode = /** @type {import('gmf/themes.js').GmfGroup} */ (treeCtrl.node);
   if (mixed) { // Will be one ol.layer per each node.
     layer = this.layerHelper_.createBasicGroup();
   } else { // Will be one ol.layer for multiple WMS nodes.
+    if (!this.ogcServersObject_) {
+      throw new Error('Missing ogcServersObject');
+    }
     const timeParam = this.getTimeParam_(treeCtrl);
     const ogcServer = this.ogcServersObject_[groupNode.ogcServer || ''];
     console.assert(ogcServer);
@@ -260,9 +265,12 @@ SyncLayertreeMap.prototype.createLeafInAMixedGroup_ = function(treeCtrl, map) {
   if (gmfLayer.type === 'WMTS') {
     layer = this.createWMTSLayer_(/** @type import('gmf/themes.js').GmfLayerWMTS */ (gmfLayer));
   } else {
+    if (!this.ogcServersObject_) {
+      throw new Error('Missing ogcServersObject');
+    }
     const gmfLayerWMS = /** @type import('gmf/themes.js').GmfLayerWMS */ (gmfLayer);
     const timeParam = this.getTimeParam_(treeCtrl);
-    const ogcServer = this.ogcServersObject_[/** @type string */ (gmfLayerWMS.ogcServer)];
+    const ogcServer = this.ogcServersObject_[gmfLayerWMS.ogcServer];
     console.assert(ogcServer);
     console.assert(ogcServer.url);
     console.assert(ogcServer.type);
@@ -385,7 +393,7 @@ SyncLayertreeMap.prototype.getTimeParam_ = function(treeCtrl) {
     });
   }
   if (wmsTime) {
-    const timeValues = this.ngeoWMSTime_.getOptions(wmsTime)['values'];
+    const timeValues = this.ngeoWMSTime_.getOptions(wmsTime).values;
     timeParam = this.ngeoWMSTime_.formatWMSTimeParam(wmsTime, {
       start: timeValues[0] || timeValues,
       end: timeValues[1]
@@ -443,6 +451,9 @@ export function getLayer(treeCtrl) {
       layer = tree.layer;
     }
     tree = tree.parent;
+  }
+  if (!layer) {
+    throw new Error('Missing layer');
   }
   return layer;
 }

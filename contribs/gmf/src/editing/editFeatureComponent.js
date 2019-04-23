@@ -49,6 +49,7 @@ import olStyleStyle from 'ol/style/Style.js';
 import olStyleText from 'ol/style/Text.js';
 import MapBrowserEvent from 'ol/MapBrowserEvent.js';
 import {CollectionEvent} from 'ol/Collection.js';
+import VectorSource from 'ol/source/Vector.js';
 
 /**
  * The different possible values of the `state` inner property.
@@ -211,34 +212,34 @@ function Controller($element, $q, $scope, $timeout,
    * properties change, which includes the geometry.
    * @type {boolean}
    */
-  this.dirty;
+  this.dirty = false;
 
   /**
-   * @type {import("ngeo/layertree/Controller.js").LayertreeController}
+   * @type {?import("ngeo/layertree/Controller.js").LayertreeController}
    */
-  this.editableTreeCtrl;
+  this.editableTreeCtrl = null;
 
   /**
-   * @type {import("ol/Map.js").default}
+   * @type {?import("ol/Map.js").default}
    */
-  this.map;
+  this.map = null;
 
   /**
    * The state property shared with the `gmf-editfeatureselector` directive.
    * For more info, see in that directive.
    * @type {string}
    */
-  this.state;
+  this.state = '';
 
   /**
    * @type {number}
    */
-  this.tolerance;
+  this.tolerance = 0;
 
   /**
-   * @type {import("ol/layer/Vector.js").default}
+   * @type {?import("ol/layer/Vector.js").default}
    */
-  this.vectorLayer;
+  this.vectorLayer = null;
 
   /**
    * @type {boolean}
@@ -324,21 +325,21 @@ function Controller($element, $q, $scope, $timeout,
   // === Private properties ===
 
   /**
-   * @type {import('gmf/themes.js').GmfLayer}
+   * @type {?import('gmf/themes.js').GmfLayer}
    * @private
    */
-  this.editableNode_;
+  this.editableNode_ = null;
 
   /**
-   * @type {import("ol/layer/Image.js").default|import("ol/layer/Tile.js").default}
+   * @type {?import("ol/layer/Image.js").default|import("ol/layer/Tile.js").default}
    * @private
    */
-  this.editableWMSLayer_;
+  this.editableWMSLayer_ = null;
 
   /**
    * A deferred object resolved after the confirm modal "continue w/o saving" or
    * "save" buttons are clicked.
-   * @type {angular.IDeferred|null}
+   * @type {?angular.IDeferred}
    * @private
    */
   this.confirmDeferred_ = null;
@@ -398,9 +399,9 @@ function Controller($element, $q, $scope, $timeout,
   this.featureId = undefined;
 
   /**
-   * @type {import("ol/Collection.js").default}
+   * @type {?import("ol/Collection.js").default}
    */
-  this.features;
+  this.features = null;
 
   /**
    * @type {import("ol/Collection.js").default}
@@ -409,15 +410,15 @@ function Controller($element, $q, $scope, $timeout,
   this.interactions_ = new olCollection();
 
   /**
-   * @type {import("ol/interaction/Modify.js").default}
+   * @type {?import("ol/interaction/Modify.js").default}
    * @private
    */
-  this.modify_;
+  this.modify_ = null;
 
   /**
-   * @type {import("ngeo/misc/ToolActivate.js").default}
+   * @type {?import("ngeo/misc/ToolActivate.js").default}
    */
-  this.modifyToolActivate;
+  this.modifyToolActivate = null;
 
   /**
    * @type {import("ngeo/Menu.js").default}
@@ -448,42 +449,42 @@ function Controller($element, $q, $scope, $timeout,
   });
 
   /**
-   * @type {import("ngeo/interaction/Translate.js").default}
+   * @type {?import("ngeo/interaction/Translate.js").default}
    * @private
    */
-  this.translate_;
+  this.translate_ = null;
 
   /**
-   * @type {import("ngeo/interaction/Rotate.js").default}
+   * @type {?import("ngeo/interaction/Rotate.js").default}
    * @private
    */
-  this.rotate_;
+  this.rotate_ = null;
 
   /**
-   * @type {!import("ngeo/misc/ToolActivate.js").default}
+   * @type {?import("ngeo/misc/ToolActivate.js").default}
    */
-  this.rotateToolActivate;
+  this.rotateToolActivate = null;
 
   /**
-   * @type {!import("ngeo/misc/ToolActivate.js").default}
+   * @type {?import("ngeo/misc/ToolActivate.js").default}
    */
-  this.translateToolActivate;
+  this.translateToolActivate = null;
 
   /**
-   * @type {!Array.<!import("ol/events.js").EventsKey>}
+   * @type {Array<import("ol/events.js").EventsKey>}
    * @private
    */
   this.listenerKeys_ = [];
 
   /**
-   * @type {?Array.<!import('ngeo/format/Attribute.js').Attribute>}
+   * @type {?Array<import('ngeo/format/Attribute.js').Attribute>}
    */
   this.attributes = null;
 
   /**
-   * @type {string|undefined}
+   * @type {?string}
    */
-  this.geomType;
+  this.geomType = null;
 
   /**
    * @type {boolean}
@@ -512,6 +513,9 @@ function Controller($element, $q, $scope, $timeout,
  * Called on initialization of the controller.
  */
 Controller.prototype.$onInit = function() {
+  if (!this.map) {
+    throw new Error('Missing map');
+  }
   const lang = this.gettextCatalog_.getCurrentLanguage();
 
   // @ts-ignore: $.datetimepicker is available, as it is imported
@@ -521,9 +525,17 @@ Controller.prototype.$onInit = function() {
 
   // (1) Set default values and other properties
   this.dirty = this.dirty === true;
-  this.editableNode_ = /** @type {import('gmf/themes.js').GmfLayer} */ (
-    this.editableTreeCtrl.node);
-  const source = /** @type {import('ol/source/Vector.js').default} */(this.vectorLayer.getSource());
+  if (!this.editableTreeCtrl) {
+    throw new Error('Missing editableTreeCtrl');
+  }
+  this.editableNode_ = /** @type {import('gmf/themes.js').GmfLayer} */ (this.editableTreeCtrl.node);
+  if (!this.vectorLayer) {
+    throw new Error('Missing vectorLayer');
+  }
+  const source = this.vectorLayer.getSource();
+  if (!(source instanceof VectorSource)) {
+    throw new Error('Wrong source');
+  }
   this.features = source.getFeaturesCollection();
   this.tolerance = this.tolerance !== undefined ? this.tolerance : 10;
 
@@ -664,7 +676,15 @@ Controller.prototype.$onInit = function() {
  * Save the currently selected feature modifications.
  */
 Controller.prototype.save = function() {
-  console.assert(this.attributes);
+  if (!this.attributes) {
+    throw new Error('Missing attributes');
+  }
+  if (!this.feature) {
+    throw new Error('Missing feature');
+  }
+  if (!this.editableNode_) {
+    throw new Error('Missing editableNode');
+  }
 
   const feature = this.feature.clone();
   feature.setId(this.feature.getId());
@@ -716,8 +736,8 @@ Controller.prototype.save = function() {
     })
     .catch((response) => {
       this.showServerError = true;
-      this.serverErrorType = `error type : ${response.data['error_type']}`;
-      this.serverErrorMessage = `error message : ${response.data['message']}`;
+      this.serverErrorType = `error type : ${response.data.error_type}`;
+      this.serverErrorMessage = `error message : ${response.data.message}`;
     })
     .finally(() => {
       this.pending = false;
@@ -728,6 +748,9 @@ Controller.prototype.save = function() {
 /**
  */
 Controller.prototype.cancel = function() {
+  if (!this.features) {
+    throw new Error('Missing features');
+  }
   this.dirty = false;
   this.feature = null;
   this.features.clear();
@@ -778,6 +801,9 @@ Controller.prototype.checkForModifications_ = function(
 /**
  */
 Controller.prototype.continueWithoutSaving = function() {
+  if (!this.confirmDeferred_) {
+    throw new Error('Missing confirmDeferred_');
+  }
   this.cancel();
   this.confirmDeferred_.resolve();
 };
@@ -786,6 +812,12 @@ Controller.prototype.continueWithoutSaving = function() {
 /**
  */
 Controller.prototype.delete = function() {
+  if (!this.editableNode_) {
+    throw new Error('Missing editableNode_');
+  }
+  if (!this.feature) {
+    throw new Error('Missing feature');
+  }
   const msg = this.gettextCatalog_.getString(
     'Do you really want to delete the selected feature?');
   // Confirm deletion first
@@ -798,6 +830,9 @@ Controller.prototype.delete = function() {
       this.feature
     ).then(
       (response) => {
+        if (!this.editableWMSLayer_) {
+          throw new Error('Missing editableWMSLayer_');
+        }
         this.dirty = false;
         this.pending = false;
         this.ngeoLayerHelper_.refreshWMSLayer(this.editableWMSLayer_);
@@ -808,8 +843,8 @@ Controller.prototype.delete = function() {
       (response) => {
         this.showServerError = true;
         this.pending = false;
-        this.serverErrorType = `error type : ${response.data['error_type']}`;
-        this.serverErrorMessage = `error message : ${response.data['message']}`;
+        this.serverErrorType = `error type : ${response.data.error_type}`;
+        this.serverErrorMessage = `error message : ${response.data.message}`;
       }
     );
 
@@ -838,6 +873,12 @@ Controller.prototype.submit = function() {
 Controller.prototype.handleEditFeature_ = function(resp) {
   const features = new olFormatGeoJSON().readFeatures(resp.data);
   if (features.length) {
+    if (!this.editableWMSLayer_) {
+      throw new Error('Missing editableWMSLayer_');
+    }
+    if (!this.feature) {
+      throw new Error('Missing feature');
+    }
     this.feature.setId(features[0].getId());
     this.ngeoLayerHelper_.refreshWMSLayer(this.editableWMSLayer_);
   }
@@ -883,7 +924,9 @@ Controller.prototype.handleFeatureAdd_ = function(evt) {
   if (evt instanceof CollectionEvent) {
     this.feature = null;
     this.timeout_(() => {
-      console.assert(this.attributes);
+      if (!this.attributes) {
+        throw new Error('Missing attributes');
+      }
       const feature = evt.element;
       console.assert(feature instanceof olFeature);
       const dateFormatter = new DateFormatter();
@@ -930,6 +973,21 @@ Controller.prototype.handleFeatureAdd_ = function(evt) {
  * @private
  */
 Controller.prototype.toggle_ = function(active) {
+  if (!this.modifyToolActivate) {
+    throw new Error('Missing modifyToolActivate');
+  }
+  if (!this.translateToolActivate) {
+    throw new Error('Missing translateToolActivate');
+  }
+  if (!this.rotateToolActivate) {
+    throw new Error('Missing rotateToolActivate');
+  }
+  if (!this.modify_) {
+    throw new Error('Missing modify');
+  }
+  if (!this.editableTreeCtrl) {
+    throw new Error('Missing editableTreeCtrl');
+  }
 
   const keys = this.listenerKeys_;
   const createUid = ['create-', olUtilGetUid(this)].join('-');
@@ -937,6 +995,12 @@ Controller.prototype.toggle_ = function(active) {
   const toolMgr = this.ngeoToolActivateMgr_;
 
   if (active) {
+    if (!this.translate_) {
+      throw new Error('Missing translate');
+    }
+    if (!this.rotate_) {
+      throw new Error('Missing rotate');
+    }
 
     // FIXME
     //this.registerInteractions_();
@@ -976,7 +1040,7 @@ Controller.prototype.toggle_ = function(active) {
 
   this.modify_.setActive(active);
   this.mapSelectActive = active;
-  this.editableTreeCtrl.properties['editing'] = active;
+  this.editableTreeCtrl.properties.editing = active;
 
 };
 
@@ -987,6 +1051,9 @@ Controller.prototype.toggle_ = function(active) {
  * @private
  */
 Controller.prototype.handleMapSelectActiveChange_ = function(active) {
+  if (!this.map) {
+    throw new Error('Missing map');
+  }
 
   const mapDiv = this.map.getViewport();
   console.assert(mapDiv);
@@ -1020,6 +1087,9 @@ Controller.prototype.handleMapSelectActiveChange_ = function(active) {
  */
 Controller.prototype.handleMapClick_ = function(evt) {
   if (evt instanceof MapBrowserEvent) {
+    if (!this.map) {
+      throw new Error('Missing map');
+    }
     const coordinate = evt.coordinate;
     const pixel = evt.pixel;
 
@@ -1028,6 +1098,9 @@ Controller.prototype.handleMapClick_ = function(evt) {
     const feature = this.map.forEachFeatureAtPixel(
       pixel,
       (feature) => {
+        if (!this.features) {
+          throw new Error('Missing features');
+        }
         let ret = null;
         if (this.features.getArray().includes(feature)) {
           ret = feature;
@@ -1047,10 +1120,19 @@ Controller.prototype.handleMapClick_ = function(evt) {
     // (2) If a feature is being edited and has unsaved changes, show modal
     //     to let the user decide what to do
     this.checkForModifications_(true).then(() => {
+      if (!this.map) {
+        throw new Error('Missing map');
+      }
+      if (!this.editableNode_) {
+        throw new Error('Missing editableNode');
+      }
 
       const map = this.map;
       const view = map.getView();
       const resolution = view.getResolution();
+      if (!resolution) {
+        throw new Error('Missing resolution');
+      }
       const buffer = resolution * this.tolerance;
       const extent = olExtent.buffer(
         [coordinate[0], coordinate[1], coordinate[0], coordinate[1]],
@@ -1079,12 +1161,18 @@ Controller.prototype.handleMapClick_ = function(evt) {
  */
 Controller.prototype.handleMapContextMenu_ = function(evt) {
   if (evt instanceof Event) {
+    if (!this.map) {
+      throw new Error('Missing map');
+    }
     const pixel = this.map.getEventPixel(evt);
     const coordinate = this.map.getCoordinateFromPixel(pixel);
 
-    let feature = /** @type {olFeature|undefined} */ (this.map.forEachFeatureAtPixel(
+    let feature = this.map.forEachFeatureAtPixel(
       pixel,
       (feature) => {
+        if (!this.features) {
+          throw new Error('Missing features');
+        }
         let ret = null;
         if (this.features.getArray().includes(feature)) {
           ret = feature;
@@ -1095,7 +1183,7 @@ Controller.prototype.handleMapContextMenu_ = function(evt) {
         hitTolerance: 7,
         layerFilter: undefined
       }
-    ));
+    );
 
     feature = feature ? feature : null;
 
@@ -1104,10 +1192,13 @@ Controller.prototype.handleMapContextMenu_ = function(evt) {
     this.vertexInfo_ = null;
 
     // show contextual menu when clicking on certain types of features
-    if (feature) {
-
+    if (feature instanceof olFeature) {
+      const resolutions = this.map.getView().getResolution();
+      if (!resolutions) {
+        throw new Error('Missing resolutions');
+      }
       const vertexInfo = this.ngeoFeatureHelper_.getVertexInfoAtCoordinate(
-        feature, coordinate, this.map.getView().getResolution());
+        feature, coordinate, resolutions);
       if (vertexInfo) {
         this.vertexInfo_ = vertexInfo;
         this.menuVertex_.open(coordinate);
@@ -1138,6 +1229,9 @@ Controller.prototype.handleGetFeatures_ = function(features) {
   this.pending = false;
 
   this.timeout_(() => {
+    if (!this.features) {
+      throw new Error('Missing features');
+    }
     if (features.length) {
       const feature = features[0];
       this.feature = feature;
@@ -1165,6 +1259,9 @@ Controller.prototype.initializeInteractions_ = function() {
  */
 Controller.prototype.registerInteractions_ = function() {
   this.interactions_.forEach((interaction) => {
+    if (!this.map) {
+      throw new Error('Missing map');
+    }
     this.map.addInteraction(interaction);
   });
 };
@@ -1176,6 +1273,9 @@ Controller.prototype.registerInteractions_ = function() {
  */
 Controller.prototype.unregisterInteractions_ = function() {
   this.interactions_.forEach((interaction) => {
+    if (!this.map) {
+      throw new Error('Missing map');
+    }
     this.map.removeInteraction(interaction);
   });
 };
@@ -1192,7 +1292,9 @@ Controller.prototype.handleFeatureChange_ = function(newFeature, oldFeature) {
   if (oldFeature) {
     olEvents.unlisten(oldFeature, 'propertychange', this.handleFeaturePropertyChange_, this);
     geom = oldFeature.getGeometry();
-    console.assert(geom);
+    if (!geom) {
+      throw new Error('Missing geom');
+    }
     olEvents.unlisten(
       geom,
       'change',
@@ -1206,7 +1308,9 @@ Controller.prototype.handleFeatureChange_ = function(newFeature, oldFeature) {
     this.featureId = newFeature.getId();
     olEvents.listen(newFeature, 'propertychange', this.handleFeaturePropertyChange_, this);
     geom = newFeature.getGeometry();
-    console.assert(geom);
+    if (!geom) {
+      throw new Error('Missing geom');
+    }
     olEvents.listen(
       geom,
       'change',
@@ -1260,10 +1364,16 @@ Controller.prototype.handleMenuActionClick_ = function(evt) {
 
   switch (action) {
     case 'move':
+      if (!this.translate_) {
+        throw new Error('Missing translate');
+      }
       this.translate_.setActive(true);
       this.scope_.$apply();
       break;
     case 'rotate':
+      if (!this.rotate_) {
+        throw new Error('Missing rotate');
+      }
       this.rotate_.setActive(true);
       this.scope_.$apply();
       break;
@@ -1282,6 +1392,12 @@ Controller.prototype.handleMenuVertexActionClick_ = function(evt) {
 
   switch (action) {
     case 'delete':
+      if (!this.feature) {
+        throw new Error('Missing feature');
+      }
+      if (!this.vertexInfo_) {
+        throw new Error('Missing vertexInfo');
+      }
       const feature = this.feature;
       const vertexInfo = this.vertexInfo_;
       this.ngeoFeatureHelper_.removeVertex(feature, vertexInfo);
@@ -1298,6 +1414,9 @@ Controller.prototype.handleMenuVertexActionClick_ = function(evt) {
  * @private
  */
 Controller.prototype.handleTranslateEnd_ = function(evt) {
+  if (!this.translate_) {
+    throw new Error('Missing translate');
+  }
   this.translate_.setActive(false);
   this.scope_.$apply();
 };
@@ -1308,6 +1427,9 @@ Controller.prototype.handleTranslateEnd_ = function(evt) {
  * @private
  */
 Controller.prototype.handleRotateEnd_ = function(evt) {
+  if (!this.rotate_) {
+    throw new Error('Missing rotate');
+  }
   this.rotate_.setActive(false);
   this.scope_.$apply();
 };
@@ -1317,6 +1439,9 @@ Controller.prototype.handleRotateEnd_ = function(evt) {
  * @private
  */
 Controller.prototype.handleDestroy_ = function() {
+  if (!this.features) {
+    throw new Error('Missing features');
+  }
   this.features.clear();
   this.handleFeatureChange_(null, this.feature);
   this.feature = null;

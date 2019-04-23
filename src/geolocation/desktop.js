@@ -174,7 +174,11 @@ function Controller($scope, $element, ngeoFeatureOverlayMgr, ngeoNotification) {
   this.active_ = false;
 
   olEvents.listen(this.geolocation_, 'change:accuracyGeometry', () => {
-    this.accuracyFeature_.setGeometry(this.geolocation_.getAccuracyGeometry());
+    const geometry = this.geolocation_.getAccuracyGeometry();
+    if (!geometry) {
+      throw new Error('Missing geometry');
+    }
+    this.accuracyFeature_.setGeometry(geometry);
   });
 
   olEvents.listen(this.geolocation_, 'change:position', (evt) => {

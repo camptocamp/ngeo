@@ -78,6 +78,7 @@ function MainController($scope, gmfEditFeature, gmfUser) {
    * @type {import("ol/layer/Image.js").default}
    * @private
    */
+  // @ts-ignore: OL issue
   this.wmsLayer_ = new olLayerImage({
     source: this.wmsSource_
   });
@@ -95,7 +96,7 @@ function MainController($scope, gmfEditFeature, gmfUser) {
   this.layerId_ = 113;
 
   /**
-   * @type {import("ol/Feature.js").default}
+   * @type {?import("ol/Feature.js").default}
    */
   this.feature = null;
 
@@ -143,6 +144,9 @@ MainController.prototype.handleMapSingleClick_ = function(evt) {
   const map = this.map;
   const view = map.getView();
   const resolution = view.getResolution();
+  if (!resolution) {
+    throw new Error('Missing resolution');
+  }
   const buffer = resolution * this.pixelBuffer_;
   const extent = olExtent.buffer(
     [coordinate[0], coordinate[1], coordinate[0], coordinate[1]],
@@ -186,6 +190,9 @@ MainController.prototype.insertFeature = function() {
   const map = this.map;
   const view = map.getView();
   const resolution = view.getResolution();
+  if (!resolution) {
+    throw new Error('Missing resolution');
+  }
   const buffer = resolution * -50; // 50 pixel buffer inside the extent
   const size = /** @type {!Array.<number>} */ (map.getSize());
   const extent = olExtent.buffer(
@@ -226,8 +233,9 @@ MainController.prototype.insertFeature = function() {
  * Update the currently selected feature with a new name.
  */
 MainController.prototype.updateFeature = function() {
-
-  console.assert(this.feature);
+  if (!this.feature) {
+    throw new Error('Missing feature');
+  }
 
   this.pending = true;
 
@@ -248,8 +256,9 @@ MainController.prototype.updateFeature = function() {
  * Delete currently selected feature.
  */
 MainController.prototype.deleteFeature = function() {
-
-  console.assert(this.feature);
+  if (!this.feature) {
+    throw new Error('Missing feature');
+  }
 
   // (1) Launch request
   this.editFeature_.deleteFeature(

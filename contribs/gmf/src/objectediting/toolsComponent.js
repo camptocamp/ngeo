@@ -162,52 +162,52 @@ function Controller($injector, $scope, ngeoToolActivateMgr) {
   /**
    * @type {boolean}
    */
-  this.active;
+  this.active = false;
 
   /**
    * @type {boolean}
    */
-  this.copyFromActive;
+  this.copyFromActive = false;
 
   /**
    * @type {boolean}
    */
-  this.deleteFromActive;
+  this.deleteFromActive = false;
 
   /**
-   * @type {import("ol/Feature.js").default}
+   * @type {?import("ol/Feature.js").default}
    */
-  this.feature;
+  this.feature = null;
 
   /**
-   * @type {string}
+   * @type {?string}
    */
-  this.geomType;
+  this.geomType = null;
 
   /**
-   * @type {import("ol/Map.js").default}
+   * @type {?import("ol/Map.js").default}
    */
-  this.map;
+  this.map = null;
 
   /**
-   * @type {ObjectEditingQueryableLayerInfo}
+   * @type {?ObjectEditingQueryableLayerInfo}
    */
-  this.queryableLayerInfo;
+  this.queryableLayerInfo = null;
 
   /**
-   * @type {string}
+   * @type {?string}
    */
-  this.process;
+  this.process = null;
 
   /**
    * @type {boolean}
    */
-  this.requiresLayer;
+  this.requiresLayer = false;
 
   /**
-   * @type {import("ol/Collection.js").default.<import("ol/Feature.js").default>}
+   * @type {?import("ol/Collection.js").default.<import("ol/Feature.js").default>}
    */
-  this.sketchFeatures;
+  this.sketchFeatures = null;
 
 
   // == Injected properties ==

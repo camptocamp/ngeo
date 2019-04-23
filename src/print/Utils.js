@@ -17,13 +17,13 @@ export function PrintUtils() {
    * @type {number}
    * @private
    */
-  this.extentHalfHorizontalDistance_;
+  this.extentHalfHorizontalDistance_ = -1;
 
   /**
    * @type {number}
    * @private
    */
-  this.extentHalfVerticalDistance_;
+  this.extentHalfVerticalDistance_ = -1;
 
 }
 
@@ -63,7 +63,13 @@ PrintUtils.prototype.createPrintMaskPostcompose = function(getSize, getScale, op
     function(evt) {
       if (evt instanceof RenderEvent) {
         const context = evt.context;
+        if (!context) {
+          throw new Error('Missing context');
+        }
         const frameState = evt.frameState;
+        if (!frameState) {
+          throw new Error('Missing state');
+        }
 
         const resolution = frameState.viewState.resolution;
 
@@ -80,15 +86,11 @@ PrintUtils.prototype.createPrintMaskPostcompose = function(getSize, getScale, op
         const ppi = DOTS_PER_INCH;
         const ipm = INCHES_PER_METER;
 
-        const extentHalfWidth =
-            (((width / ppi) / ipm) * scale / resolution) / 2;
-        self.extentHalfHorizontalDistance_ =
-            (((size[0] / ppi) / ipm) * scale) / 2;
+        const extentHalfWidth = (((width / ppi) / ipm) * scale / resolution) / 2;
+        self.extentHalfHorizontalDistance_ = (((size[0] / ppi) / ipm) * scale) / 2;
 
-        const extentHalfHeight =
-            (((height / ppi) / ipm) * scale / resolution) / 2;
-        self.extentHalfVerticalDistance_ =
-            (((size[1] / ppi) / ipm) * scale) / 2;
+        const extentHalfHeight = (((height / ppi) / ipm) * scale / resolution) / 2;
+        self.extentHalfVerticalDistance_ = (((size[1] / ppi) / ipm) * scale) / 2;
 
         // Draw a mask on the whole map.
         context.beginPath();

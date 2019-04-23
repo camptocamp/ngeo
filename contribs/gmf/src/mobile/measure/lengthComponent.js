@@ -20,7 +20,7 @@ module.value('gmfMobileMeasureLengthTemplateUrl',
    * @return {string} The template url.
    */
   (element, attrs) => {
-    const templateUrl = attrs['gmfMobileMeasureLengthTemplateurl'];
+    const templateUrl = attrs.gmfMobileMeasureLengthTemplateurl;
     return templateUrl !== undefined ? templateUrl :
       'gmf/measure/lengthComponent';
   });
@@ -70,9 +70,12 @@ function mobileMeasureLenthComponent(gmfMobileMeasureLengthTemplateUrl) {
      * @param {angular.IScope} scope Scope.
      * @param {JQuery} element Element.
      * @param {angular.IAttributes} attrs Attributes.
-     * @param {angular.IController} controller Controller.
+     * @param {angular.IController=} controller Controller.
      */
     link: (scope, element, attrs, controller) => {
+      if (!controller) {
+        throw new Error('Missing controller');
+      }
       controller.init();
     }
   };
@@ -97,15 +100,18 @@ class Controller extends MeasueMobileBaseController {
     super($scope, $filter, gettextCatalog);
 
     /**
-     * @type {import("ngeo/interaction/MeasureLengthMobile.js").default}
+     * @type {?import("ngeo/interaction/MeasureLengthMobile.js").default}
      */
-    this.measure;
+    this.measure = null;
   }
 
   /**
    * Initialise the controller.
    */
   init() {
+    if (!this.precision) {
+      throw new Error('Missing precision');
+    }
     this.measure = new ngeoInteractionMeasureLengthMobile(
       this.filter('ngeoUnitPrefix'), this.gettextCatalog, {
         precision: this.precision,
@@ -120,6 +126,9 @@ class Controller extends MeasueMobileBaseController {
    * Add current sketch point to line measure
    */
   addPoint() {
+    if (!this.drawInteraction) {
+      throw new Error('Missing drawInteraction');
+    }
     this.drawInteraction.addToDrawing();
   }
 
@@ -127,6 +136,9 @@ class Controller extends MeasueMobileBaseController {
    * Clear the sketch feature
    */
   clear() {
+    if (!this.drawInteraction) {
+      throw new Error('Missing drawInteraction');
+    }
     this.drawInteraction.clearDrawing();
   }
 
@@ -134,6 +146,9 @@ class Controller extends MeasueMobileBaseController {
    * Finish line measure
    */
   finish() {
+    if (!this.drawInteraction) {
+      throw new Error('Missing drawInteraction');
+    }
     this.drawInteraction.finishDrawing();
   }
 

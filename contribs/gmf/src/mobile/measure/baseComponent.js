@@ -6,6 +6,7 @@ import olStyleFill from 'ol/style/Fill.js';
 import olStyleRegularShape from 'ol/style/RegularShape.js';
 import olStyleStroke from 'ol/style/Stroke.js';
 import olStyleStyle from 'ol/style/Style.js';
+import MobileDraw from 'ngeo/interaction/MobileDraw';
 
 
 /**
@@ -50,23 +51,26 @@ export function MeasueMobileBaseController($scope, $filter, gettextCatalog) {
   this.gettextCatalog = gettextCatalog;
 
   /**
-   * @type {import("ol/Map.js").default}
+   * @type {?import("ol/Map.js").default}
    */
-  this.map;
+  this.map = null;
 
   /**
    * @type {boolean}
    */
-  this.active;
+  this.active = false;
 
   this.scope.$watch(() => this.active, (newVal) => {
+    if (!this.measure) {
+      throw new Error('Missing measure');
+    }
     this.measure.setActive(newVal);
   });
 
   /**
-   * @type {number|undefined}
+   * @type {?number}
    */
-  this.precision;
+  this.precision = null;
 
   /**
    * @type {import("ol/style/Style.js").StyleLike}
@@ -93,14 +97,14 @@ export function MeasueMobileBaseController($scope, $filter, gettextCatalog) {
   });
 
   /**
-   * @type {import("ngeo/interaction/Measure.js").default}
+   * @type {?import("ngeo/interaction/Measure.js").default}
    */
-  this.measure;
+  this.measure = null;
 
   /**
-   * @type {import("ngeo/interaction/MobileDraw.js").default}
+   * @type {?import("ngeo/interaction/MobileDraw.js").default}
    */
-  this.drawInteraction;
+  this.drawInteraction = null;
 
   /**
    * @type {boolean}
@@ -123,14 +127,24 @@ export function MeasueMobileBaseController($scope, $filter, gettextCatalog) {
  * Initialise the controller.
  */
 MeasueMobileBaseController.prototype.init = function() {
+  if (!this.map) {
+    throw new Error('Missing map');
+  }
+  if (!this.measure) {
+    throw new Error('Missing measure');
+  }
+  if (!this.drawInteraction) {
+    throw new Error('Missing drawInteraction');
+  }
 
   this.measure.setActive(this.active);
   interactionDecoration(this.measure);
 
-  this.drawInteraction = /** @type {import("ngeo/interaction/MobileDraw.js").default} */ (
-    this.measure.getDrawInteraction());
-
-  const drawInteraction = this.drawInteraction;
+  const drawInteraction = this.measure.getDrawInteraction();
+  if (!(drawInteraction instanceof MobileDraw)) {
+    throw new Error('Wrong drawInteraction');
+  }
+  this.drawInteraction = drawInteraction;
   interactionDecoration(drawInteraction);
 
   Object.defineProperty(this, 'hasPoints', {

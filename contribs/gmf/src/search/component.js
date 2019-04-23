@@ -332,9 +332,9 @@ class SearchController {
     this.ngeoAutoProjection_ = ngeoAutoProjection;
 
     /**
-     * @type {!import("ol/Map.js").default}
+     * @type {?import("ol/Map.js").default}
      */
-    this.map;
+    this.map = null;
 
     /**
      * @type {Object}
@@ -343,31 +343,31 @@ class SearchController {
     this.styles_ = {};
 
     /**
-     * @type {function(): void}
+     * @type {?function(): void}
      */
-    this.onInitCallback;
+    this.onInitCallback = null;
 
     /**
      * Whether or not to show a button to clear the search text.
      * Default to true.
      * @type {boolean}
      */
-    this.clearButton;
+    this.clearButton = false;
 
     /**
      * @type {boolean}
      */
-    this.colorChooser;
+    this.colorChooser = false;
 
     /**
      * @type {string}
      */
-    this.placeholder;
+    this.placeholder = '';
 
     /**
      * @type {number}
      */
-    this.delay;
+    this.delay = 0;
 
     /**
      * The maximum zoom we will zoom on result.
@@ -379,13 +379,13 @@ class SearchController {
      * Supported projections for coordinates search.
      * @type {Array<string>}
      */
-    this.coordinatesProjections;
+    this.coordinatesProjections = [];
 
     /**
      * Supported projections for coordinates search.
      * @type {Array<olProj.Projection>}
      */
-    this.coordinatesProjectionsInstances;
+    this.coordinatesProjectionsInstances = [];
 
     /**
      * @type {import("ngeo/map/FeatureOverlay.js").FeatureOverlay}
@@ -399,9 +399,9 @@ class SearchController {
     this.datasources = [];
 
     /**
-     * @type {Twitter.Typeahead.Options}
+     * @type {?Twitter.Typeahead.Options}
      */
-    this.typeaheadOptions;
+    this.typeaheadOptions = null;
 
     /**
      * @type {Twitter.Typeahead.Options}
@@ -411,12 +411,12 @@ class SearchController {
     });
 
     /**
-     * @type {Object.<string, import("ol/style/Style.js").default>}
+     * @type {Object<string, import("ol/style/Style.js").default>}
      */
-    this.featuresStyles;
+    this.featuresStyles = {};
 
     /**
-     * @type {Array.<Twitter.Typeahead.Dataset>}
+     * @type {Array<Twitter.Typeahead.Dataset>}
      */
     this.datasets = [];
 
@@ -428,7 +428,7 @@ class SearchController {
     /**
      * @type {string}
      */
-    this.color;
+    this.color = '';
 
     /**
      * @type {boolean}
@@ -436,14 +436,14 @@ class SearchController {
     this.displayColorPicker = false;
 
     /**
-     * @type {import('ngeo/search/searchDirective.js').SearchDirectiveListeners}
+     * @type {?import('ngeo/search/searchDirective.js').SearchDirectiveListeners}
      */
-    this.listeners;
+    this.listeners = null;
 
     /**
      * @type {import('ngeo/search/searchDirective.js').SearchDirectiveListeners}
      */
-    this.additionalListeners;
+    this.additionalListeners = {};
   }
 
 
@@ -451,6 +451,12 @@ class SearchController {
    * Called on initialization of the controller.
    */
   $onInit() {
+    if (!this.map) {
+      throw new Error('Missing map');
+    }
+    if (!this.ngeoLocation_) {
+      throw new Error('Missing ngeoLocation');
+    }
     const gettextCatalog = this.gettextCatalog_;
     this.clearButton = this.clearButton !== false;
     this.colorChooser = this.colorChooser === true;
@@ -506,13 +512,13 @@ class SearchController {
       if (searchQuery) {
         let resultIndex = 1;
         if (this.ngeoLocation_.getParam('search-select-index')) {
-          resultIndex = parseInt(this.ngeoLocation_.getParam('search-select-index'), 10);
+          resultIndex = parseInt(this.ngeoLocation_.getParam('search-select-index') || '', 10);
         }
         let mapZoom;
         if (this.ngeoLocation_.getParam('search-maxzoom')) {
-          mapZoom = parseInt(this.ngeoLocation_.getParam('search-maxzoom'), 10);
+          mapZoom = parseInt(this.ngeoLocation_.getParam('search-maxzoom') || '', 10);
         } else if (this.ngeoLocation_.getParam('map_zoom')) {
-          mapZoom = parseInt(this.ngeoLocation_.getParam('map_zoom'), 10);
+          mapZoom = parseInt(this.ngeoLocation_.getParam('map_zoom') || '', 10);
         }
         this.fulltextsearch_(searchQuery, resultIndex, mapZoom);
       }
@@ -558,6 +564,9 @@ class SearchController {
    * @private
    */
   initDatasets_() {
+    if (!this.map) {
+      throw new Error('Missing map');
+    }
     const gettextCatalog = this.gettextCatalog_;
     for (let i = 0; i < this.datasources.length; i++) {
       const datasource = this.datasources[i];
@@ -612,7 +621,7 @@ class SearchController {
           return `<div class="gmf-search-header" translate>${header}</div>`;
         },
         suggestion: (suggestion) => {
-          const coordinates = suggestion['label'];
+          const coordinates = suggestion.label;
 
           let html = `<p class="gmf-search-label">${coordinates}</p>`;
           html = `<div class="gmf-search-datum">${html}</div>`;
@@ -687,7 +696,7 @@ class SearchController {
          * @return {boolean}
          */
       function(feature) {
-        const properties = feature.properties;
+        const properties = feature.properties || {};
         if (properties.actions) {
           // result is an action (add_theme, add_group, ...)
           // add it to the corresponding group
@@ -714,7 +723,7 @@ class SearchController {
          * @return {boolean}
          */
       function(feature) {
-        const featureLayerName = feature.properties.layer_name;
+        const featureLayerName = (feature.properties || {}).layer_name;
         // Keep only layers with layer_name (don't keep action layers).
         if (featureLayerName === undefined) {
           return false;
@@ -736,6 +745,9 @@ class SearchController {
    * @private
    */
   createAndInitBloodhound_(config, opt_filter) {
+    if (!this.map) {
+      throw new Error('Missing map');
+    }
     const mapProjectionCode = this.map.getView().getProjection().getCode();
     const remoteOptions = this.getBloodhoudRemoteOptions_();
     const bloodhound = this.ngeoSearchCreateGeoJSONBloodhound_(config.url, opt_filter,
@@ -756,6 +768,9 @@ class SearchController {
       rateLimitWait: this.delay,
       prepare: (query, settings) => {
         const url = settings.url;
+        if (!url) {
+          throw new Error('Missing URL');
+        }
         const lang = gettextCatalog.getCurrentLanguage();
         settings.xhrFields = {
           withCredentials: true
@@ -845,7 +860,9 @@ class SearchController {
    * @private
    */
   getSearchStyle_(feature, resolution) {
-    console.assert(feature);
+    if (!feature) {
+      throw new Error('Missing feature');
+    }
     const style = this.styles_[feature.get('layer_name')] || this.styles_['default'];
     if (this.color) {
       const color = asColorArray(this.color);
@@ -948,6 +965,9 @@ class SearchController {
    * @private
    */
   select_(event, suggestion, dataset) {
+    if (!this.map) {
+      throw new Error('Missing map');
+    }
     if (suggestion.tt_source === 'coordinates') {
       const geom = new olGeomPoint(suggestion.position);
 
@@ -972,6 +992,9 @@ class SearchController {
    * @private
    */
   selectFromGMF_(event, feature, dataset) {
+    if (!this.map) {
+      throw new Error('Missing map');
+    }
     const actions = feature.get('actions');
     const featureGeometry = /** @type {import("ol/geom/SimpleGeometry.js").default} */
         (feature.getGeometry());
@@ -1086,6 +1109,9 @@ class SearchController {
     }
     this.fullTextSearch_.search(query, {limit: `${resultIndex}`})
       .then((data) => {
+        if (!this.map) {
+          throw new Error('Missing map');
+        }
         if (data && data.features[resultIndex - 1]) {
           const format = new olFormatGeoJSON();
           const feature = format.readFeature(data.features[resultIndex - 1]);
@@ -1093,9 +1119,13 @@ class SearchController {
           const fitOptions = /** @type {import('ol/View.js').FitOptions} */ ({});
           if (opt_zoom !== undefined) {
             fitOptions.maxZoom = opt_zoom;
-            fitOptions.size = this.map.getSize();
+            fitOptions.size = this.map.getSize() || [];
           }
-          this.map.getView().fit(feature.getGeometry().getExtent(), fitOptions);
+          const geometry = feature.getGeometry();
+          if (!geometry) {
+            throw new Error('Missing geometry');
+          }
+          this.map.getView().fit(geometry.getExtent(), fitOptions);
           this.inputValue = /** @type {string} */ (feature.get('label'));
         }
       });

@@ -243,6 +243,9 @@ export default class {
     canvas.width = w;
     canvas.height = h;
     const ctx = canvas.getContext('2d');
+    if (!ctx) {
+      throw new Error('Missing ctx');
+    }
     ctx.fillStyle = 'white';
     ctx.fillRect(0, 0, w, h);
 
@@ -265,9 +268,16 @@ export default class {
     // The image must be loaded to be drawn.
     exportImage.onload = () => {
       ctx.drawImage(exportImage, 0, 0, w, h);
-      body.removeChild(document.getElementById(img_id));
+      const elImg = document.getElementById(img_id);
+      if (!elImg) {
+        throw new Error('Missing elImg');
+      }
+      body.removeChild(elImg);
       // Let the user download the image.
       canvas.toBlob((blob) => {
+        if (!blob) {
+          throw new Error('Missing blob');
+        }
         saveAs(blob, 'LIDAR_profile.png');
       });
     };
@@ -323,7 +333,7 @@ export default class {
 
   /**
    * Find the maximum value in am array of numbers
-   * @param {(Array.<number>|undefined)} array of number
+   * @param {(Array<number>)} array of number
    * @return {number} the maximum of input array
    */
   arrayMax(array) {
@@ -333,7 +343,7 @@ export default class {
 
   /**
    * Find the minimum value in am array of numbers
-   * @param {Array.<number>|undefined} array of number
+   * @param {Array<number>} array of number
    * @return {number} the minimum of input array
    */
   arrayMin(array) {
@@ -374,7 +384,7 @@ export default class {
    * @param {Function} sy d3.scalelinear y scale
    * @param {import("gmf/lidarprofile/Config.js").LidarprofileServerConfigClassifications} classification_colors
    *    classification colors
-   * @return {LidarPoint} closestPoint the closest point to the clicked coordinates
+   * @return {?LidarPoint} closestPoint the closest point to the clicked coordinates
    */
   getClosestPoint(points, xs, ys, tolerance, sx, sy, classification_colors) {
     const d = points;
@@ -407,7 +417,7 @@ export default class {
       }
     }
 
-    let closestPoint;
+    let closestPoint = null;
 
     if (hP.length > 0) {
       const minDist = Math.min.apply(Math, distances);

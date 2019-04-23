@@ -10,7 +10,8 @@ import olGeomPoint from 'ol/geom/Point.js';
 import olInteractionPointer from 'ol/interaction/Draw.js';
 import olLayerVector from 'ol/layer/Vector.js';
 import olSourceVector from 'ol/source/Vector.js';
-
+import VectorSource from 'ol/source/Vector.js';
+import Feature from 'ol/Feature.js';
 
 /**
  * @typedef {Object} Options
@@ -30,7 +31,7 @@ class DrawAzimut extends olInteractionPointer {
    */
   constructor(options) {
     super({
-      type: undefined
+      type: '',
     });
 
     this.shouldStopEvent = FALSE;
@@ -39,14 +40,14 @@ class DrawAzimut extends olInteractionPointer {
      * @type {import("ol/pixel.js").Pixel}
      * @private
      */
-    this.downPx_ = null;
+    this.downPx_ = [];
 
     /**
      * Target source for drawn features.
      * @type {import("ol/source/Vector.js").default}
      * @private
      */
-    this.source_ = options.source !== undefined ? options.source : null;
+    this.source_ = options.source;
 
     /**
      * Tglls whether the drawing has started or not.
@@ -57,17 +58,17 @@ class DrawAzimut extends olInteractionPointer {
 
     /**
      * Sketch feature.
-     * @type {import("ol/Feature.js").default}
+     * @type {Feature}
      * @private
      */
-    this.sketchFeature_ = null;
+    this.sketchFeature_ = new Feature();
 
     /**
      * Sketch point.
-     * @type {import("ol/Feature.js").default}
+     * @type {Feature}
      * @private
      */
-    this.sketchPoint_ = null;
+    this.sketchPoint_ = new Feature();
 
 
     /**
@@ -117,7 +118,7 @@ class DrawAzimut extends olInteractionPointer {
    */
   createOrUpdateSketchPoint_(event) {
     const coordinates = event.coordinate.slice();
-    if (this.sketchPoint_ === null) {
+    if (this.sketchPoint_.getGeometry() === null) {
       this.sketchPoint_ = new olFeature(new olGeomPoint(coordinates));
       this.updateSketchFeatures_();
     } else {
@@ -134,12 +135,8 @@ class DrawAzimut extends olInteractionPointer {
    */
   updateSketchFeatures_() {
     const sketchFeatures = [];
-    if (this.sketchFeature_ !== null) {
-      sketchFeatures.push(this.sketchFeature_);
-    }
-    if (this.sketchPoint_ !== null) {
-      sketchFeatures.push(this.sketchPoint_);
-    }
+    sketchFeatures.push(this.sketchFeature_);
+    sketchFeatures.push(this.sketchPoint_);
     const source = /** @type {olSourceVector} */(this.sketchLayer_.getSource());
     source.clear(true);
     source.addFeatures(sketchFeatures);
@@ -172,9 +169,10 @@ class DrawAzimut extends olInteractionPointer {
    */
   modifyDrawing_(event) {
     const coordinate = event.coordinate;
-    const geometry = /** @type {import('ol/geom/GeometryCollection.js').default} */(
-      this.sketchFeature_.getGeometry()
-    );
+    const geometry = this.sketchFeature_.getGeometry();
+    if (!(geometry instanceof olGeomGeometryCollection)) {
+      throw new Error('Missing geometry');
+    }
     const geometries = geometry.getGeometriesArray();
     const line = geometries[0];
     if (line instanceof olGeomLineString) {
@@ -198,17 +196,19 @@ class DrawAzimut extends olInteractionPointer {
 
   /**
    * Stop drawing without adding the sketch feature to the target layer.
-   * @return {import("ol/Feature.js").default} The sketch feature (or null if none).
+   * @return {Feature} The sketch feature (or null if none).
    * @private
    */
   abortDrawing_() {
     this.started_ = false;
     const sketchFeature = this.sketchFeature_;
-    if (sketchFeature !== null) {
-      this.sketchFeature_ = null;
-      this.sketchPoint_ = null;
-      /** @type {olSourceVector} */(this.sketchLayer_.getSource()).clear(true);
+    this.sketchFeature_ = new Feature();
+    this.sketchPoint_ = new Feature();
+    const source = this.sketchLayer_.getSource();
+    if (!(source instanceof VectorSource)) {
+      throw new Error('Missing source');
     }
+    source.clear(true);
     return sketchFeature;
   }
 
@@ -221,6 +221,7 @@ class DrawAzimut extends olInteractionPointer {
     if (map === null || !active) {
       this.abortDrawing_();
     }
+    // @ts-ignore: OL issue
     this.sketchLayer_.setMap(active ? map : null);
   }
 
@@ -230,7 +231,6 @@ class DrawAzimut extends olInteractionPointer {
    */
   finishDrawing_() {
     const sketchFeature = this.abortDrawing_();
-    console.assert(sketchFeature !== null);
 
     if (this.source_ !== null) {
       this.source_.addFeature(sketchFeature);
@@ -250,8 +250,7 @@ class DrawAzimut extends olInteractionPointer {
   }
 
   /**
-   * @param {import("ol/MapBrowserPointerEvent.js").default} event Event.
-   * @return {boolean} Start drag sequence?
+   * @inheritDoc
    */
   handleDownEvent(event) {
     this.downPx_ = event.pixel;
@@ -259,10 +258,12 @@ class DrawAzimut extends olInteractionPointer {
   }
 
   /**
-   * @param {import("ol/MapBrowserPointerEvent.js").default} event Event.
-   * @return {boolean} Stop drag sequence?
+   * @inheritDoc
    */
   handleUpEvent(event) {
+    if (!this.downPx_) {
+      throw new Error('Missing downPx');
+    }
     const downPx = this.downPx_;
     const clickPx = event.pixel;
     const dx = downPx[0] - clickPx[0];
@@ -282,8 +283,7 @@ class DrawAzimut extends olInteractionPointer {
   }
 
   /**
-   * @param {import("ol/MapBrowserEvent.js").default} mapBrowserEvent Map browser event.
-   * @return {boolean} `false` to stop event propagation.
+   * @inheritDoc
    */
   handleEvent(mapBrowserEvent) {
     let pass = true;

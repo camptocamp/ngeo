@@ -30,13 +30,17 @@ export class AbstractAPIController extends AbstractAppController {
     };
     Object.assign(viewConfig, config.mapViewConfig || {});
 
+    const scaleline = document.getElementById('scaleline');
+    if (!scaleline) {
+      throw new Error('Missing scaleline');
+    }
     super(config, new olMap({
       pixelRatio: config.mapPixelRatio,
       layers: [],
       view: new olView(viewConfig),
       controls: config.mapControls || [
         new olControlScaleLine({
-          target: document.getElementById('scaleline')
+          target: scaleline
         }),
         new olControlZoom({
           zoomInTipLabel: '',

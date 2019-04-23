@@ -1,6 +1,7 @@
 import ngeoInteractionDrawAzimut from 'ngeo/interaction/DrawAzimut.js';
 import ngeoInteractionMeasure, {getFormattedLength} from 'ngeo/interaction/Measure.js';
-
+import LineString from 'ol/geom/LineString.js';
+import GeometryCollection from 'ol/geom/GeometryCollection.js';
 
 /**
  * Interaction dedicated to measure length.
@@ -16,18 +17,18 @@ export default class extends ngeoInteractionMeasure {
    */
   constructor(unitPrefixFormat, numberFormat, options = {}) {
     super(options);
-
+    let continueMsg;
+    if (options.continueMsg !== undefined) {
+      continueMsg = options.continueMsg;
+    } else {
+      continueMsg = document.createElement('span');
+      continueMsg.textContent = 'Click to finish.';
+    }
     /**
      * Message to show after the first point is clicked.
      * @type {Element}
      */
-    this.continueMsg;
-    if (options.continueMsg !== undefined) {
-      this.continueMsg = options.continueMsg;
-    } else {
-      this.continueMsg = document.createElement('span');
-      this.continueMsg.textContent = 'Click to finish.';
-    }
+    this.continueMsg = continueMsg;
 
     /**
      * The format function
@@ -58,10 +59,17 @@ export default class extends ngeoInteractionMeasure {
    * @inheritDoc
    */
   handleMeasure(callback) {
+    if (!this.sketchFeature) {
+      throw new Error('Missing sketchFeature');
+    }
     const geom = this.sketchFeature.getGeometry();
-    const line = /** @type {import('ol/geom/LineString.js').default} */(
-      /** @type {import('ol/geom/GeometryCollection.js').default} */(geom).getGeometries()[0]
-    );
+    if (!(geom instanceof GeometryCollection)) {
+      throw new Error('Missing geometry');
+    }
+    const line = geom.getGeometries()[0];
+    if (!(line instanceof LineString)) {
+      throw new Error('Missing line');
+    }
     const output = getFormattedAzimutRadius(
       line, this.getMap().getView().getProjection(),
       this.decimals, this.precision, this.unitPrefixFormat, this.numberFormat);

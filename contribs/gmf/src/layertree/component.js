@@ -27,6 +27,7 @@ import {isEmpty} from 'ol/obj.js';
 import olSourceImageWMS from 'ol/source/ImageWMS.js';
 import olSourceTileWMS from 'ol/source/TileWMS.js';
 import olSourceWMTS from 'ol/source/WMTS.js';
+import LayerBase from 'ol/layer/Base.js';
 
 import 'bootstrap/js/src/collapse.js';
 
@@ -190,21 +191,21 @@ function Controller($element, $scope, ngeoLayerHelper,
   /**
    * @type {?import("ol/Map.js").default}
    */
-  this.map;
+  this.map = null;
 
   /**
    * @type {?Object<string, string>}
    */
-  this.dimensions;
+  this.dimensions = null;
 
   /**
-   * @type {!angular.IScope}
+   * @type {angular.IScope}
    * @private
    */
   this.scope_ = $scope;
 
   /**
-   * @type {!import("ngeo/map/LayerHelper.js").LayerHelper}
+   * @type {import("ngeo/map/LayerHelper.js").LayerHelper}
    * @private
    */
   this.layerHelper_ = ngeoLayerHelper;
@@ -215,18 +216,18 @@ function Controller($element, $scope, ngeoLayerHelper,
   this.gmfDataSourceBeingFiltered = gmfDataSourceBeingFiltered;
 
   /**
-   * @type {!import("gmf/datasource/ExternalDataSourcesManager.js").ExternalDatSourcesManager}
+   * @type {import("gmf/datasource/ExternalDataSourcesManager.js").ExternalDatSourcesManager}
    */
   this.gmfExternalDataSourcesManager = gmfExternalDataSourcesManager;
 
   /**
-   * @type {!import("gmf/permalink/Permalink.js").PermalinkService}
+   * @type {import("gmf/permalink/Permalink.js").PermalinkService}
    * @private
    */
   this.gmfPermalink_ = gmfPermalink;
 
   /**
-   * @type {!import("gmf/layertree/TreeManager.js").LayertreeTreeManager}
+   * @type {import("gmf/layertree/TreeManager.js").LayertreeTreeManager}
    * @private
    */
   this.gmfTreeManager_ = gmfTreeManager;
@@ -235,32 +236,32 @@ function Controller($element, $scope, ngeoLayerHelper,
   console.assert(root);
 
   /**
-   * @type {!import('gmf/themes.js').GmfRootNode}
+   * @type {import('gmf/themes.js').GmfRootNode}
    */
   this.root = root;
 
   /**
-   * @type {!import("gmf/layertree/SyncLayertreeMap.js").SyncLayertreeMap}
+   * @type {import("gmf/layertree/SyncLayertreeMap.js").SyncLayertreeMap}
    * @private
    */
   this.gmfSyncLayertreeMap_ = gmfSyncLayertreeMap;
 
   /**
-   * @type {!import("ngeo/misc/WMSTime.js").WMSTime}
+   * @type {import("ngeo/misc/WMSTime.js").WMSTime}
    * @private
    */
   this.ngeoWMSTime_ = ngeoWMSTime;
 
   /**
-   * @type {!Object.<number, !Array.<string>>}
+   * @type {Object<number, Array<string>>}
    * @private
    */
   this.groupNodeStates_ = {};
 
   /**
-   * @type {boolean|undefined}
+   * @type {?boolean}
    */
-  this.openLinksInNewWindow;
+  this.openLinksInNewWindow = null;
 
   /**
    * @type {?import("ol/layer/Group.js").default}
@@ -269,12 +270,12 @@ function Controller($element, $scope, ngeoLayerHelper,
   this.dataLayerGroup_ = null;
 
   /**
-   * @type {!Array.<!import("ol/layer/Base.js").default>}
+   * @type {Array<import("ol/layer/Base.js").default>}
    */
   this.layers = [];
 
   /**
-   * @type {!import("gmf/theme/Themes.js").ThemesService}
+   * @type {import("gmf/theme/Themes.js").ThemesService}
    * @private
    */
   this.gmfThemes_ = gmfThemes;
@@ -290,6 +291,9 @@ function Controller($element, $scope, ngeoLayerHelper,
  * Init the controller,
  */
 Controller.prototype.$onInit = function() {
+  if (!this.map) {
+    throw new Error('Missing map');
+  }
   this.openLinksInNewWindow = this.openLinksInNewWindow === true;
   this.dataLayerGroup_ = this.layerHelper_.getGroupFromMap(this.map, DATALAYERGROUP_NAME);
 
@@ -298,6 +302,9 @@ Controller.prototype.$onInit = function() {
   // watch any change on layers array to refresh the map
   this.scope_.$watchCollection(() => this.layers,
     () => {
+      if (!this.map) {
+        throw new Error('Missing map');
+      }
       this.map.render();
     });
 
@@ -308,6 +315,9 @@ Controller.prototype.$onInit = function() {
     }
   }, (dimensions) => {
     if (dimensions) {
+      if (!this.gmfTreeManager_.rootCtrl) {
+        throw new Error('Missing gmfTreeManager_.rootCtrl');
+      }
       this.updateDimensions_(this.gmfTreeManager_.rootCtrl);
     }
   });
@@ -380,6 +390,12 @@ Controller.prototype.updateLayerDimensions_ = function(layer, node) {
  *    layer or group for the node.
  */
 Controller.prototype.getLayer = function(treeCtrl) {
+  if (!this.map) {
+    throw new Error('Missing map');
+  }
+  if (!this.dataLayerGroup_) {
+    throw new Error('Missing dataLayerGroup');
+  }
   let opt_position;
   if (treeCtrl.parent.isRoot) {
     this.gmfTreeManager_.rootCtrl = treeCtrl.parent;
@@ -410,8 +426,14 @@ Controller.prototype.getLayer = function(treeCtrl) {
  *    from the current node.
  */
 Controller.prototype.listeners = function(scope, treeCtrl) {
+  if (!this.dataLayerGroup_) {
+    throw new Error('Missing dataLayerGroup');
+  }
   const dataLayerGroup = this.dataLayerGroup_;
   scope.$on('$destroy', () => {
+    if (!treeCtrl.layer) {
+      throw new Error('Missing treeCtrl.layer');
+    }
     // Remove the layer from the map.
     dataLayerGroup.getLayers().remove(treeCtrl.layer);
   });
@@ -522,11 +544,12 @@ Controller.prototype.getLegendIconURL = function(treeCtrl) {
  * Get the legends object (<LayerName: url> for each layer) for the given treeCtrl.
  * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl ngeo layertree controller,
  *    from the current node.
- * @return {Object.<string, string>} A <layerName: url> object that provides a
+ * @return {?Object<string, string>} A <layerName: url> object that provides a
  *     layer for each layer.
  */
 Controller.prototype.getLegendsObject = function(treeCtrl) {
-  const legendsObject = /** @type {Object.<string, string>} */ ({});
+  /** @type {Object<string, string>} */
+  const legendsObject = {};
   if (/** @type import('gmf/themes.js').GmfGroup */ (treeCtrl.node).children !== undefined) {
     return null;
   }
@@ -540,10 +563,13 @@ Controller.prototype.getLegendsObject = function(treeCtrl) {
 
   const layer = treeCtrl.layer;
   if (gmfLayer.type === 'WMTS') {
-    console.assert(layer instanceof olLayerTile);
-    const wmtsLegendURL = this.layerHelper_.getWMTSLegendURL(
-      /** @type {import("ol/layer/Tile.js").default} */ (layer));
-    legendsObject[gmfLayerDefaultName] = wmtsLegendURL;
+    if (!(layer instanceof olLayerTile)) {
+      throw new Error('Wrong layer');
+    }
+    const wmtsLegendURL = this.layerHelper_.getWMTSLegendURL(layer);
+    if (wmtsLegendURL !== undefined) {
+      legendsObject[gmfLayerDefaultName] = wmtsLegendURL;
+    }
     return wmtsLegendURL ? legendsObject : null;
   } else {
     const gmfLayerWMS = /** @type {import('gmf/themes.js').GmfLayerWMS} */ (gmfLayer);
@@ -552,15 +578,16 @@ Controller.prototype.getLegendsObject = function(treeCtrl) {
     const scale = this.getScale_();
     // QGIS can handle multiple layers natively. Use Multiple URLs for other map
     // servers
-    let layerNamesList;
-    if (gmfOgcServer.type === ServerType.QGISSERVER) {
-      layerNamesList = [layersNames];
-    } else {
-      layerNamesList = layersNames.split(',');
+    if (gmfOgcServer.type !== ServerType.QGISSERVER) {
+      const layerNamesList = layersNames.split(',');
+      layerNamesList.forEach((layerName) => {
+        const wmtsLegendURL = this.layerHelper_.getWMSLegendURL(gmfOgcServer.url, layerName, scale);
+        if (!wmtsLegendURL) {
+          throw new Error('Missing wmtsLegendURL');
+        }
+        legendsObject[layerName] = wmtsLegendURL;
+      });
     }
-    layerNamesList.forEach((layerName) => {
-      legendsObject[layerName] = this.layerHelper_.getWMSLegendURL(gmfOgcServer.url, layerName, scale);
-    });
     return legendsObject;
   }
 };
@@ -584,9 +611,18 @@ Controller.prototype.getNumberOfLegendsObject = function(treeCtrl) {
  * @private
  */
 Controller.prototype.getScale_ = function() {
+  if (!this.map) {
+    throw new Error('Missing map');
+  }
   const view = this.map.getView();
   const resolution = view.getResolution();
+  if (!resolution) {
+    throw new Error('Missing resolution');
+  }
   const mpu = view.getProjection().getMetersPerUnit();
+  if (!mpu) {
+    throw new Error('Missing mpu');
+  }
   const dpi = 25.4 / 0.28;
   return resolution * mpu * 39.37 * dpi;
 };
@@ -599,7 +635,7 @@ Controller.prototype.getScale_ = function() {
  */
 Controller.prototype.displayMetadata = function(treeCtrl) {
   const node = treeCtrl.node;
-  const metadataURL = node.metadata['metadataUrl'];
+  const metadataURL = node.metadata.metadataUrl;
   if (metadataURL !== undefined) {
     // FIXME layertree should not rely on a window function.
     // @ts-ignore: gmfx is available, see upper
@@ -616,6 +652,9 @@ Controller.prototype.displayMetadata = function(treeCtrl) {
  * a reorder of the first-level groups. Then update the permalink.
  */
 Controller.prototype.afterReorder = function() {
+  if (!this.gmfTreeManager_.rootCtrl) {
+    throw new Error('Missing gmfTreeManager_.rootCtrl');
+  }
   const groupNodes = this.gmfTreeManager_.rootCtrl.node.children;
   const currentTreeCtrls = this.gmfTreeManager_.rootCtrl.children;
   const treeCtrls = [];
@@ -630,6 +669,7 @@ Controller.prototype.afterReorder = function() {
         // is not the wanted behaviour...
         return false;
       }
+      return false;
     });
   });
 
@@ -639,6 +679,9 @@ Controller.prototype.afterReorder = function() {
   // Update map 'data' groupe layers order
   this.layers.length = 0;
   this.gmfTreeManager_.rootCtrl.children.forEach((child) => {
+    if (!(child.layer instanceof LayerBase)) {
+      throw new Error('Wrong child.layer');
+    }
     this.layers.push(child.layer);
   });
 
@@ -679,7 +722,13 @@ Controller.prototype.nodesCount = function() {
  * @return {string|undefined} 'out-of-resolution' or undefined.
  */
 Controller.prototype.getResolutionStyle = function(gmfLayer) {
+  if (!this.map) {
+    throw new Error('Missing map');
+  }
   const resolution = this.map.getView().getResolution();
+  if (!resolution) {
+    throw new Error('Missing resolution');
+  }
   const minResolution = getNodeMinResolution(gmfLayer);
   if (minResolution !== undefined && resolution < minResolution) {
     return 'out-of-resolution';
@@ -698,9 +747,15 @@ Controller.prototype.getResolutionStyle = function(gmfLayer) {
  *    from the current node.
  */
 Controller.prototype.zoomToResolution = function(treeCtrl) {
+  if (!this.map) {
+    throw new Error('Missing map');
+  }
   const gmfLayer = /** @type {import('gmf/themes.js').GmfLayerWMS} */ (treeCtrl.node);
   const view = this.map.getView();
   const resolution = view.getResolution();
+  if (!resolution) {
+    throw new Error('Missing resolution');
+  }
   const minResolution = getNodeMinResolution(gmfLayer);
   if (minResolution !== undefined && resolution < minResolution) {
     view.setResolution(view.constrainResolution(minResolution, 0, 1));

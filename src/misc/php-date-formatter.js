@@ -1,3 +1,4 @@
+// @ts-nocheck
 /* eslint max-len: 0 */
 
 /*!

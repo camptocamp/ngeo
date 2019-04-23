@@ -13,9 +13,10 @@
  */
 export function coordinatesToXY0(coordinates) {
   if (coordinates.length > 2) {
-    const coord = /** @type{import("ol/coordinate.js").Coordinate} */(coordinates);
+    const coord = coordinates;
     return [coord[0], coord[1]];
   }
+  return coordinates;
 }
 
 

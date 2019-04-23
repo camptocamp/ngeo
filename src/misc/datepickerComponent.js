@@ -28,7 +28,7 @@ module.value('ngeoDatePickerTemplateUrl',
    * @return {string} Template URL.
    */
   (element, attrs) => {
-    const templateUrl = attrs['ngeoDatePickerTemplateUrl'];
+    const templateUrl = attrs.ngeoDatePickerTemplateUrl;
     return templateUrl !== undefined ? templateUrl :
       'ngeo/misc/datepickerComponent';
   });
@@ -62,10 +62,13 @@ function datePickerComponent(ngeoDatePickerTemplateUrl, $timeout) {
     restrict: 'AE',
     templateUrl: ngeoDatePickerTemplateUrl,
     link: (scope, element, attrs, ctrl) => {
+      if (!ctrl) {
+        throw new Error('Missing ctrl');
+      }
       ctrl.init();
 
       const lang = ctrl.gettextCatalog_.getCurrentLanguage();
-      $['datepicker']['setDefaults']($['datepicker']['regional'][lang]);
+      $.datepicker.setDefaults($.datepicker.regional[lang]);
 
       ctrl.sdateOptions = angular.extend({}, ctrl.sdateOptions, {
         'minDate': ctrl.initialMinDate,
@@ -121,15 +124,15 @@ module.directive('ngeoDatePicker', datePickerComponent);
 function Controller($scope, ngeoTime, gettextCatalog) {
 
   /**
-   * @type {!import("ngeo/misc/Time.js").Time}
+   * @type {import("ngeo/misc/Time.js").Time}
    * @private
    */
   this.ngeoTime_ = ngeoTime;
 
   /**
-   * @type {!import('ngeo/datasource/OGC.js').TimeProperty}
+   * @type {?import('ngeo/datasource/OGC.js').TimeProperty}
    */
-  this.time;
+  this.time = null;
 
   /**
    * The gettext catalog
@@ -143,27 +146,27 @@ function Controller($scope, ngeoTime, gettextCatalog) {
    * If the component is used to select a date range
    * @type {boolean}
    */
-  this.isModeRange;
+  this.isModeRange = false;
 
 
   /**
    * Function called after date(s) changed/selected
-   * @type {function({time: {start: number, end: number}}): void}
+   * @type {?function({time: {start: number, end: ?number}}): void}
    */
-  this.onDateSelected;
+  this.onDateSelected = null;
 
 
   /**
    * Initial min date for the datepicker
-   * @type {!Date}
+   * @type {?Date}
    */
-  this.initialMinDate;
+  this.initialMinDate = null;
 
   /**
    * Initial max date for the datepickeronDateSelected
-   * @type {!Date}
+   * @type {?Date}
    */
-  this.initialMaxDate;
+  this.initialMaxDate = null;
 
   /**
    * Datepicker options for the second datepicker (only for range mode)
@@ -185,25 +188,33 @@ function Controller($scope, ngeoTime, gettextCatalog) {
 
   /**
    * Start date model for the first date picker
-   * @type {Date}
+   * @type {?Date}
    */
-  this.sdate;
+  this.sdate = null;
 
   /**
    * End date model for the second datepicker (only for range mode)
-   * @type {Date}
+   * @type {?Date}
    */
-  this.edate;
+  this.edate = null;
 
   $scope.$watchGroup(['datepickerCtrl.sdate', 'datepickerCtrl.edate'], (newDates, oldDates) => {
+    if (!this.onDateSelected) {
+      throw new Error('Missing onDateSelected');
+    }
     const sDate = newDates[0];
     const eDate = newDates[1];
 
     if (angular.isDate(sDate) && (!this.isModeRange || angular.isDate(eDate))) {
+      const start = this.ngeoTime_.getTime(sDate);
+      const end = this.ngeoTime_.getTime(eDate);
+      if (!start) {
+        throw new Error('Missing start');
+      }
       this.onDateSelected({
         time: {
-          start: this.ngeoTime_.getTime(sDate),
-          end: this.ngeoTime_.getTime(eDate)
+          start,
+          end,
         }
       });
     }
@@ -214,7 +225,10 @@ function Controller($scope, ngeoTime, gettextCatalog) {
  * Initialise the controller.
  */
 Controller.prototype.init = function() {
-  //fetch the initial options for the component
+  if (!this.time) {
+    throw new Error('Missing time');
+  }
+  // Fetch the initial options for the component
   const initialOptions_ = this.ngeoTime_.getOptions(this.time);
   this.initialMinDate = this.ngeoTime_.createDate(initialOptions_.minDate);
   this.initialMaxDate = this.ngeoTime_.createDate(initialOptions_.maxDate);

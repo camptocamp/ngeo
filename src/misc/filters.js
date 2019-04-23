@@ -562,9 +562,7 @@ module.constant('ngeoStringToHtmlReplacements', StringToHtmlReplacements);
  */
 const removeCDATA = function() {
   return function(input) {
-    if (input.replace) {
-      return input.replace(/<!\[CDATA\[(.*)\]\]>/, '$1');
-    }
+    return input.replace(/<!\[CDATA\[(.*)\]\]>/, '$1');
   };
 };
 

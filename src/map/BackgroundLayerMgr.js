@@ -13,7 +13,7 @@ import ngeoLayerHelper from 'ngeo/map/LayerHelper.js';
 /**
  * @typedef {Object} BackgroundEventDetails
  * @property {import("ol/layer/Base.js").default} current
- * @property {import("ol/layer/Base.js").default} previous
+ * @property {?import("ol/layer/Base.js").default} previous
  */
 
 
@@ -94,7 +94,7 @@ export class MapBackgroundLayerManager extends olObservable {
    * Return the current background layer of a given map. `null` is returned if
    * the map does not have a background layer.
    * @param {import("ol/Map.js").default} map Map.
-   * @return {import("ol/layer/Base.js").default} layer The background layer.
+   * @return {?import("ol/layer/Base.js").default} layer The background layer.
    */
   get(map) {
     const mapUid = olUtilGetUid(map).toString();
@@ -107,7 +107,7 @@ export class MapBackgroundLayerManager extends olObservable {
    * is removed.
    * @param {import("ol/Map.js").default} map The map.
    * @param {import("ol/layer/Base.js").default} layer The new background layer.
-   * @return {import("ol/layer/Base.js").default} The previous background layer.
+   * @return {?import("ol/layer/Base.js").default} The previous background layer.
    */
   set(map, layer) {
     const ZIndex = -200;
@@ -146,7 +146,7 @@ export class MapBackgroundLayerManager extends olObservable {
    * Return the current background layer overlay of a given map, used by the opacity slider.
    * `null` is returned if the map does not have an opacity background layer.
    * @param {import("ol/Map.js").default} map Map.
-   * @return {import("ol/layer/Base.js").default} layer The opacity background layer.
+   * @return {?import("ol/layer/Base.js").default} layer The opacity background layer.
    */
   getOpacityBgLayer(map) {
     const mapUid = olUtilGetUid(map).toString();
@@ -161,10 +161,13 @@ export class MapBackgroundLayerManager extends olObservable {
    */
   setOpacityBgLayer(map, layer) {
     const bgGroup = this.ngeoLayerHelper_.getGroupFromMap(map, BACKGROUNDLAYERGROUP_NAME);
-    const previous = bgGroup.getLayers().remove(this.getOpacityBgLayer(map));
+    const opacityBackgroundLayer = this.getOpacityBgLayer(map);
+    if (opacityBackgroundLayer) {
+      const previous = bgGroup.getLayers().remove(opacityBackgroundLayer);
+      layer.setOpacity(previous ? previous.getOpacity() : 0);
+      layer.setVisible(previous ? previous.getVisible() : true);
+    }
     const ZIndex = -100;
-    layer.setOpacity(previous ? previous.getOpacity() : 0);
-    layer.setVisible(previous ? previous.getVisible() : true);
     layer.setZIndex(ZIndex);
     this.ngeoLayerHelper_.setZIndexToFirstLevelChildren(layer, ZIndex);
 

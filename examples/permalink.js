@@ -57,9 +57,9 @@ module.component('appMap', mapComponent);
  */
 function MapComponentController(ngeoLocation, ngeoDebounce) {
   /**
-   * @type {import("ol/Map.js").default}
+   * @type {?import("ol/Map.js").default}
    */
-  this.map;
+  this.map = null;
 
   /**
    * @type {import("ngeo/statemanager/Location.js").StatemanagerLocation}
@@ -77,6 +77,9 @@ function MapComponentController(ngeoLocation, ngeoDebounce) {
 module.controller('AppMapController', MapComponentController);
 
 MapComponentController.prototype.$onInit = function() {
+  if (!this.map) {
+    throw new Error('Missing map');
+  }
   const view = this.map.getView();
 
   const zoom_ = this.ngeoLocation_.getParam('z');
@@ -103,6 +106,9 @@ MapComponentController.prototype.$onInit = function() {
        */
       (e) => {
         const center = view.getCenter();
+        if (!center) {
+          throw new Error('Missing center');
+        }
         const params = {
           'z': `${view.getZoom()}`,
           'x': `${Math.round(center[0])}`,
@@ -143,14 +149,14 @@ module.component('appDraw', drawComponent);
 function DrawComponentController($scope, ngeoLocation) {
 
   /**
-   * @type {import("ol/Map.js").default}
+   * @type {?import("ol/Map.js").default}
    */
-  this.map;
+  this.map = null;
 
   /**
-   * @type {import("ol/layer/Vector.js").default}
+   * @type {?import("ol/layer/Vector.js").default}
    */
-  this.layer;
+  this.layer = null;
 
   /**
    * @type {!import("ngeo/statemanager/Location.js").StatemanagerLocation}
@@ -171,12 +177,18 @@ function DrawComponentController($scope, ngeoLocation) {
   this.featureSeq_ = 0;
 
   /**
-   * @type {import("ol/interaction/Draw.js").default}
+   * @type {?import("ol/interaction/Draw.js").default}
    */
-  this.interaction;
+  this.interaction = null;
 }
 
 DrawComponentController.prototype.$onInit = function() {
+  if (!this.map) {
+    throw new Error('Missing map');
+  }
+  if (!this.layer) {
+    throw new Error('Missing layer');
+  }
   const vectorSource = /** @type {olSourceVector} */(this.layer.getSource());
 
   this.interaction = new olInteractionDraw({
@@ -224,7 +236,14 @@ DrawComponentController.prototype.$onInit = function() {
  * Clear the vector layer.
  */
 DrawComponentController.prototype.clearLayer = function() {
-  /** @type {olSourceVector} */(this.layer.getSource()).clear(true);
+  if (!this.layer) {
+    throw new Error('Missing layer');
+  }
+  const source = this.layer.getSource();
+  if (!(source instanceof olSourceVector)) {
+    throw new Error('Wrong source');
+  }
+  source.clear(true);
   this.featureSeq_ = 0;
   this.ngeoLocation_.deleteParam('features');
 };

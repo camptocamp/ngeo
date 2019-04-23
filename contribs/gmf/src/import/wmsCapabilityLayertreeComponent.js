@@ -33,7 +33,7 @@ module.value('gmfWmscapabilitylayertreenodeTemplateUrl',
    * @return {string} The template url.
    */
   ($attrs) => {
-    const templateUrl = $attrs['gmfWmscapabilitylayertreenodeTemplateUrl'];
+    const templateUrl = $attrs.gmfWmscapabilitylayertreenodeTemplateUrl;
     return templateUrl !== undefined ? templateUrl :
       'gmf/import/wmsCapabilityLayertreeComponent';
   });
@@ -74,28 +74,28 @@ class Controller {
 
     /**
      * WMS Capabilities definition
-     * @type {!Object}
+     * @type {Object}
      */
-    this.capabilities;
+    this.capabilities = {};
 
     /**
      * WMS Capability Layer object.
-     * @type {!Object}
+     * @type {Object}
      */
-    this.layer;
+    this.layer = {};
 
     /**
      * The original server url that was used to build the WMS GetCapabilities
      * request.
-     * @type {string}
+     * @type {?string}
      */
-    this.url;
+    this.url = null;
 
 
     // Injected properties
 
     /**
-     * @type {!import("gmf/datasource/ExternalDataSourcesManager.js").ExternalDatSourcesManager}
+     * @type {import("gmf/datasource/ExternalDataSourcesManager.js").ExternalDatSourcesManager}
      * @private
      */
     this.gmfExternalDataSourcesManager_ = gmfExternalDataSourcesManager;
@@ -105,6 +105,9 @@ class Controller {
    * @param {!Object} layer WMS Capability Layer object
    */
   createAndAddDataSource(layer) {
+    if (!this.url) {
+      throw new Error('Missing url');
+    }
     this.gmfExternalDataSourcesManager_.createAndAddDataSourceFromWMSCapability(
       layer,
       this.capabilities,

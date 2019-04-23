@@ -68,10 +68,14 @@ function MainController($scope) {
    */
   this.window4IsOpen = false;
 
+  const element = document.getElementById('window4Template');
+  if (!element) {
+    throw new Error('Missing element');
+  }
   /**
    * @type {string}
    */
-  this.window4Template = angular.element(document.getElementById('window4Template')).html();
+  this.window4Template = angular.element(element).html();
 
   /**
    * @type {string}

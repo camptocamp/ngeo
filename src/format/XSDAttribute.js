@@ -30,13 +30,13 @@ class XSDAttribute extends olFormatXML {
   }
 
   /**
-   * @param {Document|Node|string} source Source.
+   * @param {Document|Element|string} source Source.
    * @return {Array.<import('ngeo/format/Attribute.js').Attribute>} The parsed result.
    * @override
    */
   read(source) {
     return (
-      /** @type {Array.<import('ngeo/format/Attribute.js').Attribute>} */ olFormatXML.prototype.read.call(
+      /** @type {Array<import('ngeo/format/Attribute.js').Attribute>} */ olFormatXML.prototype.read.call(
         this, source
       )
     );
@@ -45,14 +45,21 @@ class XSDAttribute extends olFormatXML {
 
   /**
    * @param {Document} doc Document.
-   * @return {Array.<import('ngeo/format/Attribute.js').Attribute>} List of attributes.
+   * @return {?Array<import('ngeo/format/Attribute.js').Attribute>} List of attributes.
    * @override
    */
   readFromDocument(doc) {
     console.assert(doc.nodeType == Node.DOCUMENT_NODE, 'doc.nodeType should be DOCUMENT');
-    for (let n = /** @type {Node} */(doc.firstChild); n; n = n.nextSibling) {
+    /**
+     * @type {?ChildNode}
+     */
+    let n;
+    for (n = doc.firstChild; n; n = /** @type {ChildNode} */(n.nextSibling)) {
       if (n.nodeType == Node.ELEMENT_NODE) {
-        return this.readFromNode(/** @type {Element} */(n));
+        if (!(n instanceof Element)) {
+          throw new Error('Wrong type');
+        }
+        return this.readFromNode(n);
       }
     }
     return null;
@@ -94,7 +101,9 @@ class XSDAttribute extends olFormatXML {
     const elementNode = /** @type {Element} */(node);
 
     const name = elementNode.getAttribute('name');
-    console.assert(typeof name == 'string', 'name should be defined in element node.');
+    if (!name) {
+      throw new Error('name should be defined in element node');
+    }
 
     const alias = elementNode.getAttribute('alias');
     const nillable = elementNode.getAttribute('nillable');
@@ -107,12 +116,13 @@ class XSDAttribute extends olFormatXML {
 
     /** @type {import('ngeo/format/Attribute.js').Attribute} */
     const attribute = {
-      type: null,
       name,
-      alias,
       readonly,
       required
     };
+    if (alias) {
+      attribute.alias = alias;
+    }
 
     const type = elementNode.getAttribute('type');
     if (type) {
@@ -132,7 +142,11 @@ class XSDAttribute extends olFormatXML {
         attribute.type = ngeoFormatAttributeType.SELECT;
         const choices = [];
         for (let i = 0, ii = enumerations.length; i < ii; i++) {
-          choices.push(enumerations[i].getAttribute('value'));
+          const value = enumerations[i].getAttribute('value');
+          if (!value) {
+            throw new Error('Missing value');
+          }
+          choices.push(value);
         }
         attribute.choices = choices;
       } else {
@@ -143,10 +157,11 @@ class XSDAttribute extends olFormatXML {
         }
         if (restrictions.length && restrictions[0]) {
           const restrictionNode = restrictions[0];
-          this.setAttributeByXsdType_(
-            attribute,
-            restrictionNode.getAttribute('base')
-          );
+          const base = restrictionNode.getAttribute('base');
+          if (!base) {
+            throw new Error('Missing base');
+          }
+          this.setAttributeByXsdType_(attribute, base);
           // MaxLength
           let maxLengths = elementNode.getElementsByTagName('maxLength');
           if (!maxLengths.length) {

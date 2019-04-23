@@ -206,7 +206,11 @@ function Controller($scope, $element, gettextCatalog, ngeoFeatureOverlayMgr, nge
   this.viewChangedByMe_ = false;
 
   olEvents.listen(this.geolocation_, 'change:accuracyGeometry', () => {
-    this.accuracyFeature_.setGeometry(this.geolocation_.getAccuracyGeometry());
+    const geometry = this.geolocation_.getAccuracyGeometry();
+    if (!geometry) {
+      throw new Error('Missing geometry');
+    }
+    this.accuracyFeature_.setGeometry(geometry);
     this.setPosition_();
   });
 
@@ -239,6 +243,9 @@ Controller.prototype.toggleTracking = function() {
     console.assert(currentPosition !== undefined);
     // stop tracking if the position is close to the center of the map.
     const center = this.map_.getView().getCenter();
+    if (!center) {
+      throw new Error('Missing center');
+    }
     const diff = Math.abs(currentPosition[0] - center[0]) + Math.abs(currentPosition[1] - center[1]);
     if (diff < 2) {
       this.untrack_();
@@ -313,8 +320,13 @@ Controller.prototype.handleViewChange_ = function(event) {
 Controller.prototype.autorotateListener = function() {
   let currentAlpha = 0;
   if (window.hasOwnProperty('ondeviceorientationabsolute')) {
-    window.addEventListener('deviceorientationabsolute', (evt) => {
-      const event = /** @type {DeviceOrientationEvent} */(evt);
+    window.addEventListener('deviceorientationabsolute', (event) => {
+      if (!(event instanceof DeviceOrientationEvent)) {
+        throw new Error('Wrong event type');
+      }
+      if (!event.alpha) {
+        throw new Error('Missing event.alpha');
+      }
       currentAlpha = this.handleRotate_(event.alpha, currentAlpha);
     }, true);
   } else if (window.hasOwnProperty('ondeviceorientation')) {
@@ -324,6 +336,9 @@ Controller.prototype.autorotateListener = function() {
         // @ts-ignore: ios only
         currentAlpha = this.handleRotate_(-evt.webkitCompassHeading, currentAlpha);
       } else { // non iOS
+        if (!evt.alpha) {
+          throw new Error('Missing evt.alpha');
+        }
         currentAlpha = this.handleRotate_(evt.alpha - 270, currentAlpha);
       }
     }, true);

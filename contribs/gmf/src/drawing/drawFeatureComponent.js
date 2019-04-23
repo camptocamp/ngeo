@@ -105,18 +105,14 @@ module.directive('gmfDrawfeature', drawinfDrawFeatureComponent);
 function Controller($scope, $timeout, gettextCatalog, ngeoFeatureHelper, ngeoFeatures, ngeoToolActivateMgr) {
 
   /**
-   * @type {!import("ol/Map.js").default}
+   * @type {?import("ol/Map.js").default}
    */
-  this.map;
+  this.map = null;
 
   /**
    * @type {boolean}
    */
-  this.active;
-
-  if (this.active === undefined) {
-    this.active = false;
-  }
+  this.active = false;
 
   /**
    * @type {boolean}
@@ -297,6 +293,9 @@ function Controller($scope, $timeout, gettextCatalog, ngeoFeatureHelper, ngeoFea
   $scope.$watch(
     () => this.selectedFeature,
     (newFeature, previousFeature) => {
+      if (!this.map) {
+        throw new Error('Missing map');
+      }
       this.selectedFeatures.clear();
       if (previousFeature) {
         this.featureHelper_.setStyle(previousFeature);
@@ -340,6 +339,12 @@ function Controller($scope, $timeout, gettextCatalog, ngeoFeatureHelper, ngeoFea
  */
 Controller.prototype.closeMenu_ = function() {
   if (this.menu_) {
+    if (!this.map) {
+      throw new Error('Missing map');
+    }
+    if (!this.menuListenerKey_) {
+      throw new Error('Missing menuListenerKey');
+    }
     this.map.removeOverlay(this.menu_);
     this.menu_ = null;
     olEvents.unlistenByKey(this.menuListenerKey_);
@@ -365,6 +370,9 @@ Controller.prototype.initializeInteractions_ = function() {
  */
 Controller.prototype.registerInteractions_ = function() {
   this.interactions_.forEach((interaction) => {
+    if (!this.map) {
+      throw new Error('Missing map');
+    }
     this.map.addInteraction(interaction);
   });
 };
@@ -376,6 +384,9 @@ Controller.prototype.registerInteractions_ = function() {
  */
 Controller.prototype.unregisterInteractions_ = function() {
   this.interactions_.forEach((interaction) => {
+    if (!this.map) {
+      throw new Error('Missing map');
+    }
     this.map.removeInteraction(interaction);
   });
 };
@@ -516,8 +527,10 @@ Controller.prototype.handleFeaturesRemove_ = function(evt) {
  * @param {boolean} active Whether the map select is active or not.
  * @private
  */
-Controller.prototype.handleMapSelectActiveChange_ = function(
-  active) {
+Controller.prototype.handleMapSelectActiveChange_ = function(active) {
+  if (!this.map) {
+    throw new Error('Missing map');
+  }
 
   const mapDiv = this.map.getViewport();
   console.assert(mapDiv);
@@ -544,9 +557,12 @@ Controller.prototype.handleMapSelectActiveChange_ = function(
  */
 Controller.prototype.handleMapClick_ = function(evt) {
   if (evt instanceof MapBrowserEvent) {
+    if (!this.map) {
+      throw new Error('Missing map');
+    }
     const pixel = evt.pixel;
 
-    let feature = /** @type {import('ol/Feature.js').default|undefined} */ (this.map.forEachFeatureAtPixel(
+    let feature = this.map.forEachFeatureAtPixel(
       pixel,
       (feature) => {
         let ret = null;
@@ -561,7 +577,7 @@ Controller.prototype.handleMapClick_ = function(evt) {
         hitTolerance: 5,
         layerFilter: undefined
       }
-    ));
+    );
 
     feature = feature ? feature : null;
 
@@ -593,6 +609,9 @@ Controller.prototype.handleMapTouchStart_ = function(evt) {
  * @private
  */
 Controller.prototype.handleMapTouchEnd_ = function(evt) {
+  if (!this.longPressTimeout_) {
+    throw new Error('Missing longPressTimeout');
+  }
   clearTimeout(this.longPressTimeout_);
 };
 
@@ -603,11 +622,14 @@ Controller.prototype.handleMapTouchEnd_ = function(evt) {
  */
 Controller.prototype.handleMapContextMenu_ = function(evt) {
   if (evt instanceof Event) {
+    if (!this.map) {
+      throw new Error('Missing map');
+    }
     const gettextCatalog = this.gettextCatalog_;
     const pixel = this.map.getEventPixel(evt);
     const coordinate = this.map.getCoordinateFromPixel(pixel);
 
-    let feature = /** @type {import('ol/Feature.js').default|undefined} */ (this.map.forEachFeatureAtPixel(
+    let feature = this.map.forEachFeatureAtPixel(
       pixel,
       (feature) => {
         if (feature instanceof Feature) {
@@ -622,7 +644,7 @@ Controller.prototype.handleMapContextMenu_ = function(evt) {
         hitTolerance: 7,
         layerFilter: undefined
       }
-    ));
+    );
 
     feature = feature ? feature : null;
 
@@ -632,9 +654,11 @@ Controller.prototype.handleMapContextMenu_ = function(evt) {
       this.closeMenu_();
 
       let actions = [];
-
-      const vertexInfo = this.featureHelper_.getVertexInfoAtCoordinate(
-        feature, coordinate, this.map.getView().getResolution());
+      const resolution = this.map.getView().getResolution();
+      if (!resolution) {
+        throw new Error('Missing resolution');
+      }
+      const vertexInfo = this.featureHelper_.getVertexInfoAtCoordinate(feature, coordinate, resolution);
       if (!vertexInfo) {
         const type = this.featureHelper_.getType(feature);
         if (type == ngeoGeometryType.CIRCLE ||
@@ -696,6 +720,9 @@ Controller.prototype.handleMapContextMenu_ = function(evt) {
  */
 Controller.prototype.handleMenuActionClick_ = function(vertexInfo, evt) {
   const action = /** @type{import('ngeo/filter/ruleComponent.js').MenuEvent} */(evt).detail.action;
+  if (!this.selectedFeature) {
+    throw new Error('Missing selectedFeature');
+  }
 
   switch (action) {
     case 'delete':

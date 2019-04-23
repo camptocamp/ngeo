@@ -174,8 +174,15 @@ PrintService.prototype.encodeMap_ = function(map, scale, object) {
   const viewResolution = view.getResolution();
   const viewRotation = object.rotation || toDegrees(view.getRotation());
 
-  console.assert(viewCenter !== undefined);
-  console.assert(viewProjection !== undefined);
+  if (!viewCenter) {
+    throw new Error('Missing viewCenter');
+  }
+  if (!viewProjection) {
+    throw new Error('Missing viewProjection');
+  }
+  if (!viewResolution) {
+    throw new Error('Missing viewResolution');
+  }
 
   object.center = viewCenter;
   object.projection = viewProjection.getCode();
@@ -184,7 +191,9 @@ PrintService.prototype.encodeMap_ = function(map, scale, object) {
   object.layers = [];
 
   const mapLayerGroup = map.getLayerGroup();
-  console.assert(mapLayerGroup);
+  if (!mapLayerGroup) {
+    throw new Error('Missing mapLayerGroup');
+  }
   this.printNativeAngle_ = !(mapLayerGroup.get('printNativeAngle') === false);
   let layers = this.ngeoLayerHelper_.getFlatLayers(mapLayerGroup);
 
@@ -194,7 +203,6 @@ PrintService.prototype.encodeMap_ = function(map, scale, object) {
 
   layers.forEach((layer) => {
     if (layer.getVisible()) {
-      console.assert(viewResolution !== undefined);
       this.encodeLayer(object.layers, layer, viewResolution);
     }
   });
@@ -231,7 +239,9 @@ PrintService.prototype.encodeVectorLayer = function(arr, layer, resolution) {
  * @private
  */
 PrintService.prototype.encodeImageLayer_ = function(arr, layer) {
-  console.assert(layer instanceof olLayerImage);
+  if (!(layer instanceof olLayerImage)) {
+    throw new Error('layer not instance of olLayerImage');
+  }
   const source = layer.getSource();
   if (source instanceof olSourceImageWMS) {
     this.encodeImageWmsLayer_(arr, layer);
@@ -245,10 +255,13 @@ PrintService.prototype.encodeImageLayer_ = function(arr, layer) {
  * @private
  */
 PrintService.prototype.encodeImageWmsLayer_ = function(arr, layer) {
-  const source = /** @type {olSourceImageWMS} */(layer.getSource());
-
-  console.assert(layer instanceof olLayerImage);
-  console.assert(source instanceof olSourceImageWMS);
+  if (!(layer instanceof olLayerImage)) {
+    throw new Error('layer not instance of olLayerImage');
+  }
+  const source = layer.getSource();
+  if (!(source instanceof olSourceImageWMS)) {
+    throw new Error('source not instance of olSourceImageWMS');
+  }
 
   const url = source.getUrl();
   if (url !== undefined) {
@@ -323,7 +336,9 @@ function getAbsoluteUrl_(url) {
  * @private
  */
 PrintService.prototype.encodeTileLayer_ = function(arr, layer) {
-  console.assert(layer instanceof olLayerTile);
+  if (!(layer instanceof olLayerTile)) {
+    throw new Error('layer not instance of olLayerTile');
+  }
   const source = layer.getSource();
   if (source instanceof olSourceWMTS) {
     this.encodeTileWmtsLayer_(arr, layer);
@@ -339,13 +354,26 @@ PrintService.prototype.encodeTileLayer_ = function(arr, layer) {
  * @private
  */
 PrintService.prototype.encodeTileWmtsLayer_ = function(arr, layer) {
-  console.assert(layer instanceof olLayerTile);
-  const source = /** @type {olSourceWMTS} */(layer.getSource());
-  console.assert(source instanceof olSourceWMTS);
+  if (!(layer instanceof olLayerTile)) {
+    throw new Error('layer not instance of olLayerTile');
+  }
+  const source = layer.getSource();
+  if (!(source instanceof olSourceWMTS)) {
+    throw new Error('source not instance of olSourceWMTS');
+  }
 
   const projection = source.getProjection();
-  const tileGrid = /** @type {olTilegridWMTS} */(source.getTileGrid());
-  console.assert(tileGrid instanceof olTilegridWMTS);
+  if (!projection) {
+    throw new Error('Missing projection');
+  }
+  const metersPerUnit = projection.getMetersPerUnit();
+  if (!metersPerUnit) {
+    throw new Error('Missing metersPerUnit');
+  }
+  const tileGrid = source.getTileGrid();
+  if (!(tileGrid instanceof olTilegridWMTS)) {
+    throw new Error('tileGrid not instance of olTilegridWMTS');
+  }
   const matrixIds = tileGrid.getMatrixIds();
 
   /** @type {Array.<import('ngeo/print/mapfish-print-v3.js').MapFishPrintWmtsMatrix>} */
@@ -355,8 +383,7 @@ PrintService.prototype.encodeTileWmtsLayer_ = function(arr, layer) {
     const tileRange = tileGrid.getFullTileRange(i);
     matrices.push(/** @type {import('ngeo/print/mapfish-print-v3.js').MapFishPrintWmtsMatrix} */ ({
       identifier: matrixIds[i],
-      scaleDenominator: tileGrid.getResolution(i) *
-          projection.getMetersPerUnit() / 0.28E-3,
+      scaleDenominator: tileGrid.getResolution(i) * metersPerUnit / 0.28E-3,
       tileSize: olSize.toSize(tileGrid.getTileSize(i)),
       topLeftCorner: tileGrid.getOrigin(i),
       matrixSize: [
@@ -394,13 +421,19 @@ PrintService.prototype.encodeTileWmtsLayer_ = function(arr, layer) {
  * @private
  */
 PrintService.prototype.encodeTileWmsLayer_ = function(arr, layer) {
-  const source = /** @type {olSourceTileWMS} */(layer.getSource());
+  if (!(layer instanceof olLayerTile)) {
+    throw new Error('layer not instance of olLayerTile');
+  }
+  const source = layer.getSource();
+  if (!(source instanceof olSourceTileWMS)) {
+    throw new Error('source not instance of olSourceTileWMS');
+  }
 
-  console.assert(layer instanceof olLayerTile);
-  console.assert(source instanceof olSourceTileWMS);
-
-  this.encodeWmsLayer_(
-    arr, layer, source.getUrls()[0], source.getParams());
+  const urls = source.getUrls();
+  if (!urls) {
+    throw new Error('Missing urls');
+  }
+  this.encodeWmsLayer_(arr, layer, urls[0], source.getParams());
 };
 
 
@@ -412,7 +445,9 @@ PrintService.prototype.encodeTileWmsLayer_ = function(arr, layer) {
  */
 PrintService.prototype.getWmtsUrl_ = function(source) {
   const urls = source.getUrls();
-  console.assert(urls.length > 0);
+  if (!urls) {
+    throw new Error('Missing urls');
+  }
   return getAbsoluteUrl_(urls[0]);
 };
 

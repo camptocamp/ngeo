@@ -8,6 +8,7 @@ import olStyleFill from 'ol/style/Fill.js';
 import olStyleRegularShape from 'ol/style/RegularShape.js';
 import olStyleStroke from 'ol/style/Stroke.js';
 import olStyleStyle from 'ol/style/Style.js';
+import MobileDraw from 'ngeo/interaction/MobileDraw';
 
 
 /**
@@ -27,7 +28,7 @@ module.value('gmfMobileMeasurePointTemplateUrl',
    * @return {string} The template url.
    */
   (element, attrs) => {
-    const templateUrl = attrs['gmfMobileMeasurePointTemplateurl'];
+    const templateUrl = attrs.gmfMobileMeasurePointTemplateurl;
     return templateUrl !== undefined ? templateUrl :
       'gmf/measure/pointComponent';
   });
@@ -93,9 +94,12 @@ function mobileMeasurePointComponent(gmfMobileMeasurePointTemplateUrl) {
      * @param {!angular.IScope} scope Scope.
      * @param {!JQuery} element Element.
      * @param {!angular.IAttributes} attrs Attributes.
-     * @param {!angular.IController} controller Controller.
+     * @param {!angular.IController=} controller Controller.
      */
     link: (scope, element, attrs, controller) => {
+      if (!controller) {
+        throw new Error('Missing controller');
+      }
       controller.init();
     }
   };
@@ -144,21 +148,26 @@ export function MobileMeasurePointController(gettextCatalog, $scope, $filter, gm
   this.$filter_ = $filter;
 
   /**
-   * @type {import("ol/Map.js").default}
+   * @type {?import("ol/Map.js").default}
    */
-  this.map;
+  this.map = null;
 
   /**
    * @type {boolean}
    */
-  this.active;
+  this.active = false;
+
+  this.getCoordinateDecimalsFn = () => 0;
 
   $scope.$watch(() => this.active, (newVal) => {
+    if (!this.measure) {
+      throw new Error('Missing measure');
+    }
     this.measure.setActive(newVal);
     this.handleMeasureActiveChange_();
   });
 
-  const coordinateDecimalsFn = this['getCoordinateDecimalsFn'];
+  const coordinateDecimalsFn = this.getCoordinateDecimalsFn;
 
   /**
    * @type {number}
@@ -167,15 +176,15 @@ export function MobileMeasurePointController(gettextCatalog, $scope, $filter, gm
   this.coordinateDecimals = coordinateDecimalsFn ? coordinateDecimalsFn() : 0;
 
   /**
-   * @type {!Array<LayerConfig>}
+   * @type {Array<LayerConfig>}
    * @private
    */
-  this.layersConfig;
+  this.layersConfig = [];
 
   /**
    * @type {import("ol/style/Style.js").StyleLike}
    */
-  this.sketchStyle;
+  this.sketchStyle = [];
 
   if (this.sketchStyle === undefined) {
     this.sketchStyle = new olStyleStyle({
@@ -201,19 +210,21 @@ export function MobileMeasurePointController(gettextCatalog, $scope, $filter, gm
   }
 
   /**
-   * @type {string}
+   * @type {?string}
    */
-  this.format;
+  this.format = null;
 
   /**
-   * @type {import("ngeo/interaction/MeasurePointMobile.js").default}
+   * @type {?import("ngeo/interaction/MeasurePointMobile.js").default}
    */
-  this.measure;
+  this.measure = null;
 
   /**
-   * @type {import("ngeo/interaction/MobileDraw.js").default}
+   * @type {?import("ngeo/interaction/MobileDraw.js").default}
    */
-  this.drawInteraction;
+  this.drawInteraction = null;
+
+  this.getLayersConfigFn = () => [];
 
   /**
    * The key for map view 'propertychange' event.
@@ -238,14 +249,20 @@ MobileMeasurePointController.prototype.init = function() {
   );
   this.measure.setActive(this.active);
   interactionDecoration(this.measure);
-  this.drawInteraction = /** @type {import("ngeo/interaction/MobileDraw.js").default} */ (
-    this.measure.getDrawInteraction());
+  const drawInteraction = this.measure.getDrawInteraction();
+  if (!(drawInteraction instanceof MobileDraw)) {
+    throw new Error('Wrong drawInteraction');
+  }
+  this.drawInteraction = drawInteraction;
   interactionDecoration(this.drawInteraction);
 
-  const layersConfig = this['getLayersConfigFn']();
+  const layersConfig = this.getLayersConfigFn();
   console.assert(Array.isArray(layersConfig));
   this.layersConfig = layersConfig;
 
+  if (!this.map) {
+    throw new Error('Missing map');
+  }
   this.map.addInteraction(this.measure);
 };
 
@@ -276,6 +293,12 @@ MobileMeasurePointController.prototype.translate = function(str) {
  * @hidden
  */
 MobileMeasurePointController.prototype.handleMeasureActiveChange_ = function() {
+  if (!this.map) {
+    throw new Error('Missing map');
+  }
+  if (!this.measure) {
+    throw new Error('Missing measure');
+  }
   if (this.measure.getActive()) {
     const view = this.map.getView();
     this.mapViewPropertyChangeEventKey_ = olEvents.listen(
@@ -299,12 +322,20 @@ MobileMeasurePointController.prototype.handleMeasureActiveChange_ = function() {
  * @hidden
  */
 MobileMeasurePointController.prototype.getMeasure_ = function() {
+  if (!this.map) {
+    throw new Error('Missing map');
+  }
   const center = this.map.getView().getCenter();
-  console.assert(Array.isArray(center));
+  if (!Array.isArray(center)) {
+    throw new Error('Wrong center');
+  }
   const params = {
     'layers': this.layersConfig.map(config => config.name).join(',')
   };
   this.gmfRaster_.getRaster(center, params).then((object) => {
+    if (!this.measure) {
+      throw new Error('Missing measure');
+    }
     const el = this.measure.getTooltipElement();
     const ctn = document.createElement('div');
     const className = 'gmf-mobile-measure-point';

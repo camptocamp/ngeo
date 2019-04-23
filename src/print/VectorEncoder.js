@@ -78,7 +78,7 @@ VectorEncoder.prototype.encodeVectorLayer = function(arr, layer, resolution) {
     }
     const origGeojsonFeature = this.geojsonFormat.writeFeatureObject(originalFeature);
     /**
-     * @type {Array<import("ol/style/Style.js").default>}
+     * @type {?Array<import("ol/style/Style.js").default>}
      */
     const styles = (styleData !== null && !Array.isArray(styleData)) ? [styleData] : styleData;
     console.assert(Array.isArray(styles));
@@ -91,7 +91,7 @@ VectorEncoder.prototype.encodeVectorLayer = function(arr, layer, resolution) {
         let geojsonFeature;
         if (!geometry) {
           geojsonFeature = origGeojsonFeature;
-          geometry = originalFeature.getGeometry();
+          geometry = /** @type {import("ol/geom/Geometry.js").default} */(originalFeature.getGeometry());
           // no need to encode features with no geometry
           if (!geometry) {
             continue;
@@ -101,11 +101,10 @@ VectorEncoder.prototype.encodeVectorLayer = function(arr, layer, resolution) {
             isOriginalFeatureAdded = true;
           }
         } else {
-          let styledFeature = originalFeature.clone();
+          const styledFeature = originalFeature.clone();
           styledFeature.setGeometry(geometry);
           geojsonFeature = this.geojsonFormat.writeFeatureObject(styledFeature);
-          geometry = styledFeature.getGeometry();
-          styledFeature = null;
+          geometry = /** @type {import("ol/geom/Geometry.js").default} */(styledFeature.getGeometry());
           geojsonFeatures.push(geojsonFeature);
         }
 
@@ -244,7 +243,11 @@ VectorEncoder.prototype.encodeVectorStylePoint = function(symbolizers, imageStyl
       this.encodeVectorStyleStroke(symbolizer, strokeStyle);
     }
   } else if (imageStyle instanceof olStyleIcon) {
-    const src = new URL(imageStyle.getSrc(), window.location.href).href;
+    const imgSrc = imageStyle.getSrc();
+    if (!imgSrc) {
+      throw new Error('Missing imgSrc');
+    }
+    const src = new URL(imgSrc, window.location.href).href;
     if (src !== undefined) {
       symbolizer = /** @type {import('ngeo/print/mapfish-print-v3.js').MapFishPrintSymbolizerPoint} */ ({
         type: 'point',
@@ -363,7 +366,7 @@ VectorEncoder.prototype.encodeVectorStyleStroke = function(symbolizer, strokeSty
   const strokeLineCap = strokeStyle.getLineCap();
   if (strokeLineCap) {
     /** @type {import('ngeo/print/mapfish-print-v3.js').MapFishPrintSymbolizerLine} */(symbolizer)
-      .strokeLinecap = strokeStyle.getLineCap();
+      .strokeLinecap = strokeLineCap;
   }
 };
 

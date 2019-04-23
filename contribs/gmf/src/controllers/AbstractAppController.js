@@ -230,6 +230,9 @@ export function AbstractAppController(config, map, $scope, $injector) {
 
     if (evt.type !== 'ready') {
       const themeName = this.permalink_.defaultThemeNameFromFunctionalities();
+      if (!themeName) {
+        throw new Error('Missing themeName');
+      }
       this.gmfThemeManager.updateCurrentTheme(themeName, previousThemeName);
     }
     this.setDefaultBackground_(null);
@@ -244,7 +247,6 @@ export function AbstractAppController(config, map, $scope, $injector) {
    * @type {Array<import('gmf/search/component.js').SearchComponentDatasource>}
    */
   this.searchDatasources = [{
-    datasetTitle: undefined,
     labelKey: 'label',
     groupValues: /** @type {Array<string>} **/ ($injector.get('gmfSearchGroups')),
     groupActions: /** @type {Array<import('gmf/search/component.js').gmfSearchAction>} **/(
@@ -432,7 +434,7 @@ export function AbstractAppController(config, map, $scope, $injector) {
   /**
    * @type {string}
    */
-  this.lang;
+  this.lang = '';
 
   /**
    * Default language
@@ -671,7 +673,7 @@ export function AbstractAppController(config, map, $scope, $injector) {
 /**
  * @param {Array<import("ol/layer/Base.js").default>} layers Layers list.
  * @param {Array<string>} labels default_basemap list.
- * @return {import("ol/layer/Base.js").default} layer or null
+ * @return {?import("ol/layer/Base.js").default} layer or null
  * @private
  * @hidden
  */
@@ -726,7 +728,7 @@ AbstractAppController.prototype.initLanguage = function() {
 
 
 /**
- * @param {import('gmf/themes.js').GmfTheme} theme Theme.
+ * @param {?import('gmf/themes.js').GmfTheme} theme Theme.
  * @private
  */
 AbstractAppController.prototype.setDefaultBackground_ = function(theme) {

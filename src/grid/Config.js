@@ -61,6 +61,9 @@ GridConfig.prototype.getSelectedCount = function() {
  * @return {Array.<Object>} Selected rows in the current ordering.
  */
 GridConfig.prototype.getSelectedRows = function() {
+  if (!this.data) {
+    throw new Error('Missing data');
+  }
   return this.data.filter(row => this.isRowSelected(row));
 };
 
@@ -94,6 +97,9 @@ GridConfig.prototype.toggleRow = function(attributes) {
  * Select all rows.
  */
 GridConfig.prototype.selectAll = function() {
+  if (!this.data) {
+    throw new Error('Missing data');
+  }
   this.data.forEach((attributes) => {
     this.selectRow(attributes);
   });
@@ -114,6 +120,9 @@ GridConfig.prototype.unselectAll = function() {
  * Invert selection.
  */
 GridConfig.prototype.invertSelection = function() {
+  if (!this.data) {
+    throw new Error('Missing data');
+  }
   this.data.forEach((attributes) => {
     this.toggleRow(attributes);
   });

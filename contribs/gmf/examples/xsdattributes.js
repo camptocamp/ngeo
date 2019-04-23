@@ -156,6 +156,7 @@ MainController.prototype.getDistinctFlatNodes_ = function(node, nodes) {
     if (n.id === node.id) {
       return alreadyAdded = true;
     }
+    return false;
   });
   if (!alreadyAdded) {
     nodes.push(node);

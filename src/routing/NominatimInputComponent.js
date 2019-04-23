@@ -79,14 +79,14 @@ function Controller($element, $scope, ngeoNominatimService) {
   this.ngeoNominatimService = ngeoNominatimService;
 
   /**
-   * @type {(function(Object): void|undefined)}
+   * @type {?function(Object): void}
    */
-  this.onSelect;
+  this.onSelect = null;
 
   /**
-   * @type {string}
+   * @type {?string}
    */
-  this.inputValue;
+  this.inputValue = null;
 
   /**
    * @type {Twitter.Typeahead.Options}

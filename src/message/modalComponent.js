@@ -94,29 +94,29 @@ class Controller {
 
     /**
      * @private
-     * @type {JQuery}
+     * @type {?JQuery}
      */
-    this.modal_;
+    this.modal_ = null;
 
     /**
      * @type {string}
      */
-    this.draggableHandle;
+    this.draggableHandle = '';
 
     /**
      * @type {boolean}
      */
-    this.closable;
+    this.closable = false;
 
     /**
      * @type {boolean}
      */
-    this.resizable;
+    this.resizable = false;
 
     /**
-     * @type {angular.INgModelController|null}
+     * @type {?angular.INgModelController}
      */
-    this.ngModel;
+    this.ngModel = null;
   }
 
   $onInit() {
@@ -144,11 +144,23 @@ class Controller {
       dialog.resizable();
     }
 
+    if (!this.ngModel) {
+      throw new Error('Missing model');
+    }
     this.ngModel.$render = () => {
+      if (!this.ngModel) {
+        throw new Error('Missing model');
+      }
+      if (!this.modal_) {
+        throw new Error('Missing modal');
+      }
       this.modal_.modal(this.ngModel.$viewValue ? 'show' : 'hide');
     };
 
     this.modal_.on('shown.bs.modal hidden.bs.modal', (e) => {
+      if (!this.ngModel) {
+        throw new Error('Missing model');
+      }
       const type = e.type;
       console.assert(type == 'shown' || type == 'hidden');
       this.ngModel.$setViewValue(type == 'shown');
@@ -156,6 +168,9 @@ class Controller {
   }
 
   $onDestroy() {
+    if (!this.modal_) {
+      throw new Error('Missing modal');
+    }
     // Force close the modal.
     this.modal_.modal('hide');
     // Destroy the children's plugins.
