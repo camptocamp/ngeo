@@ -396,6 +396,11 @@ MainController.prototype.issueGetAttributesRequest_ = function(
 ) {
 
   this.gmfXSDAttributes_.getAttributes(gmfLayerNode.id).then(
+    /**
+     * @this {MainController}
+     * @param {import('gmf/themes.js').GmfLayerWMS} gmfLayerNode The layer node
+     * @param {Array<import('ngeo/format/Attribute.js').Attribute>} attributes The attributes
+     */
     function(gmfLayerNode, attributes) {
       // Get geom type from attributes and set
       const geomAttr = getGeometryAttribute(attributes);

@@ -125,6 +125,7 @@ SearchController.prototype.createAndInitBloodhound_ = function(ngeoCreateLocatio
  * @param {JQueryEventObject} event Event.
  * @param {Object} suggestion Suggestion.
  * @param {Twitter.Typeahead.Dataset} dataset Dataset.
+ * @this {SearchController}
  */
 function select_(event, suggestion, dataset) {
   const feature = /** @type {import("ol/Feature.js").default} */ (suggestion);

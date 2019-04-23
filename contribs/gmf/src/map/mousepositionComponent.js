@@ -98,12 +98,12 @@ module.component('gmfMouseposition', mapMousepositionComponent);
  */
 function Controller($element, $filter, $scope, gettextCatalog) {
   /**
-   * @type {!import("ol/Map.js").default}
+   * @type {import("ol/Map.js").default}
    */
   this.map;
 
   /**
-   * @type {!Array.<!MousePositionProjection>}
+   * @type {Array.<!MousePositionProjection>}
    */
   this.projections;
 
@@ -167,7 +167,7 @@ Controller.prototype.initOlControl_ = function() {
   }
 
   // function that apply the filter.
-  const formatFn = function(coordinates) {
+  const formatFn = (coordinates) => {
     const filterAndArgs = this.projection.filter.split(':');
     const filter = this.$filter_(filterAndArgs.shift());
     console.assert(typeof filter == 'function');
@@ -179,7 +179,7 @@ Controller.prototype.initOlControl_ = function() {
   const gettextCatalog = this.gettextCatalog_;
   this.control_ = new olControlMousePosition({
     className: 'gmf-mouseposition-control',
-    coordinateFormat: formatFn.bind(this),
+    coordinateFormat: formatFn,
     target: this.$element_.find('.gmf-mouseposition-control-target').get(0),
     undefinedHTML: gettextCatalog.getString('Coordinates')
   });

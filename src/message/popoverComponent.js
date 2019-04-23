@@ -124,15 +124,13 @@ function PopoverController($scope) {
    */
   this.bodyElm = undefined;
 
-  function onClick(clickEvent) {
+  const clickHandler = (clickEvent) => {
     if (this.anchorElm[0] !== clickEvent.target &&
       this.bodyElm.parent()[0] !== clickEvent.target &&
       this.bodyElm.parent().find(clickEvent.target).length === 0 && this.shown) {
       this.dismissPopover();
     }
-  }
-
-  const clickHandler = onClick.bind(this);
+  };
 
   document.body.addEventListener('click', clickHandler);
 

@@ -107,15 +107,15 @@ function rasterComponent() {
       const ctrl = scope['ctrl'];
 
       // Watch active or not.
-      scope.$watch(() => ctrl.active, function(active) {
-        this.toggleActive_(active);
-      }.bind(ctrl));
+      scope.$watch(() => ctrl.active, (active) => {
+        ctrl.toggleActive_(active);
+      });
 
       // Watch current layer.
-      scope.$watch(() => ctrl.layer, function(layer) {
-        this.layer = layer;
-        this.elevation = null;
-      }.bind(ctrl));
+      scope.$watch(() => ctrl.layer, (layer) => {
+        ctrl.layer = layer;
+        ctrl.elevation = null;
+      });
     }
   };
 }

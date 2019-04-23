@@ -9,7 +9,7 @@
 
 /**
  * @typedef {Object} GmfThemesResponse
- * @property {!Array.<!GmfLayer|!GmfGroup>} background_layers
+ * @property {!Array<!GmfLayer|!GmfGroup>} background_layers
  * @property {!Array.<string>} errors
  * @property {!GmfOgcServers} ogcServers
  * @property {!Array.<!GmfTheme>} themes

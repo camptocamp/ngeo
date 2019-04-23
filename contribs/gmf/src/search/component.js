@@ -27,6 +27,13 @@ import {appendParams as olUriAppendParams} from 'ol/uri.js';
 
 
 /**
+ * @typedef {Object} gmfSearchAction
+ * @property {string} action The action
+ * @property {string} title The titile
+ */
+
+
+/**
  * Datasource configuration options for the search directive.
  * @typedef {Object} SearchComponentDatasource
  * @property {Bloodhound.BloodhoundOptions} [bloodhoundOptions] The optional Bloodhound configuration for this
@@ -35,7 +42,7 @@ import {appendParams as olUriAppendParams} from 'ol/uri.js';
  * The bound value of this property key will be used as label.
  * @property {Array.<string>} [groupValues] Possible values for the 'layer_name' key.
  * Used to define groups of dataset.
- * @property {Array.<string>} [groupActions] List of allowed actions. The list may contain a
+ * @property {Array.<gmfSearchAction>} [groupActions] List of allowed actions. The list may contain a
  * combination of `add_theme`, `add_group` or `add_layer`
  * @property {string} [projection] The geometry's projection for this set of data.
  * @property {Twitter.Typeahead.Dataset} [typeaheadDatasetOptions] The optional Twitter.Typeahead.
@@ -70,7 +77,7 @@ const module = angular.module('gmfSearch', [
  * @hidden
  */
 function gmfSearchTemplateUrl_(element, attrs) {
-  const templateUrl = attrs['gmfSearchTemplateurl'];
+  const templateUrl = attrs.gmfSearchTemplateurl;
   return templateUrl !== undefined ? templateUrl :
     'gmf/search';
 }
@@ -370,13 +377,13 @@ class SearchController {
 
     /**
      * Supported projections for coordinates search.
-     * @type {Array.<string>}
+     * @type {Array<string>}
      */
     this.coordinatesProjections;
 
     /**
      * Supported projections for coordinates search.
-     * @type {Array.<olProj.Projection>}
+     * @type {Array<olProj.Projection>}
      */
     this.coordinatesProjectionsInstances;
 
@@ -557,7 +564,7 @@ class SearchController {
 
       /** @type {Array.<string>} */
       const groupValues = datasource.groupValues !== undefined ? datasource.groupValues : [];
-      /** @type {Array.<string>} */
+      /** @type {Array.<gmfSearchAction>} */
       const groupActions = datasource.groupActions ? datasource.groupActions : [];
       const filters = [];
 
@@ -567,32 +574,31 @@ class SearchController {
           'filter': this.filterLayername_()
         });
       } else {
-        groupValues.forEach(function(layerName) {
+        groupValues.forEach((layerName) => {
           filters.push({
             'title': layerName,
             'filter': this.filterLayername_(layerName)
           });
-        }, this);
+        });
       }
 
-      groupActions.forEach(function(action) {
+      groupActions.forEach((action) => {
         filters.push({
-          'title': gettextCatalog.getString(action['title']),
-          'filter': this.filterAction_(action['action'])
+          'title': gettextCatalog.getString(action.title),
+          'filter': this.filterAction_(action.action)
         });
-      }, this);
+      });
 
-      filters.forEach(function(filter) {
+      filters.forEach((filter) => {
         this.datasets.push(this.createDataset_({
           bloodhoundOptions: datasource.bloodhoundOptions,
-          datasetTitle: filter['title'],
-          groupsKey: 'layer_name',
+          datasetTitle: filter.title,
           labelKey: datasource.labelKey,
           projection: datasource.projection,
           typeaheadDatasetOptions: datasource.typeaheadDatasetOptions,
           url: datasource.url
-        }, filter['filter']));
-      }, this);
+        }, filter.filter));
+      });
     }
 
     // For searching coordinates
@@ -633,8 +639,9 @@ class SearchController {
       limit: Infinity,
       source: bloodhoundEngine.ttAdapter(),
       display: (suggestion) => {
-        const feature = /** @type {import("ol/Feature.js").default} */ (suggestion);
-        return feature.get(config.labelKey);
+        if (suggestion instanceof olFeature) {
+          return suggestion.get(config.labelKey);
+        }
       },
       templates: /* Twitter.Typeahead.Templates */ ({
         header: () => {
@@ -646,17 +653,17 @@ class SearchController {
           }
         },
         suggestion: (suggestion) => {
-          const feature = /** @type {import("ol/Feature.js").default} */ (suggestion);
+          if (suggestion instanceof olFeature) {
+            const scope = componentScope.$new(true);
+            scope['feature'] = suggestion;
 
-          const scope = componentScope.$new(true);
-          scope['feature'] = feature;
-
-          let html = `<p class="gmf-search-label" translate>${
-            feature.get(config.labelKey)}</p>`;
-          html += `<p class="gmf-search-group" translate>${feature.get('layer_name') ||
-                  config.datasetTitle}</p>`;
-          html = `<div class="gmf-search-datum">${html}</div>`;
-          return compile(html)(scope).html();
+            let html = `<p class="gmf-search-label" translate>${
+              suggestion.get(config.labelKey)}</p>`;
+            html += `<p class="gmf-search-group" translate>${suggestion.get('layer_name') ||
+                    config.datasetTitle}</p>`;
+            html = `<div class="gmf-search-datum">${html}</div>`;
+            return compile(html)(scope).html();
+          }
         }
       })
     });
@@ -680,11 +687,11 @@ class SearchController {
          * @return {boolean}
          */
       function(feature) {
-        const properties = feature['properties'];
-        if (properties['actions']) {
+        const properties = feature.properties;
+        if (properties.actions) {
           // result is an action (add_theme, add_group, ...)
           // add it to the corresponding group
-          return !properties['layer_name'] && properties['actions'].some(act => act.action === action);
+          return !properties.layer_name && properties.actions.some(act => act.action === action);
         } else {
           return false;
         }
@@ -707,7 +714,7 @@ class SearchController {
          * @return {boolean}
          */
       function(feature) {
-        const featureLayerName = feature['properties']['layer_name'];
+        const featureLayerName = feature.properties.layer_name;
         // Keep only layers with layer_name (don't keep action layers).
         if (featureLayerName === undefined) {
           return false;
@@ -771,7 +778,7 @@ class SearchController {
   createSearchCoordinates_(view) {
     const viewProjection = view.getProjection();
     const extent = viewProjection.getExtent();
-    return function(query, callback) {
+    return (query, callback) => {
       const suggestions = [];
       const coordinates = this.ngeoAutoProjection_.stringToCoordinates(query);
       if (coordinates === null) {
@@ -788,7 +795,7 @@ class SearchController {
         'tt_source': 'coordinates'
       });
       callback(suggestions);
-    }.bind(this);
+    };
   }
 
 
@@ -941,15 +948,15 @@ class SearchController {
    * @private
    */
   select_(event, suggestion, dataset) {
-    if (suggestion['tt_source'] === 'coordinates') {
-      const geom = new olGeomPoint(suggestion['position']);
+    if (suggestion.tt_source === 'coordinates') {
+      const geom = new olGeomPoint(suggestion.position);
 
       this.featureOverlay_.clear();
       this.featureOverlay_.addFeature(new olFeature({
         geometry: geom,
         'layer_name': COORDINATES_LAYER_NAME
       }));
-      this.map.getView().setCenter(suggestion['position']);
+      this.map.getView().setCenter(suggestion.position);
       this.leaveSearch_();
     } else {
       console.assert(suggestion instanceof olFeature);
@@ -971,8 +978,8 @@ class SearchController {
     if (actions) {
       for (let i = 0, ii = actions.length; i < ii; i++) {
         const action = actions[i];
-        const actionName = action['action'];
-        const actionData = action['data'];
+        const actionName = action.action;
+        const actionData = action.data;
         if (actionName == 'add_theme') {
           this.gmfThemes_.getThemesObject().then((themes) => {
             const theme = findThemeByName(themes, actionData);
@@ -983,11 +990,11 @@ class SearchController {
         } else if (actionName == 'add_group') {
           this.gmfTreeManager_.addGroupByName(actionData, true);
         } else if (actionName == 'add_layer') {
-          const groupActions = /** @type {Array.<string>} */ (
+          const groupActions = /** @type {Array<gmfSearchAction>} */ (
             this.datasources[0].groupActions);
           let datasourcesActionsHaveAddLayer;
           groupActions.forEach((groupAction) => {
-            if (groupAction['action'] === 'add_layer') {
+            if (groupAction.action === 'add_layer') {
               return datasourcesActionsHaveAddLayer = true;
             }
           });

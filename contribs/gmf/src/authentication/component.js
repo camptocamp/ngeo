@@ -428,13 +428,13 @@ class AuthenticationController {
       errors = [errors];
     }
 
-    errors.forEach(function(error) {
+    errors.forEach((error) => {
       this.notification_.notify({
         msg: error,
         target: container,
         type: messageType
       });
-    }, this);
+    });
   }
 
   /**

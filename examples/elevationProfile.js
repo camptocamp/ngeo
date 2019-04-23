@@ -198,16 +198,16 @@ function MainController($http, $scope) {
   /**
    * @param {Object} point Point.
    */
-  const hoverCallback = function(point) {
+  const hoverCallback = (point) => {
     // An item in the list of points given to the profile.
     this.point = point;
     this.snappedPoint_.setGeometry(new olGeomPoint([point.x, point.y]));
-  }.bind(this);
+  };
 
-  const outCallback = function() {
+  const outCallback = () => {
     this.point = null;
     this.snappedPoint_.setGeometry(null);
-  }.bind(this);
+  };
 
 
   /**

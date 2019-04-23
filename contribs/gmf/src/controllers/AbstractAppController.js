@@ -246,8 +246,9 @@ export function AbstractAppController(config, map, $scope, $injector) {
   this.searchDatasources = [{
     datasetTitle: undefined,
     labelKey: 'label',
-    groupValues: /** @type {Array.<string>} **/ ($injector.get('gmfSearchGroups')),
-    groupActions: /** @type {Array.<string>} **/ ($injector.get('gmfSearchActions')),
+    groupValues: /** @type {Array<string>} **/ ($injector.get('gmfSearchGroups')),
+    groupActions: /** @type {Array<import('gmf/search/component.js').gmfSearchAction>} **/(
+      $injector.get('gmfSearchActions')),
     projection: `EPSG:${config.srid || 21781}`,
     url: /** @type {string} **/ ($injector.get('fulltextsearchUrl'))
   }];
@@ -505,7 +506,7 @@ export function AbstractAppController(config, map, $scope, $injector) {
    * background layer.
    * @private
    */
-  this.updateCurrentBackgroundLayer_ = function(skipPermalink) {
+  this.updateCurrentBackgroundLayer_ = (skipPermalink) => {
     this.gmfThemes_.getBgLayers().then((layers) => {
       let background;
       if (!skipPermalink) {
@@ -533,7 +534,7 @@ export function AbstractAppController(config, map, $scope, $injector) {
         this.backgroundLayerMgr_.set(this.map, background);
       }
     });
-  }.bind(this);
+  };
 
   this.updateCurrentBackgroundLayer_(false);
 
