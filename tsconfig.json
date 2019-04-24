@@ -7,7 +7,16 @@
       "allowJs": true,
       "checkJs": true,
       "noEmit": true,
-      // "strict": true,
+      // Start strict
+      //"strict": true,
+      //"noImplicitAny": true,
+      //"noImplicitThis": true,
+      "alwaysStrict": true,
+      "strictBindCallApply": true,
+      //"strictNullChecks": true,
+      //"strictFunctionTypes": true,
+      //"strictPropertyInitialization": true,
+      // End strict
       "baseUrl": "./",
       "paths": {
         "ngeo/*": ["src/*"],
