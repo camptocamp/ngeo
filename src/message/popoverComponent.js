@@ -70,7 +70,7 @@ function messagePopoverComponent() {
  * @ngname ngeoPopoverAnchor
  * @return {angular.IDirective} The Directive Definition Object
  */
-function messagePopoverAanchorComponent() {
+function messagePopoverAnchorComponent() {
   return {
     restrict: 'A',
     require: '^^ngeoPopover',
@@ -153,7 +153,7 @@ PopoverController.prototype.dismissPopover = function() {
 
 module.controller('NgeoPopoverController', PopoverController);
 module.directive('ngeoPopover', messagePopoverComponent);
-module.directive('ngeoPopoverAnchor', messagePopoverAanchorComponent);
+module.directive('ngeoPopoverAnchor', messagePopoverAnchorComponent);
 module.directive('ngeoPopoverContent', messagePopoverContentComponent);
 
 
