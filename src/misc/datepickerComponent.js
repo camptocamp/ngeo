@@ -95,7 +95,7 @@ function datePickerComponent(ngeoDatePickerTemplateUrl, $timeout) {
       });
 
       $timeout(() => {
-        angular.element('#ui-datepicker-div').on('mousedown', (e) => {
+        angular.element('#ui-datepicker-div').on('click', (e) => {
           e.stopPropagation();
         });
       });
