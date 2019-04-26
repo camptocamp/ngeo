@@ -27,12 +27,13 @@ if (!window.requestAnimationFrame) {
 /**
  * @param {angular.Scope} $scope Scope.
  * @param {angular.$injector} $injector Main injector.
+ * @param {!ngeox.QueryResult} ngeoQueryResult ngeo query result.
  * @constructor
  * @extends {gmf.controllers.AbstractDesktopController}
  * @ngInject
  * @export
  */
-const exports = function($scope, $injector) {
+const exports = function($scope, $injector, ngeoQueryResult) {
   gmfControllersAbstractDesktopController.call(this, {
     srid: 21781,
     mapViewConfig: {
@@ -114,6 +115,27 @@ const exports = function($scope, $injector) {
       .addPlugin(RavenPluginsAngular)
       .install();
   }
+
+  /**
+   * @type {boolean}
+   * @private
+   */
+  this.hasPendingQuery_ = false;
+
+  // Change to a waiting cursor if there is a pending map query
+  $scope.$watchCollection(
+    () => ngeoQueryResult,
+    (newQueryResult, oldQueryResult) => {
+      if (newQueryResult.pending !== this.hasPendingQuery_) {
+        this.hasPendingQuery_ = newQueryResult.pending;
+        if (this.hasPendingQuery_) {
+          document.body.classList.add('gmf-query-pending');
+        } else {
+          document.body.classList.remove('gmf-query-pending');
+        }
+      }
+    }
+  );
 };
 
 olBase.inherits(exports, gmfControllersAbstractDesktopController);
