@@ -276,8 +276,6 @@ class Map {
             });
             marker.setProperties(filterByKeys(values, attr));
             marker.setId(values.id);
-            // FIXME: handle values.iconSize
-            // FIXME: handle values.iconOffset
             marker.setStyle(new Style({
               image: new Icon({
                 src: values.icon
