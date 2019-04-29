@@ -305,13 +305,7 @@ export class ThemesService extends olEventsEventTarget {
    */
   getBackgroundLayersObject() {
     console.assert(this.promise_ !== null);
-    return this.promise_.then(
-      /**
-       * @param {!import('gmf/themes.js').GmfThemesResponse} data The "themes" web service response.
-       * @return {!Array.<!import('gmf/themes.js').GmfLayer>} The background layers object.
-       */
-      data => data.background_layers
-    );
+    return this.promise_.then(data => data.background_layers);
   }
 
   /**
