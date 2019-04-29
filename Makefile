@@ -137,7 +137,8 @@ spell: .build/python-venv.timestamp
 		$(shell find -name 'node_modules' -prune -or -name '.build' -prune -or -name '.git' -prune \
 		-or -name '__pycache__' -prune -or -name 'build' -prune \
 		-or \( -type f -and -not -name '*.png' -and -not -name '*.mo' -and -not -name '*.po*' -and -not -name '*_translation' \
-		-and -not -name 'themescapabilities.js' -and -not -name 'themes.js'  -and -not -name 'prettify.js' \) -print)
+		-and -not -name 'themescapabilities.js' -and -not -name 'themes.js' -and -not -name 'prettify.js' \
+		-and -not -name 'package-lock.json' \) -print)
 
 .PHONY: eslint
 eslint: .build/eslint.timestamp
