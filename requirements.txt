@@ -7,4 +7,4 @@ pip==19.1
 requests==2.21.0
 setuptools==41.0.1
 transifex-client==0.12.5  # rq.filter: <=0.12.5
-urllib3==1.25.1
+urllib3==1.25.2
