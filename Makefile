@@ -59,17 +59,11 @@ endif
 # OS compatibility
 OS := $(shell uname)
 ifeq ($(OS),Darwin)
-	STAT_COMPRESSED = stat -f '  compressed: %z bytes'
-	STAT_UNCOMPRESSED = stat -f 'uncompressed: %z bytes'
 	STAT_LAST_MODIFIED = stat -f '%m'
 	TOUCH_DATE = touch -t
-	SED_NEW_LINE = '$$'\n
 else
-	STAT_COMPRESSED = stat -c '  compressed: %s bytes'
-	STAT_UNCOMPRESSED = stat -c 'uncompressed: %s bytes'
 	STAT_LAST_MODIFIED = stat -c '%y'
 	TOUCH_DATE = touch --date
-	SED_NEW_LINE = ''
 endif
 
 ifneq (,$(findstring CYGWIN,$(OS)))
