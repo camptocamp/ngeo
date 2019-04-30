@@ -70,7 +70,7 @@ function mobileNavigationComponent() {
      * @param {angular.IScope} scope Scope.
      * @param {JQuery} element Element.
      * @param {angular.IAttributes} attrs Attributes.
-     * @param {Controller} navCtrl Controller.
+     * @param {angular.IController} navCtrl Controller.
      */
     link: (scope, element, attrs, navCtrl) => {
       navCtrl.init(element);
@@ -286,7 +286,7 @@ function mobileNavigationBackComponent() {
      * @param {angular.IScope} scope Scope.
      * @param {JQuery} element Element.
      * @param {angular.IAttributes} attrs Attributes.
-     * @param {Controller} navCtrl Controller.
+     * @param {angular.IController} navCtrl Controller.
      */
     link: (scope, element, attrs, navCtrl) => {
       scope.$watch(attrs['gmfMobileNavBack'], (newVal, oldVal) => {
@@ -329,7 +329,7 @@ function mobileNavigationBackOnClickComponent() {
      * @param {angular.IScope} scope Scope.
      * @param {JQuery} element Element.
      * @param {angular.IAttributes} attrs Attributes.
-     * @param {Controller} navCtrl Controller.
+     * @param {angular.IController} navCtrl Controller.
      */
     link: (scope, element, attrs, navCtrl) => {
       element.on('click', () => {

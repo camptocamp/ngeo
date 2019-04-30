@@ -2,6 +2,7 @@ import angular from 'angular';
 import olCollection from 'ol/Collection.js';
 import * as olEvents from 'ol/events.js';
 import olView from 'ol/View.js';
+import {CollectionEvent} from 'ol/Collection.js';
 
 
 /**
@@ -103,7 +104,7 @@ export class DataSource {
   /**
    * Called when the resolution of the map view changes. Synchronize the
    * datasources to current resolution of the view.
-   * @param {Event} evt Event.
+   * @param {Event|import("ol/events/Event.js").default} evt Event.
    * @private
    */
   handleViewResolutionChange_(evt) {
@@ -156,15 +157,17 @@ export class DataSource {
   /**
    * Called when a new data source is added to the ngeo collection. If there's
    * map bound, update its `inRange` right away.
-   * @param {!import("ol/Collection.js").CollectionEvent} event Event
+   * @param {Event|import("ol/events/Event.js").default} event Event
    * @private
    */
   handleDataSourcesAdd_(event) {
-    const dataSource = event.element;
-    if (this.map_) {
-      const resolution = this.map_.getView().getResolution();
-      console.assert(typeof resolution == 'number');
-      this.syncDataSourceToResolution_(dataSource, resolution);
+    if (event instanceof CollectionEvent) {
+      const dataSource = event.element;
+      if (this.map_) {
+        const resolution = this.map_.getView().getResolution();
+        console.assert(typeof resolution == 'number');
+        this.syncDataSourceToResolution_(dataSource, resolution);
+      }
     }
   }
 

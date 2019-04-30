@@ -910,13 +910,13 @@ export class DatasourceManager {
    * The `querySourceIds` property in the layer is used to determine the
    * data sources that are bound to the layer.
    *
-   * @param {!import('ngeo/map/BackgroundLayerMgr.js').BackgroundEvent} evt Event.
+   * @param {Event|import('ol/events/Event.js').default} evt Event.
    * @private
    */
   handleNgeoBackgroundLayerChange_(evt) {
-
-    const previousBackgroundLayer = evt.detail.previous;
-    const currentBackgroundLayer = evt.detail.current;
+    const event = /** @type{import('ngeo/map/BackgroundLayerMgr.js').BackgroundEvent} */(evt);
+    const previousBackgroundLayer = event.detail.previous;
+    const currentBackgroundLayer = event.detail.current;
     const cache = this.dataSourcesCache_;
 
     // Remove data sources linked to previous background layer

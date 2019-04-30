@@ -8,6 +8,7 @@ import olGeomPolygon from 'ol/geom/Polygon.js';
 import olInteractionPointer from 'ol/interaction/Pointer.js';
 import olLayerVector from 'ol/layer/Vector.js';
 import olSourceVector from 'ol/source/Vector.js';
+import {CollectionEvent} from 'ol/Collection.js';
 
 
 /**
@@ -272,22 +273,26 @@ class ModifyRectangle extends olInteractionPointer {
   }
 
   /**
-   * @param {import("ol/Collection.js").CollectionEvent} evt Event.
+   * @param {Event|import('ol/events/Event.js').default} evt Event.
    * @private
    */
   handleFeatureAdd_(evt) {
-    const feature = evt.element;
-    console.assert(feature instanceof olFeature, 'feature should be an ol.Feature');
-    this.addFeature_(feature);
+    if (evt instanceof CollectionEvent) {
+      const feature = evt.element;
+      console.assert(feature instanceof olFeature, 'feature should be an ol.Feature');
+      this.addFeature_(feature);
+    }
   }
 
   /**
-   * @param {import("ol/Collection.js").CollectionEvent} evt Event.
+   * @param {Event|import('ol/events/Event.js').default} evt Event.
    * @private
    */
   handleFeatureRemove_(evt) {
-    const feature = /** @type {import("ol/Feature.js").default} */ (evt.element);
-    this.removeFeature_(feature);
+    if (evt instanceof CollectionEvent) {
+      const feature = /** @type {import("ol/Feature.js").default} */ (evt.element);
+      this.removeFeature_(feature);
+    }
   }
 
   /**

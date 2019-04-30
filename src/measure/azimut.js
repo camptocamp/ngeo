@@ -37,7 +37,7 @@ function measureAzimutComponent($compile, gettextCatalog, $filter, $injector) {
      * @param {!angular.IScope} $scope Scope.
      * @param {JQuery} element Element.
      * @param {angular.IAttributes} attrs Attributes.
-     * @param {import("ngeo/draw/Controller.js").DrawController} drawFeatureCtrl Controller.
+     * @param {angular.IController} drawFeatureCtrl Controller.
      */
     link: ($scope, element, attrs, drawFeatureCtrl) => {
 
@@ -61,23 +61,24 @@ function measureAzimutComponent($compile, gettextCatalog, $filter, $injector) {
         measureAzimut,
         'measureend',
         /**
-         * @param {import('ngeo/interaction/Measure.js').MeasureEvent} event Event.
+         * @param {Event|import('ol/events/Event.js').default} event Event.
          */
         (event) => {
+          const myEvent = /** @type {import('ngeo/interaction/Measure.js').MeasureEvent} */(event);
           // In the case of azimut measure interaction, the feature's
           // geometry is actually a collection (line + circle)
           // For our purpose here, we only need the circle, which gets
           // transformed into a polygon with 64 sides.
           const geometry = /** @type {import("ol/geom/GeometryCollection.js").default} */
-                (event.detail.feature.getGeometry());
+                (myEvent.detail.feature.getGeometry());
           const circle = /** @type {import("ol/geom/Circle.js").default} */ (
             geometry.getGeometries()[1]);
           const polygon = fromCircle(circle, 64);
-          event.detail.feature = new olFeature(polygon);
+          myEvent.detail.feature = new olFeature(polygon);
           const azimut = getAzimut(
             /** @type {import("ol/geom/LineString.js").default} */ (geometry.getGeometries()[0])
           );
-          event.detail.feature.set('azimut', azimut);
+          myEvent.detail.feature.set('azimut', azimut);
 
           drawFeatureCtrl.handleDrawEnd(ngeoGeometryType.CIRCLE, event);
         },

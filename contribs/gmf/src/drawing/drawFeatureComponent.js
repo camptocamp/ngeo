@@ -24,6 +24,9 @@ import olCollection from 'ol/Collection.js';
 import olStyleFill from 'ol/style/Fill.js';
 import olStyleStyle from 'ol/style/Style.js';
 import olStyleText from 'ol/style/Text.js';
+import {CollectionEvent} from 'ol/Collection.js';
+import MapBrowserEvent from 'ol/MapBrowserEvent.js';
+import Feature from 'ol/Feature.js';
 
 import 'bootstrap/js/src/dropdown.js';
 
@@ -399,10 +402,7 @@ Controller.prototype.handleActiveChange_ = function(active) {
       olEvents.listen(this.features, 'remove', this.handleFeaturesRemove_, this)
     );
 
-    keys.push(olEvents.listen(this.translate_,
-      'translateend',
-      this.handleTranslateEnd_, this));
-
+    keys.push(olEvents.listen(this.translate_, 'translateend', this.handleTranslateEnd_, this));
     keys.push(olEvents.listen(this.rotate_, 'rotateend', this.handleRotateEnd_, this));
 
     toolMgr.registerTool(drawUid, this.drawToolActivate, false);
@@ -487,21 +487,23 @@ Controller.prototype.removeFeature = function(feature) {
 
 
 /**
- * @param {!import("ol/Collection.js").CollectionEvent} evt Event.
+ * @param {Event|import('ol/events/Event.js').default} evt Event.
  * @private
  */
 Controller.prototype.handleFeaturesAdd_ = function(evt) {
-  // timeout to prevent double-click to zoom the map
-  this.timeout_(() => {
-    this.selectedFeature = /** @type {import("ol/Feature.js").default} */ (evt.element);
-    this.drawActive = false;
-    this.scope_.$apply();
-  });
+  if (evt instanceof CollectionEvent) {
+    // timeout to prevent double-click to zoom the map
+    this.timeout_(() => {
+      this.selectedFeature = /** @type {import("ol/Feature.js").default} */ (evt.element);
+      this.drawActive = false;
+      this.scope_.$apply();
+    });
+  }
 };
 
 
 /**
- * @param {!import("ol/Collection.js").CollectionEvent} evt Event.
+ * @param {Event|import('ol/events/Event.js').default} evt Event.
  * @private
  */
 Controller.prototype.handleFeaturesRemove_ = function(evt) {
@@ -521,78 +523,62 @@ Controller.prototype.handleMapSelectActiveChange_ = function(
   console.assert(mapDiv);
 
   if (active) {
-    olEvents.listen(this.map, 'click',
-      this.handleMapClick_, this);
-
-    olEvents.listen(mapDiv, 'contextmenu',
-      this.handleMapContextMenu_, this);
-
-    olEvents.listen(mapDiv, 'touchstart',
-      this.handleMapTouchStart_, this);
-
-    olEvents.listen(mapDiv, 'touchmove',
-      this.handleMapTouchEnd_, this);
-
-    olEvents.listen(mapDiv, 'touchend',
-      this.handleMapTouchEnd_, this);
-
+    olEvents.listen(this.map, 'click', this.handleMapClick_, this);
+    olEvents.listen(mapDiv, 'contextmenu', this.handleMapContextMenu_, this);
+    olEvents.listen(mapDiv, 'touchstart', this.handleMapTouchStart_, this);
+    olEvents.listen(mapDiv, 'touchmove', this.handleMapTouchEnd_, this);
+    olEvents.listen(mapDiv, 'touchend', this.handleMapTouchEnd_, this);
   } else {
-    olEvents.unlisten(this.map, 'click',
-      this.handleMapClick_, this);
-
-    olEvents.unlisten(mapDiv, 'contextmenu',
-      this.handleMapContextMenu_, this);
-
-    olEvents.unlisten(mapDiv, 'touchstart',
-      this.handleMapTouchStart_, this);
-
-    olEvents.unlisten(mapDiv, 'touchmove',
-      this.handleMapTouchEnd_, this);
-
-    olEvents.unlisten(mapDiv, 'touchend',
-      this.handleMapTouchEnd_, this);
+    olEvents.unlisten(this.map, 'click', this.handleMapClick_, this);
+    olEvents.unlisten(mapDiv, 'contextmenu', this.handleMapContextMenu_, this);
+    olEvents.unlisten(mapDiv, 'touchstart', this.handleMapTouchStart_, this);
+    olEvents.unlisten(mapDiv, 'touchmove', this.handleMapTouchEnd_, this);
+    olEvents.unlisten(mapDiv, 'touchend', this.handleMapTouchEnd_, this);
   }
 };
 
 
 /**
- * @param {!import("ol/MapBrowserEvent.js").default} evt Event.
+ * @param {Event|import('ol/events/Event.js').default} evt Event.
  * @private
  */
 Controller.prototype.handleMapClick_ = function(evt) {
+  if (evt instanceof MapBrowserEvent) {
+    const pixel = evt.pixel;
 
-  const pixel = evt.pixel;
-
-  let feature = /** @type {import('ol/Feature.js').default|undefined} */ (this.map.forEachFeatureAtPixel(
-    pixel,
-    (feature) => {
-      let ret = null;
-      if (this.features.getArray().includes(/** @type import('ol/Feature.js').default */ (feature))) {
-        ret = feature;
+    let feature = /** @type {import('ol/Feature.js').default|undefined} */ (this.map.forEachFeatureAtPixel(
+      pixel,
+      (feature) => {
+        let ret = null;
+        if (feature instanceof Feature) {
+          if (this.features.getArray().includes(feature)) {
+            ret = feature;
+          }
+        }
+        return ret;
+      },
+      {
+        hitTolerance: 5,
+        layerFilter: undefined
       }
-      return ret;
-    },
-    {
-      hitTolerance: 5,
-      layerFilter: undefined
+    ));
+
+    feature = feature ? feature : null;
+
+    // do not do any further action if feature is null or already selected
+    if (feature === this.selectedFeature) {
+      return;
     }
-  ));
 
-  feature = feature ? feature : null;
+    this.selectedFeature = feature;
 
-  // do not do any further action if feature is null or already selected
-  if (feature === this.selectedFeature) {
-    return;
+    this.scope_.$apply();
   }
-
-  this.selectedFeature = feature;
-
-  this.scope_.$apply();
 };
 
 
 /**
- * @param {!Event} evt Event.
+ * @param {Event|import('ol/events/Event.js').default} evt Event.
  * @private
  */
 Controller.prototype.handleMapTouchStart_ = function(evt) {
@@ -603,7 +589,7 @@ Controller.prototype.handleMapTouchStart_ = function(evt) {
 
 
 /**
- * @param {!Event} evt Event.
+ * @param {Event|import('ol/events/Event.js').default} evt Event.
  * @private
  */
 Controller.prototype.handleMapTouchEnd_ = function(evt) {
@@ -612,100 +598,104 @@ Controller.prototype.handleMapTouchEnd_ = function(evt) {
 
 
 /**
- * @param {!Event} evt Event.
+ * @param {Event|import('ol/events/Event.js').default} evt Event.
  * @private
  */
 Controller.prototype.handleMapContextMenu_ = function(evt) {
-  const gettextCatalog = this.gettextCatalog_;
-  const pixel = this.map.getEventPixel(evt);
-  const coordinate = this.map.getCoordinateFromPixel(pixel);
+  if (evt instanceof Event) {
+    const gettextCatalog = this.gettextCatalog_;
+    const pixel = this.map.getEventPixel(evt);
+    const coordinate = this.map.getCoordinateFromPixel(pixel);
 
-  let feature = /** @type {import('ol/Feature.js').default|undefined} */ (this.map.forEachFeatureAtPixel(
-    pixel,
-    (feature) => {
-      let ret = null;
-      if (this.features.getArray().includes(/** @type import('ol/Feature.js').default */ (feature))) {
-        ret = feature;
+    let feature = /** @type {import('ol/Feature.js').default|undefined} */ (this.map.forEachFeatureAtPixel(
+      pixel,
+      (feature) => {
+        if (feature instanceof Feature) {
+          let ret = null;
+          if (this.features.getArray().includes(feature)) {
+            ret = feature;
+          }
+          return ret;
+        }
+      },
+      {
+        hitTolerance: 7,
+        layerFilter: undefined
       }
-      return ret;
-    },
-    {
-      hitTolerance: 7,
-      layerFilter: undefined
-    }
-  ));
+    ));
 
-  feature = feature ? feature : null;
+    feature = feature ? feature : null;
 
-  // show contextual menu when clicking on certain types of features
-  if (feature) {
+    // show contextual menu when clicking on certain types of features
+    if (feature) {
 
-    this.closeMenu_();
+      this.closeMenu_();
 
-    let actions = [];
+      let actions = [];
 
-    const vertexInfo = this.featureHelper_.getVertexInfoAtCoordinate(
-      feature, coordinate, this.map.getView().getResolution());
-    if (!vertexInfo) {
-      const type = this.featureHelper_.getType(feature);
-      if (type == ngeoGeometryType.CIRCLE ||
-          type == ngeoGeometryType.LINE_STRING ||
-          type == ngeoGeometryType.POLYGON ||
-          type == ngeoGeometryType.RECTANGLE) {
-        actions = actions.concat([{
-          cls: 'fas fa-arrows-alt',
-          label: gettextCatalog.getString('Move'),
-          name: 'move'
-        }, {
-          cls: 'fas fa-undo fa-flip-horizontal',
-          label: gettextCatalog.getString('Rotate'),
-          name: 'rotate'
-        }]);
+      const vertexInfo = this.featureHelper_.getVertexInfoAtCoordinate(
+        feature, coordinate, this.map.getView().getResolution());
+      if (!vertexInfo) {
+        const type = this.featureHelper_.getType(feature);
+        if (type == ngeoGeometryType.CIRCLE ||
+            type == ngeoGeometryType.LINE_STRING ||
+            type == ngeoGeometryType.POLYGON ||
+            type == ngeoGeometryType.RECTANGLE) {
+          actions = actions.concat([{
+            cls: 'fas fa-arrows-alt',
+            label: gettextCatalog.getString('Move'),
+            name: 'move'
+          }, {
+            cls: 'fas fa-undo fa-flip-horizontal',
+            label: gettextCatalog.getString('Rotate'),
+            name: 'rotate'
+          }]);
+        }
       }
+
+      actions = actions.concat([{
+        cls: 'fa fa-trash',
+        label: vertexInfo ? gettextCatalog.getString('Delete vertex') :
+          gettextCatalog.getString('Delete'),
+        name: 'delete'
+      }]);
+
+      this.menu_ = new ngeoMenu({
+        actions
+      });
+
+      this.menuListenerKey_ = olEvents.listen(this.menu_, 'actionclick',
+        this.handleMenuActionClick_.bind(this, vertexInfo), this);
+      this.map.addOverlay(this.menu_);
+
+      this.menu_.open(coordinate);
+
+      evt.preventDefault();
+      evt.stopPropagation();
     }
 
-    actions = actions.concat([{
-      cls: 'fa fa-trash',
-      label: vertexInfo ? gettextCatalog.getString('Delete vertex') :
-        gettextCatalog.getString('Delete'),
-      name: 'delete'
-    }]);
+    // do not do any further action if feature is null or already selected
+    if (feature === this.selectedFeature) {
+      return;
+    }
 
-    this.menu_ = new ngeoMenu({
-      actions
-    });
+    this.modify_.setActive(true);
 
-    this.menuListenerKey_ = olEvents.listen(this.menu_, 'actionclick',
-      this.handleMenuActionClick_.bind(this, vertexInfo), this);
-    this.map.addOverlay(this.menu_);
+    this.selectedFeature = /** @type import('ol/Feature.js').default */ (feature);
 
-    this.menu_.open(coordinate);
-
-    evt.preventDefault();
-    evt.stopPropagation();
+    this.scope_.$apply();
   }
-
-  // do not do any further action if feature is null or already selected
-  if (feature === this.selectedFeature) {
-    return;
-  }
-
-  this.modify_.setActive(true);
-
-  this.selectedFeature = /** @type import('ol/Feature.js').default */ (feature);
-
-  this.scope_.$apply();
 };
 
 
 /**
- * @param {?Array.<number>} vertexInfo Vertex information, in case a
+ * @param {?Array<number>} vertexInfo Vertex information, in case a
  *     vertex was clicked using the right button.
- * @param {!import('ngeo/filter/ruleComponent.js').MenuEvent} evt Event.
+ * @param {!Event|import('ol/events/Event.js').default} evt Event.
  * @private
  */
 Controller.prototype.handleMenuActionClick_ = function(vertexInfo, evt) {
-  const action = evt.detail.action;
+  const action = /** @type{import('ngeo/filter/ruleComponent.js').MenuEvent} */(evt).detail.action;
 
   switch (action) {
     case 'delete':
@@ -735,7 +725,7 @@ Controller.prototype.handleMenuActionClick_ = function(vertexInfo, evt) {
 
 
 /**
- * @param {!import("ol/interaction/Translate.js").TranslateEvent} evt Event.
+ * @param {Event|import('ol/events/Event.js').default} evt Event.
  * @private
  */
 Controller.prototype.handleTranslateEnd_ = function(evt) {
@@ -745,7 +735,7 @@ Controller.prototype.handleTranslateEnd_ = function(evt) {
 
 
 /**
- * @param {!import('ngeo/interaction/Rotate.js').RotateEvent} evt Event.
+ * @param {Event|import('ol/events/Event.js').default} evt Event.
  * @private
  */
 Controller.prototype.handleRotateEnd_ = function(evt) {

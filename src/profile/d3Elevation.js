@@ -259,9 +259,9 @@ function d3Elevation(options) {
       height = Math.max(this.clientHeight - margin.top - margin.bottom, 0);
       y = d3scaleLinear().range([height, 0]);
 
-      /** @type {import('d3').Axis<import('d3').AxisDomain>} */
+      /** @type {import('d3').Axis<number|{valueOf(): number}>} */
       const xAxis = d3axisBottom(x);
-      /** @type {import('d3').Axis<import('d3').AxisDomain>} */
+      /** @type {import('d3').Axis<number|{valueOf(): number}>} */
       const yAxis = d3axisLeft(y);
 
       let area;

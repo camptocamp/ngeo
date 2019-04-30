@@ -26,7 +26,7 @@ function drawRectangleComponent() {
      * @param {!angular.IScope} $scope Scope.
      * @param {JQuery} element Element.
      * @param {angular.IAttributes} attrs Attributes.
-     * @param {import("ngeo/draw/Controller.js").DrawController} drawFeatureCtrl Controller.
+     * @param {angular.IController} drawFeatureCtrl Controller.
      */
     link: ($scope, element, attrs, drawFeatureCtrl) => {
 

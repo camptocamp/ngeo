@@ -193,7 +193,7 @@ export function AbstractAppController(config, map, $scope, $injector) {
   });
 
   /**
-   * @param {import('gmf/authentication/Service.js').AuthenticationEvent} evt Event.
+   * @param {Event|import('ol/events/Event.js').default} evt Event.
    */
   const userChange = (evt) => {
     if (this.loginRedirectUrl) {

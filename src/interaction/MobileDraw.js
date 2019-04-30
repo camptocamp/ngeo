@@ -402,7 +402,7 @@ export default class extends olInteractionInteraction {
   }
 
   /**
-   * @param {import("ol/events/Event.js").default} evt Event.
+   * @param {Event|import('ol/events/Event.js').default} evt Event.
    * @private
    */
   handleViewCenterChange_(evt) {

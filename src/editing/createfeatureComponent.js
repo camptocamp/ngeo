@@ -258,7 +258,7 @@ Controller.prototype.$onInit = function() {
 /**
  * Called when a feature is finished being drawn. Add the feature to the
  * collection.
- * @param {import('ol/events/Event.js').default|import('ngeo/interaction/Measure.js').MeasureEvent} event
+ * @param {Event|import('ol/events/Event.js').default|import('ngeo/interaction/Measure.js').MeasureEvent} event
  *    Event.
  */
 Controller.prototype.handleDrawEnd_ = function(event) {

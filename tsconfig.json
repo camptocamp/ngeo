@@ -14,7 +14,7 @@
       "alwaysStrict": true,
       "strictBindCallApply": true,
       //"strictNullChecks": true,
-      //"strictFunctionTypes": true,
+      "strictFunctionTypes": true,
       //"strictPropertyInitialization": true,
       // End strict
       "baseUrl": "./",

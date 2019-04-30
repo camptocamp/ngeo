@@ -698,7 +698,7 @@ export class Querent {
 
       // (4.2) After count, do GetFeature (if required)
       /**
-       * @param {number} numberOfFeatures value
+       * @param {number|void} numberOfFeatures value
        * @returns {angular.IPromise<never>} undefined
        */
       const afterCount_ = (numberOfFeatures) => {

@@ -93,7 +93,7 @@ function mobileMeasurePointComponent(gmfMobileMeasurePointTemplateUrl) {
      * @param {!angular.IScope} scope Scope.
      * @param {!JQuery} element Element.
      * @param {!angular.IAttributes} attrs Attributes.
-     * @param {!MobileMeasurePointController} controller Controller.
+     * @param {!angular.IController} controller Controller.
      */
     link: (scope, element, attrs, controller) => {
       controller.init();

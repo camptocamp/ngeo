@@ -25,6 +25,7 @@ import * as olEvents from 'ol/events.js';
 import olStyleStyle from 'ol/style/Style.js';
 import olStyleText from 'ol/style/Text.js';
 import olStyleFill from 'ol/style/Fill.js';
+import {CollectionEvent} from 'ol/Collection.js';
 import 'ngeo/sass/font.scss';
 
 
@@ -771,35 +772,37 @@ class RuleController {
   }
 
   /**
-   * @param {import("ol/Collection.js").CollectionEvent} evt Event.
+   * @param {Event|import("ol/events/Event.js").default} evt Event.
    * @private
    */
   handleFeaturesAdd_(evt) {
-    // timeout to prevent double-click to zoom the map
-    this.timeout_(() => {
+    if (evt instanceof CollectionEvent) {
+      // timeout to prevent double-click to zoom the map
+      this.timeout_(() => {
 
-      const clone = this.clone;
-      if (clone instanceof ngeoRuleGeometry) {
-        const feature = clone.feature;
+        const clone = this.clone;
+        if (clone instanceof ngeoRuleGeometry) {
+          const feature = clone.feature;
 
-        // (1) Apply geometry
-        const drawnFeature = evt.element;
-        const geometry = drawnFeature.getGeometry();
-        clone.geometry = geometry;
+          // (1) Apply geometry
+          const drawnFeature = evt.element;
+          const geometry = drawnFeature.getGeometry();
+          clone.geometry = geometry;
 
-        // (2) Deactivate draw tools
-        this.drawActive = false;
+          // (2) Deactivate draw tools
+          this.drawActive = false;
 
-        // (3) Set properties, then style
-        const properties = this.ngeoFeatureHelper_.getNonSpatialProperties(
-          drawnFeature);
-        this.ngeoFeatureHelper_.clearNonSpatialProperties(feature);
-        feature.setProperties(properties);
-        this.ngeoFeatureHelper_.setStyle(feature, true);
+          // (3) Set properties, then style
+          const properties = this.ngeoFeatureHelper_.getNonSpatialProperties(
+            drawnFeature);
+          this.ngeoFeatureHelper_.clearNonSpatialProperties(feature);
+          feature.setProperties(properties);
+          this.ngeoFeatureHelper_.setStyle(feature, true);
 
-        this.scope_.$apply();
-      }
-    });
+          this.scope_.$apply();
+        }
+      });
+    }
   }
 
   /**
@@ -814,83 +817,84 @@ class RuleController {
   }
 
   /**
-   * @param {Event} evt Event.
+   * @param {Event|import("ol/events/Event.js").default} evt Event.
    * @private
    */
   handleMapContextMenu_(evt) {
+    if (evt instanceof Event || evt instanceof TouchEvent) {
+      // (1) Remove previous menu, if any
+      this.removeMenu_();
 
-    // (1) Remove previous menu, if any
-    this.removeMenu_();
+      // (2) Get feature at pixel
+      const pixel = this.map.getEventPixel(evt);
+      const coordinate = this.map.getCoordinateFromPixel(pixel);
 
-    // (2) Get feature at pixel
-    const pixel = this.map.getEventPixel(evt);
-    const coordinate = this.map.getCoordinateFromPixel(pixel);
-
-    let feature = this.map.forEachFeatureAtPixel(
-      pixel,
-      (feature) => {
-        /** @type {import('ol/Feature.js').default} */
-        let ret = null;
-        if (this.selectedFeatures.getArray().includes(
-          /** @type {import('ol/Feature.js').default} */(feature)
-        )) {
-          ret = /** @type {import('ol/Feature.js').default} */(feature);
+      let feature = this.map.forEachFeatureAtPixel(
+        pixel,
+        (feature) => {
+          /** @type {import('ol/Feature.js').default} */
+          let ret = null;
+          if (this.selectedFeatures.getArray().includes(
+            /** @type {import('ol/Feature.js').default} */(feature)
+          )) {
+            ret = /** @type {import('ol/Feature.js').default} */(feature);
+          }
+          return ret;
         }
-        return ret;
-      }
-    );
-
-    feature = feature ? feature : null;
-
-    // (3) If the clicked feature is the selected one, plus if it has a certain
-    //     type of geometry, then show the menu
-    const actions = [];
-    if (feature) {
-
-      const type = this.ngeoFeatureHelper_.getType(feature);
-      const gettextCatalog = this.gettextCatalog_;
-
-      if (type == ngeoGeometryType.CIRCLE ||
-          type == ngeoGeometryType.LINE_STRING ||
-          type == ngeoGeometryType.POLYGON ||
-          type == ngeoGeometryType.RECTANGLE) {
-        actions.push({
-          cls: 'fas fa-arrows-alt',
-          label: gettextCatalog.getString('Move'),
-          name: 'move'
-        });
-      }
-      if (type == ngeoGeometryType.LINE_STRING ||
-          type == ngeoGeometryType.POLYGON ||
-          type == ngeoGeometryType.RECTANGLE) {
-        actions.push({
-          cls: 'fas fa-undo fa-flip-horizontal',
-          label: gettextCatalog.getString('Rotate'),
-          name: 'rotate'
-        });
-      }
-    }
-
-    if (actions.length) {
-      // (4) Create and show menu
-      this.menu_ = new ngeoMenu({
-        actions
-      });
-
-      olEvents.listen(
-        this.menu_,
-        'actionclick',
-        this.handleMenuActionClick_,
-        this
       );
-      this.map.addOverlay(this.menu_);
 
-      this.menu_.open(coordinate);
+      feature = feature ? feature : null;
 
-      evt.preventDefault();
-      evt.stopPropagation();
+      // (3) If the clicked feature is the selected one, plus if it has a certain
+      //     type of geometry, then show the menu
+      const actions = [];
+      if (feature) {
 
-      this.scope_.$apply();
+        const type = this.ngeoFeatureHelper_.getType(feature);
+        const gettextCatalog = this.gettextCatalog_;
+
+        if (type == ngeoGeometryType.CIRCLE ||
+            type == ngeoGeometryType.LINE_STRING ||
+            type == ngeoGeometryType.POLYGON ||
+            type == ngeoGeometryType.RECTANGLE) {
+          actions.push({
+            cls: 'fas fa-arrows-alt',
+            label: gettextCatalog.getString('Move'),
+            name: 'move'
+          });
+        }
+        if (type == ngeoGeometryType.LINE_STRING ||
+            type == ngeoGeometryType.POLYGON ||
+            type == ngeoGeometryType.RECTANGLE) {
+          actions.push({
+            cls: 'fas fa-undo fa-flip-horizontal',
+            label: gettextCatalog.getString('Rotate'),
+            name: 'rotate'
+          });
+        }
+      }
+
+      if (actions.length) {
+        // (4) Create and show menu
+        this.menu_ = new ngeoMenu({
+          actions
+        });
+
+        olEvents.listen(
+          this.menu_,
+          'actionclick',
+          this.handleMenuActionClick_,
+          this
+        );
+        this.map.addOverlay(this.menu_);
+
+        this.menu_.open(coordinate);
+
+        evt.preventDefault();
+        evt.stopPropagation();
+
+        this.scope_.$apply();
+      }
     }
   }
 
@@ -912,11 +916,11 @@ class RuleController {
   }
 
   /**
-   * @param {MenuEvent} evt Event.
+   * @param {Event|import("ol/events/Event.js").default|MenuEvent} evt Event.
    * @private
    */
   handleMenuActionClick_(evt) {
-    const action = evt.detail.action;
+    const action = /** @type{MenuEvent} */(evt).detail.action;
 
     switch (action) {
       case 'move':
@@ -934,7 +938,7 @@ class RuleController {
   }
 
   /**
-   * @param {import('ngeo/interaction/Rotate.js').RotateEvent} evt Event.
+   * @param {Event|import("ol/events/Event.js").default} evt Event.
    * @private
    */
   handleRotateEnd_(evt) {
@@ -943,7 +947,7 @@ class RuleController {
   }
 
   /**
-   * @param {import('ol/interaction/Translate.js').TranslateEvent} evt Event.
+   * @param {Event|import("ol/events/Event.js").default} evt Event.
    * @private
    */
   handleTranslateEnd_(evt) {

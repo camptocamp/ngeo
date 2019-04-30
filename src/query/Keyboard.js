@@ -92,21 +92,21 @@ export class QueryKeyboard {
   // Handlers
 
   /**
-   * @param {KeyboardEvent} evt Event.
+   * @param {Event|import("ol/events/Event.js").default} evt Event.
    * @private
    */
   handleKeyDown_(evt) {
-    if (!this.activeKey_ && this.keys_.includes(evt.key)) {
+    if (evt instanceof KeyboardEvent && !this.activeKey_ && this.keys_.includes(evt.key)) {
       this.activeKey = evt.key;
     }
   }
 
   /**
-   * @param {KeyboardEvent} evt Event.
+   * @param {Event|import("ol/events/Event.js").default} evt Event.
    * @private
    */
   handleKeyUp_(evt) {
-    if (this.activeKey_ && this.activeKey_ === evt.key) {
+    if (evt instanceof KeyboardEvent && this.activeKey_ && this.activeKey_ === evt.key) {
       this.activeKey = null;
     }
   }

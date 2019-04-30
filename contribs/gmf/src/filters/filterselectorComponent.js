@@ -1,6 +1,7 @@
 /* eslint max-len: ["error", { "code": 110, "ignoreComments": true }] */
 
 import angular from 'angular';
+import {CollectionEvent} from 'ol/Collection.js';
 import gmfAuthenticationService from 'gmf/authentication/Service.js';
 
 import gmfDatasourceDataSourceBeingFiltered from 'gmf/datasource/DataSourceBeingFiltered.js';
@@ -233,10 +234,13 @@ class Controller {
     this.filtrableLayerNodeNames_ = null;
 
     /**
-     * @type {import('ngeo/datasource/DataSource.js').DataSources}
+     * @type {!import("ol/Collection.js").default<!import("gmf/datasource/OGC.js").default>}
      * @private
      */
-    this.gmfDataSources_ = gmfDataSourcesHelper.collection;
+    this.gmfDataSources_ =
+      /** @type{import("ol/Collection.js").default<!import("gmf/datasource/OGC.js").default>} */(
+        gmfDataSourcesHelper.collection
+      );
 
     /**
      * @type {Array.<import("ol/events.js").EventsKey>}
@@ -381,13 +385,15 @@ class Controller {
    * If the data source is 'valid', add it to the list of filtrable data
    * sources.
    *
-   * @param {import("ol/Collection.js").CollectionEvent} evt Collection event.
+   * @param {Event|import('ol/events/Event.js').default} evt Collection event.
    * @private
    */
   handleDataSourcesAdd_(evt) {
-    const dataSource = evt.element;
-    if (dataSource instanceof gmfDatasourceOGC) {
-      this.registerDataSource_(dataSource);
+    if (evt instanceof CollectionEvent) {
+      const dataSource = evt.element;
+      if (dataSource instanceof gmfDatasourceOGC) {
+        this.registerDataSource_(dataSource);
+      }
     }
   }
 
@@ -397,13 +403,15 @@ class Controller {
    * sources. If the data source is 'valid', remove it from the list of
    * filtrable data sources.
    *
-   * @param {import("ol/Collection.js").CollectionEvent} evt Collection event.
+   * @param {Event|import('ol/events/Event.js').default} evt Collection event.
    * @private
    */
   handleDataSourcesRemove_(evt) {
-    const dataSource = evt.element;
-    if (dataSource instanceof gmfDatasourceOGC) {
-      this.unregisterDataSource_(dataSource);
+    if (evt instanceof CollectionEvent) {
+      const dataSource = evt.element;
+      if (dataSource instanceof gmfDatasourceOGC) {
+        this.unregisterDataSource_(dataSource);
+      }
     }
   }
 
@@ -414,6 +422,7 @@ class Controller {
    * is set. Otherwise, it's used.
    *
    * @param {import("gmf/datasource/OGC.js").default} dataSource Data source
+   * @returns {void}
    * @private
    */
   registerDataSource_(dataSource) {

@@ -1,6 +1,7 @@
 import angular from 'angular';
 import ngeoQueryMapQuerent from 'ngeo/query/MapQuerent.js';
 import ngeoQueryKeyboard from 'ngeo/query/Keyboard.js';
+import MapBrowserEvent from 'ol/MapBrowserEvent.js';
 
 import {
   listen as olEventsListen,
@@ -60,26 +61,28 @@ function queryMapComponent(ngeoMapQuerent, ngeoQueryKeyboard, $injector) {
       /**
        * Called when the map is clicked while this controller is active. Issue
        * a request to the query service using the coordinate that was clicked.
-       * @param {import("ol/MapBrowserEvent.js").default} evt The map browser event being fired.
+       * @param {Event|import("ol/events/Event.js").default} evt The map browser event being fired.
        */
       const handleMapClick_ = function(evt) {
-        const action = ngeoQueryKeyboard.action;
-        const coordinate = evt.coordinate;
-        ngeoMapQuerent.issue({
-          action,
-          coordinate,
-          map
-        });
+        if (evt instanceof MapBrowserEvent) {
+          const action = ngeoQueryKeyboard.action;
+          const coordinate = evt.coordinate;
+          ngeoMapQuerent.issue({
+            action,
+            coordinate,
+            map
+          });
+        }
       };
 
       /**
        * Called when the pointer is moved while this controller is active.
        * Change the mouse pointer when hovering a non-transparent pixel on the
        * map.
-       * @param {import("ol/MapBrowserEvent.js").default} evt The map browser event being fired.
+       * @param {Event|import("ol/events/Event.js").default} evt The map browser event being fired.
        */
       const handlePointerMove_ = function(evt) {
-        if (!evt.dragging) {
+        if (evt instanceof MapBrowserEvent && !evt.dragging) {
           const pixel = map.getEventPixel(evt.originalEvent);
           const queryable = function(layer) {
             const visible = layer.get('visible');

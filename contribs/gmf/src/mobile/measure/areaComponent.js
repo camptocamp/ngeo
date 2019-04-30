@@ -70,7 +70,7 @@ function mobileMeasureAreaComponent(gmfMobileMeasureAreaTemplateUrl) {
      * @param {angular.IScope} scope Scope.
      * @param {JQuery} element Element.
      * @param {angular.IAttributes} attrs Attributes.
-     * @param {Controller} controller Controller.
+     * @param {angular.IController} controller Controller.
      */
     link: (scope, element, attrs, controller) => {
       controller.init();

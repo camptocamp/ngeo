@@ -47,7 +47,8 @@ import olLayerTile from 'ol/layer/Tile.js';
 import olStyleFill from 'ol/style/Fill.js';
 import olStyleStyle from 'ol/style/Style.js';
 import olStyleText from 'ol/style/Text.js';
-
+import MapBrowserEvent from 'ol/MapBrowserEvent.js';
+import {CollectionEvent} from 'ol/Collection.js';
 
 /**
  * The different possible values of the `state` inner property.
@@ -528,9 +529,9 @@ Controller.prototype.$onInit = function() {
 
   // (1.1) Set editable WMS layer
   const layer = syncLayertreeMapGetLayer(this.editableTreeCtrl);
-  console.assert(
-    layer instanceof olLayerImage || layer instanceof olLayerTile);
-  this.editableWMSLayer_ = /** @type {olLayerImage|olLayerTile} */ (layer);
+  if (layer instanceof olLayerImage || layer instanceof olLayerTile) {
+    this.editableWMSLayer_ = layer;
+  }
 
   // (1.2) Create, set and initialize interactions
   this.modify_ = new olInteractionModify({
@@ -875,49 +876,51 @@ Controller.prototype.setAttributes_ = function(attributes) {
 
 
 /**
- * @param {import("ol/Collection.js").CollectionEvent} evt Event.
+ * @param {Event|import('ol/events/Event.js').default} evt Event.
  * @private
  */
 Controller.prototype.handleFeatureAdd_ = function(evt) {
-  this.feature = null;
-  this.timeout_(() => {
-    console.assert(this.attributes);
-    const feature = evt.element;
-    console.assert(feature instanceof olFeature);
-    const dateFormatter = new DateFormatter();
-    for (const attribute of this.attributes) {
-      if (attribute.format) {
-        if (feature.get(attribute.name)) {
-          let value;
-          if (attribute.type === 'datetime') {
-            value = new Date(feature.get(attribute.name));
-            // Time zone correction
-            value.setMinutes(value.getMinutes() - value.getTimezoneOffset());
-          } else {
-            let jsonFormat = '';
-            if (attribute.type === 'date') {
-              jsonFormat = 'Y-m-d';
-            } else if (attribute.type === 'time') {
-              jsonFormat = 'H:i:s';
+  if (evt instanceof CollectionEvent) {
+    this.feature = null;
+    this.timeout_(() => {
+      console.assert(this.attributes);
+      const feature = evt.element;
+      console.assert(feature instanceof olFeature);
+      const dateFormatter = new DateFormatter();
+      for (const attribute of this.attributes) {
+        if (attribute.format) {
+          if (feature.get(attribute.name)) {
+            let value;
+            if (attribute.type === 'datetime') {
+              value = new Date(feature.get(attribute.name));
+              // Time zone correction
+              value.setMinutes(value.getMinutes() - value.getTimezoneOffset());
+            } else {
+              let jsonFormat = '';
+              if (attribute.type === 'date') {
+                jsonFormat = 'Y-m-d';
+              } else if (attribute.type === 'time') {
+                jsonFormat = 'H:i:s';
+              }
+              const name = feature.get(attribute.name);
+              console.assert(typeof name == 'string');
+              value = dateFormatter.parseDate(name, jsonFormat);
             }
-            const name = feature.get(attribute.name);
-            console.assert(typeof name == 'string');
-            value = dateFormatter.parseDate(name, jsonFormat);
+            feature.set(attribute.name, dateFormatter.formatDate(value, attribute.format));
+          } else {
+            // Shouldn't be set to an empty string
+            feature.set(attribute.name, null);
           }
-          feature.set(attribute.name, dateFormatter.formatDate(value, attribute.format));
-        } else {
-          // Shouldn't be set to an empty string
-          feature.set(attribute.name, null);
         }
       }
-    }
-    this.feature = feature;
-    this.createActive = false;
-    if (!feature.getId()) {
-      this.dirty = true;
-    }
-    this.scope_.$apply();
-  }, 0);
+      this.feature = feature;
+      this.createActive = false;
+      if (!feature.getId()) {
+        this.dirty = true;
+      }
+      this.scope_.$apply();
+    }, 0);
+  }
 };
 
 
@@ -938,15 +941,9 @@ Controller.prototype.toggle_ = function(active) {
     // FIXME
     //this.registerInteractions_();
 
-    keys.push(olEvents.listen(this.menu_, 'actionclick',
-      this.handleMenuActionClick_, this));
-    keys.push(olEvents.listen(this.menuVertex_, 'actionclick',
-      this.handleMenuVertexActionClick_, this));
-
-    keys.push(olEvents.listen(this.translate_,
-      'translateend',
-      this.handleTranslateEnd_, this));
-
+    keys.push(olEvents.listen(this.menu_, 'actionclick', this.handleMenuActionClick_, this));
+    keys.push(olEvents.listen(this.menuVertex_, 'actionclick', this.handleMenuVertexActionClick_, this));
+    keys.push(olEvents.listen(this.translate_, 'translateend', this.handleTranslateEnd_, this));
     keys.push(olEvents.listen(this.rotate_, 'rotateend', this.handleRotateEnd_, this));
 
     toolMgr.registerTool(createUid, this.createToolActivate, false);
@@ -995,18 +992,11 @@ Controller.prototype.handleMapSelectActiveChange_ = function(active) {
   console.assert(mapDiv);
 
   if (active) {
-    olEvents.listen(this.map, 'click',
-      this.handleMapClick_, this);
-
-    olEvents.listen(mapDiv, 'contextmenu',
-      this.handleMapContextMenu_, this);
-
+    olEvents.listen(this.map, 'click', this.handleMapClick_, this);
+    olEvents.listen(mapDiv, 'contextmenu', this.handleMapContextMenu_, this);
   } else {
-    olEvents.unlisten(this.map, 'click',
-      this.handleMapClick_, this);
-
-    olEvents.unlisten(mapDiv, 'contextmenu',
-      this.handleMapContextMenu_, this);
+    olEvents.unlisten(this.map, 'click', this.handleMapClick_, this);
+    olEvents.unlisten(mapDiv, 'contextmenu', this.handleMapContextMenu_, this);
   }
 };
 
@@ -1025,113 +1015,117 @@ Controller.prototype.handleMapSelectActiveChange_ = function(active) {
  *     modifications or with modifications that were canceled, launch a query
  *     to fetch the features at the clicked location.
  *
- * @param {import("ol/MapBrowserEvent.js").default} evt Event.
+ * @param {Event|import('ol/events/Event.js').default} evt Event.
  * @private
  */
 Controller.prototype.handleMapClick_ = function(evt) {
-  const coordinate = evt.coordinate;
-  const pixel = evt.pixel;
+  if (evt instanceof MapBrowserEvent) {
+    const coordinate = evt.coordinate;
+    const pixel = evt.pixel;
 
-  // (1) Check if we clicked on an existing vector feature, i.e the one
-  //     selected. In that case, no need to do any further action.
-  const feature = this.map.forEachFeatureAtPixel(
-    pixel,
-    (feature) => {
-      let ret = null;
-      if (this.features.getArray().includes(feature)) {
-        ret = feature;
+    // (1) Check if we clicked on an existing vector feature, i.e the one
+    //     selected. In that case, no need to do any further action.
+    const feature = this.map.forEachFeatureAtPixel(
+      pixel,
+      (feature) => {
+        let ret = null;
+        if (this.features.getArray().includes(feature)) {
+          ret = feature;
+        }
+        return ret;
+      },
+      {
+        hitTolerance: 5,
+        layerFilter: undefined
       }
-      return ret;
-    },
-    {
-      hitTolerance: 5,
-      layerFilter: undefined
-    }
-  );
-
-  if (feature) {
-    return;
-  }
-
-  // (2) If a feature is being edited and has unsaved changes, show modal
-  //     to let the user decide what to do
-  this.checkForModifications_(true).then(() => {
-
-    const map = this.map;
-    const view = map.getView();
-    const resolution = view.getResolution();
-    const buffer = resolution * this.tolerance;
-    const extent = olExtent.buffer(
-      [coordinate[0], coordinate[1], coordinate[0], coordinate[1]],
-      buffer
     );
 
-    // (3) Launch query to fetch features
-    this.gmfEditFeature_.getFeaturesInExtent(
-      [this.editableNode_.id],
-      extent
-    ).then(this.handleGetFeatures_.bind(this));
+    if (feature) {
+      return;
+    }
 
-    // (4) Clear any previously selected feature
-    this.cancel();
+    // (2) If a feature is being edited and has unsaved changes, show modal
+    //     to let the user decide what to do
+    this.checkForModifications_(true).then(() => {
 
-    // (5) Pending
-    this.pending = true;
-  });
+      const map = this.map;
+      const view = map.getView();
+      const resolution = view.getResolution();
+      const buffer = resolution * this.tolerance;
+      const extent = olExtent.buffer(
+        [coordinate[0], coordinate[1], coordinate[0], coordinate[1]],
+        buffer
+      );
+
+      // (3) Launch query to fetch features
+      this.gmfEditFeature_.getFeaturesInExtent(
+        [this.editableNode_.id],
+        extent
+      ).then(this.handleGetFeatures_.bind(this));
+
+      // (4) Clear any previously selected feature
+      this.cancel();
+
+      // (5) Pending
+      this.pending = true;
+    });
+  }
 };
 
 
 /**
- * @param {Event} evt Event.
+ * @param {Event|import('ol/events/Event.js').default} evt Event.
  * @private
  */
 Controller.prototype.handleMapContextMenu_ = function(evt) {
-  const pixel = this.map.getEventPixel(evt);
-  const coordinate = this.map.getCoordinateFromPixel(pixel);
+  if (evt instanceof Event) {
+    const pixel = this.map.getEventPixel(evt);
+    const coordinate = this.map.getCoordinateFromPixel(pixel);
 
-  let feature = /** @type {olFeature|undefined} */ (this.map.forEachFeatureAtPixel(
-    pixel,
-    (feature) => {
-      let ret = null;
-      if (this.features.getArray().includes(feature)) {
-        ret = feature;
+    let feature = /** @type {olFeature|undefined} */ (this.map.forEachFeatureAtPixel(
+      pixel,
+      (feature) => {
+        let ret = null;
+        if (this.features.getArray().includes(feature)) {
+          ret = feature;
+        }
+        return ret;
+      },
+      {
+        hitTolerance: 7,
+        layerFilter: undefined
       }
-      return ret;
-    },
-    {
-      hitTolerance: 7,
-      layerFilter: undefined
-    }
-  ));
+    ));
 
-  feature = feature ? feature : null;
+    feature = feature ? feature : null;
 
-  this.menu_.close();
-  this.menuVertex_.close();
-  this.vertexInfo_ = null;
+    this.menu_.close();
+    this.menuVertex_.close();
+    this.vertexInfo_ = null;
 
-  // show contextual menu when clicking on certain types of features
-  if (feature) {
+    // show contextual menu when clicking on certain types of features
+    if (feature) {
 
-    const vertexInfo = this.ngeoFeatureHelper_.getVertexInfoAtCoordinate(
-      feature, coordinate, this.map.getView().getResolution());
-    if (vertexInfo) {
-      this.vertexInfo_ = vertexInfo;
-      this.menuVertex_.open(coordinate);
-    } else {
-      const type = this.ngeoFeatureHelper_.getType(feature);
-      if (
-        type === ngeoGeometryType.POLYGON ||
-        type === ngeoGeometryType.MULTI_POLYGON ||
-        type === ngeoGeometryType.LINE_STRING ||
-        type === ngeoGeometryType.MULTI_LINE_STRING
-      ) {
-        this.menu_.open(coordinate);
+      const vertexInfo = this.ngeoFeatureHelper_.getVertexInfoAtCoordinate(
+        feature, coordinate, this.map.getView().getResolution());
+      if (vertexInfo) {
+        this.vertexInfo_ = vertexInfo;
+        this.menuVertex_.open(coordinate);
+      } else {
+        const type = this.ngeoFeatureHelper_.getType(feature);
+        if (
+          type === ngeoGeometryType.POLYGON ||
+          type === ngeoGeometryType.MULTI_POLYGON ||
+          type === ngeoGeometryType.LINE_STRING ||
+          type === ngeoGeometryType.MULTI_LINE_STRING
+        ) {
+          this.menu_.open(coordinate);
+        }
       }
-    }
 
-    evt.preventDefault();
-    evt.stopPropagation();
+      evt.preventDefault();
+      evt.stopPropagation();
+    }
   }
 };
 
@@ -1258,11 +1252,11 @@ Controller.prototype.handleFeatureGeometryChange_ = function() {
 
 
 /**
- * @param {import('ngeo/filter/ruleComponent.js').MenuEvent} evt Event.
+ * @param {Event|import('ol/events/Event.js').default} evt Event.
  * @private
  */
 Controller.prototype.handleMenuActionClick_ = function(evt) {
-  const action = evt.detail.action;
+  const action = /** @type {import('ngeo/filter/ruleComponent.js').MenuEvent} */(evt).detail.action;
 
   switch (action) {
     case 'move':
@@ -1280,11 +1274,11 @@ Controller.prototype.handleMenuActionClick_ = function(evt) {
 
 
 /**
- * @param {import('ngeo/filter/ruleComponent.js').MenuEvent} evt Event.
+ * @param {Event|import('ol/events/Event.js').default} evt Event.
  * @private
  */
 Controller.prototype.handleMenuVertexActionClick_ = function(evt) {
-  const action = evt.detail.action;
+  const action = /** @type {import('ngeo/filter/ruleComponent.js').MenuEvent} */(evt).detail.action;
 
   switch (action) {
     case 'delete':
@@ -1300,7 +1294,7 @@ Controller.prototype.handleMenuVertexActionClick_ = function(evt) {
 
 
 /**
- * @param {import("ol/interaction/Translate.js").TranslateEvent} evt Event.
+ * @param {Event|import('ol/events/Event.js').default} evt Event.
  * @private
  */
 Controller.prototype.handleTranslateEnd_ = function(evt) {
@@ -1310,7 +1304,7 @@ Controller.prototype.handleTranslateEnd_ = function(evt) {
 
 
 /**
- * @param {!import('ngeo/interaction/Rotate.js').RotateEvent} evt Event.
+ * @param {Event|import('ol/events/Event.js').default} evt Event.
  * @private
  */
 Controller.prototype.handleRotateEnd_ = function(evt) {

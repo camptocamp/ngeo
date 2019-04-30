@@ -1,6 +1,7 @@
 import angular from 'angular';
 import * as olHas from 'ol/has.js';
 import {toRadians} from 'ol/math.js';
+import RenderEvent from 'ol/render/Event.js';
 
 /**
  * Provides a service with print utility functions.
@@ -44,12 +45,12 @@ export const DOTS_PER_INCH = 72;
  * mask on the map.
  * @param {function():import('ol/size.js').Size} getSize User-defined function returning the
  *     size in dots of the map to print.
- * @param {function(import('ol/PluggableMap.js').FrameState):number} getScale User-defined function
+ * @param {function(import('ol/PluggableMap.js').FrameState): number} getScale User-defined function
  *     returning the scale of the map to print.
  * @param {function():number=} opt_rotation User defined function returning the
  *     inclination of the canvas in degree (-180 to 180).
  * returning the scale of the map to print.
- * @return {function(import('ol/render/Event.js').default)} Function to use as a map postcompose
+ * @return {function((Event|import('ol/events/Event.js').default)): void} Function to use as a map postcompose
  * listener.
  */
 PrintUtils.prototype.createPrintMaskPostcompose = function(getSize, getScale, opt_rotation) {
@@ -57,59 +58,61 @@ PrintUtils.prototype.createPrintMaskPostcompose = function(getSize, getScale, op
 
   return (
     /**
-     * @param {import("ol/render/Event.js").default} evt Postcompose event.
+     * @param {Event|import('ol/events/Event.js').default} evt Postcompose event.
      */
     function(evt) {
-      const context = evt.context;
-      const frameState = evt.frameState;
+      if (evt instanceof RenderEvent) {
+        const context = evt.context;
+        const frameState = evt.frameState;
 
-      const resolution = frameState.viewState.resolution;
+        const resolution = frameState.viewState.resolution;
 
-      const viewportWidth = frameState.size[0] * frameState.pixelRatio;
-      const viewportHeight = frameState.size[1] * frameState.pixelRatio;
+        const viewportWidth = frameState.size[0] * frameState.pixelRatio;
+        const viewportHeight = frameState.size[1] * frameState.pixelRatio;
 
-      const center = [viewportWidth / 2, viewportHeight / 2];
+        const center = [viewportWidth / 2, viewportHeight / 2];
 
-      const size = getSize();
-      const height = size[1] * olHas.DEVICE_PIXEL_RATIO;
-      const width = size[0] * olHas.DEVICE_PIXEL_RATIO;
-      const scale = getScale(frameState);
+        const size = getSize();
+        const height = size[1] * olHas.DEVICE_PIXEL_RATIO;
+        const width = size[0] * olHas.DEVICE_PIXEL_RATIO;
+        const scale = getScale(frameState);
 
-      const ppi = DOTS_PER_INCH;
-      const ipm = INCHES_PER_METER;
+        const ppi = DOTS_PER_INCH;
+        const ipm = INCHES_PER_METER;
 
-      const extentHalfWidth =
-           (((width / ppi) / ipm) * scale / resolution) / 2;
-      self.extentHalfHorizontalDistance_ =
-           (((size[0] / ppi) / ipm) * scale) / 2;
+        const extentHalfWidth =
+            (((width / ppi) / ipm) * scale / resolution) / 2;
+        self.extentHalfHorizontalDistance_ =
+            (((size[0] / ppi) / ipm) * scale) / 2;
 
-      const extentHalfHeight =
-           (((height / ppi) / ipm) * scale / resolution) / 2;
-      self.extentHalfVerticalDistance_ =
-           (((size[1] / ppi) / ipm) * scale) / 2;
+        const extentHalfHeight =
+            (((height / ppi) / ipm) * scale / resolution) / 2;
+        self.extentHalfVerticalDistance_ =
+            (((size[1] / ppi) / ipm) * scale) / 2;
 
-      // Draw a mask on the whole map.
-      context.beginPath();
-      context.moveTo(0, 0);
-      context.lineTo(viewportWidth, 0);
-      context.lineTo(viewportWidth, viewportHeight);
-      context.lineTo(0, viewportHeight);
-      context.lineTo(0, 0);
-      context.closePath();
+        // Draw a mask on the whole map.
+        context.beginPath();
+        context.moveTo(0, 0);
+        context.lineTo(viewportWidth, 0);
+        context.lineTo(viewportWidth, viewportHeight);
+        context.lineTo(0, viewportHeight);
+        context.lineTo(0, 0);
+        context.closePath();
 
-      // Draw the print zone
-      if (!opt_rotation) {
-        self.drawPrintZone_(context, center, extentHalfWidth,
-          extentHalfHeight);
-      } else {
-        const rotation = toRadians(opt_rotation());
-        self.drawPrintZoneWithRotation_(context, center, extentHalfWidth,
-          extentHalfHeight, rotation);
+        // Draw the print zone
+        if (!opt_rotation) {
+          self.drawPrintZone_(context, center, extentHalfWidth,
+            extentHalfHeight);
+        } else {
+          const rotation = toRadians(opt_rotation());
+          self.drawPrintZoneWithRotation_(context, center, extentHalfWidth,
+            extentHalfHeight, rotation);
+        }
+
+        // Fill the mask
+        context.fillStyle = 'rgba(0, 5, 25, 0.5)';
+        context.fill();
       }
-
-      // Fill the mask
-      context.fillStyle = 'rgba(0, 5, 25, 0.5)';
-      context.fill();
     }
   );
 };

@@ -40,10 +40,9 @@ function filereaderComponent($window) {
     },
     /**
      * @param {angular.IScope} scope Scope.
-     * @param {JQuery<HTMLInputElement>} element Element.
-     * @param {angular.IAttributes} attrs Attributes.
+     * @param {JQuery} element Element.
      */
-    link: (scope, element, attrs) => {
+    link: (scope, element) => {
       const supported = 'FileReader' in $window;
       scope['supported'] = supported;
       if (!supported) {
