@@ -246,8 +246,15 @@ function d3Elevation(options) {
   let xDomain;
 
 
+  /**
+   * @param {any} selection The selection
+   */
   const profile = function(selection) {
-    selection.each(function(data) {
+    /**
+     * @this {d3.ContainerElement}
+     * @param {any} data The selected data
+     */
+    const func = function(data) {
       d3select(this).selectAll('svg').remove();
       if (data === undefined) {
         return;
@@ -478,6 +485,9 @@ function d3Elevation(options) {
         .on('mouseout', mouseout)
         .on('mousemove', mousemove);
 
+      /**
+       * @this {d3.ContainerElement}
+       */
       function mousemove() {
         const mouseX = d3mouse(this)[0];
         const x0 = x.invert(mouseX);
@@ -488,7 +498,8 @@ function d3Elevation(options) {
       function mouseout() {
         profile.clearHighlight();
       }
-    });
+    };
+    selection.each(func);
   };
 
   /**

@@ -69,278 +69,281 @@ function ngeoRoutingFeatureTemplateUrl($attrs, ngeoRoutingFeatureTemplateUrl) {
  * @ngdoc controller
  * @ngname NgeoRoutingFeatureController
  */
-function Controller($scope, $timeout, $q, ngeoNominatimService) {
+class Controller {
 
-  /**
-   * @type {!angular.IScope}
-   * @private
-   */
-  this.scope_ = $scope;
+  constructor($scope, $timeout, $q, ngeoNominatimService) {
 
-  /**
-   * @type {angular.ITimeoutService}
-   * @private
-   */
-  this.timeout_ = $timeout;
+    /**
+     * @type {!angular.IScope}
+     * @private
+     */
+    this.scope_ = $scope;
 
-  /**
-   * @type {angular.IQService}
-   * @private
-   */
-  this.$q_ = $q;
+    /**
+     * @type {angular.ITimeoutService}
+     * @private
+     */
+    this.timeout_ = $timeout;
 
-  /**
-   * @type {import("ngeo/routing/NominatimService.js").NominatimService}
-   * @private
-   */
-  this.ngeoNominatimService_ = ngeoNominatimService;
+    /**
+     * @type {angular.IQService}
+     * @private
+     */
+    this.$q_ = $q;
 
-  /**
-   * @type {import("ol/Map.js").default}
-   * @private
-   */
-  this.map;
+    /**
+     * @type {import("ngeo/routing/NominatimService.js").NominatimService}
+     * @private
+     */
+    this.ngeoNominatimService_ = ngeoNominatimService;
 
-  /**
-   * @type {import("ol/Feature.js").default}
-   */
-  this.feature;
+    /**
+     * @type {import("ol/Map.js").default}
+     * @private
+     */
+    this.map;
 
-  /**
-   * @type {string}
-   */
-  this.featureLabel = '';
+    /**
+     * @type {import("ol/Feature.js").default}
+     */
+    this.feature;
 
-  /**
-   * @type {string}
-   */
-  this.fillColor;
+    /**
+     * @type {string}
+     */
+    this.featureLabel = '';
 
-  /**
-   * @type {string}
-   */
-  this.strokeColor;
+    /**
+     * @type {string}
+     */
+    this.fillColor;
 
-  /**
-   * @type {function(import("ol/Feature.js").default): void}
-   */
-  this.onChange;
+    /**
+     * @type {string}
+     */
+    this.strokeColor;
 
-  /**
-   * @type {import("ol/Collection.js").default}
-   * @private
-   */
-  this.vectorFeatures_ = new olCollection();
+    /**
+     * @type {function(import("ol/Feature.js").default): void}
+     */
+    this.onChange;
 
-  /**
-   * @type {import("ol/source/Vector.js").default}
-   * @private
-   */
-  this.vectorSource_ = new olSourceVector({
-    features: this.vectorFeatures_
-  });
+    /**
+     * @type {import("ol/Collection.js").default}
+     * @private
+     */
+    this.vectorFeatures_ = new olCollection();
 
-  /**
-   * @type {import("ol/layer/Vector.js").default}
-   * @private
-   */
-  this.vectorLayer_ = new olLayerVector({
-    source: this.vectorSource_,
-    style: (function(feature, resolution) {
-      return [new olStyleStyle({
-        text: new olStyleText({
-          fill: new olStyleFill({
-            color: this.fillColor || '#000000'
-          }),
-          font: '900 30px "Font Awesome 5 Free"',
-          offsetY: -15,
-          stroke: new olStyleStroke({
-            width: 3,
-            color: this.strokeColor || '#000000'
-          }),
-          text: '\uf041'
-        })
-      })];
-    }).bind(this)
-  });
+    /**
+     * @type {import("ol/source/Vector.js").default}
+     * @private
+     */
+    this.vectorSource_ = new olSourceVector({
+      features: this.vectorFeatures_
+    });
 
-  /**
-   * Interaction for moving start and end.
-   * @type {import("ol/interaction/Modify.js").default}
-   * @private
-   */
-  this.modifyFeature_ = new olInteractionModify({
-    features: this.vectorFeatures_
-  });
+    /**
+     * @type {import("ol/layer/Vector.js").default}
+     * @private
+     */
+    this.vectorLayer_ = new olLayerVector({
+      source: this.vectorSource_,
+      style: ((feature, resolution) => {
+        return [new olStyleStyle({
+          text: new olStyleText({
+            fill: new olStyleFill({
+              color: this.fillColor || '#000000'
+            }),
+            font: '900 30px "Font Awesome 5 Free"',
+            offsetY: -15,
+            stroke: new olStyleStroke({
+              width: 3,
+              color: this.strokeColor || '#000000'
+            }),
+            text: '\uf041'
+          })
+        })];
+      })
+    });
 
-  /**
-   * @type {import("ol/interaction/Draw.js").default}
-   * @private
-   */
-  this.draw_ = null;
+    /**
+     * Interaction for moving start and end.
+     * @type {import("ol/interaction/Modify.js").default}
+     * @private
+     */
+    this.modifyFeature_ = new olInteractionModify({
+      features: this.vectorFeatures_
+    });
 
-  /**
-   * @param {import('ngeo/routing/NominatimService').NominatimSearchResult} selected Selected result.
-   */
-  this.onSelect = this.onSelect_.bind(this);
+    /**
+     * @type {import("ol/interaction/Draw.js").default}
+     * @private
+     */
+    this.draw_ = null;
 
-  /**
-   * @type {string}
-   */
-  this.errorMessage = '';
-}
+    /**
+     * @param {import('ngeo/routing/NominatimService').NominatimSearchResult} selected Selected result.
+     */
+    this.onSelect = this.onSelect_.bind(this);
 
-Controller.prototype.$onInit = function() {
-  this.map.addLayer(this.vectorLayer_);
-
-  // setup modify interaction
-  this.modifyFeature_.setActive(true);
-  this.map.addInteraction(this.modifyFeature_);
-
-  this.modifyFeature_.on('modifyend', (event) => {
-    const feature = event.features.getArray()[0];
-    this.vectorSource_.clear();
-    this.snapFeature_(feature);
-  });
-
-  this.scope_.$watch(
-    () => this.feature,
-    (newVal, oldVal) => {
-      if (newVal) {
-        this.onFeatureChange_();
-      }
-      if (newVal === null) {
-        this.vectorSource_.clear();
-        this.featureLabel = '';
-      }
-    }
-  );
-};
-
-/**
- * Cleanup, mostly relevant for vias.
- */
-Controller.prototype.$onDestroy = function() {
-  this.map.removeLayer(this.vectorLayer_);
-  this.modifyFeature_.setActive(false);
-  this.map.removeInteraction(this.modifyFeature_);
-};
-
-/**
- */
-Controller.prototype.set = function() {
-  if (this.draw_) {
-    this.map.removeInteraction(this.draw_);
+    /**
+     * @type {string}
+     */
+    this.errorMessage = '';
   }
 
-  this.draw_ = new olInteractionDraw({
-    features: this.vectorFeatures_,
-    type: /** @type {import("ol/geom/GeometryType.js").default} */ ('Point')
-  });
+  $onInit() {
+    this.map.addLayer(this.vectorLayer_);
 
-  this.draw_.on('drawstart', () => {
-    if (this.feature) {
-      this.vectorSource_.removeFeature(this.feature);
-    }
-  });
+    // setup modify interaction
+    this.modifyFeature_.setActive(true);
+    this.map.addInteraction(this.modifyFeature_);
 
-  this.draw_.on('drawend', (event) => {
+    this.modifyFeature_.on('modifyend', (event) => {
+      const feature = event.features.getArray()[0];
+      this.vectorSource_.clear();
+      this.snapFeature_(feature);
+    });
+
+    this.scope_.$watch(
+      () => this.feature,
+      (newVal, oldVal) => {
+        if (newVal) {
+          this.onFeatureChange_();
+        }
+        if (newVal === null) {
+          this.vectorSource_.clear();
+          this.featureLabel = '';
+        }
+      }
+    );
+  }
+
+  /**
+   * Cleanup, mostly relevant for vias.
+   */
+  $onDestroy() {
+    this.map.removeLayer(this.vectorLayer_);
+    this.modifyFeature_.setActive(false);
+    this.map.removeInteraction(this.modifyFeature_);
+  }
+
+  /**
+   */
+  set() {
     if (this.draw_) {
       this.map.removeInteraction(this.draw_);
     }
-    this.snapFeature_(event.feature);
-    this.modifyFeature_.setActive(true);
-  });
 
-  this.modifyFeature_.setActive(false);
-  this.map.addInteraction(this.draw_);
-};
+    this.draw_ = new olInteractionDraw({
+      features: this.vectorFeatures_,
+      type: /** @type {import("ol/geom/GeometryType.js").default} */ ('Point')
+    });
 
-/**
- * @param {import("ol/coordinate.js").Coordinate} coordinate LonLat coordinate.
- * @param {string} label Feature name/label.
- * @private
- */
-Controller.prototype.setFeature_ = function(coordinate, label) {
-  const transformedCoordinate = olProj.fromLonLat(coordinate, this.map.getView().getProjection());
-  if (label === '') {
-    label = transformedCoordinate.join('/');
+    this.draw_.on('drawstart', () => {
+      if (this.feature) {
+        this.vectorSource_.removeFeature(this.feature);
+      }
+    });
+
+    this.draw_.on('drawend', (event) => {
+      if (this.draw_) {
+        this.map.removeInteraction(this.draw_);
+      }
+      this.snapFeature_(event.feature);
+      this.modifyFeature_.setActive(true);
+    });
+
+    this.modifyFeature_.setActive(false);
+    this.map.addInteraction(this.draw_);
   }
-  this.feature = new olFeature({
-    geometry: new olGeomPoint(transformedCoordinate),
-    name: label
-  });
-};
 
-Controller.prototype.onFeatureChange_ = function() {
-  // update label
-  this.featureLabel = /** @type{string} */(this.feature.get('name') || '');
-
-  //update vector source
-  this.vectorSource_.clear();
-  this.vectorSource_.addFeature(this.feature);
-
-  // notify others
-  if (this.onChange) {
-    this.timeout_(() => {
-      this.onChange(this.feature);
+  /**
+   * @param {import("ol/coordinate.js").Coordinate} coordinate LonLat coordinate.
+   * @param {string} label Feature name/label.
+   * @private
+   */
+  setFeature_(coordinate, label) {
+    const transformedCoordinate = olProj.fromLonLat(coordinate, this.map.getView().getProjection());
+    if (label === '') {
+      label = transformedCoordinate.join('/');
+    }
+    this.feature = new olFeature({
+      geometry: new olGeomPoint(transformedCoordinate),
+      name: label
     });
   }
-};
 
-/**
- * @param {import('ngeo/routing/NominatimService').NominatimSearchResult} selected Selected result.
- * @private
- */
-Controller.prototype.onSelect_ = function(selected) {
-  // @ts-ignore: If types are not respected
-  const coordinate = selected.coordinate.map(parseFloat);
-  const label = selected.label;
-  this.setFeature_(coordinate, label);
-  const newCoordinates = /** @type{import("ol/geom/Point.js").default} */(this.feature.getGeometry())
-    .getCoordinates();
-  this.map.getView().setCenter(newCoordinates);
-};
+  onFeatureChange_() {
+    // update label
+    this.featureLabel = /** @type{string} */(this.feature.get('name') || '');
 
-/**
- * Snaps a feature to the street network using the getNearest
- * function of the routing service. Replaces the feature.
- * @param {import("ol/Feature.js").default} feature Feature to snap
- * @private
- */
-Controller.prototype.snapFeature_ = function(feature) {
-  const coord = this.getLonLatFromPoint_(feature);
-  const config = {};
+    //update vector source
+    this.vectorSource_.clear();
+    this.vectorSource_.addFeature(this.feature);
 
-  const onSuccess = (function(resp) {
-    const lon = parseFloat(resp['data']['lon']);
-    const lat = parseFloat(resp['data']['lat']);
-    const coordinate = [lon, lat];
-    const label = resp['data']['display_name'];
+    // notify others
+    if (this.onChange) {
+      this.timeout_(() => {
+        this.onChange(this.feature);
+      });
+    }
+  }
+
+  /**
+   * @param {import('ngeo/routing/NominatimService').NominatimSearchResult} selected Selected result.
+   * @private
+   */
+  onSelect_(selected) {
+    // @ts-ignore: If types are not respected
+    const coordinate = selected.coordinate.map(parseFloat);
+    const label = selected.label;
     this.setFeature_(coordinate, label);
-  }).bind(this);
+    const newCoordinates = /** @type{import("ol/geom/Point.js").default} */(this.feature.getGeometry())
+      .getCoordinates();
+    this.map.getView().setCenter(newCoordinates);
+  }
 
-  const onError = (function(resp) {
-    this.errorMessage = 'Error: nominatim server not responding.';
-    console.log(resp);
-  }).bind(this);
+  /**
+   * Snaps a feature to the street network using the getNearest
+   * function of the routing service. Replaces the feature.
+   * @param {import("ol/Feature.js").default} feature Feature to snap
+   * @private
+   */
+  snapFeature_(feature) {
+    const coord = this.getLonLatFromPoint_(feature);
+    const config = {};
 
-  this.$q_.when(this.ngeoNominatimService_.reverse(coord, config))
-    .then(onSuccess.bind(this), onError.bind(this));
-};
+    const onSuccess = (resp) => {
+      const lon = parseFloat(resp['data']['lon']);
+      const lat = parseFloat(resp['data']['lat']);
+      const coordinate = [lon, lat];
+      const label = resp['data']['display_name'];
+      this.setFeature_(coordinate, label);
+    };
 
-/**
- * Converts feature point into LonLat coordinate.
- * @param {import("ol/Feature.js").default} point Feature point to convert
- * @return {import("ol/coordinate.js").Coordinate} LonLat coordinate
- * @private
- */
-Controller.prototype.getLonLatFromPoint_ = function(point) {
-  const geometry = /** @type {import("ol/geom/Point.js").default} */ (point.getGeometry());
-  const coords = geometry.getCoordinates();
-  const projection = this.map.getView().getProjection();
-  return olProj.toLonLat(coords, projection);
-};
+    const onError = (resp) => {
+      this.errorMessage = 'Error: nominatim server not responding.';
+      console.log(resp);
+    };
+
+    this.$q_.when(this.ngeoNominatimService_.reverse(coord, config))
+      .then(onSuccess, onError);
+  }
+
+  /**
+   * Converts feature point into LonLat coordinate.
+   * @param {import("ol/Feature.js").default} point Feature point to convert
+   * @return {import("ol/coordinate.js").Coordinate} LonLat coordinate
+   * @private
+   */
+  getLonLatFromPoint_(point) {
+    const geometry = /** @type {import("ol/geom/Point.js").default} */ (point.getGeometry());
+    const coords = geometry.getCoordinates();
+    const projection = this.map.getView().getProjection();
+    return olProj.toLonLat(coords, projection);
+  }
+}
 
 
 /**

@@ -156,7 +156,7 @@ Controller.prototype.handleFeatureSet_ = function(newFeature, previousFeature) {
       ngeoFormatFeatureProperties.SHOW_MEASURE,
       ngeoFormatFeatureProperties.SIZE,
       ngeoFormatFeatureProperties.STROKE
-    ].forEach(function(propName) {
+    ].forEach((propName) => {
       keys.push(
         olEvents.listen(
           newFeature,
@@ -165,7 +165,7 @@ Controller.prototype.handleFeatureSet_ = function(newFeature, previousFeature) {
           this
         )
       );
-    }, this);
+    });
 
     const geometry = newFeature.getGeometry();
     console.assert(geometry, 'Geometry should be thruthy');

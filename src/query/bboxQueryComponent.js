@@ -82,7 +82,7 @@ function queryBboxComponent($rootScope, ngeoMapQuerent, ngeoQueryKeyboard) {
           map
         });
       };
-      interaction.on('boxend', handleBoxEnd.bind(this, interaction));
+      interaction.on('boxend', handleBoxEnd.bind(undefined, interaction));
 
       // watch 'active' property -> activate/deactivate accordingly
       scope.$watch(attrs['ngeoBboxQueryActive'],
@@ -109,7 +109,7 @@ function queryBboxComponent($rootScope, ngeoMapQuerent, ngeoQueryKeyboard) {
         onBoxEnd: VOID
       });
       interactionWithoutCondition.on(
-        'boxend', handleBoxEnd.bind(this, interactionWithoutCondition));
+        'boxend', handleBoxEnd.bind(undefined, interactionWithoutCondition));
       let added = false;
       $rootScope.$watch(
         () => ngeoQueryKeyboard.action,

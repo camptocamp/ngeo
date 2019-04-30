@@ -122,13 +122,13 @@ MainController.prototype.error = function() {
  * this case, it's shown in the map.
  */
 MainController.prototype.inMap = function() {
-  this.inMapMsgs_.forEach(function(message) {
+  this.inMapMsgs_.forEach((message) => {
     this.disclaimer.alert({
       msg: message,
       target: '#disclaimers-in-map',
       type: MessageType.WARNING
     });
-  }, this);
+  });
 };
 
 
@@ -158,12 +158,12 @@ MainController.prototype.closeAll = function() {
     type: MessageType.ERROR
   });
 
-  this.inMapMsgs_.forEach(function(message) {
+  this.inMapMsgs_.forEach((message) => {
     this.disclaimer.close({
       msg: message,
       type: MessageType.WARNING
     });
-  }, this);
+  });
 
 };
 

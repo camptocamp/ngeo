@@ -10,7 +10,7 @@
       // Start strict
       //"strict": true,
       //"noImplicitAny": true,
-      //"noImplicitThis": true,
+      "noImplicitThis": true,
       "alwaysStrict": true,
       "strictBindCallApply": true,
       //"strictNullChecks": true,

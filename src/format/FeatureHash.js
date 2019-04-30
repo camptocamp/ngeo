@@ -133,7 +133,7 @@ const GEOMETRY_WRITERS_ = {
  *
  * @see https://github.com/sbrunner/OpenLayers-URLCompressed
  */
-export default class extends olFormatTextFeature {
+class FeatureHash extends olFormatTextFeature {
   /**
    * @param {FeatureHashOptions=} opt_options Options.
    */
@@ -246,7 +246,7 @@ export default class extends olFormatTextFeature {
    * @param {number} end End.
    * @return {string} String.
    * @private
- * @hidden
+   * @hidden
    */
   encodeCoordinates_(flatCoordinates, stride, offset, end) {
     let encodedCoordinates = '';
@@ -477,6 +477,7 @@ export default class extends olFormatTextFeature {
   }
 }
 
+export default FeatureHash;
 
 /**
  * Get features's properties.
@@ -706,6 +707,7 @@ function encodeStyleText_(textStyle, encodedStyles) {
  * @return {import("ol/geom/LineString.js").default} Line string.
  * @private
  * @hidden
+ * @this {FeatureHash}
  */
 function readLineStringGeometry_(text) {
   console.assert(text.substring(0, 2) === 'l(');
@@ -722,6 +724,7 @@ function readLineStringGeometry_(text) {
  * @return {import("ol/geom/MultiLineString.js").default} Line string.
  * @private
  * @hidden
+ * @this {FeatureHash}
  */
 function readMultiLineStringGeometry_(text) {
   console.assert(text.substring(0, 2) === 'L(');
@@ -744,6 +747,7 @@ function readMultiLineStringGeometry_(text) {
  * @return {import("ol/geom/Point.js").default} Point.
  * @private
  * @hidden
+ * @this {FeatureHash}
  */
 function readPointGeometry_(text) {
   console.assert(text.substring(0, 2) === 'p(');
@@ -761,6 +765,7 @@ function readPointGeometry_(text) {
  * @return {import("ol/geom/MultiPoint.js").default} MultiPoint.
  * @private
  * @hidden
+ * @this {FeatureHash}
  */
 function readMultiPointGeometry_(text) {
   console.assert(text.substring(0, 2) === 'P(');
@@ -777,6 +782,7 @@ function readMultiPointGeometry_(text) {
  * @return {import("ol/geom/Polygon.js").default} Polygon.
  * @private
  * @hidden
+ * @this {FeatureHash}
  */
 function readPolygonGeometry_(text) {
   console.assert(text.substring(0, 2) === 'a(');
@@ -807,6 +813,7 @@ function readPolygonGeometry_(text) {
  * @return {import("ol/geom/MultiPolygon.js").default} MultiPolygon.
  * @private
  * @hidden
+ * @this {FeatureHash}
  */
 function readMultiPolygonGeometry_(text) {
   console.assert(text.substring(0, 2) === 'A(');
@@ -1032,6 +1039,7 @@ function getStyleProperties_(text, feature) {
  * @return {string} Encoded geometry.
  * @private
  * @hidden
+ * @this {FeatureHash}
  */
 function writeLineStringGeometry_(geometry) {
   if (geometry instanceof olGeomLineString) {
@@ -1049,6 +1057,7 @@ function writeLineStringGeometry_(geometry) {
  * @return {string} Encoded geometry.
  * @private
  * @hidden
+ * @this {FeatureHash}
  */
 function writeMultiLineStringGeometry_(geometry) {
   if (geometry instanceof olGeomMultiLineString) {
@@ -1079,6 +1088,7 @@ function writeMultiLineStringGeometry_(geometry) {
  * @return {string} Encoded geometry.
  * @private
  * @hidden
+ * @this {FeatureHash}
  */
 function writePointGeometry_(geometry) {
   if (geometry instanceof olGeomPoint) {
@@ -1096,6 +1106,7 @@ function writePointGeometry_(geometry) {
  * @return {string} Encoded geometry.
  * @private
  * @hidden
+ * @this {FeatureHash}
  */
 function writeMultiPointGeometry_(geometry) {
   if (geometry instanceof olGeomMultiPoint) {
@@ -1116,6 +1127,7 @@ function writeMultiPointGeometry_(geometry) {
  * @return {number} The new offset.
  * @private
  * @hidden
+ * @this {FeatureHash}
  */
 function encodeRings_(flatCoordinates, stride, offset, ends, textArray) {
   const linearRingCount = ends.length;
@@ -1139,6 +1151,7 @@ function encodeRings_(flatCoordinates, stride, offset, ends, textArray) {
  * @return {string} Encoded geometry.
  * @private
  * @hidden
+ * @this {FeatureHash}
  */
 function writePolygonGeometry_(geometry) {
   if (geometry instanceof olGeomPolygon) {
@@ -1162,6 +1175,7 @@ function writePolygonGeometry_(geometry) {
  * @return {string} Encoded geometry.
  * @private
  * @hidden
+ * @this {FeatureHash}
  */
 function writeMultiPolygonGeometry_(geometry) {
   if (geometry instanceof olGeomMultiPolygon) {

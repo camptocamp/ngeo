@@ -155,7 +155,7 @@ function Controller($scope, $timeout, gmfThemes, gmfTreeManager) {
    * @param {Array.<import("ngeo/layertree/Controller.js").LayertreeController>} value First level
    *    controllers.
    */
-  const updateEditableTreeCtrls = function(value) {
+  const updateEditableTreeCtrls = (value) => {
     // Timeout required, because the collection event is fired before the
     // leaf nodes are created and they are the ones we're looking for here.
     this.$timeout_(() => {
@@ -174,14 +174,14 @@ function Controller($scope, $timeout, gmfThemes, gmfTreeManager) {
   };
 
   /**
-   * @type {function()}
+   * @type {function}
    * @private
    */
   this.treeCtrlsWatcherUnregister_ = $scope.$watchCollection(() => {
     if (gmfTreeManager.rootCtrl) {
       return gmfTreeManager.rootCtrl.children;
     }
-  }, updateEditableTreeCtrls.bind(this));
+  }, updateEditableTreeCtrls);
 
 
   // === Other inner properties ===

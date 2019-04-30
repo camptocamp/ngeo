@@ -515,6 +515,7 @@ export function getFormattedPoint(point, decimals, format, opt_template) {
  * @return {boolean} `false` if event propagation should be stopped.
  * @private
  * @hidden
+ * @this {Measure}
  */
 function handleEvent_(evt) {
   if (evt.type != 'pointermove' || evt.dragging) {

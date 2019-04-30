@@ -230,20 +230,22 @@ export class ThemesService extends olEventsEventTarget {
      *     response.
      * @return {angular.IPromise.<Array.<import("ol/layer/Base.js").default>>} Promise.
      */
-    const promiseSuccessFn = function(data) {
+    const promiseSuccessFn = (data) => {
       const promises = data.background_layers.map((item) => {
-        const itemType = item.type;
+        const itemLayer = /** @type {import('gmf/themes.js').GmfLayer} */(item);
+        const itemGroup = /** @type {import('gmf/themes.js').GmfGroup} */(item);
+        const itemType = itemLayer.type;
         if (itemType === 'WMTS' || itemType === 'WMS') {
-          return layerLayerCreationFn(data.ogcServers, item);
-        } else if (item.children) {
+          return layerLayerCreationFn(data.ogcServers, itemLayer);
+        } else if (itemGroup.children) {
           // group of layers
-          return layerGroupCreationFn(data.ogcServers, item);
+          return layerGroupCreationFn(data.ogcServers, itemGroup);
         } else {
           return undefined;
         }
       }, this);
       return $q.all(promises);
-    }.bind(this);
+    };
 
     this.bgLayerPromise_ = this.promise_.then(promiseSuccessFn).then((values) => {
       const layers = [];
@@ -301,11 +303,19 @@ export class ThemesService extends olEventsEventTarget {
 
   /**
    * Get an array of background layer objects.
-   * @return {angular.IPromise.<!Array.<!import('gmf/themes.js').GmfLayer>>} Promise.
+   * @return {angular.IPromise.<!Array.<!import('gmf/themes.js').GmfLayer|!import('gmf/themes.js').GmfGroup>>}
+   *   Promise.
    */
   getBackgroundLayersObject() {
     console.assert(this.promise_ !== null);
-    return this.promise_.then(data => data.background_layers);
+    return this.promise_.then(
+      /**
+       * @param {!import('gmf/themes.js').GmfThemesResponse} data The "themes" web service response.
+       * @return {!Array.<!import('gmf/themes.js').GmfLayer|!import('gmf/themes.js').GmfGroup>}
+       *    The background layers object.
+       */
+      data => data.background_layers
+    );
   }
 
   /**
