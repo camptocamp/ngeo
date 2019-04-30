@@ -167,7 +167,7 @@ git push origin master
 
 Create the new localisation resource:
 ```bash
-rm .tx/config
+rm .tx/config contribs/gmf/apps/.tx/config
 make transifex-init
 ```
 
