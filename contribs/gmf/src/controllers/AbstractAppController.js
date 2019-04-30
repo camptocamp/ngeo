@@ -32,7 +32,6 @@ import olStyleFill from 'ol/style/Fill.js';
 import olStyleStroke from 'ol/style/Stroke.js';
 import olStyleStyle from 'ol/style/Style.js';
 import {ThemeEventType} from 'gmf/theme/Manager.js';
-import {findThemeByName} from 'gmf/theme/Themes.js';
 
 
 /**
@@ -230,7 +229,8 @@ export function AbstractAppController(config, map, $scope, $injector) {
     this.gmfThemes_.loadThemes(roleId);
 
     if (evt.type !== 'ready') {
-      this.updateCurrentTheme_(previousThemeName);
+      const themeName = this.permalink_.defaultThemeNameFromFunctionalities();
+      this.gmfThemeManager.updateCurrentTheme(themeName, previousThemeName);
     }
     this.setDefaultBackground_(null);
     this.updateHasEditableLayers_();
@@ -755,23 +755,6 @@ AbstractAppController.prototype.setDefaultBackground_ = function(theme) {
   });
 };
 
-/**
- * @param {string} fallbackThemeName fallback theme name.
- * @private
- */
-AbstractAppController.prototype.updateCurrentTheme_ = function(fallbackThemeName) {
-  this.gmfThemes_.getThemesObject().then((themes) => {
-    const themeName = this.permalink_.defaultThemeNameFromFunctionalities();
-    if (themeName) {
-      const theme = findThemeByName(themes, /** @type {string} */ (themeName));
-      if (theme) {
-        this.gmfThemeManager.addTheme(theme, true);
-      }
-    } else {
-      this.gmfThemeManager.setThemeName(fallbackThemeName);
-    }
-  });
-};
 
 /**
  * @protected
