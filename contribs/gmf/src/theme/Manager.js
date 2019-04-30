@@ -1,6 +1,6 @@
 import angular from 'angular';
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
-import gmfThemeThemes from 'gmf/theme/Themes.js';
+import gmfThemeThemes, {findThemeByName} from 'gmf/theme/Themes.js';
 import ngeoStatemanagerService from 'ngeo/statemanager/Service.js';
 
 
@@ -114,6 +114,33 @@ ThemeManagerService.prototype.getThemeName = function() {
 ThemeManagerService.prototype.isLoading = function() {
   return !this.gmfThemes_.loaded;
 };
+
+
+/**
+ * @param {string} themeName wanted theme name.
+ * @param {string} fallbackThemeName fallback theme name.
+ * @export
+ */
+ThemeManagerService.prototype.updateCurrentTheme = function(themeName, fallbackThemeName) {
+  this.gmfThemes_.getThemesObject().then((themes) => {
+    if (!themeName && this.modeFlush) {
+      // In flush mode load current theme private groups
+      const fallbackTheme = findThemeByName(themes, fallbackThemeName);
+      if (fallbackTheme) {
+        this.gmfTreeManager_.addFirstLevelGroups(fallbackTheme.children, false, false);
+      }
+    }
+    if (themeName) {
+      const theme = findThemeByName(themes, themeName);
+      if (theme) {
+        this.addTheme(theme, true);
+      }
+    } else {
+      this.setThemeName(fallbackThemeName);
+    }
+  });
+};
+
 
 /**
  * @param {string} name The new theme name.

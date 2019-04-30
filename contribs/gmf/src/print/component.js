@@ -592,6 +592,10 @@ class Controller {
    * Init the controller
    */
   $onInit() {
+    olEvents.listen(this.map.getView(), 'change:rotation', (event) => {
+      this.updateRotation_(Math.round(olMath.toDegrees(event.target.getRotation())));
+    });
+
     // Clear the capabilities if the roles changes
     this.$scope_.$watch(() => this.gmfAuthenticationService_.getRolesIds().join(','), () => {
       this.gmfPrintState_.state = PrintStateEnum.CAPABILITIES_NOT_LOADED;
@@ -867,11 +871,7 @@ class Controller {
    * @param {number} rotation The optional new rotation value in degrees.
    */
   setRotation(rotation) {
-    this.rotation = olMath.clamp(rotation, -180, 180);
-
-    // sync all the inputs
-    this.rotationInput_.val(this.rotation.toString());
-
+    this.updateRotation_(rotation);
     // Render the map to update the postcompose mask or rotate the map.
     if (this.rotateMask) {
       this.map.render();
@@ -880,6 +880,15 @@ class Controller {
     }
   }
 
+  /**
+   * Set the current rotation value.
+   * @param {number} rotation The optional new rotation value in degrees.
+   */
+  updateRotation_(rotation) {
+    this.rotation = olMath.clamp(rotation, -180, 180);
+    // sync all the inputs
+    this.rotationInput_.val(this.rotation.toString());
+  }
 
   /**
    * Calculate the angle and the sense of rotation between two lines. One from the
