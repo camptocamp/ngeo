@@ -16,7 +16,7 @@ env:
   - GITHUB_USERNAME=camptocamp
   - CHROME_BIN=/opt/google/chrome/chrome
   - DISPLAY=:99.0
-  - MAIN_BRANCH=master
+  - MAIN_BRANCH=2.4
 
 addons:
   apt:
