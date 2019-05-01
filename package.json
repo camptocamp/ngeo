@@ -36,7 +36,6 @@
     "@camptocamp/cesium": "1.56.1",
     "@fortawesome/fontawesome-free": "5.8.1",
     "@geoblocks/proj": "0.4.0",
-    "@openlayers/eslint-plugin": "4.0.0-beta.2",
     "@types/angular": "1.6.54",
     "@types/angular-animate": "1.5.10",
     "@types/angular-dynamic-locale": "0.1.34",

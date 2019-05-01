@@ -5,8 +5,6 @@ env:
     jasmine: true
 parserOptions:
   ecmaVersion: 2017
-plugins:
-  - '@openlayers'
 rules:
   no-console: 0
   comma-dangle: 0
