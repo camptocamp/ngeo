@@ -19,7 +19,7 @@ export function FeatureOverlay(manager, index) {
   this.manager_ = manager;
 
   /**
-   * @type {import("ol/Collection.js").default.<import("ol/Feature.js").default>}
+   * @type {?import("ol/Collection.js").default.<import("ol/Feature.js").default>}
    * @private
    */
   this.features_ = null;

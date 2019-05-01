@@ -105,25 +105,25 @@ function Controller($scope, $timeout, gmfThemes, gmfTreeManager) {
   );
 
   /**
-   * @type {import("ol/Map.js").default}
+   * @type {?import("ol/Map.js").default}
    */
-  this.map;
+  this.map = null;
 
   /**
-   * @type {number|undefined}
+   * @type {?number}
    */
-  this.tolerance;
+  this.tolerance = null;
 
   /**
-   * @type {import("ol/layer/Vector.js").default}
+   * @type {?import("ol/layer/Vector.js").default}
    */
-  this.vectorLayer;
+  this.vectorLayer = null;
 
   /**
    * @type {boolean}
    * @export
    */
-  this.closeAfterSave;
+  this.closeAfterSave = false;
 
   // === Injected services ===
 
@@ -163,6 +163,9 @@ function Controller($scope, $timeout, gmfThemes, gmfTreeManager) {
         const editables = this.editableTreeCtrls;
 
         editables.length = 0;
+        if (!this.gmfTreeManager_.rootCtrl) {
+          throw new Error('Missing gmfTreeManager_.rootCtrl');
+        }
         this.gmfTreeManager_.rootCtrl.traverseDepthFirst((treeCtrl) => {
           if (treeCtrl.node.editable) {
             console.assert(treeCtrl.children.length === 0);
@@ -181,6 +184,7 @@ function Controller($scope, $timeout, gmfThemes, gmfTreeManager) {
     if (gmfTreeManager.rootCtrl) {
       return gmfTreeManager.rootCtrl.children;
     }
+    return [];
   }, updateEditableTreeCtrls);
 
 

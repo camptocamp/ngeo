@@ -30,7 +30,7 @@ module.value('ngeoGridTemplateUrl',
    * @return {string} Template URL.
    */
   ($attrs) => {
-    const templateUrl = $attrs['ngeoGridTemplateurl'];
+    const templateUrl = $attrs.ngeoGridTemplateurl;
     return templateUrl !== undefined ? templateUrl :
       'ngeo/grid';
   }
@@ -95,20 +95,20 @@ function Controller($scope) {
   this.scope_ = $scope;
 
   /**
-   * @type {import("ngeo/grid/Config.js").default}
+   * @type {?import("ngeo/grid/Config.js").default}
    */
-  this.configuration;
+  this.configuration = null;
 
   /**
-   * @type {Object.<string, Object>}
+   * @type {Object<string, Object>}
    */
-  this.selectedRows;
+  this.selectedRows = {};
 
   /**
    * The name of the column used to sort the grid.
    * @type {string}
    */
-  this.sortedBy;
+  this.sortedBy = '';
 
   /**
    * @type {boolean}
@@ -131,6 +131,9 @@ function Controller($scope) {
  * Init the controller
  */
 Controller.prototype.$onInit = function() {
+  if (!this.configuration) {
+    throw new Error('Missing configuration');
+  }
   this.selectedRows = this.configuration.selectedRows;
 };
 
@@ -143,6 +146,12 @@ Controller.prototype.$onInit = function() {
  *    sort the data.
  */
 Controller.prototype.sort = function(columnName) {
+  if (!this.configuration) {
+    throw new Error('Missing configuration');
+  }
+  if (!this.configuration.data) {
+    throw new Error('Missing configuration.data');
+  }
   this.sortAscending = this.sortedBy === columnName ? !this.sortAscending : true;
   this.sortedBy = columnName;
 
@@ -178,8 +187,10 @@ Controller.prototype.clickRow = function(attributes, event) {
  * @param {boolean} platformModifierKey CTRL/Meta pressed?
  * @private
  */
-Controller.prototype.clickRow_ = function(
-  attributes, shiftKey, platformModifierKey) {
+Controller.prototype.clickRow_ = function(attributes, shiftKey, platformModifierKey) {
+  if (!this.configuration) {
+    throw new Error('Missing configuration');
+  }
 
   if (shiftKey && !platformModifierKey) {
     this.selectRange_(attributes);
@@ -201,6 +212,12 @@ Controller.prototype.clickRow_ = function(
  * @private
  */
 Controller.prototype.selectRange_ = function(attributes) {
+  if (!this.configuration) {
+    throw new Error('Missing configuration');
+  }
+  if (!this.configuration.data) {
+    throw new Error('Missing configuration.data');
+  }
   const targetUid = getRowUid(attributes);
   const data = this.configuration.data;
 
@@ -209,8 +226,8 @@ Controller.prototype.selectRange_ = function(attributes) {
   }
 
   // get the position of the clicked and all already selected rows
-  /** @type {number|undefined} */
-  let posClickedRow = undefined;
+  /** @type {number} */
+  let posClickedRow = 0;
   const posSelectedRows = [];
   for (let i = 0; i < data.length; i++) {
     const currentRow = data[i];
@@ -222,7 +239,6 @@ Controller.prototype.selectRange_ = function(attributes) {
       posSelectedRows.push(i);
     }
   }
-  console.assert(posClickedRow !== undefined);
 
   if (posSelectedRows.length == 0) {
     // if no other row is selected, select the clicked one and stop

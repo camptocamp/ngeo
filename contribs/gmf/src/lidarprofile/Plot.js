@@ -36,45 +36,45 @@ export default class {
 
     /**
      * d3.scaleLinear X scale.
-     * @type {d3.ScaleLinear<number, number>}
+     * @type {?d3.ScaleLinear<number, number>}
      */
-    this.scaleX;
+    this.scaleX = null;
 
     /**
      * d3.scaleLinear X scale.
      * @type {Function}
      */
-    this.updateScaleX;
+    this.updateScaleX = () => undefined;
 
     /**
      * d3.scaleLinear Y scale.
-     * @type {d3.ScaleLinear<number, number>}
+     * @type {?d3.ScaleLinear<number, number>}
      */
-    this.scaleY;
+    this.scaleY = null;
 
     /**
      * d3.scaleLinear Y scale.
      * @type {Function}
      */
-    this.updateScaleY;
+    this.updateScaleY = () => undefined;
 
     /**
      * The material used for the drawing process. Initialized in the setup
-     * @type {string}
+     * @type {?string}
      */
-    this.material;
+    this.material = null;
 
     /**
      * @type {number}
      * @private
      */
-    this.width_;
+    this.width_ = 0;
 
     /**
      * @type {number}
      * @private
      */
-    this.height_;
+    this.height_ = 0;
 
     /**
      * @type {Array.<number>}
@@ -94,6 +94,12 @@ export default class {
    * @param {import("gmf/lidarprofile/Utils.js").LidarprofilePoints} points of the profile
    */
   drawPoints(points) {
+    if (!this.manager_.config) {
+      throw new Error('Missing manager.config');
+    }
+    if (!this.manager_.config.serverConfig) {
+      throw new Error('Missing manager_.config.serverConfig');
+    }
     let i = -1;
     const nPoints = points.distance.length;
     let cx, cy;
@@ -138,6 +144,12 @@ export default class {
    * @param {Array.<number>} rangeY range of the y scale
    */
   setupPlot(rangeX, rangeY) {
+    if (!this.manager_.config) {
+      throw new Error('Missing manager.config');
+    }
+    if (!this.manager_.config.serverConfig) {
+      throw new Error('Missing manager_.config.serverConfig');
+    }
     const canvas = d3select('#gmf-lidarprofile-container .lidar-canvas');
     const canvasEl = canvas.node();
     const ctx = canvasEl.getContext('2d');
@@ -199,7 +211,7 @@ export default class {
 
     zoom.on('end', this.zoomEnd.bind(this));
 
-    this.previousDomainX = this.scaleX['domain']();
+    this.previousDomainX = this.scaleX.domain();
     this.updateScaleX = this.scaleX;
     this.updateScaleY = this.scaleY;
 
@@ -260,6 +272,15 @@ export default class {
    * Update the plot axis during the zoom process
    */
   zoomed() {
+    if (!this.manager_.measure) {
+      throw new Error('Missing manager.measure');
+    }
+    if (!this.scaleX) {
+      throw new Error('Missing scaleX');
+    }
+    if (!this.scaleY) {
+      throw new Error('Missing scaleY');
+    }
     if (d3event.sourceEvent && d3event.sourceEvent.type === 'mousemove') {
       this.moved_ = true;
       if (d3event.sourceEvent.movementX == 0 && d3event.sourceEvent.movementY == 0) {
@@ -299,6 +320,12 @@ export default class {
    * Update the Openlayers overlay that displays point position and attributes values
    */
   pointHighlight() {
+    if (!this.manager_.config) {
+      throw new Error('Missing manager.config');
+    }
+    if (!this.manager_.config.serverConfig) {
+      throw new Error('Missing manager_.config.serverConfig');
+    }
 
     const svg = d3select('#gmf-lidarprofile-container svg.lidar-svg');
     const lidarInfo = d3select('#gmf-lidarprofile-container .lidar-info');
@@ -335,7 +362,7 @@ export default class {
       const html = this.getInfoHTML(p, pointClassification, 1);
 
       lidarInfo.html(html);
-      this.manager_.cartoHighlight.setElement(null);
+      this.manager_.cartoHighlight.setElement(undefined);
       const el = document.createElement('div');
       el.className += 'tooltip gmf-tooltip-measure';
       el.innerHTML = html;
@@ -430,6 +457,12 @@ export default class {
   * @param {string} material  value as defined in Pytree attribute configuration
   */
   setClassActive(classification, material) {
+    if (!this.manager_.config) {
+      throw new Error('Missing manager.config');
+    }
+    if (!this.manager_.config.serverConfig) {
+      throw new Error('Missing manager_.config.serverConfig');
+    }
     this.manager_.config.serverConfig.classification_colors = classification;
     this.changeStyle(material);
   }

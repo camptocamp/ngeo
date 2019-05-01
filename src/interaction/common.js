@@ -19,7 +19,11 @@ import {createEditingStyle} from 'ol/style/Style.js';
 export function getDefaultDrawStyleFunction() {
   const style = createEditingStyle();
   return function(feature, resolution) {
-    return style[feature.getGeometry().getType()];
+    const geometry = feature.getGeometry();
+    if (!geometry) {
+      throw new Error('Missing geometry');
+    }
+    return style[geometry.getType()];
   };
 }
 
@@ -31,6 +35,6 @@ export function getDefaultDrawStyleFunction() {
 export function getDefaultModifyStyleFunction() {
   const style = createEditingStyle();
   return function(feature, resolution) {
-    return style[/**@type {import("ol/geom/GeometryType.js").default} */ ('Point')];
+    return style.Point;
   };
 }

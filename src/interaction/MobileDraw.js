@@ -72,7 +72,7 @@ export default class extends olInteractionInteraction {
 
     /**
      * Sketch feature.
-     * @type {import("ol/Feature.js").default}
+     * @type {?import("ol/Feature.js").default}
      * @private
      */
     this.sketchFeature_ = null;
@@ -86,7 +86,7 @@ export default class extends olInteractionInteraction {
 
     /**
      * Current sketch point.
-     * @type {import("ol/Feature.js").default}
+     * @type {?import("ol/Feature.js").default}
      * @private
      */
     this.sketchPoint_ = null;
@@ -188,6 +188,9 @@ export default class extends olInteractionInteraction {
    * it.
    */
   addToDrawing() {
+    if (!this.sketchPoint_) {
+      throw new Error('Missing sketchPoint');
+    }
 
     // no need to do anything if interaction is not active, nor drawing
     const active = this.getActive();
@@ -200,7 +203,7 @@ export default class extends olInteractionInteraction {
     let sketchFeatureGeom;
     const sketchPointGeom = this.getSketchPointGeometry_();
     const coordinate = sketchPointGeom.getCoordinates();
-    let coordinates;
+    let coordinates = null;
 
     // == point ==
     if (this.type_ === 'Point') {
@@ -263,6 +266,9 @@ export default class extends olInteractionInteraction {
       this.set('dirty', false);
     }
 
+    if (!coordinates) {
+      throw new Error('Missing coordinates');
+    }
     // minPoints validation
     const valid = this.getValid();
     if (this.type_ === 'LineString' || this.type_ === 'Polygon') {
@@ -398,6 +404,7 @@ export default class extends olInteractionInteraction {
     } else {
       this.startDrawing_();
     }
+    // @ts-ignore
     this.overlay_.setMap(active ? map : null);
   }
 
@@ -462,12 +469,14 @@ export default class extends olInteractionInteraction {
    * @private
    */
   getSketchPointGeometry_() {
-    console.assert(this.sketchPoint_, 'sketch point should be thruty');
+    if (!this.sketchPoint_) {
+      throw new Error('Missing sketchPoint');
+    }
     const geometry = this.sketchPoint_.getGeometry();
     if (geometry instanceof olGeomPoint) {
       return geometry;
     } else {
-      throw 'Wrong geometry type';
+      throw new Error('Wrong geometry type');
     }
   }
 
@@ -478,7 +487,9 @@ export default class extends olInteractionInteraction {
    */
   getCenter_() {
     const center = this.getMap().getView().getCenter();
-    console.assert(Array.isArray(center));
+    if (!Array.isArray(center)) {
+      throw new Error('Missing center');
+    }
     return center;
   }
 }

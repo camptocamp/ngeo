@@ -93,7 +93,7 @@ module.value('gmfPrintTemplateUrl',
    * @return {string} Template.
    */
   (element, attrs) => {
-    const templateUrl = attrs['gmfPrintTemplateurl'];
+    const templateUrl = attrs.gmfPrintTemplateurl;
     return templateUrl !== undefined ? templateUrl :
       'gmf/print';
   });
@@ -291,14 +291,14 @@ class Controller {
     this.translate_ = $filter('translate');
 
     /**
-     * @type {import("ol/Map.js").default}
+     * @type {?import("ol/Map.js").default}
      */
-    this.map;
+    this.map = null;
 
     /**
      * @type {boolean}
      */
-    this.active;
+    this.active = false;
 
     /**
      * @type {boolean}
@@ -306,14 +306,14 @@ class Controller {
     this.rotateMask = false;
 
     /**
-     * @type {Object.<string, string|number|boolean>!}
+     * @type {Object<string, string|number|boolean>!}
      */
     this.fieldValues = {};
 
     /**
-     * @type {Array.<PrintSimpleAttributes>}
+     * @type {Array<PrintSimpleAttributes>}
      */
-    this.attributesOut;
+    this.attributesOut = [];
 
     /**
      * @type {angular.IScope}
@@ -433,34 +433,34 @@ class Controller {
     this.statusTimeoutPromise_ = null;
 
     /**
-     * @type {Array.<number>|null}
+     * @type {?Array<number>}
      * @private
      */
     this.onDragPreviousMousePosition_ = null;
 
     /**
-     * @type {?angular.IPromise|null}
+     * @type {?angular.IPromise}
      * @private
      */
     this.rotationTimeoutPromise_ = null;
 
     /**
-     * @type {import("ol/events.js").EventsKey}
+     * @type {?import("ol/events.js").EventsKey}
      * @private
      */
-    this.postComposeListenerKey_;
+    this.postComposeListenerKey_ = null;
 
     /**
-     * @type {import("ol/events.js").EventsKey}
+     * @type {?import("ol/events.js").EventsKey}
      * @private
      */
-    this.pointerDragListenerKey_;
+    this.pointerDragListenerKey_ = null;
 
     /**
-     * @type {import("ol/events.js").EventsKey}
+     * @type {?import("ol/events.js").EventsKey}
      * @private
      */
-    this.mapViewResolutionChangeKey_;
+    this.mapViewResolutionChangeKey_ = null;
 
     /**
      * Current report reference id.
@@ -471,14 +471,14 @@ class Controller {
 
     /**
      * Formats availables in capabilities.
-     * @type {Array.<string>}
+     * @type {Array<string>}
      * @private
      */
     this.formats_ = [];
 
     /**
      * An array of attributes objects from capabilities.
-     * @type {Array.<Object>}
+     * @type {Array<Object>}
      * @private
      */
     this.layouts_ = [];
@@ -491,7 +491,7 @@ class Controller {
     this.layout_ = {};
 
     /**
-     * @type {Array.<number>}
+     * @type {Array<number>}
      * @private
      */
     this.paperSize_ = [];
@@ -534,9 +534,9 @@ class Controller {
     this.smtpSupported = false;
 
     /**
-     * @type {Array.<string>}
+     * @type {Array<string>}
      */
-    this.hiddenAttributeNames;
+    this.hiddenAttributeNames = [];
 
     /**
      * @type {boolean}
@@ -551,40 +551,40 @@ class Controller {
 
     this.rotationInput_.on('input', (event) => {
       const rotation = $(event.target).val();
-      if (rotation !== '') {
-        this.setRotation(/** @type {number} */ (rotation));
+      if (typeof rotation == 'number') {
+        this.setRotation(rotation);
       }
     });
     // Workaround for IE11
     this.rotationInput_.on('change', (event) => {
       const rotation = $(event.target).val();
-      if (rotation !== '') {
-        this.setRotation(/** @type {number} */ (rotation));
+      if (typeof rotation == 'number') {
+        this.setRotation(rotation);
       }
     });
 
     /**
      * @type {function((Event|import("ol/events/Event.js").default)): (void|boolean)}
      */
-    this.postcomposeListener_;
+    this.postcomposeListener_ = (e) => false;
 
     /**
-     * @type {angular.IHttpPromise<Object>}
+     * @type {?angular.IHttpPromise<Object>}
      * @private
      */
-    this.capabilities_;
+    this.capabilities_ = null;
 
     /**
-     * @type {import('gmf/themes.js').GmfOgcServers}
+     * @type {?import('gmf/themes.js').GmfOgcServers}
      * @private
      */
-    this.ogcServers_;
+    this.ogcServers_ = null;
 
     /**
-     * @type {Array.<import('gmf/themes.js').GmfTheme>}
+     * @type {Array<import('gmf/themes.js').GmfTheme>}
      * @private
      */
-    this.currentThemes_;
+    this.currentThemes_ = [];
   }
 
 
@@ -592,6 +592,9 @@ class Controller {
    * Init the controller
    */
   $onInit() {
+    if (!this.map) {
+      throw new Error('Missing map');
+    }
     olEvents.listen(this.map.getView(), 'change:rotation', (event) => {
       this.updateRotation_(Math.round(olMath.toDegrees(event.target.getRotation())));
     });
@@ -676,7 +679,13 @@ class Controller {
       if (!this.capabilities_) {
         this.getCapabilities_(this.gmfAuthenticationService_.getRolesIds().join(','));
       }
+      if (!this.capabilities_) {
+        throw new Error('Missing capabilities');
+      }
       this.capabilities_.then((resp) => {
+        if (!this.map) {
+          throw new Error('Missing map');
+        }
         // make sure the panel is still open
         if (!this.active) {
           return;
@@ -696,9 +705,18 @@ class Controller {
         this.capabilities_ = null;
       });
     } else {
-      olEvents.unlistenByKey(this.postComposeListenerKey_);
-      olEvents.unlistenByKey(this.pointerDragListenerKey_);
-      olEvents.unlistenByKey(this.mapViewResolutionChangeKey_);
+      if (!this.map) {
+        throw new Error('Missing map');
+      }
+      if (this.postComposeListenerKey_) {
+        olEvents.unlistenByKey(this.postComposeListenerKey_);
+      }
+      if (this.pointerDragListenerKey_) {
+        olEvents.unlistenByKey(this.pointerDragListenerKey_);
+      }
+      if (this.mapViewResolutionChangeKey_) {
+        olEvents.unlistenByKey(this.mapViewResolutionChangeKey_);
+      }
       this.setRotation(0);
       this.map.render(); // Redraw (remove) post compose mask;
     }
@@ -729,17 +747,17 @@ class Controller {
    * @private
    */
   parseCapabilities_(resp) {
-    const data = resp['data'];
-    this.formats_ = data['formats'] || [];
-    this.layouts_ = data['layouts'];
-    this.layout_ = data['layouts'][0];
+    const data = resp.data;
+    this.formats_ = data.formats || [];
+    this.layouts_ = data.layouts;
+    this.layout_ = data.layouts[0];
 
     this.layoutInfo.layouts = [];
     this.layouts_.forEach((layout) => {
       this.layoutInfo.layouts.push(layout.name);
     });
 
-    this.smtpSupported = data['smtp'] && data['smtp']['enabled'];
+    this.smtpSupported = data.smtp && data.smtp.enabled;
 
     this.updateFields_();
   }
@@ -754,20 +772,27 @@ class Controller {
    * @private
    */
   updateFields_() {
+    if (!this.map) {
+      throw new Error('Missing map');
+    }
     this.layoutInfo.layout = this.layout_.name;
 
     const mapInfo = this.isAttributeInCurrentLayout_('map');
     console.assert(mapInfo);
-    const clientInfo = mapInfo['clientInfo'];
+    const clientInfo = mapInfo.clientInfo;
     console.assert(clientInfo);
-    this.paperSize_ = [clientInfo['width'], clientInfo['height']];
+    this.paperSize_ = [clientInfo.width, clientInfo.height];
 
     this.updateCustomFields_();
 
-    this.layoutInfo.legend = this.layoutInfo.attributes.indexOf('legend') >= 0 ?
-      this.fieldValues['legend'] !== false : undefined;
-    this.layoutInfo.scales = clientInfo['scales'] || [];
-    this.layoutInfo.dpis = clientInfo['dpiSuggestions'] || [];
+    const hasLegend = this.layoutInfo.attributes.indexOf('legend') >= 0;
+    if (hasLegend) {
+      this.fieldValues.legend = this.fieldValues.legend;
+    } else {
+      delete this.fieldValues.legend;
+    }
+    this.layoutInfo.scales = clientInfo.scales || [];
+    this.layoutInfo.dpis = clientInfo.dpiSuggestions || [];
 
     const mapSize = this.map.getSize();
     const viewResolution = this.map.getView().getResolution();
@@ -807,7 +832,7 @@ class Controller {
     // The attributes without 'clientParams' are the custom layout information (defined by end user).
     this.layout_.attributes.forEach((attribute) => {
       this.layoutInfo.attributes.push(attribute.name);
-      if (!attribute['clientParams']) {
+      if (!attribute.clientParams) {
         name = `${attribute.name}`;
         const defaultValue = attribute.default;
         value = (defaultValue !== undefined && defaultValue !== '') ?
@@ -851,7 +876,7 @@ class Controller {
   /**
    * Return a capabilities 'attribute' object corresponding to the given name.
    * @param {string} name Name of the attribute to get.
-   * @return {Object|null} corresponding attribute or null.
+   * @return {?Object} corresponding attribute or null.
    * @private
    */
   isAttributeInCurrentLayout_(name) {
@@ -871,6 +896,9 @@ class Controller {
    * @param {number} rotation The optional new rotation value in degrees.
    */
   setRotation(rotation) {
+    if (!this.map) {
+      throw new Error('Missing map');
+    }
     this.updateRotation_(rotation);
     // Render the map to update the postcompose mask or rotate the map.
     if (this.rotateMask) {
@@ -894,10 +922,16 @@ class Controller {
    * Calculate the angle and the sense of rotation between two lines. One from the
    * center of the map and the point of the last call to this function and one
    * from the same center and the point of the current call.
-   * @param {event|import("ol/events/Event.js").default} e An ol map browser pointer event.
+   * @param {Event|import("ol/events/Event.js").default} e An ol map browser pointer event.
    * @private
    */
   onPointerDrag_(e) {
+    if (!this.map) {
+      throw new Error('Missing map');
+    }
+    if (!this.onDragPreviousMousePosition_) {
+      throw new Error('Missing onDragPreviousMousePosition');
+    }
     if (e instanceof MapBrowserPointerEvent) {
       const originalEvent = e.originalEvent;
       if (originalEvent instanceof KeyboardEvent) {
@@ -946,6 +980,12 @@ class Controller {
    *     capabilities document ('pdf', 'png', etc).
    */
   print(format) {
+    if (!this.map) {
+      throw new Error('Missing map');
+    }
+    if (!this.ogcServers_) {
+      throw new Error('Missing ogcServers_');
+    }
     // Do not print if a print task is already processing.
     if (this.gmfPrintState_.state === PrintStateEnum.PRINTING) {
       return;
@@ -961,7 +1001,7 @@ class Controller {
     const customAttributes = {};
 
     if (this.layoutInfo.attributes.indexOf('datasource') >= 0) {
-      customAttributes['datasource'] = datasource;
+      customAttributes.datasource = datasource;
     }
 
     if (this.layoutInfo.simpleAttributes) {
@@ -972,6 +1012,9 @@ class Controller {
 
     if (this.layoutInfo.legend) {
       const center = this.map.getView().getCenter();
+      if (!center) {
+        throw new Error('Missing center');
+      }
       const deltaX = this.paperSize_[0] * scale / 2 / INCHES_PER_METER / DOTS_PER_INCH;
       const deltaY = this.paperSize_[1] * scale / 2 / INCHES_PER_METER / DOTS_PER_INCH;
       const bbox = [
@@ -982,7 +1025,7 @@ class Controller {
       ];
       const legend = this.getLegend_(scale, this.layoutInfo.dpi, bbox);
       if (legend !== null) {
-        customAttributes['legend'] = legend;
+        customAttributes.legend = legend;
       }
     }
 
@@ -1057,7 +1100,7 @@ class Controller {
     );
 
     // remove temporary map
-    map.setTarget(null);
+    map.setTarget('');
   }
 
 
@@ -1232,7 +1275,10 @@ class Controller {
    * @private
    */
   getLegend_(scale, dpi, bbox) {
-    const legend = {'classes': []};
+    if (!this.map) {
+      throw new Error('Missing map');
+    }
+    const legend = {classes: /** @type {Array<any>} */([])};
     const gettextCatalog = this.gettextCatalog_;
 
     // Get layers from layertree only.
@@ -1241,6 +1287,9 @@ class Controller {
 
     // For each visible layer in reverse order, get the legend url.
     layers.reverse().forEach((layer) => {
+      if (!this.map) {
+        throw new Error('Missing map');
+      }
       const classes = [];
       if (layer.getVisible() && layer.getSource()) {
         // For WMTS layers.
@@ -1251,34 +1300,43 @@ class Controller {
             const url = this.ngeoLayerHelper_.getWMTSLegendURL(layer);
             if (url) {
               icon_dpi = {
-                'url': this.ngeoLayerHelper_.getWMTSLegendURL(layer),
-                'dpi': 72
+                url: url,
+                dpi: 72
               };
             }
           }
           // Don't add classes without legend url.
           if (icon_dpi) {
             classes.push({
-              'name': gettextCatalog.getString(layerName),
-              'icons': [icon_dpi.url]
+              name: gettextCatalog.getString(layerName),
+              icons: [icon_dpi.url]
             });
           }
         } else {
           const source = /** @type import("ol/source/ImageWMS.js").default */ (layer.getSource());
           // For each name in a WMS layer.
-          const layerNames = source.getParams()['LAYERS'].split(',');
+          const layerNames = source.getParams().LAYERS.split(',');
           layerNames.forEach((name) => {
+            if (!this.map) {
+              throw new Error('Missing map');
+            }
+            if (!source.serverType_) {
+              throw new Error('Missing source.serverType_');
+            }
             let icon_dpi = this.getMetadataLegendImage_(name, dpi);
             const type = icon_dpi ? 'image' : source.serverType_;
             if (!icon_dpi) {
+              const url = this.ngeoLayerHelper_.getWMSLegendURL(source.getUrl(), name,
+                scale, undefined, undefined, undefined, source.serverType_, dpi,
+                this.gmfLegendOptions_.useBbox ? bbox : undefined,
+                this.map.getView().getProjection().getCode(),
+                this.gmfLegendOptions_.params[source.serverType_]);
+              if (!url) {
+                throw new Error('Missing url');
+              }
               icon_dpi = {
-                'url': this.ngeoLayerHelper_.getWMSLegendURL(source.getUrl(), name,
-                  scale, undefined, undefined, undefined, source.serverType_, dpi,
-                  this.gmfLegendOptions_.useBbox ? bbox : undefined,
-                  this.map.getView().getProjection().getCode(),
-                  this.gmfLegendOptions_.params[source.serverType_]
-                ),
-                'dpi': type === 'qgis' ? dpi : 72,
+                url: url,
+                dpi: type === 'qgis' ? dpi : 72,
               };
             }
 
@@ -1286,11 +1344,11 @@ class Controller {
             // active name.
             if (icon_dpi && name.length !== 0) {
               classes.push(Object.assign({
-                'name': this.gmfLegendOptions_.label[type] === false ? '' :
+                name: this.gmfLegendOptions_.label[type] === false ? '' :
                   gettextCatalog.getString(name),
-                'icons': [icon_dpi.url]
+                icons: [icon_dpi.url]
               }, icon_dpi.dpi != 72 ? {
-                'dpi': icon_dpi.dpi,
+                dpi: icon_dpi.dpi,
               } : {}));
             }
           });
@@ -1299,12 +1357,11 @@ class Controller {
 
       // Add classes object only if it contains something.
       if (classes.length > 0) {
-        legend['classes'].push({'classes': classes});
+        legend.classes.push({classes: classes});
       }
-
     });
 
-    return legend['classes'].length > 0 ? legend : null;
+    return legend.classes.length > 0 ? legend : null;
   }
 
   /**
@@ -1348,9 +1405,12 @@ class Controller {
         }
       }
     }
+    if (!legendImage) {
+      throw new Error('Missing legendImage');
+    }
     return {
-      'url': legendImage,
-      'dpi': dpi,
+      url: legendImage,
+      dpi: dpi,
     };
   }
 
@@ -1380,6 +1440,9 @@ class Controller {
    */
   getSetScale(opt_scale) {
     if (opt_scale !== undefined) {
+      if (!this.map) {
+        throw new Error('Missing map');
+      }
       const mapSize = this.map.getSize() || [0, 0];
       this.layoutInfo.scale = opt_scale;
       const res = this.ngeoPrintUtils_.getOptimalResolution(mapSize, this.paperSize_, opt_scale);

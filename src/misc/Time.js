@@ -11,18 +11,18 @@ import angular from 'angular';
 export function Time() {}
 
 /**
- * @param {number|string|null} value The value
- * @param {Date} defaultValue The default value
- * @return {Date} the date
+ * @param {?number|string} value The value
+ * @param {?Date} defaultValue The default value
+ * @return {?Date} the date
  */
 Time.prototype.createDate = function(value, defaultValue = null) {
   return value !== null ? new Date(value) : defaultValue;
 };
 
 /**
- * @param {Date} date The date
- * @param {number|null=} defaultValue The default value
- * @return {number|null} the time
+ * @param {?Date} date The date
+ * @param {?number} defaultValue The default value
+ * @return {?number} the time
  */
 Time.prototype.getTime = function(date, defaultValue = null) {
   return date ? date.getTime() : defaultValue;
@@ -45,14 +45,36 @@ Time.prototype.getOptions = function(time) {
 
   const minDefaultDate = this.createDate(time.minDefValue, minDate);
   const maxDefaultDate = this.createDate(time.maxDefValue, maxDate);
+  if (!minDefaultDate) {
+    throw new Error('Missing minDefaultDate');
+  }
+  if (!maxDefaultDate) {
+    throw new Error('Missing maxDefaultDate');
+  }
 
-  const defaultValues = (time.mode === 'range') ?
-    [this.getTime(minDefaultDate), this.getTime(maxDefaultDate)] :
-    this.getTime(minDefaultDate);
+  const minTime = this.getTime(minDate);
+  const maxTime = this.getTime(maxDate);
+  if (!minTime) {
+    throw new Error('Missing minTime');
+  }
+  if (!maxTime) {
+    throw new Error('Missing maxTime');
+  }
+
+  const minDefaultTime = this.getTime(minDefaultDate);
+  const maxDefaultTime = this.getTime(maxDefaultDate);
+  if (!minDefaultTime) {
+    throw new Error('Missing minDefaultTime');
+  }
+  if (!maxDefaultTime) {
+    throw new Error('Missing maxDefaultTime');
+  }
+
+  const defaultValues = (time.mode === 'range') ? [minDefaultTime, maxDefaultTime] : minDefaultTime;
 
   return {
-    minDate: this.getTime(minDate),
-    maxDate: this.getTime(maxDate),
+    minDate: minTime,
+    maxDate: maxTime,
     values: defaultValues
   };
 };

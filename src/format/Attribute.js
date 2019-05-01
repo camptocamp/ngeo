@@ -25,8 +25,8 @@ import ngeoFormatAttributeType from 'ngeo/format/AttributeType.js';
  * @property {string} [type] (AttributeBase)
  * @property {Array.<string>} [choices] The list of possible values for the attribute.
  * @property {number} [maxLength] Specifies the maximum number of character for the attribute value.
- * @property {string|null} name The attribute name.
- * @property {string|null} alias The attribute alias
+ * @property {string} [name] The attribute name.
+ * @property {string} [alias] The attribute alias
  * @property {boolean} [readonly] Whether the attribute's value should be prevented from being edited
  *    or not. Defaults to `false`.
  * @property {boolean} [required] Whether the attribute is required to have a value set or not.

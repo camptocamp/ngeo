@@ -98,15 +98,15 @@ class Controller {
     this.ngeoNominatimService_ = ngeoNominatimService;
 
     /**
-     * @type {import("ol/Map.js").default}
+     * @type {?import("ol/Map.js").default}
      * @private
      */
-    this.map;
+    this.map = null;
 
     /**
-     * @type {import("ol/Feature.js").default}
+     * @type {?import("ol/Feature.js").default}
      */
-    this.feature;
+    this.feature = null;
 
     /**
      * @type {string}
@@ -116,17 +116,17 @@ class Controller {
     /**
      * @type {string}
      */
-    this.fillColor;
+    this.fillColor = '';
 
     /**
      * @type {string}
      */
-    this.strokeColor;
+    this.strokeColor = '';
 
     /**
-     * @type {function(import("ol/Feature.js").default): void}
+     * @type {?function(import("ol/Feature.js").default): void}
      */
-    this.onChange;
+    this.onChange = null;
 
     /**
      * @type {import("ol/Collection.js").default}
@@ -176,7 +176,7 @@ class Controller {
     });
 
     /**
-     * @type {import("ol/interaction/Draw.js").default}
+     * @type {?import("ol/interaction/Draw.js").default}
      * @private
      */
     this.draw_ = null;
@@ -193,6 +193,9 @@ class Controller {
   }
 
   $onInit() {
+    if (!this.map) {
+      return;
+    }
     this.map.addLayer(this.vectorLayer_);
 
     // setup modify interaction
@@ -223,6 +226,9 @@ class Controller {
    * Cleanup, mostly relevant for vias.
    */
   $onDestroy() {
+    if (!this.map) {
+      return;
+    }
     this.map.removeLayer(this.vectorLayer_);
     this.modifyFeature_.setActive(false);
     this.map.removeInteraction(this.modifyFeature_);
@@ -231,6 +237,9 @@ class Controller {
   /**
    */
   set() {
+    if (!this.map) {
+      return;
+    }
     if (this.draw_) {
       this.map.removeInteraction(this.draw_);
     }
@@ -247,7 +256,7 @@ class Controller {
     });
 
     this.draw_.on('drawend', (event) => {
-      if (this.draw_) {
+      if (this.draw_ && this.map) {
         this.map.removeInteraction(this.draw_);
       }
       this.snapFeature_(event.feature);
@@ -264,6 +273,9 @@ class Controller {
    * @private
    */
   setFeature_(coordinate, label) {
+    if (!this.map) {
+      return;
+    }
     const transformedCoordinate = olProj.fromLonLat(coordinate, this.map.getView().getProjection());
     if (label === '') {
       label = transformedCoordinate.join('/');
@@ -275,17 +287,22 @@ class Controller {
   }
 
   onFeatureChange_() {
-    // update label
+    if (!this.feature) {
+      return;
+    }
+    // Update label
     this.featureLabel = /** @type{string} */(this.feature.get('name') || '');
 
-    //update vector source
+    // Update vector source
     this.vectorSource_.clear();
     this.vectorSource_.addFeature(this.feature);
 
-    // notify others
+    // Notify others
     if (this.onChange) {
       this.timeout_(() => {
-        this.onChange(this.feature);
+        if (this.feature && this.onChange) {
+          this.onChange(this.feature);
+        }
       });
     }
   }
@@ -295,6 +312,9 @@ class Controller {
    * @private
    */
   onSelect_(selected) {
+    if (!this.feature || !this.map) {
+      return;
+    }
     // @ts-ignore: If types are not respected
     const coordinate = selected.coordinate.map(parseFloat);
     const label = selected.label;
@@ -312,6 +332,9 @@ class Controller {
    */
   snapFeature_(feature) {
     const coord = this.getLonLatFromPoint_(feature);
+    if (!coord) {
+      return;
+    }
     const config = {};
 
     const onSuccess = (resp) => {
@@ -334,10 +357,13 @@ class Controller {
   /**
    * Converts feature point into LonLat coordinate.
    * @param {import("ol/Feature.js").default} point Feature point to convert
-   * @return {import("ol/coordinate.js").Coordinate} LonLat coordinate
+   * @return {?import("ol/coordinate.js").Coordinate} LonLat coordinate
    * @private
    */
   getLonLatFromPoint_(point) {
+    if (!this.map) {
+      return null;
+    }
     const geometry = /** @type {import("ol/geom/Point.js").default} */ (point.getGeometry());
     const coords = geometry.getCoordinates();
     const projection = this.map.getView().getProjection();

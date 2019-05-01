@@ -193,6 +193,7 @@ function MainController(gmfTreeManager, gmfThemes, gmfThemeManager, ngeoLocation
       if (n.id === node.id) {
         return alreadyAdded = true;
       }
+      return false;
     });
     if (!alreadyAdded) {
       nodes.push(node);

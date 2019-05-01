@@ -50,16 +50,16 @@ export class DatasourceHelper {
     // === Other properties ===
 
     /**
-     * @type {import('ngeo/datasource/DataSource.js').DataSources}
+     * @type {?import('ngeo/datasource/DataSource.js').DataSources}
      * @protected
      */
-    this.collection_;
+    this.collection_ = null;
 
     /**
-     * @type {Object.<number, import("gmf/datasource/OGC.js").default>}
+     * @type {Object<number, import("gmf/datasource/OGC.js").default>}
      * @protected
      */
-    this.cache_;
+    this.cache_ = {};
   }
 
   /**

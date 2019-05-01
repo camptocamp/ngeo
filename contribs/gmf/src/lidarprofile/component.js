@@ -15,7 +15,7 @@ module.value('gmfLidarprofileTemplateUrl',
      * @return {string} Template.
      */
   ($element, $attrs) => {
-    const templateUrl = $attrs['gmfLidarprofileTemplateUrl'];
+    const templateUrl = $attrs.gmfLidarprofileTemplateUrl;
     return templateUrl !== undefined ? templateUrl :
       'gmf/lidarprofile';
   });
@@ -83,9 +83,9 @@ class Controller {
 
     /**
      * The Openlayer LineStringt that defines the profile
-     * @type {import("ol/geom/LineString.js").default}
+     * @type {?import("ol/geom/LineString.js").default}
      */
-    this.line;
+    this.line = null;
 
     /**
      * The profile active state

@@ -71,7 +71,7 @@ AutoProjectionService.prototype.getProjectionList = function(projectionsCodes) {
  */
 AutoProjectionService.prototype.tryProjections = function(coordinates,
   extent, viewProjection, opt_projections) {
-  let position;
+  let position = null;
   if (opt_projections === undefined) {
     opt_projections = [viewProjection];
   }
@@ -85,6 +85,7 @@ AutoProjectionService.prototype.tryProjections = function(coordinates,
       // Wrong coordinate leads to a transform error and ol throw an exception that we won't log.
     }
     position = null;
+    return false;
   });
   return position;
 };

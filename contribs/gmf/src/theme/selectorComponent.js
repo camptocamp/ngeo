@@ -28,7 +28,7 @@ module.value('gmfThemeSelectorTemplateUrl',
    * @return {string} The template url.
    */
   ($attrs) => {
-    const templateUrl = $attrs['gmfThemeSelectorTemplateUrl'];
+    const templateUrl = $attrs.gmfThemeSelectorTemplateUrl;
     return templateUrl !== undefined ? templateUrl :
       'gmf/theme/selectorComponent';
   });
@@ -121,17 +121,17 @@ function Controller($scope, gmfThemeManager, gmfThemes) {
   this.gmfThemes_ = gmfThemes;
 
   /**
-   * @type {Array.<Object>}
+   * @type {Array<Object>}
    */
-  this.themes;
+  this.themes = [];
 
   /**
    * @type {function(import('gmf/themes.js').GmfTheme): boolean|undefined}
    */
-  this.filter;
+  this.filter = (theme) => undefined;
 
   /**
-   * @type {Array.<import("ol/events.js").EventsKey>}
+   * @type {Array<import("ol/events.js").EventsKey>}
    * @private
    */
   this.listenerKeys_ = [];

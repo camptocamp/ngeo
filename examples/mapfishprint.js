@@ -69,20 +69,22 @@ const PRINT_PAPER_SIZE_ = [555, 675];
  * @hidden
  */
 function MainController($timeout, ngeoCreatePrint, ngeoPrintUtils) {
+  const source = new olSourceImageWMS({
+    url: MAPSERVER_PROXY,
+    projection: undefined, // should be removed in next OL version
+    params: {
+      'LAYERS': 'osm'
+    },
+    serverType: /** @type {import("ol/source/WMSServerType.js").default} */ ('mapserver')
+  });
   /**
    * @type {import("ol/Map.js").default}
    */
   this.map = new olMap({
     layers: [
+      // @ts-ignore: OL issue
       new olLayerImage({
-        source: new olSourceImageWMS({
-          url: MAPSERVER_PROXY,
-          projection: undefined, // should be removed in next OL version
-          params: {
-            'LAYERS': 'osm'
-          },
-          serverType: /** @type {import("ol/source/WMSServerType.js").default} */ ('mapserver')
-        })
+        source
       }),
       new olLayerVector({
         source: new olSourceVector({
@@ -126,7 +128,7 @@ function MainController($timeout, ngeoCreatePrint, ngeoPrintUtils) {
   this.printUtils_ = ngeoPrintUtils;
 
   /**
-   * @type {function(import("ol/render/Event.js").default)}
+   * @type {function(import("ol/render/Event.js").default): void}
    */
   const postcomposeListener = ngeoPrintUtils.createPrintMaskPostcompose(
     /**

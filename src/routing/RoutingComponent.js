@@ -18,8 +18,8 @@ import 'ngeo/sass/font.scss';
 
 /**
  * @typedef {Object} RoutingVia
- * @property {?import("ol/Feature.js").default} feature
- * @property {function(import('ngeo/routing/NominatimService').NominatimSearchResult)} onSelect
+ * @property {import("ol/Feature.js").default} [feature]
+ * @property {function(import('ngeo/routing/NominatimService').NominatimSearchResult)} [onSelect]
  */
 
 
@@ -141,9 +141,9 @@ class Controller {
     this.$q_ = $q;
 
     /**
-     * @type {import("ol/Map.js").default}
+     * @type {?import("ol/Map.js").default}
      */
-    this.map;
+    this.map = null;
 
     /**
      * @type {string}
@@ -151,17 +151,17 @@ class Controller {
     this.errorMessage = '';
 
     /**
-     * @type {import("ol/Feature.js").default}
+     * @type {?import("ol/Feature.js").default}
      */
     this.startFeature_ = null;
 
     /**
-     * @type {import("ol/Feature.js").default}
+     * @type {?import("ol/Feature.js").default}
      */
     this.targetFeature_ = null;
 
     /**
-     * @type {Array.<RoutingVia>}
+     * @type {Array<RoutingVia>}
      */
     this.viaArray = [];
 
@@ -221,7 +221,7 @@ class Controller {
     this.regexIsFormattedCoord = /\d+\.\d+\/\d+\.\d+/;
 
     /**
-     * @type {import("ol/interaction/Draw.js").default}
+     * @type {?import("ol/interaction/Draw.js").default}
      * @private
      */
     this.draw_ = null;
@@ -240,7 +240,9 @@ class Controller {
    * Init the controller
    */
   $onInit() {
-    this.map.addLayer(this.routeLayer_);
+    if (this.map) {
+      this.map.addLayer(this.routeLayer_);
+    }
   }
 
   /**
@@ -259,10 +261,13 @@ class Controller {
   /**
    * Converts feature point into LonLat coordinate.
    * @param {import("ol/Feature.js").default} point Feature point to convert
-   * @return {import("ol/coordinate.js").Coordinate} LonLat coordinate
+   * @return {?import("ol/coordinate.js").Coordinate} LonLat coordinate
    * @private
    */
   getLonLatFromPoint_(point) {
+    if (!this.map) {
+      return null;
+    }
     const geometry = /** @type {import("ol/geom/Point.js").default} */ (point.getGeometry());
     const coords = geometry.getCoordinates();
     const projection = this.map.getView().getProjection();
@@ -290,6 +295,9 @@ class Controller {
    * @private
    */
   parseRoute_(route) {
+    if (!this.map) {
+      return [];
+    }
     let parsedRoutes = [];
     const format = new olFormatGeoJSON();
     const formatConfig = {
@@ -322,9 +330,12 @@ class Controller {
       const vias = this.viaArray.filter(via => via.feature !== null).map(
         via => this.getLonLatFromPoint_(via.feature)
       );
-      const route = [coordFrom].concat(vias, [coordTo]);
+      const route = /** @type Array<Array<number>> */([coordFrom].concat(vias, [coordTo]));
 
       const onSuccess_ = (resp) => {
+        if (!this.map || !this.startFeature_ || !this.targetFeature_) {
+          return null;
+        }
         const features = this.parseRoute_(resp.data.routes[0]);
         if (features.length === 0) {
           console.log('No route or not supported format.');
@@ -368,29 +379,25 @@ class Controller {
       };
 
       const options = {};
-      options['steps'] = true;
-      options['overview'] = false;
-      options['geometries'] = 'geojson';
+      options.steps = true;
+      options.overview = false;
+      options.geometries = 'geojson';
 
       const config = {};
-      config['options'] = options;
+      config.options = options;
 
       if (this.selectedRoutingProfile) {
-        config['instance'] = this.selectedRoutingProfile['profile'];
+        config.instance = this.selectedRoutingProfile.profile;
       }
 
-      this.$q_.when(this.ngeoRoutingService_.getRoute(route, config))
-        .then(onSuccess_, onError_);
+      this.$q_.when(this.ngeoRoutingService_.getRoute(route, config)).then(onSuccess_, onError_);
     }
   }
 
   /**
    */
   addVia() {
-    this.viaArray.push(/** @type{RoutingVia} */({
-      feature: null,
-      onSelect: null
-    }));
+    this.viaArray.push({});
   }
 
   /**

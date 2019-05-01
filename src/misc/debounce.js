@@ -30,7 +30,6 @@ function debounce(func, wait, invokeApply, $timeout) {
    */
   let timeout = null;
   return /** @type {T} */(
-  // eslint-disable-next-line @openlayers/valid-tsdoc
     /**
      * @this {any} The context
      */

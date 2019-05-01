@@ -84,20 +84,24 @@ function MainController($scope, ngeoDataSources) {
    */
   this.queryActive = true;
 
+  const source1 = new olSourceImageWMS({
+    projection: undefined, // should be removed in next OL version
+    url: MAPSERVER_PROXY,
+    params: {'LAYERS': 'information'}
+  });
+  // @ts-ignore: OL issue
   const informationLayer = new olLayerImage({
-    source: new olSourceImageWMS({
-      projection: undefined, // should be removed in next OL version
-      url: MAPSERVER_PROXY,
-      params: {'LAYERS': 'information'}
-    })
+    source: source1
   });
 
+  const source2 = new olSourceImageWMS({
+    projection: undefined, // should be removed in next OL version
+    url: MAPSERVER_PROXY,
+    params: {'LAYERS': 'bus_stop'}
+  });
+  // @ts-ignore: OL issue
   const busStopLayer = new olLayerImage({
-    source: new olSourceImageWMS({
-      projection: undefined, // should be removed in next OL version
-      url: MAPSERVER_PROXY,
-      params: {'LAYERS': 'bus_stop'}
-    })
+    source: source2
   });
 
   /**

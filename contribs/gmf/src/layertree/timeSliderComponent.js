@@ -55,12 +55,18 @@ function layertreeTimeSliderComponent() {
     templateUrl: 'gmf/layertree/timesliderComponent',
     link: {
       pre: function preLink(scope, element, attrs, ctrl) {
+        if (!ctrl) {
+          throw new Error('Missing ctrl');
+        }
         ctrl.init();
 
-        ctrl.sliderOptions['stop'] = onSliderReleased_;
-        ctrl.sliderOptions['slide'] = computeDates_;
+        ctrl.sliderOptions.stop = onSliderReleased_;
+        ctrl.sliderOptions.slide = computeDates_;
 
         function onSliderReleased_(e, sliderUi) {
+          if (!ctrl) {
+            throw new Error('Missing ctrl');
+          }
           ctrl.onDateSelected({
             time: computeDates_(e, sliderUi)
           });
@@ -68,6 +74,9 @@ function layertreeTimeSliderComponent() {
         }
 
         function computeDates_(e, sliderUi) {
+          if (!ctrl) {
+            throw new Error('Missing ctrl');
+          }
           let sDate, eDate, wmstime;
           if (sliderUi.values) {
             sDate = new Date(ctrl.getClosestValue_(sliderUi.values[0]));
@@ -118,54 +127,54 @@ function Controller(ngeoWMSTime) {
    * Function called after date(s) changed/selected
    * @type {Function}
    */
-  this.onDateSelected;
+  this.onDateSelected = () => undefined;
 
 
   /**
    * A time object for directive initialization
-   * @type {import('ngeo/datasource/OGC.js').TimeProperty}
+   * @type {?import('ngeo/datasource/OGC.js').TimeProperty}
    */
-  this.time;
+  this.time = null;
 
   /**
    * If the component is used to select a date range
    * @type {boolean}
    */
-  this.isModeRange;
+  this.isModeRange = false;
 
   /**
    * Minimal value of the slider (time in ms)
    * @type {number}
    */
-  this.minValue;
+  this.minValue = -1;
 
   /**
    * Maximal value of the slider (time in ms)
    * @type {number}
    */
-  this.maxValue;
+  this.maxValue = 999999;
 
   /**
    * Used when WMS time object has a property 'values' instead of an interval
-   * @type {?Array.<number>}
+   * @type {?Array<number>}
    */
-  this.timeValueList;
+  this.timeValueList = null;
 
   /**
    * Default Slider options (used by ui-slider directive)
-   * @type {{
+   * @type {?{
    *  range : boolean,
    *  min : number,
    *  max : number
    * }}
    */
-  this.sliderOptions;
+  this.sliderOptions = null;
 
   /**
    * Model for the ui-slider directive (date in ms format)
-   * @type {Array.<number>|number}
+   * @type {Array<number>|number}
    */
-  this.dates;
+  this.dates = [];
 }
 
 
@@ -173,6 +182,9 @@ function Controller(ngeoWMSTime) {
  * Initialise the controller.
  */
 Controller.prototype.init = function() {
+  if (!this.time) {
+    throw new Error('Missing time');
+  }
   this.timeValueList = this.getTimeValueList_();
 
   // Fetch the initial options for the component
@@ -196,8 +208,11 @@ Controller.prototype.init = function() {
  * @return {Array<number>}  - List of timestamp representing possible values
  */
 Controller.prototype.getTimeValueList_ = function() {
+  if (!this.time) {
+    throw new Error('Missing time');
+  }
   const wmsTime = this.time;
-  let timeValueList = null;
+  let timeValueList = [];
   const minDate = new Date(this.minValue);
   const maxDate = new Date(this.maxValue);
 
@@ -243,6 +258,9 @@ Controller.prototype.getTimeValueList_ = function() {
  * @private
  */
 Controller.prototype.getClosestValue_ = function(timestamp) {
+  if (!this.time) {
+    throw new Error('Missing time');
+  }
   if (timestamp <= this.minValue) {
     return this.minValue;
   }
@@ -312,6 +330,9 @@ Controller.prototype.getClosestValue_ = function(timestamp) {
  * @return {string} Localized date string regarding the resolution.
  */
 Controller.prototype.getLocalizedDate = function(time) {
+  if (!this.time) {
+    throw new Error('Missing time');
+  }
   return this.ngeoWMSTime_.formatTimeValue(time, this.time.resolution);
 };
 

@@ -59,9 +59,9 @@ module.component('appBackgroundlayer', backgroundlayerComponent);
 function BackgroundlayerController($http, ngeoBackgroundLayerMgr) {
 
   /**
-   * @type {import("ol/Map.js").default}
+   * @type {?import("ol/Map.js").default}
    */
-  this.map;
+  this.map = null;
 
   /**
    * @type {Array.<Object>|undefined}
@@ -76,7 +76,10 @@ function BackgroundlayerController($http, ngeoBackgroundLayerMgr) {
   $http.get('data/backgroundlayers.json').then(
     (resp) => {
       this.bgLayers = resp.data;
-      // use the first layer by default
+      if (!this.bgLayers) {
+        throw new Error('Missing bgLayers');
+      }
+      // Use the first layer by default
       this.bgLayer = this.bgLayers[0];
     });
 
@@ -94,8 +97,11 @@ function BackgroundlayerController($http, ngeoBackgroundLayerMgr) {
  * it.
  */
 BackgroundlayerController.prototype.change = function() {
+  if (!this.map) {
+    throw new Error('Missing map');
+  }
   const layerSpec = this.bgLayer;
-  const layer = this.getLayer_(layerSpec['name']);
+  const layer = this.getLayer_(layerSpec.name);
   this.backgroundLayerMgr_.set(this.map, layer);
 };
 
@@ -140,17 +146,19 @@ function MainController($scope) {
     })
   });
 
+  const source = new olSourceImageWMS({
+    projection: undefined, // should be removed in next OL version
+    url: 'https://wms.geo.admin.ch',
+    params: {'LAYERS': 'ch.swisstopo.dreiecksvermaschung'},
+    serverType: 'mapserver'
+  });
   /**
    * An overlay layer.
    * @type {import("ol/layer/Image.js").default}
    */
+  // @ts-ignore: OL issue
   const overlay = new olLayerImage({
-    source: new olSourceImageWMS({
-      projection: undefined, // should be removed in next OL version
-      url: 'https://wms.geo.admin.ch',
-      params: {'LAYERS': 'ch.swisstopo.dreiecksvermaschung'},
-      serverType: 'mapserver'
-    })
+    source
   });
 
   this.map.addLayer(overlay);

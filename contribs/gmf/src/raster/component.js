@@ -30,7 +30,7 @@ module.value('gmfElevationwidgetTemplateUrl',
    * @return {string} The template url.
    */
   ($attrs) => {
-    const templateUrl = $attrs['gmfElevationwidgetTemplateUrl'];
+    const templateUrl = $attrs.gmfElevationwidgetTemplateUrl;
     return templateUrl !== undefined ? templateUrl :
       'gmf/raster/widgetComponent';
   });
@@ -164,30 +164,30 @@ function Controller($scope, $filter, ngeoDebounce, gmfRaster, gettextCatalog) {
   this.gettextCatalog = gettextCatalog;
 
   /**
-   * @type {!Object.<string, LayerConfig>}
+   * @type {Object<string, LayerConfig>}
    * @private
    */
-  this.layersconfig;
+  this.layersconfig = {};
 
   /**
    * @type {boolean}
    */
-  this.active;
+  this.active = false;
 
   /**
-   * @type {!string|undefined}
+   * @type {?string}
    */
-  this.elevation;
+  this.elevation = null;
 
   /**
    * @type {string}
    */
-  this.layer;
+  this.layer = '';
 
   /**
-   * @type {import("ol/Map.js").default}
+   * @type {?import("ol/Map.js").default}
    */
-  this.map;
+  this.map = null;
 
   /**
    * @type {Array.<import("ol/events.js").EventsKey>}
@@ -219,9 +219,12 @@ function Controller($scope, $filter, ngeoDebounce, gmfRaster, gettextCatalog) {
  * @private
  */
 Controller.prototype.toggleActive_ = function(active) {
-  this.elevation = undefined;
+  this.elevation = null;
   if (active) {
     console.assert(this.listenerKeys_.length === 0);
+    if (!this.map) {
+      throw new Error('Missing map');
+    }
 
     // Moving the mouse clears previously displayed elevation
     /**
@@ -231,7 +234,7 @@ Controller.prototype.toggleActive_ = function(active) {
     const listen = (event) => {
       this.scope_.$apply(() => {
         this.inViewport_ = true;
-        this.elevation = undefined;
+        this.elevation = null;
         this.loading = false;
       });
     };
@@ -240,40 +243,31 @@ Controller.prototype.toggleActive_ = function(active) {
     // Launch the elevation service request when the user stops moving the
     // mouse for less short delay
     this.listenerKeys_.push(olEvents.listen(this.map, 'pointermove',
-      this.ngeoDebounce_(this.pointerStop_.bind(this), 500, true)
+      this.ngeoDebounce_((e) => {
+        if (this.inViewport_) {
+          this.loading = true;
+          const params = {
+            'layers': this.layer
+          };
+          this.gmfRaster_.getRaster(e.coordinate, params).then(
+            this.getRasterSuccess_.bind(this),
+            this.getRasterError_.bind(this)
+          );
+        }
+      }, 500, true)
     ));
 
     this.listenerKeys_.push(olEvents.listen(this.map.getViewport(), 'mouseout', () => {
       this.scope_.$apply(() => {
-        this.elevation = undefined;
+        this.elevation = null;
         this.inViewport_ = false;
         this.loading = false;
       });
     }));
   } else {
-    this.elevation = undefined;
+    this.elevation = null;
     this.listenerKeys_.forEach(olEvents.unlistenByKey);
     this.listenerKeys_.length = 0;
-  }
-};
-
-
-/**
- * Request data from a raster from a MapBrowserPointerEvent's coordinates.
- * Called when the user stopped moving the mouse for 500ms.
- * @param {import("ol/MapBrowserPointerEvent.js").default} e An ol map browser pointer event.
- * @private
- */
-Controller.prototype.pointerStop_ = function(e) {
-  if (this.inViewport_) {
-    this.loading = true;
-    const params = {
-      'layers': this.layer
-    };
-    this.gmfRaster_.getRaster(e.coordinate, params).then(
-      this.getRasterSuccess_.bind(this),
-      this.getRasterError_.bind(this)
-    );
   }
 };
 
@@ -307,7 +301,7 @@ Controller.prototype.getRasterSuccess_ = function(resp) {
  */
 Controller.prototype.getRasterError_ = function() {
   console.error('Error on getting the raster.');
-  this.elevation = undefined;
+  this.elevation = null;
   this.loading = false;
 };
 
@@ -357,30 +351,30 @@ module.component('gmfElevationwidget', rasterWidgetComponent);
  */
 function WidgetController() {
   /**
-   * @type {!import("ol/Map.js").default}
+   * @type {?import("ol/Map.js").default}
    */
-  this.map;
+  this.map = null;
 
   /**
-   * @type {!Array.<string>}
+   * @type {Array<string>}
    */
-  this.layers;
+  this.layers = [];
 
   /**
-   * @type {!Object.<string, LayerConfig>}
+   * @type {Object<string, LayerConfig>}
    * @private
    */
-  this.layersconfig;
+  this.layersconfig = {};
 
   /**
    * @type {boolean}
    */
-  this.active;
+  this.active = false;
 
   /**
    * @type {string}
    */
-  this.selectedElevationLayer;
+  this.selectedElevationLayer = '';
 }
 
 

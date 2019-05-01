@@ -56,7 +56,7 @@ class ModifyRectangle extends olInteractionPointer {
 
     /**
      * The feature currently modified.
-     * @type {import("ol/Feature.js").default}
+     * @type {?import("ol/Feature.js").default}
      * @private
      */
     this.feature_ = null;
@@ -185,6 +185,9 @@ class ModifyRectangle extends olInteractionPointer {
    * @private
    */
   initializeParams_() {
+    if (!this.feature_) {
+      throw new Error('Missing feature');
+    }
     const feature = this.feature_;
 
     // 1. Find the origin (opposite) point for the modify operation
@@ -322,6 +325,9 @@ class ModifyRectangle extends olInteractionPointer {
    */
   handleDrag_(evt) {
     this.willModifyFeatures_(evt);
+    if (!this.feature_) {
+      throw new Error('Missing feature');
+    }
     const feature = this.feature_;
 
     const geometry = /** @type {import("ol/geom/SimpleGeometry.js").default} */
@@ -329,6 +335,9 @@ class ModifyRectangle extends olInteractionPointer {
 
     if (geometry instanceof olGeomPoint) {
       geometry.setCoordinates(evt.coordinate);
+      if (!this.params_) {
+        throw new Error('Missing params');
+      }
 
       const destinationPixel = evt.pixel;
 

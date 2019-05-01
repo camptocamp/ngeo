@@ -112,7 +112,7 @@ export function FeatureHelper($injector, $filter) {
 
   /**
    * Filter function to display point coordinates or null to don't use any filter.
-   * @type {angular.IFilterFilter}
+   * @type {?angular.IFilterFilter}
    * @private
    */
   this.pointFilterFn_ = null;
@@ -136,10 +136,10 @@ export function FeatureHelper($injector, $filter) {
   }
 
   /**
-   * @type {!import("ol/proj/Projection.js").default}
+   * @type {?import("ol/proj/Projection.js").default}
    * @private
    */
-  this.projection_;
+  this.projection_ = null;
 
   /**
    * Download service.
@@ -210,14 +210,16 @@ FeatureHelper.prototype.getStyle = function(feature) {
       break;
   }
 
-  console.assert(style, 'Style should be thruthy');
+  if (!style) {
+    throw new Error('Missing style');
+  }
 
   /** @type {!Array<!import("ol/style/Style.js").default>} */
   let styles;
-  if (style.constructor === Array) {
-    styles = /** @type {!Array.<!import("ol/style/Style.js").default>}*/ (style);
+  if (style instanceof Array) {
+    styles = style;
   } else {
-    styles = [/** @type {!import("ol/style/Style.js").default}*/(style)];
+    styles = [style];
   }
 
   return styles;
@@ -377,6 +379,9 @@ FeatureHelper.prototype.getPolygonStyle_ = function(feature) {
   })];
   if (showMeasure || showLabel) {
     if (showMeasure && azimut !== undefined) {
+      if (!this.projection_) {
+        throw new Error('Missing projection');
+      }
       // Radius style:
       const line = this.getRadiusLine(feature, azimut);
       const length = getFormattedLength(
@@ -484,7 +489,9 @@ FeatureHelper.prototype.createEditingStyles = function(feature) {
   const styles = [];
 
   const geom = feature.getGeometry();
-  console.assert(geom);
+  if (!geom) {
+    throw new Error('Missing geom');
+  }
   const type = geom.getType();
 
   if (type === 'Point') {
@@ -575,7 +582,7 @@ FeatureHelper.prototype.getVertexInfoAtCoordinate = function(
     let coordinates = null;
     let coordinatess = null;
     let coordinatesss = null;
-    let minNumCoordinates;
+    let minNumCoordinates = -1;
 
     const geometry = feature.getGeometry();
     if (geometry instanceof olGeomLineString) {
@@ -756,19 +763,26 @@ FeatureHelper.prototype.getVertexStyle = function(opt_incGeomFunc) {
 FeatureHelper.prototype.removeVertex = function(feature, vertexInfo) {
   let deleted = false;
 
-  const geometry = /** @type {olGeomSimpleGeometry} */(feature.getGeometry());
-  console.assert(geometry instanceof olGeomSimpleGeometry);
-  const coordinates = geometry.getCoordinates();
+  const geometry = feature.getGeometry();
+  if (!(geometry instanceof olGeomSimpleGeometry)) {
+    throw new Error('Wrong geometry type');
+  }
 
   if (geometry instanceof olGeomLineString) {
     // LineString
+    const coordinates = geometry.getCoordinates();
     const index = vertexInfo[0];
     if (coordinates.length > 2) {
       coordinates.splice(index, 1);
       deleted = true;
     }
+
+    if (deleted) {
+      geometry.setCoordinates(coordinates);
+    }
   } else if (geometry instanceof olGeomPolygon) {
     // Polygon
+    const coordinates = geometry.getCoordinates();
     const indexOne = vertexInfo[0];
     const indexTwo = vertexInfo[1];
     const component = coordinates[indexOne];
@@ -781,16 +795,27 @@ FeatureHelper.prototype.removeVertex = function(feature, vertexInfo) {
         component.push(component[0]);
       }
     }
+
+    if (deleted) {
+      geometry.setCoordinates(coordinates);
+    }
   } else if (geometry instanceof olGeomMultiLineString) {
     // MultiLineString
+    const coordinates = geometry.getCoordinates();
     const indexOne = vertexInfo[0];
     const indexTwo = vertexInfo[1];
-    if (coordinates[indexOne].length > 2) {
-      coordinates[indexOne].splice(indexTwo, 1);
+    const component = coordinates[indexOne];
+    if (component.length > 2) {
+      component.splice(indexTwo, 1);
       deleted = true;
+    }
+
+    if (deleted) {
+      geometry.setCoordinates(coordinates);
     }
   } else if (geometry instanceof olGeomMultiPolygon) {
     // MultiPolygon
+    const coordinates = geometry.getCoordinates();
     const indexOne = vertexInfo[0];
     const indexTwo = vertexInfo[1];
     const indexThree = vertexInfo[2];
@@ -804,10 +829,10 @@ FeatureHelper.prototype.removeVertex = function(feature, vertexInfo) {
         component.push(component[0]);
       }
     }
-  }
 
-  if (deleted) {
-    geometry.setCoordinates(coordinates);
+    if (deleted) {
+      geometry.setCoordinates(coordinates);
+    }
   }
 };
 
@@ -898,8 +923,9 @@ FeatureHelper.prototype.getHaloStyle_ = function(feature) {
       break;
   }
 
-  console.assert(style, 'Style should be thruthy');
-
+  if (!style) {
+    throw new Error('Missing style');
+  }
   return style;
 };
 
@@ -915,9 +941,9 @@ FeatureHelper.prototype.getHaloStyle_ = function(feature) {
  */
 export function getFilteredFeatureValues(feature) {
   const properties = feature.getProperties();
-  delete properties['boundedBy'];
+  delete properties.boundedBy;
   delete properties[feature.getGeometryName()];
-  delete properties['ngeo_feature_type_'];
+  delete properties.ngeo_feature_type_;
   return properties;
 }
 
@@ -926,8 +952,7 @@ export function getFilteredFeatureValues(feature) {
  * @return {number} Angle.
  */
 FeatureHelper.prototype.getAngleProperty = function(feature) {
-  const angle = +(/** @type {string} */ (
-    feature.get(ngeoFormatFeatureProperties.ANGLE)));
+  const angle = +(/** @type {string} */ (feature.get(ngeoFormatFeatureProperties.ANGLE)));
   console.assert(typeof angle == 'number');
   return angle;
 };
@@ -938,11 +963,8 @@ FeatureHelper.prototype.getAngleProperty = function(feature) {
  * @return {string} Color.
  */
 FeatureHelper.prototype.getColorProperty = function(feature) {
-
   const color = feature.get(ngeoFormatFeatureProperties.COLOR);
-
   console.assert(typeof color == 'string');
-
   return color;
 };
 
@@ -1054,7 +1076,8 @@ FeatureHelper.prototype.exportGPX = function(features) {
   const format = new olFormatGPX();
   const mimeType = 'application/gpx+xml';
   const fileName = 'export.gpx';
-  this.export_(features, format, fileName, mimeType);
+  // Typecast due OL issue ...
+  this.export_(features, /** @type {import("ol/format/Feature.js").default} */(format), fileName, mimeType);
 };
 
 
@@ -1067,7 +1090,8 @@ FeatureHelper.prototype.exportKML = function(features) {
   const format = new olFormatKML();
   const mimeType = 'application/vnd.google-earth.kml+xml';
   const fileName = 'export.kml';
-  this.export_(features, format, fileName, mimeType);
+  // Typecast due OL issue ...
+  this.export_(features, /** @type {import("ol/format/Feature.js").default} */(format), fileName, mimeType);
 };
 
 
@@ -1075,8 +1099,8 @@ FeatureHelper.prototype.exportKML = function(features) {
  * Export features using a given format to a specific filename and download
  * the result to the browser. The projection of the exported features is:
  * `EPSG:4326`.
- * @param {!Array.<!import("ol/Feature.js").default>} features Array of vector features.
- * @param {!import("ol/format/Feature.js").default} format Format
+ * @param {Array<import("ol/Feature.js").default>} features Array of vector features.
+ * @param {import("ol/format/Feature.js").default} format Format
  * @param {string} fileName Name of the file.
  * @param {string=} opt_mimeType Mime type. Defaults to 'text/plain'.
  * @private
@@ -1148,16 +1172,23 @@ FeatureHelper.prototype.createTextStyle_ = function(options) {
  * @return {string} Measure.
  */
 FeatureHelper.prototype.getMeasure = function(feature) {
+  if (!this.projection_) {
+    throw new Error('Missing projection');
+  }
 
   const geometry = feature.getGeometry();
-  console.assert(geometry, 'Geometry should be truthy');
+  if (!geometry) {
+    throw new Error('Missing geometry');
+  }
 
   let measure = '';
 
   if (geometry instanceof olGeomPolygon) {
     if (this.getType(feature) === ngeoGeometryType.CIRCLE) {
       const azimut = this.optNumber(feature, ngeoFormatFeatureProperties.AZIMUT);
-      console.assert(typeof azimut == 'number');
+      if (typeof azimut != 'number') {
+        throw new Error('Missing azimut');
+      }
       const line = this.getRadiusLine(feature, azimut);
 
       measure = getFormattedAzimutRadius(
@@ -1223,8 +1254,9 @@ FeatureHelper.prototype.getType = function(feature) {
     type = ngeoGeometryType.MULTI_LINE_STRING;
   }
 
-  console.assert(type, 'Type should be thruthy');
-
+  if (!type) {
+    throw new Error('Missing type');
+  }
   return type;
 };
 
@@ -1249,15 +1281,22 @@ FeatureHelper.prototype.fitMapToFeature = function(feature, map, opt_duration) {
 
   const duration = opt_duration !== undefined ? opt_duration : 250;
   const size = map.getSize();
-  console.assert(Array.isArray(size));
+  if (!Array.isArray(size)) {
+    throw new Error('Missing size');
+  }
   const view = map.getView();
   const viewExtent = view.calculateExtent(size);
   const geometry = feature.getGeometry();
+  if (!geometry) {
+    throw new Error('Missing geometry');
+  }
 
   const geomIsVisible = geometry.intersectsExtent(viewExtent);
 
   const mapCenter = view.getCenter();
-  console.assert(Array.isArray(mapCenter));
+  if (!Array.isArray(mapCenter)) {
+    throw new Error('Missing mapCenter');
+  }
 
   const featureExtent = geometry.getExtent();
 
@@ -1267,9 +1306,15 @@ FeatureHelper.prototype.fitMapToFeature = function(feature, map, opt_duration) {
       // == Action: Zoom out ==
       // if the geometry is visible
       const featureResolution = view.getResolutionForExtent(featureExtent);
-      const featureZoom = Math.floor(
-        view.getZoomForResolution(featureResolution));
+      const featureZoomTmp = view.getZoomForResolution(featureResolution);
+      if (!featureZoomTmp) {
+        throw new Error('Missing featureZoom');
+      }
+      const featureZoom = Math.floor(featureZoomTmp);
       const zoom = view.getZoom();
+      if (!zoom) {
+        throw new Error('Missing zoom');
+      }
       if (featureZoom < zoom) {
         view.animate({
           center: mapCenter,
@@ -1333,6 +1378,9 @@ FeatureHelper.prototype.fitMapToFeature = function(feature, map, opt_duration) {
  */
 FeatureHelper.prototype.getRadiusLine = function(feature, azimut) {
   const geometry = feature.getGeometry();
+  if (!geometry) {
+    throw new Error('Missing geometry');
+  }
   // Determine the radius for the circle
   const extent = geometry.getExtent();
   const radius = (extent[3] - extent[1]) / 2;

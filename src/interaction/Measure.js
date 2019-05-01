@@ -12,6 +12,7 @@ import olSourceVector from 'ol/source/Vector.js';
 import olStyleFill from 'ol/style/Fill.js';
 import olStyleStroke from 'ol/style/Stroke.js';
 import olStyleStyle from 'ol/style/Style.js';
+import VectorSource from 'ol/source/Vector.js';
 
 
 /**
@@ -59,14 +60,14 @@ class Measure extends olInteractionInteraction {
 
     /**
      * The help tooltip element.
-     * @type {HTMLElement}
+     * @type {?HTMLElement}
      * @private
      */
     this.helpTooltipElement_ = null;
 
     /**
      * Overlay to show the help messages.
-     * @type {import("ol/Overlay.js").default}
+     * @type {?import("ol/Overlay.js").default}
      * @private
      */
     this.helpTooltipOverlay_ = null;
@@ -74,7 +75,7 @@ class Measure extends olInteractionInteraction {
 
     /**
      * The measure tooltip element.
-     * @type {HTMLElement}
+     * @type {?HTMLElement}
      * @private
      */
     this.measureTooltipElement_ = null;
@@ -82,7 +83,7 @@ class Measure extends olInteractionInteraction {
 
     /**
      * Overlay to show the measurement.
-     * @type {import("ol/Overlay.js").default}
+     * @type {?import("ol/Overlay.js").default}
      * @private
      */
     this.measureTooltipOverlay_ = null;
@@ -90,7 +91,7 @@ class Measure extends olInteractionInteraction {
 
     /**
      * The measurement overlay coordinate.
-     * @type {import("ol/coordinate.js").Coordinate}
+     * @type {?import("ol/coordinate.js").Coordinate}
      * @private
      */
     this.measureTooltipOverlayCoord_ = null;
@@ -98,7 +99,7 @@ class Measure extends olInteractionInteraction {
 
     /**
      * The sketch feature.
-     * @type {import("ol/Feature.js").default}
+     * @type {?import("ol/Feature.js").default}
      * @protected
      */
     this.sketchFeature = null;
@@ -132,17 +133,18 @@ class Measure extends olInteractionInteraction {
      */
     this.displayHelpTooltip_ = options.displayHelpTooltip !== undefined ? options.displayHelpTooltip : true;
 
+    let startMsg;
+    if (options.startMsg !== undefined) {
+      startMsg = options.startMsg;
+    } else {
+      startMsg = document.createElement('span');
+      startMsg.textContent = 'Click to start drawing.';
+    }
     /**
      * The message to show when user is about to start drawing.
      * @type {Element}
      */
-    this.startMsg;
-    if (options.startMsg !== undefined) {
-      this.startMsg = options.startMsg;
-    } else {
-      this.startMsg = document.createElement('span');
-      this.startMsg.textContent = 'Click to start drawing.';
-    }
+    this.startMsg = startMsg;
 
     /**
      * The key for geometry change event.
@@ -188,13 +190,20 @@ class Measure extends olInteractionInteraction {
       style: style
     });
 
+    const source = this.vectorLayer_.getSource();
+    if (!(source instanceof VectorSource)) {
+      throw new Error('Missing source');
+    }
+    const drawInteraction = this.createDrawInteraction(options.sketchStyle, source);
+    if (!drawInteraction) {
+      throw new Error('Missing drawInteraction');
+    }
     /**
      * The draw interaction to be used.
      * @type {import("ol/interaction/Draw.js").default|import("ngeo/interaction/DrawAzimut.js").default|import("ngeo/interaction/MobileDraw.js").default}
      * @private
      */
-    this.drawInteraction_ = this.createDrawInteraction(options.sketchStyle,
-      /** @type {olSourceVector} */(this.vectorLayer_.getSource()));
+    this.drawInteraction_ = drawInteraction;
 
     /**
      * @type {boolean}
@@ -224,13 +233,13 @@ class Measure extends olInteractionInteraction {
    * @abstract
    * @param {import("ol/style/Style.js").StyleLike|undefined}
    *     style The sketchStyle used for the drawing interaction.
-   * @param {import("ol/source/Vector.js").default} source Vector source.
-   * @return {import("ol/interaction/Draw.js").default|import("ngeo/interaction/DrawAzimut.js").default|import("ngeo/interaction/MobileDraw.js").default}
+   * @param {VectorSource} source Vector source.
+   * @return {?import("ol/interaction/Draw.js").default|import("ngeo/interaction/DrawAzimut.js").default|import("ngeo/interaction/MobileDraw.js").default}
    *    The interaction
    * @protected
    */
   createDrawInteraction(style, source) {
-    return undefined;
+    return null;
   }
 
 
@@ -262,15 +271,28 @@ class Measure extends olInteractionInteraction {
   onDrawStart_(evt) {
     // @ts-ignore: evt should be of type {import('ol/interaction/Draw.js').DrawEvent but he is private
     this.sketchFeature = evt.feature || evt.detail.feature;
-    /** @type {olSourceVector} */(this.vectorLayer_.getSource()).clear(true);
+    const source = this.vectorLayer_.getSource();
+    if (!(source instanceof VectorSource)) {
+      throw new Error('Missing source');
+    }
+    source.clear(true);
     this.createMeasureTooltip_();
 
+    if (!this.sketchFeature) {
+      throw new Error('Missing sketchFeature');
+    }
     const geometry = this.sketchFeature.getGeometry();
+    if (!geometry) {
+      throw new Error('Missing geometry');
+    }
 
     console.assert(geometry !== undefined);
     this.changeEventKey_ = olEvents.listen(geometry, 'change', () => {
       this.handleMeasure((measure, coord) => {
         if (coord !== null) {
+          if (!this.measureTooltipElement_) {
+            throw new Error('Missing measureTooltipElement');
+          }
           this.measureTooltipElement_.innerHTML = measure;
           this.measureTooltipOverlayCoord_ = coord;
         }
@@ -278,6 +300,12 @@ class Measure extends olInteractionInteraction {
     });
 
     this.postcomposeEventKey_ = olEvents.listen(this.getMap(), 'postcompose', () => {
+      if (!this.measureTooltipOverlay_) {
+        throw new Error('Missing measureTooltipOverlay');
+      }
+      if (!this.measureTooltipOverlayCoord_) {
+        throw new Error('Missing measureTooltipOverlayCoord');
+      }
       this.measureTooltipOverlay_.setPosition(this.measureTooltipOverlayCoord_);
     });
   }
@@ -289,6 +317,15 @@ class Measure extends olInteractionInteraction {
    * @private
    */
   onDrawEnd_(evt) {
+    if (!this.measureTooltipElement_) {
+      throw new Error('Missing measureTooltipElement');
+    }
+    if (!this.measureTooltipOverlay_) {
+      throw new Error('Missing measureTooltipOverlay');
+    }
+    if (!this.sketchFeature) {
+      throw new Error('Missing sketchFeature');
+    }
     this.measureTooltipElement_.classList.add('ngeo-tooltip-static');
     this.measureTooltipOverlay_.setOffset([0, -7]);
     /** @type {MeasureEvent} */
@@ -336,8 +373,14 @@ class Measure extends olInteractionInteraction {
    */
   removeHelpTooltip_() {
     if (this.displayHelpTooltip_) {
+      if (!this.helpTooltipOverlay_) {
+        throw new Error('Missing helpTooltipOverlay');
+      }
       this.getMap().removeOverlay(this.helpTooltipOverlay_);
       if (this.helpTooltipElement_ !== null) {
+        if (!this.helpTooltipElement_.parentNode) {
+          throw new Error('Missing helpTooltipElement_.parentNode');
+        }
         this.helpTooltipElement_.parentNode.removeChild(this.helpTooltipElement_);
       }
       this.helpTooltipElement_ = null;
@@ -371,6 +414,9 @@ class Measure extends olInteractionInteraction {
    */
   removeMeasureTooltip_() {
     if (this.measureTooltipElement_ !== null) {
+      if (!this.measureTooltipElement_.parentNode) {
+        throw new Error('Missing measureTooltipElement_.parentNode');
+      }
       this.measureTooltipElement_.parentNode.removeChild(this.measureTooltipElement_);
       this.measureTooltipElement_ = null;
       this.measureTooltipOverlay_ = null;
@@ -395,7 +441,14 @@ class Measure extends olInteractionInteraction {
         this.createHelpTooltip_();
       }
     } else {
-      /** @type {olSourceVector} */(this.vectorLayer_.getSource()).clear(true);
+      if (!this.measureTooltipOverlay_) {
+        throw new Error('Missing measureTooltipOverlay');
+      }
+      const source = this.vectorLayer_.getSource();
+      if (!(source instanceof VectorSource)) {
+        throw new Error('Missing measureTooltipOverlay');
+      }
+      source.clear(true);
       this.getMap().removeOverlay(this.measureTooltipOverlay_);
       this.removeMeasureTooltip_();
       this.removeHelpTooltip_();
@@ -421,6 +474,9 @@ class Measure extends olInteractionInteraction {
    * @return {Element} Tooltip Element.
    */
   getTooltipElement() {
+    if (!this.measureTooltipElement_) {
+      throw new Error('Missing measureTooltipElement');
+    }
     return this.measureTooltipElement_;
   }
 
@@ -523,8 +579,17 @@ function handleEvent_(evt) {
   }
 
   const helpMsg = this.sketchFeature === null ? this.startMsg : this.continueMsg;
+  if (!helpMsg) {
+    throw new Error('Missing helpMsg');
+  }
 
   if (this.displayHelpTooltip_) {
+    if (!this.helpTooltipElement_) {
+      throw new Error('Missing helpTooltipElement');
+    }
+    if (!this.helpTooltipOverlay_) {
+      throw new Error('Missing helpTooltipOverlay');
+    }
     olDom.removeChildren(this.helpTooltipElement_);
     this.helpTooltipElement_.appendChild(helpMsg);
     this.helpTooltipOverlay_.setPosition(evt.coordinate);

@@ -74,37 +74,37 @@ function Controller(ngeoFeatureOverlayMgr, gmfPermalink, gmfSnapping) {
   // Scope properties
 
   /**
-   * @type {!import("ol/Map.js").default}
+   * @type {?import("ol/Map.js").default}
    */
-  this.map;
+  this.map = null;
 
   /**
-   * @type {boolean|undefined}
+   * @type {?boolean}
    */
-  this.manageResize;
+  this.manageResize = null;
 
   /**
-   * @type {boolean|undefined}
+   * @type {?boolean}
    */
-  this.resizeTransition;
+  this.resizeTransition = null;
 
 
   // Injected properties
 
   /**
-   * @type {!import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr}
+   * @type {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr}
    * @private
    */
   this.ngeoFeatureOverlayMgr_ = ngeoFeatureOverlayMgr;
 
   /**
-   * @type {!import("gmf/permalink/Permalink.js").PermalinkService}
+   * @type {import("gmf/permalink/Permalink.js").PermalinkService}
    * @private
    */
   this.gmfPermalink_ = gmfPermalink;
 
   /**
-   * @type {!import("gmf/editing/Snapping.js").EditingSnappingService}
+   * @type {import("gmf/editing/Snapping.js").EditingSnappingService}
    * @private
    */
   this.gmfSnapping_ = gmfSnapping;
@@ -115,6 +115,9 @@ function Controller(ngeoFeatureOverlayMgr, gmfPermalink, gmfSnapping) {
  * Called on initialization of the controller.
  */
 Controller.prototype.$onInit = function() {
+  if (!this.map) {
+    throw new Error('Missing map');
+  }
   this.ngeoFeatureOverlayMgr_.init(this.map);
   this.gmfPermalink_.setMap(this.map);
   this.gmfSnapping_.setMap(this.map);

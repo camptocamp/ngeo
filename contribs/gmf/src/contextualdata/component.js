@@ -62,9 +62,12 @@ function contextualDataComponent() {
      * @param {angular.IScope} scope Scope.
      * @param {JQuery} element Element.
      * @param {angular.IAttributes} attrs Attributes.
-     * @param {angular.IController} controller Controller.
+     * @param {angular.IController=} controller Controller.
      */
     link: (scope, element, attrs, controller) => {
+      if (!controller) {
+        throw new Error('Missing controller');
+      }
       controller.init();
     }
   };
@@ -88,25 +91,25 @@ module.directive('gmfContextualdata', contextualDataComponent);
 export function ContextualdataController($compile, $timeout, $scope, gmfRaster, $injector) {
 
   /**
-   * @type {import("ol/Map.js").default}
+   * @type {?import("ol/Map.js").default}
    */
-  this.map;
+  this.map = null;
 
   /**
    * @type {Array<number>}
    */
-  this.projections;
+  this.projections = [];
 
   /**
    * @type {function(import("ol/coordinate.js").Coordinate, Object):Object}
    */
-  this.callback;
+  this.callback = (c, o) => ({});
 
   /**
-   * @type {import("ol/Overlay.js").default}
+   * @type {?import("ol/Overlay.js").default}
    * @private
    */
-  this.overlay_;
+  this.overlay_ = null;
 
   /**
    * @type {angular.ICompileService}
@@ -147,6 +150,9 @@ export function ContextualdataController($compile, $timeout, $scope, gmfRaster, 
  */
 ContextualdataController.prototype.init = function() {
   this.preparePopover_();
+  if (!this.map) {
+    throw new Error('Missing map');
+  }
 
   const mapDiv = this.map.getTargetElement();
   console.assert(mapDiv);
@@ -161,6 +167,9 @@ ContextualdataController.prototype.init = function() {
  */
 ContextualdataController.prototype.handleMapContextMenu_ = function(event) {
   this.$scope_.$apply(() => {
+    if (!this.map) {
+      throw new Error('Missing map');
+    }
     const pixel = this.map.getEventPixel(event);
     const coordinate = this.map.getCoordinateFromPixel(pixel);
     this.setContent_(coordinate);
@@ -170,12 +179,21 @@ ContextualdataController.prototype.handleMapContextMenu_ = function(event) {
 
     // Use timeout to let the popover content to be rendered before displaying it.
     this.timeout_(() => {
+      if (!this.overlay_) {
+        throw new Error('Missing overlay');
+      }
       this.overlay_.setPosition(coordinate);
     });
   });
 };
 
 ContextualdataController.prototype.setContent_ = function(coordinate) {
+  if (!this.map) {
+    throw new Error('Missing map');
+  }
+  if (!this.content_) {
+    throw new Error('Missing content');
+  }
   const scope = this.$scope_.$new(true);
   this.$compile_(this.content_)(scope);
 
@@ -207,6 +225,9 @@ ContextualdataController.prototype.setContent_ = function(coordinate) {
  * @private
  */
 ContextualdataController.prototype.preparePopover_ = function() {
+  if (!this.map) {
+    throw new Error('Missing map');
+  }
 
   const container = document.createElement('DIV');
   container.classList.add('popover');
@@ -234,11 +255,25 @@ ContextualdataController.prototype.preparePopover_ = function() {
 };
 
 ContextualdataController.prototype.showPopover = function() {
-  this.overlay_.getElement().style.display = 'block';
+  if (!this.overlay_) {
+    throw new Error('Missing overlay');
+  }
+  const element = this.overlay_.getElement();
+  if (!element) {
+    throw new Error('Missing element');
+  }
+  element.style.display = 'block';
 };
 
 ContextualdataController.prototype.hidePopover = function() {
-  this.overlay_.getElement().style.display = 'none';
+  if (!this.overlay_) {
+    throw new Error('Missing overlay');
+  }
+  const element = this.overlay_.getElement();
+  if (!element) {
+    throw new Error('Missing element');
+  }
+  element.style.display = 'none';
 };
 
 module.controller('GmfContextualdataController', ContextualdataController);

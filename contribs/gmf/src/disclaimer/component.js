@@ -61,7 +61,7 @@ function Controller(
   /**
    * @type {?import("ol/Map.js").default}
    */
-  this.map;
+  this.map = null;
 
   /**
    * @type {boolean|undefined}
@@ -149,6 +149,9 @@ function Controller(
  * Initialise the controller.
  */
 Controller.prototype.$onInit = function() {
+  if (!this.map) {
+    throw new Error('Missing map');
+  }
   this.layerVisibility = this.layerVisibility !== undefined ? this.layerVisibility : true;
 
   this.dataLayerGroup_ = this.ngeoLayerHelper_.getGroupFromMap(this.map, DATALAYERGROUP_NAME);
@@ -279,6 +282,9 @@ Controller.prototype.unregisterLayer_ = function(layer) {
 
 
 Controller.prototype.$onDestroy = function() {
+  if (!this.dataLayerGroup_) {
+    throw new Error('Missing dataLayerGroup');
+  }
   this.unregisterLayer_(this.dataLayerGroup_);
 };
 
@@ -296,12 +302,15 @@ Controller.prototype.showDisclaimerMessage_ = function(msg) {
     this.msg = `${this.sce_.trustAsHtml(this.msgs_.join('<br />'))}`;
     this.visibility = true;
   } else {
-    this.disclaimer_.alert({
-      popup: this.popup,
+    const options = {
       msg: msg,
       target: this.element_,
       type: MessageType.WARNING
-    });
+    };
+    if (this.popup) {
+      options.popup = this.popup;
+    }
+    this.disclaimer_.alert(options);
   }
 };
 
@@ -317,12 +326,15 @@ Controller.prototype.closeDisclaimerMessage_ = function(msg) {
     this.msgs_.length = 0;
     this.msg = '';
   } else {
-    this.disclaimer_.close({
-      popup: this.popup,
+    const options = {
       msg: msg,
       target: this.element_,
       type: MessageType.WARNING
-    });
+    };
+    if (this.popup) {
+      options.popup = this.popup;
+    }
+    this.disclaimer_.close(options);
   }
 };
 

@@ -64,10 +64,10 @@ module.directive('ngeoExportfeatures', editingExportFeaturesComponent);
 function Controller($element, $injector, $scope, ngeoFeatureHelper) {
 
   /**
-   * @type {import("ol/Collection.js").default.<import("ol/Feature.js").default>}
+   * @type {?import("ol/Collection.js").default.<import("ol/Feature.js").default>}
    * @private
    */
-  this.features;
+  this.features = null;
 
   /**
    * @type {JQuery}
@@ -160,6 +160,9 @@ function Controller($element, $injector, $scope, ngeoFeatureHelper) {
  * @private
  */
 Controller.prototype.handleElementClick_ = function() {
+  if (!this.features) {
+    throw new Error('Missing features');
+  }
 
   const features = this.features.getArray();
 
@@ -167,7 +170,11 @@ Controller.prototype.handleElementClick_ = function() {
     this.featureHelper_.export(features, this.formats_[0]);
   } else if (features.length === 1) {
     const feature = features[0];
-    const geometryType = feature.getGeometry().getType();
+    const geometry = feature.getGeometry();
+    if (!geometry) {
+      throw new Error('Missing geometry');
+    }
+    const geometryType = geometry.getType();
     let $item;
     this.formats_.forEach((format, i) => {
       $item = this.items_[i];
@@ -191,6 +198,12 @@ Controller.prototype.handleElementClick_ = function() {
  * @private
  */
 Controller.prototype.handleMenuItemClick_ = function(format, event) {
+  if (!this.features) {
+    throw new Error('Missing features');
+  }
+  if (!event.target.parentElement) {
+    throw new Error('Missing event.target.parentElement');
+  }
   if (!$(event.target.parentElement).hasClass('disabled')) {
     const features = this.features.getArray();
     this.featureHelper_.export(features, format);

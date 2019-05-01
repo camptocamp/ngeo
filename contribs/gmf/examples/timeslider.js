@@ -38,8 +38,6 @@ function MainController($scope, ngeoWMSTime) {
     widget: TimePropertyWidgetEnum.SLIDER,
     maxValue: '2013-12-31T00:00:00Z',
     minValue: '2006-01-01T00:00:00Z',
-    maxDefValue: null,
-    minDefValue: null,
     resolution: TimePropertyResolutionEnum.DAY,
     mode: TimePropertyModeEnum.RANGE,
     interval: [0, 1, 0, 0]
@@ -52,8 +50,6 @@ function MainController($scope, ngeoWMSTime) {
     widget: TimePropertyWidgetEnum.SLIDER,
     maxValue: '2015-12-31T00:00:00Z',
     minValue: '2014-01-01T00:00:00Z',
-    maxDefValue: null,
-    minDefValue: null,
     resolution: TimePropertyResolutionEnum.YEAR,
     mode: TimePropertyModeEnum.VALUE,
     interval: [0, 0, 1, 0]
@@ -62,12 +58,12 @@ function MainController($scope, ngeoWMSTime) {
   /**
    * @type {string}
    */
-  this.sliderValue;
+  this.sliderValue = '';
 
   /**
    * @type {string}
    */
-  this.sliderRangeValue;
+  this.sliderRangeValue = '';
 
   this.onDateSelected = function(date) {
     this.sliderValue = this.ngeoWMSTime_.formatWMSTimeParam(this.wmsTimeValueMode, date);

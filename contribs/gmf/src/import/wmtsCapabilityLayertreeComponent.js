@@ -31,9 +31,8 @@ module.value('gmfWmtscapabilitylayertreTemplateUrl',
    * @return {string} The template url.
    */
   ($attrs) => {
-    const templateUrl = $attrs['gmfWmtscapabilitylayertreTemplateUrl'];
-    return templateUrl !== undefined ? templateUrl :
-      'ngeo/import/wmtsCapabilityLayertreeComponent';
+    const templateUrl = $attrs.gmfWmtscapabilitylayertreTemplateUrl;
+    return templateUrl !== undefined ? templateUrl : 'ngeo/import/wmtsCapabilityLayertreeComponent';
   });
 
 
@@ -71,22 +70,22 @@ class Controller {
 
     /**
      * WMS Capabilities definition
-     * @type {!Object}
+     * @type {Object}
      */
-    this.capabilities;
+    this.capabilities = {};
 
     /**
      * List of WMTS Capability Layer objects.
-     * @type {!Array.<!Object>}
+     * @type {Array<Object>}
      */
-    this.layers;
+    this.layers = [];
 
     /**
      * The original WMTS GetCapabilities url that was used to fetch the
      * capability layers.
-     * @type {string}
+     * @type {?string}
      */
-    this.url;
+    this.url = null;
 
 
     // Injected properties
@@ -102,6 +101,9 @@ class Controller {
    * @param {!Object} layer WMTS Capability Layer object
    */
   createAndAddDataSource(layer) {
+    if (!this.url) {
+      throw new Error('Missing url');
+    }
     const manager = this.gmfExternalDataSourcesManager_;
     manager.createAndAddDataSourceFromWMTSCapability(
       layer,

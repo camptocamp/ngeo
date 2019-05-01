@@ -60,22 +60,22 @@ export class LidarprofileManager {
     this.promise = null;
 
     /**
-     * @type {import("gmf/lidarprofile/Plot.js").default}
+     * @type {?import("gmf/lidarprofile/Plot.js").default}
      */
     this.plot = null;
 
     /**
-     * @type {import("gmf/lidarprofile/Measure.js").default}
+     * @type {?import("gmf/lidarprofile/Measure.js").default}
      */
     this.measure = null;
 
     /**
-     * @type {import("gmf/lidarprofile/Config.js").LidarprofileConfigService}
+     * @type {?import("gmf/lidarprofile/Config.js").LidarprofileConfigService}
      */
     this.config = null;
 
     /**
-     * @type {import("ol/Map.js").default}
+     * @type {?import("ol/Map.js").default}
      * @private
      */
     this.map_ = null;
@@ -128,10 +128,10 @@ export class LidarprofileManager {
     this.isPlotSetup_ = false;
 
     /**
-     * @type {import("ol/geom/LineString.js").default}
+     * @type {?import("ol/geom/LineString.js").default}
      * @private
      */
-    this.line_;
+    this.line_ = null;
 
     /**
      * @type {import("gmf/lidarprofile/Utils.js").default}
@@ -203,6 +203,18 @@ export class LidarprofileManager {
    * @param {number} minLOD minimum Level Of Detail
    */
   getProfileByLOD(clippedLine, distanceOffset, resetPlot, minLOD) {
+    if (!this.config) {
+      throw new Error('Missing config');
+    }
+    if (!this.plot) {
+      throw new Error('Missing plot');
+    }
+    if (!this.line_) {
+      throw new Error('Missing line');
+    }
+    if (!this.config.serverConfig) {
+      throw new Error('Missing config.serverConfig');
+    }
 
     const gettextCatalog = this.gettextCatalog;
     this.profilePoints = this.getEmptyProfilePoints_();
@@ -277,6 +289,12 @@ export class LidarprofileManager {
    * @private
    */
   queryPytree_(minLOD, maxLOD, iter, coordinates, distanceOffset, lastLOD, width, resetPlot) {
+    if (!this.config) {
+      throw new Error('Missing config');
+    }
+    if (!this.config.serverConfig) {
+      throw new Error('Missing config.serverConfig');
+    }
     const gettextCatalog = this.gettextCatalog;
     const lodInfo = d3select('#gmf-lidarprofile-container .lod-info');
     if (this.config.serverConfig.debug) {
@@ -296,6 +314,12 @@ export class LidarprofileManager {
       },
       responseType: 'arraybuffer'
     }).then((response) => {
+      if (!this.config) {
+        throw new Error('Missing config');
+      }
+      if (!this.config.serverConfig) {
+        throw new Error('Missing config.serverConfig');
+      }
       if (this.config.serverConfig.debug) {
         let html = lodInfo.html();
         const lodTxt = gettextCatalog.getString('LOD: ');
@@ -319,6 +343,18 @@ export class LidarprofileManager {
    * @private
    */
   processBuffer_(profile, iter, distanceOffset, lastLOD, resetPlot) {
+    if (!this.config) {
+      throw new Error('Missing config');
+    }
+    if (!this.config.serverConfig) {
+      throw new Error('Missing config.serverConfig');
+    }
+    if (!this.plot) {
+      throw new Error('Missing plot');
+    }
+    if (!this.line_) {
+      throw new Error('Missing line');
+    }
     const lidarError = d3select('#gmf-lidarprofile-container .lidar-error');
 
     const typedArrayInt32 = new Int32Array(profile, 0, 4);
@@ -465,6 +501,18 @@ export class LidarprofileManager {
    * @private
    */
   updateData_() {
+    if (!this.config) {
+      throw new Error('Missing config');
+    }
+    if (!this.config.serverConfig) {
+      throw new Error('Missing config.serverConfig');
+    }
+    if (!this.plot) {
+      throw new Error('Missing plot');
+    }
+    if (!this.line_) {
+      throw new Error('Missing line');
+    }
     const domainX = this.plot.updateScaleX['domain']();
     let map_resolution = this.map_ ? this.map_.getView().getResolution() : 0;
     map_resolution = map_resolution || 0;

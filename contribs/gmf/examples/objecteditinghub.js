@@ -101,16 +101,16 @@ function MainController($http, $q, $scope, gmfThemes, gmfXSDAttributes) {
   this.selectedUrl = this.urls[0];
 
   /**
-   * @type {import('gmf/themes.js').GmfOgcServers} ogcServers OGC servers.
+   * @type {?import('gmf/themes.js').GmfOgcServers} ogcServers OGC servers.
    * @private
    */
-  this.gmfServers_;
+  this.gmfServers_ = null;
 
   /**
-   * @type {import('gmf/themes.js').GmfOgcServer} ogcServer OGC server to use.
+   * @type {?import('gmf/themes.js').GmfOgcServer} ogcServer OGC server to use.
    * @private
    */
-  this.gmfServer_;
+  this.gmfServer_ = null;
 
   /**
    * @type {Array<import('gmf/themes.js').GmfLayerWMS>}
@@ -130,7 +130,7 @@ function MainController($http, $q, $scope, gmfThemes, gmfXSDAttributes) {
   /**
    * @type {Array<import("ol/Feature.js").default>}
    */
-  this.features = null;
+  this.features = [];
 
   /**
    * @type {?import("ol/Feature.js").default}
@@ -184,8 +184,8 @@ function MainController($http, $q, $scope, gmfThemes, gmfXSDAttributes) {
       let i, ii;
 
       // (2) Find OE theme
-      /** @type {import('gmf/themes.js').GmfTheme} */
-      let theme;
+      /** @type {?import('gmf/themes.js').GmfTheme} */
+      let theme = null;
       for (i = 0, ii = themes.length; i < ii; i++) {
         if (themes[i].name === this.themeName) {
           theme = themes[i];
@@ -202,6 +202,9 @@ function MainController($http, $q, $scope, gmfThemes, gmfXSDAttributes) {
 
       // (4) Set OGC server, which must support WFS for this example to work
       console.assert(groupNode.ogcServer);
+      if (!this.gmfServers_) {
+        throw new Error('Missing gmfServers');
+      }
       const gmfServer = this.gmfServers_[groupNode.ogcServer];
       if (gmfServer && gmfServer.wfsSupport === true && gmfServer.urlWfs) {
         this.gmfServer_ = gmfServer;
@@ -232,6 +235,12 @@ function MainController($http, $q, $scope, gmfThemes, gmfXSDAttributes) {
 /**
  */
 MainController.prototype.runEditor = function() {
+  if (!this.selectedGmfLayerNode) {
+    throw new Error('Missing selectedGmfLayerNode');
+  }
+  if (!this.selectedFeature) {
+    throw new Error('Missing selectedFeature');
+  }
 
   const geomType = this.selectedGeomType;
   const feature = this.selectedFeature;
@@ -271,6 +280,9 @@ MainController.prototype.runViewerHosted = function() {
  * @private
  */
 MainController.prototype.runViewer_ = function(baseUrl) {
+  if (!this.selectedGmfLayerNode) {
+    throw new Error('Missing selectedGmfLayerNode');
+  }
 
   const node = this.selectedGmfLayerNode;
   const nodeId = node.id;
@@ -287,7 +299,7 @@ MainController.prototype.runViewer_ = function(baseUrl) {
   }
 
   const params = {};
-  params['wfs_layer'] = nodeName;
+  params.wfs_layer = nodeName;
   params[`wfs_${nodeIdAttrFieldName}`] = ids.join(',');
 
   const url = MainController.appendParams(baseUrl, params);
@@ -321,6 +333,9 @@ MainController.prototype.getFeatures_ = function(gmfLayerNode) {
  * @private
  */
 MainController.prototype.issueGetFeatures_ = function(gmfLayerNode) {
+  if (!this.gmfServer_) {
+    throw new Error('Missing gmfServer');
+  }
 
   const id = gmfLayerNode.id;
 
@@ -335,6 +350,9 @@ MainController.prototype.issueGetFeatures_ = function(gmfLayerNode) {
   );
 
   this.http_.get(url).then((response) => {
+    if (!this.getFeaturesDeferred_) {
+      throw new Error('Missing getFeaturesDeferred');
+    }
     const features = new olFormatWFS().readFeatures(response.data);
     this.featuresCache_[id] = features;
     this.getFeaturesDeferred_.resolve();
@@ -402,6 +420,9 @@ MainController.prototype.issueGetAttributesRequest_ = function(
      * @param {Array<import('ngeo/format/Attribute.js').Attribute>} attributes The attributes
      */
     function(gmfLayerNode, attributes) {
+      if (!this.getGeometryTypeDeferred_) {
+        throw new Error('Missing getGeometryTypeDeferred');
+      }
       // Get geom type from attributes and set
       const geomAttr = getGeometryAttribute(attributes);
       if (geomAttr && geomAttr.geomType) {

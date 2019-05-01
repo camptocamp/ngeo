@@ -116,7 +116,7 @@ export class LidarprofileConfigService {
 
     /**
      * The configuration from the LIDAR server.
-     * @type {import("gmf/lidarprofile/Config.js").LidarprofileServerConfig}
+     * @type {?import("gmf/lidarprofile/Config.js").LidarprofileServerConfig}
      */
     this.serverConfig = null;
   }

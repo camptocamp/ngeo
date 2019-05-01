@@ -70,9 +70,12 @@ function mobileNavigationComponent() {
      * @param {angular.IScope} scope Scope.
      * @param {JQuery} element Element.
      * @param {angular.IAttributes} attrs Attributes.
-     * @param {angular.IController} navCtrl Controller.
+     * @param {angular.IController=} navCtrl Controller.
      */
     link: (scope, element, attrs, navCtrl) => {
+      if (!navCtrl) {
+        throw new Error('Missing navCtrl');
+      }
       navCtrl.init(element);
     }
   };
@@ -93,28 +96,28 @@ function Controller() {
   /**
    * Stack of slid-in items.
    * @private
-   * @type {Array.<!JQuery>}
+   * @type {Array<JQuery>}
    */
   this.slid_ = [];
 
   /**
    * Currently active sliding box.
    * @private
-   * @type {JQuery}
+   * @type {?JQuery}
    */
   this.active_ = null;
 
   /**
    * The navigation header.
    * @private
-   * @type {JQuery}
+   * @type {?JQuery}
    */
   this.header_ = null;
 
   /**
    * The back button in the navigation header.
    * @private
-   * @type {JQuery}
+   * @type {?JQuery}
    */
   this.backButton_ = null;
 
@@ -143,6 +146,7 @@ Controller.prototype.init = function(element) {
    * @param {JQuery.ClickEvent<any, any, any, HTMLElement>} evt The event
    */
   const onClick = (evt) => {
+
     const slideOut = $(evt.currentTarget).parents(`.${CLASS_NAMES.SLIDE}`);
     console.assert(slideOut.length === 1);
 
@@ -153,7 +157,11 @@ Controller.prototype.init = function(element) {
     slideOut.addClass(CLASS_NAMES.SLIDE_OUT).removeClass(CLASS_NAMES.ACTIVE);
 
     // element to slide in
-    const slideIn = $($(evt.currentTarget).attr('data-target'));
+    const datatarget = $(evt.currentTarget).attr('data-target');
+    if (!datatarget) {
+      throw new Error('Missing datatarget');
+    }
+    const slideIn = $(datatarget);
     console.assert(slideIn.length === 1);
 
     // slide the "new" element in
@@ -179,6 +187,12 @@ Controller.prototype.init = function(element) {
  * @private
  */
 Controller.prototype.updateNavigationHeader_ = function(active, back) {
+  if (!this.header_) {
+    throw new Error('Missing header');
+  }
+  if (!this.backButton_) {
+    throw new Error('Missing backButton');
+  }
   this.header_.toggleClass(CLASS_NAMES.BACK, back);
 
   // remove any inactive nav
@@ -224,6 +238,9 @@ Controller.prototype.updateNavigationHeader_ = function(active, back) {
  * @private
  */
 Controller.prototype.back_ = function() {
+  if (!this.active_) {
+    throw new Error('Missing active');
+  }
   if (this.slid_.length <= 0) {
     return;
   }
@@ -233,6 +250,9 @@ Controller.prototype.back_ = function() {
 
   // get the previously active item
   const slideBack = this.slid_.pop();
+  if (!slideBack) {
+    throw new Error('Missing slideBack');
+  }
 
   // slide previous item to the right
   slideBack.addClass(CLASS_NAMES.ACTIVE).removeClass(CLASS_NAMES.SLIDE_OUT);
@@ -286,10 +306,13 @@ function mobileNavigationBackComponent() {
      * @param {angular.IScope} scope Scope.
      * @param {JQuery} element Element.
      * @param {angular.IAttributes} attrs Attributes.
-     * @param {angular.IController} navCtrl Controller.
+     * @param {angular.IController=} navCtrl Controller.
      */
     link: (scope, element, attrs, navCtrl) => {
-      scope.$watch(attrs['gmfMobileNavBack'], (newVal, oldVal) => {
+      scope.$watch(attrs.gmfMobileNavBack, (newVal, oldVal) => {
+        if (!navCtrl) {
+          throw new Error('Missing navCtrl');
+        }
         if (newVal === true) {
           navCtrl.backIfActive(element[0]);
         }
@@ -329,10 +352,13 @@ function mobileNavigationBackOnClickComponent() {
      * @param {angular.IScope} scope Scope.
      * @param {JQuery} element Element.
      * @param {angular.IAttributes} attrs Attributes.
-     * @param {angular.IController} navCtrl Controller.
+     * @param {angular.IController=} navCtrl Controller.
      */
     link: (scope, element, attrs, navCtrl) => {
       element.on('click', () => {
+        if (!navCtrl) {
+          throw new Error('Missing navCtrl');
+        }
         navCtrl.backIfActive(element[0]);
       });
     }

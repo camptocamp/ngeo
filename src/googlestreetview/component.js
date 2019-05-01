@@ -25,7 +25,7 @@ module.value('ngeoGooglestreetviewTemplateUrl',
    * @return {string} The template url.
    */
   ($attrs) => {
-    const templateUrl = $attrs['ngeoGooglestreetviewTemplateUrl'];
+    const templateUrl = $attrs.ngeoGooglestreetviewTemplateUrl;
     return templateUrl !== undefined ? templateUrl :
       'ngeo/googlestreetview';
   });
@@ -77,7 +77,7 @@ class GoogleStreetviewController {
     /**
      * @type {boolean}
      */
-    this.active;
+    this.active = false;
 
     $scope.$watch(
       () => this.active,
@@ -86,25 +86,25 @@ class GoogleStreetviewController {
 
     /**
      * Style for the feature.
-     * @type {import("ol/style/Style.js").StyleLike|undefined}
+     * @type {?import("ol/style/Style.js").StyleLike}
      */
-    this.featureStyle;
+    this.featureStyle = null;
 
     /**
-     * @type {!import("ol/Map.js").default}
+     * @type {?import("ol/Map.js").default}
      */
-    this.map;
+    this.map = null;
 
     /**
-     * @type {number|undefined}
+     * @type {number}
      */
-    this.radius;
+    this.radius = -1;
 
 
     // Injected properties
 
     /**
-     * @type {!angular.IScope}
+     * @type {angular.IScope}
      * @private
      */
     this.scope_ = $scope;
@@ -252,6 +252,9 @@ class GoogleStreetviewController {
    * @private
    */
   handleActiveChange_(active) {
+    if (!this.map) {
+      throw new Error('Missing map');
+    }
 
     const keys = this.listenerKeys_;
 
@@ -342,7 +345,12 @@ class GoogleStreetviewController {
    * @private
    */
   handleStreetViewServiceGetPanorama_(data, status) {
-
+    if (!data.location) {
+      throw new Error('Missing data.location');
+    }
+    if (!data.location.latLng) {
+      throw new Error('Missing data.location.latLng');
+    }
     const panorama = this.panorama_;
 
     if (status === google.maps.StreetViewStatus.OK) {
@@ -377,10 +385,10 @@ class GoogleStreetviewController {
    * @return {import("ol/coordinate.js").Coordinate} Map view projection coordinate.
    */
   fromLonLat_(lonLat) {
-    return olProj.fromLonLat(
-      lonLat,
-      this.map.getView().getProjection()
-    );
+    if (!this.map) {
+      throw new Error('Missing map');
+    }
+    return olProj.fromLonLat(lonLat, this.map.getView().getProjection());
   }
 
   /**
@@ -388,10 +396,10 @@ class GoogleStreetviewController {
    * @return {import("ol/coordinate.js").Coordinate} LonLat coordinate.
    */
   toLonLat_(coordinate) {
-    return olProj.toLonLat(
-      coordinate,
-      this.map.getView().getProjection()
-    );
+    if (!this.map) {
+      throw new Error('Missing map');
+    }
+    return olProj.toLonLat(coordinate, this.map.getView().getProjection());
   }
 }
 

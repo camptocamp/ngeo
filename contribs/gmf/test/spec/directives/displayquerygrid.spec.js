@@ -324,7 +324,7 @@ describe('gmf.query.gridComponent', () => {
       // grid source 2
       const gridSource2 = queryGridController.gridSources['Test 3'];
       expect(gridSource2).toBeDefined();
-      expect(gridSource2.configuration).toBe(null);
+      expect(gridSource2.configuration).toBe(undefined);
     });
 
     it('deals with sources that all have too many features', () => {
@@ -353,12 +353,12 @@ describe('gmf.query.gridComponent', () => {
       // grid source 1
       const gridSource1 = queryGridController.gridSources['Test 1'];
       expect(gridSource1).toBeDefined();
-      expect(gridSource1.configuration).toBe(null);
+      expect(gridSource1.configuration).toBe(undefined);
 
       // grid source 2
       const gridSource2 = queryGridController.gridSources['Test 3'];
       expect(gridSource2).toBeDefined();
-      expect(gridSource2.configuration).toBe(null);
+      expect(gridSource2.configuration).toBe(undefined);
     });
 
     it('merges sources', () => {
@@ -506,7 +506,7 @@ describe('gmf.query.gridComponent', () => {
       // merged source
       const gridSource1 = queryGridController.gridSources['merged_source'];
       expect(gridSource1).toBeDefined();
-      expect(gridSource1.configuration).toBe(null);
+      expect(gridSource1.configuration).toBe(undefined);
       expect(gridSource1.source.tooManyResults).toBe(true);
       expect(gridSource1.source.totalFeatureCount).toBe(353);
       expect(gridSource1.source.features).toEqual([]);

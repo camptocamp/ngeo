@@ -34,8 +34,6 @@ function MainController(ngeoTime) {
     widget: TimePropertyWidgetEnum.DATEPICKER,
     maxValue: '2013-12-31T00:00:00Z',
     minValue: '2006-01-01T00:00:00Z',
-    maxDefValue: null,
-    minDefValue: null,
     mode: TimePropertyModeEnum.RANGE,
     interval: [0, 1, 0, 0]
   };
@@ -47,8 +45,6 @@ function MainController(ngeoTime) {
     widget: TimePropertyWidgetEnum.DATEPICKER,
     maxValue: '2015-12-31T00:00:00Z',
     minValue: '2014-01-01T00:00:00Z',
-    maxDefValue: null,
-    minDefValue: null,
     mode: TimePropertyModeEnum.VALUE,
     interval: [0, 1, 0, 0]
   };
@@ -56,12 +52,12 @@ function MainController(ngeoTime) {
   /**
    * @type {string}
    */
-  this.value;
+  this.value = '';
 
   /**
    * @type {string}
    */
-  this.rangeValue;
+  this.rangeValue = '';
 
   this.onDateSelected = function(date) {
     this.value = date;

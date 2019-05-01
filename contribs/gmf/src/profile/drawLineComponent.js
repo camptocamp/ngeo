@@ -75,7 +75,7 @@ function Controller($scope, $timeout, ngeoFeatureOverlayMgr) {
   /**
    * @type {?import("ol/geom/LineString.js").default}
    */
-  this.line;
+  this.line = null;
 
   /**
    * @type {?import("ol/Map.js").default}
@@ -86,19 +86,23 @@ function Controller($scope, $timeout, ngeoFeatureOverlayMgr) {
   /**
    * @type {boolean}
    */
-  this.active;
+  this.active = false;
 
   /**
-   * @type {!import("ol/Collection.js").default}
+   * @type {import("ol/Collection.js").default}
    * @private
    */
   this.features_ = new olCollection();
+
+  this.getMapFn = () => null;
+
+  this.getStyleFn = null;
 
   const overlay = ngeoFeatureOverlayMgr.getFeatureOverlay();
   overlay.setFeatures(this.features_);
 
   let style;
-  const styleFn = this['getStyleFn'];
+  const styleFn = this.getStyleFn;
   if (styleFn) {
     style = styleFn();
     console.assert(style instanceof olStyleStyle);
@@ -165,8 +169,10 @@ function Controller($scope, $timeout, ngeoFeatureOverlayMgr) {
  * Initialise the controller.
  */
 Controller.prototype.$onInit = function() {
-  const map = this['getMapFn']();
-  console.assert(map instanceof olMap);
+  const map = this.getMapFn();
+  if (!(map instanceof olMap)) {
+    throw 'Wrong map';
+  }
   this.map_ = map;
   this.map_.addInteraction(this.interaction);
 };

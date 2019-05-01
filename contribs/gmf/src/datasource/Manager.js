@@ -5,7 +5,7 @@ import gmfLayertreeSyncLayertreeMap, {getLayer} from 'gmf/layertree/SyncLayertre
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
 import gmfThemeThemes, {ThemeNodeType} from 'gmf/theme/Themes.js';
 
-import {ServerType, WFSOutputFormat, Type} from 'ngeo/datasource/OGC.js';
+import OGC, {ServerType, WFSOutputFormat, Type} from 'ngeo/datasource/OGC.js';
 import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources.js';
 
 import ngeoFilterRuleHelper from 'ngeo/filter/RuleHelper.js';
@@ -412,15 +412,15 @@ export class DatasourceManager {
    *
    * Once a data source is created, it is added to the data sources cache.
    *
-   * @param {import('gmf/themes.js').GmfGroup} firstLevelGroup The first level group node.
-   * @param {!import('gmf/themes.js').GmfGroup|!import('gmf/themes.js').GmfLayer} node The node, which
+   * @param {?import('gmf/themes.js').GmfGroup} firstLevelGroup The first level group node.
+   * @param {import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer} node The node, which
    *     may have children or not.
-   * @param {!import('gmf/themes.js').GmfOgcServers} ogcServers OGC servers.
+   * @param {import('gmf/themes.js').GmfOgcServers} ogcServers OGC servers.
    * @private
    */
   createDataSource_(firstLevelGroup, node, ogcServers) {
 
-    const groupNode = /** @type {!import('gmf/themes.js').GmfGroup} */ (node);
+    const groupNode = /** @type {import('gmf/themes.js').GmfGroup} */ (node);
     const children = groupNode.children;
 
     // (1) Group node (node that has children). Loop in the children
@@ -537,14 +537,14 @@ export class DatasourceManager {
 
     // (7) Dimensions
     const dimensions = this.dimensions_;
-    const dimensionsConfig = node.dimensions || firstLevelGroup.dimensions;
+    const dimensionsConfig = node.dimensions || firstLevelGroup === null ? {} : firstLevelGroup.dimensions;
     const dimensionsFiltersConfig = gmfLayer.dimensionsFilters;
 
     // (8) Time values (lower or lower/upper)
     let timeLowerValue;
     let timeUpperValue;
     if (timeProperty) {
-      const timeValues = this.ngeoWMSTime_.getOptions(timeProperty)['values'];
+      const timeValues = this.ngeoWMSTime_.getOptions(timeProperty).values;
       if (Array.isArray(timeValues)) {
         timeLowerValue = timeValues[0];
         timeUpperValue = timeValues[1];
@@ -560,39 +560,76 @@ export class DatasourceManager {
     const timeAttributeName = meta.timeAttribute;
     const visible = meta.isChecked === true;
 
-    // Create the data source and add it to the cache
-    this.dataSourcesCache_[id] = new gmfDatasourceOGC({
+    const options = {
       copyable,
-      dimensions,
       dimensionsConfig,
       dimensionsFiltersConfig,
       gmfLayer,
       id,
       identifierAttribute,
-      maxResolution,
-      minResolution,
       name,
-      ogcImageType,
-      ogcLayers,
-      ogcServerType,
-      wfsFeatureNS,
       ogcType,
       snappable,
-      snappingTolerance,
-      snappingToEdges,
-      snappingToVertice,
       timeAttributeName,
-      timeLowerValue,
-      timeProperty,
-      timeUpperValue,
       visible,
       wfsOutputFormat,
-      wfsUrl,
-      wmsIsSingleTile,
-      wmsUrl,
-      wmtsLayer,
-      wmtsUrl
-    });
+    };
+    if (dimensions) {
+      options.dimensions = dimensions;
+    }
+    if (maxResolution) {
+      options.maxResolution = maxResolution;
+    }
+    if (minResolution) {
+      options.minResolution = minResolution;
+    }
+    if (ogcImageType) {
+      options.ogcImageType = ogcImageType;
+    }
+    if (ogcLayers) {
+      options.ogcLayers = ogcLayers;
+    }
+    if (ogcServerType) {
+      options.ogcServerType = ogcServerType;
+    }
+    if (wfsFeatureNS) {
+      options.wfsFeatureNS = wfsFeatureNS;
+    }
+    if (snappingTolerance) {
+      options.snappingTolerance = snappingTolerance;
+    }
+    if (snappingToEdges) {
+      options.snappingToEdges = snappingToEdges;
+    }
+    if (snappingToVertice) {
+      options.snappingToVertice = snappingToVertice;
+    }
+    if (timeLowerValue) {
+      options.timeLowerValue = timeLowerValue;
+    }
+    if (timeProperty) {
+      options.timeProperty = timeProperty;
+    }
+    if (timeUpperValue) {
+      options.timeUpperValue = timeUpperValue;
+    }
+    if (wfsUrl) {
+      options.wfsUrl = wfsUrl;
+    }
+    if (wmsIsSingleTile) {
+      options.wmsIsSingleTile = wmsIsSingleTile;
+    }
+    if (wmsUrl) {
+      options.wmsUrl = wmsUrl;
+    }
+    if (wmtsLayer) {
+      options.wmtsLayer = wmtsLayer;
+    }
+    if (wmtsUrl) {
+      options.wmtsUrl = wmtsUrl;
+    }
+    // Create the data source and add it to the cache
+    this.dataSourcesCache_[id] = new gmfDatasourceOGC(options);
   }
 
   /**
@@ -672,7 +709,9 @@ export class DatasourceManager {
 
     // (1) Remove data source
     const dataSource = item.treeCtrl.getDataSource();
-    console.assert(dataSource, 'DataSource should be set');
+    if (!dataSource) {
+      throw new Error('DataSource should be set');
+    }
     this.dataSources_.remove(dataSource);
 
     // (2) Remove item and clear event listeners
@@ -715,7 +754,9 @@ export class DatasourceManager {
    */
   handleTreeCtrlStateChange_(treeCtrl, newVal) {
     const treeDataSource = treeCtrl.getDataSource();
-    console.assert(treeDataSource, 'DataSource should be set');
+    if (!treeDataSource) {
+      throw new Error('DataSource should be set');
+    }
     const visible = newVal === 'on';
     treeDataSource.visible = visible;
 
@@ -775,14 +816,16 @@ export class DatasourceManager {
       layer instanceof olLayerTile
     );
 
-    const source = /** @type {olLayerImage|olLayerTile} */ (layer).getSource();
-    if (!(source instanceof olSourceImageWMS ||
-          source instanceof olSourceTileWMS)) {
+    if (!(layer instanceof olLayerImage || layer instanceof olLayerTile)) {
+      return;
+    }
+    const source = layer.getSource();
+    if (!(source instanceof olSourceImageWMS || source instanceof olSourceTileWMS)) {
       return;
     }
 
     const params = source.getParams();
-    const layersParam = params['LAYERS'];
+    const layersParam = params.LAYERS;
     const layersList = layersParam.split(',');
     console.assert(layersList.length >= 1);
 
@@ -810,6 +853,9 @@ export class DatasourceManager {
           const treeCtrl = item.treeCtrl;
           const projCode = treeCtrl.map.getView().getProjection().getCode();
 
+          if (!(dataSource instanceof OGC)) {
+            throw new Error('Wrong datasource');
+          }
           const filterString = dataSource.visible ?
             this.ngeoRuleHelper_.createFilterString({
               dataSource: dataSource,
@@ -883,12 +929,15 @@ export class DatasourceManager {
     let timeParam;
     const range = dataSource.timeRangeValue;
     if (range) {
+      if (!timeProperty) {
+        throw new Error('Missing timeProperty');
+      }
       timeParam = this.ngeoWMSTime_.formatWMSTimeParam(timeProperty, range);
     }
 
     // No need to update the TIME param if already the same value;
     const params = wmsSource.getParams();
-    const currentTimeParam = params['TIME'];
+    const currentTimeParam = params.TIME;
     if (currentTimeParam === timeParam) {
       return;
     }
@@ -897,7 +946,7 @@ export class DatasourceManager {
     // gets reset.
     this.ngeoLayerHelper_.updateWMSLayerState(
       wmsLayer,
-      wmsSource.getParams()['LAYERS'],
+      wmsSource.getParams().LAYERS,
       timeParam
     );
   }

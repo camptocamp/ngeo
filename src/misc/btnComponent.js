@@ -46,13 +46,16 @@ function buttonGroupComponent($parse) {
     restrict: 'A',
     controller: 'ngeoBtnGroupController',
     /**
-     * @param {!angular.IScope} scope Scope.
-     * @param {!JQuery=} element Element.
-     * @param {!angular.IAttributes=} attrs Attributes.
-     * @param {!angular.IController=} controller Controller.
+     * @param {angular.IScope} scope Scope.
+     * @param {JQuery} element Element.
+     * @param {angular.IAttributes} attrs Attributes.
+     * @param {angular.IController=} controller Controller.
      */
     link: (scope, element, attrs, controller) => {
-      const setActive = $parse(attrs['ngeoBtnGroupActive']).assign;
+      if (!controller) {
+        throw new Error('Missing controller');
+      }
+      const setActive = $parse(attrs.ngeoBtnGroupActive).assign;
 
       if (setActive) {
         scope.$watch(
@@ -144,12 +147,15 @@ function buttonComponent($parse) {
     require: ['?^ngeoBtnGroup', 'ngModel'],
     restrict: 'A',
     /**
-     * @param {!angular.IScope} scope Scope.
-     * @param {!JQuery} element Element.
-     * @param {!angular.IAttributes} attrs Attributes.
-     * @param {!angular.IController} ctrls Controller.
+     * @param {angular.IScope} scope Scope.
+     * @param {JQuery} element Element.
+     * @param {angular.IAttributes} attrs Attributes.
+     * @param {angular.IController|undefined} ctrls Controller.
      */
     link: (scope, element, attrs, ctrls) => {
+      if (!ctrls) {
+        throw new Error('Missing ctrls');
+      }
       const buttonsCtrl = ctrls[0];
       const ngModelCtrl = ctrls[1];
       let indexInGroup = -1;

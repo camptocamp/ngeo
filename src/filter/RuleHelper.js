@@ -27,7 +27,7 @@ import moment from 'moment';
  * service.
  *
  * @typedef {Object} CreateFilterOptions
- * @property {import('ngeo/datasource/DataSource.js').default} dataSource The data source from which to get
+ * @property {import('ngeo/datasource/OGC.js').default} dataSource The data source from which to get
  *    the filterRules that will be used to create the OL filter object.
  * @property {boolean} [incDimensions] Whether to include the dimensions related filters. Default to `true`.
  * @property {boolean} [incTime] Whether to include the data source's time values in the filter created. The
@@ -188,7 +188,7 @@ export class RuleHelper {
       default:
         if (isCustom) {
           rule = new ngeoRuleText({
-            text: null,
+            text: '',
             name: name,
             operator: RuleOperatorType.LIKE,
             operators: [
@@ -200,7 +200,7 @@ export class RuleHelper {
           });
         } else {
           rule = new ngeoRuleText({
-            text: null,
+            text: '',
             name: name,
             operator: RuleOperatorType.LIKE,
             propertyName: attribute.name
@@ -259,36 +259,30 @@ export class RuleHelper {
    * @return {!import("ngeo/rule/Rule.js").default} A clone rule.
    */
   cloneRule(rule) {
+    const options = {
+      isCustom: rule.isCustom,
+      name: rule.name,
+      propertyName: rule.propertyName,
+      type: rule.type,
+    };
+    const expression = rule.getExpression();
+    if (expression !== null) {
+      options.expression = expression;
+    }
+    if (rule.lowerBoundary !== null) {
+      options.lowerBoundary = rule.lowerBoundary;
+    }
+    if (rule.operator) {
+      options.operator = rule.operator;
+    }
+    if (rule.operators) {
+      options.operators = rule.operators.slice(0);
+    }
+    if (rule.upperBoundary !== null) {
+      options.upperBoundary = rule.upperBoundary;
+    }
 
     let clone;
-
-    let expression = rule.getExpression();
-    if (expression === null) {
-      expression = undefined;
-    }
-    const isCustom = rule.isCustom;
-    const lowerBoundary = rule.lowerBoundary !== null ? rule.lowerBoundary :
-      undefined;
-    const name = rule.name;
-    const operator = rule.operator !== null ? rule.operator : undefined;
-    const operators = rule.operators ? rule.operators.slice(0) : undefined;
-    const propertyName = rule.propertyName;
-    const type = rule.type !== null ? rule.type : undefined;
-    const upperBoundary = rule.upperBoundary !== null ? rule.upperBoundary :
-      undefined;
-
-    const options = {
-      expression,
-      isCustom,
-      lowerBoundary,
-      name,
-      operator,
-      operators,
-      propertyName,
-      type,
-      upperBoundary
-    };
-
     if (rule instanceof ngeoRuleDate) {
       clone = new ngeoRuleDate(options);
     } else if (rule instanceof ngeoRuleGeometry) {
@@ -409,8 +403,7 @@ export class RuleHelper {
    */
   createFilter(options) {
 
-    const dataSource = /** @type {import("ngeo/datasource/OGC.js").default} */ (options.dataSource);
-    //const dataSource = options.dataSource;
+    const dataSource = options.dataSource;
     let mainFilter = null;
 
     if (options.filter) {
@@ -589,6 +582,9 @@ export class RuleHelper {
       const geometryName = dataSource.geometryName;
       if (rule instanceof ngeoRuleGeometry) {
         const geometry = rule.geometry;
+        if (!geometry) {
+          throw new Error('Missing geometry');
+        }
         if (operator === rsot.CONTAINS) {
           filter = olFormatFilter.contains(
             geometryName,
@@ -669,21 +665,25 @@ export class RuleHelper {
   /**
    * Create and return an OpenLayers filter object using the available
    * dimensions filters configuration within the data source.
-   * @param {import("ngeo/datasource/OGC.js").OGCOptions} dataSource Data source from which to create the
+   * @param {import("ngeo/datasource/OGC.js").default} dataSource Data source from which to create the
    *     filter.
    * @return {?import("ol/format/filter/Filter.js").default} Filter
    * @private
    */
   createDimensionsFilterFromDataSource_(dataSource) {
-    const config = dataSource.dimensionsFiltersConfig;
+    const config = dataSource.dimensionsFiltersConfig || {};
     const dimensions = dataSource.dimensions;
+    if (!dimensions) {
+      throw new Error('Missing dimensions');
+    }
 
     const conditions = [];
     for (const key in config) {
       let value = config[key].value;
       if (value === null) {
-        if (dimensions[key] !== undefined && dimensions[key] !== null) {
-          value = dimensions[key];
+        const dimensionValue = dimensions[key];
+        if (dimensionValue !== undefined && dimensionValue !== null) {
+          value = dimensionValue;
         }
       }
       if (value !== null) {

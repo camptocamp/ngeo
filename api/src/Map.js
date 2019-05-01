@@ -37,6 +37,13 @@ import * as themes from './Themes.js';
 
 
 /**
+ * @typedef {Object} MarkerOptions
+ * @property {[number, number]} [position]
+ * @property {string} [icon]
+ */
+
+
+/**
  * @private
  * @hidden
  */
@@ -51,7 +58,9 @@ class Map {
    * TODO: more options
    */
   constructor(options) {
-
+    if (!constants.extent) {
+      throw new Error('Missing extent');
+    }
     /**
      * @private
      * @type {View}
@@ -95,11 +104,15 @@ class Map {
       }));
     }
     if (options.addMiniMap) {
+      const resolutions = this.view_.getResolutions();
+      if (!resolutions) {
+        throw new Error('Missing resolutions');
+      }
       this.map_.addControl(new OverviewMap({
         collapsed: !options.miniMapExpanded,
         view: new View({
           projection: this.view_.getProjection(),
-          resolutions: this.view_.getResolutions()
+          resolutions
         })
       }));
     }
@@ -153,7 +166,7 @@ class Map {
         const hasDescription = feature.get('description') !== undefined;
         return hasId && hasTitle && hasDescription;
       },
-      style: () => null
+      style: () => []
     });
     this.map_.addInteraction(this.selectInteraction_);
 
@@ -200,21 +213,27 @@ class Map {
   }
 
   /**
-   * @param {Object} options Options.
+   * @param {MarkerOptions} options Options.
    * @property {import("ol/coordinate.js").Coordinate} position
    * @property {string} [icon]
    * @property {import("ol/size.js").Size} [size]
    */
   addMarker(options = {}) {
+    const position = options.position ? options.position : this.view_.getCenter();
+    if (!position) {
+      throw new Error('Missing positon');
+    }
     const marker = new Feature({
-      geometry: new Point(options.position ? options.position : this.view_.getCenter())
+      geometry: new Point(position)
     });
     if (options.icon) {
       // FIXME: use size?
+      const image = new Icon({
+        src: options.icon
+      });
+      // @ts-ignore: OL issue
       marker.setStyle(new Style({
-        image: new Icon({
-          src: options.icon
-        })
+        image
       }));
     }
     this.vectorSource_.addFeature(marker);
@@ -267,7 +286,11 @@ class Map {
       .then((text) => {
         const attr = options.attr || ['title', 'description'];
         const lines = text.split(/\r\n|\r|\n/);
-        const columns = lines.shift().split('\t');
+        const shiftedLines = lines.shift();
+        if (!shiftedLines) {
+          throw new Error('Missing shiftedLines');
+        }
+        const columns = shiftedLines.split('\t');
         for (const line of lines) {
           if (line) {
             const values = zip(columns, line.split('\t'));
@@ -276,10 +299,14 @@ class Map {
             });
             marker.setProperties(filterByKeys(values, attr));
             marker.setId(values.id);
+            // FIXME: handle values.iconSize
+            // FIXME: handle values.iconOffset
+            const image = new Icon({
+              src: values.icon
+            });
+            // @ts-ignore: OL issue
             marker.setStyle(new Style({
-              image: new Icon({
-                src: values.icon
-              })
+              image
             }));
             this.vectorSource_.addFeature(marker);
           }
@@ -308,7 +335,14 @@ class Map {
         feature.getGeometry()
       ).getCoordinates();
       const properties = feature.getProperties();
-      const content = this.overlay_.getElement().querySelector('.ol-popup-content');
+      const element = this.overlay_.getElement();
+      if (!element) {
+        throw new Error('Missing element');
+      }
+      const content = element.querySelector('.ol-popup-content');
+      if (!content) {
+        throw new Error('Missing content');
+      }
       content.innerHTML = '';
       content.innerHTML += `<div><b>${properties.title}</b></div>`;
       content.innerHTML += `<p>${properties.description}</p>`;

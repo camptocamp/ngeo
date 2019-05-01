@@ -26,6 +26,7 @@ import olStyleStyle from 'ol/style/Style.js';
 import olStyleText from 'ol/style/Text.js';
 import olStyleFill from 'ol/style/Fill.js';
 import {CollectionEvent} from 'ol/Collection.js';
+import Feature from 'ol/Feature.js';
 import 'ngeo/sass/font.scss';
 
 
@@ -91,13 +92,13 @@ function ngeoRuleTemplateUrl($attrs, ngeoRuleTemplateUrl) {
 class RuleController {
 
   /**
-   * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext service.
-   * @param {!angular.IScope} $scope Angular scope.
-   * @param {!angular.ITimeoutService} $timeout Angular timeout service.
-   * @param {!import("ngeo/misc/FeatureHelper.js").FeatureHelper} ngeoFeatureHelper Ngeo feature helper
+   * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext service.
+   * @param {angular.IScope} $scope Angular scope.
+   * @param {angular.ITimeoutService} $timeout Angular timeout service.
+   * @param {import("ngeo/misc/FeatureHelper.js").FeatureHelper} ngeoFeatureHelper Ngeo feature helper
    *    service.
-   * @param {!import("ngeo/filter/RuleHelper.js").RuleHelper} ngeoRuleHelper Ngeo rule helper service.
-   * @param {!import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate
+   * @param {import("ngeo/filter/RuleHelper.js").RuleHelper} ngeoRuleHelper Ngeo rule helper service.
+   * @param {import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate
    *     manager service.
    * @private
    * @ngInject
@@ -110,25 +111,25 @@ class RuleController {
     // Binding properties
 
     /**
-     * @type {!import("ngeo/map/FeatureOverlay.js").FeatureOverlay}
+     * @type {?import("ngeo/map/FeatureOverlay.js").FeatureOverlay}
      */
-    this.featureOverlay;
+    this.featureOverlay = null;
 
     /**
-     * @type {!import("ol/Map.js").default}
+     * @type {?import("ol/Map.js").default}
      */
-    this.map;
+    this.map = null;
 
     /**
      * The original rule.
-     * @type {!import("ngeo/rule/Rule.js").default}
+     * @type {?import("ngeo/rule/Rule.js").default}
      */
-    this.rule;
+    this.rule = null;
 
     /**
      * @type {string}
      */
-    this.toolGroup;
+    this.toolGroup = '';
 
 
     // Injected properties
@@ -176,9 +177,9 @@ class RuleController {
      * The cloned rule. Changes in the UI are applied to the clone 'on-the-fly'.
      * Changes in the clone are applied back in the original rule when the
      * apply button is clicked.
-     * @type {!import("ngeo/rule/Rule.js").default}
+     * @type {?import("ngeo/rule/Rule.js").default}
      */
-    this.clone;
+    this.clone = null;
 
     const operatorType = RuleOperatorType;
     const spatialOperatorType = RuleSpatialOperatorType;
@@ -225,7 +226,6 @@ class RuleController {
     /**
      * Time property used when the rule is of type 'date|datetime' and uses
      * a range of date.
-     * @type {!import('ngeo/datasource/OGC.js').TimeProperty}
      */
     this.timeRangeMode = {
       widget: 'datepicker',
@@ -240,7 +240,6 @@ class RuleController {
     /**
      * Time property used when the rule is of type 'date|datetime' and uses
      * a single date.
-     * @type {!import('ngeo/datasource/OGC.js').TimeProperty}
      */
     this.timeValueMode = {
       widget: 'datepicker',
@@ -253,13 +252,13 @@ class RuleController {
     };
 
     /**
-     * @type {!import("ngeo/misc/ToolActivate.js").default}
+     * @type {?import("ngeo/misc/ToolActivate.js").default}
      * @private
      */
-    this.toolActivate_;// = new ngeo.misc.ToolActivate(this.rule, 'active');
+    this.toolActivate_ = null;// = new ngeo.misc.ToolActivate(this.rule, 'active');
 
     /**
-     * @type {!Array.<Function>}
+     * @type {Array<Function>}
      * @private
      */
     this.unlisteners_ = [];
@@ -273,12 +272,12 @@ class RuleController {
     this.drawActive = false;
 
     /**
-     * @type {!import("ngeo/misc/ToolActivate.js").default}
+     * @type {import("ngeo/misc/ToolActivate.js").default}
      */
     this.drawToolActivate = new ngeoMiscToolActivate(this, 'drawActive');
 
     /**
-     * @type {!import("ol/Collection.js").default.<!import("ol/Feature.js").default>}
+     * @type {import("ol/Collection.js").default.<import("ol/Feature.js").default>}
      */
     this.drawnFeatures = new olCollection();
 
@@ -289,18 +288,18 @@ class RuleController {
     this.menu_ = null;
 
     /**
-     * @type {!import("ol/Collection.js").default.<!import("ol/Feature.js").default>}
+     * @type {import("ol/Collection.js").default.<import("ol/Feature.js").default>}
      */
     this.selectedFeatures = new olCollection();
 
     /**
-     * @type {!import("ol/Collection.js").default.<!import("ol/interaction/Interaction.js").default>}
+     * @type {import("ol/Collection.js").default.<import("ol/interaction/Interaction.js").default>}
      * @private
      */
     this.interactions_ = new olCollection();
 
     /**
-     * @type {!import("ngeo/interaction/Modify.js").default}
+     * @type {import("ngeo/interaction/Modify.js").default}
      * @private
      */
     this.modify_ = new ngeoInteractionModify({
@@ -346,7 +345,7 @@ class RuleController {
     this.interactions_.push(this.translate_);
 
     /**
-     * @type {!Array.<!import("ol/events.js").EventsKey>}
+     * @type {Array<import("ol/events.js").EventsKey>}
      * @private
      */
     this.listenerKeys_ = [];
@@ -354,7 +353,7 @@ class RuleController {
     this.initializeInteractions_();
 
     /**
-     * @type {!import("ngeo/misc/ToolActivate.js").default}
+     * @type {import("ngeo/misc/ToolActivate.js").default}
      */
     this.modifyToolActivate = new ngeoMiscToolActivate(
       this.modify_,
@@ -390,6 +389,9 @@ class RuleController {
    * Clone the rule to be able to work with the clone directly.
    */
   $onInit() {
+    if (!this.rule) {
+      throw new Error('Missing rule');
+    }
     this.clone = this.ngeoRuleHelper_.cloneRule(this.rule);
 
     this.toolActivate_ = new ngeoMiscToolActivate(this.rule, 'active');
@@ -398,7 +400,13 @@ class RuleController {
       this.toolGroup, this.toolActivate_);
 
     this.scope_.$watch(
-      () => this.rule.active,
+      () => {
+        if (!this.rule) {
+          throw new Error('Missing rule');
+        }
+        this.rule.active;
+        return false;
+      },
       this.handleActiveChange_.bind(this)
     );
 
@@ -414,27 +422,45 @@ class RuleController {
     ) {
       // Watch 'expression'
       this.unlisteners_.push(this.scope_.$watch(
-        () => this.clone.getExpression(),
+        () => {
+          if (!this.clone) {
+            throw new Error('Missing clone');
+          }
+          this.clone.getExpression();
+        },
         (newVal) => {
           if (typeof newVal == 'string') {
+            // @ts-ignore: Why?
             this.timeValueMode.minDefValue = newVal || this.createDate_();
           }
         }
       ));
       // Watch 'lowerBoundary'
       this.unlisteners_.push(this.scope_.$watch(
-        () => this.clone.lowerBoundary,
+        () => {
+          if (!this.clone) {
+            throw new Error('Missing clone');
+          }
+          this.clone.lowerBoundary;
+        },
         (newVal) => {
           if (typeof newVal == 'string') {
+            // @ts-ignore: Why?
             this.timeRangeMode.minDefValue = newVal || this.createWeekAgoDate_();
           }
         }
       ));
       // Watch 'upperBoundary'
       this.unlisteners_.push(this.scope_.$watch(
-        () => this.clone.upperBoundary,
+        () => {
+          if (!this.clone) {
+            throw new Error('Missing clone');
+          }
+          this.clone.upperBoundary;
+        },
         (newVal) => {
           if (typeof newVal == 'string') {
+            // @ts-ignore: Why?
             this.timeRangeMode.maxDefValue = newVal || this.createDate_();
           }
         }
@@ -445,9 +471,15 @@ class RuleController {
       // supported by the newly selected operator. If it doesn't, reset
       // the expression, i.e. geometry.
       this.unlisteners_.push(this.scope_.$watch(
-        () => this.clone.operator,
+        () => {
+          if (!this.clone) {
+            throw new Error('Missing clone');
+          }
+          this.clone.operator;
+        },
         (newVal) => {
           this.drawActive = false;
+          // @ts-ignore: Why?
           if (newVal && newVal === RuleSpatialOperatorType.CONTAINS) {
             const clone = this.clone;
             if (clone instanceof ngeoRuleGeometry) {
@@ -460,6 +492,9 @@ class RuleController {
                   ngeoGeometryType.RECTANGLE
                 ];
                 if (!supportedTypes.includes(geomType)) {
+                  if (!this.clone) {
+                    throw new Error('Missing clone');
+                  }
                   this.clone.setExpression(null);
                 }
               }
@@ -470,8 +505,14 @@ class RuleController {
 
       // Watch 'expression' of clone. Set 'geomType' property accordingly.
       this.unlisteners_.push(this.scope_.$watch(
-        () => this.clone.expression,
+        () => {
+          if (!this.clone) {
+            throw new Error('Missing clone');
+          }
+          this.clone.expression;
+        },
         (newVal) => {
+          // @ts-ignore: Why?
           if (newVal) {
             const clone = this.clone;
             if (clone instanceof ngeoRuleGeometry) {
@@ -488,6 +529,12 @@ class RuleController {
       // selection collection.
       this.unlisteners_.push(this.scope_.$watch(
         () => {
+          if (!this.clone) {
+            throw new Error('Missing clone');
+          }
+          if (!this.rule) {
+            throw new Error('Missing rule');
+          }
           const hasExpression = this.clone.getExpression() !== null;
           const isActive = this.rule.active === true;
           const editToolIsActive = this.modify_.getActive() ||
@@ -513,6 +560,15 @@ class RuleController {
    * Called on destruction of the controller.
    */
   $onDestroy() {
+    if (!this.clone) {
+      throw new Error('Missing clone');
+    }
+    if (!this.rule) {
+      throw new Error('Missing rule');
+    }
+    if (!this.toolActivate_) {
+      throw new Error('Missing toolActivate');
+    }
     if (this.rule.active) {
       this.rule.active = false;
       // in $onDestroy, setting active to false will not call the handler. Call
@@ -531,6 +587,9 @@ class RuleController {
   /**
    */
   toggle() {
+    if (!this.rule) {
+      throw new Error('Missing rule');
+    }
     if (this.rule.active) {
       this.cancel();
     } else {
@@ -542,6 +601,12 @@ class RuleController {
    * Apply the changes that were made in the original rule.
    */
   apply() {
+    if (!this.clone) {
+      throw new Error('Missing clone');
+    }
+    if (!this.rule) {
+      throw new Error('Missing rule');
+    }
     this.ngeoRuleHelper_.extendRule(this.clone, this.rule);
     this.rule.active = false;
   }
@@ -550,6 +615,12 @@ class RuleController {
    * Revert the changes that were made in the clone rule.
    */
   cancel() {
+    if (!this.rule) {
+      throw new Error('Missing rule');
+    }
+    if (!this.clone) {
+      throw new Error('Missing clone');
+    }
     this.ngeoRuleHelper_.extendRule(this.rule, this.clone);
     this.rule.active = false;
   }
@@ -558,6 +629,12 @@ class RuleController {
    * Reset both original and clone rules.
    */
   reset() {
+    if (!this.rule) {
+      throw new Error('Missing rule');
+    }
+    if (!this.clone) {
+      throw new Error('Missing clone');
+    }
     this.clone.reset();
     this.rule.reset();
   }
@@ -568,6 +645,9 @@ class RuleController {
    * @param {string} choice Choice that has been clicked.
    */
   toggleChoiceSelection(choice) {
+    if (!this.clone) {
+      throw new Error('Missing clone');
+    }
     const rule = this.clone;
     const choices = rule.getExpression() ? /** @type {string} */(rule.getExpression()).split(',') : [];
     const idx = choices.indexOf(choice);
@@ -584,15 +664,21 @@ class RuleController {
    * @param {Object} date Date
    */
   onDateSelected(date) {
-    this.clone.setExpression(date['start']);
+    if (!this.clone) {
+      throw new Error('Missing clone');
+    }
+    this.clone.setExpression(date.start);
   }
 
   /**
    * @param {Object} date Date
    */
   onDateRangeSelected(date) {
-    this.clone.lowerBoundary = date['start'];
-    this.clone.upperBoundary = date['end'];
+    if (!this.clone) {
+      throw new Error('Missing clone');
+    }
+    this.clone.lowerBoundary = date.start;
+    this.clone.upperBoundary = date.end;
   }
 
   /**
@@ -644,6 +730,12 @@ class RuleController {
    * @private
    */
   handleActiveChange_(active, oldActive) {
+    if (!this.map) {
+      throw new Error('Missing map');
+    }
+    if (!this.featureOverlay) {
+      throw new Error('Missing featureOverlay');
+    }
 
     if (!(this.rule instanceof ngeoRuleGeometry) ||
         !(this.clone instanceof ngeoRuleGeometry) ||
@@ -716,6 +808,7 @@ class RuleController {
       }
 
     } else {
+      // @ts-ignore: OL issue?
       cloneFeature.setStyle(null);
       keys.forEach(olEvents.unlistenByKey);
       keys.length = 0;
@@ -757,6 +850,9 @@ class RuleController {
    */
   registerInteractions_() {
     this.interactions_.forEach((interaction) => {
+      if (!this.map) {
+        throw new Error('Missing map');
+      }
       this.map.addInteraction(interaction);
     });
   }
@@ -767,6 +863,9 @@ class RuleController {
    */
   unregisterInteractions_() {
     this.interactions_.forEach((interaction) => {
+      if (!this.map) {
+        throw new Error('Missing map');
+      }
       this.map.removeInteraction(interaction);
     });
   }
@@ -807,13 +906,14 @@ class RuleController {
 
   /**
    * Return the type of geometry used by the rule feature. Used in the template.
-   * @return {string} Geometry type.
+   * @return {?string} Geometry type.
    */
   getRuleGeometryType() {
     const rule = this.rule;
     if (rule instanceof ngeoRuleGeometry) {
       return this.ngeoFeatureHelper_.getType(rule.feature);
     }
+    return null;
   }
 
   /**
@@ -822,6 +922,9 @@ class RuleController {
    */
   handleMapContextMenu_(evt) {
     if (evt instanceof Event || evt instanceof TouchEvent) {
+      if (!this.map) {
+        throw new Error('Missing map');
+      }
       // (1) Remove previous menu, if any
       this.removeMenu_();
 
@@ -829,21 +932,23 @@ class RuleController {
       const pixel = this.map.getEventPixel(evt);
       const coordinate = this.map.getCoordinateFromPixel(pixel);
 
-      let feature = this.map.forEachFeatureAtPixel(
+      const feature = this.map.forEachFeatureAtPixel(
         pixel,
         (feature) => {
-          /** @type {import('ol/Feature.js').default} */
+          /** @type {?Feature} */
           let ret = null;
-          if (this.selectedFeatures.getArray().includes(
-            /** @type {import('ol/Feature.js').default} */(feature)
-          )) {
-            ret = /** @type {import('ol/Feature.js').default} */(feature);
+          if (!(feature instanceof Feature)) {
+            throw new Error('Wrong feature type');
+          }
+          if (this.selectedFeatures.getArray().includes(feature)) {
+            ret = feature;
+          }
+          if (!ret) {
+            throw new Error('Missing feature');
           }
           return ret;
         }
       );
-
-      feature = feature ? feature : null;
 
       // (3) If the clicked feature is the selected one, plus if it has a certain
       //     type of geometry, then show the menu
@@ -904,6 +1009,9 @@ class RuleController {
    */
   removeMenu_() {
     if (this.menu_) {
+      if (!this.map) {
+        throw new Error('Missing map');
+      }
       olEvents.unlisten(
         this.menu_,
         'actionclick',

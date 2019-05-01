@@ -46,7 +46,7 @@ module.value('gmfImportdatasourceTemplateUrl',
    * @return {string} The template url.
    */
   ($attrs) => {
-    const templateUrl = $attrs['gmfImportdatasourceTemplateUrl'];
+    const templateUrl = $attrs.gmfImportdatasourceTemplateUrl;
     return templateUrl !== undefined ? templateUrl :
       'gmf/import/importdatasourceComponent';
   });
@@ -101,39 +101,39 @@ class Controller {
     // Binding properties
 
     /**
-     * @type {!import("ol/Map.js").default}
+     * @type {?import("ol/Map.js").default}
      */
-    this.map;
+    this.map = null;
 
 
     // Injected properties
 
     /**
-     * @type {!JQuery}
+     * @type {JQuery}
      * @private
      */
     this.element_ = $element;
 
     /**
-     * @type {!angular.IScope}
+     * @type {angular.IScope}
      * @private
      */
     this.scope_ = $scope;
 
     /**
-     * @type {!angular.ITimeoutService}
+     * @type {angular.ITimeoutService}
      * @private
      */
     this.timeout_ = $timeout;
 
     /**
-     * @type {!import("gmf/datasource/ExternalDataSourcesManager.js").ExternalDatSourcesManager}
+     * @type {import("gmf/datasource/ExternalDataSourcesManager.js").ExternalDatSourcesManager}
      * @private
      */
     this.gmfExternalDataSourcesManager_ = gmfExternalDataSourcesManager;
 
     /**
-     * @type {!import("ngeo/query/Querent.js").Querent}
+     * @type {import("ngeo/query/Querent.js").Querent}
      * @private
      */
     this.ngeoQuerent_ = ngeoQuerent;
@@ -142,14 +142,14 @@ class Controller {
     // Model properties
 
     /**
-     * @type {File|undefined}
+     * @type {?File}
      */
-    this.file;
+    this.file = null;
 
     /**
-     * @type {string|undefined}
+     * @type {?string}
      */
-    this.url;
+    this.url = null;
 
 
     // Inner properties
@@ -206,18 +206,17 @@ class Controller {
     this.wmtsCapabilities = null;
 
     /**
-     * @type {Bloodhound|undefined}
+     * @type {?Bloodhound}
      * @private
      */
-    this.serversEngine_;
+    this.serversEngine_ = null;
 
-    const servers = $injector.has('gmfExternalOGCServers') ?
-      /** @type {Array.<!ExternalOGCServer>|undefined} */ (
-        $injector.get('gmfExternalOGCServers')
-      ) : undefined;
+    /** @type {?Array<ExternalOGCServer>} */
+    const servers = $injector.has('gmfExternalOGCServers') ? $injector.get('gmfExternalOGCServers')
+      : null;
 
     if (servers) {
-      const serverUrls = servers.map(server => server['url']);
+      const serverUrls = servers.map(server => server.url);
       this.serversEngine_ = new Bloodhound({
         /**
          * Allows search queries to match from string from anywhere within
@@ -258,7 +257,7 @@ class Controller {
     this.fileInput_.on('change', () => {
       const fileInput = /** @type HTMLInputElement */ (this.fileInput_[0]);
       const files = fileInput.files;
-      this.file = files && files[0] ? files[0] : undefined;
+      this.file = files && files[0] ? files[0] : null;
       this.scope_.$apply();
     });
   }
@@ -274,7 +273,9 @@ class Controller {
       // Timeout to let Angular render the placeholder of the input properly,
       // otherwise typeahead would copy the string with {{}} in it...
       this.timeout_(() => {
-        console.assert(this.serversEngine_);
+        if (!this.serversEngine_) {
+          throw new Error('Missing serversEngine');
+        }
         const $urlInput = this.element_.find('input[name=url]');
         const $connectBtn = this.element_.find('button.gmf-importdatasource-connect-btn');
         $urlInput.typeahead({
@@ -307,6 +308,9 @@ class Controller {
    * Connect to given online resource URL.
    */
   connect() {
+    if (!this.url) {
+      throw new Error('Missing url');
+    }
     const url = this.url;
     const serviceType = guessServiceTypeByUrl(url);
 
@@ -345,6 +349,9 @@ class Controller {
    * Create data source from file.
    */
   load() {
+    if (!this.file) {
+      throw new Error('Missing file');
+    }
     const file = this.file;
     this.gmfExternalDataSourcesManager_.createAndAddDataSourceFromFile(file, (success) => {
       if (!success) {
@@ -357,6 +364,9 @@ class Controller {
    * @return {string} The name of the file and human-readable size.
    */
   get fileNameAndSize() {
+    if (!this.file) {
+      return '';
+    }
     let nameAndSize = '';
 
     const file = this.file;

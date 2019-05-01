@@ -20,7 +20,7 @@ module.value('gmfBackgroundlayerselectorTemplateUrl',
    * @return {string} Template URL.
    */
   ($element, $attrs) => {
-    const templateUrl = $attrs['gmfBackgroundlayerselectorTemplateurl'];
+    const templateUrl = $attrs.gmfBackgroundlayerselectorTemplateurl;
     return templateUrl !== undefined ? templateUrl :
       'gmf/backgroundlayerselector';
   }
@@ -102,7 +102,7 @@ function Controller($scope, ngeoBackgroundLayerMgr, gmfThemes) {
   /**
    * @type {?import("ol/Map.js").default}
    */
-  this.map;
+  this.map = null;
 
   /**
    * @type {!string|undefined}
@@ -113,22 +113,22 @@ function Controller($scope, ngeoBackgroundLayerMgr, gmfThemes) {
    * Function called when a layer was selected by the user.
    * @type {?Function}
    */
-  this.select;
+  this.select = null;
 
   /**
    * @type {?import("ol/layer/Base.js").default}
    */
-  this.bgLayer;
+  this.bgLayer = null;
 
   /**
    * @type {?Array.<!import("ol/layer/Base.js").default>}
    */
-  this.bgLayers;
+  this.bgLayers = null;
 
   /**
-   * @type {import("ol/layer/Base.js").default}
+   * @type {?import("ol/layer/Base.js").default}
    */
-  this.opacityLayer;
+  this.opacityLayer = null;
 
   /**
    * @type {!import("gmf/theme/Themes.js").ThemesService}
@@ -201,7 +201,10 @@ Controller.prototype.handleThemesChange_ = function() {
  * @returns {number} The background layer opacity.
  */
 Controller.prototype.getSetBgLayerOpacity = function(val) {
-  if (val !== undefined) {
+  if (!this.opacityLayer) {
+    throw new Error('Missing opacityLayer');
+  }
+  if (val !== null) {
     this.opacityLayer.setOpacity(val);
   }
   return this.opacityLayer.getOpacity();
@@ -212,6 +215,9 @@ Controller.prototype.getSetBgLayerOpacity = function(val) {
  * @param {boolean=} opt_silent Do not notify listeners.
  */
 Controller.prototype.setLayer = function(layer, opt_silent) {
+  if (!this.map) {
+    throw new Error('Missing map');
+  }
   this.bgLayer = layer;
   this.backgroundLayerMgr_.set(this.map, layer);
   if (!opt_silent && this.select) {
@@ -224,6 +230,9 @@ Controller.prototype.setLayer = function(layer, opt_silent) {
  * @param {import("ol/layer/Base.js").default} layer The opacity background layer.
  */
 Controller.prototype.setOpacityBgLayer = function(layer) {
+  if (!this.map) {
+    throw new Error('Missing map');
+  }
   this.backgroundLayerMgr_.setOpacityBgLayer(this.map, layer);
 };
 

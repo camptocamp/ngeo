@@ -34,7 +34,7 @@ export class DataSource {
     this.collection_ = new olCollection();
 
     /**
-     * @type {import("ol/Map.js").default}
+     * @type {?import("ol/Map.js").default}
      * @private
      */
     this.map_ = null;
@@ -87,7 +87,9 @@ export class DataSource {
 
     // (2) Sync resolution with existing data sources
     const resolution = view.getResolution();
-    console.assert(typeof resolution == 'number');
+    if (typeof resolution != 'number') {
+      throw new Error('Missing resolution');
+    }
     this.syncDataSourcesToResolution_(resolution);
   }
 
@@ -111,7 +113,9 @@ export class DataSource {
     const view = evt.target;
     if (view instanceof olView) {
       const resolution = view.getResolution();
-      console.assert(typeof resolution == 'number');
+      if (typeof resolution != 'number') {
+        throw new Error('Missing resolution');
+      }
       this.syncDataSourcesToResolution_(resolution);
     }
   }
@@ -165,7 +169,9 @@ export class DataSource {
       const dataSource = event.element;
       if (this.map_) {
         const resolution = this.map_.getView().getResolution();
-        console.assert(typeof resolution == 'number');
+        if (typeof resolution != 'number') {
+          throw new Error('Missing resolution');
+        }
         this.syncDataSourceToResolution_(dataSource, resolution);
       }
     }

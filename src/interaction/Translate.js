@@ -57,7 +57,7 @@ export default class extends olInteractionTranslate {
     this.keyPressListenerKey_ = null;
 
     /**
-     * @type {import("ol/Collection.js").default.<import("ol/Feature.js").default>}
+     * @type {?import("ol/Collection.js").default.<import("ol/Feature.js").default>}
      * @private
      */
     this.myFeatures_ = options.features !== undefined ? options.features : null;
@@ -125,6 +125,7 @@ export default class extends olInteractionTranslate {
 
     const currentMap = this.getMap();
     if (currentMap) {
+      // @ts-ignore
       this.vectorLayer_.setMap(null);
     }
 
@@ -147,6 +148,9 @@ export default class extends olInteractionTranslate {
     }
     const active = this.getActive();
     const features = this.myFeatures_;
+    if (!features) {
+      throw new Error('Missing features');
+    }
     const keys = this.listenerKeys_;
 
     if (map && active && features) {
@@ -198,7 +202,9 @@ export default class extends olInteractionTranslate {
   addFeature_(feature) {
     const uid = olUtilGetUid(feature);
     const geometry = feature.getGeometry();
-    console.assert(geometry instanceof olGeomGeometry);
+    if (!geometry) {
+      throw new Error('Missing geometry');
+    }
 
     this.featureListenerKeys_[uid] = olEvents.listen(
       geometry,
@@ -267,8 +273,9 @@ export default class extends olInteractionTranslate {
       point = new olGeomPoint(center);
     }
 
-    console.assert(point, 'Point should be thruthy');
-
+    if (!point) {
+      throw new Error('Missing point');
+    }
     return point;
   }
 

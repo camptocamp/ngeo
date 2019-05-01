@@ -29,7 +29,7 @@ module.value('gmfLidarprofilePanelTemplateUrl',
    * @return {string} Template.
    */
   ($element, $attrs) => {
-    const templateUrl = $attrs['gmfLidarprofilePanelTemplateUrl'];
+    const templateUrl = $attrs.gmfLidarprofilePanelTemplateUrl;
     return templateUrl !== undefined ? templateUrl :
       'gmf/lidarprofilePanel';
   });
@@ -132,15 +132,15 @@ class Controller {
     this.active = false;
 
     /**
-     * @type {import("ol/Map.js").default}
+     * @type {?import("ol/Map.js").default}
      */
     this.map = null;
 
     /**
      * The Openlayers LineString geometry of the profle
-     * @type {import("ol/geom/LineString.js").default}
+     * @type {?import("ol/geom/LineString.js").default}
      */
-    this.line;
+    this.line = null;
 
     /**
      * State of the measure tool
@@ -188,6 +188,9 @@ class Controller {
    * @private
    */
   $onInit() {
+    if (!this.map) {
+      throw new Error('Missing map');
+    }
     this.profile.init(this.profileConfig_, this.map);
   }
 
@@ -227,6 +230,9 @@ class Controller {
   update_() {
     this.profile.clearBuffer();
     if (this.line) {
+      if (!this.profileConfig_.serverConfig) {
+        throw new Error('Missing profileConfig_.serverConfig');
+      }
       this.profile.setLine(this.line);
       this.profile.getProfileByLOD([], 0, true, this.profileConfig_.serverConfig.minLOD);
     } else {
@@ -239,6 +245,7 @@ class Controller {
    */
   clearAll() {
     this.line = null;
+    // @ts-ignore: OL issue
     this.profile.setLine(null);
     this.profile.cartoHighlight.setPosition(undefined);
     this.clearMeasure();
@@ -250,6 +257,9 @@ class Controller {
    * Activate the measure tool
    */
   setMeasureActive() {
+    if (!this.profile.measure) {
+      throw new Error('Missing profile.measure');
+    }
     this.measureActive = true;
     this.profile.measure.clearMeasure();
     this.profile.measure.setMeasureActive();
@@ -260,6 +270,9 @@ class Controller {
    * Clear the current measure
    */
   clearMeasure() {
+    if (!this.profile.measure) {
+      throw new Error('Missing profile.measure');
+    }
     this.measureActive = false;
     this.profile.measure.clearMeasure();
   }
@@ -294,6 +307,9 @@ class Controller {
    *    Selected point attribute
    */
   getSetSelectedPointAttribute(opt_selectedOption) {
+    if (!this.profile.plot) {
+      throw new Error('Missing profile.plot');
+    }
     if (opt_selectedOption !== undefined) {
       this.profileConfig_.clientConfig.pointAttributes.selectedOption = opt_selectedOption;
       this.profile.plot.changeStyle(opt_selectedOption.value);
@@ -308,6 +324,9 @@ class Controller {
    *    classification list
    */
   getClassification() {
+    if (!this.profileConfig_.serverConfig) {
+      throw new Error('Missing profileConfig_.serverConfig');
+    }
     return this.profileConfig_.serverConfig.classification_colors;
   }
 
@@ -319,6 +338,12 @@ class Controller {
    * @param {number} key of the classification code
    */
   setClassification(classification, key) {
+    if (!this.profile.plot) {
+      throw new Error('Missing profile.plot');
+    }
+    if (!this.profileConfig_.serverConfig) {
+      throw new Error('Missing profileConfig_.serverConfig');
+    }
     this.profileConfig_.serverConfig.classification_colors[key].visible = classification.visible;
     if (this.line) {
       this.profile.plot.setClassActive(this.profileConfig_.serverConfig.classification_colors,

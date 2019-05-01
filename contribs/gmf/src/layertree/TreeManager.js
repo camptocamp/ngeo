@@ -1,7 +1,8 @@
 import angular from 'angular';
 import {PermalinkParam} from 'gmf/index.js';
 import gmfThemeThemes, {findGroupByName, findGroupByLayerNodeName} from 'gmf/theme/Themes.js';
-import ngeoLayertreeController, {LayertreeVisitorDecision} from 'ngeo/layertree/Controller.js';
+import ngeoLayertreeController, {LayertreeVisitorDecision, LayertreeController} from
+  'ngeo/layertree/Controller.js';
 import {MessageType} from 'ngeo/message/Message.js';
 import ngeoMessageNotification from 'ngeo/message/Notification.js';
 import ngeoStatemanagerService from 'ngeo/statemanager/Service.js';
@@ -11,9 +12,9 @@ import * as olEvents from 'ol/events.js';
 /**
  * @typedef {Object} TreeManagerFullState
  * @property {Object.<string, TreeManagerFullState>} [children]
- * @property {boolean} [isChecked]
- * @property {boolean} [isExpanded]
- * @property {boolean} [isLegendExpanded]
+ * @property {boolean|undefined} [isChecked]
+ * @property {boolean|undefined} [isExpanded]
+ * @property {boolean|undefined} [isLegendExpanded]
  */
 
 
@@ -97,7 +98,7 @@ export function LayertreeTreeManager($timeout, $injector, gettextCatalog, ngeoLa
    * The controller of the (unique) root layer tree.
    * The array of top level layer trees is available through `rootCtrl.children`.
    * The order doesn't match with the ordre of the displayed layertree.
-   * @type {import("ngeo/layertree/Controller.js").LayertreeController}
+   * @type {?import("ngeo/layertree/Controller.js").LayertreeController}
    */
   this.rootCtrl = null;
 
@@ -116,7 +117,7 @@ export function LayertreeTreeManager($timeout, $injector, gettextCatalog, ngeoLa
   this.groupsToAddInThisDigestLoop_ = [];
 
   /**
-   * @type {angular.IPromise}
+   * @type {?angular.IPromise}
    * @private
    */
   this.promiseForGroupsToAddInThisDigestLoop_ = null;
@@ -129,7 +130,7 @@ export function LayertreeTreeManager($timeout, $injector, gettextCatalog, ngeoLa
 
   /**
    * A reference to the OGC servers loaded by the theme service.
-   * @type {import('gmf/themes.js').GmfOgcServers|null}
+   * @type {?import('gmf/themes.js').GmfOgcServers}
    * @private
    */
   this.ogcServers_ = null;
@@ -225,13 +226,17 @@ LayertreeTreeManager.prototype.addFirstLevelGroup_ = function(group) {
   const groupID = group.id;
   this.root.children.some((rootChild) => {
     if (groupID === rootChild.id) {
-      return alreadyAdded = true;
+      alreadyAdded = true;
+      return true;
     }
+    return false;
   }, this);
   this.groupsToAddInThisDigestLoop_.some((grp) => {
     if (groupID === grp.id) {
-      return alreadyAdded = true;
+      alreadyAdded = true;
+      return true;
     }
+    return false;
   }, this);
   if (alreadyAdded) {
     return false;
@@ -344,7 +349,8 @@ LayertreeTreeManager.prototype.addGroupByLayerName = function(layerName, opt_add
           console.warn('Tree controller not found, unable to add the group');
           return;
         }
-        let treeCtrlToActive = /** @type import("ngeo/layertree/Controller.js").LayertreeController */ (null);
+        /** @type {any} */
+        let treeCtrlToActive = null;
         treeCtrl.traverseDepthFirst((treeCtrl) => {
           if (treeCtrl.node.name === layerName) {
             treeCtrlToActive = treeCtrl;
@@ -358,7 +364,7 @@ LayertreeTreeManager.prototype.addGroupByLayerName = function(layerName, opt_add
         }
 
         // Active it.
-        if (treeCtrlToActive) {
+        if (treeCtrlToActive instanceof LayertreeController) {
           treeCtrlToActive.setState('on');
         }
       });
@@ -380,6 +386,7 @@ LayertreeTreeManager.prototype.removeGroup = function(group) {
       return found = true;
     }
     index++;
+    return false;
   });
   if (found) {
     children.splice(index, 1);
@@ -490,6 +497,9 @@ LayertreeTreeManager.prototype.getTreeCtrlByNodeId = function(id) {
  * @return {import('gmf/themes.js').GmfOgcServer} The OGC server.
  */
 LayertreeTreeManager.prototype.getOgcServer = function(treeCtrl) {
+  if (!this.ogcServers_) {
+    throw new Error('Missing ogcServers');
+  }
   if (treeCtrl.parent.node.mixed) {
     const gmfLayerWMS = /** @type {import('gmf/themes.js').GmfLayerWMS} */ (treeCtrl.node);
     console.assert(gmfLayerWMS.ogcServer);
@@ -516,6 +526,9 @@ LayertreeTreeManager.prototype.getOgcServer = function(treeCtrl) {
  * @private
  */
 LayertreeTreeManager.prototype.refreshFirstLevelGroups_ = function(themes) {
+  if (!this.rootCtrl) {
+    throw new Error('Missing rootCtrl');
+  }
   const firstLevelGroupsFullState = {};
 
   // Save state of each child

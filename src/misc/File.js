@@ -44,12 +44,21 @@ export function FileService($q, $http, gettext) {
     }
     fileReader = new FileReader();
     fileReader.onload = function(evt) {
-      const target = /** @type {FileReader} */(evt.target);
+      const target = evt.target;
+      if (!(target instanceof FileReader)) {
+        throw new Error('Wrong target type');
+      }
       defer.resolve(target.result);
     };
     fileReader.onerror = function(evt) {
-      const target = /** @type {FileReader} */(evt.target);
+      const target = evt.target;
+      if (!(target instanceof FileReader)) {
+        throw new Error('Wrong target type');
+      }
       const err = target.error;
+      if (!err) {
+        throw new Error('Missing error');
+      }
       console.error('Reading file failed: ', err);
       defer.reject({
         'message': err.code == 20 ? gettext('Operation canceled') : gettext('Read failed'),

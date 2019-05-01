@@ -5,7 +5,7 @@ import * as olXml from 'ol/xml.js';
 /**
  * @private
  * @hidden
- * @type {Array.<string>}
+ * @type {Array<?string>}
  */
 const NAMESPACE_URIS_ = [
   null,
@@ -24,14 +24,15 @@ const NAMESPACE_URIS_ = [
  */
 
 /**
- * @param {Array<string>} namespaceURIs Namespace URIs.
+ * @param {Array<?string>} namespaceURIs Namespace URIs.
  * @param {parserStructure} structure Structure.
  * @return {Object<string, parserStructure>} Namespaced structure.
  * @private
  * @hidden
  */
 function makeStructureNS(namespaceURIs, structure) {
-  return /** @type {parsersStructure} */(/** @type {any} */(olXml.makeStructureNS(namespaceURIs, structure)));
+  return /** @type {parsersStructure} */(/** @type {any} */(olXml.makeStructureNS(
+    /** @type {Array<string>} */(namespaceURIs), structure)));
 }
 
 /**
@@ -149,19 +150,26 @@ WFSDescribeFeatureType.prototype.readFromNode = function(node) {
  * @private
  * @hidden
  * @param {Element} node Node.
- * @param {Array.<*>} objectStack Object stack.
- * @return {!Object.<string, string>} Attributes.
+ * @param {Array<*>} objectStack Object stack.
+ * @return {Object<string, string>} Attributes.
  */
 function readElement_(node, objectStack) {
-  /** @type {!Object.<string, string>} */
+  /** @type {Object<string, string>} */
   const attributes = {};
   for (let i = 0, len = node.attributes.length; i < len; i++) {
     const attribute = node.attributes.item(i);
+    if (!attribute) {
+      throw new Error('Missing attribute');
+    }
     attributes[attribute.name] = attribute.value;
   }
   if (objectStack.length === 1) {
     // remove namespace from type
-    attributes['type'] = attributes['type'].split(':').pop();
+    const attribute = attributes.type.split(':').pop();
+    if (!attribute) {
+      throw new Error('Missing attribute');
+    }
+    attributes.type = attribute;
   }
   return attributes;
 }
@@ -171,8 +179,8 @@ function readElement_(node, objectStack) {
  * @private
  * @hidden
  * @param {Element} node Node.
- * @param {Array.<*>} objectStack Object stack.
- * @return {!Object.<string, string>} Object.
+ * @param {Array<*>} objectStack Object stack.
+ * @return {Object<string, string>} Object.
  */
 function readComplexType_(node, objectStack) {
   const name = node.getAttribute('name');
@@ -182,9 +190,8 @@ function readComplexType_(node, objectStack) {
     node, objectStack
   );
   // flatten
-  object['complexContent'] =
-    object['complexContent']['extension']['sequence']['element'];
-  return object;
+  object['complexContent'] = object['complexContent'].extension.sequence.element;
+  return /** @type {Object<string, string>} */(object);
 }
 
 

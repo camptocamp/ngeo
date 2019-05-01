@@ -70,14 +70,14 @@ function MeasuretoolsController($scope, $compile, $sce,
   $filter, gettextCatalog) {
 
   /**
-   * @type {import("ol/Map.js").default}
+   * @type {?import("ol/Map.js").default}
    */
-  this.map;
+  this.map = null;
 
   /**
    * @type {string}
    */
-  this.lang;
+  this.lang = '';
 
   /**
    * @type {Object}
@@ -215,6 +215,9 @@ function MeasuretoolsController($scope, $compile, $sce,
 module.controller('AppMeasuretoolsController', MeasuretoolsController);
 
 MeasuretoolsController.prototype.$onInit = function() {
+  if (!this.map) {
+    throw new Error('Missing map');
+  }
   this.map.addInteraction(this.measureLength);
   this.map.addInteraction(this.measureArea);
   this.map.addInteraction(this.measureAzimut);

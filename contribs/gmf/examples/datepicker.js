@@ -41,8 +41,6 @@ function MainController($scope, ngeoWMSTime) {
     widget: TimePropertyWidgetEnum.DATEPICKER,
     maxValue: '2013-12-31T00:00:00Z',
     minValue: '2006-01-01T00:00:00Z',
-    maxDefValue: null,
-    minDefValue: null,
     resolution: TimePropertyResolutionEnum.DAY,
     mode: TimePropertyModeEnum.RANGE,
     interval: [0, 1, 0, 0]
@@ -55,8 +53,6 @@ function MainController($scope, ngeoWMSTime) {
     widget: /** @type {TimePropertyWidgetEnum} */ ('datepicker'),
     maxValue: '2015-12-31T00:00:00Z',
     minValue: '2014-01-01T00:00:00Z',
-    maxDefValue: null,
-    minDefValue: null,
     resolution: /** @type {TimePropertyResolutionEnum}*/ ('month'),
     mode: /** @type {TimePropertyModeEnum} */ ('value'),
     interval: [0, 1, 0, 0]
@@ -65,12 +61,12 @@ function MainController($scope, ngeoWMSTime) {
   /**
    * @type {string}
    */
-  this.value;
+  this.value = '';
 
   /**
    * @type {string}
    */
-  this.rangeValue;
+  this.rangeValue = '';
 
   this.onDateSelected = function(date) {
     this.value = this.ngeoWMSTime_.formatWMSTimeParam(this.wmsTimeValueMode, date);
@@ -79,11 +75,9 @@ function MainController($scope, ngeoWMSTime) {
   this.onDateRangeSelected = function(date) {
     this.rangeValue = this.ngeoWMSTime_.formatWMSTimeParam(this.wmsTimeRangeMode, date);
   };
-
 }
 
 
 module.controller('MainController', MainController);
-
 
 export default module;

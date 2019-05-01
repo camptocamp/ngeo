@@ -9,7 +9,7 @@ import olFormatWMSGetFeatureInfo from 'ol/format/WMSGetFeatureInfo.js';
 
 /**
  * Dimensions definition.
- * @typedef {Object.<string, ?string>} Dimensions
+ * @typedef {Object<string, ?string>} Dimensions
  */
 
 
@@ -156,8 +156,8 @@ export const WMSInfoFormat = {
  * @property {TimePropertyWidgetEnum} widget
  * @property {string} maxValue
  * @property {string} minValue
- * @property {string|null} maxDefValue
- * @property {string|null} minDefValue
+ * @property {string} [maxDefValue]
+ * @property {string} [minDefValue]
  * @property {TimePropertyModeEnum} mode
  * @property {TimePropertyResolutionEnum} [resolution]
  * @property {Array<string>} [values]
@@ -174,7 +174,7 @@ export const WMSInfoFormat = {
 
 /**
  * Active dimensions definition, where the value can't be null.
- * @typedef {Object.<string, string>} DimensionsActive
+ * @typedef {Object<string, string>} DimensionsActive
  */
 
 
@@ -441,11 +441,13 @@ class OGC extends ngeoDatasourceDataSource {
 
     let wfsFormat = null;
     if (this.supportsWFS && layers.length) {
-      let format = undefined;
+      let format;
       if (this.wfsOutputFormat_ === WFSOutputFormat.GML3) {
         format = new olFormatGML3();
       } else if (this.wfsOutputFormat_ === WFSOutputFormat.GML2) {
         format = new olFormatGML2();
+      } else {
+        throw new Error('Unknown GML output version');
       }
       console.assert(format);
       wfsFormat = new olFormatWFS({
@@ -506,14 +508,17 @@ class OGC extends ngeoDatasourceDataSource {
    * @return {?TimeRange} Time range value
    */
   get timeRangeValue() {
+    /** @type {?TimeRange} */
     let range = null;
     const lower = this.timeLowerValue;
     const upper = this.timeUpperValue;
     if (lower !== undefined) {
       range = {
-        end: upper,
         start: lower
       };
+      if (upper != undefined) {
+        range.end = upper;
+      }
     }
     return range;
   }
@@ -713,12 +718,14 @@ class OGC extends ngeoDatasourceDataSource {
     const config = this.dimensionsConfig || {};
 
     for (const key in config) {
-      if (config[key] === null) {
-        if (dimensions[key] !== undefined && dimensions[key] !== null) {
-          active[key] = dimensions[key];
+      const configValue = config[key];
+      if (configValue === null) {
+        const value = dimensions[key];
+        if (value !== undefined && value !== null) {
+          active[key] = value;
         }
       } else {
-        active[key] = config[key];
+        active[key] = configValue;
       }
     }
 
@@ -883,7 +890,7 @@ class OGC extends ngeoDatasourceDataSource {
    * @param {number} res Resolution.
    * @param {boolean} queryableOnly Whether to additionally check if the
    *     OGC layer is queryable as well or not. Defaults to `false`.
-   * @return {Array.<string>} The OGC layer names that are in range.
+   * @return {Array<string>} The OGC layer names that are in range.
    */
   getInRangeOGCLayerNames(res, queryableOnly = false) {
 

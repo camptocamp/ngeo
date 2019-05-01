@@ -98,55 +98,55 @@ function Controller(gettextCatalog, $compile, $filter, $scope, $timeout, ngeoEve
   /**
    * @type {boolean}
    */
-  this.active;
+  this.active = false;
 
   /**
-   * @type {import("ol/Collection.js").default.<!import("ol/Feature.js").default>|!import("ol/source/Vector.js").default}
+   * @type {?import("ol/Collection.js").default.<import("ol/Feature.js").default>|!import("ol/source/Vector.js").default}
    */
-  this.features;
+  this.features = null;
 
   /**
    * @type {string}
    */
-  this.geomType;
+  this.geomType = '';
 
   /**
-   * @type {!import("ol/Map.js").default}
+   * @type {?import("ol/Map.js").default}
    */
-  this.map;
+  this.map = null;
 
   /**
-   * @type {!angular.gettext.gettextCatalog}
+   * @type {angular.gettext.gettextCatalog}
    * @private
    */
   this.gettextCatalog_ = gettextCatalog;
 
   /**
-   * @type {!angular.ICompileService}
+   * @type {angular.ICompileService}
    * @private
    */
   this.compile_ = $compile;
 
   /**
-   * @type {!angular.IFilterService}
+   * @type {angular.IFilterService}
    * @private
    */
   this.filter_ = $filter;
 
   /**
-   * @type {!angular.IScope}
+   * @type {angular.IScope}
    * @private
    */
   this.scope_ = $scope;
 
   /**
-   * @type {!angular.ITimeoutService}
+   * @type {angular.ITimeoutService}
    * @private
    */
   this.timeout_ = $timeout;
 
   /**
-   * @type {!import("ngeo/misc/EventHelper.js").EventHelper}
+   * @type {import("ngeo/misc/EventHelper.js").EventHelper}
    * @private
    */
   this.ngeoEventHelper_ = ngeoEventHelper;
@@ -154,16 +154,19 @@ function Controller(gettextCatalog, $compile, $filter, $scope, $timeout, ngeoEve
   /**
    * The draw or measure interaction responsible of drawing the vector feature.
    * The actual type depends on the geometry type.
-   * @type {import("ol/interaction/Interaction.js").default}
+   * @type {?import("ol/interaction/Interaction.js").default}
    * @private
    */
-  this.interaction_;
+  this.interaction_ = null;
 
 
   // == Event listeners ==
   $scope.$watch(
     () => this.active,
     (newVal) => {
+      if (!this.interaction_) {
+        throw new Error('Missing interaction');
+      }
       this.interaction_.setActive(newVal);
     }
   );
@@ -223,7 +226,12 @@ Controller.prototype.$onInit = function() {
     );
   }
 
-  console.assert(interaction);
+  if (!interaction) {
+    throw new Error('Missing interaction');
+  }
+  if (!this.map) {
+    throw new Error('Missing map');
+  }
 
   interaction.setActive(this.active);
   this.interaction_ = interaction;
@@ -282,6 +290,9 @@ Controller.prototype.handleDrawEnd_ = function(event) {
   if (this.features instanceof olCollection) {
     this.features.push(feature);
   } else {
+    if (!this.features) {
+      throw new Error('Missing features');
+    }
     this.features.addFeature(feature);
   }
 };
@@ -292,6 +303,12 @@ Controller.prototype.handleDrawEnd_ = function(event) {
  */
 Controller.prototype.$onDestroy = function() {
   this.timeout_(() => {
+    if (!this.map) {
+      throw new Error('Missing map');
+    }
+    if (!this.interaction_) {
+      throw new Error('Missing interaction');
+    }
     const uid = olUtilGetUid(this);
     this.ngeoEventHelper_.clearListenerKey(uid);
     this.interaction_.setActive(false);
@@ -300,6 +317,4 @@ Controller.prototype.$onDestroy = function() {
 };
 
 module.controller('ngeoCreatefeatureController', Controller);
-
-
 export default module;

@@ -23,9 +23,9 @@ export const OlcsService = class {
   constructor(ngeoDebounce, ngeoLocation, ngeoStateManager) {
     /**
      * @private
-     * @type {import('olcs/contrib/Manager.js').default|undefined}
+     * @type {?import('olcs/contrib/Manager.js').default}
      */
-    this.manager_;
+    this.manager_ = null;
 
     /**
      * @private
@@ -63,7 +63,7 @@ export const OlcsService = class {
   }
 
   /**
-   * @return {import('olcs/contrib/Manager.js').default|undefined} the manager.
+   * @return {?import('olcs/contrib/Manager.js').default} the manager.
    */
   getManager() {
     return this.manager_;
@@ -74,6 +74,9 @@ export const OlcsService = class {
    * @return {Promise<undefined>} A promise after load & enabled.
    */
   initialStateToCamera_() {
+    if (!this.manager_) {
+      throw new Error('Missing manager');
+    }
     const stateManager = this.ngeoStateManager_;
 
     const lon = stateManager.getInitialNumberValue(Permalink3dParam.LON);
@@ -82,9 +85,15 @@ export const OlcsService = class {
     const heading = stateManager.getInitialNumberValue(Permalink3dParam.HEADING) || 0;
     const pitch = stateManager.getInitialNumberValue(Permalink3dParam.PITCH) || 0;
 
-    console.assert(lon !== undefined);
-    console.assert(lat !== undefined);
-    console.assert(elevation !== undefined);
+    if (!lon) {
+      throw new Error('Missing lon');
+    }
+    if (!lat) {
+      throw new Error('Missing lat');
+    }
+    if (!elevation) {
+      throw new Error('Missing elevation');
+    }
     return this.manager_.set3dWithView(lon, lat, elevation, heading, pitch);
   }
 
@@ -92,6 +101,9 @@ export const OlcsService = class {
    * @private
    */
   cameraToState_() {
+    if (!this.manager_) {
+      throw new Error('Missing manager');
+    }
     const manager = this.manager_;
     const scene = manager.getOl3d().getCesiumScene();
     const camera = scene.camera;

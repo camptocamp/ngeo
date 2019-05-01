@@ -26,7 +26,9 @@ export function createGeoJSONBloodhound(url, opt_filter, opt_featureProjection,
     remote: {
       url,
       prepare(query, settings) {
-        settings.url = settings.url.replace('%QUERY', query);
+        if (settings.url) {
+          settings.url = settings.url.replace('%QUERY', query);
+        }
         return settings;
       },
       transform(parsedResponse) {

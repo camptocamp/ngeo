@@ -26,28 +26,24 @@ export class DrawController {
     /**
      * @type {boolean}
      */
-    this.active;
-
-    if (this.active === undefined) {
-      this.active = false;
-    }
+    this.active = false;
 
     /**
      * Alternate collection of features in which to push the drawn features.
      * If not defined, then `ngeoFeatures` is used instead.
-     * @type {!import("ol/Collection.js").default.<!import("ol/Feature.js").default>|undefined}
+     * @type {?import("ol/Collection.js").default.<!import("ol/Feature.js").default>}
      */
-    this.features;
+    this.features = null;
 
     /**
-     * @type {import("ol/Map.js").default}
+     * @type {?import("ol/Map.js").default}
      */
-    this.map;
+    this.map = null;
 
     /**
      * @type {boolean}
      */
-    this.showMeasure;
+    this.showMeasure = false;
 
     /**
      * @type {angular.gettext.gettextCatalog}
@@ -81,34 +77,34 @@ export class DrawController {
     this.interactions_ = [];
 
     /**
-     * @type {import("ol/interaction/Draw.js").default}
+     * @type {?import("ol/interaction/Draw.js").default}
      */
-    this.drawPoint;
+    this.drawPoint = null;
 
     /**
-     * @type {import("ngeo/interaction/MeasureLength.js").default}
+     * @type {?import("ngeo/interaction/MeasureLength.js").default}
      */
-    this.measureLength;
+    this.measureLength = null;
 
     /**
-     * @type {import("ngeo/interaction/MeasureArea.js").default}
+     * @type {?import("ngeo/interaction/MeasureArea.js").default}
      */
-    this.measureArea;
+    this.measureArea = null;
 
     /**
-     * @type {import("ngeo/interaction/MeasureAzimut.js").default}
+     * @type {?import("ngeo/interaction/MeasureAzimut.js").default}
      */
-    this.measureAzimut;
+    this.measureAzimut = null;
 
     /**
-     * @type {import("ol/interaction/Draw.js").default}
+     * @type {?import("ol/interaction/Draw.js").default}
      */
-    this.drawRectangle;
+    this.drawRectangle = null;
 
     /**
-     * @type {import("ol/interaction/Draw.js").default}
+     * @type {?import("ol/interaction/Draw.js").default}
      */
-    this.drawText;
+    this.drawText = null;
 
 
     // Watch the "active" property, and disable the draw interactions
@@ -131,6 +127,9 @@ export class DrawController {
    * @param {import("ol/interaction/Interaction.js").default} interaction Interaction to register.
    */
   registerInteraction(interaction) {
+    if (!this.map) {
+      throw new Error('Missing map');
+    }
     this.interactions_.push(interaction);
     interaction.setActive(false);
     ngeoMiscDecorateInteraction(interaction);

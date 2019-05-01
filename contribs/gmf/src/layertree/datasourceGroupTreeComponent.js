@@ -65,21 +65,21 @@ class Controller {
     // Binding properties
 
     /**
-     * @type {!import("ngeo/datasource/Group.js").default}
+     * @type {?import("ngeo/datasource/Group.js").default}
      */
-    this.group;
+    this.group = null;
 
 
     // Injected properties
 
     /**
-     * @type {!angular.IScope}
+     * @type {angular.IScope}
      * @private
      */
     this.scope_ = $scope;
 
     /**
-     * @type {!import('ngeo/datasource/DataSource.js').DataSources}
+     * @type {import('ngeo/datasource/DataSource.js').DataSources}
      * @private
      */
     this.dataSources_ = ngeoDataSources.collection;
@@ -96,6 +96,9 @@ class Controller {
    * Toggle visibility of the group itself, i.e. its visibility state.
    */
   toggle() {
+    if (!this.group) {
+      throw new Error('Missing group');
+    }
     this.group.toggleVisibilityState();
   }
 
@@ -114,6 +117,9 @@ class Controller {
    * is going to be removed as well, destroying this component in the process.
    */
   remove() {
+    if (!this.group) {
+      throw new Error('Missing group');
+    }
     for (let i = this.group.dataSources.length - 1, ii = 0; i >= ii; i--) {
       this.dataSources_.remove(this.group.dataSources[i]);
     }

@@ -92,7 +92,7 @@ describe('gmf.layertree.SyncLayertreeMap', () => {
     const roottreeCtrl = element.scope().layertreeCtrl;
     const treeGroup = roottreeCtrl.children[0]; // Group 'OSM functions mixed'
     const treeLeaf = treeGroup.children[0]; // osm scale;
-    const wmsParamLayers = treeLeaf.layer.getSource().getParams()['LAYERS'];
+    const wmsParamLayers = treeLeaf.layer.getSource().getParams().LAYERS;
 
     expect(treeLeaf.node.name).toEqual(wmsParamLayers);
   });
@@ -109,7 +109,7 @@ describe('gmf.layertree.SyncLayertreeMap', () => {
 
     const roottreeCtrl = element.scope().layertreeCtrl;
     const treeGroup = roottreeCtrl.children[1]; // Group 'Layers'
-    const wmsParamLayers = treeGroup.layer.getSource().getParams()['LAYERS'];
+    const wmsParamLayers = treeGroup.layer.getSource().getParams().LAYERS;
     const checkedLayers = ['cinema', 'police', 'post_office', 'entertainment',
       'sustenance', 'hospitals']; // order count !
 
@@ -158,7 +158,7 @@ describe('gmf.layertree.SyncLayertreeMap', () => {
     gmfSyncLayertreeMap_.sync_(treeGroup);
     treeLeaf.setState('on');
     gmfSyncLayertreeMap_.sync_(treeLeaf);
-    const wmsParamLayers = treeLeaf.layer.getSource().getParams()['LAYERS'];
+    const wmsParamLayers = treeLeaf.layer.getSource().getParams().LAYERS;
     expect(wmsParamLayers).toBe('osm_scale');
   });
 
@@ -182,13 +182,13 @@ describe('gmf.layertree.SyncLayertreeMap', () => {
 
     treeLeaf.setState('on');
     gmfSyncLayertreeMap_.sync_(treeLeaf);
-    let wmsParamLayers = treeGroup.layer.getSource().getParams()['LAYERS'];
+    let wmsParamLayers = treeGroup.layer.getSource().getParams().LAYERS;
     expect(wmsParamLayers).toBe('cinema');
 
     // Group is on, original order must be kept.
     treeGroup.setState('on');
     gmfSyncLayertreeMap_.sync_(treeGroup);
-    wmsParamLayers = treeGroup.layer.getSource().getParams()['LAYERS'];
+    wmsParamLayers = treeGroup.layer.getSource().getParams().LAYERS;
     expect(wmsParamLayers).toEqual('hospitals,sustenance,entertainment,' +
             'osm_time,post_office,police,cinema');
   });

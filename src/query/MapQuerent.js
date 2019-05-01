@@ -197,7 +197,7 @@ export class MapQuerent {
     for (const source of this.result_.sources) {
       if (!keep) {
         source.features.length = 0;
-        source.totalFeatureCount = undefined;
+        delete source.totalFeatureCount;
       } else {
         this.result_.total += source.features.length;
       }
@@ -226,6 +226,9 @@ export class MapQuerent {
     for (const idStr in response) {
       const id = Number(idStr);
       const dataSource = this.ngeoDataSourcesHelper_.getDataSource(id);
+      if (!dataSource) {
+        throw new Error('Missing dataSource');
+      }
       let label = dataSource.name;
       console.assert(dataSource);
 

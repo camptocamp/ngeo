@@ -46,7 +46,7 @@ module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
  */
 function MainController($scope, ngeoFeatureOverlayMgr) {
   /**
-   * @type {import("ol/geom/LineString.js").default}
+   * @type {?import("ol/geom/LineString.js").default}
    */
   this.profileLine = null;
 

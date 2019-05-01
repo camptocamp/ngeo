@@ -67,7 +67,7 @@ script:
 - '! (npm run typecheck|sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g"|grep ^src)'
 - '! (npm run typecheck|grep api)'
 - '! (npm run typecheck|grep gmf)'
-- '! (npm run typecheck|grep test)'
+- '! (npm run typecheck|grep test/)'
 - '! (npm run typecheck|grep examples)'
 - npm run doc
 - npm run build-api

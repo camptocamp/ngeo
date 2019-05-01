@@ -72,7 +72,7 @@ function Controller($scope, gmfObjectEditingQuery) {
   /**
    * @type {boolean}
    */
-  this.active;
+  this.active = false;
 
   $scope.$watch(
     () => this.active,
@@ -80,19 +80,19 @@ function Controller($scope, gmfObjectEditingQuery) {
   );
 
   /**
-   * @type {import("ol/Collection.js").default}
+   * @type {?import("ol/Collection.js").default}
    */
-  this.features;
+  this.features = null;
 
   /**
-   * @type {import('gmf/objectediting/toolsComponent.js').ObjectEditingQueryableLayerInfo}
+   * @type {?import('gmf/objectediting/toolsComponent.js').ObjectEditingQueryableLayerInfo}
    */
-  this.layerInfo;
+  this.layerInfo = null;
 
   /**
-   * @type {import("ol/Map.js").default}
+   * @type {?import("ol/Map.js").default}
    */
-  this.map;
+  this.map = null;
 
 
   // Injected properties
@@ -111,6 +111,9 @@ function Controller($scope, gmfObjectEditingQuery) {
  * @private
  */
 Controller.prototype.handleActiveChange_ = function(active) {
+  if (!this.map) {
+    throw new Error('Missing map');
+  }
   if (active) {
     olEvents.listen(
       this.map,
@@ -135,12 +138,21 @@ Controller.prototype.handleActiveChange_ = function(active) {
  */
 Controller.prototype.handleMapClick_ = function(evt) {
   if (evt instanceof MapBrowserEvent) {
+    if (!this.map) {
+      throw new Error('Missing map');
+    }
+    if (!this.layerInfo) {
+      throw new Error('Missing layerInfo');
+    }
     this.gmfObjectEditingQuery_.getFeatureInfo(
       this.layerInfo,
       evt.coordinate,
       this.map
     ).then((feature) => {
       if (feature) {
+        if (!this.features) {
+          throw new Error('Missing features');
+        }
         this.features.push(feature);
       }
     });

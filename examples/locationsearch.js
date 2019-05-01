@@ -48,9 +48,9 @@ appmodule.component('appLocationSearch', locationSearchComponent);
 function SearchController(ngeoCreateLocationSearchBloodhound) {
 
   /**
-   * @type {import("ol/Map.js").default}
+   * @type {?import("ol/Map.js").default}
    */
-  this.map;
+  this.map = null;
 
   const limit = 10;
   /** @type {Bloodhound} */
@@ -89,7 +89,19 @@ function SearchController(ngeoCreateLocationSearchBloodhound) {
    * @type {import('ngeo/search/searchDirective.js').SearchDirectiveListeners}
    */
   this.listeners = /** @type {import('ngeo/search/searchDirective.js').SearchDirectiveListeners} */ ({
-    select: select_.bind(this)
+    select: (event, suggestion, dataset) => {
+      if (!this.map) {
+        throw new Error('Missing map');
+      }
+      const feature = /** @type {import("ol/Feature.js").default} */ (suggestion);
+      const bbox = /** @type {import("ol/extent.js").Extent} */ (feature.get('bbox'));
+      const size = this.map.getSize();
+      if (!size) {
+        throw new Error('issing size');
+      }
+      const maxZoom = 16;
+      this.map.getView().fit(bbox, {size, maxZoom});
+    }
   });
 
 }
@@ -119,22 +131,6 @@ SearchController.prototype.createAndInitBloodhound_ = function(ngeoCreateLocatio
   bloodhound.initialize();
   return bloodhound;
 };
-
-
-/**
- * @param {JQueryEventObject} event Event.
- * @param {Object} suggestion Suggestion.
- * @param {Twitter.Typeahead.Dataset} dataset Dataset.
- * @this {SearchController}
- */
-function select_(event, suggestion, dataset) {
-  const feature = /** @type {import("ol/Feature.js").default} */ (suggestion);
-  const bbox = /** @type {import("ol/extent.js").Extent} */ (feature.get('bbox'));
-  const size = this.map.getSize();
-  console.assert(size !== undefined);
-  const maxZoom = 16;
-  this.map.getView().fit(bbox, {size, maxZoom});
-}
 
 
 appmodule.controller('AppSearchController', SearchController);

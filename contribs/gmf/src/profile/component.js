@@ -57,7 +57,7 @@ module.value('gmfProfileTemplateUrl',
    * @return {string} Template.
    */
   ($element, $attrs) => {
-    const templateUrl = $attrs['gmfProfileTemplateurl'];
+    const templateUrl = $attrs.gmfProfileTemplateurl;
     return templateUrl !== undefined ? templateUrl : 'gmf/profile';
   });
 
@@ -205,19 +205,19 @@ function Controller($scope, $http, $element, $filter, gettextCatalog, ngeoFeatur
   this.ngeoCsvDownload_ = ngeoCsvDownload;
 
   /**
-   * @type {import("ol/Map.js").default}
+   * @type {?import("ol/Map.js").default}
    * @private
    */
   this.map_ = null;
 
   /**
-   * @type {?Object<string, !ProfileLineConfiguration>}
+   * @type {?Object<string, ProfileLineConfiguration>}
    * @private
    */
   this.linesConfiguration_ = null;
 
   /**
-   * @type {!Array.<string>}
+   * @type {Array<string>}
    * @private
    */
   this.layersNames_ = [];
@@ -229,12 +229,12 @@ function Controller($scope, $http, $element, $filter, gettextCatalog, ngeoFeatur
   this.nbPoints_ = 100;
 
   /**
-   * @type {import("ol/geom/LineString.js").default}
+   * @type {?import("ol/geom/LineString.js").default}
    */
-  this.line;
+  this.line = null;
 
   /**
-   * @type {Array.<Object>}
+   * @type {Array<Object>}
    */
   this.profileData = [];
 
@@ -242,11 +242,7 @@ function Controller($scope, $http, $element, $filter, gettextCatalog, ngeoFeatur
    * @type {ProfileHoverPointInformations}
    */
   this.currentPoint = {
-    coordinate: undefined,
-    distance: undefined,
     elevations: {},
-    xUnits: undefined,
-    yUnits: undefined
   };
 
   /**
@@ -257,14 +253,14 @@ function Controller($scope, $http, $element, $filter, gettextCatalog, ngeoFeatur
 
   /**
    * Overlay to show the measurement.
-   * @type {import("ol/Overlay.js").default}
+   * @type {?import("ol/Overlay.js").default}
    * @private
    */
   this.measureTooltip_ = null;
 
   /**
    * The measure tooltip element.
-   * @type {HTMLElement}
+   * @type {?HTMLElement}
    * @private
    */
   this.measureTooltipElement_ = null;
@@ -297,15 +293,21 @@ function Controller($scope, $http, $element, $filter, gettextCatalog, ngeoFeatur
   this.active = false;
 
   /**
-   * @type {import("ol/events.js").EventsKey}
+   * @type {?import("ol/events.js").EventsKey}
    * @private
    */
-  this.pointerMoveKey_;
+  this.pointerMoveKey_ = null;
 
   /**
    * @type {boolean}
    */
   this.isErrored = false;
+
+  this.getMapFn = () => null;
+  this.getNbPointsFn = () => 100;
+  this.getHoverPointStyleFn = null;
+  this.getLinesConfigurationFn = () => ({});
+  this.getOptionsFn = () => ({});
 
 
   // Watch the active value to activate/deactivate events listening.
@@ -334,11 +336,11 @@ function Controller($scope, $http, $element, $filter, gettextCatalog, ngeoFeatur
  * Init the controller
  */
 Controller.prototype.$onInit = function() {
-  this.map_ = this['getMapFn'] ? this['getMapFn']() : null;
-  this.nbPoints_ = this['getNbPointsFn'] ? this['getNbPointsFn']() : 100;
+  this.map_ = this.getMapFn();
+  this.nbPoints_ = this.getNbPointsFn();
 
   let hoverPointStyle;
-  const hoverPointStyleFn = this['getHoverPointStyleFn'];
+  const hoverPointStyleFn = this.getHoverPointStyleFn;
   if (hoverPointStyleFn) {
     hoverPointStyle = hoverPointStyleFn();
     console.assert(hoverPointStyle instanceof olStyleStyle);
@@ -352,7 +354,7 @@ Controller.prototype.$onInit = function() {
   }
   this.pointHoverOverlay_.setStyle(hoverPointStyle);
 
-  const linesConfiguration = this['getLinesConfigurationFn']();
+  const linesConfiguration = this.getLinesConfigurationFn();
   console.assert(linesConfiguration instanceof Object);
 
   this.linesConfiguration_ = linesConfiguration;
@@ -375,7 +377,7 @@ Controller.prototype.$onInit = function() {
     i18n: this.profileLabels_
   });
 
-  const optionsFn = this['getOptionsFn'];
+  const optionsFn = this.getOptionsFn;
   if (optionsFn) {
     const options = optionsFn();
     console.assert(options);
@@ -404,33 +406,36 @@ Controller.prototype.update_ = function() {
 Controller.prototype.updateEventsListening_ = function() {
   if (this.active && this.map_ !== null) {
     this.pointerMoveKey_ = olEvents.listen(this.map_, 'pointermove',
-      this.onPointerMove_.bind(this));
+      (event) => {
+        const e = /** @type {import("ol/MapBrowserPointerEvent.js").default} */(event);
+        if (!this.map_) {
+          throw new Error('Missing map');
+        }
+        if (e.dragging || !this.line) {
+          return;
+        }
+        const coordinate = this.map_.getEventCoordinate(e.originalEvent);
+        const closestPoint = this.line.getClosestPoint(coordinate);
+        // compute distance to line in pixels
+        const eventToLine = new olGeomLineString([closestPoint, coordinate]);
+        const resolution = this.map_.getView().getResolution();
+        if (!resolution) {
+          throw new Error('Missing resolution');
+        }
+        const pixelDist = eventToLine.getLength() / resolution;
+
+        if (pixelDist < 16) {
+          this.profileHighlight = this.getDistanceOnALine_(closestPoint);
+        } else {
+          this.profileHighlight = -1;
+        }
+        this.$scope_.$apply();
+      });
   } else {
-    olEvents.unlistenByKey(this.pointerMoveKey_);
+    if (this.pointerMoveKey_) {
+      olEvents.unlistenByKey(this.pointerMoveKey_);
+    }
   }
-};
-
-
-/**
- * @param {import("ol/MapBrowserPointerEvent.js").default} e An ol map browser pointer event.
- * @private
- */
-Controller.prototype.onPointerMove_ = function(e) {
-  if (e.dragging || !this.line) {
-    return;
-  }
-  const coordinate = this.map_.getEventCoordinate(e.originalEvent);
-  const closestPoint = this.line.getClosestPoint(coordinate);
-  // compute distance to line in pixels
-  const eventToLine = new olGeomLineString([closestPoint, coordinate]);
-  const pixelDist = eventToLine.getLength() / this.map_.getView().getResolution();
-
-  if (pixelDist < 16) {
-    this.profileHighlight = this.getDistanceOnALine_(closestPoint);
-  } else {
-    this.profileHighlight = -1;
-  }
-  this.$scope_.$apply();
 };
 
 
@@ -443,6 +448,9 @@ Controller.prototype.onPointerMove_ = function(e) {
  * @private
  */
 Controller.prototype.getDistanceOnALine_ = function(pointOnLine) {
+  if (!this.line) {
+    throw new Error('Missing line');
+  }
   let segment;
   let distOnLine = 0;
   const fakeExtent = [
@@ -477,6 +485,12 @@ Controller.prototype.getDistanceOnALine_ = function(pointOnLine) {
  * @private
  */
 Controller.prototype.hoverCallback_ = function(point, dist, xUnits, elevationsRef, yUnits) {
+  if (!this.measureTooltipElement_) {
+    throw new Error('Missing measureTooltipElement_');
+  }
+  if (!this.measureTooltip_) {
+    throw new Error('Missing measureTooltip_');
+  }
   // Update information point.
   const coordinate = [point.x, point.y];
 
@@ -500,15 +514,15 @@ Controller.prototype.hoverCallback_ = function(point, dist, xUnits, elevationsRe
  */
 Controller.prototype.outCallback_ = function() {
   // Reset information point.
-  this.currentPoint.coordinate = undefined;
-  this.currentPoint.distance = undefined;
+  delete this.currentPoint.coordinate;
+  delete this.currentPoint.distance;
   this.currentPoint.elevations = {};
-  this.currentPoint.xUnits = undefined;
-  this.currentPoint.yUnits = undefined;
+  delete this.currentPoint.xUnits;
+  delete this.currentPoint.yUnits;
 
   // Reset hover.
   this.removeMeasureTooltip_();
-  this.snappedPoint_.setGeometry(null);
+  this.snappedPoint_.setGeometry(undefined);
 };
 
 
@@ -542,6 +556,9 @@ Controller.prototype.getTooltipHTML_ = function() {
  * @private
  */
 Controller.prototype.createMeasureTooltip_ = function() {
+  if (!this.map_) {
+    throw new Error('Missing map');
+  }
   this.removeMeasureTooltip_();
   this.measureTooltipElement_ = document.createElement('div');
   this.measureTooltipElement_.className += 'tooltip ngeo-tooltip-measure';
@@ -560,6 +577,15 @@ Controller.prototype.createMeasureTooltip_ = function() {
  */
 Controller.prototype.removeMeasureTooltip_ = function() {
   if (this.measureTooltipElement_ !== null) {
+    if (!this.map_) {
+      throw new Error('Missing map');
+    }
+    if (!this.measureTooltip_) {
+      throw new Error('Missing measureTooltip_');
+    }
+    if (!this.measureTooltipElement_.parentNode) {
+      throw new Error('Missing measureTooltipElement_.parentNode');
+    }
     this.measureTooltipElement_.parentNode.removeChild(this.measureTooltipElement_);
     this.measureTooltipElement_ = null;
     this.map_.removeOverlay(this.measureTooltip_);
@@ -573,6 +599,9 @@ Controller.prototype.removeMeasureTooltip_ = function() {
  * @return {object} The object representation of the style.
  */
 Controller.prototype.getStyle = function(layerName) {
+  if (!this.linesConfiguration_) {
+    throw new Error('Missing linesConfiguration');
+  }
   const lineConfiguration = this.linesConfiguration_[layerName];
   if (!lineConfiguration) {
     return {};
@@ -594,7 +623,7 @@ Controller.prototype.getLayersNames = function() {
 
 /**
  * @param {string} layerName name of the elevation layer.
- * @return {function(Object):number} Z extractor function.
+ * @return {function(Object): number} Z extractor function.
  * @private
  */
 Controller.prototype.getZFactory_ = function(layerName) {
@@ -605,10 +634,10 @@ Controller.prototype.getZFactory_ = function(layerName) {
    * @private
    */
   const getZFn = function(item) {
-    if ('values' in item && layerName in item['values'] && item['values'][layerName]) {
-      return parseFloat(item['values'][layerName]);
+    if ('values' in item && layerName in item.values && item.values[layerName]) {
+      return parseFloat(item.values[layerName]);
     }
-    return null;
+    throw new Error('Unexpected');
   };
   return getZFn;
 };
@@ -622,7 +651,7 @@ Controller.prototype.getZFactory_ = function(layerName) {
  */
 Controller.prototype.getDist_ = function(item) {
   if ('dist' in item) {
-    return item['dist'];
+    return item.dist;
   }
   return 0;
 };
@@ -633,6 +662,9 @@ Controller.prototype.getDist_ = function(item) {
  * @private
  */
 Controller.prototype.getJsonProfile_ = function() {
+  if (!this.line) {
+    throw new Error('Missing line');
+  }
   const geom = {
     'type': 'LineString',
     'coordinates': this.line.getCoordinates()
@@ -664,7 +696,7 @@ Controller.prototype.getJsonProfile_ = function() {
  * @private
  */
 Controller.prototype.getProfileDataSuccess_ = function(resp) {
-  const profileData = resp.data['profile'];
+  const profileData = resp.data.profile;
   if (profileData instanceof Array) {
     this.profileData = profileData;
   }
@@ -698,7 +730,7 @@ Controller.prototype.downloadCsv = function() {
     hasDistance = true;
   }
   const layers = [];
-  for (const layer in firstPoint['values']) {
+  for (const layer in firstPoint.values) {
     headers.push({'name': layer});
     layers.push(layer);
   }
@@ -708,15 +740,15 @@ Controller.prototype.downloadCsv = function() {
   const rows = this.profileData.map((point) => {
     const row = {};
     if (hasDistance) {
-      row['distance'] = point['dist'];
+      row.distance = point.dist;
     }
 
     layers.forEach((layer) => {
-      row[layer] = point['values'][layer];
+      row[layer] = point.values[layer];
     });
 
-    row['x'] = point['x'];
-    row['y'] = point['y'];
+    row.x = point.x;
+    row.y = point.y;
 
     return row;
   });

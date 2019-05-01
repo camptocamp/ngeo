@@ -1,6 +1,6 @@
 import ngeoInteractionMeasure, {getFormattedLength} from 'ngeo/interaction/Measure.js';
 import olInteractionDraw from 'ol/interaction/Draw.js';
-
+import LineString from 'ol/geom/LineString.js';
 
 /**
  * Interaction dedicated to measure length.
@@ -34,14 +34,14 @@ export default class extends ngeoInteractionMeasure {
   }
 
   /**
-   * @param {import("ol/style/Style.js").StyleLike|undefined} style The sketchStyle used for the drawing
+   * @param {import("ol/style/Style.js").StyleLike} style The sketchStyle used for the drawing
    *    interaction.
    * @param {import("ol/source/Vector.js").default} source Vector source.
    * @return {olInteractionDraw|import("ngeo/interaction/MobileDraw.js").default} The interaction
    */
   createDrawInteraction(style, source) {
     return new olInteractionDraw({
-      type: /** @type {import("ol/geom/GeometryType.js").default} */ ('LineString'),
+      type: 'LineString',
       source: source,
       style: style
     });
@@ -51,7 +51,13 @@ export default class extends ngeoInteractionMeasure {
    * @inheritDoc
    */
   handleMeasure(callback) {
-    const geom = /** @type {import("ol/geom/LineString.js").default} */(this.sketchFeature.getGeometry());
+    if (!this.sketchFeature) {
+      throw new Error('Missing sketchFeature');
+    }
+    const geom = this.sketchFeature.getGeometry();
+    if (!(geom instanceof LineString)) {
+      throw new Error('Missing geometry');
+    }
     const proj = this.getMap().getView().getProjection();
     console.assert(proj);
     const output = getFormattedLength(geom, proj, this.precision, this.format);

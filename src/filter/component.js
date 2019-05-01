@@ -45,7 +45,7 @@ module.value('ngeoFilterTemplateUrl',
    * @return {string} The template url.
    */
   ($attrs) => {
-    const templateUrl = $attrs['ngeoFilterTemplateUrl'];
+    const templateUrl = $attrs.ngeoFilterTemplateUrl;
     return templateUrl !== undefined ? templateUrl :
       'ngeo/filter';
   });
@@ -104,37 +104,37 @@ class FilterController {
     /**
      * @type {boolean}
      */
-    this.aRuleIsActive;
+    this.aRuleIsActive = false;
 
     /**
-     * @type {Array.<!import("ngeo/rule/Rule.js").default>}
+     * @type {Array<import("ngeo/rule/Rule.js").default>}
      */
-    this.customRules;
+    this.customRules = [];
 
     /**
-     * @type {!import("ngeo/datasource/OGC.js").default}
+     * @type {?import("ngeo/datasource/OGC.js").default}
      */
-    this.datasource;
+    this.datasource = null;
 
     /**
-     * @type {Array.<!import("ngeo/rule/Rule.js").default>}
+     * @type {Array<import("ngeo/rule/Rule.js").default>}
      */
-    this.directedRules;
+    this.directedRules = [];
 
     /**
-     * @type {!import("ngeo/map/FeatureOverlay.js").FeatureOverlay}
+     * @type {?import("ngeo/map/FeatureOverlay.js").FeatureOverlay}
      */
-    this.featureOverlay;
+    this.featureOverlay = null;
 
     /**
-     * @type {!import("ol/Map.js").default}
+     * @type {?import("ol/Map.js").default}
      */
-    this.map;
+    this.map = null;
 
     /**
      * @type {string}
      */
-    this.toolGroup;
+    this.toolGroup = '';
 
 
     // === Injected properties ===
@@ -217,6 +217,9 @@ class FilterController {
    * lists: geometry and the others. Then, apply the filters to the data source.
    */
   $onInit() {
+    if (!this.datasource) {
+      throw new Error('Missing datasource');
+    }
 
     this.scope_.$watch(
       () => this.aRuleIsActive,
@@ -234,7 +237,8 @@ class FilterController {
     }
 
     // (2) All rules that have geometry are added in the featureOverlay
-    const rules = [].concat(this.customRules, this.directedRules);
+    const rules_ = [];
+    const rules = rules_.concat(this.customRules, this.directedRules);
     for (const rule of rules) {
       this.registerRule_(rule);
     }
@@ -251,6 +255,12 @@ class FilterController {
    * Clear the feature overlay.
    */
   $onDestroy() {
+    if (!this.datasource) {
+      throw new Error('Missing datasource');
+    }
+    if (!this.featureOverlay) {
+      throw new Error('Missing featureOverlay');
+    }
     if (this.datasource.filterRules !== null) {
       this.datasource.filterRules = null;
     }
@@ -262,7 +272,8 @@ class FilterController {
    * @return {boolean} True if at least one rule is currently defined.
    */
   hasARule() {
-    return [].concat(this.customRules, this.directedRules).length > 0;
+    const a = [];
+    return a.concat(this.customRules, this.directedRules).length > 0;
   }
 
 
@@ -271,6 +282,9 @@ class FilterController {
    * value inside the data source, in the `filterRules` property.
    */
   apply() {
+    if (!this.datasource) {
+      throw new Error('Missing datasource');
+    }
     // (1) Reset
     this.datasource.filterRules = null;
 
@@ -278,6 +292,9 @@ class FilterController {
     this.timeout_(() => {
       const filterRules = this.getRulesWithValue_();
       if (filterRules.length) {
+        if (!this.datasource) {
+          throw new Error('Missing datasource');
+        }
         this.datasource.filterRules = filterRules;
         // The current query results are cleared when we apply a filter.
         this.ngeoMapQuerent_.clear();
@@ -291,6 +308,12 @@ class FilterController {
    * and show the result.
    */
   getData() {
+    if (!this.datasource) {
+      throw new Error('Missing datasource');
+    }
+    if (!this.map) {
+      throw new Error('Missing map');
+    }
     const filterRules = this.getRulesWithValue_();
 
     // No need to do anything if there's no rules.
@@ -307,7 +330,9 @@ class FilterController {
       filterRules: filterRules,
       srsName: projCode
     });
-    console.assert(filter);
+    if (!filter) {
+      throw new Error('Missing filter');
+    }
 
     this.ngeoMapQuerent_.issue({
       dataSources: [dataSource],
@@ -325,7 +350,8 @@ class FilterController {
    */
   getRulesWithValue_() {
     const filterRules = [];
-    const rules = [].concat(this.customRules, this.directedRules);
+    const a = [];
+    const rules = a.concat(this.customRules, this.directedRules);
     for (const rule of rules) {
       if (rule.value) {
         filterRules.push(rule);
@@ -357,6 +383,9 @@ class FilterController {
    * @param {!FilterCondition} condition Condition to set.
    */
   setCondition(condition) {
+    if (!this.datasource) {
+      throw new Error('Missing datasource');
+    }
     if (this.datasource.filterCondition !== condition.value) {
       this.datasource.filterCondition = condition.value;
     }
@@ -380,6 +409,9 @@ class FilterController {
    * @param {!import("ngeo/rule/Rule.js").default} rule Rule.
    */
   registerRule_(rule) {
+    if (!this.featureOverlay) {
+      throw new Error('Missing featureOverlay');
+    }
     const uid = olUtilGetUid(rule);
     this.ruleUnlisteners_[uid] = this.scope_.$watch(
       () => rule.active,
@@ -395,6 +427,9 @@ class FilterController {
    * @param {!import("ngeo/rule/Rule.js").default} rule Rule.
    */
   unregisterRule_(rule) {
+    if (!this.featureOverlay) {
+      throw new Error('Missing featureOverlay');
+    }
     const uid = olUtilGetUid(rule);
     const unlistener = this.ruleUnlisteners_[uid];
     console.assert(unlistener);
@@ -413,7 +448,8 @@ class FilterController {
    */
   handleRuleActiveChange_() {
     let aRuleIsActive = false;
-    const rules = [].concat(this.customRules, this.directedRules);
+    const a = [];
+    const rules = a.concat(this.customRules, this.directedRules);
     for (const rule of rules) {
       if (rule.active) {
         aRuleIsActive = true;
@@ -432,7 +468,8 @@ class FilterController {
     if (this.aRuleIsActive) {
       return;
     }
-    const rules = [].concat(this.customRules, this.directedRules);
+    const a = [];
+    const rules = a.concat(this.customRules, this.directedRules);
     for (const rule of rules) {
       if (rule.active) {
         rule.active = false;

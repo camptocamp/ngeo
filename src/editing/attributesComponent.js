@@ -27,7 +27,7 @@ module.value('ngeoAttributesTemplateUrl',
    * @return {string} The template url.
    */
   ($attrs) => {
-    const templateUrl = $attrs['ngeoAttributesTemplateUrl'];
+    const templateUrl = $attrs.ngeoAttributesTemplateUrl;
     return templateUrl !== undefined ? templateUrl :
       'ngeo/editing/attributescomponent';
   });
@@ -96,7 +96,7 @@ function Controller($scope, ngeoEventHelper) {
    * The list of attributes to create the form with.
    * @type {Array.<import('ngeo/format/Attribute.js').Attribute>}
    */
-  this.attributes;
+  this.attributes = [];
 
   /**
    * Whether the fieldset should be disabled or not.
@@ -106,16 +106,16 @@ function Controller($scope, ngeoEventHelper) {
 
   /**
    * The feature containing the values.
-   * @type {import("ol/Feature.js").default}
+   * @type {?import("ol/Feature.js").default}
    */
-  this.feature;
+  this.feature = null;
 
   /**
    * The properties bound to the form, initialized with the inner properties
    * of the feature.
-   * @type {?Object.<string, *>}
+   * @type {Object<string, *>}
    */
-  this.properties;
+  this.properties = {};
 
   /**
    * @type {!angular.IScope}
@@ -147,6 +147,9 @@ function Controller($scope, ngeoEventHelper) {
  * Initialise the component.
  */
 Controller.prototype.$onInit = function() {
+  if (!this.feature) {
+    throw new Error('Missing feature');
+  }
   this.properties = this.feature.getProperties();
 
   // Listen to the feature inner properties change and apply them to the form
@@ -163,6 +166,12 @@ Controller.prototype.$onInit = function() {
  * @param {string} name Attribute name
  */
 Controller.prototype.handleInputChange = function(name) {
+  if (!this.properties) {
+    throw new Error('Missing properties');
+  }
+  if (!this.feature) {
+    throw new Error('Missing feature');
+  }
   this.updating_ = true;
   const value = this.properties[name];
   this.feature.set(name, value);

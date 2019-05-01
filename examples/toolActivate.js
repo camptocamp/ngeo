@@ -86,6 +86,9 @@ function MainController(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
   // manage clicks on the map
   this.mapClickIsEnabled = true;
   const content = document.getElementById('popup-content');
+  if (!content) {
+    throw new Error('Missing content');
+  }
   this.map.on('singleclick', (evt) => {
     if (this.mapClickIsEnabled) {
       const c = olCoordinate.toStringXY(evt.coordinate);

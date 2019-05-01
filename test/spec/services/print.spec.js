@@ -83,15 +83,17 @@ describe('ngeo.print.Service', () => {
     describe('ImageWMS', () => {
 
       beforeEach(() => {
+        const source = new olSourceImageWMS({
+          projection: undefined, // should be removed in next OL version
+          url: 'http://example.com/wms',
+          params: {
+            'LAYERS': 'foo,bar',
+            'FORMAT': 'image/jpeg'
+          }
+        });
+        // @ts-ignore: OL issue
         map.addLayer(new olLayerImage({
-          source: new olSourceImageWMS({
-            projection: undefined, // should be removed in next OL version
-            url: 'http://example.com/wms',
-            params: {
-              'LAYERS': 'foo,bar',
-              'FORMAT': 'image/jpeg'
-            }
-          })
+          source
         }));
       });
 
@@ -405,6 +407,7 @@ describe('ngeo.print.Service', () => {
           } else if (v == '3') {
             return styles3;
           }
+          return [];
         };
 
         map.addLayer(new olLayerVector({
@@ -595,28 +598,31 @@ describe('ngeo.print.Service', () => {
     describe('layer order', () => {
 
       beforeEach(() => {
+        const source1 = new olSourceImageWMS({
+          projection: undefined, // should be removed in next OL version
+          url: 'http://example.com/wms/bottom',
+          params: {
+            'LAYERS': 'foo,bar',
+            'FORMAT': 'image/jpeg'
+          }
+        });
+        // @ts-ignore: OL issue
         map.addLayer(new olLayerImage({
-          source: new olSourceImageWMS({
-            projection: undefined, // should be removed in next OL version
-            url: 'http://example.com/wms/bottom',
-            params: {
-              'LAYERS': 'foo,bar',
-              'FORMAT': 'image/jpeg'
-            }
-          })
+          source: source1
         }));
 
+        const source2 = new olSourceImageWMS({
+          projection: undefined, // should be removed in next OL version
+          url: 'http://example.com/wms/top',
+          params: {
+            'LAYERS': 'foo,bar',
+            'FORMAT': 'image/jpeg'
+          }
+        });
+        // @ts-ignore: OL issue
         map.addLayer(new olLayerImage({
-          source: new olSourceImageWMS({
-            projection: undefined, // should be removed in next OL version
-            url: 'http://example.com/wms/top',
-            params: {
-              'LAYERS': 'foo,bar',
-              'FORMAT': 'image/jpeg'
-            }
-          })
+          source: source2
         }));
-
       });
 
       it('reverses the layer order', () => {

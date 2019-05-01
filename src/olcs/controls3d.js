@@ -44,62 +44,62 @@ const Controller = class {
     this.element_ = $element;
 
     /**
-     * @type {import('olcs/contrib/Manager.js').default}
+     * @type {?import('olcs/contrib/Manager.js').default}
      */
-    this.ol3dm;
+    this.ol3dm = null;
 
     /**
      * @type {number}
      */
-    this.minTilt;
-
-    /**
-     * @type {number}
-     * @private
-     */
-    this.maxTilt;
-
-    /**
-     * @type {JQuery}
-     * @private
-     */
-    this.tiltRightEl_;
-
-    /**
-     * @type {JQuery}
-     * @private
-     */
-    this.tiltLeftEl_;
-
-    /**
-     * @type {JQuery}
-     * @private
-     */
-    this.rotation3dEl_;
-
-    /**
-     * @type {JQuery}
-     * @private
-     */
-    this.angle3dEl_;
+    this.minTilt = -1;
 
     /**
      * @type {number}
      * @private
      */
-    this.previousRotation_;
+    this.maxTilt = -1;
 
     /**
-     * @type {Cesium.Matrix4}
+     * @type {?JQuery}
      * @private
      */
-    this.previousViewMatrix_;
+    this.tiltRightEl_ = null;
+
+    /**
+     * @type {?JQuery}
+     * @private
+     */
+    this.tiltLeftEl_ = null;
+
+    /**
+     * @type {?JQuery}
+     * @private
+     */
+    this.rotation3dEl_ = null;
+
+    /**
+     * @type {?JQuery}
+     * @private
+     */
+    this.angle3dEl_ = null;
 
     /**
      * @type {number}
      * @private
      */
-    this.animationFrameRequestId_;
+    this.previousRotation_ = -1;
+
+    /**
+     * @type {?Cesium.Matrix4}
+     * @private
+     */
+    this.previousViewMatrix_ = null;
+
+    /**
+     * @type {number}
+     * @private
+     */
+    this.animationFrameRequestId_ = -1;
 
     /**
      * @type {import("ngeo/olcs/Service.js").OlcsService}
@@ -109,6 +109,21 @@ const Controller = class {
   }
 
   updateWidget_() {
+    if (!this.ol3dm) {
+      throw new Error('Missing ol3dm');
+    }
+    if (!this.rotation3dEl_) {
+      throw new Error('Missing rotation3dEl_');
+    }
+    if (!this.angle3dEl_) {
+      throw new Error('Missing angle3dEl_');
+    }
+    if (!this.tiltRightEl_) {
+      throw new Error('Missing tiltRightEl_');
+    }
+    if (!this.tiltLeftEl_) {
+      throw new Error('Missing tiltLeftEl_');
+    }
     const newRotation = this.ol3dm.getOl3d().getOlView().getRotation();
     if (shouldUpdate(this.previousRotation_, newRotation)) {
       this.rotateElement_(this.rotation3dEl_, newRotation);
@@ -119,7 +134,7 @@ const Controller = class {
     // @ts-ignore: Cesium
     if (!Cesium.Matrix4.equalsEpsilon(this.previousViewMatrix_, newViewMatrix, 1e-5)) {
       const newTilt = this.ol3dm.getTiltOnGlobe(); // this is expensive!!
-      if (Number.isFinite(newTilt || 0)) { // Workaround https://github.com/google/closure-compiler/pull/2712
+      if (newTilt != undefined && Number.isFinite(newTilt || 0)) {
         this.rotateElement_(this.angle3dEl_, newTilt);
         // @ts-ignore: Cesium
         this.previousViewMatrix_ = Cesium.Matrix4.clone(newViewMatrix);
@@ -156,7 +171,7 @@ const Controller = class {
       this.maxTilt = 7 * Math.PI / 16;
     }
     if (!this.ol3dm) {
-      this.ol3dm = this.olcsService_.getManager();
+      this.ol3dm = this.olcsService_.getManager() || null;
     }
     this.tiltRightEl_ = this.element_.find('.ngeo-tilt-right');
     this.tiltLeftEl_ = this.element_.find('.ngeo-tilt-left');
@@ -187,6 +202,9 @@ const Controller = class {
    * @param {number} angle Angle in degrees.
    */
   rotate(angle) {
+    if (!this.ol3dm) {
+      throw new Error('Missing ol3dm');
+    }
     // @ts-ignore: Cesium
     angle = Cesium.Math.toRadians(angle);
     this.ol3dm.setHeading(angle);
@@ -197,9 +215,15 @@ const Controller = class {
    * @param {number} angle Angle in degrees.
    */
   tilt(angle) {
+    if (!this.ol3dm) {
+      throw new Error('Missing ol3dm');
+    }
     // @ts-ignore: Cesium
     angle = Cesium.Math.toRadians(angle);
     const tiltOnGlobe = this.ol3dm.getTiltOnGlobe();
+    if (tiltOnGlobe == undefined) {
+      throw new Error('Missing tiltOnGlobe');
+    }
     if (tiltOnGlobe + angle < this.minTilt) {
       angle = this.minTilt - tiltOnGlobe;
     } else if (tiltOnGlobe + angle > this.maxTilt) {
@@ -214,6 +238,9 @@ const Controller = class {
    * @param {number} delta -1 to zoom out and 1 to zoom in.
    */
   zoom(delta) {
+    if (!this.ol3dm) {
+      throw new Error('Missing ol3dm');
+    }
     const view = this.ol3dm.getOlView();
     const cur = view.getResolution();
     const newResolution = view.constrainResolution(cur, delta);

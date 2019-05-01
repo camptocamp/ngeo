@@ -38,6 +38,9 @@ export default class extends olOverlay {
    */
   constructor(menuOptions, options = {}) {
     options.positioning = olOverlayPositioning.TOP_LEFT;
+    if (!menuOptions) {
+      throw new Error('Missing menuOptions');
+    }
 
     super(options);
 
@@ -61,8 +64,7 @@ export default class extends olOverlay {
      * @type {boolean}
      * @private
      */
-    this.autoClose_ = menuOptions.autoClose !== undefined ?
-      menuOptions.autoClose : true;
+    this.autoClose_ = menuOptions.autoClose !== undefined ? menuOptions.autoClose : true;
 
     // titleEl
     if (menuOptions.title) {
@@ -150,6 +152,9 @@ export default class extends olOverlay {
    */
   open(coordinate) {
     this.setPosition(coordinate);
+    if (!(document.documentElement instanceof EventTarget)) {
+      throw new Error('Wrong document element type');
+    }
     if (this.autoClose_) {
       this.clickOutListenerKey_ = olEvents.listen(
         document.documentElement,

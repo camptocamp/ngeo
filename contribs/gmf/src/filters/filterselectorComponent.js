@@ -54,15 +54,15 @@ module.value('gmfFilterselectorTemplateUrl',
    * @return {string} The template url.
    */
   ($attrs) => {
-    const templateUrl = $attrs['gmfFilterselectorTemplateUrl'];
+    const templateUrl = $attrs.gmfFilterselectorTemplateUrl;
     return templateUrl !== undefined ? templateUrl :
       'gmf/filters/filterselectorcomponent';
   });
 
 
 /**
- * @param {!angular.IAttributes} $attrs Attributes.
- * @param {!function(!angular.IAttributes): string} gmfFilterselectorTemplateUrl Template function.
+ * @param {angular.IAttributes} $attrs Attributes.
+ * @param {function(angular.IAttributes): string} gmfFilterselectorTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
  * @private
@@ -80,8 +80,8 @@ function gmfFilterselectorTemplateUrl($attrs, gmfFilterselectorTemplateUrl) {
 class Controller {
 
   /**
-   * @param {!angular.IScope} $scope Angular scope.
-   * @param {!angular.ITimeoutService} $timeout Angular timeout service.
+   * @param {angular.IScope} $scope Angular scope.
+   * @param {angular.ITimeoutService} $timeout Angular timeout service.
    * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
    * @param {import('gmf/datasource/DataSourceBeingFiltered.js').DataSourceBeingFiltered} gmfDataSourceBeingFiltered
    *     The Gmf value service that determines the data source currently being filtered.
@@ -91,9 +91,9 @@ class Controller {
    * @param {import('gmf/authentication/Service.js').User} gmfUser User.
    * @param {import("ngeo/message/Notification.js").MessageNotification} ngeoNotification Ngeo notification
    *    service.
-   * @param {!import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr Ngeo
+   * @param {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr Ngeo
    *    FeatureOverlay manager
-   * @param {!import("ngeo/filter/RuleHelper.js").RuleHelper} ngeoRuleHelper Ngeo rule helper service.
+   * @param {import("ngeo/filter/RuleHelper.js").RuleHelper} ngeoRuleHelper Ngeo rule helper service.
    * @private
    * @ngInject
    * @ngdoc controller
@@ -109,7 +109,7 @@ class Controller {
     /**
      * @type {boolean}
      */
-    this.active;
+    this.active = false;
 
     $scope.$watch(
       () => this.active,
@@ -117,14 +117,14 @@ class Controller {
     );
 
     /**
-     * @type {!import("ol/Map.js").default}
+     * @type {?import("ol/Map.js").default}
      */
-    this.map;
+    this.map = null;
 
     /**
-     * @type {string}
+     * @type {?string}
      */
-    this.toolGroup;
+    this.toolGroup = null;
 
 
     // Injected properties
@@ -228,7 +228,7 @@ class Controller {
     this.filtrableDataSources = [];
 
     /**
-     * @type {Array.<string>}
+     * @type {?Array<string>}
      * @private
      */
     this.filtrableLayerNodeNames_ = null;
@@ -297,10 +297,10 @@ class Controller {
     /**
      * The name of the data source that should be automatically selected
      * by this component.
-     * @type {string|undefined}
+     * @type {?string}
      * @private
      */
-    this.defaultFiltrableDataSourceName_;
+    this.defaultFiltrableDataSourceName_ = null;
 
     // Initialize the data sources registration
     this.toggleDataSourceRegistration_();
@@ -320,7 +320,7 @@ class Controller {
     if (usrFunc && usrFunc.preset_layer_filter && usrFunc.preset_layer_filter[0]) {
       this.defaultFiltrableDataSourceName_ = usrFunc.preset_layer_filter[0];
     } else {
-      this.defaultFiltrableDataSourceName_ = undefined;
+      this.defaultFiltrableDataSourceName_ = null;
     }
     this.toggleDataSourceRegistration_();
   }
@@ -483,6 +483,9 @@ class Controller {
    * @private
    */
   isDataSourceFiltrable_(dataSource, opt_notify) {
+    if (!this.filtrableLayerNodeNames_) {
+      throw new Error('Missing filtrableLayerNodeNames');
+    }
     let filtrable = true;
     const gettext = this.gettextCatalog_;
     const notify = opt_notify !== false;
@@ -623,6 +626,9 @@ class Controller {
   /**
    */
   saveFilterSave() {
+    if (!this.readyDataSource) {
+      throw new Error('Missing readyDataSource');
+    }
 
     const name = this.saveFilterName;
     const dataSource = this.readyDataSource;
@@ -662,7 +668,9 @@ class Controller {
    * @param {!import("gmf/filters/SavedFilters.js").SavedFilterItem} filterItem Filter item.
    */
   saveFilterLoadItem(filterItem) {
-
+    if (!this.readyDataSource) {
+      throw new Error('Missing readyDataSource');
+    }
     const dataSource = this.readyDataSource;
 
     // (1) Reset current rules
@@ -686,6 +694,9 @@ class Controller {
 
       // (4) Update cache item
       const cacheItem = this.getRuleCacheItem_(dataSource);
+      if (!cacheItem) {
+        throw new Error('Missing cacheItem');
+      }
       cacheItem.customRules = customRules;
       cacheItem.directedRules = directedRules;
     });

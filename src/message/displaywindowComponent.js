@@ -68,7 +68,7 @@ class Controller {
     /**
      * @type {boolean}
      */
-    this.clearOnClose;
+    this.clearOnClose = false;
 
     /**
      * @type {?string}
@@ -88,32 +88,32 @@ class Controller {
     /**
      * @type {boolean}
      */
-    this.draggable;
+    this.draggable = false;
 
     /**
      * @type {Element|string}
      */
-    this.draggableContainment;
+    this.draggableContainment = '';
 
     /**
      * @type {boolean}
      */
-    this.desktop;
+    this.desktop = false;
 
     /**
-     * @type {?string}
+     * @type {string}
      */
-    this.height = null;
-
-    /**
-     * @type {boolean}
-     */
-    this.open;
+    this.height = '';
 
     /**
      * @type {boolean}
      */
-    this.resizable;
+    this.open = false;
+
+    /**
+     * @type {boolean}
+     */
+    this.resizable = false;
 
     /**
      * @type {?string}
@@ -126,9 +126,9 @@ class Controller {
     this.url = null;
 
     /**
-     * @type {?string}
+     * @type {string}
      */
-    this.width = null;
+    this.width = '';
 
 
     // === Injected Properties ===
@@ -209,6 +209,9 @@ class Controller {
    *  @private
    */
   updateContentTemplate_() {
+    if (!this.contentTemplate) {
+      return;
+    }
     const scope = this.contentScope || this.scope_;
     const compiled = this.compile_(this.contentTemplate)(scope);
     const displayWindow = this.element_.find(
@@ -228,12 +231,12 @@ class Controller {
   }
 
   /**
-   * @return {!Object.<string, string>} CSS style when using width/height
+   * @return {Object<string, string>} CSS style when using width/height
    */
   get style() {
     return {
-      'height': this.height,
-      'width': this.width
+      height: this.height,
+      width: this.width
     };
   }
 

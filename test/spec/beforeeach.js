@@ -1,4 +1,3 @@
-/* eslint @openlayers/valid-tsdoc: 0 */
 /* eslint valid-jsdoc: 0 */
 import angular from 'angular';
 import ngeoMainmodule from 'ngeo/mainmodule.js';

@@ -282,7 +282,7 @@ LayertreeController.prototype.getCalculateState = function() {
     return this.state_;
   }
   /** @type {string} */
-  let childState;
+  let childState = '';
   /** @type {string} */
   let previousChildState;
   this.children.some((child) => {
@@ -294,6 +294,7 @@ LayertreeController.prototype.getCalculateState = function() {
       }
     }
     previousChildState = childState;
+    return false;
   });
   return childState;
 };
@@ -395,7 +396,7 @@ LayertreeController.prototype.traverseDepthFirst = function(visitor) {
       }
       return false; // continue traversing
     default:
-      console.assert(false, 'Unhandled case');
+      throw 'Unhandled case';
   }
 };
 

@@ -127,9 +127,9 @@ class ScaleselectorController {
     console.assert(this.scales !== undefined);
 
     /**
-     * @type {Array.<number>}
+     * @type {Array<number>}
      */
-    this.zoomLevels;
+    this.zoomLevels = [];
 
     $scope.$watch(() => Object.keys(this.scales).length, (newLength) => {
       this.zoomLevels = Object.keys(this.scales).map(Number);
@@ -202,7 +202,7 @@ class ScaleselectorController {
   }
 
   /**
-   * @param {Event|import("ol/events/Event.js").default} e OpenLayers object event.
+   * @param {?Event|import("ol/events/Event.js").default} e OpenLayers object event.
    * @private
    */
   handleResolutionChange_(e) {

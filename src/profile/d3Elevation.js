@@ -271,7 +271,8 @@ function d3Elevation(options) {
       /** @type {import('d3').Axis<number|{valueOf(): number}>} */
       const yAxis = d3axisLeft(y);
 
-      let area;
+      /** @type {?d3.Area<[number, number]>} */
+      let area = null;
       if (numberOfLines === 1) {
         area = d3area()
           .x(d => x(distanceExtractor(d)))
@@ -358,7 +359,7 @@ function d3Elevation(options) {
         .attr('transform', `translate(${margin.left},${
           margin.top})`);
 
-      xDomain = d3extent(data, d => distanceExtractor(d));
+      xDomain = /** @type{[number, number]} */(d3extent(data, d => distanceExtractor(d)));
       x.domain(xDomain);
 
       // Return an array with the min and max value of the min/max values of
@@ -368,7 +369,8 @@ function d3Elevation(options) {
         // Get min/max values (extent) of each lines.
         for (const name in linesConfiguration) {
           /** @type {[number, number]} */
-          const extent = d3extent(data, d => linesConfiguration[name].zExtractor(d));
+          const extent = /** @type{[number, number]} */(
+            d3extent(data, d => linesConfiguration[name].zExtractor(d)));
           // only include defined extent
           if (extent.every(Number.isFinite)) {
             elevationsValues = elevationsValues.concat(extent);
@@ -393,6 +395,9 @@ function d3Elevation(options) {
 
       // Update the area path.
       if (numberOfLines === 1) {
+        if (!area) {
+          throw new Error('Missing area');
+        }
         g.select('.area')
           .transition()
           .attr('d', area);
@@ -528,6 +533,7 @@ function d3Elevation(options) {
     const dist = distanceExtractor(point);
     let elevation;
     const elevations = [];
+    /** @type {Object<string, number>} */
     const elevationsRef = {};
     let lineName;
 
