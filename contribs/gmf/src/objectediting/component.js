@@ -26,7 +26,14 @@ import * as olBase from 'ol/index.js';
 import olCollection from 'ol/Collection.js';
 import * as olEvents from 'ol/events.js';
 import olFormatGeoJSON from 'ol/format/GeoJSON.js';
-import olGeomMultiPolygon from 'ol/geom/MultiPolygon.js';
+import Point from 'ol/geom/Point.js';
+import LineString from 'ol/geom/LineString.js';
+import LinearRing from 'ol/geom/LinearRing.js';
+import Polygon from 'ol/geom/Polygon.js';
+import MultiPoint from 'ol/geom/MultiPoint.js';
+import MultiLineString from 'ol/geom/MultiLineString.js';
+import MultiPolygon from 'ol/geom/MultiPolygon.js';
+import GeometryCollection from 'ol/geom/GeometryCollection.js';
 import olLayerImage from 'ol/layer/Image.js';
 import olLayerTile from 'ol/layer/Tile.js';
 import olInteractionModify from 'ol/interaction/Modify.js';
@@ -35,12 +42,8 @@ import olStyleFill from 'ol/style/Fill.js';
 import olStyleStroke from 'ol/style/Stroke.js';
 import olStyleStyle from 'ol/style/Style.js';
 
-import {OL3Parser} from 'jsts/io';
-const jsts = {
-  io: {
-    OL3Parser,
-  },
-};
+import OL3Parser from 'jsts/io/OL3Parser.js';
+import 'jsts/monkey.js';
 
 
 /**
@@ -313,7 +316,11 @@ exports.Controller = function($scope, $timeout, gettextCatalog,
    * @type {!jsts.io.OL3Parser}
    * @private
    */
-  this.jstsOL3Parser_ = new jsts.io.OL3Parser();
+  this.jstsOL3Parser_ = new OL3Parser(undefined, {
+    geom: {
+      Point, LineString, LinearRing, Polygon, MultiPoint, MultiLineString, MultiPolygon, GeometryCollection
+    }
+  });
 
   /**
    * The state of the feature determines whether the next 'save' request
@@ -795,7 +802,7 @@ exports.Controller.prototype.handleModifyInteractionModifyEnd_ = function(
 ) {
   let geometry = this.feature.getGeometry();
 
-  if (geometry instanceof olGeomMultiPolygon) {
+  if (geometry instanceof MultiPolygon) {
     const jstsGeom = this.jstsOL3Parser_.read(geometry);
     const jstsBuffered = jstsGeom.buffer(0);
     geometry = ngeoUtils.toMulti(this.jstsOL3Parser_.write(jstsBuffered));
