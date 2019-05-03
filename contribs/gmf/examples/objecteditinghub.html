@@ -52,31 +52,6 @@
           </span> Launch Editor
         </button>
       </div>
-
-      <div class="form-group">
-        <button
-          ng-disabled="ctrl.selectedFeature === null || ctrl.selectedGmfLayerNode === null || ctrl.selectedGeomType === undefined"
-          ng-click="ctrl.runViewerHosted()"
-          type="button"
-          class="form-control btn btn-info"
-          title="Load all features of selected layer in OE viewer"
-          aria-label="Left Align">
-          </span> Launch Viewer (hosted)
-        </button>
-      </div>
-
-      <div class="form-group">
-        <button
-          ng-disabled="ctrl.selectedFeature === null || ctrl.selectedGmfLayerNode === null || ctrl.selectedGeomType === undefined"
-          ng-click="ctrl.runViewerDev()"
-          type="button"
-          class="form-control btn btn-info"
-          title="Load all features of selected layer in OE viewer"
-          aria-label="Left Align">
-          </span> Launch Viewer (dev)
-        </button>
-      </div>
-
     </div>
   </body>
 </html>

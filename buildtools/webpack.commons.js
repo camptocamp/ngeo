@@ -165,7 +165,6 @@ const config = function(hardSourceConfig, babelLoaderCacheDirectory) {
             '/apps/mobile/sass/vars_mobile.scss',
             '/apps/mobile_alt/sass/vars_mobile_alt.scss',
             '/apps/oeedit/sass/vars_oeedit.scss',
-            '/apps/oeview/sass/vars_oeview.scss',
             '/apps/sass/var',
             '/controllers/',
             '/vars.scss',
