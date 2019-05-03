@@ -299,10 +299,16 @@ class Map {
             });
             marker.setProperties(filterByKeys(values, attr));
             marker.setId(values.id);
-            // FIXME: handle values.iconSize
-            // FIXME: handle values.iconOffset
+            let anchor;
+            if (values.iconOffset) {
+              // flip the sign of the value to be compatible with the old api.
+              anchor = values.iconOffset.split(',').map(parseFloat).map(val => val * Math.sign(val));
+            }
             const image = new Icon({
-              src: values.icon
+              src: values.icon,
+              anchorXUnits: 'pixels',
+              anchorYUnits: 'pixels',
+              anchor: anchor
             });
             // @ts-ignore: OL issue
             marker.setStyle(new Style({
