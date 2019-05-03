@@ -276,9 +276,17 @@ class Map {
             });
             marker.setProperties(filterByKeys(values, attr));
             marker.setId(values.id);
+            let anchor;
+            if (values.iconOffset) {
+              // flip the sign of the value to be compatible with the old api.
+              anchor = values.iconOffset.split(',').map(parseFloat).map(val => val * Math.sign(val));
+            }
             marker.setStyle(new Style({
               image: new Icon({
-                src: values.icon
+                src: values.icon,
+                anchorXUnits: 'pixels',
+                anchorYUnits: 'pixels',
+                anchor: anchor
               })
             }));
             this.vectorSource_.addFeature(marker);
