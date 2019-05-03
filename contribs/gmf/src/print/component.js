@@ -1319,6 +1319,7 @@ class Controller {
    */
   getMetadataLegendImage_(layerName, dpi = 72) {
     const groupNode = findGroupByLayerNodeName(this.currentThemes_, layerName);
+    let found_dpi = dpi;
     let node;
     if (groupNode && groupNode.children) {
       node = findObjectByName(groupNode.children, layerName);
@@ -1332,6 +1333,7 @@ class Controller {
     let dist = Number.MAX_VALUE;
     if (legendImage) {
       dist = Math.abs(Math.log(72 / dpi));
+      found_dpi = 72;
     }
     if (hiDPILegendImages) {
       for (const str_dpi in hiDPILegendImages) {
@@ -1339,14 +1341,14 @@ class Controller {
         const new_dist = Math.abs(Math.log(new_dpi / dpi));
         if (new_dist < dist) {
           dist = new_dist;
-          dpi = new_dpi;
+          found_dpi = new_dpi;
           legendImage = hiDPILegendImages[str_dpi];
         }
       }
     }
     return {
-      'url': legendImage,
-      'dpi': dpi,
+      url: legendImage,
+      dpi: found_dpi,
     };
   }
 
