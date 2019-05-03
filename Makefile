@@ -279,8 +279,12 @@ gh-pages: .build/python-venv.timestamp
 		--app 'Desktop application' apps/desktop.html 'The desktop example application for GeoMapFish.' \
 		--app 'Alternate mobile application' apps/mobile_alt.html 'An alternate mobile example application for GeoMapFish.' \
 		--app 'Alternate desktop application' apps/desktop_alt.html 'An alternate desktop example application for GeoMapFish.' \
-		--app 'Object editing viewer' apps/oeview.html 'An example application for viewing an object.' \
-		--app 'Object editing editor' apps/oeedit.html 'An example application for editing an object.' \
+		--app 'Object editing viewer' \
+			'apps/oeview.html?objectediting_geomtype=MultiPolygon&objectediting_id=Test&objectediting_layer=112&objectediting_theme=ObjectEditing&objectediting_property=name&tree_groups=ObjectEditing' \
+			'An example application for viewing an object.' \
+		--app 'Object editing editor' \
+			'apps/oeedit.html?objectediting_geomtype=MultiPolygon&objectediting_id=Test&objectediting_layer=112&objectediting_theme=ObjectEditing&objectediting_property=name&tree_groups=ObjectEditing' \
+			'An example application for editing an object.' \
 		$< $(GMF_EXAMPLES_HTML_FILES) > $@
 
 .build/test-check-example/%.check.timestamp: test/check-example/%.html \
