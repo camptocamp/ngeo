@@ -42,6 +42,17 @@ import * as themes from './Themes.js';
  * @property {string} [icon]
  */
 
+/**
+ * @typedef {Object} MapOptions
+ * @property {string} div
+ * @property {import("ol/coordinate.js").Coordinate} center
+ * @property {number} [zoom=10]
+ * @property {boolean} [showCoords=true]
+ * @property {boolean} [addMiniMap=false]
+ * @property {boolean} [miniMapExpanded=true]
+ * @property {boolean} [addLayerSwitcher=false]
+ * @property {Array<string>} [layers]
+ */
 
 /**
  * @private
@@ -50,17 +61,9 @@ import * as themes from './Themes.js';
 class Map {
 
   /**
-   * @param {Object} options API options.
-   * @property {string} div
-   * @property {import("ol/coordinate.js").Coordinate} center
-   * @property {number} [zoom=10]
-   * @property {boolean} [showCoords=true]
-   * TODO: more options
+   * @param {MapOptions} options API options.
    */
   constructor(options) {
-    if (!constants.extent) {
-      throw new Error('Missing extent');
-    }
     /**
      * @private
      * @type {View}
@@ -74,7 +77,7 @@ class Map {
 
     if (options.center !== undefined) {
       this.view_.setCenter(options.center);
-    } else if (constants.extent !== undefined) {
+    } else if (constants.extent) {
       this.view_.setCenter(getCenter(constants.extent));
     }
 
