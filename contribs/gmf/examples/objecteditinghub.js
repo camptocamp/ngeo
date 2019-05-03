@@ -71,29 +71,17 @@ function MainController($http, $q, $scope, gmfThemes, gmfXSDAttributes) {
   this.urls = [
     {
       name: 'oeedit app. (hosted)',
-      url: 'apps/oeedit/'
+      url: 'apps/oeedit.html'
     },
     {
       name: 'oeedit app. (dev)',
-      url: '../apps/oeedit/'
+      url: '../apps/oeedit.html'
     },
     {
       name: 'example',
       url: 'objectediting.html'
     }
   ];
-
-  /**
-   * @type {string} OE viewer application base url when developping.
-   * @private
-   */
-  this.viewerUrlDev_ = '../apps/oeview/';
-
-  /**
-   * @type {string} OE viewer application base url when hosted.
-   * @private
-   */
-  this.viewerUrlHosted_ = 'apps/oeview/';
 
   /**
    * @type {Object<string, string>}
@@ -257,52 +245,6 @@ MainController.prototype.runEditor = function() {
   params[ObjecteditingParam.PROPERTY] = property;
 
   const url = MainController.appendParams(this.selectedUrl.url, params);
-  window.open(url);
-};
-
-
-/**
- */
-MainController.prototype.runViewerDev = function() {
-  this.runViewer_(this.viewerUrlDev_);
-};
-
-
-/**
- */
-MainController.prototype.runViewerHosted = function() {
-  this.runViewer_(this.viewerUrlHosted_);
-};
-
-
-/**
- * @param {string} baseUrl Base url of the viewer.
- * @private
- */
-MainController.prototype.runViewer_ = function(baseUrl) {
-  if (!this.selectedGmfLayerNode) {
-    throw new Error('Missing selectedGmfLayerNode');
-  }
-
-  const node = this.selectedGmfLayerNode;
-  const nodeId = node.id;
-  const nodeName = node.name;
-  const nodeIdAttrFieldName = node.metadata.identifierAttributeField;
-  console.assert(nodeIdAttrFieldName !== undefined);
-  const ids = [];
-
-  const features = this.featuresCache_[nodeId];
-  for (let i = 0, ii = features.length; i < ii; i++) {
-    ids.push(
-      features[i].get(nodeIdAttrFieldName)
-    );
-  }
-
-  const params = {};
-  params.wfs_layer = nodeName;
-  params[`wfs_${nodeIdAttrFieldName}`] = ids.join(',');
-
-  const url = MainController.appendParams(baseUrl, params);
   window.open(url);
 };
 
