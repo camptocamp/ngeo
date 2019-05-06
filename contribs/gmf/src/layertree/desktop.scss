@@ -62,10 +62,16 @@ gmf-layertree {
     padding: $half-app-margin;
   }
 
-  .gmf-layertree-group:hover,
-  .gmf-layertree-leaf:hover {
-    .gmf-layertree-right-buttons {
-      display: block;
+  .gmf-layertree-group, .gmf-layertree-leaf {
+    &:hover {
+      .gmf-layertree-right-buttons {
+        display: block;
+      }
+    }
+    &.off {
+      .extra-actions {
+        display: none;
+      }
     }
   }
 
