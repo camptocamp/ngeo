@@ -53,8 +53,7 @@
     fill: $color;
   }
 
-  .off,
-  .off .gmf-layertree-legend img {
+  .off {
     opacity: 0.5;
   }
 
@@ -162,6 +161,11 @@
     position: relative;
     border: 0.06rem solid $main-bg-color;
     background-color: lighten($main-bg-color, 8%);
+
+    .off {
+      opacity: 0.5;
+    }
+
     a {
       display: none;
       position: absolute;
