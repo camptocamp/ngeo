@@ -45,7 +45,7 @@ Print | PDF | X | -
 Drawing/measure | Drawing | X | -
 . | Measure point | X | X
 . | Measure line | X | X
-. | Measure polygon | X | -
+. | Measure polygon | X | 2.4
 . | Measure circle/azimuth | X | -
 . | Measure rectangle | X | -
 Filters | Spatial filter | X | -
