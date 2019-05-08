@@ -162,8 +162,14 @@
     border: 0.06rem solid $main-bg-color;
     background-color: lighten($main-bg-color, 8%);
 
-    .off {
-      opacity: 0.5;
+    display: none;
+    &.show {
+      // legend is displayed
+      display: block;
+      &.off {
+        // legend is displayed but the layer is not visible
+        display: none;
+      }
     }
 
     a {
