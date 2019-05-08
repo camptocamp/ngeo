@@ -1083,7 +1083,9 @@ class SearchController {
     const menu = this.element_.find('.twitter-typeahead .tt-menu');
     const message = menu.children('.gmf-search-no-results');
     if (message.length == 0) {
-      const div = $('<div class="gmf-search-no-results" translate>No result found</div>');
+      const gettextCatalog = this.gettextCatalog_;
+      const innerHTML = gettextCatalog.getString('No result found');
+      const div = $(`<div class="gmf-search-no-results" translate>${innerHTML}</div>`);
       menu.append(div);
     }
     if (empty) {
