@@ -271,8 +271,9 @@ class Map {
         for (const line of lines) {
           if (line) {
             const values = zip(columns, line.split('\t'));
+            // reverse to order of the coordinates to be compatible with the old api.
             const marker = new Feature({
-              geometry: new Point(values.point.split(',').map(parseFloat))
+              geometry: new Point(values.point.split(',').reverse().map(parseFloat))
             });
             marker.setProperties(filterByKeys(values, attr));
             marker.setId(values.id);
