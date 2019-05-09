@@ -630,13 +630,11 @@ function encodeStylePolygon_(fillStyle, strokeStyle, encodedStyles) {
  * styles's array.
  * @param {import("ol/style/Fill.js").default} fillStyle Fill style.
  * @param {Array<string>} encodedStyles Encoded styles array.
- * @param {string=} opt_propertyName Property name.
+ * @param {string=} [propertyName='fillColor'] Property name.
  * @private
  * @hidden
  */
-function encodeStyleFill_(fillStyle, encodedStyles, opt_propertyName) {
-  const propertyName = opt_propertyName !== undefined ?
-    opt_propertyName : 'fillColor';
+function encodeStyleFill_(fillStyle, encodedStyles, propertyName = 'fillColor') {
   const fillColor = fillStyle.getColor();
   let fillColorHex;
   if (fillColor !== null) {
