@@ -373,18 +373,16 @@ class Measure extends olInteractionInteraction {
    */
   removeHelpTooltip_() {
     if (this.displayHelpTooltip_) {
-      if (!this.helpTooltipOverlay_) {
-        throw new Error('Missing helpTooltipOverlay');
+      if (this.helpTooltipOverlay_ !== null) {
+        this.getMap().removeOverlay(this.helpTooltipOverlay_);
+        this.helpTooltipOverlay_ = null;
       }
-      this.getMap().removeOverlay(this.helpTooltipOverlay_);
       if (this.helpTooltipElement_ !== null) {
-        if (!this.helpTooltipElement_.parentNode) {
-          throw new Error('Missing helpTooltipElement_.parentNode');
+        if (this.helpTooltipElement_.parentNode) {
+          this.helpTooltipElement_.parentNode.removeChild(this.helpTooltipElement_);
         }
-        this.helpTooltipElement_.parentNode.removeChild(this.helpTooltipElement_);
+        this.helpTooltipElement_ = null;
       }
-      this.helpTooltipElement_ = null;
-      this.helpTooltipOverlay_ = null;
     }
   }
 
