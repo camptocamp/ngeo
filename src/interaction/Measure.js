@@ -300,13 +300,9 @@ class Measure extends olInteractionInteraction {
     });
 
     this.postcomposeEventKey_ = olEvents.listen(this.getMap(), 'postcompose', () => {
-      if (!this.measureTooltipOverlay_) {
-        throw new Error('Missing measureTooltipOverlay');
+      if (this.measureTooltipOverlay_ && this.measureTooltipOverlayCoord_) {
+        this.measureTooltipOverlay_.setPosition(this.measureTooltipOverlayCoord_);
       }
-      if (!this.measureTooltipOverlayCoord_) {
-        throw new Error('Missing measureTooltipOverlayCoord');
-      }
-      this.measureTooltipOverlay_.setPosition(this.measureTooltipOverlayCoord_);
     });
   }
 
