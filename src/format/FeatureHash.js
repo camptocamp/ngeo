@@ -3,6 +3,7 @@
 import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties.js';
 import ngeoFormatFeatureHashStyleType from 'ngeo/format/FeatureHashStyleType.js';
 import {rgbArrayToHex} from 'ngeo/utils.js';
+import {asArray as asColorArray} from 'ol/color.js';
 import olFeature from 'ol/Feature.js';
 import * as olFormatFeature from 'ol/format/Feature.js';
 import olFormatTextFeature from 'ol/format/TextFeature.js';
@@ -629,25 +630,25 @@ function encodeStylePolygon_(fillStyle, strokeStyle, encodedStyles) {
  * styles's array.
  * @param {import("ol/style/Fill.js").default} fillStyle Fill style.
  * @param {Array<string>} encodedStyles Encoded styles array.
- * @param {string=} opt_propertyName Property name.
+ * @param {string=} [propertyName='fillColor'] Property name.
  * @private
  * @hidden
  */
-function encodeStyleFill_(fillStyle, encodedStyles, opt_propertyName) {
-  const propertyName = opt_propertyName !== undefined ?
-    opt_propertyName : 'fillColor';
+function encodeStyleFill_(fillStyle, encodedStyles, propertyName = 'fillColor') {
   const fillColor = fillStyle.getColor();
+  let fillColorHex;
   if (fillColor !== null) {
     if (Array.isArray(fillColor)) {
-      const fillColorHex = rgbArrayToHex(fillColor);
-      if (encodedStyles.length > 0) {
-        encodedStyles.push('\'');
-      }
-      encodedStyles.push(
-        encodeURIComponent(`${propertyName}*${fillColorHex}`));
+      fillColorHex = rgbArrayToHex(fillColor);
+    } else if (typeof fillColor === 'string') {
+      fillColorHex = rgbArrayToHex(asColorArray(fillColor));
     } else {
-      console.assert(false, 'only supporting fill colors');
+      throw new Error('Unsupported color');
     }
+    if (encodedStyles.length > 0) {
+      encodedStyles.push('\'');
+    }
+    encodedStyles.push(encodeURIComponent(`${propertyName}*${fillColorHex}`));
   }
 }
 
