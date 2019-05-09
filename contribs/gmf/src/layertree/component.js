@@ -431,11 +431,10 @@ Controller.prototype.listeners = function(scope, treeCtrl) {
   }
   const dataLayerGroup = this.dataLayerGroup_;
   scope.$on('$destroy', () => {
-    if (!treeCtrl.layer) {
-      throw new Error('Missing treeCtrl.layer');
+    if (treeCtrl.layer) {
+      // Remove the layer from the map.
+      dataLayerGroup.getLayers().remove(treeCtrl.layer);
     }
-    // Remove the layer from the map.
-    dataLayerGroup.getLayers().remove(treeCtrl.layer);
   });
 };
 
