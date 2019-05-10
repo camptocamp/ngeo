@@ -352,7 +352,7 @@ class FilterController {
 
   /**
    * Loop in all directed and custom rules and collect those with a value.
-   * @return {Array.<!import("ngeo/rule/Rule.js").default>} Rules with value.
+   * @return {Array<!import("ngeo/rule/Rule.js").default>} Rules with value.
    * @private
    */
   getRulesWithValue_() {

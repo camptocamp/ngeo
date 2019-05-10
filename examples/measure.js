@@ -111,15 +111,15 @@ function MeasuretoolsController($scope, $compile, $sce,
     'fr': $sce.trustAsHtml('Cliquer pour commencer à dessiner.')
   };
   const measureLengthContinueMsgs = {
-    'en': $sce.trustAsHtml('Click to continue drawing.<br>' +
+    'en': $sce.trustAsHtml('Click to continue drawing<br>' +
         'Double-click or click last point to finish.'),
-    'fr': $sce.trustAsHtml('Cliquer pour continuer le dessin.<br>' +
+    'fr': $sce.trustAsHtml('Cliquer pour continuer le dessin<br>' +
         'Double-cliquer ou cliquer sur dernier point pour finir.')
   };
   const measureAreaContinueMsgs = {
-    'en': $sce.trustAsHtml('Click to continue drawing.<br>' +
+    'en': $sce.trustAsHtml('Click to continue drawing<br>' +
         'Double-click or click starting point to finish.'),
-    'fr': $sce.trustAsHtml('Cliquer pour continuer le dessin.<br>' +
+    'fr': $sce.trustAsHtml('Cliquer pour continuer le dessin<br>' +
         'Double-cliquer ou cliquer sur point de départ pour finir.')
   };
   const measureAzimutContinueMsgs = {

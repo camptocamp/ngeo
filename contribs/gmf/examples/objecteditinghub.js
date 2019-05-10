@@ -111,7 +111,7 @@ function MainController($http, $q, $scope, gmfThemes, gmfXSDAttributes) {
   this.selectedGmfLayerNode = null;
 
   /**
-   * @type {Object<number, Array.<import("ol/Feature.js").default>>}
+   * @type {Object<number, Array<import("ol/Feature.js").default>>}
    */
   this.featuresCache_ = {};
 
@@ -308,7 +308,7 @@ MainController.prototype.issueGetFeatures_ = function(gmfLayerNode) {
  * @private
  */
 MainController.prototype.handleGetFeatures_ = function(gmfLayerNode) {
-  const features = /** @type Array.<import("ol/Feature.js").default> */ (
+  const features = /** @type Array<import("ol/Feature.js").default> */ (
     this.getFeaturesFromCache_(gmfLayerNode));
   this.features = features;
   this.selectedFeature = this.features[0];
@@ -317,7 +317,7 @@ MainController.prototype.handleGetFeatures_ = function(gmfLayerNode) {
 
 /**
  * @param {import('gmf/themes.js').GmfLayerWMS} gmfLayerNode Layer node.
- * @return {?Array.<import("ol/Feature.js").default>} List of features
+ * @return {?Array<import("ol/Feature.js").default>} List of features
  * @private
  */
 MainController.prototype.getFeaturesFromCache_ = function(gmfLayerNode) {

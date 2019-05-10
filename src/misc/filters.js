@@ -408,7 +408,7 @@ module.filter('ngeoTrustHtml', trustHtmlFilter);
  * @ngInject
  * @ngdoc filter
  * @param {angular.ISCEService} $sce Angular sce service.
- * @param {!Array.<!StringToHtmlReplacement>}
+ * @param {!Array<!StringToHtmlReplacement>}
  *     ngeoStringToHtmlReplacements List of replacements for string to html.
  * @ngname ngeoTrustHtmlAuto
  */
@@ -540,7 +540,7 @@ module.filter('ngeoDuration', DurationFilter);
 
 
 /**
- * @type {!Array.<!StringToHtmlReplacement>}
+ * @type {!Array<!StringToHtmlReplacement>}
  * @ngname ngeoStringToHtmlReplacements
  * @hidden
  */

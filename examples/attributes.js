@@ -33,7 +33,7 @@ function MainController($http, $timeout, $scope) {
   this.timeout_ = $timeout;
 
   /**
-   * @type {?Array.<import('ngeo/format/Attribute.js').Attribute>}
+   * @type {?Array<import('ngeo/format/Attribute.js').Attribute>}
    */
   this.attributes = null;
 
@@ -83,7 +83,7 @@ function MainController($http, $timeout, $scope) {
 
 /**
  * @param {angular.IHttpResponse<string|Document|Element>} resp Ajax response.
- * @return {Array.<import('ngeo/format/Attribute.js').Attribute>} List of attributes.
+ * @return {Array<import('ngeo/format/Attribute.js').Attribute>} List of attributes.
  * @private
  */
 MainController.prototype.handleXSDAttributeGet_ = function(resp) {

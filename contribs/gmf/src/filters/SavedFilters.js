@@ -42,7 +42,7 @@ export class SavedFilter {
     this.currentDataSourceId_ = null;
 
     /**
-     * @type {!Array.<!SavedFilterItem>}
+     * @type {!Array<!SavedFilterItem>}
      * @private
      */
     this.currentDataSourceItems_ = [];
@@ -73,7 +73,7 @@ export class SavedFilter {
     }
 
     /**
-     * @type {!Array.<!SavedFilterItem>}
+     * @type {!Array<!SavedFilterItem>}
      * @private
      */
     this.items_ = [];
@@ -92,7 +92,7 @@ export class SavedFilter {
   }
 
   /**
-   * @return {!Array.<!SavedFilterItem>} Items
+   * @return {!Array<!SavedFilterItem>} Items
    */
   get currentDataSourceItems() {
     return this.currentDataSourceItems_;
@@ -107,7 +107,7 @@ export class SavedFilter {
   }
 
   /**
-   * @return {!Array.<!SavedFilterItem>} Items
+   * @return {!Array<!SavedFilterItem>} Items
    */
   get items() {
     return this.items_;
@@ -235,7 +235,7 @@ SavedFilterItem.prototype.condition;
 
 /**
  * The list of custom rules of the saved filter item.
- * @type {!Array.<!import("ngeo/filter/RuleHelper.js").AnyOptions>}
+ * @type {!Array<!import("ngeo/filter/RuleHelper.js").AnyOptions>}
  */
 SavedFilterItem.prototype.customRules;
 
@@ -249,7 +249,7 @@ SavedFilterItem.prototype.dataSourceId;
 
 /**
  * The list of directed rules of the saved filter item.
- * @type {!Array.<!import("ngeo/filter/RuleHelper.js").AnyOptions>}
+ * @type {!Array<!import("ngeo/filter/RuleHelper.js").AnyOptions>}
  */
 SavedFilterItem.prototype.directedRules;
 

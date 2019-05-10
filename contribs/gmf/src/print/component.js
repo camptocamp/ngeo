@@ -189,13 +189,13 @@ function gmfPrintTemplateUrl($element, $attrs, gmfPrintTemplateUrl) {
  *     panel is open or not.
  * @htmlAttribute {boolean} gmf-print-rotatemask Optional. True to apply
  *     rotation on the mask instead of the map. By default, the map rotates.
- * @htmlAttribute {Object.<string, string|number|boolean>}
+ * @htmlAttribute {Object<string, string|number|boolean>}
  *     gmf-print-fieldvalues optional. Key, value object to define default
  *     value in each of your print panel field. The key refers to the
  *     property's name of the field.
  *     Example: {'comments': 'demo', 'legend': false}. Doesn't work for the dpi
  *     and the scale. Server's values are used in priority.
- * @htmlAttribute {Array.<string>} gmf-print-hiddenattributes The list of attributes that should be hidden.
+ * @htmlAttribute {Array<string>} gmf-print-hiddenattributes The list of attributes that should be hidden.
  * @ngdoc component
  * @ngname gmfPrint
  */
@@ -220,8 +220,8 @@ module.component('gmfPrint', printComponent);
 /**
  * @typedef {Object} OptionsLegendType
  * @property {boolean} [useBbox]
- * @property {Object.<string, boolean>} label
- * @property {Object.<string, Object.<string, string>>} params
+ * @property {Object<string, boolean>} label
+ * @property {Object<string, Object<string, string>>} params
  */
 
 

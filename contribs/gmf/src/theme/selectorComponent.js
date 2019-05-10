@@ -64,7 +64,7 @@ function gmfThemeSelectorTemplateUrl($attrs, gmfThemeSelectorTemplateUrl) {
  *          <span class="fa fa-grid"></span>
  *          <span ng-if="mainCtrl.gmfThemeManager.modeFlush">
  *            <span translate>Theme:</span>
- *            <b ng-if="!mainCtrl.gmfThemeManager.getThemeName()" translate>Loading...</b>
+ *            <b ng-if="!mainCtrl.gmfThemeManager.getThemeName()" translate>Loading..</b>
  *            <b ng-if="mainCtrl.gmfThemeManager.getThemeName()">
  *              {{mainCtrl.gmfThemeManager.getThemeName()|translate}}
  *            </b>

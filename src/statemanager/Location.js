@@ -52,13 +52,13 @@ export function StatemanagerLocation(location, history) {
   this.path_ = location.pathname;
 
   /**
-   * @type {!Object.<string, string>}
+   * @type {!Object<string, string>}
    * @private
    */
   this.queryData_ = decodeQueryString(location.search);
 
   /**
-   * @type {!Object.<string, string>}
+   * @type {!Object<string, string>}
    * @private
    */
   this.fragment_ = decodeQueryString(location.hash);
@@ -225,7 +225,7 @@ StatemanagerLocation.prototype.getFragmentParamAsInt = function(key) {
 
 /**
  * Get an array with all existing param's keys in the location's URI.
- * @return {Array.<string>} Param keys.
+ * @return {Array<string>} Param keys.
  */
 StatemanagerLocation.prototype.getParamKeys = function() {
   const keys = [];
@@ -238,7 +238,7 @@ StatemanagerLocation.prototype.getParamKeys = function() {
 
 /**
  * Get an array with all existing param's keys from the fragment of the location's URI.
- * @return {Array.<string>} Param keys.
+ * @return {Array<string>} Param keys.
  */
 StatemanagerLocation.prototype.getFragmentParamKeys = function() {
   const keys = [];
@@ -253,7 +253,7 @@ StatemanagerLocation.prototype.getFragmentParamKeys = function() {
  * Get an array with all existing param's keys in the location's URI that start
  * with the given prefix.
  * @param {string} prefix Key prefix.
- * @return {Array.<string>} Param keys.
+ * @return {Array<string>} Param keys.
  */
 StatemanagerLocation.prototype.getParamKeysWithPrefix = function(prefix) {
   const keys = [];
@@ -270,7 +270,7 @@ StatemanagerLocation.prototype.getParamKeysWithPrefix = function(prefix) {
  * Get an array with all existing param's keys from the fragment of the location's URI
  * that start with the given prefix.
  * @param {string} prefix Key prefix.
- * @return {Array.<string>} Param keys.
+ * @return {Array<string>} Param keys.
  */
 StatemanagerLocation.prototype.getFragmentParamKeysWithPrefix = function(prefix) {
   const keys = [];
@@ -285,7 +285,7 @@ StatemanagerLocation.prototype.getFragmentParamKeysWithPrefix = function(prefix)
 
 /**
  * Set or create a param in the location's URI.
- * @param {!Object.<string, string>} params Parameters.
+ * @param {!Object<string, string>} params Parameters.
  */
 StatemanagerLocation.prototype.updateParams = function(params) {
   for (const key in params) {
@@ -296,7 +296,7 @@ StatemanagerLocation.prototype.updateParams = function(params) {
 
 /**
  * Set or create a param in the fragment of the location's URI.
- * @param {!Object.<string, string>} params Parameters.
+ * @param {!Object<string, string>} params Parameters.
  */
 StatemanagerLocation.prototype.updateFragmentParams = function(params) {
   for (const key in params) {

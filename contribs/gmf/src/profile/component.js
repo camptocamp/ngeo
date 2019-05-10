@@ -32,7 +32,7 @@ import 'bootstrap/js/src/dropdown.js';
  * @typedef {Object} ProfileHoverPointInformations
  * @property {import("ol/coordinate.js").Coordinate} [coordinate] Coordinate of the point.
  * @property {number} [distance] distance of the point on the line. Can be in meters or kilometers.
- * @property {Object.<string, number>} [elevations] Elevations of the point (example:
+ * @property {Object<string, number>} [elevations] Elevations of the point (example:
  *    {aster: 556.5, srtm: 560}).
  * @property {string} [xUnits] Units of the x axis.
  * @property {string} [yUnits] Units of the y axis.
@@ -110,14 +110,14 @@ function gmfProfileTemplateUrl($element, $attrs, gmfProfileTemplateUrl) {
  * @htmlAttribute {import("ol/geom/LineString.js").default} gmf-profile-line The linestring geometry
  *     to use to draw the profile.
  * @htmlAttribute {import("ol/Map.js").default?} gmf-profile-map An optional map.
- * @htmlAttribute {Object.<string, ProfileLineConfiguration>}
+ * @htmlAttribute {Object<string, ProfileLineConfiguration>}
  *     gmf-profile-linesconfiguration The configuration of the lines. Each keys
  *     will be used to request elevation layers.
  * @htmlAttribute {import("ol/style/Style.js").default?} gmf-profile-hoverpointstyle Optional style
  *     for the 'on Hover' point on the line.
  * @htmlAttribute {number?} gmf-profile-numberofpoints Optional maximum limit of
  *     points to request. Default to 100.
- * @htmlAttribute {Object.<string, *>?} gmf-profile-options Optional options
+ * @htmlAttribute {Object<string, *>?} gmf-profile-options Optional options
  *     object like {@link import('ngeo/profile/elevationComponent.js').ProfileOptions} but without any
  *     mandatory value. Will be passed to the ngeo profile component. Providing
  *     'linesConfiguration', 'distanceExtractor', hoverCallback, outCallback
@@ -489,7 +489,7 @@ ProfileController.prototype.getDistanceOnALine_ = function(pointOnLine) {
  * @param {Object} point Point.
  * @param {number} dist distance on the line.
  * @param {string} xUnits X units label.
- * @param {Object.<string, number>} elevationsRef Elevations references.
+ * @param {Object<string, number>} elevationsRef Elevations references.
  *  @param {string} yUnits Y units label.
  * @private
  */
@@ -623,7 +623,7 @@ ProfileController.prototype.getStyle = function(layerName) {
 
 /**
  * Return a copy of the existing layer names.
- * @return {Array.<string>} The names of layers.
+ * @return {Array<string>} The names of layers.
  */
 ProfileController.prototype.getLayersNames = function() {
   return this.layersNames_.slice(0);
@@ -730,7 +730,7 @@ ProfileController.prototype.downloadCsv = function() {
     return;
   }
 
-  /** @type {Array.<import('ngeo/download/Csv.js').GridColumnDef>} */
+  /** @type {Array<import('ngeo/download/Csv.js').GridColumnDef>} */
   const headers = [];
   let hasDistance = false;
   const firstPoint = this.profileData[0];

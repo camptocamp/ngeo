@@ -40,7 +40,7 @@ export class DataSource {
     this.map_ = null;
 
     /**
-     * @type {!Array.<!import("ol/events.js").EventsKey>}
+     * @type {!Array<!import("ol/events.js").EventsKey>}
      * @private
      */
     this.listenerKeys_ = [];

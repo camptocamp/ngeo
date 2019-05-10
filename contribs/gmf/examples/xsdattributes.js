@@ -50,7 +50,7 @@ function MainController($timeout, gmfThemes, gmfXSDAttributes) {
   this.xsdAttributes_ = gmfXSDAttributes;
 
   /**
-   * @type {?Array.<import('ngeo/format/Attribute.js').Attribute>}
+   * @type {?Array<import('ngeo/format/Attribute.js').Attribute>}
    */
   this.attributes = null;
 
@@ -60,7 +60,7 @@ function MainController($timeout, gmfThemes, gmfXSDAttributes) {
   this.feature = null;
 
   /**
-   * @type {Array.<import('gmf/themes.js').GmfLayer>}
+   * @type {Array<import('gmf/themes.js').GmfLayer>}
    */
   this.layers = [];
 
@@ -95,7 +95,7 @@ function MainController($timeout, gmfThemes, gmfXSDAttributes) {
 
 /**
  * @param {import('gmf/themes.js').GmfLayer|undefined} value A layer or undefined to get layers.
- * @return {Array.<import('gmf/themes.js').GmfLayer>} All layers in all themes.
+ * @return {Array<import('gmf/themes.js').GmfLayer>} All layers in all themes.
  */
 MainController.prototype.getSetLayers = function(value) {
   if (value !== undefined && value !== null) {
@@ -106,7 +106,7 @@ MainController.prototype.getSetLayers = function(value) {
 
 
 /**
- * @param {Array.<import('ngeo/format/Attribute.js').Attribute>} attributes Attributes.
+ * @param {Array<import('ngeo/format/Attribute.js').Attribute>} attributes Attributes.
  */
 MainController.prototype.setAttributes_ = function(attributes) {
 

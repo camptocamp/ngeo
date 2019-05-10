@@ -79,7 +79,7 @@ export default class extends olInteractionInteraction {
 
     /**
      * Previous sketch points, saved to be able to display them on the layer.
-     * @type {Array.<import("ol/Feature.js").default>}
+     * @type {Array<import("ol/Feature.js").default>}
      * @private
      */
     this.sketchPoints_ = [];

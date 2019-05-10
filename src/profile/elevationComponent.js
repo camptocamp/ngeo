@@ -56,7 +56,7 @@ import {select as d3select} from 'd3';
  * @property {ProfileFormatter} [formatter] Formatter giving full control on how numbers are formatted.
  * @property {function(Object): number} distanceExtractor Extract the distance from origin of a point (an
  * item of the elevation data array).
- * @property {!Object.<string, LineConfiguration>} linesConfiguration Configuration object for the profile's
+ * @property {!Object<string, LineConfiguration>} linesConfiguration Configuration object for the profile's
  * lines. The key string of each object is used as class for its respective svg line.
  * @property {PoiExtractor} [poiExtractor] Extractor for parsing POI data.
  * @property {boolean} [light] Show a simplified profile when true.
@@ -93,7 +93,7 @@ const module = angular.module('ngeoProfile', [
  *
  * Where `ctrl.profileOptions` is of type {@link ProfileOptions}; `ctrl.profileData` and `ctrl.profilePois`
  * are arrays which will be processed by `distanceExtractor` `{function(Object): number}`,
- * `linesConfiguration` `{Object.<string, LineConfiguration>}` {@link LineConfiguration} and
+ * `linesConfiguration` `{Object<string, LineConfiguration>}` {@link LineConfiguration} and
  * {@link PoiExtractor}.
  *
  * See our live example: [../examples/profile.html](../examples/profile.html)

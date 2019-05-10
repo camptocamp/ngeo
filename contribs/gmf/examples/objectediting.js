@@ -90,7 +90,7 @@ function MainController(gmfObjectEditingManager, gmfThemes,
   });
 
   /**
-   * @type {import("ol/Collection.js").default.<import("ol/Feature.js").default>}
+   * @type {import("ol/Collection.js").default<import("ol/Feature.js").default>}
    */
   this.sketchFeatures = new olCollection();
 

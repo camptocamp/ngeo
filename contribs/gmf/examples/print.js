@@ -68,7 +68,7 @@ function MainController(gmfThemes, ngeoFeatureOverlayMgr) {
   });
 
   /**
-   * @type {Object.<string, string|number|boolean>}
+   * @type {Object<string, string|number|boolean>}
    */
   this.defaulPrintFieldstValues = {
     'comments': 'Default comments example',
@@ -76,7 +76,7 @@ function MainController(gmfThemes, ngeoFeatureOverlayMgr) {
   };
 
   /**
-   * @type {Array.<Object>|undefined}
+   * @type {Array<Object>|undefined}
    */
   this.themes = undefined;
 

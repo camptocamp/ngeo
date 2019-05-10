@@ -517,7 +517,7 @@ function Controller($element, $q, $scope, $timeout,
   this.serverErrorType = null;
 
   /**
-   * @type {?Array.<number>}
+   * @type {?Array<number>}
    * @private
    */
   this.vertexInfo_ = null;
@@ -1242,7 +1242,7 @@ Controller.prototype.handleMapContextMenu_ = function(evt) {
 
 
 /**
- * @param {Array.<import("ol/Feature.js").default>} features Features.
+ * @param {Array<import("ol/Feature.js").default>} features Features.
  * @private
  */
 Controller.prototype.handleGetFeatures_ = function(features) {

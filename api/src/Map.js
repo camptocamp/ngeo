@@ -248,7 +248,7 @@ class Map {
 
   /**
    * @param {string} layer Name of the layer to fetch the features from
-   * @param {Array.<string>} ids List of ids
+   * @param {Array<string>} ids List of ids
    * @param {boolean} [highlight=false] Whether to add the features on
    *     the map or not.
    */
@@ -283,7 +283,7 @@ class Map {
    * @param {string} name Name.
    * @param {string} url URL.
    * @param {Object} [options] Options
-   * @property {Array.<string>} [attr=['title', 'description']]
+   * @property {Array<string>} [attr=['title', 'description']]
    * @property {function()} [success]
    * @property {function()} [error]
    */

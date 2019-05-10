@@ -160,7 +160,7 @@ module.controller('AppLayertreeController', LayertreeController);
  */
 const getLayer = (function() {
   /**
-   * @type {Object.<string, import("ol/layer/Layer.js").default>}
+   * @type {Object<string, import("ol/layer/Layer.js").default>}
    */
   const layerCache = {};
   return (

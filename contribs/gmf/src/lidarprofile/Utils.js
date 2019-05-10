@@ -70,8 +70,8 @@ export default class {
    * @param {number} dRight domain maximum
    * @return {{
    *     bufferGeom: olFeature,
-   *     bufferStyle: Array.<olStyleStyle>,
-   *     clippedLine: Array.<import("ol/coordinate.js").Coordinate>,
+   *     bufferStyle: Array<olStyleStyle>,
+   *     clippedLine: Array<import("ol/coordinate.js").Coordinate>,
    *     distanceOffset: number
    * }} Object with clipped lined coordinates and left domain value
    */
@@ -288,7 +288,7 @@ export default class {
   /**
    * Transforms a lidarprofile into multiple single points sorted by distance.
    * @param {LidarprofilePoints} profilePoints in the profile
-   * @return {Array.<LidarPoint>} An array of Lidar Points.
+   * @return {Array<LidarPoint>} An array of Lidar Points.
    */
   getFlatPointsByDistance(profilePoints) {
     const points = [];

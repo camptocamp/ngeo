@@ -75,7 +75,7 @@ function MainController(gmfThemes, ngeoFeatureOverlayMgr, ngeoNotification) {
   const fill = new olStyleFill({color: [255, 255, 255, 0.6]});
   const stroke = new olStyleStroke({color: [255, 0, 0, 1], width: 2});
   /**
-   * @type {Object.<string, import("ol/style/Style.js").default>} Map of styles for search overlay.
+   * @type {Object<string, import("ol/style/Style.js").default>} Map of styles for search overlay.
    */
   this.searchStyles = {
     'osm': new olStyleStyle({

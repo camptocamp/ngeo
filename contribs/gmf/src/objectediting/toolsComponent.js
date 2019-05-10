@@ -111,7 +111,7 @@ module.value('gmfObjectEditingToolsOptions', {});
  *     Queryable layer information.
  * @htmlAttribute {boolean} gmf-objectediting-requireslayer Flag that determines
  *     if the currently active tool requires a queryable layer or not.
- * @htmlAttribute {import("ol/Collection.js").default.<import("ol/Feature.js").default>} gmf-objectediting-sketchfeatures
+ * @htmlAttribute {import("ol/Collection.js").default<import("ol/Feature.js").default>} gmf-objectediting-sketchfeatures
  *     Collection of temporary features being drawn by the tools.
  * @return {angular.IDirective} The directive specs.
  * @ngInject
@@ -210,7 +210,7 @@ function Controller($injector, $scope, ngeoToolActivateMgr) {
   this.requiresLayer = false;
 
   /**
-   * @type {?import("ol/Collection.js").default.<import("ol/Feature.js").default>}
+   * @type {?import("ol/Collection.js").default<import("ol/Feature.js").default>}
    */
   this.sketchFeatures = null;
 

@@ -11,7 +11,7 @@ import angular from 'angular';
 /**
  * @typedef {Object} RoutingOptions
  * @property {string} [backendUrl]
- * @property {Array.<RoutingProfile>} [profiles]
+ * @property {Array<RoutingProfile>} [profiles]
  */
 
 
@@ -102,7 +102,7 @@ export function RoutingService($http, $injector) {
 
 /**
  * Route request
- * @param {Array.<import("ol/coordinate.js").Coordinate>} coordinates coordinates of the route (at least two!)
+ * @param {Array<import("ol/coordinate.js").Coordinate>} coordinates coordinates of the route (at least two!)
  * @param {?Config} config optional configuration
  * @return {angular.IHttpPromise<Routes>} promise of the OSRM API request
  */

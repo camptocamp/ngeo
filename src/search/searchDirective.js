@@ -28,7 +28,7 @@ import angular from 'angular';
  * See our live example: [../examples/search.html](../examples/search.html)
  *
  * @htmlAttribute {Twitter.Typeahead.Options} ngeo-search The options.
- * @htmlAttribute {Array.<Twitter.Typeahead.Dataset>} ngeo-search-datasets The sources datasets.
+ * @htmlAttribute {Array<Twitter.Typeahead.Dataset>} ngeo-search-datasets The sources datasets.
  * @htmlAttribute {SearchDirectiveListeners} ngeo-search-listeners The listeners.
  * @return {angular.IDirective} Directive Definition Object.
  * @ngInject

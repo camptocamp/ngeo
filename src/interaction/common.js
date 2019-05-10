@@ -8,7 +8,7 @@ import {createEditingStyle} from 'ol/style/Style.js';
 
 
 /**
- * @typedef {import("ngeo/CustomEvent.js").default.<DrawEventItem>} DrawEvent
+ * @typedef {import("ngeo/CustomEvent.js").default<DrawEventItem>} DrawEvent
  */
 
 

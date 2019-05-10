@@ -130,7 +130,7 @@ function Controller($scope, ngeoBackgroundLayerMgr, gmfThemes) {
   this.bgLayer = null;
 
   /**
-   * @type {?Array.<!import("ol/layer/Base.js").default>}
+   * @type {?Array<!import("ol/layer/Base.js").default>}
    */
   this.bgLayers = null;
 
@@ -146,7 +146,7 @@ function Controller($scope, ngeoBackgroundLayerMgr, gmfThemes) {
   this.gmfThemes_ = gmfThemes;
 
   /**
-   * @type {!Array.<!import("ol/events.js").EventsKey>}
+   * @type {!Array<!import("ol/events.js").EventsKey>}
    * @private
    */
   this.listenerKeys_ = [];

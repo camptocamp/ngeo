@@ -167,7 +167,7 @@ MainController.prototype.handleMapSingleClick_ = function(evt) {
 
 
 /**
- * @param {Array.<import("ol/Feature.js").default>} features Features.
+ * @param {Array<import("ol/Feature.js").default>} features Features.
  * @private
  */
 MainController.prototype.handleGetFeatures_ = function(features) {
@@ -194,7 +194,7 @@ MainController.prototype.insertFeature = function() {
     throw new Error('Missing resolution');
   }
   const buffer = resolution * -50; // 50 pixel buffer inside the extent
-  const size = /** @type {!Array.<number>} */ (map.getSize());
+  const size = /** @type {!Array<number>} */ (map.getSize());
   const extent = olExtent.buffer(
     view.calculateExtent(size),
     buffer

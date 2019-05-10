@@ -5,14 +5,14 @@ import ngeoRuleRule, {RuleOperatorType} from 'ngeo/rule/Rule.js';
 /**
  * extends import('ngeo/rule/Rule.js').RuleOptions
  * @typedef {Object} SelectOptions
- * @property {Array.<string>} choices List of choices available for selection.
+ * @property {Array<string>} choices List of choices available for selection.
  * @property {boolean} [active=false] (RuleOptions)
  * @property {number|string} [expression] (RuleOptions)
  * @property {boolean} [isCustom] (RuleOptions)
  * @property {number} [lowerBoundary] (RuleOptions)
  * @property {string} name (RuleOptions)
  * @property {string} [operator] (RuleOptions)
- * @property {Array.<string>} [operators] (RuleOptions)
+ * @property {Array<string>} [operators] (RuleOptions)
  * @property {string} propertyName (RuleOptions)
  * @property {string} [type] (RuleOptions)
  * @property {number} [upperBoundary] (RuleOptions)
@@ -43,7 +43,7 @@ export default class extends ngeoRuleRule {
     // === STATIC properties (i.e. that never change) ===
 
     /**
-     * @type {Array.<string>}
+     * @type {Array<string>}
      * @private
      */
     this.choices_ = options.choices;
@@ -52,7 +52,7 @@ export default class extends ngeoRuleRule {
   // === Static property getters/setters ===
 
   /**
-   * @return {Array.<string>} Choices
+   * @return {Array<string>} Choices
    */
   get choices() {
     return this.choices_;

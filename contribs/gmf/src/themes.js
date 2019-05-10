@@ -54,7 +54,7 @@
  * @property {number} id (GmfBaseNode)
  * @property {!GmfMetaData} metadata (GmfBaseNode)
  * @property {string} name (GmfBaseNode)
- * @property {!Array.<!GmfGroup|!GmfLayer>} children
+ * @property {!Array<!GmfGroup|!GmfLayer>} children
  * @property {!import('ngeo/datasource/OGC.js').Dimensions} dimensions The dimensions managed by the
  *      OpenLayers layer, if the value is null we will take the dimension from the application.
  *      This is present only on non mixed first level group.
@@ -163,11 +163,11 @@
 
 /**
  * @typedef {Object} GmfFunctionalities
- * @property {Array.<!string>} [default_basemap] The default base map.
- * @property {Array.<!string>} [open_panel] When set, contains the name of the panel to open upon loading an
+ * @property {Array<!string>} [default_basemap] The default base map.
+ * @property {Array<!string>} [open_panel] When set, contains the name of the panel to open upon loading an
  *      application.
  *      Note: although this is a list, only one can be defined.
- * @property {Array.<!string>} [preset_layer_filter] Name of the layer (data source) that should be toggled
+ * @property {Array<!string>} [preset_layer_filter] Name of the layer (data source) that should be toggled
  *      in the filter tool upon loading an application.
  *      Note: although this is a list, only one can be defined.
  */
@@ -177,11 +177,11 @@
  * @typedef {Object} GmfMetaData
  * @property {boolean} [copyable=false] Whether the geometry from this data source can be copied to other data
  *      sources or not. For WMS layers.
- * @property {Array.<string>} [directedFilterAttributes] List of attribute names which should have rules
+ * @property {Array<string>} [directedFilterAttributes] List of attribute names which should have rules
  *      already ready when using the filter tools. For WMS layers.
  * @property {string} [disclaimer] The disclaimer text for this element.
  *      For WMS and WMTS layers, layer groups and themes.
- * @property {Array.<string>} [enumeratedAttributes] List of attribute names which have enumerated attribute
+ * @property {Array<string>} [enumeratedAttributes] List of attribute names which have enumerated attribute
  *      values (for filters purpose). For WMS layers.
  * @property {boolean} [exclusiveGroup=false] Whether the group contain children that have to be mutually
  *      exclusive, meaning that only one child may be ON at any time.
@@ -238,7 +238,7 @@
 
 /**
  * @typedef {Object} GmfLayerAttributeValuesResponse
- * @property {Array.<GmfLayerAttributeValue>} items
+ * @property {Array<GmfLayerAttributeValue>} items
  */
 
 

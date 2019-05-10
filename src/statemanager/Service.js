@@ -155,7 +155,7 @@ export class StatemanagerService {
 
   /**
    * Update the application state with the values in `object`.
-   * @param {!Object.<string, string>} object Object.
+   * @param {!Object<string, string>} object Object.
    */
   updateState(object) {
     this.ngeoLocation.updateParams(object);

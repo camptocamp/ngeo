@@ -41,7 +41,7 @@ import {CollectionEvent} from 'ol/Collection.js';
  * style for the crosshair feature added by the permalink service.
  * @property {boolean} [crosshairEnabledByDefault] Display the crosshair, gets overridden by the
  * `map_crosshair` parameter. Default is `false`.
- * @property {Array.<string>} [projectionCodes] EPSG codes (e.g. 'EPSG:3857' or '3857').
+ * @property {Array<string>} [projectionCodes] EPSG codes (e.g. 'EPSG:3857' or '3857').
  * The permalink service will accept coordinates in these projections and try to detect which projection
  * the given coordinates are in.
  * @property {boolean} [useLocalStorage] Store the values in the local storage. Default is `false`.
@@ -318,7 +318,7 @@ export function PermalinkService(
   this.ngeoStateManager_ = ngeoStateManager;
 
   /**
-   * @type {?import("ol/Collection.js").default.<import("ol/Feature.js").default>}
+   * @type {?import("ol/Collection.js").default<import("ol/Feature.js").default>}
    * @private
    */
   this.ngeoFeatures_ = $injector.has('ngeoFeatures') ?
@@ -452,7 +452,7 @@ export function PermalinkService(
 
   /**
    * A list of projections that the coordinates in the permalink can be in.
-   * @type {?Array.<import("ol/proj/Projection.js").default>}
+   * @type {?Array<import("ol/proj/Projection.js").default>}
    * @private
    */
   this.sourceProjections_ = null;
@@ -1424,7 +1424,7 @@ PermalinkService.prototype.getWfsPermalinkData_ = function() {
 /**
  * Create a filter group for a given prefix from the query params.
  * @param {string} prefix E.g. `wfs_` or `wfs_0_`.
- * @param {Array.<string>} paramKeys All param keys starting with `wfs_`.
+ * @param {Array<string>} paramKeys All param keys starting with `wfs_`.
  * @return {import('ngeo/statemanager/WfsPermalink.js').WfsPermalinkFilterGroup|null} A filter group.
  * @private
  */

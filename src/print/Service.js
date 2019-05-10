@@ -234,7 +234,7 @@ PrintService.prototype.encodeVectorLayer = function(arr, layer, resolution) {
 };
 
 /**
- * @param {Array.<import('ngeo/print/mapfish-print-v3.js').MapFishPrintLayer>} arr Array.
+ * @param {Array<import('ngeo/print/mapfish-print-v3.js').MapFishPrintLayer>} arr Array.
  * @param {import("ol/layer/Image.js").default} layer Layer.
  * @private
  */
@@ -250,7 +250,7 @@ PrintService.prototype.encodeImageLayer_ = function(arr, layer) {
 
 
 /**
- * @param {Array.<import('ngeo/print/mapfish-print-v3.js').MapFishPrintLayer>} arr Array.
+ * @param {Array<import('ngeo/print/mapfish-print-v3.js').MapFishPrintLayer>} arr Array.
  * @param {import("ol/layer/Image.js").default} layer Layer.
  * @private
  */
@@ -272,7 +272,7 @@ PrintService.prototype.encodeImageWmsLayer_ = function(arr, layer) {
 
 
 /**
- * @param {Array.<import('ngeo/print/mapfish-print-v3.js').MapFishPrintLayer>} arr Array.
+ * @param {Array<import('ngeo/print/mapfish-print-v3.js').MapFishPrintLayer>} arr Array.
  * @param {import("ol/layer/Image.js").default} layer The layer.
  * @param {string} url Url of the WMS server.
  * @param {Object} params Url parameters
@@ -338,7 +338,7 @@ function getAbsoluteUrl_(url) {
 
 
 /**
- * @param {Array.<import('ngeo/print/mapfish-print-v3.js').MapFishPrintLayer>} arr Array.
+ * @param {Array<import('ngeo/print/mapfish-print-v3.js').MapFishPrintLayer>} arr Array.
  * @param {import("ol/layer/Tile.js").default} layer Layer.
  * @private
  */
@@ -356,7 +356,7 @@ PrintService.prototype.encodeTileLayer_ = function(arr, layer) {
 
 
 /**
- * @param {Array.<import('ngeo/print/mapfish-print-v3.js').MapFishPrintLayer>} arr Array.
+ * @param {Array<import('ngeo/print/mapfish-print-v3.js').MapFishPrintLayer>} arr Array.
  * @param {import("ol/layer/Tile.js").default} layer Layer.
  * @private
  */
@@ -383,7 +383,7 @@ PrintService.prototype.encodeTileWmtsLayer_ = function(arr, layer) {
   }
   const matrixIds = tileGrid.getMatrixIds();
 
-  /** @type {Array.<import('ngeo/print/mapfish-print-v3.js').MapFishPrintWmtsMatrix>} */
+  /** @type {Array<import('ngeo/print/mapfish-print-v3.js').MapFishPrintWmtsMatrix>} */
   const matrices = [];
 
   for (let i = 0, ii = matrixIds.length; i < ii; ++i) {
@@ -423,7 +423,7 @@ PrintService.prototype.encodeTileWmtsLayer_ = function(arr, layer) {
 
 
 /**
- * @param {Array.<import('ngeo/print/mapfish-print-v3.js').MapFishPrintLayer>} arr Array.
+ * @param {Array<import('ngeo/print/mapfish-print-v3.js').MapFishPrintLayer>} arr Array.
  * @param {import("ol/layer/Tile.js").default} layer Layer.
  * @private
  */

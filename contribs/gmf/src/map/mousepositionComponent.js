@@ -71,7 +71,7 @@ function gmfMapMousepositionTemplateUrl($attrs, gmfMapMousepositionTemplateUrl) 
  *  </gmf-mouseposition>
  *
  * @htmlAttribute {import("ol/Map.js").default} gmf-mouseposition-map The map.
- * @htmlAttribute {Array.<MousePositionProjection>}
+ * @htmlAttribute {Array<MousePositionProjection>}
  *    gmf-mouseposition-projection The list of the projections.
  *
  * @ngdoc component

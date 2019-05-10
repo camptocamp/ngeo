@@ -14,7 +14,7 @@ import {CollectionEvent} from 'ol/Collection.js';
 
 /**
  * @typedef {Object} TranslateOptions
- * @property {import("ol/Collection.js").default.<import("ol/Feature.js").default>} [features] Only features
+ * @property {import("ol/Collection.js").default<import("ol/Feature.js").default>} [features] Only features
  *    contained in this collection will be able to be translated. If not specified, all features on the map
  *    will be able to be translated.
  * @property {import("ol/style/Style.js").StyleLike} [style] Style for the center features added by the
@@ -57,7 +57,7 @@ export default class extends olInteractionTranslate {
     this.keyPressListenerKey_ = null;
 
     /**
-     * @type {?import("ol/Collection.js").default.<import("ol/Feature.js").default>}
+     * @type {?import("ol/Collection.js").default<import("ol/Feature.js").default>}
      * @private
      */
     this.myFeatures_ = options.features !== undefined ? options.features : null;

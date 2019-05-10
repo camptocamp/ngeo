@@ -86,7 +86,7 @@ export function EditingSnappingService($http, $q, $rootScope, $timeout, gmfTheme
   this.cache_ = {};
 
   /**
-   * @type {!Array.<import("ol/events.js").EventsKey>}
+   * @type {!Array<import("ol/events.js").EventsKey>}
    * @private
    */
   this.listenerKeys_ = [];
@@ -585,7 +585,7 @@ EditingSnappingService.prototype.handleMapMoveEnd_ = function() {
  * @property {boolean} active
  * @property {string} featureNS
  * @property {string} featurePrefix
- * @property {import("ol/Collection.js").default.<import("ol/Feature.js").default>} features
+ * @property {import("ol/Collection.js").default<import("ol/Feature.js").default>} features
  * @property {string} geometryName
  * @property {?import("ol/interaction/Snap.js").default} interaction
  * @property {number} maxFeatures

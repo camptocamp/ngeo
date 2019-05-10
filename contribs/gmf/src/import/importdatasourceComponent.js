@@ -182,7 +182,7 @@ class Controller {
     this.mode = Mode.ONLINE;
 
     /**
-     * @type {!Array.<string>}
+     * @type {!Array<string>}
      */
     this.modes = [Mode.LOCAL, Mode.ONLINE];
 
@@ -232,7 +232,7 @@ class Controller {
          * https://stackoverflow.com/questions/22059933/twitter-typeahead-js-how-to-return-all-matched-elements-within-a-string
          *
          * @param {string} datum Datum.
-         * @return {Array.<string>} List of datum tokenizers.
+         * @return {Array<string>} List of datum tokenizers.
          */
         datumTokenizer: (datum) => {
           console.assert(typeof datum == 'string');

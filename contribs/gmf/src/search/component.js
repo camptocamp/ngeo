@@ -178,13 +178,13 @@ function gmfSearchTemplateUrl($element, $attrs, gmfSearchTemplateUrl) {
  *    options.
  * @htmlAttribute {SearchComponentDatasource} gmf-search-datasource
  *    The datasources.
- * @htmlAttribute {Object.<string, import("ol/style/Style.js").default>}
+ * @htmlAttribute {Object<string, import("ol/style/Style.js").default>}
  *    gmf-search-styles A map of styles to apply on searched features. Keys
  *    must be the 'layer_name' property of features except for coordinates
  *    where the key ifor its style is the value of the constant
  *    'gmf.COORDINATES_LAYER_NAME'. The 'default' key is used to apply the
  *    default style.
- * @htmlAttribute {Array.<string>} gmf-search-coordinatesprojections codes
+ * @htmlAttribute {Array<string>} gmf-search-coordinatesprojections codes
  *    of supported projections for coordinates search (projections must be
  *    defined in ol3). If not provided, only the map's view projection
  *    format will be supported.
@@ -401,7 +401,7 @@ class SearchController {
     this.featureOverlay_ = ngeoFeatureOverlayMgr.getFeatureOverlay();
 
     /**
-     * @type {Array.<SearchComponentDatasource>}
+     * @type {Array<SearchComponentDatasource>}
      */
     this.datasources = [];
 

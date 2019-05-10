@@ -49,7 +49,7 @@ class ModifyRectangle extends olInteractionPointer {
     });
 
     /**
-     * @type {!import("ol/Collection.js").default.<import("ol/Feature.js").default>}
+     * @type {!import("ol/Collection.js").default<import("ol/Feature.js").default>}
      * @private
      */
     this.features_ = options.features;
@@ -411,7 +411,7 @@ class ModifyRectangle extends olInteractionPointer {
 
 /**
  * @typedef {Object} CacheItem
- * @property {Array.<import("ol/Feature.js").default>} corners
+ * @property {Array<import("ol/Feature.js").default>} corners
  */
 
 

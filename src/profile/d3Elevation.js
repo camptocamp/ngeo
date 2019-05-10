@@ -126,7 +126,7 @@ function d3Elevation(options) {
     options.poiLabelAngle : -60;
 
   /**
-   * @type {Object.<string, string>}
+   * @type {Object<string, string>}
    */
   const i18n = options.i18n || {};
 

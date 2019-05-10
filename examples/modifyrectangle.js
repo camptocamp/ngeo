@@ -53,7 +53,7 @@ function MainController() {
   ]]);
 
   /**
-   * @type {import("ol/Collection.js").default.<import("ol/Feature.js").default>}
+   * @type {import("ol/Collection.js").default<import("ol/Feature.js").default>}
    */
   this.features = new olCollection();
 

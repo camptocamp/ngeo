@@ -63,7 +63,7 @@ class Controller extends AbstractMobileController {
     this.searchDelay = 50;
 
     /**
-     * @type {Array.<string>}
+     * @type {Array<string>}
      */
     this.searchCoordinatesProjections = [EPSG21781, EPSG2056, 'EPSG:4326'];
 

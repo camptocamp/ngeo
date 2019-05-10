@@ -229,17 +229,17 @@ class FilterSelectorController {
     this.aRuleIsActive = false;
 
     /**
-     * @type {?Array.<!import("ngeo/rule/Rule.js").default>}
+     * @type {?Array<!import("ngeo/rule/Rule.js").default>}
      */
     this.customRules = null;
 
     /**
-     * @type {?Array.<!import("ngeo/rule/Rule.js").default>}
+     * @type {?Array<!import("ngeo/rule/Rule.js").default>}
      */
     this.directedRules = null;
 
     /**
-     * @type {Array.<import("gmf/datasource/OGC.js").default>}
+     * @type {Array<import("gmf/datasource/OGC.js").default>}
      */
     this.filtrableDataSources = [];
 
@@ -259,7 +259,7 @@ class FilterSelectorController {
       );
 
     /**
-     * @type {Array.<import("ol/events.js").EventsKey>}
+     * @type {Array<import("ol/events.js").EventsKey>}
      * @private
      */
     this.listenerKeys_ = [];
@@ -736,14 +736,14 @@ class FilterSelectorController {
 
 
 /**
- * @typedef {Object.<number, !RuleCacheItem>} RuleCache
+ * @typedef {Object<number, !RuleCacheItem>} RuleCache
  */
 
 
 /**
  * @typedef {Object} RuleCacheItem
- * @property {Array.<import('ngeo/rule/Rule.js').default>} customRules
- * @property {Array.<import('ngeo/rule/Rule.js').default>} directedRules
+ * @property {Array<import('ngeo/rule/Rule.js').default>} customRules
+ * @property {Array<import('ngeo/rule/Rule.js').default>} directedRules
  */
 
 

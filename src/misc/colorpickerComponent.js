@@ -66,7 +66,7 @@ module.directive('ngeoColorpicker', colorPickerComponent);
 
 /**
  * Default colors for the colorpicker
- * @type {Array.<Array.<string>>}
+ * @type {Array<Array<string>>}
  * @private
  * @hidden
  */
@@ -94,7 +94,7 @@ function Controller() {
 
   /**
    * The set of color
-   * @type {Array.<Array.<string>>}
+   * @type {Array<Array<string>>}
    */
   this.colors = this.colors || DEFAULT_COLORS;
 

@@ -1,8 +1,8 @@
 import {getUid as olUtilGetUid} from 'ol/util.js';
 
 /**
- * @param {Array.<Object>|undefined} data Entries/objects to be shown in a grid.
- * @param {Array.<import('ngeo/download/Csv.js').GridColumnDef>|undefined} columnDefs Column definition of a
+ * @param {Array<Object>|undefined} data Entries/objects to be shown in a grid.
+ * @param {Array<import('ngeo/download/Csv.js').GridColumnDef>|undefined} columnDefs Column definition of a
  *    grid.
  * @constructor
  * @private
@@ -58,7 +58,7 @@ GridConfig.prototype.getSelectedCount = function() {
 
 /**
  * Returns the selected rows.
- * @return {Array.<Object>} Selected rows in the current ordering.
+ * @return {Array<Object>} Selected rows in the current ordering.
  */
 GridConfig.prototype.getSelectedRows = function() {
   if (!this.data) {

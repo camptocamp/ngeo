@@ -214,7 +214,7 @@ LayerHelper.prototype.createWMTSLayerFromCapabilitites = function(
  *
  * @param {!Object} capabilities The complete capabilities object of the service
  * @param {!Object} layerCap The layer capability object
- * @param {Object.<string, string>=} opt_dimensions WMTS dimensions.
+ * @param {Object<string, string>=} opt_dimensions WMTS dimensions.
  * @return {!import("ol/layer/Tile.js").default} WMTS layer
  */
 LayerHelper.prototype.createWMTSLayerFromCapabilititesObj = function(
@@ -245,7 +245,7 @@ LayerHelper.prototype.createWMTSLayerFromCapabilititesObj = function(
 /**
  * Create and return an ol.layer.Group. You can pass a collection of layers to
  * directly add them in the returned group.
- * @param {import("ol/Collection.js").default.<import("ol/layer/Base.js").default>=} opt_layers The layer to
+ * @param {import("ol/Collection.js").default<import("ol/layer/Base.js").default>=} opt_layers The layer to
  *    add to the returned Group.
  * @return {import("ol/layer/Group.js").default} Layer group.
  */
@@ -396,7 +396,7 @@ LayerHelper.prototype.getWMTSLegendURL = function(layer) {
  * @param {number=} opt_dpi the DPI.
  * @param {Array<number>=} opt_bbox the bbox.
  * @param {string=} opt_srs The projection code.
- * @param {Object.<string, string>=} opt_additionalQueryString Additional query string parameters.
+ * @param {Object<string, string>=} opt_additionalQueryString Additional query string parameters.
  * @return {string|undefined} The legend URL or undefined.
  */
 LayerHelper.prototype.getWMSLegendURL = function(url,
@@ -529,11 +529,11 @@ LayerHelper.prototype.updateWMSLayerState = function(layer, names, opt_time) {
 
 /**
  * @param {import("ol/layer/Image.js").default} layer The WMS layer.
- * @return {Array.<number>|undefined} List of query source ids, a.k.a.
+ * @return {Array<number>|undefined} List of query source ids, a.k.a.
  *     the data source ids this layer is composed of.
  */
 LayerHelper.prototype.getQuerySourceIds = function(layer) {
-  return /** @type {Array.<number>|undefined} */ (
+  return /** @type {Array<number>|undefined} */ (
     layer.get('querySourceIds'));
 };
 

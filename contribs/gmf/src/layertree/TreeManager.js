@@ -11,7 +11,7 @@ import * as olEvents from 'ol/events.js';
 
 /**
  * @typedef {Object} TreeManagerFullState
- * @property {Object.<string, TreeManagerFullState>} [children]
+ * @property {Object<string, TreeManagerFullState>} [children]
  * @property {boolean|undefined} [isChecked]
  * @property {boolean|undefined} [isExpanded]
  * @property {boolean|undefined} [isLegendExpanded]
@@ -112,7 +112,7 @@ export function LayertreeTreeManager($timeout, $injector, gettextCatalog, ngeoLa
   this.numberOfGroupsToAddInThisDigestLoop = 0;
 
   /**
-   * @type {Array.<import('gmf/themes.js').GmfGroup>}
+   * @type {Array<import('gmf/themes.js').GmfGroup>}
    * @private
    */
   this.groupsToAddInThisDigestLoop_ = [];
@@ -204,7 +204,7 @@ LayertreeTreeManager.prototype.addFirstLevelGroups = function(firstLevelGroups, 
  * @private
  */
 LayertreeTreeManager.prototype.updateTreeGroupsState_ = function(groups) {
-  const treeGroupsParam = /** @type Object.<string, string> */ ({});
+  const treeGroupsParam = /** @type Object<string, string> */ ({});
   treeGroupsParam[PermalinkParam.TREE_GROUPS] = groups.map(node => node.name).join(',');
   this.ngeoStateManager_.updateState(treeGroupsParam);
   if (this.$injector_.has('gmfPermalink')) {
@@ -410,7 +410,7 @@ LayertreeTreeManager.prototype.removeAll = function() {
  * Clone a group node and recursively set all child node `isChecked` using
  * the given list of layer names.
  * @param {import('gmf/themes.js').GmfGroup} group The original group node.
- * @param {Array.<string>} names Array of node names to check (i.e. that
+ * @param {Array<string>} names Array of node names to check (i.e. that
  *     should have their checkbox checked)
  * @return {import('gmf/themes.js').GmfGroup} Cloned node.
  * @private
@@ -426,7 +426,7 @@ LayertreeTreeManager.prototype.cloneGroupNode_ = function(group, names) {
  * Set the child nodes metadata `isChecked` if its name is among the list of
  * given names. If a child node also has children, check those instead.
  * @param {import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer} node The original node.
- * @param {Array.<string>} names Array of node names to check (i.e. that
+ * @param {Array<string>} names Array of node names to check (i.e. that
  *     should have their checkbox checked)
  * @private
  */
@@ -450,7 +450,7 @@ LayertreeTreeManager.prototype.toggleNodeCheck_ = function(node, names) {
 /**
  * Display a notification that informs that the given groups are already in the
  * tree.
- * @param {Array.<import('gmf/themes.js').GmfGroup>} groups An array of groups that already in
+ * @param {Array<import('gmf/themes.js').GmfGroup>} groups An array of groups that already in
  *   the tree.
  * @private
  */
@@ -525,7 +525,7 @@ LayertreeTreeManager.prototype.getOgcServer = function(treeCtrl) {
  * the corresponding saved state (when possible, otherwise, juste take the
  * corresponding new node).
  * FIXME: Currently doesn't save nor restore the opacity.
- * @param {Array.<import('gmf/themes.js').GmfTheme>} themes the array of themes to be based on.
+ * @param {Array<import('gmf/themes.js').GmfTheme>} themes the array of themes to be based on.
  * @private
  */
 LayertreeTreeManager.prototype.refreshFirstLevelGroups_ = function(themes) {
@@ -579,7 +579,7 @@ LayertreeTreeManager.prototype.refreshFirstLevelGroups_ = function(themes) {
  * @private
  */
 LayertreeTreeManager.prototype.getFirstLevelGroupFullState_ = function(treeCtrl) {
-  const children = /** @type Object.<string, TreeManagerFullState>} */ ({});
+  const children = /** @type Object<string, TreeManagerFullState>} */ ({});
   // Get the state of the treeCtrl children recursively.
   treeCtrl.children.map((child) => {
     children[child.node.name] = this.getFirstLevelGroupFullState_(child);

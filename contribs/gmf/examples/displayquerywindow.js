@@ -146,7 +146,7 @@ function MainController(gmfThemes, gmfDataSourcesManager,
   gmfDataSourcesManager.setDatasourceMap(this.map);
 
   /**
-   * @type {Array.<Object>|undefined}
+   * @type {Array<Object>|undefined}
    * export
    */
   this.themes = undefined;

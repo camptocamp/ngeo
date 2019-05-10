@@ -157,7 +157,7 @@ function Controller($scope, $timeout, gmfThemes, gmfTreeManager) {
   this.gmfTreeManager_ = gmfTreeManager;
 
   /**
-   * @param {Array.<import("ngeo/layertree/Controller.js").LayertreeController>} value First level
+   * @param {Array<import("ngeo/layertree/Controller.js").LayertreeController>} value First level
    *    controllers.
    */
   const updateEditableTreeCtrls = (value) => {
@@ -205,7 +205,7 @@ function Controller($scope, $timeout, gmfThemes, gmfTreeManager) {
 
   /**
    * List of editable Layertree controllers.
-   * @type {Array.<import("ngeo/layertree/Controller.js").LayertreeController>}
+   * @type {Array<import("ngeo/layertree/Controller.js").LayertreeController>}
    */
   this.editableTreeCtrls = [];
 

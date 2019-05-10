@@ -119,7 +119,7 @@ export function FeatureHelper($injector, $filter) {
 
   /**
    * Arguments to apply to the point filter function.
-   * @type {Array.<*>}
+   * @type {Array<*>}
    * @private
    */
   this.pointFilterArgs_ = [];
@@ -185,7 +185,7 @@ FeatureHelper.prototype.setStyle = function(feature, opt_select) {
  * Create and return a style object from a given feature using its inner
  * properties and depending on its geometry type.
  * @param {!import("ol/Feature.js").default} feature Feature.
- * @return {!Array.<!import("ol/style/Style.js").default>} The style object.
+ * @return {!Array<!import("ol/style/Style.js").default>} The style object.
  */
 FeatureHelper.prototype.getStyle = function(feature) {
   const type = this.getType(feature);
@@ -228,7 +228,7 @@ FeatureHelper.prototype.getStyle = function(feature) {
 
 /**
  * @param {!import("ol/Feature.js").default} feature Feature with linestring geometry.
- * @return {!Array.<!import("ol/style/Style.js").default>} Style.
+ * @return {!Array<!import("ol/style/Style.js").default>} Style.
  * @private
  */
 FeatureHelper.prototype.getLineStringStyle_ = function(feature) {
@@ -268,7 +268,7 @@ FeatureHelper.prototype.getLineStringStyle_ = function(feature) {
 
 /**
  * @param {!import("ol/Feature.js").default} feature Feature with point geometry.
- * @return {!Array.<!import("ol/style/Style.js").default>} Style.
+ * @return {!Array<!import("ol/style/Style.js").default>} Style.
  * @private
  */
 FeatureHelper.prototype.getPointStyle_ = function(feature) {
@@ -352,7 +352,7 @@ FeatureHelper.prototype.getNumber = function(feature, attrib) {
 
 /**
  * @param {!import("ol/Feature.js").default} feature Feature with polygon geometry.
- * @return {!Array.<!import("ol/style/Style.js").default>} Style.
+ * @return {!Array<!import("ol/style/Style.js").default>} Style.
  * @private
  */
 FeatureHelper.prototype.getPolygonStyle_ = function(feature) {
@@ -479,7 +479,7 @@ FeatureHelper.prototype.getTextStyle_ = function(feature) {
 
 /**
  * @param {!import("ol/Feature.js").default} feature Feature to create the editing styles with.
- * @return {!Array.<!import("ol/style/Style.js").default>} List of style.
+ * @return {!Array<!import("ol/style/Style.js").default>} List of style.
  */
 FeatureHelper.prototype.createEditingStyles = function(feature) {
   // (1) Style definition depends on geometry type
@@ -569,7 +569,7 @@ FeatureHelper.prototype.createEditingStyles = function(feature) {
  * @param {!import("ol/Feature.js").default} feature Feature.
  * @param {!import("ol/coordinate.js").Coordinate} coordinate Coordinate.
  * @param {number} resolution Current map view resolution.
- * @return {?Array.<number>} The indexes of the vertex (coordinate) that hits.
+ * @return {?Array<number>} The indexes of the vertex (coordinate) that hits.
  */
 FeatureHelper.prototype.getVertexInfoAtCoordinate = function(
   feature, coordinate, resolution
@@ -646,7 +646,7 @@ FeatureHelper.prototype.getVertexInfoAtCoordinate = function(
  * Loop in the given coordinates and look one that hits an other given
  * coordinate using a buffer. If one does, return its index.
  *
- * @param {!Array.<!import("ol/coordinate.js").Coordinate>} coordinates Coordinates in which to
+ * @param {!Array<!import("ol/coordinate.js").Coordinate>} coordinates Coordinates in which to
  *     loop to find the one that hits the other given coordinate.
  * @param {!import("ol/coordinate.js").Coordinate} coordinate Coordinate that has to hit.
  * @param {number} min Minimum number of coordinates required to look
@@ -940,7 +940,7 @@ FeatureHelper.prototype.getHaloStyle_ = function(feature) {
  * Delete the unwanted ol3 properties from the current feature then return the properties.
  * Also delete the 'ngeo_feature_type_' from the ngeo query system.
  * @param {!import("ol/Feature.js").default} feature Feature.
- * @return {!Object.<string, *>} Filtered properties of the current feature.
+ * @return {!Object<string, *>} Filtered properties of the current feature.
  * @hidden
  */
 export function getFilteredFeatureValues(feature) {
@@ -1054,7 +1054,7 @@ FeatureHelper.prototype.getStrokeProperty = function(feature) {
 /**
  * Export features in the given format. The projection of the exported features
  * is: `EPSG:4326`.
- * @param {!Array.<!import("ol/Feature.js").default>} features Array of vector features.
+ * @param {!Array<!import("ol/Feature.js").default>} features Array of vector features.
  * @param {string} formatType Format type to export the features.
  */
 FeatureHelper.prototype.export = function(features, formatType) {
@@ -1074,7 +1074,7 @@ FeatureHelper.prototype.export = function(features, formatType) {
 /**
  * Export features in GPX and download the result to the browser. The
  * projection of the exported features is: `EPSG:4326`.
- * @param {!Array.<!import("ol/Feature.js").default>} features Array of vector features.
+ * @param {!Array<!import("ol/Feature.js").default>} features Array of vector features.
  */
 FeatureHelper.prototype.exportGPX = function(features) {
   const format = new olFormatGPX();
@@ -1088,7 +1088,7 @@ FeatureHelper.prototype.exportGPX = function(features) {
 /**
  * Export features in KML and download the result to the browser. The
  * projection of the exported features is: `EPSG:4326`.
- * @param {!Array.<!import("ol/Feature.js").default>} features Array of vector features.
+ * @param {!Array<!import("ol/Feature.js").default>} features Array of vector features.
  */
 FeatureHelper.prototype.exportKML = function(features) {
   const format = new olFormatKML();

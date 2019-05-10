@@ -49,7 +49,7 @@ export function EditingEditFeature($http, gmfLayersUrl) {
  * Build a query to the MapFish protocol to fetch features from a list
  * of layer ids inside a specified extent.
  *
- * @param {Array.<number>} layerIds List of layer ids to get the features from.
+ * @param {Array<number>} layerIds List of layer ids to get the features from.
  * @param {import("ol/extent.js").Extent} extent The extent where to get the features from.
  * @return {angular.IPromise<import("ol/Feature.js").default[]>} Promise.
  */

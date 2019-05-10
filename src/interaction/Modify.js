@@ -18,7 +18,7 @@ import {CollectionEvent} from 'ol/Collection.js';
 
 
 /**
- * @typedef {import("ngeo/CustomEvent.js").default.<ModifyEventItem>} ModifyEvent
+ * @typedef {import("ngeo/CustomEvent.js").default<ModifyEventItem>} ModifyEvent
  */
 
 
@@ -50,25 +50,25 @@ export default class extends olInteractionInteraction {
     console.assert(options.features);
 
     /**
-     * @type {!import("ol/Collection.js").default.<import("ol/Feature.js").default>}
+     * @type {!import("ol/Collection.js").default<import("ol/Feature.js").default>}
      * @private
      */
     this.features_ = options.features;
 
     /**
-     * @type {!Array.<import("ol/events.js").EventsKey>}
+     * @type {!Array<import("ol/events.js").EventsKey>}
      * @private
      */
     this.listenerKeys_ = [];
 
     /**
-     * @type {Array.<import("ol/interaction/Interaction.js").default>}
+     * @type {Array<import("ol/interaction/Interaction.js").default>}
      * @private
      */
     this.interactions_ = [];
 
     /**
-     * @type {import("ol/Collection.js").default.<import("ol/Feature.js").default>}
+     * @type {import("ol/Collection.js").default<import("ol/Feature.js").default>}
      * @private
      */
     this.otherFeatures_ = new olCollection();
@@ -82,7 +82,7 @@ export default class extends olInteractionInteraction {
     }));
 
     /**
-     * @type {import("ol/Collection.js").default.<import("ol/Feature.js").default>}
+     * @type {import("ol/Collection.js").default<import("ol/Feature.js").default>}
      * @private
      */
     this.circleFeatures_ = new olCollection();
@@ -95,7 +95,7 @@ export default class extends olInteractionInteraction {
     }));
 
     /**
-     * @type {import("ol/Collection.js").default.<import("ol/Feature.js").default>}
+     * @type {import("ol/Collection.js").default<import("ol/Feature.js").default>}
      * @private
      */
     this.rectangleFeatures_ = new olCollection();
@@ -219,7 +219,7 @@ export default class extends olInteractionInteraction {
 
   /**
    * @param {import("ol/Feature.js").default} feature Feature.
-   * @return {import("ol/Collection.js").default.<import("ol/Feature.js").default>} Collection of features for
+   * @return {import("ol/Collection.js").default<import("ol/Feature.js").default>} Collection of features for
    *    this feature.
    * @private
    */

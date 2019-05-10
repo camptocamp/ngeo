@@ -14,7 +14,7 @@ import * as olEvents from 'ol/events.js';
 export function EventHelper() {
 
   /**
-   * @type {Object.<number|string, Array.<import("ol/events.js").EventsKey>>}
+   * @type {Object<number|string, Array<import("ol/events.js").EventsKey>>}
    * @private
    */
   this.listenerKeys_ = {};

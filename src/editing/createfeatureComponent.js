@@ -101,7 +101,7 @@ function Controller(gettextCatalog, $compile, $filter, $scope, $timeout, ngeoEve
   this.active = false;
 
   /**
-   * @type {?import("ol/Collection.js").default.<import("ol/Feature.js").default>|!import("ol/source/Vector.js").default}
+   * @type {?import("ol/Collection.js").default<import("ol/Feature.js").default>|!import("ol/source/Vector.js").default}
    */
   this.features = null;
 

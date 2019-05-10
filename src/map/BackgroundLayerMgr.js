@@ -18,7 +18,7 @@ import ngeoLayerHelper from 'ngeo/map/LayerHelper.js';
 
 
 /**
- * @typedef {import("ngeo/CustomEvent.js").default.<BackgroundEventDetails>} BackgroundEvent
+ * @typedef {import("ngeo/CustomEvent.js").default<BackgroundEventDetails>} BackgroundEvent
  */
 
 
@@ -78,7 +78,7 @@ export class MapBackgroundLayerManager extends olObservable {
 
     /**
      * Object used to track if maps have background layers.
-     * @type {Object.<string, boolean>}
+     * @type {Object<string, boolean>}
      * @private
      */
     this.mapUids_ = {};
@@ -179,7 +179,7 @@ export class MapBackgroundLayerManager extends olObservable {
 
   /**
    * @param {import("ol/Map.js").default} map The map.
-   * @param {Object.<string, string>} dimensions The global dimensions object.
+   * @param {Object<string, string>} dimensions The global dimensions object.
    */
   updateDimensions(map, dimensions) {
     const baseBgLayer = this.get(map);

@@ -27,9 +27,9 @@ import Geometry from 'ol/geom/Geometry.js';
  *
  * @typedef {Object} FeatureHashOptions
  * @property {number} [accuracy] The encoding and decoding accuracy. Optional. Default value is 1.
- * @property {Object.<string, function(import("ol/Feature.js").default)>} [defaultValues] defaultValues.
+ * @property {Object<string, function(import("ol/Feature.js").default)>} [defaultValues] defaultValues.
  * @property {boolean} [encodeStyles=true] Encode styles. Optional.
- * @property {function(import("ol/Feature.js").default): Object.<string, (string|number|undefined)>} [properties]
+ * @property {function(import("ol/Feature.js").default): Object<string, (string|number|undefined)>} [properties]
  *    A function that returns serializable properties for a feature. Optional. By default the feature
  *    properties (as returned by `feature.getProperties()`) are used. To be serializable the returned
  *    properties should be numbers or strings.
@@ -38,12 +38,12 @@ import Geometry from 'ol/geom/Geometry.js';
  *   A) an `ol.style.Style` object set in the feature, or
  *   B) an object with key:values that defines the style properties set in the feature and for the
  *      `ngeo.misc.FeatureHelper` to use to style the feature with.
- * @property {Object.<string, string>} [propertiesType]
+ * @property {Object<string, string>} [propertiesType]
  */
 
 
 /**
- * @type {Object.<string, string>}
+ * @type {Object<string, string>}
  * @private
  * @hidden
  */
@@ -59,7 +59,7 @@ const DEFAULT_ACCURACY = 0.1;
 
 
 /**
- * @type {Object.<import("ol/geom/GeometryType.js").default, import("ngeo/format/FeatureHashStyleType.js").default>}
+ * @type {Object<import("ol/geom/GeometryType.js").default, import("ngeo/format/FeatureHashStyleType.js").default>}
  * @private
  * @hidden
  */
@@ -89,7 +89,7 @@ const CHAR64_ =
  * @const
  * @private
  * @hidden
- * @type {Object.<string, function(string):Geometry>}
+ * @type {Object<string, function(string):Geometry>}
  */
 const GEOMETRY_READERS_ = {
   'P': readMultiPointGeometry_,
@@ -105,7 +105,7 @@ const GEOMETRY_READERS_ = {
  * @const
  * @private
  * @hidden
- * @type {Object.<string, function(Geometry): ?string>}
+ * @type {Object<string, function(Geometry): ?string>}
  */
 const GEOMETRY_WRITERS_ = {
   'MultiLineString': writeMultiLineStringGeometry_,
@@ -157,7 +157,7 @@ class FeatureHash extends olFormatTextFeature {
     this.encodeStyles_ = options.encodeStyles || true;
 
     /**
-     * @type {function(import("ol/Feature.js").default):Object.<string, (string|number|undefined)>}
+     * @type {function(import("ol/Feature.js").default):Object<string, (string|number|undefined)>}
      * @private
      */
     this.propertiesFunction_ = options.properties || defaultPropertiesFunction_;
@@ -181,13 +181,13 @@ class FeatureHash extends olFormatTextFeature {
     this.prevY_ = 0;
 
     /**
-     * @type {Object.<string, string>}
+     * @type {Object<string, string>}
      * @private
      */
     LegacyProperties_ = options.propertiesType || {};
 
     /**
-     * @type {Object.<string, function(import("ol/Feature.js").default): void>}
+     * @type {Object<string, function(import("ol/Feature.js").default): void>}
      * @private
      */
     this.defaultValues_ = options.defaultValues || {};
@@ -489,7 +489,7 @@ export default FeatureHash;
 /**
  * Get features's properties.
  * @param {import("ol/Feature.js").default} feature Feature.
- * @return {Object.<string, (string|number|undefined)>} The feature properties to
+ * @return {Object<string, (string|number|undefined)>} The feature properties to
  * serialize.
  * @private
  * @hidden

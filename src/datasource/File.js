@@ -9,9 +9,9 @@ import olSourceVector from 'ol/source/Vector.js';
  *
  * extends DataSourceOptions
  * @typedef {Object} FileOptions
- * @property {import("ol/Collection.js").default.<!import("ol/Feature.js").default>} [features]
+ * @property {import("ol/Collection.js").default<!import("ol/Feature.js").default>} [features]
  *    Collection of `import("ol/Feature.js").default` objects.
- * @property {Array.<import('ngeo/format/Attribute.js').Attribute>} [attributes] (DataSourceOptions)
+ * @property {Array<import('ngeo/format/Attribute.js').Attribute>} [attributes] (DataSourceOptions)
  * @property {import('ngeo/datasource/OGC.js').DimensionsFiltersConfig} [dimensionsFiltersConfig]
  *    (DataSourceOptions)
  * @property {number} id (DataSourceOptions)
@@ -42,7 +42,7 @@ export default class extends ngeoDatasourceDataSource {
     // === STATIC properties (i.e. that never change) ===
 
     /**
-     * @type {!import("ol/Collection.js").default.<!import("ol/Feature.js").default>}
+     * @type {!import("ol/Collection.js").default<!import("ol/Feature.js").default>}
      * @private
      */
     this.featuresCollection_ = options.features || new olCollection();
@@ -71,7 +71,7 @@ export default class extends ngeoDatasourceDataSource {
   // ========================================
 
   /**
-   * @return {!Array.<!import("ol/Feature.js").default>} Features
+   * @return {!Array<!import("ol/Feature.js").default>} Features
    */
   get features() {
     return this.featuresCollection_.getArray();
@@ -83,7 +83,7 @@ export default class extends ngeoDatasourceDataSource {
   // =======================================
 
   /**
-   * @return {!import("ol/Collection.js").default.<!import("ol/Feature.js").default>} Features collection
+   * @return {!import("ol/Collection.js").default<!import("ol/Feature.js").default>} Features collection
    */
   get featuresCollection() {
     return this.featuresCollection_;

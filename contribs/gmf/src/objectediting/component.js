@@ -45,7 +45,7 @@ import 'jsts/monkey.js';
 
 
 /**
- * @typedef {Object.<string, import("ol/style/Style.js").default|Array.<import("ol/style/Style.js").default>>} StylesObject
+ * @typedef {Object<string, import("ol/style/Style.js").default|Array<import("ol/style/Style.js").default>>} StylesObject
  */
 
 
@@ -141,7 +141,7 @@ function gmfObjecteditingTemplateUrl($element, $attrs, gmfObjecteditingTemplateU
  * @htmlAttribute {string} gmf-objectediting-geomtype The geometry type.
  * @htmlAttribute {number} gmf-objectediting-layernodeid The GMF layer node id.
  * @htmlAttribute {import("ol/Map.js").default} gmf-objectediting-map The map.
- * @htmlAttribute {import("ol/Collection.js").default.<import("ol/Feature.js").default>} gmf-objectediting-sketchfeatures
+ * @htmlAttribute {import("ol/Collection.js").default<import("ol/Feature.js").default>} gmf-objectediting-sketchfeatures
  *     Collection of temporary features being drawn by the tools.
  * @ngdoc component
  * @ngname gmfObjectediting
@@ -214,7 +214,7 @@ function Controller($scope, $timeout, gettextCatalog,
   this.map = null;
 
   /**
-   * @type {?import("ol/Collection.js").default.<import("ol/Feature.js").default>}
+   * @type {?import("ol/Collection.js").default<import("ol/Feature.js").default>}
    */
   this.sketchFeatures = null;
 
@@ -1174,7 +1174,7 @@ Controller.prototype.handleFeatureGeometryChange_ = function() {
 
 
 /**
- * @param {Array.<import('gmf/objectediting/toolsComponent.js').ObjectEditingQueryableLayerInfo>} layersInfo
+ * @param {Array<import('gmf/objectediting/toolsComponent.js').ObjectEditingQueryableLayerInfo>} layersInfo
  *    List of queryable layers information, which contains the node and ogcServer.
  * @private
  */

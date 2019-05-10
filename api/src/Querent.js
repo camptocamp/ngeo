@@ -14,7 +14,7 @@ import olFormatWFS from 'ol/format/WFS.js';
  *  - feature ids must exist
  *
  * @param {!string} layer Name of the layer to query
- * @param {Array.<string>} ids List of ids
+ * @param {Array<string>} ids List of ids
  * @return {!Promise<Array<import('ol/Feature.js').default>>} Promise.
  * @hidden
  */

@@ -1060,7 +1060,7 @@ function handleCombinedQueryResult_(response) {
 
 
 /**
- * @typedef {Array<Array.<!ngeoDatasourceOGC>>} CombinedDataSources
+ * @typedef {Array<Array<!ngeoDatasourceOGC>>} CombinedDataSources
  */
 
 

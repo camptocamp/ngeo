@@ -176,7 +176,7 @@ export class ThemesService extends olEventsEventTarget {
           // Continue even if some layers have failed loading.
           return $q.resolve(undefined);
         });
-        return /** @type {angular.IPromise.<import("ol/layer/Base.js").default>} */(layer);
+        return /** @type {angular.IPromise<import("ol/layer/Base.js").default>} */(layer);
       } else if (gmfLayer.type === 'WMS') {
         const gmfLayerWMS = /** @type import('gmf/themes.js').GmfLayerWMS */ (gmfLayer);
         console.assert(gmfLayerWMS.ogcServer, 'An OGC server is required');
@@ -303,7 +303,7 @@ export class ThemesService extends olEventsEventTarget {
 
   /**
    * Get an array of theme objects.
-   * @return {angular.IPromise<Array.<!import('gmf/themes.js').GmfTheme>>} Promise.
+   * @return {angular.IPromise<Array<!import('gmf/themes.js').GmfTheme>>} Promise.
    */
   getThemesObject() {
     return this.promise_.then(
@@ -316,7 +316,7 @@ export class ThemesService extends olEventsEventTarget {
 
   /**
    * Get an array of background layer objects.
-   * @return {angular.IPromise.<Array<import('gmf/themes.js').GmfLayer|import('gmf/themes.js').GmfGroup>>}
+   * @return {angular.IPromise<Array<import('gmf/themes.js').GmfLayer|import('gmf/themes.js').GmfGroup>>}
    *   Promise.
    */
   getBackgroundLayersObject() {
@@ -333,7 +333,7 @@ export class ThemesService extends olEventsEventTarget {
 
   /**
    * Get the `ogcServers` object.
-   * @return {angular.IPromise.<!import('gmf/themes.js').GmfOgcServers>} Promise.
+   * @return {angular.IPromise<!import('gmf/themes.js').GmfOgcServers>} Promise.
    */
   getOgcServersObject() {
     console.assert(this.promise_ !== null);
@@ -347,7 +347,7 @@ export class ThemesService extends olEventsEventTarget {
 
   /**
    * Returns a promise to check if one of the layers in the themes is editable.
-   * @return {angular.IPromise.<boolean>} Promise.
+   * @return {angular.IPromise<boolean>} Promise.
    */
   hasEditableLayers() {
     console.assert(this.promise_ !== null);
@@ -434,7 +434,7 @@ export class ThemesService extends olEventsEventTarget {
 
 
 /**
- * @param {Array.<import('gmf/themes.js').GmfTheme>} themes Array of "theme" objects.
+ * @param {Array<import('gmf/themes.js').GmfTheme>} themes Array of "theme" objects.
  * @param {string} name The layer name.
  * @return {?import('gmf/themes.js').GmfGroup} The group.
  * @hidden
@@ -457,7 +457,7 @@ export function findGroupByLayerNodeName(themes, name) {
 
 /**
  * Find a layer group object by its name. Return null if not found.
- * @param {Array.<import('gmf/themes.js').GmfTheme>} themes Array of "theme" objects.
+ * @param {Array<import('gmf/themes.js').GmfTheme>} themes Array of "theme" objects.
  * @param {string} name The group name.
  * @return {?import('gmf/themes.js').GmfGroup} The group.
  * @hidden
@@ -509,7 +509,7 @@ export function findThemeByName(themes, themeName) {
  * Fill the given "nodes" array with all internal nodes (non-leaf nones) in the given node.
  *
  * @param {import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer} node Layertree node.
- * @param {Array.<import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer>} nodes An array.
+ * @param {Array<import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer>} nodes An array.
  * @private
  * @hidden
  */
@@ -529,7 +529,7 @@ function getFlatInternalNodes(node, nodes) {
  * Fill the given "nodes" array with all leaf nodes in the given node.
  *
  * @param {import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer} node Layertree node.
- * @param {Array.<import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer>} nodes An array.
+ * @param {Array<import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer>} nodes An array.
  * @hidden
  */
 export function getFlatNodes(node, nodes) {

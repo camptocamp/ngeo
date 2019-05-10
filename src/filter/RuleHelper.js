@@ -38,7 +38,7 @@ import moment from 'moment';
  * @property {import("ol/format/filter/Filter.js").default} [filter] A filter that is directly given the
  *    method instead of creating one.
  *    Useful to automatically combine the time values.
- * @property {!Array.<import('ngeo/rule/Rule.js').default>} [filterRules] An alternative list of filter rules
+ * @property {!Array<import('ngeo/rule/Rule.js').default>} [filterRules] An alternative list of filter rules
  *    to use instead of those that are defined within the data source. Useful when one wants to get the data
  *    of a given filter without applying it to the data source.
  * @property {string} [projCode] Projection code.
@@ -85,10 +85,10 @@ export class RuleHelper {
   }
 
   /**
-   * @param {!Array.<!import('ngeo/format/Attribute.js').Attribute>} attributes Attributes.
+   * @param {!Array<!import('ngeo/format/Attribute.js').Attribute>} attributes Attributes.
    * @param {boolean=} opt_isCustom Whether the created rules should be marked
    *     as custom or not. Defaults to `false`.
-   * @return {Array.<!import("ngeo/rule/Rule.js").default>} Rules.
+   * @return {Array<!import("ngeo/rule/Rule.js").default>} Rules.
    */
   createRulesFromAttributes(attributes, opt_isCustom) {
     const rules = [];
@@ -343,8 +343,8 @@ export class RuleHelper {
   }
 
   /**
-   * @param {!Array.<!import("ngeo/rule/Rule.js").default>} rules Rules
-   * @return {!Array.<!AnyOptions>} List of serialized rule options.
+   * @param {!Array<!import("ngeo/rule/Rule.js").default>} rules Rules
+   * @return {!Array<!AnyOptions>} List of serialized rule options.
    */
   serializeRules(rules) {
     return rules.map((rule) => {

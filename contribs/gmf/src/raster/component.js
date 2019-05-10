@@ -90,7 +90,7 @@ function gmfElevationwidgetTemplateUrl($attrs, gmfElevationwidgetTemplateUrl) {
  * @htmlAttribute {number} gmf-elevation-elevation The value to set with the
  *     elevation value.
  * @htmlAttribute {string} gmf-elevation-layer Elevation layer to use.
- * @htmlAttribute {Object.<string, LayerConfig>} gmf-elevation-layersconfig Elevation layer configurations.
+ * @htmlAttribute {Object<string, LayerConfig>} gmf-elevation-layersconfig Elevation layer configurations.
  * @htmlAttribute {import("ol/Map.js").default} gmf-elevation-map The map.
  * @return {angular.IDirective} Directive Definition Object.
  * @ngdoc directive
@@ -199,7 +199,7 @@ function Controller($scope, $filter, ngeoDebounce, gmfRaster, gettextCatalog) {
   this.map = null;
 
   /**
-   * @type {Array.<import("ol/events.js").EventsKey>}
+   * @type {Array<import("ol/events.js").EventsKey>}
    * @private
    */
   this.listenerKeys_ = [];
@@ -287,7 +287,7 @@ Controller.prototype.toggleActive_ = function(active) {
 
 
 /**
- * @param {Object.<string, number>} resp Response of the get Raster service.
+ * @param {Object<string, number>} resp Response of the get Raster service.
  * @private
  */
 Controller.prototype.getRasterSuccess_ = function(resp) {
@@ -336,7 +336,7 @@ module.controller('GmfElevationController', Controller);
  *  </gmf-elevationwidget>
  *
  * @htmlAttribute {import("ol/Map.js").default} gmf-elevationwidget-map The map.
- * @htmlAttribute {Array.<string>} gmf-elevationwidget-layers The list of
+ * @htmlAttribute {Array<string>} gmf-elevationwidget-layers The list of
  *     layers.
  * @htmlAttribute {boolean} gmf-elevationwidget-active Whether to activate the
  *     elevation component.
@@ -403,7 +403,7 @@ module.controller('gmfElevationwidgetController', WidgetController);
 /**
  * @typedef {Object} LayerConfig
  * @property {string} [filter]
- * @property {Array.<string>} [args]
+ * @property {Array<string>} [args]
  * @property {string} [postfix]
  * @property {string} [separator]
  */

@@ -57,7 +57,7 @@ export function colorZeroPadding(hex) {
 
 /**
  * Converts a color from RGB to hex representation.
- * @param {!Array.<number>} rgb rgb representation of the color.
+ * @param {!Array<number>} rgb rgb representation of the color.
  * @return {string} hex representation of the color.
  * @hidden
  */
@@ -77,11 +77,11 @@ export function rgbArrayToHex(rgb) {
 /**
  * Decode the encoded query string into a query data dictionary.
  * @param {string|undefined} queryString The queryString.
- * @return {!Object.<string, string>} The result.
+ * @return {!Object<string, string>} The result.
  * @hidden
  */
 export function decodeQueryString(queryString) {
-  /** @type {Object.<string, string>} */
+  /** @type {Object<string, string>} */
   const queryData = {};
   if (queryString) {
     const pairs = queryString.substring(1).split('&');
@@ -101,7 +101,7 @@ export function decodeQueryString(queryString) {
 
 /**
  * Encode the query data dictionary into an encoded query string.
- * @param {!Object.<string, string>} queryData The queryData,
+ * @param {!Object<string, string>} queryData The queryData,
  * @return {string} The result.
  * @hidden
  */

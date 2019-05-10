@@ -10,7 +10,7 @@ import {remove as removeFromArray} from 'ol/array.js';
  * @typedef {Object} WMSGroupOptions
  * @property {!angular.auto.IInjectorService} injector Angular main injector.
  * @property {string} url (WMSGroupOptions)
- * @property {!Array.<!import('ngeo/datasource/DataSource.js').default>} dataSources (GroupOptions)
+ * @property {!Array<!import('ngeo/datasource/DataSource.js').default>} dataSources (GroupOptions)
  * @property {string} title (GroupOptions)
  */
 
@@ -61,7 +61,7 @@ export default class extends ngeoDatasourceOGCGroup {
     /**
      * The functions to call to unregister the `watch` event on data sources
      * that are registered. Key is the id of the data source.
-     * @type {!Object.<number, Function>}
+     * @type {!Object<number, Function>}
      * @private
      */
     this.wmsDataSourceUnregister_ = {};

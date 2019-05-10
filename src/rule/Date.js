@@ -11,7 +11,7 @@ import ngeoRuleRule from 'ngeo/rule/Rule.js';
  * @property {number} [lowerBoundary] (RuleOptions)
  * @property {string} name (RuleOptions)
  * @property {string} [operator] (RuleOptions)
- * @property {Array.<string>} [operators] (RuleOptions)
+ * @property {Array<string>} [operators] (RuleOptions)
  * @property {string} propertyName (RuleOptions)
  * @property {string} [type] (RuleOptions)
  * @property {number} [upperBoundary] (RuleOptions)
