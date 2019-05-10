@@ -64,7 +64,7 @@ export function ObjecteditingManagerService($q, gmfEditFeature, ngeoLocation) {
   this.ngeoLocation_ = ngeoLocation;
 
   /**
-   * @type {angular.IDeferred|null}
+   * @type {?angular.IDeferred<?import('ol/Feature.js').default>}
    * @private
    */
   this.getFeatureDefered_ = null;
@@ -80,7 +80,7 @@ export function ObjecteditingManagerService($q, gmfEditFeature, ngeoLocation) {
  * is returned, otherwise one is created with empty geometry and with the
  * property set.
  *
- * @return {angular.IPromise} Promise.
+ * @return {angular.IPromise<?import('ol/Feature.js').default>} Promise.
  */
 ObjecteditingManagerService.prototype.getFeature = function() {
 
@@ -147,6 +147,7 @@ ObjecteditingManagerService.prototype.handleGetFeatures_ = function(key, value, 
   if (features.length) {
     feature = features[0];
   } else {
+    /** @type {Object<string, ?string>} */
     const featureProperties = {};
     featureProperties[key] = value;
     featureProperties.geometry = null;
@@ -161,7 +162,7 @@ ObjecteditingManagerService.prototype.handleGetFeatures_ = function(key, value, 
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('gmfObjectEditingManager', [

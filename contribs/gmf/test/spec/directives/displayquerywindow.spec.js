@@ -3,11 +3,14 @@ import olStyleStyle from 'ol/style/Style.js';
 import olFeature from 'ol/Feature.js';
 
 describe('gmf.query.windowComponent', () => {
-
+  /** @type {import('gmf/query/windowComponent.js').QueryWindowController} */
   let displayQueriesController;
+  /** @type {import('ngeo/query/MapQuerent.js').QueryResult} */
   let ngeoQueryResult;
   let $element;
+  /** @type {angular.IScope} */
   let $scope;
+  /** @type {angular.IScope} */
   let $rootScope;
 
   beforeEach(angular.mock.inject((_$controller_, _$rootScope_, _ngeoQueryResult_) => {
@@ -219,6 +222,7 @@ describe('gmf.query.windowComponent', () => {
       displayQueriesController.previous();
 
       // show results for all sources
+      // @ts-ignore
       displayQueriesController.setSelectedSource(null);
       expect(displayQueriesController.getResultLength()).toBe(4);
       expect(displayQueriesController.source).toBe(ngeoQueryResult.sources[0]);

@@ -39,7 +39,7 @@ export function ObjectEditingQuery($http, $q, gmfThemes) {
   this.gmfThemes_ = gmfThemes;
 
   /**
-   * @type {?angular.IDeferred}
+   * @type {?angular.IDeferred<import('./toolsComponent').ObjectEditingQueryableLayerInfo[]>}
    * @private
    */
   this.getQueryableLayerNodesDefered_ = null;
@@ -47,7 +47,7 @@ export function ObjectEditingQuery($http, $q, gmfThemes) {
 
 
 /**
- * @return {angular.IPromise} Promise.
+ * @return {angular.IPromise<import('./toolsComponent').ObjectEditingQueryableLayerInfo[]>} Promise.
  */
 ObjectEditingQuery.prototype.getQueryableLayersInfo = function() {
 
@@ -83,7 +83,6 @@ ObjectEditingQuery.prototype.getQueryableLayersInfo = function() {
   }
 
   return this.getQueryableLayerNodesDefered_.promise;
-
 };
 
 
@@ -103,21 +102,19 @@ function getQueryableLayersInfoFromThemes(
   themes, ogcServers
 ) {
   const queryableLayersInfo = [];
-  let theme;
-  let group;
-  let nodes;
 
   for (let i = 0, ii = themes.length; i < ii; i++) {
-    theme = /** @type {import('gmf/themes.js').GmfTheme} */ (themes[i]);
+    const theme = /** @type {import('gmf/themes.js').GmfTheme} */ (themes[i]);
     for (let j = 0, jj = theme.children.length; j < jj; j++) {
-      group = /** @type {import('gmf/themes.js').GmfGroup} */ (theme.children[j]);
+      const group = /** @type {import('gmf/themes.js').GmfGroup} */ (theme.children[j]);
 
       // Skip groups that don't have an ogcServer set
       if (!group.ogcServer) {
         continue;
       }
 
-      nodes = [];
+      /** @type {Array<import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer>} */
+      const nodes = [];
       getFlatNodes(group, nodes);
 
       for (let k = 0, kk = nodes.length; k < kk; k++) {
@@ -156,16 +153,19 @@ function getQueryableLayersInfoFromThemes(
  *    Queryable layer information.
  * @param {import("ol/coordinate.js").Coordinate} coordinate Coordinate.
  * @param {import("ol/Map.js").default} map Map.
- * @return {angular.IPromise} Promise.
+ * @return {angular.IPromise<?import('ol/Feature.js').default>} Promise.
  */
 ObjectEditingQuery.prototype.getFeatureInfo = function(layerInfo, coordinate, map) {
   const view = map.getView();
   const projCode = view.getProjection().getCode();
-  const resolution = /** @type {number} */(view.getResolution());
+  const resolution = view.getResolution();
   const infoFormat = WMSInfoFormat.GML;
   const layerNode = layerInfo.layerNode;
   const layersParam = layerNode.layers.split(',');
   const ogcServer = layerInfo.ogcServer;
+  if (resolution === undefined) {
+    throw new Error('Missing resolution');
+  }
 
   const format = new olFormatWMSGetFeatureInfo({
     layers: layersParam
@@ -197,7 +197,7 @@ ObjectEditingQuery.prototype.getFeatureInfo = function(layerInfo, coordinate, ma
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('gmfObjectEditingQuery', [

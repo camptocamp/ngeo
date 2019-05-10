@@ -1,13 +1,19 @@
 import angular from 'angular';
 describe('ngeo.misc.getBrowserLanguage', () => {
+  /** @type {Object<string, any>} */
   let win;
+  /** @type {import('ngeo/misc/getBrowserLanguage.js').miscGetBrowserLanguage} */
   let ngeoGetBrowserLanguage;
 
   beforeEach(() => {
     win = {navigator: {}};
-    angular.mock.module(($provide) => {
-      $provide.value('$window', win);
-    });
+    angular.mock.module(
+      /**
+       * @param {angular.IModule} $provide
+       */
+      ($provide) => {
+        $provide.value('$window', win);
+      });
     angular.mock.inject((_ngeoGetBrowserLanguage_) => {
       ngeoGetBrowserLanguage = _ngeoGetBrowserLanguage_;
     });

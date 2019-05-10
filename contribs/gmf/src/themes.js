@@ -9,16 +9,16 @@
 
 /**
  * @typedef {Object} GmfThemesResponse
- * @property {!Array<!GmfLayer|!GmfGroup>} background_layers
- * @property {!Array.<string>} errors
- * @property {!GmfOgcServers} ogcServers
- * @property {!Array.<!GmfTheme>} themes
+ * @property {Array<GmfLayer|GmfGroup>} background_layers
+ * @property {Array<string>} errors
+ * @property {GmfOgcServers} ogcServers
+ * @property {Array<GmfTheme>} themes
  */
 
 
 /**
  * @typedef {Object} GmfRootNode
- * @property {!Array.<!GmfGroup>} children
+ * @property {Array<GmfGroup>} children
  */
 
 
@@ -26,7 +26,7 @@
  * Contains the common element of all the elements of the GeoMapFish layer tree.
  * @typedef {Object} GmfBaseNode
  * @property {number} id
- * @property {!GmfMetaData} metadata The related metadata.
+ * @property {GmfMetaData} metadata The related metadata.
  * @property {string} name
  */
 
@@ -36,10 +36,10 @@
  * extends GmfBaseNode
  * @typedef {Object} GmfTheme
  * @property {number} id (GmfBaseNode)
- * @property {!GmfMetaData} metadata (GmfBaseNode)
+ * @property {GmfMetaData} metadata (GmfBaseNode)
  * @property {string} name (GmfBaseNode)
- * @property {!Array.<!GmfGroup>} children The first level layer groups.
- * @property {!GmfFunctionalities} functionalities
+ * @property {Array<GmfGroup>} children The first level layer groups.
+ * @property {GmfFunctionalities} functionalities
  */
 
 

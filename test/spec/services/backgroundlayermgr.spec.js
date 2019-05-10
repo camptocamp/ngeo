@@ -5,8 +5,11 @@ import olLayerGroup from 'ol/layer/Group.js';
 import olLayerTile from 'ol/layer/Tile.js';
 
 describe('ngeo.map.BackgroundLayerMgr', () => {
+  /** @type {import("ngeo/map/BackgroundLayerMgr.js").MapBackgroundLayerManager} */
   let ngeoBackgroundLayerMgr;
+  /** @type {import("ngeo/map/LayerHelper.js").LayerHelper} */
   let ngeoLayerHelper;
+  /** @type {import('ol/Map.js').default} */
   let map;
   const BACKGROUNDLAYERGROUP_NAME = 'background';
 
@@ -70,10 +73,12 @@ describe('ngeo.map.BackgroundLayerMgr', () => {
 
       ngeoBackgroundLayerMgr.set(map, group);
       const bgGroup = ngeoLayerHelper.getGroupFromMap(map, BACKGROUNDLAYERGROUP_NAME);
+      // @ts-ignore
       const bgGroupLayers = bgGroup.getLayers().item(0).getLayers();
 
       // We don't set ZIndex on the group, as OL is
       // just ordering it without regard it is group or layer
+      // @ts-ignore
       expect(bgGroup.getZIndex()).toBe(undefined);
 
       // As we just set the layers ZIndex, this is where it is expected
@@ -93,10 +98,12 @@ describe('ngeo.map.BackgroundLayerMgr', () => {
 
       ngeoBackgroundLayerMgr.setOpacityBgLayer(map, group);
       const bgGroup = ngeoLayerHelper.getGroupFromMap(map, BACKGROUNDLAYERGROUP_NAME);
+      // @ts-ignore
       const bgGroupLayers = bgGroup.getLayers().item(0).getLayers();
 
       // We don't set ZIndex on the group, as OL is
       // just ordering it without regard it is group or layer
+      // @ts-ignore
       expect(bgGroup.getZIndex()).toBe(undefined);
 
       // As we just set the layers ZIndex, this is where it is expected
@@ -107,6 +114,7 @@ describe('ngeo.map.BackgroundLayerMgr', () => {
     it('unsets the background layer', () => {
       const layer = new olLayerTile();
       ngeoBackgroundLayerMgr.set(map, layer);
+      // @ts-ignore
       ngeoBackgroundLayerMgr.set(map, null);
       const bgGroup = ngeoLayerHelper.getGroupFromMap(map, BACKGROUNDLAYERGROUP_NAME);
       expect(bgGroup.getLayers().getLength()).toBe(0);

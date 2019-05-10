@@ -99,16 +99,16 @@ export class AbstractMobileController extends AbstractAppController {
     this.searchOverlayVisible = false;
 
     /**
-     * @type {import('ngeo/search/searchDirective.js').SearchDirectiveListeners}
+     * @type {import('ngeo/search/searchDirective.js').SearchDirectiveListeners<never>}
      */
-    this.searchListeners = /** @type {import('ngeo/search/searchDirective.js').SearchDirectiveListeners} */ ({
+    this.searchListeners = {
       open: () => {
         this.searchOverlayVisible = true;
       },
       close: () => {
         this.searchOverlayVisible = false;
       }
-    });
+    };
 
     const positionFeatureStyle = config.positionFeatureStyle || new olStyleStyle({
       image: new olStyleCircle({

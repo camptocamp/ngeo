@@ -242,7 +242,7 @@ const capabilities = new Map();
  * @private
  * @hidden
  * @param {string} url The URL
- * @return {Object} Any
+ * @return {Promise<Object>} Any
  */
 function getWMTSCapability(url) {
   if (!(url in capabilities)) {
@@ -254,5 +254,5 @@ function getWMTSCapability(url) {
       });
     capabilities.set(url, request);
   }
-  return capabilities.get(url);
+  return /** @type {Promise<Object>} */(capabilities.get(url));
 }

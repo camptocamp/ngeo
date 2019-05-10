@@ -120,12 +120,13 @@ function profileElevationComponent(ngeoDebounce) {
      */
     link: (scope, element, attrs) => {
 
-      const optionsAttr = attrs['ngeoProfileOptions'];
+      const optionsAttr = attrs.ngeoProfileOptions;
       console.assert(optionsAttr !== undefined);
 
       const selection = d3select(element[0]);
-      let profile, elevationData, poiData;
 
+      /** @type {*} */
+      let profile = undefined;
       scope.$watchCollection(optionsAttr, (newVal) => {
 
         /** @type {ProfileOptions} */
@@ -163,17 +164,21 @@ function profileElevationComponent(ngeoDebounce) {
         }
       });
 
-      scope.$watch(attrs['ngeoProfile'], (newVal, oldVal) => {
+      /** @type {undefined|*[]} */
+      let elevationData = undefined;
+      scope.$watch(attrs.ngeoProfile, (newVal, oldVal) => {
         elevationData = newVal;
         refreshData();
       });
 
-      scope.$watch(attrs['ngeoProfilePois'], (newVal, oldVal) => {
+      /** @type {undefined|*[]} */
+      let poiData = undefined;
+      scope.$watch(attrs.ngeoProfilePois, (newVal, oldVal) => {
         poiData = newVal;
         refreshData();
       });
 
-      scope.$watch(attrs['ngeoProfileHighlight'],
+      scope.$watch(attrs.ngeoProfileHighlight,
         (newVal, oldVal) => {
           if (newVal === undefined) {
             return;

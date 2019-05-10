@@ -22,7 +22,7 @@ export function getFeaturesFromLayer(layer, ids) {
   return new Promise((resolve, reject) => {
     getOverlayDefs().then((overlayDefs) => {
 
-      /** Array<import('ol/Feature.js').default> */
+      /** @type {Array<import('ol/Feature.js').default>} */
       let features = [];
       const overlayDef = overlayDefs.get(layer);
 

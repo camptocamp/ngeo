@@ -5,11 +5,12 @@ import angular from 'angular';
  * @typedef {Object} SearchDirectiveListeners
  * @property {Function} [open]
  * @property {Function} [close]
- * @property {function(JQueryEventObject, Object, Twitter.Typeahead.Dataset): void} [cursorchange]
- * @property {function(JQueryEventObject, Object, Twitter.Typeahead.Dataset): void} [select]
- * @property {function(JQueryEventObject, Object, Twitter.Typeahead.Dataset): void} [autocomplete]
+ * @property {function(JQueryEventObject, Object, Twitter.Typeahead.Dataset<T>): void} [cursorchange]
+ * @property {function(JQueryEventObject, Object, Twitter.Typeahead.Dataset<T>): void} [select]
+ * @property {function(JQueryEventObject, Object, Twitter.Typeahead.Dataset<T>): void} [autocomplete]
  * @property {function(JQueryEventObject, string, boolean): void} [datasetsempty]
  * @property {function(JQueryEventObject, string): void} [change]
+ * @template T
  */
 
 
@@ -31,8 +32,7 @@ import angular from 'angular';
  * @htmlAttribute {SearchDirectiveListeners} ngeo-search-listeners The listeners.
  * @return {angular.IDirective} Directive Definition Object.
  * @ngInject
- * @ngdoc directive
- * @ngname ngeoSearch
+ * @template T
  */
 function searchComponent() {
   return {
@@ -44,22 +44,22 @@ function searchComponent() {
      */
     link: (scope, element, attrs) => {
 
-      const typeaheadOptionsExpr = attrs['ngeoSearch'];
+      const typeaheadOptionsExpr = attrs.ngeoSearch;
       /** @type {Twitter.Typeahead.Options} */
       const typeaheadOptions = scope.$eval(typeaheadOptionsExpr);
 
-      const typeaheadDatasetsExpr = attrs['ngeoSearchDatasets'];
-      /** @type {Array.<Twitter.Typeahead.Dataset>} */
+      const typeaheadDatasetsExpr = attrs.ngeoSearchDatasets;
+      /** @type {Array<Twitter.Typeahead.Dataset<T>>} */
       const typeaheadDatasets = scope.$eval(typeaheadDatasetsExpr);
 
       element.typeahead(typeaheadOptions, typeaheadDatasets);
 
-      const typeaheadListenersExpr = attrs['ngeoSearchListeners'];
-      /** @type {SearchDirectiveListeners} */
+      const typeaheadListenersExpr = attrs.ngeoSearchListeners;
+      /** @type {SearchDirectiveListeners<T>} */
       const typeaheadListeners_ = scope.$eval(typeaheadListenersExpr);
 
       /**
-       * @type {SearchDirectiveListeners}
+       * @type {SearchDirectiveListeners<T>}
        */
       const typeaheadListeners = adaptListeners_(
         typeaheadListeners_);
@@ -80,7 +80,7 @@ function searchComponent() {
         /**
          * @param {JQueryEventObject} event Event.
          * @param {Object} suggestion Suggestion.
-         * @param {Twitter.Typeahead.Dataset} dataset Dataset.
+         * @param {Twitter.Typeahead.Dataset<T>} dataset Dataset.
          */
         (event, suggestion, dataset) => {
           scope.$apply(() => {
@@ -92,7 +92,7 @@ function searchComponent() {
         /**
          * @param {JQueryEventObject} event Event.
          * @param {Object} suggestion Suggestion.
-         * @param {Twitter.Typeahead.Dataset} dataset Dataset.
+         * @param {Twitter.Typeahead.Dataset<T>} dataset Dataset.
          */
         (event, suggestion, dataset) => {
           scope.$apply(() => {
@@ -104,7 +104,7 @@ function searchComponent() {
         /**
          * @param {JQueryEventObject} event Event.
          * @param {Object} suggestion Suggestion.
-         * @param {Twitter.Typeahead.Dataset} dataset Dataset.
+         * @param {Twitter.Typeahead.Dataset<T>} dataset Dataset.
          */
         (event, suggestion, dataset) => {
           scope.$apply(() => {
@@ -115,12 +115,12 @@ function searchComponent() {
       element.on('typeahead:asyncreceive',
         /**
          * @param {JQueryEventObject} event Event.
-         * @param {Twitter.Typeahead.Dataset} dataset Dataset.
+         * @param {Twitter.Typeahead.Dataset<T>} dataset Dataset.
          * @param {string} query Query.
          */
         (event, dataset, query) => {
           scope.$apply(() => {
-            const empty = element.data('tt-typeahead')['menu']['_allDatasetsEmpty']();
+            const empty = element.data('tt-typeahead').menu._allDatasetsEmpty();
             typeaheadListeners.datasetsempty(event, query, empty);
           });
         });
@@ -131,7 +131,7 @@ function searchComponent() {
          */
         (event) => {
           scope.$apply(() => {
-            const query = element.data('tt-typeahead')['input']['query'];
+            const query = element.data('tt-typeahead').input.query;
             typeaheadListeners.change(event, query);
           });
         });
@@ -144,13 +144,14 @@ function searchComponent() {
 /**
  * Create a real SearchDirectiveListeners object out of the object
  * returned by $eval.
- * @param {SearchDirectiveListeners} object Object.
- * @return {SearchDirectiveListeners} The listeners object.
+ * @param {SearchDirectiveListeners<T>} object Object.
+ * @return {SearchDirectiveListeners<T>} The listeners object.
  * @private
  * @hidden
+ * @template T
  */
 function adaptListeners_(object) {
-  /** @type {SearchDirectiveListeners} */
+  /** @type {SearchDirectiveListeners<T>} */
   let typeaheadListeners;
   if (object === undefined) {
     typeaheadListeners = {

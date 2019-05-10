@@ -25,10 +25,16 @@ module.value('ngeoLayertreeTemplateUrl',
       'ngeo/layertree';
   });
 
-module.run(/* @ngInject */ ($templateCache) => {
-  // @ts-ignore: webpack
-  $templateCache.put('ngeo/layertree', require('./component.html'));
-});
+
+module.run(
+  /**
+   * @ngInject
+   * @param {angular.ITemplateCacheService} $templateCache
+   */
+  ($templateCache) => {
+    // @ts-ignore: webpack
+    $templateCache.put('ngeo/layertree', require('./component.html'));
+  });
 
 
 /**

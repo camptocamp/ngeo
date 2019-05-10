@@ -5,7 +5,12 @@ import olView from 'ol/View.js';
 
 describe('GmfPrintController', () => {
 
-  let $controller, $rootScope, $scope;
+  let $controller;
+  /** @type {angular.IScope} */
+  let $rootScope;
+  /** @type {angular.IScope} */
+  let $scope;
+  /** @type {import('gmf/print/component.js').PrintController} */
   let gmfPrintCtrl;
 
   beforeEach(angular.mock.inject((_$controller_, _$rootScope_) => {
@@ -25,6 +30,7 @@ describe('GmfPrintController', () => {
       })
     });
     gmfPrintCtrl.map.setSize([100, 100]);
+    // @ts-ignore
     gmfPrintCtrl.parseCapabilities_({data: gmfTestDataPrintcapabilities});
   }));
 
@@ -40,10 +46,12 @@ describe('GmfPrintController', () => {
 
   it('Set layout and test depending layout information changes', () => {
     const title = 'title';
+    // @ts-ignore
     gmfPrintCtrl.layoutInfo.title = title;
 
     gmfPrintCtrl.setLayout(gmfPrintCtrl.layoutInfo.layouts[1]);
 
+    // @ts-ignore
     expect(gmfPrintCtrl.layoutInfo.title).toBe(title);
     expect(gmfPrintCtrl.layoutInfo.layout).toBe(gmfPrintCtrl.layoutInfo.layouts[1]);
   });
@@ -56,9 +64,11 @@ describe('GmfPrintController', () => {
     gmfPrintCtrl.getSetScale(baseScale);
     expect(gmfPrintCtrl.layoutInfo.scale).toBe(baseScale);
 
+    // @ts-ignore
     const view = gmfPrintCtrl.map.getView();
     const resolution = view.getResolution();
     gmfPrintCtrl.getSetScale(biggerScale);
+    // @ts-ignore
     expect(resolution).toBeLessThan(view.getResolution());
   });
 

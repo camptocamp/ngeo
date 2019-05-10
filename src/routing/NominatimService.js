@@ -25,7 +25,7 @@ import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
  * OSM data by name and address.
  * @param {angular.IHttpService} $http Angular http service.
  * @param {angular.auto.IInjectorService} $injector Main injector.
- * @param {import("ngeo/misc/debounce.js").miscDebounce<function(string, function(Array<Object>): void, function(Array<NominatimSearchResult>): void): void>}  ngeoDebounce
+ * @param {import("ngeo/misc/debounce.js").miscDebounce<function(string, function(Array<Object>): void, (function(Array<NominatimSearchResult>): void)|undefined): void>}  ngeoDebounce
  *    ngeo Debounce service.
  * @constructor
  * @ngdoc service
@@ -43,7 +43,7 @@ export function NominatimService($http, $injector, ngeoDebounce) {
   this.$http_ = $http;
 
   /**
-   * @type {import("ngeo/misc/debounce.js").miscDebounce<function(string, function(Array<Object>): void, function(Array<NominatimSearchResult>): void): void>}
+   * @type {import("ngeo/misc/debounce.js").miscDebounce<function(string, function(Array<Object>): void, (function(Array<NominatimSearchResult>): void)|undefined): void>}
    * @private
    */
   this.ngeoDebounce_ = ngeoDebounce;
@@ -85,7 +85,7 @@ export function NominatimService($http, $injector, ngeoDebounce) {
   this.typeaheadDebounceDelay_ = 500;
 
   /**
-   * @type {function(string, function(Array<Object>): void, function(Array<NominatimSearchResult>): void): void}
+   * @type {(query: string, syncResults: (result: NominatimSearchResult[]) => void, asyncResults?: ((result: NominatimSearchResult[]) => void) | undefined) => void}
    */
   this.typeaheadSourceDebounced =
     this.ngeoDebounce_(this.typeaheadSource_.bind(this), this.typeaheadDebounceDelay_, true);
@@ -105,7 +105,7 @@ NominatimService.prototype.search = function(query, params) {
   params = Object.assign({}, this.searchDefaultParams_, params);
 
   // require JSON response
-  params['format'] = 'json';
+  params.format = 'json';
 
   if (params) {
     url += '&';
@@ -132,11 +132,11 @@ NominatimService.prototype.reverse = function(coordinate, params) {
   params = Object.assign({}, params);
 
   // coordinate
-  params['lon'] = coordinate[0];
-  params['lat'] = coordinate[1];
+  params.lon = coordinate[0];
+  params.lat = coordinate[1];
 
   // require JSON response
-  params['format'] = 'json';
+  params.format = 'json';
 
   if (params) {
     url += '?';
@@ -152,11 +152,15 @@ NominatimService.prototype.reverse = function(coordinate, params) {
 
 /**
  * @param {string} query Search query
- * @param {function(Array<Object>): void} syncResults Callback for synchronous execution, unused
- * @param {function(Array<NominatimSearchResult>): void} asyncResults Callback for asynchronous execution
+ * @param {(result: NominatimSearchResult[]) => void} syncResults Callback for synchronous execution, unused
+ * @param {(result: NominatimSearchResult[]) => void} [asyncResults] Callback for asynchronous execution
+ * @returns {void}
  * @private
  */
 NominatimService.prototype.typeaheadSource_ = function(query, syncResults, asyncResults) {
+  /**
+   * @param {angular.IHttpResponse<Array<NominatimSearchResponseResult>>} resp
+   */
   const onSuccess_ = function(resp) {
     /**
      * Parses result response.
@@ -169,11 +173,22 @@ NominatimService.prototype.typeaheadSource_ = function(query, syncResults, async
         name: result.display_name
       });
     };
-    asyncResults(resp.data.map(parse));
+    if (asyncResults) {
+      asyncResults(resp.data.map(parse));
+    } else {
+      syncResults(resp.data.map(parse));
+    }
   };
 
+  /**
+   * @param {angular.IHttpResponse<NominatimSearchResponseResult>} resp
+   */
   const onError_ = function(resp) {
-    asyncResults([]);
+    if (asyncResults) {
+      asyncResults([]);
+    } else {
+      syncResults([]);
+    }
   };
 
   this.search(query, {}).then(onSuccess_, onError_);
@@ -181,7 +196,7 @@ NominatimService.prototype.typeaheadSource_ = function(query, syncResults, async
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('ngeoNominatimService', [

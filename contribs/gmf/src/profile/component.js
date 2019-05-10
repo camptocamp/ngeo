@@ -40,7 +40,7 @@ import 'bootstrap/js/src/dropdown.js';
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('gmfProfile', [
@@ -52,8 +52,8 @@ const module = angular.module('gmfProfile', [
 
 module.value('gmfProfileTemplateUrl',
   /**
-   * @param {!JQuery} $element Element.
-   * @param {!angular.IAttributes} $attrs Attributes.
+   * @param {JQuery} $element Element.
+   * @param {angular.IAttributes} $attrs Attributes.
    * @return {string} Template.
    */
   ($element, $attrs) => {
@@ -61,16 +61,22 @@ module.value('gmfProfileTemplateUrl',
     return templateUrl !== undefined ? templateUrl : 'gmf/profile';
   });
 
-module.run(/* @ngInject */ ($templateCache) => {
-  // @ts-ignore: webpack
-  $templateCache.put('gmf/profile', require('./component.html'));
-});
+
+module.run(
+  /**
+   * @ngInject
+   * @param {angular.ITemplateCacheService} $templateCache
+   */
+  ($templateCache) => {
+    // @ts-ignore: webpack
+    $templateCache.put('gmf/profile', require('./component.html'));
+  });
 
 
 /**
- * @param {!JQuery} $element Element.
- * @param {!angular.IAttributes} $attrs Attributes.
- * @param {!function(!JQuery, !angular.IAttributes): string} gmfProfileTemplateUrl Template function.
+ * @param {JQuery} $element Element.
+ * @param {angular.IAttributes} $attrs Attributes.
+ * @param {function(JQuery, !angular.IAttributes): string} gmfProfileTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
  * @private
@@ -154,7 +160,7 @@ module.component('gmfProfile', profileComponent);
  * @ngdoc controller
  * @ngname GmfProfileController
  */
-function Controller($scope, $http, $element, $filter, gettextCatalog, ngeoFeatureOverlayMgr,
+export function ProfileController($scope, $http, $element, $filter, gettextCatalog, ngeoFeatureOverlayMgr,
   gmfProfileJsonUrl, ngeoCsvDownload) {
 
   /**
@@ -305,6 +311,9 @@ function Controller($scope, $http, $element, $filter, gettextCatalog, ngeoFeatur
 
   this.getMapFn = () => null;
   this.getNbPointsFn = () => 100;
+  /**
+   * @type {?() => olStyleStyle}
+   */
   this.getHoverPointStyleFn = null;
   this.getLinesConfigurationFn = () => ({});
   this.getOptionsFn = () => ({});
@@ -335,7 +344,7 @@ function Controller($scope, $http, $element, $filter, gettextCatalog, ngeoFeatur
 /**
  * Init the controller
  */
-Controller.prototype.$onInit = function() {
+ProfileController.prototype.$onInit = function() {
   this.map_ = this.getMapFn();
   this.nbPoints_ = this.getNbPointsFn();
 
@@ -389,7 +398,7 @@ Controller.prototype.$onInit = function() {
 /**
  * @private
  */
-Controller.prototype.update_ = function() {
+ProfileController.prototype.update_ = function() {
   this.isErrored = false;
   if (this.line) {
     this.getJsonProfile_();
@@ -403,7 +412,7 @@ Controller.prototype.update_ = function() {
 /**
  * @private
  */
-Controller.prototype.updateEventsListening_ = function() {
+ProfileController.prototype.updateEventsListening_ = function() {
   if (this.active && this.map_ !== null) {
     this.pointerMoveKey_ = olEvents.listen(this.map_, 'pointermove',
       (event) => {
@@ -447,7 +456,7 @@ Controller.prototype.updateEventsListening_ = function() {
  * @return {number} A distance.
  * @private
  */
-Controller.prototype.getDistanceOnALine_ = function(pointOnLine) {
+ProfileController.prototype.getDistanceOnALine_ = function(pointOnLine) {
   if (!this.line) {
     throw new Error('Missing line');
   }
@@ -484,7 +493,7 @@ Controller.prototype.getDistanceOnALine_ = function(pointOnLine) {
  *  @param {string} yUnits Y units label.
  * @private
  */
-Controller.prototype.hoverCallback_ = function(point, dist, xUnits, elevationsRef, yUnits) {
+ProfileController.prototype.hoverCallback_ = function(point, dist, xUnits, elevationsRef, yUnits) {
   if (!this.measureTooltipElement_) {
     throw new Error('Missing measureTooltipElement_');
   }
@@ -512,7 +521,7 @@ Controller.prototype.hoverCallback_ = function(point, dist, xUnits, elevationsRe
 /**
  * @private
  */
-Controller.prototype.outCallback_ = function() {
+ProfileController.prototype.outCallback_ = function() {
   // Reset information point.
   delete this.currentPoint.coordinate;
   delete this.currentPoint.distance;
@@ -530,7 +539,7 @@ Controller.prototype.outCallback_ = function() {
  * @return {string} A text formatted to a tooltip.
  * @private
  */
-Controller.prototype.getTooltipHTML_ = function() {
+ProfileController.prototype.getTooltipHTML_ = function() {
   const gettextCatalog = this.gettextCatalog_;
   const separator = '&nbsp;: ';
   let elevationName, translatedElevationName;
@@ -555,7 +564,7 @@ Controller.prototype.getTooltipHTML_ = function() {
  * Creates a new 'hover' tooltip
  * @private
  */
-Controller.prototype.createMeasureTooltip_ = function() {
+ProfileController.prototype.createMeasureTooltip_ = function() {
   if (!this.map_) {
     throw new Error('Missing map');
   }
@@ -575,7 +584,7 @@ Controller.prototype.createMeasureTooltip_ = function() {
  * Destroy the 'hover' tooltip
  * @private
  */
-Controller.prototype.removeMeasureTooltip_ = function() {
+ProfileController.prototype.removeMeasureTooltip_ = function() {
   if (this.measureTooltipElement_ !== null) {
     if (!this.map_) {
       throw new Error('Missing map');
@@ -598,7 +607,7 @@ Controller.prototype.removeMeasureTooltip_ = function() {
  * @param {string} layerName name of the elevation layer.
  * @return {object} The object representation of the style.
  */
-Controller.prototype.getStyle = function(layerName) {
+ProfileController.prototype.getStyle = function(layerName) {
   if (!this.linesConfiguration_) {
     throw new Error('Missing linesConfiguration');
   }
@@ -616,7 +625,7 @@ Controller.prototype.getStyle = function(layerName) {
  * Return a copy of the existing layer names.
  * @return {Array.<string>} The names of layers.
  */
-Controller.prototype.getLayersNames = function() {
+ProfileController.prototype.getLayersNames = function() {
   return this.layersNames_.slice(0);
 };
 
@@ -626,7 +635,7 @@ Controller.prototype.getLayersNames = function() {
  * @return {function(Object): number} Z extractor function.
  * @private
  */
-Controller.prototype.getZFactory_ = function(layerName) {
+ProfileController.prototype.getZFactory_ = function(layerName) {
   /**
    * Generic GMF extractor for the 'given' value in 'values' in profileData.
    * @param {Object} item The item.
@@ -637,7 +646,7 @@ Controller.prototype.getZFactory_ = function(layerName) {
     if ('values' in item && layerName in item.values && item.values[layerName]) {
       return parseFloat(item.values[layerName]);
     }
-    throw new Error('Unexpected');
+    return Number.NaN;
   };
   return getZFn;
 };
@@ -649,7 +658,7 @@ Controller.prototype.getZFactory_ = function(layerName) {
  * @return {number} The distance.
  * @private
  */
-Controller.prototype.getDist_ = function(item) {
+ProfileController.prototype.getDist_ = function(item) {
   if ('dist' in item) {
     return item.dist;
   }
@@ -661,7 +670,7 @@ Controller.prototype.getDist_ = function(item) {
  * Request the profile.
  * @private
  */
-Controller.prototype.getJsonProfile_ = function() {
+ProfileController.prototype.getJsonProfile_ = function() {
   if (!this.line) {
     throw new Error('Missing line');
   }
@@ -692,10 +701,10 @@ Controller.prototype.getJsonProfile_ = function() {
 
 
 /**
- * @param {!angular.IHttpResponse} resp Response.
+ * @param {angular.IHttpResponse<{profile: Object[]}>} resp Response.
  * @private
  */
-Controller.prototype.getProfileDataSuccess_ = function(resp) {
+ProfileController.prototype.getProfileDataSuccess_ = function(resp) {
   const profileData = resp.data.profile;
   if (profileData instanceof Array) {
     this.profileData = profileData;
@@ -704,10 +713,10 @@ Controller.prototype.getProfileDataSuccess_ = function(resp) {
 
 
 /**
- * @param {!angular.IHttpResponse} resp Response.
+ * @param {angular.IHttpResponse<never>} resp Response.
  * @private
  */
-Controller.prototype.getProfileDataError_ = function(resp) {
+ProfileController.prototype.getProfileDataError_ = function(resp) {
   this.isErrored = true;
   console.error('Can not get JSON profile.');
 };
@@ -716,7 +725,7 @@ Controller.prototype.getProfileDataError_ = function(resp) {
 /**
  * Request the csv profile with the current profile data.
  */
-Controller.prototype.downloadCsv = function() {
+ProfileController.prototype.downloadCsv = function() {
   if (this.profileData.length === 0) {
     return;
   }
@@ -729,6 +738,7 @@ Controller.prototype.downloadCsv = function() {
     headers.push({name: 'distance'});
     hasDistance = true;
   }
+  /** @type {string[]} */
   const layers = [];
   for (const layer in firstPoint.values) {
     headers.push({'name': layer});
@@ -738,6 +748,7 @@ Controller.prototype.downloadCsv = function() {
   headers.push({name: 'y'});
 
   const rows = this.profileData.map((point) => {
+    /** @type {Object<string, *>} */
     const row = {};
     if (hasDistance) {
       row.distance = point.dist;
@@ -757,7 +768,7 @@ Controller.prototype.downloadCsv = function() {
 };
 
 
-module.controller('GmfProfileController', Controller);
+module.controller('GmfProfileController', ProfileController);
 
 
 export default module;

@@ -1,8 +1,10 @@
+// @ts-nocheck
 import angular from 'angular';
 import {PermalinkShareService} from 'gmf/permalink/ShareService';
 
 
 describe('gmf.permalink.ShareService', () => {
+  /** @type {angular.IHttpBackendService} */
   let $httpBackend;
   const successResponse = {
     short_url: 'http://fake/gmf'
@@ -54,9 +56,13 @@ describe('gmf.permalink.ShareService', () => {
     let shortenerUrl = null;
     let gmfShareService = null;
 
-    angular.mock.module(($provide) => {
-      $provide.value('gmfShortenerCreateUrl', '');
-    });
+    angular.mock.module(
+      /**
+       * @param {angular.IModule} $provide
+       */
+      ($provide) => {
+        $provide.value('gmfShortenerCreateUrl', '');
+      });
 
     angular.mock.inject((_$httpBackend_, _gmfShareService_, _gmfShortenerCreateUrl_) => {
       $httpBackend = _$httpBackend_;

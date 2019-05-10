@@ -79,7 +79,7 @@ function d3Elevation(options) {
 
   /**
    * Hover callback function.
-   * @type {function(Object, number, string, Object.<string, number>, string): void}
+   * @type {function(Object, number, string, Object<string, number>, string): void}
    */
   const hoverCallback = options.hoverCallback !== undefined ? options.hoverCallback : () => {};
 
@@ -211,7 +211,7 @@ function d3Elevation(options) {
   const scaleModifier = options.scaleModifier;
 
   /**
-   * @type {import('d3').Selection}
+   * @type {import('d3').Selection<void, void, void, void>}
    */
   let g;
 
@@ -365,6 +365,7 @@ function d3Elevation(options) {
       // Return an array with the min and max value of the min/max values of
       // each lines.
       const yDomain = function() {
+        /** @type {number[]} */
         let elevationsValues = [];
         // Get min/max values (extent) of each lines.
         for (const name in linesConfiguration) {
@@ -377,8 +378,8 @@ function d3Elevation(options) {
           }
         }
         return [
-          Math.min.apply(null, elevationsValues),
-          Math.max.apply(null, elevationsValues)
+          Math.min(...elevationsValues),
+          Math.max(...elevationsValues)
         ];
       }();
 
@@ -400,12 +401,13 @@ function d3Elevation(options) {
         }
         g.select('.area')
           .transition()
+          // @ts-ignore: Wrong d3 type?
           .attr('d', area);
       }
 
       // Set style and update the lines paths and y hover guides for each lines.
-      let line, name, yHover;
-      for (name in linesConfiguration) {
+      let line, yHover;
+      for (const name in linesConfiguration) {
         // Set style of each line and add a class with its respective name.
         gEnter.append('path').attr('class', `line ${name}`)
           .style('stroke', linesConfiguration[name].color || '#F00')
@@ -426,6 +428,7 @@ function d3Elevation(options) {
         // Update path for the line.
         g.select(`.line.${name}`)
           .transition()
+          // @ts-ignore: Wrong d3 type?
           .attr('d', line);
       }
 
@@ -586,6 +589,9 @@ function d3Elevation(options) {
   };
 
 
+  /**
+   * @param {void[]} pois
+   */
   profile.showPois = function(pois) {
     if (!svg) {
       return;
@@ -598,20 +604,25 @@ function d3Elevation(options) {
     const profileData = svg.datum();
     const ps = g.select('.pois');
 
-    const p = ps.selectAll('.poi').data(pois, (d) => {
-      const i = bisectDistance(profileData, Math.round(pe.dist(d) * 10) / 10, 1);
-      const point = profileData[i];
-      if (point) {
-        let lineName;
-        const elevations = [];
-        for (lineName in linesConfiguration) {
-          elevations.push(linesConfiguration[lineName].zExtractor(point));
+    const p = ps.selectAll('.poi').data(pois,
+      /**
+       * @param {void} d
+       */
+      (d) => {
+        const i = bisectDistance(profileData, Math.round(pe.dist(d) * 10) / 10, 1);
+        const point = profileData[i];
+        if (point) {
+          let lineName;
+          const elevations = [];
+          for (lineName in linesConfiguration) {
+            elevations.push(linesConfiguration[lineName].zExtractor(point));
+          }
+          const z = Math.max.apply(null, elevations);
+          pe.z(d, z);
         }
-        const z = Math.max.apply(null, elevations);
-        pe.z(d, z);
+        return pe.id(d);
       }
-      return pe.id(d);
-    });
+    );
 
     const poiEnterG = p.enter()
       .append('g')
@@ -632,21 +643,55 @@ function d3Elevation(options) {
       .style('opacity', 1);
 
     poiEnterG.selectAll('text')
-      .attr('transform', (d) => {
-        if (light) {
-          return [`translate(${x(pe.dist(d))},${y(pe.z(d)) - 10})`];
-        } else {
-          return [`translate(${x(pe.dist(d))},${y(pe.z(d)) - 20}) rotate(${poiLabelAngle})`];
+      .attr('transform',
+        /**
+         * @param {void} d
+         */
+        (d) => {
+          if (light) {
+            return [`translate(${x(pe.dist(d))},${y(pe.z(d)) - 10})`];
+          } else {
+            return [`translate(${x(pe.dist(d))},${y(pe.z(d)) - 20}) rotate(${poiLabelAngle})`];
+          }
         }
-      })
-      .text(d => pe.sort(d) + (light ? '' : (` - ${pe.title(d)}`)));
+      )
+      .text(
+        /**
+         * @param {void} d
+         */
+        d => pe.sort(d) + (light ? '' : (` - ${pe.title(d)}`))
+      );
 
     poiEnterG.selectAll('line')
       .style('stroke', 'grey')
-      .attr('x1', d => x(pe.dist(d)))
-      .attr('y1', d => y(y.domain()[0]))
-      .attr('x2', d => x(pe.dist(d)))
-      .attr('y2', d => y(pe.z(d)));
+      .attr(
+        'x1',
+        /**
+         * @param {void} d
+         */
+        d => x(pe.dist(d))
+      )
+      .attr(
+        'y1',
+        /**
+         * @param {void} d
+         */
+        d => y(y.domain()[0])
+      )
+      .attr(
+        'x2',
+        /**
+         * @param {void} d
+         */
+        d => x(pe.dist(d))
+      )
+      .attr(
+        'y2',
+        /**
+         * @param {void} d
+         */
+        d => y(pe.z(d))
+      );
 
     // remove unused pois
     poiEnterG.exit().remove();

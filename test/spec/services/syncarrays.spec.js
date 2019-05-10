@@ -1,7 +1,9 @@
+// @ts-nocheck
 import angular from 'angular';
 import ngeoMiscSyncArrays from 'ngeo/misc/syncArrays.js';
 
 describe('ngeo.misc.syncArrays', () => {
+  /** @type {angular.IScope} */
   let $rootScope;
 
   beforeEach(() => {

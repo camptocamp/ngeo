@@ -28,10 +28,15 @@ const module = angular.module('app', [
 ]);
 
 
-module.run(/* @ngInject */ ($templateCache) => {
-  // @ts-ignore: webpack
-  $templateCache.put('partials/queryresult', require('./partials/queryresult.html'));
-});
+module.run(
+  /**
+   * @ngInject
+   * @param {angular.ITemplateCacheService} $templateCache
+   */
+  ($templateCache) => {
+    // @ts-ignore: webpack
+    $templateCache.put('partials/queryresult', require('./partials/queryresult.html'));
+  });
 
 
 module.value('ngeoQueryOptions', {

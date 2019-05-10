@@ -691,11 +691,12 @@ FeatureHelper.prototype.getCoordinateIndexThatHitsAt_ = function(
  *     want to include the geometry function if you just want to have the
  *     style object itself to be used to draw features that have point
  *     geometries. Defaults to `true`.
- * @return {!import("ol/style/Style.js").default} Style.
+ * @return {import("ol/style/Style.js").default} Style.
  */
 FeatureHelper.prototype.getVertexStyle = function(opt_incGeomFunc) {
   const incGeomFunc = opt_incGeomFunc !== undefined ? opt_incGeomFunc : true;
 
+  /** @type {import('ol/style/Style.js').Options} */
   const options = {
     image: new olStyleRegularShape({
       radius: VertexStyleRegularShapeRadius,
@@ -713,15 +714,18 @@ FeatureHelper.prototype.getVertexStyle = function(opt_incGeomFunc) {
   if (incGeomFunc) {
     options.geometry = function(feature) {
       const geom = feature.getGeometry();
-
+      if (!(geom instanceof olGeomSimpleGeometry)) {
+        return;
+      }
       if (geom.getType() == 'Point') {
         return;
       }
 
       let innerMultiCoordinates;
+      /** @type {number[][][]} */
       let multiCoordinates = [];
+      /** @type {number[][]} */
       let coordinates = [];
-      let i, ii;
       if (geom instanceof olGeomLineString) {
         coordinates = geom.getCoordinates();
       } else if (geom instanceof olGeomMultiLineString) {
@@ -733,11 +737,11 @@ FeatureHelper.prototype.getVertexStyle = function(opt_incGeomFunc) {
       }
 
       if (innerMultiCoordinates) {
-        for (i = 0, ii = innerMultiCoordinates.length; i < ii; i++) {
+        for (let i = 0, ii = innerMultiCoordinates.length; i < ii; i++) {
           multiCoordinates = multiCoordinates.concat(innerMultiCoordinates[i]);
         }
       }
-      for (i = 0, ii = multiCoordinates.length; i < ii; i++) {
+      for (let i = 0, ii = multiCoordinates.length; i < ii; i++) {
         coordinates = coordinates.concat(multiCoordinates[i]);
       }
 
@@ -756,8 +760,8 @@ FeatureHelper.prototype.getVertexStyle = function(opt_incGeomFunc) {
 /**
  * Remove a vertex from a feature using the given information (indexes).
  *
- * @param {!import("ol/Feature.js").default} feature Feature.
- * @param {!Array.<number>} vertexInfo The indexes of the vertex
+ * @param {import("ol/Feature.js").default} feature Feature.
+ * @param {Array<number>} vertexInfo The indexes of the vertex
  *     (coordinate) to remove.
  */
 FeatureHelper.prototype.removeVertex = function(feature, vertexInfo) {
@@ -1110,6 +1114,7 @@ FeatureHelper.prototype.export_ = function(features, format, fileName, opt_mimeT
 
   // clone the features to apply the original style to the clone
   // (the original may have select style active)
+  /** @type {olFeature[]} */
   const clones = [];
   let clone;
   features.forEach((feature) => {
@@ -1396,11 +1401,12 @@ FeatureHelper.prototype.getRadiusLine = function(feature, azimut) {
 
 /**
  * Return the properties of a feature, with the exception of the geometry.
- * @param {!import("ol/Feature.js").default} feature Feature.
- * @return {!Object.<string, *>} Object.
+ * @param {import("ol/Feature.js").default} feature Feature.
+ * @return {Object<string, *>} Object.
  */
 FeatureHelper.prototype.getNonSpatialProperties = function(feature) {
   const geometryName = feature.getGeometryName();
+  /** @type {Object<string, *>} */
   const nonSpatialProperties = {};
   const properties = feature.getProperties();
   for (const key in properties) {
@@ -1428,7 +1434,7 @@ FeatureHelper.prototype.clearNonSpatialProperties = function(feature) {
 
 
 /**
- * @param {!Array.<!import("ol/Feature.js").default>} features Features.
+ * @param {Array<import("ol/Feature.js").default>} features Features.
  * @param {string} fid Feature id
  * @return {number} Index of found feature
  */

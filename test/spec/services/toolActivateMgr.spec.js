@@ -2,8 +2,21 @@ import angular from 'angular';
 import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
 
 describe('ngeo.misc.ToolActivateMgr', () => {
-  let interaction1, interaction2, interaction3, tool1, tool2, tool3;
+  /** @type {Object<string, *>} */
+  let interaction1;
+  /** @type {Object<string, *>} */
+  let interaction2;
+  /** @type {Object<string, *>} */
+  let interaction3;
+  /** @type {ngeoMiscToolActivate} */
+  let tool1;
+  /** @type {ngeoMiscToolActivate} */
+  let tool2;
+  /** @type {ngeoMiscToolActivate} */
+  let tool3;
+  /** @type {import('ngeo/misc/ToolActivateMgr.js').ToolActivateMgr} */
   let ngeoToolActivateMgr;
+  /** @type {angular.IScope} */
   let $rootScope;
 
   beforeEach(() => {

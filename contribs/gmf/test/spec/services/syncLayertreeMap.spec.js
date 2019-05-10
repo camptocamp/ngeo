@@ -1,3 +1,4 @@
+// @ts-nocheck
 import angular from 'angular';
 import {getLayer as gmfLayertreeSyncLayertreeMapGetLayer} from 'gmf/layertree/SyncLayertreeMap.js';
 import gmfTestDataThemes from '../data/themes.js';
@@ -9,6 +10,7 @@ import olLayerImage from 'ol/layer/Image.js';
 
 
 describe('gmf.layertree.SyncLayertreeMap', () => {
+  /** @type {angular.IHttpBackendService} */
   let $httpBackend_;
   let gmfSyncLayertreeMap_;
   let element;

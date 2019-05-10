@@ -1,13 +1,14 @@
 import olOverlay from 'ol/Overlay.js';
 
 /**
- * @classdesc
  * An openlayers overlay that uses bootstrap popover to produce a popup for maps.
  *
- * @param {import('ol/Overlay.js').Options=} opt_options Overlay options.
  * @hidden
  */
 export default class extends olOverlay {
+  /**
+   * @param {import('ol/Overlay.js').Options=} options Overlay options.
+   */
   constructor(options = {}) {
     super(options);
 
@@ -40,7 +41,8 @@ export default class extends olOverlay {
   }
 
   /**
-   * @override
+   * @param {import("ol/PluggableMap.js").default|undefined} map The map that the
+   * overlay is part of.
    */
   setMap(map) {
     const element = this.getElement();

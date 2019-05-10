@@ -1,3 +1,4 @@
+// @ts-nocheck
 import angular from 'angular';
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
@@ -8,6 +9,7 @@ describe('gmf.contextualdata.component', () => {
   let $document;
   let contextualdataController;
   let map;
+  /** @type {angular.IHttpBackendService} */
   let $httpBackend;
   let callbackSpy;
 

@@ -18,10 +18,15 @@ const module = angular.module('ngeoGrid', [
 ]);
 
 
-module.run(/* @ngInject */ ($templateCache) => {
-  // @ts-ignore: webpack
-  $templateCache.put('ngeo/grid', require('./component.html'));
-});
+module.run(
+  /**
+   * @ngInject
+   * @param {angular.ITemplateCacheService} $templateCache
+   */
+  ($templateCache) => {
+    // @ts-ignore: webpack
+    $templateCache.put('ngeo/grid', require('./component.html'));
+  });
 
 
 module.value('ngeoGridTemplateUrl',
@@ -67,7 +72,7 @@ function ngeoGridTemplateUrl($attrs, ngeoGridTemplateUrl) {
  * @ngname ngeoGrid
  */
 const gridComponent = {
-  controller: Controller,
+  controller: GridController,
   bindings: {
     'configuration': '=ngeoGridConfiguration'
   },
@@ -86,7 +91,7 @@ module.component('ngeoGrid', gridComponent);
  * @ngdoc controller
  * @ngname ngeoGridController
  */
-function Controller($scope) {
+export function GridController($scope) {
 
   /**
    * @type {!angular.IScope}
@@ -120,7 +125,10 @@ function Controller($scope) {
    * @type {Object}
    */
   this.floatTheadConfig = {
-    'scrollContainer': function($table) {
+    /**
+     * @param {JQuery} $table
+     */
+    scrollContainer: function($table) {
       return $table.closest('.ngeo-grid-table-container');
     }
   };
@@ -130,7 +138,7 @@ function Controller($scope) {
 /**
  * Init the controller
  */
-Controller.prototype.$onInit = function() {
+GridController.prototype.$onInit = function() {
   if (!this.configuration) {
     throw new Error('Missing configuration');
   }
@@ -145,7 +153,7 @@ Controller.prototype.$onInit = function() {
  * @param {string} columnName The name of the column that should be used to
  *    sort the data.
  */
-Controller.prototype.sort = function(columnName) {
+GridController.prototype.sort = function(columnName) {
   if (!this.configuration) {
     throw new Error('Missing configuration');
   }
@@ -173,7 +181,7 @@ Controller.prototype.sort = function(columnName) {
  * @param {Object} attributes An entry/row.
  * @param {JQueryEventObject} event Event.
  */
-Controller.prototype.clickRow = function(attributes, event) {
+GridController.prototype.clickRow = function(attributes, event) {
   const shiftKey = isShiftKeyOnly(event);
   const platformModifierKey = isPlatformModifierKeyOnly(event);
 
@@ -187,7 +195,7 @@ Controller.prototype.clickRow = function(attributes, event) {
  * @param {boolean} platformModifierKey CTRL/Meta pressed?
  * @private
  */
-Controller.prototype.clickRow_ = function(attributes, shiftKey, platformModifierKey) {
+GridController.prototype.clickRow_ = function(attributes, shiftKey, platformModifierKey) {
   if (!this.configuration) {
     throw new Error('Missing configuration');
   }
@@ -211,7 +219,7 @@ Controller.prototype.clickRow_ = function(attributes, shiftKey, platformModifier
  * @param {Object} attributes An entry/row.
  * @private
  */
-Controller.prototype.selectRange_ = function(attributes) {
+GridController.prototype.selectRange_ = function(attributes) {
   if (!this.configuration) {
     throw new Error('Missing configuration');
   }
@@ -273,7 +281,7 @@ Controller.prototype.selectRange_ = function(attributes) {
  * when selecting multiple rows with SHIFT or CTRL/Meta.
  * @param {JQueryEventObject} event Event.
  */
-Controller.prototype.preventTextSelection = function(event) {
+GridController.prototype.preventTextSelection = function(event) {
   const shiftKey = isShiftKeyOnly(event);
   const platformModifierKey = isPlatformModifierKeyOnly(event);
 
@@ -310,7 +318,7 @@ function isShiftKeyOnly(event) {
 }
 
 
-module.controller('ngeoGridController', Controller);
+module.controller('ngeoGridController', GridController);
 
 
 export default module;

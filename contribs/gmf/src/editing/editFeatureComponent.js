@@ -90,7 +90,7 @@ export const EditingState = {
 };
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('GmfEditingFeatureComponent', [
@@ -108,10 +108,15 @@ const module = angular.module('GmfEditingFeatureComponent', [
 ]);
 
 
-module.run(/* @ngInject */ ($templateCache) => {
-  // @ts-ignore: webpack
-  $templateCache.put('gmf/editing/editFeatureComponent', require('./editFeatureComponent.html'));
-});
+module.run(
+  /**
+   * @ngInject
+   * @param {angular.ITemplateCacheService} $templateCache
+   */
+  ($templateCache) => {
+    // @ts-ignore: webpack
+    $templateCache.put('gmf/editing/editFeatureComponent', require('./editFeatureComponent.html'));
+  });
 
 
 /**
@@ -181,7 +186,7 @@ module.directive('gmfEditfeature', editingEditFeatureComponent);
 /**
  * @param {JQuery} $element Element.
  * @param {angular.IQService} $q Angular $q service.
- * @param {!angular.IScope} $scope Angular scope.
+ * @param {angular.IScope} $scope Angular scope.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @param {import("gmf/editing/EditFeature.js").EditingEditFeature} gmfEditFeature Gmf edit feature service.
@@ -262,7 +267,7 @@ function Controller($element, $q, $scope, $timeout,
   this.q_ = $q;
 
   /**
-   * @type {!angular.IScope}
+   * @type {angular.IScope}
    * @private
    */
   this.scope_ = $scope;
@@ -339,7 +344,7 @@ function Controller($element, $q, $scope, $timeout,
   /**
    * A deferred object resolved after the confirm modal "continue w/o saving" or
    * "save" buttons are clicked.
-   * @type {?angular.IDeferred}
+   * @type {?angular.IDeferred<never>}
    * @private
    */
   this.confirmDeferred_ = null;
@@ -399,12 +404,12 @@ function Controller($element, $q, $scope, $timeout,
   this.featureId = undefined;
 
   /**
-   * @type {?import("ol/Collection.js").default}
+   * @type {?import("ol/Collection.js").default<import('ol/Feature.js').default>}
    */
   this.features = null;
 
   /**
-   * @type {import("ol/Collection.js").default}
+   * @type {import("ol/Collection.js").default<import('ol/interaction/Interaction.js').default>}
    * @private
    */
   this.interactions_ = new olCollection();
@@ -763,8 +768,7 @@ Controller.prototype.cancel = function() {
 /**
  * Check if there are unsaved modifications. If there aren't, then cancel.
  * Used by the 'cancel' button in the template.
- * @return {angular.IPromise} The promise attached to the confirm deferred
- *     object.
+ * @return {angular.IPromise<void>} The promise attached to the confirm deferred object.
  */
 Controller.prototype.confirmCancel = function() {
   return this.checkForModifications_().then(() => {
@@ -778,7 +782,7 @@ Controller.prototype.confirmCancel = function() {
  * (a.k.a. is dirty), then the confirmation modal is shown.
  * @param {boolean=} scopeApply Whether to force scope to refresh or not.
  *     when the confirm modal is not dismissed.
- * @return {angular.IPromise} The promise attached to the confirm deferred
+ * @return {angular.IPromise<void>} The promise attached to the confirm deferred
  *     object.
  * @private
  */
@@ -867,7 +871,7 @@ Controller.prototype.submit = function() {
 
 /**
  * Called after an insert, update or delete request.
- * @param {angular.IHttpResponse} resp Ajax response.
+ * @param {angular.IHttpResponse<ArrayBuffer|Document|Node|Object|string>} resp Ajax response.
  * @private
  */
 Controller.prototype.handleEditFeature_ = function(resp) {
@@ -889,7 +893,7 @@ Controller.prototype.handleEditFeature_ = function(resp) {
 
 
 /**
- * @param {!Array.<import('ngeo/format/Attribute.js').Attribute>} attributes Attributes.
+ * @param {Array<import('ngeo/format/Attribute.js').Attribute>} attributes Attributes.
  * @private
  */
 Controller.prototype.setAttributes_ = function(attributes) {
@@ -1098,6 +1102,9 @@ Controller.prototype.handleMapClick_ = function(evt) {
     const feature = this.map.forEachFeatureAtPixel(
       pixel,
       (feature) => {
+        if (!(feature instanceof olFeature)) {
+          throw new Error('Wrong feature type');
+        }
         if (!this.features) {
           throw new Error('Missing features');
         }
@@ -1170,6 +1177,9 @@ Controller.prototype.handleMapContextMenu_ = function(evt) {
     let feature = this.map.forEachFeatureAtPixel(
       pixel,
       (feature) => {
+        if (!(feature instanceof olFeature)) {
+          throw new Error('Wrong feature type');
+        }
         if (!this.features) {
           throw new Error('Missing features');
         }

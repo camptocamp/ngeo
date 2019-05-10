@@ -115,7 +115,11 @@ VectorEncoder.prototype.encodeVectorLayer = function(arr, layer, resolution) {
 
         const featureStyleProp = `_ngeo_style_${j}`;
         const styleId = `${olUtilGetUid(style).toString()}-${geometryType}`;
-        this.encodeVectorStyle(mapfishStyleObject, geometryType, style, styleId, featureStyleProp);
+        this.encodeVectorStyle(
+          /** @type {Object<string, import('ngeo/print/mapfish-print-v3.js').MapFishPrintSymbolizers>} */(
+            /** @type {*} */(mapfishStyleObject)
+          ), geometryType, style, styleId, featureStyleProp
+        );
         geojsonFeature.properties[featureStyleProp] = styleId;
       }
     }
@@ -143,7 +147,7 @@ VectorEncoder.prototype.encodeVectorLayer = function(arr, layer, resolution) {
 
 
 /**
- * @param {import('ngeo/print/mapfish-print-v3.js').MapFishPrintVectorStyle} object MapFish style object.
+ * @param {Object<string, import('ngeo/print/mapfish-print-v3.js').MapFishPrintSymbolizers>} object MapFish style object.
  * @param {import("ol/geom/GeometryType.js").default} geometryType Type of the GeoJSON geometry
  * @param {import("ol/style/Style.js").default} style Style.
  * @param {string} styleId Style id.
@@ -160,9 +164,10 @@ VectorEncoder.prototype.encodeVectorStyle = function(object, geometryType, style
     // do nothing if we already have a style object for this CQL rule
     return;
   }
-  const styleObject = /** @type {import('ngeo/print/mapfish-print-v3.js').MapFishPrintSymbolizers} */ ({
+  /** @type {import('ngeo/print/mapfish-print-v3.js').MapFishPrintSymbolizers} */
+  const styleObject = {
     symbolizers: []
-  });
+  };
   object[key] = styleObject;
   const fillStyle = style.getFill();
   const imageStyle = style.getImage();

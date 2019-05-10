@@ -10,17 +10,17 @@ import {getUid as olUtilGetUid} from 'ol/util.js';
  */
 function GridConfig(data, columnDefs) {
   /**
-   * @type {Array.<Object>|undefined}
+   * @type {Array<Object>|undefined}
    */
   this.data = data;
 
   /**
-   * @type {Array.<import('ngeo/download/Csv.js').GridColumnDef>|undefined}
+   * @type {Array<import('ngeo/download/Csv.js').GridColumnDef>|undefined}
    */
   this.columnDefs = columnDefs;
 
   /**
-   * @type {!Object.<string, Object>}
+   * @type {Object<string, Object>}
    */
   this.selectedRows = {};
 }

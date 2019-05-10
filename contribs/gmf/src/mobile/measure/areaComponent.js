@@ -5,7 +5,7 @@ import {MeasueMobileBaseController} from 'gmf/mobile/measure/baseComponent.js';
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('gmfMobileMeasureArea', [
@@ -25,10 +25,17 @@ module.value('gmfMobileMeasureAreaTemplateUrl',
       'gmf/measure/areaComponent';
   });
 
-module.run(/* @ngInject */ ($templateCache) => {
+
+module.run(
+  /**
+   * @ngInject
+   * @param {angular.ITemplateCacheService} $templateCache
+   */
+  ($templateCache) => {
   // @ts-ignore: webpack
-  $templateCache.put('gmf/measure/areaComponent', require('./baseComponent.html'));
-});
+    $templateCache.put('gmf/measure/areaComponent', require('./baseComponent.html'));
+  }
+);
 
 
 /**
@@ -91,9 +98,9 @@ module.directive('gmfMobileMeasurearea', mobileMeasureAreaComponent);
  */
 class Controller extends MeasueMobileBaseController {
   /**
-   * @param {!angular.IScope} $scope Angular scope.
-   * @param {!angular.IFilterService} $filter Angular filter
-   * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
+   * @param {angular.IScope} $scope Angular scope.
+   * @param {angular.IFilterService} $filter Angular filter
+   * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
    * @ngInject
    */
   constructor($scope, $filter, gettextCatalog) {
@@ -109,6 +116,9 @@ class Controller extends MeasueMobileBaseController {
    * Initialise the controller.
    */
   init() {
+    if (this.precision === null) {
+      throw new Error('Missing precision');
+    }
     this.measure = new ngeoInteractionMeasureAreaMobile(this.filter('ngeoUnitPrefix'), this.gettextCatalog, {
       precision: this.precision,
       sketchStyle: this.sketchStyle

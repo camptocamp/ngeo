@@ -25,15 +25,14 @@ const module = angular.module('gmfapp', [
   ngeoStatemanagerWfsPermalink.name,
 ]);
 
-module.value('ngeoWfsPermalinkOptions',
-  /** @type {import('ngeo/statemanager/WfsPermalink.js').WfsPermalinkOptions} */ ({
-    wfsTypes: [
-      {featureType: 'fuel', label: 'display_name'},
-      {featureType: 'osm_scale', label: 'display_name'}
-    ],
-    defaultFeatureNS: appURL.MAPSERVER_WFS_FEATURE_NS,
-    defaultFeaturePrefix: 'feature'
-  }));
+module.value('ngeoWfsPermalinkOptions', {
+  wfsTypes: [
+    {featureType: 'fuel', label: 'display_name'},
+    {featureType: 'osm_scale', label: 'display_name'}
+  ],
+  defaultFeatureNS: appURL.MAPSERVER_WFS_FEATURE_NS,
+  defaultFeaturePrefix: 'feature'
+});
 
 module.constant('ngeoPermalinkOgcserverUrl', appURL.MAPSERVER_PROXY);
 module.constant('defaultTheme', 'Demo');

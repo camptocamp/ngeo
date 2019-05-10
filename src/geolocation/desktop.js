@@ -96,7 +96,8 @@ function Controller($scope, $element, ngeoFeatureOverlayMgr, ngeoNotification) {
 
   $element.on('click', this.toggle.bind(this));
 
-  const map = $scope['getDesktopMapFn']();
+  // @ts-ignore
+  const map = $scope.getDesktopMapFn();
   console.assert(map instanceof olMap);
 
   /**
@@ -105,7 +106,8 @@ function Controller($scope, $element, ngeoFeatureOverlayMgr, ngeoNotification) {
    */
   this.map_ = map;
 
-  const options = $scope['getDesktopGeolocationOptionsFn']() || {};
+  // @ts-ignore
+  const options = $scope.getDesktopGeolocationOptionsFn() || {};
   console.assert(options);
 
   /**

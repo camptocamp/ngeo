@@ -2,7 +2,7 @@ import angular from 'angular';
 import {DOTS_PER_INCH, INCHES_PER_METER} from 'ngeo/print/Utils.js';
 
 describe('ngeo.print.Utils', () => {
-
+  /** @type {import('ngeo/print/Utils.js').PrintUtils} */
   let ngeoPrintUtilsService;
 
   beforeEach(() => {

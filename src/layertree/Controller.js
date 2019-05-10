@@ -18,14 +18,14 @@ import olLayerLayer from 'ol/layer/Layer.js';
  */
 export function LayertreeController($scope, $rootScope, $attrs) {
 
-  const isRoot = $attrs['ngeoLayertreeNotroot'] === undefined;
+  const isRoot = $attrs.ngeoLayertreeNotroot === undefined;
 
   /**
    * @type {boolean}
    */
   this.isRoot = isRoot;
 
-  const nodeExpr = $attrs['ngeoLayertree'];
+  const nodeExpr = $attrs.ngeoLayertree;
 
   /**
    * @type {angular.IScope}
@@ -34,41 +34,43 @@ export function LayertreeController($scope, $rootScope, $attrs) {
   this.rootScope_ = $rootScope;
 
   /**
-   * @type {!Object}
+   * @type {Object<string, string|boolean>}
    */
   this.properties = {};
 
   /**
-   * @type {!string}
+   * @type {string}
    * @private
    */
   this.state_ = 'off';
 
-  /**
-   * @type {!Object}
-   */
-  this.node;
-
+  let node;
   if (isRoot) {
     $scope.$watch(nodeExpr, (newVal, oldVal) => {
       this.node = newVal;
     });
   } else {
-    this.node = /** @type {!Object} */ ($scope.$eval(nodeExpr));
+    node = $scope.$eval(nodeExpr);
     console.assert(this.node !== undefined);
   }
+  /**
+   * @type {import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer}
+   */
+  this.node = node;
 
-  const mapExpr = $attrs['ngeoLayertreeMap'];
-  const map = /** @type {import("ol/Map.js").default} */ ($scope.$eval(mapExpr));
+
+  const mapExpr = $attrs.ngeoLayertreeMap;
+  const map = /** @type {import("ol/Map.js").default} */($scope.$eval(mapExpr));
   console.assert(map !== undefined);
 
   /**
    * @type {import("ngeo/layertree/Controller.js").LayertreeController}
    */
-  this.parent = $scope.$parent['layertreeCtrl'];
+  // @ts-ignore
+  this.parent = $scope.$parent.layertreeCtrl;
 
   /**
-   * @type {Array.<import("ngeo/layertree/Controller.js").LayertreeController>}
+   * @type {import("ngeo/layertree/Controller.js").LayertreeController[]}
    */
   this.children = [];
 
@@ -97,17 +99,19 @@ export function LayertreeController($scope, $rootScope, $attrs) {
   // We set 'uid' and 'depth' in the scope as well to access the parent values
   // in the inherited scopes. This is intended to be used in the javascript not
   // in the templates.
-  $scope['uid'] = this.uid;
-  $scope['depth'] = this.depth;
+  // @ts-ignore
+  $scope.uid = this.uid;
+  // @ts-ignore
+  $scope.depth = this.depth;
 
   /**
    * @type {import("ol/Map.js").default}
    */
   this.map = map;
 
-  let nodelayerExpr = $attrs['ngeoLayertreeNodelayer'];
+  let nodelayerExpr = $attrs.ngeoLayertreeNodelayer;
   if (nodelayerExpr === undefined) {
-    const nodelayerexprExpr = $attrs['ngeoLayertreeNodelayerexpr'];
+    const nodelayerexprExpr = $attrs.ngeoLayertreeNodelayerexpr;
     const newNodelayerExpr = $scope.$eval(nodelayerexprExpr);
     console.assert(typeof newNodelayerExpr == 'string');
     nodelayerExpr = newNodelayerExpr;
@@ -148,9 +152,9 @@ export function LayertreeController($scope, $rootScope, $attrs) {
     });
   }
 
-  let listenersExpr = $attrs['ngeoLayertreeListeners'];
+  let listenersExpr = $attrs.ngeoLayertreeListeners;
   if (listenersExpr === undefined) {
-    const listenersexprExpr = $attrs['ngeoLayertreeListenersexpr'];
+    const listenersexprExpr = $attrs.ngeoLayertreeListenersexpr;
     listenersExpr = $scope.$eval(listenersexprExpr);
   }
 
@@ -168,7 +172,8 @@ export function LayertreeController($scope, $rootScope, $attrs) {
     $scope.$eval(listenersExpr, {'treeScope': $scope, 'treeCtrl': this});
   }
 
-  $scope['layertreeCtrl'] = this;
+  // @ts-ignore
+  $scope.layertreeCtrl = this;
 }
 
 
@@ -247,8 +252,8 @@ LayertreeController.prototype.setStateInternal_ = function(state) {
  * @public
  */
 LayertreeController.prototype.refreshState = function(opt_onChild, opt_broadcast) {
-
-  if (this.node.children &&
+  const group = /** @type {import('gmf/themes.js').GmfGroup} */(this.node);
+  if (group.children &&
       opt_onChild &&
       opt_onChild.getState() !== 'off' &&
       this.node.metadata &&
@@ -278,7 +283,8 @@ LayertreeController.prototype.refreshState = function(opt_onChild, opt_broadcast
  * @return {string} 'on', 'off' or 'indeterminate'.
  */
 LayertreeController.prototype.getCalculateState = function() {
-  if (this.node.children === undefined) {
+  const group = /** @type {import('gmf/themes.js').GmfGroup} */(this.node);
+  if (group.children === undefined) {
     return this.state_;
   }
   /** @type {string} */

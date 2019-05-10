@@ -59,10 +59,16 @@ function MainController(ngeoTime) {
    */
   this.rangeValue = '';
 
+  /**
+   * @param {string} date
+   */
   this.onDateSelected = function(date) {
     this.value = date;
   };
 
+  /**
+   * @param {string} date
+   */
   this.onDateRangeSelected = function(date) {
     this.rangeValue = date;
   };

@@ -11,9 +11,9 @@ import GeometryCollection from 'ol/geom/GeometryCollection.js';
 export default class extends ngeoInteractionMeasure {
   /**
    * @fires import('ngeo/interaction/Measure.js').MeasureEvent
-   * @param {!import('ngeo/misc/filters.js').unitPrefix} unitPrefixFormat The format function
-   * @param {!import('ngeo/misc/filters.js').formatNumber} numberFormat The format function
-   * @param {!import('ngeo/interaction/Measure.js').MeasureOptions=} options Options
+   * @param {import('ngeo/misc/filters.js').unitPrefix} unitPrefixFormat The format function
+   * @param {import('ngeo/misc/filters.js').formatNumber} numberFormat The format function
+   * @param {import('ngeo/interaction/Measure.js').MeasureOptions=} options Options
    */
   constructor(unitPrefixFormat, numberFormat, options = {}) {
     super(options);
@@ -44,10 +44,13 @@ export default class extends ngeoInteractionMeasure {
   }
 
   /**
-   * @inheritDoc
+   * @param {import("ol/style/Style.js").StyleLike} style The sketchStyle used for the drawing
+   *    interaction.
+   * @param {import('ol/source/Vector.js').default} source Vector source.
+   * @return {?import("ol/interaction/Draw.js").default|import("ngeo/interaction/DrawAzimut.js").default|
+   *    import("ngeo/interaction/MobileDraw.js").default} The interaction
    */
-  createDrawInteraction(style,
-    source) {
+  createDrawInteraction(style, source) {
 
     return new ngeoInteractionDrawAzimut({
       source,
@@ -56,7 +59,8 @@ export default class extends ngeoInteractionMeasure {
   }
 
   /**
-   * @inheritDoc
+   * @param {function(string, ?import("ol/coordinate.js").Coordinate): void} callback The function
+   *     to be called.
    */
   handleMeasure(callback) {
     if (!this.sketchFeature) {

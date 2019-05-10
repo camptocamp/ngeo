@@ -231,8 +231,8 @@ class Measure extends olInteractionInteraction {
    * Creates the draw interaction.
    *
    * @abstract
-   * @param {import("ol/style/Style.js").StyleLike|undefined}
-   *     style The sketchStyle used for the drawing interaction.
+   * @param {import("ol/style/Style.js").StyleLike} style The sketchStyle used for the drawing
+   *    interaction.
    * @param {VectorSource} source Vector source.
    * @return {?import("ol/interaction/Draw.js").default|import("ngeo/interaction/DrawAzimut.js").default|import("ngeo/interaction/MobileDraw.js").default}
    *    The interaction
@@ -244,7 +244,7 @@ class Measure extends olInteractionInteraction {
 
 
   /**
-   * @inheritDoc
+   * @param {import("ol/PluggableMap.js").default} map Map.
    */
   setMap(map) {
 

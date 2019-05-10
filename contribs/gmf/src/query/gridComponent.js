@@ -68,16 +68,22 @@ module.value('gmfDisplayquerygridTemplateUrl',
   }
 );
 
-module.run(/* @ngInject */ ($templateCache) => {
-  // @ts-ignore: webpack
-  $templateCache.put('gmf/query/gridComponent', require('./gridComponent.html'));
-});
+
+module.run(
+  /**
+   * @ngInject
+   * @param {angular.ITemplateCacheService} $templateCache
+   */
+  ($templateCache) => {
+    // @ts-ignore: webpack
+    $templateCache.put('gmf/query/gridComponent', require('./gridComponent.html'));
+  });
 
 
 /**
- * @param {!JQuery} $element Element.
- * @param {!angular.IAttributes} $attrs Attributes.
- * @param {!function(!JQuery, !angular.IAttributes): string} gmfDisplayquerygridTemplateUrl Template function.
+ * @param {JQuery} $element Element.
+ * @param {angular.IAttributes} $attrs Attributes.
+ * @param {function(!JQuery, !angular.IAttributes): string} gmfDisplayquerygridTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
  * @private
@@ -152,15 +158,15 @@ module.component('gmfDisplayquerygrid', queryGridComponent);
 /**
  * Controller for the query grid.
  *
- * @param {!angular.auto.IInjectorService} $injector Main injector.
- * @param {!angular.IScope} $scope Angular scope.
- * @param {!import('ngeo/query/MapQuerent.js').QueryResult} ngeoQueryResult ngeo query result.
- * @param {!import("ngeo/query/MapQuerent.js").MapQuerent} ngeoMapQuerent ngeo map querent service.
- * @param {!import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
+ * @param {angular.auto.IInjectorService} $injector Main injector.
+ * @param {angular.IScope} $scope Angular scope.
+ * @param {import('ngeo/query/MapQuerent.js').QueryResult} ngeoQueryResult ngeo query result.
+ * @param {import("ngeo/query/MapQuerent.js").MapQuerent} ngeoMapQuerent ngeo map querent service.
+ * @param {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
- * @param {!angular.ITimeoutService} $timeout Angular timeout service.
- * @param {!import("ngeo/download/Csv.js").DownloadCsvService} ngeoCsvDownload CSV download service.
- * @param {!JQuery} $element Element.
+ * @param {angular.ITimeoutService} $timeout Angular timeout service.
+ * @param {import("ngeo/download/Csv.js").DownloadCsvService} ngeoCsvDownload CSV download service.
+ * @param {JQuery} $element Element.
  * @constructor
  * @hidden
  * @ngInject
@@ -175,36 +181,36 @@ export function QueryGridController($injector, $scope, ngeoQueryResult, ngeoMapQ
       $injector.get('ngeoQueryOptions') : {});
 
   /**
-   * @type {!angular.IScope}
+   * @type {angular.IScope}
    * @private
    */
   this.$scope_ = $scope;
 
   /**
-   * @type {!angular.ITimeoutService}
+   * @type {angular.ITimeoutService}
    * @private
    */
   this.$timeout_ = $timeout;
 
   /**
-   * @type {!import('ngeo/query/MapQuerent.js').QueryResult}
+   * @type {import('ngeo/query/MapQuerent.js').QueryResult}
    */
   this.ngeoQueryResult = ngeoQueryResult;
 
   /**
-   * @type {!import("ngeo/query/MapQuerent.js").MapQuerent}
+   * @type {import("ngeo/query/MapQuerent.js").MapQuerent}
    * @private
    */
   this.ngeoMapQuerent_ = ngeoMapQuerent;
 
   /**
-   * @type {!import("ngeo/download/Csv.js").DownloadCsvService}
+   * @type {import("ngeo/download/Csv.js").DownloadCsvService}
    * @private
    */
   this.ngeoCsvDownload_ = ngeoCsvDownload;
 
   /**
-   * @type {!JQuery}
+   * @type {JQuery}
    * @private
    */
   this.$element_ = $element;
@@ -225,13 +231,13 @@ export function QueryGridController($injector, $scope, ngeoQueryResult, ngeoMapQ
   this.pending = false;
 
   /**
-   * @type {!Object.<string, GridSource>}
+   * @type {Object.<string, GridSource>}
    */
   this.gridSources = {};
 
   /**
    * IDs of the grid sources in the order they were loaded.
-   * @type {!Array.<string>}
+   * @type {Array.<string>}
    */
   this.loadedGridSources = [];
 
@@ -260,7 +266,7 @@ export function QueryGridController($injector, $scope, ngeoQueryResult, ngeoMapQ
   /**
    * A mapping between row uid and the corresponding feature for each
    * source.
-   * @type {!Object.<string, Object.<string, import("ol/Feature.js").default>>}
+   * @type {Object.<string, Object.<string, import("ol/Feature.js").default>>}
    * @private
    */
   this.featuresForSources_ = {};
@@ -268,19 +274,19 @@ export function QueryGridController($injector, $scope, ngeoQueryResult, ngeoMapQ
   // Styles for displayed features (features) and selected features
   // (highlightFeatures_) (user can set both styles).
   /**
-   * @type {!import("ol/Collection.js").default}
+   * @type {import("ol/Collection.js").default<import('ol/Feature.js').default>}
    * @private
    */
   this.features_ = new olCollection();
 
   /**
-   * @type {!import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr}
+   * @type {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr}
    * @private
    */
   this.ngeoFeatureOverlayMgr_ = ngeoFeatureOverlayMgr;
 
   /**
-   * @type {!import("ol/Collection.js").default}
+   * @type {import("ol/Collection.js").default<import('ol/Feature.js').default>}
    * @private
    */
   this.highlightFeatures_ = new olCollection();
@@ -318,15 +324,33 @@ export function QueryGridController($injector, $scope, ngeoQueryResult, ngeoMapQ
 
   this.removeEmptyColumnsFn = () => false;
   this.maxRecenterZoomFn = () => null;
-  this.featuresStyleFn = () => null;
-  this.selectedFeatureStyleFn = () => null;
-  this.getMapFn = () => null;
+  /**
+   * @type {?() => olStyleStyle}
+   */
+  this.featuresStyleFn = null;
+  /**
+   * @type {?() => olStyleStyle}
+   */
+  this.selectedFeatureStyleFn = null;
+  /**
+   * @type {?() => olMap}
+   */
+  this.getMapFn = null;
 }
 
 /**
  * Init the controller
  */
 QueryGridController.prototype.$onInit = function() {
+  if (!this.getMapFn) {
+    throw new Error('Missing getMapFn');
+  }
+  if (!this.featuresStyleFn) {
+    throw new Error('Missing featuresStyleFn');
+  }
+  if (!this.selectedFeatureStyleFn) {
+    throw new Error('Missing selectedFeatureStyleFn');
+  }
   this.removeEmptyColumns_ = this.removeEmptyColumnsFn();
   this.maxRecenterZoom = this.maxRecenterZoomFn();
 
@@ -482,8 +506,9 @@ QueryGridController.prototype.isSelected = function(gridSource) {
  * @private
  */
 QueryGridController.prototype.getMergedSources_ = function(sources) {
+  /** @type {import('ngeo/statemanager/WfsPermalink').QueryResultSource[]} */
   const allSources = [];
-  /** @type {Object.<string, import('ngeo/statemanager/WfsPermalink.js').QueryResultSource>} */
+  /** @type {Object<string, import('ngeo/statemanager/WfsPermalink.js').QueryResultSource>} */
   const mergedSources = {};
 
   sources.forEach((source) => {
@@ -578,9 +603,11 @@ QueryGridController.prototype.getMergedSource_ = function(source, mergedSources)
  */
 QueryGridController.prototype.collectData_ = function(source) {
   const features = source.features;
+  /** @type {Object<string, *>[]} */
   const allProperties = [];
+  /** @type {string[]} */
   const featureGeometriesNames = [];
-  /** @type {Object<string, !import("ol/Feature.js").default>} */
+  /** @type {Object<string, import("ol/Feature.js").default>} */
   const featuresForSource = {};
   let properties, featureGeometryName;
   features.forEach((feature) => {
@@ -635,6 +662,7 @@ QueryGridController.prototype.cleanProperties_ = function(allProperties, feature
  */
 QueryGridController.prototype.removeEmptyColumnsFn_ = function(allProperties) {
   // Keep all keys that correspond to at least one value in a properties object.
+  /** @type {string[]} */
   const keysToKeep = [];
   let i, key;
   for (key in allProperties[0]) {
@@ -691,7 +719,7 @@ QueryGridController.prototype.makeGrid_ = function(data, source) {
 
 
 /**
- * @param {Array.<!Object>} data Grid rows.
+ * @param {Array<Object>} data Grid rows.
  * @return {?import("ngeo/grid/Config.js").default} Grid config.
  * @private
  */
@@ -699,6 +727,7 @@ QueryGridController.prototype.getGridConfiguration_ = function(data) {
   console.assert(data.length > 0);
   const clone = {};
   Object.assign(clone, data[0]);
+  // @ts-ignore
   delete clone.ol_uid;
   const columns = Object.keys(clone);
 
@@ -912,7 +941,11 @@ QueryGridController.prototype.zoomToSelection = function() {
   if (source !== null) {
     const extent = olExtent.createEmpty();
     this.highlightFeatures_.forEach((feature) => {
-      olExtent.extend(extent, feature.getGeometry().getExtent());
+      const geometry = feature.getGeometry();
+      if (!geometry) {
+        throw new Error('Missing geometry');
+      }
+      olExtent.extend(extent, geometry.getExtent());
     });
     const size = this.map_.getSize();
     if (!size) {

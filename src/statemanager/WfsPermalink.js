@@ -293,7 +293,7 @@ WfsPermalinkService.prototype.getExtent_ = function(features) {
 /**
  * Create OGC filters for the filter groups extracted from the query params.
  *
- * @param {Array<!WfsPermalinkFilterGroup>} filterGroups Filter groups.
+ * @param {Array<WfsPermalinkFilterGroup>} filterGroups Filter groups.
  * @return {?import("ol/format/filter/Filter.js").default} OGC filters.
  * @private
  */

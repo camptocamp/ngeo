@@ -6,6 +6,7 @@ import olSourceImage from 'ol/source/Image.js';
 
 
 describe('ngeo.misc.DecorateLayerLoading test suite', () => {
+  /** @type {angular.IScope} */
   let scope;
 
   beforeEach(angular.mock.inject(($rootScope) => {

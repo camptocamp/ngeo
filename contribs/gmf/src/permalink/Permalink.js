@@ -247,7 +247,7 @@ const ParamPrefix = {
  * ngeoAutoProjection and ngeoFeatures.
  *
  * @constructor
- * @param {!angular.IQService} $q The Angular $q service.
+ * @param {angular.IQService} $q The Angular $q service.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @param {angular.IScope} $rootScope Angular rootScope.
  * @param {angular.auto.IInjectorService} $injector Main injector.
@@ -268,7 +268,7 @@ export function PermalinkService(
 ) {
 
   /**
-   * @type {!angular.IQService}
+   * @type {angular.IQService}
    * @private
    */
   this.q_ = $q;
@@ -354,7 +354,7 @@ export function PermalinkService(
 
   /**
    * The options to configure the gmf permalink service with.
-   * @type {!PermalinkOptions}
+   * @type {PermalinkOptions}
    */
   const gmfPermalinkOptions =
     $injector.has('gmfPermalinkOptions') ?
@@ -538,31 +538,44 @@ export function PermalinkService(
 
   // visibility
   this.rootScope_.$on('ngeo-layertree-state', (event, treeCtrl, firstParent) => {
-    /** @type {!Object.<string, string>} */
+    /** @type {Object<string, string>} */
     const newState = {};
     if (firstParent.node.mixed) {
       const state = treeCtrl.getState();
       console.assert(state === 'on' || state === 'off');
       const visible = state === 'on';
-      treeCtrl.traverseDepthFirst((ctrl) => {
-        if (ctrl.node.children === undefined) {
-          const param = ParamPrefix.TREE_ENABLE + ctrl.node.name;
-          newState[param] = `${visible}`;
+      treeCtrl.traverseDepthFirst(
+        /**
+         * @param {import('ngeo/layertree/Controller.js').LayertreeController} ctrl
+         */
+        (ctrl) => {
+          const groupNode = /** @type{import('gmf/themes.js').GmfGroup} */(treeCtrl.node);
+          if (groupNode.children === undefined) {
+            const param = ParamPrefix.TREE_ENABLE + ctrl.node.name;
+            newState[param] = `${visible}`;
+          }
         }
-      });
+      );
     } else {
+      /** @type {string[]} */
       const gmfLayerNames = [];
-      firstParent.traverseDepthFirst((ctrl) => {
-        if (ctrl.node.children === undefined && ctrl.getState() === 'on') {
-          gmfLayerNames.push(ctrl.node.name);
+      firstParent.traverseDepthFirst(
+        /**
+         * @param {import('ngeo/layertree/Controller.js').LayertreeController} ctrl
+         */
+        (ctrl) => {
+          const groupNode = /** @type{import('gmf/themes.js').GmfGroup} */(treeCtrl.node);
+          if (groupNode.children === undefined && ctrl.getState() === 'on') {
+            gmfLayerNames.push(ctrl.node.name);
+          }
         }
-      });
+      );
       newState[ParamPrefix.TREE_GROUP_LAYERS + firstParent.node.name] = gmfLayerNames.join(',');
     }
     this.ngeoStateManager_.updateState(newState);
   });
   this.rootScope_.$on('ngeo-layertree-opacity', (event, treeCtrl) => {
-    /** @type {!Object.<string, string>} */
+    /** @type {Object<string, string>} */
     const newState = {};
     const opacity = treeCtrl.layer.getOpacity();
     const stateName = (treeCtrl.parent.node.mixed ?
@@ -609,7 +622,7 @@ export function PermalinkService(
   // External DataSources
 
   /**
-   * @type {?angular.IPromise}
+   * @type {?angular.IPromise<void>}
    * @private
    */
   this.setExternalDataSourcesStatePromise_ = null;
@@ -771,11 +784,16 @@ PermalinkService.prototype.setMapTooltip = function(tooltipText, opt_center) {
   if (!this.map_) {
     throw new Error('Missing map');
   }
+  /** @type {import("ol/coordinate.js").Coordinate} */
   let tooltipPosition;
   if (opt_center) {
     tooltipPosition = opt_center;
   } else {
-    tooltipPosition = this.map_.getView().getCenter();
+    const center = this.map_.getView().getCenter();
+    if (!center) {
+      throw new Error('Missing center');
+    }
+    tooltipPosition = center;
   }
   console.assert(Array.isArray(tooltipPosition));
 
@@ -802,7 +820,7 @@ PermalinkService.prototype.setMapTooltip = function(tooltipText, opt_center) {
 
 /**
  * Get the ngeo features from the state manager for initialization purpose
- * @return {!Array.<!import("ol/Feature.js").default>} The features read from the state manager.
+ * @return {Array<import("ol/Feature.js").default>} The features read from the state manager.
  */
 PermalinkService.prototype.getFeatures = function() {
   const f = this.ngeoStateManager_.getInitialStringValue(PermalinkParam.FEATURES);
@@ -829,7 +847,7 @@ PermalinkService.prototype.setDimensions = function(dimensions) {
   }
 
   this.rootScope_.$watchCollection(() => dimensions, (dimensions) => {
-    /** @type {!Object.<string, string>} */
+    /** @type {Object<string, string>} */
     const params = {};
     for (const key in dimensions) {
       params[ParamPrefix.DIMENSIONS + key] = dimensions[key];
@@ -897,6 +915,7 @@ PermalinkService.prototype.registerMap_ = function(map, oeFeature) {
     if (geom instanceof olGeomPoint || geom instanceof olGeomMultiPoint) {
       maxZoom = this.pointRecenterZoom_;
     }
+    /** @type {import('ol/View.js').FitOptions} */
     const options = {
       size,
     };
@@ -976,7 +995,7 @@ PermalinkService.prototype.unregisterMap_ = function() {
 /**
  * Get the background layer object to use to initialize the map from the
  * state manager.
- * @param {!Array.<!import("ol/layer/Base.js").default>} layers Array of background layer objects.
+ * @param {Array<import("ol/layer/Base.js").default>} layers Array of background layer objects.
  * @return {?import("ol/layer/Base.js").default} Background layer.
  */
 PermalinkService.prototype.getBackgroundLayer = function(layers) {
@@ -1011,7 +1030,7 @@ PermalinkService.prototype.handleBackgroundLayerManagerChange_ = function() {
   console.assert(typeof layerName == 'string');
 
   // set it in state
-  /** @type {!Object.<string, string>} */
+  /** @type {Object<string, string>} */
   const object = {};
   object[PermalinkParam.BG_LAYER] = layerName;
   this.ngeoStateManager_.updateState(object);
@@ -1033,11 +1052,12 @@ PermalinkService.prototype.refreshFirstLevelGroups = function() {
     throw new Error('Missing gmfTreeManager_.rootCtrl');
   }
   // Get first-level-groups order
-  const groupNodes = this.gmfTreeManager_.rootCtrl.node.children;
-  const orderedNames = groupNodes.map(node => node.name);
+  const groupNode = /** @type{import('gmf/themes.js').GmfGroup} */(this.gmfTreeManager_.rootCtrl.node);
+  const groupNodes = groupNode.children;
+  const orderedNames = groupNodes ? groupNodes.map(node => node.name) : [];
 
   // set it in state
-  /** @type {!Object.<string, string>} */
+  /** @type {Object<string, string>} */
   const object = {};
   object[PermalinkParam.TREE_GROUPS] = orderedNames.join(',');
   this.ngeoStateManager_.updateState(object);
@@ -1047,7 +1067,7 @@ PermalinkService.prototype.refreshFirstLevelGroups = function() {
 /**
  * Return true if there is a theme specified in the URL path.
  * @private
- * @param {Array.<string>} pathElements Array of path elements.
+ * @param {Array<string>} pathElements Array of path elements.
  * @return {boolean} theme in path.
  */
 PermalinkService.prototype.themeInUrl_ = function(pathElements) {
@@ -1204,16 +1224,18 @@ PermalinkService.prototype.initLayers_ = function() {
         if (treeCtrl.isRoot) {
           return undefined;
         }
+        const groupNode = /** @type{import('gmf/themes.js').GmfGroup} */(treeCtrl.node);
+        const parentGroupNode = /** @type{import('gmf/themes.js').GmfGroup} */(treeCtrl.parent.node);
 
         const opacity = this.ngeoStateManager_.getInitialNumberValue((
-          treeCtrl.parent.node.mixed ?
+          parentGroupNode.mixed ?
             ParamPrefix.TREE_OPACITY :
             ParamPrefix.TREE_GROUP_OPACITY
         ) + treeCtrl.node.name);
         if (opacity !== undefined && treeCtrl.layer) {
           treeCtrl.layer.setOpacity(opacity);
         }
-        if (treeCtrl.parent.node && treeCtrl.parent.node.mixed && treeCtrl.node.children == undefined) {
+        if (treeCtrl.parent.node && parentGroupNode.mixed && groupNode.children == undefined) {
           // Layer of a mixed group
           const enable = this.ngeoStateManager_.getInitialBooleanValue(
             ParamPrefix.TREE_ENABLE + treeCtrl.node.name
@@ -1221,7 +1243,7 @@ PermalinkService.prototype.initLayers_ = function() {
           if (enable !== undefined) {
             treeCtrl.setState(enable ? 'on' : 'off', false);
           }
-        } else if (!treeCtrl.node.mixed && treeCtrl.depth == 1) {
+        } else if (!groupNode.mixed && treeCtrl.depth == 1) {
           // First level non mixed group
           const groupLayers = this.ngeoStateManager_.getInitialStringValue(
             ParamPrefix.TREE_GROUP_LAYERS + treeCtrl.node.name
@@ -1235,7 +1257,8 @@ PermalinkService.prototype.initLayers_ = function() {
              * @return {LayertreeVisitorDecision|undefined} the result
              */
             const visitor = (treeCtrl) => {
-              if (treeCtrl.node.children === undefined) {
+              const groupNode = /** @type{import('gmf/themes.js').GmfGroup} */(treeCtrl.node);
+              if (groupNode.children === undefined) {
                 const enable = groupLayersArray.includes(treeCtrl.node.name);
                 if (enable) {
                   groupLayersArray.splice(groupLayersArray.indexOf(treeCtrl.node.name), 1);
@@ -1404,7 +1427,7 @@ PermalinkService.prototype.getWfsPermalinkData_ = function() {
  */
 PermalinkService.prototype.createFilterGroup_ = function(prefix, paramKeys) {
   /**
-   * @type {Array.<import('ngeo/statemanager/WfsPermalink.js').WfsPermalinkFilter>}
+   * @type {Array<import('ngeo/statemanager/WfsPermalink.js').WfsPermalinkFilter>}
    */
   const filters = [];
 
@@ -1434,7 +1457,7 @@ PermalinkService.prototype.createFilterGroup_ = function(prefix, paramKeys) {
 
 
 /**
- * @return {!angular.IPromise} Promise
+ * @return {angular.IPromise<void>} Promise
  * @private
  */
 
@@ -1594,7 +1617,7 @@ PermalinkService.prototype.handleExternalDSGroupCollectionAdd_ = function(evt) {
 
 
 /**
- * @param {!import("ngeo/datasource/Group.js").default} group Data source group.
+ * @param {import("ngeo/datasource/Group.js").default} group Data source group.
  * @private
  */
 PermalinkService.prototype.registerExternalDSGroup_ = function(group) {
@@ -1615,7 +1638,7 @@ PermalinkService.prototype.registerExternalDSGroup_ = function(group) {
 
 /**
  * Contains the layer name
- * @param {!import("ol/layer/Base.js").default} layer The layer to inspect
+ * @param {import("ol/layer/Base.js").default} layer The layer to inspect
  * @param {string} name The layer name to find
  * @return {boolean} The containing status
  */
@@ -1649,7 +1672,7 @@ PermalinkService.prototype.handleExternalDSGroupCollectionRemove_ = function(evt
 
 
 /**
- * @param {!import("ngeo/datasource/Group.js").default} group Data source group.
+ * @param {import("ngeo/datasource/Group.js").default} group Data source group.
  * @private
  */
 PermalinkService.prototype.unregisterExternalDSGroup_ = function(group) {
@@ -1740,7 +1763,7 @@ PermalinkService.prototype.setExternalDataSourcesState_ = function() {
 
 /**
  * Clean the permalink parameters
- * @param {!Array.<import('gmf/themes.js').GmfGroup>} groups firstlevel groups of the tree
+ * @param {Array<import('gmf/themes.js').GmfGroup>} groups firstlevel groups of the tree
  */
 PermalinkService.prototype.cleanParams = function(groups) {
   const keys = this.ngeoLocation_.getParamKeys();
@@ -1789,7 +1812,7 @@ PermalinkService.prototype.cleanParams = function(groups) {
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('gmfPermalink', [
@@ -1813,10 +1836,10 @@ module.value('gmfPermalinkOptions', /** @type {PermalinkOptions} */ ({}));
 (function() {
   const regexp = [];
   for (const key1 in ParamPrefix) {
-    regexp.push(new RegExp(`${ParamPrefix[key1]}.*`));
+    regexp.push(new RegExp(`${/** @type {Object<string, string>} */(ParamPrefix)[key1]}.*`));
   }
   for (const key2 in PermalinkParam) {
-    regexp.push(new RegExp(ParamPrefix[key2]));
+    regexp.push(new RegExp(/** @type {Object<string, string>} */(ParamPrefix)[key2]));
   }
   ngeoStatemanagerService.value('ngeoUsedKeyRegexp', regexp);
 })();

@@ -17,35 +17,27 @@ import olLayerTile from 'ol/layer/Tile.js';
 import olLayerGroup from 'ol/layer/Group.js';
 import olMap from 'ol/Map.js';
 import * as olMath from 'ol/math.js';
+import ImageWMS from 'ol/source/ImageWMS.js';
 import MapBrowserPointerEvent from 'ol/MapBrowserPointerEvent.js';
 import 'bootstrap/js/src/dropdown.js';
-
-
-/**
- * @typedef {Object} PrintSimpleAttributes
- * @property {string|boolean|number} [default] Default value of the form field.
- * @property {string} name Name of the form field.
- * @property {string} value
- * @property {string} type Type of the field. Can be 'String', 'Boolean' or 'Number'.
- */
 
 
 /**
  * Fields that can come from a print v3 server and can be used in the partial
  * of the gmf print panel.
  * @typedef {Object} PrintLayoutInfo
- * @property {Array<PrintSimpleAttributes>} [simpleAttributes] Custom print layoutInfo.
- * @property {Array<string>} [attributes] The list of all the attributes name.
+ * @property {import('ngeo/print/mapfish-print-v3').MapFishPrintCapabilitiesLayoutAttribute[]}
+ *    [simpleAttributes] Custom print layoutInfo.
+ * @property {string[]} [attributes] The list of all the attributes name.
  * @property {number} [dpi] The selected 'dpi'.
- * @property {Array<number>} [dpis] The list of 'dpis'.
+ * @property {number[]} [dpis] The list of 'dpis'.
  * @property {Object<string, boolean>} [formats] The list of active 'formats' (png, pdf, ...).
  * @property {string} [layout] The selected 'layout'.
- * @property {Array<string>} [layouts] The list of 'layouts'.
+ * @property {string[]} [layouts] The list of 'layouts'.
  * @property {boolean} [legend] The legend checkbox.
  * @property {number} [scale] The selected 'scale'.
- * @property {Array<number>} [scales] The list of 'scales'
+ * @property {number[]} [scales] The list of 'scales'
  */
-
 
 /**
  * Object that can be used to generate a form field.
@@ -53,20 +45,6 @@ import 'bootstrap/js/src/dropdown.js';
  * @protected default {string|boolean|number|undefined} Default value of the form field.
  * @protected name {string} Name of the form field.
  * @protected type {string} Type of the field. Can be `String`, `Boolean` or `Number`.
- */
-
-
-/**
- * @typedef {Object} DataSourceTableObject
- * @property {Array.<string>} columns
- * @property {Array.<Array.<string|number|boolean>>} data
- */
-
-
-/**
- * @typedef {Object} DataSourcePrintReportObject
- * @property {string} title
- * @property {DataSourceTableObject} table
  */
 
 
@@ -98,10 +76,16 @@ module.value('gmfPrintTemplateUrl',
       'gmf/print';
   });
 
-module.run(/* @ngInject */ ($templateCache) => {
-  // @ts-ignore: webpack
-  $templateCache.put('gmf/print', require('./component.html'));
-});
+
+module.run(
+  /**
+   * @ngInject
+   * @param {angular.ITemplateCacheService} $templateCache
+   */
+  ($templateCache) => {
+    // @ts-ignore: webpack
+    $templateCache.put('gmf/print', require('./component.html'));
+  });
 
 
 /**
@@ -246,7 +230,7 @@ module.component('gmfPrint', printComponent);
  * @private
  * @hidden
  */
-class Controller {
+export class PrintController {
 
   /**
    * @param {JQuery} $element Element.
@@ -306,12 +290,12 @@ class Controller {
     this.rotateMask = false;
 
     /**
-     * @type {Object<string, string|number|boolean>!}
+     * @type {Object<string, string|number|boolean>}
      */
     this.fieldValues = {};
 
     /**
-     * @type {Array<PrintSimpleAttributes>}
+     * @type {import('ngeo/print/mapfish-print-v3').MapFishPrintCapabilitiesLayoutAttribute[]}
      */
     this.attributesOut = [];
 
@@ -421,13 +405,13 @@ class Controller {
     }
 
     /**
-     * @type {?angular.IDeferred}
+     * @type {?angular.IDeferred<never>}
      * @private
      */
     this.requestCanceler_ = null;
 
     /**
-     * @type {?angular.IPromise}
+     * @type {?angular.IPromise<void>}
      * @private
      */
     this.statusTimeoutPromise_ = null;
@@ -439,7 +423,7 @@ class Controller {
     this.onDragPreviousMousePosition_ = null;
 
     /**
-     * @type {?angular.IPromise}
+     * @type {?angular.IPromise<void>}
      * @private
      */
     this.rotationTimeoutPromise_ = null;
@@ -478,20 +462,20 @@ class Controller {
 
     /**
      * An array of attributes objects from capabilities.
-     * @type {Array<Object>}
+     * @type {Array<import('ngeo/print/mapfish-print-v3').MapFishPrintCapabilitiesLayout>}
      * @private
      */
     this.layouts_ = [];
 
     /**
      * An attributes object from capabilities.
-     * @type {Object}
+     * @type {?import('ngeo/print/mapfish-print-v3').MapFishPrintCapabilitiesLayout}
      * @private
      */
-    this.layout_ = {};
+    this.layout_ = null;
 
     /**
-     * @type {Array<number>}
+     * @type {number[]}
      * @private
      */
     this.paperSize_ = [];
@@ -730,20 +714,21 @@ class Controller {
    */
   getCapabilities_(roleId) {
     this.capabilities_ = this.ngeoPrint_.getCapabilities(
-      /** @type {angular.IRequestShortcutConfig} */ ({
+      {
         withCredentials: true,
         params: {
           'role': roleId,
           'cache_version': this.cacheVersion_
         }
-      }));
+      });
   }
 
 
   /**
    * Create the list of layouts, get the formats, get the first layout in
    * gmf print v3 capabilities and then update the print panel layout information.
-   * @param {!angular.IHttpResponse} resp Response.
+   * @param {angular.IHttpResponse<import('ngeo/print/mapfish-print-v3').MapFishPrintCapabilities>} resp
+   *    Response.
    * @private
    */
   parseCapabilities_(resp) {
@@ -774,6 +759,9 @@ class Controller {
   updateFields_() {
     if (!this.map) {
       throw new Error('Missing map');
+    }
+    if (!this.layout_) {
+      throw new Error('Missing layout');
     }
     this.layoutInfo.layout = this.layout_.name;
 
@@ -820,7 +808,9 @@ class Controller {
    * @private
    */
   updateCustomFields_() {
-    let name, rawType, value, type;
+    if (!this.layout_) {
+      throw new Error('Missing layout');
+    }
     if (!this.layoutInfo.simpleAttributes) {
       this.layoutInfo.simpleAttributes = [];
     }
@@ -833,13 +823,15 @@ class Controller {
     this.layout_.attributes.forEach((attribute) => {
       this.layoutInfo.attributes.push(attribute.name);
       if (!attribute.clientParams) {
-        name = `${attribute.name}`;
+        const name = `${attribute.name}`;
         const defaultValue = attribute.default;
-        value = (defaultValue !== undefined && defaultValue !== '') ?
+        let value = (defaultValue !== undefined && defaultValue !== '') ?
           defaultValue : this.fieldValues[name];
 
         // Try to use existing form field type
-        rawType = `${attribute.type}`;
+        const rawType = `${attribute.type}`;
+        /** @type {string} */
+        let type;
         switch (rawType) {
           case 'String':
             type = (name === 'comments') ? 'textarea' : 'text';
@@ -849,7 +841,7 @@ class Controller {
             break;
           case 'Number':
             type = 'number';
-            value = parseFloat(value);
+            value = parseFloat(/** @type {string} */(value));
             value = isNaN(value) ? 0 : value;
             break;
           default:
@@ -859,14 +851,15 @@ class Controller {
         // If it exists use the value of previous same field.
         previousAttributes.forEach((c) => {
           if (c.name === name && c.type === type) {
-            return value = c.value;
+            value = c.value;
+            return value;
           }
         });
 
         this.layoutInfo.simpleAttributes.push({
           name,
           type,
-          value
+          value: `${value}`
         });
       }
     });
@@ -880,10 +873,14 @@ class Controller {
    * @private
    */
   isAttributeInCurrentLayout_(name) {
+    if (!this.layout_) {
+      throw new Error('Missing layout');
+    }
     let attr = null;
     this.layout_.attributes.forEach((attribute) => {
       if (attribute.name === name) {
-        return attr = attribute;
+        attr = attribute;
+        return attribute;
       }
     });
     return attr;
@@ -998,6 +995,7 @@ class Controller {
     const scale = this.layoutInfo.scale || this.getOptimalScale_(mapSize, viewResolution);
     const datasource = this.getDataSource_();
 
+    /** @type {Object<string, *>} */
     const customAttributes = {};
 
     if (this.layoutInfo.attributes.indexOf('datasource') >= 0) {
@@ -1085,6 +1083,7 @@ class Controller {
       this.layoutInfo.layout, format, customAttributes, email);
 
     // Add feature overlay layer to print spec.
+    /** @type {import('ngeo/print/mapfish-print-v3.js').MapFishPrintLayer[]} */
     const layers = [];
     this.ngeoPrint_.encodeLayer(layers, this.featureOverlayLayer_,
       viewResolution);
@@ -1140,16 +1139,18 @@ class Controller {
   /**
    * Get datasource object for print report
    * @private
-   * @return {Array.<DataSourcePrintReportObject>} the data
+   * @return {Array<import('ngeo/print/mapfish-print-v3').DataSourcePrintReportObject>} the data
    *     source object for the print report
    */
   getDataSource_() {
-    let datasourceObj, data, columns;
+    /** @type {import("ngeo/print/mapfish-print-v3").DataSourcePrintReportObject[]} */
     const datasourceArr = [];
     const sources = this.ngeoQueryResult_.sources;
     sources.forEach((source) => {
-      data = [];
-      columns = [];
+      /** @type {any[]} */
+      const data = [];
+      /** @type {any[]} */
+      let columns = [];
       source.features.forEach((feature, i) => {
         console.assert(feature);
         const properties = getFilteredFeatureValues(feature);
@@ -1161,14 +1162,14 @@ class Controller {
         data.push(Object.keys(properties).map(key => properties[key]));
       });
       if (columns.length) {
-        datasourceObj =
-          /** @type {DataSourcePrintReportObject} */({
+        const datasourceObj =
+          {
             title: this.translate_(source.label),
             table: {
               columns,
               data
             }
-          });
+          };
         datasourceArr.push(datasourceObj);
       }
     });
@@ -1197,7 +1198,8 @@ class Controller {
 
 
   /**
-   * @param {!angular.IHttpResponse} resp Response.
+   * @param {angular.IHttpResponse<import('ngeo/print/mapfish-print-v3.js').MapFishPrintReportResponse>} resp
+   *    Response.
    * @private
    */
   handleCreateReportSuccess_(resp) {
@@ -1207,9 +1209,7 @@ class Controller {
       this.smtpMessage = true;
       this.resetPrintStates_();
     } else {
-      const mfResp = /** @type {import('ngeo/print/mapfish-print-v3.js').MapFishPrintReportResponse} */ (
-        resp.data);
-      const ref = mfResp.ref;
+      const ref = resp.data.ref;
       console.assert(ref.length > 0);
       this.curRef_ = ref;
       this.getStatus_(ref);
@@ -1223,9 +1223,9 @@ class Controller {
    */
   getStatus_(ref) {
     this.requestCanceler_ = this.$q_.defer();
-    this.ngeoPrint_.getStatus(ref, /** @type {angular.IRequestShortcutConfig} */ ({
+    this.ngeoPrint_.getStatus(ref, {
       timeout: this.requestCanceler_.promise
-    })).then(
+    }).then(
       this.handleGetStatusSuccess_.bind(this, ref),
       this.handleCreateReportError_.bind(this)
     );
@@ -1234,12 +1234,12 @@ class Controller {
 
   /**
    * @param {string} ref Ref.
-   * @param {!angular.IHttpResponse} resp Response.
+   * @param {!angular.IHttpResponse<import('ngeo/print/mapfish-print-v3.js').MapFishPrintStatusResponse>}
+   *    resp Response.
    * @private
    */
   handleGetStatusSuccess_(ref, resp) {
-    const mfResp = /** @type {import('ngeo/print/mapfish-print-v3.js').MapFishPrintStatusResponse} */ (
-      resp.data);
+    const mfResp = resp.data;
     const done = mfResp.done;
     if (done) {
       if (mfResp.status != 'error') {
@@ -1290,6 +1290,7 @@ class Controller {
       if (!this.map) {
         throw new Error('Missing map');
       }
+      /** @type {{name: string, icons: string[]}[]} */
       const classes = [];
       if (layer.getVisible() && layer.getSource()) {
         // For WMTS layers.
@@ -1313,9 +1314,12 @@ class Controller {
             });
           }
         } else {
-          const source = /** @type import("ol/source/ImageWMS.js").default */ (layer.getSource());
+          const source = layer.getSource();
+          if (!(source instanceof ImageWMS)) {
+            throw new Error('Wrong source type');
+          }
           // For each name in a WMS layer.
-          const layerNames = source.getParams().LAYERS.split(',');
+          const layerNames = /** @type {string} */(source.getParams().LAYERS).split(',');
           layerNames.forEach((name) => {
             if (!this.map) {
               throw new Error('Missing map');
@@ -1423,7 +1427,8 @@ class Controller {
    *     existing layouts.
    */
   setLayout(layoutName) {
-    let layout;
+    /** @type {?import('ngeo/print/mapfish-print-v3').MapFishPrintCapabilitiesLayout} */
+    let layout = null;
     this.layouts_.forEach((l) => {
       if (l.name === layoutName) {
         layout = l;
@@ -1474,7 +1479,7 @@ class Controller {
    *     state. False otherwise.
    */
   isState(stateEnumKey) {
-    return this.gmfPrintState_.state === PrintStateEnum[stateEnumKey];
+    return this.gmfPrintState_.state === /** @type {Object<string, string>} */(PrintStateEnum)[stateEnumKey];
   }
 
   /**
@@ -1485,7 +1490,7 @@ class Controller {
   }
 }
 
-module.controller('GmfPrintController', Controller);
+module.controller('GmfPrintController', PrintController);
 
 
 export default module;

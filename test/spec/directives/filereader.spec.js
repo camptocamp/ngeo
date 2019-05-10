@@ -1,25 +1,35 @@
 import angular from 'angular';
 
 describe('ngeo.misc.filereaderComponent', () => {
-  let element, rootScope;
+  /** @type {JQuery<HTMLElement>} */
+  let element;
+  /** @type {angular.IScope} */
+  let rootScope;
 
   beforeEach(() => {
-    element = angular.element(
-      '<input type="file" ngeo-filereader="fileContent" />');
+    element = angular.element('<input type="file" ngeo-filereader="fileContent" />');
 
-    angular.mock.module(($provide) => {
-      const FileReader = function() {};
-      FileReader.prototype.readAsText = function(file) {
-        const progressEvent = {
-          target: {
-            result: '<kml></kml>'
-          }
-        };
-        // @ts-ignore
-        this.onload(progressEvent);
-      };
-      $provide.value('$window', {FileReader: FileReader, angular: angular});
-    });
+    angular.mock.module(
+      /**
+       * @param {angular.IModule} $provide
+       */
+      ($provide) => {
+        const FileReader = function() {};
+        FileReader.prototype.readAsText =
+          /**
+           * @param {string} file
+           */
+          function(file) {
+            const progressEvent = {
+              target: {
+                result: '<kml></kml>'
+              }
+            };
+            // @ts-ignore
+            this.onload(progressEvent);
+          };
+        $provide.value('$window', {FileReader: FileReader, angular: angular});
+      });
 
     angular.mock.inject(($rootScope, $compile) => {
       $compile(element)($rootScope);
@@ -32,6 +42,7 @@ describe('ngeo.misc.filereaderComponent', () => {
     const customEvent = document.createEvent('CustomEvent');
     customEvent.initCustomEvent('change', true, true, {});
     input.dispatchEvent(customEvent);
+    // @ts-ignore
     expect(rootScope.fileContent).toBe('<kml></kml>');
   });
 });

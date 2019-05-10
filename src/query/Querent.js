@@ -30,9 +30,11 @@ import olSourceImageWMS from 'ol/source/ImageWMS.js';
  * @property {boolean} [tooManyFeatures]
  * @property {number} [totalFeatureCount]
  */
+
+
 /**
  * Hash of features by data source ids.
- * @typedef {!Object.<number, QuerentResultItem>} QuerentResult
+ * @typedef {Object<number, QuerentResultItem>} QuerentResult
  */
 
 
@@ -134,7 +136,7 @@ export class Querent {
 
     /**
      * Promises that can be resolved to cancel started requests.
-     * @type {Array<angular.IDeferred>}
+     * @type {Array<angular.IDeferred<Document|Element|string>>}
      * @private
      */
     this.requestCancelers_ = [];
@@ -142,7 +144,7 @@ export class Querent {
     /**
      * Cache of promises for WMS GetCapabilities requests. They key is the
      * online resource base url that is used to do the query.
-     * @type {Object<string, angular.IPromise>}
+     * @type {Object<string, angular.IPromise<Document|Element|string>>}
      * @private
      */
     this.wmsGetCapabilitiesPromises_ = {};
@@ -150,7 +152,7 @@ export class Querent {
     /**
      * Cache of promises for WMST GetCapabilities requests. They key is the
      * url that is used to do the query.
-     * @type {Object<string, angular.IPromise>}
+     * @type {Object<string, angular.IPromise<Document|Element|string>>}
      * @private
      */
     this.wmtsGetCapabilitiesPromises_ = {};
@@ -164,7 +166,7 @@ export class Querent {
    * data sources, map and optional filters.
    *
    * @param {IssueGetFeaturesOptions} options Options.
-   * @return {angular.IPromise} Promise.
+   * @return {angular.IPromise<QuerentResult>} Promise.
    */
   issue(options) {
 
@@ -188,8 +190,7 @@ export class Querent {
     // (3) Combine data sources that support WFS and issue WFS queries.
     //     The 'bbox' ('extent' option) is not required for WFS requests to
     //     be issued.
-    const combinedWFSDataSources = this.getCombinableWFSDataSources_(
-      queryableDataSources.wfs);
+    const combinedWFSDataSources = this.getCombinableWFSDataSources_(queryableDataSources.wfs);
     promises.push(this.issueCombinedWFS_(combinedWFSDataSources, options));
 
     // (4) Combine data sources that support WMS and issue WMS queries.
@@ -201,8 +202,11 @@ export class Querent {
       promises.push(this.issueCombinedWMS_(combinedWMSDataSources, options));
     }
 
-    return this.q_.all(promises).then(
-      this.handleCombinedQueryResult_.bind(this)
+    return /** @type {angular.IPromise<QuerentResult>} */(
+      /** @type {angular.IPromise<unknown>} */(
+        /** @type {angular.IPromise<QuerentResult[]>} */(this.q_.all(promises))
+          .then(this.handleCombinedQueryResult_.bind(this))
+      )
     );
   }
 
@@ -250,7 +254,7 @@ export class Querent {
 
   /**
    * @param {ngeoDatasourceOGC} dataSource Data source.
-   * @return {angular.IPromise} Promise.
+   * @return {angular.IPromise<Document|Element|string>} Promise.
    */
   wfsDescribeFeatureType(dataSource) {
     if (!dataSource.supportsAttributes) {
@@ -277,7 +281,7 @@ export class Querent {
   }
 
   /**
-   * @param {!Array.<!Object>} layerCapabilities List of WMS layer capabilities
+   * @param {Object[]} layerCapabilities List of WMS layer capabilities
    * @param {string} layerName Name of the WMS layer
    * @return {?Object} Found WMS layer capability
    */
@@ -306,7 +310,7 @@ export class Querent {
    * @param {boolean=} opt_cache Whether to use the cached capability, if
    *     available. Enabling this will also store the capability when required
    *     for the first time. Defaults to: `true`.
-   * @return {!angular.IPromise} Promise.
+   * @return {angular.IPromise<Document|Element|string>} Promise.
    */
   wmsGetCapabilities(baseUrl, opt_cache) {
 
@@ -342,7 +346,7 @@ export class Querent {
   }
 
   /**
-   * @param {!Array.<!Object>} layerCapabilities List of WMTS layer capabilities
+   * @param {Array} layerCapabilities List of WMTS layer capabilities
    * @param {string} layerName Name of the WMTS layer, a.k.a. the identifier.
    * @return {?Object} Found WTMS layer capability
    */
@@ -363,7 +367,7 @@ export class Querent {
    * @param {boolean=} opt_cache Whether to use the cached capability, if
    *     available. Enabling this will also store the capability when required
    *     for the first time. Defaults to: `true`.
-   * @return {!angular.IPromise} Promise.
+   * @return {angular.IPromise<Object>} Promise.
    */
   wmtsGetCapabilities(url, opt_cache) {
 
@@ -405,7 +409,7 @@ export class Querent {
    * The keys are always unique, i.e. there can be multiple result objects for
    * the same data source id.
    *
-   * @param {!Array.<QuerentResult>} response Response.
+   * @param {QuerentResult[]} response Response.
    * @return {QuerentResult} Hash of features by data source ids.
    * @private
    */
@@ -426,11 +430,11 @@ export class Querent {
    * Handles the result of a single WMS GetFeatureInfo or WFS GetFeature
    * request. Read features from the response and return them.
    *
-   * @param {!Array.<!ngeoDatasourceOGC>} dataSources List of
+   * @param {ngeoDatasourceOGC[]} dataSources List of
    *     queryable data sources that were used to do the query.
    * @param {number} limit The maximum number of features to get with the query.
    * @param {boolean} wfs Whether the query was WFS or WMS.
-   * @param {angular.IHttpResponse|number} response Response.
+   * @param {angular.IHttpResponse<Document|Element|string>|number} response Response.
    * @return {QuerentResult} Hash of features by data source ids.
    * @private
    */
@@ -443,6 +447,7 @@ export class Querent {
       const dataSourceId = dataSource.id;
 
       if (typeof response === 'number') {
+        /** @type {Array<import('ol/Feature.js').default>} */
         const features = [];
         const tooManyFeatures = true;
         const totalFeatureCount = response;
@@ -472,12 +477,13 @@ export class Querent {
    * The type will be stocked in the properties of the features as
    * "ngeo_feature_type_".
    * @param {ngeoDatasourceOGC} dataSource used to read the features.
-   * @param {Document | Node | Object | string} data the response data.
+   * @param {Document|Node|Object|string} data the response data.
    * @param {boolean} wfs Whether the query was WFS or WMS.
-   * @return {Array.<import("ol/Feature.js").default>} returned features with a type in each features.
+   * @return {Array<import("ol/Feature.js").default>} returned features with a type in each features.
    * @private
    */
   readAndTypeFeatures_(dataSource, data, wfs) {
+    /** @type {Array<import('ol/Feature.js').default>} */
     const features = [];
     let readFeatures;
     // Copy the types to be able to set it AND iterate on it.
@@ -514,9 +520,9 @@ export class Querent {
    * types if one is given.
    * @param {ngeoDatasourceOGC} dataSource that contains the format object.
    * @param {boolean} wfs Whether the query was WFS or WMS.
-   * @param {Array.<string>=} opt_types An array of type if you want to set the
+   * @param {Array<string>=} opt_types An array of type if you want to set the
    *     type of the format object.
-   * @return {Array.<string>} The types defined in the format.
+   * @return {Array<string>} The types defined in the format.
    * @private
    */
   getSetOlFormatTypes_(dataSource, wfs, opt_types) {
@@ -548,9 +554,9 @@ export class Querent {
    * Issue WFS GetFeature requests using the given combined data sources, map
    * and optional filters.
    *
-   * @param {!CombinedDataSources} combinedDataSources Combined data sources.
+   * @param {CombinedDataSources} combinedDataSources Combined data sources.
    * @param {IssueGetFeaturesOptions} options Options.
-   * @return {angular.IPromise} Promise.
+   * @return {angular.IPromise<QuerentResult>} Promise.
    * @private
    */
   issueCombinedWFS_(combinedDataSources, options) {
@@ -589,14 +595,17 @@ export class Querent {
     const wfsFormat = new olFormatWFS();
     const xmlSerializer = new XMLSerializer();
     for (const dataSources of combinedDataSources) {
+      /** @type {?import('ol/format/WFS.js').WriteGetFeatureOptions} */
       let getFeatureCommonOptions = null;
       /** @type{Array<string>} */
       let featureTypes = [];
-      let url;
+      /** @type {?string} */
+      let url = null;
+      /** @type {Object<string, string>} */
       const params = {};
 
       if (options.bboxAsGETParam && bbox) {
-        params['bbox'] = bbox.join(',');
+        params.bbox = bbox.join(',');
       }
 
       // (3) Build query options
@@ -616,8 +625,7 @@ export class Querent {
             geometryName,
             outputFormat,
             srsName,
-            filter: /** @type{?import("ol/format/filter/Filter.js").default} */(null),
-            featureTypes: /** @type{?Array<string>} */(null),
+            featureTypes: [],
           };
 
           url = dataSource.wfsUrl;
@@ -699,7 +707,7 @@ export class Querent {
           {
             resultType: 'hits'
           },
-          /** @type {import('ol/format/WFS.js').WriteGetFeatureOptions} */(getFeatureCommonOptions)
+          getFeatureCommonOptions
         );
         const featureCountXml = wfsFormat.writeGetFeature(getCountOptions);
         const featureCountRequest = xmlSerializer.serializeToString(
@@ -746,11 +754,11 @@ export class Querent {
             },
             getFeatureCommonOptions
           );
-          const featureRequestXml = wfsFormat.writeGetFeature(
-            getFeatureOptions);
-          const featureRequest = xmlSerializer.serializeToString(
-            featureRequestXml);
-          console.assert(typeof url == 'string');
+          const featureRequestXml = wfsFormat.writeGetFeature(getFeatureOptions);
+          const featureRequest = xmlSerializer.serializeToString(featureRequestXml);
+          if (typeof url !== 'string') {
+            throw new Error('Wrong URL type');
+          }
           const canceler = this.registerCanceler_();
           this.http_.post(
             url,
@@ -772,18 +780,16 @@ export class Querent {
       countPromise.then(afterCount_);
     }
 
-    return this.q_.all(promises).then(
-      this.handleCombinedQueryResult_.bind(this)
-    );
+    return this.q_.all(promises).then(this.handleCombinedQueryResult_.bind(this));
   }
 
   /**
    * Issue WMS GetFeatureInfo requests using the given combined data sources,
    * map and optional filters.
    *
-   * @param {!CombinedDataSources} combinedDataSources Combined data sources.
+   * @param {CombinedDataSources} combinedDataSources Combined data sources.
    * @param {IssueGetFeaturesOptions} options Options.
-   * @return {angular.IPromise} Promise.
+   * @return {angular.IPromise<QuerentResult>} Promise.
    * @private
    */
   issueCombinedWMS_(combinedDataSources, options) {
@@ -812,9 +818,11 @@ export class Querent {
     for (const dataSources of combinedDataSources) {
 
       let url;
+      /** @type {Array<string>} */
       let LAYERS = [];
       let INFO_FORMAT;
       let activeDimensionsSet = false;
+      /** @type {Object<string, *>} */
       const params = {};
       let filterString = null;
       let filtrableLayerName = null;
@@ -859,15 +867,15 @@ export class Querent {
         //     sent for this data source only.
         if (dataSource.timeRangeValue && dataSource.timeProperty) {
           console.assert(dataSources.length === 1);
-          params['TIME'] = this.ngeoWMSTime_.formatWMSTimeParam(
+          params.TIME = this.ngeoWMSTime_.formatWMSTimeParam(
             dataSource.timeProperty,
             /** @type {import('ngeo/datasource/OGC.js').TimeRange} */ (dataSource.timeRangeValue),
           );
         }
       }
 
-      params['LAYERS'] = LAYERS;
-      params['QUERY_LAYERS'] = LAYERS;
+      params.LAYERS = LAYERS;
+      params.QUERY_LAYERS = LAYERS;
 
       // Manage 'FILTER' parameter
       if (filterString && filtrableLayerName) {
@@ -890,7 +898,7 @@ export class Querent {
           }
           filterParamValue = filterParamValues.join('');
         }
-        params['FILTER'] = filterParamValue;
+        params.FILTER = filterParamValue;
       }
 
       if (!url) {
@@ -927,13 +935,15 @@ export class Querent {
       );
     }
 
-    return this.q_.all(promises).then(
-      this.handleCombinedQueryResult_.bind(this)
+    return /** @type {angular.IPromise<QuerentResult>} */(
+      /** @type {angular.IPromise<unknown>} */(
+        this.q_.all(promises).then(this.handleCombinedQueryResult_.bind(this))
+      )
     );
   }
 
   /**
-   * @param {!Array<ngeoDatasourceOGC>} dataSources List of
+   * @param {Array<ngeoDatasourceOGC>} dataSources List of
    *     queryable data sources that supports WFS.
    * @return {CombinedDataSources} Combined lists of data sources.
    * @private
@@ -965,7 +975,7 @@ export class Querent {
   }
 
   /**
-   * @param {!Array.<ngeoDatasourceOGC>} dataSources List of
+   * @param {Array<ngeoDatasourceOGC>} dataSources List of
    *     queryable data sources that supports WMS.
    * @return {CombinedDataSources} Combined lists of data sources.
    * @private
@@ -1011,7 +1021,7 @@ export class Querent {
   isDataSourceQueryable_(ds, res) {
     let queryable = ds.visible && ds.inRange && ds.queryable;
     if (queryable && ds instanceof ngeoDatasourceOGC) {
-      const ogcDS = /** @type {!ngeoDatasourceOGC} */ (ds);
+      const ogcDS = /** @type {ngeoDatasourceOGC} */ (ds);
       queryable = ogcDS.isAnyOGCLayerInRange(res, true);
     }
     return queryable;
@@ -1020,7 +1030,7 @@ export class Querent {
   /**
    * Make sure that feature ids are unique, because the same features might
    * be returned for different layers.
-   * @param {Array.<import("ol/Feature.js").default>} features Features
+   * @param {Array<import("ol/Feature.js").default>} features Features
    * @param {number} dataSourceId Data source id.
    * @private
    */
@@ -1034,8 +1044,7 @@ export class Querent {
   }
 
   /**
-   * @return {angular.IDeferred} A deferred that can be resolved to cancel a
-   *    HTTP request.
+   * @return {angular.IDeferred<*>} A deferred that can be resolved to cancel a HTTP request.
    * @private
    */
   registerCanceler_() {
@@ -1057,12 +1066,12 @@ export class Querent {
 
 
 /**
- * @typedef {!Array.<!Array.<!ngeoDatasourceOGC>>} CombinedDataSources
+ * @typedef {Array<Array.<!ngeoDatasourceOGC>>} CombinedDataSources
  */
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('ngeoQuerent', [

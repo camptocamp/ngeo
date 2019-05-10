@@ -75,7 +75,8 @@ export default class extends olInteractionInteraction {
   }
 
   /**
-   * @inheritDoc
+   * @param {import("ol/PluggableMap.js").default} map The map that the
+   * overlay is part of.
    */
   setMap(map) {
     const active = this.getActive();

@@ -20,10 +20,16 @@ module.value('ngeoColorpickerTemplateUrl',
       'ngeo/misc/colorpickerComponent';
   });
 
-module.run(/* @ngInject */ ($templateCache) => {
-  // @ts-ignore: webpack
-  $templateCache.put('ngeo/misc/colorpickerComponent', require('./colorpickerComponent.html'));
-});
+
+module.run(
+  /**
+   * @ngInject
+   * @param {angular.ITemplateCacheService} $templateCache
+   */
+  ($templateCache) => {
+    // @ts-ignore: webpack
+    $templateCache.put('ngeo/misc/colorpickerComponent', require('./colorpickerComponent.html'));
+  });
 
 
 /**

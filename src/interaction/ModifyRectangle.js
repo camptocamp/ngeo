@@ -62,7 +62,7 @@ class ModifyRectangle extends olInteractionPointer {
     this.feature_ = null;
 
     /**
-     * @type {Object.<number, CacheItem>}
+     * @type {Object<string, CacheItem>}
      * @private
      */
     this.cache_ = {};
@@ -121,6 +121,7 @@ class ModifyRectangle extends olInteractionPointer {
           corners.shift();
         }
       }
+      /** @type {olFeature[]} */
       const pointFeatures = [];
       let cornerPoint;
       let cornerFeature;
@@ -268,7 +269,7 @@ class ModifyRectangle extends olInteractionPointer {
   }
 
   /**
-   * @inheritDoc
+   * @param {import("ol/PluggableMap.js").default} map Map.
    */
   setMap(map) {
     this.vectorPoints_.setMap(map);

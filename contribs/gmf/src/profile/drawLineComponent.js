@@ -89,38 +89,37 @@ function Controller($scope, $timeout, ngeoFeatureOverlayMgr) {
   this.active = false;
 
   /**
-   * @type {import("ol/Collection.js").default}
+   * @type {import("ol/Collection.js").default<import('ol/Feature.js').default>}
    * @private
    */
   this.features_ = new olCollection();
 
-  this.getMapFn = () => null;
+  /**
+   * @type {?() => olMap}
+   */
+  this.getMapFn = null;
 
+  /**
+   * @type {?() => olStyleStyle}
+   */
   this.getStyleFn = null;
 
   const overlay = ngeoFeatureOverlayMgr.getFeatureOverlay();
   overlay.setFeatures(this.features_);
 
-  let style;
-  const styleFn = this.getStyleFn;
-  if (styleFn) {
-    style = styleFn();
-    console.assert(style instanceof olStyleStyle);
-  } else {
-    style = new olStyleStyle({
-      stroke: new olStyleStroke({
-        color: '#ffcc33',
-        width: 2
-      })
-    });
-  }
+  const style = new olStyleStyle({
+    stroke: new olStyleStroke({
+      color: '#ffcc33',
+      width: 2
+    })
+  });
   overlay.setStyle(style);
 
   /**
    * @type {!import("ol/interaction/Draw.js").default}
    */
   this.interaction = new olInteractionDraw({
-    type: /** @type {import("ol/geom/GeometryType.js").default} */ ('LineString'),
+    type: 'LineString',
     features: this.features_
   });
 
@@ -169,6 +168,9 @@ function Controller($scope, $timeout, ngeoFeatureOverlayMgr) {
  * Initialise the controller.
  */
 Controller.prototype.$onInit = function() {
+  if (!this.getMapFn) {
+    throw new Error('Missing getMapFn');
+  }
   const map = this.getMapFn();
   if (!(map instanceof olMap)) {
     throw 'Wrong map';

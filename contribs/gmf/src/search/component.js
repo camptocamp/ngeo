@@ -24,6 +24,7 @@ import olStyleRegularShape from 'ol/style/RegularShape.js';
 import olStyleStroke from 'ol/style/Stroke.js';
 import olStyleStyle from 'ol/style/Style.js';
 import {appendParams as olUriAppendParams} from 'ol/uri.js';
+import SimpleGeometry from 'ol/geom/SimpleGeometry.js';
 
 
 /**
@@ -36,16 +37,16 @@ import {appendParams as olUriAppendParams} from 'ol/uri.js';
 /**
  * Datasource configuration options for the search directive.
  * @typedef {Object} SearchComponentDatasource
- * @property {Bloodhound.BloodhoundOptions} [bloodhoundOptions] The optional Bloodhound configuration for this
+ * @property {Bloodhound.BloodhoundOptions<GeoJSON.FeatureCollection>} [bloodhoundOptions] The optional Bloodhound configuration for this
  * data set. See: https://github.com/twitter/typeahead.js/blob/master/doc/bloodhound.md
  * @property {string} labelKey The name of a corresponding GeoJSON property key in the current dataset.
  * The bound value of this property key will be used as label.
- * @property {Array.<string>} [groupValues] Possible values for the 'layer_name' key.
+ * @property {Array<string>} [groupValues] Possible values for the 'layer_name' key.
  * Used to define groups of dataset.
- * @property {Array.<gmfSearchAction>} [groupActions] List of allowed actions. The list may contain a
+ * @property {Array<gmfSearchAction>} [groupActions] List of allowed actions. The list may contain a
  * combination of `add_theme`, `add_group` or `add_layer`
  * @property {string} [projection] The geometry's projection for this set of data.
- * @property {Twitter.Typeahead.Dataset} [typeaheadDatasetOptions] The optional Twitter.Typeahead.
+ * @property {Twitter.Typeahead.Dataset<olFeature>} [typeaheadDatasetOptions] The optional Twitter.Typeahead.
  *    configuration for this dataset. See: https://github.com/twitter/typeahead.js/blob/master/
  * @property {string} url URL of the search service. Must contain a '%QUERY' term that will be
  * replaced by the input string.
@@ -82,10 +83,16 @@ function gmfSearchTemplateUrl_(element, attrs) {
     'gmf/search';
 }
 
-module.run(/* @ngInject */ ($templateCache) => {
-  // @ts-ignore: webpack
-  $templateCache.put('gmf/search', require('./component.html'));
-});
+
+module.run(
+  /**
+   * @ngInject
+   * @param {angular.ITemplateCacheService} $templateCache
+   */
+  ($templateCache) => {
+    // @ts-ignore: webpack
+    $templateCache.put('gmf/search', require('./component.html'));
+  });
 
 
 /**
@@ -416,7 +423,7 @@ class SearchController {
     this.featuresStyles = {};
 
     /**
-     * @type {Array<Twitter.Typeahead.Dataset>}
+     * @type {(Twitter.Typeahead.Dataset<olFeature>|Twitter.Typeahead.Dataset<CoordinateSuggestion>)[]}
      */
     this.datasets = [];
 
@@ -436,12 +443,12 @@ class SearchController {
     this.displayColorPicker = false;
 
     /**
-     * @type {?import('ngeo/search/searchDirective.js').SearchDirectiveListeners}
+     * @type {?import('ngeo/search/searchDirective.js').SearchDirectiveListeners<olFeature>}
      */
     this.listeners = null;
 
     /**
-     * @type {import('ngeo/search/searchDirective.js').SearchDirectiveListeners}
+     * @type {import('ngeo/search/searchDirective.js').SearchDirectiveListeners<olFeature>}
      */
     this.additionalListeners = {};
   }
@@ -499,12 +506,12 @@ class SearchController {
 
     this.listeners = this.mergeListeners_(
       this.additionalListeners,
-      /** @type {import('ngeo/search/searchDirective.js').SearchDirectiveListeners} */ ({
+      {
         select: this.select_.bind(this),
         change: this.handleChange_.bind(this),
         close: this.close_.bind(this),
         datasetsempty: this.datasetsempty_.bind(this)
-      })
+      }
     );
 
     if (this.ngeoLocation_) {
@@ -529,10 +536,10 @@ class SearchController {
   /**
    * Merges the custom listeners received via the component attributes and the
    * listeners that are needed for this controller to function (close and select).
-   * @param {import('ngeo/search/searchDirective.js').SearchDirectiveListeners} additionalListeners
+   * @param {import('ngeo/search/searchDirective.js').SearchDirectiveListeners<olFeature>} additionalListeners
    *    Custom provided listeners.
-   * @param {import('ngeo/search/searchDirective.js').SearchDirectiveListeners} listeners Default listeners.
-   * @return {import('ngeo/search/searchDirective.js').SearchDirectiveListeners} Merged listeners.
+   * @param {import('ngeo/search/searchDirective.js').SearchDirectiveListeners<olFeature>} listeners Default listeners.
+   * @return {import('ngeo/search/searchDirective.js').SearchDirectiveListeners<olFeature>} Merged listeners.
    * @private
    */
   mergeListeners_(additionalListeners, listeners) {
@@ -571,10 +578,11 @@ class SearchController {
     for (let i = 0; i < this.datasources.length; i++) {
       const datasource = this.datasources[i];
 
-      /** @type {Array.<string>} */
+      /** @type {string[]} */
       const groupValues = datasource.groupValues !== undefined ? datasource.groupValues : [];
-      /** @type {Array.<gmfSearchAction>} */
+      /** @type {gmfSearchAction[]} */
       const groupActions = datasource.groupActions ? datasource.groupActions : [];
+      /** @type {{title: string, filter: function(import("geojson").Feature): boolean}[]} */
       const filters = [];
 
       if (groupValues.length === 0) {
@@ -620,6 +628,9 @@ class SearchController {
           const header = gettextCatalog.getString('Recenter to');
           return `<div class="gmf-search-header" translate>${header}</div>`;
         },
+        /**
+         * @param {CoordinateSuggestion} suggestion
+         */
         suggestion: (suggestion) => {
           const coordinates = suggestion.label;
 
@@ -636,7 +647,7 @@ class SearchController {
    * @param {SearchComponentDatasource} config The config of the dataset.
    * @param {(function(import("geojson").Feature): boolean)=} opt_filter A filter function
    *     based on a GeoJSONFeaturesCollection's array.
-   * @return {Twitter.Typeahead.Dataset} A typeahead dataset.
+   * @return {Twitter.Typeahead.Dataset<olFeature>} A typeahead dataset.
    * @private
    */
   createDataset_(config, opt_filter) {
@@ -644,15 +655,14 @@ class SearchController {
     const componentScope = this.scope_;
     const compile = this.compile_;
     const bloodhoundEngine = this.createAndInitBloodhound_(config, opt_filter);
-    const typeaheadDataset = /** @type {Twitter.Typeahead.Dataset} */ ({
+    /** @type {Twitter.Typeahead.Dataset<olFeature>} */
+    const typeaheadDataset = {
       limit: Infinity,
       source: bloodhoundEngine.ttAdapter(),
       display: (suggestion) => {
-        if (suggestion instanceof olFeature) {
-          return suggestion.get(config.labelKey);
-        }
+        return suggestion.get(config.labelKey);
       },
-      templates: /* Twitter.Typeahead.Templates */ ({
+      templates: {
         header: () => {
           if (config.datasetTitle === undefined) {
             return '';
@@ -662,20 +672,19 @@ class SearchController {
           }
         },
         suggestion: (suggestion) => {
-          if (suggestion instanceof olFeature) {
-            const scope = componentScope.$new(true);
-            scope['feature'] = suggestion;
+          const scope = componentScope.$new(true);
+          // @ts-ignore: scope ...
+          scope.feature = suggestion;
 
-            let html = `<p class="gmf-search-label" translate>${
-              suggestion.get(config.labelKey)}</p>`;
-            html += `<p class="gmf-search-group" translate>${suggestion.get('layer_name') ||
-                    config.datasetTitle}</p>`;
-            html = `<div class="gmf-search-datum">${html}</div>`;
-            return compile(html)(scope).html();
-          }
+          let html = `<p class="gmf-search-label" translate>${
+            suggestion.get(config.labelKey)}</p>`;
+          html += `<p class="gmf-search-group" translate>${suggestion.get('layer_name') ||
+                  config.datasetTitle}</p>`;
+          html = `<div class="gmf-search-datum">${html}</div>`;
+          return compile(html)(scope).html();
         }
-      })
-    });
+      }
+    };
     if (config.typeaheadDatasetOptions) {
       Object.assign(typeaheadDataset, config.typeaheadDatasetOptions);
     }
@@ -700,7 +709,9 @@ class SearchController {
         if (properties.actions) {
           // result is an action (add_theme, add_group, ...)
           // add it to the corresponding group
-          return !properties.layer_name && properties.actions.some(act => act.action === action);
+          return !properties.layer_name && /** @type {gmfSearchAction[]} */(properties.actions).some(
+            act => act.action === action
+          );
         } else {
           return false;
         }
@@ -712,16 +723,16 @@ class SearchController {
   /**
    * @param {string=} opt_layerName The layerName to keep. If null, keep all layers
    *     (In all cases, except actions layers).
-   * @return {(function(import("geojson").Feature): boolean)} A filter function based on a
+   * @return {function(import("geojson").Feature): boolean} A filter function based on a
    *     GeoJSONFeaturesCollection's array.
    * @private
    */
   filterLayername_(opt_layerName) {
     return (
-    /**
-         * @param {import("geojson").Feature} feature
-         * @return {boolean}
-         */
+      /**
+       * @param {import("geojson").Feature} feature
+       * @return {boolean}
+       */
       function(feature) {
         const featureLayerName = (feature.properties || {}).layer_name;
         // Keep only layers with layer_name (don't keep action layers).
@@ -741,7 +752,7 @@ class SearchController {
    * @param {SearchComponentDatasource} config The config of the dataset.
    * @param {(function(import("geojson").Feature): boolean)=} opt_filter Afilter function
    *     based on a GeoJSONFeaturesCollection's array.
-   * @return {Bloodhound} The bloodhound engine.
+   * @return {Bloodhound<olFeature[]>} The bloodhound engine.
    * @private
    */
   createAndInitBloodhound_(config, opt_filter) {
@@ -759,12 +770,12 @@ class SearchController {
 
 
   /**
-   * @return {Bloodhound.RemoteOptions} Options.
+   * @return {Bloodhound.RemoteOptions<GeoJSON.FeatureCollection>} Options.
    * @private
    */
   getBloodhoudRemoteOptions_() {
     const gettextCatalog = this.gettextCatalog_;
-    return /** @type {Bloodhound.RemoteOptions} */ ({
+    return /** @type {Bloodhound.RemoteOptions<GeoJSON.FeatureCollection>} */ ({
       rateLimitWait: this.delay,
       prepare: (query, settings) => {
         const url = settings.url;
@@ -786,8 +797,17 @@ class SearchController {
 
 
   /**
+   * @typedef {Object} CoordinateSuggestion
+   * @property {string} label
+   * @property {number[]} position
+   * @property {string} tt_source
+   */
+
+
+  /**
    * @param {import("ol/View.js").default} view View.
-   * @return {function(string, function(Object))} function defining parameters for the search suggestions.
+   * @return {function(string, function(CoordinateSuggestion[]))} function defining parameters for the search
+   *    suggestions.
    * @private
    */
   createSearchCoordinates_(view) {
@@ -807,7 +827,7 @@ class SearchController {
       suggestions.push({
         label: coordinates.join(' '),
         position: position,
-        'tt_source': 'coordinates'
+        tt_source: 'coordinates'
       });
       callback(suggestions);
     };
@@ -961,7 +981,7 @@ class SearchController {
   /**
    * @param {JQueryEventObject} event Event.
    * @param {Object|import("ol/Feature.js").default} suggestion Suggestion.
-   * @param {Twitter.Typeahead.Dataset} dataset Dataset.
+   * @param {Twitter.Typeahead.Dataset<olFeature>} dataset Dataset.
    * @private
    */
   select_(event, suggestion, dataset) {
@@ -988,7 +1008,7 @@ class SearchController {
   /**
    * @param {JQueryEventObject} event Event.
    * @param {import("ol/Feature.js").default} feature Feature.
-   * @param {Twitter.Typeahead.Dataset} dataset Dataset.
+   * @param {Twitter.Typeahead.Dataset<import("ol/Feature.js").default>} dataset Dataset.
    * @private
    */
   selectFromGMF_(event, feature, dataset) {
@@ -996,8 +1016,7 @@ class SearchController {
       throw new Error('Missing map');
     }
     const actions = feature.get('actions');
-    const featureGeometry = /** @type {import("ol/geom/SimpleGeometry.js").default} */
-        (feature.getGeometry());
+    const featureGeometry = feature.getGeometry();
     if (actions) {
       for (let i = 0, ii = actions.length; i < ii; i++) {
         const action = actions[i];
@@ -1018,7 +1037,8 @@ class SearchController {
           let datasourcesActionsHaveAddLayer;
           groupActions.forEach((groupAction) => {
             if (groupAction.action === 'add_layer') {
-              return datasourcesActionsHaveAddLayer = true;
+              datasourcesActionsHaveAddLayer = true;
+              return true;
             }
           });
           if (datasourcesActionsHaveAddLayer) {
@@ -1030,7 +1050,7 @@ class SearchController {
     }
 
     const size = this.map.getSize();
-    if (featureGeometry && size) {
+    if (featureGeometry instanceof SimpleGeometry && size) {
       const view = this.map.getView();
       this.featureOverlay_.clear();
       this.featureOverlay_.addFeature(feature);

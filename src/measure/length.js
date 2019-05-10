@@ -46,6 +46,7 @@ function measureLengthComponent($compile, gettextCatalog, $filter, $injector) {
       const contMsg = gettextCatalog.getString('Click to continue drawing<br>' +
           'Double-click or click last point to finish');
 
+      /** @type {import('ngeo/interaction/Measure.js').MeasureOptions} */
       const options = {
         style: new olStyleStyle(),
         startMsg: $compile(`<div translate>${helpMsg}</div>`)($scope)[0],
@@ -64,8 +65,7 @@ function measureLengthComponent($compile, gettextCatalog, $filter, $injector) {
       olEvents.listen(
         measureLength,
         'measureend',
-        drawFeatureCtrl.handleDrawEnd.bind(
-          drawFeatureCtrl, ngeoGeometryType.LINE_STRING),
+        drawFeatureCtrl.handleDrawEnd.bind(drawFeatureCtrl, ngeoGeometryType.LINE_STRING),
         drawFeatureCtrl
       );
       olEvents.listen(

@@ -1,6 +1,8 @@
 import angular from 'angular';
 describe('ngeo.statemanager.Location', () => {
+  /** @type {Object<string, *>} */
   let win;
+  /** @type {import("ngeo/statemanager/Location.js").StatemanagerLocation} */
   let ngeoLocation;
 
   beforeEach(() => {
@@ -9,9 +11,13 @@ describe('ngeo.statemanager.Location', () => {
       'history': {'replaceState': function() {}}
     };
     spyOn(win.history, 'replaceState');
-    angular.mock.module(($provide) => {
-      $provide.value('$window', win);
-    });
+    angular.mock.module(
+      /**
+       * @param {angular.IModule} $provide
+       */
+      ($provide) => {
+        $provide.value('$window', win);
+      });
     angular.mock.inject((_ngeoLocation_) => {
       ngeoLocation = _ngeoLocation_;
     });

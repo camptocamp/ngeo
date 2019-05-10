@@ -171,7 +171,8 @@ export default class extends olInteractionPointer {
    */
   removeFeatureSegmentData_(feature) {
     const rBush = this.rBush_;
-    const /** @type {Array.<import("ol/interaction/Modify.js").SegmentData>} */ nodesToRemove = [];
+    /** @type {Array<import("ol/interaction/Modify.js").SegmentData>} */
+    const nodesToRemove = [];
     rBush.forEach(
       /**
          * @param {import("ol/interaction/Modify.js").SegmentData} node RTree node.
@@ -187,7 +188,7 @@ export default class extends olInteractionPointer {
   }
 
   /**
-   * @inheritDoc
+   * @param {import("ol/PluggableMap.js").default} map Map.
    */
   setMap(map) {
     this.overlay_.setMap(map);
@@ -275,6 +276,10 @@ export default class extends olInteractionPointer {
    */
   handlePointerAtPixel_(pixel, map) {
     const pixelCoordinate = map.getCoordinateFromPixel(pixel);
+    /**
+     * @param {import("ol/interaction/Modify.js").SegmentData} a
+     * @param {import("ol/interaction/Modify.js").SegmentData} b
+     */
     const sortByDistance = function(a, b) {
       return olCoordinate.squaredDistanceToSegment(pixelCoordinate, a.segment) -
           olCoordinate.squaredDistanceToSegment(pixelCoordinate, b.segment);
@@ -307,6 +312,7 @@ export default class extends olInteractionPointer {
           vertex = squaredDist1 > squaredDist2 ?
             closestSegment[1] : closestSegment[0];
           this.createOrUpdateVertexFeature_(vertex);
+          /** @type {Object<string, boolean>} */
           const vertexSegments = {};
           vertexSegments[olUtilGetUid(closestSegment)] = true;
           let segment;
@@ -357,6 +363,7 @@ export default class extends olInteractionPointer {
       const vertex = geometry.getCoordinates();
       const vertexExtent = olExtent.boundingExtent([vertex]);
       const segmentDataMatches = this.rBush_.getInExtent(vertexExtent);
+      /** @type {Object<string, Array<import("ol/interaction/Modify.js").SegmentData>>} */
       const componentSegments = {};
       segmentDataMatches.sort(compareIndexes);
       for (let i = 0, ii = segmentDataMatches.length; i < ii; ++i) {
@@ -370,8 +377,7 @@ export default class extends olInteractionPointer {
         if (!componentSegments[uid]) {
           componentSegments[uid] = new Array(2);
         }
-        if (olCoordinate.equals(segment[0], vertex) &&
-            !componentSegments[uid][0]) {
+        if (olCoordinate.equals(segment[0], vertex) && !componentSegments[uid][0]) {
           this.dragSegments_.push([segmentDataMatch, 0]);
           componentSegments[uid][0] = segmentDataMatch;
         } else if (olCoordinate.equals(segment[1], vertex) &&

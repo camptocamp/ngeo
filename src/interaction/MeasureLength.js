@@ -9,8 +9,8 @@ import LineString from 'ol/geom/LineString.js';
  */
 export default class extends ngeoInteractionMeasure {
   /**
-   * @param {!import('ngeo/misc/filters.js').unitPrefix} format The format function
-   * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
+   * @param {import('ngeo/misc/filters.js').unitPrefix} format The format function
+   * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
    * @param {import('ngeo/interaction/Measure.js').MeasureOptions=} options Options
    */
   constructor(format, gettextCatalog, options = {}) {
@@ -48,7 +48,8 @@ export default class extends ngeoInteractionMeasure {
   }
 
   /**
-   * @inheritDoc
+   * @param {function(string, ?import("ol/coordinate.js").Coordinate): void} callback The function
+   *     to be called.
    */
   handleMeasure(callback) {
     if (!this.sketchFeature) {

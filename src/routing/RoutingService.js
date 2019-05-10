@@ -61,14 +61,50 @@ export function RoutingService($http, $injector) {
    * @private
    */
   this.protocolVersion_ = 'v1';
-
 }
+
+
+/**
+ * @typedef {Object} Config
+ * @property {string} [service]
+ * @property {string} [profile]
+ * @property {string} [instance]
+ * @property {Object} [options]
+ */
+
+
+/**
+ * @typedef {Object} Routes
+ * @property {Array<Route>} routes
+ */
+
+
+/**
+ * @typedef {Object} Route
+ * @property {Array<Leg>} [legs]
+ * @property {string} [geometry]
+ * @property {number} distance
+ * @property {number} duration
+ */
+
+
+/**
+ * @typedef {Object} Leg
+ * @property {Array<Step>} steps
+ */
+
+
+/**
+ * @typedef {Object} Step
+ * @property {string} geometry
+ */
+
 
 /**
  * Route request
  * @param {Array.<import("ol/coordinate.js").Coordinate>} coordinates coordinates of the route (at least two!)
- * @param {?Object} config optional configuration
- * @return {!angular.IHttpPromise<Object>} promise of the OSRM API request
+ * @param {?Config} config optional configuration
+ * @return {angular.IHttpPromise<Routes>} promise of the OSRM API request
  */
 RoutingService.prototype.getRoute = function(coordinates, config) {
 
@@ -76,8 +112,8 @@ RoutingService.prototype.getRoute = function(coordinates, config) {
 
   // Service
   // see: https://github.com/Project-OSRM/osrm-backend/blob/master/docs/http.md#requests
-  if (!config['service']) {
-    config['service'] = 'route'; // default to route
+  if (!config.service) {
+    config.service = 'route'; // default to route
   }
 
   // Mode of transportation,
@@ -86,8 +122,8 @@ RoutingService.prototype.getRoute = function(coordinates, config) {
   //
   // As of version 5.8.0, OSRM (server) does not support multiple profiles simultaneously.
   // This means the value actually does not matter.
-  if (!config['profile']) {
-    config['profile'] = 'car'; // default to car
+  if (!config.profile) {
+    config.profile = 'car'; // default to car
   }
 
   // build request URL
@@ -95,11 +131,11 @@ RoutingService.prototype.getRoute = function(coordinates, config) {
 
   // Common workaround to provide multiple profiles (since it is not supported yet)
   // Every profile runs on its own instance.
-  if (config['instance']) {
-    url += `${config['instance']}/`;
+  if (config.instance) {
+    url += `${config.instance}/`;
   }
 
-  url += `${config['service']}/${this.protocolVersion_}/${config['profile']}/`;
+  url += `${config.service}/${this.protocolVersion_}/${config.profile}/`;
 
   // [ [a,b] , [c,d] ] -> 'a,b;c,d'
   const coordinateString = coordinates.map(c => c.join(',')).join(';');
@@ -123,7 +159,7 @@ RoutingService.prototype.getRoute = function(coordinates, config) {
 /**
  * Snaps a coordinate to the street network and returns the nearest match
  * @param {import("ol/coordinate.js").Coordinate} coordinate coordinate to query
- * @param {?Object} config optional configuration
+ * @param {?Config} config optional configuration
  * @return {!angular.IHttpPromise<Object>} promise of the OSRM API request
  * @see https://github.com/Project-OSRM/osrm-backend/blob/master/docs/http.md#nearest-service
  */
@@ -131,12 +167,12 @@ RoutingService.prototype.getNearest = function(coordinate, config) {
   config = config || {};
 
   // service is always nearest
-  config['service'] = 'nearest';
+  config.service = 'nearest';
 
   // Mode of transportation
   // If used in combination with a getRoute request, choose the same profile.
-  if (!config['profile']) {
-    config['profile'] = 'car'; // default to car
+  if (!config.profile) {
+    config.profile = 'car'; // default to car
   }
 
   // build request URL
@@ -144,11 +180,11 @@ RoutingService.prototype.getNearest = function(coordinate, config) {
 
   // Common workaround to provide multiple profiles (since it is not supported yet)
   // Every profile runs on its own instance.
-  if (config['instance']) {
-    url += `${config['instance']}/`;
+  if (config.instance) {
+    url += `${config.instance}/`;
   }
 
-  url += `${config['service']}/${this.protocolVersion_}/${config['profile']}/`;
+  url += `${config.service}/${this.protocolVersion_}/${config.profile}/`;
 
   // [a,b] -> 'a,b'
   const coordinateString = coordinate.join(',');

@@ -125,7 +125,7 @@ export function AbstractAppController(config, map, $scope, $injector) {
    * @type {boolean}
    */
   this.loading = true;
-  this.gmfThemes_.getThemesObject().finally((themes) => {
+  this.gmfThemes_.getThemesObject().finally(() => {
     this.loading = false;
   });
 

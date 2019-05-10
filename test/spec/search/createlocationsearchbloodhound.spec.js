@@ -1,10 +1,13 @@
+// @ts-nocheck
 import angular from 'angular';
 import ngeoTestDataGeoAdminLocationSearch from '../data/geoAdminLocationSearch.js';
 import * as olProj from 'ol/proj.js';
 
 
 describe('ngeo.search.createLocationSearchBloodhound', () => {
-
+  /**
+   * @type {import("ngeo/search/createLocationSearchBloodhound.js").createLocationSearchBloodhoundFunction}
+   */
   let ngeoCreateLocationSearchBloodhound;
 
   beforeEach(() => {

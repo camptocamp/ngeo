@@ -102,8 +102,10 @@ export default class {
         this.pStart_.cx = sx(p.distance) + margin.left;
         this.pStart_.cy = sy(p.altitude) + margin.top;
       } else {
-        this.pStart_.distance = sx['invert'](xs);
-        this.pStart_.altitude = sy['invert'](ys);
+        // @ts-ignore
+        this.pStart_.distance = sx.invert(xs);
+        // @ts-ignore
+        this.pStart_.altitude = sy.invert(ys);
         this.pStart_.cx = xs;
         this.pStart_.cy = ys;
       }
@@ -124,8 +126,10 @@ export default class {
         this.pEnd_.cx = sx(p.distance) + margin.left;
         this.pEnd_.cy = sy(p.altitude) + margin.top;
       } else {
-        this.pEnd_.distance = sx['invert'](xs);
-        this.pEnd_.altitude = sy['invert'](ys);
+        // @ts-ignore
+        this.pEnd_.distance = sx.invert(xs);
+        // @ts-ignore
+        this.pEnd_.altitude = sy.invert(ys);
         this.pEnd_.cx = xs;
         this.pEnd_.cy = ys;
 

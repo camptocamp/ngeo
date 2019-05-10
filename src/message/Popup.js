@@ -52,7 +52,8 @@ export function MessagePopup($compile, $rootScope, $sce, $timeout) {
 
   // manage the auto destruction of the popup
   this.scope.$watch(
-    () => this.scope['open'],
+    // @ts-ignore: Wring scope interface
+    () => this.scope.open,
     (open) => {
       if (!open && this.autoDestroy_) {
         this.timeout_(() => {
@@ -99,7 +100,8 @@ export function MessagePopup($compile, $rootScope, $sce, $timeout) {
  * @return {boolean} `true` if the popup is currently, otherwise `false`.
  */
 MessagePopup.prototype.getOpen = function() {
-  return this.scope['open'];
+  // @ts-ignore: Wring scope interface
+  return this.scope.open;
 };
 
 
@@ -108,7 +110,8 @@ MessagePopup.prototype.getOpen = function() {
  * @param {boolean} open `true` to show the popup, `false` to hide it.
  */
 MessagePopup.prototype.setOpen = function(open) {
-  this.scope['open'] = open;
+  // @ts-ignore: Wring scope interface
+  this.scope.open = open;
 };
 
 
@@ -127,7 +130,8 @@ MessagePopup.prototype.destroy = function() {
  */
 MessagePopup.prototype.setTitle = function(title) {
   const trustedTitle = this.sce_.trustAsHtml(title);
-  this.scope['title'] = trustedTitle;
+  // @ts-ignore: Wring scope interface
+  this.scope.title = trustedTitle;
 };
 
 
@@ -135,12 +139,13 @@ MessagePopup.prototype.setTitle = function(title) {
  * Set the popup's content.
  * Note: the type of the `content` param is `*` instead of `string`, this
  * is because the content may be trusted using `$sce.trustAsHtml`.
- * @param {*} content The content.
+ * @param {string} content The content.
  * @param {boolean=} opt_trusted Whether the content can be trusted.
  *     Default is false.
  */
 MessagePopup.prototype.setContent = function(content, opt_trusted) {
-  this.scope['content'] = opt_trusted ? this.sce_.trustAsHtml(/** @type {string} */ (content)) : content;
+  // @ts-ignore: Wring scope interface
+  this.scope.content = opt_trusted ? this.sce_.trustAsHtml(content) : content;
 };
 
 

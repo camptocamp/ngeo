@@ -57,9 +57,10 @@ function queryBboxComponent($rootScope, ngeoMapQuerent, ngeoQueryKeyboard) {
       /**
        * @type {import("ol/Map.js").default}
        */
-      const map = scope.$eval(attrs['ngeoBboxQueryMap']);
+      const map = scope.$eval(attrs.ngeoBboxQueryMap);
 
-      let active;
+      /** @type {boolean} */
+      let active = false;
 
       const interaction = new olInteractionDragBox({
         condition: platformModifierKeyOnly,
@@ -74,7 +75,7 @@ function queryBboxComponent($rootScope, ngeoMapQuerent, ngeoQueryKeyboard) {
       const handleBoxEnd = function(interaction) {
         const action = ngeoQueryKeyboard.action;
         const extent = interaction.getGeometry().getExtent();
-        const limit = scope.$eval(attrs['ngeoBboxQueryLimit']);
+        const limit = scope.$eval(attrs.ngeoBboxQueryLimit);
         ngeoMapQuerent.issue({
           action,
           extent,
@@ -85,7 +86,7 @@ function queryBboxComponent($rootScope, ngeoMapQuerent, ngeoQueryKeyboard) {
       interaction.on('boxend', handleBoxEnd.bind(undefined, interaction));
 
       // watch 'active' property -> activate/deactivate accordingly
-      scope.$watch(attrs['ngeoBboxQueryActive'],
+      scope.$watch(attrs.ngeoBboxQueryActive,
         (newVal, oldVal) => {
           active = newVal;
 
@@ -95,7 +96,7 @@ function queryBboxComponent($rootScope, ngeoMapQuerent, ngeoQueryKeyboard) {
           } else {
             // deactivate
             map.removeInteraction(interaction);
-            if (scope.$eval(attrs['ngeoBboxQueryAutoclear']) !== false) {
+            if (scope.$eval(attrs.ngeoBboxQueryAutoclear) !== false) {
               ngeoMapQuerent.clear();
             }
           }

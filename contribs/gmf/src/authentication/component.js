@@ -40,10 +40,15 @@ function gmfAuthenticationTemplateUrl_(element, attrs) {
 }
 
 
-module.run(/* @ngInject */ ($templateCache) => {
-  // @ts-ignore: webpack
-  $templateCache.put('gmf/authentication', require('./component.html'));
-});
+module.run(
+  /**
+   * @ngInject
+   * @param {angular.ITemplateCacheService} $templateCache
+   */
+  ($templateCache) => {
+    // @ts-ignore: webpack
+    $templateCache.put('gmf/authentication', require('./component.html'));
+  });
 
 
 /**
@@ -429,6 +434,7 @@ class AuthenticationController {
     }
 
     errors.forEach((error) => {
+      /** @type {import('ngeo/message/Message.js').Message} */
       const options = {
         msg: error,
         target: container,

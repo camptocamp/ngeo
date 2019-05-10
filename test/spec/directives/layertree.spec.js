@@ -5,7 +5,7 @@ import olLayerImage from 'ol/layer/Image.js';
 import {getFirstParentTree, LayertreeVisitorDecision} from 'ngeo/layertree/Controller.js';
 
 describe('ngeo.layertree.component', () => {
-
+  /** @type {import("ngeo/layertree/Controller.js").LayertreeController} */
   let roottreeCtrl;
 
   beforeEach(() => {
@@ -38,6 +38,9 @@ describe('ngeo.layertree.component', () => {
       }]
     };
 
+    /**
+     * @param {*} node
+     */
     const getLayer = function(node) {
       return new olLayerImage();
     };

@@ -93,11 +93,14 @@ const module = angular.module('ngeoAngularFilters', []);
  */
 function ScalifyFilter($filter) {
   const numberFilter = $filter('number');
+  /**
+   * @param {number} scale
+   */
   const filterFn = function(scale) {
     const text = numberFilter(scale, 0);
     return text ? `1\u00a0:\u00a0${text}` : '';
   };
-  filterFn['$stateful'] = true;
+  filterFn.$stateful = true;
   return filterFn;
 }
 
@@ -320,6 +323,11 @@ module.filter('ngeoNumberCoordinates', NumberCoordinatesFilter);
  * @ngname ngeoDMSCoordinates
  */
 function DMSCoordinatesFilter() {
+  /**
+   * @param {number} degrees
+   * @param {string} hemispheres
+   * @param {number} fractionDigits
+   */
   const degreesToStringHDMS = function(degrees, hemispheres, fractionDigits) {
     const normalizedDegrees = modulo(degrees + 180, 360) - 180;
     const dms = Math.abs(3600 * normalizedDegrees);

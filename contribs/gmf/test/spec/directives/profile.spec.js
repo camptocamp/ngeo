@@ -1,19 +1,27 @@
+// @ts-nocheck
 import angular from 'angular';
 
 describe('gmf.GmfProfileController', () => {
-
+  /** @type {import('gmf/profile/component.js').ProfileController} */
   let profileController;
+  /** @type {import("ngeo/download/Csv.js").DownloadCsvService} */
   let csvDownloadServiceMock;
+  /** @type {angular.IScope} */
   let $scope;
+  /** @type {angular.IScope} */
   let $rootScope;
 
   beforeEach(() => {
-    angular.mock.module('ngeo', ($provide) => {
-      $provide.value('gmfProfileJsonUrl', 'https://geomapfish-demo-2-4.camptocamp.com/profile.json');
-      csvDownloadServiceMock = {
-        startDownload(data, columnDefs, fileName) {}
-      };
-    });
+    angular.mock.module('ngeo',
+      /**
+       * @param {angular.IModule} $provide
+       */
+      ($provide) => {
+        $provide.value('gmfProfileJsonUrl', 'https://geomapfish-demo-2-4.camptocamp.com/profile.json');
+        csvDownloadServiceMock = {
+          startDownload(data, columnDefs, fileName) {}
+        };
+      });
 
     angular.mock.inject((_$controller_, _$rootScope_) => {
       const $controller = _$controller_;

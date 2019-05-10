@@ -1,3 +1,4 @@
+// @ts-nocheck
 import olFeature from 'ol/Feature.js';
 import olGeomMultiLineString from 'ol/geom/MultiLineString.js';
 import olGeomMultiPoint from 'ol/geom/MultiPoint.js';
@@ -15,7 +16,7 @@ import ngeoFormatFeatureHash from 'ngeo/format/FeatureHash.js';
 
 
 describe('ngeo.format.FeatureHash', () => {
-
+  /** @type {ngeoFormatFeatureHash} */
   let fhFormat;
 
   beforeEach(() => {

@@ -123,7 +123,7 @@ PrintService.prototype.cancel = function(ref, opt_httpConfig) {
  * @param {number} dpi DPI.
  * @param {string} layout Layout.
  * @param {string} format Formats.
- * @param {Object.<string, *>} customAttributes Custom attributes.
+ * @param {Object<string, *>} customAttributes Custom attributes.
  * @param {string=} email Email to send the file to.
  * @return {import('ngeo/print/mapfish-print-v3.js').MapFishPrintSpec} The print spec.
  */
@@ -132,7 +132,7 @@ PrintService.prototype.createSpec = function(
 
   const specMap = /** @type {import('ngeo/print/mapfish-print-v3.js').MapFishPrintMap} */ ({
     dpi: dpi,
-    rotation: /** number */ (customAttributes['rotation'])
+    rotation: /** number */ (customAttributes.rotation)
   });
 
   this.encodeMap_(map, scale, specMap);
@@ -194,7 +194,7 @@ PrintService.prototype.encodeMap_ = function(map, scale, object) {
   if (!mapLayerGroup) {
     throw new Error('Missing mapLayerGroup');
   }
-  this.printNativeAngle_ = !(mapLayerGroup.get('printNativeAngle') === false);
+  this.printNativeAngle_ = mapLayerGroup.get('printNativeAngle') !== false;
   let layers = this.ngeoLayerHelper_.getFlatLayers(mapLayerGroup);
 
   // Sort the layer by ZIndex
@@ -210,7 +210,7 @@ PrintService.prototype.encodeMap_ = function(map, scale, object) {
 
 
 /**
- * @param {Array.<import('ngeo/print/mapfish-print-v3.js').MapFishPrintLayer>} arr Array.
+ * @param {Array<import('ngeo/print/mapfish-print-v3.js').MapFishPrintLayer>} arr Array.
  * @param {import("ol/layer/Base.js").default} layer Layer.
  * @param {number} resolution Resolution.
  */
@@ -225,7 +225,7 @@ PrintService.prototype.encodeLayer = function(arr, layer, resolution) {
 };
 
 /**
- * @param {Array.<import('ngeo/print/mapfish-print-v3.js').MapFishPrintLayer>} arr Array.
+ * @param {Array<import('ngeo/print/mapfish-print-v3.js').MapFishPrintLayer>} arr Array.
  * @param {olLayerVector} layer Layer.
  * @param {number} resolution Resolution.
  */
@@ -283,11 +283,18 @@ PrintService.prototype.encodeWmsLayer_ = function(arr, layer, url, params) {
     url = window.location.protocol + url;
   }
   const url_url = new URL(url);
+  /** @type {Object<string, string>} */
   const customParams = {'TRANSPARENT': 'true'};
   if (url_url.searchParams) {
-    /** @type {Object} */ (url_url.searchParams).forEach((value, key) => {
-      customParams[key] = value;
-    });
+    url_url.searchParams.forEach(
+      /**
+       * @param {string} value
+       * @param {string} key
+       */
+      (value, key) => {
+        customParams[key] = value;
+      }
+    );
   }
   for (const key in params) {
     const value = params[key];
@@ -296,21 +303,21 @@ PrintService.prototype.encodeWmsLayer_ = function(arr, layer, url, params) {
       customParams[key] = value;
     }
   }
-  delete customParams['LAYERS'];
-  delete customParams['FORMAT'];
-  delete customParams['SERVERTYPE'];
-  delete customParams['VERSION'];
+  delete customParams.LAYERS;
+  delete customParams.FORMAT;
+  delete customParams.SERVERTYPE;
+  delete customParams.VERSION;
 
   /** @type {import('ngeo/print/mapfish-print-v3.js').MapFishPrintWmsLayer} */
   const object = {
     baseURL: getAbsoluteUrl_(url_url.origin + url_url.pathname),
-    imageFormat: 'FORMAT' in params ? params['FORMAT'] : 'image/png',
-    layers: params['LAYERS'].split(','),
+    imageFormat: 'FORMAT' in params ? params.FORMAT : 'image/png',
+    layers: params.LAYERS.split(','),
     customParams: customParams,
-    serverType: params['SERVERTYPE'],
+    serverType: params.SERVERTYPE,
     type: 'wms',
     opacity: this.getOpacityOrInherited_(layer),
-    version: params['VERSION'],
+    version: params.VERSION,
     useNativeAngle: this.printNativeAngle_,
   };
   arr.push(object);
@@ -511,7 +518,7 @@ PrintService.prototype.getReportUrl = function(ref) {
 /**
  * Get the print capabilities from MapFish Print.
  * @param {angular.IRequestShortcutConfig=} opt_httpConfig $http config object.
- * @return {angular.IHttpPromise<Object>} HTTP promise.
+ * @return {angular.IHttpPromise<import('ngeo/print/mapfish-print-v3').MapFishPrintSpec>} HTTP promise.
  */
 PrintService.prototype.getCapabilities = function(opt_httpConfig) {
   const httpConfig =

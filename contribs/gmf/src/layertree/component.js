@@ -72,10 +72,16 @@ module.value('ngeoLayertreeTemplateUrl',
    */
   (element, attrs) => 'gmf/layertree');
 
-module.run(/* @ngInject */ ($templateCache) => {
-  // @ts-ignore: webpack
-  $templateCache.put('gmf/layertree', require('./component.html'));
-});
+module.run(
+  /**
+   * @ngInject
+   * @param {angular.ITemplateCacheService} $templateCache
+   */
+  ($templateCache) => {
+    // @ts-ignore: webpack
+    $templateCache.put('gmf/layertree', require('./component.html'));
+  }
+);
 
 
 module.value('gmfLayertreeTemplate',
@@ -350,6 +356,7 @@ Controller.prototype.updateDimensions_ = function(treeCtrl) {
  */
 Controller.prototype.updateLayerDimensions_ = function(layer, node) {
   if (this.dimensions && node.dimensions) {
+    /** @type {Object<string, ?string>} */
     const dimensions = {};
     for (const key in node.dimensions) {
       if (node.dimensions[key] === null) {
@@ -513,16 +520,17 @@ Controller.prototype.getLegendIconURL = function(treeCtrl) {
     return iconUrl;
   }
 
-  if (treeCtrl.node.children !== undefined) {
+  const gmfGroup = /** @type {import('gmf/themes.js').GmfGroup} */(treeCtrl.node);
+  if (gmfGroup.children !== undefined) {
     return undefined;
   }
 
-  const gmfLayer = /** @type {import('gmf/themes.js').GmfLayer} */ (treeCtrl.node);
+  const gmfLayer = /** @type {import('gmf/themes.js').GmfLayer} */(treeCtrl.node);
   if (gmfLayer.type !== 'WMS') {
     return undefined;
   }
 
-  const gmfLayerWMS = /** @type {import('gmf/themes.js').GmfLayerWMS} */ (gmfLayer);
+  const gmfLayerWMS = /** @type {import('gmf/themes.js').GmfLayerWMS} */(gmfLayer);
 
   const legendRule = gmfLayerWMS.metadata.legendRule;
 
@@ -655,8 +663,10 @@ Controller.prototype.afterReorder = function() {
   if (!this.gmfTreeManager_.rootCtrl) {
     throw new Error('Missing gmfTreeManager_.rootCtrl');
   }
-  const groupNodes = this.gmfTreeManager_.rootCtrl.node.children;
+  const gmfRootGroup = /** @type {import('gmf/themes.js').GmfGroup} */(this.gmfTreeManager_.rootCtrl.node);
+  const groupNodes = gmfRootGroup.children;
   const currentTreeCtrls = this.gmfTreeManager_.rootCtrl.children;
+  /** @type {import('ngeo/layertree/Controller.js').LayertreeController[]} */
   const treeCtrls = [];
 
   // Get order of first-level groups for treectrl and layers;

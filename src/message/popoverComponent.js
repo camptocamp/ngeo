@@ -133,6 +133,9 @@ function PopoverController($scope) {
    */
   this.bodyElm = null;
 
+  /**
+   * @param {Event} clickEvent
+   */
   const clickHandler = (clickEvent) => {
     if (!this.anchorElm) {
       throw new Error('Missing anchorElm');

@@ -16,10 +16,15 @@ const module = angular.module('gmfLayertreeTimeSliderComponent', [
 ]);
 
 
-module.run(/* @ngInject */ ($templateCache) => {
-  // @ts-ignore: webpack
-  $templateCache.put('gmf/layertree/timesliderComponent', require('./timesliderComponent.html'));
-});
+module.run(
+  /**
+   * @ngInject
+   * @param {angular.ITemplateCacheService} $templateCache
+   */
+  ($templateCache) => {
+    // @ts-ignore: webpack
+    $templateCache.put('gmf/layertree/timesliderComponent', require('./timesliderComponent.html'));
+  });
 
 
 /**
@@ -63,6 +68,10 @@ function layertreeTimeSliderComponent() {
         ctrl.sliderOptions.stop = onSliderReleased_;
         ctrl.sliderOptions.slide = computeDates_;
 
+        /**
+         * @param {never} e
+         * @param {never} sliderUi
+         */
         function onSliderReleased_(e, sliderUi) {
           if (!ctrl) {
             throw new Error('Missing ctrl');
@@ -73,6 +82,10 @@ function layertreeTimeSliderComponent() {
           scope.$apply();
         }
 
+        /**
+         * @param {never} e
+         * @param {{value: ?string, values: ?string[]}} sliderUi
+         */
         function computeDates_(e, sliderUi) {
           if (!ctrl) {
             throw new Error('Missing ctrl');
@@ -192,7 +205,8 @@ Controller.prototype.init = function() {
   this.isModeRange = this.time.mode === 'range';
   this.minValue = initialOptions_.minDate;
   this.maxValue = initialOptions_.maxDate;
-  this.dates = this.isModeRange ? [initialOptions_.values[0], initialOptions_.values[1]] :
+  const values = /** @type {number[]} */(initialOptions_.values);
+  this.dates = this.isModeRange ? [values[0], values[1]] :
     initialOptions_.values;
   this.sliderOptions = {
     range: this.isModeRange,
@@ -212,6 +226,7 @@ Controller.prototype.getTimeValueList_ = function() {
     throw new Error('Missing time');
   }
   const wmsTime = this.time;
+  /** @type {number[]} */
   let timeValueList = [];
   const minDate = new Date(this.minValue);
   const maxDate = new Date(this.maxValue);

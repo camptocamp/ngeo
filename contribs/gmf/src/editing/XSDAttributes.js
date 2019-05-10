@@ -26,7 +26,7 @@ export function EditingXSDAttributeService($http, gmfLayersUrl) {
   this.baseUrl_ = gmfLayersUrl;
 
   /**
-   * @type {Object.<number, !angular.IPromise>}
+   * @type {Object<number, angular.IPromise<import('ngeo/format/Attribute.js').Attribute[]>>}
    * @private
    */
   this.promises_ = {};
@@ -36,20 +36,23 @@ export function EditingXSDAttributeService($http, gmfLayersUrl) {
 
 /**
  * @param {number} id Layer id.
- * @return {angular.IPromise} Promise.
+ * @return {angular.IPromise<import('ngeo/format/Attribute.js').Attribute[]>} Promise.
  */
 EditingXSDAttributeService.prototype.getAttributes = function(id) {
   if (!this.promises_[id]) {
     const url = `${this.baseUrl_}/${id}/md.xsd`;
-    this.promises_[id] = this.http_.get(url).then(
-      this.handleGetAttributes_.bind(this));
+    this.promises_[id] = /** @type {angular.IPromise<import('ngeo/format/Attribute.js').Attribute[]>} */(
+      /** @type {angular.IPromise<unknown>} */(
+        this.http_.get(url).then(this.handleGetAttributes_.bind(this))
+      )
+    );
   }
   return this.promises_[id];
 };
 
 /**
- * @param {angular.IHttpResponse} resp Ajax response.
- * @return {Array.<import('ngeo/format/Attribute.js').Attribute>} List of attributes.
+ * @param {angular.IHttpResponse<any>} resp Ajax response.
+ * @return {import('ngeo/format/Attribute.js').Attribute[]} List of attributes.
  */
 EditingXSDAttributeService.prototype.handleGetAttributes_ = function(resp) {
   return new ngeoFormatXSDAttribute().read(resp.data);

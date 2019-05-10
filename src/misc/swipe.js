@@ -35,24 +35,24 @@ const module = angular.module('ngeoMiscSwipe', []);
  * which is to be watched for swipes, and an object with four handler functions. See the
  * documentation for `bind` below.
  */
-
 module.factory('$verticalSwipe', [function() {
   // The total distance in any direction before we make the call on swipe vs. scroll.
   const MOVE_BUFFER_RADIUS = 10;
 
+  /** @type Object<string, Object<string, string>> */
   const POINTER_EVENTS = {
-    'mouse': {
+    mouse: {
       start: 'mousedown',
       move: 'mousemove',
       end: 'mouseup'
     },
-    'touch': {
+    touch: {
       start: 'touchstart',
       move: 'touchmove',
       end: 'touchend',
       cancel: 'touchcancel'
     },
-    'pointer': {
+    pointer: {
       start: 'pointerdown',
       move: 'pointermove',
       end: 'pointerup',
@@ -60,8 +60,12 @@ module.factory('$verticalSwipe', [function() {
     }
   };
 
+  /**
+   * @param {JQueryEventObject|TouchEvent} event
+   */
   function getCoordinates(event) {
-    const originalEvent = event.originalEvent || event;
+    const originalEvent = /** @type {TouchEvent} */(/** @type {JQueryEventObject} */(event).originalEvent)
+      || event;
     const touches = originalEvent.touches && originalEvent.touches.length ?
       originalEvent.touches :
       [originalEvent];
@@ -73,7 +77,12 @@ module.factory('$verticalSwipe', [function() {
     };
   }
 
+  /**
+   * @param {string[]} pointerTypes
+   * @param {string} eventType
+   */
   function getEvents(pointerTypes, eventType) {
+    /** @type {string[]} */
     const res = [];
     angular.forEach(pointerTypes, (pointerType) => {
       const eventName = POINTER_EVENTS[pointerType][eventType];
@@ -123,86 +132,106 @@ module.factory('$verticalSwipe', [function() {
      */
     bind(element, eventHandlers, pointerTypes) {
       // Absolute total movement, used to control swipe vs. scroll.
-      let totalX, totalY;
+      /** @type {number} */
+      let totalX;
+      /** @type {number} */
+      let totalY;
       // Coordinates of the start position.
+      /** @type {{x: number, y: number}} */
       let startCoords;
       // Last event's position.
+      /** @type {{x: number, y: number}} */
       let lastPos;
       // Whether a swipe is active.
       let active = false;
 
       pointerTypes = pointerTypes || ['mouse', 'touch', 'pointer'];
-      element.on(getEvents(pointerTypes, 'start'), (event) => {
-        startCoords = getCoordinates(event);
-        active = true;
-        totalX = 0;
-        totalY = 0;
-        lastPos = startCoords;
-        if (eventHandlers['start']) {
-          eventHandlers['start'](startCoords, event);
+      element.on(getEvents(pointerTypes, 'start'),
+        /**
+         * @param {JQueryEventObject|TouchEvent} event
+         */
+        (event) => {
+          startCoords = getCoordinates(event);
+          active = true;
+          totalX = 0;
+          totalY = 0;
+          lastPos = startCoords;
+          if (eventHandlers.start) {
+            eventHandlers.start(startCoords, event);
+          }
         }
-      });
+      );
       const events = getEvents(pointerTypes, 'cancel');
       if (events) {
         element.on(events, (event) => {
           active = false;
-          if (eventHandlers['cancel']) {
-            eventHandlers['cancel'](event);
+          if (eventHandlers.cancel) {
+            eventHandlers.cancel(event);
           }
         });
       }
 
-      element.on(getEvents(pointerTypes, 'move'), (event) => {
-        if (!active) {
-          return;
+      element.on(getEvents(pointerTypes, 'move'),
+        /**
+         * @param {JQueryEventObject|TouchEvent} event
+         */
+        (event) => {
+          if (!active) {
+            return;
+          }
+
+          // Android will send a touchcancel if it thinks we're starting to scroll.
+          // So when the total distance (+ or - or both) exceeds 10px in either direction,
+          // we either:
+          // - On totalX > totalY, we send preventDefault() and treat this as a swipe.
+          // - On totalY > totalX, we let the browser handle it as a scroll.
+
+          if (!startCoords) {
+            return;
+          }
+          const coords = getCoordinates(event);
+
+          totalX += Math.abs(coords.x - lastPos.x);
+          totalY += Math.abs(coords.y - lastPos.y);
+
+          lastPos = coords;
+
+          if (totalX < MOVE_BUFFER_RADIUS && totalY < MOVE_BUFFER_RADIUS) {
+            return;
+          }
+
+          // One of totalX or totalY has exceeded the buffer, so decide on swipe vs. scroll.
+          if (totalX > totalY) {
+            // Allow native scrolling to take over.
+            active = false;
+            if (eventHandlers.cancel) {
+              eventHandlers.cancel(event);
+            }
+            return;
+          } else {
+            // Prevent the browser from scrolling.
+            event.preventDefault();
+            if (eventHandlers.move) {
+              eventHandlers.move(coords, event);
+            }
+          }
         }
+      );
 
-        // Android will send a touchcancel if it thinks we're starting to scroll.
-        // So when the total distance (+ or - or both) exceeds 10px in either direction,
-        // we either:
-        // - On totalX > totalY, we send preventDefault() and treat this as a swipe.
-        // - On totalY > totalX, we let the browser handle it as a scroll.
-
-        if (!startCoords) {
-          return;
-        }
-        const coords = getCoordinates(event);
-
-        totalX += Math.abs(coords.x - lastPos.x);
-        totalY += Math.abs(coords.y - lastPos.y);
-
-        lastPos = coords;
-
-        if (totalX < MOVE_BUFFER_RADIUS && totalY < MOVE_BUFFER_RADIUS) {
-          return;
-        }
-
-        // One of totalX or totalY has exceeded the buffer, so decide on swipe vs. scroll.
-        if (totalX > totalY) {
-          // Allow native scrolling to take over.
+      element.on(getEvents(pointerTypes, 'end'),
+        /**
+         * @param {JQueryEventObject|TouchEvent} event
+         */
+        (event) => {
+          if (!active) {
+            return;
+          }
           active = false;
-          if (eventHandlers['cancel']) {
-            eventHandlers['cancel'](event);
-          }
-          return;
-        } else {
-          // Prevent the browser from scrolling.
-          event.preventDefault();
-          if (eventHandlers['move']) {
-            eventHandlers['move'](coords, event);
+          if (eventHandlers.end) {
+            eventHandlers.end(getCoordinates(event), event);
           }
         }
-      });
-
-      element.on(getEvents(pointerTypes, 'end'), (event) => {
-        if (!active) {
-          return;
-        }
-        active = false;
-        if (eventHandlers['end']) {
-          eventHandlers['end'](getCoordinates(event), event);
-        }
-      });
+      );
     }
   };
 }]);
@@ -228,8 +257,14 @@ function makeSwipeDirective_(directiveName, direction, eventName) {
     return function(scope, element, attr) {
       const swipeHandler = $parse(attr[directiveName]);
 
-      let startCoords, valid;
+      /** @type {{x: number, y: number}} */
+      let startCoords;
+      /** @type {boolean} */
+      let valid;
 
+      /**
+       * @param {{x: number, y: number}} coords
+       */
       function validSwipe(coords) {
         // Check that it's within the coordinates.
         // Absolute vertical distance must be within tolerances.
@@ -252,18 +287,32 @@ function makeSwipeDirective_(directiveName, direction, eventName) {
       }
 
       const pointerTypes = ['touch'];
-      if (!angular.isDefined(attr['ngeoSwipeDisableMouse'])) {
+      if (!angular.isDefined(attr.ngeoSwipeDisableMouse)) {
         pointerTypes.push('mouse');
       }
       $verticalSwipe.bind(element, {
-        'start': function(coords, event) {
+        'start':
+        /**
+         * @param {{x: number, y: number}} coords
+         * @param {void} event
+         */
+        function(coords, event) {
           startCoords = coords;
           valid = true;
         },
-        'cancel': function(event) {
+        'cancel':
+        /**
+         * @param {void} event
+         */
+        function(event) {
           valid = false;
         },
-        'end': function(coords, event) {
+        'end':
+        /**
+         * @param {{x: number, y: number}} coords
+         * @param {void} event
+         */
+        function(coords, event) {
           if (validSwipe(coords)) {
             scope.$apply(() => {
               element.triggerHandler(eventName);

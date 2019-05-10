@@ -230,6 +230,7 @@ const Controller = class {
       angle = this.maxTilt - tiltOnGlobe;
     }
     const scene = this.ol3dm.getCesiumScene();
+    // @ts-ignore: error TS2339: Property 'rotateAroundBottomCenter' does not exist on type '{}'...
     olcsCore.rotateAroundBottomCenter(scene, angle);
   }
 
@@ -273,10 +274,16 @@ function ngeoOlcsControls3dTemplateUrlInjectable($attrs, ngeoOlcsControls3dTempl
     'ngeo/olsc/controls3d';
 }
 
-module.run(/* @ngInject */ ($templateCache) => {
-  // @ts-ignore: webpack
-  $templateCache.put('ngeo/olsc/controls3d', require('./controls3d.html'));
-});
+
+module.run(
+  /**
+   * @ngInject
+   * @param {angular.ITemplateCacheService} $templateCache
+   */
+  ($templateCache) => {
+    // @ts-ignore: webpack
+    $templateCache.put('ngeo/olsc/controls3d', require('./controls3d.html'));
+  });
 
 
 /**

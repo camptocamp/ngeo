@@ -4,6 +4,7 @@ import gmfRasterRasterService from 'gmf/raster/RasterService.js';
 import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
 
 import * as olEvents from 'ol/events.js';
+import MapBrowserEvent from 'ol/MapBrowserEvent.js';
 
 import 'bootstrap/js/src/dropdown.js';
 
@@ -18,10 +19,15 @@ const module = angular.module('gmfRasterComponent', [
 ]);
 
 
-module.run(/* @ngInject */ ($templateCache) => {
-  // @ts-ignore: webpack
-  $templateCache.put('gmf/raster/widgetComponent', require('./widgetComponent.html'));
-});
+module.run(
+  /**
+   * @ngInject
+   * @param {angular.ITemplateCacheService} $templateCache
+   */
+  ($templateCache) => {
+    // @ts-ignore: webpack
+    $templateCache.put('gmf/raster/widgetComponent', require('./widgetComponent.html'));
+  });
 
 
 module.value('gmfElevationwidgetTemplateUrl',
@@ -104,7 +110,8 @@ function rasterComponent() {
       'map': '=gmfElevationMap'
     },
     link: (scope, element, attr) => {
-      const ctrl = scope['ctrl'];
+      // @ts-ignore: scope...
+      const ctrl = scope.ctrl;
 
       // Watch active or not.
       scope.$watch(() => ctrl.active, (active) => {
@@ -125,11 +132,12 @@ module.directive('gmfElevation', rasterComponent);
 
 /**
  * @hidden
- * @param {!angular.IScope} $scope Scope.
- * @param {!angular.IFilterService} $filter Angular filter.
- * @param {!import("ngeo/misc/debounce.js").miscDebounce<function(): void>} ngeoDebounce Ngeo debounce factory
- * @param {!import("gmf/raster/RasterService.js").RasterService} gmfRaster Gmf Raster service
- * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
+ * @param {angular.IScope} $scope Scope.
+ * @param {angular.IFilterService} $filter Angular filter.
+ * @param {import("ngeo/misc/debounce.js").miscDebounce<function(Event|import('ol/events/Event.js').default):
+ *    void>} ngeoDebounce Ngeo debounce factory
+ * @param {import("gmf/raster/RasterService.js").RasterService} gmfRaster Gmf Raster service
+ * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @constructor
  * @private
  * @hidden
@@ -146,7 +154,8 @@ function Controller($scope, $filter, ngeoDebounce, gmfRaster, gettextCatalog) {
   this.filter_ = $filter;
 
   /**
-   * @type {import("ngeo/misc/debounce.js").miscDebounce<function(): void>}
+   * @type {import("ngeo/misc/debounce.js").miscDebounce<
+   *    function(Event|import('ol/events/Event.js').default): void>}
    * @private
    */
   this.ngeoDebounce_ = ngeoDebounce;
@@ -243,18 +252,23 @@ Controller.prototype.toggleActive_ = function(active) {
     // Launch the elevation service request when the user stops moving the
     // mouse for less short delay
     this.listenerKeys_.push(olEvents.listen(this.map, 'pointermove',
-      this.ngeoDebounce_((e) => {
-        if (this.inViewport_) {
-          this.loading = true;
-          const params = {
-            'layers': this.layer
-          };
-          this.gmfRaster_.getRaster(e.coordinate, params).then(
-            this.getRasterSuccess_.bind(this),
-            this.getRasterError_.bind(this)
-          );
-        }
-      }, 500, true)
+      this.ngeoDebounce_(
+        /**
+         * @param {Event|import('ol/events/Event.js').default} e
+         */
+        (e) => {
+          if (this.inViewport_ && e instanceof MapBrowserEvent) {
+            this.loading = true;
+            const params = {
+              'layers': this.layer
+            };
+            this.gmfRaster_.getRaster(e.coordinate, params).then(
+              this.getRasterSuccess_.bind(this),
+              this.getRasterError_.bind(this)
+            );
+          }
+        }, 500, true
+      )
     ));
 
     this.listenerKeys_.push(olEvents.listen(this.map.getViewport(), 'mouseout', () => {

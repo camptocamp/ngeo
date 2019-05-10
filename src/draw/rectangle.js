@@ -34,13 +34,13 @@ function drawRectangleComponent() {
       }
 
       const drawRectangle = new olInteractionDraw({
-        type: /** @type {import("ol/geom/GeometryType.js").default} */ ('LineString'),
+        type: 'LineString',
         geometryFunction: (coordinates, geometry) => {
           if (!geometry) {
             geometry = new olGeomPolygon([]);
           }
-          const start = coordinates[0];
-          const end = coordinates[1];
+          const start = /** @type {number[]|number[][]} */(coordinates[0]);
+          const end = /** @type {number[]|number[][]} */(coordinates[1]);
           geometry.setCoordinates([
             [start, [start[0], end[1]], end, [end[0], start[1]], start]
           ]);

@@ -25,10 +25,17 @@ module.value('gmfMobileMeasureLengthTemplateUrl',
       'gmf/measure/lengthComponent';
   });
 
-module.run(/* @ngInject */ ($templateCache) => {
-  // @ts-ignore: webpack
-  $templateCache.put('gmf/measure/lengthComponent', require('./baseComponent.html'));
-});
+
+module.run(
+  /**
+   * @ngInject
+   * @param {angular.ITemplateCacheService} $templateCache
+   */
+  ($templateCache) => {
+    // @ts-ignore: webpack
+    $templateCache.put('gmf/measure/lengthComponent', require('./baseComponent.html'));
+  }
+);
 
 
 /**

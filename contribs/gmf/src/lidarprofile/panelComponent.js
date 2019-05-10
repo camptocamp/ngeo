@@ -34,10 +34,16 @@ module.value('gmfLidarprofilePanelTemplateUrl',
       'gmf/lidarprofilePanel';
   });
 
-module.run(/* @ngInject */ ($templateCache) => {
-  // @ts-ignore: webpack
-  $templateCache.put('gmf/lidarprofilePanel', require('./panelComponent.html'));
-});
+
+module.run(
+  /**
+   * @ngInject
+   * @param {angular.ITemplateCacheService} $templateCache
+   */
+  ($templateCache) => {
+    // @ts-ignore: webpack
+    $templateCache.put('gmf/lidarprofilePanel', require('./panelComponent.html'));
+  });
 
 
 /**
@@ -303,7 +309,7 @@ class Controller {
    * Get / Set the selected point attribute
    * @param {import("gmf/lidarprofile/Config.js").LidarprofileServerConfigPointAttribute=} opt_selectedOption
    *    The new selected point attribute.
-   * @return {import("gmf/lidarprofile/Config.js").LidarprofileServerConfigPointAttributes|undefined}
+   * @return {import("gmf/lidarprofile/Config.js").LidarprofileServerConfigPointAttribute|undefined}
    *    Selected point attribute
    */
   getSetSelectedPointAttribute(opt_selectedOption) {

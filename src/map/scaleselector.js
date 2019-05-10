@@ -27,15 +27,21 @@ module.value('ngeoScaleselectorTemplateUrl',
    * @return {string} Template URL.
    */
   (element, attrs) => {
-    const templateUrl = attrs['ngeoScaleselectorTemplateurl'];
+    const templateUrl = attrs.ngeoScaleselectorTemplateurl;
     return templateUrl !== undefined ? templateUrl :
       'ngeo/map/scaleselector';
   });
 
-module.run(/* @ngInject */ ($templateCache) => {
-  // @ts-ignore: webpack
-  $templateCache.put('ngeo/map/scaleselector', require('./scaleselector.html'));
-});
+
+module.run(
+  /**
+   * @ngInject
+   * @param {angular.ITemplateCacheService} $templateCache
+   */
+  ($templateCache) => {
+    // @ts-ignore: webpack
+    $templateCache.put('ngeo/map/scaleselector', require('./scaleselector.html'));
+  });
 
 
 /**
@@ -103,20 +109,19 @@ module.directive('ngeoScaleselector', mapScaleselectorComponent);
 
 
 /**
- * @constructor
  * @private
  * @hidden
- * @param {angular.IScope} $scope Directive scope.
- * @param {JQuery} $element Element.
- * @param {angular.IAttributes} $attrs Attributes.
- * @ngInject
- * @ngdoc controller
- * @ngname NgeoScaleselectorController
  */
 class ScaleselectorController {
+  /**
+   * @param {angular.IScope} $scope Directive scope.
+   * @param {JQuery} $element Element.
+   * @param {angular.IAttributes} $attrs Attributes.
+   * @ngInject
+   */
   constructor($scope, $element, $attrs) {
 
-    const scalesExpr = $attrs['ngeoScaleselector'];
+    const scalesExpr = $attrs.ngeoScaleselector;
 
     /**
      * The zoom level/scale map object.
@@ -131,12 +136,17 @@ class ScaleselectorController {
      */
     this.zoomLevels = [];
 
-    $scope.$watch(() => Object.keys(this.scales).length, (newLength) => {
-      this.zoomLevels = Object.keys(this.scales).map(Number);
-      this.zoomLevels.sort(numberSafeCompareFunction);
-    });
+    $scope.$watch(() => Object.keys(this.scales).length,
+      /**
+       * @param {number} newLength
+       */
+      (newLength) => {
+        this.zoomLevels = Object.keys(this.scales).map(Number);
+        this.zoomLevels.sort(numberSafeCompareFunction);
+      }
+    );
 
-    const mapExpr = $attrs['ngeoScaleselectorMap'];
+    const mapExpr = $attrs.ngeoScaleselectorMap;
 
     /**
      * @type {import("ol/Map.js").default}
@@ -145,7 +155,7 @@ class ScaleselectorController {
     this.map_ = /** @type {import("ol/Map.js").default} */ ($scope.$eval(mapExpr));
     console.assert(this.map_ instanceof olMap);
 
-    const optionsExpr = $attrs['ngeoScaleselectorOptions'];
+    const optionsExpr = $attrs.ngeoScaleselectorOptions;
     const options = $scope.$eval(optionsExpr);
 
     /**
@@ -182,7 +192,8 @@ class ScaleselectorController {
 
     this.registerResolutionChangeListener_();
 
-    $scope['scaleselectorCtrl'] = this;
+    // @ts-ignore
+    $scope.scaleselectorCtrl = this;
   }
 
 
@@ -259,7 +270,7 @@ class ScaleselectorController {
 function getOptions_(options) {
   let dropup = false;
   if (options !== undefined) {
-    dropup = options['dropup'] == true;
+    dropup = options.dropup == true;
   }
   return /** @type {ScaleselectorOptions} */ ({
     dropup: dropup

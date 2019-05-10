@@ -16,10 +16,15 @@ const module = angular.module('gmfThemeSelectorComponent', [
 ]);
 
 
-module.run(/* @ngInject */ ($templateCache) => {
-  // @ts-ignore: webpack
-  $templateCache.put('gmf/theme/selectorComponent', require('./selectorComponent.html'));
-});
+module.run(
+  /**
+   * @ngInject
+   * @param {angular.ITemplateCacheService} $templateCache
+   */
+  ($templateCache) => {
+    // @ts-ignore: webpack
+    $templateCache.put('gmf/theme/selectorComponent', require('./selectorComponent.html'));
+  });
 
 
 module.value('gmfThemeSelectorTemplateUrl',

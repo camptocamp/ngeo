@@ -54,7 +54,7 @@ function queryMapComponent(ngeoMapQuerent, ngeoQueryKeyboard, $injector) {
     restrict: 'A',
     scope: false,
     link: (scope, elem, attrs) => {
-      const map = scope.$eval(attrs['ngeoMapQueryMap']);
+      const map = scope.$eval(attrs.ngeoMapQueryMap);
       /** @type {Array<import('ol/events.js').EventsKey>} */
       const listenerKeys_ = [];
 
@@ -84,6 +84,9 @@ function queryMapComponent(ngeoMapQuerent, ngeoQueryKeyboard, $injector) {
       const handlePointerMove_ = function(evt) {
         if (evt instanceof MapBrowserEvent && !evt.dragging) {
           const pixel = map.getEventPixel(evt.originalEvent);
+          /**
+           * @param {import('ol/layer/Base').default} layer
+           */
           const queryable = function(layer) {
             const visible = layer.get('visible');
             const sourceids = layer.get('querySourceIds');
@@ -119,13 +122,13 @@ function queryMapComponent(ngeoMapQuerent, ngeoQueryKeyboard, $injector) {
           olEventsUnlistenByKey(lk);
         }
         listenerKeys_.length = 0;
-        if (scope.$eval(attrs['ngeoMapQueryAutoclear']) !== false) {
+        if (scope.$eval(attrs.ngeoMapQueryAutoclear) !== false) {
           ngeoMapQuerent.clear();
         }
       };
 
       // watch 'active' property -> activate/deactivate accordingly
-      scope.$watch(attrs['ngeoMapQueryActive'],
+      scope.$watch(attrs.ngeoMapQueryActive,
         (newVal, oldVal) => {
           if (newVal) {
             activate_();

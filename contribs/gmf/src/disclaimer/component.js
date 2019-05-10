@@ -302,6 +302,7 @@ Controller.prototype.showDisclaimerMessage_ = function(msg) {
     this.msg = `${this.sce_.trustAsHtml(this.msgs_.join('<br />'))}`;
     this.visibility = true;
   } else {
+    /** @type {import('ngeo/message/Message.js').Message} */
     const options = {
       msg: msg,
       target: this.element_,
@@ -326,6 +327,7 @@ Controller.prototype.closeDisclaimerMessage_ = function(msg) {
     this.msgs_.length = 0;
     this.msg = '';
   } else {
+    /** @type {import('ngeo/message/Message.js').Message} */
     const options = {
       msg: msg,
       target: this.element_,

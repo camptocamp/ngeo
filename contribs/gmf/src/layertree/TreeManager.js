@@ -117,7 +117,7 @@ export function LayertreeTreeManager($timeout, $injector, gettextCatalog, ngeoLa
   this.groupsToAddInThisDigestLoop_ = [];
 
   /**
-   * @type {?angular.IPromise}
+   * @type {?angular.IPromise<void>}
    * @private
    */
   this.promiseForGroupsToAddInThisDigestLoop_ = null;
@@ -161,7 +161,7 @@ LayertreeTreeManager.prototype.handleThemesChange_ = function() {
  * Set some groups as tree's children. If the service use mode 'flush', the
  * previous tree's children will be removed. Add only groups that are not
  * already in the tree.
- * @param {Array.<import('gmf/themes.js').GmfGroup>} firstLevelGroups An array of gmf theme group.
+ * @param {Array<import('gmf/themes.js').GmfGroup>} firstLevelGroups An array of gmf theme group.
  * @return {boolean} True if the group has been added. False otherwise.
  */
 LayertreeTreeManager.prototype.setFirstLevelGroups = function(firstLevelGroups) {
@@ -174,14 +174,14 @@ LayertreeTreeManager.prototype.setFirstLevelGroups = function(firstLevelGroups) 
  * Add some groups as tree's children. If the service use mode 'flush', the
  * previous tree's children will be removed. Add only groups that are not
  * already in the tree.
- * @param {Array.<import('gmf/themes.js').GmfGroup>} firstLevelGroups An array of gmf theme
+ * @param {Array<import('gmf/themes.js').GmfGroup>} firstLevelGroups An array of gmf theme
  *     group.
  * @param {boolean=} opt_add if true, force to use the 'add' mode this time.
  * @param {boolean=} opt_silent if true notifyCantAddGroups_ is not called.
  * @return{boolean} True if the group has been added. False otherwise.
  */
-LayertreeTreeManager.prototype.addFirstLevelGroups = function(firstLevelGroups,
-  opt_add, opt_silent) {
+LayertreeTreeManager.prototype.addFirstLevelGroups = function(firstLevelGroups, opt_add, opt_silent) {
+  /** @type {import('gmf/themes.js').GmfGroup[]} */
   const groupNotAdded = [];
 
   firstLevelGroups.slice().reverse().forEach((group) => {
@@ -199,7 +199,7 @@ LayertreeTreeManager.prototype.addFirstLevelGroups = function(firstLevelGroups,
 
 /**
  * Update the application state with the list of first level groups in the tree
- * @param {Array.<import('gmf/themes.js').GmfGroup>} groups firstlevel groups of the tree
+ * @param {Array<import('gmf/themes.js').GmfGroup>} groups firstlevel groups of the tree
  * @private
  */
 LayertreeTreeManager.prototype.updateTreeGroupsState_ = function(groups) {
@@ -454,6 +454,7 @@ LayertreeTreeManager.prototype.toggleNodeCheck_ = function(node, names) {
  * @private
  */
 LayertreeTreeManager.prototype.notifyCantAddGroups_ = function(groups) {
+  /** @type {string[]} */
   const names = [];
   const gettextCatalog = this.gettextCatalog_;
   groups.forEach((group) => {
@@ -500,8 +501,9 @@ LayertreeTreeManager.prototype.getOgcServer = function(treeCtrl) {
   if (!this.ogcServers_) {
     throw new Error('Missing ogcServers');
   }
-  if (treeCtrl.parent.node.mixed) {
-    const gmfLayerWMS = /** @type {import('gmf/themes.js').GmfLayerWMS} */ (treeCtrl.node);
+  const gmfParentGroup = /** @type {import('gmf/themes.js').GmfGroup} */(treeCtrl.parent.node);
+  if (gmfParentGroup.mixed) {
+    const gmfLayerWMS = /** @type {import('gmf/themes.js').GmfLayerWMS} */(treeCtrl.node);
     console.assert(gmfLayerWMS.ogcServer);
     return this.ogcServers_[gmfLayerWMS.ogcServer];
   } else {
@@ -509,7 +511,7 @@ LayertreeTreeManager.prototype.getOgcServer = function(treeCtrl) {
     while (!firstLevelGroupCtrl.parent.isRoot) {
       firstLevelGroupCtrl = firstLevelGroupCtrl.parent;
     }
-    const gmfGroup = /** @type {import('gmf/themes.js').GmfGroup} */ (firstLevelGroupCtrl.node);
+    const gmfGroup = /** @type {import('gmf/themes.js').GmfGroup} */(firstLevelGroupCtrl.node);
     console.assert(gmfGroup.ogcServer);
     return this.ogcServers_[gmfGroup.ogcServer];
   }
@@ -529,6 +531,7 @@ LayertreeTreeManager.prototype.refreshFirstLevelGroups_ = function(themes) {
   if (!this.rootCtrl) {
     throw new Error('Missing rootCtrl');
   }
+  /** @type {Object<string, TreeManagerFullState>} */
   const firstLevelGroupsFullState = {};
 
   // Save state of each child
@@ -538,6 +541,7 @@ LayertreeTreeManager.prototype.refreshFirstLevelGroups_ = function(themes) {
   });
 
   // Get nodes and set their state
+  /** @type {import('gmf/themes.js').GmfGroup[]} */
   const nodesToRestore = [];
   // Iterate on the root to keep the same order in the tree as before.
   this.root.children.map((node) => {

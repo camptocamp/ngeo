@@ -13,8 +13,8 @@ import {select as d3select} from 'd3';
 /**
  * The lidar point attribute list width default option
  * @typedef {Object} LidarPointAttributeList
- * @property {Array.<import("gmf/lidarprofile/Config.js").LidarprofileServerConfigPointAttributes>} [availableOptions]
- * @property {import("gmf/lidarprofile/Config.js").LidarprofileServerConfigPointAttributes} [selectedOption]
+ * @property {Array<import("gmf/lidarprofile/Config.js").LidarprofileServerConfigPointAttributes>} [availableOptions]
+ * @property {import("gmf/lidarprofile/Config.js").LidarprofileServerConfigPointAttribute} [selectedOption]
  */
 
 
@@ -22,7 +22,7 @@ import {select as d3select} from 'd3';
  * The object containing all points in profile
  * @typedef {Object} LidarprofileClientConfig
  * @property {boolean} [autoWidth]
- * @property {Object.<string, number>} [margin]
+ * @property {Object<string, number>} [margin]
  * @property {LidarPointAttributeList} [pointAttributes]
  * @property {number} [pointSum]
  * @property {number} [tolerance]
@@ -32,12 +32,12 @@ import {select as d3select} from 'd3';
 /**
  * The object containing all points in profile
  * @typedef {Object} LidarprofilePoints
- * @property {Array.<number>} [distance]
- * @property {Array.<number>} [altitude]
- * @property {Array.<Array<number>>} [color_packed]
- * @property {Array.<number>} [intensity]
- * @property {Array.<number>} [classification]
- * @property {Array.<Array<number>>} [coords]
+ * @property {Array<number>} [distance]
+ * @property {Array<number>} [altitude]
+ * @property {Array<Array<number>>} [color_packed]
+ * @property {Array<number>} [intensity]
+ * @property {Array<number>} [classification]
+ * @property {Array<Array<number>>} [coords]
  */
 
 
@@ -48,8 +48,8 @@ import {select as d3select} from 'd3';
  * @property {number} [cy]
  * @property {number} [distance]
  * @property {number} [altitude]
- * @property {Array.<number>} [color_packed]
- * @property {Array.<number>} [coords]
+ * @property {Array<number>} [color_packed]
+ * @property {Array<number>} [coords]
  * @property {number} [intensity]
  * @property {number} [classification]
  * @property {boolean} [set]
@@ -310,16 +310,18 @@ export default class {
 
   /**
    * Get the data for a CSV export of the profile.
-   * @param {Array.<LidarPoint>} points A list of lidar profile point objects.
-   * @return {Array.<Object>} Objects for a csv export (column: value).
+   * @param {Array<LidarPoint>} points A list of lidar profile point objects.
+   * @return {Array<Object<string, *>>} Objects for a csv export (column: value).
    */
   getCSVData(points) {
     return points.map((point) => {
+      /** @type {Object<string, *>} */
       const row = {};
       for (const key in point) {
+        // @ts-ignore: unsupported by typescript
         const value = point[key];
         if (key == 'altitude') {
-          row[key] = value.toFixed(4);
+          row.altitude = value.toFixed(4);
         } else if (key == 'color_packed' || key == 'coords') {
           row[key] = value.join(' ');
         } else {

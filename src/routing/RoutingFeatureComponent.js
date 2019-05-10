@@ -25,10 +25,16 @@ const module = angular.module('ngeoRoutingFeatureComponent', [
   ngeoRoutingNominatimInputComponent.name
 ]);
 
-module.run(/* @ngInject */ ($templateCache) => {
-  // @ts-ignore: webpack
-  $templateCache.put('ngeo/routing/routingfeature', require('./routingfeature.html'));
-});
+module.run(
+  /**
+   * @ngInject
+   * @param {angular.ITemplateCacheService} $templateCache
+   */
+  ($templateCache) => {
+    // @ts-ignore: webpack
+    $templateCache.put('ngeo/routing/routingfeature', require('./routingfeature.html'));
+  }
+);
 
 
 module.value('ngeoRoutingFeatureTemplateUrl',
@@ -37,7 +43,7 @@ module.value('ngeoRoutingFeatureTemplateUrl',
    * @return {string} Template URL.
    */
   ($attrs) => {
-    const templateUrl = $attrs['ngeoRoutingFeatureTemplateUrl'];
+    const templateUrl = $attrs.ngeoRoutingFeatureTemplateUrl;
     return templateUrl !== undefined ? templateUrl :
       'ngeo/routing/routingfeature';
   }
@@ -71,6 +77,12 @@ function ngeoRoutingFeatureTemplateUrl($attrs, ngeoRoutingFeatureTemplateUrl) {
  */
 class Controller {
 
+  /**
+   * @param {angular.IScope} $scope
+   * @param {angular.ITimeoutService} $timeout
+   * @param {angular.IQService} $q
+   * @param {import("ngeo/routing/NominatimService.js").NominatimService} ngeoNominatimService
+   */
   constructor($scope, $timeout, $q, ngeoNominatimService) {
 
     /**
@@ -129,7 +141,7 @@ class Controller {
     this.onChange = null;
 
     /**
-     * @type {import("ol/Collection.js").default}
+     * @type {import("ol/Collection.js").default<import("ol/Feature.js").default>}
      * @private
      */
     this.vectorFeatures_ = new olCollection();
@@ -246,7 +258,7 @@ class Controller {
 
     this.draw_ = new olInteractionDraw({
       features: this.vectorFeatures_,
-      type: /** @type {import("ol/geom/GeometryType.js").default} */ ('Point')
+      type: 'Point'
     });
 
     this.draw_.on('drawstart', () => {
@@ -337,14 +349,20 @@ class Controller {
     }
     const config = {};
 
+    /**
+     * @param {angular.IHttpResponse<import('./NominatimService').NominatimSearchResponseResult>} resp
+     */
     const onSuccess = (resp) => {
-      const lon = parseFloat(resp['data']['lon']);
-      const lat = parseFloat(resp['data']['lat']);
+      const lon = resp.data.lon;
+      const lat = resp.data.lat;
       const coordinate = [lon, lat];
-      const label = resp['data']['display_name'];
+      const label = resp.data.display_name;
       this.setFeature_(coordinate, label);
     };
 
+    /**
+     * @param {angular.IHttpResponse<import('./NominatimService').NominatimSearchResponseResult>} resp
+     */
     const onError = (resp) => {
       this.errorMessage = 'Error: nominatim server not responding.';
       console.log(resp);

@@ -82,7 +82,7 @@ function MainController($http, $timeout, $scope) {
 
 
 /**
- * @param {angular.IHttpResponse} resp Ajax response.
+ * @param {angular.IHttpResponse<string|Document|Element>} resp Ajax response.
  * @return {Array.<import('ngeo/format/Attribute.js').Attribute>} List of attributes.
  * @private
  */

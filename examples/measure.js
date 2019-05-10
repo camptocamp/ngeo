@@ -32,10 +32,15 @@ const module = angular.module('app', [
 ]);
 
 
-module.run(/* @ngInject */ ($templateCache) => {
-  // @ts-ignore: webpack
-  $templateCache.put('partials/measuretools', require('./partials/measuretools.html'));
-});
+module.run(
+  /**
+   * @ngInject
+   * @param {angular.ITemplateCacheService} $templateCache
+   */
+  ($templateCache) => {
+    // @ts-ignore: webpack
+    $templateCache.put('partials/measuretools', require('./partials/measuretools.html'));
+  });
 
 
 /**
@@ -80,25 +85,25 @@ function MeasuretoolsController($scope, $compile, $sce,
   this.lang = '';
 
   /**
-   * @type {Object}
+   * @type {Object<string, *>}
    */
-  this.measureStartMsg = null;
+  this.measureStartMsg = {};
 
   /**
-   * @type {Object}
+   * @type {Object<string, *>}
    */
-  this.measureLengthContinueMsg = null;
+  this.measureLengthContinueMsg = {};
 
 
   /**
-   * @type {Object}
+   * @type {Object<string, *>}
    */
-  this.measureAreaContinueMsg = null;
+  this.measureAreaContinueMsg = {};
 
   /**
-   * @type {Object}
+   * @type {Object<string, *>}
    */
-  this.measureAzimutContinueMsg = null;
+  this.measureAzimutContinueMsg = {};
 
   // Translations for the measure tools' tooltips.
   const measureStartMsgs = {
@@ -139,9 +144,13 @@ function MeasuretoolsController($scope, $compile, $sce,
   // Watch the "lang" property and update the toolip messages
   // based on the selected language.
   $scope.$watch(() => this.lang, (newVal) => {
+    // @ts-ignore
     this.measureStartMsg = measureStartMsgs[newVal];
+    // @ts-ignore
     this.measureLengthContinueMsg = measureLengthContinueMsgs[newVal];
+    // @ts-ignore
     this.measureAreaContinueMsg = measureAreaContinueMsgs[newVal];
+    // @ts-ignore
     this.measureAzimutContinueMsg = measureAzimutContinueMsgs[newVal];
   });
 

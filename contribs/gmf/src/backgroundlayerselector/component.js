@@ -27,10 +27,15 @@ module.value('gmfBackgroundlayerselectorTemplateUrl',
 );
 
 
-module.run(/* @ngInject */ ($templateCache) => {
-  // @ts-ignore: webpack
-  $templateCache.put('gmf/backgroundlayerselector', require('./component.html'));
-});
+module.run(
+  /**
+   * @ngInject
+   * @param {angular.ITemplateCacheService} $templateCache
+   */
+  ($templateCache) => {
+    // @ts-ignore: webpack
+    $templateCache.put('gmf/backgroundlayerselector', require('./component.html'));
+  });
 
 
 /**
@@ -89,10 +94,10 @@ module.component('gmfBackgroundlayerselector', backgroundlayerselectorComponent)
  * @constructor
  * @private
  * @hidden
- * @param {!angular.IScope} $scope Angular scope.
- * @param {!import("ngeo/map/BackgroundLayerMgr.js").MapBackgroundLayerManager} ngeoBackgroundLayerMgr
+ * @param {angular.IScope} $scope Angular scope.
+ * @param {import("ngeo/map/BackgroundLayerMgr.js").MapBackgroundLayerManager} ngeoBackgroundLayerMgr
  *    Background layer manager.
- * @param {!import("gmf/theme/Themes.js").ThemesService} gmfThemes Themes service.
+ * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes Themes service.
  * @ngInject
  * @ngdoc controller
  * @ngname GmfBackgroundlayerselectorController

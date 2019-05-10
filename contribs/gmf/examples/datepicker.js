@@ -22,8 +22,8 @@ module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 /**
  * @constructor
- * @param {!angular.IScope} $scope Angular scope.
- * @param {!import("ngeo/misc/WMSTime.js").WMSTime} ngeoWMSTime wmstime service.
+ * @param {angular.IScope} $scope Angular scope.
+ * @param {import("ngeo/misc/WMSTime.js").WMSTime} ngeoWMSTime wmstime service.
  * @ngInject
  */
 function MainController($scope, ngeoWMSTime) {
@@ -68,10 +68,16 @@ function MainController($scope, ngeoWMSTime) {
    */
   this.rangeValue = '';
 
+  /**
+   * @param {import('ngeo/datasource/OGC.js').TimeRange} date
+   */
   this.onDateSelected = function(date) {
     this.value = this.ngeoWMSTime_.formatWMSTimeParam(this.wmsTimeValueMode, date);
   };
 
+  /**
+   * @param {import('ngeo/datasource/OGC.js').TimeRange} date
+   */
   this.onDateRangeSelected = function(date) {
     this.rangeValue = this.ngeoWMSTime_.formatWMSTimeParam(this.wmsTimeRangeMode, date);
   };

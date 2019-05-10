@@ -14,10 +14,15 @@ const module = angular.module('gmfPermalinkShareComponent', [
 ]);
 
 
-module.run(/* @ngInject */ ($templateCache) => {
-  // @ts-ignore: webpack
-  $templateCache.put('gmf/permalink/shareComponent', require('./shareComponent.html'));
-});
+module.run(
+  /**
+   * @ngInject
+   * @param {angular.ITemplateCacheService} $templateCache
+   */
+  ($templateCache) => {
+    // @ts-ignore: webpack
+    $templateCache.put('gmf/permalink/shareComponent', require('./shareComponent.html'));
+  });
 
 
 module.value('gmfPermalinkShareTemplateUrl',
@@ -174,7 +179,7 @@ class ShareComponentController {
   getShortUrl() {
     this.$q_.when(this.gmfShareService_.getShortUrl(this.permalink_))
       .then((resp) => {
-        this.shortLink = /** @type {angular.IHttpResponse} */(resp).data.short_url;
+        this.shortLink = /** @type {angular.IHttpResponse<{short_url: string}>} */(resp).data.short_url;
         this.errorOnGetShortUrl = false;
       }, (resp) => {
         this.shortLink = this.permalink_;
@@ -186,7 +191,8 @@ class ShareComponentController {
    * Send the short version of the permalink if the email is provided
    */
   sendShortUrl() {
-    if (this.$scope_['gmfShareForm'].$valid) {
+    // @ts-ignore: scope...
+    if (this.$scope_.gmfShareForm.$valid) {
       this.$q_.when(this.gmfShareService_.sendShortUrl(this.permalink_, this.email, this.message))
         .then((resp) => {
           this.successfullySent = true;

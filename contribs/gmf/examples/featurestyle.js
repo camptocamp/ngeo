@@ -63,6 +63,7 @@ function MainController($scope, ngeoFeatureHelper) {
   // create features
   const features = [];
 
+  /** @type {Object<string, *>} */
   const pointProperties = {
     geometry: new olGeomPoint([-8458215, 6672646])
   };
@@ -71,6 +72,7 @@ function MainController($scope, ngeoFeatureHelper) {
   pointProperties[ngeoFormatFeatureProperties.SIZE] = '6';
   features.push(new olFeature(pointProperties));
 
+  /** @type {Object<string, *>} */
   const textProperties = {
     geometry: new olGeomPoint([-8007848, 6209744])
   };
@@ -82,6 +84,7 @@ function MainController($scope, ngeoFeatureHelper) {
   textProperties[ngeoFormatFeatureProperties.STROKE] = '2';
   features.push(new olFeature(textProperties));
 
+  /** @type {Object<string, *>} */
   const lineProperties = {
     geometry: new olGeomLineString([
       [-8321240, 6523441],
@@ -95,6 +98,7 @@ function MainController($scope, ngeoFeatureHelper) {
   lineProperties[ngeoFormatFeatureProperties.STROKE] = '4';
   features.push(new olFeature(lineProperties));
 
+  /** @type {Object<string, *>} */
   const poly1Properties = {
     geometry: new olGeomPolygon([
       [
@@ -113,6 +117,7 @@ function MainController($scope, ngeoFeatureHelper) {
   poly1Properties[ngeoFormatFeatureProperties.STROKE] = '1';
   features.push(new olFeature(poly1Properties));
 
+  /** @type {Object<string, *>} */
   const poly2Properties = {
     geometry: new olGeomPolygon([
       [
@@ -130,6 +135,7 @@ function MainController($scope, ngeoFeatureHelper) {
   poly2Properties[ngeoFormatFeatureProperties.STROKE] = '3';
   features.push(new olFeature(poly2Properties));
 
+  /** @type {Object<string, *>} */
   const rectProperties = {
     geometry: olGeomPolygonFromExtent([-7874848, 6496535, -7730535, 6384020])
   };
@@ -140,6 +146,7 @@ function MainController($scope, ngeoFeatureHelper) {
   rectProperties[ngeoFormatFeatureProperties.STROKE] = '2';
   features.push(new olFeature(rectProperties));
 
+  /** @type {Object<string, *>} */
   const circleProperties = {
     geometry: olGeomPolygonFromCircle(
       new olGeomCircle([-7691093, 6166327], 35000), 64)

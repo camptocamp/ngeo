@@ -114,7 +114,7 @@ export default class extends olInteractionPointer {
     });
 
     /**
-     * @type {!Object.<number, import("ol/Feature.js").default>}
+     * @type {Object<string, import("ol/Feature.js").default>}
      * @private
      */
     this.centerFeatures_ = {};
@@ -199,14 +199,19 @@ export default class extends olInteractionPointer {
       const uid = olUtilGetUid(feature);
 
       if (this.centerFeatures_[uid]) {
-        /** @type {olSourceVector} */(this.overlay_.getSource()).removeFeature(this.centerFeatures_[uid]);
+        const source = this.overlay_.getSource();
+        if (!(source instanceof olSourceVector)) {
+          throw new Error('Wrong source type');
+        }
+        source.removeFeature(this.centerFeatures_[uid]);
         delete this.centerFeatures_[uid];
       }
     }
   }
 
   /**
-   * @inheritDoc
+   * @param {import("ol/PluggableMap.js").default} map The map that the
+   * overlay is part of.
    */
   setMap(map) {
     this.overlay_.setMap(map);

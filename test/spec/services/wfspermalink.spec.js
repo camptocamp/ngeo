@@ -9,22 +9,27 @@ import {WfsPermalinkService} from 'ngeo/statemanager/WfsPermalink.js';
 import ngeoTestDataMsGMLOutputFuel from '../data/msGMLOutputFuel.js';
 
 describe('ngeo.statemanager.WfsPermalink', () => {
-
+  /** @type {import('ngeo/statemanager/WfsPermalink.js').WfsPermalinkService} */
   let ngeoWfsPermalink;
+  /** @type {import('ngeo/query/MapQuerent.js').QueryResult} */
   let ngeoQueryResult;
 
   beforeEach(() => {
-    angular.mock.module('ngeo', ($provide) => {
-      $provide.value(
-        'ngeoPermalinkOgcserverUrl',
-        'https://geomapfish-demo-2-4.camptocamp.com/mapserv_proxy'
-      );
-      $provide.value('ngeoWfsPermalinkOptions', {
-        wfsTypes: [{featureType: 'fuel'}, {featureType: 'highway'}],
-        defaultFeatureNS: 'http://mapserver.gis.umn.edu/mapserver',
-        defaultFeaturePrefix: 'ms'
+    angular.mock.module('ngeo',
+      /**
+       * @param {angular.IModule} $provide
+       */
+      ($provide) => {
+        $provide.value(
+          'ngeoPermalinkOgcserverUrl',
+          'https://geomapfish-demo-2-4.camptocamp.com/mapserv_proxy'
+        );
+        $provide.value('ngeoWfsPermalinkOptions', {
+          wfsTypes: [{featureType: 'fuel'}, {featureType: 'highway'}],
+          defaultFeatureNS: 'http://mapserver.gis.umn.edu/mapserver',
+          defaultFeaturePrefix: 'ms'
+        });
       });
-    });
 
     angular.mock.inject((_ngeoWfsPermalink_, _ngeoQueryResult_) => {
       ngeoWfsPermalink = _ngeoWfsPermalink_;
@@ -37,8 +42,9 @@ describe('ngeo.statemanager.WfsPermalink', () => {
   });
 
   describe('#issue', () => {
-
+    /** @type {angular.IHttpBackendService} */
     let $httpBackend;
+    /** @type {import('ol/Map.js').default} */
     let map;
 
     beforeEach(() => {
@@ -89,9 +95,13 @@ describe('ngeo.statemanager.WfsPermalink', () => {
   });
 
   describe('#createFilters_', () => {
+    /**
+     * @param {*} filter1
+     * @param {*} filter2
+     */
     const expectFiltersToEqual = function(filter1, filter2) {
       expect(filter1.constructor).toBe(filter2.constructor, 'same filter type');
-      if (filter1 instanceof olFormatFilterLogicalNary) {
+      if (filter1 instanceof olFormatFilterLogicalNary && filter2 instanceof olFormatFilterLogicalNary) {
         expectFiltersToEqual(filter1.conditions.length, filter2.conditions.length);
         for (let i = 0; i < filter1.conditions.length; ++i) {
           expectFiltersToEqual(filter1.conditions[i], filter2.conditions[i]);

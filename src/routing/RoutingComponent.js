@@ -36,10 +36,15 @@ const module = angular.module('ngeoRoutingComponent', [
 ]);
 
 
-module.run(/* @ngInject */ ($templateCache) => {
-  // @ts-ignore: webpack
-  $templateCache.put('ngeo/routing/routing', require('./routing.html'));
-});
+module.run(
+  /**
+   * @ngInject
+   * @param {angular.ITemplateCacheService} $templateCache
+   */
+  ($templateCache) => {
+    // @ts-ignore: webpack
+    $templateCache.put('ngeo/routing/routing', require('./routing.html'));
+  });
 
 
 module.value('ngeoRoutingTemplateUrl',
@@ -48,7 +53,7 @@ module.value('ngeoRoutingTemplateUrl',
    * @return {string} Template URL.
    */
   ($attrs) => {
-    const templateUrl = $attrs['ngeoRoutingTemplateUrl'];
+    const templateUrl = $attrs.ngeoRoutingTemplateUrl;
     return templateUrl !== undefined ? templateUrl :
       'ngeo/routing/routing';
   }
@@ -70,22 +75,22 @@ function ngeoRoutingTemplateUrl($attrs, ngeoRoutingTemplateUrl) {
 
 /**
  * The controller for the routing directive.
- * @param {angular.auto.IInjectorService} $injector Main injector.
- * @param {!angular.IScope} $scope Scope.
- * @param {!import("ngeo/routing/RoutingService.js").RoutingService} ngeoRoutingService service for OSRM
- *    routing.
- * @param {!import("ngeo/routing/NominatimService.js").NominatimService} ngeoNominatimService service for
- *    Nominatim.
- * @param {!angular.IQService} $q Angular q service
- * @param {import("ngeo/misc/debounce.js").miscDebounce<function(): void>} ngeoDebounce ngeo Debounce service.
- * @constructor
  * @private
  * @hidden
- * @ngInject
- * @ngdoc controller
- * @ngname NgeoRoutingController
  */
 class Controller {
+  /**
+   * @param {angular.auto.IInjectorService} $injector Main injector.
+   * @param {angular.IScope} $scope Scope.
+   * @param {import("ngeo/routing/RoutingService.js").RoutingService} ngeoRoutingService service for OSRM
+   *    routing.
+   * @param {import("ngeo/routing/NominatimService.js").NominatimService} ngeoNominatimService service for
+   *    Nominatim.
+   * @param {angular.IQService} $q Angular q service
+   * @param {import("ngeo/misc/debounce.js").miscDebounce<function(): void>} ngeoDebounce ngeo Debounce
+   *    service.
+   * @ngInject
+   */
   constructor($injector, $scope, ngeoRoutingService, ngeoNominatimService, $q, ngeoDebounce) {
 
     /**
@@ -290,7 +295,7 @@ class Controller {
   }
 
   /**
-   * @param {Object} route Routes of OSRM response
+   * @param {import('./RoutingService').Route} route Routes of OSRM response
    * @returns {Array<import("ol/Feature.js").default>} parsed route features
    * @private
    */
@@ -298,6 +303,7 @@ class Controller {
     if (!this.map) {
       return [];
     }
+    /** @type {Array<olFeature>} */
     let parsedRoutes = [];
     const format = new olFormatGeoJSON();
     const formatConfig = {
@@ -306,11 +312,13 @@ class Controller {
     };
     // if there are is useful "legs" data, parse this
     if (route.legs) {
-      parsedRoutes = route.legs.map(leg => leg.steps.map(step => new olFeature({
+      /** @type {Array<Array<olFeature>>} */
+      const parsedRoutes_ = route.legs.map(leg => leg.steps.map(step => new olFeature({
         geometry: format.readGeometry(step.geometry, formatConfig)
       })));
       // flatten
-      parsedRoutes = [].concat(...parsedRoutes);
+      // @ts-ignore: syntay seem not supported
+      parsedRoutes = [].concat(...parsedRoutes_);
     } else if (route.geometry) {
     // otherwise parse (overview) geometry
       parsedRoutes.push(new olFeature({geometry: format.readGeometry(route.geometry, formatConfig)}));
@@ -332,6 +340,9 @@ class Controller {
       );
       const route = /** @type Array<Array<number>> */([coordFrom].concat(vias, [coordTo]));
 
+      /**
+       * @param {angular.IHttpResponse<import('./RoutingService').Routes>} resp
+       */
       const onSuccess_ = (resp) => {
         if (!this.map || !this.startFeature_ || !this.targetFeature_) {
           return null;
@@ -346,7 +357,7 @@ class Controller {
         // recenter map on route
         this.map.getView().fit(this.routeSource_.getExtent());
 
-        this.routeDistance = parseInt(resp.data.routes[0].distance, 10);
+        this.routeDistance = resp.data.routes[0].distance;
         this.routeDuration = resp.data.routes[0].duration;
 
         // get first and last coordinate of route
@@ -373,16 +384,21 @@ class Controller {
         this.routeSource_.addFeatures(routeConnections);
       };
 
+      /**
+       * @param {angular.IHttpResponse<import('./RoutingService').Route>} resp
+       */
       const onError_ = (resp) => {
         this.errorMessage = 'Error: routing server not responding.';
         console.log(resp);
       };
 
+      /** @type {Object} */
       const options = {};
       options.steps = true;
       options.overview = false;
       options.geometries = 'geojson';
 
+      /** @type {import('./RoutingService').Config} */
       const config = {};
       config.options = options;
 

@@ -100,7 +100,7 @@ export function EditingSnappingService($http, $q, $rootScope, $timeout, gmfTheme
    * Reference to the promise taking care of calling all GetFeature requests
    * of the currently active cache items after the map view changed. Used
    * to cancel if the map view changes often within a short period of time.
-   * @type {?angular.IPromise}
+   * @type {?angular.IPromise<void>}
    * @private
    */
   this.mapViewChangePromise_ = null;
@@ -575,7 +575,7 @@ EditingSnappingService.prototype.handleMapMoveEnd_ = function() {
 
 
 /**
- * @typedef {Object<number, CacheItem>} Cache
+ * @typedef {Object<string, CacheItem>} Cache
  */
 
 
@@ -588,10 +588,10 @@ EditingSnappingService.prototype.handleMapMoveEnd_ = function() {
  * @property {string} geometryName
  * @property {?import("ol/interaction/Snap.js").default} interaction
  * @property {number} maxFeatures
- * @property {?angular.IDeferred} requestDeferred
+ * @property {?angular.IDeferred<void>} requestDeferred
  * @property {import('gmf/themes.js').GmfSnappingConfig} snappingConfig
  * @property {Function} stateWatcherUnregister
- * @property {ngeo.layertree.Controller} treeCtrl
+ * @property {import('ngeo/layertree/Controller.js').LayertreeController} treeCtrl
  * @property {WFSConfig} wfsConfig
  */
 

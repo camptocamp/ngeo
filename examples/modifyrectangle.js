@@ -62,9 +62,11 @@ function MainController() {
     'isRectangle': true
   }));
 
+  /** @type {import("ol/style/Style.js").StyleLike} */
   const style = (function() {
+    /** @type {Object<string, olStyleStyle|olStyleStyle[]>} */
     const styles = {};
-    styles['Polygon'] = [
+    styles.Polygon = [
       new olStyleStyle({
         fill: new olStyleFill({
           color: [255, 255, 255, 0.5]
@@ -84,7 +86,7 @@ function MainController() {
       })
     ];
 
-    styles['Point'] = [
+    styles.Point = [
       new olStyleStyle({
         image: new olStyleCircle({
           radius: 7,
@@ -99,11 +101,20 @@ function MainController() {
         zIndex: 100000
       })
     ];
-    styles['GeometryCollection'] = styles['Polygon'].concat(styles['Point']);
+    styles.GeometryCollection = styles.Polygon.concat(styles.Point);
 
-    return function(feature, resolution) {
-      return styles[feature.getGeometry().getType()];
-    };
+    return (
+      /**
+       * @param {olFeature|import('ol/render/Feature.js').default} feature
+       * @param {number} resolution
+       */
+      function(feature, resolution) {
+        const geometry = feature.getGeometry();
+        if (!geometry) {
+          throw new Error('Missing geometry');
+        }
+        return styles[geometry.getType()];
+      });
   })();
 
   const vectorSource = new olSourceVector({

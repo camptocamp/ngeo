@@ -1,4 +1,5 @@
 /**
+ * @type {Object<string, string>}
  */
 const exports = {};
 

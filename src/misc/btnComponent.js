@@ -60,7 +60,12 @@ function buttonGroupComponent($parse) {
       if (setActive) {
         scope.$watch(
           // return true if at least one button is active otherwise false
-          () => controller.buttons_.some(buttonModel => buttonModel(scope) === true),
+          () => controller.buttons_.some(
+            /**
+             * @param {function(angular.IScope): boolean} buttonModel
+             */
+            buttonModel => buttonModel(scope) === true
+          ),
           (newValue) => {
             setActive(scope, newValue);
           }
@@ -160,7 +165,7 @@ function buttonComponent($parse) {
       const ngModelCtrl = ctrls[1];
       let indexInGroup = -1;
 
-      const ngModelGet = $parse(attrs['ngModel']);
+      const ngModelGet = $parse(attrs.ngModel);
       const ngModelSet = ngModelGet.assign;
 
       // Set ng-model value to false if undefined

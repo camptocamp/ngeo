@@ -70,19 +70,18 @@ function sortableComponent($timeout) {
      */
     link: (scope, element, attrs) => {
 
-      const sortable = /** @type {Array} */
-              (scope.$eval(attrs['ngeoSortable'])) || [];
+      const sortable = scope.$eval(attrs.ngeoSortable) || [];
       console.assert(Array.isArray(sortable));
 
       scope.$watchCollection(() => sortable, () => {
         sortable.length && $timeout(resetUpDragDrop, 0);
       });
 
-      const optionsObject = scope.$eval(attrs['ngeoSortableOptions']);
+      const optionsObject = scope.$eval(attrs.ngeoSortableOptions);
       const options = getOptions(optionsObject);
 
-      const callbackFn = scope.$eval(attrs['ngeoSortableCallback']);
-      const callbackCtx = scope.$eval(attrs['ngeoSortableCallbackCtx']);
+      const callbackFn = scope.$eval(attrs.ngeoSortableCallback);
+      const callbackCtx = scope.$eval(attrs.ngeoSortableCallbackCtx);
 
       /**
        * This function resets drag&drop for the list. It is called each
@@ -104,22 +103,24 @@ function sortableComponent($timeout) {
           sortableElement.sortable('destroy');
         }
 
+        /** @type {JQueryUI.SortableOptions} */
         const sortableOptions = {
-          'axis': 'y',
-          'classes': {
-            'ui-sortable-helper': options['draggerClassName']
+          axis: 'y',
+          // @ts-ignore
+          classes: {
+            'ui-sortable-helper': options.draggerClassName
           }
         };
 
         // CSS class of the handle
-        if (options['handleClassName']) {
-          sortableOptions['handle'] = `.${options['handleClassName']}`;
+        if (options.handleClassName) {
+          sortableOptions.handle = `.${options.handleClassName}`;
         }
 
         // Placeholder for the item being dragged in the sortable list
-        if (options['placeholderClassName']) {
-          sortableOptions['placeholder'] = options['placeholderClassName'];
-          sortableOptions['forcePlaceholderSize'] = true;
+        if (options.placeholderClassName) {
+          sortableOptions.placeholder = options.placeholderClassName;
+          sortableOptions.forcePlaceholderSize = true;
         }
 
         sortableElement.sortable(sortableOptions);
@@ -156,8 +157,8 @@ function sortableComponent($timeout) {
         if (options === undefined) {
           ret = {'handleClassName': defaultHandleClassName};
         } else {
-          if (options['handleClassName'] === undefined) {
-            options['handleClassName'] = defaultHandleClassName;
+          if (options.handleClassName === undefined) {
+            options.handleClassName = defaultHandleClassName;
           }
           ret = /** @type {miscSortableOptions} */ (options);
         }

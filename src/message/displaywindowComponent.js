@@ -15,10 +15,15 @@ const module = angular.module('ngeoMessageDisplaywindowComponent', [
 ]);
 
 
-module.run(/* @ngInject */ ($templateCache) => {
-  // @ts-ignore: webpack
-  $templateCache.put('ngeo/message/displaywindowComponent', require('./displaywindowComponent.html'));
-});
+module.run(
+  /**
+   * @ngInject
+   * @param {angular.ITemplateCacheService} $templateCache
+   */
+  ($templateCache) => {
+    // @ts-ignore: webpack
+    $templateCache.put('ngeo/message/displaywindowComponent', require('./displaywindowComponent.html'));
+  });
 
 
 module.value('ngeoMessageDisplaywindowTemplateUrl',

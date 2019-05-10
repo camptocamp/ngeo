@@ -17,12 +17,17 @@ const module = angular.module('gmfWmtscapabilitylayertree', [
 ]);
 
 
-module.run(/* @ngInject */ ($templateCache) => {
-  $templateCache.put(
-    // @ts-ignore: webpack
-    'ngeo/import/wmtsCapabilityLayertreeComponent', require('./wmtsCapabilityLayertreeComponent.html')
-  );
-});
+module.run(
+  /**
+   * @ngInject
+   * @param {angular.ITemplateCacheService} $templateCache
+   */
+  ($templateCache) => {
+    $templateCache.put(
+      // @ts-ignore: webpack
+      'ngeo/import/wmtsCapabilityLayertreeComponent', require('./wmtsCapabilityLayertreeComponent.html')
+    );
+  });
 
 
 module.value('gmfWmtscapabilitylayertreTemplateUrl',

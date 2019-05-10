@@ -51,13 +51,17 @@ export function EditingEditFeature($http, gmfLayersUrl) {
  *
  * @param {Array.<number>} layerIds List of layer ids to get the features from.
  * @param {import("ol/extent.js").Extent} extent The extent where to get the features from.
- * @return {angular.IPromise} Promise.
+ * @return {angular.IPromise<import("ol/Feature.js").default[]>} Promise.
  */
 EditingEditFeature.prototype.getFeaturesInExtent = function(layerIds, extent) {
   const url = olUriAppendParams(`${this.baseUrl_}/${layerIds.join(',')}`, {
     'bbox': extent.join(',')
   });
-  return this.http_.get(url).then(this.handleGetFeatures_.bind(this));
+  return /** @type {angular.IPromise<import("ol/Feature.js").default[]>} */(
+    /** @type {angular.IPromise<unknown>} */(
+      this.http_.get(url).then(this.handleGetFeatures_.bind(this))
+    )
+  );
 };
 
 
@@ -70,12 +74,13 @@ EditingEditFeature.prototype.getFeaturesInExtent = function(layerIds, extent) {
  * define the url to the GMF Protocol (layers) a dummy promise returns an
  * empty array of features if the url is not defined.
  *
- * @param {!Array.<string>} layerIds List of layer ids to get the features from.
- * @param {!Array.<!ComparisonFilter>} filters List of comparison filters
- * @return {angular.IPromise} Promise.
+ * @param {Array<string>} layerIds List of layer ids to get the features from.
+ * @param {Array<ComparisonFilter>} filters List of comparison filters
+ * @return {angular.IPromise<import("ol/Feature.js").default[]>} Promise.
  */
 EditingEditFeature.prototype.getFeaturesWithComparisonFilters = function(layerIds, filters) {
   const properties = [];
+  /** @type {Object<string, string>} */
   const params = {};
 
   for (const filter of filters) {
@@ -83,16 +88,21 @@ EditingEditFeature.prototype.getFeaturesWithComparisonFilters = function(layerId
     properties.push(filter.property);
   }
 
-  params['queryable'] = properties.join(',');
+  params.queryable = properties.join(',');
 
   const url = olUriAppendParams(`${this.baseUrl_}/${layerIds.join(',')}`, params);
-  return this.http_.get(url).then(this.handleGetFeatures_.bind(this));
+
+  return /** @type {angular.IPromise<import("ol/Feature.js").default[]>} */(
+    /** @type {angular.IPromise<unknown>} */(
+      this.http_.get(url).then(this.handleGetFeatures_.bind(this))
+    )
+  );
 };
 
 
 /**
- * @param {angular.IHttpResponse} resp Ajax response.
- * @return {Array.<import("ol/Feature.js").default>} List of features.
+ * @param {angular.IHttpResponse<ArrayBuffer|Document|Node|Object|string>} resp Ajax response.
+ * @return {import("ol/Feature.js").default[]} List of features.
  * @private
  */
 EditingEditFeature.prototype.handleGetFeatures_ = function(resp) {
@@ -103,7 +113,7 @@ EditingEditFeature.prototype.handleGetFeatures_ = function(resp) {
 /**
  * @param {number} layerId The layer id that contains the feature.
  * @param {Array.<import("ol/Feature.js").default>} features List of features to insert.
- * @return {angular.IPromise} Promise.
+ * @return {angular.IPromise<ArrayBuffer|Document|Node|Object|string>} Promise.
  */
 EditingEditFeature.prototype.insertFeatures = function(layerId, features) {
   const url = `${this.baseUrl_}/${layerId}`;
@@ -118,7 +128,7 @@ EditingEditFeature.prototype.insertFeatures = function(layerId, features) {
 /**
  * @param {number} layerId The layer id that contains the feature.
  * @param {import("ol/Feature.js").default} feature The feature to update.
- * @return {angular.IPromise} Promise.
+ * @return {angular.IPromise<ArrayBuffer|Document|Node|Object|string>} Promise.
  */
 EditingEditFeature.prototype.updateFeature = function(layerId, feature) {
   const url = `${this.baseUrl_}/${layerId.toString()}/${feature.getId()}`;
@@ -133,7 +143,7 @@ EditingEditFeature.prototype.updateFeature = function(layerId, feature) {
 /**
  * @param {number} layerId The layer id that contains the feature.
  * @param {import("ol/Feature.js").default} feature The feature to delete.
- * @return {angular.IPromise} Promise.
+ * @return {angular.IPromise<ArrayBuffer|Document|Node|Object|string>} Promise.
  */
 EditingEditFeature.prototype.deleteFeature = function(layerId, feature) {
   const url = `${this.baseUrl_}/${layerId.toString()}/${feature.getId()}`;

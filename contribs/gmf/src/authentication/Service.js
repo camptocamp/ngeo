@@ -150,7 +150,7 @@ export class AuthenticationService extends olEventsEventTarget {
    * @param {string} oldPwd Old password.
    * @param {string} newPwd New password.
    * @param {string} confPwd New password confirmation.
-   * @return {angular.IPromise} Promise.
+   * @return {angular.IPromise<void>} Promise.
    */
   changePassword(oldPwd, newPwd, confPwd) {
     const url = `${this.baseUrl_}/${RouteSuffix.CHANGE_PASSWORD}`;
@@ -170,7 +170,7 @@ export class AuthenticationService extends olEventsEventTarget {
   /**
    * @param {string} login Login name.
    * @param {string} pwd Password.
-   * @return {angular.IPromise} Promise.
+   * @return {angular.IPromise<angular.IHttpResponse<AuthenticationLoginResponse>>} Promise.
    */
   login(login, pwd) {
     const url = `${this.baseUrl_}/${RouteSuffix.LOGIN}`;
@@ -179,11 +179,12 @@ export class AuthenticationService extends olEventsEventTarget {
       headers: {'Content-Type': 'application/x-www-form-urlencoded'},
       withCredentials: true
     }).then(
-      this.handleLogin_.bind(this, false));
+      this.handleLogin_.bind(this, false)
+    );
   }
 
   /**
-   * @return {angular.IPromise} Promise.
+   * @return {angular.IPromise<void>} Promise.
    */
   logout() {
     const noReload = this.noReloadRole_ ? this.getRolesNames().indexOf(this.noReloadRole_) !== -1 : false;
@@ -195,24 +196,14 @@ export class AuthenticationService extends olEventsEventTarget {
 
   /**
    * @param {string} login Login name.
-   * @return {angular.IPromise} Promise.
+   * @return {angular.IPromise<AuthenticationDefaultResponse>} Promise.
    */
   resetPassword(login) {
     const url = `${this.baseUrl_}/${RouteSuffix.RESET_PASSWORD}`;
 
-    /**
-     * @param {angular.IHttpResponse} resp Ajax response.
-     * @return {AuthenticationDefaultResponse} Response.
-     */
-    const successFn = function(resp) {
-      const respData = /** @type AuthenticationDefaultResponse} */ (
-        resp.data);
-      return respData;
-    }.bind(this);
-
     return this.$http_.post(url, $.param({'login': login}), {
       headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-    }).then(successFn);
+    }).then((resp) => resp.data);
   }
 
   /**
@@ -223,14 +214,14 @@ export class AuthenticationService extends olEventsEventTarget {
   }
 
   /**
-   * @return {!Array<number>} The roles IDs.
+   * @return {Array<number>} The roles IDs.
    */
   getRolesIds() {
     return this.user_.roles ? this.user_.roles.map((role) => role.id) : [];
   }
 
   /**
-   * @return {!Array<string>} The roles names.
+   * @return {Array<string>} The roles names.
    */
   getRolesNames() {
     return this.user_.roles ? this.user_.roles.map((role) => role.name) : [];
@@ -238,13 +229,12 @@ export class AuthenticationService extends olEventsEventTarget {
 
   /**
    * @param {boolean} checkingLoginStatus Checking the login status?
-   * @param {angular.IHttpResponse} resp Ajax response.
-   * @return {angular.IHttpResponse} Response.
+   * @param {angular.IHttpResponse<AuthenticationLoginResponse>} resp Ajax response.
+   * @return {angular.IHttpResponse<AuthenticationLoginResponse>} Response.
    * @private
    */
   handleLogin_(checkingLoginStatus, resp) {
-    const respData = /** @type {AuthenticationLoginResponse} */ (resp.data);
-    this.setUser_(respData, !checkingLoginStatus);
+    this.setUser_(resp.data, !checkingLoginStatus);
     if (checkingLoginStatus) {
       /** @type {AuthenticationEvent} */
       const event = new ngeoCustomEvent('ready', {user: this.user_});
@@ -260,9 +250,11 @@ export class AuthenticationService extends olEventsEventTarget {
    */
   setUser_(respData, emitEvent) {
     for (const key in this.user_) {
+      // @ts-ignore: unsupported syntax
       this.user_[key] = null;
     }
     for (const key in respData) {
+      // @ts-ignore: unsupported syntax
       this.user_[key] = respData[key];
     }
     if (emitEvent && respData.username !== undefined) {
@@ -280,6 +272,7 @@ export class AuthenticationService extends olEventsEventTarget {
   resetUser_(noReload) {
     noReload = noReload || false;
     for (const key in this.user_) {
+      // @ts-ignore: unsupported syntax
       this.user_[key] = null;
     }
     /** @type {AuthenticationEvent} */
@@ -293,7 +286,7 @@ export class AuthenticationService extends olEventsEventTarget {
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('gmfAuthenticationService', []);

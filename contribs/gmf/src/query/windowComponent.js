@@ -58,10 +58,16 @@ module.value('gmfDisplayquerywindowTemplateUrl',
       'gmf/query/windowComponent';
   });
 
-module.run(/* @ngInject */ ($templateCache) => {
-  // @ts-ignore: webpack
-  $templateCache.put('gmf/query/windowComponent', require('./windowComponent.html'));
-});
+
+module.run(
+  /**
+   * @ngInject
+   * @param {angular.ITemplateCacheService} $templateCache
+   */
+  ($templateCache) => {
+    // @ts-ignore: webpack
+    $templateCache.put('gmf/query/windowComponent', require('./windowComponent.html'));
+  });
 
 
 /**
@@ -129,11 +135,11 @@ module.component('gmfDisplayquerywindow', queryWindowComponent);
 
 
 /**
- * @param {!JQuery} $element Element.
- * @param {!angular.IScope} $scope Angular scope.
- * @param {!import('ngeo/query/MapQuerent.js').QueryResult} ngeoQueryResult ngeo query result.
- * @param {!import("ngeo/query/MapQuerent.js").MapQuerent} ngeoMapQuerent ngeo map querent service.
- * @param {!import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
+ * @param {JQuery} $element Element.
+ * @param {angular.IScope} $scope Angular scope.
+ * @param {import('ngeo/query/MapQuerent.js').QueryResult} ngeoQueryResult ngeo query result.
+ * @param {import("ngeo/query/MapQuerent.js").MapQuerent} ngeoMapQuerent ngeo map querent service.
+ * @param {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
  * @constructor
  * @hidden
@@ -183,7 +189,7 @@ export function QueryWindowController(
   };
 
   /**
-   * @type {!import("ngeo/query/MapQuerent.js").MapQuerent}
+   * @type {import("ngeo/query/MapQuerent.js").MapQuerent}
    * @private
    */
   this.ngeoMapQuerent_ = ngeoMapQuerent;
@@ -194,19 +200,19 @@ export function QueryWindowController(
   this.selectedSource = null;
 
   /**
-   * @type {!import("ol/Collection.js").default}
+   * @type {import("ol/Collection.js").default<import('ol/Feature.js').default>}
    * @private
    */
   this.features_ = new olCollection();
 
   /**
-   * @type {!import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr}
+   * @type {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr}
    * @private
    */
   this.ngeoFeatureOverlayMgr_ = ngeoFeatureOverlayMgr;
 
   /**
-   * @type {!import("ol/Collection.js").default}
+   * @type {import("ol/Collection.js").default<import('ol/Feature.js').default>}
    * @private
    */
   this.highlightFeatures_ = new olCollection();
@@ -251,7 +257,13 @@ export function QueryWindowController(
 
   this.showUnqueriedLayers = false;
 
+  /**
+   * @type {?() => olStyleStyle}
+   */
   this.featuresStyleFn = null;
+  /**
+   * @type {?() => olStyleStyle}
+   */
   this.selectedFeatureStyleFn = null;
 
   $scope.$watchCollection(
@@ -270,6 +282,12 @@ export function QueryWindowController(
  * Initialise the controller.
  */
 QueryWindowController.prototype.$onInit = function() {
+  if (!this.featuresStyleFn) {
+    throw new Error('Missing featuresStyleFn');
+  }
+  if (!this.selectedFeatureStyleFn) {
+    throw new Error('Missing selectedFeatureStyleFn');
+  }
   this.draggableContainment = this.draggableContainment || 'document';
   this.desktop = this.desktop;
   this.collapsed = this.defaultCollapsedFn();
@@ -520,6 +538,9 @@ QueryWindowController.prototype.collectFeatures_ = function() {
  * @private
  */
 QueryWindowController.prototype.highlightCurrentFeature_ = function(opt_lastFeature) {
+  if (!this.feature) {
+    throw new Error('Missing feature');
+  }
   this.highlightFeatures_.clear();
   this.features_.remove(this.feature);
   this.highlightFeatures_.push(this.feature);

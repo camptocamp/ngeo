@@ -10,7 +10,7 @@ import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
  * @property {string} backgroundLayer
  */
 
-export default {
+export default /** @type {APIConfig} */({
   // The URL to the themes service.
   themesUrl: 'https://www.example.com',
 
@@ -28,4 +28,4 @@ export default {
   // The name of the GeoMapFish layer to use as background. May be a single value
   // (WMTS) or a comma-separated list of layer names (WMS).
   backgroundLayer: 'orthophoto',
-};
+});

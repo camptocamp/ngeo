@@ -31,18 +31,22 @@ export default class extends ngeoInteractionMeasure {
   }
 
   /**
-   * @inheritDoc
+   * @param {import("ol/style/Style.js").StyleLike} style The sketchStyle used for the drawing
+   *    interaction.
+   * @param {import('ol/source/Vector.js').default} source Vector source.
+   * @return {import("ol/interaction/Draw.js").default|import("ngeo/interaction/DrawAzimut.js").default|
+   *    import("ngeo/interaction/MobileDraw.js").default} The interaction
    */
   createDrawInteraction(style, source) {
     return new ngeoInteractionMobileDraw({
       type: 'Point',
       style: style,
-      source: source,
     });
   }
 
   /**
-   * @inheritDoc
+   * @param {function(string, ?import("ol/coordinate.js").Coordinate): void} callback The function
+   *     to be called.
    */
   handleMeasure(callback) {
     if (!this.sketchFeature) {

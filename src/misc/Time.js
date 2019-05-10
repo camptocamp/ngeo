@@ -11,12 +11,12 @@ import angular from 'angular';
 export function Time() {}
 
 /**
- * @param {?number|string} value The value
+ * @param {?number|string|undefined} value The value
  * @param {?Date} defaultValue The default value
  * @return {?Date} the date
  */
 Time.prototype.createDate = function(value, defaultValue = null) {
-  return value !== null ? new Date(value) : defaultValue;
+  return value !== null && value != undefined ? new Date(value) : defaultValue;
 };
 
 /**
@@ -33,9 +33,9 @@ Time.prototype.getTime = function(date, defaultValue = null) {
  *
  * @param {import('ngeo/datasource/OGC.js').TimeProperty} time the time property of a node
  * @return {{
- *  minDate : number,
- *  maxDate : number,
- *  values : (Array<number>|number)
+ *  minDate: number,
+ *  maxDate: number,
+ *  values: (number[]|number)
  * }} - Configuration for the UI components
  */
 Time.prototype.getOptions = function(time) {
@@ -66,11 +66,14 @@ Time.prototype.getOptions = function(time) {
   if (!minDefaultTime) {
     throw new Error('Missing minDefaultTime');
   }
-  if (!maxDefaultTime) {
-    throw new Error('Missing maxDefaultTime');
+  /** @type {number|number[]} */
+  let defaultValues = minDefaultTime;
+  if (time.mode === 'range') {
+    if (!maxDefaultTime) {
+      throw new Error('Missing maxDefaultTime');
+    }
+    defaultValues = [minDefaultTime, maxDefaultTime];
   }
-
-  const defaultValues = (time.mode === 'range') ? [minDefaultTime, maxDefaultTime] : minDefaultTime;
 
   return {
     minDate: minTime,

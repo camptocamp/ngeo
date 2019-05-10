@@ -44,6 +44,7 @@ function filereaderComponent($window) {
      */
     link: (scope, element) => {
       const supported = 'FileReader' in $window;
+      // @ts-ignore
       scope['supported'] = supported;
       if (!supported) {
         return;
@@ -62,6 +63,7 @@ function filereaderComponent($window) {
           function(evt) {
             const target = /** @type {FileReader} */(evt.target);
             scope.$apply(() => {
+              // @ts-ignore
               scope['fileContent'] = target.result;
             });
           });

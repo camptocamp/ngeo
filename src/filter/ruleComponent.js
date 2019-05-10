@@ -55,10 +55,15 @@ const module = angular.module('ngeoRule', [
 ]);
 
 
-module.run(/* @ngInject */ ($templateCache) => {
-  // @ts-ignore: webpack
-  $templateCache.put('ngeo/filter/rulecomponent', require('./rulecomponent.html'));
-});
+module.run(
+  /**
+   * @ngInject
+   * @param {angular.ITemplateCacheService} $templateCache
+   */
+  ($templateCache) => {
+    // @ts-ignore: webpack
+    $templateCache.put('ngeo/filter/rulecomponent', require('./rulecomponent.html'));
+  });
 
 
 module.value('ngeoRuleTemplateUrl',

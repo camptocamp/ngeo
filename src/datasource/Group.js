@@ -132,7 +132,7 @@ class Group {
   // =======================
 
   /**
-   * @param {!import("ngeo/datasource/DataSource.js").default} dataSource Data source.
+   * @param {import("ngeo/datasource/DataSource.js").default} dataSource Data source.
    * @return {string} Visible state of a data source
    */
   getDataSourceState(dataSource) {
@@ -142,14 +142,14 @@ class Group {
   }
 
   /**
-   * @param {!import("ngeo/datasource/DataSource.js").default} dataSource Data source to add.
+   * @param {import("ngeo/datasource/DataSource.js").default} dataSource Data source to add.
    */
   addDataSource(dataSource) {
     this.dataSourcesCollection_.push(dataSource);
   }
 
   /**
-   * @param {!import("ngeo/datasource/DataSource.js").default} dataSource Data source to remove.
+   * @param {import("ngeo/datasource/DataSource.js").default} dataSource Data source to remove.
    */
   removeDataSource(dataSource) {
     this.dataSourcesCollection_.remove(dataSource);
