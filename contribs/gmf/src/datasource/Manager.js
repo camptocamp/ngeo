@@ -820,11 +820,6 @@ export class DatasourceManager {
    * @private
    */
   updateLayerFilter_(layer) {
-    console.assert(
-      layer instanceof olLayerImage ||
-      layer instanceof olLayerTile
-    );
-
     if (!(layer instanceof olLayerImage || layer instanceof olLayerTile)) {
       return;
     }
