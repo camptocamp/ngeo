@@ -41,21 +41,9 @@ export function EditingXSDAttributeService($http, gmfLayersUrl) {
 EditingXSDAttributeService.prototype.getAttributes = function(id) {
   if (!this.promises_[id]) {
     const url = `${this.baseUrl_}/${id}/md.xsd`;
-    this.promises_[id] = /** @type {angular.IPromise<import('ngeo/format/Attribute.js').Attribute[]>} */(
-      /** @type {angular.IPromise<unknown>} */(
-        this.http_.get(url).then(this.handleGetAttributes_.bind(this))
-      )
-    );
+    this.promises_[id] = this.http_.get(url).then(resp => new ngeoFormatXSDAttribute().read(resp.data));
   }
   return this.promises_[id];
-};
-
-/**
- * @param {angular.IHttpResponse<any>} resp Ajax response.
- * @return {import('ngeo/format/Attribute.js').Attribute[]} List of attributes.
- */
-EditingXSDAttributeService.prototype.handleGetAttributes_ = function(resp) {
-  return new ngeoFormatXSDAttribute().read(resp.data);
 };
 
 

@@ -202,12 +202,7 @@ export class Querent {
       promises.push(this.issueCombinedWMS_(combinedWMSDataSources, options));
     }
 
-    return /** @type {angular.IPromise<QuerentResult>} */(
-      /** @type {angular.IPromise<unknown>} */(
-        /** @type {angular.IPromise<QuerentResult[]>} */(this.q_.all(promises))
-          .then(this.handleCombinedQueryResult_.bind(this))
-      )
-    );
+    return this.q_.all(promises).then(handleCombinedQueryResult_);
   }
 
   /**
@@ -396,34 +391,6 @@ export class Querent {
 
 
   // === PRIVATE methods ===
-
-  /**
-   * Handles the response of multiple promises that did either
-   * WMS GetFeatureInfo or WFS GetFeature requests, in which the result is
-   * a hash with key being the data source id and value the array of features.
-   *
-   * The response object itself is an array, one item being one result per
-   * promise. The idea is to return a single hash by combining the result
-   * objects.
-   *
-   * The keys are always unique, i.e. there can be multiple result objects for
-   * the same data source id.
-   *
-   * @param {QuerentResult[]} response Response.
-   * @return {QuerentResult} Hash of features by data source ids.
-   * @private
-   */
-  handleCombinedQueryResult_(response) {
-    /** @type {QuerentResult} */
-    const combinedHash = {};
-    for (const hash of response) {
-      for (const dataSourceIdStr in hash) {
-        const dataSourceId = Number(dataSourceIdStr);
-        combinedHash[dataSourceId] = hash[dataSourceId];
-      }
-    }
-    return combinedHash;
-  }
 
 
   /**
@@ -780,7 +747,7 @@ export class Querent {
       countPromise.then(afterCount_);
     }
 
-    return this.q_.all(promises).then(this.handleCombinedQueryResult_.bind(this));
+    return this.q_.all(promises).then(handleCombinedQueryResult_);
   }
 
   /**
@@ -794,6 +761,7 @@ export class Querent {
    */
   issueCombinedWMS_(combinedDataSources, options) {
 
+    /** @type {angular.IPromise<QuerentResult>[]} */
     const promises = [];
 
     // The 'limit' option is mandatory in the querent service
@@ -930,16 +898,13 @@ export class Querent {
             timeout: canceler.promise
           }
         ).then(
-          this.handleQueryResult_.bind(this, dataSources, FEATURE_COUNT, false)
+          /** @type {function(angular.IHttpResponse<Document|Element|string>|number): QuerentResult} */
+          (this.handleQueryResult_.bind(this, dataSources, FEATURE_COUNT, false))
         )
       );
     }
 
-    return /** @type {angular.IPromise<QuerentResult>} */(
-      /** @type {angular.IPromise<unknown>} */(
-        this.q_.all(promises).then(this.handleCombinedQueryResult_.bind(this))
-      )
-    );
+    return this.q_.all(promises).then(handleCombinedQueryResult_);
   }
 
   /**
@@ -1062,6 +1027,35 @@ export class Querent {
     }
     this.requestCancelers_.length = 0;
   }
+}
+
+
+/**
+ * Handles the response of multiple promises that did either
+ * WMS GetFeatureInfo or WFS GetFeature requests, in which the result is
+ * a hash with key being the data source id and value the array of features.
+ *
+ * The response object itself is an array, one item being one result per
+ * promise. The idea is to return a single hash by combining the result
+ * objects.
+ *
+ * The keys are always unique, i.e. there can be multiple result objects for
+ * the same data source id.
+ *
+ * @param {QuerentResult[]} response Response.
+ * @return {QuerentResult} Hash of features by data source ids.
+ * @private
+ */
+function handleCombinedQueryResult_(response) {
+  /** @type {QuerentResult} */
+  const combinedHash = {};
+  for (const hash of response) {
+    for (const dataSourceIdStr in hash) {
+      const dataSourceId = Number(dataSourceIdStr);
+      combinedHash[dataSourceId] = hash[dataSourceId];
+    }
+  }
+  return combinedHash;
 }
 
 

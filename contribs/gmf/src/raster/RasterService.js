@@ -49,13 +49,7 @@ RasterService.prototype.getRaster = function(coordinate, opt_params) {
   params[Param.X] = coordinate[0];
   params[Param.Y] = coordinate[1];
 
-  return /** @type {angular.IPromise<Object<string, number>>} */(
-    /** @type {angular.IPromise<unknown>} */(
-      this.$http_.get(this.url_, {
-        params
-      }).then(this.handleGetRaster_.bind(this))
-    )
-  );
+  return this.$http_.get(this.url_, {params}).then(resp => resp.data);
 };
 
 

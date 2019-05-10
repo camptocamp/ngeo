@@ -57,11 +57,7 @@ EditingEditFeature.prototype.getFeaturesInExtent = function(layerIds, extent) {
   const url = olUriAppendParams(`${this.baseUrl_}/${layerIds.join(',')}`, {
     'bbox': extent.join(',')
   });
-  return /** @type {angular.IPromise<import("ol/Feature.js").default[]>} */(
-    /** @type {angular.IPromise<unknown>} */(
-      this.http_.get(url).then(this.handleGetFeatures_.bind(this))
-    )
-  );
+  return this.http_.get(url).then(response => new olFormatGeoJSON().readFeatures(response.data));
 };
 
 
@@ -92,27 +88,13 @@ EditingEditFeature.prototype.getFeaturesWithComparisonFilters = function(layerId
 
   const url = olUriAppendParams(`${this.baseUrl_}/${layerIds.join(',')}`, params);
 
-  return /** @type {angular.IPromise<import("ol/Feature.js").default[]>} */(
-    /** @type {angular.IPromise<unknown>} */(
-      this.http_.get(url).then(this.handleGetFeatures_.bind(this))
-    )
-  );
-};
-
-
-/**
- * @param {angular.IHttpResponse<ArrayBuffer|Document|Node|Object|string>} resp Ajax response.
- * @return {import("ol/Feature.js").default[]} List of features.
- * @private
- */
-EditingEditFeature.prototype.handleGetFeatures_ = function(resp) {
-  return new olFormatGeoJSON().readFeatures(resp.data);
+  return this.http_.get(url).then(response => new olFormatGeoJSON().readFeatures(response.data));
 };
 
 
 /**
  * @param {number} layerId The layer id that contains the feature.
- * @param {Array.<import("ol/Feature.js").default>} features List of features to insert.
+ * @param {Array<import("ol/Feature.js").default>} features List of features to insert.
  * @return {angular.IPromise<ArrayBuffer|Document|Node|Object|string>} Promise.
  */
 EditingEditFeature.prototype.insertFeatures = function(layerId, features) {

@@ -49,26 +49,10 @@ export class EditingEnumerateAttributeService {
     const name = dataSource.name;
     if (!this.promises_[promiseId]) {
       const url = `${this.baseUrl_}/${name}/values/${attribute}`;
-      this.promises_[promiseId] =
-        /** @type {angular.IPromise<import('gmf/themes.js').GmfLayerAttributeValue[]>} */(
-          /** @type {angular.IPromise<unknown>} */(
-            this.http_.get(url).then(this.handleGetAttributeValues_.bind(this))
-          )
-        );
+      this.promises_[promiseId] = this.http_.get(url).then(resp => resp.data.items);
     }
     return this.promises_[promiseId];
   }
-
-  /**
-   * @param {angular.IHttpResponse<import('gmf/themes.js').GmfLayerAttributeValuesResponse>} resp Ajax
-   *    response.
-   * @return {import('gmf/themes.js').GmfLayerAttributeValue[]} List of the attribute
-   *     values.
-   */
-  handleGetAttributeValues_(resp) {
-    return resp.data.items;
-  }
-
 }
 
 
