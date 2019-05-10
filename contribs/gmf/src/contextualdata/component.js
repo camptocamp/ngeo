@@ -40,7 +40,7 @@ const module = angular.module('gmfContextualdata', [
  * example for a usage sample.
  *
  * @htmlAttribute {import("ol/Map.js").default} map The map.
- * @htmlAttribute {Array<number>} projections The list of projections.
+ * @htmlAttribute {number[]} projections The list of projections.
  * @htmlAttribute {Function} callback A function called after server
  *    (raster) data is received in case some additional computing is required.
  *    Optional.
@@ -96,7 +96,7 @@ export function ContextualdataController($compile, $timeout, $scope, gmfRaster, 
   this.map = null;
 
   /**
-   * @type {Array<number>}
+   * @type {number[]}
    */
   this.projections = [];
 

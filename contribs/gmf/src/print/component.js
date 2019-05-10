@@ -195,7 +195,7 @@ function gmfPrintTemplateUrl($element, $attrs, gmfPrintTemplateUrl) {
  *     property's name of the field.
  *     Example: {'comments': 'demo', 'legend': false}. Doesn't work for the dpi
  *     and the scale. Server's values are used in priority.
- * @htmlAttribute {Array<string>} gmf-print-hiddenattributes The list of attributes that should be hidden.
+ * @htmlAttribute {string[]} gmf-print-hiddenattributes The list of attributes that should be hidden.
  * @ngdoc component
  * @ngname gmfPrint
  */
@@ -422,7 +422,7 @@ export class PrintController {
     this.statusTimeoutPromise_ = null;
 
     /**
-     * @type {?Array<number>}
+     * @type {?number[]}
      * @private
      */
     this.onDragPreviousMousePosition_ = null;
@@ -460,7 +460,7 @@ export class PrintController {
 
     /**
      * Formats availables in capabilities.
-     * @type {Array<string>}
+     * @type {string[]}
      * @private
      */
     this.formats_ = [];
@@ -523,7 +523,7 @@ export class PrintController {
     this.smtpSupported = false;
 
     /**
-     * @type {Array<string>}
+     * @type {string[]}
      */
     this.hiddenAttributeNames = [];
 
@@ -1275,7 +1275,7 @@ export class PrintController {
   /**
    * @param {number} scale The scale to get the legend (for wms layers only).
    * @param {number} dpi The DPI.
-   * @param {Array<number>} bbox The bbox.
+   * @param {number[]} bbox The bbox.
    * @return {Object?} Legend object for print report or null.
    * @private
    */
@@ -1283,7 +1283,7 @@ export class PrintController {
     if (!this.map) {
       throw new Error('Missing map');
     }
-    const legend = {classes: /** @type {Array<any>} */([])};
+    const legend = {classes: /** @type {any[]} */([])};
     const gettextCatalog = this.gettextCatalog_;
 
     // Get layers from layertree only.

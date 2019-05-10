@@ -11,7 +11,7 @@ import angular from 'angular';
 /**
  * @typedef {Object} RoutingOptions
  * @property {string} [backendUrl]
- * @property {Array<RoutingProfile>} [profiles]
+ * @property {RoutingProfile[]} [profiles]
  */
 
 
@@ -75,13 +75,13 @@ export function RoutingService($http, $injector) {
 
 /**
  * @typedef {Object} Routes
- * @property {Array<Route>} routes
+ * @property {Route[]} routes
  */
 
 
 /**
  * @typedef {Object} Route
- * @property {Array<Leg>} [legs]
+ * @property {Leg[]} [legs]
  * @property {string} [geometry]
  * @property {number} distance
  * @property {number} duration
@@ -90,7 +90,7 @@ export function RoutingService($http, $injector) {
 
 /**
  * @typedef {Object} Leg
- * @property {Array<Step>} steps
+ * @property {Step[]} steps
  */
 
 

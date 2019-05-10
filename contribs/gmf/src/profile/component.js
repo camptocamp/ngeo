@@ -223,7 +223,7 @@ export function ProfileController($scope, $http, $element, $filter, gettextCatal
   this.linesConfiguration_ = null;
 
   /**
-   * @type {Array<string>}
+   * @type {string[]}
    * @private
    */
   this.layersNames_ = [];
@@ -240,7 +240,7 @@ export function ProfileController($scope, $http, $element, $filter, gettextCatal
   this.line = null;
 
   /**
-   * @type {Array<Object>}
+   * @type {Object[]}
    */
   this.profileData = [];
 
@@ -623,7 +623,7 @@ ProfileController.prototype.getStyle = function(layerName) {
 
 /**
  * Return a copy of the existing layer names.
- * @return {Array<string>} The names of layers.
+ * @return {string[]} The names of layers.
  */
 ProfileController.prototype.getLayersNames = function() {
   return this.layersNames_.slice(0);

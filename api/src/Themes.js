@@ -153,7 +153,7 @@ export function writeOverlayDefs(config, ogcServers, opt_ogcServer) {
 /**
  * Returns a list of OpenLayers layer objects from the given layer names.
  *
- * @param {Array<string>} layerNames List of layer names
+ * @param {string[]} layerNames List of layer names
  * @return {Promise} Promise.
  * @hidden
  */

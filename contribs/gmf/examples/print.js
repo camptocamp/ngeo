@@ -76,7 +76,7 @@ function MainController(gmfThemes, ngeoFeatureOverlayMgr) {
   };
 
   /**
-   * @type {Array<Object>|undefined}
+   * @type {Object[]|undefined}
    */
   this.themes = undefined;
 

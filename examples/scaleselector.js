@@ -42,7 +42,7 @@ function MainController($scope) {
 
   /**
    * The zoom level/scale map object for the ngeoScaleselector directive.
-   * @type {Array<number>}
+   * @type {number[]}
    * @const
    */
   this.scales = [200000000, 100000000, 50000000, 25000000, 12000000];

@@ -81,7 +81,7 @@ class Controller {
 
     /**
      * List of WMTS Capability Layer objects.
-     * @type {Array<Object>}
+     * @type {Object[]}
      */
     this.layers = [];
 

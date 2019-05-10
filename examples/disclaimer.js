@@ -71,7 +71,7 @@ function MainController(ngeoDisclaimer) {
   this.errorMsg_ = 'Disclaimer with error style';
 
   /**
-   * @type {Array<string>}
+   * @type {string[]}
    * @private
    */
   this.inMapMsgs_ = [

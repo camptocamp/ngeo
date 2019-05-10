@@ -24,16 +24,16 @@ export function coordinatesToXY0(coordinates) {
  * Convert a given coordinate or list of coordinates of any 'nesting' level
  * to XY, i.e. remove any extra dimensions to the coordinates and keep only 2.
  *
- * @template {number|Coordinate|Array<Coordinate>|Array<Array<Coordinate>>} T
- * @param {Array<T>} coordinates Coordinates
+ * @template {number|Coordinate|Coordinate[]|Coordinate[][]} T
+ * @param {T[]} coordinates Coordinates
  * @param {number} nesting Nesting level.
- * @return {Array<T>} Converted coordinates.
+ * @return {T[]} Converted coordinates.
  * @private
  * @hidden
  */
 function toXY(coordinates, nesting) {
   if (nesting === 0) {
-    return /** @type {Array<T>} */(coordinatesToXY0(/** @type {Coordinate} */(coordinates)));
+    return /** @type {T[]} */(coordinatesToXY0(/** @type {Coordinate} */(coordinates)));
   } else {
     for (let i = 0, ii = coordinates.length; i < ii; i++) {
       // @ts-ignore: TypeScript is not able to do recurtion with deferent type in generic

@@ -517,7 +517,7 @@ function Controller($element, $q, $scope, $timeout,
   this.serverErrorType = null;
 
   /**
-   * @type {?Array<number>}
+   * @type {?number[]}
    * @private
    */
   this.vertexInfo_ = null;

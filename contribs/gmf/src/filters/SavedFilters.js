@@ -42,7 +42,7 @@ export class SavedFilter {
     this.currentDataSourceId_ = null;
 
     /**
-     * @type {Array<SavedFilterItem>}
+     * @type {SavedFilterItem[]}
      * @private
      */
     this.currentDataSourceItems_ = [];
@@ -73,7 +73,7 @@ export class SavedFilter {
     }
 
     /**
-     * @type {Array<SavedFilterItem>}
+     * @type {SavedFilterItem[]}
      * @private
      */
     this.items_ = [];
@@ -92,7 +92,7 @@ export class SavedFilter {
   }
 
   /**
-   * @return {Array<SavedFilterItem>} Items
+   * @return {SavedFilterItem[]} Items
    */
   get currentDataSourceItems() {
     return this.currentDataSourceItems_;
@@ -107,7 +107,7 @@ export class SavedFilter {
   }
 
   /**
-   * @return {Array<SavedFilterItem>} Items
+   * @return {SavedFilterItem[]} Items
    */
   get items() {
     return this.items_;

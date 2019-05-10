@@ -255,7 +255,7 @@ export function AbstractAppController(config, map, $scope, $injector) {
    */
   this.searchDatasources = [{
     labelKey: 'label',
-    groupValues: /** @type {Array<string>} **/ ($injector.get('gmfSearchGroups')),
+    groupValues: /** @type {string[]} **/ ($injector.get('gmfSearchGroups')),
     groupActions: /** @type {Array<import('gmf/search/component.js').gmfSearchAction>} **/(
       $injector.get('gmfSearchActions')),
     projection: `EPSG:${config.srid || 21781}`,
@@ -679,7 +679,7 @@ export function AbstractAppController(config, map, $scope, $injector) {
 
 /**
  * @param {Array<import("ol/layer/Base.js").default>} layers Layers list.
- * @param {Array<string>} labels default_basemap list.
+ * @param {string[]} labels default_basemap list.
  * @return {?import("ol/layer/Base.js").default} layer or null
  * @private
  * @hidden

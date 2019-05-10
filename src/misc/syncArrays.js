@@ -17,8 +17,8 @@
  *
  * This will return a function that can be called to cancel synchronization.
  *
- * @param {Array<T>} arr1 Array 1.
- * @param {Array<T>} arr2 Array 2.
+ * @param {T[]} arr1 Array 1.
+ * @param {T[]} arr2 Array 2.
  * @param {boolean} reverse `true` if arr2 is in reverse order, `false`
  *     otherwise.
  * @param {angular.IScope} scope Angular scope. Used to watch arr1 and arr2

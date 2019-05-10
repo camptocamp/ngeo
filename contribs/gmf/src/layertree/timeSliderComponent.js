@@ -169,7 +169,7 @@ function Controller(ngeoWMSTime) {
 
   /**
    * Used when WMS time object has a property 'values' instead of an interval
-   * @type {?Array<number>}
+   * @type {?number[]}
    */
   this.timeValueList = null;
 
@@ -185,7 +185,7 @@ function Controller(ngeoWMSTime) {
 
   /**
    * Model for the ui-slider directive (date in ms format)
-   * @type {Array<number>|number}
+   * @type {number[]|number}
    */
   this.dates = [];
 }
@@ -219,7 +219,7 @@ Controller.prototype.init = function() {
  * TimeSliderController.prototype.getTimeValueList_ - Get a list of time value instead
  * of using the wmstime interval as a list of possibles values
  * @private
- * @return {Array<number>}  - List of timestamp representing possible values
+ * @return {number[]}  - List of timestamp representing possible values
  */
 Controller.prototype.getTimeValueList_ = function() {
   if (!this.time) {

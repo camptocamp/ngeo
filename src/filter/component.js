@@ -178,7 +178,7 @@ class FilterController {
     // === Inner properties ===
 
     /**
-     * @type {Array<FilterCondition>}
+     * @type {FilterCondition[]}
      */
     this.conditions = [
       {

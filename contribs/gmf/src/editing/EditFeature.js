@@ -49,7 +49,7 @@ export function EditingEditFeature($http, gmfLayersUrl) {
  * Build a query to the MapFish protocol to fetch features from a list
  * of layer ids inside a specified extent.
  *
- * @param {Array<number>} layerIds List of layer ids to get the features from.
+ * @param {number[]} layerIds List of layer ids to get the features from.
  * @param {import("ol/extent.js").Extent} extent The extent where to get the features from.
  * @return {angular.IPromise<import("ol/Feature.js").default[]>} Promise.
  */
@@ -70,8 +70,8 @@ EditingEditFeature.prototype.getFeaturesInExtent = function(layerIds, extent) {
  * define the url to the GMF Protocol (layers) a dummy promise returns an
  * empty array of features if the url is not defined.
  *
- * @param {Array<string>} layerIds List of layer ids to get the features from.
- * @param {Array<ComparisonFilter>} filters List of comparison filters
+ * @param {string[]} layerIds List of layer ids to get the features from.
+ * @param {ComparisonFilter[]} filters List of comparison filters
  * @return {angular.IPromise<import("ol/Feature.js").default[]>} Promise.
  */
 EditingEditFeature.prototype.getFeaturesWithComparisonFilters = function(layerIds, filters) {

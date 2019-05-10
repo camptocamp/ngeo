@@ -344,7 +344,7 @@ export class RuleHelper {
 
   /**
    * @param {Array<import("ngeo/rule/Rule.js").default>} rules Rules
-   * @return {Array<AnyOptions>} List of serialized rule options.
+   * @return {AnyOptions[]} List of serialized rule options.
    */
   serializeRules(rules) {
     return rules.map((rule) => {

@@ -96,7 +96,7 @@ function Controller() {
   /**
    * Stack of slid-in items.
    * @private
-   * @type {Array<JQuery>}
+   * @type {JQuery[]}
    */
   this.slid_ = [];
 

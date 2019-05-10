@@ -263,7 +263,7 @@ class RuleController {
     this.toolActivate_ = null;// = new ngeo.misc.ToolActivate(this.rule, 'active');
 
     /**
-     * @type {Array<Function>}
+     * @type {Function[]}
      * @private
      */
     this.unlisteners_ = [];

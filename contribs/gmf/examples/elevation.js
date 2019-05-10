@@ -34,7 +34,7 @@ module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
  */
 function MainController() {
   /**
-   * @type {Array<string>}
+   * @type {string[]}
    */
   this.elevationLayers = ['aster', 'srtm'];
 

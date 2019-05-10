@@ -421,8 +421,8 @@ class ModifyRectangle extends olInteractionPointer {
  * @property {import("ol/pixel.js").Pixel} originPixel
  * @property {import("ol/geom/Point.js").default} siblingXPoint
  * @property {import("ol/geom/Point.js").default} siblingYPoint
- * @property {Array<number>} vectorX
- * @property {Array<number>} vectorY
+ * @property {number[]} vectorX
+ * @property {number[]} vectorY
  */
 
 

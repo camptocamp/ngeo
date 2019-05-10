@@ -93,7 +93,7 @@ function DisclamerController(
   this.msg;
 
   /**
-   * @type {Array<string>}
+   * @type {string[]}
    */
   this.msgs_ = [];
 

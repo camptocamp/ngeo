@@ -46,7 +46,7 @@ export function FeatureOverlayMgr() {
   this.featureUidToGroupIndex_ = {};
 
   /**
-   * @type {Array<MapFeatureOverlayGroup>}
+   * @type {MapFeatureOverlayGroup[]}
    * @private
    */
   this.groups_ = [];

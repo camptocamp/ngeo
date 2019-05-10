@@ -57,7 +57,7 @@ export function colorZeroPadding(hex) {
 
 /**
  * Converts a color from RGB to hex representation.
- * @param {Array<number>} rgb rgb representation of the color.
+ * @param {number[]} rgb rgb representation of the color.
  * @return {string} hex representation of the color.
  * @hidden
  */

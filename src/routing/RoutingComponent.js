@@ -166,7 +166,7 @@ class Controller {
     this.targetFeature_ = null;
 
     /**
-     * @type {Array<RoutingVia>}
+     * @type {RoutingVia[]}
      */
     this.viaArray = [];
 
@@ -303,7 +303,7 @@ class Controller {
     if (!this.map) {
       return [];
     }
-    /** @type {Array<olFeature>} */
+    /** @type {olFeature[]} */
     let parsedRoutes = [];
     const format = new olFormatGeoJSON();
     const formatConfig = {
@@ -312,7 +312,7 @@ class Controller {
     };
     // if there are is useful "legs" data, parse this
     if (route.legs) {
-      /** @type {Array<Array<olFeature>>} */
+      /** @type {olFeature[][]} */
       const parsedRoutes_ = route.legs.map(leg => leg.steps.map(step => new olFeature({
         geometry: format.readGeometry(step.geometry, formatConfig)
       })));
@@ -338,7 +338,7 @@ class Controller {
       const vias = this.viaArray.filter(via => via.feature !== null).map(
         via => this.getLonLatFromPoint_(via.feature)
       );
-      const route = /** @type Array<Array<number>> */([coordFrom].concat(vias, [coordTo]));
+      const route = /** @type Array<number[]> */([coordFrom].concat(vias, [coordTo]));
 
       /**
        * @param {angular.IHttpResponse<import('./RoutingService').Routes>} resp

@@ -41,7 +41,7 @@ import angular from 'angular';
 export function ToolActivateMgr($rootScope) {
 
   /**
-   * @type {Object<string, Array<miscToolActivateMgrEntry>>}
+   * @type {Object<string, miscToolActivateMgrEntry[]>}
    * @private
    */
   this.groups_ = {};

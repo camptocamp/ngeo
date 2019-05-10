@@ -18,8 +18,8 @@ import olSourceImageWMS from 'ol/source/ImageWMS.js';
  * `wfs` list.
  *
  * @typedef {Object} QueryableDataSources
- * @property {Array<ngeoDatasourceOGC>} wms List of queryable data sources that support WMS.
- * @property {Array<ngeoDatasourceOGC>} wfs List of queryable data sources that support WFS.
+ * @property {ngeoDatasourceOGC[]} wms List of queryable data sources that support WMS.
+ * @property {ngeoDatasourceOGC[]} wfs List of queryable data sources that support WFS.
  */
 
 
@@ -219,8 +219,8 @@ export class Querent {
   getQueryableDataSources(dataSources, map) {
 
     const queryableDataSources = {
-      wfs: /** @type{Array<ngeoDatasourceOGC>} */([]),
-      wms: /** @type{Array<ngeoDatasourceOGC>} */([]),
+      wfs: /** @type{ngeoDatasourceOGC[]} */([]),
+      wms: /** @type{ngeoDatasourceOGC[]} */([]),
     };
     const resolution = map.getView().getResolution();
     if (!resolution) {
@@ -487,9 +487,9 @@ export class Querent {
    * types if one is given.
    * @param {ngeoDatasourceOGC} dataSource that contains the format object.
    * @param {boolean} wfs Whether the query was WFS or WMS.
-   * @param {Array<string>=} opt_types An array of type if you want to set the
+   * @param {string[]=} opt_types An array of type if you want to set the
    *     type of the format object.
-   * @return {Array<string>} The types defined in the format.
+   * @return {string[]} The types defined in the format.
    * @private
    */
   getSetOlFormatTypes_(dataSource, wfs, opt_types) {
@@ -564,7 +564,7 @@ export class Querent {
     for (const dataSources of combinedDataSources) {
       /** @type {?import('ol/format/WFS.js').WriteGetFeatureOptions} */
       let getFeatureCommonOptions = null;
-      /** @type{Array<string>} */
+      /** @type{string[]} */
       let featureTypes = [];
       /** @type {?string} */
       let url = null;
@@ -786,7 +786,7 @@ export class Querent {
     for (const dataSources of combinedDataSources) {
 
       let url;
-      /** @type {Array<string>} */
+      /** @type {string[]} */
       let LAYERS = [];
       let INFO_FORMAT;
       let activeDimensionsSet = false;
@@ -908,7 +908,7 @@ export class Querent {
   }
 
   /**
-   * @param {Array<ngeoDatasourceOGC>} dataSources List of
+   * @param {ngeoDatasourceOGC[]} dataSources List of
    *     queryable data sources that supports WFS.
    * @return {CombinedDataSources} Combined lists of data sources.
    * @private
@@ -940,7 +940,7 @@ export class Querent {
   }
 
   /**
-   * @param {Array<ngeoDatasourceOGC>} dataSources List of
+   * @param {ngeoDatasourceOGC[]} dataSources List of
    *     queryable data sources that supports WMS.
    * @return {CombinedDataSources} Combined lists of data sources.
    * @private
@@ -1060,7 +1060,7 @@ function handleCombinedQueryResult_(response) {
 
 
 /**
- * @typedef {Array<Array<ngeoDatasourceOGC>>} CombinedDataSources
+ * @typedef {ngeoDatasourceOGC[][]} CombinedDataSources
  */
 
 

@@ -275,7 +275,7 @@ function Controller($element, $scope, ngeoLayerHelper,
   this.ngeoWMSTime_ = ngeoWMSTime;
 
   /**
-   * @type {Object<number, Array<string>>}
+   * @type {Object<number, string[]>}
    * @private
    */
   this.groupNodeStates_ = {};

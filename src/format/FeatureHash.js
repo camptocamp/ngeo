@@ -199,8 +199,8 @@ class FeatureHash extends olFormatTextFeature {
    * two dimensions and in latitude, longitude order.
    * corresponding to a geometry's coordinates.
    * @param {string} text Text.
-   * @param {Array<number>=} opt_flatCoordinates Flat coordinates array.
-   * @return {Array<number>} Flat coordinates.
+   * @param {number[]=} opt_flatCoordinates Flat coordinates array.
+   * @return {number[]} Flat coordinates.
    * @private
    */
   decodeCoordinates_(text, opt_flatCoordinates) {
@@ -239,7 +239,7 @@ class FeatureHash extends olFormatTextFeature {
    * Encode an array of number (corresponding to some coordinates) into a
    * logical sequence of characters. The coordinates are assumed to be in
    * two dimensions and in latitude, longitude order.
-   * @param {Array<number>} flatCoordinates Flat coordinates.
+   * @param {number[]} flatCoordinates Flat coordinates.
    * @param {number} stride Stride.
    * @param {number} offset Offset.
    * @param {number} end End.
@@ -373,7 +373,7 @@ class FeatureHash extends olFormatTextFeature {
    * @override
    */
   writeFeatureText(feature, opt_options) {
-    const /** @type {Array<string>} */ encodedParts = [];
+    const /** @type {string[]} */ encodedParts = [];
 
     // encode geometry
 
@@ -392,7 +392,7 @@ class FeatureHash extends olFormatTextFeature {
 
     // encode properties
 
-    const /** @type {Array<string>} */ encodedProperties = [];
+    const /** @type {string[]} */ encodedProperties = [];
     const propFunction = this.propertiesFunction_(feature);
     for (const key in propFunction) {
       const value = propFunction[key];
@@ -537,7 +537,7 @@ function encodeNumber_(num) {
  * styles's array.
  * @param {Array<import("ol/style/Style.js").default>} styles Styles.
  * @param {import("ol/geom/GeometryType.js").default} geometryType Geometry type.
- * @param {Array<string>} encodedStyles Encoded styles array.
+ * @param {string[]} encodedStyles Encoded styles array.
  * @private
  * @hidden
  */
@@ -574,7 +574,7 @@ function encodeStyles_(styles, geometryType, encodedStyles) {
  * Transform an {@link import("ol/style/Stroke.js").default} into a logical sequence of
  * characters and put the result into the given encoded styles's array.
  * @param {import("ol/style/Stroke.js").default} strokeStyle Stroke style.
- * @param {Array<string>} encodedStyles Encoded styles array.
+ * @param {string[]} encodedStyles Encoded styles array.
  * @private
  * @hidden
  */
@@ -586,7 +586,7 @@ function encodeStyleLine_(strokeStyle, encodedStyles) {
  * Transform an {@link import("ol/style/Circle.js").default} into a logical sequence of
  * characters and put the result into the given encoded styles's array.
  * @param {import("ol/style/Image.js").default} imageStyle Image style.
- * @param {Array<string>} encodedStyles Encoded styles array.
+ * @param {string[]} encodedStyles Encoded styles array.
  * @private
  * @hidden
  */
@@ -614,7 +614,7 @@ function encodeStylePoint_(imageStyle, encodedStyles) {
  * the given encoded styles's array.
  * @param {import("ol/style/Fill.js").default} fillStyle Fill style.
  * @param {import("ol/style/Stroke.js").default} strokeStyle Stroke style.
- * @param {Array<string>} encodedStyles Encoded styles array.
+ * @param {string[]} encodedStyles Encoded styles array.
  * @private
  * @hidden
  */
@@ -630,7 +630,7 @@ function encodeStylePolygon_(fillStyle, strokeStyle, encodedStyles) {
  * a logical sequence of characters and put the result into the given encoded
  * styles's array.
  * @param {import("ol/style/Fill.js").default} fillStyle Fill style.
- * @param {Array<string>} encodedStyles Encoded styles array.
+ * @param {string[]} encodedStyles Encoded styles array.
  * @param {string=} [propertyName='fillColor'] Property name.
  * @private
  * @hidden
@@ -657,7 +657,7 @@ function encodeStyleFill_(fillStyle, encodedStyles, propertyName = 'fillColor') 
  * Transform an {@link import("ol/style/Stroke.js").default} into a logical sequence of
  * characters and put the result into the given encoded styles's array.
  * @param {import("ol/style/Stroke.js").default} strokeStyle Stroke style.
- * @param {Array<string>} encodedStyles Encoded styles array.
+ * @param {string[]} encodedStyles Encoded styles array.
  * @private
  * @hidden
  */
@@ -685,7 +685,7 @@ function encodeStyleStroke_(strokeStyle, encodedStyles) {
  * Transform an {@link import("ol/style/Text.js").default} into a logical sequence of characters and
  * put the result into the given encoded styles's array.
  * @param {import("ol/style/Text.js").default} textStyle Text style.
- * @param {Array<string>} encodedStyles Encoded styles array.
+ * @param {string[]} encodedStyles Encoded styles array.
  * @private
  * @hidden
  */
@@ -879,7 +879,7 @@ function setStyleInFeature_(text, feature) {
   let fillStyle = null;
   if (fillColor !== undefined) {
     fillStyle = new olStyleFill({
-      color: /** @type {Array<number>|string} */ (fillColor)
+      color: /** @type {number[]|string} */ (fillColor)
     });
   }
   let strokeStyle = null;
@@ -888,7 +888,7 @@ function setStyleInFeature_(text, feature) {
       throw new Error('Missing strokeWidth');
     }
     strokeStyle = new olStyleStroke({
-      color: /** @type {Array<number>|string} */ (strokeColor),
+      color: /** @type {number[]|string} */ (strokeColor),
       width: strokeWidth
     });
   }
@@ -915,7 +915,7 @@ function setStyleInFeature_(text, feature) {
     textStyle = new olStyleText({
       font: `${fontSize} sans-serif`,
       fill: new olStyleFill({
-        color: /** @type {Array<number>|string} */ (fontColor)
+        color: /** @type {number[]|string} */ (fontColor)
       })
     });
   }
@@ -1155,11 +1155,11 @@ function writeMultiPointGeometry_(geometry) {
 
 /**
  * Helper to encode an {@link import("ol/geom/Polygon.js").default} geometry.
- * @param {Array<number>} flatCoordinates Flat coordinates.
+ * @param {number[]} flatCoordinates Flat coordinates.
  * @param {number} stride Stride.
  * @param {number} offset Offset.
- * @param {Array<number>} ends Ends.
- * @param {Array<string>} textArray Text array.
+ * @param {number[]} ends Ends.
+ * @param {string[]} textArray Text array.
  * @return {number} The new offset.
  * @private
  * @hidden

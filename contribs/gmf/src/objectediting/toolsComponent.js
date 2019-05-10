@@ -237,7 +237,7 @@ function Controller($injector, $scope, ngeoToolActivateMgr) {
   this.geomTypePolygon = ngeoGeometryType.POLYGON;
 
   /**
-   * @type {Array<string>}
+   * @type {string[]}
    * @private
    */
   this.toolActiveNames_ = [];

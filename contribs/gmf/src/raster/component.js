@@ -336,7 +336,7 @@ module.controller('GmfElevationController', Controller);
  *  </gmf-elevationwidget>
  *
  * @htmlAttribute {import("ol/Map.js").default} gmf-elevationwidget-map The map.
- * @htmlAttribute {Array<string>} gmf-elevationwidget-layers The list of
+ * @htmlAttribute {string[]} gmf-elevationwidget-layers The list of
  *     layers.
  * @htmlAttribute {boolean} gmf-elevationwidget-active Whether to activate the
  *     elevation component.
@@ -370,7 +370,7 @@ function WidgetController() {
   this.map = null;
 
   /**
-   * @type {Array<string>}
+   * @type {string[]}
    */
   this.layers = [];
 
@@ -403,7 +403,7 @@ module.controller('gmfElevationwidgetController', WidgetController);
 /**
  * @typedef {Object} LayerConfig
  * @property {string} [filter]
- * @property {Array<string>} [args]
+ * @property {string[]} [args]
  * @property {string} [postfix]
  * @property {string} [separator]
  */

@@ -126,7 +126,7 @@ function Controller($scope, gmfThemeManager, gmfThemes) {
   this.gmfThemes_ = gmfThemes;
 
   /**
-   * @type {Array<Object>}
+   * @type {Object[]}
    */
   this.themes = [];
 

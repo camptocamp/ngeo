@@ -9,7 +9,7 @@ import ngeoStatemanagerLocation from 'ngeo/statemanager/Location.js';
 export class StatemanagerService {
   /**
    * @param {import("ngeo/statemanager/Location.js").StatemanagerLocation} ngeoLocation ngeo location service.
-   * @param {Array<RegExp>} ngeoUsedKeyRegexp regexp used to identify the used keys.
+   * @param {RegExp[]} ngeoUsedKeyRegexp regexp used to identify the used keys.
    * @ngInject
    */
   constructor(ngeoLocation, ngeoUsedKeyRegexp) {
@@ -27,7 +27,7 @@ export class StatemanagerService {
 
 
     /**
-     * @type {Array<RegExp>}
+     * @type {RegExp[]}
      */
     this.usedKeyRegexp = ngeoUsedKeyRegexp;
 

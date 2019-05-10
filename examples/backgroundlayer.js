@@ -69,7 +69,7 @@ function BackgroundlayerController($http, ngeoBackgroundLayerMgr) {
   this.map = null;
 
   /**
-   * @type {Array<Object>|undefined}
+   * @type {Object[]|undefined}
    */
   this.bgLayers = undefined;
 

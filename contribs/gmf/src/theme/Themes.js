@@ -123,7 +123,7 @@ export class ThemesService extends olEventsEventTarget {
 
     /**
      * @param {import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer} item A group or a leaf.
-     * @param {Array<string>} array Array of ids;
+     * @param {string[]} array Array of ids;
      */
     const getIds = function(item, array) {
       array.push(olUtilGetUid(item));

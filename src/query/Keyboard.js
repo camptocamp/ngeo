@@ -34,7 +34,7 @@ export class QueryKeyboard {
     this.keyRemove_ = 'x';
 
     /**
-     * @type {Array<string>}
+     * @type {string[]}
      * @private
      */
     this.keys_ = [this.keyAdd_, this.keyRemove_];

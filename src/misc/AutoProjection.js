@@ -34,7 +34,7 @@ AutoProjectionService.prototype.stringToCoordinates = function(str) {
 /**
  * Get an array of projections corresponding to their EPSG codes. Log an error
  *     for each code that are not defined in ol projections.
- * @param {Array<string>} projectionsCodes EPSG codes (e.g. 'EPSG:3857',
+ * @param {string[]} projectionsCodes EPSG codes (e.g. 'EPSG:3857',
  *     'epsg:3857' or '3857').
  * @return {Array<import("ol/proj/Projection.js").default>} An array of projections.
  */

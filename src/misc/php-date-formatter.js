@@ -91,7 +91,7 @@ function _extend(out) {
  * @private
  * @hidden
  * @param {string} val Value
- * @param {Array<string>} arr Argument
+ * @param {string[]} arr Argument
  * @returns {number}
  */
 function _indexOf(val, arr) {

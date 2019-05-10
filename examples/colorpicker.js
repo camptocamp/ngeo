@@ -33,7 +33,7 @@ function ColorPickerController() {
 
   /**
    * The colors set.
-   * @type {Array<Array<string>>}
+   * @type {string[][]}
    * @const
    */
   this.colors = [

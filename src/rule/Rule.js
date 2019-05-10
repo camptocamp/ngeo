@@ -11,7 +11,7 @@ import * as olEvents from 'ol/events.js';
  *    mutually exclusives.
  * @property {string} name The human-readable name of the rule.
  * @property {string} [operator] The rule operator.
- * @property {Array<string>} [operators] The rule operators.
+ * @property {string[]} [operators] The rule operators.
  * @property {string} propertyName The property name (a.k.a. the attribute name).
  * @property {string} [type] The type of rule.
  * @property {number} [upperBoundary] The upper boundary of the rule. The expression and boundaries are
@@ -173,7 +173,7 @@ export default class Rule {
 
     /**
      * A list of rule operators.
-     * @type {?Array<string>}
+     * @type {?string[]}
      * @private
      */
     this.operators_ = options.operators || null;
@@ -240,7 +240,7 @@ export default class Rule {
   }
 
   /**
-   * @return {?Array<string>} Operators
+   * @return {?string[]} Operators
    */
   get operators() {
     return this.operators_;

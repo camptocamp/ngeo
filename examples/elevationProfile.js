@@ -87,7 +87,7 @@ function MainController($http, $scope) {
   vectorLayer.setMap(map);
 
   /**
-   * @type {Array<Object>}
+   * @type {Object[]}
    */
   this.profilePoisData = [
     {sort: 1, dist: 1000, title: 'First POI', id: 12345},

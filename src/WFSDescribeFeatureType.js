@@ -32,7 +32,7 @@ const NAMESPACE_URIS_ = [
  */
 function makeStructureNS(namespaceURIs, structure) {
   return /** @type {parsersStructure} */(/** @type {any} */(olXml.makeStructureNS(
-    /** @type {Array<string>} */(namespaceURIs), structure)));
+    /** @type {string[]} */(namespaceURIs), structure)));
 }
 
 /**

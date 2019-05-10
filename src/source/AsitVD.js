@@ -10,7 +10,7 @@ import olTilegridWMTS from 'ol/tilegrid/WMTS.js';
 
 
 /**
- * @type {Array<number>}
+ * @type {number[]}
  * @private
  * @hidden
  */

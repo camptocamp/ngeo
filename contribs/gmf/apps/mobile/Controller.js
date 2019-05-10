@@ -57,7 +57,7 @@ class Controller extends AbstractMobileController {
     ];
 
     /**
-     * @type {Array<string>}
+     * @type {string[]}
      */
     this.searchCoordinatesProjections = [EPSG21781, EPSG2056, 'EPSG:4326'];
 

@@ -12,7 +12,7 @@ const module = angular.module('ngeoGetBrowserLanguage', []);
  * Provides a function that returns the most appropriate 2-letter
  * language code depending on the list of available languages and the browser
  * languages settings.
- * @typedef {function(Array<string>):string} miscGetBrowserLanguage
+ * @typedef {function(string[]):string} miscGetBrowserLanguage
  */
 
 
@@ -33,7 +33,7 @@ const module = angular.module('ngeoGetBrowserLanguage', []);
 function factory($window) {
   return (
     /**
-     * @param {Array<string>} availableLanguages Available languages.
+     * @param {string[]} availableLanguages Available languages.
      * @return {string} The "best" language code.
      */
     function(availableLanguages) {

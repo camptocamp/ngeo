@@ -225,7 +225,7 @@ StatemanagerLocation.prototype.getFragmentParamAsInt = function(key) {
 
 /**
  * Get an array with all existing param's keys in the location's URI.
- * @return {Array<string>} Param keys.
+ * @return {string[]} Param keys.
  */
 StatemanagerLocation.prototype.getParamKeys = function() {
   const keys = [];
@@ -238,7 +238,7 @@ StatemanagerLocation.prototype.getParamKeys = function() {
 
 /**
  * Get an array with all existing param's keys from the fragment of the location's URI.
- * @return {Array<string>} Param keys.
+ * @return {string[]} Param keys.
  */
 StatemanagerLocation.prototype.getFragmentParamKeys = function() {
   const keys = [];
@@ -253,7 +253,7 @@ StatemanagerLocation.prototype.getFragmentParamKeys = function() {
  * Get an array with all existing param's keys in the location's URI that start
  * with the given prefix.
  * @param {string} prefix Key prefix.
- * @return {Array<string>} Param keys.
+ * @return {string[]} Param keys.
  */
 StatemanagerLocation.prototype.getParamKeysWithPrefix = function(prefix) {
   const keys = [];
@@ -270,7 +270,7 @@ StatemanagerLocation.prototype.getParamKeysWithPrefix = function(prefix) {
  * Get an array with all existing param's keys from the fragment of the location's URI
  * that start with the given prefix.
  * @param {string} prefix Key prefix.
- * @return {Array<string>} Param keys.
+ * @return {string[]} Param keys.
  */
 StatemanagerLocation.prototype.getFragmentParamKeysWithPrefix = function(prefix) {
   const keys = [];

@@ -105,7 +105,7 @@ function Controller($element, $injector, $scope, ngeoFeatureHelper) {
   this.menu_ = null;
 
   /**
-   * @type {Array<JQuery>}
+   * @type {JQuery[]}
    * @private
    */
   this.items_ = [];
@@ -138,7 +138,7 @@ function Controller($element, $injector, $scope, ngeoFeatureHelper) {
   }
 
   /**
-   * @type {Array<string>}
+   * @type {string[]}
    * @private
    */
   this.formats_ = formats;

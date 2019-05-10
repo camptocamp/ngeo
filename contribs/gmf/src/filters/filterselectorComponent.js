@@ -244,7 +244,7 @@ class FilterSelectorController {
     this.filtrableDataSources = [];
 
     /**
-     * @type {?Array<string>}
+     * @type {?string[]}
      * @private
      */
     this.filtrableLayerNodeNames_ = null;

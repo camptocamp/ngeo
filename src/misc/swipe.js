@@ -99,7 +99,7 @@ module.factory('$verticalSwipe', [function() {
      * @name $verticalSwipe#bind
      * @param {JQuery} element Element.
      * @param {Object} eventHandlers - Event handlers object with `start`, `cancel` and `end` callbacks
-     * @param {Array<string>} pointerTypes - Types of pointer
+     * @param {string[]} pointerTypes - Types of pointer
      *
      * @description
      * The main method of `$verticalSwipe`. It takes an element to be watched for swipe motions, and an

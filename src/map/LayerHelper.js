@@ -312,9 +312,9 @@ LayerHelper.prototype.getFlatLayers = function(layer) {
  * Computed opacity is a custom 'back-up' value that contains
  * the calculated value of all ancestors and the given layer.
  * @param {import("ol/layer/Base.js").default} layer The base layer, mostly a group of layers.
- * @param {Array<olLayerLayer>} array An array to add layers.
+ * @param {olLayerLayer[]} array An array to add layers.
  * @param {number|undefined} computedOpacity Opacity inherited from ancestor layer groups.
- * @return {Array<olLayerLayer>} Layers.
+ * @return {olLayerLayer[]} Layers.
  * @private
  */
 LayerHelper.prototype.getFlatLayers_ = function(layer, array, computedOpacity) {
@@ -394,7 +394,7 @@ LayerHelper.prototype.getWMTSLegendURL = function(layer) {
  * @param {number=} opt_legendHeight the legend height.
  * @param {string=} opt_servertype the OpenLayers server type.
  * @param {number=} opt_dpi the DPI.
- * @param {Array<number>=} opt_bbox the bbox.
+ * @param {number[]=} opt_bbox the bbox.
  * @param {string=} opt_srs The projection code.
  * @param {Object<string, string>=} opt_additionalQueryString Additional query string parameters.
  * @return {string|undefined} The legend URL or undefined.
@@ -529,11 +529,11 @@ LayerHelper.prototype.updateWMSLayerState = function(layer, names, opt_time) {
 
 /**
  * @param {import("ol/layer/Image.js").default} layer The WMS layer.
- * @return {Array<number>|undefined} List of query source ids, a.k.a.
+ * @return {number[]|undefined} List of query source ids, a.k.a.
  *     the data source ids this layer is composed of.
  */
 LayerHelper.prototype.getQuerySourceIds = function(layer) {
-  return /** @type {Array<number>|undefined} */ (
+  return /** @type {number[]|undefined} */ (
     layer.get('querySourceIds'));
 };
 

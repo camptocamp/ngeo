@@ -5,14 +5,14 @@ import ngeoRuleRule, {RuleOperatorType} from 'ngeo/rule/Rule.js';
 /**
  * extends import('ngeo/rule/Rule.js').RuleOptions
  * @typedef {Object} SelectOptions
- * @property {Array<string>} choices List of choices available for selection.
+ * @property {string[]} choices List of choices available for selection.
  * @property {boolean} [active=false] (RuleOptions)
  * @property {number|string} [expression] (RuleOptions)
  * @property {boolean} [isCustom] (RuleOptions)
  * @property {number} [lowerBoundary] (RuleOptions)
  * @property {string} name (RuleOptions)
  * @property {string} [operator] (RuleOptions)
- * @property {Array<string>} [operators] (RuleOptions)
+ * @property {string[]} [operators] (RuleOptions)
  * @property {string} propertyName (RuleOptions)
  * @property {string} [type] (RuleOptions)
  * @property {number} [upperBoundary] (RuleOptions)
@@ -43,7 +43,7 @@ export default class extends ngeoRuleRule {
     // === STATIC properties (i.e. that never change) ===
 
     /**
-     * @type {Array<string>}
+     * @type {string[]}
      * @private
      */
     this.choices_ = options.choices;
@@ -52,7 +52,7 @@ export default class extends ngeoRuleRule {
   // === Static property getters/setters ===
 
   /**
-   * @return {Array<string>} Choices
+   * @return {string[]} Choices
    */
   get choices() {
     return this.choices_;
@@ -61,10 +61,10 @@ export default class extends ngeoRuleRule {
   // === Calculated property getters ===
 
   /**
-   * @return {Array<string>} Selected choices
+   * @return {string[]} Selected choices
    */
   get selectedChoices() {
-    /** @type {Array<string>} */
+    /** @type {string[]} */
     let selectedChoices;
     if (this.expression) {
       const stringExpression = String(this.expression);

@@ -413,7 +413,7 @@ class AuthenticationController {
   }
 
   /**
-   * @param {string|Array<string>} errors Errors.
+   * @param {string|string[]} errors Errors.
    * @param {MessageType} [messageType] Type.
    * @private
    */

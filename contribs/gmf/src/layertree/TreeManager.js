@@ -410,7 +410,7 @@ LayertreeTreeManager.prototype.removeAll = function() {
  * Clone a group node and recursively set all child node `isChecked` using
  * the given list of layer names.
  * @param {import('gmf/themes.js').GmfGroup} group The original group node.
- * @param {Array<string>} names Array of node names to check (i.e. that
+ * @param {string[]} names Array of node names to check (i.e. that
  *     should have their checkbox checked)
  * @return {import('gmf/themes.js').GmfGroup} Cloned node.
  * @private
@@ -426,7 +426,7 @@ LayertreeTreeManager.prototype.cloneGroupNode_ = function(group, names) {
  * Set the child nodes metadata `isChecked` if its name is among the list of
  * given names. If a child node also has children, check those instead.
  * @param {import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer} node The original node.
- * @param {Array<string>} names Array of node names to check (i.e. that
+ * @param {string[]} names Array of node names to check (i.e. that
  *     should have their checkbox checked)
  * @private
  */

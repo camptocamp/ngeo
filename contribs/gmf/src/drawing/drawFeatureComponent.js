@@ -719,7 +719,7 @@ Controller.prototype.handleMapContextMenu_ = function(evt) {
 
 
 /**
- * @param {?Array<number>} vertexInfo Vertex information, in case a
+ * @param {?number[]} vertexInfo Vertex information, in case a
  *     vertex was clicked using the right button.
  * @param {Event|import('ol/events/Event.js').default} evt Event.
  * @private

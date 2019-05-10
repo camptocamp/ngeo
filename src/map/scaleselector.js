@@ -84,7 +84,7 @@ module.run(
  *
  * See our live example: [../examples/scaleselector.html](../examples/scaleselector.html)
  *
- * @htmlAttribute {Array<number>} ngeo-scaleselector The available scales.
+ * @htmlAttribute {number[]} ngeo-scaleselector The available scales.
  * @htmlAttribute {import("ol/Map.js").default} ngeo-scaleselector-map The map.
  * @htmlAttribute {ScaleselectorOptions} ngeo-scaleselector-options
  *    Optional. The configuration options.
@@ -125,14 +125,14 @@ class ScaleselectorController {
 
     /**
      * The zoom level/scale map object.
-     * @type {Array<number>}
+     * @type {number[]}
      */
-    this.scales = /** @type {Array<number>} */
+    this.scales = /** @type {number[]} */
       ($scope.$eval(scalesExpr));
     console.assert(this.scales !== undefined);
 
     /**
-     * @type {Array<number>}
+     * @type {number[]}
      */
     this.zoomLevels = [];
 

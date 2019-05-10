@@ -569,7 +569,7 @@ FeatureHelper.prototype.createEditingStyles = function(feature) {
  * @param {import("ol/Feature.js").default} feature Feature.
  * @param {import("ol/coordinate.js").Coordinate} coordinate Coordinate.
  * @param {number} resolution Current map view resolution.
- * @return {?Array<number>} The indexes of the vertex (coordinate) that hits.
+ * @return {?number[]} The indexes of the vertex (coordinate) that hits.
  */
 FeatureHelper.prototype.getVertexInfoAtCoordinate = function(
   feature, coordinate, resolution
@@ -761,7 +761,7 @@ FeatureHelper.prototype.getVertexStyle = function(opt_incGeomFunc) {
  * Remove a vertex from a feature using the given information (indexes).
  *
  * @param {import("ol/Feature.js").default} feature Feature.
- * @param {Array<number>} vertexInfo The indexes of the vertex
+ * @param {number[]} vertexInfo The indexes of the vertex
  *     (coordinate) to remove.
  */
 FeatureHelper.prototype.removeVertex = function(feature, vertexInfo) {
