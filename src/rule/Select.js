@@ -31,7 +31,7 @@ export default class extends ngeoRuleRule {
    * The expression property holds the list of selected choices, which is
    * comma-separated.
    *
-   * @param {!SelectOptions} options Options.
+   * @param {SelectOptions} options Options.
    */
   constructor(options) {
 

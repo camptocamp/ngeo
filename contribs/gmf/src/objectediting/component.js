@@ -109,7 +109,7 @@ module.value('gmfObjecteditingTemplateUrl',
 /**
  * @param {JQuery} $element Element.
  * @param {angular.IAttributes} $attrs Attributes.
- * @param {function(JQuery, !angular.IAttributes): string} gmfObjecteditingTemplateUrl Template function.
+ * @param {function(JQuery, angular.IAttributes): string} gmfObjecteditingTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
  * @private

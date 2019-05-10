@@ -6,7 +6,7 @@ import olGeomPolygon from 'ol/geom/Polygon.js';
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('ngeoDrawrectangle', []);
@@ -23,7 +23,7 @@ function drawRectangleComponent() {
     restrict: 'A',
     require: '^^ngeoDrawfeature',
     /**
-     * @param {!angular.IScope} $scope Scope.
+     * @param {angular.IScope} $scope Scope.
      * @param {JQuery} element Element.
      * @param {angular.IAttributes} attrs Attributes.
      * @param {angular.IController=} drawFeatureCtrl Controller.

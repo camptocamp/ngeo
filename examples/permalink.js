@@ -18,7 +18,7 @@ import olStyleStroke from 'ol/style/Stroke.js';
 import olStyleStyle from 'ol/style/Style.js';
 
 
-/** @type {!angular.IModule} **/
+/** @type {angular.IModule} **/
 const module = angular.module('app', [
   'gettext',
   ngeoMapModule.name,
@@ -34,7 +34,7 @@ const module = angular.module('app', [
  * This component gets a reference to the map instance through the "app-map"
  * attribute.
  *
- * @type {!angular.IComponentOptions}
+ * @type {angular.IComponentOptions}
  */
 const mapComponent = {
   controller: 'AppMapController as ctrl',
@@ -121,7 +121,7 @@ MapComponentController.prototype.$onInit = function() {
 /**
  * A draw component that adds a simple draw tool.
  *
- * @type {!angular.IComponentOptions}
+ * @type {angular.IComponentOptions}
  */
 const drawComponent = {
   controller: 'AppDrawController as ctrl',
@@ -141,8 +141,8 @@ module.component('appDraw', drawComponent);
 
 
 /**
- * @param {!angular.IScope} $scope Scope.
- * @param {!import("ngeo/statemanager/Location.js").StatemanagerLocation} ngeoLocation ngeo Location service.
+ * @param {angular.IScope} $scope Scope.
+ * @param {import("ngeo/statemanager/Location.js").StatemanagerLocation} ngeoLocation ngeo Location service.
  * @constructor
  * @ngInject
  */
@@ -159,13 +159,13 @@ function DrawComponentController($scope, ngeoLocation) {
   this.layer = null;
 
   /**
-   * @type {!import("ngeo/statemanager/Location.js").StatemanagerLocation}
+   * @type {import("ngeo/statemanager/Location.js").StatemanagerLocation}
    * @private
    */
   this.ngeoLocation_ = ngeoLocation;
 
   /**
-   * @type {!angular.IScope}
+   * @type {angular.IScope}
    * @private
    */
   this.scope_ = $scope;

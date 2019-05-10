@@ -36,7 +36,7 @@ export default class extends ngeoRuleRule {
   /**
    * A text rule, which always compares the value with the LIKE operator, by default.
    *
-   * @param {!TextOptions} options Options.
+   * @param {TextOptions} options Options.
    */
   constructor(options) {
     options.operator = options.operator || RuleOperatorType.LIKE;

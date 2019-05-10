@@ -41,7 +41,7 @@ import angular from 'angular';
 export function ToolActivateMgr($rootScope) {
 
   /**
-   * @type {!Object<string, Array<miscToolActivateMgrEntry>>}
+   * @type {Object<string, Array<miscToolActivateMgrEntry>>}
    * @private
    */
   this.groups_ = {};
@@ -185,7 +185,7 @@ ToolActivateMgr.prototype.activateDefault_ = function(groupName) {
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('ngeoToolActivateMgr', []);

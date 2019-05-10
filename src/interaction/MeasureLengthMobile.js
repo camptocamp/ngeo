@@ -7,8 +7,8 @@ import ngeoInteractionMobileDraw from 'ngeo/interaction/MobileDraw.js';
  */
 export default class extends ngeoInteractionMeasureLength {
   /**
-   * @param {!import('ngeo/misc/filters.js').unitPrefix} format The format function
-   * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
+   * @param {import('ngeo/misc/filters.js').unitPrefix} format The format function
+   * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
    * @param {import('ngeo/interaction/Measure.js').MeasureOptions=} opt_options Options
    */
   constructor(format, gettextCatalog, opt_options) {

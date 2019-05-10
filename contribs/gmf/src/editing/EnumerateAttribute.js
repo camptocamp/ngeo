@@ -57,7 +57,7 @@ export class EditingEnumerateAttributeService {
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('gmfEnumerateAttribute', []);

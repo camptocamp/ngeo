@@ -279,7 +279,7 @@ PrintUtils.prototype.getUpRightCorner = function(mapCenter) {
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('ngeoPrintUtils', []);

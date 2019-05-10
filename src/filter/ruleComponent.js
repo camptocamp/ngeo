@@ -42,7 +42,7 @@ import 'ngeo/sass/font.scss';
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('ngeoRule', [
@@ -68,7 +68,7 @@ module.run(
 
 module.value('ngeoRuleTemplateUrl',
   /**
-   * @param {!angular.IAttributes} $attrs Attributes.
+   * @param {angular.IAttributes} $attrs Attributes.
    * @return {string} The template url.
    */
   ($attrs) => {
@@ -78,8 +78,8 @@ module.value('ngeoRuleTemplateUrl',
   });
 
 /**
- * @param {!angular.IAttributes} $attrs Attributes.
- * @param {!function(!angular.IAttributes): string} ngeoRuleTemplateUrl Template function.
+ * @param {angular.IAttributes} $attrs Attributes.
+ * @param {function(angular.IAttributes): string} ngeoRuleTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
  * @private
@@ -146,31 +146,31 @@ class RuleController {
     this.gettextCatalog_ = gettextCatalog;
 
     /**
-     * @type {!angular.IScope}
+     * @type {angular.IScope}
      * @private
      */
     this.scope_ = $scope;
 
     /**
-     * @type {!angular.ITimeoutService}
+     * @type {angular.ITimeoutService}
      * @private
      */
     this.timeout_ = $timeout;
 
     /**
-     * @type {!import("ngeo/misc/FeatureHelper.js").FeatureHelper}
+     * @type {import("ngeo/misc/FeatureHelper.js").FeatureHelper}
      * @private
      */
     this.ngeoFeatureHelper_ = ngeoFeatureHelper;
 
     /**
-     * @type {!import("ngeo/filter/RuleHelper.js").RuleHelper}
+     * @type {import("ngeo/filter/RuleHelper.js").RuleHelper}
      * @private
      */
     this.ngeoRuleHelper_ = ngeoRuleHelper;
 
     /**
-     * @type {!import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr}
+     * @type {import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr}
      * @private
      */
     this.ngeoToolActivateMgr_ = ngeoToolActivateMgr;

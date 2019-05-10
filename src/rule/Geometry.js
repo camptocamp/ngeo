@@ -31,7 +31,7 @@ export default class extends ngeoRuleRule {
    * A rule bound to the geometry of a `ol.Feature` object. Changes made
    * to the geometry are applied to the `expression` property of the rule.
    *
-   * @param {!GeometryOptions} options Options.
+   * @param {GeometryOptions} options Options.
    */
   constructor(options) {
 
@@ -44,13 +44,13 @@ export default class extends ngeoRuleRule {
     const properties = options.featureProperties || {};
 
     /**
-     * @type {!import("ol/Feature.js").default}
+     * @type {import("ol/Feature.js").default}
      * @private
      */
     this.feature_ = new olFeature(properties);
 
     /**
-     * @type {!import("ol/format/GeoJSON.js").default}
+     * @type {import("ol/format/GeoJSON.js").default}
      * @private
      */
     this.format_ = new olFormatGeoJSON();
@@ -89,7 +89,7 @@ export default class extends ngeoRuleRule {
   // === Static property getters/setters ===
 
   /**
-   * @return {!import("ol/Feature.js").default} Feature.
+   * @return {import("ol/Feature.js").default} Feature.
    */
   get feature() {
     return this.feature_;

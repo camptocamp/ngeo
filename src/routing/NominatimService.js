@@ -95,7 +95,7 @@ export function NominatimService($http, $injector, ngeoDebounce) {
  * Search by name
  * @param {string} query Search query
  * @param {?Object} params Optional parameters
- * @return {!angular.IHttpPromise<Object>} promise of the Nominatim API request
+ * @return {angular.IHttpPromise<Object>} promise of the Nominatim API request
  * @see https://wiki.openstreetmap.org/wiki/Nominatim#Search
  */
 NominatimService.prototype.search = function(query, params) {
@@ -123,7 +123,7 @@ NominatimService.prototype.search = function(query, params) {
  * Reverse Geocoding
  * @param {import("ol/coordinate.js").Coordinate} coordinate Search coordinate in LonLat projection
  * @param {(Object|undefined)} params Optional parameters
- * @return {!angular.IHttpPromise<Object>} promise of the Nominatim API request
+ * @return {angular.IHttpPromise<Object>} promise of the Nominatim API request
  * @see https://wiki.openstreetmap.org/wiki/Nominatim#Reverse_Geocoding
  */
 NominatimService.prototype.reverse = function(coordinate, params) {

@@ -9,7 +9,7 @@ import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('gmfDrawingFeatureStyle', [
@@ -60,7 +60,7 @@ module.directive('gmfFeaturestyle', drawingDrawFeatureComponent);
 
 
 /**
- * @param {!angular.IScope} $scope Angular scope.
+ * @param {angular.IScope} $scope Angular scope.
  * @param {import("ngeo/misc/FeatureHelper.js").FeatureHelper} ngeoFeatureHelper Gmf feature helper service.
  * @constructor
  * @private
@@ -82,7 +82,7 @@ function Controller($scope, ngeoFeatureHelper) {
   this.feature = null;
 
   /**
-   * @type {!angular.IScope}
+   * @type {angular.IScope}
    * @private
    */
   this.scope_ = $scope;

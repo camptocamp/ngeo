@@ -60,7 +60,7 @@ FulltextSearchService.prototype.search = function(query, params) {
 };
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('gmfSearchFulltextSearch', []);

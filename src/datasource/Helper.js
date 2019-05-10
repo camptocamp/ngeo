@@ -152,7 +152,7 @@ export class DatasourceHelper {
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('ngeoDataSourcesHelper', [

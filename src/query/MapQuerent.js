@@ -10,7 +10,7 @@ import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
  * Results of the query source.
  *
  * @typedef {Object} QueryResult
- * @property {!Array<import('ngeo/statemanager/WfsPermalink.js').QueryResultSource>} sources Results for
+ * @property {Array<import('ngeo/statemanager/WfsPermalink.js').QueryResultSource>} sources Results for
  *    each query source.
  * @property {number} total The number of results for all sources.
  * @property {boolean} pending If at least one source is pending.
@@ -330,7 +330,7 @@ export class MapQuerent {
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('ngeoMapQuerent', [

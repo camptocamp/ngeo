@@ -4,7 +4,7 @@ import 'bootstrap/js/src/modal.js';
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('ngeoModal', []);
@@ -44,7 +44,7 @@ const module = angular.module('ngeoModal', []);
  *     closed by clicking outside it or by hiting the `escape` keyboard key. Defaults to `true`.
  * @ngdoc component
  * @ngname ngeoModal
- * @type {!angular.IComponentOptions}
+ * @type {angular.IComponentOptions}
  */
 const messageModalComponent = {
   template: `<div class="modal fade" tabindex="-1" role="dialog">
@@ -76,19 +76,19 @@ module.component('ngeoModal', messageModalComponent);
 class Controller {
   /**
    * @ngInject
-   * @param {!angular.IScope} $scope Scope.
-   * @param {!JQuery} $element Element.
+   * @param {angular.IScope} $scope Scope.
+   * @param {JQuery} $element Element.
    */
   constructor($scope, $element) {
     /**
      * @private
-     * @type {!JQuery}
+     * @type {JQuery}
      */
     this.$element_ = $element;
 
     /**
      * @private
-     * @type {!angular.IScope}
+     * @type {angular.IScope}
      */
     this.$scope_ = $scope;
 

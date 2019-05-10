@@ -19,14 +19,14 @@ import olGeomPolygon from 'ol/geom/Polygon.js';
 import ngeoMapModule from 'ngeo/map/module.js';
 
 
-/** @type {!angular.IModule} **/
+/** @type {angular.IModule} **/
 const module = angular.module('app', [
   'gettext',
   ngeoMapModule.name
 ]);
 
 
-/** @type {!angular.IModule} **/
+/** @type {angular.IModule} **/
 const appmodule = angular.module('app', ['ngeo']);
 
 

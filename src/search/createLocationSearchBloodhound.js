@@ -43,10 +43,10 @@ import 'corejs-typeahead';
  * @property {string} [origins] A comma separated list of origins.
  * Possible origins are: zipcode,gg25,district,kantone,gazetteer,address,parcel
  * Per default all origins are used.
- * @property {!import('ol/proj/Projection').default} [targetProjection] Target projection.
- * @property {!Bloodhound.BloodhoundOptions<Results>} [options] Optional Bloodhound options. If `undefined`,
+ * @property {import('ol/proj/Projection').default} [targetProjection] Target projection.
+ * @property {Bloodhound.BloodhoundOptions<Results>} [options] Optional Bloodhound options. If `undefined`,
  * the default Bloodhound config will be used.
- * @property {!Bloodhound.RemoteOptions<Results>} [remoteOptions] Optional Bloodhound remote options.
+ * @property {Bloodhound.RemoteOptions<Results>} [remoteOptions] Optional Bloodhound remote options.
  * Only used if `remote` is not defined in `options`.
  * @property {function(string, JQueryAjaxSettings): JQueryAjaxSettings} [prepare] Optional function to
  * prepare the request.

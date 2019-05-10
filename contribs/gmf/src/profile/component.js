@@ -76,7 +76,7 @@ module.run(
 /**
  * @param {JQuery} $element Element.
  * @param {angular.IAttributes} $attrs Attributes.
- * @param {function(JQuery, !angular.IAttributes): string} gmfProfileTemplateUrl Template function.
+ * @param {function(JQuery, angular.IAttributes): string} gmfProfileTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
  * @private

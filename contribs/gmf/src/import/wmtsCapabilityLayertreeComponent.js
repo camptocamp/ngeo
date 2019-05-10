@@ -8,7 +8,7 @@ import {getUid as olUtilGetUid} from 'ol/util.js';
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('gmfWmtscapabilitylayertree', [
@@ -32,7 +32,7 @@ module.run(
 
 module.value('gmfWmtscapabilitylayertreTemplateUrl',
   /**
-   * @param {!angular.IAttributes} $attrs Attributes.
+   * @param {angular.IAttributes} $attrs Attributes.
    * @return {string} The template url.
    */
   ($attrs) => {
@@ -42,8 +42,8 @@ module.value('gmfWmtscapabilitylayertreTemplateUrl',
 
 
 /**
- * @param {!angular.IAttributes} $attrs Attributes.
- * @param {!function(!angular.IAttributes): string} gmfWmtscapabilitylayertreTemplateUrl Template function.
+ * @param {angular.IAttributes} $attrs Attributes.
+ * @param {function(angular.IAttributes): string} gmfWmtscapabilitylayertreTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
  * @private
@@ -61,7 +61,7 @@ function gmfWmtscapabilitylayertreTemplateUrl($attrs, gmfWmtscapabilitylayertreT
 class Controller {
 
   /**
-   * @param {!import("gmf/datasource/ExternalDataSourcesManager.js").ExternalDatSourcesManager}
+   * @param {import("gmf/datasource/ExternalDataSourcesManager.js").ExternalDatSourcesManager}
    *     gmfExternalDataSourcesManager GMF service responsible of managing
    *     external data sources.
    * @private
@@ -96,14 +96,14 @@ class Controller {
     // Injected properties
 
     /**
-     * @type {!import("gmf/datasource/ExternalDataSourcesManager.js").ExternalDatSourcesManager}
+     * @type {import("gmf/datasource/ExternalDataSourcesManager.js").ExternalDatSourcesManager}
      * @private
      */
     this.gmfExternalDataSourcesManager_ = gmfExternalDataSourcesManager;
   }
 
   /**
-   * @param {!Object} layer WMTS Capability Layer object
+   * @param {Object} layer WMTS Capability Layer object
    */
   createAndAddDataSource(layer) {
     if (!this.url) {
@@ -118,7 +118,7 @@ class Controller {
   }
 
   /**
-   * @param {!Object} layer WMTS Capability Layer object
+   * @param {Object} layer WMTS Capability Layer object
    * @return {string} Unique id for the Capability Layer.
    */
   getUid(layer) {

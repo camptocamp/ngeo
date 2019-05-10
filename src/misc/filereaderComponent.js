@@ -2,7 +2,7 @@ import angular from 'angular';
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('ngeoFilereader', []);
@@ -54,11 +54,11 @@ function filereaderComponent($window) {
        * @param {JQuery.ChangeEvent<any, any, any, HTMLInputElement>} changeEvent The event
        */
       const ce = (changeEvent) => {
-        /** @type {!FileReader} */
+        /** @type {FileReader} */
         const fileReader = new $window.FileReader();
         fileReader.onload = (
           /**
-           * @param {!ProgressEvent} evt Event.
+           * @param {ProgressEvent} evt Event.
            */
           function(evt) {
             const target = /** @type {FileReader} */(evt.target);

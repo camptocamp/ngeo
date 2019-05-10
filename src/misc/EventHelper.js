@@ -67,7 +67,7 @@ EventHelper.prototype.initListenerKey_ = function(uid) {
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('ngeoEventHelper', []);

@@ -4,7 +4,7 @@ import angular from 'angular';
 import ngeoMessagePopup from 'ngeo/message/Popup.js';
 
 
-/** @type {!angular.IModule} **/
+/** @type {angular.IModule} **/
 const module = angular.module('app', [
   'gettext',
   ngeoMessagePopup.name,

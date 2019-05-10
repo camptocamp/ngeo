@@ -6,7 +6,7 @@ import olcsCore from 'olcs/core.js';
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('ngeoOlcsControls3d', []);
@@ -32,13 +32,13 @@ const Controller = class {
 
   /**
    * @ngInject
-   * @param {!JQuery} $element The element
+   * @param {JQuery} $element The element
    * @param {import("ngeo/olcs/Service.js").OlcsService} ngeoOlcsService The ol-cesium service.
    */
   constructor($element, ngeoOlcsService) {
 
     /**
-     * @type {!JQuery}
+     * @type {JQuery}
      * @private
      */
     this.element_ = $element;
@@ -258,8 +258,8 @@ const Controller = class {
 
 
 /**
- * @param {!angular.IAttributes} $attrs Attributes.
- * @param {!string} ngeoOlcsControls3dTemplateUrl Template function.
+ * @param {angular.IAttributes} $attrs Attributes.
+ * @param {string} ngeoOlcsControls3dTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
  * @private
@@ -301,7 +301,7 @@ module.run(
  * See our live example: [../examples/simple3d.html](../examples/simple3d.html)
  *
  * @htmlAttribute {olcs.contrib.Manager} ngeo-olcs-manager The OL-Cesium manager.
- * @type {!angular.IComponentOptions}
+ * @type {angular.IComponentOptions}
  * @ngdoc component
  * @ngname ngeoOlcsControls3d
  */

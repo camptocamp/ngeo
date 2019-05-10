@@ -3,7 +3,7 @@ import ngeoMessagePopupComponent from 'ngeo/message/popupComponent.js';
 
 
 /**
- * @typedef {function():!MessagePopup} PopupFactory
+ * @typedef {function(): MessagePopup} PopupFactory
  */
 
 
@@ -260,7 +260,7 @@ MessagePopup.prototype.open = function(options) {
 function Factory($compile, $rootScope, $sce, $timeout) {
   return (
     /**
-     * @return {!MessagePopup} The popup instance.
+     * @return {MessagePopup} The popup instance.
      */
     function() {
       return new MessagePopup($compile, $rootScope, $sce, $timeout);
@@ -270,7 +270,7 @@ function Factory($compile, $rootScope, $sce, $timeout) {
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('ngeoCreatePopup', [

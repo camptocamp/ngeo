@@ -21,7 +21,7 @@ import olSourceImageWMS from 'ol/source/ImageWMS.js';
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('gmfapp', [
@@ -40,7 +40,7 @@ module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**
- * @param {!angular.IScope} $scope Angular scope.
+ * @param {angular.IScope} $scope Angular scope.
  * @param {import("gmf/editing/EditFeature.js").EditingEditFeature} gmfEditFeature Gmf edit feature service.
  * @param {import('gmf/authentication/Service.js').User} gmfUser User.
  * @constructor
@@ -49,7 +49,7 @@ module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 function MainController($scope, gmfEditFeature, gmfUser) {
 
   /**
-   * @type {!angular.IScope}
+   * @type {angular.IScope}
    * @private
    */
   this.scope_ = $scope;
@@ -194,7 +194,7 @@ MainController.prototype.insertFeature = function() {
     throw new Error('Missing resolution');
   }
   const buffer = resolution * -50; // 50 pixel buffer inside the extent
-  const size = /** @type {!Array<number>} */ (map.getSize());
+  const size = /** @type {Array<number>} */ (map.getSize());
   const extent = olExtent.buffer(
     view.calculateExtent(size),
     buffer

@@ -21,7 +21,7 @@ import 'bootstrap/js/src/dropdown.js';
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('gmfQueryWindowComponent', [
@@ -48,8 +48,8 @@ module.config(['$animateProvider',
 
 module.value('gmfDisplayquerywindowTemplateUrl',
   /**
-   * @param {!JQuery} $element Element.
-   * @param {!angular.IAttributes} $attrs Attributes.
+   * @param {JQuery} $element Element.
+   * @param {angular.IAttributes} $attrs Attributes.
    * @return {string} Template.
    */
   ($element, $attrs) => {
@@ -71,9 +71,9 @@ module.run(
 
 
 /**
- * @param {!JQuery} $element Element.
- * @param {!angular.IAttributes} $attrs Attributes.
- * @param {!function(!JQuery, !angular.IAttributes): string} gmfDisplayquerywindowTemplateUrl Template
+ * @param {JQuery} $element Element.
+ * @param {angular.IAttributes} $attrs Attributes.
+ * @param {function(JQuery, angular.IAttributes): string} gmfDisplayquerywindowTemplateUrl Template
  *    function.
  * @return {string} Template URL.
  * @ngInject
@@ -248,7 +248,7 @@ export function QueryWindowController(
   this.open = false;
 
   /**
-   * @const {!JQuery}
+   * @const {JQuery}
    * @private
    */
   this.element_ = $element;

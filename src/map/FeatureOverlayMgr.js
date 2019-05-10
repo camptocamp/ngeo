@@ -172,7 +172,7 @@ FeatureOverlayMgr.prototype.styleFunction_ = function(feature, resolution) {
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('ngeoFeatureOverlayMgr', [

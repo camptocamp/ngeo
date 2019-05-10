@@ -2,7 +2,7 @@ import angular from 'angular';
 
 
 /**
- * @typedef {Object<number, !LidarprofileServerConfigClassification>}
+ * @typedef {Object<number, LidarprofileServerConfigClassification>}
  *     LidarprofileServerConfigClassifications
  */
 
@@ -15,7 +15,7 @@ import angular from 'angular';
  */
 
 /**
- * @typedef {Object<number, !LidarprofileServerConfigLevel>}
+ * @typedef {Object<number, LidarprofileServerConfigLevel>}
  *     LidarprofileServerConfigLevels
  */
 
@@ -166,7 +166,7 @@ export class LidarprofileConfigService {
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('gmfLidarprofileConfig', []);

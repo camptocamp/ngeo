@@ -7,7 +7,7 @@ import ngeoDrawRectangle from 'ngeo/draw/rectangle.js';
 import ngeoDrawText from 'ngeo/draw/text.js';
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  */
 export default angular.module('ngeoDrawModule', [
   ngeoDrawController.name,

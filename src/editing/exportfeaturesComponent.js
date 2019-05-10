@@ -4,7 +4,7 @@ import {getUid as olUtilGetUid} from 'ol/util.js';
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('ngeoExportfeatures', [
@@ -52,7 +52,7 @@ module.directive('ngeoExportfeatures', editingExportFeaturesComponent);
 /**
  * @param {JQuery} $element Element.
  * @param {angular.auto.IInjectorService} $injector Main injector.
- * @param {!angular.IScope} $scope Angular scope.
+ * @param {angular.IScope} $scope Angular scope.
  * @param {import("ngeo/misc/FeatureHelper.js").FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
  * @constructor
  * @private

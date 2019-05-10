@@ -15,7 +15,7 @@ import olSourceVector from 'ol/source/Vector.js';
 import ngeoMapModule from 'ngeo/map/module.js';
 
 
-/** @type {!angular.IModule} **/
+/** @type {angular.IModule} **/
 const appmodule = angular.module('app', [
   'gettext',
   ngeoMapModule.name,
@@ -213,7 +213,7 @@ MainController.prototype.getStatus_ = function(ref) {
 
 
 /**
- * @param {!angular.IHttpResponse<import('ngeo/print/mapfish-print-v3.js').MapFishPrintStatusResponse>} resp
+ * @param {angular.IHttpResponse<import('ngeo/print/mapfish-print-v3.js').MapFishPrintStatusResponse>} resp
  *    Response.
  * @private
  */
@@ -246,7 +246,7 @@ MainController.prototype.handleGetStatusSuccess_ = function(ref, resp) {
 
 
 /**
- * @param {!angular.IHttpResponse<import('ngeo/print/mapfish-print-v3.js').MapFishPrintStatusResponse>} resp
+ * @param {angular.IHttpResponse<import('ngeo/print/mapfish-print-v3.js').MapFishPrintStatusResponse>} resp
  *    Response.
  * @private
  */

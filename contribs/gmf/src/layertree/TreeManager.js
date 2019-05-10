@@ -575,7 +575,7 @@ LayertreeTreeManager.prototype.refreshFirstLevelGroups_ = function(themes) {
  * treeCtrl including the state of its children.
  * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl the ngeo layertree
  *    controller to save.
- * @return {TreeManagerFullState!} the fullState object.
+ * @return {TreeManagerFullState} the fullState object.
  * @private
  */
 LayertreeTreeManager.prototype.getFirstLevelGroupFullState_ = function(treeCtrl) {
@@ -650,7 +650,7 @@ LayertreeTreeManager.prototype.setNodeMetadataFromFullState_ = function(node, fu
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('gmfTreeManager', [

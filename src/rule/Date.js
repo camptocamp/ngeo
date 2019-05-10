@@ -26,7 +26,7 @@ export default class extends ngeoRuleRule {
   /**
    * A date rule.
    *
-   * @param {!DateOptions} options Options.
+   * @param {DateOptions} options Options.
    */
   constructor(options) {
 

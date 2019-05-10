@@ -11,7 +11,7 @@ import olSourceImageWMS from 'ol/source/ImageWMS.js';
 import ngeoMapModule from 'ngeo/map/module.js';
 
 
-/** @type {!angular.IModule} **/
+/** @type {angular.IModule} **/
 const module = angular.module('app', [
   'gettext',
   ngeoMapModule.name
@@ -38,7 +38,7 @@ module.run(
  * The component is based on Bootstrap's dropdown jQuery plugin and on
  * the ngeoBackgroundLayerMgr service.
  *
- * @type {!angular.IComponentOptions}
+ * @type {angular.IComponentOptions}
  */
 const backgroundlayerComponent = {
   bindings: {

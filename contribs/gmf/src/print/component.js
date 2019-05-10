@@ -49,7 +49,7 @@ import 'bootstrap/js/src/dropdown.js';
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('gmfPrintComponent', [
@@ -133,9 +133,9 @@ module.value('gmfPrintState', {
 
 
 /**
- * @param {!JQuery} $element Element.
- * @param {!angular.IAttributes} $attrs Attributes.
- * @param {!function(!JQuery, !angular.IAttributes): string} gmfPrintTemplateUrl Template function.
+ * @param {JQuery} $element Element.
+ * @param {angular.IAttributes} $attrs Attributes.
+ * @param {function(JQuery, angular.IAttributes): string} gmfPrintTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
  * @private
@@ -1239,7 +1239,7 @@ export class PrintController {
 
   /**
    * @param {string} ref Ref.
-   * @param {!angular.IHttpResponse<import('ngeo/print/mapfish-print-v3.js').MapFishPrintStatusResponse>}
+   * @param {angular.IHttpResponse<import('ngeo/print/mapfish-print-v3.js').MapFishPrintStatusResponse>}
    *    resp Response.
    * @private
    */
@@ -1428,7 +1428,7 @@ export class PrintController {
 
   /**
    * Set the current layout and update all layout information with this new layout parameters.
-   * @param {string!} layoutName A layout name as existing in the list of
+   * @param {string} layoutName A layout name as existing in the list of
    *     existing layouts.
    */
   setLayout(layoutName) {

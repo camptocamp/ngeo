@@ -16,7 +16,7 @@ import ngeoMapModule from 'ngeo/map/module.js';
 import ngeoMessagePopup from 'ngeo/message/Popup.js';
 
 
-/** @type {!angular.IModule} **/
+/** @type {angular.IModule} **/
 const module = angular.module('app', [
   'gettext',
   ngeoLayertreeModule.name,
@@ -29,7 +29,7 @@ const module = angular.module('app', [
  * An application-specific component wrapping the ngeo tree layer component.
  * The component includes a controller defining the tree tree.
  *
- * @type {!angular.IComponentOptions}
+ * @type {angular.IComponentOptions}
  */
 const layertreeComponent = {
   bindings: {

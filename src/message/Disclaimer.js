@@ -213,7 +213,7 @@ export class MessageDisclaimerService extends ngeoMessageMessage {
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('ngeoDisclaimer', [

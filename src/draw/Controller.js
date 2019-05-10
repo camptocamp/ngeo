@@ -14,7 +14,7 @@ import olFeature from 'ol/Feature.js';
  */
 export class DrawController {
   /**
-   * @param {!angular.IScope} $scope Scope.
+   * @param {angular.IScope} $scope Scope.
    * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext service.
    * @param {import("ngeo/misc/FeatureHelper.js").FeatureHelper} ngeoFeatureHelper Ngeo feature helper
    *    service.
@@ -31,7 +31,7 @@ export class DrawController {
     /**
      * Alternate collection of features in which to push the drawn features.
      * If not defined, then `ngeoFeatures` is used instead.
-     * @type {?import("ol/Collection.js").default<!import("ol/Feature.js").default>}
+     * @type {?import("ol/Collection.js").default<import("ol/Feature.js").default>}
      */
     this.features = null;
 
@@ -218,7 +218,7 @@ export class DrawController {
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('ngeoDrawfeatureController', [

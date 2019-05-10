@@ -7,7 +7,7 @@ import gmfThemeThemes from 'gmf/theme/Themes.js';
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('GmfEditingFeatureSelectorComponent', [
@@ -83,7 +83,7 @@ module.directive('gmfEditfeatureselector', editingEditFeatureComponent);
 
 
 /**
- * @param {!angular.IScope} $scope Angular scope.
+ * @param {angular.IScope} $scope Angular scope.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes The gmf Themes service.
  * @param {import("gmf/layertree/TreeManager.js").LayertreeTreeManager} gmfTreeManager The gmf TreeManager
@@ -133,7 +133,7 @@ function Controller($scope, $timeout, gmfThemes, gmfTreeManager) {
   // === Injected services ===
 
   /**
-   * @type {!angular.IScope}
+   * @type {angular.IScope}
    * @private
    */
   this.scope_ = $scope;

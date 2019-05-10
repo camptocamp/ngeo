@@ -201,7 +201,7 @@ class DataSource {
 
 
 /**
- * @typedef {!import("ol/Collection.js").default<!DataSource>} DataSources
+ * @typedef {import("ol/Collection.js").default<DataSource>} DataSources
  */
 
 export default DataSource;

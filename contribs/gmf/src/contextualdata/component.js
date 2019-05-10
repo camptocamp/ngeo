@@ -79,7 +79,7 @@ module.directive('gmfContextualdata', contextualDataComponent);
 /**
  * @param {angular.ICompileService} $compile Angular compile service.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
- * @param {!angular.IScope} $scope Scope.
+ * @param {angular.IScope} $scope Scope.
  * @param {import("gmf/raster/RasterService.js").RasterService} gmfRaster Gmf Raster service
  * @param {angular.auto.IInjectorService} $injector Angular injector service.
  *
@@ -162,7 +162,7 @@ ContextualdataController.prototype.init = function() {
 };
 
 /**
- * @param {!Event} event Event.
+ * @param {Event} event Event.
  * @private
  */
 ContextualdataController.prototype.handleMapContextMenu_ = function(event) {

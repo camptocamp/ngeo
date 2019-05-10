@@ -5,7 +5,7 @@ import {MeasueMobileBaseController} from 'gmf/mobile/measure/baseComponent.js';
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('gmfMobileMeasureLength', [
@@ -54,7 +54,7 @@ module.run(
  * @htmlAttribute {import("ol/Map.js").default} gmf-mobile-measurelength-map The map.
  * @htmlAttribute {import("ol/style/Style.js").StyleLike=}
  *     gmf-mobile-measurelength-sketchstyle A style for the measure length.
- * @param {string|function(!JQuery=, !angular.IAttributes=):string}
+ * @param {string|function(JQuery=, angular.IAttributes=):string}
  *     gmfMobileMeasureLengthTemplateUrl Template URL for the directive.
  * @return {angular.IDirective} The Directive Definition Object.
  * @ngInject
@@ -98,9 +98,9 @@ module.directive('gmfMobileMeasurelength', mobileMeasureLenthComponent);
  */
 class Controller extends MeasueMobileBaseController {
   /**
-   * @param {!angular.IScope} $scope Angular scope.
-   * @param {!angular.IFilterService} $filter Angular filter
-   * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
+   * @param {angular.IScope} $scope Angular scope.
+   * @param {angular.IFilterService} $filter Angular filter
+   * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
    * @ngInject
    */
   constructor($scope, $filter, gettextCatalog) {

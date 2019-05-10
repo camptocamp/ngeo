@@ -52,10 +52,10 @@
  * extends GmfBaseNode
  * @typedef {Object} GmfGroup
  * @property {number} id (GmfBaseNode)
- * @property {!GmfMetaData} metadata (GmfBaseNode)
+ * @property {GmfMetaData} metadata (GmfBaseNode)
  * @property {string} name (GmfBaseNode)
- * @property {!Array<!GmfGroup|!GmfLayer>} children
- * @property {!import('ngeo/datasource/OGC.js').Dimensions} dimensions The dimensions managed by the
+ * @property {Array<GmfGroup|GmfLayer>} children
+ * @property {import('ngeo/datasource/OGC.js').Dimensions} dimensions The dimensions managed by the
  *      OpenLayers layer, if the value is null we will take the dimension from the application.
  *      This is present only on non mixed first level group.
  * @property {boolean} mixed A mixed group is a group on which one the layers comes from different sources,
@@ -118,10 +118,10 @@
  * extends GmfLayer
  * @typedef {Object} GmfLayerWMTS
  * @property {number} id (GmfBaseNode)
- * @property {!GmfMetaData} metadata (GmfBaseNode)
+ * @property {GmfMetaData} metadata (GmfBaseNode)
  * @property {string} name (GmfBaseNode)
- * @property {!import('ngeo/datasource/OGC.js').Dimensions} dimensions (GmfLayer)
- * @property {!import('ngeo/datasource/OGC.js').DimensionsFiltersConfig} dimensionsFilters (GmfLayer)
+ * @property {import('ngeo/datasource/OGC.js').Dimensions} dimensions (GmfLayer)
+ * @property {import('ngeo/datasource/OGC.js').DimensionsFiltersConfig} dimensionsFilters (GmfLayer)
  * @property {boolean} [editable] (GmfLayer)
  * @property {string} [style] (GmfLayer)
  * @property {string} type (GmfLayer)
@@ -143,7 +143,7 @@
 
 
 /**
- * @typedef {!Object<string, !GmfOgcServer>} GmfOgcServers
+ * @typedef {Object<string, GmfOgcServer>} GmfOgcServers
  */
 
 
@@ -163,11 +163,11 @@
 
 /**
  * @typedef {Object} GmfFunctionalities
- * @property {Array<!string>} [default_basemap] The default base map.
- * @property {Array<!string>} [open_panel] When set, contains the name of the panel to open upon loading an
+ * @property {Array<string>} [default_basemap] The default base map.
+ * @property {Array<string>} [open_panel] When set, contains the name of the panel to open upon loading an
  *      application.
  *      Note: although this is a list, only one can be defined.
- * @property {Array<!string>} [preset_layer_filter] Name of the layer (data source) that should be toggled
+ * @property {Array<string>} [preset_layer_filter] Name of the layer (data source) that should be toggled
  *      in the filter tool upon loading an application.
  *      Note: although this is a list, only one can be defined.
  */

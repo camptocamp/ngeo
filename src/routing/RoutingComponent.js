@@ -24,7 +24,7 @@ import 'ngeo/sass/font.scss';
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('ngeoRoutingComponent', [
@@ -49,7 +49,7 @@ module.run(
 
 module.value('ngeoRoutingTemplateUrl',
   /**
-   * @param {!angular.IAttributes} $attrs Attributes.
+   * @param {angular.IAttributes} $attrs Attributes.
    * @return {string} Template URL.
    */
   ($attrs) => {
@@ -61,8 +61,8 @@ module.value('ngeoRoutingTemplateUrl',
 
 
 /**
- * @param {!angular.IAttributes} $attrs Attributes.
- * @param {!function(!angular.IAttributes): string} ngeoRoutingTemplateUrl Template function.
+ * @param {angular.IAttributes} $attrs Attributes.
+ * @param {function(angular.IAttributes): string} ngeoRoutingTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
  * @private

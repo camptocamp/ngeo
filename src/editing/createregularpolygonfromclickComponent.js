@@ -5,7 +5,7 @@ import olFeature from 'ol/Feature.js';
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('ngeoCreateregularpolygonfromclick', []);
@@ -75,7 +75,7 @@ module.directive('ngeoCreateregularpolygonfromclick', editingCreateRegularPolygo
 
 
 /**
- * @param {!angular.IScope} $scope Scope.
+ * @param {angular.IScope} $scope Scope.
  * @constructor
  * @private
  * @hidden

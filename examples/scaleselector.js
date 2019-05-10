@@ -9,7 +9,7 @@ import olSourceOSM from 'ol/source/OSM.js';
 import ngeoMapModule from 'ngeo/map/module.js';
 
 
-/** @type {!angular.IModule} **/
+/** @type {angular.IModule} **/
 const module = angular.module('app', [
   'gettext',
   ngeoMapModule.name,
@@ -42,7 +42,7 @@ function MainController($scope) {
 
   /**
    * The zoom level/scale map object for the ngeoScaleselector directive.
-   * @type {!Array<number>}
+   * @type {Array<number>}
    * @const
    */
   this.scales = [200000000, 100000000, 50000000, 25000000, 12000000];

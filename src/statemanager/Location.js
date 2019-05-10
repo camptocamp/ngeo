@@ -52,13 +52,13 @@ export function StatemanagerLocation(location, history) {
   this.path_ = location.pathname;
 
   /**
-   * @type {!Object<string, string>}
+   * @type {Object<string, string>}
    * @private
    */
   this.queryData_ = decodeQueryString(location.search);
 
   /**
-   * @type {!Object<string, string>}
+   * @type {Object<string, string>}
    * @private
    */
   this.fragment_ = decodeQueryString(location.hash);
@@ -285,7 +285,7 @@ StatemanagerLocation.prototype.getFragmentParamKeysWithPrefix = function(prefix)
 
 /**
  * Set or create a param in the location's URI.
- * @param {!Object<string, string>} params Parameters.
+ * @param {Object<string, string>} params Parameters.
  */
 StatemanagerLocation.prototype.updateParams = function(params) {
   for (const key in params) {
@@ -296,7 +296,7 @@ StatemanagerLocation.prototype.updateParams = function(params) {
 
 /**
  * Set or create a param in the fragment of the location's URI.
- * @param {!Object<string, string>} params Parameters.
+ * @param {Object<string, string>} params Parameters.
  */
 StatemanagerLocation.prototype.updateFragmentParams = function(params) {
   for (const key in params) {
@@ -373,7 +373,7 @@ function LocationFactory($rootScope, $window) {
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  * FIXME add utils dependencies.
  */

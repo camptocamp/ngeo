@@ -64,7 +64,7 @@ AutoProjectionService.prototype.getProjectionList = function(projectionsCodes) {
  * @param {import("ol/coordinate.js").Coordinate} coordinates The point to test.
  * @param {import("ol/extent.js").Extent} extent Limits in which coordinates can be valid.
  * @param {import("ol/proj/Projection.js").default} viewProjection Target projection the point.
- * @param {Array<!import("ol/proj/Projection.js").default|!string>=} opt_projections optional array of
+ * @param {Array<import("ol/proj/Projection.js").default|string>=} opt_projections optional array of
  *     projections. The point is tested in each projection, in the order of
  *     the array.
  * @return {?import("ol/coordinate.js").Coordinate} A coordinates in the view's projection if it matches
@@ -98,7 +98,7 @@ AutoProjectionService.prototype.tryProjections = function(coordinates,
  * @param {import("ol/coordinate.js").Coordinate} coordinates The point to test.
  * @param {import("ol/extent.js").Extent} extent Limits in which coordinates can be valid.
  * @param {import("ol/proj/Projection.js").default} viewProjection Target projection the point.
- * @param {Array<!import("ol/proj/Projection.js").default|!string>=} opt_projections optional array of
+ * @param {Array<import("ol/proj/Projection.js").default|string>=} opt_projections optional array of
  *     projections. The point is tested in each projection, in the order of
  *     the array.
  * @return {?import("ol/coordinate.js").Coordinate} A coordinates in the view's projection if it matches
@@ -117,7 +117,7 @@ AutoProjectionService.prototype.tryProjectionsWithInversion = function(
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('ngeoAutoProjection', []);

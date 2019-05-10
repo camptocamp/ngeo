@@ -52,9 +52,9 @@ module.run(
 
 
 /**
- * @param {!JQuery} $element Element.
- * @param {!angular.IAttributes} $attrs Attributes.
- * @param {!function(!JQuery, !angular.IAttributes): string} gmfAuthenticationTemplateUrl Template function.
+ * @param {JQuery} $element Element.
+ * @param {angular.IAttributes} $attrs Attributes.
+ * @param {function(JQuery, angular.IAttributes): string} gmfAuthenticationTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
  * @private
@@ -145,7 +145,7 @@ module.component('gmfAuthentication', authenticationComponent);
  */
 class AuthenticationController {
   /**
-   * @param {!JQuery} $element Element.
+   * @param {JQuery} $element Element.
    * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
    * @param {import("gmf/authentication/Service.js").AuthenticationService} gmfAuthenticationService
    *    GMF Authentication service
@@ -159,7 +159,7 @@ class AuthenticationController {
   constructor($element, gettextCatalog, gmfAuthenticationService, gmfUser, ngeoNotification) {
 
     /**
-     * @type {!JQuery}
+     * @type {JQuery}
      * @private
      */
     this.$element_ = $element;

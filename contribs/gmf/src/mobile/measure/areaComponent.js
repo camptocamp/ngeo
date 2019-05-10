@@ -54,7 +54,7 @@ module.run(
  * @htmlAttribute {import("ol/Map.js").default} gmf-mobile-measurearea-map The map.
  * @htmlAttribute {import("ol/style/Style.js").StyleLike=}
  *     gmf-mobile-measurearea-sketchstyle A style for the measure area.
- * @param {string|function(!JQuery=, !angular.IAttributes=):string}
+ * @param {string|function(JQuery=, angular.IAttributes=):string}
  *     gmfMobileMeasureAreaTemplateUrl Template URL for the directive.
  * @return {angular.IDirective} The Directive Definition Object.
  * @ngInject

@@ -492,10 +492,10 @@ class Measure extends olInteractionInteraction {
 /**
  * Calculate the area of the passed polygon and return a formatted string
  * of the area.
- * @param {!import("ol/geom/Polygon.js").default} polygon Polygon.
- * @param {!import("ol/proj/Projection.js").default} projection Projection of the polygon coords.
+ * @param {import("ol/geom/Polygon.js").default} polygon Polygon.
+ * @param {import("ol/proj/Projection.js").default} projection Projection of the polygon coords.
  * @param {number|undefined} precision Precision.
- * @param {!import('ngeo/misc/filters.js').unitPrefix} format The format function.
+ * @param {import('ngeo/misc/filters.js').unitPrefix} format The format function.
  * @return {string} Formatted string of the area.
  * @hidden
  */
@@ -510,9 +510,9 @@ export function getFormattedArea(polygon, projection, precision, format) {
 
 /**
  * Calculate the area of the passed circle and return a formatted string of the area.
- * @param {!import("ol/geom/Circle.js").default} circle Circle
+ * @param {import("ol/geom/Circle.js").default} circle Circle
  * @param {number|undefined} precision Precision.
- * @param {!import('ngeo/misc/filters.js').unitPrefix} format The format function.
+ * @param {import('ngeo/misc/filters.js').unitPrefix} format The format function.
  * @return {string} Formatted string of the area.
  * @hidden
  */
@@ -525,10 +525,10 @@ export function getFormattedCircleArea(circle, precision, format) {
 /**
  * Calculate the length of the passed line string and return a formatted
  * string of the length.
- * @param {!import("ol/geom/LineString.js").default} lineString Line string.
- * @param {!import("ol/proj/Projection.js").default} projection Projection of the line string coords.
+ * @param {import("ol/geom/LineString.js").default} lineString Line string.
+ * @param {import("ol/proj/Projection.js").default} projection Projection of the line string coords.
  * @param {number|undefined} precision Precision.
- * @param {!import('ngeo/misc/filters.js').unitPrefix} format The format function.
+ * @param {import('ngeo/misc/filters.js').unitPrefix} format The format function.
  * @return {string} Formatted string of length.
  * @hidden
  */
@@ -546,9 +546,9 @@ export function getFormattedLength(lineString, projection, precision, format) {
 
 /**
  * Return a formatted string of the point.
- * @param {!import("ol/geom/Point.js").default} point Point.
+ * @param {import("ol/geom/Point.js").default} point Point.
  * @param {number|undefined} decimals Decimals.
- * @param {!import('ngeo/misc/filters.js').numberCoordinates} format A function to format coordinate into
+ * @param {import('ngeo/misc/filters.js').numberCoordinates} format A function to format coordinate into
  * text
  * @param {string=} opt_template The template.
  * @return {string} Formatted string of coordinate.

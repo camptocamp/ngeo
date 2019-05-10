@@ -12,7 +12,7 @@ import olLayerTile from 'ol/layer/Tile.js';
 import olSourceOSM from 'ol/source/OSM.js';
 
 
-/** @type {!angular.IModule} **/
+/** @type {angular.IModule} **/
 const appmodule = angular.module('app', [
   'gettext',
   ngeoMapModule.name,
@@ -21,7 +21,7 @@ const appmodule = angular.module('app', [
 
 
 /**
- * @type {!angular.IComponentOptions}
+ * @type {angular.IComponentOptions}
  */
 const locationSearchComponent = {
   bindings: {

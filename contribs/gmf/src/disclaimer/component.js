@@ -14,7 +14,7 @@ import 'angular-sanitize';
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('gmfDisclaimer', [
@@ -43,14 +43,14 @@ function forEachDisclaimer(layer, func) {
  *  * disclaimer: The disclaimer text for this element.
  *      For WMS and WMTS layers, layer groups and themes.
  *
- * @param {!JQuery} $element Element.
- * @param {!angular.ISCEService} $sce Angular sce service.
- * @param {!angular.ITimeoutService} $timeout Angular timeout service.
- * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
- * @param {!import("ngeo/message/Disclaimer.js").MessageDisclaimerService} ngeoDisclaimer Ngeo Disclaimer
+ * @param {JQuery} $element Element.
+ * @param {angular.ISCEService} $sce Angular sce service.
+ * @param {angular.ITimeoutService} $timeout Angular timeout service.
+ * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
+ * @param {import("ngeo/message/Disclaimer.js").MessageDisclaimerService} ngeoDisclaimer Ngeo Disclaimer
  *    service.
- * @param {!import("ngeo/misc/EventHelper.js").EventHelper} ngeoEventHelper Ngeo Event Helper.
- * @param {!import("ngeo/map/LayerHelper.js").LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
+ * @param {import("ngeo/misc/EventHelper.js").EventHelper} ngeoEventHelper Ngeo Event Helper.
+ * @param {import("ngeo/map/LayerHelper.js").LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @ngInject
  * @constructor
  * @ngdoc controller
@@ -93,48 +93,48 @@ function DisclamerController(
   this.msg;
 
   /**
-   * @type {!Array<string>}
+   * @type {Array<string>}
    */
   this.msgs_ = [];
 
   /**
-   * @type {!angular.ISCEService}
+   * @type {angular.ISCEService}
    * @private
    */
   this.sce_ = $sce;
 
   /**
-   * @type {!angular.ITimeoutService}
+   * @type {angular.ITimeoutService}
    * @private
    */
   this.timeout_ = $timeout;
 
   /**
-   * @type {!angular.gettext.gettextCatalog}
+   * @type {angular.gettext.gettextCatalog}
    * @private
    */
   this.gettextCatalog_ = gettextCatalog;
 
   /**
-   * @type {!JQuery}
+   * @type {JQuery}
    * @private
    */
   this.element_ = $element;
 
   /**
-   * @type {!import("ngeo/message/Disclaimer.js").MessageDisclaimerService}
+   * @type {import("ngeo/message/Disclaimer.js").MessageDisclaimerService}
    * @private
    */
   this.disclaimer_ = ngeoDisclaimer;
 
   /**
-   * @type {!import("ngeo/misc/EventHelper.js").EventHelper}
+   * @type {import("ngeo/misc/EventHelper.js").EventHelper}
    * @private
    */
   this.eventHelper_ = ngeoEventHelper;
 
   /**
-   * @type {!import("ngeo/map/LayerHelper.js").LayerHelper}
+   * @type {import("ngeo/map/LayerHelper.js").LayerHelper}
    * @private
    */
   this.ngeoLayerHelper_ = ngeoLayerHelper;

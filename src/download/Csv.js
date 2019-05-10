@@ -142,7 +142,7 @@ DownloadCsvService.prototype.startDownload = function(data, columnDefs, fileName
 };
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('ngeoCsvDownload', [

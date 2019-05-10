@@ -22,7 +22,7 @@ import olGeomPoint from 'ol/geom/Point.js';
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('ngeoDesktopGeolocation', [
@@ -101,7 +101,7 @@ function Controller($scope, $element, ngeoFeatureOverlayMgr, ngeoNotification) {
   console.assert(map instanceof olMap);
 
   /**
-   * @type {!import("ol/Map.js").default}
+   * @type {import("ol/Map.js").default}
    * @private
    */
   this.map_ = map;
@@ -111,7 +111,7 @@ function Controller($scope, $element, ngeoFeatureOverlayMgr, ngeoNotification) {
   console.assert(options);
 
   /**
-   * @type {!angular.IScope}
+   * @type {angular.IScope}
    * @private
    */
   this.$scope_ = $scope;

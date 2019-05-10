@@ -48,7 +48,7 @@ import olFormatWFS from 'ol/format/WFS.js';
  * The options for the WFS query service (permalink).
  *
  * @typedef {Object} WfsPermalinkOptions
- * @property {!Array<WfsType>} wfsTypes The queryable WFS types.
+ * @property {Array<WfsType>} wfsTypes The queryable WFS types.
  * @property {number} [pointRecenterZoom] Zoom level to use when result is a single point feature. If not set
  *    the map is not zoomed to a specific zoom level.
  * @property {number} [maxFeatures=50] The maximum number of records per request the query service should ask.
@@ -272,8 +272,8 @@ WfsPermalinkService.prototype.issueRequest_ = function(wfsType, filter, map, sho
 
 
 /**
- * @param {!Array<!Feature>} features Features.
- * @return {!import('ol/extent.js').Extent} The extent of all features.
+ * @param {Array<Feature>} features Features.
+ * @return {import('ol/extent.js').Extent} The extent of all features.
  * @private
  */
 WfsPermalinkService.prototype.getExtent_ = function(features) {
@@ -353,7 +353,7 @@ WfsPermalinkService.or_ = function(filters) {
  * Join a list of filters with a given join function.
  *
  * @param {Array<import("ol/format/filter/Filter.js").default>} filters The filters to join.
- * @param {function(!import("ol/format/filter/Filter.js").default, !import("ol/format/filter/Filter.js").default): import("ol/format/filter/Filter.js").default} joinFn
+ * @param {function(import("ol/format/filter/Filter.js").default, import("ol/format/filter/Filter.js").default): import("ol/format/filter/Filter.js").default} joinFn
  *    The function to join two filters.
  * @return {import("ol/format/filter/Filter.js").default} The joined filters.
  * @private
@@ -384,7 +384,7 @@ WfsPermalinkService.prototype.clearResult_ = function() {
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('ngeoWfsPermalink', [

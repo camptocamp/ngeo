@@ -114,7 +114,7 @@ export class QueryKeyboard {
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('ngeoQueryKeyboard', [

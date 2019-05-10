@@ -22,7 +22,7 @@ import olStyleFill from 'ol/style/Fill.js';
 import 'angular-sanitize';
 
 
-/** @type {!angular.IModule} **/
+/** @type {angular.IModule} **/
 const module = angular.module('app', [
   'gettext',
   ngeoMapModule.name,
@@ -48,7 +48,7 @@ module.run(
  * controller has a property "map" including a reference to the OpenLayers
  * map.
  *
- * @type {!angular.IComponentOptions}
+ * @type {angular.IComponentOptions}
  */
 const measuretoolsComponent = {
   bindings: {
@@ -63,11 +63,11 @@ module.component('appMeasuretools', measuretoolsComponent);
 
 
 /**
- * @param {!angular.IScope} $scope Angular scope.
+ * @param {angular.IScope} $scope Angular scope.
  * @param {angular.ICompileService} $compile Angular compile service.
  * @param {angular.ISCEService} $sce Angular sce service.
  * @param {angular.IFilterService} $filter Angular filter service.
- * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
+ * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @constructor
  * @ngInject
  */

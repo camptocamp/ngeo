@@ -242,7 +242,7 @@ function readExtension_(node, objectStack) {
  * @hidden
  * @param {Element} node Node.
  * @param {Array<*>} objectStack Object stack.
- * @return {!Object<string, string>} Object.
+ * @return {Object<string, string>} Object.
  */
 function readSequence_(node, objectStack) {
   return olXml.pushParseAndPop(

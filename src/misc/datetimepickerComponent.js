@@ -5,7 +5,7 @@ import 'jquery-datetimepicker/jquery.datetimepicker.css';
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('ngeoDateTimePicker', ['gettext']);
@@ -39,8 +39,8 @@ module.directive('ngeoDatetimepicker', dateTimeComponent);
 
 
 /**
- * @param {!JQuery} $element Element.
- * @param {!angular.gettext.gettextCatalog} gettextCatalog service.
+ * @param {JQuery} $element Element.
+ * @param {angular.gettext.gettextCatalog} gettextCatalog service.
  * @constructor
  * @private
  * @hidden
@@ -50,14 +50,14 @@ module.directive('ngeoDatetimepicker', dateTimeComponent);
  */
 function Controller($element, gettextCatalog) {
   /**
-   * @const {!JQuery}
+   * @const {JQuery}
    * @private
    */
   this.element_ = $element;
 
   /**
    * The gettext catalog
-   * @type {!angular.gettext.gettextCatalog}
+   * @type {angular.gettext.gettextCatalog}
    * @private
    */
   this.gettextCatalog_ = gettextCatalog;

@@ -14,7 +14,7 @@ import 'bootstrap/js/src/dropdown.js';
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('ngeoScaleselector', []);
@@ -84,11 +84,11 @@ module.run(
  *
  * See our live example: [../examples/scaleselector.html](../examples/scaleselector.html)
  *
- * @htmlAttribute {!Array<number>} ngeo-scaleselector The available scales.
+ * @htmlAttribute {Array<number>} ngeo-scaleselector The available scales.
  * @htmlAttribute {import("ol/Map.js").default} ngeo-scaleselector-map The map.
  * @htmlAttribute {ScaleselectorOptions} ngeo-scaleselector-options
  *    Optional. The configuration options.
- * @param {string|function(!JQuery=, !angular.IAttributes=): string} ngeoScaleselectorTemplateUrl Template URL
+ * @param {string|function(JQuery=, angular.IAttributes=): string} ngeoScaleselectorTemplateUrl Template URL
  *    for the directive.
  * @return {angular.IDirective} Directive Definition Object.
  * @ngInject
@@ -125,9 +125,9 @@ class ScaleselectorController {
 
     /**
      * The zoom level/scale map object.
-     * @type {!Array<number>}
+     * @type {Array<number>}
      */
-    this.scales = /** @type {!Array<number>} */
+    this.scales = /** @type {Array<number>} */
       ($scope.$eval(scalesExpr));
     console.assert(this.scales !== undefined);
 
@@ -159,7 +159,7 @@ class ScaleselectorController {
     const options = $scope.$eval(optionsExpr);
 
     /**
-     * @type {!ScaleselectorOptions}
+     * @type {ScaleselectorOptions}
      */
     this.options = getOptions_(options);
 
@@ -264,7 +264,7 @@ class ScaleselectorController {
 
 /**
  * @param {?} options Options after expression evaluation.
- * @return {!ScaleselectorOptions} Options object.
+ * @return {ScaleselectorOptions} Options object.
  * @private
  */
 function getOptions_(options) {

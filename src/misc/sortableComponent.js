@@ -12,7 +12,7 @@ import 'jquery-ui-touch-punch';
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('ngeoSortable', []);
@@ -48,7 +48,7 @@ const module = angular.module('ngeoSortable', []);
  * See our live example: [../examples/layerorder.html](../examples/layerorder.html)
  *
  * @htmlAttribute {Array<import("ol/layer/Base.js").default>} ngeo-sortable The layers to sort.
- * @htmlAttribute {!miscSortableOptions} ngeo-sortable-options The options.
+ * @htmlAttribute {miscSortableOptions} ngeo-sortable-options The options.
  * @htmlAttribute {Function(JQuery, Array)?} ngeo-sortable-callback
  *     Callback function called after the move end. The Function will be called
  *     with the element and the sort array as arguments.
@@ -148,7 +148,7 @@ function sortableComponent($timeout) {
 
       /**
        * @param {?} options Options after expression evaluation.
-       * @return {!miscSortableOptions} Options object.
+       * @return {miscSortableOptions} Options object.
        * @private
        */
       function getOptions(options) {

@@ -44,7 +44,7 @@ import 'bootstrap/js/src/collapse.js';
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('gmfLayertreeComponent', [
@@ -86,8 +86,8 @@ module.run(
 
 module.value('gmfLayertreeTemplate',
   /**
-   * @param {!JQuery} $element Element.
-   * @param {!angular.IAttributes} $attrs Attributes.
+   * @param {JQuery} $element Element.
+   * @param {angular.IAttributes} $attrs Attributes.
    * @return {string} Template.
    */
   ($element, $attrs) => {
@@ -103,9 +103,9 @@ module.value('gmfLayertreeTemplate',
 
 
 /**
- * @param {!JQuery} $element Element.
- * @param {!angular.IAttributes} $attrs Attributes.
- * @param {!function(!JQuery, !angular.IAttributes): string} gmfLayertreeTemplate Template function.
+ * @param {JQuery} $element Element.
+ * @param {angular.IAttributes} $attrs Attributes.
+ * @param {function(JQuery, angular.IAttributes): string} gmfLayertreeTemplate Template function.
  * @return {string} Template.
  * @ngInject
  * @private
@@ -184,21 +184,21 @@ module.component('gmfLayertree', layertreeComponent);
 
 /**
  * @param {JQuery} $element Element.
- * @param {!angular.IScope} $scope Angular scope.
- * @param {!import("ngeo/map/LayerHelper.js").LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
+ * @param {angular.IScope} $scope Angular scope.
+ * @param {import("ngeo/map/LayerHelper.js").LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @param {import('gmf/datasource/DataSourceBeingFiltered.js').DataSourceBeingFiltered} gmfDataSourceBeingFiltered
  *    The Gmf value service that determines the data source currently being
  *    filtered.
- * @param {!import("gmf/datasource/ExternalDataSourcesManager.js").ExternalDatSourcesManager}
+ * @param {import("gmf/datasource/ExternalDataSourcesManager.js").ExternalDatSourcesManager}
  *    gmfExternalDataSourcesManager The Gmf external data sources manager
  *    service. Used here to fetch the external WMS groups.
- * @param {!import("gmf/permalink/Permalink.js").PermalinkService} gmfPermalink The gmf permalink service.
- * @param {!import("gmf/layertree/TreeManager.js").LayertreeTreeManager} gmfTreeManager
+ * @param {import("gmf/permalink/Permalink.js").PermalinkService} gmfPermalink The gmf permalink service.
+ * @param {import("gmf/layertree/TreeManager.js").LayertreeTreeManager} gmfTreeManager
  *    gmf Tree Manager service.
- * @param {!import("gmf/layertree/SyncLayertreeMap.js").SyncLayertreeMap} gmfSyncLayertreeMap
+ * @param {import("gmf/layertree/SyncLayertreeMap.js").SyncLayertreeMap} gmfSyncLayertreeMap
  *    gmfSyncLayertreeMap service.
- * @param {!import("ngeo/misc/WMSTime.js").WMSTime} ngeoWMSTime wms time service.
- * @param {!import("gmf/theme/Themes.js").ThemesService} gmfThemes The gmf Themes service.
+ * @param {import("ngeo/misc/WMSTime.js").WMSTime} ngeoWMSTime wms time service.
+ * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes The gmf Themes service.
  * @constructor
  * @private
  * @hidden
@@ -834,7 +834,7 @@ Controller.prototype.isNodeLegendVisible = function(legendNodeId) {
  *   - it supports legend
  *   - it supports having the layer opacity being changed
  *
- * @param {!import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl Ngeo tree controller.
+ * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl Ngeo tree controller.
  * @return {boolean} Whether the layer tree controller supports being
  *     "customized" or not.
  */
@@ -848,12 +848,12 @@ Controller.prototype.supportsCustomization = function(treeCtrl) {
 
 
 /**
- * @param {!import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl Ngeo tree controller.
+ * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl Ngeo tree controller.
  * @return {boolean} Whether the layer tree controller supports having a
  *     legend being shown.
  */
 Controller.prototype.supportsLegend = function(treeCtrl) {
-  const node = /** @type {!import('gmf/themes.js').GmfGroup} */ (treeCtrl.node);
+  const node = /** @type {import('gmf/themes.js').GmfGroup} */ (treeCtrl.node);
   return !!node.metadata &&
     !!node.metadata.legend &&
     !!this.getLegendsObject(treeCtrl);
@@ -861,13 +861,13 @@ Controller.prototype.supportsLegend = function(treeCtrl) {
 
 
 /**
- * @param {!import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl Ngeo tree controller.
+ * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl Ngeo tree controller.
  * @return {boolean} Whether the layer tree controller supports having its
  *     layer opacity being changed or not.
  */
 Controller.prototype.supportsOpacityChange = function(treeCtrl) {
-  const node = /** @type {!import('gmf/themes.js').GmfGroup} */ (treeCtrl.node);
-  const parentNode = /** @type {!import('gmf/themes.js').GmfGroup} */ (treeCtrl.parent.node);
+  const node = /** @type {import('gmf/themes.js').GmfGroup} */ (treeCtrl.node);
+  const parentNode = /** @type {import('gmf/themes.js').GmfGroup} */ (treeCtrl.parent.node);
   return !!treeCtrl.layer &&
     (
       (

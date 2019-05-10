@@ -5,7 +5,7 @@ import gmfFiltersFilterselectorComponent from 'gmf/filters/filterselectorCompone
 import gmfFiltersSavedFilters from 'gmf/filters/SavedFilters.js';
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  */
 export default angular.module('gmfFiltersModule', [
   gmfFiltersFilterselectorComponent.name,

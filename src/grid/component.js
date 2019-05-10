@@ -9,7 +9,7 @@ import 'ngeo/sass/font.scss';
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('ngeoGrid', [
@@ -31,7 +31,7 @@ module.run(
 
 module.value('ngeoGridTemplateUrl',
   /**
-   * @param {!angular.IAttributes} $attrs Attributes.
+   * @param {angular.IAttributes} $attrs Attributes.
    * @return {string} Template URL.
    */
   ($attrs) => {
@@ -42,8 +42,8 @@ module.value('ngeoGridTemplateUrl',
 );
 
 /**
- * @param {!angular.IAttributes} $attrs Attributes.
- * @param {!function(!angular.IAttributes): string} ngeoGridTemplateUrl Template function.
+ * @param {angular.IAttributes} $attrs Attributes.
+ * @param {function(angular.IAttributes): string} ngeoGridTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
  * @private
@@ -83,7 +83,7 @@ module.component('ngeoGrid', gridComponent);
 
 
 /**
- * @param {!angular.IScope} $scope Angular scope.
+ * @param {angular.IScope} $scope Angular scope.
  * @constructor
  * @private
  * @hidden
@@ -94,7 +94,7 @@ module.component('ngeoGrid', gridComponent);
 export function GridController($scope) {
 
   /**
-   * @type {!angular.IScope}
+   * @type {angular.IScope}
    * @private
    */
   this.scope_ = $scope;

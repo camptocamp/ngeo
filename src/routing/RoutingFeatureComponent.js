@@ -17,7 +17,7 @@ import 'ngeo/sass/font.scss';
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('ngeoRoutingFeatureComponent', [
@@ -39,7 +39,7 @@ module.run(
 
 module.value('ngeoRoutingFeatureTemplateUrl',
   /**
-   * @param {!angular.IAttributes} $attrs Attributes.
+   * @param {angular.IAttributes} $attrs Attributes.
    * @return {string} Template URL.
    */
   ($attrs) => {
@@ -50,8 +50,8 @@ module.value('ngeoRoutingFeatureTemplateUrl',
 );
 
 /**
- * @param {!angular.IAttributes} $attrs Attributes.
- * @param {!function(!angular.IAttributes): string} ngeoRoutingFeatureTemplateUrl Template function.
+ * @param {angular.IAttributes} $attrs Attributes.
+ * @param {function(angular.IAttributes): string} ngeoRoutingFeatureTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
  * @private
@@ -63,10 +63,10 @@ function ngeoRoutingFeatureTemplateUrl($attrs, ngeoRoutingFeatureTemplateUrl) {
 
 
 /**
- * @param {!angular.IScope} $scope Angular scope.
+ * @param {angular.IScope} $scope Angular scope.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
- * @param {!angular.IQService} $q Angular q service
- * @param {!import("ngeo/routing/NominatimService.js").NominatimService} ngeoNominatimService service for
+ * @param {angular.IQService} $q Angular q service
+ * @param {import("ngeo/routing/NominatimService.js").NominatimService} ngeoNominatimService service for
  *    Nominatim
  * @constructor
  * @private
@@ -86,7 +86,7 @@ class Controller {
   constructor($scope, $timeout, $q, ngeoNominatimService) {
 
     /**
-     * @type {!angular.IScope}
+     * @type {angular.IScope}
      * @private
      */
     this.scope_ = $scope;

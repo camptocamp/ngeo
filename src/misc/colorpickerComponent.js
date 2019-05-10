@@ -2,7 +2,7 @@ import angular from 'angular';
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('ngeoColorpicker', []);
@@ -42,7 +42,7 @@ module.run(
  *     </div>
  *
  *
- * @param {string|function(!JQuery=, !angular.IAttributes=): string}
+ * @param {string|function(JQuery=, angular.IAttributes=): string}
  *     ngeoColorpickerTemplateUrl Template URL for the directive.
  * @return {angular.IDirective} Directive Definition Object.
  * @ngInject

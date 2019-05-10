@@ -26,7 +26,7 @@ import {select as d3select} from 'd3';
  *
  * @typedef {Object} LineConfiguration
  * @property {string} [color] Color of the line (hex color string).
- * @property {!function(Object): number} zExtractor Extract the elevation of a point (an item of the
+ * @property {function(Object): number} zExtractor Extract the elevation of a point (an item of the
  * elevation data array).
  */
 
@@ -56,7 +56,7 @@ import {select as d3select} from 'd3';
  * @property {ProfileFormatter} [formatter] Formatter giving full control on how numbers are formatted.
  * @property {function(Object): number} distanceExtractor Extract the distance from origin of a point (an
  * item of the elevation data array).
- * @property {!Object<string, LineConfiguration>} linesConfiguration Configuration object for the profile's
+ * @property {Object<string, LineConfiguration>} linesConfiguration Configuration object for the profile's
  * lines. The key string of each object is used as class for its respective svg line.
  * @property {PoiExtractor} [poiExtractor] Extractor for parsing POI data.
  * @property {boolean} [light] Show a simplified profile when true.
@@ -72,7 +72,7 @@ import {select as d3select} from 'd3';
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('ngeoProfile', [

@@ -120,7 +120,7 @@ export function FileService($q, $http, gettext) {
 }
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('ngeoFile', []);

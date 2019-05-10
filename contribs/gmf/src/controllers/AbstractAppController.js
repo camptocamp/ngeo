@@ -263,7 +263,7 @@ export function AbstractAppController(config, map, $scope, $injector) {
   }];
 
   /**
-   * @type {!Object<string, string>}
+   * @type {Object<string, string>}
    */
   this.dimensions = {};
 
@@ -451,7 +451,7 @@ export function AbstractAppController(config, map, $scope, $injector) {
 
   /**
    * Languages URL
-   * @type {!Object<string, string>}
+   * @type {Object<string, string>}
    */
   this.langUrls = $injector.get('langUrls');
 
@@ -781,7 +781,7 @@ export function getLocationIcon() {
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('GmfAbstractAppControllerModule', [

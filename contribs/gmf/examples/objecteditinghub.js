@@ -10,7 +10,7 @@ import {getGeometryAttribute} from 'ngeo/format/XSDAttribute.js';
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('gmfapp', [
@@ -31,7 +31,7 @@ module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 /**
  * @param {angular.IHttpService} $http Angular $http service.
  * @param {angular.IQService} $q Angular $q service.
- * @param {!angular.IScope} $scope Angular scope.
+ * @param {angular.IScope} $scope Angular scope.
  * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes The gmf themes service.
  * @param {import("gmf/editing/XSDAttributes.js").EditingXSDAttributeService} gmfXSDAttributes
  *    The gmf XSDAttributes service.
@@ -406,7 +406,7 @@ MainController.prototype.getGeometryTypeFromCache_ = function(
  * Appends query parameters to a URI.
  *
  * @param {string} uri The original URI, which may already have query data.
- * @param {!Object} params An object where keys are URI-encoded parameter keys,
+ * @param {Object} params An object where keys are URI-encoded parameter keys,
  *     and the values are arbitrary types or arrays.
  * @return {string} The new URI.
  */

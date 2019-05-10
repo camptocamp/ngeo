@@ -12,7 +12,7 @@ import olFeature from 'ol/Feature.js';
 import 'jquery-datetimepicker/jquery.datetimepicker.css';
 
 
-/** @type {!angular.IModule} **/
+/** @type {angular.IModule} **/
 const module = angular.module('gmfapp', [
   'gettext',
   gmfEditingXSDAttributes.name,

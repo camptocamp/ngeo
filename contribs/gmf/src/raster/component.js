@@ -10,7 +10,7 @@ import 'bootstrap/js/src/dropdown.js';
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
 */
 const module = angular.module('gmfRasterComponent', [
@@ -32,7 +32,7 @@ module.run(
 
 module.value('gmfElevationwidgetTemplateUrl',
   /**
-   * @param {!angular.IAttributes} $attrs Attributes.
+   * @param {angular.IAttributes} $attrs Attributes.
    * @return {string} The template url.
    */
   ($attrs) => {
@@ -44,8 +44,8 @@ module.value('gmfElevationwidgetTemplateUrl',
 
 /**
  * @hidden
- * @param {!angular.IAttributes} $attrs Attributes.
- * @param {!function(!angular.IAttributes): string} gmfElevationwidgetTemplateUrl Template function.
+ * @param {angular.IAttributes} $attrs Attributes.
+ * @param {function(angular.IAttributes): string} gmfElevationwidgetTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
  * @private
@@ -148,7 +148,7 @@ module.directive('gmfElevation', rasterComponent);
 function Controller($scope, $filter, ngeoDebounce, gmfRaster, gettextCatalog) {
 
   /**
-   * @type {!angular.IFilterService}
+   * @type {angular.IFilterService}
    * @private
    */
   this.filter_ = $filter;

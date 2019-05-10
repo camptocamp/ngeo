@@ -8,7 +8,7 @@ import olStyleStyle from 'ol/style/Style.js';
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('ngeoMeasurelength', [
@@ -18,11 +18,11 @@ const module = angular.module('ngeoMeasurelength', [
 
 
 /**
- * @param {!angular.ICompileService} $compile Angular compile service.
- * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
- * @param {!angular.IFilterService} $filter Angular filter.
- * @param {!angular.auto.IInjectorService} $injector Main injector.
- * @return {!angular.IDirective} The directive specs.
+ * @param {angular.ICompileService} $compile Angular compile service.
+ * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
+ * @param {angular.IFilterService} $filter Angular filter.
+ * @param {angular.auto.IInjectorService} $injector Main injector.
+ * @return {angular.IDirective} The directive specs.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoDrawpoint
@@ -32,7 +32,7 @@ function measureLengthComponent($compile, gettextCatalog, $filter, $injector) {
     restrict: 'A',
     require: '^^ngeoDrawfeature',
     /**
-     * @param {!angular.IScope} $scope Scope.
+     * @param {angular.IScope} $scope Scope.
      * @param {JQuery} element Element.
      * @param {angular.IAttributes} attrs Attributes.
      * @param {angular.IController=} drawFeatureCtrl Controller.

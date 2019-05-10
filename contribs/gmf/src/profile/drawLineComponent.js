@@ -9,7 +9,7 @@ import {interactionDecoration} from 'ngeo/misc/decorate.js';
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('gmfDrawProfileLine', [
@@ -59,9 +59,9 @@ function profileDarwLineComponent() {
 module.directive('gmfDrawprofileline', profileDarwLineComponent);
 
 /**
- * @param {!angular.IScope} $scope Scope.
- * @param {!angular.ITimeoutService} $timeout Angular timeout service.
- * @param {!import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr Feature overlay
+ * @param {angular.IScope} $scope Scope.
+ * @param {angular.ITimeoutService} $timeout Angular timeout service.
+ * @param {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr Feature overlay
  *    manager.
  * @constructor
  * @private
@@ -116,7 +116,7 @@ function Controller($scope, $timeout, ngeoFeatureOverlayMgr) {
   overlay.setStyle(style);
 
   /**
-   * @type {!import("ol/interaction/Draw.js").default}
+   * @type {import("ol/interaction/Draw.js").default}
    */
   this.interaction = new olInteractionDraw({
     type: 'LineString',

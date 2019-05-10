@@ -15,7 +15,7 @@ import ngeoMapModule from 'ngeo/map/module.js';
 import ngeoProfileElevationComponent from 'ngeo/profile/elevationComponent.js';
 
 
-/** @type {!angular.IModule} **/
+/** @type {angular.IModule} **/
 const module = angular.module('app', [
   'gettext',
   ngeoMapModule.name,

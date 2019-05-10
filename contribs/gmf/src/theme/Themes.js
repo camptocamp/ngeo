@@ -303,7 +303,7 @@ export class ThemesService extends olEventsEventTarget {
 
   /**
    * Get an array of theme objects.
-   * @return {angular.IPromise<Array<!import('gmf/themes.js').GmfTheme>>} Promise.
+   * @return {angular.IPromise<Array<import('gmf/themes.js').GmfTheme>>} Promise.
    */
   getThemesObject() {
     return this.promise_.then(
@@ -333,7 +333,7 @@ export class ThemesService extends olEventsEventTarget {
 
   /**
    * Get the `ogcServers` object.
-   * @return {angular.IPromise<!import('gmf/themes.js').GmfOgcServers>} Promise.
+   * @return {angular.IPromise<import('gmf/themes.js').GmfOgcServers>} Promise.
    */
   getOgcServersObject() {
     console.assert(this.promise_ !== null);
@@ -609,7 +609,7 @@ export const ThemeNodeType = {
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('gmfThemes', [

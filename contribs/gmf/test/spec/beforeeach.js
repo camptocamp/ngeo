@@ -11,7 +11,7 @@ import gmfQueryExtraModule from 'gmf/query/extraModule.js';
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const appModule = angular.module('gmfapp', []);

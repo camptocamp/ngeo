@@ -27,7 +27,7 @@ import olSourceOSM from 'ol/source/OSM.js';
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('gmfapp', [
@@ -60,7 +60,7 @@ module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 class MainController {
 
   /**
-   * @param {!angular.IScope} $scope Angular scope.
+   * @param {angular.IScope} $scope Angular scope.
    * @param {import("gmf/datasource/Manager.js").DatasourceManager} gmfDataSourcesManager The gmf
    *    data sources manager service.
    * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes The gmf themes service.
@@ -76,7 +76,7 @@ class MainController {
   ) {
 
     /**
-     * @type {!angular.IScope}
+     * @type {angular.IScope}
      * @private
      */
     this.scope_ = $scope;

@@ -8,7 +8,7 @@ import gmfPermalinkShareComponent from 'gmf/permalink/shareComponent.js';
 import './share.scss';
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  */
 export default angular.module('gmfPermalinkModule', [
   gmfPermalinkPermalink.name,

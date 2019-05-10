@@ -136,7 +136,7 @@ EditingEditFeature.prototype.deleteFeature = function(layerId, feature) {
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('gmfEditFeature', []);

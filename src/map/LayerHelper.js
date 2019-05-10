@@ -212,10 +212,10 @@ LayerHelper.prototype.createWMTSLayerFromCapabilitites = function(
  * Create and return a WMTS layer using a formatted capabilities response
  * and a capability layer.
  *
- * @param {!Object} capabilities The complete capabilities object of the service
- * @param {!Object} layerCap The layer capability object
+ * @param {Object} capabilities The complete capabilities object of the service
+ * @param {Object} layerCap The layer capability object
  * @param {Object<string, string>=} opt_dimensions WMTS dimensions.
- * @return {!import("ol/layer/Tile.js").default} WMTS layer
+ * @return {import("ol/layer/Tile.js").default} WMTS layer
  */
 LayerHelper.prototype.createWMTSLayerFromCapabilititesObj = function(
   capabilities, layerCap, opt_dimensions
@@ -539,7 +539,7 @@ LayerHelper.prototype.getQuerySourceIds = function(layer) {
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('ngeoLayerHelper', []);

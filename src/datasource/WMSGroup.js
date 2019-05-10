@@ -8,9 +8,9 @@ import {remove as removeFromArray} from 'ol/array.js';
  *
  * extends OGCGroupOptions
  * @typedef {Object} WMSGroupOptions
- * @property {!angular.auto.IInjectorService} injector Angular main injector.
+ * @property {angular.auto.IInjectorService} injector Angular main injector.
  * @property {string} url (WMSGroupOptions)
- * @property {!Array<!import('ngeo/datasource/DataSource.js').default>} dataSources (GroupOptions)
+ * @property {Array<import('ngeo/datasource/DataSource.js').default>} dataSources (GroupOptions)
  * @property {string} title (GroupOptions)
  */
 
@@ -29,7 +29,7 @@ export default class extends ngeoDatasourceOGCGroup {
    * Note: the layer is not added to the map here.
    *
    * @param {WMSGroupOptions} options Options.
-   * @param {!import("ngeo/map/LayerHelper.js").LayerHelper} ngeoLayerHelper the ngeo map LayerHelper service.
+   * @param {import("ngeo/map/LayerHelper.js").LayerHelper} ngeoLayerHelper the ngeo map LayerHelper service.
    */
   constructor(options, ngeoLayerHelper) {
 
@@ -47,13 +47,13 @@ export default class extends ngeoDatasourceOGCGroup {
     this.layer_ = null;
 
     /**
-     * @type {!import("ngeo/map/LayerHelper.js").LayerHelper}
+     * @type {import("ngeo/map/LayerHelper.js").LayerHelper}
      * @private
      */
     this.ngeoLayerHelper_ = ngeoLayerHelper;
 
     /**
-     * @type {!angular.IScope}
+     * @type {angular.IScope}
      * @private
      */
     this.rootScope_ = injector.get('$rootScope');
@@ -61,7 +61,7 @@ export default class extends ngeoDatasourceOGCGroup {
     /**
      * The functions to call to unregister the `watch` event on data sources
      * that are registered. Key is the id of the data source.
-     * @type {!Object<number, Function>}
+     * @type {Object<number, Function>}
      * @private
      */
     this.wmsDataSourceUnregister_ = {};
@@ -191,7 +191,7 @@ export default class extends ngeoDatasourceOGCGroup {
   }
 
   /**
-   * @param {!import("ngeo/datasource/OGC.js").default} dataSource OGC data source to unregister.
+   * @param {import("ngeo/datasource/OGC.js").default} dataSource OGC data source to unregister.
    * @private
    */
   unregisterDataSource_(dataSource) {

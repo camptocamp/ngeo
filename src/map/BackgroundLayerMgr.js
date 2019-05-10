@@ -219,7 +219,7 @@ export class MapBackgroundLayerManager extends olObservable {
 }
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('ngeoBackgroundLayerMgr', [

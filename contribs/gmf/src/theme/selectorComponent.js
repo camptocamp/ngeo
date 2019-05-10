@@ -7,7 +7,7 @@ import 'bootstrap/js/src/dropdown.js';
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('gmfThemeSelectorComponent', [
@@ -29,7 +29,7 @@ module.run(
 
 module.value('gmfThemeSelectorTemplateUrl',
   /**
-   * @param {!angular.IAttributes} $attrs Attributes.
+   * @param {angular.IAttributes} $attrs Attributes.
    * @return {string} The template url.
    */
   ($attrs) => {
@@ -40,8 +40,8 @@ module.value('gmfThemeSelectorTemplateUrl',
 
 
 /**
- * @param {!angular.IAttributes} $attrs Attributes.
- * @param {!function(!angular.IAttributes): string} gmfThemeSelectorTemplateUrl Template function.
+ * @param {angular.IAttributes} $attrs Attributes.
+ * @param {function(angular.IAttributes): string} gmfThemeSelectorTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
  * @private
@@ -88,7 +88,7 @@ function gmfThemeSelectorTemplateUrl($attrs, gmfThemeSelectorTemplateUrl) {
  *
  * @htmlAttribute {Function} gmf-themeselector-filter The themes filter.
  *
- * @type {!angular.IComponentOptions}
+ * @type {angular.IComponentOptions}
  */
 const themeSelectorComponent = {
   bindings: {
@@ -102,7 +102,7 @@ module.component('gmfThemeselector', themeSelectorComponent);
 
 
 /**
- * @param {!angular.IScope} $scope Angular scope.
+ * @param {angular.IScope} $scope Angular scope.
  * @param {import("gmf/theme/Manager.js").ThemeManagerService} gmfThemeManager Tree manager service.
  * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes Themes service.
  * @constructor

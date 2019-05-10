@@ -48,7 +48,7 @@ export class DatasourceWFSAlias {
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('gmfDatasourceWFSAliases', [

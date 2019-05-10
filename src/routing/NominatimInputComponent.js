@@ -4,7 +4,7 @@ import ngeoRoutingNominatimService from 'ngeo/routing/NominatimService.js';
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('ngeoRoutingNominatimInputComponent', [
@@ -26,7 +26,7 @@ module.run(
 
 module.value('ngeoRoutingNominatimInputComponentTemplateUrl',
   /**
-   * @param {!angular.IAttributes} $attrs Attributes.
+   * @param {angular.IAttributes} $attrs Attributes.
    * @return {string} Template URL.
    */
   ($attrs) => {
@@ -38,8 +38,8 @@ module.value('ngeoRoutingNominatimInputComponentTemplateUrl',
 
 
 /**
- * @param {!angular.IAttributes} $attrs Attributes.
- * @param {!function(!angular.IAttributes): string} ngeoRoutingNominatimInputComponentTemplateUrl
+ * @param {angular.IAttributes} $attrs Attributes.
+ * @param {function(angular.IAttributes): string} ngeoRoutingNominatimInputComponentTemplateUrl
  *    Template function.
  * @return {string} Template URL.
  * @ngInject
@@ -54,9 +54,9 @@ function ngeoRoutingNominatimInputComponentTemplateUrl(
 
 
 /**
- * @param {!JQuery} $element Element.
- * @param {!angular.IScope} $scope Scope.
- * @param {!import("ngeo/routing/NominatimService.js").NominatimService} ngeoNominatimService service for
+ * @param {JQuery} $element Element.
+ * @param {angular.IScope} $scope Scope.
+ * @param {import("ngeo/routing/NominatimService.js").NominatimService} ngeoNominatimService service for
  *    Nominatim
  * @constructor
  * @private
@@ -68,7 +68,7 @@ function ngeoRoutingNominatimInputComponentTemplateUrl(
 function Controller($element, $scope, ngeoNominatimService) {
 
   /**
-   * @type {!JQuery}
+   * @type {JQuery}
    * @private
    */
   this.element_ = $element;

@@ -108,7 +108,7 @@ export default class Rule {
    * When the operator is `between`, the `lowerBoundary` and `upperBoundary`
    * properties are used instead of `expression`.
    *
-   * @param {!RuleOptions} options Options.
+   * @param {RuleOptions} options Options.
    */
   constructor(options) {
 
@@ -196,7 +196,7 @@ export default class Rule {
     // === Other properties ===
 
     /**
-     * @type {Array<!import("ol/events.js").EventsKey>}
+     * @type {Array<import("ol/events.js").EventsKey>}
      * @protected
      */
     this.listenerKeys = [];
