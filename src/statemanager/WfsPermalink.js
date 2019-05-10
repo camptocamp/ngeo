@@ -11,7 +11,7 @@ import olFormatWFS from 'ol/format/WFS.js';
 /**
  * Results for a query source.
  * @typedef {Object} QueryResultSource
- * @property {Array<import("ol/Feature.js").default>} features The matching features for this source.
+ * @property {Array<Feature<import("ol/geom/Geometry.js").default>>} features The matching features for this source.
  * @property {number|string} id Identifier (can be not unique).
  * @property {string} label Label.
  * @property {number} [limit] The maximum number of features that can be returned for a query with this
@@ -270,12 +270,12 @@ WfsPermalinkService.prototype.issueRequest_ = function(wfsType, filter, map, sho
 
 
 /**
- * @param {Feature[]} features Features.
+ * @param {Feature<import("ol/geom/Geometry.js").default>[]} features Features.
  * @return {import('ol/extent.js').Extent} The extent of all features.
  * @private
  */
 WfsPermalinkService.prototype.getExtent_ = function(features) {
-  return /** @type{import('ol/extent.js').Extent} */(/** @type{any[]} */(features).reduce(
+  return /** @type {import('ol/extent.js').Extent} */(/** @type {any[]} */(features).reduce(
     (extent, feature) => {
       if (feature instanceof Feature) {
         const geometry = feature.getGeometry();

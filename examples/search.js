@@ -83,18 +83,23 @@ function SearchController($element, $rootScope, $compile, ngeoSearchCreateGeoJSO
   });
 
   /**
-   * @type {Array<Twitter.Typeahead.Dataset<import("ol/Feature.js").default>>}
+   * @type {Array<Twitter.Typeahead.Dataset<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>>}
    */
   this.datasets = [{
     source: bloodhoundEngine.ttAdapter(),
     display: (suggestion) => {
-      const feature = /** @type {import("ol/Feature.js").default} */ (suggestion);
+      const feature = /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>} */ (
+        suggestion
+      );
       return feature.get('label');
     },
     templates: {
       header: () => '<div class="ngeo-header">Addresses</div>',
       suggestion: (suggestion) => {
-        const feature = /** @type {import("ol/Feature.js").default} */ (suggestion);
+        const feature =
+          /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>} */ (
+            suggestion
+          );
 
         // A scope for the ng-click on the suggestion's « i » button.
         const scope = $rootScope.$new(true);
@@ -121,7 +126,9 @@ function SearchController($element, $rootScope, $compile, ngeoSearchCreateGeoJSO
       if (!this.map) {
         throw new Error('Missing map');
       }
-      const feature = /** @type {import('ol/Feature.js').default} */ (suggestion);
+      const feature = /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>} */ (
+        suggestion
+      );
       const featureGeometry = /** @type {import('ol/geom/SimpleGeometry.js').default} */(
         feature.getGeometry()
       );
@@ -129,7 +136,9 @@ function SearchController($element, $rootScope, $compile, ngeoSearchCreateGeoJSO
       if (!size) {
         throw new Error('Missing size');
       }
-      const source = /** @type {olSourceVector} */(this.vectorLayer_.getSource());
+      const source = /** @type {olSourceVector<import("ol/geom/Geometry.js").default>} */(
+        this.vectorLayer_.getSource()
+      );
       source.clear(true);
       source.addFeature(feature);
       this.map.getView().fit(featureGeometry, {

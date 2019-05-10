@@ -46,12 +46,11 @@ export default class extends ngeoInteractionMeasure {
   /**
    * @param {import("ol/style/Style.js").StyleLike} style The sketchStyle used for the drawing
    *    interaction.
-   * @param {import('ol/source/Vector.js').default} source Vector source.
+   * @param {import('ol/source/Vector.js').default<import("ol/geom/LineString.js").default>} source Vector source.
    * @return {?import("ol/interaction/Draw.js").default|import("ngeo/interaction/DrawAzimut.js").default|
    *    import("ngeo/interaction/MobileDraw.js").default} The interaction
    */
   createDrawInteraction(style, source) {
-
     return new ngeoInteractionDrawAzimut({
       source,
       style

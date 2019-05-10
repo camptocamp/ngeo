@@ -96,7 +96,7 @@ module.directive('gmfDrawfeature', drawinfDrawFeatureComponent);
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @param {import("ngeo/misc/FeatureHelper.js").FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
- * @param {import("ol/Collection.js").default<import("ol/Feature.js").default>} ngeoFeatures Collection
+ * @param {import("ol/Collection.js").default<Feature<import("ol/geom/Geometry.js").default>>} ngeoFeatures Collection
  *    of features.
  * @param {import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate
  *    manager service.
@@ -164,7 +164,7 @@ function Controller($scope, $timeout, gettextCatalog, ngeoFeatureHelper, ngeoFea
   this.featureHelper_ = ngeoFeatureHelper;
 
   /**
-   * @type {import("ol/Collection.js").default<import("ol/Feature.js").default>}
+   * @type {import("ol/Collection.js").default<Feature<import("ol/geom/Geometry.js").default>>}
    */
   this.features = ngeoFeatures;
 
@@ -175,12 +175,12 @@ function Controller($scope, $timeout, gettextCatalog, ngeoFeatureHelper, ngeoFea
   this.ngeoToolActivateMgr_ = ngeoToolActivateMgr;
 
   /**
-   * @type {?import("ol/Feature.js").default}
+   * @type {?Feature<import("ol/geom/Geometry.js").default>}
    */
   this.selectedFeature = null;
 
   /**
-   * @type {import("ol/Collection.js").default<import("ol/Feature.js").default>}
+   * @type {import("ol/Collection.js").default<Feature<import("ol/geom/Geometry.js").default>>}
    */
   this.selectedFeatures = new olCollection();
 
@@ -460,7 +460,7 @@ Controller.prototype.handleActiveChange_ = function(active) {
  * Method called when a selection occurs from the list, i.e. when an item in
  * the list of features is clicked. Called from the template, so no need to
  * update Angular's scope.
- * @param {import("ol/Feature.js").default} feature Feature to select.
+ * @param {Feature<import("ol/geom/Geometry.js").default>} feature Feature to select.
  */
 Controller.prototype.selectFeatureFromList = function(feature) {
   this.listSelectionInProgress_ = true;
@@ -470,7 +470,7 @@ Controller.prototype.selectFeatureFromList = function(feature) {
 
 
 /**
- * @return {Array<import("ol/Feature.js").default>} Array.
+ * @return {Array<Feature<import("ol/geom/Geometry.js").default>>} Array.
  */
 Controller.prototype.getFeaturesArray = function() {
   return this.features.getArray();
@@ -490,7 +490,7 @@ Controller.prototype.clearFeatures = function() {
 
 
 /**
- * @param {import("ol/Feature.js").default} feature The feature to remove from the selection.
+ * @param {Feature<import("ol/geom/Geometry.js").default>} feature The feature to remove from the selection.
  */
 Controller.prototype.removeFeature = function(feature) {
   const gettextCatalog = this.gettextCatalog_;
@@ -510,7 +510,7 @@ Controller.prototype.handleFeaturesAdd_ = function(evt) {
   if (evt instanceof CollectionEvent) {
     // timeout to prevent double-click to zoom the map
     this.timeout_(() => {
-      this.selectedFeature = /** @type {import("ol/Feature.js").default} */ (evt.element);
+      this.selectedFeature = /** @type {Feature<import("ol/geom/Geometry.js").default>} */ (evt.element);
       this.drawActive = false;
       this.scope_.$apply();
     });
@@ -634,21 +634,23 @@ Controller.prototype.handleMapContextMenu_ = function(evt) {
     const pixel = this.map.getEventPixel(evt);
     const coordinate = this.map.getCoordinateFromPixel(pixel);
 
-    let feature = this.map.forEachFeatureAtPixel(
-      pixel,
-      (feature) => {
-        if (feature instanceof Feature) {
-          let ret = null;
-          if (this.features.getArray().includes(feature)) {
-            ret = feature;
+    let feature = /** @type {?import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>} */ (
+      this.map.forEachFeatureAtPixel(
+        pixel,
+        (feature) => {
+          if (feature instanceof Feature) {
+            let ret = null;
+            if (this.features.getArray().includes(feature)) {
+              ret = feature;
+            }
+            return ret;
           }
-          return ret;
+        },
+        {
+          hitTolerance: 7,
+          layerFilter: undefined
         }
-      },
-      {
-        hitTolerance: 7,
-        layerFilter: undefined
-      }
+      )
     );
 
     feature = feature ? feature : null;
@@ -711,7 +713,7 @@ Controller.prototype.handleMapContextMenu_ = function(evt) {
 
     this.modify_.setActive(true);
 
-    this.selectedFeature = /** @type import('ol/Feature.js').default */ (feature);
+    this.selectedFeature = feature;
 
     this.scope_.$apply();
   }

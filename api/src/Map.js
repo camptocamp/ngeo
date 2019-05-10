@@ -117,9 +117,10 @@ class Map {
       }
       this.map_.addControl(new OverviewMap({
         collapsed: !options.miniMapExpanded,
+        layers: [],
         view: new View({
           projection: this.view_.getProjection(),
-          resolutions
+          resolutions,
         })
       }));
     }
@@ -151,7 +152,7 @@ class Map {
 
     /**
      * @private
-     * @type {VectorSource}
+     * @type {VectorSource<import("ol/geom/Geometry.js").default>}
      */
     this.vectorSource_ = new VectorSource();
 

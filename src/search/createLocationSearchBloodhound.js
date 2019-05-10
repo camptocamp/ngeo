@@ -55,7 +55,7 @@ import 'corejs-typeahead';
 
 /**
  * @param {LocationSearchOptions=} opt_options Options.
- * @return {Bloodhound<olFeature[]>} The Bloodhound object.
+ * @return {Bloodhound<olFeature<import('ol/geom/Geometry.js').default>[]>} The Bloodhound object.
  * @private
  * @hidden
  */
@@ -103,7 +103,7 @@ function createLocationSearchBloodhound(opt_options) {
     }
   };
 
-  /** @type {Bloodhound.BloodhoundOptions<olFeature[]|Results>} */
+  /** @type {Bloodhound.BloodhoundOptions<olFeature<import('ol/geom/Geometry.js').default>[]|Results>} */
   const bloodhoundOptions = {
     remote: {
       url: 'https://api3.geo.admin.ch/rest/services/api/SearchServer?type=locations&searchText=%QUERY',
@@ -182,7 +182,9 @@ function createLocationSearchBloodhound(opt_options) {
   Object.assign(bloodhoundOptions, bhOptions);
   Object.assign(bloodhoundOptions.remote, remoteOptions);
 
-  return /** @type {Bloodhound<olFeature[]>} */(new Bloodhound(bloodhoundOptions));
+  return /** @type {Bloodhound<olFeature<import('ol/geom/Geometry.js').default>[]>} */(
+    new Bloodhound(bloodhoundOptions)
+  );
 }
 
 
@@ -210,7 +212,7 @@ module.value('ngeoCreateLocationSearchBloodhound', createLocationSearchBloodhoun
  *     });
  *     bloodhound.initialize();
  *
- * @typedef {function(LocationSearchOptions=):Bloodhound<olFeature[]>}
+ * @typedef {function(LocationSearchOptions=):Bloodhound<olFeature<import('ol/geom/Geometry.js').default>[]>}
  * @ngdoc service
  * @ngname search.createLocationSearchBloodhound
  * @private

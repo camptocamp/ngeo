@@ -51,7 +51,7 @@ function SearchController(ngeoCreateLocationSearchBloodhound) {
   this.map = null;
 
   const limit = 10;
-  /** @type {Bloodhound<import("ol/Feature.js").default[]>} */
+  /** @type {Bloodhound<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>[]>} */
   const bloodhoundEngine = this.createAndInitBloodhound_(ngeoCreateLocationSearchBloodhound, limit);
 
   /**
@@ -64,7 +64,7 @@ function SearchController(ngeoCreateLocationSearchBloodhound) {
   });
 
   /**
-   * @type {Array<Twitter.Typeahead.Dataset<import("ol/Feature.js").default>>}
+   * @type {Array<Twitter.Typeahead.Dataset<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>>}
    */
   this.datasets = [{
     source: bloodhoundEngine.ttAdapter(),
@@ -83,14 +83,16 @@ function SearchController(ngeoCreateLocationSearchBloodhound) {
   }];
 
   /**
-   * @type {import('ngeo/search/searchDirective.js').SearchDirectiveListeners<import("ol/Feature.js").default>}
+   * @type {import('ngeo/search/searchDirective.js').SearchDirectiveListeners<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>}
    */
   this.listeners = {
     select: (event, suggestion, dataset) => {
       if (!this.map) {
         throw new Error('Missing map');
       }
-      const feature = /** @type {import("ol/Feature.js").default} */ (suggestion);
+      const feature = /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>} */ (
+        suggestion
+      );
       const bbox = /** @type {import("ol/extent.js").Extent} */ (feature.get('bbox'));
       const size = this.map.getSize();
       if (!size) {
@@ -108,7 +110,7 @@ function SearchController(ngeoCreateLocationSearchBloodhound) {
  * @param {import("ngeo/search/createLocationSearchBloodhound.js").createLocationSearchBloodhoundFunction} ngeoCreateLocationSearchBloodhound
  *     Bloodhound service.
  * @param {number} limit Limit.
- * @return {Bloodhound<import("ol/Feature.js").default[]>} The bloodhound engine.
+ * @return {Bloodhound<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>[]>} The bloodhound engine.
  * @private
  */
 SearchController.prototype.createAndInitBloodhound_ = function(ngeoCreateLocationSearchBloodhound, limit) {

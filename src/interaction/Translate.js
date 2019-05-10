@@ -14,7 +14,7 @@ import {CollectionEvent} from 'ol/Collection.js';
 
 /**
  * @typedef {Object} TranslateOptions
- * @property {import("ol/Collection.js").default<import("ol/Feature.js").default>} [features] Only features
+ * @property {import("ol/Collection.js").default<olFeature<import("ol/geom/Geometry.js").default>>} [features] Only features
  *    contained in this collection will be able to be translated. If not specified, all features on the map
  *    will be able to be translated.
  * @property {import("ol/style/Style.js").StyleLike} [style] Style for the center features added by the
@@ -57,13 +57,13 @@ export default class extends olInteractionTranslate {
     this.keyPressListenerKey_ = null;
 
     /**
-     * @type {?import("ol/Collection.js").default<import("ol/Feature.js").default>}
+     * @type {?import("ol/Collection.js").default<olFeature<import("ol/geom/Geometry.js").default>>}
      * @private
      */
     this.myFeatures_ = options.features !== undefined ? options.features : null;
 
     /**
-     * @type {import("ol/source/Vector.js").default}
+     * @type {import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>}
      * @private
      */
     this.vectorSource_ = new olSourceVector({
@@ -82,7 +82,7 @@ export default class extends olInteractionTranslate {
     });
 
     /**
-     * @type {Object<string, import("ol/Feature.js").default>}
+     * @type {Object<string, olFeature<import("ol/geom/Geometry.js").default>>}
      * @private
      */
     this.centerFeatures_ = {};
@@ -190,13 +190,13 @@ export default class extends olInteractionTranslate {
    */
   handleFeaturesRemove_(evt) {
     if (evt instanceof CollectionEvent) {
-      const feature = /** @type {import("ol/Feature.js").default} */ (evt.element);
+      const feature = /** @type {olFeature<import("ol/geom/Geometry.js").default>} */ (evt.element);
       this.removeFeature_(feature);
     }
   }
 
   /**
-   * @param {import("ol/Feature.js").default} feature Feature.
+   * @param {olFeature<import("ol/geom/Geometry.js").default>} feature Feature.
    * @private
    */
   addFeature_(feature) {
@@ -220,7 +220,7 @@ export default class extends olInteractionTranslate {
   }
 
   /**
-   * @param {import("ol/Feature.js").default} feature Feature.
+   * @param {olFeature<import("ol/geom/Geometry.js").default>} feature Feature.
    * @private
    */
   removeFeature_(feature) {
@@ -235,7 +235,7 @@ export default class extends olInteractionTranslate {
   }
 
   /**
-   * @param {import("ol/Feature.js").default} feature Feature being moved.
+   * @param {olFeature<import("ol/geom/Geometry.js").default>} feature Feature being moved.
    * @param {Event|import("ol/events/Event.js").default} evt Event.
    * @private
    */

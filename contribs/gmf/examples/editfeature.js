@@ -96,7 +96,7 @@ function MainController($scope, gmfEditFeature, gmfUser) {
   this.layerId_ = 113;
 
   /**
-   * @type {?import("ol/Feature.js").default}
+   * @type {?olFeature<import("ol/geom/Geometry.js").default>}
    */
   this.feature = null;
 
@@ -167,7 +167,7 @@ MainController.prototype.handleMapSingleClick_ = function(evt) {
 
 
 /**
- * @param {Array<import("ol/Feature.js").default>} features Features.
+ * @param {Array<olFeature<import("ol/geom/Geometry.js").default>>} features Features.
  * @private
  */
 MainController.prototype.handleGetFeatures_ = function(features) {

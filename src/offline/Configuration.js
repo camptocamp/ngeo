@@ -222,14 +222,13 @@ const exports = class extends olObservable {
 
   /**
     * @param {import("ol/Map.js").default} map A map
-    * @param {import("ol/layer/Layer.js").default} layer A layer
+    * @param {import("ol/layer/Layer.js").default<import("ol/source/Source.js").default>} layer A layer
     * @param {Array<import("ol/layer/Group.js").default>} ancestors The ancestors of that layer
     * @param {import("ol/extent.js").Extent} userExtent The extent selected by the user.
     * @return {Array<import("./index.js").OfflineExtentByZoom>} The extent to download per zoom level
    */
   getExtentByZoom(map, layer, ancestors, userExtent) {
     const currentZoom = /** @type {!number} */ (map.getView().getZoom());
-    // const viewportExtent = map.calculateExtent(map.getSize());
 
     /**
      * @type {import("./index.js").OfflineExtentByZoom[]}
@@ -354,7 +353,7 @@ const exports = class extends olObservable {
 
   /**
    * @param {import("./index.js").OfflinePersistentLayer} offlineLayer The layer to recreate
-   * @return {?import("ol/layer/Layer.js").default} the layer.
+   * @return {?import("ol/layer/Layer.js").default<import("ol/source/Source.js").default>} the layer.
    */
   recreateOfflineLayer(offlineLayer) {
     if (offlineLayer.layerType === 'tile') {

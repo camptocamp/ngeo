@@ -291,14 +291,17 @@ LayerHelper.prototype.getGroupFromMap = function(map, groupName) {
  * Get an array of all layers in a group. The group can contain multiple levels
  * of others groups.
  * @param {import("ol/layer/Base.js").default} layer The base layer, mostly a group of layers.
- * @return {Array<import("ol/layer/Layer.js").default>} Layers.
+ * @return {Array<import("ol/layer/Layer.js").default<import('ol/source/Source.js').default>>} Layers.
  */
 LayerHelper.prototype.getFlatLayers = function(layer) {
   if (layer instanceof olLayerGroup) {
-    const sublayers = layer.getLayers().getArray();
+    const sublayers =
+      /** @type {import("ol/layer/Layer.js").default<import('ol/source/Source.js').default>[]} */(
+        layer.getLayers().getArray()
+      );
     const hasGroupLayer = sublayers.some(sublayer => sublayer instanceof olLayerGroup);
     if (!hasGroupLayer) {
-      return /** @type {Array<import("ol/layer/Layer.js").default>} */(sublayers.slice());
+      return sublayers.slice();
     }
   }
   return this.getFlatLayers_(layer, [], undefined);
@@ -312,9 +315,9 @@ LayerHelper.prototype.getFlatLayers = function(layer) {
  * Computed opacity is a custom 'back-up' value that contains
  * the calculated value of all ancestors and the given layer.
  * @param {import("ol/layer/Base.js").default} layer The base layer, mostly a group of layers.
- * @param {olLayerLayer[]} array An array to add layers.
+ * @param {olLayerLayer<import('ol/source/Source.js').default>[]} array An array to add layers.
  * @param {number|undefined} computedOpacity Opacity inherited from ancestor layer groups.
- * @return {olLayerLayer[]} Layers.
+ * @return {olLayerLayer<import('ol/source/Source.js').default>[]} Layers.
  * @private
  */
 LayerHelper.prototype.getFlatLayers_ = function(layer, array, computedOpacity) {

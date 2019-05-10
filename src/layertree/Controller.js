@@ -124,7 +124,8 @@ export function LayertreeController($scope, $rootScope, $attrs) {
   this.nodelayerExpr = nodelayerExpr;
 
   /**
-   * @type {?import("ol/layer/Layer.js").default|import("ol/layer/Group.js").default}
+   * @type {?import("ol/layer/Layer.js").default<import('ol/source/Source.js').default>|
+   *    import("ol/layer/Group.js").default}
    */
   this.layer = null;
   if (!isRoot) {
@@ -374,7 +375,7 @@ export const LayertreeVisitorDecision = {
 
 
 /**
- * @typedef {function(LayertreeController): (!LayertreeVisitorDecision|void)} Visitor
+ * @typedef {function(LayertreeController): (LayertreeVisitorDecision|undefined|void)} Visitor
  */
 
 

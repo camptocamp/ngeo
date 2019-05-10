@@ -15,14 +15,14 @@ import olFormatWFS from 'ol/format/WFS.js';
  *
  * @param {string} layer Name of the layer to query
  * @param {string[]} ids List of ids
- * @return {Promise<Array<import('ol/Feature.js').default>>} Promise.
+ * @return {Promise<Array<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>>} Promise.
  * @hidden
  */
 export function getFeaturesFromLayer(layer, ids) {
   return new Promise((resolve, reject) => {
     getOverlayDefs().then((overlayDefs) => {
 
-      /** @type {Array<import('ol/Feature.js').default>} */
+      /** @type {Array<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>} */
       let features = [];
       const overlayDef = overlayDefs.get(layer);
 

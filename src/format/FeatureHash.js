@@ -3,7 +3,7 @@ import ngeoFormatFeatureHashStyleType from 'ngeo/format/FeatureHashStyleType.js'
 import {rgbArrayToHex} from 'ngeo/utils.js';
 import {asArray as asColorArray} from 'ol/color.js';
 import olFeature from 'ol/Feature.js';
-import * as olFormatFeature from 'ol/format/Feature.js';
+import {transformGeometryWithOptions} from 'ol/format/Feature.js';
 import olFormatTextFeature from 'ol/format/TextFeature.js';
 import olGeomGeometryLayout from 'ol/geom/GeometryLayout.js';
 import olGeomLineString from 'ol/geom/LineString.js';
@@ -25,9 +25,9 @@ import Geometry from 'ol/geom/Geometry.js';
  *
  * @typedef {Object} FeatureHashOptions
  * @property {number} [accuracy] The encoding and decoding accuracy. Optional. Default value is 1.
- * @property {Object<string, function(import("ol/Feature.js").default)>} [defaultValues] defaultValues.
+ * @property {Object<string, function(olFeature<import("ol/geom/Geometry.js").default>)>} [defaultValues] defaultValues.
  * @property {boolean} [encodeStyles=true] Encode styles. Optional.
- * @property {function(import("ol/Feature.js").default): Object<string, (string|number|undefined)>} [properties]
+ * @property {function(olFeature<import("ol/geom/Geometry.js").default>): Object<string, (string|number|undefined)>} [properties]
  *    A function that returns serializable properties for a feature. Optional. By default the feature
  *    properties (as returned by `feature.getProperties()`) are used. To be serializable the returned
  *    properties should be numbers or strings.
@@ -155,7 +155,7 @@ class FeatureHash extends olFormatTextFeature {
     this.encodeStyles_ = options.encodeStyles || true;
 
     /**
-     * @type {function(import("ol/Feature.js").default):Object<string, (string|number|undefined)>}
+     * @type {function(olFeature<import("ol/geom/Geometry.js").default>):Object<string, (string|number|undefined)>}
      * @private
      */
     this.propertiesFunction_ = options.properties || defaultPropertiesFunction_;
@@ -185,7 +185,7 @@ class FeatureHash extends olFormatTextFeature {
     LegacyProperties_ = options.propertiesType || {};
 
     /**
-     * @type {Object<string, function(import("ol/Feature.js").default): void>}
+     * @type {Object<string, function(olFeature<import("ol/geom/Geometry.js").default>): void>}
      * @private
      */
     this.defaultValues_ = options.defaultValues || {};
@@ -266,7 +266,7 @@ class FeatureHash extends olFormatTextFeature {
    * Read a feature from a logical sequence of characters.
    * @param {string} text Text.
    * @param {import('ol/format/Feature.js').ReadOptions=} opt_options Read options.
-   * @return {import("ol/Feature.js").default} Feature.
+   * @return {olFeature<import("ol/geom/Geometry.js").default>} Feature.
    * @protected
    * @override
    */
@@ -316,7 +316,7 @@ class FeatureHash extends olFormatTextFeature {
    * Read multiple features from a logical sequence of characters.
    * @param {string} text Text.
    * @param {import('ol/format/Feature.js').ReadOptions=} opt_options Read options.
-   * @return {Array<import("ol/Feature.js").default>} Features.
+   * @return {Array<olFeature<import("ol/geom/Geometry.js").default>>} Features.
    * @protected
    * @override
    */
@@ -324,7 +324,7 @@ class FeatureHash extends olFormatTextFeature {
     console.assert(text[0] === 'F');
     this.prevX_ = 0;
     this.prevY_ = 0;
-    /** @type {Array<import("ol/Feature.js").default>} */
+    /** @type {Array<olFeature<import("ol/geom/Geometry.js").default>>} */
     const features = [];
     text = text.substring(1);
     while (text.length > 0) {
@@ -364,7 +364,7 @@ class FeatureHash extends olFormatTextFeature {
 
   /**
    * Encode a feature into a logical sequence of characters.
-   * @param {import("ol/Feature.js").default} feature Feature.
+   * @param {olFeature<import("ol/geom/Geometry.js").default>} feature Feature.
    * @param {import('ol/format/Feature.js').ReadOptions=} opt_options Read options.
    * @return {string} Encoded feature.
    * @protected
@@ -440,7 +440,7 @@ class FeatureHash extends olFormatTextFeature {
 
   /**
    * Encode an array of features into a logical sequence of characters.
-   * @param {Array<import("ol/Feature.js").default>} features Feature.
+   * @param {Array<olFeature<import("ol/geom/Geometry.js").default>>} features Feature.
    * @param {import('ol/format/Feature.js').ReadOptions=} opt_options Read options.
    * @return {string} Encoded features.
    * @protected
@@ -470,7 +470,7 @@ class FeatureHash extends olFormatTextFeature {
   writeGeometryText(geometry, opt_options) {
     const geometryWriter = GEOMETRY_WRITERS_[geometry.getType()];
     console.assert(geometryWriter !== undefined);
-    const transformedGeometry = olFormatFeature.transformWithOptions(geometry, true, opt_options);
+    const transformedGeometry = transformGeometryWithOptions(geometry, true, opt_options);
     if (!(transformedGeometry instanceof Geometry)) {
       throw new Error('Missing transformedGeometry');
     }
@@ -486,7 +486,7 @@ export default FeatureHash;
 
 /**
  * Get features's properties.
- * @param {import("ol/Feature.js").default} feature Feature.
+ * @param {olFeature<import("ol/geom/Geometry.js").default>} feature Feature.
  * @return {Object<string, (string|number|undefined)>} The feature properties to
  * serialize.
  * @private
@@ -858,7 +858,7 @@ function readMultiPolygonGeometry_(text) {
  * Read a logical sequence of characters and apply the decoded style on the
  * given feature.
  * @param {string} text Text.
- * @param {import("ol/Feature.js").default} feature Feature.
+ * @param {olFeature<import("ol/geom/Geometry.js").default>} feature Feature.
  * @private
  * @hidden
  */
@@ -939,7 +939,7 @@ function setStyleInFeature_(text, feature) {
  * style properties for the feature. Legacy keys are converted to the new ones
  * for compatibility.
  * @param {string} text Text.
- * @param {import("ol/Feature.js").default} feature Feature.
+ * @param {olFeature<import("ol/geom/Geometry.js").default>} feature Feature.
  * @private
  * @hidden
  */
@@ -1039,7 +1039,7 @@ function castValue_(key, value) {
  * depending on the property. Some properties are also deleted when they don't
  * match the geometry of the feature.
  * @param {string} text Text.
- * @param {import("ol/Feature.js").default} feature Feature.
+ * @param {olFeature<import("ol/geom/Geometry.js").default>} feature Feature.
  * @return {Object<string, boolean|number|string|undefined>} The style properties for the feature.
  * @private
  * @hidden

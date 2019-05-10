@@ -34,7 +34,7 @@ import VectorSource from 'ol/source/Vector.js';
 
 /**
   * @typedef {Object} MeasureEventItem
-  * @property {import("ol/Feature.js").default} feature
+  * @property {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>} feature
   */
 
 /**
@@ -97,7 +97,7 @@ class Measure extends olInteractionInteraction {
 
     /**
      * The sketch feature.
-     * @type {?import("ol/Feature.js").default}
+     * @type {?import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>}
      * @protected
      */
     this.sketchFeature = null;
@@ -231,7 +231,7 @@ class Measure extends olInteractionInteraction {
    * @abstract
    * @param {import("ol/style/Style.js").StyleLike} style The sketchStyle used for the drawing
    *    interaction.
-   * @param {VectorSource} source Vector source.
+   * @param {VectorSource<import("ol/geom/Geometry.js").default>} source Vector source.
    * @return {?import("ol/interaction/Draw.js").default|import("ngeo/interaction/DrawAzimut.js").default|import("ngeo/interaction/MobileDraw.js").default}
    *    The interaction
    * @protected

@@ -74,7 +74,7 @@ function MainController(gmfObjectEditingManager, gmfThemes,
   projection.setExtent([485869.5728, 76443.1884, 837076.5648, 299941.7864]);
 
   /**
-   * @type {import("ol/source/Vector.js").default}
+   * @type {import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>}
    * @private
    */
   this.vectorSource_ = new olSourceVector({
@@ -90,7 +90,7 @@ function MainController(gmfObjectEditingManager, gmfThemes,
   });
 
   /**
-   * @type {import("ol/Collection.js").default<import("ol/Feature.js").default>}
+   * @type {import("ol/Collection.js").default<import("ol/Feature.js").default<import("ol/geom/Geometry.js").default>>}
    */
   this.sketchFeatures = new olCollection();
 
@@ -161,7 +161,7 @@ function MainController(gmfObjectEditingManager, gmfThemes,
     'mapTools', dummyToolActivate, false);
 
   /**
-   * @type {?import("ol/Feature.js").default}
+   * @type {?import("ol/Feature.js").default<import("ol/geom/Geometry.js").default>}
    */
   this.objectEditingFeature = null;
 

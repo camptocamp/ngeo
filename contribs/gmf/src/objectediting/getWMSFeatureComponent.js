@@ -80,7 +80,7 @@ function Controller($scope, gmfObjectEditingQuery) {
   );
 
   /**
-   * @type {?import("ol/Collection.js").default<import('ol/Feature.js').default>}
+   * @type {?import("ol/Collection.js").default<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>}
    */
   this.features = null;
 

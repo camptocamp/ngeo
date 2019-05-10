@@ -42,7 +42,7 @@ function MainController($scope) {
 
   /**
    * @private
-   * @type {import("ol/source/Vector.js").default}
+   * @type {import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>}
    */
   this.vectorSource_ = new olSourceVector();
 

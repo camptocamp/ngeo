@@ -1,5 +1,6 @@
 {
     "compilerOptions": {
+      "pretty": false,
       /* Basic Options */
       "target": "ES6",
       "module": "system",

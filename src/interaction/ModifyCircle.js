@@ -40,7 +40,7 @@ export default class extends olInteractionPointer {
 
     /**
      * Editing vertex.
-     * @type {?import("ol/Feature.js").default}
+     * @type {?olFeature<import("ol/geom/Geometry.js").default>}
      * @private
      */
     this.vertexFeature_ = null;
@@ -107,7 +107,7 @@ export default class extends olInteractionPointer {
     });
 
     /**
-     * @type {import("ol/Collection.js").default<import("ol/Feature.js").default>}
+     * @type {import("ol/Collection.js").default<olFeature<import("ol/geom/Geometry.js").default>>}
      * @private
      */
     this.features_ = options.features;
@@ -119,7 +119,7 @@ export default class extends olInteractionPointer {
   }
 
   /**
-   * @param {import("ol/Feature.js").default} feature Feature.
+   * @param {olFeature<import("ol/geom/Geometry.js").default>} feature Feature.
    * @private
    */
   addFeature_(feature) {
@@ -152,7 +152,7 @@ export default class extends olInteractionPointer {
   }
 
   /**
-   * @param {import("ol/Feature.js").default} feature Feature.
+   * @param {olFeature<import("ol/geom/Geometry.js").default>} feature Feature.
    * @private
    */
   removeFeature_(feature) {
@@ -160,13 +160,14 @@ export default class extends olInteractionPointer {
     // Remove the vertex feature if the collection of canditate features
     // is empty.
     if (this.vertexFeature_ && this.features_.getLength() === 0) {
-      /** @type {olSourceVector} */(this.overlay_.getSource()).removeFeature(this.vertexFeature_);
+      /** @type {olSourceVector<import("ol/geom/Geometry.js").default>} */(this.overlay_.getSource())
+        .removeFeature(this.vertexFeature_);
       this.vertexFeature_ = null;
     }
   }
 
   /**
-   * @param {import("ol/Feature.js").default} feature Feature.
+   * @param {olFeature<import("ol/geom/Geometry.js").default>} feature Feature.
    * @private
    */
   removeFeatureSegmentData_(feature) {
@@ -213,13 +214,13 @@ export default class extends olInteractionPointer {
    */
   handleFeatureRemove_(evt) {
     if (evt instanceof CollectionEvent) {
-      const feature = /** @type {import("ol/Feature.js").default} */ (evt.element);
+      const feature = /** @type {olFeature<import("ol/geom/Geometry.js").default>} */ (evt.element);
       this.removeFeature_(feature);
     }
   }
 
   /**
-   * @param {import("ol/Feature.js").default} feature Feature
+   * @param {olFeature<import("ol/geom/Geometry.js").default>} feature Feature
    * @param {import("ol/geom/Polygon.js").default} geometry Geometry.
    * @private
    */
@@ -244,7 +245,7 @@ export default class extends olInteractionPointer {
 
   /**
    * @param {import("ol/coordinate.js").Coordinate} coordinates Coordinates.
-   * @return {import("ol/Feature.js").default} Vertex feature.
+   * @return {olFeature<import("ol/geom/Geometry.js").default>} Vertex feature.
    * @private
    */
   createOrUpdateVertexFeature_(coordinates) {
@@ -252,7 +253,8 @@ export default class extends olInteractionPointer {
     if (!vertexFeature) {
       vertexFeature = new olFeature(new olGeomPoint(coordinates));
       this.vertexFeature_ = vertexFeature;
-      /** @type {olSourceVector} */(this.overlay_.getSource()).addFeature(vertexFeature);
+      /** @type {olSourceVector<import("ol/geom/Geometry.js").default>} */(this.overlay_.getSource())
+        .addFeature(vertexFeature);
     } else {
       const geometry = /** @type {import("ol/geom/Point.js").default} */ (vertexFeature.getGeometry());
       geometry.setCoordinates(coordinates);
@@ -332,7 +334,8 @@ export default class extends olInteractionPointer {
       }
     }
     if (this.vertexFeature_) {
-      /** @type {olSourceVector} */(this.overlay_.getSource()).removeFeature(this.vertexFeature_);
+      /** @type {olSourceVector<import("ol/geom/Geometry.js").default>} */(this.overlay_.getSource())
+        .removeFeature(this.vertexFeature_);
       this.vertexFeature_ = null;
     }
   }

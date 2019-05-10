@@ -108,7 +108,7 @@ function Controller($scope) {
   this.angle = null;
 
   /**
-   * @type {?import("ol/Collection.js").default<import("ol/Feature.js").default>}
+   * @type {?import("ol/Collection.js").default<olFeature<import("ol/geom/Geometry.js").default>>}
    */
   this.features = null;
 

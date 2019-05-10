@@ -272,7 +272,7 @@ export function ProfileController($scope, $http, $element, $filter, gettextCatal
   this.measureTooltipElement_ = null;
 
   /**
-   * @type {import("ol/Feature.js").default}
+   * @type {olFeature<import("ol/geom/Geometry.js").default>}
    * @private
    */
   this.snappedPoint_ = new olFeature();

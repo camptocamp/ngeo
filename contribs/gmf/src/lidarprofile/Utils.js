@@ -67,7 +67,7 @@ export default class {
    * @param {number} dLeft domain minimum
    * @param {number} dRight domain maximum
    * @return {{
-   *     bufferGeom: olFeature,
+   *     bufferGeom: olFeature<import("ol/geom/LineString.js").default>,
    *     bufferStyle: olStyleStyle[],
    *     clippedLine: Array<import("ol/coordinate.js").Coordinate>,
    *     distanceOffset: number
@@ -113,9 +113,9 @@ export default class {
 
     });
 
-    const feat = new olFeature({
+    const feat = /** @type {olFeature<import("ol/geom/LineString.js").default>} */(new olFeature({
       geometry: clippedLine
-    });
+    }));
 
     const lineStyle = new olStyleStyle({
       stroke: new olStyleStroke({

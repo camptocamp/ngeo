@@ -38,7 +38,7 @@ let overlayDefPromise;
  * @return {Promise<Array<TileLayer|ImageLayer|GroupLayer>>} Promise
  */
 export function getBackgroundLayers() {
-  return getThemesPromise().then((themes) => {
+  return getThemesPromise().then(themes => {
     const promises = [];
     for (const config of themes.background_layers) {
       const layerConfig = /** @type {import('gmf/themes.js').GmfLayer} */(config);
@@ -61,32 +61,35 @@ export function getBackgroundLayers() {
             return layer;
           })
         );
-      } else if (/** @type {import('gmf/themes.js').GmfGroup} */ (config).children) {
+      } else if (/** @type {import('gmf/themes.js').GmfGroup} */(config).children) {
         // reverse children order
-        const reversed = /** @type {import('gmf/themes.js').GmfGroup} */ (config).children.slice().reverse();
+        const reversed = /** @type {import('gmf/themes.js').GmfGroup} */(config).children.slice().reverse();
 
         // create all the layers for the layer group
-        const groupPromise = Promise.all(reversed.map((item) => {
-          const child = /** @type {import('gmf/themes.js').GmfLayer} */ (item);
+
+        /** @type {Promise<TileLayer|ImageLayer>[]} */
+        const groupPromises = reversed.map(item => {
+          const child = /** @type {import('gmf/themes.js').GmfLayer} */(item);
           if (child.type === 'WMTS') {
-            const layerWMTS = /** @type {import('gmf/themes.js').GmfLayerWMTS} */ (child);
+            const layerWMTS = /** @type {import('gmf/themes.js').GmfLayerWMTS} */(child);
             return createWMTSLayer(layerWMTS);
           } else if (child.type === 'WMS') {
-            const layerWMS = /** @type {import('gmf/themes.js').GmfLayerWMS} */ (child);
+            const layerWMS = /** @type {import('gmf/themes.js').GmfLayerWMS} */(child);
             return createWMSLayer(layerWMS, themes.ogcServers[child.ogcServer]);
           }
           throw new Error('Unknow layer type');
-        }));
-        promises.push(
-          groupPromise.then((layers) => {
+        });
+        const groupPromise = Promise.all(groupPromises);
+        promises.push(groupPromise.then(
+          layers => {
             // create a layer group for the children.
             const group = new GroupLayer({
-              layers: layers
+              layers
             });
             group.set('config.name', config.name);
             return group;
-          })
-        );
+          }
+        ));
       }
     }
     return Promise.all(/** @type {Array<Promise<TileLayer|ImageLayer|GroupLayer>>} */ (promises));
@@ -154,11 +157,12 @@ export function writeOverlayDefs(config, ogcServers, opt_ogcServer) {
  * Returns a list of OpenLayers layer objects from the given layer names.
  *
  * @param {string[]} layerNames List of layer names
- * @return {Promise} Promise.
+ * @return {Promise<(TileLayer|ImageLayer)[]>} Promise.
  * @hidden
  */
 export function getOverlayLayers(layerNames) {
   return getOverlayDefs().then((overlayDefs) => {
+    /** @type {Promise<TileLayer|ImageLayer>[]} */
     const promises = [];
     for (const layerName of layerNames) {
 

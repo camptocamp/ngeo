@@ -119,7 +119,7 @@ class GoogleStreetviewController {
     // Inner properties
 
     /**
-     * @type {import("ol/Feature.js").default}
+     * @type {olFeature<import("ol/geom/Geometry.js").default>}
      * @private
      */
     this.feature_ = new olFeature();

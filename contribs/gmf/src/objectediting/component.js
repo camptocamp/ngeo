@@ -135,11 +135,11 @@ function gmfObjecteditingTemplateUrl($element, $attrs, gmfObjecteditingTemplateU
  *
  * @htmlAttribute {boolean} gmf-objectediting-active Whether the component is
  *     active or not.
- * @htmlAttribute {import("ol/Feature.js").default} gmf-objectediting-feature The feature to edit.
+ * @htmlAttribute {import("ol/Feature.js").default<import("ol/geom/Geometry.js").default>} gmf-objectediting-feature The feature to edit.
  * @htmlAttribute {string} gmf-objectediting-geomtype The geometry type.
  * @htmlAttribute {number} gmf-objectediting-layernodeid The GMF layer node id.
  * @htmlAttribute {import("ol/Map.js").default} gmf-objectediting-map The map.
- * @htmlAttribute {import("ol/Collection.js").default<import("ol/Feature.js").default>} gmf-objectediting-sketchfeatures
+ * @htmlAttribute {import("ol/Collection.js").default<import("ol/Feature.js").default<import("ol/geom/Geometry.js").default>>} gmf-objectediting-sketchfeatures
  *     Collection of temporary features being drawn by the tools.
  * @ngdoc component
  * @ngname gmfObjectediting
@@ -192,7 +192,7 @@ function Controller($scope, $timeout, gettextCatalog,
   this.active = false;
 
   /**
-   * @type {?import("ol/Feature.js").default}
+   * @type {?import("ol/Feature.js").default<import("ol/geom/Geometry.js").default>}
    */
   this.feature = null;
 
@@ -212,7 +212,7 @@ function Controller($scope, $timeout, gettextCatalog,
   this.map = null;
 
   /**
-   * @type {?import("ol/Collection.js").default<import("ol/Feature.js").default>}
+   * @type {?import("ol/Collection.js").default<import("ol/Feature.js").default<import("ol/geom/Geometry.js").default>>}
    */
   this.sketchFeatures = null;
 
@@ -392,7 +392,7 @@ function Controller($scope, $timeout, gettextCatalog,
   this.listenerKeys_ = [];
 
   /**
-   * @type {import("ol/Collection.js").default<import('ol/Feature.js').default>}
+   * @type {import("ol/Collection.js").default<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>}
    * @private
    */
   this.features_ = new olCollection();

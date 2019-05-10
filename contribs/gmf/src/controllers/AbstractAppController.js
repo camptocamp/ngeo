@@ -87,7 +87,7 @@ export function AbstractAppController(config, map, $scope, $injector) {
 
   /**
    * Collection of features for the draw interaction
-   * @type {import("ol/Collection.js").default<import("ol/Feature.js").default>}
+   * @type {import("ol/Collection.js").default<import("ol/Feature.js").default<import("ol/geom/Geometry.js").default>>}
    */
   const ngeoFeatures = $injector.get('ngeoFeatures');
 

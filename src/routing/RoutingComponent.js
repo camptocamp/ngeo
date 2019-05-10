@@ -18,7 +18,7 @@ import 'ngeo/sass/font.scss';
 
 /**
  * @typedef {Object} RoutingVia
- * @property {import("ol/Feature.js").default} [feature]
+ * @property {olFeature<import("ol/geom/Geometry.js").default>} [feature]
  * @property {function(import('ngeo/routing/NominatimService').NominatimSearchResult)} [onSelect]
  */
 
@@ -156,12 +156,12 @@ class Controller {
     this.errorMessage = '';
 
     /**
-     * @type {?import("ol/Feature.js").default}
+     * @type {?olFeature<import("ol/geom/Geometry.js").default>}
      */
     this.startFeature_ = null;
 
     /**
-     * @type {?import("ol/Feature.js").default}
+     * @type {?olFeature<import("ol/geom/Geometry.js").default>}
      */
     this.targetFeature_ = null;
 
@@ -183,7 +183,7 @@ class Controller {
     };
 
     /**
-     * @type {import("ol/source/Vector.js").default}
+     * @type {import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>}
      * @private
      */
     this.routeSource_ = new olSourceVector({
@@ -265,7 +265,7 @@ class Controller {
 
   /**
    * Converts feature point into LonLat coordinate.
-   * @param {import("ol/Feature.js").default} point Feature point to convert
+   * @param {olFeature<import("ol/geom/Geometry.js").default>} point Feature point to convert
    * @return {?import("ol/coordinate.js").Coordinate} LonLat coordinate
    * @private
    */
@@ -296,14 +296,14 @@ class Controller {
 
   /**
    * @param {import('./RoutingService').Route} route Routes of OSRM response
-   * @return {Array<import("ol/Feature.js").default>} parsed route features
+   * @return {Array<olFeature<import("ol/geom/Geometry.js").default>>} parsed route features
    * @private
    */
   parseRoute_(route) {
     if (!this.map) {
       return [];
     }
-    /** @type {olFeature[]} */
+    /** @type {olFeature<import('ol/geom/Geometry.js').default>[]} */
     let parsedRoutes = [];
     const format = new olFormatGeoJSON();
     const formatConfig = {
@@ -312,7 +312,7 @@ class Controller {
     };
     // if there are is useful "legs" data, parse this
     if (route.legs) {
-      /** @type {olFeature[][]} */
+      /** @type {olFeature<import('ol/geom/Geometry.js').default>[][]} */
       const parsedRoutes_ = route.legs.map(leg => leg.steps.map(step => new olFeature({
         geometry: format.readGeometry(step.geometry, formatConfig)
       })));

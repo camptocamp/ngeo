@@ -13,7 +13,7 @@ import {CollectionEvent} from 'ol/Collection.js';
 
 /**
  * @typedef {Object} ModifyEventItem
- * @property {import("ol/Feature.js").default} features
+ * @property {olFeature<import("ol/geom/Geometry.js").default>} features
  */
 
 
@@ -50,7 +50,7 @@ export default class extends olInteractionInteraction {
     console.assert(options.features);
 
     /**
-     * @type {import("ol/Collection.js").default<import("ol/Feature.js").default>}
+     * @type {import("ol/Collection.js").default<olFeature<import("ol/geom/Geometry.js").default>>}
      * @private
      */
     this.features_ = options.features;
@@ -68,7 +68,7 @@ export default class extends olInteractionInteraction {
     this.interactions_ = [];
 
     /**
-     * @type {import("ol/Collection.js").default<import("ol/Feature.js").default>}
+     * @type {import("ol/Collection.js").default<olFeature<import("ol/geom/Geometry.js").default>>}
      * @private
      */
     this.otherFeatures_ = new olCollection();
@@ -82,7 +82,7 @@ export default class extends olInteractionInteraction {
     }));
 
     /**
-     * @type {import("ol/Collection.js").default<import("ol/Feature.js").default>}
+     * @type {import("ol/Collection.js").default<olFeature<import("ol/geom/Geometry.js").default>>}
      * @private
      */
     this.circleFeatures_ = new olCollection();
@@ -95,7 +95,7 @@ export default class extends olInteractionInteraction {
     }));
 
     /**
-     * @type {import("ol/Collection.js").default<import("ol/Feature.js").default>}
+     * @type {import("ol/Collection.js").default<olFeature<import("ol/geom/Geometry.js").default>>}
      * @private
      */
     this.rectangleFeatures_ = new olCollection();
@@ -194,13 +194,13 @@ export default class extends olInteractionInteraction {
    */
   handleFeaturesRemove_(evt) {
     if (evt instanceof CollectionEvent) {
-      const feature = /** @type {import("ol/Feature.js").default} */ (evt.element);
+      const feature = /** @type {olFeature<import("ol/geom/Geometry.js").default>} */ (evt.element);
       this.removeFeature_(feature);
     }
   }
 
   /**
-   * @param {import("ol/Feature.js").default} feature Feature.
+   * @param {olFeature<import("ol/geom/Geometry.js").default>} feature Feature.
    * @private
    */
   addFeature_(feature) {
@@ -209,7 +209,7 @@ export default class extends olInteractionInteraction {
   }
 
   /**
-   * @param {import("ol/Feature.js").default} feature Feature.
+   * @param {olFeature<import("ol/geom/Geometry.js").default>} feature Feature.
    * @private
    */
   removeFeature_(feature) {
@@ -218,8 +218,8 @@ export default class extends olInteractionInteraction {
   }
 
   /**
-   * @param {import("ol/Feature.js").default} feature Feature.
-   * @return {import("ol/Collection.js").default<import("ol/Feature.js").default>} Collection of features for
+   * @param {olFeature<import("ol/geom/Geometry.js").default>} feature Feature.
+   * @return {import("ol/Collection.js").default<olFeature<import("ol/geom/Geometry.js").default>>} Collection of features for
    *    this feature.
    * @private
    */

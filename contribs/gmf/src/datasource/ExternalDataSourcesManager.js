@@ -297,7 +297,7 @@ export class ExternalDatSourcesManager {
   }
 
   /**
-   * @param {import("ol/layer/Layer.js").default} layer Layer.
+   * @param {import("ol/layer/Layer.js").default<import('ol/source/Source.js').default>} layer Layer.
    * @private
    */
   addLayer_(layer) {
@@ -305,7 +305,7 @@ export class ExternalDatSourcesManager {
   }
 
   /**
-   * @param {import("ol/layer/Layer.js").default} layer Layer.
+   * @param {import("ol/layer/Layer.js").default<import('ol/source/Source.js').default>} layer Layer.
    * @private
    */
   removeLayer_(layer) {

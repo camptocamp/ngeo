@@ -58,7 +58,7 @@ function MainController() {
   ]]);
 
   /**
-   * @type {import("ol/Collection.js").default<import("ol/Feature.js").default>}
+   * @type {import("ol/Collection.js").default<olFeature<import("ol/geom/Geometry.js").default>>}
    */
   this.features = new olCollection();
 
@@ -115,7 +115,7 @@ function MainController() {
 
     return (
       /**
-       * @param {olFeature|import('ol/render/Feature.js').default} feature
+       * @param {olFeature<import("ol/geom/Geometry.js").default>|import('ol/render/Feature.js').default} feature
        * @param {number} resolution
        */
       function(feature, resolution) {

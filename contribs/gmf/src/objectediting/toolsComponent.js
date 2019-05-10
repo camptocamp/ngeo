@@ -99,7 +99,7 @@ module.value('gmfObjectEditingToolsOptions', {});
  *     'Copy from' tool is active or not.
  * @htmlAttribute {boolean} gmf-objecteditingtools-deletefromactive Whether the
  *     'Delete from' tool is active or not.
- * @htmlAttribute {import("ol/Feature.js").default} gmf-objecteditingtools-feature The feature to
+ * @htmlAttribute {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>} gmf-objecteditingtools-feature The feature to
  *     edit.
  * @htmlAttribute {string} gmf-objecteditingtools-geomtype The geometry type.
  * @htmlAttribute {import("ol/Map.js").default} gmf-objecteditingtools-map The map.
@@ -109,7 +109,7 @@ module.value('gmfObjectEditingToolsOptions', {});
  *     Queryable layer information.
  * @htmlAttribute {boolean} gmf-objectediting-requireslayer Flag that determines
  *     if the currently active tool requires a queryable layer or not.
- * @htmlAttribute {import("ol/Collection.js").default<import("ol/Feature.js").default>} gmf-objectediting-sketchfeatures
+ * @htmlAttribute {import("ol/Collection.js").default<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>} gmf-objectediting-sketchfeatures
  *     Collection of temporary features being drawn by the tools.
  * @return {angular.IDirective} The directive specs.
  * @ngInject
@@ -178,7 +178,7 @@ function Controller($injector, $scope, ngeoToolActivateMgr) {
   this.deleteFromActive = false;
 
   /**
-   * @type {?import("ol/Feature.js").default}
+   * @type {?import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>}
    */
   this.feature = null;
 
@@ -208,7 +208,7 @@ function Controller($injector, $scope, ngeoToolActivateMgr) {
   this.requiresLayer = false;
 
   /**
-   * @type {?import("ol/Collection.js").default<import("ol/Feature.js").default>}
+   * @type {?import("ol/Collection.js").default<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>}
    */
   this.sketchFeatures = null;
 

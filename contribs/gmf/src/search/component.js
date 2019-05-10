@@ -44,7 +44,7 @@ import SimpleGeometry from 'ol/geom/SimpleGeometry.js';
  * @property {gmfSearchAction[]} [groupActions] List of allowed actions. The list may contain a
  * combination of `add_theme`, `add_group` or `add_layer`
  * @property {string} [projection] The geometry's projection for this set of data.
- * @property {Twitter.Typeahead.Dataset<olFeature>} [typeaheadDatasetOptions] The optional Twitter.Typeahead.
+ * @property {Twitter.Typeahead.Dataset<olFeature<import('ol/geom/Geometry.js').default>>} [typeaheadDatasetOptions] The optional Twitter.Typeahead.
  *    configuration for this dataset. See: https://github.com/twitter/typeahead.js/blob/master/
  * @property {string} url URL of the search service. Must contain a '%QUERY' term that will be
  * replaced by the input string.
@@ -421,7 +421,7 @@ class SearchController {
     this.featuresStyles = {};
 
     /**
-     * @type {(Twitter.Typeahead.Dataset<olFeature>|Twitter.Typeahead.Dataset<CoordinateSuggestion>)[]}
+     * @type {(Twitter.Typeahead.Dataset<olFeature<import('ol/geom/Geometry.js').default>>|Twitter.Typeahead.Dataset<CoordinateSuggestion>)[]}
      */
     this.datasets = [];
 
@@ -441,12 +441,12 @@ class SearchController {
     this.displayColorPicker = false;
 
     /**
-     * @type {?import('ngeo/search/searchDirective.js').SearchDirectiveListeners<olFeature>}
+     * @type {?import('ngeo/search/searchDirective.js').SearchDirectiveListeners<olFeature<import('ol/geom/Geometry.js').default>>}
      */
     this.listeners = null;
 
     /**
-     * @type {import('ngeo/search/searchDirective.js').SearchDirectiveListeners<olFeature>}
+     * @type {import('ngeo/search/searchDirective.js').SearchDirectiveListeners<olFeature<import('ol/geom/Geometry.js').default>>}
      */
     this.additionalListeners = {};
   }
@@ -534,10 +534,10 @@ class SearchController {
   /**
    * Merges the custom listeners received via the component attributes and the
    * listeners that are needed for this controller to function (close and select).
-   * @param {import('ngeo/search/searchDirective.js').SearchDirectiveListeners<olFeature>} additionalListeners
+   * @param {import('ngeo/search/searchDirective.js').SearchDirectiveListeners<olFeature<import('ol/geom/Geometry.js').default>>} additionalListeners
    *    Custom provided listeners.
-   * @param {import('ngeo/search/searchDirective.js').SearchDirectiveListeners<olFeature>} listeners Default listeners.
-   * @return {import('ngeo/search/searchDirective.js').SearchDirectiveListeners<olFeature>} Merged listeners.
+   * @param {import('ngeo/search/searchDirective.js').SearchDirectiveListeners<olFeature<import('ol/geom/Geometry.js').default>>} listeners Default listeners.
+   * @return {import('ngeo/search/searchDirective.js').SearchDirectiveListeners<olFeature<import('ol/geom/Geometry.js').default>>} Merged listeners.
    * @private
    */
   mergeListeners_(additionalListeners, listeners) {
@@ -645,7 +645,7 @@ class SearchController {
    * @param {SearchComponentDatasource} config The config of the dataset.
    * @param {(function(import("geojson").Feature): boolean)=} opt_filter A filter function
    *     based on a GeoJSONFeaturesCollection's array.
-   * @return {Twitter.Typeahead.Dataset<olFeature>} A typeahead dataset.
+   * @return {Twitter.Typeahead.Dataset<olFeature<import('ol/geom/Geometry.js').default>>} A typeahead dataset.
    * @private
    */
   createDataset_(config, opt_filter) {
@@ -653,7 +653,7 @@ class SearchController {
     const componentScope = this.scope_;
     const compile = this.compile_;
     const bloodhoundEngine = this.createAndInitBloodhound_(config, opt_filter);
-    /** @type {Twitter.Typeahead.Dataset<olFeature>} */
+    /** @type {Twitter.Typeahead.Dataset<olFeature<import('ol/geom/Geometry.js').default>>} */
     const typeaheadDataset = {
       limit: Infinity,
       source: bloodhoundEngine.ttAdapter(),
@@ -750,7 +750,7 @@ class SearchController {
    * @param {SearchComponentDatasource} config The config of the dataset.
    * @param {(function(import("geojson").Feature): boolean)=} opt_filter Afilter function
    *     based on a GeoJSONFeaturesCollection's array.
-   * @return {Bloodhound<olFeature[]>} The bloodhound engine.
+   * @return {Bloodhound<olFeature<import('ol/geom/Geometry.js').default>[]>} The bloodhound engine.
    * @private
    */
   createAndInitBloodhound_(config, opt_filter) {
@@ -871,7 +871,7 @@ class SearchController {
 
   /**
    * Style for search results.
-   * @param {null|import("ol/Feature.js").default|import("ol/render/Feature.js").default} feature
+   * @param {null|olFeature<import('ol/geom/Geometry.js').default>|import("ol/render/Feature.js").default} feature
    *    The searched feature.
    * @param {number} resolution The current resolution of the map.
    * @return {import("ol/style/Style.js").default} A style for this kind of features.
@@ -978,8 +978,8 @@ class SearchController {
 
   /**
    * @param {JQueryEventObject} event Event.
-   * @param {Object|import("ol/Feature.js").default} suggestion Suggestion.
-   * @param {Twitter.Typeahead.Dataset<olFeature>} dataset Dataset.
+   * @param {Object|olFeature<import('ol/geom/Geometry.js').default>} suggestion Suggestion.
+   * @param {Twitter.Typeahead.Dataset<olFeature<import('ol/geom/Geometry.js').default>>} dataset Dataset.
    * @private
    */
   select_(event, suggestion, dataset) {
@@ -1005,8 +1005,8 @@ class SearchController {
 
   /**
    * @param {JQueryEventObject} event Event.
-   * @param {import("ol/Feature.js").default} feature Feature.
-   * @param {Twitter.Typeahead.Dataset<import("ol/Feature.js").default>} dataset Dataset.
+   * @param {olFeature<import('ol/geom/Geometry.js').default>} feature Feature.
+   * @param {Twitter.Typeahead.Dataset<olFeature<import('ol/geom/Geometry.js').default>>} dataset Dataset.
    * @private
    */
   selectFromGMF_(event, feature, dataset) {

@@ -99,7 +99,7 @@ function Controller(gettextCatalog, $compile, $filter, $scope, $timeout, ngeoEve
   this.active = false;
 
   /**
-   * @type {?import("ol/Collection.js").default<import("ol/Feature.js").default>|import("ol/source/Vector.js").default}
+   * @type {?import("ol/Collection.js").default<olFeature<import("ol/geom/Geometry.js").default>>|import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>}
    */
   this.features = null;
 

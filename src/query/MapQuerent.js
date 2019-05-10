@@ -237,7 +237,7 @@ export class MapQuerent {
       const tooManyResults = querentResultItem.tooManyFeatures === true;
       const totalFeatureCount = querentResultItem.totalFeatureCount;
 
-      /** @type {Object<string, Array<import('ol/Feature.js').default>>} */
+      /** @type {Object<string, Array<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>>} */
       const typeSeparatedFeatures = {};
       features.forEach((feature) => {
         /** @type {string} */

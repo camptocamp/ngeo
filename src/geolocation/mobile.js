@@ -169,7 +169,7 @@ function Controller($scope, $element, gettextCatalog, ngeoFeatureOverlayMgr, nge
   });
 
   /**
-   * @type {import("ol/Feature.js").default}
+   * @type {olFeature<import("ol/geom/Geometry.js").default>}
    * @private
    */
   this.positionFeature_ = new olFeature();
@@ -179,7 +179,7 @@ function Controller($scope, $element, gettextCatalog, ngeoFeatureOverlayMgr, nge
   }
 
   /**
-   * @type {import("ol/Feature.js").default}
+   * @type {olFeature<import("ol/geom/Geometry.js").default>}
    * @private
    */
   this.accuracyFeature_ = new olFeature();

@@ -99,7 +99,7 @@ function MainController($scope, gmfThemes, gmfTreeManager, gmfUser,
       features: new olCollection()
     }),
     style: (feature, resolution) => ngeoFeatureHelper.createEditingStyles(
-      /** @type {import('ol/Feature.js').default} */(feature)
+      /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>} */(feature)
     )
   });
 

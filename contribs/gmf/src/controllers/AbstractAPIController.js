@@ -54,9 +54,7 @@ export class AbstractAPIController extends AbstractAppController {
       interactions: config.mapInteractions || olInteraction.defaults({
         pinchRotate: true,
         altShiftDragRotate: true
-      }),
-      loadTilesWhileAnimating: true,
-      loadTilesWhileInteracting: true
+      })
     }), $scope, $injector);
   }
 }
