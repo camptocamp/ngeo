@@ -194,7 +194,7 @@ function MainController($scope, ngeoFeatureHelper) {
   this.selectedFeature = null;
 
   this.map.on('singleclick', (evt) => {
-    this.handleMapSingleClick_.bind(this);
+    this.handleMapSingleClick_;
   });
 }
 
