@@ -38,9 +38,12 @@ function mapResenterComponent() {
   return {
     restrict: 'A',
     link: ($scope, $element, $attrs) => {
-      const mapExpr = $attrs['ngeoRecenterMap'];
+      const mapExpr = $attrs.ngeoRecenterMap;
       const map = /** @type {import("ol/Map.js").default} */ ($scope.$eval(mapExpr));
 
+      /**
+       * @param {JQuery} element
+       */
       function recenter(element) {
         const extent = element.attr('ngeo-extent');
         if (extent !== undefined) {

@@ -33,10 +33,15 @@ const module = angular.module('ngeoFilter', [
 ]);
 
 
-module.run(/* @ngInject */ ($templateCache) => {
-  // @ts-ignore: webpack
-  $templateCache.put('ngeo/filter', require('./component.html'));
-});
+module.run(
+  /**
+   * @ngInject
+   * @param {angular.ITemplateCacheService} $templateCache
+   */
+  ($templateCache) => {
+    // @ts-ignore: webpack
+    $templateCache.put('ngeo/filter', require('./component.html'));
+  });
 
 
 module.value('ngeoFilterTemplateUrl',
@@ -140,31 +145,31 @@ class FilterController {
     // === Injected properties ===
 
     /**
-     * @type {!angular.gettext.gettextCatalog}
+     * @type {angular.gettext.gettextCatalog}
      * @private
      */
     this.gettextCatalog_ = gettextCatalog;
 
     /**
-     * @type {!angular.IScope}
+     * @type {angular.IScope}
      * @private
      */
     this.scope_ = $scope;
 
     /**
-     * @type {!angular.ITimeoutService}
+     * @type {angular.ITimeoutService}
      * @private
      */
     this.timeout_ = $timeout;
 
     /**
-     * @type {!import("ngeo/query/MapQuerent.js").MapQuerent}
+     * @type {import("ngeo/query/MapQuerent.js").MapQuerent}
      * @private
      */
     this.ngeoMapQuerent_ = ngeoMapQuerent;
 
     /**
-     * @type {!import("ngeo/filter/RuleHelper.js").RuleHelper}
+     * @type {import("ngeo/filter/RuleHelper.js").RuleHelper}
      * @private
      */
     this.ngeoRuleHelper_ = ngeoRuleHelper;
@@ -173,7 +178,7 @@ class FilterController {
     // === Inner properties ===
 
     /**
-     * @type {Array.<!FilterCondition>}
+     * @type {Array<FilterCondition>}
      */
     this.conditions = [
       {
@@ -192,18 +197,18 @@ class FilterController {
 
     /**
      * List of geometry attributes.
-     * @type {Array.<!import('ngeo/format/Attribute.js').Attribute>}
+     * @type {Array<import('ngeo/format/Attribute.js').Attribute>}
      */
     this.geometryAttributes = [];
 
     /**
      * List of other attribute names.
-     * @type {Array.<!import('ngeo/format/Attribute.js').Attribute>}
+     * @type {Array<import('ngeo/format/Attribute.js').Attribute>}
      */
     this.otherAttributes = [];
 
     /**
-     * @type {!Object.<number, Function>}
+     * @type {Object<string, Function>}
      * @private
      */
     this.ruleUnlisteners_ = {};
@@ -237,6 +242,7 @@ class FilterController {
     }
 
     // (2) All rules that have geometry are added in the featureOverlay
+    /** @type {import("ngeo/rule/Rule.js").default[]} */
     const rules_ = [];
     const rules = rules_.concat(this.customRules, this.directedRules);
     for (const rule of rules) {
@@ -272,6 +278,7 @@ class FilterController {
    * @return {boolean} True if at least one rule is currently defined.
    */
   hasARule() {
+    /** @type {import("ngeo/rule/Rule.js").default[]} */
     const a = [];
     return a.concat(this.customRules, this.directedRules).length > 0;
   }
@@ -350,6 +357,7 @@ class FilterController {
    */
   getRulesWithValue_() {
     const filterRules = [];
+    /** @type {import("ngeo/rule/Rule.js").default[]} */
     const a = [];
     const rules = a.concat(this.customRules, this.directedRules);
     for (const rule of rules) {
@@ -448,6 +456,7 @@ class FilterController {
    */
   handleRuleActiveChange_() {
     let aRuleIsActive = false;
+    /** @type {import("ngeo/rule/Rule.js").default[]} */
     const a = [];
     const rules = a.concat(this.customRules, this.directedRules);
     for (const rule of rules) {
@@ -468,6 +477,7 @@ class FilterController {
     if (this.aRuleIsActive) {
       return;
     }
+    /** @type {import("ngeo/rule/Rule.js").default[]} */
     const a = [];
     const rules = a.concat(this.customRules, this.directedRules);
     for (const rule of rules) {

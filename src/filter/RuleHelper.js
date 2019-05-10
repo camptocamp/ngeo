@@ -213,9 +213,9 @@ export class RuleHelper {
   }
 
   /**
-   * @param {!Array.<!import('ngeo/rule/Rule.js').RuleOptions|!import('ngeo/rule/Select.js').SelectOptions>} optionsList
+   * @param {Array<import('ngeo/rule/Rule.js').RuleOptions|!import('ngeo/rule/Select.js').SelectOptions>} optionsList
    *    List of options
-   * @return {Array.<!import("ngeo/rule/Rule.js").default>} Rules.
+   * @return {Array<import("ngeo/rule/Rule.js").default>} Rules.
    */
   createRules(optionsList) {
     const rules = [];
@@ -226,9 +226,9 @@ export class RuleHelper {
   }
 
   /**
-   * @param {!import('ngeo/rule/Rule.js').RuleOptions|!import('ngeo/rule/Select.js').SelectOptions} options
+   * @param {import('ngeo/rule/Rule.js').RuleOptions|!import('ngeo/rule/Select.js').SelectOptions} options
    *    Options
-   * @return {!import("ngeo/rule/Rule.js").default} Rule.
+   * @return {import("ngeo/rule/Rule.js").default} Rule.
    */
   createRule(options) {
     let rule;
@@ -241,12 +241,12 @@ export class RuleHelper {
         rule = new ngeoRuleGeometry(options);
         break;
       case ngeoFormatAttributeType.SELECT:
-        const selectOptions = /** @type {!import('ngeo/rule/Select.js').SelectOptions} */ (options);
+        const selectOptions = /** @type {import('ngeo/rule/Select.js').SelectOptions} */ (options);
         console.assert(selectOptions.choices);
         rule = new ngeoRuleSelect(selectOptions);
         break;
       default:
-        rule = new ngeoRuleText(/** @type {!import('ngeo/rule/Text').TextOptions} */ (options));
+        rule = new ngeoRuleText(/** @type {import('ngeo/rule/Text').TextOptions} */ (options));
         break;
     }
     return rule;
@@ -259,6 +259,7 @@ export class RuleHelper {
    * @return {!import("ngeo/rule/Rule.js").default} A clone rule.
    */
   cloneRule(rule) {
+    /** @type {AnyOptions} */
     const options = {
       isCustom: rule.isCustom,
       name: rule.name,
@@ -291,10 +292,12 @@ export class RuleHelper {
         this.ngeoFeatureHelper_.getNonSpatialProperties(rule.feature)
       );
     } else if (rule instanceof ngeoRuleSelect) {
-      options.choices = rule.choices.slice(0);
-      clone = new ngeoRuleSelect(/** @type {!import('ngeo/rule/Select.js').SelectOptions} */ (options));
+      const opt = /** @type {!import('ngeo/rule/Select.js').SelectOptions} */ (options);
+      opt.choices = rule.choices.slice(0);
+      clone = new ngeoRuleSelect(opt);
     } else if (rule instanceof ngeoRuleText) {
-      clone = new ngeoRuleText(/** @type {!import('ngeo/rule/Text').TextOptions} */ (options));
+      const opt = /** @type {!import('ngeo/rule/Text').TextOptions} */ (options);
+      clone = new ngeoRuleText(opt);
     } else {
       clone = new ngeoRuleRule(options);
     }
@@ -352,10 +355,11 @@ export class RuleHelper {
 
   /**
    * Selialize a rule into options to re-create it later.
-   * @param {!import("ngeo/rule/Rule.js").default} rule Rule to serialize.
-   * @return {!AnyOptions} Serialized rule options.
+   * @param {import("ngeo/rule/Rule.js").default} rule Rule to serialize.
+   * @return {AnyOptions} Serialized rule options.
    */
   serializeRule(rule) {
+    /** @type {AnyOptions} */
     const obj = {
       name: rule.name,
       propertyName: rule.propertyName,
@@ -383,12 +387,13 @@ export class RuleHelper {
     }
 
     if (rule instanceof ngeoRuleGeometry) {
-      obj.featureProperties = this.ngeoFeatureHelper_.getNonSpatialProperties(
-        rule.feature);
+      const opt = /** @type {import('ngeo/rule/Geometry.js').GeometryOptions} */ (obj);
+      opt.featureProperties = this.ngeoFeatureHelper_.getNonSpatialProperties(rule.feature);
     }
 
     if (rule instanceof ngeoRuleSelect) {
-      obj.choices = rule.choices;
+      const opt = /** @type {import('ngeo/rule/Select.js').SelectOptions} */ (obj);
+      opt.choices = rule.choices;
     }
 
     return obj;

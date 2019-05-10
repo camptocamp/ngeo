@@ -12,12 +12,17 @@ const module = angular.module('gmfLayertreeDatasourceGroupTreeComponent', [
 ]);
 
 
-module.run(/* @ngInject */ ($templateCache) => {
-  $templateCache.put(
-    // @ts-ignore: webpack
-    'gmf/layertree/datasourceGroupTreeComponent', require('./datasourceGroupTreeComponent.html')
-  );
-});
+module.run(
+  /**
+   * @ngInject
+   * @param {angular.ITemplateCacheService} $templateCache
+   */
+  ($templateCache) => {
+    $templateCache.put(
+      // @ts-ignore: webpack
+      'gmf/layertree/datasourceGroupTreeComponent', require('./datasourceGroupTreeComponent.html')
+    );
+  });
 
 
 module.value('gmfLayertreeDatasourceGroupTreeTemplateUrl',

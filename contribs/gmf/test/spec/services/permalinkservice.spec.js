@@ -1,3 +1,4 @@
+// @ts-nocheck
 import angular from 'angular';
 import gmfTestDataThemes from '../data/themes.js';
 import {DATALAYERGROUP_NAME} from 'gmf/index.js';

@@ -33,17 +33,23 @@ module.value('ngeoDatePickerTemplateUrl',
       'ngeo/misc/datepickerComponent';
   });
 
-module.run(/* @ngInject */ ($templateCache) => {
-  // @ts-ignore: webpack
-  $templateCache.put('ngeo/misc/datepickerComponent', require('./datepickerComponent.html'));
-});
+
+module.run(
+  /**
+   * @ngInject
+   * @param {angular.ITemplateCacheService} $templateCache
+   */
+  ($templateCache) => {
+    // @ts-ignore: webpack
+    $templateCache.put('ngeo/misc/datepickerComponent', require('./datepickerComponent.html'));
+  });
 
 
 /**
  * Provide a directive to select a single date or a range of dates. Requires
  * jQuery UI for the 'datepicker' widget.
  *
- * @param {string|function(!JQuery=, !angular.IAttributes=): string}
+ * @param {string|function(JQuery=, angular.IAttributes=): string}
  * ngeoDatePickerTemplateUrl Template for the directive.
  * @param {angular.ITimeoutService} $timeout angular timeout service
  * @return {angular.IDirective} The directive specs.
@@ -73,7 +79,11 @@ function datePickerComponent(ngeoDatePickerTemplateUrl, $timeout) {
       ctrl.sdateOptions = angular.extend({}, ctrl.sdateOptions, {
         'minDate': ctrl.initialMinDate,
         'maxDate': ctrl.initialMaxDate,
-        'onClose': (selectedDate) => {
+        'onClose':
+        /**
+         * @param {Date} selectedDate
+         */
+        (selectedDate) => {
           if (selectedDate) {
             $(element[0]).find('input[name="edate"]').datepicker('option', 'minDate', selectedDate);
           }
@@ -83,7 +93,11 @@ function datePickerComponent(ngeoDatePickerTemplateUrl, $timeout) {
       ctrl.edateOptions = angular.extend({}, ctrl.edateOptions, {
         'minDate': ctrl.initialMinDate,
         'maxDate': ctrl.initialMaxDate,
-        'onClose': (selectedDate) => {
+        'onClose':
+        /**
+         * @param {Date} selectedDate
+         */
+        (selectedDate) => {
           if (selectedDate) {
             $(element[0]).find('input[name="sdate"]').datepicker('option', 'maxDate', selectedDate);
           }
@@ -111,9 +125,9 @@ module.directive('ngeoDatePicker', datePickerComponent);
 
 /**
  * DatePickerController - directive conttroller
- * @param {!angular.IScope} $scope Angular scope.
- * @param {!import("ngeo/misc/Time.js").Time} ngeoTime time service.
- * @param {!angular.gettext.gettextCatalog} gettextCatalog service.
+ * @param {angular.IScope} $scope Angular scope.
+ * @param {import("ngeo/misc/Time.js").Time} ngeoTime time service.
+ * @param {angular.gettext.gettextCatalog} gettextCatalog service.
  * @constructor
  * @private
  * @hidden
@@ -235,12 +249,16 @@ Controller.prototype.init = function() {
   this.isModeRange = this.time.mode === 'range';
 
   if (this.isModeRange) {
-    console.assert(Array.isArray(initialOptions_.values));
+    if (!(Array.isArray(initialOptions_.values))) {
+      throw new Error('Value should be an array');
+    }
     this.sdate = this.ngeoTime_.createDate(initialOptions_.values[0]);
     this.edate = this.ngeoTime_.createDate(initialOptions_.values[1]);
   } else {
-    console.assert(typeof initialOptions_.values == 'number');
-    this.sdate = this.ngeoTime_.createDate(/** @type {number} */(initialOptions_.values));
+    if (typeof initialOptions_.values != 'number') {
+      throw new Error('Value should be a number');
+    }
+    this.sdate = this.ngeoTime_.createDate(initialOptions_.values);
   }
 };
 

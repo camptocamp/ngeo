@@ -97,22 +97,26 @@ function Controller($scope, $element, gettextCatalog, ngeoFeatureOverlayMgr, nge
 
   $element.on('click', this.toggleTracking.bind(this));
 
-  const map = $scope['getMobileMapFn']();
-  console.assert(map instanceof olMap);
+  // @ts-ignore
+  const map = $scope.getMobileMapFn();
+  if (!(map instanceof olMap)) {
+    throw new Error('Wrong map type');
+  }
 
   /**
-   * @type {!angular.IScope}
+   * @type {angular.IScope}
    * @private
    */
   this.$scope_ = $scope;
 
   /**
-   * @type {!import("ol/Map.js").default}
+   * @type {import("ol/Map.js").default}
    * @private
    */
   this.map_ = map;
 
-  const options = $scope['getMobileGeolocationOptionsFn']() || {};
+  // @ts-ignore
+  const options = $scope.getMobileGeolocationOptionsFn() || {};
   console.assert(options);
 
   /**

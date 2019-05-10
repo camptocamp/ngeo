@@ -75,6 +75,7 @@ function MainController($timeout, gmfThemes, gmfXSDAttributes) {
       return;
     }
     // Get an array with all nodes entities existing in "themes".
+    /** @type {Array<import('gmf/themes.js').GmfTheme|import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer>} */
     const flatNodes = [];
     themes.forEach((theme) => {
       theme.children.forEach((group) => {
@@ -82,12 +83,12 @@ function MainController($timeout, gmfThemes, gmfXSDAttributes) {
       });
     });
     flatNodes.forEach((node) => {
+      const groupNode = /** @type {import('gmf/themes.js').GmfGroup} */(node);
       // Get an array of all layers
-      if (node.children === undefined && layerNames.indexOf(node.name) !== -1) {
-        this.layers.push(node);
+      if (groupNode.children === undefined && layerNames.indexOf(node.name) !== -1) {
+        this.layers.push(/** @type {import('gmf/themes.js').GmfLayer} */(node));
       }
     });
-
   });
 }
 
@@ -140,7 +141,7 @@ MainController.prototype.getGeomType = function() {
  * Just for this example
  * @param {import('gmf/themes.js').GmfTheme|import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer} node
  *    A theme, group or layer node.
- * @param {Array.<import('gmf/themes.js').GmfTheme|import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer>} nodes
+ * @param {Array<import('gmf/themes.js').GmfTheme|import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer>} nodes
  *    An Array of nodes.
  */
 MainController.prototype.getDistinctFlatNodes_ = function(node, nodes) {
@@ -154,7 +155,8 @@ MainController.prototype.getDistinctFlatNodes_ = function(node, nodes) {
   let alreadyAdded = false;
   nodes.some((n) => {
     if (n.id === node.id) {
-      return alreadyAdded = true;
+      alreadyAdded = true;
+      return true;
     }
     return false;
   });

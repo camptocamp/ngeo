@@ -18,10 +18,15 @@ const module = angular.module('gmfDrawingFeatureStyle', [
 ]);
 
 
-module.run(/* @ngInject */ ($templateCache) => {
-  // @ts-ignore: webpack
-  $templateCache.put('gmf/drawing/featureStyleComponent', require('./featureStyleComponent.html'));
-});
+module.run(
+  /**
+   * @ngInject
+   * @param {angular.ITemplateCacheService} $templateCache
+   */
+  ($templateCache) => {
+    // @ts-ignore: webpack
+    $templateCache.put('gmf/drawing/featureStyleComponent', require('./featureStyleComponent.html'));
+  });
 
 
 /**

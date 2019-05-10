@@ -18,10 +18,18 @@ const module = angular.module('app', [
 ]);
 
 
-module.run(/* @ngInject */ ($templateCache) => {
-  // @ts-ignore: webpack
-  $templateCache.put('partials/backgroundlayerdropdown', require('./partials/backgroundlayerdropdown.html'));
-});
+module.run(
+  /**
+   * @ngInject
+   * @param {angular.ITemplateCacheService} $templateCache
+   */
+  ($templateCache) => {
+    $templateCache.put(
+      'partials/backgroundlayerdropdown',
+      // @ts-ignore: webpack
+      require('./partials/backgroundlayerdropdown.html')
+    );
+  });
 
 
 /**

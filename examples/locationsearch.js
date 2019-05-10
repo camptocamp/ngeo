@@ -53,9 +53,8 @@ function SearchController(ngeoCreateLocationSearchBloodhound) {
   this.map = null;
 
   const limit = 10;
-  /** @type {Bloodhound} */
-  const bloodhoundEngine = this.createAndInitBloodhound_(
-    ngeoCreateLocationSearchBloodhound, limit);
+  /** @type {Bloodhound<import("ol/Feature.js").default[]>} */
+  const bloodhoundEngine = this.createAndInitBloodhound_(ngeoCreateLocationSearchBloodhound, limit);
 
   /**
    * @type {Twitter.Typeahead.Options}
@@ -67,28 +66,28 @@ function SearchController(ngeoCreateLocationSearchBloodhound) {
   });
 
   /**
-   * @type {Array.<Twitter.Typeahead.Dataset>}
+   * @type {Array<Twitter.Typeahead.Dataset<import("ol/Feature.js").default>>}
    */
   this.datasets = [{
     source: bloodhoundEngine.ttAdapter(),
     limit: limit,
     display: (suggestion) => {
-      const feature = /** @type {import("ol/Feature.js").default} */ (suggestion);
+      const feature = suggestion;
       return feature.get('label_no_html');
     },
     templates: {
       header: () => '<div class="ngeo-header">Locations</div>',
       suggestion: (suggestion) => {
-        const feature = /** @type {import("ol/Feature.js").default} */ (suggestion);
+        const feature = suggestion;
         return `<p>${feature.get('label')}</p>`;
       }
     }
   }];
 
   /**
-   * @type {import('ngeo/search/searchDirective.js').SearchDirectiveListeners}
+   * @type {import('ngeo/search/searchDirective.js').SearchDirectiveListeners<import("ol/Feature.js").default>}
    */
-  this.listeners = /** @type {import('ngeo/search/searchDirective.js').SearchDirectiveListeners} */ ({
+  this.listeners = {
     select: (event, suggestion, dataset) => {
       if (!this.map) {
         throw new Error('Missing map');
@@ -102,7 +101,7 @@ function SearchController(ngeoCreateLocationSearchBloodhound) {
       const maxZoom = 16;
       this.map.getView().fit(bbox, {size, maxZoom});
     }
-  });
+  };
 
 }
 
@@ -111,7 +110,7 @@ function SearchController(ngeoCreateLocationSearchBloodhound) {
  * @param {import("ngeo/search/createLocationSearchBloodhound.js").createLocationSearchBloodhoundFunction} ngeoCreateLocationSearchBloodhound
  *     Bloodhound service.
  * @param {number} limit Limit.
- * @return {Bloodhound} The bloodhound engine.
+ * @return {Bloodhound<import("ol/Feature.js").default[]>} The bloodhound engine.
  * @private
  */
 SearchController.prototype.createAndInitBloodhound_ = function(ngeoCreateLocationSearchBloodhound, limit) {

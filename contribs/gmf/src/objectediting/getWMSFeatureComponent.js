@@ -4,7 +4,7 @@ import * as olEvents from 'ol/events.js';
 import MapBrowserEvent from 'ol/MapBrowserEvent.js';
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('gmfObjecteditingGetWMSFeatureComponent', [
@@ -55,7 +55,7 @@ module.directive('gmfObjecteditinggetwmsfeature', objectEditingGetWMSFeatureComp
 
 
 /**
- * @param {!angular.IScope} $scope Scope.
+ * @param {angular.IScope} $scope Scope.
  * @param {import("gmf/objectediting/Query.js").ObjectEditingQuery} gmfObjectEditingQuery GMF ObjectEditing
  *     query service.
  * @constructor
@@ -80,7 +80,7 @@ function Controller($scope, gmfObjectEditingQuery) {
   );
 
   /**
-   * @type {?import("ol/Collection.js").default}
+   * @type {?import("ol/Collection.js").default<import('ol/Feature.js').default>}
    */
   this.features = null;
 

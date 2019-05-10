@@ -157,6 +157,7 @@ function MainController(gmfTreeManager, gmfThemes, gmfThemeManager, ngeoLocation
       this.themes = themes;
 
       // Get an array with all nodes entities existing in "themes".
+      /** @type {Array<import('gmf/themes.js').GmfTheme|import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer>} */
       const flatNodes = [];
       this.themes.forEach((theme) => {
         theme.children.forEach((group) => {
@@ -165,9 +166,10 @@ function MainController(gmfTreeManager, gmfThemes, gmfThemeManager, ngeoLocation
         });
       });
       flatNodes.forEach((node) => {
+        const groupNode = /** @type {import('gmf/themes.js').GmfGroup} */(node);
         // Get an array of all layers
-        if (node.children === undefined) {
-          this.layers.push(node);
+        if (groupNode.children === undefined) {
+          this.layers.push(/** @type {import('gmf/themes.js').GmfLayer} */(node));
         }
       });
     }
@@ -191,7 +193,8 @@ function MainController(gmfTreeManager, gmfThemes, gmfThemeManager, ngeoLocation
     let alreadyAdded = false;
     nodes.some((n) => {
       if (n.id === node.id) {
-        return alreadyAdded = true;
+        alreadyAdded = true;
+        return true;
       }
       return false;
     });

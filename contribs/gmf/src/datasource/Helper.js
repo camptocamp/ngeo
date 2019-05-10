@@ -82,7 +82,7 @@ export class DatasourceHelper {
 
   /**
    * @param {import("gmf/datasource/OGC.js").default} dataSource Filtrable data source.
-   * @return {angular.IPromise} Promise.
+   * @return {angular.IPromise<import("gmf/datasource/OGC.js").default>} Promise.
    */
   prepareFiltrableDataSource(dataSource) {
 
@@ -90,9 +90,7 @@ export class DatasourceHelper {
 
     // (1) Get the attributes. The first time, they will be asynchronously
     //     obtained using a WFS DescribeFeatureType request.
-    this.ngeoDataSourcesHelper_.getDataSourceAttributes(
-      dataSource
-    ).then((attributes) => {
+    this.ngeoDataSourcesHelper_.getDataSourceAttributes(dataSource).then((attributes) => {
       // (2) The attribute names that are in the `enumeratedAttributes`
       //     metadata are the ones that need to have their values fetched.
       //     Do that once then set the type to SELECT and the choices.
@@ -105,9 +103,7 @@ export class DatasourceHelper {
              attribute.type !== ngeoFormatAttributeType.SELECT &&
              (!attribute.choices || !attribute.choices.length)) {
             promises.push(
-              this.gmfEnumerateAttribute_.getAttributeValues(
-                dataSource, attribute.name
-              ).then((values) => {
+              this.gmfEnumerateAttribute_.getAttributeValues(dataSource, attribute.name).then((values) => {
                 const choices = values.map(choice => choice.value);
                 attribute.type = ngeoFormatAttributeType.SELECT;
                 attribute.choices = choices;
@@ -130,7 +126,7 @@ export class DatasourceHelper {
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('gmfDataSourcesHelper', [

@@ -20,16 +20,15 @@ export default class extends ngeoInteractionMeasureLength {
   }
 
   /**
-   * @param {import("ol/style/Style.js").StyleLike|undefined}
+   * @param {import("ol/style/Style.js").StyleLike}
    *     style The sketchStyle used for the drawing interaction.
    * @param {import("ol/source/Vector.js").default} source Vector source.
    * @return {ngeoInteractionMobileDraw} The interaction
    */
   createDrawInteraction(style, source) {
     return new ngeoInteractionMobileDraw({
-      type: /** @type {import("ol/geom/GeometryType.js").default} */ ('LineString'),
-      style: style,
-      source: source
+      type: 'LineString',
+      style: style
     });
   }
 }

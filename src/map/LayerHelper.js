@@ -82,9 +82,10 @@ LayerHelper.prototype.createBasicWMSLayer = function(sourceURL,
   sourceLayersName, sourceFormat, opt_serverType, opt_time, opt_params, opt_crossOrigin,
   opt_customSourceOptions, opt_customLayerOptions) {
 
+  /** @type {Object<string, string>} */
   const params = {
-    'FORMAT': sourceFormat,
-    'LAYERS': sourceLayersName
+    FORMAT: sourceFormat,
+    LAYERS: sourceLayersName
   };
   let olServerType;
   if (opt_time) {
@@ -343,10 +344,11 @@ LayerHelper.prototype.getFlatLayers_ = function(layer, array, computedOpacity) {
  * an array of layers. If one of the layers in the array is a group, then the
  * layers contained in that group are searched as well.
  * @param {string} layerName The name of the layer we're looking for.
- * @param {Array.<import("ol/layer/Base.js").default>} layers Layers.
+ * @param {Array<import("ol/layer/Base.js").default>} layers Layers.
  * @return {?import("ol/layer/Base.js").default} Layer.
  */
 LayerHelper.prototype.getLayerByName = function(layerName, layers) {
+  /** @type {?import("ol/layer/Base.js").default} */
   let found = null;
   layers.some((layer) => {
     if (layer instanceof olLayerGroup) {
@@ -403,13 +405,14 @@ LayerHelper.prototype.getWMSLegendURL = function(url,
   if (!url) {
     return undefined;
   }
+  /** @type {Object<string, string|boolean|number>} */
   const queryString = {
-    'FORMAT': 'image/png',
-    'TRANSPARENT': true,
-    'SERVICE': 'WMS',
-    'VERSION': '1.1.1',
-    'REQUEST': 'GetLegendGraphic',
-    'LAYER': layerName
+    FORMAT: 'image/png',
+    TRANSPARENT: true,
+    SERVICE: 'WMS',
+    VERSION: '1.1.1',
+    REQUEST: 'GetLegendGraphic',
+    LAYER: layerName
   };
   if (opt_scale !== undefined) {
     queryString.SCALE = opt_scale;

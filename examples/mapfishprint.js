@@ -191,14 +191,12 @@ MainController.prototype.print = function() {
 
 
 /**
- * @param {!angular.IHttpResponse} resp Response.
+ * @param {angular.IHttpResponse<import('ngeo/print/mapfish-print-v3.js').MapFishPrintReportResponse>} resp
+ *    Response.
  * @private
  */
 MainController.prototype.handleCreateReportSuccess_ = function(resp) {
-  const mfResp = /** @type {import('ngeo/print/mapfish-print-v3.js').MapFishPrintReportResponse} */ (
-    resp.data
-  );
-  this.getStatus_(mfResp.ref);
+  this.getStatus_(resp.data.ref);
 };
 
 
@@ -215,7 +213,8 @@ MainController.prototype.getStatus_ = function(ref) {
 
 
 /**
- * @param {!angular.IHttpResponse} resp Response.
+ * @param {!angular.IHttpResponse<import('ngeo/print/mapfish-print-v3.js').MapFishPrintStatusResponse>} resp
+ *    Response.
  * @private
  */
 MainController.prototype.handleCreateReportError_ = function(resp) {
@@ -225,13 +224,12 @@ MainController.prototype.handleCreateReportError_ = function(resp) {
 
 /**
  * @param {string} ref Ref.
- * @param {!angular.IHttpResponse} resp Response.
+ * @param {angular.IHttpResponse<import('ngeo/print/mapfish-print-v3.js').MapFishPrintStatusResponse>} resp
+ *    Response.
  * @private
  */
 MainController.prototype.handleGetStatusSuccess_ = function(ref, resp) {
-  const mfResp = /** @type {import('ngeo/print/mapfish-print-v3.js').MapFishPrintStatusResponse} */ (
-    resp.data
-  );
+  const mfResp = resp.data;
   const done = mfResp.done;
   if (done) {
     // The report is ready. Open it by changing the window location.
@@ -248,7 +246,8 @@ MainController.prototype.handleGetStatusSuccess_ = function(ref, resp) {
 
 
 /**
- * @param {!angular.IHttpResponse} resp Response.
+ * @param {!angular.IHttpResponse<import('ngeo/print/mapfish-print-v3.js').MapFishPrintStatusResponse>} resp
+ *    Response.
  * @private
  */
 MainController.prototype.handleGetStatusError_ = function(resp) {

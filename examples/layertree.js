@@ -46,10 +46,16 @@ const layertreeComponent = {
       '</div>'
 };
 
-module.run(/* @ngInject */ ($templateCache) => {
-  // @ts-ignore: webpack
-  $templateCache.put('examples/layertree', require('./partials/layertree.html'));
-});
+
+module.run(
+  /**
+   * @ngInject
+   * @param {angular.ITemplateCacheService} $templateCache
+   */
+  ($templateCache) => {
+    // @ts-ignore: webpack
+    $templateCache.put('examples/layertree', require('./partials/layertree.html'));
+  });
 
 module.component('appLayertree', layertreeComponent);
 
@@ -98,7 +104,7 @@ function LayertreeController($http, $sce, appGetLayer, ngeoCreatePopup) {
   this.infoPopup_ = ngeoCreatePopup();
 
   /**
-   * @type {Object.<string, !angular.IPromise>}
+   * @type {Object<string, angular.IPromise<*>>}
    * @private
    */
   this.promises_ = {};

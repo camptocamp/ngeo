@@ -385,7 +385,7 @@ class OGC extends ngeoDatasourceDataSource {
 
     /**
      * The url to use for (WFS) requests.
-     * @type {string|undefined}
+     * @type {?string}
      * @private
      */
     this.wfsUrl_ = options.wfsUrl;
@@ -548,7 +548,7 @@ class OGC extends ngeoDatasourceDataSource {
   }
 
   /**
-   * @inheritDoc
+   * @param {Array<import('ngeo/format/Attribute.js').Attribute>} attributes Attributes
    */
   setAttributes(attributes) {
     super.setAttributes(attributes);
@@ -661,7 +661,7 @@ class OGC extends ngeoDatasourceDataSource {
   }
 
   /**
-   * @return {string|undefined} WFS url
+   * @return {?string} WFS url
    */
   get wfsUrl() {
     return this.wfsUrl_;

@@ -26,7 +26,7 @@ import angular from 'angular';
  */
 
 /**
- * @typedef {Object.<number, !LidarprofileServerConfigPointAttribute>}
+ * @typedef {Object<string, LidarprofileServerConfigPointAttribute>}
  *     LidarprofileServerConfigPointAttributes
  */
 
@@ -41,9 +41,9 @@ import angular from 'angular';
 
 /**
  * @typedef {Object} LidarprofileServerConfig
- * @property {Object.<number, string>} [classes_names_normalized]
+ * @property {Object<number, string>} [classes_names_normalized]
  *     Classes names normalized
- * @property {Object.<number, string>} [classes_names_standard]
+ * @property {Object<number, string>} [classes_names_standard]
  *     Classes names standard
  * @property {LidarprofileServerConfigClassifications}
  *     [classification_colors] Classification colors
@@ -124,26 +124,26 @@ export class LidarprofileConfigService {
 
   /**
    * Initialize the service variables from Pytree profile_config_gmf2 route
-   * @return {angular.IPromise} configuration values
+   * @return {angular.IPromise<void>} configuration values
    */
   initProfileConfig() {
     return this.$http_.get(`${this.pytreeLidarprofileJsonUrl}/profile/config`).then((resp) => {
 
-      this.serverConfig = /** @type {import("gmf/lidarprofile/Config.js").LidarprofileServerConfig} */ ({
-        classification_colors: resp.data['classification_colors'] || null,
-        debug: !!resp.data['debug'],
-        default_attribute: resp.data['default_attribute'] || '',
-        default_color: resp.data['default_color'] || '',
-        default_point_attribute: resp.data['default_point_attribute'] || '',
-        default_point_cloud: resp.data['default_point_cloud'] || '',
-        initialLOD: resp.data['initialLOD'] || 0,
-        max_levels: resp.data['max_levels'] || null,
-        max_point_number: resp.data['max_point_number'] || 50000,
-        minLOD: resp.data['minLOD'] || 0,
-        point_attributes: resp.data['point_attributes'] || null,
-        point_size: resp.data['point_size'] || 0,
-        width: resp.data['width'] || 0
-      });
+      this.serverConfig = {
+        classification_colors: resp.data.classification_colors || null,
+        debug: !!resp.data.debug,
+        default_attribute: resp.data.default_attribute || '',
+        default_color: resp.data.default_color || '',
+        default_point_attribute: resp.data.default_point_attribute || '',
+        default_point_cloud: resp.data.default_point_cloud || '',
+        initialLOD: resp.data.initialLOD || 0,
+        max_levels: resp.data.max_levels || null,
+        max_point_number: resp.data.max_point_number || 50000,
+        minLOD: resp.data.minLOD || 0,
+        point_attributes: resp.data.point_attributes || null,
+        point_size: resp.data.point_size || 0,
+        width: resp.data.width || 0
+      };
 
       const attr = [];
       for (const key in this.serverConfig.point_attributes) {
@@ -155,7 +155,9 @@ export class LidarprofileConfigService {
       const selectedMat = this.serverConfig.point_attributes[this.serverConfig.default_point_attribute];
 
       this.clientConfig.pointAttributes = {
+        // @ts-ignore
         availableOptions: attr,
+        // @ts-ignore
         selectedOption: selectedMat
       };
     });

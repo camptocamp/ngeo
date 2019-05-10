@@ -48,7 +48,8 @@ export class WMSTime extends Time {
     let yearResolution = 'yyyy';
     let monthResolution = 'yyyy-MM';
     let dayResolution = 'yyyy-MM-dd';
-    let secondResolution = undefined;
+    /** @type {?string} */
+    let secondResolution = null;
 
     // Localized format.
     if (!opt_useISOFormat) {

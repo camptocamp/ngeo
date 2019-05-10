@@ -45,10 +45,12 @@ function mapResizeComponent($window) {
       const map = scope.$eval(prop);
       console.assert(map instanceof olMap);
 
-      const stateExpr = attrs['ngeoResizemapState'];
+      const stateExpr = attrs.ngeoResizemapState;
       console.assert(stateExpr !== undefined);
 
+      /** @type {number} */
       let start;
+      /** @type {number} */
       let animationDelayKey;
 
       const animationDelay = () => {

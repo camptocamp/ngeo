@@ -90,6 +90,7 @@ function Controller($element, $injector, $scope, ngeoFeatureHelper) {
    */
   this.featureHelper_ = ngeoFeatureHelper;
 
+  /** @type {string[]} */
   let formats;
   if ($injector.has('ngeoExportFeatureFormats')) {
     formats = $injector.get('ngeoExportFeatureFormats');

@@ -237,6 +237,7 @@ MainController.prototype.runEditor = function() {
   console.assert(property !== undefined);
   const id = feature.get(property);
 
+  /** @type {Object<string, *>} */
   const params = {};
   params[ObjecteditingParam.GEOM_TYPE] = geomType;
   params[ObjecteditingParam.ID] = id;
@@ -251,7 +252,7 @@ MainController.prototype.runEditor = function() {
 
 /**
  * @param {import('gmf/themes.js').GmfLayerWMS} gmfLayerNode Layer node.
- * @return {angular.IPromise} The promise attached to the deferred object.
+ * @return {angular.IPromise<void>} The promise attached to the deferred object.
  * @private
  */
 MainController.prototype.getFeatures_ = function(gmfLayerNode) {
@@ -328,7 +329,7 @@ MainController.prototype.getFeaturesFromCache_ = function(gmfLayerNode) {
 
 /**
  * @param {import('gmf/themes.js').GmfLayerWMS} gmfLayerNode Layer node.
- * @return {angular.IPromise} The promise attached to the deferred object.
+ * @return {angular.IPromise<void>} The promise attached to the deferred object.
  * @private
  */
 MainController.prototype.getGeometryType_ = function(gmfLayerNode) {
@@ -410,6 +411,7 @@ MainController.prototype.getGeometryTypeFromCache_ = function(
  * @return {string} The new URI.
  */
 MainController.appendParams = function(uri, params) {
+  /** @type {string[]} */
   const keyParams = [];
   // Skip any null or undefined parameter values
   Object.keys(params).forEach((k) => {

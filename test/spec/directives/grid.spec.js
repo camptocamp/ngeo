@@ -2,9 +2,11 @@ import angular from 'angular';
 import GridConfig from 'ngeo/grid/Config.js';
 
 describe('ngeo.grid.component', () => {
-
+  /** @type {angular.IController} */
   let gridController;
+  /** @type {angular.IScope} */
   let $scope;
+  /** @type {angular.IScope} */
   let $rootScope;
 
   beforeEach(angular.mock.inject((_$controller_, _$rootScope_) => {
@@ -60,8 +62,7 @@ describe('ngeo.grid.component', () => {
     const data = {
       configuration: new GridConfig(gridConfigData, columnDefs)
     };
-    gridController = $controller(
-      'ngeoGridController', {$scope}, data);
+    gridController = $controller('ngeoGridController', {$scope}, data);
   }));
 
   describe('#sort', () => {
@@ -287,11 +288,13 @@ describe('ngeo.grid.component', () => {
       const data = gridController.configuration.data;
 
       gridController.configuration.selectAll();
+      // @ts-ignore
       data.forEach((row) => {
         expect(gridController.configuration.isRowSelected(row)).toBe(true);
       });
 
       gridController.configuration.unselectAll();
+      // @ts-ignore
       data.forEach((row) => {
         expect(gridController.configuration.isRowSelected(row)).toBe(false);
       });

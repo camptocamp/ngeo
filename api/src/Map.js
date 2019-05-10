@@ -51,7 +51,7 @@ import * as themes from './Themes.js';
  * @property {boolean} [addMiniMap=false]
  * @property {boolean} [miniMapExpanded=true]
  * @property {boolean} [addLayerSwitcher=false]
- * @property {Array<string>} [layers]
+ * @property {string[]} [layers]
  */
 
 /**
@@ -64,16 +64,20 @@ class Map {
    * @param {MapOptions} options API options.
    */
   constructor(options) {
+    /** @type {import('ol/View.js').ViewOptions} */
+    const viewOptions = {
+      projection: getProjection(constants.projection),
+      resolutions: constants.resolutions,
+      zoom: options.zoom !== undefined ? options.zoom : 10
+    };
+    if (constants.extent) {
+      viewOptions.extent = constants.extent;
+    }
     /**
      * @private
      * @type {View}
      */
-    this.view_ = new View({
-      projection: getProjection(constants.projection),
-      extent: constants.extent,
-      resolutions: constants.resolutions,
-      zoom: options.zoom !== undefined ? options.zoom : 10
-    });
+    this.view_ = new View(viewOptions);
 
     if (options.center !== undefined) {
       this.view_.setCenter(options.center);
@@ -306,7 +310,12 @@ class Map {
             let anchor;
             if (values.iconOffset) {
               // flip the sign of the value to be compatible with the old api.
-              anchor = values.iconOffset.split(',').map(parseFloat).map(val => val * Math.sign(val));
+              anchor = values.iconOffset.split(',').map(parseFloat).map(
+                /**
+                 * @param {number} val
+                 */
+                val => val * Math.sign(val)
+              );
             }
             const image = new Icon({
               src: values.icon,
@@ -366,13 +375,14 @@ class Map {
 
 
 /**
- * @param {Array.<string>} keys Keys.
- * @param {Array.<*>} values Values.
+ * @param {Array<string>} keys Keys.
+ * @param {Array<*>} values Values.
  * @returns {Object<string, *>} Object.
  * @private
  * @hidden
  */
 function zip(keys, values) {
+  /** @type {Object<string, *>} */
   const obj = {};
   keys.forEach((key, index) => {
     obj[key] = values[index];
@@ -382,13 +392,14 @@ function zip(keys, values) {
 
 
 /**
- * @param {Object.<string, *>} obj Object.
- * @param {Array.<string>} keys keys.
+ * @param {Object<string, *>} obj Object.
+ * @param {Array<string>} keys keys.
  * @returns {Object<string, *>} Object.
  * @private
  * @hidden
  */
 function filterByKeys(obj, keys) {
+  /** @type {Object<string, *>} */
   const filtered = {};
   keys.forEach((key) => {
     filtered[key] = obj[key];

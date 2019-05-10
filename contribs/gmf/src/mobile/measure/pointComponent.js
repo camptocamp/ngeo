@@ -33,10 +33,16 @@ module.value('gmfMobileMeasurePointTemplateUrl',
       'gmf/measure/pointComponent';
   });
 
-module.run(/* @ngInject */ ($templateCache) => {
-  // @ts-ignore: webpack
-  $templateCache.put('gmf/measure/pointComponent', require('./pointComponent.html'));
-});
+
+module.run(
+  /**
+   * @ngInject
+   * @param {angular.ITemplateCacheService} $templateCache
+   */
+  ($templateCache) => {
+    // @ts-ignore: webpack
+    $templateCache.put('gmf/measure/pointComponent', require('./pointComponent.html'));
+  });
 
 
 /**
@@ -224,6 +230,9 @@ export function MobileMeasurePointController(gettextCatalog, $scope, $filter, gm
    */
   this.drawInteraction = null;
 
+  /**
+   * @type {() => Array<LayerConfig>}
+   */
   this.getLayersConfigFn = () => [];
 
   /**
@@ -344,6 +353,7 @@ MobileMeasurePointController.prototype.getMeasure_ = function() {
     for (const config of this.layersConfig) {
       const key = config.name;
       if (key in object) {
+        /** @type {string|number} */
         let value = object[key];
         const childEl = document.createElement('div');
         childEl.className = `gmf-mobile-measure-point-${key}`;

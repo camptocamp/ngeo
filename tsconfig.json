@@ -9,7 +9,7 @@
       "noEmit": true,
       // Start strict
       //"strict": true,
-      //"noImplicitAny": true,
+      "noImplicitAny": true,
       "noImplicitThis": true,
       "alwaysStrict": true,
       "strictBindCallApply": true,

@@ -57,7 +57,7 @@ export const NAMESPACE = 'oe';
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('gmfObjectEditingComponent', [
@@ -72,16 +72,21 @@ const module = angular.module('gmfObjectEditingComponent', [
 ]);
 
 
-module.run(/* @ngInject */ ($templateCache) => {
-  // @ts-ignore: webpack
-  $templateCache.put('gmf/objectediting', require('./component.html'));
-});
+module.run(
+  /**
+   * @ngInject
+   * @param {angular.ITemplateCacheService} $templateCache
+   */
+  ($templateCache) => {
+    // @ts-ignore: webpack
+    $templateCache.put('gmf/objectediting', require('./component.html'));
+  });
 
 
 module.value('gmfObjecteditingTemplateUrl',
   /**
-   * @param {!JQuery} $element Element.
-   * @param {!angular.IAttributes} $attrs Attributes.
+   * @param {JQuery} $element Element.
+   * @param {angular.IAttributes} $attrs Attributes.
    * @return {string} Template URL.
    */
   ($element, $attrs) => {
@@ -93,9 +98,9 @@ module.value('gmfObjecteditingTemplateUrl',
 
 
 /**
- * @param {!JQuery} $element Element.
- * @param {!angular.IAttributes} $attrs Attributes.
- * @param {!function(!JQuery, !angular.IAttributes): string} gmfObjecteditingTemplateUrl Template function.
+ * @param {JQuery} $element Element.
+ * @param {angular.IAttributes} $attrs Attributes.
+ * @param {function(JQuery, !angular.IAttributes): string} gmfObjecteditingTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
  * @private
@@ -149,17 +154,17 @@ module.component('gmfObjectediting', objecteditingComponent);
 
 
 /**
- * @param {!angular.IScope} $scope Angular scope.
- * @param {!angular.ITimeoutService} $timeout Angular timeout service.
- * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
- * @param {!import("gmf/editing/EditFeature.js").EditingEditFeature} gmfEditFeature Gmf edit feature service.
- * @param {!import("gmf/objectediting/Query.js").ObjectEditingQuery} gmfObjectEditingQuery Gmf ObjectEditing
+ * @param {angular.IScope} $scope Angular scope.
+ * @param {angular.ITimeoutService} $timeout Angular timeout service.
+ * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
+ * @param {import("gmf/editing/EditFeature.js").EditingEditFeature} gmfEditFeature Gmf edit feature service.
+ * @param {import("gmf/objectediting/Query.js").ObjectEditingQuery} gmfObjectEditingQuery Gmf ObjectEditing
  *     query service.
- * @param {!import("gmf/layertree/TreeManager.js").LayertreeTreeManager} gmfTreeManager The gmf TreeManager
+ * @param {import("gmf/layertree/TreeManager.js").LayertreeTreeManager} gmfTreeManager The gmf TreeManager
  *    service.
- * @param {!import("ngeo/misc/FeatureHelper.js").FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
- * @param {!import("ngeo/map/LayerHelper.js").LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
- * @param {!import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate
+ * @param {import("ngeo/misc/FeatureHelper.js").FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
+ * @param {import("ngeo/map/LayerHelper.js").LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
+ * @param {import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate
  *    manager service.
  * @constructor
  * @private
@@ -208,31 +213,31 @@ function Controller($scope, $timeout, gettextCatalog,
   // == Injected properties ==
 
   /**
-   * @type {!angular.IScope}
+   * @type {angular.IScope}
    * @private
    */
   this.scope_ = $scope;
 
   /**
-   * @type {!angular.ITimeoutService}
+   * @type {angular.ITimeoutService}
    * @private
    */
   this.timeout_ = $timeout;
 
   /**
-   * @type {!angular.gettext.gettextCatalog}
+   * @type {angular.gettext.gettextCatalog}
    * @private
    */
   this.gettextCatalog_ = gettextCatalog;
 
   /**
-   * @type {!import("gmf/editing/EditFeature.js").EditingEditFeature}
+   * @type {import("gmf/editing/EditFeature.js").EditingEditFeature}
    * @private
    */
   this.gmfEditFeature_ = gmfEditFeature;
 
   /**
-   * @type {!import("gmf/objectediting/Query.js").ObjectEditingQuery}
+   * @type {import("gmf/objectediting/Query.js").ObjectEditingQuery}
    * @private
    */
   this.gmfObjectEditingQuery_ = gmfObjectEditingQuery;
@@ -271,25 +276,25 @@ function Controller($scope, $timeout, gettextCatalog,
   this.featureHasGeom = false;
 
   /**
-   * @type {!import("ngeo/map/LayerHelper.js").LayerHelper}
+   * @type {import("ngeo/map/LayerHelper.js").LayerHelper}
    * @private
    */
   this.ngeoLayerHelper_ = ngeoLayerHelper;
 
   /**
-   * @type {!import("gmf/layertree/TreeManager.js").LayertreeTreeManager}
+   * @type {import("gmf/layertree/TreeManager.js").LayertreeTreeManager}
    * @private
    */
   this.gmfTreeManager_ = gmfTreeManager;
 
   /**
-   * @type {!import("ngeo/misc/FeatureHelper.js").FeatureHelper}
+   * @type {import("ngeo/misc/FeatureHelper.js").FeatureHelper}
    * @private
    */
   this.ngeoFeatureHelper_ = ngeoFeatureHelper;
 
   /**
-   * @type {!import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr}
+   * @type {import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr}
    * @private
    */
   this.ngeoToolActivateMgr_ = ngeoToolActivateMgr;
@@ -341,19 +346,19 @@ function Controller($scope, $timeout, gettextCatalog,
   this.defaultStyles_ = {};
 
   /**
-   * @type {!StylesObject}
+   * @type {StylesObject}
    * @private
    */
   this.defaultStylesWoVertice_ = {};
 
   /**
-   * @type {!StylesObject}
+   * @type {StylesObject}
    * @private
    */
   this.dirtyStyles_ = {};
 
   /**
-   * @type {!StylesObject}
+   * @type {StylesObject}
    * @private
    */
   this.dirtyStylesWoVertice_ = {};
@@ -370,25 +375,25 @@ function Controller($scope, $timeout, gettextCatalog,
   this.dirty = false;
 
   /**
-   * @type {!Array.<!import("ol/events.js").EventsKey>}
+   * @type {Array<import("ol/events.js").EventsKey>}
    * @private
    */
   this.listenerKeys_ = [];
 
   /**
-   * @type {!import("ol/Collection.js").default}
+   * @type {import("ol/Collection.js").default<import('ol/Feature.js').default>}
    * @private
    */
   this.features_ = new olCollection();
 
   /**
-   * @type {!import("ol/Collection.js").default}
+   * @type {import("ol/Collection.js").default<olInteractionModify>}
    * @private
    */
   this.interactions_ = new olCollection();
 
   /**
-   * @type {!import("ol/interaction/Modify.js").default}
+   * @type {import("ol/interaction/Modify.js").default}
    * @private
    */
   this.modify_ = new olInteractionModify({
@@ -399,7 +404,7 @@ function Controller($scope, $timeout, gettextCatalog,
   this.interactions_.push(this.modify_);
 
   /**
-   * @type {!import("ngeo/misc/ToolActivate.js").default}
+   * @type {import("ngeo/misc/ToolActivate.js").default}
    * @private
    */
   this.modifyToolActivate_ = new ngeoMiscToolActivate(this.modify_, 'active');
@@ -410,7 +415,7 @@ function Controller($scope, $timeout, gettextCatalog,
   this.toolsActive = false;
 
   /**
-   * @type {!import("ngeo/misc/ToolActivate.js").default}
+   * @type {import("ngeo/misc/ToolActivate.js").default}
    * @private
    */
   this.toolsToolActivate_ = new ngeoMiscToolActivate(this, 'toolsActive');
@@ -615,7 +620,7 @@ Controller.prototype.isStateInsert = function() {
 
 /**
  * Called after a delete request.
- * @param {angular.IHttpResponse} resp Ajax response.
+ * @param {angular.IHttpResponse<never>} resp Ajax response.
  * @private
  */
 Controller.prototype.handleDeleteFeature_ = function(resp) {
@@ -632,7 +637,7 @@ Controller.prototype.handleDeleteFeature_ = function(resp) {
 
 /**
  * Called after an 'insert' or 'update' request.
- * @param {angular.IHttpResponse} resp Ajax response.
+ * @param {angular.IHttpResponse<never>} resp Ajax response.
  * @private
  */
 Controller.prototype.handleEditFeature_ = function(resp) {
@@ -1008,12 +1013,12 @@ Controller.prototype.setFeatureStyle_ = function() {
 Controller.prototype.registerTreeCtrl_ = function(treeCtrl) {
 
   // Skip any Layertree controller that has a node that is not a leaf
-  const nodeGroup = /** @type {import('gmf/themes.js').GmfGroup} */ (treeCtrl.node);
+  const nodeGroup = /** @type {import('gmf/themes.js').GmfGroup} */(treeCtrl.node);
   if (nodeGroup.children && nodeGroup.children.length) {
     return;
   }
 
-  const nodeLayer = /** @type {import('gmf/themes.js').GmfLayer} */ (treeCtrl.node);
+  const nodeLayer = /** @type {import('gmf/themes.js').GmfLayer} */(treeCtrl.node);
   // Set editable WMS layer for refresh purpose
   if (nodeLayer.id === this.layerNodeId) {
     const layer = syncLayertreeMapGetLayer(treeCtrl);

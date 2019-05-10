@@ -55,7 +55,8 @@ export default class extends ngeoInteractionMeasure {
   }
 
   /**
-   * @inheritDoc
+   * @param {function(string, ?import("ol/coordinate.js").Coordinate): void} callback The function
+   *     to be called.
    */
   handleMeasure(callback) {
     if (!this.sketchFeature) {

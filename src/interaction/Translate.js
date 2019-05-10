@@ -39,13 +39,13 @@ export default class extends olInteractionTranslate {
     super(options);
 
     /**
-     * @type {!Array.<import("ol/events.js").EventsKey>}
+     * @type {Array<import("ol/events.js").EventsKey>}
      * @private
      */
     this.listenerKeys_ = [];
 
     /**
-     * @type {!Object.<number, import("ol/events.js").EventsKey>}
+     * @type {Object<string, import("ol/events.js").EventsKey>}
      * @private
      */
     this.featureListenerKeys_ = {};
@@ -82,7 +82,7 @@ export default class extends olInteractionTranslate {
     });
 
     /**
-     * @type {!Object.<number, import("ol/Feature.js").default>}
+     * @type {Object<string, import("ol/Feature.js").default>}
      * @private
      */
     this.centerFeatures_ = {};

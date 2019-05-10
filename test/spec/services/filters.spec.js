@@ -1,6 +1,6 @@
 import angular from 'angular';
 describe('ngeo.misc.filters', () => {
-
+  /** @type {angular.IFilterService} */
   let $filter;
 
   beforeEach(angular.mock.inject((_$filter_) => {

@@ -40,6 +40,7 @@ AutoProjectionService.prototype.stringToCoordinates = function(str) {
  */
 AutoProjectionService.prototype.getProjectionList = function(projectionsCodes) {
   let code, proj;
+  /** @type {olProj.Projection[]} */
   const projections = [];
   projectionsCodes.forEach((projection) => {
     code = projection.toUpperCase();

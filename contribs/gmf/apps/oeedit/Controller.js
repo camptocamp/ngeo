@@ -222,10 +222,15 @@ const module = angular.module('Appoeedit', [
 ]);
 
 module.value('gmfContextualdatacontentTemplateUrl', 'gmf/contextualdata');
-module.run(/* @ngInject */ ($templateCache) => {
-  // @ts-ignore: webpack
-  $templateCache.put('gmf/contextualdata', require('./contextualdata.html'));
-});
+module.run(
+  /**
+   * @ngInject
+   * @param {angular.ITemplateCacheService} $templateCache
+   */
+  ($templateCache) => {
+    // @ts-ignore: webpack
+    $templateCache.put('gmf/contextualdata', require('./contextualdata.html'));
+  });
 
 module.value('gmfPermalinkOptions', /** @type {PermalinkOptions} */ ({
   pointRecenterZoom: 10

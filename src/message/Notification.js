@@ -50,7 +50,7 @@ export class MessageNotification extends ngeoMessageMessage {
     this.container_ = container;
 
     /**
-     * @type {Object.<number, CacheItem>}
+     * @type {Object<string, CacheItem>}
      * @private
      */
     this.cache_ = {};
@@ -61,7 +61,7 @@ export class MessageNotification extends ngeoMessageMessage {
   /**
    * Display the given message string or object or list of message strings or
    * objects.
-   * @param {string|Array.<string>|import('ngeo/message/Message.js').Message|Array.<import('ngeo/message/Message.js').Message>}
+   * @param {string|Array<string>|import('ngeo/message/Message.js').Message|Array<import('ngeo/message/Message.js').Message>}
    *     object A message or list of messages as text or configuration objects.
    */
   notify(object) {
@@ -79,6 +79,7 @@ export class MessageNotification extends ngeoMessageMessage {
 
   /**
    * @override
+   * @param {import('ngeo/message/Message.js').Message} message Message.
    */
   showMessage(message) {
     const type = message.type;
@@ -156,12 +157,12 @@ export class MessageNotification extends ngeoMessageMessage {
 /**
  * @typedef {Object} CacheItem
  * @property {JQuery} el
- * @property {angular.IPromise} promise
+ * @property {angular.IPromise<void>} promise
  */
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('ngeoNotification', []);

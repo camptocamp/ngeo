@@ -3,9 +3,11 @@ import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
 
 describe('ngeo.map.scaleselector', () => {
-
+  /** @type {JQuery<HTMLElement>} */
   let element;
+  /** @type {import('ol/Map.js').default} */
   let map;
+  /** @type {Object<string, *>} */
   let scales;
 
   beforeEach(() => {

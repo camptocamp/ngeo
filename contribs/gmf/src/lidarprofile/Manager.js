@@ -54,7 +54,7 @@ export class LidarprofileManager {
     this.ngeoDebounce_ = ngeoDebounce;
 
     /**
-     * @type {?angular.IPromise}
+     * @type {?angular.IPromise<never>}
      * @private
      */
     this.promise = null;
@@ -231,7 +231,8 @@ export class LidarprofileManager {
     if (distanceOffset == 0) {
       maxLODWith = this.utils.getNiceLOD(this.line_.getLength(), max_levels);
     } else {
-      const domain = this.plot.updateScaleX['domain']();
+      // @ts-ignore
+      const domain = this.plot.updateScaleX.domain();
       pytreeLinestring = '';
 
       for (let i = 0; i < clippedLine.length; i++) {
@@ -390,68 +391,68 @@ export class LidarprofileManager {
 
     // If number of points return is higher than Pytree configuration max value,
     // stop sending requests.
-    this.config.clientConfig.pointSum += jHeader['points'];
+    this.config.clientConfig.pointSum += jHeader.points;
     if (this.config.clientConfig.pointSum >
         this.config.serverConfig.max_point_number) {
       console.warn('Number of points is higher than Pytree configuration max value !');
     }
 
-    const attr = jHeader['pointAttributes'];
+    const attr = jHeader.pointAttributes;
     const attributes = [];
     for (let j = 0; j < attr.length; j++) {
       if (this.config.serverConfig.point_attributes[attr[j]] != undefined) {
         attributes.push(this.config.serverConfig.point_attributes[attr[j]]);
       }
     }
-    const scale = jHeader['scale'];
+    const scale = jHeader.scale;
 
-    if (jHeader['points'] < 3) {
+    if (jHeader.points < 3) {
       return;
     }
 
     const points = this.getEmptyProfilePoints_();
-    const bytesPerPoint = jHeader['bytesPerPoint'];
+    const bytesPerPoint = jHeader.bytesPerPoint;
     const buffer = profile.slice(4 + headerSize);
-    for (let i = 0; i < jHeader['points']; i++) {
+    for (let i = 0; i < jHeader.points; i++) {
 
       const byteOffset = bytesPerPoint * i;
       const view = new DataView(buffer, byteOffset, bytesPerPoint);
       let aoffset = 0;
       for (let k = 0; k < attributes.length; k++) {
 
-        if (attributes[k]['value'] == 'POSITION_PROJECTED_PROFILE') {
+        if (attributes[k].value == 'POSITION_PROJECTED_PROFILE') {
           const udist = view.getUint32(aoffset, true);
           const dist = udist * scale;
           points.distance.push(Math.round(100 * (distanceOffset + dist)) / 100);
           this.profilePoints.distance.push(Math.round(100 * (distanceOffset + dist)) / 100);
 
-        } else if (attributes[k]['value'] == 'CLASSIFICATION') {
+        } else if (attributes[k].value == 'CLASSIFICATION') {
           const classif = view.getUint8(aoffset);
           points.classification.push(classif);
           this.profilePoints.classification.push(classif);
 
-        } else if (attributes[k]['value'] == 'INTENSITY') {
+        } else if (attributes[k].value == 'INTENSITY') {
           const intensity = view.getUint8(aoffset);
           points.intensity.push(intensity);
           this.profilePoints.intensity.push(intensity);
 
-        } else if (attributes[k]['value'] == 'COLOR_PACKED') {
+        } else if (attributes[k].value == 'COLOR_PACKED') {
           const r = view.getUint8(aoffset);
           const g = view.getUint8(aoffset + 1);
           const b = view.getUint8(aoffset + 2);
           points.color_packed.push([r, g, b]);
           this.profilePoints.color_packed.push([r, g, b]);
 
-        } else if (attributes[k]['value'] == 'POSITION_CARTESIAN') {
-          const x = view.getInt32(aoffset, true) * scale + jHeader['boundingBox']['lx'];
-          const y = view.getInt32(aoffset + 4, true) * scale + jHeader['boundingBox']['ly'];
-          const z = view.getInt32(aoffset + 8, true) * scale + jHeader['boundingBox']['lz'];
+        } else if (attributes[k].value == 'POSITION_CARTESIAN') {
+          const x = view.getInt32(aoffset, true) * scale + jHeader.boundingBox.lx;
+          const y = view.getInt32(aoffset + 4, true) * scale + jHeader.boundingBox.ly;
+          const z = view.getInt32(aoffset + 8, true) * scale + jHeader.boundingBox.lz;
           points.coords.push([x, y]);
           points.altitude.push(z);
           this.profilePoints.altitude.push(z);
           this.profilePoints.coords.push([x, y]);
         }
-        aoffset = aoffset + attributes[k]['bytes'];
+        aoffset = aoffset + attributes[k].bytes;
       }
     }
 
@@ -513,7 +514,8 @@ export class LidarprofileManager {
     if (!this.line_) {
       throw new Error('Missing line');
     }
-    const domainX = this.plot.updateScaleX['domain']();
+    // @ts-ignore
+    const domainX = this.plot.updateScaleX.domain();
     let map_resolution = this.map_ ? this.map_.getView().getResolution() : 0;
     map_resolution = map_resolution || 0;
     const clip = this.utils.clipLineByMeasure(this.config, map_resolution,

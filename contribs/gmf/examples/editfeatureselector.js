@@ -51,7 +51,7 @@ module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**
- * @param {!angular.IScope} $scope Angular scope.
+ * @param {angular.IScope} $scope Angular scope.
  * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes The gmf themes service.
  * @param {import("gmf/layertree/TreeManager.js").LayertreeTreeManager} gmfTreeManager gmf Tree Manager
  *    service.

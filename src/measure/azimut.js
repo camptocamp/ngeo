@@ -47,6 +47,7 @@ function measureAzimutComponent($compile, gettextCatalog, $filter, $injector) {
       const helpMsg = gettextCatalog.getString('Click to start drawing circle');
       const contMsg = gettextCatalog.getString('Click to finish');
 
+      /** @type {import('ngeo/interaction/Measure.js').MeasureOptions} */
       const options = {
         style: new olStyleStyle(),
         startMsg: $compile(`<div translate>${helpMsg}</div>`)($scope)[0],

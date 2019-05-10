@@ -24,10 +24,15 @@ const module = angular.module('gmfMapMouseposition', [
 ]);
 
 
-module.run(/* @ngInject */ ($templateCache) => {
-  // @ts-ignore: webpack
-  $templateCache.put('gmf/map/mousepositionComponent', require('./mousepositionComponent.html'));
-});
+module.run(
+  /**
+   * @ngInject
+   * @param {angular.ITemplateCacheService} $templateCache
+   */
+  ($templateCache) => {
+    // @ts-ignore: webpack
+    $templateCache.put('gmf/map/mousepositionComponent', require('./mousepositionComponent.html'));
+  });
 
 
 module.value('gmfMapMousepositionTemplateUrl',
@@ -170,6 +175,9 @@ Controller.prototype.initOlControl_ = function() {
   }
 
   // function that apply the filter.
+  /**
+   * @param {number[]|undefined} coordinates
+   */
   const formatFn = (coordinates) => {
     if (!this.projection) {
       throw new Error('Missing projection');
@@ -182,6 +190,7 @@ Controller.prototype.initOlControl_ = function() {
     const filter = this.$filter_(shiftedFilterAndArgs);
     console.assert(typeof filter == 'function');
     const args = filterAndArgs;
+    // @ts-ignore: is the following line needed?
     args.unshift(coordinates);
     return filter.apply(this, args);
   };

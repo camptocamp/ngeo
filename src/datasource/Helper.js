@@ -84,7 +84,7 @@ export class DatasourceHelper {
    * only have 1 ogcLayer set and be queryable.
    *
    * @param {import("ngeo/datasource/OGC.js").default} dataSource Filtrable data source.
-   * @return {angular.IPromise} Promise.
+   * @return {angular.IPromise<import('ngeo/format/Attribute').Attribute[]>} Promise.
    */
   getDataSourceAttributes(dataSource) {
 
@@ -93,13 +93,12 @@ export class DatasourceHelper {
     if (dataSource.attributes) {
       wfsDescribeFeatureTypeDefer.resolve(dataSource.attributes);
     } else {
-      this.ngeoQuerent_.wfsDescribeFeatureType(
-        dataSource
-      ).then((featureType) => {
+      this.ngeoQuerent_.wfsDescribeFeatureType(dataSource).then((featureType_) => {
         // We know, at this point, that there's only one definition that
         // was returned.  Just to be sure, let's do a bunch of assertions.
         const ogcLayerName = dataSource.getOGCLayerNames()[0];
         console.assert(typeof ogcLayerName == 'string', 'The data source should have only one ogcLayer.');
+        const featureType = /** @type {Object<string, *>} */(/** @type {unknown} */(featureType_));
         for (const element of featureType.element) {
           if (element.name === ogcLayerName) {
             for (const type of featureType.complexType) {

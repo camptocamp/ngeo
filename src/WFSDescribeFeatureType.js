@@ -119,12 +119,15 @@ WFSDescribeFeatureType.prototype.read;
 
 
 /**
- * @inheritDoc
+   * @param {Document} doc Document.
+   * @return {Object} Object
  */
 WFSDescribeFeatureType.prototype.readFromDocument = function(doc) {
-  for (let n = doc.firstChild; n; n = n.nextSibling) {
-    if (n.nodeType == Node.ELEMENT_NODE) {
-      return this.readFromNode(n);
+  /** @type {?Node|ChildNode} */
+  let node;
+  for (node = doc.firstChild; node; node = node.nextSibling) {
+    if (node && node.nodeType == Node.ELEMENT_NODE) {
+      return this.readFromNode(/** @type {Element} */(node));
     }
   }
   return null;
@@ -132,7 +135,8 @@ WFSDescribeFeatureType.prototype.readFromDocument = function(doc) {
 
 
 /**
- * @inheritDoc
+   * @param {Element} node Node.
+   * @return {Object} Object
  */
 WFSDescribeFeatureType.prototype.readFromNode = function(node) {
   let result = {};
@@ -180,18 +184,20 @@ function readElement_(node, objectStack) {
  * @hidden
  * @param {Element} node Node.
  * @param {Array<*>} objectStack Object stack.
- * @return {Object<string, string>} Object.
+ * @return {Object<string, ?string>} Object.
  */
 function readComplexType_(node, objectStack) {
   const name = node.getAttribute('name');
+  /** @type {Object<string, ?string>} */
   const object = olXml.pushParseAndPop(
-    {'name': name},
+    {name: name},
     COMPLEX_TYPE_PARSERS_,
     node, objectStack
   );
   // flatten
-  object['complexContent'] = object['complexContent'].extension.sequence.element;
-  return /** @type {Object<string, string>} */(object);
+  // @ts-ignore
+  object.complexContent = object.complexContent.extension.sequence.element;
+  return object;
 }
 
 
@@ -200,7 +206,7 @@ function readComplexType_(node, objectStack) {
  * @hidden
  * @param {Element} node Node.
  * @param {Array.<*>} objectStack Object stack.
- * @return {!Object.<string, string>} Object.
+ * @return {Object<string, string>} Object.
  */
 function readComplexContent_(
   node, objectStack
@@ -218,8 +224,8 @@ function readComplexContent_(
  * @private
  * @hidden
  * @param {Element} node Node.
- * @param {Array.<*>} objectStack Object stack.
- * @return {!Object.<string, string>} Object.
+ * @param {Array<*>} objectStack Object stack.
+ * @return {Object<string, string>} Object.
  */
 function readExtension_(node, objectStack) {
   return olXml.pushParseAndPop(

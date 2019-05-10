@@ -242,7 +242,7 @@ class DrawAzimut extends olInteractionPointer {
   }
 
   /**
-   * @inheritDoc
+   * @param {import("ol/PluggableMap.js").default} map Map.
    */
   setMap(map) {
     olInteractionPointer.prototype.setMap.call(this, map);
@@ -250,7 +250,8 @@ class DrawAzimut extends olInteractionPointer {
   }
 
   /**
-   * @inheritDoc
+   * @param {import("ol/MapBrowserPointerEvent.js").default} event Event.
+   * @return {boolean} If the event was consumed.
    */
   handleDownEvent(event) {
     this.downPx_ = event.pixel;
@@ -258,7 +259,8 @@ class DrawAzimut extends olInteractionPointer {
   }
 
   /**
-   * @inheritDoc
+   * @param {import("ol/MapBrowserPointerEvent.js").default} event Event.
+   * @return {boolean} If the event was consumed.
    */
   handleUpEvent(event) {
     if (!this.downPx_) {
@@ -283,7 +285,8 @@ class DrawAzimut extends olInteractionPointer {
   }
 
   /**
-   * @inheritDoc
+   * @param {import("ol/MapBrowserPointerEvent.js").default} mapBrowserEvent Event.
+   * @return {boolean} If the event was consumed.
    */
   handleEvent(mapBrowserEvent) {
     let pass = true;

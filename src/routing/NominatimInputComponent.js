@@ -12,10 +12,16 @@ const module = angular.module('ngeoRoutingNominatimInputComponent', [
   ngeoRoutingNominatimService.name
 ]);
 
-module.run(/* @ngInject */ ($templateCache) => {
-  // @ts-ignore: webpack
-  $templateCache.put('ngeo/routing/nominatiminput', require('./nominatiminput.html'));
-});
+
+module.run(
+  /**
+   * @ngInject
+   * @param {angular.ITemplateCacheService} $templateCache
+   */
+  ($templateCache) => {
+    // @ts-ignore: webpack
+    $templateCache.put('ngeo/routing/nominatiminput', require('./nominatiminput.html'));
+  });
 
 
 module.value('ngeoRoutingNominatimInputComponentTemplateUrl',
@@ -24,7 +30,7 @@ module.value('ngeoRoutingNominatimInputComponentTemplateUrl',
    * @return {string} Template URL.
    */
   ($attrs) => {
-    const templateUrl = $attrs['ngeoRoutingNominatimInputComponentTemplateUrl'];
+    const templateUrl = $attrs.ngeoRoutingNominatimInputComponentTemplateUrl;
     return templateUrl !== undefined ? templateUrl :
       'ngeo/routing/nominatiminput';
   }
@@ -91,24 +97,23 @@ function Controller($element, $scope, ngeoNominatimService) {
   /**
    * @type {Twitter.Typeahead.Options}
    */
-  this.options = /** @type {Twitter.Typeahead.Options} */ ({
-  });
+  this.options = /** @type {Twitter.Typeahead.Options} */ ({});
 
   /**
-   * @type {Array.<Twitter.Typeahead.Dataset>}
+   * @type {Array<Twitter.Typeahead.Dataset<import('./NominatimService').NominatimSearchResult>>}
    */
-  this.datasets = [/** @type {Twitter.Typeahead.Dataset} */({
+  this.datasets = [{
     name: 'nominatim',
     display: 'name',
     source: this.ngeoNominatimService.typeaheadSourceDebounced,
-  })];
+  }];
 
   /**
-   * @type {import('ngeo/search/searchDirective.js').SearchDirectiveListeners}
+   * @type {import('ngeo/search/searchDirective.js').SearchDirectiveListeners<void>}
    */
-  this.listeners = /** @type {import('ngeo/search/searchDirective.js').SearchDirectiveListeners} */({
+  this.listeners = {
     select: this.select_.bind(this)
-  });
+  };
 
   /**
    * @type {string}
@@ -120,7 +125,7 @@ function Controller($element, $scope, ngeoNominatimService) {
 /**
  * @param {JQueryEventObject} event Event.
  * @param {import('ngeo/routing/NominatimService').NominatimSearchResult} suggestion Suggestion.
- * @param {Twitter.Typeahead.Dataset} dataset Dataset.
+ * @param {Twitter.Typeahead.Dataset<void>} dataset Dataset.
  * @private
  * @hidden
  */

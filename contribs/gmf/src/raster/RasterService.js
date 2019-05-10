@@ -41,7 +41,7 @@ const Param = {
 /**
  * @param {import("ol/coordinate.js").Coordinate} coordinate Coordinate.
  * @param {Object=} opt_params Optional parameters for the request.
- * @return {angular.IPromise} Promise.
+ * @return {angular.IPromise<Object<string, number>>} Promise.
  */
 RasterService.prototype.getRaster = function(coordinate, opt_params) {
 
@@ -49,15 +49,13 @@ RasterService.prototype.getRaster = function(coordinate, opt_params) {
   params[Param.X] = coordinate[0];
   params[Param.Y] = coordinate[1];
 
-  return this.$http_.get(this.url_, {
-    params
-  }).then(this.handleGetRaster_.bind(this));
+  return this.$http_.get(this.url_, {params}).then(resp => resp.data);
 };
 
 
 /**
- * @param {angular.IHttpResponse} resp Ajax response.
- * @return {Object.<string, number>} The response object.
+ * @param {angular.IHttpResponse<Object<string, number>>} resp Ajax response.
+ * @return {Object<string, number>} The response object.
  * @private
  */
 RasterService.prototype.handleGetRaster_ = function(resp) {

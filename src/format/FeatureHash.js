@@ -419,6 +419,7 @@ class FeatureHash extends olFormatTextFeature {
       if (styleFunction !== undefined) {
         let styles = styleFunction.call(null, feature, 0);
         if (styles !== null) {
+          /** @type {string[]} */
           const encodedStyles = [];
           styles = Array.isArray(styles) ? styles : [styles];
           if (!geometry) {
@@ -736,6 +737,7 @@ function readMultiLineStringGeometry_(text) {
   console.assert(text.substring(0, 2) === 'L(');
   console.assert(text[text.length - 1] == ')');
   text = text.substring(2, text.length - 1);
+  /** @type {number[]} */
   let flatCoordinates = [];
   const ends = [];
   const lineStrings = text.split('\'');
@@ -794,6 +796,7 @@ function readPolygonGeometry_(text) {
   console.assert(text.substring(0, 2) === 'a(');
   console.assert(text[text.length - 1] == ')');
   text = text.substring(2, text.length - 1);
+  /** @type {number[]} */
   let flatCoordinates = [];
   const ends = [];
   const rings = text.split('\'');
@@ -825,11 +828,14 @@ function readMultiPolygonGeometry_(text) {
   console.assert(text.substring(0, 2) === 'A(');
   console.assert(text[text.length - 1] == ')');
   text = text.substring(2, text.length - 1);
+  /** @type {number[]} */
   let flatCoordinates = [];
+  /** @type {number[][]} */
   const endss = [];
   const polygons = text.split(')(');
   for (let i = 0, ii = polygons.length; i < ii; ++i) {
     const rings = polygons[i].split('\'');
+    /** @type {number[]} */
     const ends = endss[i] = [];
     for (let j = 0, jj = rings.length; j < jj; ++j) {
       flatCoordinates = this.decodeCoordinates_(rings[j], flatCoordinates);
@@ -891,6 +897,7 @@ function setStyleInFeature_(text, feature) {
     if (typeof pointRadius != 'number') {
       throw new Error('Missing pointRadius');
     }
+    /** @type {import('ol/style/Circle.js').Options} */
     const options = {
       radius: pointRadius,
     };
@@ -974,6 +981,7 @@ function setStyleProperties_(text, feature) {
   }
 
   // Convert legacy properties
+  /** @type {Object<string, string|number|boolean|undefined>} */
   const clone = {};
   for (const key in properties) {
     const value = properties[key];

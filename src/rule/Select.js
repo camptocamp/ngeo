@@ -61,9 +61,10 @@ export default class extends ngeoRuleRule {
   // === Calculated property getters ===
 
   /**
-   * @return {Array.<string>} Selected choices
+   * @return {Array<string>} Selected choices
    */
   get selectedChoices() {
+    /** @type {Array<string>} */
     let selectedChoices;
     if (this.expression) {
       const stringExpression = String(this.expression);

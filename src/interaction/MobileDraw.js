@@ -25,7 +25,6 @@ import olSourceVector from 'ol/source/Vector.js';
 
 
 /**
- * @classdesc
  * Interaction for drawing feature geometries from a mobile device using the
  * center of the map view as entry for points added.
  *
@@ -34,12 +33,13 @@ import olSourceVector from 'ol/source/Vector.js';
  * - line string
  * - polygon
  *
- * @constructor
- * @fires DrawEvent
- * @param {MobileDrawOptions} options Options
  * @hidden
  */
 export default class extends olInteractionInteraction {
+  /**
+   * @fires DrawEvent
+   * @param {MobileDrawOptions} options Options
+   */
   constructor(options) {
     super({
       handleEvent: TRUE
@@ -114,7 +114,7 @@ export default class extends olInteractionInteraction {
   }
 
   /**
-   * @inheritDoc
+   * @param {import("ol/PluggableMap.js").default} map Map.
    */
   setMap(map) {
     const currentMap = this.getMap();

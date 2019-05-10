@@ -187,6 +187,9 @@ ContextualdataController.prototype.handleMapContextMenu_ = function(event) {
   });
 };
 
+/**
+ * @param {number[]} coordinate
+ */
 ContextualdataController.prototype.setContent_ = function(coordinate) {
   if (!this.map) {
     throw new Error('Missing map');
@@ -200,23 +203,24 @@ ContextualdataController.prototype.setContent_ = function(coordinate) {
   const mapProjection = this.map.getView().getProjection().getCode();
   this.projections.forEach((proj) => {
     const coord = olProj.transform(coordinate, mapProjection, `EPSG:${proj}`);
+    // @ts-ignore: scope ...
     scope[`coord_${proj}`] = coord;
+    // @ts-ignore: scope ...
     scope[`coord_${proj}_eastern`] = coord[0];
+    // @ts-ignore: scope ...
     scope[`coord_${proj}_northern`] = coord[1];
   });
 
-  const getRasterSuccess = (resp) => {
-    Object.assign(scope, resp);
-    if (this.callback) {
-      Object.assign(scope, this.callback.call(this, coordinate, resp));
-    }
-  };
-  const getRasterError = () => {
-    console.error('Error on getting the raster.');
-  };
   this.gmfRaster_.getRaster(coordinate, this.gmfContextualdataOptions_.rasterParams).then(
-    getRasterSuccess,
-    getRasterError
+    (resp) => {
+      Object.assign(scope, resp);
+      if (this.callback) {
+        Object.assign(scope, this.callback.call(this, coordinate, resp));
+      }
+    },
+    () => {
+      console.error('Error on getting the raster.');
+    }
   );
 };
 

@@ -4,8 +4,11 @@ import gmfTestDataThemescapabilities from '../data/themescapabilities.js';
 import * as olEvents from 'ol/events.js';
 
 describe('gmf.theme.Themes', () => {
+  /** @type {import("gmf/theme/Themes.js").ThemesService} */
   let gmfThemes;
+  /** @type {string} */
   let treeUrl;
+  /** @type {angular.IHttpBackendService} */
   let $httpBackend;
 
   beforeEach(() => {
@@ -25,6 +28,7 @@ describe('gmf.theme.Themes', () => {
   it('Get background layers', () => {
     const spy = jasmine.createSpy();
     gmfThemes.getBgLayers().then(spy);
+    /** @type {string[]} */
     const urls = [];
 
     $httpBackend.expectGET(treeUrl);
@@ -98,6 +102,7 @@ describe('gmf.theme.Themes', () => {
 
     expect(spy.calls.count()).toBe(1);
     const resultThemes = /** @type {import('gmf/themes.js').GmfTheme} */(spy.calls.mostRecent().args[0]);
+    // @ts-ignore
     const dataFirstKey = Object.keys(resultThemes[0])[0];
     const themesThemesFirstKey = Object.keys(gmfTestDataThemes.themes[0])[0];
     expect(dataFirstKey).toBe(themesThemesFirstKey);

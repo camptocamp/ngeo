@@ -1,3 +1,4 @@
+// @ts-nocheck
 import angular from 'angular';
 import {RouteSuffix} from 'gmf/authentication/Service.js';
 import * as olEvents from 'ol/events.js';
@@ -8,6 +9,7 @@ describe('gmf.authentication.Service', () => {
   let isLoggedInUrl;
   let loginUrl;
   let logoutUrl;
+  /** @type {angular.IHttpBackendService} */
   let $httpBackend;
 
   beforeEach(() => {

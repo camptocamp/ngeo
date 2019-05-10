@@ -1,3 +1,4 @@
+// @ts-nocheck
 import angular from 'angular';
 import olMap from 'ol/Map.js';
 import olCollection from 'ol/Collection.js';
@@ -5,8 +6,11 @@ import olFeature from 'ol/Feature.js';
 import olStyleStyle from 'ol/style/Style.js';
 
 describe('ngeo.map.FeatureOverlayMgr', () => {
+  /** @type {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} */
   let ngeoFeatureOverlayMgr;
+  /** @type {import('ol/Map.js').default} */
   let map;
+  /** @type {import("ol/layer/Vector.js").default} */
   let layer;
 
   beforeEach(() => {

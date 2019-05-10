@@ -1,3 +1,4 @@
+// @ts-nocheck
 import angular from 'angular';
 import gmfTestDataThemes from '../data/themes.js';
 

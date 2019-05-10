@@ -33,7 +33,7 @@ export class EditingEnumerateAttributeService {
     this.baseUrl_ = gmfLayersUrl;
 
     /**
-     * @type {Object.<string, !angular.IPromise>}
+     * @type {Object.<string, angular.IPromise<import('gmf/themes.js').GmfLayerAttributeValue[]>>}
      * @private
      */
     this.promises_ = {};
@@ -42,30 +42,17 @@ export class EditingEnumerateAttributeService {
   /**
    * @param {import("gmf/datasource/OGC.js").default} dataSource Data source.
    * @param {string} attribute Attribute name.
-   * @return {angular.IPromise} Promise.
+   * @return {angular.IPromise<import('gmf/themes.js').GmfLayerAttributeValue[]>} Promise.
    */
   getAttributeValues(dataSource, attribute) {
     const promiseId = `${dataSource.id}_${attribute}`;
     const name = dataSource.name;
     if (!this.promises_[promiseId]) {
       const url = `${this.baseUrl_}/${name}/values/${attribute}`;
-      this.promises_[promiseId] = this.http_.get(url).then(
-        this.handleGetAttributeValues_.bind(this));
+      this.promises_[promiseId] = this.http_.get(url).then(resp => resp.data.items);
     }
     return this.promises_[promiseId];
   }
-
-  /**
-   * @param {angular.IHttpResponse} resp Ajax response.
-   * @return {Array.<import('gmf/themes.js').GmfLayerAttributeValue>} List of the attribute
-   *     values.
-   */
-  handleGetAttributeValues_(resp) {
-    const data = /** @type {import('gmf/themes.js').GmfLayerAttributeValuesResponse} */ (
-      resp.data);
-    return data.items;
-  }
-
 }
 
 

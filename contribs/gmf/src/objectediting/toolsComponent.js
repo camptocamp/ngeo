@@ -44,7 +44,7 @@ export const ObjecteditingProcessType = {
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('gmfObjecteditingToolsComponent', [
@@ -56,10 +56,15 @@ const module = angular.module('gmfObjecteditingToolsComponent', [
 ]);
 
 
-module.run(/* @ngInject */ ($templateCache) => {
-  // @ts-ignore: webpack
-  $templateCache.put('gmf/objectediting/toolsComponent', require('./toolsComponent.html'));
-});
+module.run(
+  /**
+   * @ngInject
+   * @param {angular.ITemplateCacheService} $templateCache
+   */
+  ($templateCache) => {
+    // @ts-ignore: webpack
+    $templateCache.put('gmf/objectediting/toolsComponent', require('./toolsComponent.html'));
+  });
 
 
 /**
@@ -145,7 +150,7 @@ const NAMESPACE = 'oet';
 
 /**
  * @param {angular.auto.IInjectorService} $injector Main injector.
- * @param {!angular.IScope} $scope Scope.
+ * @param {angular.IScope} $scope Scope.
  * @param {import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate
  *    manager service.
  * @constructor
@@ -213,7 +218,7 @@ function Controller($injector, $scope, ngeoToolActivateMgr) {
   // == Injected properties ==
 
   /**
-   * @type {!angular.IScope}
+   * @type {angular.IScope}
    * @private
    */
   this.scope_ = $scope;
@@ -232,7 +237,7 @@ function Controller($injector, $scope, ngeoToolActivateMgr) {
   this.geomTypePolygon = ngeoGeometryType.POLYGON;
 
   /**
-   * @type {Array.<string>}
+   * @type {Array<string>}
    * @private
    */
   this.toolActiveNames_ = [];
@@ -295,6 +300,7 @@ Controller.prototype.$onInit = function() {
       if (!this.active) {
         this.requiresLayer = false;
         for (let i = 0, ii = this.toolActiveNames_.length; i < ii; i++) {
+          // @ts-ignore: Strange behivior...
           this[this.toolActiveNames_[i]] = false;
         }
       }
@@ -329,6 +335,7 @@ Controller.prototype.registerTool_ = function(
   const requiresLayer = opt_requiresLayer === true;
 
   this.scope_.$watch(
+    // @ts-ignore: Strange behivior...
     () => this[toolActiveName],
     this.handleToolActiveChange_.bind(this, process, requiresLayer)
   );
@@ -363,6 +370,7 @@ Controller.prototype.handleToolActiveChange_ = function(
   // If one tool is active, update active property to true.
   let active = false;
   for (let i = 0, ii = this.toolActiveNames_.length; i < ii; i++) {
+    // @ts-ignore: Strange behivior...
     active = this[this.toolActiveNames_[i]];
     if (active) {
       break;

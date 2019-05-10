@@ -24,9 +24,9 @@ const module = angular.module('ngeoDebounce', []);
  * @private
  * @hidden
  */
-function debounce(func, wait, invokeApply, $timeout) {
+export function debounce(func, wait, invokeApply, $timeout) {
   /**
-   * @type {?angular.IPromise}
+   * @type {?angular.IPromise<void>}
    */
   let timeout = null;
   return /** @type {T} */(
@@ -42,7 +42,7 @@ function debounce(func, wait, invokeApply, $timeout) {
       if (timeout !== null) {
         $timeout.cancel(timeout);
       }
-      timeout = $timeout(later, wait, invokeApply);
+      timeout = ($timeout(later, wait, invokeApply));
     }
   );
 }
@@ -56,8 +56,6 @@ function debounce(func, wait, invokeApply, $timeout) {
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @return {import("ngeo/misc/debounce.js").miscDebounce<T>} The debounce function.
  *
- * @ngdoc service
- * @ngname ngeoDebounce
  * @ngInject
  * @private
  * @hidden

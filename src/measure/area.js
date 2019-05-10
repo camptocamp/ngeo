@@ -44,6 +44,7 @@ function measureAreaComponent($compile, gettextCatalog, $filter, $injector) {
       const contMsg = gettextCatalog.getString('Click to continue drawing<br>' +
           'Double-click or click starting point to finish');
 
+      /** @type {import('ngeo/interaction/Measure.js').MeasureOptions} */
       const options = {
         style: new olStyleStyle(),
         startMsg: $compile(`<div translate>${helpMsg}</div>`)($scope)[0],

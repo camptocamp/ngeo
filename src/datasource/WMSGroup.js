@@ -117,16 +117,18 @@ export default class extends ngeoDatasourceOGCGroup {
   // =======================
 
   /**
-   * @inheritDoc
+   * @param {import("ngeo/datasource/DataSource.js").default} dataSource Data source to add.
    */
   addDataSource(dataSource) {
     super.addDataSource(dataSource);
-    console.assert(dataSource instanceof ngeoDatasourceOGC);
+    if (!(dataSource instanceof ngeoDatasourceOGC)) {
+      throw new Error('Wrong datasource type');
+    }
     this.registerDataSource_(dataSource);
   }
 
   /**
-   * @param {!import("ngeo/datasource/OGC.js").default} dataSource OGC data source to register.
+   * @param {ngeoDatasourceOGC} dataSource OGC data source to register.
    * @private
    */
   registerDataSource_(dataSource) {
@@ -164,6 +166,7 @@ export default class extends ngeoDatasourceOGCGroup {
    */
   updateLayer_() {
     const layer = this.layer;
+    /** @type {string[]} */
     let layerNames = [];
 
     // (1) Collect layer names from data sources in the group
@@ -178,7 +181,7 @@ export default class extends ngeoDatasourceOGCGroup {
   }
 
   /**
-   * @inheritDoc
+   * @param {import("ngeo/datasource/DataSource.js").default} dataSource Data source to remove.
    */
   removeDataSource(dataSource) {
     super.removeDataSource(dataSource);

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import angular from 'angular';
 import {PrintService} from 'ngeo/print/Service.js';
 import {getUid} from 'ol/index.js';
@@ -30,7 +31,7 @@ import olTilegridWMTS from 'ol/tilegrid/WMTS.js';
  */
 
 describe('ngeo.print.Service', () => {
-
+  /** @type {import('ngeo/print/Service').CreatePrint} */
   let ngeoCreatePrint;
 
   beforeEach(() => {
@@ -647,9 +648,11 @@ describe('ngeo.print.Service', () => {
   });
 
   describe('#createReport', () => {
-
+    /** @type {} */
     let print;
+    /** @type {} */
     let spec;
+    /** @type {angular.IHttpBackendService} */
     let $httpBackend;
 
     beforeEach(() => {

@@ -50,11 +50,13 @@ export default class extends ngeoDatasourceGroup {
   }
 
   /**
-   * @inheritDoc
+   * @param {import("ngeo/datasource/DataSource.js").default} dataSource Data source to add.
    */
   addDataSource(dataSource) {
     super.addDataSource(dataSource);
-    console.assert(dataSource instanceof ngeoDatasourceFile);
+    if (!(dataSource instanceof ngeoDatasourceFile)) {
+      throw new Error('Wrong datasource type');
+    }
     this.registerDataSource_(dataSource);
   }
 
@@ -82,11 +84,13 @@ export default class extends ngeoDatasourceGroup {
   }
 
   /**
-   * @inheritDoc
+   * @param {import("ngeo/datasource/DataSource.js").default} dataSource Data source to remove.
    */
   removeDataSource(dataSource) {
     super.removeDataSource(dataSource);
-    console.assert(dataSource instanceof ngeoDatasourceFile);
+    if (!(dataSource instanceof ngeoDatasourceFile)) {
+      throw new Error('Wrong datasource type');
+    }
     this.unregisterDataSource_(dataSource);
   }
 

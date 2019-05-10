@@ -1,4 +1,51 @@
 /**
+ * @typedef {Object} MapFishPrintCapabilities
+ * @property {Object<srring, MapFishPrintCapabilitiesLayout>} layouts
+ * @property {string[]} formats
+ * @property {MapFishPrintCapabilitiesSMTP} [smtp] STMP object definition
+ */
+
+
+/**
+ * Fields that can come from a print v3 server and can be used in the partial
+ * of the gmf print panel.
+ * @typedef {Object} MapFishPrintCapabilitiesLayout
+ * @property {string} name
+ * @property {MapFishPrintCapabilitiesLayoutAttribute[]} [attributes] Custom print layoutInfo.
+ */
+
+
+/**
+ * @typedef {Object} MapFishPrintCapabilitiesLayoutAttribute
+ * @property {string} name Name of the form field.
+ * @property {string|boolean|number} [default] Default value of the form field.
+ * @property {string} value
+ * @property {string} type Type of the field. Can be 'String', 'Boolean' or 'Number'.
+ * @property {string} [clientParams]
+ */
+
+
+/**
+ * @typedef {Object} MapFishPrintCapabilitiesSMTP
+ * @property {boolean} enabled
+ */
+
+
+/**
+ * @typedef {Object} DataSourceTableObject
+ * @property {Array<string>} columns
+ * @property {Array<Array.<string|number|boolean>>} data
+ */
+
+
+/**
+ * @typedef {Object} DataSourcePrintReportObject
+ * @property {string} title
+ * @property {DataSourceTableObject} table
+ */
+
+
+/**
  * @typedef {Object} MapFishPrintSpec
  * @property {MapFishPrintAttributes} attributes
  * @property {string} layout
@@ -194,5 +241,6 @@
 
 /**
  * @hidden
+ * @type {null}
  */
 export const nothing = null;

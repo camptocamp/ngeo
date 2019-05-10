@@ -15,10 +15,15 @@ const module = angular.module('ngeoAttributes', [
 ]);
 
 
-module.run(/* @ngInject */ ($templateCache) => {
-  // @ts-ignore: webpack
-  $templateCache.put('ngeo/editing/attributescomponent', require('./attributescomponent.html'));
-});
+module.run(
+  /**
+   * @ngInject
+   * @param {angular.ITemplateCacheService} $templateCache
+   */
+  ($templateCache) => {
+    // @ts-ignore: webpack
+    $templateCache.put('ngeo/editing/attributescomponent', require('./attributescomponent.html'));
+  });
 
 
 module.value('ngeoAttributesTemplateUrl',

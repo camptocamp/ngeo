@@ -96,7 +96,7 @@ export default class extends ngeoRuleRule {
   }
 
   /**
-   * @inheritDoc
+   * @param {?number|string} expression
    */
   setExpression(expression) {
     this.updatingExpression_ = true;

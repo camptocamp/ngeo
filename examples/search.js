@@ -71,7 +71,7 @@ function SearchController($element, $rootScope, $compile, ngeoSearchCreateGeoJSO
    */
   this.vectorLayer_ = this.createVectorLayer_();
 
-  /** @type {Bloodhound} */
+  /** @type {Bloodhound<*>} */
   const bloodhoundEngine = this.createAndInitBloodhound_(
     ngeoSearchCreateGeoJSONBloodhound);
 
@@ -85,7 +85,7 @@ function SearchController($element, $rootScope, $compile, ngeoSearchCreateGeoJSO
   });
 
   /**
-   * @type {Array.<Twitter.Typeahead.Dataset>}
+   * @type {Array<Twitter.Typeahead.Dataset<import("ol/Feature.js").default>>}
    */
   this.datasets = [{
     source: bloodhoundEngine.ttAdapter(),
@@ -100,8 +100,10 @@ function SearchController($element, $rootScope, $compile, ngeoSearchCreateGeoJSO
 
         // A scope for the ng-click on the suggestion's « i » button.
         const scope = $rootScope.$new(true);
-        scope['feature'] = feature;
-        scope['click'] = function(event) {
+        // @ts-ignore: scope...
+        scope.feature = feature;
+        // @ts-ignore: scope...
+        scope.click = function(event) {
           window.alert(feature.get('label'));
           event.stopPropagation();
         };
@@ -114,9 +116,9 @@ function SearchController($element, $rootScope, $compile, ngeoSearchCreateGeoJSO
   }];
 
   /**
-   * @type {import('ngeo/search/searchDirective.js').SearchDirectiveListeners}
+   * @type {import('ngeo/search/searchDirective.js').SearchDirectiveListeners<*>}
    */
-  this.listeners = /** @type {import('ngeo/search/searchDirective.js').SearchDirectiveListeners} */ ({
+  this.listeners = {
     select: (event, suggestion, dataset) => {
       if (!this.map) {
         throw new Error('Missing map');
@@ -137,7 +139,7 @@ function SearchController($element, $rootScope, $compile, ngeoSearchCreateGeoJSO
         maxZoom: 16
       });
     }
-  });
+  };
 }
 
 
@@ -173,7 +175,7 @@ SearchController.prototype.createVectorLayer_ = function() {
 /**
  * @param {import("ngeo/search/createGeoJSONBloodhound.js").createGeoJSONBloodhound} ngeoSearchCreateGeoJSONBloodhound
  *    The ngeo create GeoJSON Bloodhound service.
- * @return {Bloodhound} The bloodhound engine.
+ * @return {Bloodhound<*>} The bloodhound engine.
  * @private
  */
 SearchController.prototype.createAndInitBloodhound_ = function(ngeoSearchCreateGeoJSONBloodhound) {

@@ -178,8 +178,7 @@ export class MapQuerent {
       bboxAsGETParam: this.bboxAsGETParam_
     });
     this.result_.pending = true;
-    this.ngeoQuerent_.issue(options).then(
-      this.handleResult_.bind(this, action));
+    this.ngeoQuerent_.issue(options).then(this.handleResult_.bind(this, action));
   }
 
   /**
@@ -238,8 +237,10 @@ export class MapQuerent {
       const tooManyResults = querentResultItem.tooManyFeatures === true;
       const totalFeatureCount = querentResultItem.totalFeatureCount;
 
+      /** @type {Object<string, Array<import('ol/Feature.js').default>>} */
       const typeSeparatedFeatures = {};
       features.forEach((feature) => {
+        /** @type {string} */
         const type = feature.get('ngeo_feature_type_');
         if (!typeSeparatedFeatures[type]) {
           typeSeparatedFeatures[type] = [];
@@ -247,6 +248,7 @@ export class MapQuerent {
         // Use properties aliases if any
         if (dataSource.attributes && dataSource.attributes.length) {
           const properties = feature.getProperties();
+          /** @type {Object<string, any>} */
           const filteredProperties = {};
           dataSource.attributes.forEach((attribute) => {
             if (attribute.alias) {
@@ -280,10 +282,9 @@ export class MapQuerent {
 
           if (existingSource) {
             for (const newFeature of featuresByType) {
-              const existingFeatureIndex =
-                this.featureHelper_.findFeatureIndexByFid(
-                  existingSource.features, newFeature.getId()
-                );
+              const existingFeatureIndex = this.featureHelper_.findFeatureIndexByFid(
+                existingSource.features, `${newFeature.getId()}`
+              );
               if (existingFeatureIndex === -1) {
                 if (action === ngeoQueryAction.ADD) {
                   existingSource.features.push(newFeature);

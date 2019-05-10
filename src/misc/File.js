@@ -10,31 +10,46 @@ import angular from 'angular';
  * @hidden
  */
 export function FileService($q, $http, gettext) {
-  let fileReader, canceler;
-
   // Test the validity of the file size
+  /**
+   * @param {number} fileSize
+   */
   this.isValidFileSize = function(fileSize) {
-    return !(fileSize > 20000000); // 20 Mo
+    return fileSize <= 20000000; // 20 Mo
   };
 
+  /**
+   * @param {string} fileContent
+   */
   this.isWmsGetCap = function(fileContent) {
     return /<(WMT_MS_Capabilities|WMS_Capabilities)/.test(fileContent);
   };
 
+  /**
+   * @param {string} fileContent
+   */
   this.isWmtsGetCap = function(fileContent) {
     return /<Capabilities/.test(fileContent);
   };
 
+  /**
+   * @param {string} fileContent
+   */
   this.isKml = function(fileContent) {
     return /<kml/.test(fileContent) && /<\/kml>/.test(fileContent);
   };
 
+  /**
+   * @param {string} fileContent
+   */
   this.isGpx = function(fileContent) {
     return /<gpx/.test(fileContent) && /<\/gpx>/.test(fileContent);
   };
 
+  /** @type {?FileReader} */
+  let fileReader = null;
   /**
-   * @param {!Blob} file .
+   * @param {Blob} file .
    * @return {angular.IPromise<string>} .
    */
   this.read = function(file) {
@@ -73,9 +88,11 @@ export function FileService($q, $http, gettext) {
     return defer.promise;
   };
 
+  /** @type {angular.IDeferred<any>} */
+  let canceler;
   /**
    * @param {string} url .
-   * @param {angular.IDeferred=} opt_cancelP .
+   * @param {angular.IDeferred<void>=} opt_cancelP .
    * @return {angular.IPromise<Blob>} .
    */
   this.load = function(url, opt_cancelP) {

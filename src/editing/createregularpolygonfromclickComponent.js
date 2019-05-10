@@ -150,13 +150,14 @@ function Controller($scope) {
  * Initialize the directive.
  */
 Controller.prototype.$onInit = function() {
+  /** @type {import('ngeo/interaction/DrawRegularPolygonFromClick.js').DrawRegularPolygonFromClickOptions} */
   const options = {
     radius: this.radius,
   };
-  if (this.angle !== undefined) {
+  if (this.angle !== null) {
     options.angle = this.angle;
   }
-  if (this.sides !== undefined) {
+  if (this.sides !== null) {
     options.sides = this.sides;
   }
   this.interaction_ = new ngeoInteractionDrawRegularPolygonFromClick(options);

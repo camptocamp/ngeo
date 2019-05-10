@@ -1,6 +1,6 @@
 import angular from 'angular';
 describe('ngeo.download.Csv', () => {
-
+  /** @type {import("ngeo/download/Csv.js").DownloadCsvService} */
   let ngeoCsvDownload;
 
   beforeEach(angular.mock.inject((_ngeoCsvDownload_) => {

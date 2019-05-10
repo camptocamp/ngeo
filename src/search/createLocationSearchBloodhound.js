@@ -12,15 +12,41 @@ import 'corejs-typeahead';
 
 
 /**
+ * @typedef {Object} Item
+ * @property {string} label
+ * @property {string} label_no_html
+ * @property {string} label_simple
+ * @property {string} featureId
+ * @property {number} x
+ * @property {number} y
+ * @property {string} geom_st_box2d
+ * @property {olGeomPoint} geometry
+ * @property {?Array<number>} bbox
+ */
+
+
+/**
+ * @typedef {Object} Result
+ * @property {Item} attrs
+ */
+
+
+/**
+ * @typedef {Object} Results
+ * @property {Array<Result>} results
+ */
+
+
+/**
  * @typedef {Object} LocationSearchOptions
  * @property {number} [limit=50] The maximum number of results to retrieve per request.
  * @property {string} [origins] A comma separated list of origins.
  * Possible origins are: zipcode,gg25,district,kantone,gazetteer,address,parcel
  * Per default all origins are used.
  * @property {!import('ol/proj/Projection').default} [targetProjection] Target projection.
- * @property {!Bloodhound.BloodhoundOptions} [options] Optional Bloodhound options. If `undefined`,
+ * @property {!Bloodhound.BloodhoundOptions<Results>} [options] Optional Bloodhound options. If `undefined`,
  * the default Bloodhound config will be used.
- * @property {!Bloodhound.RemoteOptions} [remoteOptions] Optional Bloodhound remote options.
+ * @property {!Bloodhound.RemoteOptions<Results>} [remoteOptions] Optional Bloodhound remote options.
  * Only used if `remote` is not defined in `options`.
  * @property {function(string, JQueryAjaxSettings): JQueryAjaxSettings} [prepare] Optional function to
  * prepare the request.
@@ -29,7 +55,7 @@ import 'corejs-typeahead';
 
 /**
  * @param {LocationSearchOptions=} opt_options Options.
- * @return {Bloodhound} The Bloodhound object.
+ * @return {Bloodhound<Array<olFeature>>} The Bloodhound object.
  * @private
  * @hidden
  */
@@ -59,8 +85,14 @@ function createLocationSearchBloodhound(opt_options) {
     }
   };
 
+  /**
+   * @param {string} label
+   */
   const removeHtmlTags = label => label.replace(/<\/?[ib]>/g, '');
 
+  /**
+   * @param {string} label
+   */
   const extractName = (label) => {
     const regex = /<b>(.*?)<\/b>/g;
     const match = regex.exec(label);
@@ -71,7 +103,8 @@ function createLocationSearchBloodhound(opt_options) {
     }
   };
 
-  const bloodhoundOptions = /** @type {Bloodhound.BloodhoundOptions} */ ({
+  /** @type {Bloodhound.BloodhoundOptions<Array<olFeature>|Results>} */
+  const bloodhoundOptions = {
     remote: {
       url: 'https://api3.geo.admin.ch/rest/services/api/SearchServer?type=locations&searchText=%QUERY',
       prepare: (query, settings) => {
@@ -85,10 +118,10 @@ function createLocationSearchBloodhound(opt_options) {
           }
         }
 
-        return (options.prepare !== undefined) ?
-          options.prepare(query, settings) : settings;
+        return (options.prepare !== undefined) ? options.prepare(query, settings) : settings;
       },
-      transform: (parsedResponse) => {
+      transform: (parsedResponse_) => {
+        const parsedResponse = /** @type {Results} */(parsedResponse_);
         const features = parsedResponse.results.map((result) => {
           const attrs = result.attrs;
 
@@ -102,13 +135,13 @@ function createLocationSearchBloodhound(opt_options) {
             }
           }
 
-          attrs['geometry'] = point;
-          attrs['bbox'] = bbox;
+          attrs.geometry = point;
+          attrs.bbox = bbox;
 
           // create a label without HTML tags
           const label = attrs.label;
-          attrs['label_no_html'] = removeHtmlTags(label);
-          attrs['label_simple'] = extractName(label);
+          attrs.label_no_html = removeHtmlTags(label);
+          attrs.label_simple = extractName(label);
 
           const feature = new olFeature(attrs);
           feature.setId(attrs.featureId);
@@ -125,11 +158,14 @@ function createLocationSearchBloodhound(opt_options) {
       return [];
     },
     queryTokenizer: Bloodhound.tokenizers.whitespace
-  });
+  };
 
   // The options objects are cloned to avoid updating the passed object
-  /** @type {Bloodhound.BloodhoundOptions} */
+  /** @type {Bloodhound.BloodhoundOptions<Results>} */
   const bhOptions = Object.assign({}, options.options || {
+    /**
+     * @param {any} datum
+     */
     datumTokenizer: (datum) => {
       return [];
     },
@@ -146,12 +182,12 @@ function createLocationSearchBloodhound(opt_options) {
   Object.assign(bloodhoundOptions, bhOptions);
   Object.assign(bloodhoundOptions.remote, remoteOptions);
 
-  return new Bloodhound(bloodhoundOptions);
+  return /** @type {Bloodhound<Array<olFeature>>} */(new Bloodhound(bloodhoundOptions));
 }
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('ngeoCreateLocationSearchBloodhound', []);
@@ -174,7 +210,7 @@ module.value('ngeoCreateLocationSearchBloodhound', createLocationSearchBloodhoun
  *     });
  *     bloodhound.initialize();
  *
- * @typedef {function(LocationSearchOptions=):Bloodhound}
+ * @typedef {function(LocationSearchOptions=):Bloodhound<olFeature[]>}
  * @ngdoc service
  * @ngname search.createLocationSearchBloodhound
  * @private

@@ -34,10 +34,15 @@ const module = angular.module('gmfImportdatasource', [
 ]);
 
 
-module.run(/* @ngInject */ ($templateCache) => {
-  // @ts-ignore: webpack
-  $templateCache.put('gmf/import/importdatasourceComponent', require('./importdatasourceComponent.html'));
-});
+module.run(
+  /**
+   * @ngInject
+   * @param {angular.ITemplateCacheService} $templateCache
+   */
+  ($templateCache) => {
+    // @ts-ignore: webpack
+    $templateCache.put('gmf/import/importdatasourceComponent', require('./importdatasourceComponent.html'));
+  });
 
 
 module.value('gmfImportdatasourceTemplateUrl',
@@ -166,7 +171,7 @@ class Controller {
     this.hasError = false;
 
     /**
-     * @type {?angular.IPromise}
+     * @type {?angular.IPromise<void>}
      * @private
      */
     this.hasErrorPromise_ = null;
@@ -206,7 +211,7 @@ class Controller {
     this.wmtsCapabilities = null;
 
     /**
-     * @type {?Bloodhound}
+     * @type {?Bloodhound<string>}
      * @private
      */
     this.serversEngine_ = null;

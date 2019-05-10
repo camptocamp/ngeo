@@ -1,3 +1,4 @@
+// @ts-nocheck
 import angular from 'angular';
 import olLayerGroup from 'ol/layer/Group.js';
 import olLayerImage from 'ol/layer/Image.js';
@@ -6,9 +7,11 @@ import olCollection from 'ol/Collection.js';
 import ngeoTestDataWmtsCapabilities from '../data/wmtsCapabilities.js';
 
 describe('ngeo.map.LayerHelper', () => {
+  /** @type {import("ngeo/map/LayerHelper.js").LayerHelper} */
   let ngeoLayerHelper;
   const wmtsSrc = 'http://fake/wmts/capabilities.xml';
   const wmtsName = 'layer-7328';
+  /** @type {angular.IHttpBackendService} */
   let $httpBackend;
 
   beforeEach(() => {

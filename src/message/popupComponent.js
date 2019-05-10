@@ -23,10 +23,16 @@ module.value('ngeoPopupTemplateUrl',
       'ngeo/message/popupcomponent';
   });
 
-module.run(/* @ngInject */ ($templateCache) => {
-  // @ts-ignore: webpack
-  $templateCache.put('ngeo/message/popupcomponent', require('./popupcomponent.html'));
-});
+
+module.run(
+  /**
+   * @ngInject
+   * @param {angular.ITemplateCacheService} $templateCache
+   */
+  ($templateCache) => {
+    // @ts-ignore: webpack
+    $templateCache.put('ngeo/message/popupcomponent', require('./popupcomponent.html'));
+  });
 
 
 /**
@@ -65,6 +71,7 @@ function messagePopopComponent(ngeoPopupTemplateUrl) {
       /**
        * @param {JQueryEventObject} evt Event.
        */
+      // @ts-ignore
       scope['close'] = function(evt) {
         if (evt) {
           evt.stopPropagation();

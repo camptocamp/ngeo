@@ -17,12 +17,17 @@ const module = angular.module('GmfEditingFeatureSelectorComponent', [
 ]);
 
 
-module.run(/* @ngInject */ ($templateCache) => {
-  $templateCache.put(
-    // @ts-ignore: webpack
-    'gmf/editing/editFeatureSelectorComponent', require('./editFeatureSelectorComponent.html')
-  );
-});
+module.run(
+  /**
+   * @ngInject
+   * @param {angular.ITemplateCacheService} $templateCache
+   */
+  ($templateCache) => {
+    $templateCache.put(
+      // @ts-ignore: webpack
+      'gmf/editing/editFeatureSelectorComponent', require('./editFeatureSelectorComponent.html')
+    );
+  });
 
 
 /**
@@ -167,7 +172,8 @@ function Controller($scope, $timeout, gmfThemes, gmfTreeManager) {
           throw new Error('Missing gmfTreeManager_.rootCtrl');
         }
         this.gmfTreeManager_.rootCtrl.traverseDepthFirst((treeCtrl) => {
-          if (treeCtrl.node.editable) {
+          const gmfLayer = /** @type {import('gmf/themes.js').GmfLayer} */(treeCtrl.node);
+          if (gmfLayer.editable) {
             console.assert(treeCtrl.children.length === 0);
             editables.push(treeCtrl);
           }

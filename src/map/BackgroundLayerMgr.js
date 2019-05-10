@@ -193,6 +193,7 @@ export class MapBackgroundLayerManager extends olObservable {
       layers.forEach((layer) => {
         if (layer instanceof olLayerLayer) {
           let hasUpdates = false;
+          /** @type {Object<string, string>} */
           const updatedDimensions = {};
           for (const key in layer.get('dimensions')) {
             const value = dimensions[key];
