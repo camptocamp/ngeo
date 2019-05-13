@@ -124,7 +124,7 @@ module.run(
  * @ngdoc directive
  * @ngname ngeoLayertree
  */
-function layertreeComponent(ngeoLayertreeTemplateUrl) {
+function gmfLayertreeComponent(ngeoLayertreeTemplateUrl) {
   return {
     restrict: 'A',
     scope: true,
@@ -134,7 +134,7 @@ function layertreeComponent(ngeoLayertreeTemplateUrl) {
 }
 
 
-module.directive('ngeoLayertree', layertreeComponent);
+module.directive('ngeoLayertree', gmfLayertreeComponent);
 
 
 export default module;

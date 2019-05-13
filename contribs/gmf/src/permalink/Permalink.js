@@ -246,6 +246,10 @@ const ParamPrefix = {
  * gmfThemeManager, defaultTheme, gmfTreeManager, ngeoWfsPermalink,
  * ngeoAutoProjection and ngeoFeatures.
  *
+ * Used functionnalities:
+ *
+ *  * default_theme: Theme to use by default.
+ *
  * @constructor
  * @param {angular.IQService} $q The Angular $q service.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
@@ -260,7 +264,6 @@ const ParamPrefix = {
  * @ngInject
  * @ngdoc service
  * @ngname gmfPermalink
- * @hidden
  */
 export function PermalinkService(
   $q, $timeout, $rootScope, $injector, ngeoDebounce, gettextCatalog, ngeoEventHelper, ngeoStateManager,

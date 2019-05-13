@@ -557,7 +557,6 @@ QueryWindowController.prototype.highlightCurrentFeature_ = function(opt_lastFeat
 QueryWindowController.prototype.close = function() {
   this.open = false;
   this.clear();
-  this.ngeoMapQuerent_.clear();
 };
 
 

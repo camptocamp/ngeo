@@ -185,8 +185,6 @@
  *      values (for filters purpose). For WMS layers.
  * @property {boolean} [exclusiveGroup=false] Whether the group contain children that have to be mutually
  *      exclusive, meaning that only one child may be ON at any time.
- * @property {boolean} [geometry_validation=false] Whether geometries must be validated by PostgreSQL on
- *      edition. For WMS layers.
  * @property {string} [iconUrl] The URL of the icon to display in the layer tree. For WMS and WMTS layers.
  * @property {string} identifierAttributeField The field used in the 'display query window' as feature title.
  *      For WMS layers.
@@ -197,10 +195,6 @@
  *      (only).
  * @property {boolean|undefined} [isLegendExpanded=false] Whether the legend is expanded by default. For WMS
  *      and WMTS layers.
- * @property {string} [lastUpdateDateColumn] 'Date' column that will be automatically updated after editing
- *      an element. For WMS layers.
- * @property {string} [lastUpdateUserColumn] 'User' column that will be automatically updated after editing
- *      an element. For WMS layers.
  * @property {boolean} [legend=false] Display the legend of this layers. For WMS and WMTS layers.
  * @property {string} [legendImage] The URL to the image used as a legend in the layer tree. For WMS and
  *      WMTS layers.
