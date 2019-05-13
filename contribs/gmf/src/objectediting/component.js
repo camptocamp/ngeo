@@ -22,6 +22,14 @@ import {getUid as olUtilGetUid} from 'ol/util.js';
 import olCollection from 'ol/Collection.js';
 import * as olEvents from 'ol/events.js';
 import olFormatGeoJSON from 'ol/format/GeoJSON.js';
+import Point from 'ol/geom/Point.js';
+import LineString from 'ol/geom/LineString.js';
+import LinearRing from 'ol/geom/LinearRing.js';
+import Polygon from 'ol/geom/Polygon.js';
+import MultiPoint from 'ol/geom/MultiPoint.js';
+import MultiLineString from 'ol/geom/MultiLineString.js';
+import MultiPolygon from 'ol/geom/MultiPolygon.js';
+import GeometryCollection from 'ol/geom/GeometryCollection.js';
 import olLayerImage from 'ol/layer/Image.js';
 import olLayerTile from 'ol/layer/Tile.js';
 import olInteractionModify from 'ol/interaction/Modify.js';
@@ -32,6 +40,7 @@ import olStyleStyle from 'ol/style/Style.js';
 
 // @ts-ignore: not supported import
 import {OL3Parser} from 'jsts/io';
+import 'jsts/monkey.js';
 
 
 /**
@@ -317,7 +326,11 @@ function Controller($scope, $timeout, gettextCatalog,
    * @type {!jsts.io.OL3Parser}
    * @private
    */
-  this.jstsOL3Parser_ = new OL3Parser();
+  this.jstsOL3Parser_ = new OL3Parser(undefined, {
+    geom: {
+      Point, LineString, LinearRing, Polygon, MultiPoint, MultiLineString, MultiPolygon, GeometryCollection
+    }
+  });
 
   /**
    * The state of the feature determines whether the next 'save' request
