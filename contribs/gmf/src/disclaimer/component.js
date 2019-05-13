@@ -26,7 +26,6 @@ const module = angular.module('gmfDisclaimer', [
 
 
 /**
- *
  * @param {import("ol/layer/Base.js").default} layer Layer
  * @param {function(string):void} func Function
  */
@@ -39,9 +38,11 @@ function forEachDisclaimer(layer, func) {
 
 
 /**
- * @constructor
- * @private
- * @hidden
+ * Used metadata:
+ *
+ *  * disclaimer: The disclaimer text for this element.
+ *      For WMS and WMTS layers, layer groups and themes.
+ *
  * @param {!JQuery} $element Element.
  * @param {!angular.ISCEService} $sce Angular sce service.
  * @param {!angular.ITimeoutService} $timeout Angular timeout service.
@@ -51,10 +52,11 @@ function forEachDisclaimer(layer, func) {
  * @param {!import("ngeo/misc/EventHelper.js").EventHelper} ngeoEventHelper Ngeo Event Helper.
  * @param {!import("ngeo/map/LayerHelper.js").LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @ngInject
+ * @constructor
  * @ngdoc controller
  * @ngname GmfDisclaimerController
  */
-function Controller(
+function DisclamerController(
   $element, $sce, $timeout, gettextCatalog, ngeoDisclaimer, ngeoEventHelper, ngeoLayerHelper
 ) {
 
@@ -148,7 +150,7 @@ function Controller(
 /**
  * Initialise the controller.
  */
-Controller.prototype.$onInit = function() {
+DisclamerController.prototype.$onInit = function() {
   if (!this.map) {
     throw new Error('Missing map');
   }
@@ -162,7 +164,7 @@ Controller.prototype.$onInit = function() {
  * @param {Event|import('ol/events/Event.js').default} evt Event.
  * @private
  */
-Controller.prototype.handleLayersAdd_ = function(evt) {
+DisclamerController.prototype.handleLayersAdd_ = function(evt) {
   if (evt instanceof CollectionEvent) {
     this.timeout_(() => {
       const layer = evt.element;
@@ -177,7 +179,7 @@ Controller.prototype.handleLayersAdd_ = function(evt) {
  * @param {Event|import('ol/events/Event.js').default} evt Event.
  * @private
  */
-Controller.prototype.handleLayersRemove_ = function(evt) {
+DisclamerController.prototype.handleLayersRemove_ = function(evt) {
   if (evt instanceof CollectionEvent) {
     const layer = evt.element;
     console.assert(layer instanceof olLayerBase);
@@ -190,7 +192,7 @@ Controller.prototype.handleLayersRemove_ = function(evt) {
  * @param {import("ol/layer/Base.js").default} layer Layer.
  * @private
  */
-Controller.prototype.registerLayer_ = function(layer) {
+DisclamerController.prototype.registerLayer_ = function(layer) {
 
   const layerUid = olUtilGetUid(layer);
 
@@ -258,7 +260,7 @@ Controller.prototype.registerLayer_ = function(layer) {
  * @param {import("ol/layer/Base.js").default} layer Layer.
  * @private
  */
-Controller.prototype.unregisterLayer_ = function(layer) {
+DisclamerController.prototype.unregisterLayer_ = function(layer) {
 
   const layerUid = olUtilGetUid(layer);
 
@@ -281,7 +283,7 @@ Controller.prototype.unregisterLayer_ = function(layer) {
 };
 
 
-Controller.prototype.$onDestroy = function() {
+DisclamerController.prototype.$onDestroy = function() {
   if (!this.dataLayerGroup_) {
     throw new Error('Missing dataLayerGroup');
   }
@@ -293,7 +295,7 @@ Controller.prototype.$onDestroy = function() {
  * @param {string} msg Disclaimer message.
  * @private
  */
-Controller.prototype.showDisclaimerMessage_ = function(msg) {
+DisclamerController.prototype.showDisclaimerMessage_ = function(msg) {
   msg = this.gettextCatalog_.getString(msg);
   if (this.external) {
     if (this.msgs_.indexOf(msg) < 0) {
@@ -320,7 +322,7 @@ Controller.prototype.showDisclaimerMessage_ = function(msg) {
  * @param {string} msg Disclaimer message.
  * @private
  */
-Controller.prototype.closeDisclaimerMessage_ = function(msg) {
+DisclamerController.prototype.closeDisclaimerMessage_ = function(msg) {
   msg = this.gettextCatalog_.getString(msg);
   if (this.external) {
     this.visibility = false;
@@ -393,7 +395,7 @@ Controller.prototype.closeDisclaimerMessage_ = function(msg) {
  * @ngname gmfDisclaimer
  */
 const disclaimerComponent = {
-  controller: Controller,
+  controller: DisclamerController,
   bindings: {
     'layerVisibility': '<?gmfDisclaimerLayerVisibility',
     'popup': '<?gmfDisclaimerPopup',
