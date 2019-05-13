@@ -73,10 +73,21 @@ function gmfFilterselectorTemplateUrl($attrs, gmfFilterselectorTemplateUrl) {
 
 
 /**
- * @private
- * @hidden
+ * FilterSelector Controller
+ *
+ * Used metadata:
+ *
+ *  * directedFilterAttributes: List of attribute names which should have rules
+ *      already ready when using the filter tools. For WMS layers.
+ *
+ * Used functionnalities:
+ *
+ *  * preset_layer_filter: Name of the layer (data source) that should be toggled in the filter tool upon
+ *      loading an application.
+ *      Note: although this is a list, only one can be defined.
+ *  * filterable_layers: A list of layer names that can be filtered, if empty the component will be hidden.
  */
-class Controller {
+class FilterSelectorController {
 
   /**
    * @param {!angular.IScope} $scope Angular scope.
@@ -709,13 +720,15 @@ class Controller {
  * @property {Array.<import('ngeo/rule/Rule.js').default>} customRules
  * @property {Array.<import('ngeo/rule/Rule.js').default>} directedRules
  */
+
+
 module.component('gmfFilterselector', {
   bindings: {
     active: '=',
     map: '<',
     toolGroup: '<'
   },
-  controller: Controller,
+  controller: FilterSelectorController,
   templateUrl: gmfFilterselectorTemplateUrl
 });
 

@@ -20,6 +20,7 @@ import olInteractionSnap from 'ol/interaction/Snap.js';
  * which allows the snapping to occur on other places where vector
  * features are drawn or modified.
  *
+ *
  * @constructor
  * @param {angular.IHttpService} $http Angular $http service.
  * @param {angular.IQService} $q The Angular $q service.

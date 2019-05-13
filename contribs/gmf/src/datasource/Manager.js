@@ -44,19 +44,22 @@ import olSourceTileWMS from 'ol/source/TileWMS.js';
 
 
 /**
- * @hidden
+ * The GeoMapFish DataSources Manager is responsible of listenening to the
+ * c2cgeoportal's themes to create instances of `ngeo.datasource.DataSource`
+ * objects with the layer definitions found and push them in the
+ * `DataSources` collection. The Manager must be initialized
+ * with the app's map using the setDatasourcseMap() method.
+ *
+ * When changing theme, these data sources are cleared then re-created.
+ *
+ * Used metadata:
+ *
+ *  * identifierAttributeField: The field used in the 'display query window' as feature title.
+ *      For WMS layers.
  */
 export class DatasourceManager {
 
   /**
-   * The GeoMapFish DataSources Manager is responsible of listenening to the
-   * c2cgeoportal's themes to create instances of `ngeo.datasource.DataSource`
-   * objects with the layer definitions found and push them in the
-   * `DataSources` collection. The Manager must be initialized
-   * with the app's map using the setDatasourcseMap() method.
-   *
-   * When changing theme, these data sources are cleared then re-created.
-   *
    * @param {angular.IQService} $q Angular q service
    * @param {!angular.IScope} $rootScope Angular rootScope.
    * @param {angular.ITimeoutService} $timeout Angular timeout service.
