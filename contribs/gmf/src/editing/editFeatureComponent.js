@@ -123,6 +123,16 @@ module.run(/* @ngInject */ ($templateCache) => {
  * In order to create a new feature, you use the "Draw" button and digitize
  * the feature on the map.
  *
+ * If no layers are editable the component will be hidden.
+ *
+ * Used metadata:
+ *
+ *  * enumeratedAttributes: List of attribute names which have enumerated attribute
+ *      values (for filters purpose). For WMS layers.
+ *  * snappingConfig: The snapping configuration for the leaf. If set, the leaf's layer is considered to be
+ *      "snappable", even if the config itself is empty.
+ *      Example of value: {'tolerance': 50, 'edge': false} For WMS layers.
+ *
  * Example:
  *
  *     <gmf-editfeature

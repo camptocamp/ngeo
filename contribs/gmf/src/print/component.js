@@ -194,6 +194,12 @@ function gmfPrintTemplateUrl($element, $attrs, gmfPrintTemplateUrl) {
  * Note: The 'print' and 'cancel' functions can also be called via globals
  * events 'gmfStartPrint' and 'gmfCancelPrint'.
  *
+ * Used metadata:
+ *
+ *  * hiDPILegendImages: The URLs to the hi DPI images used as a legend in the layer tree. For WMS and
+ *      WMTS layers.
+ *  * printNativeAngle: Whether the print should rotate the symbols. For layer groups (only).
+ *
  * @htmlAttribute {import("ol/Map.js").default} gmf-print-map The map.
  * @htmlAttribute {boolean} gmf-print-active A boolean that informs if the
  *     panel is open or not.
@@ -246,7 +252,7 @@ module.component('gmfPrint', printComponent);
  * @private
  * @hidden
  */
-class Controller {
+class PrintController {
 
   /**
    * @param {JQuery} $element Element.
@@ -268,7 +274,6 @@ class Controller {
    * @param {angular.IFilterService} $filter Angular $filter service.
    * @param {PrintState} gmfPrintState GMF print state.
    * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes The gmf Themes service.
-   * @private
    * @ngInject
    * @ngdoc controller
    * @ngname GmfPrintController
@@ -1418,7 +1423,7 @@ class Controller {
   }
 }
 
-module.controller('GmfPrintController', Controller);
+module.controller('GmfPrintController', PrintController);
 
 
 export default module;

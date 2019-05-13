@@ -36,6 +36,7 @@ import {ThemeEventType} from 'gmf/theme/Manager.js';
 
 /**
  * A part of the application config.
+ *
  * @typedef {Object} Config
  * @property {number} srid
  * @property {import("ol/style/Style.js").default} [positionFeatureStyle]
@@ -54,6 +55,12 @@ import {ThemeEventType} from 'gmf/theme/Manager.js';
  *
  * This file includes `goog.require` for base components/directives used
  * by the HTML page and the controller to provide the configuration.
+ *
+ * Used functionnalities:
+ *
+ *  * open_panel: When set, contains the name of the panel to open upon loading an application.
+ *      Note: although this is a list, only one can be defined.
+ *
  *
  * @param {Config} config A part of the application config.
  * @param {import('ol/Map.js').default} map The map.
