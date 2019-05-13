@@ -228,6 +228,7 @@ export class AbstractDesktopController extends AbstractAPIController {
    * If, after resizing, the size of the data panel would be too big,
    * resize it as well.
    * @private
+   * @hidden
    */
   setDataPanelMaxResizableWidth_() {
 
