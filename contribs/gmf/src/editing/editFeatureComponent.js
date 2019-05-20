@@ -127,11 +127,11 @@ module.run(/* @ngInject */ ($templateCache) => {
  *
  * Used metadata:
  *
- *  * enumeratedAttributes: List of attribute names which have enumerated attribute
+ *  * `enumeratedAttributes`: List of attribute names which have enumerated attribute
  *      values (for filters purpose). For WMS layers.
- *  * snappingConfig: The snapping configuration for the leaf. If set, the leaf's layer is considered to be
+ *  * `snappingConfig`: The snapping configuration for the leaf. If set, the leaf's layer is considered to be
  *      "snappable", even if the config itself is empty.
- *      Example of value: {'tolerance': 50, 'edge': false} For WMS layers.
+ *      Example value: {'tolerance': 50, 'edge': false} For WMS layers.
  *
  * Example:
  *

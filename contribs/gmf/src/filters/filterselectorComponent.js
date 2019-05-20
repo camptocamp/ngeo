@@ -77,15 +77,15 @@ function gmfFilterselectorTemplateUrl($attrs, gmfFilterselectorTemplateUrl) {
  *
  * Used metadata:
  *
- *  * directedFilterAttributes: List of attribute names which should have rules
+ *  * `directedFilterAttributes`: List of attribute names which should have rules
  *      already ready when using the filter tools. For WMS layers.
  *
- * Used functionnalities:
+ * Used functionalities:
  *
- *  * preset_layer_filter: Name of the layer (data source) that should be toggled in the filter tool upon
+ *  * `preset_layer_filter`: Name of the layer (data source) that should be toggled in the filter tool upon
  *      loading an application.
  *      Note: although this is a list, only one can be defined.
- *  * filterable_layers: A list of layer names that can be filtered, if empty the component will be hidden.
+ *  * `filterable_layers`: A list of layer names that can be filtered, if empty the component will be hidden.
  */
 class FilterSelectorController {
 
@@ -316,6 +316,7 @@ class FilterSelectorController {
 
   /**
    * @private
+   * @hidden
    */
   handleGmfUserFunctionalitiesChange_() {
     const usrFunc = this.gmfUser_.functionalities;
@@ -335,6 +336,7 @@ class FilterSelectorController {
 
   /**
    * @private
+   * @hidden
    */
   toggleDataSourceRegistration_() {
     const newDataSourceRegistration = !!this.filtrableLayerNodeNames_;
@@ -349,6 +351,7 @@ class FilterSelectorController {
    * Also, when deactivated, deselect data source.
    * @param {boolean} active Active.
    * @private
+   * @hidden
    */
   handleActiveChange_(active) {
     if (!active) {
@@ -363,6 +366,7 @@ class FilterSelectorController {
   /**
    * @param {boolean} register Whether register the data sources or not.
    * @private
+   * @hidden
    */
   handleEnableDataSourceRegistrationChange_(register) {
     const keys = this.listenerKeys_;
@@ -394,6 +398,7 @@ class FilterSelectorController {
    *
    * @param {import("ol/Collection.js").CollectionEvent} evt Collection event.
    * @private
+   * @hidden
    */
   handleDataSourcesAdd_(evt) {
     const dataSource = evt.element;
@@ -410,6 +415,7 @@ class FilterSelectorController {
    *
    * @param {import("ol/Collection.js").CollectionEvent} evt Collection event.
    * @private
+   * @hidden
    */
   handleDataSourcesRemove_(evt) {
     const dataSource = evt.element;
@@ -426,6 +432,7 @@ class FilterSelectorController {
    *
    * @param {import("gmf/datasource/OGC.js").default} dataSource Data source
    * @private
+   * @hidden
    */
   registerDataSource_(dataSource) {
     if (dataSource.filtrable === null) {
@@ -449,6 +456,7 @@ class FilterSelectorController {
    * that was currently selected, deselect it.
    * @param {import("gmf/datasource/OGC.js").default} dataSource Data source
    * @private
+   * @hidden
    */
   unregisterDataSource_(dataSource) {
     if (dataSource.filtrable) {
@@ -483,6 +491,7 @@ class FilterSelectorController {
    * @return {boolean} Whether the data source is valid to add to the list or
    *     not.
    * @private
+   * @hidden
    */
   isDataSourceFiltrable_(dataSource, opt_notify) {
     let filtrable = true;
@@ -545,6 +554,7 @@ class FilterSelectorController {
   /**
    * @param {?import("gmf/datasource/OGC.js").default} dataSource Newly selected data source object.
    * @private
+   * @hidden
    */
   handleSelectedDataSourceChange_(dataSource) {
 
@@ -602,6 +612,7 @@ class FilterSelectorController {
    * @param {import("ngeo/datasource/DataSource.js").default} dataSource Data source.
    * @return {?RuleCacheItem} Rule cache item.
    * @private
+   * @hidden
    */
   getRuleCacheItem_(dataSource) {
     return this.ruleCache_[dataSource.id] || null;
@@ -611,18 +622,21 @@ class FilterSelectorController {
    * @param {import("ngeo/datasource/DataSource.js").default} dataSource Data source.
    * @param {RuleCacheItem} item Rule cache item.
    * @private
+   * @hidden
    */
   setRuleCacheItem_(dataSource, item) {
     this.ruleCache_[dataSource.id] = item;
   }
 
   /**
+   * @hidden
    */
   saveFilterShowModal() {
     this.saveFilterSaveModalShown = true;
   }
 
   /**
+   * @hidden
    */
   saveFilterSave() {
 
@@ -661,7 +675,9 @@ class FilterSelectorController {
 
   /**
    * Load a saved filter item, replacing the current rules.
+   *
    * @param {!import("gmf/filters/SavedFilters.js").SavedFilterItem} filterItem Filter item.
+   * @hidden
    */
   saveFilterLoadItem(filterItem) {
 
@@ -694,6 +710,7 @@ class FilterSelectorController {
   }
 
   /**
+   * @hidden
    */
   saveFilterManage() {
     this.saveFilterManageModalShown = true;
@@ -701,7 +718,9 @@ class FilterSelectorController {
 
   /**
    * Remove a saved filter item.
+   *
    * @param {!import("gmf/filters/SavedFilters.js").SavedFilterItem} item Filter item.
+   * @hidden
    */
   saveFilterRemoveItem(item) {
     this.gmfSavedFilters.remove(item);
