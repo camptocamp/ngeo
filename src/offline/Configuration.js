@@ -19,6 +19,7 @@ import ngeoCustomEvent from 'ngeo/CustomEvent.js';
 import utils from 'ngeo/offline/utils.js';
 const defaultImageLoadFunction = olSourceImage.defaultImageLoadFunction;
 
+import * as realLocalforage from 'localforage';
 
 /**
  * @implements {ngeox.OfflineOnTileDownload}
@@ -127,7 +128,7 @@ const exports = class extends olObservable {
       console.log('Using ios localforage');
       return new LocalforageIosWrapper();
     }
-    return localforage;
+    return realLocalforage;
   }
 
   configureLocalforage() {
