@@ -5,7 +5,7 @@ import gmfAuthenticationModule from 'gmf/authentication/module.js';
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('gmfapp', [

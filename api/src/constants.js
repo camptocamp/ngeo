@@ -5,7 +5,7 @@ import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
  * @typedef {Object} APIConfig
  * @property {?string} themesUrl
  * @property {string} projection
- * @property {Array<number>} resolutions
+ * @property {number[]} resolutions
  * @property {[number, number, number, number]} [extent]
  * @property {string} backgroundLayer
  */

@@ -25,7 +25,7 @@ import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
  * OSM data by name and address.
  * @param {angular.IHttpService} $http Angular http service.
  * @param {angular.auto.IInjectorService} $injector Main injector.
- * @param {import("ngeo/misc/debounce.js").miscDebounce<function(string, function(Array<Object>): void, (function(Array<NominatimSearchResult>): void)|undefined): void>}  ngeoDebounce
+ * @param {import("ngeo/misc/debounce.js").miscDebounce<function(string, function(Object[]): void, (function(NominatimSearchResult[]): void)|undefined): void>}  ngeoDebounce
  *    ngeo Debounce service.
  * @constructor
  * @ngdoc service
@@ -43,7 +43,7 @@ export function NominatimService($http, $injector, ngeoDebounce) {
   this.$http_ = $http;
 
   /**
-   * @type {import("ngeo/misc/debounce.js").miscDebounce<function(string, function(Array<Object>): void, (function(Array<NominatimSearchResult>): void)|undefined): void>}
+   * @type {import("ngeo/misc/debounce.js").miscDebounce<function(string, function(Object[]): void, (function(NominatimSearchResult[]): void)|undefined): void>}
    * @private
    */
   this.ngeoDebounce_ = ngeoDebounce;
@@ -95,7 +95,7 @@ export function NominatimService($http, $injector, ngeoDebounce) {
  * Search by name
  * @param {string} query Search query
  * @param {?Object} params Optional parameters
- * @return {!angular.IHttpPromise<Object>} promise of the Nominatim API request
+ * @return {angular.IHttpPromise<Object>} promise of the Nominatim API request
  * @see https://wiki.openstreetmap.org/wiki/Nominatim#Search
  */
 NominatimService.prototype.search = function(query, params) {
@@ -123,7 +123,7 @@ NominatimService.prototype.search = function(query, params) {
  * Reverse Geocoding
  * @param {import("ol/coordinate.js").Coordinate} coordinate Search coordinate in LonLat projection
  * @param {(Object|undefined)} params Optional parameters
- * @return {!angular.IHttpPromise<Object>} promise of the Nominatim API request
+ * @return {angular.IHttpPromise<Object>} promise of the Nominatim API request
  * @see https://wiki.openstreetmap.org/wiki/Nominatim#Reverse_Geocoding
  */
 NominatimService.prototype.reverse = function(coordinate, params) {
@@ -159,7 +159,7 @@ NominatimService.prototype.reverse = function(coordinate, params) {
  */
 NominatimService.prototype.typeaheadSource_ = function(query, syncResults, asyncResults) {
   /**
-   * @param {angular.IHttpResponse<Array<NominatimSearchResponseResult>>} resp
+   * @param {angular.IHttpResponse<NominatimSearchResponseResult[]>} resp
    */
   const onSuccess_ = function(resp) {
     /**

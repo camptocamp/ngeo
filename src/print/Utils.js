@@ -122,7 +122,7 @@ PrintUtils.prototype.createPrintMaskPostcompose = function(getSize, getScale, op
 
 /**
  * @param {CanvasRenderingContext2D} context Context of the Postcompose event.
- * @param {Array.<number>} center Center of the viewport (x; y).
+ * @param {number[]} center Center of the viewport (x; y).
  * @param {number} extentHalfWidth Extent half width.
  * @param {number} extentHalfHeight Extent half height.
  * @private
@@ -145,7 +145,7 @@ PrintUtils.prototype.drawPrintZone_ = function(context, center,
 
 /**
  * @param {CanvasRenderingContext2D} context Context of the Postcompose event.
- * @param {Array.<number>} center Center of the viewport (x; y).
+ * @param {number[]} center Center of the viewport (x; y).
  * @param {number} extentHalfWidth Extent half width.
  * @param {number} extentHalfHeight Extent half height.
  * @param {number} rotation Rotation value in radians.
@@ -185,7 +185,7 @@ PrintUtils.prototype.drawPrintZoneWithRotation_ = function(context, center,
  * @param {import("ol/size.js").Size} mapSize Size of the map on the screen (px).
  * @param {number} mapResolution Resolution of the map on the screen.
  * @param {import("ol/size.js").Size} printMapSize Size of the map on the paper (dots).
- * @param {Array.<number>} printMapScales Supported map scales on the paper.
+ * @param {number[]} printMapScales Supported map scales on the paper.
  * The scales are provided as scale denominators, sorted in ascending order.
  * E.g. `[500, 1000, 2000, 4000]`.
  * @return {number} The best scale. `-1` is returned if there is no optimal
@@ -279,7 +279,7 @@ PrintUtils.prototype.getUpRightCorner = function(mapCenter) {
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('ngeoPrintUtils', []);

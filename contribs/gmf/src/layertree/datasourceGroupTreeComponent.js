@@ -4,7 +4,7 @@ import {getUid as olUtilGetUid} from 'ol/util.js';
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('gmfLayertreeDatasourceGroupTreeComponent', [
@@ -27,7 +27,7 @@ module.run(
 
 module.value('gmfLayertreeDatasourceGroupTreeTemplateUrl',
   /**
-   * @param {!angular.IAttributes} $attrs Attributes.
+   * @param {angular.IAttributes} $attrs Attributes.
    * @return {string} The template url.
    */
   ($attrs) => {
@@ -38,8 +38,8 @@ module.value('gmfLayertreeDatasourceGroupTreeTemplateUrl',
 
 
 /**
- * @param {!angular.IAttributes} $attrs Attributes.
- * @param {!function(!angular.IAttributes): string} gmfLayertreeDatasourceGroupTreeTemplateUrl
+ * @param {angular.IAttributes} $attrs Attributes.
+ * @param {function(angular.IAttributes): string} gmfLayertreeDatasourceGroupTreeTemplateUrl
  *    Template function.
  * @return {string} Template URL.
  * @ngInject
@@ -57,8 +57,8 @@ function gmfLayertreeDatasourceGroupTreeTemplateUrl($attrs, gmfLayertreeDatasour
 class Controller {
 
   /**
-   * @param {!angular.IScope} $scope Angular scope.
-   * @param {!import("ngeo/datasource/DataSources.js").DataSource} ngeoDataSources Ngeo data sources
+   * @param {angular.IScope} $scope Angular scope.
+   * @param {import("ngeo/datasource/DataSources.js").DataSource} ngeoDataSources Ngeo data sources
    *     service.
    * @private
    * @ngInject
@@ -131,7 +131,7 @@ class Controller {
   }
 
   /**
-   * @param {!import("ngeo/datasource/DataSource.js").default} dataSource Data source to remove from
+   * @param {import("ngeo/datasource/DataSource.js").default} dataSource Data source to remove from
    *     the `import('ngeo/datasource/DataSource.js').DataSources` collection.
    */
   removeDataSource(dataSource) {

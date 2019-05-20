@@ -2,7 +2,7 @@ import angular from 'angular';
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('ngeoMiscSwipe', []);
@@ -97,9 +97,9 @@ module.factory('$verticalSwipe', [function() {
     /**
      * @ngdoc method
      * @name $verticalSwipe#bind
-     * @param {!JQuery} element Element.
+     * @param {JQuery} element Element.
      * @param {Object} eventHandlers - Event handlers object with `start`, `cancel` and `end` callbacks
-     * @param {Array<string>} pointerTypes - Types of pointer
+     * @param {string[]} pointerTypes - Types of pointer
      *
      * @description
      * The main method of `$verticalSwipe`. It takes an element to be watched for swipe motions, and an
@@ -287,7 +287,7 @@ function makeSwipeDirective_(directiveName, direction, eventName) {
       }
 
       const pointerTypes = ['touch'];
-      if (!angular.isDefined(attr.ngeoSwipeDisableMouse)) {
+      if (angular.isDefined(attr.ngeoSwipeDisableMouse)) {
         pointerTypes.push('mouse');
       }
       $verticalSwipe.bind(element, {

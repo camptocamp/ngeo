@@ -85,7 +85,7 @@ export function createGeoJSONBloodhound(url, opt_filter, opt_featureProjection,
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('ngeoSearchCreategeojsonbloodhound', []);

@@ -33,7 +33,7 @@ export function FulltextSearchService($injector, $http) {
 
   const queryString = (url.length == 2) ? `?${url[1]}` : '';
   /**
-   * @type {Object.<string, string>}
+   * @type {Object<string, string>}
    * @private
    */
   this.defaultParams_ = decodeQueryString(queryString);
@@ -42,7 +42,7 @@ export function FulltextSearchService($injector, $http) {
 /**
  * Perform a search query on the c2c-geoportal full-text search.
  * @param {string} query Search query.
- * @param {Object.<string, string>} params Additional parameters.
+ * @param {Object<string, string>} params Additional parameters.
  * @returns {Promise} Request promise with data array.
  */
 FulltextSearchService.prototype.search = function(query, params) {
@@ -60,7 +60,7 @@ FulltextSearchService.prototype.search = function(query, params) {
 };
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('gmfSearchFulltextSearch', []);

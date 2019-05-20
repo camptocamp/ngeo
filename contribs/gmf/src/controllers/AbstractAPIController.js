@@ -62,7 +62,7 @@ export class AbstractAPIController extends AbstractAppController {
 }
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('GmfAbstractAPIControllerModule', [

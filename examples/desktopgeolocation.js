@@ -16,7 +16,7 @@ import ngeoMapModule from 'ngeo/map/module.js';
 import ngeoGeolocationDesktop from 'ngeo/geolocation/desktop.js';
 
 
-/** @type {!angular.IModule} **/
+/** @type {angular.IModule} **/
 const module = angular.module('app', [
   'gettext',
   ngeoGeolocationDesktop.name,

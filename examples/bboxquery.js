@@ -18,7 +18,7 @@ import olSourceImageWMS from 'ol/source/ImageWMS.js';
 import olSourceOSM from 'ol/source/OSM.js';
 
 
-/** @type {!angular.IModule} */
+/** @type {angular.IModule} */
 const module = angular.module('app', [
   'gettext',
   ngeoDatasourceDataSources.name,
@@ -47,7 +47,7 @@ module.value('ngeoQueryOptions', {
 /**
  * A sample component to display the result.
  *
- * @type {!angular.IComponentOptions}
+ * @type {angular.IComponentOptions}
  */
 const queryresultComponent = {
   controller: 'AppQueryresultController',

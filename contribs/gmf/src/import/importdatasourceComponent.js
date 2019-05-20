@@ -23,7 +23,7 @@ import {guessServiceTypeByUrl, Type} from 'ngeo/datasource/OGC.js';
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('gmfImportdatasource', [
@@ -47,7 +47,7 @@ module.run(
 
 module.value('gmfImportdatasourceTemplateUrl',
   /**
-   * @param {!angular.IAttributes} $attrs Attributes.
+   * @param {angular.IAttributes} $attrs Attributes.
    * @return {string} The template url.
    */
   ($attrs) => {
@@ -58,8 +58,8 @@ module.value('gmfImportdatasourceTemplateUrl',
 
 
 /**
- * @param {!angular.IAttributes} $attrs Attributes.
- * @param {!function(!angular.IAttributes): string} gmfImportdatasourceTemplateUrl Template function.
+ * @param {angular.IAttributes} $attrs Attributes.
+ * @param {function(angular.IAttributes): string} gmfImportdatasourceTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
  * @private
@@ -86,15 +86,15 @@ const Mode = {
 class Controller {
 
   /**
-   * @param {!JQuery} $element Element.
-   * @param {!angular.IFilterService} $filter Angular filter.
-   * @param {!angular.auto.IInjectorService} $injector Main injector.
-   * @param {!angular.IScope} $scope Angular scope.
-   * @param {!angular.ITimeoutService} $timeout Angular timeout service.
-   * @param {!import("gmf/datasource/ExternalDataSourcesManager.js").ExternalDatSourcesManager}
+   * @param {JQuery} $element Element.
+   * @param {angular.IFilterService} $filter Angular filter.
+   * @param {angular.auto.IInjectorService} $injector Main injector.
+   * @param {angular.IScope} $scope Angular scope.
+   * @param {angular.ITimeoutService} $timeout Angular timeout service.
+   * @param {import("gmf/datasource/ExternalDataSourcesManager.js").ExternalDatSourcesManager}
    *     gmfExternalDataSourcesManager GMF service responsible of managing
    *     external data sources.
-   * @param {!import("ngeo/query/Querent.js").Querent} ngeoQuerent Ngeo querent service.
+   * @param {import("ngeo/query/Querent.js").Querent} ngeoQuerent Ngeo querent service.
    * @private
    * @ngInject
    * @ngdoc controller
@@ -160,7 +160,7 @@ class Controller {
     // Inner properties
 
     /**
-     * @type {!JQuery}
+     * @type {JQuery}
      * @private
      */
     this.fileInput_ = $element.find('input[type=file]');
@@ -182,7 +182,7 @@ class Controller {
     this.mode = Mode.ONLINE;
 
     /**
-     * @type {!Array.<string>}
+     * @type {string[]}
      */
     this.modes = [Mode.LOCAL, Mode.ONLINE];
 
@@ -192,7 +192,7 @@ class Controller {
     this.pending = false;
 
     /**
-     * @type {!import('ngeo/misc/filters.js').unitPrefix}
+     * @type {import('ngeo/misc/filters.js').unitPrefix}
      * @private
      */
     this.unitPrefixFormat_ = /** @type {import('ngeo/misc/filters.js').unitPrefix} */ (
@@ -216,7 +216,7 @@ class Controller {
      */
     this.serversEngine_ = null;
 
-    /** @type {?Array<ExternalOGCServer>} */
+    /** @type {?ExternalOGCServer[]} */
     const servers = $injector.has('gmfExternalOGCServers') ? $injector.get('gmfExternalOGCServers')
       : null;
 
@@ -232,7 +232,7 @@ class Controller {
          * https://stackoverflow.com/questions/22059933/twitter-typeahead-js-how-to-return-all-matched-elements-within-a-string
          *
          * @param {string} datum Datum.
-         * @return {Array.<string>} List of datum tokenizers.
+         * @return {string[]} List of datum tokenizers.
          */
         datumTokenizer: (datum) => {
           console.assert(typeof datum == 'string');

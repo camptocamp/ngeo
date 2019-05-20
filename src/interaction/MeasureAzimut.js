@@ -100,9 +100,9 @@ export function getAzimut(line) {
 
 /**
  * Format measure output of azimut.
- * @param {!import("ol/geom/LineString.js").default} line LineString.
+ * @param {import("ol/geom/LineString.js").default} line LineString.
  * @param {number|undefined} decimals Decimals.
- * @param {!import('ngeo/misc/filters.js').formatNumber} format The format function.
+ * @param {import('ngeo/misc/filters.js').formatNumber} format The format function.
  * @return {string} Formatted measure.
  * @private
  * @hidden
@@ -114,12 +114,12 @@ function getFormattedAzimut(line, decimals, format) {
 
 /**
  * Format measure output of azimut and radius.
- * @param {!import("ol/geom/LineString.js").default} line LineString.
- * @param {!import("ol/proj/Projection.js").default} projection Projection of the polygon coords.
+ * @param {import("ol/geom/LineString.js").default} line LineString.
+ * @param {import("ol/proj/Projection.js").default} projection Projection of the polygon coords.
  * @param {number|undefined} decimals Decimals.
  * @param {number|undefined} precision Precision.
- * @param {!import('ngeo/misc/filters.js').unitPrefix} formatLength The format function.
- * @param {!import('ngeo/misc/filters.js').formatNumber} formatAzimut The format function.
+ * @param {import('ngeo/misc/filters.js').unitPrefix} formatLength The format function.
+ * @param {import('ngeo/misc/filters.js').formatNumber} formatAzimut The format function.
  * @return {string} Formatted measure.
  * @hidden
  */

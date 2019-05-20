@@ -21,7 +21,7 @@ import ngeoRuleRule, {RuleOperatorType} from 'ngeo/rule/Rule.js';
  * @property {number} [lowerBoundary] (RuleOptions)
  * @property {string} name (RuleOptions)
  * @property {string} [operator] (RuleOptions)
- * @property {Array.<string>} [operators] (RuleOptions)
+ * @property {string[]} [operators] (RuleOptions)
  * @property {string} propertyName (RuleOptions)
  * @property {string} [type] (RuleOptions)
  * @property {number} [upperBoundary] (RuleOptions)
@@ -36,7 +36,7 @@ export default class extends ngeoRuleRule {
   /**
    * A text rule, which always compares the value with the LIKE operator, by default.
    *
-   * @param {!TextOptions} options Options.
+   * @param {TextOptions} options Options.
    */
   constructor(options) {
     options.operator = options.operator || RuleOperatorType.LIKE;

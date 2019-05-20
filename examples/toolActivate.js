@@ -19,7 +19,7 @@ import olStyleFill from 'ol/style/Fill.js';
 import olStyleStroke from 'ol/style/Stroke.js';
 import olStyleStyle from 'ol/style/Style.js';
 
-/** @type {!angular.IModule} **/
+/** @type {angular.IModule} **/
 const module = angular.module('app', [
   'gettext',
   ngeoMapModule.name,
@@ -60,7 +60,7 @@ function MainController(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
   /**
    * Collection shared between the drawing interactions and the feature
    * overlay used to render the drawn features.
-   * @type {import("ol/Collection.js").default.<import("ol/Feature.js").default>}
+   * @type {import("ol/Collection.js").default<import("ol/Feature.js").default>}
    */
   const features = new olCollection();
 

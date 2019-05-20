@@ -2,7 +2,7 @@ import angular from 'angular';
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('ngeoBtnComponent', []);
@@ -86,19 +86,19 @@ module.directive('ngeoBtnGroup', buttonGroupComponent);
  */
 class BtnGroupController {
   /**
-   * @param {!angular.IScope} $scope Scope.
+   * @param {angular.IScope} $scope Scope.
    * @ngInject
    * @hidden
    */
   constructor($scope) {
     /**
-     * @type {!Array.<!angular.ICompiledExpression>}
+     * @type {Array<angular.ICompiledExpression>}
      * @private
      */
     this.buttons_ = [];
 
     /**
-     * @type {!angular.IScope}
+     * @type {angular.IScope}
      * @private
      */
     this.scope_ = $scope;

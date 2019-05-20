@@ -7,7 +7,7 @@ import ngeoMessageModalComponent from 'ngeo/message/modalComponent.js';
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('gmfapp', [

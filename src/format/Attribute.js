@@ -23,7 +23,7 @@ import ngeoFormatAttributeType from 'ngeo/format/AttributeType.js';
  * @property {string} [geomType] (AttributeBase)
  * @property {string} [numType] (AttributeBase)
  * @property {string} [type] (AttributeBase)
- * @property {Array.<string>} [choices] The list of possible values for the attribute.
+ * @property {string[]} [choices] The list of possible values for the attribute.
  * @property {number} [maxLength] Specifies the maximum number of character for the attribute value.
  * @property {string} [name] The attribute name.
  * @property {string} [alias] The attribute alias

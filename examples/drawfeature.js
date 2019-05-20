@@ -13,7 +13,7 @@ import olSourceOSM from 'ol/source/OSM.js';
 import olSourceVector from 'ol/source/Vector.js';
 
 
-/** @type {!angular.IModule} **/
+/** @type {angular.IModule} **/
 const module = angular.module('app', [
   'gettext',
   ngeoDrawModule.name,
@@ -23,8 +23,8 @@ const module = angular.module('app', [
 
 
 /**
- * @param {!angular.IScope} $scope Angular scope.
- * @param {import("ol/Collection.js").default.<import("ol/Feature.js").default>} ngeoFeatures Collection
+ * @param {angular.IScope} $scope Angular scope.
+ * @param {import("ol/Collection.js").default<import("ol/Feature.js").default>} ngeoFeatures Collection
  *    of features.
  * @param {import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate
  *    manager service.
@@ -34,7 +34,7 @@ const module = angular.module('app', [
 function MainController($scope, ngeoFeatures, ngeoToolActivateMgr) {
 
   /**
-   * @type {!angular.IScope}
+   * @type {angular.IScope}
    * @private
    */
   this.scope_ = $scope;

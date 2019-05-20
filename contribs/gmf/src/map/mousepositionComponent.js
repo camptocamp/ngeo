@@ -16,7 +16,7 @@ import 'bootstrap/js/src/dropdown.js';
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('gmfMapMouseposition', [
@@ -37,7 +37,7 @@ module.run(
 
 module.value('gmfMapMousepositionTemplateUrl',
   /**
-   * @param {!angular.IAttributes} $attrs Attributes.
+   * @param {angular.IAttributes} $attrs Attributes.
    * @return {string} The template url.
    */
   ($attrs) => {
@@ -48,8 +48,8 @@ module.value('gmfMapMousepositionTemplateUrl',
 
 
 /**
- * @param {!angular.IAttributes} $attrs Attributes.
- * @param {!function(!angular.IAttributes): string} gmfMapMousepositionTemplateUrl Template function.
+ * @param {angular.IAttributes} $attrs Attributes.
+ * @param {function(angular.IAttributes): string} gmfMapMousepositionTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
  * @private
@@ -71,7 +71,7 @@ function gmfMapMousepositionTemplateUrl($attrs, gmfMapMousepositionTemplateUrl) 
  *  </gmf-mouseposition>
  *
  * @htmlAttribute {import("ol/Map.js").default} gmf-mouseposition-map The map.
- * @htmlAttribute {Array.<MousePositionProjection>}
+ * @htmlAttribute {MousePositionProjection[]}
  *    gmf-mouseposition-projection The list of the projections.
  *
  * @ngdoc component
@@ -90,10 +90,10 @@ module.component('gmfMouseposition', mapMousepositionComponent);
 
 
 /**
- * @param {!JQuery} $element Element.
- * @param {!angular.IFilterService} $filter Angular filter.
- * @param {!angular.IScope} $scope Angular scope.
- * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
+ * @param {JQuery} $element Element.
+ * @param {angular.IFilterService} $filter Angular filter.
+ * @param {angular.IScope} $scope Angular scope.
+ * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @constructor
  * @private
  * @hidden
@@ -108,7 +108,7 @@ function Controller($element, $filter, $scope, gettextCatalog) {
   this.map = null;
 
   /**
-   * @type {Array<MousePositionProjection>}
+   * @type {MousePositionProjection[]}
    */
   this.projections = [];
 

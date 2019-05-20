@@ -11,7 +11,7 @@ import olSourceOSM from 'ol/source/OSM.js';
 import ngeoMapModule from 'ngeo/map/module.js';
 
 
-/** @type {!angular.IModule} **/
+/** @type {angular.IModule} **/
 const module = angular.module('app', [
   'gettext',
   ngeoMapModule.name,
@@ -71,7 +71,7 @@ function MainController(ngeoDisclaimer) {
   this.errorMsg_ = 'Disclaimer with error style';
 
   /**
-   * @type {Array.<string>}
+   * @type {string[]}
    * @private
    */
   this.inMapMsgs_ = [

@@ -4,7 +4,7 @@ import olControlControl from 'ol/control/Control.js';
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('ngeoControl', []);

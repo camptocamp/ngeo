@@ -22,12 +22,12 @@ import ngeoDatasourceOGC from 'ngeo/datasource/OGC.js';
  *    the one defined in the dimensions.
  * @property {string} [filterCondition] The filter condition to apply to the filter rules (if any).
  *    Defaults to `ngeo.filter.Condition.AND`.
- * @property {!Array.<!import('ngeo/rule/Rule.js').default>} [filterRules] A list of filter rules to apply
+ * @property {Array<import('ngeo/rule/Rule.js').default>} [filterRules] A list of filter rules to apply
  *    to this data source using the filter condition.
  * @property {boolean} [filtrable] Whether the data source is filtrable or not.
  * @property {string} [geometryName] The name of the geometry attribute.
  * @property {string} [ogcImageType] The type of images to fetch by queries by the (WMS) or (WMTS).
- * @property {Array.<!import('ngeo/datasource/OGC').OGCLayer>} [ogcLayers] A list of layer definitions that
+ * @property {Array<import('ngeo/datasource/OGC').OGCLayer>} [ogcLayers] A list of layer definitions that
  *    are used by (WMS) and (WFS) queries.
  *    These are **not** used by the (WMTS) queries (the wmtsLayers is used by WMTS queries).
  * @property {string} [ogcServerType] The type of OGC server.
@@ -61,7 +61,7 @@ import ngeoDatasourceOGC from 'ngeo/datasource/OGC.js';
  *
  * TODO - inherit typedef properly once TypeScript supports it
  * Extends (ngeo/datasource/OGC.js).DataSourceOptions
- * @property {Array.<import('ngeo/format/Attribute.js').Attribute>} [attributes] (DataSourceOptions)
+ * @property {Array<import('ngeo/format/Attribute.js').Attribute>} [attributes] (DataSourceOptions)
  * @property {import('ngeo/datasource/OGC.js').DimensionsFiltersConfig} [dimensionsFiltersConfig]
  *    (DataSourceOptions)
  * @property {number} id (DataSourceOptions)

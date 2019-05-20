@@ -7,8 +7,8 @@ import ngeoDatasourceGroup from 'ngeo/datasource/Group.js';
  *
  * extends GroupOptions
  * @typedef {Object} FileGroupOptions
- * @property {!angular.auto.IInjectorService} injector Angular main injector.
- * @property {!Array.<!import('ngeo/datasource/DataSource.js').default>} dataSources (GroupOptions)
+ * @property {angular.auto.IInjectorService} injector Angular main injector.
+ * @property {Array<import('ngeo/datasource/DataSource.js').default>} dataSources (GroupOptions)
  * @property {string} title (GroupOptions)
  */
 
@@ -35,7 +35,7 @@ export default class extends ngeoDatasourceGroup {
     // === PRIVATE properties ===
 
     /**
-     * @type {!angular.IScope}
+     * @type {angular.IScope}
      * @private
      */
     this.rootScope_ = injector.get('$rootScope');
@@ -43,7 +43,7 @@ export default class extends ngeoDatasourceGroup {
     /**
      * The functions to call to unregister the `watch` event on data sources
      * that are registered. Key is the id of the data source.
-     * @type {!Object.<number, Function>}
+     * @type {Object<number, Function>}
      * @private
      */
     this.unregister_ = {};
@@ -61,7 +61,7 @@ export default class extends ngeoDatasourceGroup {
   }
 
   /**
-   * @param {!import("ngeo/datasource/File.js").default} dataSource File data source to register.
+   * @param {import("ngeo/datasource/File.js").default} dataSource File data source to register.
    * @private
    */
   registerDataSource_(dataSource) {
@@ -72,7 +72,7 @@ export default class extends ngeoDatasourceGroup {
   }
 
   /**
-   * @param {!import("ngeo/datasource/File.js").default} dataSource File data source.
+   * @param {import("ngeo/datasource/File.js").default} dataSource File data source.
    * @param {boolean|undefined} value Current visible property of the DS
    * @param {boolean|undefined} oldValue Old visible property of the DS
    * @private
@@ -95,7 +95,7 @@ export default class extends ngeoDatasourceGroup {
   }
 
   /**
-   * @param {!import("ngeo/datasource/File.js").default} dataSource File data source to unregister.
+   * @param {import("ngeo/datasource/File.js").default} dataSource File data source to unregister.
    * @private
    */
   unregisterDataSource_(dataSource) {

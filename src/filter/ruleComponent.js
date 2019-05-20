@@ -37,12 +37,12 @@ import 'ngeo/sass/font.scss';
 
 
 /**
- * @typedef {import("ngeo/CustomEvent.js").default.<MenuEventTarget>} MenuEvent
+ * @typedef {import("ngeo/CustomEvent.js").default<MenuEventTarget>} MenuEvent
  */
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('ngeoRule', [
@@ -68,7 +68,7 @@ module.run(
 
 module.value('ngeoRuleTemplateUrl',
   /**
-   * @param {!angular.IAttributes} $attrs Attributes.
+   * @param {angular.IAttributes} $attrs Attributes.
    * @return {string} The template url.
    */
   ($attrs) => {
@@ -78,8 +78,8 @@ module.value('ngeoRuleTemplateUrl',
   });
 
 /**
- * @param {!angular.IAttributes} $attrs Attributes.
- * @param {!function(!angular.IAttributes): string} ngeoRuleTemplateUrl Template function.
+ * @param {angular.IAttributes} $attrs Attributes.
+ * @param {function(angular.IAttributes): string} ngeoRuleTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
  * @private
@@ -146,31 +146,31 @@ class RuleController {
     this.gettextCatalog_ = gettextCatalog;
 
     /**
-     * @type {!angular.IScope}
+     * @type {angular.IScope}
      * @private
      */
     this.scope_ = $scope;
 
     /**
-     * @type {!angular.ITimeoutService}
+     * @type {angular.ITimeoutService}
      * @private
      */
     this.timeout_ = $timeout;
 
     /**
-     * @type {!import("ngeo/misc/FeatureHelper.js").FeatureHelper}
+     * @type {import("ngeo/misc/FeatureHelper.js").FeatureHelper}
      * @private
      */
     this.ngeoFeatureHelper_ = ngeoFeatureHelper;
 
     /**
-     * @type {!import("ngeo/filter/RuleHelper.js").RuleHelper}
+     * @type {import("ngeo/filter/RuleHelper.js").RuleHelper}
      * @private
      */
     this.ngeoRuleHelper_ = ngeoRuleHelper;
 
     /**
-     * @type {!import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr}
+     * @type {import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr}
      * @private
      */
     this.ngeoToolActivateMgr_ = ngeoToolActivateMgr;
@@ -191,7 +191,7 @@ class RuleController {
     const temporalOperatorType = RuleTemporalOperatorType;
 
     /**
-     * @type {Object.<string, string>}
+     * @type {Object<string, string>}
      */
     this.operators = {
       [operatorType.EQUAL_TO]: gettextCatalog.getString('Is equal to'),
@@ -213,7 +213,7 @@ class RuleController {
     };
 
     /**
-     * @type {Object.<string, string>}
+     * @type {Object<string, string>}
      */
     this.operatorsShortFormat = {
       [operatorType.EQUAL_TO]: '=',
@@ -263,7 +263,7 @@ class RuleController {
     this.toolActivate_ = null;// = new ngeo.misc.ToolActivate(this.rule, 'active');
 
     /**
-     * @type {Array<Function>}
+     * @type {Function[]}
      * @private
      */
     this.unlisteners_ = [];
@@ -282,7 +282,7 @@ class RuleController {
     this.drawToolActivate = new ngeoMiscToolActivate(this, 'drawActive');
 
     /**
-     * @type {import("ol/Collection.js").default.<import("ol/Feature.js").default>}
+     * @type {import("ol/Collection.js").default<import("ol/Feature.js").default>}
      */
     this.drawnFeatures = new olCollection();
 
@@ -293,12 +293,12 @@ class RuleController {
     this.menu_ = null;
 
     /**
-     * @type {import("ol/Collection.js").default.<import("ol/Feature.js").default>}
+     * @type {import("ol/Collection.js").default<import("ol/Feature.js").default>}
      */
     this.selectedFeatures = new olCollection();
 
     /**
-     * @type {import("ol/Collection.js").default.<import("ol/interaction/Interaction.js").default>}
+     * @type {import("ol/Collection.js").default<import("ol/interaction/Interaction.js").default>}
      * @private
      */
     this.interactions_ = new olCollection();

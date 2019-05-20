@@ -18,7 +18,7 @@ import olSourceVector from 'ol/source/Vector.js';
 import ngeoMapModule from 'ngeo/map/module.js';
 
 
-/** @type {!angular.IModule} **/
+/** @type {angular.IModule} **/
 const module = angular.module('app', [
   'gettext',
   ngeoMapModule.name,

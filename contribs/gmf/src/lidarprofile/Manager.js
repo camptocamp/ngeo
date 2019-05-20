@@ -301,7 +301,7 @@ export class LidarprofileManager {
     if (this.config.serverConfig.debug) {
       let html = lodInfo.html();
       const loadingLodTxt = gettextCatalog.getString('Loading LOD: ');
-      html += `${loadingLodTxt} ${minLOD}-${maxLOD}...<br>`;
+      html += `${loadingLodTxt} ${minLOD}-${maxLOD}..<br>`;
       lodInfo.html(html);
     }
 
@@ -549,7 +549,7 @@ export class LidarprofileManager {
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('gmfLidarprofileManager', [

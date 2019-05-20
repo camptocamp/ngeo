@@ -31,7 +31,7 @@ class XSDAttribute extends olFormatXML {
 
   /**
    * @param {Document|Element|string} source Source.
-   * @return {Array.<import('ngeo/format/Attribute.js').Attribute>} The parsed result.
+   * @return {Array<import('ngeo/format/Attribute.js').Attribute>} The parsed result.
    * @override
    */
   read(source) {
@@ -68,7 +68,7 @@ class XSDAttribute extends olFormatXML {
 
   /**
    * @param {Element} node Node.
-   * @return {Array.<import('ngeo/format/Attribute.js').Attribute>} List of attributes.
+   * @return {Array<import('ngeo/format/Attribute.js').Attribute>} List of attributes.
    * @override
    */
   readFromNode(node) {
@@ -216,7 +216,7 @@ class XSDAttribute extends olFormatXML {
 
 /**
  * Returns the first geometry attribute among a given list of attributes.
- * @param {Array.<import('ngeo/format/Attribute.js').Attribute>} attributes The list of attributes.
+ * @param {Array<import('ngeo/format/Attribute.js').Attribute>} attributes The list of attributes.
  * @return {?import('ngeo/format/Attribute.js').Attribute} A geometry attribute object.
  * @hidden
  */

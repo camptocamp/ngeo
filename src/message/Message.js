@@ -69,7 +69,7 @@ export default class {
   /**
    * Display the given error message or list of error messages.
    *
-   * @param {string|Array.<string>} message Message or list of messages.
+   * @param {string|string[]} message Message or list of messages.
    */
   error(message) {
     this.show(this.getMessageObjects(message, MessageType.ERROR));
@@ -77,7 +77,7 @@ export default class {
 
   /**
    * Display the given info message or list of info messages.
-   * @param {string|Array.<string>} message Message or list of messages.
+   * @param {string|string[]} message Message or list of messages.
    */
   info(message) {
     this.show(this.getMessageObjects(message, MessageType.INFORMATION));
@@ -85,7 +85,7 @@ export default class {
 
   /**
    * Display the given success message or list of success messages.
-   * @param {string|Array.<string>} message Message or list of messages.
+   * @param {string|string[]} message Message or list of messages.
    */
   success(message) {
     this.show(this.getMessageObjects(message, MessageType.SUCCESS));
@@ -93,7 +93,7 @@ export default class {
 
   /**
    * Display the given warning message or list of warning messages.
-   * @param {string|Array.<string>} message Message or list of messages.
+   * @param {string|string[]} message Message or list of messages.
    */
   warn(message) {
     this.show(this.getMessageObjects(message, MessageType.WARNING));
@@ -107,11 +107,11 @@ export default class {
    * @param {string|Message|Array<string|Message>}
    *     object A message or list of messages as text or configuration objects.
    * @param {string=} opt_type The type of message to override the messages with.
-   * @return {Array<Message>} List of message objects.
+   * @return {Message[]} List of message objects.
    * @protected
    */
   getMessageObjects(object, opt_type) {
-    /** @type {Array<Message>} */
+    /** @type {Message[]} */
     const msgObjects = [];
     const defaultType = MessageType.INFORMATION;
 

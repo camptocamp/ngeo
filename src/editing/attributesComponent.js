@@ -6,7 +6,7 @@ import ngeoMiscDatetimepickerComponent from 'ngeo/misc/datetimepickerComponent.j
 import {ObjectEvent} from 'ol/Object.js';
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('ngeoAttributes', [
@@ -28,7 +28,7 @@ module.run(
 
 module.value('ngeoAttributesTemplateUrl',
   /**
-   * @param {!angular.IAttributes} $attrs Attributes.
+   * @param {angular.IAttributes} $attrs Attributes.
    * @return {string} The template url.
    */
   ($attrs) => {
@@ -38,8 +38,8 @@ module.value('ngeoAttributesTemplateUrl',
   });
 
 /**
- * @param {!angular.IAttributes} $attrs Attributes.
- * @param {!function(!angular.IAttributes): string} ngeoAttributesTemplateUrl Template function.
+ * @param {angular.IAttributes} $attrs Attributes.
+ * @param {function(angular.IAttributes): string} ngeoAttributesTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
  * @private
@@ -60,7 +60,7 @@ function ngeoAttributesTemplateUrl($attrs, ngeoAttributesTemplateUrl) {
  *       ngeo-attributes-feature="::ctrl.feature">
  *     </ngeo-attributes>
  *
- * @htmlAttribute {Array.<import('ngeo/format/Attribute.js').Attribute>} ngeo-attributes-attributes The
+ * @htmlAttribute {Array<import('ngeo/format/Attribute.js').Attribute>} ngeo-attributes-attributes The
  *     list of attributes to use.
  * @htmlAttribute {boolean} ngeo-attributes-disabled Whether the fieldset should
  *     be disabled or not.
@@ -86,8 +86,8 @@ module.component('ngeoAttributes', editingAttributeComponent);
 
 
 /**
- * @param {!angular.IScope} $scope Angular scope.
- * @param {!import("ngeo/misc/EventHelper.js").EventHelper} ngeoEventHelper Ngeo event helper service
+ * @param {angular.IScope} $scope Angular scope.
+ * @param {import("ngeo/misc/EventHelper.js").EventHelper} ngeoEventHelper Ngeo event helper service
  * @constructor
  * @private
  * @hidden
@@ -99,7 +99,7 @@ function Controller($scope, ngeoEventHelper) {
 
   /**
    * The list of attributes to create the form with.
-   * @type {Array.<import('ngeo/format/Attribute.js').Attribute>}
+   * @type {Array<import('ngeo/format/Attribute.js').Attribute>}
    */
   this.attributes = [];
 
@@ -123,13 +123,13 @@ function Controller($scope, ngeoEventHelper) {
   this.properties = {};
 
   /**
-   * @type {!angular.IScope}
+   * @type {angular.IScope}
    * @private
    */
   this.scope_ = $scope;
 
   /**
-   * @type {!import("ngeo/misc/EventHelper.js").EventHelper}
+   * @type {import("ngeo/misc/EventHelper.js").EventHelper}
    * @private
    */
   this.ngeoEventHelper_ = ngeoEventHelper;

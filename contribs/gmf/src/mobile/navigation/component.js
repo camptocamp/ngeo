@@ -2,7 +2,7 @@ import angular from 'angular';
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('gmfMobileNav', []);
@@ -96,7 +96,7 @@ function Controller() {
   /**
    * Stack of slid-in items.
    * @private
-   * @type {Array<JQuery>}
+   * @type {JQuery[]}
    */
   this.slid_ = [];
 
@@ -182,7 +182,7 @@ Controller.prototype.init = function(element) {
 
 
 /**
- * @param {!JQuery} active The currently active sliding box.
+ * @param {JQuery} active The currently active sliding box.
  * @param {boolean} back Whether to move back.
  * @private
  */

@@ -53,7 +53,7 @@ export class MessageDisclaimerService extends ngeoMessageMessage {
 
     /**
      * Cache of messages.
-     * @type {Object.<string, JQuery|import("ngeo/message/Popup.js").MessagePopup>}
+     * @type {Object<string, JQuery|import("ngeo/message/Popup.js").MessagePopup>}
      * @private
      */
     this.messages_ = {};
@@ -62,7 +62,7 @@ export class MessageDisclaimerService extends ngeoMessageMessage {
   /**
    * Show disclaimer message string or object or list of disclaimer message
    * strings or objects.
-   * @param {string|import('ngeo/message/Message.js').Message|Array.<string|import('ngeo/message/Message.js').Message>}
+   * @param {string|import('ngeo/message/Message.js').Message|Array<string|import('ngeo/message/Message.js').Message>}
    *     object A message or list of messages as text or configuration objects.
    */
   alert(object) {
@@ -72,7 +72,7 @@ export class MessageDisclaimerService extends ngeoMessageMessage {
   /**
    * Close disclaimer message string or object or list of disclaimer message
    * strings or objects.
-   * @param {string|import('ngeo/message/Message.js').Message|Array.<string|import('ngeo/message/Message.js').Message>}
+   * @param {string|import('ngeo/message/Message.js').Message|Array<string|import('ngeo/message/Message.js').Message>}
    *     object A message or list of messages as text or configuration objects.
    */
   close(object) {
@@ -213,7 +213,7 @@ export class MessageDisclaimerService extends ngeoMessageMessage {
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('ngeoDisclaimer', [

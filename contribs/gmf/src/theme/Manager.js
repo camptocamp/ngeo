@@ -83,7 +83,7 @@ export function ThemeManagerService($rootScope, gmfThemes, gmfTreeManagerModeFlu
 /**
  * Set the current theme name (mode 'flush' only) and add its children. Add
  * only groups that are not already in the tree.
- * @param {!import('gmf/themes.js').GmfTheme} theme A theme object.
+ * @param {import('gmf/themes.js').GmfTheme} theme A theme object.
  * @param {boolean=} opt_silent if true it will be no user message if
  *     the theme should be added but it's already added.
  */
@@ -163,7 +163,7 @@ ThemeManagerService.prototype.removeAll = function() {
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('gmfThemeManager', [

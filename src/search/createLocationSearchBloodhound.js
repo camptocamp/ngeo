@@ -21,7 +21,7 @@ import 'corejs-typeahead';
  * @property {number} y
  * @property {string} geom_st_box2d
  * @property {olGeomPoint} geometry
- * @property {?Array<number>} bbox
+ * @property {?number[]} bbox
  */
 
 
@@ -33,7 +33,7 @@ import 'corejs-typeahead';
 
 /**
  * @typedef {Object} Results
- * @property {Array<Result>} results
+ * @property {Result[]} results
  */
 
 
@@ -43,10 +43,10 @@ import 'corejs-typeahead';
  * @property {string} [origins] A comma separated list of origins.
  * Possible origins are: zipcode,gg25,district,kantone,gazetteer,address,parcel
  * Per default all origins are used.
- * @property {!import('ol/proj/Projection').default} [targetProjection] Target projection.
- * @property {!Bloodhound.BloodhoundOptions<Results>} [options] Optional Bloodhound options. If `undefined`,
+ * @property {import('ol/proj/Projection').default} [targetProjection] Target projection.
+ * @property {Bloodhound.BloodhoundOptions<Results>} [options] Optional Bloodhound options. If `undefined`,
  * the default Bloodhound config will be used.
- * @property {!Bloodhound.RemoteOptions<Results>} [remoteOptions] Optional Bloodhound remote options.
+ * @property {Bloodhound.RemoteOptions<Results>} [remoteOptions] Optional Bloodhound remote options.
  * Only used if `remote` is not defined in `options`.
  * @property {function(string, JQueryAjaxSettings): JQueryAjaxSettings} [prepare] Optional function to
  * prepare the request.
@@ -55,7 +55,7 @@ import 'corejs-typeahead';
 
 /**
  * @param {LocationSearchOptions=} opt_options Options.
- * @return {Bloodhound<Array<olFeature>>} The Bloodhound object.
+ * @return {Bloodhound<olFeature[]>} The Bloodhound object.
  * @private
  * @hidden
  */
@@ -103,7 +103,7 @@ function createLocationSearchBloodhound(opt_options) {
     }
   };
 
-  /** @type {Bloodhound.BloodhoundOptions<Array<olFeature>|Results>} */
+  /** @type {Bloodhound.BloodhoundOptions<olFeature[]|Results>} */
   const bloodhoundOptions = {
     remote: {
       url: 'https://api3.geo.admin.ch/rest/services/api/SearchServer?type=locations&searchText=%QUERY',
@@ -182,7 +182,7 @@ function createLocationSearchBloodhound(opt_options) {
   Object.assign(bloodhoundOptions, bhOptions);
   Object.assign(bloodhoundOptions.remote, remoteOptions);
 
-  return /** @type {Bloodhound<Array<olFeature>>} */(new Bloodhound(bloodhoundOptions));
+  return /** @type {Bloodhound<olFeature[]>} */(new Bloodhound(bloodhoundOptions));
 }
 
 

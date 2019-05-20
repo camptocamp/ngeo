@@ -19,7 +19,7 @@ import olStyleStyle from 'ol/style/Style.js';
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('gmfapp', [
@@ -51,7 +51,7 @@ function MainController($scope, ngeoFeatureOverlayMgr) {
   this.profileLine = null;
 
   /**
-   * @type {Object.<string, import('gmf/profile/component.js').ProfileLineConfiguration>}
+   * @type {Object<string, import('gmf/profile/component.js').ProfileLineConfiguration>}
    */
   this.profileLinesconfiguration = {
     'aster': {
@@ -91,7 +91,7 @@ function MainController($scope, ngeoFeatureOverlayMgr) {
   });
 
   /**
-   * @type {import("ol/Collection.js").default.<import("ol/Feature.js").default>}
+   * @type {import("ol/Collection.js").default<import("ol/Feature.js").default>}
    */
   const features = new olCollection();
 

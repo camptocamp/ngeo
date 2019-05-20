@@ -44,8 +44,8 @@ import {ThemeEventType} from 'gmf/theme/Manager.js';
  * @property {number} [geolocationZoom]
  * @property {boolean} [autorotate]
  * @property {olx.ViewOptions} [mapViewConfig]
- * @property {import("ol/Collection.js").default.<import('ol/control/Control.js').default>|Array.<import('ol/control/Control.js').default>} [mapControls]
- * @property {import("ol/Collection.js").default.<import('"ol/interaction/Interaction.js').default>|Array.<import('ol/interaction/Interaction.js').default>} [mapInteractions]
+ * @property {import("ol/Collection.js").default<import('ol/control/Control.js').default>|Array<import('ol/control/Control.js').default>} [mapControls]
+ * @property {import("ol/Collection.js").default<import('"ol/interaction/Interaction.js').default>|Array<import('ol/interaction/Interaction.js').default>} [mapInteractions]
  * @property {number} [mapPixelRatio]
  */
 
@@ -92,7 +92,7 @@ export function AbstractAppController(config, map, $scope, $injector) {
 
   /**
    * Collection of features for the draw interaction
-   * @type {import("ol/Collection.js").default.<import("ol/Feature.js").default>}
+   * @type {import("ol/Collection.js").default<import("ol/Feature.js").default>}
    */
   const ngeoFeatures = $injector.get('ngeoFeatures');
 
@@ -255,7 +255,7 @@ export function AbstractAppController(config, map, $scope, $injector) {
    */
   this.searchDatasources = [{
     labelKey: 'label',
-    groupValues: /** @type {Array<string>} **/ ($injector.get('gmfSearchGroups')),
+    groupValues: /** @type {string[]} **/ ($injector.get('gmfSearchGroups')),
     groupActions: /** @type {Array<import('gmf/search/component.js').gmfSearchAction>} **/(
       $injector.get('gmfSearchActions')),
     projection: `EPSG:${config.srid || 21781}`,
@@ -263,7 +263,7 @@ export function AbstractAppController(config, map, $scope, $injector) {
   }];
 
   /**
-   * @type {!Object.<string, string>}
+   * @type {Object<string, string>}
    */
   this.dimensions = {};
 
@@ -451,7 +451,7 @@ export function AbstractAppController(config, map, $scope, $injector) {
 
   /**
    * Languages URL
-   * @type {!Object.<string, string>}
+   * @type {Object<string, string>}
    */
   this.langUrls = $injector.get('langUrls');
 
@@ -679,7 +679,7 @@ export function AbstractAppController(config, map, $scope, $injector) {
 
 /**
  * @param {Array<import("ol/layer/Base.js").default>} layers Layers list.
- * @param {Array<string>} labels default_basemap list.
+ * @param {string[]} labels default_basemap list.
  * @return {?import("ol/layer/Base.js").default} layer or null
  * @private
  * @hidden
@@ -781,7 +781,7 @@ export function getLocationIcon() {
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('GmfAbstractAppControllerModule', [

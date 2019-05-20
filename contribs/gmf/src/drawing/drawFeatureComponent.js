@@ -96,7 +96,7 @@ module.directive('gmfDrawfeature', drawinfDrawFeatureComponent);
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @param {import("ngeo/misc/FeatureHelper.js").FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
- * @param {import("ol/Collection.js").default.<!import("ol/Feature.js").default>} ngeoFeatures Collection
+ * @param {import("ol/Collection.js").default<import("ol/Feature.js").default>} ngeoFeatures Collection
  *    of features.
  * @param {import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate
  *    manager service.
@@ -164,7 +164,7 @@ function Controller($scope, $timeout, gettextCatalog, ngeoFeatureHelper, ngeoFea
   this.featureHelper_ = ngeoFeatureHelper;
 
   /**
-   * @type {import("ol/Collection.js").default.<!import("ol/Feature.js").default>}
+   * @type {import("ol/Collection.js").default<import("ol/Feature.js").default>}
    */
   this.features = ngeoFeatures;
 
@@ -267,7 +267,7 @@ function Controller($scope, $timeout, gettextCatalog, ngeoFeatureHelper, ngeoFea
   this.translateToolActivate = new ngeoMiscToolActivate(this.translate_, 'active');
 
   /**
-   * @type {Array.<!import("ol/events.js").EventsKey>}
+   * @type {Array<import("ol/events.js").EventsKey>}
    * @private
    */
   this.listenerKeys_ = [];
@@ -470,7 +470,7 @@ Controller.prototype.selectFeatureFromList = function(feature) {
 
 
 /**
- * @return {Array.<!import("ol/Feature.js").default>} Array.
+ * @return {Array<import("ol/Feature.js").default>} Array.
  */
 Controller.prototype.getFeaturesArray = function() {
   return this.features.getArray();
@@ -719,7 +719,7 @@ Controller.prototype.handleMapContextMenu_ = function(evt) {
 
 
 /**
- * @param {?Array<number>} vertexInfo Vertex information, in case a
+ * @param {?number[]} vertexInfo Vertex information, in case a
  *     vertex was clicked using the right button.
  * @param {Event|import('ol/events/Event.js').default} evt Event.
  * @private

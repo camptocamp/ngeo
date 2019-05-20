@@ -77,7 +77,7 @@ export default class {
     this.height_ = 0;
 
     /**
-     * @type {Array.<number>}
+     * @type {number[]}
      */
     this.previousDomainX = [];
 
@@ -140,8 +140,8 @@ export default class {
 
   /**
    * Setup the SVG components of the D3 chart
-   * @param {Array.<number>} rangeX range of the x scale
-   * @param {Array.<number>} rangeY range of the y scale
+   * @param {number[]} rangeX range of the x scale
+   * @param {number[]} rangeY range of the y scale
    */
   setupPlot(rangeX, rangeY) {
     if (!this.manager_.config) {

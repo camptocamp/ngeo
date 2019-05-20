@@ -5,7 +5,7 @@ import olInteractionDraw from 'ol/interaction/Draw.js';
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('ngeoDrawpoint', []);

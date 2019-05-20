@@ -4,7 +4,7 @@ import ngeoMapBackgroundLayerMgr from 'ngeo/map/BackgroundLayerMgr.js';
 import * as olEvents from 'ol/events.js';
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('gmfBackgroundlayerselector', [
@@ -15,8 +15,8 @@ const module = angular.module('gmfBackgroundlayerselector', [
 
 module.value('gmfBackgroundlayerselectorTemplateUrl',
   /**
-   * @param {!JQuery} $element Element.
-   * @param {!angular.IAttributes} $attrs Attributes.
+   * @param {JQuery} $element Element.
+   * @param {angular.IAttributes} $attrs Attributes.
    * @return {string} Template URL.
    */
   ($element, $attrs) => {
@@ -39,9 +39,9 @@ module.run(
 
 
 /**
- * @param {!JQuery} $element Element.
- * @param {!angular.IAttributes} $attrs Attributes.
- * @param {!function(!JQuery, !angular.IAttributes): string} gmfBackgroundlayerselectorTemplateUrl
+ * @param {JQuery} $element Element.
+ * @param {angular.IAttributes} $attrs Attributes.
+ * @param {function(JQuery, angular.IAttributes): string} gmfBackgroundlayerselectorTemplateUrl
  *    Template function.
  * @return {string} Template URL.
  * @ngInject
@@ -114,7 +114,7 @@ function Controller($scope, ngeoBackgroundLayerMgr, gmfThemes) {
   this.map = null;
 
   /**
-   * @type {!string|undefined}
+   * @type {string|undefined}
    */
   this.opacityOptions;
 
@@ -130,7 +130,7 @@ function Controller($scope, ngeoBackgroundLayerMgr, gmfThemes) {
   this.bgLayer = null;
 
   /**
-   * @type {?Array.<!import("ol/layer/Base.js").default>}
+   * @type {?Array<import("ol/layer/Base.js").default>}
    */
   this.bgLayers = null;
 
@@ -140,13 +140,13 @@ function Controller($scope, ngeoBackgroundLayerMgr, gmfThemes) {
   this.opacityLayer = null;
 
   /**
-   * @type {!import("gmf/theme/Themes.js").ThemesService}
+   * @type {import("gmf/theme/Themes.js").ThemesService}
    * @private
    */
   this.gmfThemes_ = gmfThemes;
 
   /**
-   * @type {!Array.<!import("ol/events.js").EventsKey>}
+   * @type {Array<import("ol/events.js").EventsKey>}
    * @private
    */
   this.listenerKeys_ = [];
@@ -154,7 +154,7 @@ function Controller($scope, ngeoBackgroundLayerMgr, gmfThemes) {
   this.listenerKeys_.push(olEvents.listen(gmfThemes, 'change', this.handleThemesChange_, this));
 
   /**
-   * @type {!import("ngeo/map/BackgroundLayerMgr.js").MapBackgroundLayerManager}
+   * @type {import("ngeo/map/BackgroundLayerMgr.js").MapBackgroundLayerManager}
    * @private
    */
   this.backgroundLayerMgr_ = ngeoBackgroundLayerMgr;

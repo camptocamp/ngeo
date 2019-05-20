@@ -6,7 +6,7 @@ import ngeoMiscTime from 'ngeo/misc/Time.js';
 import {TimePropertyWidgetEnum, TimePropertyModeEnum} from 'ngeo/datasource/OGC.js';
 
 
-/** @type {!angular.IModule} **/
+/** @type {angular.IModule} **/
 const module = angular.module('app', [
   'gettext',
   ngeoMiscDatepickerComponent.name,
@@ -16,7 +16,7 @@ const module = angular.module('app', [
 
 /**
  * @constructor
- * @param {!import("ngeo/misc/Time.js").default} ngeoTime time service.
+ * @param {import("ngeo/misc/Time.js").default} ngeoTime time service.
  * @ngInject
  */
 function MainController(ngeoTime) {

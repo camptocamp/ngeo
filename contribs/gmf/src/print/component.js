@@ -49,7 +49,7 @@ import 'bootstrap/js/src/dropdown.js';
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('gmfPrintComponent', [
@@ -133,9 +133,9 @@ module.value('gmfPrintState', {
 
 
 /**
- * @param {!JQuery} $element Element.
- * @param {!angular.IAttributes} $attrs Attributes.
- * @param {!function(!JQuery, !angular.IAttributes): string} gmfPrintTemplateUrl Template function.
+ * @param {JQuery} $element Element.
+ * @param {angular.IAttributes} $attrs Attributes.
+ * @param {function(JQuery, angular.IAttributes): string} gmfPrintTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
  * @private
@@ -189,13 +189,13 @@ function gmfPrintTemplateUrl($element, $attrs, gmfPrintTemplateUrl) {
  *     panel is open or not.
  * @htmlAttribute {boolean} gmf-print-rotatemask Optional. True to apply
  *     rotation on the mask instead of the map. By default, the map rotates.
- * @htmlAttribute {Object.<string, string|number|boolean>}
+ * @htmlAttribute {Object<string, string|number|boolean>}
  *     gmf-print-fieldvalues optional. Key, value object to define default
  *     value in each of your print panel field. The key refers to the
  *     property's name of the field.
  *     Example: {'comments': 'demo', 'legend': false}. Doesn't work for the dpi
  *     and the scale. Server's values are used in priority.
- * @htmlAttribute {Array.<string>} gmf-print-hiddenattributes The list of attributes that should be hidden.
+ * @htmlAttribute {string[]} gmf-print-hiddenattributes The list of attributes that should be hidden.
  * @ngdoc component
  * @ngname gmfPrint
  */
@@ -220,8 +220,8 @@ module.component('gmfPrint', printComponent);
 /**
  * @typedef {Object} OptionsLegendType
  * @property {boolean} [useBbox]
- * @property {Object.<string, boolean>} label
- * @property {Object.<string, Object.<string, string>>} params
+ * @property {Object<string, boolean>} label
+ * @property {Object<string, Object<string, string>>} params
  */
 
 
@@ -422,7 +422,7 @@ export class PrintController {
     this.statusTimeoutPromise_ = null;
 
     /**
-     * @type {?Array<number>}
+     * @type {?number[]}
      * @private
      */
     this.onDragPreviousMousePosition_ = null;
@@ -460,7 +460,7 @@ export class PrintController {
 
     /**
      * Formats availables in capabilities.
-     * @type {Array<string>}
+     * @type {string[]}
      * @private
      */
     this.formats_ = [];
@@ -523,7 +523,7 @@ export class PrintController {
     this.smtpSupported = false;
 
     /**
-     * @type {Array<string>}
+     * @type {string[]}
      */
     this.hiddenAttributeNames = [];
 
@@ -1239,7 +1239,7 @@ export class PrintController {
 
   /**
    * @param {string} ref Ref.
-   * @param {!angular.IHttpResponse<import('ngeo/print/mapfish-print-v3.js').MapFishPrintStatusResponse>}
+   * @param {angular.IHttpResponse<import('ngeo/print/mapfish-print-v3.js').MapFishPrintStatusResponse>}
    *    resp Response.
    * @private
    */
@@ -1275,7 +1275,7 @@ export class PrintController {
   /**
    * @param {number} scale The scale to get the legend (for wms layers only).
    * @param {number} dpi The DPI.
-   * @param {Array<number>} bbox The bbox.
+   * @param {number[]} bbox The bbox.
    * @return {Object?} Legend object for print report or null.
    * @private
    */
@@ -1283,7 +1283,7 @@ export class PrintController {
     if (!this.map) {
       throw new Error('Missing map');
     }
-    const legend = {classes: /** @type {Array<any>} */([])};
+    const legend = {classes: /** @type {any[]} */([])};
     const gettextCatalog = this.gettextCatalog_;
 
     // Get layers from layertree only.
@@ -1428,7 +1428,7 @@ export class PrintController {
 
   /**
    * Set the current layout and update all layout information with this new layout parameters.
-   * @param {string!} layoutName A layout name as existing in the list of
+   * @param {string} layoutName A layout name as existing in the list of
    *     existing layouts.
    */
   setLayout(layoutName) {

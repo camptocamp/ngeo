@@ -4,7 +4,7 @@ import ngeoGridConfig from 'ngeo/grid/Config.js';
 import ngeoGridModule from 'ngeo/grid/module.js';
 
 
-/** @type {!angular.IModule} **/
+/** @type {angular.IModule} **/
 const module = angular.module('app', [
   'gettext',
   ngeoGridModule.name

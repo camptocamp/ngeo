@@ -14,12 +14,12 @@ const NAMESPACE_URIS_ = [
 
 
 /**
- * @typedef {Object.<string, import("ol/xml.js").Parser>} parserStructure
+ * @typedef {Object<string, import("ol/xml.js").Parser>} parserStructure
  */
 
 
 /**
- * typedef {Object.<string, parserStructure>} parsersStructure
+ * typedef {Object<string, parserStructure>} parsersStructure
  * @typedef {Object<string, Object<string, import("ol/xml.js").Parser>>} parsersStructure
  */
 
@@ -32,7 +32,7 @@ const NAMESPACE_URIS_ = [
  */
 function makeStructureNS(namespaceURIs, structure) {
   return /** @type {parsersStructure} */(/** @type {any} */(olXml.makeStructureNS(
-    /** @type {Array<string>} */(namespaceURIs), structure)));
+    /** @type {string[]} */(namespaceURIs), structure)));
 }
 
 /**
@@ -205,7 +205,7 @@ function readComplexType_(node, objectStack) {
  * @private
  * @hidden
  * @param {Element} node Node.
- * @param {Array.<*>} objectStack Object stack.
+ * @param {Array<*>} objectStack Object stack.
  * @return {Object<string, string>} Object.
  */
 function readComplexContent_(
@@ -241,8 +241,8 @@ function readExtension_(node, objectStack) {
  * @private
  * @hidden
  * @param {Element} node Node.
- * @param {Array.<*>} objectStack Object stack.
- * @return {!Object.<string, string>} Object.
+ * @param {Array<*>} objectStack Object stack.
+ * @return {Object<string, string>} Object.
  */
 function readSequence_(node, objectStack) {
   return olXml.pushParseAndPop(

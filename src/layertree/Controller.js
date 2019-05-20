@@ -374,7 +374,7 @@ export const LayertreeVisitorDecision = {
 
 
 /**
- * @typedef {function(LayertreeController): (!LayertreeVisitorDecision|undefined|void)} Visitor
+ * @typedef {function(LayertreeController): (LayertreeVisitorDecision|undefined|void)} Visitor
  */
 
 
@@ -408,7 +408,7 @@ LayertreeController.prototype.traverseDepthFirst = function(visitor) {
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('ngeoLayertreeController', []);

@@ -33,7 +33,7 @@ export class EditingEnumerateAttributeService {
     this.baseUrl_ = gmfLayersUrl;
 
     /**
-     * @type {Object.<string, angular.IPromise<import('gmf/themes.js').GmfLayerAttributeValue[]>>}
+     * @type {Object<string, angular.IPromise<import('gmf/themes.js').GmfLayerAttributeValue[]>>}
      * @private
      */
     this.promises_ = {};
@@ -57,7 +57,7 @@ export class EditingEnumerateAttributeService {
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('gmfEnumerateAttribute', []);

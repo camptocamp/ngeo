@@ -64,7 +64,7 @@ RasterService.prototype.handleGetRaster_ = function(resp) {
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('gmfRaster', []);

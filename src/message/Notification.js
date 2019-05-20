@@ -61,7 +61,7 @@ export class MessageNotification extends ngeoMessageMessage {
   /**
    * Display the given message string or object or list of message strings or
    * objects.
-   * @param {string|Array<string>|import('ngeo/message/Message.js').Message|Array<import('ngeo/message/Message.js').Message>}
+   * @param {string|string[]|import('ngeo/message/Message.js').Message|Array<import('ngeo/message/Message.js').Message>}
    *     object A message or list of messages as text or configuration objects.
    */
   notify(object) {

@@ -11,7 +11,7 @@ import angular from 'angular';
 /**
  * @typedef {Object} RoutingOptions
  * @property {string} [backendUrl]
- * @property {Array.<RoutingProfile>} [profiles]
+ * @property {RoutingProfile[]} [profiles]
  */
 
 
@@ -75,13 +75,13 @@ export function RoutingService($http, $injector) {
 
 /**
  * @typedef {Object} Routes
- * @property {Array<Route>} routes
+ * @property {Route[]} routes
  */
 
 
 /**
  * @typedef {Object} Route
- * @property {Array<Leg>} [legs]
+ * @property {Leg[]} [legs]
  * @property {string} [geometry]
  * @property {number} distance
  * @property {number} duration
@@ -90,7 +90,7 @@ export function RoutingService($http, $injector) {
 
 /**
  * @typedef {Object} Leg
- * @property {Array<Step>} steps
+ * @property {Step[]} steps
  */
 
 
@@ -102,7 +102,7 @@ export function RoutingService($http, $injector) {
 
 /**
  * Route request
- * @param {Array.<import("ol/coordinate.js").Coordinate>} coordinates coordinates of the route (at least two!)
+ * @param {Array<import("ol/coordinate.js").Coordinate>} coordinates coordinates of the route (at least two!)
  * @param {?Config} config optional configuration
  * @return {angular.IHttpPromise<Routes>} promise of the OSRM API request
  */
@@ -160,7 +160,7 @@ RoutingService.prototype.getRoute = function(coordinates, config) {
  * Snaps a coordinate to the street network and returns the nearest match
  * @param {import("ol/coordinate.js").Coordinate} coordinate coordinate to query
  * @param {?Config} config optional configuration
- * @return {!angular.IHttpPromise<Object>} promise of the OSRM API request
+ * @return {angular.IHttpPromise<Object>} promise of the OSRM API request
  * @see https://github.com/Project-OSRM/osrm-backend/blob/master/docs/http.md#nearest-service
  */
 RoutingService.prototype.getNearest = function(coordinate, config) {
@@ -205,7 +205,7 @@ RoutingService.prototype.getNearest = function(coordinate, config) {
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('ngeoRoutingService', [

@@ -12,7 +12,7 @@ import MobileDraw from 'ngeo/interaction/MobileDraw';
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('gmfMobileMeasurePoint', [
@@ -69,13 +69,13 @@ module.run(
  * or deactivate the component.
  * @htmlAttribute {number=} gmf-mobile-measurepoint-coordinatedecimals number
  *     of decimal to display for the coordinate.
- * @htmlAttribute {Array<LayerConfig>}
+ * @htmlAttribute {LayerConfig[]}
  *     gmf-mobile-measurepoint-layersconfig Raster elevation layers to get
  *     information under the point and its configuaration.
  * @htmlAttribute {import("ol/Map.js").default} gmf-mobile-measurepoint-map The map.
  * @htmlAttribute {import("ol/style/Style.js").StyleLike=}
  *     gmf-mobile-measurepoint-sketchstyle A style for the measure point.
- * @param {string|function(!JQuery=, !angular.IAttributes=): string}
+ * @param {string|function(JQuery=, angular.IAttributes=): string}
  *     gmfMobileMeasurePointTemplateUrl Template URL for the directive.
  * @return {angular.IDirective} The Directive Definition Object.
  * @ngInject
@@ -97,10 +97,10 @@ function mobileMeasurePointComponent(gmfMobileMeasurePointTemplateUrl) {
     bindToController: true,
     templateUrl: gmfMobileMeasurePointTemplateUrl,
     /**
-     * @param {!angular.IScope} scope Scope.
-     * @param {!JQuery} element Element.
-     * @param {!angular.IAttributes} attrs Attributes.
-     * @param {!angular.IController=} controller Controller.
+     * @param {angular.IScope} scope Scope.
+     * @param {JQuery} element Element.
+     * @param {angular.IAttributes} attrs Attributes.
+     * @param {angular.IController=} controller Controller.
      */
     link: (scope, element, attrs, controller) => {
       if (!controller) {
@@ -117,7 +117,7 @@ module.directive('gmfMobileMeasurepoint', mobileMeasurePointComponent);
 
 /**
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
- * @param {!angular.IScope} $scope Angular scope.
+ * @param {angular.IScope} $scope Angular scope.
  * @param {angular.IFilterService} $filter Angular filter service.
  * @param {import("gmf/raster/RasterService.js").RasterService} gmfRaster gmf Raster service.
  * @param {import("ngeo/misc/debounce.js").miscDebounce<function(): void>} ngeoDebounce ngeo Debounce factory.
@@ -182,7 +182,7 @@ export function MobileMeasurePointController(gettextCatalog, $scope, $filter, gm
   this.coordinateDecimals = coordinateDecimalsFn ? coordinateDecimalsFn() : 0;
 
   /**
-   * @type {Array<LayerConfig>}
+   * @type {LayerConfig[]}
    * @private
    */
   this.layersConfig = [];
@@ -231,7 +231,7 @@ export function MobileMeasurePointController(gettextCatalog, $scope, $filter, gm
   this.drawInteraction = null;
 
   /**
-   * @type {() => Array<LayerConfig>}
+   * @type {() => LayerConfig[]}
    */
   this.getLayersConfigFn = () => [];
 

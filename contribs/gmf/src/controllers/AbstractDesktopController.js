@@ -76,7 +76,7 @@ export class AbstractDesktopController extends AbstractAPIController {
     });
 
     /**
-     * @type {!import("ol/style/Style.js").default}
+     * @type {import("ol/style/Style.js").default}
      */
     this.googleStreetViewStyle = new olStyleStyle({
       text: new olStyleText({
@@ -258,7 +258,7 @@ export class AbstractDesktopController extends AbstractAPIController {
 }
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('GmfAbstractDesktopControllerModule', [

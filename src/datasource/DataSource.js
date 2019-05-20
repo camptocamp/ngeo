@@ -6,7 +6,7 @@
  *
  *
  * @typedef {Object} DataSourceOptions
- * @property {Array.<import('ngeo/format/Attribute.js').Attribute>} [attributes] The attributes of the data
+ * @property {Array<import('ngeo/format/Attribute.js').Attribute>} [attributes] The attributes of the data
  *    source.
  * @property {import('ngeo/datasource/OGC.js').DimensionsFiltersConfig} [dimensionsFiltersConfig]
  *    The dimensions filters configuration, which determines dimensions supported by this data source using
@@ -129,7 +129,7 @@ class DataSource {
   // =======================================
 
   /**
-   * @return {?Array.<import('ngeo/format/Attribute.js').Attribute>} Attributes
+   * @return {?Array<import('ngeo/format/Attribute.js').Attribute>} Attributes
    */
   getAttributes() {
     return this.attributes;
@@ -201,7 +201,7 @@ class DataSource {
 
 
 /**
- * @typedef {!import("ol/Collection.js").default<!DataSource>} DataSources
+ * @typedef {import("ol/Collection.js").default<DataSource>} DataSources
  */
 
 export default DataSource;

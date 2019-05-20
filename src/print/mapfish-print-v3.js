@@ -33,8 +33,8 @@
 
 /**
  * @typedef {Object} DataSourceTableObject
- * @property {Array<string>} columns
- * @property {Array<Array.<string|number|boolean>>} data
+ * @property {string[]} columns
+ * @property {Array<Array<string|number|boolean>>} data
  */
 
 
@@ -63,11 +63,11 @@
 
 /**
  * @typedef {Object} MapFishPrintMap
- * @property {Array.<number>} bbox
- * @property {Array.<number>} center
+ * @property {number[]} bbox
+ * @property {number[]} center
  * @property {number} scale
  * @property {number} dpi
- * @property {Array.<MapFishPrintLayer>} layers
+ * @property {MapFishPrintLayer[]} layers
  * @property {string} projection
  * @property {number} rotation
  */
@@ -102,10 +102,10 @@
  * @property {string} type (MapFishPrintLayer)
  * @property {number} opacity (MapFishPrintLayer)
  * @property {string} baseURL
- * @property {Object.<string, string>} customParams
- * @property {Array.<string>} layers
+ * @property {Object<string, string>} customParams
+ * @property {string[]} layers
  * @property {string} serverType
- * @property {Array.<string>} [styles]
+ * @property {string[]} [styles]
  * @property {string} version
  * @property {boolean} useNativeAngle
  * @property {string} imageFormat
@@ -116,9 +116,9 @@
  * @typedef {Object} MapFishPrintWmtsMatrix
  * @property {string} identifier
  * @property {number} scaleDenominator
- * @property {Array.<number>} tileSize
- * @property {Array.<number>} topLeftCorner
- * @property {Array.<number>} matrixSize
+ * @property {number[]} tileSize
+ * @property {number[]} topLeftCorner
+ * @property {number[]} matrixSize
  */
 
 
@@ -132,7 +132,7 @@
  * @property {Object} dimensionParams
  * @property {string} imageFormat
  * @property {string} layer
- * @property {Array.<MapFishPrintWmtsMatrix>} matrices
+ * @property {MapFishPrintWmtsMatrix[]} matrices
  * @property {string} matrixSet
  * @property {string} requestEncoding
  * @property {string} style
@@ -159,7 +159,7 @@
 
 /**
  * @typedef {Object} MapFishPrintSymbolizers
- * @property {Array.<MapFishPrintSymbolizer>} symbolizers
+ * @property {MapFishPrintSymbolizer[]} symbolizers
  */
 
 

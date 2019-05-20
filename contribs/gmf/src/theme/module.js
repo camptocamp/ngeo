@@ -6,7 +6,7 @@ import gmfThemeSelectorComponent from 'gmf/theme/selectorComponent.js';
 import gmfThemeThemes from 'gmf/theme/Themes.js';
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  */
 export default angular.module('gmfThemeModule', [
   gmfThemeSelectorComponent.name,

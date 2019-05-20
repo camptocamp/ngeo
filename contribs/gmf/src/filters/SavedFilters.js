@@ -20,7 +20,7 @@ export class SavedFilter {
    * The filters are saved in the browser local storage, if available.
    * Otherwise, they are kept in this service for the duration of the visit.
    *
-   * @param {!angular.IScope} $rootScope Angular rootScope.
+   * @param {angular.IScope} $rootScope Angular rootScope.
    * @ngInject
    * @ngdoc service
    * @ngname gmfSavedFilters
@@ -28,7 +28,7 @@ export class SavedFilter {
   constructor($rootScope) {
 
     /**
-     * @type {!angular.IScope}
+     * @type {angular.IScope}
      * @private
      */
     this.rootScope_ = $rootScope;
@@ -42,7 +42,7 @@ export class SavedFilter {
     this.currentDataSourceId_ = null;
 
     /**
-     * @type {!Array.<!SavedFilterItem>}
+     * @type {SavedFilterItem[]}
      * @private
      */
     this.currentDataSourceItems_ = [];
@@ -73,7 +73,7 @@ export class SavedFilter {
     }
 
     /**
-     * @type {!Array.<!SavedFilterItem>}
+     * @type {SavedFilterItem[]}
      * @private
      */
     this.items_ = [];
@@ -92,7 +92,7 @@ export class SavedFilter {
   }
 
   /**
-   * @return {!Array.<!SavedFilterItem>} Items
+   * @return {SavedFilterItem[]} Items
    */
   get currentDataSourceItems() {
     return this.currentDataSourceItems_;
@@ -107,7 +107,7 @@ export class SavedFilter {
   }
 
   /**
-   * @return {!Array.<!SavedFilterItem>} Items
+   * @return {SavedFilterItem[]} Items
    */
   get items() {
     return this.items_;
@@ -149,7 +149,7 @@ export class SavedFilter {
   }
 
   /**
-   * @param {!SavedFilterItem} item Item.
+   * @param {SavedFilterItem} item Item.
    */
   save(item) {
 
@@ -168,7 +168,7 @@ export class SavedFilter {
   }
 
   /**
-   * @param {!SavedFilterItem} item Item.
+   * @param {SavedFilterItem} item Item.
    */
   remove(item) {
 
@@ -210,7 +210,7 @@ export class SavedFilter {
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('gmfSavedFilters', []);
@@ -235,7 +235,7 @@ SavedFilterItem.prototype.condition;
 
 /**
  * The list of custom rules of the saved filter item.
- * @type {!Array.<!import("ngeo/filter/RuleHelper.js").AnyOptions>}
+ * @type {Array<import("ngeo/filter/RuleHelper.js").AnyOptions>}
  */
 SavedFilterItem.prototype.customRules;
 
@@ -249,7 +249,7 @@ SavedFilterItem.prototype.dataSourceId;
 
 /**
  * The list of directed rules of the saved filter item.
- * @type {!Array.<!import("ngeo/filter/RuleHelper.js").AnyOptions>}
+ * @type {Array<import("ngeo/filter/RuleHelper.js").AnyOptions>}
  */
 SavedFilterItem.prototype.directedRules;
 

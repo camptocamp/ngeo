@@ -6,7 +6,7 @@ import angular from 'angular';
 import ngeoMessageModalComponent from 'ngeo/message/modalComponent.js';
 
 
-/** @type {!angular.IModule} **/
+/** @type {angular.IModule} **/
 const module = angular.module('app', [
   'gettext',
   ngeoMessageModalComponent.name,

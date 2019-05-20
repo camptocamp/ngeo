@@ -25,7 +25,7 @@ import olSourceVector from 'ol/source/Vector.js';
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('gmfapp', [
@@ -90,7 +90,7 @@ function MainController(gmfObjectEditingManager, gmfThemes,
   });
 
   /**
-   * @type {import("ol/Collection.js").default.<import("ol/Feature.js").default>}
+   * @type {import("ol/Collection.js").default<import("ol/Feature.js").default>}
    */
   this.sketchFeatures = new olCollection();
 

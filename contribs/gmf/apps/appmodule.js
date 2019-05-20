@@ -8,7 +8,7 @@ import angular from 'angular';
 import {decodeQueryString} from 'ngeo/utils.js';
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('app', []);

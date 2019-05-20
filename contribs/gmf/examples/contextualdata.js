@@ -13,7 +13,7 @@ import olSourceOSM from 'ol/source/OSM.js';
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('gmfapp', [

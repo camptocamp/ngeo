@@ -20,7 +20,7 @@ import {CollectionEvent} from 'ol/Collection.js';
 
 
 /**
- * @typedef {import("ngeo/CustomEvent.js").default.<RotateEventItem>} RotateEvent
+ * @typedef {import("ngeo/CustomEvent.js").default<RotateEventItem>} RotateEvent
  */
 
 
@@ -41,7 +41,7 @@ export default class extends olInteractionPointer {
     this.handleUpEvent = this.handleUp_;
 
     /**
-     * @type {Array.<import("ol/events.js").EventsKey>}
+     * @type {Array<import("ol/events.js").EventsKey>}
      * @private
      */
     this.listenerKeys_ = [];
@@ -74,7 +74,7 @@ export default class extends olInteractionPointer {
       options.pixelTolerance : 10;
 
     /**
-     * @type {!import("ol/Collection.js").default.<import("ol/Feature.js").default>}
+     * @type {import("ol/Collection.js").default<import("ol/Feature.js").default>}
      * @private
      */
     this.features_ = options.features;

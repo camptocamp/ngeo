@@ -18,7 +18,7 @@ import moment from 'moment';
 
 
 /**
- * @typedef {!import('ngeo/rule/Rule.js').RuleOptions|!import('ngeo/rule/Geometry.js').GeometryOptions|!import('ngeo/rule/Select.js').SelectOptions|!import('ngeo/rule/Text.js').TextOptions} AnyOptions
+ * @typedef {import('ngeo/rule/Rule.js').RuleOptions|import('ngeo/rule/Geometry.js').GeometryOptions|import('ngeo/rule/Select.js').SelectOptions|import('ngeo/rule/Text.js').TextOptions} AnyOptions
  */
 
 
@@ -38,7 +38,7 @@ import moment from 'moment';
  * @property {import("ol/format/filter/Filter.js").default} [filter] A filter that is directly given the
  *    method instead of creating one.
  *    Useful to automatically combine the time values.
- * @property {!Array.<import('ngeo/rule/Rule.js').default>} [filterRules] An alternative list of filter rules
+ * @property {Array<import('ngeo/rule/Rule.js').default>} [filterRules] An alternative list of filter rules
  *    to use instead of those that are defined within the data source. Useful when one wants to get the data
  *    of a given filter without applying it to the data source.
  * @property {string} [projCode] Projection code.
@@ -55,10 +55,10 @@ export class RuleHelper {
    * A service that provides utility methods to create `import('ngeo/rule/Rule.js').default`
    * objects.
    *
-   * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext service.
-   * @param {!import("ngeo/misc/FeatureHelper.js").FeatureHelper} ngeoFeatureHelper Ngeo feature helper
+   * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext service.
+   * @param {import("ngeo/misc/FeatureHelper.js").FeatureHelper} ngeoFeatureHelper Ngeo feature helper
    *    service.
-   * @param {!import("ngeo/misc/WMSTime.js").WMSTime} ngeoWMSTime wms time service.
+   * @param {import("ngeo/misc/WMSTime.js").WMSTime} ngeoWMSTime wms time service.
    * @ngdoc service
    * @ngname ngeoRuleHelper
    * @ngInject
@@ -66,29 +66,29 @@ export class RuleHelper {
   constructor(gettextCatalog, ngeoFeatureHelper, ngeoWMSTime) {
 
     /**
-     * @type {!angular.gettext.gettextCatalog}
+     * @type {angular.gettext.gettextCatalog}
      * @private
      */
     this.gettextCatalog_ = gettextCatalog;
 
     /**
-     * @type {!import("ngeo/misc/FeatureHelper.js").FeatureHelper}
+     * @type {import("ngeo/misc/FeatureHelper.js").FeatureHelper}
      * @private
      */
     this.ngeoFeatureHelper_ = ngeoFeatureHelper;
 
     /**
-     * @type {!import("ngeo/misc/WMSTime.js").WMSTime}
+     * @type {import("ngeo/misc/WMSTime.js").WMSTime}
      * @private
      */
     this.ngeoWMSTime_ = ngeoWMSTime;
   }
 
   /**
-   * @param {!Array.<!import('ngeo/format/Attribute.js').Attribute>} attributes Attributes.
+   * @param {Array<import('ngeo/format/Attribute.js').Attribute>} attributes Attributes.
    * @param {boolean=} opt_isCustom Whether the created rules should be marked
    *     as custom or not. Defaults to `false`.
-   * @return {Array.<!import("ngeo/rule/Rule.js").default>} Rules.
+   * @return {Array<import("ngeo/rule/Rule.js").default>} Rules.
    */
   createRulesFromAttributes(attributes, opt_isCustom) {
     const rules = [];
@@ -99,10 +99,10 @@ export class RuleHelper {
   }
 
   /**
-   * @param {!import('ngeo/format/Attribute.js').Attribute} attribute Attribute.
+   * @param {import('ngeo/format/Attribute.js').Attribute} attribute Attribute.
    * @param {boolean=} opt_isCustom Whether the created rule should be marked
    *     as custom or not. Defaults to `false`.
-   * @return {!import("ngeo/rule/Rule.js").default} Rule.
+   * @return {import("ngeo/rule/Rule.js").default} Rule.
    */
   createRuleFromAttribute(attribute, opt_isCustom) {
 
@@ -213,7 +213,7 @@ export class RuleHelper {
   }
 
   /**
-   * @param {Array<import('ngeo/rule/Rule.js').RuleOptions|!import('ngeo/rule/Select.js').SelectOptions>} optionsList
+   * @param {Array<import('ngeo/rule/Rule.js').RuleOptions|import('ngeo/rule/Select.js').SelectOptions>} optionsList
    *    List of options
    * @return {Array<import("ngeo/rule/Rule.js").default>} Rules.
    */
@@ -226,7 +226,7 @@ export class RuleHelper {
   }
 
   /**
-   * @param {import('ngeo/rule/Rule.js').RuleOptions|!import('ngeo/rule/Select.js').SelectOptions} options
+   * @param {import('ngeo/rule/Rule.js').RuleOptions|import('ngeo/rule/Select.js').SelectOptions} options
    *    Options
    * @return {import("ngeo/rule/Rule.js").default} Rule.
    */
@@ -255,8 +255,8 @@ export class RuleHelper {
   /**
    * Create a new `import('ngeo/rule/Rule.js').default` object using an other given rule.
    *
-   * @param {!import("ngeo/rule/Rule.js").default} rule Original rule to clone.
-   * @return {!import("ngeo/rule/Rule.js").default} A clone rule.
+   * @param {import("ngeo/rule/Rule.js").default} rule Original rule to clone.
+   * @return {import("ngeo/rule/Rule.js").default} A clone rule.
    */
   cloneRule(rule) {
     /** @type {AnyOptions} */
@@ -292,11 +292,11 @@ export class RuleHelper {
         this.ngeoFeatureHelper_.getNonSpatialProperties(rule.feature)
       );
     } else if (rule instanceof ngeoRuleSelect) {
-      const opt = /** @type {!import('ngeo/rule/Select.js').SelectOptions} */ (options);
+      const opt = /** @type {import('ngeo/rule/Select.js').SelectOptions} */ (options);
       opt.choices = rule.choices.slice(0);
       clone = new ngeoRuleSelect(opt);
     } else if (rule instanceof ngeoRuleText) {
-      const opt = /** @type {!import('ngeo/rule/Text').TextOptions} */ (options);
+      const opt = /** @type {import('ngeo/rule/Text').TextOptions} */ (options);
       clone = new ngeoRuleText(opt);
     } else {
       clone = new ngeoRuleRule(options);
@@ -309,9 +309,9 @@ export class RuleHelper {
    * Extend the dynamic properties from a source rule to destination rule.
    * The source rule remains unchanged, while the destination rule changes.
    *
-   * @param {!import("ngeo/rule/Rule.js").default} sourceRule Source rule to collect the dynamic
+   * @param {import("ngeo/rule/Rule.js").default} sourceRule Source rule to collect the dynamic
    *     properties from.
-   * @param {!import("ngeo/rule/Rule.js").default} destRule Destination rule where the dynamic
+   * @param {import("ngeo/rule/Rule.js").default} destRule Destination rule where the dynamic
    *     properties are set.
    */
   extendRule(sourceRule, destRule) {
@@ -343,8 +343,8 @@ export class RuleHelper {
   }
 
   /**
-   * @param {!Array.<!import("ngeo/rule/Rule.js").default>} rules Rules
-   * @return {!Array.<!AnyOptions>} List of serialized rule options.
+   * @param {Array<import("ngeo/rule/Rule.js").default>} rules Rules
+   * @return {AnyOptions[]} List of serialized rule options.
    */
   serializeRules(rules) {
     return rules.map((rule) => {
@@ -771,7 +771,7 @@ export class RuleHelper {
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('ngeoRuleHelper', [

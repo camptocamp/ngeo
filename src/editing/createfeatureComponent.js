@@ -16,7 +16,7 @@ import olStyleStyle from 'ol/style/Style.js';
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('ngeoCreatefeature', [
@@ -80,12 +80,12 @@ module.directive('ngeoCreatefeature', editingCreateFeatureComponent);
 
 
 /**
- * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
- * @param {!angular.ICompileService} $compile Angular compile service.
- * @param {!angular.IFilterService} $filter Angular filter
- * @param {!angular.IScope} $scope Scope.
- * @param {!angular.ITimeoutService} $timeout Angular timeout service.
- * @param {!import("ngeo/misc/EventHelper.js").EventHelper} ngeoEventHelper Ngeo event helper service
+ * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
+ * @param {angular.ICompileService} $compile Angular compile service.
+ * @param {angular.IFilterService} $filter Angular filter
+ * @param {angular.IScope} $scope Scope.
+ * @param {angular.ITimeoutService} $timeout Angular timeout service.
+ * @param {import("ngeo/misc/EventHelper.js").EventHelper} ngeoEventHelper Ngeo event helper service
  * @constructor
  * @private
  * @hidden
@@ -101,7 +101,7 @@ function Controller(gettextCatalog, $compile, $filter, $scope, $timeout, ngeoEve
   this.active = false;
 
   /**
-   * @type {?import("ol/Collection.js").default.<import("ol/Feature.js").default>|!import("ol/source/Vector.js").default}
+   * @type {?import("ol/Collection.js").default<import("ol/Feature.js").default>|import("ol/source/Vector.js").default}
    */
   this.features = null;
 

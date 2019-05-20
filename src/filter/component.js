@@ -22,7 +22,7 @@ import 'ngeo/sass/font.scss';
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('ngeoFilter', [
@@ -46,7 +46,7 @@ module.run(
 
 module.value('ngeoFilterTemplateUrl',
   /**
-   * @param {!angular.IAttributes} $attrs Attributes.
+   * @param {angular.IAttributes} $attrs Attributes.
    * @return {string} The template url.
    */
   ($attrs) => {
@@ -56,8 +56,8 @@ module.value('ngeoFilterTemplateUrl',
   });
 
 /**
- * @param {!angular.IAttributes} $attrs Attributes.
- * @param {!function(!angular.IAttributes): string} ngeoFilterTemplateUrl Template function.
+ * @param {angular.IAttributes} $attrs Attributes.
+ * @param {function(angular.IAttributes): string} ngeoFilterTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
  * @private
@@ -91,11 +91,11 @@ module.component('ngeoFilter', {
 class FilterController {
 
   /**
-   * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext service.
-   * @param {!angular.IScope} $scope Angular scope.
-   * @param {!angular.ITimeoutService} $timeout Angular timeout service.
-   * @param {!import("ngeo/query/MapQuerent.js").MapQuerent} ngeoMapQuerent The ngeo map querent service.
-   * @param {!import("ngeo/filter/RuleHelper.js").RuleHelper} ngeoRuleHelper Ngeo rule helper service.
+   * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext service.
+   * @param {angular.IScope} $scope Angular scope.
+   * @param {angular.ITimeoutService} $timeout Angular timeout service.
+   * @param {import("ngeo/query/MapQuerent.js").MapQuerent} ngeoMapQuerent The ngeo map querent service.
+   * @param {import("ngeo/filter/RuleHelper.js").RuleHelper} ngeoRuleHelper Ngeo rule helper service.
    * @private
    * @ngInject
    * @ngdoc controller
@@ -178,7 +178,7 @@ class FilterController {
     // === Inner properties ===
 
     /**
-     * @type {Array<FilterCondition>}
+     * @type {FilterCondition[]}
      */
     this.conditions = [
       {
@@ -352,7 +352,7 @@ class FilterController {
 
   /**
    * Loop in all directed and custom rules and collect those with a value.
-   * @return {Array.<!import("ngeo/rule/Rule.js").default>} Rules with value.
+   * @return {Array<import("ngeo/rule/Rule.js").default>} Rules with value.
    * @private
    */
   getRulesWithValue_() {
@@ -372,7 +372,7 @@ class FilterController {
   /**
    * Create and add a new custom rule using an attribute. The rule is activated
    * after being created.
-   * @param {!import('ngeo/format/Attribute.js').Attribute} attribute Attribute to use to create the custom
+   * @param {import('ngeo/format/Attribute.js').Attribute} attribute Attribute to use to create the custom
    * rule.
    */
   createAndAddCustomRule(attribute) {
@@ -388,7 +388,7 @@ class FilterController {
 
 
   /**
-   * @param {!FilterCondition} condition Condition to set.
+   * @param {FilterCondition} condition Condition to set.
    */
   setCondition(condition) {
     if (!this.datasource) {
@@ -402,7 +402,7 @@ class FilterController {
   /**
    * Remove a custom rule. Deactivate it first, then give time to the
    * `ngeo-rule` directive to manage the deactivation of the rule.
-   * @param {!import("ngeo/rule/Rule.js").default} rule Custom rule to remove.
+   * @param {import("ngeo/rule/Rule.js").default} rule Custom rule to remove.
    */
   removeCustomRule(rule) {
     rule.active = false;
@@ -414,7 +414,7 @@ class FilterController {
   }
 
   /**
-   * @param {!import("ngeo/rule/Rule.js").default} rule Rule.
+   * @param {import("ngeo/rule/Rule.js").default} rule Rule.
    */
   registerRule_(rule) {
     if (!this.featureOverlay) {
@@ -432,7 +432,7 @@ class FilterController {
   }
 
   /**
-   * @param {!import("ngeo/rule/Rule.js").default} rule Rule.
+   * @param {import("ngeo/rule/Rule.js").default} rule Rule.
    */
   unregisterRule_(rule) {
     if (!this.featureOverlay) {

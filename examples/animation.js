@@ -8,7 +8,7 @@ import olSourceOSM from 'ol/source/OSM.js';
 import ngeoMapModule from 'ngeo/map/module.js';
 
 
-/** @type {!angular.IModule} */
+/** @type {angular.IModule} */
 const module = angular.module('app', [
   'gettext',
   ngeoMapModule.name
@@ -20,7 +20,7 @@ const module = angular.module('app', [
  * controller has a property "map" including a reference to the OpenLayers
  * map.
  *
- * @type {!angular.IComponentOptions}
+ * @type {angular.IComponentOptions}
  */
 const mapComponent = {
   bindings: {

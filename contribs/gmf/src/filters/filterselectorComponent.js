@@ -27,7 +27,7 @@ import 'bootstrap/js/src/dropdown.js';
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('gmfFilterselector', [
@@ -55,7 +55,7 @@ module.run(
 
 module.value('gmfFilterselectorTemplateUrl',
   /**
-   * @param {!angular.IAttributes} $attrs Attributes.
+   * @param {angular.IAttributes} $attrs Attributes.
    * @return {string} The template url.
    */
   ($attrs) => {
@@ -146,7 +146,7 @@ class FilterSelectorController {
     // Injected properties
 
     /**
-     * @type {!angular.ITimeoutService}
+     * @type {angular.ITimeoutService}
      * @private
      */
     this.timeout_ = $timeout;
@@ -210,12 +210,12 @@ class FilterSelectorController {
     this.ngeoNotification_ = ngeoNotification;
 
     /**
-     * @type {!import("ngeo/map/FeatureOverlay.js").FeatureOverlay}
+     * @type {import("ngeo/map/FeatureOverlay.js").FeatureOverlay}
      */
     this.featureOverlay = ngeoFeatureOverlayMgr.getFeatureOverlay();
 
     /**
-     * @type {!import("ngeo/filter/RuleHelper.js").RuleHelper}
+     * @type {import("ngeo/filter/RuleHelper.js").RuleHelper}
      * @private
      */
     this.ngeoRuleHelper_ = ngeoRuleHelper;
@@ -229,37 +229,37 @@ class FilterSelectorController {
     this.aRuleIsActive = false;
 
     /**
-     * @type {?Array.<!import("ngeo/rule/Rule.js").default>}
+     * @type {?Array<import("ngeo/rule/Rule.js").default>}
      */
     this.customRules = null;
 
     /**
-     * @type {?Array.<!import("ngeo/rule/Rule.js").default>}
+     * @type {?Array<import("ngeo/rule/Rule.js").default>}
      */
     this.directedRules = null;
 
     /**
-     * @type {Array.<import("gmf/datasource/OGC.js").default>}
+     * @type {Array<import("gmf/datasource/OGC.js").default>}
      */
     this.filtrableDataSources = [];
 
     /**
-     * @type {?Array<string>}
+     * @type {?string[]}
      * @private
      */
     this.filtrableLayerNodeNames_ = null;
 
     /**
-     * @type {!import("ol/Collection.js").default<!import("gmf/datasource/OGC.js").default>}
+     * @type {import("ol/Collection.js").default<import("gmf/datasource/OGC.js").default>}
      * @private
      */
     this.gmfDataSources_ =
-      /** @type{import("ol/Collection.js").default<!import("gmf/datasource/OGC.js").default>} */(
+      /** @type{import("ol/Collection.js").default<import("gmf/datasource/OGC.js").default>} */(
         gmfDataSourcesHelper.collection
       );
 
     /**
-     * @type {Array.<import("ol/events.js").EventsKey>}
+     * @type {Array<import("ol/events.js").EventsKey>}
      * @private
      */
     this.listenerKeys_ = [];
@@ -272,7 +272,7 @@ class FilterSelectorController {
     this.readyDataSource = null;
 
     /**
-     * @type {!RuleCache}
+     * @type {RuleCache}
      * @private
      */
     this.ruleCache_ = {};
@@ -665,7 +665,7 @@ class FilterSelectorController {
         this.ngeoRuleHelper_.serializeRules(this.directedRules) : [];
 
       // (2) Ask the service to save it
-      const item = /** @type {!import("gmf/filters/SavedFilters.js").SavedFilterItem} */ ({
+      const item = /** @type {import("gmf/filters/SavedFilters.js").SavedFilterItem} */ ({
         condition,
         customRules,
         dataSourceId,
@@ -681,7 +681,7 @@ class FilterSelectorController {
 
   /**
    * Load a saved filter item, replacing the current rules.
-   * @param {!import("gmf/filters/SavedFilters.js").SavedFilterItem} filterItem Filter item.
+   * @param {import("gmf/filters/SavedFilters.js").SavedFilterItem} filterItem Filter item.
    */
   saveFilterLoadItem(filterItem) {
     if (!this.readyDataSource) {
@@ -726,7 +726,7 @@ class FilterSelectorController {
 
   /**
    * Remove a saved filter item.
-   * @param {!import("gmf/filters/SavedFilters.js").SavedFilterItem} item Filter item.
+   * @param {import("gmf/filters/SavedFilters.js").SavedFilterItem} item Filter item.
    */
   saveFilterRemoveItem(item) {
     this.gmfSavedFilters.remove(item);
@@ -736,14 +736,14 @@ class FilterSelectorController {
 
 
 /**
- * @typedef {Object.<number, !RuleCacheItem>} RuleCache
+ * @typedef {Object<number, RuleCacheItem>} RuleCache
  */
 
 
 /**
  * @typedef {Object} RuleCacheItem
- * @property {Array.<import('ngeo/rule/Rule.js').default>} customRules
- * @property {Array.<import('ngeo/rule/Rule.js').default>} directedRules
+ * @property {Array<import('ngeo/rule/Rule.js').default>} customRules
+ * @property {Array<import('ngeo/rule/Rule.js').default>} directedRules
  */
 
 

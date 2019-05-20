@@ -18,7 +18,7 @@ import olOverlayPositioning from 'ol/OverlayPositioning.js';
  * The options for the contextual menu overlay.
  *
  * @typedef {Object} MenuOptions
- * @property {Array<MenuActionOptions>} actions A list of menu actions.
+ * @property {MenuActionOptions[]} actions A list of menu actions.
  * @property {boolean} [autoClose=true] Whether to automatically close the contextual menu when an action is
  * clicked or not.
  * @property {string} [title] A title to display as header of the contextual menu.
@@ -45,7 +45,7 @@ export default class extends olOverlay {
     super(options);
 
     /**
-     * @type {Array.<import("ol/events.js").EventsKey>}
+     * @type {Array<import("ol/events.js").EventsKey>}
      * @private
      */
     this.listenerKeys_ = [];
@@ -83,7 +83,7 @@ export default class extends olOverlay {
     }).appendTo(contentEl);
 
     /**
-     * @type {Array.<JQuery>}
+     * @type {JQuery[]}
      * @private
      */
     this.actions_ = [];

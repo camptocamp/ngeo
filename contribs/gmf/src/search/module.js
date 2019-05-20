@@ -7,7 +7,7 @@ import gmfSearchFulltextSearch from 'gmf/search/FulltextSearch.js';
 import './search.scss';
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  */
 export default angular.module('gmfSearchModule', [
   gmfSearchComponent.name,

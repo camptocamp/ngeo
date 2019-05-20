@@ -23,7 +23,7 @@ import olSourceTileWMS from 'ol/source/TileWMS.js';
 
 
 /**
- * @typedef {import("ol/Collection.js").default.<import("gmf/datasource/OGC.js").default>} DataSources
+ * @typedef {import("ol/Collection.js").default<import("gmf/datasource/OGC.js").default>} DataSources
  */
 
 
@@ -358,7 +358,7 @@ export class DatasourceManager {
        * @param {import('ngeo/layertree/Controller.js').LayertreeController} treeCtrl
        */
       const visitor = (treeCtrls, treeCtrl) => {
-        const node = /** @type {import('gmf/themes.js').GmfGroup|!import('gmf/themes.js').GmfLayer} */ (
+        const node = /** @type {import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer} */ (
           treeCtrl.node);
         const groupNode = /** @type {import('gmf/themes.js').GmfGroup} */ (node);
         const children = groupNode.children;
@@ -820,11 +820,6 @@ export class DatasourceManager {
    * @private
    */
   updateLayerFilter_(layer) {
-    console.assert(
-      layer instanceof olLayerImage ||
-      layer instanceof olLayerTile
-    );
-
     if (!(layer instanceof olLayerImage || layer instanceof olLayerTile)) {
       return;
     }

@@ -27,7 +27,7 @@ import olStyleStyle from 'ol/style/Style.js';
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('gmfapp', [
@@ -61,7 +61,7 @@ module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
  * Demo, NOT USED.
  * A sample component to display the result.
  *
- * @type {!angular.IComponentOptions}
+ * @type {angular.IComponentOptions}
  * @hidden
  */
 const queryresultComponent = {
@@ -143,7 +143,7 @@ function MainController(gmfThemes, gmfDataSourcesManager, ngeoFeatureOverlayMgr)
   gmfDataSourcesManager.setDatasourceMap(this.map);
 
   /**
-   * @type {Array.<Object>|undefined}
+   * @type {Object[]|undefined}
    * export
    */
   this.themes = undefined;

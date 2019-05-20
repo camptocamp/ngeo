@@ -248,7 +248,7 @@ class Map {
 
   /**
    * @param {string} layer Name of the layer to fetch the features from
-   * @param {Array.<string>} ids List of ids
+   * @param {string[]} ids List of ids
    * @param {boolean} [highlight=false] Whether to add the features on
    *     the map or not.
    */
@@ -283,7 +283,7 @@ class Map {
    * @param {string} name Name.
    * @param {string} url URL.
    * @param {Object} [options] Options
-   * @property {Array.<string>} [attr=['title', 'description']]
+   * @property {string[]} [attr=['title', 'description']]
    * @property {function()} [success]
    * @property {function()} [error]
    */
@@ -375,7 +375,7 @@ class Map {
 
 
 /**
- * @param {Array<string>} keys Keys.
+ * @param {string[]} keys Keys.
  * @param {Array<*>} values Values.
  * @returns {Object<string, *>} Object.
  * @private
@@ -393,7 +393,7 @@ function zip(keys, values) {
 
 /**
  * @param {Object<string, *>} obj Object.
- * @param {Array<string>} keys keys.
+ * @param {string[]} keys keys.
  * @returns {Object<string, *>} Object.
  * @private
  * @hidden

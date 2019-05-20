@@ -48,7 +48,7 @@ EditingXSDAttributeService.prototype.getAttributes = function(id) {
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('gmfXSDAttributes', []);

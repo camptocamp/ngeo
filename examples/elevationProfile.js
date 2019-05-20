@@ -15,7 +15,7 @@ import ngeoMapModule from 'ngeo/map/module.js';
 import ngeoProfileElevationComponent from 'ngeo/profile/elevationComponent.js';
 
 
-/** @type {!angular.IModule} **/
+/** @type {angular.IModule} **/
 const module = angular.module('app', [
   'gettext',
   ngeoMapModule.name,
@@ -87,7 +87,7 @@ function MainController($http, $scope) {
   vectorLayer.setMap(map);
 
   /**
-   * @type {Array.<Object>}
+   * @type {Object[]}
    */
   this.profilePoisData = [
     {sort: 1, dist: 1000, title: 'First POI', id: 12345},

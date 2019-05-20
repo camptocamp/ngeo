@@ -9,7 +9,7 @@ import olFeature from 'ol/Feature.js';
 import ngeoMapModule from 'ngeo/map/module.js';
 
 
-/** @type {!angular.IModule} */
+/** @type {angular.IModule} */
 const module = angular.module('app', [
   'gettext',
   ngeoMapModule.name,
@@ -20,7 +20,7 @@ const module = angular.module('app', [
 /**
  * @param {angular.IHttpService} $http Angular http service.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
- * @param {!angular.IScope} $scope Scope.
+ * @param {angular.IScope} $scope Scope.
  * @ngInject
  * @constructor
  */
@@ -33,7 +33,7 @@ function MainController($http, $timeout, $scope) {
   this.timeout_ = $timeout;
 
   /**
-   * @type {?Array.<import('ngeo/format/Attribute.js').Attribute>}
+   * @type {?Array<import('ngeo/format/Attribute.js').Attribute>}
    */
   this.attributes = null;
 
@@ -83,7 +83,7 @@ function MainController($http, $timeout, $scope) {
 
 /**
  * @param {angular.IHttpResponse<string|Document|Element>} resp Ajax response.
- * @return {Array.<import('ngeo/format/Attribute.js').Attribute>} List of attributes.
+ * @return {Array<import('ngeo/format/Attribute.js').Attribute>} List of attributes.
  * @private
  */
 MainController.prototype.handleXSDAttributeGet_ = function(resp) {

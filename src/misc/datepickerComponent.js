@@ -12,7 +12,7 @@ import 'jquery-ui/ui/i18n/datepicker-it.js';
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('ngeoDatePicker', [
@@ -150,7 +150,7 @@ function Controller($scope, ngeoTime, gettextCatalog) {
 
   /**
    * The gettext catalog
-   * @type {!angular.gettext.gettextCatalog}
+   * @type {angular.gettext.gettextCatalog}
    * @private
    */
   this.gettextCatalog_ = gettextCatalog;

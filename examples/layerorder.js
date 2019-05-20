@@ -16,7 +16,7 @@ import olLayerTile from 'ol/layer/Tile.js';
 import olSourceTileWMS from 'ol/source/TileWMS.js';
 
 
-/** @type {!angular.IModule} **/
+/** @type {angular.IModule} **/
 const module = angular.module('app', [
   'gettext',
   ngeoMapModule.name,
@@ -107,7 +107,7 @@ function MainController($scope) {
   this.roads_.set('name', 'Roads');
 
   /**
-   * @type {Array.<import("ol/layer/Base.js").default>}
+   * @type {Array<import("ol/layer/Base.js").default>}
    * @const
    */
   this.selectedLayers = [];

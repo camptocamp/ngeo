@@ -8,7 +8,7 @@ import gmfObjecteditingQuery from 'gmf/objectediting/Query.js';
 import gmfObjecteditingToolsComponent from 'gmf/objectediting/toolsComponent.js';
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  */
 export default angular.module('gmfObjecteditingModule', [
   gmfObjecteditingComponent.name,

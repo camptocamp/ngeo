@@ -12,7 +12,7 @@ import olSourceOSM from 'ol/source/OSM.js';
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('gmfapp', [
@@ -34,7 +34,7 @@ module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
  */
 function MainController() {
   /**
-   * @type {Array.<string>}
+   * @type {string[]}
    */
   this.elevationLayers = ['aster', 'srtm'];
 

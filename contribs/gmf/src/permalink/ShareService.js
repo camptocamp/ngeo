@@ -127,7 +127,7 @@ export const URL_PATH_MAX_LEN = 2048;
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('gmfShareService', []);

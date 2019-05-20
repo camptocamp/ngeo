@@ -41,9 +41,9 @@ import SimpleGeometry from 'ol/geom/SimpleGeometry.js';
  * data set. See: https://github.com/twitter/typeahead.js/blob/master/doc/bloodhound.md
  * @property {string} labelKey The name of a corresponding GeoJSON property key in the current dataset.
  * The bound value of this property key will be used as label.
- * @property {Array<string>} [groupValues] Possible values for the 'layer_name' key.
+ * @property {string[]} [groupValues] Possible values for the 'layer_name' key.
  * Used to define groups of dataset.
- * @property {Array<gmfSearchAction>} [groupActions] List of allowed actions. The list may contain a
+ * @property {gmfSearchAction[]} [groupActions] List of allowed actions. The list may contain a
  * combination of `add_theme`, `add_group` or `add_layer`
  * @property {string} [projection] The geometry's projection for this set of data.
  * @property {Twitter.Typeahead.Dataset<olFeature>} [typeaheadDatasetOptions] The optional Twitter.Typeahead.
@@ -55,7 +55,7 @@ import SimpleGeometry from 'ol/geom/SimpleGeometry.js';
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('gmfSearch', [
@@ -96,9 +96,9 @@ module.run(
 
 
 /**
- * @param {!JQuery} $element Element.
- * @param {!angular.IAttributes} $attrs Attributes.
- * @param {!function(!JQuery, !angular.IAttributes): string} gmfSearchTemplateUrl Template function.
+ * @param {JQuery} $element Element.
+ * @param {angular.IAttributes} $attrs Attributes.
+ * @param {function(JQuery, angular.IAttributes): string} gmfSearchTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
  * @private
@@ -178,13 +178,13 @@ function gmfSearchTemplateUrl($element, $attrs, gmfSearchTemplateUrl) {
  *    options.
  * @htmlAttribute {SearchComponentDatasource} gmf-search-datasource
  *    The datasources.
- * @htmlAttribute {Object.<string, import("ol/style/Style.js").default>}
+ * @htmlAttribute {Object<string, import("ol/style/Style.js").default>}
  *    gmf-search-styles A map of styles to apply on searched features. Keys
  *    must be the 'layer_name' property of features except for coordinates
  *    where the key ifor its style is the value of the constant
  *    'gmf.COORDINATES_LAYER_NAME'. The 'default' key is used to apply the
  *    default style.
- * @htmlAttribute {Array.<string>} gmf-search-coordinatesprojections codes
+ * @htmlAttribute {string[]} gmf-search-coordinatesprojections codes
  *    of supported projections for coordinates search (projections must be
  *    defined in ol3). If not provided, only the map's view projection
  *    format will be supported.
@@ -384,13 +384,13 @@ class SearchController {
 
     /**
      * Supported projections for coordinates search.
-     * @type {Array<string>}
+     * @type {string[]}
      */
     this.coordinatesProjections = [];
 
     /**
      * Supported projections for coordinates search.
-     * @type {Array<olProj.Projection>}
+     * @type {olProj.Projection[]}
      */
     this.coordinatesProjectionsInstances = [];
 
@@ -401,7 +401,7 @@ class SearchController {
     this.featureOverlay_ = ngeoFeatureOverlayMgr.getFeatureOverlay();
 
     /**
-     * @type {Array.<SearchComponentDatasource>}
+     * @type {SearchComponentDatasource[]}
      */
     this.datasources = [];
 
@@ -1032,7 +1032,7 @@ class SearchController {
         } else if (actionName == 'add_group') {
           this.gmfTreeManager_.addGroupByName(actionData, true);
         } else if (actionName == 'add_layer') {
-          const groupActions = /** @type {Array<gmfSearchAction>} */ (
+          const groupActions = /** @type {gmfSearchAction[]} */ (
             this.datasources[0].groupActions);
           let datasourcesActionsHaveAddLayer;
           groupActions.forEach((groupAction) => {

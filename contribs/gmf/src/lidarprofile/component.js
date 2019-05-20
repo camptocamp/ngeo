@@ -2,7 +2,7 @@ import angular from 'angular';
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('gmfLidarprofile', []);
@@ -10,8 +10,8 @@ const module = angular.module('gmfLidarprofile', []);
 
 module.value('gmfLidarprofileTemplateUrl',
   /**
-     * @param {!JQuery} $element Element.
-     * @param {!angular.IAttributes} $attrs Attributes.
+     * @param {JQuery} $element Element.
+     * @param {angular.IAttributes} $attrs Attributes.
      * @return {string} Template.
      */
   ($element, $attrs) => {
@@ -33,9 +33,9 @@ module.run(
 
 
 /**
- * @param {!JQuery} $element Element.
- * @param {!angular.IAttributes} $attrs Attributes.
- * @param {!function(!JQuery, !angular.IAttributes): string} gmfLidarprofileTemplateUrl Template function.
+ * @param {JQuery} $element Element.
+ * @param {angular.IAttributes} $attrs Attributes.
+ * @param {function(JQuery, angular.IAttributes): string} gmfLidarprofileTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
  * @private

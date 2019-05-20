@@ -23,7 +23,7 @@ import olSourceVector from 'ol/source/Vector.js';
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('gmfapp', [
@@ -42,14 +42,14 @@ module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 /**
  * @constructor
- * @param {!angular.IScope} $scope Angular scope.
+ * @param {angular.IScope} $scope Angular scope.
  * @param {import("ngeo/misc/FeatureHelper.js").FeatureHelper} ngeoFeatureHelper Gmf feature helper service.
  * @ngInject
  */
 function MainController($scope, ngeoFeatureHelper) {
 
   /**
-   * @type {!angular.IScope}
+   * @type {angular.IScope}
    * @private
    */
   this.scope_ = $scope;
@@ -194,7 +194,7 @@ function MainController($scope, ngeoFeatureHelper) {
   this.selectedFeature = null;
 
   this.map.on('singleclick', (evt) => {
-    this.handleMapSingleClick_.bind(this);
+    this.handleMapSingleClick_;
   });
 }
 

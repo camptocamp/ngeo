@@ -48,7 +48,7 @@ export class DatasourceHelper {
     // === Other properties ===
 
     /**
-     * @type {Object.<number, import("ngeo/datasource/DataSource.js").default>}
+     * @type {Object<number, import("ngeo/datasource/DataSource.js").default>}
      * @private
      */
     this.cache_ = {};
@@ -152,7 +152,7 @@ export class DatasourceHelper {
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('ngeoDataSourcesHelper', [

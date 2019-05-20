@@ -11,7 +11,7 @@ import MapBrowserEvent from 'ol/MapBrowserEvent.js';
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('ngeoGooglestreetview', [
@@ -21,7 +21,7 @@ const module = angular.module('ngeoGooglestreetview', [
 
 module.value('ngeoGooglestreetviewTemplateUrl',
   /**
-   * @param {!angular.IAttributes} $attrs Attributes.
+   * @param {angular.IAttributes} $attrs Attributes.
    * @return {string} The template url.
    */
   ($attrs) => {
@@ -43,8 +43,8 @@ module.run(
 
 
 /**
- * @param {!angular.IAttributes} $attrs Attributes.
- * @param {!function(!angular.IAttributes): string} ngeoGooglestreetviewTemplateUrl Template function.
+ * @param {angular.IAttributes} $attrs Attributes.
+ * @param {function(angular.IAttributes): string} ngeoGooglestreetviewTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
  * @private
@@ -68,8 +68,8 @@ class GoogleStreetviewController {
 
   /**
    * @param {JQuery} $element Element.
-   * @param {!angular.IScope} $scope Scope.
-   * @param {!import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr Ngeo
+   * @param {angular.IScope} $scope Scope.
+   * @param {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr Ngeo
    *    FeatureOverlay manager.
    * @private
    * @ngInject
@@ -119,19 +119,19 @@ class GoogleStreetviewController {
     // Inner properties
 
     /**
-     * @type {!import("ol/Feature.js").default}
+     * @type {import("ol/Feature.js").default}
      * @private
      */
     this.feature_ = new olFeature();
 
     /**
-     * @type {!import("ngeo/map/FeatureOverlay.js").FeatureOverlay}
+     * @type {import("ngeo/map/FeatureOverlay.js").FeatureOverlay}
      * @private
      */
     this.featureOverlay_ = ngeoFeatureOverlayMgr.getFeatureOverlay();
 
     /**
-     * @type {Array.<!import("ol/events.js").EventsKey>}
+     * @type {Array<import("ol/events.js").EventsKey>}
      * @private
      */
     this.listenerKeys_ = [];
@@ -150,7 +150,7 @@ class GoogleStreetviewController {
     this.noDataAtLocation = false;
 
     /**
-     * @type {!google.maps.StreetViewPanorama}
+     * @type {google.maps.StreetViewPanorama}
      * @private
      */
     this.panorama_ = new google.maps.StreetViewPanorama(
@@ -387,7 +387,7 @@ class GoogleStreetviewController {
   // Utility methods
 
   /**
-   * @param {!import("ol/coordinate.js").Coordinate} lonLat LonLat coordinate.
+   * @param {import("ol/coordinate.js").Coordinate} lonLat LonLat coordinate.
    * @return {import("ol/coordinate.js").Coordinate} Map view projection coordinate.
    */
   fromLonLat_(lonLat) {
@@ -398,7 +398,7 @@ class GoogleStreetviewController {
   }
 
   /**
-   * @param {!import("ol/coordinate.js").Coordinate} coordinate Map view projection coordinate.
+   * @param {import("ol/coordinate.js").Coordinate} coordinate Map view projection coordinate.
    * @return {import("ol/coordinate.js").Coordinate} LonLat coordinate.
    */
   toLonLat_(coordinate) {

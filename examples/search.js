@@ -16,7 +16,7 @@ import olSourceOSM from 'ol/source/OSM.js';
 import olSourceVector from 'ol/source/Vector.js';
 
 
-/** @type {!angular.IModule} **/
+/** @type {angular.IModule} **/
 const module = angular.module('app', [
   'gettext',
   ngeoMapModule.name,
@@ -25,7 +25,7 @@ const module = angular.module('app', [
 
 
 /**
- * @type {!angular.IComponentOptions}
+ * @type {angular.IComponentOptions}
  */
 const searchComponent = {
   bindings: {

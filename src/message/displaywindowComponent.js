@@ -7,7 +7,7 @@ import 'angular-sanitize';
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('ngeoMessageDisplaywindowComponent', [
@@ -28,7 +28,7 @@ module.run(
 
 module.value('ngeoMessageDisplaywindowTemplateUrl',
   /**
-   * @param {!angular.IAttributes} $attrs Attributes.
+   * @param {angular.IAttributes} $attrs Attributes.
    * @return {string} The template url.
    */
   ($attrs) => {
@@ -38,8 +38,8 @@ module.value('ngeoMessageDisplaywindowTemplateUrl',
   });
 
 /**
- * @param {!angular.IAttributes} $attrs Attributes.
- * @param {!function(!angular.IAttributes): string} ngeoMessageDisplaywindowTemplateUrl Template function.
+ * @param {angular.IAttributes} $attrs Attributes.
+ * @param {function(angular.IAttributes): string} ngeoMessageDisplaywindowTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
  * @private
@@ -57,10 +57,10 @@ function ngeoMessageDisplaywindowTemplateUrl($attrs, ngeoMessageDisplaywindowTem
 class Controller {
 
   /**
-   * @param {!JQuery} $element Element.
-   * @param {!angular.ISCEService} $sce Angular sce service.
-   * @param {!angular.IScope} $scope Scope.
-   * @param {!angular.ICompileService} $compile The compile provider.
+   * @param {JQuery} $element Element.
+   * @param {angular.ISCEService} $sce Angular sce service.
+   * @param {angular.IScope} $scope Scope.
+   * @param {angular.ICompileService} $compile The compile provider.
    * @private
    * @ngInject
    * @ngdoc controller
@@ -139,19 +139,19 @@ class Controller {
     // === Injected Properties ===
 
     /**
-     * @type {!JQuery}
+     * @type {JQuery}
      * @private
      */
     this.element_ = $element;
 
     /**
-     * @type {!angular.ISCEService}
+     * @type {angular.ISCEService}
      * @private
      */
     this.sce_ = $sce;
 
     /**
-     * @type {!angular.IScope}
+     * @type {angular.IScope}
      * @private
      */
     this.scope_ = $scope;

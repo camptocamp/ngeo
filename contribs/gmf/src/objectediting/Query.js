@@ -91,9 +91,9 @@ ObjectEditingQuery.prototype.getQueryableLayersInfo = function() {
  * A list of OGC servers is given in order to bind each queryable layer node
  * to its associated server and be able to build requests.
  *
- * @param {Array.<import('gmf/themes.js').GmfTheme>} themes List of theme nodes.
+ * @param {Array<import('gmf/themes.js').GmfTheme>} themes List of theme nodes.
  * @param {import('gmf/themes.js').GmfOgcServers} ogcServers List of ogc servers
- * @return {Array.<import('gmf/objectediting/toolsComponent.js').ObjectEditingQueryableLayerInfo>} List of
+ * @return {Array<import('gmf/objectediting/toolsComponent.js').ObjectEditingQueryableLayerInfo>} List of
  *     queryable layers information.
  * @private
  * @hidden

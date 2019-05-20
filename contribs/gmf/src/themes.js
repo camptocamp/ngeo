@@ -10,15 +10,15 @@
 /**
  * @typedef {Object} GmfThemesResponse
  * @property {Array<GmfLayer|GmfGroup>} background_layers
- * @property {Array<string>} errors
+ * @property {string[]} errors
  * @property {GmfOgcServers} ogcServers
- * @property {Array<GmfTheme>} themes
+ * @property {GmfTheme[]} themes
  */
 
 
 /**
  * @typedef {Object} GmfRootNode
- * @property {Array<GmfGroup>} children
+ * @property {GmfGroup[]} children
  */
 
 
@@ -38,7 +38,7 @@
  * @property {number} id (GmfBaseNode)
  * @property {GmfMetaData} metadata (GmfBaseNode)
  * @property {string} name (GmfBaseNode)
- * @property {Array<GmfGroup>} children The first level layer groups.
+ * @property {GmfGroup[]} children The first level layer groups.
  * @property {GmfFunctionalities} functionalities
  */
 
@@ -52,10 +52,10 @@
  * extends GmfBaseNode
  * @typedef {Object} GmfGroup
  * @property {number} id (GmfBaseNode)
- * @property {!GmfMetaData} metadata (GmfBaseNode)
+ * @property {GmfMetaData} metadata (GmfBaseNode)
  * @property {string} name (GmfBaseNode)
- * @property {!Array.<!GmfGroup|!GmfLayer>} children
- * @property {!import('ngeo/datasource/OGC.js').Dimensions} dimensions The dimensions managed by the
+ * @property {Array<GmfGroup|GmfLayer>} children
+ * @property {import('ngeo/datasource/OGC.js').Dimensions} dimensions The dimensions managed by the
  *      OpenLayers layer, if the value is null we will take the dimension from the application.
  *      This is present only on non mixed first level group.
  * @property {boolean} mixed A mixed group is a group on which one the layers comes from different sources,
@@ -104,7 +104,7 @@
  * @property {boolean} [editable] (GmfLayer)
  * @property {string} [style] (GmfLayer)
  * @property {string} type (GmfLayer)
- * @property {Array<GmfLayerChildLayer>} childLayers
+ * @property {GmfLayerChildLayer[]} childLayers
  * @property {string} layers The comma separated list of WMS layers or groups.
  * @property {number} maxResolutionHint The max resolution where the layer is visible.
  * @property {number} minResolutionHint The min resolution where the layer is visible.
@@ -118,10 +118,10 @@
  * extends GmfLayer
  * @typedef {Object} GmfLayerWMTS
  * @property {number} id (GmfBaseNode)
- * @property {!GmfMetaData} metadata (GmfBaseNode)
+ * @property {GmfMetaData} metadata (GmfBaseNode)
  * @property {string} name (GmfBaseNode)
- * @property {!import('ngeo/datasource/OGC.js').Dimensions} dimensions (GmfLayer)
- * @property {!import('ngeo/datasource/OGC.js').DimensionsFiltersConfig} dimensionsFilters (GmfLayer)
+ * @property {import('ngeo/datasource/OGC.js').Dimensions} dimensions (GmfLayer)
+ * @property {import('ngeo/datasource/OGC.js').DimensionsFiltersConfig} dimensionsFilters (GmfLayer)
  * @property {boolean} [editable] (GmfLayer)
  * @property {string} [style] (GmfLayer)
  * @property {string} type (GmfLayer)
@@ -143,7 +143,7 @@
 
 
 /**
- * @typedef {!Object<string, !GmfOgcServer>} GmfOgcServers
+ * @typedef {Object<string, GmfOgcServer>} GmfOgcServers
  */
 
 
@@ -163,11 +163,11 @@
 
 /**
  * @typedef {Object} GmfFunctionalities
- * @property {Array.<!string>} [default_basemap] The default base map.
- * @property {Array.<!string>} [open_panel] When set, contains the name of the panel to open upon loading an
+ * @property {string[]} [default_basemap] The default base map.
+ * @property {string[]} [open_panel] When set, contains the name of the panel to open upon loading an
  *      application.
  *      Note: although this is a list, only one can be defined.
- * @property {Array.<!string>} [preset_layer_filter] Name of the layer (data source) that should be toggled
+ * @property {string[]} [preset_layer_filter] Name of the layer (data source) that should be toggled
  *      in the filter tool upon loading an application.
  *      Note: although this is a list, only one can be defined.
  */
@@ -177,11 +177,11 @@
  * @typedef {Object} GmfMetaData
  * @property {boolean} [copyable=false] Whether the geometry from this data source can be copied to other data
  *      sources or not. For WMS layers.
- * @property {Array.<string>} [directedFilterAttributes] List of attribute names which should have rules
+ * @property {string[]} [directedFilterAttributes] List of attribute names which should have rules
  *      already ready when using the filter tools. For WMS layers.
  * @property {string} [disclaimer] The disclaimer text for this element.
  *      For WMS and WMTS layers, layer groups and themes.
- * @property {Array.<string>} [enumeratedAttributes] List of attribute names which have enumerated attribute
+ * @property {string[]} [enumeratedAttributes] List of attribute names which have enumerated attribute
  *      values (for filters purpose). For WMS layers.
  * @property {boolean} [exclusiveGroup=false] Whether the group contain children that have to be mutually
  *      exclusive, meaning that only one child may be ON at any time.
@@ -238,7 +238,7 @@
 
 /**
  * @typedef {Object} GmfLayerAttributeValuesResponse
- * @property {Array.<GmfLayerAttributeValue>} items
+ * @property {GmfLayerAttributeValue[]} items
  */
 
 

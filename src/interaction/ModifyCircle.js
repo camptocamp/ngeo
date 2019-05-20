@@ -59,7 +59,7 @@ export default class extends olInteractionPointer {
 
     /**
      * Segment RTree for each layer
-     * @type {import("ol/structs/RBush.js").default.<import("ol/interaction/Modify.js").SegmentData>}
+     * @type {import("ol/structs/RBush.js").default<import("ol/interaction/Modify.js").SegmentData>}
      * @private
      */
     this.rBush_ = new olStructsRBush();
@@ -107,7 +107,7 @@ export default class extends olInteractionPointer {
     });
 
     /**
-     * @type {!import("ol/Collection.js").default.<import("ol/Feature.js").default>}
+     * @type {import("ol/Collection.js").default<import("ol/Feature.js").default>}
      * @private
      */
     this.features_ = options.features;

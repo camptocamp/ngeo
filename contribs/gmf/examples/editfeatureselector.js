@@ -26,7 +26,7 @@ import olSourceVector from 'ol/source/Vector.js';
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('gmfapp', [
@@ -66,7 +66,7 @@ function MainController($scope, gmfThemes, gmfTreeManager, gmfUser,
   ngeoFeatureHelper, ngeoToolActivateMgr) {
 
   /**
-   * @type {!angular.IScope}
+   * @type {angular.IScope}
    * @private
    */
   this.scope_ = $scope;

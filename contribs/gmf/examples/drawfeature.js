@@ -16,7 +16,7 @@ import olSourceOSM from 'ol/source/OSM.js';
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('gmfapp', [
@@ -39,9 +39,9 @@ module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**
- * @param {!angular.IScope} $scope Angular scope.
+ * @param {angular.IScope} $scope Angular scope.
  * @param {import("ngeo/misc/FeatureHelper.js").FeatureHelper} ngeoFeatureHelper Gmf feature helper service.
- * @param {import("ol/Collection.js").default.<import("ol/Feature.js").default>} ngeoFeatures Collection of
+ * @param {import("ol/Collection.js").default<import("ol/Feature.js").default>} ngeoFeatures Collection of
  *    features.
  * @param {import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate
  *    manager service.
@@ -54,7 +54,7 @@ function MainController($scope, ngeoFeatureHelper, ngeoFeatures,
   ngeoToolActivateMgr, ngeoFeatureOverlayMgr) {
 
   /**
-   * @type {!angular.IScope}
+   * @type {angular.IScope}
    * @private
    */
   this.scope_ = $scope;

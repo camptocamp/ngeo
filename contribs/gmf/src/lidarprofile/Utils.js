@@ -32,12 +32,12 @@ import {select as d3select} from 'd3';
 /**
  * The object containing all points in profile
  * @typedef {Object} LidarprofilePoints
- * @property {Array<number>} [distance]
- * @property {Array<number>} [altitude]
- * @property {Array<Array<number>>} [color_packed]
- * @property {Array<number>} [intensity]
- * @property {Array<number>} [classification]
- * @property {Array<Array<number>>} [coords]
+ * @property {number[]} [distance]
+ * @property {number[]} [altitude]
+ * @property {number[][]} [color_packed]
+ * @property {number[]} [intensity]
+ * @property {number[]} [classification]
+ * @property {number[][]} [coords]
  */
 
 
@@ -48,8 +48,8 @@ import {select as d3select} from 'd3';
  * @property {number} [cy]
  * @property {number} [distance]
  * @property {number} [altitude]
- * @property {Array<number>} [color_packed]
- * @property {Array<number>} [coords]
+ * @property {number[]} [color_packed]
+ * @property {number[]} [coords]
  * @property {number} [intensity]
  * @property {number} [classification]
  * @property {boolean} [set]
@@ -70,8 +70,8 @@ export default class {
    * @param {number} dRight domain maximum
    * @return {{
    *     bufferGeom: olFeature,
-   *     bufferStyle: Array.<olStyleStyle>,
-   *     clippedLine: Array.<import("ol/coordinate.js").Coordinate>,
+   *     bufferStyle: olStyleStyle[],
+   *     clippedLine: Array<import("ol/coordinate.js").Coordinate>,
    *     distanceOffset: number
    * }} Object with clipped lined coordinates and left domain value
    */
@@ -288,7 +288,7 @@ export default class {
   /**
    * Transforms a lidarprofile into multiple single points sorted by distance.
    * @param {LidarprofilePoints} profilePoints in the profile
-   * @return {Array.<LidarPoint>} An array of Lidar Points.
+   * @return {LidarPoint[]} An array of Lidar Points.
    */
   getFlatPointsByDistance(profilePoints) {
     const points = [];
@@ -310,7 +310,7 @@ export default class {
 
   /**
    * Get the data for a CSV export of the profile.
-   * @param {Array<LidarPoint>} points A list of lidar profile point objects.
+   * @param {LidarPoint[]} points A list of lidar profile point objects.
    * @return {Array<Object<string, *>>} Objects for a csv export (column: value).
    */
   getCSVData(points) {
@@ -335,7 +335,7 @@ export default class {
 
   /**
    * Find the maximum value in am array of numbers
-   * @param {(Array<number>)} array of number
+   * @param {(number[])} array of number
    * @return {number} the maximum of input array
    */
   arrayMax(array) {
@@ -345,7 +345,7 @@ export default class {
 
   /**
    * Find the minimum value in am array of numbers
-   * @param {Array<number>} array of number
+   * @param {number[]} array of number
    * @return {number} the minimum of input array
    */
   arrayMin(array) {

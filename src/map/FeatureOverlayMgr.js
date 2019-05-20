@@ -10,7 +10,7 @@ import {toFunction as toStyleFunction, createDefaultStyle as olStyleDefaultFunct
 /**
  * @typedef {Object} MapFeatureOverlayGroup
  * @property {import('ol/style/Style.js').StyleFunction} styleFunction
- * @property {Object.<string, import('ol/Feature.js').default>} features
+ * @property {Object<string, import('ol/Feature.js').default>} features
  */
 
 
@@ -46,7 +46,7 @@ export function FeatureOverlayMgr() {
   this.featureUidToGroupIndex_ = {};
 
   /**
-   * @type {Array<MapFeatureOverlayGroup>}
+   * @type {MapFeatureOverlayGroup[]}
    * @private
    */
   this.groups_ = [];
@@ -159,7 +159,7 @@ FeatureOverlayMgr.prototype.setStyle = function(style, groupIndex) {
 /**
  * @param {import("ol/Feature.js").default|import("ol/render/Feature.js").default} feature Feature.
  * @param {number} resolution Resolution.
- * @return {Array.<import("ol/style/Style.js").default>|import("ol/style/Style.js").default} Styles.
+ * @return {Array<import("ol/style/Style.js").default>|import("ol/style/Style.js").default} Styles.
  * @private
  */
 FeatureOverlayMgr.prototype.styleFunction_ = function(feature, resolution) {
@@ -172,7 +172,7 @@ FeatureOverlayMgr.prototype.styleFunction_ = function(feature, resolution) {
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('ngeoFeatureOverlayMgr', [

@@ -10,7 +10,7 @@ import ngeoMapModule from 'ngeo/map/module.js';
 import ngeoOlcsManager from 'ngeo/olcs/Manager.js';
 
 
-/** @type {!angular.IModule} **/
+/** @type {angular.IModule} **/
 const module = angular.module('app', [
   'gettext',
   ngeoMapModule.name,

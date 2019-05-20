@@ -91,12 +91,12 @@ export function layerLoading(layer, $scope) {
   let source;
 
   /**
-   * @type {Array<string>}
+   * @type {string[]}
    */
   let incrementEvents = [];
 
   /**
-   * @type {Array<string>}
+   * @type {string[]}
    */
   let decrementEvents = [];
 

@@ -13,7 +13,7 @@ import olFormatWFS from 'ol/format/WFS.js';
 /**
  * Results for a query source.
  * @typedef {Object} QueryResultSource
- * @property {Array.<import("ol/Feature.js").default>} features The matching features for this source.
+ * @property {Array<import("ol/Feature.js").default>} features The matching features for this source.
  * @property {number|string} id Identifier (can be not unique).
  * @property {string} label Label.
  * @property {number} [limit] The maximum number of features that can be returned for a query with this
@@ -48,7 +48,7 @@ import olFormatWFS from 'ol/format/WFS.js';
  * The options for the WFS query service (permalink).
  *
  * @typedef {Object} WfsPermalinkOptions
- * @property {!Array.<WfsType>} wfsTypes The queryable WFS types.
+ * @property {WfsType[]} wfsTypes The queryable WFS types.
  * @property {number} [pointRecenterZoom] Zoom level to use when result is a single point feature. If not set
  *    the map is not zoomed to a specific zoom level.
  * @property {number} [maxFeatures=50] The maximum number of records per request the query service should ask.
@@ -60,19 +60,19 @@ import olFormatWFS from 'ol/format/WFS.js';
 /**
  * @typedef {Object} WfsPermalinkData
  * @property {string} wfsType
- * @property {Array.<WfsPermalinkFilterGroup>} filterGroups
+ * @property {WfsPermalinkFilterGroup[]} filterGroups
  * @property {boolean} showFeatures
  */
 
 /**
  * @typedef {Object} WfsPermalinkFilter
  * @property {string} property
- * @property {Array<string>|string} condition
+ * @property {string[]|string} condition
  */
 
 /**
  * @typedef {Object} WfsPermalinkFilterGroup
- * @property {Array.<WfsPermalinkFilter>} filters
+ * @property {WfsPermalinkFilter[]} filters
  */
 
 /**
@@ -272,12 +272,12 @@ WfsPermalinkService.prototype.issueRequest_ = function(wfsType, filter, map, sho
 
 
 /**
- * @param {!Array<!Feature>} features Features.
- * @return {!import('ol/extent.js').Extent} The extent of all features.
+ * @param {Feature[]} features Features.
+ * @return {import('ol/extent.js').Extent} The extent of all features.
  * @private
  */
 WfsPermalinkService.prototype.getExtent_ = function(features) {
-  return /** @type{import('ol/extent.js').Extent} */(/** @type{Array<any>} */(features).reduce(
+  return /** @type{import('ol/extent.js').Extent} */(/** @type{any[]} */(features).reduce(
     (extent, feature) => {
       if (feature instanceof Feature) {
         const geometry = feature.getGeometry();
@@ -293,7 +293,7 @@ WfsPermalinkService.prototype.getExtent_ = function(features) {
 /**
  * Create OGC filters for the filter groups extracted from the query params.
  *
- * @param {Array<WfsPermalinkFilterGroup>} filterGroups Filter groups.
+ * @param {WfsPermalinkFilterGroup[]} filterGroups Filter groups.
  * @return {?import("ol/format/filter/Filter.js").default} OGC filters.
  * @private
  */
@@ -353,7 +353,7 @@ WfsPermalinkService.or_ = function(filters) {
  * Join a list of filters with a given join function.
  *
  * @param {Array<import("ol/format/filter/Filter.js").default>} filters The filters to join.
- * @param {function(!import("ol/format/filter/Filter.js").default, !import("ol/format/filter/Filter.js").default): import("ol/format/filter/Filter.js").default} joinFn
+ * @param {function(import("ol/format/filter/Filter.js").default, import("ol/format/filter/Filter.js").default): import("ol/format/filter/Filter.js").default} joinFn
  *    The function to join two filters.
  * @return {import("ol/format/filter/Filter.js").default} The joined filters.
  * @private
@@ -384,7 +384,7 @@ WfsPermalinkService.prototype.clearResult_ = function() {
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('ngeoWfsPermalink', [

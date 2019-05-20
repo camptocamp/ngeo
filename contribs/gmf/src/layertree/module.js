@@ -10,7 +10,7 @@ import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
 import './common.scss';
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  */
 export default angular.module('gmfLayertreeModule', [
   gmfLayertreeComponent.name,

@@ -38,7 +38,7 @@ import 'bootstrap/js/src/dropdown.js';
  * E.g. `'two_wheels_park': ['velo_park', 'moto_park']}` merges the sources
  * with label `velo_park` and `moto_park` into a new source `two_wheels_park`.
  *
- * @typedef {Object<string, Array.<string>>} GridMergeTabs
+ * @typedef {Object<string, string[]>} GridMergeTabs
  */
 
 
@@ -83,7 +83,7 @@ module.run(
 /**
  * @param {JQuery} $element Element.
  * @param {angular.IAttributes} $attrs Attributes.
- * @param {function(!JQuery, !angular.IAttributes): string} gmfDisplayquerygridTemplateUrl Template function.
+ * @param {function(JQuery, angular.IAttributes): string} gmfDisplayquerygridTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
  * @private
@@ -231,13 +231,13 @@ export function QueryGridController($injector, $scope, ngeoQueryResult, ngeoMapQ
   this.pending = false;
 
   /**
-   * @type {Object.<string, GridSource>}
+   * @type {Object<string, GridSource>}
    */
   this.gridSources = {};
 
   /**
    * IDs of the grid sources in the order they were loaded.
-   * @type {Array.<string>}
+   * @type {string[]}
    */
   this.loadedGridSources = [];
 
@@ -266,7 +266,7 @@ export function QueryGridController($injector, $scope, ngeoQueryResult, ngeoMapQ
   /**
    * A mapping between row uid and the corresponding feature for each
    * source.
-   * @type {Object.<string, Object.<string, import("ol/Feature.js").default>>}
+   * @type {Object<string, Object<string, import("ol/Feature.js").default>>}
    * @private
    */
   this.featuresForSources_ = {};
@@ -393,7 +393,7 @@ QueryGridController.prototype.$onInit = function() {
 
 /**
  * Returns a list of grid sources in the order they were loaded.
- * @return {Array.<GridSource>} Grid sources.
+ * @return {GridSource[]} Grid sources.
  */
 QueryGridController.prototype.getGridSources = function() {
   return this.loadedGridSources.map(sourceLabel => this.gridSources[sourceLabel]);
@@ -501,8 +501,8 @@ QueryGridController.prototype.isSelected = function(gridSource) {
 
 /**
  * Try to merge the mergable sources.
- * @param {Array.<import('ngeo/statemanager/WfsPermalink.js').QueryResultSource>} sources Sources.
- * @return {Array.<import('ngeo/statemanager/WfsPermalink.js').QueryResultSource>} The merged sources.
+ * @param {Array<import('ngeo/statemanager/WfsPermalink.js').QueryResultSource>} sources Sources.
+ * @return {Array<import('ngeo/statemanager/WfsPermalink.js').QueryResultSource>} The merged sources.
  * @private
  */
 QueryGridController.prototype.getMergedSources_ = function(sources) {
@@ -534,7 +534,7 @@ QueryGridController.prototype.getMergedSources_ = function(sources) {
  * that will contain the features of all mergable sources is returned. If not,
  * `null` is returned.
  * @param {import('ngeo/statemanager/WfsPermalink.js').QueryResultSource} source Source.
- * @param {Object.<string, import('ngeo/statemanager/WfsPermalink.js').QueryResultSource>} mergedSources
+ * @param {Object<string, import('ngeo/statemanager/WfsPermalink.js').QueryResultSource>} mergedSources
  *    Merged sources.
  * @return {?import('ngeo/statemanager/WfsPermalink.js').QueryResultSource} A merged source of null if the
  *    source should not be merged.
@@ -636,8 +636,8 @@ QueryGridController.prototype.collectData_ = function(source) {
 
 /**
  * Remove all unwanted columns.
- * @param {Array.<Object>} allProperties A row.
- * @param {Array.<string>} featureGeometriesNames Geometry names.
+ * @param {Object[]} allProperties A row.
+ * @param {string[]} featureGeometriesNames Geometry names.
  * @private
  */
 QueryGridController.prototype.cleanProperties_ = function(allProperties, featureGeometriesNames) {
@@ -657,7 +657,7 @@ QueryGridController.prototype.cleanProperties_ = function(allProperties, feature
 
 /**
  * Remove columns that will be completely empty between each properties.
- * @param {Array.<Object>} allProperties A row.
+ * @param {Object[]} allProperties A row.
  * @private
  */
 QueryGridController.prototype.removeEmptyColumnsFn_ = function(allProperties) {
@@ -691,7 +691,7 @@ QueryGridController.prototype.removeEmptyColumnsFn_ = function(allProperties) {
 
 
 /**
- * @param {?Array.<Object>} data Grid rows.
+ * @param {?Object[]} data Grid rows.
  * @param {import('ngeo/statemanager/WfsPermalink.js').QueryResultSource} source Query source.
  * @return {boolean} Returns true if a grid was created.
  * @private
@@ -719,7 +719,7 @@ QueryGridController.prototype.makeGrid_ = function(data, source) {
 
 
 /**
- * @param {Array<Object>} data Grid rows.
+ * @param {Object[]} data Grid rows.
  * @return {?import("ngeo/grid/Config.js").default} Grid config.
  * @private
  */
@@ -731,7 +731,7 @@ QueryGridController.prototype.getGridConfiguration_ = function(data) {
   delete clone.ol_uid;
   const columns = Object.keys(clone);
 
-  /** @type {Array.<import('ngeo/download/Csv.js').GridColumnDef>} */
+  /** @type {Array<import('ngeo/download/Csv.js').GridColumnDef>} */
   const columnDefs = [];
   columns.forEach((column) => {
     columnDefs.push(/** @type {import('ngeo/download/Csv.js').GridColumnDef} */ ({

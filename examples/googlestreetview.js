@@ -18,7 +18,7 @@ import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
 import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr.js';
 
 
-/** @type {!angular.IModule} **/
+/** @type {angular.IModule} **/
 const module = angular.module('app', [
   'gettext',
   ngeoMapModule.name,
@@ -28,7 +28,7 @@ const module = angular.module('app', [
 
 
 /**
- * @param {!import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr
+ * @param {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr
  *    Ngeo FeatureOverlay manager.
  * @param {import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr} ngeoToolActivateMgr
  *    Ngeo ToolActivate manager service.
@@ -43,7 +43,7 @@ function MainController(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
   this.radius = 500;
 
   /**
-   * @type {!import("ol/style/Style.js").default}
+   * @type {import("ol/style/Style.js").default}
    */
   this.style = new olStyleStyle({
     text: new olStyleText({

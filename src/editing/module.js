@@ -5,7 +5,7 @@ import ngeoEditingCreateregularpolygonfromclickComponent
   from 'ngeo/editing/createregularpolygonfromclickComponent.js';
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  */
 export default angular.module('ngeoEditingModule', [
   ngeoEditingAttributesComponent.name,

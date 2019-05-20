@@ -24,7 +24,7 @@ import olInteractionSnap from 'ol/interaction/Snap.js';
  * @constructor
  * @param {angular.IHttpService} $http Angular $http service.
  * @param {angular.IQService} $q The Angular $q service.
- * @param {!angular.IScope} $rootScope Angular rootScope.
+ * @param {angular.IScope} $rootScope Angular rootScope.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes The gmf Themes service.
  * @param {import("gmf/layertree/TreeManager.js").LayertreeTreeManager} gmfTreeManager The gmf TreeManager
@@ -51,7 +51,7 @@ export function EditingSnappingService($http, $q, $rootScope, $timeout, gmfTheme
   this.q_ = $q;
 
   /**
-   * @type {!angular.IScope}
+   * @type {angular.IScope}
    * @private
    */
   this.rootScope_ = $rootScope;
@@ -86,7 +86,7 @@ export function EditingSnappingService($http, $q, $rootScope, $timeout, gmfTheme
   this.cache_ = {};
 
   /**
-   * @type {!Array.<import("ol/events.js").EventsKey>}
+   * @type {Array<import("ol/events.js").EventsKey>}
    * @private
    */
   this.listenerKeys_ = [];
@@ -585,7 +585,7 @@ EditingSnappingService.prototype.handleMapMoveEnd_ = function() {
  * @property {boolean} active
  * @property {string} featureNS
  * @property {string} featurePrefix
- * @property {import("ol/Collection.js").default.<import("ol/Feature.js").default>} features
+ * @property {import("ol/Collection.js").default<import("ol/Feature.js").default>} features
  * @property {string} geometryName
  * @property {?import("ol/interaction/Snap.js").default} interaction
  * @property {number} maxFeatures
@@ -605,7 +605,7 @@ EditingSnappingService.prototype.handleMapMoveEnd_ = function() {
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('gmfSnapping', [

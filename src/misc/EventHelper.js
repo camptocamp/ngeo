@@ -14,7 +14,7 @@ import * as olEvents from 'ol/events.js';
 export function EventHelper() {
 
   /**
-   * @type {Object.<number|string, Array.<import("ol/events.js").EventsKey>>}
+   * @type {Object<number|string, Array<import("ol/events.js").EventsKey>>}
    * @private
    */
   this.listenerKeys_ = {};
@@ -67,7 +67,7 @@ EventHelper.prototype.initListenerKey_ = function(uid) {
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('ngeoEventHelper', []);

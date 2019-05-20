@@ -2,7 +2,7 @@ import './colorpicker.css';
 import angular from 'angular';
 import ngeoMiscColorpickerComponent from 'ngeo/misc/colorpickerComponent.js';
 
-/** @type {!angular.IModule} **/
+/** @type {angular.IModule} **/
 const module = angular.module('app', [
   'gettext',
   ngeoMiscColorpickerComponent.name,
@@ -13,7 +13,7 @@ const module = angular.module('app', [
  * The application-specific color picker component, based on the
  * ngeo-colorpicker component.
  *
- * @type {!angular.IComponentOptions}
+ * @type {angular.IComponentOptions}
  */
 const colorpickerComponent = {
   template: '<div ngeo-colorpicker="$ctrl.colors" ngeo-colorpicker-color="mainCtrl.color"></div>',
@@ -33,7 +33,7 @@ function ColorPickerController() {
 
   /**
    * The colors set.
-   * @type {Array<Array<string>>}
+   * @type {string[][]}
    * @const
    */
   this.colors = [

@@ -19,14 +19,14 @@ import olGeomPolygon from 'ol/geom/Polygon.js';
 import ngeoMapModule from 'ngeo/map/module.js';
 
 
-/** @type {!angular.IModule} **/
+/** @type {angular.IModule} **/
 const module = angular.module('app', [
   'gettext',
   ngeoMapModule.name
 ]);
 
 
-/** @type {!angular.IModule} **/
+/** @type {angular.IModule} **/
 const appmodule = angular.module('app', ['ngeo']);
 
 
@@ -58,7 +58,7 @@ function MainController() {
   ]]);
 
   /**
-   * @type {import("ol/Collection.js").default.<import("ol/Feature.js").default>}
+   * @type {import("ol/Collection.js").default<import("ol/Feature.js").default>}
    */
   this.features = new olCollection();
 

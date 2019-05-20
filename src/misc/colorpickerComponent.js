@@ -2,7 +2,7 @@ import angular from 'angular';
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('ngeoColorpicker', []);
@@ -42,7 +42,7 @@ module.run(
  *     </div>
  *
  *
- * @param {string|function(!JQuery=, !angular.IAttributes=): string}
+ * @param {string|function(JQuery=, angular.IAttributes=): string}
  *     ngeoColorpickerTemplateUrl Template URL for the directive.
  * @return {angular.IDirective} Directive Definition Object.
  * @ngInject
@@ -66,7 +66,7 @@ module.directive('ngeoColorpicker', colorPickerComponent);
 
 /**
  * Default colors for the colorpicker
- * @type {Array.<Array.<string>>}
+ * @type {string[][]}
  * @private
  * @hidden
  */
@@ -94,7 +94,7 @@ function Controller() {
 
   /**
    * The set of color
-   * @type {Array.<Array.<string>>}
+   * @type {string[][]}
    */
   this.colors = this.colors || DEFAULT_COLORS;
 

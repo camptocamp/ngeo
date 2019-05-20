@@ -43,7 +43,7 @@ export default '<?xml version="1.0" encoding="UTF-8"?>' +
     '<Contents>' +
         '<Layer>' +
             '<ows:Title>New Zealand Earthquakes</ows:Title>' +
-            '<ows:Abstract>Historical earthquake data, accessed via the [GeoNet WFS feed](http://info.geonet.org.nz/display/appdata/Advanced+Queries). The data has been filtered to only include quakes in proximity to New Zealand with an `eventtype` of "Earthquake" or "none" per the [GeoNet catalogue](http://info.geonet.org.nz/display/appdata/Catalogue+Output). Most fields have been removed. Please also note the excluded data per this [GeoNet page](http://info.geonet.org.nz/display/appdata/The+Gap). We acknowledge the New Zealand GeoNet project and its sponsors EQC, GNS Science and LINZ, for providing data used in this layer.</ows:Abstract>' +
+            '<ows:Abstract>Historical earthquake data, accessed via the [GeoNet WFS feed](http://info.geonet.org.nz/display/appdata/Advanced+Queries). The data has been filtered to only include quakes in proximity to New Zealand with an `eventtype` of "Earthquake" or "none" per the [GeoNet catalogue](http://info.geonet.org.nz/display/appdata/Catalogue+Output). Most fields have been removed. Please also note the excluded data per this [GeoNet page](http://info.geonet.org.nz/display/appdata/The+Gap). We acknowledge the New Zealand GeoNet project and its sponsors EQC, GNS Science and LINZ, for providing data used in this layer</ows:Abstract>' +
             '<ows:Identifier>layer-7328</ows:Identifier>' +
             '<ows:BoundingBox crs="urn:ogc:def:crs:EPSG::3857">' +
                 '<ows:LowerCorner>-20037508.342789 -6406581.708337</ows:LowerCorner>' +

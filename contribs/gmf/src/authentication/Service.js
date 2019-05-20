@@ -6,12 +6,12 @@ import olEventsEventTarget from 'ol/events/Target.js';
 /**
  * Availables functionalities.
  * @typedef {Object} AuthenticationFunctionalities
- * @property {Array.<string>} default_basemap Base maps to use by default.
- * @property {Array.<string>} default_theme Theme to use by default.
- * @property {Array.<string>} [filterable_layers] A list of layer names that can be filtered.
- * @property {Array.<!string>} [open_panel] When set, contains the name of the panel to open upon loading
+ * @property {string[]} default_basemap Base maps to use by default.
+ * @property {string[]} default_theme Theme to use by default.
+ * @property {string[]} [filterable_layers] A list of layer names that can be filtered.
+ * @property {string[]} [open_panel] When set, contains the name of the panel to open upon loading
  *    an application.
- * @property {Array.<string>} [preset_layer_filter] Default filtrable datasource name.
+ * @property {string[]} [preset_layer_filter] Default filtrable datasource name.
  */
 
 /**
@@ -26,7 +26,7 @@ import olEventsEventTarget from 'ol/events/Target.js';
  * @property {AuthenticationFunctionalities|null} functionalities Configured functionalities of the user
  * @property {boolean|null} is_password_changed True if the password of the user has been changed.
  *    False otherwise.
- * @property {Array<RoleInfo>} roles Roles information.
+ * @property {RoleInfo[]} roles Roles information.
  * @property {string|null} username The name of the user.
  */
 
@@ -37,7 +37,7 @@ import olEventsEventTarget from 'ol/events/Target.js';
  */
 
 /**
- * @typedef {import("ngeo/CustomEvent.js").default.<AuthenticationEventItem>} AuthenticationEvent
+ * @typedef {import("ngeo/CustomEvent.js").default<AuthenticationEventItem>} AuthenticationEvent
  */
 
 
@@ -45,7 +45,7 @@ import olEventsEventTarget from 'ol/events/Target.js';
  * @typedef {Object} AuthenticationLoginResponse
  * @property {AuthenticationFunctionalities} [functionalities]
  * @property {boolean} [is_password_changed]
- * @property {Array<RoleInfo>} [roles]
+ * @property {RoleInfo[]} [roles]
  * @property {string} [username]
  */
 
@@ -214,14 +214,14 @@ export class AuthenticationService extends olEventsEventTarget {
   }
 
   /**
-   * @return {Array<number>} The roles IDs.
+   * @return {number[]} The roles IDs.
    */
   getRolesIds() {
     return this.user_.roles ? this.user_.roles.map((role) => role.id) : [];
   }
 
   /**
-   * @return {Array<string>} The roles names.
+   * @return {string[]} The roles names.
    */
   getRolesNames() {
     return this.user_.roles ? this.user_.roles.map((role) => role.name) : [];

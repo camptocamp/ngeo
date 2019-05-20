@@ -40,7 +40,7 @@ const module = angular.module('gmfContextualdata', [
  * example for a usage sample.
  *
  * @htmlAttribute {import("ol/Map.js").default} map The map.
- * @htmlAttribute {Array<number>} projections The list of projections.
+ * @htmlAttribute {number[]} projections The list of projections.
  * @htmlAttribute {Function} callback A function called after server
  *    (raster) data is received in case some additional computing is required.
  *    Optional.
@@ -79,7 +79,7 @@ module.directive('gmfContextualdata', contextualDataComponent);
 /**
  * @param {angular.ICompileService} $compile Angular compile service.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
- * @param {!angular.IScope} $scope Scope.
+ * @param {angular.IScope} $scope Scope.
  * @param {import("gmf/raster/RasterService.js").RasterService} gmfRaster Gmf Raster service
  * @param {angular.auto.IInjectorService} $injector Angular injector service.
  *
@@ -96,7 +96,7 @@ export function ContextualdataController($compile, $timeout, $scope, gmfRaster, 
   this.map = null;
 
   /**
-   * @type {Array<number>}
+   * @type {number[]}
    */
   this.projections = [];
 
@@ -162,7 +162,7 @@ ContextualdataController.prototype.init = function() {
 };
 
 /**
- * @param {!Event} event Event.
+ * @param {Event} event Event.
  * @private
  */
 ContextualdataController.prototype.handleMapContextMenu_ = function(event) {

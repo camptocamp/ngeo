@@ -138,7 +138,7 @@ ObjecteditingManagerService.prototype.getLayerNodeId = function() {
  *
  * @param {string} key Property key.
  * @param {string} value Property value.
- * @param {Array.<import("ol/Feature.js").default>} features List of features.
+ * @param {Array<import("ol/Feature.js").default>} features List of features.
  * @private
  */
 ObjecteditingManagerService.prototype.handleGetFeatures_ = function(key, value, features) {

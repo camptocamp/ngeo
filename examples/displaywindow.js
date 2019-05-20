@@ -6,7 +6,7 @@ import angular from 'angular';
 import ngeoMessageDisplaywindowComponent from 'ngeo/message/displaywindowComponent.js';
 
 
-/** @type {!angular.IModule} **/
+/** @type {angular.IModule} **/
 const module = angular.module('app', [
   ngeoMessageDisplaywindowComponent.name
 ]);
@@ -28,7 +28,7 @@ function MainController($scope) {
    * @type {string}
    */
   this.window2Content = `<p>A window: <ul>
-      <li>That have custom dimensions.</li>
+      <li>That have custom dimensions</li>
       <li>That is draggable</li>
       <li>That is rezisable</li>
       <li>That can be open and close</li>

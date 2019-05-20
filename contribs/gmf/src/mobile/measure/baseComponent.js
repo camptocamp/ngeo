@@ -10,7 +10,7 @@ import MobileDraw from 'ngeo/interaction/MobileDraw';
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('gmfMobileMeasureBase', [
@@ -21,9 +21,9 @@ const module = angular.module('gmfMobileMeasureBase', [
 /**
  * Base controller class for Length and Area components.
  *
- * @param {!angular.IScope} $scope Angular scope.
- * @param {!angular.IFilterService} $filter Angular filter
- * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
+ * @param {angular.IScope} $scope Angular scope.
+ * @param {angular.IFilterService} $filter Angular filter
+ * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @constructor
  * @ngInject
  * @ngdoc controller
@@ -45,7 +45,7 @@ export function MeasueMobileBaseController($scope, $filter, gettextCatalog) {
   this.filter = $filter;
 
   /**
-   * @type {!angular.gettext.gettextCatalog}
+   * @type {angular.gettext.gettextCatalog}
    * @protected
    */
   this.gettextCatalog = gettextCatalog;

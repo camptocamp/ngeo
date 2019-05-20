@@ -9,7 +9,7 @@ import gmfLidarprofileManager from 'gmf/lidarprofile/Manager.js';
 import './lidarprofile.scss';
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  */
 export default angular.module('gmfLidarprofileModule', [
   gmfLidarprofileComponent.name,

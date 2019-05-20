@@ -11,7 +11,7 @@ import olSourceOSM from 'ol/source/OSM.js';
 import ngeoMapModule from 'ngeo/map/module.js';
 
 
-/** @type {!angular.IModule} **/
+/** @type {angular.IModule} **/
 const appmodule = angular.module('app', [
   'gettext',
   ngeoMapModule.name

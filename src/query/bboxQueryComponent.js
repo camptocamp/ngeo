@@ -9,7 +9,7 @@ import {VOID} from 'ol/functions.js';
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('ngeoBboxQuery', [
@@ -70,7 +70,7 @@ function queryBboxComponent($rootScope, ngeoMapQuerent, ngeoQueryKeyboard) {
       /**
        * Called when a bbox is drawn while this controller is active. Issue
        * a request to the query service using the extent that was drawn.
-       * @param {!olInteractionDragBox} interaction Drag box interaction
+       * @param {olInteractionDragBox} interaction Drag box interaction
        */
       const handleBoxEnd = function(interaction) {
         const action = ngeoQueryKeyboard.action;

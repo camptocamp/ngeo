@@ -17,8 +17,8 @@ export default class {
 
 
   /**
-   * @param {Array.<Object>} complexTypeElements Complex type element
-   * @return {Array.<import('ngeo/format/Attribute.js').Attribute>} Attributes
+   * @param {Object[]} complexTypeElements Complex type element
+   * @return {Array<import('ngeo/format/Attribute.js').Attribute>} Attributes
    */
   read(complexTypeElements) {
     return complexTypeElements.map(this.readFromComplexTypeElement_);

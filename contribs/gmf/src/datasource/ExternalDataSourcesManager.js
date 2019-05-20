@@ -102,14 +102,14 @@ export class ExternalDatSourcesManager {
      * If a data source with an id already exists in this cache, it is used
      * instead of being re-created.
      *
-     * @type {Object.<number, !import("ngeo/datasource/OGC.js").default|!import("ngeo/datasource/File.js").default>}
+     * @type {Object<number, import("ngeo/datasource/OGC.js").default|import("ngeo/datasource/File.js").default>}
      * @private
      */
     this.extDataSources_ = {};
 
     /**
      * File external data sources, with the key being the file name.
-     * @type {Object.<string, !import("ngeo/datasource/File.js").default>}
+     * @type {Object<string, import("ngeo/datasource/File.js").default>}
      * @private
      */
     this.files_ = {};
@@ -133,14 +133,14 @@ export class ExternalDatSourcesManager {
 
     /**
      * Collection of WMS groups.
-     * @type {import("ol/Collection.js").default.<!import("ngeo/datasource/WMSGroup.js").default>}
+     * @type {import("ol/Collection.js").default<import("ngeo/datasource/WMSGroup.js").default>}
      * @private
      */
     this.wmsGroupsCollection_ = new olCollection();
 
     /**
      * Collection of groups for WMTS data sources.
-     * @type {import("ol/Collection.js").default.<!import("ngeo/datasource/OGCGroup.js").default>}
+     * @type {import("ol/Collection.js").default<import("ngeo/datasource/OGCGroup.js").default>}
      * @private
      */
     this.wmtsGroupsCollection_ = new olCollection();
@@ -250,14 +250,14 @@ export class ExternalDatSourcesManager {
   }
 
   /**
-   * @return {Array<!import("ngeo/datasource/OGCGroup.js").default>} List of groups for WMTS data sources.
+   * @return {Array<import("ngeo/datasource/OGCGroup.js").default>} List of groups for WMTS data sources.
    */
   get wmtsGroups() {
     return this.wmtsGroupsCollection_.getArray();
   }
 
   /**
-   * @return {import("ol/Collection.js").default.<!import("ngeo/datasource/OGCGroup.js").default>}
+   * @return {import("ol/Collection.js").default<import("ngeo/datasource/OGCGroup.js").default>}
    *    Collection of groups for WMTS data sources.
    */
   get wmtsGroupsCollection() {

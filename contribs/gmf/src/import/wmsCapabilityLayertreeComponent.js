@@ -10,7 +10,7 @@ import 'bootstrap/js/src/collapse.js';
 
 
 /**
- * @type {!angular.IModule}
+ * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('gmfWmscapabilitylayertreenode', [
@@ -34,7 +34,7 @@ module.run(
 
 module.value('gmfWmscapabilitylayertreenodeTemplateUrl',
   /**
-   * @param {!angular.IAttributes} $attrs Attributes.
+   * @param {angular.IAttributes} $attrs Attributes.
    * @return {string} The template url.
    */
   ($attrs) => {
@@ -45,8 +45,8 @@ module.value('gmfWmscapabilitylayertreenodeTemplateUrl',
 
 
 /**
- * @param {!angular.IAttributes} $attrs Attributes.
- * @param {!function(!angular.IAttributes): string} gmfWmscapabilitylayertreenodeTemplateUrl Template
+ * @param {angular.IAttributes} $attrs Attributes.
+ * @param {function(angular.IAttributes): string} gmfWmscapabilitylayertreenodeTemplateUrl Template
  *    function.
  * @return {string} Template URL.
  * @ngInject
@@ -65,7 +65,7 @@ function gmfWmscapabilitylayertreenodeTemplateUrl($attrs, gmfWmscapabilitylayert
 class Controller {
 
   /**
-   * @param {!import("gmf/datasource/ExternalDataSourcesManager.js").ExternalDatSourcesManager}
+   * @param {import("gmf/datasource/ExternalDataSourcesManager.js").ExternalDatSourcesManager}
    *     gmfExternalDataSourcesManager GMF service responsible of managing
    *     external data sources.
    * @private
@@ -107,7 +107,7 @@ class Controller {
   }
 
   /**
-   * @param {!Object} layer WMS Capability Layer object
+   * @param {Object} layer WMS Capability Layer object
    */
   createAndAddDataSource(layer) {
     if (!this.url) {
@@ -121,7 +121,7 @@ class Controller {
   }
 
   /**
-   * @param {!Object} layer WMS Capability Layer object
+   * @param {Object} layer WMS Capability Layer object
    * @return {string} Unique id for the Capability Layer.
    */
   getUid(layer) {

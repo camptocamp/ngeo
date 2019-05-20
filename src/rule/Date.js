@@ -11,7 +11,7 @@ import ngeoRuleRule from 'ngeo/rule/Rule.js';
  * @property {number} [lowerBoundary] (RuleOptions)
  * @property {string} name (RuleOptions)
  * @property {string} [operator] (RuleOptions)
- * @property {Array.<string>} [operators] (RuleOptions)
+ * @property {string[]} [operators] (RuleOptions)
  * @property {string} propertyName (RuleOptions)
  * @property {string} [type] (RuleOptions)
  * @property {number} [upperBoundary] (RuleOptions)
@@ -26,7 +26,7 @@ export default class extends ngeoRuleRule {
   /**
    * A date rule.
    *
-   * @param {!DateOptions} options Options.
+   * @param {DateOptions} options Options.
    */
   constructor(options) {
 
