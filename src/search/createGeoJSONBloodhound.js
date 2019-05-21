@@ -6,7 +6,6 @@ import * as olObj from 'ol/obj.js';
 
 import 'corejs-typeahead';
 
-
 /**
  * @param {string} url an URL to a search service.
  * @param {(function(GeoJSONFeature): boolean)=} opt_filter function to filter

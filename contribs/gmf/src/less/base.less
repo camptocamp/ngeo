@@ -75,20 +75,21 @@ i, cite, em, var, address, dfn {
   line-height: 1;
 }
 
-.ui-draggable {
+.ui-draggable-handle {
   cursor: grab;
   cursor: -webkit-grab;
   cursor:-moz-grab;
-
-  &.ui-draggable-dragging {
-    cursor: move;
-
-    iframe {
-      display: none;
-    }
-  }
 }
 
+.ui-draggable-dragging {
+  .ui-draggable-handle {
+    cursor: move;
+  }
+
+  iframe {
+    display: none;
+  }
+}
 .ui-resizable {
   &.ui-resizable-resizing {
     iframe {
