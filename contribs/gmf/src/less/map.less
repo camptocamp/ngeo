@@ -126,8 +126,8 @@ button[ngeo-mobile-geolocation] {
 
   input.gmf-backgroundlayerselector-opacity-slider {
     margin: 1rem 0 2rem 0;
-    padding-left: @half-app-margin !important;
-    padding-right: @half-app-margin !important;
+    // note: the 0 top and bottom padding are for IE11 compatibility
+    padding: 0 @half-app-margin !important;
   }
 }
 
