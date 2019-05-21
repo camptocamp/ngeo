@@ -297,6 +297,8 @@ gmf-themeselector {
   max-height: 1.5 * $left-panel-width;
   overflow: hidden;
   overflow-y: auto;
+  // fix issue with IE11: click on the scrollbar closes the div
+  margin-right: 20px !important;
 }
 gmf-backgroundlayerselector {
   width: 15.62rem;
