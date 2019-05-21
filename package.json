@@ -128,5 +128,7 @@
     "webpack-dev-server": "3.3.1",
     "webpack-merge": "4.2.1"
   },
-  "dependencies": {}
+  "dependencies": {
+    "localforage": "^1.7.3"
+  }
 }

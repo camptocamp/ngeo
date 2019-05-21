@@ -18,3 +18,10 @@ rules:
   max-len:
     - error
     - code: 110
+globals:
+    angular: false
+    Cesium: false
+    google: false
+    Bloodhound: false
+    DateFormatter: false
+    localforage: false

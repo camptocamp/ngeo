@@ -1,6 +1,9 @@
-import angular from 'angular';
+/**
+ * @module ngeo.message.modalComponent
+ */
 import 'jquery-ui/ui/widgets/draggable.js';
 import 'bootstrap/js/src/modal.js';
+import angular from 'angular';
 
 
 /**
