@@ -1,11 +1,11 @@
-import {platformModifierKeyOnly, singleClick} from 'ol/events/condition.js';
+import {noModifierKeys, singleClick} from 'ol/events/condition.js';
 import olGeomLineString from 'ol/geom/LineString.js';
 import olGeomMultiPoint from 'ol/geom/MultiPoint.js';
 import olGeomMultiLineString from 'ol/geom/MultiLineString.js';
 import olGeomMultiPolygon from 'ol/geom/MultiPolygon.js';
 import olGeomPoint from 'ol/geom/Point.js';
 import olGeomPolygon from 'ol/geom/Polygon.js';
-
+import {getTopLeft, getTopRight, getBottomLeft, getBottomRight} from 'ol/extent.js';
 
 /**
  * Utility method that converts a simple geometry to its multi equivalent. If
@@ -122,5 +122,22 @@ export function encodeQueryString(queryData) {
  * @hidden
  */
 export function deleteCondition(event) {
-  return platformModifierKeyOnly(event) && singleClick(event);
+  return noModifierKeys(event) && singleClick(event);
 }
+
+/**
+ * Takes an ol.Extent and return an Array of ol.Coordinate representing a rectangle polygon.
+ * @param {ol.Extent} extent The extent.
+ * @return {Array.<ol.Coordinate>} The Array of coordinate of the rectangle.
+ */
+export function extentToRectangle(extent) {
+  return [
+    getTopLeft(extent),
+    getTopRight(extent),
+    getBottomRight(extent),
+    getBottomLeft(extent),
+    getTopLeft(extent),
+  ];
+}
+
+export default exports;
