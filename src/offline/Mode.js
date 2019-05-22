@@ -2,6 +2,9 @@
  * @module ngeo.offline.Mode
  */
 
+import angular from 'angular';
+
+
 const exports = class {
 
   /**
@@ -77,7 +80,7 @@ const exports = class {
 };
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 exports.module = angular.module('ngeoOfflineMode', []);
 exports.module.service('ngeoOfflineMode', exports);

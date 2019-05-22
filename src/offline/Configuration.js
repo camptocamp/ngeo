@@ -7,7 +7,7 @@ import olLayerVector from 'ol/layer/Vector.js';
 import olLayerTile from 'ol/layer/Tile.js';
 import olLayerImage from 'ol/layer/Image.js';
 import * as olProj from 'ol/proj.js';
-import olSourceImage from 'ol/source/Image.js';
+import {defaultImageLoadFunction} from 'ol/source/Image.js';
 import olSourceImageWMS from 'ol/source/ImageWMS.js';
 import olSourceTileWMS from 'ol/source/TileWMS.js';
 import {createForProjection as createTileGridForProjection} from 'ol/tilegrid.js';
@@ -17,7 +17,7 @@ import LocalforageAndroidWrapper from 'ngeo/offline/LocalforageAndroidWrapper.js
 import LocalforageIosWrapper from 'ngeo/offline/LocalforageIosWrapper.js';
 import ngeoCustomEvent from 'ngeo/CustomEvent.js';
 import utils from 'ngeo/offline/utils.js';
-const defaultImageLoadFunction = olSourceImage.defaultImageLoadFunction;
+const defaultImageLoadFunction_ = defaultImageLoadFunction;
 
 import * as realLocalforage from 'localforage';
 
@@ -28,8 +28,9 @@ const exports = class extends olObservable {
 
   /**
    * @ngInject
-   * @param {!angular.Scope} $rootScope The rootScope provider.
-   * @param {ngeo.map.BackgroundLayerMgr} ngeoBackgroundLayerMgr The background layer manager
+   * @param {!angular.IScope} $rootScope The rootScope provider.
+   * @param {!import("ngeo/map/BackgroundLayerMgr.js").MapBackgroundLayerManager} ngeoBackgroundLayerMgr
+   *    Background layer manager.
    * @param {number} ngeoOfflineGutter A gutter around the tiles to download (to avoid cut symbols)
    */
   constructor($rootScope, ngeoBackgroundLayerMgr, ngeoOfflineGutter) {
@@ -40,7 +41,7 @@ const exports = class extends olObservable {
 
     /**
      * @private
-     * @type {!angular.Scope}
+     * @type {!angular.IScope}
      */
     this.rootScope_ = $rootScope;
 
@@ -53,7 +54,7 @@ const exports = class extends olObservable {
 
     /**
      * @private
-     * @type {ngeo.map.BackgroundLayerMgr}
+     * @type {!import("ngeo/map/BackgroundLayerMgr.js").MapBackgroundLayerManager}
      */
     this.ngeoBackgroundLayerMgr_ = ngeoBackgroundLayerMgr;
 
@@ -99,7 +100,7 @@ const exports = class extends olObservable {
    * @param {boolean} value whether there is offline data available in the storage.
    */
   setHasOfflineData(value) {
-    const needDigest = value ^ this.hasData;
+    const needDigest = value !== this.hasData;
     this.hasData = value;
     if (needDigest) {
       this.rootScope_.$applyAsync(); // force update of the UI
@@ -181,7 +182,7 @@ const exports = class extends olObservable {
   }
 
   /**
-   * @param {ngeox.OfflineLayerMetadata} layerItem The layer metadata
+   * @param {OfflineLayerMetadata} layerItem The layer metadata
    * @return {string} A key identifying an offline layer and used during restore.
    */
   getLayerKey(layerItem) {
@@ -191,7 +192,7 @@ const exports = class extends olObservable {
   /**
    * @override
    * @param {number} progress The download progress
-   * @param {ngeox.OfflineTile} tile The tile
+   * @param {OfflineTile} tile The tile
    * @return {Promise} A promise
    */
   onTileDownloadSuccess(progress, tile) {
@@ -241,7 +242,7 @@ const exports = class extends olObservable {
    * @return {ol.source.Source} A tiled equivalent source
    */
   sourceImageWMSToTileWMS(source, projection) {
-    if (source instanceof olSourceImageWMS && source.getUrl() && source.getImageLoadFunction() === defaultImageLoadFunction) {
+    if (source instanceof olSourceImageWMS && source.getUrl() && source.getImageLoadFunction() === defaultImageLoadFunction_) {
       const tileGrid = createTileGridForProjection(source.getProjection() || projection, 42, 256);
       source = new olSourceTileWMS({
         gutter: this.gutter_,
