@@ -18,7 +18,7 @@ let Action;
  */
 const exports = class AbstractLocalforageWrapper {
   constructor() {
-    this.waitingPromises_ = new window.Map();
+    this.waitingPromises_ = new Map();
     this.currentId_ = 0;
   }
 

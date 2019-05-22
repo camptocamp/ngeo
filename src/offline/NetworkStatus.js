@@ -2,14 +2,15 @@
  * @module ngeo.offline.NetworkStatus
  */
 import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
+import angular from 'angular';
 
 
 /**
  * @ngInject
- * @param {angular.$q} $q The Angular $q service.
- * @param {ngeox.miscDebounce} ngeoDebounce ngeo debounce service.
+ * @param {angular.IQService} $q The Angular $q service.
+ * @param {ngeoMiscDebounce} ngeoDebounce ngeo debounce service.
  * @param {ngeo.offline.NetworkStatus} ngeoNetworkStatus ngeo network status service.
- * @return {angular.$http.Interceptor} the interceptor
+ * @return {angular.IHttpInterceptor} the interceptor
  */
 const httpInterceptor = function($q, ngeoDebounce, ngeoNetworkStatus) {
   const debouncedCheck = ngeoDebounce(() => ngeoNetworkStatus.check(undefined), 2000, false);
@@ -48,9 +49,9 @@ const Service = class {
    *
    * @ngInject
    * @param {!jQuery} $document Angular document service.
-   * @param {angular.$window} $window Angular window service.
-   * @param {!angular.$timeout} $timeout Angular timeout service.
-   * @param {angular.Scope} $rootScope The root scope.
+   * @param {angular.IWindowService} $window Angular window service.
+   * @param {angular.ITimeoutService} $timeout Angular timeout service.
+   * @param {angular.IScope} $rootScope The root scope.
    * @param {string} ngeoOfflineTestUrl Url of the test page.
    */
   constructor($document, $window, $timeout, $rootScope, ngeoOfflineTestUrl) {
@@ -69,13 +70,13 @@ const Service = class {
 
     /**
      * @private
-     * @type {!angular.$timeout}
+     * @type {!angular.ITimeoutService}
      */
     this.$timeout_ = $timeout;
 
     /**
      * @private
-     * @type {angular.Scope}
+     * @type {angular.IScope}
      */
     this.$rootScope_ = $rootScope;
 
@@ -99,7 +100,7 @@ const Service = class {
 
     /**
      * @private
-     * @type {angular.$q.Promise|undefined}
+     * @type {angular.IPromise|undefined}
      */
     this.promise_;
 
@@ -197,7 +198,7 @@ Service.module.service(name, Service);
 /**
  * @ngInject
  * @private
- * @param {angular.$HttpProvider} $httpProvider .
+ * @param {angular.IHttpProvider} $httpProvider .
  */
 Service.module.configFunction_ = function($httpProvider) {
   $httpProvider.interceptors.push('httpInterceptor');

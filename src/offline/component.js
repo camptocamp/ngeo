@@ -10,19 +10,20 @@ import olFeature from 'ol/Feature.js';
 import olGeomPolygon from 'ol/geom/Polygon.js';
 import olGeomGeometryLayout from 'ol/geom/GeometryLayout.js';
 import {DEVICE_PIXEL_RATIO} from 'ol/has.js';
+import angular from 'angular';
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('ngeoOffline', [
-  ngeoMapFeatureOverlayMgr.module.name,
+  ngeoMapFeatureOverlayMgr.name,
   ngeoMessageModalComponent.name
 ]);
 
 exports.value('ngeoOfflineTemplateUrl',
   /**
-   * @param {angular.JQLite} element Element.
-   * @param {angular.Attributes} attrs Attributes.
+   * @param {JQuery} element Element.
+   * @param {angular.IAttributes} attrs Attributes.
    * @return {string} Template URL.
    */
   (element, attrs) => {
@@ -36,9 +37,9 @@ exports.run(/* @ngInject */ ($templateCache) => {
 });
 
 /**
- * @param {!angular.JQLite} $element Element.
- * @param {!angular.Attributes} $attrs Attributes.
- * @param {!function(!angular.JQLite, !angular.Attributes): string} ngeoOfflineTemplateUrl Template function.
+ * @param {!JQuery} $element Element.
+ * @param {!angular.IAttributes} $attrs Attributes.
+ * @param {!function(!JQuery, !angular.IAttributes): string} ngeoOfflineTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
  */
@@ -91,7 +92,7 @@ exports.Controller = class {
 
   /**
    * @private
-   * @param {angular.$timeout} $timeout Angular timeout service.
+   * @param {angular.ITimeoutService} $timeout Angular timeout service.
    * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr ngeo feature overlay manager service.
    * @param {ngeo.offline.ServiceManager} ngeoOfflineServiceManager ngeo offline service Manager.
    * @param {ngeo.offline.Configuration} ngeoOfflineConfiguration ngeo offline configuration service.
@@ -104,7 +105,7 @@ exports.Controller = class {
   constructor($timeout, ngeoFeatureOverlayMgr, ngeoOfflineServiceManager, ngeoOfflineConfiguration, ngeoOfflineMode, ngeoNetworkStatus) {
 
     /**
-     * @type {angular.$timeout}
+     * @type {angular.ITimeoutService}
      * @private
      */
     this.$timeout_ = $timeout;
@@ -500,8 +501,6 @@ exports.Controller = class {
       const viewportWidth = frameState.size[0] * frameState.pixelRatio;
       const viewportHeight = frameState.size[1] * frameState.pixelRatio;
 
-      const center = [viewportWidth / 2, viewportHeight / 2];
-
       const extentLength = this.extentSize ?
         this.extentSize / resolution * DEVICE_PIXEL_RATIO :
         Math.min(viewportWidth, viewportHeight) - this.maskMargin * 2;
@@ -518,7 +517,7 @@ exports.Controller = class {
       context.closePath();
 
       // Draw the get data zone
-      const extent = this.createExtent_(center, extentHalfLength);
+      const extent = this.createExtent_([viewportWidth / 2, viewportHeight / 2], extentHalfLength);
 
       context.moveTo(extent[0], extent[1]);
       context.lineTo(extent[0], extent[3]);

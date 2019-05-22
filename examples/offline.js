@@ -14,6 +14,7 @@ import ngeoMapModule from 'ngeo/map/module.js';
 import ngeoOfflineModule from 'ngeo/offline/module.js';
 import ngeoOfflineConfiguration from 'ngeo/offline/Configuration.js';
 import NgeoOfflineServiceManager from 'ngeo/offline/ServiceManager.js';
+import angular from 'angular';
 
 
 // Useful to work on example - remove me later
@@ -21,7 +22,7 @@ import 'bootstrap/js/modal.js';
 import 'jquery-ui/ui/widgets/resizable.js';
 import 'jquery-ui/ui/widgets/draggable.js';
 
-/** @type {!angular.Module} **/
+/** @type {!angular.IModule} **/
 exports.module = angular.module('app', [
   'gettext',
   ngeoMapModule.name,

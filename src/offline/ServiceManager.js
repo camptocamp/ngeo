@@ -2,10 +2,13 @@
  * @module ngeo.offline.ServiceManager
  */
 
+import angular from 'angular';
+
+
 const exports = class {
 
   /**
-   * @param {angular.$injector} $injector Main injector.
+   * @param {angular.auto.IInjectorService} $injector Main injector.
    * @struct
    * @ngInject
    * @ngdoc service
@@ -14,7 +17,7 @@ const exports = class {
   constructor($injector) {
 
     /**
-     * @type {angular.$injector}
+     * @type {angular.auto.IInjectorService}
      * @private
      */
     this.$injector_ = $injector;
@@ -109,7 +112,7 @@ const exports = class {
 };
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 exports.module = angular.module('ngeoOfflineServiceManager', []);
 exports.module.service('ngeoOfflineServiceManager', exports);
