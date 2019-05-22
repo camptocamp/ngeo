@@ -111,15 +111,16 @@ exports.prototype.isLoading = function() {
 /**
  * @param {string} themeName wanted theme name.
  * @param {string} fallbackThemeName fallback theme name.
+ * @param {boolean=} opt_silent if true notifyCantAddGroups_ is not called.
  * @export
  */
-exports.prototype.updateCurrentTheme = function(themeName, fallbackThemeName) {
+exports.prototype.updateCurrentTheme = function(themeName, fallbackThemeName, opt_silent) {
   this.gmfThemes_.getThemesObject().then((themes) => {
     if (!themeName && this.modeFlush) {
       // In flush mode load current theme private groups
       const fallbackTheme = gmfThemeThemes.findThemeByName(themes, /** @type {string} */ (fallbackThemeName));
       if (fallbackTheme) {
-        this.gmfTreeManager_.addFirstLevelGroups(fallbackTheme.children, false, false);
+        this.gmfTreeManager_.addFirstLevelGroups(fallbackTheme.children, false, opt_silent);
       }
     }
     if (themeName) {

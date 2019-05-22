@@ -172,7 +172,7 @@ exports.prototype.setFirstLevelGroups = function(firstLevelGroups) {
  *     group.
  * @param {boolean=} opt_add if true, force to use the 'add' mode this time.
  * @param {boolean=} opt_silent if true notifyCantAddGroups_ is not called.
- * @return{boolean} True if the group has been added. False otherwise.
+ * @return {boolean} True if the group has been added. False otherwise.
  * @export
  */
 exports.prototype.addFirstLevelGroups = function(firstLevelGroups,

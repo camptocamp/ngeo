@@ -191,7 +191,7 @@ const exports = function(config, $scope, $injector) {
 
     if (evt.type !== 'ready') {
       const themeName = this.permalink_.defaultThemeNameFromFunctionalities();
-      this.gmfThemeManager.updateCurrentTheme(themeName, previousThemeName);
+      this.gmfThemeManager.updateCurrentTheme(themeName, previousThemeName, true);
     }
     this.setDefaultBackground_(null);
     this.updateHasEditableLayers_();
