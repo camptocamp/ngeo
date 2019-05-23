@@ -63,7 +63,6 @@ div.ngeo-displaywindow {
       flex-direction: column;
       width: 100%;
       height: 100%;
-      padding: @app-margin;
       text-align: left;
       white-space: nowrap;
       overflow: hidden;
@@ -76,6 +75,14 @@ div.ngeo-displaywindow {
       }
       .content-template-container {
         overflow: auto;
+      }
+      .header {
+        padding: @app-margin @app-margin 0 @app-margin;
+      }
+      .details {
+        padding: 0 @app-margin @app-margin @app-margin;
+        // small margin so that the scrollbar and the window resize are not in conflict.
+        margin-right: @half-app-margin;
       }
     }
   }
