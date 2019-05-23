@@ -32,6 +32,7 @@ exports.COORDINATES_LAYER_NAME = 'gmfCoordinatesLayerName';
  */
 exports.PermalinkParam = {
   BG_LAYER: 'baselayer_ref',
+  BG_LAYER_OPACITY: 'baselayer_opacity',
   EXTERNAL_DATASOURCES_NAMES: 'eds_n',
   EXTERNAL_DATASOURCES_URLS: 'eds_u',
   FEATURES: 'rl_features',
