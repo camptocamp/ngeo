@@ -935,15 +935,10 @@ FeatureHelper.prototype.getAngleProperty = function(feature) {
 
 /**
  * @param {!import("ol/Feature.js").default} feature Feature.
- * @return {string} Color.
+ * @return {string|undefined} Color.
  */
 FeatureHelper.prototype.getColorProperty = function(feature) {
-
-  const color = feature.get(ngeoFormatFeatureProperties.COLOR);
-
-  console.assert(typeof color == 'string');
-
-  return color;
+  return feature.get(ngeoFormatFeatureProperties.COLOR);
 };
 
 
@@ -952,7 +947,10 @@ FeatureHelper.prototype.getColorProperty = function(feature) {
  * @return {import('ol/color.js').Color} Color.
  */
 FeatureHelper.prototype.getRGBAColorProperty = function(feature) {
-  return colorFromString(this.getColorProperty(feature));
+  const color = this.getColorProperty(feature);
+  if (color) {
+    return colorFromString(color);
+  }
 };
 
 
