@@ -102,6 +102,7 @@
     "karma-webpack": "3.0.5",
     "loader-utils": "1.2.3",
     "ls": "0.2.1",
+    "localforage": "^1.7.3",
     "moment": "2.22.2",
     "node-sass": "4.12.0",
     "node-sass-importer": "1.0.0",
@@ -127,8 +128,5 @@
     "webpack-cli": "3.3.0",
     "webpack-dev-server": "3.3.1",
     "webpack-merge": "4.2.1"
-  },
-  "dependencies": {
-    "localforage": "^1.7.3"
   }
 }

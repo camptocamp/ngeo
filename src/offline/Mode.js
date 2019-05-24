@@ -5,10 +5,10 @@
 import angular from 'angular';
 
 
-const exports = class {
+class Mode {
 
   /**
-   * @param {ngeo.offline.Configuration} ngeoOfflineConfiguration ngeo offline configuration service.
+   * @param {import("ngeo/offline/Configuration.js").default} ngeoOfflineConfiguration ngeo offline configuration service.
    * @ngInject
    * @ngdoc service
    * @ngname ngeoOfflineState
@@ -24,14 +24,14 @@ const exports = class {
 
     /**
      * Offline component.
-     * @type {ngeo.offline.component.Controller|undefined}
+     * @type {import("ngeo/offline/component.js").Controller|undefined}
      * @private
      */
     this.component_;
 
     /**
      * @private
-     * @type {ngeo.offline.Configuration}
+     * @type {import("ngeo/offline/Configuration.js").default}
      */
     this.ngeoOfflineConfiguration_ = ngeoOfflineConfiguration;
   }
@@ -55,7 +55,7 @@ const exports = class {
 
   /**
    *
-   * @param {ngeo.offline.component.Controller} component Offline component.
+   * @param {import("ngeo/offline/component.js").Controller} component Offline component.
    * @export
    */
   registerComponent(component) {
@@ -82,8 +82,9 @@ const exports = class {
 /**
  * @type {!angular.IModule}
  */
-exports.module = angular.module('ngeoOfflineMode', []);
-exports.module.service('ngeoOfflineMode', exports);
+const module = angular.module('ngeoOfflineMode', []);
+module.service('ngeoOfflineMode', Mode);
+Mode.module = module;
 
 
-export default exports;
+export default Mode;

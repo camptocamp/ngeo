@@ -565,7 +565,7 @@ EditingSnappingService.prototype.handleMapMoveEnd_ = function() {
  * @property {?angular.IDeferred} requestDeferred
  * @property {import('gmf/themes.js').GmfSnappingConfig} snappingConfig
  * @property {Function} stateWatcherUnregister
- * @property {ngeo.layertree.Controller} treeCtrl
+ * @property {import("ngeo/layertree/Controller.js").defaault} treeCtrl
  * @property {WFSConfig} wfsConfig
  */
 

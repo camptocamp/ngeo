@@ -5,32 +5,6 @@ import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
 import angular from 'angular';
 
 
-/**
- * @ngInject
- * @param {angular.IQService} $q The Angular $q service.
- * @param {ngeoMiscDebounce} ngeoDebounce ngeo debounce service.
- * @param {ngeo.offline.NetworkStatus} ngeoNetworkStatus ngeo network status service.
- * @return {angular.IHttpInterceptor} the interceptor
- */
-const httpInterceptor = function($q, ngeoDebounce, ngeoNetworkStatus) {
-  const debouncedCheck = ngeoDebounce(() => ngeoNetworkStatus.check(undefined), 2000, false);
-  return {
-    request(config) {
-      return config;
-    },
-    requestError(rejection) {
-      return $q.reject(rejection);
-    },
-    response(response) {
-      return response;
-    },
-    responseError(rejection) {
-      debouncedCheck();
-      return $q.reject(rejection);
-    }
-  };
-};
-
 const Service = class {
 
   /**
@@ -187,13 +161,42 @@ const Service = class {
   }
 };
 
+
 const name = 'ngeoNetworkStatus';
 
 Service.module = angular.module(name, [
   ngeoMiscDebounce.name
 ]);
-Service.module.factory('httpInterceptor', httpInterceptor);
 Service.module.service(name, Service);
+
+
+/**
+ * @ngInject
+ * @param {angular.IQService} $q The Angular $q service.
+ * @param {ngeoMiscDebounce} ngeoDebounce ngeo debounce service.
+ * @param {Service} ngeoNetworkStatus ngeo network status service.
+ * @return {angular.IHttpInterceptor} the interceptor
+ */
+const httpInterceptor = function($q, ngeoDebounce, ngeoNetworkStatus) {
+  const debouncedCheck = ngeoDebounce(() => ngeoNetworkStatus.check(undefined), 2000, false);
+  return {
+    request(config) {
+      return config;
+    },
+    requestError(rejection) {
+      return $q.reject(rejection);
+    },
+    response(response) {
+      return response;
+    },
+    responseError(rejection) {
+      debouncedCheck();
+      return $q.reject(rejection);
+    }
+  };
+};
+Service.module.factory('httpInterceptor', httpInterceptor);
+
 
 /**
  * @ngInject

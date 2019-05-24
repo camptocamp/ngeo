@@ -48,7 +48,7 @@ function mapComponent($window) {
      * @param {angular.IAttributes} attrs Attributes.
      */
     link: (scope, element, attrs) => {
-      // Get the 'ol.Map' object from attributes and manage it accordingly
+      // Get the 'import("ol/Map.js").default' object from attributes and manage it accordingly
       const attr = 'ngeoMap';
       const prop = attrs[attr];
 

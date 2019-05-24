@@ -49,7 +49,7 @@ module.run(/* @ngInject */ ($templateCache) => {
  *     buffer in pixels to use when making queries to get the features.
  * @htmlAttribute {import("ol/layer/Vector.js").default} gmf-editfeatureselector-vector The vector
  *     layer where the selected or created features are drawn.
- * @htmlAttribute {ngeo.layertree.Controller} gmf-editfeatureselector-tree The
+ * @htmlAttribute {import("ngeo/layertree/Controller.js").default} gmf-editfeatureselector-tree The
  *     layertree controller handling the selectable editable layers list.
  * @htmlAttribute {boolean} gmf-editfeatureselector-closeaftersave If true,
  *     immediately return to the main edit panel after save. Default is false.

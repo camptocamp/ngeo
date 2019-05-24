@@ -5,7 +5,7 @@
 import angular from 'angular';
 
 
-const exports = class {
+class ServiceManager {
 
   /**
    * @param {angular.auto.IInjectorService} $injector Main injector.
@@ -86,8 +86,8 @@ const exports = class {
 
   /**
    * Ask the provided service to save the data to an offline purpose
-   * @param {ol.Extent} extent The extent to dowload.
-   * @param {ol.Map} map The map to work on.
+   * @param {import("ol/extent.js").Extent} extent The extent to dowload.
+   * @param {import("ol/Map").default} map The map to work on.
    */
   save(extent, map) {
     if (!this.saveService_) {
@@ -99,8 +99,8 @@ const exports = class {
 
   /**
    * Ask the provided service to restore the saved data on the map
-   * @param {ol.Map} map The map to work on.
-   * @return {Promise<ol.Extent>} A promise to the extent of the downloaded area
+   * @param {import("ol/Map.js").default} map The map to work on.
+   * @return {Promise<import("ol/extent.js").Extent>} A promise to the extent of the downloaded area
    */
   restore(map) {
     if (!this.restoreService_) {
@@ -111,11 +111,8 @@ const exports = class {
   }
 };
 
-/**
- * @type {!angular.IModule}
- */
-exports.module = angular.module('ngeoOfflineServiceManager', []);
-exports.module.service('ngeoOfflineServiceManager', exports);
+ServiceManager.module = angular.module('ngeoOfflineServiceManager', []);
+ServiceManager.module.service('ngeoOfflineServiceManager', exports);
 
 
-export default exports;
+export default ServiceManager;

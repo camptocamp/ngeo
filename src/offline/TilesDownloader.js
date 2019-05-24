@@ -1,10 +1,4 @@
 /**
- * @module ngeo.offline.TilesDownloader
- */
-import googAsserts from 'goog/asserts.js';
-
-
-/**
  * @param {!Blob} blob A blob
  * @return {Promise<string>} data URL
  */
@@ -183,7 +177,7 @@ const exports = class {
       this.resolvePromise_ = resolve;
     });
 
-    googAsserts.assert(this.tiles_);
+    console.assert(this.tiles_);
     if (this.tiles_.length === 0) {
       this.callbacks_.onTileDownloadError(1); // forcing progress update
       this.resolvePromise_();

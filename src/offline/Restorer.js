@@ -9,26 +9,26 @@ class Restorer {
 
   /**
    * @ngInject
-   * @param {ngeo.offline.Configuration} ngeoOfflineConfiguration A service for customizing offline behaviour.
-   * @param {ngeo.map.BackgroundLayerMgr} ngeoBackgroundLayerMgr The background layer manager.
+   * @param {import("ngeo/offline/Configuration.js").default} ngeoOfflineConfiguration A service for customizing offline behaviour.
+   * @param {import("ngeo/map/BackgroundLayerMgr.js").MapBackgroundLayerManager} ngeoBackgroundLayerMgr The background layer manager.
    */
   constructor(ngeoOfflineConfiguration, ngeoBackgroundLayerMgr) {
     /**
      * @private
-     * @type {ngeo.offline.Configuration}
+     * @type {import("ngeo/offline/Configuration.js").default}
      */
     this.configuration_ = ngeoOfflineConfiguration;
 
     /**
      * @private
-     * @type {ngeo.map.BackgroundLayerMgr}
+     * @type {import("ngeo/map/BackgroundLayerMgr.js").MapBackgroundLayerManager}
      */
     this.ngeoBackgroundLayerMgr_ = ngeoBackgroundLayerMgr;
   }
 
   /**
-   * @param {ol.Map} map The map to work on.
-   * @return {Promise<ol.Extent>} A promise to the extent of the restored area.
+   * @param {import("ol/Map.js").default} map The map to work on.
+   * @return {Promise<import("ol/extent.js").Extent>} A promise to the extent of the restored area.
    */
   restore(map) {
     return this.configuration_.getItem('offline_content').then(offlineContent => this.doRestore(map, offlineContent));
@@ -36,9 +36,9 @@ class Restorer {
 
   /**
    * @protected
-   * @param {ol.Map} map A map
+   * @param {import("ol/Map.js").default} map A map
    * @param {ngeox.OfflinePersistentContent} offlineContent The offline content
-   * @return {ol.Extent} The extent of the restored area
+   * @return {import("ol/extent.js").Extent} The extent of the restored area
    */
   doRestore(map, offlineContent) {
     map.getLayerGroup().getLayers().clear();
@@ -57,7 +57,7 @@ class Restorer {
 
 const name = 'ngeoOfflineRestorer';
 Restorer.module = angular.module(name, [
-  ngeoMapBackgroundLayerMgr.module.name
+  ngeoMapBackgroundLayerMgr.name
 ]).service(name, Restorer);
 
 const exports = Restorer;

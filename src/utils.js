@@ -126,18 +126,19 @@ export function deleteCondition(event) {
 }
 
 /**
- * Takes an ol.Extent and return an Array of ol.Coordinate representing a rectangle polygon.
- * @param {ol.Extent} extent The extent.
- * @return {Array.<ol.Coordinate>} The Array of coordinate of the rectangle.
+ * Takes an import("ol/extent.js").Extent and return an Array of ol.Coordinate representing a rectangle polygon.
+ * @param {import("ol/extent.js").Extent} extent The extent.
+ * @return {Array.<import("ol/coordinate.js").Coordinate>} The Array of coordinate of the rectangle.
  */
 export function extentToRectangle(extent) {
-  return [
+  const result = [
     getTopLeft(extent),
     getTopRight(extent),
     getBottomRight(extent),
     getBottomLeft(extent),
     getTopLeft(extent),
   ];
+  return result;
 }
 
 export default exports;

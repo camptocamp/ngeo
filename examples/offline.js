@@ -59,7 +59,7 @@ class MainController {
     this.ngeoNetworkStatus = ngeoNetworkStatus;
 
     /**
-     * @type {ol.Map}
+     * @type {olMap}
      * @export
      */
     this.map = new olMap({

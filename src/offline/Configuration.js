@@ -1,5 +1,5 @@
 /**
- * @module ngeo.offline.Configuration
+ * @module import("ngeo/offline/Configuration.js").default
  */
 import olObservable from 'ol/Observable.js';
 import olLayerLayer from 'ol/layer/Layer.js';
@@ -60,7 +60,7 @@ const exports = class extends olObservable {
 
     /**
      * @private
-     * @type {ngeo.offline.SerializerDeserializer}
+     * @type {SerializerDeserializer}
      */
     this.serDes_ = new SerializerDeserializer({gutter: ngeoOfflineGutter});
 
@@ -174,7 +174,7 @@ const exports = class extends olObservable {
   }
 
   /**
-   * @param {!ol.Map} map A map
+   * @param {!import("ol/Map.js").default} map A map
    * @return {number} An "estimation" of the size of the data to download
    */
   estimateLoadDataSize(map) {
@@ -215,10 +215,10 @@ const exports = class extends olObservable {
   }
 
   /**
-    * @param {ol.Map} map A map
-    * @param {ol.layer.Layer} layer A layer
-    * @param {Array<ol.layer.Group>} ancestors The ancestors of that layer
-    * @param {ol.Extent} userExtent The extent selected by the user.
+    * @param {import("ol/Map.js").default} map A map
+    * @param {import("ol/layer/Layer.js").default} layer A layer
+    * @param {Array<import("ol/layer/Group.js").default>} ancestors The ancestors of that layer
+    * @param {import("ol/extent.js").Extent} userExtent The extent selected by the user.
     * @return {Array<ngeox.OfflineExtentByZoom>} The extent to download per zoom level
    */
   getExtentByZoom(map, layer, ancestors, userExtent) {
@@ -237,9 +237,9 @@ const exports = class extends olObservable {
 
   /**
    * @protected
-   * @param {ol.source.Source} source An ImageWMS source
-   * @param {ol.proj.Projection} projection The projection
-   * @return {ol.source.Source} A tiled equivalent source
+   * @param {import("ol/source/Source.js").default} source An ImageWMS source
+   * @param {!import("ol/proj/Projection.js").default} projection The projection
+   * @return {import("ol/source/Source.js").default} A tiled equivalent source
    */
   sourceImageWMSToTileWMS(source, projection) {
     if (source instanceof olSourceImageWMS && source.getUrl() && source.getImageLoadFunction() === defaultImageLoadFunction_) {
@@ -257,16 +257,16 @@ const exports = class extends olObservable {
   }
 
   /**
-   * @param {ol.Map} map The map to work on.
-   * @param {ol.Extent} userExtent The extent selected by the user.
+   * @param {import("ol/Map.js").default} map The map to work on.
+   * @param {import("ol/extent.js").Extent} userExtent The extent selected by the user.
    * @return {!Array<ngeox.OfflineLayerMetadata>} the downloadable layers and metadata.
    */
   createLayerMetadatas(map, userExtent) {
     const layersItems = [];
 
     /**
-     * @param {ol.layer.Base} layer .
-     * @param {Array<ol.layer.Group>} ancestors .
+     * @param {import("ol/layer/Base.js").default} layer .
+     * @param {Array<import("ol/layer/Group.js").default>} ancestors .
      * @return {boolean} whether to traverse this layer children.
      */
     const visitLayer = (layer, ancestors) => {
@@ -306,13 +306,13 @@ const exports = class extends olObservable {
   /**
    * @private
    * @param {ngeox.OfflinePersistentLayer} offlineLayer The offline layer
-   * @return {function(ol.ImageTile, string)} the tile function
+   * @return {function(import("ol/ImageTile.js").default, string)} the tile function
    */
   createTileLoadFunction_(offlineLayer) {
     const that = this;
     /**
      * Load the tile from persistent storage.
-     * @param {ol.ImageTile} imageTile The image tile
+     * @param {import("ol/ImageTile.js").default} imageTile The image tile
      * @param {string} src The tile URL
      */
     const tileLoadFunction = function(imageTile, src) {
@@ -329,7 +329,7 @@ const exports = class extends olObservable {
 
   /**
    * @param {ngeox.OfflinePersistentLayer} offlineLayer The layer to recreate
-   * @return {ol.layer.Layer} the layer.
+   * @return {import("ol/layer/Layer.js").default} the layer.
    */
   recreateOfflineLayer(offlineLayer) {
     if (offlineLayer.layerType === 'tile') {

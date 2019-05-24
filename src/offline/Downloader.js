@@ -2,15 +2,15 @@
  * @module ngeo.offline.Downloader
  */
 import {DEVICE_PIXEL_RATIO} from 'ol/has.js';
-import googAsserts from 'goog/asserts.js';
 import olSourceTileWMS from 'ol/source/TileWMS.js';
 import olSourceWMTS from 'ol/source/WMTS.js';
 import TilesDownloader from 'ngeo/offline/TilesDownloader.js';
+import angular from 'angular';
 
 
 /**
- * @param {ol.Coordinate} a Some coordinates.
- * @param {ol.Coordinate} b Some other coordinates.
+ * @param {import("ol/coordinate.js").Coordinate} a Some coordinates.
+ * @param {import("ol/coordinate.js").Coordinate} b Some other coordinates.
  * @return {number} The squared magnitude.
  */
 function magnitude2(a, b) {
@@ -26,12 +26,12 @@ const Downloader = class {
 
   /**
    * @ngInject
-   * @param {ngeo.offline.Configuration} ngeoOfflineConfiguration A service for customizing offline behaviour.
+   * @param {import("ngeo/offline/Configuration.js").default} ngeoOfflineConfiguration A service for customizing offline behaviour.
    */
   constructor(ngeoOfflineConfiguration) {
     /**
      * @private
-     * @type {ngeo.offline.Configuration}
+     * @type {import("ngeo/offline/Configuration.js").default}
      */
     this.configuration_ = ngeoOfflineConfiguration;
 
@@ -56,12 +56,12 @@ const Downloader = class {
     if (!source) {
       return;
     }
-    googAsserts.assert(source instanceof olSourceTileWMS || source instanceof olSourceWMTS);
+    console.assert(source instanceof olSourceTileWMS || source instanceof olSourceWMTS);
     const projection = map.getView().getProjection();
     const tileGrid = source.getTileGrid();
     const tileUrlFunction = source.getTileUrlFunction();
 
-    googAsserts.assert(extentByZoom);
+    console.assert(extentByZoom);
     for (const extentZoom of extentByZoom) {
       const z = extentZoom.zoom;
       const extent = extentZoom.extent;
@@ -70,12 +70,12 @@ const Downloader = class {
       tileGrid.forEachTileCoord(extent, z, (coord) => {
         maxX = coord[1];
         maxY = coord[2];
-        if (minX === undefined) {
+        if (minX === undefined || minY === undefined) {
           minX = coord[1];
           minY = coord[2];
         }
         const url = tileUrlFunction(coord, DEVICE_PIXEL_RATIO, projection);
-        googAsserts.assert(url);
+        console.assert(url);
 
         /**
          * @type {ngeox.OfflineTile}
@@ -91,8 +91,8 @@ const Downloader = class {
   }
 
   /**
-   * @param {ol.Extent} extent The extent to download.
-   * @param {ol.Map} map The map to work on.
+   * @param {import("ol/extent.js").Extent} extent The extent to download.
+   * @param {import("ol/Map.js").default} map The map to work on.
    * @return {Promise} A promise resolving when save is finished.
    */
   save(extent, map) {
