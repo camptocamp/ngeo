@@ -327,7 +327,6 @@ class Controller {
     if (!this.feature || !this.map) {
       return;
     }
-    // @ts-ignore: If types are not respected
     const coordinate = selected.coordinate.map(parseFloat);
     const label = selected.label;
     this.setFeature_(coordinate, label);
@@ -353,8 +352,8 @@ class Controller {
      * @param {angular.IHttpResponse<import('./NominatimService').NominatimSearchResponseResult>} resp
      */
     const onSuccess = (resp) => {
-      const lon = resp.data.lon;
-      const lat = resp.data.lat;
+      const lon = parseFloat(resp.data.lon);
+      const lat = parseFloat(resp.data.lat);
       const coordinate = [lon, lat];
       const label = resp.data.display_name;
       this.setFeature_(coordinate, label);
