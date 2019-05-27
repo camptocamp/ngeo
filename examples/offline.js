@@ -34,8 +34,9 @@ ngeoOfflineModule.service('ngeoOfflineConfiguration', ngeoOfflineConfiguration);
 class MainController {
 
   /**
-   * @param {ngeoFeatureOverlayMgr} ngeoFeatureOverlayMgr ngeo feature overlay manager service.
-   * @param {ngeoNetworkStatus} ngeoNetworkStatus ngeo network status service.
+   * @param {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr
+   * ngeo feature overlay manager service.
+   * @param {import("ngeo/offline/NetworkStatus.js").default} ngeoNetworkStatus ngeo network status service.
    * @param {NgeoOfflineServiceManager} ngeoOfflineServiceManager ngeo offline service.
    * @ngInject
    */
