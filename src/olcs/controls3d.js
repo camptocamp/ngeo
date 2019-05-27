@@ -2,6 +2,7 @@
 
 import angular from 'angular';
 import * as olEasing from 'ol/easing.js';
+import {toRadians} from 'ol/math.js';
 import olcsCore from 'olcs/core.js';
 
 
@@ -205,9 +206,7 @@ const Controller = class {
     if (!this.ol3dm) {
       throw new Error('Missing ol3dm');
     }
-    // @ts-ignore: Cesium
-    angle = Cesium.Math.toRadians(angle);
-    this.ol3dm.setHeading(angle);
+    this.ol3dm.setHeading(toRadians(angle));
   }
 
 
@@ -218,8 +217,7 @@ const Controller = class {
     if (!this.ol3dm) {
       throw new Error('Missing ol3dm');
     }
-    // @ts-ignore: Cesium
-    angle = Cesium.Math.toRadians(angle);
+    angle = toRadians(angle);
     const tiltOnGlobe = this.ol3dm.getTiltOnGlobe();
     if (tiltOnGlobe == undefined) {
       throw new Error('Missing tiltOnGlobe');

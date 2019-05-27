@@ -1,10 +1,9 @@
-/* global Cesium */
-
 import angular from 'angular';
 import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
 import ngeoStatemanagerLocation from 'ngeo/statemanager/Location.js';
 import {Permalink3dParam} from 'ngeo/olcs/constants.js';
 import ngeoStatemanagerService from 'ngeo/statemanager/Service.js';
+import {toDegrees} from 'ol/math.js';
 
 /**
  * @hidden
@@ -112,15 +111,11 @@ export const OlcsService = class {
       const position = camera.positionCartographic;
       this.ngeoStateManager_.updateState({
         [Permalink3dParam.ENABLED]: true,
-        // @ts-ignore: Cesium
-        [Permalink3dParam.LON]: Cesium.Math.toDegrees(position.longitude).toFixed(5),
-        // @ts-ignore: Cesium
-        [Permalink3dParam.LAT]: Cesium.Math.toDegrees(position.latitude).toFixed(5),
+        [Permalink3dParam.LON]: toDegrees(position.longitude).toFixed(5),
+        [Permalink3dParam.LAT]: toDegrees(position.latitude).toFixed(5),
         [Permalink3dParam.ELEVATION]: position.height.toFixed(0),
-        // @ts-ignore: Cesium
-        [Permalink3dParam.HEADING]: Cesium.Math.toDegrees(camera.heading).toFixed(3),
-        // @ts-ignore: Cesium
-        [Permalink3dParam.PITCH]: Cesium.Math.toDegrees(camera.pitch).toFixed(3)
+        [Permalink3dParam.HEADING]: toDegrees(camera.heading).toFixed(3),
+        [Permalink3dParam.PITCH]: toDegrees(camera.pitch).toFixed(3)
       });
     }, 1000, true));
 
