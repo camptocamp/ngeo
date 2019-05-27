@@ -3,7 +3,8 @@
  */
 const exports = {};
 
-import './offline.less';
+import '@fortawesome/fontawesome-free/css/fontawesome.min.css';
+import './offline.css';
 import './common_dependencies.js';
 import olMap from 'ol/Map.js';
 
@@ -16,11 +17,6 @@ import ngeoOfflineConfiguration from 'ngeo/offline/Configuration.js';
 import NgeoOfflineServiceManager from 'ngeo/offline/ServiceManager.js';
 import angular from 'angular';
 
-
-// Useful to work on example - remove me later
-import 'bootstrap/js/modal.js';
-import 'jquery-ui/ui/widgets/resizable.js';
-import 'jquery-ui/ui/widgets/draggable.js';
 
 /** @type {!angular.IModule} **/
 exports.module = angular.module('app', [

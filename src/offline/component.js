@@ -33,8 +33,8 @@ module.value('ngeoOfflineTemplateUrl',
   });
 
 module.run(/* @ngInject */ ($templateCache) => {
-  const html = require('./component.html');
-  $templateCache.put('ngeo/offline/component.html', html);
+  // @ts-ignore: webpack
+  $templateCache.put('ngeo/offline/component.html', require('../offline/'));
 });
 
 /**

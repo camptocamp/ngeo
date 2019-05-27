@@ -141,5 +141,3 @@ export function extentToRectangle(extent) {
   ];
   return result;
 }
-
-export default exports;

@@ -114,7 +114,7 @@ class ServiceManager {
 }
 
 ServiceManager.module = angular.module('ngeoOfflineServiceManager', []);
-ServiceManager.module.service('ngeoOfflineServiceManager', exports);
+ServiceManager.module.service('ngeoOfflineServiceManager', ServiceManager);
 
 
 export default ServiceManager;

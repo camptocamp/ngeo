@@ -97,13 +97,14 @@ const Service = class {
     });
 
     // We catch every $.ajax request errors or (canceled request).
-    this.$document_.ajaxError((evt, jqxhr, settings, thrownError) => {
-      // Filter out canceled requests
-      if (!/^(canceled|abort)$/.test(thrownError)) {
-        this.check(2000);
-      }
-    });
-
+    if (this.$document_['ajaxError']) {
+      this.$document_['ajaxError']((evt, jqxhr, settings, thrownError) => {
+        // Filter out canceled requests
+        if (!/^(canceled|abort)$/.test(thrownError)) {
+          this.check(2000);
+        }
+      });
+    }
   }
 
   /**
@@ -173,7 +174,7 @@ Service.module.service(name, Service);
 /**
  * @ngInject
  * @param {angular.IQService} $q The Angular $q service.
- * @param {ngeoMiscDebounce} ngeoDebounce ngeo debounce service.
+ * @param {import("ngeo/misc/debounce.js").miscDebounce<function()>} ngeoDebounce ngeo debounce service.
  * @param {Service} ngeoNetworkStatus ngeo network status service.
  * @return {angular.IHttpInterceptor} the interceptor
  */
