@@ -251,7 +251,6 @@ class Controller {
    */
   clearAll() {
     this.line = null;
-    // @ts-ignore: OL issue
     this.profile.setLine(null);
     this.profile.cartoHighlight.setPosition(undefined);
     this.clearMeasure();

@@ -162,7 +162,7 @@ export class LidarprofileManager {
 
   /**
    * Set the line for the profile
-   * @param {import("ol/geom/LineString.js").default} line that defines the profile
+   * @param {?import("ol/geom/LineString.js").default} line that defines the profile
    */
   setLine(line) {
     this.line_ = line;
