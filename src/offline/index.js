@@ -61,7 +61,7 @@
  */
 
 
- /**
+/**
  * @typedef {Object} OfflineOnTileDownload
  * @property {onTileDownloadSuccess} onTileDownloadSuccess
  * @property {onTileDownloadError} onTileDownloadError

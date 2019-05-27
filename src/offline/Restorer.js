@@ -9,8 +9,10 @@ class Restorer {
 
   /**
    * @ngInject
-   * @param {import("ngeo/offline/Configuration.js").default} ngeoOfflineConfiguration A service for customizing offline behaviour.
-   * @param {import("ngeo/map/BackgroundLayerMgr.js").MapBackgroundLayerManager} ngeoBackgroundLayerMgr The background layer manager.
+   * @param {import("ngeo/offline/Configuration.js").default}
+   * ngeoOfflineConfiguration A service for customizing offline behaviour.
+   * @param {import("ngeo/map/BackgroundLayerMgr.js").MapBackgroundLayerManager}
+   * ngeoBackgroundLayerMgr The background layer manager.
    */
   constructor(ngeoOfflineConfiguration, ngeoBackgroundLayerMgr) {
     /**
@@ -31,13 +33,14 @@ class Restorer {
    * @return {Promise<import("ol/extent.js").Extent>} A promise to the extent of the restored area.
    */
   restore(map) {
-    return this.configuration_.getItem('offline_content').then(offlineContent => this.doRestore(map, offlineContent));
+    return this.configuration_.getItem('offline_content').then(
+      offlineContent => this.doRestore(map, offlineContent));
   }
 
   /**
    * @protected
    * @param {import("ol/Map.js").default} map A map
-   * @param {ngeox.OfflinePersistentContent} offlineContent The offline content
+   * @param {import("./index.js").OfflinePersistentContent} offlineContent The offline content
    * @return {import("ol/extent.js").Extent} The extent of the restored area
    */
   doRestore(map, offlineContent) {

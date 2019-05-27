@@ -33,7 +33,8 @@ module.value('ngeoOfflineTemplateUrl',
   });
 
 module.run(/* @ngInject */ ($templateCache) => {
-  $templateCache.put('ngeo/offline/component.html', require('./component.html'));
+  const html = require('./component.html');
+  $templateCache.put('ngeo/offline/component.html', html);
 });
 
 /**
@@ -90,16 +91,20 @@ export const Controller = class {
   /**
    * @private
    * @param {angular.ITimeoutService} $timeout Angular timeout service.
-   * @param {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr ngeo feature overlay manager service.
-   * @param {import("ngeo/offline/ServiceManager.js").default} ngeoOfflineServiceManager ngeo offline service Manager.
-   * @param {import("ngeo/offline/Configuration.js").default} ngeoOfflineConfiguration ngeo offline configuration service.
+   * @param {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr
+   * ngeo feature overlay manager service.
+   * @param {import("ngeo/offline/ServiceManager.js").default} ngeoOfflineServiceManager
+   * ngeo offline service Manager.
+   * @param {import("ngeo/offline/Configuration.js").default} ngeoOfflineConfiguration
+   * ngeo offline configuration service.
    * @param {import("ngeo/offline/Mode.js").default} ngeoOfflineMode Offline mode manager.
    * @param {import("ngeo/offline/NetworkStatus.js").default} ngeoNetworkStatus ngeo network status service.
    * @ngInject
    * @ngdoc controller
    * @ngname ngeoOfflineController
    */
-  constructor($timeout, ngeoFeatureOverlayMgr, ngeoOfflineServiceManager, ngeoOfflineConfiguration, ngeoOfflineMode, ngeoNetworkStatus) {
+  constructor($timeout, ngeoFeatureOverlayMgr, ngeoOfflineServiceManager, ngeoOfflineConfiguration,
+    ngeoOfflineMode, ngeoNetworkStatus) {
 
     /**
      * @type {angular.ITimeoutService}

@@ -62,7 +62,8 @@ class ServiceManager {
 
   /**
    * Set the service to call on 'save'.
-   * @param {string|{save: Function}} saveLikeService A service name that can be injected or an object that have a 'save' method.
+   * @param {string|{save: Function}} saveLikeService
+   * A service name that can be injected or an object that have a 'save' method.
    */
   setSaveService(saveLikeService) {
     this.saveService_ = this.getOfflineService_(saveLikeService, 'save');
@@ -70,7 +71,8 @@ class ServiceManager {
 
   /**
    * Set the service to call on 'restore'
-   * @param {string|{restore: Function}} restoreLikeService A service name that can be injected or an object that have a 'restore' method.
+   * @param {string|{restore: Function}} restoreLikeService
+   * A service name that can be injected or an object that have a 'restore' method.
    */
   setRestoreService(restoreLikeService) {
     this.restoreService_ = this.getOfflineService_(restoreLikeService, 'restore');
@@ -109,7 +111,7 @@ class ServiceManager {
     }
     return this.restoreService_.restore(map);
   }
-};
+}
 
 ServiceManager.module = angular.module('ngeoOfflineServiceManager', []);
 ServiceManager.module.service('ngeoOfflineServiceManager', exports);

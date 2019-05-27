@@ -153,7 +153,8 @@ const exports = class {
         }
         ++this.allCount_;
         ++this.okCount_;
-        this.callbacks_.onTileDownloadSuccess(this.allCount_ / this.tiles_.length, tile).then(onTileDownloaded, onTileDownloaded);
+        this.callbacks_.onTileDownloadSuccess(this.allCount_ / this.tiles_.length, tile).then(
+          onTileDownloaded, onTileDownloaded);
       }
     };
 

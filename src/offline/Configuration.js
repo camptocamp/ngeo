@@ -244,7 +244,8 @@ const exports = class extends olObservable {
    * @return {import("ol/source/Source.js").default} A tiled equivalent source
    */
   sourceImageWMSToTileWMS(source, projection) {
-    if (source instanceof olSourceImageWMS && source.getUrl() && source.getImageLoadFunction() === defaultImageLoadFunction_) {
+    if (source instanceof olSourceImageWMS && source.getUrl()
+        && source.getImageLoadFunction() === defaultImageLoadFunction_) {
       const tileGrid = createTileGridForProjection(source.getProjection() || projection, 42, 256);
       source = new olSourceTileWMS({
         gutter: this.gutter_,
@@ -321,6 +322,7 @@ const exports = class extends olObservable {
       that.getItem(utils.normalizeURL(src)).then((content) => {
         if (!content) {
           // use a transparent 1x1 image to make the map consistent
+          /* eslint-disable-next-line */
           content = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=';
         }
         /** @type {HTMLImageElement} */ (imageTile.getImage()).src = content;

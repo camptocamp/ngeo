@@ -8,7 +8,8 @@ import angular from 'angular';
 class Mode {
 
   /**
-   * @param {import("ngeo/offline/Configuration.js").default} ngeoOfflineConfiguration ngeo offline configuration service.
+   * @param {import("ngeo/offline/Configuration.js").default} ngeoOfflineConfiguration
+   * ngeo offline configuration service.
    * @ngInject
    * @ngdoc service
    * @ngname ngeoOfflineState
@@ -77,7 +78,7 @@ class Mode {
     return this.ngeoOfflineConfiguration_.hasOfflineData();
   }
 
-};
+}
 
 /**
  * @type {!angular.IModule}

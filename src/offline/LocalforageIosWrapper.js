@@ -13,7 +13,7 @@ const exports = class IosWrapper extends AbstractWrapper {
    * @override
    */
   postToBackend(action) {
-    if (action['command'] === 'setItem')  {
+    if (action['command'] === 'setItem') {
       action['args'][1] = JSON.stringify(action['args'][1]);
     }
     const stringified = JSON.stringify(action);

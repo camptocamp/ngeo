@@ -26,7 +26,8 @@ const Downloader = class {
 
   /**
    * @ngInject
-   * @param {import("ngeo/offline/Configuration.js").default} ngeoOfflineConfiguration A service for customizing offline behaviour.
+   * @param {import("ngeo/offline/Configuration.js").default} ngeoOfflineConfiguration
+   * A service for customizing offline behaviour.
    */
   constructor(ngeoOfflineConfiguration) {
     /**
@@ -140,7 +141,8 @@ const Downloader = class {
     };
     const setOfflineContentPromise = this.configuration_.setItem('offline_content', persistentObject);
 
-    this.tileDownloader_ = new TilesDownloader(queue, this.configuration_, this.configuration_.getMaxNumberOfParallelDownloads());
+    const maxDownloads = this.configuration_.getMaxNumberOfParallelDownloads();
+    this.tileDownloader_ = new TilesDownloader(queue, this.configuration_, maxDownloads);
     const tileDownloadPromise = this.tileDownloader_.download();
 
     const allPromise = Promise.all([setOfflineContentPromise, tileDownloadPromise]);
