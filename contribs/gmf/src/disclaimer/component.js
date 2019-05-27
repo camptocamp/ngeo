@@ -347,7 +347,7 @@ DisclaimerController.prototype.closeDisclaimerMessage_ = function(msg) {
  *        gmf-disclaimer-external-visibility="disclaimerVisibility">
  *      </gmf-disclaimer>
  *      <ngeo-modal ng-model="disclaimerVisibility">
- *       <div class="modal-header">
+ *       <div class="modal-header ui-draggable-handle">
  *         <button type="button" class="close" data-dismiss="modal"
  *                 aria-hidden="true">&times;</button>
  *       </div>

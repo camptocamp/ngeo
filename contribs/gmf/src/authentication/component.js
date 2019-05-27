@@ -101,7 +101,7 @@ function gmfAuthenticationTemplateUrl($element, $attrs, gmfAuthenticationTemplat
  *     <ngeo-modal
  *         ngeo-modal-closable="false"
  *         ng-model="mainCtrl.userMustChangeItsPassword">
- *       <div class="modal-header">
+ *       <div class="modal-header ui-draggable-handle">
  *         <h4 class="modal-title">
  *           {{'You must change your password' | translate}}
  *         </h4>

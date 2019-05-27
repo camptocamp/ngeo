@@ -87,7 +87,7 @@
     </div>
   </div>
   <ngeo-modal ng-model="efCtrl.unsavedModificationsModalShown">
-    <div class="modal-header">
+    <div class="modal-header ui-draggable-handle">
       <h4 class="modal-title">{{'Unsaved modifications!' | translate}}</h4>
       <button
           type="button"
@@ -124,7 +124,7 @@
     </div>
   </ngeo-modal>
   <ngeo-modal ng-model="efCtrl.showServerError">
-    <div class="modal-header">{{'Server error.' | translate}}</div>
+    <div class="modal-header ui-draggable-handle">{{'Server error.' | translate}}</div>
     <div class="modal-body">{{efCtrl.serverErrorType}}<br>
     {{efCtrl.serverErrorMessage || ('Unexpected server error.' | translate)}}</div>
   </ngeo-modal>
