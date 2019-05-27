@@ -19,7 +19,9 @@ import ngeoCustomEvent from 'ngeo/CustomEvent.js';
 import utils from 'ngeo/offline/utils.js';
 const defaultImageLoadFunction_ = defaultImageLoadFunction;
 
-import * as realLocalforage from 'localforage';
+// @ts-ignore No idea why typescript displays an error here.
+import localforage from 'localforage';
+
 
 /**
  * @implements {ngeox.OfflineOnTileDownload}
@@ -129,7 +131,7 @@ const exports = class extends olObservable {
       console.log('Using ios localforage');
       return new LocalforageIosWrapper();
     }
-    return realLocalforage;
+    return localforage;
   }
 
   configureLocalforage() {
@@ -182,7 +184,7 @@ const exports = class extends olObservable {
   }
 
   /**
-   * @param {OfflineLayerMetadata} layerItem The layer metadata
+   * @param {import("./index.js").OfflineLayerMetadata} layerItem The layer metadata
    * @return {string} A key identifying an offline layer and used during restore.
    */
   getLayerKey(layerItem) {
@@ -192,7 +194,7 @@ const exports = class extends olObservable {
   /**
    * @override
    * @param {number} progress The download progress
-   * @param {OfflineTile} tile The tile
+   * @param {import("./index.js").OfflineTile} tile The tile
    * @return {Promise} A promise
    */
   onTileDownloadSuccess(progress, tile) {
@@ -219,7 +221,7 @@ const exports = class extends olObservable {
     * @param {import("ol/layer/Layer.js").default} layer A layer
     * @param {Array<import("ol/layer/Group.js").default>} ancestors The ancestors of that layer
     * @param {import("ol/extent.js").Extent} userExtent The extent selected by the user.
-    * @return {Array<ngeox.OfflineExtentByZoom>} The extent to download per zoom level
+    * @return {Array<import("./index.js").OfflineExtentByZoom>} The extent to download per zoom level
    */
   getExtentByZoom(map, layer, ancestors, userExtent) {
     const currentZoom = map.getView().getZoom();
@@ -259,7 +261,7 @@ const exports = class extends olObservable {
   /**
    * @param {import("ol/Map.js").default} map The map to work on.
    * @param {import("ol/extent.js").Extent} userExtent The extent selected by the user.
-   * @return {!Array<ngeox.OfflineLayerMetadata>} the downloadable layers and metadata.
+   * @return {!Array<import("./index.js").OfflineLayerMetadata>} the downloadable layers and metadata.
    */
   createLayerMetadatas(map, userExtent) {
     const layersItems = [];
@@ -305,7 +307,7 @@ const exports = class extends olObservable {
 
   /**
    * @private
-   * @param {ngeox.OfflinePersistentLayer} offlineLayer The offline layer
+   * @param {import("./index.js").OfflinePersistentLayer} offlineLayer The offline layer
    * @return {function(import("ol/ImageTile.js").default, string)} the tile function
    */
   createTileLoadFunction_(offlineLayer) {
@@ -321,14 +323,14 @@ const exports = class extends olObservable {
           // use a transparent 1x1 image to make the map consistent
           content = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=';
         }
-        imageTile.getImage().src = content;
+        /** @type {HTMLImageElement} */ (imageTile.getImage()).src = content;
       });
     };
     return tileLoadFunction;
   }
 
   /**
-   * @param {ngeox.OfflinePersistentLayer} offlineLayer The layer to recreate
+   * @param {import("./index.js").OfflinePersistentLayer} offlineLayer The layer to recreate
    * @return {import("ol/layer/Layer.js").default} the layer.
    */
   recreateOfflineLayer(offlineLayer) {

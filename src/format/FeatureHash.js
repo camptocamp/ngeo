@@ -418,7 +418,7 @@ export default class extends olFormatTextFeature {
     if (this.encodeStyles_) {
       const styleFunction = feature.getStyleFunction();
       if (styleFunction !== undefined) {
-        let styles = styleFunction.call(feature, 0);
+        let styles = styleFunction(feature, 0);
         if (styles !== null) {
           const encodedStyles = [];
           styles = Array.isArray(styles) ? styles : [styles];

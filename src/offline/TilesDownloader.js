@@ -6,7 +6,7 @@ function blobToDataUrl(blob) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onload = function() {
-      resolve(reader.result);
+      resolve(/** @type String */ (reader.result));
     };
     reader.onerror = reject;
     reader.readAsDataURL(blob);
@@ -16,8 +16,8 @@ function blobToDataUrl(blob) {
 const exports = class {
 
   /**
-   * @param {Array<ngeox.OfflineTile>} tiles An array of tiles to download.
-   * @param {ngeox.OfflineOnTileDownload} callbacks The callbacks.
+   * @param {Array<import("./index.js").OfflineTile>} tiles An array of tiles to download.
+   * @param {import("./index.js").OfflineOnTileDownload} callbacks The callbacks.
    * @param {number} workers The maximum number of workers.
    */
   constructor(tiles, callbacks, workers) {
@@ -33,14 +33,14 @@ const exports = class {
     this.wasStarted_ = false;
 
     /**
-     * @type {Array<ngeox.OfflineTile>}
+     * @type {Array<import("./index.js").OfflineTile>}
      * @private
      */
     this.tiles_ = tiles;
 
     /**
      * @private
-     * @type {ngeox.OfflineOnTileDownload}
+     * @type {import("./index.js").OfflineOnTileDownload}
      */
     this.callbacks_ = callbacks;
 
@@ -66,7 +66,7 @@ const exports = class {
 
     /**
      * @private
-     * @type {function()}
+     * @type {function(): any}
      */
     this.resolvePromise_;
 
@@ -103,7 +103,7 @@ const exports = class {
     const tile = this.tiles_[this.tileIndex_++];
     const tileUrl = tile.url;
     const xhr = new XMLHttpRequest();
-    xhr.tileUrl = tile.url;
+    xhr['tileUrl'] = tile.url;
     xhr.open('GET', tileUrl, true);
     xhr.responseType = 'blob';
     const onTileDownloaded = () => {

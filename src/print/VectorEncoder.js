@@ -71,6 +71,9 @@ VectorEncoder.prototype.encodeVectorLayer = function(arr, layer, resolution) {
   for (let i = 0, ii = features.length; i < ii; ++i) {
     const originalFeature = features[i];
 
+    /**
+     * @type {import("ol/style/Style.js").default|Array<import("ol/style/Style.js").default>}
+     */
     let styleData = null;
     const styleFunction = originalFeature.getStyleFunction() || layer.getStyleFunction();
     if (styleFunction !== undefined) {
@@ -80,8 +83,7 @@ VectorEncoder.prototype.encodeVectorLayer = function(arr, layer, resolution) {
     /**
      * @type {Array<import("ol/style/Style.js").default>}
      */
-    const styles = (styleData !== null && !Array.isArray(styleData)) ? [styleData] : styleData;
-    console.assert(Array.isArray(styles));
+    const styles = Array.isArray(styleData) ? styleData : styleData === null ? null : [styleData];
 
     if (styles !== null && styles.length > 0) {
       let isOriginalFeatureAdded = false;

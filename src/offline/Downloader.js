@@ -47,11 +47,12 @@ const Downloader = class {
   }
 
   /**
-   * @param {ngeox.OfflineLayerMetadata} layerMetadata Layers metadata.
-   * @param {Array<ngeox.OfflineTile>} queue Queue of tiles to download.
+   * @param {import("./index.js").OfflineLayerMetadata} layerMetadata Layers metadata.
+   * @param {Array<import("./index.js").OfflineTile>} queue Queue of tiles to download.
    */
   queueLayerTiles_(layerMetadata, queue) {
-    const {map, source, extentByZoom} = layerMetadata;
+    const source = /** @type {olSourceTileWMS|olSourceWMTS} */ (layerMetadata.source);
+    const {map, extentByZoom} = layerMetadata;
 
     if (!source) {
       return;
@@ -78,12 +79,13 @@ const Downloader = class {
         console.assert(url);
 
         /**
-         * @type {ngeox.OfflineTile}
+         * @type {import("./index.js").OfflineTile}
          */
-        const tile = {coord, url};
+        const tile = {coord, url, response: null};
         queueByZ.push(tile);
       });
 
+      // @ts-ignore
       const centerTileCoord = [z, (minX + maxX) / 2, (minY + maxY) / 2];
       queueByZ.sort((a, b) => magnitude2(a.coord, centerTileCoord) - magnitude2(b.coord, centerTileCoord));
       queue.push(...queueByZ);
@@ -97,12 +99,12 @@ const Downloader = class {
    */
   save(extent, map) {
     /**
-     * @type {!Array<ngeox.OfflineLayerMetadata>}
+     * @type {!Array<import("./index.js").OfflineLayerMetadata>}
      */
     const layersMetadatas = this.configuration_.createLayerMetadatas(map, extent);
 
     /**
-     * @type {!Array<ngeox.OfflinePersistentLayer>}
+     * @type {!Array<import("./index.js").OfflinePersistentLayer>}
      */
     const persistentLayers = [];
     const queue = [];
@@ -129,7 +131,7 @@ const Downloader = class {
     }
 
     /**
-     * @type {ngeox.OfflinePersistentContent}
+     * @type {import("./index.js").OfflinePersistentContent}
      */
     const persistentObject = {
       extent: extent,
