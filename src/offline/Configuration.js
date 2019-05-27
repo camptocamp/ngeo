@@ -19,8 +19,7 @@ import ngeoCustomEvent from 'ngeo/CustomEvent.js';
 import utils from 'ngeo/offline/utils.js';
 const defaultImageLoadFunction_ = defaultImageLoadFunction;
 
-// @ts-ignore No idea why typescript displays an error here.
-import localforage from 'localforage';
+import localforage from 'localforage/src/localforage.js';
 
 
 /**
@@ -147,7 +146,7 @@ const exports = class extends olObservable {
    * @return {Promise<?>} A promise
    */
   getItem(key) {
-    return this.traceGetSetItem('getItem', key, this.localforage_.getItem(key));
+    return this.traceGetSetItem('getItem', key, this.localforage_['getItem'](key));
   }
 
   /**
@@ -155,7 +154,7 @@ const exports = class extends olObservable {
    * @return {Promise<?>} .
    */
   removeItem(key) {
-    return this.traceGetSetItem('removeItem', key, this.localforage_.removeItem(key));
+    return this.traceGetSetItem('removeItem', key, this.localforage_['removeItem'](key));
   }
 
   /**
@@ -164,7 +163,7 @@ const exports = class extends olObservable {
    * @return {Promise<?>} A promise
    */
   setItem(key, value) {
-    return this.traceGetSetItem('setItem', key, this.localforage_.setItem(key, value));
+    return this.traceGetSetItem('setItem', key, this.localforage_['setItem'](key, value));
   }
 
   /**
@@ -172,7 +171,7 @@ const exports = class extends olObservable {
    */
   clear() {
     this.setHasOfflineData(false);
-    return this.traceGetSetItem('clear', '', this.localforage_.clear());
+    return this.traceGetSetItem('clear', '', this.localforage_['clear']());
   }
 
   /**
