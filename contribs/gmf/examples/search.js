@@ -117,7 +117,7 @@ function MainController(gmfThemes, ngeoFeatureOverlayMgr, ngeoNotification) {
   });
 
   /**
-   * @type {function()}
+   * @type {function(): void}
    */
   this.searchIsReady = () => {
     ngeoNotification.notify({

@@ -1,7 +1,3 @@
-/**
- * @module ngeo.offline.Mode
- */
-
 import angular from 'angular';
 
 

@@ -1,6 +1,3 @@
-/**
- * @module ngeo.offline.component
- */
 import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr.js';
 import ngeoMessageModalComponent from 'ngeo/message/modalComponent.js';
 import {extentToRectangle} from 'ngeo/utils.js';
@@ -34,7 +31,7 @@ module.value('ngeoOfflineTemplateUrl',
 
 module.run(/* @ngInject */ ($templateCache) => {
   // @ts-ignore: webpack
-  $templateCache.put('ngeo/offline/component.html', require('../offline/'));
+  $templateCache.put('ngeo/offline/component.html', require('./component.html'));
 });
 
 /**

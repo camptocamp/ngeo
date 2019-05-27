@@ -1,6 +1,3 @@
-/**
- * @module ngeo.offline.SerializerDeserializer
- */
 import OlTilegridTileGrid from 'ol/tilegrid/TileGrid.js';
 import OlTilegridWMTS from 'ol/tilegrid/WMTS.js';
 import * as olProj from 'ol/proj.js';

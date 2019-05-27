@@ -174,7 +174,7 @@ function Controller($scope, $timeout, gmfThemes, gmfTreeManager) {
   };
 
   /**
-   * @type {function()}
+   * @type {function(): void}
    * @private
    */
   this.treeCtrlsWatcherUnregister_ = $scope.$watchCollection(() => {

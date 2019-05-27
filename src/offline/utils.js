@@ -1,6 +1,3 @@
-/**
- * @module ngeo.offline.utils
- */
 const exports = {};
 import olLayerGroup from 'ol/layer/Group.js';
 

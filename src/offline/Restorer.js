@@ -1,6 +1,3 @@
-/**
- * @module ngeo.offline.Restorer
- */
 import ngeoMapBackgroundLayerMgr from 'ngeo/map/BackgroundLayerMgr.js';
 import angular from 'angular';
 

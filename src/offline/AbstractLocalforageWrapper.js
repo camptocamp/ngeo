@@ -1,7 +1,4 @@
 /**
- * @module ngeo.offline.AbstractLocalforageWrapper
- */
-/**
  * @typedef {{
  *   id: number,
  *   plugin: string,

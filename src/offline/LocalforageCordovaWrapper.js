@@ -1,6 +1,3 @@
-/**
- * @module ngeo.offline.LocalforageCordovaWrapper
- */
 import AbstractWrapper from 'ngeo/offline/AbstractLocalforageWrapper.js';
 
 const exports = class CordovaWrapper extends AbstractWrapper {

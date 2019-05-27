@@ -1,6 +1,3 @@
-/**
- * @module import("ngeo/offline/Configuration.js").default
- */
 import olObservable from 'ol/Observable.js';
 import olLayerLayer from 'ol/layer/Layer.js';
 import olLayerVector from 'ol/layer/Vector.js';

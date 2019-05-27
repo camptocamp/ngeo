@@ -1,6 +1,3 @@
-/**
- * @module ngeo.offline.Downloader
- */
 import {DEVICE_PIXEL_RATIO} from 'ol/has.js';
 import olSourceTileWMS from 'ol/source/TileWMS.js';
 import olSourceWMTS from 'ol/source/WMTS.js';

@@ -1,6 +1,3 @@
-/**
- * @module ngeo.offline.module
- */
 import ngeoOfflineComponent from 'ngeo/offline/component.js';
 import ngeoOfflineNetworkStatus from 'ngeo/offline/NetworkStatus.js';
 import ngeoOfflineServiceManager from 'ngeo/offline/ServiceManager.js';

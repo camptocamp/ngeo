@@ -367,7 +367,7 @@ export const LayertreeVisitorDecision = {
 
 
 /**
- * @typedef {function(LayertreeController): (!LayertreeVisitorDecision|undefined)} Visitor
+ * @typedef {function(LayertreeController): (!LayertreeVisitorDecision|void)} Visitor
  */
 
 

@@ -1,6 +1,3 @@
-/**
- * @module ngeo.offline.LocalforageAndroidWrapper
- */
 import AbstractWrapper from 'ngeo/offline/AbstractLocalforageWrapper.js';
 
 const exports = class AndroidWrapper extends AbstractWrapper {

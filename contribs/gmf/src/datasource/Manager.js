@@ -358,17 +358,17 @@ export class DatasourceManager {
 
       // (2) Collect 'leaf' treeCtrls
       const newTreeCtrls = [];
-      const visitor = (treeCtrls, treeCtrl) => {
+      const visitor = (treeCtrl) => {
         const node = /** @type {!import('gmf/themes.js').GmfGroup|!import('gmf/themes.js').GmfLayer} */ (
           treeCtrl.node);
         const groupNode = /** @type {!import('gmf/themes.js').GmfGroup} */ (node);
         const children = groupNode.children;
         if (!children) {
-          treeCtrls.push(treeCtrl);
+          newTreeCtrls.push(treeCtrl);
         }
       };
       for (let i = 0, ii = value.length; i < ii; i++) {
-        value[i].traverseDepthFirst(visitor.bind(this, newTreeCtrls));
+        value[i].traverseDepthFirst(visitor);
       }
 
       // (3) Add new 'treeCtrls'

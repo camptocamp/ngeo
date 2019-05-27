@@ -1,7 +1,3 @@
-/**
- * @module ngeo.offline.ServiceManager
- */
-
 import angular from 'angular';
 
 

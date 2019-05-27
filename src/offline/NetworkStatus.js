@@ -1,6 +1,3 @@
-/**
- * @module ngeo.offline.NetworkStatus
- */
 import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
 import angular from 'angular';
 
