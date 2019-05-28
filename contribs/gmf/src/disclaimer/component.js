@@ -40,7 +40,7 @@ function forEachDisclaimer(layer, func) {
 /**
  * Used metadata:
  *
- *  * disclaimer: The disclaimer text for this element.
+ *  * `disclaimer`: The disclaimer text for this element.
  *      For WMS and WMTS layers, layer groups and themes.
  *
  * @param {JQuery} $element Element.
@@ -56,7 +56,7 @@ function forEachDisclaimer(layer, func) {
  * @ngdoc controller
  * @ngname GmfDisclaimerController
  */
-function DisclamerController(
+function DisclaimerController(
   $element, $sce, $timeout, gettextCatalog, ngeoDisclaimer, ngeoEventHelper, ngeoLayerHelper
 ) {
 
@@ -150,7 +150,7 @@ function DisclamerController(
 /**
  * Initialise the controller.
  */
-DisclamerController.prototype.$onInit = function() {
+DisclaimerController.prototype.$onInit = function() {
   if (!this.map) {
     throw new Error('Missing map');
   }
@@ -164,7 +164,7 @@ DisclamerController.prototype.$onInit = function() {
  * @param {Event|import('ol/events/Event.js').default} evt Event.
  * @private
  */
-DisclamerController.prototype.handleLayersAdd_ = function(evt) {
+DisclaimerController.prototype.handleLayersAdd_ = function(evt) {
   if (evt instanceof CollectionEvent) {
     this.timeout_(() => {
       const layer = evt.element;
@@ -179,7 +179,7 @@ DisclamerController.prototype.handleLayersAdd_ = function(evt) {
  * @param {Event|import('ol/events/Event.js').default} evt Event.
  * @private
  */
-DisclamerController.prototype.handleLayersRemove_ = function(evt) {
+DisclaimerController.prototype.handleLayersRemove_ = function(evt) {
   if (evt instanceof CollectionEvent) {
     const layer = evt.element;
     console.assert(layer instanceof olLayerBase);
@@ -192,7 +192,7 @@ DisclamerController.prototype.handleLayersRemove_ = function(evt) {
  * @param {import("ol/layer/Base.js").default} layer Layer.
  * @private
  */
-DisclamerController.prototype.registerLayer_ = function(layer) {
+DisclaimerController.prototype.registerLayer_ = function(layer) {
 
   const layerUid = olUtilGetUid(layer);
 
@@ -260,7 +260,7 @@ DisclamerController.prototype.registerLayer_ = function(layer) {
  * @param {import("ol/layer/Base.js").default} layer Layer.
  * @private
  */
-DisclamerController.prototype.unregisterLayer_ = function(layer) {
+DisclaimerController.prototype.unregisterLayer_ = function(layer) {
 
   const layerUid = olUtilGetUid(layer);
 
@@ -283,7 +283,7 @@ DisclamerController.prototype.unregisterLayer_ = function(layer) {
 };
 
 
-DisclamerController.prototype.$onDestroy = function() {
+DisclaimerController.prototype.$onDestroy = function() {
   if (!this.dataLayerGroup_) {
     throw new Error('Missing dataLayerGroup');
   }
@@ -295,7 +295,7 @@ DisclamerController.prototype.$onDestroy = function() {
  * @param {string} msg Disclaimer message.
  * @private
  */
-DisclamerController.prototype.showDisclaimerMessage_ = function(msg) {
+DisclaimerController.prototype.showDisclaimerMessage_ = function(msg) {
   msg = this.gettextCatalog_.getString(msg);
   if (this.external) {
     if (this.msgs_.indexOf(msg) < 0) {
@@ -322,7 +322,7 @@ DisclamerController.prototype.showDisclaimerMessage_ = function(msg) {
  * @param {string} msg Disclaimer message.
  * @private
  */
-DisclamerController.prototype.closeDisclaimerMessage_ = function(msg) {
+DisclaimerController.prototype.closeDisclaimerMessage_ = function(msg) {
   msg = this.gettextCatalog_.getString(msg);
   if (this.external) {
     this.visibility = false;
@@ -366,7 +366,7 @@ DisclamerController.prototype.closeDisclaimerMessage_ = function(msg) {
  *        gmf-disclaimer-external-visibility="disclaimerVisibility">
  *      </gmf-disclaimer>
  *      <ngeo-modal ng-model="disclaimerVisibility">
- *       <div class="modal-header">
+ *       <div class="modal-header ui-draggable-handle">
  *         <button type="button" class="close" data-dismiss="modal"
  *                 aria-hidden="true">&times;</button>
  *       </div>
@@ -395,7 +395,7 @@ DisclamerController.prototype.closeDisclaimerMessage_ = function(msg) {
  * @ngname gmfDisclaimer
  */
 const disclaimerComponent = {
-  controller: DisclamerController,
+  controller: DisclaimerController,
   bindings: {
     'layerVisibility': '<?gmfDisclaimerLayerVisibility',
     'popup': '<?gmfDisclaimerPopup',

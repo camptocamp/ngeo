@@ -978,7 +978,8 @@ FeatureHelper.prototype.getColorProperty = function(feature) {
  * @return {import('ol/color.js').Color} Color.
  */
 FeatureHelper.prototype.getRGBAColorProperty = function(feature) {
-  return colorFromString(this.getColorProperty(feature));
+  const color = this.getColorProperty(feature);
+  return colorFromString(color);
 };
 
 

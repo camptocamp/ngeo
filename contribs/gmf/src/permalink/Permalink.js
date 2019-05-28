@@ -246,9 +246,9 @@ const ParamPrefix = {
  * gmfThemeManager, defaultTheme, gmfTreeManager, ngeoWfsPermalink,
  * ngeoAutoProjection and ngeoFeatures.
  *
- * Used functionnalities:
+ * Used functionalities:
  *
- *  * default_theme: Theme to use by default.
+ *  * `default_theme`: Theme to use by default.
  *
  * @constructor
  * @param {angular.IQService} $q The Angular $q service.

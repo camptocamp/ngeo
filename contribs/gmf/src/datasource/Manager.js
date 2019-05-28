@@ -44,17 +44,17 @@ import olSourceTileWMS from 'ol/source/TileWMS.js';
 
 
 /**
- * The GeoMapFish DataSources Manager is responsible of listenening to the
+ * The GeoMapFish DataSources Manager is responsible of listening to the
  * c2cgeoportal's themes to create instances of `ngeo.datasource.DataSource`
  * objects with the layer definitions found and push them in the
  * `DataSources` collection. The Manager must be initialized
- * with the app's map using the setDatasourcseMap() method.
+ * with the app's map using the `setDatasourceMap()` method.
  *
  * When changing theme, these data sources are cleared then re-created.
  *
  * Used metadata:
  *
- *  * identifierAttributeField: The field used in the 'display query window' as feature title.
+ *  * `identifierAttributeField`: The field used in the 'display query window' as feature title.
  *      For WMS layers.
  */
 export class DatasourceManager {
@@ -219,6 +219,7 @@ export class DatasourceManager {
   /**
    * Set the map to use with your datasources.
    * @param {import("ol/Map.js").default} map The map to use.
+   * @hidden
    */
   setDatasourceMap(map) {
     this.ngeoDataSources_.map = map;
@@ -227,6 +228,7 @@ export class DatasourceManager {
   /**
    * @param {import('ngeo/datasource/OGC.js').Dimensions} dimensions A reference to the dimensions
    *     object to keep a reference of in this service.
+   * @hidden
    */
   setDimensions(dimensions) {
     if (this.dimensionsWatcherUnregister) {
@@ -246,6 +248,7 @@ export class DatasourceManager {
   /**
    * Called when the dimensions change. Update all affected layer's filters.
    * @private
+   * @hidden
    */
   handleDimensionsChange_() {
 
@@ -280,6 +283,7 @@ export class DatasourceManager {
    * Called when the themes change. Remove any existing data sources first,
    * then create and add data sources from the loaded themes.
    * @private
+   * @hidden
    */
   handleThemesChange_() {
     // (1) Clear
@@ -340,6 +344,7 @@ export class DatasourceManager {
    * @param {Array<import("ngeo/layertree/Controller.js").LayertreeController>|undefined} value List of tree
    *     controllers.
    * @private
+   * @hidden
    */
   handleTreeManagerRootChildrenChange_(value) {
 
@@ -354,20 +359,19 @@ export class DatasourceManager {
       /** @type {import('ngeo/layertree/Controller.js').LayertreeController[]} */
       const newTreeCtrls = [];
       /**
-       * @param {import('ngeo/layertree/Controller.js').LayertreeController[]} treeCtrls
        * @param {import('ngeo/layertree/Controller.js').LayertreeController} treeCtrl
        */
-      const visitor = (treeCtrls, treeCtrl) => {
-        const node = /** @type {import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer} */ (
+      const visitor = (treeCtrl) => {
+        const node = /** @type {import('gmf/themes.js').GmfGroup|!import('gmf/themes.js').GmfLayer} */ (
           treeCtrl.node);
         const groupNode = /** @type {import('gmf/themes.js').GmfGroup} */ (node);
         const children = groupNode.children;
         if (!children) {
-          treeCtrls.push(treeCtrl);
+          newTreeCtrls.push(treeCtrl);
         }
       };
       for (let i = 0, ii = value.length; i < ii; i++) {
-        value[i].traverseDepthFirst(visitor.bind(this, newTreeCtrls));
+        value[i].traverseDepthFirst(visitor);
       }
 
       // (3) Add new 'treeCtrls'
@@ -394,6 +398,7 @@ export class DatasourceManager {
    * Remove the data sources from the ngeo collection that are in the cache,
    * i.e. those created by this service, then clear the cache.
    * @private
+   * @hidden
    */
   clearDataSources_() {
 
@@ -425,6 +430,7 @@ export class DatasourceManager {
    *     may have children or not.
    * @param {import('gmf/themes.js').GmfOgcServers} ogcServers OGC servers.
    * @private
+   * @hidden
    */
   createDataSource_(firstLevelGroup, node, ogcServers) {
 
@@ -648,6 +654,7 @@ export class DatasourceManager {
    *
    * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl Layertree controller to add
    * @private
+   * @hidden
    */
   addTreeCtrlToCache_(treeCtrl) {
 
@@ -710,9 +717,9 @@ export class DatasourceManager {
    * Remove a treeCtrl cache item. Unregister event listeners and remove the
    * data source from the ngeo collection.
    *
-   * @param {ManagerTreeCtrlCacheItem} item Layertree
-   *     controller cache item
+   * @param {ManagerTreeCtrlCacheItem} item Layertree controller cache item
    * @private
+   * @hidden
    */
   removeTreeCtrlCacheItem_(item) {
 
@@ -742,6 +749,7 @@ export class DatasourceManager {
    *
    * The data source gets also removed from the ngeo data sources collection.
    * @private
+   * @hidden
    */
   clearTreeCtrlCache_() {
     for (const id in this.treeCtrlCache_) {
@@ -760,6 +768,7 @@ export class DatasourceManager {
    * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl The layer tree controller
    * @param {string|undefined} newVal New state value
    * @private
+   * @hidden
    */
   handleTreeCtrlStateChange_(treeCtrl, newVal) {
     const treeDataSource = treeCtrl.getDataSource();
@@ -785,6 +794,7 @@ export class DatasourceManager {
    * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl The layer tree controller
    * @return {ManagerTreeCtrlCacheItem} Cache item
    * @private
+   * @hidden
    */
   getTreeCtrlCacheItem_(treeCtrl) {
     return this.treeCtrlCache_[olUtilGetUid(treeCtrl.node)] || null;
@@ -795,6 +805,7 @@ export class DatasourceManager {
    * @param {import("ngeo/datasource/DataSource.js").default} dataSource The data source.
    * @return {import("ol/layer/Base.js").default|undefined} The layer.
    * @private
+   * @hidden
    */
   getDataSourceLayer_(dataSource) {
     const gmfOGCDataSource = /** @type {import("gmf/datasource/OGC.js").default} */ (dataSource);
@@ -818,6 +829,7 @@ export class DatasourceManager {
    * and dimensions filters.
    * @param {import("ol/layer/Base.js").default} layer The layer to update.
    * @private
+   * @hidden
    */
   updateLayerFilter_(layer) {
     if (!(layer instanceof olLayerImage || layer instanceof olLayerTile)) {
@@ -892,6 +904,7 @@ export class DatasourceManager {
    *
    * @param {import("gmf/datasource/OGC.js").default} dataSource Data source.
    * @private
+   * @hidden
    */
   handleDataSourceFilterRulesChange_(dataSource) {
 
@@ -920,6 +933,7 @@ export class DatasourceManager {
    *
    * @param {import("gmf/datasource/OGC.js").default} dataSource Data source.
    * @private
+   * @hidden
    */
   handleDataSourceTimeValueChange_(dataSource) {
 
@@ -965,6 +979,7 @@ export class DatasourceManager {
    *
    * @param {Event|import('ol/events/Event.js').default} evt Event.
    * @private
+   * @hidden
    */
   handleNgeoBackgroundLayerChange_(evt) {
     const event = /** @type{import('ngeo/map/BackgroundLayerMgr.js').BackgroundEvent} */(evt);

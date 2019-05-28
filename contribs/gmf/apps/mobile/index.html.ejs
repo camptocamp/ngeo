@@ -17,11 +17,9 @@
   <body ng-class="{'gmf-mobile-nav-is-visible': mainCtrl.navIsVisible(),
                    'gmf-mobile-nav-left-is-visible': mainCtrl.leftNavVisible,
                    'gmf-mobile-nav-right-is-visible': mainCtrl.rightNavVisible}">
-  <div ng-show="mainCtrl.loading" class="loading-mask">
-    <i class="fa fa-spinner fa-spin spinner-loading-mask"></i>
-    &nbsp;
-    <img src="<%=require("./image/logo.png")%>" />
-  </div>
+    <div ng-show="mainCtrl.loading" class="loading-mask">
+      <i class="fa fa-spinner fa-spin spinner-loading-mask"></i>
+    </div>
     <main ng-class="{'gmf-search-is-active': mainCtrl.searchOverlayVisible}">
       <gmf-map
         gmf-map-map="mainCtrl.map"
@@ -190,7 +188,7 @@
     </nav>
     <ngeo-modal
         ng-model="mainCtrl.userMustChangeItsPassword">
-      <div class="modal-header">
+      <div class="modal-header ui-draggable-handle">
         <h4 class="modal-title">
           {{'You must change your password' | translate}}
         </h4>

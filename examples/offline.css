@@ -1,0 +1,60 @@
+#map {
+  width: 600px;
+  height: 400px;
+  position: relative;
+}
+ngeo-offline div {
+  z-index: 1;
+}
+ngeo-offline .main-button {
+  position: absolute;
+  right: 1rem;
+  bottom: 5rem;
+  cursor: pointer;
+}
+ngeo-offline .main-button .no-data {
+  color: black;
+}
+ngeo-offline .main-button .with-data {
+  color: red;
+}
+ngeo-offline .main-button .no-data,
+ngeo-offline .main-button .with-data {
+  background-color: white;
+  text-align: center;
+  font-size: 2.5rem;
+  line-height: 2rem;
+  border-radius: 2rem;
+  font-family: FontAwesome;
+}
+
+ngeo-offline .validate-extent {
+  position: absolute;
+  bottom: 0.5rem;
+  width: 10rem;
+  left: calc(50% - 5rem);
+}
+ngeo-offline .in-progress {
+  position: absolute;
+  left: calc(50% - 3.3rem);
+  top: calc(50% - 3rem);
+  color: white;
+  font-weight: bold;
+  background-color: #337ab7;
+  padding: 2rem 2rem;
+  border-radius: 1rem;
+}
+ngeo-offline .modal-content {
+  width: 30rem;
+}
+ngeo-offline .modal-body button {
+  display: block;
+  margin: 0.5rem auto;
+  width: 25rem;
+}
+.offline-msg {
+  display: none;
+}
+.offline .offline-msg {
+  display: block;
+}

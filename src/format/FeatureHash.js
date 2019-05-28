@@ -417,7 +417,7 @@ class FeatureHash extends olFormatTextFeature {
     if (this.encodeStyles_) {
       const styleFunction = feature.getStyleFunction();
       if (styleFunction !== undefined) {
-        let styles = styleFunction.call(null, feature, 0);
+        let styles = styleFunction(feature, 0);
         if (styles !== null) {
           /** @type {string[]} */
           const encodedStyles = [];

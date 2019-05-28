@@ -1021,6 +1021,7 @@ Controller.prototype.setFeatureStyle_ = function() {
  *
  * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl Layertree controller
  *    to register
+ * @return {void}
  * @private
  */
 Controller.prototype.registerTreeCtrl_ = function(treeCtrl) {

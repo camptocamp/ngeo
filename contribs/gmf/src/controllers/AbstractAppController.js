@@ -53,12 +53,9 @@ import {ThemeEventType} from 'gmf/theme/Manager.js';
 /**
  * Application abstract controller.
  *
- * This file includes `goog.require` for base components/directives used
- * by the HTML page and the controller to provide the configuration.
+ * Used functionalities:
  *
- * Used functionnalities:
- *
- *  * open_panel: When set, contains the name of the panel to open upon loading an application.
+ *  * `open_panel`: When set, contains the name of the panel to open upon loading an application.
  *      Note: although this is a list, only one can be defined.
  *
  *

@@ -66,11 +66,11 @@ function gmfBackgroundlayerselectorTemplateUrl($element, $attrs, gmfBackgroundla
  *
  * Used metadata:
  *
- *  * thumbnail: The URL used for the icon.
+ *  * `thumbnail`: The URL used for the icon.
  *
- * Used functionnalities:
+ * Used functionalities:
  *
- *  * default_basemap: Base maps to use by default.
+ *  * `default_basemap`: Base maps to use by default.
  *
  * @htmlAttribute {import("ol/Map.js").default=} gmf-backgroundlayerselector-map The map.
  * @htmlAttribute {string} gmf-backgroundlayer-opacity-options The opacity slider options.
