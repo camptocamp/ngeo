@@ -8,7 +8,7 @@ import olStyleFill from 'ol/style/Fill.js';
 import olStyleRegularShape from 'ol/style/RegularShape.js';
 import olStyleStroke from 'ol/style/Stroke.js';
 import olStyleStyle from 'ol/style/Style.js';
-import MobileDraw from 'ngeo/interaction/MobileDraw';
+import MobileDraw from 'ngeo/interaction/MobileDraw.js';
 
 
 /**

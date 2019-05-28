@@ -40,7 +40,7 @@ import olStyleStyle from 'ol/style/Style.js';
 import {CollectionEvent} from 'ol/Collection.js';
 
 // @ts-ignore: not supported import
-import {OL3Parser} from 'jsts/io';
+import {OL3Parser} from 'jsts/io.js';
 import 'jsts/monkey.js';
 
 
