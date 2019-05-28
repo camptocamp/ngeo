@@ -1,4 +1,4 @@
-import 'gmf/sass/vars.scss'
+import 'gmf/sass/vars.scss';
 import 'jquery';
 import 'angular';
 import 'angular-gettext';

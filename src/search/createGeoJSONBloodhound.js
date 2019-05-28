@@ -6,7 +6,6 @@ import olFormatGeoJSON from 'ol/format/GeoJSON.js';
 
 import 'corejs-typeahead';
 
-
 /**
  * @param {string} url an URL to a search service.
  * @param {(function(GeoJSON.Feature): boolean)=} opt_filter function to filter results.

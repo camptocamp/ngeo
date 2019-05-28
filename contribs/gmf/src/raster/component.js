@@ -127,7 +127,8 @@ module.directive('gmfElevation', rasterComponent);
  * @hidden
  * @param {!angular.IScope} $scope Scope.
  * @param {!angular.IFilterService} $filter Angular filter.
- * @param {!import("ngeo/misc/debounce.js").miscDebounce<function(): void>} ngeoDebounce Ngeo debounce factory
+ * @param {!import("ngeo/misc/debounce.js").miscDebounce
+ * <function(import("ol/MapBrowserPointerEvent.js").default): void>} ngeoDebounce Ngeo debounce factory
  * @param {!import("gmf/raster/RasterService.js").RasterService} gmfRaster Gmf Raster service
  * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @constructor
@@ -146,7 +147,8 @@ function Controller($scope, $filter, ngeoDebounce, gmfRaster, gettextCatalog) {
   this.filter_ = $filter;
 
   /**
-   * @type {import("ngeo/misc/debounce.js").miscDebounce<function(): void>}
+   * @type {import("ngeo/misc/debounce.js").miscDebounce
+   * <function(import("ol/MapBrowserPointerEvent.js").default): void>}
    * @private
    */
   this.ngeoDebounce_ = ngeoDebounce;
