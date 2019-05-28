@@ -7,16 +7,16 @@ import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
 /**
  * @typedef {Object} NominatimSearchResult
  * @property {string} name
- * @property {string} label
- * @property {import("ol/coordinate.js").Coordinate} coordinate
+ * @property {string} [label]
+ * @property {Array<string>} coordinate
  */
 
 
 /**
  * @typedef {Object} NominatimSearchResponseResult
  * @property {string} display_name
- * @property {number} lon
- * @property {number} lat
+ * @property {string} lon
+ * @property {string} lat
  */
 
 
@@ -168,10 +168,10 @@ NominatimService.prototype.typeaheadSource_ = function(query, syncResults, async
      * @return {NominatimSearchResult} Parsed result
      */
     const parse = function(result) {
-      return /** @type {NominatimSearchResult} */({
+      return {
         coordinate: [result.lon, result.lat],
         name: result.display_name
-      });
+      };
     };
     if (asyncResults) {
       asyncResults(resp.data.map(parse));
