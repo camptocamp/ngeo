@@ -304,7 +304,7 @@ WfsPermalinkService.prototype.createFilters_ = function(filterGroups) {
   /**
    * The function
    * @param {WfsPermalinkFilterGroup} filterGroup The filter
-   * @returns {import("ol/format/filter/Filter.js").default} The return
+   * @return {import("ol/format/filter/Filter.js").default} The return
    */
   const createFiltersForGroup = function(filterGroup) {
     const filters = filterGroup.filters.map((filterDef) => {

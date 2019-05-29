@@ -15,7 +15,7 @@ let themesPromise;
 
 /**
  * @hidden
- * @returns {Promise<import('gmf/themes.js').GmfThemesResponse>} Promise
+ * @return {Promise<import('gmf/themes.js').GmfThemesResponse>} Promise
  */
 function getThemesPromise() {
   if (!themesPromise) {
@@ -35,7 +35,7 @@ let overlayDefPromise;
 
 /**
  * @hidden
- * @returns {Promise<Array<TileLayer|ImageLayer|GroupLayer>>} Promise
+ * @return {Promise<Array<TileLayer|ImageLayer|GroupLayer>>} Promise
  */
 export function getBackgroundLayers() {
   return getThemesPromise().then((themes) => {
@@ -107,7 +107,7 @@ const overlayDefs = new Map();
 
 /**
  * @hidden
- * @returns {Promise<Map<string, overlayDefinition>>} Promise
+ * @return {Promise<Map<string, overlayDefinition>>} Promise
  */
 export function getOverlayDefs() {
   if (!overlayDefPromise) {
@@ -128,7 +128,7 @@ export function getOverlayDefs() {
  * @param {Object} config Config
  * @param {import('gmf/themes.js').GmfOgcServers} ogcServers OGC servers
  * @param {import('gmf/themes.js').GmfOgcServer} [opt_ogcServer] OGC server
- * @returns {void}
+ * @return {void}
  * @hidden
  */
 export function writeOverlayDefs(config, ogcServers, opt_ogcServer) {

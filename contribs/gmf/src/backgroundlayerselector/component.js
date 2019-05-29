@@ -207,7 +207,7 @@ Controller.prototype.handleThemesChange_ = function() {
 /**
  * Getter/setter for background layer overlay, used by opacity slider.
  * @param {?number} val The opacity.
- * @returns {number} The background layer opacity.
+ * @return {number} The background layer opacity.
  */
 Controller.prototype.getSetBgLayerOpacity = function(val) {
   if (!this.opacityLayer) {

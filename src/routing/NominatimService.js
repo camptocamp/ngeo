@@ -154,7 +154,7 @@ NominatimService.prototype.reverse = function(coordinate, params) {
  * @param {string} query Search query
  * @param {(result: NominatimSearchResult[]) => void} syncResults Callback for synchronous execution, unused
  * @param {(result: NominatimSearchResult[]) => void} [asyncResults] Callback for asynchronous execution
- * @returns {void}
+ * @return {void}
  * @private
  */
 NominatimService.prototype.typeaheadSource_ = function(query, syncResults, asyncResults) {

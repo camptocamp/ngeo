@@ -461,7 +461,7 @@ PrintService.prototype.getWmtsUrl_ = function(source) {
 /**
  * Return an opacity value for the specified layer.
  * @param {import("ol/layer/Base.js").default} layer Layer.
- * @returns {number} opacity Opacity value.
+ * @return {number} opacity Opacity value.
  * @private
  */
 PrintService.prototype.getOpacityOrInherited_ = function(layer) {

@@ -707,7 +707,7 @@ export class Querent {
       // (4.2) After count, do GetFeature (if required)
       /**
        * @param {number|void} numberOfFeatures value
-       * @returns {?angular.IPromise<never>}
+       * @return {?angular.IPromise<never>}
        */
       const afterCount_ = (numberOfFeatures) => {
         // `true` is returned if a count request was made AND there would

@@ -296,7 +296,7 @@ class Controller {
 
   /**
    * @param {import('./RoutingService').Route} route Routes of OSRM response
-   * @returns {Array<import("ol/Feature.js").default>} parsed route features
+   * @return {Array<import("ol/Feature.js").default>} parsed route features
    * @private
    */
   parseRoute_(route) {

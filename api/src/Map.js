@@ -377,7 +377,7 @@ class Map {
 /**
  * @param {string[]} keys Keys.
  * @param {Array<*>} values Values.
- * @returns {Object<string, *>} Object.
+ * @return {Object<string, *>} Object.
  * @private
  * @hidden
  */
@@ -394,7 +394,7 @@ function zip(keys, values) {
 /**
  * @param {Object<string, *>} obj Object.
  * @param {string[]} keys keys.
- * @returns {Object<string, *>} Object.
+ * @return {Object<string, *>} Object.
  * @private
  * @hidden
  */
