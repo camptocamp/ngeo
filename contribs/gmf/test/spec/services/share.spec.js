@@ -1,6 +1,6 @@
 // @ts-nocheck
 import angular from 'angular';
-import {PermalinkShareService} from 'gmf/permalink/ShareService';
+import {PermalinkShareService} from 'gmf/permalink/ShareService.js';
 
 
 describe('gmf.permalink.ShareService', () => {
