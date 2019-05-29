@@ -43,7 +43,7 @@ export function FulltextSearchService($injector, $http) {
  * Perform a search query on the c2c-geoportal full-text search.
  * @param {string} query Search query.
  * @param {Object<string, string>} params Additional parameters.
- * @returns {Promise} Request promise with data array.
+ * @return {Promise} Request promise with data array.
  */
 FulltextSearchService.prototype.search = function(query, params) {
   const queryParams = Object.assign({}, this.defaultParams_, params);

@@ -243,7 +243,7 @@ module.factory('$verticalSwipe', [function() {
  * @param {string} directiveName Directive name
  * @param {number} direction Direction
  * @param {string} eventName Event name
- * @returns {void}
+ * @return {void}
  */
 function makeSwipeDirective_(directiveName, direction, eventName) {
   module.directive(directiveName, ['$parse', '$verticalSwipe', function($parse, $verticalSwipe) {

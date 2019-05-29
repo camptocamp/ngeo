@@ -183,7 +183,7 @@
  *      For WMS and WMTS layers, layer groups and themes.
  * @property {string[]} [enumeratedAttributes] List of attribute names which have enumerated attribute
  *      values (for filters purpose). For WMS layers.
- * @property {boolean} [exclusiveGroup=false] Whether the group contain children that have to be mutually
+ * @property {boolean} [exclusiveGroup=false] Whether the group contains children that have to be mutually
  *      exclusive, meaning that only one child may be ON at any time.
  * @property {string} [iconUrl] The URL of the icon to display in the layer tree. For WMS and WMTS layers.
  * @property {string} identifierAttributeField The field used in the 'display query window' as feature title.
@@ -203,12 +203,12 @@
  * @property {string} [legendRule] The WMS 'RULE' parameter used to display the icon in the layer tree.
  *      "Short version" of the 'iconURL' metadata for WMS layers. For WMS layers.
  * @property {number} [maxResolution] The max resolution where the layer is visible. For WMS layers.
- *      On WMTS layers it will have effect on the node in the layertree but not on the layertree directly.
+ *      On WMTS layers it will have an effect on the node in the layertree but not on the layertree directly.
  * @property {string} [metadataUrl] The URL to the information on this layer. For WMS and WMTS layers.
  * @property {number} [minResolution] The min resolution where the layer is visible. For WMS layers.
- *      On WMTS layers it will have effect on the node in the layertree but not on the layer directly.
+ *      On WMTS layers it will have an effect on the node in the layertree but not on the layer directly.
  * @property {string} [ogcServer] The corresponding OGC server for a WMTS layer. For WMTS layers.
- * @property {number} [opacity=1.0] Layer opacity. 1.0 means fuly visible, 0 means invisible, For WMS and
+ * @property {number} [opacity=1.0] Layer opacity. 1.0 means fully visible, 0 means invisible, For WMS and
  *      WMTS layers.
  * @property {string} [printLayers] A WMS layer that will be used instead of the WMTS layers in the print.
  *      Used to increase quality of printed WMTS layers. For WMTS layers.
@@ -218,9 +218,9 @@
  * @property {string} [timeAttribute] The name of the time attribute. For WMS(-T) layers.
  * @property {GmfSnappingConfig} [snappingConfig] The snapping configuration for the leaf. If set, the
  *      leaf's layer is considered to be "snappable", even if the config itself is empty.
- *      Example of value: {'tolerance': 50, 'edge': false} For WMS layers.
- * @property {string} [wmsLayers] A corresponding WMS layer for a WMTS layers. Used to query the WMTS layers
- *      and to print it. (See also printLayers and queryLayers metadata for more
+ *      Example value: {'tolerance': 50, 'edge': false} For WMS layers.
+ * @property {string} [wmsLayers] A corresponding WMS layer for WMTS layers. Used to query the WMTS layers
+ *      and to print them. (See also printLayers and queryLayers metadata for more
  *      granularity). For WMTS Layers.
  * @property {Object} [customOpenLayersOptions] The custom OpenLayers WMS layer options.
  */

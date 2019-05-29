@@ -23,7 +23,7 @@ const module = angular.module('ngeoModal', []);
  * jQuery plugin.
  *
  *     <ngeo-modal ng-model="modalShown">
- *       <div class="modal-header">
+ *       <div class="modal-header ui-draggable-handle">
  *         <button type="button" class="close" data-dismiss="modal"
  *                 aria-hidden="true">&times;</button>
  *         <h4 class="modal-title">The Title</h4>
@@ -37,7 +37,7 @@ const module = angular.module('ngeoModal', []);
  * See our live example: [../examples/modal.html](../examples/modal.html)
  *
  * @htmlAttribute {string} ngeo-draggable-handle The jquery selector that define the element
- *     that can starts the dragging sequence. Defaults to `.modal-header`.
+ *     that can starts the dragging sequence. Defaults to `.ui-draggable-handle`.
  * @htmlAttribute {boolean} ngeo-modal-resizable Whether the modal can be
  *     resized or not. Defaults to `false`.
  * @htmlAttribute {boolean} ngeo-modal-closable Whether the modal can be
@@ -124,7 +124,7 @@ class Controller {
 
     this.resizable = !!this.resizable;
 
-    this.draggableHandle = this.draggableHandle || '.modal-header';
+    this.draggableHandle = this.draggableHandle || '.ui-draggable-handle';
   }
 
   $postLink() {

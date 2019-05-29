@@ -41,7 +41,7 @@ const HOUR = 3600;
  * @hidden
  * @param {string} str1 String 1
  * @param {string} str2 String 2
- * @returns {boolean}
+ * @return {boolean}
  */
 function _compare(str1, str2) {
     return typeof str1 === 'string' && typeof str2 === 'string' && str1.toLowerCase() === str2.toLowerCase();
@@ -53,7 +53,7 @@ function _compare(str1, str2) {
  * @param {Object} value Value
  * @param {number} length Length
  * @param {string} [chr] Char
- * @returns {string}
+ * @return {string}
  */
 function _lpad(value, length, chr) {
     const val = value.toString();
@@ -65,7 +65,7 @@ function _lpad(value, length, chr) {
  * @private
  * @hidden
  * @param {Object} [out] Out
- * @returns {Object}
+ * @return {Object}
  */
 function _extend(out) {
     out = out || {};
@@ -92,7 +92,7 @@ function _extend(out) {
  * @hidden
  * @param {string} val Value
  * @param {string[]} arr Argument
- * @returns {number}
+ * @return {number}
  */
 function _indexOf(val, arr) {
     for (let i = 0; i < arr.length; i++) {

@@ -12,9 +12,9 @@
     <% } %>
   </head>
   <body>
-  <div ng-show="mainCtrl.loading" class="loading-mask">
-    <i class="fa fa-spinner fa-spin spinner-loading-mask"></i>
-  </div>
+    <div ng-show="mainCtrl.loading" class="loading-mask">
+      <i class="fa fa-spinner fa-spin spinner-loading-mask"></i>
+    </div>
     <main>
       <div class="gmf-app-map-container" ng-class="{'gmf-app-infobar-active': mainCtrl.showInfobar}">
         <ngeo-displaywindow
@@ -76,7 +76,7 @@
       <ngeo-modal
           ngeo-modal-closable="false"
           ng-model="mainCtrl.userMustChangeItsPassword">
-        <div class="modal-header">
+        <div class="modal-header ui-draggable-handle">
           <h4 class="modal-title">
             {{'You must change your password' | translate}}
           </h4>

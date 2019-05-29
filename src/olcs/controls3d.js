@@ -18,7 +18,7 @@ const module = angular.module('ngeoOlcsControls3d', []);
  * @hidden
  * @param {number} older Older
  * @param {number} newer Newer
- * @returns {boolean} ?
+ * @return {boolean} ?
  */
 function shouldUpdate(older, newer) {
   return Number.isFinite(newer) && (!Number.isFinite(older) || Math.abs(newer - older) > 0.05);

@@ -472,7 +472,7 @@ QueryGridController.prototype.hasOneWithTooManyResults_ = function() {
 /**
  * Returns the value with all symbols and spaces replaced by an underscore.
  * @param {string|number} value A value to escape.
- * @returns {string|number} value An escaped value.
+ * @return {string|number} value An escaped value.
  */
 QueryGridController.prototype.escapeValue = function(value) {
   // Work-around for Number.isInteger() when not always getting a number ...
