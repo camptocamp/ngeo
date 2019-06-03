@@ -1,5 +1,3 @@
-/* eslint max-len: ["error", { "code": 110, "ignoreComments": true }] */
-
 import angular from 'angular';
 import gmfEditingEditFeature from 'gmf/editing/EditFeature.js';
 

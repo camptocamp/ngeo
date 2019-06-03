@@ -1,5 +1,3 @@
-/* eslint max-len: ["error", { "code": 110, "ignoreComments": true }] */
-
 import 'jquery';
 import angular from 'angular';
 import 'angular-gettext';

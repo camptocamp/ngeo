@@ -1,5 +1,3 @@
-/* eslint max-len: ["error", { "code": 110, "ignoreComments": true }] */
-
 import angular from 'angular';
 import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
 

@@ -1,5 +1,3 @@
-/* eslint max-len: ["error", { "code": 110, "ignoreComments": true }] */
-
 import './permalink.css';
 import angular from 'angular';
 import ngeoFormatFeatureHash from 'ngeo/format/FeatureHash.js';
