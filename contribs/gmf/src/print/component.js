@@ -1351,10 +1351,12 @@ class PrintController {
         }
       }
     }
-    return {
-      url: legendImage,
-      dpi: found_dpi,
-    };
+    if (legendImage) {
+      return {
+        url: legendImage,
+        dpi: found_dpi,
+      };
+    }
   }
 
 
