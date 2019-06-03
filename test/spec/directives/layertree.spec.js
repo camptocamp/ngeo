@@ -50,6 +50,7 @@ describe('ngeo.layertree.component', () => {
       $rootScope.$digest();
     });
 
+    // ts-ignore
     roottreeCtrl = element.scope().layertreeCtrl;
   });
 
