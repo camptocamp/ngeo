@@ -124,7 +124,7 @@ LayerHelper.prototype.createBasicWMSLayerFromDataSource = function(
   const url = dataSource.wmsUrl;
   console.assert(url);
 
-  const layerNames = dataSource.getOGCLayerNames().join(',');
+  const layerNames = dataSource.getWFSLayerNames().join(',');
   const serverType = dataSource.ogcServerType;
   const imageType = dataSource.ogcImageType;
 

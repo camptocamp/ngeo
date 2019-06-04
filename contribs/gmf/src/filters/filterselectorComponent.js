@@ -475,7 +475,7 @@ class FilterSelectorController {
    *
    *  1) have its name in the list of filtrable layer node names
    *  2) support WFS
-   *  3) have only one ogcLayers defined
+   *  3) have only one wfsLayers defined
    *  4) the ogcLayer must be queryable
    *
    * If 1) is true but not any of the others, then the server has not been
@@ -510,14 +510,14 @@ class FilterSelectorController {
       }
 
       // (3) The DS must have only one ogcLayer
-      if (!dataSource.ogcLayers || !dataSource.ogcLayers.length) {
+      if (!dataSource.wfsLayers || !dataSource.wfsLayers.length) {
         msgs.push(gettext.getString(
-          'The data source must have only 1 ogcLayer defined.'
+          'The data source must have only 1 wfsLayer defined.'
         ));
-      } else if (!dataSource.ogcLayers[0].queryable) {
+      } else if (!dataSource.wfsLayers[0].queryable) {
         // (4) The ogcLayer must be queryable
         msgs.push(gettext.getString(
-          'The ogcLayer within the data source must be queryable.'
+          'The wfsLayer within the data source must be queryable.'
         ));
       }
 
