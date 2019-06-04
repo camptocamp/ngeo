@@ -1,5 +1,3 @@
-/* eslint max-len: ["error", { "code": 110, "ignoreComments": true }] */
-
 import angular from 'angular';
 import ngeoFilterCondition from 'ngeo/filter/Condition.js';
 import ngeoFormatAttributeType from 'ngeo/format/AttributeType.js';

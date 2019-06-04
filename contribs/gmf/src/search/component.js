@@ -1,5 +1,3 @@
-/* eslint max-len: ["error", { "code": 110, "ignoreComments": true }] */
-
 import angular from 'angular';
 import {COORDINATES_LAYER_NAME} from 'gmf/index.js';
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';

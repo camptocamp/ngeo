@@ -374,7 +374,7 @@ export class LidarprofileManager {
     } catch (e) {
       if (!this.isPlotSetup_) {
         const canvas = d3select('#gmf-lidarprofile-container .lidar-canvas');
-        const canvasEl = canvas.node();
+        const canvasEl = /** @type {HTMLCanvasElement} */ (canvas.node());
         const ctx = canvasEl.getContext('2d');
         ctx.clearRect(0, 0, canvasEl.getBoundingClientRect().width, canvasEl.getBoundingClientRect().height);
         canvas.selectAll('*').remove();

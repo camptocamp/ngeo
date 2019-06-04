@@ -1,5 +1,4 @@
 // @ts-nocheck
-/* eslint max-len: 0 */
 
 /*!
  * @copyright Copyright &copy; Kartik Visweswaran, Krajee.com, 2014 - 2017
@@ -16,6 +15,9 @@
  * For more Yii related demos visit http://demos.krajee.com
  */
 
+
+/* eslint max-len: 0 */
+/* eslint @openlayers/valid-tsdoc: 0 */
 /* eslint valid-jsdoc: 0 */
 /* eslint quotes: 0 */
 /* eslint indent: 0 */

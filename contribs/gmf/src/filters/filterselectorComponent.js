@@ -1,5 +1,3 @@
-/* eslint max-len: ["error", { "code": 110, "ignoreComments": true }] */
-
 import angular from 'angular';
 import {CollectionEvent} from 'ol/Collection.js';
 import gmfAuthenticationService from 'gmf/authentication/Service.js';

@@ -1,5 +1,3 @@
-/* eslint max-len: ["error", { "code": 110, "ignoreComments": true }] */
-
 import angular from 'angular';
 import gmfEditingEnumerateAttribute from 'gmf/editing/EnumerateAttribute.js';
 import ngeoDatasourceHelper from 'ngeo/datasource/Helper.js';
