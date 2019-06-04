@@ -1,5 +1,3 @@
-/* eslint max-len: ["error", { "code": 110, "ignoreComments": true }] */
-
 import angular from 'angular';
 import {DATALAYERGROUP_NAME} from 'gmf/index.js';
 import gmfDatasourceDataSourceBeingFiltered from 'gmf/datasource/DataSourceBeingFiltered.js';

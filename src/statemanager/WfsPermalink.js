@@ -1,5 +1,3 @@
-/* eslint max-len: ["error", { "code": 110, "ignoreComments": true }] */
-
 import angular from 'angular';
 import * as olExtent from 'ol/extent.js';
 import {equalTo, and, or} from 'ol/format/filter.js';

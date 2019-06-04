@@ -1,4 +1,3 @@
-/* eslint max-len: ["error", { "code": 110, "ignoreComments": true }] */
 /* global Bloodhound */
 
 import angular from 'angular';

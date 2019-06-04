@@ -1,5 +1,3 @@
-/* eslint max-len: ["error", { "code": 110, "ignoreComments": true }] */
-
 import olFeature from 'ol/Feature.js';
 import olGeomLineString from 'ol/geom/LineString.js';
 import olGeomPoint from 'ol/geom/Point.js';
@@ -247,14 +245,16 @@ export default class {
     ctx.fillRect(0, 0, w, h);
 
     // Draw the profile canvas (the points) into the new canvas.
-    const profileCanvas = d3select('#gmf-lidarprofile-container .lidar-canvas').node();
-    ctx.drawImage(profileCanvas, margin.left, margin.top,
+    const profileCanvas = d3select('#gmf-lidarprofile-container .lidar-canvas');
+    const profileCanvasEl = /** @type {HTMLCanvasElement} */ (profileCanvas.node());
+    ctx.drawImage(profileCanvasEl, margin.left, margin.top,
       w - (margin.left + margin.right), h - (margin.top + margin.bottom));
 
     // Add transforms the profile into an image.
     const exportImage = new Image();
     const serializer = new XMLSerializer();
-    const svgStr = serializer.serializeToString(profileSVG.node());
+    const profileSVGEl = /** @type {HTMLElement} */ (profileSVG.node());
+    const svgStr = serializer.serializeToString(profileSVGEl);
 
     // Draw the image of the profile into the context of the new canvas.
     const img_id = 'lidare_profile_for_export_uid';

@@ -1,5 +1,3 @@
-/* eslint max-len: ["error", { "code": 110, "ignoreComments": true }] */
-
 import angular from 'angular';
 import {modulo} from 'ol/math.js';
 import {padNumber} from 'ol/string.js';

@@ -1,5 +1,3 @@
-/* eslint max-len: ["error", { "code": 110, "ignoreComments": true }] */
-
 import angular from 'angular';
 import * as olEvents from 'ol/events.js';
 
