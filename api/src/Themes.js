@@ -245,7 +245,7 @@ const capabilities = new Map();
  * @return {Promise<Object>} Any
  */
 function getWMTSCapability(url) {
-  if (!(url in capabilities)) {
+  if (!capabilities.has(url)) {
     const request = fetch(url)
       .then(response => response.text())
       .then((capability) => {

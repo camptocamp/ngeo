@@ -1,5 +1,3 @@
-/* eslint max-len: ["error", { "code": 110, "ignoreComments": true }] */
-
 import ngeoCustomEvent from 'ngeo/CustomEvent.js';
 import * as olDom from 'ol/dom.js';
 import * as olProj from 'ol/proj.js';

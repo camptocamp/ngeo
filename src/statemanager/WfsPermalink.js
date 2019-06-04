@@ -1,5 +1,3 @@
-/* eslint max-len: ["error", { "code": 110, "ignoreComments": true }] */
-
 import angular from 'angular';
 import {extend as extendExtent, createEmpty as createEmptyExtent} from 'ol/extent.js';
 import Feature from 'ol/Feature.js';

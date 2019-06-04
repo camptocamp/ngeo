@@ -1416,13 +1416,13 @@ export class PrintController {
         }
       }
     }
-    if (!legendImage) {
-      throw new Error('Missing legendImage');
+
+    if (legendImage) {
+      return {
+        url: legendImage,
+        dpi: found_dpi,
+      };
     }
-    return {
-      url: legendImage,
-      dpi: found_dpi,
-    };
   }
 
 
