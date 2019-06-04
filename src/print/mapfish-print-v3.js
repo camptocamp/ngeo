@@ -19,7 +19,7 @@
  * @typedef {Object} MapFishPrintCapabilitiesLayoutAttribute
  * @property {string} name Name of the form field.
  * @property {string|boolean|number} [default] Default value of the form field.
- * @property {string} value
+ * @property {string|boolean|number} value
  * @property {string} type Type of the field. Can be 'String', 'Boolean' or 'Number'.
  * @property {string} [clientParams]
  */

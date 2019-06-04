@@ -864,7 +864,7 @@ export class PrintController {
         this.layoutInfo.simpleAttributes.push({
           name,
           type,
-          value: `${value}`
+          value
         });
       }
     });
