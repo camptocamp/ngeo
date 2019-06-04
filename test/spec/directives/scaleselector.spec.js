@@ -58,6 +58,7 @@ describe('ngeo.map.scaleselector', () => {
       }
 
       expect(test).not.toThrow();
+      // @ts-ignore: scope
       expect(scope.scaleselectorCtrl.currentScale).toBe(scales[4]);
     });
 
