@@ -259,9 +259,7 @@ function d3Elevation(options) {
       height = Math.max(this.clientHeight - margin.top - margin.bottom, 0);
       y = d3scaleLinear().range([height, 0]);
 
-      /** @type {import('d3').Axis<import('d3').AxisDomain>} */
       const xAxis = d3axisBottom(x);
-      /** @type {import('d3').Axis<import('d3').AxisDomain>} */
       const yAxis = d3axisLeft(y);
 
       let area;
@@ -434,7 +432,7 @@ function d3Elevation(options) {
 
         g.select('.x.axis')
           .transition()
-          .call(xAxis);
+          .call(/** @type {any}*/ (xAxis));
 
         g.select('.x.label')
           .text(`${xAxisLabel} [${xUnits}]`)
@@ -448,12 +446,12 @@ function d3Elevation(options) {
 
         g.select('.y.axis')
           .transition()
-          .call(yAxis);
+          .call(/** @type {any}*/ (yAxis));
       }
 
       g.select('.grid-y')
         .transition()
-        .call(yAxis.tickSize(-width).tickFormat(null))
+        .call(/** @type {any}*/ (yAxis.tickSize(-width).tickFormat(null)))
         .selectAll('.tick line')
         .style('stroke', '#ccc')
         .style('opacity', 0.7);
