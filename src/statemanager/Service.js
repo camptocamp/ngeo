@@ -117,11 +117,7 @@ StatemanagerService.prototype.getInitialValue = function(key) {
  * @return {string|undefined} State value.
  */
 StatemanagerService.prototype.getInitialStringValue = function(key) {
-  const value = this.initialState[key];
-  if (value === undefined) {
-    return undefined;
-  }
-  return value;
+  return this.initialState[key];
 };
 
 

@@ -528,7 +528,8 @@ export function PermalinkService(
       this.ngeoBackgroundLayerMgr_,
       'change',
       this.handleBackgroundLayerManagerChange_,
-      this);
+      this
+    );
   }
 
   // visibility
@@ -843,7 +844,6 @@ PermalinkService.prototype.setMap = function(map) {
       this.registerMap_(map, null);
     }
   }
-
 };
 
 
@@ -940,8 +940,7 @@ PermalinkService.prototype.unregisterMap_ = function() {
 
 
 /**
- * Get the background layer object to use to initialize the map from the
- * state manager.
+ * Get the background layer object to use to initialize the map from the state manager.
  * @param {!Array.<!import("ol/layer/Base.js").default>} layers Array of background layer objects.
  * @return {?import("ol/layer/Base.js").default} Background layer.
  */
@@ -955,6 +954,16 @@ PermalinkService.prototype.getBackgroundLayer = function(layers) {
     }
   }
   return null;
+};
+
+
+/**
+ * Get the background layer opacity to use to initialize the map from the state manager.
+ * @return {number} Opacity.
+ */
+PermalinkService.prototype.getBackgroundLayerOpacity = function() {
+  const opacity_ = this.ngeoStateManager_.getInitialNumberValue(PermalinkParam.BG_LAYER_OPACITY);
+  return opacity_ === undefined ? undefined : opacity_ / 100;
 };
 
 
@@ -978,6 +987,31 @@ PermalinkService.prototype.handleBackgroundLayerManagerChange_ = function() {
   const object = {};
   object[PermalinkParam.BG_LAYER] = layerName;
   this.ngeoStateManager_.updateState(object);
+
+  const backgroundLayer = this.ngeoBackgroundLayerMgr_.getOpacityBgLayer(this.map_);
+  if (backgroundLayer) {
+    const opacity = this.getBackgroundLayerOpacity();
+    if (opacity !== undefined) {
+      backgroundLayer.setOpacity(opacity);
+    } else {
+      const opacity = backgroundLayer.getOpacity();
+      /** @type {Object<string, string>} */
+      const object = {};
+      object[PermalinkParam.BG_LAYER_OPACITY] = `${opacity * 100}`;
+      this.ngeoStateManager_.updateState(object);
+    }
+    olEvents.listen(
+      backgroundLayer,
+      'change:opacity',
+      () => {
+        const opacity = backgroundLayer.getOpacity();
+        /** @type {Object<string, string>} */
+        const object = {};
+        object[PermalinkParam.BG_LAYER_OPACITY] = `${opacity * 100}`;
+        this.ngeoStateManager_.updateState(object);
+      }
+    );
+  }
 };
 
 
