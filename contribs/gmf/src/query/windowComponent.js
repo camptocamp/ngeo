@@ -324,14 +324,15 @@ QueryWindowController.prototype.$onInit = function() {
   }
   highlightFeaturesOverlay.setStyle(highlightFeatureStyle);
 
+  const windowContainer = this.element_.find('.gmf-displayquerywindow .windowcontainer');
   if (this.desktop) {
-    this.element_.find('.gmf-displayquerywindow .windowcontainer').draggable({
-      'cancel': 'input,textarea,button,select,option,tr',
-      'containment': this.draggableContainment
+    windowContainer.draggable({
+      handle: '.header',
+      containment: this.draggableContainment
     });
-    this.element_.find('.gmf-displayquerywindow .windowcontainer').resizable({
-      'minHeight': 240,
-      'minWidth': 240
+    windowContainer.resizable({
+      minHeight: 240,
+      minWidth: 240
     });
   }
 };

@@ -260,13 +260,13 @@ export class Querent {
       throw new Error('Missing WFS URL');
     }
 
-    const ogcLayerNames = dataSource.getOGCLayerNames();
+    const wfsLayerNames = dataSource.getWFSLayerNames();
 
     const url = olUriAppendParams(dataSource.wfsUrl, {
       'REQUEST': 'DescribeFeatureType',
       'SERVICE': 'WFS',
       'VERSION': '2.0.0',
-      'TYPENAME': ogcLayerNames
+      'TYPENAME': wfsLayerNames
     });
 
     return this.http_.get(url).then((response) => {
@@ -444,7 +444,7 @@ export class Querent {
    * The type will be stocked in the properties of the features as
    * "ngeo_feature_type_".
    * @param {ngeoDatasourceOGC} dataSource used to read the features.
-   * @param {Document|Node|Object|string} data the response data.
+   * @param {Document|Element|string} data the response data.
    * @param {boolean} wfs Whether the query was WFS or WMS.
    * @return {Array<import("ol/Feature.js").default>} returned features with a type in each features.
    * @private
@@ -602,8 +602,7 @@ export class Querent {
         }
 
         // (b) Add queryable layer names in featureTypes array
-        featureTypes = featureTypes.concat(
-          dataSource.getInRangeOGCLayerNames(resolution, true));
+        featureTypes = featureTypes.concat(dataSource.getInRangeWFSLayerNames(resolution, true));
 
         // (c) Add filter, if any. If the case, then only one data source
         //     is expected to be used for this request.
@@ -805,8 +804,7 @@ export class Querent {
         }
 
         // (b) Add queryable layer names in featureTypes array
-        LAYERS = LAYERS.concat(
-          dataSource.getInRangeOGCLayerNames(resolution, true));
+        LAYERS = LAYERS.concat(dataSource.getWMSLayerNames(true));
 
         // (c) Manage active dimensions, which are added directly to the
         //     query parameters. Note that this occurs only ONCE, i.e.
@@ -823,7 +821,7 @@ export class Querent {
         //     data source only.
         if (dataSource.filterRules && dataSource.filterRules.length) {
           console.assert(dataSources.length === 1);
-          filtrableLayerName = dataSource.getFiltrableOGCLayerName();
+          filtrableLayerName = dataSource.getFiltrableWFSLayerName();
           filterString = this.ngeoRuleHelper_.createFilterString({
             dataSource: dataSource,
             srsName: projCode

@@ -235,7 +235,7 @@ export function AbstractAppController(config, map, $scope, $injector) {
       if (!themeName) {
         throw new Error('Missing themeName');
       }
-      this.gmfThemeManager.updateCurrentTheme(themeName, previousThemeName);
+      this.gmfThemeManager.updateCurrentTheme(themeName, previousThemeName, true);
     }
     this.setDefaultBackground_(null);
     this.updateHasEditableLayers_();
@@ -711,7 +711,7 @@ AbstractAppController.prototype.initLanguage = function() {
   const browserLanguage = /** @type {string|undefined} */
       (this.getBrowserLanguage(Object.keys(this.langUrls)));
   const urlLanguage = /** @type {string|undefined} */
-      (this.stateManager.getInitialValue('lang'));
+      (this.stateManager.getInitialStringValue('lang'));
 
   if (urlLanguage !== undefined && urlLanguage in this.langUrls) {
     this.switchLanguage(urlLanguage);

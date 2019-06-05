@@ -110,21 +110,8 @@ export class StatemanagerService {
    * @param {string} key State key.
    * @return {string|undefined} State value.
    */
-  getInitialValue(key) {
-    return this.initialState[key];
-  }
-
-  /**
-   * Get the state value for `key`.
-   * @param {string} key State key.
-   * @return {string|undefined} State value.
-   */
   getInitialStringValue(key) {
-    const value = this.initialState[key];
-    if (value === undefined) {
-      return undefined;
-    }
-    return value;
+    return this.initialState[key];
   }
 
   /**

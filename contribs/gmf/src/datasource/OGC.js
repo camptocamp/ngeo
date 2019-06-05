@@ -27,8 +27,10 @@ import ngeoDatasourceOGC from 'ngeo/datasource/OGC.js';
  * @property {boolean} [filtrable] Whether the data source is filtrable or not.
  * @property {string} [geometryName] The name of the geometry attribute.
  * @property {string} [ogcImageType] The type of images to fetch by queries by the (WMS) or (WMTS).
- * @property {Array<import('ngeo/datasource/OGC').OGCLayer>} [ogcLayers] A list of layer definitions that
- *    are used by (WMS) and (WFS) queries.
+ * @property {Array<import('ngeo/datasource/OGC').WMSLayer>} [wmsLayers] A list of layer definitions that are used by WMS queries.
+ *    These are **not** used by the (WMTS) queries (the wmtsLayers is used by WMTS queries).
+ * @property {Array<import('ngeo/datasource/OGC').WFSLayer>} [wfsLayers] A list of layer definitions that
+ *    are used by WFS queries.
  *    These are **not** used by the (WMTS) queries (the wmtsLayers is used by WMTS queries).
  * @property {string} [ogcServerType] The type of OGC server.
  * @property {string} [ogcType] The type data source. Can be: 'WMS' or 'WMTS'.

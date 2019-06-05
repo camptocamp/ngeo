@@ -99,8 +99,9 @@ export const WMSInfoFormat = {
  * @property {boolean} [filtrable] Whether the data source is filtrable or not.
  * @property {string} [geometryName] The name of the geometry attribute.
  * @property {string} [ogcImageType] The type of images to fetch by queries by the (WMS) or (WMTS).
- * @property {OGCLayer[]} [ogcLayers] A list of layer definitions that are used by (WMS) and (WFS)
- *    queries.
+ * @property {WMSLayer[]} [wmsLayers] A list of layer definitions that are used by WMS queries.
+ *    These are **not** used by the (WMTS) queries (the wmtsLayers is used by WMTS queries).
+ * @property {WFSLayer[]} [wfsLayers] A list of layer definitions that are used by WFS queries.
  *    These are **not** used by the (WMTS) queries (the wmtsLayers is used by WMTS queries).
  * @property {string} [ogcServerType] The type of OGC server.
  * @property {string} [ogcType] The type data source. Can be: 'WMS' or 'WMTS'.
@@ -142,7 +143,16 @@ export const WMSInfoFormat = {
 /**
  * The definition of a single layer (WMS) and/or featureType (WFS).
  *
- * @typedef {Object} OGCLayer
+ * @typedef {Object} WMSLayer
+ * @property {string} name The layer name (WMS) and/or feature type name (WFS)
+ * @property {boolean} [queryable] Whether the the layer is queryable or not. Defaults to `false`.
+ */
+
+
+/**
+ * The definition of a single layer (WMS) and/or featureType (WFS).
+ *
+ * @typedef {Object} WFSLayer
  * @property {number} [maxResolution] The maximum resolution the layer should be rendered (when visible).
  * @property {number} [minResolution] The minimum resolution the layer should be rendered (when visible).
  * @property {string} name The layer name (WMS) and/or feature type name (WFS)
@@ -280,13 +290,22 @@ class OGC extends ngeoDatasourceDataSource {
     this.ogcImageType_ = options.ogcImageType || 'image/png';
 
     /**
-     * A list of layer definitions that are used by (WMS) and (WFS) queries.
+     * A list of layer definitions that are used by WMS queries.
      * These are **not** used by the (WMTS) queries (the wmtsLayers is used
      * by WMTS queries).
-     * @type {?OGCLayer[]}
+     * @type {?Array<WMSLayer>}
      * @private
      */
-    this.ogcLayers_ = options.ogcLayers || null;
+    this.wmsLayers_ = options.wmsLayers || null;
+
+    /**
+     * A list of layer definitions that are used by WFS queries.
+     * These are **not** used by the (WMTS) queries (the wmtsLayers is used
+     * by WMTS queries).
+     * @type {?WFSLayer[]}
+     * @private
+     */
+    this.wfsLayers_ = options.wfsLayers || null;
 
     /**
      * The type of OGC server making the requests.
@@ -430,17 +449,30 @@ class OGC extends ngeoDatasourceDataSource {
     // === Calculated properties ===
 
     // Get queryable ogc layer names
-    const layers = [];
-    if (this.queryable && this.ogcLayers) {
-      for (const ogcLayer of this.ogcLayers) {
-        if (ogcLayer.queryable) {
-          layers.push(ogcLayer.name);
+    const wfsLayers = [];
+    if (this.queryable && this.wfsLayers) {
+      for (const wfsLayer of this.wfsLayers) {
+        if (wfsLayer.queryable) {
+          wfsLayers.push(wfsLayer.name);
+        }
+      }
+    }
+    const wmsLayers = [];
+    if (this.queryable) {
+      for (const wmsLayer of (this.wmsLayers || [])) {
+        if (wmsLayer.queryable) {
+          wmsLayers.push(wmsLayer.name);
+        }
+      }
+      for (const wfsLayer of this.wfsLayers || []) {
+        if (wfsLayer.queryable) {
+          wmsLayers.push(wfsLayer.name);
         }
       }
     }
 
     let wfsFormat = null;
-    if (this.supportsWFS && layers.length) {
+    if (this.supportsWFS && wfsLayers.length) {
       let format;
       if (this.wfsOutputFormat_ === WFSOutputFormat.GML3) {
         format = new olFormatGML3();
@@ -452,7 +484,7 @@ class OGC extends ngeoDatasourceDataSource {
       console.assert(format);
       wfsFormat = new olFormatWFS({
         featureNS: this.wfsFeatureNS,
-        featureType: layers,
+        featureType: wfsLayers,
         gmlFormat: format
       });
     }
@@ -464,10 +496,10 @@ class OGC extends ngeoDatasourceDataSource {
     this.wfsFormat_ = wfsFormat;
 
     let wmsFormat = null;
-    if (this.supportsWMS && layers.length) {
+    if (this.supportsWMS && wmsLayers.length) {
       if (this.wmsInfoFormat === WMSInfoFormat.GML) {
         wmsFormat = new olFormatWMSGetFeatureInfo({
-          layers
+          layers: wmsLayers
         });
       }
       // Todo, support more formats for WMS
@@ -577,10 +609,17 @@ class OGC extends ngeoDatasourceDataSource {
   }
 
   /**
-   * @return {?OGCLayer[]} OGC layers
+   * @return {?WMSLayer[]} WMS layers
    */
-  get ogcLayers() {
-    return this.ogcLayers_;
+  get wmsLayers() {
+    return this.wmsLayers_;
+  }
+
+  /**
+   * @return {?Array<WFSLayer>} TFS layers
+   */
+  get wfsLayers() {
+    return this.wfsLayers_;
   }
 
   /**
@@ -769,14 +808,16 @@ class OGC extends ngeoDatasourceDataSource {
    */
   get queryable() {
     let queryable = false;
-    const supportsOGCQueries = this.supportsWMS || this.supportsWFS;
-    if (supportsOGCQueries && this.ogcLayers) {
-      for (const ogcLayer of this.ogcLayers) {
-        if (ogcLayer.queryable === true) {
+    if (this.supportsWFS && this.wfsLayers) {
+      for (const wfsLayer of this.wfsLayers) {
+        if (wfsLayer.queryable === true) {
           queryable = true;
           break;
         }
       }
+    }
+    if (this.supportsWMS && this.wmsLayers && this.wmsLayers.length > 0) {
+      queryable = true;
     }
     return queryable;
   }
@@ -804,9 +845,9 @@ class OGC extends ngeoDatasourceDataSource {
   get supportsAttributes() {
     return this.attributes !== null || (
       this.supportsWFS &&
-      this.ogcLayers !== null &&
-      this.ogcLayers.length === 1 &&
-      this.ogcLayers[0].queryable === true
+      this.wfsLayers !== null &&
+      this.wfsLayers.length === 1 &&
+      this.wfsLayers[0].queryable === true
     );
   }
 
@@ -881,31 +922,52 @@ class OGC extends ngeoDatasourceDataSource {
    * @return {boolean} At least one OGC layer is in range.
    */
   isAnyOGCLayerInRange(res, queryableOnly = false) {
-    return !!(this.getInRangeOGCLayerNames(res, queryableOnly).length);
+    return !!(this.getInRangeWFSLayerNames(res, queryableOnly).length);
   }
 
   /**
-   * Returns a list of OGC layer names that are in range of a given resolution.
-   * If there's no OGC layers defined, an empty array is returned.
-   * @param {number} res Resolution.
+   * Returns the list of WMS layer names.
    * @param {boolean} queryableOnly Whether to additionally check if the
-   *     OGC layer is queryable as well or not. Defaults to `false`.
-   * @return {string[]} The OGC layer names that are in range.
+   *     WMS layer is queryable as well or not. Defaults to `false`.
+   * @return {Array<string>} The WMS layer names.
    */
-  getInRangeOGCLayerNames(res, queryableOnly = false) {
+  getWMSLayerNames(queryableOnly = false) {
 
     const layerNames = [];
 
-    if (this.ogcLayers) {
-      for (const ogcLayer of this.ogcLayers) {
-        const maxRes = ogcLayer.maxResolution;
-        const minRes = ogcLayer.minResolution;
+    if (this.wmsLayers) {
+      for (const wmsLayer of this.wmsLayers) {
+        if (!queryableOnly || wmsLayer.queryable) {
+          layerNames.push(wmsLayer.name);
+        }
+      }
+    }
+
+    return layerNames;
+  }
+
+  /**
+   * Returns a list of WFS layer names that are in range of a given resolution.
+   * If there's no WFS layers defined, an empty array is returned.
+   * @param {number} res Resolution.
+   * @param {boolean} queryableOnly Whether to additionally check if the
+   *     WFS layer is queryable as well or not. Defaults to `false`.
+   * @return {string[]} The WFS layer names that are in range.
+   */
+  getInRangeWFSLayerNames(res, queryableOnly = false) {
+
+    const layerNames = [];
+
+    if (this.wfsLayers) {
+      for (const wfsLayer of this.wfsLayers) {
+        const maxRes = wfsLayer.maxResolution;
+        const minRes = wfsLayer.minResolution;
         const inMinRange = minRes === undefined || res >= minRes;
         const inMaxRange = maxRes === undefined || res <= maxRes;
         const inRange = inMinRange && inMaxRange;
 
-        if (inRange && (!queryableOnly || ogcLayer.queryable)) {
-          layerNames.push(ogcLayer.name);
+        if (inRange && (!queryableOnly || wfsLayer.queryable)) {
+          layerNames.push(wfsLayer.name);
         }
       }
     }
@@ -914,19 +976,19 @@ class OGC extends ngeoDatasourceDataSource {
   }
 
   /**
-   * Returns the list of OGC layer names.
+   * Returns the list of WFS layer names.
    * @param {boolean} queryableOnly Whether to additionally check if the
-   *     OGC layer is queryable as well or not. Defaults to `false`.
-   * @return {string[]} The OGC layer names.
+   *     WFS layer is queryable as well or not. Defaults to `false`.
+   * @return {string[]} The WFS layer names.
    */
-  getOGCLayerNames(queryableOnly = false) {
+  getWFSLayerNames(queryableOnly = false) {
 
     const layerNames = [];
 
-    if (this.ogcLayers) {
-      for (const ogcLayer of this.ogcLayers) {
-        if (!queryableOnly || ogcLayer.queryable) {
-          layerNames.push(ogcLayer.name);
+    if (this.wfsLayers) {
+      for (const wfsLayer of this.wfsLayers) {
+        if (!queryableOnly || wfsLayer.queryable) {
+          layerNames.push(wfsLayer.name);
         }
       }
     }
@@ -935,13 +997,13 @@ class OGC extends ngeoDatasourceDataSource {
   }
 
   /**
-   * Returns the filtrable OGC layer name. This methods asserts that
+   * Returns the filtrable WFS layer name. This methods asserts that
    * the name exists and is filtrable.
-   * @return {string} OGC layer name.
+   * @return {string} WFS layer name.
    */
-  getFiltrableOGCLayerName() {
+  getFiltrableWFSLayerName() {
     console.assert(this.filtrable);
-    const layerNames = this.getOGCLayerNames();
+    const layerNames = this.getWFSLayerNames();
     console.assert(layerNames.length === 1);
     return layerNames[0];
   }
