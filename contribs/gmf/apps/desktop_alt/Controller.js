@@ -161,7 +161,7 @@ class Controller extends AbstractDesktopController {
    * @param {JQueryEventObject} event keydown event.
    */
   onKeydown(event) {
-    if (event.ctrlKey && event.key === 'p') {
+    if (event && event.ctrlKey && event.key === 'p') {
       this.printPanelActive = true;
       event.preventDefault();
     }
