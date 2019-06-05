@@ -353,7 +353,7 @@ export class ExternalDatSourcesManager {
         id: id,
         name: layer['Title'],
         ogcImageType: ogcImageType,
-        ogcLayers: [{
+        wmsLayers: [{
           name: layer['Name'],
           queryable: queryable
         }],

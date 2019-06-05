@@ -1633,7 +1633,7 @@ PermalinkService.prototype.setExternalDataSourcesState_ = function() {
           // External WMS data sources always have only one OGC layer name,
           // as they are created using a single Capability Layer object that
           // has only 1 layer name
-          const layerName = wmsDataSource.getOGCLayerNames()[0];
+          const layerName = wmsDataSource.getWFSLayerNames()[0];
           wmsGroupLayerNames.push(layerName);
         }
       }

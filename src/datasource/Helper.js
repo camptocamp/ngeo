@@ -97,7 +97,7 @@ export class DatasourceHelper {
       ).then((featureType) => {
         // We know, at this point, that there's only one definition that
         // was returned.  Just to be sure, let's do a bunch of assertions.
-        const ogcLayerName = dataSource.getOGCLayerNames()[0];
+        const ogcLayerName = dataSource.getWFSLayerNames()[0];
         console.assert(typeof ogcLayerName == 'string', 'The data source should have only one ogcLayer.');
         for (const element of featureType.element) {
           if (element.name === ogcLayerName) {
