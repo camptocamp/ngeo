@@ -46,7 +46,7 @@ cd ngeo
 make serve-ngeo
 ```
 
-The ngeo examples are now available on your http://localhost:3000/examples/.
+The ngeo examples are now available on your https://localhost:3000/examples/.
 
 ### Run GeoMapFish
 
@@ -56,7 +56,7 @@ To run the GeoMapFish examples:
 make serve-gmf
 ```
 
-then visit http://localhost:3000/contribs/gmf/examples/.
+then visit https://localhost:3000/contribs/gmf/examples/.
 
 To run the GeoMapFish applications:
 
@@ -65,8 +65,8 @@ serve-gmf-apps
 ```
 
 then visit them using
-http://localhost:3000/contribs/gmf/apps/<app_name>.html, for example:
-http://localhost:3000/contribs/gmf/apps/desktop.html
+https://localhost:3000/contribs/gmf/apps/<app_name>.html, for example:
+https://localhost:3000/contribs/gmf/apps/desktop.html
 
 ### Go further
 
