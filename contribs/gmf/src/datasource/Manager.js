@@ -462,7 +462,8 @@ export class DatasourceManager {
     const ogcType = gmfLayer.type;
     let maxResolution = 0;
     let minResolution = 0;
-    let ogcLayers;
+    let wmsLayers;
+    let wfsLayers;
     let ogcServer;
     let wmtsLayer;
     let wmtsUrl;
@@ -482,7 +483,13 @@ export class DatasourceManager {
       // OGC Layers
       const layers = meta.queryLayers || meta.wmsLayers;
       if (layers) {
-        ogcLayers = layers.split(',').map((layer) => {
+        wmsLayers = layers.split(',').map((layer) => {
+          return {
+            name: layer,
+            queryable: true
+          };
+        });
+        wfsLayers = layers.split(',').map((layer) => {
           return {
             maxResolution: maxResolution,
             minResolution: minResolution,
@@ -506,7 +513,20 @@ export class DatasourceManager {
       minResolution = gmfLayerWMS.minResolutionHint;
 
       // OGC Layers
-      ogcLayers = gmfLayerWMS.childLayers.map((childLayer) => {
+      let queryable = false;
+      for (const wfslayer of gmfLayerWMS.childLayers) {
+        if (wfslayer.queryable) {
+          queryable = true;
+          break;
+        }
+      }
+      wmsLayers = gmfLayerWMS.layers.split(',').map((childLayer) => {
+        return {
+          name: childLayer,
+          queryable: queryable,
+        };
+      });
+      wfsLayers = gmfLayerWMS.childLayers.map((childLayer) => {
         return {
           maxResolution: childLayer.maxResolutionHint,
           minResolution: childLayer.minResolutionHint,
@@ -601,8 +621,11 @@ export class DatasourceManager {
     if (ogcImageType) {
       options.ogcImageType = ogcImageType;
     }
-    if (ogcLayers) {
-      options.ogcLayers = ogcLayers;
+    if (wmsLayers) {
+      options.wmsLayers = wmsLayers;
+    }
+    if (wfsLayers) {
+      options.wfsLayers = wfsLayers;
     }
     if (ogcServerType) {
       options.ogcServerType = ogcServerType;

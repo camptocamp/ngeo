@@ -136,7 +136,11 @@ function MainController($scope, ngeoDataSources) {
     visible: true,
     wfsFeatureNS: MAPSERVER_WFS_FEATURE_NS,
     wfsUrl: MAPSERVER_PROXY,
-    ogcLayers: [{
+    wmsLayers: [{
+      name: 'bus_stop',
+      queryable: true
+    }],
+    wfsLayers: [{
       name: 'bus_stop',
       queryable: true
     }]
@@ -148,7 +152,11 @@ function MainController($scope, ngeoDataSources) {
     visible: true,
     wfsFeatureNS: MAPSERVER_WFS_FEATURE_NS,
     wfsUrl: MAPSERVER_PROXY,
-    ogcLayers: [{
+    wmsLayers: [{
+      name: 'information',
+      queryable: true
+    }],
+    wfsLayers: [{
       name: 'information',
       queryable: true
     }]

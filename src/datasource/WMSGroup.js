@@ -172,7 +172,7 @@ export default class extends ngeoDatasourceOGCGroup {
     // (1) Collect layer names from data sources in the group
     for (const dataSource of this.dataSources) {
       if (dataSource instanceof ngeoDatasourceOGC && dataSource.visible) {
-        layerNames = layerNames.concat(dataSource.getOGCLayerNames());
+        layerNames = layerNames.concat(dataSource.getWFSLayerNames());
       }
     }
 

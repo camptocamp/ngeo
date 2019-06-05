@@ -37,7 +37,7 @@ export class DatasourceWFSAlias {
     // Only QGIS Server supports WFS aliases
     if (dataSource.ogcServerType === ServerType.QGISSERVER &&
       dataSource.wfsUrl_ &&
-      dataSource.getOGCLayerNames().length == 1 &&
+      dataSource.getWFSLayerNames().length == 1 &&
       !dataSource.attributes) {
       // Trigger an additional WFS DescribeFeatureType request to get
       // datasource attributes, including aliases.
