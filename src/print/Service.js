@@ -273,7 +273,7 @@ PrintService.prototype.encodeImageWmsLayer_ = function(arr, layer) {
 
 /**
  * @param {Array<import('ngeo/print/mapfish-print-v3.js').MapFishPrintLayer>} arr Array.
- * @param {import("ol/layer/Image.js").default} layer The layer.
+ * @param {import("ol/layer/Image.js").default|import("ol/layer/Tile.js").default} layer The layer.
  * @param {string} url Url of the WMS server.
  * @param {Object} params Url parameters
  * @private

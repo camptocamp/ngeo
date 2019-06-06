@@ -282,7 +282,7 @@ class RuleController {
     this.drawToolActivate = new ngeoMiscToolActivate(this, 'drawActive');
 
     /**
-     * @type {import("ol/Collection.js").default<import("ol/Feature.js").default>}
+     * @type {import("ol/Collection.js").default<Feature<import("ol/geom/Geometry.js").default>>}
      */
     this.drawnFeatures = new olCollection();
 
@@ -293,7 +293,7 @@ class RuleController {
     this.menu_ = null;
 
     /**
-     * @type {import("ol/Collection.js").default<import("ol/Feature.js").default>}
+     * @type {import("ol/Collection.js").default<Feature<import("ol/geom/Geometry.js").default>>}
      */
     this.selectedFeatures = new olCollection();
 
@@ -940,7 +940,7 @@ class RuleController {
       const feature = this.map.forEachFeatureAtPixel(
         pixel,
         (feature) => {
-          /** @type {?Feature} */
+          /** @type {?Feature<import("ol/geom/Geometry.js").default>} */
           let ret = null;
           if (!(feature instanceof Feature)) {
             throw new Error('Wrong feature type');

@@ -18,7 +18,7 @@ export class DrawController {
    * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext service.
    * @param {import("ngeo/misc/FeatureHelper.js").FeatureHelper} ngeoFeatureHelper Ngeo feature helper
    *    service.
-   * @param {import("ol/Collection.js").default<import("ol/Feature.js").default>} ngeoFeatures Collection of
+   * @param {import("ol/Collection.js").default<olFeature<import("ol/geom/Geometry.js").default>>} ngeoFeatures Collection of
    *    features.
    * @ngInject
    */
@@ -31,7 +31,7 @@ export class DrawController {
     /**
      * Alternate collection of features in which to push the drawn features.
      * If not defined, then `ngeoFeatures` is used instead.
-     * @type {?import("ol/Collection.js").default<import("ol/Feature.js").default>}
+     * @type {?import("ol/Collection.js").default<olFeature<import("ol/geom/Geometry.js").default>>}
      */
     this.features = null;
 
@@ -65,7 +65,7 @@ export class DrawController {
     this.featureHelper_ = ngeoFeatureHelper;
 
     /**
-     * @type {import("ol/Collection.js").default<import("ol/Feature.js").default>}
+     * @type {import("ol/Collection.js").default<olFeature<import("ol/geom/Geometry.js").default>>}
      * @private
      */
     this.ngeoFeatures_ = ngeoFeatures;

@@ -240,6 +240,19 @@
 
 
 /**
+ * @typedef {Object} MapFishPrintLegend
+ * @property {MapFishPrintLegendClass[]} classes
+ */
+
+
+/**
+ * @typedef {Object} MapFishPrintLegendClass
+ * @property {string} name
+ * @property {string[]} icons
+ */
+
+
+/**
  * @hidden
  * @type {null}
  */

@@ -72,21 +72,21 @@ export default class extends olInteractionInteraction {
 
     /**
      * Sketch feature.
-     * @type {?import("ol/Feature.js").default}
+     * @type {?olFeature<import("ol/geom/Geometry.js").default>}
      * @private
      */
     this.sketchFeature_ = null;
 
     /**
      * Previous sketch points, saved to be able to display them on the layer.
-     * @type {Array<import("ol/Feature.js").default>}
+     * @type {Array<olFeature<import("ol/geom/Geometry.js").default>>}
      * @private
      */
     this.sketchPoints_ = [];
 
     /**
      * Current sketch point.
-     * @type {?import("ol/Feature.js").default}
+     * @type {?olFeature<import("ol/geom/Geometry.js").default>}
      * @private
      */
     this.sketchPoint_ = null;
@@ -174,7 +174,7 @@ export default class extends olInteractionInteraction {
 
   /**
    * Returns the current sketch feature.
-   * @return {?import("ol/Feature.js").default} The sketch feature, or null if none.
+   * @return {?olFeature<import("ol/geom/Geometry.js").default>} The sketch feature, or null if none.
    */
   getFeature() {
     return this.sketchFeature_;
@@ -376,7 +376,7 @@ export default class extends olInteractionInteraction {
 
   /**
    * Stop drawing without adding the sketch feature to the target layer.
-   * @return {?import("ol/Feature.js").default} The sketch feature (or null if none).
+   * @return {?olFeature<import("ol/geom/Geometry.js").default>} The sketch feature (or null if none).
    * @private
    */
   abortDrawing_() {
@@ -384,7 +384,8 @@ export default class extends olInteractionInteraction {
     if (sketchFeature || this.sketchPoints_.length > 0) {
       this.sketchFeature_ = null;
       this.sketchPoint_ = null;
-      /** @type {olSourceVector} */(this.overlay_.getSource()).clear(true);
+      /** @type {olSourceVector<import("ol/geom/Geometry.js").default>} */(this.overlay_.getSource())
+        .clear(true);
     }
     this.sketchPoints_ = [];
     this.set('dirty', false);
@@ -457,7 +458,9 @@ export default class extends olInteractionInteraction {
     if (this.sketchPoint_) {
       sketchFeatures.push(this.sketchPoint_);
     }
-    const overlaySource = /** @type {olSourceVector} */(this.overlay_.getSource());
+    const overlaySource = /** @type {olSourceVector<import("ol/geom/Geometry.js").default>} */(
+      this.overlay_.getSource()
+    );
     overlaySource.clear(true);
     overlaySource.addFeatures(sketchFeatures);
     overlaySource.addFeatures(this.sketchPoints_);

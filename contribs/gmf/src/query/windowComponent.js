@@ -200,7 +200,7 @@ export function QueryWindowController(
   this.selectedSource = null;
 
   /**
-   * @type {import("ol/Collection.js").default<import('ol/Feature.js').default>}
+   * @type {import("ol/Collection.js").default<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>}
    * @private
    */
   this.features_ = new olCollection();
@@ -212,7 +212,7 @@ export function QueryWindowController(
   this.ngeoFeatureOverlayMgr_ = ngeoFeatureOverlayMgr;
 
   /**
-   * @type {import("ol/Collection.js").default<import('ol/Feature.js').default>}
+   * @type {import("ol/Collection.js").default<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>}
    * @private
    */
   this.highlightFeatures_ = new olCollection();
@@ -223,7 +223,7 @@ export function QueryWindowController(
   this.source = null;
 
   /**
-   * @type {?import("ol/Feature.js").default}
+   * @type {?import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>}
    */
   this.feature = null;
 
@@ -534,7 +534,7 @@ QueryWindowController.prototype.collectFeatures_ = function() {
 
 /**
  * Highlight the current displayed feature.
- * @param {import("ol/Feature.js").default=} opt_lastFeature last highlighted feature. Require if
+ * @param {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>=} opt_lastFeature last highlighted feature. Require if
  * it exists because it must be added to the 'non-selected' features collection.
  * @private
  */

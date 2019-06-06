@@ -116,7 +116,7 @@ class Controller {
     this.map = null;
 
     /**
-     * @type {?import("ol/Feature.js").default}
+     * @type {?olFeature<import("ol/geom/Geometry.js").default>}
      */
     this.feature = null;
 
@@ -136,18 +136,18 @@ class Controller {
     this.strokeColor = '';
 
     /**
-     * @type {?function(import("ol/Feature.js").default): void}
+     * @type {?function(olFeature<import("ol/geom/Geometry.js").default>): void}
      */
     this.onChange = null;
 
     /**
-     * @type {import("ol/Collection.js").default<import("ol/Feature.js").default>}
+     * @type {import("ol/Collection.js").default<olFeature<import("ol/geom/Geometry.js").default>>}
      * @private
      */
     this.vectorFeatures_ = new olCollection();
 
     /**
-     * @type {import("ol/source/Vector.js").default}
+     * @type {import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>}
      * @private
      */
     this.vectorSource_ = new olSourceVector({
@@ -338,7 +338,7 @@ class Controller {
   /**
    * Snaps a feature to the street network using the getNearest
    * function of the routing service. Replaces the feature.
-   * @param {import("ol/Feature.js").default} feature Feature to snap
+   * @param {olFeature<import("ol/geom/Geometry.js").default>} feature Feature to snap
    * @private
    */
   snapFeature_(feature) {
@@ -373,7 +373,7 @@ class Controller {
 
   /**
    * Converts feature point into LonLat coordinate.
-   * @param {import("ol/Feature.js").default} point Feature point to convert
+   * @param {olFeature<import("ol/geom/Geometry.js").default>} point Feature point to convert
    * @return {?import("ol/coordinate.js").Coordinate} LonLat coordinate
    * @private
    */
@@ -410,10 +410,10 @@ class Controller {
  * See the [../examples/routing.html](../examples/routing.html) example for a usage sample.
  *
  * @htmlAttribute {import("ol/Map.js").default} ngeo-routing-feature-map The map.
- * @htmlAttribute {import("ol/Feature.js").default} ngeo-routing-feature-feature The feature.
+ * @htmlAttribute {olFeature<import("ol/geom/Geometry.js").default>} ngeo-routing-feature-feature The feature.
  * @htmlAttribute {string} ngeo-routing-feature-fill-color The marker fill color.
  * @htmlAttribute {string} ngeo-routing-feature-stroke-color The marker stroke color.
- * @htmlAttribute {function(import("ol/Feature.js").default)} ngeo-routing-feature-on-change Event fired when
+ * @htmlAttribute {function(olFeature<import("ol/geom/Geometry.js").default>)} ngeo-routing-feature-on-change Event fired when
  *    feature changes.
  * @ngdoc directive
  * @ngname ngeoRoutingFeature

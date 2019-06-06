@@ -15,7 +15,7 @@ import {CollectionEvent} from 'ol/Collection.js';
 
 /**
  * @typedef {Object} RotateEventItem
- * @property {import("ol/Feature.js").default} feature
+ * @property {olFeature<import("ol/geom/Geometry.js").default>} feature
  */
 
 
@@ -74,14 +74,14 @@ export default class extends olInteractionPointer {
       options.pixelTolerance : 10;
 
     /**
-     * @type {import("ol/Collection.js").default<import("ol/Feature.js").default>}
+     * @type {import("ol/Collection.js").default<olFeature<import("ol/geom/Geometry.js").default>>}
      * @private
      */
     this.features_ = options.features;
 
     /**
      * The feature currently modified.
-     * @type {?import("ol/Feature.js").default}
+     * @type {?olFeature<import("ol/geom/Geometry.js").default>}
      * @private
      */
     this.feature_ = null;
@@ -114,7 +114,7 @@ export default class extends olInteractionPointer {
     });
 
     /**
-     * @type {Object<string, import("ol/Feature.js").default>}
+     * @type {Object<string, olFeature<import("ol/geom/Geometry.js").default>>}
      * @private
      */
     this.centerFeatures_ = {};
@@ -157,7 +157,7 @@ export default class extends olInteractionPointer {
   }
 
   /**
-   * @param {import("ol/Feature.js").default} feature Feature.
+   * @param {olFeature<import("ol/geom/Geometry.js").default>} feature Feature.
    * @private
    */
   addFeature_(feature) {
@@ -173,7 +173,9 @@ export default class extends olInteractionPointer {
     const point = new olGeomPoint(this.getCenterCoordinate_(geometry));
     const centerFeature = new olFeature(point);
     this.centerFeatures_[uid] = centerFeature;
-    /** @type {olSourceVector} */(this.overlay_.getSource()).addFeature(centerFeature);
+    /** @type {olSourceVector<import("ol/geom/Geometry.js").default>} */(
+      this.overlay_.getSource()
+    ).addFeature(centerFeature);
   }
 
   /**
@@ -189,7 +191,7 @@ export default class extends olInteractionPointer {
   }
 
   /**
-   * @param {import("ol/Feature.js").default} feature Feature.
+   * @param {olFeature<import("ol/geom/Geometry.js").default>} feature Feature.
    * @private
    */
   removeFeature_(feature) {
@@ -236,7 +238,7 @@ export default class extends olInteractionPointer {
    */
   handleFeatureRemove_(evt) {
     if (evt instanceof CollectionEvent) {
-      const feature = /** @type {import("ol/Feature.js").default} */ (evt.element);
+      const feature = /** @type {olFeature<import("ol/geom/Geometry.js").default>} */ (evt.element);
       this.removeFeature_(feature);
     }
   }
@@ -266,7 +268,7 @@ export default class extends olInteractionPointer {
 
     if (feature) {
       this.coordinate_ = evt.coordinate;
-      this.feature_ = /** @type {olFeature} */(feature);
+      this.feature_ = /** @type {olFeature<import("ol/geom/Geometry.js").default>} */(feature);
       const geometry = (this.feature_.getGeometry());
       if (geometry !== undefined) {
         this.centerCoordinate_ = this.getCenterCoordinate_(geometry);

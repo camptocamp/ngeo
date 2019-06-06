@@ -13,9 +13,7 @@ import ngeoDatasourceOGC, {ServerType} from 'ngeo/datasource/OGC.js';
 
 import ngeoLayertreeComponent from 'ngeo/layertree/component.js';
 
-import ngeoLayertreeController, {
-  LayertreeVisitorDecision
-} from 'ngeo/layertree/Controller.js';
+import ngeoLayertreeController, {LayertreeVisitorDecision} from 'ngeo/layertree/Controller.js';
 import ngeoMapLayerHelper from 'ngeo/map/LayerHelper.js';
 import ngeoMiscSyncArrays from 'ngeo/misc/syncArrays.js';
 import ngeoMiscWMSTime from 'ngeo/misc/WMSTime.js';
@@ -354,8 +352,8 @@ Controller.prototype.updateDimensions_ = function(treeCtrl) {
       const layer = ctrl.layer;
       console.assert(layer instanceof olLayerLayer);
       this.updateLayerDimensions_(
-        /** @type olLayerLayer */ (layer),
-        /** @type import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer */ (ctrl.node)
+        /** @type {olLayerLayer<import('ol/source/Source.js').default>} */ (layer),
+        /** @type {import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer} */ (ctrl.node)
       );
       return LayertreeVisitorDecision.DESCEND;
     }
@@ -364,7 +362,7 @@ Controller.prototype.updateDimensions_ = function(treeCtrl) {
 
 
 /**
- * @param {import("ol/layer/Layer.js").default} layer Layer to update.
+ * @param {olLayerLayer<import('ol/source/Source.js').default>} layer Layer to update.
  * @param {import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer} node Layer tree node.
  * @private
  */
@@ -780,12 +778,17 @@ Controller.prototype.zoomToResolution = function(treeCtrl) {
     throw new Error('Missing resolution');
   }
   const minResolution = getNodeMinResolution(gmfLayer);
+  const constrainResolution = view.getConstraints().resolution;
+  const size = this.map.getSize();
+  if (size === undefined) {
+    throw new Error('Missing size');
+  }
   if (minResolution !== undefined && resolution < minResolution) {
-    view.setResolution(view.constrainResolution(minResolution, 0, 1));
+    view.setResolution(constrainResolution(minResolution, 1, size));
   } else {
     const maxResolution = getNodeMaxResolution(gmfLayer);
     if (maxResolution !== undefined && resolution > maxResolution) {
-      view.setResolution(view.constrainResolution(maxResolution, 0, -1));
+      view.setResolution(constrainResolution(maxResolution, -1, size));
     }
   }
 };

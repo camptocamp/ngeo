@@ -49,14 +49,14 @@ class ModifyRectangle extends olInteractionPointer {
     });
 
     /**
-     * @type {import("ol/Collection.js").default<import("ol/Feature.js").default>}
+     * @type {import("ol/Collection.js").default<olFeature<import("ol/geom/Geometry.js").default>>}
      * @private
      */
     this.features_ = options.features;
 
     /**
      * The feature currently modified.
-     * @type {?import("ol/Feature.js").default}
+     * @type {?olFeature<import("ol/geom/Geometry.js").default>}
      * @private
      */
     this.feature_ = null;
@@ -93,7 +93,7 @@ class ModifyRectangle extends olInteractionPointer {
   }
 
   /**
-   * @param {import("ol/Feature.js").default} feature Feature.
+   * @param {olFeature<import("ol/geom/Geometry.js").default>} feature Feature.
    * @private
    */
   addFeature_(feature) {
@@ -107,7 +107,9 @@ class ModifyRectangle extends olInteractionPointer {
         return;
       }
 
-      const pointSource = /** @type {olSourceVector} */(this.vectorPoints_.getSource());
+      const pointSource = /** @type {olSourceVector<import("ol/geom/Geometry.js").default>} */(
+        this.vectorPoints_.getSource()
+      );
 
       // from each corners, create a point feature and add it to the point layer.
       // each point is then associated with 2 siblings in order to update the
@@ -121,7 +123,7 @@ class ModifyRectangle extends olInteractionPointer {
           corners.shift();
         }
       }
-      /** @type {olFeature[]} */
+      /** @type {olFeature<import("ol/geom/Geometry.js").default>[]} */
       const pointFeatures = [];
       let cornerPoint;
       let cornerFeature;
@@ -253,7 +255,7 @@ class ModifyRectangle extends olInteractionPointer {
   }
 
   /**
-   * @param {import("ol/Feature.js").default} feature Feature.
+   * @param {olFeature<import("ol/geom/Geometry.js").default>} feature Feature.
    * @private
    */
   removeFeature_(feature) {
@@ -261,7 +263,8 @@ class ModifyRectangle extends olInteractionPointer {
     const item = this.cache_[uid];
     const corners = item.corners;
     for (let i = 0; i < corners.length; i++) {
-      /** @type {olSourceVector} */(this.vectorPoints_.getSource()).removeFeature(corners[i]);
+      /** @type {olSourceVector<import("ol/geom/Geometry.js").default>} */(this.vectorPoints_.getSource())
+        .removeFeature(corners[i]);
     }
     this.feature_ = null;
     corners.length = 0;
@@ -294,7 +297,7 @@ class ModifyRectangle extends olInteractionPointer {
    */
   handleFeatureRemove_(evt) {
     if (evt instanceof CollectionEvent) {
-      const feature = /** @type {import("ol/Feature.js").default} */ (evt.element);
+      const feature = /** @type {olFeature<import("ol/geom/Geometry.js").default>} */ (evt.element);
       this.removeFeature_(feature);
     }
   }
@@ -307,8 +310,10 @@ class ModifyRectangle extends olInteractionPointer {
   handleDown_(evt) {
     const map = evt.map;
 
-    const feature = /** @type {olFeature} */(map.forEachFeatureAtPixel(evt.pixel, feature =>
-      (feature.get('siblingX') && feature.get('siblingY') ? feature : undefined))
+    const feature = /** @type {olFeature<import("ol/geom/Geometry.js").default>} */(
+      map.forEachFeatureAtPixel(evt.pixel, feature =>
+        (feature.get('siblingX') && feature.get('siblingY') ? feature : undefined)
+      )
     );
 
     if (feature) {
@@ -411,7 +416,7 @@ class ModifyRectangle extends olInteractionPointer {
 
 /**
  * @typedef {Object} CacheItem
- * @property {Array<import("ol/Feature.js").default>} corners
+ * @property {Array<olFeature<import("ol/geom/Geometry.js").default>>} corners
  */
 
 

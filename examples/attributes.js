@@ -43,7 +43,7 @@ function MainController($http, $timeout, $scope) {
   this.disabled = false;
 
   /**
-   * @type {import("ol/Feature.js").default}
+   * @type {olFeature<import("ol/geom/Geometry.js").default>}
    */
   this.feature = new olFeature({
     'name': 'A feature',

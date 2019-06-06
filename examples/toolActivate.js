@@ -60,7 +60,7 @@ function MainController(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
   /**
    * Collection shared between the drawing interactions and the feature
    * overlay used to render the drawn features.
-   * @type {import("ol/Collection.js").default<import("ol/Feature.js").default>}
+   * @type {import("ol/Collection.js").default<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>}
    */
   const features = new olCollection();
 

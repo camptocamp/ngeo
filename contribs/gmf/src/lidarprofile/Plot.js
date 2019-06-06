@@ -349,6 +349,9 @@ export default class {
       this.updateScaleX, this.updateScaleY, classification_colors
     );
 
+    const source = /** @type {import("ol/source/Vector.js").default<import("ol/geom/Point.js").default>} */(
+      this.manager_.lidarPointHighlight.getSource()
+    );
     if (p != undefined) {
 
       cx = this.updateScaleX(p.distance) + margin.left;
@@ -376,8 +379,7 @@ export default class {
 
       this.manager_.cartoHighlight.setElement(el);
       this.manager_.cartoHighlight.setPosition([p.coords[0], p.coords[1]]);
-      /** @type {import("ol/source/Vector.js").default} */(this.manager_.lidarPointHighlight.getSource())
-        .clear();
+      source.clear();
       const lidarPointGeom = new olGeomPoint([p.coords[0], p.coords[1]]);
       const lidarPointFeature = new olFeature(lidarPointGeom);
       if (typeof (pointClassification.color) !== undefined) {
@@ -392,13 +394,9 @@ export default class {
         }));
       }
 
-      /** @type {import("ol/source/Vector.js").default} */(
-        this.manager_.lidarPointHighlight.getSource()
-      ).addFeature(lidarPointFeature);
+      source.addFeature(lidarPointFeature);
     } else {
-      /** @type {import("ol/source/Vector.js").default} */(
-        this.manager_.lidarPointHighlight.getSource()
-      ).clear();
+      source.clear();
       svg.select('#highlightCircle').remove();
       lidarInfo.html('');
       this.manager_.cartoHighlight.setPosition(undefined);

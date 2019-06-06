@@ -49,7 +49,7 @@ function MainController() {
   const circle = new olGeomCircle([-10691093, 4966327], 465000);
 
   /**
-   * @type {import("ol/Collection.js").default<import("ol/Feature.js").default>}
+   * @type {import("ol/Collection.js").default<olFeature<import("ol/geom/Geometry.js").default>>}
    */
   this.features = new olCollection();
 

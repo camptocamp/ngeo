@@ -1,6 +1,6 @@
 import {getDefaultDrawStyleFunction} from 'ngeo/interaction/common.js';
 import ngeoCustomEvent from 'ngeo/CustomEvent.js';
-import olFeature from 'ol/Feature.js';
+import Feature from 'ol/Feature.js';
 import * as olEvents from 'ol/events.js';
 import {FALSE} from 'ol/functions.js';
 import olGeomCircle from 'ol/geom/Circle.js';
@@ -9,13 +9,11 @@ import olGeomLineString from 'ol/geom/LineString.js';
 import olGeomPoint from 'ol/geom/Point.js';
 import olInteractionPointer from 'ol/interaction/Draw.js';
 import olLayerVector from 'ol/layer/Vector.js';
-import olSourceVector from 'ol/source/Vector.js';
 import VectorSource from 'ol/source/Vector.js';
-import Feature from 'ol/Feature.js';
 
 /**
  * @typedef {Object} Options
- * @property {olSourceVector} source
+ * @property {VectorSource<import("ol/geom/Geometry.js").default>} source
  * @property {import('ol/style/Style.js').StyleLike} style
  */
 
@@ -25,6 +23,7 @@ import Feature from 'ol/Feature.js';
  * @private
  * @hidden
  */
+// @ts-ignore: error «error TS2415: Class 'DrawAzimut' incorrectly extends base class 'Draw'.» is unclear...
 class DrawAzimut extends olInteractionPointer {
   /**
    * @param {Options} options Options.
@@ -44,7 +43,7 @@ class DrawAzimut extends olInteractionPointer {
 
     /**
      * Target source for drawn features.
-     * @type {import("ol/source/Vector.js").default}
+     * @type {import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>}
      * @private
      */
     this.source_ = options.source;
@@ -58,14 +57,14 @@ class DrawAzimut extends olInteractionPointer {
 
     /**
      * Sketch feature.
-     * @type {Feature}
+     * @type {Feature<import("ol/geom/Geometry.js").default>}
      * @private
      */
     this.sketchFeature_ = new Feature();
 
     /**
      * Sketch point.
-     * @type {Feature}
+     * @type {Feature<import("ol/geom/Geometry.js").default>}
      * @private
      */
     this.sketchPoint_ = new Feature();
@@ -87,7 +86,7 @@ class DrawAzimut extends olInteractionPointer {
      * @private
      */
     this.sketchLayer_ = new olLayerVector({
-      source: new olSourceVector({
+      source: new VectorSource({
         useSpatialIndex: false,
         wrapX: false
       }),
@@ -119,7 +118,7 @@ class DrawAzimut extends olInteractionPointer {
   createOrUpdateSketchPoint_(event) {
     const coordinates = event.coordinate.slice();
     if (this.sketchPoint_.getGeometry() === null) {
-      this.sketchPoint_ = new olFeature(new olGeomPoint(coordinates));
+      this.sketchPoint_ = new Feature(new olGeomPoint(coordinates));
       this.updateSketchFeatures_();
     } else {
       const sketchPointGeom = this.sketchPoint_.getGeometry();
@@ -137,7 +136,9 @@ class DrawAzimut extends olInteractionPointer {
     const sketchFeatures = [];
     sketchFeatures.push(this.sketchFeature_);
     sketchFeatures.push(this.sketchPoint_);
-    const source = /** @type {olSourceVector} */(this.sketchLayer_.getSource());
+    const source = /** @type {VectorSource<import("ol/geom/Geometry.js").default>} */(
+      this.sketchLayer_.getSource()
+    );
     source.clear(true);
     source.addFeatures(sketchFeatures);
   }
@@ -153,8 +154,7 @@ class DrawAzimut extends olInteractionPointer {
     const line = new olGeomLineString([start.slice(), start.slice()]);
     const circle = new olGeomCircle(start, 0);
     const geometry = new olGeomGeometryCollection([line, circle]);
-    console.assert(geometry !== undefined);
-    this.sketchFeature_ = new olFeature();
+    this.sketchFeature_ = new Feature();
     this.sketchFeature_.setGeometry(geometry);
     this.updateSketchFeatures_();
     /** @type {import('ngeo/interaction/common.js').DrawEvent} */
@@ -196,7 +196,7 @@ class DrawAzimut extends olInteractionPointer {
 
   /**
    * Stop drawing without adding the sketch feature to the target layer.
-   * @return {Feature} The sketch feature (or null if none).
+   * @return {Feature<import("ol/geom/Geometry.js").default>} The sketch feature (or null if none).
    * @private
    */
   abortDrawing_() {

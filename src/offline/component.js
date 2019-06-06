@@ -1,10 +1,10 @@
 import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr.js';
 import ngeoMessageModalComponent from 'ngeo/message/modalComponent.js';
 import {extentToRectangle} from 'ngeo/utils.js';
-import OlCollection from 'ol/Collection.js';
+import olCollection from 'ol/Collection.js';
 import {unByKey} from 'ol/Observable.js';
-import OlFeature from 'ol/Feature.js';
-import OlGeomPolygon from 'ol/geom/Polygon.js';
+import Feature from 'ol/Feature.js';
+import Polygon from 'ol/geom/Polygon.js';
 import olGeomGeometryLayout from 'ol/geom/GeometryLayout.js';
 import {DEVICE_PIXEL_RATIO} from 'ol/has.js';
 import angular from 'angular';
@@ -160,10 +160,10 @@ export const Controller = class {
     this.featuresOverlay_ = ngeoFeatureOverlayMgr.getFeatureOverlay();
 
     /**
-     * @type {!OlCollection<OlFeature>}
+     * @type {!olCollection<Feature<import('ol/geom/Geometry.js').default>>}
      * @private
      */
-    this.overlayCollection_ = new OlCollection();
+    this.overlayCollection_ = new olCollection();
 
     this.featuresOverlay_.setFeatures(this.overlayCollection_);
 
@@ -180,7 +180,7 @@ export const Controller = class {
 
 
     /**
-     * @type {?OlGeomPolygon}
+     * @type {?Polygon}
      * @private
      */
     this.dataPolygon_ = null;
@@ -457,7 +457,7 @@ export const Controller = class {
    */
   displayExtent_() {
     if (!this.isExtentVisible() && this.dataPolygon_) {
-      const feature = new OlFeature(this.dataPolygon_);
+      const feature = new Feature(this.dataPolygon_);
       this.overlayCollection_.push(feature);
     }
   }
@@ -543,13 +543,13 @@ export const Controller = class {
   /**
    * A polygon on the whole extent of the projection, with a hole for the offline extent.
    * @param {import("ol/extent.js").Extent} extent An extent
-   * @return {OlGeomPolygon} Polygon to save, based on the projection extent, the center of the map and
+   * @return {Polygon} Polygon to save, based on the projection extent, the center of the map and
    *     the extentSize property.
    * @private
    */
   createPolygonFromExtent_(extent) {
     const projExtent = this.map.getView().getProjection().getExtent();
-    return new OlGeomPolygon([
+    return new Polygon([
       extentToRectangle(projExtent),
       extentToRectangle(extent),
     ], olGeomGeometryLayout.XY);

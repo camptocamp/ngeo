@@ -1283,7 +1283,8 @@ export class PrintController {
     if (!this.map) {
       throw new Error('Missing map');
     }
-    const legend = {classes: /** @type {any[]} */([])};
+    /** @type {import('ngeo/print/mapfish-print-v3').MapFishPrintLegend} */
+    const legend = {classes: []};
     const gettextCatalog = this.gettextCatalog_;
 
     // Get layers from layertree only.
@@ -1295,7 +1296,7 @@ export class PrintController {
       if (!this.map) {
         throw new Error('Missing map');
       }
-      /** @type {{name: string, icons: string[]}[]} */
+      /** @type {import('ngeo/print/mapfish-print-v3').MapFishPrintLegendClass[]} */
       const classes = [];
       if (layer.getVisible() && layer.getSource()) {
         // For WMTS layers.
@@ -1366,7 +1367,7 @@ export class PrintController {
 
       // Add classes object only if it contains something.
       if (classes.length > 0) {
-        legend.classes.push({classes: classes});
+        legend.classes = legend.classes.concat(classes);
       }
     });
 
@@ -1458,8 +1459,10 @@ export class PrintController {
       const mapSize = this.map.getSize() || [0, 0];
       this.layoutInfo.scale = opt_scale;
       const res = this.ngeoPrintUtils_.getOptimalResolution(mapSize, this.paperSize_, opt_scale);
-      const contrainRes = this.map.getView().constrainResolution(res, 0, 1);
-      this.map.getView().setResolution(contrainRes);
+
+      const view = this.map.getView();
+      const contrainRes = view.getConstraints().resolution(res, 1, mapSize);
+      view.setResolution(contrainRes);
       // Render the map to update the postcompose mask manually
       this.map.render();
       this.scaleManuallySelected_ = true;

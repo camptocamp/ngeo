@@ -64,7 +64,7 @@ export function ObjecteditingManagerService($q, gmfEditFeature, ngeoLocation) {
   this.ngeoLocation_ = ngeoLocation;
 
   /**
-   * @type {?angular.IDeferred<?import('ol/Feature.js').default>}
+   * @type {?angular.IDeferred<?olFeature<import("ol/geom/Geometry.js").default>>}
    * @private
    */
   this.getFeatureDefered_ = null;
@@ -80,7 +80,7 @@ export function ObjecteditingManagerService($q, gmfEditFeature, ngeoLocation) {
  * is returned, otherwise one is created with empty geometry and with the
  * property set.
  *
- * @return {angular.IPromise<?import('ol/Feature.js').default>} Promise.
+ * @return {angular.IPromise<?olFeature<import("ol/geom/Geometry.js").default>>} Promise.
  */
 ObjecteditingManagerService.prototype.getFeature = function() {
 
@@ -138,7 +138,7 @@ ObjecteditingManagerService.prototype.getLayerNodeId = function() {
  *
  * @param {string} key Property key.
  * @param {string} value Property value.
- * @param {Array<import("ol/Feature.js").default>} features List of features.
+ * @param {Array<olFeature<import("ol/geom/Geometry.js").default>>} features List of features.
  * @private
  */
 ObjecteditingManagerService.prototype.handleGetFeatures_ = function(key, value, features) {

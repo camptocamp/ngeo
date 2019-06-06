@@ -585,7 +585,7 @@ EditingSnappingService.prototype.handleMapMoveEnd_ = function() {
  * @property {boolean} active
  * @property {string} featureNS
  * @property {string} featurePrefix
- * @property {import("ol/Collection.js").default<import("ol/Feature.js").default>} features
+ * @property {import("ol/Collection.js").default<import("ol/Feature.js").default<import("ol/geom/Geometry.js").default>>} features
  * @property {string} geometryName
  * @property {?import("ol/interaction/Snap.js").default} interaction
  * @property {number} maxFeatures

@@ -94,7 +94,7 @@ class Controller extends AbstractDesktopController {
     });
 
     /**
-     * @type {import("ol/Collection.js").default<import("ol/Feature.js").default>}
+     * @type {import("ol/Collection.js").default<import("ol/Feature.js").default<import("ol/geom/Geometry.js").default>>}
      */
     this.sketchFeatures = new olCollection();
 
@@ -139,7 +139,7 @@ class Controller extends AbstractDesktopController {
     this.oeLayerNodeId = gmfObjectEditingManager.getLayerNodeId();
 
     /**
-     * @type {?import("ol/Feature.js").default}
+     * @type {?import("ol/Feature.js").default<import("ol/geom/Geometry.js").default>}
      */
     this.oeFeature = null;
 

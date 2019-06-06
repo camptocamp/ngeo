@@ -63,9 +63,7 @@ script:
 - buildtools/test_examples.py 1/1
 #- npm run typecheck
 # Generate API doc
-- npm install --prefix openlayers_src https://api.github.com/repos/openlayers/openlayers/tarball/v5.3.1
-- '! (npm run typecheck|sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g"|grep ^src)'
-- '! (npm run typecheck|grep -E "api|gmf|test/|examples")'
+- "! (npm run typecheck|grep -v '^node_modules/'|grep '^[a-z]')"
 - npm run doc
 - npm run build-api
 

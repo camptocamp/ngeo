@@ -12,7 +12,7 @@
     "serve-gmf-apps": "DEV_SERVER=1 TARGET=gmf-apps webpack-dev-server --https --cert=private.crt --key=private.key --port 3000 --mode development --progress --debug",
     "serve-api": "webpack-dev-server --content-base api/dist/apihelp/ --config buildtools/webpack.api.js --https --cert=private.crt --key=private.key --port 3000 --mode development --progress --watch --debug",
     "build-gmf-apps-profile": "TARGET=gmf-apps webpack --profile --json > profile.json",
-    "typecheck": "tsc --pretty",
+    "typecheck": "tsc",
     "doc": "typedoc --name ngeo --mode file --excludePrivate --excludeProtected --ignoreCompilerErrors --excludeExternals --exclude '**/examples/**,**/test/**' --out apidoc"
   },
   "sideEffects": false,
@@ -105,7 +105,7 @@
     "moment": "^2.24.0",
     "node-sass": "^4.12.0",
     "node-sass-importer": "^1.0.0",
-    "ol": "^5.3.3",
+    "ol": "^6.0.0-beta.6",
     "ol-cesium": "^2.9.0",
     "ol-layerswitcher": "^3.2.0",
     "phantomjs-polyfill-string-includes": "^1.0.0",

@@ -38,7 +38,7 @@ module.run(
  *         gmf-featurestyle-feature="ctrl.selectedFeature">
  *     </gmf-featurestyle>
  *
- * @htmlAttribute {import("ol/Feature.js").default} gmf-featurestyle-feature The feature.
+ * @htmlAttribute {import("ol/Feature.js").default<import("ol/geom/Geometry.js").default>} gmf-featurestyle-feature The feature.
  * @return {angular.IDirective} The directive specs.
  * @ngInject
  * @ngdoc directive
@@ -77,7 +77,7 @@ function Controller($scope, ngeoFeatureHelper) {
   this.uid = olUtilGetUid(this);
 
   /**
-   * @type {?import("ol/Feature.js").default}
+   * @type {?import("ol/Feature.js").default<import("ol/geom/Geometry.js").default>}
    */
   this.feature = null;
 
@@ -134,8 +134,8 @@ function Controller($scope, ngeoFeatureHelper) {
 
 /**
  * Called when a new feature is set, which can also be null.
- * @param {?import("ol/Feature.js").default} newFeature New feature or null value.
- * @param {?import("ol/Feature.js").default} previousFeature Previous feature or null value.
+ * @param {?import("ol/Feature.js").default<import("ol/geom/Geometry.js").default>} newFeature New feature or null value.
+ * @param {?import("ol/Feature.js").default<import("ol/geom/Geometry.js").default>} previousFeature Previous feature or null value.
  * @private
  */
 Controller.prototype.handleFeatureSet_ = function(newFeature, previousFeature) {

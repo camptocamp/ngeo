@@ -64,7 +64,8 @@ module.component('appLayertree', layertreeComponent);
  * @constructor
  * @param {angular.IHttpService} $http Angular http service.
  * @param {angular.ISCEService} $sce Angular sce service.
- * @param {function(Object):import("ol/layer/Layer.js").default} appGetLayer Get layer service.
+ * @param {function(Object):import("ol/layer/Layer.js").default<import('ol/source/Source.js').default>}
+ *    appGetLayer Get layer service.
  * @param {import("ngeo/message/Popup.js").PopupFactory} ngeoCreatePopup Popup service.
  * @ngInject
  */
@@ -93,7 +94,7 @@ function LayertreeController($http, $sce, appGetLayer, ngeoCreatePopup) {
 
   /**
    * @private
-   * @type {function(Object):import("ol/layer/Layer.js").default}
+   * @type {function(Object):import("ol/layer/Layer.js").default<import('ol/source/Source.js').default>}
    */
   this.getLayer_ = appGetLayer;
 
@@ -116,7 +117,8 @@ function LayertreeController($http, $sce, appGetLayer, ngeoCreatePopup) {
  * from a tree node. The function should return `null` if no layer should
  * be associated to the node (because it's not a leaf).
  * @param {Object} node Node object.
- * @return {import("ol/layer/Layer.js").default} The layer for this node.
+ * @return {import("ol/layer/Layer.js").default<import('ol/source/Source.js').default>} The layer for this
+ *    node.
  */
 LayertreeController.prototype.getLayer = function(node) {
   return this.getLayer_(node);
@@ -125,7 +127,7 @@ LayertreeController.prototype.getLayer = function(node) {
 
 /**
  * @param {Object} node Tree node.
- * @param {import("ol/layer/Layer.js").default} layer Layer.
+ * @param {import("ol/layer/Layer.js").default<import('ol/source/Source.js').default>} layer Layer.
  */
 LayertreeController.prototype.onButtonClick = function(node, layer) {
   const layerType = node.layerType;
@@ -160,13 +162,13 @@ module.controller('AppLayertreeController', LayertreeController);
  */
 const getLayer = (function() {
   /**
-   * @type {Object<string, import("ol/layer/Layer.js").default>}
+   * @type {Object.<string, import("ol/layer/Layer.js").default<import('ol/source/Source.js').default>>}
    */
   const layerCache = {};
   return (
     /**
      * @param {Object} node Tree node.
-     * @return {?import("ol/layer/Layer.js").default} Layer.
+     * @return {?import("ol/layer/Layer.js").default<import('ol/source/Source.js').default>} Layer.
      */
     function(node) {
       if (!('layerType' in node)) {

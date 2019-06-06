@@ -53,7 +53,7 @@ function MainController($timeout, gmfThemes, gmfXSDAttributes) {
   this.attributes = null;
 
   /**
-   * @type {?import("ol/Feature.js").default}
+   * @type {?olFeature<import("ol/geom/Geometry.js").default>}
    */
   this.feature = null;
 

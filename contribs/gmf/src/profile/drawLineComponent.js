@@ -89,7 +89,7 @@ function Controller($scope, $timeout, ngeoFeatureOverlayMgr) {
   this.active = false;
 
   /**
-   * @type {import("ol/Collection.js").default<import('ol/Feature.js').default>}
+   * @type {import("ol/Collection.js").default<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>}
    * @private
    */
   this.features_ = new olCollection();

@@ -14,13 +14,13 @@ import 'corejs-typeahead';
  *     undefined, the default Bloodhound config will be used.
  * @param {Bloodhound.RemoteOptions<GeoJSON.FeatureCollection>=} opt_remoteOptions optional Bloodhound
  * remote options. Effective only if `remote` is not defined in `opt_options`.
- * @return {Bloodhound<import('ol/Feature.js').default[]>} The Bloodhound object.
+ * @return {Bloodhound<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>[]>} The Bloodhound object.
  * @hidden
  */
 export function createGeoJSONBloodhound(url, opt_filter, opt_featureProjection,
   opt_dataProjection, opt_options, opt_remoteOptions) {
   const geojsonFormat = new olFormatGeoJSON();
-  /** @type {Bloodhound.BloodhoundOptions<GeoJSON.FeatureCollection|Array<import('ol/Feature.js').default>>} */
+  /** @type {Bloodhound.BloodhoundOptions<GeoJSON.FeatureCollection|Array<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>>} */
   const bloodhoundOptions = {
     remote: {
       url,
@@ -78,7 +78,9 @@ export function createGeoJSONBloodhound(url, opt_filter, opt_featureProjection,
   Object.assign(bloodhoundOptions, options);
   Object.assign(bloodhoundOptions.remote, remoteOptions);
 
-  return /** @type {Bloodhound<import('ol/Feature.js').default[]>} */(new Bloodhound(bloodhoundOptions));
+  return /** @type {Bloodhound<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>[]>} */(
+    new Bloodhound(bloodhoundOptions)
+  );
 }
 
 
@@ -122,7 +124,7 @@ module.value('ngeoSearchCreateGeoJSONBloodhound', createGeoJSONBloodhound);
  *     );
  *     bloodhound.initialize();
  *
- * @typedef {function(string, (function(import("geojson").Feature): boolean)=, import("ol/proj/Projection.js").default=, import("ol/proj/Projection.js").default=, Bloodhound.Options=, Bloodhound.RemoteOptions=):Bloodhound<GeoJSON.FeatureCollection|Array<import('ol/Feature.js').default>>}
+ * @typedef {function(string, (function(import("geojson").Feature): boolean)=, import("ol/proj/Projection.js").default=, import("ol/proj/Projection.js").default=, Bloodhound.Options=, Bloodhound.RemoteOptions=):Bloodhound<GeoJSON.FeatureCollection|Array<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>>}
  */
 
 

@@ -1,7 +1,6 @@
 import {rgbArrayToHex} from 'ngeo/utils.js';
 import {getUid as olUtilGetUid} from 'ol/util.js';
 import olFormatGeoJSON from 'ol/format/GeoJSON.js';
-import olSourceVector from 'ol/source/Vector.js';
 import olStyleRegularShape from 'ol/style/RegularShape.js';
 import {toDegrees} from 'ol/math.js';
 import olStyleIcon from 'ol/style/Icon.js';
@@ -54,8 +53,9 @@ const PRINT_STYLE_TYPES = {
  * @param {number} resolution Resolution.
  */
 VectorEncoder.prototype.encodeVectorLayer = function(arr, layer, resolution) {
-  const source = /** @type {olSourceVector} */(layer.getSource());
-  console.assert(source instanceof olSourceVector);
+  const source = /** @type {import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>} */(
+    layer.getSource()
+  );
 
   const features = source.getFeatures();
 

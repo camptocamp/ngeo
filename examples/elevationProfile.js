@@ -80,7 +80,8 @@ function MainController($http, $scope) {
   });
 
   this.snappedPoint_ = new olFeature();
-  /** @type {olSourceVector} */(vectorLayer.getSource()).addFeature(this.snappedPoint_);
+  /** @type {olSourceVector<import("ol/geom/Geometry.js").default>} */(vectorLayer.getSource())
+    .addFeature(this.snappedPoint_);
 
   // Use vectorLayer.setMap(map) rather than map.addLayer(vectorLayer). This
   // makes the vector layer "unmanaged", meaning that it is always on top.

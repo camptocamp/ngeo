@@ -10,7 +10,7 @@ import {toFunction as toStyleFunction, createDefaultStyle as olStyleDefaultFunct
 /**
  * @typedef {Object} MapFeatureOverlayGroup
  * @property {import('ol/style/Style.js').StyleFunction} styleFunction
- * @property {Object<string, import('ol/Feature.js').default>} features
+ * @property {Object<string, import('ol/Feature.js').default<import('ol/geom/Geometry.js').default>>} features
  */
 
 
@@ -52,7 +52,7 @@ export function FeatureOverlayMgr() {
   this.groups_ = [];
 
   /**
-   * @type {import("ol/source/Vector.js").default}
+   * @type {import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>}
    * @private
    */
   this.source_ = new olSourceVector({
@@ -74,7 +74,7 @@ export function FeatureOverlayMgr() {
 
 
 /**
- * @param {import("ol/Feature.js").default} feature The feature to add.
+ * @param {import('ol/Feature.js').default<import('ol/geom/Geometry.js').default>} feature The feature to add.
  * @param {number} groupIndex The group groupIndex.
  */
 FeatureOverlayMgr.prototype.addFeature = function(feature, groupIndex) {
@@ -88,7 +88,7 @@ FeatureOverlayMgr.prototype.addFeature = function(feature, groupIndex) {
 
 
 /**
- * @param {import("ol/Feature.js").default} feature The feature to add.
+ * @param {import('ol/Feature.js').default<import('ol/geom/Geometry.js').default>} feature The feature to add.
  * @param {number} groupIndex The group groupIndex.
  */
 FeatureOverlayMgr.prototype.removeFeature = function(feature, groupIndex) {
@@ -157,7 +157,7 @@ FeatureOverlayMgr.prototype.setStyle = function(style, groupIndex) {
 
 
 /**
- * @param {import("ol/Feature.js").default|import("ol/render/Feature.js").default} feature Feature.
+ * @param {import('ol/Feature.js').default<import('ol/geom/Geometry.js').default>|import("ol/render/Feature.js").default} feature Feature.
  * @param {number} resolution Resolution.
  * @return {Array<import("ol/style/Style.js").default>|import("ol/style/Style.js").default} Styles.
  * @private

@@ -25,7 +25,7 @@ import olSourceImageWMS from 'ol/source/ImageWMS.js';
 
 /**
  * @typedef {Object} QuerentResultItem
- * @property {Array<import("ol/Feature.js").default>} features
+ * @property {Array<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>} features
  * @property {number} limit
  * @property {boolean} [tooManyFeatures]
  * @property {number} [totalFeatureCount]
@@ -414,7 +414,7 @@ export class Querent {
       const dataSourceId = dataSource.id;
 
       if (typeof response === 'number') {
-        /** @type {Array<import('ol/Feature.js').default>} */
+        /** @type {Array<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>} */
         const features = [];
         const tooManyFeatures = true;
         const totalFeatureCount = response;
@@ -446,11 +446,11 @@ export class Querent {
    * @param {ngeoDatasourceOGC} dataSource used to read the features.
    * @param {Document|Element|string} data the response data.
    * @param {boolean} wfs Whether the query was WFS or WMS.
-   * @return {Array<import("ol/Feature.js").default>} returned features with a type in each features.
+   * @return {Array<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>} returned features with a type in each features.
    * @private
    */
   readAndTypeFeatures_(dataSource, data, wfs) {
-    /** @type {Array<import('ol/Feature.js').default>} */
+    /** @type {Array<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>} */
     const features = [];
     let readFeatures;
     // Copy the types to be able to set it AND iterate on it.
@@ -993,7 +993,7 @@ export class Querent {
   /**
    * Make sure that feature ids are unique, because the same features might
    * be returned for different layers.
-   * @param {Array<import("ol/Feature.js").default>} features Features
+   * @param {Array<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>} features Features
    * @param {number} dataSourceId Data source id.
    * @private
    */

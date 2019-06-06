@@ -318,7 +318,7 @@ export function PermalinkService(
   this.ngeoStateManager_ = ngeoStateManager;
 
   /**
-   * @type {?import("ol/Collection.js").default<import("ol/Feature.js").default>}
+   * @type {?import("ol/Collection.js").default<olFeature<import("ol/geom/Geometry.js").default>>}
    * @private
    */
   this.ngeoFeatures_ = $injector.has('ngeoFeatures') ?
@@ -464,7 +464,7 @@ export function PermalinkService(
   }
 
   /**
-   * @type {?import("ol/Feature.js").default}
+   * @type {?olFeature<import("ol/geom/Geometry.js").default>}
    * @private
    */
   this.crosshairFeature_ = null;
@@ -824,7 +824,7 @@ PermalinkService.prototype.setMapTooltip = function(tooltipText, opt_center) {
 
 /**
  * Get the ngeo features from the state manager for initialization purpose
- * @return {Array<import("ol/Feature.js").default>} The features read from the state manager.
+ * @return {Array<olFeature<import("ol/geom/Geometry.js").default>>} The features read from the state manager.
  */
 PermalinkService.prototype.getFeatures = function() {
   const f = this.ngeoStateManager_.getInitialStringValue(PermalinkParam.FEATURES);
@@ -897,7 +897,7 @@ PermalinkService.prototype.setMap = function(map) {
 /**
  * Listen to the map view property change and update the state accordingly.
  * @param {import("ol/Map.js").default} map The ol3 map object.
- * @param {?import("ol/Feature.js").default} oeFeature ObjectEditing feature
+ * @param {?olFeature<import("ol/geom/Geometry.js").default>} oeFeature ObjectEditing feature
  * @private
  */
 PermalinkService.prototype.registerMap_ = function(map, oeFeature) {
@@ -1362,7 +1362,7 @@ PermalinkService.prototype.handleNgeoFeaturesRemove_ = function(event) {
 /**
  * Listen to any changes that may occur within the feature in order to
  * update the state of the permalink accordingly.
- * @param {import("ol/Feature.js").default} feature Feature.
+ * @param {olFeature<import("ol/geom/Geometry.js").default>} feature Feature.
  * @private
  */
 PermalinkService.prototype.addNgeoFeature_ = function(feature) {
@@ -1377,7 +1377,7 @@ PermalinkService.prototype.addNgeoFeature_ = function(feature) {
 
 /**
  * Unregister any event listener from the feature.
- * @param {import("ol/Feature.js").default} feature Feature.
+ * @param {olFeature<import("ol/geom/Geometry.js").default>} feature Feature.
  * @private
  */
 PermalinkService.prototype.removeNgeoFeature_ = function(feature) {

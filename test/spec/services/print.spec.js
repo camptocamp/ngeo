@@ -65,7 +65,7 @@ describe('ngeo.print.Service', () => {
 
       beforeEach(() => {
         const view = map.getView();
-        view.rotate(Math.PI);
+        view.adjustRotation(Math.PI);
       });
 
       it('rotation angle is correct', () => {

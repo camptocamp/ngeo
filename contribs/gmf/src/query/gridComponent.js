@@ -266,7 +266,7 @@ export function QueryGridController($injector, $scope, ngeoQueryResult, ngeoMapQ
   /**
    * A mapping between row uid and the corresponding feature for each
    * source.
-   * @type {Object<string, Object<string, import("ol/Feature.js").default>>}
+   * @type {Object<string, Object<string, import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>>}
    * @private
    */
   this.featuresForSources_ = {};
@@ -274,7 +274,7 @@ export function QueryGridController($injector, $scope, ngeoQueryResult, ngeoMapQ
   // Styles for displayed features (features) and selected features
   // (highlightFeatures_) (user can set both styles).
   /**
-   * @type {import("ol/Collection.js").default<import('ol/Feature.js').default>}
+   * @type {import("ol/Collection.js").default<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>}
    * @private
    */
   this.features_ = new olCollection();
@@ -286,7 +286,7 @@ export function QueryGridController($injector, $scope, ngeoQueryResult, ngeoMapQ
   this.ngeoFeatureOverlayMgr_ = ngeoFeatureOverlayMgr;
 
   /**
-   * @type {import("ol/Collection.js").default<import('ol/Feature.js').default>}
+   * @type {import("ol/Collection.js").default<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>}
    * @private
    */
   this.highlightFeatures_ = new olCollection();
@@ -607,7 +607,7 @@ QueryGridController.prototype.collectData_ = function(source) {
   const allProperties = [];
   /** @type {string[]} */
   const featureGeometriesNames = [];
-  /** @type {Object<string, import("ol/Feature.js").default>} */
+  /** @type {Object<string, import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>} */
   const featuresForSource = {};
   let properties, featureGeometryName;
   features.forEach((feature) => {

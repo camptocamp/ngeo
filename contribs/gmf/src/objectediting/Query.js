@@ -153,7 +153,7 @@ function getQueryableLayersInfoFromThemes(
  *    Queryable layer information.
  * @param {import("ol/coordinate.js").Coordinate} coordinate Coordinate.
  * @param {import("ol/Map.js").default} map Map.
- * @return {angular.IPromise<?import('ol/Feature.js').default>} Promise.
+ * @return {angular.IPromise<?import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>} Promise.
  */
 ObjectEditingQuery.prototype.getFeatureInfo = function(layerInfo, coordinate, map) {
   const view = map.getView();

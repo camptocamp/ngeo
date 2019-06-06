@@ -397,7 +397,7 @@ function Controller($element, $q, $scope, $timeout,
   this.mapSelectToolActivate = new ngeoMiscToolActivate(this, 'mapSelectActive');
 
   /**
-   * @type {?import("ol/Feature.js").default}
+   * @type {?olFeature<import("ol/geom/Geometry.js").default>}
    */
   this.feature = null;
 
@@ -412,7 +412,7 @@ function Controller($element, $q, $scope, $timeout,
   this.featureId = undefined;
 
   /**
-   * @type {?import("ol/Collection.js").default<import('ol/Feature.js').default>}
+   * @type {?import("ol/Collection.js").default<olFeature<import("ol/geom/Geometry.js").default>>}
    */
   this.features = null;
 
@@ -1240,7 +1240,7 @@ Controller.prototype.handleMapContextMenu_ = function(evt) {
 
 
 /**
- * @param {Array<import("ol/Feature.js").default>} features Features.
+ * @param {Array<olFeature<import("ol/geom/Geometry.js").default>>} features Features.
  * @private
  */
 Controller.prototype.handleGetFeatures_ = function(features) {
@@ -1300,8 +1300,8 @@ Controller.prototype.unregisterInteractions_ = function() {
 
 
 /**
- * @param {?import("ol/Feature.js").default} newFeature The new feature.
- * @param {?import("ol/Feature.js").default} oldFeature The old feature.
+ * @param {?olFeature<import("ol/geom/Geometry.js").default>} newFeature The new feature.
+ * @param {?olFeature<import("ol/geom/Geometry.js").default>} oldFeature The old feature.
  * @private
  */
 Controller.prototype.handleFeatureChange_ = function(newFeature, oldFeature) {
