@@ -11,4 +11,9 @@ export default {
    * (WMTS) or a comma-separated list of layer names (WMS).
    */
   backgroundLayer: 'orthophoto',
+
+  /**
+   *  The list of layers (names) declared as queryable.
+   */
+  queryableLayers: ['osm_open', 'many_attributes']
 };
