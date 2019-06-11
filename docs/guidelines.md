@@ -394,7 +394,7 @@ referenced by their names in HTML pages and templates. So it is required to
 prevent the compiler from renaming these properties.
 
 The way to do that is to add the right tag on each variable, function and class.
- -  `@private`: With a final underscore (`this.my_private_variable_`) tell the compilier to rename it with a
+ -  `@private`: With a final underscore (`this.my_private_variable_`) tell the compiler to rename it with a
     name not understainable outside of the current file.
  -  And nothing, without final underscore, if the element is used freely in the code, but never in the html.
 

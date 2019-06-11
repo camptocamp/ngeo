@@ -51,7 +51,7 @@ import olSourceImageWMS from 'ol/source/ImageWMS.js';
  *    - `remove`:  newly queried features are removed from the existing ones
  * @property {import("ol/coordinate.js").Coordinate} [coordinate] The coordinate to issue the requests with,
  *    which can end up with either WMS or WFS requests.
- * @property {Array<import('ngeo/datasource/DataSource.js').default>} [dataSources] ist of data sources to
+ * @property {Array<import('ngeo/datasource/DataSource.js').default>} [dataSources] list of data sources to
  *    query. Only those that meet the requirements will actually be queried. The querent service requires
  *    either the `dataSources` or `queryableDataSources` property to be set.
  * @property {import("ol/extent.js").Extent} [extent] The extent to issue the requests with, which can end up
