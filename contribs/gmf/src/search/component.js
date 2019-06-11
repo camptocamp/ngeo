@@ -28,7 +28,7 @@ import SimpleGeometry from 'ol/geom/SimpleGeometry.js';
 /**
  * @typedef {Object} gmfSearchAction
  * @property {string} action The action
- * @property {string} title The titile
+ * @property {string} title The title
  */
 
 

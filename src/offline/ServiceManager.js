@@ -84,7 +84,7 @@ class ServiceManager {
 
   /**
    * Ask the provided service to save the data to an offline purpose
-   * @param {import("ol/extent.js").Extent} extent The extent to dowload.
+   * @param {import("ol/extent.js").Extent} extent The extent to download.
    * @param {import("ol/Map").default} map The map to work on.
    */
   save(extent, map) {

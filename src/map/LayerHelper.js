@@ -71,7 +71,7 @@ const REFRESH_PARAM = 'random';
  * @param {string} sourceFormat Image format, for example 'image/png'.
  * @param {string=} opt_serverType Type of the server ("mapserver",
  *     "geoserver", "qgisserver", …).
- * @param {string=} opt_time time parameter for layer queryable by time/periode
+ * @param {string=} opt_time time parameter for layer queryable by time/period
  * @param {Object<string, string>=} opt_params WMS parameters.
  * @param {string=} opt_crossOrigin crossOrigin.
  * @param {Object=} opt_customSourceOptions Some initial options.
