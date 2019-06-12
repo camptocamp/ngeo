@@ -7,7 +7,7 @@
  * @property {string} msg The message text to display.
  * @property {JQuery|Element|string} [target] The target element (or selector to get the element) in which
  *    to display the message. If not defined, then the default target of the notification service is used.
- * @property {string} [type] The type of message. Defaults to `info`.
+ * @property {string} [type='info'] The type of message.
  */
 
 
