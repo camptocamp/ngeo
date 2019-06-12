@@ -707,7 +707,7 @@ FeatureHelper.prototype.getVertexStyle = function(opt_incGeomFunc) {
     options.geometry = function(feature) {
       const geom = feature.getGeometry();
 
-      if (geom.getType() == 'Point') {
+      if (!geom || geom.getType() == 'Point') {
         return;
       }
 
