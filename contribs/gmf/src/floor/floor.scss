@@ -1,0 +1,45 @@
+.gmf-floorselector {
+  overflow: hidden;
+  background-color: transparent;
+  padding: 0;
+  &:hover {
+   background-color: transparent;
+  }
+  .btn-floor {
+    margin: 0;
+    height: $map-tools-size;
+    width: $map-tools-size;
+    background-color: $map-tools-bg-color;
+    border: solid 0.06rem $border-color;
+    color: $map-tools-color;
+    &:hover {
+      background-color: $map-tools-bg-color;
+    }
+    &:focus {
+      background-color: $map-tools-bg-color;
+      outline: none;
+      box-shadow: none;
+    }
+    &.active {
+      outline: none;
+      background-color: $brand-secondary;
+    }
+  }
+  .btn-group-floors {
+    margin-top: 0.2rem;
+    margin-bottom: 0.2rem;
+    transition-property: top;
+    transition-duration: 500ms;
+    transition-timing-function: ease;
+  }
+  .btn-floor-up {
+    position: absolute;
+    top: 0;
+    z-index: 1;
+  }
+  .btn-floor-down {
+    position: absolute;
+    bottom: 0;
+    z-index: 1;
+  }
+}
