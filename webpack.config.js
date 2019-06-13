@@ -1,18 +1,17 @@
+const webpackMerge = require('webpack-merge');
+
 module.exports = (env, args) => {
   const nodeEnv = args.mode || 'production';
   process.env['NODE_ENV'] = nodeEnv;
 
-  const webpackMerge = require('webpack-merge');
-  const commons = require('./buildtools/webpack.commons');
-
-  let config = commons.config({}, true);
+  let config = require('./buildtools/webpack.commons')();
 
   switch (nodeEnv) {
     case 'development':
-      config = webpackMerge(config, require('./buildtools/webpack.dev'));
+      config = webpackMerge(config, require('./buildtools/webpack.dev')());
       break;
     case 'production':
-      config = webpackMerge(config, require('./buildtools/webpack.prod')(true));
+      config = webpackMerge(config, require('./buildtools/webpack.prod')());
       break;
     default:
       console.log(`The 'NODE_ENV' environment variable is set to an invalid value: ${process.env.NODE_ENV}.`);

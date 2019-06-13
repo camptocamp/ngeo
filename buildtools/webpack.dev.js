@@ -17,14 +17,16 @@ new webpack.LoaderOptionsPlugin({
 });
 
 
-module.exports = {
-  mode: 'development',
-  output: {
-    filename: '[name].js'
-  },
-  module: {
-    rules: [
-      resourcesRule,
-    ]
-  },
+module.exports = function() {
+  return {
+    mode: 'development',
+    output: {
+      filename: '[name].js'
+    },
+    module: {
+      rules: [
+        resourcesRule,
+      ]
+    },
+  };
 };

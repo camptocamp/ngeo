@@ -1,4 +1,4 @@
-dist: trusty
+dist: xenial
 sudo: false
 
 language: node_js
@@ -24,7 +24,7 @@ addons:
     - ubuntu-toolchain-r-test
     packages:
     - g++-4.8
-    - python-virtualenv
+    - python3-venv
   chrome: stable
 
 cache:
@@ -49,7 +49,6 @@ before_script:
 - export PACKAGE_VERSION=`buildtools/get-version.sh version`
 - echo "_auth = ${NPM_AUTH}" > ~/.npmrc
 - echo "email = stephane.brunner@camptocamp.com" >> ~/.npmrc
-- sh -e /etc/init.d/xvfb start
 
 script:
 # Lint

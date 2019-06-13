@@ -5,6 +5,12 @@ const SassPlugin = require('./webpack.plugin.js');
 const devMode = process.env.NODE_ENV !== 'production';
 
 
+const dllPlugin = new webpack.DllReferencePlugin({
+  manifest: path.resolve(__dirname, '../dist/vendor-manifest.json'),
+  context: path.resolve(__dirname, '../context/jjjj')
+});
+
+
 const providePlugin = new webpack.ProvidePlugin({
   // Make sure that Angular finds jQuery and does not fall back to jqLite
   // See https://github.com/webpack/webpack/issues/582
@@ -97,7 +103,7 @@ function get_comp(firsts, lasts) {
   };
 }
 
-const config = function(hardSourceConfig, babelLoaderCacheDirectory) {
+module.exports = function() {
 
   const ngeoRule = {
     test: /\/ngeo\/(?!node_modules\/).*\.js$/,
@@ -106,7 +112,6 @@ const config = function(hardSourceConfig, babelLoaderCacheDirectory) {
       options: {
         babelrc: false,
         comments: false,
-        cacheDirectory: babelLoaderCacheDirectory,
         presets: babelPresets,
         plugins: [require.resolve('@camptocamp/babel-plugin-angularjs-annotate')],
       }
@@ -119,7 +124,6 @@ const config = function(hardSourceConfig, babelLoaderCacheDirectory) {
       options: {
         babelrc: false,
         comments: false,
-        cacheDirectory: babelLoaderCacheDirectory,
         presets: babelPresets,
         plugins: [
           require.resolve('@babel/plugin-syntax-object-rest-spread'),
@@ -131,7 +135,6 @@ const config = function(hardSourceConfig, babelLoaderCacheDirectory) {
 
   return {
     context: path.resolve(__dirname, '../'),
-    devtool: 'source-map',
     output: {
       path: path.resolve(__dirname, '../dist/')
     },
@@ -148,6 +151,7 @@ const config = function(hardSourceConfig, babelLoaderCacheDirectory) {
       ]
     },
     plugins: [
+      dllPlugin,
       providePlugin,
       new SassPlugin({
         filename: devMode ? '[name].css' : '[name].[hash:6].css',
@@ -200,8 +204,4 @@ const config = function(hardSourceConfig, babelLoaderCacheDirectory) {
       sideEffects: false,
     },
   };
-};
-
-module.exports = {
-  config: config,
 };

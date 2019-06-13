@@ -12,9 +12,10 @@ const resourcesRule = {
   }
 };
 
-module.exports = function(TerserPluginCache) {
+module.exports = function() {
   return {
     mode: 'production',
+    devtool: 'source-map',
     output: {
       filename: '[name].[chunkhash:6].js'
     },
@@ -29,7 +30,6 @@ module.exports = function(TerserPluginCache) {
     optimization: {
       minimizer: [
         new TerserPlugin({
-          cache: TerserPluginCache,
           parallel: true,
           sourceMap: true,
           terserOptions: {

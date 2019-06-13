@@ -1,7 +1,9 @@
 const webpackMerge = require('webpack-merge');
-const commons = require('./buildtools/webpack.commons');
 
-const webpackConfig = webpackMerge(commons.config(), require('./buildtools/webpack.dev'));
+const webpackConfig = webpackMerge(
+  require('./buildtools/webpack.commons')(),
+  require('./buildtools/webpack.dev')()
+);
 
 module.exports = function(config) {
   config.set({
@@ -33,7 +35,7 @@ module.exports = function(config) {
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters:['progress'],
+    reporters: ['progress'],
 
     // web server port
     port: 9876,
@@ -55,7 +57,7 @@ module.exports = function(config) {
 
     customLaunchers: {
       optchrome: {
-        base: 'Chrome',
+        base: 'ChromeHeadless',
         flags: ['--no-sandbox']
       }
     },
