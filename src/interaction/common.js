@@ -20,10 +20,9 @@ export function getDefaultDrawStyleFunction() {
   const style = createEditingStyle();
   return function(feature, resolution) {
     const geometry = feature.getGeometry();
-    if (!geometry) {
-      throw new Error('Missing geometry');
+    if (geometry) {
+      return style[geometry.getType()];
     }
-    return style[geometry.getType()];
   };
 }
 

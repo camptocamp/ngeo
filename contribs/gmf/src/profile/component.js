@@ -494,27 +494,23 @@ ProfileController.prototype.getDistanceOnALine_ = function(pointOnLine) {
  * @private
  */
 ProfileController.prototype.hoverCallback_ = function(point, dist, xUnits, elevationsRef, yUnits) {
-  if (!this.measureTooltipElement_) {
-    throw new Error('Missing measureTooltipElement_');
-  }
-  if (!this.measureTooltip_) {
-    throw new Error('Missing measureTooltip_');
-  }
-  // Update information point.
-  const coordinate = [point.x, point.y];
+  if (this.measureTooltipElement_ && this.measureTooltip_) {
+    // Update information point.
+    const coordinate = [point.x, point.y];
 
-  this.currentPoint.elevations = elevationsRef;
-  this.currentPoint.distance = dist;
-  this.currentPoint.xUnits = xUnits;
-  this.currentPoint.yUnits = yUnits;
-  this.currentPoint.coordinate = coordinate;
+    this.currentPoint.elevations = elevationsRef;
+    this.currentPoint.distance = dist;
+    this.currentPoint.xUnits = xUnits;
+    this.currentPoint.yUnits = yUnits;
+    this.currentPoint.coordinate = coordinate;
 
-  // Update hover.
-  const geom = new olGeomPoint(coordinate);
-  this.createMeasureTooltip_();
-  this.measureTooltipElement_.innerHTML = this.getTooltipHTML_();
-  this.measureTooltip_.setPosition(coordinate);
-  this.snappedPoint_.setGeometry(geom);
+    // Update hover.
+    const geom = new olGeomPoint(coordinate);
+    this.createMeasureTooltip_();
+    this.measureTooltipElement_.innerHTML = this.getTooltipHTML_();
+    this.measureTooltip_.setPosition(coordinate);
+    this.snappedPoint_.setGeometry(geom);
+  }
 };
 
 

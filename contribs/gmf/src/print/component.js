@@ -928,13 +928,7 @@ export class PrintController {
    * @private
    */
   onPointerDrag_(e) {
-    if (!this.map) {
-      throw new Error('Missing map');
-    }
-    if (!this.onDragPreviousMousePosition_) {
-      throw new Error('Missing onDragPreviousMousePosition');
-    }
-    if (e instanceof MapBrowserPointerEvent) {
+    if (e instanceof MapBrowserPointerEvent && this.onDragPreviousMousePosition_ && this.map) {
       const originalEvent = e.originalEvent;
       if (originalEvent instanceof KeyboardEvent) {
         const mapCenter = this.map.getView().getCenter();

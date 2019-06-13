@@ -571,11 +571,8 @@ function handleEvent_(evt) {
   }
 
   const helpMsg = this.sketchFeature === null ? this.startMsg : this.continueMsg;
-  if (!helpMsg) {
-    throw new Error('Missing helpMsg');
-  }
 
-  if (this.displayHelpTooltip_) {
+  if (this.displayHelpTooltip_ && helpMsg) {
     if (!this.helpTooltipElement_) {
       throw new Error('Missing helpTooltipElement');
     }
