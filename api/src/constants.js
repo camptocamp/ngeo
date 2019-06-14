@@ -8,6 +8,7 @@ import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
  * @property {number[]} resolutions
  * @property {[number, number, number, number]} [extent]
  * @property {string} backgroundLayer
+ * @property {string[]} queryableLayers
  */
 
 export default /** @type {APIConfig} */({
@@ -28,4 +29,9 @@ export default /** @type {APIConfig} */({
   // The name of the GeoMapFish layer to use as background. May be a single value
   // (WMTS) or a comma-separated list of layer names (WMS).
   backgroundLayer: 'orthophoto',
+
+  /**
+   *  The list of layers (names) declared as queryable.
+   */
+  queryableLayers: ['osm_open', 'many_attributes']
 });

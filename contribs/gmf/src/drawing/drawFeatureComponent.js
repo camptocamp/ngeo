@@ -663,7 +663,7 @@ Controller.prototype.handleMapContextMenu_ = function(evt) {
       /** @type {import('ngeo/Menu').MenuActionOptions[]} */
       let actions = [];
       const resolution = this.map.getView().getResolution();
-      if (!resolution) {
+      if (resolution === undefined) {
         throw new Error('Missing resolution');
       }
       const vertexInfo = this.featureHelper_.getVertexInfoAtCoordinate(feature, coordinate, resolution);

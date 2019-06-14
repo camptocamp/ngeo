@@ -254,7 +254,7 @@ MainController.prototype.snapToGeometry = function(coordinate, geometry) {
   const dy = closestPoint[1] - coordinate[1];
   const dist = Math.sqrt(dx * dx + dy * dy);
   const resolution = this.map.getView().getResolution();
-  if (!resolution) {
+  if (resolution === undefined) {
     throw new Error('Missing resolution');
   }
   const pixelDist = dist / resolution;

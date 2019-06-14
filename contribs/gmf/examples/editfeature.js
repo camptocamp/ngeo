@@ -144,7 +144,7 @@ MainController.prototype.handleMapSingleClick_ = function(evt) {
   const map = this.map;
   const view = map.getView();
   const resolution = view.getResolution();
-  if (!resolution) {
+  if (resolution === undefined) {
     throw new Error('Missing resolution');
   }
   const buffer = resolution * this.pixelBuffer_;
@@ -190,7 +190,7 @@ MainController.prototype.insertFeature = function() {
   const map = this.map;
   const view = map.getView();
   const resolution = view.getResolution();
-  if (!resolution) {
+  if (resolution === undefined) {
     throw new Error('Missing resolution');
   }
   const buffer = resolution * -50; // 50 pixel buffer inside the extent

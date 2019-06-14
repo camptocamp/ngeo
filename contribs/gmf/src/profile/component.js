@@ -428,7 +428,7 @@ ProfileController.prototype.updateEventsListening_ = function() {
         // compute distance to line in pixels
         const eventToLine = new olGeomLineString([closestPoint, coordinate]);
         const resolution = this.map_.getView().getResolution();
-        if (!resolution) {
+        if (resolution === undefined) {
           throw new Error('Missing resolution');
         }
         const pixelDist = eventToLine.getLength() / resolution;
