@@ -86,11 +86,11 @@ export function getFeaturesFromIds(layer, ids) {
 
 
 /**
- * @param {!string} layer Name of the layer to query
- * @param {Array.<number>} coordinate Coordinate.
+ * @param {string} layer Name of the layer to query
+ * @param {number[]} coordinate Coordinate.
  * @param {number} resolution Resolution
  *
- * @return {!Promise<import('ol/Feature.js').default>} Promise.
+ * @return {Promise<import('ol/Feature.js').default<import('ol/geom/Geometry.js').default>>} Promise.
  * @hidden
  */
 export function getFeaturesFromCoordinates(layer, coordinate, resolution) {
@@ -121,6 +121,7 @@ export function getFeaturesFromCoordinates(layer, coordinate, resolution) {
       };
       const url = olUriAppendParams(overlayDef.ogcServer.urlWfs, params);
 
+      /** @type {?import('ol/Feature.js').default<import('ol/geom/Geometry.js').default>} */
       let feature;
       fetch(url)
         .then(response => response.text().then((responseText) => {
@@ -134,6 +135,9 @@ export function getFeaturesFromCoordinates(layer, coordinate, resolution) {
           console.error(`WFS GetFeature request failed, response: ${response}`);
         })
         .then(() => {
+          if (!feature) {
+            throw new Error('Missing feature');
+          }
           resolve(feature);
         });
     });

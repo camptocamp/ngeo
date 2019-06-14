@@ -8,6 +8,7 @@ import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
  * @property {number[]} resolutions
  * @property {[number, number, number, number]} [extent]
  * @property {string} backgroundLayer
+ * @property {string[]} queryableLayers
  */
 
 export default /** @type {APIConfig} */({

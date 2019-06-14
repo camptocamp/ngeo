@@ -87,7 +87,7 @@ export class DataSource {
 
     // (2) Sync resolution with existing data sources
     const resolution = view.getResolution();
-    if (typeof resolution != 'number') {
+    if (resolution === undefined) {
       throw new Error('Missing resolution');
     }
     this.syncDataSourcesToResolution_(resolution);
@@ -113,7 +113,7 @@ export class DataSource {
     const view = evt.target;
     if (view instanceof olView) {
       const resolution = view.getResolution();
-      if (typeof resolution != 'number') {
+      if (resolution === undefined) {
         throw new Error('Missing resolution');
       }
       this.syncDataSourcesToResolution_(resolution);
@@ -169,7 +169,7 @@ export class DataSource {
       const dataSource = event.element;
       if (this.map_) {
         const resolution = this.map_.getView().getResolution();
-        if (typeof resolution != 'number') {
+        if (resolution === undefined) {
           throw new Error('Missing resolution');
         }
         this.syncDataSourceToResolution_(dataSource, resolution);

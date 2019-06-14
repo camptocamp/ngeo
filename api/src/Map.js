@@ -194,6 +194,9 @@ class Map {
 
     this.map_.on('singleclick', (event) => {
       const resolution = this.map_.getView().getResolution();
+      if (resolution === undefined) {
+        throw new Error('Missing resolution');
+      }
       const visibleLayers = this.map_.getLayers().getArray().filter(layer => layer.getVisible());
       const visibleLayersName = visibleLayers.map(layer => layer.get('config.name'));
 
@@ -204,7 +207,11 @@ class Map {
           getFeaturesFromCoordinates(layer, event.coordinate, resolution).then((feature) => {
             if (feature) {
               this.vectorSource_.addFeature(feature);
-              this.selectObject(feature.getId(), true);
+              const featureId = feature.getId();
+              if (featureId === undefined) {
+                throw new Error('Missing feature ID');
+              }
+              this.selectObject(featureId, true);
             }
           });
         }

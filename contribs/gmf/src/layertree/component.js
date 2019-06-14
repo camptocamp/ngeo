@@ -635,7 +635,7 @@ Controller.prototype.getScale_ = function() {
   }
   const view = this.map.getView();
   const resolution = view.getResolution();
-  if (!resolution) {
+  if (resolution === undefined) {
     throw new Error('Missing resolution');
   }
   const mpu = view.getProjection().getMetersPerUnit();
@@ -747,7 +747,7 @@ Controller.prototype.getResolutionStyle = function(gmfLayer) {
     throw new Error('Missing map');
   }
   const resolution = this.map.getView().getResolution();
-  if (!resolution) {
+  if (resolution === undefined) {
     throw new Error('Missing resolution');
   }
   const minResolution = getNodeMinResolution(gmfLayer);
@@ -774,7 +774,7 @@ Controller.prototype.zoomToResolution = function(treeCtrl) {
   const gmfLayer = /** @type {import('gmf/themes.js').GmfLayerWMS} */ (treeCtrl.node);
   const view = this.map.getView();
   const resolution = view.getResolution();
-  if (!resolution) {
+  if (resolution === undefined) {
     throw new Error('Missing resolution');
   }
   const minResolution = getNodeMinResolution(gmfLayer);

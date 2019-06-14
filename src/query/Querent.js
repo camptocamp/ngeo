@@ -223,7 +223,7 @@ export class Querent {
       wms: /** @type{ngeoDatasourceOGC[]} */([]),
     };
     const resolution = map.getView().getResolution();
-    if (!resolution) {
+    if (resolution === undefined) {
       throw new Error('Missing resolution');
     }
 
@@ -539,7 +539,7 @@ export class Querent {
     const projection = view.getProjection();
     const srsName = projection.getCode();
     const wfsCount = options.wfsCount === true;
-    if (!resolution) {
+    if (resolution === undefined) {
       throw new Error('Missing resolution');
     }
 
@@ -771,7 +771,7 @@ export class Querent {
     const resolution = view.getResolution();
     const projection = view.getProjection();
     const projCode = projection.getCode();
-    if (!resolution) {
+    if (resolution === undefined) {
       throw new Error('Missing resolution');
     }
 
