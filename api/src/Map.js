@@ -32,7 +32,7 @@ import {get as getProjection} from 'ol/proj.js';
 
 import constants from './constants.js';
 
-import {getFeaturesFromLayer} from './Querent.js';
+import {getFeaturesFromIds, getFeaturesFromCoordinates} from './Querent.js';
 import * as themes from './Themes.js';
 
 
@@ -53,6 +53,12 @@ import * as themes from './Themes.js';
  * @property {boolean} [addLayerSwitcher=false]
  * @property {string[]} [layers]
  */
+
+/**
+ * @type {Array<string>}
+ */
+const EXCLUDE_PROPERTIES = ['geom', 'geometry', 'boundedBy'];
+
 
 /**
  * @private
@@ -184,6 +190,26 @@ class Map {
         this.selectObject(selected.getId());
       }
     });
+
+
+    this.map_.on('singleclick', (event) => {
+      const resolution = this.map_.getView().getResolution();
+      const visibleLayers = this.map_.getLayers().getArray().filter(layer => layer.getVisible());
+      const visibleLayersName = visibleLayers.map(layer => layer.get('config.name'));
+
+      this.clearSelection();
+
+      for (const layer of constants.queryableLayers) {
+        if (visibleLayersName.includes(layer)) {
+          getFeaturesFromCoordinates(layer, event.coordinate, resolution).then((feature) => {
+            if (feature) {
+              this.vectorSource_.addFeature(feature);
+              this.selectObject(feature.getId(), true);
+            }
+          });
+        }
+      }
+    });
   }
 
   /**
@@ -195,11 +221,8 @@ class Map {
     overlayContainer.className = 'ol-popup';
     const overlayCloser = document.createElement('div');
     overlayCloser.className = 'ol-popup-closer';
-    overlayCloser.addEventListener('click', (event) => {
-      // clear the selected features
-      this.selectInteraction_.getFeatures().clear();
-      // hide the overlay
-      this.overlay_.setPosition(undefined);
+    overlayCloser.addEventListener('click', () => {
+      this.clearSelection();
       return false;
     });
     const overlayContent = document.createElement('div');
@@ -250,11 +273,10 @@ class Map {
   /**
    * @param {string} layer Name of the layer to fetch the features from
    * @param {string[]} ids List of ids
-   * @param {boolean} [highlight=false] Whether to add the features on
-   *     the map or not.
+   * @param {boolean} [highlight=false] Whether to add the features on the map or not.
    */
   recenterOnObjects(layer, ids, highlight = false) {
-    getFeaturesFromLayer(layer, ids)
+    getFeaturesFromIds(layer, ids)
       .then((features) => {
         if (!features.length) {
           console.error('Could not recenter: no objects were found.');
@@ -346,15 +368,32 @@ class Map {
   }
 
   /**
-   * @param {string} id Identifier.
+   * @param {string|number} id Identifier.
+   * @param {boolean} table Display all properties in a table
    */
-  selectObject(id) {
+  selectObject(id, table = false) {
     const feature = this.vectorSource_.getFeatureById(id);
     if (feature) {
       const coordinates = /** @type {import('ol/geom/Point.js').default} */(
         feature.getGeometry()
       ).getCoordinates();
       const properties = feature.getProperties();
+      let contentHTML = '';
+      if (table) {
+        contentHTML += '<table><tbody>';
+        for (const key in properties) {
+          if (!EXCLUDE_PROPERTIES.includes(key)) {
+            contentHTML += '<tr>';
+            contentHTML += `<th>${key}</th>`;
+            contentHTML += `<td>${properties[key]}</td>`;
+            contentHTML += '</tr>';
+          }
+        }
+        contentHTML += '</tbody></table>';
+      } else {
+        contentHTML += `<div><b>${properties.title}</b></div>`;
+        contentHTML += `<p>${properties.description}</p>`;
+      }
       const element = this.overlay_.getElement();
       if (!element) {
         throw new Error('Missing element');
@@ -363,17 +402,23 @@ class Map {
       if (!content) {
         throw new Error('Missing content');
       }
-      content.innerHTML = '';
-      content.innerHTML += `<div><b>${properties.title}</b></div>`;
-      content.innerHTML += `<p>${properties.description}</p>`;
+      content.innerHTML = contentHTML;
       this.overlay_.setPosition(coordinates);
-
       this.view_.setCenter(coordinates);
     }
   }
 
+  /**
+   *
+   */
+  clearSelection() {
+    // clear the selected features
+    this.selectInteraction_.getFeatures().clear();
+    this.vectorSource_.clear();
+    // hide the overlay
+    this.overlay_.setPosition(undefined);
+  }
 }
-
 
 /**
  * @param {string[]} keys Keys.

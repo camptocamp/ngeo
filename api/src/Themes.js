@@ -46,7 +46,6 @@ export function getBackgroundLayers() {
         const layerWMTS = /** @type {import('gmf/themes.js').GmfLayerWMTS} */(config);
         promises.push(
           createWMTSLayer(layerWMTS).then((layer) => {
-            layer.set('config.layer', layerWMTS.layer);
             layer.set('config.name', layerWMTS.name);
             return layer;
           })
@@ -56,7 +55,6 @@ export function getBackgroundLayers() {
         const ogcServer = themes.ogcServers[config.ogcServer];
         promises.push(
           createWMSLayer(layerWMS, ogcServer).then((layer) => {
-            layer.set('config.layer', layerWMS.layers);
             layer.set('config.name', layerWMS.name);
             return layer;
           })
@@ -194,19 +192,21 @@ export function getOverlayLayers(layerNames) {
  * @hidden
  */
 export function createWMSLayer(config, ogcServer) {
-  const source = new ImageWMS({
-    url: ogcServer.url,
-    projection: undefined, // should be removed in next OL version
-    params: {
-      'LAYERS': config.layers
-    },
-    serverType: ogcServer.type
-  });
   // @ts-ignore: OL issue
   const layer = new ImageLayer({
-    source
+    source: new ImageWMS({
+      url: ogcServer.url,
+      projection: undefined, // FIXME: should be removed in next OL version
+      params: {
+        'LAYERS': config.layers
+      },
+      serverType: ogcServer.type
+    }),
+    minResolution: config.minResolutionHint,
+    maxResolution: config.maxResolutionHint
   });
   layer.set('title', config.name);
+  layer.set('config.name', config.name);
   return Promise.resolve(layer);
 }
 
@@ -232,6 +232,7 @@ export function createWMTSLayer(config) {
       source: source
     });
     layer.set('title', config.name);
+    layer.set('config.name', config.name);
     return layer;
   });
 }
