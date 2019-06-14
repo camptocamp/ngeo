@@ -146,7 +146,7 @@ eof-newline:
 	buildtools/test-eof-newline
 
 .PHONY: test
-test: .build/node_modules.timestamp
+test: .build/node_modules.timestamp build-dll
 	TS_NODE_PROJECT=disable.json ./node_modules/karma/bin/karma start karma-conf.js --single-run
 
 .PHONY: test-debug
@@ -159,15 +159,15 @@ test-debug: .build/node_modules.timestamp .build/node_modules_karma-chrome-launc
 	touch $@
 
 .PHONY: serve-ngeo
-serve-ngeo: .build/node_modules.timestamp $(ANGULAR_LOCALES_FILES)
+serve-ngeo: .build/node_modules.timestamp build-dll $(ANGULAR_LOCALES_FILES)
 	npm run serve-ngeo-examples
 
 .PHONY: serve-gmf
-serve-gmf: .build/node_modules.timestamp $(ANGULAR_LOCALES_FILES)
+serve-gmf: .build/node_modules.timestamp build-dll $(ANGULAR_LOCALES_FILES)
 	npm run serve-gmf-examples
 
 .PHONY: serve-gmf-apps
-serve-gmf-apps: .build/node_modules.timestamp $(ANGULAR_LOCALES_FILES)
+serve-gmf-apps: .build/node_modules.timestamp build-dll $(ANGULAR_LOCALES_FILES)
 	npm run serve-gmf-apps
 
 .PHONY: examples-hosted
@@ -179,21 +179,24 @@ examples-hosted: \
 .PHONY: examples-hosted-ngeo
 examples-hosted-ngeo: .build/examples-ngeo.timestamp .build/examples-hosted/index.html
 
-.build/examples-ngeo.timestamp: $(NGEO_ALL_SRC_FILES) $(WEBPACK_CONFIG_FILES) .build/node_modules.timestamp
+.build/examples-ngeo.timestamp: $(NGEO_ALL_SRC_FILES) $(WEBPACK_CONFIG_FILES) \
+	.build/node_modules.timestamp build-dll
 	npm run build-ngeo-examples
 	touch $@
 
 .PHONY: examples-hosted-gmf
 examples-hosted-gmf: .build/examples-gmf.timestamp .build/examples-hosted/contribs/gmf/index.html
 
-.build/examples-gmf.timestamp: $(GMF_ALL_SRC_FILES) $(WEBPACK_CONFIG_FILES) .build/node_modules.timestamp
+.build/examples-gmf.timestamp: $(GMF_ALL_SRC_FILES) $(WEBPACK_CONFIG_FILES) \
+	.build/node_modules.timestamp build-dll
 	npm run build-gmf-examples
 	touch $@
 
 .PHONY: examples-hosted-apps
 examples-hosted-apps: .build/gmf-apps.timestamp .build/examples-hosted-gmf-apps-deps.timestamp
 
-.build/gmf-apps.timestamp: $(GMF_APPS_ALL_SRC_FILES) $(WEBPACK_CONFIG_FILES) .build/node_modules.timestamp
+.build/gmf-apps.timestamp: $(GMF_APPS_ALL_SRC_FILES) $(WEBPACK_CONFIG_FILES) \
+	.build/node_modules.timestamp build-dll
 	npm run build-gmf-apps
 	touch $@
 
@@ -286,7 +289,7 @@ contribs/gmf/build/angular-locale_%.js: package.json
 
 .build/python-venv.timestamp: requirements.txt
 	mkdir -p $(dir $@)
-	virtualenv $(PY_VERSION) --no-site-packages .build/python-venv
+	python3 -m venv .build/python-venv
 	$(PY_VENV_BIN)/pip install `grep ^pip== requirements.txt --colour=never`
 	$(PY_VENV_BIN)/pip install -r requirements.txt
 	touch $@
@@ -383,6 +386,12 @@ contribs/gmf/build/gmf-%.json: \
 	mkdir -p $(dir $@)
 	node buildtools/compile-catalog $(filter-out .build/node_modules.timestamp, $^) > $@
 
+
+.PHONY: build-dll
+build-dll:.build/python-venv.timestamp
+	$(PY_VENV_BIN)/python3 buildtools/extract-ngeo-dependencies > deps.js && \
+	npm run build-dll
+	rm deps.js
 
 .PHONY: clean
 clean:

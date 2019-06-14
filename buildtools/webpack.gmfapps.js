@@ -17,7 +17,10 @@ for (const filename of ls('contribs/gmf/apps/*/index.html.ejs')) {
       inject: false,
       chunksSortMode: 'manual',
       filename: `${filenamePrefix}${name}.html`,
-      chunks: [name]
+      chunks: [name],
+      vars: {
+        version: 'dev',
+      }
     })
   );
 }
