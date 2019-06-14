@@ -61,15 +61,9 @@ PrintUtils.prototype.createPrintMaskPostcompose = function(getSize, getScale, op
      * @param {Event|import('ol/events/Event.js').default} evt Postcompose event.
      */
     function(evt) {
-      if (evt instanceof RenderEvent) {
+      if (evt instanceof RenderEvent && evt.context && evt.frameState) {
         const context = evt.context;
-        if (!context) {
-          throw new Error('Missing context');
-        }
         const frameState = evt.frameState;
-        if (!frameState) {
-          throw new Error('Missing state');
-        }
 
         const resolution = frameState.viewState.resolution;
 
