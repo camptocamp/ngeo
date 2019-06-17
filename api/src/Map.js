@@ -89,6 +89,10 @@ class Map {
      * @type {Overlay}
      */
     this.overlay_ = new Overlay({
+      autoPan: true,
+      autoPanAnimation: {
+        duration: 80
+      },
       element: this.createOverlayDomTree_()
     });
     this.map_.addOverlay(this.overlay_);
@@ -149,6 +153,7 @@ class Map {
      */
     this.vectorLayer_ = new VectorLayer({
       zIndex: 1,
+      style: null,
       source: this.vectorSource_
     });
 
@@ -361,7 +366,6 @@ class Map {
       const content = this.overlay_.getElement().querySelector('.ol-popup-content');
       content.innerHTML = contentHTML;
       this.overlay_.setPosition(coordinates);
-      this.view_.setCenter(coordinates);
     }
   }
 
@@ -371,7 +375,6 @@ class Map {
   clearSelection() {
     // clear the selected features
     this.selectInteraction_.getFeatures().clear();
-    this.vectorSource_.clear();
     // hide the overlay
     this.overlay_.setPosition(undefined);
   }
