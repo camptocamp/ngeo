@@ -223,7 +223,7 @@
 <div
   ng-if="::!layertreeCtrl.isRoot && gmfLayertreeCtrl.getLegendsObject(layertreeCtrl) && layertreeCtrl.node.metadata.legend" id="gmf-layertree-node-{{::layertreeCtrl.uid}}-legend"
   class="collapse gmf-layertree-legend"
-  ng-class="::[layertreeCtrl.node.metadata.isLegendExpanded ? 'in' : '']">
+  ng-class="[gmfLayertreeCtrl.getNodeState(layertreeCtrl), layertreeCtrl.node.metadata.isLegendExpanded ? 'in' : '']">
 
   <a
     title="{{'Hide legend'|translate}}"
