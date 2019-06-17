@@ -27,7 +27,12 @@ then
         then
             echo "Publish daily version"
             $RUN npm install --no-save fluid-publish
-            $RUN node_modules/.bin/fluid-publish devTag="version-${MAIN_BRANCH}-latest"
+            if [ "${TRAVIS_BRANCH}" = "master" ]
+            then
+                $RUN node_modules/.bin/fluid-publish devTag="latest"
+            else
+                $RUN node_modules/.bin/fluid-publish devTag="version-${MAIN_BRANCH}-latest"
+            fi
         fi
     fi
 fi
