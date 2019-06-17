@@ -89,6 +89,10 @@ class Map {
      * @type {Overlay}
      */
     this.overlay_ = new Overlay({
+      autoPan: true,
+      autoPanAnimation: {
+        duration: 80
+      },
       element: this.createOverlayDomTree_()
     });
     this.map_.addOverlay(this.overlay_);
@@ -116,8 +120,10 @@ class Map {
 
     // Get background layer first...
     themes.getBackgroundLayers().then((layers) => {
+      // The options is an array for backward compatibility reason.
+      const backgroundLayer = options.backgroundLayers || [constants.backgroundLayer];
       for (const layer of layers) {
-        if (layer.get('config.name') === constants.backgroundLayer) {
+        if (backgroundLayer.includes(layer.get('config.name'))) {
           // we don't want the background layer in the layerswitch so we remove the title.
           layer.set('title', undefined);
           this.map_.addLayer(layer);
@@ -147,6 +153,7 @@ class Map {
      */
     this.vectorLayer_ = new VectorLayer({
       zIndex: 1,
+      style: null,
       source: this.vectorSource_
     });
 
@@ -359,7 +366,6 @@ class Map {
       const content = this.overlay_.getElement().querySelector('.ol-popup-content');
       content.innerHTML = contentHTML;
       this.overlay_.setPosition(coordinates);
-      this.view_.setCenter(coordinates);
     }
   }
 
@@ -369,7 +375,6 @@ class Map {
   clearSelection() {
     // clear the selected features
     this.selectInteraction_.getFeatures().clear();
-    this.vectorSource_.clear();
     // hide the overlay
     this.overlay_.setPosition(undefined);
   }
