@@ -116,8 +116,10 @@ class Map {
 
     // Get background layer first...
     themes.getBackgroundLayers().then((layers) => {
+      // The options is an array for backward compatibility reason.
+      const backgroundLayer = options.backgroundLayers || [constants.backgroundLayer];
       for (const layer of layers) {
-        if (layer.get('config.name') === constants.backgroundLayer) {
+        if (backgroundLayer.includes(layer.get('config.name'))) {
           // we don't want the background layer in the layerswitch so we remove the title.
           layer.set('title', undefined);
           this.map_.addLayer(layer);
