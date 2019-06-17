@@ -32,7 +32,7 @@ $table-height: $grid-height - $app-margin - 2 * $map-tools-size;
   }
 
   .nav-pills {
-    height: $map-tools-size;
+    padding-bottom: $half-app-margin;
     font-size: $font-size-small;
   }
 
