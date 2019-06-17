@@ -346,11 +346,14 @@ class GoogleStreetviewController {
   }
 
   /**
-   * @param {google.maps.StreetViewPanoramaData} data Data.
+   * @param {?google.maps.StreetViewPanoramaData} data Data.
    * @param {google.maps.StreetViewStatus} status Status.
    * @private
    */
   handleStreetViewServiceGetPanorama_(data, status) {
+    if (!data) {
+      throw new Error('Missing data');
+    }
     if (!data.location) {
       throw new Error('Missing data.location');
     }
