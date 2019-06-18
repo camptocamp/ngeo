@@ -1,3 +1,4 @@
+const path = require('path');
 const webpackMerge = require('webpack-merge');
 
 const webpackConfig = webpackMerge(
@@ -21,7 +22,11 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'test/spec/all.js',
+      {
+        pattern: path.resolve(__dirname, 'dist/vendor.js'),
+        watched: false,
+        served: true
+      }, 'test/spec/all.js',
     ],
 
     // preprocess matching files before serving them to the browser

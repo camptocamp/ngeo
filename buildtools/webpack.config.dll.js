@@ -65,5 +65,6 @@ module.exports = {
         sourceMap: true,
       }),
     ],
+    sideEffects: false,
   },
 };

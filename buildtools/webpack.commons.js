@@ -4,106 +4,107 @@ const SassPlugin = require('./webpack.plugin.js');
 
 const devMode = process.env.NODE_ENV !== 'production';
 
+module.exports = function(config) {
 
-const dllPlugin = new webpack.DllReferencePlugin({
-  manifest: path.resolve(__dirname, '../dist/vendor-manifest.json'),
-  context: path.resolve(__dirname, '../context/jjjj')
-});
+  config = config || {};
+
+  const dllPlugin = new webpack.DllReferencePlugin(Object.assign({
+    manifest: path.resolve(__dirname, '../dist/vendor-manifest.json')
+  }, config.DllReferencePluginOptions || {}));
 
 
-const providePlugin = new webpack.ProvidePlugin({
-  // Make sure that Angular finds jQuery and does not fall back to jqLite
-  // See https://github.com/webpack/webpack/issues/582
-  'window.jQuery': 'jquery',
-  // For Bootstrap
-  'jQuery': 'jquery',
-  // For own scripts
-  $: 'jquery',
-});
+  const providePlugin = new webpack.ProvidePlugin({
+    // Make sure that Angular finds jQuery and does not fall back to jqLite
+    // See https://github.com/webpack/webpack/issues/582
+    'window.jQuery': 'jquery',
+    // For Bootstrap
+    'jQuery': 'jquery',
+    // For own scripts
+    $: 'jquery',
+  });
 
-const babelPresets = [[require.resolve('@babel/preset-env'), {
-  'targets': {
-    'browsers': ['last 2 versions', 'Firefox ESR', 'ie 11'],
-  },
-  'modules': false,
-  'loose': true,
-}]];
-
-const angularRule = {
-  test: require.resolve('angular'),
-  use: {
-    loader: 'expose-loader',
-    options: 'angular'
-  }
-};
-
-// Expose corejs-typeahead as window.Bloodhound
-const typeaheadRule = {
-  test: require.resolve('corejs-typeahead'),
-  use: {
-    loader: 'expose-loader',
-    options: 'Bloodhound'
-  }
-};
-
-const cssRule = {
-  test: /\.css$/,
-  use: [
-    './buildtools/webpack.scss-loader',
-    'extract-loader',
-    'css-loader',
-  ]
-};
-
-const sassRule = {
-  test: /\.scss$/,
-  use: [{
-    loader: './buildtools/webpack.scss-loader',
-  }]
-};
-
-const htmlRule = {
-  test: /\.html$/,
-  use: 'ejs-loader',
-};
-
-const svgRule = {
-  test: /\.svg$/,
-  use: [
-    {
-      loader: 'svg-inline-loader',
-      options: {
-        removeSVGTagAttrs: false,
-      },
+  const babelPresets = [[require.resolve('@babel/preset-env'), {
+    'targets': {
+      'browsers': ['last 2 versions', 'Firefox ESR', 'ie 11'],
     },
-    './buildtools/svg-viewbox-loader',
-    'svgo-loader',
-  ]
-};
+    'modules': false,
+    'loose': true,
+  }]];
 
-function get_comp(firsts, lasts) {
-  return (f1, f2) => {
-    for (const pattern of firsts) {
-      if (f1.indexOf(pattern) >= 0) {
-        return -1;
-      }
-      if (f2.indexOf(pattern) >= 0) {
-        return 1;
-      }
+  const angularRule = {
+    test: require.resolve('angular'),
+    use: {
+      loader: 'expose-loader',
+      options: 'angular'
     }
-    for (const pattern of lasts) {
-      if (f1.indexOf(pattern) >= 0) {
-        return 1;
-      }
-      if (f2.indexOf(pattern) >= 0) {
-        return -1;
-      }
-    }
-    return 0;
   };
-}
 
-module.exports = function() {
+  // Expose corejs-typeahead as window.Bloodhound
+  const typeaheadRule = {
+    test: require.resolve('corejs-typeahead'),
+    use: {
+      loader: 'expose-loader',
+      options: 'Bloodhound'
+    }
+  };
+
+  const cssRule = {
+    test: /\.css$/,
+    use: [
+      './buildtools/webpack.scss-loader',
+      'extract-loader',
+      'css-loader',
+    ]
+  };
+
+  const sassRule = {
+    test: /\.scss$/,
+    use: [{
+      loader: './buildtools/webpack.scss-loader',
+    }]
+  };
+
+  const htmlRule = {
+    test: /\.html$/,
+    use: 'ejs-loader',
+  };
+
+  const svgRule = {
+    test: /\.svg$/,
+    use: [
+      {
+        loader: 'svg-inline-loader',
+        options: {
+          removeSVGTagAttrs: false,
+        },
+      },
+      './buildtools/svg-viewbox-loader',
+      'svgo-loader',
+    ]
+  };
+
+  function get_comp(firsts, lasts) {
+    return (f1, f2) => {
+      for (const pattern of firsts) {
+        if (f1.indexOf(pattern) >= 0) {
+          return -1;
+        }
+        if (f2.indexOf(pattern) >= 0) {
+          return 1;
+        }
+      }
+      for (const pattern of lasts) {
+        if (f1.indexOf(pattern) >= 0) {
+          return 1;
+        }
+        if (f2.indexOf(pattern) >= 0) {
+          return -1;
+        }
+      }
+      return 0;
+    };
+  }
+
 
   const ngeoRule = {
     test: /\/ngeo\/(?!node_modules\/).*\.js$/,
