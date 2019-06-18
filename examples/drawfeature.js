@@ -25,6 +25,7 @@ exports.module = angular.module('app', [
   ngeoMiscToolActivateMgr.module.name,
 ]);
 
+exports.module.value('ngeoMeasureTolerance', 20);
 
 /**
  * @param {!angular.Scope} $scope Angular scope.

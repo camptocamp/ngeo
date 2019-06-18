@@ -26,6 +26,7 @@ import olInteractionSnap from 'ol/interaction/Snap.js';
  * @param {angular.$http} $http Angular $http service.
  * @param {angular.$q} $q The Angular $q service.
  * @param {!angular.Scope} $rootScope Angular rootScope.
+ * @param {!angular.$injector} $injector Angular injector.
  * @param {angular.$timeout} $timeout Angular timeout service.
  * @param {gmf.theme.Themes} gmfThemes The gmf Themes service.
  * @param {gmf.layertree.TreeManager} gmfTreeManager The gmf TreeManager service.
@@ -33,7 +34,7 @@ import olInteractionSnap from 'ol/interaction/Snap.js';
  * @ngdoc service
  * @ngname gmfSnapping
  */
-const exports = function($http, $q, $rootScope, $timeout, gmfThemes,
+const exports = function($http, $q, $rootScope, $injector, $timeout, gmfThemes,
   gmfTreeManager) {
 
   // === Injected services ===
@@ -61,6 +62,12 @@ const exports = function($http, $q, $rootScope, $timeout, gmfThemes,
    * @private
    */
   this.timeout_ = $timeout;
+
+  /**
+   * @type {!angular.$injector}
+   * @private
+   */
+  this.injector_ = $injector;
 
   /**
    * @type {gmf.theme.Themes}
@@ -113,13 +120,46 @@ const exports = function($http, $q, $rootScope, $timeout, gmfThemes,
    */
   this.ogcServers_ = null;
 
+  /**
+   * @type {ol.source.Vector | undefined}
+   * @private
+   */
+  this.ngeoSnappingSource_ = this.injector_.get('ngeoSnappingSource') || undefined;
+
 };
+
+
+class CustomSnap extends olInteractionSnap {
+  constructor(options) {
+    super(options);
+    this.modifierPressed = false;
+    document.body.addEventListener('keydown', (evt) => {
+      this.modifierPressed = evt.keyCode === 17; // Ctrl key
+    });
+    document.body.addEventListener('keyup', () => {
+      this.modifierPressed = false;
+    });
+  }
+
+  handleEvent(evt) {
+    if (this.modifierPressed) {
+      return;
+    } else {
+      const result = this.snapTo(evt.pixel, evt.coordinate, evt.map);
+      if (result.snapped) {
+        evt.coordinate = result.vertex.slice(0, 2);
+        evt.pixel = result.vertexPixel;
+      }
+      return super.handleEvent(evt);
+    }
+  }
+}
 
 
 /**
  * In order for a `ol.interaction.Snap` to work properly, it has to be added
  * to the map after any draw interactions or other kinds of interactions that
- * ineracts with features on the map.
+ * interacts with features on the map.
  *
  * This method can be called to make sure the Snap interactions are on top.
  *
@@ -384,7 +424,7 @@ exports.prototype.activateItem_ = function(item) {
   const map = this.map_;
   googAsserts.assert(map);
 
-  const interaction = new olInteractionSnap({
+  const interaction = new CustomSnap({
     edge: item.snappingConfig.edge,
     features: item.features,
     pixelTolerance: item.snappingConfig.tolerance,
@@ -514,6 +554,7 @@ exports.prototype.loadItemFeatures_ = function(item) {
       const readFeatures = new olFormatWFS().readFeatures(response.data);
       if (readFeatures) {
         item.features.extend(readFeatures);
+        this.refreshSnappingSource_();
       }
     });
 
@@ -535,6 +576,18 @@ exports.prototype.handleMapMoveEnd_ = function() {
   );
 };
 
+/**
+ * @private
+ */
+exports.prototype.refreshSnappingSource_ = function() {
+  this.ngeoSnappingSource_.clear();
+  for (const uid in this.cache_) {
+    const item = this.cache_[+uid];
+    if (item.active) {
+      this.ngeoSnappingSource_.addFeatures(item.features.getArray());
+    }
+  }
+};
 
 /**
  * @typedef {Object<number, gmf.editing.Snapping.CacheItem>}

@@ -254,5 +254,4 @@ exports.module.value('ngeoQueryOptions', {
 exports.module.value('ngeoMeasurePrecision', 3);
 exports.module.value('ngeoMeasureDecimals', 0);
 
-
 export default exports;
