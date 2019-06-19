@@ -363,7 +363,7 @@
     </footer>
     <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=es6,default-3.6,Array.prototype.includes,Object.entries,Object.values"></script>
     <script src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyA3NVIy-HOYT0a0CkChA6nFwqEFqHYWBVk"></script>
-    <script src="/dist/vendor.js?${htmlWebpackPlugin.options.vars.version}"></script>
+    <script src="../../../dist/vendor.js?${htmlWebpackPlugin.options.vars.version}"></script>
     <% for (var chunk in htmlWebpackPlugin.files.chunks) { %>
     <script src="<%= htmlWebpackPlugin.files.chunks[chunk].entry %>"></script>
     <% } %>
