@@ -1,8 +1,7 @@
 extends:
 - openlayers
 env:
-    jquery: true
-    jasmine: true
+  jquery: true
 parserOptions:
   ecmaVersion: 2017
 rules:

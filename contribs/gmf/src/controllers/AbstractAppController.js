@@ -30,6 +30,7 @@ import olStyleFill from 'ol/style/Fill.js';
 import olStyleStroke from 'ol/style/Stroke.js';
 import olStyleStyle from 'ol/style/Style.js';
 import {ThemeEventType} from 'gmf/theme/Manager.js';
+import {getBrowserLanguage} from 'ngeo/utils.js';
 
 
 /**
@@ -414,11 +415,6 @@ export function AbstractAppController(config, map, $scope, $injector) {
   );
 
   /**
-   * @type {import('ngeo/misc/getBrowserLanguage.js').miscGetBrowserLanguage}
-   */
-  this.getBrowserLanguage = $injector.get('ngeoGetBrowserLanguage');
-
-  /**
    * @type {import("ngeo/statemanager/Service.js").StatemanagerService}
    */
   this.stateManager = $injector.get('ngeoStateManager');
@@ -708,8 +704,7 @@ AbstractAppController.prototype.initLanguage = function() {
     });
   });
 
-  const browserLanguage = /** @type {string|undefined} */
-      (this.getBrowserLanguage(Object.keys(this.langUrls)));
+  const browserLanguage = getBrowserLanguage(Object.keys(this.langUrls));
   const urlLanguage = /** @type {string|undefined} */
       (this.stateManager.getInitialStringValue('lang'));
 
