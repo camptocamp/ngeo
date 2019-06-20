@@ -1,7 +1,6 @@
 
 import $ from 'jquery';
 import angular from 'angular';
-import {TOUCH} from 'ol/has.js';
 
 
 /**
@@ -41,7 +40,7 @@ function bootstrap(module) {
   request.done((dynamic) => {
     if (dynamic.doRedirect) {
       const small_screen = window.matchMedia ? window.matchMedia('(max-width: 1024px)') : false;
-      if (small_screen && TOUCH) {
+      if (small_screen && 'ontouchstart' in window) {
         window.location.href = dynamic.redirectUrl;
       }
     }
