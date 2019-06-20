@@ -11,7 +11,6 @@ import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
 import ngeoMiscFile from 'ngeo/misc/File.js';
 import ngeoMiscFilereaderComponent from 'ngeo/misc/filereaderComponent.js';
 import ngeoMiscFilters from 'ngeo/misc/filters.js';
-import ngeoMiscGetBrowserLanguage from 'ngeo/misc/getBrowserLanguage.js';
 import ngeoMiscSortableComponent from 'ngeo/misc/sortableComponent.js';
 import ngeoMiscTime from 'ngeo/misc/Time.js';
 import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr.js';
@@ -31,7 +30,6 @@ export default angular.module('ngeoMiscExtraModule', [
   ngeoMiscFile.name,
   ngeoMiscFilereaderComponent.name,
   ngeoMiscFilters.name,
-  ngeoMiscGetBrowserLanguage.name,
   ngeoMiscSortableComponent.name,
   ngeoMiscTime.name,
   ngeoMiscToolActivateMgr.name,

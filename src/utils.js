@@ -7,6 +7,21 @@ import olGeomPoint from 'ol/geom/Point.js';
 import olGeomPolygon from 'ol/geom/Polygon.js';
 import {getTopLeft, getTopRight, getBottomLeft, getBottomRight} from 'ol/extent.js';
 
+
+/**
+ * @param {string[]} availableLanguages Available languages.
+ * @return {string} The "best" language code.
+ */
+export function getBrowserLanguage(availableLanguages) {
+  let browserLanguages = window.navigator.languages || [window.navigator.language];
+  browserLanguages = browserLanguages.map(item => item.substring(0, 2));
+  // remove duplicated language codes
+  browserLanguages = browserLanguages.filter((item, index, arr) => arr.indexOf(item) == index);
+  const supportedLanguages = browserLanguages.filter(item => availableLanguages.indexOf(item) != -1);
+  return supportedLanguages[0];
+}
+
+
 /**
  * Utility method that converts a simple geometry to its multi equivalent. If
  * the geometry itself is already multi, it is returned as-is.
