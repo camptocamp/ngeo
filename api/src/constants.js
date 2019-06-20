@@ -26,12 +26,10 @@ export default /** @type {APIConfig} */({
   // the default is ǹo restriction.
   // extent: undefined,
 
-  // The name of the GeoMapFish layer to use as background. May be a single value
-  // (WMTS) or a comma-separated list of layer names (WMS).
+  // The name of the layer to use as background, the layer must be present in the 'background_layers'
+  // section of the theme
   backgroundLayer: 'orthophoto',
 
-  /**
-   *  The list of layers (names) declared as queryable.
-   */
+  // The list of layers (names) that can be queried on mouse click
   queryableLayers: ['osm_open', 'many_attributes']
 });
