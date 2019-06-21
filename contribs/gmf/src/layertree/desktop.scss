@@ -52,7 +52,6 @@ gmf-layertree {
 
   &.gmf-layertree-dragger {
     * {
-      cursor: url(~gmf/cursors/grabbing.cur), default;
       cursor: -webkit-grabbing;
       cursor: grabbing;
     }
@@ -87,7 +86,6 @@ gmf-layertree {
   }
 
   div.ngeo-sortable-handle {
-    cursor: url(~gmf/cursors/grab.cur), default;
     cursor: -webkit-grab;
     cursor: grab;
     position: absolute;
