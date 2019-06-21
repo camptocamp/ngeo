@@ -3,7 +3,7 @@
  * @type {string}
  * @hidden
  */
-export const GMF_DEMO = 'https://geomapfish-demo-2-4.camptocamp.com/';
+export const GMF_DEMO = 'https://geomapfish-demo-2-5.camptocamp.com/';
 
 /**
  * WFS feature namespace for MapServer

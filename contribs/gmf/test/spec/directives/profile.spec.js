@@ -17,7 +17,7 @@ describe('gmf.GmfProfileController', () => {
        * @param {angular.IModule} $provide
        */
       ($provide) => {
-        $provide.value('gmfProfileJsonUrl', 'https://geomapfish-demo-2-4.camptocamp.com/profile.json');
+        $provide.value('gmfProfileJsonUrl', 'https://geomapfish-demo-2-5.camptocamp.com/profile.json');
         csvDownloadServiceMock = {
           startDownload(data, columnDefs, fileName) {}
         };
