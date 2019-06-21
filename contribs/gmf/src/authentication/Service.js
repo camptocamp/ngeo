@@ -1,6 +1,8 @@
 import angular from 'angular';
 import ngeoCustomEvent from 'ngeo/CustomEvent.js';
 import olEventsEventTarget from 'ol/events/Target.js';
+// @ts-ignore
+import * as Sentry from '@sentry/browser';
 
 
 /**
@@ -249,6 +251,10 @@ export class AuthenticationService extends olEventsEventTarget {
    * @private
    */
   setUser_(respData, emitEvent) {
+    Sentry.setUser({
+      username: respData.username
+    });
+
     for (const key in this.user_) {
       // @ts-ignore: unsupported syntax
       this.user_[key] = null;
