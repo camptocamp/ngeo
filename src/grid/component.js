@@ -1,7 +1,7 @@
 import angular from 'angular';
 import ngeoMiscFilters from 'ngeo/misc/filters.js';
 import {getRowUid} from 'ngeo/grid/Config.js';
-import * as olHas from 'ol/has.js';
+import {MAC} from 'ol/has.js';
 
 import 'floatthead';
 import 'angular-float-thead';
@@ -299,7 +299,7 @@ GridController.prototype.preventTextSelection = function(event) {
  */
 function isPlatformModifierKeyOnly(event) {
   return !event.altKey &&
-    (olHas.MAC ? event.metaKey : event.ctrlKey) &&
+    (MAC ? event.metaKey : event.ctrlKey) &&
     !event.shiftKey;
 }
 
