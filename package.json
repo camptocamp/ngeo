@@ -76,7 +76,7 @@
     "css-loader": "^3.0.0",
     "d3": "^5.9.2",
     "ejs-loader": "^0.3.3",
-    "eslint": "^5.16.0",
+    "eslint": "^6.0.0",
     "eslint-config-openlayers": "^12.0.0",
     "eslint-plugin-googshift": "^0.9.3",
     "eslint-plugin-import": "^2.17.3",
