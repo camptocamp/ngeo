@@ -259,10 +259,7 @@ class Controller {
 
     // Register input[type=file] onchange event, use HTML5 File api
     this.fileInput_.on('change', () => {
-      /**
-       * @type {HTMLInputElement}
-       */
-      const fileInput = this.fileInput_[0];
+      const fileInput = /** @type {HTMLInputElement} */(this.fileInput_[0]);
       const files = fileInput.files;
       this.file = files && files[0] ? files[0] : null;
       this.scope_.$apply();

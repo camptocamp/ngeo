@@ -5,6 +5,7 @@ import ngeoMiscWMSTime from 'ngeo/misc/WMSTime.js';
 import {getUid as olUtilGetUid} from 'ol/util.js';
 import olLayerImage from 'ol/layer/Image.js';
 import olLayerTile from 'ol/layer/Tile.js';
+import Group from 'ol/layer/Group.js';
 
 /**
  * Service to create layer based on a ngeo.layertree.Controller with a
@@ -70,14 +71,8 @@ SyncLayertreeMap.prototype.createLayer = function(treeCtrl, map, dataLayerGroup,
    * @type {?import("ol/layer/Base.js").default|import("ol/layer/Group.js").default}
    */
   let layer = null;
-  /**
-   * @type {import('gmf/themes.js').GmfGroup}
-   */
-  const gmfGroup = treeCtrl.node;
-  /**
-   * @type {import('gmf/themes.js').GmfGroup}
-   */
-  const gmfParentGroup = treeCtrl.parent.node;
+  const gmfGroup = /** @type {import('gmf/themes.js').GmfGroup} */(treeCtrl.node);
+  const gmfParentGroup = /** @type {import('gmf/themes.js').GmfGroup} */(treeCtrl.parent.node);
   if (gmfGroup.children !== undefined && gmfGroup.mixed) {
     // Mixed groups
     layer = this.createGroup_(treeCtrl, map, dataLayerGroup, opt_position);
@@ -108,10 +103,7 @@ SyncLayertreeMap.prototype.createLayer = function(treeCtrl, map, dataLayerGroup,
  */
 SyncLayertreeMap.prototype.sync_ = function(treeCtrl) {
   treeCtrl.traverseDepthFirst((treeCtrl) => {
-    /**
-     * @type {import('gmf/themes.js').GmfGroup}
-     */
-    const gmfGroup = treeCtrl.node;
+    const gmfGroup = /** @type {import('gmf/themes.js').GmfGroup} */(treeCtrl.node);
     if (treeCtrl.layer && !gmfGroup.mixed) {
       this.updateLayerState_(
         /** @type {import("ol/layer/Image.js").default|import("ol/layer/Tile.js").default} */(treeCtrl.layer),
@@ -130,14 +122,8 @@ SyncLayertreeMap.prototype.sync_ = function(treeCtrl) {
  * @private
  */
 SyncLayertreeMap.prototype.updateLayerState_ = function(layer, treeCtrl) {
-  /**
-   * @type {import('gmf/themes.js').GmfGroup}
-   */
-  const gmfGroup = treeCtrl.node;
-  /**
-   * @type {import('gmf/themes.js').GmfLayer}
-   */
-  const gmfLayer = treeCtrl.node;
+  const gmfGroup = /** @type {import('gmf/themes.js').GmfGroup} */(treeCtrl.node);
+  const gmfLayer = /** @type {import('gmf/themes.js').GmfLayer} */(treeCtrl.node);
   const active = treeCtrl.getState() === 'on';
   if (gmfLayer.type === 'WMTS') {
     layer.setVisible(active);
@@ -149,15 +135,9 @@ SyncLayertreeMap.prototype.updateLayerState_ = function(layer, treeCtrl) {
     /** @type {string[]} */
     const styles = [];
     treeCtrl.traverseDepthFirst((treeCtrl) => {
-      /**
-       * @type {import('gmf/themes.js').GmfGroup}
-       */
-      const gmfGroup = treeCtrl.node;
+      const gmfGroup = /** @type {import('gmf/themes.js').GmfGroup} */(treeCtrl.node);
       if (gmfGroup.children === undefined && treeCtrl.getState() === 'on') {
-        /**
-         * @type {import('gmf/themes.js').GmfLayerWMS}
-         */
-        const gmfLayerWMS = treeCtrl.node;
+        const gmfLayerWMS = /** @type {import('gmf/themes.js').GmfLayerWMS} */(treeCtrl.node);
         names.push(gmfLayerWMS.layers);
         const style = (gmfLayerWMS.style !== undefined) ? gmfLayerWMS.style : '';
         styles.push(style);
@@ -198,10 +178,7 @@ SyncLayertreeMap.prototype.updateLayerState_ = function(layer, treeCtrl) {
  */
 SyncLayertreeMap.prototype.createGroup_ = function(treeCtrl, map,
   dataLayerGroup, opt_position) {
-  /**
-   * @type {import('gmf/themes.js').GmfGroup}
-   */
-  const groupNode = treeCtrl.node;
+  const groupNode = /** @type {import('gmf/themes.js').GmfGroup} */(treeCtrl.node);
   let layer = null;
   const isFirstLevelGroup = treeCtrl.parent.isRoot;
 
@@ -220,10 +197,10 @@ SyncLayertreeMap.prototype.createGroup_ = function(treeCtrl, map,
     const inAMixedGroup = !this.isOneParentNotMixed_(treeCtrl);
     if (inAMixedGroup) {
       layer = this.createLayerFromGroup_(treeCtrl, true);
-      /**
-       * @type {import("ol/layer/Group.js").default}
-       */
       const layerGroup = getLayer(treeCtrl.parent);
+      if (!(layerGroup instanceof Group)) {
+        throw new Error('Wrong layerGroup type');
+      }
       layerGroup.getLayers().insertAt(0, layer);
     }
   }
@@ -247,10 +224,7 @@ SyncLayertreeMap.prototype.createGroup_ = function(treeCtrl, map,
 SyncLayertreeMap.prototype.createLayerFromGroup_ = function(treeCtrl, mixed) {
   /** @type {import("ol/layer/Image.js").default|import("ol/layer/Group.js").default} */
   let layer;
-  /**
-   * @type {import('gmf/themes.js').GmfGroup}
-   */
-  const groupNode = treeCtrl.node;
+  const groupNode = /** @type {import('gmf/themes.js').GmfGroup} */(treeCtrl.node);
   if (mixed) { // Will be one ol.layer per each node.
     layer = this.layerHelper_.createBasicGroup();
   } else { // Will be one ol.layer for multiple WMS nodes.
@@ -298,10 +272,7 @@ SyncLayertreeMap.prototype.createLayerFromGroup_ = function(treeCtrl, mixed) {
  * @private
  */
 SyncLayertreeMap.prototype.createLeafInAMixedGroup_ = function(treeCtrl, map) {
-  /**
-   * @type {import('gmf/themes.js').GmfLayer}
-   */
-  const gmfLayer = treeCtrl.node;
+  const gmfLayer = /** @type {import('gmf/themes.js').GmfLayer} */(treeCtrl.node);
   let layer;
   // Make layer.
   if (gmfLayer.type === 'WMTS') {
@@ -310,10 +281,7 @@ SyncLayertreeMap.prototype.createLeafInAMixedGroup_ = function(treeCtrl, map) {
     if (!this.ogcServersObject_) {
       throw new Error('Missing ogcServersObject');
     }
-    /**
-     * @type {import('gmf/themes.js').GmfLayerWMS}
-     */
-    const gmfLayerWMS = gmfLayer;
+    const gmfLayerWMS = /** @type {import('gmf/themes.js').GmfLayerWMS} */(gmfLayer);
     const timeParam = this.getTimeParam_(treeCtrl);
     const ogcServer = this.ogcServersObject_[gmfLayerWMS.ogcServer];
     console.assert(ogcServer);
@@ -359,16 +327,13 @@ SyncLayertreeMap.prototype.createLeafInAMixedGroup_ = function(treeCtrl, map) {
  * @private
  */
 SyncLayertreeMap.prototype.initGmfLayerInANotMixedGroup_ = function(treeCtrl, map) {
-  /**
-   * @type {import('gmf/themes.js').GmfLayer}
-   */
-  const leafNode = treeCtrl.node;
+  const leafNode = /** @type {import('gmf/themes.js').GmfLayer} */(treeCtrl.node);
   const firstLevelGroup = this.getFirstLevelGroupCtrl_(treeCtrl);
   console.assert(firstLevelGroup);
-  /**
-   * @type {import("ol/layer/Image.js").default}
-   */
   const layer = firstLevelGroup.layer;
+  if (!(layer instanceof olLayerImage)) {
+    throw new Error('Wrong layer type');
+  }
   console.assert(layer instanceof olLayerImage);
   // Update layer information and tree state.
   this.updateLayerReferences_(leafNode, layer);
@@ -432,18 +397,12 @@ SyncLayertreeMap.prototype.updateLayerReferences_ = function(leafNode, layer) {
 SyncLayertreeMap.prototype.getTimeParam_ = function(treeCtrl) {
   let wmsTime;
   let timeParam;
-  /**
-   * @type {import('gmf/themes.js').GmfGroup}
-   */
-  const node = treeCtrl.node;
+  const node = /** @type {import('gmf/themes.js').GmfGroup} */(treeCtrl.node);
   if (node.time) {
     wmsTime = node.time;
   } else if (node.children) {
     treeCtrl.traverseDepthFirst((treeCtrl) => {
-      /**
-       * @type {import('gmf/themes.js').GmfGroup}
-       */
-      const node = treeCtrl.node;
+      const node = /** @type {import('gmf/themes.js').GmfGroup} */(treeCtrl.node);
       if (node.children === undefined && node.time) {
         wmsTime = node.time;
         return LayertreeVisitorDecision.STOP;
@@ -452,14 +411,8 @@ SyncLayertreeMap.prototype.getTimeParam_ = function(treeCtrl) {
   }
   if (wmsTime) {
     const options = this.ngeoWMSTime_.getOptions(wmsTime);
-    /**
-     * @type {number}
-     */
-    const timeValue = options.values;
-    /**
-     * @type {number[]}
-     */
-    const timeValues = options.values;
+    const timeValue = /** @type {number} */(options.values);
+    const timeValues = /** @type {number[]} */(options.values);
     timeParam = this.ngeoWMSTime_.formatWMSTimeParam(wmsTime, {
       start: timeValues[0] || timeValue,
       end: timeValues[1]
@@ -479,10 +432,7 @@ SyncLayertreeMap.prototype.isOneParentNotMixed_ = function(treeCtrl) {
   let tree = treeCtrl.parent;
   let isOneParentNotMix = false;
   do {
-    /**
-     * @type {import('gmf/themes.js').GmfGroup}
-     */
-    const gmfGroup = tree.node;
+    const gmfGroup = /** @type {import('gmf/themes.js').GmfGroup} */(tree.node);
     isOneParentNotMix = gmfGroup.mixed === false;
     tree = tree.parent;
   }

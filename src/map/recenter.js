@@ -50,10 +50,10 @@ function mapResenterComponent() {
       function recenter(element) {
         const extent = element.attr('ngeo-extent');
         if (extent !== undefined) {
-          /**
-           * @type {import("ol/size.js").Size}
-           */
           const size = map.getSize();
+          if (size === undefined) {
+            throw new Error('Missing size');
+          }
           map.getView().fit($scope.$eval(extent), {size});
         }
         const zoom = element.attr('ngeo-zoom');

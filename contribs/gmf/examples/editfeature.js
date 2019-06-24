@@ -194,9 +194,6 @@ MainController.prototype.insertFeature = function() {
     throw new Error('Missing resolution');
   }
   const buffer = resolution * -50; // 50 pixel buffer inside the extent
-  /**
-   * @type {number[]}
-   */
   const size = map.getSize();
   const extent = olExtent.buffer(
     view.calculateExtent(size),

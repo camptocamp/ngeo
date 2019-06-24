@@ -1025,18 +1025,12 @@ Controller.prototype.setFeatureStyle_ = function() {
 Controller.prototype.registerTreeCtrl_ = function(treeCtrl) {
 
   // Skip any Layertree controller that has a node that is not a leaf
-  /**
-   * @type {import('gmf/themes.js').GmfGroup}
-   */
-  const nodeGroup = treeCtrl.node;
+  const nodeGroup = /** @type {import('gmf/themes.js').GmfGroup} */(treeCtrl.node);
   if (nodeGroup.children && nodeGroup.children.length) {
     return;
   }
 
-  /**
-   * @type {import('gmf/themes.js').GmfLayer}
-   */
-  const nodeLayer = treeCtrl.node;
+  const nodeLayer = /** @type {import('gmf/themes.js').GmfLayer} */(treeCtrl.node);
   // Set editable WMS layer for refresh purpose
   if (nodeLayer.id === this.layerNodeId) {
     const layer = syncLayertreeMapGetLayer(treeCtrl);

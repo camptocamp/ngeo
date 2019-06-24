@@ -104,14 +104,8 @@ function getQueryableLayersInfoFromThemes(
   const queryableLayersInfo = [];
 
   for (let i = 0, ii = themes.length; i < ii; i++) {
-    /**
-     * @type {import('gmf/themes.js').GmfTheme}
-     */
     const theme = themes[i];
     for (let j = 0, jj = theme.children.length; j < jj; j++) {
-      /**
-       * @type {import('gmf/themes.js').GmfGroup}
-       */
       const group = theme.children[j];
 
       // Skip groups that don't have an ogcServer set
@@ -124,19 +118,13 @@ function getQueryableLayersInfoFromThemes(
       getFlatNodes(group, nodes);
 
       for (let k = 0, kk = nodes.length; k < kk; k++) {
-        /**
-         * @type {import('gmf/themes.js').GmfGroup}
-         */
-        const nodeGroup = nodes[k];
+        const nodeGroup = /** @type {import('gmf/themes.js').GmfGroup} */(nodes[k]);
         // Skip groups within groups
         if (nodeGroup.children && nodeGroup.children.length) {
           continue;
         }
 
-        /**
-         * @type {import('gmf/themes.js').GmfLayerWMS}
-         */
-        const nodeWMS = nodes[k];
+        const nodeWMS = /** @type {import('gmf/themes.js').GmfLayerWMS} */(nodes[k]);
 
         if (nodeWMS.childLayers &&
           nodeWMS.childLayers[0] &&

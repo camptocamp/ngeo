@@ -4,6 +4,7 @@ import gmfDatasourceWFSAliases from 'gmf/datasource/WFSAliases.js';
 import gmfLayertreeSyncLayertreeMap, {getLayer} from 'gmf/layertree/SyncLayertreeMap.js';
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
 import gmfThemeThemes, {ThemeNodeType} from 'gmf/theme/Themes.js';
+import gmfOGC from 'gmf/datasource/OGC.js';
 
 import OGC, {ServerType, WFSOutputFormat, Type} from 'ngeo/datasource/OGC.js';
 import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources.js';
@@ -258,13 +259,9 @@ export class DatasourceManager {
 
     const dataSources = this.dataSources_.getArray();
     for (const dataSource of dataSources) {
-      /**
-       * @type {import('gmf/datasource/OGC').default}
-       */
-      const gmfOGCDataSource = dataSource;
-      if (gmfOGCDataSource.dimensionsFiltersConfig) {
-        for (const key in gmfOGCDataSource.dimensionsFiltersConfig) {
-          if (gmfOGCDataSource.dimensionsFiltersConfig[key].value === null) {
+      if (dataSource instanceof gmfOGC && dataSource.dimensionsFiltersConfig) {
+        for (const key in dataSource.dimensionsFiltersConfig) {
+          if (dataSource.dimensionsFiltersConfig[key].value === null) {
             const layer = this.getDataSourceLayer_(dataSource);
             if (layer == undefined) {
               return;
@@ -367,10 +364,7 @@ export class DatasourceManager {
       const visitor = (treeCtrl) => {
         const node = /** @type {import('gmf/themes.js').GmfGroup|!import('gmf/themes.js').GmfLayer} */ (
           treeCtrl.node);
-        /**
-         * @type {import('gmf/themes.js').GmfGroup}
-         */
-        const groupNode = node;
+        const groupNode = /** @type {import('gmf/themes.js').GmfGroup} */(node);
         const children = groupNode.children;
         if (!children) {
           newTreeCtrls.push(treeCtrl);
@@ -440,10 +434,7 @@ export class DatasourceManager {
    */
   createDataSource_(firstLevelGroup, node, ogcServers) {
 
-    /**
-     * @type {import('gmf/themes.js').GmfGroup}
-     */
-    const groupNode = node;
+    const groupNode = /** @type {import('gmf/themes.js').GmfGroup} */(node);
     const children = groupNode.children;
 
     // (1) Group node (node that has children). Loop in the children
@@ -458,10 +449,7 @@ export class DatasourceManager {
     }
 
     // From there on, the node is a layer node.
-    /**
-     * @type {import('gmf/themes.js').GmfLayer}
-     */
-    const gmfLayer = node;
+    const gmfLayer = /** @type {import('gmf/themes.js').GmfLayer} */(node);
 
     // (2) Skip layer node if a data source with the same id exists
     const id = Number(olUtilGetUid(gmfLayer));
@@ -484,10 +472,7 @@ export class DatasourceManager {
 
     if (ogcType === ThemeNodeType.WMTS) {
       // (3) Manage WMTS
-      /**
-       * @type {import('gmf/themes.js').GmfLayerWMTS}
-       */
-      const gmfLayerWMTS = gmfLayer;
+      const gmfLayerWMTS = /** @type {import('gmf/themes.js').GmfLayerWMTS} */(gmfLayer);
 
       // Common options for WMTS
       wmtsLayer = gmfLayerWMTS.layer;
@@ -521,10 +506,7 @@ export class DatasourceManager {
       ogcImageType = gmfLayerWMTS.imageType;
     } else if (ogcType === ThemeNodeType.WMS) {
       // (4) Manage WMS
-      /**
-       * @type {import('gmf/themes.js').GmfLayerWMS}
-       */
-      const gmfLayerWMS = gmfLayer;
+      const gmfLayerWMS = /** @type {import('gmf/themes.js').GmfLayerWMS} */(gmfLayer);
 
       // Common options for WMS
       maxResolution = gmfLayerWMS.maxResolutionHint;
@@ -849,14 +831,10 @@ export class DatasourceManager {
    * @hidden
    */
   getDataSourceLayer_(dataSource) {
-    /**
-     * @type {import("gmf/datasource/OGC.js").default}
-     */
-    const gmfOGCDataSource = dataSource;
-    if (gmfOGCDataSource.gmfLayer == undefined) {
+    if (!(dataSource instanceof gmfOGC) || dataSource.gmfLayer == undefined) {
       return;
     }
-    const id = olUtilGetUid(gmfOGCDataSource.gmfLayer);
+    const id = olUtilGetUid(dataSource.gmfLayer);
     if (id == undefined) {
       return;
     }
@@ -901,19 +879,15 @@ export class DatasourceManager {
         if (dsLayer == undefined) {
           continue;
         }
-        /**
-         * @type {import('gmf/datasource/OGC.js').default}
-         */
-        const gmfOGCDataSource = dataSource;
-        /**
-         * @type {import('gmf/themes.js').GmfLayerWMS}
-         */
-        const gmfLayerWMS = gmfOGCDataSource.gmfLayer;
+        if (!(dataSource instanceof gmfOGC)) {
+          throw new Error('Wrong dataSource type');
+        }
+        const gmfLayerWMS = /** @type {import('gmf/themes.js').GmfLayerWMS} */(dataSource.gmfLayer);
         if (olUtilGetUid(dsLayer) == olUtilGetUid(layer) &&
             layer.get('querySourceIds').indexOf(String(dataSource.id)) >= 0 &&
             gmfLayerWMS.layers.split(',').indexOf(wmsLayerName) >= 0) {
 
-          const id = olUtilGetUid(gmfOGCDataSource.gmfLayer);
+          const id = olUtilGetUid(dataSource.gmfLayer);
           const item = this.treeCtrlCache_[id];
           console.assert(item);
           const treeCtrl = item.treeCtrl;
@@ -1032,10 +1006,7 @@ export class DatasourceManager {
    * @hidden
    */
   handleNgeoBackgroundLayerChange_(evt) {
-    /**
-     * @type {import('ngeo/map/BackgroundLayerMgr.js').BackgroundEvent}
-     */
-    const event = evt;
+    const event = /** @type {import('ngeo/map/BackgroundLayerMgr.js').BackgroundEvent} */(evt);
     const previousBackgroundLayer = event.detail.previous;
     const currentBackgroundLayer = event.detail.current;
     const cache = this.dataSourcesCache_;

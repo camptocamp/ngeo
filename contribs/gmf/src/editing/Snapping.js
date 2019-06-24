@@ -217,10 +217,7 @@ EditingSnappingService.prototype.registerTreeCtrl_ = function(treeCtrl) {
 
   // Skip any Layertree controller that has a node that is not a leaf
   let node = /** @type {import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer} */ (treeCtrl.node);
-  /**
-   * @type {import('gmf/themes.js').GmfGroup}
-   */
-  const groupNode = node;
+  const groupNode = /** @type {import('gmf/themes.js').GmfGroup} */(node);
   if (groupNode.children) {
     return;
   }
@@ -291,31 +288,19 @@ EditingSnappingService.prototype.unregisterAllTreeCtrl_ = function() {
  * @private
  */
 EditingSnappingService.prototype.getOGCServer_ = function(treeCtrl) {
-  /**
-   * @type {import('gmf/themes.js').GmfLayer}
-   */
-  const gmfLayer = treeCtrl.node;
+  const gmfLayer = /** @type {import('gmf/themes.js').GmfLayer} */(treeCtrl.node);
   if (gmfLayer.type !== ThemeNodeType.WMS) {
     return null;
   }
-  /**
-   * @type {import('gmf/themes.js').GmfLayerWMS}
-   */
-  const gmfLayerWMS = gmfLayer;
+  const gmfLayerWMS = /** @type {import('gmf/themes.js').GmfLayerWMS} */(gmfLayer);
 
   let ogcServerName;
-  /**
-   * @type {import('gmf/themes.js').GmfGroup}
-   */
-  const gmfGroup = treeCtrl.parent.node;
+  const gmfGroup = /** @type {import('gmf/themes.js').GmfGroup} */(treeCtrl.parent.node);
   if (gmfGroup.mixed) {
     ogcServerName = gmfLayerWMS.ogcServer;
   } else {
     const firstTreeCtrl = getFirstParentTree(treeCtrl);
-    /**
-     * @type {import('gmf/themes.js').GmfGroup}
-     */
-    const firstNode = firstTreeCtrl.node;
+    const firstNode = /** @type {import('gmf/themes.js').GmfGroup} */(firstTreeCtrl.node);
     ogcServerName = firstNode.ogcServer;
   }
   if (!ogcServerName) {
@@ -352,20 +337,14 @@ EditingSnappingService.prototype.getWFSConfig_ = function(treeCtrl) {
     return null;
   }
 
-  /**
-   * @type {import('gmf/themes.js').GmfLayer}
-   */
-  const gmfLayer = treeCtrl.node;
+  const gmfLayer = /** @type {import('gmf/themes.js').GmfLayer} */(treeCtrl.node);
 
   // (2)
   if (gmfLayer.type !== ThemeNodeType.WMS) {
     return null;
   }
 
-  /**
-   * @type {import('gmf/themes.js').GmfLayerWMS}
-   */
-  const gmfLayerWMS = gmfLayer;
+  const gmfLayerWMS = /** @type {import('gmf/themes.js').GmfLayerWMS} */(gmfLayer);
 
   // (3)
   const featureTypes = [];

@@ -54,10 +54,11 @@ describe('ngeo.misc.WMSTime service', () => {
   it('should format the time regarding the resolution and with a mode set on range', () => {
     wmsTime.mode = 'range';
     wmsTime.resolution = 'year';
-    /**
-     * @type {number[]}
-     */
-    const timeValues = ngeoWMSTime.getOptions(wmsTime)['values'];
+    const timeValues = ngeoWMSTime.getOptions(wmsTime).values;
+    if (!Array.isArray(timeValues)) {
+      throw new Error('Wrong time values type');
+    }
+
     let timeParam = ngeoWMSTime.formatWMSTimeParam(wmsTime, {
       start: timeValues[0],
       end: timeValues[1]

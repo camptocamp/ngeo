@@ -531,26 +531,17 @@ Controller.prototype.getLegendIconURL = function(treeCtrl) {
     return iconUrl;
   }
 
-  /**
-   * @type {import('gmf/themes.js').GmfGroup}
-   */
-  const gmfGroup = treeCtrl.node;
+  const gmfGroup = /** @type {import('gmf/themes.js').GmfGroup} */(treeCtrl.node);
   if (gmfGroup.children !== undefined) {
     return undefined;
   }
 
-  /**
-   * @type {import('gmf/themes.js').GmfLayer}
-   */
-  const gmfLayer = treeCtrl.node;
+  const gmfLayer = /** @type {import('gmf/themes.js').GmfLayer} */(treeCtrl.node);
   if (gmfLayer.type !== 'WMS') {
     return undefined;
   }
 
-  /**
-   * @type {import('gmf/themes.js').GmfLayerWMS}
-   */
-  const gmfLayerWMS = gmfLayer;
+  const gmfLayerWMS = /** @type {import('gmf/themes.js').GmfLayerWMS} */(gmfLayer);
 
   const legendRule = gmfLayerWMS.metadata.legendRule;
 
@@ -582,10 +573,7 @@ Controller.prototype.getLegendsObject = function(treeCtrl) {
     return null;
   }
 
-  /**
-   * @type {import('gmf/themes.js').GmfLayer}
-   */
-  const gmfLayer = treeCtrl.node;
+  const gmfLayer = /** @type {import('gmf/themes.js').GmfLayer} */(treeCtrl.node);
   const gmfLayerDefaultName = gmfLayer.name;
   if (gmfLayer.metadata.legendImage) {
     legendsObject[gmfLayerDefaultName] = gmfLayer.metadata.legendImage;
@@ -603,10 +591,7 @@ Controller.prototype.getLegendsObject = function(treeCtrl) {
     }
     return wmtsLegendURL ? legendsObject : null;
   } else {
-    /**
-     * @type {import('gmf/themes.js').GmfLayerWMS}
-     */
-    const gmfLayerWMS = gmfLayer;
+    const gmfLayerWMS = /** @type {import('gmf/themes.js').GmfLayerWMS} */(gmfLayer);
     const layersNames = gmfLayerWMS.layers;
     const gmfOgcServer = this.gmfTreeManager_.getOgcServer(treeCtrl);
     const scale = this.getScale_();
@@ -689,10 +674,7 @@ Controller.prototype.afterReorder = function() {
   if (!this.gmfTreeManager_.rootCtrl) {
     throw new Error('Missing gmfTreeManager_.rootCtrl');
   }
-  /**
-   * @type {import('gmf/themes.js').GmfGroup}
-   */
-  const gmfRootGroup = this.gmfTreeManager_.rootCtrl.node;
+  const gmfRootGroup = /** @type {import('gmf/themes.js').GmfGroup} */(this.gmfTreeManager_.rootCtrl.node);
   const groupNodes = gmfRootGroup.children;
   const currentTreeCtrls = this.gmfTreeManager_.rootCtrl.children;
   /** @type {import('ngeo/layertree/Controller.js').LayertreeController[]} */
@@ -789,10 +771,7 @@ Controller.prototype.zoomToResolution = function(treeCtrl) {
   if (!this.map) {
     throw new Error('Missing map');
   }
-  /**
-   * @type {import('gmf/themes.js').GmfLayerWMS}
-   */
-  const gmfLayer = treeCtrl.node;
+  const gmfLayer = /** @type {import('gmf/themes.js').GmfLayerWMS} */(treeCtrl.node);
   const view = this.map.getView();
   const resolution = view.getResolution();
   if (resolution === undefined) {
@@ -875,10 +854,7 @@ Controller.prototype.supportsCustomization = function(treeCtrl) {
  *     legend being shown.
  */
 Controller.prototype.supportsLegend = function(treeCtrl) {
-  /**
-   * @type {import('gmf/themes.js').GmfGroup}
-   */
-  const node = treeCtrl.node;
+  const node = /** @type {import('gmf/themes.js').GmfGroup} */(treeCtrl.node);
   return !!node.metadata &&
     !!node.metadata.legend &&
     !!this.getLegendsObject(treeCtrl);
@@ -891,14 +867,8 @@ Controller.prototype.supportsLegend = function(treeCtrl) {
  *     layer opacity being changed or not.
  */
 Controller.prototype.supportsOpacityChange = function(treeCtrl) {
-  /**
-   * @type {import('gmf/themes.js').GmfGroup}
-   */
-  const node = treeCtrl.node;
-  /**
-   * @type {import('gmf/themes.js').GmfGroup}
-   */
-  const parentNode = treeCtrl.parent.node;
+  const node = /** @type {import('gmf/themes.js').GmfGroup} */(treeCtrl.node);
+  const parentNode = /** @type {import('gmf/themes.js').GmfGroup} */(treeCtrl.parent.node);
   return !!treeCtrl.layer &&
     (
       (

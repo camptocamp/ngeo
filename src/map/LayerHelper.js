@@ -520,10 +520,10 @@ LayerHelper.prototype.updateWMSLayerState = function(layer, names, opt_time) {
     layer.setVisible(false);
   } else {
     layer.setVisible(true);
-    /**
-     * @type {import("ol/source/ImageWMS.js").default}
-     */
     const source = layer.getSource();
+    if (!(source instanceof olSourceImageWMS)) {
+      throw new Error('Wrong source type');
+    }
     if (opt_time) {
       source.updateParams({'LAYERS': names, 'TIME': opt_time});
     } else {

@@ -381,10 +381,10 @@ class Controller {
     if (!this.map) {
       return null;
     }
-    /**
-     * @type {import("ol/geom/Point.js").default}
-     */
     const geometry = point.getGeometry();
+    if (!(geometry instanceof olGeomPoint)) {
+      throw new Error('Wrong time values type');
+    }
     const coords = geometry.getCoordinates();
     const projection = this.map.getView().getProjection();
     return olProj.toLonLat(coords, projection);

@@ -259,10 +259,10 @@ export default class extends olInteractionPointer {
       /** @type {olSourceVector<import("ol/geom/Geometry.js").default>} */(this.overlay_.getSource())
         .addFeature(vertexFeature);
     } else {
-      /**
-       * @type {import("ol/geom/Point.js").default}
-       */
       const geometry = vertexFeature.getGeometry();
+      if (!(geometry instanceof olGeomPoint)) {
+        throw new Error('Wrong geometry type');
+      }
       geometry.setCoordinates(coordinates);
     }
     return vertexFeature;
@@ -368,10 +368,10 @@ export default class extends olInteractionPointer {
     this.modified_ = false;
     const vertexFeature = this.vertexFeature_;
     if (vertexFeature) {
-      /**
-       * @type {import("ol/geom/Point.js").default}
-       */
       const geometry = vertexFeature.getGeometry();
+      if (!(geometry instanceof olGeomPoint)) {
+        throw new Error('Wrong geometry type');
+      }
       const vertex = geometry.getCoordinates();
       const vertexExtent = olExtent.boundingExtent([vertex]);
       const segmentDataMatches = this.rBush_.getInExtent(vertexExtent);

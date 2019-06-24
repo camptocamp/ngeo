@@ -164,10 +164,7 @@ function MainController(gmfTreeManager, gmfThemes, gmfThemeManager, ngeoLocation
         });
       });
       flatNodes.forEach((node) => {
-        /**
-         * @type {import('gmf/themes.js').GmfGroup}
-         */
-        const groupNode = node;
+        const groupNode = /** @type {import('gmf/themes.js').GmfGroup} */(node);
         // Get an array of all layers
         if (groupNode.children === undefined) {
           this.layers.push(/** @type {import('gmf/themes.js').GmfLayer} */(node));

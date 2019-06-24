@@ -98,10 +98,7 @@ class XSDAttribute extends olFormatXML {
    */
   readFromElementNode_(node) {
     console.assert(node.nodeType == Node.ELEMENT_NODE, 'node.nodeType should be ELEMENT');
-    /**
-     * @type {Element}
-     */
-    const elementNode = node;
+    const elementNode = /** @type {Element} */(node);
 
     const name = elementNode.getAttribute('name');
     if (!name) {

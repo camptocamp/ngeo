@@ -395,10 +395,10 @@ export const Controller = class {
   activateOfflineMode() {
     this.ngeoOfflineServiceManager_.restore(this.map).then((extent) => {
       this.dataPolygon_ = this.createPolygonFromExtent_(extent);
-      /**
-       * @type {import("ol/size.js").Size}
-       */
       const size = this.map.getSize();
+      if (size === undefined) {
+        throw new Error('Missing size');
+      }
       this.map.getView().fit(extent, {size});
       this.menuDisplayed = false;
       this.displayExtent_();

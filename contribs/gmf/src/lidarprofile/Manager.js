@@ -375,14 +375,11 @@ export class LidarprofileManager {
     } catch (e) {
       if (!this.isPlotSetup_) {
         const canvas = d3select('#gmf-lidarprofile-container .lidar-canvas');
-        /**
-         * @type {HTMLCanvasElement}
-         */
-        const canvasEl = canvas.node();
-        /**
-         * @type {CanvasRenderingContext2D}
-         */
+        const canvasEl = /** @type {HTMLCanvasElement} */(canvas.node());
         const ctx = canvasEl.getContext('2d');
+        if (ctx === null) {
+          throw new Error('Missing ctx');
+        }
         ctx.clearRect(0, 0, canvasEl.getBoundingClientRect().width, canvasEl.getBoundingClientRect().height);
         canvas.selectAll('*').remove();
         const errorTxt = this.getHTMLError_();

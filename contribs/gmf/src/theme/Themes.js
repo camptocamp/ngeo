@@ -127,10 +127,7 @@ export class ThemesService extends olEventsEventTarget {
      */
     const getIds = function(item, array) {
       array.push(olUtilGetUid(item));
-      /**
-       * @type {import('gmf/themes.js').GmfGroup}
-       */
-      const groupItem = item;
+      const groupItem = /** @type {import('gmf/themes.js').GmfGroup} */(item);
       const children = groupItem.children || [];
       children.forEach((child) => {
         getIds(child, array);
@@ -161,10 +158,7 @@ export class ThemesService extends olEventsEventTarget {
      */
     const layerLayerCreationFn = function(ogcServers, gmfLayer) {
       if (gmfLayer.type === 'WMTS') {
-        /**
-         * @type {import('gmf/themes.js').GmfLayerWMTS}
-         */
-        const gmfLayerWMTS = gmfLayer;
+        const gmfLayerWMTS = /** @type {import('gmf/themes.js').GmfLayerWMTS} */(gmfLayer);
         if (!gmfLayerWMTS.url) {
           throw 'Layer URL is required';
         }
@@ -184,10 +178,7 @@ export class ThemesService extends olEventsEventTarget {
         });
         return /** @type {angular.IPromise<import("ol/layer/Base.js").default>} */(layer);
       } else if (gmfLayer.type === 'WMS') {
-        /**
-         * @type {import('gmf/themes.js').GmfLayerWMS}
-         */
-        const gmfLayerWMS = gmfLayer;
+        const gmfLayerWMS = /** @type {import('gmf/themes.js').GmfLayerWMS} */(gmfLayer);
         console.assert(gmfLayerWMS.ogcServer, 'An OGC server is required');
         const server = ogcServers[gmfLayerWMS.ogcServer];
         console.assert(server, 'The OGC server was not found');
@@ -250,14 +241,8 @@ export class ThemesService extends olEventsEventTarget {
     const promiseSuccessFn = (data) => {
       const promises = /** @type {angular.IPromise<*>} */(/** @type {*} */(
         data.background_layers.map((item) => {
-          /**
-           * @type {import('gmf/themes.js').GmfLayer}
-           */
-          const itemLayer = item;
-          /**
-           * @type {import('gmf/themes.js').GmfGroup}
-           */
-          const itemGroup = item;
+          const itemLayer = /** @type {import('gmf/themes.js').GmfLayer} */(item);
+          const itemGroup = /** @type {import('gmf/themes.js').GmfGroup} */(item);
           const itemType = itemLayer.type;
           if (itemType === 'WMTS' || itemType === 'WMS') {
             return layerLayerCreationFn(data.ogcServers, itemLayer);

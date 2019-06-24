@@ -7,6 +7,7 @@ import olFeature from 'ol/Feature.js';
 import olGeolocation from 'ol/Geolocation.js';
 import olMap from 'ol/Map.js';
 import olGeomPoint from 'ol/geom/Point.js';
+import Polygon from 'ol/geom/Polygon.js';
 
 
 /**
@@ -289,10 +290,10 @@ Controller.prototype.untrack_ = function() {
  * @private
  */
 Controller.prototype.setPosition_ = function() {
-  /**
-   * @type {import("ol/coordinate.js").Coordinate}
-   */
   const position = this.geolocation_.getPosition();
+  if (position === undefined) {
+    throw new Error('Missing position');
+  }
   const point = new olGeomPoint(position);
 
   this.positionFeature_.setGeometry(point);
@@ -303,12 +304,12 @@ Controller.prototype.setPosition_ = function() {
     if (this.zoom_ !== undefined) {
       this.map_.getView().setCenter(position);
       this.map_.getView().setZoom(this.zoom_);
-    } else if (accuracy) {
-      /**
-       * @type {import("ol/size.js").Size}
-       */
+    } else if (accuracy instanceof Polygon) {
       const size = this.map_.getSize();
-      this.map_.getView().fit(/** @type {import("ol/geom/Polygon.js").default} */ (accuracy), {size});
+      if (size === undefined) {
+        throw new Error('Missing size');
+      }
+      this.map_.getView().fit(accuracy, {size});
     }
     this.viewChangedByMe_ = false;
   }

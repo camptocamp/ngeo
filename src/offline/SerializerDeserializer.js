@@ -155,10 +155,7 @@ const SerDes = class {
     obj.style = source.getStyle();
     obj.matrixSet = source.getMatrixSet();
     // The OL getTileGrid method is expected to return a WMTS tilegrid so it is OK to cast here.
-    /**
-     * @type {OlTilegridWMTS}
-     */
-    const tileGridWMTS = source.getTileGrid();
+    const tileGridWMTS = /** @type {OlTilegridWMTS} */(source.getTileGrid());
     obj.tileGrid = this.serializeTilegridWMTS(tileGridWMTS);
     obj.requestEncoding = source.getRequestEncoding();
     const projection = source.getProjection();

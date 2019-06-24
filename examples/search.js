@@ -12,6 +12,7 @@ import olLayerVector from 'ol/layer/Vector.js';
 import * as olProj from 'ol/proj.js';
 import olSourceOSM from 'ol/source/OSM.js';
 import olSourceVector from 'ol/source/Vector.js';
+import SimpleGeometry from 'ol/geom/SimpleGeometry.js';
 
 
 /** @type {angular.IModule} **/
@@ -129,10 +130,10 @@ function SearchController($element, $rootScope, $compile, ngeoSearchCreateGeoJSO
       const feature = /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>} */ (
         suggestion
       );
-      /**
-       * @type {import('ol/geom/SimpleGeometry.js').default}
-       */
       const featureGeometry = feature.getGeometry();
+      if (!(featureGeometry instanceof SimpleGeometry)) {
+        throw new Error('Missing Wrong geometry type');
+      }
       const size = this.map.getSize();
       if (!size) {
         throw new Error('Missing size');
