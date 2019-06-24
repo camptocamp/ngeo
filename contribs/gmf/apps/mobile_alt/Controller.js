@@ -15,8 +15,6 @@ import gmfControllersAbstractMobileController, {AbstractMobileController}
 import appBase from '../appmodule.js';
 import EPSG2056 from '@geoblocks/proj/src/EPSG_2056.js';
 import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
-import Raven from 'raven-js/src/raven.js';
-import RavenPluginsAngular from 'raven-js/plugins/angular.js';
 
 if (!window.requestAnimationFrame) {
   alert('Your browser is not supported, please update it or use another one. You will be redirected.\n\n'
@@ -66,14 +64,6 @@ class Controller extends AbstractMobileController {
      * @type {string[]}
      */
     this.searchCoordinatesProjections = [EPSG21781, EPSG2056, 'EPSG:4326'];
-
-    if ($injector.has('sentryUrl')) {
-      const options = $injector.has('sentryOptions') ? $injector.get('sentryOptions') : undefined;
-      const raven = new Raven();
-      raven.config($injector.get('sentryUrl'), options)
-        .addPlugin(RavenPluginsAngular)
-        .install();
-    }
   }
 }
 

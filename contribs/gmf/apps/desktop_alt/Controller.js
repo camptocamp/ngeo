@@ -20,8 +20,6 @@ import EPSG2056 from '@geoblocks/proj/src/EPSG_2056.js';
 import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
 import ngeoStatemanagerWfsPermalink from 'ngeo/statemanager/WfsPermalink.js';
 import {Circle, Fill, Stroke, Style} from 'ol/style.js';
-import Raven from 'raven-js/src/raven.js';
-import RavenPluginsAngular from 'raven-js/plugins/angular.js';
 
 if (!window.requestAnimationFrame) {
   alert('Your browser is not supported, please update it or use another one. You will be redirected.\n\n'
@@ -147,14 +145,6 @@ class Controller extends AbstractDesktopController {
      * @type {string}
      */
     this.bgOpacityOptions = 'orthophoto';
-
-    if ($injector.has('sentryUrl')) {
-      const options = $injector.has('sentryOptions') ? $injector.get('sentryOptions') : undefined;
-      const raven = new Raven();
-      raven.config($injector.get('sentryUrl'), options)
-        .addPlugin(RavenPluginsAngular)
-        .install();
-    }
   }
 
   /**

@@ -31,6 +31,8 @@ import olStyleStroke from 'ol/style/Stroke.js';
 import olStyleStyle from 'ol/style/Style.js';
 import {ThemeEventType} from 'gmf/theme/Manager.js';
 import {getBrowserLanguage} from 'ngeo/utils.js';
+// @ts-ignore
+import * as Sentry from '@sentry/browser';
 
 
 /**
@@ -665,6 +667,16 @@ export function AbstractAppController(config, map, $scope, $injector) {
    * @type {?string}
    */
   this.displaywindowWidth = '50vw';
+
+  if ($injector.has('sentryOptions')) {
+    const options = $injector.get('sentryOptions');
+    const tags = options.tags || [];
+    delete options.tags;
+    Sentry.init(options);
+    for (const tag in tags) {
+      Sentry.setTag(tag, tags[tag]);
+    }
+  }
 }
 
 
