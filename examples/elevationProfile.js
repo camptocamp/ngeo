@@ -172,13 +172,13 @@ function MainController($http, $scope) {
   };
 
 
-  /** @type function(Object<string, number>): number */
+  /** @type {function(Object<string, number>): number} */
   const sort = typedFunctionsFactory(types.number, 'sort');
-  /** @type function(Object<string, string>): string */
+  /** @type {function(Object<string, string>): string} */
   const id = typedFunctionsFactory(types.string, 'id');
-  /** @type function(Object<string, number>): number */
+  /** @type {function(Object<string, number>): number} */
   const dist = typedFunctionsFactory(types.number, 'dist');
-  /** @type function(Object<string, string>): string */
+  /** @type {function(Object<string, string>): string} */
   const title = typedFunctionsFactory(types.string, 'title');
 
   /**

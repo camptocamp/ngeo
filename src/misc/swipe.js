@@ -39,7 +39,7 @@ module.factory('$verticalSwipe', [function() {
   // The total distance in any direction before we make the call on swipe vs. scroll.
   const MOVE_BUFFER_RADIUS = 10;
 
-  /** @type Object<string, Object<string, string>> */
+  /** @type {Object<string, Object<string, string>>} */
   const POINTER_EVENTS = {
     mouse: {
       start: 'mousedown',

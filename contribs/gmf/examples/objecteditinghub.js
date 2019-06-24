@@ -204,7 +204,7 @@ function MainController($http, $q, $scope, gmfThemes, gmfXSDAttributes) {
       const gmfLayerNodes = [];
       for (i = 0, ii = groupNode.children.length; i < ii; i++) {
         if (groupNode.children[i].metadata.identifierAttributeField) {
-          gmfLayerNodes.push(/** @type import('gmf/themes.js').GmfLayerWMS} */(groupNode.children[i]));
+          gmfLayerNodes.push(/** @type {import('gmf/themes.js').GmfLayerWMS} */(groupNode.children[i]));
         }
       }
 

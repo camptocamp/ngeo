@@ -212,7 +212,7 @@ Controller.prototype.handleColorSet_ = function(newColor) {
  * @return {number} The angle of the feature.
  */
 Controller.prototype.getSetAngle = function(value) {
-  return /** @type number */ (this.getSetProperty_(ngeoFormatFeatureProperties.ANGLE, value));
+  return /** @type {number} */(this.getSetProperty_(ngeoFormatFeatureProperties.ANGLE, value));
 };
 
 
@@ -221,7 +221,7 @@ Controller.prototype.getSetAngle = function(value) {
  * @return {string} The name of the feature.
  */
 Controller.prototype.getSetName = function(value) {
-  return /** @type string */ (this.getSetProperty_(ngeoFormatFeatureProperties.NAME, value));
+  return /** @type {string} */(this.getSetProperty_(ngeoFormatFeatureProperties.NAME, value));
 };
 
 /**
@@ -230,7 +230,7 @@ Controller.prototype.getSetName = function(value) {
  * @return {boolean} Whether to show the labels or not.
  */
 Controller.prototype.getSetShowLabel = function(value) {
-  return /** @type boolean */ (this.getSetProperty_(ngeoFormatFeatureProperties.SHOW_LABEL, value));
+  return /** @type {boolean} */(this.getSetProperty_(ngeoFormatFeatureProperties.SHOW_LABEL, value));
 };
 
 /**
@@ -238,7 +238,7 @@ Controller.prototype.getSetShowLabel = function(value) {
  * @return {number} The stroke of the feature.
  */
 Controller.prototype.getSetOpacity = function(value) {
-  return /** @type number */ (this.getSetProperty_(ngeoFormatFeatureProperties.OPACITY, value));
+  return /** @type {number} */(this.getSetProperty_(ngeoFormatFeatureProperties.OPACITY, value));
 };
 
 
@@ -248,7 +248,7 @@ Controller.prototype.getSetOpacity = function(value) {
  * @return {boolean} Whether to show the measurements or not.
  */
 Controller.prototype.getSetShowMeasure = function(value) {
-  return /** @type boolean */ (this.getSetProperty_(ngeoFormatFeatureProperties.SHOW_MEASURE, value));
+  return /** @type {boolean} */(this.getSetProperty_(ngeoFormatFeatureProperties.SHOW_MEASURE, value));
 };
 
 
@@ -257,7 +257,7 @@ Controller.prototype.getSetShowMeasure = function(value) {
  * @return {number} The size of the feature.
  */
 Controller.prototype.getSetSize = function(value) {
-  return /** @type number */ (this.getSetProperty_(ngeoFormatFeatureProperties.SIZE, value));
+  return /** @type {number} */(this.getSetProperty_(ngeoFormatFeatureProperties.SIZE, value));
 };
 
 
@@ -266,7 +266,7 @@ Controller.prototype.getSetSize = function(value) {
  * @return {number} The stroke of the feature.
  */
 Controller.prototype.getSetStroke = function(value) {
-  return /** @type number */ (this.getSetProperty_(ngeoFormatFeatureProperties.STROKE, value));
+  return /** @type {number} */(this.getSetProperty_(ngeoFormatFeatureProperties.STROKE, value));
 };
 
 

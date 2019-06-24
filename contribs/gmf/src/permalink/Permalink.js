@@ -553,7 +553,7 @@ export function PermalinkService(
          * @param {import('ngeo/layertree/Controller.js').LayertreeController} ctrl
          */
         (ctrl) => {
-          const groupNode = /** @type{import('gmf/themes.js').GmfGroup} */(treeCtrl.node);
+          const groupNode = /** @type {import('gmf/themes.js').GmfGroup} */(treeCtrl.node);
           if (groupNode.children === undefined) {
             const param = ParamPrefix.TREE_ENABLE + ctrl.node.name;
             newState[param] = `${visible}`;
@@ -568,7 +568,7 @@ export function PermalinkService(
          * @param {import('ngeo/layertree/Controller.js').LayertreeController} ctrl
          */
         (ctrl) => {
-          const groupNode = /** @type{import('gmf/themes.js').GmfGroup} */(treeCtrl.node);
+          const groupNode = /** @type {import('gmf/themes.js').GmfGroup} */(treeCtrl.node);
           if (groupNode.children === undefined && ctrl.getState() === 'on') {
             gmfLayerNames.push(ctrl.node.name);
           }
@@ -1089,7 +1089,7 @@ PermalinkService.prototype.refreshFirstLevelGroups = function() {
     throw new Error('Missing gmfTreeManager_.rootCtrl');
   }
   // Get first-level-groups order
-  const groupNode = /** @type{import('gmf/themes.js').GmfGroup} */(this.gmfTreeManager_.rootCtrl.node);
+  const groupNode = /** @type {import('gmf/themes.js').GmfGroup} */(this.gmfTreeManager_.rootCtrl.node);
   const groupNodes = groupNode.children;
   const orderedNames = groupNodes ? groupNodes.map(node => node.name) : [];
 
@@ -1261,8 +1261,8 @@ PermalinkService.prototype.initLayers_ = function() {
         if (treeCtrl.isRoot) {
           return undefined;
         }
-        const groupNode = /** @type{import('gmf/themes.js').GmfGroup} */(treeCtrl.node);
-        const parentGroupNode = /** @type{import('gmf/themes.js').GmfGroup} */(treeCtrl.parent.node);
+        const groupNode = /** @type {import('gmf/themes.js').GmfGroup} */(treeCtrl.node);
+        const parentGroupNode = /** @type {import('gmf/themes.js').GmfGroup} */(treeCtrl.parent.node);
 
         const opacity = this.ngeoStateManager_.getInitialNumberValue((
           parentGroupNode.mixed ?
@@ -1294,7 +1294,7 @@ PermalinkService.prototype.initLayers_ = function() {
              * @return {LayertreeVisitorDecision|undefined} the result
              */
             const visitor = (treeCtrl) => {
-              const groupNode = /** @type{import('gmf/themes.js').GmfGroup} */(treeCtrl.node);
+              const groupNode = /** @type {import('gmf/themes.js').GmfGroup} */(treeCtrl.node);
               if (groupNode.children === undefined) {
                 const enable = groupLayersArray.includes(treeCtrl.node.name);
                 if (enable) {

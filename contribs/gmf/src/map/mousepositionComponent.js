@@ -142,7 +142,7 @@ function Controller($element, $filter, $scope, gettextCatalog) {
   this.$filter_ = $filter;
 
   /**
-   * @type  {?import("ol/control/MousePosition.js").default}
+   * @type {?import("ol/control/MousePosition.js").default}
    * @private
    */
   this.control_ = null;

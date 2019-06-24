@@ -303,7 +303,7 @@ class Controller {
       return;
     }
     // Update label
-    this.featureLabel = /** @type{string} */(this.feature.get('name') || '');
+    this.featureLabel = /** @type {string} */(this.feature.get('name') || '');
 
     // Update vector source
     this.vectorSource_.clear();
@@ -330,7 +330,7 @@ class Controller {
     const coordinate = selected.coordinate.map(parseFloat);
     const label = selected.label;
     this.setFeature_(coordinate, label);
-    const newCoordinates = /** @type{import("ol/geom/Point.js").default} */(this.feature.getGeometry())
+    const newCoordinates = /** @type {import("ol/geom/Point.js").default} */(this.feature.getGeometry())
       .getCoordinates();
     this.map.getView().setCenter(newCoordinates);
   }

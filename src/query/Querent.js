@@ -219,8 +219,8 @@ export class Querent {
   getQueryableDataSources(dataSources, map) {
 
     const queryableDataSources = {
-      wfs: /** @type{ngeoDatasourceOGC[]} */([]),
-      wms: /** @type{ngeoDatasourceOGC[]} */([]),
+      wfs: /** @type {ngeoDatasourceOGC[]} */([]),
+      wms: /** @type {ngeoDatasourceOGC[]} */([]),
     };
     const resolution = map.getView().getResolution();
     if (resolution === undefined) {
@@ -564,7 +564,7 @@ export class Querent {
     for (const dataSources of combinedDataSources) {
       /** @type {?import('ol/format/WFS.js').WriteGetFeatureOptions} */
       let getFeatureCommonOptions = null;
-      /** @type{string[]} */
+      /** @type {string[]} */
       let featureTypes = [];
       /** @type {?string} */
       let url = null;

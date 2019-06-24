@@ -258,7 +258,7 @@ export class DatasourceManager {
 
     const dataSources = this.dataSources_.getArray();
     for (const dataSource of dataSources) {
-      const gmfOGCDataSource = /** @type import('gmf/datasource/OGC').default */ (dataSource);
+      const gmfOGCDataSource = /** @type {import('gmf/datasource/OGC').default} */(dataSource);
       if (gmfOGCDataSource.dimensionsFiltersConfig) {
         for (const key in gmfOGCDataSource.dimensionsFiltersConfig) {
           if (gmfOGCDataSource.dimensionsFiltersConfig[key].value === null) {
@@ -449,7 +449,7 @@ export class DatasourceManager {
     }
 
     // From there on, the node is a layer node.
-    const gmfLayer = /** @type import('gmf/themes.js').GmfLayer */ (node);
+    const gmfLayer = /** @type {import('gmf/themes.js').GmfLayer} */(node);
 
     // (2) Skip layer node if a data source with the same id exists
     const id = Number(olUtilGetUid(gmfLayer));
@@ -880,8 +880,8 @@ export class DatasourceManager {
         if (dsLayer == undefined) {
           continue;
         }
-        const gmfOGCDataSource = /** @type import('gmf/datasource/OGC.js').default */ (dataSource);
-        const gmfLayerWMS = /** @type import('gmf/themes.js').GmfLayerWMS */ (gmfOGCDataSource.gmfLayer);
+        const gmfOGCDataSource = /** @type {import('gmf/datasource/OGC.js').default} */(dataSource);
+        const gmfLayerWMS = /** @type {import('gmf/themes.js').GmfLayerWMS} */(gmfOGCDataSource.gmfLayer);
         if (olUtilGetUid(dsLayer) == olUtilGetUid(layer) &&
             layer.get('querySourceIds').indexOf(String(dataSource.id)) >= 0 &&
             gmfLayerWMS.layers.split(',').indexOf(wmsLayerName) >= 0) {
@@ -1005,7 +1005,7 @@ export class DatasourceManager {
    * @hidden
    */
   handleNgeoBackgroundLayerChange_(evt) {
-    const event = /** @type{import('ngeo/map/BackgroundLayerMgr.js').BackgroundEvent} */(evt);
+    const event = /** @type {import('ngeo/map/BackgroundLayerMgr.js').BackgroundEvent} */(evt);
     const previousBackgroundLayer = event.detail.previous;
     const currentBackgroundLayer = event.detail.current;
     const cache = this.dataSourcesCache_;

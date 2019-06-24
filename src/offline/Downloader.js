@@ -71,11 +71,11 @@ const Downloader = class {
        */
       const queueByZ = [];
       /**
-       * @type number
+       * @type {number}
        */
       let minX;
       /**
-       * @type number
+       * @type {number}
        */
       let minY, maxX, maxY;
       tileGrid.forEachTileCoord(extent, z, (coord) => {

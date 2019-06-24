@@ -357,7 +357,7 @@ function d3Elevation(options) {
         .attr('transform', `translate(${margin.left},${
           margin.top})`);
 
-      xDomain = /** @type{[number, number]} */(d3extent(data, d => distanceExtractor(d)));
+      xDomain = /** @type {[number, number]} */(d3extent(data, d => distanceExtractor(d)));
       x.domain(xDomain);
 
       // Return an array with the min and max value of the min/max values of
@@ -368,7 +368,7 @@ function d3Elevation(options) {
         // Get min/max values (extent) of each lines.
         for (const name in linesConfiguration) {
           /** @type {[number, number]} */
-          const extent = /** @type{[number, number]} */(
+          const extent = /** @type {[number, number]} */(
             d3extent(data, d => linesConfiguration[name].zExtractor(d)));
           // only include defined extent
           if (extent.every(Number.isFinite)) {

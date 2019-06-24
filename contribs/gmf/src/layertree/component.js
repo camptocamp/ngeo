@@ -569,7 +569,7 @@ Controller.prototype.getLegendIconURL = function(treeCtrl) {
 Controller.prototype.getLegendsObject = function(treeCtrl) {
   /** @type {Object<string, string>} */
   const legendsObject = {};
-  if (/** @type import('gmf/themes.js').GmfGroup */ (treeCtrl.node).children !== undefined) {
+  if (/** @type {import('gmf/themes.js').GmfGroup} */(treeCtrl.node).children !== undefined) {
     return null;
   }
 

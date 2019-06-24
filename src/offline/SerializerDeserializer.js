@@ -47,11 +47,11 @@ const SerDes = class {
      * @type {Object<string, any>}
      */
     const obj = {};
-    obj['extent'] = tilegrid.getExtent();
-    obj['minZoom'] = tilegrid.getMinZoom();
-    obj['origin'] = tilegrid.getOrigin(0); // hack
-    obj['resolutions'] = tilegrid.getResolutions();
-    obj['tileSize'] = tilegrid.getTileSize(tilegrid.getMinZoom());
+    obj.extent = tilegrid.getExtent();
+    obj.minZoom = tilegrid.getMinZoom();
+    obj.origin = tilegrid.getOrigin(0); // hack
+    obj.resolutions = tilegrid.getResolutions();
+    obj.tileSize = tilegrid.getTileSize(tilegrid.getMinZoom());
     return JSON.stringify(obj);
   }
 
@@ -60,7 +60,7 @@ const SerDes = class {
    * @return {OlTilegridTileGrid} tilegrid
    */
   deserializeTilegrid(serialization) {
-    const options = /** @type {import ("ol/tilegrid/WMTS").Options} */ (JSON.parse(serialization));
+    const options = /** @type {import ("ol/tilegrid/WMTS").Options} */(JSON.parse(serialization));
     return new OlTilegridTileGrid(options);
   }
 
@@ -77,14 +77,14 @@ const SerDes = class {
      */
     const obj = {};
     const resolutions = tilegrid.getResolutions();
-    obj['extent'] = tilegrid.getExtent();
-    obj['minZoom'] = tilegrid.getMinZoom();
-    obj['matrixIds'] = tilegrid.getMatrixIds();
-    obj['resolutions'] = resolutions;
+    obj.extent = tilegrid.getExtent();
+    obj.minZoom = tilegrid.getMinZoom();
+    obj.matrixIds = tilegrid.getMatrixIds();
+    obj.resolutions = resolutions;
 
-    obj['origins'] = [];
+    obj.origins = [];
     for (let z = 0; z < resolutions.length; ++z) {
-      obj['origins'].push(tilegrid.getOrigin(z));
+      obj.origins.push(tilegrid.getOrigin(z));
     }
     return JSON.stringify(obj);
   }
@@ -94,7 +94,7 @@ const SerDes = class {
    * @return {OlTilegridWMTS} tilegrid .
    */
   deserializeTilegridWMTS(serialization) {
-    const options = /** @type {import ("ol/tilegrid/WMTS").Options} */ (JSON.parse(serialization));
+    const options = /** @type {import ("ol/tilegrid/WMTS").Options} */(JSON.parse(serialization));
     return new OlTilegridWMTS(options);
   }
 
@@ -105,12 +105,12 @@ const SerDes = class {
    */
   serializeSourceTileWMS(source) {
     const obj = this.createBaseObject_(source);
-    obj['params'] = source.getParams();
-    obj['urls'] = source.getUrls();
-    obj['tileGrid'] = this.serializeTilegrid(source.getTileGrid());
+    obj.params = source.getParams();
+    obj.urls = source.getUrls();
+    obj.tileGrid = this.serializeTilegrid(source.getTileGrid());
     const projection = source.getProjection();
     if (projection) {
-      obj['projection'] = olProj.get(source.getProjection()).getCode();
+      obj.projection = olProj.get(source.getProjection()).getCode();
     }
 
     return JSON.stringify(obj);
@@ -122,11 +122,11 @@ const SerDes = class {
    * @return {OlSourceTileWMS} source .
    */
   deserializeSourceTileWMS(serialization, tileLoadFunction) {
-    const options = /** @type {import ("ol/source/TileWMS").Options} */ (JSON.parse(serialization));
+    const options = /** @type {import ("ol/source/TileWMS").Options} */(JSON.parse(serialization));
     // @ts-ignore
     options.tileLoadFunction = tileLoadFunction;
     if (options.tileGrid) {
-      options.tileGrid = this.deserializeTilegrid(/** @type{any} */ (options).tileGrid);
+      options.tileGrid = this.deserializeTilegrid(/** @type {any} */(options).tileGrid);
     }
     options.gutter = this.gutter_;
     return new OlSourceTileWMS(options);
@@ -146,7 +146,7 @@ const SerDes = class {
     obj.style = source.getStyle();
     obj.matrixSet = source.getMatrixSet();
     // The OL getTileGrid method is expected to return a WMTS tilegrid so it is OK to cast here.
-    const tileGridWMTS = /** @type {OlTilegridWMTS} */ (source.getTileGrid());
+    const tileGridWMTS = /** @type {OlTilegridWMTS} */(source.getTileGrid());
     obj.tileGrid = this.serializeTilegridWMTS(tileGridWMTS);
     obj.requestEncoding = source.getRequestEncoding();
     const projection = source.getProjection();
@@ -163,11 +163,11 @@ const SerDes = class {
    * @return {OlSourceWMTS} .
    */
   deserializeSourceWMTS(serialization, tileLoadFunction) {
-    const options = /** @type {import("ol/source/WMTS").Options} */ (JSON.parse(serialization));
+    const options = /** @type {import("ol/source/WMTS").Options} */(JSON.parse(serialization));
     // @ts-ignore
     options.tileLoadFunction = tileLoadFunction;
     if (options.tileGrid) {
-      options.tileGrid = this.deserializeTilegridWMTS(/** @type{any} */(options).tileGrid);
+      options.tileGrid = this.deserializeTilegridWMTS(/** @type {any} */(options).tileGrid);
     }
     return new OlSourceWMTS(options);
   }
@@ -213,13 +213,13 @@ const SerDes = class {
    * @return {!import("ol/layer/Tile.js").default} .
    */
   deserializeTileLayer(serialization, tileLoadFunction) {
-    const options = /** @type import("ol/layer/Tile").Options */ (JSON.parse(serialization));
+    const options = /** @type {import('ol/layer/BaseTile.js').Options} */(JSON.parse(serialization));
     // @ts-ignore
-    const sourceType = options['sourceType'];
+    const sourceType = options.sourceType;
     if (sourceType === 'tileWMS') {
-      options.source = this.deserializeSourceTileWMS(/** @type any */ (options).source, tileLoadFunction);
+      options.source = this.deserializeSourceTileWMS(/** @type {any} */(options).source, tileLoadFunction);
     } else if (sourceType === 'WMTS') {
-      options.source = this.deserializeSourceWMTS(/** @type any */ (options).source, tileLoadFunction);
+      options.source = this.deserializeSourceWMTS(/** @type {any} */(options).source, tileLoadFunction);
     }
     return new OlLayerTile(options);
   }
