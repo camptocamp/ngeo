@@ -104,9 +104,15 @@ function getQueryableLayersInfoFromThemes(
   const queryableLayersInfo = [];
 
   for (let i = 0, ii = themes.length; i < ii; i++) {
-    const theme = /** @type {import('gmf/themes.js').GmfTheme} */ (themes[i]);
+    /**
+     * @type {import('gmf/themes.js').GmfTheme}
+     */
+    const theme = themes[i];
     for (let j = 0, jj = theme.children.length; j < jj; j++) {
-      const group = /** @type {import('gmf/themes.js').GmfGroup} */ (theme.children[j]);
+      /**
+       * @type {import('gmf/themes.js').GmfGroup}
+       */
+      const group = theme.children[j];
 
       // Skip groups that don't have an ogcServer set
       if (!group.ogcServer) {
@@ -118,13 +124,19 @@ function getQueryableLayersInfoFromThemes(
       getFlatNodes(group, nodes);
 
       for (let k = 0, kk = nodes.length; k < kk; k++) {
-        const nodeGroup = /** @type {import('gmf/themes.js').GmfGroup} */ (nodes[k]);
+        /**
+         * @type {import('gmf/themes.js').GmfGroup}
+         */
+        const nodeGroup = nodes[k];
         // Skip groups within groups
         if (nodeGroup.children && nodeGroup.children.length) {
           continue;
         }
 
-        const nodeWMS = /** @type {import('gmf/themes.js').GmfLayerWMS} */ (nodes[k]);
+        /**
+         * @type {import('gmf/themes.js').GmfLayerWMS}
+         */
+        const nodeWMS = nodes[k];
 
         if (nodeWMS.childLayers &&
           nodeWMS.childLayers[0] &&

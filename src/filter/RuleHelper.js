@@ -239,7 +239,10 @@ export class RuleHelper {
         rule = new ngeoRuleGeometry(options);
         break;
       case ngeoFormatAttributeType.SELECT:
-        const selectOptions = /** @type {import('ngeo/rule/Select.js').SelectOptions} */ (options);
+        /**
+         * @type {import('ngeo/rule/Select.js').SelectOptions}
+         */
+        const selectOptions = options;
         console.assert(selectOptions.choices);
         rule = new ngeoRuleSelect(selectOptions);
         break;
@@ -290,11 +293,17 @@ export class RuleHelper {
         this.ngeoFeatureHelper_.getNonSpatialProperties(rule.feature)
       );
     } else if (rule instanceof ngeoRuleSelect) {
-      const opt = /** @type {import('ngeo/rule/Select.js').SelectOptions} */ (options);
+      /**
+       * @type {import('ngeo/rule/Select.js').SelectOptions}
+       */
+      const opt = options;
       opt.choices = rule.choices.slice(0);
       clone = new ngeoRuleSelect(opt);
     } else if (rule instanceof ngeoRuleText) {
-      const opt = /** @type {import('ngeo/rule/Text').TextOptions} */ (options);
+      /**
+       * @type {import('ngeo/rule/Text').TextOptions}
+       */
+      const opt = options;
       clone = new ngeoRuleText(opt);
     } else {
       clone = new ngeoRuleRule(options);
@@ -385,12 +394,18 @@ export class RuleHelper {
     }
 
     if (rule instanceof ngeoRuleGeometry) {
-      const opt = /** @type {import('ngeo/rule/Geometry.js').GeometryOptions} */ (obj);
+      /**
+       * @type {import('ngeo/rule/Geometry.js').GeometryOptions}
+       */
+      const opt = obj;
       opt.featureProperties = this.ngeoFeatureHelper_.getNonSpatialProperties(rule.feature);
     }
 
     if (rule instanceof ngeoRuleSelect) {
-      const opt = /** @type {import('ngeo/rule/Select.js').SelectOptions} */ (obj);
+      /**
+       * @type {import('ngeo/rule/Select.js').SelectOptions}
+       */
+      const opt = obj;
       opt.choices = rule.choices;
     }
 
@@ -609,7 +624,10 @@ export class RuleHelper {
         }
       }
     } else if (numericTypes.includes(operator)) {
-      const numericExpression = /** @type {number} */(expression);
+      /**
+       * @type {number}
+       */
+      const numericExpression = expression;
       if (operator === rot.GREATER_THAN) {
         filter = olFormatFilter.greaterThan(
           propertyName,

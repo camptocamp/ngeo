@@ -289,7 +289,10 @@ Controller.prototype.untrack_ = function() {
  * @private
  */
 Controller.prototype.setPosition_ = function() {
-  const position = /** @type {import("ol/coordinate.js").Coordinate} */ (this.geolocation_.getPosition());
+  /**
+   * @type {import("ol/coordinate.js").Coordinate}
+   */
+  const position = this.geolocation_.getPosition();
   const point = new olGeomPoint(position);
 
   this.positionFeature_.setGeometry(point);
@@ -301,7 +304,10 @@ Controller.prototype.setPosition_ = function() {
       this.map_.getView().setCenter(position);
       this.map_.getView().setZoom(this.zoom_);
     } else if (accuracy) {
-      const size = /** @type {import("ol/size.js").Size} */ (this.map_.getSize());
+      /**
+       * @type {import("ol/size.js").Size}
+       */
+      const size = this.map_.getSize();
       this.map_.getView().fit(/** @type {import("ol/geom/Polygon.js").default} */ (accuracy), {size});
     }
     this.viewChangedByMe_ = false;

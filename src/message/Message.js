@@ -128,7 +128,10 @@ export default class {
             type: opt_type !== undefined ? opt_type : defaultType
           });
         } else {
-          const msgObject = /** @type {Message} */(msg);
+          /**
+           * @type {Message}
+           */
+          const msgObject = msg;
           if (opt_type !== undefined) {
             msgObject.type = opt_type;
           }
@@ -136,7 +139,10 @@ export default class {
         }
       });
     } else {
-      const msgObject = /** @type {Message} */(object);
+      /**
+       * @type {Message}
+       */
+      const msgObject = object;
       if (opt_type !== undefined) {
         msgObject.type = opt_type;
       }

@@ -297,11 +297,17 @@ LayertreeTreeManager.prototype.addFirstLevelGroup_ = function(group) {
  * @private
  */
 LayertreeTreeManager.prototype.manageExclusiveGroupSingleChecked_ = function(node, found) {
-  const groupNode = /** @type {import('gmf/themes.js').GmfGroup} */(node);
+  /**
+   * @type {import('gmf/themes.js').GmfGroup}
+   */
+  const groupNode = node;
   const children = groupNode.children;
   if (children) {
     for (const child of children) {
-      const childGroup = /** @type {import('gmf/themes.js').GmfGroup} */(child);
+      /**
+       * @type {import('gmf/themes.js').GmfGroup}
+       */
+      const childGroup = child;
       if (childGroup.children) {
         found = this.manageExclusiveGroupSingleChecked_(childGroup, found);
       } else {
@@ -419,7 +425,10 @@ LayertreeTreeManager.prototype.removeAll = function() {
  * @private
  */
 LayertreeTreeManager.prototype.cloneGroupNode_ = function(group, names) {
-  const clone = /** @type {import('gmf/themes.js').GmfGroup} */ (Object.assign({}, group));
+  /**
+   * @type {import('gmf/themes.js').GmfGroup}
+   */
+  const clone = Object.assign({}, group);
   this.toggleNodeCheck_(clone, names);
   return clone;
 };
@@ -434,7 +443,10 @@ LayertreeTreeManager.prototype.cloneGroupNode_ = function(group, names) {
  * @private
  */
 LayertreeTreeManager.prototype.toggleNodeCheck_ = function(node, names) {
-  const groupNode = /** @type {import('gmf/themes.js').GmfGroup} */(node);
+  /**
+   * @type {import('gmf/themes.js').GmfGroup}
+   */
+  const groupNode = node;
   if (!groupNode.children) {
     return;
   }
@@ -505,9 +517,15 @@ LayertreeTreeManager.prototype.getOgcServer = function(treeCtrl) {
   if (!this.ogcServers_) {
     throw new Error('Missing ogcServers');
   }
-  const gmfParentGroup = /** @type {import('gmf/themes.js').GmfGroup} */(treeCtrl.parent.node);
+  /**
+   * @type {import('gmf/themes.js').GmfGroup}
+   */
+  const gmfParentGroup = treeCtrl.parent.node;
   if (gmfParentGroup.mixed) {
-    const gmfLayerWMS = /** @type {import('gmf/themes.js').GmfLayerWMS} */(treeCtrl.node);
+    /**
+     * @type {import('gmf/themes.js').GmfLayerWMS}
+     */
+    const gmfLayerWMS = treeCtrl.node;
     console.assert(gmfLayerWMS.ogcServer);
     return this.ogcServers_[gmfLayerWMS.ogcServer];
   } else {
@@ -515,7 +533,10 @@ LayertreeTreeManager.prototype.getOgcServer = function(treeCtrl) {
     while (!firstLevelGroupCtrl.parent.isRoot) {
       firstLevelGroupCtrl = firstLevelGroupCtrl.parent;
     }
-    const gmfGroup = /** @type {import('gmf/themes.js').GmfGroup} */(firstLevelGroupCtrl.node);
+    /**
+     * @type {import('gmf/themes.js').GmfGroup}
+     */
+    const gmfGroup = firstLevelGroupCtrl.node;
     console.assert(gmfGroup.ogcServer);
     return this.ogcServers_[gmfGroup.ogcServer];
   }
@@ -582,7 +603,10 @@ LayertreeTreeManager.prototype.refreshFirstLevelGroups_ = function(themes) {
  * @private
  */
 LayertreeTreeManager.prototype.getFirstLevelGroupFullState_ = function(treeCtrl) {
-  const children = /** @type {Object<string, TreeManagerFullState>} */({});
+  /**
+   * @type {Object<string, TreeManagerFullState>}
+   */
+  const children = {};
   // Get the state of the treeCtrl children recursively.
   treeCtrl.children.map((child) => {
     children[child.node.name] = this.getFirstLevelGroupFullState_(child);
@@ -635,7 +659,10 @@ LayertreeTreeManager.prototype.setNodeMetadataFromFullState_ = function(node, fu
   }
 
   // Set the metadata of the node children recursively.
-  const groupNode = /** @type {import('gmf/themes.js').GmfGroup} */(node);
+  /**
+   * @type {import('gmf/themes.js').GmfGroup}
+   */
+  const groupNode = node;
   if (groupNode.children) {
     groupNode.children.map((child) => {
       this.setNodeMetadataFromFullState_(child, fullState.children[child.name]);

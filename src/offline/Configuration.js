@@ -228,7 +228,10 @@ const exports = class extends olObservable {
     * @return {Array<import("./index.js").OfflineExtentByZoom>} The extent to download per zoom level
    */
   getExtentByZoom(map, layer, ancestors, userExtent) {
-    const currentZoom = /** @type {!number} */ (map.getView().getZoom());
+    /**
+     * @type {!number}
+     */
+    const currentZoom = map.getView().getZoom();
 
     /**
      * @type {import("./index.js").OfflineExtentByZoom[]}

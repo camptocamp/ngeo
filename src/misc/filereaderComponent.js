@@ -61,7 +61,10 @@ function filereaderComponent($window) {
            * @param {ProgressEvent} evt Event.
            */
           function(evt) {
-            const target = /** @type {FileReader} */(evt.target);
+            /**
+             * @type {FileReader}
+             */
+            const target = evt.target;
             scope.$apply(() => {
               // @ts-ignore
               scope['fileContent'] = target.result;

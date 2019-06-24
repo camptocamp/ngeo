@@ -206,10 +206,10 @@ function MainController($scope, ngeoFeatureHelper) {
 MainController.prototype.handleMapSingleClick_ = function(evt) {
   const pixel = evt.pixel;
 
-  const feature = /** @type {olFeature<import("ol/geom/Geometry.js").default>} */(
-    this.map.forEachFeatureAtPixel(pixel, feature => feature)
-  );
-
+  /**
+   * @type {olFeature<import("ol/geom/Geometry.js").default>}
+   */
+  const feature = this.map.forEachFeatureAtPixel(pixel, feature => feature);
   if (this.selectedFeature) {
     this.featureHelper_.setStyle(this.selectedFeature);
   }

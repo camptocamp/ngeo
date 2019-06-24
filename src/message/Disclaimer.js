@@ -191,14 +191,20 @@ export class MessageDisclaimerService extends ngeoMessageMessage {
     // (2) Close message (popup or alert)
     if (obj instanceof MessagePopup) {
       // (2.1) Close popup, if not already closed
-      const mpObj = /** @type {MessagePopup} */(obj);
+      /**
+       * @type {MessagePopup}
+       */
+      const mpObj = obj;
       if (mpObj.getOpen()) {
         mpObj.setOpen(false);
       }
     } else {
       // (2.2) Check if the message hasn't been closed using the UI, i.e. by
       //       clicking the close button. If not, then close it.
-      const jqueryObj = /** @type {JQuery} */(obj);
+      /**
+       * @type {JQuery}
+       */
+      const jqueryObj = obj;
       if (jqueryObj.hasClass('show')) {
         jqueryObj.alert('close');
       }

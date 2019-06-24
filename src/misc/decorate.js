@@ -158,7 +158,10 @@ export function layerLoading(layer, $scope) {
    */
   function increment_(layer) {
     let load_count = /** @type {number} */ (layer.get('load_count'));
-    const parent = /** @type {import("ol/layer/Base.js").default} */ (layer.get('parent_group'));
+    /**
+     * @type {import("ol/layer/Base.js").default}
+     */
+    const parent = layer.get('parent_group');
     layer.set('load_count', ++load_count, true);
     if (parent) {
       increment_(parent);
@@ -172,7 +175,10 @@ export function layerLoading(layer, $scope) {
    */
   function decrement_(layer) {
     let load_count = /** @type {number} */ (layer.get('load_count'));
-    const parent = /** @type {import("ol/layer/Base.js").default} */ (layer.get('parent_group'));
+    /**
+     * @type {import("ol/layer/Base.js").default}
+     */
+    const parent = layer.get('parent_group');
     layer.set('load_count', --load_count, true);
     if (parent) {
       decrement_(parent);

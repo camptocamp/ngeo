@@ -969,7 +969,10 @@ function setStyleProperties_(text, feature) {
 
   // Convert font size from px to pt
   if (properties.fontSize) {
-    const fontSizeStr = /** @type {string} */(properties.fontSize);
+    /**
+     * @type {string}
+     */
+    const fontSizeStr = properties.fontSize;
     /** @type {number} */
     let fontSize = parseFloat(fontSizeStr);
     if (fontSizeStr.indexOf('px') !== -1) {

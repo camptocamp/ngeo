@@ -72,7 +72,10 @@ function measureAzimutComponent($compile, gettextCatalog, $filter, $injector) {
          * @param {Event|import('ol/events/Event.js').default} event Event.
          */
         (event) => {
-          const myEvent = /** @type {import('ngeo/interaction/Measure.js').MeasureEvent} */(event);
+          /**
+           * @type {import('ngeo/interaction/Measure.js').MeasureEvent}
+           */
+          const myEvent = event;
           // In the case of azimut measure interaction, the feature's
           // geometry is actually a collection (line + circle)
           // For our purpose here, we only need the circle, which gets

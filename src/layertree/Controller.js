@@ -60,7 +60,10 @@ export function LayertreeController($scope, $rootScope, $attrs) {
 
 
   const mapExpr = $attrs.ngeoLayertreeMap;
-  const map = /** @type {import("ol/Map.js").default} */($scope.$eval(mapExpr));
+  /**
+   * @type {import("ol/Map.js").default}
+   */
+  const map = $scope.$eval(mapExpr);
   console.assert(map !== undefined);
 
   /**
@@ -253,7 +256,10 @@ LayertreeController.prototype.setStateInternal_ = function(state) {
  * @public
  */
 LayertreeController.prototype.refreshState = function(opt_onChild, opt_broadcast) {
-  const group = /** @type {import('gmf/themes.js').GmfGroup} */(this.node);
+  /**
+   * @type {import('gmf/themes.js').GmfGroup}
+   */
+  const group = this.node;
   if (group.children &&
       opt_onChild &&
       opt_onChild.getState() !== 'off' &&
@@ -284,7 +290,10 @@ LayertreeController.prototype.refreshState = function(opt_onChild, opt_broadcast
  * @return {string} 'on', 'off' or 'indeterminate'.
  */
 LayertreeController.prototype.getCalculateState = function() {
-  const group = /** @type {import('gmf/themes.js').GmfGroup} */(this.node);
+  /**
+   * @type {import('gmf/themes.js').GmfGroup}
+   */
+  const group = this.node;
   if (group.children === undefined) {
     return this.state_;
   }

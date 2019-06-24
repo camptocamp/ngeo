@@ -381,7 +381,10 @@ class Controller {
     if (!this.map) {
       return null;
     }
-    const geometry = /** @type {import("ol/geom/Point.js").default} */ (point.getGeometry());
+    /**
+     * @type {import("ol/geom/Point.js").default}
+     */
+    const geometry = point.getGeometry();
     const coords = geometry.getCoordinates();
     const projection = this.map.getView().getProjection();
     return olProj.toLonLat(coords, projection);

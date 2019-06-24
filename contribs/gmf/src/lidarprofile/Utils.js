@@ -249,14 +249,20 @@ export default class {
 
     // Draw the profile canvas (the points) into the new canvas.
     const profileCanvas = d3select('#gmf-lidarprofile-container .lidar-canvas');
-    const profileCanvasEl = /** @type {HTMLCanvasElement} */ (profileCanvas.node());
+    /**
+     * @type {HTMLCanvasElement}
+     */
+    const profileCanvasEl = profileCanvas.node();
     ctx.drawImage(profileCanvasEl, margin.left, margin.top,
       w - (margin.left + margin.right), h - (margin.top + margin.bottom));
 
     // Add transforms the profile into an image.
     const exportImage = new Image();
     const serializer = new XMLSerializer();
-    const profileSVGEl = /** @type {HTMLElement} */ (profileSVG.node());
+    /**
+     * @type {HTMLElement}
+     */
+    const profileSVGEl = profileSVG.node();
     const svgStr = serializer.serializeToString(profileSVGEl);
 
     // Draw the image of the profile into the context of the new canvas.

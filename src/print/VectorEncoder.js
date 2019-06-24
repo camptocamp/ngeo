@@ -53,9 +53,10 @@ const PRINT_STYLE_TYPES = {
  * @param {number} resolution Resolution.
  */
 VectorEncoder.prototype.encodeVectorLayer = function(arr, layer, resolution) {
-  const source = /** @type {import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>} */(
-    layer.getSource()
-  );
+  /**
+   * @type {import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>}
+   */
+  const source = layer.getSource();
 
   const features = source.getFeatures();
 
@@ -351,7 +352,10 @@ VectorEncoder.prototype.encodeVectorStylePolygon = function(symbolizers, fillSty
  * @protected
  */
 VectorEncoder.prototype.encodeVectorStyleStroke = function(symbolizer, strokeStyle) {
-  const strokeColor = /** @type {import('ol/color.js').Color} */(strokeStyle.getColor());
+  /**
+   * @type {import('ol/color.js').Color}
+   */
+  const strokeColor = strokeStyle.getColor();
   if (strokeColor !== null) {
     console.assert(typeof strokeColor === 'string' || Array.isArray(strokeColor));
     const strokeColorRgba = asColorArray(strokeColor);
@@ -429,7 +433,10 @@ VectorEncoder.prototype.encodeTextStyle = function(symbolizers, textStyle) {
 
     const strokeStyle = textStyle.getStroke();
     if (strokeStyle !== null) {
-      const strokeColor = /** @type {import('ol/color.js').Color} */(strokeStyle.getColor());
+      /**
+       * @type {import('ol/color.js').Color}
+       */
+      const strokeColor = strokeStyle.getColor();
       console.assert(typeof strokeColor === 'string' || Array.isArray(strokeColor));
       const strokeColorRgba = asColorArray(strokeColor);
       console.assert(Array.isArray(strokeColorRgba), 'only supporting stroke colors');
@@ -444,7 +451,10 @@ VectorEncoder.prototype.encodeTextStyle = function(symbolizers, textStyle) {
 
     const fillStyle = textStyle.getFill();
     if (fillStyle !== null) {
-      const fillColor = /** @type {import('ol/color.js').Color} */(fillStyle.getColor());
+      /**
+       * @type {import('ol/color.js').Color}
+       */
+      const fillColor = fillStyle.getColor();
       console.assert(typeof fillColor === 'string' || Array.isArray(fillColor));
       const fillColorRgba = asColorArray(fillColor);
       console.assert(Array.isArray(fillColorRgba), 'only supporting fill colors');

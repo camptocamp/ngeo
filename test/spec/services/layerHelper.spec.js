@@ -46,8 +46,14 @@ describe('ngeo.map.LayerHelper', () => {
     $httpBackend.flush();
 
     expect(spy.calls.count()).toBe(1);
-    const layer = /** @type {import("ol/layer/Tile.js").default} */(spy.calls.mostRecent().args[0]);
-    const source = /** @type {import("ol/source/WMTS.js").default} */(layer.getSource());
+    /**
+     * @type {import("ol/layer/Tile.js").default}
+     */
+    const layer = spy.calls.mostRecent().args[0];
+    /**
+     * @type {import("ol/source/WMTS.js").default}
+     */
+    const source = layer.getSource();
     expect(source.getLayer()).toBe(wmtsName);
   });
 
@@ -96,7 +102,10 @@ describe('ngeo.map.LayerHelper', () => {
     $httpBackend.flush();
 
     expect(spy.calls.count()).toBe(1);
-    const layer = /** @type {import("ol/layer/Tile.js").default} */(spy.calls.mostRecent().args[0]);
+    /**
+     * @type {import("ol/layer/Tile.js").default}
+     */
+    const layer = spy.calls.mostRecent().args[0];
     const capabilitiesStyles = [{legendURL: [{href: 'http://legendURL'}]}];
     layer.set('capabilitiesStyles', capabilitiesStyles);
     const legend = ngeoLayerHelper.getWMTSLegendURL(layer);

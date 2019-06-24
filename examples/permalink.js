@@ -187,9 +187,10 @@ DrawComponentController.prototype.$onInit = function() {
   if (!this.layer) {
     throw new Error('Missing layer');
   }
-  const vectorSource = /** @type {olSourceVector<import("ol/geom/Geometry.js").default>} */(
-    this.layer.getSource()
-  );
+  /**
+   * @type {olSourceVector<import("ol/geom/Geometry.js").default>}
+   */
+  const vectorSource = this.layer.getSource();
 
   this.interaction = new olInteractionDraw({
     type: /** @type {import("ol/geom/GeometryType.js").default} */ ('LineString'),

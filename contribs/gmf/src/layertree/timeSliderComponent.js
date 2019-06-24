@@ -205,7 +205,10 @@ Controller.prototype.init = function() {
   this.isModeRange = this.time.mode === 'range';
   this.minValue = initialOptions_.minDate;
   this.maxValue = initialOptions_.maxDate;
-  const values = /** @type {number[]} */(initialOptions_.values);
+  /**
+   * @type {number[]}
+   */
+  const values = initialOptions_.values;
   this.dates = this.isModeRange ? [values[0], values[1]] :
     initialOptions_.values;
   this.sliderOptions = {

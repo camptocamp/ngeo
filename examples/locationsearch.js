@@ -93,7 +93,10 @@ function SearchController(ngeoCreateLocationSearchBloodhound) {
       const feature = /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>} */ (
         suggestion
       );
-      const bbox = /** @type {import("ol/extent.js").Extent} */ (feature.get('bbox'));
+      /**
+       * @type {import("ol/extent.js").Extent}
+       */
+      const bbox = feature.get('bbox');
       const size = this.map.getSize();
       if (!size) {
         throw new Error('issing size');

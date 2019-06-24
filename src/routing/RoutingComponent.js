@@ -273,7 +273,10 @@ class Controller {
     if (!this.map) {
       return null;
     }
-    const geometry = /** @type {import("ol/geom/Point.js").default} */ (point.getGeometry());
+    /**
+     * @type {import("ol/geom/Point.js").default}
+     */
+    const geometry = point.getGeometry();
     const coords = geometry.getCoordinates();
     const projection = this.map.getView().getProjection();
     return toLonLat(coords, projection);
@@ -338,7 +341,10 @@ class Controller {
       const vias = this.viaArray.filter(via => via.feature !== null).map(
         via => this.getLonLatFromPoint_(via.feature)
       );
-      const route = /** @type {Array<number[]>} */([coordFrom].concat(vias, [coordTo]));
+      /**
+       * @type {Array<number[]>}
+       */
+      const route = [coordFrom].concat(vias, [coordTo]);
 
       /**
        * @param {angular.IHttpResponse<import('./RoutingService').Routes>} resp

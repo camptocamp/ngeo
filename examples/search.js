@@ -129,16 +129,18 @@ function SearchController($element, $rootScope, $compile, ngeoSearchCreateGeoJSO
       const feature = /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>} */ (
         suggestion
       );
-      const featureGeometry = /** @type {import('ol/geom/SimpleGeometry.js').default} */(
-        feature.getGeometry()
-      );
+      /**
+       * @type {import('ol/geom/SimpleGeometry.js').default}
+       */
+      const featureGeometry = feature.getGeometry();
       const size = this.map.getSize();
       if (!size) {
         throw new Error('Missing size');
       }
-      const source = /** @type {olSourceVector<import("ol/geom/Geometry.js").default>} */(
-        this.vectorLayer_.getSource()
-      );
+      /**
+       * @type {olSourceVector<import("ol/geom/Geometry.js").default>}
+       */
+      const source = this.vectorLayer_.getSource();
       source.clear(true);
       source.addFeature(feature);
       this.map.getView().fit(featureGeometry, {

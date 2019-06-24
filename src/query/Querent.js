@@ -984,7 +984,10 @@ export class Querent {
   isDataSourceQueryable_(ds, res) {
     let queryable = ds.visible && ds.inRange && ds.queryable;
     if (queryable && ds instanceof ngeoDatasourceOGC) {
-      const ogcDS = /** @type {ngeoDatasourceOGC} */ (ds);
+      /**
+       * @type {ngeoDatasourceOGC}
+       */
+      const ogcDS = ds;
       queryable = ogcDS.isAnyOGCLayerInRange(res, true);
     }
     return queryable;

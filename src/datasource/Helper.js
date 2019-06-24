@@ -98,7 +98,10 @@ export class DatasourceHelper {
         // was returned.  Just to be sure, let's do a bunch of assertions.
         const ogcLayerName = dataSource.getWFSLayerNames()[0];
         console.assert(typeof ogcLayerName == 'string', 'The data source should have only one ogcLayer.');
-        const featureType = /** @type {Object<string, *>} */(/** @type {unknown} */(featureType_));
+        /**
+         * @type {Object<string, *>}
+         */
+        const featureType = /** @type {unknown} */(featureType_);
         for (const element of featureType.element) {
           if (element.name === ogcLayerName) {
             for (const type of featureType.complexType) {

@@ -172,7 +172,10 @@ function Controller($scope, $timeout, gmfThemes, gmfTreeManager) {
           throw new Error('Missing gmfTreeManager_.rootCtrl');
         }
         this.gmfTreeManager_.rootCtrl.traverseDepthFirst((treeCtrl) => {
-          const gmfLayer = /** @type {import('gmf/themes.js').GmfLayer} */(treeCtrl.node);
+          /**
+           * @type {import('gmf/themes.js').GmfLayer}
+           */
+          const gmfLayer = treeCtrl.node;
           if (gmfLayer.editable) {
             console.assert(treeCtrl.children.length === 0);
             editables.push(treeCtrl);

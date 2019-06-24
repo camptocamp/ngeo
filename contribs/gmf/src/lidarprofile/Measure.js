@@ -73,9 +73,15 @@ export default class {
       throw new Error('Missing manager.plot');
     }
     const svg = d3select('#gmf-lidarprofile-container svg.lidar-svg');
-    const svgEl = /** @type {HTMLElement} */ (svg.node());
+    /**
+     * @type {HTMLElement}
+     */
+    const svgEl = svg.node();
     const canvas = d3select('#gmf-lidarprofile-container .lidar-canvas');
-    const canvasEl = /** @type {HTMLCanvasElement} */ (canvas.node());
+    /**
+     * @type {HTMLCanvasElement}
+     */
+    const canvasEl = canvas.node();
 
     const svgCoordinates = d3mouse(svgEl);
     const canvasCoordinates = d3mouse(canvasEl);

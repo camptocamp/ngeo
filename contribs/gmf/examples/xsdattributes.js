@@ -81,7 +81,10 @@ function MainController($timeout, gmfThemes, gmfXSDAttributes) {
       });
     });
     flatNodes.forEach((node) => {
-      const groupNode = /** @type {import('gmf/themes.js').GmfGroup} */(node);
+      /**
+       * @type {import('gmf/themes.js').GmfGroup}
+       */
+      const groupNode = node;
       // Get an array of all layers
       if (groupNode.children === undefined && layerNames.indexOf(node.name) !== -1) {
         this.layers.push(/** @type {import('gmf/themes.js').GmfLayer} */(node));

@@ -51,7 +51,10 @@ const Downloader = class {
    * @param {Array<import("./index.js").OfflineTile>} queue Queue of tiles to download.
    */
   queueLayerTiles_(layerMetadata, queue) {
-    const source = /** @type {olSourceTileWMS|olSourceWMTS} */ (layerMetadata.source);
+    /**
+     * @type {olSourceTileWMS|olSourceWMTS}
+     */
+    const source = layerMetadata.source;
     const {map, extentByZoom} = layerMetadata;
 
     if (!source) {

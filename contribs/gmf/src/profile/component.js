@@ -416,7 +416,10 @@ ProfileController.prototype.updateEventsListening_ = function() {
   if (this.active && this.map_ !== null) {
     this.pointerMoveKey_ = olEvents.listen(this.map_, 'pointermove',
       (event) => {
-        const e = /** @type {import("ol/MapBrowserPointerEvent.js").default} */(event);
+        /**
+         * @type {import("ol/MapBrowserPointerEvent.js").default}
+         */
+        const e = event;
         if (!this.map_) {
           throw new Error('Missing map');
         }

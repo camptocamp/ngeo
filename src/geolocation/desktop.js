@@ -184,7 +184,10 @@ function Controller($scope, $element, ngeoFeatureOverlayMgr, ngeoNotification) {
   });
 
   olEvents.listen(this.geolocation_, 'change:position', (evt) => {
-    const event = /** @type {import("ol/events/Event.js").default} */(evt);
+    /**
+     * @type {import("ol/events/Event.js").default}
+     */
+    const event = evt;
     this.setPosition_(event);
   });
 
@@ -228,7 +231,10 @@ Controller.prototype.deactivate_ = function() {
  * @private
  */
 Controller.prototype.setPosition_ = function(event) {
-  const position = /** @type {import("ol/coordinate.js").Coordinate} */ (this.geolocation_.getPosition());
+  /**
+   * @type {import("ol/coordinate.js").Coordinate}
+   */
+  const position = this.geolocation_.getPosition();
   const point = new olGeomPoint(position);
 
   this.positionFeature_.setGeometry(point);
