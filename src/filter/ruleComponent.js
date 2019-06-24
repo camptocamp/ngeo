@@ -1033,7 +1033,7 @@ class RuleController {
    * @private
    */
   handleMenuActionClick_(evt) {
-    const action = /** @type{MenuEvent} */(evt).detail.action;
+    const action = /** @type {MenuEvent} */(evt).detail.action;
 
     switch (action) {
       case 'move':

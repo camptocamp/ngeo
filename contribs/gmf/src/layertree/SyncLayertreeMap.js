@@ -105,7 +105,7 @@ SyncLayertreeMap.prototype.sync_ = function(treeCtrl) {
     const gmfGroup = /** @type {import('gmf/themes.js').GmfGroup} */(treeCtrl.node);
     if (treeCtrl.layer && !gmfGroup.mixed) {
       this.updateLayerState_(
-        /** @type import("ol/layer/Image.js").default|import("ol/layer/Tile.js").default */ (treeCtrl.layer),
+        /** @type {import("ol/layer/Image.js").default|import("ol/layer/Tile.js").default} */(treeCtrl.layer),
         treeCtrl
       );
       return LayertreeVisitorDecision.DESCEND;
@@ -245,10 +245,10 @@ SyncLayertreeMap.prototype.createLayerFromGroup_ = function(treeCtrl, mixed) {
     let hasActiveChildren = false;
     treeCtrl.traverseDepthFirst((ctrl) => {
       // Update layer information and tree state.
-      this.updateLayerReferences_(/** @type import('gmf/themes.js').GmfLayer */ (ctrl.node), layer);
+      this.updateLayerReferences_(/** @type {import('gmf/themes.js').GmfLayer} */(ctrl.node), layer);
       if (ctrl.node.metadata.isChecked) {
         ctrl.setState('on', false);
-        this.updateLayerState_(/** @type {import("ol/layer/Image.js").default} */ (layer), ctrl);
+        this.updateLayerState_(/** @type {import("ol/layer/Image.js").default} */(layer), ctrl);
         hasActiveChildren = true;
         return LayertreeVisitorDecision.DESCEND;
       }
@@ -268,16 +268,16 @@ SyncLayertreeMap.prototype.createLayerFromGroup_ = function(treeCtrl, mixed) {
  * @private
  */
 SyncLayertreeMap.prototype.createLeafInAMixedGroup_ = function(treeCtrl, map) {
-  const gmfLayer = /** @type {import('gmf/themes.js').GmfLayer} */ (treeCtrl.node);
+  const gmfLayer = /** @type {import('gmf/themes.js').GmfLayer} */(treeCtrl.node);
   let layer;
   // Make layer.
   if (gmfLayer.type === 'WMTS') {
-    layer = this.createWMTSLayer_(/** @type {import('gmf/themes.js').GmfLayerWMTS} */ (gmfLayer));
+    layer = this.createWMTSLayer_(/** @type {import('gmf/themes.js').GmfLayerWMTS} */(gmfLayer));
   } else {
     if (!this.ogcServersObject_) {
       throw new Error('Missing ogcServersObject');
     }
-    const gmfLayerWMS = /** @type import('gmf/themes.js').GmfLayerWMS */ (gmfLayer);
+    const gmfLayerWMS = /** @type {import('gmf/themes.js').GmfLayerWMS} */(gmfLayer);
     const timeParam = this.getTimeParam_(treeCtrl);
     const ogcServer = this.ogcServersObject_[gmfLayerWMS.ogcServer];
     console.assert(ogcServer);

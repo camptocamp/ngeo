@@ -158,7 +158,7 @@ export class ThemesService extends olEventsEventTarget {
      */
     const layerLayerCreationFn = function(ogcServers, gmfLayer) {
       if (gmfLayer.type === 'WMTS') {
-        const gmfLayerWMTS = /** @type import('gmf/themes.js').GmfLayerWMTS */ (gmfLayer);
+        const gmfLayerWMTS = /** @type {import('gmf/themes.js').GmfLayerWMTS} */(gmfLayer);
         if (!gmfLayerWMTS.url) {
           throw 'Layer URL is required';
         }
@@ -178,7 +178,7 @@ export class ThemesService extends olEventsEventTarget {
         });
         return /** @type {angular.IPromise<import("ol/layer/Base.js").default>} */(layer);
       } else if (gmfLayer.type === 'WMS') {
-        const gmfLayerWMS = /** @type import('gmf/themes.js').GmfLayerWMS */ (gmfLayer);
+        const gmfLayerWMS = /** @type {import('gmf/themes.js').GmfLayerWMS} */(gmfLayer);
         console.assert(gmfLayerWMS.ogcServer, 'An OGC server is required');
         const server = ogcServers[gmfLayerWMS.ogcServer];
         console.assert(server, 'The OGC server was not found');

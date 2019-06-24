@@ -727,7 +727,7 @@ Controller.prototype.handleMapContextMenu_ = function(evt) {
  * @private
  */
 Controller.prototype.handleMenuActionClick_ = function(vertexInfo, evt) {
-  const action = /** @type{import('ngeo/filter/ruleComponent.js').MenuEvent} */(evt).detail.action;
+  const action = /** @type {import('ngeo/filter/ruleComponent.js').MenuEvent} */(evt).detail.action;
   if (!this.selectedFeature) {
     throw new Error('Missing selectedFeature');
   }

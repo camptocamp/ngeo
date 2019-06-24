@@ -164,7 +164,7 @@ function Controller($scope, ngeoBackgroundLayerMgr, gmfThemes) {
      * @param {Event|import('ol/events/Event.js').default} event Event.
      */
     (event) => {
-      this.bgLayer = /** @type{import('ngeo/map/BackgroundLayerMgr.js').BackgroundEvent} */
+      this.bgLayer = /** @type {import('ngeo/map/BackgroundLayerMgr.js').BackgroundEvent} */
           (event).detail.current;
     }));
 

@@ -338,7 +338,7 @@ class Controller {
       const vias = this.viaArray.filter(via => via.feature !== null).map(
         via => this.getLonLatFromPoint_(via.feature)
       );
-      const route = /** @type Array<number[]> */([coordFrom].concat(vias, [coordTo]));
+      const route = /** @type {Array<number[]>} */([coordFrom].concat(vias, [coordTo]));
 
       /**
        * @param {angular.IHttpResponse<import('./RoutingService').Routes>} resp
@@ -361,10 +361,10 @@ class Controller {
         this.routeDuration = resp.data.routes[0].duration;
 
         // get first and last coordinate of route
-        const startRoute = /** @type{import("ol/geom/LineString.js").default} */(
+        const startRoute = /** @type {import("ol/geom/LineString.js").default} */(
           features[0].getGeometry()
         ).getCoordinateAt(0);
-        const endRoute = /** @type{import("ol/geom/LineString.js").default} */(
+        const endRoute = /** @type {import("ol/geom/LineString.js").default} */(
           features[features.length - 1].getGeometry()
         ).getCoordinateAt(1);
 

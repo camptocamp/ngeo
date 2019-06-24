@@ -217,7 +217,7 @@ EditingSnappingService.prototype.registerTreeCtrl_ = function(treeCtrl) {
 
   // Skip any Layertree controller that has a node that is not a leaf
   let node = /** @type {import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer} */ (treeCtrl.node);
-  const groupNode = /** @type import('gmf/themes.js').GmfGroup */ (node);
+  const groupNode = /** @type {import('gmf/themes.js').GmfGroup} */(node);
   if (groupNode.children) {
     return;
   }

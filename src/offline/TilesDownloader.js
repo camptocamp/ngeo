@@ -6,7 +6,7 @@ function blobToDataUrl(blob) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onload = function() {
-      resolve(/** @type String */ (reader.result));
+      resolve(/** @type {String} */(reader.result));
     };
     reader.onerror = reject;
     reader.readAsDataURL(blob);

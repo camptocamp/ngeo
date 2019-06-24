@@ -17,7 +17,6 @@
 
 
 /* eslint max-len: 0 */
-/* eslint @openlayers/valid-tsdoc: 0 */
 /* eslint valid-jsdoc: 0 */
 /* eslint quotes: 0 */
 /* eslint indent: 0 */

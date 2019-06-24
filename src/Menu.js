@@ -215,7 +215,7 @@ export default class extends olOverlay {
    * @private
    */
   handleMapPointerMove_(evt) {
-    const myEvent = /** @type{import("ol/MapBrowserEvent.js").default} */(evt);
+    const myEvent = /** @type {import("ol/MapBrowserEvent.js").default} */(evt);
     const target = myEvent.originalEvent.target;
     const element = this.getElement();
     if (target instanceof Element && element instanceof Element && element.contains(target)) {
