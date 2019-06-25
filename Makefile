@@ -212,8 +212,7 @@ gh-pages: .build/python-venv.timestamp
 		$(GMF_TEST_JS_FILES) \
 		$(GMF_JS_FILES) \
 		$(GMF_EXAMPLES_JS_FILES) \
-		$(GMF_APPS_JS_FILES) \
-		$(WEBPACK_CONFIG_FILES)
+		$(GMF_APPS_JS_FILES)
 	./node_modules/.bin/eslint $(filter-out .build/node_modules.timestamp $(ESLINT_CONFIG_FILES), $^)
 	touch $@
 
