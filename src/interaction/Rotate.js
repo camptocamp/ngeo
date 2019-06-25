@@ -238,7 +238,10 @@ export default class extends olInteractionPointer {
    */
   handleFeatureRemove_(evt) {
     if (evt instanceof CollectionEvent) {
-      const feature = /** @type {olFeature<import("ol/geom/Geometry.js").default>} */ (evt.element);
+      /**
+       * @type {olFeature<import("ol/geom/Geometry.js").default>}
+       */
+      const feature = evt.element;
       this.removeFeature_(feature);
     }
   }

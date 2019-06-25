@@ -128,15 +128,20 @@ export default class {
             type: opt_type !== undefined ? opt_type : defaultType
           });
         } else {
-          const msgObject = /** @type {Message} */(msg);
-          if (opt_type !== undefined) {
-            msgObject.type = opt_type;
+          if (typeof msg == 'string') {
+            throw new Error('Wrong msg type');
           }
-          msgObjects.push(msgObject);
+          if (opt_type !== undefined) {
+            msg.type = opt_type;
+          }
+          msgObjects.push(msg);
         }
       });
     } else {
-      const msgObject = /** @type {Message} */(object);
+      /**
+       * @type {Message}
+       */
+      const msgObject = object;
       if (opt_type !== undefined) {
         msgObject.type = opt_type;
       }

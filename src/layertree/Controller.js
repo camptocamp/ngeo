@@ -60,7 +60,10 @@ export function LayertreeController($scope, $rootScope, $attrs) {
 
 
   const mapExpr = $attrs.ngeoLayertreeMap;
-  const map = /** @type {import("ol/Map.js").default} */($scope.$eval(mapExpr));
+  /**
+   * @type {import("ol/Map.js").default}
+   */
+  const map = $scope.$eval(mapExpr);
   console.assert(map !== undefined);
 
   /**

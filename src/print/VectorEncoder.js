@@ -53,9 +53,10 @@ const PRINT_STYLE_TYPES = {
  * @param {number} resolution Resolution.
  */
 VectorEncoder.prototype.encodeVectorLayer = function(arr, layer, resolution) {
-  const source = /** @type {import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>} */(
-    layer.getSource()
-  );
+  /**
+   * @type {import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>}
+   */
+  const source = layer.getSource();
 
   const features = source.getFeatures();
 
@@ -351,11 +352,15 @@ VectorEncoder.prototype.encodeVectorStylePolygon = function(symbolizers, fillSty
  * @protected
  */
 VectorEncoder.prototype.encodeVectorStyleStroke = function(symbolizer, strokeStyle) {
-  const strokeColor = /** @type {import('ol/color.js').Color} */(strokeStyle.getColor());
+  const strokeColor = strokeStyle.getColor();
   if (strokeColor !== null) {
-    console.assert(typeof strokeColor === 'string' || Array.isArray(strokeColor));
+    if (!(typeof strokeColor === 'string' || Array.isArray(strokeColor))) {
+      throw new Error('Wrong strokeColor type');
+    }
     const strokeColorRgba = asColorArray(strokeColor);
-    console.assert(Array.isArray(strokeColorRgba), 'only supporting stroke colors');
+    if (!(Array.isArray(strokeColor))) {
+      throw new Error('Wrong strokeColor type');
+    }
     symbolizer.strokeColor = rgbArrayToHex(strokeColorRgba);
     symbolizer.strokeOpacity = strokeColorRgba[3];
   }
@@ -429,10 +434,14 @@ VectorEncoder.prototype.encodeTextStyle = function(symbolizers, textStyle) {
 
     const strokeStyle = textStyle.getStroke();
     if (strokeStyle !== null) {
-      const strokeColor = /** @type {import('ol/color.js').Color} */(strokeStyle.getColor());
-      console.assert(typeof strokeColor === 'string' || Array.isArray(strokeColor));
+      const strokeColor = strokeStyle.getColor();
+      if (!(typeof strokeColor === 'string' || Array.isArray(strokeColor))) {
+        throw new Error('Wrong strokeColor type');
+      }
       const strokeColorRgba = asColorArray(strokeColor);
-      console.assert(Array.isArray(strokeColorRgba), 'only supporting stroke colors');
+      if (!(Array.isArray(strokeColor))) {
+        throw new Error('Wrong strokeColor type');
+      }
       symbolizer.haloColor = rgbArrayToHex(strokeColorRgba);
       symbolizer.haloOpacity = strokeColorRgba[3];
       const width = strokeStyle.getWidth();
@@ -444,10 +453,14 @@ VectorEncoder.prototype.encodeTextStyle = function(symbolizers, textStyle) {
 
     const fillStyle = textStyle.getFill();
     if (fillStyle !== null) {
-      const fillColor = /** @type {import('ol/color.js').Color} */(fillStyle.getColor());
-      console.assert(typeof fillColor === 'string' || Array.isArray(fillColor));
+      const fillColor = fillStyle.getColor();
+      if (!(typeof fillColor === 'string' || Array.isArray(fillColor))) {
+        throw new Error('Wrong fillColor type');
+      }
       const fillColorRgba = asColorArray(fillColor);
-      console.assert(Array.isArray(fillColorRgba), 'only supporting fill colors');
+      if (!(Array.isArray(fillColor))) {
+        throw new Error('Wrong fillColor type');
+      }
       symbolizer.fontColor = rgbArrayToHex(fillColorRgba);
     }
 

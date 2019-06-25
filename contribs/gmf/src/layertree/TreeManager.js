@@ -419,7 +419,10 @@ LayertreeTreeManager.prototype.removeAll = function() {
  * @private
  */
 LayertreeTreeManager.prototype.cloneGroupNode_ = function(group, names) {
-  const clone = /** @type {import('gmf/themes.js').GmfGroup} */ (Object.assign({}, group));
+  /**
+   * @type {import('gmf/themes.js').GmfGroup}
+   */
+  const clone = Object.assign({}, group);
   this.toggleNodeCheck_(clone, names);
   return clone;
 };
@@ -582,7 +585,10 @@ LayertreeTreeManager.prototype.refreshFirstLevelGroups_ = function(themes) {
  * @private
  */
 LayertreeTreeManager.prototype.getFirstLevelGroupFullState_ = function(treeCtrl) {
-  const children = /** @type {Object<string, TreeManagerFullState>} */({});
+  /**
+   * @type {Object<string, TreeManagerFullState>}
+   */
+  const children = {};
   // Get the state of the treeCtrl children recursively.
   treeCtrl.children.map((child) => {
     children[child.node.name] = this.getFirstLevelGroupFullState_(child);

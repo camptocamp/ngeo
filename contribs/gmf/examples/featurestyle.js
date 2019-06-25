@@ -209,7 +209,6 @@ MainController.prototype.handleMapSingleClick_ = function(evt) {
   const feature = /** @type {olFeature<import("ol/geom/Geometry.js").default>} */(
     this.map.forEachFeatureAtPixel(pixel, feature => feature)
   );
-
   if (this.selectedFeature) {
     this.featureHelper_.setStyle(this.selectedFeature);
   }

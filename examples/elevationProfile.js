@@ -114,7 +114,10 @@ function MainController($http, $scope) {
     }
     source.addFeature(new olFeature(lineString));
 
-    const size = /** @type {import("ol/size.js").Size} */ (this.map.getSize());
+    const size = this.map.getSize();
+    if (size === undefined) {
+      throw new Error('Missing size');
+    }
     map.getView().fit(source.getExtent(), {size});
   });
 

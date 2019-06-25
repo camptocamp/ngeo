@@ -381,9 +381,11 @@ class Map {
   selectObject(id, table = false) {
     const feature = this.vectorSource_.getFeatureById(id);
     if (feature) {
-      const coordinates = /** @type {import('ol/geom/Point.js').default} */(
-        feature.getGeometry()
-      ).getCoordinates();
+      const point = feature.getGeometry();
+      if (!(point instanceof Point)) {
+        throw new Error('Wrong geometry type');
+      }
+      const coordinates = point.getCoordinates();
       const properties = feature.getProperties();
       let contentHTML = '';
       if (table) {

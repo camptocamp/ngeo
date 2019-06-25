@@ -214,7 +214,10 @@ export default class extends olInteractionPointer {
    */
   handleFeatureRemove_(evt) {
     if (evt instanceof CollectionEvent) {
-      const feature = /** @type {olFeature<import("ol/geom/Geometry.js").default>} */ (evt.element);
+      /**
+       * @type {olFeature<import("ol/geom/Geometry.js").default>}
+       */
+      const feature = evt.element;
       this.removeFeature_(feature);
     }
   }
@@ -256,7 +259,10 @@ export default class extends olInteractionPointer {
       /** @type {olSourceVector<import("ol/geom/Geometry.js").default>} */(this.overlay_.getSource())
         .addFeature(vertexFeature);
     } else {
-      const geometry = /** @type {import("ol/geom/Point.js").default} */ (vertexFeature.getGeometry());
+      const geometry = vertexFeature.getGeometry();
+      if (!(geometry instanceof olGeomPoint)) {
+        throw new Error('Wrong geometry type');
+      }
       geometry.setCoordinates(coordinates);
     }
     return vertexFeature;
@@ -362,7 +368,10 @@ export default class extends olInteractionPointer {
     this.modified_ = false;
     const vertexFeature = this.vertexFeature_;
     if (vertexFeature) {
-      const geometry = /** @type {import("ol/geom/Point.js").default} */ (vertexFeature.getGeometry());
+      const geometry = vertexFeature.getGeometry();
+      if (!(geometry instanceof olGeomPoint)) {
+        throw new Error('Wrong geometry type');
+      }
       const vertex = geometry.getCoordinates();
       const vertexExtent = olExtent.boundingExtent([vertex]);
       const segmentDataMatches = this.rBush_.getInExtent(vertexExtent);

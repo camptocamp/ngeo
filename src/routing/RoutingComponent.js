@@ -14,6 +14,7 @@ import {toLonLat} from 'ol/proj.js';
 import olFeature from 'ol/Feature.js';
 import olGeomLineString from 'ol/geom/LineString.js';
 import 'ngeo/sass/font.scss';
+import Point from 'ol/geom/Point.js';
 
 
 /**
@@ -273,7 +274,10 @@ class Controller {
     if (!this.map) {
       return null;
     }
-    const geometry = /** @type {import("ol/geom/Point.js").default} */ (point.getGeometry());
+    const geometry = point.getGeometry();
+    if (!(geometry instanceof Point)) {
+      throw new Error('Wrong time values type');
+    }
     const coords = geometry.getCoordinates();
     const projection = this.map.getView().getProjection();
     return toLonLat(coords, projection);
@@ -338,7 +342,8 @@ class Controller {
       const vias = this.viaArray.filter(via => via.feature !== null).map(
         via => this.getLonLatFromPoint_(via.feature)
       );
-      const route = /** @type {Array<number[]>} */([coordFrom].concat(vias, [coordTo]));
+      const route =
+      /** @type {Array<number[]>} */([coordFrom].concat(vias, [coordTo]));
 
       /**
        * @param {angular.IHttpResponse<import('./RoutingService').Routes>} resp

@@ -39,8 +39,14 @@ function drawRectangleComponent() {
           if (!geometry) {
             geometry = new olGeomPolygon([]);
           }
-          const start = /** @type {number[]|number[][]} */(coordinates[0]);
-          const end = /** @type {number[]|number[][]} */(coordinates[1]);
+          const start = coordinates[0];
+          if (!(Array.isArray(start))) {
+            throw new Error('Wrong coordinates type');
+          }
+          const end = coordinates[1];
+          if (!(Array.isArray(end))) {
+            throw new Error('Wrong coordinates type');
+          }
           geometry.setCoordinates([
             [start, [start[0], end[1]], end, [end[0], start[1]], start]
           ]);

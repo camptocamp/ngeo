@@ -375,8 +375,11 @@ export class LidarprofileManager {
     } catch (e) {
       if (!this.isPlotSetup_) {
         const canvas = d3select('#gmf-lidarprofile-container .lidar-canvas');
-        const canvasEl = /** @type {HTMLCanvasElement} */ (canvas.node());
-        const ctx = /** @type {CanvasRenderingContext2D} */ (canvasEl.getContext('2d'));
+        const canvasEl = /** @type {HTMLCanvasElement} */(canvas.node());
+        const ctx = canvasEl.getContext('2d');
+        if (ctx === null) {
+          throw new Error('Missing ctx');
+        }
         ctx.clearRect(0, 0, canvasEl.getBoundingClientRect().width, canvasEl.getBoundingClientRect().height);
         canvas.selectAll('*').remove();
         const errorTxt = this.getHTMLError_();
@@ -522,9 +525,10 @@ export class LidarprofileManager {
     const clip = this.utils.clipLineByMeasure(this.config, map_resolution,
       this.line_, domainX[0], domainX[1]);
 
-    const source = /** @type {olSourceVector<import("ol/geom/Geometry.js").default>} */(
-      this.lidarBuffer.getSource()
-    );
+    /**
+     * @type {olSourceVector<import("ol/geom/Geometry.js").default>}
+     */
+    const source = this.lidarBuffer.getSource();
     source.clear();
     source.addFeature(clip.bufferGeom);
     this.lidarBuffer.setStyle(clip.bufferStyle);

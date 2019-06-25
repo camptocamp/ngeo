@@ -107,9 +107,10 @@ class ModifyRectangle extends olInteractionPointer {
         return;
       }
 
-      const pointSource = /** @type {olSourceVector<import("ol/geom/Geometry.js").default>} */(
-        this.vectorPoints_.getSource()
-      );
+      /**
+       * @type {olSourceVector<import("ol/geom/Geometry.js").default>}
+       */
+      const pointSource = this.vectorPoints_.getSource();
 
       // from each corners, create a point feature and add it to the point layer.
       // each point is then associated with 2 siblings in order to update the
@@ -297,7 +298,10 @@ class ModifyRectangle extends olInteractionPointer {
    */
   handleFeatureRemove_(evt) {
     if (evt instanceof CollectionEvent) {
-      const feature = /** @type {olFeature<import("ol/geom/Geometry.js").default>} */ (evt.element);
+      /**
+       * @type {olFeature<import("ol/geom/Geometry.js").default>}
+       */
+      const feature = evt.element;
       this.removeFeature_(feature);
     }
   }

@@ -121,7 +121,10 @@ function createLocationSearchBloodhound(opt_options) {
         return (options.prepare !== undefined) ? options.prepare(query, settings) : settings;
       },
       transform: (parsedResponse_) => {
-        const parsedResponse = /** @type {Results} */(parsedResponse_);
+        const parsedResponse = parsedResponse_;
+        if (Array.isArray(parsedResponse)) {
+          throw new Error('Wrong parsedResponse type');
+        }
         const features = parsedResponse.results.map((result) => {
           const attrs = result.attrs;
 

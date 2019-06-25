@@ -553,7 +553,10 @@ export function PermalinkService(
          * @param {import('ngeo/layertree/Controller.js').LayertreeController} ctrl
          */
         (ctrl) => {
-          const groupNode = /** @type {import('gmf/themes.js').GmfGroup} */(treeCtrl.node);
+          /**
+           * @type {import('gmf/themes.js').GmfGroup}
+           */
+          const groupNode = treeCtrl.node;
           if (groupNode.children === undefined) {
             const param = ParamPrefix.TREE_ENABLE + ctrl.node.name;
             newState[param] = `${visible}`;
@@ -568,7 +571,10 @@ export function PermalinkService(
          * @param {import('ngeo/layertree/Controller.js').LayertreeController} ctrl
          */
         (ctrl) => {
-          const groupNode = /** @type {import('gmf/themes.js').GmfGroup} */(treeCtrl.node);
+          /**
+           * @type {import('gmf/themes.js').GmfGroup}
+           */
+          const groupNode = treeCtrl.node;
           if (groupNode.children === undefined && ctrl.getState() === 'on') {
             gmfLayerNames.push(ctrl.node.name);
           }

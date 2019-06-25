@@ -60,7 +60,10 @@ const SerDes = class {
    * @return {OlTilegridTileGrid} tilegrid
    */
   deserializeTilegrid(serialization) {
-    const options = /** @type {import ("ol/tilegrid/WMTS").Options} */(JSON.parse(serialization));
+    /**
+     * @type {import ("ol/tilegrid/WMTS").Options}
+     */
+    const options = JSON.parse(serialization);
     return new OlTilegridTileGrid(options);
   }
 
@@ -94,7 +97,10 @@ const SerDes = class {
    * @return {OlTilegridWMTS} tilegrid .
    */
   deserializeTilegridWMTS(serialization) {
-    const options = /** @type {import ("ol/tilegrid/WMTS").Options} */(JSON.parse(serialization));
+    /**
+     * @type {import ("ol/tilegrid/WMTS").Options}
+     */
+    const options = JSON.parse(serialization);
     return new OlTilegridWMTS(options);
   }
 
@@ -122,7 +128,10 @@ const SerDes = class {
    * @return {OlSourceTileWMS} source .
    */
   deserializeSourceTileWMS(serialization, tileLoadFunction) {
-    const options = /** @type {import ("ol/source/TileWMS").Options} */(JSON.parse(serialization));
+    /**
+     * @type {import ("ol/source/TileWMS").Options}
+     */
+    const options = JSON.parse(serialization);
     // @ts-ignore
     options.tileLoadFunction = tileLoadFunction;
     if (options.tileGrid) {
@@ -163,7 +172,10 @@ const SerDes = class {
    * @return {OlSourceWMTS} .
    */
   deserializeSourceWMTS(serialization, tileLoadFunction) {
-    const options = /** @type {import("ol/source/WMTS").Options} */(JSON.parse(serialization));
+    /**
+     * @type {import("ol/source/WMTS").Options}
+     */
+    const options = JSON.parse(serialization);
     // @ts-ignore
     options.tileLoadFunction = tileLoadFunction;
     if (options.tileGrid) {
@@ -213,7 +225,10 @@ const SerDes = class {
    * @return {!import("ol/layer/Tile.js").default} .
    */
   deserializeTileLayer(serialization, tileLoadFunction) {
-    const options = /** @type {import('ol/layer/BaseTile.js').Options} */(JSON.parse(serialization));
+    /**
+     * @type {import('ol/layer/BaseTile.js').Options}
+     */
+    const options = JSON.parse(serialization);
     // @ts-ignore
     const sourceType = options.sourceType;
     if (sourceType === 'tileWMS') {

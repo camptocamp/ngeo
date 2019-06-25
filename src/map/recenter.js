@@ -39,7 +39,10 @@ function mapResenterComponent() {
     restrict: 'A',
     link: ($scope, $element, $attrs) => {
       const mapExpr = $attrs.ngeoRecenterMap;
-      const map = /** @type {import("ol/Map.js").default} */ ($scope.$eval(mapExpr));
+      /**
+       * @type {import("ol/Map.js").default}
+       */
+      const map = $scope.$eval(mapExpr);
 
       /**
        * @param {JQuery} element
@@ -47,7 +50,10 @@ function mapResenterComponent() {
       function recenter(element) {
         const extent = element.attr('ngeo-extent');
         if (extent !== undefined) {
-          const size = /** @type {import("ol/size.js").Size} */ (map.getSize());
+          const size = map.getSize();
+          if (size === undefined) {
+            throw new Error('Missing size');
+          }
           map.getView().fit($scope.$eval(extent), {size});
         }
         const zoom = element.attr('ngeo-zoom');

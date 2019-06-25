@@ -288,19 +288,19 @@ EditingSnappingService.prototype.unregisterAllTreeCtrl_ = function() {
  * @private
  */
 EditingSnappingService.prototype.getOGCServer_ = function(treeCtrl) {
-  const gmfLayer = /** @type {import('gmf/themes.js').GmfLayer} */ (treeCtrl.node);
+  const gmfLayer = /** @type {import('gmf/themes.js').GmfLayer} */(treeCtrl.node);
   if (gmfLayer.type !== ThemeNodeType.WMS) {
     return null;
   }
-  const gmfLayerWMS = /** @type {import('gmf/themes.js').GmfLayerWMS} */ (gmfLayer);
+  const gmfLayerWMS = /** @type {import('gmf/themes.js').GmfLayerWMS} */(gmfLayer);
 
   let ogcServerName;
-  const gmfGroup = /** @type {import('gmf/themes.js').GmfGroup} */ (treeCtrl.parent.node);
+  const gmfGroup = /** @type {import('gmf/themes.js').GmfGroup} */(treeCtrl.parent.node);
   if (gmfGroup.mixed) {
     ogcServerName = gmfLayerWMS.ogcServer;
   } else {
     const firstTreeCtrl = getFirstParentTree(treeCtrl);
-    const firstNode = /** @type {import('gmf/themes.js').GmfGroup} */ (firstTreeCtrl.node);
+    const firstNode = /** @type {import('gmf/themes.js').GmfGroup} */(firstTreeCtrl.node);
     ogcServerName = firstNode.ogcServer;
   }
   if (!ogcServerName) {
@@ -337,14 +337,14 @@ EditingSnappingService.prototype.getWFSConfig_ = function(treeCtrl) {
     return null;
   }
 
-  const gmfLayer = /** @type {import('gmf/themes.js').GmfLayer} */ (treeCtrl.node);
+  const gmfLayer = /** @type {import('gmf/themes.js').GmfLayer} */(treeCtrl.node);
 
   // (2)
   if (gmfLayer.type !== ThemeNodeType.WMS) {
     return null;
   }
 
-  const gmfLayerWMS = /** @type {import('gmf/themes.js').GmfLayerWMS} */ (gmfLayer);
+  const gmfLayerWMS = /** @type {import('gmf/themes.js').GmfLayerWMS} */(gmfLayer);
 
   // (3)
   const featureTypes = [];

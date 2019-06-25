@@ -1136,7 +1136,10 @@ class SearchController {
           const format = new olFormatGeoJSON();
           const feature = format.readFeature(data.features[resultIndex - 1]);
           this.featureOverlay_.addFeature(feature);
-          const fitOptions = /** @type {import('ol/View.js').FitOptions} */ ({});
+          /**
+           * @type {import('ol/View.js').FitOptions}
+           */
+          const fitOptions = {};
           if (opt_zoom !== undefined) {
             fitOptions.maxZoom = opt_zoom;
             fitOptions.size = this.map.getSize() || [];

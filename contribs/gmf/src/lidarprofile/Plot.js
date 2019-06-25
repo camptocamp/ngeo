@@ -104,8 +104,11 @@ export default class {
     const nPoints = points.distance.length;
     let cx, cy;
     const canvas = d3select('#gmf-lidarprofile-container .lidar-canvas');
-    const canvasEl = /** @type {HTMLCanvasElement} */ (canvas.node());
-    const ctx = /** @type {CanvasRenderingContext2D} */ (canvasEl.getContext('2d'));
+    const canvasEl = /** @type {HTMLCanvasElement} */(canvas.node());
+    const ctx = canvasEl.getContext('2d');
+    if (ctx === null) {
+      throw new Error('Missing ctx');
+    }
     const profileServerConfig = this.manager_.config.serverConfig;
 
     while (++i < nPoints) {
@@ -153,13 +156,16 @@ export default class {
       throw new Error('Missing manager_.config.serverConfig');
     }
     const canvas = d3select('#gmf-lidarprofile-container .lidar-canvas');
-    const canvasEl = /** @type {HTMLCanvasElement} */ (canvas.node());
-    const ctx = /** @type {CanvasRenderingContext2D} */ (canvasEl.getContext('2d'));
+    const canvasEl = /** @type {HTMLCanvasElement} */(canvas.node());
+    const ctx = canvasEl.getContext('2d');
+    if (ctx === null) {
+      throw new Error('Missing ctx');
+    }
     ctx.clearRect(0, 0, canvasEl.getBoundingClientRect().width, canvasEl.getBoundingClientRect().height);
 
     const margin = this.manager_.config.clientConfig.margin;
     const container = d3select('#gmf-lidarprofile-container');
-    const containerEl = /** @type {HTMLElement} */ (container.node());
+    const containerEl = /** @type {HTMLElement} */(container.node());
     const containerWidth = containerEl.getBoundingClientRect().width;
     const containerHeight = containerEl.getBoundingClientRect().height;
     this.width_ = containerWidth - (margin.left + margin.right);
@@ -265,8 +271,11 @@ export default class {
     }
     this.moved_ = false;
     const canvas = d3select('#gmf-lidarprofile-container .lidar-canvas');
-    const canvasEl = /** @type {HTMLCanvasElement} */ (canvas.node());
-    const ctx = /** @type {CanvasRenderingContext2D} */ (canvasEl.getContext('2d'));
+    const canvasEl = /** @type {HTMLCanvasElement} */(canvas.node());
+    const ctx = canvasEl.getContext('2d');
+    if (ctx === null) {
+      throw new Error('Missing ctx');
+    }
     ctx.clearRect(0, 0, this.width_, this.height_);
     this.manager_.updateData();
   }
@@ -307,8 +316,11 @@ export default class {
     svg.select('.y.axis').call(/** @type {any} */ (yAxis.scale(new_scaleY)));
 
     const canvas = d3select('#gmf-lidarprofile-container .lidar-canvas');
-    const canvasEl = /** @type {HTMLCanvasElement} */ (canvas.node());
-    const ctx = /** @type {CanvasRenderingContext2D} */ (canvasEl.getContext('2d'));
+    const canvasEl = /** @type {HTMLCanvasElement} */(canvas.node());
+    const ctx = canvasEl.getContext('2d');
+    if (ctx === null) {
+      throw new Error('Missing ctx');
+    }
     ctx.clearRect(0, 0, this.width_, this.height_);
 
     svg.select('.y.axis').selectAll('g.tick line')
@@ -339,7 +351,7 @@ export default class {
     const tolerance = this.manager_.config.clientConfig.tolerance || 0;
 
     const canvas = d3select('#gmf-lidarprofile-container .lidar-canvas');
-    const canvasEl = /** @type {HTMLCanvasElement} */ (canvas.node());
+    const canvasEl = /** @type {HTMLCanvasElement} */(canvas.node());
     const canvasCoordinates = d3mouse(canvasEl);
     const classification_colors = this.manager_.config.serverConfig.classification_colors;
 
@@ -349,9 +361,10 @@ export default class {
       this.updateScaleX, this.updateScaleY, classification_colors
     );
 
-    const source = /** @type {import("ol/source/Vector.js").default<import("ol/geom/Point.js").default>} */(
-      this.manager_.lidarPointHighlight.getSource()
-    );
+    /**
+     * @type {import("ol/source/Vector.js").default<import("ol/geom/Point.js").default>}
+     */
+    const source = this.manager_.lidarPointHighlight.getSource();
     if (p != undefined) {
 
       cx = this.updateScaleX(p.distance) + margin.left;
@@ -449,8 +462,11 @@ export default class {
   changeStyle(material) {
     this.material = material;
     const canvas = d3select('#gmf-lidarprofile-container .lidar-canvas');
-    const canvasEl = /** @type {HTMLCanvasElement} */ (canvas.node());
-    const ctx = /** @type {CanvasRenderingContext2D} */ (canvasEl.getContext('2d'));
+    const canvasEl = /** @type {HTMLCanvasElement} */(canvas.node());
+    const ctx = canvasEl.getContext('2d');
+    if (ctx === null) {
+      throw new Error('Missing ctx');
+    }
     ctx.clearRect(0, 0, canvasEl.width, canvasEl.height);
     this.drawPoints(this.manager_.profilePoints);
   }

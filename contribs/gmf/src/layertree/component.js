@@ -573,7 +573,7 @@ Controller.prototype.getLegendsObject = function(treeCtrl) {
     return null;
   }
 
-  const gmfLayer = /** @type {import('gmf/themes.js').GmfLayer} */ (treeCtrl.node);
+  const gmfLayer = /** @type {import('gmf/themes.js').GmfLayer} */(treeCtrl.node);
   const gmfLayerDefaultName = gmfLayer.name;
   if (gmfLayer.metadata.legendImage) {
     legendsObject[gmfLayerDefaultName] = gmfLayer.metadata.legendImage;
@@ -591,7 +591,7 @@ Controller.prototype.getLegendsObject = function(treeCtrl) {
     }
     return wmtsLegendURL ? legendsObject : null;
   } else {
-    const gmfLayerWMS = /** @type {import('gmf/themes.js').GmfLayerWMS} */ (gmfLayer);
+    const gmfLayerWMS = /** @type {import('gmf/themes.js').GmfLayerWMS} */(gmfLayer);
     const layersNames = gmfLayerWMS.layers;
     const gmfOgcServer = this.gmfTreeManager_.getOgcServer(treeCtrl);
     const scale = this.getScale_();
@@ -771,7 +771,7 @@ Controller.prototype.zoomToResolution = function(treeCtrl) {
   if (!this.map) {
     throw new Error('Missing map');
   }
-  const gmfLayer = /** @type {import('gmf/themes.js').GmfLayerWMS} */ (treeCtrl.node);
+  const gmfLayer = /** @type {import('gmf/themes.js').GmfLayerWMS} */(treeCtrl.node);
   const view = this.map.getView();
   const resolution = view.getResolution();
   if (resolution === undefined) {
@@ -854,7 +854,7 @@ Controller.prototype.supportsCustomization = function(treeCtrl) {
  *     legend being shown.
  */
 Controller.prototype.supportsLegend = function(treeCtrl) {
-  const node = /** @type {import('gmf/themes.js').GmfGroup} */ (treeCtrl.node);
+  const node = /** @type {import('gmf/themes.js').GmfGroup} */(treeCtrl.node);
   return !!node.metadata &&
     !!node.metadata.legend &&
     !!this.getLegendsObject(treeCtrl);
@@ -867,8 +867,8 @@ Controller.prototype.supportsLegend = function(treeCtrl) {
  *     layer opacity being changed or not.
  */
 Controller.prototype.supportsOpacityChange = function(treeCtrl) {
-  const node = /** @type {import('gmf/themes.js').GmfGroup} */ (treeCtrl.node);
-  const parentNode = /** @type {import('gmf/themes.js').GmfGroup} */ (treeCtrl.parent.node);
+  const node = /** @type {import('gmf/themes.js').GmfGroup} */(treeCtrl.node);
+  const parentNode = /** @type {import('gmf/themes.js').GmfGroup} */(treeCtrl.parent.node);
   return !!treeCtrl.layer &&
     (
       (

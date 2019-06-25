@@ -239,7 +239,7 @@ export class RuleHelper {
         rule = new ngeoRuleGeometry(options);
         break;
       case ngeoFormatAttributeType.SELECT:
-        const selectOptions = /** @type {import('ngeo/rule/Select.js').SelectOptions} */ (options);
+        const selectOptions = /** @type {import('ngeo/rule/Select.js').SelectOptions} */(options);
         console.assert(selectOptions.choices);
         rule = new ngeoRuleSelect(selectOptions);
         break;
@@ -290,11 +290,11 @@ export class RuleHelper {
         this.ngeoFeatureHelper_.getNonSpatialProperties(rule.feature)
       );
     } else if (rule instanceof ngeoRuleSelect) {
-      const opt = /** @type {import('ngeo/rule/Select.js').SelectOptions} */ (options);
+      const opt = /** @type {import('ngeo/rule/Select.js').SelectOptions} */(options);
       opt.choices = rule.choices.slice(0);
       clone = new ngeoRuleSelect(opt);
     } else if (rule instanceof ngeoRuleText) {
-      const opt = /** @type {import('ngeo/rule/Text').TextOptions} */ (options);
+      const opt = /** @type {import('ngeo/rule/Text').TextOptions} */(options);
       clone = new ngeoRuleText(opt);
     } else {
       clone = new ngeoRuleRule(options);
@@ -385,12 +385,15 @@ export class RuleHelper {
     }
 
     if (rule instanceof ngeoRuleGeometry) {
-      const opt = /** @type {import('ngeo/rule/Geometry.js').GeometryOptions} */ (obj);
+      /**
+       * @type {import('ngeo/rule/Geometry.js').GeometryOptions}
+       */
+      const opt = obj;
       opt.featureProperties = this.ngeoFeatureHelper_.getNonSpatialProperties(rule.feature);
     }
 
     if (rule instanceof ngeoRuleSelect) {
-      const opt = /** @type {import('ngeo/rule/Select.js').SelectOptions} */ (obj);
+      const opt = /** @type {import('ngeo/rule/Select.js').SelectOptions} */(obj);
       opt.choices = rule.choices;
     }
 
@@ -609,26 +612,28 @@ export class RuleHelper {
         }
       }
     } else if (numericTypes.includes(operator)) {
-      const numericExpression = /** @type {number} */(expression);
+      if (typeof expression !== 'number') {
+        throw new Error('Wrong expression type');
+      }
       if (operator === rot.GREATER_THAN) {
         filter = olFormatFilter.greaterThan(
           propertyName,
-          numericExpression
+          expression
         );
       } else if (operator === rot.GREATER_THAN_OR_EQUAL_TO) {
         filter = olFormatFilter.greaterThanOrEqualTo(
           propertyName,
-          numericExpression
+          expression
         );
       } else if (operator === rot.LESSER_THAN) {
         filter = olFormatFilter.lessThan(
           propertyName,
-          numericExpression
+          expression
         );
       } else if (operator === rot.LESSER_THAN_OR_EQUAL_TO) {
         filter = olFormatFilter.lessThanOrEqualTo(
           propertyName,
-          numericExpression
+          expression
         );
       }
     } else if (operator === rot.BETWEEN) {

@@ -136,9 +136,10 @@ class DrawAzimut extends olInteractionPointer {
     const sketchFeatures = [];
     sketchFeatures.push(this.sketchFeature_);
     sketchFeatures.push(this.sketchPoint_);
-    const source = /** @type {VectorSource<import("ol/geom/Geometry.js").default>} */(
-      this.sketchLayer_.getSource()
-    );
+    /**
+     * @type {VectorSource<import("ol/geom/Geometry.js").default>}
+     */
+    const source = this.sketchLayer_.getSource();
     source.clear(true);
     source.addFeatures(sketchFeatures);
   }

@@ -5,6 +5,7 @@ import ngeoMiscWMSTime from 'ngeo/misc/WMSTime.js';
 import {getUid as olUtilGetUid} from 'ol/util.js';
 import olLayerImage from 'ol/layer/Image.js';
 import olLayerTile from 'ol/layer/Tile.js';
+import Group from 'ol/layer/Group.js';
 
 /**
  * Service to create layer based on a ngeo.layertree.Controller with a
@@ -177,7 +178,7 @@ SyncLayertreeMap.prototype.updateLayerState_ = function(layer, treeCtrl) {
  */
 SyncLayertreeMap.prototype.createGroup_ = function(treeCtrl, map,
   dataLayerGroup, opt_position) {
-  const groupNode = /** @type {import('gmf/themes.js').GmfGroup} */ (treeCtrl.node);
+  const groupNode = /** @type {import('gmf/themes.js').GmfGroup} */(treeCtrl.node);
   let layer = null;
   const isFirstLevelGroup = treeCtrl.parent.isRoot;
 
@@ -196,7 +197,10 @@ SyncLayertreeMap.prototype.createGroup_ = function(treeCtrl, map,
     const inAMixedGroup = !this.isOneParentNotMixed_(treeCtrl);
     if (inAMixedGroup) {
       layer = this.createLayerFromGroup_(treeCtrl, true);
-      const layerGroup = /** @type {import("ol/layer/Group.js").default} */ (getLayer(treeCtrl.parent));
+      const layerGroup = getLayer(treeCtrl.parent);
+      if (!(layerGroup instanceof Group)) {
+        throw new Error('Wrong layerGroup type');
+      }
       layerGroup.getLayers().insertAt(0, layer);
     }
   }
@@ -220,7 +224,7 @@ SyncLayertreeMap.prototype.createGroup_ = function(treeCtrl, map,
 SyncLayertreeMap.prototype.createLayerFromGroup_ = function(treeCtrl, mixed) {
   /** @type {import("ol/layer/Image.js").default|import("ol/layer/Group.js").default} */
   let layer;
-  const groupNode = /** @type {import('gmf/themes.js').GmfGroup} */ (treeCtrl.node);
+  const groupNode = /** @type {import('gmf/themes.js').GmfGroup} */(treeCtrl.node);
   if (mixed) { // Will be one ol.layer per each node.
     layer = this.layerHelper_.createBasicGroup();
   } else { // Will be one ol.layer for multiple WMS nodes.
@@ -323,10 +327,13 @@ SyncLayertreeMap.prototype.createLeafInAMixedGroup_ = function(treeCtrl, map) {
  * @private
  */
 SyncLayertreeMap.prototype.initGmfLayerInANotMixedGroup_ = function(treeCtrl, map) {
-  const leafNode = /** @type {import('gmf/themes.js').GmfLayer} */ (treeCtrl.node);
+  const leafNode = /** @type {import('gmf/themes.js').GmfLayer} */(treeCtrl.node);
   const firstLevelGroup = this.getFirstLevelGroupCtrl_(treeCtrl);
   console.assert(firstLevelGroup);
-  const layer = /** @type {import("ol/layer/Image.js").default} */ (firstLevelGroup.layer);
+  const layer = firstLevelGroup.layer;
+  if (!(layer instanceof olLayerImage)) {
+    throw new Error('Wrong layer type');
+  }
   console.assert(layer instanceof olLayerImage);
   // Update layer information and tree state.
   this.updateLayerReferences_(leafNode, layer);

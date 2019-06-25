@@ -228,7 +228,10 @@ Controller.prototype.deactivate_ = function() {
  * @private
  */
 Controller.prototype.setPosition_ = function(event) {
-  const position = /** @type {import("ol/coordinate.js").Coordinate} */ (this.geolocation_.getPosition());
+  const position = this.geolocation_.getPosition();
+  if (position === undefined) {
+    throw new Error('Missing position');
+  }
   const point = new olGeomPoint(position);
 
   this.positionFeature_.setGeometry(point);
