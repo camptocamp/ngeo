@@ -552,6 +552,7 @@ function(opt_lastFeature) {
 exports.Controller_.prototype.close = function() {
   this.open = false;
   this.clear();
+  this.ngeoMapQuerent_.clear();
 };
 
 
