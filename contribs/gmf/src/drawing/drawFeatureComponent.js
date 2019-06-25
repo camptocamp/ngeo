@@ -538,7 +538,9 @@ Controller.prototype.handleMapSelectActiveChange_ = function(active) {
   }
 
   const mapDiv = this.map.getViewport();
-  console.assert(mapDiv);
+  if (!mapDiv) {
+    throw new Error('Missing mapDiv');
+  }
 
   if (active) {
     olEvents.listen(this.map, 'click', this.handleMapClick_, this);
@@ -734,8 +736,9 @@ Controller.prototype.handleMenuActionClick_ = function(vertexInfo, evt) {
 
   switch (action) {
     case 'delete':
-      console.assert(
-        this.selectedFeature, 'Selected feature should be truthy');
+      if (!this.selectedFeature) {
+        throw new Error('Missing selectedFeature');
+      }
       if (vertexInfo) {
         this.featureHelper_.removeVertex(this.selectedFeature, vertexInfo);
       } else {

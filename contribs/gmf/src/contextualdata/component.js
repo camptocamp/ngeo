@@ -155,7 +155,9 @@ ContextualdataController.prototype.init = function() {
   }
 
   const mapDiv = this.map.getTargetElement();
-  console.assert(mapDiv);
+  if (!mapDiv) {
+    throw new Error('Missing mapDiv');
+  }
   mapDiv.addEventListener('contextmenu', this.handleMapContextMenu_.bind(this));
 
   this.map.on('pointerdown', this.hidePopover.bind(this));

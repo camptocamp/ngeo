@@ -945,7 +945,9 @@ Controller.prototype.handleFeatureAdd_ = function(evt) {
         throw new Error('Missing attributes');
       }
       const feature = evt.element;
-      console.assert(feature instanceof olFeature);
+      if (!(feature instanceof olFeature)) {
+        throw new Error('Wrong feature type');
+      }
       const dateFormatter = new DateFormatter();
       for (const attribute of this.attributes) {
         if (attribute.format) {
@@ -963,7 +965,9 @@ Controller.prototype.handleFeatureAdd_ = function(evt) {
                 jsonFormat = 'H:i:s';
               }
               const name = feature.get(attribute.name);
-              console.assert(typeof name == 'string');
+              if (typeof name != 'string') {
+                throw new Error('Wrong name type');
+              }
               value = dateFormatter.parseDate(name, jsonFormat);
             }
             feature.set(attribute.name, dateFormatter.formatDate(value, attribute.format));
@@ -1073,7 +1077,9 @@ Controller.prototype.handleMapSelectActiveChange_ = function(active) {
   }
 
   const mapDiv = this.map.getViewport();
-  console.assert(mapDiv);
+  if (!mapDiv) {
+    throw new Error('Missing mapDiv');
+  }
 
   if (active) {
     olEvents.listen(this.map, 'click', this.handleMapClick_, this);

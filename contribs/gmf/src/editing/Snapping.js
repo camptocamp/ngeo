@@ -366,7 +366,9 @@ EditingSnappingService.prototype.getWFSConfig_ = function(treeCtrl) {
   // At this point, every requirements have been met.
   // Create and return the configuration.
   const urlWfs = ogcServer.urlWfs;
-  console.assert(urlWfs, 'urlWfs should be defined.');
+  if (!urlWfs) {
+    throw new Error('Missing urlWfs');
+  }
 
   return {
     featureTypes: featureTypes.join(','),
@@ -413,7 +415,6 @@ EditingSnappingService.prototype.activateItem_ = function(item) {
   }
 
   const map = this.map_;
-  console.assert(map);
 
   const interaction = new olInteractionSnap({
     edge: item.snappingConfig.edge,
@@ -512,11 +513,12 @@ EditingSnappingService.prototype.loadItemFeatures_ = function(item) {
   }
 
   const map = this.map_;
-  console.assert(map);
 
   const view = map.getView();
   const size = map.getSize();
-  console.assert(size);
+  if (!size) {
+    throw new Error('Missing size');
+  }
 
   const extent = view.calculateExtent(size);
   const projCode = view.getProjection().getCode();

@@ -481,7 +481,6 @@ class OGC extends ngeoDatasourceDataSource {
       } else {
         throw new Error('Unknown GML output version');
       }
-      console.assert(format);
       wfsFormat = new olFormatWFS({
         featureNS: this.wfsFeatureNS,
         featureType: wfsLayers,
@@ -1002,7 +1001,9 @@ class OGC extends ngeoDatasourceDataSource {
    * @return {string} WFS layer name.
    */
   getFiltrableWFSLayerName() {
-    console.assert(this.filtrable);
+    if (!this.filtrable) {
+      throw new Error('Missing filtrable');
+    }
     const layerNames = this.getWFSLayerNames();
     console.assert(layerNames.length === 1);
     return layerNames[0];

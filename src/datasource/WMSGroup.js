@@ -74,8 +74,9 @@ export default class extends ngeoDatasourceOGCGroup {
    * @private
    */
   init_() {
-    console.assert(
-      this.dataSources.length, 'At least one data source is required.');
+    if (!this.dataSources.length) {
+      throw new Error('Missing dataSources');
+    }
 
     for (const dataSource of this.dataSources) {
       if (dataSource instanceof ngeoDatasourceOGC) {

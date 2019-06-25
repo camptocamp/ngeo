@@ -188,7 +188,9 @@ Controller.prototype.initOlControl_ = function() {
       throw new Error('Missing shiftedFilterAndArgs');
     }
     const filter = this.$filter_(shiftedFilterAndArgs);
-    console.assert(typeof filter == 'function');
+    if (typeof filter != 'function') {
+      throw new Error('Wrong filter type');
+    }
     const args = filterAndArgs;
     // @ts-ignore: is the following line needed?
     args.unshift(coordinates);

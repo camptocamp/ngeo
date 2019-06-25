@@ -995,7 +995,9 @@ class SearchController {
       this.map.getView().setCenter(suggestion.position);
       this.leaveSearch_();
     } else {
-      console.assert(suggestion instanceof olFeature);
+      if (!(suggestion instanceof olFeature)) {
+        throw new Error('Wrong suggestion type');
+      }
       this.selectFromGMF_(event, suggestion, dataset);
     }
   }

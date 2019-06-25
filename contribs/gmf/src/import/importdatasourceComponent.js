@@ -234,9 +234,13 @@ class Controller {
          * @return {string[]} List of datum tokenizers.
          */
         datumTokenizer: (datum) => {
-          console.assert(typeof datum == 'string');
+          if (typeof datum != 'string') {
+            throw new Error('Wrong datum type');
+          }
           const originalDatumTokenizers = Bloodhound.tokenizers.whitespace(datum);
-          console.assert(originalDatumTokenizers);
+          if (!originalDatumTokenizers) {
+            throw new Error('Missing originalDatumTokenizers');
+          }
           const datumTokenizers = [];
           for (const originalDatumTokenizer of originalDatumTokenizers) {
             let i = 0;

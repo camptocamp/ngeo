@@ -646,8 +646,12 @@ export class PrintController {
   getScaleFn(frameState) {
     // Don't compute an optimal scale if the user manually choose a value not in
     // the pre-defined scales. (`scaleInput` in `gmfPrintOptions`).
-    console.assert(this.layoutInfo.scales);
-    console.assert(this.layoutInfo.scale !== undefined);
+    if (this.layoutInfo.scale === undefined) {
+      throw new Error('Missing layoutInfo.scale');
+    }
+    if (!this.layoutInfo.scales) {
+      throw new Error('Missing layoutInfo.scales');
+    }
     if (!this.scaleManuallySelected_ &&
         (this.layoutInfo.scale === -1 || this.layoutInfo.scales.includes(this.layoutInfo.scale))) {
       const mapSize = frameState.size;
@@ -771,9 +775,13 @@ export class PrintController {
     this.layoutInfo.layout = this.layout_.name;
 
     const mapInfo = this.isAttributeInCurrentLayout_('map');
-    console.assert(mapInfo);
+    if (!mapInfo) {
+      throw new Error('Missing mapInfo');
+    }
     const clientInfo = mapInfo.clientInfo;
-    console.assert(clientInfo);
+    if (!clientInfo) {
+      throw new Error('Missing clientInfo');
+    }
     this.paperSize_ = [clientInfo.width, clientInfo.height];
 
     this.updateCustomFields_();
@@ -1026,8 +1034,12 @@ export class PrintController {
       }
     }
 
-    console.assert(typeof this.layoutInfo.dpi == 'number');
-    console.assert(typeof this.layoutInfo.layout == 'string');
+    if (typeof this.layoutInfo.dpi != 'number') {
+      throw new Error('Wrong layoutInfo.dpi type');
+    }
+    if (typeof this.layoutInfo.layout != 'string') {
+      throw new Error('Wrong layoutInfo.layout type');
+    }
 
     // convert the WMTS layers to WMS
     const map = new olMap({});
@@ -1151,7 +1163,9 @@ export class PrintController {
       /** @type {any[]} */
       let columns = [];
       source.features.forEach((feature, i) => {
-        console.assert(feature);
+        if (!feature) {
+          throw new Error('Missing feature');
+        }
         const properties = getFilteredFeatureValues(feature);
         if (i === 0) {
           columns = Object.keys(properties).map((prop) => {
@@ -1209,7 +1223,9 @@ export class PrintController {
       this.resetPrintStates_();
     } else {
       const ref = resp.data.ref;
-      console.assert(ref.length > 0);
+      if (!ref.length) {
+        throw new Error('Wrong ref');
+      }
       this.curRef_ = ref;
       this.getStatus_(ref);
     }

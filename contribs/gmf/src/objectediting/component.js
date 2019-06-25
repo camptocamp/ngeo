@@ -874,7 +874,9 @@ Controller.prototype.handleModifyInteractionModifyEnd_ = function(evt) {
   }
 
   const clone = cloneGeometry(geometry);
-  console.assert(clone);
+  if (!clone) {
+    throw new Error('Missing clone geometry');
+  }
   this.geometryChanges_.push(clone);
   this.scope_.$apply();
 };

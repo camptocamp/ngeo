@@ -251,7 +251,9 @@ function Controller($element, $scope, ngeoLayerHelper,
   this.gmfTreeManager_ = gmfTreeManager;
 
   const root = gmfTreeManager.root;
-  console.assert(root);
+  if (!root) {
+    throw new Error('Missing root');
+  }
 
   /**
    * @type {import('gmf/themes.js').GmfRootNode}
@@ -350,7 +352,9 @@ Controller.prototype.updateDimensions_ = function(treeCtrl) {
   treeCtrl.traverseDepthFirst((ctrl) => {
     if (ctrl.node.dimensions) {
       const layer = ctrl.layer;
-      console.assert(layer instanceof olLayerLayer);
+      if (!(layer instanceof olLayerLayer)) {
+        throw new Error('Wrong feature type');
+      }
       this.updateLayerDimensions_(
         /** @type {olLayerLayer<import('ol/source/Source.js').default>} */ (layer),
         /** @type {import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer} */ (ctrl.node)
@@ -389,7 +393,9 @@ Controller.prototype.updateLayerDimensions_ = function(layer, node) {
       } else {
         // the source is not ready yet
         layer.once('change:source', () => {
-          console.assert(layer instanceof olLayerLayer);
+          if (!(layer instanceof olLayerLayer)) {
+            throw new Error('Wrong feature type');
+          }
           this.updateLayerDimensions_(layer, node);
         });
       }
@@ -507,7 +513,9 @@ Controller.prototype.updateWMSTimeLayerState = function(layertreeCtrl, time) {
   const dataSource = /** @type {?import("ngeo/datasource/OGC").default} */ (
     layertreeCtrl.getDataSource());
   if (dataSource) {
-    console.assert(dataSource instanceof ngeoDatasourceOGC);
+    if (!(dataSource instanceof ngeoDatasourceOGC)) {
+      throw new Error('Wrong dataSource type');
+    }
     dataSource.timeRangeValue = time;
   } else if (layertreeCtrl.children) {
     for (let i = 0, ii = layertreeCtrl.children.length; i < ii; i++) {
