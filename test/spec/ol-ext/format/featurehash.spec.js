@@ -505,7 +505,7 @@ describe('ngeo.format.FeatureHash', () => {
         fhFormat = new ngeoFormatFeatureHash({
           accuracy: 1,
           properties(feature) {
-            return {foobar: feature.get('foo') + feature.get('bar')};
+            return {foobar: `${feature.get('foo')}${feature.get('bar')}`};
           }
         });
         const feature = new olFeature(new olGeomPoint([1, 1]));

@@ -13,7 +13,7 @@ import angular from 'angular';
 function magnitude2(a, b) {
   let magnitudeSquared = 0;
   for (let i = 0; i < a.length; ++i) {
-    magnitudeSquared += Math.pow(a[1] - b[1], 2);
+    magnitudeSquared += Math.pow(a[i] - b[i], 2);
   }
   return magnitudeSquared;
 }
@@ -77,7 +77,15 @@ const Downloader = class {
       /**
        * @type {number}
        */
-      let minY, maxX, maxY;
+      let minY;
+      /**
+       * @type {number}
+       */
+      let maxX;
+      /**
+       * @type {number}
+       */
+      let maxY;
       tileGrid.forEachTileCoord(extent, z, (coord) => {
         maxX = coord[1];
         maxY = coord[2];
@@ -145,7 +153,7 @@ const Downloader = class {
 
       layerItem.extentByZoom.forEach(obj => {
         const zoom = obj.zoom;
-        if (zooms.indexOf(zoom) < 0) {
+        if (!zooms.includes(zoom)) {
           zooms.push(zoom);
         }
       });

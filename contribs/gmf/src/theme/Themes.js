@@ -518,8 +518,8 @@ function getFlatInternalNodes(node, nodes) {
   const children = node.children;
   if (children !== undefined) {
     nodes.push(node);
-    for (let i = 0; i < children.length; i++) {
-      getFlatInternalNodes(children[i], nodes);
+    for (const child of children) {
+      getFlatInternalNodes(child, nodes);
     }
   }
 }
@@ -536,8 +536,8 @@ export function getFlatNodes(node, nodes) {
   // @ts-ignore: children only on GmfGroup
   const children = node.children;
   if (children !== undefined) {
-    for (let i = 0; i < children.length; i++) {
-      getFlatNodes(children[i], nodes);
+    for (const child of children) {
+      getFlatNodes(child, nodes);
     }
   } else {
     nodes.push(node);

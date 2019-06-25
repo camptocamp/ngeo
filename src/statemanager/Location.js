@@ -112,7 +112,7 @@ StatemanagerLocation.prototype.getUriString = function() {
   }
 
   if (this.path_) {
-    if (this.domain_ && this.path_.charAt(0) !== '/') {
+    if (this.domain_ && !this.path_.startsWith('/')) {
       out.push('/');
     }
     out.push(this.path_);
@@ -258,7 +258,7 @@ StatemanagerLocation.prototype.getFragmentParamKeys = function() {
 StatemanagerLocation.prototype.getParamKeysWithPrefix = function(prefix) {
   const keys = [];
   for (const key in this.queryData_) {
-    if (key.indexOf(prefix) == 0) {
+    if (key.startsWith(prefix)) {
       keys.push(key);
     }
   }
@@ -275,7 +275,7 @@ StatemanagerLocation.prototype.getParamKeysWithPrefix = function(prefix) {
 StatemanagerLocation.prototype.getFragmentParamKeysWithPrefix = function(prefix) {
   const keys = [];
   for (const key in this.fragment_) {
-    if (key.indexOf(prefix) == 0) {
+    if (key.startsWith(prefix)) {
       keys.push(key);
     }
   }

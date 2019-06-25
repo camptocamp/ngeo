@@ -256,8 +256,8 @@ GridController.prototype.selectRange_ = function(attributes) {
   // find the selected row which is the closest to the clicked row
   let distance = Infinity;
   let posClosestRow = posSelectedRows[0];
-  for (let j = 0; j < posSelectedRows.length; j++) {
-    const currentPos = posSelectedRows[j];
+  for (const posSelectedRow of posSelectedRows) {
+    const currentPos = posSelectedRow;
     const currentDistance = Math.abs(currentPos - posClickedRow);
     if (distance > currentDistance) {
       distance = currentDistance;

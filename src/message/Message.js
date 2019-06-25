@@ -43,8 +43,6 @@ export const MessageType = {
  * @hidden
  */
 export default class {
-  constructor() {}
-
   /**
    * Show the message.
    *

@@ -54,13 +54,11 @@ export const DOTS_PER_INCH = 72;
  * listener.
  */
 PrintUtils.prototype.createPrintMaskPostcompose = function(getSize, getScale, opt_rotation) {
-  const self = this;
-
   return (
     /**
      * @param {Event|import('ol/events/Event.js').default} evt Postcompose event.
      */
-    function(evt) {
+    (evt) => {
       if (evt instanceof RenderEvent && evt.context && evt.frameState) {
         const context = evt.context;
         const frameState = evt.frameState;
@@ -81,10 +79,10 @@ PrintUtils.prototype.createPrintMaskPostcompose = function(getSize, getScale, op
         const ipm = INCHES_PER_METER;
 
         const extentHalfWidth = (((width / ppi) / ipm) * scale / resolution) / 2;
-        self.extentHalfHorizontalDistance_ = (((size[0] / ppi) / ipm) * scale) / 2;
+        this.extentHalfHorizontalDistance_ = (((size[0] / ppi) / ipm) * scale) / 2;
 
         const extentHalfHeight = (((height / ppi) / ipm) * scale / resolution) / 2;
-        self.extentHalfVerticalDistance_ = (((size[1] / ppi) / ipm) * scale) / 2;
+        this.extentHalfVerticalDistance_ = (((size[1] / ppi) / ipm) * scale) / 2;
 
         // Draw a mask on the whole map.
         context.beginPath();
@@ -97,11 +95,11 @@ PrintUtils.prototype.createPrintMaskPostcompose = function(getSize, getScale, op
 
         // Draw the print zone
         if (!opt_rotation) {
-          self.drawPrintZone_(context, center, extentHalfWidth,
+          this.drawPrintZone_(context, center, extentHalfWidth,
             extentHalfHeight);
         } else {
           const rotation = toRadians(opt_rotation());
-          self.drawPrintZoneWithRotation_(context, center, extentHalfWidth,
+          this.drawPrintZoneWithRotation_(context, center, extentHalfWidth,
             extentHalfHeight, rotation);
         }
 

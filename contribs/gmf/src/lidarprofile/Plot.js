@@ -42,9 +42,9 @@ export default class {
 
     /**
      * d3.scaleLinear X scale.
-     * @type {Function}
+     * @type {function(number): number}
      */
-    this.updateScaleX = () => undefined;
+    this.updateScaleX = (x) => x;
 
     /**
      * d3.scaleLinear Y scale.
@@ -54,9 +54,9 @@ export default class {
 
     /**
      * d3.scaleLinear Y scale.
-     * @type {Function}
+     * @type {function(number): number}
      */
-    this.updateScaleY = () => undefined;
+    this.updateScaleY = (y) => y;
 
     /**
      * The material used for the drawing process. Initialized in the setup
@@ -309,11 +309,11 @@ export default class {
     const yAxis = d3axisLeft(this.scaleY)
       .tickSize(-this.width_);
 
-    const new_scaleX = tr.rescaleX(this.scaleX);
-    const new_scaleY = tr.rescaleY(this.scaleY);
+    const newScaleX = tr.rescaleX(this.scaleX);
+    const newScaleY = tr.rescaleY(this.scaleY);
 
-    svg.select('.x.axis').call(/** @type {any} */ (xAxis.scale(new_scaleX)));
-    svg.select('.y.axis').call(/** @type {any} */ (yAxis.scale(new_scaleY)));
+    svg.select('.x.axis').call(/** @type {any} */ (xAxis.scale(newScaleX)));
+    svg.select('.y.axis').call(/** @type {any} */ (yAxis.scale(newScaleY)));
 
     const canvas = d3select('#gmf-lidarprofile-container .lidar-canvas');
     const canvasEl = /** @type {HTMLCanvasElement} */(canvas.node());
@@ -327,8 +327,8 @@ export default class {
       .style('opacity', '0.5')
       .style('stroke', '#b7cff7');
 
-    this.updateScaleX = new_scaleX;
-    this.updateScaleY = new_scaleY;
+    this.updateScaleX = newScaleX;
+    this.updateScaleY = newScaleY;
 
   }
 

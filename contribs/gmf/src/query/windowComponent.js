@@ -442,8 +442,7 @@ QueryWindowController.prototype.next = function() {
 QueryWindowController.prototype.updateQueryResult_ = function(queryResult) {
   this.ngeoQueryResult.total = 0;
   this.ngeoQueryResult.sources.length = 0;
-  for (let i = 0; i < queryResult.sources.length; i++) {
-    const source = queryResult.sources[i];
+  for (const source of queryResult.sources) {
     source.features = source.features.filter((feature) => {
       console.assert(feature);
       return !isEmpty(getFilteredFeatureValues(feature));
@@ -518,15 +517,14 @@ QueryWindowController.prototype.animate_ = function(isNext) {
 QueryWindowController.prototype.collectFeatures_ = function() {
   const sources = this.ngeoQueryResult.sources;
   this.features_.clear();
-  for (let i = 0; i < sources.length; i++) {
-    const source = sources[i];
+  for (const source of sources) {
     if (this.selectedSource !== null && this.selectedSource !== source) {
       // when filtering on a source, only add features of the selected source
       continue;
     }
     const features = source.features;
-    for (let ii = 0; ii < features.length; ii++) {
-      this.features_.push(features[ii]);
+    for (const feature of features) {
+      this.features_.push(feature);
     }
   }
 };

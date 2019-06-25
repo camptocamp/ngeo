@@ -116,8 +116,8 @@ ToolActivateMgr.prototype.unregisterTool = function(groupName, tool) {
 ToolActivateMgr.prototype.unregisterGroup = function(groupName) {
   const entries = this.groups_[groupName];
   if (entries) {
-    for (let i = 0; i < entries.length; i++) {
-      entries[i].unlisten();
+    for (const entry of entries) {
+      entry.unlisten();
     }
     delete this.groups_[groupName];
   }
@@ -151,9 +151,9 @@ ToolActivateMgr.prototype.deactivateTool = function(tool) {
  */
 ToolActivateMgr.prototype.deactivateTools_ = function(groupName, tool) {
   const entries = this.groups_[groupName];
-  for (let i = 0; i < entries.length; i++) {
-    if (tool != entries[i].tool) {
-      entries[i].tool.setActive(false);
+  for (const entry of entries) {
+    if (tool != entry.tool) {
+      entry.tool.setActive(false);
     }
   }
 };
@@ -170,11 +170,11 @@ ToolActivateMgr.prototype.activateDefault_ = function(groupName) {
   let defaultTool = null;
   let hasActiveTool = false;
 
-  for (let i = 0; i < entries.length; i++) {
-    hasActiveTool = hasActiveTool || entries[i].tool.getActive();
+  for (const entry of entries) {
+    hasActiveTool = hasActiveTool || entry.tool.getActive();
 
-    if (entries[i].defaultTool) {
-      defaultTool = entries[i].tool;
+    if (entry.defaultTool) {
+      defaultTool = entry.tool;
     }
   }
 

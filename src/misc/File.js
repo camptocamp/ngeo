@@ -29,21 +29,21 @@ export function FileService($q, $http, gettext) {
    * @param {string} fileContent
    */
   this.isWmtsGetCap = function(fileContent) {
-    return /<Capabilities/.test(fileContent);
+    return fileContent.includes('<Capabilities');
   };
 
   /**
    * @param {string} fileContent
    */
   this.isKml = function(fileContent) {
-    return /<kml/.test(fileContent) && /<\/kml>/.test(fileContent);
+    return fileContent.includes('<kml') && fileContent.includes('</kml>');
   };
 
   /**
    * @param {string} fileContent
    */
   this.isGpx = function(fileContent) {
-    return /<gpx/.test(fileContent) && /<\/gpx>/.test(fileContent);
+    return fileContent.includes('<gpx') && fileContent.includes('</gpx>');
   };
 
   /** @type {?FileReader} */

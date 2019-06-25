@@ -23,6 +23,8 @@
 /* eslint default-case: 0 */
 /* eslint prefer-rest-params: 0 */
 /* eslint prefer-template: 0 */
+/* eslint @typescript-eslint/no-this-alias: 0 */
+/* eslint @typescript-eslint/restrict-plus-operands: 0 */
 
 "use strict";
 
@@ -161,6 +163,12 @@ export default class DateFormatter {
         }
         return i;
     }
+    /**
+     *
+     * @param {Date|string|number} vDate
+     * @param {?string} vFormat
+     * @returns {?Date}
+     */
     parseDate(vDate, vFormat) {
         // @ts-ignore: not checked file
         const self = this, vSettings = self.dateSettings,
@@ -237,8 +245,8 @@ export default class DateFormatter {
                     break;
                 case 'g':
                 case 'h':
-                    const vMeriIndex = (vFormatParts.indexOf('a') > -1) ? vFormatParts.indexOf('a') :
-                        (vFormatParts.indexOf('A') > -1) ? vFormatParts.indexOf('A') : -1;
+                    const vMeriIndex = (vFormatParts.includes('a')) ? vFormatParts.indexOf('a') :
+                        (vFormatParts.includes('A')) ? vFormatParts.indexOf('A') : -1;
                     const mer = vDateParts[vMeriIndex];
                     if (vMeriIndex !== -1) {
                         const vMeriOffset = _compare(mer, vSettings.meridiem[0]) ? 0 :

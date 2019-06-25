@@ -25,10 +25,6 @@ export const FormatNumberType = {
  * @hidden
  */
 class XSDAttribute extends olFormatXML {
-  constructor() {
-    super();
-  }
-
   /**
    * @param {Document|Element|string} source Source.
    * @return {Array<import('ngeo/format/Attribute.js').Attribute>} The parsed result.

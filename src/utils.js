@@ -17,7 +17,7 @@ export function getBrowserLanguage(availableLanguages) {
   browserLanguages = browserLanguages.map(item => item.substring(0, 2));
   // remove duplicated language codes
   browserLanguages = browserLanguages.filter((item, index, arr) => arr.indexOf(item) == index);
-  const supportedLanguages = browserLanguages.filter(item => availableLanguages.indexOf(item) != -1);
+  const supportedLanguages = browserLanguages.filter(item => availableLanguages.includes(item));
   return supportedLanguages[0];
 }
 
@@ -56,7 +56,7 @@ export function toMulti(geometry) {
  * @hidden
  */
 export function isSafari() {
-  return navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1;
+  return navigator.userAgent.includes('Safari') && !navigator.userAgent.includes('Chrome');
 }
 
 /**

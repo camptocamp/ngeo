@@ -102,9 +102,6 @@ const SEQUENCE_PARSERS_ = makeStructureNS(
  * @hidden
  */
 class WFSDescribeFeatureType extends olFormatXML {
-  constructor() {
-    super();
-  }
 }
 
 

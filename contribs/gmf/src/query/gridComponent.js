@@ -615,7 +615,7 @@ QueryGridController.prototype.collectData_ = function(source) {
     if (properties !== undefined) {
       // Keeps distinct geometry names to remove theme later.
       featureGeometryName = feature.getGeometryName();
-      if (featureGeometriesNames.indexOf(featureGeometryName) === -1) {
+      if (!featureGeometriesNames.includes(featureGeometryName)) {
         featureGeometriesNames.push(featureGeometryName);
       }
 
@@ -678,7 +678,7 @@ QueryGridController.prototype.removeEmptyColumnsFn_ = function(allProperties) {
   allProperties.forEach((properties) => {
     keyToRemove = [];
     for (key in properties) {
-      if (keysToKeep.indexOf(key) === -1) {
+      if (!keysToKeep.includes(key)) {
         keyToRemove.push(key);
       }
     }
@@ -705,7 +705,7 @@ QueryGridController.prototype.makeGrid_ = function(data, source) {
       return false;
     }
   }
-  if (this.loadedGridSources.indexOf(sourceLabel) == -1) {
+  if (!this.loadedGridSources.includes(sourceLabel)) {
     this.loadedGridSources.push(sourceLabel);
   }
   this.gridSources[sourceLabel] = {

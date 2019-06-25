@@ -12,7 +12,7 @@ import angular from 'angular';
 function bootstrap(module) {
   // Hack to make the bootstrap type check working with polyfill.io
   const oldObjectToString = Object.prototype.toString;
-  if (oldObjectToString.toString().indexOf('[native code]') < 0) {
+  if (!oldObjectToString.toString().includes('[native code]')) {
     Object.prototype.toString = function() {
       if (this === null) {
         return '[object Null]';
