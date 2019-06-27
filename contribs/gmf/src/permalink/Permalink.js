@@ -546,7 +546,9 @@ export function PermalinkService(
     const newState = {};
     if (firstParent.node.mixed) {
       const state = treeCtrl.getState();
-      console.assert(state === 'on' || state === 'off');
+      if (state !== 'on' && state !== 'off') {
+        throw new Error('Wrong state');
+      }
       const visible = state === 'on';
       treeCtrl.traverseDepthFirst(
         /**
@@ -805,7 +807,9 @@ PermalinkService.prototype.setMapTooltip = function(tooltipText, opt_center) {
     }
     tooltipPosition = center;
   }
-  console.assert(Array.isArray(tooltipPosition));
+  if (!Array.isArray(tooltipPosition)) {
+    throw new Error('Wrong tooltipPosition type');
+  }
 
   const div = $('<div/>', {
     'class': 'gmf-permalink-tooltip',
@@ -1044,7 +1048,9 @@ PermalinkService.prototype.handleBackgroundLayerManagerChange_ = function() {
     throw new Error('Missing layer');
   }
   const layerName = layer.get('label');
-  console.assert(typeof layerName == 'string');
+  if (typeof layerName != 'string') {
+    throw new Error('Wrong layerName type');
+  }
 
   // set it in state
   /** @type {Object<string, string>} */
@@ -1129,7 +1135,9 @@ PermalinkService.prototype.setThemeInUrl_ = function(themeName) {
   }
   if (themeName) {
     const pathElements = path.split('/');
-    console.assert(pathElements.length > 1);
+    if (pathElements.length <= 1) {
+      throw new Error('Wrong pathElements');
+    }
     if (pathElements[pathElements.length - 1] === '') {
       // case where the path is just "/"
       pathElements.splice(pathElements.length - 1);
@@ -1228,7 +1236,9 @@ PermalinkService.prototype.initLayers_ = function() {
     // Check if we have the groups in the permalink
     const groupsNames = this.ngeoLocation_.getParam(PermalinkParam.TREE_GROUPS);
     if (groupsNames === undefined) {
-      console.assert(typeof themeName == 'string');
+      if (typeof themeName != 'string') {
+        throw new Error('Wrong themeName type');
+      }
       theme = findThemeByName(themes, themeName);
       if (theme) {
         firstLevelGroups = theme.children;
@@ -1345,7 +1355,9 @@ PermalinkService.prototype.initLayers_ = function() {
 PermalinkService.prototype.handleNgeoFeaturesAdd_ = function(event) {
   if (event instanceof CollectionEvent) {
     const feature = event.element;
-    console.assert(feature instanceof olFeature);
+    if (!(feature instanceof olFeature)) {
+      throw new Error('Wrong feature type');
+    }
     this.addNgeoFeature_(feature);
   }
 };
@@ -1358,7 +1370,9 @@ PermalinkService.prototype.handleNgeoFeaturesAdd_ = function(event) {
 PermalinkService.prototype.handleNgeoFeaturesRemove_ = function(event) {
   if (event instanceof CollectionEvent) {
     const feature = event.element;
-    console.assert(feature instanceof olFeature);
+    if (!(feature instanceof olFeature)) {
+      throw new Error('Wrong feature type');
+    }
     this.removeNgeoFeature_(feature);
   }
 };
@@ -1651,7 +1665,9 @@ PermalinkService.prototype.initExternalDataSources_ = function() {
 PermalinkService.prototype.handleExternalDSGroupCollectionAdd_ = function(evt) {
   if (evt instanceof CollectionEvent) {
     const group = evt.element;
-    console.assert(group instanceof ngeoDatasourceGroup);
+    if (!(group instanceof ngeoDatasourceGroup)) {
+      throw new Error('Wrong group type');
+    }
     this.registerExternalDSGroup_(group);
     this.setExternalDataSourcesState_();
   }
@@ -1687,7 +1703,9 @@ PermalinkService.prototype.registerExternalDSGroup_ = function(group) {
 PermalinkService.prototype.containsLayerName = function(layer, name) {
   if (layer instanceof olLayerGroup) {
     for (const l of layer.getLayers().getArray()) {
-      console.assert(l);
+      if (!l) {
+        throw new Error('Missing layer');
+      }
       if (this.containsLayerName(l, name)) {
         return true;
       }
@@ -1706,7 +1724,9 @@ PermalinkService.prototype.containsLayerName = function(layer, name) {
 PermalinkService.prototype.handleExternalDSGroupCollectionRemove_ = function(evt) {
   if (evt instanceof CollectionEvent) {
     const group = evt.element;
-    console.assert(group instanceof ngeoDatasourceGroup);
+    if (!(group instanceof ngeoDatasourceGroup)) {
+      throw new Error('Wrong group type');
+    }
     this.unregisterExternalDSGroup_(group);
     this.setExternalDataSourcesState_();
   }
@@ -1781,7 +1801,9 @@ PermalinkService.prototype.setExternalDataSourcesState_ = function() {
       for (const wmtsDataSource of
         /** @type {Array<import('ngeo/datasource/OGC').default>} */(wmtsGroup.dataSources)
       ) {
-        console.assert(wmtsDataSource.wmtsLayer);
+        if (!wmtsDataSource.wmtsLayer) {
+          throw new Error('Missing wmtsDataSource.wmtsLayer');
+        }
         wmtsGroupLayerNames.push(wmtsDataSource.wmtsLayer);
       }
       names.push(wmtsGroupLayerNames.join(ExtDSSeparator.NAMES));
@@ -1834,7 +1856,9 @@ PermalinkService.prototype.cleanParams = function(groups) {
       return;
     }
     const layer = this.map_.getLayerGroup();
-    console.assert(layer);
+    if (!layer) {
+      throw new Error('Missing layer');
+    }
     for (const key of keys) {
       if (key.startsWith(ParamPrefix.TREE_ENABLE)) {
         const value = key.substring(ParamPrefix.TREE_ENABLE.length);

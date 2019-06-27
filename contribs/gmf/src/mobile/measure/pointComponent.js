@@ -266,7 +266,9 @@ MobileMeasurePointController.prototype.init = function() {
   interactionDecoration(this.drawInteraction);
 
   const layersConfig = this.getLayersConfigFn();
-  console.assert(Array.isArray(layersConfig));
+  if (!Array.isArray(layersConfig)) {
+    throw new Error('Wrong layersConfig type');
+  }
   this.layersConfig = layersConfig;
 
   if (!this.map) {

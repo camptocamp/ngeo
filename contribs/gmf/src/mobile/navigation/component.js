@@ -148,7 +148,9 @@ Controller.prototype.init = function(element) {
   const onClick = (evt) => {
 
     const slideOut = $(evt.currentTarget).parents(`.${CLASS_NAMES.SLIDE}`);
-    console.assert(slideOut.length === 1);
+    if (slideOut.length != 1) {
+      throw new Error('Wrong slideOut');
+    }
 
     // push the item to the selected stack
     this.slid_.push(slideOut);
@@ -162,7 +164,9 @@ Controller.prototype.init = function(element) {
       throw new Error('Missing datatarget');
     }
     const slideIn = $(datatarget);
-    console.assert(slideIn.length === 1);
+    if (slideIn.length != 1) {
+      throw new Error('Wrong slideIn');
+    }
 
     // slide the "new" element in
     slideIn.addClass(CLASS_NAMES.ACTIVE);

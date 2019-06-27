@@ -85,8 +85,9 @@ export function AbstractAppController(config, map, $scope, $injector) {
    * @type {import("ol/Map.js").default}
    */
   this.map = map;
-
-  console.assert(this.map instanceof olMap);
+  if (!(this.map instanceof olMap)) {
+    throw new Error('Wrong map type');
+  }
 
   /**
    * Collection of features for the draw interaction
@@ -699,7 +700,9 @@ function getLayerByLabels(layers, labels) {
  * @param {string} lang Language code.
  */
 AbstractAppController.prototype.switchLanguage = function(lang) {
-  console.assert(lang in this.langUrls);
+  if (!(lang in this.langUrls)) {
+    throw new Error('Missing lang URL');
+  }
   this.gettextCatalog.setCurrentLanguage(lang);
   this.gettextCatalog.loadRemote(this.langUrls[lang]);
   this.tmhDynamicLocale.set(lang);
@@ -762,7 +765,9 @@ AbstractAppController.prototype.setDefaultBackground_ = function(theme) {
       layer = layers[layers.length > 1 ? 1 : 0];
     }
 
-    console.assert(layer);
+    if (!layer) {
+      throw new Error('Missing layer');
+    }
     this.backgroundLayerMgr_.set(this.map, layer);
   });
 };

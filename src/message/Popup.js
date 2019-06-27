@@ -52,7 +52,7 @@ export function MessagePopup($compile, $rootScope, $sce, $timeout) {
 
   // manage the auto destruction of the popup
   this.scope.$watch(
-    // @ts-ignore: Wring scope interface
+    // @ts-ignore: Wrong scope interface
     () => this.scope.open,
     (open) => {
       if (!open && this.autoDestroy_) {
@@ -100,7 +100,7 @@ export function MessagePopup($compile, $rootScope, $sce, $timeout) {
  * @return {boolean} `true` if the popup is currently, otherwise `false`.
  */
 MessagePopup.prototype.getOpen = function() {
-  // @ts-ignore: Wring scope interface
+  // @ts-ignore: Wrong scope interface
   return this.scope.open;
 };
 
@@ -110,7 +110,7 @@ MessagePopup.prototype.getOpen = function() {
  * @param {boolean} open `true` to show the popup, `false` to hide it.
  */
 MessagePopup.prototype.setOpen = function(open) {
-  // @ts-ignore: Wring scope interface
+  // @ts-ignore: Wrong scope interface
   this.scope.open = open;
 };
 
@@ -130,7 +130,7 @@ MessagePopup.prototype.destroy = function() {
  */
 MessagePopup.prototype.setTitle = function(title) {
   const trustedTitle = this.sce_.trustAsHtml(title);
-  // @ts-ignore: Wring scope interface
+  // @ts-ignore: Wrong scope interface
   this.scope.title = trustedTitle;
 };
 
@@ -144,7 +144,7 @@ MessagePopup.prototype.setTitle = function(title) {
  *     Default is false.
  */
 MessagePopup.prototype.setContent = function(content, opt_trusted) {
-  // @ts-ignore: Wring scope interface
+  // @ts-ignore: Wrong scope interface
   this.scope.content = opt_trusted ? this.sce_.trustAsHtml(content) : content;
 };
 

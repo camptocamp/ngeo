@@ -352,7 +352,9 @@ ProfileController.prototype.$onInit = function() {
   const hoverPointStyleFn = this.getHoverPointStyleFn;
   if (hoverPointStyleFn) {
     hoverPointStyle = hoverPointStyleFn();
-    console.assert(hoverPointStyle instanceof olStyleStyle);
+    if (!(hoverPointStyle instanceof olStyleStyle)) {
+      throw new Error('Wrong hoverPointStyle type');
+    }
   } else {
     hoverPointStyle = new olStyleStyle({
       image: new olStyleCircle({
@@ -363,10 +365,7 @@ ProfileController.prototype.$onInit = function() {
   }
   this.pointHoverOverlay_.setStyle(hoverPointStyle);
 
-  const linesConfiguration = this.getLinesConfigurationFn();
-  console.assert(linesConfiguration instanceof Object);
-
-  this.linesConfiguration_ = linesConfiguration;
+  this.linesConfiguration_ = this.getLinesConfigurationFn();
 
   for (const name in this.linesConfiguration_) {
     // Keep an array of all layer names.
@@ -389,7 +388,9 @@ ProfileController.prototype.$onInit = function() {
   const optionsFn = this.getOptionsFn;
   if (optionsFn) {
     const options = optionsFn();
-    console.assert(options);
+    if (!options) {
+      throw new Error('Missing options');
+    }
     Object.assign(this.profileOptions, options);
   }
 };

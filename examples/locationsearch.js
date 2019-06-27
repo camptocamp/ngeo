@@ -118,7 +118,9 @@ function SearchController(ngeoCreateLocationSearchBloodhound) {
  */
 SearchController.prototype.createAndInitBloodhound_ = function(ngeoCreateLocationSearchBloodhound, limit) {
   const epsg3857 = olProj.get('EPSG:3857');
-  console.assert(epsg3857 !== null);
+  if (!epsg3857) {
+    throw new Error('Missing epsg3857');
+  }
   const bloodhound = ngeoCreateLocationSearchBloodhound({
     targetProjection: epsg3857,
     limit: limit,

@@ -168,7 +168,9 @@ DisclaimerController.prototype.handleLayersAdd_ = function(evt) {
   if (evt instanceof CollectionEvent) {
     this.timeout_(() => {
       const layer = evt.element;
-      console.assert(layer instanceof olLayerBase);
+      if (!(layer instanceof olLayerBase)) {
+        throw new Error('Wrong layer type');
+      }
       this.registerLayer_(layer);
     });
   }
@@ -182,7 +184,10 @@ DisclaimerController.prototype.handleLayersAdd_ = function(evt) {
 DisclaimerController.prototype.handleLayersRemove_ = function(evt) {
   if (evt instanceof CollectionEvent) {
     const layer = evt.element;
-    console.assert(layer instanceof olLayerBase);
+    if (!(layer instanceof olLayerBase)) {
+      throw new Error('Wrong layer type');
+    }
+
     this.unregisterLayer_(layer);
   }
 };

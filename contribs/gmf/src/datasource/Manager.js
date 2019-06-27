@@ -306,7 +306,6 @@ export class DatasourceManager {
         // Create a DataSources for each theme
         for (const theme of themes) {
           for (const child of theme.children) {
-            console.assert(child);
             this.createDataSource_(child, child, ogcServers);
           }
         }
@@ -449,7 +448,6 @@ export class DatasourceManager {
     //     group node itself is **skipped**.
     if (children) {
       for (const child of children) {
-        console.assert(child);
         this.createDataSource_(firstLevelGroup, child, ogcServers);
       }
       return;
@@ -545,7 +543,6 @@ export class DatasourceManager {
       // OGC Server
       const ogcServerName = (!firstLevelGroup || firstLevelGroup.mixed) ?
         gmfLayerWMS.ogcServer : firstLevelGroup.ogcServer;
-      console.assert(ogcServerName);
       ogcServer = ogcServers[ogcServerName];
       ogcImageType = ogcServer.imageType;
 
@@ -690,7 +687,9 @@ export class DatasourceManager {
 
     const id = olUtilGetUid(treeCtrl.node);
     const dataSource = this.dataSourcesCache_[id];
-    console.assert(dataSource, 'DataSource should be set');
+    if (!dataSource) {
+      throw new Error('Missing dataSource');
+    }
     treeCtrl.setDataSource(dataSource);
 
     const stateWatcherUnregister = this.rootScope_.$watch(
@@ -872,7 +871,9 @@ export class DatasourceManager {
     const params = source.getParams();
     const layersParam = params.LAYERS;
     const layersList = layersParam.split(',');
-    console.assert(layersList.length >= 1);
+    if (!layersList.length) {
+      throw new Error('Missing layersList');
+    }
 
     const filterParam = 'FILTER';
     const filterParamValues = [];
@@ -896,7 +897,9 @@ export class DatasourceManager {
 
           const id = olUtilGetUid(dataSource.gmfLayer);
           const item = this.treeCtrlCache_[id];
-          console.assert(item);
+          if (!item) {
+            throw new Error('Missing item');
+          }
           const treeCtrl = item.treeCtrl;
           const projCode = treeCtrl.map.getView().getProjection().getCode();
 
@@ -970,7 +973,9 @@ export class DatasourceManager {
 
     const id = olUtilGetUid(dataSource.gmfLayer);
     const item = this.treeCtrlCache_[id];
-    console.assert(item);
+    if (!item) {
+      throw new Error('Missing item');
+    }
     const wmsLayer = item.wmsLayer;
     const wmsSource = wmsLayer.getSource();
 

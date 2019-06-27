@@ -189,7 +189,9 @@ function MainController($http, $q, $scope, gmfThemes, gmfXSDAttributes) {
       const groupNode = theme.children[0];
 
       // (4) Set OGC server, which must support WFS for this example to work
-      console.assert(groupNode.ogcServer);
+      if (!groupNode.ogcServer) {
+        throw new Error('Missing groupNode.ogcServer');
+      }
       if (!this.gmfServers_) {
         throw new Error('Missing gmfServers');
       }
@@ -234,7 +236,9 @@ MainController.prototype.runEditor = function() {
   const feature = this.selectedFeature;
   const layer = this.selectedGmfLayerNode.id;
   const property = this.selectedGmfLayerNode.metadata.identifierAttributeField;
-  console.assert(property !== undefined);
+  if (!property) {
+    throw new Error('Missing property');
+  }
   const id = feature.get(property);
 
   /** @type {Object<string, *>} */

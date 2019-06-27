@@ -511,7 +511,9 @@ LayertreeTreeManager.prototype.getOgcServer = function(treeCtrl) {
   const gmfParentGroup = /** @type {import('gmf/themes.js').GmfGroup} */(treeCtrl.parent.node);
   if (gmfParentGroup.mixed) {
     const gmfLayerWMS = /** @type {import('gmf/themes.js').GmfLayerWMS} */(treeCtrl.node);
-    console.assert(gmfLayerWMS.ogcServer);
+    if (!gmfLayerWMS.ogcServer) {
+      throw new Error('Missing gmfLayerWMS.ogcServer');
+    }
     return this.ogcServers_[gmfLayerWMS.ogcServer];
   } else {
     let firstLevelGroupCtrl = treeCtrl;
@@ -519,7 +521,9 @@ LayertreeTreeManager.prototype.getOgcServer = function(treeCtrl) {
       firstLevelGroupCtrl = firstLevelGroupCtrl.parent;
     }
     const gmfGroup = /** @type {import('gmf/themes.js').GmfGroup} */(firstLevelGroupCtrl.node);
-    console.assert(gmfGroup.ogcServer);
+    if (!gmfGroup.ogcServer) {
+      throw new Error('Missing gmfGroup.ogcServer');
+    }
     return this.ogcServers_[gmfGroup.ogcServer];
   }
 };

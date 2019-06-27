@@ -129,7 +129,9 @@ SyncLayertreeMap.prototype.updateLayerState_ = function(layer, treeCtrl) {
     layer.setVisible(active);
   } else if (!gmfGroup.mixed && treeCtrl.depth === 1) {
     // First level non mixed group
-    console.assert(layer instanceof olLayerImage);
+    if (!(layer instanceof olLayerImage)) {
+      throw new Error('Wrong dataSource type');
+    }
     /** @type {string[]} */
     const names = [];
     /** @type {string[]} */
@@ -156,7 +158,9 @@ SyncLayertreeMap.prototype.updateLayerState_ = function(layer, treeCtrl) {
     }
   } else {
     // WMS mixed layer
-    console.assert(layer instanceof olLayerImage);
+    if (!(layer instanceof olLayerImage)) {
+      throw new Error('Wrong dataSource type');
+    }
     layer.setVisible(active);
   }
 };
@@ -233,10 +237,18 @@ SyncLayertreeMap.prototype.createLayerFromGroup_ = function(treeCtrl, mixed) {
     }
     const timeParam = this.getTimeParam_(treeCtrl);
     const ogcServer = this.ogcServersObject_[groupNode.ogcServer || ''];
-    console.assert(ogcServer);
-    console.assert(ogcServer.url);
-    console.assert(ogcServer.type);
-    console.assert(ogcServer.imageType);
+    if (!ogcServer) {
+      throw new Error('Missing ogcServer');
+    }
+    if (!ogcServer.url) {
+      throw new Error('Missing ogcServer.url');
+    }
+    if (!ogcServer.type) {
+      throw new Error('Missing ogcServer.type');
+    }
+    if (!ogcServer.imageType) {
+      throw new Error('Missing ogcServer.imageType');
+    }
     layer = this.layerHelper_.createBasicWMSLayer(
       ogcServer.url,
       '',
@@ -284,11 +296,21 @@ SyncLayertreeMap.prototype.createLeafInAMixedGroup_ = function(treeCtrl, map) {
     const gmfLayerWMS = /** @type {import('gmf/themes.js').GmfLayerWMS} */(gmfLayer);
     const timeParam = this.getTimeParam_(treeCtrl);
     const ogcServer = this.ogcServersObject_[gmfLayerWMS.ogcServer];
-    console.assert(ogcServer);
-    console.assert(ogcServer.url);
-    console.assert(ogcServer.type);
-    console.assert(gmfLayerWMS.layers);
-    console.assert(ogcServer.imageType);
+    if (!ogcServer) {
+      throw new Error('Missing ogcServer');
+    }
+    if (!ogcServer.url) {
+      throw new Error('Missing ogcServer.url');
+    }
+    if (!ogcServer.type) {
+      throw new Error('Missing ogcServer.type');
+    }
+    if (!ogcServer.imageType) {
+      throw new Error('Missing ogcServer.imageType');
+    }
+    if (!gmfLayerWMS.layers) {
+      throw new Error('Missing gmfLayerWMS.layers');
+    }
 
     const opt_params = {STYLES: gmfLayerWMS.style};
 
@@ -329,12 +351,16 @@ SyncLayertreeMap.prototype.createLeafInAMixedGroup_ = function(treeCtrl, map) {
 SyncLayertreeMap.prototype.initGmfLayerInANotMixedGroup_ = function(treeCtrl, map) {
   const leafNode = /** @type {import('gmf/themes.js').GmfLayer} */(treeCtrl.node);
   const firstLevelGroup = this.getFirstLevelGroupCtrl_(treeCtrl);
-  console.assert(firstLevelGroup);
+  if (!firstLevelGroup) {
+    throw new Error('Missing firstLevelGroup');
+  }
   const layer = firstLevelGroup.layer;
   if (!(layer instanceof olLayerImage)) {
     throw new Error('Wrong layer type');
   }
-  console.assert(layer instanceof olLayerImage);
+  if (!(layer instanceof olLayerImage)) {
+    throw new Error('Wrong dataSource type');
+  }
   // Update layer information and tree state.
   this.updateLayerReferences_(leafNode, layer);
   if (leafNode.metadata.isChecked) {
@@ -355,8 +381,12 @@ SyncLayertreeMap.prototype.initGmfLayerInANotMixedGroup_ = function(treeCtrl, ma
  */
 SyncLayertreeMap.prototype.createWMTSLayer_ = function(gmfLayerWMTS) {
   const newLayer = new olLayerTile();
-  console.assert(gmfLayerWMTS.url);
-  console.assert(gmfLayerWMTS.layer);
+  if (!gmfLayerWMTS.url) {
+    throw new Error('Missing gmfLayerWMTS.url');
+  }
+  if (!gmfLayerWMTS.layer) {
+    throw new Error('Missing gmfLayerWMTS.layer');
+  }
   this.layerHelper_.createWMTSLayerFromCapabilitites(gmfLayerWMTS.url,
     gmfLayerWMTS.layer, gmfLayerWMTS.matrixSet, gmfLayerWMTS.dimensions).then((layer) => {
     newLayer.setSource(layer.getSource());

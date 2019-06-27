@@ -179,11 +179,19 @@ export class ThemesService extends olEventsEventTarget {
         return /** @type {angular.IPromise<import("ol/layer/Base.js").default>} */(layer);
       } else if (gmfLayer.type === 'WMS') {
         const gmfLayerWMS = /** @type {import('gmf/themes.js').GmfLayerWMS} */(gmfLayer);
-        console.assert(gmfLayerWMS.ogcServer, 'An OGC server is required');
+        if (!gmfLayerWMS.ogcServer) {
+          throw new Error('Missing gmfLayerWMS.ogcServer');
+        }
         const server = ogcServers[gmfLayerWMS.ogcServer];
-        console.assert(server, 'The OGC server was not found');
-        console.assert(server.url, 'The server URL is required');
-        console.assert(server.imageType, 'The server image type is required');
+        if (!server) {
+          throw new Error('Missing server');
+        }
+        if (!server.url) {
+          throw new Error('Missing server.url');
+        }
+        if (!server.imageType) {
+          throw new Error('Missing server.imageType');
+        }
 
         // Manage WMS styles
         /** @type {Object<string, string>} */
@@ -320,7 +328,9 @@ export class ThemesService extends olEventsEventTarget {
    *   Promise.
    */
   getBackgroundLayersObject() {
-    console.assert(this.promise_ !== null);
+    if (this.promise_ === null) {
+      throw new Error('Missing promise');
+    }
     return this.promise_.then(
       /**
        * @param {import('gmf/themes.js').GmfThemesResponse} data The "themes" web service response.
@@ -336,7 +346,9 @@ export class ThemesService extends olEventsEventTarget {
    * @return {angular.IPromise<import('gmf/themes.js').GmfOgcServers>} Promise.
    */
   getOgcServersObject() {
-    console.assert(this.promise_ !== null);
+    if (this.promise_ === null) {
+      throw new Error('Missing promise');
+    }
     return this.promise_.then(
       /**
        * @param {import('gmf/themes.js').GmfThemesResponse} data The "themes" web service response.
@@ -350,7 +362,9 @@ export class ThemesService extends olEventsEventTarget {
    * @return {angular.IPromise<boolean>} Promise.
    */
   hasEditableLayers() {
-    console.assert(this.promise_ !== null);
+    if (this.promise_ === null) {
+      throw new Error('Missing promise');
+    }
     return this.promise_.then(this.hasEditableLayers_.bind(this));
   }
 

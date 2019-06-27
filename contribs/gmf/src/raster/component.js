@@ -224,7 +224,9 @@ function Controller($scope, $filter, ngeoDebounce, gmfRaster, gettextCatalog) {
 Controller.prototype.toggleActive_ = function(active) {
   this.elevation = null;
   if (active) {
-    console.assert(this.listenerKeys_.length === 0);
+    if (this.listenerKeys_.length) {
+      throw new Error('Unexpexted listenerKeys');
+    }
     if (!this.map) {
       throw new Error('Missing map');
     }
@@ -285,7 +287,9 @@ Controller.prototype.toggleActive_ = function(active) {
  * @private
  */
 Controller.prototype.getRasterSuccess_ = function(resp) {
-  console.assert(this.layer, 'A layer should be selected');
+  if (this.layer === undefined) {
+    throw new Error('Missing layer');
+  }
   const value = resp[this.layer];
   if (value !== undefined && value !== null) {
     const options = this.layersconfig[this.layer] || {};

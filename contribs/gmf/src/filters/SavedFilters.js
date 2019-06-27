@@ -121,7 +121,9 @@ export class SavedFilter {
   loadItemsFromLocalStorage_() {
     if (window.localStorage[this.localStorageKey_]) {
       const items = JSON.parse(window.localStorage[this.localStorageKey_]);
-      console.assert(Array.isArray(items));
+      if (!Array.isArray(items)) {
+        throw new Error('Wrong items type');
+      }
       this.items_ = items;
     }
   }

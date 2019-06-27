@@ -358,7 +358,9 @@ QueryGridController.prototype.$onInit = function() {
   featuresOverlay.setFeatures(this.features_);
   const featuresStyle = this.featuresStyleFn();
   if (featuresStyle !== undefined) {
-    console.assert(featuresStyle instanceof olStyleStyle);
+    if (!(featuresStyle instanceof olStyleStyle)) {
+      throw new Error('Wrong featuresStyle type');
+    }
     featuresOverlay.setStyle(featuresStyle);
   }
 
@@ -366,7 +368,9 @@ QueryGridController.prototype.$onInit = function() {
   highlightFeaturesOverlay.setFeatures(this.highlightFeatures_);
   let highlightFeatureStyle = this.selectedFeatureStyleFn();
   if (highlightFeatureStyle !== undefined) {
-    console.assert(highlightFeatureStyle instanceof olStyleStyle);
+    if (!(highlightFeatureStyle instanceof olStyleStyle)) {
+      throw new Error('Wrong highlightFeatureStyle type');
+    }
   } else {
     const fill = new olStyleFill({color: [255, 0, 0, 0.6]});
     const stroke = new olStyleStroke({color: [255, 0, 0, 1], width: 2});
@@ -386,7 +390,9 @@ QueryGridController.prototype.$onInit = function() {
   const mapFn = this.getMapFn;
   if (mapFn) {
     const map = mapFn();
-    console.assert(map instanceof olMap);
+    if (!(map instanceof olMap)) {
+      throw new Error('Wrong map type');
+    }
     this.map_ = map;
   }
 };
@@ -724,7 +730,9 @@ QueryGridController.prototype.makeGrid_ = function(data, source) {
  * @private
  */
 QueryGridController.prototype.getGridConfiguration_ = function(data) {
-  console.assert(data.length > 0);
+  if (!data.length) {
+    throw new Error('Missing data');
+  }
   const clone = {};
   Object.assign(clone, data[0]);
   // @ts-ignore
