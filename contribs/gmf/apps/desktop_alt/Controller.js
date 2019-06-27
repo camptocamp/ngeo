@@ -117,7 +117,7 @@ class Controller extends AbstractDesktopController {
     const fill = new Fill({color: [255, 255, 255, 0.6]});
     const stroke = new Stroke({color: [255, 0, 0, 1], width: 2});
     const image = new Circle({fill, radius, stroke});
-    const default_search_style = new Style({
+    const defaultSearchStyle = new Style({
       fill,
       image,
       stroke
@@ -128,7 +128,7 @@ class Controller extends AbstractDesktopController {
      * @export
      */
     this.searchStyles = {
-      'default': default_search_style
+      'default': defaultSearchStyle
     };
 
     // Allow angular-gettext-tools to collect the strings to translate

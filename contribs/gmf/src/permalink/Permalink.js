@@ -580,7 +580,7 @@ export function PermalinkService(
           }
         }
       );
-      newState[ParamPrefix.TREE_GROUP_LAYERS + firstParent.node.name] = gmfLayerNames.join(',');
+      newState[`${ParamPrefix.TREE_GROUP_LAYERS}${firstParent.node.name}`] = gmfLayerNames.join(',');
     }
     this.ngeoStateManager_.updateState(newState);
   });
@@ -588,9 +588,9 @@ export function PermalinkService(
     /** @type {Object<string, string>} */
     const newState = {};
     const opacity = treeCtrl.layer.getOpacity();
-    const stateName = (treeCtrl.parent.node.mixed ?
+    const stateName = `${(treeCtrl.parent.node.mixed ?
       ParamPrefix.TREE_OPACITY : ParamPrefix.TREE_GROUP_OPACITY
-    ) + treeCtrl.node.name;
+    )}${treeCtrl.node.name}`;
     newState[stateName] = opacity;
     this.ngeoStateManager_.updateState(newState);
   });
@@ -847,8 +847,7 @@ PermalinkService.prototype.getFeatures = function() {
 PermalinkService.prototype.setDimensions = function(dimensions) {
   // apply initial state
   const keys = this.ngeoLocation_.getParamKeysWithPrefix(ParamPrefix.DIMENSIONS);
-  for (let i = 0; i < keys.length; i++) {
-    const key = keys[i];
+  for (const key of keys) {
     const value = this.ngeoLocation_.getParam(key);
     if (!value) {
       throw new Error('Missing value');
@@ -1439,7 +1438,7 @@ PermalinkService.prototype.getWfsPermalinkData_ = function() {
     // filter groups are used, e.g. '?wfs_layer=osm_scale&wfs_ngroups=2&wfs_0_ele=380&
     // wfs_0_highway=bus_stop&&wfs_1_name=Grand-Pont'
     for (let i = 0; i < numGroups; i++) {
-      filterGroup = this.createFilterGroup_(`${ParamPrefix.WFS + i}_`, paramKeys);
+      filterGroup = this.createFilterGroup_(`${ParamPrefix.WFS}${i}_`, paramKeys);
       if (filterGroup !== null) {
         filterGroups.push(filterGroup);
       }
@@ -1476,7 +1475,7 @@ PermalinkService.prototype.createFilterGroup_ = function(prefix, paramKeys) {
 
   paramKeys.forEach((paramKey) => {
     if (paramKey == PermalinkParam.WFS_LAYER || paramKey == PermalinkParam.WFS_SHOW_FEATURES ||
-        paramKey == PermalinkParam.WFS_NGROUPS || paramKey.indexOf(prefix) != 0) {
+        paramKey == PermalinkParam.WFS_NGROUPS || !paramKey.startsWith(prefix)) {
       return;
     }
     const value = this.ngeoLocation_.getParam(paramKey);

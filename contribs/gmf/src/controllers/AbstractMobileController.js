@@ -182,6 +182,7 @@ export class AbstractMobileController extends AbstractAppController {
    */
   openNavMenu(target) {
     const navElements = document.getElementsByClassName('gmf-mobile-nav-button');
+    // eslint-disable-next-line @typescript-eslint/prefer-for-of
     for (let i = 0; i < navElements.length; i++) {
       const element = /** @type {HTMLElement} */(navElements[i]);
       if (element.dataset && element.dataset.target === target) {

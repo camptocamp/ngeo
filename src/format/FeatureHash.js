@@ -273,7 +273,7 @@ class FeatureHash extends olFormatTextFeature {
   readFeatureFromText(text, opt_options) {
     console.assert(text.length > 2);
     console.assert(text[1] === '(');
-    console.assert(text[text.length - 1] === ')');
+    console.assert(text.endsWith(')'));
     let splitIndex = text.indexOf('~');
     const geometryText = splitIndex >= 0 ?
       `${text.substring(0, splitIndex)})` : text;
@@ -288,8 +288,8 @@ class FeatureHash extends olFormatTextFeature {
         attributesAndStylesText;
       if (attributesText != '') {
         const parts = attributesText.split('\'');
-        for (let i = 0; i < parts.length; ++i) {
-          const part = decodeURIComponent(parts[i]);
+        for (const encodedPart of parts) {
+          const part = decodeURIComponent(encodedPart);
           const keyVal = part.split('*');
           console.assert(keyVal.length === 2);
           let key = keyVal[0];
@@ -321,7 +321,7 @@ class FeatureHash extends olFormatTextFeature {
    * @override
    */
   readFeaturesFromText(text, opt_options) {
-    console.assert(text[0] === 'F');
+    console.assert(text.startsWith('F'));
     this.prevX_ = 0;
     this.prevY_ = 0;
     /** @type {Array<olFeature<import("ol/geom/Geometry.js").default>>} */
@@ -383,7 +383,7 @@ class FeatureHash extends olFormatTextFeature {
 
     if (encodedGeometry.length > 0) {
       // remove the final bracket
-      console.assert(encodedGeometry[encodedGeometry.length - 1] === ')');
+      console.assert(encodedGeometry.endsWith(')'));
       encodedGeometry = encodedGeometry.substring(0, encodedGeometry.length - 1);
       encodedParts.push(encodedGeometry);
     }
@@ -542,8 +542,7 @@ function encodeNumber_(num) {
 function encodeStyles_(styles, geometryType, encodedStyles) {
   const styleType = StyleTypes_[geometryType];
   console.assert(styleType !== undefined);
-  for (let i = 0; i < styles.length; ++i) {
-    const style = styles[i];
+  for (const style of styles) {
     const fillStyle = style.getFill();
     const imageStyle = style.getImage();
     const strokeStyle = style.getStroke();
@@ -715,8 +714,8 @@ function encodeStyleText_(textStyle, encodedStyles) {
  * @this {FeatureHash}
  */
 function readLineStringGeometry_(text) {
-  console.assert(text.substring(0, 2) === 'l(');
-  console.assert(text[text.length - 1] == ')');
+  console.assert(text.startsWith('l('));
+  console.assert(text.endsWith(')'));
   text = text.substring(2, text.length - 1);
   const flatCoordinates = this.decodeCoordinates_(text);
   return new olGeomLineString(flatCoordinates, olGeomGeometryLayout.XY);
@@ -732,8 +731,8 @@ function readLineStringGeometry_(text) {
  * @this {FeatureHash}
  */
 function readMultiLineStringGeometry_(text) {
-  console.assert(text.substring(0, 2) === 'L(');
-  console.assert(text[text.length - 1] == ')');
+  console.assert(text.startsWith('L('));
+  console.assert(text.endsWith(')'));
   text = text.substring(2, text.length - 1);
   /** @type {number[]} */
   let flatCoordinates = [];
@@ -756,8 +755,8 @@ function readMultiLineStringGeometry_(text) {
  * @this {FeatureHash}
  */
 function readPointGeometry_(text) {
-  console.assert(text.substring(0, 2) === 'p(');
-  console.assert(text[text.length - 1] == ')');
+  console.assert(text.startsWith('p('));
+  console.assert(text.endsWith(')'));
   text = text.substring(2, text.length - 1);
   const flatCoordinates = this.decodeCoordinates_(text);
   console.assert(flatCoordinates.length === 2);
@@ -774,8 +773,8 @@ function readPointGeometry_(text) {
  * @this {FeatureHash}
  */
 function readMultiPointGeometry_(text) {
-  console.assert(text.substring(0, 2) === 'P(');
-  console.assert(text[text.length - 1] == ')');
+  console.assert(text.startsWith('P('));
+  console.assert(text.endsWith(')'));
   text = text.substring(2, text.length - 1);
   const flatCoordinates = this.decodeCoordinates_(text);
   return new olGeomMultiPoint(flatCoordinates, olGeomGeometryLayout.XY);
@@ -791,8 +790,8 @@ function readMultiPointGeometry_(text) {
  * @this {FeatureHash}
  */
 function readPolygonGeometry_(text) {
-  console.assert(text.substring(0, 2) === 'a(');
-  console.assert(text[text.length - 1] == ')');
+  console.assert(text.startsWith('a('));
+  console.assert(text.endsWith(')'));
   text = text.substring(2, text.length - 1);
   /** @type {number[]} */
   let flatCoordinates = [];
@@ -823,8 +822,8 @@ function readPolygonGeometry_(text) {
  * @this {FeatureHash}
  */
 function readMultiPolygonGeometry_(text) {
-  console.assert(text.substring(0, 2) === 'A(');
-  console.assert(text[text.length - 1] == ')');
+  console.assert(text.startsWith('A('));
+  console.assert(text.endsWith(')'));
   text = text.substring(2, text.length - 1);
   /** @type {number[]} */
   let flatCoordinates = [];
@@ -974,7 +973,7 @@ function setStyleProperties_(text, feature) {
       throw new Error('Wrong fontSizeStr type');
     }
     let fontSize = parseFloat(fontSizeStr);
-    if (fontSizeStr.indexOf('px') !== -1) {
+    if (fontSizeStr.includes('px')) {
       fontSize = Math.round(fontSize / 1.333333);
     }
     properties.fontSize = fontSize;
@@ -1051,8 +1050,8 @@ function getStyleProperties_(text, feature) {
   /** @type {Object<string, boolean|number|string>} */
   const properties = {};
 
-  for (let i = 0; i < parts.length; ++i) {
-    const part = decodeURIComponent(parts[i]);
+  for (const encodedPart of parts) {
+    const part = decodeURIComponent(encodedPart);
     const keyVal = part.split('*');
     console.assert(keyVal.length === 2);
     const key = keyVal[0];

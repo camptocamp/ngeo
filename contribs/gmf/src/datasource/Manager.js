@@ -1,5 +1,5 @@
 import angular from 'angular';
-import gmfDatasourceOGC from 'gmf/datasource/OGC.js';
+import GmfDatasourceOGC from 'gmf/datasource/OGC.js';
 import gmfDatasourceWFSAliases from 'gmf/datasource/WFSAliases.js';
 import gmfLayertreeSyncLayertreeMap, {getLayer} from 'gmf/layertree/SyncLayertreeMap.js';
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
@@ -21,6 +21,7 @@ import {clear as clearObject} from 'ol/obj.js';
 import olLayerImage from 'ol/layer/Image.js';
 import olSourceImageWMS from 'ol/source/ImageWMS.js';
 import olSourceTileWMS from 'ol/source/TileWMS.js';
+import BaseLayer from 'ol/layer/Base.js';
 
 
 /**
@@ -254,7 +255,13 @@ export class DatasourceManager {
   handleDimensionsChange_() {
 
     // Create a layer list to update each one only once
+    /**
+     * @type {BaseLayer[]}
+     */
     const layers = [];
+    /**
+     * @type {string[]}
+     */
     const layerIds = [];
 
     const dataSources = this.dataSources_.getArray();
@@ -267,7 +274,7 @@ export class DatasourceManager {
               return;
             }
             const id = olUtilGetUid(layer);
-            if (layerIds.indexOf(id) == -1) {
+            if (!layerIds.includes(id)) {
               layers.push(layer);
               layerIds.push(id);
             }
@@ -667,7 +674,7 @@ export class DatasourceManager {
       options.wmtsUrl = wmtsUrl;
     }
     // Create the data source and add it to the cache
-    this.dataSourcesCache_[id] = new gmfDatasourceOGC(options);
+    this.dataSourcesCache_[id] = new GmfDatasourceOGC(options);
   }
 
   /**
@@ -884,8 +891,8 @@ export class DatasourceManager {
         }
         const gmfLayerWMS = /** @type {import('gmf/themes.js').GmfLayerWMS} */(dataSource.gmfLayer);
         if (olUtilGetUid(dsLayer) == olUtilGetUid(layer) &&
-            layer.get('querySourceIds').indexOf(String(dataSource.id)) >= 0 &&
-            gmfLayerWMS.layers.split(',').indexOf(wmsLayerName) >= 0) {
+            layer.get('querySourceIds').includes(String(dataSource.id)) &&
+            gmfLayerWMS.layers.split(',').includes(wmsLayerName)) {
 
           const id = olUtilGetUid(dataSource.gmfLayer);
           const item = this.treeCtrlCache_[id];

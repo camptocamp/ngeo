@@ -237,9 +237,8 @@ MainController.prototype.handleGetStatusSuccess_ = function(ref, resp) {
     window.location.href = this.print_.getReportUrl(ref);
   } else {
     // The report is not ready yet. Check again in 1s.
-    const that = this;
     this.$timeout_(() => {
-      that.getStatus_(ref);
+      this.getStatus_(ref);
     }, 1000, false);
   }
 };

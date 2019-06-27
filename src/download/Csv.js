@@ -118,7 +118,7 @@ DownloadCsvService.prototype.getRow_ = function(values) {
     if (value !== undefined && value !== null) {
       value = `${value}`;
       // wrap each value into quotes and escape quotes with double quotes
-      return this.quote_ + value.replace(matchAllQuotesRegex, doubleQuote) + this.quote_;
+      return `${this.quote_}${value.replace(matchAllQuotesRegex, doubleQuote)}${this.quote_}`;
     } else {
       return '';
     }

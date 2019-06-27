@@ -778,7 +778,7 @@ export class PrintController {
 
     this.updateCustomFields_();
 
-    const hasLegend = this.layoutInfo.attributes.indexOf('legend') >= 0;
+    const hasLegend = this.layoutInfo.attributes.includes('legend');
     if (hasLegend) {
       this.fieldValues.legend = this.fieldValues.legend;
     } else {
@@ -997,7 +997,7 @@ export class PrintController {
     /** @type {Object<string, *>} */
     const customAttributes = {};
 
-    if (this.layoutInfo.attributes.indexOf('datasource') >= 0) {
+    if (this.layoutInfo.attributes.includes('datasource')) {
       customAttributes.datasource = datasource;
     }
 

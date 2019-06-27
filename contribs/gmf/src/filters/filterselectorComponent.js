@@ -6,7 +6,7 @@ import gmfDatasourceDataSourceBeingFiltered from 'gmf/datasource/DataSourceBeing
 
 import gmfDatasourceHelper from 'gmf/datasource/Helper.js';
 
-import gmfDatasourceOGC from 'gmf/datasource/OGC.js';
+import GmfDatasourceOGC from 'gmf/datasource/OGC.js';
 import gmfFiltersSavedFilters from 'gmf/filters/SavedFilters.js';
 
 import ngeoMessageModalComponent from 'ngeo/message/modalComponent.js';
@@ -410,7 +410,7 @@ class FilterSelectorController {
   handleDataSourcesAdd_(evt) {
     if (evt instanceof CollectionEvent) {
       const dataSource = evt.element;
-      if (dataSource instanceof gmfDatasourceOGC) {
+      if (dataSource instanceof GmfDatasourceOGC) {
         this.registerDataSource_(dataSource);
       }
     }
@@ -429,7 +429,7 @@ class FilterSelectorController {
   handleDataSourcesRemove_(evt) {
     if (evt instanceof CollectionEvent) {
       const dataSource = evt.element;
-      if (dataSource instanceof gmfDatasourceOGC) {
+      if (dataSource instanceof GmfDatasourceOGC) {
         this.unregisterDataSource_(dataSource);
       }
     }

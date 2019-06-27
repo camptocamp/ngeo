@@ -34,10 +34,9 @@ export function debounce(func, wait, invokeApply, $timeout) {
      * @this {any} The context
      */
     function(...args) {
-      const context = this;
-      const later = function() {
+      const later = () => {
         timeout = null;
-        func.apply(context, args);
+        func.apply(this, args);
       };
       if (timeout !== null) {
         $timeout.cancel(timeout);

@@ -657,7 +657,7 @@ function d3Elevation(options) {
         /**
          * @param {void} d
          */
-        d => pe.sort(d) + (light ? '' : (` - ${pe.title(d)}`))
+        d => `${pe.sort(d)}${(light ? '' : (` - ${pe.title(d)}`))}`
       );
 
     poiEnterG.selectAll('line')

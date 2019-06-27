@@ -22,7 +22,7 @@ import localforage from 'localforage/src/localforage.js';
 /**
  * @implements {ngeox.OfflineOnTileDownload}
  */
-const exports = class extends olObservable {
+export default class extends olObservable {
 
   /**
    * @ngInject
@@ -334,14 +334,13 @@ const exports = class extends olObservable {
    * @return {function(import("ol/ImageTile.js").default, string)} the tile function
    */
   createTileLoadFunction_(offlineLayer) {
-    const that = this;
     /**
      * Load the tile from persistent storage.
      * @param {import("ol/ImageTile.js").default} imageTile The image tile
      * @param {string} src The tile URL
      */
-    const tileLoadFunction = function(imageTile, src) {
-      that.getItem(normalizeURL(src)).then((content) => {
+    const tileLoadFunction = (imageTile, src) => {
+      this.getItem(normalizeURL(src)).then((content) => {
         if (!content) {
           // use a transparent 1x1 image to make the map consistent
           /* eslint-disable-next-line */
@@ -375,7 +374,4 @@ const exports = class extends olObservable {
   getMaxNumberOfParallelDownloads() {
     return 11;
   }
-};
-
-
-export default exports;
+}

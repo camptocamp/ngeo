@@ -350,9 +350,9 @@ export default class {
    */
   arrayMin(array) {
     let minVal = Infinity;
-    for (let i = 0; i < array.length; i++) {
-      if (array[i] < minVal) {
-        minVal = array[i];
+    for (const element of array) {
+      if (element < minVal) {
+        minVal = element;
       }
     }
     return minVal;
@@ -367,9 +367,9 @@ export default class {
   getPytreeLinestring(line) {
     const coords = line.getCoordinates();
     let pytreeLineString = '';
-    for (let i = 0; i < coords.length; i++) {
-      const px = coords[i][0];
-      const py = coords[i][1];
+    for (const coord of coords) {
+      const px = coord[0];
+      const py = coord[1];
       pytreeLineString += `{${Math.round(100 * px) / 100}, ${Math.round(100 * py) / 100}},`;
     }
     return pytreeLineString.substr(0, pytreeLineString.length - 1);

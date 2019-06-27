@@ -327,7 +327,7 @@ LayertreeController.prototype.getSetActive = function(val) {
       map.addLayer(layer);
     }
   } else {
-    return map.getLayers().getArray().indexOf(layer) >= 0;
+    return map.getLayers().getArray().includes(layer);
   }
 };
 
@@ -397,8 +397,7 @@ LayertreeController.prototype.traverseDepthFirst = function(visitor) {
     case LayertreeVisitorDecision.SKIP:
       return false; // continue traversing but skip current branch
     case LayertreeVisitorDecision.DESCEND:
-      for (let i = 0; i < this.children.length; ++i) {
-        const child = this.children[i];
+      for (const child of this.children) {
         const stop = child.traverseDepthFirst(visitor);
         if (stop) {
           return true; // stop traversing

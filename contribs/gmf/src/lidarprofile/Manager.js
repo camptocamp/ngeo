@@ -236,8 +236,8 @@ export class LidarprofileManager {
       const domain = this.plot.updateScaleX.domain();
       pytreeLinestring = '';
 
-      for (let i = 0; i < clippedLine.length; i++) {
-        pytreeLinestring += `{${clippedLine[i][0]},${clippedLine[i][1]}},`;
+      for (const clipped of clippedLine) {
+        pytreeLinestring += `{${clipped[0]},${clipped[1]}},`;
       }
       pytreeLinestring = pytreeLinestring.substr(0, pytreeLinestring.length - 1);
       maxLODWith = this.utils.getNiceLOD(domain[1] - domain[0], max_levels);
@@ -364,8 +364,8 @@ export class LidarprofileManager {
 
     const uInt8header = new Uint8Array(profile, 4, headerSize);
     let strHeaderLocal = '';
-    for (let i = 0; i < uInt8header.length; i++) {
-      strHeaderLocal += String.fromCharCode(uInt8header[i]);
+    for (const header of uInt8header) {
+      strHeaderLocal += String.fromCharCode(header);
     }
 
     try {
@@ -403,11 +403,14 @@ export class LidarprofileManager {
 
     const attr = jHeader.pointAttributes;
     const attributes = [];
-    for (let j = 0; j < attr.length; j++) {
-      if (this.config.serverConfig.point_attributes[attr[j]] != undefined) {
-        attributes.push(this.config.serverConfig.point_attributes[attr[j]]);
+    for (const att of attr) {
+      if (this.config.serverConfig.point_attributes[att] != undefined) {
+        attributes.push(this.config.serverConfig.point_attributes[att]);
       }
     }
+    /**
+     * @type {number}
+     */
     const scale = jHeader.scale;
 
     if (jHeader.points < 3) {
@@ -422,41 +425,52 @@ export class LidarprofileManager {
       const byteOffset = bytesPerPoint * i;
       const view = new DataView(buffer, byteOffset, bytesPerPoint);
       let aoffset = 0;
-      for (let k = 0; k < attributes.length; k++) {
-
-        if (attributes[k].value == 'POSITION_PROJECTED_PROFILE') {
+      for (const attribute of attributes) {
+        if (attribute.value == 'POSITION_PROJECTED_PROFILE') {
           const udist = view.getUint32(aoffset, true);
           const dist = udist * scale;
           points.distance.push(Math.round(100 * (distanceOffset + dist)) / 100);
           this.profilePoints.distance.push(Math.round(100 * (distanceOffset + dist)) / 100);
 
-        } else if (attributes[k].value == 'CLASSIFICATION') {
+        } else if (attribute.value == 'CLASSIFICATION') {
           const classif = view.getUint8(aoffset);
           points.classification.push(classif);
           this.profilePoints.classification.push(classif);
 
-        } else if (attributes[k].value == 'INTENSITY') {
+        } else if (attribute.value == 'INTENSITY') {
           const intensity = view.getUint8(aoffset);
           points.intensity.push(intensity);
           this.profilePoints.intensity.push(intensity);
 
-        } else if (attributes[k].value == 'COLOR_PACKED') {
+        } else if (attribute.value == 'COLOR_PACKED') {
           const r = view.getUint8(aoffset);
           const g = view.getUint8(aoffset + 1);
           const b = view.getUint8(aoffset + 2);
           points.color_packed.push([r, g, b]);
           this.profilePoints.color_packed.push([r, g, b]);
 
-        } else if (attributes[k].value == 'POSITION_CARTESIAN') {
-          const x = view.getInt32(aoffset, true) * scale + jHeader.boundingBox.lx;
-          const y = view.getInt32(aoffset + 4, true) * scale + jHeader.boundingBox.ly;
-          const z = view.getInt32(aoffset + 8, true) * scale + jHeader.boundingBox.lz;
+        } else if (attribute.value == 'POSITION_CARTESIAN') {
+          const lx = jHeader.boundingBox.lx;
+          if (typeof lx != 'number') {
+            throw new Error('Wrong lx type');
+          }
+          const ly = jHeader.boundingBox.ly;
+          if (typeof ly != 'number') {
+            throw new Error('Wrong ly type');
+          }
+          const lz = jHeader.boundingBox.lz;
+          if (typeof lz != 'number') {
+            throw new Error('Wrong lz type');
+          }
+          const x = view.getInt32(aoffset, true) * scale + lx;
+          const y = view.getInt32(aoffset + 4, true) * scale + ly;
+          const z = view.getInt32(aoffset + 8, true) * scale + lz;
           points.coords.push([x, y]);
           points.altitude.push(z);
           this.profilePoints.altitude.push(z);
           this.profilePoints.coords.push([x, y]);
         }
-        aoffset = aoffset + attributes[k].bytes;
+        aoffset = aoffset + attribute.bytes;
       }
     }
 

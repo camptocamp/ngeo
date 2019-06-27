@@ -298,7 +298,7 @@ DisclaimerController.prototype.$onDestroy = function() {
 DisclaimerController.prototype.showDisclaimerMessage_ = function(msg) {
   msg = this.gettextCatalog_.getString(msg);
   if (this.external) {
-    if (this.msgs_.indexOf(msg) < 0) {
+    if (!this.msgs_.includes(msg)) {
       this.msgs_.push(msg);
     }
     this.msg = `${this.sce_.trustAsHtml(this.msgs_.join('<br />'))}`;

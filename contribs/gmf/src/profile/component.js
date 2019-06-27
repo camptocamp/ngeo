@@ -546,10 +546,10 @@ ProfileController.prototype.getTooltipHTML_ = function() {
   innerHTML.push(`${this.profileLabels_.xAxis} ${separator} ${value}&nbsp;${this.currentPoint.xUnits}`);
   for (elevationName in this.currentPoint.elevations) {
     translatedElevationName = gettextCatalog.getString(elevationName);
-    const int_value = this.currentPoint.elevations[elevationName];
-    const value = int_value === null ?
+    const intValue = this.currentPoint.elevations[elevationName];
+    const value = intValue === null ?
       gettextCatalog.getString('no value') :
-      `${number(int_value, 0)}&nbsp;${this.currentPoint.yUnits}`;
+      `${number(intValue, 0)}&nbsp;${this.currentPoint.yUnits}`;
     innerHTML.push(`${translatedElevationName} ${separator} ${value}`);
   }
   return innerHTML.join('</br>');

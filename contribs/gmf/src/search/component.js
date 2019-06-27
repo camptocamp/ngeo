@@ -573,9 +573,7 @@ class SearchController {
       throw new Error('Missing map');
     }
     const gettextCatalog = this.gettextCatalog_;
-    for (let i = 0; i < this.datasources.length; i++) {
-      const datasource = this.datasources[i];
-
+    for (const datasource of this.datasources) {
       /** @type {string[]} */
       const groupValues = datasource.groupValues !== undefined ? datasource.groupValues : [];
       /** @type {gmfSearchAction[]} */

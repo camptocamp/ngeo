@@ -144,7 +144,7 @@ function MainController($scope) {
  */
 MainController.prototype.toggleRoadsLayer = function(val) {
   if (val === undefined) {
-    return this.map.getLayers().getArray().indexOf(this.roads_) >= 0;
+    return this.map.getLayers().getArray().includes(this.roads_);
   } else {
     if (val) {
       this.map.addLayer(this.roads_);

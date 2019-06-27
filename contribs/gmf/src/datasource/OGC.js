@@ -80,7 +80,7 @@ import ngeoDatasourceOGC from 'ngeo/datasource/OGC.js';
  * @private
  * @hidden
  */
-class gmfDatasourceOGC extends ngeoDatasourceOGC {
+class GmfDatasourceOGC extends ngeoDatasourceOGC {
 
   /**
    * A `gmf.datasource.OGC` extends a `ngeo.datasource.OGC` and
@@ -113,4 +113,4 @@ class gmfDatasourceOGC extends ngeoDatasourceOGC {
 
 }
 
-export default gmfDatasourceOGC;
+export default GmfDatasourceOGC;

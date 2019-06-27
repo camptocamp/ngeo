@@ -163,7 +163,7 @@ function NumberFilter($locale) {
         str_number = `0${str_number}`;
       }
       decimal = str_number.substring(str_number.length - nb_decimal);
-      while (decimal[decimal.length - 1] === '0') {
+      while (decimal.endsWith('0')) {
         decimal = decimal.substring(0, decimal.length - 1);
       }
     }
@@ -209,6 +209,7 @@ module.filter('ngeoNumber', NumberFilter);
  * @ngname ngeoUnitPrefix
  */
 function UnitPrefixFilter($filter) {
+  /** @type {function(number, number=): string} */
   const numberFilter = $filter('ngeoNumber');
   const standardPrefix = ['', 'k', 'M', 'G', 'T', 'P'];
   const binaryPrefix = ['', 'Ki', 'Mi', 'Gi', 'Ti', 'Pi'];

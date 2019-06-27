@@ -333,7 +333,7 @@ LayerHelper.prototype.getFlatLayers_ = function(layer, array, computedOpacity) {
       this.getFlatLayers_(l, array, computedOpacity);
     });
   } else if (layer instanceof olLayerLayer) {
-    if (array.indexOf(layer) < 0) {
+    if (!array.includes(layer)) {
       layer.set('inheritedOpacity', computedOpacity, true);
       array.push(layer);
     }

@@ -263,9 +263,9 @@ class ModifyRectangle extends olInteractionPointer {
     const uid = olUtilGetUid(feature);
     const item = this.cache_[uid];
     const corners = item.corners;
-    for (let i = 0; i < corners.length; i++) {
+    for (const corner of corners) {
       /** @type {olSourceVector<import("ol/geom/Geometry.js").default>} */(this.vectorPoints_.getSource())
-        .removeFeature(corners[i]);
+        .removeFeature(corner);
     }
     this.feature_ = null;
     corners.length = 0;

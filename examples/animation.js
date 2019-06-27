@@ -69,9 +69,8 @@ function MainController($timeout) {
   // But we need to do it asynchronously in order to have the `resizemap`
   // directive working. If we don't, the `ng-class` directive doesn't fire the
   // animation hooks.
-  const self = this;
   $timeout(() => {
-    self.open = true;
+    this.open = true;
   }, 0);
 }
 
