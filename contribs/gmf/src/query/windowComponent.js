@@ -265,7 +265,8 @@ exports.Controller_ = function($element, $scope, ngeoQueryResult, ngeoMapQuerent
       if (newQueryResult.total > 0) {
         this.show();
       } else if (oldQueryResult !== newQueryResult) {
-        this.close();
+        this.open = false;
+        this.clear();
       }
     });
 };
@@ -552,6 +553,7 @@ function(opt_lastFeature) {
 exports.Controller_.prototype.close = function() {
   this.open = false;
   this.clear();
+  this.ngeoMapQuerent_.clear();
 };
 
 
