@@ -234,7 +234,7 @@ gh-pages: .build/python-venv.timestamp
 		.build/python-venv.timestamp
 	mkdir -p $(dir $@)
 	$(PY_VENV_BIN)/python buildtools/generate-examples-index.py \
-		--app 'GeoMapFish' contribs/gmf/mobile.html 'GeoMapFish examples.' \
+		--app 'GeoMapFish' contribs/gmf/ 'GeoMapFish examples.' \
 		$< $(NGEO_EXAMPLES_HTML_FILES) > $@
 
 .build/examples-hosted/contribs/gmf/index.html: \
