@@ -116,7 +116,7 @@ class Controller extends MeasueMobileBaseController {
    * Initialise the controller.
    */
   init() {
-    if (!this.precision) {
+    if (this.precision === null) {
       throw new Error('Missing precision');
     }
     this.measure = new ngeoInteractionMeasureLengthMobile(
