@@ -254,7 +254,8 @@ export function QueryWindowController(
       if (newQueryResult.total > 0) {
         this.show();
       } else if (oldQueryResult !== newQueryResult) {
-        this.close();
+        this.open = false;
+        this.clear();
       }
     });
 }
