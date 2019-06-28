@@ -51,7 +51,6 @@ export function LayertreeController($scope, $rootScope, $attrs) {
     });
   } else {
     node = $scope.$eval(nodeExpr);
-    console.assert(this.node !== undefined);
   }
   /**
    * @type {import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer}

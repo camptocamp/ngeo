@@ -133,9 +133,6 @@ MeasueMobileBaseController.prototype.init = function() {
   if (!this.measure) {
     throw new Error('Missing measure');
   }
-  if (!this.drawInteraction) {
-    throw new Error('Missing drawInteraction');
-  }
 
   this.measure.setActive(this.active);
   interactionDecoration(this.measure);

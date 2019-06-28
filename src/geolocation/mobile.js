@@ -335,10 +335,9 @@ Controller.prototype.autorotateListener = function() {
       if (!(event instanceof DeviceOrientationEvent)) {
         throw new Error('Wrong event type');
       }
-      if (!event.alpha) {
-        throw new Error('Missing event.alpha');
+      if (event.alpha !== null) {
+        currentAlpha = this.handleRotate_(event.alpha, currentAlpha);
       }
-      currentAlpha = this.handleRotate_(event.alpha, currentAlpha);
     }, true);
   } else if (window.hasOwnProperty('ondeviceorientation')) {
     window.addEventListener('deviceorientation', (evt) => {
