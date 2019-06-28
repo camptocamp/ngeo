@@ -14,6 +14,7 @@ import gmfControllersAbstractDesktopController, {AbstractDesktopController}
   from 'gmf/controllers/AbstractDesktopController.js';
 import appBase from '../appmodule.js';
 import gmfImportModule from 'gmf/import/module.js';
+import gmfFloorModule from 'gmf/floor/module.js';
 import ngeoGooglestreetviewModule from 'ngeo/googlestreetview/module.js';
 import ngeoRoutingModule from 'ngeo/routing/module.js';
 import EPSG2056 from '@geoblocks/proj/src/EPSG_2056.js';
@@ -38,9 +39,10 @@ class Controller extends AbstractDesktopController {
   /**
    * @param {angular.IScope} $scope Scope.
    * @param {angular.auto.IInjectorService} $injector Main injector.
+   * @param {Array<Object<string, string>>} appFloors Floor dimension values and labels.
    * @ngInject
    */
-  constructor($scope, $injector) {
+  constructor($scope, $injector, appFloors) {
     super({
       srid: 21781,
       mapViewConfig: {
@@ -51,7 +53,21 @@ class Controller extends AbstractDesktopController {
     }, $scope, $injector);
 
     /**
-     * @type {string[]}
+     * @type {Array<Object<string, string>>}
+     */
+    this.floors = appFloors;
+
+    /**
+     * @type {Object<string, string>}
+     */
+    this.dimensions = {};
+
+    if (this.dimensions.FLOOR == undefined) {
+      this.dimensions.FLOOR = '*';
+    }
+
+    /**
+     * @type {Array<string>}
      */
     this.searchCoordinatesProjections = [EPSG21781, EPSG2056, 'EPSG:4326'];
 
@@ -165,6 +181,7 @@ const module = angular.module('Appdesktop_alt', [
   appBase.name,
   gmfControllersAbstractDesktopController.name,
   gmfImportModule.name,
+  gmfFloorModule.name,
   ngeoRoutingModule.name,
   ngeoGooglestreetviewModule.name,
   ngeoStatemanagerWfsPermalink.name,

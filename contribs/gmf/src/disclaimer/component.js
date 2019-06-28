@@ -14,6 +14,19 @@ import 'angular-sanitize';
 
 
 /**
+ * Extension of type {import('ngeo/message/Message.js').Message}
+ *
+ * @typedef {Object} Message
+ * @property {number} [delay=7000] The delay in milliseconds the message is shown
+ * @property {boolean} [popup=false] Whether the message should be displayed inside a popup window or not.
+ * @property {string} msg The message text to display.
+ * @property {JQuery|Element|string} [target] The target element (or selector to get the element) in which
+ *    to display the message. If not defined, then the default target of the notification service is used.
+ * @property {string} [type='info'] The type of message.
+ * @property {string} [layerUid] The layer ID
+ */
+
+/**
  * @type {angular.IModule}
  * @hidden
  */
@@ -23,18 +36,6 @@ const module = angular.module('gmfDisclaimer', [
   ngeoMessageDisclaimer.name,
   ngeoMiscEventHelper.name,
 ]);
-
-
-/**
- * @param {import("ol/layer/Base.js").default} layer Layer
- * @param {function(string):void} func Function
- */
-function forEachDisclaimer(layer, func) {
-  const disclaimers = layer.get('disclaimers');
-  if (disclaimers && Array.isArray(disclaimers)) {
-    disclaimers.forEach(func);
-  }
-}
 
 
 /**
@@ -232,30 +233,23 @@ DisclaimerController.prototype.registerLayer_ = function(layer) {
 
     if (this.layerVisibility) {
       // Show disclaimer messages for this layer
-      forEachDisclaimer(layer, (disclaimer) => {
-        if (layer.getVisible()) {
-          this.showDisclaimerMessage_(disclaimer);
-        }
-      });
+      if (layer.getVisible()) {
+        this.update_(layer);
+      } else {
+        this.closeAll_(layer);
+      }
 
-      const listenerKey = olEvents.listen(layer, 'change:visible', (event) => {
-        const layer = event.target;
+      const listenerKey = olEvents.listen(layer, 'change', (event) => {
         if (layer.getVisible()) {
-          forEachDisclaimer(layer, (disclaimer) => {
-            this.showDisclaimerMessage_(disclaimer);
-          });
+          this.update_(layer);
         } else {
-          forEachDisclaimer(layer, (disclaimer) => {
-            this.closeDisclaimerMessage_(disclaimer);
-          });
+          this.closeAll_(layer);
         }
       });
       this.eventHelper_.addListenerKey(layerUid, listenerKey);
     } else {
       // Show disclaimer messages for this layer
-      forEachDisclaimer(layer, (disclaimer) => {
-        this.showDisclaimerMessage_(disclaimer);
-      });
+      this.showAll_(layer);
     }
   }
 };
@@ -278,11 +272,8 @@ DisclaimerController.prototype.unregisterLayer_ = function(layer) {
     layer.getLayers().forEach(layer => this.unregisterLayer_(layer));
 
   } else {
-
-    // Close disclaimer messages for this layer
-    forEachDisclaimer(layer, (disclaimer) => {
-      this.closeDisclaimerMessage_(disclaimer);
-    });
+    // Close all disclaimer messages for this layer
+    this.closeAll_(layer);
   }
 
 };
@@ -297,10 +288,11 @@ DisclaimerController.prototype.$onDestroy = function() {
 
 
 /**
+ * @param {string} layerUid Layer identifier.
  * @param {string} msg Disclaimer message.
  * @private
  */
-DisclaimerController.prototype.showDisclaimerMessage_ = function(msg) {
+DisclaimerController.prototype.showDisclaimerMessage_ = function(layerUid, msg) {
   msg = this.gettextCatalog_.getString(msg);
   if (this.external) {
     if (!this.msgs_.includes(msg)) {
@@ -309,9 +301,10 @@ DisclaimerController.prototype.showDisclaimerMessage_ = function(msg) {
     this.msg = `${this.sce_.trustAsHtml(this.msgs_.join('<br />'))}`;
     this.visibility = true;
   } else {
-    /** @type {import('ngeo/message/Message.js').Message} */
+    /** @type {Message} */
     const options = {
       msg: msg,
+      layerUid: layerUid,
       target: this.element_,
       type: MessageType.WARNING
     };
@@ -324,19 +317,84 @@ DisclaimerController.prototype.showDisclaimerMessage_ = function(msg) {
 
 
 /**
+ * @param {import("ol/layer/Base.js").default} layer Layer
+ * @private
+ */
+DisclaimerController.prototype.closeAll_ = function(layer) {
+  const disclaimers = layer.get('disclaimers');
+  if (disclaimers) {
+    const layerUid = olUtilGetUid(layer);
+    for (const key in disclaimers) {
+      const uid = `${layerUid}-${key}`;
+      this.closeDisclaimerMessage_(uid, disclaimers[key]);
+    }
+  }
+};
+
+
+/**
+ * @param {import("ol/layer/Base.js").default} layer Layer
+ * @private
+ */
+DisclaimerController.prototype.showAll_ = function(layer) {
+  const disclaimers = layer.get('disclaimers');
+  if (disclaimers) {
+    const layerUid = olUtilGetUid(layer);
+    for (const key in disclaimers) {
+      const uid = `${layerUid}-${key}`;
+      this.showDisclaimerMessage_(uid, disclaimers[key]);
+    }
+  }
+};
+
+
+/**
+ * @param {import("ol/layer/Base.js").default} layer Layer
+ * @private
+ */
+DisclaimerController.prototype.update_ = function(layer) {
+  const disclaimers = layer.get('disclaimers');
+  if (disclaimers) {
+    if ('all' in disclaimers) {
+      // the disclaimer is for all the layers, WMS or WMTS.
+      console.assert(Object.keys(disclaimers).length === 1);
+      this.showAll_(layer);
+    } else {
+      const layerWMS =
+        /** @type {import("ol/layer/Layer.js").default<import("ol/source/ImageWMS.js").default>} */(layer);
+      const sourceWMS = layerWMS.getSource();
+      if (sourceWMS.getParams) {
+        const layers = sourceWMS.getParams()['LAYERS'];
+        const layerUid = olUtilGetUid(layer);
+        for (const key in disclaimers) {
+          const uid = `${layerUid}-${key}`;
+          if (layers.indexOf(key) !== -1) {
+            this.showDisclaimerMessage_(uid, disclaimers[key]);
+          } else {
+            this.closeDisclaimerMessage_(uid, disclaimers[key]);
+          }
+        }
+      }
+    }
+  }
+};
+
+/**
+ * @param {string} layerUid Layer identifier.
  * @param {string} msg Disclaimer message.
  * @private
  */
-DisclaimerController.prototype.closeDisclaimerMessage_ = function(msg) {
+DisclaimerController.prototype.closeDisclaimerMessage_ = function(layerUid, msg) {
   msg = this.gettextCatalog_.getString(msg);
   if (this.external) {
     this.visibility = false;
     this.msgs_.length = 0;
     this.msg = '';
   } else {
-    /** @type {import('ngeo/message/Message.js').Message} */
+    /** @type {Message} */
     const options = {
       msg: msg,
+      layerUid: layerUid,
       target: this.element_,
       type: MessageType.WARNING
     };

@@ -273,7 +273,8 @@ export function QueryWindowController(
       if (newQueryResult.total > 0) {
         this.show();
       } else if (oldQueryResult !== newQueryResult) {
-        this.close();
+        this.open = false;
+        this.clear();
       }
     });
 }
@@ -562,6 +563,7 @@ QueryWindowController.prototype.highlightCurrentFeature_ = function(opt_lastFeat
 QueryWindowController.prototype.close = function() {
   this.open = false;
   this.clear();
+  this.ngeoMapQuerent_.clear();
 };
 
 
