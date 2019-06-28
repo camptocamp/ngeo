@@ -116,12 +116,9 @@ class Controller extends MeasueMobileBaseController {
    * Initialise the controller.
    */
   init() {
-    if (this.precision === null) {
-      throw new Error('Missing precision');
-    }
     this.measure = new ngeoInteractionMeasureLengthMobile(
       this.filter('ngeoUnitPrefix'), this.gettextCatalog, {
-        precision: this.precision,
+        precision: this.precision || 0,
         sketchStyle: this.sketchStyle
       }
     );
