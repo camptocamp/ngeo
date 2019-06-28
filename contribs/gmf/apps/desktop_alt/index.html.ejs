@@ -305,6 +305,11 @@
           ngeo-bbox-query-autoclear="mainCtrl.queryAutoClear">
         </gmf-map>
 
+        <gmf-floorselector class="gmf-floorselector ol-unselectable ol-control"
+          value="mainCtrl.dimensions.FLOOR"
+          items="::mainCtrl.floors">
+        </gmf-floorselector>
+
         <!--infobar-->
         <div class="gmf-app-footer" ng-class="{'gmf-app-active': mainCtrl.showInfobar}">
           <button class="btn fa gmf-app-map-info ng-cloak" ng-click="mainCtrl.showInfobar = !mainCtrl.showInfobar"

@@ -7,6 +7,20 @@ import 'ngeo/sass/font.scss';
 
 
 /**
+ * A message to display by the disclaimer service.
+ *
+ * @typedef {Object} Message
+ * @property {number} [delay=7000] The delay in milliseconds the message is shown
+ * @property {boolean} [popup=false] Whether the message should be displayed inside a popup window or not.
+ * @property {string} msg The message text to display.
+ * @property {string} [layerUid] The OpenLayers layer identifier.
+ * @property {JQuery|Element|string} [target] The target element (or selector to get the element) in which
+ *    to display the message. If not defined, then the default target of the notification service is used.
+ * @property {string} [type='info'] The type of message.
+ */
+
+
+/**
  * Provides methods to display any sort of messages, disclaimers, errors,
  * etc. Requires Bootstrap library (both CSS and JS) to display the alerts
  * properly.
@@ -55,12 +69,24 @@ export class MessageDisclaimerService extends ngeoMessageMessage {
      * @private
      */
     this.messages_ = {};
+
+    /**
+     * @type {Object<string, number>}
+     * @private
+     */
+    this.messagesConsumerCount_ = {};
+
+    /**
+     * @type {Object<string, boolean>}
+     * @private
+     */
+    this.uids_ = {};
   }
 
   /**
    * Show disclaimer message string or object or list of disclaimer message
    * strings or objects.
-   * @param {string|import('ngeo/message/Message.js').Message|Array<string|import('ngeo/message/Message.js').Message>}
+   * @param {string|Message|Array<string|Message>}
    *     object A message or list of messages as text or configuration objects.
    */
   alert(object) {
@@ -70,17 +96,17 @@ export class MessageDisclaimerService extends ngeoMessageMessage {
   /**
    * Close disclaimer message string or object or list of disclaimer message
    * strings or objects.
-   * @param {string|import('ngeo/message/Message.js').Message|Array<string|import('ngeo/message/Message.js').Message>}
+   * @param {string|Message|Array<string|Message>}
    *     object A message or list of messages as text or configuration objects.
    */
   close(object) {
     const msgObjects = this.getMessageObjects(object);
-    msgObjects.forEach(this.closeMessage_, this);
+    msgObjects.forEach((message) => this.closeMessage_(message));
   }
 
   /**
    * Show the message.
-   * @param {import('ngeo/message/Message.js').Message} message Message.
+   * @param {Message} message Message.
    * @protected
    * @override
    */
@@ -89,15 +115,15 @@ export class MessageDisclaimerService extends ngeoMessageMessage {
     const type = message.type;
     console.assert(typeof type == 'string', 'Type should be set.');
 
-    // No need to do anything if message already exist.
+    // No need to do anything if message already displayed.
     const uid = this.getMessageUid_(message);
-    if (this.messages_[uid] !== undefined) {
+    if (this.uids_[uid]) {
       return;
     }
 
-    const showInPopup = message.popup === true;
+    this.uids_[uid] = true;
 
-    if (showInPopup) {
+    if (message.popup === true) {
       // display the message in a popup, i.e. using the ngeo create popup
       const popup = this.createPopup_();
       const content = this.sce_.trustAsHtml(message.msg);
@@ -108,7 +134,7 @@ export class MessageDisclaimerService extends ngeoMessageMessage {
       });
 
       // Watch the open property
-      popup.scope.$watch('open', (newVal, oldVal) => {
+      popup.scope.$watch('open', newVal => {
         if (!newVal) {
           this.closeMessage_(message);
         }
@@ -117,6 +143,14 @@ export class MessageDisclaimerService extends ngeoMessageMessage {
       this.messages_[uid] = popup;
 
     } else {
+      // get an already displayed compatible message.
+      const compatibleMessageUid = this.getCompatibleMessageUid_(message);
+      if (this.messages_[compatibleMessageUid]) {
+        // we already have a message
+        this.messagesConsumerCount_[compatibleMessageUid]++;
+        return;
+      }
+
       // display the message using a bootstrap dismissible alert
       const classNames = ['alert', 'fade', 'alert-dismissible', 'show'];
       switch (type) {
@@ -158,35 +192,57 @@ export class MessageDisclaimerService extends ngeoMessageMessage {
 
       // Listen when the message gets closed to cleanup the cache of messages
       el.on('closed.bs.alert', () => {
-        this.closeMessage_(message);
+        this.closeMessage_(message, true);
       });
-
-      this.messages_[uid] = el;
+      this.messages_[compatibleMessageUid] = el;
+      this.messagesConsumerCount_[compatibleMessageUid] = 1;
     }
   }
 
   /**
-   * @param {import('ngeo/message/Message.js').Message} message Message.
+   * @param {Message} message Message.
    * @return {string} The uid.
    * @private
    */
   getMessageUid_(message) {
+    return `${message.msg}-${message.type}-${message.layerUid}`;
+  }
+
+  /**
+   * @param {Message} message Message.
+   * @return {string} The uid.
+   * @private
+   */
+  getCompatibleMessageUid_(message) {
     return `${message.msg}-${message.type}`;
   }
 
   /**
    * Close the message.
-   * @param {import('ngeo/message/Message.js').Message} message Message.
+   * @param {Message} message Message.
+   * @param {boolean} force Force close the message.
    * @protected
    */
-  closeMessage_(message) {
+  closeMessage_(message, force = false) {
     const uid = this.getMessageUid_(message);
-    const obj = this.messages_[uid];
 
     // (1) No need to do anything if message doesn't exist
-    if (obj === undefined) {
+    if (!this.uids_[uid]) {
       return;
     }
+    delete this.uids_[uid];
+    const compatibleMessageUid = this.getCompatibleMessageUid_(message);
+    if (force) {
+      this.messagesConsumerCount_[compatibleMessageUid] = 0;
+    } else {
+      this.messagesConsumerCount_[compatibleMessageUid]--;
+    }
+    if (this.messagesConsumerCount_[compatibleMessageUid] > 0) {
+      // the message is still used
+      return;
+    }
+
+    const obj = this.messages_[compatibleMessageUid];
 
     // (2) Close message (popup or alert)
     if (obj instanceof MessagePopup) {
@@ -208,7 +264,8 @@ export class MessageDisclaimerService extends ngeoMessageMessage {
     }
 
     // (3) Remove message from cache since it's closed now.
-    delete this.messages_[uid];
+    delete this.messages_[compatibleMessageUid];
+    delete this.messagesConsumerCount_[compatibleMessageUid];
   }
 }
 

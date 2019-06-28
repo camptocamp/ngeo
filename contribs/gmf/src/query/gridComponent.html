@@ -10,13 +10,15 @@
     role="tablist">
 
     <li
+      class="nav-item"
       ng-repeat="gridSource in ctrl.getGridSources() track by gridSource.source.label"
       role="presentation"
-      ng-class="{'active' : ctrl.isSelected(gridSource)}"
       ng-click="ctrl.selectTab(gridSource)">
 
       <a
+        class="nav-link"
         href="#{{ctrl.escapeValue(gridSource.source.label)}}"
+        ng-class="{'active' : ctrl.isSelected(gridSource)}"
         data-target="#{{ctrl.escapeValue(gridSource.source.label)}}"
         aria-controls="{{ctrl.escapeValue(gridSource.source.label)}}"
         role="tab"

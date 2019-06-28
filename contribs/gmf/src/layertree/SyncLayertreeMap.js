@@ -398,7 +398,7 @@ SyncLayertreeMap.prototype.createWMTSLayer_ = function(gmfLayerWMTS) {
 
 /**
  * Update properties of a layer with the node of a given leafNode.
- * @param {import('gmf/themes.js').GmfLayer} leafNode a leaf node.
+ * @param {import('gmf/themes.js').GmfLayer|import('gmf/themes.js').GmfLayerWMS} leafNode a leaf node.
  * @param {import("ol/layer/Base.js").default} layer A layer.
  * @private
  */
@@ -410,8 +410,14 @@ SyncLayertreeMap.prototype.updateLayerReferences_ = function(leafNode, layer) {
 
   const disclaimer = leafNode.metadata.disclaimer;
   if (disclaimer) {
-    const disclaimers = layer.get('disclaimers') || [];
-    disclaimers.push(leafNode.metadata.disclaimer);
+    const disclaimers = layer.get('disclaimers') || {};
+
+    // 'all' means that the disclaimer is for all the layer.
+    let layers = 'all';
+    if ('layers' in leafNode) {
+      layers = /** @type {import('gmf/themes.js').GmfLayerWMS} */ (leafNode).layers;
+    }
+    disclaimers[layers] = leafNode.metadata.disclaimer;
     layer.set('disclaimers', disclaimers);
   }
 };
