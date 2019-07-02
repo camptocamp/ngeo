@@ -23,6 +23,11 @@ gmf-layertree {
   display: none;
 }
 
+#scaleline {
+  position: absolute;
+  bottom: 0;
+}
+
 .ol-scale-line {
   bottom: $app-margin;
   left: $app-margin;
