@@ -838,8 +838,9 @@ export class PrintController {
       if (!attribute.clientParams) {
         const name = `${attribute.name}`;
         const defaultValue = attribute.default;
+        /** @type {string} */
         let value = (defaultValue !== undefined && defaultValue !== '') ?
-          defaultValue : this.fieldValues[name];
+          `${defaultValue}` : name in this.fieldValues ? `${this.fieldValues[name]}` : '';
 
         // Try to use existing form field type
         const rawType = `${attribute.type}`;
@@ -854,8 +855,8 @@ export class PrintController {
             break;
           case 'Number':
             type = 'number';
-            value = parseFloat(/** @type {string} */(value));
-            value = isNaN(value) ? 0 : value;
+            const numberValue = parseFloat(value);
+            value = isNaN(numberValue) ? '0' : `${value}`;
             break;
           default:
             type = rawType;
@@ -872,7 +873,7 @@ export class PrintController {
         this.layoutInfo.simpleAttributes.push({
           name,
           type,
-          value: `${value}`
+          value: value
         });
       }
     });
