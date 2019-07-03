@@ -75,11 +75,6 @@ https://localhost:3000/contribs/gmf/apps/desktop.html
   application developers using ngeo.
 
 
-## How to migrate from ngeo 2.2 to ngeo 2.3 ?
-* [The migration guide - from 2.2 to 2.3](docs/how_to_migrate_from_2.2_to_2.3.md) – This guide is for
-  integrators **still** on ngeo 2.2 and wanting to use ngeo 2.3.
-
-
 ## Other docs related to ngeo:
 * [Transifex](https://www.transifex.com/camptocamp/ngeo/) – Translation platform.
 * [Travis](https://travis-ci.org/camptocamp/ngeo) – Continuous integration.
