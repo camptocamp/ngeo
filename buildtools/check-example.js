@@ -1,76 +1,96 @@
-"use strict";
-//
-// A PhantomJS script used to check that the hosted examples load
-// without errors. This script is executed by the Makefile's
-// check-examples target.
+'use strict';
 
-require('phantomjs-polyfill-string-includes');
-var args = require('system').args;
-if (args.length != 2) {
-  phantom.exit(1);
+const path = require('path');
+const puppeteer = require('puppeteer');
+
+const arg = process.argv[2];
+const screenshotPath = `${arg}.png`;
+const url = `http://localhost:3000/${arg}`;
+if (!arg) {
+  throw new Error('Please provide a HTML file as the first argument');
 }
-var examplePath = args[1];
-var page = require('webpage').create();
-var exitCode = 0;
-page.onError = function(msg, trace) {
-  var msgStack = ['JavaScript ERROR: ' + msg];
-  if (trace) {
-    msgStack.push('TRACE:');
-    trace.forEach(function(t) {
-      if (t.file.startsWith('https://maps.googleapis.com/maps/api/js')) {
-        // Ignore google referrer error
-        return;
-      }
-      msgStack.push(' -> ' + t.file + ': ' + t.line + (t.function ? ' (in function "' + t.function + '")' : ''));
-    });
-  }
-  console.error(msgStack.join('\n'));
-  exitCode = 2;
-};
-page.onConsoleMessage = function(msg, lineNum, sourceId) {
-  console.log('console: ' + msg + ' (from line #' + lineNum + ' in "' + sourceId + '")');
-  exitCode = 2;
-};
-page.onAlert = function(msg) {
-  console.log('alert: ' + msg);
-  exitCode = 2;
-};
 
-page.onResourceError = function(resourceError) {
-  if (resourceError.url.includes('tile.openstreetmap.org')) {
-    console.warn('Ignoring resource error from OpenStreetMap');
-  } else if (resourceError.url.includes('https://maps.googleapis.com/maps/api/js')) {
-    console.warn('Ignoring resource error from Google');
-  } else if (resourceError.url.includes('https://csi.gstatic.com/')) {
-    console.warn('Ignoring resource error from Google static');
-  } else if (resourceError.url.includes('cdn.polyfill.io')) {
-    console.warn('Ignoring resource error from polyfill.io');
-  } else if (resourceError.errorCode >= 400) {
-    console.log('Resource error: ' + resourceError.errorCode + ', ' + resourceError.errorString + ', ' + resourceError.url);
-    exitCode = 2;
+const requestsURL = new Set();
+const start = new Date();
+let timeout = undefined;
+function loaded(page, browser) {
+  if (timeout !== undefined) {
+    clearTimeout(timeout);
   }
-};
-page.onResourceTimeout = page.onResourceError;
-page.settings.resourceTimeout = 4000;
-page.onUrlChanged = function(url) {
-  console.log('URL changed: ' + url);
-};
-page.open(examplePath, function(s) {
-  if (s != 'success') {
-    console.error('PAGE LOAD ERROR');
-    phantom.exit(2);
-  }
-
-  setTimeout(function() {
-    //page.render(examplePath + '.png')
-    var consoleControl = require('console-control-strings');
-
-    var color = exitCode == 0 ? 'green' : 'red';
-    console.log(
-      consoleControl.color([color, "bold"]) +
-      "EXIT with " + exitCode +
-      consoleControl.color('reset')
-    );
-    phantom.exit(exitCode);
-  }, 3000)
-});
+  timeout = setTimeout(() => {
+    if (requestsURL.size) {
+      console.log('Pending requests:');
+      requestsURL.forEach((request) => console.log(request));
+      process.exit(2);
+    } else {
+      // @ts-ignore
+      console.log(`Check finished in ${new Date() - start} seconds`);
+      page.screenshot({
+        path: screenshotPath
+      }).then(() => {
+        console.log(`Screenshot saved at: ${screenshotPath}`);
+        browser.close();
+      }, (e) => {
+        console.log(`Screenshot error: ${e}`);
+        process.exit(2);
+      });
+    }
+  }, 2000);
+}
+(async () => {
+  const browser = await puppeteer.launch();
+  const page = await browser.newPage();
+  await page.setViewport({width: 1920, height: 1080});
+  page.on('load', () => console.log(`Page loaded: ${page.url()}`));
+  page.on('pageerror', (e) => {
+    console.log('Page error');
+    console.log(e);
+    process.exit(2);
+  });
+  page.on('dialog', (e) => {
+    console.log('Unexpected alert message');
+    console.log(e);
+    process.exit(2);
+  });
+  page.on('request', (request) => {
+    const url = request.url();
+    requestsURL.add(url);
+    loaded(page, browser);
+  });
+  page.on('requestfinished', (request) => {
+    const url = request.url();
+    requestsURL.delete(url);
+    loaded(page, browser);
+  });
+  page.on('requestfailed', (request) => {
+    const url = request.url();
+    requestsURL.delete(url);
+    if (url.includes('tile.openstreetmap.org')) {
+      console.warn('Ignoring resource error from OpenStreetMap');
+    } else if (url.includes('https://maps.googleapis.com/maps/api/js')) {
+      console.warn('Ignoring resource error from Google');
+    } else if (url.includes('https://csi.gstatic.com/')) {
+      console.warn('Ignoring resource error from Google static');
+    } else if (url.includes('cdn.polyfill.io')) {
+      console.warn('Ignoring resource error from polyfill.io');
+    } else {
+      console.log(`Request failed on: ${url}`);
+      process.exit(2);
+    }
+    loaded(page, browser);
+  });
+  page.on('console', (message) => {
+    const type = message.type();
+    const location = message.location();
+    if (type !== 'log' && type !== 'debug' && type !== 'info' && type !== 'warning' &&
+      location.url != 'http://localhost:3000/.build/examples-hosted/dist/vendor.js?dev'
+    ) {
+      console.log(`Console ${type}`);
+      console.log(`On: ${location.url} ${location.lineNumber}:${location.columnNumber}.`);
+      console.log(message.text());
+      process.exit(2);
+    }
+  });
+  await page.goto(url);
+  loaded(page, browser);
+})();

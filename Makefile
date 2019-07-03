@@ -13,7 +13,7 @@ NGEO_EXAMPLES_JS_FILES := $(NGEO_EXAMPLES_HTML_FILES:.html=.js)
 
 GMF_PARTIALS_FILES := $(shell find contribs/gmf/src/ -name *.html)
 GMF_JS_FILES := $(shell find contribs/gmf/src/ -type f -name '*.js')
-GMF_ALL_SRC_FILES := $(shell find contribs/gmf/src/ -type f) $(shell find contribs/gmf/src/cursors/ -type f) $(NGEO_ALL_SRC_FILES)
+GMF_ALL_SRC_FILES := $(shell find contribs/gmf/src/ -type f) $(NGEO_ALL_SRC_FILES)
 GMF_TEST_JS_FILES := $(shell find contribs/gmf/test/ -type f -name '*.js')
 GMF_EXAMPLES_HTML_FILES := $(shell ls -1 contribs/gmf/examples/*.html)
 GMF_EXAMPLES_JS_FILES := $(GMF_EXAMPLES_HTML_FILES:.html=.js)
@@ -180,7 +180,9 @@ examples-hosted: \
 examples-hosted-ngeo: .build/examples-ngeo.timestamp .build/examples-hosted/index.html
 
 .build/examples-ngeo.timestamp: $(NGEO_ALL_SRC_FILES) $(WEBPACK_CONFIG_FILES) \
-	.build/node_modules.timestamp .build/build-dll.timestamp
+		.build/node_modules.timestamp \
+		.build/build-dll.timestamp \
+		.build/examples-hosted/dist
 	npm run build-ngeo-examples
 	touch $@
 
@@ -188,15 +190,20 @@ examples-hosted-ngeo: .build/examples-ngeo.timestamp .build/examples-hosted/inde
 examples-hosted-gmf: .build/examples-gmf.timestamp .build/examples-hosted/contribs/gmf/index.html
 
 .build/examples-gmf.timestamp: $(GMF_ALL_SRC_FILES) $(WEBPACK_CONFIG_FILES) \
-	.build/node_modules.timestamp .build/build-dll.timestamp
+		.build/node_modules.timestamp \
+		.build/build-dll.timestamp \
+		.build/examples-hosted/dist
 	npm run build-gmf-examples
 	touch $@
 
 .PHONY: examples-hosted-apps
-examples-hosted-apps: .build/gmf-apps.timestamp .build/examples-hosted-gmf-apps-deps.timestamp
+examples-hosted-apps: .build/gmf-apps.timestamp
 
 .build/gmf-apps.timestamp: $(GMF_APPS_ALL_SRC_FILES) $(WEBPACK_CONFIG_FILES) \
-	.build/node_modules.timestamp .build/build-dll.timestamp
+		.build/node_modules.timestamp \
+		.build/build-dll.timestamp \
+		.build/examples-hosted/dist \
+		.build/examples-hosted-gmf-apps-deps.timestamp
 	npm run build-gmf-apps
 	touch $@
 
@@ -216,8 +223,10 @@ gh-pages: .build/python-venv.timestamp
 	./node_modules/.bin/eslint $(filter-out .build/node_modules.timestamp $(ESLINT_CONFIG_FILES), $^)
 	touch $@
 
+.build/examples-hosted/dist: .build/build-dll.timestamp
+	cp -r dist .build/examples-hosted/
+
 .build/examples-hosted-gmf-apps-deps.timestamp: \
-		.build/build-dll.timestamp \
 		$(addprefix contribs/gmf/build/gmf-, $(addsuffix .json, $(LANGUAGES))) \
 		$(addprefix contribs/gmf/build/angular-locale_, $(addsuffix .js, $(LANGUAGES)))
 	mkdir -p .build/examples-hosted/contribs/gmf
@@ -225,7 +234,6 @@ gh-pages: .build/python-venv.timestamp
 	# To simplify processing, we first copy them in gmfappsdeps directory, then from there to each app
 	$(foreach f,$^,mkdir -p .build/examples-hosted/gmfappsdeps/`dirname $(f)`; cp $(f) .build/examples-hosted/gmfappsdeps/$(f);)
 	rsync --recursive .build/examples-hosted/gmfappsdeps/contribs/gmf/ .build/examples-hosted/contribs/gmf/apps/;)
-	cp -r dist .build/examples-hosted/
 	touch $@
 
 .build/examples-hosted/index.html: \
@@ -255,30 +263,39 @@ gh-pages: .build/python-venv.timestamp
 
 .build/test-check-example/%.check.timestamp: test/check-example/%.html \
 		.build/node_modules.timestamp \
-		buildtools/check-example.js
+		buildtools/check-example.js \
+		.build/httpserver.timestamp
 	mkdir -p $(dir $@)
-	if ./node_modules/.bin/phantomjs --local-to-remote-url-access=true buildtools/check-example.js $< ; then false; fi
+	node buildtools/check-example.js $<
 	touch $@
 
-.build/%.check.timestamp: .build/examples-hosted/%.html \
+.build/httpserver.timestamp:
+	python3 -m http.server 3000 &
+	touch $@
+
+.build/%.check.timestamp: .build/examples-ngeo.timestamp \
 		.build/node_modules.timestamp \
-		buildtools/check-example.js
+		buildtools/check-example.js \
+		.build/httpserver.timestamp
 	mkdir -p $(dir $@)
-	./node_modules/.bin/phantomjs --local-to-remote-url-access=true buildtools/check-example.js $<
+	node buildtools/check-example.js .build/examples-hosted/$*.html
 	#[ `compare -metric RMSE $<.png example/$*-ref.png /$<-diff.png 2>&1 | sed 's/^.*(\(.*\))/\1/g'` \< 0.05 ]
 	touch $@
 
-.build/contribs/gmf/%.check.timestamp: .build/examples-hosted/contribs/gmf/%.html \
+.build/contribs/gmf/%.check.timestamp: .build/examples-gmf.timestamp \
 		.build/examples-hosted/contribs/gmf/%.js \
 		.build/node_modules.timestamp \
-		buildtools/check-example.js
+		buildtools/check-example.js \
+		.build/httpserver.timestamp
 	mkdir -p $(dir $@)
-	./node_modules/.bin/phantomjs --local-to-remote-url-access=true buildtools/check-example.js $<
+	node buildtools/check-example.js .build/examples-hosted/contribs/gmf/$*.html
 	touch $@
 
-.build/contribs/gmf/apps/%.check.timestamp: .build/examples-hosted/contribs/gmf/apps/%.html
+.build/contribs/gmf/apps/%.check.timestamp: .build/gmf-apps.timestamp \
+		buildtools/check-example.js \
+		.build/httpserver.timestamp
 	mkdir -p $(dir $@)
-	./node_modules/.bin/phantomjs --local-to-remote-url-access=true buildtools/check-example.js $<
+	node buildtools/check-example.js .build/examples-hosted/contribs/gmf/apps/$*.html
 	touch $@
 
 .build/node_modules.timestamp: package.json
@@ -393,7 +410,7 @@ contribs/gmf/build/gmf-%.json: \
 .PHONY: build-dll
 build-dll: .build/build-dll.timestamp
 
-.build/build-dll.timestamp: .build/python-venv.timestamp
+.build/build-dll.timestamp: .build/python-venv.timestamp .build/node_modules.timestamp
 	$(PY_VENV_BIN)/python3 buildtools/extract-ngeo-dependencies > deps.js && \
 	npm run build-dll
 	rm deps.js
