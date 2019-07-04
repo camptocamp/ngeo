@@ -1,5 +1,10 @@
 {
   "esversion": 6,
   "-W014": true,
-  "-W119": true
+  "-W119": true,
+  "globals": {
+    "console": true,
+    "setTimeout": true,
+    "clearTimeout": true
+  }
 }
