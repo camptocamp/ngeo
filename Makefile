@@ -201,7 +201,6 @@ examples-hosted-apps: .build/gmf-apps.timestamp
 
 .build/gmf-apps.timestamp: $(GMF_APPS_ALL_SRC_FILES) $(WEBPACK_CONFIG_FILES) \
 		.build/node_modules.timestamp \
-		.build/build-dll.timestamp \
 		.build/examples-hosted/dist \
 		.build/examples-hosted-gmf-apps-deps.timestamp
 	npm run build-gmf-apps
@@ -224,7 +223,9 @@ gh-pages: .build/python-venv.timestamp
 	touch $@
 
 .build/examples-hosted/dist: .build/build-dll.timestamp
+	mkdir -p .build/examples-hosted/
 	cp -r dist .build/examples-hosted/
+	touch $@
 
 .build/examples-hosted-gmf-apps-deps.timestamp: \
 		$(addprefix contribs/gmf/build/gmf-, $(addsuffix .json, $(LANGUAGES))) \
@@ -261,41 +262,38 @@ gh-pages: .build/python-venv.timestamp
 			'An example application for editing an object.' \
 		$< $(GMF_EXAMPLES_HTML_FILES) > $@
 
-.build/test-check-example/%.check.timestamp: test/check-example/%.html \
-		.build/node_modules.timestamp \
-		buildtools/check-example.js \
-		.build/httpserver.timestamp
-	mkdir -p $(dir $@)
-	node buildtools/check-example.js $<
-	touch $@
-
 .build/httpserver.timestamp:
 	python3 -m http.server 3000 &
 	touch $@
 
 .build/%.check.timestamp: .build/examples-ngeo.timestamp \
 		.build/node_modules.timestamp \
-		buildtools/check-example.js \
 		.build/httpserver.timestamp
 	mkdir -p $(dir $@)
 	node buildtools/check-example.js .build/examples-hosted/$*.html
-	#[ `compare -metric RMSE $<.png example/$*-ref.png /$<-diff.png 2>&1 | sed 's/^.*(\(.*\))/\1/g'` \< 0.05 ]
+	[ "$$(gm compare -metric RMSE -highlight-style xor .build/examples-hosted/$*.html.png \
+	examples/$*-ref.png -file .build/examples-hosted/$*.html.png-diff.png 2>&1 | \
+	tail --lines=1 | sed 's/.* \([0-9\.]\+\) .*/\1/g')" \< 0.005 ]
 	touch $@
 
 .build/contribs/gmf/%.check.timestamp: .build/examples-gmf.timestamp \
 		.build/examples-hosted/contribs/gmf/%.js \
 		.build/node_modules.timestamp \
-		buildtools/check-example.js \
 		.build/httpserver.timestamp
 	mkdir -p $(dir $@)
 	node buildtools/check-example.js .build/examples-hosted/contribs/gmf/$*.html
+	[ "$$(gm compare -metric RMSE -highlight-style xor .build/examples-hosted/contribs/gmf/$*.html.png \
+	contribs/gmf/examples/$*-ref.png -file .build/examples-hosted/contribs/gmf/$*-diff.png 2>&1 | \
+	tail --lines=1 | sed 's/.* \([0-9\.]\+\) .*/\1/g')" \< 0.005 ]
 	touch $@
 
 .build/contribs/gmf/apps/%.check.timestamp: .build/gmf-apps.timestamp \
-		buildtools/check-example.js \
 		.build/httpserver.timestamp
 	mkdir -p $(dir $@)
 	node buildtools/check-example.js .build/examples-hosted/contribs/gmf/apps/$*.html
+	[ "$$(gm compare -metric RMSE -highlight-style xor .build/examples-hosted/contribs/gmf/apps/$*.html.png \
+	contribs/gmf/apps/$*-ref.png -file .build/examples-hosted/contribs/gmf/apps/$*-diff.png 2>&1 | \
+	tail --lines=1 | sed 's/.* \([0-9\.]\+\) .*/\1/g')" \< 0.005 ]
 	touch $@
 
 .build/node_modules.timestamp: package.json
@@ -437,6 +435,7 @@ clean:
 
 .PHONY: cleanall
 cleanall: clean
+	rm -rf dist
 	rm -rf .build
 	rm -rf node_modules
 	rm -f .tx/config

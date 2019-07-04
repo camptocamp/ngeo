@@ -1,6 +1,7 @@
 import angular from 'angular';
 import appURL from './url.js';
 import './print.css';
+import './gmf-hidden.inc.css';
 import gmfLayertreeComponent from 'gmf/layertree/component.js';
 
 import gmfMapComponent from 'gmf/map/component.js';

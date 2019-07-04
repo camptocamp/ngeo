@@ -1,6 +1,7 @@
 import angular from 'angular';
 import appURL from './url.js';
 import './editfeatureselector.css';
+import './gmf-hidden.inc.css';
 import 'bootstrap/js/src/tooltip.js';
 import gmfAuthenticationModule from 'gmf/authentication/module.js';
 
