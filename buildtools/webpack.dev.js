@@ -12,6 +12,33 @@ const resourcesRule = {
   }
 };
 
+const svgRule = {
+  test: /\.svg$/,
+  oneOf: [{
+    resourceQuery: /url/,
+    use: [
+      {
+        loader: 'file-loader',
+        options: {
+          name: '[name].[ext]'
+        },
+      },
+      'svgo-loader',
+    ]
+  }, {
+    use: [
+      {
+        loader: 'svg-inline-loader',
+        options: {
+          removeSVGTagAttrs: false,
+        },
+      },
+      './buildtools/svg-viewbox-loader',
+      'svgo-loader',
+    ]
+  }]
+};
+
 new webpack.LoaderOptionsPlugin({
   debug: false
 });
@@ -19,12 +46,14 @@ new webpack.LoaderOptionsPlugin({
 
 module.exports = {
   mode: 'development',
+  // devtool: 'eval',
   output: {
     filename: '[name].js'
   },
   module: {
     rules: [
       resourcesRule,
+      svgRule,
     ]
   },
 };

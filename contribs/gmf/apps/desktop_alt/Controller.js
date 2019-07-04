@@ -20,7 +20,11 @@ import ngeoRoutingModule from 'ngeo/routing/module.js';
 import EPSG2056 from '@geoblocks/proj/src/EPSG_2056.js';
 import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
 import ngeoStatemanagerWfsPermalink from 'ngeo/statemanager/WfsPermalink.js';
-import {Circle, Fill, Stroke, Style} from 'ol/style';
+import Style from 'ol/style/Style.js';
+import Circle from 'ol/style/Circle.js';
+import Fill from 'ol/style/Fill.js';
+import Stroke from 'ol/style/Stroke.js';
+import Icon from 'ol/style/Icon.js';
 import Raven from 'raven-js/src/raven.js';
 import RavenPluginsAngular from 'raven-js/plugins/angular.js';
 
@@ -193,5 +197,19 @@ const module = angular.module('Appdesktop_alt', [
 ]);
 
 module.controller('AlternativeDesktopController', Controller);
+
+
+module.value('gmfPermalinkOptions', /** @type {import('gmf/permalink/Permalink.js').PermalinkOptions} */ ({
+  crosshairStyle: [
+    new Style({
+      image: new Icon({
+        src: 'data:image/svg+xml;base64,' + btoa(require('./image/crosshair.svg?inline')),
+        // Also working
+        // src: require('./image/crosshair.svg?url'),
+        imgSize: [22, 22],
+      })
+    })
+  ]
+}));
 
 export default module;
