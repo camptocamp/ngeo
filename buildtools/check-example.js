@@ -1,14 +1,17 @@
 'use strict';
 
 const path = require('path');
+const fs = require('fs');
 const puppeteer = require('puppeteer');
 
 const arg = process.argv[2];
-const screenshotPath = `${arg}.png`;
-const url = `http://localhost:3000/${arg}`;
 if (!arg) {
   throw new Error('Please provide a HTML file as the first argument');
 }
+const screenshotPath = `${arg}.png`;
+const url = `http://localhost:3000/${arg}`;
+
+const OSMImage = fs.readFileSync(path.resolve(__dirname, 'osm.png'));
 
 const requestsURL = new Set();
 const start = new Date();
@@ -19,71 +22,87 @@ function loaded(page, browser) {
   }
   timeout = setTimeout(() => {
     if (requestsURL.size) {
-      console.log('Pending requests:');
-      requestsURL.forEach((request) => console.log(request));
-      process.exit(2);
+      // @ts-ignore
+      if ((new Date() - start) > 60000) {
+        // The page take more than 60s. to load ...
+        console.log('Pending requests:');
+        requestsURL.forEach((request) => console.log(request));
+        process.exit(2);
+      } else {
+        timeout = undefined;
+        loaded(page, browser);
+      }
     } else {
       // @ts-ignore
-      console.log(`Check finished in ${new Date() - start} seconds`);
+      console.log(`Check finished in ${(new Date() - start) / 1000} seconds`);
       page.screenshot({
         path: screenshotPath
       }).then(() => {
         console.log(`Screenshot saved at: ${screenshotPath}`);
         browser.close();
-      }, (e) => {
+      }, e => {
         console.log(`Screenshot error: ${e}`);
         process.exit(2);
       });
     }
-  }, 2000);
+  }, 500);
 }
 (async () => {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
   await page.setViewport({width: 1920, height: 1080});
-  page.on('load', () => console.log(`Page loaded: ${page.url()}`));
-  page.on('pageerror', (e) => {
+  await page.setRequestInterception(true);
+  page.on('pageerror', e => {
     console.log('Page error');
     console.log(e);
     process.exit(2);
   });
-  page.on('dialog', (e) => {
+  page.on('dialog', e => {
     console.log('Unexpected alert message');
     console.log(e);
     process.exit(2);
   });
-  page.on('request', (request) => {
+  page.on('request', request => {
     const url = request.url();
-    requestsURL.add(url);
     loaded(page, browser);
-  });
-  page.on('requestfinished', (request) => {
-    const url = request.url();
-    requestsURL.delete(url);
-    loaded(page, browser);
-  });
-  page.on('requestfailed', (request) => {
-    const url = request.url();
-    requestsURL.delete(url);
-    if (url.includes('tile.openstreetmap.org')) {
-      console.warn('Ignoring resource error from OpenStreetMap');
-    } else if (url.includes('https://maps.googleapis.com/maps/api/js')) {
-      console.warn('Ignoring resource error from Google');
-    } else if (url.includes('https://csi.gstatic.com/')) {
-      console.warn('Ignoring resource error from Google static');
-    } else if (url.includes('cdn.polyfill.io')) {
-      console.warn('Ignoring resource error from polyfill.io');
+    if (url.startsWith('http://localhost:3000/') ||
+        url.startsWith('https://geomapfish-demo-2-5.camptocamp.com/') ||
+        url.startsWith('https://wms.geo.admin.ch/')) {
+      requestsURL.add(url);
+      request.continue();
+    } else if (url.includes('tile.openstreetmap.org')) {
+      request.respond({
+        status: 200,
+        headers: {
+          'content-type': 'image/png',
+        },
+        body: OSMImage,
+      });
     } else {
+      request.abort();
+    }
+  });
+  page.on('requestfinished', request => {
+    const url = request.url();
+    requestsURL.delete(url);
+    loaded(page, browser);
+  });
+  page.on('requestfailed', request => {
+    const url = request.url();
+    if (url.startsWith('http://localhost:3000/') ||
+        url.startsWith('https://geomapfish-demo-2-5.camptocamp.com/') ||
+        url.startsWith('https://wms.geo.admin.ch/')) {
       console.log(`Request failed on: ${url}`);
       process.exit(2);
     }
     loaded(page, browser);
   });
-  page.on('console', (message) => {
+  page.on('console', message => {
     const type = message.type();
     const location = message.location();
     if (type !== 'log' && type !== 'debug' && type !== 'info' && type !== 'warning' &&
-      location.url != 'http://localhost:3000/.build/examples-hosted/dist/vendor.js?dev'
+      !location.url.startsWith('http://localhost:3000/.build/examples-hosted/dist/vendor.js') &&
+      location.url.startsWith('http://localhost:3000/')
     ) {
       console.log(`Console ${type}`);
       console.log(`On: ${location.url} ${location.lineNumber}:${location.columnNumber}.`);

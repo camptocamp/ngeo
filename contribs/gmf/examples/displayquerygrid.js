@@ -1,6 +1,7 @@
 import angular from 'angular';
 import appURL from './url.js';
 import './displayquerygrid.css';
+import './gmf-hidden.inc.css';
 import gmfDatasourceManager from 'gmf/datasource/Manager.js';
 
 import gmfLayertreeComponent from 'gmf/layertree/component.js';
