@@ -41,10 +41,9 @@ class Controller extends AbstractDesktopController {
   /**
    * @param {angular.IScope} $scope Scope.
    * @param {angular.auto.IInjectorService} $injector Main injector.
-   * @param {Array.<Object.<string, string>>} appFloors Floor dimension values and labels.
    * @ngInject
    */
-  constructor($scope, $injector, appFloors) {
+  constructor($scope, $injector) {
     super({
       srid: 21781,
       mapViewConfig: {
@@ -54,17 +53,12 @@ class Controller extends AbstractDesktopController {
       }
     }, $scope, $injector);
 
-    /**
-     * @type {Array.<Object.<string, string>>}
-     */
-    this.floors = appFloors;
-
-    if (this.dimensions['FLOOR'] == undefined) {
-      this.dimensions['FLOOR'] = '*';
+    if (this.dimensions.FLOOR == undefined) {
+      this.dimensions.FLOOR = '*';
     }
 
     /**
-     * @type {Array.<string>}
+     * @type {Array<string>}
      */
     this.searchCoordinatesProjections = [EPSG21781, EPSG2056, 'EPSG:4326'];
 
