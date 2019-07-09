@@ -94,10 +94,8 @@ const Service = class {
     });
 
     // We catch every $.ajax request errors or (canceled request).
-
     // @ts-ignore
-    const ajaxError = this.$document_['ajaxError'];
-    if (ajaxError) {
+    if (this.$document_.ajaxError) {
       /**
        * @param {any} evt
        * @param {any} jqxhr
@@ -110,7 +108,8 @@ const Service = class {
           this.check(2000);
         }
       };
-      ajaxError(onAjaxError);
+      // @ts-ignore
+      this.$document_.ajaxError(onAjaxError);
     }
   }
 
