@@ -119,6 +119,12 @@ function loaded(page, browser) {
       process.exit(2);
     }
   });
-  await page.goto(url);
+  await page.goto(url).catch(error => {
+    console.log(`Page load error: ${error}.`);
+    process.exit(2);
+  });
   loaded(page, browser);
-})();
+})().catch(error => {
+  console.log(`Unexpected error: ${error}.`);
+  process.exit(2);
+});
