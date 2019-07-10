@@ -124,4 +124,7 @@ function loaded(page, browser) {
     process.exit(2);
   });
   loaded(page, browser);
-})();
+})().catch(error => {
+  console.log(`Unexpected error: ${error}.`);
+  process.exit(2);
+});
