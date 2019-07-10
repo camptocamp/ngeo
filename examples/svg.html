@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html ng-app='app'>
+  <head>
+    <title>SVG example</title>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <meta name="mobile-web-app-capable" content="yes">
+  </head>
+  <body ng-controller="MainController as ctrl">
+    <p id="desc">This example shows different ways to include an SVG in the application using Webpack.</p>
+    <p>In a map:</p>
+    <div id="map" ngeo-map="ctrl.map"></div>
+    <p>In the HTML:</p>
+    <p id="font2">Font (2rem): <%=require("./font.svg")%>.</p>
+    <p id="font4">Font (4rem): <%=require("./font.svg")%>.</p>
+    <p>Inline (?inline): <%=require("./inline.svg?inline")%>.</p>
+    <p>URL (?url): <img src="<%=require("./url.svg?url")%>" /></p>
+    <p>Note for Inkscape, in the document property - Page:</p>
+    <ul>
+      <li>The default unit should be px.</li>
+      <li>In Custom size the unit should be px.</li>
+      <li>The scale should be 1.</li>
+    </ul>
+    <p>Note: in font, and in inline mode, CSS rules can be used.</p>
+  </body>
+</html>

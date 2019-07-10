@@ -61,19 +61,6 @@ const htmlRule = {
   use: 'ejs-loader',
 };
 
-const svgRule = {
-  test: /\.svg$/,
-  use: [
-    {
-      loader: 'svg-inline-loader',
-      options: {
-        removeSVGTagAttrs: false,
-      },
-    },
-    './buildtools/svg-viewbox-loader',
-    'svgo-loader',
-  ]
-};
 
 function get_comp(firsts, lasts) {
   return (f1, f2) => {
@@ -142,7 +129,6 @@ const config = function(hardSourceConfig, babelLoaderCacheDirectory) {
         cssRule,
         sassRule,
         htmlRule,
-        svgRule,
         ngeoRule,
         otherRule,
       ]
