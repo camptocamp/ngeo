@@ -203,9 +203,7 @@ module.value('gmfPermalinkOptions', /** @type {import('gmf/permalink/Permalink.j
   crosshairStyle: [
     new Style({
       image: new Icon({
-        src: 'data:image/svg+xml;base64,' + btoa(require('./image/crosshair.svg?inline')),
-        // Also working
-        // src: require('./image/crosshair.svg?url'),
+        src: 'data:image/svg+xml;base64,' + btoa(require('./image/crosshair.svg?viewbox')),
         imgSize: [22, 22],
       })
     })

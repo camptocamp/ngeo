@@ -480,7 +480,7 @@ export function PermalinkService(
     this.crosshairStyle_ = [new olStyleStyle({
       image: new olStyleIcon({
         // @ts-ignore: webpack
-        src: require('!!file-loader!gmf/permalink/crosshair.svg')
+        src: 'data:image/svg+xml;base64,' + btoa(require('gmf/permalink/crosshair.svg'))
       })
     })];
   }
