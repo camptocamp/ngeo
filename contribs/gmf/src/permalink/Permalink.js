@@ -134,7 +134,7 @@ const ParamPrefix = {
  *     For these parameters to work properly, they must define the
  *     same number of elements, i.e. same number of names and urls.
  *
- * - `map_crossair` (boolean)
+ * - `map_crosshair` (boolean)
  *     If this parameter set to `true`, then a crosshair marker will be
  *     added to the center of the map upon initialization. The marker
  *     will stay at this location.
