@@ -12,6 +12,44 @@ const resourcesRule = {
   }
 };
 
+const svgRule = {
+  test: /\.svg$/,
+  oneOf: [{
+    resourceQuery: /url/,
+    use: [
+      {
+        loader: 'file-loader',
+        options: {
+          name: '[name].[hash:6].[ext]'
+        },
+      },
+      'svgo-loader',
+    ]
+  }, {
+    resourceQuery: /inline/,
+    use: [
+      {
+        loader: 'svg-inline-loader',
+        options: {
+          removeSVGTagAttrs: false,
+        },
+      },
+      'svgo-loader',
+    ]
+  }, {
+    use: [
+      {
+        loader: 'svg-inline-loader',
+        options: {
+          removeSVGTagAttrs: false,
+        },
+      },
+      './buildtools/svg-viewbox-loader',
+      'svgo-loader',
+    ]
+  }]
+};
+
 module.exports = function() {
   return {
     mode: 'production',
@@ -25,6 +63,7 @@ module.exports = function() {
     module: {
       rules: [
         resourcesRule,
+        svgRule,
       ]
     },
     optimization: {

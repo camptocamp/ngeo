@@ -146,7 +146,6 @@ module.exports = function(config) {
         cssRule,
         sassRule,
         htmlRule,
-        svgRule,
         ngeoRule,
         otherRule,
       ]
