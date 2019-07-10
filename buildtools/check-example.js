@@ -8,10 +8,15 @@ const arg = process.argv[2];
 if (!arg) {
   throw new Error('Please provide a HTML file as the first argument');
 }
-const screenshotPath = `${arg}.png`;
-const url = `http://localhost:3000/${arg}`;
+const screenshot = !arg.startsWith('http');
+const screenshotPath = screenshot ? `${arg}.png` : undefined;
+const url = screenshot ? `http://localhost:3000/${arg}` : arg;
 
-const OSMImage = fs.readFileSync(path.resolve(__dirname, 'osm.png'));
+try {
+  const OSMImage = fs.readFileSync(path.resolve(__dirname, 'osm.png'));
+} catch (e) {
+  // Ignore
+}
 
 const requestsURL = new Set();
 const start = new Date();
@@ -35,15 +40,19 @@ function loaded(page, browser) {
     } else {
       // @ts-ignore
       console.log(`Check finished in ${(new Date() - start) / 1000} seconds`);
-      page.screenshot({
-        path: screenshotPath
-      }).then(() => {
-        console.log(`Screenshot saved at: ${screenshotPath}`);
+      if (screenshot) {
+        page.screenshot({
+          path: screenshotPath
+        }).then(() => {
+          console.log(`Screenshot saved at: ${screenshotPath}`);
+          browser.close();
+        }, e => {
+          console.log(`Screenshot error: ${e}`);
+          process.exit(2);
+        });
+      } else {
         browser.close();
-      }, e => {
-        console.log(`Screenshot error: ${e}`);
-        process.exit(2);
-      });
+      }
     }
   }, 500);
 }
