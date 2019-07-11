@@ -9,9 +9,9 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="65.118118"
-   height="65.118111"
-   viewBox="0 0 65.118118 65.118111"
+   width="1.7229168cm"
+   height="1.7229167cm"
+   viewBox="0 0 130.23624 130.23622"
    version="1.1"
    id="svg8"
    inkscape:version="0.92.3 (2405546, 2018-03-11)"
@@ -26,21 +26,21 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="3.959798"
-     inkscape:cx="-68.924416"
-     inkscape:cy="1.772267"
-     inkscape:document-units="px"
+     inkscape:cx="38.116651"
+     inkscape:cy="62.381419"
+     inkscape:document-units="cm"
      inkscape:current-layer="layer1"
      showgrid="false"
      fit-margin-top="2"
      fit-margin-left="2"
      fit-margin-right="2"
      fit-margin-bottom="2"
-     inkscape:window-width="1680"
-     inkscape:window-height="1022"
-     inkscape:window-x="1680"
-     inkscape:window-y="0"
+     inkscape:window-width="1613"
+     inkscape:window-height="995"
+     inkscape:window-x="67"
+     inkscape:window-y="27"
      inkscape:window-maximized="1"
-     units="px"
+     units="cm"
      scale-x="1" />
   <metadata
      id="metadata5">
@@ -62,19 +62,19 @@
     <circle
        style="fill-opacity:1;stroke:none;stroke-width:0.52916664;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="path815"
-       cx="82.341797"
-       cy="110.60072"
-       r="25" />
+       cx="114.90086"
+       cy="143.15977"
+       r="50" />
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:15.79833221px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       x="64.541672"
-       y="116.24739"
+       style="font-style:normal;font-weight:normal;font-size:31.59666634px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="79.300606"
+       y="154.45312"
        id="text819"><tspan
          sodipodi:role="line"
          id="tspan817"
-         x="64.541672"
-         y="116.24739"
+         x="79.300606"
+         y="154.45312"
          style="stroke-width:0.26458332px">Font</tspan></text>
   </g>
 </svg>

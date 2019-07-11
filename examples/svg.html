@@ -9,19 +9,23 @@
   </head>
   <body ng-controller="MainController as ctrl">
     <p id="desc">This example shows different ways to include an SVG in the application using Webpack.</p>
-    <p>In a map:</p>
+    <h5>In the HTML</h5>
+    <p>Default: <%=require("./inline.svg")%>.</p>
+    <p id="font2">With <code>?viewbox&height=1em</code>, 2rem, style on circle: <%=require("./font.svg?viewbox&height=1em")%>.</p>
+    <p id="font4">With <code>?viewbox&height=1em</code>, 4rem, style on circle: <%=require("./font.svg?viewbox&height=1em")%>.</p>
+    <p id="fa">Font Awesome <code>?viewbox&height=2em</code>, style <code>fill: #65b0ff</code>: <%=require("@fortawesome/fontawesome-free/svgs/regular/check-circle.svg?viewbox&height=2em")%>.</p>
+    <p>With <code>?viewbox</code>: <%=require("./inline.svg?viewbox")%>.</p>
+    <p>With <code>?viewbox&width=3em</code>: <%=require("./inline.svg?viewbox&width=3em")%>.</p>
+    <p>With <code>?viewbox&height=3em</code>: <%=require("./inline.svg?viewbox&height=3em")%>.</p>
+    <p>As URL with <code>?url</code>: <img src="<%=require("./url.svg?url")%>" /></p>
+    <p>Note: in font, and in inline mode, CSS rules can be used to style the SVG.</p>
+    <h5>In an OpenLayers symboles</h5>
     <div id="map" ngeo-map="ctrl.map"></div>
-    <p>In the HTML:</p>
-    <p id="font2">Font (2rem): <%=require("./font.svg")%>.</p>
-    <p id="font4">Font (4rem): <%=require("./font.svg")%>.</p>
-    <p>Inline (?inline): <%=require("./inline.svg?inline")%>.</p>
-    <p>URL (?url): <img src="<%=require("./url.svg?url")%>" /></p>
-    <p>Note for Inkscape, in the document property - Page:</p>
+    <p>Using src (left to right):</p>
     <ul>
-      <li>The default unit should be px.</li>
-      <li>In Custom size the unit should be px.</li>
-      <li>The scale should be 1.</li>
+      <li><code>'data:image/svg+xml;base64,' + btoa(require('./inline.svg'))</code></li>
+      <li><code>'data:image/svg+xml;base64,' + btoa(require('./inline.svg?viewbox&width=30px'))</code></li>
+      <li><code>require('./url.svg?url')</code></li>
     </ul>
-    <p>Note: in font, and in inline mode, CSS rules can be used.</p>
   </body>
 </html>

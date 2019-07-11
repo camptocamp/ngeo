@@ -43,10 +43,9 @@ class Controller extends AbstractDesktopController {
   /**
    * @param {angular.IScope} $scope Scope.
    * @param {angular.auto.IInjectorService} $injector Main injector.
-   * @param {Array<Object<string, string>>} appFloors Floor dimension values and labels.
    * @ngInject
    */
-  constructor($scope, $injector, appFloors) {
+  constructor($scope, $injector) {
     super({
       srid: 21781,
       mapViewConfig: {
@@ -55,16 +54,6 @@ class Controller extends AbstractDesktopController {
         resolutions: [250, 100, 50, 20, 10, 5, 2, 1, 0.5, 0.25, 0.1, 0.05]
       }
     }, $scope, $injector);
-
-    /**
-     * @type {Array<Object<string, string>>}
-     */
-    this.floors = appFloors;
-
-    /**
-     * @type {Object<string, string>}
-     */
-    this.dimensions = {};
 
     if (this.dimensions.FLOOR == undefined) {
       this.dimensions.FLOOR = '*';
@@ -198,9 +187,7 @@ module.value('gmfPermalinkOptions', /** @type {import('gmf/permalink/Permalink.j
   crosshairStyle: [
     new Style({
       image: new Icon({
-        src: 'data:image/svg+xml;base64,' + btoa(require('./image/crosshair.svg?inline')),
-        // Also working
-        // src: require('./image/crosshair.svg?url'),
+        src: 'data:image/svg+xml;base64,' + btoa(require('./image/crosshair.svg?viewbox')),
         imgSize: [22, 22],
       })
     })

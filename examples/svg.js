@@ -34,7 +34,7 @@ function MainController() {
   feature1.setStyle([new Style({
     image: new Icon({
       // @ts-ignore: For Webpack
-      src: 'data:image/svg+xml;base64,' + btoa(require('./inline.svg?inline')),
+      src: 'data:image/svg+xml;base64,' + btoa(require('./inline.svg')),
       // For IE compatibility
       imgSize: [65, 65]
     })
@@ -42,10 +42,24 @@ function MainController() {
   source.addFeature(feature1);
 
   const feature2 = new Feature({
-    geometry: new Point([601000, 200000])
+    geometry: new Point([600000, 200000])
   });
   // @ts-ignore: OL issue
   feature2.setStyle([new Style({
+    image: new Icon({
+      // @ts-ignore: For Webpack
+      src: 'data:image/svg+xml;base64,' + btoa(require('./inline.svg?viewbox&width=30px')),
+      // For IE compatibility
+      imgSize: [30, 30]
+    })
+  })]);
+  source.addFeature(feature2);
+
+  const feature3 = new Feature({
+    geometry: new Point([601000, 200000])
+  });
+  // @ts-ignore: OL issue
+  feature3.setStyle([new Style({
     image: new Icon({
       // @ts-ignore: For Webpack
       src: require('./url.svg?url'),
@@ -53,7 +67,7 @@ function MainController() {
       imgSize: [65, 65]
     })
   })]);
-  source.addFeature(feature2);
+  source.addFeature(feature3);
 
   this.map = new Map({
     layers: [

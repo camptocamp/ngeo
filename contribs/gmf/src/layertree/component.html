@@ -45,7 +45,7 @@
     ng-click="::gmfLayertreeCtrl.toggleActive(layertreeCtrl)"
     ng-if="::!layertreeCtrl.node.children && !gmfLayertreeCtrl.getLegendIconURL(layertreeCtrl)"
     class="gmf-layertree-layer-icon gmf-layertree-no-layer-icon"
-  ><%=require('gmf/icons/dot.svg')%></a>
+  ><%=require('gmf/icons/dot.svg?viewbox&height=1em')%></a>
 
   <a
     href
@@ -58,13 +58,13 @@
     ng-click="::gmfLayertreeCtrl.toggleActive(layertreeCtrl)"
     ng-if="layertreeCtrl.node.children && !layertreeCtrl.layer.loading"
     class="gmf-layertree-state gmf-not-intermediate"
-  ><%=require('gmf/icons/layers.svg')%></a>
+  ><%=require('gmf/icons/layers.svg?viewbox&height=1em')%></a>
   <a
     href
     ng-click="::gmfLayertreeCtrl.toggleActive(layertreeCtrl)"
     ng-if="layertreeCtrl.node.children && !layertreeCtrl.layer.loading"
     class="gmf-layertree-state gmf-intermediate"
-  ><%=require('gmf/icons/stack-indeterminate.svg')%></a>
+  ><%=require('gmf/icons/stack-indeterminate.svg?viewbox&height=1em')%></a>
 
   <a
     href
@@ -83,7 +83,7 @@
       data-title="{{'Not visible at current scale. Click to zoom.'|translate}}"
       ng-click="::gmfLayertreeCtrl.zoomToResolution(layertreeCtrl); $event.preventDefault(); $event.stopPropagation();"
       ng-if="gmfLayertreeCtrl.getNodeState(layertreeCtrl) == 'on'"
-    ><%=require('gmf/icons/search-go.svg')%></i>
+    ><%=require('gmf/icons/search-go.svg?viewbox&height=1em')%></i>
 
     <span
       ngeo-popover
