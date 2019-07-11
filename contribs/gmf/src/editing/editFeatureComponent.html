@@ -15,27 +15,27 @@
       ng-model="efCtrl.createActive">
       <span ng-switch="::efCtrl.geomType">
         <span ng-switch-when="Point">
-          <%=require('gmf/icons/point.svg')%>
+          <%=require('gmf/icons/point.svg?viewbox&height=1em')%>
           {{'Draw new point' | translate}}
         </span>
         <span ng-switch-when="MultiPoint">
-          <%=require('gmf/icons/point.svg')%>
+          <%=require('gmf/icons/point.svg?viewbox&height=1em')%>
           {{'Draw new point' | translate}}
         </span>
         <span ng-switch-when="LineString">
-          <%=require('gmf/icons/line.svg')%>
+          <%=require('gmf/icons/line.svg?viewbox&height=1em')%>
           {{'Draw new linestring' | translate}}
         </span>
         <span ng-switch-when="MultiLineString">
-          <%=require('gmf/icons/line.svg')%>
+          <%=require('gmf/icons/line.svg?viewbox&height=1em')%>
           {{'Draw new linestring' | translate}}
         </span>
         <span ng-switch-when="Polygon">
-          <%=require('gmf/icons/polygon.svg')%>
+          <%=require('gmf/icons/polygon.svg?viewbox&height=1em')%>
           {{'Draw new polygon' | translate}}
         </span>
         <span ng-switch-when="MultiPolygon">
-          <%=require('gmf/icons/polygon.svg')%>
+          <%=require('gmf/icons/polygon.svg?viewbox&height=1em')%>
           {{'Draw new polygon' | translate}}
         </span>
       </span>

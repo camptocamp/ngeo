@@ -26,7 +26,7 @@ const svgRule = {
       'svgo-loader',
     ]
   }, {
-    resourceQuery: /inline/,
+    resourceQuery: /viewbox/,
     use: [
       {
         loader: 'svg-inline-loader',
@@ -34,6 +34,7 @@ const svgRule = {
           removeSVGTagAttrs: false,
         },
       },
+      './buildtools/svg-viewbox-loader',
       'svgo-loader',
     ]
   }, {
@@ -44,7 +45,6 @@ const svgRule = {
           removeSVGTagAttrs: false,
         },
       },
-      './buildtools/svg-viewbox-loader',
       'svgo-loader',
     ]
   }]
