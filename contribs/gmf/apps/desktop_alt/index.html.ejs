@@ -17,7 +17,7 @@
   </div>
   <header>
     <div class="logo">
-      <%=require("./image/logo.svg?inline")%>
+      <%=require("./image/logo.svg")%>
       <span>by Camptocamp</span>
     </div>
   </header>
@@ -306,8 +306,7 @@
         </gmf-map>
 
         <gmf-floorselector class="gmf-floorselector ol-unselectable ol-control"
-          value="mainCtrl.dimensions.FLOOR"
-          items="::mainCtrl.floors">
+          value="mainCtrl.dimensions.FLOOR">
         </gmf-floorselector>
 
         <!--infobar-->

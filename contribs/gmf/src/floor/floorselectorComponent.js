@@ -26,7 +26,7 @@ module.value('gmfFloorselectorTemplateUrl',
    * @return {string} The template url.
    */
   ($attrs) => {
-    const templateUrl = $attrs['gmfFloorselectorTemplateUrl'];
+    const templateUrl = $attrs.gmfFloorselectorTemplateUrl;
     return templateUrl !== undefined ? templateUrl :
       'gmf/floor/floorselectorcomponent';
   });
@@ -54,17 +54,18 @@ class Controller {
   /**
    * @param {angular.IScope} $scope Angular scope.
    * @param {JQuery} $element Element.
+   * @param {Array<Object<string, string>>} gmfFloors Floor dimension values and labels.
    * @private
    * @ngInject
    * @ngdoc controller
    * @ngname GmfFilterselectorController
    */
-  constructor($scope, $element) {
+  constructor($scope, $element, gmfFloors) {
 
     /**
      * @type {Array<Object<string, string>>}
      */
-    this.items;
+    this.items = gmfFloors;
 
     /**
      * @type {number}
@@ -188,21 +189,18 @@ class Controller {
  * Example:
  *
  *      <gmf-floorselector class="gmf-floorselector ol-unselectable ol-control"
- *        value="mainCtrl.dimensions.FLOOR"
- *        items="::mainCtrl.floors">
+ *        value="mainCtrl.dimensions.FLOOR">
  *      </gmf-floorselector>
  *
- * With:
+ * With the injected value `gmfFloors` with:
  *
- *      mainCtrl.floors = [
+ *      [
  *        {value: 'value1', label: 'label1'},
  *        {value: 'value2', label: 'label2'},
  *        ...
  *      ];
  *
  * @htmlAttribute {string} value Current floor value.
- * @htmlAttribute {Array<Object<string, string>>} items List of objects with "value" and
- * "label" properties.
  *
  * @ngdoc component
  * @ngname gmfFloorselector
@@ -210,7 +208,6 @@ class Controller {
 const floorSelectorComponent = {
   bindings: {
     value: '=',
-    items: '<'
   },
   controller: Controller,
   templateUrl: gmfFloorselectorTemplateUrl
