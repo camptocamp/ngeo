@@ -159,7 +159,7 @@ test-debug: .build/node_modules.timestamp .build/build-dll.timestamp .build/node
 	touch $@
 
 .PHONY: serve-ngeo
-serve-ngeo: .build/node_modules.timestamp .build/build-dll.timestamp $(ANGULAR_LOCALES_FILES)
+serve-ngeo: examples/dist $(ANGULAR_LOCALES_FILES)
 	npm run serve-ngeo-examples
 
 .PHONY: serve-gmf
@@ -225,6 +225,11 @@ gh-pages: .build/python-venv.timestamp
 .build/examples-hosted/dist: .build/build-dll.timestamp
 	mkdir -p .build/examples-hosted/
 	cp -r dist .build/examples-hosted/
+	touch $@
+
+examples/dist: .build/build-dll.timestamp
+	mkdir -p .build/examples-hosted/
+	cp -r dist examples/
 	touch $@
 
 .build/examples-hosted-gmf-apps-deps.timestamp: \

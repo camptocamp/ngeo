@@ -4,7 +4,8 @@ import {getUid as olUtilGetUid} from 'ol/util.js';
 import * as olArray from 'ol/array.js';
 import olCollection from 'ol/Collection.js';
 import olEventsEventTarget from 'ol/events/Target.js';
-import olLayerTile from 'ol/layer/Tile.js';
+import VectorLayer from 'ol/layer/Vector.js';
+import VectorSource from 'ol/source/Vector.js';
 
 
 /**
@@ -276,7 +277,9 @@ export class ThemesService extends olEventsEventTarget {
         if (this.addBlankBackgroundLayer_) {
           // For i18n string collection
           gettextCatalog.getString('blank');
-          const layer = new olLayerTile();
+          const layer = new VectorLayer({
+            source: new VectorSource()
+          });
           layer.set('label', 'blank');
           layer.set('metadata', {thumbnail: ''});
           layers.push(layer);

@@ -7,6 +7,8 @@ import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
 import olLayerImage from 'ol/layer/Image.js';
 import olLayerTile from 'ol/layer/Tile.js';
+import VectorLayer from 'ol/layer/Vector.js';
+import VectorSource from 'ol/source/Vector.js';
 import olSourceImageWMS from 'ol/source/ImageWMS.js';
 import ngeoMapModule from 'ngeo/map/module.js';
 
@@ -97,12 +99,16 @@ BackgroundlayerController.prototype.setLayer = function(layerSpec) {
 
 /**
  * @param {string} layerName Layer name.
- * @return {import("ol/layer/Tile.js").default} The layer.
+ * @return {import("ol/layer/Layer.js").default<*>} The layer.
  * @private
  */
 BackgroundlayerController.prototype.createLayer_ = function(layerName) {
   if (layerName === 'blank') {
-    return new olLayerTile();
+    const layer = new VectorLayer({
+      source: new VectorSource()
+    });
+    layer.set('label', 'blank');
+    return layer;
   }
 
   const source = new ngeoSourceAsitVD({
