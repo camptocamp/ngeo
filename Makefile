@@ -182,7 +182,8 @@ examples-hosted-ngeo: .build/examples-ngeo.timestamp .build/examples-hosted/inde
 .build/examples-ngeo.timestamp: $(NGEO_ALL_SRC_FILES) $(WEBPACK_CONFIG_FILES) \
 		.build/node_modules.timestamp \
 		.build/build-dll.timestamp \
-		.build/examples-hosted/dist
+		.build/examples-hosted/dist \
+		.build/examples-hosted/partials
 	npm run build-ngeo-examples
 	touch $@
 
@@ -221,6 +222,10 @@ gh-pages: .build/python-venv.timestamp
 		$(GMF_APPS_JS_FILES)
 	./node_modules/.bin/eslint $(filter-out .build/node_modules.timestamp $(ESLINT_CONFIG_FILES), $^)
 	touch $@
+
+.build/examples-hosted/partials: examples/partials/
+	mkdir -p $(dir $@)
+	cp -r $< $@
 
 .build/examples-hosted/dist: .build/build-dll.timestamp
 	mkdir -p .build/examples-hosted/
