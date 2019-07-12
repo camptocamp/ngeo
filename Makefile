@@ -112,7 +112,7 @@ help:
 check: lint spell check-examples-checker check-examples test examples-hosted-apps
 
 .PHONY: check-examples-checker
-check-example-checker: $(CHECK_EXAMPLE_CHECKER)
+check-examples-checker: $(CHECK_EXAMPLE_CHECKER)
 
 .PHONY: check-examples
 check-examples: $(BUILD_EXAMPLES_CHECK_TIMESTAMP_FILES)
@@ -277,7 +277,6 @@ gh-pages: .build/python-venv.timestamp
 	touch $@
 
 .build/contribs/gmf/%.check.timestamp: .build/examples-gmf.timestamp \
-		.build/examples-hosted/contribs/gmf/%.js \
 		.build/node_modules.timestamp \
 		.build/httpserver.timestamp
 	mkdir -p $(dir $@)
@@ -294,6 +293,12 @@ gh-pages: .build/python-venv.timestamp
 	[ "$$(gm compare -metric RMSE -highlight-style xor .build/examples-hosted/contribs/gmf/apps/$*.html.png \
 	contribs/gmf/apps/$*-ref.png -file .build/examples-hosted/contribs/gmf/apps/$*-diff.png 2>&1 | \
 	tail --lines=1 | sed 's/.* \([0-9\.]\+\) .*/\1/g')" \< 0.005 ]
+	touch $@
+
+.build/test-check-example/%.check.timestamp: \
+		.build/httpserver.timestamp test/check-example/%.html
+	mkdir -p $(dir $@)
+	( ! node buildtools/check-example.js test/check-example/$*.html)
 	touch $@
 
 .build/node_modules.timestamp: package.json

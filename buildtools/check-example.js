@@ -12,11 +12,19 @@ const screenshot = !arg.startsWith('http');
 const screenshotPath = screenshot ? `${arg}.png` : undefined;
 const url = screenshot ? `http://localhost:3000/${arg}` : arg;
 
-try {
-  const OSMImage = fs.readFileSync(path.resolve(__dirname, 'osm.png'));
-} catch (e) {
-  // Ignore
-}
+const OSMImage = (() => {
+  try {
+    return fs.readFileSync(path.resolve(__dirname, 'osm.png'));
+  } catch (e) {
+    // Ignore
+    return undefined;
+  }
+})();
+
+process.on('unhandledRejection', error => {
+  console.log(`UnhandledRejection: ${error.message}.`);
+  process.exit(2);
+});
 
 const requestsURL = new Set();
 const start = new Date();
@@ -109,8 +117,7 @@ function loaded(page, browser) {
   page.on('console', message => {
     const type = message.type();
     const location = message.location();
-    if (type !== 'log' && type !== 'debug' && type !== 'info' && type !== 'warning' &&
-      !location.url.startsWith('http://localhost:3000/.build/examples-hosted/dist/vendor.js') &&
+    if (!location.url.startsWith('http://localhost:3000/.build/examples-hosted/dist/vendor.js') &&
       location.url.startsWith('http://localhost:3000/')
     ) {
       console.log(`Console ${type}`);
