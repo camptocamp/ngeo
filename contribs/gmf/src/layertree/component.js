@@ -807,9 +807,10 @@ Controller.prototype.zoomToResolution = function(treeCtrl) {
  * @param {string} legendNodeId The DOM node legend id to toggle
  */
 Controller.prototype.toggleNodeLegend = function(legendNodeId) {
-  $(legendNodeId).toggle({
-    toggle: true
-  });
+  const div = document.querySelector(legendNodeId);
+  if (div) {
+    div.classList.toggle('show');
+  }
 };
 
 

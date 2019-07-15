@@ -696,10 +696,10 @@ class SearchController {
    */
   filterAction_(action) {
     return (
-    /**
-         * @param {import("geojson").Feature} feature
-         * @return {boolean}
-         */
+      /**
+       * @param {import("geojson").Feature} feature
+       * @return {boolean}
+       */
       function(feature) {
         const properties = feature.properties || {};
         if (properties.actions) {

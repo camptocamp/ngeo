@@ -162,7 +162,6 @@
             <i class="fa fa-th-list fa-fw"></i>
             <a
               ng-click="::gmfLayertreeCtrl.toggleNodeLegend('#gmf-layertree-node-' + layertreeCtrl.uid + '-legend'); popoverCtrl.dismissPopover()"
-              data-toggle="collapse"
               href="">
               {{'Show/hide legend'|translate}}
             </a>
@@ -222,7 +221,6 @@
   <a
     class="gmf-layertree-node-menu-togglelegend"
     ng-if="::gmfLayertreeCtrl.supportsLegend(layertreeCtrl)"
-    data-toggle="collapse"
     ng-click="::gmfLayertreeCtrl.toggleNodeLegend('#gmf-layertree-node-' + layertreeCtrl.uid + '-legend')"
     href="">
     <span
@@ -235,12 +233,11 @@
 
 <div
   ng-if="::!layertreeCtrl.isRoot && gmfLayertreeCtrl.getLegendsObject(layertreeCtrl) && layertreeCtrl.node.metadata.legend" id="gmf-layertree-node-{{::layertreeCtrl.uid}}-legend"
-  class="collapse gmf-layertree-legend"
+  class="gmf-layertree-legend"
   ng-class="[gmfLayertreeCtrl.getNodeState(layertreeCtrl), layertreeCtrl.node.metadata.isLegendExpanded ? 'show' : '']">
 
   <a
     title="{{'Hide legend'|translate}}"
-    data-toggle="collapse"
     ng-click="::gmfLayertreeCtrl.toggleNodeLegend('#gmf-layertree-node-' + layertreeCtrl.uid + '-legend')"
     href="">
     {{'Hide legend'|translate}}
