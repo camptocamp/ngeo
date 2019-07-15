@@ -206,14 +206,14 @@ Controller.prototype.handleThemesChange_ = function() {
 
 /**
  * Getter/setter for background layer overlay, used by opacity slider.
- * @param {?number} val The opacity.
+ * @param {number|undefined} val The opacity.
  * @return {number} The background layer opacity.
  */
 Controller.prototype.getSetBgLayerOpacity = function(val) {
   if (!this.opacityLayer) {
     throw new Error('Missing opacityLayer');
   }
-  if (val !== null) {
+  if (val !== undefined) {
     this.opacityLayer.setOpacity(val);
   }
   return this.opacityLayer.getOpacity();
