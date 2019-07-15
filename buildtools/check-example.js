@@ -65,7 +65,7 @@ function loaded(page, browser) {
   }, 500);
 }
 (async () => {
-  const browser = await puppeteer.launch();
+  const browser = await puppeteer.launch({args: ['--disable-web-security']});
   const page = await browser.newPage();
   await page.setViewport({width: 1920, height: 1080});
   await page.setRequestInterception(true);
@@ -86,7 +86,12 @@ function loaded(page, browser) {
         url.startsWith('https://geomapfish-demo-2-5.camptocamp.com/') ||
         url.startsWith('https://wms.geo.admin.ch/')) {
       requestsURL.add(url);
-      request.continue();
+      if (url.startsWith('https://geomapfish-demo-2-5.camptocamp.com/')) {
+        request.headers().origin = 'http://localhost:3000';
+      }
+      request.continue({
+        headers: request.headers()
+      });
     } else if (url.includes('tile.openstreetmap.org')) {
       request.respond({
         status: 200,
@@ -99,10 +104,29 @@ function loaded(page, browser) {
       request.abort();
     }
   });
-  page.on('requestfinished', request => {
+  page.on('requestfinished', async (request) => {
     const url = request.url();
     requestsURL.delete(url);
     loaded(page, browser);
+    if (url.startsWith('https://geomapfish-demo-2-5.camptocamp.com/') &&
+        request.headers()['sec-fetch-mode'] == 'cors' &&
+        request.response().headers()['access-control-allow-origin'] == undefined) {
+      console.log(`CORS error on: ${url}`);
+      console.log("= Request headers");
+      for (const n in request.headers()) {
+        console.log(`${n}: ${request.headers()[n]}`);
+      }
+      console.log("= Response headers");
+      for (const n in request.response().headers()) {
+        console.log(`${n}: ${request.response().headers()[n]}`);
+      }
+      if (request.response().headers()['content-type'] == 'text/html') {
+        const text = await response.text();
+        console.log('= Response body');
+        console.log(text);
+      }
+      process.exit(2);
+    }
   });
   page.on('requestfailed', request => {
     const url = request.url();
@@ -110,9 +134,6 @@ function loaded(page, browser) {
         url.startsWith('https://geomapfish-demo-2-5.camptocamp.com/') ||
         url.startsWith('https://wms.geo.admin.ch/')) {
       console.log(`Request failed on: ${url}`);
-      for (const n in request.response().headers()) {
-        console.log(`${n}: ${request.response().headers()[n]}`);
-      }
       process.exit(2);
     }
     loaded(page, browser);
