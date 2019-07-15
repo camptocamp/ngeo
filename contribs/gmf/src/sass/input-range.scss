@@ -34,9 +34,7 @@ input[type=range]::-webkit-slider-runnable-track {
   border-radius: $gmf-input-range-track-border-radius;
   border: $gmf-input-range-track-border;
 }
-input[type=range]::-webkit-slider-thumb,
-input[type=range]::-moz-range-thumb,
-input[type=range]::-ms-thumb {
+input[type=range]::-webkit-slider-thumb {
   box-shadow: $gmf-input-range-thumb-box-shadow;
   border: $gmf-input-range-thumb-border;
   height: $gmf-input-range-thumb-height;
@@ -44,12 +42,9 @@ input[type=range]::-ms-thumb {
   border-radius: $gmf-input-range-thumb-border-radius;
   background: $gmf-input-range-thumb-background;
   cursor: $gmf-input-range-cursor;
-}
-input[type=range]::-webkit-slider-thumb {
   -webkit-appearance: none;
   margin-top: -0.48rem;
 }
-
 input[type=range]::-moz-range-track {
   width: 100%;
   height: $gmf-input-range-track-height;
@@ -63,6 +58,15 @@ input[type=range]::-moz-range-progress {
   background: $brand-primary;
   height: $gmf-input-range-track-height;
 }
+input[type=range]::-moz-range-thumb {
+  box-shadow: $gmf-input-range-thumb-box-shadow;
+  border: $gmf-input-range-thumb-border;
+  height: $gmf-input-range-thumb-height;
+  width: $gmf-input-range-thumb-width;
+  border-radius: $gmf-input-range-thumb-border-radius;
+  background: $gmf-input-range-thumb-background;
+  cursor: $gmf-input-range-cursor;
+}
 input[type=range]::-ms-track {
   width: 100%;
   height: $gmf-input-range-track-height;
@@ -71,16 +75,25 @@ input[type=range]::-ms-track {
   border-color: transparent;
   color: transparent;
 }
-
-input[type=range]::-ms-fill-lower,
-input[type=range]::-ms-fill-upper {
+input[type=range]::-ms-fill-lower {
+  background: $brand-primary;
   border: $gmf-input-range-track-border;
   border-radius: 0.12rem;
   box-shadow: $gmf-input-range-track-box-shadow;
 }
-input[type=range]::-ms-fill-lower {
-  background: $brand-primary;
-}
 input[type=range]::-ms-fill-upper {
   background: $brand-secondary;
+  border: $gmf-input-range-track-border;
+  border-radius: 0.12rem;
+  box-shadow: $gmf-input-range-track-box-shadow;
+}
+input[type=range]::-ms-thumb {
+  box-shadow: $gmf-input-range-thumb-box-shadow;
+  border: $gmf-input-range-thumb-border;
+  height: $gmf-input-range-thumb-height;
+  width: $gmf-input-range-thumb-width;
+  border-radius: $gmf-input-range-thumb-border-radius;
+  background: $gmf-input-range-thumb-background;
+  cursor: $gmf-input-range-cursor;
+  height: $gmf-input-range-track-height;
 }
