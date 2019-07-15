@@ -278,21 +278,33 @@ class Controller {
 
 
     if (this.serversEngine_) {
-      // Timeout to let Angular render the placeholder of the input properly,
-      // otherwise typeahead would copy the string with {{}} in it...
-      this.timeout_(() => {
+
+      /**
+       * @param {string} query Query string.
+       * @param {function(Array<string>):void} sync
+       */
+      const serversEngineWithDefaults = (query, sync) => {
         if (!this.serversEngine_) {
           throw new Error('Missing serversEngine');
         }
+        if (query === '') {
+          sync(this.serversEngine_.all());
+        } else {
+          this.serversEngine_.search(query, sync);
+        }
+      };
+      // Timeout to let Angular render the placeholder of the input properly,
+      // otherwise typeahead would copy the string with {{}} in it...
+      this.timeout_(() => {
         const $urlInput = this.element_.find('input[name=url]');
         const $connectBtn = this.element_.find('button.gmf-importdatasource-connect-btn');
         $urlInput.typeahead({
           hint: true,
           highlight: true,
-          minLength: 1
+          minLength: 0
         }, {
           name: 'url',
-          source: this.serversEngine_.ttAdapter()
+          source: serversEngineWithDefaults
         }).bind('typeahead:select', (ev, suggestion) => {
           this.timeout_(() => {
             this.url = suggestion;
