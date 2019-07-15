@@ -9,7 +9,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, '../dist/'),
     filename: '[name].js',
-    library: '[name]_[hash]',
+    library: '[name]',
   },
   module: {
     rules: [
@@ -38,7 +38,7 @@ module.exports = {
   plugins: [
     new webpack.DllPlugin({
       path: path.resolve(__dirname, '../dist/vendor-manifest.json'),
-      name: '[name]_[hash]',
+      name: '[name]',
     }),
     new webpack.SourceMapDevToolPlugin({
       filename: '[file].map',
