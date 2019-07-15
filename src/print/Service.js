@@ -132,7 +132,7 @@ PrintService.prototype.createSpec = function(
 
   const specMap = /** @type {import('ngeo/print/mapfish-print-v3.js').MapFishPrintMap} */ ({
     dpi: dpi,
-    rotation: /** number */ (customAttributes.rotation)
+    rotation: customAttributes.rotation
   });
 
   this.encodeMap_(map, scale, specMap);
