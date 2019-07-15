@@ -110,6 +110,9 @@ function loaded(page, browser) {
         url.startsWith('https://geomapfish-demo-2-5.camptocamp.com/') ||
         url.startsWith('https://wms.geo.admin.ch/')) {
       console.log(`Request failed on: ${url}`);
+      for (const n in request.response().headers()) {
+        console.log(`${n}: ${request.response().headers()[n]}`);
+      }
       process.exit(2);
     }
     loaded(page, browser);
@@ -123,7 +126,9 @@ function loaded(page, browser) {
       console.log(`Console ${type}`);
       console.log(`On: ${location.url} ${location.lineNumber}:${location.columnNumber}.`);
       console.log(message.text());
-      process.exit(2);
+      if (!message.text().includes('CORS')) {
+        process.exit(2);
+      }
     }
   });
   await page.goto(url).catch(error => {
