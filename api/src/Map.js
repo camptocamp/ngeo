@@ -9,6 +9,7 @@ import Feature from 'ol/Feature.js';
 import Overlay from 'ol/Overlay.js';
 import Point from 'ol/geom/Point.js';
 import {Icon, Style} from 'ol/style.js';
+import {createDefaultStyle} from 'ol/style/Style';
 import View from 'ol/View.js';
 import VectorSource from 'ol/source/Vector.js';
 import VectorLayer from 'ol/layer/Vector.js';
@@ -246,6 +247,8 @@ class Map {
           src: options.icon
         })
       }));
+    } else {
+      marker.setStyle(createDefaultStyle);
     }
     this.vectorSource_.addFeature(marker);
   }
