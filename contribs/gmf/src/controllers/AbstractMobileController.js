@@ -4,7 +4,7 @@ import gmfControllersAbstractAppController, {AbstractAppController, getLocationI
 import gmfMobileMeasureModule from 'gmf/mobile/measure/module.js';
 import gmfMobileNavigationModule from 'gmf/mobile/navigation/module.js';
 import gmfQueryWindowComponent from 'gmf/query/windowComponent.js';
-import ngeoGeolocationMobile from 'ngeo/geolocation/mobile.js';
+import ngeoGeolocation from 'ngeo/geolocation/component.js';
 import * as olProj from 'ol/proj.js';
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
@@ -124,9 +124,9 @@ export class AbstractMobileController extends AbstractAppController {
     });
 
     /**
-     * @type {import('ngeo/geolocation/mobile.js').MobileGeolocationDirectiveOptions}
+     * @type {import('ngeo/geolocation/component.js').GeolocationDirectiveOptions}
      */
-    this.mobileGeolocationOptions = {
+    this.geolocationOptions = {
       positionFeatureStyle: positionFeatureStyle,
       accuracyFeatureStyle: accuracyFeatureStyle,
       zoom: config.geolocationZoom,
@@ -201,7 +201,7 @@ const module = angular.module('GmfAbstractMobileControllerModule', [
   gmfMobileMeasureModule.name,
   gmfMobileNavigationModule.name,
   gmfQueryWindowComponent.name,
-  ngeoGeolocationMobile.name,
+  ngeoGeolocation.name,
 ]);
 
 module.controller('AbstractMobileController', AbstractMobileController);

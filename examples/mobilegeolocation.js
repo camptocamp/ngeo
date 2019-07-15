@@ -13,13 +13,13 @@ import olStyleStyle from 'ol/style/Style.js';
 import olStyleFill from 'ol/style/Fill.js';
 import olStyleStroke from 'ol/style/Stroke.js';
 import ngeoMapModule from 'ngeo/map/module.js';
-import ngeoGeolocationMobile from 'ngeo/geolocation/mobile.js';
+import ngeoGeolocation from 'ngeo/geolocation/component.js';
 
 
 /** @type {angular.IModule} **/
 const appmodule = angular.module('app', [
   'gettext',
-  ngeoGeolocationMobile.name,
+  ngeoGeolocation.name,
   ngeoMapModule.name
 ]);
 
@@ -47,9 +47,9 @@ function MainController($scope, ngeoFeatureOverlayMgr) {
   });
 
   /**
-   * @type {import('ngeo/geolocation/mobile.js').MobileGeolocationDirectiveOptions}
+   * @type {import('ngeo/geolocation/component.js').GeolocationDirectiveOptions}
    */
-  this.mobileGeolocationOptions = {
+  this.geolocationOptions = {
     positionFeatureStyle: positionFeatureStyle,
     accuracyFeatureStyle: accuracyFeatureStyle,
     zoom: 17,

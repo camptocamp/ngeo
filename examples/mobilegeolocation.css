@@ -3,7 +3,7 @@
   width: 600px;
   height: 400px;
 }
-button[ngeo-mobile-geolocation]:after {
+button[ngeo-geolocation]:after {
   content: 'Toggle tracking'
 }
 .ngeo-notification {

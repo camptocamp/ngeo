@@ -11,9 +11,9 @@ import Polygon from 'ol/geom/Polygon.js';
 
 
 /**
- * Options for the mobile geolocations directive.
+ * Options for the geolocation directive.
  *
- * @typedef {Object} MobileGeolocationDirectiveOptions
+ * @typedef {Object} GeolocationDirectiveOptions
  * @property {import("ol/style/Style.js").StyleLike} [accuracyFeatureStyle] The style to
  * use to sketch the accuracy feature, which is a regular polygon.
  * @property {import("ol/style/Style.js").StyleLike} [positionFeatureStyle] The style to
@@ -28,7 +28,7 @@ import Polygon from 'ol/geom/Polygon.js';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoMobileGeolocation', [
+const module = angular.module('ngeoGeolocation', [
   ngeoMapFeatureOverlayMgr.name,
   ngeoMessageNotification.name,
 ]);
@@ -42,41 +42,41 @@ const GeolocationEventType = {
   /**
    * Triggered when an error occurs.
    */
-  ERROR: 'mobile-geolocation-error'
+  ERROR: 'geolocation-error'
 };
 
 /**
- * Provide a "mobile geolocation" directive.
+ * Provide a geolocation directive.
  *
  * Example:
  *
- *      <button ngeo-mobile-geolocation
- *        ngeo-mobile-geolocation-map="ctrl.map"
- *        ngeo-mobile-geolocation-options="ctrl.mobileGeolocationOptions">
+ *      <button ngeo-geolocation
+ *        ngeo-geolocation-map="ctrl.map"
+ *        ngeo-geolocation-options="ctrl.geolocationOptions">
  *      </button>
  *
  * See our live example: [../examples/mobilegeolocation.html](../examples/mobilegeolocation.html)
  *
- * @htmlAttribute {import("ol/Map.js").default} ngeo-mobile-geolocation-map The map.
- * @htmlAttribute {MobileGeolocationDirectiveOptions} ngeo-mobile-geolocation-options The options.
+ * @htmlAttribute {import("ol/Map.js").default} ngeo-geolocation-map The map.
+ * @htmlAttribute {GeolocationDirectiveOptions} ngeo-geolocation-options The options.
  * @return {angular.IDirective} The Directive Definition Object.
  * @ngInject
  * @ngdoc directive
- * @ngname ngeoMobileGeolocation
+ * @ngname ngeoGeolocation
  */
-function geolocationMobileComponent() {
+function geolocationComponent() {
   return {
     restrict: 'A',
     scope: {
-      'getMobileMapFn': '&ngeoMobileGeolocationMap',
-      'getMobileGeolocationOptionsFn': '&ngeoMobileGeolocationOptions'
+      'getMapFn': '&ngeoGeolocationMap',
+      'getOptionsFn': '&ngeoGeolocationOptions'
     },
-    controller: 'ngeoGeolocationMobileController'
+    controller: 'ngeoGeolocationController'
   };
 }
 
 
-module.directive('ngeoMobileGeolocation', geolocationMobileComponent);
+module.directive('ngeoGeolocation', geolocationComponent);
 
 
 /**
@@ -92,14 +92,14 @@ module.directive('ngeoMobileGeolocation', geolocationMobileComponent);
  *    service.
  * @ngInject
  * @ngdoc controller
- * @ngname NgeoMobileGeolocationController
+ * @ngname ngeoGeolocationController
  */
 function Controller($scope, $element, gettextCatalog, ngeoFeatureOverlayMgr, ngeoNotification) {
 
   $element.on('click', this.toggleTracking.bind(this));
 
   // @ts-ignore
-  const map = $scope.getMobileMapFn();
+  const map = $scope.getMapFn();
   if (!(map instanceof olMap)) {
     throw new Error('Wrong map type');
   }
@@ -117,7 +117,7 @@ function Controller($scope, $element, gettextCatalog, ngeoFeatureOverlayMgr, nge
   this.map_ = map;
 
   // @ts-ignore
-  const options = $scope.getMobileGeolocationOptionsFn() || {};
+  const options = $scope.getOptionsFn() || {};
   console.assert(options);
 
   /**
@@ -378,7 +378,7 @@ Controller.prototype.handleRotate_ = function(eventAlpha, currentAlpha) {
 };
 
 
-module.controller('ngeoGeolocationMobileController', Controller);
+module.controller('ngeoGeolocationController', Controller);
 
 
 export default module;

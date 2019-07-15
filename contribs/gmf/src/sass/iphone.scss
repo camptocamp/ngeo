@@ -19,7 +19,7 @@
       top: (4 * $map-tools-size + 2 * $app-margin + 3 * $micro-app-margin) + $ios-margin;
     }
 
-    button[ngeo-mobile-geolocation] {
+    button[ngeo-geolocation] {
       top: (3 * $map-tools-size + 2 * $app-margin + 2 * $micro-app-margin) + $ios-margin;
     }
   }
