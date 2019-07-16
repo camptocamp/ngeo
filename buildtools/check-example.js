@@ -117,10 +117,11 @@ function loaded(page, browser) {
         console.log(`${n}: ${request.headers()[n]}`);
       }
       console.log("= Response headers");
-      for (const n in request.response().headers()) {
-        console.log(`${n}: ${request.response().headers()[n]}`);
+      const response = request.response();
+      for (const n in response.headers()) {
+        console.log(`${n}: ${response.headers()[n]}`);
       }
-      if (request.response().headers()['content-type'] == 'text/html') {
+      if (response.headers()['content-type'] == 'text/html') {
         const text = await response.text();
         console.log('= Response body');
         console.log(text);
