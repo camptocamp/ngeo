@@ -266,6 +266,13 @@ class Controller {
       const fileInput = /** @type {HTMLInputElement} */(this.fileInput_[0]);
       const files = fileInput.files;
       this.file = files && files[0] ? files[0] : null;
+
+      if (this.file) {
+        this.hasError = false;
+        // update the label
+        $(fileInput).next('.custom-file-label').html(this.fileNameAndSize);
+      }
+
       this.scope_.$apply();
     });
   }
@@ -314,14 +321,6 @@ class Controller {
         });
       });
     }
-  }
-
-  /**
-   * Triggers a 'click' on the "Browse" button.
-   */
-  browse() {
-    this.hasError = false;
-    this.element_.find('input[type=file][name=file]').click();
   }
 
   /**
