@@ -247,7 +247,8 @@ Controller.prototype.toggleTracking = function() {
     }
     console.assert(currentPosition !== undefined);
     // stop tracking if the position is close to the center of the map.
-    const center = this.map_.getView().getCenter();
+    const view = this.map_.getView();
+    const center = view.getCenter();
     if (!center) {
       throw new Error('Missing center');
     }
@@ -255,6 +256,8 @@ Controller.prototype.toggleTracking = function() {
     if (diff < 2) {
       this.untrack_();
     } else {
+      // immediately recenter to the latest position to avoid a delay if the GPS device is slow to respond.
+      view.setCenter(currentPosition);
       this.untrack_();
       this.track_();
     }
@@ -290,6 +293,7 @@ Controller.prototype.untrack_ = function() {
  * @private
  */
 Controller.prototype.setPosition_ = function() {
+  const view = this.map_.getView();
   const position = this.geolocation_.getPosition();
   if (position === undefined) {
     throw new Error('Missing position');
@@ -302,14 +306,14 @@ Controller.prototype.setPosition_ = function() {
   if (this.follow_) {
     this.viewChangedByMe_ = true;
     if (this.zoom_ !== undefined) {
-      this.map_.getView().setCenter(position);
-      this.map_.getView().setZoom(this.zoom_);
+      view.setCenter(position);
+      view.setZoom(this.zoom_);
     } else if (accuracy instanceof Polygon) {
       const size = this.map_.getSize();
       if (size === undefined) {
         throw new Error('Missing size');
       }
-      this.map_.getView().fit(accuracy, {size});
+      view.fit(accuracy, {size});
     }
     this.viewChangedByMe_ = false;
   }
