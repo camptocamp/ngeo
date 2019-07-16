@@ -11,9 +11,9 @@ import Polygon from 'ol/geom/Polygon.js';
 
 
 /**
- * Options for the mobile geolocations directive.
+ * Options for the geolocation directive.
  *
- * @typedef {Object} MobileGeolocationDirectiveOptions
+ * @typedef {Object} GeolocationDirectiveOptions
  * @property {import("ol/style/Style.js").StyleLike} [accuracyFeatureStyle] The style to
  * use to sketch the accuracy feature, which is a regular polygon.
  * @property {import("ol/style/Style.js").StyleLike} [positionFeatureStyle] The style to
@@ -28,7 +28,7 @@ import Polygon from 'ol/geom/Polygon.js';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoMobileGeolocation', [
+const module = angular.module('ngeoGeolocation', [
   ngeoMapFeatureOverlayMgr.name,
   ngeoMessageNotification.name,
 ]);
@@ -42,41 +42,41 @@ const GeolocationEventType = {
   /**
    * Triggered when an error occurs.
    */
-  ERROR: 'mobile-geolocation-error'
+  ERROR: 'geolocation-error'
 };
 
 /**
- * Provide a "mobile geolocation" directive.
+ * Provide a geolocation directive.
  *
  * Example:
  *
- *      <button ngeo-mobile-geolocation
- *        ngeo-mobile-geolocation-map="ctrl.map"
- *        ngeo-mobile-geolocation-options="ctrl.mobileGeolocationOptions">
+ *      <button ngeo-geolocation
+ *        ngeo-geolocation-map="ctrl.map"
+ *        ngeo-geolocation-options="ctrl.geolocationOptions">
  *      </button>
  *
  * See our live example: [../examples/mobilegeolocation.html](../examples/mobilegeolocation.html)
  *
- * @htmlAttribute {import("ol/Map.js").default} ngeo-mobile-geolocation-map The map.
- * @htmlAttribute {MobileGeolocationDirectiveOptions} ngeo-mobile-geolocation-options The options.
+ * @htmlAttribute {import("ol/Map.js").default} ngeo-geolocation-map The map.
+ * @htmlAttribute {GeolocationDirectiveOptions} ngeo-geolocation-options The options.
  * @return {angular.IDirective} The Directive Definition Object.
  * @ngInject
  * @ngdoc directive
- * @ngname ngeoMobileGeolocation
+ * @ngname ngeoGeolocation
  */
-function geolocationMobileComponent() {
+function geolocationComponent() {
   return {
     restrict: 'A',
     scope: {
-      'getMobileMapFn': '&ngeoMobileGeolocationMap',
-      'getMobileGeolocationOptionsFn': '&ngeoMobileGeolocationOptions'
+      'getMapFn': '&ngeoGeolocationMap',
+      'getOptionsFn': '&ngeoGeolocationOptions'
     },
-    controller: 'ngeoGeolocationMobileController'
+    controller: 'ngeoGeolocationController'
   };
 }
 
 
-module.directive('ngeoMobileGeolocation', geolocationMobileComponent);
+module.directive('ngeoGeolocation', geolocationComponent);
 
 
 /**
@@ -92,14 +92,14 @@ module.directive('ngeoMobileGeolocation', geolocationMobileComponent);
  *    service.
  * @ngInject
  * @ngdoc controller
- * @ngname NgeoMobileGeolocationController
+ * @ngname ngeoGeolocationController
  */
 function Controller($scope, $element, gettextCatalog, ngeoFeatureOverlayMgr, ngeoNotification) {
 
   $element.on('click', this.toggleTracking.bind(this));
 
   // @ts-ignore
-  const map = $scope.getMobileMapFn();
+  const map = $scope.getMapFn();
   if (!(map instanceof olMap)) {
     throw new Error('Wrong map type');
   }
@@ -117,7 +117,7 @@ function Controller($scope, $element, gettextCatalog, ngeoFeatureOverlayMgr, nge
   this.map_ = map;
 
   // @ts-ignore
-  const options = $scope.getMobileGeolocationOptionsFn() || {};
+  const options = $scope.getOptionsFn() || {};
   console.assert(options);
 
   /**
@@ -247,7 +247,8 @@ Controller.prototype.toggleTracking = function() {
     }
     console.assert(currentPosition !== undefined);
     // stop tracking if the position is close to the center of the map.
-    const center = this.map_.getView().getCenter();
+    const view = this.map_.getView();
+    const center = view.getCenter();
     if (!center) {
       throw new Error('Missing center');
     }
@@ -255,6 +256,8 @@ Controller.prototype.toggleTracking = function() {
     if (diff < 2) {
       this.untrack_();
     } else {
+      // immediately recenter to the latest position to avoid a delay if the GPS device is slow to respond.
+      view.setCenter(currentPosition);
       this.untrack_();
       this.track_();
     }
@@ -290,6 +293,7 @@ Controller.prototype.untrack_ = function() {
  * @private
  */
 Controller.prototype.setPosition_ = function() {
+  const view = this.map_.getView();
   const position = this.geolocation_.getPosition();
   if (position === undefined) {
     throw new Error('Missing position');
@@ -302,14 +306,14 @@ Controller.prototype.setPosition_ = function() {
   if (this.follow_) {
     this.viewChangedByMe_ = true;
     if (this.zoom_ !== undefined) {
-      this.map_.getView().setCenter(position);
-      this.map_.getView().setZoom(this.zoom_);
+      view.setCenter(position);
+      view.setZoom(this.zoom_);
     } else if (accuracy instanceof Polygon) {
       const size = this.map_.getSize();
       if (size === undefined) {
         throw new Error('Missing size');
       }
-      this.map_.getView().fit(accuracy, {size});
+      view.fit(accuracy, {size});
     }
     this.viewChangedByMe_ = false;
   }
@@ -378,7 +382,7 @@ Controller.prototype.handleRotate_ = function(eventAlpha, currentAlpha) {
 };
 
 
-module.controller('ngeoGeolocationMobileController', Controller);
+module.controller('ngeoGeolocationController', Controller);
 
 
 export default module;

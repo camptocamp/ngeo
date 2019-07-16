@@ -4,7 +4,6 @@ import gmfControllersAbstractAppController, {AbstractAppController, getLocationI
 import gmfMobileMeasureModule from 'gmf/mobile/measure/module.js';
 import gmfMobileNavigationModule from 'gmf/mobile/navigation/module.js';
 import gmfQueryWindowComponent from 'gmf/query/windowComponent.js';
-import ngeoGeolocationMobile from 'ngeo/geolocation/mobile.js';
 import * as olProj from 'ol/proj.js';
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
@@ -12,7 +11,6 @@ import olControlScaleLine from 'ol/control/ScaleLine.js';
 import olControlZoom from 'ol/control/Zoom.js';
 import olControlRotate from 'ol/control/Rotate.js';
 import * as olInteraction from 'ol/interaction.js';
-import olStyleCircle from 'ol/style/Circle.js';
 import olStyleFill from 'ol/style/Fill.js';
 import olStyleRegularShape from 'ol/style/RegularShape.js';
 import olStyleStroke from 'ol/style/Stroke.js';
@@ -110,29 +108,6 @@ export class AbstractMobileController extends AbstractAppController {
       }
     };
 
-    const positionFeatureStyle = config.positionFeatureStyle || new olStyleStyle({
-      image: new olStyleCircle({
-        radius: 6,
-        fill: new olStyleFill({color: 'rgba(230, 100, 100, 1)'}),
-        stroke: new olStyleStroke({color: 'rgba(230, 40, 40, 1)', width: 2})
-      })
-    });
-
-    const accuracyFeatureStyle = config.accuracyFeatureStyle || new olStyleStyle({
-      fill: new olStyleFill({color: 'rgba(100, 100, 230, 0.3)'}),
-      stroke: new olStyleStroke({color: 'rgba(40, 40, 230, 1)', width: 2})
-    });
-
-    /**
-     * @type {import('ngeo/geolocation/mobile.js').MobileGeolocationDirectiveOptions}
-     */
-    this.mobileGeolocationOptions = {
-      positionFeatureStyle: positionFeatureStyle,
-      accuracyFeatureStyle: accuracyFeatureStyle,
-      zoom: config.geolocationZoom,
-      autorotate: config.autorotate
-    };
-
     this.manageResize = true;
     this.resizeTransition = 500;
 
@@ -201,7 +176,6 @@ const module = angular.module('GmfAbstractMobileControllerModule', [
   gmfMobileMeasureModule.name,
   gmfMobileNavigationModule.name,
   gmfQueryWindowComponent.name,
-  ngeoGeolocationMobile.name,
 ]);
 
 module.controller('AbstractMobileController', AbstractMobileController);

@@ -162,6 +162,15 @@ $footer-height: $input-height-base + 2 * $padding-base-vertical;
     }
   }
 
+  button[ngeo-geolocation] {
+    position: absolute;
+    height: $map-tools-size;
+    width: $map-tools-size;
+    left: $app-margin;
+    top: 2 * $map-tools-size + $app-margin + 2 * $micro-app-margin;
+    z-index: $below-content-index;
+  }
+
   [ngeo-scaleselector] .btn > span {
     min-width: 5rem;
     display: inline-block;

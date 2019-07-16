@@ -132,7 +132,7 @@ gmf-map {
   left: $app-margin;
 }
 
-button[ngeo-mobile-geolocation] {
+button[ngeo-geolocation] {
   right: $app-margin;
   top: 3 * $map-tools-size + 2 * $app-margin + 2 * $micro-app-margin;
 }
@@ -159,7 +159,7 @@ button[ngeo-mobile-geolocation] {
     top: auto;
     bottom: $app-margin + $map-tools-size;
   }
-  button[ngeo-mobile-geolocation] {
+  button[ngeo-geolocation] {
     top: auto;
     bottom: $app-margin;
   }

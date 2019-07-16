@@ -22,6 +22,7 @@ import ngeoQueryMapQuerent from 'ngeo/query/MapQuerent.js';
 import ngeoQueryMapQueryComponent from 'ngeo/query/mapQueryComponent.js';
 import ngeoStatemanagerModule from 'ngeo/statemanager/module.js';
 import ngeoStatemanagerWfsPermalink from 'ngeo/statemanager/WfsPermalink.js';
+import ngeoGeolocation from 'ngeo/geolocation/component.js';
 import * as olArray from 'ol/array.js';
 import * as olEvents from 'ol/events.js';
 import olMap from 'ol/Map.js';
@@ -678,6 +679,30 @@ export function AbstractAppController(config, map, $scope, $injector) {
       Sentry.setTag(tag, tags[tag]);
     }
   }
+
+  const positionFeatureStyle = config.positionFeatureStyle || new olStyleStyle({
+    image: new olStyleCircle({
+      radius: 6,
+      fill: new olStyleFill({color: 'rgba(230, 100, 100, 1)'}),
+      stroke: new olStyleStroke({color: 'rgba(230, 40, 40, 1)', width: 2})
+    })
+  });
+
+  const accuracyFeatureStyle = config.accuracyFeatureStyle || new olStyleStyle({
+    fill: new olStyleFill({color: 'rgba(100, 100, 230, 0.3)'}),
+    stroke: new olStyleStroke({color: 'rgba(40, 40, 230, 1)', width: 2})
+  });
+
+  /**
+   * @type {import('ngeo/geolocation/component.js').GeolocationDirectiveOptions}
+   */
+  this.geolocationOptions = {
+    positionFeatureStyle: positionFeatureStyle,
+    accuracyFeatureStyle: accuracyFeatureStyle,
+    zoom: config.geolocationZoom,
+    autorotate: config.autorotate
+  };
+
 }
 
 
@@ -812,6 +837,7 @@ const module = angular.module('GmfAbstractAppControllerModule', [
   ngeoQueryMapQueryComponent.name,
   ngeoStatemanagerModule.name,
   ngeoStatemanagerWfsPermalink.name,
+  ngeoGeolocation.name,
 ]);
 
 
