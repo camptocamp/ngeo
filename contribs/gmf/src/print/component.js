@@ -538,18 +538,12 @@ export class PrintController {
      */
     this.rotationInput_ = $element.find('.gmf-print-rotation-input');
 
-    this.rotationInput_.on('input', (event) => {
+    // 'change' event listening is a workaround for IE11
+    this.rotationInput_.on('input change', (event) => {
       const rotation = $(event.target).val();
-      if (typeof rotation == 'number') {
-        this.setRotation(rotation);
-      }
-    });
-    // Workaround for IE11
-    this.rotationInput_.on('change', (event) => {
-      const rotation = $(event.target).val();
-      if (typeof rotation == 'number') {
-        this.setRotation(rotation);
-      }
+       if (typeof rotation == 'string') {
+         this.setRotation(parseFloat(rotation));
+       }
     });
 
     /**
