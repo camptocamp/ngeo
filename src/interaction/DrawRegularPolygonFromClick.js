@@ -8,7 +8,7 @@ import * as olEvents from 'ol/events.js';
 import olFeature from 'ol/Feature.js';
 import * as olFunctions from 'ol/functions.js';
 import olGeomCircle from 'ol/geom/Circle.js';
-import olGeomPolygon from 'ol/geom/Polygon.js';
+import {fromCircle, makeRegular} from 'ol/geom/Polygon.js';
 import olInteractionInteraction from 'ol/interaction/Interaction.js';
 
 /**
@@ -130,11 +130,12 @@ exports.prototype.disable_ = function() {
  */
 exports.prototype.handleMapClick_ = function(evt) {
   const center = evt.coordinate;
-  const geometry = olGeomPolygon.fromCircle(
+  const geometry = fromCircle(
     new olGeomCircle(center), this.sides_
   );
 
-  olGeomPolygon.makeRegular(geometry, center, this.radius_, this.angle_);
+  makeRegular(geometry, center, this.radius_, this.angle_);
+
 
   /** @type {ngeox.DrawEvent} */
   const event = new ngeoCustomEvent('drawend', {feature: new olFeature(geometry)});
