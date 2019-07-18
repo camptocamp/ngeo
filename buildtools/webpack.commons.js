@@ -158,6 +158,19 @@ const config = function(hardSourceConfig, babelLoaderCacheDirectory) {
     }
   };
 
+  const jstsRule = {
+    test: /jsts\/.*\.js$/,
+    use: {
+      loader: 'babel-loader',
+      options: {
+        babelrc: false,
+        comments: false,
+        cacheDirectory: babelLoaderCacheDirectory,
+        presets: babelPresets,
+      }
+    }
+  };
+
   return {
     context: path.resolve(__dirname, '../'),
     devtool: 'source-map',
@@ -168,6 +181,7 @@ const config = function(hardSourceConfig, babelLoaderCacheDirectory) {
       rules: [
         olRule,
         olcsRule,
+        jstsRule,
         angularRule,
         typeaheadRule,
         cssRule,

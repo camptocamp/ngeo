@@ -362,8 +362,7 @@ exports.Controller_.prototype.handleToolActiveChange_ = function(
 exports.Controller_.prototype.handleDestroy_ = function() {};
 
 
-exports.controller('GmfObjecteditingtoolsController',
-  exports.Controller_);
+exports.controller('GmfObjecteditingtoolsController', exports.Controller_);
 
 
 /**
