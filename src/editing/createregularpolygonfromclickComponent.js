@@ -180,7 +180,7 @@ exports.Controller_.prototype.$onInit = function() {
  * @private
  */
 exports.Controller_.prototype.handleDrawEnd_ = function(evt) {
-  const feature = new olFeature(evt.feature.getGeometry());
+  const feature = new olFeature(evt.detail.feature.getGeometry());
   this.features.push(feature);
 };
 
