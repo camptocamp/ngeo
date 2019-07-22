@@ -48,7 +48,8 @@ exports.directive_ = function($compile, gettextCatalog, $filter, $injector) {
         startMsg: $compile(`<div translate>${helpMsg}</div>`)($scope)[0],
         continueMsg: $compile(`<div translate>${contMsg}</div>`)($scope)[0],
         precision: $injector.has('ngeoMeasurePrecision') ? $injector.get('ngeoMeasurePrecision') : undefined,
-        tolerance: $injector.has('ngeoMeasureTolerance') ? $injector.get('ngeoMeasureTolerance') : undefined,
+        tolerance: $injector.has('ngeoSnappingTolerance') ? $injector.get('ngeoSnappingTolerance') : undefined,
+        source: $injector.has('ngeoSnappingSource') ? $injector.get('ngeoSnappingSource') : undefined,
       });
 
       drawFeatureCtrl.registerInteraction(measureLength);

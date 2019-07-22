@@ -55,11 +55,15 @@ const exports = function(format, gettextCatalog, options = /** @type {ngeox.inte
   this.format = format;
 
   /**
-   * The tolerance for snapping in pixels.
+   * The snapping tolerance in pixels.
    * @params {Number}
    */
   this.tolerance = options.tolerance;
 
+  /**
+   * The snapping source
+   * @params {ol.source.Vector}
+   */
   this.source = options.source;
 };
 

@@ -209,7 +209,7 @@ exports.Controller_.prototype.$onInit = function() {
         style: new olStyleStyle(),
         startMsg: this.compile_(`<div translate>${helpMsg}</div>`)(this.scope_)[0],
         continueMsg: this.compile_(`<div translate>${contMsg}</div>`)(this.scope_)[0],
-        tolerance: this.injector_.has('ngeoMeasureTolerance') ? this.injector_.get('ngeoMeasureTolerance') : undefined,
+        tolerance: this.injector_.has('ngeoSnappingTolerance') ? this.injector_.get('ngeoSnappingTolerance') : undefined,
         source: this.injector_.has('ngeoSnappingSource') ? this.injector_.get('ngeoSnappingSource') : undefined,
       }
     );
