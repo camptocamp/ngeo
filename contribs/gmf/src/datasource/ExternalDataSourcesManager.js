@@ -545,7 +545,7 @@ export class ExternalDatSourcesManager {
         };
 
         if (ngeoFile.isKml(content)) {
-          features = new olFormatKML({extractStyles: false}).readFeatures(content, readOptions);
+          features = new olFormatKML().readFeatures(content, readOptions);
         } else if (ngeoFile.isGpx(content)) {
           features = new olFormatGPX().readFeatures(content, readOptions);
         }
