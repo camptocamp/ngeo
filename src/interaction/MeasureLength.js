@@ -56,7 +56,7 @@ const exports = function(format, gettextCatalog, options = /** @type {ngeox.inte
 
   /**
    * The snapping tolerance in pixels.
-   * @params {Number}
+   * @params {number}
    */
   this.tolerance = options.tolerance;
 
@@ -73,13 +73,13 @@ olBase.inherits(exports, ngeoInteractionMeasure);
 /**
  * @inheritDoc
  */
-exports.prototype.createDrawInteraction = function(style) {
+exports.prototype.createDrawInteraction = function(style, source) {
   return new olInteractionDraw({
     type: /** @type {ol.geom.GeometryType} */ ('LineString'),
-    geometryFunction: (...args) =>
-      this.linestringGeometryFunction(...args),
+    geometryFunction: this.linestringGeometryFunction.bind(this),
     condition: () => true,
-    style: style
+    style: style,
+    source: source,
   });
 };
 
@@ -93,7 +93,7 @@ exports.prototype.createDrawInteraction = function(style) {
  * @return {LineString} Geometry.
  */
 exports.prototype.linestringGeometryFunction = function(coordinates, opt_geometry) {
-  if (modifierPressed && this.tolerance !== undefined && this.source !== undefined) {
+  if (modifierPressed) {
     const viewRotation = this.getMap().getView().getRotation();
     const angle = Math.PI / 4;
     const from = coordinates[coordinates.length - 2];
@@ -106,12 +106,12 @@ exports.prototype.linestringGeometryFunction = function(coordinates, opt_geometr
     to[0] = from[0] - (length * Math.cos(rotation));
     to[1] = from[1] - (length * Math.sin(rotation));
 
-    const delta = this.getMap().getView().getResolution() * this.tolerance;
-    const bbox = [to[0] - delta, to[1] - delta, to[0] + delta, to[1] + delta];
+    if (this.tolerance !== undefined && this.source !== undefined) {
+      const delta = this.getMap().getView().getResolution() * this.tolerance;
+      const bbox = [to[0] - delta, to[1] - delta, to[0] + delta, to[1] + delta];
 
-    const layerSource = this.source;
-    const featuresInExtent = layerSource.getFeaturesInExtent(bbox);
-    if (featuresInExtent.length > 0) {
+      const layerSource = this.source;
+      const featuresInExtent = layerSource.getFeaturesInExtent(bbox);
       featuresInExtent.forEach((feature) => {
         feature.getGeometry().forEachSegment((point1, point2) => {
           // Line points are: from A to M (to B that we need to find)

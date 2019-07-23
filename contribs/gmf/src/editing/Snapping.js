@@ -171,7 +171,7 @@ exports.prototype.ensureSnapInteractionsOnTop = function() {
 
   let item;
   for (const uid in this.cache_) {
-    item = this.cache_[+uid];
+    item = this.cache_[uid];
     if (item.active) {
       googAsserts.assert(item.interaction);
       map.removeInteraction(item.interaction);
@@ -298,11 +298,11 @@ exports.prototype.registerTreeCtrl_ = function(treeCtrl) {
  */
 exports.prototype.unregisterAllTreeCtrl_ = function() {
   for (const uid in this.cache_) {
-    const item = this.cache_[+uid];
+    const item = this.cache_[uid];
     if (item) {
       item.stateWatcherUnregister();
       this.deactivateItem_(item);
-      delete this.cache_[+uid];
+      delete this.cache_[uid];
     }
   }
 };
@@ -481,7 +481,7 @@ exports.prototype.loadAllItems_ = function() {
   this.mapViewChangePromise_ = null;
   let item;
   for (const uid in this.cache_) {
-    item = this.cache_[+uid];
+    item = this.cache_[uid];
     if (item.active) {
       this.loadItemFeatures_(item);
     }
@@ -582,7 +582,7 @@ exports.prototype.handleMapMoveEnd_ = function() {
 exports.prototype.refreshSnappingSource_ = function() {
   this.ngeoSnappingSource_.clear();
   for (const uid in this.cache_) {
-    const item = this.cache_[+uid];
+    const item = this.cache_[uid];
     if (item.active) {
       this.ngeoSnappingSource_.addFeatures(item.features.getArray());
     }
