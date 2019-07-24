@@ -7,6 +7,7 @@ import * as olBase from 'ol/index.js';
 import olGeomLineString from 'ol/geom/LineString.js';
 import olInteractionDraw from 'ol/interaction/Draw.js';
 import {distance} from 'ol/coordinate.js';
+import {containsXY} from 'ol/extent';
 
 let modifierPressed = undefined;
 
@@ -113,21 +114,36 @@ exports.prototype.linestringGeometryFunction = function(coordinates, opt_geometr
       const layerSource = this.source;
       const featuresInExtent = layerSource.getFeaturesInExtent(bbox);
       featuresInExtent.forEach((feature) => {
-        feature.getGeometry().forEachSegment((point1, point2) => {
-          // Line points are: from A to M (to B that we need to find)
-          const distanceFromTo = distance(from, to);
-          const ax = from[0];
-          const ay = from[1];
-          const mx = to[0];
-          const my = to[1];
-          const unitVector = [(mx - ax) / distanceFromTo, (my - ay) / distanceFromTo];
-          const b = [(ax + (distanceFromTo + delta) * unitVector[0]), (ay + (distanceFromTo + delta) * unitVector[1])];
-          to[0] = b[0];
-          to[1] = b[1];
 
+        let lastIntersection = [];
+        let bestIntersection = [];
+        let bestDistance = Infinity;
+
+        // Line points are: from A to M (to B that we need to find)
+        const distanceFromTo = distance(from, to);
+        const ax = from[0];
+        const ay = from[1];
+        const mx = to[0];
+        const my = to[1];
+        const unitVector = [(mx - ax) / distanceFromTo, (my - ay) / distanceFromTo];
+        const b = [(ax + (distanceFromTo + delta) * unitVector[0]), (ay + (distanceFromTo + delta) * unitVector[1])];
+
+        feature.getGeometry().forEachSegment((point1, point2) => {
           // intersection calculation
-          this.computeLineSegmentIntersection(from, to, point1, point2, to);
+          lastIntersection = this.computeLineSegmentIntersection(from, b, point1, point2);
+          if (lastIntersection !== undefined && containsXY(bbox, lastIntersection[0], lastIntersection[1])) {
+            const lastDistance = distance(to, lastIntersection);
+            if (lastDistance < bestDistance) {
+              bestDistance = lastDistance;
+              bestIntersection = lastIntersection;
+            }
+          }
         });
+
+        if (bestIntersection) {
+          to[0] = bestIntersection[0] || to[0];
+          to[1] = bestIntersection[1] || to[1];
+        }
       });
     }
   }
@@ -160,11 +176,9 @@ exports.prototype.handleMeasure = function(callback) {
  * @param {Number} line1vertex2 The coordinates of the first line's second vertex.
  * @param {Number} line2vertex1 The coordinates of the second line's first vertex.
  * @param {Number} line2vertex2 The coordinates of the second line's second vertex.
- * @param {Array<number>} [result] An existing array where the result will be copied. If this parameter
- *                     is undefined, a new array is created and returned.
- * @returns {Array<number> | undefined} The intersection point, undefined if there is no intersection point or lines are coincident.
+ * @return {Array<number> | undefined} The intersection point, undefined if there is no intersection point or lines are coincident.
  */
-exports.prototype.computeLineSegmentIntersection = function(line1vertex1, line1vertex2, line2vertex1, line2vertex2, result) {
+exports.prototype.computeLineSegmentIntersection = function(line1vertex1, line1vertex2, line2vertex1, line2vertex2) {
   const numerator1A = (line2vertex2[0] - line2vertex1[0]) * (line1vertex1[1] - line2vertex1[1])
     - (line2vertex2[1] - line2vertex1[1]) * (line1vertex1[0] - line2vertex1[0]);
   const numerator1B = (line1vertex2[0] - line1vertex1[0]) * (line1vertex1[1] - line2vertex1[1])
@@ -181,6 +195,7 @@ exports.prototype.computeLineSegmentIntersection = function(line1vertex1, line1v
   const  ub1 = numerator1B / denominator1;
 
   if (ua1 >= 0 && ua1 <= 1 && ub1 >= 0 && ub1 <= 1) {
+    const result = [];
     result[0] = line1vertex1[0] + ua1 * (line1vertex2[0] - line1vertex1[0]);
     result[1] = line1vertex1[1] + ua1 * (line1vertex2[1] - line1vertex1[1]);
     return result;

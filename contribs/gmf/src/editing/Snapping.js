@@ -471,6 +471,7 @@ exports.prototype.deactivateItem_ = function(item) {
   }
 
   item.active = false;
+  this.refreshSnappingSource_();
 };
 
 
