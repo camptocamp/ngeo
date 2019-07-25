@@ -25,7 +25,6 @@ exports.module = angular.module('app', [
   ngeoMiscToolActivateMgr.module.name,
 ]);
 
-
 /**
  * @param {!angular.Scope} $scope Angular scope.
  * @param {ol.Collection.<ol.Feature>} ngeoFeatures Collection of features.

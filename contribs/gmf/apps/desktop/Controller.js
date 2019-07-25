@@ -16,6 +16,7 @@ import ngeoProjEPSG21781 from 'ngeo/proj/EPSG21781.js';
 import * as olBase from 'ol/index.js';
 import Raven from 'raven-js/src/raven.js';
 import RavenPluginsAngular from 'raven-js/plugins/angular.js';
+import olSourceVector from 'ol/source/Vector.js';
 
 if (!window.requestAnimationFrame) {
   alert('Your browser is not supported, please update it or use another one. You will be redirected.\n\n'
@@ -122,6 +123,9 @@ exports.module = angular.module('Appdesktop', [
   appBase.module.name,
   gmfControllersAbstractDesktopController.module.name,
 ]);
+
+exports.module.value('ngeoSnappingTolerance', 20);
+exports.module.value('ngeoSnappingSource', new olSourceVector());
 
 exports.module.value('gmfContextualdatacontentTemplateUrl', 'gmf/contextualdata');
 exports.module.run(/* @ngInject */ ($templateCache) => {

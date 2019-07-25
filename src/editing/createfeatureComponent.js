@@ -79,6 +79,7 @@ exports.directive('ngeoCreatefeature', exports.directive_);
  * @param {!angularGettext.Catalog} gettextCatalog Gettext catalog.
  * @param {!angular.$compile} $compile Angular compile service.
  * @param {!angular.$filter} $filter Angular filter
+ * @param {!angular.$injector} $injector Angular injector service.
  * @param {!angular.Scope} $scope Scope.
  * @param {!angular.$timeout} $timeout Angular timeout service.
  * @param {!ngeo.misc.EventHelper} ngeoEventHelper Ngeo event helper service
@@ -89,7 +90,7 @@ exports.directive('ngeoCreatefeature', exports.directive_);
  * @ngdoc controller
  * @ngname ngeoCreatefeatureController
  */
-exports.Controller_ = function(gettextCatalog, $compile, $filter, $scope,
+exports.Controller_ = function(gettextCatalog, $compile, $filter, $injector, $scope,
   $timeout, ngeoEventHelper) {
 
   /**
@@ -153,6 +154,12 @@ exports.Controller_ = function(gettextCatalog, $compile, $filter, $scope,
   this.ngeoEventHelper_ = ngeoEventHelper;
 
   /**
+   * @type {!angular.$injector}
+   * @private
+   */
+  this.injector_ = $injector;
+
+  /**
    * The draw or measure interaction responsible of drawing the vector feature.
    * The actual type depends on the geometry type.
    * @type {ol.interaction.Interaction}
@@ -201,7 +208,9 @@ exports.Controller_.prototype.$onInit = function() {
       {
         style: new olStyleStyle(),
         startMsg: this.compile_(`<div translate>${helpMsg}</div>`)(this.scope_)[0],
-        continueMsg: this.compile_(`<div translate>${contMsg}</div>`)(this.scope_)[0]
+        continueMsg: this.compile_(`<div translate>${contMsg}</div>`)(this.scope_)[0],
+        tolerance: this.injector_.has('ngeoSnappingTolerance') ? this.injector_.get('ngeoSnappingTolerance') : undefined,
+        source: this.injector_.has('ngeoSnappingSource') ? this.injector_.get('ngeoSnappingSource') : undefined,
       }
     );
   } else if (this.geomType === ngeoGeometryType.POLYGON ||
