@@ -9,9 +9,7 @@ import * as olBase from 'ol/index.js';
 import * as olEvents from 'ol/events.js';
 import olCollection from 'ol/Collection.js';
 import olFormatWFS from 'ol/format/WFS.js';
-import olInteractionSnap, {handleEvent as snapHandleEvent} from 'ol/interaction/Snap.js';
-import {handleEvent as handlePointerEvent} from 'ol/interaction/Pointer.js';
-
+import olInteractionSnap from 'ol/interaction/Snap.js';
 
 /**
  * The snapping service of GMF. Responsible of collecting the treeCtrls that
@@ -134,19 +132,12 @@ const exports = function($http, $q, $rootScope, $injector, $timeout, gmfThemes,
 class CustomSnap extends olInteractionSnap {
   constructor(options) {
     super(options);
-    this.modifierPressed = false;
     document.body.addEventListener('keydown', (evt) => {
-      this.modifierPressed = evt.keyCode === 17; // Ctrl key
+      this.setActive(evt.keyCode !== 17); // Ctrl key
     });
     document.body.addEventListener('keyup', () => {
-      this.modifierPressed = false;
+      this.setActive(true);
     });
-    this.handleEvent = (evt) => { // horrible hack
-      if (!this.modifierPressed) {
-        return snapHandleEvent.call(this, evt);
-      }
-      return handlePointerEvent.call(this, evt);
-    };
   }
 }
 
