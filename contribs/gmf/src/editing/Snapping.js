@@ -9,7 +9,9 @@ import * as olBase from 'ol/index.js';
 import * as olEvents from 'ol/events.js';
 import olCollection from 'ol/Collection.js';
 import olFormatWFS from 'ol/format/WFS.js';
-import olInteractionSnap from 'ol/interaction/Snap.js';
+import olInteractionSnap, {handleEvent as snapHandleEvent} from 'ol/interaction/Snap.js';
+import {handleEvent as handlePointerEvent} from 'ol/interaction/Pointer.js';
+
 
 /**
  * The snapping service of GMF. Responsible of collecting the treeCtrls that
@@ -139,19 +141,12 @@ class CustomSnap extends olInteractionSnap {
     document.body.addEventListener('keyup', () => {
       this.modifierPressed = false;
     });
-  }
-
-  handleEvent(evt) {
-    if (this.modifierPressed) {
-      return;
-    } else {
-      const result = this.snapTo(evt.pixel, evt.coordinate, evt.map);
-      if (result.snapped) {
-        evt.coordinate = result.vertex.slice(0, 2);
-        evt.pixel = result.vertexPixel;
+    this.handleEvent = (evt) => { // horrible hack
+      if (!this.modifierPressed) {
+        return snapHandleEvent.call(this, evt);
       }
-      return super.handleEvent(evt);
-    }
+      return handlePointerEvent.call(this, evt);
+    };
   }
 }
 
