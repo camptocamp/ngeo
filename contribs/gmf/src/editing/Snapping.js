@@ -124,7 +124,7 @@ const exports = function($http, $q, $rootScope, $injector, $timeout, gmfThemes,
    * @type {ol.source.Vector | undefined}
    * @private
    */
-  this.ngeoSnappingSource_ = this.injector_.get('ngeoSnappingSource') || undefined;
+  this.ngeoSnappingSource_ = this.injector_.has('ngeoSnappingSource') ? this.injector_.get('ngeoSnappingSource') : undefined;
 
 };
 
