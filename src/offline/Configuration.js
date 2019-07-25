@@ -7,7 +7,6 @@ import olLayerVector from 'ol/layer/Vector.js';
 import olLayerTile from 'ol/layer/Tile.js';
 import olLayerImage from 'ol/layer/Image.js';
 import * as olProj from 'ol/proj.js';
-import olSourceImage from 'ol/source/Image.js';
 import olSourceImageWMS from 'ol/source/ImageWMS.js';
 import olSourceTileWMS from 'ol/source/TileWMS.js';
 import {createForProjection as createTileGridForProjection} from 'ol/tilegrid.js';
@@ -17,7 +16,7 @@ import LocalforageAndroidWrapper from 'ngeo/offline/LocalforageAndroidWrapper.js
 import LocalforageIosWrapper from 'ngeo/offline/LocalforageIosWrapper.js';
 import ngeoCustomEvent from 'ngeo/CustomEvent.js';
 import utils from 'ngeo/offline/utils.js';
-const defaultImageLoadFunction = olSourceImage.defaultImageLoadFunction;
+import {defaultImageLoadFunction} from 'ol/source/Image.js';
 
 import * as realLocalforage from 'localforage';
 
