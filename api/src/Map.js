@@ -250,6 +250,13 @@ class Map {
   }
 
   /**
+   * @return {OLMap}
+   */
+  getMap() {
+    return this.map_;
+  }
+
+  /**
    * @param {import("ol/coordinate.js").Coordinate} center Center.
    * @param {number} zoom Zoom.
    */
