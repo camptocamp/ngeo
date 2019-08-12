@@ -1,5 +1,5 @@
 beautifulsoup4==4.8.0
-codespell==1.14.0
+codespell==1.15.0
 glob2==0.7
 htmlmin==0.1.12
 Mako==1.1.0
