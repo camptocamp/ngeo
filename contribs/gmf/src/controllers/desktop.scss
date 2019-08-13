@@ -366,6 +366,7 @@ $theme-selector-columns: 2;
 
     textarea {
       resize: vertical;
+      min-height: $input-height;
     }
 
     .gmf-app-tools-content-heading {
