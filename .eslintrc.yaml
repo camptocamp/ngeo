@@ -1,11 +1,11 @@
 extends:
-- openlayers
-- plugin:@typescript-eslint/recommended
+  - openlayers
+  - plugin:@typescript-eslint/recommended
 env:
   jquery: true
 parserOptions:
   ecmaVersion: 2017
-  project: ./tsconfig.json
+  project: ./tsconfig-eslint.json
 rules:
   no-console: 0
   comma-dangle: 0
@@ -35,3 +35,7 @@ rules:
     - error
   '@typescript-eslint/restrict-plus-operands':
     - error
+  '@typescript-eslint/ban-ts-ignore': 0
+  '@typescript-eslint/explicit-function-return-type': 0
+  '@typescript-eslint/no-var-requires': 0
+  '@typescript-eslint/no-empty-function': 0

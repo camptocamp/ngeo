@@ -58,7 +58,7 @@ class Controller extends AbstractDesktopController {
 
     /**
      * The ngeo ToolActivate manager service.
-     * @type {import('ngeo/misc/ToolActivateMgr.js').default}
+     * @type {import('ngeo/misc/ToolActivateMgr.js').ToolActivateMgr}
      */
     const ngeoToolActivateMgr = $injector.get('ngeoToolActivateMgr');
 
@@ -76,7 +76,7 @@ class Controller extends AbstractDesktopController {
     });
 
     /**
-     * @type {import("ol/source/Vector.js").default}
+     * @type {import("ol/source/Vector.js").default<*>}
      * @private
      */
     this.vectorSource_ = new olSourceVector({
@@ -222,7 +222,7 @@ module.run(
     $templateCache.put('gmf/contextualdata', require('./contextualdata.html'));
   });
 
-module.value('gmfPermalinkOptions', /** @type {PermalinkOptions} */ ({
+module.value('gmfPermalinkOptions', /** @type {import('gmf/permalink/Permalink.js').PermalinkOptions} */ ({
   pointRecenterZoom: 10
 }));
 

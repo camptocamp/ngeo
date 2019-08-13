@@ -25,12 +25,13 @@
       "src/**/*.js",
       "api/src/**/*.js",
       "contribs/gmf/src/**/*.js",
+      "contribs/gmf/apps/**/*.js",
       "test/spec/**/*.js",
       "contribs/gmf/test/spec/**/*.js",
       "examples/*.js",
       "contribs/gmf/examples/*.js",
     ],
     "files": [
-      "types/dom.d.ts"
+      "types/dom.d.ts",
     ]
 }

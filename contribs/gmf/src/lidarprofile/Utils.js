@@ -422,7 +422,7 @@ export default class {
     let closestPoint = null;
 
     if (hP.length > 0) {
-      const minDist = Math.min.apply(Math, distances);
+      const minDist = Math.min(...distances);
       const indexMin = distances.indexOf(minDist);
       if (indexMin != -1) {
         closestPoint = hP[indexMin];
