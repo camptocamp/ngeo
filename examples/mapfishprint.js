@@ -132,13 +132,13 @@ function MainController($timeout, ngeoCreatePrint, ngeoPrintUtils) {
    */
   const postcomposeListener = ngeoPrintUtils.createPrintMaskPostcompose(
     /**
-       * @return {import("ol/size.js").Size} Size in dots of the map to print.
-       */
+     * @return {import("ol/size.js").Size} Size in dots of the map to print.
+     */
     () => PRINT_PAPER_SIZE_,
     /**
-       * @param {import('ol/PluggableMap.js').FrameState} frameState Frame state.
-       * @return {number} Scale of the map to print.
-       */
+     * @param {import('ol/PluggableMap.js').FrameState} frameState Frame state.
+     * @return {number} Scale of the map to print.
+     */
     (frameState) => {
       const mapSize = frameState.size;
       const mapResolution = frameState.viewState.resolution;

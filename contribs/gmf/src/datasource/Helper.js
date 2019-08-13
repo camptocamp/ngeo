@@ -98,8 +98,8 @@ export class DatasourceHelper {
         const promises = [];
         for (const attribute of attributes) {
           if (enumAttributes.includes(attribute.name) &&
-             attribute.type !== ngeoFormatAttributeType.SELECT &&
-             (!attribute.choices || !attribute.choices.length)) {
+              attribute.type !== ngeoFormatAttributeType.SELECT &&
+              (!attribute.choices || !attribute.choices.length)) {
             promises.push(
               this.gmfEnumerateAttribute_.getAttributeValues(dataSource, attribute.name).then((values) => {
                 const choices = values.map(choice => choice.value);

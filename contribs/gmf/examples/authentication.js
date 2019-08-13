@@ -45,7 +45,7 @@ function MainController(gettextCatalog) {
       );
     },
     notValidMessage: gettextCatalog.getString('The new password must have at least 8 characters,'
-                             + 'including capital letter, small letter, digit and special character.')
+                              + 'including capital letter, small letter, digit and special character.')
   };
 }
 

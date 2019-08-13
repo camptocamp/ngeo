@@ -541,9 +541,9 @@ export class PrintController {
     // 'change' event listening is a workaround for IE11
     this.rotationInput_.on('input change', (event) => {
       const rotation = $(event.target).val();
-       if (typeof rotation == 'string') {
-         this.setRotation(parseFloat(rotation));
-       }
+      if (typeof rotation == 'string') {
+        this.setRotation(parseFloat(rotation));
+      }
     });
 
     /**

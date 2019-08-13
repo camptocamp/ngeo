@@ -116,8 +116,8 @@ WFSDescribeFeatureType.prototype.read;
 
 
 /**
-   * @param {Document} doc Document.
-   * @return {Object} Object
+ * @param {Document} doc Document.
+ * @return {Object} Object
  */
 WFSDescribeFeatureType.prototype.readFromDocument = function(doc) {
   /** @type {?Node|ChildNode} */
@@ -132,8 +132,8 @@ WFSDescribeFeatureType.prototype.readFromDocument = function(doc) {
 
 
 /**
-   * @param {Element} node Node.
-   * @return {Object} Object
+ * @param {Element} node Node.
+ * @return {Object} Object
  */
 WFSDescribeFeatureType.prototype.readFromNode = function(node) {
   let result = {};

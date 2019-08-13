@@ -330,9 +330,7 @@ export class RuleHelper {
       destRule.upperBoundary = sourceRule.upperBoundary;
     }
 
-    if (sourceRule instanceof ngeoRuleGeometry &&
-       destRule instanceof ngeoRuleGeometry
-    ) {
+    if (sourceRule instanceof ngeoRuleGeometry && destRule instanceof ngeoRuleGeometry) {
       this.ngeoFeatureHelper_.clearNonSpatialProperties(destRule.feature);
       destRule.feature.setProperties(
         this.ngeoFeatureHelper_.getNonSpatialProperties(sourceRule.feature)
@@ -437,9 +435,7 @@ export class RuleHelper {
       } else if (conditions.length >= 2) {
         if (condition === ngeoFilterCondition.AND) {
           mainFilter = olFormatFilter.and.apply(null, conditions);
-        } else if (condition === ngeoFilterCondition.OR ||
-                   condition === ngeoFilterCondition.NOT
-        ) {
+        } else if (condition === ngeoFilterCondition.OR || condition === ngeoFilterCondition.NOT) {
           mainFilter = olFormatFilter.or.apply(null, conditions);
         }
       }

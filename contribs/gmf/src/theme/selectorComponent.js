@@ -74,8 +74,8 @@ function gmfThemeSelectorTemplateUrl($attrs, gmfThemeSelectorTemplateUrl) {
  *          </span>
  *      </a>
  *      <gmf-themeselector class="dropdown-menu"
-           gmf-themeselector-currenttheme="mainCtrl.theme"
-           gmf-themeselector-filter="::mainCtrl.filter">
+ *          gmf-themeselector-currenttheme="mainCtrl.theme"
+ *          gmf-themeselector-filter="::mainCtrl.filter">
  *      </gmf-themeselector>
  *
  * The theme selector can operate in a 'flush' (as above) or 'add' mode. For more information
