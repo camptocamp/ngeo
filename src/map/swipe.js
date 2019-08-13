@@ -1,6 +1,6 @@
 import angular from 'angular';
 import * as olEvents from 'ol/events.js';
-
+import '../../examples/mapswipe.css';
 /**
  * @type {angular.IModule}
  * @hidden
@@ -84,28 +84,27 @@ class SwipeController {
      */
     this.swipeInput_ = $element.find('.swipe-input');
 
-    /**
-     * @type {?import("ol/events.js").EventsKey}
-     * @private
-     */
-    this.layerKey_ = null;
+    /** @type {(olEvents.EventsKey | olEvents.EventsKey[])[] | null} */
+    this.layerKeys_ = [];
   }
 
   /**
    * Init the controller
    */
   $onInit() {
-    this.layerKey_ = this.layer.on('prerender', this.handleLayerPrerender_.bind(this));
+    this.layerKeys_.push(olEvents.listen(this.layer, 'prerender', this.handleLayerPrerender_, this));
+
     this.swipeInput_.on('input change', event => {
       this.swipeValue = Number($(event.target).val());
       this.map.render();
     });
-    this.layer.on('postrender', this.handleLayerPostrender_.bind(this));
+
+    this.layerKeys_.push(olEvents.listen(this.layer, 'postrender', this.handleLayerPostrender_, this));
   }
 
   /**
    * @param {import("ol/events/Event.js").default} evt OpenLayers object event.
-   * @private
+   *@private
    */
   handleLayerPrerender_(evt) {
     const ctx = evt.context;
@@ -129,9 +128,8 @@ class SwipeController {
   }
 
   $onDestroy() {
-    if (this.layerKey_ !== null) {
-       olEvents.unlistenByKey(this.layerKey_);
-    }
+    olEvents.unlistenByKey(this.layerKeys_);
+    this.swipeInput_.off();
   }
 }
 

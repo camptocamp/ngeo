@@ -22,14 +22,14 @@ const module = angular.module('app', [
  */
 function MainController() {
 
-  const openStreatMap = new olLayerTile({
+  const openStreetMapLayer = new olLayerTile({
     source: new olSourceOSM()
   });
 
   /**
    * @type {import('ol/layer/Tile.js').default}
    */
-  this.openSeaMap = new olLayerTile({
+  this.openSeaMapLayer = new olLayerTile({
     source: new olSourceOSM({
       attributions: [
         'All maps © <a href="http://www.openseamap.org/">OpenSeaMap</a>',
@@ -45,8 +45,8 @@ function MainController() {
    */
   this.map = new olMap({
     layers: [
-      openStreatMap,
-      this.openSeaMap
+      openStreetMapLayer,
+      this.openSeaMapLayer
     ],
     view: new olView({
       center: [-244780.24508882355, 5986452.183179816],
