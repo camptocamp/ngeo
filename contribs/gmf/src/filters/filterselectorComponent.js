@@ -184,7 +184,7 @@ class FilterSelectorController {
       () => this.gmfSavedFilters.currentDataSourceItems,
       () => {
         if (this.gmfSavedFilters.currentDataSourceItems.length === 0 &&
-           this.saveFilterManageModalShown) {
+            this.saveFilterManageModalShown) {
           this.saveFilterManageModalShown = false;
         }
       }

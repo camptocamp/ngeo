@@ -247,7 +247,7 @@ Controller.prototype.$onInit = function() {
       )
     );
   } else if (interaction instanceof ngeoInteractionMeasureLength ||
-     interaction instanceof ngeoInteractionMeasureArea) {
+      interaction instanceof ngeoInteractionMeasureArea) {
     this.ngeoEventHelper_.addListenerKey(
       uid,
       olEvents.listen(

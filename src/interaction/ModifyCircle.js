@@ -176,8 +176,8 @@ export default class extends olInteractionPointer {
     const nodesToRemove = [];
     rBush.forEach(
       /**
-         * @param {import("ol/interaction/Modify.js").SegmentData} node RTree node.
-         */
+       * @param {import("ol/interaction/Modify.js").SegmentData} node RTree node.
+       */
       (node) => {
         if (feature === node.feature) {
           nodesToRemove.push(node);
