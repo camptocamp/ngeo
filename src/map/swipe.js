@@ -1,6 +1,6 @@
 import angular from 'angular';
 import * as olEvents from 'ol/events.js';
-import '../../examples/mapswipe.css';
+import RenderEvent from 'ol/render/Event.js';
 /**
  * @type {angular.IModule}
  * @hidden
@@ -64,7 +64,7 @@ class SwipeController {
     this.map;
 
     /**
-     * @type {import('ol/layer/Layer.js').default}
+     * @type {import('ol/layer/Tile.js').default}
      */
     this.layer;
 
@@ -106,11 +106,12 @@ class SwipeController {
   }
 
   /**
-   * @param {import("ol/events/Event.js").default} evt OpenLayers object event.
-   *@private
+   * @param {?Event|import("ol/events/Event.js").default} evt OpenLayers object event.
+   * @private
    */
   handleLayerPrerender_(evt) {
-    const ctx = evt.context;
+    if (evt instanceof RenderEvent) {
+      const ctx = evt.context;
     if (!ctx) {
       return;
     }
@@ -119,19 +120,25 @@ class SwipeController {
     ctx.beginPath();
     ctx.rect(0, 0, width, ctx.canvas.height);
     ctx.clip();
+    }
   }
 
   /**
-   * @param {import("ol/events/Event.js").default} evt OpenLayers object event.
+   * @param {?Event|import("ol/events/Event.js").default} evt OpenLayers object event.
    * @private
    */
   handleLayerPostrender_(evt) {
-    const ctx = evt.context;
-    ctx.restore();
+    if (evt instanceof RenderEvent) {
+      const ctx = evt.context;
+      if (!ctx) {
+        return;
+      }
+      ctx.restore();
+    }
   }
 
   $onDestroy() {
-    olEvents.unlistenByKey(this.layerKeys_);
+    this.layerKeys_.forEach(olEvents.unlistenByKey);
     this.layerKeys_.length = 0;
     this.swipeInput_.off();
   }
