@@ -13,7 +13,7 @@ import VectorSource from 'ol/source/Vector.js';
 
 /**
  * @typedef {Object} Options
- * @property {VectorSource<import("ol/geom/Geometry.js").default>} source
+ * @property {!VectorSource<import("ol/geom/Geometry.js").default>} source
  * @property {import('ol/style/Style.js').StyleLike} style
  */
 
@@ -43,13 +43,13 @@ class DrawAzimut extends olInteractionPointer {
 
     /**
      * Target source for drawn features.
-     * @type {import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>}
+     * @type {!import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>}
      * @private
      */
     this.source_ = options.source;
 
     /**
-     * Tglls whether the drawing has started or not.
+     * Whether the drawing has started or not.
      * @type {boolean}
      * @private
      */
@@ -57,14 +57,14 @@ class DrawAzimut extends olInteractionPointer {
 
     /**
      * Sketch feature.
-     * @type {Feature<import("ol/geom/Geometry.js").default>}
+     * @type {Feature<import("ol/geom/GeometryCollection.js").default>}
      * @private
      */
     this.sketchFeature_ = new Feature();
 
     /**
      * Sketch point.
-     * @type {Feature<import("ol/geom/Geometry.js").default>}
+     * @type {Feature<import("ol/geom/Point.js").default>}
      * @private
      */
     this.sketchPoint_ = new Feature();
@@ -117,14 +117,12 @@ class DrawAzimut extends olInteractionPointer {
    */
   createOrUpdateSketchPoint_(event) {
     const coordinates = event.coordinate.slice();
-    if (this.sketchPoint_.getGeometry() === null) {
+    const sketchPointGeom = this.sketchPoint_.getGeometry();
+    if (!sketchPointGeom) {
       this.sketchPoint_ = new Feature(new olGeomPoint(coordinates));
       this.updateSketchFeatures_();
     } else {
-      const sketchPointGeom = this.sketchPoint_.getGeometry();
-      if (sketchPointGeom instanceof olGeomPoint) {
-        sketchPointGeom.setCoordinates(coordinates);
-      }
+      sketchPointGeom.setCoordinates(coordinates);
     }
   }
 
@@ -136,9 +134,6 @@ class DrawAzimut extends olInteractionPointer {
     const sketchFeatures = [];
     sketchFeatures.push(this.sketchFeature_);
     sketchFeatures.push(this.sketchPoint_);
-    /**
-     * @type {VectorSource<import("ol/geom/Geometry.js").default>}
-     */
     const source = this.sketchLayer_.getSource();
     source.clear(true);
     source.addFeatures(sketchFeatures);
@@ -158,7 +153,6 @@ class DrawAzimut extends olInteractionPointer {
     this.sketchFeature_ = new Feature();
     this.sketchFeature_.setGeometry(geometry);
     this.updateSketchFeatures_();
-    /** @type {import('ngeo/interaction/common.js').DrawEvent} */
     const evt = new ngeoCustomEvent('drawstart', {feature: this.sketchFeature_});
     this.dispatchEvent(evt);
   }
@@ -233,11 +227,8 @@ class DrawAzimut extends olInteractionPointer {
   finishDrawing_() {
     const sketchFeature = this.abortDrawing_();
 
-    if (this.source_ !== null) {
-      this.source_.addFeature(sketchFeature);
-    }
+    this.source_.addFeature(sketchFeature);
 
-    /** @type {import('ngeo/interaction/common.js').DrawEvent} */
     const event = new ngeoCustomEvent('drawend', {feature: this.sketchFeature_});
     this.dispatchEvent(event);
   }
