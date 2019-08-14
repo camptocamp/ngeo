@@ -57,14 +57,14 @@ class DrawAzimut extends olInteractionPointer {
 
     /**
      * Sketch feature.
-     * @type {Feature<import("ol/geom/Geometry.js").default>}
+     * @type {Feature<import("ol/geom/GeometryCollection.js").default>}
      * @private
      */
     this.sketchFeature_ = new Feature();
 
     /**
      * Sketch point.
-     * @type {Feature<import("ol/geom/Geometry.js").default>}
+     * @type {Feature<import("ol/geom/Point.js").default>}
      * @private
      */
     this.sketchPoint_ = new Feature();
@@ -117,14 +117,12 @@ class DrawAzimut extends olInteractionPointer {
    */
   createOrUpdateSketchPoint_(event) {
     const coordinates = event.coordinate.slice();
-    if (this.sketchPoint_.getGeometry() === null) {
+    const sketchPointGeom = this.sketchPoint_.getGeometry();
+    if (!sketchPointGeom) {
       this.sketchPoint_ = new Feature(new olGeomPoint(coordinates));
       this.updateSketchFeatures_();
     } else {
-      const sketchPointGeom = this.sketchPoint_.getGeometry();
-      if (sketchPointGeom instanceof olGeomPoint) {
-        sketchPointGeom.setCoordinates(coordinates);
-      }
+      sketchPointGeom.setCoordinates(coordinates);
     }
   }
 
