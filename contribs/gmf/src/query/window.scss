@@ -63,7 +63,6 @@ div.ngeo-displaywindow {
       width: 100%;
       height: 100%;
       text-align: left;
-      white-space: nowrap;
       overflow: hidden;
       position: absolute;
       top: 0;
@@ -129,15 +128,6 @@ div.ngeo-displaywindow {
     overflow-y: auto;
     .details-key {
       padding-right: $app-margin;
-    }
-
-    /** word wrapping */
-    .details-key, .details-value {
-      white-space: normal;
-    }
-
-    .slide-animation.ng-enter-active .details .details-value {
-      white-space: nowrap;
     }
   }
   .navigate {
