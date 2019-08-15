@@ -1,5 +1,6 @@
 import angular from 'angular';
 import ngeoMiscWMSTime from 'ngeo/misc/WMSTime.js';
+import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
 
 import 'jquery-ui/ui/widgets/slider.js';
 import 'angular-ui-slider';
@@ -12,6 +13,7 @@ import './timeslider.scss';
  */
 const module = angular.module('gmfLayertreeTimeSliderComponent', [
   ngeoMiscWMSTime.name,
+  ngeoMiscDebounce.name,
   'ui.slider',
 ]);
 
@@ -66,7 +68,7 @@ function layertreeTimeSliderComponent() {
         ctrl.init();
 
         ctrl.sliderOptions.stop = onSliderReleased_;
-        ctrl.sliderOptions.slide = computeDates_;
+        ctrl.sliderOptions.slide = ctrl.ngeoDebounce_(onSliderReleased_, 300, true);
 
         /**
          * @param {never} e
@@ -121,6 +123,7 @@ module.directive('gmfTimeSlider', layertreeTimeSliderComponent);
 /**
  * TimeSliderController - directive controller
  * @param {import("ngeo/misc/WMSTime.js").WMSTime} ngeoWMSTime WMSTime service.
+ * @param {import("ngeo/misc/debounce.js").miscDebounce<function(): void>} ngeoDebounce ngeo Debounce factory.
  * @constructor
  * @private
  * @hidden
@@ -128,13 +131,18 @@ module.directive('gmfTimeSlider', layertreeTimeSliderComponent);
  * @ngdoc controller
  * @ngname gmfTimeSliderController
  */
-function Controller(ngeoWMSTime) {
+function Controller(ngeoWMSTime, ngeoDebounce) {
 
   /**
    * @type {import("ngeo/misc/WMSTime.js").WMSTime}
    * @private
    */
   this.ngeoWMSTime_ = ngeoWMSTime;
+
+  /**
+   * @type {import("ngeo/misc/debounce.js").miscDebounce<function(): void>}
+   */
+  this.ngeoDebounce_ = ngeoDebounce;
 
   /**
    * Function called after date(s) changed/selected
@@ -198,7 +206,6 @@ Controller.prototype.init = function() {
   if (!this.time) {
     throw new Error('Missing time');
   }
-  this.timeValueList = this.getTimeValueList_();
 
   // Fetch the initial options for the component
   const initialOptions_ = this.ngeoWMSTime_.getOptions(this.time);
@@ -214,6 +221,7 @@ Controller.prototype.init = function() {
   } else {
     this.dates = initialOptions_.values;
   }
+  this.timeValueList = this.getTimeValueList_();
   this.sliderOptions = {
     range: this.isModeRange,
     min: this.minValue,
