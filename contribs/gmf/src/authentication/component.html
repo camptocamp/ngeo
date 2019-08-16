@@ -63,7 +63,24 @@
           ng-model="$ctrl.newPwdConfVal"
           ng-attr-placeholder="{{'Confirm new password' | translate}}"/>
     </div>
-    <div class="form-group">
+    <div ng-if="$ctrl.gmfUser.otp_uri" class="form-group">
+      <label translate>Two factor authentication barcode:</label>
+      <div><img class="" ng-src="{{$ctrl.otpImage}}"></div>
+    </div>
+    <div ng-if="$ctrl.gmfUser.two_factor_totp_secret" class="form-group">
+      <label translate>Two factor authentication key:</label>
+      <code>{{$ctrl.gmfUser.two_factor_totp_secret}}</code>
+    </div>
+    <div ng-if="$ctrl.twoFactorAuth" class="form-group">
+      <input
+          type="text"
+          autocomplete="off"
+          class="form-control"
+          name="otp"
+          ng-model="$ctrl.otpVal"
+          ng-attr-placeholder="{{'Authentication code' | translate}}"/>
+      </div>
+      <div class="form-group">
       <input
           type="submit"
           class="form-control btn prime"
@@ -115,6 +132,15 @@
           name="password"
           ng-model="$ctrl.pwdVal"
           ng-attr-placeholder="{{'Password' | translate}}"/>
+    </div>
+    <div ng-if="$ctrl.twoFactorAuth" class="form-group">
+      <input
+          type="text"
+          autocomplete="off"
+          class="form-control"
+          name="otp"
+          ng-model="$ctrl.otpVal"
+          ng-attr-placeholder="{{'Authentication code' | translate}}"/>
     </div>
     <div class="form-group">
     <input

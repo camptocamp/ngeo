@@ -31,6 +31,8 @@ import * as Sentry from '@sentry/browser';
  *    False otherwise.
  * @property {RoleInfo[]} roles Roles information.
  * @property {string|null} username The name of the user.
+ * @property {string|null} otp_key
+ * @property {string|null} otp_uri
  */
 
 
@@ -50,6 +52,8 @@ import * as Sentry from '@sentry/browser';
  * @property {boolean} [is_password_changed]
  * @property {RoleInfo[]} [roles]
  * @property {string} [username]
+ * @property {string} [otp_key]
+ * @property {string} [otp_uri]
  */
 
 
@@ -154,14 +158,16 @@ export class AuthenticationService extends olEventsEventTarget {
    * @param {string} oldPwd Old password.
    * @param {string} newPwd New password.
    * @param {string} confPwd New password confirmation.
+   * @param {string} [otp]
    * @return {angular.IPromise<void>} Promise.
    */
-  changePassword(login, oldPwd, newPwd, confPwd) {
+  changePassword(login, oldPwd, newPwd, confPwd, otp = undefined) {
     const url = `${this.baseUrl_}/${RouteSuffix.CHANGE_PASSWORD}`;
 
     return this.$http_.post(url, $.param({
       'login': login,
       'oldPassword': oldPwd,
+      'otp': otp,
       'newPassword': newPwd,
       'confirmNewPassword': confPwd
     }), {
@@ -175,12 +181,17 @@ export class AuthenticationService extends olEventsEventTarget {
   /**
    * @param {string} login Login name.
    * @param {string} pwd Password.
+   * @param {string} [otp]
    * @return {angular.IPromise<angular.IHttpResponse<AuthenticationLoginResponse>>} Promise.
    */
-  login(login, pwd) {
+  login(login, pwd, otp = undefined) {
     const url = `${this.baseUrl_}/${RouteSuffix.LOGIN}`;
+    const params = {'login': login, 'password': pwd};
+    if (otp) {
+      Object.assign(params, {'otp': otp});
+    }
 
-    return this.$http_.post(url, $.param({'login': login, 'password': pwd}), {
+    return this.$http_.post(url, $.param(params), {
       headers: {'Content-Type': 'application/x-www-form-urlencoded'},
       withCredentials: true
     }).then(
