@@ -5,12 +5,10 @@
 
 ngeo-mapswipe .swipe-input {
   background: none;
-  height: 0;
+  height: 100%;
   opacity: 0.7;
   outline: none;
   pointer-events: none;
-  position: absolute;
-  top: 20%;
   transition: opacity .2s;
   -webkit-appearance: none;
   -webkit-transition: .2s;
@@ -23,10 +21,24 @@ ngeo-mapswipe .swipe-input:hover {
 
 ngeo-mapswipe .swipe-input::-webkit-slider-thumb {
   appearance: none;
-  background: #206020;
+  border: 1px solid #7B8E7C;
   cursor: pointer;
-  height: 415px;
+  height: 400px;
   pointer-events: auto;
   -webkit-appearance: none;
   width: 25px;
+  background: url('./right-and-left-arrows-square-button.png') #849E8B;
+  background-size: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding-left: 10px;
+  margin-left: -10px;
+}
+
+ngeo-mapswipe div {
+  vertical-align: middle;
+  height: 400px;
+  width: 100%;
+  position: absolute;
+  top: 0;
 }
