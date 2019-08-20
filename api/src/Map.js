@@ -40,7 +40,7 @@ import * as themes from './Themes.js';
 /**
  * @type {Array<string>}
  */
-const EXCLUDE_PROPERTIES = ['geom', 'geometry', 'boundedBy'];
+const EXCLUDE_PROPERTIES = ['boundedBy'];
 
 
 /**
@@ -349,12 +349,13 @@ class Map {
       const coordinates = /** @type {import('ol/geom/Point.js').default} */(
         feature.getGeometry()
       ).getCoordinates();
+      const geometryName = feature.getGeometryName();
       const properties = feature.getProperties();
       let contentHTML = '';
       if (table) {
         contentHTML += '<table><tbody>';
         for (const key in properties) {
-          if (!EXCLUDE_PROPERTIES.includes(key)) {
+          if (!EXCLUDE_PROPERTIES.includes(key) || key !== geometryName) {
             contentHTML += '<tr>';
             contentHTML += `<th>${key}</th>`;
             contentHTML += `<td>${properties[key]}</td>`;
