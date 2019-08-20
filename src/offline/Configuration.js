@@ -14,8 +14,6 @@ import LocalforageAndroidWrapper from 'ngeo/offline/LocalforageAndroidWrapper.js
 import LocalforageIosWrapper from 'ngeo/offline/LocalforageIosWrapper.js';
 import ngeoCustomEvent from 'ngeo/CustomEvent.js';
 import {normalizeURL, traverseLayer} from 'ngeo/offline/utils.js';
-const defaultImageLoadFunction_ = defaultImageLoadFunction;
-
 import localforage from 'localforage/src/localforage.js';
 
 
@@ -253,7 +251,7 @@ export default class extends olObservable {
    */
   sourceImageWMSToTileWMS(source, projection) {
     if (source instanceof olSourceImageWMS && source.getUrl()
-        && source.getImageLoadFunction() === defaultImageLoadFunction_) {
+        && source.getImageLoadFunction() === defaultImageLoadFunction) {
       const tileGrid = createTileGridForProjection(source.getProjection() || projection, 42, 256);
       const attributions = source.getAttributions() || '';
       const url = source.getUrl();

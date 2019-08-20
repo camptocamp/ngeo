@@ -81,6 +81,7 @@ module.directive('ngeoCreatefeature', editingCreateFeatureComponent);
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @param {angular.ICompileService} $compile Angular compile service.
  * @param {angular.IFilterService} $filter Angular filter
+ * @param {angular.auto.IInjectorService} $injector Angular injector service.
  * @param {angular.IScope} $scope Scope.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @param {import("ngeo/misc/EventHelper.js").EventHelper} ngeoEventHelper Ngeo event helper service
@@ -91,7 +92,7 @@ module.directive('ngeoCreatefeature', editingCreateFeatureComponent);
  * @ngdoc controller
  * @ngname ngeoCreatefeatureController
  */
-function Controller(gettextCatalog, $compile, $filter, $scope, $timeout, ngeoEventHelper) {
+function Controller(gettextCatalog, $compile, $filter, $injector, $scope, $timeout, ngeoEventHelper) {
 
   /**
    * @type {boolean}
@@ -150,6 +151,12 @@ function Controller(gettextCatalog, $compile, $filter, $scope, $timeout, ngeoEve
   this.ngeoEventHelper_ = ngeoEventHelper;
 
   /**
+   * @type {angular.auto.IInjectorService}
+   * @private
+   */
+  this.injector_ = $injector;
+
+  /**
    * The draw or measure interaction responsible of drawing the vector feature.
    * The actual type depends on the geometry type.
    * @type {?import("ol/interaction/Interaction.js").default}
@@ -195,14 +202,23 @@ Controller.prototype.$onInit = function() {
       'Double-click or click last point to finish'
     );
 
+    /** @type {import('ngeo/interaction/Measure.js').MeasureOptions} */
+    const options = {
+      style: new olStyleStyle(),
+      startMsg: this.compile_(`<div translate>${helpMsg}</div>`)(this.scope_)[0],
+      continueMsg: this.compile_(`<div translate>${contMsg}</div>`)(this.scope_)[0],
+    };
+    if (this.injector_.has('ngeoSnappingTolerance')) {
+      options.tolerance = this.injector_.get('ngeoSnappingTolerance');
+    }
+    if (this.injector_.has('ngeoSnappingSource')) {
+      options.source = this.injector_.get('ngeoSnappingSource');
+    }
+
     interaction = new ngeoInteractionMeasureLength(
       this.filter_('ngeoUnitPrefix'),
       gettextCatalog,
-      {
-        style: new olStyleStyle(),
-        startMsg: this.compile_(`<div translate>${helpMsg}</div>`)(this.scope_)[0],
-        continueMsg: this.compile_(`<div translate>${contMsg}</div>`)(this.scope_)[0]
-      }
+      options
     );
   } else if (this.geomType === ngeoGeometryType.POLYGON ||
       this.geomType === ngeoGeometryType.MULTI_POLYGON

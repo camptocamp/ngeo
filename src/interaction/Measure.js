@@ -25,10 +25,12 @@ import VectorSource from 'ol/source/Vector.js';
  * then the default behaviour occurs depending on the measure type.
  * @property {number} [decimals] Defines the number of decimals to keep in the measurement. If not defined,
  * then the default behaviour occurs depending on the measure type.
+ * @property {number} [tolerance] Defines the tolerance.
  * @property {import("ol/style/Style.js").StyleLike} [style] The style to be used when
  * drawing is finished.
  * @property {import("ol/style/Style.js").StyleLike} [sketchStyle] The style to be used
  * while drawing.
+ * @property {import('ol/source/Vector.js').default} [source] The source.
  */
 
 
@@ -228,13 +230,11 @@ class Measure extends olInteractionInteraction {
   /**
    * Creates the draw interaction.
    *
-   * @abstract
    * @param {import("ol/style/Style.js").StyleLike} style The sketchStyle used for the drawing
    *    interaction.
    * @param {VectorSource<import("ol/geom/Geometry.js").default>} source Vector source.
    * @return {?import("ol/interaction/Draw.js").default|import("ngeo/interaction/DrawAzimut.js").default|import("ngeo/interaction/MobileDraw.js").default}
    *    The interaction
-   * @protected
    */
   createDrawInteraction(style, source) {
     return null;
@@ -453,10 +453,8 @@ class Measure extends olInteractionInteraction {
    * Function implemented in inherited classes to compute measurement, determine
    * where to place the tooltip and determine which help message to display.
    *
-   * @abstract
    * @param {function(string, ?import("ol/coordinate.js").Coordinate): void} callback The function
    *     to be called.
-   * @protected
    */
   handleMeasure(callback) {}
 
