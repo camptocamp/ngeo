@@ -51,7 +51,7 @@ export default class extends olInteractionInteraction {
     this.sides_ = options.sides !== undefined ? options.sides : 3;
 
     /**
-     * @type {!Array.<import("ol/events.js").EventsKey>}
+     * @type {Array<import("ol/events.js").EventsKey>}
      * @private
      */
     this.listenerKeys_ = [];

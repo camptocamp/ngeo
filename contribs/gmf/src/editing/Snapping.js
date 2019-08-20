@@ -24,7 +24,8 @@ import olInteractionSnap from 'ol/interaction/Snap.js';
  * @constructor
  * @param {angular.IHttpService} $http Angular $http service.
  * @param {angular.IQService} $q The Angular $q service.
- * @param {!angular.IScope} $rootScope Angular rootScope.
+ * @param {angular.IScope} $rootScope Angular rootScope.
+ * @param {angular.auto.IInjectorService} $injector Angular injector.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes The gmf Themes service.
  * @param {import("gmf/layertree/TreeManager.js").LayertreeTreeManager} gmfTreeManager The gmf TreeManager
@@ -34,7 +35,9 @@ import olInteractionSnap from 'ol/interaction/Snap.js';
  * @ngname gmfSnapping
  * @hidden
  */
-export function EditingSnappingService($http, $q, $rootScope, $timeout, gmfThemes, gmfTreeManager) {
+export function EditingSnappingService(
+  $http, $q, $rootScope, $injector, $timeout, gmfThemes, gmfTreeManager
+) {
 
   // === Injected services ===
 
@@ -61,6 +64,12 @@ export function EditingSnappingService($http, $q, $rootScope, $timeout, gmfTheme
    * @private
    */
   this.timeout_ = $timeout;
+
+  /**
+   * @type {angular.auto.IInjectorService}
+   * @private
+   */
+  this.injector_ = $injector;
 
   /**
    * @type {import("gmf/theme/Themes.js").ThemesService}
@@ -113,13 +122,32 @@ export function EditingSnappingService($http, $q, $rootScope, $timeout, gmfTheme
    */
   this.ogcServers_ = null;
 
+  /**
+   * @type {import('ol/source/Vector.js').default|undefined}
+   * @private
+   */
+  this.ngeoSnappingSource_ = this.injector_.has('ngeoSnappingSource') ?
+    this.injector_.get('ngeoSnappingSource') : undefined;
+}
+
+
+class CustomSnap extends olInteractionSnap {
+  constructor(options) {
+    super(options);
+    document.body.addEventListener('keydown', (evt) => {
+      this.setActive(evt.keyCode !== 17); // Ctrl key
+    });
+    document.body.addEventListener('keyup', () => {
+      this.setActive(true);
+    });
+  }
 }
 
 
 /**
  * In order for a `ol.interaction.Snap` to work properly, it has to be added
  * to the map after any draw interactions or other kinds of interactions that
- * ineracts with features on the map.
+ * interacts with features on the map.
  *
  * This method can be called to make sure the Snap interactions are on top.
  *
@@ -130,7 +158,7 @@ EditingSnappingService.prototype.ensureSnapInteractionsOnTop = function() {
 
   let item;
   for (const uid in this.cache_) {
-    item = this.cache_[+uid];
+    item = this.cache_[uid];
     if (item.active) {
       console.assert(item.interaction);
       map.removeInteraction(item.interaction);
@@ -257,11 +285,11 @@ EditingSnappingService.prototype.registerTreeCtrl_ = function(treeCtrl) {
  */
 EditingSnappingService.prototype.unregisterAllTreeCtrl_ = function() {
   for (const uid in this.cache_) {
-    const item = this.cache_[+uid];
+    const item = this.cache_[uid];
     if (item) {
       item.stateWatcherUnregister();
       this.deactivateItem_(item);
-      delete this.cache_[+uid];
+      delete this.cache_[uid];
     }
   }
 };
@@ -396,7 +424,7 @@ EditingSnappingService.prototype.activateItem_ = function(item) {
   const map = this.map_;
   console.assert(map);
 
-  const interaction = new olInteractionSnap({
+  const interaction = new CustomSnap({
     edge: item.snappingConfig.edge,
     features: item.features,
     pixelTolerance: item.snappingConfig.tolerance,
@@ -443,6 +471,7 @@ EditingSnappingService.prototype.deactivateItem_ = function(item) {
   }
 
   item.active = false;
+  this.refreshSnappingSource_();
 };
 
 
@@ -453,7 +482,7 @@ EditingSnappingService.prototype.loadAllItems_ = function() {
   this.mapViewChangePromise_ = null;
   let item;
   for (const uid in this.cache_) {
-    item = this.cache_[+uid];
+    item = this.cache_[uid];
     if (item.active) {
       this.loadItemFeatures_(item);
     }
@@ -526,6 +555,7 @@ EditingSnappingService.prototype.loadItemFeatures_ = function(item) {
       const readFeatures = new olFormatWFS().readFeatures(response.data);
       if (readFeatures) {
         item.features.extend(readFeatures);
+        this.refreshSnappingSource_();
       }
     });
 
@@ -547,6 +577,18 @@ EditingSnappingService.prototype.handleMapMoveEnd_ = function() {
   );
 };
 
+/**
+ * @private
+ */
+EditingSnappingService.prototype.refreshSnappingSource_ = function() {
+  this.ngeoSnappingSource_.clear();
+  for (const uid in this.cache_) {
+    const item = this.cache_[uid];
+    if (item.active) {
+      this.ngeoSnappingSource_.addFeatures(item.features.getArray());
+    }
+  }
+};
 
 /**
  * @typedef {Object<number, CacheItem>} Cache
@@ -558,14 +600,14 @@ EditingSnappingService.prototype.handleMapMoveEnd_ = function() {
  * @property {boolean} active
  * @property {string} featureNS
  * @property {string} featurePrefix
- * @property {import("ol/Collection.js").default.<import("ol/Feature.js").default>} features
+ * @property {import("ol/Collection.js").default<import("ol/Feature.js").default>} features
  * @property {string} geometryName
  * @property {?import("ol/interaction/Snap.js").default} interaction
  * @property {number} maxFeatures
  * @property {?angular.IDeferred} requestDeferred
  * @property {import('gmf/themes.js').GmfSnappingConfig} snappingConfig
  * @property {Function} stateWatcherUnregister
- * @property {import("ngeo/layertree/Controller.js").defaault} treeCtrl
+ * @property {import("ngeo/layertree/Controller.js").default} treeCtrl
  * @property {WFSConfig} wfsConfig
  */
 

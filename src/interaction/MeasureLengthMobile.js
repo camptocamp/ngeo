@@ -27,7 +27,7 @@ export default class extends ngeoInteractionMeasureLength {
    */
   createDrawInteraction(style, source) {
     return new ngeoInteractionMobileDraw({
-      type: /** @type {import("ol/geom/GeometryType.js").default} */ ('LineString'),
+      type: 'LineString',
       style: style,
       source: source
     });
