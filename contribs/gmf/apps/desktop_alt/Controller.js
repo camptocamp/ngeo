@@ -135,7 +135,7 @@ class Controller extends AbstractDesktopController {
     });
 
     /**
-     * @type {Object.<string, ol.style.Style>} Map of styles for search overlay.
+     * @type {Object<string, import('ol/style/Style.js').default>} Map of styles for search overlay.
      * @export
      */
     this.searchStyles = {

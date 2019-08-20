@@ -78,12 +78,13 @@ module.directive('ngeoCreatefeature', editingCreateFeatureComponent);
 
 
 /**
- * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
- * @param {!angular.ICompileService} $compile Angular compile service.
- * @param {!angular.IFilterService} $filter Angular filter
- * @param {!angular.IScope} $scope Scope.
- * @param {!angular.ITimeoutService} $timeout Angular timeout service.
- * @param {!import("ngeo/misc/EventHelper.js").EventHelper} ngeoEventHelper Ngeo event helper service
+ * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
+ * @param {angular.ICompileService} $compile Angular compile service.
+ * @param {angular.IFilterService} $filter Angular filter
+ * @param {angular.auto.IInjectorService} $injector Angular injector service.
+ * @param {angular.IScope} $scope Scope.
+ * @param {angular.ITimeoutService} $timeout Angular timeout service.
+ * @param {import("ngeo/misc/EventHelper.js").EventHelper} ngeoEventHelper Ngeo event helper service
  * @constructor
  * @private
  * @hidden
@@ -91,7 +92,7 @@ module.directive('ngeoCreatefeature', editingCreateFeatureComponent);
  * @ngdoc controller
  * @ngname ngeoCreatefeatureController
  */
-function Controller(gettextCatalog, $compile, $filter, $scope, $timeout, ngeoEventHelper) {
+function Controller(gettextCatalog, $compile, $filter, $injector, $scope, $timeout, ngeoEventHelper) {
 
   /**
    * @type {boolean}
@@ -109,45 +110,51 @@ function Controller(gettextCatalog, $compile, $filter, $scope, $timeout, ngeoEve
   this.geomType;
 
   /**
-   * @type {!import("ol/Map.js").default}
+   * @type {import("ol/Map.js").default}
    */
   this.map;
 
   /**
-   * @type {!angular.gettext.gettextCatalog}
+   * @type {angular.gettext.gettextCatalog}
    * @private
    */
   this.gettextCatalog_ = gettextCatalog;
 
   /**
-   * @type {!angular.ICompileService}
+   * @type {angular.ICompileService}
    * @private
    */
   this.compile_ = $compile;
 
   /**
-   * @type {!angular.IFilterService}
+   * @type {angular.IFilterService}
    * @private
    */
   this.filter_ = $filter;
 
   /**
-   * @type {!angular.IScope}
+   * @type {angular.IScope}
    * @private
    */
   this.scope_ = $scope;
 
   /**
-   * @type {!angular.ITimeoutService}
+   * @type {angular.ITimeoutService}
    * @private
    */
   this.timeout_ = $timeout;
 
   /**
-   * @type {!import("ngeo/misc/EventHelper.js").EventHelper}
+   * @type {import("ngeo/misc/EventHelper.js").EventHelper}
    * @private
    */
   this.ngeoEventHelper_ = ngeoEventHelper;
+
+  /**
+   * @type {angular.auto.IInjectorService}
+   * @private
+   */
+  this.injector_ = $injector;
 
   /**
    * The draw or measure interaction responsible of drawing the vector feature.
@@ -198,7 +205,11 @@ Controller.prototype.$onInit = function() {
       {
         style: new olStyleStyle(),
         startMsg: this.compile_(`<div translate>${helpMsg}</div>`)(this.scope_)[0],
-        continueMsg: this.compile_(`<div translate>${contMsg}</div>`)(this.scope_)[0]
+        continueMsg: this.compile_(`<div translate>${contMsg}</div>`)(this.scope_)[0],
+        tolerance: this.injector_.has('ngeoSnappingTolerance') ?
+          this.injector_.get('ngeoSnappingTolerance') : undefined,
+        source: this.injector_.has('ngeoSnappingSource') ?
+          this.injector_.get('ngeoSnappingSource') : undefined,
       }
     );
   } else if (this.geomType === ngeoGeometryType.POLYGON ||

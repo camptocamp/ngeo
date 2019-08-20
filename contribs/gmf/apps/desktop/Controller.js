@@ -17,6 +17,7 @@ import EPSG2056 from '@geoblocks/proj/src/EPSG_2056.js';
 import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
 import Raven from 'raven-js/src/raven.js';
 import RavenPluginsAngular from 'raven-js/plugins/angular.js';
+import olSourceVector from 'ol/source/Vector.js';
 
 if (!window.requestAnimationFrame) {
   alert('Your browser is not supported, please update it or use another one. You will be redirected.\n\n'
@@ -120,6 +121,8 @@ const module = angular.module('Appdesktop', [
   appBase.name,
   gmfControllersAbstractDesktopController.name,
 ]);
+
+module.value('ngeoSnappingSource', new olSourceVector());
 
 module.value('gmfContextualdatacontentTemplateUrl', 'gmf/contextualdata');
 module.run(/* @ngInject */ ($templateCache) => {
