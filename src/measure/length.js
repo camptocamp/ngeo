@@ -55,6 +55,12 @@ function measureLengthComponent($compile, gettextCatalog, $filter, $injector) {
       if ($injector.has('ngeoMeasurePrecision')) {
         options.precision = $injector.get('ngeoMeasurePrecision');
       }
+      if ($injector.has('ngeoSnappingTolerance')) {
+        options.tolerance = $injector.get('ngeoSnappingTolerance');
+      }
+      if ($injector.has('ngeoSnappingSource')) {
+        options.source = $injector.get('ngeoSnappingSource');
+      }
       const measureLength = new ngeoInteractionMeasureLength(
         $filter('ngeoUnitPrefix'), gettextCatalog, options
       );

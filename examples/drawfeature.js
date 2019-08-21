@@ -21,7 +21,6 @@ const module = angular.module('app', [
   ngeoMiscToolActivateMgr.name,
 ]);
 
-
 /**
  * @param {angular.IScope} $scope Angular scope.
  * @param {import("ol/Collection.js").default<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>} ngeoFeatures Collection

@@ -9,6 +9,7 @@ import Feature from 'ol/Feature.js';
 import Overlay from 'ol/Overlay.js';
 import Point from 'ol/geom/Point.js';
 import {Icon, Style} from 'ol/style.js';
+import {createDefaultStyle} from 'ol/style/Style.js';
 import View from 'ol/View.js';
 import VectorSource from 'ol/source/Vector.js';
 import VectorLayer from 'ol/layer/Vector.js';
@@ -58,7 +59,7 @@ import * as themes from './Themes.js';
 /**
  * @type {Array<string>}
  */
-const EXCLUDE_PROPERTIES = ['geom', 'geometry', 'boundedBy'];
+const EXCLUDE_PROPERTIES = ['boundedBy'];
 
 
 /**
@@ -288,6 +289,8 @@ class Map {
       marker.setStyle(new Style({
         image
       }));
+    } else {
+      marker.setStyle(createDefaultStyle);
     }
     this.vectorSource_.addFeature(marker);
   }
@@ -401,12 +404,13 @@ class Map {
         throw new Error('Wrong geometry type');
       }
       const coordinates = point.getCoordinates();
+      const geometryName = feature.getGeometryName();
       const properties = feature.getProperties();
       let contentHTML = '';
       if (table) {
         contentHTML += '<table><tbody>';
         for (const key in properties) {
-          if (!EXCLUDE_PROPERTIES.includes(key)) {
+          if (!EXCLUDE_PROPERTIES.includes(key) || key !== geometryName) {
             contentHTML += '<tr>';
             contentHTML += `<th>${key}</th>`;
             contentHTML += `<td>${properties[key]}</td>`;
