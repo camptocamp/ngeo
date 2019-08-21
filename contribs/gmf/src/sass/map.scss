@@ -13,7 +13,7 @@
     height: $map-tools-size;
     width: $map-tools-size;
     background-color: $map-tools-bg-color;
-    border: solid 0.06rem $border-color;
+    border: $border;
     color: $map-tools-color;
     &:hover {
       background-color: $onhover-color;
@@ -59,7 +59,7 @@
 
 button[ngeo-mobile-geolocation] {
   background-color: $map-tools-bg-color;
-  border: solid 0.06rem $border-color;
+  border: $border;
   color: $map-tools-color;
   .fa {
     font-size: $icon-font-size;

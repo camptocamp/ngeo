@@ -281,7 +281,7 @@ nav.gmf-mobile-nav-right {
   color: $map-tools-color;
   z-index: $above-search-index;
   height: $map-tools-size;
-  border: 0.06rem solid $border-color;
+  border: $border;
   .fa, svg {
     font-size: $icon-font-size;
   }
@@ -320,7 +320,7 @@ nav.gmf-mobile-nav-right {
 
   .gmf-mobile-nav-trigger {
     margin: 0;
-    border: solid 0.06rem $border-color;
+    border: $border;
   }
 
   .gmf-mobile-nav-right-trigger {
