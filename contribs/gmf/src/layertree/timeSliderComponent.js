@@ -3,6 +3,7 @@ import ngeoMiscWMSTime from 'ngeo/misc/WMSTime.js';
 import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
 
 import 'jquery-ui/ui/widgets/slider.js';
+import 'ngeo/sass/jquery-ui.scss';
 import 'angular-ui-slider';
 import './timeslider.scss';
 

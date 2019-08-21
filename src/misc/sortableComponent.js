@@ -1,5 +1,6 @@
 import angular from 'angular';
 import 'jquery-ui/ui/widgets/sortable.js';
+import 'ngeo/sass/jquery-ui.scss';
 import 'jquery-ui-touch-punch';
 
 
