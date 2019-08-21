@@ -15,7 +15,6 @@ $padding-base-vertical: $half-app-margin !default;
 $padding-base-horizontal: $app-margin !default;
 $form-group-margin-bottom: $app-margin !default;
 $search-results-max-height: calc(100vh - #{$topbar-height} + #{$map-tools-size} + (2 * #{$app-margin})) !default;
-$border-color: darken($brand-primary, $standard-variation) !default;
 
 @import "~bootstrap/scss/_functions.scss";
 @import "~bootstrap/scss/_variables.scss";
@@ -108,9 +107,7 @@ $footer-height: $input-height-base + 2 * $padding-base-vertical;
   overflow: hidden;
   position: relative;
   display: block;
-  border-top-color: $btn-default-border;
-  border-top-width: 0.06rem;
-  border-top-style: solid;
+  border-top: 0.06rem solid $btn-default-border;
   .gmf-map,
   .gmf-map > div {
     position: absolute;
@@ -133,8 +130,7 @@ $footer-height: $input-height-base + 2 * $padding-base-vertical;
     margin-bottom: 0;
     /* buttons or inputs in bar are supposed to be '-sm' */
     transition: 0.2s ease-out all;
-    border: solid $border-color;
-    border-width: 0.06rem 0 0;
+    border-top: $border;
     &.gmf-app-active {
       bottom: 0;
     }
@@ -156,9 +152,8 @@ $footer-height: $input-height-base + 2 * $padding-base-vertical;
       $width: 2.50rem;
       width: $width;
       margin-left: -($width / 2);
-      border-bottom: 0;
-      border: solid $border-color;
-      border-width: 0.06rem 0.06rem 0 0.06rem;
+      border-bottom: none;
+      border: $border;
       font-weight: 900;
     }
   }
@@ -302,8 +297,8 @@ gmf-search {
   .ui-resizable-e {
     background-color: darken($brand-secondary, $standard-variation);
     border: {
-      left: 0.06rem solid $border-color;
-      right: 0.06rem solid $border-color;
+      left: $border;
+      right: $border;
     }
   }
 }
@@ -403,7 +398,7 @@ $theme-selector-columns: 2;
 
   .gmf-app-bar {
     background-color: $brand-primary;
-    border-left: 0.06rem solid $border-color;
+    border-left: $border;
 
     float: right;
     height: 100%;
@@ -428,7 +423,7 @@ $theme-selector-columns: 2;
     .btn-group-vertical {
       width: 100%;
       .btn {
-        border: 0.06rem solid $border-color;
+        border: $border;
         border-right-width: 0;
         border-left-width: 0;
 
@@ -669,7 +664,7 @@ $bgselector-image-size: 3.00rem;
  * GMF EditFeature directive
  */
 gmf-editfeature > div {
-  border-top: 0.06rem solid $border-color;
+  border-top: $border;
   margin-top: $app-margin;
   padding-top: $app-margin;
 }
@@ -679,7 +674,7 @@ gmf-editfeature > div {
  * GMF ObjectEditingTools directive
  */
 gmf-objecteditingtools {
-  border-bottom: 0.06rem solid $border-color;
+  border-bottom: $border;
   display: block;
   margin: 0 0 $app-margin 0;
   padding: 0 0 $app-margin 0;

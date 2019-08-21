@@ -32,7 +32,7 @@ div.ngeo-displaywindow {
   z-index: $above-all;
   .collapse-button {
     background-color: $nav-bg;
-    border: solid 0.06rem $border-color;
+    border: $border;
     border-bottom-width: 0;
     border-radius: $border-radius-base $border-radius-base 0 0;
     line-height: 0.5;
@@ -47,7 +47,7 @@ div.ngeo-displaywindow {
   }
   .windowcontainer {
     background-color: $nav-bg;
-    border: solid 0.06rem $border-color;
+    border: $border;
     position: relative;
     height: 100%;
     width: 100%;
@@ -131,7 +131,7 @@ div.ngeo-displaywindow {
     }
   }
   .navigate {
-    border-top: solid 0.06rem $border-color;
+    border-top: $border;
     height: $map-tools-size;
     display: flex;
     justify-content: space-between;
