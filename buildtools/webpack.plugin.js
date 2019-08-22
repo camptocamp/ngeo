@@ -105,7 +105,7 @@ function * mergeSources(opts, entry, resolve, level) {
         }
         const absoluteFile = path.normalize(path.resolve(entryDir, file));
         // fix for windows path
-        let relativeFile = path.relative(opts.baseEntryDir, absoluteFile).replace(/\\/g, '/');
+        let relativeFile = path.relative(process.cwd(), absoluteFile).replace(/\\/g, '/');
 
         if (relativeFile[0] !== '.') {
           relativeFile = `./${relativeFile}`;
@@ -293,23 +293,28 @@ function manageContent(pluginOptions, usedContext, compilation, chunk, resolve, 
         }
         try {
           const assetUrl = url.getValue();
-          let assetName = url.getValue().substr(1);
-          let queryString = '';
-          const questionMarkIndex = assetName.indexOf('?');
-          if (questionMarkIndex > 0) {
-            queryString = assetName.substr(questionMarkIndex);
-            assetName = assetName.substr(0, questionMarkIndex);
-          } else {
-            const sharpIndex = assetName.indexOf('#');
-            if (sharpIndex > 0) {
-              queryString = assetName.substr(sharpIndex);
-              assetName = assetName.substr(0, sharpIndex);
+          if (assetUrl[0] == '~') {
+            let assetName = assetUrl.substr(1);
+            let queryString = '';
+            const questionMarkIndex = assetName.indexOf('?');
+            if (questionMarkIndex > 0) {
+              queryString = assetName.substr(questionMarkIndex);
+              assetName = assetName.substr(0, questionMarkIndex);
+            } else {
+              const sharpIndex = assetName.indexOf('#');
+              if (sharpIndex > 0) {
+                queryString = assetName.substr(sharpIndex);
+                assetName = assetName.substr(0, sharpIndex);
+              }
             }
+            promises.push(new Promise(fillDependency(
+              pluginOptions, usedContext, compilation, assetName, assetUrl, queryString, replacements
+            )));
+          } else {
+            promises.push(new Promise(fillDependency(
+              pluginOptions, usedContext, compilation, assetUrl, assetUrl, '', replacements
+            )));
           }
-
-          promises.push(new Promise(fillDependency(
-            pluginOptions, usedContext, compilation, assetName, assetUrl, queryString, replacements
-          )));
         } catch (e) {
           console.error(e.stack || e);
           callback(`SCSS plugin error, ${e}`);

@@ -3,6 +3,7 @@ import angular from 'angular';
 import 'ngeo/sass/font.scss';
 import 'jquery-ui/ui/widgets/resizable.js';
 import 'jquery-ui/ui/widgets/draggable.js';
+import 'ngeo/sass/jquery-ui.scss';
 import 'angular-sanitize';
 
 

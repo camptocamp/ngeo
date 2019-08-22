@@ -14,6 +14,7 @@ import olStyleStroke from 'ol/style/Stroke.js';
 import olStyleStyle from 'ol/style/Style.js';
 
 import 'jquery-ui/ui/widgets/resizable.js';
+import 'ngeo/sass/jquery-ui.scss';
 import 'angular-animate';
 import 'angular-touch';
 import 'bootstrap/js/src/collapse.js';
