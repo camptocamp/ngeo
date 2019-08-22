@@ -260,7 +260,6 @@ EditingSnappingService.prototype.registerTreeCtrl_ = function(treeCtrl) {
         featureNS: ogcServer.wfsFeatureNS,
         featurePrefix: 'feature',
         features: new olCollection(),
-        geometryName: ogcServer.geometryName,
         interaction: null,
         maxFeatures: 50,
         requestDeferred: null,

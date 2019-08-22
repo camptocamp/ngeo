@@ -97,7 +97,6 @@ export const WMSInfoFormat = {
  * @property {!Array.<!import('ngeo/rule/Rule.js').default>} [filterRules] A list of filter rules to apply to
  *    this data source using the filter condition.
  * @property {boolean} [filtrable] Whether the data source is filtrable or not.
- * @property {string} [geometryName] The name of the geometry attribute.
  * @property {string} [ogcImageType] The type of images to fetch by queries by the (WMS) or (WMTS).
  * @property {Array<WMSLayer>} [wmsLayers] A list of layer definitions that are used by WMS queries.
  *    These are **not** used by the (WMTS) queries (the wmtsLayers is used by WMTS queries).
@@ -105,6 +104,8 @@ export const WMSInfoFormat = {
  *    These are **not** used by the (WMTS) queries (the wmtsLayers is used by WMTS queries).
  * @property {string} [ogcServerType] The type of OGC server.
  * @property {string} [ogcType] The type data source. Can be: 'WMS' or 'WMTS'.
+ * @property {Object<string, Object<string, import('gmf/themes.js').GmfOgcServerAttribute>>} [ogcAttributes]
+ *    The attributes of the OGC server.
  * @property {boolean} [snappable] Whether the geometry from this data source can be used to snap the geometry
  *    of features from other data sources that are being edited. Defaults to `false`.
  * @property {boolean} [snappingToEdges] Determines whether external features can be snapped to the edges of
@@ -280,7 +281,7 @@ class OGC extends ngeoDatasourceDataSource {
      * @type {string}
      * @private
      */
-    this.geometryName_ = options.geometryName || DEFAULT_GEOMETRY_NAME;
+    this.geometryName_ = DEFAULT_GEOMETRY_NAME;
 
     /**
      * The type of images to fetch by queries by the (WMS) or (WMTS) .
@@ -320,6 +321,13 @@ class OGC extends ngeoDatasourceDataSource {
      * @private
      */
     this.ogcType_ = options.ogcType || Type.WMS;
+
+    /**
+     * The attributes of the OGC server.
+     * @type {Object<string, Object<string, import('gmf/themes.js').GmfOgcServerAttribute>>}
+     * @private
+     */
+    this.ogcAttributes_ = options.ogcAttributes;
 
     /**
      * Whether the geometry from this data source can be used to snap the
@@ -473,7 +481,7 @@ class OGC extends ngeoDatasourceDataSource {
 
     let wfsFormat = null;
     if (this.supportsWFS && wfsLayers.length) {
-      let format = undefined;
+      let format;
       if (this.wfsOutputFormat_ === WFSOutputFormat.GML3) {
         format = new olFormatGML3();
       } else if (this.wfsOutputFormat_ === WFSOutputFormat.GML2) {
@@ -570,13 +578,6 @@ class OGC extends ngeoDatasourceDataSource {
   /**
    * @inheritDoc
    */
-  getAttributes() {
-    return super.attributes;
-  }
-
-  /**
-   * @inheritDoc
-   */
   setAttributes(attributes) {
     super.setAttributes(attributes);
     this.updateGeometryNameFromAttributes_();
@@ -590,9 +591,19 @@ class OGC extends ngeoDatasourceDataSource {
   }
 
   /**
-   * @return {string} Geometry name
+   * @param {?string} layer The layer name.
+   * @return {?string} Geometry name
    */
-  get geometryName() {
+  geometryName(layer) {
+    if (!this.ogcAttributes_ || !layer) {
+      return this.geometryName_;
+    }
+    const attributes = this.ogcAttributes_[layer];
+    for (const attribute in attributes) {
+      if (attributes[attribute].namespace == 'http://www.opengis.net/gml') {
+        return attribute;
+      }
+    }
     return this.geometryName_;
   }
 
@@ -1008,18 +1019,14 @@ class OGC extends ngeoDatasourceDataSource {
    * @private
    */
   updateGeometryNameFromAttributes_() {
-    let geometryName = DEFAULT_GEOMETRY_NAME;
-
     if (this.attributes) {
       for (const attribute of this.attributes) {
         if (attribute.type === ngeoFormatAttributeType.GEOMETRY) {
-          geometryName = attribute.name;
+          this.geometryName_ = attribute.name;
           break;
         }
       }
     }
-
-    this.geometryName_ = geometryName;
   }
 
   /**

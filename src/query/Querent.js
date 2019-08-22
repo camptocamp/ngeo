@@ -579,12 +579,13 @@ export class Querent {
 
       // (3) Build query options
       for (const dataSource of dataSources) {
+        const currentFeatureTypes = dataSource.getInRangeWFSLayerNames(resolution, true);
 
         // (a) Create common options, if not done yet
         if (!getFeatureCommonOptions) {
           featureNS = dataSource.wfsFeatureNS;
           const featurePrefix = dataSource.wfsFeaturePrefix;
-          const geometryName = dataSource.geometryName;
+          const geometryName = dataSource.geometryName(currentFeatureTypes[0]);
           const outputFormat = dataSource.wfsOutputFormat;
 
           getFeatureCommonOptions = {
@@ -604,7 +605,7 @@ export class Querent {
         }
 
         // (b) Add queryable layer names in featureTypes array
-        featureTypes = featureTypes.concat(dataSource.getInRangeWFSLayerNames(resolution, true));
+        featureTypes = featureTypes.concat(currentFeatureTypes);
 
         // (c) Add filter, if any. If the case, then only one data source
         //     is expected to be used for this request.
@@ -689,7 +690,7 @@ export class Querent {
           const meta = dataSources[0].wfsFormat.readFeatureCollectionMetadata(
             response.data
           );
-          return meta['numberOfFeatures'];
+          return meta.numberOfFeatures;
         });
       } else {
         countPromise = this.q_.resolve();

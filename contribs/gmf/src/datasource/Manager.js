@@ -446,7 +446,7 @@ export class DatasourceManager {
     }
 
     // From there on, the node is a layer node.
-    const gmfLayer = /** @type import('gmf/themes.js').GmfLayer */ (node);
+    const gmfLayer = /** @type {import('gmf/themes.js').GmfLayer} */ (node);
 
     // (2) Skip layer node if a data source with the same id exists
     const id = Number(olUtilGetUid(gmfLayer));
@@ -590,6 +590,7 @@ export class DatasourceManager {
     const name = gmfLayer.name;
     const timeAttributeName = meta.timeAttribute;
     const visible = meta.isChecked === true;
+    const ogcAttributes = ogcServer ? ogcServer.attributes : null;
 
     // Create the data source and add it to the cache
     this.dataSourcesCache_[id] = new gmfDatasourceOGC({
@@ -609,6 +610,7 @@ export class DatasourceManager {
       ogcServerType,
       wfsFeatureNS,
       ogcType,
+      ogcAttributes,
       snappable,
       snappingTolerance,
       snappingToEdges,
