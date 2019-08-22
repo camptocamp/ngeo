@@ -264,7 +264,7 @@ EditingSnappingService.prototype.registerTreeCtrl_ = function(treeCtrl) {
       const uid = olUtilGetUid(treeCtrl);
 
       const stateWatcherUnregister = this.rootScope_.$watch(
-        () => treeCtrl.getState(),
+        () => this.isSnappingActiveForTreeCtrl_(treeCtrl),
         this.handleTreeCtrlStateChange_.bind(this, treeCtrl)
       );
 
@@ -287,7 +287,7 @@ EditingSnappingService.prototype.registerTreeCtrl_ = function(treeCtrl) {
       };
 
       // This extra call is to initialize the treeCtrl with its current state
-      this.handleTreeCtrlStateChange_(treeCtrl, treeCtrl.getState());
+      this.handleTreeCtrlStateChange_(treeCtrl, this.isSnappingActiveForTreeCtrl_(treeCtrl));
     }
   }
 };
@@ -410,7 +410,30 @@ EditingSnappingService.prototype.getWFSConfig_ = function(treeCtrl) {
 
 /**
  * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl The layer tree controller
- * @param {string|undefined} newVal New state value
+ * @return {boolean} True if state is on and snapping is activated for that layer.
+ * @private
+ */
+EditingSnappingService.prototype.isSnappingActiveForTreeCtrl_ = function(treeCtrl) {
+  // Note: a snappable treeCtrl can only be a leaf, therefore the only possible
+  //       states are: 'on' and 'off'.
+  if (treeCtrl.getState() !== 'on') {
+    return false;
+  }
+  if (treeCtrl.properties.snapping !== undefined) {
+    if (typeof treeCtrl.properties.snapping !== 'boolean') {
+      throw new Error('Wrong snappingActive type');
+    }
+    return treeCtrl.properties.snapping;
+  }
+  const node = /** @type {import('gmf/themes.js').GmfLayer} */ (treeCtrl.node);
+  const config = getSnappingConfig(node);
+  return config !== null && config.activated;
+};
+
+
+/**
+ * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl The layer tree controller
+ * @param {boolean} newVal New value for the layer
  * @private
  */
 EditingSnappingService.prototype.handleTreeCtrlStateChange_ = function(treeCtrl, newVal) {
@@ -418,13 +441,7 @@ EditingSnappingService.prototype.handleTreeCtrlStateChange_ = function(treeCtrl,
   const uid = olUtilGetUid(treeCtrl);
   const item = this.cache_[uid];
 
-  // Note: a snappable treeCtrl can only be a leaf, therefore the only possible
-  //       states are: 'on' and 'off'.
-  if (newVal === 'on') {
-    this.activateItem_(item);
-  } else {
-    this.deactivateItem_(item);
-  }
+  newVal ? this.activateItem_(item) : this.deactivateItem_(item);
 };
 
 

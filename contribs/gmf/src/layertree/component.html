@@ -118,6 +118,14 @@
       title="{{'Currently editing this layer'|translate}}"
       ng-if="layertreeCtrl.properties.editing">
     </span>
+
+    <span
+      class="fas fa-magnet"
+      ng-if="layertreeCtrl.node.metadata.snappingConfig"
+      ng-class="gmfLayertreeCtrl.isSnappingActivated(layertreeCtrl) ? 'on' : 'off'"
+      ng-click="gmfLayertreeCtrl.toggleSnapping(layertreeCtrl); $event.preventDefault(); $event.stopPropagation();"
+    >
+    </span>
   </a>
 
   <span class="gmf-layertree-right-buttons">
