@@ -5,6 +5,7 @@ import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
 
 import ngeoPrintService from 'ngeo/print/Service.js';
 import ngeoPrintUtils from 'ngeo/print/Utils.js';
+import MaskLayer from 'ngeo/print/Mask.js';
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
 import olFormatGeoJSON from 'ol/format/GeoJSON.js';
@@ -128,31 +129,22 @@ function MainController($timeout, ngeoCreatePrint, ngeoPrintUtils) {
   this.printUtils_ = ngeoPrintUtils;
 
   /**
-   * @type {function(import("ol/render/Event.js").default): void}
+   * @private
    */
-  const postcomposeListener = ngeoPrintUtils.createPrintMaskPostcompose(
-    /**
-     * @return {import("ol/size.js").Size} Size in dots of the map to print.
-     */
-    () => PRINT_PAPER_SIZE_,
-    /**
-     * @param {import('ol/PluggableMap.js').FrameState} frameState Frame state.
-     * @return {number} Scale of the map to print.
-     */
-    (frameState) => {
-      const mapSize = frameState.size;
-      const mapResolution = frameState.viewState.resolution;
-      // we test mapSize and mapResolution just to please the compiler
-      return mapSize !== undefined && mapResolution !== undefined ?
-        ngeoPrintUtils.getOptimalScale(mapSize, mapResolution,
-          PRINT_PAPER_SIZE_, PRINT_SCALES_) :
-        PRINT_SCALES_[0];
-    });
+  this.maskLayer_ = new MaskLayer();
 
-  /**
-   * Draw the print window in a map postcompose listener.
-   */
-  this.map.on('postcompose', postcomposeListener);
+  this.maskLayer_.getSize = () => PRINT_PAPER_SIZE_;
+  this.maskLayer_.getScale = (frameState) => {
+    const mapSize = frameState.size;
+    const mapResolution = frameState.viewState.resolution;
+    // we test mapSize and mapResolution just to please the compiler
+    if (mapSize !== undefined && mapResolution !== undefined) {
+      return ngeoPrintUtils.getOptimalScale(mapSize, mapResolution, PRINT_PAPER_SIZE_, PRINT_SCALES_);
+    } else {
+      return PRINT_SCALES_[0];
+    }
+  };
+  this.map.addLayer(this.maskLayer_);
 }
 
 

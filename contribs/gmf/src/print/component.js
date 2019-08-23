@@ -4,6 +4,7 @@ import {DATALAYERGROUP_NAME} from 'gmf/index.js';
 
 import gmfAuthenticationService from 'gmf/authentication/Service.js';
 
+import MaskLayer from 'ngeo/print/Mask.js';
 import gmfThemeThemes, {findGroupByLayerNodeName, findObjectByName} from 'gmf/theme/Themes.js';
 import ngeoMapLayerHelper from 'ngeo/map/LayerHelper.js';
 import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr.js';
@@ -285,6 +286,11 @@ export class PrintController {
     this.map = null;
 
     /**
+     * @private
+     */
+    this.maskLayer_ = new MaskLayer();
+
+    /**
      * @type {boolean}
      */
     this.active = false;
@@ -432,12 +438,6 @@ export class PrintController {
      * @private
      */
     this.rotationTimeoutPromise_ = null;
-
-    /**
-     * @type {?import("ol/events.js").EventsKey}
-     * @private
-     */
-    this.postComposeListenerKey_ = null;
 
     /**
      * @type {?import("ol/events.js").EventsKey}
@@ -628,8 +628,9 @@ export class PrintController {
       getRotationFn = () => this.rotation;
     }
 
-    this.postcomposeListener_ = this.ngeoPrintUtils_.createPrintMaskPostcompose(
-      getSizeFn, this.getScaleFn.bind(this), getRotationFn);
+    this.maskLayer_.getSize = getSizeFn;
+    this.maskLayer_.getScale = this.getScaleFn.bind(this);
+    this.maskLayer_.getRotation = getRotationFn;
   }
 
 
@@ -680,7 +681,7 @@ export class PrintController {
         this.gmfPrintState_.state = PrintStateEnum.NOT_IN_USE;
         // Get capabilities - On success
         this.parseCapabilities_(resp);
-        this.postComposeListenerKey_ = olEvents.listen(this.map, 'postcompose', this.postcomposeListener_);
+        this.map.addLayer(this.maskLayer_);
         this.pointerDragListenerKey_ = olEvents.listen(this.map, 'pointerdrag', this.onPointerDrag_, this);
         this.mapViewResolutionChangeKey_ = olEvents.listen(this.map.getView(), 'change:resolution', () => {
           this.scaleManuallySelected_ = false;
@@ -695,9 +696,7 @@ export class PrintController {
       if (!this.map) {
         throw new Error('Missing map');
       }
-      if (this.postComposeListenerKey_) {
-        olEvents.unlistenByKey(this.postComposeListenerKey_);
-      }
+      this.map.removeLayer(this.maskLayer_);
       if (this.pointerDragListenerKey_) {
         olEvents.unlistenByKey(this.pointerDragListenerKey_);
       }
