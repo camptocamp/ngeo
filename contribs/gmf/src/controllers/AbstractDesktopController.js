@@ -251,6 +251,9 @@ exports.module.value('ngeoQueryOptions', {
   'limit': 20
 });
 
+exports.module.value('ngeoSnappingTolerance', 20);
+exports.module.value('ngeoSnappingSource', new olSourceVector());
+
 exports.module.value('ngeoMeasurePrecision', 3);
 exports.module.value('ngeoMeasureDecimals', 0);
 
