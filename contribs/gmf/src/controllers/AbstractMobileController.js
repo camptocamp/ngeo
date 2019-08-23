@@ -182,9 +182,5 @@ module.controller('AbstractMobileController', AbstractMobileController);
 
 module.value('isMobile', true);
 
-module.value('ngeoQueryOptions', {
-  'tolerance': 10
-});
-
 
 export default module;
