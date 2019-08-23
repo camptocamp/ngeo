@@ -54,6 +54,7 @@ function contextualDataComponent() {
     scope: false,
     controller: 'GmfContextualdataController as cdCtrl',
     bindToController: {
+      'displayed': '=gmfContextualdataDisplayed',
       'map': '<gmfContextualdataMap',
       'projections': '<gmfContextualdataProjections',
       'callback': '<gmfContextualdataCallback'
@@ -99,6 +100,11 @@ export function ContextualdataController($compile, $timeout, $scope, gmfRaster, 
    * @type {number[]}
    */
   this.projections = [];
+
+  /**
+   * @type {boolean}
+   */
+  this.displayed = false;
 
   /**
    * @type {function(import("ol/coordinate.js").Coordinate, Object):Object}
@@ -148,7 +154,11 @@ export function ContextualdataController($compile, $timeout, $scope, gmfRaster, 
   this.gmfContextualdataOptions_ = $injector.has('gmfContextualdataOptions') ?
     $injector.get('gmfContextualdataOptions') : {};
 
-  document.body.addEventListener('mousedown', this.hidePopover.bind(this));
+  document.body.addEventListener('mousedown', () => {
+    this.$scope_.$apply(() => {
+      this.hidePopover();
+    });
+  });
 }
 
 /**
@@ -171,7 +181,11 @@ ContextualdataController.prototype.init = function() {
   mapDiv.addEventListener('touchmove', this.handleMapTouchEnd_.bind(this));
   mapDiv.addEventListener('touchend', this.handleMapTouchEnd_.bind(this));
 
-  this.map.on('pointerdown', this.hidePopover.bind(this));
+  this.map.on('pointerdown', () => {
+    this.$scope_.$apply(() => {
+      this.hidePopover();
+    });
+  });
 };
 
 
@@ -300,6 +314,7 @@ ContextualdataController.prototype.showPopover = function() {
     throw new Error('Missing element');
   }
   element.style.display = 'block';
+  this.displayed = true;
 };
 
 ContextualdataController.prototype.hidePopover = function() {
@@ -311,6 +326,7 @@ ContextualdataController.prototype.hidePopover = function() {
     throw new Error('Missing element');
   }
   element.style.display = 'none';
+  this.displayed = false;
 };
 
 module.controller('GmfContextualdataController', ContextualdataController);
