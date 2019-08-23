@@ -614,7 +614,7 @@ EditingSnappingService.prototype.handleMapMoveEnd_ = function() {
  */
 EditingSnappingService.prototype.refreshSnappingSource_ = function() {
   if (this.ngeoSnappingSource_ === undefined) {
-    throw new Error('Missing SnappingSource');
+    return;
   }
   this.ngeoSnappingSource_.clear();
   for (const uid in this.cache_) {
