@@ -584,7 +584,8 @@ export class RuleHelper {
         filter = olFormatFilter.or.apply(null, conditions);
       }
     } else if (spatialTypes.includes(operator)) {
-      const geometryName = dataSource.geometryName;
+      const featureNames = dataSource.getFiltrableWFSLayerName();
+      const geometryName = dataSource.geometryName(featureNames ? featureNames[0] : undefined);
       if (rule instanceof ngeoRuleGeometry) {
         const geometry = rule.geometry;
         if (operator === rsot.CONTAINS) {
