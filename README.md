@@ -61,7 +61,7 @@ then visit https://localhost:3000/contribs/gmf/examples/.
 To run the GeoMapFish applications:
 
 ```
-serve-gmf-apps
+make serve-gmf-apps
 ```
 
 then visit them using

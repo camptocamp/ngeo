@@ -2,6 +2,7 @@ import angular from 'angular';
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
 import gmfThemeThemes, {ThemeNodeType, getSnappingConfig} from 'gmf/theme/Themes.js';
 import ngeoLayertreeController, {getFirstParentTree} from 'ngeo/layertree/Controller.js';
+import {DEFAULT_GEOMETRY_NAME} from 'ngeo/datasource/OGC.js';
 import {getUid as olUtilGetUid} from 'ol/util.js';
 import * as olEvents from 'ol/events.js';
 import olCollection from 'ol/Collection.js';
@@ -276,7 +277,6 @@ EditingSnappingService.prototype.registerTreeCtrl_ = function(treeCtrl) {
         featureNS: ogcServer.wfsFeatureNS,
         featurePrefix: 'feature',
         features: new olCollection(),
-        geometryName: ogcServer.geometryName,
         interaction: null,
         maxFeatures: 50,
         requestDeferred: null,
@@ -563,7 +563,7 @@ EditingSnappingService.prototype.loadItemFeatures_ = function(item) {
     featureTypes: featureTypes,
     outputFormat: 'GML3',
     bbox: extent,
-    geometryName: item.geometryName,
+    geometryName: DEFAULT_GEOMETRY_NAME,
     maxFeatures: item.maxFeatures
   };
 
@@ -590,7 +590,6 @@ EditingSnappingService.prototype.loadItemFeatures_ = function(item) {
         this.refreshSnappingSource_();
       }
     });
-
 };
 
 
@@ -639,7 +638,6 @@ EditingSnappingService.prototype.refreshSnappingSource_ = function() {
  * @property {string} featureNS
  * @property {string} featurePrefix
  * @property {import("ol/Collection.js").default<import("ol/Feature.js").default<import("ol/geom/Geometry.js").default>>} features
- * @property {string} geometryName
  * @property {?import("ol/interaction/Snap.js").default} interaction
  * @property {number} maxFeatures
  * @property {?angular.IDeferred<void>} requestDeferred

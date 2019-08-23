@@ -597,6 +597,7 @@ export class DatasourceManager {
     const name = gmfLayer.name;
     const timeAttributeName = meta.timeAttribute;
     const visible = meta.isChecked === true;
+    const ogcAttributes = ogcServer ? ogcServer.attributes : null;
 
     /** @type {import('./OGC').OGCOptions} */
     const options = {
@@ -608,6 +609,7 @@ export class DatasourceManager {
       identifierAttribute,
       name,
       ogcType,
+      ogcAttributes,
       snappable,
       timeAttributeName,
       visible,

@@ -146,11 +146,15 @@
  * @typedef {Object<string, GmfOgcServer>} GmfOgcServers
  */
 
+/**
+ * @typedef {Object} GmfOgcServerAttribute
+ * @property {string} namespace The attribute namespace.
+ * @property {string} type The attribute type (in namspace).
+ */
 
 /**
  * @typedef {Object} GmfOgcServer
  * @property {boolean} credential
- * @property {string} [geometryName='geometry'] Geometry name.
  * @property {string} imageType 'image/png' or 'image/jpeg'.
  * @property {boolean} isSingleTile
  * @property {string} [namespace] Namespace
@@ -159,6 +163,7 @@
  * @property {string} urlWfs The WFS URL.
  * @property {string} [wfsFeatureNS] WFS feature namespace
  * @property {boolean} wfsSupport
+ * @property {Object<string, Object<string, GmfOgcServerAttribute>>} attributes
  */
 
 /**
