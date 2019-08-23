@@ -25,7 +25,6 @@ import ngeoDatasourceOGC from 'ngeo/datasource/OGC.js';
  * @property {Array<import('ngeo/rule/Rule.js').default>} [filterRules] A list of filter rules to apply
  *    to this data source using the filter condition.
  * @property {boolean} [filtrable] Whether the data source is filtrable or not.
- * @property {string} [geometryName] The name of the geometry attribute.
  * @property {string} [ogcImageType] The type of images to fetch by queries by the (WMS) or (WMTS).
  * @property {Array<import('ngeo/datasource/OGC').WMSLayer>} [wmsLayers] A list of layer definitions that are used by WMS queries.
  *    These are **not** used by the (WMTS) queries (the wmtsLayers is used by WMTS queries).
@@ -34,6 +33,8 @@ import ngeoDatasourceOGC from 'ngeo/datasource/OGC.js';
  *    These are **not** used by the (WMTS) queries (the wmtsLayers is used by WMTS queries).
  * @property {string} [ogcServerType] The type of OGC server.
  * @property {string} [ogcType] The type data source. Can be: 'WMS' or 'WMTS'.
+ * @property {?Object<string, Object<string, import('gmf/themes.js').GmfOgcServerAttribute>>} [ogcAttributes]
+ *    The attributes of the OGC server.
  * @property {boolean} [snappable] Whether the geometry from this data source can be used to snap the geometry
  *    of features from other data sources that are being edited. Defaults to `false`.
  * @property {boolean} [snappingToEdges] Determines whether external features can be snapped to the edges of

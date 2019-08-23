@@ -577,13 +577,17 @@ export class Querent {
 
       // (3) Build query options
       for (const dataSource of dataSources) {
+        const currentFeatureTypes = dataSource.getInRangeWFSLayerNames(resolution, true);
 
         // (a) Create common options, if not done yet
         if (!getFeatureCommonOptions) {
           const featureNS = dataSource.wfsFeatureNS;
           const featurePrefix = dataSource.wfsFeaturePrefix;
-          const geometryName = dataSource.geometryName;
+          const geometryName = dataSource.geometryName(currentFeatureTypes[0]);
           const outputFormat = dataSource.wfsOutputFormat;
+          if (!geometryName) {
+            throw new Error('Missing geometryName');
+          }
 
           getFeatureCommonOptions = {
             bbox,
@@ -602,7 +606,7 @@ export class Querent {
         }
 
         // (b) Add queryable layer names in featureTypes array
-        featureTypes = featureTypes.concat(dataSource.getInRangeWFSLayerNames(resolution, true));
+        featureTypes = featureTypes.concat(currentFeatureTypes);
 
         // (c) Add filter, if any. If the case, then only one data source
         //     is expected to be used for this request.
@@ -638,10 +642,10 @@ export class Querent {
           getFeatureCommonOptions.filter = filter;
         }
       }
-
       if (!getFeatureCommonOptions) {
         throw new Error('Missing getFeatureCommonOptions');
       }
+
       getFeatureCommonOptions.featureTypes = featureTypes;
       if (!url) {
         throw new Error('Missing url');

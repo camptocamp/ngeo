@@ -127,7 +127,7 @@ LayerHelper.prototype.createBasicWMSLayerFromDataSource = function(
     throw new Error('Missing url');
   }
 
-  const layerNames = dataSource.getWFSLayerNames().join(',');
+  const layerNames = dataSource.getWMSLayerNames().join(',');
   const serverType = dataSource.ogcServerType;
   const imageType = dataSource.ogcImageType;
 
