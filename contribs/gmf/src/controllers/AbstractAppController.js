@@ -360,6 +360,11 @@ export function AbstractAppController(config, map, $scope, $injector) {
   /**
    * @type {boolean}
    */
+  this.contextdataActive;
+
+  /**
+   * @type {boolean}
+   */
   this.printActive = false;
 
   /**
@@ -498,6 +503,9 @@ export function AbstractAppController(config, map, $scope, $injector) {
 
   const printPanelActivate = new ngeoMiscToolActivate(this, 'printPanelActive');
   ngeoToolActivateMgr.registerTool(mapTools, printPanelActivate, false);
+
+  const contextdataActivate = new ngeoMiscToolActivate(this, 'contextdataActive');
+  ngeoToolActivateMgr.registerTool(mapTools, contextdataActivate, false);
 
   $scope.$root.$on(ThemeEventType.THEME_NAME_SET, (event, name) => {
     this.gmfThemes_.getThemeObject(name).then((theme) => {

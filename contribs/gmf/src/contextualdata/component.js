@@ -14,7 +14,7 @@ const module = angular.module('gmfContextualdata', [
 
 /**
  * Provide a directive responsible of displaying contextual data after a right
- * click on the map.
+ * click or a long press on the map.
  *
  * This directive doesn't require being rendered in a visible DOM element.
  * It's usually added to the element where the map directive is also added.
@@ -54,6 +54,7 @@ function contextualDataComponent() {
     scope: false,
     controller: 'GmfContextualdataController as cdCtrl',
     bindToController: {
+      'displayed': '=gmfContextualdataDisplayed',
       'map': '<gmfContextualdataMap',
       'projections': '<gmfContextualdataProjections',
       'callback': '<gmfContextualdataCallback'
@@ -101,6 +102,11 @@ export function ContextualdataController($compile, $timeout, $scope, gmfRaster, 
   this.projections = [];
 
   /**
+   * @type {boolean}
+   */
+  this.displayed = false;
+
+  /**
    * @type {function(import("ol/coordinate.js").Coordinate, Object):Object}
    */
   this.callback = (c, o) => ({});
@@ -110,6 +116,12 @@ export function ContextualdataController($compile, $timeout, $scope, gmfRaster, 
    * @private
    */
   this.overlay_ = null;
+
+  /**
+   * @type {number?}
+   * @private
+   */
+  this.longPressTimeout_ = null;
 
   /**
    * @type {angular.ICompileService}
@@ -142,7 +154,11 @@ export function ContextualdataController($compile, $timeout, $scope, gmfRaster, 
   this.gmfContextualdataOptions_ = $injector.has('gmfContextualdataOptions') ?
     $injector.get('gmfContextualdataOptions') : {};
 
-  document.body.addEventListener('mousedown', this.hidePopover.bind(this));
+  document.body.addEventListener('mousedown', () => {
+    this.$scope_.$apply(() => {
+      this.hidePopover();
+    });
+  });
 }
 
 /**
@@ -160,7 +176,37 @@ ContextualdataController.prototype.init = function() {
   }
   mapDiv.addEventListener('contextmenu', this.handleMapContextMenu_.bind(this));
 
-  this.map.on('pointerdown', this.hidePopover.bind(this));
+  // long press support
+  mapDiv.addEventListener('touchstart', this.handleMapTouchStart_.bind(this));
+  mapDiv.addEventListener('touchmove', this.handleMapTouchEnd_.bind(this));
+  mapDiv.addEventListener('touchend', this.handleMapTouchEnd_.bind(this));
+
+  this.map.on('pointerdown', () => {
+    this.$scope_.$apply(() => {
+      this.hidePopover();
+    });
+  });
+};
+
+
+/**
+ * @param {Event} event Event.
+ * @private
+ */
+ContextualdataController.prototype.handleMapTouchStart_ = function(event) {
+  this.longPressTimeout_ = window.setTimeout(() => {
+    this.handleMapContextMenu_(event);
+  }, 500);
+};
+
+
+/**
+ * @private
+ */
+ContextualdataController.prototype.handleMapTouchEnd_ = function() {
+  if (this.longPressTimeout_) {
+    clearTimeout(this.longPressTimeout_);
+  }
 };
 
 /**
@@ -176,7 +222,6 @@ ContextualdataController.prototype.handleMapContextMenu_ = function(event) {
     const coordinate = this.map.getCoordinateFromPixel(pixel);
     this.setContent_(coordinate);
     event.preventDefault();
-    this.hidePopover();
     this.showPopover();
 
     // Use timeout to let the popover content to be rendered before displaying it.
@@ -269,6 +314,7 @@ ContextualdataController.prototype.showPopover = function() {
     throw new Error('Missing element');
   }
   element.style.display = 'block';
+  this.displayed = true;
 };
 
 ContextualdataController.prototype.hidePopover = function() {
@@ -280,6 +326,7 @@ ContextualdataController.prototype.hidePopover = function() {
     throw new Error('Missing element');
   }
   element.style.display = 'none';
+  this.displayed = false;
 };
 
 module.controller('GmfContextualdataController', ContextualdataController);
