@@ -175,6 +175,15 @@
               {{'Show/hide legend'|translate}}
             </a>
           </li>
+          <li ng-if="::(layertreeCtrl.depth === 1 && !layertreeCtrl.node.mixed) || (layertreeCtrl.depth > 1 && layertreeCtrl.parent.node.mixed)">
+            <i class="fa fa-th-list fa-fw"></i>
+            <a
+              ng-click="::gmfLayertreeCtrl.toggleSwipeLayer(layertreeCtrl)"
+              href="">
+              <!-- i18n -->
+             swipe with this layer
+            </a>
+          </li>
           <li ng-if="layertreeCtrl.getDataSource() && layertreeCtrl.getDataSource().filtrable">
             <i class="fa fa-filter fa-fw"></i>
             <a
@@ -237,9 +246,7 @@
     </span>
     {{'Show/hide legend'|translate}}
   </a>
-
 </div>
-
 <div
   ng-if="::!layertreeCtrl.isRoot && gmfLayertreeCtrl.getLegendsObject(layertreeCtrl) && layertreeCtrl.node.metadata.legend" id="gmf-layertree-node-{{::layertreeCtrl.uid}}-legend"
   class="gmf-layertree-legend"

@@ -256,6 +256,7 @@
           gmf-search-clearbutton="::true"
           gmf-search-styles="::mainCtrl.searchStyles">
         </gmf-search>
+          <ngeo-mapswipe ng-if="mainCtrl.gmfLayerBeingSwipe.layer" map="::mainCtrl.map" layer="::mainCtrl.gmfLayerBeingSwipe.layer" id="gmf-map-swipe"></ngeo-mapswipe>
         <ngeo-displaywindow
           content="mainCtrl.displaywindowContent"
           desktop="true"
@@ -304,7 +305,6 @@
           ngeo-bbox-query-active="mainCtrl.queryActive"
           ngeo-bbox-query-autoclear="mainCtrl.queryAutoClear">
         </gmf-map>
-
         <gmf-floorselector class="gmf-floorselector ol-unselectable ol-control"
           value="mainCtrl.dimensions.FLOOR">
         </gmf-floorselector>
