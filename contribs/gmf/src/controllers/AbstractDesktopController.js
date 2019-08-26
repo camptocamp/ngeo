@@ -7,6 +7,7 @@ import gmfPermalinkShareComponent from 'gmf/permalink/shareComponent.js';
 import gmfPrintModule from 'gmf/print/module.js';
 import gmfProfileModule from 'gmf/profile/module.js';
 import gmfRasterComponent from 'gmf/raster/component.js';
+import ngeoMapswipeModule from 'ngeo/map/swipe.js';
 import ngeoDrawFeatures from 'ngeo/draw/features.js';
 import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
 import gmfImportModule from 'gmf/import/module.js';
@@ -131,6 +132,12 @@ export class AbstractDesktopController extends AbstractAPIController {
      * @type {import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr}
      */
     const ngeoToolActivateMgr = $injector.get('ngeoToolActivateMgr');
+
+    /**
+     * The gmf layer being swipe.
+      * @type {import('gmf/datasource/LayerBeingSwipe.js').LayerBeingSwipe}
+     */
+    this.gmfLayerBeingSwipe = $injector.get('gmfLayerBeingSwipe');
 
     const editFeatureActivate = new ngeoMiscToolActivate(this, 'editFeatureActive');
     ngeoToolActivateMgr.registerTool('mapTools', editFeatureActivate, false);
@@ -272,6 +279,7 @@ const module = angular.module('GmfAbstractDesktopControllerModule', [
   gmfRasterComponent.name,
   ngeoDrawFeatures.name,
   gmfImportModule.name,
+  ngeoMapswipeModule.name
 ]);
 
 module.controller('AbstractDesktopController', AbstractDesktopController);

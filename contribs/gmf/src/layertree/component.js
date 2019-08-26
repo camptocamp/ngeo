@@ -1,6 +1,7 @@
 import angular from 'angular';
 import {DATALAYERGROUP_NAME} from 'gmf/index.js';
 import gmfDatasourceDataSourceBeingFiltered from 'gmf/datasource/DataSourceBeingFiltered.js';
+import gmfLayerBeingSwipe from 'gmf/datasource/LayerBeingSwipe.js';
 import gmfDatasourceExternalDataSourcesManager from 'gmf/datasource/ExternalDataSourcesManager.js';
 import gmfPermalinkPermalink from 'gmf/permalink/Permalink.js';
 
@@ -12,7 +13,6 @@ import gmfThemeThemes, {getNodeMinResolution, getNodeMaxResolution} from 'gmf/th
 import ngeoDatasourceOGC, {ServerType} from 'ngeo/datasource/OGC.js';
 
 import ngeoLayertreeComponent from 'ngeo/layertree/component.js';
-
 import ngeoLayertreeController, {LayertreeVisitorDecision} from 'ngeo/layertree/Controller.js';
 import ngeoMapLayerHelper from 'ngeo/map/LayerHelper.js';
 import ngeoMiscSyncArrays from 'ngeo/misc/syncArrays.js';
@@ -55,6 +55,8 @@ const module = angular.module('gmfLayertreeComponent', [
   ngeoLayertreeController.name,
   ngeoMapLayerHelper.name,
   ngeoMiscWMSTime.name,
+  gmfLayerBeingSwipe.name
+
 ]);
 
 
@@ -185,6 +187,7 @@ module.component('gmfLayertree', layertreeComponent);
  * @param {import('gmf/datasource/DataSourceBeingFiltered.js').DataSourceBeingFiltered} gmfDataSourceBeingFiltered
  *    The Gmf value service that determines the data source currently being
  *    filtered.
+ * @param {import('gmf/datasource/LayerBeingSwipe.js').LayerBeingSwipe} gmfLayerBeingSwipe
  * @param {import("gmf/datasource/ExternalDataSourcesManager.js").ExternalDatSourcesManager}
  *    gmfExternalDataSourcesManager The Gmf external data sources manager
  *    service. Used here to fetch the external WMS groups.
@@ -202,9 +205,10 @@ module.component('gmfLayertree', layertreeComponent);
  * @ngdoc controller
  * @ngname gmfLayertreeController
  */
-function Controller($element, $scope, ngeoLayerHelper,
+function Controller($element, $scope, ngeoLayerHelper, gmfLayerBeingSwipe,
   gmfDataSourceBeingFiltered, gmfExternalDataSourcesManager, gmfPermalink,
   gmfTreeManager, gmfSyncLayertreeMap, ngeoWMSTime, gmfThemes) {
+
 
   /**
    * @type {?import("ol/Map.js").default}
@@ -227,6 +231,12 @@ function Controller($element, $scope, ngeoLayerHelper,
    * @private
    */
   this.layerHelper_ = ngeoLayerHelper;
+
+  /**
+   * @type {import('gmf/datasource/LayerBeingSwipe.js').LayerBeingSwipe}
+   * @private
+   */
+  this.gmfLayerBeingSwipe = gmfLayerBeingSwipe;
 
   /**
    * @type {import('gmf/datasource/DataSourceBeingFiltered.js').DataSourceBeingFiltered}
@@ -803,6 +813,24 @@ Controller.prototype.zoomToResolution = function(treeCtrl) {
 
 
 /**
+ * Set the swipe option on the map.
+ *    from the current node.
+ *  @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl Ngeo tree controller.
+ * @type {import('gmf/datasource/LayerBeingSwipe.js').LayerBeingSwipe}
+ */
+Controller.prototype.toggleSwipeLayer = function(treeCtrl) {
+  if (!treeCtrl.layer) {
+    console.error('No layer');
+  } else if (this.gmfLayerBeingSwipe.layer === treeCtrl.layer) {
+    this.gmfLayerBeingSwipe.layer = null;
+    return;
+  } else {
+    this.gmfLayerBeingSwipe.layer = treeCtrl.layer;
+  }
+};
+
+
+/**
  * Toggle the legend for a node
  * @param {string} legendNodeId The DOM node legend id to toggle
  */
@@ -887,6 +915,18 @@ Controller.prototype.supportsOpacityChange = function(treeCtrl) {
         treeCtrl.depth > 1 && parentNode.mixed
       )
     );
+};
+
+/**
+ * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl Ngeo tree controller.
+ * @return {boolean} Whether the layer tree controller supports having a
+ *     legend being shown.
+ */
+Controller.prototype.supportSwipeChange = function(treeCtrl) {
+  const node = /** @type {import('gmf/themes.js').GmfGroup} */(treeCtrl.node);
+  return !!node.metadata &&
+    !!node.metadata.legend &&
+    !!this.getLegendsObject(treeCtrl);
 };
 
 module.controller('GmfLayertreeController', Controller);
