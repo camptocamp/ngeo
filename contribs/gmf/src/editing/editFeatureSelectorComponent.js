@@ -168,15 +168,14 @@ function Controller($scope, $timeout, gmfThemes, gmfTreeManager) {
         const editables = this.editableTreeCtrls;
 
         editables.length = 0;
-        if (!this.gmfTreeManager_.rootCtrl) {
-          throw new Error('Missing gmfTreeManager_.rootCtrl');
+        if (this.gmfTreeManager_.rootCtrl) {
+          this.gmfTreeManager_.rootCtrl.traverseDepthFirst((treeCtrl) => {
+            const gmfLayer = /** @type {import('gmf/themes.js').GmfLayer} */(treeCtrl.node);
+            if (gmfLayer.editable) {
+              editables.push(treeCtrl);
+            }
+          });
         }
-        this.gmfTreeManager_.rootCtrl.traverseDepthFirst((treeCtrl) => {
-          const gmfLayer = /** @type {import('gmf/themes.js').GmfLayer} */(treeCtrl.node);
-          if (gmfLayer.editable) {
-            editables.push(treeCtrl);
-          }
-        });
       }
     }, 0);
   };
