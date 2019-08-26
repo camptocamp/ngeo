@@ -76,6 +76,12 @@
 
     {{layertreeCtrl.node.name | translate}}
 
+    <a 
+      ng-if="gmfLayertreeCtrl.gmfLayerBeingSwipe.layer === layertreeCtrl.layer" 
+      href
+      class="fa fal fa-sort fa-rotate-90"
+    ></a>
+
     <i
       class="gmf-layertree-zoom"
       data-toggle="tooltip"
@@ -167,7 +173,7 @@
             </a>
           </li>
           <li ng-if="::(layertreeCtrl.depth === 1 && !layertreeCtrl.node.mixed) || (layertreeCtrl.depth > 1 && layertreeCtrl.parent.node.mixed)">
-            <i class="fa fa-th-list fa-fw"></i>
+            <i class="fa fal fa-sort fa-rotate-90"></i>
             <a
               ng-click="::gmfLayertreeCtrl.toggleSwipeLayer(layertreeCtrl)"
               href="">
