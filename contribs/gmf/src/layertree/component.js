@@ -198,6 +198,7 @@ module.component('gmfLayertree', layertreeComponent);
  *    gmfSyncLayertreeMap service.
  * @param {import("ngeo/misc/WMSTime.js").WMSTime} ngeoWMSTime wms time service.
  * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes The gmf Themes service.
+ * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @constructor
  * @private
  * @hidden
@@ -207,7 +208,7 @@ module.component('gmfLayertree', layertreeComponent);
  */
 function Controller($element, $scope, ngeoLayerHelper, gmfLayerBeingSwipe,
   gmfDataSourceBeingFiltered, gmfExternalDataSourcesManager, gmfPermalink,
-  gmfTreeManager, gmfSyncLayertreeMap, ngeoWMSTime, gmfThemes) {
+  gmfTreeManager, gmfSyncLayertreeMap, ngeoWMSTime, gmfThemes, $timeout) {
 
 
   /**
@@ -309,6 +310,12 @@ function Controller($element, $scope, ngeoLayerHelper, gmfLayerBeingSwipe,
    * @private
    */
   this.gmfThemes_ = gmfThemes;
+
+  /**
+   * @type {angular.ITimeoutService}
+   * @private
+   */
+  this.$timeout_ = $timeout;
 
   // enter digest cycle on node collapse
   $element.on('shown.bs.collapse', () => {
@@ -823,13 +830,13 @@ Controller.prototype.toggleSwipeLayer = function(treeCtrl) {
     console.error('No layer');
   } else if (this.gmfLayerBeingSwipe.layer === treeCtrl.layer) {
     this.gmfLayerBeingSwipe.layer = null;
-    return;
   } else {
     this.gmfLayerBeingSwipe.layer = null;
-    setTimeout(() => {
+    this.$timeout_(() => {
       this.gmfLayerBeingSwipe.layer = treeCtrl.layer;
     }, 0);
   }
+  this.scope_.$apply();
 };
 
 
@@ -918,18 +925,6 @@ Controller.prototype.supportsOpacityChange = function(treeCtrl) {
         treeCtrl.depth > 1 && parentNode.mixed
       )
     );
-};
-
-/**
- * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl Ngeo tree controller.
- * @return {boolean} Whether the layer tree controller supports having a
- *     legend being shown.
- */
-Controller.prototype.supportSwipeChange = function(treeCtrl) {
-  const node = /** @type {import('gmf/themes.js').GmfGroup} */(treeCtrl.node);
-  return !!node.metadata &&
-    !!node.metadata.legend &&
-    !!this.getLegendsObject(treeCtrl);
 };
 
 module.controller('GmfLayertreeController', Controller);
