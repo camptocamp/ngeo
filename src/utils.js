@@ -9,6 +9,16 @@ import {getTopLeft, getTopRight, getBottomLeft, getBottomRight} from 'ol/extent.
 
 
 /**
+ * Return whether the primary pointing device is coarse or 'false' if unsupported (Internet Explorer).
+ * See https://developer.mozilla.org/en-US/docs/Web/CSS/@media/pointer
+ * @return {boolean}
+ */
+export function hasCoarsePointingDevice() {
+  return matchMedia('(pointer: coarse)').matches;
+}
+
+
+/**
  * @param {string[]} availableLanguages Available languages.
  * @return {string} The "best" language code.
  */

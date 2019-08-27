@@ -1,4 +1,5 @@
 import angular from 'angular';
+import {hasCoarsePointingDevice} from 'ngeo/utils.js';
 import ngeoQueryAction from 'ngeo/query/Action.js';
 import ngeoQueryQuerent from 'ngeo/query/Querent.js';
 import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources.js';
@@ -32,6 +33,7 @@ import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
  * @property {number} [tolerance=3] When issuing an identify feature request at a click position, either a
  *    WMS GetFeatureInfo or a WFS GetFeature request will be used. For GetFeature requests a bbox is built
  *    around the position. This `tolerance` in pixel determines the size of the bbox.
+ * @property {number} [toleranceTouch=10] The tolerance on touch devices.
  * @property {string} [featureNS='http://mapserver.gis.umn.edu/mapserver'] The feature namespace for WFS
  *    GetFeature requests.
  * @property {string} [featurePrefix='feature'] The feature prefix for WFS GetFeature requests.
@@ -123,8 +125,13 @@ export class MapQuerent {
      * @type {number}
      * @private
      */
-    this.tolerancePx_ = options.tolerance !== undefined ?
-      options.tolerance : 3;
+    this.tolerancePx_;
+
+    if (hasCoarsePointingDevice()) {
+      this.tolerancePx_ = options.toleranceTouch !== undefined ? options.toleranceTouch : 10;
+    } else {
+      this.tolerancePx_ = options.tolerance !== undefined ? options.tolerance : 3;
+    }
 
     /**
      * @type {boolean}
