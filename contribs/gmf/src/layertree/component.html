@@ -77,11 +77,10 @@
 
     {{layertreeCtrl.node.name | translate}}
 
-    <a 
-      ng-if="gmfLayertreeCtrl.gmfLayerBeingSwipe.layer === layertreeCtrl.layer" 
-      href
+    <span
+      ng-if="gmfLayertreeCtrl.gmfLayerBeingSwipe.layer === layertreeCtrl.layer"
       class="fa fal fa-sort fa-rotate-90 gmf-layer-being-swipe"
-    ></a>
+    ></span>
 
     <i
       class="gmf-layertree-zoom"
@@ -181,7 +180,7 @@
               {{'Show/hide legend'|translate}}
             </a>
           </li>
-          <li ng-if="::(layertreeCtrl.depth === 1 && !layertreeCtrl.node.mixed) || (layertreeCtrl.depth > 1 && layertreeCtrl.parent.node.mixed)">
+          <li ng-if="::gmfLayertreeCtrl.supportsOpacityChange(layertreeCtrl)">
             <i class="fa fal fa-sort fa-fw fa-rotate-90"></i>
             <a
               ng-click="::gmfLayertreeCtrl.toggleSwipeLayer(layertreeCtrl)"
