@@ -114,14 +114,14 @@ class SwipeController {
       return;
     }
     const ctx = evt.context;
-      if (!ctx) {
-        return;
-      }
-      const width = ctx.canvas.width * (this.swipeValue / 100);
-      ctx.save();
-      ctx.beginPath();
-      ctx.rect(0, 0, width, ctx.canvas.height);
-      ctx.clip();
+    if (!ctx) {
+      return;
+    }
+    const width = ctx.canvas.width * (this.swipeValue / 100);
+    ctx.save();
+    ctx.beginPath();
+    ctx.rect(0, 0, width, ctx.canvas.height);
+    ctx.clip();
   }
 
   /**

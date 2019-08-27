@@ -825,7 +825,10 @@ Controller.prototype.toggleSwipeLayer = function(treeCtrl) {
     this.gmfLayerBeingSwipe.layer = null;
     return;
   } else {
-    this.gmfLayerBeingSwipe.layer = treeCtrl.layer;
+    this.gmfLayerBeingSwipe.layer = null;
+    setTimeout(() => {
+      this.gmfLayerBeingSwipe.layer = treeCtrl.layer;
+    }, 0);
   }
 };
 
