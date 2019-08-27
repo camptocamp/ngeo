@@ -80,7 +80,7 @@
     <a 
       ng-if="gmfLayertreeCtrl.gmfLayerBeingSwipe.layer === layertreeCtrl.layer" 
       href
-      class="fa fal fa-sort fa-rotate-90"
+      class="fa fal fa-sort fa-rotate-90 gmf-layer-being-swipe"
     ></a>
 
     <i
@@ -182,12 +182,13 @@
             </a>
           </li>
           <li ng-if="::(layertreeCtrl.depth === 1 && !layertreeCtrl.node.mixed) || (layertreeCtrl.depth > 1 && layertreeCtrl.parent.node.mixed)">
-            <i class="fa fal fa-sort fa-rotate-90"></i>
+            <i class="fa fal fa-sort fa-fw fa-rotate-90"></i>
             <a
               ng-click="::gmfLayertreeCtrl.toggleSwipeLayer(layertreeCtrl)"
-              href="">
-              <!-- i18n -->
-             swipe with this layer
+              href=""
+              ng-model="layertreeCtrl.layer"
+              >
+              {{'Swipe with this layer'| translate}}
             </a>
           </li>
           <li ng-if="layertreeCtrl.getDataSource() && layertreeCtrl.getDataSource().filtrable">
