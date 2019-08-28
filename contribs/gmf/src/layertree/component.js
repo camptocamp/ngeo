@@ -27,6 +27,8 @@ import olSourceWMTS from 'ol/source/WMTS.js';
 import LayerBase from 'ol/layer/Base.js';
 
 import 'bootstrap/js/src/collapse.js';
+import Layer from 'ol/layer/Layer.js';
+import TileLayer from 'ol/layer/Tile.js';
 
 
 /**
@@ -859,7 +861,7 @@ Controller.prototype.zoomToResolution = function(treeCtrl) {
 Controller.prototype.toggleSwipeLayer = function(treeCtrl) {
   if (!treeCtrl.layer) {
     console.error('No layer');
-  } else if (treeCtrl.layer instanceof olLayerTile && this.gmfLayerBeingSwipe.layer === treeCtrl.layer) {
+  } else if (this.gmfLayerBeingSwipe.layer === treeCtrl.layer) {
     this.gmfLayerBeingSwipe.layer = null;
   } else {
     this.gmfLayerBeingSwipe.layer = null;
