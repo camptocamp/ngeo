@@ -256,7 +256,12 @@
           gmf-search-clearbutton="::true"
           gmf-search-styles="::mainCtrl.searchStyles">
         </gmf-search>
-          <ngeo-mapswipe ng-if="mainCtrl.gmfLayerBeingSwipe.layer != null" map="::mainCtrl.map" layer="::mainCtrl.gmfLayerBeingSwipe.layer" id="gmf-map-swipe"></ngeo-mapswipe>
+        <ngeo-mapswipe
+          ng-if="mainCtrl.gmfLayerBeingSwipe.layer != null"
+          map="::mainCtrl.map"
+          layer="::mainCtrl.gmfLayerBeingSwipe.layer"
+          id="gmf-map-swipe">
+        </ngeo-mapswipe>
         <ngeo-displaywindow
           content="mainCtrl.displaywindowContent"
           desktop="true"

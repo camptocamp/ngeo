@@ -859,7 +859,7 @@ Controller.prototype.zoomToResolution = function(treeCtrl) {
 Controller.prototype.toggleSwipeLayer = function(treeCtrl) {
   if (!treeCtrl.layer) {
     console.error('No layer');
-  } else if (this.gmfLayerBeingSwipe.layer === treeCtrl.layer) {
+  } else if (treeCtrl.layer instanceof olLayerTile && this.gmfLayerBeingSwipe.layer === treeCtrl.layer) {
     this.gmfLayerBeingSwipe.layer = null;
   } else {
     this.gmfLayerBeingSwipe.layer = null;
@@ -867,7 +867,6 @@ Controller.prototype.toggleSwipeLayer = function(treeCtrl) {
       this.gmfLayerBeingSwipe.layer = treeCtrl.layer;
     }, 0);
   }
-  this.scope_.$apply();
 };
 
 
