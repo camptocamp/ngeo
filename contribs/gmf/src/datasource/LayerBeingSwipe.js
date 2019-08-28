@@ -4,7 +4,7 @@ import angular from 'angular';
 /**
  * @typedef {Object} LayerBeingSwipe
  * @property {import('ol/Map.js').default} map
- * @property {import('ol/layer/Tile.js').default} layer
+ * @property {?import('ol/layer/Tile.js').default} layer
  */
 
 /**
