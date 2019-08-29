@@ -682,6 +682,9 @@ export function AbstractAppController(config, map, $scope, $injector) {
     const options = $injector.get('sentryOptions');
     const tags = options.tags || [];
     delete options.tags;
+    Object.assign(options, {
+      beforeBreadcrumb: augmentBreadcrumb
+    });
     Sentry.init(options);
     for (const tag in tags) {
       Sentry.setTag(tag, tags[tag]);
@@ -817,6 +820,23 @@ export function getLocationIcon() {
   const arrowWrapper = document.createElement('span');
   arrowWrapper.appendChild(arrow);
   return arrowWrapper;
+}
+
+
+/**
+ * @param {Sentry.Breadcrumb} breadcrumb
+ * @param {Sentry.BreadcrumbHint} hint
+ */
+function augmentBreadcrumb(breadcrumb, hint) {
+  if (breadcrumb.category === 'ui.click') {
+    const target = hint.event.target;
+    if (target) {
+      const message = target.dataset.sentry;
+      if (message) {
+        breadcrumb.message = `${breadcrumb.message} | ${message}`;
+      }
+    }
+  }
 }
 
 
