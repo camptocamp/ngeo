@@ -206,6 +206,7 @@ Controller.prototype.handleThemesChange_ = function() {
 Controller.prototype.getSetBgLayerOpacity = function(val) {
   if (val !== undefined) {
     this.opacityLayer.setOpacity(val);
+    this.opacityLayer.setVisible(val !== 0);
   }
   return this.opacityLayer.getOpacity();
 };
