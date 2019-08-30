@@ -163,8 +163,9 @@ export class MapBackgroundLayerManager extends olObservable {
     const bgGroup = this.ngeoLayerHelper_.getGroupFromMap(map, BACKGROUNDLAYERGROUP_NAME);
     const previous = bgGroup.getLayers().remove(this.getOpacityBgLayer(map));
     const ZIndex = -100;
-    layer.setOpacity(previous ? previous.getOpacity() : 0);
-    layer.setVisible(previous ? previous.getVisible() : true);
+    const opacity = previous ? previous.getOpacity() : 0;
+    layer.setOpacity(opacity);
+    layer.setVisible(opacity !== 0);
     layer.setZIndex(ZIndex);
     this.ngeoLayerHelper_.setZIndexToFirstLevelChildren(layer, ZIndex);
 
