@@ -128,6 +128,7 @@ ThemeManagerService.prototype.updateCurrentTheme = function(themeName, fallbackT
       // In flush mode load current theme private groups
       const fallbackTheme = findThemeByName(themes, fallbackThemeName);
       if (fallbackTheme) {
+        this.gmfTreeManager_.setItintialFirstLevelGroups(fallbackTheme.children);
         this.gmfTreeManager_.addFirstLevelGroups(fallbackTheme.children, false, opt_silent);
       }
     }
