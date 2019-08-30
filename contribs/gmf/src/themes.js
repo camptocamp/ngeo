@@ -233,6 +233,7 @@
 
 /**
  * @typedef {Object} GmfSnappingConfig
+ * @property {boolean} [activated=true] Determines whether the snapping on this layer is activated by default.
  * @property {boolean} [edge=true] Determines whethers the edges of features from the node layer can be
  * snapped or not.
  * @property {number} [tolerance=10] The tolerance in pixels the snapping should occur for the node layer.

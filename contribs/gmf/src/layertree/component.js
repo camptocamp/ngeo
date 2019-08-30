@@ -8,7 +8,8 @@ import gmfLayertreeDatasourceGroupTreeComponent from 'gmf/layertree/datasourceGr
 
 import gmfLayertreeSyncLayertreeMap from 'gmf/layertree/SyncLayertreeMap.js';
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
-import gmfThemeThemes, {getNodeMinResolution, getNodeMaxResolution} from 'gmf/theme/Themes.js';
+import gmfThemeThemes,
+{getNodeMinResolution, getNodeMaxResolution, getSnappingConfig} from 'gmf/theme/Themes.js';
 import ngeoDatasourceOGC, {ServerType} from 'ngeo/datasource/OGC.js';
 
 import ngeoLayertreeComponent from 'ngeo/layertree/component.js';
@@ -156,6 +157,7 @@ function gmfLayertreeTemplate($element, $attrs, gmfLayertreeTemplate) {
  *  * `printLayers`: A WMS layer that will be used instead of the WMTS layers in the print.
  *  * `queryLayers`: The WMS layers used as references to query the WMTS layers. For WMTS layers.
  *  * `isExpanded`: Whether the layer group is expanded by default. For layer groups (only).
+ *  * `snappingConfig`: Whether the layer is used for snapping.
  *
  * @htmlAttribute {import("ol/Map.js").default} gmf-layertree-map The map.
  * @htmlAttribute {Object<string, string>|undefined} gmf-layertree-dimensions Global dimensions object.
@@ -463,6 +465,7 @@ Controller.prototype.listeners = function(scope, treeCtrl) {
   });
 };
 
+
 /**
  * Toggle the state of treeCtrl's node.
  * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl ngeo layertree controller,
@@ -652,6 +655,34 @@ Controller.prototype.getScale_ = function() {
   }
   const dpi = 25.4 / 0.28;
   return resolution * mpu * 39.37 * dpi;
+};
+
+
+/**
+ * Is snapping activated for this LayertreeController
+ * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl ngeo layertree controller.
+ * @return {boolean} True if snapping is activated for that layer.
+ */
+Controller.prototype.isSnappingActivated = function(treeCtrl) {
+  if (treeCtrl.properties.snapping !== undefined) {
+    if (typeof treeCtrl.properties.snapping !== 'boolean') {
+      throw new Error('Wrong snappingActive type');
+    }
+    return treeCtrl.properties.snapping;
+  }
+  // Default to node.metadata.activated
+  const node = /** @type {import('gmf/themes.js').GmfLayer} */ (treeCtrl.node);
+  const config = getSnappingConfig(node);
+  return config !== null && config.activated;
+};
+
+
+/**
+ * Toggle snapping for this LayertreeController.
+ * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl ngeo layertree controller.
+ */
+Controller.prototype.toggleSnapping = function(treeCtrl) {
+  treeCtrl.properties.snapping = !this.isSnappingActivated(treeCtrl);
 };
 
 

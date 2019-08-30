@@ -570,6 +570,10 @@ export function getFlatNodes(node, nodes) {
 export function getSnappingConfig(node) {
   const config = (node.metadata && node.metadata.snappingConfig !== undefined) ?
     node.metadata.snappingConfig : null;
+  // config.activated default to true
+  if (config && config.activated === undefined) {
+    config.activated = true;
+  }
   return config;
 }
 
