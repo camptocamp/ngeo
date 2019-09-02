@@ -130,6 +130,12 @@ export function LayertreeTreeManager($timeout, $injector, gettextCatalog, ngeoLa
   this.ngeoStateManager_ = ngeoStateManager;
 
   /**
+   * @type {Array.<import('gmf/themes.js').GmfGroup>|undefined}
+   * @private
+   */
+  this.initialLevelFirstGroups_ = undefined;
+
+  /**
    * A reference to the OGC servers loaded by the theme service.
    * @type {?import('gmf/themes.js').GmfOgcServers}
    * @private
@@ -197,6 +203,22 @@ LayertreeTreeManager.prototype.addFirstLevelGroups = function(firstLevelGroups, 
   return groupNotAdded.length === 0;
 };
 
+/**
+ * @param {Array.<import('gmf/themes.js').GmfGroup>} firstGroups The groups we add to the layertree
+ */
+LayertreeTreeManager.prototype.setItintialFirstLevelGroups = function(firstGroups) {
+  this.initialLevelFirstGroups_ = firstGroups;
+};
+
+/**
+ * @param {array} array An array of groups.
+ * @param {number} old_index The old index before reorder (the current one).
+ * @param {number} new_index The new index after reorder.
+ * @private
+ */
+LayertreeTreeManager.prototype.reorderChild_ = function(array, old_index, new_index) {
+  array.splice(new_index, 0, array.splice(old_index, 1)[0]);
+};
 
 /**
  * Update the application state with the list of first level groups in the tree
@@ -265,7 +287,20 @@ LayertreeTreeManager.prototype.addFirstLevelGroup_ = function(group) {
     // Add each first-level-groups.
     this.groupsToAddInThisDigestLoop_.forEach((grp) => {
       this.root.children.unshift(grp);
+
+      // We reorder the groups now as it has to be done before the permalink to be updated
+      // initialFirstGroups_ is only defined for user change theme loading
+      this.root.children.forEach((group, old_index) => {
+        if (this.initialLevelFirstGroups_ !== undefined) {
+          const new_index = this.initialLevelFirstGroups_.findIndex(
+            firstLevelGroup => firstLevelGroup.id === group.id);
+          if (new_index !== -1 && new_index !== old_index) {
+            this.reorderChild_(this.root.children, old_index, new_index);
+          }
+        }
+      });
     });
+    this.initialLevelFirstGroups_ = undefined;
     //Update the permalink
     this.updateTreeGroupsState_(this.root.children);
     // Reset the groups and the promise state. Don't reset the
