@@ -410,7 +410,7 @@ class Map {
       if (table) {
         contentHTML += '<table><tbody>';
         for (const key in properties) {
-          if (!EXCLUDE_PROPERTIES.includes(key) || key !== geometryName) {
+          if (!EXCLUDE_PROPERTIES.includes(key) && key !== geometryName) {
             contentHTML += '<tr>';
             contentHTML += `<th>${key}</th>`;
             contentHTML += `<td>${properties[key]}</td>`;
