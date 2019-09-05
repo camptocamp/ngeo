@@ -68,6 +68,17 @@ then visit them using
 https://localhost:3000/contribs/gmf/apps/<app_name>.html, for example:
 https://localhost:3000/contribs/gmf/apps/desktop.html
 
+
+### Run the Simple API Help
+
+To run the Simple API Help:
+
+```
+make serve-api
+```
+
+Then visit https://localhost:3000/apihelp.html
+
 ### Go further
 
 * [Developer guide](docs/developer-guide.md) – This guide is for ngeo developers.
