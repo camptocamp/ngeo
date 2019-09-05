@@ -186,7 +186,6 @@ Controller.prototype.handleThemesChange_ = function() {
       const opacityLayer = layers.find(layer => layer.get('label') === this.opacityOptions);
       if (opacityLayer !== undefined) {
         this.setOpacityBgLayer(opacityLayer);
-        this.opacityLayer = opacityLayer;
 
         // Reorder for the UI the bgArray copy with the opacity layer at the end
         this.bgLayers = this.bgLayers.slice();
@@ -207,6 +206,7 @@ Controller.prototype.getSetBgLayerOpacity = function(val) {
   if (val !== undefined) {
     this.opacityLayer.setOpacity(val);
     this.opacityLayer.setVisible(val !== 0);
+    this.bgLayer.setVisible(val !== 1);
   }
   return this.opacityLayer.getOpacity();
 };
@@ -216,8 +216,14 @@ Controller.prototype.getSetBgLayerOpacity = function(val) {
  * @param {boolean=} opt_silent Do not notify listeners.
  */
 Controller.prototype.setLayer = function(layer, opt_silent) {
+  const opacity = this.opacityLayer ? this.opacityLayer.getOpacity() : 0;
   this.bgLayer = layer;
   this.backgroundLayerMgr_.set(this.map, layer);
+  layer.setVisible(opacity !== 1);
+  if (this.opacityLayer) {
+    this.opacityLayer.setVisible(opacity !== 0);
+    this.opacityLayer.setOpacity(opacity);
+  }
   if (!opt_silent && this.select) {
     this.select();
   }
@@ -228,6 +234,10 @@ Controller.prototype.setLayer = function(layer, opt_silent) {
  * @param {import("ol/layer/Base.js").default} layer The opacity background layer.
  */
 Controller.prototype.setOpacityBgLayer = function(layer) {
+  this.opacityLayer = layer;
+  const opacity = layer.getOpacity();
+  this.opacityLayer.setVisible(opacity !== 0);
+  this.bgLayer.setVisible(opacity !== 1);
   this.backgroundLayerMgr_.setOpacityBgLayer(this.map, layer);
 };
 

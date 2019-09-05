@@ -57,7 +57,7 @@ new webpack.LoaderOptionsPlugin({
 
 module.exports = {
   mode: 'development',
-  // devtool: 'eval',
+  devtool: 'inline-cheap-source-map', // 'cheap-eval-source-map',
   output: {
     filename: '[name].js'
   },
