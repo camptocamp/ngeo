@@ -110,6 +110,7 @@ module.value('ngeoSearchCreateGeoJSONBloodhound', createGeoJSONBloodhound);
  *       '',
  *       undefined,
  *       ol.proj.get('EPSG:3857'),
+ *       ol.proj.get('EPSG:2056'),
  *       ol.proj.get('EPSG:21781'),
  *       {
  *         remote: {

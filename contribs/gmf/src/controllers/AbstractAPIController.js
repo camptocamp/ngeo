@@ -26,7 +26,7 @@ export class AbstractAPIController extends AbstractAppController {
    */
   constructor(config, $scope, $injector) {
     const viewConfig = {
-      projection: olProj.get(`EPSG:${config.srid || 21781}`)
+      projection: olProj.get(`EPSG:${config.srid || 2056}`)
     };
     Object.assign(viewConfig, config.mapViewConfig || {});
 

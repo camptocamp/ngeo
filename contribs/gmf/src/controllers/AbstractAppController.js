@@ -258,7 +258,7 @@ export function AbstractAppController(config, map, $scope, $injector) {
     groupValues: /** @type {string[]} **/ ($injector.get('gmfSearchGroups')),
     groupActions: /** @type {Array<import('gmf/search/component.js').gmfSearchAction>} **/(
       $injector.get('gmfSearchActions')),
-    projection: `EPSG:${config.srid || 21781}`,
+    projection: `EPSG:${config.srid || 2056}`,
     url: /** @type {string} **/ ($injector.get('fulltextsearchUrl'))
   }];
 

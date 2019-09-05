@@ -36,13 +36,13 @@ class Controller extends AbstractDesktopController {
    */
   constructor($scope, $injector) {
     super({
-      srid: 21781,
+      srid: 2056,
       mapViewConfig: {
-        center: [632464, 185457],
+        center: [2632464, 1185457],
         zoom: 3,
         resolutions: [250, 100, 50, 20, 10, 5, 2, 1, 0.5, 0.25, 0.1, 0.05],
         constrainResolution: true,
-        extent: [485071.54, 75346.36, 828515.78, 299941.84],
+        extent: [2485071.54, 175346.36, 2828515.78, 1299941.84],
       }
     }, $scope, $injector);
 

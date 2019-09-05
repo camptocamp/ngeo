@@ -34,9 +34,9 @@ class Controller extends AbstractAPIController {
    */
   constructor($scope, $injector) {
     super({
-      srid: 21781,
+      srid: 2056,
       mapViewConfig: {
-        center: [632464, 185457],
+        center: [2632464, 1185457],
         zoom: 3,
         resolutions: [250, 100, 50, 20, 10, 5, 2, 1, 0.5, 0.25, 0.1, 0.05]
       }
