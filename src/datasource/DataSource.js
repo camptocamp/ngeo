@@ -82,9 +82,9 @@ class DataSource {
      * Note: `attributes` is not using the conventionnal getter/setter due
      * to:  See: https://github.com/google/closure-compiler/issues/1089
      *
-     * @type {Array<import('ngeo/format/Attribute.js').Attribute>}
+     * @type {?Array<import('ngeo/format/Attribute.js').Attribute>}
      */
-    this.attributes = options.attributes || [];
+    this.attributes = options.attributes || null;
 
     /**
      * (Required) The data source id.
