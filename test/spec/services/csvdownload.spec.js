@@ -14,6 +14,9 @@ describe('ngeo.download.Csv', () => {
 
     it('generates a CSV', () => {
       const columnDefs = [{name: 'col 1'}, {name: 'col 2'}, {name: 'col 3'}];
+      /**
+       * @type {Array<any>}
+       */
       const data = [{
         'col 1': 'some text',
         'col 2': 123,

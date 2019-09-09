@@ -323,6 +323,10 @@ export function QueryGridController($injector, $scope, ngeoQueryResult, ngeoMapQ
   this.unregisterSelectWatcher_ = null;
 
   this.removeEmptyColumnsFn = () => false;
+
+  /**
+   * @type {function():number}
+   */
   this.maxRecenterZoomFn = () => null;
   /**
    * @type {?() => olStyleStyle}

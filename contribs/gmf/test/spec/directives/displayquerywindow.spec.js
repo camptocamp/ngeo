@@ -23,6 +23,9 @@ describe('gmf.query.windowComponent', () => {
       featuresStyleFn() {
         return new olStyleStyle();
       },
+      /**
+       * @type {function():olStyleStyle}
+       */
       selectedFeatureStyleFn() {
         return undefined;
       }

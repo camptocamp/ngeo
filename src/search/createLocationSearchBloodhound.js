@@ -168,6 +168,7 @@ function createLocationSearchBloodhound(opt_options) {
   const bhOptions = Object.assign({}, options.options || {
     /**
      * @param {any} datum
+     * @return {any}
      */
     datumTokenizer: (datum) => {
       return [];
