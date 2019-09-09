@@ -362,10 +362,10 @@ class FilterSelectorController {
    */
   handleActiveChange_(active) {
     if (!active) {
-      this.aRuleIsActive = false;
-      this.timeout_(() => {
-        this.gmfDataSourceBeingFiltered.dataSource = null;
-      });
+      //this.aRuleIsActive = false;
+      //this.timeout_(() => {
+      //  this.gmfDataSourceBeingFiltered.dataSource = null;
+      //  });
     }
   }
 

@@ -277,11 +277,11 @@ class FilterController {
   /**
    * @return {boolean} True if at least one rule is currently defined.
    */
-  hasARule() {
-    /** @type {import("ngeo/rule/Rule.js").default[]} */
-    const a = [];
-    return a.concat(this.customRules, this.directedRules).length > 0;
-  }
+  // hasARule() {
+  //   /** @type {import("ngeo/rule/Rule.js").default[]} */
+  //   const a = [];
+  //   return a.concat(this.customRules, this.directedRules).length > 0;
+  // }
 
 
   /**
