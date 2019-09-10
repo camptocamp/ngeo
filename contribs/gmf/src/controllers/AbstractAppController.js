@@ -237,9 +237,6 @@ export function AbstractAppController(config, map, $scope, $injector) {
 
     if (evt.type !== 'ready') {
       const themeName = this.permalink_.defaultThemeNameFromFunctionalities();
-      if (!themeName) {
-        throw new Error('Missing themeName');
-      }
       this.gmfThemeManager.updateCurrentTheme(themeName, previousThemeName, true);
     }
     this.setDefaultBackground_(null);

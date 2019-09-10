@@ -117,7 +117,7 @@ ThemeManagerService.prototype.isLoading = function() {
 
 
 /**
- * @param {string} themeName wanted theme name.
+ * @param {?string} themeName wanted theme name.
  * @param {string} fallbackThemeName fallback theme name.
  * @param {boolean=} opt_silent if true notifyCantAddGroups_ is not called.
  * @export
@@ -128,7 +128,7 @@ ThemeManagerService.prototype.updateCurrentTheme = function(themeName, fallbackT
       // In flush mode load current theme private groups
       const fallbackTheme = findThemeByName(themes, fallbackThemeName);
       if (fallbackTheme) {
-        this.gmfTreeManager_.setItintialFirstLevelGroups(fallbackTheme.children);
+        this.gmfTreeManager_.setInitialFirstLevelGroups(fallbackTheme.children);
         this.gmfTreeManager_.addFirstLevelGroups(fallbackTheme.children, false, opt_silent);
       }
     }
