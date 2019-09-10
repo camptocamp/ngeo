@@ -191,7 +191,7 @@ class Map {
           getFeaturesFromCoordinates(layer, event.coordinate, resolution).then((feature) => {
             if (feature) {
               this.vectorSource_.addFeature(feature);
-              this.selectObject(feature.getId(), true);
+              this.selectObject(feature.getId(), event.coordinate, true);
             }
           });
         }
@@ -341,14 +341,16 @@ class Map {
 
   /**
    * @param {string|number} id Identifier.
+   * @param {import("ol/coordinate.js").Coordinate} position
    * @param {boolean} table Display all properties in a table
    */
-  selectObject(id, table = false) {
+  selectObject(id, position = null, table = false) {
     const feature = this.vectorSource_.getFeatureById(id);
     if (feature) {
-      const coordinates = /** @type {import('ol/geom/Point.js').default} */(
-        feature.getGeometry()
-      ).getCoordinates();
+      if (!position) {
+        const geometry = /** @type {import('ol/geom/SimpleGeometry.js').default} */ (feature.getGeometry());
+        position = geometry.getCoordinates();
+      }
       const geometryName = feature.getGeometryName();
       const properties = feature.getProperties();
       let contentHTML = '';
@@ -369,7 +371,7 @@ class Map {
       }
       const content = this.overlay_.getElement().querySelector('.ol-popup-content');
       content.innerHTML = contentHTML;
-      this.overlay_.setPosition(coordinates);
+      this.overlay_.setPosition(position);
     }
   }
 
