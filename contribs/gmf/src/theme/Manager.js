@@ -117,7 +117,7 @@ ThemeManagerService.prototype.isLoading = function() {
 
 
 /**
- * @param {string} themeName wanted theme name.
+ * @param {?string} themeName wanted theme name.
  * @param {string} fallbackThemeName fallback theme name.
  * @param {boolean=} opt_silent if true notifyCantAddGroups_ is not called.
  * @export
