@@ -309,6 +309,9 @@ export function ProfileController($scope, $http, $element, $filter, gettextCatal
    */
   this.isErrored = false;
 
+  /**
+   * @type {function():import("ol/Map.js").default}
+   */
   this.getMapFn = () => null;
   this.getNbPointsFn = () => 100;
   /**

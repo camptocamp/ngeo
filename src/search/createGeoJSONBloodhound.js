@@ -56,9 +56,6 @@ export function createGeoJSONBloodhound(url, opt_filter, opt_featureProjection,
   // The options objects are cloned to avoid updating the passed object
   /** @type {Bloodhound.BloodhoundOptions<GeoJSON.FeatureCollection>} */
   const options = Object.assign({}, opt_options || {
-    /**
-     * @param {any} datum
-     */
     datumTokenizer: (datum) => {
       return [];
     },

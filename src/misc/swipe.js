@@ -61,19 +61,19 @@ module.factory('$verticalSwipe', [function() {
   };
 
   /**
-   * @param {JQueryEventObject|TouchEvent} event
+   * @param {JQueryEventObject} event
    */
   function getCoordinates(event) {
-    const originalEvent = /** @type {TouchEvent} */(/** @type {JQueryEventObject} */(event).originalEvent)
-      || event;
-    const touches = originalEvent.touches && originalEvent.touches.length ?
-      originalEvent.touches :
-      [originalEvent];
-    const e = (originalEvent.changedTouches && originalEvent.changedTouches[0]) || touches[0];
-
+    let uiEvent;
+    const touchEvent = /** @type {TouchEvent} */ (event.originalEvent);
+    if (touchEvent.changedTouches && touchEvent.changedTouches.length > 0) {
+      uiEvent = touchEvent.changedTouches[0];
+    } else {
+      uiEvent = /** @type {MouseEvent} */ (event.originalEvent);
+    }
     return {
-      x: e.clientX,
-      y: e.clientY
+      x: uiEvent.clientX,
+      y: uiEvent.clientY
     };
   }
 
@@ -148,7 +148,7 @@ module.factory('$verticalSwipe', [function() {
       pointerTypes = pointerTypes || ['mouse', 'touch', 'pointer'];
       element.on(getEvents(pointerTypes, 'start'),
         /**
-         * @param {JQueryEventObject|TouchEvent} event
+         * @param {JQueryEventObject} event
          */
         (event) => {
           startCoords = getCoordinates(event);
@@ -173,7 +173,7 @@ module.factory('$verticalSwipe', [function() {
 
       element.on(getEvents(pointerTypes, 'move'),
         /**
-         * @param {JQueryEventObject|TouchEvent} event
+         * @param {JQueryEventObject} event
          */
         (event) => {
           if (!active) {
@@ -220,7 +220,7 @@ module.factory('$verticalSwipe', [function() {
 
       element.on(getEvents(pointerTypes, 'end'),
         /**
-         * @param {JQueryEventObject|TouchEvent} event
+         * @param {JQueryEventObject} event
          */
         (event) => {
           if (!active) {

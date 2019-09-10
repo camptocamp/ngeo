@@ -49,6 +49,9 @@ describe('gmf.query.gridComponent', () => {
         featuresStyleFn() {
           return new olStyleStyle();
         },
+        /**
+         * @type {function():olStyleStyle}
+         */
         selectedFeatureStyleFn() {
           return undefined;
         },
@@ -110,6 +113,9 @@ describe('gmf.query.gridComponent', () => {
       expect(gridSource).toBeDefined();
 
       const gridConfig = gridSource.configuration;
+      /**
+       * @type {Array<any>}
+       */
       const expectedGridData = [
         {
           'osm_id': 1234,
@@ -122,7 +128,6 @@ describe('gmf.query.gridComponent', () => {
           'empty_column': undefined
         }
       ];
-      // @ts-ignore
       compareGridData(gridConfig.data, expectedGridData);
 
       const expectedColumnDefs = [

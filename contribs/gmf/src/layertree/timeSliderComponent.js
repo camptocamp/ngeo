@@ -147,10 +147,9 @@ function Controller(ngeoWMSTime, ngeoDebounce) {
 
   /**
    * Function called after date(s) changed/selected
-   * @type {Function}
+   * @type {function(Object):any}
    */
   this.onDateSelected = () => undefined;
-
 
   /**
    * A time object for directive initialization
