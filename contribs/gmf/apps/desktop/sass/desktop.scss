@@ -1,1 +1,13 @@
-//
+header {
+  .logo {
+    background-image: url('../image/logo.png');
+    span {
+        left: 19.5rem;
+        position: absolute;
+        bottom: 0.2rem;
+    }
+    span::before {
+      content: "by Camptocamp";
+    }
+  }
+}
