@@ -206,7 +206,7 @@ LayertreeTreeManager.prototype.addFirstLevelGroups = function(firstLevelGroups, 
 /**
  * @param {Array.<import('gmf/themes.js').GmfGroup>} firstGroups The groups we add to the layertree
  */
-LayertreeTreeManager.prototype.setItintialFirstLevelGroups = function(firstGroups) {
+LayertreeTreeManager.prototype.setInitialFirstLevelGroups = function(firstGroups) {
   this.initialLevelFirstGroups_ = firstGroups;
 };
 
