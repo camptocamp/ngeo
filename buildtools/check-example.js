@@ -3,6 +3,7 @@
 const path = require('path');
 const fs = require('fs');
 const puppeteer = require('puppeteer');
+const parse = require('url-parse')
 
 const arg = process.argv[2];
 if (!arg) {
@@ -10,7 +11,7 @@ if (!arg) {
 }
 const screenshot = !arg.startsWith('http');
 const screenshotPath = screenshot ? `${arg}.png` : undefined;
-const url = screenshot ? `http://localhost:3000/${arg}` : arg;
+const page_url = screenshot ? `http://localhost:3000/${arg}` : arg;
 
 const OSMImage = (() => {
   try {
@@ -82,7 +83,8 @@ function loaded(page, browser) {
   page.on('request', request => {
     const url = request.url();
     loaded(page, browser);
-    if (url.startsWith('http://localhost:3000/') ||
+    if (parse(url).host == parse(page_url).host ||
+        url.startsWith('http://localhost:3000/') ||
         url.startsWith('https://geomapfish-demo-2-5.camptocamp.com/') ||
         url.startsWith('https://wms.geo.admin.ch/')) {
       requestsURL.add(url);
@@ -101,7 +103,7 @@ function loaded(page, browser) {
         body: OSMImage,
       });
     } else {
-      request.abort();
+      request.abort('aborted');
     }
   });
   page.on('requestfinished', async (request) => {
@@ -131,9 +133,7 @@ function loaded(page, browser) {
   });
   page.on('requestfailed', request => {
     const url = request.url();
-    if (url.startsWith('http://localhost:3000/') ||
-        url.startsWith('https://geomapfish-demo-2-5.camptocamp.com/') ||
-        url.startsWith('https://wms.geo.admin.ch/')) {
+    if (request.failure().errorText != 'net::ERR_ABORTED') {
       console.log(`Request failed on: ${url}`);
       process.exit(2);
     }
@@ -153,7 +153,7 @@ function loaded(page, browser) {
       }
     }
   });
-  await page.goto(url).catch(error => {
+  await page.goto(page_url).catch(error => {
     console.log(`Page load error: ${error}.`);
     process.exit(2);
   });
