@@ -1,6 +1,6 @@
 import angular from 'angular';
 import {MAPSERVER_PROXY, MAPSERVER_WFS_FEATURE_NS} from './url.js';
-import './mapquery.css';
+import './query.css';
 import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
 
 import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources.js';
