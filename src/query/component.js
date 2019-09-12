@@ -151,7 +151,7 @@ class QueryController {
       () => {
         let value = null;
         if (this.active) {
-          value = this.ngeoQueryModeSelector_.mode
+          value = this.ngeoQueryModeSelector_.mode;
         }
         return value;
       },

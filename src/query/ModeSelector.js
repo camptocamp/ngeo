@@ -105,13 +105,18 @@ export class QueryModeSelector {
     olEventsListen(document, 'keyup', this.handleKeyUp_, this);
   }
 
-  // Getters
-
   /**
    * @return {string} The query action currently active
    */
   get action() {
     return this.action_;
+  }
+
+  /**
+   * @param {string} The query action to set as active
+   */
+  set action(action) {
+    this.action_ = action;
   }
 
   /**
@@ -121,20 +126,11 @@ export class QueryModeSelector {
     return this.mode_;
   }
 
-  // Setters
-
-  /**
-   * @param {string} The query action to set as active
-   */
-  set action(action) {
-    this.action_ = action
-  }
-
   /**
    * @param {string} The query mode to set as active
    */
   set mode(mode) {
-    this.mode_ = mode
+    this.mode_ = mode;
   }
 
   // Handlers
