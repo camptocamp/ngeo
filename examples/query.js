@@ -152,7 +152,7 @@ function MainController(
       projection: EPSG21781,
       resolutions: [200, 100, 50, 20, 10, 5, 2.5, 2, 1, 0.5],
       center: [537635, 152640],
-      zoom: 0
+      zoom: 4
     })
   });
 
