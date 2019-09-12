@@ -163,7 +163,7 @@ class QueryController {
    * Called on initialization of the controller.
    */
   $onInit() {
-    // Set default value of optionnal binding properties
+    // Set default value of optional binding properties
     this.autoclear = !!this.autoclear;
   }
 
