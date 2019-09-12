@@ -374,7 +374,12 @@ class QueryController {
       return visible && !!sourceids;
     };
     const hit = this.map.forEachLayerAtPixel(
-      pixel, () => true, undefined, queryable);
+      pixel,
+      () => true,
+      {
+        layerFilter: queryable
+      }
+    );
     this.map.getTargetElement().style.cursor = hit ? 'pointer' : '';
   }
 }

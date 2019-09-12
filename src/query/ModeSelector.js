@@ -113,7 +113,7 @@ export class QueryModeSelector {
   }
 
   /**
-   * @param {string} The query action to set as active
+   * @param {string} action The query action to set as active
    */
   set action(action) {
     this.action_ = action;
@@ -127,7 +127,7 @@ export class QueryModeSelector {
   }
 
   /**
-   * @param {string} The query mode to set as active
+   * @param {string} mode The query mode to set as active
    */
   set mode(mode) {
     this.mode_ = mode;
