@@ -320,9 +320,13 @@ class QueryController {
       extent,
       limit,
       map
-    }).then(() => {
-      this.vectorSource_.clear();
-    });
+    })
+      .then(() => {})
+      .catch(() => {})
+      .then(() => {
+        // "finally"
+        this.vectorSource_.clear();
+      });
   }
 
   /**
