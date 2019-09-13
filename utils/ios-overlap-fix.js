@@ -1,7 +1,7 @@
 (function() {
   // Hack for ios Safari browser (UI overlapping on iOS 10)
   var userAgent = window.navigator.userAgent;
-  var regEx = /iP(hone|od|ad)/;
+  var regEx = /(iPhone|iPod|iPad)/;
   var iOS = regEx.test(userAgent);
   var webkit = /WebKit/i.test(userAgent);
   var chromeiOS = /(Chrome|CriOS|OPiOS)/i.test(userAgent);

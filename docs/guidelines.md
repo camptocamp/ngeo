@@ -2,7 +2,7 @@
 
 The purpose of this guideline is to help the developer to contribute in the
 best way to `ngeo` and `gmf` cores.
-It describe the golbal philosophy of `ngeo` design, and set base rules to
+It describe the global philosophy of `ngeo` design, and set base rules to
 apply when you want to add a new feature.
 
 You are free to read and fork this library. But you must know that we have currently no time to handle issues
