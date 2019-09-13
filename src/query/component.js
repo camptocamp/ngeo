@@ -99,7 +99,7 @@ class QueryController {
     // === Inner properties ===
 
     /**
-     * @type {olSourceVector}
+     * @type {olSourceVector<import("ol/geom/Polygon.js").default>}
      * @private
      */
     this.vectorSource_ = new olSourceVector({
@@ -308,6 +308,7 @@ class QueryController {
    * @private
    */
   handleDrawBoxInteractionDrawEnd_(evt) {
+    // @ts-ignore: evt should be of type {import('ol/interaction/Draw.js').DrawEvent but he is private
     const feature = evt.feature;
 
     const action = this.ngeoQueryModeSelector_.action;

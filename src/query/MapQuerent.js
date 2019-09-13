@@ -156,7 +156,7 @@ export class MapQuerent {
 
   /**
    * @param {import('ngeo/query/Querent.js').IssueGetFeaturesOptions} options Options.
-   * @return {angular.IPromise<QuerentResult>} Promise.
+   * @return {angular.IPromise<void|import('ngeo/query/Querent.js').QuerentResult>} Promise.
    */
   issue(options) {
     const action = options.action ? options.action : ngeoQueryAction.REPLACE;
