@@ -216,9 +216,9 @@ function Controller($element, $scope, ngeoLayerHelper, gmfLayerBeingSwipe,
 
 
   /**
-   * @type {?import("ol/Map.js").default}
+   * @type {import("ol/Map.js").default}
    */
-  this.map = null;
+  this.map;
 
   /**
    * @type {?Object<string, string>}
@@ -332,22 +332,15 @@ function Controller($element, $scope, ngeoLayerHelper, gmfLayerBeingSwipe,
  * Init the controller,
  */
 Controller.prototype.$onInit = function() {
-  if (!this.map) {
-    throw new Error('Missing map');
-  }
   this.openLinksInNewWindow = this.openLinksInNewWindow === true;
   this.dataLayerGroup_ = this.layerHelper_.getGroupFromMap(this.map, DATALAYERGROUP_NAME);
 
   ngeoMiscSyncArrays(this.dataLayerGroup_.getLayers().getArray(), this.layers, true, this.scope_, () => true);
 
   // watch any change on layers array to refresh the map
-  this.scope_.$watchCollection(() => this.layers,
-    () => {
-      if (!this.map) {
-        throw new Error('Missing map');
-      }
-      this.map.render();
-    });
+  this.scope_.$watchCollection(() => this.layers, () => {
+    this.map.render();
+  });
 
   // watch any change on dimensions object to refresh the layers
   this.scope_.$watchCollection(() => {
@@ -436,9 +429,6 @@ Controller.prototype.updateLayerDimensions_ = function(layer, node) {
  *    layer or group for the node.
  */
 Controller.prototype.getLayer = function(treeCtrl) {
-  if (!this.map) {
-    throw new Error('Missing map');
-  }
   if (!this.dataLayerGroup_) {
     throw new Error('Missing dataLayerGroup');
   }
@@ -660,9 +650,6 @@ Controller.prototype.getNumberOfLegendsObject = function(treeCtrl) {
  * @private
  */
 Controller.prototype.getScale_ = function() {
-  if (!this.map) {
-    throw new Error('Missing map');
-  }
   const view = this.map.getView();
   const resolution = view.getResolution();
   if (resolution === undefined) {
@@ -801,9 +788,6 @@ Controller.prototype.nodesCount = function() {
  * @return {string|undefined} 'out-of-resolution' or undefined.
  */
 Controller.prototype.getResolutionStyle = function(gmfLayer) {
-  if (!this.map) {
-    throw new Error('Missing map');
-  }
   const resolution = this.map.getView().getResolution();
   if (resolution === undefined) {
     throw new Error('Missing resolution');
@@ -826,9 +810,6 @@ Controller.prototype.getResolutionStyle = function(gmfLayer) {
  *    from the current node.
  */
 Controller.prototype.zoomToResolution = function(treeCtrl) {
-  if (!this.map) {
-    throw new Error('Missing map');
-  }
   const gmfLayer = /** @type {import('gmf/themes.js').GmfLayerWMS} */(treeCtrl.node);
   const view = this.map.getView();
   const resolution = view.getResolution();
@@ -863,10 +844,12 @@ Controller.prototype.toggleSwipeLayer = function(treeCtrl) {
     console.error('No layer');
   } else if (this.gmfLayerBeingSwipe.layer === treeCtrl.layer) {
     this.gmfLayerBeingSwipe.layer = null;
+    this.map.render();
   } else {
     this.gmfLayerBeingSwipe.layer = null;
     this.$timeout_(() => {
       this.gmfLayerBeingSwipe.layer = treeCtrl.layer;
+      this.map.render();
     }, 0);
   }
 };
