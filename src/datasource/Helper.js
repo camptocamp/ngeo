@@ -57,6 +57,9 @@ export class DatasourceHelper {
 
     olEvents.listen(this.collection_, 'add', this.handleDataSourcesAdd_, this);
     olEvents.listen(this.collection_, 'remove', this.handleDataSourcesRemove_, this);
+
+    // Register data sources that are already in the collection
+    this.collection_.forEach(this.registerDataSource_.bind(this));
   }
 
   /**
@@ -122,6 +125,24 @@ export class DatasourceHelper {
   }
 
   /**
+   * Register a data source, adding it to the cache.
+   * @param {ngeoDatasourceDataSource} dataSource An ngeo data source
+   * @private
+   */
+  registerDataSource_(dataSource) {
+    this.cache_[dataSource.id] = dataSource;
+  }
+
+  /**
+   * Unregister a data source, removing it to from cache.
+   * @param {ngeoDatasourceDataSource} dataSource An ngeo data source
+   * @private
+   */
+  unregisterDataSource_(dataSource) {
+    delete this.cache_[dataSource.id];
+  }
+
+  /**
    * Called when a new data source is added to the ngeo collection. Add it
    * to the cache.
    * @param {Event|import("ol/events/Event.js").default} evt Event
@@ -131,7 +152,7 @@ export class DatasourceHelper {
     if (evt instanceof CollectionEvent) {
       const dataSource = evt.element;
       console.assert(dataSource instanceof ngeoDatasourceDataSource);
-      this.cache_[dataSource.id] = dataSource;
+      this.registerDataSource_(dataSource);
     }
   }
 
@@ -144,7 +165,7 @@ export class DatasourceHelper {
   handleDataSourcesRemove_(evt) {
     if (evt instanceof CollectionEvent) {
       const dataSource = evt.element;
-      delete this.cache_[dataSource.id];
+      this.unregisterDataSource_(dataSource);
     }
   }
 

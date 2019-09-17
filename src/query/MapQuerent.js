@@ -156,6 +156,7 @@ export class MapQuerent {
 
   /**
    * @param {import('ngeo/query/Querent.js').IssueGetFeaturesOptions} options Options.
+   * @return {angular.IPromise<void|import('ngeo/query/Querent.js').QuerentResult>} Promise.
    */
   issue(options) {
     const action = options.action ? options.action : ngeoQueryAction.REPLACE;
@@ -185,7 +186,8 @@ export class MapQuerent {
       bboxAsGETParam: this.bboxAsGETParam_
     });
     this.result_.pending = true;
-    this.ngeoQuerent_.issue(options).then(this.handleResult_.bind(this, action));
+    return this.ngeoQuerent_.issue(options).then(
+      this.handleResult_.bind(this, action));
   }
 
   /**

@@ -1,0 +1,401 @@
+import angular from 'angular';
+
+import {unlistenByKeys as ngeoEventsUnlistenByKeys} from 'ngeo/events.js';
+import ngeoQueryMode from 'ngeo/query/Mode.js';
+import ngeoQueryModeSelector from 'ngeo/query/ModeSelector.js';
+import ngeoQueryMapQuerent from 'ngeo/query/MapQuerent.js';
+
+import {listen as olEventsListen} from 'ol/events.js';
+import {always as olEventsConditionAlways} from 'ol/events/condition.js';
+import olInteractionDraw, {
+  createBox as olInteractionDrawCreateBox
+} from 'ol/interaction/Draw.js';
+import {Vector as olLayerVector} from 'ol/layer.js';
+import MapBrowserEvent from 'ol/MapBrowserEvent.js';
+import {Vector as olSourceVector} from 'ol/source.js';
+
+/**
+ * @type {angular.IModule}
+ * @hidden
+ */
+const module = angular.module('ngeoQuery', [
+  ngeoQueryModeSelector.name,
+  ngeoQueryMapQuerent.name,
+]);
+
+
+/**
+ * @private
+ * @hidden
+ */
+class QueryController {
+
+  /**
+   * @param {import("ngeo/query/MapQuerent.js").MapQuerent}
+   *     ngeoMapQuerent The ngeo map querent service.
+   * @param {import("ngeo/query/ModeSelector.js").QueryModeSelector}
+   *     ngeoQueryModeSelector The ngeo query modeSelector service.
+   * @param {angular.auto.IInjectorService} $injector Main injector.
+   * @param {angular.IScope} $scope Scope.
+   * @private
+   * @ngInject
+   * @ngdoc controller
+   * @ngname NgeoQueryController
+   */
+  constructor(ngeoMapQuerent, ngeoQueryModeSelector, $injector, $scope) {
+
+    // === Binding properties ===
+
+    /**
+     * @type {boolean}
+     */
+    this.active;
+
+    /**
+     * @type {boolean}
+     */
+    this.autoclear;
+
+    /**
+     * @type {!import("ol/Map.js").default}
+     */
+    this.map;
+
+
+    // === Injected properties ===
+
+    /**
+     * @type {import("ngeo/query/MapQuerent.js").MapQuerent}
+     * @private
+     */
+    this.ngeoMapQuerent_ = ngeoMapQuerent;
+
+    /**
+     * @type {import("ngeo/query/ModeSelector.js").QueryModeSelector}
+     * @private
+     */
+    this.ngeoQueryModeSelector_ = ngeoQueryModeSelector;
+
+    const ngeoQueryOptions =
+      /** @type {import('ngeo/query/MapQuerent.js').QueryOptions} */ (
+        $injector.has('ngeoQueryOptions') ?
+          $injector.get('ngeoQueryOptions') :
+          {}
+      );
+
+    /**
+     * @type {import('ngeo/query/MapQuerent.js').QueryOptions}
+     * @private
+     */
+    this.ngeoQueryOptions_ = ngeoQueryOptions;
+
+    /**
+     * @type {angular.IScope}
+     * @private
+     */
+    this.scope_ = $scope;
+
+
+    // === Inner properties ===
+
+    /**
+     * @type {olSourceVector<import("ol/geom/Polygon.js").default>}
+     * @private
+     */
+    this.vectorSource_ = new olSourceVector({
+      wrapX: false
+    });
+
+    /**
+     * @type {olLayerVector}
+     * @private
+     */
+    this.vectorLayer_ = new olLayerVector({
+      source: this.vectorSource_
+    });
+
+    /**
+     * @type {olInteractionDraw}
+     * @private
+     */
+    this.drawBoxInteraction_ = new olInteractionDraw({
+      condition: olEventsConditionAlways,
+      geometryFunction: olInteractionDrawCreateBox(),
+      source: this.vectorSource_,
+      type: 'Circle'
+    });
+
+    /**
+     * The event keys of the currently active "mode".
+     *
+     * @type {Array<import('ol/events.js').EventsKey>}
+     * @private
+     */
+    this.listenerKeys_ = [];
+
+    /**
+     * @type {?string}
+     * @private
+     */
+    this.mode_ = null;
+
+
+    // === Event listeners that uses angular $scope
+
+    $scope.$watch(
+      () => this.active,
+      this.handleActiveChange_.bind(this)
+    );
+
+    $scope.$watch(
+      () => {
+        let value = null;
+        if (this.active) {
+          value = this.ngeoQueryModeSelector_.mode;
+        }
+        return value;
+      },
+      this.enableMode_.bind(this)
+    );
+  }
+
+  /**
+   * Called on initialization of the controller.
+   */
+  $onInit() {
+    // Set default value of optional binding properties
+    this.autoclear = !!this.autoclear;
+  }
+
+  /**
+   * Called on destruction of the controller.
+   */
+  $onDestroy() {
+    this.enableMode_(null);
+  }
+
+  // === Mode enabling/disabling ===
+
+  /**
+   * Disable the current mode, then enable a new mode, i.e. add any
+   * interaction of that mode to the map.
+   *
+   * @param {?string} mode Mode to enable
+   * @private
+   */
+  enableMode_(mode) {
+    this.disableMode_();
+
+    // No need to do anything if there's no mode to enable
+    if (!mode) {
+      return;
+    }
+
+    // For debug purpose
+    // console.log(`mode enable: ${mode}`);
+
+    switch (mode) {
+      case ngeoQueryMode.CLICK:
+        this.listenerKeys_.push(
+          olEventsListen(
+            this.map,
+            'singleclick',
+            this.handleMapClick_,
+            this
+          )
+        );
+        if (this.ngeoQueryOptions_.cursorHover) {
+          this.listenerKeys_.push(
+            olEventsListen(
+              this.map,
+              'pointermove',
+              this.handleMapPointerMove_,
+              this
+            )
+          );
+        }
+        break;
+
+      case ngeoQueryMode.DRAW_BOX:
+        this.map.addLayer(this.vectorLayer_);
+        this.map.addInteraction(this.drawBoxInteraction_);
+        this.listenerKeys_.push(
+          olEventsListen(
+            this.drawBoxInteraction_,
+            'drawend',
+            this.handleDrawBoxInteractionDrawEnd_,
+            this
+          )
+        );
+        break;
+
+      default:
+        break;
+    }
+
+    this.mode_ = mode;
+  }
+
+  /**
+   * Disable the current mode, i.e. remove any interaction of that
+   * mode from the map.
+   * @private
+   */
+  disableMode_() {
+    // No need to do anything if there's no mode currently active
+    if (!this.mode_) {
+      return;
+    }
+
+    // For debug purpose
+    // console.log(`mode disable: ${this.mode_}`);
+
+    switch (this.mode_) {
+      case ngeoQueryMode.CLICK:
+        // Reset cursor, if required
+        if (this.ngeoQueryOptions_.cursorHover) {
+          this.map.getTargetElement().style.cursor = '';
+        }
+        break;
+
+      case ngeoQueryMode.DRAW_BOX:
+        this.map.removeLayer(this.vectorLayer_);
+        this.map.removeInteraction(this.drawBoxInteraction_);
+        break;
+
+      default:
+        break;
+    }
+
+    ngeoEventsUnlistenByKeys(this.listenerKeys_);
+
+    this.mode_ = null;
+  }
+
+  // === Utilities ===
+
+  /**
+   * The maximum number of features a query should return. Obtained
+   * from the options.
+   * @return {number|undefined}
+   * @private
+   */
+  getLimitOption_() {
+    return this.ngeoQueryOptions_ && this.ngeoQueryOptions_.limit ?
+      this.ngeoQueryOptions_.limit : undefined;
+  }
+
+
+  // === Handlers ===
+
+  /**
+   * Called when active property changes
+   * @param {boolean} active Whether this component is active or not.
+   * @private
+   */
+  handleActiveChange_(active) {
+    if (!active) {
+      if (this.autoclear) {
+        this.ngeoMapQuerent_.clear();
+      }
+    }
+  }
+
+  /**
+   * Called when a box is drawn on the map. Use it to issue a query.
+   * @param {Event|import("ol/events/Event.js").default} evt The draw
+   *     interaction drawend event being fired.
+   * @private
+   */
+  handleDrawBoxInteractionDrawEnd_(evt) {
+    // @ts-ignore: evt should be of type {import('ol/interaction/Draw.js').DrawEvent but he is private
+    const feature = evt.feature;
+
+    const action = this.ngeoQueryModeSelector_.action;
+    const extent = feature.getGeometry().getExtent();
+    const limit = this.getLimitOption_();
+    const map = this.map;
+
+    this.ngeoMapQuerent_.issue({
+      action,
+      extent,
+      limit,
+      map
+    })
+      .then(() => {})
+      .catch(() => {})
+      .then(() => {
+        // "finally"
+        this.vectorSource_.clear();
+      });
+  }
+
+  /**
+   * Called when the map is clicked while this component is active and
+   * the mode is "click". Issue a request to the query service using
+   * the coordinate that was clicked.
+   * @param {Event|import("ol/events/Event.js").default} evt The map
+   *     browser event being fired.
+   * @private
+   */
+  handleMapClick_(evt) {
+    if (!(evt instanceof MapBrowserEvent)) {
+      return;
+    }
+
+    const action = this.ngeoQueryModeSelector_.action;
+    const coordinate = evt.coordinate;
+    const map = this.map;
+
+    this.ngeoMapQuerent_.issue({
+      action,
+      coordinate,
+      map
+    });
+  }
+
+  /**
+   * Called when the pointer is moved over the map while this
+   * component is active and the mode is "click".  Change the
+   * mouse pointer when hovering a non-transparent pixel on the
+   * map.
+   * @param {Event|import("ol/events/Event.js").default} evt
+   *     The map browser event being fired.
+   */
+  handleMapPointerMove_(evt) {
+    // No need to do anything if user is dragging the map
+    if (!(evt instanceof MapBrowserEvent) || evt.dragging) {
+      return;
+    }
+
+    const pixel = this.map.getEventPixel(evt.originalEvent);
+
+    /**
+     * @param {import('ol/layer/Base').default} layer
+     */
+    const queryable = function(layer) {
+      const visible = layer.get('visible');
+      const sourceids = layer.get('querySourceIds');
+      return visible && !!sourceids;
+    };
+    const hit = this.map.forEachLayerAtPixel(
+      pixel,
+      () => true,
+      {
+        layerFilter: queryable
+      }
+    );
+    this.map.getTargetElement().style.cursor = hit ? 'pointer' : '';
+  }
+}
+
+module.component('ngeoQuery', {
+  bindings: {
+    'active': '=',
+    'autoclear': '<?',
+    'map': '<'
+  },
+  controller: QueryController
+});
+
+export default module;

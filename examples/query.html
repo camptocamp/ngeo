@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html ng-app='app'>
+  <head>
+    <title>Query example</title>
+    <meta charset="utf-8" />
+    <meta name="viewport"
+          content="initial-scale=1.0, user-scalable=no, width=device-width" />
+    <meta name="mobile-web-app-capable" content="yes" />
+  </head>
+  <body ng-controller="MainController as ctrl">
+    <div
+      id="map"
+      ngeo-map="ctrl.map">
+    </div>
+
+    <ngeo-query
+        active="ctrl.queryActive"
+        autoclear="ctrl.queryAutoClear"
+        map="::ctrl.map">
+    </ngeo-query>
+
+    <p id="desc">
+      This example shows how to use the
+      <code>
+        <a
+          href="../apidoc/ngeo.query.component.html"
+          title="Read our documentation">ngeo-query</a>
+      </code>
+      component. It also shows how the
+      <code>
+        <a
+          href="../apidoc/ngeo.misc.ToolActivateMgr.html"
+          title="Read our documentation">ngeo.misc.ToolActivate</a>
+      </code>
+      can be used to make the component inactive when an other tool
+      becomes active.  The "Dummy" button here does nothing, but when
+      toggled the query component becomes inactive. Click on the map to
+      issue a query. Hold down the "ctrl" key (meta on MAC) then click twice
+      in the map to draw a box instead. Hold the A key to add the results to
+      existing ones. Hold the X key to remove the results from the existing
+      ones.
+    </p>
+
+    <button
+      ngeo-btn=""
+      class="btn btn-info"
+      ng-model="ctrl.getSetDummyActive"
+      ng-model-options="{getterSetter: true}">Dummy</button>
+
+    <span>Mode: {{ ctrl.ngeoQueryModeSelector.mode }}</span>,
+    <span>Action: {{ ctrl.ngeoQueryModeSelector.action }}</span>
+    <br />
+
+    <app-queryresult></app-queryresult>
+
+    <script type="text/javascript" src="dist/vendor.js"></script>
+  </body>
+</html>
