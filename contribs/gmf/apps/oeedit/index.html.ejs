@@ -125,16 +125,12 @@
           gmf-contextualdata=""
           gmf-contextualdata-displayed="mainCtrl.contextdataActive"
           gmf-contextualdata-map="::mainCtrl.map"
-          gmf-contextualdata-projections="::[2056, 21781, 4326]"
-          ngeo-map-query=""
-          ngeo-map-query-map="::mainCtrl.map"
-          ngeo-map-query-active="mainCtrl.queryActive"
-          ngeo-map-query-autoclear="mainCtrl.queryAutoClear"
-          ngeo-bbox-query=""
-          ngeo-bbox-query-map="::mainCtrl.map"
-          ngeo-bbox-query-active="mainCtrl.queryActive"
-          ngeo-bbox-query-autoclear="mainCtrl.queryAutoClear">
+          gmf-contextualdata-projections="::[2056, 21781, 4326]">
         </gmf-map>
+        <ngeo-query
+          active="mainCtrl.queryActive"
+          map="::mainCtrl.map">
+        </ngeo-query>
 
         <!--infobar-->
         <div class="gmf-app-footer" ng-class="{'gmf-app-active': mainCtrl.showInfobar}">

@@ -8,15 +8,13 @@
     <meta name="mobile-web-app-capable" content="yes">
   </head>
   <body ng-controller="MainController as ctrl">
-    <gmf-map
-      gmf-map-map="ctrl.map"
-      ngeo-map-query=""
-      ngeo-map-query-map="::ctrl.map"
-      ngeo-map-query-active="ctrl.queryActive"
-      ngeo-bbox-query=""
-      ngeo-bbox-query-map="::ctrl.map"
-      ngeo-bbox-query-active="ctrl.queryActive">
-    </gmf-map>
+
+    <gmf-map gmf-map-map="ctrl.map"></gmf-map>
+
+    <ngeo-query
+        active="ctrl.queryActive"
+        map="::ctrl.map">
+    </ngeo-query>
 
     <div class="panel panel-default panel-body">
       <p id="desc">

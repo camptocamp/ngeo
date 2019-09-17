@@ -14,9 +14,8 @@ import gmfMapComponent from 'gmf/map/component.js';
 import gmfThemeThemes from 'gmf/theme/Themes.js';
 import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources.js';
 
-import ngeoQueryBboxQueryComponent from 'ngeo/query/bboxQueryComponent.js';
+import ngeoQueryComponent from 'ngeo/query/component.js';
 
-import ngeoQueryMapQueryComponent from 'ngeo/query/mapQueryComponent.js';
 import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
@@ -37,8 +36,7 @@ const module = angular.module('gmfapp', [
   gmfMapComponent.name,
   gmfThemeThemes.name,
   ngeoDatasourceDataSources.name,
-  ngeoQueryBboxQueryComponent.name,
-  ngeoQueryMapQueryComponent.name,
+  ngeoQueryComponent.name,
 ]);
 
 

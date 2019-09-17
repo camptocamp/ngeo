@@ -1,7 +1,6 @@
 import angular from 'angular';
 import gmfControllersAbstractAppController, {AbstractAppController, getLocationIcon}
   from 'gmf/controllers/AbstractAppController.js';
-import ngeoQueryBboxQueryComponent from 'ngeo/query/bboxQueryComponent.js';
 import ngeoMapResizemap from 'ngeo/map/resizemap.js';
 import * as olProj from 'ol/proj.js';
 import olMap from 'ol/Map.js';
@@ -66,7 +65,6 @@ export class AbstractAPIController extends AbstractAppController {
 const module = angular.module('GmfAbstractAPIControllerModule', [
   gmfControllersAbstractAppController.name,
   ngeoMapResizemap.name,
-  ngeoQueryBboxQueryComponent.name
 ]);
 
 module.controller('AbstractAPIController', AbstractAPIController);

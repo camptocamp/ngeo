@@ -9,14 +9,12 @@
   </head>
   <body ng-controller="MainController as ctrl">
 
-    <gmf-map gmf-map-map="ctrl.map"
-        ngeo-map-query=""
-        ngeo-map-query-map="::ctrl.map"
-        ngeo-map-query-active="ctrl.queryActive"
-        ngeo-bbox-query=""
-        ngeo-bbox-query-map="::ctrl.map"
-        ngeo-bbox-query-active="ctrl.queryActive">
-    </gmf-map>
+    <gmf-map gmf-map-map="ctrl.map"></gmf-map>
+
+    <ngeo-query
+        active="ctrl.queryActive"
+        map="::ctrl.map">
+    </ngeo-query>
 
     <div id="tree-container">
       <div>
@@ -39,8 +37,8 @@
     <div class="clear-left"></div>
 
     <p id="desc">
-      This example shows how to use the <code>ngeo-map-query</code>
-      directive in combination with the
+      This example shows how to use the <code>ngeo-query</code>
+      component in combination with the
       <code>gmf.datasource.Manager</code>.
       The DataSourcesManager fetches the themes returned by the theme
       service and adds one DataSource, which is used by the querent service
