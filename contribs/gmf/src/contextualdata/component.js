@@ -24,7 +24,7 @@ const module = angular.module('gmfContextualdata', [
  *     <gmf-map gmf-map-map="mainCtrl.map"
  *         gmf-contextualdata
  *         gmf-contextualdata-map="::mainCtrl.map"
- *         gmf-contextualdata-projections="::[21781,4326]">
+ *         gmf-contextualdata-projections="::[2056,21781,4326]">
  *
  * The content of the popover is managed in a partial that must be defined
  * using the `gmfContextualdatacontentTemplateUrl` value. See

@@ -26,7 +26,7 @@ const asitVDResolutions = [
  * @hidden
  */
 const asitVDTileGrid = new olTilegridWMTS({
-  extent: [420000, 30000, 900000, 350000],
+  extent: [2420000, 130000, 2900000, 1350000],
   resolutions: asitVDResolutions,
   matrixIds: asitVDResolutions.map((value, index) => `${index}`)
 });
@@ -46,12 +46,12 @@ export default class extends olSourceWMTS {
     super({
       attributions: 'géodonnées &copy; Etat de Vaud & &copy; contributeurs OpenStreetMap',
       url: 'https://ows{1-4}.asitvd.ch/wmts/1.0.0/{Layer}/default/default/0/' +
-        '21781/{TileMatrix}/{TileRow}/{TileCol}.png',
-      projection: 'EPSG:21781',
+        '2056/{TileMatrix}/{TileRow}/{TileCol}.png',
+      projection: 'EPSG:2056',
       requestEncoding: 'REST',
       layer: options.layer,
       style: 'default',
-      matrixSet: '21781',
+      matrixSet: '2056',
       format: 'image/png',
       tileGrid: asitVDTileGrid
     });
