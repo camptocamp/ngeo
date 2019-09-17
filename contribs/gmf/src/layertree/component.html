@@ -78,7 +78,7 @@
     {{layertreeCtrl.node.name | translate}}
 
     <span
-      ng-if="gmfLayertreeCtrl.gmfLayerBeingSwipe.layer === layertreeCtrl.layer"
+      ng-if="gmfLayertreeCtrl.gmfLayerBeingSwipe.layer && gmfLayertreeCtrl.gmfLayerBeingSwipe.layer === layertreeCtrl.layer"
       class="fa fal fa-sort fa-rotate-90 gmf-layer-being-swipe"
     ></span>
 
