@@ -183,7 +183,7 @@
           <li ng-if="::gmfLayertreeCtrl.supportsOpacityChange(layertreeCtrl)">
             <i class="fa fal fa-sort fa-fw fa-rotate-90"></i>
             <a
-              ng-click="::gmfLayertreeCtrl.toggleSwipeLayer(layertreeCtrl)"
+              ng-click="::gmfLayertreeCtrl.toggleSwipeLayer(layertreeCtrl); popoverCtrl.dismissPopover()"
               href=""
               ng-model="layertreeCtrl.layer"
               >
