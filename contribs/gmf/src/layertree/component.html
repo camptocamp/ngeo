@@ -77,6 +77,11 @@
 
     {{layertreeCtrl.node.name | translate}}
 
+    <span
+      ng-if="gmfLayertreeCtrl.gmfLayerBeingSwipe.layer && gmfLayertreeCtrl.gmfLayerBeingSwipe.layer === layertreeCtrl.layer"
+      class="fa fal fa-sort fa-rotate-90 gmf-layer-being-swipe"
+    ></span>
+
     <i
       class="gmf-layertree-zoom"
       data-toggle="tooltip"
@@ -175,6 +180,16 @@
               {{'Show/hide legend'|translate}}
             </a>
           </li>
+          <li ng-if="::gmfLayertreeCtrl.supportsOpacityChange(layertreeCtrl)">
+            <i class="fa fal fa-sort fa-fw fa-rotate-90"></i>
+            <a
+              ng-click="::gmfLayertreeCtrl.toggleSwipeLayer(layertreeCtrl); popoverCtrl.dismissPopover()"
+              href=""
+              ng-model="layertreeCtrl.layer"
+              >
+              {{'Swipe with this layer'| translate}}
+            </a>
+          </li>
           <li ng-if="layertreeCtrl.getDataSource() && layertreeCtrl.getDataSource().filtrable">
             <i class="fa fa-filter fa-fw"></i>
             <a
@@ -237,9 +252,7 @@
     </span>
     {{'Show/hide legend'|translate}}
   </a>
-
 </div>
-
 <div
   ng-if="::!layertreeCtrl.isRoot && gmfLayertreeCtrl.getLegendsObject(layertreeCtrl) && layertreeCtrl.node.metadata.legend" id="gmf-layertree-node-{{::layertreeCtrl.uid}}-legend"
   class="gmf-layertree-legend"

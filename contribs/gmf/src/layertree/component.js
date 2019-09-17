@@ -1,6 +1,7 @@
 import angular from 'angular';
 import {DATALAYERGROUP_NAME} from 'gmf/index.js';
 import gmfDatasourceDataSourceBeingFiltered from 'gmf/datasource/DataSourceBeingFiltered.js';
+import gmfLayerBeingSwipe from 'gmf/datasource/LayerBeingSwipe.js';
 import gmfDatasourceExternalDataSourcesManager from 'gmf/datasource/ExternalDataSourcesManager.js';
 import gmfPermalinkPermalink from 'gmf/permalink/Permalink.js';
 
@@ -13,7 +14,6 @@ import gmfThemeThemes,
 import ngeoDatasourceOGC, {ServerType} from 'ngeo/datasource/OGC.js';
 
 import ngeoLayertreeComponent from 'ngeo/layertree/component.js';
-
 import ngeoLayertreeController, {LayertreeVisitorDecision} from 'ngeo/layertree/Controller.js';
 import ngeoMapLayerHelper from 'ngeo/map/LayerHelper.js';
 import ngeoMiscSyncArrays from 'ngeo/misc/syncArrays.js';
@@ -27,6 +27,8 @@ import olSourceWMTS from 'ol/source/WMTS.js';
 import LayerBase from 'ol/layer/Base.js';
 
 import 'bootstrap/js/src/collapse.js';
+import Layer from 'ol/layer/Layer.js';
+import TileLayer from 'ol/layer/Tile.js';
 
 
 /**
@@ -56,6 +58,8 @@ const module = angular.module('gmfLayertreeComponent', [
   ngeoLayertreeController.name,
   ngeoMapLayerHelper.name,
   ngeoMiscWMSTime.name,
+  gmfLayerBeingSwipe.name
+
 ]);
 
 
@@ -187,6 +191,7 @@ module.component('gmfLayertree', layertreeComponent);
  * @param {import('gmf/datasource/DataSourceBeingFiltered.js').DataSourceBeingFiltered} gmfDataSourceBeingFiltered
  *    The Gmf value service that determines the data source currently being
  *    filtered.
+ * @param {import('gmf/datasource/LayerBeingSwipe.js').LayerBeingSwipe} gmfLayerBeingSwipe
  * @param {import("gmf/datasource/ExternalDataSourcesManager.js").ExternalDatSourcesManager}
  *    gmfExternalDataSourcesManager The Gmf external data sources manager
  *    service. Used here to fetch the external WMS groups.
@@ -197,6 +202,7 @@ module.component('gmfLayertree', layertreeComponent);
  *    gmfSyncLayertreeMap service.
  * @param {import("ngeo/misc/WMSTime.js").WMSTime} ngeoWMSTime wms time service.
  * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes The gmf Themes service.
+ * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @constructor
  * @private
  * @hidden
@@ -204,14 +210,15 @@ module.component('gmfLayertree', layertreeComponent);
  * @ngdoc controller
  * @ngname gmfLayertreeController
  */
-function Controller($element, $scope, ngeoLayerHelper,
+function Controller($element, $scope, ngeoLayerHelper, gmfLayerBeingSwipe,
   gmfDataSourceBeingFiltered, gmfExternalDataSourcesManager, gmfPermalink,
-  gmfTreeManager, gmfSyncLayertreeMap, ngeoWMSTime, gmfThemes) {
+  gmfTreeManager, gmfSyncLayertreeMap, ngeoWMSTime, gmfThemes, $timeout) {
+
 
   /**
-   * @type {?import("ol/Map.js").default}
+   * @type {import("ol/Map.js").default}
    */
-  this.map = null;
+  this.map;
 
   /**
    * @type {?Object<string, string>}
@@ -229,6 +236,12 @@ function Controller($element, $scope, ngeoLayerHelper,
    * @private
    */
   this.layerHelper_ = ngeoLayerHelper;
+
+  /**
+   * @type {import('gmf/datasource/LayerBeingSwipe.js').LayerBeingSwipe}
+   * @private
+   */
+  this.gmfLayerBeingSwipe = gmfLayerBeingSwipe;
 
   /**
    * @type {import('gmf/datasource/DataSourceBeingFiltered.js').DataSourceBeingFiltered}
@@ -302,6 +315,12 @@ function Controller($element, $scope, ngeoLayerHelper,
    */
   this.gmfThemes_ = gmfThemes;
 
+  /**
+   * @type {angular.ITimeoutService}
+   * @private
+   */
+  this.$timeout_ = $timeout;
+
   // enter digest cycle on node collapse
   $element.on('shown.bs.collapse', () => {
     this.scope_.$apply();
@@ -313,22 +332,15 @@ function Controller($element, $scope, ngeoLayerHelper,
  * Init the controller,
  */
 Controller.prototype.$onInit = function() {
-  if (!this.map) {
-    throw new Error('Missing map');
-  }
   this.openLinksInNewWindow = this.openLinksInNewWindow === true;
   this.dataLayerGroup_ = this.layerHelper_.getGroupFromMap(this.map, DATALAYERGROUP_NAME);
 
   ngeoMiscSyncArrays(this.dataLayerGroup_.getLayers().getArray(), this.layers, true, this.scope_, () => true);
 
   // watch any change on layers array to refresh the map
-  this.scope_.$watchCollection(() => this.layers,
-    () => {
-      if (!this.map) {
-        throw new Error('Missing map');
-      }
-      this.map.render();
-    });
+  this.scope_.$watchCollection(() => this.layers, () => {
+    this.map.render();
+  });
 
   // watch any change on dimensions object to refresh the layers
   this.scope_.$watchCollection(() => {
@@ -417,9 +429,6 @@ Controller.prototype.updateLayerDimensions_ = function(layer, node) {
  *    layer or group for the node.
  */
 Controller.prototype.getLayer = function(treeCtrl) {
-  if (!this.map) {
-    throw new Error('Missing map');
-  }
   if (!this.dataLayerGroup_) {
     throw new Error('Missing dataLayerGroup');
   }
@@ -641,9 +650,6 @@ Controller.prototype.getNumberOfLegendsObject = function(treeCtrl) {
  * @private
  */
 Controller.prototype.getScale_ = function() {
-  if (!this.map) {
-    throw new Error('Missing map');
-  }
   const view = this.map.getView();
   const resolution = view.getResolution();
   if (resolution === undefined) {
@@ -782,9 +788,6 @@ Controller.prototype.nodesCount = function() {
  * @return {string|undefined} 'out-of-resolution' or undefined.
  */
 Controller.prototype.getResolutionStyle = function(gmfLayer) {
-  if (!this.map) {
-    throw new Error('Missing map');
-  }
   const resolution = this.map.getView().getResolution();
   if (resolution === undefined) {
     throw new Error('Missing resolution');
@@ -807,9 +810,6 @@ Controller.prototype.getResolutionStyle = function(gmfLayer) {
  *    from the current node.
  */
 Controller.prototype.zoomToResolution = function(treeCtrl) {
-  if (!this.map) {
-    throw new Error('Missing map');
-  }
   const gmfLayer = /** @type {import('gmf/themes.js').GmfLayerWMS} */(treeCtrl.node);
   const view = this.map.getView();
   const resolution = view.getResolution();
@@ -829,6 +829,28 @@ Controller.prototype.zoomToResolution = function(treeCtrl) {
     if (maxResolution !== undefined && resolution > maxResolution) {
       view.setResolution(constrainResolution(maxResolution, -1, size));
     }
+  }
+};
+
+
+/**
+ * Set the swipe option on the map.
+ *    from the current node.
+ *  @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl Ngeo tree controller.
+ * @type {import('gmf/datasource/LayerBeingSwipe.js').LayerBeingSwipe}
+ */
+Controller.prototype.toggleSwipeLayer = function(treeCtrl) {
+  if (!treeCtrl.layer) {
+    console.error('No layer');
+  } else if (this.gmfLayerBeingSwipe.layer === treeCtrl.layer) {
+    this.gmfLayerBeingSwipe.layer = null;
+    this.map.render();
+  } else {
+    this.gmfLayerBeingSwipe.layer = null;
+    this.$timeout_(() => {
+      this.gmfLayerBeingSwipe.layer = treeCtrl.layer;
+      this.map.render();
+    }, 0);
   }
 };
 
