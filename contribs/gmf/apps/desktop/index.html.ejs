@@ -209,6 +209,11 @@
           gmf-search-datasources="::mainCtrl.searchDatasources"
           gmf-search-coordinatesprojections="::mainCtrl.searchCoordinatesProjections">
         </gmf-search>
+        <ngeo-mapswipe
+          ng-if="mainCtrl.gmfLayerBeingSwipe.layer != null"
+          map="::mainCtrl.map"
+          layer="::mainCtrl.gmfLayerBeingSwipe.layer">
+        </ngeo-mapswipe>
         <ngeo-displaywindow
           content="mainCtrl.displaywindowContent"
           desktop="true"
