@@ -648,7 +648,7 @@ export class Querent {
         // as well.
         if (options.geometry) {
           const spatialFilter = olFormatFilter.intersects(
-            dataSource.geometryName(null),
+            dataSource.geometryName(),
             options.geometry,
             srsName
           );

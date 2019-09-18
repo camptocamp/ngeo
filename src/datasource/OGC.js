@@ -595,20 +595,27 @@ class OGC extends ngeoDatasourceDataSource {
   }
 
   /**
-   * @param {?string} layer The layer name.
+   * @param {string=} layer The layer name.
    * @return {?string} Geometry name
    */
   geometryName(layer) {
-    if (!this.ogcAttributes_ || !layer) {
-      return this.geometryName_;
-    }
-    const attributes = this.ogcAttributes_[layer];
-    for (const attribute in attributes) {
-      if (attributes[attribute].namespace == 'http://www.opengis.net/gml') {
-        return attribute;
+    let geometryName = null;
+
+    if (layer && this.ogcAttributes_) {
+      const attributes = this.ogcAttributes_[layer];
+      for (const attribute in attributes) {
+        if (attributes[attribute].namespace == 'http://www.opengis.net/gml') {
+          geometryName = attribute;
+          break;
+        }
       }
     }
-    return this.geometryName_;
+
+    if (!geometryName) {
+      geometryName = this.geometryName_;
+    }
+
+    return geometryName;
   }
 
   /**
