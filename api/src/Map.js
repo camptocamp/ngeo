@@ -285,7 +285,6 @@ class Map {
       const image = new Icon({
         src: options.icon
       });
-      // @ts-ignore: OL issue
       marker.setStyle(new Style({
         image
       }));
@@ -371,7 +370,6 @@ class Map {
               anchorYUnits: 'pixels',
               anchor: anchor
             });
-            // @ts-ignore: OL issue
             marker.setStyle(new Style({
               image
             }));

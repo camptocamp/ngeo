@@ -187,11 +187,11 @@ module.controller('AlternativeDesktopController', Controller);
 module.value('gmfPermalinkOptions', /** @type {import('gmf/permalink/Permalink.js').PermalinkOptions} */ ({
   crosshairStyle: [
     new Style({
-      image: /** @type {import('ol/style/Image.js').default} */(new Icon({
+      image: new Icon({
         // @ts-ignore: webpack
         src: 'data:image/svg+xml;base64,' + btoa(require('./image/crosshair.svg?viewbox')),
         imgSize: [22, 22],
-      }))
+      })
     })
   ]
 }));
