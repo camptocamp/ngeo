@@ -62,7 +62,7 @@ import olSourceImageWMS from 'ol/source/ImageWMS.js';
  * @property {import("ol/format/filter/Filter.js").default} [filter] A filter to additionally use with the
  *    query. Only used by WFS requests.
  *    If a filter is defined, then it is used instead of the data source's filter rules.
- * @property {import("ol/geom/Geometry.js").Geometry} [geometry] The geometry to use as filter for the
+ * @property {import("ol/geom/Geometry.js").default} [geometry] The geometry to use as filter for the
  *    requests, which can end up with WFS requests only.
  * @property {number} [limit] The maximum number of features to get per request.
  * @property {import("ol/Map.js").default} map The ol3 map object. Used to fill some parameters of the
