@@ -19,7 +19,7 @@ import ngeoMiscExtraModule from 'ngeo/misc/extraModule.js';
 import ngeoMiscFeatureHelper, {FeatureFormatType} from 'ngeo/misc/FeatureHelper.js';
 import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
 import ngeoQueryMapQuerent from 'ngeo/query/MapQuerent.js';
-import ngeoQueryMapQueryComponent from 'ngeo/query/mapQueryComponent.js';
+import ngeoQueryComponent from 'ngeo/query/component.js';
 import ngeoStatemanagerModule from 'ngeo/statemanager/module.js';
 import ngeoStatemanagerWfsPermalink from 'ngeo/statemanager/WfsPermalink.js';
 import ngeoGeolocation from 'ngeo/geolocation/component.js';
@@ -859,7 +859,7 @@ const module = angular.module('GmfAbstractAppControllerModule', [
   ngeoMiscExtraModule.name,
   ngeoMiscFeatureHelper.name,
   ngeoQueryMapQuerent.name,
-  ngeoQueryMapQueryComponent.name,
+  ngeoQueryComponent.name,
   ngeoStatemanagerModule.name,
   ngeoStatemanagerWfsPermalink.name,
   ngeoGeolocation.name,

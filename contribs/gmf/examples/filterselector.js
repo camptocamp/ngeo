@@ -15,8 +15,7 @@ import gmfMapComponent from 'gmf/map/component.js';
 
 import gmfThemeThemes from 'gmf/theme/Themes.js';
 import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources.js';
-import ngeoQueryBboxQueryComponent from 'ngeo/query/bboxQueryComponent.js';
-import ngeoQueryMapQueryComponent from 'ngeo/query/mapQueryComponent.js';
+import ngeoQueryComponent from 'ngeo/query/component.js';
 import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
 import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr.js';
 import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
@@ -41,8 +40,7 @@ const module = angular.module('gmfapp', [
   gmfThemeThemes.name,
   ngeoDatasourceDataSources.name,
   ngeoMiscToolActivateMgr.name,
-  ngeoQueryBboxQueryComponent.name,
-  ngeoQueryMapQueryComponent.name,
+  ngeoQueryComponent.name,
 ]);
 
 

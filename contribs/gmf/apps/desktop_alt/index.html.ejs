@@ -300,17 +300,13 @@
           class="gmf-map"
           gmf-map-map="mainCtrl.map"
           gmf-map-manage-resize="mainCtrl.manageResize"
-          gmf-map-resize-transition="mainCtrl.resizeTransition"
-          ngeo-map-query=""
-          ngeo-map-query-map="::mainCtrl.map"
-          ngeo-map-query-active="mainCtrl.queryActive"
-          ngeo-map-query-autoclear="mainCtrl.queryAutoClear"
-          ngeo-bbox-query=""
-          ngeo-bbox-query-limit="50"
-          ngeo-bbox-query-map="::mainCtrl.map"
-          ngeo-bbox-query-active="mainCtrl.queryActive"
-          ngeo-bbox-query-autoclear="mainCtrl.queryAutoClear">
+          gmf-map-resize-transition="mainCtrl.resizeTransition">
         </gmf-map>
+        <ngeo-query
+          active="mainCtrl.queryActive"
+          autoclear="mainCtrl.queryAutoClear"
+          map="::mainCtrl.map">
+        </ngeo-query>
         <gmf-floorselector class="gmf-floorselector ol-unselectable ol-control"
           value="mainCtrl.dimensions.FLOOR">
         </gmf-floorselector>

@@ -15,8 +15,7 @@ import ngeoGridModule from 'ngeo/grid/module.js';
 import ngeoMapModule from 'ngeo/map/module.js';
 import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent.js';
 import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
-import ngeoQueryBboxQueryComponent from 'ngeo/query/bboxQueryComponent.js';
-import ngeoQueryMapQueryComponent from 'ngeo/query/mapQueryComponent.js';
+import ngeoQueryComponent from 'ngeo/query/component.js';
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
 import olLayerTile from 'ol/layer/Tile.js';
@@ -41,8 +40,7 @@ const module = angular.module('gmfapp', [
   ngeoGridModule.name,
   ngeoMapModule.name, // for ngeo.map.FeatureOverlay, perhaps remove me
   ngeoMiscBtnComponent.name,
-  ngeoQueryBboxQueryComponent.name,
-  ngeoQueryMapQueryComponent.name,
+  ngeoQueryComponent.name,
 ]);
 
 

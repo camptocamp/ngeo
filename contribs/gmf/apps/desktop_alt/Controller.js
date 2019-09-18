@@ -196,4 +196,8 @@ module.value('gmfPermalinkOptions', /** @type {import('gmf/permalink/Permalink.j
   ]
 }));
 
+module.value('ngeoQueryOptions', {
+  'limit': 50
+});
+
 export default module;
