@@ -170,6 +170,10 @@ serve-gmf: .build/node_modules.timestamp $(ANGULAR_LOCALES_FILES)
 serve-gmf-apps: .build/node_modules.timestamp $(ANGULAR_LOCALES_FILES)
 	npm run serve-gmf-apps
 
+.PHONY: serve-api
+serve-api:
+	npm run serve-api
+
 .PHONY: examples-hosted
 examples-hosted: \
 		examples-hosted-ngeo \

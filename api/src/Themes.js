@@ -25,6 +25,30 @@ function getThemesPromise() {
 }
 
 /**
+ * @type {Promise<Object<string, string>>} Promise
+ * @hidden
+ */
+let localePromise;
+
+/**
+ * @hidden
+ * @return {Promise<Object<string, string>>} Promise
+ */
+function getLocalePromise() {
+  if (!constants.localeUrl) {
+    // Fallback to an empty dict
+    return Promise.resolve({});
+  }
+  if (!localePromise) {
+    localePromise = fetch(constants.localeUrl).then(response => response.json()).then(data =>
+      // Return the first property as data should looks like { 'fr': { ... } }
+      data[Object.keys(data)[0]]
+    );
+  }
+  return localePromise;
+}
+
+/**
  * @type {Promise<Map<string, overlayDefinition>>|undefined}
  * @hidden
  */
@@ -196,9 +220,11 @@ export function createWMSLayer(config, ogcServer) {
     minResolution: config.minResolutionHint,
     maxResolution: config.maxResolutionHint
   });
-  layer.set('title', config.name);
   layer.set('config.name', config.name);
-  return Promise.resolve(layer);
+  return getLocalePromise().then(translations => {
+    layer.set('title', translations[config.name] || config.name);
+    return layer;
+  });
 }
 
 /**
@@ -207,7 +233,9 @@ export function createWMSLayer(config, ogcServer) {
  * @hidden
  */
 export function createWMTSLayer(config) {
-  return getWMTSCapability(config.url).then((capability) => {
+  return Promise.all([getLocalePromise(), getWMTSCapability(config.url)]).then(result => {
+    const translations = result[0];
+    const capability = result[1];
     const options = optionsFromCapabilities(capability, {
       crossOrigin: 'anonymous',
       layer: config.layer,
@@ -219,7 +247,7 @@ export function createWMTSLayer(config) {
       preload: Infinity,
       source: source
     });
-    layer.set('title', config.name);
+    layer.set('title', translations[config.name] || config.name);
     layer.set('config.name', config.name);
     return layer;
   });
