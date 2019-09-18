@@ -16,9 +16,9 @@ module.run(
    * @param {angular.ITemplateCacheService} $templateCache
    */
   $templateCache => {
-    // @ts-ignore: webpack
     $templateCache.put(
       'ngeo/src/query/panelComponent',
+      // @ts-ignore: webpack
       require('./panelComponent.html')
     );
   }
