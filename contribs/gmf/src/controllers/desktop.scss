@@ -54,13 +54,18 @@ header {
   height: $topbar-height;
   z-index: $zindex-navbar-fixed;
   .logo {
-    height: 100%;
-    line-height: $topbar-height;
+    height: $topbar-height;
     margin-left: $app-margin;
-    img {
-      height: 100%;
-      vertical-align: bottom;
-    }
+    background-repeat: no-repeat;
+    background-size: auto $topbar-height;
+  }
+  .logo-right {
+    height: $topbar-height;
+    background-repeat: no-repeat;
+    background-size: auto $topbar-height;
+    position: absolute;
+    top: 0;
+    right: 0;
   }
 }
 

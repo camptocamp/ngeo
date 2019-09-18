@@ -1,3 +1,17 @@
+header {
+  .logo {
+    background-image: url('../image/logo.svg');
+    span {
+      left: 18.5rem;
+      position: absolute;
+      bottom: 0.2rem;
+    }
+    span::before {
+      content: "by Camptocamp";
+    }
+  }
+}
+
 .gmf-theme-selector li {
   flex-direction: column;
 }
