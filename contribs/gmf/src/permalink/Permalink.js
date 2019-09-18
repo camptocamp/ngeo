@@ -478,7 +478,6 @@ export function PermalinkService(
   if (gmfPermalinkOptions.crosshairStyle !== undefined) {
     this.crosshairStyle_ = gmfPermalinkOptions.crosshairStyle;
   } else {
-    // @ts-ignore: OL issue
     this.crosshairStyle_ = [new olStyleStyle({
       image: new olStyleIcon({
         // @ts-ignore: webpack

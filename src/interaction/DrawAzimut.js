@@ -216,7 +216,6 @@ class DrawAzimut extends olInteractionPointer {
     if (map === null || !active) {
       this.abortDrawing_();
     }
-    // @ts-ignore: OL issue
     this.sketchLayer_.setMap(active ? map : null);
   }
 

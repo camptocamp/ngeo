@@ -216,7 +216,6 @@ export function getOverlayLayers(layerNames) {
  * @hidden
  */
 export function createWMSLayer(config, ogcServer) {
-  // @ts-ignore: OL issue
   const layer = new ImageLayer({
     source: new ImageWMS({
       url: ogcServer.url,

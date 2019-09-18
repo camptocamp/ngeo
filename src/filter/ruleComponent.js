@@ -813,7 +813,6 @@ class RuleController {
       }
 
     } else {
-      // @ts-ignore: OL issue?
       cloneFeature.setStyle(null);
       keys.forEach(olEvents.unlistenByKey);
       keys.length = 0;

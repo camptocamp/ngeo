@@ -92,7 +92,6 @@ describe('ngeo.print.Service', () => {
             'FORMAT': 'image/jpeg'
           }
         });
-        // @ts-ignore: OL issue
         map.addLayer(new olLayerImage({
           source
         }));
@@ -607,7 +606,6 @@ describe('ngeo.print.Service', () => {
             'FORMAT': 'image/jpeg'
           }
         });
-        // @ts-ignore: OL issue
         map.addLayer(new olLayerImage({
           source: source1
         }));
@@ -620,7 +618,6 @@ describe('ngeo.print.Service', () => {
             'FORMAT': 'image/jpeg'
           }
         });
-        // @ts-ignore: OL issue
         map.addLayer(new olLayerImage({
           source: source2
         }));
