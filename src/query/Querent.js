@@ -2,6 +2,7 @@ import angular from 'angular';
 import ngeoDatasourceOGC from 'ngeo/datasource/OGC.js';
 import ngeoFilterRuleHelper from 'ngeo/filter/RuleHelper.js';
 import ngeoMiscWMSTime from 'ngeo/misc/WMSTime.js';
+import * as olFormatFilter from 'ol/format/filter.js';
 import olFormatWFS from 'ol/format/WFS.js';
 import ngeoWFSDescribeFeatureType from 'ngeo/WFSDescribeFeatureType.js';
 import olFormatWMSCapabilities from 'ol/format/WMSCapabilities.js';
@@ -49,6 +50,8 @@ import olSourceImageWMS from 'ol/source/ImageWMS.js';
  *    - `replace`: newly queried features are used as result
  *    - `add`:     newly queried features are added to the existing ones
  *    - `remove`:  newly queried features are removed from the existing ones
+ * @property {import("ol/extent.js").Extent} [bbox] The bbox to issue the requests with,
+ *    which will end up with a WFS request.
  * @property {import("ol/coordinate.js").Coordinate} [coordinate] The coordinate to issue the requests with,
  *    which can end up with either WMS or WFS requests.
  * @property {Array<import('ngeo/datasource/DataSource.js').default>} [dataSources] list of data sources to
@@ -59,6 +62,8 @@ import olSourceImageWMS from 'ol/source/ImageWMS.js';
  * @property {import("ol/format/filter/Filter.js").default} [filter] A filter to additionally use with the
  *    query. Only used by WFS requests.
  *    If a filter is defined, then it is used instead of the data source's filter rules.
+ * @property {import("ol/geom/Geometry.js").Geometry} [geometry] The geometry to use as filter for the
+ *    requests, which can end up with WFS requests only.
  * @property {number} [limit] The maximum number of features to get per request.
  * @property {import("ol/Map.js").default} map The ol3 map object. Used to fill some parameters of the
  *    queries, such as 'srs' and filter the queryable layers within the data sources.
@@ -610,7 +615,7 @@ export class Querent {
 
         // (c) Add filter, if any. If the case, then only one data source
         //     is expected to be used for this request.
-        let filter;
+        let filter = null;
         if (options.filter) {
           filter = this.ngeoRuleHelper_.createFilter({
             dataSource: dataSource,
@@ -636,6 +641,18 @@ export class Querent {
             incTime: true,
             srsName: srsName
           });
+        }
+
+        // (d) If a 'geometry' is set in the query options, then
+        // create and add a spatial filter it to the existing filter
+        // as well.
+        if (options.geometry) {
+          const spatialFilter = olFormatFilter.intersects(
+            dataSource.geometryName(null),
+            options.geometry,
+            srsName
+          );
+          filter = this.ngeoRuleHelper_.joinFilters(filter, spatialFilter);
         }
 
         if (filter) {

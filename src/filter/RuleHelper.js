@@ -446,30 +446,12 @@ export class RuleHelper {
 
     if (options.incTime) {
       const timeFilter = this.createTimeFilterFromDataSource_(dataSource);
-      if (timeFilter) {
-        if (mainFilter) {
-          mainFilter = olFormatFilter.and.apply(
-            null,
-            [
-              mainFilter,
-              timeFilter
-            ]
-          );
-        } else {
-          mainFilter = timeFilter;
-        }
-      }
+      mainFilter = this.joinFilters(mainFilter, timeFilter);
     }
 
     if (options.incDimensions) {
       const dimensionsFilter = this.createDimensionsFilterFromDataSource_(dataSource);
-      if (dimensionsFilter) {
-        if (mainFilter) {
-          mainFilter = olFormatFilter.and.apply(null, [mainFilter, dimensionsFilter]);
-        } else {
-          mainFilter = dimensionsFilter;
-        }
-      }
+      mainFilter = this.joinFilters(mainFilter, dimensionsFilter);
     }
 
     return mainFilter;
@@ -488,6 +470,39 @@ export class RuleHelper {
       filterString = xmlSerializer.serializeToString(filterNode);
     }
     return filterString;
+  }
+
+  /**
+   * Join 2 filters together in an "And" filter, if both are set.
+   *
+   * If only one is set, then no need to create an "And"
+   * filter. Simply return the one that is set.
+   *
+   * If none are set, return null.
+   *
+   * @param {?import("ol/format/filter/Filter.js").default} filterA
+   *     First filter.
+   * @param {?import("ol/format/filter/Filter.js").default} filterB
+   *     Second filter.
+   * @return {?import("ol/format/filter/Filter.js").default} Filters
+   *     joined together.
+   */
+  joinFilters(filterA, filterB) {
+    let filter = null;
+    if (filterA && filterB) {
+      filter = olFormatFilter.and.apply(
+        null,
+        [
+          filterA,
+          filterB
+        ]
+      );
+    } else if (filterA) {
+      filter = filterA;
+    } else if (filterB) {
+      filter = filterB;
+    }
+    return filter;
   }
 
   /**
