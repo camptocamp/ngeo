@@ -10,6 +10,7 @@ import gmfRasterComponent from 'gmf/raster/component.js';
 import ngeoMapswipeModule from 'ngeo/map/swipe.js';
 import ngeoDrawFeatures from 'ngeo/draw/features.js';
 import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
+import ngeoQueryPanelComponent from 'ngeo/query/panelComponent.js';
 import gmfImportModule from 'gmf/import/module.js';
 import olCollection from 'ol/Collection.js';
 import {listen} from 'ol/events.js';
@@ -61,6 +62,11 @@ export class AbstractDesktopController extends AbstractAPIController {
      * @type {boolean}
      */
     this.editFeatureActive = false;
+
+    /**
+     * @type {boolean}
+     */
+    this.queryPanelActive = false;
 
     /**
      * @type {boolean}
@@ -270,6 +276,7 @@ export class AbstractDesktopController extends AbstractAPIController {
  * @hidden
  */
 const module = angular.module('GmfAbstractDesktopControllerModule', [
+  ngeoQueryPanelComponent.name,
   gmfControllersAbstractAPIController.name,
   gmfContextualdataModule.name,
   gmfEditingModule.name,

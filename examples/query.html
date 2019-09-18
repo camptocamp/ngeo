@@ -13,42 +13,59 @@
       ngeo-map="ctrl.map">
     </div>
 
-    <ngeo-query
+    <div class='app-query'>
+      <ngeo-query
         active="ctrl.queryActive"
         autoclear="ctrl.queryAutoClear"
         map="::ctrl.map">
-    </ngeo-query>
+      </ngeo-query>
+
+      <button
+        ngeo-btn=""
+        class="btn btn-default"
+        ng-model="ctrl.getSetQueryActive"
+        ng-model-options="{getterSetter: true}">Query</button>
+
+      <ngeo-query-panel ng-if="ctrl.queryActive"></ngeo-query-panel>
+    </div>
 
     <p id="desc">
-      This example shows how to use the
+      This example shows how to configure and use the
       <code>
         <a
           href="../apidoc/ngeo.query.component.html"
           title="Read our documentation">ngeo-query</a>
       </code>
-      component. It also shows how the
+      and
+      <code>
+        <a
+          href="../apidoc/ngeo.query.panelComponent.html"
+          title="Read our documentation">ngeo-query-panel</a>
+      </code>
+      components. It also shows how the
       <code>
         <a
           href="../apidoc/ngeo.misc.ToolActivateMgr.html"
           title="Read our documentation">ngeo.misc.ToolActivate</a>
       </code>
       can be used to make the component inactive when an other tool
-      becomes active.  The "Dummy" button here does nothing, but when
-      toggled the query component becomes inactive. Click on the map to
-      issue a query. Hold down the "ctrl" key (meta on MAC) then click twice
-      in the map to draw a box instead. Hold the A key to add the results to
-      existing ones. Hold the X key to remove the results from the existing
-      ones.
+      becomes active. You can how queries are made on the map and what
+      to do with the results using the panel. You can also temporarily
+      change them using keyboard shortcuts:
+      <ul>
+        <li>
+          Hold down the "ctrl" key (meta on MAC) to set the query mode
+          to drawing boxes on the map.
+        </li>
+        <li>
+          Hold the A key to add the results to existing ones.
+        </li>
+        <li>
+          Hold the X key to remove the results from the existing ones.
+        </li>
+      </ul>
     </p>
 
-    <button
-      ngeo-btn=""
-      class="btn btn-info"
-      ng-model="ctrl.getSetDummyActive"
-      ng-model-options="{getterSetter: true}">Dummy</button>
-
-    <span>Mode: {{ ctrl.ngeoQueryModeSelector.mode }}</span>,
-    <span>Action: {{ ctrl.ngeoQueryModeSelector.action }}</span>
     <br />
 
     <app-queryresult></app-queryresult>

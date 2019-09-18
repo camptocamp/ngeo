@@ -3,6 +3,7 @@ import ngeoQueryModeSelector from 'ngeo/query/ModeSelector.js';
 import ngeoQueryQuerent from 'ngeo/query/Querent.js';
 import ngeoQueryMapQuerent from 'ngeo/query/MapQuerent.js';
 import ngeoQueryComponent from 'ngeo/query/component.js';
+import ngeoQueryPanelComponent from 'ngeo/query/panelComponent.js';
 
 /**
  * @type {angular.IModule}
@@ -12,4 +13,5 @@ export default angular.module('ngeoQueryModule', [
   ngeoQueryQuerent.name,
   ngeoQueryMapQuerent.name,
   ngeoQueryComponent.name,
+  ngeoQueryPanelComponent.name,
 ]);
