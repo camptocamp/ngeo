@@ -20,8 +20,8 @@
 ngeo-query-panel {
   display: block;
   margin: 1rem 0 0 0;
+}
 
-  .ngeo-query-panel-actions {
-    margin: 1rem 0 0 0;
-  }
+ngeo-query-panel .ngeo-query-panel-actions {
+  margin: 1rem 0 0 0;
 }
