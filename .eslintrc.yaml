@@ -11,6 +11,7 @@ rules:
   comma-dangle: 0
   import/no-unresolved: 0
   valid-jsdoc: 0
+  no-unused-vars: error
   max-len:
     - error
     - code: 110
