@@ -24,7 +24,7 @@ import ngeoStatemanagerModule from 'ngeo/statemanager/module.js';
 import ngeoStatemanagerWfsPermalink from 'ngeo/statemanager/WfsPermalink.js';
 import ngeoGeolocation from 'ngeo/geolocation/component.js';
 import * as olArray from 'ol/array.js';
-import * as olEvents from 'ol/events.js';
+import {listen} from 'ol/events.js';
 import olMap from 'ol/Map.js';
 import olStyleCircle from 'ol/style/Circle.js';
 import olStyleFill from 'ol/style/Fill.js';
@@ -243,9 +243,9 @@ export function AbstractAppController(config, map, $scope, $injector) {
     this.updateHasEditableLayers_();
   };
 
-  olEvents.listen(gmfAuthentication, 'ready', userChange);
-  olEvents.listen(gmfAuthentication, 'login', userChange);
-  olEvents.listen(gmfAuthentication, 'logout', userChange);
+  listen(gmfAuthentication, 'ready', userChange);
+  listen(gmfAuthentication, 'login', userChange);
+  listen(gmfAuthentication, 'logout', userChange);
 
   /**
    * @type {Array<import('gmf/search/component.js').SearchComponentDatasource>}

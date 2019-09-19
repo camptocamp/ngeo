@@ -6,7 +6,7 @@ import {getUid as olUtilGetUid} from 'ol/util.js';
 import olFeature from 'ol/Feature.js';
 import olMapBrowserPointerEvent from 'ol/MapBrowserPointerEvent.js';
 import * as olCoordinate from 'ol/coordinate.js';
-import * as olEvents from 'ol/events.js';
+import {listen} from 'ol/events.js';
 import * as olExtent from 'ol/extent.js';
 import olGeomCircle from 'ol/geom/Circle.js';
 import olGeomLineString from 'ol/geom/LineString.js';
@@ -113,8 +113,8 @@ export default class extends olInteractionPointer {
     this.features_ = options.features;
 
     this.features_.forEach(feature => this.addFeature_(feature));
-    olEvents.listen(this.features_, 'add', this.handleFeatureAdd_, this);
-    olEvents.listen(this.features_, 'remove', this.handleFeatureRemove_, this);
+    listen(this.features_, 'add', this.handleFeatureAdd_, this);
+    listen(this.features_, 'remove', this.handleFeatureRemove_, this);
 
   }
 

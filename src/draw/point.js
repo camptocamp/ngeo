@@ -1,6 +1,6 @@
 import angular from 'angular';
 import ngeoGeometryType from 'ngeo/GeometryType.js';
-import * as olEvents from 'ol/events.js';
+import {listen} from 'ol/events.js';
 import olInteractionDraw from 'ol/interaction/Draw.js';
 
 
@@ -39,19 +39,10 @@ function drawPointComponent() {
       drawFeatureCtrl.registerInteraction(drawPoint);
       drawFeatureCtrl.drawPoint = drawPoint;
 
-      olEvents.listen(
-        drawPoint,
-        'drawend',
-        drawFeatureCtrl.handleDrawEnd.bind(
-          drawFeatureCtrl, ngeoGeometryType.POINT),
-        drawFeatureCtrl
-      );
-      olEvents.listen(
-        drawPoint,
-        'change:active',
-        drawFeatureCtrl.handleActiveChange,
-        drawFeatureCtrl
-      );
+      listen(drawPoint, 'drawend', drawFeatureCtrl.handleDrawEnd.bind(
+        drawFeatureCtrl, ngeoGeometryType.POINT
+      ), drawFeatureCtrl);
+      listen(drawPoint, 'change:active', drawFeatureCtrl.handleActiveChange, drawFeatureCtrl);
     }
   };
 }

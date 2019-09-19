@@ -1,5 +1,5 @@
 import angular from 'angular';
-import * as olEvents from 'ol/events.js';
+import {listen} from 'ol/events.js';
 import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
 import ngeoProfileD3Elevation from 'ngeo/profile/d3Elevation.js';
 
@@ -188,7 +188,7 @@ function profileElevationComponent(ngeoDebounce) {
           }
         });
 
-      olEvents.listen(window, 'resize', ngeoDebounce(refreshData, 50, true));
+      listen(window, 'resize', ngeoDebounce(refreshData, 50, true));
 
       /**
        * @param {Event|import("ol/events/Event.js").default=} evt Event

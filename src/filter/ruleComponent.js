@@ -21,7 +21,7 @@ import {RuleOperatorType, RuleSpatialOperatorType, RuleTemporalOperatorType} fro
 import ngeoRuleGeometry from 'ngeo/rule/Geometry.js';
 import {getUid as olUtilGetUid} from 'ol/util.js';
 import olCollection from 'ol/Collection.js';
-import * as olEvents from 'ol/events.js';
+import {listen, unlistenByKey} from 'ol/events.js';
 import olStyleStyle from 'ol/style/Style.js';
 import olStyleText from 'ol/style/Text.js';
 import olStyleFill from 'ol/style/Fill.js';
@@ -386,6 +386,11 @@ class RuleController {
      * @type {?string}
      */
     this.geomType = null;
+
+    /**
+     * @type {import("ol/events.js").EventsKey[]}
+     */
+    this.listenerKeys_ = [];
   }
 
   /**
@@ -761,39 +766,10 @@ class RuleController {
 
     if (active) {
       keys.push(
-        olEvents.listen(
-          this.drawnFeatures,
-          'add',
-          this.handleFeaturesAdd_,
-          this
-        )
-      );
-
-      keys.push(
-        olEvents.listen(
-          mapDiv,
-          'contextmenu',
-          this.handleMapContextMenu_,
-          this
-        )
-      );
-
-      keys.push(
-        olEvents.listen(
-          this.translate_,
-          'translateend',
-          this.handleTranslateEnd_,
-          this
-        )
-      );
-
-      keys.push(
-        olEvents.listen(
-          this.rotate_,
-          'rotateend',
-          this.handleRotateEnd_,
-          this
-        )
+        listen(this.drawnFeatures, 'add', this.handleFeaturesAdd_, this),
+        listen(mapDiv, 'contextmenu', this.handleMapContextMenu_, this),
+        listen(this.translate_, 'translateend', this.handleTranslateEnd_, this),
+        listen(this.rotate_, 'rotateend', this.handleRotateEnd_, this)
       );
 
       this.featureOverlay.removeFeature(ruleFeature);
@@ -814,7 +790,7 @@ class RuleController {
 
     } else {
       cloneFeature.setStyle(null);
-      keys.forEach(olEvents.unlistenByKey);
+      keys.forEach(unlistenByKey);
       keys.length = 0;
 
       this.drawActive = false;
@@ -989,12 +965,7 @@ class RuleController {
           actions
         });
 
-        olEvents.listen(
-          this.menu_,
-          'actionclick',
-          this.handleMenuActionClick_,
-          this
-        );
+        this.listenerKeys_.push(listen(this.menu_, 'actionclick', this.handleMenuActionClick_, this));
         this.map.addOverlay(this.menu_);
 
         this.menu_.open(coordinate);
@@ -1016,12 +987,7 @@ class RuleController {
       if (!this.map) {
         throw new Error('Missing map');
       }
-      olEvents.unlisten(
-        this.menu_,
-        'actionclick',
-        this.handleMenuActionClick_,
-        this
-      );
+      this.listenerKeys_.forEach(unlistenByKey);
       this.map.removeOverlay(this.menu_);
       this.menu_ = null;
     }

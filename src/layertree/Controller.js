@@ -1,7 +1,7 @@
 import angular from 'angular';
 import {layerLoading, layerDecoration} from 'ngeo/misc/decorate.js';
 import {getUid as olUtilGetUid} from 'ol/util.js';
-import * as olEvents from 'ol/events.js';
+import {listen} from 'ol/events.js';
 import olLayerGroup from 'ol/layer/Group.js';
 import olLayerLayer from 'ol/layer/Layer.js';
 
@@ -150,7 +150,7 @@ export function LayertreeController($scope, $rootScope, $attrs) {
     layerLoading(this.layer, $scope);
     layerDecoration(this.layer);
 
-    olEvents.listen(this.layer, 'change:opacity', () => {
+    listen(this.layer, 'change:opacity', () => {
       this.rootScope_.$broadcast('ngeo-layertree-opacity', this);
     });
   }

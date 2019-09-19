@@ -1,5 +1,5 @@
 import angular from 'angular';
-import * as olEvents from 'ol/events.js';
+import {listen, unlistenByKey} from 'ol/events.js';
 import {CollectionEvent} from 'ol/Collection.js';
 
 /**
@@ -27,6 +27,11 @@ export function FeatureOverlay(manager, index) {
    * @private
    */
   this.index_ = index;
+
+  /**
+   * @type {import("ol/events.js").EventsKey[]}
+   */
+  this.listenerKeys_ = [];
 }
 
 
@@ -67,15 +72,14 @@ FeatureOverlay.prototype.clear = function() {
 FeatureOverlay.prototype.setFeatures = function(features) {
   if (this.features_ !== null) {
     this.features_.clear();
-    olEvents.unlisten(this.features_, 'add', this.handleFeatureAdd_, this);
-    olEvents.unlisten(this.features_, 'remove', this.handleFeatureRemove_, this);
+    this.listenerKeys_.forEach(unlistenByKey);
   }
   if (features !== null) {
     features.forEach((feature) => {
       this.addFeature(feature);
     });
-    olEvents.listen(features, 'add', this.handleFeatureAdd_, this);
-    olEvents.listen(features, 'remove', this.handleFeatureRemove_, this);
+    this.listenerKeys_.push(listen(features, 'add', this.handleFeatureAdd_, this));
+    this.listenerKeys_.push(listen(features, 'remove', this.handleFeatureRemove_, this));
   }
   this.features_ = features;
 };

@@ -1,5 +1,5 @@
 import angular from 'angular';
-import * as olEvents from 'ol/events.js';
+import {listen, unlistenByKey} from 'ol/events.js';
 import olFeature from 'ol/Feature.js';
 import olOverlay from 'ol/Overlay.js';
 import olGeomLineString from 'ol/geom/LineString.js';
@@ -418,7 +418,7 @@ ProfileController.prototype.update_ = function() {
  */
 ProfileController.prototype.updateEventsListening_ = function() {
   if (this.active && this.map_ !== null) {
-    this.pointerMoveKey_ = olEvents.listen(this.map_, 'pointermove',
+    this.pointerMoveKey_ = listen(this.map_, 'pointermove',
       (event) => {
         const e = /** @type {import("ol/MapBrowserPointerEvent.js").default} */(event);
         if (!this.map_) {
@@ -446,7 +446,7 @@ ProfileController.prototype.updateEventsListening_ = function() {
       });
   } else {
     if (this.pointerMoveKey_) {
-      olEvents.unlistenByKey(this.pointerMoveKey_);
+      unlistenByKey(this.pointerMoveKey_);
     }
   }
 };

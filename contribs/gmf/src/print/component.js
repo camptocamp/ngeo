@@ -12,7 +12,7 @@ import ngeoMiscFeatureHelper, {getFilteredFeatureValues} from 'ngeo/misc/Feature
 import ngeoPrintService from 'ngeo/print/Service.js';
 import ngeoPrintUtils, {INCHES_PER_METER, DOTS_PER_INCH} from 'ngeo/print/Utils.js';
 import ngeoQueryMapQuerent from 'ngeo/query/MapQuerent.js';
-import * as olEvents from 'ol/events.js';
+import {listen, unlistenByKey} from 'ol/events.js';
 import olLayerImage from 'ol/layer/Image.js';
 import olLayerTile from 'ol/layer/Tile.js';
 import olLayerGroup from 'ol/layer/Group.js';
@@ -578,7 +578,7 @@ export class PrintController {
     if (!this.map) {
       throw new Error('Missing map');
     }
-    olEvents.listen(this.map.getView(), 'change:rotation', (event) => {
+    listen(this.map.getView(), 'change:rotation', (event) => {
       this.updateRotation_(Math.round(olMath.toDegrees(event.target.getRotation())));
     });
 
@@ -682,8 +682,8 @@ export class PrintController {
         // Get capabilities - On success
         this.parseCapabilities_(resp);
         this.map.addLayer(this.maskLayer_);
-        this.pointerDragListenerKey_ = olEvents.listen(this.map, 'pointerdrag', this.onPointerDrag_, this);
-        this.mapViewResolutionChangeKey_ = olEvents.listen(this.map.getView(), 'change:resolution', () => {
+        this.pointerDragListenerKey_ = listen(this.map, 'pointerdrag', this.onPointerDrag_, this);
+        this.mapViewResolutionChangeKey_ = listen(this.map.getView(), 'change:resolution', () => {
           this.scaleManuallySelected_ = false;
         });
         this.map.render();
@@ -698,10 +698,10 @@ export class PrintController {
       }
       this.map.removeLayer(this.maskLayer_);
       if (this.pointerDragListenerKey_) {
-        olEvents.unlistenByKey(this.pointerDragListenerKey_);
+        unlistenByKey(this.pointerDragListenerKey_);
       }
       if (this.mapViewResolutionChangeKey_) {
-        olEvents.unlistenByKey(this.mapViewResolutionChangeKey_);
+        unlistenByKey(this.mapViewResolutionChangeKey_);
       }
       this.setRotation(0);
       this.map.render(); // Redraw (remove) post compose mask;

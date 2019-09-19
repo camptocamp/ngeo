@@ -3,7 +3,7 @@ import gmfRasterRasterService from 'gmf/raster/RasterService.js';
 
 import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
 
-import * as olEvents from 'ol/events.js';
+import {listen, unlistenByKey} from 'ol/events.js';
 import MapBrowserEvent from 'ol/MapBrowserEvent.js';
 
 import 'bootstrap/js/src/dropdown.js';
@@ -243,11 +243,11 @@ Controller.prototype.toggleActive_ = function(active) {
         this.loading = false;
       });
     };
-    this.listenerKeys_.push(olEvents.listen(this.map, 'pointermove', listen));
+    this.listenerKeys_.push(listen(this.map, 'pointermove', listen));
 
     // Launch the elevation service request when the user stops moving the
     // mouse for less short delay
-    this.listenerKeys_.push(olEvents.listen(this.map, 'pointermove',
+    this.listenerKeys_.push(listen(this.map, 'pointermove',
       this.ngeoDebounce_(
         /**
          * @param {Event|import('ol/events/Event.js').default} e
@@ -267,7 +267,7 @@ Controller.prototype.toggleActive_ = function(active) {
       )
     ));
 
-    this.listenerKeys_.push(olEvents.listen(this.map.getViewport(), 'mouseout', () => {
+    this.listenerKeys_.push(listen(this.map.getViewport(), 'mouseout', () => {
       this.scope_.$apply(() => {
         this.elevation = null;
         this.inViewport_ = false;
@@ -276,7 +276,7 @@ Controller.prototype.toggleActive_ = function(active) {
     }));
   } else {
     this.elevation = null;
-    this.listenerKeys_.forEach(olEvents.unlistenByKey);
+    this.listenerKeys_.forEach(unlistenByKey);
     this.listenerKeys_.length = 0;
   }
 };

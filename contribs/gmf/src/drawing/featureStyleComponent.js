@@ -1,6 +1,6 @@
 import angular from 'angular';
 import {getUid as olUtilGetUid} from 'ol/util.js';
-import * as olEvents from 'ol/events.js';
+import {listen, unlistenByKey} from 'ol/events.js';
 import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties.js';
 
 import ngeoMiscColorpickerComponent from 'ngeo/misc/colorpickerComponent.js';
@@ -143,7 +143,7 @@ Controller.prototype.handleFeatureSet_ = function(newFeature, previousFeature) {
   const keys = this.featureListenerKeys_;
 
   if (previousFeature) {
-    keys.forEach(olEvents.unlistenByKey);
+    keys.forEach(unlistenByKey);
     keys.length = 0;
     this.type = undefined;
     this.color = undefined;
@@ -162,14 +162,7 @@ Controller.prototype.handleFeatureSet_ = function(newFeature, previousFeature) {
       ngeoFormatFeatureProperties.SIZE,
       ngeoFormatFeatureProperties.STROKE
     ].forEach((propName) => {
-      keys.push(
-        olEvents.listen(
-          newFeature,
-          `change:${propName}`,
-          this.handleFeatureChange_,
-          this
-        )
-      );
+      keys.push(listen(newFeature, `change:${propName}`, this.handleFeatureChange_, this));
     });
 
     const geometry = newFeature.getGeometry();
@@ -177,14 +170,7 @@ Controller.prototype.handleFeatureSet_ = function(newFeature, previousFeature) {
       throw new Error('Missing geometry');
     }
 
-    keys.push(
-      olEvents.listen(
-        geometry,
-        'change',
-        this.handleGeometryChange_,
-        this
-      )
-    );
+    keys.push(listen(geometry, 'change', this.handleGeometryChange_, this));
 
     this.type = this.featureHelper_.getType(newFeature);
     this.color = this.featureHelper_.getColorProperty(newFeature);

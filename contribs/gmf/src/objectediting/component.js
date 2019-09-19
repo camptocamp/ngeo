@@ -18,7 +18,7 @@ import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr.js';
 import {toMulti, deleteCondition} from 'ngeo/utils.js';
 import {getUid as olUtilGetUid} from 'ol/util.js';
 import olCollection from 'ol/Collection.js';
-import * as olEvents from 'ol/events.js';
+import {listen, unlistenByKey} from 'ol/events.js';
 import olFormatGeoJSON from 'ol/format/GeoJSON.js';
 import Point from 'ol/geom/Point.js';
 import LineString from 'ol/geom/LineString.js';
@@ -735,51 +735,37 @@ Controller.prototype.toggle_ = function(active) {
 
   if (active) {
 
-    keys.push(
-      olEvents.listen(
-        this.feature,
-        `change:${this.feature.getGeometryName()}`,
-        this.handleFeatureGeometryChange_,
-        this
-      )
-    );
-
-    keys.push(
-      olEvents.listen(
-        this.modify_,
-        'change:active',
-        this.setFeatureStyle_,
-        this
-      )
-    );
-
-    keys.push(
-      olEvents.listen(
-        this.modify_,
-        'modifyend',
-        this.handleModifyInteractionModifyEnd_,
-        this
-      )
-    );
-
-    keys.push(
-      olEvents.listen(
-        window,
-        'beforeunload',
-        // @ts-ignore: strange API
-        this.handleWindowBeforeUnload_,
-        this
-      )
-    );
-
-    keys.push(
-      olEvents.listen(
-        this.sketchFeatures,
-        'add',
-        this.handleSketchFeaturesAdd_,
-        this
-      )
-    );
+    keys.push(listen(
+      this.feature,
+      `change:${this.feature.getGeometryName()}`,
+      this.handleFeatureGeometryChange_,
+      this
+    ));
+    keys.push(listen(
+      this.modify_,
+      'change:active',
+      this.setFeatureStyle_,
+      this
+    ));
+    keys.push(listen(
+      this.modify_,
+      'modifyend',
+      this.handleModifyInteractionModifyEnd_,
+      this
+    ));
+    keys.push(listen(
+      window,
+      'beforeunload',
+      // @ts-ignore: strange API
+      this.handleWindowBeforeUnload_,
+      this
+    ));
+    keys.push(listen(
+      this.sketchFeatures,
+      'add',
+      this.handleSketchFeaturesAdd_,
+      this
+    ));
 
     toolMgr.registerTool(uid, this.modifyToolActivate_, true);
     toolMgr.registerTool(uid, this.toolsToolActivate_, false);
@@ -790,7 +776,7 @@ Controller.prototype.toggle_ = function(active) {
 
     this.unregisterInteractions_();
 
-    keys.forEach(olEvents.unlistenByKey);
+    keys.forEach(unlistenByKey);
     keys.length = 0;
 
     toolMgr.unregisterTool(uid, this.modifyToolActivate_);

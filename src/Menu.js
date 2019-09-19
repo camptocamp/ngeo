@@ -1,5 +1,5 @@
 import ngeoCustomEvent from 'ngeo/CustomEvent.js';
-import * as olEvents from 'ol/events.js';
+import {listen, unlistenByKey} from 'ol/events.js';
 import olOverlay from 'ol/Overlay.js';
 import olOverlayPositioning from 'ol/OverlayPositioning.js';
 
@@ -115,7 +115,7 @@ export default class extends olOverlay {
   setMap(map) {
     const currentMap = this.getMap();
     if (currentMap) {
-      this.listenerKeys_.forEach(olEvents.unlistenByKey);
+      this.listenerKeys_.forEach(unlistenByKey);
       this.listenerKeys_.length = 0;
     }
 
@@ -125,23 +125,12 @@ export default class extends olOverlay {
       this.actions_.forEach((action) => {
         const data = action.data();
         this.listenerKeys_.push(
-          olEvents.listen(
-            action[0],
-            'click',
-            this.handleActionClick_.bind(this, data.name)
-          )
+          listen(action[0], 'click', this.handleActionClick_.bind(this, data.name))
         );
       });
 
       // Autoclose the menu when clicking anywhere else than the menu
-      this.listenerKeys_.push(
-        olEvents.listen(
-          map,
-          'pointermove',
-          this.handleMapPointerMove_,
-          this
-        )
-      );
+      this.listenerKeys_.push(listen(map, 'pointermove', this.handleMapPointerMove_, this));
     }
   }
 
@@ -156,12 +145,7 @@ export default class extends olOverlay {
       throw new Error('Wrong document element type');
     }
     if (this.autoClose_) {
-      this.clickOutListenerKey_ = olEvents.listen(
-        document.documentElement,
-        'mousedown',
-        this.handleClickOut_,
-        this
-      );
+      this.clickOutListenerKey_ = listen(document.documentElement, 'mousedown', this.handleClickOut_, this);
     }
   }
 
@@ -171,7 +155,7 @@ export default class extends olOverlay {
     this.setPosition(undefined);
 
     if (this.clickOutListenerKey_ !== null) {
-      olEvents.unlistenByKey(this.clickOutListenerKey_);
+      unlistenByKey(this.clickOutListenerKey_);
     }
   }
 

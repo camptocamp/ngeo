@@ -35,7 +35,7 @@ import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr.js';
 
 import {getUid as olUtilGetUid} from 'ol/util.js';
 import olCollection from 'ol/Collection.js';
-import * as olEvents from 'ol/events.js';
+import {listen, unlistenByKey} from 'ol/events.js';
 import * as olExtent from 'ol/extent.js';
 import olFeature from 'ol/Feature.js';
 import olFormatGeoJSON from 'ol/format/GeoJSON.js';
@@ -484,13 +484,23 @@ function Controller($element, $q, $scope, $timeout,
   this.translateToolActivate = null;
 
   /**
-   * @type {Array<import("ol/events.js").EventsKey>}
+   * @type {import("ol/events.js").EventsKey[]>}
    * @private
    */
   this.listenerKeys_ = [];
 
   /**
-   * @type {?Array<import('ngeo/format/Attribute.js').Attribute>}
+   * @type {import("ol/events.js").EventsKey[]}
+   */
+  this.geomListenerKeys_ = [];
+
+  /**
+   * @type {import("ol/events.js").EventsKey[]}
+   */
+  this.mapListenerKeys_ = [];
+
+  /**
+   * @type {?import('ngeo/format/Attribute.js').Attribute[]}
    */
   this.attributes = null;
 
@@ -620,7 +630,7 @@ Controller.prototype.$onInit = function() {
   const uid = olUtilGetUid(this);
   this.ngeoEventHelper_.addListenerKey(
     uid,
-    olEvents.listen(
+    listen(
       this.features,
       'add',
       this.handleFeatureAdd_,
@@ -1026,10 +1036,10 @@ Controller.prototype.toggle_ = function(active) {
     // FIXME
     //this.registerInteractions_();
 
-    keys.push(olEvents.listen(this.menu_, 'actionclick', this.handleMenuActionClick_, this));
-    keys.push(olEvents.listen(this.menuVertex_, 'actionclick', this.handleMenuVertexActionClick_, this));
-    keys.push(olEvents.listen(this.translate_, 'translateend', this.handleTranslateEnd_, this));
-    keys.push(olEvents.listen(this.rotate_, 'rotateend', this.handleRotateEnd_, this));
+    keys.push(listen(this.menu_, 'actionclick', this.handleMenuActionClick_, this));
+    keys.push(listen(this.menuVertex_, 'actionclick', this.handleMenuVertexActionClick_, this));
+    keys.push(listen(this.translate_, 'translateend', this.handleTranslateEnd_, this));
+    keys.push(listen(this.rotate_, 'rotateend', this.handleRotateEnd_, this));
 
     toolMgr.registerTool(createUid, this.createToolActivate, false);
     toolMgr.registerTool(createUid, this.mapSelectToolActivate, true);
@@ -1044,7 +1054,7 @@ Controller.prototype.toggle_ = function(active) {
     // FIXME
     //this.unregisterInteractions_();
 
-    keys.forEach(olEvents.unlistenByKey);
+    keys.forEach(unlistenByKey);
     keys.length = 0;
 
     toolMgr.unregisterTool(createUid, this.createToolActivate);
@@ -1082,11 +1092,12 @@ Controller.prototype.handleMapSelectActiveChange_ = function(active) {
   }
 
   if (active) {
-    olEvents.listen(this.map, 'click', this.handleMapClick_, this);
-    olEvents.listen(mapDiv, 'contextmenu', this.handleMapContextMenu_, this);
+    this.mapListenerKeys_.push(
+      listen(this.map, 'click', this.handleMapClick_, this),
+      listen(mapDiv, 'contextmenu', this.handleMapContextMenu_, this),
+    );
   } else {
-    olEvents.unlisten(this.map, 'click', this.handleMapClick_, this);
-    olEvents.unlisten(mapDiv, 'contextmenu', this.handleMapContextMenu_, this);
+    this.mapListenerKeys_.forEach(unlistenByKey);
   }
 };
 
@@ -1319,32 +1330,16 @@ Controller.prototype.handleFeatureChange_ = function(newFeature, oldFeature) {
 
   let geom;
   if (oldFeature) {
-    olEvents.unlisten(oldFeature, 'propertychange', this.handleFeaturePropertyChange_, this);
-    geom = oldFeature.getGeometry();
-    if (!geom) {
-      throw new Error('Missing geom');
-    }
-    olEvents.unlisten(
-      geom,
-      'change',
-      this.handleFeatureGeometryChange_,
-      this
-    );
+    this.geomListenerKeys_.forEach(unlistenByKey);
     this.unregisterInteractions_();
   }
 
   if (newFeature) {
     this.featureId = newFeature.getId();
-    olEvents.listen(newFeature, 'propertychange', this.handleFeaturePropertyChange_, this);
     geom = newFeature.getGeometry();
-    if (!geom) {
-      throw new Error('Missing geom');
-    }
-    olEvents.listen(
-      geom,
-      'change',
-      this.handleFeatureGeometryChange_,
-      this
+    this.geomListenerKeys_.push(
+      listen(newFeature, 'propertychange', this.handleFeaturePropertyChange_, this),
+      listen(geom, 'change', this.handleFeatureGeometryChange_, this),
     );
     this.registerInteractions_();
 

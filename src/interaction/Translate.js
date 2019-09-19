@@ -1,7 +1,7 @@
 import {getUid as olUtilGetUid} from 'ol/util.js';
 import * as olExtent from 'ol/extent.js';
 import olFeature from 'ol/Feature.js';
-import * as olEvents from 'ol/events.js';
+import {listen, unlistenByKey} from 'ol/events.js';
 import olGeomGeometry from 'ol/geom/Geometry.js';
 import olGeomLineString from 'ol/geom/LineString.js';
 import olGeomPoint from 'ol/geom/Point.js';
@@ -96,19 +96,14 @@ export default class extends olInteractionTranslate {
   setActive(active) {
 
     if (this.keyPressListenerKey_) {
-      olEvents.unlistenByKey(this.keyPressListenerKey_);
+      unlistenByKey(this.keyPressListenerKey_);
       this.keyPressListenerKey_ = null;
     }
 
     olInteractionTranslate.prototype.setActive.call(this, active);
 
     if (active) {
-      this.keyPressListenerKey_ = olEvents.listen(
-        document,
-        'keyup',
-        this.handleKeyUp_,
-        this
-      );
+      this.keyPressListenerKey_ = listen(document, 'keyup', this.handleKeyUp_, this);
     }
 
     this.setState_();
@@ -156,8 +151,8 @@ export default class extends olInteractionTranslate {
     if (map && active && features) {
       features.forEach(feature => this.addFeature_(feature));
       keys.push(
-        olEvents.listen(features, 'add', this.handleFeaturesAdd_, this),
-        olEvents.listen(features, 'remove', this.handleFeaturesRemove_, this)
+        listen(features, 'add', this.handleFeaturesAdd_, this),
+        listen(features, 'remove', this.handleFeaturesRemove_, this)
       );
     } else {
 
@@ -166,7 +161,7 @@ export default class extends olInteractionTranslate {
         elem.style.cursor = 'default';
       }
 
-      keys.forEach(olEvents.unlistenByKey);
+      keys.forEach(unlistenByKey);
       keys.length = 0;
       features.forEach(feature => this.removeFeature_(feature));
     }
@@ -209,11 +204,8 @@ export default class extends olInteractionTranslate {
       throw new Error('Missing geometry');
     }
 
-    this.featureListenerKeys_[uid] = olEvents.listen(
-      geometry,
-      'change',
-      this.handleGeometryChange_.bind(this, feature),
-      this
+    this.featureListenerKeys_[uid] = listen(
+      geometry, 'change', this.handleGeometryChange_.bind(this, feature), this
     );
 
     const point = this.getGeometryCenterPoint_(geometry);
@@ -229,7 +221,7 @@ export default class extends olInteractionTranslate {
   removeFeature_(feature) {
     const uid = olUtilGetUid(feature);
     if (this.featureListenerKeys_[uid]) {
-      olEvents.unlistenByKey(this.featureListenerKeys_[uid]);
+      unlistenByKey(this.featureListenerKeys_[uid]);
       delete this.featureListenerKeys_[uid];
 
       this.vectorSource_.removeFeature(this.centerFeatures_[uid]);

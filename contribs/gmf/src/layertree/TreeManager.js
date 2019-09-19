@@ -6,7 +6,7 @@ import ngeoLayertreeController, {LayertreeVisitorDecision, LayertreeController} 
 import {MessageType} from 'ngeo/message/Message.js';
 import ngeoMessageNotification from 'ngeo/message/Notification.js';
 import ngeoStatemanagerService from 'ngeo/statemanager/Service.js';
-import * as olEvents from 'ol/events.js';
+import {listen} from 'ol/events.js';
 
 
 /**
@@ -142,7 +142,7 @@ export function LayertreeTreeManager($timeout, $injector, gettextCatalog, ngeoLa
    */
   this.ogcServers_ = null;
 
-  olEvents.listen(this.gmfThemes_, 'change', this.handleThemesChange_, this);
+  listen(this.gmfThemes_, 'change', this.handleThemesChange_, this);
 }
 
 /**

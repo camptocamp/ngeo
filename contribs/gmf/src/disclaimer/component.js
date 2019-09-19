@@ -1,6 +1,6 @@
 import angular from 'angular';
 import {getUid as olUtilGetUid} from 'ol/util.js';
-import * as olEvents from 'ol/events.js';
+import {listen} from 'ol/events.js';
 import olLayerBase from 'ol/layer/Base.js';
 import olLayerGroup from 'ol/layer/Group.js';
 import {DATALAYERGROUP_NAME} from 'gmf/index.js';
@@ -207,7 +207,7 @@ DisclaimerController.prototype.registerLayer_ = function(layer) {
     // (1) Listen to added/removed layers to this group
     this.eventHelper_.addListenerKey(
       layerUid,
-      olEvents.listen(
+      listen(
         layer.getLayers(),
         'add',
         this.handleLayersAdd_,
@@ -216,7 +216,7 @@ DisclaimerController.prototype.registerLayer_ = function(layer) {
     );
     this.eventHelper_.addListenerKey(
       layerUid,
-      olEvents.listen(
+      listen(
         layer.getLayers(),
         'remove',
         this.handleLayersRemove_,
@@ -239,7 +239,7 @@ DisclaimerController.prototype.registerLayer_ = function(layer) {
         this.closeAll_(layer);
       }
 
-      const listenerKey = olEvents.listen(layer, 'change', (event) => {
+      const listenerKey = listen(layer, 'change', (event) => {
         if (layer.getVisible()) {
           this.update_(layer);
         } else {

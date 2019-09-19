@@ -3,7 +3,7 @@ import gmfRasterRasterService from 'gmf/raster/RasterService.js';
 import ngeoInteractionMeasurePointMobile from 'ngeo/interaction/MeasurePointMobile.js';
 import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
 import {interactionDecoration} from 'ngeo/misc/decorate.js';
-import * as olEvents from 'ol/events.js';
+import {listen, unlistenByKey} from 'ol/events.js';
 import olStyleFill from 'ol/style/Fill.js';
 import olStyleRegularShape from 'ol/style/RegularShape.js';
 import olStyleStroke from 'ol/style/Stroke.js';
@@ -312,15 +312,12 @@ MobileMeasurePointController.prototype.handleMeasureActiveChange_ = function() {
   }
   if (this.measure.getActive()) {
     const view = this.map.getView();
-    this.mapViewPropertyChangeEventKey_ = olEvents.listen(
-      view,
-      'propertychange',
-      this.ngeoDebounce_(
-        this.getMeasure_.bind(this), 300, /* invokeApply */ true),
-      this);
+    this.mapViewPropertyChangeEventKey_ = listen(view, 'propertychange', this.ngeoDebounce_(
+      this.getMeasure_.bind(this), 300, /* invokeApply */ true
+    ), this);
     this.getMeasure_();
   } else if (this.mapViewPropertyChangeEventKey_) {
-    olEvents.unlistenByKey(this.mapViewPropertyChangeEventKey_);
+    unlistenByKey(this.mapViewPropertyChangeEventKey_);
     this.mapViewPropertyChangeEventKey_ = null;
   }
 };

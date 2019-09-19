@@ -1,7 +1,7 @@
 import {getDefaultDrawStyleFunction} from 'ngeo/interaction/common.js';
 import ngeoCustomEvent from 'ngeo/CustomEvent.js';
 import Feature from 'ol/Feature.js';
-import * as olEvents from 'ol/events.js';
+import {listen} from 'ol/events.js';
 import {FALSE} from 'ol/functions.js';
 import olGeomCircle from 'ol/geom/Circle.js';
 import olGeomGeometryCollection from 'ol/geom/GeometryCollection.js';
@@ -93,7 +93,7 @@ class DrawAzimut extends olInteractionPointer {
       style: options.style || getDefaultDrawStyleFunction()
     });
 
-    olEvents.listen(this, 'change:active', this.updateState_, this);
+    listen(this, 'change:active', this.updateState_, this);
   }
 
   /**

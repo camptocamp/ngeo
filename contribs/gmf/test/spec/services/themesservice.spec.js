@@ -1,7 +1,7 @@
 import angular from 'angular';
 import gmfTestDataThemes from '../data/themes.js';
 import gmfTestDataThemescapabilities from '../data/themescapabilities.js';
-import * as olEvents from 'ol/events.js';
+import {listen} from 'ol/events.js';
 
 describe('gmf.theme.Themes', () => {
   /** @type {import("gmf/theme/Themes.js").ThemesService} */
@@ -72,7 +72,7 @@ describe('gmf.theme.Themes', () => {
   it('Emit change event', () => {
     const spy = jasmine.createSpy();
     const eventSpy = jasmine.createSpy();
-    olEvents.listen(gmfThemes, 'change', eventSpy);
+    listen(gmfThemes, 'change', eventSpy);
 
     gmfThemes.promise_.then(spy);
 

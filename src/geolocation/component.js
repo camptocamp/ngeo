@@ -2,7 +2,7 @@ import angular from 'angular';
 import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr.js';
 import ngeoMessageNotification from 'ngeo/message/Notification.js';
 import * as olEasing from 'ol/easing.js';
-import * as olEvents from 'ol/events.js';
+import {listen} from 'ol/events.js';
 import olFeature from 'ol/Feature.js';
 import olGeolocation from 'ol/Geolocation.js';
 import olMap from 'ol/Map.js';
@@ -210,7 +210,7 @@ function Controller($scope, $element, gettextCatalog, ngeoFeatureOverlayMgr, nge
    */
   this.viewChangedByMe_ = false;
 
-  olEvents.listen(this.geolocation_, 'change:accuracyGeometry', () => {
+  listen(this.geolocation_, 'change:accuracyGeometry', () => {
     const geometry = this.geolocation_.getAccuracyGeometry();
     if (!geometry) {
       throw new Error('Missing geometry');
@@ -219,16 +219,14 @@ function Controller($scope, $element, gettextCatalog, ngeoFeatureOverlayMgr, nge
     this.setPosition_();
   });
 
-  olEvents.listen(this.geolocation_, 'change:position', () => {
+  listen(this.geolocation_, 'change:position', () => {
     this.setPosition_();
   });
 
   const view = map.getView();
 
-  olEvents.listen(view, 'change:center', this.handleViewChange_, this);
-
-  olEvents.listen(view, 'change:resolution', this.handleViewChange_, this);
-
+  listen(view, 'change:center', this.handleViewChange_, this);
+  listen(view, 'change:resolution', this.handleViewChange_, this);
 }
 
 

@@ -1,6 +1,6 @@
 import angular from 'angular';
 import gmfObjecteditingQuery from 'gmf/objectediting/Query.js';
-import * as olEvents from 'ol/events.js';
+import {listen, unlistenByKey} from 'ol/events.js';
 import MapBrowserEvent from 'ol/MapBrowserEvent.js';
 
 /**
@@ -103,6 +103,10 @@ function Controller($scope, gmfObjectEditingQuery) {
    */
   this.gmfObjectEditingQuery_ = gmfObjectEditingQuery;
 
+  /**
+   * @type {import("ol/events.js").EventsKey[]}
+   */
+  this.listenerKeys_ = [];
 }
 
 
@@ -115,19 +119,9 @@ Controller.prototype.handleActiveChange_ = function(active) {
     throw new Error('Missing map');
   }
   if (active) {
-    olEvents.listen(
-      this.map,
-      'click',
-      this.handleMapClick_,
-      this
-    );
+    this.listenerKeys_.push(listen(this.map, 'click', this.handleMapClick_, this));
   } else {
-    olEvents.unlisten(
-      this.map,
-      'click',
-      this.handleMapClick_,
-      this
-    );
+    this.listenerKeys_.forEach(unlistenByKey);
   }
 };
 

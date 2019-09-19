@@ -2,7 +2,7 @@ import angular from 'angular';
 import ngeoDrawController from 'ngeo/draw/Controller.js';
 import ngeoGeometryType from 'ngeo/GeometryType.js';
 import ngeoInteractionMeasureArea from 'ngeo/interaction/MeasureArea.js';
-import * as olEvents from 'ol/events.js';
+import {listen} from 'ol/events.js';
 import olStyleStyle from 'ol/style/Style.js';
 
 
@@ -58,19 +58,10 @@ function measureAreaComponent($compile, gettextCatalog, $filter, $injector) {
       drawFeatureCtrl.registerInteraction(measureArea);
       drawFeatureCtrl.measureArea = measureArea;
 
-      olEvents.listen(
-        measureArea,
-        'measureend',
-        drawFeatureCtrl.handleDrawEnd.bind(
-          drawFeatureCtrl, ngeoGeometryType.POLYGON),
-        drawFeatureCtrl
-      );
-      olEvents.listen(
-        measureArea,
-        'change:active',
-        drawFeatureCtrl.handleActiveChange,
-        drawFeatureCtrl
-      );
+      listen(measureArea, 'measureend', drawFeatureCtrl.handleDrawEnd.bind(
+        drawFeatureCtrl, ngeoGeometryType.POLYGON
+      ), drawFeatureCtrl);
+      listen(measureArea, 'change:active', drawFeatureCtrl.handleActiveChange, drawFeatureCtrl);
     }
   };
 }

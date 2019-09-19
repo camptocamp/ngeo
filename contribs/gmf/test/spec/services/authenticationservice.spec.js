@@ -1,7 +1,7 @@
 // @ts-nocheck
 import angular from 'angular';
 import {RouteSuffix} from 'gmf/authentication/Service.js';
-import * as olEvents from 'ol/events.js';
+import {listenOnce} from 'ol/events.js';
 
 describe('gmf.authentication.Service', () => {
   let gmfAuthentication;
@@ -39,12 +39,10 @@ describe('gmf.authentication.Service', () => {
     const spy = jasmine.createSpy();
     /** @type {?import('gmf/authentication/Service.js').AuthenticationEvent} */
     let event_ = null;
-    olEvents.listenOnce(
-      gmfAuthentication, 'ready', (evt) => {
-        event_ = /** @type {import('gmf/authentication/Service.js').AuthenticationEvent} */(evt);
-        spy();
-      }
-    );
+    listenOnce(gmfAuthentication, 'ready', (evt) => {
+      event_ = /** @type {import('gmf/authentication/Service.js').AuthenticationEvent} */(evt);
+      spy();
+    });
 
     $httpBackend.when('GET', isLoggedInUrl).respond({});
 
@@ -66,12 +64,10 @@ describe('gmf.authentication.Service', () => {
     const spy = jasmine.createSpy();
     /** @type {?import('gmf/authentication/Service.js').AuthenticationEvent} */
     let event_ = null;
-    olEvents.listenOnce(
-      gmfAuthentication, 'login', (evt) => {
-        event_ = /** @type {import('gmf/authentication/Service.js').AuthenticationEvent} */(evt);
-        spy();
-      }
-    );
+    listenOnce(gmfAuthentication, 'login', (evt) => {
+      event_ = /** @type {import('gmf/authentication/Service.js').AuthenticationEvent} */(evt);
+      spy();
+    });
 
     $httpBackend.when('POST', loginUrl).respond({'username': 'user'});
 
@@ -91,7 +87,7 @@ describe('gmf.authentication.Service', () => {
 
   it('trys to login with wrong credentials', () => {
     const spy = jasmine.createSpy();
-    olEvents.listenOnce(
+    listenOnce(
       gmfAuthentication, 'login', spy);
 
     $httpBackend.when('POST', loginUrl).respond({});
@@ -104,8 +100,7 @@ describe('gmf.authentication.Service', () => {
 
   it('logs out', () => {
     const spy = jasmine.createSpy();
-    olEvents.listenOnce(
-      gmfAuthentication, 'logout', spy);
+    listenOnce(gmfAuthentication, 'logout', spy);
 
     $httpBackend.when('GET', logoutUrl).respond('true');
 

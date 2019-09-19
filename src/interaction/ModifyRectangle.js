@@ -2,7 +2,7 @@ import {getDefaultModifyStyleFunction} from 'ngeo/interaction/common.js';
 import ngeoCustomEvent from 'ngeo/CustomEvent.js';
 import {getUid as olUtilGetUid} from 'ol/util.js';
 import olFeature from 'ol/Feature.js';
-import * as olEvents from 'ol/events.js';
+import {listen} from 'ol/events.js';
 import olGeomPoint from 'ol/geom/Point.js';
 import olGeomPolygon from 'ol/geom/Polygon.js';
 import olInteractionPointer from 'ol/interaction/Pointer.js';
@@ -73,8 +73,8 @@ class ModifyRectangle extends olInteractionPointer {
      */
     this.params_ = null;
 
-    olEvents.listen(this.features_, 'add', this.handleFeatureAdd_, this);
-    olEvents.listen(this.features_, 'remove', this.handleFeatureRemove_, this);
+    listen(this.features_, 'add', this.handleFeatureAdd_, this);
+    listen(this.features_, 'remove', this.handleFeatureRemove_, this);
 
     this.features_.forEach((feature) => {
       this.addFeature_(feature);

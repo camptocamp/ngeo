@@ -12,7 +12,7 @@ import ngeoDrawFeatures from 'ngeo/draw/features.js';
 import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
 import gmfImportModule from 'gmf/import/module.js';
 import olCollection from 'ol/Collection.js';
-import * as olEvents from 'ol/events.js';
+import {listen} from 'ol/events.js';
 import olLayerVector from 'ol/layer/Vector.js';
 import olSourceVector from 'ol/source/Vector.js';
 import olStyleFill from 'ol/style/Fill.js';
@@ -219,7 +219,7 @@ export class AbstractDesktopController extends AbstractAPIController {
     // Listen to window resize to set the max resizable width
     // accordingly, and set it also right away.
     const ngeoDebounce = $injector.get('ngeoDebounce');
-    olEvents.listen(
+    listen(
       window,
       'resize',
       ngeoDebounce(this.setDataPanelMaxResizableWidth_.bind(this), 50, true)

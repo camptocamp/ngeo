@@ -19,7 +19,7 @@ import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
 import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
 import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr.js';
 import {getUid as olUtilGetUid} from 'ol/util.js';
-import * as olEvents from 'ol/events.js';
+import {listen, unlistenByKey} from 'ol/events.js';
 import olCollection from 'ol/Collection.js';
 import olStyleFill from 'ol/style/Fill.js';
 import olStyleStyle from 'ol/style/Style.js';
@@ -267,10 +267,16 @@ function Controller($scope, $timeout, gettextCatalog, ngeoFeatureHelper, ngeoFea
   this.translateToolActivate = new ngeoMiscToolActivate(this.translate_, 'active');
 
   /**
-   * @type {Array<import("ol/events.js").EventsKey>}
+   * @type {import("ol/events.js").EventsKey[]}
    * @private
    */
   this.listenerKeys_ = [];
+
+  /**
+   * @type {import("ol/events.js").EventsKey[]}
+   * @private
+   */
+  this.mapListenerKeys_ = [];
 
   /**
    * Flag used to determine whether the selection of a feature was made
@@ -352,7 +358,7 @@ Controller.prototype.closeMenu_ = function() {
     }
     this.map.removeOverlay(this.menu_);
     this.menu_ = null;
-    olEvents.unlistenByKey(this.menuListenerKey_);
+    unlistenByKey(this.menuListenerKey_);
   }
 };
 
@@ -413,13 +419,10 @@ Controller.prototype.handleActiveChange_ = function(active) {
   if (active) {
     // when activated
 
-    keys.push(
-      olEvents.listen(this.features, 'add', this.handleFeaturesAdd_, this),
-      olEvents.listen(this.features, 'remove', this.handleFeaturesRemove_, this)
-    );
-
-    keys.push(olEvents.listen(this.translate_, 'translateend', this.handleTranslateEnd_, this));
-    keys.push(olEvents.listen(this.rotate_, 'rotateend', this.handleRotateEnd_, this));
+    keys.push(listen(this.features, 'add', this.handleFeaturesAdd_, this));
+    keys.push(listen(this.features, 'remove', this.handleFeaturesRemove_, this));
+    keys.push(listen(this.translate_, 'translateend', this.handleTranslateEnd_, this));
+    keys.push(listen(this.rotate_, 'rotateend', this.handleRotateEnd_, this));
 
     toolMgr.registerTool(drawUid, this.drawToolActivate, false);
     toolMgr.registerTool(drawUid, this.mapSelectToolActivate, true);
@@ -434,7 +437,7 @@ Controller.prototype.handleActiveChange_ = function(active) {
   } else {
     // when deactivated
 
-    keys.forEach(olEvents.unlistenByKey);
+    keys.forEach(unlistenByKey);
     keys.length = 0;
 
     toolMgr.unregisterTool(drawUid, this.drawToolActivate);
@@ -543,17 +546,13 @@ Controller.prototype.handleMapSelectActiveChange_ = function(active) {
   }
 
   if (active) {
-    olEvents.listen(this.map, 'click', this.handleMapClick_, this);
-    olEvents.listen(mapDiv, 'contextmenu', this.handleMapContextMenu_, this);
-    olEvents.listen(mapDiv, 'touchstart', this.handleMapTouchStart_, this);
-    olEvents.listen(mapDiv, 'touchmove', this.handleMapTouchEnd_, this);
-    olEvents.listen(mapDiv, 'touchend', this.handleMapTouchEnd_, this);
+    this.mapListenerKeys_.push(listen(this.map, 'click', this.handleMapClick_, this));
+    this.mapListenerKeys_.push(listen(mapDiv, 'contextmenu', this.handleMapContextMenu_, this));
+    this.mapListenerKeys_.push(listen(mapDiv, 'touchstart', this.handleMapTouchStart_, this));
+    this.mapListenerKeys_.push(listen(mapDiv, 'touchmove', this.handleMapTouchEnd_, this));
+    this.mapListenerKeys_.push(listen(mapDiv, 'touchend', this.handleMapTouchEnd_, this));
   } else {
-    olEvents.unlisten(this.map, 'click', this.handleMapClick_, this);
-    olEvents.unlisten(mapDiv, 'contextmenu', this.handleMapContextMenu_, this);
-    olEvents.unlisten(mapDiv, 'touchstart', this.handleMapTouchStart_, this);
-    olEvents.unlisten(mapDiv, 'touchmove', this.handleMapTouchEnd_, this);
-    olEvents.unlisten(mapDiv, 'touchend', this.handleMapTouchEnd_, this);
+    this.mapListenerKeys_.forEach(unlistenByKey);
   }
 };
 
@@ -698,7 +697,7 @@ Controller.prototype.handleMapContextMenu_ = function(evt) {
         actions
       });
 
-      this.menuListenerKey_ = olEvents.listen(this.menu_, 'actionclick',
+      this.menuListenerKey_ = listen(this.menu_, 'actionclick',
         this.handleMenuActionClick_.bind(this, vertexInfo), this);
       this.map.addOverlay(this.menu_);
 

@@ -3,7 +3,7 @@ import * as olDom from 'ol/dom.js';
 import * as olProj from 'ol/proj.js';
 import olOverlay from 'ol/Overlay.js';
 import * as olSphere from 'ol/sphere.js';
-import * as olEvents from 'ol/events.js';
+import {listen, unlistenByKey} from 'ol/events.js';
 import olInteractionInteraction from 'ol/interaction/Interaction.js';
 import olLayerVector from 'ol/layer/Vector.js';
 import olSourceVector from 'ol/source/Vector.js';
@@ -211,11 +211,10 @@ class Measure extends olInteractionInteraction {
      */
     this.shouldHandleDrawInteractionActiveChange_ = true;
 
-    olEvents.listen(this.drawInteraction_, 'change:active', this.handleDrawInteractionActiveChange_, this);
-    olEvents.listen(this.drawInteraction_, 'drawstart', this.onDrawStart_, this);
-    olEvents.listen(this.drawInteraction_, 'drawend', this.onDrawEnd_, this);
-
-    olEvents.listen(this, 'change:active', this.updateState_, this);
+    listen(this.drawInteraction_, 'change:active', this.handleDrawInteractionActiveChange_, this);
+    listen(this.drawInteraction_, 'drawstart', this.onDrawStart_, this);
+    listen(this.drawInteraction_, 'drawend', this.onDrawEnd_, this);
+    listen(this, 'change:active', this.updateState_, this);
   }
 
   /**
@@ -285,7 +284,7 @@ class Measure extends olInteractionInteraction {
     }
 
     console.assert(geometry !== undefined);
-    this.changeEventKey_ = olEvents.listen(geometry, 'change', () => {
+    this.changeEventKey_ = listen(geometry, 'change', () => {
       this.handleMeasure((measure, coord) => {
         if (coord !== null) {
           if (!this.measureTooltipElement_) {
@@ -297,7 +296,7 @@ class Measure extends olInteractionInteraction {
       });
     });
 
-    this.postcomposeEventKey_ = olEvents.listen(this.getMap(), 'postcompose', () => {
+    this.postcomposeEventKey_ = listen(this.getMap(), 'postcompose', () => {
       if (this.measureTooltipOverlay_ && this.measureTooltipOverlayCoord_) {
         this.measureTooltipOverlay_.setPosition(this.measureTooltipOverlayCoord_);
       }
@@ -335,8 +334,8 @@ class Measure extends olInteractionInteraction {
    */
   unlistenerEvent_() {
     if (this.changeEventKey_ !== null && this.postcomposeEventKey_ !== null) {
-      olEvents.unlistenByKey(this.changeEventKey_);
-      olEvents.unlistenByKey(this.postcomposeEventKey_);
+      unlistenByKey(this.changeEventKey_);
+      unlistenByKey(this.postcomposeEventKey_);
       this.changeEventKey_ = null;
       this.postcomposeEventKey_ = null;
     }

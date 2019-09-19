@@ -1,7 +1,7 @@
 import angular from 'angular';
 import {interactionDecoration} from 'ngeo/misc/decorate.js';
 import ngeoMiscFilters from 'ngeo/misc/filters.js';
-import * as olEvents from 'ol/events.js';
+import {listen} from 'ol/events.js';
 import olStyleFill from 'ol/style/Fill.js';
 import olStyleRegularShape from 'ol/style/RegularShape.js';
 import olStyleStroke from 'ol/style/Stroke.js';
@@ -150,39 +150,24 @@ MeasueMobileBaseController.prototype.init = function() {
     }
   });
 
-  olEvents.listen(
-    drawInteraction,
-    'change:dirty',
-    (evt) => {
-      this.dirty = drawInteraction.getDirty();
+  listen(drawInteraction, 'change:dirty', (evt) => {
+    this.dirty = drawInteraction.getDirty();
 
-      // this is where the angular scope is forced to be applied. We
-      // only need to do this when dirty, as going to "no being dirty"
-      // is made by a click on a button where Angular is within scope
-      if (this.dirty) {
-        this.scope.$apply();
-      }
-    },
-    this
-  );
+    // this is where the angular scope is forced to be applied. We
+    // only need to do this when dirty, as going to "no being dirty"
+    // is made by a click on a button where Angular is within scope
+    if (this.dirty) {
+      this.scope.$apply();
+    }
+  }, this);
 
-  olEvents.listen(
-    drawInteraction,
-    'change:drawing',
-    (evt) => {
-      this.drawing = drawInteraction.getDrawing();
-    },
-    this
-  );
+  listen(drawInteraction, 'change:drawing', (evt) => {
+    this.drawing = drawInteraction.getDrawing();
+  }, this);
 
-  olEvents.listen(
-    drawInteraction,
-    'change:valid',
-    (evt) => {
-      this.valid = drawInteraction.getValid();
-    },
-    this
-  );
+  listen(drawInteraction, 'change:valid', (evt) => {
+    this.valid = drawInteraction.getValid();
+  }, this);
 
   this.map.addInteraction(this.measure);
 };

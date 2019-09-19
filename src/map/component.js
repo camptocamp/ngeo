@@ -1,5 +1,5 @@
 import angular from 'angular';
-import * as olEvents from 'ol/events.js';
+import {listen} from 'ol/events.js';
 import olMap from 'ol/Map.js';
 
 
@@ -73,31 +73,27 @@ function mapComponent($window) {
         const resizeTransition = /** @type {number|undefined} */ (
           scope.$eval(resizeTransitionProp));
 
-        olEvents.listen(
-          $window,
-          'resize',
-          () => {
-            if (resizeTransition) {
-              // Resize with transition
-              const start = Date.now();
-              let loop = true;
-              const adjustSize = function() {
-                map.updateSize();
-                map.renderSync();
-                if (loop) {
-                  $window.requestAnimationFrame(adjustSize);
-                }
-                if (Date.now() - start > resizeTransition) {
-                  loop = false;
-                }
-              };
-              adjustSize();
-            } else {
-              // A single plain resize
+        listen($window, 'resize', () => {
+          if (resizeTransition) {
+            // Resize with transition
+            const start = Date.now();
+            let loop = true;
+            const adjustSize = function() {
               map.updateSize();
-            }
+              map.renderSync();
+              if (loop) {
+                $window.requestAnimationFrame(adjustSize);
+              }
+              if (Date.now() - start > resizeTransition) {
+                loop = false;
+              }
+            };
+            adjustSize();
+          } else {
+            // A single plain resize
+            map.updateSize();
           }
-        );
+        });
       }
     }
   };

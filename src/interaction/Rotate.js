@@ -3,7 +3,7 @@ import ngeoCustomEvent from 'ngeo/CustomEvent.js';
 import {getUid as olUtilGetUid} from 'ol/util.js';
 import * as olExtent from 'ol/extent.js';
 import olFeature from 'ol/Feature.js';
-import * as olEvents from 'ol/events.js';
+import {listen, unlistenByKey} from 'ol/events.js';
 import olInteractionPointer from 'ol/interaction/Pointer.js';
 import olGeomPoint from 'ol/geom/Point.js';
 import olGeomLineString from 'ol/geom/LineString.js';
@@ -130,27 +130,22 @@ export default class extends olInteractionPointer {
       return;
     }
     if (this.keyPressListenerKey_) {
-      olEvents.unlistenByKey(this.keyPressListenerKey_);
+      unlistenByKey(this.keyPressListenerKey_);
       this.keyPressListenerKey_ = null;
     }
 
     olInteractionPointer.prototype.setActive.call(this, active);
 
     if (active) {
-      this.keyPressListenerKey_ = olEvents.listen(
-        document,
-        'keyup',
-        this.handleKeyUp_,
-        this
-      );
+      this.keyPressListenerKey_ = listen(document, 'keyup', this.handleKeyUp_, this);
       this.features_.forEach(feature => this.addFeature_(feature));
       this.listenerKeys_.push(
-        olEvents.listen(this.features_, 'add', this.handleFeatureAdd_, this),
-        olEvents.listen(this.features_, 'remove', this.handleFeatureRemove_, this)
+        listen(this.features_, 'add', this.handleFeatureAdd_, this),
+        listen(this.features_, 'remove', this.handleFeatureRemove_, this)
       );
 
     } else {
-      this.listenerKeys_.forEach(olEvents.unlistenByKey);
+      this.listenerKeys_.forEach(unlistenByKey);
       this.listenerKeys_.length = 0;
       this.features_.forEach(feature => this.removeFeature_(feature));
     }

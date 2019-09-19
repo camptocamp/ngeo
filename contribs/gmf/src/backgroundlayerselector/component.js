@@ -1,7 +1,7 @@
 import angular from 'angular';
 import gmfThemeThemes from 'gmf/theme/Themes.js';
 import ngeoMapBackgroundLayerMgr from 'ngeo/map/BackgroundLayerMgr.js';
-import * as olEvents from 'ol/events.js';
+import {listen, unlistenByKey} from 'ol/events.js';
 
 /**
  * @type {angular.IModule}
@@ -151,7 +151,7 @@ function Controller($scope, ngeoBackgroundLayerMgr, gmfThemes) {
    */
   this.listenerKeys_ = [];
 
-  this.listenerKeys_.push(olEvents.listen(gmfThemes, 'change', this.handleThemesChange_, this));
+  this.listenerKeys_.push(listen(gmfThemes, 'change', this.handleThemesChange_, this));
 
   /**
    * @type {import("ngeo/map/BackgroundLayerMgr.js").MapBackgroundLayerManager}
@@ -159,7 +159,7 @@ function Controller($scope, ngeoBackgroundLayerMgr, gmfThemes) {
    */
   this.backgroundLayerMgr_ = ngeoBackgroundLayerMgr;
 
-  this.listenerKeys_.push(olEvents.listen(this.backgroundLayerMgr_, 'change',
+  this.listenerKeys_.push(listen(this.backgroundLayerMgr_, 'change',
     /**
      * @param {Event|import('ol/events/Event.js').default} event Event.
      */
@@ -250,7 +250,7 @@ Controller.prototype.setOpacityBgLayer = function(layer) {
  * @private
  */
 Controller.prototype.handleDestroy_ = function() {
-  this.listenerKeys_.forEach(olEvents.unlistenByKey);
+  this.listenerKeys_.forEach(unlistenByKey);
   this.listenerKeys_.length = 0;
 };
 

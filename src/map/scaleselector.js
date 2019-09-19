@@ -1,7 +1,7 @@
 import angular from 'angular';
 import {numberSafeCompareFunction} from 'ol/array.js';
 import olMap from 'ol/Map.js';
-import * as olEvents from 'ol/events.js';
+import {listen, unlistenByKey} from 'ol/events.js';
 import 'bootstrap/js/src/dropdown.js';
 
 
@@ -188,7 +188,7 @@ class ScaleselectorController {
       }
     }
 
-    olEvents.listen(this.map_, 'change:view', this.handleViewChange_, this);
+    listen(this.map_, 'change:view', this.handleViewChange_, this);
 
     this.registerResolutionChangeListener_();
 
@@ -252,12 +252,10 @@ class ScaleselectorController {
    */
   registerResolutionChangeListener_() {
     if (this.resolutionChangeKey_ !== null) {
-      olEvents.unlistenByKey(this.resolutionChangeKey_);
+      unlistenByKey(this.resolutionChangeKey_);
     }
     const view = this.map_.getView();
-    this.resolutionChangeKey_ = olEvents.listen(view,
-      'change:resolution', this.handleResolutionChange_,
-      this);
+    this.resolutionChangeKey_ = listen(view, 'change:resolution', this.handleResolutionChange_, this);
   }
 }
 
