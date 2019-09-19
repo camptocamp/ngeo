@@ -13,7 +13,6 @@ import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
 import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr.js';
 import ngeoQueryComponent from 'ngeo/query/component.js';
 import ngeoQueryModule from 'ngeo/query/module.js';
-import ngeoQueryModeSelector from 'ngeo/query/ModeSelector.js';
 
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';

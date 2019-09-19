@@ -21,7 +21,6 @@ import {clear as clearObject} from 'ol/obj.js';
 import olLayerImage from 'ol/layer/Image.js';
 import olSourceImageWMS from 'ol/source/ImageWMS.js';
 import olSourceTileWMS from 'ol/source/TileWMS.js';
-import BaseLayer from 'ol/layer/Base.js';
 
 
 /**
@@ -256,7 +255,7 @@ export class DatasourceManager {
 
     // Create a layer list to update each one only once
     /**
-     * @type {BaseLayer[]}
+     * @type {import('ol/layer/Base.js').default[]}
      */
     const layers = [];
     /**

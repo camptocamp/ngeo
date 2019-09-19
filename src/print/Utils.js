@@ -1,7 +1,5 @@
 import angular from 'angular';
-import * as olHas from 'ol/has.js';
-import {toRadians} from 'ol/math.js';
-import RenderEvent from 'ol/render/Event.js';
+
 
 /**
  * Provides a service with print utility functions.
