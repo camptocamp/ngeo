@@ -484,7 +484,7 @@ function Controller($element, $q, $scope, $timeout,
   this.translateToolActivate = null;
 
   /**
-   * @type {import("ol/events.js").EventsKey[]>}
+   * @type {import("ol/events.js").EventsKey[]}
    * @private
    */
   this.listenerKeys_ = [];

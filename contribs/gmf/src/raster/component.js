@@ -236,14 +236,14 @@ Controller.prototype.toggleActive_ = function(active) {
      * @param {Event|import("ol/events/Event.js").default} event The event
      * @return {void}
      */
-    const listen = (event) => {
+    const listener = (event) => {
       this.scope_.$apply(() => {
         this.inViewport_ = true;
         this.elevation = null;
         this.loading = false;
       });
     };
-    this.listenerKeys_.push(listen(this.map, 'pointermove', listen));
+    this.listenerKeys_.push(listen(this.map, 'pointermove', listener));
 
     // Launch the elevation service request when the user stops moving the
     // mouse for less short delay
