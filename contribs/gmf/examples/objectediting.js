@@ -13,7 +13,7 @@ import gmfObjecteditingManager from 'gmf/objectediting/Manager.js';
 import gmfThemeThemes from 'gmf/theme/Themes.js';
 import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
 import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr.js';
-import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
+import EPSG2056 from '@geoblocks/proj/src/EPSG_2056.js';
 import * as olProj from 'ol/proj.js';
 import olCollection from 'ol/Collection.js';
 import olMap from 'ol/Map.js';
@@ -70,7 +70,7 @@ function MainController(gmfObjectEditingManager, gmfThemes,
 
   gmfThemes.loadThemes();
 
-  const projection = olProj.get(EPSG21781);
+  const projection = olProj.get(EPSG2056);
   projection.setExtent([485869.5728, 76443.1884, 837076.5648, 299941.7864]);
 
   /**
@@ -115,9 +115,9 @@ function MainController(gmfObjectEditingManager, gmfThemes,
       })
     ],
     view: new olView({
-      projection: EPSG21781,
+      projection: EPSG2056,
       resolutions: [200, 100, 50, 20, 10, 5, 2.5, 2, 1, 0.5],
-      center: [537635, 152640],
+      center: [2537635, 1152640],
       zoom: 2
     })
   });

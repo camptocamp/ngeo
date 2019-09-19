@@ -2,7 +2,7 @@ import angular from 'angular';
 import appURL from './url.js';
 import './editfeature.css';
 import 'bootstrap/js/src/tooltip.js';
-import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
+import EPSG2056 from '@geoblocks/proj/src/EPSG_2056.js';
 
 import gmfAuthenticationModule from 'gmf/authentication/module.js';
 import gmfEditingEditFeature from 'gmf/editing/EditFeature.js';
@@ -116,9 +116,9 @@ function MainController($scope, gmfEditFeature, gmfUser) {
       this.wmsLayer_
     ],
     view: new olView({
-      projection: EPSG21781,
+      projection: EPSG2056,
       resolutions: [200, 100, 50, 20, 10, 5, 2.5, 2, 1, 0.5],
-      center: [537635, 152640],
+      center: [2537635, 1152640],
       zoom: 2
     })
   });

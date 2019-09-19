@@ -3,7 +3,7 @@ import {SEARCH} from './url.js';
 import './search.css';
 
 import ngeoMapModule from 'ngeo/map/module.js';
-import {proj as EPSG21781} from '@geoblocks/proj/src/EPSG_21781.js';
+import {proj as EPSG2056} from '@geoblocks/proj/src/EPSG_2056.js';
 import ngeoSearchModule from 'ngeo/search/module.js';
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
@@ -190,7 +190,7 @@ SearchController.prototype.createVectorLayer_ = function() {
  */
 SearchController.prototype.createAndInitBloodhound_ = function(ngeoSearchCreateGeoJSONBloodhound) {
   const url = SEARCH;
-  const bloodhound = ngeoSearchCreateGeoJSONBloodhound(url, undefined, olProj.get('EPSG:3857'), EPSG21781);
+  const bloodhound = ngeoSearchCreateGeoJSONBloodhound(url, undefined, olProj.get('EPSG:3857'), EPSG2056);
   bloodhound.initialize();
   return bloodhound;
 };

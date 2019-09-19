@@ -7,7 +7,7 @@ import gmfSearchModule from 'gmf/search/module.js';
 import gmfThemeThemes from 'gmf/theme/Themes.js';
 import ngeoMessageNotification from 'ngeo/message/Notification.js';
 import {MessageType} from 'ngeo/message/Message.js';
-import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
+import EPSG2056 from '@geoblocks/proj/src/EPSG_2056.js';
 import ngeoMapModule from 'ngeo/map/module.js';
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
@@ -63,7 +63,7 @@ function MainController(gmfThemes, ngeoFeatureOverlayMgr, ngeoNotification) {
     groupValues: ['osm', 'district'],
     groupActions: [],
     labelKey: 'label',
-    projection: EPSG21781,
+    projection: EPSG2056,
     bloodhoundOptions: /** @type {Bloodhound.BloodhoundOptions<any>} */({
       remote: {
         rateLimitWait: 250

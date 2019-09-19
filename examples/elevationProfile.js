@@ -1,6 +1,6 @@
 import './elevationProfile.css';
 import angular from 'angular';
-import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
+import EPSG2056 from '@geoblocks/proj/src/EPSG_2056.js';
 
 import olFeature from 'ol/Feature.js';
 import olMap from 'ol/Map.js';
@@ -66,7 +66,7 @@ function MainController($http, $scope) {
       })
     ],
     view: new olView({
-      projection: EPSG21781,
+      projection: EPSG2056,
       extent: [420000, 30000, 900000, 350000],
       zoom: 0,
       center: [0, 0]

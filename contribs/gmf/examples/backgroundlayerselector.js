@@ -6,7 +6,7 @@ import gmfBackgroundlayerselectorModule from 'gmf/backgroundlayerselector/module
 import gmfMapComponent from 'gmf/map/component.js';
 
 import gmfThemeThemes from 'gmf/theme/Themes.js';
-import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
+import EPSG2056 from '@geoblocks/proj/src/EPSG_2056.js';
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
 
@@ -43,8 +43,8 @@ function MainController(gmfThemes) {
   this.map = new olMap({
     layers: [],
     view: new olView({
-      center: [632464, 185457],
-      projection: EPSG21781,
+      center: [2632464, 1185457],
+      projection: EPSG2056,
       minZoom: 3,
       zoom: 3
     })

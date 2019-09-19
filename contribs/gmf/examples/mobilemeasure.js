@@ -9,7 +9,7 @@ import gmfMobileMeasureAreaComponent from 'gmf/mobile/measure/areaComponent.js';
 import gmfMobileMeasureLengthComponent from 'gmf/mobile/measure/lengthComponent.js';
 import gmfMobileMeasurePointComponent from 'gmf/mobile/measure/pointComponent.js';
 import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent.js';
-import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
+import EPSG2056 from '@geoblocks/proj/src/EPSG_2056.js';
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
 import olControlScaleLine from 'ol/control/ScaleLine.js';
@@ -58,7 +58,7 @@ function MainController(gmfPermalink) {
       })
     ],
     view: new olView({
-      projection: EPSG21781,
+      projection: EPSG2056,
       resolutions: [200, 100, 50, 20, 10, 5, 2.5, 2, 1, 0.5],
       center: center,
       zoom: zoom
