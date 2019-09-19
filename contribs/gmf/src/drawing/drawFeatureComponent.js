@@ -441,6 +441,8 @@ exports.Controller_.prototype.handleActiveChange_ = function(active) {
     }
   }
 
+  olEvents.unlistenByKey(this.cancelEventKey_);
+
 };
 
 
@@ -591,6 +593,14 @@ exports.Controller_.prototype.handleMapClick_ = function(evt) {
   if (feature === this.selectedFeature) {
     return;
   }
+
+  this.cancelEventKey_ = olEvents.listen(document.body, 'keydown', (e) => {
+    const escPressed = event.keyCode === 27; // Escape key
+    if (escPressed && this.selectedFeature) {
+      this.selectedFeature = null;
+      olEvents.unlistenByKey(this.cancelEventKey_);
+    }
+  });
 
   this.selectedFeature = feature;
 

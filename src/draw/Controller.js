@@ -12,12 +12,16 @@ import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent.js';
 import ngeoMiscDecorate from 'ngeo/misc/decorate.js';
 import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
 import olFeature from 'ol/Feature.js';
+import * as olBase from 'ol/index.js';
+import * as olEvents from 'ol/events.js';
+import ngeoMiscEventHelper from 'ngeo/misc/EventHelper.js';
 
 /**
  * @param {!angular.Scope} $scope Scope.
  * @param {angular.$sce} $sce Angular sce service.
  * @param {angularGettext.Catalog} gettextCatalog Gettext service.
  * @param {ngeo.misc.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
+ * @param {ngeo.misc.EventHelper} ngeoEventHelper Ngeo event helper service
  * @param {ol.Collection.<ol.Feature>} ngeoFeatures Collection of features.
  * @constructor
  * @private
@@ -27,7 +31,7 @@ import olFeature from 'ol/Feature.js';
  * @ngname ngeoDrawfeatureController
  */
 const exports = function($scope, $sce, gettextCatalog,
-  ngeoFeatureHelper, ngeoFeatures) {
+  ngeoFeatureHelper, ngeoEventHelper, ngeoFeatures) {
 
   /**
    * @type {boolean}
@@ -126,6 +130,7 @@ const exports = function($scope, $sce, gettextCatalog,
    */
   this.drawText;
 
+  this.ngeoEventHelper_ = ngeoEventHelper;
 
   // Watch the "active" property, and disable the draw interactions
   // when "active" gets set to false.
@@ -139,7 +144,21 @@ const exports = function($scope, $sce, gettextCatalog,
       }
     }
   );
+};
 
+
+/**
+ * Called when escape key is pressed to reset drawing.
+ * @param {ol.interaction.Draw.Event|ngeox.MeasureEvent} event Event.
+ * @export
+ */
+exports.prototype.handleEscapeKeyDown_ = function(event) {
+  const escPressed = event.keyCode === 27; // Escape key
+  if (escPressed && this.interaction_.getActive()) {
+    const interaction = this.interaction_;
+    interaction.setActive(false);
+    interaction.setActive(true);
+  }
 };
 
 
@@ -167,6 +186,18 @@ exports.prototype.registerInteraction = function(
  */
 exports.prototype.handleActiveChange = function(event) {
   this.active = this.interactions_.some(interaction => interaction.getActive(), this);
+  this.interaction_ = this.interactions_.find(interaction => interaction.getActive() === true);
+  const uid = olBase.getUid(this);
+
+  this.ngeoEventHelper_.addListenerKey(
+    uid,
+    olEvents.listen(
+      document.body,
+      'keydown',
+      this.handleEscapeKeyDown_,
+      this
+    )
+  );
 };
 
 
@@ -247,6 +278,7 @@ exports.module = angular.module('ngeoDrawfeatureController', [
   ngeoDrawFeatures.name,
   ngeoMiscBtnComponent.name,
   ngeoMiscFeatureHelper.module.name,
+  ngeoMiscEventHelper.module.name,
 ]);
 exports.module.controller('ngeoDrawfeatureController', exports);
 

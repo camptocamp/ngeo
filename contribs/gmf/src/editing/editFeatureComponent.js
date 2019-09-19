@@ -987,6 +987,17 @@ exports.Controller_.prototype.handleMapSelectActiveChange_ = function(
  * @private
  */
 exports.Controller_.prototype.handleMapClick_ = function(evt) {
+  const interactions = evt.target.getInteractions().getArray();
+  const activeInteraction = interactions.find(interaction => interaction.getActive() === true);
+
+  this.cancelEventKey_ = olEvents.listen(document.body, 'keydown', (e) => {
+    const escPressed = event.keyCode === 27; // Escape key
+    if (escPressed && activeInteraction.getActive()) {
+      this.cancel();
+      olEvents.unlistenByKey(this.cancelEventKey_);
+    }
+  });
+
   const coordinate = evt.coordinate;
   const pixel = evt.pixel;
 
@@ -1252,6 +1263,7 @@ exports.Controller_.prototype.handleDestroy_ = function() {
   this.toggle_(false);
   this.handleMapSelectActiveChange_(false);
   this.unregisterInteractions_();
+  olEvents.unlistenByKey(this.cancelEventKey_);
 };
 
 
