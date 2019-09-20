@@ -1,6 +1,6 @@
 import angular from 'angular';
 import olCollection from 'ol/Collection.js';
-import * as olEvents from 'ol/events.js';
+import {listen, unlistenByKey} from 'ol/events.js';
 import olView from 'ol/View.js';
 import {CollectionEvent} from 'ol/Collection.js';
 
@@ -45,7 +45,7 @@ export class DataSource {
      */
     this.listenerKeys_ = [];
 
-    olEvents.listen(this.collection_, 'add', this.handleDataSourcesAdd_, this);
+    listen(this.collection_, 'add', this.handleDataSourcesAdd_, this);
   }
 
   /**
@@ -82,7 +82,7 @@ export class DataSource {
     // (1) Event listeners
     const view = map.getView();
     this.listenerKeys_.push(
-      olEvents.listen(view, 'change:resolution', this.handleViewResolutionChange_, this)
+      listen(view, 'change:resolution', this.handleViewResolutionChange_, this)
     );
 
     // (2) Sync resolution with existing data sources
@@ -99,7 +99,7 @@ export class DataSource {
    * @private
    */
   unbindMap_(map) {
-    this.listenerKeys_.forEach(olEvents.unlistenByKey);
+    this.listenerKeys_.forEach(unlistenByKey);
     this.listenerKeys_ = [];
   }
 

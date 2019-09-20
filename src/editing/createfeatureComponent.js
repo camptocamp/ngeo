@@ -7,7 +7,7 @@ import ngeoMiscEventHelper from 'ngeo/misc/EventHelper.js';
 import {toMulti} from 'ngeo/utils.js';
 import {getUid as olUtilGetUid} from 'ol/util.js';
 import olCollection from 'ol/Collection.js';
-import * as olEvents from 'ol/events.js';
+import {listen} from 'ol/events.js';
 import olFeature from 'ol/Feature.js';
 import olInteractionDraw from 'ol/interaction/Draw.js';
 import olStyleStyle from 'ol/style/Style.js';
@@ -255,23 +255,13 @@ Controller.prototype.$onInit = function() {
   if (interaction instanceof olInteractionDraw) {
     this.ngeoEventHelper_.addListenerKey(
       uid,
-      olEvents.listen(
-        interaction,
-        'drawend',
-        this.handleDrawEnd_,
-        this
-      )
+      listen(interaction, 'drawend', this.handleDrawEnd_, this)
     );
   } else if (interaction instanceof ngeoInteractionMeasureLength ||
       interaction instanceof ngeoInteractionMeasureArea) {
     this.ngeoEventHelper_.addListenerKey(
       uid,
-      olEvents.listen(
-        interaction,
-        'measureend',
-        this.handleDrawEnd_,
-        this
-      )
+      listen(interaction, 'measureend', this.handleDrawEnd_, this)
     );
   }
 };

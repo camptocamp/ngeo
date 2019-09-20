@@ -1,6 +1,6 @@
 import angular from 'angular';
 import ngeoInteractionDrawRegularPolygonFromClick from 'ngeo/interaction/DrawRegularPolygonFromClick.js';
-import * as olEvents from 'ol/events.js';
+import {listen, unlistenByKey} from 'ol/events.js';
 import olFeature from 'ol/Feature.js';
 
 
@@ -163,16 +163,8 @@ Controller.prototype.$onInit = function() {
   this.interaction_ = new ngeoInteractionDrawRegularPolygonFromClick(options);
   this.interaction_.setActive(this.active);
 
-  this.interactionListenerKey_ = olEvents.listen(
-    this.interaction_,
-    'drawend',
-    this.handleDrawEnd_,
-    this
-  );
+  this.interactionListenerKey_ = listen(this.interaction_, 'drawend', this.handleDrawEnd_, this);
 
-  if (!this.map) {
-    throw new Error('Missing map');
-  }
   this.map.addInteraction(this.interaction_);
 };
 
@@ -207,7 +199,7 @@ Controller.prototype.handleDestroy_ = function() {
   if (!this.interaction_) {
     throw new Error('Missing interaction');
   }
-  olEvents.unlistenByKey(this.interactionListenerKey_);
+  unlistenByKey(this.interactionListenerKey_);
   this.interaction_.setActive(false);
   this.map.removeInteraction(this.interaction_);
 };

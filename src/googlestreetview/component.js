@@ -3,7 +3,7 @@
 import angular from 'angular';
 import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr.js';
 import * as olArray from 'ol/array.js';
-import * as olEvents from 'ol/events.js';
+import {listen, unlistenByKey} from 'ol/events.js';
 import * as olProj from 'ol/proj.js';
 import olFeature from 'ol/Feature.js';
 import olGeomPoint from 'ol/geom/Point.js';
@@ -265,11 +265,9 @@ class GoogleStreetviewController {
     const keys = this.listenerKeys_;
 
     if (active) {
-      keys.push(
-        olEvents.listen(this.map, 'click', this.handleMapClick_, this)
-      );
+      keys.push(listen(this.map, 'click', this.handleMapClick_, this));
     } else {
-      keys.forEach(olEvents.unlistenByKey);
+      keys.forEach(unlistenByKey);
       keys.length = 0;
     }
   }

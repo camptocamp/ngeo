@@ -1,5 +1,5 @@
 import angular from 'angular';
-import * as olEvents from 'ol/events.js';
+import {unlistenByKey} from 'ol/events.js';
 
 
 /**
@@ -59,7 +59,7 @@ EventHelper.prototype.initListenerKey_ = function(uid) {
     this.listenerKeys_[uid] = [];
   } else {
     if (this.listenerKeys_[uid].length) {
-      this.listenerKeys_[uid].forEach(olEvents.unlistenByKey);
+      this.listenerKeys_[uid].forEach(unlistenByKey);
       this.listenerKeys_[uid].length = 0;
     }
   }

@@ -1,6 +1,6 @@
 import angular from 'angular';
 import ngeoGeometryType from 'ngeo/GeometryType.js';
-import * as olEvents from 'ol/events.js';
+import {listen} from 'ol/events.js';
 import olInteractionDraw from 'ol/interaction/Draw.js';
 
 
@@ -39,19 +39,10 @@ function drawTextComponent() {
       drawFeatureCtrl.registerInteraction(drawText);
       drawFeatureCtrl.drawText = drawText;
 
-      olEvents.listen(
-        drawText,
-        'drawend',
-        drawFeatureCtrl.handleDrawEnd.bind(
-          drawFeatureCtrl, ngeoGeometryType.TEXT),
-        drawFeatureCtrl
-      );
-      olEvents.listen(
-        drawText,
-        'change:active',
-        drawFeatureCtrl.handleActiveChange,
-        drawFeatureCtrl
-      );
+      listen(drawText, 'drawend', drawFeatureCtrl.handleDrawEnd.bind(
+        drawFeatureCtrl, ngeoGeometryType.TEXT
+      ), drawFeatureCtrl);
+      listen(drawText, 'change:active', drawFeatureCtrl.handleActiveChange, drawFeatureCtrl);
     }
   };
 }

@@ -301,15 +301,13 @@ this.geolocation_.on('change:accuracyGeometry', function() {
 This is the correct syntax:
 
 ```js
-import olObject from 'ol/object.js';
-import olGeolocationProperty from 'ol/GeolocationProperty.js';
-import * as olEvents from 'ol/events.js';
+import {getChangeEventType} from 'ol/object.js';
+import {ACCURACY_GEOMETRY} from 'ol/GeolocationProperty.js';
+import {listen} from 'ol/events.js';
 
-olEvents.listen(this.geolocation_,
-  olObject.getChangeEventType(olGeolocationProperty.ACCURACY_GEOMETRY),
-  function() {
-    ...
-  }, this);
+listen(this.geolocation_, getChangeEventType(ACCURACY_GEOMETRY), () => {
+  ...
+});
 ```
 
 

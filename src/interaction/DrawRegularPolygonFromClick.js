@@ -1,5 +1,5 @@
 import ngeoCustomEvent from 'ngeo/CustomEvent.js';
-import * as olEvents from 'ol/events.js';
+import {listen, unlistenByKey} from 'ol/events.js';
 import olFeature from 'ol/Feature.js';
 import {TRUE} from 'ol/functions.js';
 import olGeomCircle from 'ol/geom/Circle.js';
@@ -102,7 +102,7 @@ export default class extends olInteractionInteraction {
     const map = this.getMap();
     console.assert(map, 'Map should be set.');
     this.listenerKeys_.push(
-      olEvents.listen(map, 'click', this.handleMapClick_, this)
+      listen(map, 'click', this.handleMapClick_, this)
     );
   }
 
@@ -113,7 +113,7 @@ export default class extends olInteractionInteraction {
   disable_() {
     const map = this.getMap();
     console.assert(map, 'Map should be set.');
-    this.listenerKeys_.forEach(olEvents.unlistenByKey);
+    this.listenerKeys_.forEach(unlistenByKey);
     this.listenerKeys_.length = 0;
   }
 

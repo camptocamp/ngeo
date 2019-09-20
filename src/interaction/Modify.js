@@ -2,7 +2,7 @@ import {deleteCondition} from 'ngeo/utils.js';
 import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties.js';
 import ngeoInteractionModifyCircle from 'ngeo/interaction/ModifyCircle.js';
 import ngeoInteractionModifyRectangle from 'ngeo/interaction/ModifyRectangle.js';
-import * as olEvents from 'ol/events.js';
+import {listen, unlistenByKey} from 'ol/events.js';
 import {TRUE} from 'ol/functions.js';
 import olInteractionInteraction from 'ol/interaction/Interaction.js';
 import olCollection from 'ol/Collection.js';
@@ -166,11 +166,11 @@ export default class extends olInteractionInteraction {
     if (active && map) {
       this.features_.forEach(feature => this.addFeature_(feature));
       keys.push(
-        olEvents.listen(this.features_, 'add', this.handleFeaturesAdd_, this),
-        olEvents.listen(this.features_, 'remove', this.handleFeaturesRemove_, this)
+        listen(this.features_, 'add', this.handleFeaturesAdd_, this),
+        listen(this.features_, 'remove', this.handleFeaturesRemove_, this)
       );
     } else {
-      keys.forEach(olEvents.unlistenByKey);
+      keys.forEach(unlistenByKey);
       keys.length = 0;
       this.features_.forEach(feature => this.removeFeature_(feature));
     }

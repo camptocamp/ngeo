@@ -1,6 +1,6 @@
 import angular from 'angular';
 import ngeoGeometryType from 'ngeo/GeometryType.js';
-import * as olEvents from 'ol/events.js';
+import {listen} from 'ol/events.js';
 import olInteractionDraw from 'ol/interaction/Draw.js';
 import olGeomPolygon from 'ol/geom/Polygon.js';
 
@@ -58,19 +58,10 @@ function drawRectangleComponent() {
       drawFeatureCtrl.registerInteraction(drawRectangle);
       drawFeatureCtrl.drawRectangle = drawRectangle;
 
-      olEvents.listen(
-        drawRectangle,
-        'drawend',
-        drawFeatureCtrl.handleDrawEnd.bind(
-          drawFeatureCtrl, ngeoGeometryType.RECTANGLE),
-        drawFeatureCtrl
-      );
-      olEvents.listen(
-        drawRectangle,
-        'change:active',
-        drawFeatureCtrl.handleActiveChange,
-        drawFeatureCtrl
-      );
+      listen(drawRectangle, 'drawend', drawFeatureCtrl.handleDrawEnd.bind(
+        drawFeatureCtrl, ngeoGeometryType.RECTANGLE
+      ), drawFeatureCtrl);
+      listen(drawRectangle, 'change:active', drawFeatureCtrl.handleActiveChange, drawFeatureCtrl);
     }
   };
 }

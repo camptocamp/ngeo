@@ -4,7 +4,7 @@ import gmfThemeThemes, {ThemeNodeType, getSnappingConfig} from 'gmf/theme/Themes
 import ngeoLayertreeController, {getFirstParentTree} from 'ngeo/layertree/Controller.js';
 import {DEFAULT_GEOMETRY_NAME} from 'ngeo/datasource/OGC.js';
 import {getUid as olUtilGetUid} from 'ol/util.js';
-import * as olEvents from 'ol/events.js';
+import {listen, unlistenByKey} from 'ol/events.js';
 import olCollection from 'ol/Collection.js';
 import olFormatWFS from 'ol/format/WFS.js';
 import olInteractionSnap from 'ol/interaction/Snap.js';
@@ -190,7 +190,7 @@ EditingSnappingService.prototype.setMap = function(map) {
     }
     this.treeCtrlsUnregister_();
     this.unregisterAllTreeCtrl_();
-    keys.forEach(olEvents.unlistenByKey);
+    keys.forEach(unlistenByKey);
     keys.length = 0;
   }
 
@@ -216,8 +216,8 @@ EditingSnappingService.prototype.setMap = function(map) {
     });
 
     keys.push(
-      olEvents.listen(this.gmfThemes_, 'change', this.handleThemesChange_, this),
-      olEvents.listen(map, 'moveend', this.handleMapMoveEnd_, this)
+      listen(this.gmfThemes_, 'change', this.handleThemesChange_, this),
+      listen(map, 'moveend', this.handleMapMoveEnd_, this)
     );
   }
 };

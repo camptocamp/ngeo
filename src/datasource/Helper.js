@@ -3,7 +3,7 @@ import ngeoDatasourceDataSource from 'ngeo/datasource/DataSource.js';
 import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources.js';
 import ngeoFormatWFSAttribute from 'ngeo/format/WFSAttribute.js';
 import ngeoQueryQuerent from 'ngeo/query/Querent.js';
-import * as olEvents from 'ol/events.js';
+import {listen} from 'ol/events.js';
 import {CollectionEvent} from 'ol/Collection.js';
 
 
@@ -55,8 +55,8 @@ export class DatasourceHelper {
 
     // Events
 
-    olEvents.listen(this.collection_, 'add', this.handleDataSourcesAdd_, this);
-    olEvents.listen(this.collection_, 'remove', this.handleDataSourcesRemove_, this);
+    listen(this.collection_, 'add', this.handleDataSourcesAdd_, this);
+    listen(this.collection_, 'remove', this.handleDataSourcesRemove_, this);
 
     // Register data sources that are already in the collection
     this.collection_.forEach(this.registerDataSource_.bind(this));

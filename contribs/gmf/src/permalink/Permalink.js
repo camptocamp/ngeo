@@ -24,7 +24,7 @@ import ngeoStatemanagerModule from 'ngeo/statemanager/module.js';
 import ngeoStatemanagerService from 'ngeo/statemanager/Service.js';
 import ngeoLayertreeController, {LayertreeVisitorDecision} from 'ngeo/layertree/Controller.js';
 import {getUid as olUtilGetUid} from 'ol/util.js';
-import * as olEvents from 'ol/events.js';
+import {listen, unlistenByKey} from 'ol/events.js';
 import olFeature from 'ol/Feature.js';
 import olGeomMultiPoint from 'ol/geom/MultiPoint.js';
 import olGeomPoint from 'ol/geom/Point.js';
@@ -451,6 +451,11 @@ export function PermalinkService(
     $injector.get('ngeoAutoProjection') : null;
 
   /**
+   * @type {import("ol/events.js").EventsKey[]}
+   */
+  this.listenerKeys_ = [];
+
+  /**
    * A list of projections that the coordinates in the permalink can be in.
    * @type {?Array<import("ol/proj/Projection.js").default>}
    * @private
@@ -531,12 +536,7 @@ export function PermalinkService(
   // == event listeners ==
 
   if (this.ngeoBackgroundLayerMgr_) {
-    olEvents.listen(
-      this.ngeoBackgroundLayerMgr_,
-      'change',
-      this.handleBackgroundLayerManagerChange_,
-      this
-    );
+    listen(this.ngeoBackgroundLayerMgr_, 'change', this.handleBackgroundLayerManagerChange_, this);
   }
 
   // visibility
@@ -606,8 +606,8 @@ export function PermalinkService(
     });
 
     this.ngeoFeatures_.extend(features);
-    olEvents.listen(this.ngeoFeatures_, 'add', this.handleNgeoFeaturesAdd_, this);
-    olEvents.listen(this.ngeoFeatures_, 'remove', this.handleNgeoFeaturesRemove_, this);
+    listen(this.ngeoFeatures_, 'add', this.handleNgeoFeaturesAdd_, this);
+    listen(this.ngeoFeatures_, 'remove', this.handleNgeoFeaturesRemove_, this);
   }
 
   if (this.featureHelper_) {
@@ -643,25 +643,25 @@ export function PermalinkService(
       }
       // Then, listen to the changes made to the external data sources to
       // update the url accordingly.
-      olEvents.listen(
+      listen(
         this.gmfExternalDataSourcesManager_.wmsGroupsCollection,
         'add',
         this.handleExternalDSGroupCollectionAdd_,
         this
       );
-      olEvents.listen(
+      listen(
         this.gmfExternalDataSourcesManager_.wmsGroupsCollection,
         'remove',
         this.handleExternalDSGroupCollectionRemove_,
         this
       );
-      olEvents.listen(
+      listen(
         this.gmfExternalDataSourcesManager_.wmtsGroupsCollection,
         'add',
         this.handleExternalDSGroupCollectionAdd_,
         this
       );
-      olEvents.listen(
+      listen(
         this.gmfExternalDataSourcesManager_.wmtsGroupsCollection,
         'remove',
         this.handleExternalDSGroupCollectionRemove_,
@@ -947,23 +947,19 @@ PermalinkService.prototype.registerMap_ = function(map, oeFeature) {
 
   // (2) Listen to any property changes within the view and apply them to
   //     the permalink service
-  this.mapViewPropertyChangeEventKey_ = olEvents.listen(
-    view,
-    'propertychange',
-    this.ngeoDebounce_(() => {
-      const center = view.getCenter();
-      if (!center) {
-        throw new Error('Missing center');
-      }
-      const zoom = view.getZoom();
-      /** @type {Object<string, string>} */
-      const object = {};
-      object[PermalinkParam.MAP_X] = `${Math.round(center[0])}`;
-      object[PermalinkParam.MAP_Y] = `${Math.round(center[1])}`;
-      object[PermalinkParam.MAP_Z] = `${zoom}`;
-      this.ngeoStateManager_.updateState(object);
-    }, 300, /* invokeApply */ true),
-    this);
+  this.mapViewPropertyChangeEventKey_ = listen(view, 'propertychange', this.ngeoDebounce_(() => {
+    const center = view.getCenter();
+    if (!center) {
+      throw new Error('Missing center');
+    }
+    const zoom = view.getZoom();
+    /** @type {Object<string, string>} */
+    const object = {};
+    object[PermalinkParam.MAP_X] = `${Math.round(center[0])}`;
+    object[PermalinkParam.MAP_Y] = `${Math.round(center[1])}`;
+    object[PermalinkParam.MAP_Z] = `${zoom}`;
+    this.ngeoStateManager_.updateState(object);
+  }, 300, /* invokeApply */ true), this);
 
   // (3) Add map crosshair, if set
   if (this.getMapCrosshair() && this.featureOverlay_) {
@@ -992,7 +988,7 @@ PermalinkService.prototype.unregisterMap_ = function() {
   if (!this.mapViewPropertyChangeEventKey_) {
     throw new Error('Missing mapViewPropertyChangeEventKey');
   }
-  olEvents.unlistenByKey(this.mapViewPropertyChangeEventKey_);
+  unlistenByKey(this.mapViewPropertyChangeEventKey_);
   this.mapViewPropertyChangeEventKey_ = null;
 };
 
@@ -1066,17 +1062,13 @@ PermalinkService.prototype.handleBackgroundLayerManagerChange_ = function() {
       object[PermalinkParam.BG_LAYER_OPACITY] = `${opacity * 100}`;
       this.ngeoStateManager_.updateState(object);
     }
-    olEvents.listen(
-      backgroundLayer,
-      'change:opacity',
-      () => {
-        const opacity = backgroundLayer.getOpacity();
-        /** @type {Object<string, string>} */
-        const object = {};
-        object[PermalinkParam.BG_LAYER_OPACITY] = `${opacity * 100}`;
-        this.ngeoStateManager_.updateState(object);
-      }
-    );
+    listen(backgroundLayer, 'change:opacity', () => {
+      const opacity = backgroundLayer.getOpacity();
+      /** @type {Object<string, string>} */
+      const object = {};
+      object[PermalinkParam.BG_LAYER_OPACITY] = `${opacity * 100}`;
+      this.ngeoStateManager_.updateState(object);
+    });
   }
 };
 
@@ -1384,8 +1376,7 @@ PermalinkService.prototype.addNgeoFeature_ = function(feature) {
   const uid = olUtilGetUid(feature);
   this.ngeoEventHelper_.addListenerKey(
     uid,
-    olEvents.listen(feature, 'change',
-      this.ngeoDebounce_(this.handleNgeoFeaturesChange_, 250, true), this)
+    listen(feature, 'change', this.ngeoDebounce_(this.handleNgeoFeaturesChange_, 250, true), this)
   );
 };
 
@@ -1675,17 +1666,9 @@ PermalinkService.prototype.handleExternalDSGroupCollectionAdd_ = function(evt) {
  * @private
  */
 PermalinkService.prototype.registerExternalDSGroup_ = function(group) {
-  olEvents.listen(
-    group.dataSourcesCollection,
-    'add',
-    this.setExternalDataSourcesState_,
-    this
-  );
-  olEvents.listen(
-    group.dataSourcesCollection,
-    'remove',
-    this.setExternalDataSourcesState_,
-    this
+  this.listenerKeys_.push(
+    listen(group.dataSourcesCollection, 'add', this.setExternalDataSourcesState_, this),
+    listen(group.dataSourcesCollection, 'remove', this.setExternalDataSourcesState_, this),
   );
 };
 
@@ -1734,18 +1717,7 @@ PermalinkService.prototype.handleExternalDSGroupCollectionRemove_ = function(evt
  * @private
  */
 PermalinkService.prototype.unregisterExternalDSGroup_ = function(group) {
-  olEvents.unlisten(
-    group.dataSourcesCollection,
-    'add',
-    this.setExternalDataSourcesState_,
-    this
-  );
-  olEvents.unlisten(
-    group.dataSourcesCollection,
-    'remove',
-    this.setExternalDataSourcesState_,
-    this
-  );
+  this.listenerKeys_.forEach(unlistenByKey);
 };
 
 

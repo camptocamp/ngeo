@@ -15,13 +15,12 @@ import ngeoMapBackgroundLayerMgr from 'ngeo/map/BackgroundLayerMgr.js';
 import ngeoMapLayerHelper from 'ngeo/map/LayerHelper.js';
 import ngeoMiscWMSTime from 'ngeo/misc/WMSTime.js';
 import {getUid as olUtilGetUid} from 'ol/util.js';
-import * as olEvents from 'ol/events.js';
+import {listen} from 'ol/events.js';
 import olLayerTile from 'ol/layer/Tile.js';
 import {clear as clearObject} from 'ol/obj.js';
 import olLayerImage from 'ol/layer/Image.js';
 import olSourceImageWMS from 'ol/source/ImageWMS.js';
 import olSourceTileWMS from 'ol/source/TileWMS.js';
-import BaseLayer from 'ol/layer/Base.js';
 
 
 /**
@@ -208,13 +207,13 @@ export class DatasourceManager {
 
     // === Events ===
 
-    olEvents.listen(
+    listen(
       this.ngeoBackgroundLayerMgr_,
       'change',
       this.handleNgeoBackgroundLayerChange_,
       this
     );
-    olEvents.listen(this.gmfThemes_, 'change', this.handleThemesChange_, this);
+    listen(this.gmfThemes_, 'change', this.handleThemesChange_, this);
   }
 
 
@@ -256,7 +255,7 @@ export class DatasourceManager {
 
     // Create a layer list to update each one only once
     /**
-     * @type {BaseLayer[]}
+     * @type {import('ol/layer/Base.js').default[]}
      */
     const layers = [];
     /**

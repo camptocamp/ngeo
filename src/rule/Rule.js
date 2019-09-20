@@ -1,4 +1,4 @@
-import * as olEvents from 'ol/events.js';
+import {unlistenByKey} from 'ol/events.js';
 
 
 /**
@@ -320,7 +320,7 @@ export default class Rule {
   /**
    */
   destroy() {
-    this.listenerKeys.forEach(olEvents.unlistenByKey);
+    this.listenerKeys.forEach(unlistenByKey);
     this.listenerKeys.length = 0;
   }
 }

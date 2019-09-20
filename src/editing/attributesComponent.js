@@ -1,6 +1,6 @@
 import angular from 'angular';
 import {getUid as olUtilGetUid} from 'ol/util.js';
-import * as olEvents from 'ol/events.js';
+import {listen} from 'ol/events.js';
 import ngeoMiscEventHelper from 'ngeo/misc/EventHelper.js';
 import ngeoMiscDatetimepickerComponent from 'ngeo/misc/datetimepickerComponent.js';
 import {ObjectEvent} from 'ol/Object.js';
@@ -161,7 +161,7 @@ Controller.prototype.$onInit = function() {
   const uid = olUtilGetUid(this);
   this.ngeoEventHelper_.addListenerKey(
     uid,
-    olEvents.listen(this.feature, 'propertychange', this.handleFeaturePropertyChange_, this)
+    listen(this.feature, 'propertychange', this.handleFeaturePropertyChange_, this)
   );
 };
 

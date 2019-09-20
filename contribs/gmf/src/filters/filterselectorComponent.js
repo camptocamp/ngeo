@@ -17,7 +17,7 @@ import {MessageType} from 'ngeo/message/Message.js';
 import ngeoFilterRuleHelper from 'ngeo/filter/RuleHelper.js';
 
 import ngeoFilterComponent from 'ngeo/filter/component.js';
-import * as olEvents from 'ol/events.js';
+import {listen, unlistenByKey} from 'ol/events.js';
 import {remove as removeFromArray} from 'ol/array.js';
 import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr.js';
 
@@ -381,15 +381,15 @@ class FilterSelectorController {
     if (register) {
       // Listen to data sources being added/removed
       keys.push(
-        olEvents.listen(this.gmfDataSources_, 'add', this.handleDataSourcesAdd_, this),
-        olEvents.listen(this.gmfDataSources_, 'remove', this.handleDataSourcesRemove_, this)
+        listen(this.gmfDataSources_, 'add', this.handleDataSourcesAdd_, this),
+        listen(this.gmfDataSources_, 'remove', this.handleDataSourcesRemove_, this)
       );
 
       // Manage the data sources that are already in the collection
       this.gmfDataSources_.forEach(this.registerDataSource_.bind(this));
 
     } else {
-      keys.forEach(olEvents.unlistenByKey);
+      keys.forEach(unlistenByKey);
       keys.length = 0;
 
       // Remove data sources that are in the collection

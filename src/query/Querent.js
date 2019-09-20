@@ -881,7 +881,7 @@ export class Querent {
       });
 
       // (4) Build query url, then launch
-      const wmsGetFeatureInfoUrl = wmsSource.getGetFeatureInfoUrl(
+      const wmsGetFeatureInfoUrl = wmsSource.getFeatureInfoUrl(
         coordinate, resolution, projCode, {
           // Without extern, quoting is necessary
           'FEATURE_COUNT': FEATURE_COUNT,

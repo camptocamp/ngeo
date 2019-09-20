@@ -3,7 +3,7 @@ import ngeoDrawController from 'ngeo/draw/Controller.js';
 import ngeoMiscFilters from 'ngeo/misc/filters.js';
 import ngeoGeometryType from 'ngeo/GeometryType.js';
 import ngeoInteractionMeasureAzimut, {getAzimut} from 'ngeo/interaction/MeasureAzimut.js';
-import * as olEvents from 'ol/events.js';
+import {listen} from 'ol/events.js';
 import olFeature from 'ol/Feature.js';
 import {fromCircle} from 'ol/geom/Polygon.js';
 import olStyleStyle from 'ol/style/Style.js';
@@ -65,9 +65,7 @@ function measureAzimutComponent($compile, gettextCatalog, $filter, $injector) {
       drawFeatureCtrl.registerInteraction(measureAzimut);
       drawFeatureCtrl.measureAzimut = measureAzimut;
 
-      olEvents.listen(
-        measureAzimut,
-        'measureend',
+      listen(measureAzimut, 'measureend',
         /**
          * @param {Event|import('ol/events/Event.js').default} event Event.
          */
@@ -93,12 +91,7 @@ function measureAzimutComponent($compile, gettextCatalog, $filter, $injector) {
         drawFeatureCtrl
       );
 
-      olEvents.listen(
-        measureAzimut,
-        'change:active',
-        drawFeatureCtrl.handleActiveChange,
-        drawFeatureCtrl
-      );
+      listen(measureAzimut, 'change:active', drawFeatureCtrl.handleActiveChange, drawFeatureCtrl);
     }
   };
 }

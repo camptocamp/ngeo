@@ -1,7 +1,7 @@
 import angular from 'angular';
 import gmfThemeManager from 'gmf/theme/Manager.js';
 import gmfThemeThemes from 'gmf/theme/Themes.js';
-import * as olEvents from 'ol/events.js';
+import {listen, unlistenByKey} from 'ol/events.js';
 
 import 'bootstrap/js/src/dropdown.js';
 
@@ -141,7 +141,7 @@ function Controller($scope, gmfThemeManager, gmfThemes) {
    */
   this.listenerKeys_ = [];
 
-  this.listenerKeys_.push(olEvents.listen(this.gmfThemes_, 'change', this.setThemes_, this));
+  this.listenerKeys_.push(listen(this.gmfThemes_, 'change', this.setThemes_, this));
 
   $scope.$on('$destroy', this.handleDestroy_.bind(this));
 
@@ -176,7 +176,7 @@ Controller.prototype.setTheme = function(theme, opt_silent) {
  * @private
  */
 Controller.prototype.handleDestroy_ = function() {
-  this.listenerKeys_.forEach(olEvents.unlistenByKey);
+  this.listenerKeys_.forEach(unlistenByKey);
   this.listenerKeys_.length = 0;
 };
 

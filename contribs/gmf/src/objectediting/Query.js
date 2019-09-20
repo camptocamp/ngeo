@@ -180,7 +180,7 @@ ObjectEditingQuery.prototype.getFeatureInfo = function(layerInfo, coordinate, ma
   });
 
   const url = /** @type {string} */ (
-    wmsSource.getGetFeatureInfoUrl(coordinate, resolution, projCode, {
+    wmsSource.getFeatureInfoUrl(coordinate, resolution, projCode, {
       'INFO_FORMAT': infoFormat,
       'FEATURE_COUNT': 1,
       'QUERY_LAYERS': layersParam

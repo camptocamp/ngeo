@@ -1,5 +1,5 @@
 import angular from 'angular';
-import * as olEvents from 'ol/events.js';
+import {listen, unlistenByKey} from 'ol/events.js';
 import RenderEvent from 'ol/render/Event.js';
 /**
  * @type {angular.IModule}
@@ -86,7 +86,7 @@ class SwipeController {
     this.swipeInput_ = $element.find('.swipe-input');
 
     /**
-     * @type {olEvents.EventsKey[]}
+     * @type {import("ol/events.js").EventsKey[]}
      * @private
      */
     this.layerKeys_ = [];
@@ -96,8 +96,8 @@ class SwipeController {
    * Init the controller
    */
   $onInit() {
-    this.layerKeys_.push(olEvents.listen(this.layer, 'prerender', this.handleLayerPrerender_, this));
-    this.layerKeys_.push(olEvents.listen(this.layer, 'postrender', this.handleLayerPostrender_, this));
+    this.layerKeys_.push(listen(this.layer, 'prerender', this.handleLayerPrerender_, this));
+    this.layerKeys_.push(listen(this.layer, 'postrender', this.handleLayerPostrender_, this));
 
     this.swipeInput_.on('input change', event => {
       this.swipeValue = Number($(event.target).val());
@@ -139,7 +139,7 @@ class SwipeController {
   }
 
   $onDestroy() {
-    this.layerKeys_.forEach(olEvents.unlistenByKey);
+    this.layerKeys_.forEach(unlistenByKey);
     this.layerKeys_.length = 0;
     this.swipeInput_.off();
   }

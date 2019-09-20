@@ -13,7 +13,7 @@ import ngeoDatasourceOGCGroup from 'ngeo/datasource/OGCGroup.js';
 import ngeoDatasourceWMSGroup from 'ngeo/datasource/WMSGroup.js';
 import {getUid as olUtilGetUid} from 'ol/util.js';
 import {isEmpty} from 'ol/extent.js';
-import * as olEvents from 'ol/events.js';
+import {listen} from 'ol/events.js';
 import olCollection from 'ol/Collection.js';
 import olFormatGPX from 'ol/format/GPX.js';
 import olFormatKML from 'ol/format/KML.js';
@@ -151,7 +151,7 @@ export class ExternalDatSourcesManager {
      */
     this.wmtsCache_ = {};
 
-    olEvents.listen(this.dataSources_, 'remove', this.handleDataSourcesRemove_, this);
+    listen(this.dataSources_, 'remove', this.handleDataSourcesRemove_, this);
   }
 
 

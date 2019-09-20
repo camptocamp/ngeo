@@ -1,6 +1,6 @@
 import {getDefaultDrawStyleFunction} from 'ngeo/interaction/common.js';
 import ngeoCustomEvent from 'ngeo/CustomEvent.js';
-import * as olEvents from 'ol/events.js';
+import {listen, unlistenByKey} from 'ol/events.js';
 import olFeature from 'ol/Feature.js';
 import {TRUE} from 'ol/functions.js';
 import olGeomLineString from 'ol/geom/LineString.js';
@@ -106,7 +106,7 @@ export default class extends olInteractionInteraction {
       updateWhileInteracting: true
     });
 
-    olEvents.listen(this, 'change:active', this.updateState_, this);
+    listen(this, 'change:active', this.updateState_, this);
 
     this.set('dirty', false);
     this.set('drawing', false);
@@ -120,16 +120,14 @@ export default class extends olInteractionInteraction {
     const currentMap = this.getMap();
     if (currentMap) {
       if (this.changeEventKey_) {
-        olEvents.unlistenByKey(this.changeEventKey_);
+        unlistenByKey(this.changeEventKey_);
       }
     }
 
     olInteractionInteraction.prototype.setMap.call(this, map);
 
     if (map) {
-      this.changeEventKey_ = olEvents.listen(map.getView(),
-        'change:center',
-        this.handleViewCenterChange_, this);
+      this.changeEventKey_ = listen(map.getView(), 'change:center', this.handleViewCenterChange_, this);
     }
 
     this.updateState_();

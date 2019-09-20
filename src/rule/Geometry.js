@@ -1,6 +1,6 @@
 import ngeoFormatAttributeType from 'ngeo/format/AttributeType.js';
 import ngeoRuleRule from 'ngeo/rule/Rule.js';
-import * as olEvents from 'ol/events.js';
+import {listen, unlistenByKey} from 'ol/events.js';
 import olFeature from 'ol/Feature.js';
 import olFormatGeoJSON from 'ol/format/GeoJSON.js';
 
@@ -74,7 +74,7 @@ export default class extends ngeoRuleRule {
     this.geometryChangeListenerKey_ = null;
 
     this.listenerKeys.push(
-      olEvents.listen(
+      listen(
         this.feature_,
         `change:${this.feature.getGeometryName()}`,
         this.handleFeatureGeometryChange_,
@@ -189,14 +189,14 @@ export default class extends ngeoRuleRule {
 
     // (1) Unlisten
     if (this.geometryChangeListenerKey_ !== null) {
-      olEvents.unlistenByKey(this.geometryChangeListenerKey_);
+      unlistenByKey(this.geometryChangeListenerKey_);
       this.geometryChangeListenerKey_ = null;
     }
 
     // (2) Listen, if geom
     const geometry = this.feature_.getGeometry();
     if (geometry) {
-      this.geometryChangeListenerKey_ = olEvents.listen(
+      this.geometryChangeListenerKey_ = listen(
         geometry,
         'change',
         this.handleGeometryChange_,

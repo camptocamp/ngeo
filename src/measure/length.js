@@ -3,7 +3,7 @@ import ngeoDrawController from 'ngeo/draw/Controller.js';
 import ngeoMiscFilters from 'ngeo/misc/filters.js';
 import ngeoGeometryType from 'ngeo/GeometryType.js';
 import ngeoInteractionMeasureLength from 'ngeo/interaction/MeasureLength.js';
-import * as olEvents from 'ol/events.js';
+import {listen} from 'ol/events.js';
 import olStyleStyle from 'ol/style/Style.js';
 
 
@@ -68,18 +68,11 @@ function measureLengthComponent($compile, gettextCatalog, $filter, $injector) {
       drawFeatureCtrl.registerInteraction(measureLength);
       drawFeatureCtrl.measureLength = measureLength;
 
-      olEvents.listen(
-        measureLength,
-        'measureend',
+      listen(measureLength, 'measureend',
         drawFeatureCtrl.handleDrawEnd.bind(drawFeatureCtrl, ngeoGeometryType.LINE_STRING),
         drawFeatureCtrl
       );
-      olEvents.listen(
-        measureLength,
-        'change:active',
-        drawFeatureCtrl.handleActiveChange,
-        drawFeatureCtrl
-      );
+      listen(measureLength, 'change:active', drawFeatureCtrl.handleActiveChange, drawFeatureCtrl);
     }
   };
 }
