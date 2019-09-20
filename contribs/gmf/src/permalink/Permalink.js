@@ -1208,9 +1208,6 @@ PermalinkService.prototype.initLayers_ = function() {
   }
   this.gmfThemes_.getThemesObject().then((themes) => {
     const themeName = this.defaultThemeName();
-    if (themeName === null) {
-      throw new Error('Missing themeName');
-    }
 
     if (this.gmfThemeManager_) {
       this.gmfThemeManager_.setThemeName(this.gmfThemeManager_.modeFlush ? themeName : '');
@@ -1224,9 +1221,6 @@ PermalinkService.prototype.initLayers_ = function() {
     // Check if we have the groups in the permalink
     const groupsNames = this.ngeoLocation_.getParam(PermalinkParam.TREE_GROUPS);
     if (groupsNames === undefined) {
-      if (typeof themeName != 'string') {
-        throw new Error('Wrong themeName type');
-      }
       theme = findThemeByName(themes, themeName);
       if (theme) {
         firstLevelGroups = theme.children;
