@@ -86,7 +86,9 @@ function loaded(page, browser) {
     if (parse(url).host == parse(page_url).host ||
         url.startsWith('http://localhost:3000/') ||
         url.startsWith('https://geomapfish-demo-2-5.camptocamp.com/') ||
-        url.startsWith('https://wms.geo.admin.ch/')) {
+        url.startsWith('https://wmts.geo.admin.ch/') ||
+        url.startsWith('https://wms.geo.admin.ch/') ||
+        url.startsWith('https://ows.asitvd.ch/')) {
       requestsURL.add(url);
       if (url.startsWith('https://geomapfish-demo-2-5.camptocamp.com/')) {
         request.headers().origin = 'http://localhost:3000';

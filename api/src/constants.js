@@ -15,6 +15,7 @@ import EPSG2056 from '@geoblocks/proj/src/EPSG_2056.js';
 export default /** @type {APIConfig} */({
   // The URL to the themes service.
   themesUrl: 'https://www.example.com',
+  localeUrl: undefined,
 
   // The projection of the map
   projection: EPSG2056,
@@ -32,5 +33,5 @@ export default /** @type {APIConfig} */({
   backgroundLayer: 'orthophoto',
 
   // The list of layers (names) that can be queried on mouse click
-  queryableLayers: ['osm_open', 'many_attributes']
+  queryableLayers: ['osm_open', 'many_attributes', 'polygon']
 });

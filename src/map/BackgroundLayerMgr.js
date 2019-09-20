@@ -164,9 +164,8 @@ export class MapBackgroundLayerManager extends olObservable {
     const opacityBackgroundLayer = this.getOpacityBgLayer(map);
     if (opacityBackgroundLayer) {
       const previous = bgGroup.getLayers().remove(opacityBackgroundLayer);
-      const opacity = previous ? previous.getOpacity() : 0;
-      layer.setOpacity(opacity);
-      layer.setVisible(opacity !== 0);
+      layer.setOpacity(previous ? previous.getOpacity() : 0);
+      layer.setVisible(previous ? previous.getVisible() : true);
     }
     const ZIndex = -100;
     layer.setZIndex(ZIndex);
