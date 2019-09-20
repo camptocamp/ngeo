@@ -10,7 +10,7 @@ import gmfPrintComponent from 'gmf/print/component.js';
 
 import gmfThemeThemes from 'gmf/theme/Themes.js';
 import ngeoMapModule from 'ngeo/map/module.js';
-import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
+import EPSG2056 from '@geoblocks/proj/src/EPSG_2056.js';
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
 import olLayerTile from 'ol/layer/Tile.js';
@@ -61,9 +61,9 @@ function MainController(gmfThemes, ngeoFeatureOverlayMgr) {
       })
     ],
     view: new olView({
-      projection: EPSG21781,
+      projection: EPSG2056,
       resolutions: [200, 100, 50, 20, 10, 5, 2.5, 2, 1, 0.5],
-      center: [537635, 152640],
+      center: [2537635, 1152640],
       zoom: 3
     })
   });

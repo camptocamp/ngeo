@@ -1,7 +1,7 @@
 import './asitvd.css';
 import angular from 'angular';
 import ngeoSourceAsitVD from 'ngeo/source/AsitVD.js';
-import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
+import EPSG2056 from '@geoblocks/proj/src/EPSG_2056.js';
 
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
@@ -33,9 +33,9 @@ function MainController() {
       })
     ],
     view: new olView({
-      projection: EPSG21781,
+      projection: EPSG2056,
       resolutions: [250, 100, 50, 20, 10, 5, 2.5, 2, 1.5, 1, 0.5],
-      center: [535000, 154000],
+      center: [2535000, 1154000],
       zoom: 0
     })
   });
