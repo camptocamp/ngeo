@@ -131,7 +131,7 @@
     "tsconfig-paths": "~3.8.0",
     "typedoc": "~0.15.0",
     "typescript": "~3.2.1",
-    "webpack": "~4.31.0",
+    "webpack": "~4.40.2",
     "webpack-cli": "~3.3.2",
     "webpack-dev-server": "~3.6.0",
     "webpack-merge": "~4.2.1"
