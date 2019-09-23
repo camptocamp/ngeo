@@ -33,7 +33,7 @@
     "@babel/core": "~7.6.2",
     "@babel/plugin-syntax-object-rest-spread": "~7.2.0",
     "@babel/plugin-transform-spread": "~7.6.2",
-    "@babel/preset-env": "~7.4.5",
+    "@babel/preset-env": "~7.6.2",
     "@camptocamp/babel-plugin-angularjs-annotate": "~0.8.2",
     "@camptocamp/cesium": "~1.56.1",
     "@fortawesome/fontawesome-free": "~5.8.2",
