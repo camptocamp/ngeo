@@ -121,7 +121,7 @@
     "proj4": "~2.5.0",
     "puppeteer": "~1.18.1",
     "simple-html-tokenizer": "~0.5.7",
-    "sinon": "~7.3.2",
+    "sinon": "~7.5.0",
     "svg-inline-loader": "~0.8.0",
     "svgo": "~1.2.2",
     "svgo-loader": "~2.2.0",
