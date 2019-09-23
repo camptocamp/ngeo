@@ -10,11 +10,11 @@ import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties.js';
 import ngeoGeometryType from 'ngeo/GeometryType.js';
 import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent.js';
 import ngeoMiscDecorate from 'ngeo/misc/decorate.js';
+import ngeoMiscEventHelper from 'ngeo/misc/EventHelper.js';
 import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
 import olFeature from 'ol/Feature.js';
-import * as olBase from 'ol/index.js';
-import * as olEvents from 'ol/events.js';
-import ngeoMiscEventHelper from 'ngeo/misc/EventHelper.js';
+import {getUid} from 'ol/index.js';
+import {listen} from 'ol/events.js';
 
 /**
  * @param {!angular.Scope} $scope Scope.
@@ -187,17 +187,19 @@ exports.prototype.registerInteraction = function(
 exports.prototype.handleActiveChange = function(event) {
   this.active = this.interactions_.some(interaction => interaction.getActive(), this);
   this.interaction_ = this.interactions_.find(interaction => interaction.getActive() === true);
-  const uid = olBase.getUid(this);
 
-  this.ngeoEventHelper_.addListenerKey(
-    uid,
-    olEvents.listen(
-      document.body,
-      'keydown',
-      this.handleEscapeKeyDown_,
-      this
-    )
-  );
+  if (this.interaction_) {
+    const uid = getUid(this);
+    this.ngeoEventHelper_.addListenerKey(
+      uid,
+      listen(
+        document.body,
+        'keydown',
+        this.handleEscapeKeyDown_,
+        this
+      )
+    );
+  }
 };
 
 

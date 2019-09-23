@@ -281,10 +281,11 @@ exports.Controller_.prototype.$onInit = function() {
  * @export
  */
 exports.Controller_.prototype.handleEscapeKeyDown_ = function(event) {
+  const interaction = this.interaction_;
   const escPressed = event.keyCode === 27; // Escape key
-  if (escPressed && this.interaction_.getActive()) {
-    this.interaction_.setActive(false);
-    this.interaction_.setActive(true);
+  if (escPressed && interaction.getActive()) {
+    interaction.setActive(false);
+    interaction.setActive(true);
   }
 };
 
