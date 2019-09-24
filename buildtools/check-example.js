@@ -63,7 +63,7 @@ function loaded(page, browser) {
         browser.close();
       }
     }
-  }, 500);
+  }, 1000);
 }
 (async () => {
   const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-web-security']});
