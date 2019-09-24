@@ -440,7 +440,6 @@ exports.Controller_.prototype.handleActiveChange_ = function(active) {
       this.menu_ = null;
     }
   }
-
 };
 
 
@@ -544,6 +543,9 @@ exports.Controller_.prototype.handleMapSelectActiveChange_ = function(
     olEvents.listen(mapDiv, 'touchend',
       this.handleMapTouchEnd_, this);
 
+    olEvents.listen(document.body, 'keydown',
+      this.handleCancelKeyEvent_, this);
+
   } else {
     olEvents.unlisten(this.map, 'click',
       this.handleMapClick_, this);
@@ -559,6 +561,9 @@ exports.Controller_.prototype.handleMapSelectActiveChange_ = function(
 
     olEvents.unlisten(mapDiv, 'touchend',
       this.handleMapTouchEnd_, this);
+
+    olEvents.unlisten(document.body, 'keydown',
+      this.handleCancelKeyEvent_, this);
   }
 };
 
@@ -597,6 +602,15 @@ exports.Controller_.prototype.handleMapClick_ = function(evt) {
   this.scope_.$apply();
 };
 
+
+exports.Controller_.prototype.handleCancelKeyEvent_ = function() {
+  olEvents.listen(document.body, 'keydown', (e) => {
+    const escPressed = event.keyCode === 27; // Escape key
+    if (escPressed && this.selectedFeature) {
+      this.selectedFeature = null;
+    }
+  });
+};
 
 /**
  * @param {!Event} evt Event.

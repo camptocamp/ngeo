@@ -345,6 +345,10 @@ exports.prototype.onDrawStart_ = function(evt) {
     });
   });
 
+  this.cancelEventKey_ = olEvents.listen(document.body, 'keydown', (event) => {
+    this.handleEscapeKeyDown_(event);
+  });
+
   this.postcomposeEventKey_ = olEvents.listen(this.getMap(), 'postcompose', () => {
     this.measureTooltipOverlay_.setPosition(this.measureTooltipOverlayCoord_);
   });
@@ -374,8 +378,10 @@ exports.prototype.unlistenerEvent_ = function() {
   if (this.changeEventKey_ !== null && this.postcomposeEventKey_ !== null) {
     olEvents.unlistenByKey(this.changeEventKey_);
     olEvents.unlistenByKey(this.postcomposeEventKey_);
+    olEvents.unlistenByKey(this.cancelEventKey_);
     this.changeEventKey_ = null;
     this.postcomposeEventKey_ = null;
+    this.cancelEventKey_ = null;
   }
 };
 
@@ -507,5 +513,19 @@ exports.prototype.handleDrawInteractionActiveChange_ = function() {
   }
 };
 
+
+/**
+ * Called when escape key is pressed to reset drawing.
+ * @param {ol.interaction.Draw.Event|ngeox.MeasureEvent} event Event.
+ * @private
+ * @export
+ */
+exports.prototype.handleEscapeKeyDown_ = function(event) {
+  const escPressed = event.keyCode === 27; // Escape key
+  if (this.drawInteraction_.getActive() && escPressed) {
+    this.drawInteraction_.setActive(false);
+    this.drawInteraction_.setActive(true);
+  }
+};
 
 export default exports;

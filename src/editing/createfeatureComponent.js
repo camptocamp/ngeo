@@ -240,6 +240,17 @@ exports.Controller_.prototype.$onInit = function() {
   this.map.addInteraction(interaction);
 
   const uid = olBase.getUid(this);
+
+  this.ngeoEventHelper_.addListenerKey(
+    uid,
+    olEvents.listen(
+      document.body,
+      'keydown',
+      this.handleEscapeKeyDown_,
+      this
+    )
+  );
+
   if (interaction instanceof olInteractionDraw) {
     this.ngeoEventHelper_.addListenerKey(
       uid,
@@ -264,6 +275,19 @@ exports.Controller_.prototype.$onInit = function() {
   }
 };
 
+/**
+ * Called when escape key is pressed to reset drawing.
+ * @param {ol.interaction.Draw.Event|ngeox.MeasureEvent} event Event.
+ * @export
+ */
+exports.Controller_.prototype.handleEscapeKeyDown_ = function(event) {
+  const interaction = this.interaction_;
+  const escPressed = event.keyCode === 27; // Escape key
+  if (escPressed && interaction.getActive()) {
+    interaction.setActive(false);
+    interaction.setActive(true);
+  }
+};
 
 /**
  * Called when a feature is finished being drawn. Add the feature to the
