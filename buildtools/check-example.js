@@ -22,6 +22,15 @@ const OSMImage = (() => {
   }
 })();
 
+const ASITVDCapabilities = (() => {
+  try {
+    return fs.readFileSync(path.resolve(__dirname, 'asitvd.capabilities.xml'));
+  } catch (e) {
+    // Ignore
+    return undefined;
+  }
+})();
+
 process.on('unhandledRejection', error => {
   console.log(`UnhandledRejection: ${error.message}.`);
   process.exit(2);
@@ -83,12 +92,19 @@ function loaded(page, browser) {
   page.on('request', request => {
     const url = request.url();
     loaded(page, browser);
-    if (parse(url).host == parse(page_url).host ||
+    if (url == "https://ows.asitvd.ch/wmts/1.0.0/WMTSCapabilities.xml") {
+      request.respond({
+        status: 200,
+        headers: {
+          'content-type': 'text/xml',
+        },
+        body: ASITVDCapabilities,
+      });
+    } else if (parse(url).host == parse(page_url).host ||
         url.startsWith('http://localhost:3000/') ||
         url.startsWith('https://geomapfish-demo-2-5.camptocamp.com/') ||
         url.startsWith('https://wmts.geo.admin.ch/') ||
-        url.startsWith('https://wms.geo.admin.ch/') ||
-        url.startsWith('https://ows.asitvd.ch/')) {
+        url.startsWith('https://wms.geo.admin.ch/')) {
       requestsURL.add(url);
       if (url.startsWith('https://geomapfish-demo-2-5.camptocamp.com/')) {
         request.headers().origin = 'http://localhost:3000';
@@ -96,7 +112,8 @@ function loaded(page, browser) {
       request.continue({
         headers: request.headers()
       });
-    } else if (url.includes('tile.openstreetmap.org')) {
+    } else if (url.includes('tile.openstreetmap.org') ||
+        url.includes('https://ows.asitvd.ch') ) {
       request.respond({
         status: 200,
         headers: {
