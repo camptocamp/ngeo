@@ -3,7 +3,7 @@
 const path = require('path');
 const fs = require('fs');
 const puppeteer = require('puppeteer');
-const parse = require('url-parse')
+const parse = require('url-parse');
 
 const arg = process.argv[2];
 if (!arg) {
@@ -38,7 +38,7 @@ function loaded(page, browser) {
     if (requestsURL.size) {
       // @ts-ignore
       if ((new Date() - start) > 60000) {
-        // The page take more than 60s. to load ...
+        console.log(`The page take more than 60s. to load (${(new Date() - start) / 1000}).`);
         console.log('Pending requests:');
         requestsURL.forEach((request) => console.log(request));
         process.exit(2);
