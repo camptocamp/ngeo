@@ -38,7 +38,7 @@
     "@camptocamp/cesium": "~1.56.1",
     "@fortawesome/fontawesome-free": "~5.8.2",
     "@geoblocks/proj": "~0.4.0",
-    "@sentry/browser": "~5.4.2",
+    "@sentry/browser": "~5.6.3",
     "@sentry/types": "~5.6.1",
     "@types/angular": "~1.6.54",
     "@types/angular-animate": "~1.5.10",
