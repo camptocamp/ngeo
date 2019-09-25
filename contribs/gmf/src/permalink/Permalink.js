@@ -4,6 +4,8 @@ import {PermalinkParam} from 'gmf/index.js';
 
 import gmfAuthenticationService from 'gmf/authentication/Service.js';
 
+import gmfLayerBeingSwipe from 'gmf/datasource/LayerBeingSwipe.js';
+
 import gmfThemeManager, {ThemeEventType} from 'gmf/theme/Manager.js';
 
 import gmfThemeThemes, {findThemeByName, findGroupByName} from 'gmf/theme/Themes.js';
@@ -255,6 +257,7 @@ const ParamPrefix = {
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @param {angular.IScope} $rootScope Angular rootScope.
  * @param {angular.auto.IInjectorService} $injector Main injector.
+ * @param {import('gmf/datasource/LayerBeingSwipe.js').LayerBeingSwipe} gmfLayerBeingSwipe
  * @param {import("ngeo/misc/debounce.js").miscDebounce<function(): void>} ngeoDebounce ngeo Debounce factory.
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext service.
  * @param {import("ngeo/misc/EventHelper.js").EventHelper} ngeoEventHelper Ngeo event helper service
@@ -267,7 +270,7 @@ const ParamPrefix = {
  */
 export function PermalinkService(
   $q, $timeout, $rootScope, $injector, ngeoDebounce, gettextCatalog, ngeoEventHelper, ngeoStateManager,
-  ngeoLocation
+  ngeoLocation, gmfLayerBeingSwipe
 ) {
 
   /**
@@ -330,6 +333,12 @@ export function PermalinkService(
    */
   this.ngeoBackgroundLayerMgr_ = $injector.has('ngeoBackgroundLayerMgr') ?
     $injector.get('ngeoBackgroundLayerMgr') : null;
+
+  /**
+   * @type {import('gmf/datasource/LayerBeingSwipe.js').LayerBeingSwipe}
+   * @private
+   */
+  this.gmfLayerBeingSwipe = gmfLayerBeingSwipe;
 
   /**
    * @type {?import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr}
@@ -627,6 +636,11 @@ export function PermalinkService(
     });
   }
 
+  // Watch gmfLayerBeingSwipe
+  this.rootScope_.$watch(
+    () => this.gmfLayerBeingSwipe.layer,
+    this.handleLayerBeingSwipeChange_.bind(this));
+
   // External DataSources
 
   /**
@@ -682,6 +696,28 @@ export function PermalinkService(
   this.initLayers_();
 }
 
+/**
+   * Called when layer being swipe
+   * @param {?import("ol/layer/Layer.js").default<import('ol/source/Source.js').default>
+   * |import("ol/layer/Group.js").default} layer layer object.
+   * @param {?import("ol/layer/Layer.js").default<import('ol/source/Source.js').default>
+   * |import("ol/layer/Group.js").default} oldLayer  old layer object.
+   * @private
+   */
+PermalinkService.prototype.handleLayerBeingSwipeChange_ = function(layer, oldLayer) {
+  if (layer === oldLayer) {
+    return;
+  }
+  if (layer) {
+    /** @type {Object<string, object>} */
+    const object = {};
+    const dataSourceId = layer.get('dataSourceId');
+    object[PermalinkParam.MAP_SWIPE] = dataSourceId;
+    this.ngeoStateManager_.updateState(object);
+  } else {
+    this.ngeoStateManager_.deleteParam(PermalinkParam.MAP_SWIPE);
+  }
+};
 
 // === Map X, Y, Z ===
 
@@ -1023,7 +1059,6 @@ PermalinkService.prototype.getBackgroundLayerOpacity = function() {
   return opacity_ === undefined ? null : opacity_ / 100;
 };
 
-
 /**
  * Called when the background layer changes. Update the state using the
  * background layer label, i.e. its name.
@@ -1248,7 +1283,9 @@ PermalinkService.prototype.initLayers_ = function() {
         }
         return;
       }
-
+      // Get the layerBeingSwipe value from Permalink.
+      const layerBeingSwipeValue = this.ngeoStateManager_.getInitialNumberValue(
+        PermalinkParam.MAP_SWIPE);
       /**
        * Enable the layers and set the opacity
        * @param {import('ngeo/layertree/Controller.js').LayertreeController} treeCtrl Controller
@@ -1260,15 +1297,22 @@ PermalinkService.prototype.initLayers_ = function() {
         }
         const groupNode = /** @type {import('gmf/themes.js').GmfGroup} */(treeCtrl.node);
         const parentGroupNode = /** @type {import('gmf/themes.js').GmfGroup} */(treeCtrl.parent.node);
-
         const opacity = this.ngeoStateManager_.getInitialNumberValue((
           parentGroupNode.mixed ?
             ParamPrefix.TREE_OPACITY :
             ParamPrefix.TREE_GROUP_OPACITY
         ) + treeCtrl.node.name);
-        if (opacity !== undefined && treeCtrl.layer) {
-          treeCtrl.layer.setOpacity(opacity);
+
+        if (treeCtrl.layer) {
+          if (opacity !== undefined) {
+            treeCtrl.layer.setOpacity(opacity);
+          }
+          // === Set the gmfLayerBeingSwipe layer ===
+          if (layerBeingSwipeValue !== null && treeCtrl.layer.get('dataSourceId') === layerBeingSwipeValue) {
+            this.gmfLayerBeingSwipe.layer = treeCtrl.layer;
+          }
         }
+
         if (treeCtrl.parent.node && parentGroupNode.mixed && groupNode.children == undefined) {
           // Layer of a mixed group
           const enable = this.ngeoStateManager_.getInitialBooleanValue(
@@ -1848,6 +1892,7 @@ const module = angular.module('gmfPermalink', [
   gmfThemeManager.name,
   gmfThemeThemes.name,
   ngeoDrawFeatures.name,
+  gmfLayerBeingSwipe.name,
   ngeoLayertreeController.name,
   ngeoMiscDebounce.name,
   ngeoMiscEventHelper.name,

@@ -148,6 +148,7 @@ export class ThemesService extends olEventsEventTarget {
       const ids = [];
       getIds(item, ids);
       layer.set('querySourceIds', ids);
+      layer.set('dataSourceId', item.id);
       return layer;
     };
 
