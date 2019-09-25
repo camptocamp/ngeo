@@ -30,6 +30,7 @@ addons:
 cache:
   apt: true
   pip: true
+  npm: false
 
 before_install:
 - python3 --version
