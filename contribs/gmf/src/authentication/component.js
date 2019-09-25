@@ -330,6 +330,7 @@ class AuthenticationController {
             );
           })
           .catch((err) => {
+            this.oldPwdVal = '';
             this.setError_(gettextCatalog.getString('Incorrect old password.'));
           });
       }
@@ -354,9 +355,12 @@ class AuthenticationController {
     } else {
       this.gmfAuthenticationService_.login(this.loginVal, this.pwdVal)
         .then(() => {
+          this.loginVal = '';
+          this.pwdVal = '';
           this.resetError_();
         })
         .catch(() => {
+          this.pwdVal = '';
           this.setError_(gettextCatalog.getString('Incorrect credentials or disabled account.'));
         });
     }
