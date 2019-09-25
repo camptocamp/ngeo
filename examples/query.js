@@ -1,5 +1,6 @@
 import angular from 'angular';
 import {MAPSERVER_PROXY, MAPSERVER_WFS_FEATURE_NS} from './url.js';
+import './base.css';
 import './query.css';
 import EPSG2056 from '@geoblocks/proj/src/EPSG_2056.js';
 
@@ -12,6 +13,7 @@ import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent.js';
 import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
 import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr.js';
 import ngeoQueryComponent from 'ngeo/query/component.js';
+import ngeoQueryPanelComponent from 'ngeo/query/panelComponent.js';
 import ngeoQueryModule from 'ngeo/query/module.js';
 
 import olMap from 'ol/Map.js';
@@ -30,6 +32,7 @@ const module = angular.module('app', [
   ngeoMiscBtnComponent.name,
   ngeoMiscToolActivateMgr.name,
   ngeoQueryComponent.name,
+  ngeoQueryPanelComponent.name,
   ngeoQueryModule.name,
 ]);
 
@@ -192,10 +195,10 @@ function MainController(
   }));
 
   const queryToolActivate = new ngeoMiscToolActivate(this, 'queryActive');
-  ngeoToolActivateMgr.registerTool('mapTools', queryToolActivate, true);
+  ngeoToolActivateMgr.registerTool('mapTools', queryToolActivate);
 
   const dummyToolActivate = new ngeoMiscToolActivate(this, 'dummyActive');
-  ngeoToolActivateMgr.registerTool('mapTools', dummyToolActivate);
+  ngeoToolActivateMgr.registerTool('mapTools', dummyToolActivate, true);
 
 }
 
@@ -204,11 +207,11 @@ function MainController(
  * @param {boolean|undefined} val Value.
  * @return {boolean|undefined} Value.
  */
-MainController.prototype.getSetDummyActive = function(val) {
+MainController.prototype.getSetQueryActive = function(val) {
   if (val !== undefined) {
-    this.dummyActive = val;
+    this.queryActive = val;
   } else {
-    return this.dummyActive;
+    return this.queryActive;
   }
 };
 

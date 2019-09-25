@@ -868,3 +868,12 @@ ngeo-googlestreetview {
   height: calc(100% - 3.75rem);
   width: $streeview-width;
 }
+
+/**
+ * Ngeo Query Panel Component
+ */
+ngeo-query-panel {
+  .ngeo-query-panel-actions {
+    margin: 2rem 0 0 0;
+  }
+}

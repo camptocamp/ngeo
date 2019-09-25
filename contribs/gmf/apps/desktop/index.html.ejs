@@ -84,6 +84,10 @@
               data-toggle="tooltip" data-placement="left" data-original-title="{{'Profile'|translate}}">
               <span class="fa fa-chart-area"></span>
             </button>
+            <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.queryPanelActive"
+              data-toggle="tooltip" data-placement="left" data-original-title="{{'Selection'|translate}}">
+              <span class="fa fa-info"></span>
+            </button>
             <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.importDataSourceActive"
                     data-toggle="tooltip" data-placement="left" data-original-title="{{'Import Layer'|translate}}">
               <span class="fa fa-upload"></span>
@@ -191,6 +195,15 @@
                   </em>
                 </p>
               </div>
+            </div>
+          </div>
+          <div ng-show="mainCtrl.queryPanelActive" class="row">
+            <div class="col-sm-12">
+              <div class="gmf-app-tools-content-heading">
+                {{'Selection'|translate}}
+                <a class="btn close" ng-click="mainCtrl.queryPanelActive = false">&times;</a>
+              </div>
+              <ngeo-query-panel></ngeo-query-panel>
             </div>
           </div>
           <div ng-show="mainCtrl.importDataSourceActive" class="row">

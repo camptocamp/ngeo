@@ -1,5 +1,27 @@
 
+#map,
+.app-query {
+  float: left;
+}
+
 #map {
   width: 600px;
   height: 400px;
+}
+
+.app-query {
+  margin: 1rem;
+}
+
+#desc {
+  clear: both;
+}
+
+ngeo-query-panel {
+  display: block;
+  margin: 1rem 0 0 0;
+}
+
+ngeo-query-panel .ngeo-query-panel-actions {
+  margin: 1rem 0 0 0;
 }

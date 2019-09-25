@@ -1,0 +1,61 @@
+<div
+  class="btn-group"
+>
+  <button
+    data-toggle="tooltip"
+    title="{{'While active, click on the map to issue a query' | translate}}"
+    class="btn btn-default"
+    ng-class="{active: $ctrl.ngeoQueryModeSelector.mode === 'click'}"
+    ng-click="$ctrl.ngeoQueryModeSelector.mode = 'click'"
+  >
+    <%=require('ngeo/icons/point.svg?viewbox&height=1em')%>
+  </button>
+  <button
+    data-toggle="tooltip"
+    title="{{'While active, click twice the map to issue a query using a box' | translate}}"
+    class="btn btn-default"
+    ng-class="{active: $ctrl.ngeoQueryModeSelector.mode === 'drawbox'}"
+    ng-click="$ctrl.ngeoQueryModeSelector.mode = 'drawbox'"
+  >
+    <%=require('ngeo/icons/rectangle.svg?viewbox&height=1em')%>
+  </button>
+</div>
+
+<div class="ngeo-query-panel-actions">
+  <div class="form-check">
+    <label class="form-check-label">
+      <input
+        type="radio"
+        class="form-check-input"
+        ng-model="$ctrl.ngeoQueryModeSelector.action"
+        value="add"
+      >
+        <span>{{'Add' | translate }}</span>
+      </input>
+    </label>
+  </div>
+  <div class="form-check">
+    <label class="form-check-label">
+      <input
+        type="radio"
+        class="form-check-input"
+        ng-model="$ctrl.ngeoQueryModeSelector.action"
+        value="remove"
+      >
+        <span>{{'Remove' | translate }}</span>
+      </input>
+    </label>
+  </div>
+  <div class="form-check">
+    <label class="form-check-label">
+      <input
+        type="radio"
+        class="form-check-input"
+        ng-model="$ctrl.ngeoQueryModeSelector.action"
+        value="replace"
+      >
+        <span>{{'Replace' | translate }}</span>
+      </input>
+    </label>
+  </div>
+</div>
