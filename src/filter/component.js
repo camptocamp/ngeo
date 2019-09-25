@@ -239,7 +239,7 @@ class FilterController {
     this.scope_.$watch(
       () => this.datasource.filterRules,
       () => {
-        this.filterIsApplied = this.hasARule();
+        this.filterIsApplied = this.hasARuleActive();
       }
     );
 
@@ -287,10 +287,22 @@ class FilterController {
 
 
   /**
-   * @return {boolean} True if at least one rule is currently defined.
+   * @return {boolean} True if at least one rule is currently defined with an expression.
    */
-  hasARule() {
-    return this.customRules.length > 0 || this.directedRules.length > 0;
+  hasARuleActive() {
+    let customRuleActive = false;
+    let directedRuleActive = false;
+    for (const rule of this.customRules) {
+      if (rule.expression) {
+        customRuleActive = true;
+      }
+    }
+    for (const rule of this.directedRules) {
+      if (rule.expression) {
+        directedRuleActive = true;
+      }
+    }
+    return customRuleActive || directedRuleActive;
   }
 
 
