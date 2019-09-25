@@ -5,8 +5,8 @@
     data-toggle="tooltip"
     title="{{'While active, click on the map to issue a query' | translate}}"
     class="btn btn-default"
-    ng-class="{active: qpCtrl.ngeoQueryModeSelector.mode === 'click'}"
-    ng-click="qpCtrl.ngeoQueryModeSelector.mode = 'click'"
+    ng-class="{active: $ctrl.ngeoQueryModeSelector.mode === 'click'}"
+    ng-click="$ctrl.ngeoQueryModeSelector.mode = 'click'"
   >
     <%=require('ngeo/icons/point.svg?viewbox&height=1em')%>
   </button>
@@ -14,8 +14,8 @@
     data-toggle="tooltip"
     title="{{'While active, click twice the map to issue a query using a box' | translate}}"
     class="btn btn-default"
-    ng-class="{active: qpCtrl.ngeoQueryModeSelector.mode === 'drawbox'}"
-    ng-click="qpCtrl.ngeoQueryModeSelector.mode = 'drawbox'"
+    ng-class="{active: $ctrl.ngeoQueryModeSelector.mode === 'drawbox'}"
+    ng-click="$ctrl.ngeoQueryModeSelector.mode = 'drawbox'"
   >
     <%=require('ngeo/icons/rectangle.svg?viewbox&height=1em')%>
   </button>
@@ -27,7 +27,7 @@
       <input
         type="radio"
         class="form-check-input"
-        ng-model="qpCtrl.ngeoQueryModeSelector.action"
+        ng-model="$ctrl.ngeoQueryModeSelector.action"
         value="add"
       >
         <span>{{'Add' | translate }}</span>
@@ -39,7 +39,7 @@
       <input
         type="radio"
         class="form-check-input"
-        ng-model="qpCtrl.ngeoQueryModeSelector.action"
+        ng-model="$ctrl.ngeoQueryModeSelector.action"
         value="remove"
       >
         <span>{{'Remove' | translate }}</span>
@@ -51,7 +51,7 @@
       <input
         type="radio"
         class="form-check-input"
-        ng-model="qpCtrl.ngeoQueryModeSelector.action"
+        ng-model="$ctrl.ngeoQueryModeSelector.action"
         value="replace"
       >
         <span>{{'Replace' | translate }}</span>

@@ -73,10 +73,8 @@ class QueryPanelController {
   }
 }
 
-module.controller('ngeoQueryPanelController', QueryPanelController);
-
 module.component('ngeoQueryPanel', {
-  controller: 'ngeoQueryPanelController as qpCtrl',
+  controller: QueryPanelController,
   templateUrl: ngeoQueryPanelTemplateUrl
 });
 
