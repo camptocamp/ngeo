@@ -23,7 +23,7 @@ ngeo-mapswipe .swipe-input {
 
   &::-webkit-slider-thumb {
     appearance: none;
-    border: 1px solid $border-color;
+    border: $border;
     cursor: pointer;
     height: 900px;
     pointer-events: auto;

@@ -14,13 +14,13 @@
     overflow-y: auto;
     background-color: $map-tools-bg-color;
     box-shadow: $light-box-shadow;
-    border: solid 0.06rem $border-color;
+    border: $border;
 
     .tt-suggestion {
       text-align: left;
       padding: $app-margin;
       margin: 0;
-      border-bottom: solid 0.06rem $border-color;
+      border-bottom: $border;
 
       &:hover, &.tt-cursor {
         cursor: pointer;
