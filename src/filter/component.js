@@ -77,6 +77,7 @@ module.component('ngeoFilter', {
     'datasource': '<',
     'directedRules': '<',
     'featureOverlay': '<',
+    'filterIsApplied': '=',
     'map': '<',
     'toolGroup': '<'
   },
@@ -141,6 +142,10 @@ class FilterController {
      */
     this.toolGroup = '';
 
+    /**
+     * @type {boolean}
+     */
+    this.filterIsApplied = false;
 
     // === Injected properties ===
 
@@ -231,6 +236,13 @@ class FilterController {
       this.handleARuleIsActiveChange_.bind(this)
     );
 
+    this.scope_.$watch(
+      () => this.datasource.filterRules,
+      () => {
+        this.filterIsApplied = this.hasARule();
+      }
+    );
+
     // (1) Separate the attributes in 2: geometry and the others.
     const attributes = this.datasource.attributes;
     for (const attribute of attributes) {
@@ -242,10 +254,10 @@ class FilterController {
     }
 
     // (2) All rules that have geometry are added in the featureOverlay
-    /** @type {import("ngeo/rule/Rule.js").default[]} */
-    const rules_ = [];
-    const rules = rules_.concat(this.customRules, this.directedRules);
-    for (const rule of rules) {
+    for (const rule of this.customRules) {
+      this.registerRule_(rule);
+    }
+    for (const rule of this.directedRules) {
       this.registerRule_(rule);
     }
 
@@ -277,11 +289,9 @@ class FilterController {
   /**
    * @return {boolean} True if at least one rule is currently defined.
    */
-  // hasARule() {
-  //   /** @type {import("ngeo/rule/Rule.js").default[]} */
-  //   const a = [];
-  //   return a.concat(this.customRules, this.directedRules).length > 0;
-  // }
+  hasARule() {
+    return this.customRules.length > 0 || this.directedRules.length > 0;
+  }
 
 
   /**

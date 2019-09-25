@@ -140,7 +140,6 @@ class FilterSelectorController {
      */
     this.toolGroup = null;
 
-
     // Injected properties
 
     /**
@@ -768,7 +767,8 @@ module.component('gmfFilterselector', {
   bindings: {
     active: '=',
     map: '<',
-    toolGroup: '<'
+    toolGroup: '<',
+    filterIsApplied: '='
   },
   controller: FilterSelectorController,
   templateUrl: gmfFilterselectorTemplateUrl
