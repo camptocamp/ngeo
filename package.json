@@ -113,7 +113,7 @@
     "moment": "~2.24.0",
     "node-sass": "~4.12.0",
     "node-sass-importer": "~1.0.0",
-    "ol": "6.0.0-dev.25",
+    "ol": "6.0.0-dev.1569433045197",
     "ol-cesium": "~2.9.0",
     "ol-layerswitcher": "~3.4.0",
     "parse-absolute-css-unit": "~1.0.2",
