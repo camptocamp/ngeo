@@ -153,6 +153,11 @@ class Controller {
     /**
      * @type {?string}
      */
+    this.searchText = null;
+
+    /**
+     * @type {?string}
+     */
     this.url = null;
 
 
@@ -339,6 +344,7 @@ class Controller {
         (wmsCapabilities) => {
           this.wmsCapabilities = wmsCapabilities;
           this.stopWorking_();
+          this.search();
         },
         () => {
           // Something went wrong...
@@ -350,6 +356,7 @@ class Controller {
         (wmtsCapabilities) => {
           this.wmtsCapabilities = wmtsCapabilities;
           this.stopWorking_();
+          this.search();
         },
         () => {
           // Something went wrong...
@@ -397,6 +404,67 @@ class Controller {
     return nameAndSize;
   }
 
+  /**
+   * Apply search on current tree.
+   */
+  search() {
+    if (this.wmsCapabilities !== null) {
+      this.filterLayer(this.wmsCapabilities.Capability.Layer);
+    }
+    if (this.wmtsCapabilities !== null) {
+      for (const layer of this.wmtsCapabilities.Contents.Layer) {
+        this.filterLayer(layer);
+      }
+    }
+  }
+
+  /**
+   * Recursively apply filter on layer, setting some custom properties:
+   * - _visible: true if searchText is empty or searchText is found in
+   * layer.Title or in any of its ancestors or in any of its descendants.
+   * - _expanded: true if searchText is found in any of its descendants.
+   * - _searchPrefix: subtring before searchText in layer.Title.
+   * - _searchMatch: subtring matching searchText in layer.Title.
+   * - _searchSuffix: subtring after searchText in layer.Title.
+   * @param {Object} layer WMS Capability Layer object.
+   * @param {boolean} visible Force layer to be visible.
+   */
+  filterLayer(layer, visible = false) {
+    layer._visible = visible;
+    layer._searchMatch = null;
+    layer._expanded = false;
+
+    if (!this.searchText) {
+      layer._visible = true;
+    } else {
+      // Search for searchText in layer.Title
+      /** @type {number} */
+      const index = layer.Title.toLowerCase().indexOf(this.searchText.toLowerCase());
+      if (index >= 0) {
+        layer._searchPrefix = layer.Title.substring(0, index);
+        layer._searchMatch = layer.Title.substring(index, index + this.searchText.length);
+        layer._searchSuffix = layer.Title.substring(index + this.searchText.length);
+        layer._visible = true;
+      }
+    }
+
+    // Process children
+    let childVisible = false;
+    if (layer.Layer !== undefined) {
+      for (const child of layer.Layer) {
+        this.filterLayer(child, layer._visible);
+        if (child._visible) {
+          childVisible = true;
+        }
+        if (child._expanded || child._searchMatch) {
+          layer._expanded = true;
+        }
+      }
+    }
+    if (childVisible) {
+      layer._visible = true;
+    }
+  }
 
   // === Private methods ===
 
