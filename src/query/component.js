@@ -126,6 +126,16 @@ class QueryController {
     });
 
     /**
+     * @type {olInteractionDraw}
+     * @private
+     */
+    this.drawPolygonInteraction_ = new olInteractionDraw({
+      condition: olEventsConditionAlways,
+      source: this.vectorSource_,
+      type: 'Polygon'
+    });
+
+    /**
      * The event keys of the currently active "mode".
      *
      * @type {Array<import('ol/events.js').EventsKey>}
@@ -229,6 +239,19 @@ class QueryController {
         );
         break;
 
+      case ngeoQueryMode.DRAW_POLYGON:
+        this.map.addLayer(this.vectorLayer_);
+        this.map.addInteraction(this.drawPolygonInteraction_);
+        this.listenerKeys_.push(
+          olEventsListen(
+            this.drawPolygonInteraction_,
+            'drawend',
+            this.handleDrawPolygonInteractionDrawEnd_,
+            this
+          )
+        );
+        break;
+
       default:
         break;
     }
@@ -261,6 +284,11 @@ class QueryController {
       case ngeoQueryMode.DRAW_BOX:
         this.map.removeLayer(this.vectorLayer_);
         this.map.removeInteraction(this.drawBoxInteraction_);
+        break;
+
+      case ngeoQueryMode.DRAW_POLYGON:
+        this.map.removeLayer(this.vectorLayer_);
+        this.map.removeInteraction(this.drawPolygonInteraction_);
         break;
 
       default:
@@ -308,7 +336,7 @@ class QueryController {
    * @private
    */
   handleDrawBoxInteractionDrawEnd_(evt) {
-    // @ts-ignore: evt should be of type {import('ol/interaction/Draw.js').DrawEvent but he is private
+    // @ts-ignore: evt should be of type {import('ol/interaction/Draw.js').DrawEvent but it is private
     const feature = evt.feature;
 
     const action = this.ngeoQueryModeSelector_.action;
@@ -319,6 +347,35 @@ class QueryController {
     this.ngeoMapQuerent_.issue({
       action,
       extent,
+      limit,
+      map
+    })
+      .then(() => {})
+      .catch(() => {})
+      .then(() => {
+        // "finally"
+        this.vectorSource_.clear();
+      });
+  }
+
+  /**
+   * Called when a polygon is drawn on the map. Use it to issue a query.
+   * @param {Event|import("ol/events/Event.js").default} evt The draw
+   *     interaction drawend event being fired.
+   * @private
+   */
+  handleDrawPolygonInteractionDrawEnd_(evt) {
+    // @ts-ignore: evt should be of type {import('ol/interaction/Draw.js').DrawEvent but it is private
+    const feature = evt.feature;
+
+    const action = this.ngeoQueryModeSelector_.action;
+    const geometry = feature.getGeometry();
+    const limit = this.getLimitOption_();
+    const map = this.map;
+
+    this.ngeoMapQuerent_.issue({
+      action,
+      geometry,
       limit,
       map
     })
@@ -392,7 +449,7 @@ class QueryController {
 module.component('ngeoQuery', {
   bindings: {
     'active': '=',
-    'autoclear': '<?',
+    'autoclear': '=?',
     'map': '<'
   },
   controller: QueryController
