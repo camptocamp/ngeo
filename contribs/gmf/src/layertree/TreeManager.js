@@ -303,47 +303,9 @@ LayertreeTreeManager.prototype.addFirstLevelGroup_ = function(group) {
     this.promiseForGroupsToAddInThisDigestLoop_ = null;
   });
 
-  // If the group has the `exclusiveGroup` property set, then make
-  // sure that only one of its children can be checked,
-  // i.e. 'visible'.
-  if (group.metadata.exclusiveGroup) {
-    this.manageExclusiveGroupSingleChecked_(group, false);
-  }
-
   return true;
 };
 
-/**
- * Loop in the children of a node. Make sure that only one of them can
- * be checked. If a child also have children, include them in the loop
- * as well.
- *
- * @param {import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer} node Group or layer node
- * @param {boolean} found Whether a checked node was already found or not.
- * @return {boolean} Whether a checked node was already found or not.
- * @private
- */
-LayertreeTreeManager.prototype.manageExclusiveGroupSingleChecked_ = function(node, found) {
-  const groupNode = /** @type import('gmf/themes.js').GmfGroup */ (node);
-  const children = groupNode.children;
-  if (children) {
-    for (const child of children) {
-      const childGroup = /** @type import('gmf/themes.js').GmfGroup */ (child);
-      if (childGroup.children) {
-        found = this.manageExclusiveGroupSingleChecked_(childGroup, found);
-      } else {
-        if (child.metadata.isChecked) {
-          if (found) {
-            child.metadata.isChecked = false;
-          } else {
-            found = true;
-          }
-        }
-      }
-    }
-  }
-  return found;
-};
 
 /**
  * Retrieve a group (first found) by its name and add in the tree. Do nothing
