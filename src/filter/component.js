@@ -77,6 +77,7 @@ module.component('ngeoFilter', {
     'datasource': '<',
     'directedRules': '<',
     'featureOverlay': '<',
+    'filterIsApplied': '=',
     'map': '<',
     'toolGroup': '<'
   },
@@ -141,6 +142,10 @@ class FilterController {
      */
     this.toolGroup = '';
 
+    /**
+     * @type {boolean}
+     */
+    this.filterIsApplied = false;
 
     // === Injected properties ===
 
@@ -231,6 +236,13 @@ class FilterController {
       this.handleARuleIsActiveChange_.bind(this)
     );
 
+    this.scope_.$watch(
+      () => this.datasource.filterRules,
+      () => {
+        this.filterIsApplied = this.hasARuleActive();
+      }
+    );
+
     // (1) Separate the attributes in 2: geometry and the others.
     const attributes = this.datasource.attributes;
     for (const attribute of attributes) {
@@ -242,10 +254,10 @@ class FilterController {
     }
 
     // (2) All rules that have geometry are added in the featureOverlay
-    /** @type {import("ngeo/rule/Rule.js").default[]} */
-    const rules_ = [];
-    const rules = rules_.concat(this.customRules, this.directedRules);
-    for (const rule of rules) {
+    for (const rule of this.customRules) {
+      this.registerRule_(rule);
+    }
+    for (const rule of this.directedRules) {
       this.registerRule_(rule);
     }
 
@@ -275,12 +287,22 @@ class FilterController {
 
 
   /**
-   * @return {boolean} True if at least one rule is currently defined.
+   * @return {boolean} True if at least one rule is currently defined with an expression.
    */
-  hasARule() {
-    /** @type {import("ngeo/rule/Rule.js").default[]} */
-    const a = [];
-    return a.concat(this.customRules, this.directedRules).length > 0;
+  hasARuleActive() {
+    let customRuleActive = false;
+    let directedRuleActive = false;
+    for (const rule of this.customRules) {
+      if (rule.expression) {
+        customRuleActive = true;
+      }
+    }
+    for (const rule of this.directedRules) {
+      if (rule.expression) {
+        directedRuleActive = true;
+      }
+    }
+    return customRuleActive || directedRuleActive;
   }
 
 
@@ -357,10 +379,12 @@ class FilterController {
    */
   getRulesWithValue_() {
     const filterRules = [];
-    /** @type {import("ngeo/rule/Rule.js").default[]} */
-    const a = [];
-    const rules = a.concat(this.customRules, this.directedRules);
-    for (const rule of rules) {
+    for (const rule of this.customRules) {
+      if (rule.value) {
+        filterRules.push(rule);
+      }
+    }
+    for (const rule of this.directedRules) {
       if (rule.value) {
         filterRules.push(rule);
       }
@@ -456,10 +480,13 @@ class FilterController {
    */
   handleRuleActiveChange_() {
     let aRuleIsActive = false;
-    /** @type {import("ngeo/rule/Rule.js").default[]} */
-    const a = [];
-    const rules = a.concat(this.customRules, this.directedRules);
-    for (const rule of rules) {
+    for (const rule of this.customRules) {
+      if (rule.active) {
+        aRuleIsActive = true;
+        break;
+      }
+    }
+    for (const rule of this.directedRules) {
       if (rule.active) {
         aRuleIsActive = true;
         break;
@@ -477,10 +504,13 @@ class FilterController {
     if (this.aRuleIsActive) {
       return;
     }
-    /** @type {import("ngeo/rule/Rule.js").default[]} */
-    const a = [];
-    const rules = a.concat(this.customRules, this.directedRules);
-    for (const rule of rules) {
+    for (const rule of this.customRules) {
+      if (rule.active) {
+        rule.active = false;
+        break;
+      }
+    }
+    for (const rule of this.directedRules) {
       if (rule.active) {
         rule.active = false;
         break;

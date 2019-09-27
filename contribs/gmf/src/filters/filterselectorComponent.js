@@ -125,11 +125,6 @@ class FilterSelectorController {
      */
     this.active = false;
 
-    $scope.$watch(
-      () => this.active,
-      this.handleActiveChange_.bind(this)
-    );
-
     /**
      * @type {?import("ol/Map.js").default}
      */
@@ -139,7 +134,6 @@ class FilterSelectorController {
      * @type {?string}
      */
     this.toolGroup = null;
-
 
     // Injected properties
 
@@ -349,23 +343,6 @@ class FilterSelectorController {
     const newDataSourceRegistration = !!this.filtrableLayerNodeNames_;
     if (this.enableDataSourceRegistration_ !== newDataSourceRegistration) {
       this.enableDataSourceRegistration_ = newDataSourceRegistration;
-    }
-  }
-
-
-  /**
-   * Called when the active property changes. Toggle data source registration.
-   * Also, when deactivated, deselect data source.
-   * @param {boolean} active Active.
-   * @private
-   * @hidden
-   */
-  handleActiveChange_(active) {
-    if (!active) {
-      this.aRuleIsActive = false;
-      this.timeout_(() => {
-        this.gmfDataSourceBeingFiltered.dataSource = null;
-      });
     }
   }
 
@@ -768,7 +745,8 @@ module.component('gmfFilterselector', {
   bindings: {
     active: '=',
     map: '<',
-    toolGroup: '<'
+    toolGroup: '<',
+    filterIsApplied: '='
   },
   controller: FilterSelectorController,
   templateUrl: gmfFilterselectorTemplateUrl
