@@ -82,7 +82,7 @@
     "d3": "~5.12.0",
     "editorconfig-checker": "~3.0.2",
     "ejs-loader": "~0.3.3",
-    "eslint": "~6.4.0",
+    "eslint": "~6.5.0",
     "eslint-config-openlayers": "~12.0.0",
     "eslint-plugin-googshift": "~0.9.3",
     "eslint-plugin-import": "~2.18.2",
