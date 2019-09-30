@@ -23,8 +23,8 @@
     data-toggle="tooltip"
     title="{{'While active, click on the map multiple times to draw a polygon, which will issue a query using it' | translate}}"
     class="btn btn-default"
-    ng-class="{active: qpCtrl.ngeoQueryModeSelector.mode === 'drawpolygon'}"
-    ng-click="qpCtrl.ngeoQueryModeSelector.mode = 'drawpolygon'"
+    ng-class="{active: $ctrl.ngeoQueryModeSelector.mode === 'drawpolygon'}"
+    ng-click="$ctrl.ngeoQueryModeSelector.mode = 'drawpolygon'"
   >
     <%=require('ngeo/icons/polygon.svg?viewbox&height=1em')%>
   </button>
