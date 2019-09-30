@@ -1306,10 +1306,8 @@ PermalinkService.prototype.initLayers_ = function() {
             treeCtrl.layer.setOpacity(opacity);
           }
           // === Set the gmfLayerBeingSwipe layer ===
-          if (layerBeingSwipeValue == undefined) {
-            return;
-          }
-          if (layerBeingSwipeValue !== null && treeCtrl.layer.get('dataSourceId') === layerBeingSwipeValue) {
+          if (layerBeingSwipeValue !== null && layerBeingSwipeValue !== undefined
+            && treeCtrl.layer.get('dataSourceId') === layerBeingSwipeValue) {
             this.gmfLayerBeingSwipe.layer = treeCtrl.layer;
           }
         }
