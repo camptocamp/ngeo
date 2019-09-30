@@ -698,8 +698,8 @@ export function PermalinkService(
 
 /**
    * Called when layer being swipe
-   * @param {?import("ol/layer/Layer.js").default<import('ol/source/Source.js').default>} layer layer object.
-   * @param {?import("ol/layer/Layer.js").default<import('ol/source/Source.js').default>} oldLayer  old layer object.
+   * @param {?import("ol/layer/Layer.js").default<import('ol/source/Source.js').default>|import("ol/layer/Group.js").default} layer layer object.
+   * @param {?import("ol/layer/Layer.js").default<import('ol/source/Source.js').default>|import("ol/layer/Group.js").default} oldLayer  old layer object.
    * @private
    */
 PermalinkService.prototype.handleLayerBeingSwipeChange_ = function(layer, oldLayer) {
@@ -1306,6 +1306,9 @@ PermalinkService.prototype.initLayers_ = function() {
             treeCtrl.layer.setOpacity(opacity);
           }
           // === Set the gmfLayerBeingSwipe layer ===
+          if (layerBeingSwipeValue == undefined) {
+            return;
+          }
           if (layerBeingSwipeValue !== null && treeCtrl.layer.get('dataSourceId') === layerBeingSwipeValue) {
             this.gmfLayerBeingSwipe.layer = treeCtrl.layer;
           }
