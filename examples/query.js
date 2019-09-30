@@ -86,7 +86,6 @@ module.controller('AppQueryresultController', QueryresultController);
 
 
 /**
- * @param {angular.IScope} $scope Scope.
  * @param {import("ngeo/datasource/DataSources.js").DataSource} ngeoDataSources Ngeo data sources service.
  * @param {import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr} ngeoToolActivateMgr The ngeo ToolActivate
  *     manager.
@@ -95,9 +94,7 @@ module.controller('AppQueryresultController', QueryresultController);
  * @constructor
  * @ngInject
  */
-function MainController(
-  $scope, ngeoDataSources, ngeoToolActivateMgr, ngeoQueryModeSelector
-) {
+function MainController(ngeoDataSources, ngeoToolActivateMgr, ngeoQueryModeSelector) {
 
   /**
    * @type {boolean}
