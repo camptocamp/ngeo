@@ -995,6 +995,8 @@ exports.Controller_.prototype.handleMapClick_ = function(evt) {
       const escPressed = event.keyCode === 27; // Escape key
       if (escPressed && activeInteraction.getActive()) {
         this.cancel();
+        this.scope_.$apply();
+
         olEvents.unlistenByKey(this.cancelEventKey_);
         this.cancelEventKey_ = undefined;
       }
