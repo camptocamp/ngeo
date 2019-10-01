@@ -80,6 +80,14 @@
   class="gmf-importdatasource-layers"
   ng-if="$ctrl.wmsCapabilities !== null || $ctrl.wmtsCapabilities !== null">
   <hr />
+  <input
+    class="form-control"
+    placeholder="{{'Search' | translate}}"
+    ng-disabled="$ctrl.pending"
+    ng-model="$ctrl.searchText"
+    ng-model-options="{ debounce: 250 }"
+    ng-change="$ctrl.search()"
+  />
   <gmf-wmscapabilitylayertreenode
     capabilities="::$ctrl.wmsCapabilities"
     layer="::$ctrl.wmsCapabilities.Capability.Layer"

@@ -113,6 +113,9 @@ a.gmf-wmscapabilitylayertreenode-expand-node.fa {
 .gmf-wmscapabilitylayertreenode-title {
   flex: 2;
   padding: 0 0.31rem;
+  .highlight {
+    background-color: yellow;
+  }
 }
 
 .gmf-wmscapabilitylayertreenode-description {

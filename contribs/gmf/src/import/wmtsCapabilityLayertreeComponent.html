@@ -1,6 +1,11 @@
 <ul>
-  <li ng-repeat="layer in ::$ctrl.layers">
-    <div class="gmf-wmscapabilitylayertreenode-header">
+  <li
+    ng-repeat="layer in ::$ctrl.layers"
+    ng-show="layer._visible"
+  >
+    <div
+      class="gmf-wmscapabilitylayertreenode-header"
+    >
 
       <span
         class="gmf-wmscapabilitylayertreenode-popover-container"
@@ -46,7 +51,12 @@
       <a class="fa fa-circle-thin gmf-wmscapabilitylayertreenode-no-icon fa-fw"></a>
       <span
         class="gmf-wmscapabilitylayertreenode-title"
+        ng-if="!layer._searchMatch"
       >{{ ::layer.Title }}</span>
+      <span
+        class="gmf-wmscapabilitylayertreenode-title"
+        ng-if="layer._searchMatch"
+      >{{ layer._searchPrefix }}<span class=highlight>{{ layer._searchMatch }}</span>{{ layer._searchSuffix }}</span>
 
       <div
         class="collapse gmf-wmscapabilitylayertreenode-description"
