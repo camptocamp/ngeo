@@ -636,7 +636,7 @@ class SearchController {
       },
       templates: /* Twitter.Typeahead.Templates */ ({
         header: () => {
-          if (config.datasetTitle === undefined) {
+          if (!config.datasetTitle) {
             return '';
           } else {
             const header = gettextCatalog.getString(config.datasetTitle);
