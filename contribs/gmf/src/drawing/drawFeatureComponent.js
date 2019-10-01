@@ -608,6 +608,7 @@ exports.Controller_.prototype.handleCancelKeyEvent_ = function() {
     const escPressed = event.keyCode === 27; // Escape key
     if (escPressed && this.selectedFeature) {
       this.selectedFeature = null;
+      this.scope_.$apply();
     }
   });
 };

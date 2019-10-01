@@ -187,9 +187,9 @@ exports.prototype.registerInteraction = function(
 exports.prototype.handleActiveChange = function(event) {
   this.active = this.interactions_.some(interaction => interaction.getActive(), this);
   this.interaction_ = this.interactions_.find(interaction => interaction.getActive() === true);
+  const uid = getUid(this);
 
   if (this.interaction_) {
-    const uid = getUid(this);
     this.ngeoEventHelper_.addListenerKey(
       uid,
       listen(
@@ -199,6 +199,8 @@ exports.prototype.handleActiveChange = function(event) {
         this
       )
     );
+  } else {
+    this.ngeoEventHelper_.clearListenerKey(uid);
   }
 };
 
