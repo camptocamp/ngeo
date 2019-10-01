@@ -1,7 +1,6 @@
  ngeo-mapswipe {
-   display: block;
    height: 100%;
-   position: absolute;
+   position: relative;
    width: 100%;
    z-index: 2;
  }
@@ -13,7 +12,9 @@
 }
 
 ngeo-mapswipe div {
+  display: contents;
   height: 100%;
+  position: absolute;
   vertical-align: middle;
   width: 100%;
 
