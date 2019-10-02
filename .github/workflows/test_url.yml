@@ -11,3 +11,5 @@ jobs:
     - uses: actions/checkout@master
     - run: (cd .github; npm install --production)
     - run: (cd .github; node pr-message.js)
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
