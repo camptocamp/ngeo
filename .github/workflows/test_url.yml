@@ -22,8 +22,8 @@ jobs:
             repo: github.context.issue.repo,
             pull_number: github.context.issue.number,
             body: [
-              \`Examples: https://camptocamp.github.io/ngeo/${process.env.GITHUB_HEAD_REF}/examples/\`,
-              \`API documentation: https://camptocamp.github.io/ngeo/${process.env.GITHUB_HEAD_REF}/apidoc/\`,
+              \`Examples: https://camptocamp.github.io/ngeo/\${process.env.GITHUB_HEAD_REF}/examples/\`,
+              \`API documentation: https://camptocamp.github.io/ngeo/\${process.env.GITHUB_HEAD_REF}/apidoc/\`,
             ].join('\n'),
             event: 'COMMENT'
           });
