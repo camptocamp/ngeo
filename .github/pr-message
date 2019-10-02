@@ -6,10 +6,10 @@ import os
 
 
 
-print(os.environ.GITHUB_HEAD_REF)
-#  const client = new github.GitHub(process.env.GITHUB_TOKEN);
-print(os.environ.GITHUB_REF); #refs/pull/5190/merge
-print(os.environ.GITHUB_REPOSITORY);
+print(os.environ.get('GITHUB_HEAD_REF', '---'))
+#  const client = new github.GitHub(process.env.GITHUB_TOKEN;
+print(os.environ.get('GITHUB_REF', '---')) #refs/pull/5190/merge
+print(os.environ.get('GITHUB_REPOSITORY', '---'))
 
 
 #json_stuff = requests.get(url.format(repo, ref), headers={
