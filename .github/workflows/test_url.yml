@@ -8,17 +8,7 @@ jobs:
   all:
     runs-on: ubuntu-latest
     steps:
-    - run: |
-        echo -e "
-        {
-          \"name\": \"ngeo-github-action\",
-          \"version\": \"1.0.0\",
-          \"dependencies\": {
-            \"@actions/github\": \"*\"
-          }
-        }
-        " > package.json
-    - run: npm install --production
+    - run: npm install --production @actions/github
     - run: |
         echo "
         const github = require('@actions/github');
@@ -41,6 +31,7 @@ jobs:
 
         run();
         " > pr-message.js
+    - run: cat pr-message.js
     - run: node pr-message.js
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
