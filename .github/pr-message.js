@@ -7,6 +7,15 @@ async function run() {
     core.getInput('repo-token', {required: true})
   );
   const context = github.context;
+  console.log(context.issue.owner);
+  console.log(context.issue.repo);
+  console.log(context.issue.number);
+  console.log(client.issues);
+  console.log(client.pulls);
+  console.log(context.issue);
+  console.log(Object.keys(client.issues));
+  console.log(Object.keys(client.pulls));
+  console.log(Object.keys(context.issue));
 
   await client.pulls.createReview({
     owner: context.issue.owner,
