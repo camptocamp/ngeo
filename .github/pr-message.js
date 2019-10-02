@@ -11,8 +11,6 @@ async function run() {
     pull_number: context.issue.number,
   });
   console.log(process.env.GITHUB_REF);
-  console.log(process.env.INPUT_SOURCE_BRANCH);
-  console.log(process.env.SOURCE_BRANCH);
 
 
   await client.pulls.createReview({
