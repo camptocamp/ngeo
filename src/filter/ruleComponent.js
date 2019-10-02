@@ -414,8 +414,7 @@ class RuleController {
         if (!this.rule) {
           throw new Error('Missing rule');
         }
-        this.rule.active;
-        return false;
+        return this.rule.active;
       },
       this.handleActiveChange_.bind(this)
     );
