@@ -1,16 +1,13 @@
 name: Greetings
 
-on: [pull_request, issues]
+on: [pull_request]
+#  pull_request:
+#    types: [created]
 
 jobs:
-  url:
+  all:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/first-interaction@v1
-      on:
-        pull-request:
-          types: created
-      with:
-        repo-token: ${{ secrets.GITHUB_TOKEN }}
-        issue-message: 'Message that will be displayed on users'' first issue'
-        pr-message: 'Message that will be displayed on users'' first pr'
+    - uses: actions/checkout@master
+    - run: (cd .github; npm install --production)
+    - run: (cd .github; node pr-message.js)
