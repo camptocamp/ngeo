@@ -57,7 +57,6 @@ function MainController($http, $scope) {
    */
   this.map = new olMap({
     layers: [
-      // @ts-ignore: OL issue
       new olLayerImage({
         source: source2
       }),

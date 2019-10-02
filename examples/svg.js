@@ -30,7 +30,6 @@ function MainController() {
   const feature1 = new Feature({
     geometry: new Point([599000, 200000])
   });
-  // @ts-ignore: OL issue
   feature1.setStyle([new Style({
     image: new Icon({
       // @ts-ignore: For Webpack
@@ -44,7 +43,6 @@ function MainController() {
   const feature2 = new Feature({
     geometry: new Point([600000, 200000])
   });
-  // @ts-ignore: OL issue
   feature2.setStyle([new Style({
     image: new Icon({
       // @ts-ignore: For Webpack
@@ -58,7 +56,6 @@ function MainController() {
   const feature3 = new Feature({
     geometry: new Point([601000, 200000])
   });
-  // @ts-ignore: OL issue
   feature3.setStyle([new Style({
     image: new Icon({
       // @ts-ignore: For Webpack

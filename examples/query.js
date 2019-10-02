@@ -121,7 +121,6 @@ function MainController(ngeoDataSources, ngeoToolActivateMgr, ngeoQueryModeSelec
     projection: undefined, // should be removed in next OL version
     params: {'LAYERS': 'bus_stop'}
   });
-  // @ts-ignore: OL issue
   const busStopLayer = new olLayerImage({
     source: source1
   });
@@ -131,7 +130,6 @@ function MainController(ngeoDataSources, ngeoToolActivateMgr, ngeoQueryModeSelec
     projection: undefined, // should be removed in next OL version
     params: {'LAYERS': 'information'}
   });
-  // @ts-ignore: OL issue
   const informationLayer = new olLayerImage({
     source: source2
   });
