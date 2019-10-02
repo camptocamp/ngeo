@@ -5,14 +5,13 @@ async function run() {
   // Get client and context
   const client = new github.GitHub(process.env.GITHUB_TOKEN);
   const context = github.context;
-  for (const commit in await client.pulls.listCommits({
+  const a = await client.pulls.listCommits({
     owner: context.issue.owner,
     repo: context.issue.repo,
     pull_number: context.issue.number,
-  })) {
-    console.log(Object.keys(commit));
-    console.log(commit);
-  }
+  });
+  console.log(Object.keys(a));
+  console.log(a);
 
   await client.pulls.createReview({
     owner: context.issue.owner,
