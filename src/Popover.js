@@ -9,34 +9,26 @@ import olOverlay from 'ol/Overlay.js';
  */
 export default class extends olOverlay {
   constructor(options = {}) {
+
+    const originalEl = options.element ? options.element : document.createElement('div');
+    options.element = document.createElement('div');
+
     super(options);
 
-    let originalEl;
-    if (options.element) {
-      originalEl = options.element;
-      delete options.element;
-    } else {
-      originalEl = $('<div />')[0];
+    const closeEl = document.createElement('div');
+    closeEl.className = 'close';
+    closeEl.innerHTML = '&times;';
+    closeEl.addEventListener('click', this.close.bind(this));
+
+    this.contentEl_ = document.createElement('div');
+    this.contentEl_.append(closeEl, originalEl);
+  }
+
+  close() {
+    const map = this.getMap();
+    if (map) {
+      map.removeOverlay(this);
     }
-
-    /**
-     * @type {JQuery}
-     * @private
-     */
-    this.closeEl_ = $('<button>', {
-      'class': 'close',
-      'html': '&times;'
-    });
-
-    /**
-     * @type {JQuery}
-     * @private
-     */
-    this.contentEl_ = $('<div/>')
-      .append(this.closeEl_)
-      .append(originalEl);
-
-    options.element = $('<div />')[0];
   }
 
   /**
@@ -50,33 +42,20 @@ export default class extends olOverlay {
       $(element).popover('dispose');
     }
 
-    olOverlay.prototype.setMap.call(this, map);
+    super.setMap(map);
 
     if (map) {
       const contentEl = this.contentEl_;
       // wait for the overlay to be rendered in the map before popping over
       window.setTimeout(() => {
-        $(element)
-          .popover({
-            content: contentEl.get()[0],
-            html: true,
-            placement: 'top',
-            template: [
-              '<div class="popover ngeo-popover" role="tooltip">',
-              '  <div class="arrow"></div>',
-              '  <h3 class="popover-header"></h3>',
-              '  <div class="popover-body"></div>',
-              '</div>'
-            ].join('')
-          }).popover('show');
+        $(element).popover({
+          container: element.parentElement,
+          placement: 'top',
+          content: contentEl,
+          html: true
+        });
+        $(element).popover('show');
       }, 0);
-
-      this.closeEl_.one('click', () => {
-        const map = this.getMap();
-        if (map) {
-          map.removeOverlay(this);
-        }
-      });
     }
   }
 }
