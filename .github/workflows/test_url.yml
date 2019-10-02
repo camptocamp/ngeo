@@ -8,10 +8,39 @@ jobs:
   all:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
-    - run: (cd .github; npm install --production)
-    - run: (cd .github; node pr-message.js)
-#    - run: python3 -m pip install --user requests
-#    - run: .github/pr-message
+    - run: |
+        echo -e "
+        {
+          \"name\": \"ngeo-github-action\",
+          \"version\": \"1.0.0\",
+          \"dependencies\": {
+            \"@actions/github\": \"*\"
+          }
+        }
+        " > package.json
+    - run: npm install --production
+    - run: |
+        echo "
+        const github = require('@actions/github');
+
+        async function run() {
+          // Get client and context
+          const client = new github.GitHub(process.env.GITHUB_TOKEN);
+
+          await client.pulls.createReview({
+            owner: github.context.issue.owner,
+            repo: github.context.issue.repo,
+            pull_number: github.context.issue.number,
+            body: [
+              `Examples: https://camptocamp.github.io/ngeo/${process.env.GITHUB_HEAD_REF}/examples/`,
+              `API documentation: https://camptocamp.github.io/ngeo/${process.env.GITHUB_HEAD_REF}/apidoc/`,
+            ].join('\n'),
+            event: 'COMMENT'
+          });
+        }
+
+        run();
+        " > pr-message.js
+    - run: node pr-message.js
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
