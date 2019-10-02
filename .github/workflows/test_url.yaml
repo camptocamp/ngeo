@@ -1,8 +1,7 @@
 name: Greetings
 
 on:
-  pull_request:
-    types: [created]
+  - pull_request
 
 jobs:
   all:
