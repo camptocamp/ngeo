@@ -28,3 +28,5 @@ async function run() {
     event: 'COMMENT'
   });
 }
+
+run();
