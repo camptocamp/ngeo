@@ -152,7 +152,6 @@ function MainController($scope) {
    * An overlay layer.
    * @type {import("ol/layer/Image.js").default}
    */
-  // @ts-ignore: OL issue
   const overlay = new olLayerImage({
     source
   });

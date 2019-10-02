@@ -78,7 +78,6 @@ function MainController($scope, gmfEditFeature, gmfUser) {
    * @type {import("ol/layer/Image.js").default}
    * @private
    */
-  // @ts-ignore: OL issue
   this.wmsLayer_ = new olLayerImage({
     source: this.wmsSource_
   });

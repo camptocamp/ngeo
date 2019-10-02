@@ -83,7 +83,6 @@ function MainController($timeout, ngeoCreatePrint, ngeoPrintUtils) {
    */
   this.map = new olMap({
     layers: [
-      // @ts-ignore: OL issue
       new olLayerImage({
         source
       }),
