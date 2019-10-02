@@ -10,16 +10,18 @@ async function run() {
     repo: context.issue.repo,
     pull_number: context.issue.number,
   });
-  console.log(Object.keys(a));
-  console.log(a);
+  console.log(process.env.GITHUB_REF);
+  console.log(process.env.INPUT_SOURCE_BRANCH);
+  console.log(process.env.SOURCE_BRANCH);
+
 
   await client.pulls.createReview({
     owner: context.issue.owner,
     repo: context.issue.repo,
     pull_number: context.issue.number,
     body: [
-      `Examples: https://camptocamp.github.io/ngeo/${client.issues}/examples/`,
-      `API documentation: https://camptocamp.github.io/ngeo/${client.pulls}/apidoc/`,
+      `Examples: https://camptocamp.github.io/ngeo/${process.env.GITHUB_REF}/examples/`,
+      `API documentation: https://camptocamp.github.io/ngeo/${process.env.GITHUB_REF}/apidoc/`,
     ].join('\n'),
     event: 'COMMENT'
   });
