@@ -12,7 +12,7 @@ print(os.environ.get('GITHUB_REF', '---')) #refs/pull/5190/merge
 print(os.environ.get('GITHUB_REPOSITORY', '---'))
 
 
-#json_stuff = requests.get(url.format(repo, ref), headers={
-#    'Accept': 'application/vnd.github.groot-preview+json',
-#    'Authorization': 'token {}'.format(os.environ['GITHUB_TOKEN'])
-#}).json()
+json_stuff = requests.get(url.format(repo, ref), headers={
+    'Accept': 'application/vnd.github.groot-preview+json',
+    'Authorization': 'token {}'.format(os.environ['GITHUB_TOKEN'])
+}).json()
