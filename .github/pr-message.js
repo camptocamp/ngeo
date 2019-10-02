@@ -3,9 +3,7 @@ const github = require('@actions/github');
 
 async function run() {
   // Get client and context
-  const client = new github.GitHub(
-    core.getInput('repo-token', {required: true})
-  );
+  const client = new github.GitHub(process.env.GITHUB_TOKEN);
   const context = github.context;
   console.log(context.issue.owner);
   console.log(context.issue.repo);
