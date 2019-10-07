@@ -193,7 +193,7 @@ export default class extends olInteractionPointer {
    */
   setMap(map) {
     this.overlay_.setMap(map);
-    olInteractionPointer.prototype.setMap.call(this, map);
+    super.setMap(map);
   }
 
   /**
@@ -299,8 +299,7 @@ export default class extends olInteractionPointer {
       [pixel[0] + this.pixelTolerance_, pixel[1] - this.pixelTolerance_]);
     const box = olExtent.boundingExtent([lowerLeft, upperRight]);
 
-    const rBush = this.rBush_;
-    const nodes = rBush.getInExtent(box);
+    const nodes = this.rBush_.getInExtent(box);
     if (nodes.length > 0) {
       nodes.sort(sortByDistance);
       const node = nodes[0];
@@ -340,8 +339,7 @@ export default class extends olInteractionPointer {
       }
     }
     if (this.vertexFeature_) {
-      /** @type {olSourceVector<import("ol/geom/Geometry.js").default>} */(this.overlay_.getSource())
-        .removeFeature(this.vertexFeature_);
+      this.overlay_.getSource().removeFeature(this.vertexFeature_);
       this.vertexFeature_ = null;
     }
   }
@@ -464,7 +462,7 @@ export default class extends olInteractionPointer {
       this.handlePointerMove_(mapBrowserEvent);
     }
 
-    return olInteractionPointer.prototype.handleEvent.call(this, mapBrowserEvent) && !handled;
+    return super.handleEvent(mapBrowserEvent) && !handled;
   }
 }
 
