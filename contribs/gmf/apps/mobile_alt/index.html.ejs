@@ -26,6 +26,10 @@
         gmf-map-map="mainCtrl.map"
         gmf-map-manage-resize="mainCtrl.manageResize"
         gmf-map-resize-transition="mainCtrl.resizeTransition"></gmf-map>
+
+      <div ng-show="!mainCtrl.leftNavVisible && !mainCtrl.rightNavVisible" class="nav-swipper nav-swipper-left" ng-swipe-right="mainCtrl.toggleLeftNavVisibility()"></div>
+      <div ng-show="!mainCtrl.leftNavVisible && !mainCtrl.rightNavVisible" class="nav-swipper nav-swipper-right" ng-swipe-left="mainCtrl.toggleRightNavVisibility()"></div>
+
       <ngeo-query
         active="mainCtrl.queryActive"
         map="::mainCtrl.map">
@@ -100,7 +104,7 @@
         </div>
       </div>
     </main>
-    <nav class="gmf-mobile-nav-left" gmf-mobile-nav>
+    <nav class="gmf-mobile-nav-left" gmf-mobile-nav ng-swipe-left="mainCtrl.toggleLeftNavVisibility()">
       <header>
         <a class="gmf-mobile-nav-go-back" href>{{'Back' | translate}}</a>
         <span class="gmf-mobile-nav-header-title">{{'Data' | translate}}</span>
@@ -137,7 +141,7 @@
         gmf-mobile-nav-back-on-click>
       </gmf-themeselector>
     </nav>
-    <nav class="gmf-mobile-nav-right" gmf-mobile-nav>
+    <nav class="gmf-mobile-nav-right" gmf-mobile-nav ng-swipe-right="mainCtrl.toggleRightNavVisibility()">
       <header>
         <a class="gmf-mobile-nav-go-back" href>{{'Back' | translate}}</a>
         <span class="gmf-mobile-nav-header-title">{{'Tools' | translate}}</span>
