@@ -1,50 +1,99 @@
+ ngeo-mapswipe {
+   height: 100%;
+   position: relative;
+   width: 100%;
+   z-index: 2;
+ }
 
-ngeo-mapswipe {
-  position: absolute;
-  z-index: 2;
-  width: 100%;
-}
-
-ngeo-mapswipe .swipe-input {
+@mixin track() {
   background: none;
-  height: 0;
-  opacity: 0.7;
-  outline: none;
-  pointer-events: none;
-  transition: opacity 0.2s;
-  -webkit-appearance: none;
-  -webkit-transition: 0.2s;
-  width: 100%;
-
-  &::-webkit-slider-runnable-track {
-    background: none;
-    height: none;
-  }
-
-  &::-webkit-slider-thumb {
-    appearance: none;
-    border: $border;
-    cursor: pointer;
-    height: 900px;
-    pointer-events: auto;
-    -webkit-appearance: none;
-    width: 25px;
-    background: url("image/right-and-left-arrows-square-button.png") $brand-primary;
-    background-size: 100%;
-    background-position: center;
-    background-repeat: no-repeat;
-    padding-left: 10px;
-    margin-left: -10px;
-  }
-
-  &:hover {
-    opacity: 1;
-  }
+  border: 0;
+  height: 100%;
 }
 
 ngeo-mapswipe div {
+  display: contents;
+  height: 100%;
+  position: absolute;
   vertical-align: middle;
   width: 100%;
-  position: absolute;
-  top: 0;
+
+  .swipe-input {
+    appearance: none;
+    background: none;
+    height: 100%;
+    opacity: 0.7;
+    outline: none;
+    pointer-events: none;
+    transition: opacity 0.2s;
+    width: 100%;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    -webkit-transition: 0.2s;
+  }
+
+  [type="range"].swipe-input {
+    &::-webkit-slider-thumb {
+      appearance: none;
+      background: url("image/right-and-left-arrows-square-button.png")
+        $brand-primary;
+      background-position: center;
+      background-size: 100%;
+      background-repeat: no-repeat;
+      border: $border;
+      cursor: pointer;
+      height: 100%;
+      padding-left: 10px;
+      pointer-events: auto;
+      width: 25px;
+      -webkit-appearance: none;
+    }
+
+    &::-webkit-slider-runnable-track {
+      @include track;
+    }
+    &::-moz-range-track {
+      width: 100%;
+      @include track;
+    }
+    &::-ms-track {
+      @include track;
+    }
+
+    &::-moz-range-progress {
+      background: transparent;
+    }
+
+    &::-moz-range-thumb {
+      appearance: none;
+      background: url("image/right-and-left-arrows-square-button.png")
+        $brand-primary;
+      background-position: center;
+      background-size: 100%;
+      background-repeat: no-repeat;
+      border: $border;
+      box-sizing: border-box;
+      cursor: pointer;
+      height: 100%;
+      padding-left: 10px;
+      pointer-events: auto;
+      width: 25px;
+      -moz-appearance: none;
+    }
+    &::-ms-thumb {
+      margin-top: 0;
+    }
+
+    &::-ms-tooltip {
+      display: none;
+    }
+
+    &::-moz-focus-outer {
+      border: 0;
+    }
+
+    &:hover {
+      opacity: 1;
+    }
+  }
 }
