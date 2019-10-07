@@ -338,7 +338,7 @@ export function PermalinkService(
    * @type {import('gmf/datasource/LayerBeingSwipe.js').LayerBeingSwipe}
    * @private
    */
-  this.gmfLayerBeingSwipe = gmfLayerBeingSwipe;
+  this.gmfLayerBeingSwipe_ = gmfLayerBeingSwipe;
 
   /**
    * @type {?import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr}
@@ -638,7 +638,7 @@ export function PermalinkService(
 
   // Watch gmfLayerBeingSwipe
   this.rootScope_.$watch(
-    () => this.gmfLayerBeingSwipe.layer,
+    () => this.gmfLayerBeingSwipe_.layer,
     this.handleLayerBeingSwipeChange_.bind(this));
 
   // External DataSources
@@ -1308,7 +1308,7 @@ PermalinkService.prototype.initLayers_ = function() {
           // === Set the gmfLayerBeingSwipe layer ===
           if (layerBeingSwipeValue !== null && layerBeingSwipeValue !== undefined
             && treeCtrl.layer.get('dataSourceId') === layerBeingSwipeValue) {
-            this.gmfLayerBeingSwipe.layer = treeCtrl.layer;
+            this.gmfLayerBeingSwipe_.layer = treeCtrl.layer;
           }
         }
 
