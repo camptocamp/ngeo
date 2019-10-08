@@ -148,6 +148,9 @@ LayerHelper.prototype.createBasicWMSLayerFromDataSource = function(
   // (3) Reference to the data source
   layer.set('querySourceIds', [dataSource.id]);
 
+  // (4) Set the `dataSourceId` property
+  layer.set('dataSourceId', dataSource.id);
+
   return layer;
 };
 

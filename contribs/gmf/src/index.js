@@ -30,6 +30,7 @@ export const PermalinkParam = {
   EXTERNAL_DATASOURCES_URLS: 'eds_u',
   FEATURES: 'rl_features',
   MAP_CROSSHAIR: 'map_crosshair',
+  MAP_SWIPE: 'map_swipe',
   MAP_TOOLTIP: 'map_tooltip',
   MAP_X: 'map_x',
   MAP_Y: 'map_y',

@@ -258,6 +258,9 @@ SyncLayertreeMap.prototype.createLayerFromGroup_ = function(treeCtrl, mixed) {
       undefined, // WMS parameters
       ogcServer.credential ? 'use-credentials' : 'anonymous'
     );
+
+    layer.set('dataSourceId', groupNode.id);
+
     let hasActiveChildren = false;
     treeCtrl.traverseDepthFirst((ctrl) => {
       // Update layer information and tree state.
@@ -324,6 +327,7 @@ SyncLayertreeMap.prototype.createLeafInAMixedGroup_ = function(treeCtrl, map) {
       ogcServer.credential ? 'use-credentials' : 'anonymous'
     );
   }
+  layer.set('dataSourceId', gmfLayer.id);
   // Update layer information and tree state.
   layer.set('layerNodeName', gmfLayer.name); // Really useful ?
   this.updateLayerReferences_(gmfLayer, layer);
