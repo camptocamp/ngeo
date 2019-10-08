@@ -83,7 +83,11 @@ ngeo.utils.decodeQueryString = function(queryString) {
       if (indexOfEquals >= 0) {
         const name = pair.substring(0, indexOfEquals);
         const value = pair.substring(indexOfEquals + 1);
-        queryData[decodeURIComponent(name)] = decodeURIComponent(value);
+        try {
+          queryData[decodeURIComponent(name)] = decodeURIComponent(value);
+        } catch (err) {
+          console.error(err);
+        }
       } else {
         queryData[pair] = '';
       }
