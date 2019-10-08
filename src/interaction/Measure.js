@@ -351,6 +351,7 @@ class Measure extends olInteractionInteraction {
       this.helpTooltipElement_ = document.createElement('div');
       this.helpTooltipElement_.classList.add('tooltip');
       this.helpTooltipOverlay_ = new olOverlay({
+        stopEvent: false,
         element: this.helpTooltipElement_,
         offset: [15, 0],
         positioning: 'center-left'
