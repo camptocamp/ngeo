@@ -560,7 +560,7 @@ Controller.prototype.$onInit = function() {
     throw new Error('Wrong source');
   }
   this.features = source.getFeaturesCollection();
-  this.tolerance = this.tolerance !== undefined ? this.tolerance : 10;
+  this.tolerance = this.tolerance || 10;
 
   // (1.1) Set editable WMS layer
   const layer = syncLayertreeMapGetLayer(this.editableTreeCtrl);
