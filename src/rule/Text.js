@@ -10,6 +10,7 @@ import ngeoRuleRule, {RuleOperatorType} from 'ngeo/rule/Rule.js';
  * @property {string} text
  * @property {number} [size]
  * @property {number} [angle]
+ * @property {boolean} [rotateWithView=false]
  * @property {import('ol/color.js').Color} [color]
  * @property {number} [width]
  * @property {number} [offsetX]
