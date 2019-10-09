@@ -1185,22 +1185,23 @@ export class PrintController {
 
 
   /**
-   * Get the optimal scale to display the print mask. Return the first scale if
+   * Get the optimal scale to display the print mask. Return the lowest scale if
    * no scale matches.
    * @param {import("ol/size.js").Size|undefined} mapSize Size of the map on the screen (px).
    * @param {number|undefined} viewResolution Resolution of the map on the screen.
-   * @return {number} The best scale. -1 is returned if there is no optimal
-   *     scale, that is the optimal scale is lower than or equal to the first
-   *     value in printMapScales.
+   * @return {number} The best scale.
    * @private
    */
   getOptimalScale_(mapSize, viewResolution) {
     const scales = this.layoutInfo.scales.slice();
     if (mapSize !== undefined && viewResolution !== undefined) {
-      return this.ngeoPrintUtils_.getOptimalScale(mapSize, viewResolution,
+      const scale = this.ngeoPrintUtils_.getOptimalScale(mapSize, viewResolution,
         this.paperSize_, scales.reverse());
+      if (scale > 0) {
+        return scale;
+      }
     }
-    return this.layoutInfo.scales[0];
+    return this.layoutInfo.scales[this.layoutInfo.scales.length - 1];
   }
 
 

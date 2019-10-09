@@ -76,7 +76,12 @@ gmf-search {
       }
       border-top: none;
       .gmf-search-header {
-        display: none;
+        padding: $app-margin;
+        display: block;
+        font-size: $font-size-small;
+        background-color: #eee;
+        text-transform: uppercase;
+        color: $color-light;
       }
       .gmf-search-datum {
         p {

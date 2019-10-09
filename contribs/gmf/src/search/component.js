@@ -660,7 +660,7 @@ class SearchController {
       },
       templates: {
         header: () => {
-          if (config.datasetTitle === undefined) {
+          if (!config.datasetTitle) {
             return '';
           } else {
             const header = gettextCatalog.getString(config.datasetTitle);
