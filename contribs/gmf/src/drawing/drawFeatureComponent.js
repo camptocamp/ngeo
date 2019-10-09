@@ -604,7 +604,7 @@ exports.Controller_.prototype.handleMapClick_ = function(evt) {
 
 
 exports.Controller_.prototype.handleCancelKeyEvent_ = function() {
-  olEvents.listen(document.body, 'keydown', (e) => {
+  olEvents.listen(document.body, 'keydown', (event) => {
     const escPressed = event.keyCode === 27; // Escape key
     if (escPressed && this.selectedFeature) {
       this.selectedFeature = null;

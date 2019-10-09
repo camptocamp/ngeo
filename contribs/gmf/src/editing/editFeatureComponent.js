@@ -991,7 +991,7 @@ exports.Controller_.prototype.handleMapClick_ = function(evt) {
   const activeInteraction = interactions.find(interaction => interaction.getActive() === true);
 
   if (this.cancelEventKey_ === undefined) {
-    this.cancelEventKey_ = olEvents.listen(document.body, 'keydown', (e) => {
+    this.cancelEventKey_ = olEvents.listen(document.body, 'keydown', (event) => {
       const escPressed = event.keyCode === 27; // Escape key
       if (escPressed && activeInteraction.getActive()) {
         this.cancel();
