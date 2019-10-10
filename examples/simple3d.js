@@ -42,7 +42,7 @@ function MainController($rootScope, ngeoOlcsService) {
   });
 
   // TODO: detect and use different URL for DEBUG MODE
-  const cesiumUrl = '../node_modules/@camptocamp/cesium/Build/Cesium/Cesium.js';
+  const cesiumUrl = '../node_modules/cesium/Build/Cesium/Cesium.js';
 
   /**
    * @type {import('olcs/contrib/Manager.js').default}
