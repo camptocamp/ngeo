@@ -30,6 +30,7 @@ addons:
 cache:
   apt: true
   pip: true
+  npm: false
 
 before_install:
 - python3 --version
@@ -73,3 +74,9 @@ deploy:
     on:
       repo: camptocamp/ngeo
       all_branches: true
+
+notifications:
+  email:
+    recipients:
+      - stephane.brunner@camptocamp.com
+    if: branch = env(MAIN_BRANCH)

@@ -219,15 +219,6 @@ gmf-search {
     .tt-menu {
       border-radius: $border-radius-base;
 
-      .gmf-search-header {
-        padding: $app-margin;
-        display: block;
-        font-size: $font-size-small;
-        background-color: #eee;
-        text-transform: uppercase;
-        color: $color-light;
-      }
-
       .gmf-search-group {
         display: none;
       }

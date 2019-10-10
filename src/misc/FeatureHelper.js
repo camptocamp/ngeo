@@ -467,6 +467,7 @@ FeatureHelper.prototype.getTextStyle_ = function(feature) {
     text: this.createTextStyle_({
       propertyName: '',
       name: '',
+      rotateWithView: true,
       text: this.getNameProperty(feature),
       size: this.getSizeProperty(feature),
       angle: this.getAngleProperty(feature),

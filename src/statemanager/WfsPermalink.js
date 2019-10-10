@@ -77,8 +77,15 @@ import olFormatWFS from 'ol/format/WFS.js';
  * WFS permalink service that can be used to load features with a WFS
  * GetFeature request given query parameters.
  *
- * Resulting features are then highlighted and
- * the map is zoomed to the nearest map extent.
+ * Resulting features are then highlighted and the map is zoomed to the nearest map extent.
+ *
+ * Configuration:
+ *
+ *    ngeoWfsPermalinkOptions:
+ *      wfsTypes:
+ *        - featureType: <featureType>
+ *          label: <attribute used as label>
+ *        - ...
  *
  * Parameters:
  *
@@ -101,8 +108,7 @@ import olFormatWFS from 'ol/format/WFS.js';
  *   starting at 0. For instance ``wfs_0_<layer attribute name>``
  *
  * Example:
- * http://example.com?wfs_layer=parcels&wfs_ngroups=2
- * &wfs_0_city=Oslo&wfs_0_number=12,34,56&wfs_1_city=Paris&wfs_1_number=78,90
+ * http://example.com?wfs_layer=parcels&wfs_ngroups=2&wfs_0_city=Oslo&wfs_0_number=12,34,56&wfs_1_city=Paris&wfs_1_number=78,90
  * will load parcels #12, 34 and 56 of the city of Oslo as well as
  * parcels #78 and 90 of the city of Paris.
  *
