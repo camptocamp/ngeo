@@ -35,17 +35,12 @@ ngeo-mapswipe div {
   [type="range"].swipe-input {
     &::-webkit-slider-thumb {
       appearance: none;
-      background: url("image/right-and-left-arrows-square-button.png")
-        $brand-primary;
-      background-position: center;
-      background-size: 100%;
-      background-repeat: no-repeat;
-      border: $border;
+      background-color: red;
+      border: 0.06rem solid red;
       cursor: pointer;
       height: 100%;
-      padding-left: 10px;
       pointer-events: auto;
-      width: 25px;
+      width: 8px;
       -webkit-appearance: none;
     }
 
@@ -66,18 +61,13 @@ ngeo-mapswipe div {
 
     &::-moz-range-thumb {
       appearance: none;
-      background: url("image/right-and-left-arrows-square-button.png")
-        $brand-primary;
-      background-position: center;
-      background-size: 100%;
-      background-repeat: no-repeat;
-      border: $border;
+      background-color: red;
+      border: 0.06rem solid red;
       box-sizing: border-box;
       cursor: pointer;
       height: 100%;
-      padding-left: 10px;
       pointer-events: auto;
-      width: 25px;
+      width: 8px;
       -moz-appearance: none;
     }
     &::-ms-thumb {
@@ -95,5 +85,33 @@ ngeo-mapswipe div {
     &:hover {
       opacity: 1;
     }
+  }
+
+  .swipe-output {
+    background-color: red;
+    border: 2px solid red;
+    color: white;
+    display: inline-block;
+    font-size: 36px;
+    height: 40px;
+    left: 0%;
+    line-height: 20px;
+    margin: 30% 0 0 -20px;
+    padding: 5px;
+    position: absolute;
+    pointer-events: none;
+    text-align: center;
+    top: auto;
+    transform: rotate(90deg);
+    width: 40px;
+  }
+
+  .swipe-output::before {
+    content: "\f0dc";
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    margin: 30% 0 0 -3%;
+    position: relative;
+    vertical-align: middle;
   }
 }

@@ -86,6 +86,12 @@ class SwipeController {
     this.swipeInput_ = $element.find('.swipe-input');
 
     /**
+     * @type {JQuery}
+     * @private
+     */
+    this.swipeOutput_ = $element.find('.swipe-output');
+
+    /**
      * @type {import("ol/events.js").EventsKey[]}
      * @private
      */
@@ -99,9 +105,16 @@ class SwipeController {
     this.layerKeys_.push(listen(this.layer, 'prerender', this.handleLayerPrerender_, this));
     this.layerKeys_.push(listen(this.layer, 'postrender', this.handleLayerPostrender_, this));
 
+    this.swipeOutput_.css({
+      'left': this.swipeValue+'%'
+    });
+
     this.swipeInput_.on('input change', event => {
       this.swipeValue = Number($(event.target).val());
       this.map.render();
+      this.swipeOutput_.css({
+        'left': this.swipeValue+'%'
+      });
     });
   }
 
