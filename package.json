@@ -35,7 +35,6 @@
     "@babel/plugin-transform-spread": "~7.6.2",
     "@babel/preset-env": "~7.6.2",
     "@camptocamp/babel-plugin-angularjs-annotate": "~0.8.2",
-    "cesium": "~1.62.0",
     "@fortawesome/fontawesome-free": "~5.11.2",
     "@geoblocks/proj": "~0.4.0",
     "@sentry/browser": "~5.6.3",
