@@ -41,7 +41,7 @@ function MainController($rootScope, ngeoOlcsService) {
     })
   });
 
-  const cesiumUrl = document.location.search.indexOf('mode=dev') != -1 ?
+  const cesiumUrl = document.location.search.includes('mode=dev') ?
     'https://cesium.com/downloads/cesiumjs/releases/1.62/Build/CesiumUnminified/Cesium.js' :
     'https://cesium.com/downloads/cesiumjs/releases/1.62/Build/Cesium/Cesium.js';
 
