@@ -41,8 +41,9 @@ function MainController($rootScope, ngeoOlcsService) {
     })
   });
 
-  // TODO: detect and use different URL for DEBUG MODE
-  const cesiumUrl = '../node_modules/@camptocamp/cesium/Build/Cesium/Cesium.js';
+  const cesiumUrl = document.location.search.includes('mode=dev') ?
+    'https://cesium.com/downloads/cesiumjs/releases/1.62/Build/CesiumUnminified/Cesium.js' :
+    'https://cesium.com/downloads/cesiumjs/releases/1.62/Build/Cesium/Cesium.js';
 
   /**
    * @type {import('olcs/contrib/Manager.js').default}
