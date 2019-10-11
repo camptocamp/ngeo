@@ -106,14 +106,14 @@ class SwipeController {
     this.layerKeys_.push(listen(this.layer, 'postrender', this.handleLayerPostrender_, this));
 
     this.swipeOutput_.css({
-      'left': this.swipeValue+'%'
+      'left': `${this.swipeValue}%`
     });
 
     this.swipeInput_.on('input change', event => {
       this.swipeValue = Number($(event.target).val());
       this.map.render();
       this.swipeOutput_.css({
-        'left': this.swipeValue+'%'
+        'left': `${this.swipeValue}%`
       });
     });
   }
