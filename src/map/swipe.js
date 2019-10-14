@@ -1,6 +1,10 @@
 import angular from 'angular';
 import {listen, unlistenByKey} from 'ol/events.js';
 import RenderEvent from 'ol/render/Event.js';
+
+import 'jquery-ui/ui/widgets/draggable.js';
+
+
 /**
  * @type {angular.IModule}
  * @hidden
@@ -77,25 +81,26 @@ class SwipeController {
     /**
      * @type {number}
      */
-    this.swipeValue = 50;
+    this.swipeValue = 0.5;
 
     /**
      * @type {JQuery}
      * @private
      */
-    this.swipeInput_ = $element.find('.swipe-input');
-
-    /**
-     * @type {JQuery}
-     * @private
-     */
-    this.swipeOutput_ = $element.find('.swipe-output');
+    this.draggableElement_ = $element.find('.ngeo-swipe-line-draggable');
 
     /**
      * @type {import("ol/events.js").EventsKey[]}
      * @private
      */
     this.layerKeys_ = [];
+
+    /**
+     * @type {import("ol/events.js").EventsKey}
+     * @private
+     */
+    this.resizelistenerKey_;
+
   }
 
   /**
@@ -105,16 +110,25 @@ class SwipeController {
     this.layerKeys_.push(listen(this.layer, 'prerender', this.handleLayerPrerender_, this));
     this.layerKeys_.push(listen(this.layer, 'postrender', this.handleLayerPostrender_, this));
 
-    this.swipeOutput_.css({
-      'left': `${this.swipeValue}%`
+    const halfDraggableWidth = this.draggableElement_.width() / 2;
+
+    this.draggableElement_.draggable({
+      axis: 'x',
+      containment: 'parent',
+      drag: () => {
+        const parentWidth = this.draggableElement_.parent().width();
+        const position = this.draggableElement_.position().left + halfDraggableWidth;
+
+        this.swipeValue = position / parentWidth;
+
+        this.map.render();
+      }
     });
 
-    this.swipeInput_.on('input change', event => {
-      this.swipeValue = Number($(event.target).val());
-      this.map.render();
-      this.swipeOutput_.css({
-        'left': `${this.swipeValue}%`
-      });
+    // keep the same percentage on window move
+    this.resizelistenerKey_ = listen(window, 'resize', () => {
+      const parentWidth = this.draggableElement_.parent().width();
+      this.draggableElement_.css('left', (parentWidth * this.swipeValue) - halfDraggableWidth);
     });
   }
 
@@ -130,7 +144,7 @@ class SwipeController {
     if (!ctx) {
       return;
     }
-    const width = ctx.canvas.width * (this.swipeValue / 100);
+    const width = ctx.canvas.width * this.swipeValue;
     ctx.save();
     ctx.beginPath();
     ctx.rect(0, 0, width, ctx.canvas.height);
@@ -154,7 +168,8 @@ class SwipeController {
   $onDestroy() {
     this.layerKeys_.forEach(unlistenByKey);
     this.layerKeys_.length = 0;
-    this.swipeInput_.off();
+    this.draggableElement_.draggable('destroy');
+    unlistenByKey(this.resizelistenerKey_);
   }
 }
 
