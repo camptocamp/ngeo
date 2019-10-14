@@ -40,10 +40,10 @@ function MainController($http, $scope) {
   const source = new olSourceVector();
   const source2 = new olSourceImageWMS({
     projection: undefined, // should be removed in next OL version
-    url: 'http://wms.geo.admin.ch/',
+    url: 'https://wms.geo.admin.ch/',
     crossOrigin: 'anonymous',
     attributions: '&copy; ' +
-      '<a href="http://www.geo.admin.ch/internet/geoportal/' +
+      '<a href="https://www.geo.admin.ch/internet/geoportal/' +
       'en/home.html">Pixelmap 1:500000 / geo.admin.ch</a>',
     params: {
       'LAYERS': 'ch.swisstopo.pixelkarte-farbe-pk1000.noscale',
