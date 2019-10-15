@@ -53,6 +53,9 @@ before_script:
 - echo "email = stephane.brunner@camptocamp.com" >> ~/.npmrc
 
 script:
+# Fix:
+# UnhandledPromiseRejectionWarning: Error: ENOSPC: System limit for number of file watchers reached
+- echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
 # Lint
 - make lint
 - make spell
