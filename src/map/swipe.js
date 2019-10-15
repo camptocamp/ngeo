@@ -2,6 +2,7 @@ import angular from 'angular';
 import {listen, unlistenByKey} from 'ol/events.js';
 import RenderEvent from 'ol/render/Event.js';
 
+import ResizeObserver from 'resize-observer-polyfill';
 import 'jquery-ui/ui/widgets/draggable.js';
 
 
@@ -96,10 +97,10 @@ class SwipeController {
     this.layerKeys_ = [];
 
     /**
-     * @type {import("ol/events.js").EventsKey}
+     * @type {ResizeObserver}
      * @private
      */
-    this.resizelistenerKey_;
+    this.resizeObserver_;
 
   }
 
@@ -125,11 +126,12 @@ class SwipeController {
       }
     });
 
-    // keep the same percentage on window move
-    this.resizelistenerKey_ = listen(window, 'resize', () => {
+    // keep the same percentage when the parent is resized
+    this.resizeObserver_ = new ResizeObserver(() => {
       const parentWidth = this.draggableElement_.parent().width();
       this.draggableElement_.css('left', (parentWidth * this.swipeValue) - halfDraggableWidth);
     });
+    this.resizeObserver_.observe(this.draggableElement_.parent().get(0));
   }
 
   /**
@@ -169,7 +171,7 @@ class SwipeController {
     this.layerKeys_.forEach(unlistenByKey);
     this.layerKeys_.length = 0;
     this.draggableElement_.draggable('destroy');
-    unlistenByKey(this.resizelistenerKey_);
+    this.resizeObserver_.disconnect();
   }
 }
 
