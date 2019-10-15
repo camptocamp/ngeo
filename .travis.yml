@@ -17,6 +17,7 @@ env:
   - CHROME_BIN=/opt/google/chrome/chrome
   - DISPLAY=:99.0
   - MAIN_BRANCH=master
+  - CI=true
 
 addons:
   apt:

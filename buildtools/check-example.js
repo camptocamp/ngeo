@@ -13,23 +13,27 @@ const screenshot = !arg.startsWith('http');
 const screenshotPath = screenshot ? `${arg}.png` : undefined;
 const page_url = screenshot ? `http://localhost:3000/${arg}` : arg;
 
-const OSMImage = (() => {
-  try {
-    return fs.readFileSync(path.resolve(__dirname, 'osm.png'));
-  } catch (e) {
-    // Ignore
-    return undefined;
+function fileMock(name, contentType) {
+  return {
+    status: 200,
+    headers: {
+      'content-type': contentType,
+    },
+    body: (() => {
+      try {
+        return fs.readFileSync(path.resolve(__dirname, name));
+      } catch (e) {
+        // Ignore
+        return undefined;
+      }
+    })(),
   }
-})();
+}
 
-const ASITVDCapabilities = (() => {
-  try {
-    return fs.readFileSync(path.resolve(__dirname, 'asitvd.capabilities.xml'));
-  } catch (e) {
-    // Ignore
-    return undefined;
-  }
-})();
+
+const OSMImage = fileMock('osm.png', 'image/png');
+const ASITVDCapabilities = fileMock('asitvd.capabilities.xml', 'text/xml');
+
 
 process.on('unhandledRejection', error => {
   console.log(`UnhandledRejection: ${error.message}.`);
@@ -90,16 +94,14 @@ function loaded(page, browser) {
     process.exit(2);
   });
   page.on('request', request => {
-    const url = request.url();
     loaded(page, browser);
-    if (url == "https://ows.asitvd.ch/wmts/1.0.0/WMTSCapabilities.xml") {
-      request.respond({
-        status: 200,
-        headers: {
-          'content-type': 'text/xml',
-        },
-        body: ASITVDCapabilities,
-      });
+    if (process.env.CI != 'true') {
+      request.continue();
+      return
+    }
+    const url = request.url();
+    if (url == 'https://ows.asitvd.ch/wmts/1.0.0/WMTSCapabilities.xml') {
+      request.respond(ASITVDCapabilities);
     } else if (parse(url).host == parse(page_url).host ||
         url.startsWith('http://localhost:3000/') ||
         url.startsWith('https://geomapfish-demo-2-5.camptocamp.com/') ||
@@ -109,27 +111,27 @@ function loaded(page, browser) {
       if (url.startsWith('https://geomapfish-demo-2-5.camptocamp.com/')) {
         request.headers().origin = 'http://localhost:3000';
       }
-      request.continue({
-        headers: request.headers()
-      });
+      request.continue();
     } else if (url.includes('tile.openstreetmap.org') ||
-        url.includes('https://ows.asitvd.ch') ) {
-      request.respond({
-        status: 200,
-        headers: {
-          'content-type': 'image/png',
-        },
-        body: OSMImage,
-      });
+        url.startsWith('https://tiles.openseamap.org') ||
+        url.startsWith('https://wms.geo.admin.ch') ||
+        url.startsWith('https://ows.asitvd.ch') ||
+        url.startsWith('https://ows1.asitvd.ch') ||
+        url.startsWith('https://ows2.asitvd.ch') ||
+        url.startsWith('https://ows3.asitvd.ch') ||
+        url.startsWith('https://ows4.asitvd.ch') ) {
+      request.respond(OSMImage);
     } else {
-      request.abort('aborted');
+      console.log(`Abort request on '${url}'`);
+      request.abort('failed');
     }
   });
   page.on('requestfinished', async (request) => {
+    const ci = process.env.CI == 'true';
     const url = request.url();
     requestsURL.delete(url);
     loaded(page, browser);
-    if (url.startsWith('https://geomapfish-demo-2-5.camptocamp.com/') &&
+    if (ci && url.startsWith('https://geomapfish-demo-2-5.camptocamp.com/') &&
         request.headers()['sec-fetch-mode'] == 'cors' &&
         request.response().headers()['access-control-allow-origin'] == undefined) {
       console.log(`CORS error on: ${url}`);
@@ -147,12 +149,13 @@ function loaded(page, browser) {
         console.log('= Response body');
         console.log(text);
       }
-      process.exit(2);
     }
   });
   page.on('requestfailed', request => {
     const url = request.url();
-    if (request.failure().errorText != 'net::ERR_ABORTED') {
+    if (!url.startsWith('https://www.camptocamp.com/') &&
+        !url.startsWith('https://cdn.polyfill.io/') &&
+        !url.startsWith('https://maps.googleapis.com/')) {
       console.log(`Request failed on: ${url}`);
       process.exit(2);
     }
