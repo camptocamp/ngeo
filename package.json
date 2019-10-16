@@ -116,7 +116,7 @@
     "ol-cesium": "~2.10.0",
     "ol-layerswitcher": "~3.4.0",
     "parse-absolute-css-unit": "~1.0.2",
-    "popper.js": "~1.15.0",
+    "popper.js": "~1.16.0",
     "proj4": "~2.5.0",
     "puppeteer": "~1.20.0",
     "simple-html-tokenizer": "~0.5.7",
