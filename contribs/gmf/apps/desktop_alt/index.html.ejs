@@ -68,9 +68,12 @@
               data-toggle="tooltip" data-placement="left" data-original-title="{{'Draw and Measure'|translate}}">
               <span class="fa fa-paint-brush"></span>
             </button>
-            <button ngeo-btn class="btn btn-default" ng-class="{'gmf-filter-active': mainCtrl.filterIsApplied}" ng-model="mainCtrl.filterSelectorActive"
+            <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.filterSelectorActive"
               data-toggle="tooltip" data-placement="left" data-original-title="{{'Filter'|translate}}">
-              <span class="fa fa-filter"></span>
+              <span
+                class="fa"
+                ng-class="mainCtrl.gmfDataSourceBeingFiltered.dataSource && mainCtrl.gmfDataSourceBeingFiltered.dataSource.filterRules ? 'fa-funnel-dollar' : 'fa-filter'"></span>
+
             </button>
             <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.editFeatureActive"
               data-toggle="tooltip" data-placement="left" data-original-title="{{'Editing'|translate}}"
