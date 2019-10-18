@@ -64,7 +64,7 @@ import * as Sentry from '@sentry/browser';
  * @hidden
  */
 export const RouteSuffix = {
-  CHANGE_PASSWORD: 'loginchange',
+  CHANGE_PASSWORD: 'loginchangepassword',
   IS_LOGGED_IN: 'loginuser',
   LOGIN: 'login',
   LOGOUT: 'logout',
@@ -150,15 +150,17 @@ export class AuthenticationService extends olEventsEventTarget {
   }
 
   /**
+   * @param {string} login Login.
    * @param {string} oldPwd Old password.
    * @param {string} newPwd New password.
    * @param {string} confPwd New password confirmation.
    * @return {angular.IPromise<void>} Promise.
    */
-  changePassword(oldPwd, newPwd, confPwd) {
+  changePassword(login, oldPwd, newPwd, confPwd) {
     const url = `${this.baseUrl_}/${RouteSuffix.CHANGE_PASSWORD}`;
 
     return this.$http_.post(url, $.param({
+      'login': login,
       'oldPassword': oldPwd,
       'newPassword': newPwd,
       'confirmNewPassword': confPwd
