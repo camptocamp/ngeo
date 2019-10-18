@@ -2,6 +2,7 @@ import angular from 'angular';
 import gmfControllersAbstractAPIController, {AbstractAPIController}
   from 'gmf/controllers/AbstractAPIController.js';
 import gmfContextualdataModule from 'gmf/contextualdata/module.js';
+import gmfDatasourceDataSourceBeingFiltered from 'gmf/datasource/DataSourceBeingFiltered.js';
 import gmfEditingModule from 'gmf/editing/module.js';
 import gmfPermalinkShareComponent from 'gmf/permalink/shareComponent.js';
 import gmfPrintModule from 'gmf/print/module.js';
@@ -138,6 +139,11 @@ export class AbstractDesktopController extends AbstractAPIController {
      * @type {import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr}
      */
     const ngeoToolActivateMgr = $injector.get('ngeoToolActivateMgr');
+
+    /**
+     * @type {import('gmf/datasource/DataSourceBeingFiltered.js').DataSourceBeingFiltered}
+     */
+    this.gmfDataSourceBeingFiltered = $injector.get('gmfDataSourceBeingFiltered');
 
     /**
      * The gmf layer being swipe.
@@ -279,6 +285,7 @@ const module = angular.module('GmfAbstractDesktopControllerModule', [
   ngeoQueryPanelComponent.name,
   gmfControllersAbstractAPIController.name,
   gmfContextualdataModule.name,
+  gmfDatasourceDataSourceBeingFiltered.name,
   gmfEditingModule.name,
   gmfPermalinkShareComponent.name,
   gmfPrintModule.name,
