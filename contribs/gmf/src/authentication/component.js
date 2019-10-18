@@ -190,12 +190,12 @@ class AuthenticationController {
     /**
      * @type {boolean}
      */
-    this.allowPasswordReset = false;
+    this.allowPasswordReset = true;
 
     /**
      * @type {boolean}
      */
-    this.allowPasswordChange = false;
+    this.allowPasswordChange = true;
 
     /**
      * @type {PasswordValidator?}
