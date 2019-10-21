@@ -1,3 +1,8 @@
+<div ng-if="$ctrl.gmfUser.is_intranet">
+  <div class="form-group">
+    <span>{{'You are recognise as an intranet user.' | translate}}</span>
+  </div>
+</div>
 <div ng-if="$ctrl.gmfUser.username">
   <div class="form-group">
     <span>{{'Logged in as' | translate}}</span>

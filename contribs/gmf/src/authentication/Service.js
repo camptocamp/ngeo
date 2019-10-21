@@ -25,6 +25,7 @@ import * as Sentry from '@sentry/browser';
 /**
  * @typedef {Object} User
  * @property {string|null} email User's email address
+ * @property {boolean|null} is_intranet The user is in the intranet.
  * @property {AuthenticationFunctionalities|null} functionalities Configured functionalities of the user
  * @property {boolean|null} is_password_changed True if the password of the user has been changed.
  *    False otherwise.
