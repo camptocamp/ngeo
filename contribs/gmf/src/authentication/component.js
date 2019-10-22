@@ -321,7 +321,7 @@ class AuthenticationController {
         this.setError_(errors);
       } else {
         // Send request with current credentials, which may fail if the old password given is incorrect.
-        this.gmfAuthenticationService_.changePassword(oldPwd, newPwd, confPwd)
+        this.gmfAuthenticationService_.changePassword(this.gmfUser.username, oldPwd, newPwd, confPwd)
           .then(() => {
             this.changePasswordReset();
             this.setError_(
