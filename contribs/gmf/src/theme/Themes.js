@@ -164,12 +164,16 @@ export class ThemesService extends olEventsEventTarget {
         if (!gmfLayerWMTS.url) {
           throw 'Layer URL is required';
         }
+        const minResolution = getNodeMinResolution(gmfLayerWMTS);
+        const maxResolution = getNodeMaxResolution(gmfLayerWMTS);
         const layer = layerHelper.createWMTSLayerFromCapabilitites(
           gmfLayerWMTS.url,
           gmfLayerWMTS.layer || '',
           gmfLayerWMTS.matrixSet,
           gmfLayer.dimensions,
-          gmfLayerWMTS.metadata.customOpenLayersOptions
+          gmfLayerWMTS.metadata.customOpenLayersOptions,
+          minResolution,
+          maxResolution
         ).then(callback.bind(null, gmfLayer)).then(null, (response) => {
           let message = `Unable to build layer "${gmfLayerWMTS.layer}" `
             + `from WMTSCapabilities: ${gmfLayerWMTS.url}\n`;

@@ -167,15 +167,25 @@ LayerHelper.prototype.createBasicWMSLayerFromDataSource = function(
  * @param {string=} opt_matrixSet Optional WMTS matrix set.
  * @param {Object<string, ?string>=} opt_dimensions WMTS dimensions.
  * @param {Object=} opt_customOptions Some initial options.
+ * @param {number|undefined} opt_minResolution WMTS minimum resolution.
+ * @param {number|undefined} opt_maxResolution WMTS maximum resolution.
  * @return {angular.IPromise<import("ol/layer/Tile.js").default>} A Promise with a layer (with source) on
  *    success, no layer else.
  */
 LayerHelper.prototype.createWMTSLayerFromCapabilitites = function(
-  capabilitiesURL, layerName, opt_matrixSet, opt_dimensions, opt_customOptions
+  capabilitiesURL,
+  layerName,
+  opt_matrixSet,
+  opt_dimensions,
+  opt_customOptions,
+  opt_minResolution,
+  opt_maxResolution
 ) {
   const parser = new olFormatWMTSCapabilities();
   const layer = new olLayerTile({
-    preload: this.tilesPreloadingLimit_
+    preload: this.tilesPreloadingLimit_,
+    minResolution: opt_minResolution,
+    maxResolution: opt_maxResolution
   });
   const $q = this.$q_;
 
