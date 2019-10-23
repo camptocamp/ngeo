@@ -77,10 +77,9 @@
 
     {{layertreeCtrl.node.name | translate}}
 
-    <span
-      ng-if="gmfLayertreeCtrl.gmfLayerBeingSwipe.layer && gmfLayertreeCtrl.gmfLayerBeingSwipe.layer === layertreeCtrl.layer"
-      class="fas fa-arrows-alt-h gmf-layer-being-swipe"
-    ></span>
+    <i ng-if="gmfLayertreeCtrl.gmfLayerBeingSwipe.layer && gmfLayertreeCtrl.gmfLayerBeingSwipe.layer === layertreeCtrl.layer">
+      <%=require('ngeo/icons/swipe.svg?viewbox&width=1em')%>
+    </i>
 
     <i
       class="gmf-layertree-zoom"
@@ -181,7 +180,7 @@
             </a>
           </li>
           <li ng-if="::gmfLayertreeCtrl.supportsOpacityChange(layertreeCtrl)">
-            <i class="fa fal fa-sort fa-fw fa-rotate-90"></i>
+            <i><%=require('ngeo/icons/swipe.svg?viewbox&height=1em')%></i>
             <a
               ng-click="::gmfLayertreeCtrl.toggleSwipeLayer(layertreeCtrl); popoverCtrl.dismissPopover()"
               href=""
