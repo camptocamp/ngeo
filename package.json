@@ -110,7 +110,7 @@
     "localforage": "~1.7.3",
     "ls": "~0.2.1",
     "moment": "~2.24.0",
-    "node-sass": "~4.12.0",
+    "node-sass": "~4.13.0",
     "node-sass-importer": "~1.0.0",
     "ol": "6.0.1",
     "ol-cesium": "~2.10.0",
