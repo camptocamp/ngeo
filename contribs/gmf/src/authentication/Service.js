@@ -173,8 +173,10 @@ export class AuthenticationService extends olEventsEventTarget {
     }), {
       headers: {'Content-Type': 'application/x-www-form-urlencoded'},
       withCredentials: true
-    }).then(((response) => {
+    }).then((() => {
       this.user_.is_password_changed = true;
+      const event = new ngeoCustomEvent('ready', {user: this.user_});
+      this.dispatchEvent(event);
     }));
   }
 
