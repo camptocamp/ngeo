@@ -203,6 +203,10 @@ export function AbstractAppController(config, map, $scope, $injector) {
    * @param {Event|import('ol/events/Event.js').default} evt Event.
    */
   const userChange = (evt) => {
+    // password change is in progress, don't reload the theme yet.
+    if (this.gmfUser.is_password_changed === false) {
+      return;
+    }
     if (this.loginRedirectUrl) {
       window.location.href = this.loginRedirectUrl;
       return;
