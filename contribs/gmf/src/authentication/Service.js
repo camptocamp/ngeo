@@ -254,7 +254,6 @@ export class AuthenticationService extends olEventsEventTarget {
   handleLogin_(checkingLoginStatus, resp) {
     this.setUser_(resp.data, !checkingLoginStatus);
     if (checkingLoginStatus) {
-      /** @type {AuthenticationEvent} */
       const event = new ngeoCustomEvent('ready', {user: this.user_});
       this.dispatchEvent(event);
     }
@@ -280,7 +279,6 @@ export class AuthenticationService extends olEventsEventTarget {
       this.user_[key] = respData[key];
     }
     if (emitEvent && respData.username !== undefined) {
-      /** @type {AuthenticationEvent} */
       const event = new ngeoCustomEvent('login', {user: this.user_});
       this.dispatchEvent(event);
     }
@@ -297,7 +295,6 @@ export class AuthenticationService extends olEventsEventTarget {
       // @ts-ignore: unsupported syntax
       this.user_[key] = null;
     }
-    /** @type {AuthenticationEvent} */
     const event = new ngeoCustomEvent('logout', {user: this.user_});
     this.dispatchEvent(event);
     if (!noReload) {
