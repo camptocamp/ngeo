@@ -24,6 +24,7 @@
         "jsts/*": ["node_modules/@types/jsts/index.d.ts"],
         "localforage/*": ["node_modules/localforage/*"],
         "resize-observer-polyfill": ["node_modules/resize-observer-polyfill/src/index.d.ts"],
+        "qruri": ["node_modules/qruri/index.js"],
       }
     },
     "include": [

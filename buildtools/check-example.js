@@ -104,11 +104,11 @@ function loaded(page, browser) {
       request.respond(ASITVDCapabilities);
     } else if (parse(url).host == parse(page_url).host ||
         url.startsWith('http://localhost:3000/') ||
-        url.startsWith('https://geomapfish-demo-2-5.camptocamp.com/') ||
+        url.startsWith('https://geomapfish-demo') ||
         url.startsWith('https://wmts.geo.admin.ch/') ||
         url.startsWith('https://wms.geo.admin.ch/')) {
       requestsURL.add(url);
-      if (url.startsWith('https://geomapfish-demo-2-5.camptocamp.com/')) {
+      if (url.startsWith('https://geomapfish-demo')) {
         request.headers().origin = 'http://localhost:3000';
       }
       request.continue();
@@ -131,7 +131,7 @@ function loaded(page, browser) {
     const url = request.url();
     requestsURL.delete(url);
     loaded(page, browser);
-    if (ci && url.startsWith('https://geomapfish-demo-2-5.camptocamp.com/') &&
+    if (ci && url.startsWith('https://geomapfish-demo') &&
         request.headers()['sec-fetch-mode'] == 'cors' &&
         request.response().headers()['access-control-allow-origin'] == undefined) {
       console.log(`CORS error on: ${url}`);

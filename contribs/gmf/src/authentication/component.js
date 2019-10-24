@@ -2,9 +2,9 @@ import angular from 'angular';
 import gmfAuthenticationService from 'gmf/authentication/Service.js';
 import {MessageType} from 'ngeo/message/Message.js';
 import ngeoMessageNotification from 'ngeo/message/Notification.js';
-
 import ngeoMessageModalComponent from 'ngeo/message/modalComponent.js';
 
+import qruri from 'qruri';
 
 /**
  * Password validator function with an error message.
@@ -145,7 +145,9 @@ module.component('gmfAuthentication', authenticationComponent);
  */
 class AuthenticationController {
   /**
+   * @param {angular.IScope} $scope Scope.
    * @param {JQuery} $element Element.
+   * @param {boolean} gmfTwoFactorAuth Two factor authentication is required.
    * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
    * @param {import("gmf/authentication/Service.js").AuthenticationService} gmfAuthenticationService
    *    GMF Authentication service
@@ -156,7 +158,8 @@ class AuthenticationController {
    * @ngdoc controller
    * @ngname GmfAuthenticationController
    */
-  constructor($element, gettextCatalog, gmfAuthenticationService, gmfUser, ngeoNotification) {
+  constructor($scope, $element, gmfTwoFactorAuth, gettextCatalog, gmfAuthenticationService,
+    gmfUser, ngeoNotification) {
 
     /**
      * @type {JQuery}
@@ -186,6 +189,11 @@ class AuthenticationController {
      * @private
      */
     this.notification_ = ngeoNotification;
+
+    /**
+     * @type {boolean}
+     */
+    this.twoFactorAuth = gmfTwoFactorAuth;
 
     /**
      * @type {boolean}
@@ -244,6 +252,11 @@ class AuthenticationController {
      */
     this.pwdVal = '';
 
+    /**
+     * @type {string}
+     */
+    this.otpVal;
+
     // CHANGE PASSWORD form values
 
     /**
@@ -260,6 +273,20 @@ class AuthenticationController {
      * @type {string}
      */
     this.newPwdConfVal = '';
+
+    this.otpImage;
+
+    $scope.$watch(
+      () => this.gmfUser.otp_uri,
+      (val) => {
+        if (val) {
+          this.otpImage = qruri(val, {
+            margin: 2
+          });
+        }
+      }
+    );
+
   }
 
   /**
@@ -321,7 +348,8 @@ class AuthenticationController {
         this.setError_(errors);
       } else {
         // Send request with current credentials, which may fail if the old password given is incorrect.
-        this.gmfAuthenticationService_.changePassword(this.gmfUser.username, oldPwd, newPwd, confPwd)
+        const username = this.gmfUser.username;
+        this.gmfAuthenticationService_.changePassword(username, oldPwd, newPwd, confPwd, this.otpVal)
           .then(() => {
             this.changePasswordReset();
             this.setError_(
@@ -331,6 +359,7 @@ class AuthenticationController {
           })
           .catch((err) => {
             this.oldPwdVal = '';
+            this.otpVal = '';
             this.setError_(gettextCatalog.getString('Incorrect old password.'));
           });
       }
@@ -353,14 +382,16 @@ class AuthenticationController {
     if (errors.length) {
       this.setError_(errors);
     } else {
-      this.gmfAuthenticationService_.login(this.loginVal, this.pwdVal)
+      this.gmfAuthenticationService_.login(this.loginVal, this.pwdVal, this.otpVal)
         .then(() => {
           this.loginVal = '';
           this.pwdVal = '';
+          this.otpVal = '';
           this.resetError_();
         })
         .catch(() => {
           this.pwdVal = '';
+          this.otpVal = '';
           this.setError_(gettextCatalog.getString('Incorrect credentials or disabled account.'));
         });
     }
