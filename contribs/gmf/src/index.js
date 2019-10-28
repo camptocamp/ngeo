@@ -31,6 +31,7 @@ export const PermalinkParam = {
   FEATURES: 'rl_features',
   MAP_CROSSHAIR: 'map_crosshair',
   MAP_SWIPE: 'map_swipe',
+  MAP_SWIPE_VALUE: 'map_swipe_value',
   MAP_TOOLTIP: 'map_tooltip',
   MAP_X: 'map_x',
   MAP_Y: 'map_y',

@@ -179,7 +179,8 @@ module.component('ngeoMapswipe', {
   controller: SwipeController,
   bindings: {
     map: '<',
-    layer: '<'
+    layer: '<',
+    swipeValue: '=?'
   },
   templateUrl: ngeoMapswipeTemplateUrl
 });

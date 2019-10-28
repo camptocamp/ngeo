@@ -711,6 +711,7 @@ PermalinkService.prototype.handleLayerBeingSwipeChange_ = function(layer, oldLay
     const object = {};
     const dataSourceId = layer.get('dataSourceId');
     object[PermalinkParam.MAP_SWIPE] = dataSourceId;
+    object[PermalinkParam.MAP_SWIPE_VALUE] = this.gmfLayerBeingSwipe_.swipeValue;
     this.ngeoStateManager_.updateState(object);
   } else {
     this.ngeoStateManager_.deleteParam(PermalinkParam.MAP_SWIPE);
@@ -1284,6 +1285,10 @@ PermalinkService.prototype.initLayers_ = function() {
       // Get the layerBeingSwipe value from Permalink.
       const layerBeingSwipeValue = this.ngeoStateManager_.getInitialNumberValue(
         PermalinkParam.MAP_SWIPE);
+      // Get the map swipe value from Permalink.
+      const mapSwipeValue = this.ngeoStateManager_.getInitialNumberValue(
+        PermalinkParam.MAP_SWIPE_VALUE
+      );
       /**
        * Enable the layers and set the opacity
        * @param {import('ngeo/layertree/Controller.js').LayertreeController} treeCtrl Controller
