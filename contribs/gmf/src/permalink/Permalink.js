@@ -641,6 +641,11 @@ export function PermalinkService(
     () => this.gmfLayerBeingSwipe_.layer,
     this.handleLayerBeingSwipeChange_.bind(this));
 
+  // Watch map swipe value.
+  this.rootScope_.$watch(
+    () => this.gmfLayerBeingSwipe_.swipeValue,
+    this.handleMapSwipeValue_.bind(this));
+
   // External DataSources
 
   /**
@@ -711,11 +716,26 @@ PermalinkService.prototype.handleLayerBeingSwipeChange_ = function(layer, oldLay
     const object = {};
     const dataSourceId = layer.get('dataSourceId');
     object[PermalinkParam.MAP_SWIPE] = dataSourceId;
-    object[PermalinkParam.MAP_SWIPE_VALUE] = this.gmfLayerBeingSwipe_.swipeValue;
     this.ngeoStateManager_.updateState(object);
   } else {
     this.ngeoStateManager_.deleteParam(PermalinkParam.MAP_SWIPE);
+    this.ngeoStateManager_.deleteParam(PermalinkParam.MAP_SWIPE_VALUE);
   }
+};
+
+/**
+ * Called when map swipe value change.
+ * @private
+ */
+PermalinkService.prototype.handleMapSwipeValue_ = function() {
+  const mapSwipeValue = this.gmfLayerBeingSwipe_.swipeValue;
+  /** @type {Object<string, object>} */
+  const object = {};
+  if (mapSwipeValue === undefined || mapSwipeValue === null) {
+    return;
+  }
+  object[PermalinkParam.MAP_SWIPE_VALUE] = mapSwipeValue;
+  this.ngeoStateManager_.updateState(object);
 };
 
 // === Map X, Y, Z ===
@@ -1313,6 +1333,9 @@ PermalinkService.prototype.initLayers_ = function() {
           // === Set the gmfLayerBeingSwipe layer ===
           if (layerBeingSwipeValue !== null && layerBeingSwipeValue !== undefined
             && treeCtrl.layer.get('dataSourceId') === layerBeingSwipeValue) {
+            if (mapSwipeValue !== undefined) {
+              this.gmfLayerBeingSwipe_.swipeValue = mapSwipeValue;
+            }
             this.gmfLayerBeingSwipe_.layer = treeCtrl.layer;
           }
         }

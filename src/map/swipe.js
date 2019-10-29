@@ -82,7 +82,7 @@ class SwipeController {
     /**
      * @type {number}
      */
-    this.swipeValue = 0.5;
+    this.swipeValue;
 
     /**
      * @type {JQuery}
@@ -108,6 +108,7 @@ class SwipeController {
    * Init the controller
    */
   $onInit() {
+    this.swipeValue = this.swipeValue !== undefined ? this.swipeValue : 0.5;
     this.layerKeys_.push(listen(this.layer, 'prerender', this.handleLayerPrerender_, this));
     this.layerKeys_.push(listen(this.layer, 'postrender', this.handleLayerPostrender_, this));
 
@@ -180,7 +181,7 @@ module.component('ngeoMapswipe', {
   bindings: {
     map: '<',
     layer: '<',
-    swipeValue: '=?'
+    swipeValue: '='
   },
   templateUrl: ngeoMapswipeTemplateUrl
 });
