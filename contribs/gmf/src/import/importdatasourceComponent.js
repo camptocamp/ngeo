@@ -423,9 +423,9 @@ class Controller {
    * - _visible: true if searchText is empty or searchText is found in
    * layer.Title or in any of its ancestors or in any of its descendants.
    * - _expanded: true if searchText is found in any of its descendants.
-   * - _searchPrefix: subtring before searchText in layer.Title.
-   * - _searchMatch: subtring matching searchText in layer.Title.
-   * - _searchSuffix: subtring after searchText in layer.Title.
+   * - _searchPrefix: substring before searchText in layer.Title.
+   * - _searchMatch: substring matching searchText in layer.Title.
+   * - _searchSuffix: substring after searchText in layer.Title.
    * @param {Object} layer WMS Capability Layer object.
    * @param {boolean} visible Force layer to be visible.
    */
