@@ -42,6 +42,7 @@ export class AbstractAPIController extends AbstractAppController {
           target: scaleline
         }),
         new olControlZoom({
+          target: 'ol-zoom-control',
           zoomInTipLabel: '',
           zoomOutTipLabel: ''
         }),
