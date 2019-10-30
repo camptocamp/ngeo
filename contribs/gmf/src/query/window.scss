@@ -203,7 +203,7 @@ div.ngeo-displaywindow {
   }
   &.desktop {
     .windowcontainer {
-      height: 15rem;
+      height: $displayquerywindow-desktop-height;
       .slide-animation {
         height: 100%;
       }
