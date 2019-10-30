@@ -1,6 +1,7 @@
 import ngeoDatasourceDataSource from 'ngeo/datasource/DataSource.js';
 import ngeoFilterCondition from 'ngeo/filter/Condition.js';
 import ngeoFormatAttributeType from 'ngeo/format/AttributeType.js';
+import olFormatGeoJSON from 'ol/format/GeoJSON.js';
 import olFormatGML2 from 'ol/format/GML2.js';
 import olFormatGML3 from 'ol/format/GML3.js';
 import olFormatWFS from 'ol/format/WFS.js';
@@ -19,6 +20,7 @@ import olFormatWMSGetFeatureInfo from 'ol/format/WMSGetFeatureInfo.js';
  * @hidden
  */
 export const ServerType = {
+  ARCGIS: 'arcgis',
   GEOSERVER: 'geoserver',
   MAPSERVER: 'mapserver',
   QGISSERVER: 'qgisserver'
@@ -64,6 +66,7 @@ export const WFSOutputFormat = {
  * @hidden
  */
 export const WMSInfoFormat = {
+  GEOJSON: 'application/geojson',
   GML: 'application/vnd.ogc.gml'
 };
 
@@ -417,12 +420,23 @@ class OGC extends ngeoDatasourceDataSource {
      */
     this.wfsUrl_ = options.wfsUrl;
 
+    let wmsInfoFormat;
+    if (options.wmsInfoFormat) {
+      wmsInfoFormat = options.wmsInfoFormat;
+    } else {
+      if (this.ogcServerType_ === ServerType.ARCGIS) {
+        wmsInfoFormat = WMSInfoFormat.GEOJSON;
+      } else {
+        wmsInfoFormat = WMSInfoFormat.GML;
+      }
+    }
+
     /**
      * The InfoFormat to use with WMS requests.
      * @type {string}
      * @private
      */
-    this.wmsInfoFormat_ = options.wmsInfoFormat || WMSInfoFormat.GML;
+    this.wmsInfoFormat_ = wmsInfoFormat;
 
     /**
      * Whether the (WMS) images returned by this data source
@@ -508,12 +522,13 @@ class OGC extends ngeoDatasourceDataSource {
         wmsFormat = new olFormatWMSGetFeatureInfo({
           layers: wmsLayers
         });
+      } else if (this.wmsInfoFormat === WMSInfoFormat.GEOJSON) {
+        wmsFormat = new olFormatGeoJSON();
       }
-      // Todo, support more formats for WMS
     }
 
     /**
-     * @type {?import("ol/format/WMSGetFeatureInfo.js").default}
+     * @type {?olFormatWMSGetFeatureInfo|olFormatGeoJSON}
      * @private
      */
     this.wmsFormat_ = wmsFormat;
