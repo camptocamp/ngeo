@@ -230,7 +230,8 @@
         <ngeo-mapswipe
           ng-if="mainCtrl.gmfLayerBeingSwipe.layer != null"
           map="::mainCtrl.map"
-          layer="::mainCtrl.gmfLayerBeingSwipe.layer">
+          layer="::mainCtrl.gmfLayerBeingSwipe.layer"
+          swipe-value="mainCtrl.gmfLayerBeingSwipe.swipeValue">
         </ngeo-mapswipe>
         <ngeo-displaywindow
           content="mainCtrl.displaywindowContent"

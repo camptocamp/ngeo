@@ -641,6 +641,11 @@ export function PermalinkService(
     () => this.gmfLayerBeingSwipe_.layer,
     this.handleLayerBeingSwipeChange_.bind(this));
 
+  // Watch map swipe value.
+  this.rootScope_.$watch(
+    () => this.gmfLayerBeingSwipe_.swipeValue,
+    this.handleMapSwipeValue_.bind(this));
+
   // External DataSources
 
   /**
@@ -709,11 +714,31 @@ PermalinkService.prototype.handleLayerBeingSwipeChange_ = function(layer, oldLay
   if (layer) {
     /** @type {Object<string, object>} */
     const object = {};
+    const mapSwipeValue = this.gmfLayerBeingSwipe_.swipeValue;
+    if (mapSwipeValue === null) {
+      this.gmfLayerBeingSwipe_.swipeValue = 0.5;
+    }
     const dataSourceId = layer.get('dataSourceId');
     object[PermalinkParam.MAP_SWIPE] = dataSourceId;
+    object[PermalinkParam.MAP_SWIPE_VALUE] = mapSwipeValue;
     this.ngeoStateManager_.updateState(object);
   } else {
     this.ngeoStateManager_.deleteParam(PermalinkParam.MAP_SWIPE);
+    this.ngeoStateManager_.deleteParam(PermalinkParam.MAP_SWIPE_VALUE);
+  }
+};
+
+/**
+ * Called when map swipe value change.
+ * @private
+ */
+PermalinkService.prototype.handleMapSwipeValue_ = function() {
+  const mapSwipeValue = this.gmfLayerBeingSwipe_.swipeValue;
+  /** @type {Object<string, object>} */
+  const object = {};
+  if (mapSwipeValue && mapSwipeValue !== null && mapSwipeValue !== undefined) {
+    object[PermalinkParam.MAP_SWIPE_VALUE] = mapSwipeValue;
+    this.ngeoStateManager_.updateState(object);
   }
 };
 
@@ -1284,6 +1309,10 @@ PermalinkService.prototype.initLayers_ = function() {
       // Get the layerBeingSwipe value from Permalink.
       const layerBeingSwipeValue = this.ngeoStateManager_.getInitialNumberValue(
         PermalinkParam.MAP_SWIPE);
+      // Get the map swipe value from Permalink.
+      const mapSwipeValue = this.ngeoStateManager_.getInitialNumberValue(
+        PermalinkParam.MAP_SWIPE_VALUE
+      );
       /**
        * Enable the layers and set the opacity
        * @param {import('ngeo/layertree/Controller.js').LayertreeController} treeCtrl Controller
@@ -1308,6 +1337,9 @@ PermalinkService.prototype.initLayers_ = function() {
           // === Set the gmfLayerBeingSwipe layer ===
           if (layerBeingSwipeValue !== null && layerBeingSwipeValue !== undefined
             && treeCtrl.layer.get('dataSourceId') === layerBeingSwipeValue) {
+            if (mapSwipeValue !== null && mapSwipeValue !== undefined) {
+              this.gmfLayerBeingSwipe_.swipeValue = mapSwipeValue;
+            }
             this.gmfLayerBeingSwipe_.layer = treeCtrl.layer;
           }
         }
