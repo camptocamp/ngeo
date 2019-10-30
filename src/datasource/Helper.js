@@ -91,37 +91,52 @@ export class DatasourceHelper {
    */
   getDataSourceAttributes(dataSource) {
 
-    const wfsDescribeFeatureTypeDefer = this.q_.defer();
+    const getDataSourceAttributesDefer = this.q_.defer();
 
     if (dataSource.attributes) {
-      wfsDescribeFeatureTypeDefer.resolve(dataSource.attributes);
+      getDataSourceAttributesDefer.resolve(dataSource.attributes);
     } else {
-      this.ngeoQuerent_.wfsDescribeFeatureType(dataSource).then((featureType_) => {
-        // We know, at this point, that there's only one definition that
-        // was returned.  Just to be sure, let's do a bunch of assertions.
-        const ogcLayerName = dataSource.getWFSLayerNames()[0];
-        console.assert(typeof ogcLayerName == 'string', 'The data source should have only one ogcLayer.');
-        const featureType = /** @type {Object<string, *>} */(/** @type {unknown} */(featureType_));
-        for (const element of featureType.element) {
-          if (element.name === ogcLayerName) {
-            for (const type of featureType.complexType) {
-              if (type.name == element.type) {
-                const complexContent = type.complexContent;
-                const attributes = new ngeoFormatWFSAttribute().read(complexContent);
+      // The data source doesn't have its attributes set yet,
+      // therefore we need to get them. There are 2 possible ways to
+      // get them:
+      //
+      // 1) by using the ones defined in the ogcAttributes
+      const createdAttributes =
+        this.createDataSourceAttributesFromOGCAttributes_(dataSource);
+      if (createdAttributes) {
+        dataSource.setAttributes(createdAttributes);
+        getDataSourceAttributesDefer.resolve(createdAttributes);
+      } else {
+        // 2) by launching a WFS DescribeFeatureType request, which is
+        // only supported if there is one ogcLayer within the data
+        // source.
+        this.ngeoQuerent_.wfsDescribeFeatureType(dataSource).then((featureType_) => {
+          // We know, at this point, that there's only one definition that
+          // was returned.  Just to be sure, let's do a bunch of assertions.
+          const ogcLayerName = dataSource.getWFSLayerNames()[0];
+          console.assert(typeof ogcLayerName == 'string', 'The data source should have only one ogcLayer.');
+          const featureType = /** @type {Object<string, *>} */(/** @type {unknown} */(featureType_));
+          for (const element of featureType.element) {
+            if (element.name === ogcLayerName) {
+              for (const type of featureType.complexType) {
+                if (type.name == element.type) {
+                  const complexContent = type.complexContent;
+                  const attributes = new ngeoFormatWFSAttribute().read(complexContent);
 
-                // Set the attributes in the data source
-                dataSource.setAttributes(attributes);
+                  // Set the attributes in the data source
+                  dataSource.setAttributes(attributes);
 
-                wfsDescribeFeatureTypeDefer.resolve(attributes);
-                break;
+                  getDataSourceAttributesDefer.resolve(attributes);
+                  break;
+                }
               }
             }
           }
-        }
-      });
+        });
+      }
     }
 
-    return wfsDescribeFeatureTypeDefer.promise;
+    return getDataSourceAttributesDefer.promise;
   }
 
   /**
@@ -169,6 +184,43 @@ export class DatasourceHelper {
     }
   }
 
+  /**
+   * Create and return a list of attributes for a data source using
+   * the ones that are defined in the `ogcAttributes` property of that
+   * data source. The list is build using the ogcAttributes that are
+   * supported by the data source, i.e. by those having a WFS layer
+   * defined in it.
+   *
+   * If there are no WFS layer in the data source that are in the
+   * ogcAttributes list, then `null` is returned.
+   *
+   * @param {import("ngeo/datasource/OGC.js").default} dataSource Filtrable data source.
+   * @return {Array<import('ngeo/format/Attribute.js').Attribute>} attributes Attributes
+   */
+  createDataSourceAttributesFromOGCAttributes_(dataSource) {
+    let attributes = null;
+
+    const ogcAttributes = dataSource.ogcAttributesWFS;
+    if (ogcAttributes) {
+      attributes = [];
+      for (const name in ogcAttributes) {
+        const ogcAttribute = ogcAttributes[name];
+
+        const alias = ogcAttribute.alias;
+        const required = ogcAttribute.minOccurs != '0';
+        const type = ogcAttribute.type;
+
+        attributes.push({
+          alias,
+          name,
+          required,
+          type,
+        });
+      }
+    }
+
+    return attributes;
+  }
 }
 
 

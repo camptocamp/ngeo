@@ -150,6 +150,9 @@
 
 /**
  * @typedef {Object} GmfOgcServerAttribute
+ * @property {string} [alias] The attribute alias.
+ * @property {string} [minOccurs] If not '0', then the attribute is
+ *     considered required.
  * @property {string} namespace The attribute namespace.
  * @property {string} type The attribute type (in namspace).
  */
