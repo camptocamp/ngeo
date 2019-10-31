@@ -309,6 +309,7 @@ QueryWindowController.prototype.$onInit = function() {
       containment: this.draggableContainment
     });
     windowContainer.resizable({
+      handles: 'all',
       minHeight: 240,
       minWidth: 240
     });
