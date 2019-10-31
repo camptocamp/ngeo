@@ -908,7 +908,7 @@ class OGC extends ngeoDatasourceDataSource {
   }
 
   /**
-   * @return {?import("ol/format/WMSGetFeatureInfo.js").default} WMS format.
+   * @return {?olFormatWMSGetFeatureInfo|olFormatGeoJSON} WMS format.
    */
   get wmsFormat() {
     return this.wmsFormat_;
