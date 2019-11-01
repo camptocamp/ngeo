@@ -18,6 +18,7 @@ export default class Mask extends Layer {
     this.context_ = createCanvasContext2D();
 
     this.context_.canvas.style.opacity = '0.5';
+    this.context_.canvas.style.position = 'absolute';
 
     /**
      * @type {function(import("ol/PluggableMap.js").FrameState):number}
