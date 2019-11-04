@@ -1,7 +1,7 @@
 import ngeoDatasourceDataSource from 'ngeo/datasource/DataSource.js';
 import ngeoFilterCondition from 'ngeo/filter/Condition.js';
+import ngeoFormatArcGISGeoJSON from 'ngeo/format/ArcGISGeoJSON.js';
 import ngeoFormatAttributeType from 'ngeo/format/AttributeType.js';
-import olFormatGeoJSON from 'ol/format/GeoJSON.js';
 import olFormatGML2 from 'ol/format/GML2.js';
 import olFormatGML3 from 'ol/format/GML3.js';
 import olFormatWFS from 'ol/format/WFS.js';
@@ -523,12 +523,16 @@ class OGC extends ngeoDatasourceDataSource {
           layers: wmsLayers
         });
       } else if (this.wmsInfoFormat === WMSInfoFormat.GEOJSON) {
-        wmsFormat = new olFormatGeoJSON();
+        if (this.ogcServerType_ === ServerType.ARCGIS) {
+          wmsFormat = new ngeoFormatArcGISGeoJSON({
+            layers: wmsLayers
+          });
+        }
       }
     }
 
     /**
-     * @type {?olFormatWMSGetFeatureInfo|olFormatGeoJSON}
+     * @type {?olFormatWMSGetFeatureInfo|ngeoFormatArcGISGeoJSON}
      * @private
      */
     this.wmsFormat_ = wmsFormat;
@@ -908,7 +912,7 @@ class OGC extends ngeoDatasourceDataSource {
   }
 
   /**
-   * @return {?olFormatWMSGetFeatureInfo|olFormatGeoJSON} WMS format.
+   * @return {?olFormatWMSGetFeatureInfo|ngeoFormatArcGISGeoJSON} WMS format.
    */
   get wmsFormat() {
     return this.wmsFormat_;

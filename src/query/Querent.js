@@ -3,9 +3,7 @@ import ngeoDatasourceOGC from 'ngeo/datasource/OGC.js';
 import ngeoFilterRuleHelper from 'ngeo/filter/RuleHelper.js';
 import ngeoMiscWMSTime from 'ngeo/misc/WMSTime.js';
 import * as olFormatFilter from 'ol/format/filter.js';
-import olFormatGeoJSON from 'ol/format/GeoJSON.js';
 import olFormatWFS from 'ol/format/WFS.js';
-import olFormatWMSGetFeatureInfo from 'ol/format/WMSGetFeatureInfo.js';
 import ngeoWFSDescribeFeatureType from 'ngeo/WFSDescribeFeatureType.js';
 import olFormatWMSCapabilities from 'ol/format/WMSCapabilities.js';
 import olFormatWMTSCapabilities from 'ol/format/WMTSCapabilities.js';
@@ -513,22 +511,10 @@ export class Querent {
       if (!dataSource.wmsFormat) {
         throw new Error('Missing wmsFormat');
       }
-      // WMS GetFeatureInfo format supports reading features with a
-      // specific type (i.e. a layer name)
-      if (dataSource.wmsFormat instanceof olFormatWMSGetFeatureInfo) {
-        if (opt_types) {
-          dataSource.wmsFormat.setLayers(opt_types);
-        }
-        types = dataSource.wmsFormat.getLayers();
-      } else if (dataSource.wmsFormat instanceof olFormatGeoJSON) {
-        // GeoJSON doesn't support this, but we still need to do this
-        // so get the type names (layer names) from the data source
-        // itself
-        const layers = wfs ? dataSource.wfsLayers : dataSource.wmsLayers;
-        types = layers.map((layer) => {
-          return layer.name;
-        });
+      if (opt_types) {
+        dataSource.wmsFormat.setLayers(opt_types);
       }
+      types = dataSource.wmsFormat.getLayers();
     }
     if (!types) {
       return [];
