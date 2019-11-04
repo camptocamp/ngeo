@@ -586,15 +586,13 @@ export function getSnappingConfig(node) {
 /**
  * Get the maximal resolution defined for this layer. Looks in the
  *     layer itself before to look into its metadata.
- * @param {import('gmf/themes.js').GmfLayerWMS} gmfLayer the GeoMapFish Layer. WMTS layer is
- *     also allowed (the type is defined as GmfLayerWMS only to avoid some
- *     useless tests to know if a maxResolutionHint property can exist
- *     on the node).
+ * @param {import('gmf/themes.js').GmfLayerWMS|import('gmf/themes.js').GmfLayerWMTS} gmfLayer the GeoMapFish Layer.
  * @return {number|undefined} the max resolution or undefined if any.
  * @hidden
  */
 export function getNodeMaxResolution(gmfLayer) {
   const metadata = gmfLayer.metadata;
+  // @ts-ignore: ignore error about maxResolutionHint no present in GmfLayerWMTS typedef
   let maxResolution = gmfLayer.maxResolutionHint;
   if (maxResolution === undefined && metadata !== undefined) {
     maxResolution = metadata.maxResolution;
@@ -606,15 +604,13 @@ export function getNodeMaxResolution(gmfLayer) {
 /**
  * Get the minimal resolution defined for this layer. Looks in the
  *     layer itself before to look into its metadata.
- * @param {import('gmf/themes.js').GmfLayerWMS} gmfLayer the GeoMapFish Layer. WMTS layer is
- *     also allowed (the type is defined as GmfLayerWMS only to avoid some
- *     useless tests to know if a minResolutionHint property can exist
- *     on the node).
+ * @param {import('gmf/themes.js').GmfLayerWMS|import('gmf/themes.js').GmfLayerWMTS} gmfLayer the GeoMapFish Layer.
  * @return {number|undefined} the min resolution or undefined if any.
  * @hidden
  */
 export function getNodeMinResolution(gmfLayer) {
   const metadata = gmfLayer.metadata;
+  // @ts-ignore: ignore error about minResolutionHint no present in GmfLayerWMTS typedef
   let minResolution = gmfLayer.minResolutionHint;
   if (minResolution === undefined && metadata !== undefined) {
     minResolution = metadata.minResolution;
