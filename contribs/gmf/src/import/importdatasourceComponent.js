@@ -191,6 +191,13 @@ class Controller {
     this.modes = [Mode.LOCAL, Mode.ONLINE];
 
     /**
+     * @type {angular.gettext.gettextCatalog}
+     */
+    const gettextCatalog = $injector.get('gettextCatalog');
+    gettextCatalog.getString('Local');
+    gettextCatalog.getString('Online');
+
+    /**
      * @type {boolean}
      */
     this.pending = false;
