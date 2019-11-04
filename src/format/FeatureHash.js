@@ -832,8 +832,8 @@ function readMultiPolygonGeometry_(text) {
   const polygons = text.split(')(');
   for (let i = 0, ii = polygons.length; i < ii; ++i) {
     const rings = polygons[i].split('\'');
-    /** @type {number[]} */
-    const ends = endss[i] = [];
+    endss[i] = [];
+    const ends = endss[i];
     for (let j = 0, jj = rings.length; j < jj; ++j) {
       flatCoordinates = this.decodeCoordinates_(rings[j], flatCoordinates);
       let end = flatCoordinates.length;
@@ -905,7 +905,8 @@ function setStyleInFeature_(text, feature) {
       options.stroke = strokeStyle;
     }
     imageStyle = new olStyleCircle(options);
-    fillStyle = strokeStyle = null;
+    fillStyle = null;
+    strokeStyle = null;
   }
   let textStyle = null;
   if (fontSize !== undefined && fontColor !== undefined) {

@@ -62,11 +62,9 @@ export function ToolActivateMgr($rootScope) {
  * @param {boolean=} opt_defaultActivate If true, this tool will be activated
  *     when all other tools in the group are deactivated.
  */
-ToolActivateMgr.prototype.registerTool = function(groupName, tool,
-  opt_defaultActivate) {
-  let entries = this.groups_[groupName];
-  if (!entries) {
-    entries = this.groups_[groupName] = [];
+ToolActivateMgr.prototype.registerTool = function(groupName, tool, opt_defaultActivate) {
+  if (!this.groups_[groupName]) {
+    this.groups_[groupName] = [];
   }
 
   const unlisten = this.scope_.$watch(
@@ -82,7 +80,7 @@ ToolActivateMgr.prototype.registerTool = function(groupName, tool,
       }
     });
 
-  entries.push({
+  this.groups_[groupName].push({
     tool: tool,
     defaultTool: opt_defaultActivate || false,
     unlisten: unlisten

@@ -140,7 +140,8 @@ export class AbstractMobileController extends AbstractAppController {
    * Hide both navigation menus.
    */
   hideNav() {
-    this.leftNavVisible = this.rightNavVisible = false;
+    this.leftNavVisible = false;
+    this.rightNavVisible = false;
   }
 
   /**
