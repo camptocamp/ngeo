@@ -639,6 +639,9 @@ gmf-featurestyle {
 div.gmf-displayquerywindow {
   position: absolute;
   right: $app-margin;
+  bottom: initial;
+  $div-height: $displayquerywindow-desktop-height + $app-margin;
+  top: calc(100% - #{$div-height});
 }
 
 /** ngeo-displayquery-window */
