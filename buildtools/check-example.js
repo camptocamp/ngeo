@@ -103,7 +103,7 @@ function loaded(page, browser) {
     if (url == 'https://ows.asitvd.ch/wmts/1.0.0/WMTSCapabilities.xml') {
       request.respond(ASITVDCapabilities);
     } else if (parse(url).host == parse(page_url).host ||
-        url.startsWith('http://localhost:3000/') ||
+        url.startsWith('http://localhost:') ||
         url.startsWith('https://geomapfish-demo') ||
         url.startsWith('https://wmts.geo.admin.ch/') ||
         url.startsWith('https://wms.geo.admin.ch/')) {
