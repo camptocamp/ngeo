@@ -1,5 +1,5 @@
 import angular from 'angular';
-import gmfThemeThemes from 'gmf/theme/Themes.js';
+import gmfThemeThemes, {getNodeMinResolution, getNodeMaxResolution} from 'gmf/theme/Themes.js';
 import ngeoLayertreeController, {LayertreeVisitorDecision} from 'ngeo/layertree/Controller.js';
 import ngeoMiscWMSTime from 'ngeo/misc/WMSTime.js';
 import {getUid as olUtilGetUid} from 'ol/util.js';
@@ -391,10 +391,19 @@ SyncLayertreeMap.prototype.createWMTSLayer_ = function(gmfLayerWMTS) {
   if (!gmfLayerWMTS.layer) {
     throw new Error('Missing gmfLayerWMTS.layer');
   }
-  this.layerHelper_.createWMTSLayerFromCapabilitites(gmfLayerWMTS.url,
-    gmfLayerWMTS.layer, gmfLayerWMTS.matrixSet, gmfLayerWMTS.dimensions).then((layer) => {
-    newLayer.setSource(layer.getSource());
-    newLayer.set('capabilitiesStyles', layer.get('capabilitiesStyles'));
+  const minResolution = getNodeMinResolution(gmfLayerWMTS);
+  const maxResolution = getNodeMaxResolution(gmfLayerWMTS);
+
+  this.layerHelper_.createWMTSLayerFromCapabilitites(
+    gmfLayerWMTS.url,
+    gmfLayerWMTS.layer,
+    gmfLayerWMTS.matrixSet,
+    gmfLayerWMTS.dimensions,
+    undefined,
+    minResolution,
+    maxResolution
+  ).then((layer) => {
+    newLayer.setProperties(layer.getProperties());
   });
   return newLayer;
 };
