@@ -76,7 +76,7 @@ function loaded(page, browser) {
         browser.close();
       }
     }
-  }, 1000);
+  }, 2000);
 }
 (async () => {
   const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-web-security']});
@@ -99,7 +99,11 @@ function loaded(page, browser) {
       request.continue();
       return
     }
-    const url = request.url();
+    const originalUrl = request.url();
+    let url = originalUrl;
+    if (url.startsWith('http://localhost:8080/')) {
+      url = url.replace('http://localhost:8080/', 'https://geomapfish-demo-2-5.camptocamp.com/');
+    }
     if (url == 'https://ows.asitvd.ch/wmts/1.0.0/WMTSCapabilities.xml') {
       request.respond(ASITVDCapabilities);
     } else if (parse(url).host == parse(page_url).host ||
@@ -107,11 +111,13 @@ function loaded(page, browser) {
         url.startsWith('https://geomapfish-demo') ||
         url.startsWith('https://wmts.geo.admin.ch/') ||
         url.startsWith('https://wms.geo.admin.ch/')) {
-      requestsURL.add(url);
+      requestsURL.add(originalUrl);
       if (url.startsWith('https://geomapfish-demo')) {
         request.headers().origin = 'http://localhost:3000';
       }
-      request.continue();
+      request.continue({
+        url
+      });
     } else if (url.includes('tile.openstreetmap.org') ||
         url.startsWith('https://tiles.openseamap.org') ||
         url.startsWith('https://wms.geo.admin.ch') ||
