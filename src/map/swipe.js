@@ -136,6 +136,14 @@ class SwipeController {
   }
 
   /**
+   * Allows you to deactivate the swiper on click of the close button.
+   */
+  deactivate() {
+    this.layer = null;
+    this.map.render();
+  }
+
+  /**
    * @param {?Event|import("ol/events/Event.js").default} evt OpenLayers object event.
    * @private
    */
@@ -180,7 +188,7 @@ module.component('ngeoMapswipe', {
   controller: SwipeController,
   bindings: {
     map: '<',
-    layer: '<',
+    layer: '=',
     swipeValue: '='
   },
   templateUrl: ngeoMapswipeTemplateUrl
