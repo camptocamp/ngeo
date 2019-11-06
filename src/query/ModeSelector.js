@@ -95,6 +95,12 @@ export class QueryModeSelector {
     this.activeActionKey_ = null;
 
     /**
+     * If drawing is active, the selection is blocked.
+     * @type {boolean}
+     */
+    this.isBlocked = false;
+
+    /**
      * @type {angular.IScope}
      * @private
      */
@@ -166,7 +172,7 @@ export class QueryModeSelector {
         this.rootScope_.$apply();
       }
 
-    } else if ((MAC ? evt.metaKey : evt.ctrlKey) && !this.previousMode_) {
+    } else if ((MAC ? evt.metaKey : evt.ctrlKey) && !this.previousMode_ && !this.isBlocked) {
       // The 'ctrl' (or 'meta' key) on mac was pressed
       this.previousMode_ = this.mode;
       this.mode = ngeoQueryMode.DRAW_BOX;
@@ -187,7 +193,7 @@ export class QueryModeSelector {
 
     // On any 'keyup', if no 'ctrl' (or 'meta' on mac) is pressed and
     // there is a previous mode set, then set it as new active mode.
-    if (!(evt.metaKey || evt.ctrlKey) && this.previousMode_) {
+    if (!(evt.metaKey || evt.ctrlKey) && this.previousMode_ && !this.isBlocked) {
       this.mode = this.previousMode_;
       this.previousMode_ = null;
       updateScope = true;

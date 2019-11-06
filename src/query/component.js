@@ -232,6 +232,14 @@ class QueryController {
         this.listenerKeys_.push(
           olEventsListen(
             this.drawBoxInteraction_,
+            'drawstart',
+            this.handleDrawBoxInteractionDrawStart_,
+            this
+          )
+        );
+        this.listenerKeys_.push(
+          olEventsListen(
+            this.drawBoxInteraction_,
             'drawend',
             this.handleDrawBoxInteractionDrawEnd_,
             this
@@ -242,6 +250,14 @@ class QueryController {
       case ngeoQueryMode.DRAW_POLYGON:
         this.map.addLayer(this.vectorLayer_);
         this.map.addInteraction(this.drawPolygonInteraction_);
+        this.listenerKeys_.push(
+          olEventsListen(
+            this.drawPolygonInteraction_,
+            'drawstart',
+            this.handleDrawPolygonInteractionDrawStart_,
+            this
+          )
+        );
         this.listenerKeys_.push(
           olEventsListen(
             this.drawPolygonInteraction_,
@@ -338,6 +354,15 @@ class QueryController {
   }
 
   /**
+   * Called when the box is drawn on the map, to lock mode selection.
+   * @param {Event|import("ol/events/Event.js").default} evt The draw
+   * interaction drawstart event being fired.
+   */
+  handleDrawBoxInteractionDrawStart_(evt) {
+    this.ngeoQueryModeSelector_.isBlocked = true;
+  }
+
+  /**
    * Called when a box is drawn on the map. Use it to issue a query.
    * @param {Event|import("ol/events/Event.js").default} evt The draw
    *     interaction drawend event being fired.
@@ -351,6 +376,8 @@ class QueryController {
     const extent = feature.getGeometry().getExtent();
     const limit = this.getLimitOption_();
     const map = this.map;
+
+    this.ngeoQueryModeSelector_.isBlocked = false;
 
     this.ngeoMapQuerent_.issue({
       action,
@@ -367,6 +394,15 @@ class QueryController {
   }
 
   /**
+   * Called when a polygon is drawn on the map, to lock mode selection.
+   * @param {Event|import("ol/events/Event.js").default} evt The draw
+   * interaction drawstart event being fired.
+   */
+  handleDrawPolygonInteractionDrawStart_(evt) {
+    this.ngeoQueryModeSelector_.isBlocked = true;
+  }
+
+  /**
    * Called when a polygon is drawn on the map. Use it to issue a query.
    * @param {Event|import("ol/events/Event.js").default} evt The draw
    *     interaction drawend event being fired.
@@ -380,6 +416,8 @@ class QueryController {
     const geometry = feature.getGeometry();
     const limit = this.getLimitOption_();
     const map = this.map;
+
+    this.ngeoQueryModeSelector_.isBlocked = false;
 
     this.ngeoMapQuerent_.issue({
       action,
