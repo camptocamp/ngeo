@@ -140,6 +140,7 @@ class SwipeController {
    */
   deactivate() {
     this.layer = null;
+    this.map.render();
   }
 
   /**
