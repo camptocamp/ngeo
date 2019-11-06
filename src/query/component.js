@@ -282,6 +282,7 @@ class QueryController {
         break;
 
       case ngeoQueryMode.DRAW_BOX:
+        this.vectorSource_.clear();
         this.map.removeLayer(this.vectorLayer_);
         this.map.removeInteraction(this.drawBoxInteraction_);
         // FIXME: remove next lines after updating OpenLayers > 6.1.1
@@ -290,6 +291,7 @@ class QueryController {
         break;
 
       case ngeoQueryMode.DRAW_POLYGON:
+        this.vectorSource_.clear();
         this.map.removeLayer(this.vectorLayer_);
         this.map.removeInteraction(this.drawPolygonInteraction_);
         // FIXME: remove next lines after updating OpenLayers > 6.1.1
