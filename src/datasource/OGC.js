@@ -488,7 +488,7 @@ class OGC extends ngeoDatasourceDataSource {
       }
       for (const wfsLayer of this.wfsLayers || []) {
         if (wfsLayer.queryable) {
-          wmsLayers.push(wfsLayer.name);
+          wfsLayers.push(wfsLayer.name);
         }
       }
     }
