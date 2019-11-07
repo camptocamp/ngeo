@@ -1,3 +1,4 @@
+import {pushUnlessIncluded} from 'ngeo/array.js';
 import ngeoDatasourceDataSource from 'ngeo/datasource/DataSource.js';
 import ngeoFilterCondition from 'ngeo/filter/Condition.js';
 import ngeoFormatArcGISGeoJSON from 'ngeo/format/ArcGISGeoJSON.js';
@@ -470,31 +471,33 @@ class OGC extends ngeoDatasourceDataSource {
 
     // === Calculated properties ===
 
-    // Get queryable ogc layer names
-    const wfsLayers = [];
-    if (this.queryable && this.wfsLayers) {
-      for (const wfsLayer of this.wfsLayers) {
-        if (wfsLayer.queryable) {
-          wfsLayers.push(wfsLayer.name);
-        }
-      }
-    }
-    const wmsLayers = [];
+    // Get queryable ogc layer names.
+    //
+    // Note: for wms layer names, both wms and wfs layers are used,
+    // because wms can use layer group. When reading the features
+    // returned by wms queries, the layer "name" is used in each
+    // feature, not the "group". WFS does not use "group".
+    const wfsLayerNames = [];
+    const wmsLayerNames = [];
     if (this.queryable) {
-      for (const wmsLayer of (this.wmsLayers || [])) {
-        if (wmsLayer.queryable) {
-          wmsLayers.push(wmsLayer.name);
+      const wfsLayers = /** @type {WFSLayer[]} */ (this.wfsLayers || []);
+      for (const wfsLayer of wfsLayers) {
+        if (wfsLayer.queryable) {
+          // WFS layer named is pushed in both wfs and wms lists
+          wfsLayerNames.push(wfsLayer.name);
+          wmsLayerNames.push(wfsLayer.name);
         }
       }
-      for (const wfsLayer of this.wfsLayers || []) {
-        if (wfsLayer.queryable) {
-          wmsLayers.push(wfsLayer.name);
+      const wmsLayers = /** @type {WMSLayer[]} */ (this.wmsLayers || []);
+      for (const wmsLayer of wmsLayers) {
+        if (wmsLayer.queryable) {
+          pushUnlessIncluded(wmsLayerNames, wmsLayer.name);
         }
       }
     }
 
     let wfsFormat = null;
-    if (this.supportsWFS && wfsLayers.length) {
+    if (this.supportsWFS && wfsLayerNames.length) {
       let format;
       if (this.wfsOutputFormat_ === WFSOutputFormat.GML3) {
         format = new olFormatGML3();
@@ -505,7 +508,7 @@ class OGC extends ngeoDatasourceDataSource {
       }
       wfsFormat = new olFormatWFS({
         featureNS: this.wfsFeatureNS,
-        featureType: wfsLayers,
+        featureType: wfsLayerNames,
         gmlFormat: format
       });
     }
@@ -517,15 +520,15 @@ class OGC extends ngeoDatasourceDataSource {
     this.wfsFormat_ = wfsFormat;
 
     let wmsFormat = null;
-    if (this.supportsWMS && wmsLayers.length) {
+    if (this.supportsWMS && wmsLayerNames.length) {
       if (this.wmsInfoFormat === WMSInfoFormat.GML) {
         wmsFormat = new olFormatWMSGetFeatureInfo({
-          layers: wmsLayers
+          layers: wmsLayerNames
         });
       } else if (this.wmsInfoFormat === WMSInfoFormat.GEOJSON) {
         if (this.ogcServerType_ === ServerType.ARCGIS) {
           wmsFormat = new ngeoFormatArcGISGeoJSON({
-            layers: wmsLayers
+            layers: wmsLayerNames
           });
         }
       }
@@ -652,7 +655,7 @@ class OGC extends ngeoDatasourceDataSource {
   }
 
   /**
-   * @return {?Array<WFSLayer>} TFS layers
+   * @return {?Array<WFSLayer>} WFS layers
    */
   get wfsLayers() {
     return this.wfsLayers_;
