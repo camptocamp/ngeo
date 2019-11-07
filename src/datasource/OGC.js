@@ -480,7 +480,7 @@ class OGC extends ngeoDatasourceDataSource {
     const wfsLayerNames = [];
     const wmsLayerNames = [];
     if (this.queryable) {
-      const wfsLayers = this.wfsLayers || [];
+      const wfsLayers = /** @type {WFSLayer[]} */ (this.wfsLayers || []);
       for (const wfsLayer of wfsLayers) {
         if (wfsLayer.queryable) {
           // WFS layer named is pushed in both wfs and wms lists
@@ -488,7 +488,7 @@ class OGC extends ngeoDatasourceDataSource {
           wmsLayerNames.push(wfsLayer.name);
         }
       }
-      const wmsLayers = this.wmsLayers || [];
+      const wmsLayers = /** @type {WMSLayer[]} */ (this.wmsLayers || []);
       for (const wmsLayer of wmsLayers) {
         if (wmsLayer.queryable) {
           pushUnlessIncluded(wmsLayerNames, wmsLayer.name);
@@ -655,7 +655,7 @@ class OGC extends ngeoDatasourceDataSource {
   }
 
   /**
-   * @return {?Array<WFSLayer>} TFS layers
+   * @return {?Array<WFSLayer>} WFS layers
    */
   get wfsLayers() {
     return this.wfsLayers_;
