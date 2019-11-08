@@ -146,7 +146,7 @@ $footer-height: $input-height-base + 2 * $padding-base-vertical;
     button.gmf-app-map-info {
       position: absolute;
       /* button is supposed to be .btn-sm */
-      bottom: $footer-height;
+      bottom: $footer-height - 0.06rem;
       border-top-left-radius: $border-radius-base;
       border-top-right-radius: $border-radius-base;
       border-bottom-left-radius: 0;
@@ -289,10 +289,12 @@ gmf-search {
     padding: 0.8rem 0.25rem;
     position: relative;
     top: calc(50% - #{$icon-font-size});
+    cursor: pointer;
   }
 
   .ui-resizable-e {
     background-color: darken($brand-secondary, $standard-variation);
+    cursor: ew-resize;
     border: {
       left: $border;
       right: $border;
