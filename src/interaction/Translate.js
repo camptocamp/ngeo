@@ -13,6 +13,7 @@ import olGeomPolygon from 'ol/geom/Polygon.js';
 import olInteractionTranslate from 'ol/interaction/Translate.js';
 import olLayerVector from 'ol/layer/Vector.js';
 import olSourceVector from 'ol/source/Vector.js';
+import {active} from 'ngeo/utils.js';
 
 /**
  * An extension of the OpenLayers Translate interaction that adds the following
@@ -279,7 +280,7 @@ exports.prototype.getGeometryCenterPoint_ = function(
  */
 exports.prototype.handleKeyUp_ = function(evt) {
   // 27 == ESC key
-  if (evt.keyCode === 27) {
+  if (!active.mousedown && evt.keyCode === 27) {
     this.setActive(false);
   }
 };

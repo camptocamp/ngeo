@@ -12,6 +12,7 @@ import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent.js';
 import ngeoMiscDecorate from 'ngeo/misc/decorate.js';
 import ngeoMiscEventHelper from 'ngeo/misc/EventHelper.js';
 import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
+import {active} from 'ngeo/utils.js';
 import olFeature from 'ol/Feature.js';
 import {getUid} from 'ol/index.js';
 import {listen} from 'ol/events.js';
@@ -154,7 +155,7 @@ const exports = function($scope, $sce, gettextCatalog,
  */
 exports.prototype.handleEscapeKeyDown_ = function(event) {
   const escPressed = event.keyCode === 27; // Escape key
-  if (escPressed && this.interaction_.getActive()) {
+  if (!active.mousedown && escPressed && this.interaction_.getActive()) {
     const interaction = this.interaction_;
     interaction.setActive(false);
     interaction.setActive(true);

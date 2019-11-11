@@ -4,6 +4,7 @@
 import googAsserts from 'goog/asserts.js';
 import ngeoInteractionCommon from 'ngeo/interaction/common.js';
 import ngeoCustomEvent from 'ngeo/CustomEvent.js';
+import {active} from 'ngeo/utils.js';
 import * as olBase from 'ol/index.js';
 import * as olExtent from 'ol/extent.js';
 import olFeature from 'ol/Feature.js';
@@ -357,7 +358,7 @@ exports.prototype.handleUp_ = function(evt) {
  */
 exports.prototype.handleKeyUp_ = function(evt) {
   // 27 == ESC key
-  if (evt.keyCode === 27) {
+  if (!active.mousedown && evt.keyCode === 27) {
     this.setActive(false);
   }
 };

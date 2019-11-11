@@ -26,6 +26,8 @@ import ngeoMiscDecorate from 'ngeo/misc/decorate.js';
 import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
 import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
 import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr.js';
+import {active} from 'ngeo/utils.js';
+
 import * as olBase from 'ol/index.js';
 import * as olArray from 'ol/array.js';
 import * as olEvents from 'ol/events.js';
@@ -606,7 +608,7 @@ exports.Controller_.prototype.handleMapClick_ = function(evt) {
 exports.Controller_.prototype.handleCancelKeyEvent_ = function() {
   olEvents.listen(document.body, 'keydown', (e) => {
     const escPressed = event.keyCode === 27; // Escape key
-    if (escPressed && this.selectedFeature) {
+    if (!active.mousedown && escPressed && this.selectedFeature) {
       this.selectedFeature = null;
       this.scope_.$apply();
     }

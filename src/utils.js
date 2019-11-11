@@ -132,4 +132,19 @@ export function extentToRectangle(extent) {
   ];
 }
 
+/**
+ * Active states.
+ */
+export const active = {
+  mousedown: false
+};
+
+document.addEventListener('mousedown', (evt) => {
+  active.mousedown = true;
+});
+
+document.addEventListener('mouseup', (evt) => {
+  active.mousedown = false;
+});
+
 export default exports;

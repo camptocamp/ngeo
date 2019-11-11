@@ -20,7 +20,7 @@ import ngeoEditingAttributesComponent from 'ngeo/editing/attributesComponent.js'
 /** @suppress {extraRequire} */
 import ngeoEditingCreatefeatureComponent from 'ngeo/editing/createfeatureComponent.js';
 
-import ngeoUtils from 'ngeo/utils.js';
+import ngeoUtils, {active} from 'ngeo/utils.js';
 import ngeoFormatXSDAttribute from 'ngeo/format/XSDAttribute.js';
 import ngeoGeometryType from 'ngeo/GeometryType.js';
 import ngeoInteractionRotate from 'ngeo/interaction/Rotate.js';
@@ -993,7 +993,7 @@ exports.Controller_.prototype.handleMapClick_ = function(evt) {
   if (this.cancelEventKey_ === undefined) {
     this.cancelEventKey_ = olEvents.listen(document.body, 'keydown', (e) => {
       const escPressed = event.keyCode === 27; // Escape key
-      if (escPressed && activeInteraction.getActive()) {
+      if (!active.mousedown && escPressed && activeInteraction.getActive()) {
         this.cancel();
         this.scope_.$apply();
 

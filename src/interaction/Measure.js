@@ -3,6 +3,7 @@
  */
 import googAsserts from 'goog/asserts.js';
 import ngeoCustomEvent from 'ngeo/CustomEvent.js';
+import {active} from 'ngeo/utils.js';
 import * as olBase from 'ol/index.js';
 import * as olDom from 'ol/dom.js';
 import * as olProj from 'ol/proj.js';
@@ -522,7 +523,7 @@ exports.prototype.handleDrawInteractionActiveChange_ = function() {
  */
 exports.prototype.handleEscapeKeyDown_ = function(event) {
   const escPressed = event.keyCode === 27; // Escape key
-  if (this.drawInteraction_.getActive() && escPressed) {
+  if (!active.mousedown && this.drawInteraction_.getActive() && escPressed) {
     this.drawInteraction_.setActive(false);
     this.drawInteraction_.setActive(true);
   }
