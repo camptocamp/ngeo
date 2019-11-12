@@ -7,7 +7,7 @@ import ngeoGeometryType from 'ngeo/GeometryType.js';
 import ngeoInteractionMeasureArea from 'ngeo/interaction/MeasureArea.js';
 import ngeoInteractionMeasureLength from 'ngeo/interaction/MeasureLength.js';
 import ngeoMiscEventHelper from 'ngeo/misc/EventHelper.js';
-import ngeoUtils from 'ngeo/utils.js';
+import ngeoUtils, {active} from 'ngeo/utils.js';
 import * as olBase from 'ol/index.js';
 import olCollection from 'ol/Collection.js';
 import * as olEvents from 'ol/events.js';
@@ -283,7 +283,7 @@ exports.Controller_.prototype.$onInit = function() {
 exports.Controller_.prototype.handleEscapeKeyDown_ = function(event) {
   const interaction = this.interaction_;
   const escPressed = event.keyCode === 27; // Escape key
-  if (escPressed && interaction.getActive()) {
+  if (!active.mousedown && escPressed && interaction.getActive()) {
     interaction.setActive(false);
     interaction.setActive(true);
   }
