@@ -338,6 +338,11 @@ Controller.prototype.$onInit = function() {
   // watch any change on layers array to refresh the map
   this.scope_.$watchCollection(() => this.layers, () => {
     this.map.render();
+
+    // If the layer being swiped is removed, unset it
+    if (this.gmfLayerBeingSwipe.layer && !this.layers.includes(this.gmfLayerBeingSwipe.layer)) {
+      this.gmfLayerBeingSwipe.layer = null;
+    }
   });
 
   // watch any change on dimensions object to refresh the layers
