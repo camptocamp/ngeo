@@ -1,6 +1,5 @@
 import angular from 'angular';
 import {listen, unlistenByKey} from 'ol/events.js';
-import {ObjectEvent} from 'ol/Object.js';
 import RenderEvent from 'ol/render/Event.js';
 
 import ResizeObserver from 'resize-observer-polyfill';
