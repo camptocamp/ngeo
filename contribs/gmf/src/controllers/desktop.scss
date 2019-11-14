@@ -2,19 +2,7 @@
  * Entry point for all styles required for the desktop application.
  */
 
-$map-tools-size: 1.9rem !default;
-$left-panel-width: 20rem !default;
-$right-panel-width: 17.5rem !default;
-$streeview-width: 25rem !default;
-$topbar-height: 2.8rem !default;
-$search-width: 8 * $map-tools-size !default;
-
 @import '~gmf/sass/vars_only.scss';
-
-$padding-base-vertical: $half-app-margin !default;
-$padding-base-horizontal: $app-margin !default;
-$form-group-margin-bottom: $app-margin !default;
-$search-results-max-height: calc(100vh - #{$topbar-height} + #{$map-tools-size} + (2 * #{$app-margin})) !default;
 
 @import "~bootstrap/scss/_functions.scss";
 @import "~bootstrap/scss/_variables.scss";
@@ -31,6 +19,22 @@ $search-results-max-height: calc(100vh - #{$topbar-height} + #{$map-tools-size} 
 @import '~gmf/sass/swipe.scss';
 
 @import '~gmf/layertree/desktop.scss';
+
+
+$map-tools-size: 1.9rem !default;
+$left-panel-width: 20rem !default;
+$right-panel-width: 17.5rem !default;
+$streeview-width: 25rem !default;
+$topbar-height: 2.8rem !default;
+$search-width: 8 * $map-tools-size !default;
+$theme-selector-columns: 2 !default;
+$theme-selector-column-width: $left-panel-width / 4 * 3 !default;
+$theme-selector-height: 1.5 * $left-panel-width !default;
+
+$padding-base-vertical: $half-app-margin !default;
+$padding-base-horizontal: $app-margin !default;
+$form-group-margin-bottom: $app-margin !default;
+$search-results-max-height: calc(100vh - #{$topbar-height} + #{$map-tools-size} + (2 * #{$app-margin})) !default;
 
 
 html, body {
@@ -303,8 +307,8 @@ gmf-search {
 }
 
 gmf-themeselector {
-  width: 1.5 * $left-panel-width;
-  max-height: 1.5 * $left-panel-width;
+  width: $half-app-margin * 2 + $theme-selector-columns * $theme-selector-column-width;
+  max-height: $theme-selector-height;
   overflow: hidden;
   overflow-y: auto;
 }
@@ -313,10 +317,9 @@ gmf-backgroundlayerselector {
 }
 gmf-themeselector,
 gmf-backgroundlayerselector {
-  padding: $half-app-margin !important;
+  padding: $half-app-margin;
 }
 
-$theme-selector-columns: 2;
 .gmf-theme-selector li {
   float: left;
   width: calc((100% - #{$theme-selector-columns} * 2 * #{$half-app-margin}) / #{$theme-selector-columns});
