@@ -23,11 +23,11 @@ $nav-width: 20rem !default;
 $input-border-focus: darken($brand-primary, $standard-variation) !default;
 $light-box-shadow: 0 0.37rem 0.75rem rgba(0, 0, 0, 0.1) !default;
 $eavy-box-shadow: 0 0.37rem 0.75rem rgba(0, 0, 0, 0.3) !default;
-$icon-font-size: 1.25rem;
+$icon-font-size: 1.25rem !default;
 $border-color: darken($brand-primary, $standard-variation) !default;
 $border: 0.06rem solid $border-color !default;
 
-$displayquerywindow-desktop-height: 15rem;
+$displayquerywindow-desktop-height: 15rem !default;
 
 // Z-indexes
 $below-content-index: 1;
@@ -41,7 +41,7 @@ $above-all: 9999;
 
 // Bootstrap 3 compatibility layer
 $gray-base: #000 !default;
-$gray-dark: lighten($gray-base, 20%) !default;   // #333
+$gray-dark: lighten($gray-base, 20%) !default;  // #333
 $padding-small-vertical: 0.36rem !default;
 $padding-small-horizontal: 0.72rem !default;
 $input-height-base: 1.88rem !default;
