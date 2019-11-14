@@ -1,6 +1,12 @@
 
 .gmf-theme-selector li {
   flex-direction: column;
+  span.gmf-text {
+    width: auto;
+  }
+}
+.gmf-theme-selector .gmf-thumb {
+  height: 3rem;
 }
 
 .gmf-layertree-node .gmf-layertree-legend {
