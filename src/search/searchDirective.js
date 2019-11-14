@@ -136,6 +136,20 @@ function searchComponent() {
           });
         });
 
+      //show spinning gif while waiting for the results
+      // on the closest span from the input in which it is being typed
+      element.on('typeahead:asyncrequest', () => {
+        element.parent().addClass('search-loading');
+      });
+
+      // on results received or canceled -> remove the loading spiner
+      element.on('typeahead:asynccancel typeahead:asyncreceive', () => {
+        // sometimes the classes are not removed/added in the correct order
+        // and jQuery thinks there is nothing to remove when called immediately. Sic!
+        setTimeout(() => {
+          element.parent().removeClass('search-loading');
+        }, 50);
+      });
     }
   };
 }

@@ -31,6 +31,11 @@
       <div class="form-group">
         <textarea class="form-control" ng-attr-placeholder="{{'Message (optional)' | translate }}" ng-model="$ctrl.message"></textarea>
       </div>
+      <span class="text-default" ng-if="!$ctrl.isFinishedState">
+        <i class="fa custom-spinner-generic fa-spin">
+          <%=require('gmf/icons/spinner.svg?viewbox&height=1rem')%>
+        </i>
+      </span>
       <span class="text-success" ng-if="$ctrl.successfullySent">
         <i class="fa fa-check" aria-hidden="true"></i>
           {{ 'Link successfully sent.' | translate }}

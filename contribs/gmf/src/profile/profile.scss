@@ -32,10 +32,23 @@ $profile-height: 12.50rem;
   }
 
   .close {
-    height: 0.62rem;
+    top: 0.62rem;
+    right: 0.62rem;
+    position: absolute;
   }
 }
 
 .gmf-profile-chart-active main {
   height: calc(100% - #{$profile-height});
+}
+
+span {
+  width: 100%;
+
+  .custom-spinner-profile {
+    fill: black;
+    margin-top: 2rem;
+    margin-left: 50%;
+    margin-right: 50%;
+  }
 }

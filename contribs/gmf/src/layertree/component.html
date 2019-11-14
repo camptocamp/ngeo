@@ -51,8 +51,8 @@
     href
     ng-click="::gmfLayertreeCtrl.toggleActive(layertreeCtrl)"
     ng-if="layertreeCtrl.node.children && layertreeCtrl.layer.loading"
-    class="fa fa-fw fa-refresh fa-sync fa-spin"
-  ></a>
+    class="fa fa-fw custom-spinner-generic fa-spin"
+  ><%=require('gmf/icons/spinner.svg?viewbox&height=1rem')%></a>
   <a
     href
     ng-click="::gmfLayertreeCtrl.toggleActive(layertreeCtrl)"

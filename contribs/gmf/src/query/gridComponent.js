@@ -309,6 +309,13 @@ export function QueryGridController($injector, $scope, ngeoQueryResult, ngeoMapQ
   this.$scope_.$watchCollection(
     () => ngeoQueryResult,
     (newQueryResult, oldQueryResult) => {
+
+      // Open the panel before results for first request (display the spinner)
+      if (ngeoQueryResult.pending) {
+        this.active = true;
+        this.pending = true;
+      }
+
       if (newQueryResult !== oldQueryResult) {
         this.updateData_();
       }

@@ -12,7 +12,9 @@
     >
     <span class="gmf-elevationwidget-value">
       {{ctrl.elevationValue}}
-      <span ng-show="ctrl.elevationLoading" class="fa fa-spinner"></span>
+      <span ng-show="ctrl.elevationLoading" class="fa custom-spinner-generic">
+          <%=require('gmf/icons/spinner.svg?viewbox&height=1rem')%>
+      </span>
       <span ng-show="!ctrl.elevationValue && !ctrl.elevationLoading" translate>Elevation…</span>
     </span><span class="caret" ng-if="::ctrl.layers.length > 1"></span>
   </a>

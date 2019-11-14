@@ -227,6 +227,11 @@ class Controller {
      */
     this.serversEngine_ = null;
 
+    /**
+     * @type {boolean}
+     */
+    this.isLoading = false;
+
     /** @type {?ExternalOGCServer[]} */
     const servers = $injector.has('gmfExternalOGCServers') ? $injector.get('gmfExternalOGCServers')
       : null;
@@ -345,15 +350,18 @@ class Controller {
     const url = this.url;
     const serviceType = guessServiceTypeByUrl(url);
 
+    this.isLoading = true;
     this.startWorking_();
     if (serviceType === Type.WMS) {
       this.ngeoQuerent_.wmsGetCapabilities(url).then(
         (wmsCapabilities) => {
           this.wmsCapabilities = wmsCapabilities;
+          this.isLoading = false;
           this.stopWorking_();
           this.search();
         },
         () => {
+          this.isLoading = false;
           // Something went wrong...
           this.stopWorking_(true);
         }
@@ -362,10 +370,12 @@ class Controller {
       this.ngeoQuerent_.wmtsGetCapabilities(url).then(
         (wmtsCapabilities) => {
           this.wmtsCapabilities = wmtsCapabilities;
+          this.isLoading = false;
           this.stopWorking_();
           this.search();
         },
         () => {
+          this.isLoading = false;
           // Something went wrong...
           this.stopWorking_(true);
         }
@@ -373,6 +383,7 @@ class Controller {
     } else {
       // Could not determine the type of url
       this.timeout_(() => {
+        this.isLoading = false;
         this.stopWorking_(true);
       });
     }
