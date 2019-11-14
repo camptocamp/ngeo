@@ -27,3 +27,7 @@ div .ngeo-displaywindow {
   right: initial;
   top: $topbar-height + $app-margin + 3 * $map-tools-size;
 }
+
+.offset-info-icon {
+  position: absolute;
+}
