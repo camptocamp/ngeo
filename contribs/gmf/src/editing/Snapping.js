@@ -275,6 +275,7 @@ EditingSnappingService.prototype.registerTreeCtrl_ = function(treeCtrl) {
       this.cache_[uid] = {
         active: false,
         featureNS: ogcServer.wfsFeatureNS,
+        geometryName: ogcServer.geometryName,
         featurePrefix: 'feature',
         features: new olCollection(),
         interaction: null,
@@ -653,6 +654,7 @@ EditingSnappingService.prototype.refreshSnappingSource_ = function() {
  * @typedef {Object} CacheItem
  * @property {boolean} active
  * @property {string} featureNS
+ * @property {string} geometryName
  * @property {string} featurePrefix
  * @property {import("ol/Collection.js").default<import("ol/Feature.js").default<import("ol/geom/Geometry.js").default>>} features
  * @property {?import("ol/interaction/Snap.js").default} interaction
