@@ -543,7 +543,14 @@ export class Querent {
     const resolution = view.getResolution();
     const projection = view.getProjection();
     const srsName = projection.getCode();
-    const wfsCount = options.wfsCount === true;
+
+    // === NOTE - TEMPORARY FIX ===
+    // The wfsCount property (a.k.a. "queryCountFirst" option of the
+    // query tool) has been temporarily disabled to allow WFS queries
+    // to always be made until we come up with a better fix.
+    //const wfsCount = options.wfsCount === true;
+    const wfsCount = false;
+
     if (resolution === undefined) {
       throw new Error('Missing resolution');
     }
