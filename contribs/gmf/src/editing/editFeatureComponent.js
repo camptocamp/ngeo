@@ -720,9 +720,6 @@ Controller.prototype.save = function() {
     if (attribute.format) {
       if (this.feature.get(attribute.name)) {
         const name = this.feature.get(attribute.name);
-        if (typeof name == 'string') {
-          throw new Error('Wrong name type');
-        }
         const value = dateFormatter.parseDate(name, attribute.format);
         if (value === null) {
           throw new Error('Missing date');
