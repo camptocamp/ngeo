@@ -111,6 +111,7 @@ class SwipeController {
     this.swipeValue = this.swipeValue !== undefined ? this.swipeValue : 0.5;
     this.layerKeys_.push(listen(this.layer, 'prerender', this.handleLayerPrerender_, this));
     this.layerKeys_.push(listen(this.layer, 'postrender', this.handleLayerPostrender_, this));
+    this.layerKeys_.push(listen(this.layer, 'change:visible', this.handleLayerVisibleChange_, this));
 
     const halfDraggableWidth = this.draggableElement_.width() / 2;
 
@@ -173,6 +174,17 @@ class SwipeController {
         return;
       }
       ctx.restore();
+    }
+  }
+
+  /**
+   * Called when the visibility of the layer changes. If it is no
+   * longer visible, deactivate the swipe component.
+   * @private
+   */
+  handleLayerVisibleChange_() {
+    if (!this.layer.getVisible()) {
+      this.deactivate();
     }
   }
 
