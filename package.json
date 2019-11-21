@@ -55,7 +55,7 @@
     "@types/jqueryui": "1.12.7",
     "@types/jsts": "0.17.0",
     "@types/proj4": "2.5.0",
-    "@types/sinon": "7.5.0",
+    "@types/sinon": "7.5.1",
     "@types/typeahead": "0.11.32",
     "@typescript-eslint/eslint-plugin": "2.6.0",
     "@typescript-eslint/parser": "2.6.0",
