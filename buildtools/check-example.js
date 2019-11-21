@@ -33,10 +33,11 @@ function fileMock(name, contentType) {
 
 const OSMImage = fileMock('osm.png', 'image/png');
 const ASITVDCapabilities = fileMock('asitvd.capabilities.xml', 'text/xml');
+let browser;
 
-
-process.on('unhandledRejection', error => {
+process.on('unhandledRejection', async error => {
   console.log(`UnhandledRejection: ${error.message}.`);
+  await browser.close();
   process.exit(2);
 });
 
@@ -47,13 +48,14 @@ function loaded(page, browser) {
   if (timeout !== undefined) {
     clearTimeout(timeout);
   }
-  timeout = setTimeout(() => {
+  timeout = setTimeout(async () => {
     if (requestsURL.size) {
       // @ts-ignore
       if ((new Date() - start) > 60000) {
         console.log(`The page take more than 60s. to load (${(new Date() - start) / 1000}).`);
         console.log('Pending requests:');
         requestsURL.forEach((request) => console.log(request));
+        await browser.close();
         process.exit(2);
       } else {
         timeout = undefined;
@@ -65,32 +67,35 @@ function loaded(page, browser) {
       if (screenshot) {
         page.screenshot({
           path: screenshotPath
-        }).then(() => {
+        }).then(async () => {
           console.log(`Screenshot saved at: ${screenshotPath}`);
-          browser.close();
-        }, e => {
+          await browser.close();
+        }, async e => {
           console.log(`Screenshot error: ${e}`);
+          await browser.close();
           process.exit(2);
         });
       } else {
-        browser.close();
+        await browser.close();
       }
     }
   }, 2000);
 }
 (async () => {
-  const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-web-security']});
+  browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-web-security', '--single-process']});
   const page = await browser.newPage();
   await page.setViewport({width: 1920, height: 1080});
   await page.setRequestInterception(true);
-  page.on('pageerror', e => {
+  page.on('pageerror', async e => {
     console.log('Page error');
     console.log(e);
+    await browser.close();
     process.exit(2);
   });
-  page.on('dialog', e => {
+  page.on('dialog', async e => {
     console.log('Unexpected alert message');
     console.log(e);
+    await browser.close();
     process.exit(2);
   });
   page.on('request', request => {
@@ -157,17 +162,18 @@ function loaded(page, browser) {
       }
     }
   });
-  page.on('requestfailed', request => {
+  page.on('requestfailed', async request => {
     const url = request.url();
     if (!url.startsWith('https://www.camptocamp.com/') &&
         !url.startsWith('https://cdn.polyfill.io/') &&
         !url.startsWith('https://maps.googleapis.com/')) {
       console.log(`Request failed on: ${url}`);
+      await browser.close();
       process.exit(2);
     }
     loaded(page, browser);
   });
-  page.on('console', message => {
+  page.on('console', async message => {
     const type = message.type();
     const location = message.location();
     if (!location.url.startsWith('http://localhost:3000/.build/examples-hosted/dist/vendor.js') &&
@@ -177,16 +183,19 @@ function loaded(page, browser) {
       console.log(`On: ${location.url} ${location.lineNumber}:${location.columnNumber}.`);
       console.log(message.text());
       if (!message.text().includes('CORS')) {
+        await browser.close();
         process.exit(2);
       }
     }
   });
-  await page.goto(page_url).catch(error => {
+  await page.goto(page_url).catch(async error => {
     console.log(`Page load error: ${error}.`);
+    await browser.close();
     process.exit(2);
   });
   loaded(page, browser);
-})().catch(error => {
+})().catch(async error => {
   console.log(`Unexpected error: ${error}.`);
+  await browser.close();
   process.exit(2);
 });
