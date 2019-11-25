@@ -358,8 +358,8 @@ VectorEncoder.prototype.encodeVectorStyleStroke = function(symbolizer, strokeSty
       throw new Error('Wrong strokeColor type');
     }
     const strokeColorRgba = asColorArray(strokeColor);
-    if (!(Array.isArray(strokeColor))) {
-      throw new Error('Wrong strokeColor type');
+    if (!(Array.isArray(strokeColorRgba))) {
+      throw new Error('parsed StrokeColor is not an array');
     }
     symbolizer.strokeColor = rgbArrayToHex(strokeColorRgba);
     symbolizer.strokeOpacity = strokeColorRgba[3];
