@@ -128,7 +128,7 @@
     "svgo-loader": "2.2.1",
     "terser": "4.3.1",
     "terser-webpack-plugin": "2.2.1",
-    "ts-node": "8.4.1",
+    "ts-node": "8.5.2",
     "tsconfig-paths": "3.9.0",
     "typedoc": "0.15.0",
     "typescript": "3.5.1",
