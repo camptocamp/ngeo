@@ -308,13 +308,18 @@ PrintService.prototype.encodeWmsLayer_ = function(arr, layer, url, params) {
   delete customParams.SERVERTYPE;
   delete customParams.VERSION;
 
+  let serverType = undefined;
+  if (params.SERVERTYPE !== 'arcgis') {
+    serverType = params.SERVERTYPE;
+  }
+
   /** @type {import('ngeo/print/mapfish-print-v3.js').MapFishPrintWmsLayer} */
   const object = {
     baseURL: getAbsoluteUrl_(url_url.origin + url_url.pathname),
     imageFormat: 'FORMAT' in params ? params.FORMAT : 'image/png',
     layers: params.LAYERS.split(','),
     customParams: customParams,
-    serverType: params.SERVERTYPE,
+    serverType,
     type: 'wms',
     opacity: this.getOpacityOrInherited_(layer),
     version: params.VERSION,
