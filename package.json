@@ -117,7 +117,7 @@
     "ol-layerswitcher": "3.4.0",
     "parse-absolute-css-unit": "1.0.2",
     "popper.js": "1.16.0",
-    "proj4": "2.5.0",
+    "proj4": "2.6.0",
     "puppeteer": "2.0.0",
     "qruri": "0.0.4",
     "resize-observer-polyfill": "1.5.1",
