@@ -46,6 +46,11 @@ export class DrawController {
     this.showMeasure = false;
 
     /**
+     * @type {?string}
+     */
+    this.uid = null;
+
+    /**
      * @type {angular.gettext.gettextCatalog}
      * @private
      */

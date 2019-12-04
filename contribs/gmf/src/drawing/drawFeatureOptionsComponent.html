@@ -1,0 +1,36 @@
+<div ng-if="$ctrl.drawRectangle">
+  <label>{{'Height:' | translate}}</label>
+  <div class="input-group">
+    <input
+        class="form-control"
+        min="1"
+        ng-model="$ctrl.height"
+        type="number">
+    </input>
+    <select
+        class="form-control"
+        ng-model="$ctrl.heightUnits">
+      <option value="m">{{'m (meters)' | translate}}</option>
+      <option value="km">{{'km (kilometers)' | translate}}</option>
+    </select>
+  </div>
+</div>
+
+<div ng-switch="::(!!$ctrl.measureAzimut)">
+  <label ng-switch-when="true">{{'Radius:' | translate}}</label>
+  <label ng-switch-default>{{'Length:' | translate}}</label>
+</div>
+<div class="input-group">
+  <input
+      class="form-control"
+      min="1"
+      ng-model="$ctrl.length"
+      type="number">
+  </input>
+  <select
+      class="form-control"
+      ng-model="$ctrl.lengthUnits">
+    <option value="m">{{'m (meters)' | translate}}</option>
+    <option value="km">{{'km (kilometers)' | translate}}</option>
+  </select>
+</div>

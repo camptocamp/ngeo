@@ -65,6 +65,13 @@ function measureLengthComponent($compile, gettextCatalog, $filter, $injector) {
         $filter('ngeoUnitPrefix'), gettextCatalog, options
       );
 
+      if (drawFeatureCtrl.uid) {
+        measureLength.set(
+          'ngeo-interaction-draw-uid',
+          `${drawFeatureCtrl.uid}-length`
+        );
+      }
+
       drawFeatureCtrl.registerInteraction(measureLength);
       drawFeatureCtrl.measureLength = measureLength;
 

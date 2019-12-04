@@ -55,6 +55,13 @@ function measureAreaComponent($compile, gettextCatalog, $filter, $injector) {
       }
       const measureArea = new ngeoInteractionMeasureArea($filter('ngeoUnitPrefix'), gettextCatalog, options);
 
+      if (drawFeatureCtrl.uid) {
+        measureArea.set(
+          'ngeo-interaction-draw-uid',
+          `${drawFeatureCtrl.uid}-area`
+        );
+      }
+
       drawFeatureCtrl.registerInteraction(measureArea);
       drawFeatureCtrl.measureArea = measureArea;
 

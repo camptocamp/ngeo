@@ -482,6 +482,10 @@ hr.gmf-drawfeature-separator {
   margin-top: $app-margin;
 }
 
+gmf-drawfeatureoptions label {
+  margin: 1rem 0 0 0;
+}
+
 
 /**
  * NGEO DrawFeature directive & map tooltips

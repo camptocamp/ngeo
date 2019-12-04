@@ -62,6 +62,13 @@ function measureAzimutComponent($compile, gettextCatalog, $filter, $injector) {
       const measureAzimut = new ngeoInteractionMeasureAzimut(
         $filter('ngeoUnitPrefix'), $filter('number'), options);
 
+      if (drawFeatureCtrl.uid) {
+        measureAzimut.set(
+          'ngeo-interaction-draw-uid',
+          `${drawFeatureCtrl.uid}-azimut`
+        );
+      }
+
       drawFeatureCtrl.registerInteraction(measureAzimut);
       drawFeatureCtrl.measureAzimut = measureAzimut;
 

@@ -2,6 +2,7 @@
  */
 import angular from 'angular';
 import gmfDrawingDrawFeatureComponent from 'gmf/drawing/drawFeatureComponent.js';
+import gmfDrawingDrawFeatureOptionsComponent from 'gmf/drawing/drawFeatureOptionsComponent.js';
 import gmfDrawingFeatureStyleComponent from 'gmf/drawing/featureStyleComponent.js';
 
 /**
@@ -9,5 +10,6 @@ import gmfDrawingFeatureStyleComponent from 'gmf/drawing/featureStyleComponent.j
  */
 export default angular.module('gmfDrawingModule', [
   gmfDrawingDrawFeatureComponent.name,
+  gmfDrawingDrawFeatureOptionsComponent.name,
   gmfDrawingFeatureStyleComponent.name,
 ]);
