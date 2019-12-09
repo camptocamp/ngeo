@@ -39,7 +39,7 @@
     "@geoblocks/proj": "0.4.0",
     "@sentry/browser": "5.9.1",
     "@sentry/types": "5.10.0",
-    "@types/angular": "1.6.54",
+    "@types/angular": "1.6.57",
     "@types/angular-animate": "1.5.10",
     "@types/angular-dynamic-locale": "0.1.34",
     "@types/angular-gettext": "2.1.34",
