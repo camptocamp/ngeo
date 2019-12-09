@@ -181,6 +181,7 @@ function gmfSearchTemplateUrl($element, $attrs, gmfSearchTemplateUrl) {
  *    change the style of the feature on the map. Default is false.
  * @htmlAttribute {number=} gmf-search-maxzoom Optional maximum zoom we will zoom on result, default is 16.
  * @htmlAttribute {function=} gmf-search-on-init Optional function called when the component is initialized.
+ * @htmlAttribute {function=} gmf-search-action Optional function called when no default action is defined.
  * @ngdoc component
  * @ngname gmfSearch
  */
@@ -198,7 +199,8 @@ const searchComponent = {
     'additionalListeners': '<gmfSearchListeners',
     'maxZoom': '<?gmfSearchMaxzoom',
     'delay': '<?gmfSearchDelay',
-    'onInitCallback': '<?gmfSearchOnInit'
+    'onInitCallback': '<?gmfSearchOnInit',
+    'searchActionCallback': '&?gmfSearchAction'
   },
   controller: 'gmfSearchController',
   templateUrl: gmfSearchTemplateUrl
@@ -339,6 +341,17 @@ class SearchController {
     this.onInitCallback;
 
     /**
+     * @type {function(): void}
+     */
+    this.searchActionCallback;
+
+    /**
+     * @type {function(): void}
+     * @private
+     */
+    this.executeSearchAction_;
+
+    /**
      * Whether or not to show a button to clear the search text.
      * Default to true.
      * @type {boolean}
@@ -442,6 +455,9 @@ class SearchController {
    * Called on initialization of the controller.
    */
   $onInit() {
+    if (this.searchActionCallback) {
+      this.executeSearchAction_ = this.searchActionCallback();
+    }
     const gettextCatalog = this.gettextCatalog_;
     this.clearButton = this.clearButton !== false;
     this.colorChooser = this.colorChooser === true;
@@ -992,6 +1008,10 @@ class SearchController {
           if (datasourcesActionsHaveAddLayer) {
             const silent = !!featureGeometry;
             this.gmfTreeManager_.addGroupByLayerName(actionData, true, silent);
+          }
+        } else {
+          if (this.executeSearchAction_) {
+            this.executeSearchAction_(action);
           }
         }
       }
