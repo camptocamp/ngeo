@@ -38,7 +38,7 @@
     "@fortawesome/fontawesome-free": "5.11.2",
     "@geoblocks/proj": "0.4.0",
     "@sentry/browser": "5.9.1",
-    "@sentry/types": "5.7.1",
+    "@sentry/types": "5.10.0",
     "@types/angular": "1.6.54",
     "@types/angular-animate": "1.5.10",
     "@types/angular-dynamic-locale": "0.1.34",
