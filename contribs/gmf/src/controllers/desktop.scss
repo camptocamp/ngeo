@@ -482,7 +482,8 @@ hr.gmf-drawfeature-separator {
   margin-top: $app-margin;
 }
 
-gmf-drawfeatureoptions label {
+gmf-drawfeatureoptions label,
+.gmf-drawfeatureoptions-help-rectangle {
   margin: 1rem 0 0 0;
 }
 

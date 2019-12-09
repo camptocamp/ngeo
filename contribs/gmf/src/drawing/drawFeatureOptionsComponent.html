@@ -34,3 +34,8 @@
     <option value="km">{{'km (kilometers)' | translate}}</option>
   </select>
 </div>
+
+<p
+    class="gmf-drawfeatureoptions-help-rectangle"
+    ng-if="$ctrl.drawRectangle"
+>{{ 'Note: drawing a rectangle of a specific size requires both height and length to be defined.' | translate}}</p>
