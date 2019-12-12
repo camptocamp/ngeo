@@ -36,6 +36,13 @@ function drawPointComponent() {
         type: /** @type {import("ol/geom/GeometryType.js").default} */ ('Point')
       });
 
+      if (drawFeatureCtrl.uid) {
+        drawPoint.set(
+          'ngeo-interaction-draw-uid',
+          `${drawFeatureCtrl.uid}-point`
+        );
+      }
+
       drawFeatureCtrl.registerInteraction(drawPoint);
       drawFeatureCtrl.drawPoint = drawPoint;
 

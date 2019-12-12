@@ -1,4 +1,5 @@
 import angular from 'angular';
+import gmfDrawingDrawFeatureOptionsComponent from 'gmf/drawing/drawFeatureOptionsComponent.js';
 import gmfDrawingFeatureStyleComponent from 'gmf/drawing/featureStyleComponent.js';
 
 import ngeoGeometryType from 'ngeo/GeometryType.js';
@@ -36,6 +37,7 @@ import 'bootstrap/js/src/dropdown.js';
  * @hidden
  */
 const module = angular.module('GmfDrawFeatureComponent', [
+  gmfDrawingDrawFeatureOptionsComponent.name,
   gmfDrawingFeatureStyleComponent.name,
   ngeoEditingExportfeaturesComponent.name,
   ngeoMiscBtnComponent.name,
@@ -128,6 +130,11 @@ function Controller($scope, $timeout, gettextCatalog, ngeoFeatureHelper, ngeoFea
    * @type {import("ngeo/misc/ToolActivate.js").default}
    */
   this.drawToolActivate = new ngeoMiscToolActivate(this, 'drawActive');
+
+  /**
+   * @type {string}
+   */
+  this.ngeoDrawFeatureUid = 'gmf-drawfeature';
 
   /**
    * @type {boolean}
@@ -276,6 +283,12 @@ function Controller($scope, $timeout, gettextCatalog, ngeoFeatureHelper, ngeoFea
    * @type {import("ol/events.js").EventsKey[]}
    * @private
    */
+  this.mainListenerKeys_ = [];
+
+  /**
+   * @type {import("ol/events.js").EventsKey[]}
+   * @private
+   */
   this.mapListenerKeys_ = [];
 
   /**
@@ -340,7 +353,69 @@ function Controller($scope, $timeout, gettextCatalog, ngeoFeatureHelper, ngeoFea
    * @private
    */
   this.gettextCatalog_ = gettextCatalog;
+
+  // --- Draw Interactions ---
+  // Automatically set by listening interactions added to the map,
+  // using the uid set...
+
+  /**
+   * @type {?import("ol/interaction/Draw.js").default}
+   */
+  this.drawPoint = null;
+
+  /**
+   * @type {?import("ngeo/interaction/MeasureLength.js").default}
+   */
+  this.measureLength = null;
+
+  /**
+   * @type {?import("ngeo/interaction/MeasureArea.js").default}
+   */
+  this.measureArea = null;
+
+  /**
+   * @type {?import("ngeo/interaction/MeasureAzimut.js").default}
+   */
+  this.measureAzimut = null;
+
+  /**
+   * @type {?import("ol/interaction/Draw.js").default}
+   */
+  this.drawRectangle = null;
+
+  /**
+   * @type {?import("ol/interaction/Draw.js").default}
+   */
+  this.drawText = null;
 }
+
+
+/**
+ * Called upon initialization of the controller.
+ */
+Controller.prototype.$onInit = function() {
+  if (!this.map) {
+    throw new Error('Missing map');
+  }
+
+  this.mainListenerKeys_.push(
+    listen(
+      this.map.getInteractions(),
+      'add',
+      this.handleMapInteractionsAdd_,
+      this
+    )
+  );
+};
+
+
+/**
+ * Called upon destruction of the controller.
+ */
+Controller.prototype.$onDestroy = function() {
+  this.mainListenerKeys_.forEach(unlistenByKey);
+  this.mainListenerKeys_.length = 0;
+};
 
 
 /**
@@ -780,6 +855,50 @@ Controller.prototype.handleRotateEnd_ = function(evt) {
   this.scope_.$apply();
 };
 
+
+/**
+ * @param {Event|import('ol/events/Event.js').default} evt Event.
+ * @private
+ */
+Controller.prototype.handleMapInteractionsAdd_ = function(evt) {
+  if (!(evt instanceof CollectionEvent)) {
+    return;
+  }
+
+  // If the added interaction is a draw one registered with a unique
+  // id, bind it to the according property.
+  const interaction = /** @type {import('ol/interaction/Interaction.js').default} */ (evt.element);
+  const drawFeatureUid = interaction.get('ngeo-interaction-draw-uid');
+
+  switch (drawFeatureUid) {
+    case `${this.ngeoDrawFeatureUid}-point`:
+      this.drawPoint =
+        /** @type {import("ol/interaction/Draw.js").default} */ (interaction);
+      break;
+    case `${this.ngeoDrawFeatureUid}-length`:
+      this.measureLength =
+        /** @type {import("ngeo/interaction/MeasureLength.js").default} */ (interaction);
+      break;
+    case `${this.ngeoDrawFeatureUid}-area`:
+      this.measureArea =
+        /** @type {import("ngeo/interaction/MeasureArea.js").default} */ (interaction);
+      break;
+    case `${this.ngeoDrawFeatureUid}-azimut`:
+      this.measureAzimut =
+        /** @type {import("ngeo/interaction/MeasureAzimut.js").default} */ (interaction);
+      break;
+    case `${this.ngeoDrawFeatureUid}-rectangle`:
+      this.drawRectangle =
+        /** @type {import("ol/interaction/Draw.js").default} */ (interaction);
+      break;
+    case `${this.ngeoDrawFeatureUid}-text`:
+      this.drawText =
+        /** @type {import("ol/interaction/Draw.js").default} */ (interaction);
+      break;
+    default:
+      break;
+  }
+};
 
 module.controller('GmfDrawfeatureController', Controller);
 

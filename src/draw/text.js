@@ -36,6 +36,13 @@ function drawTextComponent() {
         type: /** @type {import("ol/geom/GeometryType.js").default} */ ('Point')
       });
 
+      if (drawFeatureCtrl.uid) {
+        drawText.set(
+          'ngeo-interaction-draw-uid',
+          `${drawFeatureCtrl.uid}-text`
+        );
+      }
+
       drawFeatureCtrl.registerInteraction(drawText);
       drawFeatureCtrl.drawText = drawText;
 

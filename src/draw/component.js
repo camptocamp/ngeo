@@ -92,6 +92,10 @@ const module = angular.module('ngeoDrawfeature', [
  * @htmlAttribute {boolean} ngeo-drawfeature-showmeasure. Checks the
  *      checkbox in order to display the feature measurements as a label.
  *      Default to false.
+ * @htmlAttribute {string=} ngeo-drawfeature-uid A prefix to use to
+ *      create unique ids for each created draw interaction as
+ *      property. Used to find those draw interactions later on from the
+ *      map, using the property set.
  * @return {angular.IDirective} The directive specs.
  * @ngInject
  * @ngdoc directive
@@ -105,7 +109,8 @@ function drawComponent() {
       'active': '=ngeoDrawfeatureActive',
       'features': '=?ngeoDrawfeatureFeatures',
       'map': '=ngeoDrawfeatureMap',
-      'showMeasure': '=?ngeoDrawfeatureShowmeasure'
+      'showMeasure': '=?ngeoDrawfeatureShowmeasure',
+      'uid': '<?ngeoDrawfeatureUid'
     }
   };
 }

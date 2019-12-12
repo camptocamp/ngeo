@@ -55,6 +55,13 @@ function drawRectangleComponent() {
         maxPoints: 2
       });
 
+      if (drawFeatureCtrl.uid) {
+        drawRectangle.set(
+          'ngeo-interaction-draw-uid',
+          `${drawFeatureCtrl.uid}-rectangle`
+        );
+      }
+
       drawFeatureCtrl.registerInteraction(drawRectangle);
       drawFeatureCtrl.drawRectangle = drawRectangle;
 

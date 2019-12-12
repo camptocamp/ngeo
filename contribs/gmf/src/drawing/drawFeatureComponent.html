@@ -3,6 +3,7 @@
     class="btn-group"
     ngeo-drawfeature-active="efCtrl.drawActive"
     ngeo-drawfeature-map="efCtrl.map"
+    ngeo-drawfeature-uid="efCtrl.ngeoDrawFeatureUid"
     ngeo-drawfeature-showmeasure="efCtrl.showMeasure">
   <a
     data-toggle="tooltip"
@@ -76,40 +77,68 @@
 
   <hr class="gmf-drawfeature-separator" ng-show="efCtrl.getFeaturesArray().length > 0">
   <div ng-switch-when="null">
-    <div ng-show="efCtrl.getFeaturesArray().length > 0">
-      <div class="ngeo-drawfeature-actionbuttons">
-        <button
-            type="button"
-            data-toggle="dropdown"
-            aria-haspopup="true"
-            aria-expanded="false"
-            ngeo-exportfeatures
-            ngeo-exportfeatures-features="efCtrl.features"
-            class="btn btn-link btn-sm dropdown-toggle">
-          <span class="fa fa-file-export"></span>
-          {{'Export' | translate}}
-        </button>
-        <button
-            ng-click="efCtrl.clearFeatures()"
-            class="btn btn-link btn-sm">
-          <span class="fa fa-trash"></span>
-          {{'Delete All' | translate}}
-        </button>
+
+    <div ng-switch="efCtrl.drawActive">
+
+      <div ng-switch-when="true">
+        <!-- adube! -->
+        <gmf-drawfeatureoptions
+            ng-if="efCtrl.measureLength && efCtrl.measureLength.active"
+            measure-length="::efCtrl.measureLength"
+            map="::efCtrl.map">
+        </gmf-drawfeatureoptions>
+        <gmf-drawfeatureoptions
+            ng-if="efCtrl.measureArea && efCtrl.measureArea.active"
+            measure-area="::efCtrl.measureArea"
+            map="::efCtrl.map">
+        </gmf-drawfeatureoptions>
+        <gmf-drawfeatureoptions
+            ng-if="efCtrl.measureAzimut && efCtrl.measureAzimut.active"
+            measure-azimut="::efCtrl.measureAzimut"
+            map="::efCtrl.map">
+        </gmf-drawfeatureoptions>
+        <gmf-drawfeatureoptions
+            ng-if="efCtrl.drawRectangle && efCtrl.drawRectangle.active"
+            draw-rectangle="::efCtrl.drawRectangle"
+            map="::efCtrl.map">
+        </gmf-drawfeatureoptions>
       </div>
 
-      <div class="gmf-eol"></div>
-
-      <div class="gmf-drawfeature-featurelist list-group list-group-sm">
-        <button
-            role="button"
-            class="list-group-item"
-            ng-repeat="feature in efCtrl.getFeaturesArray()"
-            ng-click="efCtrl.selectFeatureFromList(feature);">
-          {{ feature.get(efCtrl.nameProperty) }}
-        </button>
+      <div
+        ng-show="efCtrl.getFeaturesArray().length > 0"
+        ng-switch-default
+      >
+        <div class="ngeo-drawfeature-actionbuttons">
+          <button
+              type="button"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+              ngeo-exportfeatures
+              ngeo-exportfeatures-features="efCtrl.features"
+              class="btn btn-link btn-sm dropdown-toggle">
+            <span class="fa fa-file-export"></span>
+            {{'Export' | translate}}
+          </button>
+          <button
+              ng-click="efCtrl.clearFeatures()"
+              class="btn btn-link btn-sm">
+            <span class="fa fa-trash"></span>
+            {{'Delete All' | translate}}
+          </button>
+        </div>
+        <div class="gmf-eol"></div>
+        <div class="gmf-drawfeature-featurelist list-group list-group-sm">
+          <button
+              role="button"
+              class="list-group-item"
+              ng-repeat="feature in efCtrl.getFeaturesArray()"
+              ng-click="efCtrl.selectFeatureFromList(feature);">
+            {{ feature.get(efCtrl.nameProperty) }}
+          </button>
+        </div>
       </div>
     </div>
-
   </div>
 
   <div ng-switch-default>
