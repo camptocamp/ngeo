@@ -105,15 +105,6 @@ class Map {
         coordinateFormat: createStringXY(0)
       }));
     }
-    if (options.addMiniMap) {
-      this.map_.addControl(new OverviewMap({
-        collapsed: !options.miniMapExpanded,
-        view: new View({
-          projection: this.view_.getProjection(),
-          resolutions: this.view_.getResolutions()
-        })
-      }));
-    }
 
     if (options.addLayerSwitcher) {
       this.map_.addControl(new LayerSwitcher());
@@ -128,6 +119,18 @@ class Map {
           // we don't want the background layer in the layerswitch so we remove the title.
           layer.set('title', undefined);
           this.map_.addLayer(layer);
+
+          if (options.addMiniMap) {
+            this.map_.addControl(new OverviewMap({
+              // @ts-ignore: layers param in overviewmap
+              layers: [layer],
+              collapsed: !options.miniMapExpanded,
+              view: new View({
+                projection: this.view_.getProjection(),
+                resolutions: this.view_.getResolutions()
+              })
+            }));
+          }
         }
       }
 
