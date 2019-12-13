@@ -163,18 +163,21 @@ module.exports = function(config) {
             ? chunksFiles[chunk.name].concat(chunksFiles.commons)
             : chunksFiles[chunk.name];
           files.sort(get_comp([
+            // ngeo default apps
             '/apps/desktop/sass/vars_desktop.scss',
             '/apps/desktop_alt/sass/vars_desktop_alt.scss',
             '/apps/iframe_api/sass/vars_iframe_api.scss',
             '/apps/mobile/sass/vars_mobile.scss',
             '/apps/mobile_alt/sass/vars_mobile_alt.scss',
             '/apps/oeedit/sass/vars_oeedit.scss',
+            // project sass vars files
             '/apps/sass/var',
             '/controllers/',
             '/vars.scss',
             '/vars_only.scss',
             '/common_dependencies.scss',
           ], [
+            // project and ngeo default apps other sass files
             '/apps/',
           ]));
           //console.log(files);
