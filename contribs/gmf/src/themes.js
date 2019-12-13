@@ -48,7 +48,7 @@
  * not an OpenLayers group
  * neither a WMS group.
  * This represent « first level group » (Block in the layer tree),
- * or all sub nodes that's not al leaf.
+ * or all sub nodes that's not a leaf.
  * extends GmfBaseNode
  * @typedef {Object} GmfGroup
  * @property {number} id (GmfBaseNode)
@@ -67,6 +67,7 @@
  * @property {string} [ogcServer] On non mixed first level group it is the ogc server to use.
  * @property {import('ngeo/datasource/OGC.js').TimeProperty} [time] On non mixed first level group with more
  *      then one time layer, it is the time information.
+ * @property {string} [popupId] a popup identifier for the associate submenu.
  */
 
 
@@ -90,6 +91,7 @@
  * @property {string} [style]
  * @property {string} type WMS or WMTS.
  * @property {string} [ogcServer]
+ * @property {string} [popupId] a popup identifier for the associate submenu.
  */
 
 
