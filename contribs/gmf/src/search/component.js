@@ -346,12 +346,6 @@ class SearchController {
     this.searchActionCallback;
 
     /**
-     * @type {function(): void}
-     * @private
-     */
-    this.executeSearchAction_;
-
-    /**
      * Whether or not to show a button to clear the search text.
      * Default to true.
      * @type {boolean}
@@ -455,9 +449,6 @@ class SearchController {
    * Called on initialization of the controller.
    */
   $onInit() {
-    if (this.searchActionCallback) {
-      this.executeSearchAction_ = this.searchActionCallback();
-    }
     const gettextCatalog = this.gettextCatalog_;
     this.clearButton = this.clearButton !== false;
     this.colorChooser = this.colorChooser === true;
@@ -1010,8 +1001,8 @@ class SearchController {
             this.gmfTreeManager_.addGroupByLayerName(actionData, true, silent);
           }
         } else {
-          if (this.executeSearchAction_) {
-            this.executeSearchAction_(action);
+          if (this.searchActionCallback) {
+            this.searchActionCallback(action);
           }
         }
       }
