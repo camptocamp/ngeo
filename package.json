@@ -15,7 +15,8 @@
     "serve-api": "webpack-dev-server --content-base=api/dist/apihelp/ --config=buildtools/webpack.api.js --https --cert=private.crt --key=private.key --port=3000 --mode=development --progress --watch --debug",
     "build-gmf-apps-profile": "TARGET=gmf-apps webpack --profile --json > profile.json",
     "typecheck": "tsc",
-    "doc": "typedoc --name ngeo --mode file --excludePrivate --excludeProtected --ignoreCompilerErrors --excludeExternals --exclude '**/examples/**,**/test/**' --out apidoc"
+    "doc": "typedoc --name ngeo --mode file --excludePrivate --excludeProtected --ignoreCompilerErrors --excludeExternals --exclude '**/examples/**,**/test/**' --readme buildtools/doc-readme.md --out apidoc",
+    "jsdoc": "jsdoc contribs/gmf/src/themes.js --configure jsdoc/config.json --destination jsdoc/build"
   },
   "sideEffects": false,
   "repository": {
@@ -100,6 +101,8 @@
     "jquery-mousewheel": "3.1.13",
     "jquery-ui": "1.12.1",
     "jquery-ui-touch-punch": "0.2.3",
+    "jsdoc": "3.6.3",
+    "jsdoc-plugin-typescript": "2.0.5",
     "jsts": "2.1.0",
     "karma": "4.4.1",
     "karma-chrome-launcher": "3.1.0",

@@ -52,6 +52,7 @@ jobs:
       - run: "! (npm run typecheck|grep -v '^node_modules/'|grep '^[a-z]')"
       # Generate API doc
       - run: npm run doc
+      - run: npm run jsdoc
       - run: npm run build-api
       - run: cat /home/runner/.npm/_logs/*
         if: failure()

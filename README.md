@@ -18,7 +18,6 @@ standalone builds of ngeo can be created.
 To know more about ngeo take a look at:
 
 * The [examples](https://camptocamp.github.io/ngeo/master/examples)
-* The [simple API help](https://camptocamp.github.io/ngeo/master/api/apihelp/apihelp.html)
 * The documentation can be found in each file. There is currently no API web-documentation for this
   version (you may also use [API documentation](https://camptocamp.github.io/ngeo/master/apidoc/index.html)).
 
