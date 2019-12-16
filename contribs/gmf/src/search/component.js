@@ -341,7 +341,7 @@ class SearchController {
     this.onInitCallback;
 
     /**
-     * @type {function(): void}
+     * @type {function(any): void}
      */
     this.searchActionCallback;
 
