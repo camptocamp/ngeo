@@ -133,6 +133,45 @@ module.exports = function(config) {
       }
     }
   };
+  const plugins = [
+    providePlugin,
+    new SassPlugin({
+      filename: devMode ? '[name].css' : '[name].[hash:6].css',
+      assetname: '[name].[hash:6].[ext]',
+      //tempfile: '/tmp/t.scss',
+      blacklistedChunks: ['commons'],
+      filesOrder: (chunk, chunksFiles) => {
+        const files = chunksFiles.commons
+          ? chunksFiles[chunk.name].concat(chunksFiles.commons)
+          : chunksFiles[chunk.name];
+        files.sort(get_comp(config.fist_scss || [
+          // ngeo default apps
+          '/apps/desktop/sass/vars_desktop.scss',
+          '/apps/desktop_alt/sass/vars_desktop_alt.scss',
+          '/apps/iframe_api/sass/vars_iframe_api.scss',
+          '/apps/mobile/sass/vars_mobile.scss',
+          '/apps/mobile_alt/sass/vars_mobile_alt.scss',
+          '/apps/oeedit/sass/vars_oeedit.scss',
+          // project sass vars files
+          '/apps/sass/var',
+          '/controllers/',
+          '/vars.scss',
+          '/vars_only.scss',
+          '/common_dependencies.scss',
+        ], config.last_scss || [
+          // project and ngeo default apps other sass files
+          '/apps/',
+        ]));
+        //console.log(files);
+        return files;
+      }
+    }),
+    new webpack.IgnorePlugin(/^\.\/locale$/, /node_modules\/moment\/src\/lib\/locale$/),
+  ];
+  if (config.nodll != true) {
+    plugins.push(dllPlugin);
+  }
+
 
   return {
     context: path.resolve(__dirname, '../'),
@@ -150,39 +189,7 @@ module.exports = function(config) {
         otherRule,
       ]
     },
-    plugins: [
-      dllPlugin,
-      providePlugin,
-      new SassPlugin({
-        filename: devMode ? '[name].css' : '[name].[hash:6].css',
-        assetname: '[name].[hash:6].[ext]',
-        //tempfile: '/tmp/t.scss',
-        blacklistedChunks: ['commons'],
-        filesOrder: (chunk, chunksFiles) => {
-          const files = chunksFiles.commons
-            ? chunksFiles[chunk.name].concat(chunksFiles.commons)
-            : chunksFiles[chunk.name];
-          files.sort(get_comp([
-            '/apps/desktop/sass/vars_desktop.scss',
-            '/apps/desktop_alt/sass/vars_desktop_alt.scss',
-            '/apps/iframe_api/sass/vars_iframe_api.scss',
-            '/apps/mobile/sass/vars_mobile.scss',
-            '/apps/mobile_alt/sass/vars_mobile_alt.scss',
-            '/apps/oeedit/sass/vars_oeedit.scss',
-            '/apps/sass/var',
-            '/controllers/',
-            '/vars.scss',
-            '/vars_only.scss',
-            '/common_dependencies.scss',
-          ], [
-            '/apps/',
-          ]));
-          //console.log(files);
-          return files;
-        }
-      }),
-      new webpack.IgnorePlugin(/^\.\/locale$/, /node_modules\/moment\/src\/lib\/locale$/),
-    ],
+    plugins: plugins,
     resolve: {
       modules: [
         '../node_modules',
