@@ -70,6 +70,8 @@
  * @property {MapFishPrintLayer[]} layers
  * @property {string} projection
  * @property {number} rotation
+ * @property {boolean} [useNearestScale] Indicates if the map should adjust its scale/zoom level to be
+ *    equal to one of those defined in the configuration file.
  */
 
 
