@@ -134,6 +134,7 @@
           ng-attr-placeholder="{{'Password' | translate}}"/>
     </div>
     <div ng-if="$ctrl.twoFactorAuth" class="form-group">
+      {{'The following field should be kept empty on first login:' | translate}}
       <input
           type="text"
           autocomplete="off"
