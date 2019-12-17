@@ -32,7 +32,9 @@ const exports = function(format, gettextCatalog, options = /** @type {ngeox.inte
   if (modifierPressed === undefined) {
     modifierPressed = false;
     document.body.addEventListener('keydown', (evt) => {
-      modifierPressed = evt.keyCode === 17; // Ctrl key
+      const SafariModifierPressed = !!evt.metaKey; // Cmd Key (MacOS)
+      const ctrlModifierPressed = evt.keyCode === 17; // Ctrl key
+      modifierPressed = SafariModifierPressed || ctrlModifierPressed;
     });
     document.body.addEventListener('keyup', () => {
       modifierPressed = false;

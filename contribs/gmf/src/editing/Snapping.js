@@ -133,7 +133,9 @@ class CustomSnap extends olInteractionSnap {
   constructor(options) {
     super(options);
     document.body.addEventListener('keydown', (evt) => {
-      this.setActive(evt.keyCode !== 17); // Ctrl key
+      const SafariModifierNotPressed = !evt.metaKey; // Cmd key (MacOS)
+      const CtrlModifierNotPressed = evt.keyCode !== 17; // Ctrl key
+      this.setActive(CtrlModifierNotPressed && SafariModifierNotPressed);
     });
     document.body.addEventListener('keyup', () => {
       this.setActive(true);
