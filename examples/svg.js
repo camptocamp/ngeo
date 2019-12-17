@@ -28,7 +28,7 @@ const appmodule = angular.module('app', [
 function MainController() {
   const source = new SourceVector();
   const feature1 = new Feature({
-    geometry: new Point([599000, 200000])
+    geometry: new Point([2599000, 1200000])
   });
   feature1.setStyle([new Style({
     image: new Icon({
@@ -41,7 +41,7 @@ function MainController() {
   source.addFeature(feature1);
 
   const feature2 = new Feature({
-    geometry: new Point([600000, 200000])
+    geometry: new Point([2600000, 1200000])
   });
   feature2.setStyle([new Style({
     image: new Icon({
@@ -54,7 +54,7 @@ function MainController() {
   source.addFeature(feature2);
 
   const feature3 = new Feature({
-    geometry: new Point([601000, 200000])
+    geometry: new Point([2601000, 1200000])
   });
   feature3.setStyle([new Style({
     image: new Icon({
