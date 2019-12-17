@@ -114,6 +114,7 @@ describe('ngeo.print.Service', () => {
               projection: 'EPSG:3857',
               rotation: 0,
               scale: 500,
+              useNearestScale: false,
               layers: [{
                 baseURL: 'http://example.com/wms',
                 imageFormat: 'image/jpeg',
@@ -173,6 +174,7 @@ describe('ngeo.print.Service', () => {
               center: [3000, 4000],
               projection: 'EPSG:3857',
               scale: 500,
+              useNearestScale: false,
               rotation: 0,
               layers: [{
                 baseURL: 'http://example.com/wms',
@@ -248,6 +250,7 @@ describe('ngeo.print.Service', () => {
               projection: 'EPSG:3857',
               rotation: 0,
               scale: 500,
+              useNearestScale: false,
               layers: [{
                 baseURL: 'http://example.com/wmts/{Layer}/{Style}/' +
                     '{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.jpeg',
@@ -543,6 +546,7 @@ describe('ngeo.print.Service', () => {
               projection: 'EPSG:3857',
               rotation: 0,
               scale: 500,
+              useNearestScale: false,
               layers: [{
                 geoJson: {
                   type: 'FeatureCollection',
@@ -656,6 +660,7 @@ describe('ngeo.print.Service', () => {
             center: [3000, 4000],
             projection: 'EPSG:3857',
             scale: 500,
+            useNearestScale: false,
             layers: [{
               baseURL: 'http://example.com/wms',
               imageFormat: 'image/jpeg',

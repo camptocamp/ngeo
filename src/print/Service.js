@@ -181,6 +181,7 @@ PrintService.prototype.encodeMap_ = function(map, scale, object) {
   object.projection = viewProjection.getCode();
   object.rotation = viewRotation;
   object.scale = scale;
+  object.useNearestScale = false;
   object.layers = [];
 
   const mapLayerGroup = map.getLayerGroup();
