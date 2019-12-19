@@ -151,11 +151,13 @@
 
     <span
       ngeo-popover
-      ng-if="::(layertreeCtrl.depth === 1 && !layertreeCtrl.node.mixed) || (layertreeCtrl.depth > 1 && layertreeCtrl.parent.node.mixed && !layertreeCtrl.node.children) || (gmfLayertreeCtrl.getLegendsObject(layertreeCtrl) && layertreeCtrl.node.metadata.legend) || layertreeCtrl.getDataSource().filtrable" ngeo-popover-dismiss=".content">
+      ng-if="::(layertreeCtrl.depth === 1 && !layertreeCtrl.node.mixed) || (layertreeCtrl.depth > 1 && layertreeCtrl.parent.node.mixed && !layertreeCtrl.node.children) || (gmfLayertreeCtrl.getLegendsObject(layertreeCtrl) && layertreeCtrl.node.metadata.legend) || layertreeCtrl.getDataSource().filtrable" ngeo-popover-dismiss=".content"
+      ng-click="::gmfLayertreeCtrl.tagPopup(layertreeCtrl.node)">
 
       <span
         ngeo-popover-anchor
-        class="extra-actions fa fa-cog">
+        class="extra-actions fa fa-cog"
+        id="popup-id-{{layertreeCtrl.node.ol_uid}}">
       </span>
 
       <div ngeo-popover-content>
