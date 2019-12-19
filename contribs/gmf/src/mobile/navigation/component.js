@@ -292,7 +292,7 @@ Controller.prototype.backIfActive = function(element) {
  *    <nav class="gmf-mobile-nav-left" gmf-mobile-nav>
  *      ...
  *      <gmf-authentication class="gmf-mobile-nav-slide"
- *         gmf-mobile-nav-back="authCtrl.gmfUser.username !== null">
+ *         gmf-mobile-nav-back="mainCtrl.gmfUser.username !== null">
  *      </gmf-authentication>
  *
  * If `mainCtrl.gmfUser.username` becomes true and the login-slide is currently
