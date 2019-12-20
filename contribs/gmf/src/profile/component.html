@@ -2,11 +2,11 @@
   class="gmf-profile-container panel"
   ng-show="ctrl.active">
 
-  <span class="text-default" ng-show="ctrl.isLoading">
-    <i class="custom-spinner-profile fa fa-spin">
+  <div id="spinner-profile" ng-show="ctrl.isLoading">
+    <i class="fa fa-spin">
       <%=require('gmf/icons/spinner.svg?viewbox&height=3rem')%>
     </i>
-  </span>
+  </div>
 
   <div
     class="ngeo-profile"

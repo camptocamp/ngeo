@@ -42,10 +42,9 @@ $profile-height: 12.50rem;
   height: calc(100% - #{$profile-height});
 }
 
-span {
+#spinner-profile {
   width: 100%;
-
-  .custom-spinner-profile {
+  i {
     fill: black;
     margin-top: 2rem;
     margin-left: 50%;
