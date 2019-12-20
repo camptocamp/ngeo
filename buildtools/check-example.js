@@ -100,12 +100,22 @@ function loaded(page, browser) {
   });
   page.on('request', request => {
     loaded(page, browser);
-    if (process.env.CI != 'true') {
-      request.continue();
-      return
-    }
     const originalUrl = request.url();
     let url = originalUrl;
+    if (process.env.CI != 'true') {
+      if (process.env.HTTP_MAP) {
+        for (const http_map in JSON.parse(process.env.HTTP_MAP)) {
+          if (url.startsWith(http_map[0])) {
+            url = url.replace(http_map[0], http_map[1]);
+          }
+        }
+      }
+      requestsURL.add(originalUrl);
+      request.continue({
+        url
+      });
+      return
+    }
     if (url.startsWith('http://localhost:8080/')) {
       url = url.replace('http://localhost:8080/', 'https://geomapfish-demo-2-5.camptocamp.com/');
     }
