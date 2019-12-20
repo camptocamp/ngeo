@@ -132,7 +132,7 @@ spell: .build/python-venv.timestamp
 		-or -name '__pycache__' -prune -or -name 'build' -prune \
 		-or \( -type f -and -not -name '*.png' -and -not -name '*.mo' -and -not -name '*.po*' -and -not -name '*_translation' \
 		-and -not -name 'themescapabilities.js' -and -not -name 'themes.js' -and -not -name 'prettify.js' \
-		-and -not -name 'package-lock.json' -and -not -name 'asitvd.capabilities.xml' \) -print)
+		-and -not -name 'asitvd.capabilities.xml' \) -print)
 
 .PHONY: eslint
 eslint: .build/eslint.timestamp

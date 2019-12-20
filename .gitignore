@@ -3,7 +3,6 @@
 /apidoc/
 /api/dist/api.*
 /.transifexrc
-/package-lock.json
 /npm-debug.log
 /.build/
 /node_modules/
