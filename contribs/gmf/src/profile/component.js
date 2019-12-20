@@ -310,6 +310,11 @@ export function ProfileController($scope, $http, $element, $filter, gettextCatal
   this.isErrored = false;
 
   /**
+   * @type {boolean}
+   */
+  this.isLoading = false;
+
+  /**
    * @type {function():import("ol/Map.js").default}
    */
   this.getMapFn = () => null;
@@ -672,6 +677,9 @@ ProfileController.prototype.getJsonProfile_ = function() {
   if (!this.line) {
     throw new Error('Missing line');
   }
+
+  this.isLoading = true;
+
   const geom = {
     'type': 'LineString',
     'coordinates': this.line.getCoordinates()
@@ -705,6 +713,7 @@ ProfileController.prototype.getJsonProfile_ = function() {
 ProfileController.prototype.getProfileDataSuccess_ = function(resp) {
   const profileData = resp.data.profile;
   if (profileData instanceof Array) {
+    this.isLoading = false;
     this.profileData = profileData;
   }
 };
@@ -715,6 +724,7 @@ ProfileController.prototype.getProfileDataSuccess_ = function(resp) {
  * @private
  */
 ProfileController.prototype.getProfileDataError_ = function(resp) {
+  this.isLoading = false;
   this.isErrored = true;
   console.error('Can not get JSON profile.');
 };

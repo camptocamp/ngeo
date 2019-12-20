@@ -276,6 +276,11 @@ class AuthenticationController {
 
     this.otpImage;
 
+    /**
+     * @type {boolean}
+     */
+    this.isLoading = false;
+
     $scope.$watch(
       () => this.gmfUser.otp_uri,
       (val) => {
@@ -372,6 +377,7 @@ class AuthenticationController {
   login() {
     const gettextCatalog = this.gettextCatalog;
 
+    this.isLoading = true;
     const errors = [];
     if (this.loginVal === '') {
       errors.push(gettextCatalog.getString('The username is required.'));
@@ -380,16 +386,19 @@ class AuthenticationController {
       errors.push(gettextCatalog.getString('The password is required.'));
     }
     if (errors.length) {
+      this.isLoading = false;
       this.setError_(errors);
     } else {
       this.gmfAuthenticationService_.login(this.loginVal, this.pwdVal, this.otpVal)
         .then(() => {
+          this.isLoading = false;
           this.loginVal = '';
           this.pwdVal = '';
           this.otpVal = '';
           this.resetError_();
         })
         .catch(() => {
+          this.isLoading = false;
           this.pwdVal = '';
           this.otpVal = '';
           this.setError_(gettextCatalog.getString('Incorrect credentials or disabled account.'));
@@ -402,11 +411,15 @@ class AuthenticationController {
    */
   logout() {
     const gettextCatalog = this.gettextCatalog;
+
+    this.isLoading = true;
     this.gmfAuthenticationService_.logout()
       .then(() => {
+        this.isLoading = false;
         this.resetError_();
       })
       .catch(() => {
+        this.isLoading = false;
         this.setError_(gettextCatalog.getString('Could not log out.'));
       });
   }
@@ -417,6 +430,7 @@ class AuthenticationController {
   resetPassword() {
     const gettextCatalog = this.gettextCatalog;
 
+    this.isLoading = true;
     if (!this.loginVal) {
       this.setError_(gettextCatalog.getString('Please, input a login...'));
       return;
@@ -424,10 +438,12 @@ class AuthenticationController {
 
     this.gmfAuthenticationService_.resetPassword(this.loginVal)
       .then(() => {
+        this.isLoading = false;
         this.resetPasswordModalShown = true;
         this.resetError_();
       })
       .catch(() => {
+        this.isLoading = false;
         this.setError_(gettextCatalog.getString('An error occurred while resetting the password.'));
       });
 

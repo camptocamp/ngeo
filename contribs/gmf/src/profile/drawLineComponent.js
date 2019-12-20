@@ -125,11 +125,9 @@ function Controller($scope, $timeout, ngeoFeatureOverlayMgr) {
 
   interactionDecoration(this.interaction);
 
-  // Clear the line as soon as the interaction is activated.
-  this.interaction.on('change:active', () => {
-    if (this.interaction.getActive()) {
-      this.clear_();
-    }
+  // Clear the line as soon as a new drawing is started.
+  this.interaction.on('drawstart', (event) => {
+    this.features_.clear();
   });
 
   // Update the profile with the new geometry.

@@ -189,7 +189,9 @@
 
     <div class="gmf-print-actions form-group pull-right">
       <span ng-show="$ctrl.isState('PRINTING')">
-        <i class="fa fa-refresh fa-spinner fa-spin"></i>
+        <i class="fa custom-spinner-generic fa-spin">
+            <%=require('gmf/icons/spinner.svg?viewbox&height=1rem')%>
+        </i>
       </span>
 
       <a

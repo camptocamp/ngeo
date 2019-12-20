@@ -142,3 +142,32 @@ i, cite, em, var, address, dfn {
   text-align: left;
   padding: 0.25rem 0.5rem;
 }
+
+// Spinner for loading app
+.custom-spinner-loading {
+  fill: red;
+  font-size: 3rem;
+}
+
+// Spinner for generic purpose
+.custom-spinner-generic {
+  fill: black;
+}
+
+// Spinner for login panel
+.login-spinner {
+  float: left;
+  margin-right: 20px;
+
+  .custom-spinner-connect {
+    fill: black;
+    font-size: 1.3rem;
+  }
+}
+
+// Spinner for KML import panel
+.custom-spinner-importkml {
+  fill: black;
+  font-size: 2rem;
+  margin: 20px 45%;
+}

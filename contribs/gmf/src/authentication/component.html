@@ -149,6 +149,11 @@
         class="form-control btn prime"
         value="{{'Connect' | translate}}" />
     </div>
+    <div class="login-spinner" ng-if="$ctrl.isLoading">
+      <i class="fa custom-spinner-connect fa-spin">
+        <%=require('gmf/icons/spinner.svg?viewbox&height=1em')%>
+      </i>
+    </div>
     <div ng-show="$ctrl.allowPasswordReset" class="form-group">
       <a ng-click="$ctrl.resetPassword()"
          href="">{{'Password forgotten?' | translate}}</a>

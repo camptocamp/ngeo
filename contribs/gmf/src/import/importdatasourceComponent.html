@@ -76,6 +76,12 @@
 
 </div>
 
+<div ng-if="$ctrl.isLoading">
+  <i class="fa custom-spinner-importkml fa-spin">
+    <%=require('gmf/icons/spinner.svg?viewbox&height=1em')%>
+  </i>
+</div>
+
 <div
   class="gmf-importdatasource-layers"
   ng-if="$ctrl.wmsCapabilities !== null || $ctrl.wmtsCapabilities !== null">

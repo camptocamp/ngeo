@@ -59,10 +59,14 @@ $table-height: $grid-height - $app-margin - 2 * $map-tools-size;
     margin-top: $app-margin;
   }
 
-  .gmf-displayquerygrid-pending {
-    font-size: 3em;
-    margin-left: 50%;
-    margin-right: 50%;
+  #spinner-grid {
+    width: 100%;
+    i {
+      fill: black;
+      margin-top: 2rem;
+      margin-left: 50%;
+      margin-right: 50%;
+    }
   }
 
   .floatThead-container {

@@ -18,7 +18,9 @@
                    'gmf-mobile-nav-left-is-visible': mainCtrl.leftNavVisible,
                    'gmf-mobile-nav-right-is-visible': mainCtrl.rightNavVisible}">
     <div ng-show="mainCtrl.loading" class="loading-mask">
-      <i class="fa fa-spinner fa-spin spinner-loading-mask"></i>
+      <i class="fa custom-spinner-loading fa-spin spinner-loading-mask">
+        <%=require('gmf/icons/spinner.svg?viewbox&height=1em')%>
+      </i>
     </div>
     <main ng-class="{'gmf-search-is-active': mainCtrl.searchOverlayVisible}">
       <gmf-map
