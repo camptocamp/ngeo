@@ -237,3 +237,12 @@ div.ngeo-displaywindow {
     }
   }
 }
+
+.spinner-window {
+  position: absolute;
+  bottom: 35px;
+  right: 50px;
+  i {
+    fill: black;
+  }
+}

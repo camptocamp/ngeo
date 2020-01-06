@@ -267,9 +267,15 @@ export function QueryWindowController(
    */
   this.selectedFeatureStyleFn = null;
 
+  /**
+   * @type {boolean}
+   */
+  this.isLoading = false;
+
   $scope.$watchCollection(
     () => ngeoQueryResult,
     (newQueryResult, oldQueryResult) => {
+      this.isLoading = newQueryResult.pending;
       this.updateQueryResult_(newQueryResult);
       if (newQueryResult.total > 0) {
         this.show();

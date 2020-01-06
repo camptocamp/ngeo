@@ -1,3 +1,9 @@
+<div class="spinner-window" ng-if="ctrl.isLoading">
+  <i class="fa fa-spin">
+    <%=require('gmf/icons/spinner.svg?viewbox&height=3rem')%>
+  </i>
+</div>
+
 <div
   class="gmf-displayquerywindow"
   ng-class="{'desktop': ctrl.desktop, 'mobile': !ctrl.desktop}"
