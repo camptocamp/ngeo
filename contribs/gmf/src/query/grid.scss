@@ -59,7 +59,7 @@ $table-height: $grid-height - $app-margin - 2 * $map-tools-size;
     margin-top: $app-margin;
   }
 
-  #spinner-grid {
+  .spinner-grid {
     width: 100%;
     i {
       fill: black;
