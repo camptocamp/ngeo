@@ -63,6 +63,36 @@ const REFRESH_PARAM = 'random';
 
 
 /**
+ * Copy each properties from a layer onto an other layer, with the
+ * option to exclude specific ones.
+ *
+ * @param {import("ol/layer/Layer.js").default} layerFrom The layer
+ *     from which to copy the properties.
+ * @param {import("ol/layer/Layer.js").default} layerTo The layer onto
+ *     which the properties are copied.
+ * @param {string[]=} opt_excludes A list of properties that should
+ *     not be copied.
+ */
+LayerHelper.prototype.copyProperties = function(
+  layerFrom, layerTo, opt_excludes
+) {
+  const properties = layerFrom.getProperties();
+  if (opt_excludes) {
+    const excludes = opt_excludes;
+    const keys = Object.keys(properties);
+    for (const key of keys) {
+      if (excludes.includes(key)) {
+        continue;
+      }
+      layerTo.set(key, properties[key]);
+    }
+  } else {
+    layerTo.setProperties(properties);
+  }
+};
+
+
+/**
  * Create and return a basic WMS layer with only a source URL and a comma
  * separated layers names (see {@link import("ol/source/ImageWMS.js").default}).
  *
