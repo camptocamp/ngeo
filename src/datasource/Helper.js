@@ -1,6 +1,7 @@
 import angular from 'angular';
 import ngeoDatasourceDataSource from 'ngeo/datasource/DataSource.js';
 import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources.js';
+import {setGeometryType as ngeoAttributeSetGeometryType} from 'ngeo/format/Attribute.js';
 import ngeoFormatWFSAttribute from 'ngeo/format/WFSAttribute.js';
 import ngeoQueryQuerent from 'ngeo/query/Querent.js';
 import {listen} from 'ol/events.js';
@@ -210,12 +211,22 @@ export class DatasourceHelper {
         const required = ogcAttribute.minOccurs != '0';
         const type = ogcAttribute.type;
 
-        attributes.push({
+        const attribute = {
           alias,
           name,
           required,
-          type,
-        });
+        };
+
+        // Set the type of attribute. If the type is any geometry one,
+        // then the attribute type is set to geometry and geomType is
+        // set depending on the geometry type. This is handled by the
+        // method below. If the type is not any geometry one, then set
+        // the one that was given.
+        if (!ngeoAttributeSetGeometryType(attribute, `gml:${type}`)) {
+          attribute.type = type;
+        }
+
+        attributes.push(attribute);
       }
     }
 
