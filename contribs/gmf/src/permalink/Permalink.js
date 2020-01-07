@@ -1342,16 +1342,6 @@ PermalinkService.prototype.initLayers_ = function() {
             }
             this.gmfLayerBeingSwipe_.layer = treeCtrl.layer;
           }
-
-          if (
-            treeCtrl.layer.getLayers &&
-            treeCtrl.layer.getLayers().item(0) &&
-            treeCtrl.layer.getLayers().item(0).get('layerNodeName') === 'ch.are.alpenkonvention'
-          ) {
-            treeCtrl.layer.getLayers().item(0).on('change:visible', (e) => {
-              console.log(e);
-            });
-          }
         }
 
         if (treeCtrl.parent.node && parentGroupNode.mixed && groupNode.children == undefined) {
