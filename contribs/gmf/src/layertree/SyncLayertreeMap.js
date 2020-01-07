@@ -403,7 +403,7 @@ SyncLayertreeMap.prototype.createWMTSLayer_ = function(gmfLayerWMTS) {
     minResolution,
     maxResolution
   ).then((layer) => {
-    newLayer.setProperties(layer.getProperties());
+    this.layerHelper_.copyProperties(layer, newLayer, ['visible']);
   });
   return newLayer;
 };
