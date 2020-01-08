@@ -137,6 +137,8 @@
 /**
  * Additional attributes related on a WMS layers (or WFS features type).
  * @typedef {Object} GmfLayerChildLayer
+ * @property {boolean|undefined} [getData] If the layer is queryable and this property is set to
+ *     false, then the layer won't be used in queries issued. Defaults to `true`.
  * @property {number} maxResolutionHint The min resolution where the layer is visible.
  * @property {number} minResolutionHint The max resolution where the layer is visible.
  * @property {string} name
@@ -222,8 +224,8 @@
  *      WMTS layers.
  * @property {string} [printLayers] A WMS layer that will be used instead of the WMTS layers in the print.
  *      Used to increase quality of printed WMTS layers. For WMTS layers.
- * @property {string} [queryLayers] The WMS layers used as references to query the WMTS layers. For WMTS
- *      layers.
+ * @property {string} [queryLayers] The WMS layers used as references to query the WMTS layers (for WMTS
+ *      layers) or the WFS layers that should be queried only in case of a WFS GetFeature request.
  * @property {string} [thumbnail] The icon visible in the background selector. For WMS and WMTS layers.
  * @property {string} [timeAttribute] The name of the time attribute. For WMS(-T) layers.
  * @property {GmfSnappingConfig} [snappingConfig] The snapping configuration for the leaf. If set, the

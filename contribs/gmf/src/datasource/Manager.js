@@ -524,19 +524,40 @@ export class DatasourceManager {
           break;
         }
       }
+
+      // Read 'meta.queryLayers' for WMS data source to set 'getData'
+      //
+      // If a WMS data source has the `queryLayers` property set in
+      // its metadata, then it lists the layers that should be used
+      // when queries are issued with that data source, i.e. when a
+      // WFS GetFeature request is issued. The 'queryable' property
+      // still needs to be true for the purpose of the filter tool to
+      // work properly, i.e. a data source must be queryable to be
+      // filtrable.
+
+      const queryLayers = meta.queryLayers ? meta.queryLayers.split(',') : null;
+
       wmsLayers = gmfLayerWMS.layers.split(',').map((childLayer) => {
-        return {
+        const item = {
           name: childLayer,
           queryable: queryable,
         };
+        if (queryLayers && !queryLayers.includes(childLayer)) {
+          item.getData = false;
+        }
+        return item;
       });
       wfsLayers = gmfLayerWMS.childLayers.map((childLayer) => {
-        return {
+        const item = {
           maxResolution: childLayer.maxResolutionHint,
           minResolution: childLayer.minResolutionHint,
           name: childLayer.name,
           queryable: childLayer.queryable
         };
+        if (queryLayers && !queryLayers.includes(childLayer.name)) {
+          item.getData = false;
+        }
+        return item;
       });
 
       // OGC Server

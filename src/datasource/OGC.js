@@ -1014,7 +1014,13 @@ class OGC extends ngeoDatasourceDataSource {
 
     if (this.wmsLayers) {
       for (const wmsLayer of this.wmsLayers) {
-        if (!queryableOnly || wmsLayer.queryable) {
+        if (
+          !queryableOnly ||
+          (
+            wmsLayer.queryable &&
+            wmsLayer.getData !== false
+          )
+        ) {
           layerNames.push(wmsLayer.name);
         }
       }
@@ -1043,7 +1049,16 @@ class OGC extends ngeoDatasourceDataSource {
         const inMaxRange = maxRes === undefined || res <= maxRes;
         const inRange = inMinRange && inMaxRange;
 
-        if (inRange && (!queryableOnly || wfsLayer.queryable)) {
+        if (
+          inRange &&
+          (
+            !queryableOnly ||
+            (
+              wfsLayer.queryable &&
+              wfsLayer.getData !== false
+            )
+          )
+        ) {
           layerNames.push(wfsLayer.name);
         }
       }
@@ -1064,7 +1079,13 @@ class OGC extends ngeoDatasourceDataSource {
 
     if (this.wfsLayers) {
       for (const wfsLayer of this.wfsLayers) {
-        if (!queryableOnly || wfsLayer.queryable) {
+        if (
+          !queryableOnly ||
+          (
+            wfsLayer.queryable &&
+            wfsLayer.getData !== false
+          )
+        ) {
           layerNames.push(wfsLayer.name);
         }
       }
@@ -1075,15 +1096,20 @@ class OGC extends ngeoDatasourceDataSource {
 
   /**
    * Returns the filtrable WFS layer name. This methods asserts that
-   * the name exists and is filtrable.
+   * the name exists and is filtrable. It also asserts that there
+   * should be only one layer (if it has many) that "gets data" for
+   * data data source.
    * @return {string} WFS layer name.
    */
   getFiltrableWFSLayerName() {
     if (!this.filtrable) {
       throw new Error('Missing filtrable');
     }
-    const layerNames = this.getWFSLayerNames();
-    console.assert(layerNames.length === 1);
+    const layerNames = this.getWFSLayerNames(true);
+    console.assert(
+      layerNames.length === 1,
+      'Only one layer should be filtrable, i.e. should be able to get data.'
+    );
     return layerNames[0];
   }
 
