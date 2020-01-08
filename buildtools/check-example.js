@@ -104,9 +104,10 @@ function loaded(page, browser) {
     let url = originalUrl;
     if (process.env.CI != 'true') {
       if (process.env.HTTP_MAP) {
-        for (const http_map in JSON.parse(process.env.HTTP_MAP)) {
-          if (url.startsWith(http_map[0])) {
-            url = url.replace(http_map[0], http_map[1]);
+        const http_map = JSON.parse(process.env.HTTP_MAP);
+        for (const key in http_map) {
+          if (url.startsWith(key)) {
+            url = url.replace(key, http_map[key]);
           }
         }
       }
