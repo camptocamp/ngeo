@@ -1,8 +1,8 @@
 import ngeoCustomEvent from 'ngeo/CustomEvent.js';
-import * as olDom from 'ol/dom.js';
-import * as olProj from 'ol/proj.js';
+import {removeChildren} from 'ol/dom.js';
+import {transform} from 'ol/proj.js';
 import olOverlay from 'ol/Overlay.js';
-import * as olSphere from 'ol/sphere.js';
+import {getArea, getDistance} from 'ol/sphere.js';
 import {listen, unlistenByKey} from 'ol/events.js';
 import olInteractionInteraction from 'ol/interaction/Interaction.js';
 import olLayerVector from 'ol/layer/Vector.js';
@@ -499,7 +499,7 @@ export function getFormattedArea(polygon, projection, precision, format) {
   const geom = /** @type {import("ol/geom/Polygon.js").default} */ (
     polygon.clone().transform(projection, 'EPSG:4326')
   );
-  const area = Math.abs(olSphere.getArea(geom, {'projection': 'EPSG:4326'}));
+  const area = Math.abs(getArea(geom, {'projection': 'EPSG:4326'}));
   return format(area, 'm²', 'square', precision);
 }
 
@@ -532,9 +532,9 @@ export function getFormattedLength(lineString, projection, precision, format) {
   let length = 0;
   const coordinates = lineString.getCoordinates();
   for (let i = 0, ii = coordinates.length - 1; i < ii; ++i) {
-    const c1 = olProj.transform(coordinates[i], projection, 'EPSG:4326');
-    const c2 = olProj.transform(coordinates[i + 1], projection, 'EPSG:4326');
-    length += olSphere.getDistance(c1, c2);
+    const c1 = transform(coordinates[i], projection, 'EPSG:4326');
+    const c2 = transform(coordinates[i + 1], projection, 'EPSG:4326');
+    length += getDistance(c1, c2);
   }
   return format(length, 'm', 'unit', precision);
 }
@@ -577,7 +577,7 @@ function handleEvent_(evt) {
     if (!this.helpTooltipOverlay_) {
       throw new Error('Missing helpTooltipOverlay');
     }
-    olDom.removeChildren(this.helpTooltipElement_);
+    removeChildren(this.helpTooltipElement_);
     this.helpTooltipElement_.appendChild(helpMsg);
     this.helpTooltipOverlay_.setPosition(evt.coordinate);
   }
