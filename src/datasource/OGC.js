@@ -841,6 +841,44 @@ class OGC extends ngeoDatasourceDataSource {
   }
 
   /**
+   * Returns the ogc attributes of only the WFS layers of this data
+   * source that are queryable.
+   *
+   * @return {?Object<string, import('gmf/themes.js').GmfOgcServerAttribute>}
+   */
+  get ogcAttributesWFS() {
+    // (1) Collect queryable WFS layer names
+    const wfsLayerNames = []; // that are querayble
+    for (const wfsLayer of this.wfsLayers_) {
+      if (wfsLayer.queryable) {
+        wfsLayerNames.push(wfsLayer.name);
+      }
+    }
+
+    // (2) Get attribute of those layers only
+    return this.getCommonOGCAttributes_(wfsLayerNames);
+  }
+
+  /**
+   * Returns the ogc attributes of only the WMS layers of this data
+   * source that are queryable.
+   *
+   * @return {?Object<string, import('gmf/themes.js').GmfOgcServerAttribute>}
+   */
+  get ogcAttributesWMS() {
+    // (1) Collect queryable WMS layer names
+    const wmsLayerNames = []; // that are querayble
+    for (const wmsLayer of this.wmsLayers_) {
+      if (wmsLayer.queryable) {
+        wmsLayerNames.push(wmsLayer.name);
+      }
+    }
+
+    // (2) Get attribute of those layers only
+    return this.getCommonOGCAttributes_(wmsLayerNames);
+  }
+
+  /**
    * Whether the data source is queryable or not. For an OGC data source to be
    * queryable, it requires the support of WFS or WMS and at least one ogc
    * layer to be querable.
@@ -1097,6 +1135,63 @@ class OGC extends ngeoDatasourceDataSource {
     }
 
     return share;
+  }
+
+  // ===============================
+  // === Private utility methods ===
+  // ===============================
+
+  /**
+   * Collect the ogc attributes that are shared among the given
+   * layers, i.e. only the attributes that are in all the given layers
+   * are returned.
+   *
+   * @param {Array<string>} layerNames List of layer names
+   * @return {?Object<string, import('gmf/themes.js').GmfOgcServerAttribute>}
+   */
+  getCommonOGCAttributes_(layerNames) {
+    const allLayersAttributes = this.ogcAttributes_;
+
+    // No need to do anything if there's no ogcAttributes set, or if
+    // there are no layer names given
+    if (!allLayersAttributes || !layerNames.length) {
+      return null;
+    }
+
+    // Build a list of layer each represented by a list of their attributes
+    const layersAttributes = [];
+    for (const layerName of layerNames) {
+      const layerAttributes = allLayersAttributes[layerName];
+      if (layerAttributes) {
+        layersAttributes.push(layerAttributes);
+      }
+    }
+
+    // If there were no layer found, then no need to do anything else
+    if (!layersAttributes.length) {
+      return null;
+    }
+
+    // List of common attributes
+    const attributes = /** @type {Object<string, import('gmf/themes.js').GmfOgcServerAttribute>} */ ({});
+
+    // Collect the attributes that are in shared among all the layers
+    const firstLayerAttributes = layersAttributes.shift();
+    for (const firstLayerAttributeName in firstLayerAttributes) {
+      const firstLayerAttribute = firstLayerAttributes[firstLayerAttributeName];
+      let shouldPushAttribute = true;
+      for (const layerAttributes of layersAttributes) {
+        if (!layerAttributes[firstLayerAttributeName]) {
+          shouldPushAttribute = false;
+          break;
+        }
+      }
+      if (shouldPushAttribute) {
+        attributes[firstLayerAttributeName] = firstLayerAttribute;
+      }
+    }
+
+    return attributes;
   }
 }
 
