@@ -878,6 +878,7 @@ Controller.prototype.handleMapInteractionsAdd_ = function(evt) {
     case `${this.ngeoDrawFeatureUid}-length`:
       this.measureLength =
         /** @type {import("ngeo/interaction/MeasureLength.js").default} */ (interaction);
+      this.measureLength.spherical = this.featureHelper_.spherical;
       break;
     case `${this.ngeoDrawFeatureUid}-area`:
       this.measureArea =

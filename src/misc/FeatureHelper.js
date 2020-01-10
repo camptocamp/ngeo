@@ -94,6 +94,14 @@ export function FeatureHelper($injector, $filter) {
   }
 
   /**
+   * @type {boolean}
+   */
+  this.spherical = false;
+  if ($injector.has('ngeoMeasureSpherical')) {
+    this.spherical = $injector.get('ngeoMeasureSpherical');
+  }
+
+  /**
    * @type {import('ngeo/misc/filters.js').formatNumber}
    */
   this.numberFormat_ = /** @type {import('ngeo/misc/filters.js').formatNumber} */ ($filter('number'));
@@ -1207,11 +1215,12 @@ FeatureHelper.prototype.getMeasure = function(feature) {
       measure = getFormattedAzimutRadius(
         line, this.projection_, this.decimals_, this.precision_, this.unitPrefixFormat_, this.numberFormat_);
     } else {
-      measure = getFormattedArea(geometry, this.projection_, this.precision_, this.unitPrefixFormat_);
+      measure = getFormattedArea(
+        geometry, this.projection_, this.precision_, this.unitPrefixFormat_, this.spherical);
     }
   } else if (geometry instanceof olGeomLineString) {
     measure = getFormattedLength(
-      geometry, this.projection_, this.precision_, this.unitPrefixFormat_);
+      geometry, this.projection_, this.precision_, this.unitPrefixFormat_, this.spherical);
   } else if (geometry instanceof olGeomPoint) {
     if (this.pointFilterFn_ === null) {
       measure = getFormattedPoint(geometry, this.decimals_, this.ngeoNumberCoordinates_);

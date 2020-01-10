@@ -492,14 +492,20 @@ class Measure extends olInteractionInteraction {
  * @param {import("ol/proj/Projection.js").default} projection Projection of the polygon coords.
  * @param {number|undefined} precision Precision.
  * @param {import('ngeo/misc/filters.js').unitPrefix} format The format function.
+ * @param {boolean} [spherical=true] Whether to use the spherical area.
  * @return {string} Formatted string of the area.
  * @hidden
  */
-export function getFormattedArea(polygon, projection, precision, format) {
-  const geom = /** @type {import("ol/geom/Polygon.js").default} */ (
-    polygon.clone().transform(projection, 'EPSG:4326')
-  );
-  const area = Math.abs(getArea(geom, {'projection': 'EPSG:4326'}));
+export function getFormattedArea(polygon, projection, precision, format, spherical = true) {
+  let area;
+  if (spherical) {
+    const geom = /** @type {import("ol/geom/Polygon.js").default} */ (
+      polygon.clone().transform(projection, 'EPSG:4326')
+    );
+    area = Math.abs(getArea(geom, {'projection': 'EPSG:4326'}));
+  } else {
+    area = polygon.getArea();
+  }
   return format(area, 'm²', 'square', precision);
 }
 
@@ -525,16 +531,21 @@ export function getFormattedCircleArea(circle, precision, format) {
  * @param {import("ol/proj/Projection.js").default} projection Projection of the line string coords.
  * @param {number|undefined} precision Precision.
  * @param {import('ngeo/misc/filters.js').unitPrefix} format The format function.
+ * @param {boolean} [spherical=true] Whether to use the spherical distance.
  * @return {string} Formatted string of length.
  * @hidden
  */
-export function getFormattedLength(lineString, projection, precision, format) {
+export function getFormattedLength(lineString, projection, precision, format, spherical = true) {
   let length = 0;
-  const coordinates = lineString.getCoordinates();
-  for (let i = 0, ii = coordinates.length - 1; i < ii; ++i) {
-    const c1 = transform(coordinates[i], projection, 'EPSG:4326');
-    const c2 = transform(coordinates[i + 1], projection, 'EPSG:4326');
-    length += getDistance(c1, c2);
+  if (spherical) {
+    const coordinates = lineString.getCoordinates();
+    for (let i = 0, ii = coordinates.length - 1; i < ii; ++i) {
+      const c1 = transform(coordinates[i], projection, 'EPSG:4326');
+      const c2 = transform(coordinates[i + 1], projection, 'EPSG:4326');
+      length += getDistance(c1, c2);
+    }
+  } else {
+    length = lineString.getLength();
   }
   return format(length, 'm', 'unit', precision);
 }
