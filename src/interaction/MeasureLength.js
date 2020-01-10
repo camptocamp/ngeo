@@ -44,6 +44,11 @@ export default class extends ngeoInteractionMeasure {
     }
 
     /**
+     * @type {boolean}
+     */
+    this.spherical = false;
+
+    /**
      * The format function
      * @type {import('ngeo/misc/filters.js').unitPrefix}
      */
@@ -187,7 +192,7 @@ export default class extends ngeoInteractionMeasure {
     }
     const proj = this.getMap().getView().getProjection();
     console.assert(proj);
-    const output = getFormattedLength(geom, proj, this.precision, this.format);
+    const output = getFormattedLength(geom, proj, this.precision, this.format, this.spherical);
     const coord = geom.getLastCoordinate();
     callback(output, coord);
   }
