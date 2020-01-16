@@ -254,9 +254,9 @@ export function QueryGridController($injector, $scope, ngeoQueryResult, ngeoMapQ
   this.removeEmptyColumns_ = false;
 
   /**
-   * @type {?number}
+   * @type {number}
    */
-  this.maxRecenterZoom = null;
+  this.maxRecenterZoom;
 
   /**
    * @type {GridMergeTabs}
@@ -334,7 +334,7 @@ export function QueryGridController($injector, $scope, ngeoQueryResult, ngeoMapQ
   /**
    * @type {function():number}
    */
-  this.maxRecenterZoomFn = () => null;
+  this.maxRecenterZoomFn = () => undefined;
   /**
    * @type {?() => olStyleStyle}
    */
@@ -969,9 +969,6 @@ QueryGridController.prototype.zoomToSelection = function() {
     const size = this.map_.getSize();
     if (!size) {
       throw new Error('Missing size');
-    }
-    if (this.maxRecenterZoom === null) {
-      throw new Error('Missing maxRecenterZoom');
     }
     this.map_.getView().fit(extent, {size, maxZoom: this.maxRecenterZoom});
   }
