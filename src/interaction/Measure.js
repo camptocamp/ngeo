@@ -492,11 +492,11 @@ class Measure extends olInteractionInteraction {
  * @param {import("ol/proj/Projection.js").default} projection Projection of the polygon coords.
  * @param {number|undefined} precision Precision.
  * @param {import('ngeo/misc/filters.js').unitPrefix} format The format function.
- * @param {boolean} [spherical=true] Whether to use the spherical area.
+ * @param {boolean} [spherical=false] Whether to use the spherical area.
  * @return {string} Formatted string of the area.
  * @hidden
  */
-export function getFormattedArea(polygon, projection, precision, format, spherical = true) {
+export function getFormattedArea(polygon, projection, precision, format, spherical = false) {
   let area;
   if (spherical) {
     const geom = /** @type {import("ol/geom/Polygon.js").default} */ (
@@ -531,11 +531,11 @@ export function getFormattedCircleArea(circle, precision, format) {
  * @param {import("ol/proj/Projection.js").default} projection Projection of the line string coords.
  * @param {number|undefined} precision Precision.
  * @param {import('ngeo/misc/filters.js').unitPrefix} format The format function.
- * @param {boolean} [spherical=true] Whether to use the spherical distance.
+ * @param {boolean} [spherical=false] Whether to use the spherical distance.
  * @return {string} Formatted string of length.
  * @hidden
  */
-export function getFormattedLength(lineString, projection, precision, format, spherical = true) {
+export function getFormattedLength(lineString, projection, precision, format, spherical = false) {
   let length = 0;
   if (spherical) {
     const coordinates = lineString.getCoordinates();
