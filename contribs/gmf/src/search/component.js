@@ -357,7 +357,7 @@ class SearchController {
      * Default to true.
      * @type {boolean}
      */
-    this.clearButton = false;
+    this.clearButton = true;
 
     /**
      * @type {boolean}
@@ -468,8 +468,7 @@ class SearchController {
     if (this.delay === undefined) {
       this.delay = 50;
     }
-    this.placeholder = this.placeholder !== undefined ? this.placeholder :
-      gettextCatalog.getString('Search…');
+    this.placeholder = this.placeholder ? this.placeholder : gettextCatalog.getString('Search…');
 
     // Init coordinates projections instances
     this.coordinatesProjectionsInstances = this.coordinatesProjections === undefined ?
