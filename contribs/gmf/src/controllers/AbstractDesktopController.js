@@ -22,6 +22,9 @@ import olStyleStroke from 'ol/style/Stroke.js';
 import olStyleStyle from 'ol/style/Style.js';
 import olStyleText from 'ol/style/Text.js';
 
+import 'gmf/controllers/vars_desktop.scss';
+import 'gmf/controllers/desktop.scss';
+
 /**
  * Desktop application abstract controller.
  *

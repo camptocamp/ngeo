@@ -6,7 +6,6 @@
  */
 
 import './sass/vars_mobile.scss';
-import 'gmf/controllers/mobile.scss';
 import './sass/mobile.scss';
 
 import angular from 'angular';

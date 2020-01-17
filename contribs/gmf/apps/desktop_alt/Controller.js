@@ -6,7 +6,6 @@
  */
 
 import './sass/desktop_alt.scss';
-import 'gmf/controllers/desktop.scss';
 import './sass/vars_desktop_alt.scss';
 
 import angular from 'angular';

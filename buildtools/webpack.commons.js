@@ -152,17 +152,22 @@ module.exports = function(config) {
           '/apps/mobile/sass/vars_mobile.scss',
           '/apps/mobile_alt/sass/vars_mobile_alt.scss',
           '/apps/oeedit/sass/vars_oeedit.scss',
-          // project sass vars files
-          '/apps/sass/var',
-          '/controllers/',
-          '/vars.scss',
-          '/vars_only.scss',
-          '/common_dependencies.scss',
+          // GeoMapFish project sass vars files
+          '/apps/sass/vars_',
+          '/controllers/vars_',
+          // For the tests
+          'sass/vars.scss',
         ], config.last_scss || [
           // project and ngeo default apps other sass files
           '/apps/',
+          '/controllers/',
         ]));
-        //console.log(files);
+        console.log();
+        console.log("SCSS files order:");
+        for (const file of files) {
+          console.log(file);
+        }
+        console.log();
         return files;
       }
     }),

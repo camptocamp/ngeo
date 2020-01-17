@@ -1,0 +1,20 @@
+$map-tools-size: 1.9rem !default;
+$left-panel-width: 20rem !default;
+$right-panel-width: 17.5rem !default;
+$streeview-width: 25rem !default;
+$topbar-height: 2.8rem !default;
+$search-width: 8 * $map-tools-size !default;
+$theme-selector-columns: 2 !default;
+$theme-selector-column-width: $left-panel-width / 4 * 3 !default;
+$theme-selector-height: 1.5 * $left-panel-width !default;
+
+$app-margin: 0.62rem !default;
+$half-app-margin: 0.32rem !default;
+$padding-base-vertical: $half-app-margin !default;
+$padding-base-horizontal: $app-margin !default;
+$form-group-margin-bottom: $app-margin !default;
+$search-results-max-height: calc(100vh - #{$topbar-height} + #{$map-tools-size} + (2 * #{$app-margin})) !default;
+
+$notification-width: 12.5rem !default;
+
+@import '~gmf/sass/vars.scss';

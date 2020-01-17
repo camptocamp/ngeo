@@ -2,11 +2,6 @@
  * Styles for mobile navigation menus (side menus).
  */
 
-$duration: 0.3s;
-$nav-bar-height: $map-tools-size + $app-margin;
-$nav-back-width: 1.5 * $map-tools-size;
-$menu-item-height: $nav-bar-height;
-$back-color: darken($nav-bg, $standard-variation);
 
 main {
   position: fixed;
