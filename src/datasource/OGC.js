@@ -1014,7 +1014,13 @@ class OGC extends ngeoDatasourceDataSource {
 
     if (this.wmsLayers) {
       for (const wmsLayer of this.wmsLayers) {
-        if (!queryableOnly || wmsLayer.queryable) {
+        if (
+          !queryableOnly ||
+          (
+            wmsLayer.queryable &&
+            wmsLayer.getData !== false
+          )
+        ) {
           layerNames.push(wmsLayer.name);
         }
       }
@@ -1043,7 +1049,16 @@ class OGC extends ngeoDatasourceDataSource {
         const inMaxRange = maxRes === undefined || res <= maxRes;
         const inRange = inMinRange && inMaxRange;
 
-        if (inRange && (!queryableOnly || wfsLayer.queryable)) {
+        if (
+          inRange &&
+          (
+            !queryableOnly ||
+            (
+              wfsLayer.queryable &&
+              wfsLayer.getData !== false
+            )
+          )
+        ) {
           layerNames.push(wfsLayer.name);
         }
       }
@@ -1064,7 +1079,13 @@ class OGC extends ngeoDatasourceDataSource {
 
     if (this.wfsLayers) {
       for (const wfsLayer of this.wfsLayers) {
-        if (!queryableOnly || wfsLayer.queryable) {
+        if (
+          !queryableOnly ||
+          (
+            wfsLayer.queryable &&
+            wfsLayer.getData !== false
+          )
+        ) {
           layerNames.push(wfsLayer.name);
         }
       }
@@ -1074,16 +1095,21 @@ class OGC extends ngeoDatasourceDataSource {
   }
 
   /**
-   * Returns the filtrable WFS layer name. This methods asserts that
-   * the name exists and is filtrable.
+   * Returns the filtrable WFS layer name.
+   *
+   * Although a data source may contain multiple WFS wfs layers, only
+   * the first one is returned. We don't need to return more than one,
+   * since in that case a group is used in the WMS GetMap query, and
+   * each queryable layers will end up being used in WFS GetData
+   * queries sent.
+   *
    * @return {string} WFS layer name.
    */
   getFiltrableWFSLayerName() {
     if (!this.filtrable) {
       throw new Error('Missing filtrable');
     }
-    const layerNames = this.getWFSLayerNames();
-    console.assert(layerNames.length === 1);
+    const layerNames = this.getWFSLayerNames(true);
     return layerNames[0];
   }
 
@@ -1145,6 +1171,11 @@ class OGC extends ngeoDatasourceDataSource {
    * Collect the ogc attributes that are shared among the given
    * layers, i.e. only the attributes that are in all the given layers
    * are returned.
+   *
+   * Among the attributes, geometry columns are returned as
+   * well. Therefore, if there are no attributes with a geometry name
+   * returned, then the Filter tool have the possibilily to filter the
+   * data source using spatial filters.
    *
    * @param {Array<string>} layerNames List of layer names
    * @return {?Object<string, import('gmf/themes.js').GmfOgcServerAttribute>}
