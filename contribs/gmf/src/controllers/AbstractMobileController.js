@@ -16,6 +16,9 @@ import olStyleRegularShape from 'ol/style/RegularShape.js';
 import olStyleStroke from 'ol/style/Stroke.js';
 import olStyleStyle from 'ol/style/Style.js';
 
+import 'gmf/controllers/vars_mobile.scss';
+import 'gmf/controllers/mobile.scss';
+
 /**
  * Mobile application abstract controller.
  *

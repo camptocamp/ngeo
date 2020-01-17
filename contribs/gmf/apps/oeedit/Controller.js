@@ -6,7 +6,6 @@
  */
 
 import './sass/vars_oeedit.scss';
-import 'gmf/controllers/desktop.scss';
 import './sass/oeedit.scss';
 
 import angular from 'angular';

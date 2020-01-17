@@ -6,7 +6,6 @@
  */
 
 import './sass/desktop.scss';
-import 'gmf/controllers/desktop.scss';
 import './sass/vars_desktop.scss';
 
 import angular from 'angular';
