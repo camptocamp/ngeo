@@ -1095,10 +1095,14 @@ class OGC extends ngeoDatasourceDataSource {
   }
 
   /**
-   * Returns the filtrable WFS layer name. This methods asserts that
-   * the name exists and is filtrable. It also asserts that there
-   * should be only one layer (if it has many) that "gets data" for
-   * data data source.
+   * Returns the filtrable WFS layer name.
+   *
+   * Although a data source may contain multiple WFS wfs layers, only
+   * the first one is returned. We don't need to return more than one,
+   * since in that case a group is used in the WMS GetMap query, and
+   * each queryable layers will end up being used in WFS GetData
+   * queries sent.
+   *
    * @return {string} WFS layer name.
    */
   getFiltrableWFSLayerName() {
@@ -1106,10 +1110,6 @@ class OGC extends ngeoDatasourceDataSource {
       throw new Error('Missing filtrable');
     }
     const layerNames = this.getWFSLayerNames(true);
-    console.assert(
-      layerNames.length === 1,
-      'Only one layer should be filtrable, i.e. should be able to get data.'
-    );
     return layerNames[0];
   }
 
@@ -1171,6 +1171,11 @@ class OGC extends ngeoDatasourceDataSource {
    * Collect the ogc attributes that are shared among the given
    * layers, i.e. only the attributes that are in all the given layers
    * are returned.
+   *
+   * Among the attributes, geometry columns are returned as
+   * well. Therefore, if there are no attributes with a geometry name
+   * returned, then the Filter tool have the possibilily to filter the
+   * data source using spatial filters.
    *
    * @param {Array<string>} layerNames List of layer names
    * @return {?Object<string, import('gmf/themes.js').GmfOgcServerAttribute>}
