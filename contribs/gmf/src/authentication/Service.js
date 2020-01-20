@@ -148,9 +148,8 @@ export class AuthenticationService extends olEventsEventTarget {
    */
   load_() {
     const url = `${this.baseUrl_}/${RouteSuffix.IS_LOGGED_IN}`;
-    this.$http_.get(url, {withCredentials: true}).then(
-      this.handleLogin_.bind(this, true)
-    );
+    this.$http_.get(url, {withCredentials: true})
+      .then((resp) => this.handleLogin_(true, resp));
   }
 
   /**
@@ -196,9 +195,7 @@ export class AuthenticationService extends olEventsEventTarget {
     return this.$http_.post(url, $.param(params), {
       headers: {'Content-Type': 'application/x-www-form-urlencoded'},
       withCredentials: true
-    }).then(
-      this.handleLogin_.bind(this, false)
-    );
+    }).then((resp) => this.handleLogin_(false, resp));
   }
 
   /**
