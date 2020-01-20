@@ -7,6 +7,10 @@ import ngeoMessageModalComponent from 'ngeo/message/modalComponent.js';
 import qruri from 'qruri';
 
 /**
+ * @typedef {import("gmf/authentication/Service").AuthenticationLoginResponsePromise} AuthenticationLoginResponsePromise
+ */
+
+/**
  * Password validator function with an error message.
  * Configuration options for the permalink service.
  * @typedef {Object} PasswordValidator
@@ -126,6 +130,7 @@ const authenticationComponent = {
     'allowPasswordReset': '<?gmfAuthenticationAllowPasswordReset',
     'allowPasswordChange': '<?gmfAuthenticationAllowPasswordChange',
     'passwordValidator': '<?gmfAuthenticationPasswordValidator',
+    'onSuccessfulLogin': '<?gmfAuthenticationOnSuccessfulLogin',
     'forcePasswordChange': '<?gmfAuthenticationForcePasswordChange',
     'infoMessage': '=?gmfAuthenticationInfoMessage'
   },
@@ -209,6 +214,11 @@ class AuthenticationController {
      * @type {PasswordValidator?}
      */
     this.passwordValidator = null;
+
+    /**
+     * @type {function(AuthenticationLoginResponsePromise): AuthenticationLoginResponsePromise}
+     */
+    this.onSuccessfulLogin = null;
 
     /**
      * @type {boolean}
@@ -305,6 +315,9 @@ class AuthenticationController {
       this.changingPassword = true;
     }
     this.userMustChangeItsPassword = (this.gmfUser.is_password_changed === false && this.forcePasswordChange);
+    if (this.onSuccessfulLogin) {
+      this.gmfAuthenticationService_.onSuccessfulLogin = this.onSuccessfulLogin;
+    }
   }
 
 

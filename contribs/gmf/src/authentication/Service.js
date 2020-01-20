@@ -56,6 +56,9 @@ import * as Sentry from '@sentry/browser';
  * @property {string} [otp_uri]
  */
 
+/**
+ * @typedef {angular.IHttpResponse<AuthenticationLoginResponse>} AuthenticationLoginResponsePromise
+ */
 
 /**
  * @typedef {Object} AuthenticationDefaultResponse
@@ -183,7 +186,7 @@ export class AuthenticationService extends olEventsEventTarget {
    * @param {string} login Login name.
    * @param {string} pwd Password.
    * @param {string} [otp]
-   * @return {angular.IPromise<angular.IHttpResponse<AuthenticationLoginResponse>>} Promise.
+   * @return {angular.IPromise<AuthenticationLoginResponsePromise>} Promise.
    */
   login(login, pwd, otp = undefined) {
     const url = `${this.baseUrl_}/${RouteSuffix.LOGIN}`;
@@ -195,7 +198,17 @@ export class AuthenticationService extends olEventsEventTarget {
     return this.$http_.post(url, $.param(params), {
       headers: {'Content-Type': 'application/x-www-form-urlencoded'},
       withCredentials: true
-    }).then((resp) => this.handleLogin_(false, resp));
+    })
+      .then((resp) => this.onSuccessfulLogin(resp))
+      .then((resp) => this.handleLogin_(false, resp));
+  }
+
+  /**
+   * @param {AuthenticationLoginResponsePromise} resp Ajax response.
+   * @return {AuthenticationLoginResponsePromise} Response.
+   */
+  onSuccessfulLogin(resp) {
+    return resp;
   }
 
   /**
@@ -244,8 +257,8 @@ export class AuthenticationService extends olEventsEventTarget {
 
   /**
    * @param {boolean} checkingLoginStatus Checking the login status?
-   * @param {angular.IHttpResponse<AuthenticationLoginResponse>} resp Ajax response.
-   * @return {angular.IHttpResponse<AuthenticationLoginResponse>} Response.
+   * @param {AuthenticationLoginResponsePromise} resp Ajax response.
+   * @return {AuthenticationLoginResponsePromise} Response.
    * @private
    */
   handleLogin_(checkingLoginStatus, resp) {
