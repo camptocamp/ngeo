@@ -156,7 +156,7 @@ class DrawFeatureOptionsController {
      * need to update the snap feature.
      * @type {number}
      */
-    this.verticesCounter_ = 2;
+    this.verticesCounter_ = NaN;
 
     /**
      * @type {!OLFeature<import("ol/geom/Geometry.js").default>}
