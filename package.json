@@ -102,7 +102,7 @@
     "jsts": "2.1.0",
     "karma": "4.4.1",
     "karma-chrome-launcher": "3.1.0",
-    "karma-jasmine": "2.0.1",
+    "karma-jasmine": "3.1.0",
     "karma-sinon": "1.0.5",
     "karma-sourcemap-loader": "0.3.7",
     "karma-webpack": "4.0.2",
