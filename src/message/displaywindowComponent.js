@@ -124,7 +124,7 @@ class Controller {
     /**
      * @type {?string}
      */
-    this.title ;
+    this.title;
 
     /**
      * @type {?string}
