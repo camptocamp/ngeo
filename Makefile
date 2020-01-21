@@ -259,6 +259,7 @@ contribs/dist: .build/build-dll.timestamp
 	mkdir -p $(dir $@)
 	$(PY_VENV_BIN)/python buildtools/generate-examples-index.py \
 		--app 'GeoMapFish' contribs/gmf/ 'GeoMapFish examples.' \
+		--app 'API help' ../api/apihelp/apihelp.html 'GeoMapFish API help.' \
 		$< $(NGEO_EXAMPLES_HTML_FILES) > $@
 
 .build/examples-hosted/contribs/gmf/index.html: \
