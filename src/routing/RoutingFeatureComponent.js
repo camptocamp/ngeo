@@ -324,9 +324,6 @@ class Controller {
    * @private
    */
   onSelect_(selected) {
-    if (!this.feature || !this.map) {
-      return;
-    }
     const coordinate = selected.coordinate.map(parseFloat);
     const label = selected.label;
     this.setFeature_(coordinate, label);
