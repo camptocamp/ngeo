@@ -213,6 +213,9 @@ div.ngeo-displaywindow {
         height: ($displayquerywindow-detailed-header-height + $displayquerywindow-detailed-details-height / 2 + $app-margin * 3) + $map-tools-size;
       }
     }
+    .results {
+      padding: 0.6rem 0 0 0;
+    }
   }
 }
 
