@@ -974,21 +974,23 @@ FeatureHelper.prototype.getAngleProperty = function(feature) {
 
 /**
  * @param {olFeature<import("ol/geom/Geometry.js").default>} feature Feature.
- * @return {string} Color.
+ * @return {?string} Color.
  */
 FeatureHelper.prototype.getColorProperty = function(feature) {
   const color = feature.get(ngeoFormatFeatureProperties.COLOR);
-  console.assert(typeof color == 'string');
   return color;
 };
 
 
 /**
  * @param {olFeature<import("ol/geom/Geometry.js").default>} feature Feature.
- * @return {import('ol/color.js').Color} Color.
+ * @return {?import('ol/color.js').Color} Color.
  */
 FeatureHelper.prototype.getRGBAColorProperty = function(feature) {
   const color = this.getColorProperty(feature);
+  if (typeof color != 'string') {
+    return null;
+  }
   return colorFromString(color);
 };
 
