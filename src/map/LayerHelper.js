@@ -211,6 +211,10 @@ LayerHelper.prototype.createWMTSLayerFromCapabilitites = function(
   opt_minResolution,
   opt_maxResolution
 ) {
+  // Small hack to get perfect sync with the on resolution status and the zoom to resolution
+  if (opt_maxResolution) {
+    opt_maxResolution = opt_maxResolution * 1.0000001;
+  }
   const parser = new olFormatWMTSCapabilities();
   const layer = new olLayerTile({
     preload: this.tilesPreloadingLimit_,
