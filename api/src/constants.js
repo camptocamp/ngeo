@@ -30,7 +30,7 @@ export default /** @type {APIConfig} */({
 
   // The name of the layer to use as background, the layer must be present in the 'background_layers'
   // section of the theme
-  backgroundLayer: 'orthophoto',
+  backgroundLayer: 'OSM map',
 
   // The list of layers (names) that can be queried on mouse click
   queryableLayers: ['osm_open', 'many_attributes', 'polygon']

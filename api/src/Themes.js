@@ -237,7 +237,7 @@ export function createWMSLayer(config, ogcServer) {
 
 /**
  * @param {import('gmf/themes.js').GmfLayerWMTS} config Layer config (i.e. gmf layer node)
- * @return {Promise<TileLayer>} Promise.
+ * @return {Promise<?TileLayer>} Promise.
  * @hidden
  */
 export function createWMTSLayer(config) {
@@ -250,7 +250,12 @@ export function createWMTSLayer(config) {
       matrixSet: config.matrixSet
     });
     if (!options) {
-      throw new Error('Missing options');
+      console.log(
+        `Missing options for WMTS layer '${config.layer}', `
+        + `with name '${config.name}', `
+        + `from URL '${config.url}'.`
+      );
+      return null;
     }
     const source = new WMTS(options);
     source.updateDimensions(config.dimensions);
