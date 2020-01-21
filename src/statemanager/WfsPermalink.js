@@ -252,7 +252,7 @@ WfsPermalinkService.prototype.issueRequest_ = function(wfsType, filter, map, sho
 
     // zoom to features
     const size = map.getSize();
-    if (size !== undefined && this.pointRecenterZoom_ !== undefined) {
+    if (size !== undefined) {
       const maxZoom = this.pointRecenterZoom_;
       const padding = [10, 10, 10, 10];
       map.getView().fit(this.getExtent_(features), {size, maxZoom, padding});
