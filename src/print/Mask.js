@@ -1,6 +1,7 @@
 import Layer from 'ol/layer/Layer.js';
 import {createCanvasContext2D} from 'ol/dom.js';
 import {INCHES_PER_METER, DOTS_PER_INCH} from 'ngeo/print/Utils.js';
+import {toRadians} from 'ol/math.js';
 
 
 /**
@@ -62,7 +63,7 @@ export default class Mask extends Layer {
     const extentHalfWidth = (((width / DOTS_PER_INCH) / INCHES_PER_METER) * scale / resolution) / 2;
     const extentHalfHeight = (((height / DOTS_PER_INCH) / INCHES_PER_METER) * scale / resolution) / 2;
 
-    const rotation = this.getRotation !== undefined ? this.getRotation() : 0;
+    const rotation = this.getRotation !== undefined ? toRadians(this.getRotation()) : 0;
 
     // diagonal = distance p1 to center.
     const diagonal = Math.sqrt(Math.pow(extentHalfWidth, 2) + Math.pow(extentHalfHeight, 2));

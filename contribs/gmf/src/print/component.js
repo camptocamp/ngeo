@@ -17,7 +17,7 @@ import olLayerImage from 'ol/layer/Image.js';
 import olLayerTile from 'ol/layer/Tile.js';
 import olLayerGroup from 'ol/layer/Group.js';
 import olMap from 'ol/Map.js';
-import * as olMath from 'ol/math.js';
+import {toDegrees, toRadians, clamp} from 'ol/math.js';
 import ImageWMS from 'ol/source/ImageWMS.js';
 import MapBrowserPointerEvent from 'ol/MapBrowserPointerEvent.js';
 import 'bootstrap/js/src/dropdown.js';
@@ -579,7 +579,7 @@ export class PrintController {
       throw new Error('Missing map');
     }
     listen(this.map.getView(), 'change:rotation', (event) => {
-      this.updateRotation_(Math.round(olMath.toDegrees(event.target.getRotation())));
+      this.updateRotation_(Math.round(toDegrees(event.target.getRotation())));
     });
 
     // Clear the capabilities if the roles changes
@@ -908,7 +908,7 @@ export class PrintController {
     if (this.rotateMask) {
       this.map.render();
     } else {
-      this.map.getView().setRotation(olMath.toRadians(this.rotation));
+      this.map.getView().setRotation(toRadians(this.rotation));
     }
   }
 
@@ -917,7 +917,7 @@ export class PrintController {
    * @param {number} rotation The optional new rotation value in degrees.
    */
   updateRotation_(rotation) {
-    this.rotation = olMath.clamp(rotation, -180, 180);
+    this.rotation = clamp(rotation, -180, 180);
     // sync all the inputs
     this.rotationInput_.val(this.rotation.toString());
   }
@@ -954,7 +954,7 @@ export class PrintController {
             let angle = (p0x * p1x + p0y * p1y) / (centerToP0 * centerToP1);
             angle = angle <= 1 ? sense * Math.acos(angle) : 0;
             const boost = centerToP1 / 200;
-            const increment = Math.round(olMath.toDegrees(angle) * boost);
+            const increment = Math.round(toDegrees(angle) * boost);
 
             // Set rotation then update the view.
             this.setRotation(this.rotation + increment);
