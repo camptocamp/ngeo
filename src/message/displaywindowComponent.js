@@ -79,7 +79,7 @@ class Controller {
     /**
      * @type {?string}
      */
-    this.content ;
+    this.content;
 
     /**
      * @type {?string}
