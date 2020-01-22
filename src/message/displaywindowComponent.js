@@ -74,67 +74,67 @@ class Controller {
     /**
      * @type {boolean}
      */
-    this.clearOnClose = false;
+    this.clearOnClose;
 
     /**
      * @type {?string}
      */
-    this.content = null;
+    this.content;
 
     /**
      * @type {?string}
      */
-    this.contentTemplate = null;
+    this.contentTemplate;
 
     /**
      * @type {?angular.IScope}
      */
-    this.contentScope = null;
+    this.contentScope;
 
     /**
      * @type {boolean}
      */
-    this.draggable = false;
+    this.draggable;
 
     /**
      * @type {Element|string}
      */
-    this.draggableContainment = '';
+    this.draggableContainment;
 
     /**
      * @type {boolean}
      */
-    this.desktop = false;
+    this.desktop;
 
     /**
      * @type {string}
      */
-    this.height = '';
+    this.height;
 
     /**
      * @type {boolean}
      */
-    this.open = false;
+    this.open;
 
     /**
      * @type {boolean}
      */
-    this.resizable = false;
+    this.resizable;
 
     /**
      * @type {?string}
      */
-    this.title = null;
+    this.title;
 
     /**
      * @type {?string}
      */
-    this.url = null;
+    this.url;
 
     /**
      * @type {string}
      */
-    this.width = '';
+    this.width;
 
 
     // === Injected Properties ===
