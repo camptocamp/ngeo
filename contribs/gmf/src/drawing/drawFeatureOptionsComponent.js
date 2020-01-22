@@ -156,7 +156,7 @@ class DrawFeatureOptionsController {
      * need to update the snap feature.
      * @type {number}
      */
-    this.verticesCounter_ = 2;
+    this.verticesCounter_ = NaN;
 
     /**
      * @type {!OLFeature<import("ol/geom/Geometry.js").default>}
@@ -313,18 +313,15 @@ class DrawFeatureOptionsController {
 
     this.feature_ = feature;
 
-    // For measureLength and measureArea, changing geometry needs to update
-    if (this.measureLength || this.measureArea) {
-      const geometry = feature.getGeometry();
-      this.listenerKeys_.push(
-        olEventsListen(
-          geometry,
-          'change',
-          this.handleFeatureGeometryChange_,
-          this
-        )
-      );
-    }
+    const geometry = feature.getGeometry();
+    this.listenerKeys_.push(
+      olEventsListen(
+        geometry,
+        'change',
+        this.handleFeatureGeometryChange_,
+        this
+      )
+    );
   }
 
   /**
@@ -354,6 +351,13 @@ class DrawFeatureOptionsController {
           adjust = true;
         }
       }
+    } else if (this.drawRectangle) {
+      if (this.length && this.height) {
+        this.adjustSnapFeature_(this.length, this.lengthUnits, this.height, this.heightUnits);
+        return;
+      }
+    } else if (this.measureAzimut) {
+      adjust = true;
     }
 
     // Adjust snap feature if the number of vertices changed
