@@ -779,12 +779,8 @@ export class PrintController {
 
     this.updateCustomFields_();
 
-    const hasLegend = this.layoutInfo.attributes.includes('legend');
-    if (hasLegend) {
-      this.fieldValues.legend = this.fieldValues.legend;
-    } else {
-      delete this.fieldValues.legend;
-    }
+    this.layoutInfo.legend = this.layoutInfo.attributes.includes('legend') ?
+      this.fieldValues['legend'] !== false : undefined;
     this.layoutInfo.scales = clientInfo.scales || [];
     this.layoutInfo.dpis = clientInfo.dpiSuggestions || [];
 
