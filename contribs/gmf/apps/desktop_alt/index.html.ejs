@@ -124,9 +124,7 @@
                 <a class="btn close" ng-click="mainCtrl.loginActive = false">&times;</a>
               </div>
               <gmf-authentication
-                  gmf-authentication-info-message="mainCtrl.loginInfoMessage"
-                  gmf-authentication-allow-password-reset="::false"
-                  gmf-authentication-allow-password-change="::false">
+                  gmf-authentication-info-message="mainCtrl.loginInfoMessage">
               </gmf-authentication>
             </div>
           </div>
@@ -366,7 +364,9 @@
           </h4>
         </div>
         <div class="modal-body">
-          <gmf-authentication gmf-authentication-force-password-change="::true"></gmf-authentication>
+          <gmf-authentication
+            gmf-authentication-modal="::true">
+          </gmf-authentication>
         </div>
       </ngeo-modal>
 

@@ -3,6 +3,7 @@ import gmfAuthenticationService from 'gmf/authentication/Service.js';
 import {MessageType} from 'ngeo/message/Message.js';
 import ngeoMessageNotification from 'ngeo/message/Notification.js';
 import ngeoMessageModalComponent from 'ngeo/message/modalComponent.js';
+import {listen} from 'ol/events.js';
 
 import qruri from 'qruri';
 
@@ -12,6 +13,18 @@ import qruri from 'qruri';
  * @typedef {Object} PasswordValidator
  * @property {function(string): boolean} isPasswordValid
  * @property {string} notValidMessage
+ */
+
+
+/**
+ * The Authentication configuration.
+ * @typedef {Object} AuthenticationConfig
+ * @property {boolean} allowPasswordReset Whether to show the password forgotten link. Default to true.
+ * @property {boolean} allowPasswordChange Whether to show the change password button. Default to true.
+ *    You can also specify a `PasswordValidator` Object to add constraint on user's new password.
+ * @property {boolean} forcePasswordChange Force the user to change its password. Default to false.
+ *    If you set it to true, you should also allow the user to change its password. Don't add this option
+ *    alone, use it in a dedicated authentication component.
  */
 
 
@@ -82,24 +95,14 @@ function gmfAuthenticationTemplateUrl($element, $attrs, gmfAuthenticationTemplat
  * Example:
  *
  *      <gmf-authentication
- *        gmf-authentication-info-message="mainCtrl.loginInfoMessage"
- *        gmf-authentication-allow-password-change="::true">
+ *        gmf-authentication-info-message="mainCtrl.loginInfoMessage">
  *      </gmf-authentication>
  *
- * @htmlAttribute {boolean} gmf-authentication-allow-password-reset Whether to
- *     show the password forgotten link. Default to true.
- * @htmlAttribute {boolean|function} gmf-authentication-allow-password-change Whether to
- *     show the change password button. Default to true. You can also specify a PasswordValidator Object
- *     to add constraint on user's new password.
  * @htmlAttribute {PasswordValidator} gmf-authentication-password-validator A PasswordValidator
- *     Object to add constraint on user's new password. The gmf-authentication-allow-password-change. To use
+ *     Object to add constraint on user's new password. The `allowPasswordChange` config. To use
  *     it you must also allow the user to change its password.
- * @htmlAttribute {boolean} gmf-authentication-force-password-change Force the
- *     user to change its password. Default to false. If you set it to true, you
- *     should also allow the user to change its password. Don't add this option alone, use
- *     it in a dedicated authentication component, in a ngeo-modal, directly in
- *     your index.html (see example 2.)
  * @htmlAttribute {string} gmf-authentication-info-message Message to show above the authentication form.
+ * @htmlAttribure {boolean} gmf-authentication-modal Is the authentication is included in the modal window.
  *
  * Example 2:
  *
@@ -113,7 +116,7 @@ function gmfAuthenticationTemplateUrl($element, $attrs, gmfAuthenticationTemplat
  *       </div>
  *       <div class="modal-body">
  *         <gmf-authentication
- *           gmf-authentication-force-password-change="::true">
+ *           gmf-authentication-modal="::true">
  *         </gmf-authentication>
  *       </div>
  *     </ngeo-modal>
@@ -123,11 +126,9 @@ function gmfAuthenticationTemplateUrl($element, $attrs, gmfAuthenticationTemplat
  */
 const authenticationComponent = {
   bindings: {
-    'allowPasswordReset': '<?gmfAuthenticationAllowPasswordReset',
-    'allowPasswordChange': '<?gmfAuthenticationAllowPasswordChange',
     'passwordValidator': '<?gmfAuthenticationPasswordValidator',
-    'forcePasswordChange': '<?gmfAuthenticationForcePasswordChange',
-    'infoMessage': '=?gmfAuthenticationInfoMessage'
+    'infoMessage': '=?gmfAuthenticationInfoMessage',
+    'modal': '=?gmfAuthenticationModal'
   },
   controller: 'GmfAuthenticationController',
   templateUrl: gmfAuthenticationTemplateUrl
@@ -154,12 +155,13 @@ class AuthenticationController {
    * @param {import('gmf/authentication/Service.js').User} gmfUser User.
    * @param {import("ngeo/message/Notification.js").MessageNotification} ngeoNotification Ngeo notification
    *    service.
+   * @param {AuthenticationConfig} gmfAuthenticationConfig The configuration
    * @ngInject
    * @ngdoc controller
    * @ngname GmfAuthenticationController
    */
   constructor($scope, $element, gmfTwoFactorAuth, gettextCatalog, gmfAuthenticationService,
-    gmfUser, ngeoNotification) {
+    gmfUser, ngeoNotification, gmfAuthenticationConfig) {
 
     /**
      * @type {JQuery}
@@ -198,12 +200,12 @@ class AuthenticationController {
     /**
      * @type {boolean}
      */
-    this.allowPasswordReset = true;
+    this.allowPasswordReset = gmfAuthenticationConfig.allowPasswordReset !== false;
 
     /**
      * @type {boolean}
      */
-    this.allowPasswordChange = true;
+    this.allowPasswordChange = gmfAuthenticationConfig.allowPasswordChange !== false;
 
     /**
      * @type {PasswordValidator?}
@@ -211,14 +213,14 @@ class AuthenticationController {
     this.passwordValidator = null;
 
     /**
-     * @type {boolean}
-     */
-    this.forcePasswordChange = false;
-
-    /**
      * @type {?string}
      */
     this.infoMessage = null;
+
+    /**
+     * @type {?boolean}
+     */
+    this.modal = false;
 
     /**
      * @type {boolean}
@@ -229,6 +231,25 @@ class AuthenticationController {
      * @type {boolean}
      */
     this.userMustChangeItsPassword = false;
+
+    listen(gmfAuthenticationService, 'mustChangePassword', () => {
+      this.changingPassword = true;
+      this.userMustChangeItsPassword = true;
+    });
+
+    listen(gmfAuthenticationService, 'changePasswordReset', () => {
+      this.resetError_();
+      this.changingPassword = false;
+      this.userMustChangeItsPassword = false;
+      this.oldPwdVal = '';
+      this.newPwdVal = '';
+      this.newPwdConfVal = '';
+    });
+
+    listen(gmfAuthenticationService, 'login', () => {
+      this.changingPassword = false;
+      this.userMustChangeItsPassword = false;
+    });
 
     /**
      * @type {boolean}
@@ -291,20 +312,6 @@ class AuthenticationController {
         }
       }
     );
-
-  }
-
-  /**
-   * Initialise the controller.
-   */
-  $onInit() {
-    this.allowPasswordReset = this.allowPasswordReset !== false;
-    this.allowPasswordChange = this.allowPasswordChange !== false;
-    this.forcePasswordChange = this.forcePasswordChange === true;
-    if (this.forcePasswordChange) {
-      this.changingPassword = true;
-    }
-    this.userMustChangeItsPassword = (this.gmfUser.is_password_changed === false && this.forcePasswordChange);
   }
 
 
@@ -456,11 +463,7 @@ class AuthenticationController {
    * Reset the changePassword values and error.
    */
   changePasswordReset() {
-    this.resetError_();
-    this.changingPassword = false;
-    this.oldPwdVal = '';
-    this.newPwdVal = '';
-    this.newPwdConfVal = '';
+    this.gmfAuthenticationService_.changePasswordReset();
   }
 
   /**
