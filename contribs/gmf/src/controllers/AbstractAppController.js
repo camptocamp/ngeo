@@ -180,6 +180,12 @@ export function AbstractAppController(config, map, $scope, $injector) {
    * @export
    */
   this.userMustChangeItsPassword = false;
+  listen(gmfAuthentication, 'mustChangePassword', () => {
+    this.userMustChangeItsPassword = true;
+  });
+  listen(gmfAuthentication, 'changePasswordReset', () => {
+    this.userMustChangeItsPassword = false;
+  });
 
   $scope.$on('authenticationrequired', (event, args) => {
     /** @type {angular.gettext.gettextCatalog} */
@@ -203,10 +209,6 @@ export function AbstractAppController(config, map, $scope, $injector) {
    * @param {Event|import('ol/events/Event.js').default} evt Event.
    */
   const userChange = (evt) => {
-    // password change is in progress, don't reload the theme yet.
-    if (this.gmfUser.is_password_changed === false) {
-      return;
-    }
     if (this.loginRedirectUrl) {
       window.location.href = this.loginRedirectUrl;
       return;
@@ -417,12 +419,6 @@ export function AbstractAppController(config, map, $scope, $injector) {
    * @type {import('gmf/authentication/Service.js').User}
    */
   this.gmfUser = $injector.get('gmfUser');
-  $scope.$watch(
-    () => this.gmfUser.is_password_changed,
-    (value) => {
-      this.userMustChangeItsPassword = value === false;
-    }
-  );
 
   /**
    * @type {import("ngeo/statemanager/Service.js").StatemanagerService}
