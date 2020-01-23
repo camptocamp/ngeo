@@ -16,6 +16,7 @@ export default /** @type {APIConfig} */({
   // The URL to the themes service.
   themesUrl: 'https://www.example.com',
   localeUrl: undefined,
+  searchUrl: undefined,
 
   // The projection of the map
   projection: EPSG2056,

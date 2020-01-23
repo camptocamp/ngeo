@@ -416,3 +416,22 @@
   overflow: hidden;
   height: 0;
 }
+
+.api-search-input {
+  width: 100%;
+}
+
+.api-search-results {
+  max-height: 400px;
+  overflow: hidden;
+  overflow-y: auto;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  background-color: #fff;
+}
+
+.api-search-results .autocomplete-result {
+  cursor: pointer;
+  padding: 4px;
+}

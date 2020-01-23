@@ -39,6 +39,7 @@
     "@geoblocks/proj": "0.4.2",
     "@sentry/browser": "5.10.2",
     "@sentry/types": "5.10.0",
+    "@trevoreyre/autocomplete-js": "2.1.0",
     "@types/angular": "1.6.57",
     "@types/angular-animate": "1.5.10",
     "@types/angular-dynamic-locale": "0.1.35",
