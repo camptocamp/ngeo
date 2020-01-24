@@ -6,6 +6,8 @@ config.themesUrl = 'https://geomapfish-demo-2-5.camptocamp.com/themes?' +
 
 config.localeUrl = 'https://geomapfish-demo-2-5.camptocamp.com/locale.json'
 
+config.searchUrl = 'https://geomapfish-demo-2-5.camptocamp.com/search?interface=api&limit=15';
+
 const lib = {
   Map
 };

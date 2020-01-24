@@ -35,6 +35,7 @@ import constants from './constants.js';
 
 import {getFeaturesFromIds, getFeaturesFromCoordinates} from './Querent.js';
 import * as themes from './Themes.js';
+import Search from './Search.js';
 
 
 /**
@@ -52,6 +53,7 @@ import * as themes from './Themes.js';
  * @property {boolean} [addMiniMap=false]
  * @property {boolean} [miniMapExpanded=true]
  * @property {boolean} [addLayerSwitcher=false]
+ * @property {boolean} [searchDiv]
  * @property {string[]} [layers]
  * @property {string[]} [backgroundLayers]
  */
@@ -222,6 +224,27 @@ class Map {
         }
       }
     });
+
+    if (options.searchDiv) {
+      const element = document.querySelector(`#${options.searchDiv}`);
+      if (element) {
+        const vectorLayer = new VectorLayer({
+          zIndex: 1,
+          source: new VectorSource()
+        });
+        this.map_.addLayer(vectorLayer);
+
+        new Search({
+          container: element,
+          url: constants.searchUrl,
+          source: vectorLayer.getSource(),
+          view: this.map_.getView()
+        });
+      } else {
+        throw new Error('Invalid searchDiv option');
+      }
+    }
+
   }
 
   /**

@@ -207,6 +207,21 @@ map.addCustomLayer('text', 'My custom txt layer', 'data.txt', {
                     </pre>
                 </div>
 
+                <div class="api">
+                    <h2>Search input</h2>
+                    <div id='map10search' style="width: 400px;"></div>
+                    <div id='map10' class="map"></div>
+                    <pre data-language="javascript">
+var map = new demo.Map({
+    div: 'map10',
+    zoom: 3,
+    center: [2544500, 1210100],
+    searchDiv: 'map10search'
+});
+                    </pre>
+                </div>
+
+
         </div>
         <script>
          var apis = document.getElementsByTagName('pre');
