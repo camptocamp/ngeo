@@ -175,18 +175,6 @@ export function AbstractAppController(config, map, $scope, $injector) {
    */
   this.loginInfoMessage = null;
 
-  /**
-   * @type {boolean}
-   * @export
-   */
-  this.userMustChangeItsPassword = false;
-  listen(gmfAuthentication, 'mustChangePassword', () => {
-    this.userMustChangeItsPassword = true;
-  });
-  listen(gmfAuthentication, 'changePasswordReset', () => {
-    this.userMustChangeItsPassword = false;
-  });
-
   $scope.$on('authenticationrequired', (event, args) => {
     /** @type {angular.gettext.gettextCatalog} */
     const gettextCatalog = $injector.get('gettextCatalog');

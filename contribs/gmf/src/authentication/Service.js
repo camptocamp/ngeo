@@ -320,11 +320,6 @@ export class AuthenticationService extends olEventsEventTarget {
       this.load_();
     }
   }
-
-  changePasswordReset() {
-    const event = new ngeoCustomEvent('changePasswordReset');
-    this.dispatchEvent(event);
-  }
 }
 
 

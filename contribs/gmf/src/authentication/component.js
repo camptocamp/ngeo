@@ -106,24 +106,6 @@ function gmfAuthenticationTemplateUrl($element, $attrs, gmfAuthenticationTemplat
  *     Object to add constraint on user's new password. The `allowPasswordChange` config. To use
  *     it you must also allow the user to change its password.
  * @htmlAttribute {string} gmf-authentication-info-message Message to show above the authentication form.
- * @htmlAttribure {boolean} gmf-authentication-modal Is the authentication is included in the modal window.
- *
- * Example 2:
- *
- *     <ngeo-modal
- *         ngeo-modal-closable="false"
- *         ng-model="mainCtrl.userMustChangeItsPassword">
- *       <div class="modal-header ui-draggable-handle">
- *         <h4 class="modal-title">
- *           {{'You must change your password' | translate}}
- *         </h4>
- *       </div>
- *       <div class="modal-body">
- *         <gmf-authentication
- *           gmf-authentication-modal="::true">
- *         </gmf-authentication>
- *       </div>
- *     </ngeo-modal>
  *
  * @ngdoc component
  * @ngname gmfAuthentication
@@ -132,8 +114,7 @@ const authenticationComponent = {
   bindings: {
     'passwordValidator': '<?gmfAuthenticationPasswordValidator',
     'onSuccessfulLogin': '<?gmfAuthenticationOnSuccessfulLogin',
-    'infoMessage': '=?gmfAuthenticationInfoMessage',
-    'modal': '=?gmfAuthenticationModal'
+    'infoMessage': '=?gmfAuthenticationInfoMessage'
   },
   controller: 'GmfAuthenticationController',
   templateUrl: gmfAuthenticationTemplateUrl
@@ -228,11 +209,6 @@ class AuthenticationController {
     this.infoMessage = null;
 
     /**
-     * @type {?boolean}
-     */
-    this.modal = false;
-
-    /**
      * @type {boolean}
      */
     this.changingPassword = false;
@@ -245,15 +221,6 @@ class AuthenticationController {
     listen(gmfAuthenticationService, 'mustChangePassword', () => {
       this.changingPassword = true;
       this.userMustChangeItsPassword = true;
-    });
-
-    listen(gmfAuthenticationService, 'changePasswordReset', () => {
-      this.resetError_();
-      this.changingPassword = false;
-      this.userMustChangeItsPassword = false;
-      this.oldPwdVal = '';
-      this.newPwdVal = '';
-      this.newPwdConfVal = '';
     });
 
     listen(gmfAuthenticationService, 'login', () => {
@@ -481,7 +448,12 @@ class AuthenticationController {
    * Reset the changePassword values and error.
    */
   changePasswordReset() {
-    this.gmfAuthenticationService_.changePasswordReset();
+    this.resetError_();
+    this.changingPassword = false;
+    this.userMustChangeItsPassword = false;
+    this.oldPwdVal = '';
+    this.newPwdVal = '';
+    this.newPwdConfVal = '';
   }
 
   /**

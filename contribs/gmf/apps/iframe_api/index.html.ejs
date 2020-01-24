@@ -72,20 +72,6 @@
       <ngeo-modal ng-model="mainCtrl.modalShareShown">
         <gmf-share ng-if="mainCtrl.modalShareShown" gmf-share-email="true"></gmf-share>
       </ngeo-modal>
-      <ngeo-modal
-          ngeo-modal-closable="false"
-          ng-model="mainCtrl.userMustChangeItsPassword">
-        <div class="modal-header ui-draggable-handle">
-          <h4 class="modal-title">
-            {{'You must change your password' | translate}}
-          </h4>
-        </div>
-        <div class="modal-body">
-          <gmf-authentication
-            gmf-authentication-modal="::true">
-          </gmf-authentication>
-        </div>
-      </ngeo-modal>
     </main>
     <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=es6,default-3.6,Array.prototype.includes,Object.entries,Object.values"></script>
     <script src="../../../dist/vendor.js?${htmlWebpackPlugin.options.vars.version}"></script>
