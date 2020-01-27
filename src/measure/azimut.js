@@ -86,7 +86,10 @@ function measureAzimutComponent($compile, gettextCatalog, $filter, $injector) {
                 (myEvent.detail.feature.getGeometry());
           const circle = /** @type {import("ol/geom/Circle.js").default} */ (
             geometry.getGeometries()[1]);
-          const polygon = fromCircle(circle, 64);
+          const polygon = fromCircle(
+            circle,
+            Number.parseInt(attrs.$$element.attr('ngeo-measureazimut-nbpoints') || 64)
+          );
           myEvent.detail.feature = new olFeature(polygon);
           const azimut = getAzimut(
             /** @type {import("ol/geom/LineString.js").default} */ (geometry.getGeometries()[0])
