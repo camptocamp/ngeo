@@ -188,10 +188,6 @@ gmf-search {
   position: absolute;
   left: 2 * $app-margin + $map-tools-size;
 
-  .gmf-clear-button {
-    top: 0;
-  }
-
   span.twitter-typeahead {
     &::before {
       // magnifier
