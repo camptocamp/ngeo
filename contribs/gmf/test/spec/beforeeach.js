@@ -45,5 +45,6 @@ beforeEach(() => {
       $provide.value('gmfRasterUrl', 'https://fake/gmf/raster');
       $provide.value('gmfContextualdatacontentTemplateUrl', 'contextualdata.html');
       $provide.value('defaultTheme', 'Demo');
+      $provide.value('gmfAuthenticationConfig', {});
     });
 });

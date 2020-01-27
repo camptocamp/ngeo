@@ -100,9 +100,11 @@ export class AuthenticationService extends olEventsEventTarget {
    * @param {angular.IScope} $rootScope The directive's scope.
    * @param {string} authenticationBaseUrl URL to "authentication" web service.
    * @param {User} gmfUser User.
+   * @param {import("gmf/authentication/component.js").AuthenticationConfig} gmfAuthenticationConfig
+   *    The configuration
    * @ngInject
    */
-  constructor($http, $injector, $rootScope, authenticationBaseUrl, gmfUser) {
+  constructor($http, $injector, $rootScope, authenticationBaseUrl, gmfUser, gmfAuthenticationConfig) {
 
     super();
 
@@ -130,6 +132,11 @@ export class AuthenticationService extends olEventsEventTarget {
      * @private
      */
     this.user_ = gmfUser;
+
+    /**
+     * @type {boolean}
+     */
+    this.forcePasswordChange = gmfAuthenticationConfig.forcePasswordChange === true;
 
     /**
       * Don't request a new user object from the back-end after
@@ -175,11 +182,9 @@ export class AuthenticationService extends olEventsEventTarget {
     }), {
       headers: {'Content-Type': 'application/x-www-form-urlencoded'},
       withCredentials: true
-    }).then((() => {
-      this.user_.is_password_changed = true;
-      const event = new ngeoCustomEvent('ready', {user: this.user_});
-      this.dispatchEvent(event);
-    }));
+    }).then((resp) => {
+      this.setUser_(resp.data, true);
+    });
   }
 
   /**
@@ -262,6 +267,11 @@ export class AuthenticationService extends olEventsEventTarget {
    * @private
    */
   handleLogin_(checkingLoginStatus, resp) {
+    if (resp.data.is_password_changed === false && this.forcePasswordChange) {
+      const event = new ngeoCustomEvent('mustChangePassword');
+      this.dispatchEvent(event);
+      return;
+    }
     this.setUser_(resp.data, !checkingLoginStatus);
     if (checkingLoginStatus) {
       const event = new ngeoCustomEvent('ready', {user: this.user_});
@@ -273,7 +283,6 @@ export class AuthenticationService extends olEventsEventTarget {
   /**
    * @param {AuthenticationLoginResponse} respData Response.
    * @param {boolean} emitEvent Emit a login event?
-   * @private
    */
   setUser_(respData, emitEvent) {
     Sentry.setUser({

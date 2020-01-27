@@ -319,20 +319,6 @@
       <ngeo-modal ng-model="mainCtrl.modalShareShown">
         <gmf-share ng-if="mainCtrl.modalShareShown" gmf-share-email="true"></gmf-share>
       </ngeo-modal>
-      <ngeo-modal
-          ngeo-modal-closable="false"
-          ng-model="mainCtrl.userMustChangeItsPassword">
-        <div class="modal-header ui-draggable-handle">
-          <h4 class="modal-title">
-            {{'You must change your password' | translate}}
-          </h4>
-        </div>
-        <div class="modal-body">
-          <gmf-authentication
-            gmf-authentication-force-password-change="::true">
-          </gmf-authentication>
-        </div>
-      </ngeo-modal>
     </main>
     <footer>
       <gmf-profile
