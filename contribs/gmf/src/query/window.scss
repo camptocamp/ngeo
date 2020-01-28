@@ -6,6 +6,10 @@ $displayquerywindow-detailed-details-line-height: 1.25rem;
 $displayquerywindow-detailed-details-height: 8 * $displayquerywindow-detailed-details-line-height;
 
 div.gmf-displayquerywindow {
+  pointer-events: none;
+  div.windowcontainer {
+    pointer-events: all;
+  }
   .details {
     display: none;
   }
