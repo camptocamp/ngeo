@@ -60,6 +60,26 @@ export class QueryModeSelector {
     this.action_ = ngeoQueryAction.REPLACE;
 
     /**
+     * A flag that determines whether a request is currently pending
+     * in the query component.
+     *
+     * While this flag is set, the mode can't change due to keyboard
+     * keys being pressed.
+     *
+     * @type {boolean}
+     * @private
+     */
+    this.pending_ = false;
+
+    /**
+     * A flag than handles the change of mode while a request was
+     * still pending.
+     * @type {boolean}
+     * @private
+     */
+    this.wasPending_ = false;
+
+    /**
      * If a key is pressed, it can temporarily change the currently
      * active action. When that happens, the currently active action
      * is stored here to be restored later, after the key has been
@@ -133,6 +153,28 @@ export class QueryModeSelector {
     this.mode_ = mode;
   }
 
+  /**
+   * @return {boolean} Whether a request is currently pending or not.
+   */
+  get pending() {
+    return this.pending_;
+  }
+
+  /**
+   * @param {boolean} pending Whether a request is currently pending or not.
+   */
+  set pending(pending) {
+    this.pending_ = pending;
+
+    // If we're no longer pending, but we were pending while a change
+    // of mode tried to occur, then do it here.
+    if (!pending && this.wasPending_ && this.previousMode_) {
+      this.wasPending_ = false;
+      this.mode = this.previousMode_;
+      this.previousMode_ = null;
+    }
+  }
+
   // Handlers
 
   /**
@@ -141,6 +183,11 @@ export class QueryModeSelector {
    */
   handleKeyDown_(evt) {
     if (!(evt instanceof KeyboardEvent)) {
+      return;
+    }
+
+    // No need to do anything on "keydown" if a request is already pending
+    if (this.pending) {
       return;
     }
 
@@ -188,9 +235,13 @@ export class QueryModeSelector {
     // On any 'keyup', if no 'ctrl' (or 'meta' on mac) is pressed and
     // there is a previous mode set, then set it as new active mode.
     if (!(evt.metaKey || evt.ctrlKey) && this.previousMode_) {
-      this.mode = this.previousMode_;
-      this.previousMode_ = null;
-      updateScope = true;
+      if (this.pending) {
+        this.wasPending_ = true;
+      } else {
+        this.mode = this.previousMode_;
+        this.previousMode_ = null;
+        updateScope = true;
+      }
     }
 
     // If the active action key was released, then restore the
