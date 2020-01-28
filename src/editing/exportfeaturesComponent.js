@@ -113,27 +113,22 @@ function Controller($element, $injector, $scope, ngeoFeatureHelper) {
   // build the drop-down menu and items if there's more than one format
   if (formats.length > 1) {
     $element.attr('id', id);
-    const $menu = $('<ul />', {
+    const $menu = $('<div />', {
       'class': 'dropdown-menu',
       'aria-labelledby': id
     }).appendTo($element.parent()[0]);
 
     this.menu_ = $menu;
-    let $item;
 
     formats.forEach((format) => {
-      $item = $('<li />')
-        .appendTo($menu)
-        .append($('<a />', {
-          'href': '#',
-          'text': format
-        })
-          .on(
-            ['click', id].join('.'),
-            this.handleMenuItemClick_.bind(this, format)
-          )
-        );
-      this.items_.push($item);
+      const item = $('<a />', {
+        'href': '#',
+        'class': 'dropdown-item',
+        'text': format
+      });
+      item.appendTo($menu);
+      item.on(`click.${id}`, this.handleMenuItemClick_.bind(this, format));
+      this.items_.push(item);
     });
   }
 
