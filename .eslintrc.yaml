@@ -6,6 +6,8 @@ env:
 parserOptions:
   ecmaVersion: 2017
   project: ./tsconfig-eslint.json
+plugins:
+  - copyright
 rules:
   no-console: 0
   comma-dangle: 0
@@ -16,6 +18,7 @@ rules:
     - error
     - code: 110
       ignoreComments: true
+  'copyright/copyright': error
   '@typescript-eslint/indent': 0
   '@typescript-eslint/no-unused-vars': 0
   '@typescript-eslint/no-use-before-define': 0
