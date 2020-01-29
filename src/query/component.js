@@ -374,6 +374,8 @@ class QueryController {
     const limit = this.getLimitOption_();
     const map = this.map;
 
+    this.ngeoQueryModeSelector_.pending = true;
+
     this.ngeoMapQuerent_.issue({
       action,
       extent,
@@ -385,6 +387,7 @@ class QueryController {
       .then(() => {
         // "finally"
         this.vectorSource_.clear();
+        this.ngeoQueryModeSelector_.pending = false;
       });
   }
 
@@ -403,6 +406,8 @@ class QueryController {
     const limit = this.getLimitOption_();
     const map = this.map;
 
+    this.ngeoQueryModeSelector_.pending = true;
+
     this.ngeoMapQuerent_.issue({
       action,
       geometry,
@@ -414,6 +419,7 @@ class QueryController {
       .then(() => {
         // "finally"
         this.vectorSource_.clear();
+        this.ngeoQueryModeSelector_.pending = false;
       });
   }
 
@@ -434,11 +440,19 @@ class QueryController {
     const coordinate = evt.coordinate;
     const map = this.map;
 
+    this.ngeoQueryModeSelector_.pending = true;
+
     this.ngeoMapQuerent_.issue({
       action,
       coordinate,
       map
-    });
+    })
+      .then(() => {})
+      .catch(() => {})
+      .then(() => {
+        // "finally"
+        this.ngeoQueryModeSelector_.pending = false;
+      });
   }
 
   /**
