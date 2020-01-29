@@ -138,5 +138,7 @@
     "webpack-dev-server": "3.10.1",
     "webpack-merge": "4.2.2"
   },
-  "dependencies": {}
+  "dependencies": {
+    "eslint-plugin-copyright": "file:buildtools/copyright"
+  }
 }

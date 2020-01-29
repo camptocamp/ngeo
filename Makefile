@@ -211,7 +211,11 @@ examples-hosted-apps: .build/gmf-apps.timestamp
 gh-pages: .build/python-venv.timestamp
 	buildtools/deploy.sh
 
-.build/eslint.timestamp: .build/node_modules.timestamp $(ESLINT_CONFIG_FILES) \
+.build/node_modules.copyright.timestamp: .build/node_modules.timestamp
+	npm install buildtools/copyright
+	touch $@
+
+.build/eslint.timestamp: .build/node_modules.copyright.timestamp $(ESLINT_CONFIG_FILES) \
 		$(API_JS_FILES) \
 		$(NGEO_JS_FILES) \
 		$(NGEO_TEST_JS_FILES) \
@@ -220,7 +224,7 @@ gh-pages: .build/python-venv.timestamp
 		$(GMF_JS_FILES) \
 		$(GMF_EXAMPLES_JS_FILES) \
 		$(GMF_APPS_JS_FILES)
-	./node_modules/.bin/eslint $(filter-out .build/node_modules.timestamp $(ESLINT_CONFIG_FILES), $^)
+	./node_modules/.bin/eslint $(filter-out .build/node_modules.copyright.timestamp $(ESLINT_CONFIG_FILES), $^)
 	touch $@
 
 .build/examples-hosted/partials: examples/partials/
