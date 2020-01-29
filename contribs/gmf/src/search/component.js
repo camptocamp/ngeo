@@ -153,6 +153,7 @@ function gmfSearchTemplateUrl($element, $attrs, gmfSearchTemplateUrl) {
  *      change the style of the feature on the map. Default is false.
  * @htmlAttribute {number=} gmf-search-maxzoom Optional maximum zoom we will zoom on result, default is 16.
  * @htmlAttribute {function=} gmf-search-on-init Optional function called when the component is initialized.
+ * @htmlAttribute {function=} gmf-search-action Optional function called when no default action is defined.
  * @ngdoc component
  * @ngname gmfSearch
  */
@@ -170,7 +171,8 @@ exports.component_ = {
     'additionalListeners': '<gmfSearchListeners',
     'maxZoom': '<?gmfSearchMaxzoom',
     'delay': '<?gmfSearchDelay',
-    'onInitCallback': '<?gmfSearchOnInit'
+    'onInitCallback': '<?gmfSearchOnInit',
+    'searchActionCallback': '&?gmfSearchAction'
   },
   controller: 'gmfSearchController',
   templateUrl: gmfSearchTemplateUrl
@@ -307,6 +309,11 @@ exports.SearchController_ = class {
      * @export
      */
     this.onInitCallback;
+
+    /**
+     * @type {function(any): void}
+     */
+    this.searchActionCallback;
 
     /**
      * Whether or not to show a button to clear the search text.
@@ -979,6 +986,10 @@ exports.SearchController_ = class {
           if (datasourcesActionsHaveAddLayer) {
             const silent = !!featureGeometry;
             this.gmfTreeManager_.addGroupByLayerName(actionData, true, silent);
+          }
+        } else {
+          if (this.searchActionCallback) {
+            this.searchActionCallback(action);
           }
         }
       }
