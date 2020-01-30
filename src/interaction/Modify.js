@@ -45,6 +45,20 @@ import {CollectionEvent} from 'ol/Collection.js';
 
 
 /**
+ * @typedef {Object} Options
+ * @property {import("../events/condition.js").Condition} [condition] From ol/interaction/Modify.Options.
+ * @property {import("../events/condition.js").Condition} [deleteCondition] From ol/interaction/Modify.Options.
+ * @property {import("../events/condition.js").Condition} [insertVertexCondition] From ol/interaction/Modify.Options.
+ * @property {number} [pixelTolerance=10] From ol/interaction/Modify.Options.
+ * @property {import("../style/Style.js").StyleLike} [style] From ol/interaction/Modify.Options.
+ * @property {VectorSource} [source] From ol/interaction/Modify.Options.
+ * @property {Collection<Feature>} [features] From ol/interaction/Modify.Options.
+ * @property {boolean} [wrapX=false] From ol/interaction/Modify.Options.
+ * @property {number} [nbPoints=64] The number of points in the circle.
+ */
+
+
+/**
  * This interaction combines multiple kind of feature modification interactions
  * in order to be able to modify vector features depending on their geometry
  * type. The different kind of interactions supported are:
@@ -63,7 +77,7 @@ import {CollectionEvent} from 'ol/Collection.js';
  */
 export default class extends olInteractionInteraction {
   /**
-   * @param {import('ol/interaction/Modify.js').Options} options Options.
+   * @param {Options} options Options.
    */
   constructor(options) {
     super({
@@ -113,7 +127,8 @@ export default class extends olInteractionInteraction {
       features: this.circleFeatures_,
       pixelTolerance: options.pixelTolerance,
       style: options.style,
-      wrapX: options.wrapX
+      wrapX: options.wrapX,
+      nbPoints: options.nbPoints,
     }));
 
     /**
