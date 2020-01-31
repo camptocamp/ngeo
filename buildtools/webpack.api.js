@@ -6,7 +6,7 @@ const dest = path.resolve(__dirname, '../api/dist/');
 
 const babelPresetEnv = ['@babel/preset-env', {
   targets: {
-    browsers: ['last 2 versions', 'Firefox ESR', 'ie 11'],
+    browsers: ['> 0.5% in CH', '> 0.5% in FR', 'Firefox ESR', 'ie 11'],
   },
   modules: false,
   loose: true
