@@ -94,6 +94,12 @@ export default class extends olInteractionPointer {
       options.pixelTolerance : 10;
 
     /**
+     * @type {number}
+     * @private
+     */
+    this.nbPoints = options.nbPoints || 64;
+
+    /**
      * @type {boolean}
      * @private
      */
@@ -137,7 +143,6 @@ export default class extends olInteractionPointer {
     this.features_.forEach(feature => this.addFeature_(feature));
     listen(this.features_, 'add', this.handleFeatureAdd_, this);
     listen(this.features_, 'remove', this.handleFeatureRemove_, this);
-
   }
 
   /**
@@ -439,7 +444,7 @@ export default class extends olInteractionPointer {
      * @type {import("ol/geom/Circle.js").default}
      */
     const circle = new olGeomCircle(center, line.getLength());
-    const coordinates = fromCircle(circle, 64).getCoordinates();
+    const coordinates = fromCircle(circle, this.nbPoints).getCoordinates();
     this.setGeometryCoordinates_(geometry, coordinates);
 
 
