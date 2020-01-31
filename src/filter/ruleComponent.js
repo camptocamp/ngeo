@@ -332,7 +332,7 @@ class RuleController {
     this.modify_ = new ngeoInteractionModify({
       features: this.selectedFeatures,
       style: ngeoFeatureHelper.getVertexStyle(false),
-      nbPoints: 16
+      nbPoints: 32
     });
     this.interactions_.push(this.modify_);
 
