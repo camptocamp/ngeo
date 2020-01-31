@@ -986,7 +986,6 @@ class SearchController {
     $(inputs[1]).typeahead('val', '');
     ttmenu.children('.tt-dataset').empty();
     this.setTTDropdownVisibility_();
-    this.displayColorPicker = false;
   }
 
 
