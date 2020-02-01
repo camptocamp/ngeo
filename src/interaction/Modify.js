@@ -189,12 +189,13 @@ export default class extends olInteractionInteraction {
    */
   setState_() {
     const map = this.getMap();
-    if (!map) {
-      return;
-    }
     const active = this.getActive();
     const interactions = this.interactions_;
     const keys = this.listenerKeys_;
+
+    if (!interactions || !keys) {
+      return;
+    }
 
     interactions.forEach((interaction) => {
       interaction.setActive(active && !!map);
