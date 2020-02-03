@@ -160,15 +160,13 @@ export default class extends olInteractionTranslate {
    */
   setState_() {
     const map = this.getMap();
-    if (!map) {
-      return;
-    }
     const active = this.getActive();
     const features = this.myFeatures_;
-    if (!features) {
-      throw new Error('Missing features');
-    }
     const keys = this.listenerKeys_;
+
+    if (!features || !keys) {
+      return;
+    }
 
     if (map && active && features) {
       features.forEach(feature => this.addFeature_(feature));
