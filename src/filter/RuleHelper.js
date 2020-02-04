@@ -1,6 +1,7 @@
 import angular from 'angular';
 import ngeoFilterCondition from 'ngeo/filter/Condition.js';
 import ngeoFormatAttributeType from 'ngeo/format/AttributeType.js';
+import * as ngeoFormatFilter from 'ngeo/format/filter.js';
 import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
 import ngeoMiscWMSTime from 'ngeo/misc/WMSTime.js';
 import ngeoRuleDate from 'ngeo/rule/Date.js';
@@ -558,11 +559,19 @@ export class RuleHelper {
           .format('YYYY-MM-DD');
       }
       if (beginValue && endValue) {
-        filter = olFormatFilter.during(
-          propertyName,
-          beginValue,
-          endValue
-        );
+        if (dataSource.ogcServerType == 'qgisserver') {
+          filter = ngeoFormatFilter.dateBetween(
+            propertyName,
+            beginValue,
+            endValue
+          );
+        } else {
+          filter = olFormatFilter.during(
+            propertyName,
+            beginValue,
+            endValue
+          );
+        }
       }
     } else if (rule instanceof ngeoRuleSelect) {
       const selectedChoices = rule.selectedChoices;
