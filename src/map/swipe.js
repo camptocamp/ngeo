@@ -116,7 +116,7 @@ class SwipeController {
      * @type {import("ol/events.js").EventsKey[]}
      * @private
      */
-    this.layerKeys_ = [];
+    this.listenerKeys_ = [];
 
     /**
      * @type {ResizeObserver}
@@ -130,12 +130,21 @@ class SwipeController {
    * Init the controller
    */
   $onInit() {
+    const view = this.map.getView();
+
     this.swipeValue = this.swipeValue !== undefined ? this.swipeValue : 0.5;
-    this.layerKeys_.push(listen(this.layer, 'prerender', this.handleLayerPrerender_, this));
-    this.layerKeys_.push(listen(this.layer, 'postrender', this.handleLayerPostrender_, this));
-    this.layerKeys_.push(listen(this.layer, 'change:visible', this.handleLayerVisibleChange_, this));
+    this.listenerKeys_.push(listen(this.layer, 'prerender', this.handleLayerPrerender_, this));
+    this.listenerKeys_.push(listen(this.layer, 'postrender', this.handleLayerPostrender_, this));
+    this.listenerKeys_.push(listen(this.layer, 'change:visible', this.handleLayerVisibleChange_, this));
+    this.listenerKeys_.push(listen(view, 'change:rotation', this.handleViewRotationChange_, this));
 
     const halfDraggableWidth = this.draggableElement_.width() / 2;
+
+    // When beginning to swipe a layer, reset the view rotation
+    const rotation = view.getRotation();
+    if (rotation) {
+      view.setRotation(0);
+    }
 
     this.draggableElement_.draggable({
       axis: 'x',
@@ -210,9 +219,20 @@ class SwipeController {
     }
   }
 
+  /**
+   * Called when the rotation of the view changes. If the view is
+   * rotated, deactivate the swipe component.
+   * @private
+   */
+  handleViewRotationChange_() {
+    if (this.map.getView().getRotation()) {
+      this.deactivate();
+    }
+  }
+
   $onDestroy() {
-    this.layerKeys_.forEach(unlistenByKey);
-    this.layerKeys_.length = 0;
+    this.listenerKeys_.forEach(unlistenByKey);
+    this.listenerKeys_.length = 0;
     this.draggableElement_.draggable('destroy');
     this.resizeObserver_.disconnect();
   }
