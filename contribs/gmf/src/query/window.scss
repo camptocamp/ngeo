@@ -7,7 +7,8 @@ $displayquerywindow-detailed-details-height: 8 * $displayquerywindow-detailed-de
 
 div.gmf-displayquerywindow {
   pointer-events: none;
-  div.windowcontainer {
+  div.windowcontainer,
+  button.collapse-button {
     pointer-events: all;
   }
   .details {
