@@ -633,8 +633,10 @@ export class PrintController {
       this.ogcServers_ = ogcServersObject;
     });
 
-    this.gmfThemes_.getThemesObject().then((currentThemes) => {
-      this.currentThemes_ = currentThemes;
+    listen(this.gmfThemes_, 'change', () => {
+      this.gmfThemes_.getThemesObject().then((currentThemes) => {
+        this.currentThemes_ = currentThemes;
+      });
     });
 
     /**
