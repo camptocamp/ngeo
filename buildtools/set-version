@@ -4,20 +4,25 @@
 import json
 import os
 import re
+import sys
 
-if len(os.environ.get("TRAVIS_TAG", "")) == 0:
-    exit(0)
+if len(os.environ.get("GITHUB_REF", "")) == 0:
+    sys.exit(0)
 
 with open("package.json") as package_json_file:
     package_json = json.loads(package_json_file.read())
 
-version = os.environ["TRAVIS_TAG"]
+version = os.environ["GITHUB_REF"].split('/')
+if len(version) != 3 or version[1] != 'tags':
+    sys.exit(0)
+version = version[2]
+
 match_dev = re.match(r"([0-9]+\.[0-9]+\.[0-9]+)-([a-z]+)\.([0-9]+)", version)
 if match_dev is None:
     if package_json["version"] == version:
-        exit(0)
+        sys.exit(0)
     else:
-        exit(1)
+        sys.exit(1)
 
 package_json["version"] = version
 

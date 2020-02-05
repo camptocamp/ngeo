@@ -80,7 +80,7 @@ git tag <version>
 git push origin <version>
 ```
 
-Travis will create a new package on npm.
+GitHub Actions will create a new package on npm.
 
 If you create a new release, bump version in the package.json file:
 ```
@@ -108,20 +108,16 @@ Create the new branch:
 git checkout -b x.y
 ```
 
-Update the `.travis.yml`:
+Update the `.github/workflows/ci.yaml`:
 ```diff
- - provider: script
-   script: make transifex-send
-   skip_cleanup: true
-   on:
-     repo: camptocamp/ngeo
--     branch: master
-+     branch: x.y
+     env:
+-      MAIN_BRANCH: master
++      MAIN_BRANCH: x.y
 ```
 
 Commit and push the changes:
 ```bash
-git add .travis.yml
+git add .github/workflows/ci.yaml
 git commit -m "Update the branch"
 git push origin x.y
 ```
@@ -136,15 +132,11 @@ Do the merge to prepare the future merges:
 git merge x.y
 ```
 
-Restore the `.travis.yml`:
+Restore the `.github/workflows/ci.yaml`:
 ```diff
- - provider: script
-   script: make transifex-send
-   skip_cleanup: true
-   on:
-     repo: camptocamp/ngeo
--     branch: x.y
-+     branch: master
+     env:
+-      MAIN_BRANCH: master
++      MAIN_BRANCH: x.y
 ```
 
 Get the actual localisation:
@@ -160,7 +152,7 @@ Update the `Makefile`:
 
 Commit and push the changes:
 ```bash
-git add Makefile .travis.yml
+git add Makefile .github/workflows/ci.yaml
 git commit -m "Start the version x.y+1"
 git push origin master
 ```
