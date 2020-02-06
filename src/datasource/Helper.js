@@ -245,7 +245,7 @@ export class DatasourceHelper {
         // method below. If the type is not any geometry one, then set
         // the one that was given.
         if (!ngeoAttributeSetGeometryType(attribute, `gml:${type}`)) {
-          attribute.type = type;
+          attribute.type = type.toLowerCase();
         }
 
         attributes.push(attribute);
