@@ -7,3 +7,12 @@
     flex-basis: 50%;
   }
 }
+
+gmf-displayquerywindow {
+  position: inherit;
+
+  .spinner-window {
+    position: inherit;
+    right: 65px;
+  }
+}
