@@ -933,7 +933,7 @@ Controller.prototype.toggleSwipeLayer = function(treeCtrl) {
 Controller.prototype.toggleNodeLegend = function(legendNodeId) {
   const div = document.querySelector(legendNodeId);
   if (div) {
-    div.classList.toggle('show');
+    div.classList.toggle('d-none');
   }
 };
 
