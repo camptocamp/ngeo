@@ -58,7 +58,7 @@ describe('gmf.permalink.ShareService', () => {
     };
 
     $httpBackend.expectPOST(shortenerUrl, $.param(params));
-    // @ts-ignore: Ununderstandable issue wisible only on Travis...
+    // @ts-ignore: Ununderstandable issue wisible only on CI...
     gmfShareService.getShortUrl(permalink);
     $httpBackend.flush();
 
@@ -67,7 +67,7 @@ describe('gmf.permalink.ShareService', () => {
     if (!params.email) {
       throw new Error('Missing params.email');
     }
-    // @ts-ignore: Ununderstandable issue wisible only on Travis...
+    // @ts-ignore: Ununderstandable issue wisible only on CI...
     gmfShareService.sendShortUrl(permalink, params.email);
     $httpBackend.flush();
 
@@ -100,7 +100,7 @@ describe('gmf.permalink.ShareService', () => {
       throw new Error('Missing shortenerUrl');
     }
 
-    // @ts-ignore: Ununderstandable issue wisible only on Travis...
+    // @ts-ignore: Ununderstandable issue wisible only on CI...
     gmfShareService.getShortUrl(shortenerUrl);
     $httpBackend.verifyNoOutstandingExpectation();
   });

@@ -18,7 +18,8 @@ on:
 jobs:
   auto-merge:
     name: Auto merge
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
+    timeout-minutes: 5
     steps:
       - name: Auto merge
         uses: ridedott/dependabot-auto-merge-action@master

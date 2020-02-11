@@ -88,4 +88,3 @@ Then visit https://localhost:3000/apihelp.html
 
 ## Other docs related to ngeo:
 * [Transifex](https://www.transifex.com/camptocamp/ngeo/) – Translation platform.
-* [Travis](https://travis-ci.org/camptocamp/ngeo) – Continuous integration.

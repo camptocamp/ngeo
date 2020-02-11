@@ -1,4 +1,4 @@
-ANGULAR_VERSION := $(shell buildtools/get-version.sh angular)
+ANGULAR_VERSION := $(shell buildtools/get-version angular)
 
 ESLINT_CONFIG_FILES := $(shell find * -not -path 'node_modules/*' -type f -name '.eslintrc*')
 WEBPACK_CONFIG_FILES := $(shell find . -not -path './node_modules/*' -name 'webpack.*.js')
@@ -212,7 +212,7 @@ gh-pages: .build/python-venv.timestamp
 	buildtools/deploy.sh
 
 .build/node_modules.copyright.timestamp: .build/node_modules.timestamp
-	npm install buildtools/copyright
+	npm install --no-save -no-optional --no-package-lock buildtools/copyright
 	touch $@
 
 .build/eslint.timestamp: .build/node_modules.copyright.timestamp $(ESLINT_CONFIG_FILES) \

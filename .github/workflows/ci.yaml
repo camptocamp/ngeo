@@ -1,0 +1,80 @@
+---
+
+name: Continuous integration
+
+on:
+  push:
+
+jobs:
+  main:
+    runs-on: ubuntu-18.04
+    name: Continuous integration
+    timeout-minutes: 30
+
+    env:
+      MAIN_BRANCH: master
+      CI: true
+      PATH: /bin:/usr/bin:/usr/local/bin:/home/runner/.local/bin
+      SUMMON_PROVIDER: /usr/local/bin/gopass
+
+    steps:
+      - run: python3 --version
+      - run: python3 -m pip --version
+      - run: /opt/google/chrome/chrome --version
+
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '10.x'
+
+      - run: node --version
+      - run: npm --version
+
+      - run: sudo apt update
+      - run: sudo apt install g++-4.8 python3-venv
+
+      - uses: actions/checkout@v1
+      - run: git config --global user.name "Continuous integration"
+      - run: git config --global user.email "ci@comptocamp.org"
+      - run: ls -al
+      - run: buildtools/set-version
+
+      - run: echo "_auth = ${NPM_AUTH}" > ~/.npmrc
+      - run: echo "email = stephane.brunner@camptocamp.com" >> ~/.npmrc
+
+      # Lint
+      - run: make lint
+      - run: make spell
+      - run: make check-examples-checker
+      - run: make test
+      # Webpack build of ngeo/gmf examples and gmf apps
+      - run: NODE_ENV=production make examples-hosted
+      - run: make check-examples
+      #- run: npm run typecheck
+      - run: "! (npm run typecheck|grep -v '^node_modules/'|grep '^[a-z]')"
+      # Generate API doc
+      - run: npm run doc
+      - run: npm run build-api
+      - run: cat /home/runner/.npm/_logs/*
+        if: failure()
+
+      - uses: camptocamp/initialise-gopass-summon-action@v1
+        with:
+          ci-gpg-private-key: ${{secrets.CI_GPG_PRIVATE_KEY}}
+          github-gopass-ci-token: ${{secrets.GITHUB_GOPASS_CI_TOKEN}}
+        if: github.repository == 'camptocamp/ngeo'
+      - name: Build ~/.transifexrc
+        run: |
+          summon --yaml '
+            USERNAME: !var gs/ci/transifex/rw/username
+            PASSWORD: !var gs/ci/transifex/rw/password
+          ' bash -c 'envsubst < buildtools/transifexrc.tmpl > ~/.transifexrc'
+        if: github.repository == 'camptocamp/ngeo'
+
+      - run: make transifex-send
+        if: github.repository == 'camptocamp/ngeo' && github.ref == format('refs/heads/{0}', env.MAIN_BRANCH)
+      - run: buildtools/publish
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        if: github.repository == 'camptocamp/ngeo'
+      - run: buildtools/npm-publish
+        if: github.repository == 'camptocamp/ngeo'

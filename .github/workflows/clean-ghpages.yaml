@@ -1,0 +1,22 @@
+---
+
+name: Clean docker hub tags
+
+on:
+  delete
+
+jobs:
+  clean:
+    runs-on: ubuntu-18.04
+    name: Clean docker hub tags
+    timeout-minutes: 5
+
+    steps:
+      - uses: actions/checkout@v1
+        with:
+          ref: gh-pages
+      - name: Clean ghpages
+        run: |
+          git rm $(cat ${GITHUB_EVENT_PATH}|jq --raw-output .ref)
+          git commit --amend
+          git push origin gh-pages --force

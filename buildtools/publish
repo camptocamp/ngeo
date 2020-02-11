@@ -1,0 +1,42 @@
+#!/bin/bash -ex
+
+GIT_REF=$(git rev-parse HEAD)
+
+if [ -z "${GITHUB_REF}" ]
+then
+  GIT_BRANCH=$(git rev-parse --symbolic-full-name --abbrev-ref HEAD)
+elif [[ "${GITHUB_REF}" =~ ^refs/heads/.* ]]
+then
+  GIT_BRANCH=$(echo "${GITHUB_REF}"|sed 's|^refs/heads/||g')
+else
+  echo "Build is not on a branch"
+  exit
+fi
+
+if [[ ${GIT_BRANCH} =~ "/" ]]
+then
+  echo "Skipping deploy of external branch ${GIT_BRANCH}"
+  exit
+fi
+
+# Cloning gh-pages into a local temporary directory
+git fetch origin
+git checkout -b gh-pages origin/gh-pages
+
+git rm --ignore-unmatch -r --quiet --force ${GIT_BRANCH} || true
+
+mkdir -p ${GIT_BRANCH}/examples
+cp -r .build/examples-hosted/* ${GIT_BRANCH}/examples/
+cp -r apidoc ${GIT_BRANCH}/
+cp -r api/dist ${GIT_BRANCH}/api
+
+# Rewrite root commit and force push
+FIRST_COMMIT=$(git log --format='%H' | tail -1)
+git reset --quiet --mixed $FIRST_COMMIT
+git add ${GIT_BRANCH}
+git commit --quiet --amend --message="Update GitHub pages"
+
+remote_repo="https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/camptocamp/ngeo.git"
+git push "${remote_repo}" gh-pages --force
+
+git checkout ${GIT_REF}
