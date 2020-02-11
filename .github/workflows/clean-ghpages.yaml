@@ -17,6 +17,9 @@ jobs:
           ref: gh-pages
       - name: Clean ghpages
         run: |
+          git config --global user.name "Continuous integration"
+          git config --global user.email "ci@comptocamp.org"
           git rm -r $(cat ${GITHUB_EVENT_PATH}|jq --raw-output .ref)
           git commit --amend
-          git push origin gh-pages --force
+          remote_repo="https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/camptocamp/ngeo.git"
+          git push "${remote_repo}" gh-pages --force
