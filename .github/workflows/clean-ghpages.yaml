@@ -17,6 +17,6 @@ jobs:
           ref: gh-pages
       - name: Clean ghpages
         run: |
-          git rm $(cat ${GITHUB_EVENT_PATH}|jq --raw-output .ref)
+          git rm -r $(cat ${GITHUB_EVENT_PATH}|jq --raw-output .ref)
           git commit --amend
           git push origin gh-pages --force

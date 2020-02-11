@@ -29,6 +29,7 @@ then
         then
             GIT_BRANCH=$(echo ${GITHUB_REF}|sed 's|refs/heads/||g')
             echo "Publish daily version"
+            $RUN npm install --no-save fluid-publish
             if [ "${MAIN_BRANCH}" = "master" ]
             then
                 $RUN node_modules/.bin/fluid-publish devTag="latest"
