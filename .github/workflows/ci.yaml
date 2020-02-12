@@ -38,8 +38,7 @@ jobs:
       - run: ls -al
       - run: buildtools/set-version
 
-      - run: echo "_auth = ${NPM_AUTH}" > ~/.npmrc
-      - run: echo "email = stephane.brunner@camptocamp.com" >> ~/.npmrc
+      - run: echo "//registry.npmjs.org/:_authToken=$(gopass gs/ci/npm/token)" > ~/.npmrc
 
       # Lint
       - run: make lint
