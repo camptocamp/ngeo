@@ -643,16 +643,19 @@ Controller.prototype.getLegendsObject = function(treeCtrl) {
     const scale = this.getScale_();
     // QGIS can handle multiple layers natively. Use Multiple URLs for other map
     // servers
-    if (gmfOgcServer.type !== ServerType.QGISSERVER) {
-      const layerNamesList = layersNames.split(',');
-      layerNamesList.forEach((layerName) => {
-        const wmtsLegendURL = this.layerHelper_.getWMSLegendURL(gmfOgcServer.url, layerName, scale);
-        if (!wmtsLegendURL) {
-          throw new Error('Missing wmtsLegendURL');
-        }
-        legendsObject[layerName] = wmtsLegendURL;
-      });
+    let layerNamesList;
+    if (gmfOgcServer.type === ServerType.QGISSERVER) {
+      layerNamesList = [layersNames];
+    } else {
+      layerNamesList = layersNames.split(',');
     }
+    layerNamesList.forEach((layerName) => {
+      const wmtsLegendURL = this.layerHelper_.getWMSLegendURL(gmfOgcServer.url, layerName, scale);
+      if (!wmtsLegendURL) {
+        throw new Error('Missing wmtsLegendURL');
+      }
+      legendsObject[layerName] = wmtsLegendURL;
+    });
     return legendsObject;
   }
 };
@@ -933,7 +936,7 @@ Controller.prototype.toggleSwipeLayer = function(treeCtrl) {
 Controller.prototype.toggleNodeLegend = function(legendNodeId) {
   const div = document.querySelector(legendNodeId);
   if (div) {
-    div.classList.toggle('d-none');
+    div.classList.toggle('show');
   }
 };
 
