@@ -194,6 +194,9 @@ LayertreeTreeManager.prototype.handleThemesChange_ = function() {
  * @return {boolean} True if the group has been added. False otherwise.
  */
 LayertreeTreeManager.prototype.setFirstLevelGroups = function(firstLevelGroups) {
+  //Remove existing submenu if opened at theme refresh
+  this.parseTreeNodes(this.root);
+
   this.root.children.length = 0;
   this.ngeoStateManager_.deleteParam(PermalinkParam.TREE_GROUPS);
   return this.addFirstLevelGroups(firstLevelGroups);
@@ -231,6 +234,35 @@ LayertreeTreeManager.prototype.addFirstLevelGroups = function(firstLevelGroups, 
 LayertreeTreeManager.prototype.setInitialFirstLevelGroups = function(firstGroups) {
   this.initialLevelFirstGroups_ = firstGroups;
 };
+
+/**
+ * @param {import('gmf/themes.js').GmfGroup | import('gmf/themes.js').GmfLayer | import('gmf/themes.js').GmfRootNode} node Layer tree node to remove.
+ */
+LayertreeTreeManager.prototype.parseTreeNodes = function(node) {
+  if (node.children) {
+    /**
+     * @param {any} child
+     */
+    node.children.forEach(child => {
+      this.parseTreeNodes(child);
+    });
+  }
+  if (node.popupId) {
+    this.removePopup_(node);
+  }
+};
+
+
+/**
+ * @param {import('gmf/themes.js').GmfGroup} node Layer tree node to remove.
+ * @private
+ */
+LayertreeTreeManager.prototype.removePopup_ = function(node) {
+  const popupId = node.popupId;
+  $(`#${popupId}`).remove();
+  delete node.popupId;
+};
+
 
 /**
  * @param {array} array An array of groups.

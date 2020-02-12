@@ -802,43 +802,14 @@ Controller.prototype.tagPopup = function(node) {
  * @param {import('gmf/themes.js').GmfGroup} node Layer tree node to remove.
  */
 Controller.prototype.removeNode = function(node) {
-  this.parseTreeNodes(node);
+  this.gmfTreeManager_.parseTreeNodes(node);
   this.gmfTreeManager_.removeGroup(node);
 };
 
 
 Controller.prototype.removeAllNodes = function() {
-  this.parseTreeNodes(this.root);
+  this.gmfTreeManager_.parseTreeNodes(this.root);
   this.gmfTreeManager_.removeAll();
-};
-
-
-/**
- * @param {import('gmf/themes.js').GmfGroup | import('gmf/themes.js').GmfLayer | import('gmf/themes.js').GmfRootNode} node Layer tree node to remove.
- */
-Controller.prototype.parseTreeNodes = function(node) {
-  if (node.children) {
-    /**
-     * @param {any} child
-     */
-    node.children.forEach(child => {
-      this.parseTreeNodes(child);
-    });
-  }
-  if (node.popupId) {
-    this.removePopup_(node);
-  }
-};
-
-
-/**
- * @param {import('gmf/themes.js').GmfGroup} node Layer tree node to remove.
- * @private
- */
-Controller.prototype.removePopup_ = function(node) {
-  const popupId = node.popupId;
-  $(`#${popupId}`).remove();
-  delete node.popupId;
 };
 
 
