@@ -1,6 +1,6 @@
 ---
 
-name: Clean docker hub tags
+name: Clean GitHub pages
 
 on:
   delete
@@ -8,7 +8,7 @@ on:
 jobs:
   clean:
     runs-on: ubuntu-18.04
-    name: Clean docker hub tags
+    name: Clean GitHub pages
     timeout-minutes: 5
 
     steps:
