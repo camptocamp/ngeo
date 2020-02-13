@@ -446,6 +446,7 @@ class AuthenticationController {
 
     this.isLoading = true;
     if (!this.loginVal) {
+      this.isLoading = false;
       this.setError_(gettextCatalog.getString('Please, input a login...'));
       return;
     }
