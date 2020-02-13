@@ -1,6 +1,6 @@
 ---
 
-name: Clean docker hub tags
+name: Clean GitHub pages
 
 on:
   delete
@@ -8,7 +8,7 @@ on:
 jobs:
   clean:
     runs-on: ubuntu-18.04
-    name: Clean docker hub tags
+    name: Clean GitHub pages
     timeout-minutes: 5
 
     steps:
@@ -19,7 +19,10 @@ jobs:
         run: |
           git config --global user.name "Continuous integration"
           git config --global user.email "ci@comptocamp.org"
-          git rm -r $(cat ${GITHUB_EVENT_PATH}|jq --raw-output .ref)
-          git commit --amend -m "Clean branch $(cat ${GITHUB_EVENT_PATH}|jq --raw-output .ref)"
-          remote_repo="https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/camptocamp/ngeo.git"
-          git push "${remote_repo}" gh-pages --force
+          if [ -d $(cat ${GITHUB_EVENT_PATH}|jq --raw-output .ref) ]
+          then
+            git rm -r $(cat ${GITHUB_EVENT_PATH}|jq --raw-output .ref)
+            git commit --amend -m "Clean branch $(cat ${GITHUB_EVENT_PATH}|jq --raw-output .ref)"
+            remote_repo="https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/camptocamp/ngeo.git"
+            git push "${remote_repo}" gh-pages --force
+          fi

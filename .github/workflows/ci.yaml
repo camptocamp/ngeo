@@ -38,8 +38,6 @@ jobs:
       - run: ls -al
       - run: buildtools/set-version
 
-      - run: echo "//registry.npmjs.org/:_authToken=$(gopass gs/ci/npm/token)" > ~/.npmrc
-
       # Lint
       - run: make lint
       - run: make spell
@@ -60,6 +58,8 @@ jobs:
         with:
           ci-gpg-private-key: ${{secrets.CI_GPG_PRIVATE_KEY}}
           github-gopass-ci-token: ${{secrets.GITHUB_GOPASS_CI_TOKEN}}
+        if: github.repository == 'camptocamp/ngeo'
+      - run: echo "//registry.npmjs.org/:_authToken=$(gopass gs/ci/npm/token)" > ~/.npmrc
         if: github.repository == 'camptocamp/ngeo'
       - name: Build ~/.transifexrc
         run: |
