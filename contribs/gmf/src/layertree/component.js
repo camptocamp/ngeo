@@ -942,6 +942,18 @@ Controller.prototype.toggleNodeLegend = function(legendNodeId) {
 
 
 /**
+ * Toggle the menu for a node
+ * @param {string} legendNodeId The DOM node menu id to toggle
+ */
+Controller.prototype.toggleNodeMenu = function(menuNodeId) {
+  const div = document.querySelector(menuNodeId);
+  if (div) {
+    div.classList.toggle('d-none');
+  }
+};
+
+
+/**
  * @param {import("gmf/datasource/OGC.js").default} ds Data source to filter.
  */
 Controller.prototype.toggleFiltrableDataSource = function(ds) {
