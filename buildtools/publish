@@ -28,6 +28,7 @@ git rm --ignore-unmatch -r --quiet --force ${GIT_BRANCH} || true
 mkdir -p ${GIT_BRANCH}/examples
 cp -r .build/examples-hosted/* ${GIT_BRANCH}/examples/
 cp -r apidoc ${GIT_BRANCH}/
+cp -r jsdoc/build ${GIT_BRANCH}/jsdoc
 cp -r api/dist ${GIT_BRANCH}/api
 
 # Rewrite root commit and force push
