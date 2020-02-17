@@ -79,11 +79,15 @@ function loaded(page, browser) {
         await browser.close();
       }
     }
-  }, 2000);
+  }, 1000);
 }
 (async () => {
-  browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-web-security', '--single-process']});
+  browser = await puppeteer.launch({
+    args: ['--no-sandbox', '--disable-web-security', '--single-process'],
+    headless: true
+  });
   const page = await browser.newPage();
+
   await page.setViewport({width: 1920, height: 1080});
   await page.setRequestInterception(true);
   page.on('pageerror', async e => {
@@ -132,7 +136,11 @@ function loaded(page, browser) {
         request.headers().origin = 'http://localhost:3000';
       }
       request.continue({
-        url
+        url,
+        // Don't be intranet
+        headers: {
+          'Forwarded': 'for=8.8.8.8;proto=https'
+        }
       });
     } else if (url.includes('tile.openstreetmap.org') ||
         url.startsWith('https://tiles.openseamap.org') ||

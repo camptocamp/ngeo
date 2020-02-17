@@ -30,7 +30,7 @@ jobs:
       - run: npm --version
 
       - run: sudo apt update
-      - run: sudo apt install g++-4.8 python3-venv
+      - run: sudo apt install g++-4.8 python3-venv graphicsmagick fonts-liberation2
 
       - uses: actions/checkout@v1
       - run: git config --global user.name "Continuous integration"
@@ -46,13 +46,22 @@ jobs:
       # Webpack build of ngeo/gmf examples and gmf apps
       - run: NODE_ENV=production make examples-hosted
       - run: make check-examples
+      - uses: actions/upload-artifact@v1
+        with:
+          name: Examples hosted
+          path: .build/examples-hosted
+        if: failure()
+
       #- run: npm run typecheck
       - run: "! (npm run typecheck|grep -v '^node_modules/'|grep '^[a-z]')"
       # Generate API doc
       - run: npm run doc
       - run: npm run jsdoc
       - run: npm run build-api
-      - run: cat /home/runner/.npm/_logs/*
+      - uses: actions/upload-artifact@v1
+        with:
+          name: Npm logs
+          path: /home/runner/.npm/_logs
         if: failure()
 
       - uses: camptocamp/initialise-gopass-summon-action@v1
