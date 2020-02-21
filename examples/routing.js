@@ -72,7 +72,7 @@ function MainController() {
   /**
    * @type {boolean}
    */
-  this.routingfeatureActive = true;
+  this.routingPanelActive = true;
 }
 
 module.controller('MainController', MainController);
