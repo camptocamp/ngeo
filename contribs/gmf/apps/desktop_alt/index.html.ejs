@@ -101,7 +101,7 @@
               data-toggle="tooltip" data-placement="left" data-original-title="{{'Import Layer'|translate}}">
               <span class="fa fa-upload"></span>
             </button>
-            <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.routingfeatureActive"
+            <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.routingPanelActive"
                     data-toggle="tooltip" data-placement="left" data-original-title="{{'Routing'|translate}}">
               <span class="fa fa-map-signs"></span>
             </button>
@@ -256,11 +256,11 @@
               </gmf-importdatasource>
             </div>
           </div>
-          <div ng-show="mainCtrl.routingfeatureActive" class="row">
+          <div ng-show="mainCtrl.routingPanelActive" class="row">
             <div class="col-sm-12">
               <div class="gmf-app-tools-content-heading">
                 {{'Routing'|translate}}
-                <a class="btn close" ng-click="mainCtrl.routingfeatureActive = false">&times;</a>
+                <a class="btn close" ng-click="mainCtrl.routingPanelActive = false">&times;</a>
               </div>
               <ngeo-routing
                   ngeo-routing-map="mainCtrl.map">

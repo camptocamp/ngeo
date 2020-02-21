@@ -97,7 +97,7 @@ export class AbstractDesktopController extends AbstractAPIController {
     /**
      * @type {boolean}
      */
-    this.routingfeatureActive = false;
+    this.routingPanelActive = false;
 
     /**
      * @type {boolean}
