@@ -290,7 +290,7 @@ export class AuthenticationService extends olEventsEventTarget {
    */
   handleLogin_(checkingLoginStatus, resp) {
     if (resp.data.is_password_changed === false && this.forcePasswordChange) {
-      const event = new ngeoCustomEvent('mustChangePassword');
+      const event = new ngeoCustomEvent('mustChangePassword', {username: resp.data.username});
       this.dispatchEvent(event);
       return;
     }

@@ -236,11 +236,19 @@ class AuthenticationController {
     this.changingPassword = false;
 
     /**
+     * @type {?string}
+     */
+    this.changingPasswordUsername = null;
+
+    /**
      * @type {boolean}
      */
     this.userMustChangeItsPassword = false;
 
-    listen(gmfAuthenticationService, 'mustChangePassword', () => {
+
+    listen(gmfAuthenticationService, 'mustChangePassword', (event) => {
+      const username = /** @type {CustomEvent} */ (event).detail.username;
+      this.changingPasswordUsername = username;
       this.changingPassword = true;
       this.userMustChangeItsPassword = true;
     });
@@ -367,7 +375,13 @@ class AuthenticationController {
         this.setError_(errors);
       } else {
         // Send request with current credentials, which may fail if the old password given is incorrect.
-        const username = this.gmfUser.username;
+        let username;
+        if (this.userMustChangeItsPassword) {
+          username = this.changingPasswordUsername;
+        } else {
+          username = this.gmfUser.username;
+        }
+        console.assert(username);
         this.gmfAuthenticationService_.changePassword(username, oldPwd, newPwd, confPwd, this.otpVal)
           .then(() => {
             this.changePasswordReset();
