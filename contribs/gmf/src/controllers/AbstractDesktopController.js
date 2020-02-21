@@ -97,11 +97,6 @@ export class AbstractDesktopController extends AbstractAPIController {
     /**
      * @type {boolean}
      */
-    this.routingPanelActive = false;
-
-    /**
-     * @type {boolean}
-     */
     this.googleStreetViewActive = false;
 
     $scope.$watch(() => this.googleStreetViewActive, (newVal) => {

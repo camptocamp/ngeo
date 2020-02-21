@@ -426,6 +426,11 @@ export function AbstractAppController(config, map, $scope, $injector) {
   this.drawProfilePanelActive = false;
 
   /**
+   * @type {boolean}
+   */
+  this.routingPanelActive = false;
+
+  /**
    * @type {import('gmf/authentication/Service.js').User}
    */
   this.gmfUser = $injector.get('gmfUser');
@@ -513,6 +518,9 @@ export function AbstractAppController(config, map, $scope, $injector) {
 
   const contextdataActivate = new ngeoMiscToolActivate(this, 'contextdataActive');
   ngeoToolActivateMgr.registerTool(mapTools, contextdataActivate, false);
+
+  const routingPanelActive = new ngeoMiscToolActivate(this, 'routingPanelActive');
+  ngeoToolActivateMgr.registerTool(mapTools, routingPanelActive, false);
 
   $scope.$root.$on(ThemeEventType.THEME_NAME_SET, (event, name) => {
     this.gmfThemes_.getThemeObject(name).then((theme) => {
