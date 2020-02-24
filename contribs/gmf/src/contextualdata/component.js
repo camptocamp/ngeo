@@ -176,10 +176,15 @@ export function ContextualdataController($compile, $timeout, $scope, gmfRaster, 
   this.gmfContextualdataOptions_ = $injector.has('gmfContextualdataOptions') ?
     $injector.get('gmfContextualdataOptions') : {};
 
-  document.body.addEventListener('mousedown', () => {
-    this.$scope_.$apply(() => {
-      this.hidePopover();
-    });
+  document.body.addEventListener('mousedown', event => {
+    const element = this.overlay_.getElement();
+    const target = /** @type {Node} */ (event.target);
+    // don't close if the user click the popup itself. this allows the text to be copied.
+    if (!element.contains(target)) {
+      this.$scope_.$apply(() => {
+        this.hidePopover();
+      });
+    }
   });
 }
 
