@@ -381,7 +381,7 @@ VectorEncoder.prototype.encodeVectorStyleStroke = function(symbolizer, strokeSty
     }
     const strokeColorRgba = asColorArray(strokeColor);
     if (!(Array.isArray(strokeColorRgba))) {
-      throw new Error('parsed StrokeColor is not an array');
+      throw new Error('Parsed StrokeColorRgba is not an array');
     }
     symbolizer.strokeColor = rgbArrayToHex(strokeColorRgba);
     symbolizer.strokeOpacity = strokeColorRgba[3];
@@ -461,8 +461,8 @@ VectorEncoder.prototype.encodeTextStyle = function(symbolizers, textStyle) {
         throw new Error('Wrong strokeColor type');
       }
       const strokeColorRgba = asColorArray(strokeColor);
-      if (!(Array.isArray(strokeColor))) {
-        throw new Error('Wrong strokeColor type');
+      if (!(Array.isArray(strokeColorRgba))) {
+        throw new Error('Parsed strokeColorRgba is not an array');
       }
       symbolizer.haloColor = rgbArrayToHex(strokeColorRgba);
       symbolizer.haloOpacity = strokeColorRgba[3];
@@ -480,8 +480,8 @@ VectorEncoder.prototype.encodeTextStyle = function(symbolizers, textStyle) {
         throw new Error('Wrong fillColor type');
       }
       const fillColorRgba = asColorArray(fillColor);
-      if (!(Array.isArray(fillColor))) {
-        throw new Error('Wrong fillColor type');
+      if (!(Array.isArray(fillColorRgba))) {
+        throw new Error('Parsed fillColorRgba is not an array');
       }
       symbolizer.fontColor = rgbArrayToHex(fillColorRgba);
     }
