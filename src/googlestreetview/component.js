@@ -126,7 +126,7 @@ class GoogleStreetviewController {
     /**
      * @type {number}
      */
-    this.radius = -1;
+    this.radius;
 
 
     // Injected properties
