@@ -265,7 +265,7 @@ Controller.prototype.setLayer = function(layer, opt_silent) {
  * @param {import("ol/layer/Base.js").default} layer The opacity background layer.
  */
 Controller.prototype.setOpacityBgLayer = function(layer) {
-  const opacity = this.opacityLayer ? this.opacityLayer.getOpacity() : layer.getOpacity();
+  const opacity = this.opacityLayer ? this.opacityLayer.getOpacity() : 0;
   layer.setOpacity(opacity);
   this.opacityLayer = layer;
   this.opacityLayer.setVisible(opacity !== 0);
