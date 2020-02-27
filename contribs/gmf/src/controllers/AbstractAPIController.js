@@ -24,13 +24,15 @@ import angular from 'angular';
 import gmfControllersAbstractAppController, {AbstractAppController, getLocationIcon}
   from 'gmf/controllers/AbstractAppController.js';
 import ngeoMapResizemap from 'ngeo/map/resizemap.js';
-import * as olProj from 'ol/proj.js';
+import {get as getProjection} from 'ol/proj.js';
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
 import olControlScaleLine from 'ol/control/ScaleLine.js';
 import olControlZoom from 'ol/control/Zoom.js';
 import olControlRotate from 'ol/control/Rotate.js';
-import * as olInteraction from 'ol/interaction.js';
+import {defaults as interactionsDefaults} from 'ol/interaction.js';
+import olInteractionDragPan from 'ol/interaction/DragPan.js';
+import {noModifierKeys} from 'ol/events/condition.js';
 
 /**
  * API application abstract controller.
@@ -47,7 +49,7 @@ export class AbstractAPIController extends AbstractAppController {
    */
   constructor(config, $scope, $injector) {
     const viewConfig = {
-      projection: olProj.get(`EPSG:${config.srid || 2056}`)
+      projection: getProjection(`EPSG:${config.srid || 2056}`)
     };
     Object.assign(viewConfig, config.mapViewConfig || {});
 
@@ -55,7 +57,7 @@ export class AbstractAPIController extends AbstractAppController {
     if (!scaleline) {
       throw new Error('Missing scaleline');
     }
-    super(config, new olMap({
+    const map = new olMap({
       pixelRatio: config.mapPixelRatio,
       layers: [],
       view: new olView(viewConfig),
@@ -73,11 +75,16 @@ export class AbstractAPIController extends AbstractAppController {
           tipLabel: ''
         })
       ],
-      interactions: config.mapInteractions || olInteraction.defaults({
+      interactions: config.mapInteractions || interactionsDefaults({
         pinchRotate: true,
         altShiftDragRotate: true
       })
-    }), $scope, $injector);
+    });
+    map.addInteraction(new olInteractionDragPan({
+      condition: noModifierKeys
+    }));
+
+    super(config, map, $scope, $injector);
   }
 }
 
