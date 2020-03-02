@@ -72,7 +72,7 @@ module.run(
  *
  * @htmlAttribute {boolean} gmf-mobile-measurelength-active Used to active
  * or deactivate the component.
- * @htmlAttribute {number=} gmf-mobile-measurelength-precision the number of significant digits to display.
+ * @htmlAttribute {number=} gmf-mobile-measurelength-precision the number of significant digits to display. Default is 2.
  * @htmlAttribute {import("ol/Map.js").default} gmf-mobile-measurelength-map The map.
  * @htmlAttribute {import("ol/style/Style.js").StyleLike=}
  *     gmf-mobile-measurelength-sketchstyle A style for the measure length.
@@ -140,7 +140,7 @@ class Controller extends MeasueMobileBaseController {
   init() {
     this.measure = new ngeoInteractionMeasureLengthMobile(
       this.filter('ngeoUnitPrefix'), this.gettextCatalog, {
-        precision: this.precision || 0,
+        precision: this.precision || 2,
         sketchStyle: this.sketchStyle
       }
     );

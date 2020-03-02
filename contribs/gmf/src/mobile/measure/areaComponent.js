@@ -72,7 +72,7 @@ module.run(
  *
  * @htmlAttribute {boolean} gmf-mobile-measurearea-active Used to active
  * or deactivate the component.
- * @htmlAttribute {number=} gmf-mobile-measurearea-precision the number of significant digits to display.
+ * @htmlAttribute {number=} gmf-mobile-measurearea-precision the number of significant digits to display. Default is 2.
  * @htmlAttribute {import("ol/Map.js").default} gmf-mobile-measurearea-map The map.
  * @htmlAttribute {import("ol/style/Style.js").StyleLike=}
  *     gmf-mobile-measurearea-sketchstyle A style for the measure area.
@@ -138,11 +138,8 @@ class Controller extends MeasueMobileBaseController {
    * Initialise the controller.
    */
   init() {
-    if (this.precision === null) {
-      throw new Error('Missing precision');
-    }
     this.measure = new ngeoInteractionMeasureAreaMobile(this.filter('ngeoUnitPrefix'), this.gettextCatalog, {
-      precision: this.precision,
+      precision: this.precision || 2,
       sketchStyle: this.sketchStyle
     });
 
