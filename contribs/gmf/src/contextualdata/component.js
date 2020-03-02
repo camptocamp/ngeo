@@ -221,9 +221,12 @@ ContextualdataController.prototype.init = function() {
  * @private
  */
 ContextualdataController.prototype.handleMapTouchStart_ = function(event) {
-  this.longPressTimeout_ = window.setTimeout(() => {
-    this.handleMapContextMenu_(event);
-  }, 500);
+  // Don't open the context menu if 2-touch event is fired, ie. pinch the map on mobile
+  if (event.targetTouches.length < 2 && event.changedTouches.length < 2) {
+    this.longPressTimeout_ = window.setTimeout(() => {
+      this.handleMapContextMenu_(event);
+    }, 500);
+  }
 };
 
 
