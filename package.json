@@ -38,7 +38,7 @@
     "@camptocamp/babel-plugin-angularjs-annotate": "0.8.2",
     "@fortawesome/fontawesome-free": "5.12.1",
     "@geoblocks/proj": "0.4.2",
-    "@sentry/browser": "5.13.0",
+    "@sentry/browser": "5.13.2",
     "@sentry/types": "5.12.4",
     "@trevoreyre/autocomplete-js": "2.1.1",
     "@types/angular": "1.6.57",
