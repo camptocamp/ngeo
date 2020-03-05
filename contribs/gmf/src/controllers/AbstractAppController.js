@@ -145,16 +145,16 @@ export function AbstractAppController(config, map, $scope, $injector) {
   /**
    * Themes service
    * @type {import("gmf/theme/Themes.js").ThemesService}
-   * @private
+   * @protected
    */
-  this.gmfThemes_ = $injector.get('gmfThemes');
+  this.gmfThemes = $injector.get('gmfThemes');
 
   /**
    * Checks if the themes are loaded
    * @type {boolean}
    */
   this.loading = true;
-  this.gmfThemes_.getThemesObject().finally(() => {
+  this.gmfThemes.getThemesObject().finally(() => {
     this.loading = false;
   });
 
@@ -180,7 +180,7 @@ export function AbstractAppController(config, map, $scope, $injector) {
    * @private
    */
   this.updateHasEditableLayers_ = function() {
-    this.gmfThemes_.hasEditableLayers().then((hasEditableLayers) => {
+    this.gmfThemes.hasEditableLayers().then((hasEditableLayers) => {
       this.hasEditableLayers = hasEditableLayers;
     });
   };
@@ -236,7 +236,7 @@ export function AbstractAppController(config, map, $scope, $injector) {
 
     // Open filter panel if 'open_panel' is set in functionalities and
     // has 'layer_filter' as first value
-    this.gmfThemes_.getThemesObject().then((themes) => {
+    this.gmfThemes.getThemesObject().then((themes) => {
       if (functionalities &&
           functionalities.open_panel &&
           functionalities.open_panel[0] === 'layer_filter') {
@@ -249,7 +249,7 @@ export function AbstractAppController(config, map, $scope, $injector) {
     this.gmfThemeManager.setThemeName('', true);
 
     // Reload themes and background layer when login status changes.
-    this.gmfThemes_.loadThemes(roleId);
+    this.gmfThemes.loadThemes(roleId);
 
     if (evt.type !== 'ready') {
       const themeName = this.permalink_.defaultThemeNameFromFunctionalities();
@@ -523,7 +523,7 @@ export function AbstractAppController(config, map, $scope, $injector) {
   ngeoToolActivateMgr.registerTool(mapTools, routingPanelActive, false);
 
   $scope.$root.$on(ThemeEventType.THEME_NAME_SET, (event, name) => {
-    this.gmfThemes_.getThemeObject(name).then((theme) => {
+    this.gmfThemes.getThemeObject(name).then((theme) => {
       this.setDefaultBackground_(theme);
     });
   });
@@ -534,7 +534,7 @@ export function AbstractAppController(config, map, $scope, $injector) {
    * @private
    */
   this.updateCurrentBackgroundLayer_ = (skipPermalink) => {
-    this.gmfThemes_.getBgLayers().then((layers) => {
+    this.gmfThemes.getBgLayers().then((layers) => {
       let background;
       if (!skipPermalink) {
         // get the background from the permalink
@@ -795,7 +795,7 @@ AbstractAppController.prototype.initLanguage = function() {
  * @private
  */
 AbstractAppController.prototype.setDefaultBackground_ = function(theme) {
-  this.gmfThemes_.getBgLayers().then((layers) => {
+  this.gmfThemes.getBgLayers().then((layers) => {
     let layer;
 
     // get the background from the permalink
