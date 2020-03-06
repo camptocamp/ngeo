@@ -252,6 +252,7 @@ module.component('gmfPrint', printComponent);
  * @typedef {Object} OptionsType
  * @property {boolean} [scaleInput]
  * @property {OptionsLegendType} [legend]
+ * @property {number} [goodnessOfFit]
  */
 
 
@@ -424,6 +425,12 @@ export class PrintController {
       params: {},
     };
 
+    /**
+     * @type {number}
+     * @private
+     */
+    this.goodnessOfFit_ = 0.5;
+
     if ($injector.has('gmfPrintOptions')) {
       /**
        * @type {OptionsType}
@@ -434,6 +441,9 @@ export class PrintController {
       }
       if (options.legend) {
         Object.assign(this.gmfLegendOptions_, options.legend);
+      }
+      if (typeof options.goodnessOfFit === 'number') {
+        this.goodnessOfFit_ = options.goodnessOfFit;
       }
     }
 
@@ -1054,6 +1064,8 @@ export class PrintController {
     if (typeof this.layoutInfo.layout != 'string') {
       throw new Error('Wrong layoutInfo.layout type');
     }
+
+    customAttributes.goodnessOfFit = this.goodnessOfFit_;
 
     // convert the WMTS layers to WMS
     const map = new olMap({});
