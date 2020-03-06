@@ -3,10 +3,11 @@
 name: Lint pull request title
 
 on:
-  push:
   pull_request:
     types:
+      - opened
       - edited
+      - reopened
 
 jobs:
   lint:
