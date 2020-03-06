@@ -211,6 +211,7 @@ function gmfPrintTemplateUrl($element, $attrs, gmfPrintTemplateUrl) {
  *     property's name of the field.
  *     Example: {'comments': 'demo', 'legend': false}. Doesn't work for the dpi
  *     and the scale. Server's values are used in priority.
+ * @htmlAttribute {string} gmf-print-defaultlayout Optional. The default layout.
  * @htmlAttribute {Array.<string>} gmf-print-hiddenattributes The list of attributes that should be hidden.
  * @ngdoc component
  * @ngname gmfPrint
@@ -222,6 +223,7 @@ const printComponent = {
     'rotateMask': '<?gmfPrintRotatemask',
     'fieldValues': '<?gmfPrintFieldvalues',
     'hiddenAttributeNames': '<?gmfPrintHiddenattributes',
+    'defaultLayout': '<?gmfPrintDefaultlayout',
     'attributesOut': '=?gmfPrintAttributesOut'
   },
   controller: 'GmfPrintController',
@@ -314,6 +316,11 @@ class PrintController {
      * @type {Object.<string, string|number|boolean>!}
      */
     this.fieldValues = {};
+
+    /**
+     * @type {string}
+     */
+    this.defaultLayout;
 
     /**
      * @type {Array.<PrintSimpleAttributes>}
@@ -689,6 +696,9 @@ class PrintController {
         this.gmfPrintState_.state = PrintStateEnum.NOT_IN_USE;
         // Get capabilities - On success
         this.parseCapabilities_(resp);
+        if (this.defaultLayout) {
+          this.setLayout(this.defaultLayout);
+        }
         this.postComposeListenerKey_ = olEvents.listen(this.map, 'postcompose', this.postcomposeListener_);
         this.pointerDragListenerKey_ = olEvents.listen(this.map, 'pointerdrag', this.onPointerDrag_, this);
         this.mapViewResolutionChangeKey_ = olEvents.listen(this.map.getView(), 'change:resolution', () => {
