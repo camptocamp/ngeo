@@ -21,3 +21,17 @@ jobs:
           title-regex: "^[A-Z0-9].*"
           on-failed-regex-comment: "The title should start with a capital."
           repo-token: "${{ secrets.GITHUB_TOKEN }}"
+
+      - name: Update status
+        uses: ouzi-dev/commit-status-updater@v1.0.0
+        with:
+          status: error
+          description: Global status
+          name: Pull request title
+        if: failure()
+      - name: Update status
+        uses: ouzi-dev/commit-status-updater@v1.0.0
+        with:
+          status: success
+          description: Global status
+          name: Pull request title
