@@ -98,6 +98,12 @@ export function PrintService(url, $http, gettextCatalog, ngeoLayerHelper) {
    * @private
    */
   this.printNativeAngle_ = true;
+
+  /**
+   * @type {number}
+   * @private
+   */
+  this.goodnessOfFit_;
 }
 
 
@@ -134,6 +140,8 @@ PrintService.prototype.createSpec = function(
     dpi: dpi,
     rotation: /** number */ (customAttributes['rotation'])
   });
+
+  this.goodnessOfFit_ = customAttributes['goodnessOfFit'];
 
   this.encodeMap_(map, scale, specMap);
 
@@ -223,7 +231,7 @@ PrintService.prototype.encodeLayer = function(arr, layer, resolution) {
  * @param {number} resolution Resolution.
  */
 PrintService.prototype.encodeVectorLayer = function(arr, layer, resolution) {
-  this.vectorEncoder.encodeVectorLayer(arr, layer, resolution);
+  this.vectorEncoder.encodeVectorLayer(arr, layer, resolution, this.goodnessOfFit_);
 };
 
 /**
