@@ -127,7 +127,7 @@
           ng-attr-placeholder="{{'Confirm new password' | translate}}"/>
     </div>
     <div ng-if="$ctrl.gmfUser.otp_uri" class="form-group">
-      <label translate>Two factor authentication barcode:</label>
+      <label translate>Two factor authentication QR code:</label>
       <div><img class="" ng-src="{{$ctrl.otpImage}}"></div>
     </div>
     <div ng-if="$ctrl.gmfUser.two_factor_totp_secret" class="form-group">

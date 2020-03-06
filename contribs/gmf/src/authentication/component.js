@@ -246,8 +246,9 @@ class AuthenticationController {
     this.userMustChangeItsPassword = false;
 
 
-    listen(gmfAuthenticationService, 'mustChangePassword', (event) => {
-      const username = /** @type {CustomEvent} */ (event).detail.username;
+    listen(gmfAuthenticationService, 'mustChangePassword', event => {
+      const username = /** @type {CustomEvent} */ (event).detail.user.username;
+      this.gmfUser = /** @type {CustomEvent} */ (event).detail.user;
       this.changingPasswordUsername = username;
       this.changingPassword = true;
       this.userMustChangeItsPassword = true;
