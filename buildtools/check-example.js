@@ -121,6 +121,8 @@ function loaded(page, browser) {
       });
       return
     }
+
+    console.log(url);
     if (url.startsWith('http://localhost:8080/')) {
       url = url.replace('http://localhost:8080/', 'https://geomapfish-demo-2-5.camptocamp.com/');
     }
