@@ -120,6 +120,12 @@
               <gmf-authentication
                 gmf-authentication-info-message="mainCtrl.loginInfoMessage"
               ></gmf-authentication>
+              <div ng-if="mainCtrl.postLoading">
+                <i class="fa custom-spinner-connect fa-spin">
+                  <%=require('gmf/icons/spinner.svg?viewbox&height=1em')%>
+                </i>
+                {{'Loading themes, please wait...' | translate}}
+              </div>
             </div>
           </div>
           <div ng-show="mainCtrl.printPanelActive" class="row">

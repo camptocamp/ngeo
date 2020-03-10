@@ -192,10 +192,15 @@ export class AbstractDesktopController extends AbstractAPIController {
      */
     this.profileLine = null;
 
-    // Close the login panel on successful login.
+    // Close the login panel on successful login, after the new themes
+    // have finished loading.
     $scope.$watch(() => this.gmfUser.username, (newVal) => {
       if (newVal !== null && this.loginActive) {
-        this.loginActive = false;
+        this.postLoading = true;
+        this.gmfThemes.getThemesObject().finally(() => {
+          this.postLoading = false;
+          this.loginActive = false;
+        });
       }
     });
 
