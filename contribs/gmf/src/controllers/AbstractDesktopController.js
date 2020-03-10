@@ -196,9 +196,9 @@ export class AbstractDesktopController extends AbstractAPIController {
     // have finished loading.
     $scope.$watch(() => this.gmfUser.username, (newVal) => {
       if (newVal !== null && this.loginActive) {
-        this.loading = true;
+        this.postLoading = true;
         this.gmfThemes.getThemesObject().finally(() => {
-          this.loading = false;
+          this.postLoading = false;
           this.loginActive = false;
         });
       }

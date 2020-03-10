@@ -159,6 +159,13 @@ export function AbstractAppController(config, map, $scope, $injector) {
   });
 
   /**
+   * This property is set to `true` when the themes change after a
+   * successful login
+   * @type {boolean}
+   */
+  this.postLoading = false;
+
+  /**
    * Permalink service
    * @type {import("gmf/permalink/Permalink.js").PermalinkService}
    * @private
