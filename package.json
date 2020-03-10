@@ -126,7 +126,7 @@
     "qruri": "0.0.4",
     "resize-observer-polyfill": "1.5.1",
     "simple-html-tokenizer": "0.5.9",
-    "sinon": "9.0.0",
+    "sinon": "9.0.1",
     "svg-inline-loader": "0.8.2",
     "svgo": "1.3.2",
     "svgo-loader": "2.2.1",
