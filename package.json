@@ -39,7 +39,7 @@
     "@fortawesome/fontawesome-free": "5.12.1",
     "@geoblocks/proj": "0.4.2",
     "@sentry/browser": "5.13.2",
-    "@sentry/types": "5.13.2",
+    "@sentry/types": "5.14.0",
     "@trevoreyre/autocomplete-js": "2.1.1",
     "@types/angular": "1.6.57",
     "@types/angular-animate": "1.5.10",
