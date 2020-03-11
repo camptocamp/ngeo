@@ -664,14 +664,14 @@ ProfileController.prototype.getZFactory_ = function(layerName) {
   /**
    * Generic GMF extractor for the 'given' value in 'values' in profileData.
    * @param {Object} item The item.
-   * @return {number} The elevation.
+   * @return {number|null} The elevation or `null` if the value is not present in the data.
    * @private
    */
   const getZFn = function(item) {
     if ('values' in item && layerName in item.values && item.values[layerName]) {
       return parseFloat(item.values[layerName]);
     }
-    return Number.NaN;
+    return null;
   };
   return getZFn;
 };
