@@ -117,7 +117,14 @@ VectorEncoder.prototype.encodeVectorLayer = function(arr, layer, resolution, goo
 
         const featureStyleProp = `_ngeo_style_${j}`;
         const styleId = `${olUtilGetUid(style).toString()}-${geometryType}`;
-        this.encodeVectorStyle(mapfishStyleObject, geometryType, style, styleId, featureStyleProp, goodnessOfFit);
+        this.encodeVectorStyle(
+          mapfishStyleObject,
+          geometryType,
+          style,
+          styleId,
+          featureStyleProp,
+          goodnessOfFit
+        );
         geojsonFeature.properties[featureStyleProp] = styleId;
       }
     }
@@ -152,7 +159,14 @@ VectorEncoder.prototype.encodeVectorLayer = function(arr, layer, resolution, goo
  * @param {string} featureStyleProp Feature style property name.
  * @param {number} [goodnessOfFit] Goodness of fit.
  */
-VectorEncoder.prototype.encodeVectorStyle = function(object, geometryType, style, styleId, featureStyleProp, goodnessOfFit) {
+VectorEncoder.prototype.encodeVectorStyle = function(
+  object,
+  geometryType,
+  style,
+  styleId,
+  featureStyleProp,
+  goodnessOfFit
+) {
   if (!(geometryType in PRINT_STYLE_TYPES)) {
     // unsupported geometry type
     return;
