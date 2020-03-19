@@ -218,7 +218,6 @@ function gmfPrintTemplateUrl($element, $attrs, gmfPrintTemplateUrl) {
  *     property's name of the field.
  *     Example: {'comments': 'demo', 'legend': false}. Doesn't work for the dpi
  *     and the scale. Server's values are used in priority.
- * @htmlAttribute {string} gmf-print-defaultlayout Optional. The default layout.
  * @htmlAttribute {string[]} gmf-print-hiddenattributes The list of attributes that should be hidden.
  * @ngdoc component
  * @ngname gmfPrint
@@ -230,7 +229,6 @@ const printComponent = {
     'rotateMask': '<?gmfPrintRotatemask',
     'fieldValues': '<?gmfPrintFieldvalues',
     'hiddenAttributeNames': '<?gmfPrintHiddenattributes',
-    'defaultLayout': '<?gmfPrintDefaultlayout',
     'attributesOut': '=?gmfPrintAttributesOut'
   },
   controller: 'GmfPrintController',
@@ -255,6 +253,7 @@ module.component('gmfPrint', printComponent);
  * @property {boolean} [scaleInput]
  * @property {OptionsLegendType} [legend]
  * @property {number} [goodnessOfFit]
+ * @property {string} [defaultLayout]
  */
 
 
@@ -451,6 +450,9 @@ export class PrintController {
       }
       if (typeof options.goodnessOfFit === 'number') {
         this.goodnessOfFit_ = options.goodnessOfFit;
+      }
+      if (options.defaultLayout) {
+        this.defaultLayout = options.defaultLayout;
       }
     }
 
