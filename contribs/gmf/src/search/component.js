@@ -911,19 +911,17 @@ class SearchController {
     if (this.color) {
       const color = asColorArray(this.color);
 
-      const strokeColor = color.slice();
-      // 100% opacity for the stroke color
-      strokeColor[3] = 1;
-
-      const fillColor = color.slice();
-      // 50% opacity for the fill color
-      fillColor[3] = 0.5;
-
       const strokeStyle = style.getStroke();
+      const prevStrokeColor = strokeStyle.getColor();
+      const strokeColor = color.slice();
+      strokeColor[3] = prevStrokeColor[3];
       if (strokeStyle) {
         strokeStyle.setColor(strokeColor);
       }
       const fillStyle = style.getFill();
+      const prevFillColor = fillStyle.getColor();
+      const fillColor = color.slice();
+      fillColor[3] = prevFillColor[3];
       if (fillStyle) {
         fillStyle.setColor(fillColor);
       }
