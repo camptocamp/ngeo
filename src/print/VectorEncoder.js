@@ -52,8 +52,9 @@ const PRINT_STYLE_TYPES = {
  * @param {Array.<import('ngeo/print/mapfish-print-v3.js').MapFishPrintLayer>} arr Array.
  * @param {import("ol/layer/Vector.js").default} layer Layer.
  * @param {number} resolution Resolution.
+ * @param {number} [goodnessOfFit] Goodness of fit.
  */
-VectorEncoder.prototype.encodeVectorLayer = function(arr, layer, resolution) {
+VectorEncoder.prototype.encodeVectorLayer = function(arr, layer, resolution, goodnessOfFit) {
   const source = /** @type {olSourceVector} */(layer.getSource());
   console.assert(source instanceof olSourceVector);
 
@@ -116,7 +117,14 @@ VectorEncoder.prototype.encodeVectorLayer = function(arr, layer, resolution) {
 
         const featureStyleProp = `_ngeo_style_${j}`;
         const styleId = `${olUtilGetUid(style).toString()}-${geometryType}`;
-        this.encodeVectorStyle(mapfishStyleObject, geometryType, style, styleId, featureStyleProp);
+        this.encodeVectorStyle(
+          mapfishStyleObject,
+          geometryType,
+          style,
+          styleId,
+          featureStyleProp,
+          goodnessOfFit
+        );
         geojsonFeature.properties[featureStyleProp] = styleId;
       }
     }
@@ -149,8 +157,16 @@ VectorEncoder.prototype.encodeVectorLayer = function(arr, layer, resolution) {
  * @param {import("ol/style/Style.js").default} style Style.
  * @param {string} styleId Style id.
  * @param {string} featureStyleProp Feature style property name.
+ * @param {number} [goodnessOfFit] Goodness of fit.
  */
-VectorEncoder.prototype.encodeVectorStyle = function(object, geometryType, style, styleId, featureStyleProp) {
+VectorEncoder.prototype.encodeVectorStyle = function(
+  object,
+  geometryType,
+  style,
+  styleId,
+  featureStyleProp,
+  goodnessOfFit
+) {
   if (!(geometryType in PRINT_STYLE_TYPES)) {
     // unsupported geometry type
     return;
@@ -184,7 +200,7 @@ VectorEncoder.prototype.encodeVectorStyle = function(object, geometryType, style
     }
   }
   if (textStyle !== null) {
-    this.encodeTextStyle(styleObject.symbolizers, textStyle);
+    this.encodeTextStyle(styleObject.symbolizers, textStyle, goodnessOfFit);
   }
 };
 
@@ -372,9 +388,10 @@ VectorEncoder.prototype.encodeVectorStyleStroke = function(symbolizer, strokeSty
  * @param {Array.<import('ngeo/print/mapfish-print-v3.js').MapFishPrintSymbolizer>} symbolizers Array of
  *    MapFish Print symbolizers.
  * @param {!import("ol/style/Text.js").default} textStyle Text style.
+ * @param {number} [goodnessOfFit] Goodness of fit.
  * @protected
  */
-VectorEncoder.prototype.encodeTextStyle = function(symbolizers, textStyle) {
+VectorEncoder.prototype.encodeTextStyle = function(symbolizers, textStyle, goodnessOfFit) {
   const symbolizer = /** @type {import('ngeo/print/mapfish-print-v3.js').MapFishPrintSymbolizerText} */ ({
     type: 'Text'
   });
@@ -449,6 +466,10 @@ VectorEncoder.prototype.encodeTextStyle = function(symbolizers, textStyle) {
       // Mapfish uses the opposite direction of OpenLayers for y axis, so the
       // minus sign is required for the y offset to be identical.
       symbolizer.labelYOffset = -textStyle.getOffsetY();
+    }
+
+    if (goodnessOfFit !== undefined) {
+      symbolizer.goodnessOfFit = goodnessOfFit;
     }
 
     symbolizers.push(symbolizer);
