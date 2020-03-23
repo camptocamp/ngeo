@@ -245,6 +245,7 @@ module.component('gmfPrint', printComponent);
  * @typedef {Object} OptionsType
  * @property {boolean} [scaleInput]
  * @property {OptionsLegendType} [legend]
+ * @property {string} [defaultLayout]
  * @property {number} [goodnessOfFit]
  */
 
@@ -315,6 +316,11 @@ class PrintController {
      * @type {Object.<string, string|number|boolean>!}
      */
     this.fieldValues = {};
+
+    /**
+     * @type {string}
+     */
+    this.defaultLayout;
 
     /**
      * @type {Array.<PrintSimpleAttributes>}
@@ -429,6 +435,9 @@ class PrintController {
       }
       if (options.legend) {
         Object.assign(this.gmfLegendOptions_, options.legend);
+      }
+      if (options.defaultLayout) {
+        this.defaultLayout = options.defaultLayout;
       }
       if (typeof options.goodnessOfFit === 'number') {
         this.goodnessOfFit_ = options.goodnessOfFit;
@@ -699,6 +708,9 @@ class PrintController {
         this.gmfPrintState_.state = PrintStateEnum.NOT_IN_USE;
         // Get capabilities - On success
         this.parseCapabilities_(resp);
+        if (this.defaultLayout) {
+          this.setLayout(this.defaultLayout);
+        }
         this.postComposeListenerKey_ = olEvents.listen(this.map, 'postcompose', this.postcomposeListener_);
         this.pointerDragListenerKey_ = olEvents.listen(this.map, 'pointerdrag', this.onPointerDrag_, this);
         this.mapViewResolutionChangeKey_ = olEvents.listen(this.map.getView(), 'change:resolution', () => {
