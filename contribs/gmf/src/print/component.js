@@ -246,6 +246,7 @@ module.component('gmfPrint', printComponent);
  * @property {boolean} [scaleInput]
  * @property {OptionsLegendType} [legend]
  * @property {string} [defaultLayout]
+ * @property {number} [goodnessOfFit]
  */
 
 
@@ -418,6 +419,12 @@ class PrintController {
       params: {},
     };
 
+    /**
+     * @type {number}
+     * @private
+     */
+    this.goodnessOfFit_ = 0.5;
+
     if ($injector.has('gmfPrintOptions')) {
       /**
        * @type {OptionsType}
@@ -431,6 +438,9 @@ class PrintController {
       }
       if (options.defaultLayout) {
         this.defaultLayout = options.defaultLayout;
+      }
+      if (typeof options.goodnessOfFit === 'number') {
+        this.goodnessOfFit_ = options.goodnessOfFit;
       }
     }
 
@@ -998,6 +1008,8 @@ class PrintController {
         customAttributes['legend'] = legend;
       }
     }
+
+    customAttributes['goodnessOfFit'] = this.goodnessOfFit_;
 
     console.assert(typeof this.layoutInfo.dpi == 'number');
     console.assert(typeof this.layoutInfo.layout == 'string');
