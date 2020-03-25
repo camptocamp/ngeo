@@ -5,5 +5,5 @@ htmlmin==0.1.12
 Mako==1.1.2
 pip==20.0.2
 requests==2.23.0
-setuptools==46.1.1
+setuptools==46.1.2
 transifex-client==0.13.8
