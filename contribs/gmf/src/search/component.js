@@ -382,6 +382,11 @@ class SearchController {
     this.searchActionCallback;
 
     /**
+     * @type {function(any): void}
+     */
+    this.searchActionCallback;
+
+    /**
      * Whether or not to show a button to clear the search text.
      * Default to true.
      * @type {boolean}

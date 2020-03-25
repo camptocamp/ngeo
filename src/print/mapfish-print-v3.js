@@ -254,6 +254,7 @@
  * @property {number} haloOpacity
  * @property {number} haloRadius
  * @property {string} fontColor
+ * @property {number} goodnessOfFit
  */
 
 

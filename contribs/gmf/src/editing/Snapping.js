@@ -297,6 +297,7 @@ EditingSnappingService.prototype.registerTreeCtrl_ = function(treeCtrl) {
       this.cache_[uid] = {
         active: false,
         featureNS: ogcServer.wfsFeatureNS,
+        geometryName: ogcServer.geometryName,
         featurePrefix: 'feature',
         features: new olCollection(),
         interaction: null,

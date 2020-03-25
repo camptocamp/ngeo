@@ -252,6 +252,8 @@ module.component('gmfPrint', printComponent);
  * @typedef {Object} OptionsType
  * @property {boolean} [scaleInput]
  * @property {OptionsLegendType} [legend]
+ * @property {string} [defaultLayout]
+ * @property {number} [goodnessOfFit]
  */
 
 
@@ -326,6 +328,11 @@ export class PrintController {
      * @type {Object<string, string|number|boolean>}
      */
     this.fieldValues = {};
+
+    /**
+     * @type {string}
+     */
+    this.defaultLayout;
 
     /**
      * @type {import('ngeo/print/mapfish-print-v3').MapFishPrintCapabilitiesLayoutAttribute[]}
@@ -424,6 +431,12 @@ export class PrintController {
       params: {},
     };
 
+    /**
+     * @type {number}
+     * @private
+     */
+    this.goodnessOfFit_ = 0.5;
+
     if ($injector.has('gmfPrintOptions')) {
       /**
        * @type {OptionsType}
@@ -434,6 +447,12 @@ export class PrintController {
       }
       if (options.legend) {
         Object.assign(this.gmfLegendOptions_, options.legend);
+      }
+      if (options.defaultLayout) {
+        this.defaultLayout = options.defaultLayout;
+      }
+      if (typeof options.goodnessOfFit === 'number') {
+        this.goodnessOfFit_ = options.goodnessOfFit;
       }
     }
 
@@ -706,6 +725,9 @@ export class PrintController {
         // Get capabilities - On success
         this.parseCapabilities_(resp);
         this.map.addLayer(this.maskLayer_);
+        if (this.defaultLayout) {
+          this.setLayout(this.defaultLayout);
+        }
         this.pointerDragListenerKey_ = listen(this.map, 'pointerdrag', this.onPointerDrag_, this);
         this.mapViewResolutionChangeKey_ = listen(this.map.getView(), 'change:resolution', () => {
           this.scaleManuallySelected_ = false;
@@ -1054,6 +1076,8 @@ export class PrintController {
     if (typeof this.layoutInfo.layout != 'string') {
       throw new Error('Wrong layoutInfo.layout type');
     }
+
+    customAttributes['goodnessOfFit'] = this.goodnessOfFit_;
 
     // convert the WMTS layers to WMS
     const map = new olMap({});

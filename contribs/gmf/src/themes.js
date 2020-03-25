@@ -192,6 +192,7 @@
  * @property {string} urlWfs The WFS URL.
  * @property {string} [wfsFeatureNS] WFS feature namespace
  * @property {boolean} wfsSupport
+ * @property {string} geometryName The geometry name
  * @property {Object<string, Object<string, GmfOgcServerAttribute>>} attributes
  */
 
