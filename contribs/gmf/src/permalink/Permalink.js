@@ -990,6 +990,7 @@ PermalinkService.prototype.registerMap_ = function(map, oeFeature) {
 
   const view = map.getView();
   let center;
+  let zoom;
 
   // (1) Initialize the map view with either:
   //     a) the given ObjectEditing feature
@@ -1019,7 +1020,7 @@ PermalinkService.prototype.registerMap_ = function(map, oeFeature) {
       if (center) {
         view.setCenter(center);
       }
-      const zoom = this.getMapZoom();
+      zoom = this.getMapZoom();
       if (zoom !== undefined) {
         view.setZoom(zoom);
       }
@@ -1056,7 +1057,7 @@ PermalinkService.prototype.registerMap_ = function(map, oeFeature) {
   // (6) check for a wfs permalink
   const wfsPermalinkData = this.getWfsPermalinkData_();
   if (wfsPermalinkData !== null && this.ngeoWfsPermalink_) {
-    this.ngeoWfsPermalink_.issue(wfsPermalinkData, map);
+    this.ngeoWfsPermalink_.issue(wfsPermalinkData, map, zoom);
   }
 };
 
