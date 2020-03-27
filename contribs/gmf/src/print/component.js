@@ -1077,8 +1077,6 @@ export class PrintController {
       throw new Error('Wrong layoutInfo.layout type');
     }
 
-    customAttributes.goodnessOfFit = this.goodnessOfFit_;
-
     // convert the WMTS layers to WMS
     const map = new olMap({});
     map.setView(this.map.getView());
@@ -1129,7 +1127,7 @@ export class PrintController {
     const email = this.smtpSupported && this.smtpEmail && this.smtpEnabled ? this.smtpEmail : undefined;
 
     const spec = this.ngeoPrint_.createSpec(map, scale, this.layoutInfo.dpi,
-      this.layoutInfo.layout, format, customAttributes, email);
+      this.layoutInfo.layout, format, customAttributes, email, this.goodnessOfFit_);
 
     // Add feature overlay layer to print spec.
     /** @type {import('ngeo/print/mapfish-print-v3.js').MapFishPrintLayer[]} */
