@@ -86,7 +86,7 @@
     "eslint": "6.8.0",
     "eslint-config-openlayers": "13.0.0",
     "eslint-plugin-googshift": "0.9.3",
-    "eslint-plugin-import": "2.20.1",
+    "eslint-plugin-import": "2.20.2",
     "expose-loader": "0.7.5",
     "extract-loader": "5.0.1",
     "fast-sass-loader": "1.5.0",
