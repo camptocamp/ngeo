@@ -266,7 +266,7 @@ LayerHelper.prototype.createWMTSLayerFromCapabilitites = function(
       const layers = result.Contents.Layer;
       const l = olArray.find(layers, (elt, index, array) => elt.Identifier == layerName);
       if (!l) {
-        return $q.reject(`Layer ${layerName} not abalable in WMTS capabilities from ${capabilitiesURL}`);
+        return $q.reject(`Layer ${layerName} not available in WMTS capabilities from ${capabilitiesURL}`);
       }
       layer.set('capabilitiesStyles', l.Style);
 
