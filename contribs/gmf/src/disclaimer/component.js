@@ -261,7 +261,7 @@ DisclaimerController.prototype.registerLayer_ = function(layer) {
         this.closeAll_(layer);
       }
 
-      const listenerKey = listen(layer, 'change', (event) => {
+      const listenerKey = listen(layer, 'propertychange', (event) => {
         if (layer.getVisible()) {
           this.update_(layer);
         } else {
