@@ -193,7 +193,11 @@ LayerHelper.prototype.createWMTSLayerFromCapabilitites = function(
       // Add styles from capabilities as param of the layer
       const layers = result['Contents']['Layer'];
       const l = olArray.find(layers, (elt, index, array) => elt['Identifier'] == layerName);
-      layer.set('capabilitiesStyles', l['Style']);
+      if (l) {
+        layer.set('capabilitiesStyles', l['Style']);
+      } else {
+        console.error(`The layer '${layerName}' is missing in the server capabilities: ${capabilitiesURL}`);
+      }
 
       return $q.resolve(layer);
     }
