@@ -1,0 +1,37 @@
+name: Add message on pull requests with the related examples
+
+on:
+  pull_request:
+    types:
+      - opened
+
+jobs:
+  all:
+    runs-on: ubuntu-latest
+    steps:
+    - run: npm install --production @actions/github
+    - run: |
+        echo "
+        const github = require('@actions/github');
+
+        async function run() {
+          // Get client and context
+          const client = new github.GitHub(process.env.GITHUB_TOKEN);
+
+          await client.pulls.createReview({
+            owner: github.context.issue.owner,
+            repo: github.context.issue.repo,
+            pull_number: github.context.issue.number,
+            body: [
+              \`Examples: https://camptocamp.github.io/ngeo/\${process.env.GITHUB_HEAD_REF}/examples/\`,
+              \`API documentation: https://camptocamp.github.io/ngeo/\${process.env.GITHUB_HEAD_REF}/apidoc/\`,
+            ].join('\n'),
+            event: 'COMMENT'
+          });
+        }
+
+        run();
+        " > pr-message.js
+    - run: node pr-message.js
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
