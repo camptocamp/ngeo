@@ -212,7 +212,7 @@ DisclaimerController.prototype.registerLayer_ = function(layer) {
         this.closeAll_(layer);
       }
 
-      const listenerKey = olEvents.listen(layer, 'change', (event) => {
+      const listenerKey = olEvents.listen(layer, 'propertychange', (event) => {
         if (layer.getVisible()) {
           this.update_(layer);
         } else {
