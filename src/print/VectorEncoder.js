@@ -176,7 +176,7 @@ VectorEncoder.prototype.encodeVectorLayer = function(arr, layer, resolution, goo
  * @param {import("ol/style/Style.js").default} style Style.
  * @param {string} styleId Style id.
  * @param {string} featureStyleProp Feature style property name.
- * @param {number} [goodnessOfFit] Goodness of fit.
+ * @param {number=} [goodnessOfFit] Goodness of fit.
  */
 VectorEncoder.prototype.encodeVectorStyle = function(object, geometryType, style,
   styleId, featureStyleProp, goodnessOfFit) {
@@ -411,7 +411,7 @@ VectorEncoder.prototype.encodeVectorStyleStroke = function(symbolizer, strokeSty
  * @param {Array<import('ngeo/print/mapfish-print-v3.js').MapFishPrintSymbolizer>} symbolizers Array of
  *    MapFish Print symbolizers.
  * @param {import("ol/style/Text.js").default} textStyle Text style.
- * @param {number} [goodnessOfFit] Goodness of fit.
+ * @param {number=} [goodnessOfFit] Goodness of fit.
  * @protected
  */
 VectorEncoder.prototype.encodeTextStyle = function(symbolizers, textStyle, goodnessOfFit) {

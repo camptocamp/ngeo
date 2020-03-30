@@ -253,6 +253,7 @@ module.component('gmfPrint', printComponent);
  * @property {boolean} [scaleInput]
  * @property {OptionsLegendType} [legend]
  * @property {number} [goodnessOfFit]
+ * @property {string} [defaultLayout]
  */
 
 
@@ -327,6 +328,11 @@ export class PrintController {
      * @type {Object<string, string|number|boolean>}
      */
     this.fieldValues = {};
+
+    /**
+     * @type {string}
+     */
+    this.defaultLayout;
 
     /**
      * @type {import('ngeo/print/mapfish-print-v3').MapFishPrintCapabilitiesLayoutAttribute[]}
@@ -444,6 +450,9 @@ export class PrintController {
       }
       if (typeof options.goodnessOfFit === 'number') {
         this.goodnessOfFit_ = options.goodnessOfFit;
+      }
+      if (options.defaultLayout) {
+        this.defaultLayout = options.defaultLayout;
       }
     }
 
@@ -716,6 +725,9 @@ export class PrintController {
         // Get capabilities - On success
         this.parseCapabilities_(resp);
         this.map.addLayer(this.maskLayer_);
+        if (this.defaultLayout) {
+          this.setLayout(this.defaultLayout);
+        }
         this.pointerDragListenerKey_ = listen(this.map, 'pointerdrag', this.onPointerDrag_, this);
         this.mapViewResolutionChangeKey_ = listen(this.map.getView(), 'change:resolution', () => {
           this.scaleManuallySelected_ = false;
@@ -1065,8 +1077,6 @@ export class PrintController {
       throw new Error('Wrong layoutInfo.layout type');
     }
 
-    customAttributes.goodnessOfFit = this.goodnessOfFit_;
-
     // convert the WMTS layers to WMS
     const map = new olMap({});
     map.setView(this.map.getView());
@@ -1117,7 +1127,7 @@ export class PrintController {
     const email = this.smtpSupported && this.smtpEmail && this.smtpEnabled ? this.smtpEmail : undefined;
 
     const spec = this.ngeoPrint_.createSpec(map, scale, this.layoutInfo.dpi,
-      this.layoutInfo.layout, format, customAttributes, email);
+      this.layoutInfo.layout, format, customAttributes, email, this.goodnessOfFit_);
 
     // Add feature overlay layer to print spec.
     /** @type {import('ngeo/print/mapfish-print-v3.js').MapFishPrintLayer[]} */
