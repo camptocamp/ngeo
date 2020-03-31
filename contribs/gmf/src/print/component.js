@@ -1009,8 +1009,6 @@ class PrintController {
       }
     }
 
-    customAttributes['goodnessOfFit'] = this.goodnessOfFit_;
-
     console.assert(typeof this.layoutInfo.dpi == 'number');
     console.assert(typeof this.layoutInfo.layout == 'string');
 
@@ -1064,7 +1062,7 @@ class PrintController {
     const email = this.smtpSupported && this.smtpEmail && this.smtpEnabled ? this.smtpEmail : undefined;
 
     const spec = this.ngeoPrint_.createSpec(map, scale, this.layoutInfo.dpi,
-      this.layoutInfo.layout, format, customAttributes, email);
+      this.layoutInfo.layout, format, customAttributes, email, this.goodnessOfFit_);
 
     // Add feature overlay layer to print spec.
     const layers = [];
