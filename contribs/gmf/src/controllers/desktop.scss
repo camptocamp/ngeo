@@ -769,6 +769,13 @@ hr.ngeo-filter-separator-rules {
   border-color: $color;
 }
 
+// handle long text in dropdown
+ngeo-filter {
+  .dropdown-menu li > a {
+    white-space: normal;
+  }
+}
+
 /**
  * Ngeo Rule component
  */
@@ -782,6 +789,10 @@ ngeo-rule {
 
   .dropdown > .dropdown-toggle {
     text-align: left;
+    // handle long text in button
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-right: 1rem;
     &::after {
       right: $app-margin;
       top: 50%;
