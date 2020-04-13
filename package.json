@@ -59,7 +59,7 @@
     "@types/proj4": "2.5.0",
     "@types/sinon": "9.0.0",
     "@types/typeahead": "0.11.32",
-    "@typescript-eslint/eslint-plugin": "2.27.0",
+    "@typescript-eslint/eslint-plugin": "2.28.0",
     "@typescript-eslint/parser": "2.27.0",
     "angular": "1.7.9",
     "angular-animate": "1.7.9",
