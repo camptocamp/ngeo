@@ -132,9 +132,6 @@ class Controller {
    * @param {Object} layer WMS Capability Layer object
    */
   createAndAddDataSource(layer) {
-    if (!this.url) {
-      throw new Error('Missing url');
-    }
     this.gmfExternalDataSourcesManager_.createAndAddDataSourceFromWMSCapability(
       layer,
       this.capabilities,
