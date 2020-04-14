@@ -196,8 +196,9 @@ WfsPermalinkService.prototype.clear = function() {
  *
  * @param {WfsPermalinkData} queryData Query data for the WFS request.
  * @param {import("ol/Map.js").default} map The ol3 map object to get the current projection from.
+ * @param {number} [zoomLevel] The level to zoom on when recentering on features.
  */
-WfsPermalinkService.prototype.issue = function(queryData, map) {
+WfsPermalinkService.prototype.issue = function(queryData, map, zoomLevel = undefined) {
   console.assert(this.url_,
     'url is not set. to use the wfs permalink service, ' +
       'set the value `ngeoWfsPermalinkOptions`');
@@ -214,7 +215,7 @@ WfsPermalinkService.prototype.issue = function(queryData, map) {
     return;
   }
 
-  this.issueRequest_(wfsType, filters, map, queryData.showFeatures);
+  this.issueRequest_(wfsType, filters, map, queryData.showFeatures, zoomLevel);
 };
 
 
@@ -223,9 +224,16 @@ WfsPermalinkService.prototype.issue = function(queryData, map) {
  * @param {import("ol/format/filter/Filter.js").default} filter Filter.
  * @param {import("ol/Map.js").default} map The ol3 map object to get the current projection from.
  * @param {boolean} showFeatures Show features or only zoom to feature extent?
+ * @param {number} [zoomLevel] The level to zoom on when recentering on features.
  * @private
  */
-WfsPermalinkService.prototype.issueRequest_ = function(wfsType, filter, map, showFeatures) {
+WfsPermalinkService.prototype.issueRequest_ = function(
+  wfsType,
+  filter,
+  map,
+  showFeatures,
+  zoomLevel = undefined
+) {
   const wfsFormat = new olFormatWFS();
   const featureRequestXml = wfsFormat.writeGetFeature({
     srsName: map.getView().getProjection().getCode(),
@@ -252,7 +260,7 @@ WfsPermalinkService.prototype.issueRequest_ = function(wfsType, filter, map, sho
     // zoom to features
     const size = map.getSize();
     if (size !== undefined) {
-      const maxZoom = this.pointRecenterZoom_;
+      const maxZoom = zoomLevel === undefined ? this.pointRecenterZoom_ : zoomLevel;
       const padding = [10, 10, 10, 10];
       map.getView().fit(this.getExtent_(features), {size, maxZoom, padding});
     }
