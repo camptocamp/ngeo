@@ -337,7 +337,7 @@ export class ExternalDatSourcesManager {
   /**
    * @param {Object} layer WMS Capability Layer object.
    * @param {Object} capabilities  WMS Capabilities definition
-   * @param {string} url The WMS service url.
+   * @param {?string} url The WMS service url.
    */
   createAndAddDataSourceFromWMSCapability(layer, capabilities, url) {
 
