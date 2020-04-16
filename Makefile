@@ -48,7 +48,7 @@ L10N_PO_FILES = \
 LANGUAGES = en $(L10N_LANGUAGES)
 ANGULAR_LOCALES_FILES = $(addprefix contribs/gmf/build/angular-locale_, $(addsuffix .js, $(LANGUAGES)))
 
-TX_VERSION ?= 2_5
+TX_VERSION ?= 2_6
 ifeq (,$(wildcard $(HOME)/.transifexrc))
 TOUCHBACK_TXRC = $(TOUCH_DATE) "$(shell date --iso-8601=seconds)" $(HOME)/.transifexrc
 else
