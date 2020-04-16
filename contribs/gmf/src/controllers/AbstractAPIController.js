@@ -81,11 +81,21 @@ export class AbstractAPIController extends AbstractAppController {
       })
     });
     map.addInteraction(new olInteractionDragPan({
-      condition: noModifierKeys
+      condition: dragPanCondition
     }));
 
     super(config, map, $scope, $injector);
   }
+}
+
+/**
+ * Allow map pan with all buttons except right click (context menu)
+ * @param {import("ol/MapBrowserEvent.js").default} event MapBrowser event
+ * @return {boolean}
+ */
+function dragPanCondition(event) {
+  const pointerEvent = /** @type {import("ol/MapBrowserPointerEvent.js").default} */ (event).pointerEvent;
+  return noModifierKeys(event) && pointerEvent.button !== 2;
 }
 
 /**
