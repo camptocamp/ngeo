@@ -40,7 +40,7 @@ export GIT_REMOTE_NAME
 
 
 # i18n
-L10N_LANGUAGES = fr de
+L10N_LANGUAGES = fr de it
 L10N_PO_FILES = \
 	$(addprefix .build/locale/,$(addsuffix /LC_MESSAGES/ngeo.po, $(L10N_LANGUAGES))) \
 	$(addprefix .build/locale/,$(addsuffix /LC_MESSAGES/gmf.po, $(L10N_LANGUAGES))) \
@@ -426,16 +426,15 @@ transifex-init: .build/python-venv.timestamp \
 	$(PY_VENV_BIN)/tx pull -l $* --force --mode=reviewed
 	$(TOUCHBACK_TXRC)
 
+.PRECIOUS: .build/locale/%/LC_MESSAGES/apps.po
 .build/locale/%/LC_MESSAGES/apps.po: contribs/gmf/apps/.tx/config $(HOME)/.transifexrc .build/python-venv.timestamp
-	cd contribs/gmf/apps/
-	$(PY_VENV_BIN)/tx pull -l $* --force --mode=reviewed
-	cd .
+	(cd contribs/gmf/apps/; ../../../$(PY_VENV_BIN)/tx pull -l $* --force --mode=reviewed)
 	$(TOUCHBACK_TXRC)
 
 .PRECIOUS: .build/locale/%/LC_MESSAGES/demo.po
 .build/locale/%/LC_MESSAGES/demo.po:
 	mkdir -p $(dir $@)
-	wget -O $@ https://raw.githubusercontent.com/camptocamp/demo_geomapfish/2.4/geoportal/demo_geoportal/locale/$*/LC_MESSAGES/demo_geoportal-client.po
+	wget -O $@ https://raw.githubusercontent.com/camptocamp/demo_geomapfish/prod-2-5/geoportal/geomapfish_geoportal/locale/$*/LC_MESSAGES/geomapfish_geoportal-client.po
 
 contribs/gmf/build/gmf-%.json: \
 		.build/locale/%/LC_MESSAGES/ngeo.po \
