@@ -1,3 +1,6 @@
+TX_VERSION ?= 2_6
+DEMO_BRANCH ?= prod-2-6
+
 ANGULAR_VERSION := $(shell buildtools/get-version angular)
 
 ESLINT_CONFIG_FILES := $(shell find * -not -path 'node_modules/*' -type f -name '.eslintrc*')
@@ -48,7 +51,6 @@ L10N_PO_FILES = \
 LANGUAGES = en $(L10N_LANGUAGES)
 ANGULAR_LOCALES_FILES = $(addprefix contribs/gmf/build/angular-locale_, $(addsuffix .js, $(LANGUAGES)))
 
-TX_VERSION ?= 2_5
 ifeq (,$(wildcard $(HOME)/.transifexrc))
 TOUCHBACK_TXRC = $(TOUCH_DATE) "$(shell date --iso-8601=seconds)" $(HOME)/.transifexrc
 else
@@ -434,7 +436,7 @@ transifex-init: .build/python-venv.timestamp \
 .PRECIOUS: .build/locale/%/LC_MESSAGES/demo.po
 .build/locale/%/LC_MESSAGES/demo.po:
 	mkdir -p $(dir $@)
-	wget -O $@ https://raw.githubusercontent.com/camptocamp/demo_geomapfish/prod-2-5/geoportal/geomapfish_geoportal/locale/$*/LC_MESSAGES/geomapfish_geoportal-client.po
+	wget -O $@ https://raw.githubusercontent.com/camptocamp/demo_geomapfish/$(DEMO_BRANCH)/geoportal/geomapfish_geoportal/locale/$*/LC_MESSAGES/geomapfish_geoportal-client.po
 
 contribs/gmf/build/gmf-%.json: \
 		.build/locale/%/LC_MESSAGES/ngeo.po \
