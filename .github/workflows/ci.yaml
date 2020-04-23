@@ -30,7 +30,7 @@ jobs:
       - run: npm --version
 
       - run: sudo apt update
-      - run: sudo apt install g++-4.8 python3-venv graphicsmagick fonts-liberation2
+      - run: sudo apt install g++-4.8 libgbm1 python3-venv graphicsmagick fonts-liberation2
 
       - uses: actions/checkout@v1
       - run: git config --global user.name "Continuous integration"
