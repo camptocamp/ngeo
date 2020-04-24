@@ -115,7 +115,9 @@ function loaded(page, browser) {
           }
         }
       }
-      requestsURL.add(originalUrl);
+      if (!originalUrl.includes('/tiles/')) {
+        requestsURL.add(originalUrl);
+      }
       request.continue({
         url
       });
