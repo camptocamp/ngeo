@@ -1,0 +1,12 @@
+parser:
+parserOptions:
+  project:
+rules:
+  '@typescript-eslint/no-unnecessary-type-assertion': 0
+  '@typescript-eslint/no-for-in-array': 0
+  '@typescript-eslint/no-this-alias': 0
+  '@typescript-eslint/no-useless-constructor': 0
+  '@typescript-eslint/prefer-for-of': 0
+  '@typescript-eslint/prefer-includes': 0
+  '@typescript-eslint/prefer-string-starts-ends-with': 0
+  '@typescript-eslint/restrict-plus-operands': 0

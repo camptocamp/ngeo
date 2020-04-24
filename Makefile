@@ -23,6 +23,7 @@ GMF_EXAMPLES_JS_FILES := $(GMF_EXAMPLES_HTML_FILES:.html=.js)
 
 GMF_APPS += mobile desktop desktop_alt iframe_api mobile_alt oeedit
 GMF_APPS_JS_FILES = $(shell find contribs/gmf/apps/ -type f -name '*.js')
+BUILD_JS_FILES = $(shell find buildtools/ -type f -name '*.js')
 GMF_APPS_PARTIALS_FILES = $(shell find contribs/gmf/apps/ -type f -name '*.html' -or -name '*.html.ejs')
 GMF_APPS_ALL_FILES = $(shell find contribs/gmf/apps/ -type f) $(GMF_ALL_SRC_FILES)
 
@@ -225,7 +226,8 @@ gh-pages: .build/python-venv.timestamp
 		$(GMF_TEST_JS_FILES) \
 		$(GMF_JS_FILES) \
 		$(GMF_EXAMPLES_JS_FILES) \
-		$(GMF_APPS_JS_FILES)
+		$(GMF_APPS_JS_FILES) \
+		$(BUILD_JS_FILES)
 	./node_modules/.bin/eslint $(filter-out .build/node_modules.copyright.timestamp $(ESLINT_CONFIG_FILES), $^)
 	touch $@
 
