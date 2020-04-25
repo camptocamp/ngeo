@@ -70,20 +70,6 @@ module.exports = function(config) {
     use: 'ejs-loader',
   };
 
-  const svgRule = {
-    test: /\.svg$/,
-    use: [
-      {
-        loader: 'svg-inline-loader',
-        options: {
-          removeSVGTagAttrs: false,
-        },
-      },
-      './buildtools/svg-viewbox-loader',
-      'svgo-loader',
-    ]
-  };
-
   function get_comp(firsts, lasts) {
     return (f1, f2) => {
       for (const pattern of firsts) {
