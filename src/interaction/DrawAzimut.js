@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import {getDefaultDrawStyleFunction} from 'ngeo/interaction/common.js';
 import ngeoCustomEvent from 'ngeo/CustomEvent.js';
 import Feature from 'ol/Feature.js';
@@ -38,7 +37,6 @@ import VectorSource from 'ol/source/Vector.js';
  * @property {!VectorSource<import("ol/geom/Geometry.js").default>} source
  * @property {import('ol/style/Style.js').StyleLike} style
  */
-
 
 /**
  * Interaction dedicated to measure azimut.
@@ -91,7 +89,6 @@ class DrawAzimut extends olInteractionPointer {
      */
     this.sketchPoint_ = new Feature();
 
-
     /**
      * Squared tolerance for handling up events.  If the squared distance
      * between a down and up event is greater than this tolerance, up events
@@ -101,7 +98,6 @@ class DrawAzimut extends olInteractionPointer {
      */
     this.squaredClickTolerance_ = 4;
 
-
     /**
      * Vector layer where our sketch features are drawn.
      * @type {import("ol/layer/Vector.js").default}
@@ -110,9 +106,9 @@ class DrawAzimut extends olInteractionPointer {
     this.sketchLayer_ = new olLayerVector({
       source: new VectorSource({
         useSpatialIndex: false,
-        wrapX: false
+        wrapX: false,
       }),
-      style: options.style || getDefaultDrawStyleFunction()
+      style: options.style || getDefaultDrawStyleFunction(),
     });
 
     listen(this, 'change:active', this.updateState_, this);

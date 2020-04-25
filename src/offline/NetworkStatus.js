@@ -19,13 +19,10 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
 import angular from 'angular';
 
-
 const Service = class {
-
   /**
    * This service watches the status of network connection.
    *
@@ -48,7 +45,6 @@ const Service = class {
    * @param {string} ngeoOfflineTestUrl Url of the test page.
    */
   constructor($document, $window, $timeout, $rootScope, ngeoOfflineTestUrl) {
-
     /**
      * @private
      * @type {!jQuery}
@@ -98,7 +94,6 @@ const Service = class {
     this.promise_;
 
     this.initialize_();
-
   }
 
   initialize_() {
@@ -166,9 +161,8 @@ const Service = class {
         if (this.count_ > 2 && !this.offline_) {
           this.triggerChangeStatusEvent_(true);
         }
-      }
+      },
     });
-
   }
 
   /**
@@ -190,14 +184,10 @@ const Service = class {
   }
 };
 
-
 const name = 'ngeoNetworkStatus';
 
-Service.module = angular.module(name, [
-  ngeoMiscDebounce.name
-]);
+Service.module = angular.module(name, [ngeoMiscDebounce.name]);
 Service.module.service(name, Service);
-
 
 /**
  * @ngInject
@@ -206,7 +196,7 @@ Service.module.service(name, Service);
  * @param {Service} ngeoNetworkStatus ngeo network status service.
  * @return {angular.IHttpInterceptor} the interceptor
  */
-const httpInterceptor = function($q, ngeoDebounce, ngeoNetworkStatus) {
+const httpInterceptor = function ($q, ngeoDebounce, ngeoNetworkStatus) {
   const debouncedCheck = ngeoDebounce(() => ngeoNetworkStatus.check(undefined), 2000, false);
   return {
     request(config) {
@@ -221,18 +211,17 @@ const httpInterceptor = function($q, ngeoDebounce, ngeoNetworkStatus) {
     responseError(rejection) {
       debouncedCheck();
       return $q.reject(rejection);
-    }
+    },
   };
 };
 Service.module.factory('httpInterceptor', httpInterceptor);
-
 
 /**
  * @ngInject
  * @private
  * @param {angular.IHttpProvider} $httpProvider .
  */
-Service.module.configFunction_ = function($httpProvider) {
+Service.module.configFunction_ = function ($httpProvider) {
   $httpProvider.interceptors.push('httpInterceptor');
 };
 Service.module.config(Service.module.configFunction_);
@@ -240,6 +229,5 @@ Service.module.config(Service.module.configFunction_);
 Service.module.value('ngeoOfflineTestUrl', '');
 
 const exports = Service;
-
 
 export default exports;

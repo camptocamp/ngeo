@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 
 import 'ngeo/sass/font.scss';
@@ -28,15 +27,11 @@ import 'jquery-ui/ui/widgets/draggable.js';
 import 'ngeo/sass/jquery-ui.scss';
 import 'angular-sanitize';
 
-
 /**
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoMessageDisplaywindowComponent', [
-  'ngSanitize',
-]);
-
+const module = angular.module('ngeoMessageDisplaywindowComponent', ['ngSanitize']);
 
 module.run(
   /**
@@ -46,19 +41,20 @@ module.run(
   ($templateCache) => {
     // @ts-ignore: webpack
     $templateCache.put('ngeo/message/displaywindowComponent', require('./displaywindowComponent.html'));
-  });
+  }
+);
 
-
-module.value('ngeoMessageDisplaywindowTemplateUrl',
+module.value(
+  'ngeoMessageDisplaywindowTemplateUrl',
   /**
    * @param {angular.IAttributes} $attrs Attributes.
    * @return {string} The template url.
    */
   ($attrs) => {
     const templateUrl = $attrs['ngeoMessageDisplaywindowTemplateUrl'];
-    return templateUrl !== undefined ? templateUrl :
-      'ngeo/message/displaywindowComponent';
-  });
+    return templateUrl !== undefined ? templateUrl : 'ngeo/message/displaywindowComponent';
+  }
+);
 
 /**
  * @param {angular.IAttributes} $attrs Attributes.
@@ -72,13 +68,11 @@ function ngeoMessageDisplaywindowTemplateUrl($attrs, ngeoMessageDisplaywindowTem
   return ngeoMessageDisplaywindowTemplateUrl($attrs);
 }
 
-
 /**
  * @private
  * @hidden
  */
 class Controller {
-
   /**
    * @param {JQuery} $element Element.
    * @param {angular.ISCEService} $sce Angular sce service.
@@ -90,7 +84,6 @@ class Controller {
    * @ngname ngeoDisplaywindowComponentController
    */
   constructor($element, $sce, $scope, $compile) {
-
     // === Binding Properties ===
 
     /**
@@ -158,7 +151,6 @@ class Controller {
      */
     this.width;
 
-
     // === Injected Properties ===
 
     /**
@@ -190,7 +182,6 @@ class Controller {
    * Called on initialization of the component.
    */
   $onInit() {
-
     // Initialize binding properties
     this.clearOnClose = this.clearOnClose !== false;
     this.content = this.content || null;
@@ -202,16 +193,14 @@ class Controller {
     this.height = this.height || '240px';
     this.width = this.width || '240px';
 
-    this.draggable = this.draggable !== undefined ?
-      this.draggable : this.desktop;
-    this.resizable = this.resizable !== undefined ?
-      this.resizable : this.desktop;
+    this.draggable = this.draggable !== undefined ? this.draggable : this.desktop;
+    this.resizable = this.resizable !== undefined ? this.resizable : this.desktop;
 
     // Draggable
     if (this.draggable) {
       this.element_.find('.ngeo-displaywindow .windowcontainer').draggable({
         'containment': this.draggableContainment,
-        'handle': 'div.header'
+        'handle': 'div.header',
       });
     }
 
@@ -219,7 +208,7 @@ class Controller {
     if (this.resizable) {
       this.element_.find('.ngeo-displaywindow .windowcontainer').resizable({
         'minHeight': 240,
-        'minWidth': 240
+        'minWidth': 240,
       });
     }
 
@@ -264,7 +253,7 @@ class Controller {
   get style() {
     return {
       height: this.height,
-      width: this.width
+      width: this.width,
     };
   }
 
@@ -285,7 +274,6 @@ class Controller {
     this.url = null;
   }
 }
-
 
 /**
  * The `ngeo-displaywindow` component is an alternative to the `ngeo.message.Popup`.
@@ -347,12 +335,11 @@ const ngeoMessageDisplaywindowComponent = {
     'resizable': '<?',
     'title': '=?',
     'url': '=?',
-    'width': '=?'
+    'width': '=?',
   },
   controller: Controller,
-  templateUrl: ngeoMessageDisplaywindowTemplateUrl
+  templateUrl: ngeoMessageDisplaywindowTemplateUrl,
 };
 module.component('ngeoDisplaywindow', ngeoMessageDisplaywindowComponent);
-
 
 export default module;

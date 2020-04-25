@@ -19,9 +19,7 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
-
 
 /**
  * Provides a service with print utility functions.
@@ -32,7 +30,6 @@ import angular from 'angular';
  * @hidden
  */
 export function PrintUtils() {
-
   /**
    * @type {number}
    * @private
@@ -44,21 +41,17 @@ export function PrintUtils() {
    * @private
    */
   this.extentHalfVerticalDistance_ = -1;
-
 }
-
 
 /**
  * @hidden
  */
 export const INCHES_PER_METER = 39.37;
 
-
 /**
  * @hidden
  */
 export const DOTS_PER_INCH = 72;
-
 
 /**
  * Get the optimal print scale for a map, the map being defined by its
@@ -73,14 +66,12 @@ export const DOTS_PER_INCH = 72;
  * scale, that is the optimal scale is lower than or equal to the first value
  * in `printMapScales`.
  */
-PrintUtils.prototype.getOptimalScale = function(
-  mapSize, mapResolution, printMapSize, printMapScales) {
-
+PrintUtils.prototype.getOptimalScale = function (mapSize, mapResolution, printMapSize, printMapScales) {
   const mapWidth = mapSize[0] * mapResolution;
   const mapHeight = mapSize[1] * mapResolution;
 
-  const scaleWidth = mapWidth * INCHES_PER_METER * DOTS_PER_INCH / printMapSize[0];
-  const scaleHeight = mapHeight * INCHES_PER_METER * DOTS_PER_INCH / printMapSize[1];
+  const scaleWidth = (mapWidth * INCHES_PER_METER * DOTS_PER_INCH) / printMapSize[0];
+  const scaleHeight = (mapHeight * INCHES_PER_METER * DOTS_PER_INCH) / printMapSize[1];
 
   const scale = Math.min(scaleWidth, scaleHeight);
 
@@ -94,7 +85,6 @@ PrintUtils.prototype.getOptimalScale = function(
   return optimal;
 };
 
-
 /**
  * Get the optimal map resolution for a print scale and a map size.
  * @param {import("ol/size.js").Size} mapSize Size of the map on the screen (px).
@@ -102,8 +92,7 @@ PrintUtils.prototype.getOptimalScale = function(
  * @param {number} printMapScale Map scale on the paper.
  * @return {number} The optimal map resolution.
  */
-PrintUtils.prototype.getOptimalResolution = function(mapSize, printMapSize, printMapScale) {
-
+PrintUtils.prototype.getOptimalResolution = function (mapSize, printMapSize, printMapScale) {
   const dotsPerMeter = DOTS_PER_INCH * INCHES_PER_METER;
 
   const resolutionX = (printMapSize[0] * printMapScale) / (dotsPerMeter * mapSize[0]);
@@ -114,50 +103,41 @@ PrintUtils.prototype.getOptimalResolution = function(mapSize, printMapSize, prin
   return optimalResolution;
 };
 
-
 /**
  * Get the coordinates of the bottom left corner of the printed map.
  * @param {import("ol/coordinate.js").Coordinate} mapCenter Center of the map to print.
  * @return {import("ol/coordinate.js").Coordinate} The coordinates of the bottom left corner.
  */
-PrintUtils.prototype.getBottomLeftCorner = function(mapCenter) {
-  return [mapCenter[0] - this.extentHalfHorizontalDistance_,
-    mapCenter[1] - this.extentHalfVerticalDistance_];
+PrintUtils.prototype.getBottomLeftCorner = function (mapCenter) {
+  return [mapCenter[0] - this.extentHalfHorizontalDistance_, mapCenter[1] - this.extentHalfVerticalDistance_];
 };
-
 
 /**
  * Get the coordinates of the bottom right corner of the printed map.
  * @param {import("ol/coordinate.js").Coordinate} mapCenter Center of the map to print.ç
  * @return {import("ol/coordinate.js").Coordinate} The coordinates of the bottom right corner.
  */
-PrintUtils.prototype.getBottomRightCorner = function(mapCenter) {
-  return [mapCenter[0] + this.extentHalfHorizontalDistance_,
-    mapCenter[1] - this.extentHalfVerticalDistance_];
+PrintUtils.prototype.getBottomRightCorner = function (mapCenter) {
+  return [mapCenter[0] + this.extentHalfHorizontalDistance_, mapCenter[1] - this.extentHalfVerticalDistance_];
 };
-
 
 /**
  * Get the coordinates of the up left corner of the printed map.
  * @param {import("ol/coordinate.js").Coordinate} mapCenter Center of the map to print.
  * @return {import("ol/coordinate.js").Coordinate} The coordinates of the up left corner.
  */
-PrintUtils.prototype.getUpLeftCorner = function(mapCenter) {
-  return [mapCenter[0] - this.extentHalfHorizontalDistance_,
-    mapCenter[1] + this.extentHalfVerticalDistance_];
+PrintUtils.prototype.getUpLeftCorner = function (mapCenter) {
+  return [mapCenter[0] - this.extentHalfHorizontalDistance_, mapCenter[1] + this.extentHalfVerticalDistance_];
 };
-
 
 /**
  * Get the coordinates of the up right corner of the printed map.
  * @param {import("ol/coordinate.js").Coordinate} mapCenter Center of the map to print.
  * @return {import("ol/coordinate.js").Coordinate} The coordinates of the up right corner.
  */
-PrintUtils.prototype.getUpRightCorner = function(mapCenter) {
-  return [mapCenter[0] + this.extentHalfHorizontalDistance_,
-    mapCenter[1] + this.extentHalfVerticalDistance_];
+PrintUtils.prototype.getUpRightCorner = function (mapCenter) {
+  return [mapCenter[0] + this.extentHalfHorizontalDistance_, mapCenter[1] + this.extentHalfVerticalDistance_];
 };
-
 
 /**
  * @type {angular.IModule}
@@ -165,6 +145,5 @@ PrintUtils.prototype.getUpRightCorner = function(mapCenter) {
  */
 const module = angular.module('ngeoPrintUtils', []);
 module.service('ngeoPrintUtils', PrintUtils);
-
 
 export default module;

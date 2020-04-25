@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import 'jquery';
 import angular from 'angular';
 import 'angular-gettext';
@@ -57,7 +56,6 @@ import {getBrowserLanguage} from 'ngeo/utils.js';
 // @ts-ignore
 import * as Sentry from '@sentry/browser';
 
-
 /**
  * A part of the application config.
  *
@@ -72,7 +70,6 @@ import * as Sentry from '@sentry/browser';
  * @property {import("ol/Collection.js").default<import('"ol/interaction/Interaction.js').default>|Array<import('ol/interaction/Interaction.js').default>} [mapInteractions]
  * @property {number} [mapPixelRatio]
  */
-
 
 /**
  * Application abstract controller.
@@ -92,7 +89,6 @@ import * as Sentry from '@sentry/browser';
  * @ngInject
  */
 export function AbstractAppController(config, map, $scope, $injector) {
-
   /**
    * Location service
    * @type {import("ngeo/statemanager/Location.js").StatemanagerLocation}
@@ -186,7 +182,7 @@ export function AbstractAppController(config, map, $scope, $injector) {
   /**
    * @private
    */
-  this.updateHasEditableLayers_ = function() {
+  this.updateHasEditableLayers_ = function () {
     this.gmfThemes.hasEditableLayers().then((hasEditableLayers) => {
       this.hasEditableLayers = hasEditableLayers;
     });
@@ -209,17 +205,21 @@ export function AbstractAppController(config, map, $scope, $injector) {
     const gettextCatalog = $injector.get('gettextCatalog');
     this.loginInfoMessage = gettextCatalog.getString(
       'Some layers in this link are not accessible to unauthenticated users. ' +
-      'Please log in to see whole data.');
+        'Please log in to see whole data.'
+    );
     this.loginRedirectUrl = args.url;
     this.loginActive = true;
 
-    const unbind = $scope.$watch(() => this.loginActive, () => {
-      if (!this.loginActive) {
-        this.loginInfoMessage = null;
-        this.loginRedirectUrl = null;
-        unbind();
+    const unbind = $scope.$watch(
+      () => this.loginActive,
+      () => {
+        if (!this.loginActive) {
+          this.loginInfoMessage = null;
+          this.loginRedirectUrl = null;
+          unbind();
+        }
       }
-    });
+    );
   });
 
   /**
@@ -235,18 +235,18 @@ export function AbstractAppController(config, map, $scope, $injector) {
     const functionalities = this.gmfUser.functionalities;
 
     // Enable filter tool in toolbar
-    if (functionalities &&
+    if (
+      functionalities &&
       functionalities.filterable_layers &&
-      functionalities.filterable_layers.length > 0) {
+      functionalities.filterable_layers.length > 0
+    ) {
       this.filterSelectorEnabled = true;
     }
 
     // Open filter panel if 'open_panel' is set in functionalities and
     // has 'layer_filter' as first value
     this.gmfThemes.getThemesObject().then((themes) => {
-      if (functionalities &&
-          functionalities.open_panel &&
-          functionalities.open_panel[0] === 'layer_filter') {
+      if (functionalities && functionalities.open_panel && functionalities.open_panel[0] === 'layer_filter') {
         this.filterSelectorActive = true;
       }
     });
@@ -273,14 +273,17 @@ export function AbstractAppController(config, map, $scope, $injector) {
   /**
    * @type {Array<import('gmf/search/component.js').SearchComponentDatasource>}
    */
-  this.searchDatasources = [{
-    labelKey: 'label',
-    groupValues: /** @type {string[]} **/ ($injector.get('gmfSearchGroups')),
-    groupActions: /** @type {Array<import('gmf/search/component.js').gmfSearchAction>} **/(
-      $injector.get('gmfSearchActions')),
-    projection: `EPSG:${config.srid || 2056}`,
-    url: /** @type {string} **/ ($injector.get('fulltextsearchUrl'))
-  }];
+  this.searchDatasources = [
+    {
+      labelKey: 'label',
+      groupValues: /** @type {string[]} **/ ($injector.get('gmfSearchGroups')),
+      groupActions: /** @type {Array<import('gmf/search/component.js').gmfSearchAction>} **/ ($injector.get(
+        'gmfSearchActions'
+      )),
+      projection: `EPSG:${config.srid || 2056}`,
+      url: /** @type {string} **/ ($injector.get('fulltextsearchUrl')),
+    },
+  ];
 
   /**
    * @type {Object<string, string>}
@@ -314,9 +317,12 @@ export function AbstractAppController(config, map, $scope, $injector) {
   this.backgroundLayerMgr_ = $injector.get('ngeoBackgroundLayerMgr');
 
   // watch any change on dimensions object to refresh the background layer
-  $scope.$watchCollection(() => this.dimensions, () => {
-    this.backgroundLayerMgr_.updateDimensions(this.map, this.dimensions);
-  });
+  $scope.$watchCollection(
+    () => this.dimensions,
+    () => {
+      this.backgroundLayerMgr_.updateDimensions(this.map, this.dimensions);
+    }
+  );
 
   this.backgroundLayerMgr_.on('change', () => {
     this.backgroundLayerMgr_.updateDimensions(this.map, this.dimensions);
@@ -344,9 +350,9 @@ export function AbstractAppController(config, map, $scope, $injector) {
     image: new olStyleCircle({
       fill: queryFill,
       radius: 5,
-      stroke: queryStroke
+      stroke: queryStroke,
     }),
-    stroke: queryStroke
+    stroke: queryStroke,
   });
 
   /**
@@ -394,15 +400,18 @@ export function AbstractAppController(config, map, $scope, $injector) {
   this.ngeoMapQuerent_ = $injector.get('ngeoMapQuerent');
 
   // Don't deactivate ngeoQuery on print activation
-  $scope.$watch(() => this.printPanelActive, (newVal) => {
-    // Clear queries if another panel is open but not if user go back to the
-    // map form the print.
-    if (!newVal && !this.queryActive) {
-      this.ngeoMapQuerent_.clear();
+  $scope.$watch(
+    () => this.printPanelActive,
+    (newVal) => {
+      // Clear queries if another panel is open but not if user go back to the
+      // map form the print.
+      if (!newVal && !this.queryActive) {
+        this.ngeoMapQuerent_.clear();
+      }
+      this.queryAutoClear = !newVal;
+      this.printActive = newVal;
     }
-    this.queryAutoClear = !newVal;
-    this.printActive = newVal;
-  });
+  );
 
   /**
    * The active state of the directive responsible of area measurements.
@@ -554,7 +563,7 @@ export function AbstractAppController(config, map, $scope, $injector) {
           const defaultBasemapArray = functionalities.default_basemap;
           if (defaultBasemapArray.length > 0) {
             const defaultBasemapLabel = defaultBasemapArray[0];
-            background = olArray.find(layers, layer => layer.get('label') === defaultBasemapLabel);
+            background = olArray.find(layers, (layer) => layer.get('label') === defaultBasemapLabel);
           }
         }
       }
@@ -579,7 +588,6 @@ export function AbstractAppController(config, map, $scope, $injector) {
    * @param {boolean=} opt_apply If true, trigger the Angular digest loop. Default to true.
    */
   const openPopup_ = (title, opt_width, opt_height, opt_apply) => {
-
     this.displaywindowTitle = title;
     this.displaywindowOpen = true;
 
@@ -611,9 +619,7 @@ export function AbstractAppController(config, map, $scope, $injector) {
    * @param {number=} opt_height CSS height.
    * @param {boolean=} opt_apply If true, trigger the Angular digest loop. Default to true.
    */
-  gmfx.openIframePopup = (
-    url, title, opt_width, opt_height, opt_apply
-  ) => {
+  gmfx.openIframePopup = (url, title, opt_width, opt_height, opt_apply) => {
     this.displaywindowUrl = url;
     openPopup_(title, opt_width, opt_height, opt_apply);
   };
@@ -661,7 +667,7 @@ export function AbstractAppController(config, map, $scope, $injector) {
    * @param {number=} opt_height CSS height in pixel.
    * @param {boolean=} opt_apply If true, trigger the Angular digest loop. Default to true.
    */
-  cgxp.tools.openInfoWindow = function(url, title, opt_width, opt_height, opt_apply) {
+  cgxp.tools.openInfoWindow = function (url, title, opt_width, opt_height, opt_apply) {
     gmfx.openIframePopup(url, title, opt_width, opt_height, opt_apply);
   };
 
@@ -705,7 +711,7 @@ export function AbstractAppController(config, map, $scope, $injector) {
     const tags = options.tags || [];
     delete options.tags;
     Object.assign(options, {
-      beforeBreadcrumb: augmentBreadcrumb
+      beforeBreadcrumb: augmentBreadcrumb,
     });
     Sentry.init(options);
     for (const tag in tags) {
@@ -713,18 +719,22 @@ export function AbstractAppController(config, map, $scope, $injector) {
     }
   }
 
-  const positionFeatureStyle = config.positionFeatureStyle || new olStyleStyle({
-    image: new olStyleCircle({
-      radius: 6,
-      fill: new olStyleFill({color: 'rgba(230, 100, 100, 1)'}),
-      stroke: new olStyleStroke({color: 'rgba(230, 40, 40, 1)', width: 2})
-    })
-  });
+  const positionFeatureStyle =
+    config.positionFeatureStyle ||
+    new olStyleStyle({
+      image: new olStyleCircle({
+        radius: 6,
+        fill: new olStyleFill({color: 'rgba(230, 100, 100, 1)'}),
+        stroke: new olStyleStroke({color: 'rgba(230, 40, 40, 1)', width: 2}),
+      }),
+    });
 
-  const accuracyFeatureStyle = config.accuracyFeatureStyle || new olStyleStyle({
-    fill: new olStyleFill({color: 'rgba(100, 100, 230, 0.3)'}),
-    stroke: new olStyleStroke({color: 'rgba(40, 40, 230, 1)', width: 2})
-  });
+  const accuracyFeatureStyle =
+    config.accuracyFeatureStyle ||
+    new olStyleStyle({
+      fill: new olStyleFill({color: 'rgba(100, 100, 230, 0.3)'}),
+      stroke: new olStyleStroke({color: 'rgba(40, 40, 230, 1)', width: 2}),
+    });
 
   /**
    * @type {import('ngeo/geolocation/component.js').GeolocationDirectiveOptions}
@@ -733,11 +743,9 @@ export function AbstractAppController(config, map, $scope, $injector) {
     positionFeatureStyle: positionFeatureStyle,
     accuracyFeatureStyle: accuracyFeatureStyle,
     zoom: config.geolocationZoom,
-    autorotate: config.autorotate
+    autorotate: config.autorotate,
   };
-
 }
-
 
 /**
  * @param {Array<import("ol/layer/Base.js").default>} layers Layers list.
@@ -748,16 +756,15 @@ export function AbstractAppController(config, map, $scope, $injector) {
  */
 function getLayerByLabels(layers, labels) {
   if (labels && labels.length > 0) {
-    return olArray.find(layers, layer => layer.get('label') === labels[0]);
+    return olArray.find(layers, (layer) => layer.get('label') === labels[0]);
   }
   return null;
 }
 
-
 /**
  * @param {string} lang Language code.
  */
-AbstractAppController.prototype.switchLanguage = function(lang) {
+AbstractAppController.prototype.switchLanguage = function (lang) {
   if (!(lang in this.langUrls)) {
     throw new Error('Missing lang URL');
   }
@@ -767,19 +774,20 @@ AbstractAppController.prototype.switchLanguage = function(lang) {
   this.lang = lang;
 };
 
-
 /**
  */
-AbstractAppController.prototype.initLanguage = function() {
-  this.$scope.$watch(() => this.lang, (newValue) => {
-    this.stateManager.updateState({
-      'lang': newValue
-    });
-  });
+AbstractAppController.prototype.initLanguage = function () {
+  this.$scope.$watch(
+    () => this.lang,
+    (newValue) => {
+      this.stateManager.updateState({
+        'lang': newValue,
+      });
+    }
+  );
 
   const browserLanguage = getBrowserLanguage(Object.keys(this.langUrls));
-  const urlLanguage = /** @type {string|undefined} */
-      (this.stateManager.getInitialStringValue('lang'));
+  const urlLanguage = /** @type {string|undefined} */ (this.stateManager.getInitialStringValue('lang'));
 
   if (urlLanguage !== undefined && urlLanguage in this.langUrls) {
     this.switchLanguage(urlLanguage);
@@ -796,12 +804,11 @@ AbstractAppController.prototype.initLanguage = function() {
   }
 };
 
-
 /**
  * @param {?import('gmf/themes.js').GmfTheme} theme Theme.
  * @private
  */
-AbstractAppController.prototype.setDefaultBackground_ = function(theme) {
+AbstractAppController.prototype.setDefaultBackground_ = function (theme) {
   this.gmfThemes.getBgLayers().then((layers) => {
     let layer;
 
@@ -830,7 +837,6 @@ AbstractAppController.prototype.setDefaultBackground_ = function(theme) {
   });
 };
 
-
 /**
  * @protected
  * @return {HTMLSpanElement} Span element with font-awesome inside of it
@@ -843,7 +849,6 @@ export function getLocationIcon() {
   arrowWrapper.appendChild(arrow);
   return arrowWrapper;
 }
-
 
 /**
  * @param {Sentry.Breadcrumb} breadcrumb
@@ -860,7 +865,6 @@ function augmentBreadcrumb(breadcrumb, hint) {
     }
   }
 }
-
 
 /**
  * @type {angular.IModule}
@@ -890,25 +894,22 @@ const module = angular.module('GmfAbstractAppControllerModule', [
   ngeoGeolocation.name,
 ]);
 
-
 module.controller('AbstractController', AbstractAppController);
 
+module.value('ngeoExportFeatureFormats', [FeatureFormatType.KML, FeatureFormatType.GPX]);
 
-module.value('ngeoExportFeatureFormats', [
-  FeatureFormatType.KML,
-  FeatureFormatType.GPX
-]);
-
-module.config(['tmhDynamicLocaleProvider', 'angularLocaleScript',
+module.config([
+  'tmhDynamicLocaleProvider',
+  'angularLocaleScript',
   /**
    * @param {angular.dynamicLocale.tmhDynamicLocaleProvider} tmhDynamicLocaleProvider
    *     angular-dynamic-locale provider.
    * @param {string} angularLocaleScript the script.
    */
-  function(tmhDynamicLocaleProvider, angularLocaleScript) {
+  function (tmhDynamicLocaleProvider, angularLocaleScript) {
     // configure the script URL
     tmhDynamicLocaleProvider.localeLocationPattern(angularLocaleScript);
-  }
+  },
 ]);
 
 bootstrap(module);

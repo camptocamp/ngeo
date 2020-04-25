@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import './modifyrectangle.css';
 import angular from 'angular';
 import ngeoInteractionModifyRectangle from 'ngeo/interaction/ModifyRectangle.js';
@@ -39,73 +38,74 @@ import olStyleFill from 'ol/style/Fill.js';
 import olStyleStroke from 'ol/style/Stroke.js';
 import ngeoMapModule from 'ngeo/map/module.js';
 
-
 /** @type {angular.IModule} **/
-const appmodule = angular.module('app', [
-  'gettext',
-  ngeoMapModule.name
-]);
-
+const appmodule = angular.module('app', ['gettext', ngeoMapModule.name]);
 
 /**
  * @constructor
  * @ngInject
  */
 function MainController() {
-
   /**
    * @type {import("ol/Map.js").default}
    */
   this.map = new olMap({
     layers: [
       new olLayerTile({
-        source: new olSourceOSM()
-      })
+        source: new olSourceOSM(),
+      }),
     ],
     view: new olView({
       center: [-10997148, 4569099],
-      zoom: 4
-    })
+      zoom: 4,
+    }),
   });
 
   const map = this.map;
 
-  const rectangle = new olGeomPolygon([[
-    [-9e6, 4e6], [-11e6, 4e6], [-11e6, 6e6], [-9e6, 6e6]
-  ]]);
+  const rectangle = new olGeomPolygon([
+    [
+      [-9e6, 4e6],
+      [-11e6, 4e6],
+      [-11e6, 6e6],
+      [-9e6, 6e6],
+    ],
+  ]);
 
   /**
    * @type {import("ol/Collection.js").default<olFeature<import("ol/geom/Geometry.js").default>>}
    */
   this.features = new olCollection();
 
-  this.features.push(new olFeature({
-    geometry: rectangle,
-    'isRectangle': true
-  }));
+  this.features.push(
+    new olFeature({
+      geometry: rectangle,
+      'isRectangle': true,
+    })
+  );
 
   /** @type {import("ol/style/Style.js").StyleLike} */
-  const style = (function() {
+  const style = (function () {
     /** @type {Object<string, olStyleStyle|olStyleStyle[]>} */
     const styles = {};
     styles.Polygon = [
       new olStyleStyle({
         fill: new olStyleFill({
-          color: [255, 255, 255, 0.5]
-        })
+          color: [255, 255, 255, 0.5],
+        }),
       }),
       new olStyleStyle({
         stroke: new olStyleStroke({
           color: [255, 255, 255, 1],
-          width: 5
-        })
+          width: 5,
+        }),
       }),
       new olStyleStyle({
         stroke: new olStyleStroke({
           color: [0, 153, 255, 1],
-          width: 3
-        })
-      })
+          width: 3,
+        }),
+      }),
     ];
 
     styles.Point = [
@@ -113,15 +113,15 @@ function MainController() {
         image: new olStyleCircle({
           radius: 7,
           fill: new olStyleFill({
-            color: [0, 153, 255, 1]
+            color: [0, 153, 255, 1],
           }),
           stroke: new olStyleStroke({
             color: [255, 255, 255, 0.75],
-            width: 1.5
-          })
+            width: 1.5,
+          }),
         }),
-        zIndex: 100000
-      })
+        zIndex: 100000,
+      }),
     ];
     styles.GeometryCollection = styles.Polygon.concat(styles.Point);
 
@@ -130,20 +130,21 @@ function MainController() {
        * @param {olFeature<import("ol/geom/Geometry.js").default>|import('ol/render/Feature.js').default} feature
        * @param {number} resolution
        */
-      function(feature, resolution) {
+      function (feature, resolution) {
         const geometry = feature.getGeometry();
         if (!geometry) {
           throw new Error('Missing geometry');
         }
         return styles[geometry.getType()];
-      });
+      }
+    );
   })();
 
   const vectorSource = new olSourceVector({
-    features: this.features
+    features: this.features,
   });
   const vectorLayer = new olLayerVector({
-    source: vectorSource
+    source: vectorSource,
   });
 
   // Use vectorLayer.setMap(map) rather than map.addLayer(vectorLayer). This
@@ -154,19 +155,17 @@ function MainController() {
    * @type {import("ngeo/interaction/ModifyRectangle.js").default}
    */
   this.interaction = new ngeoInteractionModifyRectangle(
-    /** @type {import('ol/interaction/Modify.js').Options} */({
+    /** @type {import('ol/interaction/Modify.js').Options} */ ({
       features: this.features,
-      style: style
-    }));
+      style: style,
+    })
+  );
 
   const interaction = this.interaction;
   map.addInteraction(interaction);
   interaction.setActive(true);
-
 }
 
-
 appmodule.controller('MainController', MainController);
-
 
 export default module;

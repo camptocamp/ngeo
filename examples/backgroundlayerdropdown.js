@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import './backgroundlayerdropdown.css';
 import angular from 'angular';
 import ngeoSourceAsitVD from 'ngeo/source/AsitVD.js';
@@ -34,13 +33,8 @@ import VectorSource from 'ol/source/Vector.js';
 import olSourceImageWMS from 'ol/source/ImageWMS.js';
 import ngeoMapModule from 'ngeo/map/module.js';
 
-
 /** @type {angular.IModule} **/
-const module = angular.module('app', [
-  'gettext',
-  ngeoMapModule.name
-]);
-
+const module = angular.module('app', ['gettext', ngeoMapModule.name]);
 
 module.run(
   /**
@@ -53,8 +47,8 @@ module.run(
       // @ts-ignore: webpack
       require('./partials/backgroundlayerdropdown.html')
     );
-  });
-
+  }
+);
 
 /**
  * The application-specific background layer component.
@@ -66,15 +60,13 @@ module.run(
  */
 const backgroundlayerComponent = {
   bindings: {
-    'map': '=appBackgroundlayerMap'
+    'map': '=appBackgroundlayerMap',
   },
   templateUrl: 'partials/backgroundlayerdropdown',
-  controller: 'AppBackgroundlayerController'
+  controller: 'AppBackgroundlayerController',
 };
 
-
 module.component('appBackgroundlayer', backgroundlayerComponent);
-
 
 /**
  * @constructor
@@ -84,12 +76,11 @@ module.component('appBackgroundlayer', backgroundlayerComponent);
  * @ngInject
  */
 function BackgroundlayerController($http, ngeoBackgroundLayerMgr) {
-  $http.get('data/backgroundlayers.json').then(
-    (resp) => {
-      const bgLayers = resp.data;
-      this.bgLayers = bgLayers;
-      this.setLayer(bgLayers[0]);
-    });
+  $http.get('data/backgroundlayers.json').then((resp) => {
+    const bgLayers = resp.data;
+    this.bgLayers = bgLayers;
+    this.setLayer(bgLayers[0]);
+  });
 
   /**
    * @type {?import("ol/Map.js").default}
@@ -103,13 +94,12 @@ function BackgroundlayerController($http, ngeoBackgroundLayerMgr) {
   this.backgroundLayerMgr_ = ngeoBackgroundLayerMgr;
 }
 
-
 /**
  * Function called when the user selects a new background layer in the
  * dropdown. Called by the ng-click directive used in the partial.
  * @param {Object} layerSpec Layer specification object.
  */
-BackgroundlayerController.prototype.setLayer = function(layerSpec) {
+BackgroundlayerController.prototype.setLayer = function (layerSpec) {
   if (!this.map) {
     throw new Error('Missing map');
   }
@@ -118,31 +108,27 @@ BackgroundlayerController.prototype.setLayer = function(layerSpec) {
   this.backgroundLayerMgr_.set(this.map, layer);
 };
 
-
 /**
  * @param {string} layerName Layer name.
  * @return {import("ol/layer/Layer.js").default<*>} The layer.
  * @private
  */
-BackgroundlayerController.prototype.createLayer_ = function(layerName) {
+BackgroundlayerController.prototype.createLayer_ = function (layerName) {
   if (layerName === 'blank') {
     const layer = new VectorLayer({
-      source: new VectorSource()
+      source: new VectorSource(),
     });
     layer.set('label', 'blank');
     return layer;
   }
 
   const source = new ngeoSourceAsitVD({
-    layer: layerName
+    layer: layerName,
   });
   return new olLayerTile({source});
 };
 
-
-module.controller('AppBackgroundlayerController',
-  BackgroundlayerController);
-
+module.controller('AppBackgroundlayerController', BackgroundlayerController);
 
 /**
  * @constructor
@@ -150,7 +136,6 @@ module.controller('AppBackgroundlayerController',
  * @ngInject
  */
 function MainController($scope) {
-
   /**
    * @type {import("ol/Map.js").default}
    */
@@ -159,8 +144,8 @@ function MainController($scope) {
       projection: EPSG2056,
       resolutions: [1000, 500, 200, 100, 50, 20, 10, 5, 2.5, 2, 1, 0.5],
       center: [2600000, 1200000],
-      zoom: 1
-    })
+      zoom: 1,
+    }),
   });
   this.map = map;
 
@@ -168,22 +153,19 @@ function MainController($scope) {
     projection: undefined, // should be removed in next OL version
     url: 'https://wms.geo.admin.ch',
     params: {'LAYERS': 'ch.swisstopo.dreiecksvermaschung'},
-    serverType: 'mapserver'
+    serverType: 'mapserver',
   });
   /**
    * An overlay layer.
    * @type {import("ol/layer/Image.js").default}
    */
   const overlay = new olLayerImage({
-    source
+    source,
   });
 
   map.addLayer(overlay);
-
 }
 
-
 module.controller('MainController', MainController);
-
 
 export default module;

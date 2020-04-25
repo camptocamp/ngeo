@@ -19,12 +19,10 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import ngeoDatasourceDataSource from 'ngeo/datasource/DataSource.js';
 import olCollection from 'ol/Collection.js';
 import olLayerVector from 'ol/layer/Vector.js';
 import olSourceVector from 'ol/source/Vector.js';
-
 
 /**
  * The options required to create a `File`.
@@ -45,21 +43,17 @@ import olSourceVector from 'ol/source/Vector.js';
  * @property {boolean} [visible=false] (DataSourceOptions)
  */
 
-
 /**
  * @hidden
  */
 export default class extends ngeoDatasourceDataSource {
-
   /**
    * A data source that contains vector features that were loaded from a file.
    *
    * @param {FileOptions} options Options.
    */
   constructor(options) {
-
     super(options);
-
 
     // === STATIC properties (i.e. that never change) ===
 
@@ -75,7 +69,7 @@ export default class extends ngeoDatasourceDataSource {
      */
     this.source_ = new olSourceVector({
       features: this.featuresCollection_,
-      wrapX: false
+      wrapX: false,
     });
 
     /**
@@ -83,10 +77,9 @@ export default class extends ngeoDatasourceDataSource {
      * @private
      */
     this.layer_ = new olLayerVector({
-      source: this.source_
+      source: this.source_,
     });
   }
-
 
   // ========================================
   // === Dynamic property getters/setters ===
@@ -98,7 +91,6 @@ export default class extends ngeoDatasourceDataSource {
   get features() {
     return this.featuresCollection_.getArray();
   }
-
 
   // =======================================
   // === Static property getters/setters ===
@@ -117,7 +109,6 @@ export default class extends ngeoDatasourceDataSource {
   get layer() {
     return this.layer_;
   }
-
 
   // ===================================
   // === Calculated property getters ===

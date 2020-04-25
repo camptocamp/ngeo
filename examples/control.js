@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import './control.css';
 import angular from 'angular';
 import ngeoMapModule from 'ngeo/map/module.js';
@@ -32,46 +31,37 @@ import olControlMousePosition from 'ol/control/MousePosition.js';
 import olLayerTile from 'ol/layer/Tile.js';
 import olSourceOSM from 'ol/source/OSM.js';
 
-
 /** @type {angular.IModule} **/
-const module = angular.module('app', [
-  'gettext',
-  ngeoMapModule.name,
-  ngeoMiscControlComponent.name,
-]);
-
+const module = angular.module('app', ['gettext', ngeoMapModule.name, ngeoMiscControlComponent.name]);
 
 /**
  * @constructor
  * @ngInject
  */
 function MainController() {
-
   /**
    * @type {import("ol/Map.js").default}
    */
   this.map = new olMap({
     layers: [
       new olLayerTile({
-        source: new olSourceOSM()
-      })
+        source: new olSourceOSM(),
+      }),
     ],
     view: new olView({
       center: [0, 0],
-      zoom: 4
-    })
+      zoom: 4,
+    }),
   });
 
   /**
    * @type {import('ol/control/Control.js').default}
    */
   this.control = new olControlMousePosition({
-    className: 'mouse-position'
+    className: 'mouse-position',
   });
 }
 
-
 module.controller('MainController', MainController);
-
 
 export default module;

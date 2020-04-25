@@ -19,10 +19,8 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import GeoJSON from 'ol/format/GeoJSON.js';
 import Autocomplete from '@trevoreyre/autocomplete-js';
-
 
 /**
  * @typedef {Object} SearchOptions
@@ -33,12 +31,10 @@ import Autocomplete from '@trevoreyre/autocomplete-js';
  */
 
 export default class Search {
-
   /**
    * @param {SearchOptions} options API options.
    */
   constructor(options) {
-
     this.format_ = new GeoJSON();
 
     this.url_ = new URL(options.url);
@@ -57,7 +53,7 @@ export default class Search {
     this.autocomplete_ = new Autocomplete(options.container, {
       search: this.search_.bind(this),
       getResultValue: this.getResultValue_.bind(this),
-      onSubmit: this.onSubmit_.bind(this)
+      onSubmit: this.onSubmit_.bind(this),
     });
   }
 
@@ -65,13 +61,13 @@ export default class Search {
    * @param {string} input
    */
   search_(input) {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       if (input.length >= 1) {
         this.url_.searchParams.set('query', input);
         fetch(this.url_.href)
-          .then(response => response.json())
-          .then(collection => collection.features)
-          .then(features => resolve(features.filter(this.hasGeometry_)));
+          .then((response) => response.json())
+          .then((collection) => collection.features)
+          .then((features) => resolve(features.filter(this.hasGeometry_)));
       } else {
         resolve([]);
       }
@@ -101,5 +97,4 @@ export default class Search {
     this.source_.addFeature(feature);
     this.view_.fit(this.source_.getExtent());
   }
-
 }

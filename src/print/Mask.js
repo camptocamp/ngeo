@@ -19,20 +19,16 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import Layer from 'ol/layer/Layer.js';
 import {createCanvasContext2D} from 'ol/dom.js';
 import {INCHES_PER_METER, DOTS_PER_INCH} from 'ngeo/print/Utils.js';
 import {toRadians} from 'ol/math.js';
 
-
 /**
  * @extends {Layer<any>}
  */
 export default class Mask extends Layer {
-
   constructor(options = {}) {
-
     super(options);
 
     /**
@@ -82,8 +78,8 @@ export default class Mask extends Layer {
     const scale = this.getScale(frameState);
     const resolution = frameState.viewState.resolution;
 
-    const extentHalfWidth = (((width / DOTS_PER_INCH) / INCHES_PER_METER) * scale / resolution) / 2;
-    const extentHalfHeight = (((height / DOTS_PER_INCH) / INCHES_PER_METER) * scale / resolution) / 2;
+    const extentHalfWidth = ((width / DOTS_PER_INCH / INCHES_PER_METER) * scale) / resolution / 2;
+    const extentHalfHeight = ((height / DOTS_PER_INCH / INCHES_PER_METER) * scale) / resolution / 2;
 
     const rotation = this.getRotation !== undefined ? toRadians(this.getRotation()) : 0;
 

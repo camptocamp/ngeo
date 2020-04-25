@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 /**
  * The default template base URL for modules, used as-is by the template cache.
  * @type {string}
@@ -39,7 +38,6 @@ export const EXTERNALLAYERGROUP_NAME = 'external';
  * @hidden
  */
 export const COORDINATES_LAYER_NAME = 'gmfCoordinatesLayerName';
-
 
 /**
  * @enum {string}
@@ -61,5 +59,5 @@ export const PermalinkParam = {
   TREE_GROUPS: 'tree_groups',
   WFS_LAYER: 'wfs_layer',
   WFS_NGROUPS: 'wfs_ngroups',
-  WFS_SHOW_FEATURES: 'wfs_showFeatures'
+  WFS_SHOW_FEATURES: 'wfs_showFeatures',
 };

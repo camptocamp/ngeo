@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 import {listen, unlistenByKey} from 'ol/events.js';
 import olFeature from 'ol/Feature.js';
@@ -38,7 +37,6 @@ import ngeoProfileElevationComponent from 'ngeo/profile/elevationComponent.js';
 
 import 'bootstrap/js/src/dropdown.js';
 
-
 /**
  * Configuration object for one profile's line.
  * @typedef {Object} ProfileLineConfiguration
@@ -46,7 +44,6 @@ import 'bootstrap/js/src/dropdown.js';
  * @property {function(Object): number} [zExtractor] Extract the elevation of a point
  * (an item of the elevation data array).
  */
-
 
 /**
  * Information to display for a given point in the profile. The point is
@@ -60,7 +57,6 @@ import 'bootstrap/js/src/dropdown.js';
  * @property {string} [yUnits] Units of the y axis.
  */
 
-
 /**
  * @type {angular.IModule}
  * @hidden
@@ -71,8 +67,8 @@ const module = angular.module('gmfProfile', [
   ngeoProfileElevationComponent.name,
 ]);
 
-
-module.value('gmfProfileTemplateUrl',
+module.value(
+  'gmfProfileTemplateUrl',
   /**
    * @param {JQuery} $element Element.
    * @param {angular.IAttributes} $attrs Attributes.
@@ -81,8 +77,8 @@ module.value('gmfProfileTemplateUrl',
   ($element, $attrs) => {
     const templateUrl = $attrs.gmfProfileTemplateurl;
     return templateUrl !== undefined ? templateUrl : 'gmf/profile';
-  });
-
+  }
+);
 
 module.run(
   /**
@@ -92,8 +88,8 @@ module.run(
   ($templateCache) => {
     // @ts-ignore: webpack
     $templateCache.put('gmf/profile', require('./component.html'));
-  });
-
+  }
+);
 
 /**
  * @param {JQuery} $element Element.
@@ -107,7 +103,6 @@ module.run(
 function gmfProfileTemplateUrl($element, $attrs, gmfProfileTemplateUrl) {
   return gmfProfileTemplateUrl($element, $attrs);
 }
-
 
 /**
  * Provide a component that display a profile panel. This profile use the given
@@ -157,13 +152,12 @@ const profileComponent = {
     'getLinesConfigurationFn': '&gmfProfileLinesconfiguration',
     'getHoverPointStyleFn': '&?gmfProfileHoverpointstyle',
     'getNbPointsFn': '&?gmfProfileNumberofpoints',
-    'getOptionsFn': '&?gmfProfileOptions'
+    'getOptionsFn': '&?gmfProfileOptions',
   },
-  templateUrl: gmfProfileTemplateUrl
+  templateUrl: gmfProfileTemplateUrl,
 };
 
 module.component('gmfProfile', profileComponent);
-
 
 /**
  * @param {angular.IScope} $scope Angular scope.
@@ -182,9 +176,16 @@ module.component('gmfProfile', profileComponent);
  * @ngdoc controller
  * @ngname GmfProfileController
  */
-export function ProfileController($scope, $http, $element, $filter, gettextCatalog, ngeoFeatureOverlayMgr,
-  gmfProfileJsonUrl, ngeoCsvDownload) {
-
+export function ProfileController(
+  $scope,
+  $http,
+  $element,
+  $filter,
+  gettextCatalog,
+  ngeoFeatureOverlayMgr,
+  gmfProfileJsonUrl,
+  ngeoCsvDownload
+) {
   /**
    * @type {angular.IScope}
    * @private
@@ -306,9 +307,8 @@ export function ProfileController($scope, $http, $element, $filter, gettextCatal
    */
   this.profileLabels_ = {
     xAxis: gettextCatalog.getString('Distance'),
-    yAxis: gettextCatalog.getString('Elevation')
+    yAxis: gettextCatalog.getString('Elevation'),
   };
-
 
   /**
    * @type {?import('ngeo/profile/elevationComponent.js').ProfileOptions}
@@ -348,7 +348,6 @@ export function ProfileController($scope, $http, $element, $filter, gettextCatal
   this.getLinesConfigurationFn = () => ({});
   this.getOptionsFn = () => ({});
 
-
   // Watch the active value to activate/deactivate events listening.
   $scope.$watch(
     () => this.active,
@@ -356,7 +355,8 @@ export function ProfileController($scope, $http, $element, $filter, gettextCatal
       if (oldValue !== newValue) {
         this.updateEventsListening_();
       }
-    });
+    }
+  );
 
   // Watch the line to update the profileData (data for the chart).
   $scope.$watch(
@@ -365,16 +365,16 @@ export function ProfileController($scope, $http, $element, $filter, gettextCatal
       if (oldLine !== newLine) {
         this.update_();
       }
-    });
+    }
+  );
 
   this.updateEventsListening_();
 }
 
-
 /**
  * Init the controller
  */
-ProfileController.prototype.$onInit = function() {
+ProfileController.prototype.$onInit = function () {
   this.map_ = this.getMapFn();
   this.nbPoints_ = this.getNbPointsFn();
 
@@ -389,8 +389,8 @@ ProfileController.prototype.$onInit = function() {
     hoverPointStyle = new olStyleStyle({
       image: new olStyleCircle({
         fill: new olStyleFill({color: '#ffffff'}),
-        radius: 3
-      })
+        radius: 3,
+      }),
     });
   }
   this.pointHoverOverlay_.setStyle(hoverPointStyle);
@@ -412,7 +412,7 @@ ProfileController.prototype.$onInit = function() {
     distanceExtractor: this.getDist_,
     hoverCallback: this.hoverCallback_.bind(this),
     outCallback: this.outCallback_.bind(this),
-    i18n: this.profileLabels_
+    i18n: this.profileLabels_,
   });
 
   const optionsFn = this.getOptionsFn;
@@ -425,11 +425,10 @@ ProfileController.prototype.$onInit = function() {
   }
 };
 
-
 /**
  * @private
  */
-ProfileController.prototype.update_ = function() {
+ProfileController.prototype.update_ = function () {
   this.isErrored = false;
   if (this.line) {
     this.getJsonProfile_();
@@ -439,45 +438,42 @@ ProfileController.prototype.update_ = function() {
   this.active = !!this.line;
 };
 
-
 /**
  * @private
  */
-ProfileController.prototype.updateEventsListening_ = function() {
+ProfileController.prototype.updateEventsListening_ = function () {
   if (this.active && this.map_ !== null) {
-    this.pointerMoveKey_ = listen(this.map_, 'pointermove',
-      (event) => {
-        const e = /** @type {import("ol/MapBrowserPointerEvent.js").default} */(event);
-        if (!this.map_) {
-          throw new Error('Missing map');
-        }
-        if (e.dragging || !this.line) {
-          return;
-        }
-        const coordinate = this.map_.getEventCoordinate(e.originalEvent);
-        const closestPoint = this.line.getClosestPoint(coordinate);
-        // compute distance to line in pixels
-        const eventToLine = new olGeomLineString([closestPoint, coordinate]);
-        const resolution = this.map_.getView().getResolution();
-        if (resolution === undefined) {
-          throw new Error('Missing resolution');
-        }
-        const pixelDist = eventToLine.getLength() / resolution;
+    this.pointerMoveKey_ = listen(this.map_, 'pointermove', (event) => {
+      const e = /** @type {import("ol/MapBrowserPointerEvent.js").default} */ (event);
+      if (!this.map_) {
+        throw new Error('Missing map');
+      }
+      if (e.dragging || !this.line) {
+        return;
+      }
+      const coordinate = this.map_.getEventCoordinate(e.originalEvent);
+      const closestPoint = this.line.getClosestPoint(coordinate);
+      // compute distance to line in pixels
+      const eventToLine = new olGeomLineString([closestPoint, coordinate]);
+      const resolution = this.map_.getView().getResolution();
+      if (resolution === undefined) {
+        throw new Error('Missing resolution');
+      }
+      const pixelDist = eventToLine.getLength() / resolution;
 
-        if (pixelDist < 16) {
-          this.profileHighlight = this.getDistanceOnALine_(closestPoint);
-        } else {
-          this.profileHighlight = -1;
-        }
-        this.$scope_.$apply();
-      });
+      if (pixelDist < 16) {
+        this.profileHighlight = this.getDistanceOnALine_(closestPoint);
+      } else {
+        this.profileHighlight = -1;
+      }
+      this.$scope_.$apply();
+    });
   } else {
     if (this.pointerMoveKey_) {
       unlistenByKey(this.pointerMoveKey_);
     }
   }
 };
-
 
 /**
  * Return the distance between the beginning of the line and the given point.
@@ -487,18 +483,13 @@ ProfileController.prototype.updateEventsListening_ = function() {
  * @return {number} A distance.
  * @private
  */
-ProfileController.prototype.getDistanceOnALine_ = function(pointOnLine) {
+ProfileController.prototype.getDistanceOnALine_ = function (pointOnLine) {
   if (!this.line) {
     throw new Error('Missing line');
   }
   let segment;
   let distOnLine = 0;
-  const fakeExtent = [
-    pointOnLine[0] - 0.5,
-    pointOnLine[1] - 0.5,
-    pointOnLine[0] + 0.5,
-    pointOnLine[1] + 0.5
-  ];
+  const fakeExtent = [pointOnLine[0] - 0.5, pointOnLine[1] - 0.5, pointOnLine[0] + 0.5, pointOnLine[1] + 0.5];
   this.line.forEachSegment((firstPoint, lastPoint) => {
     segment = new olGeomLineString([firstPoint, lastPoint]);
     // Is the pointOnLine on this swegement ?
@@ -506,7 +497,7 @@ ProfileController.prototype.getDistanceOnALine_ = function(pointOnLine) {
       // If the closestPoint is on the line, add the distance between the first
       // point of this segment and the pointOnLine.
       segment.setCoordinates([firstPoint, pointOnLine]);
-      return distOnLine += segment.getLength(); // Assign value and break;
+      return (distOnLine += segment.getLength()); // Assign value and break;
     } else {
       // Do the sum of the length of each eventual previous segment.
       distOnLine += segment.getLength();
@@ -514,7 +505,6 @@ ProfileController.prototype.getDistanceOnALine_ = function(pointOnLine) {
   });
   return distOnLine;
 };
-
 
 /**
  * @param {Object} point Point.
@@ -524,7 +514,7 @@ ProfileController.prototype.getDistanceOnALine_ = function(pointOnLine) {
  *  @param {string} yUnits Y units label.
  * @private
  */
-ProfileController.prototype.hoverCallback_ = function(point, dist, xUnits, elevationsRef, yUnits) {
+ProfileController.prototype.hoverCallback_ = function (point, dist, xUnits, elevationsRef, yUnits) {
   // Update information point.
   const coordinate = [point.x, point.y];
 
@@ -542,11 +532,10 @@ ProfileController.prototype.hoverCallback_ = function(point, dist, xUnits, eleva
   this.snappedPoint_.setGeometry(geom);
 };
 
-
 /**
  * @private
  */
-ProfileController.prototype.outCallback_ = function() {
+ProfileController.prototype.outCallback_ = function () {
   // Reset information point.
   delete this.currentPoint.coordinate;
   delete this.currentPoint.distance;
@@ -559,12 +548,11 @@ ProfileController.prototype.outCallback_ = function() {
   this.snappedPoint_.setGeometry(undefined);
 };
 
-
 /**
  * @return {string} A text formatted to a tooltip.
  * @private
  */
-ProfileController.prototype.getTooltipHTML_ = function() {
+ProfileController.prototype.getTooltipHTML_ = function () {
   const gettextCatalog = this.gettextCatalog_;
   const separator = '&nbsp;: ';
   let elevationName, translatedElevationName;
@@ -576,20 +564,20 @@ ProfileController.prototype.getTooltipHTML_ = function() {
   for (elevationName in this.currentPoint.elevations) {
     translatedElevationName = gettextCatalog.getString(elevationName);
     const intValue = this.currentPoint.elevations[elevationName];
-    const value = intValue === null ?
-      gettextCatalog.getString('no value') :
-      `${number(intValue, 0)}&nbsp;${this.currentPoint.yUnits}`;
+    const value =
+      intValue === null
+        ? gettextCatalog.getString('no value')
+        : `${number(intValue, 0)}&nbsp;${this.currentPoint.yUnits}`;
     innerHTML.push(`${translatedElevationName} ${separator} ${value}`);
   }
   return innerHTML.join('</br>');
 };
 
-
 /**
  * Creates a new 'hover' tooltip
  * @private
  */
-ProfileController.prototype.createMeasureTooltip_ = function() {
+ProfileController.prototype.createMeasureTooltip_ = function () {
   if (!this.map_) {
     throw new Error('Missing map');
   }
@@ -599,17 +587,16 @@ ProfileController.prototype.createMeasureTooltip_ = function() {
   this.measureTooltip_ = new olOverlay({
     element: this.measureTooltipElement_,
     offset: [0, -15],
-    positioning: 'bottom-center'
+    positioning: 'bottom-center',
   });
   this.map_.addOverlay(this.measureTooltip_);
 };
-
 
 /**
  * Destroy the 'hover' tooltip
  * @private
  */
-ProfileController.prototype.removeMeasureTooltip_ = function() {
+ProfileController.prototype.removeMeasureTooltip_ = function () {
   if (this.measureTooltipElement_ !== null) {
     if (!this.map_) {
       throw new Error('Missing map');
@@ -626,13 +613,12 @@ ProfileController.prototype.removeMeasureTooltip_ = function() {
   }
 };
 
-
 /**
  * Return the styler value of a ProfileLineConfiguration.
  * @param {string} layerName name of the elevation layer.
  * @return {object} The object representation of the style.
  */
-ProfileController.prototype.getStyle = function(layerName) {
+ProfileController.prototype.getStyle = function (layerName) {
   if (!this.linesConfiguration_) {
     throw new Error('Missing linesConfiguration');
   }
@@ -641,33 +627,31 @@ ProfileController.prototype.getStyle = function(layerName) {
     return {};
   }
   return {
-    'color': lineConfiguration.color || '#F00'
+    'color': lineConfiguration.color || '#F00',
   };
 };
-
 
 /**
  * Return a copy of the existing layer names.
  * @return {string[]} The names of layers.
  */
-ProfileController.prototype.getLayersNames = function() {
+ProfileController.prototype.getLayersNames = function () {
   return this.layersNames_.slice(0);
 };
-
 
 /**
  * @param {string} layerName name of the elevation layer.
  * @return {function(Object): number} Z extractor function.
  * @private
  */
-ProfileController.prototype.getZFactory_ = function(layerName) {
+ProfileController.prototype.getZFactory_ = function (layerName) {
   /**
    * Generic GMF extractor for the 'given' value in 'values' in profileData.
    * @param {Object} item The item.
    * @return {number|null} The elevation or `null` if the value is not present in the data.
    * @private
    */
-  const getZFn = function(item) {
+  const getZFn = function (item) {
     if ('values' in item && layerName in item.values && item.values[layerName]) {
       return parseFloat(item.values[layerName]);
     }
@@ -676,26 +660,24 @@ ProfileController.prototype.getZFactory_ = function(layerName) {
   return getZFn;
 };
 
-
 /**
  * Extractor for the 'dist' value in profileData.
  * @param {Object} item The item.
  * @return {number} The distance.
  * @private
  */
-ProfileController.prototype.getDist_ = function(item) {
+ProfileController.prototype.getDist_ = function (item) {
   if ('dist' in item) {
     return item.dist;
   }
   return 0;
 };
 
-
 /**
  * Request the profile.
  * @private
  */
-ProfileController.prototype.getJsonProfile_ = function() {
+ProfileController.prototype.getJsonProfile_ = function () {
   if (!this.line) {
     throw new Error('Missing line');
   }
@@ -704,13 +686,13 @@ ProfileController.prototype.getJsonProfile_ = function() {
 
   const geom = {
     'type': 'LineString',
-    'coordinates': this.line.getCoordinates()
+    'coordinates': this.line.getCoordinates(),
   };
 
   const params = {
     'layers': this.layersNames_.join(','),
     'geom': JSON.stringify(geom),
-    'nbPoints': this.nbPoints_
+    'nbPoints': this.nbPoints_,
   };
 
   /** @type {Function} */ (this.$http_)({
@@ -719,20 +701,16 @@ ProfileController.prototype.getJsonProfile_ = function() {
     params: params,
     paramSerializer: '$httpParamSerializerJQLike',
     headers: {
-      'Content-Type': 'application/x-www-form-urlencoded'
-    }
-  }).then(
-    this.getProfileDataSuccess_.bind(this),
-    this.getProfileDataError_.bind(this)
-  );
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+  }).then(this.getProfileDataSuccess_.bind(this), this.getProfileDataError_.bind(this));
 };
-
 
 /**
  * @param {angular.IHttpResponse<{profile: Object[]}>} resp Response.
  * @private
  */
-ProfileController.prototype.getProfileDataSuccess_ = function(resp) {
+ProfileController.prototype.getProfileDataSuccess_ = function (resp) {
   const profileData = resp.data.profile;
   if (profileData instanceof Array) {
     this.isLoading = false;
@@ -740,22 +718,20 @@ ProfileController.prototype.getProfileDataSuccess_ = function(resp) {
   }
 };
 
-
 /**
  * @param {angular.IHttpResponse<never>} resp Response.
  * @private
  */
-ProfileController.prototype.getProfileDataError_ = function(resp) {
+ProfileController.prototype.getProfileDataError_ = function (resp) {
   this.isLoading = false;
   this.isErrored = true;
   console.error('Can not get JSON profile.');
 };
 
-
 /**
  * Request the csv profile with the current profile data.
  */
-ProfileController.prototype.downloadCsv = function() {
+ProfileController.prototype.downloadCsv = function () {
   if (this.profileData.length === 0) {
     return;
   }
@@ -797,8 +773,6 @@ ProfileController.prototype.downloadCsv = function() {
   this.ngeoCsvDownload_.startDownload(rows, headers, 'profile.csv');
 };
 
-
 module.controller('GmfProfileController', ProfileController);
-
 
 export default module;

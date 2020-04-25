@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 
 import ngeoDrawFeatures from 'ngeo/draw/features.js';
@@ -133,7 +132,6 @@ export class DrawController {
      */
     this.drawText = null;
 
-
     // Watch the "active" property, and disable the draw interactions
     // when "active" gets set to false.
     $scope.$watch(
@@ -170,7 +168,7 @@ export class DrawController {
    * @param {Event|import("ol/events/Event.js").default} event Event.
    */
   handleActiveChange(event) {
-    this.active = this.interactions_.some(interaction => interaction.getActive(), this);
+    this.active = this.interactions_.some((interaction) => interaction.getActive(), this);
   }
 
   /**
@@ -187,7 +185,7 @@ export class DrawController {
       // @ts-ignore: evt should be of type {import('ol/interaction/Draw.js').DrawEvent but he is private
       sketch = event.feature;
     } else {
-      sketch = /** @type {import('ngeo/interaction/Measure.js').MeasureEvent} */(event).detail.feature;
+      sketch = /** @type {import('ngeo/interaction/Measure.js').MeasureEvent} */ (event).detail.feature;
     }
     console.assert(sketch);
 
@@ -243,7 +241,6 @@ export class DrawController {
   }
 }
 
-
 /**
  * @type {angular.IModule}
  * @hidden
@@ -254,6 +251,5 @@ const module = angular.module('ngeoDrawfeatureController', [
   ngeoMiscFeatureHelper.name,
 ]);
 module.controller('ngeoDrawfeatureController', DrawController);
-
 
 export default module;

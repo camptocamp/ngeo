@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 import ngeoDrawController from 'ngeo/draw/Controller.js';
 import ngeoMiscFilters from 'ngeo/misc/filters.js';
@@ -30,16 +29,11 @@ import olFeature from 'ol/Feature.js';
 import {fromCircle} from 'ol/geom/Polygon.js';
 import olStyleStyle from 'ol/style/Style.js';
 
-
 /**
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoMeasureazimut', [
-  ngeoDrawController.name,
-  ngeoMiscFilters.name,
-]);
-
+const module = angular.module('ngeoMeasureazimut', [ngeoDrawController.name, ngeoMiscFilters.name]);
 
 /**
  * @param {angular.ICompileService} $compile Angular compile service.
@@ -82,32 +76,34 @@ function measureAzimutComponent($compile, gettextCatalog, $filter, $injector) {
         options.decimals = $injector.get('ngeoMeasureDecimals');
       }
       const measureAzimut = new ngeoInteractionMeasureAzimut(
-        $filter('ngeoUnitPrefix'), $filter('number'), options);
+        $filter('ngeoUnitPrefix'),
+        $filter('number'),
+        options
+      );
 
       if (drawFeatureCtrl.uid) {
-        measureAzimut.set(
-          'ngeo-interaction-draw-uid',
-          `${drawFeatureCtrl.uid}-azimut`
-        );
+        measureAzimut.set('ngeo-interaction-draw-uid', `${drawFeatureCtrl.uid}-azimut`);
       }
 
       drawFeatureCtrl.registerInteraction(measureAzimut);
       drawFeatureCtrl.measureAzimut = measureAzimut;
 
-      listen(measureAzimut, 'measureend',
+      listen(
+        measureAzimut,
+        'measureend',
         /**
          * @param {Event|import('ol/events/Event.js').default} event Event.
          */
         (event) => {
-          const myEvent = /** @type {import('ngeo/interaction/Measure.js').MeasureEvent} */(event);
+          const myEvent = /** @type {import('ngeo/interaction/Measure.js').MeasureEvent} */ (event);
           // In the case of azimut measure interaction, the feature's
           // geometry is actually a collection (line + circle)
           // For our purpose here, we only need the circle, which gets
           // transformed into a polygon with 64 sides.
-          const geometry = /** @type {import("ol/geom/GeometryCollection.js").default} */
-                (myEvent.detail.feature.getGeometry());
-          const circle = /** @type {import("ol/geom/Circle.js").default} */ (
-            geometry.getGeometries()[1]);
+          const geometry =
+            /** @type {import("ol/geom/GeometryCollection.js").default} */
+            (myEvent.detail.feature.getGeometry());
+          const circle = /** @type {import("ol/geom/Circle.js").default} */ (geometry.getGeometries()[1]);
           const polygon = fromCircle(
             circle,
             Number.parseInt(attrs.$$element.attr('ngeo-measureazimut-nbpoints') || 64)
@@ -124,12 +120,10 @@ function measureAzimutComponent($compile, gettextCatalog, $filter, $injector) {
       );
 
       listen(measureAzimut, 'change:active', drawFeatureCtrl.handleActiveChange, drawFeatureCtrl);
-    }
+    },
   };
 }
 
-
 module.directive('ngeoMeasureazimut', measureAzimutComponent);
-
 
 export default module;

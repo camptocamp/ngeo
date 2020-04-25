@@ -19,28 +19,24 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 import './datepicker.css';
 import ngeoMiscDatepickerComponent from 'ngeo/misc/datepickerComponent.js';
 
 import ngeoMiscWMSTime from 'ngeo/misc/WMSTime.js';
-import {TimePropertyWidgetEnum, TimePropertyResolutionEnum, TimePropertyModeEnum}
-  from 'ngeo/datasource/OGC.js';
-
+import {
+  TimePropertyWidgetEnum,
+  TimePropertyResolutionEnum,
+  TimePropertyModeEnum,
+} from 'ngeo/datasource/OGC.js';
 
 /**
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfapp', [
-  'gettext',
-  ngeoMiscDatepickerComponent.name,
-  ngeoMiscWMSTime.name,
-]);
+const module = angular.module('gmfapp', ['gettext', ngeoMiscDatepickerComponent.name, ngeoMiscWMSTime.name]);
 
 module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
-
 
 /**
  * @constructor
@@ -49,7 +45,6 @@ module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
  * @ngInject
  */
 function MainController($scope, ngeoWMSTime) {
-
   /**
    * @type {import("ngeo/misc/WMSTime.js").WMSTime}
    * @private
@@ -65,7 +60,7 @@ function MainController($scope, ngeoWMSTime) {
     minValue: '2006-01-01T00:00:00Z',
     resolution: TimePropertyResolutionEnum.DAY,
     mode: TimePropertyModeEnum.RANGE,
-    interval: [0, 1, 0, 0]
+    interval: [0, 1, 0, 0],
   };
 
   /**
@@ -77,7 +72,7 @@ function MainController($scope, ngeoWMSTime) {
     minValue: '2014-01-01T00:00:00Z',
     resolution: /** @type {TimePropertyResolutionEnum}*/ ('month'),
     mode: /** @type {TimePropertyModeEnum} */ ('value'),
-    interval: [0, 1, 0, 0]
+    interval: [0, 1, 0, 0],
   };
 
   /**
@@ -93,18 +88,17 @@ function MainController($scope, ngeoWMSTime) {
   /**
    * @param {import('ngeo/datasource/OGC.js').TimeRange} date
    */
-  this.onDateSelected = function(date) {
+  this.onDateSelected = function (date) {
     this.value = this.ngeoWMSTime_.formatWMSTimeParam(this.wmsTimeValueMode, date);
   };
 
   /**
    * @param {import('ngeo/datasource/OGC.js').TimeRange} date
    */
-  this.onDateRangeSelected = function(date) {
+  this.onDateRangeSelected = function (date) {
     this.rangeValue = this.ngeoWMSTime_.formatWMSTimeParam(this.wmsTimeRangeMode, date);
   };
 }
-
 
 module.controller('MainController', MainController);
 

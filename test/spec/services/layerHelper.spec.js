@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 // @ts-nocheck
 import angular from 'angular';
 import olLayerGroup from 'ol/layer/Group.js';
@@ -101,7 +100,8 @@ describe('ngeo.map.LayerHelper', () => {
     const layerName = 'wmsLayer';
     const scale = 0;
     const wmsLegendURL = ngeoLayerHelper.getWMSLegendURL(url, layerName, scale);
-    const expectedResult = `${url}?FORMAT=image%2Fpng&TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&` +
+    const expectedResult =
+      `${url}?FORMAT=image%2Fpng&TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&` +
       `REQUEST=GetLegendGraphic&LAYER=${layerName}&SCALE=${scale}`;
     expect(expectedResult).toBe(wmsLegendURL);
   });
@@ -111,7 +111,8 @@ describe('ngeo.map.LayerHelper', () => {
     const layerName = 'wmsLayer';
     const legendRule = 'legendRule';
     const wmsLegendURL = ngeoLayerHelper.getWMSLegendURL(url, layerName, undefined, legendRule);
-    const expectedResult = `${url}?FORMAT=image%2Fpng&TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&` +
+    const expectedResult =
+      `${url}?FORMAT=image%2Fpng&TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&` +
       `REQUEST=GetLegendGraphic&LAYER=${layerName}&RULE=${legendRule}`;
     expect(expectedResult).toBe(wmsLegendURL);
   });

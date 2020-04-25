@@ -19,11 +19,9 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 import * as olProj from 'ol/proj.js';
 import * as olExtent from 'ol/extent.js';
-
 
 /**
  * @constructor
@@ -33,25 +31,23 @@ import * as olExtent from 'ol/extent.js';
  */
 export function AutoProjectionService() {}
 
-
 /**
  * Parse a string and return a coordinate if the result is valid. Given string
  * must be a two numbers separated by a space.
  * @param {string} str the string to parse.
  * @return {?import("ol/coordinate.js").Coordinate} A coordinate or null if the format is not valid.
  */
-AutoProjectionService.prototype.stringToCoordinates = function(str) {
+AutoProjectionService.prototype.stringToCoordinates = function (str) {
   const coords = str.match(/([\d\.']+)[\s,]+([\d\.']+)/);
   if (coords) {
-    const x = parseFloat(coords[1].replace('\'', ''));
-    const y = parseFloat(coords[2].replace('\'', ''));
+    const x = parseFloat(coords[1].replace("'", ''));
+    const y = parseFloat(coords[2].replace("'", ''));
     if (!isNaN(x) && !isNaN(y)) {
       return [x, y];
     }
   }
   return null;
 };
-
 
 /**
  * Get an array of projections corresponding to their EPSG codes. Log an error
@@ -60,7 +56,7 @@ AutoProjectionService.prototype.stringToCoordinates = function(str) {
  *     'epsg:3857' or '3857').
  * @return {Array<import("ol/proj/Projection.js").default>} An array of projections.
  */
-AutoProjectionService.prototype.getProjectionList = function(projectionsCodes) {
+AutoProjectionService.prototype.getProjectionList = function (projectionsCodes) {
   let code, proj;
   /** @type {olProj.Projection[]} */
   const projections = [];
@@ -79,7 +75,6 @@ AutoProjectionService.prototype.getProjectionList = function(projectionsCodes) {
   return projections;
 };
 
-
 /**
  * It projects the point using the projection array and finds the first one for
  * which it falls inside of the viewProjection extent.
@@ -92,8 +87,12 @@ AutoProjectionService.prototype.getProjectionList = function(projectionsCodes) {
  * @return {?import("ol/coordinate.js").Coordinate} A coordinates in the view's projection if it matches
  *     in one of the given projections, or null else.
  */
-AutoProjectionService.prototype.tryProjections = function(coordinates,
-  extent, viewProjection, opt_projections) {
+AutoProjectionService.prototype.tryProjections = function (
+  coordinates,
+  extent,
+  viewProjection,
+  opt_projections
+) {
   let position = null;
   if (opt_projections === undefined) {
     opt_projections = [viewProjection];
@@ -113,7 +112,6 @@ AutoProjectionService.prototype.tryProjections = function(coordinates,
   return position;
 };
 
-
 /**
  * Same as AutoProjection.tryProjections but if tryProjections return null,
  * re-call it with coordinates in reverse order.
@@ -126,17 +124,18 @@ AutoProjectionService.prototype.tryProjections = function(coordinates,
  * @return {?import("ol/coordinate.js").Coordinate} A coordinates in the view's projection if it matches
  *     in one of the given projections, or null else.
  */
-AutoProjectionService.prototype.tryProjectionsWithInversion = function(
-  coordinates, extent, viewProjection, opt_projections) {
-  let position = this.tryProjections(coordinates, extent, viewProjection,
-    opt_projections);
+AutoProjectionService.prototype.tryProjectionsWithInversion = function (
+  coordinates,
+  extent,
+  viewProjection,
+  opt_projections
+) {
+  let position = this.tryProjections(coordinates, extent, viewProjection, opt_projections);
   if (position === null) {
-    position = this.tryProjections(coordinates.reverse(), extent,
-      viewProjection, opt_projections);
+    position = this.tryProjections(coordinates.reverse(), extent, viewProjection, opt_projections);
   }
   return position;
 };
-
 
 /**
  * @type {angular.IModule}
@@ -144,6 +143,5 @@ AutoProjectionService.prototype.tryProjectionsWithInversion = function(
  */
 const module = angular.module('ngeoAutoProjection', []);
 module.service('ngeoAutoProjection', AutoProjectionService);
-
 
 export default module;

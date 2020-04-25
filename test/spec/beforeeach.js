@@ -19,12 +19,10 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 // @ts-nocheck
 /* eslint valid-jsdoc: 0 */
 import angular from 'angular';
 import ngeoMainmodule from 'ngeo/mainmodule.js';
-
 
 const module = angular.module('app', []);
 
@@ -58,7 +56,7 @@ beforeEach(() => {
             result.pass = false;
           } else {
             for (let i = 0; i < len1; i++) {
-              if (!(Math.abs(actual[i] - expected[i]) < (Math.pow(10, -precision) / 2))) {
+              if (!(Math.abs(actual[i] - expected[i]) < Math.pow(10, -precision) / 2)) {
                 result.pass = false;
                 break;
               }
@@ -68,11 +66,10 @@ beforeEach(() => {
           result.message = `expected ${actual} to sort of equal ${expected}`;
 
           return result;
-        }
+        },
       };
-    }
+    },
   });
 });
-
 
 export default module;

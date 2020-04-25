@@ -19,13 +19,11 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 import ngeoCustomEvent from 'ngeo/CustomEvent.js';
 import olEventsEventTarget from 'ol/events/Target.js';
 // @ts-ignore
 import * as Sentry from '@sentry/browser';
-
 
 /**
  * Availables functionalities.
@@ -57,7 +55,6 @@ import * as Sentry from '@sentry/browser';
  * @property {string|null} otp_uri
  */
 
-
 /**
  * @typedef {Object} AuthenticationEventItem
  * @property {User} user
@@ -66,7 +63,6 @@ import * as Sentry from '@sentry/browser';
 /**
  * @typedef {import("ngeo/CustomEvent.js").default<AuthenticationEventItem>} AuthenticationEvent
  */
-
 
 /**
  * @typedef {Object} AuthenticationLoginResponse
@@ -87,7 +83,6 @@ import * as Sentry from '@sentry/browser';
  * @property {boolean} success
  */
 
-
 /**
  * @enum {string}
  * @hidden
@@ -97,9 +92,8 @@ export const RouteSuffix = {
   IS_LOGGED_IN: 'loginuser',
   LOGIN: 'login',
   LOGOUT: 'logout',
-  RESET_PASSWORD: 'loginresetpassword'
+  RESET_PASSWORD: 'loginresetpassword',
 };
-
 
 /**
  * An "authentication" service for a GeoMapFish application. Upon loading, it
@@ -115,7 +109,6 @@ export const RouteSuffix = {
  * @hidden
  */
 export class AuthenticationService extends olEventsEventTarget {
-
   /**
    * @param {angular.IHttpService} $http Angular http service.
    * @param {angular.auto.IInjectorService} $injector Main injector.
@@ -127,7 +120,6 @@ export class AuthenticationService extends olEventsEventTarget {
    * @ngInject
    */
   constructor($http, $injector, $rootScope, authenticationBaseUrl, gmfUser, gmfAuthenticationConfig) {
-
     super();
 
     /**
@@ -161,11 +153,11 @@ export class AuthenticationService extends olEventsEventTarget {
     this.forcePasswordChange = gmfAuthenticationConfig.forcePasswordChange === true;
 
     /**
-      * Don't request a new user object from the back-end after
-      * logging out if the logged-in user's role has this role.
-      * @type {?string}
-      * @private
-      */
+     * Don't request a new user object from the back-end after
+     * logging out if the logged-in user's role has this role.
+     * @type {?string}
+     * @private
+     */
     this.noReloadRole_ = $injector.has('gmfAuthenticationNoReloadRole')
       ? $injector.get('gmfAuthenticationNoReloadRole')
       : null;
@@ -180,8 +172,7 @@ export class AuthenticationService extends olEventsEventTarget {
    */
   load_() {
     const url = `${this.baseUrl_}/${RouteSuffix.IS_LOGGED_IN}`;
-    this.$http_.get(url, {withCredentials: true})
-      .then((resp) => this.handleLogin_(true, resp));
+    this.$http_.get(url, {withCredentials: true}).then((resp) => this.handleLogin_(true, resp));
   }
 
   /**
@@ -195,18 +186,24 @@ export class AuthenticationService extends olEventsEventTarget {
   changePassword(login, oldPwd, newPwd, confPwd, otp = undefined) {
     const url = `${this.baseUrl_}/${RouteSuffix.CHANGE_PASSWORD}`;
 
-    return this.$http_.post(url, $.param({
-      'login': login,
-      'oldPassword': oldPwd,
-      'otp': otp,
-      'newPassword': newPwd,
-      'confirmNewPassword': confPwd
-    }), {
-      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-      withCredentials: true
-    }).then((resp) => {
-      this.setUser_(resp.data, true);
-    });
+    return this.$http_
+      .post(
+        url,
+        $.param({
+          'login': login,
+          'oldPassword': oldPwd,
+          'otp': otp,
+          'newPassword': newPwd,
+          'confirmNewPassword': confPwd,
+        }),
+        {
+          headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+          withCredentials: true,
+        }
+      )
+      .then((resp) => {
+        this.setUser_(resp.data, true);
+      });
   }
 
   /**
@@ -222,10 +219,11 @@ export class AuthenticationService extends olEventsEventTarget {
       Object.assign(params, {'otp': otp});
     }
 
-    return this.$http_.post(url, $.param(params), {
-      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-      withCredentials: true
-    })
+    return this.$http_
+      .post(url, $.param(params), {
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        withCredentials: true,
+      })
       .then((resp) => this.onSuccessfulLogin(resp))
       .then((resp) => this.handleLogin_(false, resp));
   }
@@ -256,9 +254,11 @@ export class AuthenticationService extends olEventsEventTarget {
   resetPassword(login) {
     const url = `${this.baseUrl_}/${RouteSuffix.RESET_PASSWORD}`;
 
-    return this.$http_.post(url, $.param({'login': login}), {
-      headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-    }).then((resp) => resp.data);
+    return this.$http_
+      .post(url, $.param({'login': login}), {
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+      })
+      .then((resp) => resp.data);
   }
 
   /**
@@ -308,7 +308,7 @@ export class AuthenticationService extends olEventsEventTarget {
    */
   setUser_(respData, emitEvent) {
     Sentry.setUser({
-      username: respData.username
+      username: respData.username,
     });
 
     for (const key in this.user_) {
@@ -344,7 +344,6 @@ export class AuthenticationService extends olEventsEventTarget {
   }
 }
 
-
 /**
  * @type {angular.IModule}
  * @hidden
@@ -356,8 +355,7 @@ module.value('gmfUser', {
   functionalities: null,
   is_password_changed: null,
   roles: null,
-  username: null
+  username: null,
 });
-
 
 export default module;

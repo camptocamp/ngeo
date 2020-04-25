@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import {deleteCondition} from 'ngeo/utils.js';
 import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties.js';
 import ngeoInteractionModifyCircle from 'ngeo/interaction/ModifyCircle.js';
@@ -32,17 +31,14 @@ import olInteractionModify from 'ol/interaction/Modify.js';
 import olFeature from 'ol/Feature.js';
 import {CollectionEvent} from 'ol/Collection.js';
 
-
 /**
  * @typedef {Object} ModifyEventItem
  * @property {olFeature<import("ol/geom/Geometry.js").default>} features
  */
 
-
 /**
  * @typedef {import("ngeo/CustomEvent.js").default<ModifyEventItem>} ModifyEvent
  */
-
 
 /**
  * @typedef {Object} Options
@@ -56,7 +52,6 @@ import {CollectionEvent} from 'ol/Collection.js';
  * @property {boolean} [wrapX=false] From ol/interaction/Modify.Options.
  * @property {number} [nbPoints=64] The number of points in the circle.
  */
-
 
 /**
  * This interaction combines multiple kind of feature modification interactions
@@ -81,7 +76,7 @@ export default class extends olInteractionInteraction {
    */
   constructor(options) {
     super({
-      handleEvent: TRUE
+      handleEvent: TRUE,
     });
     console.assert(options.features);
 
@@ -109,13 +104,15 @@ export default class extends olInteractionInteraction {
      */
     this.otherFeatures_ = new olCollection();
 
-    this.interactions_.push(new olInteractionModify({
-      deleteCondition: deleteCondition,
-      features: this.otherFeatures_,
-      pixelTolerance: options.pixelTolerance,
-      style: options.style,
-      wrapX: options.wrapX
-    }));
+    this.interactions_.push(
+      new olInteractionModify({
+        deleteCondition: deleteCondition,
+        features: this.otherFeatures_,
+        pixelTolerance: options.pixelTolerance,
+        style: options.style,
+        wrapX: options.wrapX,
+      })
+    );
 
     /**
      * @type {import("ol/Collection.js").default<olFeature<import("ol/geom/Geometry.js").default>>}
@@ -123,13 +120,15 @@ export default class extends olInteractionInteraction {
      */
     this.circleFeatures_ = new olCollection();
 
-    this.interactions_.push(new ngeoInteractionModifyCircle({
-      features: this.circleFeatures_,
-      pixelTolerance: options.pixelTolerance,
-      style: options.style,
-      wrapX: options.wrapX,
-      nbPoints: options.nbPoints,
-    }));
+    this.interactions_.push(
+      new ngeoInteractionModifyCircle({
+        features: this.circleFeatures_,
+        pixelTolerance: options.pixelTolerance,
+        style: options.style,
+        wrapX: options.wrapX,
+        nbPoints: options.nbPoints,
+      })
+    );
 
     /**
      * @type {import("ol/Collection.js").default<olFeature<import("ol/geom/Geometry.js").default>>}
@@ -137,12 +136,14 @@ export default class extends olInteractionInteraction {
      */
     this.rectangleFeatures_ = new olCollection();
 
-    this.interactions_.push(new ngeoInteractionModifyRectangle({
-      features: this.rectangleFeatures_,
-      pixelTolerance: options.pixelTolerance,
-      style: options.style,
-      wrapX: options.wrapX
-    }));
+    this.interactions_.push(
+      new ngeoInteractionModifyRectangle({
+        features: this.rectangleFeatures_,
+        pixelTolerance: options.pixelTolerance,
+        style: options.style,
+        wrapX: options.wrapX,
+      })
+    );
   }
 
   /**
@@ -202,7 +203,7 @@ export default class extends olInteractionInteraction {
     });
 
     if (active && map) {
-      this.features_.forEach(feature => this.addFeature_(feature));
+      this.features_.forEach((feature) => this.addFeature_(feature));
       keys.push(
         listen(this.features_, 'add', this.handleFeaturesAdd_, this),
         listen(this.features_, 'remove', this.handleFeaturesRemove_, this)
@@ -210,7 +211,7 @@ export default class extends olInteractionInteraction {
     } else {
       keys.forEach(unlistenByKey);
       keys.length = 0;
-      this.features_.forEach(feature => this.removeFeature_(feature));
+      this.features_.forEach((feature) => this.removeFeature_(feature));
     }
   }
 

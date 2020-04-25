@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import ngeoCustomEvent from 'ngeo/CustomEvent.js';
 import {listen, unlistenByKey} from 'ol/events.js';
 import olFeature from 'ol/Feature.js';
@@ -38,7 +37,6 @@ import MapBrowserEvent from 'ol/MapBrowserEvent.js';
  * @property {number} [sides=3] The number of sides for the regular polygon.
  */
 
-
 /**
  * This interactions allows drawing regular polygons of a pre-determined number
  * of sides and size a a clicked location on the map.
@@ -51,7 +49,7 @@ export default class extends olInteractionInteraction {
    */
   constructor(options) {
     super({
-      handleEvent: TRUE
+      handleEvent: TRUE,
     });
 
     /**
@@ -113,7 +111,6 @@ export default class extends olInteractionInteraction {
     if (map && active) {
       this.enable_();
     }
-
   }
 
   /**
@@ -123,9 +120,7 @@ export default class extends olInteractionInteraction {
   enable_() {
     const map = this.getMap();
     console.assert(map, 'Map should be set.');
-    this.listenerKeys_.push(
-      listen(map, 'click', this.handleMapClick_, this)
-    );
+    this.listenerKeys_.push(listen(map, 'click', this.handleMapClick_, this));
   }
 
   /**
@@ -148,9 +143,7 @@ export default class extends olInteractionInteraction {
   handleMapClick_(evt) {
     if (evt instanceof MapBrowserEvent) {
       const center = evt.coordinate;
-      const geometry = fromCircle(
-        new olGeomCircle(center), this.sides_
-      );
+      const geometry = fromCircle(new olGeomCircle(center), this.sides_);
 
       makeRegular(geometry, center, this.radius_, this.angle_);
 

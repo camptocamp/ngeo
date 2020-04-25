@@ -19,12 +19,10 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 import DateFormatter from 'ngeo/misc/php-date-formatter.js';
 import 'jquery-datetimepicker/jquery.datetimepicker.js';
 import 'jquery-datetimepicker/jquery.datetimepicker.css';
-
 
 /**
  * @type {angular.IModule}
@@ -52,13 +50,12 @@ function dateTimeComponent() {
     controller: Controller,
     bindToController: true,
     scope: {
-      'options': '<ngeoDatetimepickerOptions'
-    }
+      'options': '<ngeoDatetimepickerOptions',
+    },
   };
 }
 
 module.directive('ngeoDatetimepicker', dateTimeComponent);
-
 
 /**
  * @param {JQuery} $element Element.
@@ -92,11 +89,10 @@ function Controller($element, gettextCatalog) {
   this.options;
 }
 
-
 /**
  * Initialize the directive.
  */
-Controller.prototype.$onInit = function() {
+Controller.prototype.$onInit = function () {
   const lang = this.gettextCatalog_.getCurrentLanguage();
   // @ts-ignore: Missing in DefinitelyTyped
   $.datetimepicker.setLocale(lang);
@@ -109,6 +105,5 @@ Controller.prototype.$onInit = function() {
 };
 
 module.controller('ngeoDateTimePickerController', Controller);
-
 
 export default module;

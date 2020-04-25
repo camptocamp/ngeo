@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 
 describe('ngeo.misc.filereaderComponent', () => {
@@ -36,22 +35,23 @@ describe('ngeo.misc.filereaderComponent', () => {
        * @param {angular.IModule} $provide
        */
       ($provide) => {
-        const FileReader = function() {};
+        const FileReader = function () {};
         FileReader.prototype.readAsText =
           /**
            * @param {string} file
            */
-          function(file) {
+          function (file) {
             const progressEvent = {
               target: {
-                result: '<kml></kml>'
-              }
+                result: '<kml></kml>',
+              },
             };
             // @ts-ignore
             this.onload(progressEvent);
           };
         $provide.value('$window', {FileReader: FileReader, angular: angular});
-      });
+      }
+    );
 
     angular.mock.inject(($rootScope, $compile) => {
       $compile(element)($rootScope);

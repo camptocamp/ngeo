@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import './mapswipe.css';
 import angular from 'angular';
 import ngeoMapswipeModule from 'ngeo/map/swipe.js';
@@ -30,20 +29,15 @@ import olSourceOSM, {ATTRIBUTION} from 'ol/source/OSM.js';
 import olView from 'ol/View.js';
 
 /** @type {angular.IModule} **/
-const module = angular.module('app', [
-  'gettext',
-  ngeoMapModule.name,
-  ngeoMapswipeModule.name
-]);
+const module = angular.module('app', ['gettext', ngeoMapModule.name, ngeoMapswipeModule.name]);
 
 /**
  * @constructor
  * @ngInject
  */
 function MainController() {
-
   const openStreetMapLayer = new olLayerTile({
-    source: new olSourceOSM()
+    source: new olSourceOSM(),
   });
 
   /**
@@ -51,27 +45,21 @@ function MainController() {
    */
   this.openSeaMapLayer = new olLayerTile({
     source: new olSourceOSM({
-      attributions: [
-        'All maps © <a href="http://www.openseamap.org/">OpenSeaMap</a>',
-        ATTRIBUTION
-      ],
+      attributions: ['All maps © <a href="http://www.openseamap.org/">OpenSeaMap</a>', ATTRIBUTION],
       opaque: false,
-      url: 'https://tiles.openseamap.org/seamark/{z}/{x}/{y}.png'
-    })
+      url: 'https://tiles.openseamap.org/seamark/{z}/{x}/{y}.png',
+    }),
   });
 
   /**
    * @type {import('ol/Map.js').default}
    */
   this.map = new olMap({
-    layers: [
-      openStreetMapLayer,
-      this.openSeaMapLayer
-    ],
+    layers: [openStreetMapLayer, this.openSeaMapLayer],
     view: new olView({
       center: [-244780.24508882355, 5986452.183179816],
-      zoom: 15
-    })
+      zoom: 15,
+    }),
   });
 }
 

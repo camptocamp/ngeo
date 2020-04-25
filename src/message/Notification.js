@@ -19,13 +19,11 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 import 'bootstrap/js/src/alert.js';
 
 import ngeoMessageMessage, {MessageType} from 'ngeo/message/Message.js';
 import {getUid as olUtilGetUid} from 'ol/util.js';
-
 
 /**
  * Default delay (in milliseconds) a message should be displayed.
@@ -34,7 +32,6 @@ import {getUid as olUtilGetUid} from 'ol/util.js';
  * @hidden
  */
 const DEFAULT_DELAY = 7000;
-
 
 /**
  * Provides methods to display any sort of messages, notifications, errors,
@@ -138,7 +135,7 @@ export class MessageNotification extends ngeoMessageMessage {
     const delay = message.delay !== undefined ? message.delay : DEFAULT_DELAY;
 
     const item = /** @type {CacheItem} */ ({
-      el
+      el,
     });
 
     // Keep a reference to the promise, in case we want to manually cancel it
@@ -179,7 +176,6 @@ export class MessageNotification extends ngeoMessageMessage {
  * @property {JQuery} el
  * @property {angular.IPromise<void>} promise
  */
-
 
 /**
  * @type {angular.IModule}

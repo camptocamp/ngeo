@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
@@ -33,26 +32,24 @@ describe('ngeo.map.scaleselector', () => {
   let scales;
 
   beforeEach(() => {
-
     map = new olMap({
       view: new olView({
         center: [0, 0],
-        zoom: 0
-      })
+        zoom: 0,
+      }),
     });
 
     element = angular.element(
-      '<div ngeo-scaleselector="scales"' +
-            'ngeo-scaleselector-map="map">' +
-        '</div>');
+      '<div ngeo-scaleselector="scales"' + 'ngeo-scaleselector-map="map">' + '</div>'
+    );
 
     angular.mock.inject(($rootScope, $compile, $sce) => {
       scales = {
-        '0': $sce.trustAsHtml('1&nbsp;:&nbsp;200\'000\'000'),
-        '1': $sce.trustAsHtml('1&nbsp;:&nbsp;100\'000\'000'),
-        '2': $sce.trustAsHtml('1&nbsp;:&nbsp;50\'000\'000'),
-        '3': $sce.trustAsHtml('1&nbsp;:&nbsp;25\'000\'000'),
-        '4': $sce.trustAsHtml('1&nbsp;:&nbsp;12\'000\'000')
+        '0': $sce.trustAsHtml("1&nbsp;:&nbsp;200'000'000"),
+        '1': $sce.trustAsHtml("1&nbsp;:&nbsp;100'000'000"),
+        '2': $sce.trustAsHtml("1&nbsp;:&nbsp;50'000'000"),
+        '3': $sce.trustAsHtml("1&nbsp;:&nbsp;25'000'000"),
+        '4': $sce.trustAsHtml("1&nbsp;:&nbsp;12'000'000"),
       };
 
       $rootScope.map = map;
@@ -60,7 +57,6 @@ describe('ngeo.map.scaleselector', () => {
       $compile(element)($rootScope);
       $rootScope.$digest();
     });
-
   });
 
   it('creates an element with expected number of li elements', () => {
@@ -69,7 +65,6 @@ describe('ngeo.map.scaleselector', () => {
   });
 
   describe('calling setZoom in Angular context', () => {
-
     it('does not throw', () => {
       const scope = element.scope();
 
@@ -83,7 +78,5 @@ describe('ngeo.map.scaleselector', () => {
       // @ts-ignore: scope
       expect(scope.scaleselectorCtrl.currentScale).toBe(scales[4]);
     });
-
   });
-
 });

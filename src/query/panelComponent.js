@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 
 import ngeoQueryModeSelector from 'ngeo/query/ModeSelector.js';
@@ -28,16 +27,14 @@ import ngeoQueryModeSelector from 'ngeo/query/ModeSelector.js';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoQueryPanel', [
-  ngeoQueryModeSelector.name,
-]);
+const module = angular.module('ngeoQueryPanel', [ngeoQueryModeSelector.name]);
 
 module.run(
   /**
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
-  $templateCache => {
+  ($templateCache) => {
     $templateCache.put(
       'ngeo/src/query/panelComponent',
       // @ts-ignore: webpack
@@ -52,11 +49,9 @@ module.value(
    * @param {angular.IAttributes} $attrs Attributes.
    * @return {string} The template url.
    */
-  $attrs => {
+  ($attrs) => {
     const templateUrl = $attrs.ngeoQueryPanelTemplateUrl;
-    return templateUrl !== undefined ?
-      templateUrl :
-      'ngeo/src/query/panelComponent';
+    return templateUrl !== undefined ? templateUrl : 'ngeo/src/query/panelComponent';
   }
 );
 
@@ -72,13 +67,11 @@ function ngeoQueryPanelTemplateUrl($attrs, ngeoQueryPanelTemplateUrl) {
   return ngeoQueryPanelTemplateUrl($attrs);
 }
 
-
 /**
  * @private
  * @hidden
  */
 class QueryPanelController {
-
   /**
    * @param {import("ngeo/query/ModeSelector.js").QueryModeSelector}
    *     ngeoQueryModeSelector The ngeo query modeSelector service.
@@ -97,7 +90,7 @@ class QueryPanelController {
 
 module.component('ngeoQueryPanel', {
   controller: QueryPanelController,
-  templateUrl: ngeoQueryPanelTemplateUrl
+  templateUrl: ngeoQueryPanelTemplateUrl,
 });
 
 export default module;

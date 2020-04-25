@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 import appURL from './url.js';
 import './layertreeadd.css';
@@ -40,7 +39,6 @@ import olView from 'ol/View.js';
 import olLayerTile from 'ol/layer/Tile.js';
 import olSourceOSM from 'ol/source/OSM.js';
 
-
 /**
  * @type {angular.IModule}
  * @hidden
@@ -56,13 +54,11 @@ const module = angular.module('gmfapp', [
   gmfDisclaimerModule.name,
 ]);
 
-
 module.value('gmfTreeUrl', appURL.GMF_THEMES);
 
 module.constant('defaultTheme', 'Demo');
 module.constant('gmfTreeManagerModeFlush', false);
 module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
-
 
 /**
  * @constructor
@@ -74,7 +70,6 @@ module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
  * @ngInject
  */
 function MainController(gmfTreeManager, gmfThemes, gmfThemeManager, ngeoLocation) {
-
   gmfThemes.loadThemes();
 
   /**
@@ -83,15 +78,15 @@ function MainController(gmfTreeManager, gmfThemes, gmfThemeManager, ngeoLocation
   this.map = new olMap({
     layers: [
       new olLayerTile({
-        source: new olSourceOSM()
-      })
+        source: new olSourceOSM(),
+      }),
     ],
     view: new olView({
       projection: EPSG2056,
       resolutions: [200, 100, 50, 20, 10, 5, 2.5, 2, 1, 0.5],
       center: [2537635, 1152640],
-      zoom: 3
-    })
+      zoom: 3,
+    }),
   });
 
   // How should disclaimer message be displayed: in modals or alerts
@@ -131,7 +126,7 @@ function MainController(gmfTreeManager, gmfThemes, gmfThemeManager, ngeoLocation
    * @param {import('gmf/themes.js').GmfTheme|undefined} value A theme or undefined to get Themes.
    * @return {Array<import('gmf/themes.js').GmfTheme>} All themes.
    */
-  this.getSetTheme = function(value) {
+  this.getSetTheme = function (value) {
     if (value) {
       this.gmfThemeManager.addTheme(value);
     }
@@ -142,7 +137,7 @@ function MainController(gmfTreeManager, gmfThemes, gmfThemeManager, ngeoLocation
    * @param {import('gmf/themes.js').GmfGroup|undefined} value A group or undefined to get groups.
    * @return {Array<import('gmf/themes.js').GmfGroup>} All groups in all themes.
    */
-  this.getSetGroup = function(value) {
+  this.getSetGroup = function (value) {
     if (value !== undefined) {
       this.gmfTreeManager.addFirstLevelGroups([value]);
     }
@@ -153,7 +148,7 @@ function MainController(gmfTreeManager, gmfThemes, gmfThemeManager, ngeoLocation
    * @param {import('gmf/themes.js').GmfLayer|undefined} value A group or undefined to get groups.
    * @return {Array<import('gmf/themes.js').GmfLayer>} All groups in all themes.
    */
-  this.getSetLayers = function(value) {
+  this.getSetLayers = function (value) {
     if (value !== undefined) {
       this.gmfTreeManager.addGroupByLayerName(value.name);
     }
@@ -165,7 +160,7 @@ function MainController(gmfTreeManager, gmfThemes, gmfThemeManager, ngeoLocation
    *     to get the groups of the tree manager.
    * @return {Array<import('gmf/themes.js').GmfGroup>} All groups in the tree manager.
    */
-  this.getSetRemoveTree = function(value) {
+  this.getSetRemoveTree = function (value) {
     if (value !== undefined) {
       this.gmfTreeManager.removeGroup(value);
     }
@@ -186,10 +181,10 @@ function MainController(gmfTreeManager, gmfThemes, gmfThemeManager, ngeoLocation
         });
       });
       flatNodes.forEach((node) => {
-        const groupNode = /** @type {import('gmf/themes.js').GmfGroup} */(node);
+        const groupNode = /** @type {import('gmf/themes.js').GmfGroup} */ (node);
         // Get an array of all layers
         if (groupNode.children === undefined) {
-          this.layers.push(/** @type {import('gmf/themes.js').GmfLayer} */(node));
+          this.layers.push(/** @type {import('gmf/themes.js').GmfLayer} */ (node));
         }
       });
     }
@@ -202,9 +197,9 @@ function MainController(gmfTreeManager, gmfThemes, gmfThemeManager, ngeoLocation
    * @param {Array<import('gmf/themes.js').GmfTheme|import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer>} nodes
    *    An Array of nodes.
    */
-  this.getDistinctFlatNodes_ = function(node, nodes) {
+  this.getDistinctFlatNodes_ = function (node, nodes) {
     let i;
-    const children = /** @type {import('gmf/themes.js').GmfGroup} */(node).children;
+    const children = /** @type {import('gmf/themes.js').GmfGroup} */ (node).children;
     if (children !== undefined) {
       for (i = 0; i < children.length; i++) {
         this.getDistinctFlatNodes_(children[i], nodes);
@@ -213,7 +208,7 @@ function MainController(gmfTreeManager, gmfThemes, gmfThemeManager, ngeoLocation
     let alreadyAdded = false;
     nodes.some((n) => {
       if (n.id === node.id) {
-        return alreadyAdded = true;
+        return (alreadyAdded = true);
       }
       return false;
     });
@@ -224,6 +219,5 @@ function MainController(gmfTreeManager, gmfThemes, gmfThemeManager, ngeoLocation
 }
 
 module.controller('MainController', MainController);
-
 
 export default module;

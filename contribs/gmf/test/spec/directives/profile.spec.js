@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 // @ts-nocheck
 import angular from 'angular';
 
@@ -34,16 +33,18 @@ describe('gmf.GmfProfileController', () => {
   let $rootScope;
 
   beforeEach(() => {
-    angular.mock.module('ngeo',
+    angular.mock.module(
+      'ngeo',
       /**
        * @param {angular.IModule} $provide
        */
       ($provide) => {
         $provide.value('gmfProfileJsonUrl', 'https://geomapfish-demo-2-6.camptocamp.com/profile.json');
         csvDownloadServiceMock = {
-          startDownload(data, columnDefs, fileName) {}
+          startDownload(data, columnDefs, fileName) {},
         };
-      });
+      }
+    );
 
     angular.mock.inject((_$controller_, _$rootScope_) => {
       const $controller = _$controller_;
@@ -53,25 +54,28 @@ describe('gmf.GmfProfileController', () => {
         getLinesConfigurationFn() {
           return {
             'aster': {
-              'color': '#0404A0'
+              'color': '#0404A0',
             },
             'srtm': {
-              'color': '#04A004'
-            }
+              'color': '#04A004',
+            },
           };
-        }
+        },
       };
       profileController = $controller(
-        'GmfProfileController', {
+        'GmfProfileController',
+        {
           $scope: $scope,
           ngeoCsvDownload: csvDownloadServiceMock,
-          $element: $('<div></div>')}, data);
+          $element: $('<div></div>'),
+        },
+        data
+      );
       $rootScope.$digest();
     });
   });
 
   describe('#downloadCsv', () => {
-
     it('does nothing when empty', () => {
       profileController.profileData = [];
       spyOn(csvDownloadServiceMock, 'startDownload');
@@ -87,8 +91,8 @@ describe('gmf.GmfProfileController', () => {
           dist: 0,
           values: {
             aster: 1094,
-            srtm: 1097
-          }
+            srtm: 1097,
+          },
         },
         {
           x: 631945,
@@ -96,8 +100,8 @@ describe('gmf.GmfProfileController', () => {
           dist: 101,
           values: {
             aster: 900,
-            srtm: 905
-          }
+            srtm: 905,
+          },
         },
         {
           x: 631947,
@@ -105,9 +109,9 @@ describe('gmf.GmfProfileController', () => {
           dist: 204,
           values: {
             aster: 564,
-            srtm: 562
-          }
-        }
+            srtm: 562,
+          },
+        },
       ];
       spyOn(csvDownloadServiceMock, 'startDownload');
       profileController.downloadCsv();
@@ -121,29 +125,29 @@ describe('gmf.GmfProfileController', () => {
           y: 189536,
           distance: 0,
           aster: 1094,
-          srtm: 1097
+          srtm: 1097,
         },
         {
           x: 631945,
           y: 189537,
           distance: 101,
           aster: 900,
-          srtm: 905
+          srtm: 905,
         },
         {
           x: 631947,
           y: 189539,
           distance: 204,
           aster: 564,
-          srtm: 562
-        }
+          srtm: 562,
+        },
       ]);
       expect(callArgs[1]).toEqual([
         {name: 'distance'},
         {name: 'aster'},
         {name: 'srtm'},
         {name: 'x'},
-        {name: 'y'}
+        {name: 'y'},
       ]);
       expect(callArgs[2]).toEqual('profile.csv');
     });

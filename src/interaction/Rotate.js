@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import {getDefaultModifyStyleFunction} from 'ngeo/interaction/common.js';
 import ngeoCustomEvent from 'ngeo/CustomEvent.js';
 import {getUid as olUtilGetUid} from 'ol/util.js';
@@ -34,17 +33,14 @@ import olLayerVector from 'ol/layer/Vector.js';
 import olSourceVector from 'ol/source/Vector.js';
 import {CollectionEvent} from 'ol/Collection.js';
 
-
 /**
  * @typedef {Object} RotateEventItem
  * @property {olFeature<import("ol/geom/Geometry.js").default>} feature
  */
 
-
 /**
  * @typedef {import("ngeo/CustomEvent.js").default<RotateEventItem>} RotateEvent
  */
-
 
 /**
  * Interaction to rotate features.
@@ -92,8 +88,7 @@ export default class extends olInteractionPointer {
      * @type {number}
      * @private
      */
-    this.pixelTolerance_ = options.pixelTolerance !== undefined ?
-      options.pixelTolerance : 10;
+    this.pixelTolerance_ = options.pixelTolerance !== undefined ? options.pixelTolerance : 10;
 
     /**
      * @type {import("ol/Collection.js").default<olFeature<import("ol/geom/Geometry.js").default>>}
@@ -128,11 +123,11 @@ export default class extends olInteractionPointer {
     this.overlay_ = new olLayerVector({
       source: new olSourceVector({
         useSpatialIndex: false,
-        wrapX: !!options.wrapX
+        wrapX: !!options.wrapX,
       }),
       style: options.style || getDefaultModifyStyleFunction(),
       updateWhileAnimating: true,
-      updateWhileInteracting: true
+      updateWhileInteracting: true,
     });
 
     /**
@@ -160,16 +155,15 @@ export default class extends olInteractionPointer {
 
     if (active) {
       this.keyPressListenerKey_ = listen(document, 'keyup', this.handleKeyUp_, this);
-      this.features_.forEach(feature => this.addFeature_(feature));
+      this.features_.forEach((feature) => this.addFeature_(feature));
       this.listenerKeys_.push(
         listen(this.features_, 'add', this.handleFeatureAdd_, this),
         listen(this.features_, 'remove', this.handleFeatureRemove_, this)
       );
-
     } else {
       this.listenerKeys_.forEach(unlistenByKey);
       this.listenerKeys_.length = 0;
-      this.features_.forEach(feature => this.removeFeature_(feature));
+      this.features_.forEach((feature) => this.removeFeature_(feature));
     }
   }
 
@@ -190,9 +184,9 @@ export default class extends olInteractionPointer {
     const point = new olGeomPoint(this.getCenterCoordinate_(geometry));
     const centerFeature = new olFeature(point);
     this.centerFeatures_[uid] = centerFeature;
-    /** @type {olSourceVector<import("ol/geom/Geometry.js").default>} */(
-      this.overlay_.getSource()
-    ).addFeature(centerFeature);
+    /** @type {olSourceVector<import("ol/geom/Geometry.js").default>} */ (this.overlay_.getSource()).addFeature(
+      centerFeature
+    );
   }
 
   /**
@@ -271,8 +265,7 @@ export default class extends olInteractionPointer {
   handleDown_(evt) {
     const map = evt.map;
 
-    let feature = map.forEachFeatureAtPixel(evt.pixel,
-      (feature, layer) => feature, undefined);
+    let feature = map.forEachFeatureAtPixel(evt.pixel, (feature, layer) => feature, undefined);
 
     if (feature) {
       let found = false;
@@ -288,8 +281,8 @@ export default class extends olInteractionPointer {
 
     if (feature) {
       this.coordinate_ = evt.coordinate;
-      this.feature_ = /** @type {olFeature<import("ol/geom/Geometry.js").default>} */(feature);
-      const geometry = (this.feature_.getGeometry());
+      this.feature_ = /** @type {olFeature<import("ol/geom/Geometry.js").default>} */ (feature);
+      const geometry = this.feature_.getGeometry();
       if (geometry !== undefined) {
         this.centerCoordinate_ = this.getCenterCoordinate_(geometry);
       }
@@ -304,9 +297,7 @@ export default class extends olInteractionPointer {
    * @return {import("ol/coordinate.js").Coordinate} The center coordinate of the geometry.
    * @private
    */
-  getCenterCoordinate_(
-    geometry) {
-
+  getCenterCoordinate_(geometry) {
     let center;
 
     if (geometry instanceof olGeomLineString) {

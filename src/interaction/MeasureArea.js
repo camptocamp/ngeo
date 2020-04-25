@@ -19,11 +19,9 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import ngeoInteractionMeasure, {getFormattedArea} from 'ngeo/interaction/Measure.js';
 import olInteractionDraw from 'ol/interaction/Draw.js';
 import Polygon from 'ol/geom/Polygon.js';
-
 
 /**
  * Interaction dedicated to measure length.
@@ -72,7 +70,7 @@ export default class extends ngeoInteractionMeasure {
     return new olInteractionDraw({
       type: 'Polygon',
       source: source,
-      style: style
+      style: style,
     });
   }
 

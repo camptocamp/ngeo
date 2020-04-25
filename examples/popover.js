@@ -19,17 +19,11 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import './popover.css';
 import angular from 'angular';
 import ngeoMessagePopoverComponent from 'ngeo/message/popoverComponent.js';
 
-
 /** @type {angular.IModule} **/
-const module = angular.module('app', [
-  'gettext',
-  ngeoMessagePopoverComponent.name,
-]);
-
+const module = angular.module('app', ['gettext', ngeoMessagePopoverComponent.name]);
 
 export default module;

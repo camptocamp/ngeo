@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 import gmfRasterRasterService from 'gmf/raster/RasterService.js';
 
@@ -30,16 +29,11 @@ import MapBrowserEvent from 'ol/MapBrowserEvent.js';
 
 import 'bootstrap/js/src/dropdown.js';
 
-
 /**
  * @type {angular.IModule}
  * @hidden
-*/
-const module = angular.module('gmfRasterComponent', [
-  gmfRasterRasterService.name,
-  ngeoMiscDebounce.name,
-]);
-
+ */
+const module = angular.module('gmfRasterComponent', [gmfRasterRasterService.name, ngeoMiscDebounce.name]);
 
 module.run(
   /**
@@ -49,20 +43,20 @@ module.run(
   ($templateCache) => {
     // @ts-ignore: webpack
     $templateCache.put('gmf/raster/widgetComponent', require('./widgetComponent.html'));
-  });
+  }
+);
 
-
-module.value('gmfElevationwidgetTemplateUrl',
+module.value(
+  'gmfElevationwidgetTemplateUrl',
   /**
    * @param {angular.IAttributes} $attrs Attributes.
    * @return {string} The template url.
    */
   ($attrs) => {
     const templateUrl = $attrs.gmfElevationwidgetTemplateUrl;
-    return templateUrl !== undefined ? templateUrl :
-      'gmf/raster/widgetComponent';
-  });
-
+    return templateUrl !== undefined ? templateUrl : 'gmf/raster/widgetComponent';
+  }
+);
 
 /**
  * @hidden
@@ -76,7 +70,6 @@ module.value('gmfElevationwidgetTemplateUrl',
 function gmfElevationwidgetTemplateUrl($attrs, gmfElevationwidgetTemplateUrl) {
   return gmfElevationwidgetTemplateUrl($attrs);
 }
-
 
 /**
  * Provide a directive that set a value each 500ms with the elevation under the
@@ -129,26 +122,31 @@ function rasterComponent() {
       'layersconfig': '=gmfElevationLayersconfig',
       'loading': '=?gmfElevationLoading',
       'layer': '<gmfElevationLayer',
-      'map': '=gmfElevationMap'
+      'map': '=gmfElevationMap',
     },
     link: (scope, element, attr) => {
       // @ts-ignore: scope...
       const ctrl = scope.ctrl;
 
       // Watch active or not.
-      scope.$watch(() => ctrl.active, (active) => {
-        ctrl.toggleActive_(active);
-      });
+      scope.$watch(
+        () => ctrl.active,
+        (active) => {
+          ctrl.toggleActive_(active);
+        }
+      );
 
       // Watch current layer.
-      scope.$watch(() => ctrl.layer, (layer) => {
-        ctrl.layer = layer;
-        ctrl.elevation = null;
-      });
-    }
+      scope.$watch(
+        () => ctrl.layer,
+        (layer) => {
+          ctrl.layer = layer;
+          ctrl.elevation = null;
+        }
+      );
+    },
   };
 }
-
 
 module.directive('gmfElevation', rasterComponent);
 
@@ -167,7 +165,6 @@ module.directive('gmfElevation', rasterComponent);
  * @ngname gmfElevationController
  */
 function Controller($scope, $filter, ngeoDebounce, gmfRaster, gettextCatalog) {
-
   /**
    * @private
    */
@@ -243,7 +240,7 @@ function Controller($scope, $filter, ngeoDebounce, gmfRaster, gettextCatalog) {
  * @param {boolean} active true to make requests.
  * @private
  */
-Controller.prototype.toggleActive_ = function(active) {
+Controller.prototype.toggleActive_ = function (active) {
   this.elevation = null;
   if (active) {
     if (this.listenerKeys_.length) {
@@ -269,33 +266,40 @@ Controller.prototype.toggleActive_ = function(active) {
 
     // Launch the elevation service request when the user stops moving the
     // mouse for less short delay
-    this.listenerKeys_.push(listen(this.map, 'pointermove',
-      this.ngeoDebounce_(
-        /**
-         * @param {Event|import('ol/events/Event.js').default} e
-         */
-        (e) => {
-          if (this.inViewport_ && e instanceof MapBrowserEvent) {
-            this.loading = true;
-            const params = {
-              'layers': this.layer
-            };
-            this.gmfRaster_.getRaster(e.coordinate, params).then(
-              this.getRasterSuccess_.bind(this),
-              this.getRasterError_.bind(this)
-            );
-          }
-        }, 500, true
+    this.listenerKeys_.push(
+      listen(
+        this.map,
+        'pointermove',
+        this.ngeoDebounce_(
+          /**
+           * @param {Event|import('ol/events/Event.js').default} e
+           */
+          (e) => {
+            if (this.inViewport_ && e instanceof MapBrowserEvent) {
+              this.loading = true;
+              const params = {
+                'layers': this.layer,
+              };
+              this.gmfRaster_
+                .getRaster(e.coordinate, params)
+                .then(this.getRasterSuccess_.bind(this), this.getRasterError_.bind(this));
+            }
+          },
+          500,
+          true
+        )
       )
-    ));
+    );
 
-    this.listenerKeys_.push(listen(this.map.getViewport(), 'mouseout', () => {
-      this.scope_.$apply(() => {
-        this.elevation = null;
-        this.inViewport_ = false;
-        this.loading = false;
-      });
-    }));
+    this.listenerKeys_.push(
+      listen(this.map.getViewport(), 'mouseout', () => {
+        this.scope_.$apply(() => {
+          this.elevation = null;
+          this.inViewport_ = false;
+          this.loading = false;
+        });
+      })
+    );
   } else {
     this.elevation = null;
     this.listenerKeys_.forEach(unlistenByKey);
@@ -303,12 +307,11 @@ Controller.prototype.toggleActive_ = function(active) {
   }
 };
 
-
 /**
  * @param {Object<string, number>} resp Response of the get Raster service.
  * @private
  */
-Controller.prototype.getRasterSuccess_ = function(resp) {
+Controller.prototype.getRasterSuccess_ = function (resp) {
   if (this.layer === undefined) {
     throw new Error('Missing layer');
   }
@@ -318,8 +321,8 @@ Controller.prototype.getRasterSuccess_ = function(resp) {
     const filter = options.filter || 'number';
     const custom_args = options.args || [];
     const postfix = options.hasOwnProperty('postfix') ? options.postfix : 'm';
-    const separator = postfix.length > 0 ?
-      (options.hasOwnProperty('separator') ? options.separator : '\u00a0') : '';
+    const separator =
+      postfix.length > 0 ? (options.hasOwnProperty('separator') ? options.separator : '\u00a0') : '';
     const args = Array.prototype.concat([value], custom_args);
     const elevation = this.filter_(filter)(...args);
     if (typeof elevation != 'string') {
@@ -333,19 +336,16 @@ Controller.prototype.getRasterSuccess_ = function(resp) {
   this.loading = false;
 };
 
-
 /**
  * @private
  */
-Controller.prototype.getRasterError_ = function() {
+Controller.prototype.getRasterError_ = function () {
   console.error('Error on getting the raster.');
   this.elevation = null;
   this.loading = false;
 };
 
-
 module.controller('GmfElevationController', Controller);
-
 
 /**
  * Provides a component which encapsulates the elevation component (see above)
@@ -374,12 +374,11 @@ const rasterWidgetComponent = {
     'map': '<gmfElevationwidgetMap',
     'layers': '<gmfElevationwidgetLayers',
     'layersconfig': '=gmfElevationwidgetLayersconfig',
-    'active': '<gmfElevationwidgetActive'
+    'active': '<gmfElevationwidgetActive',
   },
-  templateUrl: gmfElevationwidgetTemplateUrl
+  templateUrl: gmfElevationwidgetTemplateUrl,
 };
 module.component('gmfElevationwidget', rasterWidgetComponent);
-
 
 /**
  * @constructor
@@ -415,14 +414,11 @@ function WidgetController() {
   this.selectedElevationLayer = '';
 }
 
-
-WidgetController.prototype.$onInit = function() {
+WidgetController.prototype.$onInit = function () {
   this.selectedElevationLayer = this.layers[0];
 };
 
-
 module.controller('gmfElevationwidgetController', WidgetController);
-
 
 /**
  * @typedef {Object} LayerConfig
@@ -431,6 +427,5 @@ module.controller('gmfElevationwidgetController', WidgetController);
  * @property {string} [postfix]
  * @property {string} [separator]
  */
-
 
 export default module;

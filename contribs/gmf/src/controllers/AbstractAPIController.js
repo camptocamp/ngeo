@@ -19,10 +19,11 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
-import gmfControllersAbstractAppController, {AbstractAppController, getLocationIcon}
-  from 'gmf/controllers/AbstractAppController.js';
+import gmfControllersAbstractAppController, {
+  AbstractAppController,
+  getLocationIcon,
+} from 'gmf/controllers/AbstractAppController.js';
 import ngeoMapResizemap from 'ngeo/map/resizemap.js';
 import {get as getProjection} from 'ol/proj.js';
 import olMap from 'ol/Map.js';
@@ -49,7 +50,7 @@ export class AbstractAPIController extends AbstractAppController {
    */
   constructor(config, $scope, $injector) {
     const viewConfig = {
-      projection: getProjection(`EPSG:${config.srid || 2056}`)
+      projection: getProjection(`EPSG:${config.srid || 2056}`),
     };
     Object.assign(viewConfig, config.mapViewConfig || {});
 
@@ -63,26 +64,30 @@ export class AbstractAPIController extends AbstractAppController {
       view: new olView(viewConfig),
       controls: config.mapControls || [
         new olControlScaleLine({
-          target: scaleline
+          target: scaleline,
         }),
         new olControlZoom({
           target: 'ol-zoom-control',
           zoomInTipLabel: '',
-          zoomOutTipLabel: ''
+          zoomOutTipLabel: '',
         }),
         new olControlRotate({
           label: getLocationIcon(),
-          tipLabel: ''
-        })
+          tipLabel: '',
+        }),
       ],
-      interactions: config.mapInteractions || interactionsDefaults({
-        pinchRotate: true,
-        altShiftDragRotate: true
-      })
+      interactions:
+        config.mapInteractions ||
+        interactionsDefaults({
+          pinchRotate: true,
+          altShiftDragRotate: true,
+        }),
     });
-    map.addInteraction(new olInteractionDragPan({
-      condition: dragPanCondition
-    }));
+    map.addInteraction(
+      new olInteractionDragPan({
+        condition: dragPanCondition,
+      })
+    );
 
     super(config, map, $scope, $injector);
   }
@@ -112,8 +117,7 @@ module.controller('AbstractAPIController', AbstractAPIController);
 module.value('isDesktop', true);
 
 module.value('ngeoQueryOptions', {
-  'limit': 20
+  'limit': 20,
 });
-
 
 export default module;

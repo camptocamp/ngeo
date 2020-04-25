@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 import {MAPSERVER_PROXY, MAPSERVER_WFS_FEATURE_NS} from './url.js';
 import './base.css';
@@ -45,7 +44,6 @@ import olLayerTile from 'ol/layer/Tile.js';
 import olSourceImageWMS from 'ol/source/ImageWMS.js';
 import olSourceOSM from 'ol/source/OSM.js';
 
-
 /** @type {angular.IModule} **/
 const module = angular.module('app', [
   'gettext',
@@ -58,7 +56,6 @@ const module = angular.module('app', [
   ngeoQueryModule.name,
 ]);
 
-
 module.run(
   /**
    * @ngInject
@@ -67,14 +64,13 @@ module.run(
   ($templateCache) => {
     // @ts-ignore: webpack
     $templateCache.put('partials/queryresult', require('./partials/queryresult.html'));
-  });
-
+  }
+);
 
 module.value('ngeoQueryOptions', {
   'cursorHover': true,
-  'limit': 20
+  'limit': 20,
 });
-
 
 /**
  * A sample component to display the result.
@@ -83,11 +79,10 @@ module.value('ngeoQueryOptions', {
  */
 const queryresultComponent = {
   controller: 'AppQueryresultController',
-  templateUrl: 'partials/queryresult'
+  templateUrl: 'partials/queryresult',
 };
 
 module.component('appQueryresult', queryresultComponent);
-
 
 /**
  * @param {import('ngeo/query/MapQuerent.js').QueryResult} ngeoQueryResult The ngeo query service.
@@ -95,17 +90,13 @@ module.component('appQueryresult', queryresultComponent);
  * @ngInject
  */
 function QueryresultController(ngeoQueryResult) {
-
   /**
    * @type {import('ngeo/query/MapQuerent.js').QueryResult}
    */
   this.result = ngeoQueryResult;
-
 }
 
-
 module.controller('AppQueryresultController', QueryresultController);
-
 
 /**
  * @param {import("ngeo/datasource/DataSources.js").DataSource} ngeoDataSources Ngeo data sources service.
@@ -117,7 +108,6 @@ module.controller('AppQueryresultController', QueryresultController);
  * @ngInject
  */
 function MainController(ngeoDataSources, ngeoToolActivateMgr, ngeoQueryModeSelector) {
-
   /**
    * @type {boolean}
    */
@@ -141,19 +131,19 @@ function MainController(ngeoDataSources, ngeoToolActivateMgr, ngeoQueryModeSelec
   const source1 = new olSourceImageWMS({
     url: MAPSERVER_PROXY,
     projection: undefined, // should be removed in next OL version
-    params: {'LAYERS': 'bus_stop'}
+    params: {'LAYERS': 'bus_stop'},
   });
   const busStopLayer = new olLayerImage({
-    source: source1
+    source: source1,
   });
 
   const source2 = new olSourceImageWMS({
     url: MAPSERVER_PROXY,
     projection: undefined, // should be removed in next OL version
-    params: {'LAYERS': 'information'}
+    params: {'LAYERS': 'information'},
   });
   const informationLayer = new olLayerImage({
-    source: source2
+    source: source2,
   });
 
   /**
@@ -162,69 +152,79 @@ function MainController(ngeoDataSources, ngeoToolActivateMgr, ngeoQueryModeSelec
   this.map = new olMap({
     layers: [
       new olLayerTile({
-        source: new olSourceOSM()
+        source: new olSourceOSM(),
       }),
       informationLayer,
-      busStopLayer
+      busStopLayer,
     ],
     view: new olView({
       projection: EPSG2056,
       resolutions: [200, 100, 50, 20, 10, 5, 2.5, 2, 1, 0.5],
       center: [2536660, 1153009],
-      zoom: 4
-    })
+      zoom: 4,
+    }),
   });
 
   ngeoDataSources.map = this.map;
 
-  ngeoDataSources.collection.push(new ngeoDatasourceOGC({
-    id: 1,
-    name: 'bus_stop',
-    visible: true,
-    wmsUrl: MAPSERVER_PROXY,
-    wmsLayers: [{
+  ngeoDataSources.collection.push(
+    new ngeoDatasourceOGC({
+      id: 1,
       name: 'bus_stop',
-      queryable: true
-    }],
-    wfsUrl: MAPSERVER_PROXY,
-    wfsFeatureNS: MAPSERVER_WFS_FEATURE_NS,
-    wfsLayers: [{
-      name: 'bus_stop',
-      queryable: true
-    }]
-  }));
+      visible: true,
+      wmsUrl: MAPSERVER_PROXY,
+      wmsLayers: [
+        {
+          name: 'bus_stop',
+          queryable: true,
+        },
+      ],
+      wfsUrl: MAPSERVER_PROXY,
+      wfsFeatureNS: MAPSERVER_WFS_FEATURE_NS,
+      wfsLayers: [
+        {
+          name: 'bus_stop',
+          queryable: true,
+        },
+      ],
+    })
+  );
 
-  ngeoDataSources.collection.push(new ngeoDatasourceOGC({
-    id: 2,
-    name: 'information',
-    visible: true,
-    wmsUrl: MAPSERVER_PROXY,
-    wmsLayers: [{
+  ngeoDataSources.collection.push(
+    new ngeoDatasourceOGC({
+      id: 2,
       name: 'information',
-      queryable: true
-    }],
-    wfsFeatureNS: MAPSERVER_WFS_FEATURE_NS,
-    wfsUrl: MAPSERVER_PROXY,
-    wfsLayers: [{
-      name: 'information',
-      queryable: true
-    }]
-  }));
+      visible: true,
+      wmsUrl: MAPSERVER_PROXY,
+      wmsLayers: [
+        {
+          name: 'information',
+          queryable: true,
+        },
+      ],
+      wfsFeatureNS: MAPSERVER_WFS_FEATURE_NS,
+      wfsUrl: MAPSERVER_PROXY,
+      wfsLayers: [
+        {
+          name: 'information',
+          queryable: true,
+        },
+      ],
+    })
+  );
 
   const queryToolActivate = new ngeoMiscToolActivate(this, 'queryActive');
   ngeoToolActivateMgr.registerTool('mapTools', queryToolActivate);
 
   const dummyToolActivate = new ngeoMiscToolActivate(this, 'dummyActive');
   ngeoToolActivateMgr.registerTool('mapTools', dummyToolActivate, true);
-
 }
-
 
 /**
  * @param {boolean|undefined} val Value.
  * @return {boolean|undefined} Value.
  */
-MainController.prototype.getSetQueryActive = function(val) {
+MainController.prototype.getSetQueryActive = function (val) {
   if (val !== undefined) {
     this.queryActive = val;
   } else {
@@ -232,8 +232,6 @@ MainController.prototype.getSetQueryActive = function(val) {
   }
 };
 
-
 module.controller('MainController', MainController);
-
 
 export default module;

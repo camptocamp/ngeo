@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 import appURL from './url.js';
 import './editfeatureselector.css';
@@ -47,7 +46,6 @@ import olLayerVector from 'ol/layer/Vector.js';
 import olSourceOSM from 'ol/source/OSM.js';
 import olSourceVector from 'ol/source/Vector.js';
 
-
 /**
  * @type {angular.IModule}
  * @hidden
@@ -64,14 +62,12 @@ const module = angular.module('gmfapp', [
   ngeoMiscToolActivateMgr.name,
 ]);
 
-
 module.value('gmfTreeUrl', appURL.GMF_THEMES);
 module.value('authenticationBaseUrl', appURL.GMF_DEMO);
 module.value('gmfLayersUrl', appURL.GMF_LAYERS);
 
 module.constant('defaultTheme', 'Edit');
 module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
-
 
 /**
  * @param {angular.IScope} $scope Angular scope.
@@ -85,9 +81,7 @@ module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
  * @ngInject
  * @constructor
  */
-function MainController($scope, gmfThemes, gmfTreeManager, gmfUser,
-  ngeoFeatureHelper, ngeoToolActivateMgr) {
-
+function MainController($scope, gmfThemes, gmfTreeManager, gmfUser, ngeoFeatureHelper, ngeoToolActivateMgr) {
   /**
    * @type {angular.IScope}
    * @private
@@ -112,18 +106,18 @@ function MainController($scope, gmfThemes, gmfTreeManager, gmfUser,
    */
   this.gmfTreeManager = gmfTreeManager;
 
-
   /**
    * @type {import("ol/layer/Vector.js").default}
    */
   this.vectorLayer = new olLayerVector({
     source: new olSourceVector({
       wrapX: false,
-      features: new olCollection()
+      features: new olCollection(),
     }),
-    style: (feature, resolution) => ngeoFeatureHelper.createEditingStyles(
-      /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>} */(feature)
-    )
+    style: (feature, resolution) =>
+      ngeoFeatureHelper.createEditingStyles(
+        /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>} */ (feature)
+      ),
   });
 
   /**
@@ -132,15 +126,15 @@ function MainController($scope, gmfThemes, gmfTreeManager, gmfUser,
   this.map = new olMap({
     layers: [
       new olLayerTile({
-        source: new olSourceOSM()
-      })
+        source: new olSourceOSM(),
+      }),
     ],
     view: new olView({
       projection: EPSG2056,
       resolutions: [200, 100, 50, 20, 10, 5, 2.5, 2, 1, 0.5],
       center: [2537635, 1152640],
-      zoom: 2
-    })
+      zoom: 2,
+    }),
   });
 
   gmfThemes.getThemesObject().then((themes) => {
@@ -163,31 +157,24 @@ function MainController($scope, gmfThemes, gmfTreeManager, gmfUser,
    */
   this.editFeatureSelectorActive = true;
 
-  const editFeatureSelectorToolActivate = new ngeoMiscToolActivate(
-    this, 'editFeatureSelectorActive');
-  ngeoToolActivateMgr.registerTool(
-    'mapTools', editFeatureSelectorToolActivate, true);
+  const editFeatureSelectorToolActivate = new ngeoMiscToolActivate(this, 'editFeatureSelectorActive');
+  ngeoToolActivateMgr.registerTool('mapTools', editFeatureSelectorToolActivate, true);
 
   /**
    * @type {boolean}
    */
   this.dummyActive = false;
 
-  const dummyToolActivate = new ngeoMiscToolActivate(
-    this, 'dummyActive');
-  ngeoToolActivateMgr.registerTool(
-    'mapTools', dummyToolActivate, false);
+  const dummyToolActivate = new ngeoMiscToolActivate(this, 'dummyActive');
+  ngeoToolActivateMgr.registerTool('mapTools', dummyToolActivate, false);
 
   // initialize tooltips
   $('[data-toggle="tooltip"]').tooltip({
     container: 'body',
-    trigger: 'hover'
+    trigger: 'hover',
   });
-
 }
 
-
 module.controller('MainController', MainController);
-
 
 export default module;

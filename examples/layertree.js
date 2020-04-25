@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 /**
  * This example shows how to create a layer tree tree based
  * on ngeo's ngeoLayertree directive.
@@ -37,7 +36,6 @@ import ngeoLayertreeModule from 'ngeo/layertree/module.js';
 import ngeoMapModule from 'ngeo/map/module.js';
 import ngeoMessagePopup from 'ngeo/message/Popup.js';
 
-
 /** @type {angular.IModule} **/
 const module = angular.module('app', [
   'gettext',
@@ -45,7 +43,6 @@ const module = angular.module('app', [
   ngeoMapModule.name,
   ngeoMessagePopup.name,
 ]);
-
 
 /**
  * An application-specific component wrapping the ngeo tree layer component.
@@ -55,19 +52,18 @@ const module = angular.module('app', [
  */
 const layertreeComponent = {
   bindings: {
-    'map': '=appLayertreeMap'
+    'map': '=appLayertreeMap',
   },
   controller: 'AppLayertreeController',
   // use "::$ctrl.tree" for the "tree" expression as we know the
   // layer tree won't change
   template:
-      '<div ngeo-layertree="::$ctrl.tree" ' +
-      'ngeo-layertree-templateurl="examples/layertree" ' +
-      'ngeo-layertree-map="$ctrl.map" ' +
-      'ngeo-layertree-nodelayer="$ctrl.getLayer(node)">' +
-      '</div>'
+    '<div ngeo-layertree="::$ctrl.tree" ' +
+    'ngeo-layertree-templateurl="examples/layertree" ' +
+    'ngeo-layertree-map="$ctrl.map" ' +
+    'ngeo-layertree-nodelayer="$ctrl.getLayer(node)">' +
+    '</div>',
 };
-
 
 module.run(
   /**
@@ -77,10 +73,10 @@ module.run(
   ($templateCache) => {
     // @ts-ignore: webpack
     $templateCache.put('examples/layertree', require('./partials/layertree.html'));
-  });
+  }
+);
 
 module.component('appLayertree', layertreeComponent);
-
 
 /**
  * @constructor
@@ -92,7 +88,6 @@ module.component('appLayertree', layertreeComponent);
  * @ngInject
  */
 function LayertreeController($http, $sce, appGetLayer, ngeoCreatePopup) {
-
   /**
    * @type {Object|undefined}
    */
@@ -133,7 +128,6 @@ function LayertreeController($http, $sce, appGetLayer, ngeoCreatePopup) {
   this.promises_ = {};
 }
 
-
 /**
  * Function called by the ngeo-layertree directives to create a layer
  * from a tree node. The function should return `null` if no layer should
@@ -142,24 +136,21 @@ function LayertreeController($http, $sce, appGetLayer, ngeoCreatePopup) {
  * @return {import("ol/layer/Layer.js").default<import('ol/source/Source.js').default>} The layer for this
  *    node.
  */
-LayertreeController.prototype.getLayer = function(node) {
+LayertreeController.prototype.getLayer = function (node) {
   return this.getLayer_(node);
 };
-
 
 /**
  * @param {Object} node Tree node.
  * @param {import("ol/layer/Layer.js").default<import('ol/source/Source.js').default>} layer Layer.
  */
-LayertreeController.prototype.onButtonClick = function(node, layer) {
+LayertreeController.prototype.onButtonClick = function (node, layer) {
   const layerType = node.layerType;
   if (!(layerType in this.promises_)) {
-    this.promises_[layerType] = this.http_.get('data/metadata.html').then(
-      (resp) => {
-        const html = this.sce_.trustAsHtml(resp.data);
-        return html;
-      }
-    );
+    this.promises_[layerType] = this.http_.get('data/metadata.html').then((resp) => {
+      const html = this.sce_.trustAsHtml(resp.data);
+      return html;
+    });
   }
   const infoPopup = this.infoPopup_;
   this.promises_[layerType].then((html) => {
@@ -169,9 +160,7 @@ LayertreeController.prototype.onButtonClick = function(node, layer) {
   });
 };
 
-
 module.controller('AppLayertreeController', LayertreeController);
-
 
 /**
  * A function that returns a layer for a node. A cache is used, so always the
@@ -182,7 +171,7 @@ module.controller('AppLayertreeController', LayertreeController);
  * @param {Object} node Layer tree node.
  * @return {import("ol/layer/Layer.js").default} Layer.
  */
-const getLayer = (function() {
+const getLayer = (function () {
   /**
    * @type {Object.<string, import("ol/layer/Layer.js").default<import('ol/source/Source.js').default>>}
    */
@@ -192,7 +181,7 @@ const getLayer = (function() {
      * @param {Object} node Tree node.
      * @return {?import("ol/layer/Layer.js").default<import('ol/source/Source.js').default>} Layer.
      */
-    function(node) {
+    function (node) {
       if (!('layerType' in node)) {
         return null;
       }
@@ -203,29 +192,29 @@ const getLayer = (function() {
       let source;
       if (type == 'stamenWatercolor') {
         source = new olSourceStamen({
-          layer: 'watercolor'
+          layer: 'watercolor',
         });
       } else if (type == 'stamenTerrain-labels') {
         source = new olSourceStamen({
-          layer: 'terrain-labels'
+          layer: 'terrain-labels',
         });
       } else if (type == 'osmHumanitarian') {
         source = new olSourceOSM({
-          url: 'https://tile-{a-c}.openstreetmap.fr/hot/{z}/{x}/{y}.png'
+          url: 'https://tile-{a-c}.openstreetmap.fr/hot/{z}/{x}/{y}.png',
         });
       } else if (type == 'osmCycle') {
         source = new olSourceOSM({
-          url: 'https://{a-c}.tile.thunderforest.com/cycle/{z}/{x}/{y}.png'
+          url: 'https://{a-c}.tile.thunderforest.com/cycle/{z}/{x}/{y}.png',
         });
       } else if (type == 'osmTransport') {
         source = new olSourceOSM({
-          url: 'https://{a-c}.tile.thunderforest.com/transport/{z}/{x}/{y}.png'
+          url: 'https://{a-c}.tile.thunderforest.com/transport/{z}/{x}/{y}.png',
         });
       } else {
         source = new olSourceOSM();
       }
       const layer = new olLayerTile({
-        source
+        source,
       });
       layer.set('type', type);
       layerCache[type] = layer;
@@ -234,9 +223,7 @@ const getLayer = (function() {
   );
 })();
 
-
 module.value('appGetLayer', getLayer);
-
 
 /**
  * The application's main directive.
@@ -244,25 +231,22 @@ module.value('appGetLayer', getLayer);
  * @ngInject
  */
 function MainController() {
-
   /**
    * @type {import("ol/Map.js").default}
    */
   this.map = new olMap({
     layers: [
       new olLayerTile({
-        source: new olSourceOSM()
-      })
+        source: new olSourceOSM(),
+      }),
     ],
     view: new olView({
       center: [-10983710.59086991, 4686507.078220731],
-      zoom: 4
-    })
+      zoom: 4,
+    }),
   });
 }
 
-
 module.controller('MainController', MainController);
-
 
 export default module;

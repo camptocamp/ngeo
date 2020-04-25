@@ -19,9 +19,7 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
-
 
 /**
  * @type {angular.IModule}
@@ -29,8 +27,8 @@ import angular from 'angular';
  */
 const module = angular.module('gmfLidarprofile', []);
 
-
-module.value('gmfLidarprofileTemplateUrl',
+module.value(
+  'gmfLidarprofileTemplateUrl',
   /**
    * @param {JQuery} $element Element.
    * @param {angular.IAttributes} $attrs Attributes.
@@ -38,9 +36,9 @@ module.value('gmfLidarprofileTemplateUrl',
    */
   ($element, $attrs) => {
     const templateUrl = $attrs.gmfLidarprofileTemplateUrl;
-    return templateUrl !== undefined ? templateUrl :
-      'gmf/lidarprofile';
-  });
+    return templateUrl !== undefined ? templateUrl : 'gmf/lidarprofile';
+  }
+);
 
 module.run(
   /**
@@ -52,7 +50,6 @@ module.run(
     $templateCache.put('gmf/lidarprofile', require('./component.html'));
   }
 );
-
 
 /**
  * @param {JQuery} $element Element.
@@ -66,7 +63,6 @@ module.run(
 function gmfLidarprofileTemplateUrl($element, $attrs, gmfLidarprofileTemplateUrl) {
   return gmfLidarprofileTemplateUrl($element, $attrs);
 }
-
 
 /**
  * Provide a component that display a lidar profile panel.
@@ -86,29 +82,26 @@ const lidarprofileComponent = {
   controller: 'GmfLidarprofileController',
   bindings: {
     'active': '=gmfLidarprofileActive',
-    'line': '=gmfLidarprofileLine'
+    'line': '=gmfLidarprofileLine',
   },
-  templateUrl: gmfLidarprofileTemplateUrl
+  templateUrl: gmfLidarprofileTemplateUrl,
 };
 
 module.component('gmfLidarprofile', lidarprofileComponent);
-
 
 /**
  * @private
  * @hidden
  */
 class Controller {
-
   /**
    * @param {angular.IScope} $scope Angular scope.
    * @private
    * @ngInject
    * @ngdo controller
    * @ngname GmfLidarprofileController
-  */
+   */
   constructor($scope) {
-
     /**
      * The Openlayer LineStringt that defines the profile
      * @type {?import("ol/geom/LineString.js").default}
@@ -128,12 +121,11 @@ class Controller {
         if (oldLine !== newLine) {
           this.active = !!this.line;
         }
-      });
+      }
+    );
   }
 }
 
-
 module.controller('GmfLidarprofileController', Controller);
-
 
 export default module;

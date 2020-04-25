@@ -19,17 +19,12 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import './colorpicker.css';
 import angular from 'angular';
 import ngeoMiscColorpickerComponent from 'ngeo/misc/colorpickerComponent.js';
 
 /** @type {angular.IModule} **/
-const module = angular.module('app', [
-  'gettext',
-  ngeoMiscColorpickerComponent.name,
-]);
-
+const module = angular.module('app', ['gettext', ngeoMiscColorpickerComponent.name]);
 
 /**
  * The application-specific color picker component, based on the
@@ -39,20 +34,16 @@ const module = angular.module('app', [
  */
 const colorpickerComponent = {
   template: '<div ngeo-colorpicker="$ctrl.colors" ngeo-colorpicker-color="mainCtrl.color"></div>',
-  controller: 'AppColorpickerController'
+  controller: 'AppColorpickerController',
 };
 
-
 module.component('appColorpicker', colorpickerComponent);
-
 
 /**
  * @constructor
  * @ngInject
  */
 function ColorPickerController() {
-
-
   /**
    * The colors set.
    * @type {string[][]}
@@ -60,14 +51,11 @@ function ColorPickerController() {
    */
   this.colors = [
     ['red', 'yellow', 'green', 'lightgreen', 'lightblue', 'orange', 'purple'],
-    ['#ffffff', '#f7f7f7', '#c3c3c3', '#000000']
+    ['#ffffff', '#f7f7f7', '#c3c3c3', '#000000'],
   ];
-
 }
 
-module.controller('AppColorpickerController',
-  ColorPickerController);
-
+module.controller('AppColorpickerController', ColorPickerController);
 
 /**
  * @constructor
@@ -75,17 +63,13 @@ module.controller('AppColorpickerController',
  * @ngInject
  */
 function MainController($scope) {
-
   /**
    * Active color.
    * @type {string}
    */
   this.color = 'red';
-
 }
 
-
 module.controller('MainController', MainController);
-
 
 export default module;

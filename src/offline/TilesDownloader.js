@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 /**
  * @param {!Blob} blob A blob
  * @return {Promise<string>} data URL
@@ -27,8 +26,8 @@
 function blobToDataUrl(blob) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
-    reader.onload = function() {
-      resolve(/** @type {String} */(reader.result));
+    reader.onload = function () {
+      resolve(/** @type {String} */ (reader.result));
     };
     reader.onerror = reject;
     reader.readAsDataURL(blob);
@@ -36,7 +35,6 @@ function blobToDataUrl(blob) {
 }
 
 export default class TileDownloader {
-
   /**
    * @param {Array<import("./index.js").OfflineTile>} tiles An array of tiles to download.
    * @param {import("./index.js").OfflineOnTileDownload} callbacks The callbacks.
@@ -115,7 +113,6 @@ export default class TileDownloader {
     this.cancel_ = true;
   }
 
-
   /**
    * @return {Promise} A promise that resolves when the downloads are complete (failing or not)
    */
@@ -185,7 +182,8 @@ export default class TileDownloader {
        * @type {?Blob}
        */
       const response = xhr.response;
-      if (response && response.size !== 0) { // non-empty tile
+      if (response && response.size !== 0) {
+        // non-empty tile
         blobToDataUrl(response).then(
           (dataUrl) => {
             if (this.cancel_) {
@@ -210,8 +208,9 @@ export default class TileDownloader {
         }
         ++this.allCount_;
         ++this.okCount_;
-        this.callbacks_.onTileDownloadSuccess(this.allCount_ / this.tiles_.length, tile).then(
-          onTileDownloaded, onTileDownloaded);
+        this.callbacks_
+          .onTileDownloadSuccess(this.allCount_ / this.tiles_.length, tile)
+          .then(onTileDownloaded, onTileDownloaded);
       }
     };
 

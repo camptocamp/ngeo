@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 import ngeoMiscWMSTime from 'ngeo/misc/WMSTime.js';
 import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
@@ -28,7 +27,6 @@ import 'jquery-ui/ui/widgets/slider.js';
 import 'ngeo/sass/jquery-ui.scss';
 import 'angular-ui-slider';
 import './timeslider.scss';
-
 
 /**
  * @type {angular.IModule}
@@ -40,7 +38,6 @@ const module = angular.module('gmfLayertreeTimeSliderComponent', [
   'ui.slider',
 ]);
 
-
 module.run(
   /**
    * @ngInject
@@ -49,8 +46,8 @@ module.run(
   ($templateCache) => {
     // @ts-ignore: webpack
     $templateCache.put('gmf/layertree/timesliderComponent', require('./timesliderComponent.html'));
-  });
-
+  }
+);
 
 /**
  * Provide a directive to select a single date or a range of dates with a slider
@@ -77,7 +74,7 @@ function layertreeTimeSliderComponent() {
   return {
     scope: {
       onDateSelected: '&gmfTimeSliderOnDateSelected',
-      time: '=gmfTimeSliderTime'
+      time: '=gmfTimeSliderTime',
     },
     bindToController: true,
     controller: 'gmfTimeSliderController as sliderCtrl',
@@ -102,7 +99,7 @@ function layertreeTimeSliderComponent() {
             throw new Error('Missing ctrl');
           }
           ctrl.onDateSelected({
-            time: computeDates_(e, sliderUi)
+            time: computeDates_(e, sliderUi),
           });
           scope.$apply();
         }
@@ -122,26 +119,24 @@ function layertreeTimeSliderComponent() {
             ctrl.dates = [sDate, eDate];
             wmstime = {
               start: sDate.getTime(),
-              end: eDate.getTime()
+              end: eDate.getTime(),
             };
           } else {
             sDate = new Date(ctrl.getClosestValue_(sliderUi.value));
             ctrl.dates = sDate;
             wmstime = {
-              start: sDate.getTime()
+              start: sDate.getTime(),
             };
           }
           scope.$apply();
           return wmstime;
         }
-      }
-    }
+      },
+    },
   };
 }
 
-
 module.directive('gmfTimeSlider', layertreeTimeSliderComponent);
-
 
 /**
  * TimeSliderController - directive controller
@@ -155,7 +150,6 @@ module.directive('gmfTimeSlider', layertreeTimeSliderComponent);
  * @ngname gmfTimeSliderController
  */
 function Controller(ngeoWMSTime, ngeoDebounce) {
-
   /**
    * @type {import("ngeo/misc/WMSTime.js").WMSTime}
    * @private
@@ -220,11 +214,10 @@ function Controller(ngeoWMSTime, ngeoDebounce) {
   this.dates = [];
 }
 
-
 /**
  * Initialise the controller.
  */
-Controller.prototype.init = function() {
+Controller.prototype.init = function () {
   if (!this.time) {
     throw new Error('Missing time');
   }
@@ -236,7 +229,7 @@ Controller.prototype.init = function() {
   this.maxValue = initialOptions_.maxDate;
   const values = initialOptions_.values;
   if (this.isModeRange) {
-    if (!(Array.isArray(values))) {
+    if (!Array.isArray(values)) {
       throw new Error('Wrong Options values');
     }
     this.dates = [values[0], values[1]];
@@ -247,7 +240,7 @@ Controller.prototype.init = function() {
   this.sliderOptions = {
     range: this.isModeRange,
     min: this.minValue,
-    max: this.maxValue
+    max: this.maxValue,
   };
 };
 
@@ -257,7 +250,7 @@ Controller.prototype.init = function() {
  * @private
  * @return {number[]}  - List of timestamp representing possible values
  */
-Controller.prototype.getTimeValueList_ = function() {
+Controller.prototype.getTimeValueList_ = function () {
   if (!this.time) {
     throw new Error('Missing time');
   }
@@ -276,8 +269,10 @@ Controller.prototype.getTimeValueList_ = function() {
     const maxNbValues = 1024;
     const endDate = new Date(minDate.getTime());
     endDate.setFullYear(minDate.getFullYear() + maxNbValues * wmsTime.interval[0]);
-    endDate.setMonth(minDate.getMonth() + maxNbValues * wmsTime.interval[1],
-      minDate.getDate() + maxNbValues * wmsTime.interval[2]);
+    endDate.setMonth(
+      minDate.getMonth() + maxNbValues * wmsTime.interval[1],
+      minDate.getDate() + maxNbValues * wmsTime.interval[2]
+    );
     endDate.setSeconds(minDate.getSeconds() + maxNbValues * wmsTime.interval[3]);
 
     if (endDate > maxDate) {
@@ -287,8 +282,10 @@ Controller.prototype.getTimeValueList_ = function() {
       for (let i = 0; ; i++) {
         const nextDate = new Date(minDate.getTime());
         nextDate.setFullYear(minDate.getFullYear() + i * wmsTime.interval[0]);
-        nextDate.setMonth(minDate.getMonth() + i * wmsTime.interval[1],
-          minDate.getDate() + i * wmsTime.interval[2]);
+        nextDate.setMonth(
+          minDate.getMonth() + i * wmsTime.interval[1],
+          minDate.getDate() + i * wmsTime.interval[2]
+        );
         nextDate.setSeconds(minDate.getSeconds() + i * wmsTime.interval[3]);
         if (nextDate <= maxDate) {
           timeValueList.push(nextDate.getTime());
@@ -301,14 +298,13 @@ Controller.prototype.getTimeValueList_ = function() {
   return timeValueList;
 };
 
-
 /**
  * Compute the closest available date from the given timestamp
  * @param  {number} timestamp selected datetime (in ms format)
  * @return {number} the closest available datetime (in ms format) from the timestamp
  * @private
  */
-Controller.prototype.getClosestValue_ = function(timestamp) {
+Controller.prototype.getClosestValue_ = function (timestamp) {
   if (!this.time) {
     throw new Error('Missing time');
   }
@@ -326,7 +322,7 @@ Controller.prototype.getClosestValue_ = function(timestamp) {
     let leftIndex = 0;
     let rightIndex = this.timeValueList.length - 1;
 
-    while ((rightIndex - leftIndex) > 1) {
+    while (rightIndex - leftIndex > 1) {
       index = Math.floor((leftIndex + rightIndex) / 2);
       if (this.timeValueList[index] >= timestamp) {
         rightIndex = index;
@@ -353,8 +349,10 @@ Controller.prototype.getClosestValue_ = function(timestamp) {
       // two months at once
       const next = new Date(startDate.getTime());
       next.setFullYear(startDate.getFullYear() + i * this.time.interval[0]);
-      next.setMonth(startDate.getMonth() + i * this.time.interval[1],
-        startDate.getDate() + i * this.time.interval[2]);
+      next.setMonth(
+        startDate.getMonth() + i * this.time.interval[1],
+        startDate.getDate() + i * this.time.interval[2]
+      );
       next.setSeconds(startDate.getSeconds() + i * this.time.interval[3]);
 
       if (next > maxDate) {
@@ -374,21 +372,18 @@ Controller.prototype.getClosestValue_ = function(timestamp) {
   }
 };
 
-
 /**
  * Format and localize time regarding a resolution.
  * @param {number} time (in ms format) timestamp to format and localize.
  * @return {string} Localized date string regarding the resolution.
  */
-Controller.prototype.getLocalizedDate = function(time) {
+Controller.prototype.getLocalizedDate = function (time) {
   if (!this.time) {
     throw new Error('Missing time');
   }
   return this.ngeoWMSTime_.formatTimeValue(time, this.time.resolution);
 };
 
-
 module.controller('gmfTimeSliderController', Controller);
-
 
 export default module;

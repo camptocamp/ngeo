@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 import appURL from './url.js';
 import './elevation.css';
@@ -32,23 +31,16 @@ import olView from 'ol/View.js';
 import olLayerTile from 'ol/layer/Tile.js';
 import olSourceOSM from 'ol/source/OSM.js';
 
-
 /**
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfapp', [
-  'gettext',
-  gmfMapComponent.name,
-  gmfRasterModule.name,
-]);
-
+const module = angular.module('gmfapp', ['gettext', gmfMapComponent.name, gmfRasterModule.name]);
 
 module.value('gmfRasterUrl', appURL.RASTER);
 
 module.constant('defaultTheme', 'Demo');
 module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
-
 
 /**
  * @constructor
@@ -71,19 +63,18 @@ function MainController() {
   this.map = new olMap({
     layers: [
       new olLayerTile({
-        source: new olSourceOSM()
-      })
+        source: new olSourceOSM(),
+      }),
     ],
     view: new olView({
       projection: EPSG2056,
       resolutions: [200, 100, 50, 20, 10, 5, 2.5, 2, 1, 0.5],
       center: [2600000, 1200000],
-      zoom: 3
-    })
+      zoom: 3,
+    }),
   });
 }
 
 module.controller('MainController', MainController);
-
 
 export default module;

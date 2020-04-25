@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 describe('ngeo.statemanager.Location', () => {
   /** @type {Object<string, *>} */
@@ -30,7 +29,7 @@ describe('ngeo.statemanager.Location', () => {
   beforeEach(() => {
     win = {
       'location': new URL('http://domain.com/some/path?some=param'),
-      'history': {'replaceState': function() {}}
+      'history': {'replaceState': function () {}},
     };
     spyOn(win.history, 'replaceState');
     angular.mock.module(
@@ -39,7 +38,8 @@ describe('ngeo.statemanager.Location', () => {
        */
       ($provide) => {
         $provide.value('$window', win);
-      });
+      }
+    );
     angular.mock.inject((_ngeoLocation_) => {
       ngeoLocation = _ngeoLocation_;
     });
@@ -142,7 +142,10 @@ describe('ngeo.statemanager.Location', () => {
     it('calls history.replaceState with expected args', () => {
       ngeoLocation.refresh();
       expect(win.history.replaceState).toHaveBeenCalledWith(
-        null, '', 'http://domain.com/some/path?some=param');
+        null,
+        '',
+        'http://domain.com/some/path?some=param'
+      );
     });
   });
 
@@ -151,7 +154,7 @@ describe('ngeo.statemanager.Location', () => {
       // change url to 'http://domain.com/some/path?some=param#key1=value1&key2=2'
       ngeoLocation.updateFragmentParams({
         'key1': 'value1',
-        'key2': '2'
+        'key2': '2',
       });
     });
 

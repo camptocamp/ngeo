@@ -19,15 +19,12 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
-
 
 /**
  * @typedef {Object} ShortenerAPIResponseData
  * @property {string} short_url
  */
-
 
 /**
  * @typedef {Object} ShortenerAPIResponse
@@ -35,14 +32,12 @@ import angular from 'angular';
  * @property {number} status HTTP status
  */
 
-
 /**
  * @typedef {Object} ShortenerAPIRequestParams
  * @property {string} url
  * @property {string} [email]
  * @property {string} [message]
  */
-
 
 /**
  * Service to handle the sharing of the permalink.
@@ -54,22 +49,18 @@ import angular from 'angular';
  * @hidden
  */
 export function PermalinkShareService($http, gmfShortenerCreateUrl) {
-
   /**
    * @type {angular.IHttpService}
    * @private
    */
   this.$http_ = $http;
 
-
   /**
    * @type {string}
    * @private
    */
   this.gmfShortenerCreateUrl_ = gmfShortenerCreateUrl;
-
 }
-
 
 /**
  * Get a short URL of the permalink by calling the url shortener service.
@@ -78,23 +69,22 @@ export function PermalinkShareService($http, gmfShortenerCreateUrl) {
  * @return {ShortenerAPIResponse|angular.IHttpPromise<Object>} an object containing the permalink not
  *    shortened or the promise attached to the shortener API request
  */
-PermalinkShareService.prototype.getShortUrl = function(url) {
+PermalinkShareService.prototype.getShortUrl = function (url) {
   const params = /** @type {ShortenerAPIRequestParams} */ ({
-    url
+    url,
   });
 
   if (!this.gmfShortenerCreateUrl_) {
     return {
       data: {
-        short_url: url
+        short_url: url,
       },
-      status: 200
+      status: 200,
     };
   }
 
   return this.postShortUrl_(params);
 };
-
 
 /**
  * Send the short permalink to the email provided
@@ -104,10 +94,10 @@ PermalinkShareService.prototype.getShortUrl = function(url) {
  * @param  {string=} opt_message message for the email
  * @return {angular.IHttpPromise<Object>} the promise attached to the shortener API request
  */
-PermalinkShareService.prototype.sendShortUrl = function(shortUrl, email, opt_message) {
+PermalinkShareService.prototype.sendShortUrl = function (shortUrl, email, opt_message) {
   const params = /** @type {ShortenerAPIRequestParams} */ ({
     url: shortUrl,
-    email: email
+    email: email,
   });
 
   if (opt_message) {
@@ -117,19 +107,17 @@ PermalinkShareService.prototype.sendShortUrl = function(shortUrl, email, opt_mes
   return this.postShortUrl_(params);
 };
 
-
 /**
  * @param  {ShortenerAPIRequestParams} params parameters for the request
  * @return {angular.IHttpPromise<Object>} the promise attached to the shortener API request
  * @private
  */
-PermalinkShareService.prototype.postShortUrl_ = function(params) {
+PermalinkShareService.prototype.postShortUrl_ = function (params) {
   // Override default behavior of $http.post method (sending data in json format)
   return this.$http_.post(this.gmfShortenerCreateUrl_, $.param(params), {
-    headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
   });
 };
-
 
 /**
  * Max length defined for the complete url.
@@ -147,7 +135,6 @@ export const URL_MAX_LEN = 2083;
  */
 export const URL_PATH_MAX_LEN = 2048;
 
-
 /**
  * @type {angular.IModule}
  * @hidden
@@ -155,6 +142,5 @@ export const URL_PATH_MAX_LEN = 2048;
 const module = angular.module('gmfShareService', []);
 
 module.service('gmfShareService', PermalinkShareService);
-
 
 export default module;

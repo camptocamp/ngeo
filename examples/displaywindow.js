@@ -19,17 +19,12 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import './displaywindow.css';
 import angular from 'angular';
 import ngeoMessageDisplaywindowComponent from 'ngeo/message/displaywindowComponent.js';
 
-
 /** @type {angular.IModule} **/
-const module = angular.module('app', [
-  ngeoMessageDisplaywindowComponent.name
-]);
-
+const module = angular.module('app', [ngeoMessageDisplaywindowComponent.name]);
 
 /**
  * @param {angular.IScope} $scope Scope.
@@ -37,7 +32,6 @@ const module = angular.module('app', [
  * @constructor
  */
 function MainController($scope) {
-
   /**
    * @type {string}
    */
@@ -81,7 +75,6 @@ function MainController($scope) {
    */
   this.window3FalseValue = false;
 
-
   /**
    * @type {boolean}
    */
@@ -107,8 +100,6 @@ function MainController($scope) {
   this.windowScope = $scope;
 }
 
-
 module.controller('MainController', MainController);
-
 
 export default module;

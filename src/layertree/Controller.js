@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 import {layerLoading, layerDecoration} from 'ngeo/misc/decorate.js';
 import {getUid as olUtilGetUid} from 'ol/util.js';
@@ -39,7 +38,6 @@ import olLayerLayer from 'ol/layer/Layer.js';
  * @hidden
  */
 export function LayertreeController($scope, $rootScope, $attrs) {
-
   const isRoot = $attrs.ngeoLayertreeNotroot === undefined;
 
   /**
@@ -78,7 +76,6 @@ export function LayertreeController($scope, $rootScope, $attrs) {
    * @type {import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer}
    */
   this.node = node;
-
 
   const mapExpr = $attrs.ngeoLayertreeMap;
   /**
@@ -155,9 +152,7 @@ export function LayertreeController($scope, $rootScope, $attrs) {
   if (!isRoot) {
     const layer = $scope.$eval(nodelayerExpr, {'treeCtrl': this}) || null;
     if (layer) {
-      console.assert(
-        layer instanceof olLayerLayer || layer instanceof olLayerGroup
-      );
+      console.assert(layer instanceof olLayerLayer || layer instanceof olLayerGroup);
       this.layer = layer;
     }
   }
@@ -201,15 +196,13 @@ export function LayertreeController($scope, $rootScope, $attrs) {
   $scope.layertreeCtrl = this;
 }
 
-
 /**
  * Return the current state.
  * @return {string} 'on', 'off', 'indeterminate'.
  */
-LayertreeController.prototype.getState = function() {
+LayertreeController.prototype.getState = function () {
   return this.state_;
 };
-
 
 /**
  * Set the state of this treeCtrl. Update its children with its value and then
@@ -217,7 +210,7 @@ LayertreeController.prototype.getState = function() {
  * @param {string} state 'on' or 'off'.
  * @param {boolean=} opt_broadcast Broadcast.
  */
-LayertreeController.prototype.setState = function(state, opt_broadcast) {
+LayertreeController.prototype.setState = function (state, opt_broadcast) {
   if (state === this.state_) {
     return;
   }
@@ -237,18 +230,14 @@ LayertreeController.prototype.setState = function(state, opt_broadcast) {
   }
 };
 
-
 /**
  * @param {string} state 'on' or 'off'.
  */
-LayertreeController.prototype.setStateInternal_ = function(state) {
+LayertreeController.prototype.setStateInternal_ = function (state) {
   // Set the state
   this.state_ = state === 'on' ? 'on' : 'off';
 
-  if (this.state_ === 'on' &&
-      this.node.metadata &&
-      this.node.metadata.exclusiveGroup
-  ) {
+  if (this.state_ === 'on' && this.node.metadata && this.node.metadata.exclusiveGroup) {
     let firstChild;
     for (const child of this.children) {
       if (!firstChild) {
@@ -266,7 +255,6 @@ LayertreeController.prototype.setStateInternal_ = function(state) {
   }
 };
 
-
 /**
  * Refresh the state of this treeCtrl based on it's children value. The call its
  * parent to do the same.
@@ -276,13 +264,14 @@ LayertreeController.prototype.setStateInternal_ = function(state) {
  * @param {boolean=} opt_broadcast Broadcast.
  * @public
  */
-LayertreeController.prototype.refreshState = function(opt_onChild, opt_broadcast) {
-  const group = /** @type {import('gmf/themes.js').GmfGroup} */(this.node);
-  if (group.children &&
-      opt_onChild &&
-      opt_onChild.getState() !== 'off' &&
-      this.node.metadata &&
-      this.node.metadata.exclusiveGroup
+LayertreeController.prototype.refreshState = function (opt_onChild, opt_broadcast) {
+  const group = /** @type {import('gmf/themes.js').GmfGroup} */ (this.node);
+  if (
+    group.children &&
+    opt_onChild &&
+    opt_onChild.getState() !== 'off' &&
+    this.node.metadata &&
+    this.node.metadata.exclusiveGroup
   ) {
     const onChild = opt_onChild;
     this.children.forEach((child) => {
@@ -302,13 +291,12 @@ LayertreeController.prototype.refreshState = function(opt_onChild, opt_broadcast
   }
 };
 
-
 /**
  * Return the current state, calculate on all its children recursively.
  * @return {string} 'on', 'off' or 'indeterminate'.
  */
-LayertreeController.prototype.getCalculateState = function() {
-  const group = /** @type {import('gmf/themes.js').GmfGroup} */(this.node);
+LayertreeController.prototype.getCalculateState = function () {
+  const group = /** @type {import('gmf/themes.js').GmfGroup} */ (this.node);
   if (group.children === undefined) {
     return this.state_;
   }
@@ -330,12 +318,11 @@ LayertreeController.prototype.getCalculateState = function() {
   return childState;
 };
 
-
 /**
  * @param {boolean|undefined} val Value.
  * @return {boolean|undefined} Value.
  */
-LayertreeController.prototype.getSetActive = function(val) {
+LayertreeController.prototype.getSetActive = function (val) {
   const layer = this.layer;
   const map = this.map;
   if (!layer) {
@@ -352,23 +339,20 @@ LayertreeController.prototype.getSetActive = function(val) {
   }
 };
 
-
 /**
  * @return {?import("ngeo/datasource/DataSource.js").default} dataSource The data source bound to
  *     this layer tree controller.
  */
-LayertreeController.prototype.getDataSource = function() {
+LayertreeController.prototype.getDataSource = function () {
   return this.dataSource_;
 };
-
 
 /**
  * @param {?import("ngeo/datasource/DataSource.js").default} dataSource Data source or null.
  */
-LayertreeController.prototype.setDataSource = function(dataSource) {
+LayertreeController.prototype.setDataSource = function (dataSource) {
   this.dataSource_ = dataSource;
 };
-
 
 /**
  * Get the "top level" layertree (one of the first level child under the root
@@ -386,7 +370,6 @@ export function getFirstParentTree(treeCtrl) {
   return tree;
 }
 
-
 /**
  * @enum {string}
  * @hidden
@@ -394,21 +377,19 @@ export function getFirstParentTree(treeCtrl) {
 export const LayertreeVisitorDecision = {
   STOP: 'STOP',
   SKIP: 'SKIP',
-  DESCEND: 'DESCEND'
+  DESCEND: 'DESCEND',
 };
-
 
 /**
  * @typedef {function(LayertreeController): (LayertreeVisitorDecision|undefined|void)} Visitor
  */
-
 
 /**
  * Recursive method to traverse the layertree controller graph.
  * @param {Visitor} visitor A visitor called for each node.
  * @return {boolean} whether to stop traversing.
  */
-LayertreeController.prototype.traverseDepthFirst = function(visitor) {
+LayertreeController.prototype.traverseDepthFirst = function (visitor) {
   // First visit the current controller
   const decision = visitor(this) || LayertreeVisitorDecision.DESCEND;
 
@@ -430,13 +411,11 @@ LayertreeController.prototype.traverseDepthFirst = function(visitor) {
   }
 };
 
-
 /**
  * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('ngeoLayertreeController', []);
 module.controller('ngeoLayertreeController', LayertreeController);
-
 
 export default module;

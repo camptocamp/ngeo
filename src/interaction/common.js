@@ -19,20 +19,16 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import {createEditingStyle} from 'ol/style/Style.js';
-
 
 /**
  * @typedef {Object} DrawEventItem
  * @property {import("ol/Feature.js").default} feature
  */
 
-
 /**
  * @typedef {import("ngeo/CustomEvent.js").default<DrawEventItem>} DrawEvent
  */
-
 
 /**
  * @return {import('ol/style/Style.js').StyleFunction} Styles.
@@ -40,7 +36,7 @@ import {createEditingStyle} from 'ol/style/Style.js';
  */
 export function getDefaultDrawStyleFunction() {
   const style = createEditingStyle();
-  return function(feature, resolution) {
+  return function (feature, resolution) {
     const geometry = feature.getGeometry();
     if (geometry) {
       return style[geometry.getType()];
@@ -48,14 +44,13 @@ export function getDefaultDrawStyleFunction() {
   };
 }
 
-
 /**
  * @return {import('ol/style/Style.js').StyleFunction} Styles.
  * @hidden
  */
 export function getDefaultModifyStyleFunction() {
   const style = createEditingStyle();
-  return function(feature, resolution) {
+  return function (feature, resolution) {
     return style.Point;
   };
 }

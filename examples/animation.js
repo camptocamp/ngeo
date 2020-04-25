@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import './animation.css';
 import angular from 'angular';
 import olMap from 'ol/Map.js';
@@ -29,13 +28,8 @@ import olLayerTile from 'ol/layer/Tile.js';
 import olSourceOSM from 'ol/source/OSM.js';
 import ngeoMapModule from 'ngeo/map/module.js';
 
-
 /** @type {angular.IModule} */
-const module = angular.module('app', [
-  'gettext',
-  ngeoMapModule.name
-]);
-
+const module = angular.module('app', ['gettext', ngeoMapModule.name]);
 
 /**
  * App-specific component wrapping the ngeo map component. The component's
@@ -47,14 +41,12 @@ const module = angular.module('app', [
 const mapComponent = {
   bindings: {
     'map': '=appMap',
-    'class': '=appMapClass'
+    'class': '=appMapClass',
   },
-  template: '<div ngeo-map="$ctrl.map"></div>'
+  template: '<div ngeo-map="$ctrl.map"></div>',
 };
 
-
 module.component('appMap', mapComponent);
-
 
 /**
  * The application's main controller.
@@ -72,13 +64,13 @@ function MainController($timeout) {
   this.map = new olMap({
     layers: [
       new olLayerTile({
-        source: new olSourceOSM()
-      })
+        source: new olSourceOSM(),
+      }),
     ],
     view: new olView({
       center: [0, 0],
-      zoom: 4
-    })
+      zoom: 4,
+    }),
   });
 
   /**
@@ -96,8 +88,6 @@ function MainController($timeout) {
   }, 0);
 }
 
-
 module.controller('MainController', MainController);
-
 
 export default module;

@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import './mobilegeolocation.css';
 import angular from 'angular';
 import olMap from 'ol/Map.js';
@@ -34,14 +33,8 @@ import olStyleStroke from 'ol/style/Stroke.js';
 import ngeoMapModule from 'ngeo/map/module.js';
 import ngeoGeolocation from 'ngeo/geolocation/component.js';
 
-
 /** @type {angular.IModule} **/
-const appmodule = angular.module('app', [
-  'gettext',
-  ngeoGeolocation.name,
-  ngeoMapModule.name
-]);
-
+const appmodule = angular.module('app', ['gettext', ngeoGeolocation.name, ngeoMapModule.name]);
 
 /**
  * @param {angular.IScope} $scope Scope.
@@ -51,18 +44,17 @@ const appmodule = angular.module('app', [
  * @ngInject
  */
 function MainController($scope, ngeoFeatureOverlayMgr) {
-
   const positionFeatureStyle = new olStyleStyle({
     image: new olStyleCircle({
       radius: 6,
       fill: new olStyleFill({color: 'rgba(230, 100, 100, 1)'}),
-      stroke: new olStyleStroke({color: 'rgba(230, 40, 40, 1)', width: 2})
-    })
+      stroke: new olStyleStroke({color: 'rgba(230, 40, 40, 1)', width: 2}),
+    }),
   });
 
   const accuracyFeatureStyle = new olStyleStyle({
     fill: new olStyleFill({color: 'rgba(100, 100, 230, 0.3)'}),
-    stroke: new olStyleStroke({color: 'rgba(40, 40, 230, 1)', width: 2})
+    stroke: new olStyleStroke({color: 'rgba(40, 40, 230, 1)', width: 2}),
   });
 
   /**
@@ -72,7 +64,7 @@ function MainController($scope, ngeoFeatureOverlayMgr) {
     positionFeatureStyle: positionFeatureStyle,
     accuracyFeatureStyle: accuracyFeatureStyle,
     zoom: 17,
-    autorotate: true
+    autorotate: true,
   };
 
   /**
@@ -81,20 +73,18 @@ function MainController($scope, ngeoFeatureOverlayMgr) {
   this.map = new olMap({
     layers: [
       new olLayerTile({
-        source: new olSourceOSM()
-      })
+        source: new olSourceOSM(),
+      }),
     ],
     view: new olView({
       center: [0, 0],
-      zoom: 4
-    })
+      zoom: 4,
+    }),
   });
 
   ngeoFeatureOverlayMgr.init(this.map);
 }
 
-
 appmodule.controller('MainController', MainController);
-
 
 export default module;

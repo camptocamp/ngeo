@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 import ngeoStatemanagerLocation from 'ngeo/statemanager/Location.js';
 
@@ -35,7 +34,6 @@ export class StatemanagerService {
    * @ngInject
    */
   constructor(ngeoLocation, ngeoUsedKeyRegexp) {
-
     /**
      * Object representing the application's initial state.
      * @type {Object<string, string>}
@@ -46,7 +44,6 @@ export class StatemanagerService {
      * @type {import("ngeo/statemanager/Location.js").StatemanagerLocation}
      */
     this.ngeoLocation = ngeoLocation;
-
 
     /**
      * @type {RegExp[]}
@@ -65,7 +62,7 @@ export class StatemanagerService {
     // state is read from the location URL, or from the local storage if there
     // is no state in the location URL.
 
-    const paramKeys = ngeoLocation.getParamKeys().filter(key => key != 'debug' && key != 'no_redirect');
+    const paramKeys = ngeoLocation.getParamKeys().filter((key) => key != 'debug' && key != 'no_redirect');
 
     if (paramKeys.length === 0) {
       if (this.useLocalStorage_) {
@@ -101,7 +98,6 @@ export class StatemanagerService {
       });
     }
   }
-
 
   /**
    * @param {boolean} value Use localStorage
@@ -190,16 +186,12 @@ export class StatemanagerService {
   }
 }
 
-
 /**
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoStateManager', [
-  ngeoStatemanagerLocation.name
-]);
+const module = angular.module('ngeoStateManager', [ngeoStatemanagerLocation.name]);
 module.service('ngeoStateManager', StatemanagerService);
 module.value('ngeoUsedKeyRegexp', [new RegExp('.*')]);
-
 
 export default module;

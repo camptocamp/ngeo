@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 import ngeoFormatXSDAttribute from 'ngeo/format/XSDAttribute.js';
 
@@ -34,7 +33,6 @@ import ngeoFormatXSDAttribute from 'ngeo/format/XSDAttribute.js';
  * @hidden
  */
 export function EditingXSDAttributeService($http, gmfLayersUrl) {
-
   /**
    * @type {angular.IHttpService}
    * @private
@@ -52,22 +50,19 @@ export function EditingXSDAttributeService($http, gmfLayersUrl) {
    * @private
    */
   this.promises_ = {};
-
 }
-
 
 /**
  * @param {number} id Layer id.
  * @return {angular.IPromise<import('ngeo/format/Attribute.js').Attribute[]>} Promise.
  */
-EditingXSDAttributeService.prototype.getAttributes = function(id) {
+EditingXSDAttributeService.prototype.getAttributes = function (id) {
   if (!this.promises_[id]) {
     const url = `${this.baseUrl_}/${id}/md.xsd`;
-    this.promises_[id] = this.http_.get(url).then(resp => new ngeoFormatXSDAttribute().read(resp.data));
+    this.promises_[id] = this.http_.get(url).then((resp) => new ngeoFormatXSDAttribute().read(resp.data));
   }
   return this.promises_[id];
 };
-
 
 /**
  * @type {angular.IModule}
@@ -75,6 +70,5 @@ EditingXSDAttributeService.prototype.getAttributes = function(id) {
  */
 const module = angular.module('gmfXSDAttributes', []);
 module.service('gmfXSDAttributes', EditingXSDAttributeService);
-
 
 export default module;

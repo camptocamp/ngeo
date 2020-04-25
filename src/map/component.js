@@ -19,18 +19,15 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 import {listen} from 'ol/events.js';
 import olMap from 'ol/Map.js';
-
 
 /**
  * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('ngeoMap', []);
-
 
 /**
  * Provides a directive used to insert a user-defined OpenLayers
@@ -92,15 +89,14 @@ function mapComponent($window) {
         const resizeTransitionAttr = 'ngeoMapResizeTransition';
         const resizeTransitionProp = attrs[resizeTransitionAttr];
 
-        const resizeTransition = /** @type {number|undefined} */ (
-          scope.$eval(resizeTransitionProp));
+        const resizeTransition = /** @type {number|undefined} */ (scope.$eval(resizeTransitionProp));
 
         listen($window, 'resize', () => {
           if (resizeTransition) {
             // Resize with transition
             const start = Date.now();
             let loop = true;
-            const adjustSize = function() {
+            const adjustSize = function () {
               map.updateSize();
               map.renderSync();
               if (loop) {
@@ -117,12 +113,11 @@ function mapComponent($window) {
           }
         });
       }
-    }
+    },
   };
 }
 
 // Register the directive in the module
 module.directive('ngeoMap', mapComponent);
-
 
 export default module;

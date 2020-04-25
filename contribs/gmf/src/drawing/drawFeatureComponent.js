@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 import gmfDrawingDrawFeatureOptionsComponent from 'gmf/drawing/drawFeatureOptionsComponent.js';
 import gmfDrawingFeatureStyleComponent from 'gmf/drawing/featureStyleComponent.js';
@@ -53,7 +52,6 @@ import Feature from 'ol/Feature.js';
 
 import 'bootstrap/js/src/dropdown.js';
 
-
 /**
  * @type {angular.IModule}
  * @hidden
@@ -68,7 +66,6 @@ const module = angular.module('GmfDrawFeatureComponent', [
   ngeoMiscToolActivateMgr.name,
 ]);
 
-
 module.run(
   /**
    * @ngInject
@@ -77,8 +74,8 @@ module.run(
   ($templateCache) => {
     // @ts-ignore: webpack
     $templateCache.put('gmf/drawing/drawFeatureComponent', require('./drawFeatureComponent.html'));
-  });
-
+  }
+);
 
 /**
  * Directive used to create, modify and delete vector features on a map with
@@ -104,16 +101,14 @@ function drawinfDrawFeatureComponent() {
     scope: {
       'active': '=gmfDrawfeatureActive',
       'map': '<gmfDrawfeatureMap',
-      'showMeasure': '=?gmfDrawfeatureShowmeasure'
+      'showMeasure': '=?gmfDrawfeatureShowmeasure',
     },
     bindToController: true,
-    templateUrl: 'gmf/drawing/drawFeatureComponent'
+    templateUrl: 'gmf/drawing/drawFeatureComponent',
   };
 }
 
-
 module.directive('gmfDrawfeature', drawinfDrawFeatureComponent);
-
 
 /**
  * @param {angular.IScope} $scope Angular scope.
@@ -132,7 +127,6 @@ module.directive('gmfDrawfeature', drawinfDrawFeatureComponent);
  * @ngname GmfDrawfeatureController
  */
 function Controller($scope, $timeout, gettextCatalog, ngeoFeatureHelper, ngeoFeatures, ngeoToolActivateMgr) {
-
   /**
    * @type {?import("ol/Map.js").default}
    */
@@ -213,7 +207,6 @@ function Controller($scope, $timeout, gettextCatalog, ngeoFeatureHelper, ngeoFea
    */
   this.selectedFeatures = new olCollection();
 
-
   /**
    * @type {import("ol/Collection.js").default<import('ol/interaction/Interaction.js').default>}
    * @private
@@ -226,7 +219,7 @@ function Controller($scope, $timeout, gettextCatalog, ngeoFeatureHelper, ngeoFea
    */
   this.modify_ = new ngeoInteractionModify({
     features: this.selectedFeatures,
-    style: ngeoFeatureHelper.getVertexStyle(false)
+    style: ngeoFeatureHelper.getVertexStyle(false),
   });
   this.interactions_.push(this.modify_);
 
@@ -258,10 +251,10 @@ function Controller($scope, $timeout, gettextCatalog, ngeoFeatureHelper, ngeoFea
         text: '\uf0b2',
         font: '900 18px "Font Awesome 5 Free"',
         fill: new olStyleFill({
-          color: '#7a7a7a'
-        })
-      })
-    })
+          color: '#7a7a7a',
+        }),
+      }),
+    }),
   });
   this.interactions_.push(this.translate_);
 
@@ -276,10 +269,10 @@ function Controller($scope, $timeout, gettextCatalog, ngeoFeatureHelper, ngeoFea
         text: '\uf01e',
         font: '900 18px "Font Awesome 5 Free"',
         fill: new olStyleFill({
-          color: '#7a7a7a'
-        })
-      })
-    })
+          color: '#7a7a7a',
+        }),
+      }),
+    }),
   });
   this.interactions_.push(this.rotate_);
 
@@ -322,10 +315,7 @@ function Controller($scope, $timeout, gettextCatalog, ngeoFeatureHelper, ngeoFea
    */
   this.listSelectionInProgress_ = false;
 
-  $scope.$watch(
-    () => this.active,
-    this.handleActiveChange_.bind(this)
-  );
+  $scope.$watch(() => this.active, this.handleActiveChange_.bind(this));
 
   $scope.$watch(
     () => this.drawActive,
@@ -361,10 +351,7 @@ function Controller($scope, $timeout, gettextCatalog, ngeoFeatureHelper, ngeoFea
     }
   );
 
-  $scope.$watch(
-    () => this.mapSelectActive,
-    this.handleMapSelectActiveChange_.bind(this)
-  );
+  $scope.$watch(() => this.mapSelectActive, this.handleMapSelectActiveChange_.bind(this));
 
   /**
    * @type {string}
@@ -411,41 +398,33 @@ function Controller($scope, $timeout, gettextCatalog, ngeoFeatureHelper, ngeoFea
   this.drawText = null;
 }
 
-
 /**
  * Called upon initialization of the controller.
  */
-Controller.prototype.$onInit = function() {
+Controller.prototype.$onInit = function () {
   if (!this.map) {
     throw new Error('Missing map');
   }
 
   this.mainListenerKeys_.push(
-    listen(
-      this.map.getInteractions(),
-      'add',
-      this.handleMapInteractionsAdd_,
-      this
-    )
+    listen(this.map.getInteractions(), 'add', this.handleMapInteractionsAdd_, this)
   );
 };
-
 
 /**
  * Called upon destruction of the controller.
  */
-Controller.prototype.$onDestroy = function() {
+Controller.prototype.$onDestroy = function () {
   this.mainListenerKeys_.forEach(unlistenByKey);
   this.mainListenerKeys_.length = 0;
 };
-
 
 /**
  * Close menu, if it exists.
  * @private
  * @hidden
  */
-Controller.prototype.closeMenu_ = function() {
+Controller.prototype.closeMenu_ = function () {
   if (this.menu_) {
     if (!this.map) {
       throw new Error('Missing map');
@@ -459,24 +438,22 @@ Controller.prototype.closeMenu_ = function() {
   }
 };
 
-
 /**
  * Initialize interactions by setting them inactive and decorating them
  * @private
  */
-Controller.prototype.initializeInteractions_ = function() {
+Controller.prototype.initializeInteractions_ = function () {
   this.interactions_.forEach((interaction) => {
     interaction.setActive(false);
     ngeoMiscDecorateInteraction(interaction);
   });
 };
 
-
 /**
  * Register interactions by adding them to the map
  * @private
  */
-Controller.prototype.registerInteractions_ = function() {
+Controller.prototype.registerInteractions_ = function () {
   this.interactions_.forEach((interaction) => {
     if (!this.map) {
       throw new Error('Missing map');
@@ -485,12 +462,11 @@ Controller.prototype.registerInteractions_ = function() {
   });
 };
 
-
 /**
  * Register interactions by removing them to the map
  * @private
  */
-Controller.prototype.unregisterInteractions_ = function() {
+Controller.prototype.unregisterInteractions_ = function () {
   this.interactions_.forEach((interaction) => {
     if (!this.map) {
       throw new Error('Missing map');
@@ -499,15 +475,13 @@ Controller.prototype.unregisterInteractions_ = function() {
   });
 };
 
-
 /**
  * Called when the active property of the this directive changes. Manage
  * the activation/deactivation accordingly (event management, etc.)
  * @param {boolean} active Whether the directive is active or not.
  * @private
  */
-Controller.prototype.handleActiveChange_ = function(active) {
-
+Controller.prototype.handleActiveChange_ = function (active) {
   const keys = this.listenerKeys_;
   const drawUid = ['draw-', olUtilGetUid(this)].join('-');
   const otherUid = ['other-', olUtilGetUid(this)].join('-');
@@ -552,9 +526,7 @@ Controller.prototype.handleActiveChange_ = function(active) {
 
     this.closeMenu_();
   }
-
 };
-
 
 /**
  * Method called when a selection occurs from the list, i.e. when an item in
@@ -562,51 +534,45 @@ Controller.prototype.handleActiveChange_ = function(active) {
  * update Angular's scope.
  * @param {Feature<import("ol/geom/Geometry.js").default>} feature Feature to select.
  */
-Controller.prototype.selectFeatureFromList = function(feature) {
+Controller.prototype.selectFeatureFromList = function (feature) {
   this.listSelectionInProgress_ = true;
   this.selectedFeature = feature;
   this.drawActive = false;
 };
 
-
 /**
  * @return {Array<Feature<import("ol/geom/Geometry.js").default>>} Array.
  */
-Controller.prototype.getFeaturesArray = function() {
+Controller.prototype.getFeaturesArray = function () {
   return this.features.getArray();
 };
 
-
 /**
  */
-Controller.prototype.clearFeatures = function() {
+Controller.prototype.clearFeatures = function () {
   const gettextCatalog = this.gettextCatalog_;
-  const msg = gettextCatalog.getString(
-    'Do you really want to delete all the features?');
+  const msg = gettextCatalog.getString('Do you really want to delete all the features?');
   if (confirm(msg)) {
     this.features.clear();
   }
 };
 
-
 /**
  * @param {Feature<import("ol/geom/Geometry.js").default>} feature The feature to remove from the selection.
  */
-Controller.prototype.removeFeature = function(feature) {
+Controller.prototype.removeFeature = function (feature) {
   const gettextCatalog = this.gettextCatalog_;
-  const msg = gettextCatalog.getString(
-    'Do you really want to delete the selected feature?');
+  const msg = gettextCatalog.getString('Do you really want to delete the selected feature?');
   if (confirm(msg)) {
     this.features.remove(feature);
   }
 };
 
-
 /**
  * @param {Event|import('ol/events/Event.js').default} evt Event.
  * @private
  */
-Controller.prototype.handleFeaturesAdd_ = function(evt) {
+Controller.prototype.handleFeaturesAdd_ = function (evt) {
   if (evt instanceof CollectionEvent) {
     // timeout to prevent double-click to zoom the map
     this.timeout_(() => {
@@ -617,22 +583,20 @@ Controller.prototype.handleFeaturesAdd_ = function(evt) {
   }
 };
 
-
 /**
  * @param {Event|import('ol/events/Event.js').default} evt Event.
  * @private
  */
-Controller.prototype.handleFeaturesRemove_ = function(evt) {
+Controller.prototype.handleFeaturesRemove_ = function (evt) {
   this.selectedFeature = null;
 };
-
 
 /**
  * Called when the mapSelectActive property changes.
  * @param {boolean} active Whether the map select is active or not.
  * @private
  */
-Controller.prototype.handleMapSelectActiveChange_ = function(active) {
+Controller.prototype.handleMapSelectActiveChange_ = function (active) {
   if (!this.map) {
     throw new Error('Missing map');
   }
@@ -653,12 +617,11 @@ Controller.prototype.handleMapSelectActiveChange_ = function(active) {
   }
 };
 
-
 /**
  * @param {Event|import('ol/events/Event.js').default} evt Event.
  * @private
  */
-Controller.prototype.handleMapClick_ = function(evt) {
+Controller.prototype.handleMapClick_ = function (evt) {
   if (evt instanceof MapBrowserEvent) {
     if (!this.map) {
       throw new Error('Missing map');
@@ -678,7 +641,7 @@ Controller.prototype.handleMapClick_ = function(evt) {
       },
       {
         hitTolerance: 5,
-        layerFilter: undefined
+        layerFilter: undefined,
       }
     );
 
@@ -695,35 +658,32 @@ Controller.prototype.handleMapClick_ = function(evt) {
   }
 };
 
-
 /**
  * @param {Event|import('ol/events/Event.js').default} evt Event.
  * @private
  */
-Controller.prototype.handleMapTouchStart_ = function(evt) {
+Controller.prototype.handleMapTouchStart_ = function (evt) {
   this.longPressTimeout_ = window.setTimeout(() => {
     this.handleMapContextMenu_(evt);
   }, 500);
 };
 
-
 /**
  * @param {Event|import('ol/events/Event.js').default} evt Event.
  * @private
  */
-Controller.prototype.handleMapTouchEnd_ = function(evt) {
+Controller.prototype.handleMapTouchEnd_ = function (evt) {
   if (!this.longPressTimeout_) {
     throw new Error('Missing longPressTimeout');
   }
   clearTimeout(this.longPressTimeout_);
 };
 
-
 /**
  * @param {Event|import('ol/events/Event.js').default} evt Event.
  * @private
  */
-Controller.prototype.handleMapContextMenu_ = function(evt) {
+Controller.prototype.handleMapContextMenu_ = function (evt) {
   if (evt instanceof Event) {
     if (!this.map) {
       throw new Error('Missing map');
@@ -732,30 +692,27 @@ Controller.prototype.handleMapContextMenu_ = function(evt) {
     const pixel = this.map.getEventPixel(evt);
     const coordinate = this.map.getCoordinateFromPixel(pixel);
 
-    let feature = /** @type {?import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>} */ (
-      this.map.forEachFeatureAtPixel(
-        pixel,
-        (feature) => {
-          if (feature instanceof Feature) {
-            let ret = null;
-            if (this.features.getArray().includes(feature)) {
-              ret = feature;
-            }
-            return ret;
+    let feature = /** @type {?import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>} */ (this.map.forEachFeatureAtPixel(
+      pixel,
+      (feature) => {
+        if (feature instanceof Feature) {
+          let ret = null;
+          if (this.features.getArray().includes(feature)) {
+            ret = feature;
           }
-        },
-        {
-          hitTolerance: 7,
-          layerFilter: undefined
+          return ret;
         }
-      )
-    );
+      },
+      {
+        hitTolerance: 7,
+        layerFilter: undefined,
+      }
+    ));
 
     feature = feature ? feature : null;
 
     // show contextual menu when clicking on certain types of features
     if (feature) {
-
       this.closeMenu_();
 
       /** @type {import('ngeo/Menu').MenuActionOptions[]} */
@@ -767,35 +724,45 @@ Controller.prototype.handleMapContextMenu_ = function(evt) {
       const vertexInfo = this.featureHelper_.getVertexInfoAtCoordinate(feature, coordinate, resolution);
       if (!vertexInfo) {
         const type = this.featureHelper_.getType(feature);
-        if (type == ngeoGeometryType.CIRCLE ||
-            type == ngeoGeometryType.LINE_STRING ||
-            type == ngeoGeometryType.POLYGON ||
-            type == ngeoGeometryType.RECTANGLE) {
-          actions = actions.concat([{
-            cls: 'fas fa-arrows-alt',
-            label: gettextCatalog.getString('Move'),
-            name: 'move'
-          }, {
-            cls: 'fas fa-undo fa-flip-horizontal',
-            label: gettextCatalog.getString('Rotate'),
-            name: 'rotate'
-          }]);
+        if (
+          type == ngeoGeometryType.CIRCLE ||
+          type == ngeoGeometryType.LINE_STRING ||
+          type == ngeoGeometryType.POLYGON ||
+          type == ngeoGeometryType.RECTANGLE
+        ) {
+          actions = actions.concat([
+            {
+              cls: 'fas fa-arrows-alt',
+              label: gettextCatalog.getString('Move'),
+              name: 'move',
+            },
+            {
+              cls: 'fas fa-undo fa-flip-horizontal',
+              label: gettextCatalog.getString('Rotate'),
+              name: 'rotate',
+            },
+          ]);
         }
       }
 
-      actions = actions.concat([{
-        cls: 'fa fa-trash',
-        label: vertexInfo ? gettextCatalog.getString('Delete vertex') :
-          gettextCatalog.getString('Delete'),
-        name: 'delete'
-      }]);
+      actions = actions.concat([
+        {
+          cls: 'fa fa-trash',
+          label: vertexInfo ? gettextCatalog.getString('Delete vertex') : gettextCatalog.getString('Delete'),
+          name: 'delete',
+        },
+      ]);
 
       this.menu_ = new ngeoMenu({
-        actions
+        actions,
       });
 
-      this.menuListenerKey_ = listen(this.menu_, 'actionclick',
-        this.handleMenuActionClick_.bind(this, vertexInfo), this);
+      this.menuListenerKey_ = listen(
+        this.menu_,
+        'actionclick',
+        this.handleMenuActionClick_.bind(this, vertexInfo),
+        this
+      );
       this.map.addOverlay(this.menu_);
 
       this.menu_.open(coordinate);
@@ -817,15 +784,14 @@ Controller.prototype.handleMapContextMenu_ = function(evt) {
   }
 };
 
-
 /**
  * @param {?number[]} vertexInfo Vertex information, in case a
  *     vertex was clicked using the right button.
  * @param {Event|import('ol/events/Event.js').default} evt Event.
  * @private
  */
-Controller.prototype.handleMenuActionClick_ = function(vertexInfo, evt) {
-  const action = /** @type {import('ngeo/filter/ruleComponent.js').MenuEvent} */(evt).detail.action;
+Controller.prototype.handleMenuActionClick_ = function (vertexInfo, evt) {
+  const action = /** @type {import('ngeo/filter/ruleComponent.js').MenuEvent} */ (evt).detail.action;
   if (!this.selectedFeature) {
     throw new Error('Missing selectedFeature');
   }
@@ -857,32 +823,29 @@ Controller.prototype.handleMenuActionClick_ = function(vertexInfo, evt) {
   }
 };
 
-
 /**
  * @param {Event|import('ol/events/Event.js').default} evt Event.
  * @private
  */
-Controller.prototype.handleTranslateEnd_ = function(evt) {
+Controller.prototype.handleTranslateEnd_ = function (evt) {
   this.translate_.setActive(false);
   this.scope_.$apply();
 };
 
-
 /**
  * @param {Event|import('ol/events/Event.js').default} evt Event.
  * @private
  */
-Controller.prototype.handleRotateEnd_ = function(evt) {
+Controller.prototype.handleRotateEnd_ = function (evt) {
   this.rotate_.setActive(false);
   this.scope_.$apply();
 };
 
-
 /**
  * @param {Event|import('ol/events/Event.js').default} evt Event.
  * @private
  */
-Controller.prototype.handleMapInteractionsAdd_ = function(evt) {
+Controller.prototype.handleMapInteractionsAdd_ = function (evt) {
   if (!(evt instanceof CollectionEvent)) {
     return;
   }
@@ -894,29 +857,23 @@ Controller.prototype.handleMapInteractionsAdd_ = function(evt) {
 
   switch (drawFeatureUid) {
     case `${this.ngeoDrawFeatureUid}-point`:
-      this.drawPoint =
-        /** @type {import("ol/interaction/Draw.js").default} */ (interaction);
+      this.drawPoint = /** @type {import("ol/interaction/Draw.js").default} */ (interaction);
       break;
     case `${this.ngeoDrawFeatureUid}-length`:
-      this.measureLength =
-        /** @type {import("ngeo/interaction/MeasureLength.js").default} */ (interaction);
+      this.measureLength = /** @type {import("ngeo/interaction/MeasureLength.js").default} */ (interaction);
       this.measureLength.spherical = this.featureHelper_.spherical;
       break;
     case `${this.ngeoDrawFeatureUid}-area`:
-      this.measureArea =
-        /** @type {import("ngeo/interaction/MeasureArea.js").default} */ (interaction);
+      this.measureArea = /** @type {import("ngeo/interaction/MeasureArea.js").default} */ (interaction);
       break;
     case `${this.ngeoDrawFeatureUid}-azimut`:
-      this.measureAzimut =
-        /** @type {import("ngeo/interaction/MeasureAzimut.js").default} */ (interaction);
+      this.measureAzimut = /** @type {import("ngeo/interaction/MeasureAzimut.js").default} */ (interaction);
       break;
     case `${this.ngeoDrawFeatureUid}-rectangle`:
-      this.drawRectangle =
-        /** @type {import("ol/interaction/Draw.js").default} */ (interaction);
+      this.drawRectangle = /** @type {import("ol/interaction/Draw.js").default} */ (interaction);
       break;
     case `${this.ngeoDrawFeatureUid}-text`:
-      this.drawText =
-        /** @type {import("ol/interaction/Draw.js").default} */ (interaction);
+      this.drawText = /** @type {import("ol/interaction/Draw.js").default} */ (interaction);
       break;
     default:
       break;
@@ -924,6 +881,5 @@ Controller.prototype.handleMapInteractionsAdd_ = function(evt) {
 };
 
 module.controller('GmfDrawfeatureController', Controller);
-
 
 export default module;

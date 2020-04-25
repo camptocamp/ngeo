@@ -19,10 +19,8 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 import olCollection from 'ol/Collection.js';
-
 
 /**
  * @type {angular.IModule}
@@ -31,6 +29,5 @@ import olCollection from 'ol/Collection.js';
 const module = angular.module('ngeoFeatures', []);
 
 module.value('ngeoFeatures', new olCollection());
-
 
 export default module;
