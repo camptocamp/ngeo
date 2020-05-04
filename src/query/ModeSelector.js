@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 import ngeoQueryAction from 'ngeo/query/Action.js';
 import ngeoQueryMode from 'ngeo/query/Mode.js';
@@ -27,12 +26,10 @@ import ngeoQueryMode from 'ngeo/query/Mode.js';
 import {listen as olEventsListen} from 'ol/events.js';
 import {MAC} from 'ol/has.js';
 
-
 /**
  * @hidden
  */
 export class QueryModeSelector {
-
   /**
    * Service that provides the query "mode", i.e. how queries on the
    * map should be made by the user.
@@ -49,7 +46,6 @@ export class QueryModeSelector {
    * @param {angular.IScope} $rootScope .
    */
   constructor($rootScope) {
-
     // Constants
 
     /**
@@ -234,7 +230,6 @@ export class QueryModeSelector {
         this.activeActionKey_ = key;
         this.rootScope_.$apply();
       }
-
     } else if ((MAC ? evt.metaKey : evt.ctrlKey) && !this.previousMode_) {
       // The 'ctrl' (or 'meta' key) on mac was pressed
       this.previousMode_ = this.mode;
@@ -282,14 +277,11 @@ export class QueryModeSelector {
   }
 }
 
-
 /**
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoQueryModeSelector', [
-]);
+const module = angular.module('ngeoQueryModeSelector', []);
 module.service('ngeoQueryModeSelector', QueryModeSelector);
-
 
 export default module;

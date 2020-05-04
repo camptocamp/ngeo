@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
@@ -37,7 +36,8 @@ describe('ngeo.statemanager.WfsPermalink', () => {
   let ngeoQueryResult;
 
   beforeEach(() => {
-    angular.mock.module('ngeo',
+    angular.mock.module(
+      'ngeo',
       /**
        * @param {angular.IModule} $provide
        */
@@ -49,9 +49,10 @@ describe('ngeo.statemanager.WfsPermalink', () => {
         $provide.value('ngeoWfsPermalinkOptions', {
           wfsTypes: [{featureType: 'fuel'}, {featureType: 'highway'}],
           defaultFeatureNS: 'http://mapserver.gis.umn.edu/mapserver',
-          defaultFeaturePrefix: 'ms'
+          defaultFeaturePrefix: 'ms',
         });
-      });
+      }
+    );
 
     angular.mock.inject((_ngeoWfsPermalink_, _ngeoQueryResult_) => {
       ngeoWfsPermalink = _ngeoWfsPermalink_;
@@ -85,8 +86,8 @@ describe('ngeo.statemanager.WfsPermalink', () => {
           projection: projection,
           resolutions: [200, 100, 50, 20, 10, 5, 2.5, 2, 1, 0.5],
           center: [2537635, 1152640],
-          zoom: 0
-        })
+          zoom: 0,
+        }),
       });
     });
 
@@ -101,11 +102,9 @@ describe('ngeo.statemanager.WfsPermalink', () => {
         'showFeatures': true,
         'filterGroups': [
           {
-            'filters': [
-              {'property': 'osm_id', 'condition': '1420918679'}
-            ]
-          }
-        ]
+            'filters': [{'property': 'osm_id', 'condition': '1420918679'}],
+          },
+        ],
       };
 
       ngeoWfsPermalink.issue(queryData, map);
@@ -121,7 +120,7 @@ describe('ngeo.statemanager.WfsPermalink', () => {
      * @param {*} filter1
      * @param {*} filter2
      */
-    const expectFiltersToEqual = function(filter1, filter2) {
+    const expectFiltersToEqual = function (filter1, filter2) {
       expect(filter1.constructor).toBe(filter2.constructor, 'same filter type');
       if (filter1 instanceof olFormatFilterLogicalNary && filter2 instanceof olFormatFilterLogicalNary) {
         expectFiltersToEqual(filter1.conditions.length, filter2.conditions.length);
@@ -142,47 +141,30 @@ describe('ngeo.statemanager.WfsPermalink', () => {
           {
             'filters': [
               {'property': 'osm_id', 'condition': '12345'},
-              {'property': 'type', 'condition': ['diesel', 'gas']}
-            ]
+              {'property': 'type', 'condition': ['diesel', 'gas']},
+            ],
           },
           {
-            'filters': [
-              {'property': 'payment', 'condition': ['card', 'cash']}
-            ]
+            'filters': [{'property': 'payment', 'condition': ['card', 'cash']}],
           },
           {
-            'filters': [
-              {'property': 'open_7_24', 'condition': '1'}
-            ]
-          }
-        ]
+            'filters': [{'property': 'open_7_24', 'condition': '1'}],
+          },
+        ],
       };
       const f = olFormatFilter;
       const expectedFilters = f.or(
         f.or(
-          f.and(
-            f.equalTo('osm_id', '12345'),
-            f.or(
-              f.equalTo('type', 'diesel'),
-              f.equalTo('type', 'gas')
-            )
-          ),
-          f.or(
-            f.equalTo('payment', 'card'),
-            f.equalTo('payment', 'cash')
-          )
+          f.and(f.equalTo('osm_id', '12345'), f.or(f.equalTo('type', 'diesel'), f.equalTo('type', 'gas'))),
+          f.or(f.equalTo('payment', 'card'), f.equalTo('payment', 'cash'))
         ),
         f.equalTo('open_7_24', '1')
       );
-      expectFiltersToEqual(
-        ngeoWfsPermalink.createFilters_(queryData['filterGroups']),
-        expectedFilters
-      );
+      expectFiltersToEqual(ngeoWfsPermalink.createFilters_(queryData['filterGroups']), expectedFilters);
     });
 
     it('handles 0 filter groups', () => {
       expect(ngeoWfsPermalink.createFilters_([])).toBe(null);
     });
   });
-
 });

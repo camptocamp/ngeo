@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 
 import gmfDatasourceExternalDataSourcesManager from 'gmf/datasource/ExternalDataSourcesManager.js';
@@ -27,7 +26,6 @@ import gmfDatasourceExternalDataSourcesManager from 'gmf/datasource/ExternalData
 import ngeoMessagePopup from 'ngeo/message/Popup.js';
 
 import {getUid as olUtilGetUid} from 'ol/util.js';
-
 
 /**
  * @type {angular.IModule}
@@ -38,7 +36,6 @@ const module = angular.module('gmfWmtscapabilitylayertree', [
   ngeoMessagePopup.name,
 ]);
 
-
 module.run(
   /**
    * @ngInject
@@ -47,12 +44,14 @@ module.run(
   ($templateCache) => {
     $templateCache.put(
       // @ts-ignore: webpack
-      'ngeo/import/wmtsCapabilityLayertreeComponent', require('./wmtsCapabilityLayertreeComponent.html')
+      'ngeo/import/wmtsCapabilityLayertreeComponent',
+      require('./wmtsCapabilityLayertreeComponent.html')
     );
-  });
+  }
+);
 
-
-module.value('gmfWmtscapabilitylayertreTemplateUrl',
+module.value(
+  'gmfWmtscapabilitylayertreTemplateUrl',
   /**
    * @param {angular.IAttributes} $attrs Attributes.
    * @return {string} The template url.
@@ -60,8 +59,8 @@ module.value('gmfWmtscapabilitylayertreTemplateUrl',
   ($attrs) => {
     const templateUrl = $attrs.gmfWmtscapabilitylayertreTemplateUrl;
     return templateUrl !== undefined ? templateUrl : 'ngeo/import/wmtsCapabilityLayertreeComponent';
-  });
-
+  }
+);
 
 /**
  * @param {angular.IAttributes} $attrs Attributes.
@@ -75,13 +74,11 @@ function gmfWmtscapabilitylayertreTemplateUrl($attrs, gmfWmtscapabilitylayertreT
   return gmfWmtscapabilitylayertreTemplateUrl($attrs);
 }
 
-
 /**
  * @private
  * @hidden
  */
 class Controller {
-
   /**
    * @param {import("gmf/datasource/ExternalDataSourcesManager.js").ExternalDatSourcesManager}
    *     gmfExternalDataSourcesManager GMF service responsible of managing
@@ -92,7 +89,6 @@ class Controller {
    * @ngname GmfWmtscapabilitylayertreeController
    */
   constructor(gmfExternalDataSourcesManager) {
-
     // Binding properties
 
     /**
@@ -114,7 +110,6 @@ class Controller {
      */
     this.url = null;
 
-
     // Injected properties
 
     /**
@@ -132,11 +127,7 @@ class Controller {
       throw new Error('Missing url');
     }
     const manager = this.gmfExternalDataSourcesManager_;
-    manager.createAndAddDataSourceFromWMTSCapability(
-      layer,
-      this.capabilities,
-      this.url
-    );
+    manager.createAndAddDataSourceFromWMTSCapability(layer, this.capabilities, this.url);
   }
 
   /**
@@ -148,16 +139,14 @@ class Controller {
   }
 }
 
-
 module.component('gmfWmtscapabilitylayertree', {
   bindings: {
     'capabilities': '<',
     'layers': '<',
-    'url': '<'
+    'url': '<',
   },
   controller: Controller,
-  templateUrl: gmfWmtscapabilitylayertreTemplateUrl
+  templateUrl: gmfWmtscapabilitylayertreTemplateUrl,
 });
-
 
 export default module;

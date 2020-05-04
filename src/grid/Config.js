@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import {getUid as olUtilGetUid} from 'ol/util.js';
 
 /**
@@ -47,7 +46,6 @@ function GridConfig(data, columnDefs) {
   this.selectedRows = {};
 }
 
-
 /**
  * Get an ID for a row.
  * @param {Object} attributes An entry/row.
@@ -58,53 +56,48 @@ export function getRowUid(attributes) {
   return `${olUtilGetUid(attributes)}`;
 }
 
-
 /**
  * Is the given row selected?
  * @param {Object} attributes An entry/row.
  * @return {boolean} True if already selected. False otherwise.
  */
-GridConfig.prototype.isRowSelected = function(attributes) {
+GridConfig.prototype.isRowSelected = function (attributes) {
   return !!this.selectedRows[getRowUid(attributes)];
 };
-
 
 /**
  * Returns the number of selected rows.
  * @return {number} Number of selected rows.
  */
-GridConfig.prototype.getSelectedCount = function() {
+GridConfig.prototype.getSelectedCount = function () {
   return Object.keys(this.selectedRows).length;
 };
-
 
 /**
  * Returns the selected rows.
  * @return {Object[]} Selected rows in the current ordering.
  */
-GridConfig.prototype.getSelectedRows = function() {
+GridConfig.prototype.getSelectedRows = function () {
   if (!this.data) {
     throw new Error('Missing data');
   }
-  return this.data.filter(row => this.isRowSelected(row));
+  return this.data.filter((row) => this.isRowSelected(row));
 };
-
 
 /**
  * @param {Object} attributes An entry/row.
  * @public
  */
-GridConfig.prototype.selectRow = function(attributes) {
+GridConfig.prototype.selectRow = function (attributes) {
   const uid = getRowUid(attributes);
   this.selectedRows[uid] = attributes;
 };
 
-
 /**
  * @param {Object} attributes An entry/row.
  * @public
  */
-GridConfig.prototype.toggleRow = function(attributes) {
+GridConfig.prototype.toggleRow = function (attributes) {
   const uid = getRowUid(attributes);
   const isSelected = this.isRowSelected(attributes);
   if (isSelected) {
@@ -114,11 +107,10 @@ GridConfig.prototype.toggleRow = function(attributes) {
   }
 };
 
-
 /**
  * Select all rows.
  */
-GridConfig.prototype.selectAll = function() {
+GridConfig.prototype.selectAll = function () {
   if (!this.data) {
     throw new Error('Missing data');
   }
@@ -127,21 +119,19 @@ GridConfig.prototype.selectAll = function() {
   });
 };
 
-
 /**
  * Deselect all rows.
  */
-GridConfig.prototype.unselectAll = function() {
+GridConfig.prototype.unselectAll = function () {
   for (const rowId in this.selectedRows) {
     delete this.selectedRows[rowId];
   }
 };
 
-
 /**
  * Invert selection.
  */
-GridConfig.prototype.invertSelection = function() {
+GridConfig.prototype.invertSelection = function () {
   if (!this.data) {
     throw new Error('Missing data');
   }
@@ -149,6 +139,5 @@ GridConfig.prototype.invertSelection = function() {
     this.toggleRow(attributes);
   });
 };
-
 
 export default GridConfig;

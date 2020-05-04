@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import '@fortawesome/fontawesome-free/css/fontawesome.min.css';
 import './offline.css';
 import './common_dependencies.js';
@@ -34,9 +33,7 @@ import ngeoOfflineConfiguration from 'ngeo/offline/Configuration.js';
 import NgeoOfflineServiceManager from 'ngeo/offline/ServiceManager.js';
 import angular from 'angular';
 
-
 class MainController {
-
   /**
    * @param {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr
    * ngeo feature overlay manager service.
@@ -45,7 +42,6 @@ class MainController {
    * @ngInject
    */
   constructor(ngeoFeatureOverlayMgr, ngeoNetworkStatus, ngeoOfflineServiceManager) {
-
     /**
      * Save a square of 10 km sideways (Map's unit is the meter).
      * @type {number}
@@ -66,13 +62,13 @@ class MainController {
     this.map = new olMap({
       layers: [
         new olLayerTile({
-          source: new olSourceOSM()
-        })
+          source: new olSourceOSM(),
+        }),
       ],
       view: new olView({
         center: [352379, 5172733],
-        zoom: 4
-      })
+        zoom: 4,
+      }),
     });
 
     ngeoFeatureOverlayMgr.init(this.map);
@@ -96,6 +92,5 @@ MainController.module.value('ngeoOfflineTestUrl', '../../src/offline/component.h
 ngeoOfflineModule.service('ngeoOfflineConfiguration', ngeoOfflineConfiguration);
 
 MainController.module.controller('MainController', MainController);
-
 
 export default MainController;

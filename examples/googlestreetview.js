@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import './googlestreetview.css';
 import angular from 'angular';
 import olMap from 'ol/Map.js';
@@ -36,15 +35,13 @@ import ngeoMapModule from 'ngeo/map/module.js';
 import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
 import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr.js';
 
-
 /** @type {angular.IModule} **/
 const module = angular.module('app', [
   'gettext',
   ngeoMapModule.name,
   ngeoGooglestreetviewModule.name,
-  ngeoMiscToolActivateMgr.name
+  ngeoMiscToolActivateMgr.name,
 ]);
-
 
 /**
  * @param {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr
@@ -55,7 +52,6 @@ const module = angular.module('app', [
  * @ngInject
  */
 function MainController(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
-
   /**
    * @type {number}
    */
@@ -70,8 +66,8 @@ function MainController(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
       font: '900 30px "Font Awesome 5 Free"',
       offsetY: -15,
       stroke: new olStyleStroke({color: '#ffffff', width: 3}),
-      text: '\uf041'
-    })
+      text: '\uf041',
+    }),
   });
 
   /**
@@ -80,13 +76,13 @@ function MainController(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
   this.map = new olMap({
     layers: [
       new olLayerTile({
-        source: new olSourceOSM()
-      })
+        source: new olSourceOSM(),
+      }),
     ],
     view: new olView({
       center: [-7910687, 6178318],
-      zoom: 17
-    })
+      zoom: 17,
+    }),
   });
 
   ngeoFeatureOverlayMgr.init(this.map);
@@ -96,34 +92,18 @@ function MainController(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
    */
   this.googleStreetViewActive = true;
 
-  const googleStreetViewToolActivate = new ngeoMiscToolActivate(
-    this,
-    'googleStreetViewActive'
-  );
-  ngeoToolActivateMgr.registerTool(
-    'mapTools',
-    googleStreetViewToolActivate,
-    true
-  );
+  const googleStreetViewToolActivate = new ngeoMiscToolActivate(this, 'googleStreetViewActive');
+  ngeoToolActivateMgr.registerTool('mapTools', googleStreetViewToolActivate, true);
 
   /**
    * @type {boolean}
    */
   this.dummyActive = false;
 
-  const dummyToolActivate = new ngeoMiscToolActivate(
-    this,
-    'dummyActive'
-  );
-  ngeoToolActivateMgr.registerTool(
-    'mapTools',
-    dummyToolActivate,
-    false
-  );
+  const dummyToolActivate = new ngeoMiscToolActivate(this, 'dummyActive');
+  ngeoToolActivateMgr.registerTool('mapTools', dummyToolActivate, false);
 }
 
-
 module.controller('MainController', MainController);
-
 
 export default module;

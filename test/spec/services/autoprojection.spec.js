@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
 import * as olProj from 'ol/proj.js';
@@ -65,18 +64,14 @@ describe('ngeo.misc.AutoProjection', () => {
     const extent = viewProjection.getExtent();
     const projections = [olProj.get(EPSG21781), olProj.get('EPSG:4326')];
 
-    let point = ngeoAutoProjection.tryProjections(coordinatesA, extent,
-      viewProjection);
+    let point = ngeoAutoProjection.tryProjections(coordinatesA, extent, viewProjection);
     expect(point).toEqual(coordinatesA);
 
-    point = ngeoAutoProjection.tryProjections(coordinatesB, extent,
-      viewProjection);
+    point = ngeoAutoProjection.tryProjections(coordinatesB, extent, viewProjection);
     expect(point).toBeNull();
 
-    const coordinatesBTransformed = olProj.transform(coordinatesB,
-      olProj.get('EPSG:4326'), viewProjection);
-    point = ngeoAutoProjection.tryProjections(coordinatesB, extent,
-      viewProjection, projections);
+    const coordinatesBTransformed = olProj.transform(coordinatesB, olProj.get('EPSG:4326'), viewProjection);
+    point = ngeoAutoProjection.tryProjections(coordinatesB, extent, viewProjection, projections);
     expect(point).toEqual(coordinatesBTransformed);
   });
 
@@ -85,11 +80,14 @@ describe('ngeo.misc.AutoProjection', () => {
     const viewProjection = olProj.get(EPSG21781);
     const extent = viewProjection.getExtent();
     const projections = [olProj.get('EPSG:4326')];
-    const coordinatesTransformed = olProj.transform(coordinates.reverse(),
-      projections[0], viewProjection);
+    const coordinatesTransformed = olProj.transform(coordinates.reverse(), projections[0], viewProjection);
 
-    const point = ngeoAutoProjection.tryProjectionsWithInversion(coordinates,
-      extent, viewProjection, projections);
+    const point = ngeoAutoProjection.tryProjectionsWithInversion(
+      coordinates,
+      extent,
+      viewProjection,
+      projections
+    );
     expect(point).toEqual(coordinatesTransformed);
   });
 });

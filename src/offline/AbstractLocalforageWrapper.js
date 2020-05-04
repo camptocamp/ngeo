@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 /**
  * @typedef {{
  *   id: number,
@@ -84,11 +83,11 @@ const exports = class AbstractLocalforageWrapper {
       'plugin': 'localforage',
       'command': command,
       'args': args,
-      'id': id
+      'id': id,
     };
     const waitingPromise = {
       resolve() {},
-      reject() {}
+      reject() {},
     };
     const promise = new Promise((resolve, reject) => {
       waitingPromise.resolve = resolve;
@@ -134,9 +133,7 @@ const exports = class AbstractLocalforageWrapper {
    * @protected
    * @param {Action} action .
    */
-  postToBackend(action) {
-  }
+  postToBackend(action) {}
 };
-
 
 export default exports;

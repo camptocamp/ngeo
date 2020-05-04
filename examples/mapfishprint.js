@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 import {MAPSERVER_PROXY, PRINT_PROXY} from './url.js';
 import './mapfishprint.css';
@@ -37,7 +36,6 @@ import olSourceImageWMS from 'ol/source/ImageWMS.js';
 import olSourceVector from 'ol/source/Vector.js';
 import ngeoMapModule from 'ngeo/map/module.js';
 
-
 /** @type {angular.IModule} **/
 const appmodule = angular.module('app', [
   'gettext',
@@ -46,14 +44,11 @@ const appmodule = angular.module('app', [
   ngeoPrintUtils.name,
 ]);
 
-
 /**
  * @private
  * @hidden
  */
-const PRINT_SCALES_ = [100, 250, 500, 2500, 5000, 10000, 25000, 50000,
-  100000, 500000];
-
+const PRINT_SCALES_ = [100, 250, 500, 2500, 5000, 10000, 25000, 50000, 100000, 500000];
 
 /**
  * @private
@@ -61,13 +56,11 @@ const PRINT_SCALES_ = [100, 250, 500, 2500, 5000, 10000, 25000, 50000,
  */
 const PRINT_FORMAT_ = 'pdf';
 
-
 /**
  * @private
  * @hidden
  */
 const PRINT_LAYOUT_ = '1 A4 portrait';
-
 
 /**
  * @private
@@ -75,13 +68,11 @@ const PRINT_LAYOUT_ = '1 A4 portrait';
  */
 const PRINT_DPI_ = 72;
 
-
 /**
  * @private
  * @hidden
  */
 const PRINT_PAPER_SIZE_ = [555, 675];
-
 
 /**
  * @constructor
@@ -96,9 +87,9 @@ function MainController($timeout, ngeoCreatePrint, ngeoPrintUtils) {
     url: MAPSERVER_PROXY,
     projection: undefined, // should be removed in next OL version
     params: {
-      'LAYERS': 'osm'
+      'LAYERS': 'osm',
     },
-    serverType: /** @type {import("ol/source/WMSServerType.js").default} */ ('mapserver')
+    serverType: /** @type {import("ol/source/WMSServerType.js").default} */ ('mapserver'),
   });
   /**
    * @type {import("ol/Map.js").default}
@@ -106,23 +97,23 @@ function MainController($timeout, ngeoCreatePrint, ngeoPrintUtils) {
   this.map = new olMap({
     layers: [
       new olLayerImage({
-        source
+        source,
       }),
       new olLayerVector({
         source: new olSourceVector({
           url: 'data/polygon-swizerland.json',
           format: new olFormatGeoJSON({
-            dataProjection: EPSG2056
-          })
-        })
-      })
+            dataProjection: EPSG2056,
+          }),
+        }),
+      }),
     ],
     view: new olView({
       projection: EPSG2056,
       resolutions: [200, 100, 50, 20, 10, 5, 2.5, 2, 1],
       center: [2537635, 1152640],
-      zoom: 3
-    })
+      zoom: 3,
+    }),
   });
 
   /**
@@ -168,20 +159,19 @@ function MainController($timeout, ngeoCreatePrint, ngeoPrintUtils) {
   this.map.addLayer(this.maskLayer_);
 }
 
-
 /**
  */
-MainController.prototype.print = function() {
+MainController.prototype.print = function () {
   const map = this.map;
 
   const mapSize = map.getSize();
   const viewResolution = map.getView().getResolution();
 
   // we test mapSize and viewResolution just to please the compiler
-  const scale = mapSize !== undefined && viewResolution !== undefined ?
-    this.printUtils_.getOptimalScale(mapSize, viewResolution,
-      PRINT_PAPER_SIZE_, PRINT_SCALES_) :
-    PRINT_SCALES_[0];
+  const scale =
+    mapSize !== undefined && viewResolution !== undefined
+      ? this.printUtils_.getOptimalScale(mapSize, viewResolution, PRINT_PAPER_SIZE_, PRINT_SCALES_)
+      : PRINT_SCALES_[0];
 
   const dpi = PRINT_DPI_;
   const format = PRINT_FORMAT_;
@@ -193,55 +183,49 @@ MainController.prototype.print = function() {
     'datasource': [],
     'debug': 0,
     'comments': 'My comments',
-    'title': 'My print'
+    'title': 'My print',
   });
 
-  this.print_.createReport(spec).then(
-    this.handleCreateReportSuccess_.bind(this),
-    this.handleCreateReportError_.bind(this)
-  );
+  this.print_
+    .createReport(spec)
+    .then(this.handleCreateReportSuccess_.bind(this), this.handleCreateReportError_.bind(this));
 };
-
 
 /**
  * @param {angular.IHttpResponse<import('ngeo/print/mapfish-print-v3.js').MapFishPrintReportResponse>} resp
  *    Response.
  * @private
  */
-MainController.prototype.handleCreateReportSuccess_ = function(resp) {
+MainController.prototype.handleCreateReportSuccess_ = function (resp) {
   this.getStatus_(resp.data.ref);
 };
 
-
 /**
  * @param {string} ref Ref.
  * @private
  */
-MainController.prototype.getStatus_ = function(ref) {
-  this.print_.getStatus(ref).then(
-    this.handleGetStatusSuccess_.bind(this, ref),
-    this.handleGetStatusError_.bind(this)
-  );
+MainController.prototype.getStatus_ = function (ref) {
+  this.print_
+    .getStatus(ref)
+    .then(this.handleGetStatusSuccess_.bind(this, ref), this.handleGetStatusError_.bind(this));
 };
-
 
 /**
  * @param {angular.IHttpResponse<import('ngeo/print/mapfish-print-v3.js').MapFishPrintStatusResponse>} resp
  *    Response.
  * @private
  */
-MainController.prototype.handleCreateReportError_ = function(resp) {
+MainController.prototype.handleCreateReportError_ = function (resp) {
   this.printState = 'Print error';
 };
 
-
 /**
  * @param {string} ref Ref.
  * @param {angular.IHttpResponse<import('ngeo/print/mapfish-print-v3.js').MapFishPrintStatusResponse>} resp
  *    Response.
  * @private
  */
-MainController.prototype.handleGetStatusSuccess_ = function(ref, resp) {
+MainController.prototype.handleGetStatusSuccess_ = function (ref, resp) {
   const mfResp = resp.data;
   const done = mfResp.done;
   if (done) {
@@ -250,24 +234,25 @@ MainController.prototype.handleGetStatusSuccess_ = function(ref, resp) {
     window.location.href = this.print_.getReportUrl(ref);
   } else {
     // The report is not ready yet. Check again in 1s.
-    this.$timeout_(() => {
-      this.getStatus_(ref);
-    }, 1000, false);
+    this.$timeout_(
+      () => {
+        this.getStatus_(ref);
+      },
+      1000,
+      false
+    );
   }
 };
-
 
 /**
  * @param {angular.IHttpResponse<import('ngeo/print/mapfish-print-v3.js').MapFishPrintStatusResponse>} resp
  *    Response.
  * @private
  */
-MainController.prototype.handleGetStatusError_ = function(resp) {
+MainController.prototype.handleGetStatusError_ = function (resp) {
   this.printState = 'Print error';
 };
 
-
 appmodule.controller('MainController', MainController);
-
 
 export default module;

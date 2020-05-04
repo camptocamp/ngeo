@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 // @ts-nocheck
 import angular from 'angular';
 import {RouteSuffix} from 'gmf/authentication/Service.js';
@@ -62,7 +61,7 @@ describe('gmf.authentication.Service', () => {
     /** @type {?import('gmf/authentication/Service.js').AuthenticationEvent} */
     let event_ = null;
     listenOnce(gmfAuthentication, 'ready', (evt) => {
-      event_ = /** @type {import('gmf/authentication/Service.js').AuthenticationEvent} */(evt);
+      event_ = /** @type {import('gmf/authentication/Service.js').AuthenticationEvent} */ (evt);
       spy();
     });
 
@@ -87,7 +86,7 @@ describe('gmf.authentication.Service', () => {
     /** @type {?import('gmf/authentication/Service.js').AuthenticationEvent} */
     let event_ = null;
     listenOnce(gmfAuthentication, 'login', (evt) => {
-      event_ = /** @type {import('gmf/authentication/Service.js').AuthenticationEvent} */(evt);
+      event_ = /** @type {import('gmf/authentication/Service.js').AuthenticationEvent} */ (evt);
       spy();
     });
 
@@ -109,8 +108,7 @@ describe('gmf.authentication.Service', () => {
 
   it('trys to login with wrong credentials', () => {
     const spy = jasmine.createSpy();
-    listenOnce(
-      gmfAuthentication, 'login', spy);
+    listenOnce(gmfAuthentication, 'login', spy);
 
     $httpBackend.when('POST', loginUrl).respond({});
 

@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 import gmfFiltersFilterselectorComponent from 'gmf/filters/filterselectorComponent.js';
 import gmfFiltersSavedFilters from 'gmf/filters/SavedFilters.js';

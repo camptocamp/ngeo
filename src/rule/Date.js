@@ -19,10 +19,8 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import ngeoFormatAttributeType from 'ngeo/format/AttributeType.js';
 import ngeoRuleRule from 'ngeo/rule/Rule.js';
-
 
 /**
  * extends import('ngeo/rule/Rule.js').RuleOptions
@@ -39,19 +37,16 @@ import ngeoRuleRule from 'ngeo/rule/Rule.js';
  * @property {number} [upperBoundary] (RuleOptions)
  */
 
-
 /**
  * @hidden
  */
 export default class extends ngeoRuleRule {
-
   /**
    * A date rule.
    *
    * @param {DateOptions} options Options.
    */
   constructor(options) {
-
     options.type = options.type || ngeoFormatAttributeType.DATE;
 
     super(options);

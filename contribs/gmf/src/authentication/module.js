@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 import gmfAuthenticationComponent from 'gmf/authentication/component.js';
 
@@ -30,5 +29,5 @@ import gmfAuthenticationService from 'gmf/authentication/Service.js';
  */
 export default angular.module('gmfAuthenticationModule', [
   gmfAuthenticationComponent.name,
-  gmfAuthenticationService.name
+  gmfAuthenticationService.name,
 ]);

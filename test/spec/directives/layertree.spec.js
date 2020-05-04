@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
@@ -31,39 +30,44 @@ describe('ngeo.layertree.component', () => {
   let roottreeCtrl;
 
   beforeEach(() => {
-
     const map = new olMap({
       view: new olView({
         center: [0, 0],
-        zoom: 0
-      })
+        zoom: 0,
+      }),
     });
 
     const element = angular.element(
       '<div ngeo-layertree="tree"' +
         'ngeo-layertree-map="map"' +
         'ngeo-layertree-nodelayer="getLayer(node)"' +
-      '</div>'
+        '</div>'
     );
 
     const tree = {
       'name': 'Root',
-      'children': [{
-        'name': 'Node 0',
-        'children': [{
-          'name': 'Leaf 00'
-        }, {
-          'name': 'Leaf 01'
-        }]
-      }, {
-        'name': 'Leaf 1'
-      }]
+      'children': [
+        {
+          'name': 'Node 0',
+          'children': [
+            {
+              'name': 'Leaf 00',
+            },
+            {
+              'name': 'Leaf 01',
+            },
+          ],
+        },
+        {
+          'name': 'Leaf 1',
+        },
+      ],
     };
 
     /**
      * @param {*} node
      */
-    const getLayer = function(node) {
+    const getLayer = function (node) {
       return new olLayerImage();
     };
 

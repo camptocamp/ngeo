@@ -19,11 +19,9 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import ngeoDatasourceOGCGroup from 'ngeo/datasource/OGCGroup.js';
 import ngeoDatasourceOGC from 'ngeo/datasource/OGC.js';
 import {remove as removeFromArray} from 'ol/array.js';
-
 
 /**
  * The options required to create a `WMSGroup`.
@@ -36,12 +34,10 @@ import {remove as removeFromArray} from 'ol/array.js';
  * @property {string} title (GroupOptions)
  */
 
-
 /**
  * @hidden
  */
 export default class extends ngeoDatasourceOGCGroup {
-
   /**
    * A WMSGroup data source combines multiple `ngeo.datasource.OGC` objects
    * that have the 'WMS' type. Its main goal is to create a single
@@ -54,11 +50,9 @@ export default class extends ngeoDatasourceOGCGroup {
    * @param {import("ngeo/map/LayerHelper.js").LayerHelper} ngeoLayerHelper the ngeo map LayerHelper service.
    */
   constructor(options, ngeoLayerHelper) {
-
     super(options);
 
     const injector = options.injector;
-
 
     // === PRIVATE properties ===
 
@@ -87,7 +81,6 @@ export default class extends ngeoDatasourceOGCGroup {
      * @private
      */
     this.wmsDataSourceUnregister_ = {};
-
 
     this.init_();
   }
@@ -119,7 +112,6 @@ export default class extends ngeoDatasourceOGCGroup {
     super.destroy();
   }
 
-
   // =======================================
   // === Static property getters/setters ===
   // =======================================
@@ -133,7 +125,6 @@ export default class extends ngeoDatasourceOGCGroup {
     }
     return this.layer_;
   }
-
 
   // =======================
   // === Utility Methods ===
@@ -155,7 +146,6 @@ export default class extends ngeoDatasourceOGCGroup {
    * @private
    */
   registerDataSource_(dataSource) {
-
     const id = dataSource.id;
 
     this.wmsDataSourceUnregister_[id] = this.rootScope_.$watch(
@@ -164,9 +154,7 @@ export default class extends ngeoDatasourceOGCGroup {
     );
 
     if (!this.layer_) {
-      this.layer_ = this.ngeoLayerHelper_.createBasicWMSLayerFromDataSource(
-        dataSource
-      );
+      this.layer_ = this.ngeoLayerHelper_.createBasicWMSLayerFromDataSource(dataSource);
     } else {
       this.layer_.get('querySourceIds').push(id);
       this.updateLayer_();
@@ -218,7 +206,6 @@ export default class extends ngeoDatasourceOGCGroup {
    * @private
    */
   unregisterDataSource_(dataSource) {
-
     const id = dataSource.id;
     const layer = this.layer;
 

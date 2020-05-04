@@ -19,18 +19,15 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 import olMap from 'ol/Map.js';
 import olControlControl from 'ol/control/Control.js';
-
 
 /**
  * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('ngeoControl', []);
-
 
 /**
  * Provides a directive that can be used to add a control to the map
@@ -61,23 +58,20 @@ function controlComponent() {
      * @param {angular.IAttributes} attrs Attributes.
      */
     link: (scope, element, attrs) => {
-
-      const control = /** @type {import('ol/control/Control.js').default} */
-              (scope.$eval(attrs['ngeoControl']));
+      const control =
+        /** @type {import('ol/control/Control.js').default} */
+        (scope.$eval(attrs['ngeoControl']));
       console.assert(control instanceof olControlControl);
 
-      const map = /** @type {import('ol/Map.js').default} */
-              (scope.$eval(attrs['ngeoControlMap']));
+      const map = /** @type {import('ol/Map.js').default} */ (scope.$eval(attrs['ngeoControlMap']));
       console.assert(map instanceof olMap);
 
       control.setTarget(element[0]);
       map.addControl(control);
-    }
+    },
   };
 }
 
-
 module.directive('ngeoControl', controlComponent);
-
 
 export default module;

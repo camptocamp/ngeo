@@ -1,3 +1,24 @@
+// The MIT License (MIT)
+//
+// Copyright (c) 2018-2020 Camptocamp SA
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy of
+// this software and associated documentation files (the "Software"), to deal in
+// the Software without restriction, including without limitation the rights to
+// use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+// the Software, and to permit persons to whom the Software is furnished to do so,
+// subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+// FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+// COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+// IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+// CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
 'use strict';
 
 const sassLoader = require('./webpack.scss-loader.js');
@@ -9,7 +30,6 @@ const replaceAsync = require('fast-sass-loader/lib/replace');
 const utils = require('fast-sass-loader/lib/utils');
 const loaderUtils = require('loader-utils');
 const assert = require('assert');
-
 
 const BOM_HEADER = '\uFEFF';
 const EXT_PRECEDENCE = ['.scss', '.sass', '.css'];
@@ -54,10 +74,9 @@ function getImportsToResolve(original, includePaths, transformers) {
   return imports;
 }
 
-
 let cache;
 
-function * mergeSources(opts, entry, resolve, level) {
+function* mergeSources(opts, entry, resolve, level) {
   level = level || 0;
 
   const includePaths = opts.includePaths;
@@ -124,7 +143,7 @@ function * mergeSources(opts, entry, resolve, level) {
   const commentRanges = utils.findComments(content);
 
   // replace @import "..."
-  function * importReplacer(total) {
+  function* importReplacer(total) {
     // if current import is in comments, then skip it
     const range = this;
     const finded = commentRanges.find((commentRange) => {
@@ -196,7 +215,7 @@ function * mergeSources(opts, entry, resolve, level) {
 }
 
 function resolver(ctx) {
-  return function(dir, importFile) {
+  return function (dir, importFile) {
     return new Promise((resolve, reject) => {
       ctx.resolve(dir, importFile, (err, resolvedFile) => {
         if (err) {
@@ -210,7 +229,13 @@ function resolver(ctx) {
 }
 
 function fillDependency(
-  pluginOptions, usedContext, compilation, assetName, assetUrl, queryString, replacements
+  pluginOptions,
+  usedContext,
+  compilation,
+  assetName,
+  assetUrl,
+  queryString,
+  replacements
 ) {
   return (resolve, reject) => {
     if (assetUrl.startsWith('~')) {
@@ -226,11 +251,11 @@ function fillDependency(
             } else {
               usedContext.resourcePath = assetName;
               const name = loaderUtils.interpolateName(usedContext, pluginOptions.assetname, {
-                content: data
+                content: data,
               });
               compilation.assets[name] = {
                 source: () => data,
-                size: () => data.length
+                size: () => data.length,
               };
               replacements[assetUrl] = name + queryString;
               resolve();
@@ -246,11 +271,11 @@ function fillDependency(
         } else {
           usedContext.resourcePath = assetName;
           const name = loaderUtils.interpolateName(usedContext, pluginOptions.assetname, {
-            content: data
+            content: data,
           });
           compilation.assets[name] = {
             source: () => data,
-            size: () => data.length
+            size: () => data.length,
           };
           replacements[assetUrl] = name + queryString;
           resolve();
@@ -278,16 +303,14 @@ function manageContent(pluginOptions, usedContext, compilation, chunk, resolve, 
     try {
       const replacements = {};
       const promises = [];
-      const options = Object.assign(
-        {}, pluginOptions.sassConfig, {
-          data: doReplacement(contents, pluginOptions.preReplacements),
-          functions: {},
-        }
-      );
+      const options = Object.assign({}, pluginOptions.sassConfig, {
+        data: doReplacement(contents, pluginOptions.preReplacements),
+        functions: {},
+      });
       // Double parse the Sass files to be able to return in a synchronous function things
       // that we can only get asynchronously.
       const preparseOptions = Object.assign({}, options);
-      preparseOptions.functions['url($url)'] = function(url) {
+      preparseOptions.functions['url($url)'] = function (url) {
         if (url.getValue().startsWith('data:')) {
           return url;
         }
@@ -307,13 +330,25 @@ function manageContent(pluginOptions, usedContext, compilation, chunk, resolve, 
                 assetName = assetName.substr(0, sharpIndex);
               }
             }
-            promises.push(new Promise(fillDependency(
-              pluginOptions, usedContext, compilation, assetName, assetUrl, queryString, replacements
-            )));
+            promises.push(
+              new Promise(
+                fillDependency(
+                  pluginOptions,
+                  usedContext,
+                  compilation,
+                  assetName,
+                  assetUrl,
+                  queryString,
+                  replacements
+                )
+              )
+            );
           } else {
-            promises.push(new Promise(fillDependency(
-              pluginOptions, usedContext, compilation, assetUrl, assetUrl, '', replacements
-            )));
+            promises.push(
+              new Promise(
+                fillDependency(pluginOptions, usedContext, compilation, assetUrl, assetUrl, '', replacements)
+              )
+            );
           }
         } catch (e) {
           console.error(e.stack || e);
@@ -325,7 +360,7 @@ function manageContent(pluginOptions, usedContext, compilation, chunk, resolve, 
       nodeSass.renderSync(preparseOptions);
       await Promise.all(promises);
       const parseOptions = Object.assign({}, options);
-      parseOptions.functions['url($url)'] = function(url) {
+      parseOptions.functions['url($url)'] = function (url) {
         const assetUrl = url.getValue();
         if (assetUrl.startsWith('data:')) {
           return url;
@@ -337,7 +372,7 @@ function manageContent(pluginOptions, usedContext, compilation, chunk, resolve, 
       const srcmap = result.map;
       const asset = {
         source: () => content,
-        size: () => content.length
+        size: () => content.length,
       };
       usedContext.resourcePath = `/${chunk.name}`;
       const assetName = loaderUtils.interpolateName(usedContext, pluginOptions.filename, {
@@ -348,7 +383,7 @@ function manageContent(pluginOptions, usedContext, compilation, chunk, resolve, 
       if (srcmap) {
         compilation.assets[`${assetName}.map`] = {
           source: () => srcmap,
-          size: () => srcmap.length
+          size: () => srcmap.length,
         };
         chunk.files.push(`${assetName}.map`);
       }
@@ -365,27 +400,34 @@ function processAsset(files) {
   return (resolve, reject) => {
     try {
       const contents = [];
-      const browse = function(position) {
+      const browse = function (position) {
         if (position < files.length) {
           const file = files[position];
           const entry = sassLoader.entries[file];
           if (entry) {
-            const merged = mergeSources(entry.options, {
-              file: file,
-              content: entry.content
-            }, resolver(entry.ctx));
+            const merged = mergeSources(
+              entry.options,
+              {
+                file: file,
+                content: entry.content,
+              },
+              resolver(entry.ctx)
+            );
             const merged2 = [];
             for (const content of merged) {
               merged2.push(content);
             }
             assert.strictEqual(merged2.length, 1);
-            merged2[0].then((content) => {
-              contents.push(content);
-              position++;
-              browse(position);
-            }, () => {
-              reject(`${position}, ${file}`);
-            });
+            merged2[0].then(
+              (content) => {
+                contents.push(content);
+                position++;
+                browse(position);
+              },
+              () => {
+                reject(`${position}, ${file}`);
+              }
+            );
           } else {
             reject(`Missing entry for ${file}`);
           }
@@ -434,17 +476,20 @@ class SassPlugin {
         const files = pluginOptions.filesOrder
           ? pluginOptions.filesOrder(chunk, chunksFiles)
           : chunksFiles[chunk.name];
-        if ((!pluginOptions.blacklistedChunks || pluginOptions.blacklistedChunks.indexOf(chunk.name) < 0)
-            && files.length > 0) {
+        if (
+          (!pluginOptions.blacklistedChunks || pluginOptions.blacklistedChunks.indexOf(chunk.name) < 0) &&
+          files.length > 0
+        ) {
           const promise = new Promise((resolve, reject) => {
             const usedContext = files.length > 0 ? sassLoader.entries[files[0]].ctx : undefined;
             const promise = new Promise(processAsset(files));
 
-            promise.then(manageContent(
-              pluginOptions, usedContext, compilation, chunk, resolve, callback
-            ), (error) => {
-              callback(`SCSS dependencies error, ${error}`);
-            });
+            promise.then(
+              manageContent(pluginOptions, usedContext, compilation, chunk, resolve, callback),
+              (error) => {
+                callback(`SCSS dependencies error, ${error}`);
+              }
+            );
           });
           await Promise.all([promise]);
         }

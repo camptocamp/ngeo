@@ -19,14 +19,12 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 import {listen, unlistenByKey} from 'ol/events.js';
 import RenderEvent from 'ol/render/Event.js';
 
 import ResizeObserver from 'resize-observer-polyfill';
 import 'jquery-ui/ui/widgets/draggable.js';
-
 
 /**
  * @type {angular.IModule}
@@ -39,7 +37,7 @@ module.run(
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
-  $templateCache => {
+  ($templateCache) => {
     // @ts-ignore: webpack
     $templateCache.put('ngeo/src/map/swipe', require('./swipe.html'));
   }
@@ -51,7 +49,7 @@ module.value(
    * @param {angular.IAttributes} $attrs Attributes.
    * @return {string} The template url.
    */
-  $attrs => {
+  ($attrs) => {
     const templateUrl = $attrs.ngeoMapswipeTemplateUrl;
     return templateUrl !== undefined ? templateUrl : 'ngeo/src/map/swipe';
   }
@@ -123,7 +121,6 @@ class SwipeController {
      * @private
      */
     this.resizeObserver_;
-
   }
 
   /**
@@ -156,13 +153,13 @@ class SwipeController {
         this.swipeValue = position / parentWidth;
 
         this.map.render();
-      }
+      },
     });
 
     // keep the same percentage when the parent is resized
     this.resizeObserver_ = new ResizeObserver(() => {
       const parentWidth = this.draggableElement_.parent().width();
-      this.draggableElement_.css('left', (parentWidth * this.swipeValue) - halfDraggableWidth);
+      this.draggableElement_.css('left', parentWidth * this.swipeValue - halfDraggableWidth);
     });
     this.resizeObserver_.observe(this.draggableElement_.parent().get(0));
   }
@@ -243,9 +240,9 @@ module.component('ngeoMapswipe', {
   bindings: {
     map: '<',
     layer: '=',
-    swipeValue: '='
+    swipeValue: '=',
   },
-  templateUrl: ngeoMapswipeTemplateUrl
+  templateUrl: ngeoMapswipeTemplateUrl,
 });
 
 export default module;

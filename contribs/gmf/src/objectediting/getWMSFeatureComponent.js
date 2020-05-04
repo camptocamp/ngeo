@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 import gmfObjecteditingQuery from 'gmf/objectediting/Query.js';
 import {listen, unlistenByKey} from 'ol/events.js';
@@ -29,10 +28,7 @@ import MapBrowserEvent from 'ol/MapBrowserEvent.js';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfObjecteditingGetWMSFeatureComponent', [
-  gmfObjecteditingQuery.name,
-]);
-
+const module = angular.module('gmfObjecteditingGetWMSFeatureComponent', [gmfObjecteditingQuery.name]);
 
 /**
  * When activated, this directive registers clicks on an OL3 map and use the
@@ -67,14 +63,13 @@ function objectEditingGetWMSFeatureComponent() {
       'active': '=gmfObjecteditinggetwmsfeatureActive',
       'features': '<gmfObjecteditinggetwmsfeatureFeatures',
       'layerInfo': '=gmfObjecteditinggetwmsfeatureLayerinfo',
-      'map': '<gmfObjecteditinggetwmsfeatureMap'
+      'map': '<gmfObjecteditinggetwmsfeatureMap',
     },
-    bindToController: true
+    bindToController: true,
   };
 }
 
 module.directive('gmfObjecteditinggetwmsfeature', objectEditingGetWMSFeatureComponent);
-
 
 /**
  * @param {angular.IScope} $scope Scope.
@@ -88,7 +83,6 @@ module.directive('gmfObjecteditinggetwmsfeature', objectEditingGetWMSFeatureComp
  * @ngname GmfObjecteditinggetwmsfeatureController
  */
 function Controller($scope, gmfObjectEditingQuery) {
-
   // Scope properties
 
   /**
@@ -96,10 +90,7 @@ function Controller($scope, gmfObjectEditingQuery) {
    */
   this.active = false;
 
-  $scope.$watch(
-    () => this.active,
-    this.handleActiveChange_.bind(this)
-  );
+  $scope.$watch(() => this.active, this.handleActiveChange_.bind(this));
 
   /**
    * @type {?import("ol/Collection.js").default<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>}
@@ -116,7 +107,6 @@ function Controller($scope, gmfObjectEditingQuery) {
    */
   this.map = null;
 
-
   // Injected properties
 
   /**
@@ -131,12 +121,11 @@ function Controller($scope, gmfObjectEditingQuery) {
   this.listenerKeys_ = [];
 }
 
-
 /**
  * @param {boolean} active Active.
  * @private
  */
-Controller.prototype.handleActiveChange_ = function(active) {
+Controller.prototype.handleActiveChange_ = function (active) {
   if (!this.map) {
     throw new Error('Missing map');
   }
@@ -147,12 +136,11 @@ Controller.prototype.handleActiveChange_ = function(active) {
   }
 };
 
-
 /**
  * @param {Event|import('ol/events/Event.js').default} evt Event.
  * @private
  */
-Controller.prototype.handleMapClick_ = function(evt) {
+Controller.prototype.handleMapClick_ = function (evt) {
   if (evt instanceof MapBrowserEvent) {
     if (!this.map) {
       throw new Error('Missing map');
@@ -160,11 +148,7 @@ Controller.prototype.handleMapClick_ = function(evt) {
     if (!this.layerInfo) {
       throw new Error('Missing layerInfo');
     }
-    this.gmfObjectEditingQuery_.getFeatureInfo(
-      this.layerInfo,
-      evt.coordinate,
-      this.map
-    ).then((feature) => {
+    this.gmfObjectEditingQuery_.getFeatureInfo(this.layerInfo, evt.coordinate, this.map).then((feature) => {
       if (feature) {
         if (!this.features) {
           throw new Error('Missing features');
@@ -176,6 +160,5 @@ Controller.prototype.handleMapClick_ = function(evt) {
 };
 
 module.controller('gmfObjecteditinggetwmsfeatureController', Controller);
-
 
 export default module;

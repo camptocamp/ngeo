@@ -19,16 +19,13 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
-
 
 /**
  * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('ngeoBtnComponent', []);
-
 
 /**
  * Provides two directives: ngeo-btn-group and ngeo-btn.
@@ -82,24 +79,23 @@ function buttonGroupComponent($parse) {
       if (setActive) {
         scope.$watch(
           // return true if at least one button is active otherwise false
-          () => controller.buttons_.some(
-            /**
-             * @param {function(angular.IScope): boolean} buttonModel
-             */
-            buttonModel => buttonModel(scope) === true
-          ),
+          () =>
+            controller.buttons_.some(
+              /**
+               * @param {function(angular.IScope): boolean} buttonModel
+               */
+              (buttonModel) => buttonModel(scope) === true
+            ),
           (newValue) => {
             setActive(scope, newValue);
           }
         );
       }
-    }
+    },
   };
 }
 
-
 module.directive('ngeoBtnGroup', buttonGroupComponent);
-
 
 /**
  * @private
@@ -147,9 +143,7 @@ class BtnGroupController {
   }
 }
 
-
 module.controller('ngeoBtnGroupController', BtnGroupController);
-
 
 /**
  * The ngeo-btn allows creating toggle buttons working with ng-model. It is
@@ -207,18 +201,16 @@ function buttonComponent($parse) {
       });
 
       // model -> UI
-      ngModelCtrl.$render = function() {
+      ngModelCtrl.$render = function () {
         if (ngModelCtrl.$viewValue && buttonsCtrl !== null) {
           buttonsCtrl.activate(indexInGroup);
         }
         element.toggleClass('active', ngModelCtrl.$viewValue);
       };
-    }
+    },
   };
 }
 
-
 module.directive('ngeoBtn', buttonComponent);
-
 
 export default module;

@@ -8,7 +8,7 @@ ngeo is a JS library that aims to ease the development of applications based on
 More specifically, ngeo is a collection of AngularJS Components and Services
 useful for developing applications combining AngularJS and OpenLayers.
 
-Ngeo uses [webpack](https://webpack.js.org): webpack gives you the possibility to use easily only the specific
+ngeo uses [webpack](https://webpack.js.org): webpack gives you the possibility to use easily only the specific
 part of JavaScript, css and html that you need for your application.
 
 If you use ngeo we recommend that you also use webpack, because this is the way

@@ -19,17 +19,15 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 // @ts-nocheck
 import angular from 'angular';
 import {PermalinkShareService} from 'gmf/permalink/ShareService.js';
-
 
 describe('gmf.permalink.ShareService', () => {
   /** @type {angular.IHttpBackendService} */
   let $httpBackend;
   const successResponse = {
-    short_url: 'http://fake/gmf'
+    short_url: 'http://fake/gmf',
   };
 
   afterEach(() => {
@@ -54,7 +52,7 @@ describe('gmf.permalink.ShareService', () => {
 
     const permalink = 'http://fake/c2c/permalink';
     const params = {
-      url: permalink
+      url: permalink,
     };
 
     $httpBackend.expectPOST(shortenerUrl, $.param(params));
@@ -70,7 +68,6 @@ describe('gmf.permalink.ShareService', () => {
     // @ts-ignore: Ununderstandable issue wisible only on CI...
     gmfShareService.sendShortUrl(permalink, params.email);
     $httpBackend.flush();
-
   });
 
   it('Should return the permalink if no URL for the shorten service has been provided', () => {
@@ -84,7 +81,8 @@ describe('gmf.permalink.ShareService', () => {
        */
       ($provide) => {
         $provide.value('gmfShortenerCreateUrl', '');
-      });
+      }
+    );
 
     angular.mock.inject((_$httpBackend_, _gmfShareService_, _gmfShortenerCreateUrl_) => {
       $httpBackend = _$httpBackend_;

@@ -19,14 +19,12 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 import 'bootstrap/js/src/alert.js';
 
 import ngeoMessagePopup, {MessagePopup} from 'ngeo/message/Popup.js';
 import ngeoMessageMessage, {MessageType} from 'ngeo/message/Message.js';
 import 'ngeo/sass/font.scss';
-
 
 /**
  * A message to display by the disclaimer service.
@@ -40,7 +38,6 @@ import 'ngeo/sass/font.scss';
  *    to display the message. If not defined, then the default target of the notification service is used.
  * @property {string} [type='info'] The type of message.
  */
-
 
 /**
  * Provides methods to display any sort of messages, disclaimers, errors,
@@ -152,18 +149,17 @@ export class MessageDisclaimerService extends ngeoMessageMessage {
       popup.open({
         autoDestroy: true,
         content: content,
-        title: '&nbsp;'
+        title: '&nbsp;',
       });
 
       // Watch the open property
-      popup.scope.$watch('open', newVal => {
+      popup.scope.$watch('open', (newVal) => {
         if (!newVal) {
           this.closeMessage_(message);
         }
       });
 
       this.messages_[uid] = popup;
-
     } else {
       // get an already displayed compatible message.
       const compatibleMessageUid = this.getCompatibleMessageUid_(message);
@@ -192,12 +188,12 @@ export class MessageDisclaimerService extends ngeoMessageMessage {
           break;
       }
 
-      const el = angular.element(
-        `<div role="alert" class="${classNames.join(' ')}"></div>`);
+      const el = angular.element(`<div role="alert" class="${classNames.join(' ')}"></div>`);
       const button = angular.element(
-        `<button type="button" class="close" data-dismiss="alert" aria-label="${
-          gettextCatalog.getString('Close')
-        }"><span aria-hidden="true" class="fa fa-times"></span></button>`);
+        `<button type="button" class="close" data-dismiss="alert" aria-label="${gettextCatalog.getString(
+          'Close'
+        )}"><span aria-hidden="true" class="fa fa-times"></span></button>`
+      );
       const msg = angular.element('<span />').html(message.msg);
       el.append(button).append(msg);
 
@@ -279,7 +275,7 @@ export class MessageDisclaimerService extends ngeoMessageMessage {
     } else {
       // (2.2) Check if the message hasn't been closed using the UI, i.e. by
       //       clicking the close button. If not, then close it.
-      const jqueryObj = /** @type {JQuery} */(obj);
+      const jqueryObj = /** @type {JQuery} */ (obj);
       if (jqueryObj.hasClass('show')) {
         jqueryObj.alert('close');
       }
@@ -291,16 +287,12 @@ export class MessageDisclaimerService extends ngeoMessageMessage {
   }
 }
 
-
 /**
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoDisclaimer', [
-  ngeoMessagePopup.name,
-]);
+const module = angular.module('ngeoDisclaimer', [ngeoMessagePopup.name]);
 
 module.service('ngeoDisclaimer', MessageDisclaimerService);
-
 
 export default module;

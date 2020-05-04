@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 /**
  * Application entry point.
  *
@@ -31,21 +30,23 @@ import './sass/desktop.scss';
 import './sass/vars_desktop.scss';
 
 import angular from 'angular';
-import gmfControllersAbstractDesktopController, {AbstractDesktopController}
-  from 'gmf/controllers/AbstractDesktopController.js';
+import gmfControllersAbstractDesktopController, {
+  AbstractDesktopController,
+} from 'gmf/controllers/AbstractDesktopController.js';
 import appBase from '../appmodule.js';
 import EPSG2056 from '@geoblocks/proj/src/EPSG_2056.js';
 import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
 
 if (!window.requestAnimationFrame) {
-  alert('Your browser is not supported, please update it or use another one. You will be redirected.\n\n'
-    + 'Votre navigateur n\'est pas supporté, veuillez le mettre à jour ou en utiliser un autre. '
-    + 'Vous allez être redirigé.\n\n'
-    + 'Ihr Browser wird nicht unterstützt, bitte aktualisieren Sie ihn oder verwenden Sie einen anderen. '
-    + 'Sie werden weitergeleitet.');
+  alert(
+    'Your browser is not supported, please update it or use another one. You will be redirected.\n\n' +
+      "Votre navigateur n'est pas supporté, veuillez le mettre à jour ou en utiliser un autre. " +
+      'Vous allez être redirigé.\n\n' +
+      'Ihr Browser wird nicht unterstützt, bitte aktualisieren Sie ihn oder verwenden Sie einen anderen. ' +
+      'Sie werden weitergeleitet.'
+  );
   window.location.href = 'https://geomapfish.org/';
 }
-
 
 /**
  * @private
@@ -57,16 +58,20 @@ class Controller extends AbstractDesktopController {
    * @ngInject
    */
   constructor($scope, $injector) {
-    super({
-      srid: 2056,
-      mapViewConfig: {
-        center: [2632464, 1185457],
-        zoom: 3,
-        resolutions: [250, 100, 50, 20, 10, 5, 2, 1, 0.5, 0.25, 0.1, 0.05],
-        constrainResolution: true,
-        extent: [2485071.54, 175346.36, 2828515.78, 1299941.84],
-      }
-    }, $scope, $injector);
+    super(
+      {
+        srid: 2056,
+        mapViewConfig: {
+          center: [2632464, 1185457],
+          zoom: 3,
+          resolutions: [250, 100, 50, 20, 10, 5, 2, 1, 0.5, 0.25, 0.1, 0.05],
+          constrainResolution: true,
+          extent: [2485071.54, 175346.36, 2828515.78, 1299941.84],
+        },
+      },
+      $scope,
+      $injector
+    );
 
     /**
      * @type {string[]}
@@ -104,19 +109,23 @@ class Controller extends AbstractDesktopController {
     /**
      * @type {Array<import('gmf/map/mousepositionComponent.js').MousePositionProjection>}
      */
-    this.mousePositionProjections = [{
-      code: EPSG2056,
-      label: 'CH1903+ / LV95',
-      filter: 'ngeoNumberCoordinates::{x}, {y} m'
-    }, {
-      code: EPSG21781,
-      label: 'CH1903 / LV03',
-      filter: 'ngeoNumberCoordinates::{x}, {y} m'
-    }, {
-      code: 'EPSG:4326',
-      label: 'WGS84',
-      filter: 'ngeoDMSCoordinates:2'
-    }];
+    this.mousePositionProjections = [
+      {
+        code: EPSG2056,
+        label: 'CH1903+ / LV95',
+        filter: 'ngeoNumberCoordinates::{x}, {y} m',
+      },
+      {
+        code: EPSG21781,
+        label: 'CH1903 / LV03',
+        filter: 'ngeoNumberCoordinates::{x}, {y} m',
+      },
+      {
+        code: 'EPSG:4326',
+        label: 'WGS84',
+        filter: 'ngeoDMSCoordinates:2',
+      },
+    ];
 
     // Allow angular-gettext-tools to collect the strings to translate
     /** @type {angular.gettext.gettextCatalog} */
@@ -130,11 +139,7 @@ class Controller extends AbstractDesktopController {
 /**
  * @hidden
  */
-const module = angular.module('Appdesktop', [
-  appBase.name,
-  gmfControllersAbstractDesktopController.name,
-]);
-
+const module = angular.module('Appdesktop', [appBase.name, gmfControllersAbstractDesktopController.name]);
 
 module.value('gmfContextualdatacontentTemplateUrl', 'gmf/contextualdata');
 module.run(

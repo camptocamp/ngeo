@@ -19,15 +19,16 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 describe('ngeo.download.Csv', () => {
   /** @type {import("ngeo/download/Csv.js").DownloadCsvService} */
   let ngeoCsvDownload;
 
-  beforeEach(angular.mock.inject((_ngeoCsvDownload_) => {
-    ngeoCsvDownload = _ngeoCsvDownload_;
-  }));
+  beforeEach(
+    angular.mock.inject((_ngeoCsvDownload_) => {
+      ngeoCsvDownload = _ngeoCsvDownload_;
+    })
+  );
 
   describe('#generateCsv', () => {
     it('deals with no data', () => {
@@ -39,22 +40,23 @@ describe('ngeo.download.Csv', () => {
       /**
        * @type {Array<any>}
        */
-      const data = [{
-        'col 1': 'some text',
-        'col 2': 123,
-        'col 3': true,
-        'column that should be ignored': 'some text'
-      }, {
-        'col 1': 'some "more" text',
-        'col 2': null,
-        'col 3': undefined
-      }];
+      const data = [
+        {
+          'col 1': 'some text',
+          'col 2': 123,
+          'col 3': true,
+          'column that should be ignored': 'some text',
+        },
+        {
+          'col 1': 'some "more" text',
+          'col 2': null,
+          'col 3': undefined,
+        },
+      ];
       const csv = ngeoCsvDownload.generateCsv(data, columnDefs);
 
       const expectedCsv =
-          '"col 1","col 2","col 3"\n' +
-          '"some text","123","true"\n' +
-          '"some ""more"" text",,\n';
+        '"col 1","col 2","col 3"\n' + '"some text","123","true"\n' + '"some ""more"" text",,\n';
 
       expect(csv).toBe(expectedCsv);
     });

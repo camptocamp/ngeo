@@ -19,14 +19,12 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 /**
  * @typedef {Object} MapFishPrintCapabilities
  * @property {Object<srring, MapFishPrintCapabilitiesLayout>} layouts
  * @property {string[]} formats
  * @property {MapFishPrintCapabilitiesSMTP} [smtp] STMP object definition
  */
-
 
 /**
  * Fields that can come from a print v3 server and can be used in the partial
@@ -35,7 +33,6 @@
  * @property {string} name
  * @property {MapFishPrintCapabilitiesLayoutAttribute[]} [attributes] Custom print layoutInfo.
  */
-
 
 /**
  * @typedef {Object} MapFishPrintCapabilitiesLayoutAttribute
@@ -46,12 +43,10 @@
  * @property {string} [clientParams]
  */
 
-
 /**
  * @typedef {Object} MapFishPrintCapabilitiesSMTP
  * @property {boolean} enabled
  */
-
 
 /**
  * @typedef {Object} DataSourceTableObject
@@ -59,13 +54,11 @@
  * @property {Array<Array<string|number|boolean>>} data
  */
 
-
 /**
  * @typedef {Object} DataSourcePrintReportObject
  * @property {string} title
  * @property {DataSourceTableObject} table
  */
-
 
 /**
  * @typedef {Object} MapFishPrintSpec
@@ -76,12 +69,10 @@
  * @property {MapFishPrintSMTP} [smtp] STMP object definition
  */
 
-
 /**
  * @typedef {Object} MapFishPrintAttributes
  * @property {MapFishPrintMap} map
  */
-
 
 /**
  * @typedef {Object} MapFishPrintMap
@@ -96,13 +87,11 @@
  *    equal to one of those defined in the configuration file.
  */
 
-
 /**
  * @typedef {Object} MapFishPrintLayer
  * @property {string} type
  * @property {number} opacity
  */
-
 
 /**
  * extends {MapFishPrintLayer}
@@ -113,12 +102,10 @@
  * @property {MapFishPrintVectorStyle} style
  */
 
-
 /**
  * @typedef {Object} MapFishPrintVectorStyle
  * @property {number} version
  */
-
 
 /**
  * extends {MapFishPrintLayer}
@@ -135,7 +122,6 @@
  * @property {string} imageFormat
  */
 
-
 /**
  * @typedef {Object} MapFishPrintWmtsMatrix
  * @property {string} identifier
@@ -144,7 +130,6 @@
  * @property {number[]} topLeftCorner
  * @property {number[]} matrixSize
  */
-
 
 /**
  * extends {MapFishPrintLayer}
@@ -163,14 +148,12 @@
  * @property {string} version
  */
 
-
 /**
  * @typedef {Object} MapFishPrintReportResponse
  * @property {string} ref
  * @property {string} [statusURL]
  * @property {string} [downloadURL]
  */
-
 
 /**
  * @typedef {Object} MapFishPrintStatusResponse
@@ -180,18 +163,15 @@
  * @property {string} [downloadURL]
  */
 
-
 /**
  * @typedef {Object} MapFishPrintSymbolizers
  * @property {MapFishPrintSymbolizer[]} symbolizers
  */
 
-
 /**
  * @typedef {Object} MapFishPrintSymbolizer
  * @property {string} type
  */
-
 
 /**
  * extends {MapFishPrintSymbolizer}
@@ -203,7 +183,6 @@
  * @property {string} strokeDashstyle
  * @property {string} strokeLinecap
  */
-
 
 /**
  * extends {MapFishPrintSymbolizer}
@@ -224,7 +203,6 @@
  * @property {string} graphicName
  */
 
-
 /**
  * extends {MapFishPrintSymbolizer}
  * @typedef {Object} MapFishPrintSymbolizerPolygon
@@ -236,7 +214,6 @@
  * @property {number} strokeWidth
  * @property {string} strokeDashstyle
  */
-
 
 /**
  * extends {MapFishPrintSymbolizer}
@@ -257,25 +234,21 @@
  * @property {number} goodnessOfFit
  */
 
-
 /**
  * @typedef {Object} MapFishPrintSMTP
  * @property {string} to Email address
  */
-
 
 /**
  * @typedef {Object} MapFishPrintLegend
  * @property {MapFishPrintLegendClass[]} classes
  */
 
-
 /**
  * @typedef {Object} MapFishPrintLegendClass
  * @property {string} name
  * @property {string[]} icons
  */
-
 
 /**
  * @hidden

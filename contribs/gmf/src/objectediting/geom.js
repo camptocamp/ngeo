@@ -19,9 +19,12 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
-import {coordinatesToXY0, coordinatesToXY1, coordinatesToXY2, coordinatesToXY3}
-  from 'gmf/objectediting/coordinate.js';
+import {
+  coordinatesToXY0,
+  coordinatesToXY1,
+  coordinatesToXY2,
+  coordinatesToXY3,
+} from 'gmf/objectediting/coordinate.js';
 import olGeomLineString from 'ol/geom/LineString.js';
 import olGeomMultiLineString from 'ol/geom/MultiLineString.js';
 import olGeomMultiPoint from 'ol/geom/MultiPoint.js';
@@ -29,7 +32,6 @@ import olGeomMultiPolygon from 'ol/geom/MultiPolygon.js';
 import olGeomPoint from 'ol/geom/Point.js';
 import olGeomPolygon from 'ol/geom/Polygon.js';
 import olGeomSimpleGeometry from 'ol/geom/SimpleGeometry.js';
-
 
 /**
  * Determines whether a given geometry is empty or not. A null or undefined
@@ -49,7 +51,6 @@ export function isEmpty(geom) {
   }
   return isEmpty;
 }
-
 
 /**
  * Convert all coordinates within a geometry object to XY, i.e. remove any

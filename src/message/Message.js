@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 /**
  * A message to display by the ngeo notification service.
  *
@@ -31,7 +30,6 @@
  *    to display the message. If not defined, then the default target of the notification service is used.
  * @property {string} [type='info'] The type of message.
  */
-
 
 /**
  * @enum {string}
@@ -53,9 +51,8 @@ export const MessageType = {
   /**
    * @type {string}
    */
-  WARNING: 'warning'
+  WARNING: 'warning',
 };
-
 
 /**
  * Abstract class for services that display messages.
@@ -137,15 +134,15 @@ export default class {
 
     if (typeof object === 'string') {
       msgObjects.push({
-        msg: /** @type {string} */(object),
-        type: opt_type !== undefined ? opt_type : defaultType
+        msg: /** @type {string} */ (object),
+        type: opt_type !== undefined ? opt_type : defaultType,
       });
     } else if (Array.isArray(object)) {
-      /** @type {Array<string|Message>} */(object).forEach((msg) => {
+      /** @type {Array<string|Message>} */ (object).forEach((msg) => {
         if (typeof object === 'string') {
           msgObjects.push({
-            msg: /** @type {string} */(msg),
-            type: opt_type !== undefined ? opt_type : defaultType
+            msg: /** @type {string} */ (msg),
+            type: opt_type !== undefined ? opt_type : defaultType,
           });
         } else {
           if (typeof msg == 'string') {

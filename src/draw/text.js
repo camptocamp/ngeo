@@ -19,19 +19,16 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 import ngeoGeometryType from 'ngeo/GeometryType.js';
 import {listen} from 'ol/events.js';
 import olInteractionDraw from 'ol/interaction/Draw.js';
-
 
 /**
  * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('ngeoDrawtext', []);
-
 
 /**
  * @return {angular.IDirective} The directive specs.
@@ -55,29 +52,27 @@ function drawTextComponent() {
       }
 
       const drawText = new olInteractionDraw({
-        type: /** @type {import("ol/geom/GeometryType.js").default} */ ('Point')
+        type: /** @type {import("ol/geom/GeometryType.js").default} */ ('Point'),
       });
 
       if (drawFeatureCtrl.uid) {
-        drawText.set(
-          'ngeo-interaction-draw-uid',
-          `${drawFeatureCtrl.uid}-text`
-        );
+        drawText.set('ngeo-interaction-draw-uid', `${drawFeatureCtrl.uid}-text`);
       }
 
       drawFeatureCtrl.registerInteraction(drawText);
       drawFeatureCtrl.drawText = drawText;
 
-      listen(drawText, 'drawend', drawFeatureCtrl.handleDrawEnd.bind(
-        drawFeatureCtrl, ngeoGeometryType.TEXT
-      ), drawFeatureCtrl);
+      listen(
+        drawText,
+        'drawend',
+        drawFeatureCtrl.handleDrawEnd.bind(drawFeatureCtrl, ngeoGeometryType.TEXT),
+        drawFeatureCtrl
+      );
       listen(drawText, 'change:active', drawFeatureCtrl.handleActiveChange, drawFeatureCtrl);
-    }
+    },
   };
 }
 
-
 module.directive('ngeoDrawtext', drawTextComponent);
-
 
 export default module;

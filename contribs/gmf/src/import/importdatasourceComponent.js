@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 /* global Bloodhound */
 
 import angular from 'angular';
@@ -33,7 +32,6 @@ import gmfImportWmtsCapabilityLayertreeComponent from 'gmf/import/wmtsCapability
 import ngeoQueryQuerent from 'ngeo/query/Querent.js';
 import {guessServiceTypeByUrl, Type} from 'ngeo/datasource/OGC.js';
 
-
 /**
  * The definition of an external OGC server
  * @typedef {Object} ExternalOGCServer
@@ -41,7 +39,6 @@ import {guessServiceTypeByUrl, Type} from 'ngeo/datasource/OGC.js';
  * @property {string} type
  * @property {string} url
  */
-
 
 /**
  * @type {angular.IModule}
@@ -54,7 +51,6 @@ const module = angular.module('gmfImportdatasource', [
   ngeoQueryQuerent.name,
 ]);
 
-
 module.run(
   /**
    * @ngInject
@@ -63,20 +59,20 @@ module.run(
   ($templateCache) => {
     // @ts-ignore: webpack
     $templateCache.put('gmf/import/importdatasourceComponent', require('./importdatasourceComponent.html'));
-  });
+  }
+);
 
-
-module.value('gmfImportdatasourceTemplateUrl',
+module.value(
+  'gmfImportdatasourceTemplateUrl',
   /**
    * @param {angular.IAttributes} $attrs Attributes.
    * @return {string} The template url.
    */
   ($attrs) => {
     const templateUrl = $attrs.gmfImportdatasourceTemplateUrl;
-    return templateUrl !== undefined ? templateUrl :
-      'gmf/import/importdatasourceComponent';
-  });
-
+    return templateUrl !== undefined ? templateUrl : 'gmf/import/importdatasourceComponent';
+  }
+);
 
 /**
  * @param {angular.IAttributes} $attrs Attributes.
@@ -96,16 +92,14 @@ function gmfImportdatasourceTemplateUrl($attrs, gmfImportdatasourceTemplateUrl) 
  */
 const Mode = {
   LOCAL: 'Local',
-  ONLINE: 'Online'
+  ONLINE: 'Online',
 };
-
 
 /**
  * @private
  * @hidden
  */
 class Controller {
-
   /**
    * @param {JQuery} $element Element.
    * @param {angular.IFilterService} $filter Angular filter.
@@ -121,16 +115,13 @@ class Controller {
    * @ngdoc controller
    * @ngname GmfImportdatasourceController
    */
-  constructor($element, $filter, $injector, $scope, $timeout,
-    gmfExternalDataSourcesManager, ngeoQuerent) {
-
+  constructor($element, $filter, $injector, $scope, $timeout, gmfExternalDataSourcesManager, ngeoQuerent) {
     // Binding properties
 
     /**
      * @type {?import("ol/Map.js").default}
      */
     this.map = null;
-
 
     // Injected properties
 
@@ -164,7 +155,6 @@ class Controller {
      */
     this.ngeoQuerent_ = ngeoQuerent;
 
-
     // Model properties
 
     /**
@@ -181,7 +171,6 @@ class Controller {
      * @type {?string}
      */
     this.url = null;
-
 
     // Inner properties
 
@@ -228,8 +217,9 @@ class Controller {
      * @type {import('ngeo/misc/filters.js').unitPrefix}
      * @private
      */
-    this.unitPrefixFormat_ = /** @type {import('ngeo/misc/filters.js').unitPrefix} */ (
-      $filter('ngeoUnitPrefix'));
+    this.unitPrefixFormat_ = /** @type {import('ngeo/misc/filters.js').unitPrefix} */ ($filter(
+      'ngeoUnitPrefix'
+    ));
 
     /**
      * Current WMS Capabilities that were connected.
@@ -255,11 +245,10 @@ class Controller {
     this.isLoading = false;
 
     /** @type {?ExternalOGCServer[]} */
-    const servers = $injector.has('gmfExternalOGCServers') ? $injector.get('gmfExternalOGCServers')
-      : null;
+    const servers = $injector.has('gmfExternalOGCServers') ? $injector.get('gmfExternalOGCServers') : null;
 
     if (servers) {
-      const serverUrls = servers.map(server => server.url);
+      const serverUrls = servers.map((server) => server.url);
       this.serversEngine_ = new Bloodhound({
         /**
          * Allows search queries to match from string from anywhere within
@@ -283,26 +272,21 @@ class Controller {
           const datumTokenizers = [];
           for (const originalDatumTokenizer of originalDatumTokenizers) {
             let i = 0;
-            while ((i + 1) < originalDatumTokenizer.length) {
-              datumTokenizers.push(
-                originalDatumTokenizer.substr(
-                  i,
-                  originalDatumTokenizer.length
-                )
-              );
+            while (i + 1 < originalDatumTokenizer.length) {
+              datumTokenizers.push(originalDatumTokenizer.substr(i, originalDatumTokenizer.length));
               i++;
             }
           }
           return datumTokenizers;
         },
         queryTokenizer: Bloodhound.tokenizers.whitespace,
-        local: serverUrls
+        local: serverUrls,
       });
     }
 
     // Register input[type=file] onchange event, use HTML5 File api
     this.fileInput_.on('change', () => {
-      const fileInput = /** @type {HTMLInputElement} */(this.fileInput_[0]);
+      const fileInput = /** @type {HTMLInputElement} */ (this.fileInput_[0]);
       const files = fileInput.files;
       this.file = files && files[0] ? files[0] : null;
 
@@ -322,9 +306,7 @@ class Controller {
   $onInit() {
     this.gmfExternalDataSourcesManager_.map = this.map;
 
-
     if (this.serversEngine_) {
-
       /**
        * @param {string} query Query string.
        * @param {function(Array<string>):void} sync
@@ -344,20 +326,25 @@ class Controller {
       this.timeout_(() => {
         const $urlInput = this.element_.find('input[name=url]');
         const $connectBtn = this.element_.find('button.gmf-importdatasource-connect-btn');
-        $urlInput.typeahead({
-          hint: true,
-          highlight: true,
-          minLength: 0
-        }, {
-          name: 'url',
-          source: serversEngineWithDefaults
-        }).bind('typeahead:select', (ev, suggestion) => {
-          this.timeout_(() => {
-            this.url = suggestion;
-            this.scope_.$apply();
-            $connectBtn.focus();
+        $urlInput
+          .typeahead(
+            {
+              hint: true,
+              highlight: true,
+              minLength: 0,
+            },
+            {
+              name: 'url',
+              source: serversEngineWithDefaults,
+            }
+          )
+          .bind('typeahead:select', (ev, suggestion) => {
+            this.timeout_(() => {
+              this.url = suggestion;
+              this.scope_.$apply();
+              $connectBtn.focus();
+            });
           });
-        });
       });
     }
   }
@@ -540,14 +527,12 @@ class Controller {
   }
 }
 
-
 module.component('gmfImportdatasource', {
   bindings: {
-    'map': '<'
+    'map': '<',
   },
   controller: Controller,
-  templateUrl: gmfImportdatasourceTemplateUrl
+  templateUrl: gmfImportdatasourceTemplateUrl,
 });
-
 
 export default module;

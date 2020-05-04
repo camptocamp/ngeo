@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 import gmfThemeManager from 'gmf/theme/Manager.js';
 import gmfThemeThemes from 'gmf/theme/Themes.js';
@@ -27,16 +26,11 @@ import {listen, unlistenByKey} from 'ol/events.js';
 
 import 'bootstrap/js/src/dropdown.js';
 
-
 /**
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfThemeSelectorComponent', [
-  gmfThemeManager.name,
-  gmfThemeThemes.name,
-]);
-
+const module = angular.module('gmfThemeSelectorComponent', [gmfThemeManager.name, gmfThemeThemes.name]);
 
 module.run(
   /**
@@ -46,20 +40,20 @@ module.run(
   ($templateCache) => {
     // @ts-ignore: webpack
     $templateCache.put('gmf/theme/selectorComponent', require('./selectorComponent.html'));
-  });
+  }
+);
 
-
-module.value('gmfThemeSelectorTemplateUrl',
+module.value(
+  'gmfThemeSelectorTemplateUrl',
   /**
    * @param {angular.IAttributes} $attrs Attributes.
    * @return {string} The template url.
    */
   ($attrs) => {
     const templateUrl = $attrs.gmfThemeSelectorTemplateUrl;
-    return templateUrl !== undefined ? templateUrl :
-      'gmf/theme/selectorComponent';
-  });
-
+    return templateUrl !== undefined ? templateUrl : 'gmf/theme/selectorComponent';
+  }
+);
 
 /**
  * @param {angular.IAttributes} $attrs Attributes.
@@ -72,7 +66,6 @@ module.value('gmfThemeSelectorTemplateUrl',
 function gmfThemeSelectorTemplateUrl($attrs, gmfThemeSelectorTemplateUrl) {
   return gmfThemeSelectorTemplateUrl($attrs);
 }
-
 
 /**
  * Note that this component works with the
@@ -114,14 +107,13 @@ function gmfThemeSelectorTemplateUrl($attrs, gmfThemeSelectorTemplateUrl) {
  */
 const themeSelectorComponent = {
   bindings: {
-    'filter': '<gmfThemeselectorFilter'
+    'filter': '<gmfThemeselectorFilter',
   },
   controller: 'gmfThemeselectorController',
-  templateUrl: gmfThemeSelectorTemplateUrl
+  templateUrl: gmfThemeSelectorTemplateUrl,
 };
 
 module.component('gmfThemeselector', themeSelectorComponent);
-
 
 /**
  * @param {angular.IScope} $scope Angular scope.
@@ -135,7 +127,6 @@ module.component('gmfThemeselector', themeSelectorComponent);
  * @ngname gmfThemeselectorController
  */
 function Controller($scope, gmfThemeManager, gmfThemes) {
-
   /**
    * @type {import("gmf/theme/Manager.js").ThemeManagerService}
    */
@@ -166,7 +157,6 @@ function Controller($scope, gmfThemeManager, gmfThemes) {
   this.listenerKeys_.push(listen(this.gmfThemes_, 'change', this.setThemes_, this));
 
   $scope.$on('$destroy', this.handleDestroy_.bind(this));
-
 }
 
 /**
@@ -174,36 +164,32 @@ function Controller($scope, gmfThemeManager, gmfThemes) {
  * current theme.
  * @private
  */
-Controller.prototype.setThemes_ = function() {
+Controller.prototype.setThemes_ = function () {
   this.gmfThemes_.getThemesObject().then((themes) => {
     // Keep only the themes dedicated to the theme switcher
     this.themes = this.filter ? themes.filter(this.filter) : themes;
   });
 };
 
-
 /**
  * @param {import('gmf/themes.js').GmfTheme} theme Theme.
  * @param {boolean=} opt_silent if true it will be no user message if
  *     the theme should be added but it's already added.
  */
-Controller.prototype.setTheme = function(theme, opt_silent) {
+Controller.prototype.setTheme = function (theme, opt_silent) {
   if (theme) {
     this.gmfThemeManager.addTheme(theme, opt_silent);
   }
 };
 
-
 /**
  * @private
  */
-Controller.prototype.handleDestroy_ = function() {
+Controller.prototype.handleDestroy_ = function () {
   this.listenerKeys_.forEach(unlistenByKey);
   this.listenerKeys_.length = 0;
 };
 
-
 module.controller('gmfThemeselectorController', Controller);
-
 
 export default module;

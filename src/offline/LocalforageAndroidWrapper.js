@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import AbstractWrapper from 'ngeo/offline/AbstractLocalforageWrapper.js';
 
 const exports = class AndroidWrapper extends AbstractWrapper {
@@ -46,10 +45,9 @@ const exports = class AndroidWrapper extends AbstractWrapper {
   receiveFromAndroid(actionString) {
     const action = JSON.parse(actionString);
     this.receiveMessage({
-      'data': action
+      'data': action,
     });
   }
 };
-
 
 export default exports;

@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr.js';
 import ngeoMessageNotification from 'ngeo/message/Notification.js';
@@ -30,7 +29,6 @@ import olGeolocation from 'ol/Geolocation.js';
 import olMap from 'ol/Map.js';
 import olGeomPoint from 'ol/geom/Point.js';
 import Polygon from 'ol/geom/Polygon.js';
-
 
 /**
  * Options for the geolocation directive.
@@ -44,7 +42,6 @@ import Polygon from 'ol/geom/Polygon.js';
  * the zoom level to set when obtaining a new position
  * @property {boolean} [autorotate] Autorotate.
  */
-
 
 /**
  * @type {angular.IModule}
@@ -64,7 +61,7 @@ const GeolocationEventType = {
   /**
    * Triggered when an error occurs.
    */
-  ERROR: 'geolocation-error'
+  ERROR: 'geolocation-error',
 };
 
 /**
@@ -91,15 +88,13 @@ function geolocationComponent() {
     restrict: 'A',
     scope: {
       'getMapFn': '&ngeoGeolocationMap',
-      'getOptionsFn': '&ngeoGeolocationOptions'
+      'getOptionsFn': '&ngeoGeolocationOptions',
     },
-    controller: 'ngeoGeolocationController'
+    controller: 'ngeoGeolocationController',
   };
 }
 
-
 module.directive('ngeoGeolocation', geolocationComponent);
-
 
 /**
  * @constructor
@@ -117,7 +112,6 @@ module.directive('ngeoGeolocation', geolocationComponent);
  * @ngname ngeoGeolocationController
  */
 function Controller($scope, $element, gettextCatalog, ngeoFeatureOverlayMgr, ngeoNotification) {
-
   $element.on('click', this.toggleTracking.bind(this));
 
   // @ts-ignore
@@ -161,8 +155,8 @@ function Controller($scope, $element, gettextCatalog, ngeoFeatureOverlayMgr, nge
   this.geolocation_ = new olGeolocation({
     projection: map.getView().getProjection(),
     trackingOptions: /** @type {PositionOptions} */ ({
-      enableHighAccuracy: true
-    })
+      enableHighAccuracy: true,
+    }),
   });
 
   if (options.autorotate) {
@@ -251,10 +245,9 @@ function Controller($scope, $element, gettextCatalog, ngeoFeatureOverlayMgr, nge
   listen(view, 'change:resolution', this.handleViewChange_, this);
 }
 
-
 /**
  */
-Controller.prototype.toggleTracking = function() {
+Controller.prototype.toggleTracking = function () {
   if (this.geolocation_.getTracking()) {
     // if map center is different than geolocation position, then track again
     const currentPosition = this.geolocation_.getPosition();
@@ -286,33 +279,30 @@ Controller.prototype.toggleTracking = function() {
   }
 };
 
-
 /**
  * @private
  */
-Controller.prototype.track_ = function() {
+Controller.prototype.track_ = function () {
   this.featureOverlay_.addFeature(this.positionFeature_);
   this.featureOverlay_.addFeature(this.accuracyFeature_);
   this.follow_ = true;
   this.geolocation_.setTracking(true);
 };
 
-
 /**
  * @private
  */
-Controller.prototype.untrack_ = function() {
+Controller.prototype.untrack_ = function () {
   this.featureOverlay_.clear();
   this.follow_ = false;
   this.geolocation_.setTracking(false);
   this.notification_.clear();
 };
 
-
 /**
  * @private
  */
-Controller.prototype.setPosition_ = function() {
+Controller.prototype.setPosition_ = function () {
   const view = this.map_.getView();
   const position = this.geolocation_.getPosition();
   if (position === undefined) {
@@ -339,43 +329,51 @@ Controller.prototype.setPosition_ = function() {
   }
 };
 
-
 /**
  * @param {Event|import("ol/events/Event.js").default} event Event.
  * @private
  */
-Controller.prototype.handleViewChange_ = function(event) {
+Controller.prototype.handleViewChange_ = function (event) {
   if (this.follow_ && !this.viewChangedByMe_) {
     this.follow_ = false;
   }
 };
 
-
 // Orientation control events
-Controller.prototype.autorotateListener = function() {
+Controller.prototype.autorotateListener = function () {
   let currentAlpha = 0;
   if (window.hasOwnProperty('ondeviceorientationabsolute')) {
-    window.addEventListener('deviceorientationabsolute', (event) => {
-      if (!(event instanceof DeviceOrientationEvent)) {
-        throw new Error('Wrong event type');
-      }
-      if (event.alpha !== null) {
-        currentAlpha = this.handleRotate_(event.alpha, currentAlpha);
-      }
-    }, true);
-  } else if (window.hasOwnProperty('ondeviceorientation')) {
-    window.addEventListener('deviceorientation', (evt) => {
-      // @ts-ignore: ios only
-      if (evt.webkitCompassHeading) { // check for iOS property
-        // @ts-ignore: ios only
-        currentAlpha = this.handleRotate_(-evt.webkitCompassHeading, currentAlpha);
-      } else { // non iOS
-        if (!evt.alpha) {
-          throw new Error('Missing evt.alpha');
+    window.addEventListener(
+      'deviceorientationabsolute',
+      (event) => {
+        if (!(event instanceof DeviceOrientationEvent)) {
+          throw new Error('Wrong event type');
         }
-        currentAlpha = this.handleRotate_(evt.alpha - 270, currentAlpha);
-      }
-    }, true);
+        if (event.alpha !== null) {
+          currentAlpha = this.handleRotate_(event.alpha, currentAlpha);
+        }
+      },
+      true
+    );
+  } else if (window.hasOwnProperty('ondeviceorientation')) {
+    window.addEventListener(
+      'deviceorientation',
+      (evt) => {
+        // @ts-ignore: ios only
+        if (evt.webkitCompassHeading) {
+          // check for iOS property
+          // @ts-ignore: ios only
+          currentAlpha = this.handleRotate_(-evt.webkitCompassHeading, currentAlpha);
+        } else {
+          // non iOS
+          if (!evt.alpha) {
+            throw new Error('Missing evt.alpha');
+          }
+          currentAlpha = this.handleRotate_(evt.alpha - 270, currentAlpha);
+        }
+      },
+      true
+    );
   } else {
     console.error('Orientation is not supported on this device');
   }
@@ -388,21 +386,19 @@ Controller.prototype.autorotateListener = function() {
  * @return {number} .
  * @private
  */
-Controller.prototype.handleRotate_ = function(eventAlpha, currentAlpha) {
+Controller.prototype.handleRotate_ = function (eventAlpha, currentAlpha) {
   if (this.geolocation_.getTracking() && Math.abs(eventAlpha - currentAlpha) > 0.2) {
     currentAlpha = eventAlpha;
-    const radAlpha = currentAlpha * Math.PI / 180;
+    const radAlpha = (currentAlpha * Math.PI) / 180;
     this.map_.getView().animate({
       rotation: radAlpha,
       duration: 350,
-      easing: olEasing.linear
+      easing: olEasing.linear,
     });
   }
   return currentAlpha;
 };
 
-
 module.controller('ngeoGeolocationController', Controller);
-
 
 export default module;

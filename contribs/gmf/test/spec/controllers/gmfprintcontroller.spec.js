@@ -19,14 +19,12 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 import gmfTestDataPrintcapabilities from '../data/printcapabilities.js';
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
 
 describe('GmfPrintController', () => {
-
   let $controller;
   /** @type {angular.IScope} */
   let $rootScope;
@@ -35,26 +33,28 @@ describe('GmfPrintController', () => {
   /** @type {import('gmf/print/component.js').PrintController} */
   let gmfPrintCtrl;
 
-  beforeEach(angular.mock.inject((_$controller_, _$rootScope_) => {
-    $controller = _$controller_;
-    $rootScope = _$rootScope_;
-    $scope = $rootScope.$new();
-    const $element = angular.element('<div></div>');
-    gmfPrintCtrl = $controller('GmfPrintController', {
-      $element: $element,
-      $scope: $scope,
-      gmfPrintUrl: ''
-    });
-    gmfPrintCtrl.map = new olMap({
-      view: new olView({
-        center: [0, 0],
-        zoom: 4
-      })
-    });
-    gmfPrintCtrl.map.setSize([100, 100]);
-    // @ts-ignore
-    gmfPrintCtrl.parseCapabilities_({data: gmfTestDataPrintcapabilities});
-  }));
+  beforeEach(
+    angular.mock.inject((_$controller_, _$rootScope_) => {
+      $controller = _$controller_;
+      $rootScope = _$rootScope_;
+      $scope = $rootScope.$new();
+      const $element = angular.element('<div></div>');
+      gmfPrintCtrl = $controller('GmfPrintController', {
+        $element: $element,
+        $scope: $scope,
+        gmfPrintUrl: '',
+      });
+      gmfPrintCtrl.map = new olMap({
+        view: new olView({
+          center: [0, 0],
+          zoom: 4,
+        }),
+      });
+      gmfPrintCtrl.map.setSize([100, 100]);
+      // @ts-ignore
+      gmfPrintCtrl.parseCapabilities_({data: gmfTestDataPrintcapabilities});
+    })
+  );
 
   it('Set rotation', () => {
     expect(gmfPrintCtrl.rotation).toBe(0);
@@ -80,8 +80,10 @@ describe('GmfPrintController', () => {
 
   it('Set scale and test map resolution change', () => {
     const baseScale = gmfPrintCtrl.layoutInfo.scales[1];
-    const biggerScale = gmfPrintCtrl.layoutInfo.scales[2] > baseScale ?
-      gmfPrintCtrl.layoutInfo.scales[2] : gmfPrintCtrl.layoutInfo.scales[0];
+    const biggerScale =
+      gmfPrintCtrl.layoutInfo.scales[2] > baseScale
+        ? gmfPrintCtrl.layoutInfo.scales[2]
+        : gmfPrintCtrl.layoutInfo.scales[0];
 
     gmfPrintCtrl.getSetScale(baseScale);
     expect(gmfPrintCtrl.layoutInfo.scale).toBe(baseScale);

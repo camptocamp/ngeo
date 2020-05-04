@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 import appURL from './url.js';
 import './displayquerygrid.css';
@@ -47,7 +46,6 @@ import olStyleFill from 'ol/style/Fill.js';
 import olStyleStroke from 'ol/style/Stroke.js';
 import olStyleStyle from 'ol/style/Style.js';
 
-
 /**
  * @type {angular.IModule}
  * @hidden
@@ -65,18 +63,15 @@ const module = angular.module('gmfapp', [
   ngeoQueryComponent.name,
 ]);
 
-
 module.constant('ngeoQueryOptions', {
   'limit': 20,
-  'queryCountFirst': true
+  'queryCountFirst': true,
 });
-
 
 module.constant('gmfTreeUrl', appURL.GMF_THEMES);
 
 module.constant('defaultTheme', 'Demo');
 module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
-
 
 /**
  * Demo, NOT USED.
@@ -88,11 +83,10 @@ module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 const queryresultComponent = {
   controller: 'gmfappQueryresultController',
   // @ts-ignore: webpack
-  template: require('./partials/queryresult.html')
+  template: require('./partials/queryresult.html'),
 };
 
 module.component('gmfappQueryresult', queryresultComponent);
-
 
 /**
  * Demo, NOT USED.
@@ -101,17 +95,13 @@ module.component('gmfappQueryresult', queryresultComponent);
  * @ngInject
  */
 function QueryresultController(ngeoQueryResult) {
-
   /**
    * @type {import('ngeo/query/MapQuerent.js').QueryResult}
    */
   this.result = ngeoQueryResult;
-
 }
 
-
 module.controller('gmfappQueryresultController', QueryresultController);
-
 
 /**
  * @constructor
@@ -123,7 +113,6 @@ module.controller('gmfappQueryresultController', QueryresultController);
  * @ngInject
  */
 function MainController(gmfThemes, gmfDataSourcesManager, ngeoFeatureOverlayMgr) {
-
   gmfThemes.loadThemes();
 
   const fill = new olStyleFill({color: [255, 170, 0, 0.6]});
@@ -138,9 +127,9 @@ function MainController(gmfThemes, gmfDataSourcesManager, ngeoFeatureOverlayMgr)
     image: new olStyleCircle({
       fill: fill,
       radius: 5,
-      stroke: stroke
+      stroke: stroke,
     }),
-    stroke: stroke
+    stroke: stroke,
   });
 
   /**
@@ -149,15 +138,15 @@ function MainController(gmfThemes, gmfDataSourcesManager, ngeoFeatureOverlayMgr)
   this.map = new olMap({
     layers: [
       new olLayerTile({
-        source: new olSourceOSM()
-      })
+        source: new olSourceOSM(),
+      }),
     ],
     view: new olView({
       projection: EPSG2056,
       resolutions: [200, 100, 50, 20, 10, 5, 2.5, 2, 1, 0.5],
       center: [2537635, 1152640],
-      zoom: 3
-    })
+      zoom: 3,
+    }),
   });
 
   // Init the datasources with our map.
@@ -195,6 +184,5 @@ function MainController(gmfThemes, gmfDataSourcesManager, ngeoFeatureOverlayMgr)
 }
 
 module.controller('MainController', MainController);
-
 
 export default module;

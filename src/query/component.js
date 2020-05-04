@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 
 import {unlistenByKeys as ngeoEventsUnlistenByKeys} from 'ngeo/events.js';
@@ -29,9 +28,7 @@ import ngeoQueryMapQuerent from 'ngeo/query/MapQuerent.js';
 
 import {listen as olEventsListen} from 'ol/events.js';
 import {always as olEventsConditionAlways} from 'ol/events/condition.js';
-import olInteractionDraw, {
-  createBox as olInteractionDrawCreateBox
-} from 'ol/interaction/Draw.js';
+import olInteractionDraw, {createBox as olInteractionDrawCreateBox} from 'ol/interaction/Draw.js';
 import {Vector as olLayerVector} from 'ol/layer.js';
 import MapBrowserEvent from 'ol/MapBrowserEvent.js';
 import {Vector as olSourceVector} from 'ol/source.js';
@@ -40,18 +37,13 @@ import {Vector as olSourceVector} from 'ol/source.js';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoQuery', [
-  ngeoQueryModeSelector.name,
-  ngeoQueryMapQuerent.name,
-]);
-
+const module = angular.module('ngeoQuery', [ngeoQueryModeSelector.name, ngeoQueryMapQuerent.name]);
 
 /**
  * @private
  * @hidden
  */
 class QueryController {
-
   /**
    * @param {import("ngeo/query/MapQuerent.js").MapQuerent}
    *     ngeoMapQuerent The ngeo map querent service.
@@ -65,7 +57,6 @@ class QueryController {
    * @ngname NgeoQueryController
    */
   constructor(ngeoMapQuerent, ngeoQueryModeSelector, $injector, $scope) {
-
     // === Binding properties ===
 
     /**
@@ -83,7 +74,6 @@ class QueryController {
      */
     this.map;
 
-
     // === Injected properties ===
 
     /**
@@ -98,12 +88,11 @@ class QueryController {
      */
     this.ngeoQueryModeSelector_ = ngeoQueryModeSelector;
 
-    const ngeoQueryOptions =
-      /** @type {import('ngeo/query/MapQuerent.js').QueryOptions} */ (
-        $injector.has('ngeoQueryOptions') ?
-          $injector.get('ngeoQueryOptions') :
-          {}
-      );
+    const ngeoQueryOptions = /** @type {import('ngeo/query/MapQuerent.js').QueryOptions} */ ($injector.has(
+      'ngeoQueryOptions'
+    )
+      ? $injector.get('ngeoQueryOptions')
+      : {});
 
     /**
      * @type {import('ngeo/query/MapQuerent.js').QueryOptions}
@@ -117,7 +106,6 @@ class QueryController {
      */
     this.scope_ = $scope;
 
-
     // === Inner properties ===
 
     /**
@@ -125,7 +113,7 @@ class QueryController {
      * @private
      */
     this.vectorSource_ = new olSourceVector({
-      wrapX: false
+      wrapX: false,
     });
 
     /**
@@ -133,7 +121,7 @@ class QueryController {
      * @private
      */
     this.vectorLayer_ = new olLayerVector({
-      source: this.vectorSource_
+      source: this.vectorSource_,
     });
 
     /**
@@ -144,7 +132,7 @@ class QueryController {
       condition: olEventsConditionAlways,
       geometryFunction: olInteractionDrawCreateBox(),
       source: this.vectorSource_,
-      type: 'Circle'
+      type: 'Circle',
     });
 
     /**
@@ -154,7 +142,7 @@ class QueryController {
     this.drawPolygonInteraction_ = new olInteractionDraw({
       condition: olEventsConditionAlways,
       source: this.vectorSource_,
-      type: 'Polygon'
+      type: 'Polygon',
     });
 
     /**
@@ -171,24 +159,17 @@ class QueryController {
      */
     this.mode_ = null;
 
-
     // === Event listeners that uses angular $scope
 
-    $scope.$watch(
-      () => this.active,
-      this.handleActiveChange_.bind(this)
-    );
+    $scope.$watch(() => this.active, this.handleActiveChange_.bind(this));
 
-    $scope.$watch(
-      () => {
-        let value = null;
-        if (this.active) {
-          value = this.ngeoQueryModeSelector_.mode;
-        }
-        return value;
-      },
-      this.enableMode_.bind(this)
-    );
+    $scope.$watch(() => {
+      let value = null;
+      if (this.active) {
+        value = this.ngeoQueryModeSelector_.mode;
+      }
+      return value;
+    }, this.enableMode_.bind(this));
   }
 
   /**
@@ -228,23 +209,9 @@ class QueryController {
 
     switch (mode) {
       case ngeoQueryMode.CLICK:
-        this.listenerKeys_.push(
-          olEventsListen(
-            this.map,
-            'singleclick',
-            this.handleMapClick_,
-            this
-          )
-        );
+        this.listenerKeys_.push(olEventsListen(this.map, 'singleclick', this.handleMapClick_, this));
         if (this.ngeoQueryOptions_.cursorHover) {
-          this.listenerKeys_.push(
-            olEventsListen(
-              this.map,
-              'pointermove',
-              this.handleMapPointerMove_,
-              this
-            )
-          );
+          this.listenerKeys_.push(olEventsListen(this.map, 'pointermove', this.handleMapPointerMove_, this));
         }
         break;
 
@@ -252,12 +219,7 @@ class QueryController {
         this.map.addLayer(this.vectorLayer_);
         this.map.addInteraction(this.drawBoxInteraction_);
         this.listenerKeys_.push(
-          olEventsListen(
-            this.drawBoxInteraction_,
-            'drawend',
-            this.handleDrawBoxInteractionDrawEnd_,
-            this
-          )
+          olEventsListen(this.drawBoxInteraction_, 'drawend', this.handleDrawBoxInteractionDrawEnd_, this)
         );
         break;
 
@@ -339,10 +301,8 @@ class QueryController {
    * @private
    */
   getLimitOption_() {
-    return this.ngeoQueryOptions_ && this.ngeoQueryOptions_.limit ?
-      this.ngeoQueryOptions_.limit : undefined;
+    return this.ngeoQueryOptions_ && this.ngeoQueryOptions_.limit ? this.ngeoQueryOptions_.limit : undefined;
   }
-
 
   // === Handlers ===
 
@@ -376,12 +336,13 @@ class QueryController {
 
     this.ngeoQueryModeSelector_.pending = true;
 
-    this.ngeoMapQuerent_.issue({
-      action,
-      extent,
-      limit,
-      map
-    })
+    this.ngeoMapQuerent_
+      .issue({
+        action,
+        extent,
+        limit,
+        map,
+      })
       .then(() => {})
       .catch(() => {})
       .then(() => {
@@ -408,12 +369,13 @@ class QueryController {
 
     this.ngeoQueryModeSelector_.pending = true;
 
-    this.ngeoMapQuerent_.issue({
-      action,
-      geometry,
-      limit,
-      map
-    })
+    this.ngeoMapQuerent_
+      .issue({
+        action,
+        geometry,
+        limit,
+        map,
+      })
       .then(() => {})
       .catch(() => {})
       .then(() => {
@@ -442,11 +404,12 @@ class QueryController {
 
     this.ngeoQueryModeSelector_.pending = true;
 
-    this.ngeoMapQuerent_.issue({
-      action,
-      coordinate,
-      map
-    })
+    this.ngeoMapQuerent_
+      .issue({
+        action,
+        coordinate,
+        map,
+      })
       .then(() => {})
       .catch(() => {})
       .then(() => {
@@ -474,18 +437,14 @@ class QueryController {
     /**
      * @param {import('ol/layer/Base').default} layer
      */
-    const queryable = function(layer) {
+    const queryable = function (layer) {
       const visible = layer.get('visible');
       const sourceids = layer.get('querySourceIds');
       return visible && !!sourceids;
     };
-    const hit = this.map.forEachLayerAtPixel(
-      pixel,
-      () => true,
-      {
-        layerFilter: queryable
-      }
-    );
+    const hit = this.map.forEachLayerAtPixel(pixel, () => true, {
+      layerFilter: queryable,
+    });
     this.map.getTargetElement().style.cursor = hit ? 'pointer' : '';
   }
 }
@@ -494,9 +453,9 @@ module.component('ngeoQuery', {
   bindings: {
     'active': '=',
     'autoclear': '=?',
-    'map': '<'
+    'map': '<',
   },
-  controller: QueryController
+  controller: QueryController,
 });
 
 export default module;

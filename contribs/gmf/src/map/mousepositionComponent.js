@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 import ngeoMiscFilters from 'ngeo/misc/filters.js';
 import olControlMousePosition from 'ol/control/MousePosition.js';
@@ -36,15 +35,11 @@ import 'bootstrap/js/src/dropdown.js';
  * with colon as separator (example: MyFilter:args1:args2:...)
  */
 
-
 /**
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfMapMouseposition', [
-  ngeoMiscFilters.name,
-]);
-
+const module = angular.module('gmfMapMouseposition', [ngeoMiscFilters.name]);
 
 module.run(
   /**
@@ -54,20 +49,20 @@ module.run(
   ($templateCache) => {
     // @ts-ignore: webpack
     $templateCache.put('gmf/map/mousepositionComponent', require('./mousepositionComponent.html'));
-  });
+  }
+);
 
-
-module.value('gmfMapMousepositionTemplateUrl',
+module.value(
+  'gmfMapMousepositionTemplateUrl',
   /**
    * @param {angular.IAttributes} $attrs Attributes.
    * @return {string} The template url.
    */
   ($attrs) => {
     const templateUrl = $attrs.gmfMapMousepositionTemplateUrl;
-    return templateUrl !== undefined ? templateUrl :
-      'gmf/map/mousepositionComponent';
-  });
-
+    return templateUrl !== undefined ? templateUrl : 'gmf/map/mousepositionComponent';
+  }
+);
 
 /**
  * @param {angular.IAttributes} $attrs Attributes.
@@ -103,13 +98,12 @@ const mapMousepositionComponent = {
   controller: 'gmfMousepositionController as ctrl',
   bindings: {
     'map': '<gmfMousepositionMap',
-    'projections': '<gmfMousepositionProjections'
+    'projections': '<gmfMousepositionProjections',
   },
-  templateUrl: gmfMapMousepositionTemplateUrl
+  templateUrl: gmfMapMousepositionTemplateUrl,
 };
 
 module.component('gmfMouseposition', mapMousepositionComponent);
-
 
 /**
  * @param {JQuery} $element Element.
@@ -170,11 +164,10 @@ function Controller($element, $filter, $scope, gettextCatalog) {
   this.control_ = null;
 }
 
-
 /**
  * Initialise the controller.
  */
-Controller.prototype.$onInit = function() {
+Controller.prototype.$onInit = function () {
   this.$scope_.$on('gettextLanguageChanged', () => {
     this.initOlControl_();
   });
@@ -183,12 +176,11 @@ Controller.prototype.$onInit = function() {
   this.initOlControl_();
 };
 
-
 /**
  * Init the ol.control.MousePosition
  * @private
  */
-Controller.prototype.initOlControl_ = function() {
+Controller.prototype.initOlControl_ = function () {
   if (!this.map) {
     throw new Error('Missing map');
   }
@@ -224,7 +216,7 @@ Controller.prototype.initOlControl_ = function() {
     className: 'gmf-mouseposition-control',
     coordinateFormat: formatFn,
     target: this.$element_.find('.gmf-mouseposition-control-target').get(0),
-    undefinedHTML: gettextCatalog.getString('Coordinates')
+    undefinedHTML: gettextCatalog.getString('Coordinates'),
   });
 
   this.setProjection(this.projections[0]);
@@ -232,11 +224,10 @@ Controller.prototype.initOlControl_ = function() {
   this.map.addControl(this.control_);
 };
 
-
 /**
  * @param {MousePositionProjection} projection The new projection to use.
  */
-Controller.prototype.setProjection = function(projection) {
+Controller.prototype.setProjection = function (projection) {
   if (!this.control_) {
     throw new Error('Missing control');
   }
@@ -245,6 +236,5 @@ Controller.prototype.setProjection = function(projection) {
 };
 
 module.controller('gmfMousepositionController', Controller);
-
 
 export default module;

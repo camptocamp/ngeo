@@ -1,4 +1,3 @@
-
 // The MIT License (MIT)
 //
 // Copyright (c) 2019-2020 Camptocamp SA
@@ -20,13 +19,11 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 /**
  * @typedef {Object} OfflineExtentByZoom
  * @property {number} zoom
  * @property {import("ol/extent.js").Extent} extent
  */
-
 
 /**
  * @typedef {Object} OfflineLayerMetadata
@@ -40,7 +37,6 @@
  * @property {import("ol/layer/Group.js").default[]} ancestors
  */
 
-
 /**
  * @typedef {Object} OfflinePersistentLayer
  * @property {string|undefined} layerType
@@ -49,14 +45,12 @@
  * @property {string} key
  */
 
-
 /**
  * @typedef {Object} OfflinePersistentContent
  * @property {import("ol/extent.js").Extent} extent
  * @property {!Array<OfflinePersistentLayer>} layers
  * @property {!Array<number>} zooms
  */
-
 
 /**
  * @typedef {Object} OfflineTile
@@ -65,7 +59,6 @@
  * @property {?string} response
  */
 
-
 /**
  * @callback onTileDownloadSuccess
  * @param {number} progress
@@ -73,19 +66,16 @@
  * @return {Promise}
  */
 
-
 /**
  * @callback onTileDownloadError
  * @param {number} progress
  * @return {Promise}
  */
 
-
 /**
  * @typedef {Object} OfflineOnTileDownload
  * @property {onTileDownloadSuccess} onTileDownloadSuccess
  * @property {onTileDownloadError} onTileDownloadError
  */
-
 
 export default {};

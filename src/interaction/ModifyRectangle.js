@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import {getDefaultModifyStyleFunction} from 'ngeo/interaction/common.js';
 import ngeoCustomEvent from 'ngeo/CustomEvent.js';
 import {getUid as olUtilGetUid} from 'ol/util.js';
@@ -31,7 +30,6 @@ import olInteractionPointer from 'ol/interaction/Pointer.js';
 import olLayerVector from 'ol/layer/Vector.js';
 import olSourceVector from 'ol/source/Vector.js';
 import {CollectionEvent} from 'ol/Collection.js';
-
 
 /**
  * Interaction for modifying feature geometries.
@@ -62,12 +60,12 @@ class ModifyRectangle extends olInteractionPointer {
      */
     this.vectorPoints_ = new olLayerVector({
       source: new olSourceVector({
-        wrapX: !!options.wrapX
+        wrapX: !!options.wrapX,
       }),
       visible: this.getActive(),
       style: options.style || getDefaultModifyStyleFunction(),
       updateWhileAnimating: true,
-      updateWhileInteracting: true
+      updateWhileInteracting: true,
     });
 
     /**
@@ -121,7 +119,6 @@ class ModifyRectangle extends olInteractionPointer {
   addFeature_(feature) {
     const featureGeom = feature.getGeometry();
     if (featureGeom instanceof olGeomPolygon) {
-
       // If the feature's corners are already set, no need to set them again
       const uid = olUtilGetUid(feature);
       let item = this.cache_[uid];
@@ -157,13 +154,13 @@ class ModifyRectangle extends olInteractionPointer {
           'geometry': cornerPoint,
           'siblingX': null,
           'siblingY': null,
-          'boxFeature': feature
+          'boxFeature': feature,
         });
 
         pointFeatures.push(cornerFeature);
       }, this);
       item = /** @type {CacheItem} */ ({
-        corners: pointFeatures
+        corners: pointFeatures,
       });
       this.cache_[uid] = item;
 
@@ -187,7 +184,6 @@ class ModifyRectangle extends olInteractionPointer {
           cornerFeature.set('siblingX', previousFeature);
           cornerFeature.set('siblingY', nextFeature);
         }
-
       }, this);
       pointSource.addFeatures(pointFeatures);
     }
@@ -235,10 +231,7 @@ class ModifyRectangle extends olInteractionPointer {
     console.assert(siblingXPoint instanceof olGeomPoint);
     const siblingXCoordinate = siblingXPoint.getCoordinates();
     const siblingXPixel = this.getMap().getPixelFromCoordinate(siblingXCoordinate);
-    let vectorX = [
-      siblingXPixel[0] - originPixel[0],
-      siblingXPixel[1] - originPixel[1]
-    ];
+    let vectorX = [siblingXPixel[0] - originPixel[0], siblingXPixel[1] - originPixel[1]];
     const vectorXMagnitude = Math.sqrt(vectorX[0] * vectorX[0] + vectorX[1] * vectorX[1]);
     vectorX[0] /= vectorXMagnitude;
     vectorX[1] /= vectorXMagnitude;
@@ -248,10 +241,7 @@ class ModifyRectangle extends olInteractionPointer {
     console.assert(siblingYPoint instanceof olGeomPoint);
     const siblingYCoordinate = siblingYPoint.getCoordinates();
     const siblingYPixel = this.getMap().getPixelFromCoordinate(siblingYCoordinate);
-    let vectorY = [
-      siblingYPixel[0] - originPixel[0],
-      siblingYPixel[1] - originPixel[1]
-    ];
+    let vectorY = [siblingYPixel[0] - originPixel[0], siblingYPixel[1] - originPixel[1]];
     const vectorYMagnitude = Math.sqrt(vectorY[0] * vectorY[0] + vectorY[1] * vectorY[1]);
     vectorY[0] /= vectorYMagnitude;
     vectorY[1] /= vectorYMagnitude;
@@ -273,7 +263,7 @@ class ModifyRectangle extends olInteractionPointer {
       siblingXPoint,
       siblingYPoint,
       vectorX,
-      vectorY
+      vectorY,
     };
   }
 
@@ -286,8 +276,9 @@ class ModifyRectangle extends olInteractionPointer {
     const item = this.cache_[uid];
     const corners = item.corners;
     for (const corner of corners) {
-      /** @type {olSourceVector<import("ol/geom/Geometry.js").default>} */(this.vectorPoints_.getSource())
-        .removeFeature(corner);
+      /** @type {olSourceVector<import("ol/geom/Geometry.js").default>} */ (this.vectorPoints_.getSource()).removeFeature(
+        corner
+      );
     }
     this.feature_ = null;
     corners.length = 0;
@@ -336,11 +327,10 @@ class ModifyRectangle extends olInteractionPointer {
   handleDown_(evt) {
     const map = evt.map;
 
-    const feature = /** @type {olFeature<import("ol/geom/Geometry.js").default>} */(
-      map.forEachFeatureAtPixel(evt.pixel, feature =>
-        (feature.get('siblingX') && feature.get('siblingY') ? feature : undefined)
-      )
-    );
+    const feature = /** @type {olFeature<import("ol/geom/Geometry.js").default>} */ (map.forEachFeatureAtPixel(
+      evt.pixel,
+      (feature) => (feature.get('siblingX') && feature.get('siblingY') ? feature : undefined)
+    ));
 
     if (feature) {
       this.feature_ = feature;
@@ -362,8 +352,7 @@ class ModifyRectangle extends olInteractionPointer {
     }
     const feature = this.feature_;
 
-    const geometry = /** @type {import("ol/geom/SimpleGeometry.js").default} */
-        (feature.getGeometry());
+    const geometry = /** @type {import("ol/geom/SimpleGeometry.js").default} */ (feature.getGeometry());
 
     if (geometry instanceof olGeomPoint) {
       geometry.setCoordinates(evt.coordinate);
@@ -381,16 +370,13 @@ class ModifyRectangle extends olInteractionPointer {
       const originCoordinate = this.params_.originCoordinate;
 
       // Calculate new positions of siblings
-      const b2Pixel = this.calculateNewPixel_(
-        originPixel, destinationPixel, vectorX);
+      const b2Pixel = this.calculateNewPixel_(originPixel, destinationPixel, vectorX);
       const b2Coordinate = this.getMap().getCoordinateFromPixel(b2Pixel);
       siblingXPoint.setCoordinates(b2Coordinate);
 
-      const c2Pixel = this.calculateNewPixel_(
-        originPixel, destinationPixel, vectorY);
+      const c2Pixel = this.calculateNewPixel_(originPixel, destinationPixel, vectorY);
       const c2Coordinate = this.getMap().getCoordinateFromPixel(c2Pixel);
       siblingYPoint.setCoordinates(c2Coordinate);
-
 
       // Resize the box
       const boxFeature = feature.get('boxFeature');
@@ -409,17 +395,12 @@ class ModifyRectangle extends olInteractionPointer {
    * @return {import("ol/pixel.js").Pixel} The new pixel of the point
    * @private
    */
-  calculateNewPixel_(
-    origin, destination, vector) {
-
+  calculateNewPixel_(origin, destination, vector) {
     const aVector = [destination[0] - origin[0], destination[1] - origin[1]];
 
     const abScalarProduct = aVector[0] * vector[0] + aVector[1] * vector[1];
 
-    const deltaVector = [
-      (vector[0] * abScalarProduct),
-      (vector[1] * abScalarProduct)
-    ];
+    const deltaVector = [vector[0] * abScalarProduct, vector[1] * abScalarProduct];
 
     return [deltaVector[0] + origin[0], deltaVector[1] + origin[1]];
   }
@@ -445,7 +426,6 @@ class ModifyRectangle extends olInteractionPointer {
  * @property {Array<olFeature<import("ol/geom/Geometry.js").default>>} corners
  */
 
-
 /**
  * @typedef {Object} ModifyParams
  * @property {import("ol/coordinate.js").Coordinate} originCoordinate
@@ -455,6 +435,5 @@ class ModifyRectangle extends olInteractionPointer {
  * @property {number[]} vectorX
  * @property {number[]} vectorY
  */
-
 
 export default ModifyRectangle;

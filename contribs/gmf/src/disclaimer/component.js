@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 import {getUid as olUtilGetUid} from 'ol/util.js';
 import {listen} from 'ol/events.js';
@@ -33,7 +32,6 @@ import ngeoMiscEventHelper from 'ngeo/misc/EventHelper.js';
 import {CollectionEvent} from 'ol/Collection.js';
 
 import 'angular-sanitize';
-
 
 /**
  * Extension of type {import('ngeo/message/Message.js').Message}
@@ -59,7 +57,6 @@ const module = angular.module('gmfDisclaimer', [
   ngeoMiscEventHelper.name,
 ]);
 
-
 /**
  * Used metadata:
  *
@@ -80,9 +77,14 @@ const module = angular.module('gmfDisclaimer', [
  * @ngname GmfDisclaimerController
  */
 function DisclaimerController(
-  $element, $sce, $timeout, gettextCatalog, ngeoDisclaimer, ngeoEventHelper, ngeoLayerHelper
+  $element,
+  $sce,
+  $timeout,
+  gettextCatalog,
+  ngeoDisclaimer,
+  ngeoEventHelper,
+  ngeoLayerHelper
 ) {
-
   /**
    * @type {?import("ol/Map.js").default}
    */
@@ -169,11 +171,10 @@ function DisclaimerController(
   this.dataLayerGroup_ = null;
 }
 
-
 /**
  * Initialise the controller.
  */
-DisclaimerController.prototype.$onInit = function() {
+DisclaimerController.prototype.$onInit = function () {
   if (!this.map) {
     throw new Error('Missing map');
   }
@@ -187,7 +188,7 @@ DisclaimerController.prototype.$onInit = function() {
  * @param {Event|import('ol/events/Event.js').default} evt Event.
  * @private
  */
-DisclaimerController.prototype.handleLayersAdd_ = function(evt) {
+DisclaimerController.prototype.handleLayersAdd_ = function (evt) {
   if (evt instanceof CollectionEvent) {
     this.timeout_(() => {
       const layer = evt.element;
@@ -199,12 +200,11 @@ DisclaimerController.prototype.handleLayersAdd_ = function(evt) {
   }
 };
 
-
 /**
  * @param {Event|import('ol/events/Event.js').default} evt Event.
  * @private
  */
-DisclaimerController.prototype.handleLayersRemove_ = function(evt) {
+DisclaimerController.prototype.handleLayersRemove_ = function (evt) {
   if (evt instanceof CollectionEvent) {
     const layer = evt.element;
     if (!(layer instanceof olLayerBase)) {
@@ -215,44 +215,26 @@ DisclaimerController.prototype.handleLayersRemove_ = function(evt) {
   }
 };
 
-
 /**
  * @param {import("ol/layer/Base.js").default} layer Layer.
  * @private
  */
-DisclaimerController.prototype.registerLayer_ = function(layer) {
-
+DisclaimerController.prototype.registerLayer_ = function (layer) {
   const layerUid = olUtilGetUid(layer);
 
   if (layer instanceof olLayerGroup) {
-
     // (1) Listen to added/removed layers to this group
+    this.eventHelper_.addListenerKey(layerUid, listen(layer.getLayers(), 'add', this.handleLayersAdd_, this));
     this.eventHelper_.addListenerKey(
       layerUid,
-      listen(
-        layer.getLayers(),
-        'add',
-        this.handleLayersAdd_,
-        this
-      )
-    );
-    this.eventHelper_.addListenerKey(
-      layerUid,
-      listen(
-        layer.getLayers(),
-        'remove',
-        this.handleLayersRemove_,
-        this
-      )
+      listen(layer.getLayers(), 'remove', this.handleLayersRemove_, this)
     );
 
     // (2) Register existing layers in the group
     layer.getLayers().forEach((layer) => {
       this.registerLayer_(layer);
     });
-
   } else {
-
     if (this.layerVisibility) {
       // Show disclaimer messages for this layer
       if (layer.getVisible()) {
@@ -276,45 +258,38 @@ DisclaimerController.prototype.registerLayer_ = function(layer) {
   }
 };
 
-
 /**
  * @param {import("ol/layer/Base.js").default} layer Layer.
  * @private
  */
-DisclaimerController.prototype.unregisterLayer_ = function(layer) {
-
+DisclaimerController.prototype.unregisterLayer_ = function (layer) {
   const layerUid = olUtilGetUid(layer);
 
   if (layer instanceof olLayerGroup) {
-
     // (1) Clear event listeners
     this.eventHelper_.clearListenerKey(layerUid);
 
     // (2) Unregister existing layers in the group
-    layer.getLayers().forEach(layer => this.unregisterLayer_(layer));
-
+    layer.getLayers().forEach((layer) => this.unregisterLayer_(layer));
   } else {
     // Close all disclaimer messages for this layer
     this.closeAll_(layer);
   }
-
 };
 
-
-DisclaimerController.prototype.$onDestroy = function() {
+DisclaimerController.prototype.$onDestroy = function () {
   if (!this.dataLayerGroup_) {
     throw new Error('Missing dataLayerGroup');
   }
   this.unregisterLayer_(this.dataLayerGroup_);
 };
 
-
 /**
  * @param {string} layerUid Layer identifier.
  * @param {string} msg Disclaimer message.
  * @private
  */
-DisclaimerController.prototype.showDisclaimerMessage_ = function(layerUid, msg) {
+DisclaimerController.prototype.showDisclaimerMessage_ = function (layerUid, msg) {
   msg = this.gettextCatalog_.getString(msg);
   if (this.external) {
     if (!this.msgs_.includes(msg)) {
@@ -328,7 +303,7 @@ DisclaimerController.prototype.showDisclaimerMessage_ = function(layerUid, msg) 
       msg: msg,
       layerUid: layerUid,
       target: this.element_,
-      type: MessageType.WARNING
+      type: MessageType.WARNING,
     };
     if (this.popup) {
       options.popup = this.popup;
@@ -337,12 +312,11 @@ DisclaimerController.prototype.showDisclaimerMessage_ = function(layerUid, msg) 
   }
 };
 
-
 /**
  * @param {import("ol/layer/Base.js").default} layer Layer
  * @private
  */
-DisclaimerController.prototype.closeAll_ = function(layer) {
+DisclaimerController.prototype.closeAll_ = function (layer) {
   const disclaimers = layer.get('disclaimers');
   if (disclaimers) {
     const layerUid = olUtilGetUid(layer);
@@ -353,12 +327,11 @@ DisclaimerController.prototype.closeAll_ = function(layer) {
   }
 };
 
-
 /**
  * @param {import("ol/layer/Base.js").default} layer Layer
  * @private
  */
-DisclaimerController.prototype.showAll_ = function(layer) {
+DisclaimerController.prototype.showAll_ = function (layer) {
   const disclaimers = layer.get('disclaimers');
   if (disclaimers) {
     const layerUid = olUtilGetUid(layer);
@@ -369,12 +342,11 @@ DisclaimerController.prototype.showAll_ = function(layer) {
   }
 };
 
-
 /**
  * @param {import("ol/layer/Base.js").default} layer Layer
  * @private
  */
-DisclaimerController.prototype.update_ = function(layer) {
+DisclaimerController.prototype.update_ = function (layer) {
   const disclaimers = layer.get('disclaimers');
   if (disclaimers) {
     if ('all' in disclaimers) {
@@ -382,8 +354,7 @@ DisclaimerController.prototype.update_ = function(layer) {
       console.assert(Object.keys(disclaimers).length === 1);
       this.showAll_(layer);
     } else {
-      const layerWMS =
-        /** @type {import("ol/layer/Layer.js").default<import("ol/source/ImageWMS.js").default>} */(layer);
+      const layerWMS = /** @type {import("ol/layer/Layer.js").default<import("ol/source/ImageWMS.js").default>} */ (layer);
       const sourceWMS = layerWMS.getSource();
       if (sourceWMS.getParams) {
         const layers = sourceWMS.getParams()['LAYERS'];
@@ -406,7 +377,7 @@ DisclaimerController.prototype.update_ = function(layer) {
  * @param {string} msg Disclaimer message.
  * @private
  */
-DisclaimerController.prototype.closeDisclaimerMessage_ = function(layerUid, msg) {
+DisclaimerController.prototype.closeDisclaimerMessage_ = function (layerUid, msg) {
   msg = this.gettextCatalog_.getString(msg);
   if (this.external) {
     this.visibility = false;
@@ -418,7 +389,7 @@ DisclaimerController.prototype.closeDisclaimerMessage_ = function(layerUid, msg)
       msg: msg,
       layerUid: layerUid,
       target: this.element_,
-      type: MessageType.WARNING
+      type: MessageType.WARNING,
     };
     if (this.popup) {
       options.popup = this.popup;
@@ -426,7 +397,6 @@ DisclaimerController.prototype.closeDisclaimerMessage_ = function(layerUid, msg)
     this.disclaimer_.close(options);
   }
 };
-
 
 /**
  * Provide a "disclaimer" component for GeoMapFish that is bound to the
@@ -487,12 +457,10 @@ const disclaimerComponent = {
     'map': '=gmfDisclaimerMap',
     'external': '<?gmfDisclaimerExternal',
     'visibility': '=?gmfDisclaimerExternalVisibility',
-    'msg': '=?gmfDisclaimerExternalMsg'
-  }
+    'msg': '=?gmfDisclaimerExternalMsg',
+  },
 };
 
-
 module.component('gmfDisclaimer', disclaimerComponent);
-
 
 export default module;

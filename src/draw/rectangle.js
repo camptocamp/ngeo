@@ -19,20 +19,17 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 import ngeoGeometryType from 'ngeo/GeometryType.js';
 import {listen} from 'ol/events.js';
 import olInteractionDraw from 'ol/interaction/Draw.js';
 import olGeomPolygon from 'ol/geom/Polygon.js';
 
-
 /**
  * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('ngeoDrawrectangle', []);
-
 
 /**
  * @return {angular.IDirective} The directive specs.
@@ -62,41 +59,37 @@ function drawRectangleComponent() {
             geometry = new olGeomPolygon([]);
           }
           const start = coordinates[0];
-          if (!(Array.isArray(start))) {
+          if (!Array.isArray(start)) {
             throw new Error('Wrong coordinates type');
           }
           const end = coordinates[1];
-          if (!(Array.isArray(end))) {
+          if (!Array.isArray(end)) {
             throw new Error('Wrong coordinates type');
           }
-          geometry.setCoordinates([
-            [start, [start[0], end[1]], end, [end[0], start[1]], start]
-          ]);
+          geometry.setCoordinates([[start, [start[0], end[1]], end, [end[0], start[1]], start]]);
           return geometry;
         },
-        maxPoints: 2
+        maxPoints: 2,
       });
 
       if (drawFeatureCtrl.uid) {
-        drawRectangle.set(
-          'ngeo-interaction-draw-uid',
-          `${drawFeatureCtrl.uid}-rectangle`
-        );
+        drawRectangle.set('ngeo-interaction-draw-uid', `${drawFeatureCtrl.uid}-rectangle`);
       }
 
       drawFeatureCtrl.registerInteraction(drawRectangle);
       drawFeatureCtrl.drawRectangle = drawRectangle;
 
-      listen(drawRectangle, 'drawend', drawFeatureCtrl.handleDrawEnd.bind(
-        drawFeatureCtrl, ngeoGeometryType.RECTANGLE
-      ), drawFeatureCtrl);
+      listen(
+        drawRectangle,
+        'drawend',
+        drawFeatureCtrl.handleDrawEnd.bind(drawFeatureCtrl, ngeoGeometryType.RECTANGLE),
+        drawFeatureCtrl
+      );
       listen(drawRectangle, 'change:active', drawFeatureCtrl.handleActiveChange, drawFeatureCtrl);
-    }
+    },
   };
 }
 
-
 module.directive('ngeoDrawrectangle', drawRectangleComponent);
-
 
 export default module;

@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 import ngeoFormatXSDAttribute from 'ngeo/format/XSDAttribute.js';
 
@@ -28,14 +27,8 @@ import ngeoEditingAttributesComponent from 'ngeo/editing/attributesComponent.js'
 import olFeature from 'ol/Feature.js';
 import ngeoMapModule from 'ngeo/map/module.js';
 
-
 /** @type {angular.IModule} */
-const module = angular.module('app', [
-  'gettext',
-  ngeoMapModule.name,
-  ngeoEditingAttributesComponent.name,
-]);
-
+const module = angular.module('app', ['gettext', ngeoMapModule.name, ngeoEditingAttributesComponent.name]);
 
 /**
  * @param {angular.IHttpService} $http Angular http service.
@@ -45,7 +38,6 @@ const module = angular.module('app', [
  * @constructor
  */
 function MainController($http, $timeout, $scope) {
-
   /**
    * @type {angular.ITimeoutService}
    * @private
@@ -67,11 +59,10 @@ function MainController($http, $timeout, $scope) {
    */
   this.feature = new olFeature({
     'name': 'A feature',
-    'kind': 'house'
+    'kind': 'house',
   });
 
-  $http.get('data/xsdattributes.xml').then(
-    this.handleXSDAttributeGet_.bind(this));
+  $http.get('data/xsdattributes.xml').then(this.handleXSDAttributeGet_.bind(this));
 
   //
   // Visual feedback for changes applied to feature:
@@ -100,23 +91,21 @@ function MainController($http, $timeout, $scope) {
   );
 }
 
-
 /**
  * @param {angular.IHttpResponse<string|Document|Element>} resp Ajax response.
  * @return {Array<import('ngeo/format/Attribute.js').Attribute>} List of attributes.
  * @private
  */
-MainController.prototype.handleXSDAttributeGet_ = function(resp) {
+MainController.prototype.handleXSDAttributeGet_ = function (resp) {
   const format = new ngeoFormatXSDAttribute();
   const attributes = format.read(resp.data);
   this.attributes = attributes;
   return attributes;
 };
 
-
 /**
  */
-MainController.prototype.updateName = function() {
+MainController.prototype.updateName = function () {
   this.timeout_(() => {
     this.feature.set('name', 'An alternate name');
   }, 0);
@@ -125,12 +114,10 @@ MainController.prototype.updateName = function() {
 /**
  * @param {string} newMessage New message to add to log.
  */
-MainController.prototype.appendLog = function(newMessage) {
+MainController.prototype.appendLog = function (newMessage) {
   this.log = `${newMessage}\n${this.log}`;
 };
 
-
 module.controller('MainController', MainController);
-
 
 export default module;

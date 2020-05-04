@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 import {interactionDecoration} from 'ngeo/misc/decorate.js';
 import ngeoMiscFilters from 'ngeo/misc/filters.js';
@@ -30,15 +29,11 @@ import olStyleStroke from 'ol/style/Stroke.js';
 import olStyleStyle from 'ol/style/Style.js';
 import MobileDraw from 'ngeo/interaction/MobileDraw.js';
 
-
 /**
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfMobileMeasureBase', [
-  ngeoMiscFilters.name,
-]);
-
+const module = angular.module('gmfMobileMeasureBase', [ngeoMiscFilters.name]);
 
 /**
  * Base controller class for Length and Area components.
@@ -53,7 +48,6 @@ const module = angular.module('gmfMobileMeasureBase', [
  * @hidden
  */
 export function MeasueMobileBaseController($scope, $filter, gettextCatalog) {
-
   /**
    * @type {angular.IScope}
    * @protected
@@ -82,12 +76,15 @@ export function MeasueMobileBaseController($scope, $filter, gettextCatalog) {
    */
   this.active = false;
 
-  this.scope.$watch(() => this.active, (newVal) => {
-    if (!this.measure) {
-      throw new Error('Missing measure');
+  this.scope.$watch(
+    () => this.active,
+    (newVal) => {
+      if (!this.measure) {
+        throw new Error('Missing measure');
+      }
+      this.measure.setActive(newVal);
     }
-    this.measure.setActive(newVal);
-  });
+  );
 
   /**
    * @type {?number}
@@ -99,23 +96,23 @@ export function MeasueMobileBaseController($scope, $filter, gettextCatalog) {
    */
   this.sketchStyle = new olStyleStyle({
     fill: new olStyleFill({
-      color: 'rgba(255, 255, 255, 0.2)'
+      color: 'rgba(255, 255, 255, 0.2)',
     }),
     stroke: new olStyleStroke({
       color: 'rgba(0, 0, 0, 0.5)',
       lineDash: [10, 10],
-      width: 2
+      width: 2,
     }),
     image: new olStyleRegularShape({
       stroke: new olStyleStroke({
         color: 'rgba(0, 0, 0, 0.7)',
-        width: 2
+        width: 2,
       }),
       points: 4,
       radius: 8,
       radius2: 0,
-      angle: 0
-    })
+      angle: 0,
+    }),
   });
 
   /**
@@ -144,11 +141,10 @@ export function MeasueMobileBaseController($scope, $filter, gettextCatalog) {
   this.valid = false;
 }
 
-
 /**
  * Initialise the controller.
  */
-MeasueMobileBaseController.prototype.init = function() {
+MeasueMobileBaseController.prototype.init = function () {
   if (!this.map) {
     throw new Error('Missing map');
   }
@@ -169,27 +165,42 @@ MeasueMobileBaseController.prototype.init = function() {
   Object.defineProperty(this, 'hasPoints', {
     get() {
       return this.drawInteraction.getFeature() !== null;
-    }
+    },
   });
 
-  listen(drawInteraction, 'change:dirty', (evt) => {
-    this.dirty = drawInteraction.getDirty();
+  listen(
+    drawInteraction,
+    'change:dirty',
+    (evt) => {
+      this.dirty = drawInteraction.getDirty();
 
-    // this is where the angular scope is forced to be applied. We
-    // only need to do this when dirty, as going to "no being dirty"
-    // is made by a click on a button where Angular is within scope
-    if (this.dirty) {
-      this.scope.$apply();
-    }
-  }, this);
+      // this is where the angular scope is forced to be applied. We
+      // only need to do this when dirty, as going to "no being dirty"
+      // is made by a click on a button where Angular is within scope
+      if (this.dirty) {
+        this.scope.$apply();
+      }
+    },
+    this
+  );
 
-  listen(drawInteraction, 'change:drawing', (evt) => {
-    this.drawing = drawInteraction.getDrawing();
-  }, this);
+  listen(
+    drawInteraction,
+    'change:drawing',
+    (evt) => {
+      this.drawing = drawInteraction.getDrawing();
+    },
+    this
+  );
 
-  listen(drawInteraction, 'change:valid', (evt) => {
-    this.valid = drawInteraction.getValid();
-  }, this);
+  listen(
+    drawInteraction,
+    'change:valid',
+    (evt) => {
+      this.valid = drawInteraction.getValid();
+    },
+    this
+  );
 
   this.map.addInteraction(this.measure);
 };

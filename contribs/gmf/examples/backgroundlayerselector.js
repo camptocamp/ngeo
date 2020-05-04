@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 import appURL from './url.js';
 import './backgroundlayerselector.css';
@@ -32,7 +31,6 @@ import EPSG2056 from '@geoblocks/proj/src/EPSG_2056.js';
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
 
-
 /**
  * @type {angular.IModule}
  * @hidden
@@ -44,11 +42,9 @@ const module = angular.module('gmfapp', [
   gmfThemeThemes.name,
 ]);
 
-
 module.value('gmfTreeUrl', appURL.GMF_THEMES);
 
 module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
-
 
 /**
  * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes Themes service.
@@ -56,7 +52,6 @@ module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
  * @ngInject
  */
 function MainController(gmfThemes) {
-
   gmfThemes.loadThemes();
 
   /**
@@ -68,13 +63,11 @@ function MainController(gmfThemes) {
       center: [2632464, 1185457],
       projection: EPSG2056,
       minZoom: 3,
-      zoom: 3
-    })
+      zoom: 3,
+    }),
   });
 }
 
-
 module.controller('MainController', MainController);
-
 
 export default module;

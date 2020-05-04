@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 import gmfSearchComponent from 'gmf/search/component.js';
 import gmfSearchFulltextSearch from 'gmf/search/FulltextSearch.js';
@@ -29,7 +28,4 @@ import './search.scss';
 /**
  * @type {angular.IModule}
  */
-export default angular.module('gmfSearchModule', [
-  gmfSearchComponent.name,
-  gmfSearchFulltextSearch.name
-]);
+export default angular.module('gmfSearchModule', [gmfSearchComponent.name, gmfSearchFulltextSearch.name]);

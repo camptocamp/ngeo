@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 /**
  */
 
@@ -40,12 +39,7 @@ import olLayerTile from 'ol/layer/Tile.js';
 import olSourceOSM from 'ol/source/OSM.js';
 
 /** @type {angular.IModule} **/
-const module = angular.module('app', [
-  'gettext',
-  ngeoMapModule.name,
-  ngeoRoutingModule.name
-]);
-
+const module = angular.module('app', ['gettext', ngeoMapModule.name, ngeoRoutingModule.name]);
 
 /**
  * The application's main directive.
@@ -53,20 +47,19 @@ const module = angular.module('app', [
  * @ngInject
  */
 function MainController() {
-
   /**
    * @type {import("ol/Map.js").default}
    */
   this.map = new olMap({
     layers: [
       new olLayerTile({
-        source: new olSourceOSM()
-      })
+        source: new olSourceOSM(),
+      }),
     ],
     view: new olView({
       center: [931010.1535989442, 5961705.842297254],
-      zoom: 9
-    })
+      zoom: 9,
+    }),
   });
 
   /**
@@ -76,6 +69,5 @@ function MainController() {
 }
 
 module.controller('MainController', MainController);
-
 
 export default module;

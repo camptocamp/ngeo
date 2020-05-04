@@ -19,10 +19,10 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
-import gmfControllersAbstractAPIController, {AbstractAPIController}
-  from 'gmf/controllers/AbstractAPIController.js';
+import gmfControllersAbstractAPIController, {
+  AbstractAPIController,
+} from 'gmf/controllers/AbstractAPIController.js';
 import gmfContextualdataModule from 'gmf/contextualdata/module.js';
 import gmfDatasourceDataSourceBeingFiltered from 'gmf/datasource/DataSourceBeingFiltered.js';
 import gmfEditingModule from 'gmf/editing/module.js';
@@ -99,9 +99,12 @@ export class AbstractDesktopController extends AbstractAPIController {
      */
     this.googleStreetViewActive = false;
 
-    $scope.$watch(() => this.googleStreetViewActive, (newVal) => {
-      this.setDataPanelMaxResizableWidth_();
-    });
+    $scope.$watch(
+      () => this.googleStreetViewActive,
+      (newVal) => {
+        this.setDataPanelMaxResizableWidth_();
+      }
+    );
 
     /**
      * @type {import("ol/style/Style.js").default}
@@ -112,8 +115,8 @@ export class AbstractDesktopController extends AbstractAPIController {
         font: '900 30px "Font Awesome 5 Free"',
         offsetY: -15,
         stroke: new olStyleStroke({color: '#ffffff', width: 3}),
-        text: '\uf041'
-      })
+        text: '\uf041',
+      }),
     });
 
     /**
@@ -124,14 +127,16 @@ export class AbstractDesktopController extends AbstractAPIController {
     const body = $('body');
 
     // initialize tooltips
-    body.tooltip(/** @type {Bootstrap.TooltipOption} */ ({
-      container: 'body',
-      trigger: 'hover',
-      selector: '[data-toggle="tooltip"]',
+    body.tooltip(
+      /** @type {Bootstrap.TooltipOption} */ ({
+        container: 'body',
+        trigger: 'hover',
+        selector: '[data-toggle="tooltip"]',
 
-      // Avoid error in config type checking with IE11
-      sanitizeFn: $injector.get('$sanitize')
-    }));
+        // Avoid error in config type checking with IE11
+        sanitizeFn: $injector.get('$sanitize'),
+      })
+    );
 
     // deactivate tooltips on touch device
     body.on('touchstart.detectTouch', () => {
@@ -147,9 +152,9 @@ export class AbstractDesktopController extends AbstractAPIController {
     this.editFeatureVectorLayer = new olLayerVector({
       source: new olSourceVector({
         wrapX: false,
-        features: new olCollection()
+        features: new olCollection(),
       }),
-      style: (feature, resolution) => ngeoFeatureHelper.createEditingStyles(feature)
+      style: (feature, resolution) => ngeoFeatureHelper.createEditingStyles(feature),
       // style: ngeoFeatureHelper.createEditingStyles.bind(ngeoFeatureHelper)
     });
     this.editFeatureVectorLayer.setMap(this.map);
@@ -167,24 +172,21 @@ export class AbstractDesktopController extends AbstractAPIController {
 
     /**
      * The gmf layer being swipe.
-      * @type {import('gmf/datasource/LayerBeingSwipe.js').LayerBeingSwipe}
+     * @type {import('gmf/datasource/LayerBeingSwipe.js').LayerBeingSwipe}
      */
     this.gmfLayerBeingSwipe = $injector.get('gmfLayerBeingSwipe');
 
     const editFeatureActivate = new ngeoMiscToolActivate(this, 'editFeatureActive');
     ngeoToolActivateMgr.registerTool('mapTools', editFeatureActivate, false);
 
-    const googleStreetViewActivate = new ngeoMiscToolActivate(
-      this,
-      'googleStreetViewActive'
-    );
+    const googleStreetViewActivate = new ngeoMiscToolActivate(this, 'googleStreetViewActive');
     ngeoToolActivateMgr.registerTool('mapTools', googleStreetViewActivate, false);
 
     /**
      * @type {import('ngeo/map/scaleselector.js').ScaleselectorOptions}
      */
     this.scaleSelectorOptions = {
-      dropup: true
+      dropup: true,
     };
 
     /**
@@ -194,15 +196,18 @@ export class AbstractDesktopController extends AbstractAPIController {
 
     // Close the login panel on successful login, after the new themes
     // have finished loading.
-    $scope.$watch(() => this.gmfUser.username, (newVal) => {
-      if (newVal !== null && this.loginActive) {
-        this.postLoading = true;
-        this.gmfThemes.getThemesObject().finally(() => {
-          this.postLoading = false;
-          this.loginActive = false;
-        });
+    $scope.$watch(
+      () => this.gmfUser.username,
+      (newVal) => {
+        if (newVal !== null && this.loginActive) {
+          this.postLoading = true;
+          this.gmfThemes.getThemesObject().finally(() => {
+            this.postLoading = false;
+            this.loginActive = false;
+          });
+        }
       }
-    });
+    );
 
     /**
      * @type {number}
@@ -212,15 +217,14 @@ export class AbstractDesktopController extends AbstractAPIController {
 
     // Make the data panel (on the left) resizable...
     const dataPanelCls = 'gmf-app-data-panel';
-    const $dataPanel = $(`.${dataPanelCls}`)
-      .resizable({
-        'ghost': true,
-        'handles': 'e',
-        'minWidth': this.dataPanelMinResizableWidth_,
-        'stop': (event, ui) => {
-          this.map.updateSize();
-        }
-      });
+    const $dataPanel = $(`.${dataPanelCls}`).resizable({
+      'ghost': true,
+      'handles': 'e',
+      'minWidth': this.dataPanelMinResizableWidth_,
+      'stop': (event, ui) => {
+        this.map.updateSize();
+      },
+    });
 
     /**
      * @type {JQuery}
@@ -229,38 +233,32 @@ export class AbstractDesktopController extends AbstractAPIController {
     this.$dataPanel_ = $dataPanel;
 
     // ... and collapsible when the handle is clicked.
-    const $resizableEastHandle = $dataPanel
-      .find('.ui-resizable-e')
-      .on('click', (evt) => {
-        this.dataPanelActive = !this.dataPanelActive;
-        this.$scope.$apply();
-      });
+    const $resizableEastHandle = $dataPanel.find('.ui-resizable-e').on('click', (evt) => {
+      this.dataPanelActive = !this.dataPanelActive;
+      this.$scope.$apply();
+    });
 
     // Add an extra element to act as a button to be clicked on for
     // collapse/expand
     $('<div>', {
-      'class': `${dataPanelCls}-toggle-btn btn prime btn-sm`
+      'class': `${dataPanelCls}-toggle-btn btn prime btn-sm`,
     })
       .appendTo($resizableEastHandle)
       .append(
         $('<span>', {
-          'class': `fa fa-angle-double-left ${dataPanelCls}-collapse-btn`
+          'class': `fa fa-angle-double-left ${dataPanelCls}-collapse-btn`,
         })
       )
       .append(
         $('<span>', {
-          'class': `fa fa-angle-double-right ${dataPanelCls}-expand-btn`
+          'class': `fa fa-angle-double-right ${dataPanelCls}-expand-btn`,
         })
       );
 
     // Listen to window resize to set the max resizable width
     // accordingly, and set it also right away.
     const ngeoDebounce = $injector.get('ngeoDebounce');
-    listen(
-      window,
-      'resize',
-      ngeoDebounce(this.setDataPanelMaxResizableWidth_.bind(this), 50, true)
-    );
+    listen(window, 'resize', ngeoDebounce(this.setDataPanelMaxResizableWidth_.bind(this), 50, true));
     this.setDataPanelMaxResizableWidth_();
   }
 
@@ -275,7 +273,6 @@ export class AbstractDesktopController extends AbstractAPIController {
    * @hidden
    */
   setDataPanelMaxResizableWidth_() {
-
     let rightPanelWidth = 320;
     if (this.googleStreetViewActive) {
       rightPanelWidth += 140;
@@ -318,7 +315,7 @@ const module = angular.module('GmfAbstractDesktopControllerModule', [
   gmfRasterComponent.name,
   ngeoDrawFeatures.name,
   gmfImportModule.name,
-  ngeoMapswipeModule.name
+  ngeoMapswipeModule.name,
 ]);
 
 module.controller('AbstractDesktopController', AbstractDesktopController);

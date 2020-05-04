@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 // @ts-nocheck
 import angular from 'angular';
 import ngeoMiscSyncArrays from 'ngeo/misc/syncArrays.js';
@@ -42,7 +41,7 @@ describe('ngeo.misc.syncArrays', () => {
       const ngeoSyncArrays = ngeoMiscSyncArrays;
       arr1 = [0, 10, 1, 20, 2, 30, 3];
       arr2 = [];
-      const filter = function(n) {
+      const filter = function (n) {
         return n < 10;
       };
       dereg = ngeoSyncArrays(arr1, arr2, false, $rootScope, filter);
@@ -80,7 +79,6 @@ describe('ngeo.misc.syncArrays', () => {
       $rootScope.$digest();
       expect(arr1).toEqual([0, 10, 1, 20, 2, 30, 3]);
     });
-
   });
 
   describe('arr1 and arr2 in reverse order', () => {
@@ -92,7 +90,7 @@ describe('ngeo.misc.syncArrays', () => {
         const ngeoSyncArrays = ngeoMiscSyncArrays;
         arr1 = [0, 10, 1, 20, 2, 30, 3];
         arr2 = [];
-        const filter = function(n) {
+        const filter = function (n) {
           return n < 10;
         };
         dereg = ngeoSyncArrays(arr1, arr2, true, $rootScope, filter);
@@ -131,6 +129,5 @@ describe('ngeo.misc.syncArrays', () => {
       $rootScope.$digest();
       expect(arr1).toEqual([0, 10, 1, 20, 2, 30, 3]);
     });
-
   });
 });

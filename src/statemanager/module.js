@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 import ngeoStatemanagerLocation from 'ngeo/statemanager/Location.js';
 import ngeoStatemanagerService from 'ngeo/statemanager/Service.js';
@@ -29,5 +28,5 @@ import ngeoStatemanagerService from 'ngeo/statemanager/Service.js';
  */
 export default angular.module('ngeoStatemanagerModule', [
   ngeoStatemanagerLocation.name,
-  ngeoStatemanagerService.name
+  ngeoStatemanagerService.name,
 ]);

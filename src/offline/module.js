@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import ngeoOfflineComponent from 'ngeo/offline/component.js';
 import ngeoOfflineNetworkStatus from 'ngeo/offline/NetworkStatus.js';
 import ngeoOfflineServiceManager from 'ngeo/offline/ServiceManager.js';
@@ -27,7 +26,6 @@ import downloader from 'ngeo/offline/Downloader.js';
 import restorer from 'ngeo/offline/Restorer.js';
 import mode from 'ngeo/offline/Mode.js';
 import angular from 'angular';
-
 
 /**
  * @type {!angular.IModule}
@@ -38,10 +36,9 @@ const exports = angular.module('ngeoOfflineModule', [
   ngeoOfflineServiceManager.module.name,
   downloader.module.name,
   restorer.module.name,
-  mode.module.name
+  mode.module.name,
 ]);
 
 exports.value('ngeoOfflineGutter', 96);
-
 
 export default exports;

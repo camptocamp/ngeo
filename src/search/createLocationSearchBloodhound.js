@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 /* global Bloodhound */
 
 import angular from 'angular';
@@ -31,7 +30,6 @@ import olGeomPoint from 'ol/geom/Point.js';
 import olFeature from 'ol/Feature.js';
 
 import 'corejs-typeahead';
-
 
 /**
  * @typedef {Object} Item
@@ -46,18 +44,15 @@ import 'corejs-typeahead';
  * @property {?number[]} bbox
  */
 
-
 /**
  * @typedef {Object} Result
  * @property {Item} attrs
  */
 
-
 /**
  * @typedef {Object} Results
  * @property {Result[]} results
  */
-
 
 /**
  * @typedef {Object} LocationSearchOptions
@@ -73,7 +68,6 @@ import 'corejs-typeahead';
  * @property {function(string, JQueryAjaxSettings): JQueryAjaxSettings} [prepare] Optional function to
  * prepare the request.
  */
-
 
 /**
  * @param {LocationSearchOptions=} opt_options Options.
@@ -96,12 +90,7 @@ function createLocationSearchBloodhound(opt_options) {
     const regex = /BOX\((.*?) (.*?),(.*?) (.*?)\)/g;
     const match = regex.exec(bbox);
     if (match !== null) {
-      return [
-        parseFloat(match[1]),
-        parseFloat(match[2]),
-        parseFloat(match[3]),
-        parseFloat(match[4])
-      ];
+      return [parseFloat(match[1]), parseFloat(match[2]), parseFloat(match[3]), parseFloat(match[4])];
     } else {
       return null;
     }
@@ -110,7 +99,7 @@ function createLocationSearchBloodhound(opt_options) {
   /**
    * @param {string} label
    */
-  const removeHtmlTags = label => label.replace(/<\/?[ib]>/g, '');
+  const removeHtmlTags = (label) => label.replace(/<\/?[ib]>/g, '');
 
   /**
    * @param {string} label
@@ -140,7 +129,7 @@ function createLocationSearchBloodhound(opt_options) {
           }
         }
 
-        return (options.prepare !== undefined) ? options.prepare(query, settings) : settings;
+        return options.prepare !== undefined ? options.prepare(query, settings) : settings;
       },
       transform: (parsedResponse_) => {
         const parsedResponse = parsedResponse_;
@@ -175,28 +164,31 @@ function createLocationSearchBloodhound(opt_options) {
         });
 
         return features;
-      }
+      },
     },
     // datumTokenizer is required by the Bloodhound constructor but it
     // is not used when only a remote is passsed to Bloodhound.
     datumTokenizer: (datum) => {
       return [];
     },
-    queryTokenizer: Bloodhound.tokenizers.whitespace
+    queryTokenizer: Bloodhound.tokenizers.whitespace,
   };
 
   // The options objects are cloned to avoid updating the passed object
   /** @type {Bloodhound.BloodhoundOptions<Results>} */
-  const bhOptions = Object.assign({}, options.options || {
-    /**
-     * @param {any} datum
-     * @return {any}
-     */
-    datumTokenizer: (datum) => {
-      return [];
-    },
-    queryTokenizer: Bloodhound.tokenizers.whitespace
-  });
+  const bhOptions = Object.assign(
+    {},
+    options.options || {
+      /**
+       * @param {any} datum
+       * @return {any}
+       */
+      datumTokenizer: (datum) => {
+        return [];
+      },
+      queryTokenizer: Bloodhound.tokenizers.whitespace,
+    }
+  );
   const remoteOptions = Object.assign({}, options.remoteOptions || {});
 
   if (bhOptions.remote) {
@@ -208,11 +200,10 @@ function createLocationSearchBloodhound(opt_options) {
   Object.assign(bloodhoundOptions, bhOptions);
   Object.assign(bloodhoundOptions.remote, remoteOptions);
 
-  return /** @type {Bloodhound<olFeature<import('ol/geom/Geometry.js').default>[]>} */(
-    new Bloodhound(bloodhoundOptions)
-  );
+  return /** @type {Bloodhound<olFeature<import('ol/geom/Geometry.js').default>[]>} */ (new Bloodhound(
+    bloodhoundOptions
+  ));
 }
-
 
 /**
  * @type {angular.IModule}
@@ -221,7 +212,6 @@ function createLocationSearchBloodhound(opt_options) {
 const module = angular.module('ngeoCreateLocationSearchBloodhound', []);
 
 module.value('ngeoCreateLocationSearchBloodhound', createLocationSearchBloodhound);
-
 
 /**
  * Provides a function that creates a Bloodhound engine
@@ -244,6 +234,5 @@ module.value('ngeoCreateLocationSearchBloodhound', createLocationSearchBloodhoun
  * @private
  */
 export function createLocationSearchBloodhoundFunction() {}
-
 
 export default module;

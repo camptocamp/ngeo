@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 import './svg.css';
 import EPSG2056 from '@geoblocks/proj/src/EPSG_2056.js';
@@ -35,12 +34,8 @@ import Icon from 'ol/style/Icon.js';
 
 import MapModule from 'ngeo/map/module.js';
 
-
 /** @type {!angular.IModule} **/
-const appmodule = angular.module('app', [
-  MapModule.name,
-]);
-
+const appmodule = angular.module('app', [MapModule.name]);
 
 /**
  * @constructor
@@ -50,61 +45,65 @@ const appmodule = angular.module('app', [
 function MainController() {
   const source = new SourceVector();
   const feature1 = new Feature({
-    geometry: new Point([2599000, 1200000])
+    geometry: new Point([2599000, 1200000]),
   });
-  feature1.setStyle([new Style({
-    image: new Icon({
-      // @ts-ignore: For Webpack
-      src: 'data:image/svg+xml;base64,' + btoa(require('./inline.svg')),
-      // For IE compatibility
-      imgSize: [65, 65]
-    })
-  })]);
+  feature1.setStyle([
+    new Style({
+      image: new Icon({
+        // @ts-ignore: For Webpack
+        src: 'data:image/svg+xml;base64,' + btoa(require('./inline.svg')),
+        // For IE compatibility
+        imgSize: [65, 65],
+      }),
+    }),
+  ]);
   source.addFeature(feature1);
 
   const feature2 = new Feature({
-    geometry: new Point([2600000, 1200000])
+    geometry: new Point([2600000, 1200000]),
   });
-  feature2.setStyle([new Style({
-    image: new Icon({
-      // @ts-ignore: For Webpack
-      src: 'data:image/svg+xml;base64,' + btoa(require('./inline.svg?viewbox&width=30px')),
-      // For IE compatibility
-      imgSize: [30, 30]
-    })
-  })]);
+  feature2.setStyle([
+    new Style({
+      image: new Icon({
+        // @ts-ignore: For Webpack
+        src: 'data:image/svg+xml;base64,' + btoa(require('./inline.svg?viewbox&width=30px')),
+        // For IE compatibility
+        imgSize: [30, 30],
+      }),
+    }),
+  ]);
   source.addFeature(feature2);
 
   const feature3 = new Feature({
-    geometry: new Point([2601000, 1200000])
+    geometry: new Point([2601000, 1200000]),
   });
-  feature3.setStyle([new Style({
-    image: new Icon({
-      // @ts-ignore: For Webpack
-      src: require('./url.svg?url'),
-      // For IE compatibility
-      imgSize: [65, 65]
-    })
-  })]);
+  feature3.setStyle([
+    new Style({
+      image: new Icon({
+        // @ts-ignore: For Webpack
+        src: require('./url.svg?url'),
+        // For IE compatibility
+        imgSize: [65, 65],
+      }),
+    }),
+  ]);
   source.addFeature(feature3);
 
   this.map = new Map({
     layers: [
       new LayerVector({
-        source
-      })
+        source,
+      }),
     ],
     view: new View({
       projection: EPSG2056,
       resolutions: [200, 100, 50, 20, 10, 5, 2.5, 2, 1],
       center: [2600000, 1200000],
-      zoom: 4
-    })
+      zoom: 4,
+    }),
   });
 }
 
-
 appmodule.controller('MainController', MainController);
-
 
 export default module;

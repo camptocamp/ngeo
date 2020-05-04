@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import './disclaimer.css';
 import 'bootstrap/js/src/tooltip.js';
 import angular from 'angular';
@@ -32,14 +31,8 @@ import olLayerTile from 'ol/layer/Tile.js';
 import olSourceOSM from 'ol/source/OSM.js';
 import ngeoMapModule from 'ngeo/map/module.js';
 
-
 /** @type {angular.IModule} **/
-const module = angular.module('app', [
-  'gettext',
-  ngeoMapModule.name,
-  ngeoMessageDisclaimer.name,
-]);
-
+const module = angular.module('app', ['gettext', ngeoMapModule.name, ngeoMessageDisclaimer.name]);
 
 /**
  * @param {import("ngeo/message/Disclaimer.js").MessageDisclaimerService} ngeoDisclaimer Ngeo disclaimer
@@ -48,7 +41,6 @@ const module = angular.module('app', [
  * @constructor
  */
 function MainController(ngeoDisclaimer) {
-
   /**
    * @type {import("ngeo/message/Disclaimer.js").MessageDisclaimerService}
    */
@@ -60,13 +52,13 @@ function MainController(ngeoDisclaimer) {
   this.map = new olMap({
     layers: [
       new olLayerTile({
-        source: new olSourceOSM()
-      })
+        source: new olSourceOSM(),
+      }),
     ],
     view: new olView({
       center: [0, 0],
-      zoom: 4
-    })
+      zoom: 4,
+    }),
   });
 
   /**
@@ -100,97 +92,87 @@ function MainController(ngeoDisclaimer) {
     'Disclaimer inside the map',
     'An other message ',
     'Map contributors',
-    'This is a long message inside a map'
+    'This is a long message inside a map',
   ];
 
   // initialize tooltips
   $('[data-toggle="tooltip"]').tooltip({
     container: 'body',
-    trigger: 'hover'
+    trigger: 'hover',
   });
 }
 
-
 /**
  */
-MainController.prototype.success = function() {
+MainController.prototype.success = function () {
   this.disclaimer.success(this.successMsg_);
 };
 
-
 /**
  */
-MainController.prototype.info = function() {
+MainController.prototype.info = function () {
   this.disclaimer.info(this.infoMsg_);
 };
 
-
 /**
  */
-MainController.prototype.warn = function() {
+MainController.prototype.warn = function () {
   this.disclaimer.warn(this.warningMsg_);
 };
 
-
 /**
  */
-MainController.prototype.error = function() {
+MainController.prototype.error = function () {
   this.disclaimer.error(this.errorMsg_);
 };
-
 
 /**
  * Demonstrates how to display a disclaimer message in an other target. In
  * this case, it's shown in the map.
  */
-MainController.prototype.inMap = function() {
+MainController.prototype.inMap = function () {
   this.inMapMsgs_.forEach((message) => {
     this.disclaimer.alert({
       msg: message,
       target: '#disclaimers-in-map',
-      type: MessageType.WARNING
+      type: MessageType.WARNING,
     });
   });
 };
-
 
 /**
  * Demonstrates how to close disclaimer messages using JavaScript, i.e.
  * instead of clicking on the close button.
  */
-MainController.prototype.closeAll = function() {
-
+MainController.prototype.closeAll = function () {
   this.disclaimer.close({
     msg: this.successMsg_,
-    type: MessageType.SUCCESS
+    type: MessageType.SUCCESS,
   });
 
   this.disclaimer.close({
     msg: this.infoMsg_,
-    type: MessageType.INFORMATION
+    type: MessageType.INFORMATION,
   });
 
   this.disclaimer.close({
     msg: this.warningMsg_,
-    type: MessageType.WARNING
+    type: MessageType.WARNING,
   });
 
   this.disclaimer.close({
     msg: this.errorMsg_,
-    type: MessageType.ERROR
+    type: MessageType.ERROR,
   });
 
   this.inMapMsgs_.forEach((message) => {
     this.disclaimer.close({
       msg: message,
-      type: MessageType.WARNING
+      type: MessageType.WARNING,
     });
   });
-
 };
 
-
 module.controller('MainController', MainController);
-
 
 export default module;

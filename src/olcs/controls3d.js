@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 /* global Cesium */
 
 import angular from 'angular';
@@ -27,13 +26,11 @@ import * as olEasing from 'ol/easing.js';
 import {toRadians} from 'ol/math.js';
 import olcsCore from 'olcs/core.js';
 
-
 /**
  * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('ngeoOlcsControls3d', []);
-
 
 /**
  * @private
@@ -46,20 +43,17 @@ function shouldUpdate(older, newer) {
   return Number.isFinite(newer) && (!Number.isFinite(older) || Math.abs(newer - older) > 0.05);
 }
 
-
 /**
  * @private
  * @hidden
  */
 const Controller = class {
-
   /**
    * @ngInject
    * @param {JQuery} $element The element
    * @param {import("ngeo/olcs/Service.js").OlcsService} ngeoOlcsService The ol-cesium service.
    */
   constructor($element, ngeoOlcsService) {
-
     /**
      * @type {JQuery}
      * @private
@@ -191,7 +185,7 @@ const Controller = class {
       this.minTilt = 0;
     }
     if (this.maxTilt === undefined) {
-      this.maxTilt = 7 * Math.PI / 16;
+      this.maxTilt = (7 * Math.PI) / 16;
     }
     if (!this.ol3dm) {
       this.ol3dm = this.olcsService_.getManager() || null;
@@ -202,7 +196,6 @@ const Controller = class {
     this.angle3dEl_ = this.element_.find('.ngeo-angle3d');
     this.updateWidget_();
   }
-
 
   /**
    * @param {JQuery} element Element to rotate.
@@ -216,10 +209,9 @@ const Controller = class {
       '-webkit-transform': r,
       '-o-transform': r,
       '-ms-transform': r,
-      'transform': r
+      'transform': r,
     });
   }
-
 
   /**
    * @param {number} angle Angle in degrees.
@@ -230,7 +222,6 @@ const Controller = class {
     }
     this.ol3dm.setHeading(toRadians(angle));
   }
-
 
   /**
    * @param {number} angle Angle in degrees.
@@ -254,7 +245,6 @@ const Controller = class {
     olcsCore.rotateAroundBottomCenter(scene, angle);
   }
 
-
   /**
    * @param {number} delta -1 to zoom out and 1 to zoom in.
    */
@@ -271,11 +261,10 @@ const Controller = class {
     view.animate({
       resolution: newResolution,
       duration: 250,
-      easing: olEasing.easeOut
+      easing: olEasing.easeOut,
     });
   }
 };
-
 
 /**
  * @param {angular.IAttributes} $attrs Attributes.
@@ -290,10 +279,8 @@ function ngeoOlcsControls3dTemplateUrlInjectable($attrs, ngeoOlcsControls3dTempl
     return ngeoOlcsControls3dTemplateUrl;
   }
   const templateUrl = $attrs['ngeoOlcsControls3dTemplateUrl'];
-  return templateUrl ? templateUrl :
-    'ngeo/olsc/controls3d';
+  return templateUrl ? templateUrl : 'ngeo/olsc/controls3d';
 }
-
 
 module.run(
   /**
@@ -303,8 +290,8 @@ module.run(
   ($templateCache) => {
     // @ts-ignore: webpack
     $templateCache.put('ngeo/olsc/controls3d', require('./controls3d.html'));
-  });
-
+  }
+);
 
 /**
  * Provides the "ngeoOlcsControls3d" component, a widget for
@@ -329,15 +316,14 @@ const olscControls3dComponent = {
   bindings: {
     'minTilt': '<?',
     'maxTilt': '<?',
-    'ol3dm': '<?'
+    'ol3dm': '<?',
   },
   controller: Controller,
-  templateUrl: ngeoOlcsControls3dTemplateUrlInjectable
+  templateUrl: ngeoOlcsControls3dTemplateUrlInjectable,
 };
 
 module.component('ngeoOlcsControls3d', olscControls3dComponent);
 
 module.value('ngeoOlcsControls3dTemplateUrl', '');
-
 
 export default module;

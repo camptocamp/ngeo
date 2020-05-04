@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import './toolActivate.css';
 import angular from 'angular';
 import ngeoMapModule from 'ngeo/map/module.js';
@@ -49,7 +48,6 @@ const module = angular.module('app', [
   ngeoMiscToolActivateMgr.name,
 ]);
 
-
 /**
  * @param {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr Feature overlay
  *     manager.
@@ -58,20 +56,19 @@ const module = angular.module('app', [
  * @ngInject
  */
 function MainController(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
-
   /**
    * @type {import("ol/Map.js").default}
    */
   this.map = new olMap({
     layers: [
       new olLayerTile({
-        source: new olSourceOSM()
-      })
+        source: new olSourceOSM(),
+      }),
     ],
     view: new olView({
       center: [1444682, 5979706],
-      zoom: 4
-    })
+      zoom: 4,
+    }),
   });
 
   const map = this.map;
@@ -88,22 +85,23 @@ function MainController(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
 
   const overlay = ngeoFeatureOverlayMgr.getFeatureOverlay();
   overlay.setFeatures(features);
-  overlay.setStyle(new olStyleStyle({
-    fill: new olStyleFill({
-      color: 'rgba(255, 255, 255, 0.2)'
-    }),
-    stroke: new olStyleStroke({
-      color: '#ffcc33',
-      width: 2
-    }),
-    image: new olStyleCircle({
-      radius: 7,
+  overlay.setStyle(
+    new olStyleStyle({
       fill: new olStyleFill({
-        color: '#ffcc33'
-      })
+        color: 'rgba(255, 255, 255, 0.2)',
+      }),
+      stroke: new olStyleStroke({
+        color: '#ffcc33',
+        width: 2,
+      }),
+      image: new olStyleCircle({
+        radius: 7,
+        fill: new olStyleFill({
+          color: '#ffcc33',
+        }),
+      }),
     })
-  }));
-
+  );
 
   // manage clicks on the map
   this.mapClickIsEnabled = true;
@@ -121,7 +119,6 @@ function MainController(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
   const mapClickTool = new ngeoMiscToolActivate(this, 'mapClickIsEnabled');
   ngeoToolActivateMgr.registerTool('mapTools', mapClickTool, true);
 
-
   // draw point interaction
   /**
    * @type {import("ol/interaction/Draw.js").default}
@@ -129,8 +126,9 @@ function MainController(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
   this.drawPoint = new olInteractionDraw(
     /** @type {import('ol/interaction/Draw.js').Options} */ ({
       type: 'Point',
-      features: features
-    }));
+      features: features,
+    })
+  );
   this.drawPoint.setActive(false);
   interactionDecoration(this.drawPoint);
   map.addInteraction(this.drawPoint);
@@ -145,8 +143,9 @@ function MainController(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
   this.drawLine = new olInteractionDraw(
     /** @type {import('ol/interaction/Draw.js').Options} */ ({
       type: 'LineString',
-      features: features
-    }));
+      features: features,
+    })
+  );
   this.drawLine.setActive(false);
   interactionDecoration(this.drawLine);
   map.addInteraction(this.drawLine);
@@ -161,8 +160,9 @@ function MainController(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
   this.drawPolygon = new olInteractionDraw(
     /** @type {import('ol/interaction/Draw.js').Options} */ ({
       type: 'Polygon',
-      features: features
-    }));
+      features: features,
+    })
+  );
   this.drawPolygon.setActive(false);
   interactionDecoration(this.drawPolygon);
   map.addInteraction(this.drawPolygon);
@@ -171,8 +171,6 @@ function MainController(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
   ngeoToolActivateMgr.registerTool('mapTools', drawPolygonTool);
 }
 
-
 module.controller('MainController', MainController);
-
 
 export default module;

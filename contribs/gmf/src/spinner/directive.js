@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 
 /**
@@ -29,7 +28,7 @@ import angular from 'angular';
  * @ngdoc directive
  * @ngname gmfLoaderSpinner
  */
-const loaderSpinner = function($http) {
+const loaderSpinner = function ($http) {
   return {
     restrict: 'A',
     scope: true,
@@ -50,7 +49,7 @@ const loaderSpinner = function($http) {
             }
           }
         );
-      }
+      },
   };
 };
 
@@ -61,6 +60,5 @@ const loaderSpinner = function($http) {
 const module = angular.module('gmfLoaderSpinner', []);
 
 module.directive('gmfLoaderSpinner', loaderSpinner);
-
 
 export default module;
