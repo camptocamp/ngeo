@@ -103,8 +103,10 @@ function loaded(page, browser) {
     process.exit(2);
   });
   page.on('request', request => {
-    loaded(page, browser);
     const originalUrl = request.url();
+    if (process.env.CI != 'true' || !originalUrl.includes('/tiles/')) {
+      loaded(page, browser);
+    }
     let url = originalUrl;
     if (process.env.CI != 'true') {
       if (process.env.HTTP_MAP) {
@@ -115,7 +117,6 @@ function loaded(page, browser) {
           }
         }
       }
-      requestsURL.add(originalUrl);
       request.continue({
         url
       });
@@ -131,7 +132,11 @@ function loaded(page, browser) {
         url.startsWith('https://geomapfish-demo') ||
         url.startsWith('https://wmts.geo.admin.ch/') ||
         url.startsWith('https://wms.geo.admin.ch/')) {
-      requestsURL.add(originalUrl);
+
+      if (!originalUrl.includes('/tiles/')) {
+        console.log(originalUrl);
+        requestsURL.add(originalUrl);
+      }
       if (url.startsWith('https://geomapfish-demo')) {
         request.headers().origin = 'http://localhost:3000';
       }
@@ -160,7 +165,9 @@ function loaded(page, browser) {
     const ci = process.env.CI == 'true';
     const url = request.url();
     requestsURL.delete(url);
-    loaded(page, browser);
+    if (process.env.CI != 'true' || !url.includes('/tiles/')) {
+      loaded(page, browser);
+    }
     if (ci && url.startsWith('https://geomapfish-demo') &&
         request.headers()['sec-fetch-mode'] == 'cors' &&
         request.response().headers()['access-control-allow-origin'] == undefined) {
