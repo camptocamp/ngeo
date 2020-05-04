@@ -104,7 +104,7 @@ function loaded(page, browser) {
         await browser.close();
       }
     }
-  }, 1000);
+  }, 500);
 }
 (async () => {
   browser = await puppeteer.launch({
@@ -129,7 +129,7 @@ function loaded(page, browser) {
   });
   page.on('request', (request) => {
     const originalUrl = request.url();
-    if (process.env.CI != 'true' || !originalUrl.includes('/tiles/')) {
+    if (process.env.CI != 'true') {
       loaded(page, browser);
     }
     let url = originalUrl;
@@ -159,20 +159,22 @@ function loaded(page, browser) {
       url.startsWith('https://wmts.geo.admin.ch/') ||
       url.startsWith('https://wms.geo.admin.ch/')
     ) {
-      if (!originalUrl.includes('/tiles/')) {
+      if (originalUrl.includes('/tiles/') && originalUrl.endsWith('.png')) {
+        request.respond(OSMImage);
+      } else {
         console.log(originalUrl);
         requestsURL.add(originalUrl);
+        if (url.startsWith('https://geomapfish-demo')) {
+          request.headers().origin = 'http://localhost:3000';
+        }
+        request.continue({
+          url,
+          // Don't be intranet
+          headers: {
+            'Forwarded': 'for=8.8.8.8;proto=https',
+          },
+        });
       }
-      if (url.startsWith('https://geomapfish-demo')) {
-        request.headers().origin = 'http://localhost:3000';
-      }
-      request.continue({
-        url,
-        // Don't be intranet
-        headers: {
-          'Forwarded': 'for=8.8.8.8;proto=https',
-        },
-      });
     } else if (
       url.includes('tile.openstreetmap.org') ||
       url.startsWith('https://tiles.openseamap.org') ||
