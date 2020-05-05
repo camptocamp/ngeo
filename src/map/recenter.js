@@ -19,9 +19,7 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
-
 
 /**
  * @type {angular.IModule}
@@ -85,7 +83,7 @@ function mapResenterComponent() {
       }
 
       // if the children is a link or button
-      $element.on('click', '*', function(event) {
+      $element.on('click', '*', function (event) {
         recenter(angular.element($(this)));
       });
 
@@ -98,12 +96,11 @@ function mapResenterComponent() {
         recenter(angular.element(selected));
       };
       $element.on({change: ce});
-    }
+    },
   };
 }
 
 // Register the directive in the module
 module.directive('ngeoRecenter', mapResenterComponent);
-
 
 export default module;

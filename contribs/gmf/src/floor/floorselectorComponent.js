@@ -19,17 +19,14 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 import {findIndex as findIndexInArray} from 'ol/array.js';
-
 
 /**
  * @type {!angular.IModule}
  * @hidden
  */
 const module = angular.module('gmfFloorSelector', []);
-
 
 module.run(
   /**
@@ -39,20 +36,20 @@ module.run(
   ($templateCache) => {
     // @ts-ignore: webpack
     $templateCache.put('gmf/floor/floorselectorcomponent', require('./floorselectorcomponent.html'));
-  });
+  }
+);
 
-
-module.value('gmfFloorselectorTemplateUrl',
+module.value(
+  'gmfFloorselectorTemplateUrl',
   /**
    * @param {!angular.IAttributes} $attrs Attributes.
    * @return {string} The template url.
    */
   ($attrs) => {
     const templateUrl = $attrs.gmfFloorselectorTemplateUrl;
-    return templateUrl !== undefined ? templateUrl :
-      'gmf/floor/floorselectorcomponent';
-  });
-
+    return templateUrl !== undefined ? templateUrl : 'gmf/floor/floorselectorcomponent';
+  }
+);
 
 /**
  * @param {!angular.IAttributes} $attrs Attributes.
@@ -66,13 +63,11 @@ function gmfFloorselectorTemplateUrl($attrs, gmfFloorselectorTemplateUrl) {
   return gmfFloorselectorTemplateUrl($attrs);
 }
 
-
 /**
  * @private
  * @hidden
  */
 class Controller {
-
   /**
    * @param {angular.IScope} $scope Angular scope.
    * @param {JQuery} $element Element.
@@ -83,7 +78,6 @@ class Controller {
    * @ngname GmfFilterselectorController
    */
   constructor($scope, $element, gmfFloors) {
-
     /**
      * @type {Array<Object<string, string>>}
      */
@@ -145,12 +139,13 @@ class Controller {
     const value = this.value;
 
     // Update currentIndex
-    this.currentIndex = findIndexInArray(this.items,
+    this.currentIndex = findIndexInArray(
+      this.items,
       /**
        * @param {Object<string, string>} item
        * @returns {boolean}
        */
-      function(item) {
+      function (item) {
         return item.value === value;
       }
     );
@@ -181,11 +176,7 @@ class Controller {
     if (currentButtonOuterHeight === undefined) {
       throw new Error('Missing currentButton.outerHeight');
     }
-    let top = (
-      innerHeight / 2
-      - currentButton.position().top
-      - currentButtonOuterHeight / 2
-    );
+    let top = innerHeight / 2 - currentButton.position().top - currentButtonOuterHeight / 2;
     top = Math.min(top, maxTop);
     top = Math.max(top, minTop);
     buttonGroup.css('top', top);
@@ -201,7 +192,6 @@ class Controller {
     }
   }
 }
-
 
 /**
  * Provide a floor selector component.
@@ -232,10 +222,9 @@ const floorSelectorComponent = {
     value: '=',
   },
   controller: Controller,
-  templateUrl: gmfFloorselectorTemplateUrl
+  templateUrl: gmfFloorselectorTemplateUrl,
 };
 
 module.component('gmfFloorselector', floorSelectorComponent);
-
 
 export default module;

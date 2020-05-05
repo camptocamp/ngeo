@@ -19,12 +19,10 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 import gmfEditingEditFeature from 'gmf/editing/EditFeature.js';
 import ngeoStatemanagerLocation from 'ngeo/statemanager/Location.js';
 import olFeature from 'ol/Feature.js';
-
 
 /**
  * @enum {string}
@@ -50,9 +48,8 @@ export const ObjecteditingParam = {
   /**
    * @type {string}
    */
-  THEME: 'objectediting_theme'
+  THEME: 'objectediting_theme',
 };
-
 
 /**
  * A service that looks for certain parameters in the url and use them to fetch
@@ -66,7 +63,6 @@ export const ObjecteditingParam = {
  * @hidden
  */
 export function ObjecteditingManagerService($q, gmfEditFeature, ngeoLocation) {
-
   /**
    * @type {angular.IQService}
    * @private
@@ -90,9 +86,7 @@ export function ObjecteditingManagerService($q, gmfEditFeature, ngeoLocation) {
    * @private
    */
   this.getFeatureDefered_ = null;
-
 }
-
 
 /**
  * Use the EditFeature service to fetch a single feature using parameters in
@@ -104,8 +98,7 @@ export function ObjecteditingManagerService($q, gmfEditFeature, ngeoLocation) {
  *
  * @return {angular.IPromise<?olFeature<import("ol/geom/Geometry.js").default>>} Promise.
  */
-ObjecteditingManagerService.prototype.getFeature = function() {
-
+ObjecteditingManagerService.prototype.getFeature = function () {
   if (!this.getFeatureDefered_) {
     this.getFeatureDefered_ = this.q_.defer();
 
@@ -116,41 +109,39 @@ ObjecteditingManagerService.prototype.getFeature = function() {
     const theme = this.ngeoLocation_.getParam(ObjecteditingParam.THEME);
 
     if (geomType && id && layer && property && theme) {
-      this.gmfEditFeature_.getFeaturesWithComparisonFilters(
-        [layer],
-        [{
-          operator: 'eq',
-          property: property,
-          value: id
-        }]
-      ).then(this.handleGetFeatures_.bind(this, property, id));
+      this.gmfEditFeature_
+        .getFeaturesWithComparisonFilters(
+          [layer],
+          [
+            {
+              operator: 'eq',
+              property: property,
+              value: id,
+            },
+          ]
+        )
+        .then(this.handleGetFeatures_.bind(this, property, id));
     } else {
       this.getFeatureDefered_.resolve(null);
     }
   }
 
   return this.getFeatureDefered_.promise;
-
 };
-
 
 /**
  * @return {string|undefined} The geometry type.
  */
-ObjecteditingManagerService.prototype.getGeomType = function() {
-  return this.ngeoLocation_.getParam(
-    ObjecteditingParam.GEOM_TYPE);
+ObjecteditingManagerService.prototype.getGeomType = function () {
+  return this.ngeoLocation_.getParam(ObjecteditingParam.GEOM_TYPE);
 };
-
 
 /**
  * @return {number|undefined} The gmf layer node id.
  */
-ObjecteditingManagerService.prototype.getLayerNodeId = function() {
-  return this.ngeoLocation_.getParamAsInt(
-    ObjecteditingParam.LAYER);
+ObjecteditingManagerService.prototype.getLayerNodeId = function () {
+  return this.ngeoLocation_.getParamAsInt(ObjecteditingParam.LAYER);
 };
-
 
 /**
  * Called after getting features with comparison filters. Resolve the deferred
@@ -163,7 +154,7 @@ ObjecteditingManagerService.prototype.getLayerNodeId = function() {
  * @param {Array<olFeature<import("ol/geom/Geometry.js").default>>} features List of features.
  * @private
  */
-ObjecteditingManagerService.prototype.handleGetFeatures_ = function(key, value, features) {
+ObjecteditingManagerService.prototype.handleGetFeatures_ = function (key, value, features) {
   let feature;
 
   if (features.length) {
@@ -182,7 +173,6 @@ ObjecteditingManagerService.prototype.handleGetFeatures_ = function(key, value, 
   this.getFeatureDefered_.resolve(feature);
 };
 
-
 /**
  * @type {angular.IModule}
  * @hidden
@@ -192,6 +182,5 @@ const module = angular.module('gmfObjectEditingManager', [
   ngeoStatemanagerLocation.name,
 ]);
 module.service('gmfObjectEditingManager', ObjecteditingManagerService);
-
 
 export default module;

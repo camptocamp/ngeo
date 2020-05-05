@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 import appURL from './url.js';
 import './objectediting.css';
@@ -45,7 +44,6 @@ import olLayerVector from 'ol/layer/Vector.js';
 import olSourceOSM from 'ol/source/OSM.js';
 import olSourceVector from 'ol/source/Vector.js';
 
-
 /**
  * @type {angular.IModule}
  * @hidden
@@ -65,10 +63,9 @@ module.constant('defaultTheme', 'ObjectEditing');
 module.constant('gmfLayersUrl', appURL.GMF_LAYERS);
 module.constant('gmfTreeUrl', appURL.GMF_THEMES);
 module.constant('gmfObjectEditingToolsOptions', {
-  regularPolygonRadius: 150
+  regularPolygonRadius: 150,
 });
 module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
-
 
 /**
  * @param {import("gmf/objectediting/Manager.js").ObjecteditingManagerService} gmfObjectEditingManager The gmf
@@ -81,9 +78,7 @@ module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
  * @constructor
  * @ngInject
  */
-function MainController(gmfObjectEditingManager, gmfThemes,
-  gmfTreeManager, ngeoToolActivateMgr) {
-
+function MainController(gmfObjectEditingManager, gmfThemes, gmfTreeManager, ngeoToolActivateMgr) {
   /**
    * @type {import("gmf/layertree/TreeManager.js").LayertreeTreeManager}
    * @private
@@ -100,7 +95,7 @@ function MainController(gmfObjectEditingManager, gmfThemes,
    * @private
    */
   this.vectorSource_ = new olSourceVector({
-    wrapX: false
+    wrapX: false,
   });
 
   /**
@@ -108,7 +103,7 @@ function MainController(gmfObjectEditingManager, gmfThemes,
    * @private
    */
   this.vectorLayer_ = new olLayerVector({
-    source: this.vectorSource_
+    source: this.vectorSource_,
   });
 
   /**
@@ -123,8 +118,8 @@ function MainController(gmfObjectEditingManager, gmfThemes,
   this.sketchLayer_ = new olLayerVector({
     source: new olSourceVector({
       features: this.sketchFeatures,
-      wrapX: false
-    })
+      wrapX: false,
+    }),
   });
 
   /**
@@ -133,15 +128,15 @@ function MainController(gmfObjectEditingManager, gmfThemes,
   this.map = new olMap({
     layers: [
       new olLayerTile({
-        source: new olSourceOSM()
-      })
+        source: new olSourceOSM(),
+      }),
     ],
     view: new olView({
       projection: EPSG2056,
       resolutions: [200, 100, 50, 20, 10, 5, 2.5, 2, 1, 0.5],
       center: [2537635, 1152640],
-      zoom: 2
-    })
+      zoom: 2,
+    }),
   });
 
   gmfThemes.getThemesObject().then((themes) => {
@@ -167,20 +162,16 @@ function MainController(gmfObjectEditingManager, gmfThemes,
    */
   this.objectEditingActive = true;
 
-  const objectEditingToolActivate = new ngeoMiscToolActivate(
-    this, 'objectEditingActive');
-  ngeoToolActivateMgr.registerTool(
-    'mapTools', objectEditingToolActivate, true);
+  const objectEditingToolActivate = new ngeoMiscToolActivate(this, 'objectEditingActive');
+  ngeoToolActivateMgr.registerTool('mapTools', objectEditingToolActivate, true);
 
   /**
    * @type {boolean}
    */
   this.dummyActive = false;
 
-  const dummyToolActivate = new ngeoMiscToolActivate(
-    this, 'dummyActive');
-  ngeoToolActivateMgr.registerTool(
-    'mapTools', dummyToolActivate, false);
+  const dummyToolActivate = new ngeoMiscToolActivate(this, 'dummyActive');
+  ngeoToolActivateMgr.registerTool('mapTools', dummyToolActivate, false);
 
   /**
    * @type {?import("ol/Feature.js").default<import("ol/geom/Geometry.js").default>}
@@ -193,10 +184,8 @@ function MainController(gmfObjectEditingManager, gmfThemes,
       this.vectorSource_.addFeature(feature);
     }
   });
-
 }
 
 module.controller('MainController', MainController);
-
 
 export default module;

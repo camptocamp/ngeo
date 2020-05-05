@@ -19,17 +19,17 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 import {PermalinkParam} from 'gmf/index.js';
 import gmfThemeThemes, {findGroupByName, findGroupByLayerNodeName} from 'gmf/theme/Themes.js';
-import ngeoLayertreeController, {LayertreeVisitorDecision, LayertreeController} from
-  'ngeo/layertree/Controller.js';
+import ngeoLayertreeController, {
+  LayertreeVisitorDecision,
+  LayertreeController,
+} from 'ngeo/layertree/Controller.js';
 import {MessageType} from 'ngeo/message/Message.js';
 import ngeoMessageNotification from 'ngeo/message/Notification.js';
 import ngeoStatemanagerService from 'ngeo/statemanager/Service.js';
 import {listen} from 'ol/events.js';
-
 
 /**
  * @typedef {Object} TreeManagerFullState
@@ -38,7 +38,6 @@ import {listen} from 'ol/events.js';
  * @property {boolean|undefined} [isExpanded]
  * @property {boolean|undefined} [isLegendExpanded]
  */
-
 
 /**
  * Manage a tree with children. This service can be used in mode 'flush'
@@ -68,9 +67,15 @@ import {listen} from 'ol/events.js';
  * @ngname gmfTreeManager
  * @hidden
  */
-export function LayertreeTreeManager($timeout, $injector, gettextCatalog, ngeoLayerHelper,
-  ngeoNotification, gmfThemes, ngeoStateManager) {
-
+export function LayertreeTreeManager(
+  $timeout,
+  $injector,
+  gettextCatalog,
+  ngeoLayerHelper,
+  ngeoNotification,
+  gmfThemes,
+  ngeoStateManager
+) {
   /**
    * @type {angular.ITimeoutService}
    * @private
@@ -114,7 +119,7 @@ export function LayertreeTreeManager($timeout, $injector, gettextCatalog, ngeoLa
    * @public
    */
   this.root = /** @type {import('gmf/themes.js').GmfRootNode} */ ({
-    children: []
+    children: [],
   });
 
   /**
@@ -174,7 +179,7 @@ export function LayertreeTreeManager($timeout, $injector, gettextCatalog, ngeoLa
  * layertree.
  * @private
  */
-LayertreeTreeManager.prototype.handleThemesChange_ = function() {
+LayertreeTreeManager.prototype.handleThemesChange_ = function () {
   this.gmfThemes_.getOgcServersObject().then((ogcServers) => {
     this.ogcServers_ = ogcServers;
   });
@@ -193,7 +198,7 @@ LayertreeTreeManager.prototype.handleThemesChange_ = function() {
  * @param {Array<import('gmf/themes.js').GmfGroup>} firstLevelGroups An array of gmf theme group.
  * @return {boolean} True if the group has been added. False otherwise.
  */
-LayertreeTreeManager.prototype.setFirstLevelGroups = function(firstLevelGroups) {
+LayertreeTreeManager.prototype.setFirstLevelGroups = function (firstLevelGroups) {
   //Remove existing submenu if opened at theme refresh
   this.parseTreeNodes(this.root);
 
@@ -212,15 +217,18 @@ LayertreeTreeManager.prototype.setFirstLevelGroups = function(firstLevelGroups) 
  * @param {boolean=} opt_silent if true notifyCantAddGroups_ is not called.
  * @return {boolean} True if the group has been added. False otherwise.
  */
-LayertreeTreeManager.prototype.addFirstLevelGroups = function(firstLevelGroups, opt_add, opt_silent) {
+LayertreeTreeManager.prototype.addFirstLevelGroups = function (firstLevelGroups, opt_add, opt_silent) {
   /** @type {import('gmf/themes.js').GmfGroup[]} */
   const groupNotAdded = [];
 
-  firstLevelGroups.slice().reverse().forEach((group) => {
-    if (!this.addFirstLevelGroup_(group)) {
-      groupNotAdded.push(group);
-    }
-  });
+  firstLevelGroups
+    .slice()
+    .reverse()
+    .forEach((group) => {
+      if (!this.addFirstLevelGroup_(group)) {
+        groupNotAdded.push(group);
+      }
+    });
   if (groupNotAdded.length > 0 && !opt_silent) {
     this.notifyCantAddGroups_(groupNotAdded);
   }
@@ -231,19 +239,19 @@ LayertreeTreeManager.prototype.addFirstLevelGroups = function(firstLevelGroups, 
 /**
  * @param {Array.<import('gmf/themes.js').GmfGroup>} firstGroups The groups we add to the layertree
  */
-LayertreeTreeManager.prototype.setInitialFirstLevelGroups = function(firstGroups) {
+LayertreeTreeManager.prototype.setInitialFirstLevelGroups = function (firstGroups) {
   this.initialLevelFirstGroups_ = firstGroups;
 };
 
 /**
  * @param {import('gmf/themes.js').GmfGroup | import('gmf/themes.js').GmfLayer | import('gmf/themes.js').GmfRootNode} node Layer tree node to remove.
  */
-LayertreeTreeManager.prototype.parseTreeNodes = function(node) {
+LayertreeTreeManager.prototype.parseTreeNodes = function (node) {
   if (node.children) {
     /**
      * @param {any} child
      */
-    node.children.forEach(child => {
+    node.children.forEach((child) => {
       this.parseTreeNodes(child);
     });
   }
@@ -252,17 +260,15 @@ LayertreeTreeManager.prototype.parseTreeNodes = function(node) {
   }
 };
 
-
 /**
  * @param {import('gmf/themes.js').GmfGroup} node Layer tree node to remove.
  * @private
  */
-LayertreeTreeManager.prototype.removePopup_ = function(node) {
+LayertreeTreeManager.prototype.removePopup_ = function (node) {
   const popupId = node.popupId;
   $(`#${popupId}`).remove();
   delete node.popupId;
 };
-
 
 /**
  * @param {array} array An array of groups.
@@ -270,7 +276,7 @@ LayertreeTreeManager.prototype.removePopup_ = function(node) {
  * @param {number} new_index The new index after reorder.
  * @private
  */
-LayertreeTreeManager.prototype.reorderChild_ = function(array, old_index, new_index) {
+LayertreeTreeManager.prototype.reorderChild_ = function (array, old_index, new_index) {
   array.splice(new_index, 0, array.splice(old_index, 1)[0]);
 };
 
@@ -279,20 +285,19 @@ LayertreeTreeManager.prototype.reorderChild_ = function(array, old_index, new_in
  * @param {Array<import('gmf/themes.js').GmfGroup>} groups firstlevel groups of the tree
  * @private
  */
-LayertreeTreeManager.prototype.updateTreeGroupsState_ = function(groups) {
+LayertreeTreeManager.prototype.updateTreeGroupsState_ = function (groups) {
   /**
    * @type {Object<string, string>}
    */
   const treeGroupsParam = {};
-  treeGroupsParam[PermalinkParam.TREE_GROUPS] = groups.map(node => node.name).join(',');
+  treeGroupsParam[PermalinkParam.TREE_GROUPS] = groups.map((node) => node.name).join(',');
   this.ngeoStateManager_.updateState(treeGroupsParam);
   if (this.$injector_.has('gmfPermalink')) {
-    /** @type {import("gmf/permalink/Permalink.js").PermalinkService} */(
-      this.$injector_.get('gmfPermalink')
-    ).cleanParams(groups);
+    /** @type {import("gmf/permalink/Permalink.js").PermalinkService} */ (this.$injector_.get(
+      'gmfPermalink'
+    )).cleanParams(groups);
   }
 };
-
 
 /**
  * Add a group as tree's children without consideration of this service 'mode'.
@@ -301,7 +306,7 @@ LayertreeTreeManager.prototype.updateTreeGroupsState_ = function(groups) {
  * @return {boolean} true if the group has been added.
  * @private
  */
-LayertreeTreeManager.prototype.addFirstLevelGroup_ = function(group) {
+LayertreeTreeManager.prototype.addFirstLevelGroup_ = function (group) {
   let alreadyAdded = false;
   const groupID = group.id;
   this.root.children.some((rootChild) => {
@@ -347,7 +352,8 @@ LayertreeTreeManager.prototype.addFirstLevelGroup_ = function(group) {
       this.root.children.forEach((group, old_index) => {
         if (this.initialLevelFirstGroups_ !== undefined) {
           const new_index = this.initialLevelFirstGroups_.findIndex(
-            firstLevelGroup => firstLevelGroup.id === group.id);
+            (firstLevelGroup) => firstLevelGroup.id === group.id
+          );
           if (new_index !== -1 && new_index !== old_index) {
             this.reorderChild_(this.root.children, old_index, new_index);
           }
@@ -368,14 +374,13 @@ LayertreeTreeManager.prototype.addFirstLevelGroup_ = function(group) {
   return true;
 };
 
-
 /**
  * Retrieve a group (first found) by its name and add in the tree. Do nothing
  * if any corresponding group is found.
  * @param {string} groupName Name of the group to add.
  * @param {boolean=} opt_add if true, force to use the 'add' mode this time.
  */
-LayertreeTreeManager.prototype.addGroupByName = function(groupName, opt_add) {
+LayertreeTreeManager.prototype.addGroupByName = function (groupName, opt_add) {
   this.gmfThemes_.getThemesObject().then((themes) => {
     const group = findGroupByName(themes, groupName);
     if (group) {
@@ -383,7 +388,6 @@ LayertreeTreeManager.prototype.addGroupByName = function(groupName, opt_add) {
     }
   });
 };
-
 
 /**
  * Retrieve a group by the name of a layer that is contained in this group
@@ -393,7 +397,7 @@ LayertreeTreeManager.prototype.addGroupByName = function(groupName, opt_add) {
  * @param {boolean=} opt_add if true, force to use the 'add' mode this time.
  * @param {boolean=} opt_silent if true notifyCantAddGroups_ is not called
  */
-LayertreeTreeManager.prototype.addGroupByLayerName = function(layerName, opt_add, opt_silent) {
+LayertreeTreeManager.prototype.addGroupByLayerName = function (layerName, opt_add, opt_silent) {
   this.gmfThemes_.getThemesObject().then((themes) => {
     const group = findGroupByLayerNodeName(themes, layerName);
     if (group) {
@@ -427,18 +431,18 @@ LayertreeTreeManager.prototype.addGroupByLayerName = function(layerName, opt_add
   });
 };
 
-
 /**
  * Remove a group from this tree's children. The first group that is found (
  * based on its name) will be removed. If any is found, nothing will append.
  * @param {import('gmf/themes.js').GmfGroup} group The group to remove.
  */
-LayertreeTreeManager.prototype.removeGroup = function(group) {
+LayertreeTreeManager.prototype.removeGroup = function (group) {
   const children = this.root.children;
-  let index = 0, found = false;
+  let index = 0,
+    found = false;
   children.some((child) => {
     if (child.name === group.name) {
-      return found = true;
+      return (found = true);
     }
     index++;
     return false;
@@ -449,16 +453,14 @@ LayertreeTreeManager.prototype.removeGroup = function(group) {
   }
 };
 
-
 /**
  * Remove all groups.
  */
-LayertreeTreeManager.prototype.removeAll = function() {
+LayertreeTreeManager.prototype.removeAll = function () {
   while (this.root.children.length) {
     this.removeGroup(this.root.children[0]);
   }
 };
-
 
 /**
  * Clone a group node and recursively set all child node `isChecked` using
@@ -469,7 +471,7 @@ LayertreeTreeManager.prototype.removeAll = function() {
  * @return {import('gmf/themes.js').GmfGroup} Cloned node.
  * @private
  */
-LayertreeTreeManager.prototype.cloneGroupNode_ = function(group, names) {
+LayertreeTreeManager.prototype.cloneGroupNode_ = function (group, names) {
   /**
    * @type {import('gmf/themes.js').GmfGroup}
    */
@@ -477,7 +479,6 @@ LayertreeTreeManager.prototype.cloneGroupNode_ = function(group, names) {
   this.toggleNodeCheck_(clone, names);
   return clone;
 };
-
 
 /**
  * Set the child nodes metadata `isChecked` if its name is among the list of
@@ -487,14 +488,13 @@ LayertreeTreeManager.prototype.cloneGroupNode_ = function(group, names) {
  *     should have their checkbox checked)
  * @private
  */
-LayertreeTreeManager.prototype.toggleNodeCheck_ = function(node, names) {
-  const groupNode = /** @type {import('gmf/themes.js').GmfGroup} */(node);
+LayertreeTreeManager.prototype.toggleNodeCheck_ = function (node, names) {
+  const groupNode = /** @type {import('gmf/themes.js').GmfGroup} */ (node);
   if (!groupNode.children) {
     return;
   }
   groupNode.children.forEach((childNode) => {
-    const childGroupNode = /** @type {import('gmf/themes.js').GmfGroup} */(
-      childNode);
+    const childGroupNode = /** @type {import('gmf/themes.js').GmfGroup} */ (childNode);
     if (childGroupNode.children) {
       this.toggleNodeCheck_(childGroupNode, names);
     } else if (childNode.metadata) {
@@ -503,7 +503,6 @@ LayertreeTreeManager.prototype.toggleNodeCheck_ = function(node, names) {
   });
 };
 
-
 /**
  * Display a notification that informs that the given groups are already in the
  * tree.
@@ -511,22 +510,22 @@ LayertreeTreeManager.prototype.toggleNodeCheck_ = function(node, names) {
  *   the tree.
  * @private
  */
-LayertreeTreeManager.prototype.notifyCantAddGroups_ = function(groups) {
+LayertreeTreeManager.prototype.notifyCantAddGroups_ = function (groups) {
   /** @type {string[]} */
   const names = [];
   const gettextCatalog = this.gettextCatalog_;
   groups.forEach((group) => {
     names.push(gettextCatalog.getString(group.name));
   });
-  const msg = (names.length < 2) ?
-    gettextCatalog.getString('group is already loaded.') :
-    gettextCatalog.getString('groups are already loaded.');
+  const msg =
+    names.length < 2
+      ? gettextCatalog.getString('group is already loaded.')
+      : gettextCatalog.getString('groups are already loaded.');
   this.ngeoNotification_.notify({
     msg: `${names.join(', ')} ${msg}`,
-    type: MessageType.INFORMATION
+    type: MessageType.INFORMATION,
   });
 };
-
 
 /**
  * Get a treeCtrl based on it's node id.
@@ -535,7 +534,7 @@ LayertreeTreeManager.prototype.notifyCantAddGroups_ = function(groups) {
  *    or null.
  * @public
  */
-LayertreeTreeManager.prototype.getTreeCtrlByNodeId = function(id) {
+LayertreeTreeManager.prototype.getTreeCtrlByNodeId = function (id) {
   let correspondingTreeCtrl = null;
   if (this.rootCtrl && this.rootCtrl.traverseDepthFirst) {
     this.rootCtrl.traverseDepthFirst((treeCtrl) => {
@@ -548,20 +547,19 @@ LayertreeTreeManager.prototype.getTreeCtrlByNodeId = function(id) {
   return correspondingTreeCtrl;
 };
 
-
 /**
  * Get the OGC server.
  * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl ngeo layertree controller,
  *    from the current node.
  * @return {import('gmf/themes.js').GmfOgcServer} The OGC server.
  */
-LayertreeTreeManager.prototype.getOgcServer = function(treeCtrl) {
+LayertreeTreeManager.prototype.getOgcServer = function (treeCtrl) {
   if (!this.ogcServers_) {
     throw new Error('Missing ogcServers');
   }
-  const gmfParentGroup = /** @type {import('gmf/themes.js').GmfGroup} */(treeCtrl.parent.node);
+  const gmfParentGroup = /** @type {import('gmf/themes.js').GmfGroup} */ (treeCtrl.parent.node);
   if (gmfParentGroup.mixed) {
-    const gmfLayerWMS = /** @type {import('gmf/themes.js').GmfLayerWMS} */(treeCtrl.node);
+    const gmfLayerWMS = /** @type {import('gmf/themes.js').GmfLayerWMS} */ (treeCtrl.node);
     if (!gmfLayerWMS.ogcServer) {
       throw new Error('Missing gmfLayerWMS.ogcServer');
     }
@@ -571,14 +569,13 @@ LayertreeTreeManager.prototype.getOgcServer = function(treeCtrl) {
     while (!firstLevelGroupCtrl.parent.isRoot) {
       firstLevelGroupCtrl = firstLevelGroupCtrl.parent;
     }
-    const gmfGroup = /** @type {import('gmf/themes.js').GmfGroup} */(firstLevelGroupCtrl.node);
+    const gmfGroup = /** @type {import('gmf/themes.js').GmfGroup} */ (firstLevelGroupCtrl.node);
     if (!gmfGroup.ogcServer) {
       throw new Error('Missing gmfGroup.ogcServer');
     }
     return this.ogcServers_[gmfGroup.ogcServer];
   }
 };
-
 
 /**
  * Keep the state of each existing first-level-groups in the layertree then
@@ -589,7 +586,7 @@ LayertreeTreeManager.prototype.getOgcServer = function(treeCtrl) {
  * @param {Array<import('gmf/themes.js').GmfTheme>} themes the array of themes to be based on.
  * @private
  */
-LayertreeTreeManager.prototype.refreshFirstLevelGroups_ = function(themes) {
+LayertreeTreeManager.prototype.refreshFirstLevelGroups_ = function (themes) {
   if (!this.rootCtrl) {
     throw new Error('Missing rootCtrl');
   }
@@ -630,7 +627,6 @@ LayertreeTreeManager.prototype.refreshFirstLevelGroups_ = function(themes) {
   });
 };
 
-
 /**
  * Return a TreeManagerFullState that keeps the state of the given
  * treeCtrl including the state of its children.
@@ -639,7 +635,7 @@ LayertreeTreeManager.prototype.refreshFirstLevelGroups_ = function(themes) {
  * @return {TreeManagerFullState} the fullState object.
  * @private
  */
-LayertreeTreeManager.prototype.getFirstLevelGroupFullState_ = function(treeCtrl) {
+LayertreeTreeManager.prototype.getFirstLevelGroupFullState_ = function (treeCtrl) {
   /**
    * @type {Object<string, TreeManagerFullState>}
    */
@@ -676,10 +672,9 @@ LayertreeTreeManager.prototype.getFirstLevelGroupFullState_ = function(treeCtrl)
     children,
     isChecked,
     isExpanded,
-    isLegendExpanded
+    isLegendExpanded,
   };
 };
-
 
 /**
  * Set a node's metadata with the given fullState. Update also its children
@@ -690,13 +685,13 @@ LayertreeTreeManager.prototype.getFirstLevelGroupFullState_ = function(treeCtrl)
  * @return {import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer} the node with modification.
  * @private
  */
-LayertreeTreeManager.prototype.setNodeMetadataFromFullState_ = function(node, fullState) {
+LayertreeTreeManager.prototype.setNodeMetadataFromFullState_ = function (node, fullState) {
   if (!fullState) {
     return node;
   }
 
   // Set the metadata of the node children recursively.
-  const groupNode = /** @type {import('gmf/themes.js').GmfGroup} */(node);
+  const groupNode = /** @type {import('gmf/themes.js').GmfGroup} */ (node);
   if (groupNode.children) {
     groupNode.children.map((child) => {
       this.setNodeMetadataFromFullState_(child, fullState.children[child.name]);
@@ -712,7 +707,6 @@ LayertreeTreeManager.prototype.setNodeMetadataFromFullState_ = function(node, fu
   return node;
 };
 
-
 /**
  * @type {angular.IModule}
  * @hidden
@@ -724,6 +718,5 @@ const module = angular.module('gmfTreeManager', [
   ngeoStatemanagerService.name,
 ]);
 module.service('gmfTreeManager', LayertreeTreeManager);
-
 
 export default module;

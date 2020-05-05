@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 import ngeoMapBackgroundLayerMgr from 'ngeo/map/BackgroundLayerMgr.js';
 import ngeoMapComponent from 'ngeo/map/component.js';
@@ -40,5 +39,5 @@ export default angular.module('ngeoMapModule', [
   ngeoMapFeatureOverlayMgr.name,
   ngeoMapRecenter.name,
   ngeoMapResizemap.name,
-  ngeoMapScaleselector.name
+  ngeoMapScaleselector.name,
 ]);

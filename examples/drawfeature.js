@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import './drawfeature.css';
 import angular from 'angular';
 import ngeoDrawModule from 'ngeo/draw/module.js';
@@ -33,7 +32,6 @@ import olLayerTile from 'ol/layer/Tile.js';
 import olLayerVector from 'ol/layer/Vector.js';
 import olSourceOSM from 'ol/source/OSM.js';
 import olSourceVector from 'ol/source/Vector.js';
-
 
 /** @type {angular.IModule} **/
 const module = angular.module('app', [
@@ -53,7 +51,6 @@ const module = angular.module('app', [
  * @constructor
  */
 function MainController($scope, ngeoFeatures, ngeoToolActivateMgr) {
-
   /**
    * @type {angular.IScope}
    * @private
@@ -63,8 +60,8 @@ function MainController($scope, ngeoFeatures, ngeoToolActivateMgr) {
   const vector = new olLayerVector({
     source: new olSourceVector({
       wrapX: false,
-      features: ngeoFeatures
-    })
+      features: ngeoFeatures,
+    }),
   });
 
   /**
@@ -73,14 +70,14 @@ function MainController($scope, ngeoFeatures, ngeoToolActivateMgr) {
   this.map = new olMap({
     layers: [
       new olLayerTile({
-        source: new olSourceOSM()
+        source: new olSourceOSM(),
       }),
-      vector
+      vector,
     ],
     view: new olView({
       center: [0, 0],
-      zoom: 3
-    })
+      zoom: 3,
+    }),
   });
 
   /**
@@ -100,8 +97,6 @@ function MainController($scope, ngeoFeatures, ngeoToolActivateMgr) {
   ngeoToolActivateMgr.registerTool('mapTools', dummyToolActivate, true);
 }
 
-
 module.controller('MainController', MainController);
-
 
 export default module;

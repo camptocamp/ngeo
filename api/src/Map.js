@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 // see https://github.com/camptocamp/cgxp/blob/master/core/src/script/CGXP/api/Map.js
 
 /**
@@ -49,7 +48,7 @@ import {
   createEmpty as olExtentCreateEmpty,
   extend as olExtentExtend,
   getCenter,
-  isEmpty as olExtentIsEmpty
+  isEmpty as olExtentIsEmpty,
 } from 'ol/extent.js';
 import {get as getProjection} from 'ol/proj.js';
 
@@ -58,7 +57,6 @@ import constants from './constants.js';
 import {getFeaturesFromIds, getFeaturesFromCoordinates} from './Querent.js';
 import * as themes from './Themes.js';
 import Search from './Search.js';
-
 
 /**
  * @typedef {Object} MarkerOptions
@@ -85,13 +83,11 @@ import Search from './Search.js';
  */
 const EXCLUDE_PROPERTIES = ['boundedBy'];
 
-
 /**
  * @private
  * @hidden
  */
 class Map {
-
   /**
    * @param {MapOptions} options API options.
    */
@@ -100,7 +96,7 @@ class Map {
     const viewOptions = {
       projection: getProjection(constants.projection),
       resolutions: constants.resolutions,
-      zoom: options.zoom !== undefined ? options.zoom : 10
+      zoom: options.zoom !== undefined ? options.zoom : 10,
     };
     if (constants.extent) {
       viewOptions.extent = constants.extent;
@@ -123,7 +119,7 @@ class Map {
      */
     this.map_ = new OLMap({
       target: options.div,
-      view: this.view_
+      view: this.view_,
     });
 
     /**
@@ -133,32 +129,36 @@ class Map {
     this.overlay_ = new Overlay({
       autoPan: true,
       autoPanAnimation: {
-        duration: 80
+        duration: 80,
       },
-      element: this.createOverlayDomTree_()
+      element: this.createOverlayDomTree_(),
     });
     this.map_.addOverlay(this.overlay_);
 
     this.map_.addControl(new ScaleLine());
 
     if (options.showCoords) {
-      this.map_.addControl(new MousePosition({
-        coordinateFormat: createStringXY(0)
-      }));
+      this.map_.addControl(
+        new MousePosition({
+          coordinateFormat: createStringXY(0),
+        })
+      );
     }
     if (options.addMiniMap) {
       const resolutions = this.view_.getResolutions();
       if (!resolutions) {
         throw new Error('Missing resolutions');
       }
-      this.map_.addControl(new OverviewMap({
-        collapsed: !options.miniMapExpanded,
-        layers: [],
-        view: new View({
-          projection: this.view_.getProjection(),
-          resolutions,
+      this.map_.addControl(
+        new OverviewMap({
+          collapsed: !options.miniMapExpanded,
+          layers: [],
+          view: new View({
+            projection: this.view_.getProjection(),
+            resolutions,
+          }),
         })
-      }));
+      );
     }
 
     if (options.addLayerSwitcher) {
@@ -201,7 +201,7 @@ class Map {
     this.vectorLayer_ = new VectorLayer({
       zIndex: 1,
       style: [],
-      source: this.vectorSource_
+      source: this.vectorSource_,
     });
 
     this.map_.addLayer(this.vectorLayer_);
@@ -213,7 +213,7 @@ class Map {
         const hasDescription = feature.get('description') !== undefined;
         return hasId && hasTitle && hasDescription;
       },
-      style: () => []
+      style: () => [],
     });
     this.map_.addInteraction(this.selectInteraction_);
 
@@ -224,14 +224,16 @@ class Map {
       }
     });
 
-
     this.map_.on('singleclick', (event) => {
       const resolution = this.map_.getView().getResolution();
       if (resolution === undefined) {
         throw new Error('Missing resolution');
       }
-      const visibleLayers = this.map_.getLayers().getArray().filter(layer => layer.getVisible());
-      const visibleLayersName = visibleLayers.map(layer => layer.get('config.name'));
+      const visibleLayers = this.map_
+        .getLayers()
+        .getArray()
+        .filter((layer) => layer.getVisible());
+      const visibleLayersName = visibleLayers.map((layer) => layer.get('config.name'));
 
       this.clearSelection();
 
@@ -252,7 +254,7 @@ class Map {
       if (element) {
         const vectorLayer = new VectorLayer({
           zIndex: 1,
-          source: new VectorSource()
+          source: new VectorSource(),
         });
         this.map_.addLayer(vectorLayer);
 
@@ -260,13 +262,12 @@ class Map {
           container: element,
           url: constants.searchUrl,
           source: vectorLayer.getSource(),
-          view: this.map_.getView()
+          view: this.map_.getView(),
         });
       } else {
         throw new Error('Invalid searchDiv option');
       }
     }
-
   }
 
   /**
@@ -319,16 +320,18 @@ class Map {
       throw new Error('Missing positon');
     }
     const marker = new Feature({
-      geometry: new Point(position)
+      geometry: new Point(position),
     });
     if (options.icon) {
       // FIXME: use size?
       const image = new Icon({
-        src: options.icon
+        src: options.icon,
       });
-      marker.setStyle(new Style({
-        image
-      }));
+      marker.setStyle(
+        new Style({
+          image,
+        })
+      );
     } else {
       marker.setStyle(createDefaultStyle);
     }
@@ -377,7 +380,7 @@ class Map {
    */
   addCustomLayer(type, name, url, options = {}) {
     fetch(url)
-      .then(response => response.text())
+      .then((response) => response.text())
       .then((text) => {
         const attr = options.attr || ['title', 'description'];
         const lines = text.split(/\r\n|\r|\n/);
@@ -391,29 +394,34 @@ class Map {
             const values = zip(columns, line.split('\t'));
             // reverse to order of the coordinates to be compatible with the old api.
             const marker = new Feature({
-              geometry: new Point(values.point.split(',').reverse().map(parseFloat))
+              geometry: new Point(values.point.split(',').reverse().map(parseFloat)),
             });
             marker.setProperties(filterByKeys(values, attr));
             marker.setId(values.id);
             let anchor;
             if (values.iconOffset) {
               // flip the sign of the value to be compatible with the old api.
-              anchor = values.iconOffset.split(',').map(parseFloat).map(
-                /**
-                 * @param {number} val
-                 */
-                val => val * Math.sign(val)
-              );
+              anchor = values.iconOffset
+                .split(',')
+                .map(parseFloat)
+                .map(
+                  /**
+                   * @param {number} val
+                   */
+                  (val) => val * Math.sign(val)
+                );
             }
             const image = new Icon({
               src: values.icon,
               anchorXUnits: 'pixels',
               anchorYUnits: 'pixels',
-              anchor: anchor
+              anchor: anchor,
             });
-            marker.setStyle(new Style({
-              image
-            }));
+            marker.setStyle(
+              new Style({
+                image,
+              })
+            );
             this.vectorSource_.addFeature(marker);
           }
         }
@@ -504,7 +512,6 @@ function zip(keys, values) {
   return obj;
 }
 
-
 /**
  * @param {Object<string, *>} obj Object.
  * @param {string[]} keys keys.
@@ -520,6 +527,5 @@ function filterByKeys(obj, keys) {
   });
   return filtered;
 }
-
 
 export default Map;

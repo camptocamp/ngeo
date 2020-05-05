@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 import ngeoMapLayerHelper from 'ngeo/map/LayerHelper.js';
 import {getUid as olUtilGetUid} from 'ol/util.js';
@@ -29,14 +28,12 @@ import olEventsEventTarget from 'ol/events/Target.js';
 import VectorLayer from 'ol/layer/Vector.js';
 import VectorSource from 'ol/source/Vector.js';
 
-
 /**
  * Configuration options for the themes service.
  * @typedef {Object} ThemesOptions
  * @property {boolean} [addBlankBackgroundLayer] Whether to add a blank background layer to the list of
  *    available backgrounds.
  */
-
 
 /**
  * The Themes service. This service interacts
@@ -148,9 +145,9 @@ export class ThemesService extends olEventsEventTarget {
      * @param {import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer} item A group or a leaf.
      * @param {string[]} array Array of ids;
      */
-    const getIds = function(item, array) {
+    const getIds = function (item, array) {
       array.push(olUtilGetUid(item));
-      const groupItem = /** @type {import('gmf/themes.js').GmfGroup} */(item);
+      const groupItem = /** @type {import('gmf/themes.js').GmfGroup} */ (item);
       const children = groupItem.children || [];
       children.forEach((child) => {
         getIds(child, array);
@@ -162,7 +159,7 @@ export class ThemesService extends olEventsEventTarget {
      * @param {import("ol/layer/Base.js").default} layer The layer.
      * @return {import("ol/layer/Base.js").default} the provided layer.
      */
-    const callback = function(item, layer) {
+    const callback = function (item, layer) {
       layer.set('label', item.name);
       layer.set('metadata', item.metadata);
       layer.set('dimensions', item.dimensions);
@@ -180,33 +177,37 @@ export class ThemesService extends olEventsEventTarget {
      * @return {angular.IPromise<import("ol/layer/Base.js").default>|import("ol/layer/Base.js").default}
      *    The created layer.
      */
-    const layerLayerCreationFn = function(ogcServers, gmfLayer) {
+    const layerLayerCreationFn = function (ogcServers, gmfLayer) {
       if (gmfLayer.type === 'WMTS') {
-        const gmfLayerWMTS = /** @type {import('gmf/themes.js').GmfLayerWMTS} */(gmfLayer);
+        const gmfLayerWMTS = /** @type {import('gmf/themes.js').GmfLayerWMTS} */ (gmfLayer);
         if (!gmfLayerWMTS.url) {
           throw 'Layer URL is required';
         }
         const minResolution = getNodeMinResolution(gmfLayerWMTS);
         const maxResolution = getNodeMaxResolution(gmfLayerWMTS);
-        const layer = layerHelper.createWMTSLayerFromCapabilitites(
-          gmfLayerWMTS.url,
-          gmfLayerWMTS.layer || '',
-          gmfLayerWMTS.matrixSet,
-          gmfLayer.dimensions,
-          gmfLayerWMTS.metadata.customOpenLayersOptions,
-          minResolution,
-          maxResolution
-        ).then(callback.bind(null, gmfLayer)).then(null, (response) => {
-          let message = `Unable to build layer "${gmfLayerWMTS.layer}" `
-            + `from WMTSCapabilities: ${gmfLayerWMTS.url}\n`;
-          message += `OpenLayers error is "${response.message}`;
-          console.error(message);
-          // Continue even if some layers have failed loading.
-          return $q.resolve(undefined);
-        });
-        return /** @type {angular.IPromise<import("ol/layer/Base.js").default>} */(layer);
+        const layer = layerHelper
+          .createWMTSLayerFromCapabilitites(
+            gmfLayerWMTS.url,
+            gmfLayerWMTS.layer || '',
+            gmfLayerWMTS.matrixSet,
+            gmfLayer.dimensions,
+            gmfLayerWMTS.metadata.customOpenLayersOptions,
+            minResolution,
+            maxResolution
+          )
+          .then(callback.bind(null, gmfLayer))
+          .then(null, (response) => {
+            let message =
+              `Unable to build layer "${gmfLayerWMTS.layer}" ` +
+              `from WMTSCapabilities: ${gmfLayerWMTS.url}\n`;
+            message += `OpenLayers error is "${response.message}`;
+            console.error(message);
+            // Continue even if some layers have failed loading.
+            return $q.resolve(undefined);
+          });
+        return /** @type {angular.IPromise<import("ol/layer/Base.js").default>} */ (layer);
       } else if (gmfLayer.type === 'WMS') {
-        const gmfLayerWMS = /** @type {import('gmf/themes.js').GmfLayerWMS} */(gmfLayer);
+        const gmfLayerWMS = /** @type {import('gmf/themes.js').GmfLayerWMS} */ (gmfLayer);
         if (!gmfLayerWMS.ogcServer) {
           throw new Error('Missing gmfLayerWMS.ogcServer');
         }
@@ -232,16 +233,19 @@ export class ThemesService extends olEventsEventTarget {
           }
         }
 
-        return callback(gmfLayer, layerHelper.createBasicWMSLayer(
-          server.url,
-          gmfLayerWMS.layers || '',
-          server.imageType,
-          server.type,
-          undefined, // time
-          opt_params,
-          server.credential ? 'use-credentials' : 'anonymous',
-          gmfLayerWMS.metadata.customOpenLayersOptions
-        ));
+        return callback(
+          gmfLayer,
+          layerHelper.createBasicWMSLayer(
+            server.url,
+            gmfLayerWMS.layers || '',
+            server.imageType,
+            server.type,
+            undefined, // time
+            opt_params,
+            server.credential ? 'use-credentials' : 'anonymous',
+            gmfLayerWMS.metadata.customOpenLayersOptions
+          )
+        );
       }
       throw `Unsupported type: ${gmfLayer.type}`;
     };
@@ -254,13 +258,14 @@ export class ThemesService extends olEventsEventTarget {
     const layerGroupCreationFn = (ogcServers, item) => {
       // We assume no child is a layer group.
       // The order of insertion in OL3 is the contrary of the theme
-      const orderedChildren = item.children.map(x => x).reverse();
-      const promises = orderedChildren.map((item) => layerLayerCreationFn(
-        ogcServers, /** @type {import('gmf/themes.js').GmfLayer} */(item)));
+      const orderedChildren = item.children.map((x) => x).reverse();
+      const promises = orderedChildren.map((item) =>
+        layerLayerCreationFn(ogcServers, /** @type {import('gmf/themes.js').GmfLayer} */ (item))
+      );
       return $q.all(promises).then((layers) => {
         let collection;
         if (layers) {
-          layers = layers.filter(l => l);
+          layers = layers.filter((l) => l);
           collection = new olCollection(layers);
         }
         const group = layerHelper.createBasicGroup(collection);
@@ -275,10 +280,10 @@ export class ThemesService extends olEventsEventTarget {
      * @return {angular.IPromise<import("ol/layer/Base.js").default[]>} Promise.
      */
     const promiseSuccessFn = (data) => {
-      const promises = /** @type {angular.IPromise<*>} */(/** @type {*} */(
-        data.background_layers.map((item) => {
-          const itemLayer = /** @type {import('gmf/themes.js').GmfLayer} */(item);
-          const itemGroup = /** @type {import('gmf/themes.js').GmfGroup} */(item);
+      const promises = /** @type {angular.IPromise<*>} */ (
+        /** @type {*} */ (data.background_layers.map((item) => {
+          const itemLayer = /** @type {import('gmf/themes.js').GmfLayer} */ (item);
+          const itemGroup = /** @type {import('gmf/themes.js').GmfGroup} */ (item);
           const itemType = itemLayer.type;
           if (itemType === 'WMTS' || itemType === 'WMS') {
             return layerLayerCreationFn(data.ogcServers, itemLayer);
@@ -288,15 +293,16 @@ export class ThemesService extends olEventsEventTarget {
           } else {
             return undefined;
           }
-        })
-      ));
-      return /** @type {angular.IPromise<import("ol/layer/Base.js").default[]>} */(/** @type {*} */(
-        $q.all(promises)
-      ));
+        }))
+      );
+      return /** @type {angular.IPromise<import("ol/layer/Base.js").default[]>} */ (
+        /** @type {*} */ ($q.all(promises))
+      );
     };
 
-    this.bgLayerPromise_ = /** @type {angular.IPromise<import("ol/layer/Base.js").default[]>} */(
-      this.promise_.then(promiseSuccessFn).then((values) => {
+    this.bgLayerPromise_ = /** @type {angular.IPromise<import("ol/layer/Base.js").default[]>} */ (this.promise_
+      .then(promiseSuccessFn)
+      .then((values) => {
         /** @type {import('ol/layer/Base.js').default[]} */
         const layers = [];
 
@@ -305,7 +311,7 @@ export class ThemesService extends olEventsEventTarget {
           // For i18n string collection
           gettextCatalog.getString('blank');
           const layer = new VectorLayer({
-            source: new VectorSource()
+            source: new VectorSource(),
           });
           layer.set('label', 'blank');
           layer.set('metadata', {thumbnail: ''});
@@ -319,8 +325,7 @@ export class ThemesService extends olEventsEventTarget {
           }
         });
         return layers;
-      })
-    );
+      }));
 
     return this.bgLayerPromise_;
   }
@@ -336,7 +341,8 @@ export class ThemesService extends olEventsEventTarget {
        * @param {import('gmf/themes.js').GmfThemesResponse} data The "themes" web service response.
        * @return {?import('gmf/themes.js').GmfTheme} The theme object for themeName, or null if not found.
        */
-      data => findThemeByName(data.themes, themeName));
+      (data) => findThemeByName(data.themes, themeName)
+    );
   }
 
   /**
@@ -349,7 +355,8 @@ export class ThemesService extends olEventsEventTarget {
        * @param {import('gmf/themes.js').GmfThemesResponse} data The "themes" web service response.
        * @return {Array<import('gmf/themes.js').GmfTheme>} The themes object.
        */
-      data => data.themes);
+      (data) => data.themes
+    );
   }
 
   /**
@@ -367,7 +374,7 @@ export class ThemesService extends olEventsEventTarget {
        * @return {Array<import('gmf/themes.js').GmfLayer|import('gmf/themes.js').GmfGroup>}
        *    The background layers object.
        */
-      data => data.background_layers
+      (data) => data.background_layers
     );
   }
 
@@ -384,7 +391,8 @@ export class ThemesService extends olEventsEventTarget {
        * @param {import('gmf/themes.js').GmfThemesResponse} data The "themes" web service response.
        * @return {import('gmf/themes.js').GmfOgcServers} The `ogcServers` object.
        */
-      data => data.ogcServers);
+      (data) => data.ogcServers
+    );
   }
 
   /**
@@ -446,36 +454,42 @@ export class ThemesService extends olEventsEventTarget {
       this.loaded = false;
     }
 
-    this.$http_.get(this.treeUrl_, {
-      params: opt_roleId !== undefined ? {
-        'role': opt_roleId
-      } : {},
-      cache: false,
-      withCredentials: true
-    }).then((response) => {
-      if (response.data.errors.length != 0) {
-        const message = `The themes contain some errors:\n${
-          response.data.errors.join('\n')}`;
-        console.error(message);
-        if (this.ngeoLocation_ !== null && this.ngeoLocation_.hasParam('debug')) {
-          window.alert(message);
+    this.$http_
+      .get(this.treeUrl_, {
+        params:
+          opt_roleId !== undefined
+            ? {
+                'role': opt_roleId,
+              }
+            : {},
+        cache: false,
+        withCredentials: true,
+      })
+      .then(
+        (response) => {
+          if (response.data.errors.length != 0) {
+            const message = `The themes contain some errors:\n${response.data.errors.join('\n')}`;
+            console.error(message);
+            if (this.ngeoLocation_ !== null && this.ngeoLocation_.hasParam('debug')) {
+              window.alert(message);
+            }
+          }
+
+          // set default values
+          Object.values(response.data.ogcServers).forEach((server) => {
+            server.geometryName = server.geometryName || 'geometry';
+          });
+
+          this.deferred_.resolve(response.data);
+          this.dispatchEvent('change');
+          this.loaded = true;
+        },
+        (response) => {
+          this.deferred_.reject(response);
         }
-      }
-
-      // set default values
-      Object.values(response.data.ogcServers).forEach((server) => {
-        server.geometryName = server.geometryName || 'geometry';
-      });
-
-      this.deferred_.resolve(response.data);
-      this.dispatchEvent('change');
-      this.loaded = true;
-    }, (response) => {
-      this.deferred_.reject(response);
-    });
+      );
   }
 }
-
 
 /**
  * @param {Array<import('gmf/themes.js').GmfTheme>} themes Array of "theme" objects.
@@ -522,7 +536,6 @@ export function findGroupByName(themes, name) {
   return null;
 }
 
-
 /**
  * Find an object by its name. Return null if not found.
  * @param {(import('gmf/themes.js').GmfTheme|import("gmf/themes").GmfGroup|import("gmf/themes").GmfLayer)[]}
@@ -533,9 +546,8 @@ export function findGroupByName(themes, name) {
  * @hidden
  */
 export function findObjectByName(objects, objectName) {
-  return olArray.find(objects, object => object.name === objectName);
+  return olArray.find(objects, (object) => object.name === objectName);
 }
-
 
 /**
  * Find a theme object by its name. Return null if not found.
@@ -545,9 +557,8 @@ export function findObjectByName(objects, objectName) {
  * @hidden
  */
 export function findThemeByName(themes, themeName) {
-  return /** @type {import('gmf/themes.js').GmfTheme} */(findObjectByName(themes, themeName));
+  return /** @type {import('gmf/themes.js').GmfTheme} */ (findObjectByName(themes, themeName));
 }
-
 
 /**
  * Fill the given "nodes" array with all internal nodes (non-leaf nones) in the given node.
@@ -567,7 +578,6 @@ function getFlatInternalNodes(node, nodes) {
     }
   }
 }
-
 
 /**
  * Fill the given "nodes" array with all leaf nodes in the given node.
@@ -595,15 +605,14 @@ export function getFlatNodes(node, nodes) {
  * @hidden
  */
 export function getSnappingConfig(node) {
-  const config = (node.metadata && node.metadata.snappingConfig !== undefined) ?
-    node.metadata.snappingConfig : null;
+  const config =
+    node.metadata && node.metadata.snappingConfig !== undefined ? node.metadata.snappingConfig : null;
   // config.activated default to true
   if (config && config.activated === undefined) {
     config.activated = true;
   }
   return config;
 }
-
 
 /**
  * Get the maximal resolution defined for this layer. Looks in the
@@ -621,7 +630,6 @@ export function getNodeMaxResolution(gmfLayer) {
   }
   return maxResolution;
 }
-
 
 /**
  * Get the minimal resolution defined for this layer. Looks in the
@@ -648,20 +656,16 @@ export const ThemeNodeType = {
   MIXED_GROUP: 'MixedGroup',
   NOT_MIXED_GROUP: 'NotMixedGroup',
   WMTS: 'WMTS',
-  WMS: 'WMS'
+  WMS: 'WMS',
 };
-
 
 /**
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfThemes', [
-  ngeoMapLayerHelper.name,
-]);
+const module = angular.module('gmfThemes', [ngeoMapLayerHelper.name]);
 
 module.value('gmfThemesOptions', {});
 module.service('gmfThemes', ThemesService);
-
 
 export default module;

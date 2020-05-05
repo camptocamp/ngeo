@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 import ngeoQueryMapQuerent from 'ngeo/query/MapQuerent.js';
 import ngeoFilterCondition from 'ngeo/filter/Condition.js';
@@ -35,13 +34,11 @@ import {getUid as olUtilGetUid} from 'ol/util.js';
 import {remove as removeFromArray} from 'ol/array.js';
 import 'ngeo/sass/font.scss';
 
-
 /**
  * @typedef {Object} FilterCondition
  * @property {string} text
  * @property {string} value
  */
-
 
 /**
  * @type {angular.IModule}
@@ -54,7 +51,6 @@ const module = angular.module('ngeoFilter', [
   ngeoQueryMapQuerent.name,
 ]);
 
-
 module.run(
   /**
    * @ngInject
@@ -63,19 +59,20 @@ module.run(
   ($templateCache) => {
     // @ts-ignore: webpack
     $templateCache.put('ngeo/filter', require('./component.html'));
-  });
+  }
+);
 
-
-module.value('ngeoFilterTemplateUrl',
+module.value(
+  'ngeoFilterTemplateUrl',
   /**
    * @param {angular.IAttributes} $attrs Attributes.
    * @return {string} The template url.
    */
   ($attrs) => {
     const templateUrl = $attrs.ngeoFilterTemplateUrl;
-    return templateUrl !== undefined ? templateUrl :
-      'ngeo/filter';
-  });
+    return templateUrl !== undefined ? templateUrl : 'ngeo/filter';
+  }
+);
 
 /**
  * @param {angular.IAttributes} $attrs Attributes.
@@ -89,7 +86,6 @@ function ngeoFilterTemplateUrl($attrs, ngeoFilterTemplateUrl) {
   return ngeoFilterTemplateUrl($attrs);
 }
 
-
 module.component('ngeoFilter', {
   bindings: {
     'aRuleIsActive': '=',
@@ -101,10 +97,10 @@ module.component('ngeoFilter', {
     'featureOverlay': '<',
     'filterIsApplied': '=',
     'map': '<',
-    'toolGroup': '<'
+    'toolGroup': '<',
   },
   controller: 'ngeoFilterController',
-  templateUrl: ngeoFilterTemplateUrl
+  templateUrl: ngeoFilterTemplateUrl,
 });
 
 /**
@@ -112,7 +108,6 @@ module.component('ngeoFilter', {
  * @hidden
  */
 class FilterController {
-
   /**
    * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext service.
    * @param {angular.IScope} $scope Angular scope.
@@ -124,9 +119,7 @@ class FilterController {
    * @ngdoc controller
    * @ngname NgeoFilterController
    */
-  constructor(gettextCatalog, $scope, $timeout, ngeoMapQuerent,
-    ngeoRuleHelper) {
-
+  constructor(gettextCatalog, $scope, $timeout, ngeoMapQuerent, ngeoRuleHelper) {
     // === Binding properties ===
 
     /**
@@ -201,7 +194,6 @@ class FilterController {
      */
     this.ngeoRuleHelper_ = ngeoRuleHelper;
 
-
     // === Inner properties ===
 
     /**
@@ -210,16 +202,16 @@ class FilterController {
     this.conditions = [
       {
         text: gettextCatalog.getString('Match all criteria'),
-        value: ngeoFilterCondition.AND
+        value: ngeoFilterCondition.AND,
       },
       {
         text: gettextCatalog.getString('Match at least one criterion'),
-        value: ngeoFilterCondition.OR
+        value: ngeoFilterCondition.OR,
       },
       {
         text: gettextCatalog.getString('Does not match any criterion'),
-        value: ngeoFilterCondition.NOT
-      }
+        value: ngeoFilterCondition.NOT,
+      },
     ];
 
     /**
@@ -241,7 +233,6 @@ class FilterController {
     this.ruleUnlisteners_ = {};
   }
 
-
   /**
    * Called on initialization of the controller.
    *
@@ -253,10 +244,7 @@ class FilterController {
       throw new Error('Missing datasource');
     }
 
-    this.scope_.$watch(
-      () => this.aRuleIsActive,
-      this.handleARuleIsActiveChange_.bind(this)
-    );
+    this.scope_.$watch(() => this.aRuleIsActive, this.handleARuleIsActiveChange_.bind(this));
 
     this.scope_.$watch(
       () => this.datasource.filterRules,
@@ -287,7 +275,6 @@ class FilterController {
     this.apply();
   }
 
-
   /**
    * Called on destruction of the controller.
    *
@@ -307,7 +294,6 @@ class FilterController {
     this.featureOverlay.clear();
   }
 
-
   /**
    * @return {boolean} True if at least one rule is currently defined with an expression.
    */
@@ -326,7 +312,6 @@ class FilterController {
     }
     return customRuleActive || directedRuleActive;
   }
-
 
   /**
    * Loop in all directed and custom rules. Apply the rules that have a proper
@@ -353,7 +338,6 @@ class FilterController {
     });
   }
 
-
   /**
    * Loop in all directed and custom rules. Issue a request to obtain the data
    * and show the result.
@@ -379,7 +363,7 @@ class FilterController {
     const filter = this.ngeoRuleHelper_.createFilter({
       dataSource: dataSource,
       filterRules: filterRules,
-      srsName: projCode
+      srsName: projCode,
     });
     if (!filter) {
       throw new Error('Missing filter');
@@ -389,10 +373,9 @@ class FilterController {
       dataSources: [dataSource],
       filter: filter,
       limit: limit,
-      map: map
+      map: map,
     });
   }
-
 
   /**
    * Loop in all directed and custom rules and collect those with a value.
@@ -414,7 +397,6 @@ class FilterController {
     return filterRules;
   }
 
-
   /**
    * Create and add a new custom rule using an attribute. The rule is activated
    * after being created.
@@ -431,7 +413,6 @@ class FilterController {
       rule.active = true;
     }, 1);
   }
-
 
   /**
    * @param {FilterCondition} condition Condition to set.
@@ -539,10 +520,8 @@ class FilterController {
       }
     }
   }
-
 }
 
 module.controller('ngeoFilterController', FilterController);
-
 
 export default module;

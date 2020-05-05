@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 import appURL from './url.js';
 import './profile.css';
@@ -39,7 +38,6 @@ import olSourceOSM from 'ol/source/OSM.js';
 import olStyleStroke from 'ol/style/Stroke.js';
 import olStyleStyle from 'ol/style/Style.js';
 
-
 /**
  * @type {angular.IModule}
  * @hidden
@@ -49,15 +47,13 @@ const module = angular.module('gmfapp', [
   gmfPermalinkPermalink.name,
   gmfMapComponent.name,
   gmfProfileModule.name,
-  ngeoMapModule.name // for ngeo.map.FeatureOverlay, perhaps remove me
+  ngeoMapModule.name, // for ngeo.map.FeatureOverlay, perhaps remove me
 ]);
-
 
 module.value('gmfProfileJsonUrl', appURL.PROFILE);
 
 module.constant('defaultTheme', 'Demo');
 module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
-
 
 /**
  * @param {angular.IScope} $scope Angular scope.
@@ -77,15 +73,15 @@ function MainController($scope, ngeoFeatureOverlayMgr) {
    */
   this.profileLinesconfiguration = {
     'aster': {
-      'color': '#0404A0'
+      'color': '#0404A0',
     },
     'srtm': {
-      'color': '#04A004'
-    }
+      'color': '#04A004',
+    },
   };
 
   this.profileOptions = {
-    styleDefs: 'svg {background-color: #D3E5D7};'
+    styleDefs: 'svg {background-color: #D3E5D7};',
   };
 
   /**
@@ -94,22 +90,22 @@ function MainController($scope, ngeoFeatureOverlayMgr) {
   this.map = new olMap({
     layers: [
       new olLayerTile({
-        source: new olSourceOSM()
-      })
+        source: new olSourceOSM(),
+      }),
     ],
     view: new olView({
       projection: EPSG2056,
       resolutions: [200, 100, 50, 20, 10, 5, 2.5, 2, 1, 0.5],
       center: [2600000, 1200000],
-      zoom: 3
-    })
+      zoom: 3,
+    }),
   });
 
   const lineStyle = new olStyleStyle({
     stroke: new olStyleStroke({
       color: '#ffcc33',
-      width: 2
-    })
+      width: 2,
+    }),
   });
 
   /**
@@ -121,7 +117,6 @@ function MainController($scope, ngeoFeatureOverlayMgr) {
   overlay.setFeatures(features);
   overlay.setStyle(lineStyle);
 
-
   // Initialize the feature overlay manager with the map.
   ngeoFeatureOverlayMgr.init(this.map);
 
@@ -131,7 +126,7 @@ function MainController($scope, ngeoFeatureOverlayMgr) {
    */
   this.drawLine = new olInteractionDraw({
     type: /** @type {import("ol/geom/GeometryType.js").default} */ ('LineString'),
-    features: features
+    features: features,
   });
 
   this.drawLine.setActive(false);
@@ -140,7 +135,7 @@ function MainController($scope, ngeoFeatureOverlayMgr) {
   /**
    * Toggle activation of the draw line interaction.
    */
-  this.toggleDrawLineActive = function() {
+  this.toggleDrawLineActive = function () {
     if (this.drawLine.getActive()) {
       this.drawLine.setActive(false);
       this.clear_();
@@ -149,7 +144,7 @@ function MainController($scope, ngeoFeatureOverlayMgr) {
     }
   };
 
-  this.clear_ = function() {
+  this.clear_ = function () {
     features.clear(); // For the draw overlay.
     this.profileLine = null; // To reset the profile.
   };
@@ -165,8 +160,6 @@ function MainController($scope, ngeoFeatureOverlayMgr) {
   });
 }
 
-
 module.controller('MainController', MainController);
-
 
 export default module;

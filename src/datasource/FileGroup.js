@@ -19,10 +19,8 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import ngeoDatasourceFile from 'ngeo/datasource/File.js';
 import ngeoDatasourceGroup from 'ngeo/datasource/Group.js';
-
 
 /**
  * The options required to create a `FileGroup`.
@@ -34,12 +32,10 @@ import ngeoDatasourceGroup from 'ngeo/datasource/Group.js';
  * @property {string} title (GroupOptions)
  */
 
-
 /**
  * @hidden
  */
 export default class extends ngeoDatasourceGroup {
-
   /**
    * A FileGroup data source combines multiple `ngeo.datasource.File` objects.
    * Its main goal is to synchronize the added data source 'visible' properties
@@ -48,11 +44,9 @@ export default class extends ngeoDatasourceGroup {
    * @param {FileGroupOptions} options Options.
    */
   constructor(options) {
-
     super(options);
 
     const injector = options.injector;
-
 
     // === PRIVATE properties ===
 

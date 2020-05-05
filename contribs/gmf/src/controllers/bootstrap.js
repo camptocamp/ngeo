@@ -19,10 +19,8 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import $ from 'jquery';
 import angular from 'angular';
-
 
 /**
  * @private
@@ -34,7 +32,7 @@ function bootstrap(module) {
   // Hack to make the bootstrap type check working with polyfill.io
   const oldObjectToString = Object.prototype.toString;
   if (!oldObjectToString.toString().includes('[native code]')) {
-    Object.prototype.toString = function() {
+    Object.prototype.toString = function () {
       if (this === null) {
         return '[object Null]';
       }
@@ -50,14 +48,12 @@ function bootstrap(module) {
   const search = document.location ? document.location.search || '' : '';
   const dynamicUrl = `${dynamicUrl_}?interface=${interface_}&query=${encodeURIComponent(
     search
-  )}&path=${encodeURIComponent(
-    document.location.pathname
-  )}`;
+  )}&path=${encodeURIComponent(document.location.pathname)}`;
   const request = $.ajax(dynamicUrl, {
     'dataType': 'json',
     'xhrFields': {
-      withCredentials: false
-    }
+      withCredentials: false,
+    },
   });
   request.fail((jqXHR, textStatus) => {
     window.alert(`Failed to get the dynamic: ${textStatus}`);

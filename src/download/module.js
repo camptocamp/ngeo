@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 import ngeoDownloadCsv from 'ngeo/download/Csv.js';
 import ngeoDownloadService from 'ngeo/download/service.js';
@@ -27,7 +26,4 @@ import ngeoDownloadService from 'ngeo/download/service.js';
 /**
  * @type {angular.IModule}
  */
-export default angular.module('ngeoDownloadModule', [
-  ngeoDownloadCsv.name,
-  ngeoDownloadService.name,
-]);
+export default angular.module('ngeoDownloadModule', [ngeoDownloadCsv.name, ngeoDownloadService.name]);

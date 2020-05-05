@@ -19,9 +19,7 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
-
 
 /**
  * @type {angular.IModule}
@@ -34,7 +32,6 @@ const module = angular.module('ngeoDebounce', []);
  * @template {function(?): void} T args
  * @typedef {function(T, number, boolean): T} miscDebounce
  */
-
 
 /**
  * @template {function(?): void} T args
@@ -51,11 +48,11 @@ export function debounce(func, wait, invokeApply, $timeout) {
    * @type {?angular.IPromise<void>}
    */
   let timeout = null;
-  return /** @type {T} */(
+  return /** @type {T} */ (
     /**
      * @this {any} The context
      */
-    function(...args) {
+    function (...args) {
       const later = () => {
         timeout = null;
         func.apply(this, args);
@@ -63,11 +60,10 @@ export function debounce(func, wait, invokeApply, $timeout) {
       if (timeout !== null) {
         $timeout.cancel(timeout);
       }
-      timeout = ($timeout(later, wait, invokeApply));
+      timeout = $timeout(later, wait, invokeApply);
     }
   );
 }
-
 
 /**
  * Provides a debounce service. That service is a function

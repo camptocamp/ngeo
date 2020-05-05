@@ -19,13 +19,11 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 import {numberSafeCompareFunction} from 'ol/array.js';
 import olMap from 'ol/Map.js';
 import {listen, unlistenByKey} from 'ol/events.js';
 import 'bootstrap/js/src/dropdown.js';
-
 
 /**
  * Options to configure the scale selector.
@@ -34,15 +32,14 @@ import 'bootstrap/js/src/dropdown.js';
  * @property {boolean} [dropup] True to get a drop menu that opens imself to the top, instead of the bottom.
  */
 
-
 /**
  * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('ngeoScaleselector', []);
 
-
-module.value('ngeoScaleselectorTemplateUrl',
+module.value(
+  'ngeoScaleselectorTemplateUrl',
   /**
    * @param {JQuery} element Element.
    * @param {angular.IAttributes} attrs Attributes.
@@ -50,10 +47,9 @@ module.value('ngeoScaleselectorTemplateUrl',
    */
   (element, attrs) => {
     const templateUrl = attrs.ngeoScaleselectorTemplateurl;
-    return templateUrl !== undefined ? templateUrl :
-      'ngeo/map/scaleselector';
-  });
-
+    return templateUrl !== undefined ? templateUrl : 'ngeo/map/scaleselector';
+  }
+);
 
 module.run(
   /**
@@ -63,8 +59,8 @@ module.run(
   ($templateCache) => {
     // @ts-ignore: webpack
     $templateCache.put('ngeo/map/scaleselector', require('./scaleselector.html'));
-  });
-
+  }
+);
 
 /**
  * Provides the "ngeoScaleselector" directive, a widget for
@@ -117,18 +113,16 @@ module.run(
  * @ngdoc directive
  * @ngname ngeoScaleselector
  */
-const mapScaleselectorComponent = function(ngeoScaleselectorTemplateUrl) {
+const mapScaleselectorComponent = function (ngeoScaleselectorTemplateUrl) {
   return {
     restrict: 'A',
     scope: true,
     controller: 'NgeoScaleselectorController',
-    templateUrl: ngeoScaleselectorTemplateUrl
+    templateUrl: ngeoScaleselectorTemplateUrl,
   };
 };
 
-
 module.directive('ngeoScaleselector', mapScaleselectorComponent);
-
 
 /**
  * @private
@@ -142,15 +136,13 @@ class ScaleselectorController {
    * @ngInject
    */
   constructor($scope, $element, $attrs) {
-
     const scalesExpr = $attrs.ngeoScaleselector;
 
     /**
      * The zoom level/scale map object.
      * @type {number[]}
      */
-    this.scales = /** @type {number[]} */
-      ($scope.$eval(scalesExpr));
+    this.scales = /** @type {number[]} */ ($scope.$eval(scalesExpr));
     console.assert(this.scales !== undefined);
 
     /**
@@ -158,7 +150,8 @@ class ScaleselectorController {
      */
     this.zoomLevels = [];
 
-    $scope.$watch(() => Object.keys(this.scales).length,
+    $scope.$watch(
+      () => Object.keys(this.scales).length,
       /**
        * @param {number} newLength
        */
@@ -217,7 +210,6 @@ class ScaleselectorController {
     // @ts-ignore
     $scope.scaleselectorCtrl = this;
   }
-
 
   /**
    * @param {number} zoom Zoom level.
@@ -281,7 +273,6 @@ class ScaleselectorController {
   }
 }
 
-
 /**
  * @param {?} options Options after expression evaluation.
  * @return {ScaleselectorOptions} Options object.
@@ -293,12 +284,10 @@ function getOptions_(options) {
     dropup = options.dropup == true;
   }
   return /** @type {ScaleselectorOptions} */ ({
-    dropup: dropup
+    dropup: dropup,
   });
 }
 
-
 module.controller('NgeoScaleselectorController', ScaleselectorController);
-
 
 export default module;

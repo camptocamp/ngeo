@@ -19,10 +19,8 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import ngeoFormatAttributeType from 'ngeo/format/AttributeType.js';
 import ngeoRuleRule, {RuleOperatorType} from 'ngeo/rule/Rule.js';
-
 
 /**
  * The options for creating a text style.
@@ -50,12 +48,10 @@ import ngeoRuleRule, {RuleOperatorType} from 'ngeo/rule/Rule.js';
  * @property {number} [upperBoundary] (RuleOptions)
  */
 
-
 /**
  * @hidden
  */
 export default class extends ngeoRuleRule {
-
   /**
    * A text rule, which always compares the value with the LIKE operator, by default.
    *

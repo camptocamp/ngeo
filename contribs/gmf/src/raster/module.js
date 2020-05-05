@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 import gmfRasterComponent from 'gmf/raster/component.js';
 import gmfRasterRasterService from 'gmf/raster/RasterService.js';
@@ -27,7 +26,4 @@ import gmfRasterRasterService from 'gmf/raster/RasterService.js';
 /**
  * @type {angular.IModule}
  */
-export default angular.module('gmfRasterModule', [
-  gmfRasterComponent.name,
-  gmfRasterRasterService.name,
-]);
+export default angular.module('gmfRasterModule', [gmfRasterComponent.name, gmfRasterRasterService.name]);

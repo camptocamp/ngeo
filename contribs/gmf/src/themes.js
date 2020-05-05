@@ -19,11 +19,9 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 /**
  * The GeoMapFish "themes" web service.
  */
-
 
 /**
  * @typedef {Object} GmfThemes
@@ -37,12 +35,10 @@
  * @property {GmfTheme[]} themes
  */
 
-
 /**
  * @typedef {Object} GmfRootNode
  * @property {GmfGroup[]} children
  */
-
 
 /**
  * Contains the common element of all the elements of the GeoMapFish layer tree.
@@ -51,7 +47,6 @@
  * @property {GmfMetaData} metadata The related metadata.
  * @property {string} name
  */
-
 
 /**
  * The element we can select in the theme selector.
@@ -63,7 +58,6 @@
  * @property {GmfGroup[]} children The first level layer groups.
  * @property {GmfFunctionalities} functionalities
  */
-
 
 /**
  * A GeoMapFish group
@@ -92,7 +86,6 @@
  * @property {string} [popupId] a popup identifier for the associate submenu.
  */
 
-
 /**
  * A GeoMapFish layer
  * not an OpenLayers layer
@@ -116,7 +109,6 @@
  * @property {string} [popupId] a popup identifier for the associate submenu.
  */
 
-
 /**
  * extends GmfLayer
  * @typedef {Object} GmfLayerWMS
@@ -137,7 +129,6 @@
  *      directly manage it, see also `{GmfGroup.time}`.
  */
 
-
 /**
  * extends GmfLayer
  * @typedef {Object} GmfLayerWMTS
@@ -155,7 +146,6 @@
  * @property {string} url
  */
 
-
 /**
  * Additional attributes related on a WMS layers (or WFS features type).
  * @typedef {Object} GmfLayerChildLayer
@@ -166,7 +156,6 @@
  * @property {string} name
  * @property {boolean} queryable
  */
-
 
 /**
  * @typedef {Object<string, GmfOgcServer>} GmfOgcServers
@@ -205,7 +194,6 @@
  *      in the filter tool upon loading an application.
  *      Note: although this is a list, only one can be defined.
  */
-
 
 /**
  * @typedef {Object} GmfMetaData
@@ -259,7 +247,6 @@
  * @property {Object} [customOpenLayersOptions] The custom OpenLayers WMS layer options.
  */
 
-
 /**
  * @typedef {Object} GmfSnappingConfig
  * @property {boolean} [activated=true] Determines whether the snapping on this layer is activated by default.
@@ -270,12 +257,10 @@
  * snapped or not.
  */
 
-
 /**
  * @typedef {Object} GmfLayerAttributeValuesResponse
  * @property {GmfLayerAttributeValue[]} items
  */
-
 
 /**
  * @typedef {Object} GmfLayerAttributeValue

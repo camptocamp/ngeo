@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import './scaleselector.css';
 import angular from 'angular';
 import ngeoMiscFilters from 'ngeo/misc/filters.js';
@@ -30,14 +29,8 @@ import olLayerTile from 'ol/layer/Tile.js';
 import olSourceOSM from 'ol/source/OSM.js';
 import ngeoMapModule from 'ngeo/map/module.js';
 
-
 /** @type {angular.IModule} **/
-const module = angular.module('app', [
-  'gettext',
-  ngeoMapModule.name,
-  ngeoMiscFilters.name,
-]);
-
+const module = angular.module('app', ['gettext', ngeoMapModule.name, ngeoMiscFilters.name]);
 
 /**
  * @constructor
@@ -45,21 +38,20 @@ const module = angular.module('app', [
  * @ngInject
  */
 function MainController($scope) {
-
   /**
    * @type {import("ol/Map.js").default}
    */
   this.map = new olMap({
     layers: [
       new olLayerTile({
-        source: new olSourceOSM()
-      })
+        source: new olSourceOSM(),
+      }),
     ],
     view: new olView({
       center: [-10635142.37, 4813698.29],
       zoom: 1,
-      maxZoom: 4
-    })
+      maxZoom: 4,
+    }),
   });
 
   /**
@@ -74,13 +66,10 @@ function MainController($scope) {
    * @type {import('ngeo/map/scaleselector.js').ScaleselectorOptions}
    */
   this.options = {
-    dropup: true
+    dropup: true,
   };
-
 }
 
-
 module.controller('MainController', MainController);
-
 
 export default module;

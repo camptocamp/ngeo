@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 import ngeoMiscTime, {Time} from 'ngeo/misc/Time.js';
 
@@ -50,7 +49,6 @@ export class WMSTime extends Time {
      */
     this.gettextCatalog_ = gettextCatalog;
   }
-
 
   /**
    * Format time regarding a resolution
@@ -99,9 +97,7 @@ export class WMSTime extends Time {
         //case "second":
         return date.toISOString().replace(/\.\d{3}/, '');
     }
-
   }
-
 
   /**
    * Format time to be used as a WMS Time query parameter
@@ -115,25 +111,23 @@ export class WMSTime extends Time {
     console.assert(wmsTimeProperty.resolution !== undefined);
     if (wmsTimeProperty.mode === 'range') {
       console.assert(times.end !== undefined);
-      return (
-        `${this.formatTimeValue(times.start, wmsTimeProperty.resolution, true, opt_toUTC)}/${
-          this.formatTimeValue(times.end, wmsTimeProperty.resolution, true, opt_toUTC)}`
-      );
+      return `${this.formatTimeValue(
+        times.start,
+        wmsTimeProperty.resolution,
+        true,
+        opt_toUTC
+      )}/${this.formatTimeValue(times.end, wmsTimeProperty.resolution, true, opt_toUTC)}`;
     } else {
       return this.formatTimeValue(times.start, wmsTimeProperty.resolution, true, opt_toUTC);
     }
   }
 }
 
-
 /**
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoWMSTime', [
-  ngeoMiscTime.name,
-]);
+const module = angular.module('ngeoWMSTime', [ngeoMiscTime.name]);
 module.service('ngeoWMSTime', WMSTime);
-
 
 export default module;

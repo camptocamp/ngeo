@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 
 import {listen as olEventsListen} from 'ol/events.js';
@@ -28,7 +27,7 @@ import {
   Circle as OLGeomCircle,
   GeometryCollection as OLGeomGeometryCollection,
   LineString as OLGeomLineString,
-  Polygon as OLGeomPolygon
+  Polygon as OLGeomPolygon,
 } from 'ol/geom.js';
 import {fromExtent as olGeomPolygonFromExtent} from 'ol/geom/Polygon.js';
 import OLInteractionDraw from 'ol/interaction/Draw.js';
@@ -43,9 +42,7 @@ import {unlistenByKeys as ngeoEventsUnlistenByKeys} from 'ngeo/events.js';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('GmfDrawFeatureOptionsComponent', [
-]);
-
+const module = angular.module('GmfDrawFeatureOptionsComponent', []);
 
 module.run(
   /**
@@ -61,13 +58,11 @@ module.run(
   }
 );
 
-
 /**
  * @private
  * @hidden
  */
 class DrawFeatureOptionsController {
-
   /**
    * @param {angular.IScope} $scope Scope.
    * @private
@@ -191,7 +186,7 @@ class DrawFeatureOptionsController {
      * @private
      */
     this.snapSource_ = new OLSourceVector({
-      features: [this.snapFeature_]
+      features: [this.snapFeature_],
     });
 
     /**
@@ -202,7 +197,7 @@ class DrawFeatureOptionsController {
       // @ts-ignore: webpack
       handleEvent: this.snapInteractionHandleEvent_.bind(this),
       pixelTolerance: 10000,
-      source: this.snapSource_
+      source: this.snapSource_,
     });
 
     /**
@@ -242,24 +237,9 @@ class DrawFeatureOptionsController {
     this.map.addInteraction(this.snapInteraction_);
 
     this.listenerKeys_.push(
-      olEventsListen(
-        drawInteraction,
-        'drawstart',
-        this.handleDrawInteractionDrawStart_,
-        this
-      ),
-      olEventsListen(
-        this.map,
-        'singleclick',
-        this.handleMapSingleClick_,
-        this
-      ),
-      olEventsListen(
-        this.map,
-        'dblclick',
-        this.handleMapDoubleClick_,
-        this
-      )
+      olEventsListen(drawInteraction, 'drawstart', this.handleDrawInteractionDrawStart_, this),
+      olEventsListen(this.map, 'singleclick', this.handleMapSingleClick_, this),
+      olEventsListen(this.map, 'dblclick', this.handleMapDoubleClick_, this)
     );
 
     if (requiresHeight) {
@@ -273,12 +253,7 @@ class DrawFeatureOptionsController {
         },
         (newVal, oldVal) => {
           if (newVal) {
-            this.adjustSnapFeature_(
-              this.length,
-              this.lengthUnits,
-              this.height,
-              this.heightUnits
-            );
+            this.adjustSnapFeature_(this.length, this.lengthUnits, this.height, this.heightUnits);
           } else {
             this.resetSnapFeature_();
           }
@@ -295,10 +270,7 @@ class DrawFeatureOptionsController {
         },
         (newVal, oldVal) => {
           if (newVal) {
-            this.adjustSnapFeature_(
-              this.length,
-              this.lengthUnits,
-            );
+            this.adjustSnapFeature_(this.length, this.lengthUnits);
           } else {
             this.resetSnapFeature_();
           }
@@ -336,14 +308,7 @@ class DrawFeatureOptionsController {
     this.feature_ = feature;
 
     const geometry = feature.getGeometry();
-    this.listenerKeys_.push(
-      olEventsListen(
-        geometry,
-        'change',
-        this.handleFeatureGeometryChange_,
-        this
-      )
-    );
+    this.listenerKeys_.push(olEventsListen(geometry, 'change', this.handleFeatureGeometryChange_, this));
   }
 
   /**
@@ -407,9 +372,8 @@ class DrawFeatureOptionsController {
    */
   adjustSnapFeature_(length, lengthUnits, opt_height, opt_heightUnits) {
     const lengthMeters = lengthUnits === 'm' ? length : length * 1000;
-    const heightMeters = opt_height && opt_heightUnits ?
-      opt_heightUnits === 'm' ? opt_height : opt_height * 1000 :
-      null;
+    const heightMeters =
+      opt_height && opt_heightUnits ? (opt_heightUnits === 'm' ? opt_height : opt_height * 1000) : null;
 
     let snapGeometry;
 
@@ -446,14 +410,12 @@ class DrawFeatureOptionsController {
         const center = polygonGeometry.getCoordinates()[0][0];
         console.assert(typeof center[0] === 'number');
         console.assert(typeof center[1] === 'number');
-        snapGeometry = olGeomPolygonFromExtent(
-          [
-            Number(center[0]) - lengthMeters,
-            Number(center[1]) - heightMeters,
-            Number(center[0]) + lengthMeters,
-            Number(center[1]) + heightMeters
-          ]
-        );
+        snapGeometry = olGeomPolygonFromExtent([
+          Number(center[0]) - lengthMeters,
+          Number(center[1]) - heightMeters,
+          Number(center[0]) + lengthMeters,
+          Number(center[1]) + heightMeters,
+        ]);
       }
     }
 
@@ -525,7 +487,6 @@ class DrawFeatureOptionsController {
   }
 }
 
-
 module.component('gmfDrawfeatureoptions', {
   bindings: {
     'map': '<',
@@ -533,11 +494,10 @@ module.component('gmfDrawfeatureoptions', {
     'drawRectangle': '<?',
     'measureArea': '<?',
     'measureAzimut': '<?',
-    'measureLength': '<?'
+    'measureLength': '<?',
   },
   controller: DrawFeatureOptionsController,
-  templateUrl: 'gmf/drawing/drawFeatureOptionsComponent'
+  templateUrl: 'gmf/drawing/drawFeatureOptionsComponent',
 });
-
 
 export default module;

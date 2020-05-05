@@ -19,9 +19,7 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
-
 
 /**
  * @typedef {Object} RoutingProfile
@@ -29,13 +27,11 @@ import angular from 'angular';
  * @property {string} profile
  */
 
-
 /**
  * @typedef {Object} RoutingOptions
  * @property {string} [backendUrl]
  * @property {RoutingProfile[]} [profiles]
  */
-
 
 /**
  * Service to provide access to a
@@ -50,7 +46,6 @@ import angular from 'angular';
  * @hidden
  */
 export function RoutingService($http, $injector) {
-
   /**
    * @type {angular.IHttpService}
    * @private
@@ -85,7 +80,6 @@ export function RoutingService($http, $injector) {
   this.protocolVersion_ = 'v1';
 }
 
-
 /**
  * @typedef {Object} Config
  * @property {string} [service]
@@ -94,12 +88,10 @@ export function RoutingService($http, $injector) {
  * @property {Object} [options]
  */
 
-
 /**
  * @typedef {Object} Routes
  * @property {Route[]} routes
  */
-
 
 /**
  * @typedef {Object} Route
@@ -109,18 +101,15 @@ export function RoutingService($http, $injector) {
  * @property {number} duration
  */
 
-
 /**
  * @typedef {Object} Leg
  * @property {Step[]} steps
  */
 
-
 /**
  * @typedef {Object} Step
  * @property {string} geometry
  */
-
 
 /**
  * Route request
@@ -128,8 +117,7 @@ export function RoutingService($http, $injector) {
  * @param {?Config} config optional configuration
  * @return {angular.IHttpPromise<Routes>} promise of the OSRM API request
  */
-RoutingService.prototype.getRoute = function(coordinates, config) {
-
+RoutingService.prototype.getRoute = function (coordinates, config) {
   config = config || {};
 
   // Service
@@ -160,7 +148,7 @@ RoutingService.prototype.getRoute = function(coordinates, config) {
   url += `${config.service}/${this.protocolVersion_}/${config.profile}/`;
 
   // [ [a,b] , [c,d] ] -> 'a,b;c,d'
-  const coordinateString = coordinates.map(c => c.join(',')).join(';');
+  const coordinateString = coordinates.map((c) => c.join(',')).join(';');
 
   url += coordinateString;
 
@@ -185,7 +173,7 @@ RoutingService.prototype.getRoute = function(coordinates, config) {
  * @return {angular.IHttpPromise<Object>} promise of the OSRM API request
  * @see https://github.com/Project-OSRM/osrm-backend/blob/master/docs/http.md#nearest-service
  */
-RoutingService.prototype.getNearest = function(coordinate, config) {
+RoutingService.prototype.getNearest = function (coordinate, config) {
   config = config || {};
 
   // service is always nearest
@@ -225,15 +213,12 @@ RoutingService.prototype.getNearest = function(coordinate, config) {
   return this.$http_.get(url);
 };
 
-
 /**
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoRoutingService', [
-]);
+const module = angular.module('ngeoRoutingService', []);
 
 module.service('ngeoRoutingService', RoutingService);
-
 
 export default module;

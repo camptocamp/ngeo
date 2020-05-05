@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 import ngeoDatasourceDataSource from 'ngeo/datasource/DataSource.js';
 import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources.js';
@@ -28,7 +27,6 @@ import ngeoFormatWFSAttribute from 'ngeo/format/WFSAttribute.js';
 import ngeoQueryQuerent from 'ngeo/query/Querent.js';
 import {listen} from 'ol/events.js';
 import {CollectionEvent} from 'ol/Collection.js';
-
 
 /**
  * @hidden
@@ -46,7 +44,6 @@ export class DatasourceHelper {
    * @ngInject
    */
   constructor($q, ngeoDataSources, ngeoQuerent) {
-
     // === Injected properties ===
 
     /**
@@ -66,7 +63,6 @@ export class DatasourceHelper {
      * @private
      */
     this.ngeoQuerent_ = ngeoQuerent;
-
 
     // === Other properties ===
 
@@ -113,7 +109,6 @@ export class DatasourceHelper {
    * @return {angular.IPromise<import('ngeo/format/Attribute').Attribute[]>} Promise.
    */
   getDataSourceAttributes(dataSource) {
-
     const getDataSourceAttributesDefer = this.q_.defer();
 
     if (dataSource.attributes) {
@@ -124,8 +119,7 @@ export class DatasourceHelper {
       // get them:
       //
       // 1) by using the ones defined in the ogcAttributes
-      const createdAttributes =
-        this.createDataSourceAttributesFromOGCAttributes_(dataSource);
+      const createdAttributes = this.createDataSourceAttributesFromOGCAttributes_(dataSource);
       if (createdAttributes) {
         dataSource.setAttributes(createdAttributes);
         getDataSourceAttributesDefer.resolve(createdAttributes);
@@ -138,7 +132,7 @@ export class DatasourceHelper {
           // was returned.  Just to be sure, let's do a bunch of assertions.
           const ogcLayerName = dataSource.getWFSLayerNames()[0];
           console.assert(typeof ogcLayerName == 'string', 'The data source should have only one ogcLayer.');
-          const featureType = /** @type {Object<string, *>} */(/** @type {unknown} */(featureType_));
+          const featureType = /** @type {Object<string, *>} */ (/** @type {unknown} */ (featureType_));
           for (const element of featureType.element) {
             if (element.name === ogcLayerName) {
               for (const type of featureType.complexType) {
@@ -256,7 +250,6 @@ export class DatasourceHelper {
   }
 }
 
-
 /**
  * @type {angular.IModule}
  * @hidden
@@ -266,6 +259,5 @@ const module = angular.module('ngeoDataSourcesHelper', [
   ngeoQueryQuerent.name,
 ]);
 module.service('ngeoDataSourcesHelper', DatasourceHelper);
-
 
 export default module;

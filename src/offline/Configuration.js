@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import olObservable from 'ol/Observable.js';
 import olLayerLayer from 'ol/layer/Layer.js';
 import olLayerVector from 'ol/layer/Vector.js';
@@ -38,12 +37,10 @@ import ngeoCustomEvent from 'ngeo/CustomEvent.js';
 import {normalizeURL, traverseLayer} from 'ngeo/offline/utils.js';
 import localforage from 'localforage/src/localforage.js';
 
-
 /**
  * @implements {ngeox.OfflineOnTileDownload}
  */
 export default class extends olObservable {
-
   /**
    * @ngInject
    * @param {!angular.IScope} $rootScope The rootScope provider.
@@ -94,16 +91,18 @@ export default class extends olObservable {
    * @param {number} progress new progress.
    */
   dispatchProgress_(progress) {
-    this.dispatchEvent(new ngeoCustomEvent('progress', {
-      'progress': progress
-    }));
+    this.dispatchEvent(
+      new ngeoCustomEvent('progress', {
+        'progress': progress,
+      })
+    );
   }
 
   /**
    * @protected
    */
   initializeHasOfflineData() {
-    this.getItem('offline_content').then(value => this.setHasOfflineData(!!value));
+    this.getItem('offline_content').then((value) => this.setHasOfflineData(!!value));
   }
 
   /**
@@ -154,7 +153,7 @@ export default class extends olObservable {
     this.localforage_.config({
       'name': 'ngeoOfflineStorage',
       'version': 1.0,
-      'storeName': 'offlineStorage'
+      'storeName': 'offlineStorage',
     });
   }
 
@@ -241,11 +240,11 @@ export default class extends olObservable {
   }
 
   /**
-    * @param {import("ol/Map.js").default} map A map
-    * @param {import("ol/layer/Layer.js").default<import("ol/source/Source.js").default>} layer A layer
-    * @param {Array<import("ol/layer/Group.js").default>} ancestors The ancestors of that layer
-    * @param {import("ol/extent.js").Extent} userExtent The extent selected by the user.
-    * @return {Array<import("./index.js").OfflineExtentByZoom>} The extent to download per zoom level
+   * @param {import("ol/Map.js").default} map A map
+   * @param {import("ol/layer/Layer.js").default<import("ol/source/Source.js").default>} layer A layer
+   * @param {Array<import("ol/layer/Group.js").default>} ancestors The ancestors of that layer
+   * @param {import("ol/extent.js").Extent} userExtent The extent selected by the user.
+   * @return {Array<import("./index.js").OfflineExtentByZoom>} The extent to download per zoom level
    */
   getExtentByZoom(map, layer, ancestors, userExtent) {
     const currentZoom = map.getView().getZoom();
@@ -259,7 +258,7 @@ export default class extends olObservable {
     [0, 1, 2, 3, 4].forEach((dz) => {
       results.push({
         zoom: currentZoom + dz,
-        extent: userExtent
+        extent: userExtent,
       });
     });
     return results;
@@ -272,8 +271,11 @@ export default class extends olObservable {
    * @return {import("ol/source/Source.js").default} A tiled equivalent source
    */
   sourceImageWMSToTileWMS(source, projection) {
-    if (source instanceof olSourceImageWMS && source.getUrl()
-        && source.getImageLoadFunction() === defaultImageLoadFunction) {
+    if (
+      source instanceof olSourceImageWMS &&
+      source.getUrl() &&
+      source.getImageLoadFunction() === defaultImageLoadFunction
+    ) {
       const tileGrid = createTileGridForProjection(source.getProjection() || projection, 42, 256);
       const attributions = source.getAttributions() || '';
       const url = source.getUrl();
@@ -286,7 +288,7 @@ export default class extends olObservable {
         tileGrid,
         attributions,
         projection: source.getProjection(),
-        params: source.getParams()
+        params: source.getParams(),
       });
     }
     return source;
@@ -337,7 +339,7 @@ export default class extends olObservable {
           layerSerialization,
           layer,
           source,
-          ancestors
+          ancestors,
         });
       }
       return true;

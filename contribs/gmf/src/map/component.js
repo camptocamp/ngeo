@@ -19,13 +19,11 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 import gmfPermalinkModule from 'gmf/permalink/module.js';
 import gmfEditingSnapping from 'gmf/editing/Snapping.js';
 import ngeoMapModule from 'ngeo/map/module.js';
 import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr.js';
-
 
 /**
  * @type {angular.IModule}
@@ -38,7 +36,6 @@ const module = angular.module('gmfMapComponent', [
   ngeoMapFeatureOverlayMgr.name,
 ]);
 
-
 module.run(
   /**
    * @ngInject
@@ -47,8 +44,8 @@ module.run(
   ($templateCache) => {
     // @ts-ignore: webpack
     $templateCache.put('gmf/map', require('./component.html'));
-  });
-
+  }
+);
 
 /**
  * A "map" directive for a GeoMapFish application.
@@ -74,16 +71,15 @@ function gmfMapComponent() {
     scope: {
       'map': '<gmfMapMap',
       'manageResize': '<gmfMapManageResize',
-      'resizeTransition': '<gmfMapResizeTransition'
+      'resizeTransition': '<gmfMapResizeTransition',
     },
     controller: 'GmfMapController as ctrl',
     bindToController: true,
-    templateUrl: 'gmf/map'
+    templateUrl: 'gmf/map',
   };
 }
 
 module.directive('gmfMap', gmfMapComponent);
-
 
 /**
  * @param {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
@@ -97,7 +93,6 @@ module.directive('gmfMap', gmfMapComponent);
  * @ngname GmfMapController
  */
 function Controller(ngeoFeatureOverlayMgr, gmfPermalink, gmfSnapping) {
-
   // Scope properties
 
   /**
@@ -114,7 +109,6 @@ function Controller(ngeoFeatureOverlayMgr, gmfPermalink, gmfSnapping) {
    * @type {?boolean}
    */
   this.resizeTransition = null;
-
 
   // Injected properties
 
@@ -137,11 +131,10 @@ function Controller(ngeoFeatureOverlayMgr, gmfPermalink, gmfSnapping) {
   this.gmfSnapping_ = gmfSnapping;
 }
 
-
 /**
  * Called on initialization of the controller.
  */
-Controller.prototype.$onInit = function() {
+Controller.prototype.$onInit = function () {
   if (!this.map) {
     throw new Error('Missing map');
   }
@@ -150,8 +143,6 @@ Controller.prototype.$onInit = function() {
   this.gmfSnapping_.setMap(this.map);
 };
 
-
 module.controller('GmfMapController', Controller);
-
 
 export default module;

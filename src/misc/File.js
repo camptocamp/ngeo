@@ -19,9 +19,7 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
-
 
 /**
  * @constructor
@@ -36,35 +34,35 @@ export function FileService($q, $http, gettext) {
   /**
    * @param {number} fileSize
    */
-  this.isValidFileSize = function(fileSize) {
+  this.isValidFileSize = function (fileSize) {
     return fileSize <= 20000000; // 20 Mo
   };
 
   /**
    * @param {string} fileContent
    */
-  this.isWmsGetCap = function(fileContent) {
+  this.isWmsGetCap = function (fileContent) {
     return /<(WMT_MS_Capabilities|WMS_Capabilities)/.test(fileContent);
   };
 
   /**
    * @param {string} fileContent
    */
-  this.isWmtsGetCap = function(fileContent) {
+  this.isWmtsGetCap = function (fileContent) {
     return fileContent.includes('<Capabilities');
   };
 
   /**
    * @param {string} fileContent
    */
-  this.isKml = function(fileContent) {
+  this.isKml = function (fileContent) {
     return fileContent.includes('<kml') && fileContent.includes('</kml>');
   };
 
   /**
    * @param {string} fileContent
    */
-  this.isGpx = function(fileContent) {
+  this.isGpx = function (fileContent) {
     return fileContent.includes('<gpx') && fileContent.includes('</gpx>');
   };
 
@@ -74,20 +72,20 @@ export function FileService($q, $http, gettext) {
    * @param {Blob} file .
    * @return {angular.IPromise<string>} .
    */
-  this.read = function(file) {
+  this.read = function (file) {
     const defer = $q.defer();
     if (fileReader && fileReader.readyState === FileReader.LOADING) {
       fileReader.abort();
     }
     fileReader = new FileReader();
-    fileReader.onload = function(evt) {
+    fileReader.onload = function (evt) {
       const target = evt.target;
       if (!(target instanceof FileReader)) {
         throw new Error('Wrong target type');
       }
       defer.resolve(target.result);
     };
-    fileReader.onerror = function(evt) {
+    fileReader.onerror = function (evt) {
       const target = evt.target;
       if (!(target instanceof FileReader)) {
         throw new Error('Wrong target type');
@@ -99,10 +97,10 @@ export function FileService($q, $http, gettext) {
       console.error('Reading file failed: ', err);
       defer.reject({
         'message': err.code == 20 ? gettext('Operation canceled') : gettext('Read failed'),
-        'reason': err.message
+        'reason': err.message,
       });
     };
-    fileReader.onprogress = function(evt) {
+    fileReader.onprogress = function (evt) {
       defer.notify(evt);
     };
     // Read the file
@@ -117,8 +115,7 @@ export function FileService($q, $http, gettext) {
    * @param {angular.IDeferred<void>=} opt_cancelP .
    * @return {angular.IPromise<Blob>} .
    */
-  this.load = function(url, opt_cancelP) {
-
+  this.load = function (url, opt_cancelP) {
     if (canceler) {
       canceler.resolve();
     }
@@ -126,17 +123,22 @@ export function FileService($q, $http, gettext) {
 
     // Angularjs doesn't handle onprogress event
     const defer = $q.defer();
-    $http.get(url, {
-      timeout: canceler.promise
-    }).then((response) => {
-      defer.resolve(response.data);
-    }, (reason) => {
-      console.error('Uploading file failed: ', reason);
-      defer.reject({
-        'message': gettext('Upload failed'),
-        'reason': reason
-      });
-    });
+    $http
+      .get(url, {
+        timeout: canceler.promise,
+      })
+      .then(
+        (response) => {
+          defer.resolve(response.data);
+        },
+        (reason) => {
+          console.error('Uploading file failed: ', reason);
+          defer.reject({
+            'message': gettext('Upload failed'),
+            'reason': reason,
+          });
+        }
+      );
     return defer.promise;
   };
 }
@@ -148,6 +150,5 @@ export function FileService($q, $http, gettext) {
 const module = angular.module('ngeoFile', []);
 
 module.service('ngeoFile', FileService);
-
 
 export default module;

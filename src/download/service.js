@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 import {isSafari} from 'ngeo/utils.js';
 
@@ -57,8 +56,7 @@ function factory() {
     // do a manual download with "Save as".
     // See also: https://github.com/eligrey/FileSaver.js/issues/12
     /** @type {string} */
-    const fileType = opt_fileType !== undefined && !isSafari() ?
-      opt_fileType : 'text/plain;charset=utf-8';
+    const fileType = opt_fileType !== undefined && !isSafari() ? opt_fileType : 'text/plain;charset=utf-8';
 
     const blob = new Blob([content], {type: fileType});
     saveAs(blob, fileName);
@@ -68,6 +66,5 @@ function factory() {
 }
 
 module.factory('ngeoDownload', factory);
-
 
 export default module;

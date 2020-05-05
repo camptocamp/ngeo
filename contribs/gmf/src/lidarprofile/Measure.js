@@ -19,22 +19,18 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import {mouse as d3mouse, select as d3select} from 'd3';
-
 
 /**
  * @hidden
  */
 export default class {
-
   /**
    * Measure tool for the d3 chart
    * @param {import("gmf/lidarprofile/Manager.js").LidarprofileManager} gmfLidarprofileManagerInstance
    *    gmf lidar profile manager instance
    */
   constructor(gmfLidarprofileManagerInstance) {
-
     /**
      * @type {import("gmf/lidarprofile/Manager.js").LidarprofileManager}
      * @private
@@ -54,7 +50,6 @@ export default class {
     this.pEnd_ = {};
   }
 
-
   /**
    * Clear the current measure
    */
@@ -73,7 +68,6 @@ export default class {
     svg.style('cursor', 'default');
   }
 
-
   /**
    * Activate the measure tool
    */
@@ -82,7 +76,6 @@ export default class {
     svg.style('cursor', 'pointer');
     svg.on('click', this.measureHeigt.bind(this));
   }
-
 
   /**
    * Measure and display height after two click on the profile.
@@ -95,9 +88,9 @@ export default class {
       throw new Error('Missing manager.plot');
     }
     const svg = d3select('#gmf-lidarprofile-container svg.lidar-svg');
-    const svgEl = /** @type {HTMLElement} */(svg.node());
+    const svgEl = /** @type {HTMLElement} */ (svg.node());
     const canvas = d3select('#gmf-lidarprofile-container .lidar-canvas');
-    const canvasEl = /** @type {HTMLCanvasElement} */(canvas.node());
+    const canvasEl = /** @type {HTMLCanvasElement} */ (canvas.node());
 
     const svgCoordinates = d3mouse(svgEl);
     const canvasCoordinates = d3mouse(canvasEl);
@@ -118,10 +111,10 @@ export default class {
       tolerance,
       this.manager_.plot.updateScaleX,
       this.manager_.plot.updateScaleY,
-      this.manager_.config.serverConfig.classification_colors);
+      this.manager_.config.serverConfig.classification_colors
+    );
 
     if (!this.pStart_.set) {
-
       if (p !== null) {
         this.pStart_.distance = p.distance;
         this.pStart_.altitude = p.altitude;
@@ -137,16 +130,15 @@ export default class {
       }
 
       this.pStart_.set = true;
-      svg.append('circle')
+      svg
+        .append('circle')
         .attr('id', 'start_m')
         .attr('cx', this.pStart_.cx)
         .attr('cy', this.pStart_.cy)
         .attr('r', pointSize)
         .style('fill', 'red');
-
     } else if (!this.pEnd_.set) {
       if (p !== null) {
-
         this.pEnd_.distance = p.distance;
         this.pEnd_.altitude = p.altitude;
         this.pEnd_.cx = sx(p.distance) + margin.left;
@@ -158,18 +150,19 @@ export default class {
         this.pEnd_.altitude = sy.invert(ys);
         this.pEnd_.cx = xs;
         this.pEnd_.cy = ys;
-
       }
 
       this.pEnd_.set = true;
-      svg.append('circle')
+      svg
+        .append('circle')
         .attr('id', 'end_m')
         .attr('cx', this.pEnd_.cx)
         .attr('cy', this.pEnd_.cy)
         .attr('r', pointSize)
         .style('fill', 'red');
 
-      svg.append('line')
+      svg
+        .append('line')
         .attr('id', 'line_m')
         .attr('x1', this.pStart_.cx)
         .attr('y1', this.pStart_.cy)
@@ -177,7 +170,6 @@ export default class {
         .attr('y2', this.pEnd_.cy)
         .attr('stroke-width', 2)
         .attr('stroke', 'red');
-
     }
 
     if (this.pStart_.set && this.pEnd_.set) {
@@ -187,7 +179,8 @@ export default class {
       const height = Math.round(10 * Math.sqrt(Math.pow(dH, 2) + Math.pow(dD, 2))) / 10;
 
       if (!isNaN(height)) {
-        svg.append('text')
+        svg
+          .append('text')
           .attr('id', 'text_m')
           .attr('x', 10 + (this.pStart_.cx + this.pEnd_.cx) / 2)
           .attr('y', (this.pStart_.cy + this.pEnd_.cy) / 2)

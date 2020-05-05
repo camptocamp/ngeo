@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import WMTSCapabilities from 'ol/format/WMTSCapabilities.js';
 import ImageWMS from 'ol/source/ImageWMS.js';
 import WMTS, {optionsFromCapabilities} from 'ol/source/WMTS.js';
@@ -44,7 +43,7 @@ function getThemesPromise() {
     if (!constants.themesUrl) {
       throw new Error('Missing constants.themesUrl');
     }
-    themesPromise = fetch(constants.themesUrl).then(response => response.json());
+    themesPromise = fetch(constants.themesUrl).then((response) => response.json());
   }
   return themesPromise;
 }
@@ -65,10 +64,13 @@ function getLocalePromise() {
     return Promise.resolve({});
   }
   if (!localePromise) {
-    localePromise = fetch(constants.localeUrl).then(response => response.json()).then(data =>
-      // Return the first property as data should looks like { 'fr': { ... } }
-      data[Object.keys(data)[0]]
-    );
+    localePromise = fetch(constants.localeUrl)
+      .then((response) => response.json())
+      .then(
+        (data) =>
+          // Return the first property as data should looks like { 'fr': { ... } }
+          data[Object.keys(data)[0]]
+      );
   }
   return localePromise;
 }
@@ -84,12 +86,12 @@ let overlayDefPromise;
  * @return {Promise<Array<TileLayer|ImageLayer|GroupLayer>>} Promise
  */
 export function getBackgroundLayers() {
-  return getThemesPromise().then(themes => {
+  return getThemesPromise().then((themes) => {
     const promises = [];
     for (const config of themes.background_layers) {
-      const layerConfig = /** @type {import('gmf/themes.js').GmfLayer} */(config);
+      const layerConfig = /** @type {import('gmf/themes.js').GmfLayer} */ (config);
       if (layerConfig.type === 'WMTS') {
-        const layerWMTS = /** @type {import('gmf/themes.js').GmfLayerWMTS} */(config);
+        const layerWMTS = /** @type {import('gmf/themes.js').GmfLayerWMTS} */ (config);
         promises.push(
           createWMTSLayer(layerWMTS).then((layer) => {
             layer.set('config.name', layerWMTS.name);
@@ -97,7 +99,7 @@ export function getBackgroundLayers() {
           })
         );
       } else if (layerConfig.type === 'WMS') {
-        const layerWMS = /** @type {import('gmf/themes.js').GmfLayerWMS} */(config);
+        const layerWMS = /** @type {import('gmf/themes.js').GmfLayerWMS} */ (config);
         const ogcServer = themes.ogcServers[config.ogcServer];
         promises.push(
           createWMSLayer(layerWMS, ogcServer).then((layer) => {
@@ -105,35 +107,35 @@ export function getBackgroundLayers() {
             return layer;
           })
         );
-      } else if (/** @type {import('gmf/themes.js').GmfGroup} */(config).children) {
+      } else if (/** @type {import('gmf/themes.js').GmfGroup} */ (config).children) {
         // reverse children order
-        const reversed = /** @type {import('gmf/themes.js').GmfGroup} */(config).children.slice().reverse();
+        const reversed = /** @type {import('gmf/themes.js').GmfGroup} */ (config).children.slice().reverse();
 
         // create all the layers for the layer group
 
         /** @type {Promise<TileLayer|ImageLayer>[]} */
-        const groupPromises = reversed.map(item => {
-          const child = /** @type {import('gmf/themes.js').GmfLayer} */(item);
+        const groupPromises = reversed.map((item) => {
+          const child = /** @type {import('gmf/themes.js').GmfLayer} */ (item);
           if (child.type === 'WMTS') {
-            const layerWMTS = /** @type {import('gmf/themes.js').GmfLayerWMTS} */(child);
+            const layerWMTS = /** @type {import('gmf/themes.js').GmfLayerWMTS} */ (child);
             return createWMTSLayer(layerWMTS);
           } else if (child.type === 'WMS') {
-            const layerWMS = /** @type {import('gmf/themes.js').GmfLayerWMS} */(child);
+            const layerWMS = /** @type {import('gmf/themes.js').GmfLayerWMS} */ (child);
             return createWMSLayer(layerWMS, themes.ogcServers[child.ogcServer]);
           }
           throw new Error('Unknow layer type');
         });
         const groupsPromise = Promise.all(groupPromises);
-        promises.push(groupsPromise.then(
-          layers => {
+        promises.push(
+          groupsPromise.then((layers) => {
             // create a layer group for the children.
             const group = new GroupLayer({
-              layers
+              layers,
             });
             group.set('config.name', config.name);
             return group;
-          }
-        ));
+          })
+        );
       }
     }
     return Promise.all(/** @type {Array<Promise<TileLayer|ImageLayer|GroupLayer>>} */ (promises));
@@ -170,7 +172,6 @@ export function getOverlayDefs() {
   return overlayDefPromise;
 }
 
-
 /**
  * @param {Object} config Config
  * @param {import('gmf/themes.js').GmfOgcServers} ogcServers OGC servers
@@ -179,21 +180,18 @@ export function getOverlayDefs() {
  * @hidden
  */
 export function writeOverlayDefs(config, ogcServers, opt_ogcServer) {
-  const group = /** @type {import('gmf/themes.js').GmfGroup} */(config);
+  const group = /** @type {import('gmf/themes.js').GmfGroup} */ (config);
   const ogcServer = opt_ogcServer ? opt_ogcServer : ogcServers[group.ogcServer];
   if (group.children) {
     for (const childConfig of group.children) {
       writeOverlayDefs(childConfig, ogcServers, ogcServer);
     }
   } else {
-    const layer = /** @type {import('gmf/themes.js').GmfLayer} */(config);
-    overlayDefs.set(
-      layer.name,
-      {
-        layer,
-        ogcServer
-      }
-    );
+    const layer = /** @type {import('gmf/themes.js').GmfLayer} */ (config);
+    overlayDefs.set(layer.name, {
+      layer,
+      ogcServer,
+    });
   }
 }
 
@@ -209,7 +207,6 @@ export function getOverlayLayers(layerNames) {
     /** @type {Promise<TileLayer|ImageLayer>[]} */
     const promises = [];
     for (const layerName of layerNames) {
-
       const overlayDef = overlayDefs.get(layerName);
 
       if (!overlayDef) {
@@ -220,10 +217,10 @@ export function getOverlayLayers(layerNames) {
       const ogcServer = overlayDef.ogcServer;
 
       if (overlayDef.layer.type === 'WMTS') {
-        const wmtsLayer = /** @type {import('gmf/themes.js').GmfLayerWMTS} */(overlayDef.layer);
+        const wmtsLayer = /** @type {import('gmf/themes.js').GmfLayerWMTS} */ (overlayDef.layer);
         promises.push(createWMTSLayer(wmtsLayer));
       } else if (overlayDef.layer.type === 'WMS' && ogcServer) {
-        const wmsLayer = /** @type {import('gmf/themes.js').GmfLayerWMS} */(overlayDef.layer);
+        const wmsLayer = /** @type {import('gmf/themes.js').GmfLayerWMS} */ (overlayDef.layer);
         promises.push(createWMSLayer(wmsLayer, ogcServer));
       }
     }
@@ -243,15 +240,15 @@ export function createWMSLayer(config, ogcServer) {
       url: ogcServer.url,
       projection: undefined, // FIXME: should be removed in next OL version
       params: {
-        'LAYERS': config.layers
+        'LAYERS': config.layers,
       },
-      serverType: ogcServer.type
+      serverType: ogcServer.type,
     }),
     minResolution: config.minResolutionHint,
-    maxResolution: config.maxResolutionHint
+    maxResolution: config.maxResolutionHint,
   });
   layer.set('config.name', config.name);
-  return getLocalePromise().then(translations => {
+  return getLocalePromise().then((translations) => {
     layer.set('title', translations[config.name] || config.name);
     return layer;
   });
@@ -263,19 +260,19 @@ export function createWMSLayer(config, ogcServer) {
  * @hidden
  */
 export function createWMTSLayer(config) {
-  return Promise.all([getLocalePromise(), getWMTSCapability(config.url)]).then(result => {
+  return Promise.all([getLocalePromise(), getWMTSCapability(config.url)]).then((result) => {
     const translations = result[0];
     const capability = result[1];
     const options = optionsFromCapabilities(capability, {
       crossOrigin: 'anonymous',
       layer: config.layer,
-      matrixSet: config.matrixSet
+      matrixSet: config.matrixSet,
     });
     if (!options) {
       console.log(
-        `Missing options for WMTS layer '${config.layer}', `
-        + `with name '${config.name}', `
-        + `from URL '${config.url}'.`
+        `Missing options for WMTS layer '${config.layer}', ` +
+          `with name '${config.name}', ` +
+          `from URL '${config.url}'.`
       );
       return null;
     }
@@ -283,7 +280,7 @@ export function createWMTSLayer(config) {
     source.updateDimensions(config.dimensions);
     const layer = new TileLayer({
       preload: Infinity,
-      source: source
+      source: source,
     });
     layer.set('title', translations[config.name] || config.name);
     layer.set('config.name', config.name);
@@ -306,12 +303,12 @@ const capabilities = new Map();
 function getWMTSCapability(url) {
   if (!capabilities.has(url)) {
     const request = fetch(url)
-      .then(response => response.text())
+      .then((response) => response.text())
       .then((capability) => {
         const parser = new WMTSCapabilities();
         return parser.read(capability);
       });
     capabilities.set(url, request);
   }
-  return /** @type {Promise<Object>} */(capabilities.get(url));
+  return /** @type {Promise<Object>} */ (capabilities.get(url));
 }

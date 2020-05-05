@@ -19,10 +19,8 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 import olMap from 'ol/Map.js';
-
 
 /**
  * @type {angular.IModule}
@@ -98,12 +96,10 @@ function mapResizeComponent($window) {
           animationDelayKey = $window.requestAnimationFrame(animationDelay);
         }
       });
-    }
+    },
   };
 }
 
-
 module.directive('ngeoResizemap', mapResizeComponent);
-
 
 export default module;

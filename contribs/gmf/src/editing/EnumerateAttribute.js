@@ -19,15 +19,12 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
-
 
 /**
  * @hidden
  */
 export class EditingEnumerateAttributeService {
-
   /**
    * The EnumerateAttribute is responsible of fetching all possible of a given
    * attribute of a given data source (gmf layer).
@@ -39,7 +36,6 @@ export class EditingEnumerateAttributeService {
    * @ngname gmfEnumerateAttribute
    */
   constructor($http, gmfLayersUrl) {
-
     // === Injected services ===
 
     /**
@@ -71,12 +67,11 @@ export class EditingEnumerateAttributeService {
     const name = dataSource.name;
     if (!this.promises_[promiseId]) {
       const url = `${this.baseUrl_}/${name}/values/${attribute}`;
-      this.promises_[promiseId] = this.http_.get(url).then(resp => resp.data.items);
+      this.promises_[promiseId] = this.http_.get(url).then((resp) => resp.data.items);
     }
     return this.promises_[promiseId];
   }
 }
-
 
 /**
  * @type {angular.IModule}
@@ -84,6 +79,5 @@ export class EditingEnumerateAttributeService {
  */
 const module = angular.module('gmfEnumerateAttribute', []);
 module.service('gmfEnumerateAttribute', EditingEnumerateAttributeService);
-
 
 export default module;

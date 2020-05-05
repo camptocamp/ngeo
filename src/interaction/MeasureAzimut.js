@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import ngeoInteractionDrawAzimut from 'ngeo/interaction/DrawAzimut.js';
 import ngeoInteractionMeasure, {getFormattedLength} from 'ngeo/interaction/Measure.js';
 import LineString from 'ol/geom/LineString.js';
@@ -75,7 +74,7 @@ export default class extends ngeoInteractionMeasure {
   createDrawInteraction(style, source) {
     return new ngeoInteractionDrawAzimut({
       source,
-      style
+      style,
     });
   }
 
@@ -96,11 +95,15 @@ export default class extends ngeoInteractionMeasure {
       throw new Error('Missing line');
     }
     const output = getFormattedAzimutRadius(
-      line, this.getMap().getView().getProjection(),
-      this.decimals, this.precision, this.unitPrefixFormat, this.numberFormat);
+      line,
+      this.getMap().getView().getProjection(),
+      this.decimals,
+      this.precision,
+      this.unitPrefixFormat,
+      this.numberFormat
+    );
     callback(output, line.getLastCoordinate());
   }
-
 }
 
 /**
@@ -115,9 +118,8 @@ export function getAzimut(line) {
   const dy = coords[1][1] - coords[0][1];
   const rad = Math.acos(dy / Math.sqrt(dx * dx + dy * dy));
   const factor = dx > 0 ? 1 : -1;
-  return (factor * rad * 180 / Math.PI) % 360;
+  return ((factor * rad * 180) / Math.PI) % 360;
 }
-
 
 /**
  * Format measure output of azimut.
@@ -144,9 +146,7 @@ function getFormattedAzimut(line, decimals, format) {
  * @return {string} Formatted measure.
  * @hidden
  */
-export function getFormattedAzimutRadius(
-  line, projection, decimals, precision, formatLength, formatAzimut) {
-
+export function getFormattedAzimutRadius(line, projection, decimals, precision, formatLength, formatAzimut) {
   let output = getFormattedAzimut(line, decimals, formatAzimut);
 
   output += `, ${getFormattedLength(line, projection, precision, formatLength)}`;

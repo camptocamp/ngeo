@@ -19,15 +19,12 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 import ngeoMessagePopupComponent from 'ngeo/message/popupComponent.js';
-
 
 /**
  * @typedef {function(): MessagePopup} PopupFactory
  */
-
 
 /**
  * The options for a popup created by the popup factory.
@@ -42,7 +39,6 @@ import ngeoMessagePopupComponent from 'ngeo/message/popupComponent.js';
  * @property {string} [url] The URL to use for the iframe to include as content for the popup.
  * @property {string} [width] The width of the popup.
  */
-
 
 /**
  * Provides a factory to create a popup in the page.
@@ -65,7 +61,6 @@ import ngeoMessagePopupComponent from 'ngeo/message/popupComponent.js';
  * @hidden
  */
 export function MessagePopup($compile, $rootScope, $sce, $timeout) {
-
   /**
    * The scope the compiled element is link to.
    * @type {angular.IScope}
@@ -110,52 +105,46 @@ export function MessagePopup($compile, $rootScope, $sce, $timeout) {
    */
   this.autoDestroy_ = false;
 
-
   // Compile the element, link it to the scope and add it to the document.
   $compile(this.element_)(this.scope);
   angular.element(document.body).append(this.element_);
 }
 
-
 /**
  * Get the current popup state.
  * @return {boolean} `true` if the popup is currently, otherwise `false`.
  */
-MessagePopup.prototype.getOpen = function() {
+MessagePopup.prototype.getOpen = function () {
   // @ts-ignore: Wrong scope interface
   return this.scope.open;
 };
-
 
 /**
  * Show/hide the popup.
  * @param {boolean} open `true` to show the popup, `false` to hide it.
  */
-MessagePopup.prototype.setOpen = function(open) {
+MessagePopup.prototype.setOpen = function (open) {
   // @ts-ignore: Wrong scope interface
   this.scope.open = open;
 };
 
-
 /**
  * Destroy the popup.
  */
-MessagePopup.prototype.destroy = function() {
+MessagePopup.prototype.destroy = function () {
   this.scope.$destroy();
   this.element_.remove();
 };
-
 
 /**
  * Set the popup's title.
  * @param {string} title The title.
  */
-MessagePopup.prototype.setTitle = function(title) {
+MessagePopup.prototype.setTitle = function (title) {
   const trustedTitle = this.sce_.trustAsHtml(title);
   // @ts-ignore: Wrong scope interface
   this.scope.title = trustedTitle;
 };
-
 
 /**
  * Set the popup's content.
@@ -165,78 +154,68 @@ MessagePopup.prototype.setTitle = function(title) {
  * @param {boolean=} opt_trusted Whether the content can be trusted.
  *     Default is false.
  */
-MessagePopup.prototype.setContent = function(content, opt_trusted) {
+MessagePopup.prototype.setContent = function (content, opt_trusted) {
   // @ts-ignore: Wrong scope interface
   this.scope.content = opt_trusted ? this.sce_.trustAsHtml(content) : content;
 };
-
 
 /**
  * Set the popup's content with an iframe using the given url.
  * @param {string} url The url of the page.
  */
-MessagePopup.prototype.setUrl = function(url) {
-  const content = this.sce_.trustAsHtml(
-    `<iframe src="${url}" width="100%" height="100%"></iframe>`
-  );
+MessagePopup.prototype.setUrl = function (url) {
+  const content = this.sce_.trustAsHtml(`<iframe src="${url}" width="100%" height="100%"></iframe>`);
   this.setContent(content);
 };
-
 
 /**
  * Set the popup's width.
  * @param {string} width Width the popup should have.
  */
-MessagePopup.prototype.setWidth = function(width) {
+MessagePopup.prototype.setWidth = function (width) {
   this.element_.width(width);
 };
-
 
 /**
  * Set the popup's height.
  * @param {string} height Height the popup should have.
  */
-MessagePopup.prototype.setHeight = function(height) {
+MessagePopup.prototype.setHeight = function (height) {
   this.element_.height(height);
 };
-
 
 /**
  * Set the popup's width and height.
  * @param {string} width Width the popup should have.
  * @param {string} height Height the popup should have.
  */
-MessagePopup.prototype.setSize = function(width, height) {
+MessagePopup.prototype.setSize = function (width, height) {
   this.setWidth(width);
   this.setHeight(height);
 };
-
 
 /**
  * Set the popup's autoDestroy property.
  * @param {boolean} autoDestroy Whether to automatically destroy the popup when
  *     being closed or not.
  */
-MessagePopup.prototype.setAutoDestroy = function(autoDestroy) {
+MessagePopup.prototype.setAutoDestroy = function (autoDestroy) {
   this.autoDestroy_ = autoDestroy;
 };
-
 
 /**
  * Add an extra CSS class name to the popup.
  * @param {string} cls Class name to add to the popup element.
  */
-MessagePopup.prototype.addClass = function(cls) {
+MessagePopup.prototype.addClass = function (cls) {
   this.element_.addClass(cls);
 };
-
 
 /**
  * Open a popup with the given properties.
  * @param {PopupOptions} options Options.
  */
-MessagePopup.prototype.open = function(options) {
-
+MessagePopup.prototype.open = function (options) {
   if (options.url) {
     this.setUrl(options.url);
   } else if (options.content) {
@@ -268,7 +247,6 @@ MessagePopup.prototype.open = function(options) {
   this.setOpen(true);
 };
 
-
 /**
  * @param {angular.ICompileService} $compile Angular compile service.
  * @param {angular.IScope} $rootScope Angular rootScope service.
@@ -284,21 +262,17 @@ function Factory($compile, $rootScope, $sce, $timeout) {
     /**
      * @return {MessagePopup} The popup instance.
      */
-    function() {
+    function () {
       return new MessagePopup($compile, $rootScope, $sce, $timeout);
     }
   );
 }
 
-
 /**
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoCreatePopup', [
-  ngeoMessagePopupComponent.name,
-]);
+const module = angular.module('ngeoCreatePopup', [ngeoMessagePopupComponent.name]);
 module.factory('ngeoCreatePopup', Factory);
-
 
 export default module;

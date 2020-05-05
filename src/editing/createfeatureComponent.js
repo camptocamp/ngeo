@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 import ngeoMiscFilters from 'ngeo/misc/filters.js';
 import ngeoGeometryType from 'ngeo/GeometryType.js';
@@ -34,16 +33,11 @@ import olFeature from 'ol/Feature.js';
 import olInteractionDraw from 'ol/interaction/Draw.js';
 import olStyleStyle from 'ol/style/Style.js';
 
-
 /**
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoCreatefeature', [
-  ngeoMiscEventHelper.name,
-  ngeoMiscFilters.name,
-]);
-
+const module = angular.module('ngeoCreatefeature', [ngeoMiscEventHelper.name, ngeoMiscFilters.name]);
 
 /**
  * A directive used to draw vector features of a single geometry type using
@@ -91,13 +85,12 @@ function editingCreateFeatureComponent() {
       'active': '=ngeoCreatefeatureActive',
       'features': '=ngeoCreatefeatureFeatures',
       'geomType': '=ngeoCreatefeatureGeomType',
-      'map': '=ngeoCreatefeatureMap'
-    }
+      'map': '=ngeoCreatefeatureMap',
+    },
   };
 }
 
 module.directive('ngeoCreatefeature', editingCreateFeatureComponent);
-
 
 /**
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
@@ -115,7 +108,6 @@ module.directive('ngeoCreatefeature', editingCreateFeatureComponent);
  * @ngname ngeoCreatefeatureController
  */
 function Controller(gettextCatalog, $compile, $filter, $injector, $scope, $timeout, ngeoEventHelper) {
-
   /**
    * @type {boolean}
    */
@@ -186,7 +178,6 @@ function Controller(gettextCatalog, $compile, $filter, $injector, $scope, $timeo
    */
   this.interaction_ = null;
 
-
   // == Event listeners ==
   $scope.$watch(
     () => this.active,
@@ -199,29 +190,26 @@ function Controller(gettextCatalog, $compile, $filter, $injector, $scope, $timeo
   );
 }
 
-
 /**
  * Initialize the directive.
  */
-Controller.prototype.$onInit = function() {
+Controller.prototype.$onInit = function () {
   this.active = this.active === true;
   const gettextCatalog = this.gettextCatalog_;
 
   // Create the draw or measure interaction depending on the geometry type
   let interaction;
-  if (this.geomType === ngeoGeometryType.POINT ||
-      this.geomType === ngeoGeometryType.MULTI_POINT
-  ) {
+  if (this.geomType === ngeoGeometryType.POINT || this.geomType === ngeoGeometryType.MULTI_POINT) {
     interaction = new olInteractionDraw({
-      type: /** @type {import("ol/geom/GeometryType.js").default} */ ('Point')
+      type: /** @type {import("ol/geom/GeometryType.js").default} */ ('Point'),
     });
-  } else if (this.geomType === ngeoGeometryType.LINE_STRING ||
-      this.geomType === ngeoGeometryType.MULTI_LINE_STRING
+  } else if (
+    this.geomType === ngeoGeometryType.LINE_STRING ||
+    this.geomType === ngeoGeometryType.MULTI_LINE_STRING
   ) {
     const helpMsg = gettextCatalog.getString('Click to start drawing length');
     const contMsg = gettextCatalog.getString(
-      'Click to continue drawing<br/>' +
-      'Double-click or click last point to finish'
+      'Click to continue drawing<br/>' + 'Double-click or click last point to finish'
     );
 
     /** @type {import('ngeo/interaction/Measure.js').MeasureOptions} */
@@ -237,29 +225,18 @@ Controller.prototype.$onInit = function() {
       options.source = this.injector_.get('ngeoSnappingSource');
     }
 
-    interaction = new ngeoInteractionMeasureLength(
-      this.filter_('ngeoUnitPrefix'),
-      gettextCatalog,
-      options
-    );
-  } else if (this.geomType === ngeoGeometryType.POLYGON ||
-      this.geomType === ngeoGeometryType.MULTI_POLYGON
-  ) {
+    interaction = new ngeoInteractionMeasureLength(this.filter_('ngeoUnitPrefix'), gettextCatalog, options);
+  } else if (this.geomType === ngeoGeometryType.POLYGON || this.geomType === ngeoGeometryType.MULTI_POLYGON) {
     const helpMsg = gettextCatalog.getString('Click to start drawing area');
     const contMsg = gettextCatalog.getString(
-      'Click to continue drawing<br/>' +
-      'Double-click or click starting point to finish'
+      'Click to continue drawing<br/>' + 'Double-click or click starting point to finish'
     );
 
-    interaction = new ngeoInteractionMeasureArea(
-      this.filter_('ngeoUnitPrefix'),
-      gettextCatalog,
-      {
-        style: new olStyleStyle(),
-        startMsg: this.compile_(`<div translate>${helpMsg}</div>`)(this.scope_)[0],
-        continueMsg: this.compile_(`<div translate>${contMsg}</div>`)(this.scope_)[0]
-      }
-    );
+    interaction = new ngeoInteractionMeasureArea(this.filter_('ngeoUnitPrefix'), gettextCatalog, {
+      style: new olStyleStyle(),
+      startMsg: this.compile_(`<div translate>${helpMsg}</div>`)(this.scope_)[0],
+      continueMsg: this.compile_(`<div translate>${contMsg}</div>`)(this.scope_)[0],
+    });
   }
 
   if (!interaction) {
@@ -275,19 +252,14 @@ Controller.prototype.$onInit = function() {
 
   const uid = olUtilGetUid(this);
   if (interaction instanceof olInteractionDraw) {
-    this.ngeoEventHelper_.addListenerKey(
-      uid,
-      listen(interaction, 'drawend', this.handleDrawEnd_, this)
-    );
-  } else if (interaction instanceof ngeoInteractionMeasureLength ||
-      interaction instanceof ngeoInteractionMeasureArea) {
-    this.ngeoEventHelper_.addListenerKey(
-      uid,
-      listen(interaction, 'measureend', this.handleDrawEnd_, this)
-    );
+    this.ngeoEventHelper_.addListenerKey(uid, listen(interaction, 'drawend', this.handleDrawEnd_, this));
+  } else if (
+    interaction instanceof ngeoInteractionMeasureLength ||
+    interaction instanceof ngeoInteractionMeasureArea
+  ) {
+    this.ngeoEventHelper_.addListenerKey(uid, listen(interaction, 'measureend', this.handleDrawEnd_, this));
   }
 };
-
 
 /**
  * Called when a feature is finished being drawn. Add the feature to the
@@ -295,14 +267,14 @@ Controller.prototype.$onInit = function() {
  * @param {Event|import('ol/events/Event.js').default|import('ngeo/interaction/Measure.js').MeasureEvent} event
  *    Event.
  */
-Controller.prototype.handleDrawEnd_ = function(event) {
+Controller.prototype.handleDrawEnd_ = function (event) {
   let sketch;
   // @ts-ignore: evt should be of type {import('ol/interaction/Draw.js').DrawEvent but he is private
   if (event.feature) {
     // @ts-ignore: evt should be of type {import('ol/interaction/Draw.js').DrawEvent but he is private
     sketch = event.feature;
   } else {
-    sketch = /** @type {import('ngeo/interaction/Measure.js').MeasureEvent} */(event).detail.feature;
+    sketch = /** @type {import('ngeo/interaction/Measure.js').MeasureEvent} */ (event).detail.feature;
   }
   console.assert(sketch);
 
@@ -323,11 +295,10 @@ Controller.prototype.handleDrawEnd_ = function(event) {
   }
 };
 
-
 /**
  * Cleanup event listeners and remove the interaction from the map.
  */
-Controller.prototype.$onDestroy = function() {
+Controller.prototype.$onDestroy = function () {
   this.timeout_(() => {
     if (!this.map) {
       throw new Error('Missing map');

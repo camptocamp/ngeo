@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 import ngeoDrawController from 'ngeo/draw/Controller.js';
 import ngeoMiscFilters from 'ngeo/misc/filters.js';
@@ -28,16 +27,11 @@ import ngeoInteractionMeasureLength from 'ngeo/interaction/MeasureLength.js';
 import {listen} from 'ol/events.js';
 import olStyleStyle from 'ol/style/Style.js';
 
-
 /**
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoMeasurelength', [
-  ngeoDrawController.name,
-  ngeoMiscFilters.name,
-]);
-
+const module = angular.module('ngeoMeasurelength', [ngeoDrawController.name, ngeoMiscFilters.name]);
 
 /**
  * @param {angular.ICompileService} $compile Angular compile service.
@@ -65,8 +59,9 @@ function measureLengthComponent($compile, gettextCatalog, $filter, $injector) {
       }
 
       const helpMsg = gettextCatalog.getString('Click to start drawing line');
-      const contMsg = gettextCatalog.getString('Click to continue drawing<br>' +
-          'Double-click or click last point to finish');
+      const contMsg = gettextCatalog.getString(
+        'Click to continue drawing<br>' + 'Double-click or click last point to finish'
+      );
 
       /** @type {import('ngeo/interaction/Measure.js').MeasureOptions} */
       const options = {
@@ -84,30 +79,29 @@ function measureLengthComponent($compile, gettextCatalog, $filter, $injector) {
         options.source = $injector.get('ngeoSnappingSource');
       }
       const measureLength = new ngeoInteractionMeasureLength(
-        $filter('ngeoUnitPrefix'), gettextCatalog, options
+        $filter('ngeoUnitPrefix'),
+        gettextCatalog,
+        options
       );
 
       if (drawFeatureCtrl.uid) {
-        measureLength.set(
-          'ngeo-interaction-draw-uid',
-          `${drawFeatureCtrl.uid}-length`
-        );
+        measureLength.set('ngeo-interaction-draw-uid', `${drawFeatureCtrl.uid}-length`);
       }
 
       drawFeatureCtrl.registerInteraction(measureLength);
       drawFeatureCtrl.measureLength = measureLength;
 
-      listen(measureLength, 'measureend',
+      listen(
+        measureLength,
+        'measureend',
         drawFeatureCtrl.handleDrawEnd.bind(drawFeatureCtrl, ngeoGeometryType.LINE_STRING),
         drawFeatureCtrl
       );
       listen(measureLength, 'change:active', drawFeatureCtrl.handleActiveChange, drawFeatureCtrl);
-    }
+    },
   };
 }
 
-
 module.directive('ngeoMeasurelength', measureLengthComponent);
-
 
 export default module;

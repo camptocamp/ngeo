@@ -14,11 +14,14 @@ rules:
   import/no-unresolved: 0
   valid-jsdoc: 0
   no-unused-vars: error
-  max-len:
+  prettier/prettier:
     - error
-    - code: 110
-      ignoreComments: true
-  'copyright/copyright': error
+    - singleQuote: true
+      bracketSpacing: false
+      quoteProps: preserve
+      printWidth: 110
+  sort-imports-es6-autofix/sort-imports-es6: 0
+  copyright/copyright: error
   '@typescript-eslint/indent': 0
   '@typescript-eslint/no-unused-vars': 0
   '@typescript-eslint/no-use-before-define': 0

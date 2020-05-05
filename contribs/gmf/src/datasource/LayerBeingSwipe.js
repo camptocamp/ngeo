@@ -19,9 +19,7 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
-
 
 /**
  * @typedef {Object} LayerBeingSwipe
@@ -38,7 +36,7 @@ import angular from 'angular';
 const module = angular.module('gmfLayerBeingSwipe', []);
 module.value('gmfLayerBeingSwipe', {
   layer: null,
-  swipeValue: null
+  swipeValue: null,
 });
 
 export default module;

@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 /**
  * The options required to create a `DataSource`.
  *
@@ -48,13 +47,11 @@
  *    whether its is ON or OFF.
  */
 
-
 /**
  * @private
  * @hidden
  */
 class DataSource {
-
   /**
    * A `ngeo.datasource.DataSource` represents a single source of data, which
    * can combine different type of servers to display or fetch the data. It can
@@ -71,7 +68,6 @@ class DataSource {
    * @param {DataSourceOptions} options Options.
    */
   constructor(options) {
-
     // === DYNAMIC properties (i.e. that can change / be watched ===
 
     /**
@@ -94,7 +90,6 @@ class DataSource {
      * @type {boolean}
      */
     this.visible = options.visible === true;
-
 
     // === STATIC properties (i.e. that never change) ===
 
@@ -199,7 +194,6 @@ class DataSource {
     return this.name_;
   }
 
-
   // ===================================
   // === Calculated property getters ===
   // ===================================
@@ -220,7 +214,6 @@ class DataSource {
     return this.maxResolution !== null || this.minResolution !== null;
   }
 }
-
 
 /**
  * @typedef {import("ol/Collection.js").default<DataSource>} DataSources

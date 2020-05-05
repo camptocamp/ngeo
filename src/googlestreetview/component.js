@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 /* global google */
 
 import angular from 'angular';
@@ -31,27 +30,23 @@ import olFeature from 'ol/Feature.js';
 import olGeomPoint from 'ol/geom/Point.js';
 import MapBrowserEvent from 'ol/MapBrowserEvent.js';
 
-
 /**
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoGooglestreetview', [
-  ngeoMapFeatureOverlayMgr.name
-]);
+const module = angular.module('ngeoGooglestreetview', [ngeoMapFeatureOverlayMgr.name]);
 
-
-module.value('ngeoGooglestreetviewTemplateUrl',
+module.value(
+  'ngeoGooglestreetviewTemplateUrl',
   /**
    * @param {angular.IAttributes} $attrs Attributes.
    * @return {string} The template url.
    */
   ($attrs) => {
     const templateUrl = $attrs.ngeoGooglestreetviewTemplateUrl;
-    return templateUrl !== undefined ? templateUrl :
-      'ngeo/googlestreetview';
-  });
-
+    return templateUrl !== undefined ? templateUrl : 'ngeo/googlestreetview';
+  }
+);
 
 module.run(
   /**
@@ -61,8 +56,8 @@ module.run(
   ($templateCache) => {
     // @ts-ignore: webpack
     $templateCache.put('ngeo/googlestreetview', require('./component.html'));
-  });
-
+  }
+);
 
 /**
  * @param {angular.IAttributes} $attrs Attributes.
@@ -76,7 +71,6 @@ function ngeoGooglestreetviewTemplateUrl($attrs, ngeoGooglestreetviewTemplateUrl
   return ngeoGooglestreetviewTemplateUrl($attrs);
 }
 
-
 /**
  * Example:
  *
@@ -87,7 +81,6 @@ function ngeoGooglestreetviewTemplateUrl($attrs, ngeoGooglestreetviewTemplateUrl
  *             </ngeo-googlestreetview>
  */
 class GoogleStreetviewController {
-
   /**
    * @param {JQuery} $element Element.
    * @param {angular.IScope} $scope Scope.
@@ -99,7 +92,6 @@ class GoogleStreetviewController {
    * @ngname NgeoGooglestreetviewController
    */
   constructor($element, $scope, ngeoFeatureOverlayMgr) {
-
     // Binding properties
 
     /**
@@ -107,10 +99,7 @@ class GoogleStreetviewController {
      */
     this.active = false;
 
-    $scope.$watch(
-      () => this.active,
-      this.handleActiveChange_.bind(this)
-    );
+    $scope.$watch(() => this.active, this.handleActiveChange_.bind(this));
 
     /**
      * Style for the feature.
@@ -128,7 +117,6 @@ class GoogleStreetviewController {
      */
     this.radius;
 
-
     // Injected properties
 
     /**
@@ -136,7 +124,6 @@ class GoogleStreetviewController {
      * @private
      */
     this.scope_ = $scope;
-
 
     // Inner properties
 
@@ -175,17 +162,14 @@ class GoogleStreetviewController {
      * @type {google.maps.StreetViewPanorama}
      * @private
      */
-    this.panorama_ = new google.maps.StreetViewPanorama(
-      $element[0],
-      {
-        pov: {
-          heading: 0,
-          pitch: 0
-        },
-        visible: false,
-        zoom: 1
-      }
-    );
+    this.panorama_ = new google.maps.StreetViewPanorama($element[0], {
+      pov: {
+        heading: 0,
+        pitch: 0,
+      },
+      visible: false,
+      zoom: 1,
+    });
 
     /**
      * @type {?google.maps.MapsEventListener}
@@ -218,25 +202,18 @@ class GoogleStreetviewController {
    * Called on initialization of the controller.
    */
   $onInit() {
-
     // === Watchers ===
 
     // (1) Watch for any change in the location
-    this.scope_.$watch(
-      () => this.location,
-      this.handleLocationChange_.bind(this)
-    );
+    this.scope_.$watch(() => this.location, this.handleLocationChange_.bind(this));
 
     // (2) Watch for both the active and location. When we have both, the
     //     state is considered 'ready'.
-    this.scope_.$watch(
-      () => {
-        const isActive = this.active;
-        const hasLocation = this.location !== null;
-        return isActive && hasLocation;
-      },
-      this.handleReadyChange_.bind(this)
-    );
+    this.scope_.$watch(() => {
+      const isActive = this.active;
+      const hasLocation = this.location !== null;
+      return isActive && hasLocation;
+    }, this.handleReadyChange_.bind(this));
 
     // (3) Watcher to manage the visibility of the panorama.
     this.scope_.$watch(
@@ -266,12 +243,10 @@ class GoogleStreetviewController {
       }
     );
 
-
     // Other initialization
     if (this.featureStyle) {
       this.feature_.setStyle(this.featureStyle);
     }
-
   }
 
   /**
@@ -301,12 +276,11 @@ class GoogleStreetviewController {
    * @private
    */
   handleLocationChange_(location, oldLocation) {
-
     // (1) No need to do anything if the old value equals the new value
-    if (location === oldLocation || (
-      Array.isArray(location) && Array.isArray(oldLocation) &&
-        olArray.equals(location, oldLocation)
-    )) {
+    if (
+      location === oldLocation ||
+      (Array.isArray(location) && Array.isArray(oldLocation) && olArray.equals(location, oldLocation))
+    ) {
       return;
     }
 
@@ -316,13 +290,16 @@ class GoogleStreetviewController {
     // (3) Update StreetView location
     if (location && !this.panoramaPositionChanging_) {
       const lonLat = this.toLonLat_(location);
-      this.streetViewService_.getPanorama({
-        location: {
-          lat: lonLat[1],
-          lng: lonLat[0]
+      this.streetViewService_.getPanorama(
+        {
+          location: {
+            lat: lonLat[1],
+            lng: lonLat[0],
+          },
+          radius: this.radius,
         },
-        radius: this.radius
-      }, this.handleStreetViewServiceGetPanorama_.bind(this));
+        this.handleStreetViewServiceGetPanorama_.bind(this)
+      );
     }
   }
 
@@ -353,7 +330,6 @@ class GoogleStreetviewController {
    * @private
    */
   handleReadyChange_(ready, oldReady) {
-
     if (ready === oldReady) {
       return;
     }
@@ -406,7 +382,6 @@ class GoogleStreetviewController {
     this.panoramaPositionChanging_ = false;
   }
 
-
   // Utility methods
 
   /**
@@ -432,17 +407,15 @@ class GoogleStreetviewController {
   }
 }
 
-
 module.component('ngeoGooglestreetview', {
   bindings: {
     'active': '<',
     'featureStyle': '<?',
     'map': '<',
-    'radius': '<?'
+    'radius': '<?',
   },
   controller: GoogleStreetviewController,
-  templateUrl: ngeoGooglestreetviewTemplateUrl
+  templateUrl: ngeoGooglestreetviewTemplateUrl,
 });
-
 
 export default module;
