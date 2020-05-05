@@ -1,0 +1,14 @@
+Error on backporting to branch master, error on cherry picking ['c5dc4290b2b26803663225739dd93dc82e801c4f']:
+error: could not apply c5dc4290b... Add missing dependency for prettier
+hint: after resolving the conflicts, mark the corrected paths
+hint: with 'git add <paths>' or 'git rm <paths>'
+hint: and commit the result with 'git commit'
+
+
+
+to continue do:
+git fetch
+git checkout backport/5785-to-master
+git reset --hard HEAD^
+git cherry-pick c5dc4290b2b26803663225739dd93dc82e801c4f
+git push origin backport/5785-to-master --force
