@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 import gmfRasterRasterService from 'gmf/raster/RasterService.js';
 import olOverlay from 'ol/Overlay.js';
@@ -29,10 +28,7 @@ import * as olProj from 'ol/proj.js';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfContextualdata', [
-  gmfRasterRasterService.name,
-]);
-
+const module = angular.module('gmfContextualdata', [gmfRasterRasterService.name]);
 
 /**
  * Provide a directive responsible of displaying contextual data after a right
@@ -79,7 +75,7 @@ function contextualDataComponent() {
       'displayed': '=gmfContextualdataDisplayed',
       'map': '<gmfContextualdataMap',
       'projections': '<gmfContextualdataProjections',
-      'callback': '<gmfContextualdataCallback'
+      'callback': '<gmfContextualdataCallback',
     },
     /**
      * @param {angular.IScope} scope Scope.
@@ -92,12 +88,11 @@ function contextualDataComponent() {
         throw new Error('Missing controller');
       }
       controller.init();
-    }
+    },
   };
 }
 
 module.directive('gmfContextualdata', contextualDataComponent);
-
 
 /**
  * @param {angular.ICompileService} $compile Angular compile service.
@@ -112,7 +107,6 @@ module.directive('gmfContextualdata', contextualDataComponent);
  * @ngInject
  */
 export function ContextualdataController($compile, $timeout, $scope, gmfRaster, $injector) {
-
   /**
    * @type {?import("ol/Map.js").default}
    */
@@ -173,10 +167,11 @@ export function ContextualdataController($compile, $timeout, $scope, gmfRaster, 
    * @type {Object}
    * @private
    */
-  this.gmfContextualdataOptions_ = $injector.has('gmfContextualdataOptions') ?
-    $injector.get('gmfContextualdataOptions') : {};
+  this.gmfContextualdataOptions_ = $injector.has('gmfContextualdataOptions')
+    ? $injector.get('gmfContextualdataOptions')
+    : {};
 
-  document.body.addEventListener('mousedown', event => {
+  document.body.addEventListener('mousedown', (event) => {
     const element = this.overlay_.getElement();
     const target = /** @type {Node} */ (event.target);
     // don't close if the user click the popup itself. this allows the text to be copied.
@@ -191,7 +186,7 @@ export function ContextualdataController($compile, $timeout, $scope, gmfRaster, 
 /**
  *
  */
-ContextualdataController.prototype.init = function() {
+ContextualdataController.prototype.init = function () {
   this.preparePopover_();
   if (!this.map) {
     throw new Error('Missing map');
@@ -215,12 +210,11 @@ ContextualdataController.prototype.init = function() {
   });
 };
 
-
 /**
  * @param {Event} event Event.
  * @private
  */
-ContextualdataController.prototype.handleMapTouchStart_ = function(event) {
+ContextualdataController.prototype.handleMapTouchStart_ = function (event) {
   // Don't open the context menu if 2-touch event is fired, ie. pinch the map on mobile
   if (event.targetTouches.length < 2 && event.changedTouches.length < 2) {
     this.longPressTimeout_ = window.setTimeout(() => {
@@ -229,11 +223,10 @@ ContextualdataController.prototype.handleMapTouchStart_ = function(event) {
   }
 };
 
-
 /**
  * @private
  */
-ContextualdataController.prototype.handleMapTouchEnd_ = function() {
+ContextualdataController.prototype.handleMapTouchEnd_ = function () {
   if (this.longPressTimeout_) {
     clearTimeout(this.longPressTimeout_);
   }
@@ -243,7 +236,7 @@ ContextualdataController.prototype.handleMapTouchEnd_ = function() {
  * @param {Event} event Event.
  * @private
  */
-ContextualdataController.prototype.handleMapContextMenu_ = function(event) {
+ContextualdataController.prototype.handleMapContextMenu_ = function (event) {
   this.$scope_.$apply(() => {
     if (!this.map) {
       throw new Error('Missing map');
@@ -267,7 +260,7 @@ ContextualdataController.prototype.handleMapContextMenu_ = function(event) {
 /**
  * @param {number[]} coordinate
  */
-ContextualdataController.prototype.setContent_ = function(coordinate) {
+ContextualdataController.prototype.setContent_ = function (coordinate) {
   if (!this.map) {
     throw new Error('Missing map');
   }
@@ -301,11 +294,10 @@ ContextualdataController.prototype.setContent_ = function(coordinate) {
   );
 };
 
-
 /**
  * @private
  */
-ContextualdataController.prototype.preparePopover_ = function() {
+ContextualdataController.prototype.preparePopover_ = function () {
   if (!this.map) {
     throw new Error('Missing map');
   }
@@ -328,14 +320,14 @@ ContextualdataController.prototype.preparePopover_ = function() {
     stopEvent: true,
     autoPan: true,
     autoPanAnimation: {
-      duration: 250
+      duration: 250,
     },
-    positioning: 'top-center'
+    positioning: 'top-center',
   });
   this.map.addOverlay(this.overlay_);
 };
 
-ContextualdataController.prototype.showPopover = function() {
+ContextualdataController.prototype.showPopover = function () {
   if (!this.overlay_) {
     throw new Error('Missing overlay');
   }
@@ -347,7 +339,7 @@ ContextualdataController.prototype.showPopover = function() {
   this.displayed = true;
 };
 
-ContextualdataController.prototype.hidePopover = function() {
+ContextualdataController.prototype.hidePopover = function () {
   if (!this.overlay_) {
     throw new Error('Missing overlay');
   }
@@ -360,7 +352,6 @@ ContextualdataController.prototype.hidePopover = function() {
 };
 
 module.controller('GmfContextualdataController', ContextualdataController);
-
 
 /**
  * Provide a directive responsible of formatting the content of the popover for
@@ -395,11 +386,10 @@ function contextualDataComponentContent(gmfContextualdatacontentTemplateUrl) {
   return {
     restrict: 'A',
     scope: true,
-    templateUrl: gmfContextualdatacontentTemplateUrl
+    templateUrl: gmfContextualdatacontentTemplateUrl,
   };
 }
 
 module.directive('gmfContextualdatacontent', contextualDataComponentContent);
-
 
 export default module;

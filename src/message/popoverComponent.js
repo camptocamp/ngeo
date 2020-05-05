@@ -19,18 +19,15 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 import 'bootstrap/js/src/tooltip.js';
 import 'bootstrap/js/src/popover.js';
-
 
 /**
  * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('ngeoPopover', []);
-
 
 /**
  * Provides a directive used to display a Bootstrap popover.
@@ -71,7 +68,7 @@ function messagePopoverComponent() {
         html: true,
         content: ngeoPopoverCtrl.bodyElm,
         boundary: 'viewport',
-        placement: attrs['ngeoPopoverPlacement'] || 'right'
+        placement: attrs['ngeoPopoverPlacement'] || 'right',
       });
 
       if (attrs['ngeoPopoverDismiss']) {
@@ -85,7 +82,7 @@ function messagePopoverComponent() {
         ngeoPopoverCtrl.anchorElm.unbind('inserted.bs.popover');
         ngeoPopoverCtrl.anchorElm.unbind('hidden.bs.popover');
       });
-    }
+    },
   };
 }
 
@@ -104,7 +101,7 @@ function messagePopoverAnchorComponent() {
         throw new Error('Missing ngeoPopoverCtrl');
       }
       ngeoPopoverCtrl.anchorElm = elem;
-    }
+    },
   };
 }
 
@@ -124,7 +121,7 @@ function messagePopoverContentComponent() {
       }
       ngeoPopoverCtrl.bodyElm = elem;
       elem.hide();
-    }
+    },
   };
 }
 
@@ -165,9 +162,12 @@ function PopoverController($scope) {
     if (!this.bodyElm) {
       throw new Error('Missing bodyElm');
     }
-    if (this.anchorElm[0] !== clickEvent.target &&
+    if (
+      this.anchorElm[0] !== clickEvent.target &&
       this.bodyElm.parent()[0] !== clickEvent.target &&
-      this.bodyElm.parent().find(clickEvent.target).length === 0 && this.shown) {
+      this.bodyElm.parent().find(clickEvent.target).length === 0 &&
+      this.shown
+    ) {
       this.dismissPopover();
     }
   };
@@ -179,11 +179,10 @@ function PopoverController($scope) {
   });
 }
 
-
 /**
  * Dissmiss popover function
  */
-PopoverController.prototype.dismissPopover = function() {
+PopoverController.prototype.dismissPopover = function () {
   if (!this.anchorElm) {
     throw new Error('Missing anchorElm');
   }
@@ -191,11 +190,9 @@ PopoverController.prototype.dismissPopover = function() {
   this.anchorElm.popover('hide');
 };
 
-
 module.controller('NgeoPopoverController', PopoverController);
 module.directive('ngeoPopover', messagePopoverComponent);
 module.directive('ngeoPopoverAnchor', messagePopoverAnchorComponent);
 module.directive('ngeoPopoverContent', messagePopoverContentComponent);
-
 
 export default module;

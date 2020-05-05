@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 
 import ngeoDrawController from 'ngeo/draw/Controller.js';
@@ -29,7 +28,6 @@ import ngeoDrawText from 'ngeo/draw/text.js';
 import ngeoMeasureArea from 'ngeo/measure/area.js';
 import ngeoMeasureAzimut from 'ngeo/measure/azimut.js';
 import ngeoMeasureLength from 'ngeo/measure/length.js';
-
 
 /**
  * @type {angular.IModule}
@@ -44,7 +42,6 @@ const module = angular.module('ngeoDrawfeature', [
   ngeoMeasureAzimut.name,
   ngeoMeasureLength.name,
 ]);
-
 
 /**
  * Directive used to draw vector features on a map.
@@ -132,12 +129,11 @@ function drawComponent() {
       'features': '=?ngeoDrawfeatureFeatures',
       'map': '=ngeoDrawfeatureMap',
       'showMeasure': '=?ngeoDrawfeatureShowmeasure',
-      'uid': '<?ngeoDrawfeatureUid'
-    }
+      'uid': '<?ngeoDrawfeatureUid',
+    },
   };
 }
 
 module.directive('ngeoDrawfeature', drawComponent);
-
 
 export default module;

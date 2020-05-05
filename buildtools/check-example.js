@@ -1,3 +1,24 @@
+// The MIT License (MIT)
+//
+// Copyright (c) 2014-2020 Camptocamp SA
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy of
+// this software and associated documentation files (the "Software"), to deal in
+// the Software without restriction, including without limitation the rights to
+// use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+// the Software, and to permit persons to whom the Software is furnished to do so,
+// subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+// FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+// COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+// IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+// CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
 'use strict';
 
 const path = require('path');
@@ -27,15 +48,14 @@ function fileMock(name, contentType) {
         return undefined;
       }
     })(),
-  }
+  };
 }
-
 
 const OSMImage = fileMock('osm.png', 'image/png');
 const ASITVDCapabilities = fileMock('asitvd.capabilities.xml', 'text/xml');
 let browser;
 
-process.on('unhandledRejection', async error => {
+process.on('unhandledRejection', async (error) => {
   console.log(`UnhandledRejection: ${error.message}.`);
   await browser.close();
   process.exit(2);
@@ -51,7 +71,7 @@ function loaded(page, browser) {
   timeout = setTimeout(async () => {
     if (requestsURL.size) {
       // @ts-ignore
-      if ((new Date() - start) > 60000) {
+      if (new Date() - start > 60000) {
         console.log(`The page take more than 60s. to load (${(new Date() - start) / 1000}).`);
         console.log('Pending requests:');
         requestsURL.forEach((request) => console.log(request));
@@ -65,16 +85,21 @@ function loaded(page, browser) {
       // @ts-ignore
       console.log(`Check finished in ${(new Date() - start) / 1000} seconds`);
       if (screenshot) {
-        page.screenshot({
-          path: screenshotPath
-        }).then(async () => {
-          console.log(`Screenshot saved at: ${screenshotPath}`);
-          await browser.close();
-        }, async e => {
-          console.log(`Screenshot error: ${e}`);
-          await browser.close();
-          process.exit(2);
-        });
+        page
+          .screenshot({
+            path: screenshotPath,
+          })
+          .then(
+            async () => {
+              console.log(`Screenshot saved at: ${screenshotPath}`);
+              await browser.close();
+            },
+            async (e) => {
+              console.log(`Screenshot error: ${e}`);
+              await browser.close();
+              process.exit(2);
+            }
+          );
       } else {
         await browser.close();
       }
@@ -84,25 +109,25 @@ function loaded(page, browser) {
 (async () => {
   browser = await puppeteer.launch({
     args: ['--no-sandbox', '--disable-web-security', '--single-process'],
-    headless: true
+    headless: true,
   });
   const page = await browser.newPage();
 
   await page.setViewport({width: 1920, height: 1080});
   await page.setRequestInterception(true);
-  page.on('pageerror', async e => {
+  page.on('pageerror', async (e) => {
     console.log('Page error');
     console.log(e);
     await browser.close();
     process.exit(2);
   });
-  page.on('dialog', async e => {
+  page.on('dialog', async (e) => {
     console.log('Unexpected alert message');
     console.log(e);
     await browser.close();
     process.exit(2);
   });
-  page.on('request', request => {
+  page.on('request', (request) => {
     loaded(page, browser);
     const originalUrl = request.url();
     let url = originalUrl;
@@ -117,20 +142,22 @@ function loaded(page, browser) {
       }
       requestsURL.add(originalUrl);
       request.continue({
-        url
+        url,
       });
-      return
+      return;
     }
     if (url.startsWith('http://localhost:8080/')) {
       url = url.replace('http://localhost:8080/', 'https://geomapfish-demo-2-5.camptocamp.com/');
     }
     if (url == 'https://ows.asitvd.ch/wmts/1.0.0/WMTSCapabilities.xml') {
       request.respond(ASITVDCapabilities);
-    } else if (parse(url).host == parse(page_url).host ||
-        url.startsWith('http://localhost:') ||
-        url.startsWith('https://geomapfish-demo') ||
-        url.startsWith('https://wmts.geo.admin.ch/') ||
-        url.startsWith('https://wms.geo.admin.ch/')) {
+    } else if (
+      parse(url).host == parse(page_url).host ||
+      url.startsWith('http://localhost:') ||
+      url.startsWith('https://geomapfish-demo') ||
+      url.startsWith('https://wmts.geo.admin.ch/') ||
+      url.startsWith('https://wms.geo.admin.ch/')
+    ) {
       requestsURL.add(originalUrl);
       if (url.startsWith('https://geomapfish-demo')) {
         request.headers().origin = 'http://localhost:3000';
@@ -139,17 +166,19 @@ function loaded(page, browser) {
         url,
         // Don't be intranet
         headers: {
-          'Forwarded': 'for=8.8.8.8;proto=https'
-        }
+          'Forwarded': 'for=8.8.8.8;proto=https',
+        },
       });
-    } else if (url.includes('tile.openstreetmap.org') ||
-        url.startsWith('https://tiles.openseamap.org') ||
-        url.startsWith('https://wms.geo.admin.ch') ||
-        url.startsWith('https://ows.asitvd.ch') ||
-        url.startsWith('https://ows1.asitvd.ch') ||
-        url.startsWith('https://ows2.asitvd.ch') ||
-        url.startsWith('https://ows3.asitvd.ch') ||
-        url.startsWith('https://ows4.asitvd.ch') ) {
+    } else if (
+      url.includes('tile.openstreetmap.org') ||
+      url.startsWith('https://tiles.openseamap.org') ||
+      url.startsWith('https://wms.geo.admin.ch') ||
+      url.startsWith('https://ows.asitvd.ch') ||
+      url.startsWith('https://ows1.asitvd.ch') ||
+      url.startsWith('https://ows2.asitvd.ch') ||
+      url.startsWith('https://ows3.asitvd.ch') ||
+      url.startsWith('https://ows4.asitvd.ch')
+    ) {
       request.respond(OSMImage);
     } else {
       console.log(`Abort request on '${url}'`);
@@ -161,15 +190,18 @@ function loaded(page, browser) {
     const url = request.url();
     requestsURL.delete(url);
     loaded(page, browser);
-    if (ci && url.startsWith('https://geomapfish-demo') &&
-        request.headers()['sec-fetch-mode'] == 'cors' &&
-        request.response().headers()['access-control-allow-origin'] == undefined) {
+    if (
+      ci &&
+      url.startsWith('https://geomapfish-demo') &&
+      request.headers()['sec-fetch-mode'] == 'cors' &&
+      request.response().headers()['access-control-allow-origin'] == undefined
+    ) {
       console.log(`CORS error on: ${url}`);
-      console.log("= Request headers");
+      console.log('= Request headers');
       for (const n in request.headers()) {
         console.log(`${n}: ${request.headers()[n]}`);
       }
-      console.log("= Response headers");
+      console.log('= Response headers');
       const response = request.response();
       for (const n in response.headers()) {
         console.log(`${n}: ${response.headers()[n]}`);
@@ -181,21 +213,24 @@ function loaded(page, browser) {
       }
     }
   });
-  page.on('requestfailed', async request => {
+  page.on('requestfailed', async (request) => {
     const url = request.url();
-    if (!url.startsWith('https://www.camptocamp.com/') &&
-        !url.startsWith('https://cdn.polyfill.io/') &&
-        !url.startsWith('https://maps.googleapis.com/')) {
+    if (
+      !url.startsWith('https://www.camptocamp.com/') &&
+      !url.startsWith('https://cdn.polyfill.io/') &&
+      !url.startsWith('https://maps.googleapis.com/')
+    ) {
       console.log(`Request failed on: ${url}`);
       await browser.close();
       process.exit(2);
     }
     loaded(page, browser);
   });
-  page.on('console', async message => {
+  page.on('console', async (message) => {
     const type = message.type();
     const location = message.location();
-    if (!location.url.startsWith('http://localhost:3000/.build/examples-hosted/dist/vendor.js') &&
+    if (
+      !location.url.startsWith('http://localhost:3000/.build/examples-hosted/dist/vendor.js') &&
       location.url.startsWith('http://localhost:3000/')
     ) {
       console.log(`Console ${type}`);
@@ -207,13 +242,13 @@ function loaded(page, browser) {
       }
     }
   });
-  await page.goto(page_url).catch(async error => {
+  await page.goto(page_url).catch(async (error) => {
     console.log(`Page load error: ${error}.`);
     await browser.close();
     process.exit(2);
   });
   loaded(page, browser);
-})().catch(async error => {
+})().catch(async (error) => {
   console.log(`Unexpected error: ${error}.`);
   await browser.close();
   process.exit(2);

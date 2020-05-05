@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import olOverlay from 'ol/Overlay.js';
 
 /**
@@ -32,7 +31,6 @@ export default class extends olOverlay {
    * @param {import('ol/Overlay.js').Options=} options Overlay options.
    */
   constructor(options = {}) {
-
     const originalEl = options.element ? options.element : document.createElement('div');
     options.element = document.createElement('div');
 
@@ -79,7 +77,7 @@ export default class extends olOverlay {
           container: element.parentElement,
           placement: 'top',
           content: contentEl,
-          html: true
+          html: true,
         });
         $(element).popover('show');
       }, 0);

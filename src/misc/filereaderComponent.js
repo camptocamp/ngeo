@@ -19,9 +19,7 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
-
 
 /**
  * @type {angular.IModule}
@@ -58,7 +56,7 @@ function filereaderComponent($window) {
     restrict: 'A',
     scope: {
       'fileContent': '=ngeoFilereader',
-      'supported': '=?ngeoFilereaderSupported'
+      'supported': '=?ngeoFilereaderSupported',
     },
     /**
      * @param {angular.IScope} scope Scope.
@@ -78,17 +76,17 @@ function filereaderComponent($window) {
       const ce = (changeEvent) => {
         /** @type {FileReader} */
         const fileReader = new $window.FileReader();
-        fileReader.onload = (
+        fileReader.onload =
           /**
            * @param {ProgressEvent} evt Event.
            */
-          function(evt) {
-            const target = /** @type {FileReader} */(evt.target);
+          function (evt) {
+            const target = /** @type {FileReader} */ (evt.target);
             scope.$apply(() => {
               // @ts-ignore: scope
               scope.fileContent = target.result;
             });
-          });
+          };
         const files = changeEvent.target.files;
         if (!files) {
           throw new Error('Missing files');
@@ -96,12 +94,10 @@ function filereaderComponent($window) {
         fileReader.readAsText(files[0]);
       };
       element.on({change: ce});
-    }
+    },
   };
 }
 
-
 module.directive('ngeoFilereader', filereaderComponent);
-
 
 export default module;

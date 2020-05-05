@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import {noModifierKeys, singleClick} from 'ol/events/condition.js';
 import olGeomLineString from 'ol/geom/LineString.js';
 import olGeomMultiPoint from 'ol/geom/MultiPoint.js';
@@ -28,7 +27,6 @@ import olGeomMultiPolygon from 'ol/geom/MultiPolygon.js';
 import olGeomPoint from 'ol/geom/Point.js';
 import olGeomPolygon from 'ol/geom/Polygon.js';
 import {getTopLeft, getTopRight, getBottomLeft, getBottomRight} from 'ol/extent.js';
-
 
 /**
  * Return whether the primary pointing device is coarse or 'false' if unsupported (Internet Explorer).
@@ -39,20 +37,18 @@ export function hasCoarsePointingDevice() {
   return matchMedia('(pointer: coarse)').matches;
 }
 
-
 /**
  * @param {string[]} availableLanguages Available languages.
  * @return {string} The "best" language code.
  */
 export function getBrowserLanguage(availableLanguages) {
   let browserLanguages = window.navigator.languages || [window.navigator.language];
-  browserLanguages = browserLanguages.map(item => item.substring(0, 2));
+  browserLanguages = browserLanguages.map((item) => item.substring(0, 2));
   // remove duplicated language codes
   browserLanguages = browserLanguages.filter((item, index, arr) => arr.indexOf(item) == index);
-  const supportedLanguages = browserLanguages.filter(item => availableLanguages.includes(item));
+  const supportedLanguages = browserLanguages.filter((item) => availableLanguages.includes(item));
   return supportedLanguages[0];
 }
-
 
 /**
  * Utility method that converts a simple geometry to its multi equivalent. If
@@ -165,7 +161,6 @@ export function encodeQueryString(queryData) {
   }
   return queryItem.join('&');
 }
-
 
 /**
  * Delete condition passed to the modify interaction

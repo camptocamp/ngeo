@@ -19,16 +19,13 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import {includes as olArrayIncludes} from 'ol/array.js';
 import olFormatGeoJSON from 'ol/format/GeoJSON.js';
-
 
 /**
  * @typedef {import("geojson").GeoJSON} GeoJSONObject
  * @typedef {import("geojson").FeatureCollection} GeoJSONFeatureCollection
  */
-
 
 /**
  * @typedef {Object} Options
@@ -45,21 +42,17 @@ import olFormatGeoJSON from 'ol/format/GeoJSON.js';
  * and a `geometryName` is provided, the `geometryName` will take precedence.
  */
 
-
 /**
  * @const
  * @type {string}
  */
 const layerIdentifier = 'layerName';
 
-
 class ArcGISGeoJSON extends olFormatGeoJSON {
-
   /**
    * @param {Options=} opt_options Options.
    */
   constructor(opt_options) {
-
     const options = opt_options ? opt_options : {};
 
     super(opt_options);
@@ -114,6 +107,5 @@ class ArcGISGeoJSON extends olFormatGeoJSON {
     return features;
   }
 }
-
 
 export default ArcGISGeoJSON;

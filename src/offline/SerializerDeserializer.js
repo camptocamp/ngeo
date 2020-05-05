@@ -19,14 +19,12 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import OlTilegridTileGrid from 'ol/tilegrid/TileGrid.js';
 import OlTilegridWMTS from 'ol/tilegrid/WMTS.js';
 import * as olProj from 'ol/proj.js';
 import OlSourceTileWMS from 'ol/source/TileWMS.js';
 import OlSourceWMTS from 'ol/source/WMTS.js';
 import OlLayerTile from 'ol/layer/Tile.js';
-
 
 const SerDes = class {
   /**
@@ -126,7 +124,6 @@ const SerDes = class {
     return new OlTilegridWMTS(options);
   }
 
-
   /**
    * @param {OlSourceTileWMS} source .
    * @return {string} .
@@ -157,7 +154,7 @@ const SerDes = class {
     // @ts-ignore
     options.tileLoadFunction = tileLoadFunction;
     if (options.tileGrid) {
-      options.tileGrid = this.deserializeTilegrid(/** @type {any} */(options).tileGrid);
+      options.tileGrid = this.deserializeTilegrid(/** @type {any} */ (options).tileGrid);
     }
     options.gutter = this.gutter_;
     return new OlSourceTileWMS(options);
@@ -177,7 +174,7 @@ const SerDes = class {
     obj.style = source.getStyle();
     obj.matrixSet = source.getMatrixSet();
     // The OL getTileGrid method is expected to return a WMTS tilegrid so it is OK to cast here.
-    const tileGridWMTS = /** @type {OlTilegridWMTS} */(source.getTileGrid());
+    const tileGridWMTS = /** @type {OlTilegridWMTS} */ (source.getTileGrid());
     obj.tileGrid = this.serializeTilegridWMTS(tileGridWMTS);
     obj.requestEncoding = source.getRequestEncoding();
     const projection = source.getProjection();
@@ -201,7 +198,7 @@ const SerDes = class {
     // @ts-ignore
     options.tileLoadFunction = tileLoadFunction;
     if (options.tileGrid) {
-      options.tileGrid = this.deserializeTilegridWMTS(/** @type {any} */(options).tileGrid);
+      options.tileGrid = this.deserializeTilegridWMTS(/** @type {any} */ (options).tileGrid);
     }
     return new OlSourceWMTS(options);
   }
@@ -254,15 +251,14 @@ const SerDes = class {
     // @ts-ignore
     const sourceType = options.sourceType;
     if (sourceType === 'tileWMS') {
-      options.source = this.deserializeSourceTileWMS(/** @type {any} */(options).source, tileLoadFunction);
+      options.source = this.deserializeSourceTileWMS(/** @type {any} */ (options).source, tileLoadFunction);
     } else if (sourceType === 'WMTS') {
-      options.source = this.deserializeSourceWMTS(/** @type {any} */(options).source, tileLoadFunction);
+      options.source = this.deserializeSourceWMTS(/** @type {any} */ (options).source, tileLoadFunction);
     }
     return new OlLayerTile(options);
   }
 };
 
 const exports = SerDes;
-
 
 export default exports;

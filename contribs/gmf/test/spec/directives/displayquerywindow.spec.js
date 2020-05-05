@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 import olStyleStyle from 'ol/style/Style.js';
 import olFeature from 'ol/Feature.js';
@@ -35,29 +34,29 @@ describe('gmf.query.windowComponent', () => {
   /** @type {angular.IScope} */
   let $rootScope;
 
-  beforeEach(angular.mock.inject((_$controller_, _$rootScope_, _ngeoQueryResult_) => {
-    ngeoQueryResult = _ngeoQueryResult_;
-    const $controller = _$controller_;
-    $element = angular.element('<div></div>');
-    $rootScope = _$rootScope_;
-    $scope = $rootScope.$new();
-    const data = {
-      featuresStyleFn() {
-        return new olStyleStyle();
-      },
-      /**
-       * @type {function():olStyleStyle}
-       */
-      selectedFeatureStyleFn() {
-        return undefined;
-      }
-    };
-    displayQueriesController = $controller(
-      'GmfDisplayquerywindowController', {$element, $scope}, data);
-  }));
+  beforeEach(
+    angular.mock.inject((_$controller_, _$rootScope_, _ngeoQueryResult_) => {
+      ngeoQueryResult = _ngeoQueryResult_;
+      const $controller = _$controller_;
+      $element = angular.element('<div></div>');
+      $rootScope = _$rootScope_;
+      $scope = $rootScope.$new();
+      const data = {
+        featuresStyleFn() {
+          return new olStyleStyle();
+        },
+        /**
+         * @type {function():olStyleStyle}
+         */
+        selectedFeatureStyleFn() {
+          return undefined;
+        },
+      };
+      displayQueriesController = $controller('GmfDisplayquerywindowController', {$element, $scope}, data);
+    })
+  );
 
   describe('#show', () => {
-
     it('deals with no sources', () => {
       ngeoQueryResult.total = 0;
       ngeoQueryResult.sources = [];
@@ -67,20 +66,22 @@ describe('gmf.query.windowComponent', () => {
 
     it('deals with a single source', () => {
       ngeoQueryResult.total = 2;
-      ngeoQueryResult.sources = [{
-        features: [
-          new olFeature({
-            foo: 'bar'
-          }),
-          new olFeature({
-            bar: 'baz'
-          })
-        ],
-        id: 123,
-        label: 'Test',
-        pending: false,
-        queried: true
-      }];
+      ngeoQueryResult.sources = [
+        {
+          features: [
+            new olFeature({
+              foo: 'bar',
+            }),
+            new olFeature({
+              bar: 'baz',
+            }),
+          ],
+          id: 123,
+          label: 'Test',
+          pending: false,
+          queried: true,
+        },
+      ];
       $rootScope.$digest();
       expect(displayQueriesController.open).toBe(true);
       expect(displayQueriesController.source).toBe(ngeoQueryResult.sources[0]);
@@ -99,40 +100,44 @@ describe('gmf.query.windowComponent', () => {
 
     it('deals with multiple sources', () => {
       ngeoQueryResult.total = 5;
-      ngeoQueryResult.sources = [{
-        features: [
-          new olFeature({
-            foo: 'bar'
-          }),
-          new olFeature({
-            bar: 'baz'
-          })
-        ],
-        id: 123,
-        label: 'Test 1',
-        pending: false,
-        queried: true
-      }, {
-        features: [],
-        id: 234,
-        label: 'Test 2',
-        pending: false,
-        queried: true
-      }, {
-        features: [
-          new olFeature({
-            foo: 'bar'
-          }),
-          new olFeature(),
-          new olFeature({
-            bar: 'baz'
-          })
-        ],
-        id: 345,
-        label: 'Test 3',
-        pending: false,
-        queried: true
-      }];
+      ngeoQueryResult.sources = [
+        {
+          features: [
+            new olFeature({
+              foo: 'bar',
+            }),
+            new olFeature({
+              bar: 'baz',
+            }),
+          ],
+          id: 123,
+          label: 'Test 1',
+          pending: false,
+          queried: true,
+        },
+        {
+          features: [],
+          id: 234,
+          label: 'Test 2',
+          pending: false,
+          queried: true,
+        },
+        {
+          features: [
+            new olFeature({
+              foo: 'bar',
+            }),
+            new olFeature(),
+            new olFeature({
+              bar: 'baz',
+            }),
+          ],
+          id: 345,
+          label: 'Test 3',
+          pending: false,
+          queried: true,
+        },
+      ];
       $rootScope.$digest();
       expect(displayQueriesController.open).toBe(true);
       expect(displayQueriesController.source).toBe(ngeoQueryResult.sources[0]);
@@ -164,40 +169,44 @@ describe('gmf.query.windowComponent', () => {
 
     it('deals with selected sources', () => {
       ngeoQueryResult.total = 5;
-      ngeoQueryResult.sources = [{
-        features: [
-          new olFeature({
-            foo: 'bar'
-          }),
-          new olFeature({
-            bar: 'baz'
-          })
-        ],
-        id: 123,
-        label: 'Test 1',
-        pending: false,
-        queried: true
-      }, {
-        features: [],
-        id: 234,
-        label: 'Test 2',
-        pending: false,
-        queried: true
-      }, {
-        features: [
-          new olFeature({
-            foo: 'bar'
-          }),
-          new olFeature(),
-          new olFeature({
-            bar: 'baz'
-          })
-        ],
-        id: 345,
-        label: 'Test 3',
-        pending: false,
-        queried: true
-      }];
+      ngeoQueryResult.sources = [
+        {
+          features: [
+            new olFeature({
+              foo: 'bar',
+            }),
+            new olFeature({
+              bar: 'baz',
+            }),
+          ],
+          id: 123,
+          label: 'Test 1',
+          pending: false,
+          queried: true,
+        },
+        {
+          features: [],
+          id: 234,
+          label: 'Test 2',
+          pending: false,
+          queried: true,
+        },
+        {
+          features: [
+            new olFeature({
+              foo: 'bar',
+            }),
+            new olFeature(),
+            new olFeature({
+              bar: 'baz',
+            }),
+          ],
+          id: 345,
+          label: 'Test 3',
+          pending: false,
+          queried: true,
+        },
+      ];
       $rootScope.$digest();
       expect(displayQueriesController.open).toBe(true);
       expect(displayQueriesController.source).toBe(ngeoQueryResult.sources[0]);

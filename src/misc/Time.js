@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 
 /**
@@ -37,7 +36,7 @@ export function Time() {}
  * @param {?Date} defaultValue The default value
  * @return {?Date} the date
  */
-Time.prototype.createDate = function(value, defaultValue = null) {
+Time.prototype.createDate = function (value, defaultValue = null) {
   return value !== null && value != undefined ? new Date(value) : defaultValue;
 };
 
@@ -46,7 +45,7 @@ Time.prototype.createDate = function(value, defaultValue = null) {
  * @param {?number} defaultValue The default value
  * @return {?number} the time
  */
-Time.prototype.getTime = function(date, defaultValue = null) {
+Time.prototype.getTime = function (date, defaultValue = null) {
   return date ? date.getTime() : defaultValue;
 };
 
@@ -60,8 +59,7 @@ Time.prototype.getTime = function(date, defaultValue = null) {
  *  values: (number[]|number)
  * }} - Configuration for the UI components
  */
-Time.prototype.getOptions = function(time) {
-
+Time.prototype.getOptions = function (time) {
   const minDate = this.createDate(time.minValue);
   const maxDate = this.createDate(time.maxValue);
 
@@ -100,10 +98,9 @@ Time.prototype.getOptions = function(time) {
   return {
     minDate: minTime,
     maxDate: maxTime,
-    values: defaultValues
+    values: defaultValues,
   };
 };
-
 
 /**
  * Time.prototype.getUTCDate - Get UTC date from a local date object
@@ -111,13 +108,9 @@ Time.prototype.getOptions = function(time) {
  * @param  {Object} localDate loacl date object in
  * @return {Object} UTC date
  */
-Time.prototype.getUTCDate = function(localDate) {
-  return new Date(
-    localDate.getUTCFullYear(),
-    localDate.getUTCMonth(),
-    localDate.getUTCDate());
+Time.prototype.getUTCDate = function (localDate) {
+  return new Date(localDate.getUTCFullYear(), localDate.getUTCMonth(), localDate.getUTCDate());
 };
-
 
 /**
  * @type {angular.IModule}
@@ -125,6 +118,5 @@ Time.prototype.getUTCDate = function(localDate) {
  */
 const module = angular.module('ngeoTime', []);
 module.service('ngeoTime', Time);
-
 
 export default module;

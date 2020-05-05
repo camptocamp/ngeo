@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 import {listen, unlistenByKey} from 'ol/events.js';
 import {CollectionEvent} from 'ol/Collection.js';
@@ -31,7 +30,6 @@ import {CollectionEvent} from 'ol/Collection.js';
  * @hidden
  */
 export function FeatureOverlay(manager, index) {
-
   /**
    * @type {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr}
    * @private
@@ -56,32 +54,28 @@ export function FeatureOverlay(manager, index) {
   this.listenerKeys_ = [];
 }
 
-
 /**
  * Add a feature to the feature overlay.
  * @param {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>} feature The feature to add.
  */
-FeatureOverlay.prototype.addFeature = function(feature) {
+FeatureOverlay.prototype.addFeature = function (feature) {
   this.manager_.addFeature(feature, this.index_);
 };
-
 
 /**
  * Remove a feature from the feature overlay.
  * @param {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>} feature The feature to remove.
  */
-FeatureOverlay.prototype.removeFeature = function(feature) {
+FeatureOverlay.prototype.removeFeature = function (feature) {
   this.manager_.removeFeature(feature, this.index_);
 };
-
 
 /**
  * Remove all the features from the feature overlay.
  */
-FeatureOverlay.prototype.clear = function() {
+FeatureOverlay.prototype.clear = function () {
   this.manager_.clear(this.index_);
 };
-
 
 /**
  * Configure this feature overlay with a feature collection. Features added
@@ -91,7 +85,7 @@ FeatureOverlay.prototype.clear = function() {
  * `addFeature`, `removeFeature` and `clear` functions.
  * @param {import("ol/Collection.js").default<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>} features Feature collection.
  */
-FeatureOverlay.prototype.setFeatures = function(features) {
+FeatureOverlay.prototype.setFeatures = function (features) {
   if (this.features_ !== null) {
     this.features_.clear();
     this.listenerKeys_.forEach(unlistenByKey);
@@ -106,50 +100,41 @@ FeatureOverlay.prototype.setFeatures = function(features) {
   this.features_ = features;
 };
 
-
 /**
  * Set a style for the feature overlay.
  * @param {import("ol/style/Style.js").default|Array<import("ol/style/Style.js").default>|import('ol/style/Style.js').StyleFunction} style
  * Style.
  */
-FeatureOverlay.prototype.setStyle = function(style) {
+FeatureOverlay.prototype.setStyle = function (style) {
   this.manager_.setStyle(style, this.index_);
 };
-
 
 /**
  * @param {Event|import('ol/events/Event.js').default} evt Feature collection event.
  * @private
  */
-FeatureOverlay.prototype.handleFeatureAdd_ = function(evt) {
+FeatureOverlay.prototype.handleFeatureAdd_ = function (evt) {
   if (evt instanceof CollectionEvent) {
-    const feature = /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>} */ (
-      evt.element
-    );
+    const feature = /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>} */ (evt.element);
     this.addFeature(feature);
   }
 };
 
-
 /**
  * @param {Event|import('ol/events/Event.js').default} evt Feature collection event.
  * @private
  */
-FeatureOverlay.prototype.handleFeatureRemove_ = function(evt) {
+FeatureOverlay.prototype.handleFeatureRemove_ = function (evt) {
   if (evt instanceof CollectionEvent) {
-    const feature = /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>} */ (
-      evt.element
-    );
+    const feature = /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>} */ (evt.element);
     this.removeFeature(feature);
   }
 };
-
 
 /**
  * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('ngeoFeatureOverlay', []);
-
 
 export default module;

@@ -19,13 +19,10 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 import gmfDisclaimerComponent from 'gmf/disclaimer/component.js';
 
 /**
  * @type {angular.IModule}
  */
-export default angular.module('gmfDisclaimerModule', [
-  gmfDisclaimerComponent.name,
-]);
+export default angular.module('gmfDisclaimerModule', [gmfDisclaimerComponent.name]);

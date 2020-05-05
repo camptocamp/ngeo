@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 /**
  * A simple object that can be managed by `ngeo.misc.ToolActivateMgr`.
  *
@@ -33,13 +32,12 @@
  * @constructor
  * @ngname ngeoToolActivate
  */
-export default function(toolContext, activePropertyName) {
-
+export default function (toolContext, activePropertyName) {
   /**
    * A getter function to get the active state of the tool.
    * @return {boolean} Is active.
    */
-  this.getActive = function() {
+  this.getActive = function () {
     return toolContext[activePropertyName];
   };
 
@@ -47,7 +45,7 @@ export default function(toolContext, activePropertyName) {
    * A setter function to set the active state of the tool.
    * @param {boolean} newVal New active state.
    */
-  this.setActive = function(newVal) {
+  this.setActive = function (newVal) {
     toolContext[activePropertyName] = newVal;
   };
 }

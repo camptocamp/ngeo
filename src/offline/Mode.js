@@ -19,12 +19,9 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 
-
 class Mode {
-
   /**
    * @param {import("ngeo/offline/Configuration.js").default} ngeoOfflineConfiguration
    * ngeo offline configuration service.
@@ -33,7 +30,6 @@ class Mode {
    * @ngname ngeoOfflineState
    */
   constructor(ngeoOfflineConfiguration) {
-
     /**
      * Offline mode is enabled or not.
      * @type {boolean}
@@ -98,7 +94,6 @@ class Mode {
   hasData() {
     return this.ngeoOfflineConfiguration_.hasOfflineData();
   }
-
 }
 
 /**
@@ -107,6 +102,5 @@ class Mode {
 const module = angular.module('ngeoOfflineMode', []);
 module.service('ngeoOfflineMode', Mode);
 Mode.module = module;
-
 
 export default Mode;

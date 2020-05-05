@@ -19,9 +19,7 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import olCollection from 'ol/Collection.js';
-
 
 /**
  * The options required to create a `Group`.
@@ -34,7 +32,6 @@ import olCollection from 'ol/Collection.js';
  * used for this property.
  */
 
-
 /**
  * @enum {string}
  * @private
@@ -43,16 +40,14 @@ import olCollection from 'ol/Collection.js';
 const VisibilityState = {
   INDETERMINATE: 'indeterminate',
   OFF: 'off',
-  ON: 'on'
+  ON: 'on',
 };
-
 
 /**
  * @private
  * @hidden
  */
 class Group {
-
   /**
    * A Group data source combines multiple `ngeo.datasource.DataSource` objects.
    * Its main purpose is to provide a calculated `visibilityState` property
@@ -62,7 +57,6 @@ class Group {
    * @param {GroupOptions} options Options.
    */
   constructor(options) {
-
     // === DYNAMIC properties (i.e. that can change / be watched ===
 
     /**
@@ -70,7 +64,6 @@ class Group {
      * @protected
      */
     this.dataSourcesCollection_ = new olCollection(options.dataSources);
-
 
     // === STATIC properties (i.e. that never change) ===
 
@@ -96,7 +89,6 @@ class Group {
     return this.dataSourcesCollection_.getArray();
   }
 
-
   /**
    * @return {import("ol/Collection.js").default<import("ngeo/datasource/DataSource.js").default>}
    *    Data sources
@@ -104,7 +96,6 @@ class Group {
   get dataSourcesCollection() {
     return this.dataSourcesCollection_;
   }
-
 
   // =======================================
   // === Static property getters/setters ===
@@ -116,7 +107,6 @@ class Group {
   get title() {
     return this.title_;
   }
-
 
   // ===================================
   // === Calculated property getters ===
@@ -148,7 +138,6 @@ class Group {
     return state;
   }
 
-
   // =======================
   // === Utility Methods ===
   // =======================
@@ -158,9 +147,7 @@ class Group {
    * @return {string} Visible state of a data source
    */
   getDataSourceState(dataSource) {
-    return dataSource.visible ?
-      VisibilityState.ON :
-      VisibilityState.OFF;
+    return dataSource.visible ? VisibilityState.ON : VisibilityState.OFF;
   }
 
   /**
@@ -187,8 +174,7 @@ class Group {
    *
    */
   toggleVisibilityState() {
-    const visibleToSet =
-        this.visibilityState !== VisibilityState.ON;
+    const visibleToSet = this.visibilityState !== VisibilityState.ON;
     for (const dataSource of this.dataSources) {
       if (dataSource.visible !== visibleToSet) {
         dataSource.visible = visibleToSet;
@@ -196,6 +182,5 @@ class Group {
     }
   }
 }
-
 
 export default Group;

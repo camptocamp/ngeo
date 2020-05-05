@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 import * as olArray from 'ol/array.js';
 import olFormatWMTSCapabilities from 'ol/format/WMTSCapabilities.js';
@@ -48,7 +47,6 @@ import {ServerType} from 'ngeo/datasource/OGC.js';
  * @hidden
  */
 export function LayerHelper($q, $http, ngeoTilesPreloadingLimit) {
-
   /**
    * @type {angular.IQService}
    * @private
@@ -69,20 +67,17 @@ export function LayerHelper($q, $http, ngeoTilesPreloadingLimit) {
   this.tilesPreloadingLimit_ = ngeoTilesPreloadingLimit;
 }
 
-
 /**
  * @private
  * @hidden
  */
 const GROUP_KEY = 'groupName';
 
-
 /**
  * @private
  * @hidden
  */
 const REFRESH_PARAM = 'random';
-
 
 /**
  * Copy each properties from a layer onto an other layer, with the
@@ -95,9 +90,7 @@ const REFRESH_PARAM = 'random';
  * @param {string[]=} opt_excludes A list of properties that should
  *     not be copied.
  */
-LayerHelper.prototype.copyProperties = function(
-  layerFrom, layerTo, opt_excludes
-) {
+LayerHelper.prototype.copyProperties = function (layerFrom, layerTo, opt_excludes) {
   const properties = layerFrom.getProperties();
   if (opt_excludes) {
     const excludes = opt_excludes;
@@ -112,7 +105,6 @@ LayerHelper.prototype.copyProperties = function(
     layerTo.setProperties(properties);
   }
 };
-
 
 /**
  * Create and return a basic WMS layer with only a source URL and a comma
@@ -130,14 +122,21 @@ LayerHelper.prototype.copyProperties = function(
  * @param {Object=} opt_customLayerOptions The layer opacity.
  * @return {import("ol/layer/Image.js").default} WMS Layer.
  */
-LayerHelper.prototype.createBasicWMSLayer = function(sourceURL,
-  sourceLayersName, sourceFormat, opt_serverType, opt_time, opt_params, opt_crossOrigin,
-  opt_customSourceOptions, opt_customLayerOptions) {
-
+LayerHelper.prototype.createBasicWMSLayer = function (
+  sourceURL,
+  sourceLayersName,
+  sourceFormat,
+  opt_serverType,
+  opt_time,
+  opt_params,
+  opt_crossOrigin,
+  opt_customSourceOptions,
+  opt_customLayerOptions
+) {
   /** @type {Object<string, string>} */
   const params = {
     FORMAT: sourceFormat,
-    LAYERS: sourceLayersName
+    LAYERS: sourceLayersName,
   };
   let olServerType;
   if (opt_time) {
@@ -152,7 +151,7 @@ LayerHelper.prototype.createBasicWMSLayer = function(sourceURL,
     url: sourceURL,
     params: params,
     serverType: olServerType,
-    crossOrigin: opt_crossOrigin
+    crossOrigin: opt_crossOrigin,
   });
   const source = new olSourceImageWMS(options);
   if (opt_params) {
@@ -163,7 +162,6 @@ LayerHelper.prototype.createBasicWMSLayer = function(sourceURL,
   return new olLayerImage(layerOptions);
 };
 
-
 /**
  * Create and return a basic WMS layer using an OGC data source.
  *
@@ -171,9 +169,7 @@ LayerHelper.prototype.createBasicWMSLayer = function(sourceURL,
  * @param {string=} opt_crossOrigin crossOrigin.
  * @return {import("ol/layer/Image.js").default} WMS Layer.
  */
-LayerHelper.prototype.createBasicWMSLayerFromDataSource = function(
-  dataSource, opt_crossOrigin
-) {
+LayerHelper.prototype.createBasicWMSLayerFromDataSource = function (dataSource, opt_crossOrigin) {
   const url = dataSource.wmsUrl;
   if (url === undefined) {
     throw new Error('Missing url');
@@ -206,7 +202,6 @@ LayerHelper.prototype.createBasicWMSLayerFromDataSource = function(
   return layer;
 };
 
-
 /**
  * Create and return a promise that provides a WMTS layer with source on
  * success, no layer else.
@@ -224,7 +219,7 @@ LayerHelper.prototype.createBasicWMSLayerFromDataSource = function(
  * @return {angular.IPromise<import("ol/layer/Tile.js").default>} A Promise with a layer (with source) on
  *    success, no layer else.
  */
-LayerHelper.prototype.createWMTSLayerFromCapabilitites = function(
+LayerHelper.prototype.createWMTSLayerFromCapabilitites = function (
   capabilitiesURL,
   layerName,
   opt_matrixSet,
@@ -241,7 +236,7 @@ LayerHelper.prototype.createWMTSLayerFromCapabilitites = function(
   const layer = new olLayerTile({
     preload: this.tilesPreloadingLimit_,
     minResolution: opt_minResolution,
-    maxResolution: opt_maxResolution
+    maxResolution: opt_maxResolution,
   });
   const $q = this.$q_;
 
@@ -251,11 +246,15 @@ LayerHelper.prototype.createWMTSLayerFromCapabilitites = function(
       result = parser.read(response.data);
     }
     if (result) {
-      const options = Object.assign({}, opt_customOptions, optionsFromCapabilities(result, {
-        matrixSet: opt_matrixSet,
-        crossOrigin: 'anonymous',
-        layer: layerName
-      }));
+      const options = Object.assign(
+        {},
+        opt_customOptions,
+        optionsFromCapabilities(result, {
+          matrixSet: opt_matrixSet,
+          crossOrigin: 'anonymous',
+          layer: layerName,
+        })
+      );
       const source = new olSourceWMTS(/** @type {import('ol/source/WMTS.js').Options} */ (options));
       if (opt_dimensions && !isEmpty(opt_dimensions)) {
         source.updateDimensions(opt_dimensions);
@@ -276,7 +275,6 @@ LayerHelper.prototype.createWMTSLayerFromCapabilitites = function(
   });
 };
 
-
 /**
  * Create and return a WMTS layer using a formatted capabilities response
  * and a capability layer.
@@ -286,17 +284,18 @@ LayerHelper.prototype.createWMTSLayerFromCapabilitites = function(
  * @param {Object<string, string>=} opt_dimensions WMTS dimensions.
  * @return {import("ol/layer/Tile.js").default} WMTS layer
  */
-LayerHelper.prototype.createWMTSLayerFromCapabilititesObj = function(
-  capabilities, layerCap, opt_dimensions
+LayerHelper.prototype.createWMTSLayerFromCapabilititesObj = function (
+  capabilities,
+  layerCap,
+  opt_dimensions
 ) {
-
   const options = optionsFromCapabilities(capabilities, {
     crossOrigin: 'anonymous',
-    layer: layerCap.Identifier
+    layer: layerCap.Identifier,
   });
 
   console.assert(options);
-  const source = new olSourceWMTS(/** @type {import('ol/source/WMTS.js').Options} */(options));
+  const source = new olSourceWMTS(/** @type {import('ol/source/WMTS.js').Options} */ (options));
 
   if (opt_dimensions && !isEmpty(opt_dimensions)) {
     source.updateDimensions(opt_dimensions);
@@ -304,12 +303,11 @@ LayerHelper.prototype.createWMTSLayerFromCapabilititesObj = function(
 
   const result = new olLayerTile({
     preload: Infinity,
-    source: source
+    source: source,
   });
   result.set('capabilitiesStyles', layerCap.Style);
   return result;
 };
-
 
 /**
  * Create and return an ol.layer.Group. You can pass a collection of layers to
@@ -318,14 +316,13 @@ LayerHelper.prototype.createWMTSLayerFromCapabilititesObj = function(
  *    add to the returned Group.
  * @return {import("ol/layer/Group.js").default} Layer group.
  */
-LayerHelper.prototype.createBasicGroup = function(opt_layers) {
+LayerHelper.prototype.createBasicGroup = function (opt_layers) {
   const group = new olLayerGroup();
   if (opt_layers) {
     group.setLayers(opt_layers);
   }
   return group;
 };
-
 
 /**
  * Retrieve (or create if it doesn't exist) and return a group of layer from
@@ -336,7 +333,7 @@ LayerHelper.prototype.createBasicGroup = function(opt_layers) {
  * @param {string} groupName The name of the group.
  * @return {import("ol/layer/Group.js").default} The group corresponding to the given name.
  */
-LayerHelper.prototype.getGroupFromMap = function(map, groupName) {
+LayerHelper.prototype.getGroupFromMap = function (map, groupName) {
   const groups = map.getLayerGroup().getLayers();
   let group;
   groups.getArray().some((existingGroup) => {
@@ -355,27 +352,24 @@ LayerHelper.prototype.getGroupFromMap = function(map, groupName) {
   return group;
 };
 
-
 /**
  * Get an array of all layers in a group. The group can contain multiple levels
  * of others groups.
  * @param {import("ol/layer/Base.js").default} layer The base layer, mostly a group of layers.
  * @return {Array<import("ol/layer/Layer.js").default<import('ol/source/Source.js').default>>} Layers.
  */
-LayerHelper.prototype.getFlatLayers = function(layer) {
+LayerHelper.prototype.getFlatLayers = function (layer) {
   if (layer instanceof olLayerGroup) {
-    const sublayers =
-      /** @type {import("ol/layer/Layer.js").default<import('ol/source/Source.js').default>[]} */(
-        layer.getLayers().getArray()
-      );
-    const hasGroupLayer = sublayers.some(sublayer => sublayer instanceof olLayerGroup);
+    const sublayers = /** @type {import("ol/layer/Layer.js").default<import('ol/source/Source.js').default>[]} */ (layer
+      .getLayers()
+      .getArray());
+    const hasGroupLayer = sublayers.some((sublayer) => sublayer instanceof olLayerGroup);
     if (!hasGroupLayer) {
       return sublayers.slice();
     }
   }
   return this.getFlatLayers_(layer, [], undefined);
 };
-
 
 /**
  * Get an array of all layers in a group. The group can contain multiple levels
@@ -389,7 +383,7 @@ LayerHelper.prototype.getFlatLayers = function(layer) {
  * @return {olLayerLayer<import('ol/source/Source.js').default>[]} Layers.
  * @private
  */
-LayerHelper.prototype.getFlatLayers_ = function(layer, array, computedOpacity) {
+LayerHelper.prototype.getFlatLayers_ = function (layer, array, computedOpacity) {
   const opacity = layer.getOpacity();
   if (computedOpacity !== undefined) {
     computedOpacity *= opacity;
@@ -410,7 +404,6 @@ LayerHelper.prototype.getFlatLayers_ = function(layer, array, computedOpacity) {
   return array;
 };
 
-
 /**
  * Get a layer that has a `layerName` property equal to a given layer name from
  * an array of layers. If one of the layers in the array is a group, then the
@@ -419,7 +412,7 @@ LayerHelper.prototype.getFlatLayers_ = function(layer, array, computedOpacity) {
  * @param {Array<import("ol/layer/Base.js").default>} layers Layers.
  * @return {?import("ol/layer/Base.js").default} Layer.
  */
-LayerHelper.prototype.getLayerByName = function(layerName, layers) {
+LayerHelper.prototype.getLayerByName = function (layerName, layers) {
   /** @type {?import("ol/layer/Base.js").default} */
   let found = null;
   layers.some((layer) => {
@@ -435,14 +428,13 @@ LayerHelper.prototype.getLayerByName = function(layerName, layers) {
   return found;
 };
 
-
 /**
  * Get the WMTS legend URL for the given layer.
  * @param {import("ol/layer/Tile.js").default} layer Tile layer as returned by the
  * ngeo layerHelper service.
  * @return {string|undefined} The legend URL or undefined.
  */
-LayerHelper.prototype.getWMTSLegendURL = function(layer) {
+LayerHelper.prototype.getWMTSLegendURL = function (layer) {
   // FIXME case of multiple styles ?  case of multiple legendUrl ?
   let url;
   const styles = layer.get('capabilitiesStyles');
@@ -454,7 +446,6 @@ LayerHelper.prototype.getWMTSLegendURL = function(layer) {
   }
   return url;
 };
-
 
 /**
  * Get the WMS legend URL for the given node.
@@ -471,9 +462,19 @@ LayerHelper.prototype.getWMTSLegendURL = function(layer) {
  * @param {Object<string, string>=} opt_additionalQueryString Additional query string parameters.
  * @return {string|undefined} The legend URL or undefined.
  */
-LayerHelper.prototype.getWMSLegendURL = function(url,
-  layerName, opt_scale, opt_legendRule, opt_legendWidth, opt_legendHeight,
-  opt_servertype, opt_dpi, opt_bbox, opt_srs, opt_additionalQueryString) {
+LayerHelper.prototype.getWMSLegendURL = function (
+  url,
+  layerName,
+  opt_scale,
+  opt_legendRule,
+  opt_legendWidth,
+  opt_legendHeight,
+  opt_servertype,
+  opt_dpi,
+  opt_bbox,
+  opt_srs,
+  opt_additionalQueryString
+) {
   if (!url) {
     return undefined;
   }
@@ -484,7 +485,7 @@ LayerHelper.prototype.getWMSLegendURL = function(url,
     SERVICE: 'WMS',
     VERSION: '1.1.1',
     REQUEST: 'GetLegendGraphic',
-    LAYER: layerName
+    LAYER: layerName,
   };
   if (opt_scale !== undefined) {
     queryString.SCALE = opt_scale;
@@ -503,16 +504,16 @@ LayerHelper.prototype.getWMSLegendURL = function(url,
       queryString.DPI = opt_dpi;
     }
     if (
-      opt_bbox != undefined
-      && opt_srs != undefined
-      && opt_scale != undefined
-      && opt_dpi != undefined
-      && opt_legendRule == undefined
+      opt_bbox != undefined &&
+      opt_srs != undefined &&
+      opt_scale != undefined &&
+      opt_dpi != undefined &&
+      opt_legendRule == undefined
     ) {
       queryString.BBOX = opt_bbox.join(',');
       queryString.SRS = opt_srs;
-      queryString.WIDTH = Math.round((opt_bbox[2] - opt_bbox[0]) / opt_scale * 39.37 * opt_dpi);
-      queryString.HEIGHT = Math.round((opt_bbox[3] - opt_bbox[1]) / opt_scale * 39.37 * opt_dpi);
+      queryString.WIDTH = Math.round(((opt_bbox[2] - opt_bbox[0]) / opt_scale) * 39.37 * opt_dpi);
+      queryString.HEIGHT = Math.round(((opt_bbox[3] - opt_bbox[1]) / opt_scale) * 39.37 * opt_dpi);
     }
   }
   if (opt_additionalQueryString) {
@@ -521,14 +522,13 @@ LayerHelper.prototype.getWMSLegendURL = function(url,
   return olUriAppendParams(url, queryString);
 };
 
-
 /**
  * Returns if this layer is visible at the current resolution.
  * @param {import("ol/layer/Base.js").default} layer Layer.
  * @param {import("ol/Map.js").default} map Map.
  * @return {boolean} Is the layer currently visible?
  */
-LayerHelper.prototype.isLayerVisible = function(layer, map) {
+LayerHelper.prototype.isLayerVisible = function (layer, map) {
   if (!layer.getVisible()) {
     return false;
   }
@@ -537,28 +537,21 @@ LayerHelper.prototype.isLayerVisible = function(layer, map) {
   if (currentResolution === undefined) {
     throw new Error('Missing resolution');
   }
-  return currentResolution > layer.getMinResolution() &&
-      currentResolution < layer.getMaxResolution();
+  return currentResolution > layer.getMinResolution() && currentResolution < layer.getMaxResolution();
 };
-
 
 /**
  * Force a WMS layer to refresh using a random value.
  * @param {import("ol/layer/Image.js").default|import("ol/layer/Tile.js").default} layer Layer to refresh.
  */
-LayerHelper.prototype.refreshWMSLayer = function(layer) {
+LayerHelper.prototype.refreshWMSLayer = function (layer) {
   const source_ = layer.getSource();
-  console.assert(
-    source_ instanceof olSourceImageWMS ||
-    source_ instanceof olSourceTileWMS
-  );
-  const source =
-    /** @type {import("ol/source/ImageWMS.js").default|import("ol/source/TileWMS.js").default} */ (source_);
+  console.assert(source_ instanceof olSourceImageWMS || source_ instanceof olSourceTileWMS);
+  const source = /** @type {import("ol/source/ImageWMS.js").default|import("ol/source/TileWMS.js").default} */ (source_);
   const params = source.getParams();
   params[REFRESH_PARAM] = Math.random();
   source.updateParams(params);
 };
-
 
 /**
  * Set ZIndex property to first level children elements
@@ -566,13 +559,12 @@ LayerHelper.prototype.refreshWMSLayer = function(layer) {
  *    layer with first level children layers.
  * @param {number} ZIndex The ZIndex for children element.
  */
-LayerHelper.prototype.setZIndexToFirstLevelChildren = function(element, ZIndex) {
+LayerHelper.prototype.setZIndexToFirstLevelChildren = function (element, ZIndex) {
   if (element instanceof olLayerGroup) {
     const innerGroupLayers = element.getLayers();
-    innerGroupLayers.forEach(innerLayer => innerLayer.setZIndex(ZIndex));
+    innerGroupLayers.forEach((innerLayer) => innerLayer.setZIndex(ZIndex));
   }
 };
-
 
 /**
  * Update the LAYERS parameter of the source of the given WMS layer.
@@ -583,7 +575,7 @@ LayerHelper.prototype.setZIndexToFirstLevelChildren = function(element, ZIndex) 
  * and optionally the end datetime (for time range selection) selected by user
  * in a ISO-8601 string datetime or time interval format
  */
-LayerHelper.prototype.updateWMSLayerState = function(layer, names, opt_time) {
+LayerHelper.prototype.updateWMSLayerState = function (layer, names, opt_time) {
   // Don't send layer without parameters, hide layer instead;
   if (names.length <= 0) {
     layer.setVisible(false);
@@ -601,17 +593,14 @@ LayerHelper.prototype.updateWMSLayerState = function(layer, names, opt_time) {
   }
 };
 
-
 /**
  * @param {import("ol/layer/Image.js").default} layer The WMS layer.
  * @return {number[]|undefined} List of query source ids, a.k.a.
  *     the data source ids this layer is composed of.
  */
-LayerHelper.prototype.getQuerySourceIds = function(layer) {
-  return /** @type {number[]|undefined} */ (
-    layer.get('querySourceIds'));
+LayerHelper.prototype.getQuerySourceIds = function (layer) {
+  return /** @type {number[]|undefined} */ (layer.get('querySourceIds'));
 };
-
 
 /**
  * @type {angular.IModule}
@@ -620,6 +609,5 @@ LayerHelper.prototype.getQuerySourceIds = function(layer) {
 const module = angular.module('ngeoLayerHelper', []);
 module.service('ngeoLayerHelper', LayerHelper);
 module.value('ngeoTilesPreloadingLimit', Infinity);
-
 
 export default module;

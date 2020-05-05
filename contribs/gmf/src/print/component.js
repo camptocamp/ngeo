@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 
 import {DATALAYERGROUP_NAME} from 'gmf/index.js';
@@ -43,7 +42,6 @@ import {toDegrees, toRadians, clamp} from 'ol/math.js';
 import ImageWMS from 'ol/source/ImageWMS.js';
 import MapBrowserPointerEvent from 'ol/MapBrowserPointerEvent.js';
 import 'bootstrap/js/src/dropdown.js';
-
 
 /**
  * Fields that can come from a print v3 server and can be used in the partial
@@ -70,7 +68,6 @@ import 'bootstrap/js/src/dropdown.js';
  * @protected type {string} Type of the field. Can be `String`, `Boolean` or `Number`.
  */
 
-
 /**
  * @type {angular.IModule}
  * @hidden
@@ -86,8 +83,8 @@ const module = angular.module('gmfPrintComponent', [
   ngeoQueryMapQuerent.name,
 ]);
 
-
-module.value('gmfPrintTemplateUrl',
+module.value(
+  'gmfPrintTemplateUrl',
   /**
    * @param {JQuery} element Element.
    * @param {angular.IAttributes} attrs Attributes.
@@ -95,10 +92,9 @@ module.value('gmfPrintTemplateUrl',
    */
   (element, attrs) => {
     const templateUrl = attrs.gmfPrintTemplateurl;
-    return templateUrl !== undefined ? templateUrl :
-      'gmf/print';
-  });
-
+    return templateUrl !== undefined ? templateUrl : 'gmf/print';
+  }
+);
 
 module.run(
   /**
@@ -108,15 +104,14 @@ module.run(
   ($templateCache) => {
     // @ts-ignore: webpack
     $templateCache.put('gmf/print', require('./component.html'));
-  });
-
+  }
+);
 
 /**
  * @enum {string}
  * @hidden
  */
 const PrintStateEnum = {
-
   /**
    * @type {string}
    */
@@ -140,20 +135,17 @@ const PrintStateEnum = {
   /**
    * @type {string}
    */
-  ERROR_ON_GETCAPABILITIES: 'errorOnGetCapabilities'
+  ERROR_ON_GETCAPABILITIES: 'errorOnGetCapabilities',
 };
-
 
 /**
  * @typedef {Object} PrintState
  * @property {PrintStateEnum} state
  */
 
-
 module.value('gmfPrintState', {
-  state: PrintStateEnum.CAPABILITIES_NOT_LOADED
+  state: PrintStateEnum.CAPABILITIES_NOT_LOADED,
 });
-
 
 /**
  * @param {JQuery} $element Element.
@@ -167,7 +159,6 @@ module.value('gmfPrintState', {
 function gmfPrintTemplateUrl($element, $attrs, gmfPrintTemplateUrl) {
   return gmfPrintTemplateUrl($element, $attrs);
 }
-
 
 /**
  * Provide a component that display a print panel. This panel is populated with
@@ -229,16 +220,14 @@ const printComponent = {
     'rotateMask': '<?gmfPrintRotatemask',
     'fieldValues': '<?gmfPrintFieldvalues',
     'hiddenAttributeNames': '<?gmfPrintHiddenattributes',
-    'attributesOut': '=?gmfPrintAttributesOut'
+    'attributesOut': '=?gmfPrintAttributesOut',
   },
   controller: 'GmfPrintController',
   templateUrl: gmfPrintTemplateUrl,
-  transclude: true
+  transclude: true,
 };
 
-
 module.component('gmfPrint', printComponent);
-
 
 /**
  * @typedef {Object} OptionsLegendType
@@ -246,7 +235,6 @@ module.component('gmfPrint', printComponent);
  * @property {Object<string, boolean>} label
  * @property {Object<string, Object<string, string>>} params
  */
-
 
 /**
  * @typedef {Object} OptionsType
@@ -256,13 +244,11 @@ module.component('gmfPrint', printComponent);
  * @property {string} [defaultLayout]
  */
 
-
 /**
  * @private
  * @hidden
  */
 export class PrintController {
-
   /**
    * @param {JQuery} $element Element.
    * @param {angular.IScope} $rootScope Angular root scope.
@@ -287,11 +273,25 @@ export class PrintController {
    * @ngdoc controller
    * @ngname GmfPrintController
    */
-  constructor($element, $rootScope, $scope, $timeout, $q, $injector,
-    gettextCatalog, ngeoLayerHelper, ngeoFeatureOverlayMgr, ngeoPrintUtils,
-    ngeoCreatePrint, gmfPrintUrl, gmfAuthenticationService, ngeoQueryResult,
-    $filter, gmfPrintState, gmfThemes) {
-
+  constructor(
+    $element,
+    $rootScope,
+    $scope,
+    $timeout,
+    $q,
+    $injector,
+    gettextCatalog,
+    ngeoLayerHelper,
+    ngeoFeatureOverlayMgr,
+    ngeoPrintUtils,
+    ngeoCreatePrint,
+    gmfPrintUrl,
+    gmfAuthenticationService,
+    ngeoQueryResult,
+    $filter,
+    gmfPrintState,
+    gmfThemes
+  ) {
     /**
      * @type {PrintState}
      * @private
@@ -611,7 +611,6 @@ export class PrintController {
     this.currentThemes_ = [];
   }
 
-
   /**
    * Init the controller
    */
@@ -624,19 +623,28 @@ export class PrintController {
     });
 
     // Clear the capabilities if the roles changes
-    this.$scope_.$watch(() => this.gmfAuthenticationService_.getRolesIds().join(','), () => {
-      this.gmfPrintState_.state = PrintStateEnum.CAPABILITIES_NOT_LOADED;
-      this.capabilities_ = null;
-    });
+    this.$scope_.$watch(
+      () => this.gmfAuthenticationService_.getRolesIds().join(','),
+      () => {
+        this.gmfPrintState_.state = PrintStateEnum.CAPABILITIES_NOT_LOADED;
+        this.capabilities_ = null;
+      }
+    );
 
     // Store user email
-    this.$scope_.$watch(() => this.gmfAuthenticationService_.getEmail(), (newValue) => {
-      this.smtpEmail = newValue;
-    });
+    this.$scope_.$watch(
+      () => this.gmfAuthenticationService_.getEmail(),
+      (newValue) => {
+        this.smtpEmail = newValue;
+      }
+    );
 
-    this.$scope_.$watch(() => this.active, (active) => {
-      this.togglePrintPanel_(active);
-    });
+    this.$scope_.$watch(
+      () => this.active,
+      (active) => {
+        this.togglePrintPanel_(active);
+      }
+    );
 
     // Print on event.
     this.$rootScope_.$on('gmfStartPrint', (event, format) => {
@@ -676,7 +684,6 @@ export class PrintController {
     this.maskLayer_.getRotation = getRotationFn;
   }
 
-
   /**
    * @param {import('ol/PluggableMap.js').FrameState} frameState Frame state.
    * @return {number} Scale of the map to print.
@@ -690,15 +697,16 @@ export class PrintController {
     if (!this.layoutInfo.scales) {
       throw new Error('Missing layoutInfo.scales');
     }
-    if (!this.scaleManuallySelected_ &&
-        (this.layoutInfo.scale === -1 || this.layoutInfo.scales.includes(this.layoutInfo.scale))) {
+    if (
+      !this.scaleManuallySelected_ &&
+      (this.layoutInfo.scale === -1 || this.layoutInfo.scales.includes(this.layoutInfo.scale))
+    ) {
       const mapSize = frameState.size;
       const viewResolution = frameState.viewState.resolution;
       this.layoutInfo.scale = this.getOptimalScale_(mapSize, viewResolution);
     }
     return this.layoutInfo.scale;
   }
-
 
   /**
    * @param {boolean} active True to listen events related to the print and get
@@ -713,31 +721,34 @@ export class PrintController {
       if (!this.capabilities_) {
         throw new Error('Missing capabilities');
       }
-      this.capabilities_.then((resp) => {
-        if (!this.map) {
-          throw new Error('Missing map');
+      this.capabilities_.then(
+        (resp) => {
+          if (!this.map) {
+            throw new Error('Missing map');
+          }
+          // make sure the panel is still open
+          if (!this.active) {
+            return;
+          }
+          this.gmfPrintState_.state = PrintStateEnum.NOT_IN_USE;
+          // Get capabilities - On success
+          this.parseCapabilities_(resp);
+          this.map.addLayer(this.maskLayer_);
+          if (this.defaultLayout) {
+            this.setLayout(this.defaultLayout);
+          }
+          this.pointerDragListenerKey_ = listen(this.map, 'pointerdrag', this.onPointerDrag_, this);
+          this.mapViewResolutionChangeKey_ = listen(this.map.getView(), 'change:resolution', () => {
+            this.scaleManuallySelected_ = false;
+          });
+          this.map.render();
+        },
+        (resp) => {
+          // Get capabilities - On error
+          this.gmfPrintState_.state = PrintStateEnum.ERROR_ON_GETCAPABILITIES;
+          this.capabilities_ = null;
         }
-        // make sure the panel is still open
-        if (!this.active) {
-          return;
-        }
-        this.gmfPrintState_.state = PrintStateEnum.NOT_IN_USE;
-        // Get capabilities - On success
-        this.parseCapabilities_(resp);
-        this.map.addLayer(this.maskLayer_);
-        if (this.defaultLayout) {
-          this.setLayout(this.defaultLayout);
-        }
-        this.pointerDragListenerKey_ = listen(this.map, 'pointerdrag', this.onPointerDrag_, this);
-        this.mapViewResolutionChangeKey_ = listen(this.map.getView(), 'change:resolution', () => {
-          this.scaleManuallySelected_ = false;
-        });
-        this.map.render();
-      }, (resp) => {
-        // Get capabilities - On error
-        this.gmfPrintState_.state = PrintStateEnum.ERROR_ON_GETCAPABILITIES;
-        this.capabilities_ = null;
-      });
+      );
     } else {
       if (!this.map) {
         throw new Error('Missing map');
@@ -754,23 +765,20 @@ export class PrintController {
     }
   }
 
-
   /**
    * Gets the print capabilities.
    * @param {string} roleId The roles ids.
    * @private
    */
   getCapabilities_(roleId) {
-    this.capabilities_ = this.ngeoPrint_.getCapabilities(
-      {
-        withCredentials: true,
-        params: {
-          'role': roleId,
-          'cache_version': this.cacheVersion_
-        }
-      });
+    this.capabilities_ = this.ngeoPrint_.getCapabilities({
+      withCredentials: true,
+      params: {
+        'role': roleId,
+        'cache_version': this.cacheVersion_,
+      },
+    });
   }
-
 
   /**
    * Create the list of layouts, get the formats, get the first layout in
@@ -794,7 +802,6 @@ export class PrintController {
 
     this.updateFields_();
   }
-
 
   /**
    * Update layout information with the user values if there are always available in the
@@ -825,8 +832,9 @@ export class PrintController {
 
     this.updateCustomFields_();
 
-    this.layoutInfo.legend = this.layoutInfo.attributes.includes('legend') ?
-      this.fieldValues['legend'] !== false : undefined;
+    this.layoutInfo.legend = this.layoutInfo.attributes.includes('legend')
+      ? this.fieldValues['legend'] !== false
+      : undefined;
     this.layoutInfo.scales = clientInfo.scales || [];
     this.layoutInfo.dpis = clientInfo.dpiSuggestions || [];
 
@@ -835,8 +843,9 @@ export class PrintController {
     this.layoutInfo.scale = this.getOptimalScale_(mapSize, viewResolution);
 
     this.layoutInfo.dpi =
-        (this.layoutInfo.dpi && this.layoutInfo.dpis.indexOf(this.layoutInfo.dpi) > 0) ?
-          this.layoutInfo.dpi : this.layoutInfo.dpis[0];
+      this.layoutInfo.dpi && this.layoutInfo.dpis.indexOf(this.layoutInfo.dpi) > 0
+        ? this.layoutInfo.dpi
+        : this.layoutInfo.dpis[0];
 
     this.layoutInfo.formats = {};
     this.formats_.forEach((format) => {
@@ -848,7 +857,6 @@ export class PrintController {
     // Force the update of the mask
     this.map.render();
   }
-
 
   /**
    * Update simple attributes information with Customfield to be able to generate a form
@@ -874,8 +882,12 @@ export class PrintController {
         const name = `${attribute.name}`;
         const defaultValue = attribute.default;
         /** @type {string} */
-        let value = (defaultValue !== undefined && defaultValue !== '') ?
-          `${defaultValue}` : name in this.fieldValues ? `${this.fieldValues[name]}` : '';
+        let value =
+          defaultValue !== undefined && defaultValue !== ''
+            ? `${defaultValue}`
+            : name in this.fieldValues
+            ? `${this.fieldValues[name]}`
+            : '';
 
         // Try to use existing form field type
         const rawType = `${attribute.type}`;
@@ -883,7 +895,7 @@ export class PrintController {
         let type;
         switch (rawType) {
           case 'String':
-            type = (name === 'comments') ? 'textarea' : 'text';
+            type = name === 'comments' ? 'textarea' : 'text';
             break;
           case 'Boolean':
             type = 'checkbox';
@@ -908,12 +920,11 @@ export class PrintController {
         this.layoutInfo.simpleAttributes.push({
           name,
           type,
-          value: value
+          value: value,
         });
       }
     });
   }
-
 
   /**
    * Return a capabilities 'attribute' object corresponding to the given name.
@@ -934,7 +945,6 @@ export class PrintController {
     });
     return attr;
   }
-
 
   /**
    * Set the current rotation value.
@@ -992,7 +1002,7 @@ export class PrintController {
             const p1y = pixel[1] - center[1];
             const centerToP0 = Math.sqrt(Math.pow(p0x, 2) + Math.pow(p0y, 2));
             const centerToP1 = Math.sqrt(Math.pow(p1x, 2) + Math.pow(p1y, 2));
-            const sense = (p0x * p1y - p0y * p1x) > 0 ? 1 : -1;
+            const sense = p0x * p1y - p0y * p1x > 0 ? 1 : -1;
             let angle = (p0x * p1x + p0y * p1y) / (centerToP0 * centerToP1);
             angle = angle <= 1 ? sense * Math.acos(angle) : 0;
             const boost = centerToP1 / 200;
@@ -1012,7 +1022,6 @@ export class PrintController {
       }
     }
   }
-
 
   /**
    * Create a print report based on the values of the 'layoutInfo' values.
@@ -1056,14 +1065,9 @@ export class PrintController {
       if (!center) {
         throw new Error('Missing center');
       }
-      const deltaX = this.paperSize_[0] * scale / 2 / INCHES_PER_METER / DOTS_PER_INCH;
-      const deltaY = this.paperSize_[1] * scale / 2 / INCHES_PER_METER / DOTS_PER_INCH;
-      const bbox = [
-        center[0] - deltaX,
-        center[1] - deltaY,
-        center[0] + deltaX,
-        center[1] + deltaY,
-      ];
+      const deltaX = (this.paperSize_[0] * scale) / 2 / INCHES_PER_METER / DOTS_PER_INCH;
+      const deltaY = (this.paperSize_[1] * scale) / 2 / INCHES_PER_METER / DOTS_PER_INCH;
+      const bbox = [center[0] - deltaX, center[1] - deltaY, center[0] + deltaX, center[1] + deltaY];
       const legend = this.getLegend_(scale, this.layoutInfo.dpi, bbox);
       if (legend !== null) {
         customAttributes.legend = legend;
@@ -1126,29 +1130,37 @@ export class PrintController {
 
     const email = this.smtpSupported && this.smtpEmail && this.smtpEnabled ? this.smtpEmail : undefined;
 
-    const spec = this.ngeoPrint_.createSpec(map, scale, this.layoutInfo.dpi,
-      this.layoutInfo.layout, format, customAttributes, email, this.goodnessOfFit_);
+    const spec = this.ngeoPrint_.createSpec(
+      map,
+      scale,
+      this.layoutInfo.dpi,
+      this.layoutInfo.layout,
+      format,
+      customAttributes,
+      email,
+      this.goodnessOfFit_
+    );
 
     // Add feature overlay layer to print spec.
     /** @type {import('ngeo/print/mapfish-print-v3.js').MapFishPrintLayer[]} */
     const layers = [];
-    this.ngeoPrint_.encodeLayer(layers, this.featureOverlayLayer_,
-      viewResolution);
+    this.ngeoPrint_.encodeLayer(layers, this.featureOverlayLayer_, viewResolution);
     if (layers.length > 0) {
       spec.attributes.map.layers.unshift(layers[0]);
     }
 
-    this.ngeoPrint_.createReport(spec, /** @type {angular.IRequestShortcutConfig} */ ({
-      timeout: this.requestCanceler_.promise
-    })).then(
-      this.handleCreateReportSuccess_.bind(this),
-      this.handleCreateReportError_.bind(this)
-    );
+    this.ngeoPrint_
+      .createReport(
+        spec,
+        /** @type {angular.IRequestShortcutConfig} */ ({
+          timeout: this.requestCanceler_.promise,
+        })
+      )
+      .then(this.handleCreateReportSuccess_.bind(this), this.handleCreateReportError_.bind(this));
 
     // remove temporary map
     map.setTarget('');
   }
-
 
   /**
    * Cancel the current print and reset its state.
@@ -1172,7 +1184,6 @@ export class PrintController {
     this.resetPrintStates_();
   }
 
-
   /**
    * @param {PrintStateEnum=} opt_printState the print state.
    * @private
@@ -1181,7 +1192,6 @@ export class PrintController {
     this.gmfPrintState_.state = opt_printState || PrintStateEnum.NOT_IN_USE;
     this.curRef_ = '';
   }
-
 
   /**
    * Get datasource object for print report
@@ -1208,23 +1218,21 @@ export class PrintController {
             return this.translate_(prop);
           });
         }
-        data.push(Object.keys(properties).map(key => properties[key]));
+        data.push(Object.keys(properties).map((key) => properties[key]));
       });
       if (columns.length) {
-        const datasourceObj =
-          {
-            title: this.translate_(source.label),
-            table: {
-              columns,
-              data
-            }
-          };
+        const datasourceObj = {
+          title: this.translate_(source.label),
+          table: {
+            columns,
+            data,
+          },
+        };
         datasourceArr.push(datasourceObj);
       }
     });
     return datasourceArr;
   }
-
 
   /**
    * Get the optimal scale to display the print mask. Return the lowest scale if
@@ -1237,15 +1245,18 @@ export class PrintController {
   getOptimalScale_(mapSize, viewResolution) {
     const scales = this.layoutInfo.scales.slice();
     if (mapSize !== undefined && viewResolution !== undefined) {
-      const scale = this.ngeoPrintUtils_.getOptimalScale(mapSize, viewResolution,
-        this.paperSize_, scales.reverse());
+      const scale = this.ngeoPrintUtils_.getOptimalScale(
+        mapSize,
+        viewResolution,
+        this.paperSize_,
+        scales.reverse()
+      );
       if (scale > 0) {
         return scale;
       }
     }
     return this.layoutInfo.scales[this.layoutInfo.scales.length - 1];
   }
-
 
   /**
    * @param {angular.IHttpResponse<import('ngeo/print/mapfish-print-v3.js').MapFishPrintReportResponse>} resp
@@ -1268,21 +1279,18 @@ export class PrintController {
     }
   }
 
-
   /**
    * @param {string} ref Ref.
    * @private
    */
   getStatus_(ref) {
     this.requestCanceler_ = this.$q_.defer();
-    this.ngeoPrint_.getStatus(ref, {
-      timeout: this.requestCanceler_.promise
-    }).then(
-      this.handleGetStatusSuccess_.bind(this, ref),
-      this.handleCreateReportError_.bind(this)
-    );
+    this.ngeoPrint_
+      .getStatus(ref, {
+        timeout: this.requestCanceler_.promise,
+      })
+      .then(this.handleGetStatusSuccess_.bind(this, ref), this.handleCreateReportError_.bind(this));
   }
-
 
   /**
    * @param {string} ref Ref.
@@ -1304,12 +1312,15 @@ export class PrintController {
       }
     } else {
       // The report is not ready yet. Check again in 1s.
-      this.statusTimeoutPromise_ = this.$timeout_(() => {
-        this.getStatus_(ref);
-      }, 1000, false);
+      this.statusTimeoutPromise_ = this.$timeout_(
+        () => {
+          this.getStatus_(ref);
+        },
+        1000,
+        false
+      );
     }
   }
-
 
   /**
    * @private
@@ -1317,7 +1328,6 @@ export class PrintController {
   handleCreateReportError_() {
     this.resetPrintStates_(PrintStateEnum.ERROR_ON_REPORT);
   }
-
 
   /**
    * @param {number} scale The scale to get the legend (for wms layers only).
@@ -1355,7 +1365,7 @@ export class PrintController {
             if (url) {
               icon_dpi = {
                 url: url,
-                dpi: 72
+                dpi: 72,
               };
             }
           }
@@ -1363,7 +1373,7 @@ export class PrintController {
           if (icon_dpi) {
             classes.push({
               name: gettextCatalog.getString(layerName),
-              icons: [icon_dpi.url]
+              icons: [icon_dpi.url],
             });
           }
         } else {
@@ -1372,7 +1382,7 @@ export class PrintController {
             throw new Error('Wrong source type');
           }
           // For each name in a WMS layer.
-          const layerNames = /** @type {string} */(source.getParams().LAYERS).split(',');
+          const layerNames = /** @type {string} */ (source.getParams().LAYERS).split(',');
           layerNames.forEach((name) => {
             if (!this.map) {
               throw new Error('Missing map');
@@ -1383,11 +1393,19 @@ export class PrintController {
             let icon_dpi = this.getMetadataLegendImage_(name, dpi);
             const type = icon_dpi ? 'image' : source.serverType_;
             if (!icon_dpi) {
-              const url = this.ngeoLayerHelper_.getWMSLegendURL(source.getUrl(), name,
-                scale, undefined, undefined, undefined, source.serverType_, dpi,
+              const url = this.ngeoLayerHelper_.getWMSLegendURL(
+                source.getUrl(),
+                name,
+                scale,
+                undefined,
+                undefined,
+                undefined,
+                source.serverType_,
+                dpi,
                 this.gmfLegendOptions_.useBbox ? bbox : undefined,
                 this.map.getView().getProjection().getCode(),
-                this.gmfLegendOptions_.params[source.serverType_]);
+                this.gmfLegendOptions_.params[source.serverType_]
+              );
               if (!url) {
                 throw new Error('Missing url');
               }
@@ -1400,13 +1418,19 @@ export class PrintController {
             // Don't add classes without legend url or from layers without any
             // active name.
             if (icon_dpi && name.length !== 0) {
-              classes.push(Object.assign({
-                name: this.gmfLegendOptions_.label[type] === false ? '' :
-                  gettextCatalog.getString(name),
-                icons: [icon_dpi.url]
-              }, icon_dpi.dpi != 72 ? {
-                dpi: icon_dpi.dpi,
-              } : {}));
+              classes.push(
+                Object.assign(
+                  {
+                    name: this.gmfLegendOptions_.label[type] === false ? '' : gettextCatalog.getString(name),
+                    icons: [icon_dpi.url],
+                  },
+                  icon_dpi.dpi != 72
+                    ? {
+                        dpi: icon_dpi.dpi,
+                      }
+                    : {}
+                )
+              );
             }
           });
         }
@@ -1473,7 +1497,6 @@ export class PrintController {
     }
   }
 
-
   /**
    * Set the current layout and update all layout information with this new layout parameters.
    * @param {string} layoutName A layout name as existing in the list of
@@ -1491,7 +1514,6 @@ export class PrintController {
     this.layout_ = layout;
     this.updateFields_();
   }
-
 
   /**
    * Get or set the print scale value and adapt the zoom to match with this new scale.
@@ -1517,7 +1539,6 @@ export class PrintController {
     return this.layoutInfo.scale;
   }
 
-
   /**
    * Set the print dpi value.
    * @param {number} dpi A dpi value as existing in the dpis list field.
@@ -1526,7 +1547,6 @@ export class PrintController {
     this.layoutInfo.dpi = dpi;
   }
 
-
   /**
    * Check the current state of the print.
    * @param {string} stateEnumKey An enum key from import("gmf/print/component.js").default.PrintStateEnum.
@@ -1534,7 +1554,7 @@ export class PrintController {
    *     state. False otherwise.
    */
   isState(stateEnumKey) {
-    return this.gmfPrintState_.state === /** @type {Object<string, string>} */(PrintStateEnum)[stateEnumKey];
+    return this.gmfPrintState_.state === /** @type {Object<string, string>} */ (PrintStateEnum)[stateEnumKey];
   }
 
   /**
@@ -1546,6 +1566,5 @@ export class PrintController {
 }
 
 module.controller('GmfPrintController', PrintController);
-
 
 export default module;

@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 // Todo - use the 'Filter' theme instead if the 'Edit' theme
 import angular from 'angular';
 import appURL from './url.js';
@@ -46,7 +45,6 @@ import olView from 'ol/View.js';
 import olLayerTile from 'ol/layer/Tile.js';
 import olSourceOSM from 'ol/source/OSM.js';
 
-
 /**
  * @type {angular.IModule}
  * @hidden
@@ -65,7 +63,6 @@ const module = angular.module('gmfapp', [
   ngeoQueryComponent.name,
 ]);
 
-
 module.value('gmfTreeUrl', appURL.GMF_THEMES);
 module.value('authenticationBaseUrl', appURL.GMF_DEMO);
 module.value('gmfLayersUrl', appURL.GMF_LAYERS);
@@ -73,12 +70,10 @@ module.value('gmfLayersUrl', appURL.GMF_LAYERS);
 module.constant('defaultTheme', 'Filters');
 module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
-
 /**
  * @private
  */
 class MainController {
-
   /**
    * @param {angular.IScope} $scope Angular scope.
    * @param {import("gmf/datasource/Manager.js").DatasourceManager} gmfDataSourcesManager The gmf
@@ -91,10 +86,14 @@ class MainController {
    *    manager service.
    * @ngInject
    */
-  constructor($scope, gmfDataSourcesManager, gmfThemes, gmfTreeManager,
-    ngeoDataSources, ngeoToolActivateMgr
+  constructor(
+    $scope,
+    gmfDataSourcesManager,
+    gmfThemes,
+    gmfTreeManager,
+    ngeoDataSources,
+    ngeoToolActivateMgr
   ) {
-
     /**
      * @type {angular.IScope}
      * @private
@@ -114,15 +113,15 @@ class MainController {
     this.map = new olMap({
       layers: [
         new olLayerTile({
-          source: new olSourceOSM()
-        })
+          source: new olSourceOSM(),
+        }),
       ],
       view: new olView({
         projection: EPSG2056,
         resolutions: [200, 100, 50, 20, 10, 5, 2.5, 2, 1, 0.5],
         center: [2537635, 1152640],
-        zoom: 2
-      })
+        zoom: 2,
+      }),
     });
 
     // Init the datasources with our map.
@@ -150,42 +149,33 @@ class MainController {
      */
     this.filterSelectorActive = true;
 
-    const filterSelectorToolActivate = new ngeoMiscToolActivate(
-      this, 'filterSelectorActive');
-    ngeoToolActivateMgr.registerTool(
-      'dummyTools', filterSelectorToolActivate, true);
+    const filterSelectorToolActivate = new ngeoMiscToolActivate(this, 'filterSelectorActive');
+    ngeoToolActivateMgr.registerTool('dummyTools', filterSelectorToolActivate, true);
 
     /**
      * @type {boolean}
      */
     this.dummyActive = false;
 
-    const dummyToolActivate = new ngeoMiscToolActivate(
-      this, 'dummyActive');
-    ngeoToolActivateMgr.registerTool(
-      'dummyTools', dummyToolActivate, false);
+    const dummyToolActivate = new ngeoMiscToolActivate(this, 'dummyActive');
+    ngeoToolActivateMgr.registerTool('dummyTools', dummyToolActivate, false);
 
     /**
      * @type {boolean}
      */
     this.queryActive = true;
 
-    const queryToolActivate = new ngeoMiscToolActivate(
-      this, 'queryActive');
-    ngeoToolActivateMgr.registerTool(
-      this.toolGroup, queryToolActivate, true);
+    const queryToolActivate = new ngeoMiscToolActivate(this, 'queryActive');
+    ngeoToolActivateMgr.registerTool(this.toolGroup, queryToolActivate, true);
 
     // initialize tooltips
     $('[data-toggle="tooltip"]').tooltip({
       container: 'body',
-      trigger: 'hover'
+      trigger: 'hover',
     });
-
   }
 }
 
-
 module.controller('MainController', MainController);
-
 
 export default module;

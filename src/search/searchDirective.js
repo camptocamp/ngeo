@@ -19,9 +19,7 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
-
 
 /**
  * @typedef {Object} SearchDirectiveListeners
@@ -34,7 +32,6 @@ import angular from 'angular';
  * @property {function(JQueryEventObject, string): void} [change]
  * @template T
  */
-
 
 /**
  * Provides the "ngeoSearch" directive, which uses Twitter's
@@ -65,7 +62,6 @@ function searchComponent() {
      * @param {angular.IAttributes} attrs Attributes.
      */
     link: (scope, element, attrs) => {
-
       const typeaheadOptionsExpr = attrs.ngeoSearch;
       /** @type {Twitter.Typeahead.Options} */
       const typeaheadOptions = scope.$eval(typeaheadOptionsExpr);
@@ -83,8 +79,7 @@ function searchComponent() {
       /**
        * @type {SearchDirectiveListeners<T>}
        */
-      const typeaheadListeners = adaptListeners_(
-        typeaheadListeners_);
+      const typeaheadListeners = adaptListeners_(typeaheadListeners_);
 
       element.on('typeahead:open', () => {
         scope.$apply(() => {
@@ -98,7 +93,8 @@ function searchComponent() {
         });
       });
 
-      element.on('typeahead:cursorchange',
+      element.on(
+        'typeahead:cursorchange',
         /**
          * @param {JQueryEventObject} event Event.
          * @param {Object} suggestion Suggestion.
@@ -108,9 +104,11 @@ function searchComponent() {
           scope.$apply(() => {
             typeaheadListeners.cursorchange(event, suggestion, dataset);
           });
-        });
+        }
+      );
 
-      element.on('typeahead:select',
+      element.on(
+        'typeahead:select',
         /**
          * @param {JQueryEventObject} event Event.
          * @param {Object} suggestion Suggestion.
@@ -120,9 +118,11 @@ function searchComponent() {
           scope.$apply(() => {
             typeaheadListeners.select(event, suggestion, dataset);
           });
-        });
+        }
+      );
 
-      element.on('typeahead:autocomplete',
+      element.on(
+        'typeahead:autocomplete',
         /**
          * @param {JQueryEventObject} event Event.
          * @param {Object} suggestion Suggestion.
@@ -132,9 +132,11 @@ function searchComponent() {
           scope.$apply(() => {
             typeaheadListeners.autocomplete(event, suggestion, dataset);
           });
-        });
+        }
+      );
 
-      element.on('typeahead:asyncreceive',
+      element.on(
+        'typeahead:asyncreceive',
         /**
          * @param {JQueryEventObject} event Event.
          * @param {Twitter.Typeahead.Dataset<T>} dataset Dataset.
@@ -145,9 +147,11 @@ function searchComponent() {
             const empty = element.data('tt-typeahead').menu._allDatasetsEmpty();
             typeaheadListeners.datasetsempty(event, query, empty);
           });
-        });
+        }
+      );
 
-      element.on('typeahead:change',
+      element.on(
+        'typeahead:change',
         /**
          * @param {JQueryEventObject} event Event.
          */
@@ -156,7 +160,8 @@ function searchComponent() {
             const query = element.data('tt-typeahead').input.query;
             typeaheadListeners.change(event, query);
           });
-        });
+        }
+      );
 
       //show spinning gif while waiting for the results
       // on the closest span from the input in which it is being typed
@@ -172,10 +177,9 @@ function searchComponent() {
           element.parent().removeClass('search-loading');
         }, 50);
       });
-    }
+    },
   };
 }
-
 
 /**
  * Create a real SearchDirectiveListeners object out of the object
@@ -197,29 +201,21 @@ function adaptListeners_(object) {
       datasetsempty() {},
       select() {},
       autocomplete() {},
-      change() {}
+      change() {},
     };
   } else {
     typeaheadListeners = {
-      open: object.open !== undefined ?
-        object.open : () => {},
-      close: object.close !== undefined ?
-        object.close : () => {},
-      cursorchange: object.cursorchange !== undefined ?
-        object.cursorchange : () => {},
-      datasetsempty: object.datasetsempty !== undefined ?
-        object.datasetsempty : () => {},
-      select: object.select !== undefined ?
-        object.select : () => {},
-      autocomplete: object.autocomplete !== undefined ?
-        object.autocomplete : () => {},
-      change: object.change !== undefined ?
-        object.change : () => {}
+      open: object.open !== undefined ? object.open : () => {},
+      close: object.close !== undefined ? object.close : () => {},
+      cursorchange: object.cursorchange !== undefined ? object.cursorchange : () => {},
+      datasetsempty: object.datasetsempty !== undefined ? object.datasetsempty : () => {},
+      select: object.select !== undefined ? object.select : () => {},
+      autocomplete: object.autocomplete !== undefined ? object.autocomplete : () => {},
+      change: object.change !== undefined ? object.change : () => {},
     };
   }
   return typeaheadListeners;
 }
-
 
 /**
  * @type {angular.IModule}
@@ -227,9 +223,7 @@ function adaptListeners_(object) {
  */
 const module = angular.module('ngeoSearchDirective', []);
 
-
 // Register the directive in the module
 module.directive('ngeoSearch', searchComponent);
-
 
 export default module;

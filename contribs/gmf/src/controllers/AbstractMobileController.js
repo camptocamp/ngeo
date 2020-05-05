@@ -19,10 +19,11 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
-import gmfControllersAbstractAppController, {AbstractAppController, getLocationIcon}
-  from 'gmf/controllers/AbstractAppController.js';
+import gmfControllersAbstractAppController, {
+  AbstractAppController,
+  getLocationIcon,
+} from 'gmf/controllers/AbstractAppController.js';
 import gmfMobileMeasureModule from 'gmf/mobile/measure/module.js';
 import gmfMobileNavigationModule from 'gmf/mobile/navigation/module.js';
 import gmfQueryWindowComponent from 'gmf/query/windowComponent.js';
@@ -57,53 +58,55 @@ export class AbstractMobileController extends AbstractAppController {
    */
   constructor(config, $scope, $injector) {
     const viewConfig = {
-      projection: olProj.get(`EPSG:${config.srid || 2056}`)
+      projection: olProj.get(`EPSG:${config.srid || 2056}`),
     };
     Object.assign(viewConfig, config.mapViewConfig || {});
 
-    super(config, new olMap({
-      pixelRatio: config.mapPixelRatio,
-      layers: [],
-      view: new olView(viewConfig),
-      controls: config.mapControls || [
-        new olControlScaleLine(),
-        new olControlZoom({
-          zoomInTipLabel: '',
-          zoomOutTipLabel: ''
-        }),
-        new olControlRotate({
-          label: getLocationIcon(),
-          tipLabel: ''
-        })
-      ],
-      interactions:
-          config.mapInteractions ||
-          olInteraction.defaults({pinchRotate: true})
-    }), $scope, $injector);
-
+    super(
+      config,
+      new olMap({
+        pixelRatio: config.mapPixelRatio,
+        layers: [],
+        view: new olView(viewConfig),
+        controls: config.mapControls || [
+          new olControlScaleLine(),
+          new olControlZoom({
+            zoomInTipLabel: '',
+            zoomOutTipLabel: '',
+          }),
+          new olControlRotate({
+            label: getLocationIcon(),
+            tipLabel: '',
+          }),
+        ],
+        interactions: config.mapInteractions || olInteraction.defaults({pinchRotate: true}),
+      }),
+      $scope,
+      $injector
+    );
 
     /**
      * @type {import("ol/style/Style.js").default}
      */
     this.customMeasureStyle = new olStyleStyle({
       fill: new olStyleFill({
-        color: 'rgba(255, 128, 128, 0.2)'
+        color: 'rgba(255, 128, 128, 0.2)',
       }),
       stroke: new olStyleStroke({
         color: 'rgba(255, 0, 0, 0.5)',
         lineDash: [10, 10],
-        width: 2
+        width: 2,
       }),
       image: new olStyleRegularShape({
         stroke: new olStyleStroke({
           color: 'rgba(255, 0, 0, 0.7)',
-          width: 2
+          width: 2,
         }),
         points: 4,
         radius: 8,
         radius2: 0,
-        angle: 0
-      })
+        angle: 0,
+      }),
     });
 
     /**
@@ -130,18 +133,21 @@ export class AbstractMobileController extends AbstractAppController {
       },
       close: () => {
         this.searchOverlayVisible = false;
-      }
+      },
     };
 
     this.manageResize = true;
     this.resizeTransition = 500;
 
     // Close right nave on successful login.
-    $scope.$watch(() => this.gmfUser.username, (newVal) => {
-      if (newVal !== null && this.navIsVisible()) {
-        this.rightNavVisible = false;
+    $scope.$watch(
+      () => this.gmfUser.username,
+      (newVal) => {
+        if (newVal !== null && this.navIsVisible()) {
+          this.rightNavVisible = false;
+        }
       }
-    });
+    );
 
     /**
      * @const {string}
@@ -185,7 +191,7 @@ export class AbstractMobileController extends AbstractAppController {
     const navElements = document.getElementsByClassName('gmf-mobile-nav-button');
     // eslint-disable-next-line @typescript-eslint/prefer-for-of
     for (let i = 0; i < navElements.length; i++) {
-      const element = /** @type {HTMLElement} */(navElements[i]);
+      const element = /** @type {HTMLElement} */ (navElements[i]);
       if (element.dataset && element.dataset.target === target) {
         element.click();
       }
@@ -207,6 +213,5 @@ const module = angular.module('GmfAbstractMobileControllerModule', [
 module.controller('AbstractMobileController', AbstractMobileController);
 
 module.value('isMobile', true);
-
 
 export default module;

@@ -19,13 +19,11 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import {DEVICE_PIXEL_RATIO} from 'ol/has.js';
 import olSourceTileWMS from 'ol/source/TileWMS.js';
 import olSourceWMTS from 'ol/source/WMTS.js';
 import TilesDownloader from 'ngeo/offline/TilesDownloader.js';
 import angular from 'angular';
-
 
 /**
  * @param {import("ol/coordinate.js").Coordinate} a Some coordinates.
@@ -40,9 +38,7 @@ function magnitude2(a, b) {
   return magnitudeSquared;
 }
 
-
 const Downloader = class {
-
   /**
    * @ngInject
    * @param {import("ngeo/offline/Configuration.js").default} ngeoOfflineConfiguration
@@ -73,7 +69,7 @@ const Downloader = class {
    * @param {Array<import("./index.js").OfflineTile>} queue Queue of tiles to download.
    */
   queueLayerTiles_(layerMetadata, queue) {
-    const source = /** @type {olSourceTileWMS|olSourceWMTS} */(layerMetadata.source);
+    const source = /** @type {olSourceTileWMS|olSourceWMTS} */ (layerMetadata.source);
     const {map, extentByZoom} = layerMetadata;
 
     if (!source) {
@@ -120,8 +116,8 @@ const Downloader = class {
 
         if (url) {
           /**
-          * @type {import("./index.js").OfflineTile}
-          */
+           * @type {import("./index.js").OfflineTile}
+           */
           const tile = {coord, url, response: null};
           queueByZ.push(tile);
         }
@@ -173,7 +169,7 @@ const Downloader = class {
         key: this.configuration_.getLayerKey(layerItem),
       });
 
-      layerItem.extentByZoom.forEach(obj => {
+      layerItem.extentByZoom.forEach((obj) => {
         const zoom = obj.zoom;
         if (!zooms.includes(zoom)) {
           zooms.push(zoom);
@@ -187,7 +183,7 @@ const Downloader = class {
     const persistentObject = {
       extent: extent,
       layers: persistentLayers,
-      zooms: zooms.sort((a, b) => (a < b ? -1 : 1))
+      zooms: zooms.sort((a, b) => (a < b ? -1 : 1)),
     };
     const setOfflineContentPromise = this.configuration_.setItem('offline_content', persistentObject);
 
@@ -206,6 +202,5 @@ const name = 'offlineDownloader';
 Downloader.module = angular.module(name, []).service(name, Downloader);
 
 const exports = Downloader;
-
 
 export default exports;

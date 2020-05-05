@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 import ngeoDatasourceOGC from 'ngeo/datasource/OGC.js';
 import ngeoFilterRuleHelper from 'ngeo/filter/RuleHelper.js';
@@ -33,7 +32,6 @@ import {appendParams as olUriAppendParams} from 'ol/uri.js';
 import * as olExtent from 'ol/extent.js';
 import olSourceImageWMS from 'ol/source/ImageWMS.js';
 
-
 /**
  * A hash that contains 2 lists of queryable data sources: `wfs` and `wms`.
  * The same data source can only be in one of the two lists. The `wfs` list
@@ -45,7 +43,6 @@ import olSourceImageWMS from 'ol/source/ImageWMS.js';
  * @property {ngeoDatasourceOGC[]} wfs List of queryable data sources that support WFS.
  */
 
-
 /**
  * @typedef {Object} QuerentResultItem
  * @property {Array<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>} features
@@ -54,12 +51,10 @@ import olSourceImageWMS from 'ol/source/ImageWMS.js';
  * @property {number} [totalFeatureCount]
  */
 
-
 /**
  * Hash of features by data source ids.
  * @typedef {Object<number, QuerentResultItem>} QuerentResult
  */
-
 
 /**
  * The options to use when sending GetFeature/GetFeatureInfo requests using
@@ -103,12 +98,10 @@ import olSourceImageWMS from 'ol/source/ImageWMS.js';
  *    requests.
  */
 
-
 /**
  * @hidden
  */
 export class Querent {
-
   /**
    * The ngeo Querent is a service that issues all sorts of queries using
    * ngeo data sources. It does not store the result. Instead, it returns it
@@ -131,7 +124,6 @@ export class Querent {
    * @ngInject
    */
   constructor($http, $q, ngeoRuleHelper, ngeoWMSTime) {
-
     // === Injected properties ===
 
     /**
@@ -157,7 +149,6 @@ export class Querent {
      * @private
      */
     this.ngeoWMSTime_ = ngeoWMSTime;
-
 
     // === Other properties ===
 
@@ -185,7 +176,6 @@ export class Querent {
     this.wmtsGetCapabilitiesPromises_ = {};
   }
 
-
   // === PUBLIC methods ===
 
   /**
@@ -196,7 +186,6 @@ export class Querent {
    * @return {angular.IPromise<QuerentResult>} Promise.
    */
   issue(options) {
-
     const promises = [];
     const map = options.map;
 
@@ -244,10 +233,9 @@ export class Querent {
    * @return {QueryableDataSources} Queryable data sources.
    */
   getQueryableDataSources(dataSources, map) {
-
     const queryableDataSources = {
-      wfs: /** @type {ngeoDatasourceOGC[]} */([]),
-      wms: /** @type {ngeoDatasourceOGC[]} */([]),
+      wfs: /** @type {ngeoDatasourceOGC[]} */ ([]),
+      wms: /** @type {ngeoDatasourceOGC[]} */ ([]),
     };
     const resolution = map.getView().getResolution();
     if (resolution === undefined) {
@@ -255,7 +243,6 @@ export class Querent {
     }
 
     for (const dataSource of dataSources) {
-
       // (1) Skip data source that can't be queried
       if (!this.isDataSourceQueryable_(dataSource, resolution)) {
         continue;
@@ -293,7 +280,7 @@ export class Querent {
       'REQUEST': 'DescribeFeatureType',
       'SERVICE': 'WFS',
       'VERSION': '2.0.0',
-      'TYPENAME': wfsLayerNames
+      'TYPENAME': wfsLayerNames,
     });
 
     return this.http_.get(url).then((response) => {
@@ -308,7 +295,6 @@ export class Querent {
    * @return {?Object} Found WMS layer capability
    */
   wmsFindLayerCapability(layerCapabilities, layerName) {
-
     let found = null;
 
     for (const layerCapability of layerCapabilities) {
@@ -316,8 +302,7 @@ export class Querent {
         found = layerCapability;
         break;
       } else if (layerCapability.Layer) {
-        found = this.wmsFindLayerCapability(
-          layerCapability.Layer, layerName);
+        found = this.wmsFindLayerCapability(layerCapability.Layer, layerName);
         if (found) {
           break;
         }
@@ -335,13 +320,12 @@ export class Querent {
    * @return {angular.IPromise<Document|Element|string>} Promise.
    */
   wmsGetCapabilities(baseUrl, opt_cache) {
-
     const cache = opt_cache !== false;
 
     const params = {
       'REQUEST': 'GetCapabilities',
       'SERVICE': 'WMS',
-      'VERSION': '1.3.0'
+      'VERSION': '1.3.0',
     };
 
     const url = olUriAppendParams(baseUrl, params);
@@ -392,7 +376,6 @@ export class Querent {
    * @return {angular.IPromise<Object>} Promise.
    */
   wmtsGetCapabilities(url, opt_cache) {
-
     const cache = opt_cache !== false;
     let promise;
 
@@ -416,9 +399,7 @@ export class Querent {
     return promise;
   }
 
-
   // === PRIVATE methods ===
-
 
   /**
    * Handles the result of a single WMS GetFeatureInfo or WFS GetFeature
@@ -437,7 +418,6 @@ export class Querent {
     const hash = {};
 
     for (const dataSource of dataSources) {
-
       const dataSourceId = dataSource.id;
 
       if (typeof response === 'number') {
@@ -450,11 +430,13 @@ export class Querent {
           features,
           limit,
           tooManyFeatures,
-          totalFeatureCount
+          totalFeatureCount,
         };
       } else {
-        const features = dataSource instanceof ngeoDatasourceOGC ?
-          this.readAndTypeFeatures_(dataSource, response.data, wfs) : [];
+        const features =
+          dataSource instanceof ngeoDatasourceOGC
+            ? this.readAndTypeFeatures_(dataSource, response.data, wfs)
+            : [];
         this.setUniqueIds_(features, dataSource.id);
         hash[dataSourceId] = {
           features,
@@ -541,7 +523,7 @@ export class Querent {
     if (!types) {
       return [];
     }
-    return (Array.isArray(types)) ? types : [types];
+    return Array.isArray(types) ? types : [types];
   }
 
   /**
@@ -554,7 +536,6 @@ export class Querent {
    * @private
    */
   issueCombinedWFS_(combinedDataSources, options) {
-
     const promises = [];
 
     // The 'limit' option is mandatory in the querent service
@@ -584,10 +565,7 @@ export class Querent {
       const tolerancePx = options.tolerancePx;
       console.assert(tolerancePx);
       const tolerance = tolerancePx * resolution;
-      bbox = olExtent.buffer(
-        olExtent.createOrUpdateFromCoordinate(coordinate),
-        tolerance
-      );
+      bbox = olExtent.buffer(olExtent.createOrUpdateFromCoordinate(coordinate), tolerance);
     } else {
       bbox = options.extent;
     }
@@ -650,17 +628,16 @@ export class Querent {
             dataSource: dataSource,
             filter: options.filter,
             incDimensions: true,
-            incTime: true
+            incTime: true,
           });
-        } else if ((dataSource.filterRules && dataSource.filterRules.length) ||
-            dataSource.timeRangeValue ||
-            (dataSource.dimensionsFiltersConfig && Object.keys(
-              dataSource.dimensionsFiltersConfig
-            ).length > 0)) {
-
+        } else if (
+          (dataSource.filterRules && dataSource.filterRules.length) ||
+          dataSource.timeRangeValue ||
+          (dataSource.dimensionsFiltersConfig && Object.keys(dataSource.dimensionsFiltersConfig).length > 0)
+        ) {
           console.assert(
             dataSources.length === 1 ||
-            !(dataSource.timeRangeValue || (dataSource.filterRules && dataSource.filterRules.length)),
+              !(dataSource.timeRangeValue || (dataSource.filterRules && dataSource.filterRules.length)),
             `A data source having filterRules or timeRangeValue should issue
             a single query, alone.`
           );
@@ -669,7 +646,7 @@ export class Querent {
             dataSource: dataSource,
             incDimensions: true,
             incTime: true,
-            srsName: srsName
+            srsName: srsName,
           });
         }
 
@@ -710,9 +687,7 @@ export class Querent {
       //     an normal WFS GetFeature request.
       const getFeatureDefer = this.q_.defer();
       promises.push(
-        getFeatureDefer.promise.then(
-          this.handleQueryResult_.bind(this, dataSources, maxFeatures, true)
-        )
+        getFeatureDefer.promise.then(this.handleQueryResult_.bind(this, dataSources, maxFeatures, true))
       );
 
       // (4.1) Count, if required
@@ -722,34 +697,29 @@ export class Querent {
         /** @type {import('ol/format/WFS.js').WriteGetFeatureOptions} */
         const getCountOptions = Object.assign(
           {
-            resultType: 'hits'
+            resultType: 'hits',
           },
           getFeatureCommonOptions
         );
         const featureCountXml = wfsFormat.writeGetFeature(getCountOptions);
-        const featureCountRequest = xmlSerializer.serializeToString(
-          featureCountXml);
+        const featureCountRequest = xmlSerializer.serializeToString(featureCountXml);
         const canceler = this.registerCanceler_();
-        countPromise = this.http_.post(
-          url,
-          featureCountRequest,
-          {
+        countPromise = this.http_
+          .post(url, featureCountRequest, {
             params: params,
             headers: {'Content-Type': 'text/xml; charset=UTF-8'},
-            timeout: canceler.promise
-          }
-        ).then((response) => {
-          if (!dataSources[0].wfsFormat) {
-            throw new Error('Missing wfsFormat');
-          }
-          const meta = dataSources[0].wfsFormat.readFeatureCollectionMetadata(
-            response.data
-          );
-          if (!meta) {
-            throw new Error('Missing meta');
-          }
-          return meta.numberOfFeatures;
-        });
+            timeout: canceler.promise,
+          })
+          .then((response) => {
+            if (!dataSources[0].wfsFormat) {
+              throw new Error('Missing wfsFormat');
+            }
+            const meta = dataSources[0].wfsFormat.readFeatureCollectionMetadata(response.data);
+            if (!meta) {
+              throw new Error('Missing meta');
+            }
+            return meta.numberOfFeatures;
+          });
       } else {
         countPromise = this.q_.resolve();
       }
@@ -763,11 +733,10 @@ export class Querent {
         // `true` is returned if a count request was made AND there would
         // be too many features.
         if (numberOfFeatures === undefined || numberOfFeatures < maxFeatures) {
-
           /** @type {import('ol/format/WFS.js').WriteGetFeatureOptions} */
           const getFeatureOptions = Object.assign(
             {
-              maxFeatures
+              maxFeatures,
             },
             getFeatureCommonOptions
           );
@@ -777,18 +746,15 @@ export class Querent {
             throw new Error('Wrong URL type');
           }
           const canceler = this.registerCanceler_();
-          this.http_.post(
-            url,
-            featureRequest,
-            {
+          this.http_
+            .post(url, featureRequest, {
               params: params,
               headers: {'Content-Type': 'text/xml; charset=UTF-8'},
-              timeout: canceler.promise
-            }
-          ).then((response) => {
-            getFeatureDefer.resolve(response);
-          });
-
+              timeout: canceler.promise,
+            })
+            .then((response) => {
+              getFeatureDefer.resolve(response);
+            });
         } else {
           getFeatureDefer.resolve(numberOfFeatures);
         }
@@ -810,7 +776,6 @@ export class Querent {
    * @private
    */
   issueCombinedWMS_(combinedDataSources, options) {
-
     /** @type {angular.IPromise<QuerentResult>[]} */
     const promises = [];
 
@@ -834,7 +799,6 @@ export class Querent {
 
     // (2) Launch one request per combinaison of data sources
     for (const dataSources of combinedDataSources) {
-
       let url;
       /** @type {string[]} */
       let LAYERS = [];
@@ -847,7 +811,6 @@ export class Querent {
 
       // (3) Build query options
       for (const dataSource of dataSources) {
-
         // (a) Create common options, if not done yet
         if (!INFO_FORMAT) {
           INFO_FORMAT = dataSource.wmsInfoFormat;
@@ -875,7 +838,7 @@ export class Querent {
           filtrableLayerName = dataSource.getFiltrableWFSLayerName();
           filterString = this.ngeoRuleHelper_.createFilterString({
             dataSource: dataSource,
-            srsName: projCode
+            srsName: projCode,
           });
         }
 
@@ -886,7 +849,7 @@ export class Querent {
           console.assert(dataSources.length === 1);
           params.TIME = this.ngeoWMSTime_.formatWMSTimeParam(
             dataSource.timeProperty,
-            /** @type {import('ngeo/datasource/OGC.js').TimeRange} */ (dataSource.timeRangeValue),
+            /** @type {import('ngeo/datasource/OGC.js').TimeRange} */ (dataSource.timeRangeValue)
           );
         }
       }
@@ -928,28 +891,25 @@ export class Querent {
       });
 
       // (4) Build query url, then launch
-      const wmsGetFeatureInfoUrl = wmsSource.getFeatureInfoUrl(
-        coordinate, resolution, projCode, {
-          // Without extern, quoting is necessary
-          'FEATURE_COUNT': FEATURE_COUNT,
-          'INFO_FORMAT': INFO_FORMAT
-        }
-      );
+      const wmsGetFeatureInfoUrl = wmsSource.getFeatureInfoUrl(coordinate, resolution, projCode, {
+        // Without extern, quoting is necessary
+        'FEATURE_COUNT': FEATURE_COUNT,
+        'INFO_FORMAT': INFO_FORMAT,
+      });
       if (!wmsGetFeatureInfoUrl) {
         throw new Error('Missing wmsGetFeatureInfoUrl');
       }
 
       const canceler = this.registerCanceler_();
       promises.push(
-        this.http_.get(
-          wmsGetFeatureInfoUrl,
-          {
-            timeout: canceler.promise
-          }
-        ).then(
-          /** @type {function(angular.IHttpResponse<Document|Element|string>|number): QuerentResult} */
-          (this.handleQueryResult_.bind(this, dataSources, FEATURE_COUNT, false))
-        )
+        this.http_
+          .get(wmsGetFeatureInfoUrl, {
+            timeout: canceler.promise,
+          })
+          .then(
+            /** @type {function(angular.IHttpResponse<Document|Element|string>|number): QuerentResult} */
+            (this.handleQueryResult_.bind(this, dataSources, FEATURE_COUNT, false))
+          )
       );
     }
 
@@ -1081,7 +1041,6 @@ export class Querent {
   }
 }
 
-
 /**
  * Handles the response of multiple promises that did either
  * WMS GetFeatureInfo or WFS GetFeature requests, in which the result is
@@ -1110,21 +1069,15 @@ function handleCombinedQueryResult_(response) {
   return combinedHash;
 }
 
-
 /**
  * @typedef {ngeoDatasourceOGC[][]} CombinedDataSources
  */
-
 
 /**
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoQuerent', [
-  ngeoFilterRuleHelper.name,
-  ngeoMiscWMSTime.name,
-]);
+const module = angular.module('ngeoQuerent', [ngeoFilterRuleHelper.name, ngeoMiscWMSTime.name]);
 module.service('ngeoQuerent', Querent);
-
 
 export default module;

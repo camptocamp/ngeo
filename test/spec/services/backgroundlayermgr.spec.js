@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 import olCollection from 'ol/Collection.js';
 import olMap from 'ol/Map.js';
@@ -45,7 +44,6 @@ describe('ngeo.map.BackgroundLayerMgr', () => {
   });
 
   describe('#set', () => {
-
     it('sets the background layer #1', () => {
       const layer = new olLayerTile();
       ngeoBackgroundLayerMgr.set(map, layer);
@@ -141,11 +139,9 @@ describe('ngeo.map.BackgroundLayerMgr', () => {
       const bgGroup = ngeoLayerHelper.getGroupFromMap(map, BACKGROUNDLAYERGROUP_NAME);
       expect(bgGroup.getLayers().getLength()).toBe(0);
     });
-
   });
 
   describe('#get', () => {
-
     it('returns `null` if no background layer', () => {
       const layer = ngeoBackgroundLayerMgr.get(map);
       expect(layer).toBe(null);
@@ -172,5 +168,4 @@ describe('ngeo.map.BackgroundLayerMgr', () => {
       expect(layer).toBe(opacityBgLayer);
     });
   });
-
 });

@@ -19,24 +19,19 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import {setGeometryType} from 'ngeo/format/Attribute.js';
 import ngeoFormatAttributeType from 'ngeo/format/AttributeType.js';
 import {FormatNumberType} from 'ngeo/format/XSDAttribute.js';
-
 
 /**
  * @hidden
  */
 export default class {
-
-
   /**
    * A format that reads the complexType from a WFS DescribeFeatureType
    * response for a single set of attributes and return an array of
    * `Attribute`.
    */
-
 
   /**
    * @param {Object[]} complexTypeElements Complex type element
@@ -46,14 +41,12 @@ export default class {
     return complexTypeElements.map(this.readFromComplexTypeElement_);
   }
 
-
   /**
    * @param {Object} object Complex type element
    * @return {import('ngeo/format/Attribute.js').Attribute} Attribute
    * @private
    */
   readFromComplexTypeElement_(object) {
-
     const name = object.name;
     const alias = object.alias || null;
     const required = object.minOccurs != '0';
@@ -62,7 +55,7 @@ export default class {
     const attribute = {
       name,
       alias,
-      required
+      required,
     };
 
     const type = object.type;
@@ -89,5 +82,4 @@ export default class {
 
     return attribute;
   }
-
 }

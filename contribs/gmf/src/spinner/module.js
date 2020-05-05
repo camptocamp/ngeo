@@ -19,15 +19,12 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 import gmfSpinnerDirective from 'gmf/spinner/directive.js';
 
 import './loader.scss';
 
-const module = angular.module('gmfSpinnerModule', [
-  gmfSpinnerDirective.name,
-]);
+const module = angular.module('gmfSpinnerModule', [gmfSpinnerDirective.name]);
 
 /**
  * @type {angular.IModule}

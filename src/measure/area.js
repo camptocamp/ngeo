@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 import ngeoDrawController from 'ngeo/draw/Controller.js';
 import ngeoGeometryType from 'ngeo/GeometryType.js';
@@ -27,15 +26,11 @@ import ngeoInteractionMeasureArea from 'ngeo/interaction/MeasureArea.js';
 import {listen} from 'ol/events.js';
 import olStyleStyle from 'ol/style/Style.js';
 
-
 /**
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoMeasurearea', [
-  ngeoDrawController.name
-]);
-
+const module = angular.module('ngeoMeasurearea', [ngeoDrawController.name]);
 
 /**
  * @param {angular.ICompileService} $compile Angular compile service.
@@ -63,8 +58,9 @@ function measureAreaComponent($compile, gettextCatalog, $filter, $injector) {
       }
 
       const helpMsg = gettextCatalog.getString('Click to start drawing polygon');
-      const contMsg = gettextCatalog.getString('Click to continue drawing<br>' +
-          'Double-click or click starting point to finish');
+      const contMsg = gettextCatalog.getString(
+        'Click to continue drawing<br>' + 'Double-click or click starting point to finish'
+      );
 
       /** @type {import('ngeo/interaction/Measure.js').MeasureOptions} */
       const options = {
@@ -78,25 +74,23 @@ function measureAreaComponent($compile, gettextCatalog, $filter, $injector) {
       const measureArea = new ngeoInteractionMeasureArea($filter('ngeoUnitPrefix'), gettextCatalog, options);
 
       if (drawFeatureCtrl.uid) {
-        measureArea.set(
-          'ngeo-interaction-draw-uid',
-          `${drawFeatureCtrl.uid}-area`
-        );
+        measureArea.set('ngeo-interaction-draw-uid', `${drawFeatureCtrl.uid}-area`);
       }
 
       drawFeatureCtrl.registerInteraction(measureArea);
       drawFeatureCtrl.measureArea = measureArea;
 
-      listen(measureArea, 'measureend', drawFeatureCtrl.handleDrawEnd.bind(
-        drawFeatureCtrl, ngeoGeometryType.POLYGON
-      ), drawFeatureCtrl);
+      listen(
+        measureArea,
+        'measureend',
+        drawFeatureCtrl.handleDrawEnd.bind(drawFeatureCtrl, ngeoGeometryType.POLYGON),
+        drawFeatureCtrl
+      );
       listen(measureArea, 'change:active', drawFeatureCtrl.handleActiveChange, drawFeatureCtrl);
-    }
+    },
   };
 }
 
-
 module.directive('ngeoMeasurearea', measureAreaComponent);
-
 
 export default module;

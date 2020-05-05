@@ -19,12 +19,10 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 import gmfPermalinkShareService, {URL_MAX_LEN, URL_PATH_MAX_LEN} from 'gmf/permalink/ShareService.js';
 import ngeoStatemanagerLocation from 'ngeo/statemanager/Location.js';
 import {getUid as olUtilGetUid} from 'ol/util.js';
-
 
 /**
  * @type {angular.IModule}
@@ -35,7 +33,6 @@ const module = angular.module('gmfPermalinkShareComponent', [
   ngeoStatemanagerLocation.name,
 ]);
 
-
 module.run(
   /**
    * @ngInject
@@ -44,20 +41,20 @@ module.run(
   ($templateCache) => {
     // @ts-ignore: webpack
     $templateCache.put('gmf/permalink/shareComponent', require('./shareComponent.html'));
-  });
+  }
+);
 
-
-module.value('gmfPermalinkShareTemplateUrl',
+module.value(
+  'gmfPermalinkShareTemplateUrl',
   /**
    * @param {angular.IAttributes} $attrs Attributes.
    * @return {string} The template url.
    */
   ($attrs) => {
     const templateUrl = $attrs.gmfPermalinkShareTemplateUrl;
-    return templateUrl !== undefined ? templateUrl :
-      'gmf/permalink/shareComponent';
-  });
-
+    return templateUrl !== undefined ? templateUrl : 'gmf/permalink/shareComponent';
+  }
+);
 
 /**
  * @param {angular.IAttributes} $attrs Attributes.
@@ -71,7 +68,6 @@ function gmfPermalinkShareTemplateUrl($attrs, gmfPermalinkShareTemplateUrl) {
   return gmfPermalinkShareTemplateUrl($attrs);
 }
 
-
 /**
  * Component to display a shortened permalink and share it by email Example:
  *
@@ -84,13 +80,12 @@ function gmfPermalinkShareTemplateUrl($attrs, gmfPermalinkShareTemplateUrl) {
  */
 const permalinkShareComponent = {
   bindings: {
-    'enableEmail': '<gmfShareEmail'
+    'enableEmail': '<gmfShareEmail',
   },
   controller: 'GmfShareController',
-  templateUrl: gmfPermalinkShareTemplateUrl
+  templateUrl: gmfPermalinkShareTemplateUrl,
 };
 module.component('gmfShare', permalinkShareComponent);
-
 
 /**
  * @private
@@ -111,7 +106,6 @@ class ShareComponentController {
    * @ngname GmfShareController
    */
   constructor($scope, ngeoLocation, gmfShareService, $q, $attrs) {
-
     /**
      * @type {string}
      */
@@ -174,8 +168,7 @@ class ShareComponentController {
     /**
      * @type {boolean}
      */
-    this.showLengthWarning = this.permalink_.length > URL_MAX_LEN ||
-      path.length > URL_PATH_MAX_LEN;
+    this.showLengthWarning = this.permalink_.length > URL_MAX_LEN || path.length > URL_PATH_MAX_LEN;
 
     /**
      * @type {boolean}
@@ -204,40 +197,42 @@ class ShareComponentController {
    * Get the short version of the permalink if the email is not provided
    */
   getShortUrl() {
-    this.$q_.when(this.gmfShareService_.getShortUrl(this.permalink_))
-      .then((resp) => {
-        this.shortLink = /** @type {angular.IHttpResponse<{short_url: string}>} */(resp).data.short_url;
+    this.$q_.when(this.gmfShareService_.getShortUrl(this.permalink_)).then(
+      (resp) => {
+        this.shortLink = /** @type {angular.IHttpResponse<{short_url: string}>} */ (resp).data.short_url;
         this.errorOnGetShortUrl = false;
-      }, (resp) => {
+      },
+      (resp) => {
         this.shortLink = this.permalink_;
         this.errorOnGetShortUrl = true;
-      });
+      }
+    );
   }
 
   /**
    * Send the short version of the permalink if the email is provided
    */
   sendShortUrl() {
-
     this.errorOnsend = false;
     this.successfullySent = false;
     this.isFinishedState = false;
 
     // @ts-ignore: scope...
     if (this.$scope_.gmfShareForm.$valid) {
-      this.$q_.when(this.gmfShareService_.sendShortUrl(this.permalink_, this.email, this.message))
-        .then((resp) => {
+      this.$q_.when(this.gmfShareService_.sendShortUrl(this.permalink_, this.email, this.message)).then(
+        (resp) => {
           this.successfullySent = true;
           this.isFinishedState = true;
-        }, (resp) => {
+        },
+        (resp) => {
           this.errorOnsend = true;
           this.isFinishedState = true;
-        });
+        }
+      );
     }
   }
 }
 
 module.controller('GmfShareController', ShareComponentController);
-
 
 export default module;

@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 import 'angular-dynamic-locale';
 import gmfContextualdataComponent from 'gmf/contextualdata/component.js';
@@ -30,7 +29,6 @@ import gmfPermalinkModule from 'gmf/permalink/module.js';
 import gmfPrintComponent from 'gmf/print/component.js';
 import gmfProfileModule from 'gmf/profile/module.js';
 import gmfQueryExtraModule from 'gmf/query/extraModule.js';
-
 
 /**
  * @type {angular.IModule}
@@ -56,7 +54,8 @@ beforeEach(() => {
   appModule.constant('angularLocaleScript', 'http://fake');
   appModule.constant('gmfLayersUrl', 'https://fake');
 
-  angular.mock.module('gmfapp',
+  angular.mock.module(
+    'gmfapp',
     /**
      * @param {angular.IModule} $provide
      */
@@ -68,5 +67,6 @@ beforeEach(() => {
       $provide.value('gmfContextualdatacontentTemplateUrl', 'contextualdata.html');
       $provide.value('defaultTheme', 'Demo');
       $provide.value('gmfAuthenticationConfig', {});
-    });
+    }
+  );
 });

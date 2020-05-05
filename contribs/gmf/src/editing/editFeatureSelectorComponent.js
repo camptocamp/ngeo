@@ -19,14 +19,12 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 
 import gmfEditingEditFeatureComponent, {EditingState} from 'gmf/editing/editFeatureComponent.js';
 
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
 import gmfThemeThemes from 'gmf/theme/Themes.js';
-
 
 /**
  * @type {angular.IModule}
@@ -38,7 +36,6 @@ const module = angular.module('GmfEditingFeatureSelectorComponent', [
   gmfThemeThemes.name,
 ]);
 
-
 module.run(
   /**
    * @ngInject
@@ -47,10 +44,11 @@ module.run(
   ($templateCache) => {
     $templateCache.put(
       // @ts-ignore: webpack
-      'gmf/editing/editFeatureSelectorComponent', require('./editFeatureSelectorComponent.html')
+      'gmf/editing/editFeatureSelectorComponent',
+      require('./editFeatureSelectorComponent.html')
     );
-  });
-
+  }
+);
 
 /**
  * Directive that uses the GMF Theme service to collect the editable layers
@@ -93,16 +91,14 @@ function editingEditFeatureComponent() {
       'tolerance': '<?gmfEditfeatureselectorTolerance',
       'vectorLayer': '<gmfEditfeatureselectorVector',
       'selectedEditableTreeCtrl': '=?gmfEditfeatureselectorTree',
-      'closeAfterSave': '=?gmfEditfeatureselectorCloseaftersave'
+      'closeAfterSave': '=?gmfEditfeatureselectorCloseaftersave',
     },
     bindToController: true,
-    templateUrl: 'gmf/editing/editFeatureSelectorComponent'
+    templateUrl: 'gmf/editing/editFeatureSelectorComponent',
   };
 }
 
-
 module.directive('gmfEditfeatureselector', editingEditFeatureComponent);
-
 
 /**
  * @param {angular.IScope} $scope Angular scope.
@@ -118,7 +114,6 @@ module.directive('gmfEditfeatureselector', editingEditFeatureComponent);
  * @ngname GmfEditfeatureselectorController
  */
 function Controller($scope, $timeout, gmfThemes, gmfTreeManager) {
-
   // === Directive options ===
 
   /**
@@ -126,10 +121,7 @@ function Controller($scope, $timeout, gmfThemes, gmfTreeManager) {
    */
   this.active = this.active === true;
 
-  $scope.$watch(
-    () => this.active,
-    this.handleActiveChange_.bind(this)
-  );
+  $scope.$watch(() => this.active, this.handleActiveChange_.bind(this));
 
   /**
    * @type {?import("ol/Map.js").default}
@@ -192,7 +184,7 @@ function Controller($scope, $timeout, gmfThemes, gmfTreeManager) {
         editables.length = 0;
         if (this.gmfTreeManager_.rootCtrl) {
           this.gmfTreeManager_.rootCtrl.traverseDepthFirst((treeCtrl) => {
-            const gmfLayer = /** @type {import('gmf/themes.js').GmfLayer} */(treeCtrl.node);
+            const gmfLayer = /** @type {import('gmf/themes.js').GmfLayer} */ (treeCtrl.node);
             if (gmfLayer.editable) {
               editables.push(treeCtrl);
             }
@@ -212,7 +204,6 @@ function Controller($scope, $timeout, gmfThemes, gmfTreeManager) {
     }
     return [];
   }, updateEditableTreeCtrls);
-
 
   // === Other inner properties ===
 
@@ -256,8 +247,7 @@ function Controller($scope, $timeout, gmfThemes, gmfTreeManager) {
   $scope.$watch(
     () => this.state,
     (newValue, oldValue) => {
-      if (newValue === EditingState.STOP_EDITING_EXECUTE ||
-          newValue === EditingState.DEACTIVATE_EXECUTE) {
+      if (newValue === EditingState.STOP_EDITING_EXECUTE || newValue === EditingState.DEACTIVATE_EXECUTE) {
         this.selectedEditableTreeCtrl = null;
       }
       if (newValue === EditingState.DEACTIVATE_EXECUTE) {
@@ -267,19 +257,16 @@ function Controller($scope, $timeout, gmfThemes, gmfTreeManager) {
   );
 
   $scope.$on('$destroy', this.handleDestroy_.bind(this));
-
 }
-
 
 /**
  * Called when the 'stop editing' button is clicked. Set the 'state'
  * variable to 'pending' allow the editfeature directive to check if it can
  * stop or if it requires confirmation due to unsaved modifications.
  */
-Controller.prototype.stopEditing = function() {
+Controller.prototype.stopEditing = function () {
   this.state = EditingState.STOP_EDITING_PENDING;
 };
-
 
 /**
  * Called when the active property of the this directive changes. Manage
@@ -287,7 +274,7 @@ Controller.prototype.stopEditing = function() {
  * @param {boolean} active Whether the directive is active or not.
  * @private
  */
-Controller.prototype.handleActiveChange_ = function(active) {
+Controller.prototype.handleActiveChange_ = function (active) {
   if (!active) {
     if (!this.dirty) {
       this.stopEditing();
@@ -305,16 +292,13 @@ Controller.prototype.handleActiveChange_ = function(active) {
   }
 };
 
-
 /**
  * @private
  */
-Controller.prototype.handleDestroy_ = function() {
+Controller.prototype.handleDestroy_ = function () {
   this.treeCtrlsWatcherUnregister_();
 };
 
-
 module.controller('GmfEditfeatureselectorController', Controller);
-
 
 export default module;

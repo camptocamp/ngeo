@@ -19,9 +19,7 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import EPSG2056 from '@geoblocks/proj/src/EPSG_2056.js';
-
 
 /**
  * @typedef {Object} APIConfig
@@ -34,7 +32,7 @@ import EPSG2056 from '@geoblocks/proj/src/EPSG_2056.js';
  * @property {string[]} queryableLayers
  */
 
-export default /** @type {APIConfig} */({
+export default /** @type {APIConfig} */ ({
   // The URL to the themes service.
   themesUrl: 'https://www.example.com',
   localeUrl: undefined,
@@ -56,5 +54,5 @@ export default /** @type {APIConfig} */({
   backgroundLayer: 'OSM map',
 
   // The list of layers (names) that can be queried on mouse click
-  queryableLayers: ['osm_open', 'many_attributes', 'polygon']
+  queryableLayers: ['osm_open', 'many_attributes', 'polygon'],
 });

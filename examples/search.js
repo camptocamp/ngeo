@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 import {SEARCH} from './url.js';
 import './search.css';
@@ -36,33 +35,25 @@ import olSourceOSM from 'ol/source/OSM.js';
 import olSourceVector from 'ol/source/Vector.js';
 import SimpleGeometry from 'ol/geom/SimpleGeometry.js';
 
-
 /** @type {angular.IModule} **/
-const module = angular.module('app', [
-  'gettext',
-  ngeoMapModule.name,
-  ngeoSearchModule.name
-]);
-
+const module = angular.module('app', ['gettext', ngeoMapModule.name, ngeoSearchModule.name]);
 
 /**
  * @type {angular.IComponentOptions}
  */
 const searchComponent = {
   bindings: {
-    'map': '=appSearchMap'
+    'map': '=appSearchMap',
   },
   controller: 'AppSearchController',
   template:
-      '<input type="text" placeholder="search…" ' +
-      'ngeo-search="$ctrl.options" ' +
-      'ngeo-search-datasets="$ctrl.datasets" ' +
-      'ngeo-search-listeners="$ctrl.listeners">'
+    '<input type="text" placeholder="search…" ' +
+    'ngeo-search="$ctrl.options" ' +
+    'ngeo-search-datasets="$ctrl.datasets" ' +
+    'ngeo-search-listeners="$ctrl.listeners">',
 };
 
-
 module.component('appSearch', searchComponent);
-
 
 /**
  * @constructor
@@ -80,7 +71,6 @@ function SearchController($element, $rootScope, $compile, ngeoSearchCreateGeoJSO
    */
   this.$element = $element;
 
-
   /**
    * @type {?import("ol/Map.js").default}
    */
@@ -93,8 +83,7 @@ function SearchController($element, $rootScope, $compile, ngeoSearchCreateGeoJSO
   this.vectorLayer_ = this.createVectorLayer_();
 
   /** @type {Bloodhound<*>} */
-  const bloodhoundEngine = this.createAndInitBloodhound_(
-    ngeoSearchCreateGeoJSONBloodhound);
+  const bloodhoundEngine = this.createAndInitBloodhound_(ngeoSearchCreateGeoJSONBloodhound);
 
   /**
    * @type {Twitter.Typeahead.Options}
@@ -102,44 +91,40 @@ function SearchController($element, $rootScope, $compile, ngeoSearchCreateGeoJSO
   this.options = /** @type {Twitter.Typeahead.Options} */ ({
     highlight: true,
     hint: undefined,
-    minLength: undefined
+    minLength: undefined,
   });
 
   /**
    * @type {Array<Twitter.Typeahead.Dataset<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>>}
    */
-  this.datasets = [{
-    source: bloodhoundEngine.ttAdapter(),
-    display: (suggestion) => {
-      const feature = /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>} */ (
-        suggestion
-      );
-      return feature.get('label');
+  this.datasets = [
+    {
+      source: bloodhoundEngine.ttAdapter(),
+      display: (suggestion) => {
+        const feature = /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>} */ (suggestion);
+        return feature.get('label');
+      },
+      templates: {
+        header: () => '<div class="ngeo-header">Addresses</div>',
+        suggestion: (suggestion) => {
+          const feature = /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>} */ (suggestion);
+
+          // A scope for the ng-click on the suggestion's « i » button.
+          const scope = $rootScope.$new(true);
+          // @ts-ignore: scope...
+          scope.feature = feature;
+          // @ts-ignore: scope...
+          scope.click = function (event) {
+            window.alert(feature.get('label'));
+            event.stopPropagation();
+          };
+
+          const html = `<p>${feature.get('label')}<button ng-click="click($event)">i</button></p>`;
+          return $compile(html)(scope).html();
+        },
+      },
     },
-    templates: {
-      header: () => '<div class="ngeo-header">Addresses</div>',
-      suggestion: (suggestion) => {
-        const feature =
-          /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>} */ (
-            suggestion
-          );
-
-        // A scope for the ng-click on the suggestion's « i » button.
-        const scope = $rootScope.$new(true);
-        // @ts-ignore: scope...
-        scope.feature = feature;
-        // @ts-ignore: scope...
-        scope.click = function(event) {
-          window.alert(feature.get('label'));
-          event.stopPropagation();
-        };
-
-        const html = `<p>${feature.get('label')
-        }<button ng-click="click($event)">i</button></p>`;
-        return $compile(html)(scope).html();
-      }
-    }
-  }];
+  ];
 
   /**
    * @type {import('ngeo/search/searchDirective.js').SearchDirectiveListeners<*>}
@@ -149,9 +134,7 @@ function SearchController($element, $rootScope, $compile, ngeoSearchCreateGeoJSO
       if (!this.map) {
         throw new Error('Missing map');
       }
-      const feature = /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>} */ (
-        suggestion
-      );
+      const feature = /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>} */ (suggestion);
       const featureGeometry = feature.getGeometry();
       if (!(featureGeometry instanceof SimpleGeometry)) {
         throw new Error('Missing Wrong geometry type');
@@ -168,16 +151,15 @@ function SearchController($element, $rootScope, $compile, ngeoSearchCreateGeoJSO
       source.addFeature(feature);
       this.map.getView().fit(featureGeometry, {
         size: size,
-        maxZoom: 16
+        maxZoom: 16,
       });
-    }
+    },
   };
 }
 
-
 /**
  */
-SearchController.prototype.$onInit = function() {
+SearchController.prototype.$onInit = function () {
   // Empty the search field on focus and blur.
   const input = this.$element.find('input');
   input.on('focus blur', () => {
@@ -185,17 +167,16 @@ SearchController.prototype.$onInit = function() {
   });
 };
 
-
 /**
  * @return {import("ol/layer/Vector.js").default} The vector layer.
  * @private
  */
-SearchController.prototype.createVectorLayer_ = function() {
+SearchController.prototype.createVectorLayer_ = function () {
   if (!this.map) {
     throw new Error('Missing map');
   }
   const vectorLayer = new olLayerVector({
-    source: new olSourceVector()
+    source: new olSourceVector(),
   });
   // Use vectorLayer.setMap(map) rather than map.addLayer(vectorLayer). This
   // makes the vector layer "unmanaged", meaning that it is always on top.
@@ -203,23 +184,20 @@ SearchController.prototype.createVectorLayer_ = function() {
   return vectorLayer;
 };
 
-
 /**
  * @param {import("ngeo/search/createGeoJSONBloodhound.js").createGeoJSONBloodhound} ngeoSearchCreateGeoJSONBloodhound
  *    The ngeo create GeoJSON Bloodhound service.
  * @return {Bloodhound<*>} The bloodhound engine.
  * @private
  */
-SearchController.prototype.createAndInitBloodhound_ = function(ngeoSearchCreateGeoJSONBloodhound) {
+SearchController.prototype.createAndInitBloodhound_ = function (ngeoSearchCreateGeoJSONBloodhound) {
   const url = SEARCH;
   const bloodhound = ngeoSearchCreateGeoJSONBloodhound(url, undefined, olProj.get('EPSG:3857'), EPSG2056);
   bloodhound.initialize();
   return bloodhound;
 };
 
-
 module.controller('AppSearchController', SearchController);
-
 
 /**
  * @constructor
@@ -232,19 +210,16 @@ function MainController() {
   this.map = new olMap({
     layers: [
       new olLayerTile({
-        source: new olSourceOSM()
-      })
+        source: new olSourceOSM(),
+      }),
     ],
     view: new olView({
       center: [0, 0],
-      zoom: 4
-    })
+      zoom: 4,
+    }),
   });
-
 }
 
-
 module.controller('MainController', MainController);
-
 
 export default module;

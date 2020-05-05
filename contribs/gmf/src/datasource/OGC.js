@@ -19,9 +19,7 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import ngeoDatasourceOGC from 'ngeo/datasource/OGC.js';
-
 
 /**
  * The options required to create a `gmf.datasource.OGC`.
@@ -98,13 +96,11 @@ import ngeoDatasourceOGC from 'ngeo/datasource/OGC.js';
  * @property {boolean} [visible=false] (DataSourceOptions)
  */
 
-
 /**
  * @private
  * @hidden
  */
 class GmfDatasourceOGC extends ngeoDatasourceOGC {
-
   /**
    * A `gmf.datasource.OGC` extends a `ngeo.datasource.OGC` and
    * adds some properties that are proper to GMF only.
@@ -112,7 +108,6 @@ class GmfDatasourceOGC extends ngeoDatasourceOGC {
    * @param {OGCOptions} options Options.
    */
   constructor(options) {
-
     super(options);
 
     // === STATIC properties (i.e. that never change) ===
@@ -122,7 +117,6 @@ class GmfDatasourceOGC extends ngeoDatasourceOGC {
      * @private
      */
     this.gmfLayer_ = options.gmfLayer;
-
   }
 
   // === Static property getters/setters ===
@@ -133,7 +127,6 @@ class GmfDatasourceOGC extends ngeoDatasourceOGC {
   get gmfLayer() {
     return this.gmfLayer_;
   }
-
 }
 
 export default GmfDatasourceOGC;

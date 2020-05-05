@@ -19,9 +19,7 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import ngeoDatasourceGroup from 'ngeo/datasource/Group.js';
-
 
 /**
  * The options required to create a `OGCGroup`.
@@ -33,19 +31,16 @@ import ngeoDatasourceGroup from 'ngeo/datasource/Group.js';
  * @property {string} title (GroupOptions)
  */
 
-
 /**
  * @hidden
  */
 export default class extends ngeoDatasourceGroup {
-
   /**
    * A OGCGroup data source combines multiple `ngeo.datasource.OGC` objects.
    *
    * @param {OGCGroupOptions} options Options.
    */
   constructor(options) {
-
     super(options);
 
     /**

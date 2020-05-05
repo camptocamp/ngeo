@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import {getDefaultDrawStyleFunction} from 'ngeo/interaction/common.js';
 import ngeoCustomEvent from 'ngeo/CustomEvent.js';
 import {listen, unlistenByKey} from 'ol/events.js';
@@ -33,7 +32,6 @@ import olInteractionInteraction from 'ol/interaction/Interaction.js';
 import olLayerVector from 'ol/layer/Vector.js';
 import olSourceVector from 'ol/source/Vector.js';
 
-
 /**
  * MobileDraw Interaction.
  *
@@ -44,7 +42,6 @@ import olSourceVector from 'ol/source/Vector.js';
  * @property {import("ol/geom/GeometryType.js").default} type Drawing type ('Point' or 'LineString'.
  * @property {boolean} [wrapX] Wrap the world horizontally on the sketch overlay. Default is `false`.
  */
-
 
 /**
  * Interaction for drawing feature geometries from a mobile device using the
@@ -64,7 +61,7 @@ export default class extends olInteractionInteraction {
    */
   constructor(options) {
     super({
-      handleEvent: TRUE
+      handleEvent: TRUE,
     });
 
     /**
@@ -88,9 +85,7 @@ export default class extends olInteractionInteraction {
      * @type {number}
      * @private
      */
-    this.minPoints_ = options.minPoints ?
-      options.minPoints :
-      (this.type_ === 'Polygon' ? 3 : 2);
+    this.minPoints_ = options.minPoints ? options.minPoints : this.type_ === 'Polygon' ? 3 : 2;
 
     /**
      * Sketch feature.
@@ -121,11 +116,11 @@ export default class extends olInteractionInteraction {
     this.overlay_ = new olLayerVector({
       source: new olSourceVector({
         useSpatialIndex: false,
-        wrapX: options.wrapX ? options.wrapX : false
+        wrapX: options.wrapX ? options.wrapX : false,
       }),
       style: options.style || getDefaultDrawStyleFunction(),
       updateWhileAnimating: true,
-      updateWhileInteracting: true
+      updateWhileInteracting: true,
     });
 
     listen(this, 'change:active', this.updateState_, this);
@@ -157,7 +152,6 @@ export default class extends olInteractionInteraction {
 
   // === PUBLIC METHODS - PROPERTY GETTERS ===
 
-
   /**
    * Return whether the interaction is currently dirty. It is if the sketch
    * feature has its geometry last coordinate set to the center without the
@@ -166,8 +160,7 @@ export default class extends olInteractionInteraction {
    * @observable
    */
   getDirty() {
-    return /** @type {boolean} */ (
-      this.get('dirty'));
+    return /** @type {boolean} */ (this.get('dirty'));
   }
 
   /**
@@ -176,8 +169,7 @@ export default class extends olInteractionInteraction {
    * @observable
    */
   getDrawing() {
-    return /** @type {boolean} */ (
-      this.get('drawing'));
+    return /** @type {boolean} */ (this.get('drawing'));
   }
 
   /**
@@ -188,8 +180,7 @@ export default class extends olInteractionInteraction {
    * @observable
    */
   getValid() {
-    return /** @type {boolean} */ (
-      this.get('valid'));
+    return /** @type {boolean} */ (this.get('valid'));
   }
 
   /**
@@ -201,7 +192,6 @@ export default class extends olInteractionInteraction {
   }
 
   // === PUBLIC METHODS ===
-
 
   /**
    * Add current sketch point to sketch feature if the latter exists, else create
@@ -263,12 +253,9 @@ export default class extends olInteractionInteraction {
       if (!this.sketchFeature_) {
         coordinates = [coordinate.slice(), coordinate.slice(), coordinate.slice()];
         this.sketchFeature_ = new olFeature(new olGeomPolygon([coordinates]));
-        const event = new ngeoCustomEvent(
-          'drawstart',
-          {
-            feature: this.sketchFeature_
-          }
-        );
+        const event = new ngeoCustomEvent('drawstart', {
+          feature: this.sketchFeature_,
+        });
         this.dispatchEvent(event);
       } else {
         sketchFeatureGeom = this.sketchFeature_.getGeometry();
@@ -342,7 +329,6 @@ export default class extends olInteractionInteraction {
 
   // === PRIVATE METHODS ===
 
-
   /**
    * Start drawing by adding the sketch point first.
    * @private
@@ -404,8 +390,9 @@ export default class extends olInteractionInteraction {
     if (sketchFeature || this.sketchPoints_.length > 0) {
       this.sketchFeature_ = null;
       this.sketchPoint_ = null;
-      /** @type {olSourceVector<import("ol/geom/Geometry.js").default>} */(this.overlay_.getSource())
-        .clear(true);
+      /** @type {olSourceVector<import("ol/geom/Geometry.js").default>} */ (this.overlay_.getSource()).clear(
+        true
+      );
     }
     this.sketchPoints_ = [];
     this.set('dirty', false);
@@ -478,9 +465,7 @@ export default class extends olInteractionInteraction {
     if (this.sketchPoint_) {
       sketchFeatures.push(this.sketchPoint_);
     }
-    const overlaySource = /** @type {olSourceVector<import("ol/geom/Geometry.js").default>} */(
-      this.overlay_.getSource()
-    );
+    const overlaySource = /** @type {olSourceVector<import("ol/geom/Geometry.js").default>} */ (this.overlay_.getSource());
     overlaySource.clear(true);
     overlaySource.addFeatures(sketchFeatures);
     overlaySource.addFeatures(this.sketchPoints_);

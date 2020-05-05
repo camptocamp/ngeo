@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 import {getUid as olUtilGetUid} from 'ol/util.js';
 import {listen} from 'ol/events.js';
@@ -36,7 +35,6 @@ const module = angular.module('ngeoAttributes', [
   ngeoMiscEventHelper.name,
 ]);
 
-
 module.run(
   /**
    * @ngInject
@@ -45,19 +43,20 @@ module.run(
   ($templateCache) => {
     // @ts-ignore: webpack
     $templateCache.put('ngeo/editing/attributescomponent', require('./attributescomponent.html'));
-  });
+  }
+);
 
-
-module.value('ngeoAttributesTemplateUrl',
+module.value(
+  'ngeoAttributesTemplateUrl',
   /**
    * @param {angular.IAttributes} $attrs Attributes.
    * @return {string} The template url.
    */
   ($attrs) => {
     const templateUrl = $attrs.ngeoAttributesTemplateUrl;
-    return templateUrl !== undefined ? templateUrl :
-      'ngeo/editing/attributescomponent';
-  });
+    return templateUrl !== undefined ? templateUrl : 'ngeo/editing/attributescomponent';
+  }
+);
 
 /**
  * @param {angular.IAttributes} $attrs Attributes.
@@ -70,7 +69,6 @@ module.value('ngeoAttributesTemplateUrl',
 function ngeoAttributesTemplateUrl($attrs, ngeoAttributesTemplateUrl) {
   return ngeoAttributesTemplateUrl($attrs);
 }
-
 
 /**
  * Component used to render the attributes of a feature into a form.
@@ -96,16 +94,15 @@ const editingAttributeComponent = {
   bindings: {
     'attributes': '=ngeoAttributesAttributes',
     'disabled': '<ngeoAttributesDisabled',
-    'feature': '=ngeoAttributesFeature'
+    'feature': '=ngeoAttributesFeature',
   },
   require: {
-    'form': '^'
+    'form': '^',
   },
-  templateUrl: ngeoAttributesTemplateUrl
+  templateUrl: ngeoAttributesTemplateUrl,
 };
 
 module.component('ngeoAttributes', editingAttributeComponent);
-
 
 /**
  * @param {angular.IScope} $scope Angular scope.
@@ -118,7 +115,6 @@ module.component('ngeoAttributes', editingAttributeComponent);
  * @ngname ngeoAttributesController
  */
 function Controller($scope, ngeoEventHelper) {
-
   /**
    * The list of attributes to create the form with.
    * @type {Array<import('ngeo/format/Attribute.js').Attribute>}
@@ -169,11 +165,10 @@ function Controller($scope, ngeoEventHelper) {
   this.updating_ = false;
 }
 
-
 /**
  * Initialise the component.
  */
-Controller.prototype.$onInit = function() {
+Controller.prototype.$onInit = function () {
   if (!this.feature) {
     throw new Error('Missing feature');
   }
@@ -187,12 +182,11 @@ Controller.prototype.$onInit = function() {
   );
 };
 
-
 /**
  * Called when an input node value changes
  * @param {string} name Attribute name
  */
-Controller.prototype.handleInputChange = function(name) {
+Controller.prototype.handleInputChange = function (name) {
   if (!this.properties) {
     throw new Error('Missing properties');
   }
@@ -205,21 +199,19 @@ Controller.prototype.handleInputChange = function(name) {
   this.updating_ = false;
 };
 
-
 /**
  * Cleanup event listeners.
  */
-Controller.prototype.$onDestroy = function() {
+Controller.prototype.$onDestroy = function () {
   const uid = olUtilGetUid(this);
   this.ngeoEventHelper_.clearListenerKey(uid);
 };
-
 
 /**
  * @param {Event|import('ol/events/Event.js').default} evt Event.
  * @private
  */
-Controller.prototype.handleFeaturePropertyChange_ = function(evt) {
+Controller.prototype.handleFeaturePropertyChange_ = function (evt) {
   if (evt instanceof ObjectEvent) {
     if (this.updating_) {
       return;
@@ -229,8 +221,6 @@ Controller.prototype.handleFeaturePropertyChange_ = function(evt) {
   }
 };
 
-
 module.controller('ngeoAttributesController', Controller);
-
 
 export default module;

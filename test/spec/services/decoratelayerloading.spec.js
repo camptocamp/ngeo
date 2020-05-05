@@ -19,21 +19,21 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 import {layerLoading} from 'ngeo/misc/decorate.js';
 import olLayerImage from 'ol/layer/Image.js';
 import olLayerGroup from 'ol/layer/Group.js';
 import olSourceImage from 'ol/source/Image.js';
 
-
 describe('ngeo.misc.DecorateLayerLoading test suite', () => {
   /** @type {angular.IScope} */
   let scope;
 
-  beforeEach(angular.mock.inject(($rootScope) => {
-    scope = $rootScope.$new();
-  }));
+  beforeEach(
+    angular.mock.inject(($rootScope) => {
+      scope = $rootScope.$new();
+    })
+  );
 
   it('should increment layerLoadingCount recursively', () => {
     const imageSource = new olSourceImage({

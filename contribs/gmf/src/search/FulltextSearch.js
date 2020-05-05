@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import angular from 'angular';
 import {encodeQueryString, decodeQueryString} from 'ngeo/utils.js';
 
@@ -33,7 +32,6 @@ import {encodeQueryString, decodeQueryString} from 'ngeo/utils.js';
  * @hidden
  */
 export function FulltextSearchService($injector, $http) {
-
   /**
    * @type {angular.IHttpService}
    * @private
@@ -53,7 +51,7 @@ export function FulltextSearchService($injector, $http) {
    */
   this.baseUrl_ = url[0];
 
-  const queryString = (url.length == 2) ? `?${url[1]}` : '';
+  const queryString = url.length == 2 ? `?${url[1]}` : '';
   /**
    * @type {Object<string, string>}
    * @private
@@ -67,7 +65,7 @@ export function FulltextSearchService($injector, $http) {
  * @param {Object<string, string>} params Additional parameters.
  * @return {Promise} Request promise with data array.
  */
-FulltextSearchService.prototype.search = function(query, params) {
+FulltextSearchService.prototype.search = function (query, params) {
   const queryParams = Object.assign({}, this.defaultParams_, params);
 
   queryParams['query'] = query;
@@ -75,8 +73,9 @@ FulltextSearchService.prototype.search = function(query, params) {
   const url = `${this.baseUrl_}?${encodeQueryString(queryParams)}`;
 
   return new Promise((resolve, reject) => {
-    this.$http_.get(url)
-      .then(resp => resolve(resp['data']))
+    this.$http_
+      .get(url)
+      .then((resp) => resolve(resp['data']))
       .catch(reject);
   });
 };
@@ -87,6 +86,5 @@ FulltextSearchService.prototype.search = function(query, params) {
  */
 const module = angular.module('gmfSearchFulltextSearch', []);
 module.service('gmfSearchFulltextSearch', FulltextSearchService);
-
 
 export default module;

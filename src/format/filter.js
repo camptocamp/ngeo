@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 /**
  * @module ngeo.format.filter
  */
@@ -31,7 +30,6 @@ import olFormatFilterComparison from 'ol/format/filter/Comparison.js';
  * suitable for QGIS server that does not support `<During>`.
  */
 class DateIsBetween extends olFormatFilterComparison {
-
   /**
    * @param {!string} propertyName Name of the context property to compare.
    * @param {!string} lowerBoundary The lower bound of the range.
@@ -51,7 +49,6 @@ class DateIsBetween extends olFormatFilterComparison {
     this.upperBoundary = upperBoundary;
   }
 }
-
 
 /**
  * Creates a `<PropertyIsBetween>` comparison operator to test whether an expression
