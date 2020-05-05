@@ -105,7 +105,7 @@
     "jquery-ui-touch-punch": "0.2.3",
     "jsdoc": "3.6.4",
     "jsdoc-plugin-typescript": "2.0.5",
-    "jsts": "2.2.1",
+    "jsts": "2.2.2",
     "karma": "5.0.4",
     "karma-chrome-launcher": "3.1.0",
     "karma-jasmine": "3.1.1",
