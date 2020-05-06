@@ -12,24 +12,18 @@ update_configs:
     directory: /
     update_schedule: live
     target_branch: "2.5"
-    automerged_updates:
-      - match:
-          update_type: all
     allowed_updates:
       - match:
           update_type: security
-          dependency_type: indirect
+          dependency_type: all
   - package_manager: javascript
     directory: /
     update_schedule: live
     target_branch: "2.4"
-    automerged_updates:
-      - match:
-          update_type: all
     allowed_updates:
       - match:
           update_type: security
-          dependency_type: indirect
+          dependency_type: all
 
   - package_manager: python
     directory: /
@@ -47,21 +41,15 @@ update_configs:
     directory: /
     update_schedule: live
     target_branch: "2.5"
-    automerged_updates:
-      - match:
-          update_type: all
     allowed_updates:
       - match:
           update_type: security
-          dependency_type: indirect
+          dependency_type: all
   - package_manager: python
     directory: /
     update_schedule: live
     target_branch: "2.4"
-    automerged_updates:
-      - match:
-          update_type: all
     allowed_updates:
       - match:
           update_type: security
-          dependency_type: indirect
+          dependency_type: all
