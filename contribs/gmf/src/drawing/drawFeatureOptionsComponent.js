@@ -383,7 +383,9 @@ class DrawFeatureOptionsController {
       if (lineStringGeometry instanceof OLGeomLineString) {
         const coordinates = lineStringGeometry.getCoordinates();
         const center = coordinates[this.verticesCounter_ - 2];
-        snapGeometry = new OLGeomCircle(center, lengthMeters);
+        if (center) {
+          snapGeometry = new OLGeomCircle(center, lengthMeters);
+        }
       }
     } else if (this.measureArea && this.verticesCounter_ !== 2) {
       // Area, i.e. Polygon
@@ -391,7 +393,9 @@ class DrawFeatureOptionsController {
       if (polygonGeometry instanceof OLGeomPolygon) {
         const coordinates = polygonGeometry.getCoordinates()[0];
         const center = coordinates[this.verticesCounter_ - 3];
-        snapGeometry = new OLGeomCircle(center, lengthMeters);
+        if (center) {
+          snapGeometry = new OLGeomCircle(center, lengthMeters);
+        }
       }
     } else if (this.measureAzimut) {
       // Azimut, i.e. Circle
