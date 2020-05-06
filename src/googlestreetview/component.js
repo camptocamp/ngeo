@@ -348,7 +348,7 @@ class GoogleStreetviewController {
    */
   handleStreetViewServiceGetPanorama_(data, status) {
     if (!data) {
-      throw new Error('Missing data');
+      return;
     }
     if (!data.location) {
       throw new Error('Missing data.location');
