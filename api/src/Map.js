@@ -270,6 +270,9 @@ class Map {
         }
         const extent = olExtentCreateEmpty();
         for (const feature of features) {
+          if (highlight) {
+            feature.setStyle(createDefaultStyle);
+          }
           const geom = feature.getGeometry();
           if (geom) {
             olExtentExtend(extent, geom.getExtent());
