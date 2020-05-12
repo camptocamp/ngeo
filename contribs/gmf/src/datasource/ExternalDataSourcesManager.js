@@ -412,8 +412,8 @@ export class ExternalDatSourcesManager {
       dataSource = this.extDataSources_[id];
     } else {
 
-      const name = typeof layer['Title'];
-      const wmtsLayer = typeof layer['Identifier'];
+      const name = layer['Title'];
+      const wmtsLayer = layer['Identifier'];
 
       // TODO - MaxScaleDenominator
       // TODO - MinScaleDenominator
