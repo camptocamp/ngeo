@@ -1,0 +1,14 @@
+Error on backporting to branch master, error on cherry picking ['74dd173e0079deb2c1db920022d50c8af26742cd']:
+error: could not apply 74dd173e0... Remove typecheck to show wmts layer name
+hint: after resolving the conflicts, mark the corrected paths
+hint: with 'git add <paths>' or 'git rm <paths>'
+hint: and commit the result with 'git commit'
+
+
+
+to continue do:
+git fetch
+git checkout backport/5812-to-master
+git reset --hard HEAD^
+git cherry-pick 74dd173e0079deb2c1db920022d50c8af26742cd
+git push origin backport/5812-to-master --force
