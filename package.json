@@ -115,7 +115,7 @@
     "loader-utils": "2.0.0",
     "localforage": "1.7.3",
     "ls": "0.2.1",
-    "moment": "2.25.3",
+    "moment": "2.26.0",
     "node-sass": "4.14.1",
     "node-sass-importer": "1.0.0",
     "ol": "6.3.1",
