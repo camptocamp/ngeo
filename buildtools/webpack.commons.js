@@ -142,6 +142,7 @@ module.exports = function (config) {
         plugins: [
           require.resolve('@babel/plugin-syntax-object-rest-spread'),
           require.resolve('@babel/plugin-transform-spread'),
+          require.resolve('@babel/plugin-proposal-class-properties'),
         ],
       },
     },

@@ -32,6 +32,7 @@
   },
   "devDependencies": {
     "@babel/core": "7.9.6",
+    "@babel/plugin-proposal-class-properties": "7.8.3",
     "@babel/plugin-syntax-object-rest-spread": "7.8.3",
     "@babel/plugin-transform-spread": "7.8.3",
     "@babel/preset-env": "7.9.6",
@@ -105,7 +106,7 @@
     "jquery-ui-touch-punch": "0.2.3",
     "jsdoc": "3.6.4",
     "jsdoc-plugin-typescript": "2.0.5",
-    "jsts": "2.2.2",
+    "jsts": "2.2.3",
     "karma": "5.0.9",
     "karma-chrome-launcher": "3.1.0",
     "karma-jasmine": "3.1.1",
