@@ -19,6 +19,8 @@ then
   exit
 fi
 
+cp -r api/dist api/dist_
+
 # Cloning gh-pages into a local temporary directory
 git fetch origin
 git checkout -b gh-pages origin/gh-pages
@@ -29,7 +31,7 @@ mkdir -p ${GIT_BRANCH}/examples
 cp -r .build/examples-hosted/* ${GIT_BRANCH}/examples/
 cp -r apidoc ${GIT_BRANCH}/
 cp -r jsdoc/build ${GIT_BRANCH}/jsdoc
-cp -r api/dist ${GIT_BRANCH}/api
+cp -r api/dist_ ${GIT_BRANCH}/api
 
 # Rewrite root commit and force push
 FIRST_COMMIT=$(git log --format='%H' | tail -1)
