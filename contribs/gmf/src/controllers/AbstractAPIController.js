@@ -79,6 +79,7 @@ export class AbstractAPIController extends AbstractAppController {
       interactions:
         config.mapInteractions ||
         interactionsDefaults({
+          dragPan: false,
           pinchRotate: true,
           altShiftDragRotate: true,
         }),
