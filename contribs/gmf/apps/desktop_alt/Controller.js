@@ -91,7 +91,7 @@ class Controller extends AbstractDesktopController {
      */
     this.elevationLayersConfig = {};
 
-    this.layertreeOptions = {"legendIcon": {"width": 60, "height": 60}};
+    this.layertreeOptions = {"legendIcon": {"width": 20, "height": 20}};
 
     /**
      * @type {Object<string, import('gmf/profile/component.js').ProfileLineConfiguration>}
