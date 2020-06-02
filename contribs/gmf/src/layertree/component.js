@@ -156,6 +156,7 @@ function gmfLayertreeTemplate($element, $attrs, gmfLayertreeTemplate) {
  * @htmlAttribute {Object<string, string>|undefined} gmf-layertree-dimensions Global dimensions object.
  * @htmlAttribute {boolean|undefined} gmf-layertree-openlinksinnewwindow if true, open
  *     metadataURLs in a new window. Otherwise open them in a popup.
+ * @htmlAttribute {Object<>} gmf-layer-tree-options Configuration for legendIcons
  *
  * @ngdoc component
  * @ngname gmfLayertreeComponent
@@ -166,6 +167,7 @@ const layertreeComponent = {
     'map': '=gmfLayertreeMap',
     'dimensions': '=?gmfLayertreeDimensions',
     'openLinksInNewWindow': '<?gmfLayertreeOpenlinksinnewwindow',
+    'layertreeOptions': '=gmfLayertreeOptions'
   },
   template: gmfLayertreeTemplate
 };
@@ -210,6 +212,7 @@ function Controller($element, $scope, ngeoLayerHelper,
    * @type {?Object<string, string>}
    */
   this.dimensions;
+
 
   /**
    * @type {!angular.IScope}
@@ -293,6 +296,10 @@ function Controller($element, $scope, ngeoLayerHelper,
    */
   this.gmfThemes_ = gmfThemes;
 
+  this.legendIconWidth = 20;
+  this.legendIconHeight = 20;
+
+
   // enter digest cycle on node collapse
   $element.on('shown.bs.collapse', () => {
     this.scope_.$apply();
@@ -306,6 +313,8 @@ function Controller($element, $scope, ngeoLayerHelper,
 Controller.prototype.$onInit = function() {
   this.openLinksInNewWindow = this.openLinksInNewWindow === true;
   this.dataLayerGroup_ = this.layerHelper_.getGroupFromMap(this.map, DATALAYERGROUP_NAME);
+
+  this.setLegendOptions();
 
   ngeoMiscSyncArrays(this.dataLayerGroup_.getLayers().getArray(), this.layers, true, this.scope_, () => true);
 
@@ -527,7 +536,7 @@ Controller.prototype.getLegendIconURL = function(treeCtrl) {
   const layerName = gmfLayerWMS.layers.split(',')[0];
   const gmfOgcServer = this.gmfTreeManager_.getOgcServer(treeCtrl);
   return this.layerHelper_.getWMSLegendURL(
-    gmfOgcServer.url, layerName, undefined, legendRule, 20, 20
+    gmfOgcServer.url, layerName, undefined, legendRule, this.legendIconWidth, this.legendIconHeight
   );
 };
 
@@ -812,6 +821,23 @@ Controller.prototype.supportsOpacityChange = function(treeCtrl) {
       )
     );
 };
+
+Controller.prototype.setLegendOptions = function() {
+  if(this.layertreeOptions) {
+    if(!this.layertreeOptions.legendIcon || this.layertreeOptions.legendIcon.width === "auto") {
+      this.legendIconWidth = undefined;
+    } else {
+      this.legendIconWidth = this.layertreeOptions.legendIcon.width;
+    }
+
+    if(!this.layertreeOptions.legendIcon || this.layertreeOptions.legendIcon.height === "auto") 
+    {
+      this.legendIconHeight = undefined;
+    } else {
+      this.legendIconHeight = this.layertreeOptions.legendIcon.height;
+    }
+  } 
+}
 
 module.controller('GmfLayertreeController', Controller);
 
