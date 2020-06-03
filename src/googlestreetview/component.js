@@ -347,19 +347,22 @@ class GoogleStreetviewController {
    * @private
    */
   handleStreetViewServiceGetPanorama_(data, status) {
-    if (!data) {
-      return;
-    }
-    if (!data.location) {
-      throw new Error('Missing data.location');
-    }
-    if (!data.location.latLng) {
-      throw new Error('Missing data.location.latLng');
-    }
+    
     const panorama = this.panorama_;
 
     if (status === google.maps.StreetViewStatus.OK) {
       this.noDataAtLocation = false;
+
+      if (!data) {
+        return;
+      }
+      if (!data.location) {
+        throw new Error('Missing data.location');
+      }
+      if (!data.location.latLng) {
+        throw new Error('Missing data.location.latLng');
+      }
+
       panorama.setPosition(data.location.latLng);
     } else {
       this.noDataAtLocation = true;
