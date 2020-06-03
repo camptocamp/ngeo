@@ -28,6 +28,7 @@ import Icon from 'ol/style/Icon.js';
 import Raven from 'raven-js/src/raven.js';
 import RavenPluginsAngular from 'raven-js/plugins/angular.js';
 
+
 if (!window.requestAnimationFrame) {
   alert('Your browser is not supported, please update it or use another one. You will be redirected.\n\n'
     + 'Votre navigateur n\'est pas supporté, veuillez le mettre à jour ou en utiliser un autre. '
@@ -91,7 +92,6 @@ class Controller extends AbstractDesktopController {
      */
     this.elevationLayersConfig = {};
 
-    this.layertreeOptions = {"legendIcon": {"width": 20, "height": 20}};
 
     /**
      * @type {Object<string, import('gmf/profile/component.js').ProfileLineConfiguration>}
@@ -194,6 +194,7 @@ const module = angular.module('Appdesktop_alt', [
 
 module.controller('AlternativeDesktopController', Controller);
 
+module.value('gmfLayertreeOptions', {'legendIcon': {'width': '30', 'height': '30'}});
 
 module.value('gmfPermalinkOptions', /** @type {import('gmf/permalink/Permalink.js').PermalinkOptions} */ ({
   crosshairStyle: [

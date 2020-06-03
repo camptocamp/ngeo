@@ -28,6 +28,17 @@ import olSourceWMTS from 'ol/source/WMTS.js';
 
 import 'bootstrap/js/src/collapse.js';
 
+/**
+ * Definition of the icon size asked to the mapserver
+ * @typedef {Object} LegendIcon
+ * @property {number} width
+ * @property {number} height
+ */
+
+/**
+ * @typedef {Object} GmfLayetreeOptions
+ * @property {!LegendIcon} legendIcon
+ */
 
 /**
  * Static function to create a popup with an iframe.
@@ -156,7 +167,6 @@ function gmfLayertreeTemplate($element, $attrs, gmfLayertreeTemplate) {
  * @htmlAttribute {Object<string, string>|undefined} gmf-layertree-dimensions Global dimensions object.
  * @htmlAttribute {boolean|undefined} gmf-layertree-openlinksinnewwindow if true, open
  *     metadataURLs in a new window. Otherwise open them in a popup.
- * @htmlAttribute {Object<>} gmf-layer-tree-options Configuration for legendIcons
  *
  * @ngdoc component
  * @ngname gmfLayertreeComponent
@@ -166,8 +176,7 @@ const layertreeComponent = {
   bindings: {
     'map': '=gmfLayertreeMap',
     'dimensions': '=?gmfLayertreeDimensions',
-    'openLinksInNewWindow': '<?gmfLayertreeOpenlinksinnewwindow',
-    'layertreeOptions': '=gmfLayertreeOptions'
+    'openLinksInNewWindow': '<?gmfLayertreeOpenlinksinnewwindow'
   },
   template: gmfLayertreeTemplate
 };
@@ -192,6 +201,7 @@ module.component('gmfLayertree', layertreeComponent);
  *    gmfSyncLayertreeMap service.
  * @param {!import("ngeo/misc/WMSTime.js").WMSTime} ngeoWMSTime wms time service.
  * @param {!import("gmf/theme/Themes.js").ThemesService} gmfThemes The gmf Themes service.
+ * @param {angular.auto.IInjectorService} $injector Main injector.
  * @constructor
  * @private
  * @hidden
@@ -201,7 +211,7 @@ module.component('gmfLayertree', layertreeComponent);
  */
 function Controller($element, $scope, ngeoLayerHelper,
   gmfDataSourceBeingFiltered, gmfExternalDataSourcesManager, gmfPermalink,
-  gmfTreeManager, gmfSyncLayertreeMap, ngeoWMSTime, gmfThemes) {
+  gmfTreeManager, gmfSyncLayertreeMap, ngeoWMSTime, gmfThemes, $injector) {
 
   /**
    * @type {?import("ol/Map.js").default}
@@ -296,9 +306,12 @@ function Controller($element, $scope, ngeoLayerHelper,
    */
   this.gmfThemes_ = gmfThemes;
 
-  this.legendIconWidth = 20;
-  this.legendIconHeight = 20;
-
+  /**
+   * @type {GmfLayetreeOptions}
+   */
+  this.layertreeOptions = $injector.has('gmfLayertreeOptions')
+    ? $injector.get('gmfLayertreeOptions')
+    : {'legendIcon': {'width': 20, 'height': 20}};
 
   // enter digest cycle on node collapse
   $element.on('shown.bs.collapse', () => {
@@ -823,21 +836,20 @@ Controller.prototype.supportsOpacityChange = function(treeCtrl) {
 };
 
 Controller.prototype.setLegendOptions = function() {
-  if(this.layertreeOptions) {
-    if(!this.layertreeOptions.legendIcon || this.layertreeOptions.legendIcon.width === "auto") {
+  if (this.layertreeOptions) {
+    if (!this.layertreeOptions.legendIcon || this.layertreeOptions.legendIcon.width === 'auto') {
       this.legendIconWidth = undefined;
     } else {
       this.legendIconWidth = this.layertreeOptions.legendIcon.width;
     }
 
-    if(!this.layertreeOptions.legendIcon || this.layertreeOptions.legendIcon.height === "auto") 
-    {
+    if (!this.layertreeOptions.legendIcon || this.layertreeOptions.legendIcon.height === 'auto') {
       this.legendIconHeight = undefined;
     } else {
       this.legendIconHeight = this.layertreeOptions.legendIcon.height;
     }
-  } 
-}
+  }
+};
 
 module.controller('GmfLayertreeController', Controller);
 
