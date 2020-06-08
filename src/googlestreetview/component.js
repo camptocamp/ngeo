@@ -347,7 +347,6 @@ class GoogleStreetviewController {
    * @private
    */
   handleStreetViewServiceGetPanorama_(data, status) {
-    
     const panorama = this.panorama_;
 
     if (status === google.maps.StreetViewStatus.OK) {
