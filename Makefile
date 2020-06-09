@@ -89,6 +89,7 @@ help:
 	@echo
 	@echo "- help                        Display this help message"
 	@echo "- serve-ngeo                  Run a development web server for running the ngeo examples"
+	@echo "- serve-api                   Run a development web server for running the api examples"
 	@echo "- serve-gmf                   Run a development web server for running the gmf examples"
 	@echo "- serve-gmf-apps              Run a development web server for running the gmf apps"
 	@echo "- examples-hosted             Build the hosted examples"
@@ -171,7 +172,7 @@ serve-gmf-apps: .build/node_modules.timestamp $(ANGULAR_LOCALES_FILES)
 	npm run serve-gmf-apps
 
 .PHONY: serve-api
-serve-api:
+serve-api: .build/node_modules.timestamp
 	npm run serve-api
 
 .PHONY: examples-hosted
