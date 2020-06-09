@@ -45,7 +45,6 @@ import Style from 'ol/style/Style.js';
 import Circle from 'ol/style/Circle.js';
 import Fill from 'ol/style/Fill.js';
 import Stroke from 'ol/style/Stroke.js';
-import Icon from 'ol/style/Icon.js';
 
 if (!window.requestAnimationFrame) {
   alert(
@@ -212,24 +211,5 @@ const module = angular.module('Appdesktop_alt', [
 ]);
 
 module.controller('AlternativeDesktopController', Controller);
-
-module.value(
-  'gmfPermalinkOptions',
-  /** @type {import('gmf/permalink/Permalink.js').PermalinkOptions} */ ({
-    crosshairStyle: [
-      new Style({
-        image: new Icon({
-          // @ts-ignore: webpack
-          src: 'data:image/svg+xml;base64,' + btoa(require('./image/crosshair.svg?viewbox')),
-          imgSize: [22, 22],
-        }),
-      }),
-    ],
-  })
-);
-
-module.value('ngeoQueryOptions', {
-  'limit': 50,
-});
 
 export default module;
