@@ -158,7 +158,7 @@ const exports = function(options = /** @type {ngeo.interaction.MeasureBaseOption
    * @type {ol.layer.Vector}
    * @private
    */
-  this.vectorLayer_ = new olLayerVector({
+  this.vectorLayer_ = options.layer !== undefined ? options.layer : new olLayerVector({
     source: new olSourceVector(),
     style: style
   });
@@ -431,7 +431,6 @@ exports.prototype.createMeasureTooltip_ = function() {
   });
   this.getMap().addOverlay(this.measureTooltipOverlay_);
 };
-
 
 /**
  * Destroy the help tooltip

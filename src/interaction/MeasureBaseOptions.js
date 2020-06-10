@@ -12,7 +12,8 @@ const exports = {};
  *    displayHelpTooltip: (boolean|undefined),
  *    startMsg: (Element|undefined),
  *    style: (ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction|undefined),
- *    sketchStyle: (ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction|undefined)
+ *    sketchStyle: (ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction|undefined),
+ *    layer: (ol.layer.Vector|undefined)
  * }}
  */
 exports;
