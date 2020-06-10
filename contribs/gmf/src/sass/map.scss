@@ -142,7 +142,7 @@ button[ngeo-geolocation] {
   bottom: $app-margin;
   left: $app-margin;
   width: 18.75rem;
-  z-index: $above-content-index;
+  z-index: $above-search-index;
 
   .alert {
     padding: $half-app-margin calc(#{$app-margin} + 1rem) $half-app-margin $app-margin;
