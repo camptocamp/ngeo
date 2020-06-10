@@ -599,6 +599,7 @@ export function handleEvent_(evt) {
   }
 
   return true;
-}
+};
+
 
 export default Measure;
