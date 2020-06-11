@@ -94,7 +94,12 @@ module.exports = function (config) {
 
   const htmlRule = {
     test: /\.html$/,
-    use: 'ejs-loader',
+    use: {
+      loader: 'ejs-loader',
+      options: {
+        esModule: false,
+      },
+    },
   };
 
   function get_comp(firsts, lasts) {
