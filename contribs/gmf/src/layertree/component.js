@@ -31,8 +31,8 @@ import 'bootstrap/js/src/collapse.js';
 /**
  * Definition of the icon size asked to the mapserver
  * @typedef {Object} LegendIcon
- * @property {number} width
- * @property {number} height
+ * @property {number|string} width
+ * @property {number|string} height
  */
 
 /**
