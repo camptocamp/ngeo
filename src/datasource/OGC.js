@@ -1166,7 +1166,7 @@ class OGC extends ngeoDatasourceDataSource {
    * @override
    */
   haveTheSameActiveDimensionsFilters(dataSource) {
-    const myConfig = this.dimensionsFiltersConfig  || {};
+    const myConfig = this.dimensionsFiltersConfig || {};
     const itsConfig = dataSource.dimensionsFiltersConfig || {};
 
     const equals = (key) => {
