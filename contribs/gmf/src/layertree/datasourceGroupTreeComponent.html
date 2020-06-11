@@ -61,7 +61,52 @@
           ng-click="$ctrl.removeDataSource(dataSource)">
           <span class="fa fa-trash"></span>
         </a>
+        <a
+          class="gmf-layertree-node-menu-btn"
+          href=""
+          ng-if=ctrl.getLegendUrl(dataSource.legend)>
+            <span class="fa fa-cog"></span>
+        </a>
+        <span
+          ngeo-popover
+          ng-if="$ctrl.getLegendUrl(dataSource.legend)"
+          ngeo-popover-dismiss=".content">
+            <span
+              ngeo-popover-anchor
+              class="extra-actions fa fa-cog"
+              id="popup-id-{{dataSource.id}}">
+            </span>
+
+            <div ngeo-popover-content>
+              <ul>
+                <li ng-if="$ctrl.getLegendUrl(dataSource.legend)">
+                  <i class="fa fa-th-list fa-fw"></i>
+                  <a
+                    ng-click="$ctrl.toggleNodeLegend(dataSource.id + 'legend'); popoverCtrl.dismissPopover()"
+                    href=""
+                  >
+                    {{'Show/hide legend'|translate}}
+                  </a>
+                </li>
+              </ul>
+            </div>
+        </span>
       </span>
+    </div>
+    <div
+      id="{{dataSource.id + 'legend'}}"
+      class="gmf-layertree-legend">
+      <a
+        title="{{'Hide legend'|translate}}"
+        ng-click="$ctrl.toggleNodeLegend(dataSource.id + 'legend')"
+        href="">
+        {{'Hide legend'|translate}}
+      </a>
+      <div ng-if="$ctrl.getLegendUrl(dataSource.legend)" class="gmf-imported-legend">
+          <div class="gmf-legend-image">
+            <img ng-src="{{$ctrl.getLegendUrl(dataSource.legend)}}"></img>
+          </div>
+      </div>
     </div>
   </li>
 </ul>

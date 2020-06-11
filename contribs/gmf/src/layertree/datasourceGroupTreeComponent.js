@@ -21,13 +21,17 @@
 
 import angular from 'angular';
 import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources.js';
+import ngeoMapLayerHelper from 'ngeo/map/LayerHelper.js';
 import {getUid as olUtilGetUid} from 'ol/util.js';
 
 /**
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfLayertreeDatasourceGroupTreeComponent', [ngeoDatasourceDataSources.name]);
+const module = angular.module('gmfLayertreeDatasourceGroupTreeComponent', [
+  ngeoDatasourceDataSources.name,
+  ngeoMapLayerHelper.name,
+]);
 
 module.run(
   /**
@@ -75,14 +79,14 @@ function gmfLayertreeDatasourceGroupTreeTemplateUrl($attrs, gmfLayertreeDatasour
 class Controller {
   /**
    * @param {angular.IScope} $scope Angular scope.
-   * @param {import("ngeo/datasource/DataSources.js").DataSource} ngeoDataSources Ngeo data sources
-   *     service.
+   * @param {import("ngeo/datasource/DataSources.js").DataSource} ngeoDataSources Ngeo data sources service.
+   * @param {import("ngeo/map/LayerHelper.js")} ngeoLayerHelper Ngeo data sources service.
    * @private
    * @ngInject
    * @ngdoc controller
    * @ngname GmfDatasourcegrouptreeController
    */
-  constructor($scope, ngeoDataSources) {
+  constructor($scope, ngeoDataSources, ngeoLayerHelper) {
     // Binding properties
 
     /**
@@ -103,6 +107,17 @@ class Controller {
      * @private
      */
     this.dataSources_ = ngeoDataSources.collection;
+
+    /**
+     * @type {import("ngeo/map/LayerHelper.js").LayerHelper}
+     * @private
+     */
+    this.layerHelper_ = ngeoLayerHelper;
+
+    /**
+     * method of layertree to get the present map scale
+     */
+    this.getScale = null;
   }
 
   /**
@@ -129,6 +144,11 @@ class Controller {
    */
   toggleDataSource(dataSource) {
     dataSource.visible = !dataSource.visible;
+    if (dataSource.visible) {
+      this.setLegendVisibility(true, dataSource.id.toString() + 'legend');
+    } else {
+      this.setLegendVisibility(false, dataSource.id.toString() + 'legend');
+    }
   }
 
   /**
@@ -152,11 +172,48 @@ class Controller {
   removeDataSource(dataSource) {
     this.dataSources_.remove(dataSource);
   }
+
+  /**
+   * Toggle the legend for a node
+   * @param {string} legendNodeId The DOM node legend id to toggle
+   */
+  toggleNodeLegend(legendNodeId) {
+    const div = document.getElementById(legendNodeId);
+    if (div) {
+      div.classList.toggle('show');
+    }
+  }
+
+  /**
+   * Get legendUrl
+   * @param {import('gmf/datasource/ExternalOGC.js').Legend}  legend The legend for which to get the legend url
+   * @return {string}
+   */
+  getLegendUrl(legend) {
+    if (legend) {
+      return this.layerHelper_.getWMSLegendURL(legend.url, legend.name, this.getScale());
+    } else {
+      return null;
+    }
+  }
+
+  /**
+   * Set legend visibility
+   * @param {boolean} show The DOM node legend id to toggle
+   * @param {string} legendNodeId The DOM node legend id to toggle
+   */
+  setLegendVisibility(show, legendNodeId) {
+    const div = document.getElementById(legendNodeId);
+    if (div) {
+      show ? div.classList.remove('off') : div.classList.add('off');
+    }
+  }
 }
 
 module.component('gmfDatasourcegrouptree', {
   bindings: {
     'group': '<',
+    'getScale': '&',
   },
   controller: Controller,
   templateUrl: gmfLayertreeDatasourceGroupTreeTemplateUrl,

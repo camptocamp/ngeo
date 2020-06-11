@@ -899,7 +899,7 @@ Controller.prototype.toggleNodeLegend = function (legendNodeId) {
 
 /**
  * Toggle the menu for a node
- * @param {string} legendNodeId The DOM node menu id to toggle
+ * @param {string} menuNodeId The DOM node menu id to toggle
  */
 Controller.prototype.toggleNodeMenu = function (menuNodeId) {
   const div = document.querySelector(menuNodeId);

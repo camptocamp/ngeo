@@ -117,3 +117,10 @@ gmf-layertree {
   margin: 0 $micro-app-margin $app-margin $micro-app-margin;
   box-shadow: $layertree-group-box-shadow;
 }
+
+.gmf-imported-legend {
+  padding-top:0.8rem;
+  .gmf-legend-image {
+    overflow-y: auto;
+  }
+}
