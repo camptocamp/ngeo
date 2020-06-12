@@ -51,15 +51,35 @@ import {listen, unlistenByKey} from 'ol/events.js';
 import olFeature from 'ol/Feature.js';
 import olGeomMultiPoint from 'ol/geom/MultiPoint.js';
 import olGeomPoint from 'ol/geom/Point.js';
-import olStyleIcon from 'ol/style/Icon.js';
 import olStyleStyle from 'ol/style/Style.js';
+import RegularShape from 'ol/style/RegularShape.js';
+import Fill from 'ol/style/Fill.js';
+import Stroke from 'ol/style/Stroke.js';
 import olLayerGroup from 'ol/layer/Group.js';
 import {CollectionEvent} from 'ol/Collection.js';
 
 /**
+ * Specify radius for regular polygons, or radius1 and radius2 for stars.
+ * See also: https://openlayers.org/en/latest/examples/regularshape.html
+ *
+ * @typedef {Object} RegularShapeOptions
+ * @property {import("ol/style/Fill.js").Options} [fill] Fill style.
+ * @property {number} points Number of points for stars and regular polygons. In case of a polygon, the number of points
+ * is the number of sides.
+ * @property {number} [radius] Radius of a regular polygon.
+ * @property {number} [radius1] Outer radius of a star.
+ * @property {number} [radius2] Inner radius of a star.
+ * @property {number} [angle=0] Shape's angle in degree. A value of 0 will have one of the shape's point facing up.
+ * @property {Array<number>} [displacement=[0,0]] Displacement of the shape
+ * @property {import("ol/style/Stroke.js").Options} [stroke] Stroke style.
+ * @property {number} [rotation=0] Rotation in degree (positive rotation clockwise).
+ * @property {boolean} [rotateWithView=false] Whether to rotate the shape with the view.
+ */
+
+/**
  * Configuration options for the permalink service.
  * @typedef {Object} PermalinkOptions
- * @property {import("ol/style/Style.js").StyleLike} [crosshairStyle] An alternate
+ * @property {RegularShapeOptions[]} [crosshairStyle] An alternate
  * style for the crosshair feature added by the permalink service.
  * @property {boolean} [crosshairEnabledByDefault] Display the crosshair, gets overridden by the
  * `map_crosshair` parameter. Default is `false`.
@@ -513,17 +533,51 @@ export function PermalinkService(
    */
   this.crosshairStyle_ = [];
 
-  if (gmfPermalinkOptions.crosshairStyle !== undefined) {
-    this.crosshairStyle_ = gmfPermalinkOptions.crosshairStyle;
-  } else {
-    this.crosshairStyle_ = [
+  const crosshairStyleDescription_ = gmfPermalinkOptions.crosshairStyle || [
+    {
+      stroke: {
+        color: 'white',
+        width: 5,
+      },
+      points: 4,
+      radius: 10,
+      radius2: 0,
+      angle: 0,
+    },
+    {
+      stroke: {
+        color: 'red',
+        width: 2,
+      },
+      points: 4,
+      radius: 10,
+      radius2: 0,
+      angle: 0,
+    },
+  ];
+  const crosshairStyleDescription = Array.isArray(crosshairStyleDescription_)
+    ? crosshairStyleDescription_
+    : [crosshairStyleDescription_];
+
+  for (const crosshairStyle of crosshairStyleDescription) {
+    const regularStyle = Object.assign({}, crosshairStyle);
+    if (regularStyle.stroke) {
+      regularStyle.stroke = new Stroke(regularStyle.stroke);
+    }
+    if (regularStyle.fill) {
+      regularStyle.fill = new Fill(regularStyle.fill);
+    }
+    if (regularStyle.angle) {
+      regularStyle.angle = (regularStyle.angle / 180) * Math.PI;
+    }
+    if (regularStyle.rotation) {
+      regularStyle.rotation = (regularStyle.angle / 180) * Math.PI;
+    }
+    this.crosshairStyle_.push(
       new olStyleStyle({
-        image: new olStyleIcon({
-          // @ts-ignore: webpack
-          src: 'data:image/svg+xml;base64,' + btoa(require('gmf/permalink/crosshair.svg')),
-        }),
-      }),
-    ];
+        image: new RegularShape(regularStyle),
+      })
+    );
   }
 
   /**
