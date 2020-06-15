@@ -838,15 +838,15 @@ Controller.prototype.supportsOpacityChange = function(treeCtrl) {
 Controller.prototype.setLegendOptions = function() {
   if (this.layertreeOptions) {
     if (!this.layertreeOptions.legendIcon || this.layertreeOptions.legendIcon.width === 'auto') {
-      this.legendIconWidth = /** @type {number} */ undefined;
+      this.legendIconWidth = (/** @type {number} */ undefined);
     } else {
-      this.legendIconWidth = /** @type {number} */ this.layertreeOptions.legendIcon.width;
+      this.legendIconWidth = (/** @type {number} */ this.layertreeOptions.legendIcon.width);
     }
 
     if (!this.layertreeOptions.legendIcon || this.layertreeOptions.legendIcon.height === 'auto') {
-      this.legendIconHeight = /** @type {number} */ undefined;
+      this.legendIconHeight = (/** @type {number} */ undefined);
     } else {
-      this.legendIconHeight = /** @type {number} */ this.layertreeOptions.legendIcon.height;
+      this.legendIconHeight = (/** @type {number} */ this.layertreeOptions.legendIcon.height);
     }
   }
 };
