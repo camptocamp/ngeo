@@ -223,6 +223,12 @@ function Controller($element, $scope, ngeoLayerHelper,
    */
   this.dimensions;
 
+  /** @type {number} */
+  this.legendIconWidth;
+
+  /** @type {number} */
+  this.legendIconHeight;
+
 
   /**
    * @type {!angular.IScope}
@@ -838,15 +844,15 @@ Controller.prototype.supportsOpacityChange = function(treeCtrl) {
 Controller.prototype.setLegendOptions = function() {
   if (this.layertreeOptions) {
     if (!this.layertreeOptions.legendIcon || this.layertreeOptions.legendIcon.width === 'auto') {
-      this.legendIconWidth = (/** @type {number} */ undefined);
+      this.legendIconWidth = undefined;
     } else {
-      this.legendIconWidth = (/** @type {number} */ this.layertreeOptions.legendIcon.width);
+      this.legendIconWidth = /** @type {number} */ (this.layertreeOptions.legendIcon.width);
     }
 
     if (!this.layertreeOptions.legendIcon || this.layertreeOptions.legendIcon.height === 'auto') {
-      this.legendIconHeight = (/** @type {number} */ undefined);
+      this.legendIconHeight = undefined;
     } else {
-      this.legendIconHeight = (/** @type {number} */ this.layertreeOptions.legendIcon.height);
+      this.legendIconHeight = /** @type {number} */ (this.layertreeOptions.legendIcon.height);
     }
   }
 };
