@@ -149,16 +149,25 @@ class Map {
       if (!resolutions) {
         throw new Error('Missing resolutions');
       }
-      this.map_.addControl(
-        new OverviewMap({
-          collapsed: !options.miniMapExpanded,
-          layers: [],
-          view: new View({
-            projection: this.view_.getProjection(),
-            resolutions,
-          }),
-        })
-      );
+      themes.getBackgroundLayers().then((layers) => {
+        // The options is an array for backward compatibility reason.
+        const backgroundLayer = options.backgroundLayers || [constants.backgroundLayer];
+        for (const layer of layers) {
+          if (backgroundLayer.includes(layer.get('config.name'))) {
+            this.map_.addControl(
+              new OverviewMap({
+                collapsed: !options.miniMapExpanded,
+                // @ts-ignore: OpenLayers issue
+                layers: [layer],
+                view: new View({
+                  projection: this.view_.getProjection(),
+                  resolutions,
+                }),
+              })
+            );
+          }
+        }
+      });
     }
 
     if (options.addLayerSwitcher) {
