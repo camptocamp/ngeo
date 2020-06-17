@@ -258,7 +258,6 @@ Controller.prototype.toggleTracking = function () {
       this.$scope_.$emit(GeolocationEventType.ERROR, null);
       return;
     }
-    console.assert(currentPosition !== undefined);
     // stop tracking if the position is close to the center of the map.
     const view = this.map_.getView();
     const center = view.getCenter();

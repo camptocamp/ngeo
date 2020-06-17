@@ -318,7 +318,6 @@ QueryWindowController.prototype.$onInit = function () {
     throw new Error('Missing selectedFeatureStyleFn');
   }
   this.draggableContainment = this.draggableContainment || 'document';
-  this.desktop = this.desktop;
   this.collapsed = this.defaultCollapsedFn();
 
   this.showUnqueriedLayers_ = this.showUnqueriedLayers;

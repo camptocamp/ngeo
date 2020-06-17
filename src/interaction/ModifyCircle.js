@@ -53,7 +53,6 @@ export default class extends olInteractionPointer {
 
     this.handleDownEvent = this.handleDownEvent_;
     this.handleDragEvent = this.handleDragEvent_;
-    this.handleEvent = this.handleEvent;
     this.handleUpEvent = this.handleUpEvent_;
 
     console.assert(options.features);

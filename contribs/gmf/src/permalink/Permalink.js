@@ -812,7 +812,7 @@ PermalinkService.prototype.handleMapSwipeValue_ = function () {
   const mapSwipeValue = this.gmfLayerBeingSwipe_.swipeValue;
   /** @type {Object<string, object>} */
   const object = {};
-  if (mapSwipeValue && mapSwipeValue !== null && mapSwipeValue !== undefined) {
+  if (mapSwipeValue) {
     object[PermalinkParam.MAP_SWIPE_VALUE] = mapSwipeValue;
     this.ngeoStateManager_.updateState(object);
   }

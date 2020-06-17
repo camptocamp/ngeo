@@ -296,7 +296,6 @@ class Measure extends olInteractionInteraction {
       throw new Error('Missing geometry');
     }
 
-    console.assert(geometry !== undefined);
     this.changeEventKey_ = listen(geometry, 'change', () => {
       this.handleMeasure((measure, coord) => {
         if (coord !== null) {

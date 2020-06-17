@@ -1417,7 +1417,7 @@ export class PrintController {
 
             // Don't add classes without legend url or from layers without any
             // active name.
-            if (icon_dpi && name.length !== 0) {
+            if (name.length !== 0) {
               classes.push(
                 Object.assign(
                   {

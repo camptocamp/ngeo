@@ -451,7 +451,7 @@ class RuleController {
             if (!this.clone) {
               throw new Error('Missing clone');
             }
-            this.clone.lowerBoundary;
+            return this.clone.lowerBoundary;
           },
           (newVal) => {
             if (typeof newVal == 'string') {
@@ -468,7 +468,7 @@ class RuleController {
             if (!this.clone) {
               throw new Error('Missing clone');
             }
-            this.clone.upperBoundary;
+            return this.clone.upperBoundary;
           },
           (newVal) => {
             if (typeof newVal == 'string') {
@@ -488,7 +488,7 @@ class RuleController {
             if (!this.clone) {
               throw new Error('Missing clone');
             }
-            this.clone.operator;
+            return this.clone.operator;
           },
           (newVal) => {
             this.drawActive = false;
@@ -524,7 +524,7 @@ class RuleController {
             if (!this.clone) {
               throw new Error('Missing clone');
             }
-            this.clone.expression;
+            return this.clone.expression;
           },
           (newVal) => {
             // @ts-ignore: Why?

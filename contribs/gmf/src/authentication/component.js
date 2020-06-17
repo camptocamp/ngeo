@@ -300,8 +300,6 @@ class AuthenticationController {
      */
     this.newPwdConfVal = '';
 
-    this.otpImage;
-
     /**
      * @type {boolean}
      */
