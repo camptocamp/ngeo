@@ -40,8 +40,8 @@ export function AutoProjectionService() {}
 AutoProjectionService.prototype.stringToCoordinates = function (str) {
   const coords = str.match(/([\d\.']+)[\s,]+([\d\.']+)/);
   if (coords) {
-    const x = parseFloat(coords[1].replace("'", ''));
-    const y = parseFloat(coords[2].replace("'", ''));
+    const x = parseFloat(coords[1].replace(/'/g, ''));
+    const y = parseFloat(coords[2].replace(/'/g, ''));
     if (!isNaN(x) && !isNaN(y)) {
       return [x, y];
     }

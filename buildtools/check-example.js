@@ -177,13 +177,13 @@ function loaded(page, browser) {
       }
     } else if (
       url.includes('tile.openstreetmap.org') ||
-      url.startsWith('https://tiles.openseamap.org') ||
-      url.startsWith('https://wms.geo.admin.ch') ||
-      url.startsWith('https://ows.asitvd.ch') ||
-      url.startsWith('https://ows1.asitvd.ch') ||
-      url.startsWith('https://ows2.asitvd.ch') ||
-      url.startsWith('https://ows3.asitvd.ch') ||
-      url.startsWith('https://ows4.asitvd.ch')
+      url.startsWith('https://tiles.openseamap.org/') ||
+      url.startsWith('https://wms.geo.admin.ch/') ||
+      url.startsWith('https://ows.asitvd.ch/') ||
+      url.startsWith('https://ows1.asitvd.ch/') ||
+      url.startsWith('https://ows2.asitvd.ch/') ||
+      url.startsWith('https://ows3.asitvd.ch/') ||
+      url.startsWith('https://ows4.asitvd.ch/')
     ) {
       request.respond(OSMImage);
     } else {
