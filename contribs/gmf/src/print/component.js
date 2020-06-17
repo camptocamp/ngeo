@@ -676,7 +676,7 @@ export class PrintController {
       /**
        * @return {number} rotation to apply.
        */
-      getRotationFn = () => this.rotation;
+      getRotationFn = () => -this.rotation;
     }
 
     this.maskLayer_.getSize = getSizeFn;
@@ -1133,6 +1133,7 @@ export class PrintController {
     const spec = this.ngeoPrint_.createSpec(
       map,
       scale,
+      this.rotation,
       this.layoutInfo.dpi,
       this.layoutInfo.layout,
       format,

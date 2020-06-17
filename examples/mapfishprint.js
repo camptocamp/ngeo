@@ -173,13 +173,14 @@ MainController.prototype.print = function () {
       ? this.printUtils_.getOptimalScale(mapSize, viewResolution, PRINT_PAPER_SIZE_, PRINT_SCALES_)
       : PRINT_SCALES_[0];
 
+  const rotation = map.getView().getRotation();
   const dpi = PRINT_DPI_;
   const format = PRINT_FORMAT_;
   const layout = PRINT_LAYOUT_;
 
   this.printState = 'Printing...';
 
-  const spec = this.print_.createSpec(map, scale, dpi, layout, format, {
+  const spec = this.print_.createSpec(map, scale, rotation, dpi, layout, format, {
     'datasource': [],
     'debug': 0,
     'comments': 'My comments',

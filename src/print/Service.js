@@ -26,7 +26,6 @@ import {stableSort} from 'ol/array.js';
 import olLayerImage from 'ol/layer/Image.js';
 import olLayerTile from 'ol/layer/Tile.js';
 import olLayerVector from 'ol/layer/Vector.js';
-import {toDegrees} from 'ol/math.js';
 import * as olSize from 'ol/size.js';
 import olSourceImageWMS from 'ol/source/ImageWMS.js';
 import olSourceTileWMS from 'ol/source/TileWMS.js';
@@ -143,6 +142,7 @@ PrintService.prototype.cancel = function (ref, opt_httpConfig) {
  * Create a report specification.
  * @param {import("ol/Map.js").default} map Map.
  * @param {number} scale Scale.
+ * @param {number} rotation Rotation.
  * @param {number} dpi DPI.
  * @param {string} layout Layout.
  * @param {string} format Formats.
@@ -154,6 +154,7 @@ PrintService.prototype.cancel = function (ref, opt_httpConfig) {
 PrintService.prototype.createSpec = function (
   map,
   scale,
+  rotation,
   dpi,
   layout,
   format,
@@ -163,7 +164,7 @@ PrintService.prototype.createSpec = function (
 ) {
   const specMap = /** @type {import('ngeo/print/mapfish-print-v3.js').MapFishPrintMap} */ ({
     dpi: dpi,
-    rotation: customAttributes.rotation,
+    rotation: rotation,
   });
 
   if (goodnessOfFit) {
@@ -206,7 +207,6 @@ PrintService.prototype.encodeMap_ = function (map, scale, object) {
   const viewCenter = view.getCenter();
   const viewProjection = view.getProjection();
   const viewResolution = view.getResolution();
-  const viewRotation = object.rotation || toDegrees(view.getRotation());
 
   if (!viewCenter) {
     throw new Error('Missing viewCenter');
@@ -220,7 +220,6 @@ PrintService.prototype.encodeMap_ = function (map, scale, object) {
 
   object.center = viewCenter;
   object.projection = viewProjection.getCode();
-  object.rotation = viewRotation;
   object.scale = scale;
   object.useNearestScale = false;
   object.layers = [];
