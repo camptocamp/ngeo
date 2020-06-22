@@ -79,24 +79,6 @@ describe('ngeo.print.Service', () => {
       });
     });
 
-    describe('rotation', () => {
-      beforeEach(() => {
-        const view = map.getView();
-        view.adjustRotation(Math.PI);
-      });
-
-      it('rotation angle is correct', () => {
-        const scale = 500;
-        const dpi = 72;
-        const layout = 'foo layout';
-        const format = 'pdf';
-        const customAttributes = {'foo': 'fooval', 'bar': 'barval'};
-
-        const spec = print.createSpec(map, scale, dpi, layout, format, customAttributes);
-        expect(spec.attributes.map.rotation).toEqual(180);
-      });
-    });
-
     describe('ImageWMS', () => {
       beforeEach(() => {
         const source = new olSourceImageWMS({
@@ -116,12 +98,13 @@ describe('ngeo.print.Service', () => {
 
       it('creates a valid spec object', () => {
         const scale = 500;
+        const rotation = 0;
         const dpi = 72;
         const layout = 'foo layout';
         const format = 'pdf';
         const customAttributes = {'foo': 'fooval', 'bar': 'barval'};
 
-        const spec = print.createSpec(map, scale, dpi, layout, format, customAttributes);
+        const spec = print.createSpec(map, scale, rotation, dpi, layout, format, customAttributes);
 
         expect(spec).toEqual({
           attributes: {
@@ -176,12 +159,13 @@ describe('ngeo.print.Service', () => {
 
       it('creates a valid spec object', () => {
         const scale = 500;
+        const rotation = 0;
         const dpi = 72;
         const layout = 'foo layout';
         const format = 'pdf';
         const customAttributes = {'foo': 'fooval', 'bar': 'barval'};
 
-        const spec = print.createSpec(map, scale, dpi, layout, format, customAttributes);
+        const spec = print.createSpec(map, scale, rotation, dpi, layout, format, customAttributes);
         expect(spec).toEqual({
           attributes: {
             map: {
@@ -250,12 +234,13 @@ describe('ngeo.print.Service', () => {
 
       it('creates a valid spec object', () => {
         const scale = 500;
+        const rotation = 0;
         const dpi = 72;
         const layout = 'foo layout';
         const format = 'pdf';
         const customAttributes = {'foo': 'fooval', 'bar': 'barval'};
 
-        const spec = print.createSpec(map, scale, dpi, layout, format, customAttributes);
+        const spec = print.createSpec(map, scale, rotation, dpi, layout, format, customAttributes);
 
         expect(spec).toEqual({
           attributes: {
@@ -450,12 +435,13 @@ describe('ngeo.print.Service', () => {
 
       it('creates a valid spec object', () => {
         const scale = 500;
+        const rotation = 0;
         const dpi = 72;
         const layout = 'foo layout';
         const format = 'pdf';
         const customAttributes = {'foo': 'fooval', 'bar': 'barval'};
 
-        const spec = print.createSpec(map, scale, dpi, layout, format, customAttributes);
+        const spec = print.createSpec(map, scale, rotation, dpi, layout, format, customAttributes);
 
         const styleId0 = getUid(style0);
         const styleId1 = getUid(style1);
@@ -686,12 +672,13 @@ describe('ngeo.print.Service', () => {
 
       it('reverses the layer order', () => {
         const scale = 500;
+        const rotation = 0;
         const dpi = 72;
         const layout = 'foo layout';
         const format = 'pdf';
         const customAttributes = {'foo': 'fooval', 'bar': 'barval'};
 
-        const spec = print.createSpec(map, scale, dpi, layout, format, customAttributes);
+        const spec = print.createSpec(map, scale, rotation, dpi, layout, format, customAttributes);
 
         const layers = spec.attributes.map.layers;
         expect(layers.length).toBe(2);
