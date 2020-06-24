@@ -65,7 +65,9 @@ module.exports = function (config) {
     test: require.resolve('angular'),
     use: {
       loader: 'expose-loader',
-      options: 'angular',
+      options: {
+        exposes: ['angular'],
+      },
     },
   };
 
@@ -74,7 +76,9 @@ module.exports = function (config) {
     test: require.resolve('corejs-typeahead'),
     use: {
       loader: 'expose-loader',
-      options: 'Bloodhound',
+      options: {
+        exposes: ['Bloodhound'],
+      },
     },
   };
 

@@ -90,7 +90,7 @@
     "eslint-plugin-import": "2.21.2",
     "eslint-plugin-prettier": "3.1.4",
     "eslint-plugin-sort-imports-es6-autofix": "0.5.0",
-    "expose-loader": "0.7.5",
+    "expose-loader": "1.0.0",
     "extract-loader": "5.1.0",
     "fast-sass-loader": "1.5.0",
     "file-loader": "6.0.0",
