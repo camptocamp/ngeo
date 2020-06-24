@@ -24,6 +24,6 @@ jobs:
         with:
           ref: ${{ matrix.branch }}
       - run: npm install --package-lock
-      - run: npm audit fix
+      - run: npm audit fix --force
       - run: git diff
       - run: git diff-index --quiet HEAD
