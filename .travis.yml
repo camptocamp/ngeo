@@ -60,7 +60,7 @@ script:
 - make test
 # Webpack build of ngeo/gmf examples and gmf apps
 - if [ "${TRAVIS_PULL_REQUEST}" = false ]; then export NODE_ENV=production; fi
-- make examples-hosted
+- make examples-hosted > /dev/null
 - buildtools/test_examples.py 1/1
 #- npm run typecheck
 # Generate API doc
@@ -70,7 +70,7 @@ script:
 - '! (npm run typecheck|grep gmf)'
 - '! (npm run typecheck|grep test)'
 - '! (npm run typecheck|grep examples)'
-- npm run doc
+- npm run doc > /dev/null
 - npm run build-api
 
 deploy:
