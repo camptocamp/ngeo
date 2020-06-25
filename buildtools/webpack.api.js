@@ -50,10 +50,12 @@ module.exports = (env, argv) => {
       ]
     },
     plugins: [
-      new CopyWebpackPlugin([{
-        from: './api/src/api.css',
-        to: dest
-      }])
+      new CopyWebpackPlugin({
+        patterns: [{
+          from: './api/src/api.css',
+          to: dest
+        }]
+      })
     ]
   };
 };
