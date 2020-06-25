@@ -139,7 +139,9 @@ class Map {
       if (overlayLayerNames && overlayLayerNames.length) {
         themes.getOverlayLayers(overlayLayerNames).then((layers) => {
           for (const layer of layers) {
-            this.map_.addLayer(layer);
+            if (layer !== null) {
+              this.map_.addLayer(layer);
+            }
           }
         });
       }

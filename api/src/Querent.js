@@ -54,14 +54,20 @@ export function getFeaturesFromIds(layer, ids) {
         return;
       }
 
-      const featureIds = ids.map(id => `${layer}.${id}`);
+      const gmfLayer = /** @type import('gmf/themes.js').GmfLayerWMS */ (overlayDef.layer);
+      const childLayerNames = [];
+      let featureIds = [];
+      for (const childLayer of gmfLayer.childLayers) {
+        childLayerNames.push(childLayer.name);
+        featureIds = featureIds.concat(ids.map(id => `${childLayer.name}.${id}`));
+      }
 
       const params = {
         'FEATUREID': featureIds.join(','),
-        'MAXFEATURES': ids.length,
+        'MAXFEATURES': featureIds.length,
         'REQUEST': 'GetFeature',
         'SERVICE': 'WFS',
-        'TYPENAME': layer,
+        'TYPENAME': childLayerNames.join(','),
         'VERSION': '1.0.0'
       };
       const url = olUriAppendParams(overlayDef.ogcServer.urlWfs, params);
