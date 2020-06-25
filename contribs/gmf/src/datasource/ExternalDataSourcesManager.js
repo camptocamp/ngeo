@@ -30,6 +30,7 @@ import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources.js';
 import ngeoDatasourceFile from 'ngeo/datasource/File.js';
 import ngeoDatasourceFileGroup from 'ngeo/datasource/FileGroup.js';
 import ngeoDatasourceOGC, {Type, WMSInfoFormat} from 'ngeo/datasource/OGC.js';
+import gmfExternalDatasourceOGC from 'gmf/datasource/ExternalOGC.js';
 import ngeoDatasourceOGCGroup from 'ngeo/datasource/OGCGroup.js';
 import ngeoDatasourceWMSGroup from 'ngeo/datasource/WMSGroup.js';
 import {getUid as olUtilGetUid} from 'ol/util.js';
@@ -61,7 +62,7 @@ export class ExternalDatSourcesManager {
    * @param {angular.IScope} $rootScope The rootScope provider.
    * @param {import("ngeo/datasource/DataSources.js").DataSource} ngeoDataSources Ngeo data sources service.
    * @param {import("ngeo/misc/File.js").FileService} ngeoFile Ngeo file.
-   * @param {import("ngeo/map/LayerHelper.js").LayerHelper} ngeoLayerHelper Ngeo layer helper service
+   * @param {import("ngeo/map/LayerHelper.js").LayerHelper} ngeoLayerHelper Ngeo layer helper service.
    * @ngInject
    * @ngdoc service
    * @ngname gmfExternalDataSourcesManager
@@ -331,6 +332,8 @@ export class ExternalDatSourcesManager {
     const id = getId(layer);
     const service = capabilities.Service;
 
+    const originalUrl = url || service.OnlineResource;
+
     url = service.OnlineResource || url;
 
     let dataSource;
@@ -373,7 +376,10 @@ export class ExternalDatSourcesManager {
       if (wmsInfoFormat) {
         options.wmsInfoFormat = wmsInfoFormat;
       }
-      dataSource = new ngeoDatasourceOGC(options);
+
+      const legend = {'title': layer.Title, 'url': originalUrl, 'name': layer.Name};
+
+      dataSource = new gmfExternalDatasourceOGC(options, legend);
 
       // Keep a reference to the external data source in the cache
       this.extDataSources_[id] = dataSource;
