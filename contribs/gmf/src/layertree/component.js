@@ -177,7 +177,7 @@ const layertreeComponent = {
     'map': '=gmfLayertreeMap',
     'dimensions': '=?gmfLayertreeDimensions',
     'openLinksInNewWindow': '<?gmfLayertreeOpenlinksinnewwindow',
-    'isExpanded': '<?mapbsIsexpanded'
+    'isExpanded': '<?gmfLayertreeIsexpanded'
   },
   template: gmfLayertreeTemplate
 };
