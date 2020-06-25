@@ -176,7 +176,8 @@ const layertreeComponent = {
   bindings: {
     'map': '=gmfLayertreeMap',
     'dimensions': '=?gmfLayertreeDimensions',
-    'openLinksInNewWindow': '<?gmfLayertreeOpenlinksinnewwindow'
+    'openLinksInNewWindow': '<?gmfLayertreeOpenlinksinnewwindow',
+    'isExpanded': '<?mapbsIsexpanded'
   },
   template: gmfLayertreeTemplate
 };
@@ -229,6 +230,8 @@ function Controller($element, $scope, ngeoLayerHelper,
   /** @type {number} */
   this.legendIconHeight;
 
+  /** @type {boolean} */
+  this.isExpanded;
 
   /**
    * @type {!angular.IScope}
