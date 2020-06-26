@@ -34,7 +34,7 @@ let localePromise;
  * @hidden
  * @return {Promise<Object<string, string>>} Promise
  */
-function getLocalePromise() {
+export function getLocalePromise() {
   if (!constants.localeUrl) {
     // Fallback to an empty dict
     return Promise.resolve({});

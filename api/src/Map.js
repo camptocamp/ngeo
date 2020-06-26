@@ -361,25 +361,26 @@ class Map {
       }
       const geometryName = feature.getGeometryName();
       const properties = feature.getProperties();
-      let contentHTML = '';
-      if (table) {
-        contentHTML += '<table><tbody>';
-        for (const key in properties) {
-          if (!EXCLUDE_PROPERTIES.includes(key) && key !== geometryName && properties[key] !== undefined) {
-            contentHTML += '<tr>';
-            contentHTML += `<th>${key}</th>`;
-            contentHTML += `<td>${properties[key]}</td>`;
-            contentHTML += '</tr>';
+      themes.getLocalePromise().then((translations) => {
+        let contentHTML = '';
+        if (table) {
+          contentHTML += '<table><tbody>';
+          for (const key in properties) {
+            if (!EXCLUDE_PROPERTIES.includes(key) && key !== geometryName && properties[key] !== undefined) {
+              contentHTML += '<tr>';
+              contentHTML += `<th>${translations[key] || key}</th>`;
+              contentHTML += `<td>${properties[key]}</td>`;
+              contentHTML += '</tr>';
+            }
           }
+          contentHTML += '</tbody></table>';
+        } else {
+          contentHTML += `<div><b>${properties.title}</b></div>`;
+          contentHTML += `<p>${properties.description}</p>`;
         }
-        contentHTML += '</tbody></table>';
-      } else {
-        contentHTML += `<div><b>${properties.title}</b></div>`;
-        contentHTML += `<p>${properties.description}</p>`;
-      }
-      const content = this.overlay_.getElement().querySelector('.ol-popup-content');
-      content.innerHTML = contentHTML;
-      this.overlay_.setPosition(position);
+        const content = this.overlay_.getElement().querySelector('.ol-popup-content');
+        content.innerHTML = contentHTML;
+        this.overlay_.setPosition(position);
     }
   }
 
