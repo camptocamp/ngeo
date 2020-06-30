@@ -240,7 +240,7 @@ export class PrintController {
    * @param {angular.IFilterService} $filter Angular $filter service.
    * @param {PrintState} gmfPrintState GMF print state.
    * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes The gmf Themes service.
-   * @param {import("gmf/datasource/ExternalDataSourcesManager.js").ExternalDatSourcesManager} gmfExternalDataSourcesManager The ngeo Layer Helper service.
+   * @param {import("gmf/datasource/ExternalDataSourcesManager.js").ExternalDatSourcesManager} gmfExternalDataSourcesManager The manager of external datasources.
    * @param {import('gmf/options.js').gmfPrintOptions} gmfPrintOptions The options.
    * @param {string} cacheVersion The cache version
    * @ngInject

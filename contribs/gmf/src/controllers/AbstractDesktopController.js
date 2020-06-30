@@ -387,5 +387,6 @@ const module = angular.module('GmfAbstractDesktopControllerModule', [
 module.controller('AbstractDesktopController', AbstractDesktopController);
 
 module.value('ngeoSnappingSource', new olSourceVector());
+module.value('gmfFileDropEnabled', true);
 
 export default module;
