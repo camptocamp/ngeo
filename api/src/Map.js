@@ -4,51 +4,48 @@
  * @module api/Map.js
  */
 
-import OLMap from 'ol/Map.js';
 import Feature from 'ol/Feature.js';
+import OLMap from 'ol/Map.js';
 import Overlay from 'ol/Overlay.js';
 import Point from 'ol/geom/Point.js';
+import SelectInteraction from 'ol/interaction/Select.js';
+import VectorLayer from 'ol/layer/Vector.js';
+import VectorSource from 'ol/source/Vector.js';
+import View from 'ol/View.js';
 import {Icon, Style} from 'ol/style.js';
 import {createDefaultStyle} from 'ol/style/Style.js';
-import View from 'ol/View.js';
-import VectorSource from 'ol/source/Vector.js';
-import VectorLayer from 'ol/layer/Vector.js';
-import SelectInteraction from 'ol/interaction/Select.js';
 
 import MousePosition from 'ol/control/MousePosition.js';
-import {createStringXY} from 'ol/coordinate.js';
-import ScaleLine from 'ol/control/ScaleLine.js';
 import OverviewMap from 'ol/control/OverviewMap.js';
+import ScaleLine from 'ol/control/ScaleLine.js';
+import {createStringXY} from 'ol/coordinate.js';
 
 // @ts-ignore there is no existing types for ol-layerswitcher
 import LayerSwitcher from 'ol-layerswitcher';
 
 import {
+  getCenter,
   createEmpty as olExtentCreateEmpty,
   extend as olExtentExtend,
-  getCenter,
-  isEmpty as olExtentIsEmpty
+  isEmpty as olExtentIsEmpty,
 } from 'ol/extent.js';
 import {get as getProjection} from 'ol/proj.js';
 
 import constants from './constants.js';
 
-import {getFeaturesFromIds, getFeaturesFromCoordinates} from './Querent.js';
 import * as themes from './Themes.js';
-
+import {getFeaturesFromCoordinates, getFeaturesFromIds} from './Querent.js';
 
 /**
  * @type {Array<string>}
  */
 const EXCLUDE_PROPERTIES = ['boundedBy'];
 
-
 /**
  * @private
  * @hidden
  */
 class Map {
-
   /**
    * @param {Object} options API options.
    * @property {string} div
@@ -58,7 +55,6 @@ class Map {
    * TODO: more options
    */
   constructor(options) {
-
     /**
      * @private
      * @type {View}
@@ -67,7 +63,7 @@ class Map {
       projection: getProjection(constants.projection),
       extent: constants.extent,
       resolutions: constants.resolutions,
-      zoom: options.zoom !== undefined ? options.zoom : 10
+      zoom: options.zoom !== undefined ? options.zoom : 10,
     });
 
     if (options.center !== undefined) {
@@ -82,7 +78,7 @@ class Map {
      */
     this.map_ = new OLMap({
       target: options.div,
-      view: this.view_
+      view: this.view_,
     });
 
     /**
@@ -92,18 +88,20 @@ class Map {
     this.overlay_ = new Overlay({
       autoPan: true,
       autoPanAnimation: {
-        duration: 80
+        duration: 80,
       },
-      element: this.createOverlayDomTree_()
+      element: this.createOverlayDomTree_(),
     });
     this.map_.addOverlay(this.overlay_);
 
     this.map_.addControl(new ScaleLine());
 
     if (options.showCoords) {
-      this.map_.addControl(new MousePosition({
-        coordinateFormat: createStringXY(0)
-      }));
+      this.map_.addControl(
+        new MousePosition({
+          coordinateFormat: createStringXY(0),
+        })
+      );
     }
 
     if (options.addLayerSwitcher) {
@@ -113,7 +111,9 @@ class Map {
     // Get background layer first...
     themes.getBackgroundLayers().then((layers) => {
       // The options is an array for backward compatibility reason.
-      const backgroundLayer = options.backgroundLayers || [constants.backgroundLayer];
+      const backgroundLayer = options.backgroundLayers || [
+        constants.backgroundLayer,
+      ];
       for (const layer of layers) {
         if (backgroundLayer.includes(layer.get('config.name'))) {
           // we don't want the background layer in the layerswitch so we remove the title.
@@ -121,15 +121,17 @@ class Map {
           this.map_.addLayer(layer);
 
           if (options.addMiniMap) {
-            this.map_.addControl(new OverviewMap({
-              // @ts-ignore: layers param in overviewmap
-              layers: [layer],
-              collapsed: !options.miniMapExpanded,
-              view: new View({
-                projection: this.view_.getProjection(),
-                resolutions: this.view_.getResolutions()
+            this.map_.addControl(
+              new OverviewMap({
+                // @ts-ignore: layers param in overviewmap
+                layers: [layer],
+                collapsed: !options.miniMapExpanded,
+                view: new View({
+                  projection: this.view_.getProjection(),
+                  resolutions: this.view_.getResolutions(),
+                }),
               })
-            }));
+            );
           }
         }
       }
@@ -160,7 +162,7 @@ class Map {
     this.vectorLayer_ = new VectorLayer({
       zIndex: 1,
       style: null,
-      source: this.vectorSource_
+      source: this.vectorSource_,
     });
 
     this.map_.addLayer(this.vectorLayer_);
@@ -172,7 +174,7 @@ class Map {
         const hasDescription = feature.get('description') !== undefined;
         return hasId && hasTitle && hasDescription;
       },
-      style: () => null
+      style: () => null,
     });
     this.map_.addInteraction(this.selectInteraction_);
 
@@ -183,22 +185,28 @@ class Map {
       }
     });
 
-
     this.map_.on('singleclick', (event) => {
       const resolution = this.map_.getView().getResolution();
-      const visibleLayers = this.map_.getLayers().getArray().filter(layer => layer.getVisible());
-      const visibleLayersName = visibleLayers.map(layer => layer.get('config.name'));
+      const visibleLayers = this.map_
+        .getLayers()
+        .getArray()
+        .filter((layer) => layer.getVisible());
+      const visibleLayersName = visibleLayers.map((layer) =>
+        layer.get('config.name')
+      );
 
       this.clearSelection();
 
       for (const layer of constants.queryableLayers) {
         if (visibleLayersName.includes(layer)) {
-          getFeaturesFromCoordinates(layer, event.coordinate, resolution).then((feature) => {
-            if (feature) {
-              this.vectorSource_.addFeature(feature);
-              this.selectObject(feature.getId(), event.coordinate, true);
+          getFeaturesFromCoordinates(layer, event.coordinate, resolution).then(
+            (feature) => {
+              if (feature) {
+                this.vectorSource_.addFeature(feature);
+                this.selectObject(feature.getId(), event.coordinate, true);
+              }
             }
-          });
+          );
         }
       }
     });
@@ -243,15 +251,19 @@ class Map {
    */
   addMarker(options = {}) {
     const marker = new Feature({
-      geometry: new Point(options.position ? options.position : this.view_.getCenter())
+      geometry: new Point(
+        options.position ? options.position : this.view_.getCenter()
+      ),
     });
     if (options.icon) {
       // FIXME: use size?
-      marker.setStyle(new Style({
-        image: new Icon({
-          src: options.icon
+      marker.setStyle(
+        new Style({
+          image: new Icon({
+            src: options.icon,
+          }),
         })
-      }));
+      );
     } else {
       marker.setStyle(createDefaultStyle);
     }
@@ -303,7 +315,7 @@ class Map {
    */
   addCustomLayer(type, name, url, options = {}) {
     fetch(url)
-      .then(response => response.text())
+      .then((response) => response.text())
       .then((text) => {
         const attr = options.attr || ['title', 'description'];
         const lines = text.split(/\r\n|\r|\n/);
@@ -313,23 +325,30 @@ class Map {
             const values = zip(columns, line.split('\t'));
             // reverse to order of the coordinates to be compatible with the old api.
             const marker = new Feature({
-              geometry: new Point(values.point.split(',').reverse().map(parseFloat))
+              geometry: new Point(
+                values.point.split(',').reverse().map(parseFloat)
+              ),
             });
             marker.setProperties(filterByKeys(values, attr));
             marker.setId(values.id);
             let anchor;
             if (values.iconOffset) {
               // flip the sign of the value to be compatible with the old api.
-              anchor = values.iconOffset.split(',').map(parseFloat).map(val => val * Math.sign(val));
+              anchor = values.iconOffset
+                .split(',')
+                .map(parseFloat)
+                .map((val) => val * Math.sign(val));
             }
-            marker.setStyle(new Style({
-              image: new Icon({
-                src: values.icon,
-                anchorXUnits: 'pixels',
-                anchorYUnits: 'pixels',
-                anchor: anchor
+            marker.setStyle(
+              new Style({
+                image: new Icon({
+                  src: values.icon,
+                  anchorXUnits: 'pixels',
+                  anchorYUnits: 'pixels',
+                  anchor: anchor,
+                }),
               })
-            }));
+            );
             this.vectorSource_.addFeature(marker);
           }
         }
@@ -361,25 +380,33 @@ class Map {
       }
       const geometryName = feature.getGeometryName();
       const properties = feature.getProperties();
-      let contentHTML = '';
-      if (table) {
-        contentHTML += '<table><tbody>';
-        for (const key in properties) {
-          if (!EXCLUDE_PROPERTIES.includes(key) && key !== geometryName && properties[key] !== undefined) {
-            contentHTML += '<tr>';
-            contentHTML += `<th>${key}</th>`;
-            contentHTML += `<td>${properties[key]}</td>`;
-            contentHTML += '</tr>';
+      themes.getLocalePromise().then((translations) => {
+        let contentHTML = '';
+        if (table) {
+          contentHTML += '<table><tbody>';
+          for (const key in properties) {
+            if (
+              !EXCLUDE_PROPERTIES.includes(key) &&
+              key !== geometryName &&
+              properties[key] !== undefined
+            ) {
+              contentHTML += '<tr>';
+              contentHTML += `<th>${translations[key] || key}</th>`;
+              contentHTML += `<td>${properties[key]}</td>`;
+              contentHTML += '</tr>';
+            }
           }
+          contentHTML += '</tbody></table>';
+        } else {
+          contentHTML += `<div><b>${properties.title}</b></div>`;
+          contentHTML += `<p>${properties.description}</p>`;
         }
-        contentHTML += '</tbody></table>';
-      } else {
-        contentHTML += `<div><b>${properties.title}</b></div>`;
-        contentHTML += `<p>${properties.description}</p>`;
-      }
-      const content = this.overlay_.getElement().querySelector('.ol-popup-content');
-      content.innerHTML = contentHTML;
-      this.overlay_.setPosition(position);
+        const content = this.overlay_
+          .getElement()
+          .querySelector('.ol-popup-content');
+        content.innerHTML = contentHTML;
+        this.overlay_.setPosition(position);
+      });
     }
   }
 
@@ -409,7 +436,6 @@ function zip(keys, values) {
   return obj;
 }
 
-
 /**
  * @param {Object.<string, *>} obj Object.
  * @param {Array.<string>} keys keys.
@@ -424,6 +450,5 @@ function filterByKeys(obj, keys) {
   });
   return filtered;
 }
-
 
 export default Map;
