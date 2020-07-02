@@ -164,3 +164,5 @@ make transifex-init
 ```
 
 Update the references in the `index.html` file of the `gh-pages` branch.
+
+In the master branch add the new release branch in the `.github/workflows/audit.yaml` file.
