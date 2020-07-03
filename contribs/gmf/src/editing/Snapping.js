@@ -308,7 +308,7 @@ EditingSnappingService.prototype.setMap = function (map) {
     // (4) Listen when File data sources are added to the File Group
     //     (i.e. when vector files are imported using the Import tool,
     //     they create File data sources, which contain features that have
-    //     to be snaped on)
+    //     to be snapped on)
     const fileGroup = this.gmfDatasourceFileGroup_.fileGroup;
     if (fileGroup) {
       keys.push(
