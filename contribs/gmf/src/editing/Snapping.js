@@ -32,6 +32,21 @@ import olCollection, {CollectionEvent} from 'ol/Collection.js';
 import olFormatWFS from 'ol/format/WFS.js';
 import olInteractionSnap from 'ol/interaction/Snap.js';
 
+class CustomSnap extends olInteractionSnap {
+  /**
+   * @param {import('ol/interaction/Snap.js').Options} options
+   */
+  constructor(options) {
+    super(options);
+    document.body.addEventListener('keydown', (evt) => {
+      this.setActive(evt.keyCode !== 17); // Ctrl key
+    });
+    document.body.addEventListener('keyup', () => {
+      this.setActive(true);
+    });
+  }
+}
+
 /**
  * The snapping service of GMF. Responsible of collecting the treeCtrls that
  * support snapping and store them here. As soon as a treeCtrl state becomes
@@ -193,21 +208,6 @@ export function EditingSnappingService(
     : undefined;
 }
 
-class CustomSnap extends olInteractionSnap {
-  /**
-   * @param {import('ol/interaction/Snap.js').Options} options
-   */
-  constructor(options) {
-    super(options);
-    document.body.addEventListener('keydown', (evt) => {
-      this.setActive(evt.keyCode !== 17); // Ctrl key
-    });
-    document.body.addEventListener('keyup', () => {
-      this.setActive(true);
-    });
-  }
-}
-
 /**
  * In order for a `ol.interaction.Snap` to work properly, it has to be added
  * to the map after any draw interactions or other kinds of interactions that
@@ -258,7 +258,6 @@ EditingSnappingService.prototype.ensureSnapInteractionsOnTop = function () {
  * @param {?import("ol/Map.js").default} map Map
  */
 EditingSnappingService.prototype.setMap = function (map) {
-
   const keys = this.listenerKeys_;
 
   if (this.map_) {
@@ -313,18 +312,13 @@ EditingSnappingService.prototype.setMap = function (map) {
     const fileGroup = this.gmfDatasourceFileGroup_.fileGroup;
     if (fileGroup) {
       keys.push(
-        listen(
-          fileGroup.dataSourcesCollection,
-          'add',
-          this.handleFileGroupDataSourcesCollectionAdd_,
-          this
-        ),
+        listen(fileGroup.dataSourcesCollection, 'add', this.handleFileGroupDataSourcesCollectionAdd_, this),
         listen(
           fileGroup.dataSourcesCollection,
           'remove',
           this.handleFileGroupDataSourcesCollectionRemove_,
           this
-        ),
+        )
       );
     }
 
@@ -742,9 +736,7 @@ EditingSnappingService.prototype.refreshSnappingSource_ = function () {
  * @param {Event|import("ol/events/Event.js").default} evt Event
  * @private
  */
-EditingSnappingService.prototype.handleFileGroupDataSourcesCollectionAdd_ = function (
-  evt
-) {
+EditingSnappingService.prototype.handleFileGroupDataSourcesCollectionAdd_ = function (evt) {
   if (!(evt instanceof CollectionEvent)) {
     return;
   }
@@ -763,12 +755,9 @@ EditingSnappingService.prototype.handleFileGroupDataSourcesCollectionAdd_ = func
 
   // (2) Watch the visible property of the data source. When ON, the
   //     snap should be added. When OFF, it should be removed.
-  const visibleWatcherUnregister = this.rootScope_.$watch(
-    () => {
-      return fileDataSource.visible;
-    },
-    this.handleFileDataSourceVisibleChange_.bind(this, fileDataSource)
-  );
+  const visibleWatcherUnregister = this.rootScope_.$watch(() => {
+    return fileDataSource.visible;
+  }, this.handleFileDataSourceVisibleChange_.bind(this, fileDataSource));
 
   const uid = olUtilGetUid(fileDataSource);
 
@@ -791,9 +780,7 @@ EditingSnappingService.prototype.handleFileGroupDataSourcesCollectionAdd_ = func
  * @param {Event|import("ol/events/Event.js").default} evt Event
  * @private
  */
-EditingSnappingService.prototype.handleFileGroupDataSourcesCollectionRemove_ = function (
-  evt
-) {
+EditingSnappingService.prototype.handleFileGroupDataSourcesCollectionRemove_ = function (evt) {
   if (!(evt instanceof CollectionEvent)) {
     return;
   }
@@ -826,9 +813,7 @@ EditingSnappingService.prototype.handleFileGroupDataSourcesCollectionRemove_ = f
 /**
  * @private
  */
-EditingSnappingService.prototype.handleFileDataSourceVisibleChange_ = function (
-  fileDataSource
-) {
+EditingSnappingService.prototype.handleFileDataSourceVisibleChange_ = function (fileDataSource) {
   const uid = olUtilGetUid(fileDataSource);
   const item = this.cacheFileDataSource_[uid];
   const visible = fileDataSource.visible;

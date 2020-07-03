@@ -78,7 +78,7 @@ export class ExternalDatSourcesManager {
     ngeoDataSources,
     ngeoFile,
     ngeoLayerHelper
-) {
+  ) {
     // === Injected properties ===
 
     /**
