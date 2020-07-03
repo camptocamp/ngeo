@@ -811,6 +811,9 @@ EditingSnappingService.prototype.handleFileGroupDataSourcesCollectionRemove_ = f
 };
 
 /**
+ * Called when the "visible" property of a File data source
+ * changes. Add or remove the Snap interaction for that data source
+ * depending on the property value.
  * @private
  */
 EditingSnappingService.prototype.handleFileDataSourceVisibleChange_ = function (fileDataSource) {
