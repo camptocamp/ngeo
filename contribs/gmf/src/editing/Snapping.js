@@ -66,6 +66,8 @@ class CustomSnap extends olInteractionSnap {
  * @param {angular.auto.IInjectorService} $injector Angular injector.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @param {import('gmf/datasource/fileGroup.js').DataSourceFileGroup} gmfDatasourceFileGroup Group that contains file data sources.
+ * @param {import('gmf/themes.js').GmfSnappingConfig} gmfSnappingConfig Snapping configuration options for the
+ *     features in the Draw tool and in the "Layer Import / Local" tool.
  * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes The gmf Themes service.
  * @param {import("gmf/layertree/TreeManager.js").LayertreeTreeManager} gmfTreeManager The gmf TreeManager
  *    service.
@@ -83,6 +85,7 @@ export function EditingSnappingService(
   $injector,
   $timeout,
   gmfDatasourceFileGroup,
+  gmfSnappingConfig,
   gmfThemes,
   gmfTreeManager,
   ngeoFeatures
@@ -124,6 +127,12 @@ export function EditingSnappingService(
    * @private
    */
   this.gmfDatasourceFileGroup_ = gmfDatasourceFileGroup;
+
+  /**
+   * @type {import('gmf/themes.js').GmfSnappingConfig}
+   * @private
+   */
+  this.gmfSnappingConfig_ = gmfSnappingConfig;
 
   /**
    * @type {import("gmf/theme/Themes.js").ThemesService}
@@ -189,7 +198,10 @@ export function EditingSnappingService(
    * @private
    */
   this.ngeoFeaturesSnapInteraction_ = new CustomSnap({
+    edge: gmfSnappingConfig.edge,
     features: ngeoFeatures,
+    pixelTolerance: gmfSnappingConfig.tolerance,
+    vertex: gmfSnappingConfig.vertex,
   });
 
   /**
@@ -749,8 +761,12 @@ EditingSnappingService.prototype.handleFileGroupDataSourcesCollectionAdd_ = func
   // (1) Create Snap interaction and give it the features collection
   //     of the data source.
   const features = fileDataSource.featuresCollection;
+  const gmfSnappingConfig = this.gmfSnappingConfig_;
   const interaction = new CustomSnap({
+    edge: gmfSnappingConfig.edge,
     features,
+    pixelTolerance: gmfSnappingConfig.tolerance,
+    vertex: gmfSnappingConfig.vertex,
   });
 
   // (2) Watch the visible property of the data source. When ON, the
@@ -887,5 +903,10 @@ const module = angular.module('gmfSnapping', [
   ngeoLayertreeController.name,
 ]);
 module.service('gmfSnapping', EditingSnappingService);
+
+// Note: the gmfSnappingConfig are used for features from:
+// - the Draw tool
+// - the Layer Import / Local tool
+module.value('gmfSnappingConfig', {});
 
 export default module;
