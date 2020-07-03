@@ -30,6 +30,7 @@ import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources.js';
 import ngeoDatasourceFile from 'ngeo/datasource/File.js';
 import ngeoDatasourceFileGroup from 'ngeo/datasource/FileGroup.js';
 import ngeoDatasourceOGC, {Type, WMSInfoFormat} from 'ngeo/datasource/OGC.js';
+import gmfDatasourceFileGroup from 'gmf/datasource/fileGroup.js';
 import gmfExternalDatasourceOGC from 'gmf/datasource/ExternalOGC.js';
 import ngeoDatasourceOGCGroup from 'ngeo/datasource/OGCGroup.js';
 import ngeoDatasourceWMSGroup from 'ngeo/datasource/WMSGroup.js';
@@ -60,6 +61,7 @@ export class ExternalDatSourcesManager {
    * @param {angular.auto.IInjectorService} $injector Main injector.
    * @param {angular.IQService} $q The Angular $q service.
    * @param {angular.IScope} $rootScope The rootScope provider.
+   * @param {import('gmf/datasource/fileGroup.js').DataSourceFileGroup} gmfDatasourceFileGroup Group that contains file data sources.
    * @param {import("ngeo/datasource/DataSources.js").DataSource} ngeoDataSources Ngeo data sources service.
    * @param {import("ngeo/misc/File.js").FileService} ngeoFile Ngeo file.
    * @param {import("ngeo/map/LayerHelper.js").LayerHelper} ngeoLayerHelper Ngeo layer helper service.
@@ -67,7 +69,16 @@ export class ExternalDatSourcesManager {
    * @ngdoc service
    * @ngname gmfExternalDataSourcesManager
    */
-  constructor(gettextCatalog, $injector, $q, $rootScope, ngeoDataSources, ngeoFile, ngeoLayerHelper) {
+  constructor(
+    gettextCatalog,
+    $injector,
+    $q,
+    $rootScope,
+    gmfDatasourceFileGroup,
+    ngeoDataSources,
+    ngeoFile,
+    ngeoLayerHelper
+) {
     // === Injected properties ===
 
     /**
@@ -146,6 +157,7 @@ export class ExternalDatSourcesManager {
       injector: this.injector_,
       title: gettextCatalog.getString('Local files'),
     });
+    gmfDatasourceFileGroup.fileGroup = this.fileGroup_;
 
     /**
      * Collection of WMS groups.
@@ -738,6 +750,7 @@ function getId(layer) {
  * @hidden
  */
 const module = angular.module('gmfExternalDataSourcesManager', [
+  gmfDatasourceFileGroup.name,
   ngeoMapLayerHelper.name,
   ngeoMiscFile.name,
   ngeoDatasourceDataSources.name,

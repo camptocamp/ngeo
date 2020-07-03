@@ -114,6 +114,7 @@ module.directive('gmfDrawfeature', drawinfDrawFeatureComponent);
  * @param {angular.IScope} $scope Angular scope.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
+ * @param {import("gmf/editing/Snapping.js").EditingSnappingService} gmfSnapping The gmf snapping service.
  * @param {import("ngeo/misc/FeatureHelper.js").FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
  * @param {import("ol/Collection.js").default<Feature<import("ol/geom/Geometry.js").default>>} ngeoFeatures Collection
  *    of features.
@@ -126,7 +127,15 @@ module.directive('gmfDrawfeature', drawinfDrawFeatureComponent);
  * @ngdoc controller
  * @ngname GmfDrawfeatureController
  */
-function Controller($scope, $timeout, gettextCatalog, ngeoFeatureHelper, ngeoFeatures, ngeoToolActivateMgr) {
+function Controller(
+  $scope,
+  $timeout,
+  gettextCatalog,
+  gmfSnapping,
+  ngeoFeatureHelper,
+  ngeoFeatures,
+  ngeoToolActivateMgr
+) {
   /**
    * @type {?import("ol/Map.js").default}
    */
@@ -179,6 +188,12 @@ function Controller($scope, $timeout, gettextCatalog, ngeoFeatureHelper, ngeoFea
    * @private
    */
   this.timeout_ = $timeout;
+
+  /**
+   * @type {import("gmf/editing/Snapping.js").EditingSnappingService}
+   * @private
+   */
+  this.gmfSnapping_ = gmfSnapping;
 
   /**
    * @type {import("ngeo/misc/FeatureHelper.js").FeatureHelper}
@@ -345,6 +360,7 @@ function Controller($scope, $timeout, gettextCatalog, ngeoFeatureHelper, ngeoFea
           this.featureHelper_.fitMapToFeature(newFeature, this.map);
           this.listSelectionInProgress_ = false;
         }
+        this.gmfSnapping_.ensureSnapInteractionsOnTop();
       } else {
         this.closeMenu_();
       }
