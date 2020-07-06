@@ -1,7 +1,8 @@
 const path = require('path');
-const webpackMerge = require('webpack-merge');
+const { merge } = require('webpack-merge');
 
-const webpackConfig = webpackMerge(
+
+const webpackConfig = merge(
   require('./buildtools/webpack.commons')(),
   require('./buildtools/webpack.dev')()
 );

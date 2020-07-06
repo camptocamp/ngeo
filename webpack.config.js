@@ -1,4 +1,4 @@
-const webpackMerge = require('webpack-merge');
+const { merge } = require('webpack-merge');
 
 module.exports = (env, args) => {
   const nodeEnv = args.mode || 'production';
@@ -8,10 +8,10 @@ module.exports = (env, args) => {
 
   switch (nodeEnv) {
     case 'development':
-      config = webpackMerge(config, require('./buildtools/webpack.dev')());
+      config = merge(config, require('./buildtools/webpack.dev')());
       break;
     case 'production':
-      config = webpackMerge(config, require('./buildtools/webpack.prod')());
+      config = merge(config, require('./buildtools/webpack.prod')());
       break;
     default:
       console.log(`The 'NODE_ENV' environment variable is set to an invalid value: ${process.env.NODE_ENV}.`);
@@ -20,13 +20,13 @@ module.exports = (env, args) => {
 
   switch (process.env.TARGET) {
     case 'ngeo-examples':
-      config = webpackMerge(config, require('./buildtools/webpack.ngeoexamples'));
+      config = merge(config, require('./buildtools/webpack.ngeoexamples'));
       break;
     case 'gmf-examples':
-      config = webpackMerge(config, require('./buildtools/webpack.gmfexamples'));
+      config = merge(config, require('./buildtools/webpack.gmfexamples'));
       break;
     case 'gmf-apps':
-      config = webpackMerge(config, require('./buildtools/webpack.gmfapps'));
+      config = merge(config, require('./buildtools/webpack.gmfapps'));
       break;
     default:
       console.log(`The 'TARGET' environment variable is set to an invalid value: ${process.env.TARGET}.`);
