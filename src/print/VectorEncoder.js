@@ -342,10 +342,14 @@ VectorEncoder.prototype.encodeVectorStylePoint = function (symbolizers, imageSty
       const strokeShape = imageStyle.getStroke();
       if (strokeShape !== null) {
         this.encodeVectorStyleStroke(symbolizer, strokeShape);
+      } else {
+        symbolizer.strokeOpacity = 0;
       }
       const fillShape = imageStyle.getFill();
       if (fillShape !== null) {
         this.encodeVectorStyleFill(symbolizer, fillShape);
+      } else {
+        symbolizer.fillOpacity = 0;
       }
     }
   }
