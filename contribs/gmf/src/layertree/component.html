@@ -70,13 +70,8 @@
     href
     data-sentry="id:{{layertreeCtrl.node.id}}"
     ng-click="::gmfLayertreeCtrl.toggleActive(layertreeCtrl)"
-    class="gmf-layertree-name"
-    data-toggle="tooltip"
-    data-placement="top"
-    title="{{layertreeCtrl.node.name | translate}}">
-
+    class="gmf-layertree-name">
     {{layertreeCtrl.node.name | translate}}
-
     <i ng-if="gmfLayertreeCtrl.gmfLayerBeingSwipe.layer && gmfLayertreeCtrl.gmfLayerBeingSwipe.layer === layertreeCtrl.layer">
       <%=require('ngeo/icons/swipe.svg?viewbox&width=1em')%>
     </i>
@@ -84,7 +79,7 @@
     <i
       class="gmf-layertree-zoom"
       data-toggle="tooltip"
-      data-placement="bottom"
+      data-placement="top"
       data-title="{{'Not visible at current scale. Click to zoom.'|translate}}"
       ng-click="::gmfLayertreeCtrl.zoomToResolution(layertreeCtrl); $event.preventDefault(); $event.stopPropagation();"
       ng-if="gmfLayertreeCtrl.getNodeState(layertreeCtrl) == 'on'"
@@ -98,7 +93,10 @@
       <span
         ngeo-popover-anchor
         class="far fa-clock"
-        ng-click="$event.preventDefault(); $event.stopPropagation()">
+        ng-click="$event.preventDefault(); $event.stopPropagation()"
+        data-toggle="tooltip"
+        data-placement="top"
+        title="{{'Click to enter a period.'|translate}}">
       </span>
 
       <div ngeo-popover-content>
@@ -129,6 +127,9 @@
       ng-if="layertreeCtrl.node.metadata.snappingConfig"
       ng-class="gmfLayertreeCtrl.isSnappingActivated(layertreeCtrl) ? 'on' : 'off'"
       ng-click="gmfLayertreeCtrl.toggleSnapping(layertreeCtrl); $event.preventDefault(); $event.stopPropagation();"
+      data-toggle="tooltip"
+      data-placement="top"
+      data-title="{{'Click to toggle snapping.'|translate}}"
     >
     </span>
   </a>
