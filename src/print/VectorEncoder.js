@@ -307,45 +307,17 @@ VectorEncoder.prototype.encodeVectorStylePoint = function (symbolizers, imageSty
     }
   } else if (imageStyle instanceof olStyleRegularShape) {
     /**
-     * Mapfish Print does not support image defined with ol.style.RegularShape.
-     * As a workaround, I try to map the image on a well-known image name.
+     * The regular shapes cannot always be translated to mapfish print shapes; use an image instead.
      */
-    const points = /** @type {import("ol/style/RegularShape.js").default} */ (imageStyle).getPoints();
-    if (points !== null) {
-      symbolizer = /** @type {import('ngeo/print/mapfish-print-v3.js').MapFishPrintSymbolizerPoint} */ ({
-        type: 'point',
-      });
-      if (points === 4) {
-        symbolizer.graphicName = 'square';
-      } else if (points === 3) {
-        symbolizer.graphicName = 'triangle';
-      } else if (points === 5) {
-        symbolizer.graphicName = 'star';
-      } else if (points === 8) {
-        symbolizer.graphicName = 'cross';
-      }
-      const sizeShape = imageStyle.getSize();
-      if (sizeShape !== null) {
-        symbolizer.graphicWidth = sizeShape[0];
-        symbolizer.graphicHeight = sizeShape[1];
-      }
-      const rotationShape = imageStyle.getRotation();
-      if (!isNaN(rotationShape) && rotationShape !== 0) {
-        symbolizer.rotation = toDegrees(rotationShape);
-      }
-      const opacityShape = imageStyle.getOpacity();
-      if (opacityShape !== null) {
-        symbolizer.graphicOpacity = opacityShape;
-      }
-      const strokeShape = imageStyle.getStroke();
-      if (strokeShape !== null) {
-        this.encodeVectorStyleStroke(symbolizer, strokeShape);
-      }
-      const fillShape = imageStyle.getFill();
-      if (fillShape !== null) {
-        this.encodeVectorStyleFill(symbolizer, fillShape);
-      }
-    }
+    symbolizer = /** @type {import('ngeo/print/mapfish-print-v3.js').MapFishPrintSymbolizerPoint} */ ({
+      type: 'point',
+      externalGraphic: imageStyle.getImage().toDataURL(),
+    });
+
+    const [height, width] = imageStyle.getSize();
+    const scale = imageStyle.getScale();
+    symbolizer.graphicHeight = height * scale;
+    symbolizer.graphicWidth = width * scale;
   }
   if (symbolizer !== undefined) {
     symbolizers.push(symbolizer);
