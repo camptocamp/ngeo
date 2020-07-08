@@ -316,13 +316,15 @@ VectorEncoder.prototype.encodeVectorStylePoint = function (symbolizers, imageSty
         type: 'point',
       });
       if (points === 4) {
-        symbolizer.graphicName = 'square';
+        if (imageStyle.getRadius2() === 0) {
+          symbolizer.graphicName = 'cross';
+        } else {
+          symbolizer.graphicName = 'square';
+        }
       } else if (points === 3) {
         symbolizer.graphicName = 'triangle';
       } else if (points === 5) {
         symbolizer.graphicName = 'star';
-      } else if (points === 8) {
-        symbolizer.graphicName = 'cross';
       }
       const sizeShape = imageStyle.getSize();
       if (sizeShape !== null) {
@@ -339,13 +341,20 @@ VectorEncoder.prototype.encodeVectorStylePoint = function (symbolizers, imageSty
       if (opacityShape !== null) {
         symbolizer.graphicOpacity = opacityShape;
       }
-      const strokeShape = imageStyle.getStroke();
+
+      let strokeShape = imageStyle.getStroke();
+      let fillShape = imageStyle.getFill();
+      if (symbolizer.graphicName === 'cross') {
+        // The 'cross' is an unclosed shape; to have a similar rendering as OpenLayers
+        // the fill and stroke style must be swapped.
+        [strokeShape, fillShape] = [fillShape, strokeShape];
+      }
+
       if (strokeShape !== null) {
         this.encodeVectorStyleStroke(symbolizer, strokeShape);
       } else {
         symbolizer.strokeOpacity = 0;
       }
-      const fillShape = imageStyle.getFill();
       if (fillShape !== null) {
         this.encodeVectorStyleFill(symbolizer, fillShape);
       } else {
