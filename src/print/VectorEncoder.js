@@ -329,9 +329,11 @@ VectorEncoder.prototype.encodeVectorStylePoint = function (symbolizers, imageSty
         symbolizer.graphicWidth = sizeShape[0];
         symbolizer.graphicHeight = sizeShape[1];
       }
-      const rotationShape = imageStyle.getRotation();
-      if (!isNaN(rotationShape) && rotationShape !== 0) {
-        symbolizer.rotation = toDegrees(rotationShape);
+      const rotationShape = imageStyle.getRotation() || 0;
+      const angleShape = imageStyle.getAngle() || 0;
+      const rotation = rotationShape + angleShape;
+      if (rotation !== 0) {
+        symbolizer.rotation = toDegrees(rotation);
       }
       const opacityShape = imageStyle.getOpacity();
       if (opacityShape !== null) {
