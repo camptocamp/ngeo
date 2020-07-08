@@ -198,6 +198,7 @@ const layertreeComponent = {
     'map': '=gmfLayertreeMap',
     'dimensions': '=?gmfLayertreeDimensions',
     'openLinksInNewWindow': '<?gmfLayertreeOpenlinksinnewwindow',
+    'isExpanded': '<?gmfLayertreeIsexpanded',
   },
   template: gmfLayertreeTemplate,
 };
@@ -253,6 +254,9 @@ function Controller(
    * @type {?Object<string, string>}
    */
   this.dimensions = null;
+
+  /** @type {boolean} */
+  this.isExpanded;
 
   /**
    * @type {angular.IScope}
