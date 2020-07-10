@@ -241,12 +241,12 @@ function fillDependency(
     if (assetUrl.startsWith('~')) {
       usedContext.resolve(usedContext.resourcePath, assetName, (err, resolvedFile) => {
         if (err) {
-          console.log(err);
+          console.error('error with fillDependency', assetName, err);
           reject(err);
         } else {
           fs.readFile(resolvedFile, (err, data) => {
             if (err) {
-              console.log(err);
+              console.error('error reading file', resolvedFile, err);
               reject(err);
             } else {
               usedContext.resourcePath = assetName;
@@ -266,7 +266,7 @@ function fillDependency(
     } else {
       fs.readFile(assetName, (err, data) => {
         if (err) {
-          console.log(err);
+          console.error('error reading asset', assetName, err);
           reject(err);
         } else {
           usedContext.resourcePath = assetName;
@@ -351,7 +351,7 @@ function manageContent(pluginOptions, usedContext, compilation, chunk, resolve, 
             );
           }
         } catch (e) {
-          console.error(e.stack || e);
+          console.error('plugin error', e.stack || e);
           callback(`SCSS plugin error, ${e}`);
         }
         return url;
@@ -390,7 +390,7 @@ function manageContent(pluginOptions, usedContext, compilation, chunk, resolve, 
       usedContext.resourcePath = originalResourcePath;
       resolve();
     } catch (e) {
-      console.error(e.stack || e);
+      console.error('manage content error', e.stack || e);
       callback(`SCSS plugin error, ${e}`);
     }
   };
@@ -424,7 +424,8 @@ function processAsset(files) {
                 position++;
                 browse(position);
               },
-              () => {
+              (...args) => {
+                console.error('mergedSources error', ...args);
                 reject(`${position}, ${file}`);
               }
             );
