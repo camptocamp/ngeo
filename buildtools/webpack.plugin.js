@@ -316,8 +316,12 @@ function manageContent(pluginOptions, usedContext, compilation, chunk, resolve, 
         }
         try {
           const assetUrl = url.getValue();
-          if (assetUrl[0] == '~') {
-            let assetName = assetUrl.substr(1);
+          console.log('asset url', assetUrl);
+          if (assetUrl[0] == '~' || assetUrl[0] === '.') {
+            let assetName = assetUrl;
+            if (assetUrl[0] == '~') {
+              assetName = assetName.substr(1);
+            }
             let queryString = '';
             const questionMarkIndex = assetName.indexOf('?');
             if (questionMarkIndex > 0) {
