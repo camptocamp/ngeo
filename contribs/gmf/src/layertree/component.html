@@ -191,13 +191,16 @@
               {{'Swipe with this layer'| translate}}
             </a>
           </li>
-          <li ng-if="layertreeCtrl.getDataSource() && layertreeCtrl.getDataSource().filtrable">
+          <li ng-if="::gmfLayertreeCtrl.isFiltrable(layertreeCtrl)">
             <i class="fa fa-filter fa-fw"></i>
             <a
               ng-click="gmfLayertreeCtrl.toggleFiltrableDataSource(layertreeCtrl.getDataSource())"
               href="">
               {{'Filter'|translate}}
             </a>
+          </li>
+          <li class="more-options-info" ng-if="::gmfLayertreeCtrl.getFirstParentWithLayerFunctions(layertreeCtrl) !== null">
+            <span>{{'More options at the group level'||translate}}</span>
           </li>
         </ul>
       </div>
@@ -229,6 +232,10 @@
   class="gmf-layertree-node-menu d-none"
   id="gmf-layertree-node-menu-{{::layertreeCtrl.uid}}"
   ng-if="::gmfLayertreeCtrl.supportsCustomization(layertreeCtrl)">
+
+  <div class="more-options-info" ng-if="::gmfLayertreeCtrl.getFirstParentWithLayerFunctions(layertreeCtrl) !== null">
+     <span>{{'More options at the group level'||translate}}</span>
+  </div>
 
   <div ng-if="::gmfLayertreeCtrl.supportsOpacityChange(layertreeCtrl)">
     <i class="fa fa-tint fa-fw"></i>
