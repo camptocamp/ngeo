@@ -162,7 +162,7 @@
 
       <div ngeo-popover-content>
         <ul>
-          <li ng-if="::(layertreeCtrl.depth === 1 && !layertreeCtrl.node.mixed) || (layertreeCtrl.depth > 1 && layertreeCtrl.parent.node.mixed)">
+          <li ng-if="::gmfLayertreeCtrl.supportsOpacityChange(layertreeCtrl)">
             <i class="fa fa-tint fa-fw"></i>
             <span>{{'Opacity'|translate}}</span>
             <input
