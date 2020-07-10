@@ -16,7 +16,7 @@ jobs:
 
           async function run() {
             // Get client and context
-            const client = new github.GitHub(process.env.GITHUB_TOKEN);
+            const client = new github.getOctokit(process.env.GITHUB_TOKEN);
 
             await client.pulls.createReview({
               owner: github.context.issue.owner,
