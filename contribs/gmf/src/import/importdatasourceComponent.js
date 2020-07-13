@@ -234,7 +234,7 @@ class Controller {
     this.wmtsCapabilities = null;
 
     /**
-     * @type {?Bloodhound<string>}
+     * @type {?Bloodhound<ExternalOGCServer>}
      * @private
      */
     this.serversEngine_ = null;
@@ -248,7 +248,6 @@ class Controller {
     const servers = $injector.has('gmfExternalOGCServers') ? $injector.get('gmfExternalOGCServers') : null;
 
     if (servers) {
-      const serverUrls = servers.map((server) => server.url);
       this.serversEngine_ = new Bloodhound({
         /**
          * Allows search queries to match from string from anywhere within
@@ -258,14 +257,15 @@ class Controller {
          * Borrowed from:
          * https://stackoverflow.com/questions/22059933/twitter-typeahead-js-how-to-return-all-matched-elements-within-a-string
          *
-         * @param {string} datum Datum.
+         * @param {ExternalOGCServer} datum Datum.
          * @return {string[]} List of datum tokenizers.
          */
         datumTokenizer: (datum) => {
-          if (typeof datum != 'string') {
+          if (!(typeof datum === 'object' && datum.name && datum.url)) {
             throw new Error('Wrong datum type');
           }
-          const originalDatumTokenizers = Bloodhound.tokenizers.whitespace(datum);
+          const originalDatumTokenizers = Bloodhound.tokenizers.whitespace('name');
+          // const originalDatumTokenizers = Bloodhound.tokenizers.whitespace(datum);
           if (!originalDatumTokenizers) {
             throw new Error('Missing originalDatumTokenizers');
           }
@@ -280,7 +280,7 @@ class Controller {
           return datumTokenizers;
         },
         queryTokenizer: Bloodhound.tokenizers.whitespace,
-        local: serverUrls,
+        local: servers,
       });
     }
 
@@ -309,7 +309,7 @@ class Controller {
     if (this.serversEngine_) {
       /**
        * @param {string} query Query string.
-       * @param {function(Array<string>):void} sync
+       * @param {function(Array<ExternalOGCServer>):void} sync
        */
       const serversEngineWithDefaults = (query, sync) => {
         if (!this.serversEngine_) {
@@ -336,11 +336,17 @@ class Controller {
             {
               name: 'url',
               source: serversEngineWithDefaults,
+              displayKey: 'url',
+              templates: {
+                suggestion: function (item) {
+                  return `<div> ${item.name}</div>`;
+                },
+              },
             }
           )
           .bind('typeahead:select', (ev, suggestion) => {
             this.timeout_(() => {
-              this.url = suggestion;
+              this.url = suggestion.url;
               this.scope_.$apply();
               $connectBtn.focus();
             });
