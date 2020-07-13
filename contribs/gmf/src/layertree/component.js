@@ -965,10 +965,35 @@ Controller.prototype.supportsLegend = function (treeCtrl) {
  */
 Controller.prototype.supportsOpacityChange = function (treeCtrl) {
   const node = /** @type {import('gmf/themes.js').GmfGroup} */ (treeCtrl.node);
-  const parentNode = /** @type {import('gmf/themes.js').GmfGroup} */ (treeCtrl.parent.node);
   return (
-    !!treeCtrl.layer && ((treeCtrl.depth === 1 && !node.mixed) || (treeCtrl.depth > 1 && parentNode.mixed))
+    !!treeCtrl.layer &&
+    ((treeCtrl.depth === 1 && !node.mixed) || (treeCtrl.depth > 1 && treeCtrl.parent.node.mixed))
   );
+};
+
+/**
+ * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl Ngeo tree controller.
+ * @return {boolean} Whether the layer tree controller has a filtrable datasource or not.
+ */
+Controller.prototype.isFiltrable = function (treeCtrl) {
+  const datasource = treeCtrl.getDataSource();
+  return datasource ? datasource.filtrable : false;
+};
+
+/**
+ * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl Ngeo tree controller.
+ * @return {import("ngeo/layertree/Controller.js").LayertreeController} first parent that supports
+ *     opacity change or is filtrable. Or null if there is any parent with layer functions.
+ */
+Controller.prototype.getFirstParentWithLayerFunctions = function (treeCtrl) {
+  const parentTreeCtrl = /** @type {import("ngeo/layertree/Controller.js"} */ (treeCtrl.parent);
+  if (!parentTreeCtrl) {
+    return null;
+  }
+  if (this.supportsOpacityChange(parentTreeCtrl) || this.isFiltrable(parentTreeCtrl)) {
+    return parentTreeCtrl;
+  }
+  return this.getFirstParentWithLayerFunctions(parentTreeCtrl);
 };
 
 module.controller('GmfLayertreeController', Controller);
