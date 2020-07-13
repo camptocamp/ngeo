@@ -1,0 +1,15 @@
+Error on backporting to branch master, error on cherry picking ['e88df142f34b7033960c26dd499ab760d1ca35db', '375be349bd0f8da9548584d670d522e75fd9deba']:
+error: could not apply e88df142f... Use an image to print RegularShape
+hint: after resolving the conflicts, mark the corrected paths
+hint: with 'git add <paths>' or 'git rm <paths>'
+hint: and commit the result with 'git commit'
+
+
+
+to continue do:
+git fetch
+git checkout backport/6005-to-master
+git reset --hard HEAD^
+git cherry-pick e88df142f34b7033960c26dd499ab760d1ca35db
+git cherry-pick 375be349bd0f8da9548584d670d522e75fd9deba
+git push origin backport/6005-to-master --force
