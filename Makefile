@@ -293,7 +293,7 @@ contribs/dist: .build/build-dll.timestamp
 		.build/node_modules.timestamp \
 		.build/httpserver.timestamp
 	mkdir -p $(dir $@)
-	CI=true LANGUAGE=en_US node buildtools/check-example.js \
+	CI=true LANGUAGE=en_US buildtools/retry node buildtools/check-example.js \
 		.build/examples-hosted/$*.html
 	[ "$$(gm compare -metric RMSE -highlight-style xor .build/examples-hosted/$*.html.png \
 		examples/$*-ref.png -file .build/examples-hosted/$*.html.png-diff.png 2>&1 | \
@@ -304,7 +304,7 @@ contribs/dist: .build/build-dll.timestamp
 		.build/node_modules.timestamp \
 		.build/httpserver.timestamp
 	mkdir -p $(dir $@)
-	CI=true LANGUAGE=en_US node buildtools/check-example.js \
+	CI=true LANGUAGE=en_US buildtools/retry node buildtools/check-example.js \
 		.build/examples-hosted/error.html
 	gm compare -metric RMSE -highlight-style xor .build/examples-hosted/error.html.png \
 		examples/error-ref.png -file .build/examples-hosted/error.html.png-diff.png
@@ -317,7 +317,7 @@ contribs/dist: .build/build-dll.timestamp
 		.build/node_modules.timestamp \
 		.build/httpserver.timestamp
 	mkdir -p $(dir $@)
-	CI=true LANGUAGE=en_US node buildtools/check-example.js \
+	CI=true LANGUAGE=en_US buildtools/retry node buildtools/check-example.js \
 		.build/examples-hosted/contribs/gmf/$*.html
 	[ "$$(gm compare -metric RMSE -highlight-style xor .build/examples-hosted/contribs/gmf/$*.html.png \
 		contribs/gmf/examples/$*-ref.png -file .build/examples-hosted/contribs/gmf/$*-diff.png 2>&1 | \
@@ -327,7 +327,7 @@ contribs/dist: .build/build-dll.timestamp
 .build/contribs/gmf/apps/%.check.timestamp: .build/gmf-apps.timestamp \
 		.build/httpserver.timestamp
 	mkdir -p $(dir $@)
-	CI=true LANGUAGE=en_US node buildtools/check-example.js \
+	CI=true LANGUAGE=en_US buildtools/retry node buildtools/check-example.js \
 		.build/examples-hosted/contribs/gmf/apps/$*.html
 	[ "$$(gm compare -metric RMSE -highlight-style xor .build/examples-hosted/contribs/gmf/apps/$*.html.png \
 		contribs/gmf/apps/$*-ref.png -file .build/examples-hosted/contribs/gmf/apps/$*-diff.png 2>&1 | \
@@ -337,7 +337,7 @@ contribs/dist: .build/build-dll.timestamp
 .build/test-check-example/%.check.timestamp: \
 		.build/httpserver.timestamp test/check-example/%.html
 	mkdir -p $(dir $@)
-	( ! CI=true LANGUAGE=en_US node buildtools/check-example.js test/check-example/$*.html)
+	( ! CI=true LANGUAGE=en_US buildtools/retry node buildtools/check-example.js test/check-example/$*.html)
 	touch $@
 
 .build/node_modules.timestamp: package.json
