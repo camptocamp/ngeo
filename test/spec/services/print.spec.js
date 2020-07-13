@@ -452,7 +452,7 @@ describe('ngeo.print.Service', () => {
         const expectedStyle = {
           version: 2,
         };
-        expectedStyle[`[_ngeo_style_0 = '${styleId0}-Point']`] = {
+        expectedStyle[`[_ngeo_style = '${styleId0}-Point']`] = {
           symbolizers: [
             {
               type: 'point',
@@ -463,7 +463,7 @@ describe('ngeo.print.Service', () => {
             },
           ],
         };
-        expectedStyle[`[_ngeo_style_0 = '${styleId0}-LineString']`] = {
+        expectedStyle[`[_ngeo_style = '${styleId0},${styleId1}-LineString']`] = {
           symbolizers: [
             {
               type: 'line',
@@ -471,10 +471,6 @@ describe('ngeo.print.Service', () => {
               strokeOpacity: 0.1,
               strokeWidth: 1,
             },
-          ],
-        };
-        expectedStyle[`[_ngeo_style_1 = '${styleId1}-LineString']`] = {
-          symbolizers: [
             {
               type: 'line',
               strokeColor: '#020202',
@@ -483,7 +479,7 @@ describe('ngeo.print.Service', () => {
             },
           ],
         };
-        expectedStyle[`[_ngeo_style_0 = '${styleId0}-Polygon']`] = {
+        expectedStyle[`[_ngeo_style = '${styleId0},${styleId2}-Polygon']`] = {
           symbolizers: [
             {
               type: 'polygon',
@@ -493,10 +489,6 @@ describe('ngeo.print.Service', () => {
               strokeOpacity: 0.1,
               strokeWidth: 1,
             },
-          ],
-        };
-        expectedStyle[`[_ngeo_style_1 = '${styleId2}-Polygon']`] = {
-          symbolizers: [
             {
               type: 'polygon',
               fillColor: '#030303',
@@ -507,7 +499,7 @@ describe('ngeo.print.Service', () => {
             },
           ],
         };
-        expectedStyle[`[_ngeo_style_0 = '${styleId3}-Point']`] = {
+        expectedStyle[`[_ngeo_style = '${styleId3},${styleId4}-Point']`] = {
           symbolizers: [
             {
               type: 'Text',
@@ -520,10 +512,6 @@ describe('ngeo.print.Service', () => {
               labelXOffset: 42,
               labelYOffset: 42,
             },
-          ],
-        };
-        expectedStyle[`[_ngeo_style_1 = '${styleId4}-Point']`] = {
-          symbolizers: [
             {
               type: 'Text',
               fontColor: '#030303',
@@ -541,28 +529,25 @@ describe('ngeo.print.Service', () => {
         // the expected properties of feature0
         const properties0 = {
           foo: '0',
-          '_ngeo_style_0': `${styleId0}-Point`,
+          '_ngeo_style': `${styleId0}-Point`,
         };
 
         // the expected properties of feature1
         const properties1 = {
           foo: '1',
-          '_ngeo_style_0': `${styleId0}-LineString`,
-          '_ngeo_style_1': `${styleId1}-LineString`,
+          '_ngeo_style': `${styleId0},${styleId1}-LineString`,
         };
 
         // the expected properties of feature2
         const properties2 = {
           foo: '2',
-          '_ngeo_style_0': `${styleId0}-Polygon`,
-          '_ngeo_style_1': `${styleId2}-Polygon`,
+          '_ngeo_style': `${styleId0},${styleId2}-Polygon`,
         };
 
         // the expected properties of feature3
         const properties3 = {
           foo: '3',
-          '_ngeo_style_0': `${styleId3}-Point`,
-          '_ngeo_style_1': `${styleId4}-Point`,
+          '_ngeo_style': `${styleId3},${styleId4}-Point`,
         };
 
         expect(spec).toEqual({
