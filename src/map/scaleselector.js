@@ -232,7 +232,7 @@ class ScaleselectorController {
    */
   handleResolutionChange_(e) {
     const view = this.map_.getView();
-    const currentScale = this.scales[/** @type {number} */ (view.getZoom())];
+    const currentScale = this.getCalculateScale(view.getZoom());
 
     // handleResolutionChange_ is a change:resolution listener. The listener
     // may be executed outside the Angular context, for example when the user
@@ -250,6 +250,28 @@ class ScaleselectorController {
         this.currentScale = currentScale;
       });
     }
+  }
+
+  /**
+   * Calculate a scale from a number representing an index of scales or
+   * from a number between two scales indexes.
+   * @param {number} zoom An int or float value representing an index of
+   *     scales or a value between two scales indexes.
+   * @return {number} A calculated scales value or undefined.
+   */
+  getCalculateScale(zoom) {
+    // if zoom is an index of scales, return the matching scale.
+    let scale = this.scales[zoom];
+    if (scale !== undefined) {
+      return scale;
+    }
+
+    // If zoom is not an exact index of scales, try to determine the current scales from the zoom value.
+    const flooredZoom = Math.floor(zoom);
+    const lowerScale = this.scales[flooredZoom];
+    const upperScale = this.scales[flooredZoom + 1];
+    scale = lowerScale - (lowerScale - upperScale) * (zoom - flooredZoom);
+    return isNaN(scale) ? undefined : Math.round(scale);
   }
 
   /**
