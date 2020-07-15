@@ -162,11 +162,13 @@ function loaded(page, browser) {
       if (url.startsWith('https://geomapfish-demo')) {
         request.headers().origin = 'http://localhost:3000';
       }
+      console.log(`Request: ${url}`);
       request.continue({
         url,
-        // Don't be intranet
         headers: {
+          // Don't be intranet
           'Forwarded': 'for=8.8.8.8;proto=https',
+          'Cache-Control': 'no-cache',
         },
       });
     } else if (
