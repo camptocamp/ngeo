@@ -65,6 +65,10 @@ describe('ngeo.misc.filters', () => {
     expect(unitPrefix(8192, 'o', 'binary')).toBe('8\u00a0Kio');
     expect(unitPrefix(1123.132, 'm')).toBe('1.12\u00a0km');
     expect(unitPrefix(1123.132, 'm', 'unit', 6)).toBe('1.12313\u00a0km');
+    expect(unitPrefix(999.51, 'm')).toBe('1\u00a0km');
+    expect(unitPrefix(999.49, 'm')).toBe('999\u00a0m');
+    expect(unitPrefix(995.1, 'm', undefined, 2)).toBe('1\u00a0km');
+    expect(unitPrefix(994.9, 'm', undefined, 2)).toBe('990\u00a0m');
   });
 
   it('Ngeo Number coordinates', () => {
