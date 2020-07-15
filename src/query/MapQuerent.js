@@ -227,7 +227,6 @@ export class MapQuerent {
         this.result_.total += source.features.length;
       }
       source.pending = false;
-      source.queried = false;
       source.tooManyResults = false;
     }
     if (!keep) {
@@ -338,7 +337,6 @@ export class MapQuerent {
             label: label,
             limit: limit,
             pending: false,
-            queried: true,
             tooManyResults: tooManyResults,
             totalFeatureCount: totalFeatureCount,
           });

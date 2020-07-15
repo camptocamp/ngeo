@@ -37,7 +37,6 @@ import olFormatWFS from 'ol/format/WFS.js';
  * @property {number} [limit] The maximum number of features that can be returned for a query with this
  *    source.
  * @property {boolean} pending Is the request for this source still ongoing?
- * @property {boolean} [queried] Has this source been queried for the last query request?
  * @property {boolean} [tooManyResults] If the last query for this source would return more features than the
  *    configured limit.
  * @property {number} [totalFeatureCount] If `tooManyResults` is `true`, this contains the total number of
