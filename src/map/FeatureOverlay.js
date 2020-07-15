@@ -71,6 +71,14 @@ FeatureOverlay.prototype.removeFeature = function (feature) {
 };
 
 /**
+ * Is empty.
+ * @returns {boolean} Is empty.
+ */
+FeatureOverlay.prototype.isEmpty = function () {
+  return this.features_.getLength() == 0;
+};
+
+/**
  * Remove all the features from the feature overlay.
  */
 FeatureOverlay.prototype.clear = function () {
