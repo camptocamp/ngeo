@@ -135,7 +135,12 @@ class Map {
     });
     this.map_.addOverlay(this.overlay_);
 
-    this.map_.addControl(new ScaleLine());
+    this.map_.addControl(
+      new ScaleLine({
+        // See: https://www.w3.org/TR/CSS21/syndata.html#length-units
+        dpi: 96,
+      })
+    );
 
     if (options.showCoords) {
       this.map_.addControl(
