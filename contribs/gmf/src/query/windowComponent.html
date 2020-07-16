@@ -120,7 +120,7 @@
             </li>
 
             <li
-              ng-repeat-start="source in ctrl.ngeoQueryResult.sources | filter: ctrl.sourcesFilter" ng-repeat-end
+              ng-repeat-start="source in ctrl.ngeoQueryResult.sources" ng-repeat-end
               ng-class="{'disabled': source.features.length <= 0}">
               <a
                 href="#"

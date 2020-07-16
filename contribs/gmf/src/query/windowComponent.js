@@ -130,8 +130,6 @@ function gmfDisplayquerywindowTemplateUrl($element, $attrs, gmfDisplayquerywindo
  *     collapsed.
  * @htmlAttribute {boolean} desktop If the component is used in the desktop
  *     application.
- * @htmlAttribute {boolean} showunqueriedlayers If also layers, that have not
- *     been queried for the last query, should be shown in the filter.
  *
  * @ngdoc component
  * @ngname gmfDisplayquerywindow
@@ -144,7 +142,6 @@ const queryWindowComponent = {
     'selectedFeatureStyleFn': '&gmfDisplayquerywindowSelectedfeaturestyle',
     'defaultCollapsedFn': '&?gmfDisplayquerywindowDefaultcollapsed',
     'desktop': '=gmfDisplayquerywindowDesktop',
-    'showUnqueriedLayers': '=gmfDisplayquerywindowShowunqueriedlayers',
   },
   templateUrl: gmfDisplayquerywindowTemplateUrl,
 };
@@ -187,18 +184,6 @@ export function QueryWindowController(
    * @type {boolean}
    */
   this.collapsed = !this.desktop;
-
-  /**
-   * @type {boolean}
-   * @private
-   */
-  this.showUnqueriedLayers_ = false;
-
-  /**
-   * Object that is used to filter the source list in the template.
-   * @type {Object}
-   */
-  this.sourcesFilter = {'queried': true};
 
   /**
    * @type {import('ngeo/query/MapQuerent.js').QueryResult}
@@ -276,8 +261,6 @@ export function QueryWindowController(
 
   this.defaultCollapsedFn = () => !this.desktop;
 
-  this.showUnqueriedLayers = false;
-
   /**
    * @type {?() => olStyleStyle}
    */
@@ -320,10 +303,6 @@ QueryWindowController.prototype.$onInit = function () {
   this.draggableContainment = this.draggableContainment || 'document';
   this.desktop = this.desktop;
   this.collapsed = this.defaultCollapsedFn();
-
-  this.showUnqueriedLayers_ = this.showUnqueriedLayers;
-
-  this.sourcesFilter = this.showUnqueriedLayers_ ? {} : {'queried': true};
 
   const featuresOverlay = this.ngeoFeatureOverlayMgr_.getFeatureOverlay();
   featuresOverlay.setFeatures(this.features_);
