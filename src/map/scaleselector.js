@@ -143,7 +143,6 @@ class ScaleselectorController {
      * @type {number[]}
      */
     this.scales = /** @type {number[]} */ ($scope.$eval(scalesExpr));
-    console.assert(this.scales !== undefined);
 
     /**
      * @type {number[]}
@@ -196,11 +195,41 @@ class ScaleselectorController {
     this.currentScale = undefined;
 
     const view = this.map_.getView();
-    if (view !== null) {
-      const currentZoom = this.map_.getView().getZoom();
-      if (currentZoom !== undefined) {
-        this.currentScale = this.getScale(currentZoom);
+
+    // See: https://www.w3.org/TR/CSS21/syndata.html#length-units
+    const dpi = 96;
+    const inchesPerMeter = 39.37;
+    const warningRatio = 1.5;
+
+    if (this.scales) {
+      for (let zoom = view.getMinZoom(); zoom <= view.getMaxZoom(); zoom++) {
+        const calculatedScale = Math.round(view.getResolutionForZoom(zoom) * inchesPerMeter * dpi);
+        // If zoom is an index of scales, return the matching scale.
+        const scale = this.scales[zoom];
+        if (scale == undefined) {
+          console.warn(
+            `Missing scale for zoom '${zoom}', set it to real calculated scale '${calculatedScale}'.`
+          );
+          this.scales[zoom] = calculatedScale;
+        } else {
+          if (Math.exp(Math.abs(Math.log(calculatedScale / scale))) > warningRatio) {
+            console.warn(
+              `Big deferance between configured scale '${scale}' ` +
+                `for zoom '${zoom}' and real calculated scale '${calculatedScale}'.`
+            );
+          }
+        }
       }
+    } else {
+      this.scales = [];
+      for (let zoom = view.getMinZoom(); zoom <= view.getMaxZoom(); zoom++) {
+        this.scales[zoom] = Math.round(view.getResolutionForZoom(zoom) * inchesPerMeter * dpi);
+      }
+    }
+
+    const currentZoom = this.map_.getView().getZoom();
+    if (currentZoom !== undefined) {
+      this.currentScale = this.getScale(currentZoom);
     }
 
     listen(this.map_, 'change:view', this.handleViewChange_, this);
@@ -216,7 +245,22 @@ class ScaleselectorController {
    * @return {number} Scale.
    */
   getScale(zoom) {
-    return this.scales[zoom];
+    if (zoom === undefined) {
+      return undefined;
+    }
+
+    // if zoom is an index of scales, return the matching scale.
+    let scale = this.scales[zoom];
+    if (scale !== undefined) {
+      return scale;
+    }
+
+    // If zoom is not an exact index of scales, try to determine the current scales from the zoom value.
+    const flooredZoom = Math.floor(zoom);
+    const lowerScale = this.scales[flooredZoom];
+    const upperScale = this.scales[flooredZoom + 1];
+    scale = lowerScale - (lowerScale - upperScale) * (zoom - flooredZoom);
+    return isNaN(scale) ? undefined : Math.round(scale);
   }
 
   /**
@@ -232,7 +276,7 @@ class ScaleselectorController {
    */
   handleResolutionChange_(e) {
     const view = this.map_.getView();
-    const currentScale = this.getCalculateScale(view.getZoom());
+    const currentScale = this.getScale(view.getZoom());
 
     // handleResolutionChange_ is a change:resolution listener. The listener
     // may be executed outside the Angular context, for example when the user
@@ -250,28 +294,6 @@ class ScaleselectorController {
         this.currentScale = currentScale;
       });
     }
-  }
-
-  /**
-   * Calculate a scale from a number representing an index of scales or
-   * from a number between two scales indexes.
-   * @param {number} zoom An int or float value representing an index of
-   *     scales or a value between two scales indexes.
-   * @return {number} A calculated scales value or undefined.
-   */
-  getCalculateScale(zoom) {
-    // if zoom is an index of scales, return the matching scale.
-    let scale = this.scales[zoom];
-    if (scale !== undefined) {
-      return scale;
-    }
-
-    // If zoom is not an exact index of scales, try to determine the current scales from the zoom value.
-    const flooredZoom = Math.floor(zoom);
-    const lowerScale = this.scales[flooredZoom];
-    const upperScale = this.scales[flooredZoom + 1];
-    scale = lowerScale - (lowerScale - upperScale) * (zoom - flooredZoom);
-    return isNaN(scale) ? undefined : Math.round(scale);
   }
 
   /**

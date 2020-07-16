@@ -54,7 +54,7 @@ describe('ngeo.map.scaleselector', () => {
 
   it('creates an element with expected number of li elements', () => {
     const lis = element.find('li');
-    expect(lis.length).toBe(5);
+    expect(lis.length).toBe(29);
   });
 
   describe('calling setZoom in Angular context', () => {
@@ -73,12 +73,13 @@ describe('ngeo.map.scaleselector', () => {
     });
   });
 
-  it('calls getCalculateScale', () => {
+  it('calls getScale', () => {
     const scope = element.scope();
-    expect(scope.scaleselectorCtrl.getCalculateScale(0)).toBe(scales[0]);
-    expect(scope.scaleselectorCtrl.getCalculateScale(0.5)).toEqual(750);
-    expect(scope.scaleselectorCtrl.getCalculateScale(4)).toBe(scales[4]);
-    expect(scope.scaleselectorCtrl.getCalculateScale(4.1)).toBeUndefined();
-    expect(scope.scaleselectorCtrl.getCalculateScale(undefined)).toBeUndefined();
+    expect(scope.scaleselectorCtrl.getScale(0)).toBe(scales[0]);
+    expect(scope.scaleselectorCtrl.getScale(0.5)).toEqual(750);
+    expect(scope.scaleselectorCtrl.getScale(4)).toBe(scales[4]);
+    expect(scope.scaleselectorCtrl.getScale(28)).toBe(2);
+    expect(scope.scaleselectorCtrl.getScale(28.1)).toBeUndefined();
+    expect(scope.scaleselectorCtrl.getScale(undefined)).toBeUndefined();
   });
 });
