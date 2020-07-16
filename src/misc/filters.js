@@ -236,6 +236,7 @@ function UnitPrefixFilter($filter) {
     if (opt_unit === undefined) {
       opt_unit = '';
     }
+    const comparatorFactor = 1 - 0.1 ** (opt_precision || 3) * 0.5;
     let divisor = 1000;
     let prefix = standardPrefix;
     if (opt_type === 'square') {
@@ -247,7 +248,7 @@ function UnitPrefixFilter($filter) {
 
     let index = 0;
     const index_max = prefix.length - 1;
-    while (number >= divisor && index < index_max) {
+    while (number >= divisor * comparatorFactor && index < index_max) {
       number = number / divisor;
       index++;
     }
