@@ -104,12 +104,16 @@ const module = angular.module('ngeoAngularFilters', []);
  * @ngname ngeoScalify
  */
 function ScalifyFilter($filter) {
-  const numberFilter = $filter('number');
+  const numberFilter = $filter('ngeoNumber');
   /**
    * @param {number} scale
+   * @param {number=} opt_precision The used precision, default is 2.
    */
-  const filterFn = function (scale) {
-    const text = numberFilter(scale, 0);
+  const filterFn = function (scale, opt_precision) {
+    if (opt_precision === undefined) {
+      opt_precision = 2;
+    }
+    const text = numberFilter(scale, opt_precision);
     return text ? `1\u00a0:\u00a0${text}` : '';
   };
   filterFn.$stateful = true;
