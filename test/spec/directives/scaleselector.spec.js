@@ -44,14 +44,7 @@ describe('ngeo.map.scaleselector', () => {
     );
 
     angular.mock.inject(($rootScope, $compile, $sce) => {
-      scales = {
-        '0': $sce.trustAsHtml("1&nbsp;:&nbsp;200'000'000"),
-        '1': $sce.trustAsHtml("1&nbsp;:&nbsp;100'000'000"),
-        '2': $sce.trustAsHtml("1&nbsp;:&nbsp;50'000'000"),
-        '3': $sce.trustAsHtml("1&nbsp;:&nbsp;25'000'000"),
-        '4': $sce.trustAsHtml("1&nbsp;:&nbsp;12'000'000"),
-      };
-
+      scales = [500, 1000, 5000, 25000, 50000];
       $rootScope.map = map;
       $rootScope.scales = scales;
       $compile(element)($rootScope);
@@ -61,7 +54,7 @@ describe('ngeo.map.scaleselector', () => {
 
   it('creates an element with expected number of li elements', () => {
     const lis = element.find('li');
-    expect(lis.length).toBe(5);
+    expect(lis.length).toBe(29);
   });
 
   describe('calling setZoom in Angular context', () => {
@@ -78,5 +71,15 @@ describe('ngeo.map.scaleselector', () => {
       // @ts-ignore: scope
       expect(scope.scaleselectorCtrl.currentScale).toBe(scales[4]);
     });
+  });
+
+  it('calls getScale', () => {
+    const scope = element.scope();
+    expect(scope.scaleselectorCtrl.getScale(0)).toBe(scales[0]);
+    expect(scope.scaleselectorCtrl.getScale(0.5)).toEqual(750);
+    expect(scope.scaleselectorCtrl.getScale(4)).toBe(scales[4]);
+    expect(scope.scaleselectorCtrl.getScale(28)).toBe(2);
+    expect(scope.scaleselectorCtrl.getScale(28.1)).toBeUndefined();
+    expect(scope.scaleselectorCtrl.getScale(undefined)).toBeUndefined();
   });
 });

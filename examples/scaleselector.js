@@ -59,7 +59,7 @@ function MainController($scope) {
    * @type {number[]}
    * @const
    */
-  this.scales = [200000000, 100000000, 50000000, 25000000, 12000000];
+  this.scales = [600000000, 300000000, 150000000, 70000000, 40000000];
 
   /**
    * Use the "dropup" variation of the Bootstrap dropdown.
