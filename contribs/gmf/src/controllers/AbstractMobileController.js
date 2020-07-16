@@ -69,7 +69,10 @@ export class AbstractMobileController extends AbstractAppController {
         layers: [],
         view: new olView(viewConfig),
         controls: config.mapControls || [
-          new olControlScaleLine(),
+          new olControlScaleLine({
+            // See: https://www.w3.org/TR/CSS21/syndata.html#length-units
+            dpi: 96,
+          }),
           new olControlZoom({
             zoomInTipLabel: '',
             zoomOutTipLabel: '',

@@ -275,7 +275,12 @@ function MainController() {
     }),
   });
 
-  this.map.addControl(new olControlScaleLine());
+  this.map.addControl(
+    new olControlScaleLine({
+      // See: https://www.w3.org/TR/CSS21/syndata.html#length-units
+      dpi: 96,
+    })
+  );
 }
 
 module.controller('MainController', MainController);

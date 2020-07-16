@@ -65,6 +65,8 @@ export class AbstractAPIController extends AbstractAppController {
       controls: config.mapControls || [
         new olControlScaleLine({
           target: scaleline,
+          // See: https://www.w3.org/TR/CSS21/syndata.html#length-units
+          dpi: 96,
         }),
         new olControlZoom({
           target: 'ol-zoom-control',
