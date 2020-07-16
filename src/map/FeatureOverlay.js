@@ -75,7 +75,7 @@ FeatureOverlay.prototype.removeFeature = function (feature) {
  * @returns {boolean} Is empty.
  */
 FeatureOverlay.prototype.isEmpty = function () {
-  return this.features_.getLength() == 0;
+  return !this.features_ || this.features_.getLength() == 0;
 };
 
 /**
