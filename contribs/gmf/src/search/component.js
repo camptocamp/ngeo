@@ -969,6 +969,7 @@ class SearchController {
   onClearButton() {
     this.featureOverlay_.clear();
     this.clear();
+    this.displayColorPicker = false;
   }
 
   /**
