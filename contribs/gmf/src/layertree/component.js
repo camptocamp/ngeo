@@ -807,6 +807,7 @@ Controller.prototype.removeNode = function (node) {
 Controller.prototype.removeAllNodes = function () {
   this.gmfTreeManager_.parseTreeNodes(this.root);
   this.gmfTreeManager_.removeAll();
+  this.gmfExternalDataSourcesManager.removeAll();
 };
 
 /**
