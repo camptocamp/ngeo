@@ -681,6 +681,32 @@ export class ExternalDatSourcesManager {
       }
     }
   }
+
+  /**
+   * @return {boolean} is empty.
+   */
+  isEmpty() {
+    return (
+      this.wmsGroupsCollection_.getLength() == 0 &&
+      this.wmtsGroupsCollection_.getLength() == 0 &&
+      this.fileGroup_.dataSourcesCollection.getLength() == 0
+    );
+  }
+
+  /**
+   * Remove all groups.
+   */
+  removeAll() {
+    for (const dataSource of this.dataSources_.getArray()) {
+      if (this.extDataSources_[dataSource.id] === dataSource) {
+        if (dataSource instanceof ngeoDatasourceFile) {
+          this.removeFileDataSource_(dataSource);
+        } else if (dataSource instanceof ngeoDatasourceOGC) {
+          this.removeOGCDataSource_(dataSource);
+        }
+      }
+    }
+  }
 }
 
 /**

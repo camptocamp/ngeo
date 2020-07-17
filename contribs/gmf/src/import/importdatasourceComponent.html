@@ -84,7 +84,7 @@
 
 <div
   class="gmf-importdatasource-layers"
-  ng-if="$ctrl.wmsCapabilities !== null || $ctrl.wmtsCapabilities !== null">
+  ng-if="($ctrl.wmsCapabilities !== null || $ctrl.wmtsCapabilities !== null) && $ctrl.mode === 'Online'">
   <hr />
   <input
     class="form-control"
