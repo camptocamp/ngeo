@@ -3,7 +3,7 @@
    ng-if="layertreeCtrl.isRoot">
   <a
      href
-     ng-if="gmfLayertreeCtrl.nodesCount() > 0"
+     ng-if="gmfLayertreeCtrl.nodesCount() > 0 || !gmfLayertreeCtrl.gmfExternalDataSourcesManager.isEmpty()"
      ng-click="gmfLayertreeCtrl.removeAllNodes()">
     <span class="fa fa-trash"></span> {{'Clear all' | translate}}
   </a>
