@@ -967,7 +967,10 @@ Controller.prototype.supportsOpacityChange = function (treeCtrl) {
   const node = /** @type {import('gmf/themes.js').GmfGroup} */ (treeCtrl.node);
   return (
     !!treeCtrl.layer &&
-    ((treeCtrl.depth === 1 && !node.mixed) || (treeCtrl.depth > 1 && treeCtrl.parent.node.mixed))
+    ((treeCtrl.depth === 1 && !node.mixed) ||
+      (treeCtrl.depth > 1 &&
+        treeCtrl.parent.node.mixed &&
+        (!treeCtrl.node.children || (treeCtrl.node.children && !node.mixed))))
   );
 };
 
