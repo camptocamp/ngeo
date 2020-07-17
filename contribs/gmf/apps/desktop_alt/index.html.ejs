@@ -143,8 +143,6 @@
               <gmf-print
                 gmf-print-map="::mainCtrl.map"
                 gmf-print-active="mainCtrl.printActive"
-                gmf-print-hiddenattributes="::['debug']"
-                gmf-print-rotatemask="::true"
                 gmf-print-attributes-out="::attributes">
                   <span ng-if="mainCtrl.gmfUser.username">
                     <div ng-repeat="attribute in ::attributes">
@@ -317,8 +315,6 @@
           <div class="gmf-app-map-messages">
             <gmf-disclaimer
               gmf-disclaimer-map="::mainCtrl.map"
-              gmf-disclaimer-layer-visibility="::false"
-              gmf-disclaimer-external="::true"
               gmf-disclaimer-external-msg="disclaimerMsg"
               gmf-disclaimer-external-visibility="disclaimerVisibility">
             </gmf-disclaimer>

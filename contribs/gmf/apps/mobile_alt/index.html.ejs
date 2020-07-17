@@ -35,8 +35,7 @@
         map="::mainCtrl.map">
       </ngeo-query>
       <gmf-displayquerywindow
-        gmf-displayquerywindow-featuresstyle="::mainCtrl.queryFeatureStyle"
-        gmf-displayquerywindow-defaultcollapsed="false">
+        gmf-displayquerywindow-featuresstyle="::mainCtrl.queryFeatureStyle">
       </gmf-displayquerywindow>
       <div
         class="gmf-mobile-measure"
@@ -49,11 +48,9 @@
         class="gmf-mobile-measure"
         gmf-mobile-measurepoint
         gmf-mobile-measurepoint-active="mainCtrl.measurePointActive"
-        gmf-mobile-measurepoint-coordinateDecimals="2"
         gmf-mobile-measurepoint-layersconfig="::mainCtrl.elevationLayersConfig"
         gmf-mobile-measurepoint-map="::mainCtrl.map"
-        gmf-mobile-measurepoint-sketchstyle="::mainCtrl.customMeasureStyle"
-        gmf-mobile-measurepoint-format="'{x} / {y}'">
+        gmf-mobile-measurepoint-sketchstyle="::mainCtrl.customMeasureStyle">
       </div>
       <button class="gmf-mobile-nav-trigger gmf-mobile-nav-left-trigger"
         ng-click="mainCtrl.toggleLeftNavVisibility()">
@@ -61,7 +58,6 @@
       </button>
       <gmf-search gmf-search-map="mainCtrl.map"
         gmf-search-datasources="mainCtrl.searchDatasources"
-        gmf-search-clearbutton="::false"
         gmf-search-coordinatesprojections="mainCtrl.searchCoordinatesProjections"
         gmf-search-listeners="::mainCtrl.searchListeners"
         gmf-search-delay="mainCtrl.searchDelay">
@@ -120,8 +116,7 @@
         </ul>
         <gmf-layertree
           gmf-layertree-dimensions="mainCtrl.dimensions"
-          gmf-layertree-map="::mainCtrl.map"
-          gmf-layertree-openlinksinnewwindow="true">
+          gmf-layertree-map="::mainCtrl.map">
         </gmf-layertree>
       </div>
       <gmf-backgroundlayerselector

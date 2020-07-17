@@ -39,10 +39,6 @@ import gmfFloorModule from 'gmf/floor/module.js';
 import ngeoGooglestreetviewModule from 'ngeo/googlestreetview/module.js';
 import ngeoRoutingModule from 'ngeo/routing/module.js';
 import ngeoStatemanagerWfsPermalink from 'ngeo/statemanager/WfsPermalink.js';
-import Style from 'ol/style/Style.js';
-import Circle from 'ol/style/Circle.js';
-import Fill from 'ol/style/Fill.js';
-import Stroke from 'ol/style/Stroke.js';
 
 if (!window.requestAnimationFrame) {
   alert(
@@ -71,86 +67,6 @@ class Controller extends AbstractDesktopController {
       this.dimensions.FLOOR = '*';
     }
 
-    /**
-     * @type {Array<string>}
-     */
-    this.searchCoordinatesProjections = ['EPSG:21781', 'EPSG:2056', 'EPSG:4326'];
-
-    /**
-     * @type {number}
-     */
-    this.searchDelay = 500;
-
-    /**
-     * @type {boolean}
-     */
-    this.showInfobar = true;
-
-    /**
-     * @type {string[]}
-     */
-    this.elevationLayers = ['srtm-partial'];
-
-    /**
-     * @type {Object<string, import('gmf/mobile/measure/pointComponent.js').LayerConfig>}
-     */
-    this.elevationLayersConfig = {};
-
-    /**
-     * @type {Object<string, import('gmf/profile/component.js').ProfileLineConfiguration>}
-     */
-    this.profileLinesconfiguration = {
-      'srtm-partial': {},
-    };
-
-    /**
-     * @type {Array<import('gmf/map/mousepositionComponent.js').MousePositionProjection>}
-     */
-    this.mousePositionProjections = [
-      {
-        code: 'EPSG:2056',
-        label: 'CH1903+ / LV95',
-        filter: 'ngeoNumberCoordinates::{x}, {y} m',
-      },
-      {
-        code: 'EPSG:21781',
-        label: 'CH1903 / LV03',
-        filter: 'ngeoNumberCoordinates::{x}, {y} m',
-      },
-      {
-        code: 'EPSG:4326',
-        label: 'WGS84',
-        filter: 'ngeoDMSCoordinates:2',
-      },
-    ];
-
-    /**
-     * @type {import('gmf/query/gridComponent.js').GridMergeTabs}
-     */
-    this.gridMergeTabs = {
-      'OSM_time_merged': ['osm_time', 'osm_time2'],
-      'transport (merged)': ['fuel', 'parking'],
-      'Learning [merged]': ['information', 'bus_stop'],
-    };
-
-    const radius = 5;
-    const fill = new Fill({color: [255, 255, 255, 0.6]});
-    const stroke = new Stroke({color: [255, 0, 0, 1], width: 2});
-    const image = new Circle({fill, radius, stroke});
-    const defaultSearchStyle = new Style({
-      fill,
-      image,
-      stroke,
-    });
-
-    /**
-     * @type {Object<string, import('ol/style/Style.js').default>} Map of styles for search overlay.
-     * @export
-     */
-    this.searchStyles = {
-      'default': defaultSearchStyle,
-    };
-
     // Allow angular-gettext-tools to collect the strings to translate
     /** @type {angular.gettext.gettextCatalog} */
     const gettextCatalog = $injector.get('gettextCatalog');
@@ -160,11 +76,6 @@ class Controller extends AbstractDesktopController {
     gettextCatalog.getString('Add a theme');
     gettextCatalog.getString('Add a sub theme');
     gettextCatalog.getString('Add a layer');
-
-    /**
-     * @type {string}
-     */
-    this.bgOpacityOptions = 'orthophoto';
   }
 
   /**

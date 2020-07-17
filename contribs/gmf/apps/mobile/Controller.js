@@ -49,29 +49,7 @@ if (!window.requestAnimationFrame) {
 /**
  * @private
  */
-class Controller extends AbstractMobileController {
-  /**
-   * @param {angular.IScope} $scope Scope.
-   * @param {angular.auto.IInjectorService} $injector Main injector.
-   * @ngInject
-   */
-  constructor($scope, $injector) {
-    super($scope, $injector);
-
-    /**
-     * @type {Array<import('gmf/mobile/measure/pointComponent.js').LayerConfig>}
-     */
-    this.elevationLayersConfig = [
-      {name: 'aster', unit: 'm'},
-      {name: 'srtm', unit: 'm'},
-    ];
-
-    /**
-     * @type {string[]}
-     */
-    this.searchCoordinatesProjections = ['EPSG:21781', 'EPSG:2056', 'EPSG:4326'];
-  }
-}
+class Controller extends AbstractMobileController {}
 
 /**
  * @hidden

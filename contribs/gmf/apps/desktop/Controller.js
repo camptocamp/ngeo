@@ -59,71 +59,9 @@ class Controller extends AbstractDesktopController {
     super($scope, $injector);
 
     /**
-     * @type {string[]}
-     */
-    this.searchCoordinatesProjections = ['EPSG:21781', 'EPSG:2056', 'EPSG:4326'];
-
-    /**
-     * @type {number[]}
-     */
-    this.scaleSelectorValues = [
-      1000000,
-      500000,
-      200000,
-      100000,
-      50000,
-      20000,
-      10000,
-      5000,
-      2000,
-      1000,
-      500,
-      200,
-    ];
-
-    /**
-     * @type {string[]}
-     */
-    this.elevationLayers = ['aster', 'srtm'];
-
-    /**
-     * @type {Object<string, import('gmf/mobile/measure/pointComponent.js').LayerConfig>}
-     */
-    this.elevationLayersConfig = {};
-
-    /**
      * @type {string}
      */
     this.selectedElevationLayer = this.elevationLayers[0];
-
-    /**
-     * @type {Object<string, import('gmf/profile/component.js').ProfileLineConfiguration>}
-     */
-    this.profileLinesconfiguration = {
-      'aster': {color: '#0000A0'},
-      'srtm': {color: '#00A000'},
-    };
-
-    /**
-     * @type {Array<import('gmf/map/mousepositionComponent.js').MousePositionProjection>}
-     */
-    this.mousePositionProjections = [
-      {
-        code: 'EPSG:2056',
-        label: 'CH1903+ / LV95',
-        filter: 'ngeoNumberCoordinates::{x}, {y} m',
-      },
-      {
-        code: 'EPSG:21781',
-        label: 'CH1903 / LV03',
-        filter: 'ngeoNumberCoordinates::{x}, {y} m',
-      },
-      {
-        code: 'EPSG:4326',
-        label: 'WGS84',
-        filter: 'ngeoDMSCoordinates:2',
-      },
-    ];
 
     // Allow angular-gettext-tools to collect the strings to translate
     /** @type {angular.gettext.gettextCatalog} */
