@@ -72,7 +72,8 @@ git reset --hard origin/<release-branche>
 Where `<release-branch>` stand for `2.x`.
 
 Verify that the `<version>` (`2.x.x`) in package.json match with the tag you'll
-create. Then create a tag named the same as the version.
+create (If that's not the case, update the package.json and commit it).
+Then create a tag named the same as the version.
 ```
 git tag <version>
 git push origin <version>
