@@ -21,7 +21,8 @@
         <span>Theme:
         <select
             class="form-control"
-            ng-model="ctrl.treeSource"
+            ng-model="ctrl.selectedTheme"
+            ng-change="ctrl.updateTheme()"
             ng-options="theme.name for theme in ctrl.themes">
         </select>
         </span>

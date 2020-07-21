@@ -31,6 +31,7 @@ import gmfMapComponent from 'gmf/map/component.js';
 
 import gmfQueryWindowComponent from 'gmf/query/windowComponent.js';
 
+import gmfThemeManager from 'gmf/theme/Manager.js';
 import gmfThemeThemes from 'gmf/theme/Themes.js';
 import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent.js';
 import EPSG2056 from '@geoblocks/proj/src/EPSG_2056.js';
@@ -55,6 +56,7 @@ const module = angular.module('gmfapp', [
   gmfLayertreeComponent.name,
   gmfMapComponent.name,
   gmfQueryWindowComponent.name,
+  gmfThemeManager.name,
   gmfThemeThemes.name,
   ngeoMapModule.name, // for ngeo.map.FeatureOverlay, perhaps remove me
   ngeoMiscBtnComponent.name,
@@ -67,7 +69,8 @@ module.value('ngeoQueryOptions', {
 
 module.value('gmfTreeUrl', appURL.GMF_THEMES);
 
-module.constant('defaultTheme', 'Demo');
+const defaultTheme = 'Demo';
+module.constant('defaultTheme', defaultTheme);
 module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 /**
@@ -107,9 +110,10 @@ module.controller('AppQueryresultController', QueryresultController);
  *     data sources manager service.
  * @param {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *   overlay manager service.
+ * @param {import("gmf/theme/Manager.js").ThemeManagerService} gmfThemeManager gmf Theme Manager service.
  * @ngInject
  */
-function MainController(gmfThemes, gmfDataSourcesManager, ngeoFeatureOverlayMgr) {
+function MainController(gmfThemes, gmfDataSourcesManager, ngeoFeatureOverlayMgr, gmfThemeManager) {
   gmfThemes.loadThemes();
 
   /**
@@ -162,25 +166,36 @@ function MainController(gmfThemes, gmfDataSourcesManager, ngeoFeatureOverlayMgr)
   gmfDataSourcesManager.setDimensions(this.dimensions);
 
   /**
+   * @type {boolean}
+   */
+  this.queryActive = true;
+
+  /**
    * @type {Object[]|undefined}
    * export
    */
   this.themes = undefined;
 
   /**
-   * @type {Object|undefined}
+   * @type {import('gmf/themes.js').GmfTheme} The selected theme.
    */
-  this.treeSource = undefined;
+  this.selectedTheme = null;
 
-  /**
-   * @type {boolean}
-   */
-  this.queryActive = true;
+  this.updateTheme = function () {
+    gmfThemeManager.addTheme(this.selectedTheme);
+  };
 
   gmfThemes.getThemesObject().then((themes) => {
     if (themes) {
       this.themes = themes;
-      this.treeSource = themes[3];
+
+      // Select default theme;
+      themes.forEach((theme) => {
+        if (theme.name === defaultTheme) {
+          this.selectedTheme = theme;
+          return;
+        }
+      });
     }
   });
 
