@@ -20,6 +20,8 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
+import ngeoDownloadCsv from 'ngeo/download/Csv.js';
+import ngeoDownloadService from 'ngeo/download/service.js';
 import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr.js';
 import ngeoMiscFeatureHelper, {getFilteredFeatureValues} from 'ngeo/misc/FeatureHelper.js';
 
@@ -46,6 +48,8 @@ import 'bootstrap/js/src/dropdown.js';
  * @hidden
  */
 const module = angular.module('gmfQueryWindowComponent', [
+  ngeoDownloadCsv.name,
+  ngeoDownloadService.name,
   ngeoMapFeatureOverlayMgr.name,
   ngeoMiscFeatureHelper.name,
   ngeoMiscSwipe.name,
@@ -150,9 +154,11 @@ module.component('gmfDisplayquerywindow', queryWindowComponent);
 
 /**
  * @param {JQuery} $element Element.
+ * @param {angular.auto.IInjectorService} $injector Main injector.
  * @param {angular.IScope} $scope Angular scope.
  * @param {import('ngeo/query/MapQuerent.js').QueryResult} ngeoQueryResult ngeo query result.
  * @param {import("ngeo/query/MapQuerent.js").MapQuerent} ngeoMapQuerent ngeo map querent service.
+ * @param {import("ngeo/download/Csv.js").DownloadCsvService} ngeoCsvDownload CSV download service.
  * @param {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
  * @constructor
@@ -163,9 +169,11 @@ module.component('gmfDisplayquerywindow', queryWindowComponent);
  */
 export function QueryWindowController(
   $element,
+  $injector,
   $scope,
   ngeoQueryResult,
   ngeoMapQuerent,
+  ngeoCsvDownload,
   ngeoFeatureOverlayMgr
 ) {
   /**
@@ -199,6 +207,19 @@ export function QueryWindowController(
    * @private
    */
   this.ngeoMapQuerent_ = ngeoMapQuerent;
+
+  /**
+   * @type {import("ngeo/download/Csv.js").DownloadCsvService}
+   * @private
+   */
+  this.ngeoCsvDownload_ = ngeoCsvDownload;
+
+  /**
+   * Filename
+   * @type {string}
+   * @private
+   */
+  this.filename_ = $injector.has('gmfCsvFilename') ? $injector.get('gmfCsvFilename') : 'query-results.csv';
 
   /**
    * @type {?import('ngeo/statemanager/WfsPermalink.js').QueryResultSource}
@@ -584,6 +605,30 @@ QueryWindowController.prototype.setSelectedSource = function (source) {
   this.clear();
   this.selectedSource = source;
   this.updateFeatures_();
+};
+
+/**
+ * @param {import('ngeo/statemanager/WfsPermalink.js').QueryResultSource} source The source to export as csv.
+ */
+QueryWindowController.prototype.downloadCSV = function (source) {
+  if (!source || source.features.length <= 0) {
+    // Without source or with sources with no results export can't be done
+    return;
+  }
+
+  const distinctKeys = new Set();
+  const rows = source.features.map((feature) => {
+    // Get properties (name - value) without unwanted ol properties.
+    const row = getFilteredFeatureValues(feature);
+    // keep property name for not undefined values.
+    Object.keys(row)
+      .filter((key) => row[key] !== undefined)
+      .forEach((key) => distinctKeys.add(key));
+    return row;
+  });
+  const columnDefs = [];
+  distinctKeys.forEach((key) => columnDefs.push({'name': key}));
+  this.ngeoCsvDownload_.startDownload(rows, columnDefs, this.filename_);
 };
 
 module.controller('GmfDisplayquerywindowController', QueryWindowController);
