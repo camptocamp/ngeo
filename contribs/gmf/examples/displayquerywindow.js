@@ -151,8 +151,15 @@ function MainController(gmfThemes, gmfDataSourcesManager, ngeoFeatureOverlayMgr)
     }),
   });
 
+  /**
+   * @type {Object<string, string>}
+   */
+  this.dimensions = {};
+
   // Init the datasources with our map.
   gmfDataSourcesManager.setDatasourceMap(this.map);
+  // Give the dimensions to the gmfDataSourcesManager
+  gmfDataSourcesManager.setDimensions(this.dimensions);
 
   /**
    * @type {Object[]|undefined}
