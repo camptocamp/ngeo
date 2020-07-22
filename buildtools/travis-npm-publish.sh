@@ -27,7 +27,7 @@ then
         then
             echo "Publish daily version"
             $RUN npm install --no-save fluid-publish
-            $RUN node_modules/.bin/fluid-publish devTag="version-${MAIN_BRANCH}-latest"
+            $RUN npm config set loglevel warn && node_modules/.bin/fluid-publish devTag="version-${MAIN_BRANCH}-latest"
         fi
     fi
 fi
