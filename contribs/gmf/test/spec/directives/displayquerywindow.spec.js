@@ -59,10 +59,13 @@ describe('gmf.query.windowComponent', () => {
         {
           features: [
             new olFeature({
+              bar: undefined,
               foo: 'bar',
+              empty: undefined,
             }),
             new olFeature({
               bar: 'baz',
+              empty: undefined,
             }),
           ],
           id: 123,
@@ -214,6 +217,27 @@ describe('gmf.query.windowComponent', () => {
       expect(displayQueriesController.getResultLength()).toBe(4);
       expect(displayQueriesController.source).toBe(ngeoQueryResult.sources[0]);
       expect(displayQueriesController.feature).toBe(ngeoQueryResult.sources[0].features[0]);
+    });
+
+    it('Get csv data', () => {
+      expect(displayQueriesController.getCSVData_(null)).toBeUndefined();
+
+      expect(displayQueriesController.getCSVData_({features: []})).toBeUndefined();
+
+      expect(displayQueriesController.getCSVData_(sources[0])).toEqual([
+        {bar: undefined, foo: 'bar', empty: undefined},
+        {bar: 'baz', empty: undefined},
+      ]);
+    });
+
+    it('Get csv header définition', () => {
+      expect(displayQueriesController.getCSVHeaderDefinition_(null)).toBeUndefined();
+
+      const data = [
+        {bar: undefined, foo: 'bar', empty: undefined},
+        {bar: 'baz', empty: undefined},
+      ];
+      expect(displayQueriesController.getCSVHeaderDefinition_(data)).toEqual([{name: 'foo'}, {name: 'bar'}]);
     });
   });
 });

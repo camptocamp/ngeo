@@ -608,27 +608,54 @@ QueryWindowController.prototype.setSelectedSource = function (source) {
 };
 
 /**
+ * Download a CSV with features of the given source.
  * @param {import('ngeo/statemanager/WfsPermalink.js').QueryResultSource} source The source to export as csv.
  */
 QueryWindowController.prototype.downloadCSV = function (source) {
+  const data = this.getCSVData_(source);
+  const columnDefs = this.getCSVHeaderDefinition_(data);
+  if (columnDefs) {
+    this.ngeoCsvDownload_.startDownload(data, columnDefs, this.filename_);
+  }
+};
+
+/**
+ * @param {import('ngeo/statemanager/WfsPermalink.js').QueryResultSource} source The source to export as csv.
+ * @return {Array<Object>} data.
+ * @private
+ */
+QueryWindowController.prototype.getCSVData_ = function (source) {
   if (!source || source.features.length <= 0) {
-    // Without source or with sources with no results export can't be done
+    // Without source, or with sources with no results, export can't be done
     return;
   }
 
+  // Get properties (name - value) without unwanted ol properties.
+  return source.features.map((feature) => getFilteredFeatureValues(feature));
+};
+
+/**
+ * @param {Array<Object>} data where keys with at least one defined value will be used as csv column header.
+ * @return {Array<import('ngeo/download/Csv.js').GridColumnDef>} columns definitions for the CSV.
+ * @private
+ */
+QueryWindowController.prototype.getCSVHeaderDefinition_ = function (data) {
+  if (!data) {
+    return;
+  }
   const distinctKeys = new Set();
-  const rows = source.features.map((feature) => {
-    // Get properties (name - value) without unwanted ol properties.
-    const row = getFilteredFeatureValues(feature);
+  data.forEach((datum) => {
     // keep property name for not undefined values.
-    Object.keys(row)
-      .filter((key) => row[key] !== undefined)
+    Object.keys(datum)
+      .filter((key) => datum[key] !== undefined)
       .forEach((key) => distinctKeys.add(key));
-    return row;
   });
+
+  // From Set (distinct values) to array.
   const columnDefs = [];
-  distinctKeys.forEach((key) => columnDefs.push({'name': key}));
-  this.ngeoCsvDownload_.startDownload(rows, columnDefs, this.filename_);
+  distinctKeys.forEach((key) => columnDefs.push({name: key}));
+
+  return columnDefs;
 };
 
 module.controller('GmfDisplayquerywindowController', QueryWindowController);
