@@ -1,9 +1,9 @@
 @import '~gmf/sass/vars.scss';
 
-$displayquerywindow-tablet-width: 8 * $map-tools-size;
+$displayquerywindow-tablet-width: 9 * $map-tools-size;
 $displayquerywindow-detailed-header-height: 3.12rem;
 $displayquerywindow-detailed-details-line-height: 1.25rem;
-$displayquerywindow-detailed-details-height: 8 * $displayquerywindow-detailed-details-line-height;
+$displayquerywindow-detailed-details-height: 9 * $displayquerywindow-detailed-details-line-height;
 
 div.gmf-displayquerywindow {
   pointer-events: none;
