@@ -33,6 +33,8 @@ describe('gmf.query.windowComponent', () => {
   let $scope;
   /** @type {angular.IScope} */
   let $rootScope;
+  /** @type {Array<import('ngeo/statemanager/WfsPermalink.js').QueryResultSource>} */
+  let sources;
 
   beforeEach(
     angular.mock.inject((_$controller_, _$rootScope_, _ngeoQueryResult_) => {
@@ -52,55 +54,8 @@ describe('gmf.query.windowComponent', () => {
           return undefined;
         },
       };
-      displayQueriesController = $controller('GmfDisplayquerywindowController', {$element, $scope}, data);
-    })
-  );
 
-  describe('#show', () => {
-    it('deals with no sources', () => {
-      ngeoQueryResult.total = 0;
-      ngeoQueryResult.sources = [];
-      $rootScope.$digest();
-      expect(displayQueriesController.open).toBe(false);
-    });
-
-    it('deals with a single source', () => {
-      ngeoQueryResult.total = 2;
-      ngeoQueryResult.sources = [
-        {
-          features: [
-            new olFeature({
-              foo: 'bar',
-            }),
-            new olFeature({
-              bar: 'baz',
-            }),
-          ],
-          id: 123,
-          label: 'Test',
-          pending: false,
-          queried: true,
-        },
-      ];
-      $rootScope.$digest();
-      expect(displayQueriesController.open).toBe(true);
-      expect(displayQueriesController.source).toBe(ngeoQueryResult.sources[0]);
-      expect(displayQueriesController.feature).toBe(ngeoQueryResult.sources[0].features[0]);
-
-      // toggle through features
-      displayQueriesController.next();
-      expect(displayQueriesController.feature).toBe(ngeoQueryResult.sources[0].features[1]);
-      displayQueriesController.next();
-      expect(displayQueriesController.feature).toBe(ngeoQueryResult.sources[0].features[0]);
-      displayQueriesController.previous();
-      expect(displayQueriesController.feature).toBe(ngeoQueryResult.sources[0].features[1]);
-      displayQueriesController.previous();
-      expect(displayQueriesController.feature).toBe(ngeoQueryResult.sources[0].features[0]);
-    });
-
-    it('deals with multiple sources', () => {
-      ngeoQueryResult.total = 5;
-      ngeoQueryResult.sources = [
+      sources = [
         {
           features: [
             new olFeature({
@@ -138,6 +93,41 @@ describe('gmf.query.windowComponent', () => {
           queried: true,
         },
       ];
+
+      displayQueriesController = $controller('GmfDisplayquerywindowController', {$element, $scope}, data);
+    })
+  );
+
+  describe('#show', () => {
+    it('deals with no sources', () => {
+      ngeoQueryResult.total = 0;
+      ngeoQueryResult.sources = [];
+      $rootScope.$digest();
+      expect(displayQueriesController.open).toBe(false);
+    });
+
+    it('deals with a single source', () => {
+      ngeoQueryResult.total = 2;
+      ngeoQueryResult.sources = [sources[0]];
+      $rootScope.$digest();
+      expect(displayQueriesController.open).toBe(true);
+      expect(displayQueriesController.source).toBe(ngeoQueryResult.sources[0]);
+      expect(displayQueriesController.feature).toBe(ngeoQueryResult.sources[0].features[0]);
+
+      // toggle through features
+      displayQueriesController.next();
+      expect(displayQueriesController.feature).toBe(ngeoQueryResult.sources[0].features[1]);
+      displayQueriesController.next();
+      expect(displayQueriesController.feature).toBe(ngeoQueryResult.sources[0].features[0]);
+      displayQueriesController.previous();
+      expect(displayQueriesController.feature).toBe(ngeoQueryResult.sources[0].features[1]);
+      displayQueriesController.previous();
+      expect(displayQueriesController.feature).toBe(ngeoQueryResult.sources[0].features[0]);
+    });
+
+    it('deals with multiple sources', () => {
+      ngeoQueryResult.total = 5;
+      ngeoQueryResult.sources = sources;
       $rootScope.$digest();
       expect(displayQueriesController.open).toBe(true);
       expect(displayQueriesController.source).toBe(ngeoQueryResult.sources[0]);
@@ -169,44 +159,7 @@ describe('gmf.query.windowComponent', () => {
 
     it('deals with selected sources', () => {
       ngeoQueryResult.total = 5;
-      ngeoQueryResult.sources = [
-        {
-          features: [
-            new olFeature({
-              foo: 'bar',
-            }),
-            new olFeature({
-              bar: 'baz',
-            }),
-          ],
-          id: 123,
-          label: 'Test 1',
-          pending: false,
-          queried: true,
-        },
-        {
-          features: [],
-          id: 234,
-          label: 'Test 2',
-          pending: false,
-          queried: true,
-        },
-        {
-          features: [
-            new olFeature({
-              foo: 'bar',
-            }),
-            new olFeature(),
-            new olFeature({
-              bar: 'baz',
-            }),
-          ],
-          id: 345,
-          label: 'Test 3',
-          pending: false,
-          queried: true,
-        },
-      ];
+      ngeoQueryResult.sources = sources;
       $rootScope.$digest();
       expect(displayQueriesController.open).toBe(true);
       expect(displayQueriesController.source).toBe(ngeoQueryResult.sources[0]);
