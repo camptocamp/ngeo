@@ -18,7 +18,7 @@ then
         fi
         if [ "$PACKAGE_VERSION" = "$TRAVIS_TAG" ]
         then
-            $RUN npm publish --tag=version-${MAIN_BRANCH} $TAG
+            $RUN npm publish --quiet --tag=version-${MAIN_BRANCH} $TAG
         else
             echo "Skipping publication, the travis tag and package version differ"
         fi
