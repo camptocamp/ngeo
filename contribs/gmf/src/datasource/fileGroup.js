@@ -28,6 +28,13 @@ import angular from 'angular';
 const module = angular.module('gmfDatasourceFileGroup', []);
 
 /**
+ * The "gmfDatasourceFileGroup" angular value serves as a placeholder
+ * for the ngeo FileGroup data source that is created when the user
+ * adds geospatial files to the map (KML files, for example).
+ *
+ * It is used in the GMF Snapping to be able for drawn/edited features
+ * to be snapped onto features that were imported in such a manner.
+ *
  * @typedef {Object} DatasourceFileGroup
  * @property {import("ngeo/datasource/FileGroup.js").default|null} fileGroup
  */
