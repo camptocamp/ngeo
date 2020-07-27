@@ -20,6 +20,8 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
+import ngeoDownloadCsv from 'ngeo/download/Csv.js';
+import ngeoDownloadService from 'ngeo/download/service.js';
 import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr.js';
 import ngeoMiscFeatureHelper, {getFilteredFeatureValues} from 'ngeo/misc/FeatureHelper.js';
 
@@ -46,6 +48,8 @@ import 'bootstrap/js/src/dropdown.js';
  * @hidden
  */
 const module = angular.module('gmfQueryWindowComponent', [
+  ngeoDownloadCsv.name,
+  ngeoDownloadService.name,
   ngeoMapFeatureOverlayMgr.name,
   ngeoMiscFeatureHelper.name,
   ngeoMiscSwipe.name,
@@ -150,9 +154,11 @@ module.component('gmfDisplayquerywindow', queryWindowComponent);
 
 /**
  * @param {JQuery} $element Element.
+ * @param {angular.auto.IInjectorService} $injector Main injector.
  * @param {angular.IScope} $scope Angular scope.
  * @param {import('ngeo/query/MapQuerent.js').QueryResult} ngeoQueryResult ngeo query result.
  * @param {import("ngeo/query/MapQuerent.js").MapQuerent} ngeoMapQuerent ngeo map querent service.
+ * @param {import("ngeo/download/Csv.js").DownloadCsvService} ngeoCsvDownload CSV download service.
  * @param {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
  * @constructor
@@ -163,9 +169,11 @@ module.component('gmfDisplayquerywindow', queryWindowComponent);
  */
 export function QueryWindowController(
   $element,
+  $injector,
   $scope,
   ngeoQueryResult,
   ngeoMapQuerent,
+  ngeoCsvDownload,
   ngeoFeatureOverlayMgr
 ) {
   /**
@@ -199,6 +207,19 @@ export function QueryWindowController(
    * @private
    */
   this.ngeoMapQuerent_ = ngeoMapQuerent;
+
+  /**
+   * @type {import("ngeo/download/Csv.js").DownloadCsvService}
+   * @private
+   */
+  this.ngeoCsvDownload_ = ngeoCsvDownload;
+
+  /**
+   * Filename
+   * @type {string}
+   * @private
+   */
+  this.filename_ = $injector.has('gmfCsvFilename') ? $injector.get('gmfCsvFilename') : 'query-results.csv';
 
   /**
    * @type {?import('ngeo/statemanager/WfsPermalink.js').QueryResultSource}
@@ -344,7 +365,7 @@ QueryWindowController.prototype.$onInit = function () {
     windowContainer.resizable({
       handles: 'all',
       minHeight: 240,
-      minWidth: 240,
+      minWidth: 260,
     });
   }
 };
@@ -584,6 +605,57 @@ QueryWindowController.prototype.setSelectedSource = function (source) {
   this.clear();
   this.selectedSource = source;
   this.updateFeatures_();
+};
+
+/**
+ * Download a CSV with features of the given source.
+ * @param {import('ngeo/statemanager/WfsPermalink.js').QueryResultSource} source The source to export as csv.
+ */
+QueryWindowController.prototype.downloadCSV = function (source) {
+  const data = this.getCSVData_(source);
+  const columnDefs = this.getCSVHeaderDefinition_(data);
+  if (columnDefs) {
+    this.ngeoCsvDownload_.startDownload(data, columnDefs, this.filename_);
+  }
+};
+
+/**
+ * @param {import('ngeo/statemanager/WfsPermalink.js').QueryResultSource} source The source to export as csv.
+ * @return {Array<Object>} data.
+ * @private
+ */
+QueryWindowController.prototype.getCSVData_ = function (source) {
+  if (!source || source.features.length <= 0) {
+    // Without source, or with sources with no results, export can't be done
+    return;
+  }
+
+  // Get properties (name - value) without unwanted ol properties.
+  return source.features.map((feature) => getFilteredFeatureValues(feature));
+};
+
+/**
+ * @param {Array<Object>} data where keys with at least one defined value will be used as csv column header.
+ * @return {Array<import('ngeo/download/Csv.js').GridColumnDef>} columns definitions for the CSV.
+ * @private
+ */
+QueryWindowController.prototype.getCSVHeaderDefinition_ = function (data) {
+  if (!data) {
+    return;
+  }
+  const distinctKeys = new Set();
+  data.forEach((datum) => {
+    // keep property name for not undefined values.
+    Object.keys(datum)
+      .filter((key) => datum[key] !== undefined)
+      .forEach((key) => distinctKeys.add(key));
+  });
+
+  // From Set (distinct values) to array.
+  const columnDefs = [];
+  distinctKeys.forEach((key) => columnDefs.push({name: key}));
+
+  return columnDefs;
 };
 
 module.controller('GmfDisplayquerywindowController', QueryWindowController);

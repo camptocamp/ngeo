@@ -86,6 +86,7 @@
         <span>{{ctrl.currentResult + 1}}</span>
         <span>/</span>
         <span>{{ctrl.getResultLength()}}</span>
+
         <div
           ng-show="::ctrl.desktop"
           class="dropup">
@@ -130,6 +131,33 @@
                   ng-class="{'fa-check': ctrl.selectedSource === source}">
                 </i>
                 <span>{{source.label | translate}} ({{source.features.length}})</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div
+          ng-show="::ctrl.desktop"
+          class="dropup">
+
+          <button
+            type="button"
+            class="btn btn-default dropdown-toggle"
+            data-toggle="dropdown"
+            aria-expanded="false">
+            <span class="fa fa-download"></span>
+          </button>
+
+          <ul
+            class="dropdown-menu dropdown-menu-right"
+            role="menu">
+            <li
+              ng-repeat-start="source in ctrl.ngeoQueryResult.sources" ng-repeat-end
+              ng-class="{'disabled': source.features.length <= 0}">
+              <a
+                href="#"
+                ng-click="ctrl.downloadCSV(source)">
+                <span>{{'Export' | translate}} {{source.label | translate}}</span>
               </a>
             </li>
           </ul>
