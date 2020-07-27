@@ -20,7 +20,7 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import {listen, unlistenByKey} from 'ol/events.js';
+import {listen} from 'ol/events.js';
 import {CollectionEvent} from 'ol/Collection.js';
 
 /**
@@ -35,12 +35,6 @@ export function FeatureOverlay(manager, index) {
    * @private
    */
   this.manager_ = manager;
-
-  /**
-   * @type {?import("ol/Collection.js").default<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>}
-   * @private
-   */
-  this.features_ = null;
 
   /**
    * @type {number}
@@ -71,11 +65,11 @@ FeatureOverlay.prototype.removeFeature = function (feature) {
 };
 
 /**
- * Is empty.
- * @returns {boolean} Is empty.
+ * Check if featureOverlay has no features.
+ * @returns {boolean} True if there is no features. False otherwise.
  */
 FeatureOverlay.prototype.isEmpty = function () {
-  return !this.features_ || this.features_.getLength() == 0;
+  return this.manager_.isEmpty(this.index_);
 };
 
 /**
@@ -94,10 +88,6 @@ FeatureOverlay.prototype.clear = function () {
  * @param {import("ol/Collection.js").default<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>} features Feature collection.
  */
 FeatureOverlay.prototype.setFeatures = function (features) {
-  if (this.features_ !== null) {
-    this.features_.clear();
-    this.listenerKeys_.forEach(unlistenByKey);
-  }
   if (features !== null) {
     features.forEach((feature) => {
       this.addFeature(feature);
@@ -105,7 +95,6 @@ FeatureOverlay.prototype.setFeatures = function (features) {
     this.listenerKeys_.push(listen(features, 'add', this.handleFeatureAdd_, this));
     this.listenerKeys_.push(listen(features, 'remove', this.handleFeatureRemove_, this));
   }
-  this.features_ = features;
 };
 
 /**

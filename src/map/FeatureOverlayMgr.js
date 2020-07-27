@@ -90,6 +90,16 @@ export function FeatureOverlayMgr() {
 }
 
 /**
+ * @param {number} groupIndex The group groupIndex.
+ * @returns {@boolean} True if the group has no features. False otherwise.
+ */
+FeatureOverlayMgr.prototype.isEmpty = function (groupIndex) {
+  console.assert(groupIndex >= 0);
+  console.assert(groupIndex < this.groups_.length);
+  return isEmpty(this.groups_[groupIndex].features);
+};
+
+/**
  * @param {import('ol/Feature.js').default<import('ol/geom/Geometry.js').default>} feature The feature to add.
  * @param {number} groupIndex The group groupIndex.
  */
