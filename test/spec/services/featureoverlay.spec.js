@@ -148,13 +148,36 @@ describe('ngeo.map.FeatureOverlayMgr', () => {
       });
     });
 
+    it('Check is the collection is empty', () => {
+      // Has 2 features per default: not empty.
+      expect(layer.getSource().getFeatures().length).toBe(2);
+      expect(overlay.isEmpty()).toBeFalsy();
+
+      // Remove features: empty.
+      features.clear();
+      expect(layer.getSource().getFeatures().length).toBe(0);
+      expect(overlay.isEmpty()).toBeTruthy();
+
+      // Add one feature: not empty.
+      features.push(new olFeature());
+      expect(layer.getSource().getFeatures().length).toBe(1);
+      expect(overlay.isEmpty()).toBeFalsy();
+
+      // Set features with no collection: empty.
+      overlay.setFeatures(null);
+      expect(layer.getSource().getFeatures().length).toBe(0);
+      expect(overlay.isEmpty()).toBeTruthy();
+    });
+
     describe('replace the collection by another one', () => {
       it('uses the new collection and ignores the old one', () => {
         const newFeatures = new olCollection();
         overlay.setFeatures(newFeatures);
         expect(layer.getSource().getFeatures().length).toBe(0);
+
         newFeatures.push(new olFeature());
         expect(layer.getSource().getFeatures().length).toBe(1);
+
         features.push(new olFeature());
         expect(layer.getSource().getFeatures().length).toBe(1);
       });
