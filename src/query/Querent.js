@@ -994,7 +994,9 @@ export class Querent {
    */
   isDataSourceQueryable_(ds, res) {
     let queryable = ds.visible && ds.inRange && ds.queryable;
-    if (queryable && ds instanceof ngeoDatasourceOGC) {
+    // If the data source supports WFS, do one last extra check: see
+    // of any of the inner OGC layer is in range.
+    if (queryable && ds instanceof ngeoDatasourceOGC && ds.supportsWFS) {
       /**
        * @type {ngeoDatasourceOGC}
        */
