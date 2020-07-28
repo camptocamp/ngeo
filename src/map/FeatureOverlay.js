@@ -20,7 +20,7 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import {listen} from 'ol/events.js';
+import {listen, unlistenByKey} from 'ol/events.js';
 import {CollectionEvent} from 'ol/Collection.js';
 
 /**
@@ -88,10 +88,16 @@ FeatureOverlay.prototype.clear = function () {
  * @param {import("ol/Collection.js").default<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>} features Feature collection.
  */
 FeatureOverlay.prototype.setFeatures = function (features) {
+  // Remove old features collection.
+  this.clear();
+  this.listenerKeys_.forEach(unlistenByKey);
+
+  // Add new feature collection.
   if (features !== null) {
     features.forEach((feature) => {
       this.addFeature(feature);
     });
+    // Listen collection to sync features in the manager.
     this.listenerKeys_.push(listen(features, 'add', this.handleFeatureAdd_, this));
     this.listenerKeys_.push(listen(features, 'remove', this.handleFeatureRemove_, this));
   }
