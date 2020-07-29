@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2018-2020 Camptocamp SA
+// Copyright (c) 2017-2020 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -20,21 +20,27 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import gmfDatasourceDataSourceBeingFiltered from 'gmf/datasource/DataSourceBeingFiltered.js';
-import gmfDatasourceExternalDataSourcesManager from 'gmf/datasource/ExternalDataSourcesManager.js';
-import gmfDatasourceFileGroup from 'gmf/datasource/fileGroup.js';
-import gmfDatasourceHelper from 'gmf/datasource/Helper.js';
-import gmfDatasourceManager from 'gmf/datasource/Manager.js';
-import gmfDatasourceWFSAliases from 'gmf/datasource/WFSAliases.js';
 
 /**
  * @type {angular.IModule}
+ * @hidden
  */
-export default angular.module('gmfDatasourceModule', [
-  gmfDatasourceDataSourceBeingFiltered.name,
-  gmfDatasourceExternalDataSourcesManager.name,
-  gmfDatasourceFileGroup.name,
-  gmfDatasourceHelper.name,
-  gmfDatasourceManager.name,
-  gmfDatasourceWFSAliases.name,
-]);
+const module = angular.module('gmfDatasourceFileGroup', []);
+
+/**
+ * The "gmfDatasourceFileGroup" angular value serves as a placeholder
+ * for the ngeo FileGroup data source that is created when the user
+ * adds geospatial files to the map (KML files, for example).
+ *
+ * It is used in the GMF Snapping to be able for drawn/edited features
+ * to be snapped onto features that were imported in such a manner.
+ *
+ * @typedef {Object} DatasourceFileGroup
+ * @property {import("ngeo/datasource/FileGroup.js").default|null} fileGroup
+ */
+
+module.value('gmfDatasourceFileGroup', {
+  fileGroup: null,
+});
+
+export default module;

@@ -20,15 +20,32 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
+import gmfDatasourceFileGroup from 'gmf/datasource/fileGroup.js';
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
 import gmfThemeThemes, {ThemeNodeType, getSnappingConfig} from 'gmf/theme/Themes.js';
 import ngeoLayertreeController, {getFirstParentTree} from 'ngeo/layertree/Controller.js';
+import ngeoDatasourceFile from 'ngeo/datasource/File.js';
 import {DEFAULT_GEOMETRY_NAME} from 'ngeo/datasource/OGC.js';
 import {getUid as olUtilGetUid} from 'ol/util.js';
 import {listen, unlistenByKey} from 'ol/events.js';
-import olCollection from 'ol/Collection.js';
+import olCollection, {CollectionEvent} from 'ol/Collection.js';
 import olFormatWFS from 'ol/format/WFS.js';
 import olInteractionSnap from 'ol/interaction/Snap.js';
+
+class CustomSnap extends olInteractionSnap {
+  /**
+   * @param {import('ol/interaction/Snap.js').Options} options
+   */
+  constructor(options) {
+    super(options);
+    document.body.addEventListener('keydown', (evt) => {
+      this.setActive(evt.keyCode !== 17); // Ctrl key
+    });
+    document.body.addEventListener('keyup', () => {
+      this.setActive(true);
+    });
+  }
+}
 
 /**
  * The snapping service of GMF. Responsible of collecting the treeCtrls that
@@ -48,9 +65,14 @@ import olInteractionSnap from 'ol/interaction/Snap.js';
  * @param {angular.IScope} $rootScope Angular rootScope.
  * @param {angular.auto.IInjectorService} $injector Angular injector.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
+ * @param {import('gmf/datasource/fileGroup.js').DataSourceFileGroup} gmfDatasourceFileGroup Group that contains file data sources.
+ * @param {import('gmf/themes.js').GmfSnappingConfig} gmfSnappingConfig Snapping configuration options for the
+ *     features in the Draw tool and in the "Layer Import / Local" tool.
  * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes The gmf Themes service.
  * @param {import("gmf/layertree/TreeManager.js").LayertreeTreeManager} gmfTreeManager The gmf TreeManager
  *    service.
+ * @param {import("ol/Collection.js").default<Feature<import("ol/geom/Geometry.js").default>>} ngeoFeatures Collection
+ *    of features.
  * @ngInject
  * @ngdoc service
  * @ngname gmfSnapping
@@ -62,8 +84,11 @@ export function EditingSnappingService(
   $rootScope,
   $injector,
   $timeout,
+  gmfDatasourceFileGroup,
+  gmfSnappingConfig,
   gmfThemes,
-  gmfTreeManager
+  gmfTreeManager,
+  ngeoFeatures
 ) {
   // === Injected services ===
 
@@ -98,6 +123,18 @@ export function EditingSnappingService(
   this.injector_ = $injector;
 
   /**
+   * @type {import('gmf/datasource/fileGroup.js').DataSourceFileGroup}
+   * @private
+   */
+  this.gmfDatasourceFileGroup_ = gmfDatasourceFileGroup;
+
+  /**
+   * @type {import('gmf/themes.js').GmfSnappingConfig}
+   * @private
+   */
+  this.gmfSnappingConfig_ = gmfSnappingConfig;
+
+  /**
    * @type {import("gmf/theme/Themes.js").ThemesService}
    * @private
    */
@@ -109,6 +146,12 @@ export function EditingSnappingService(
    */
   this.gmfTreeManager_ = gmfTreeManager;
 
+  /**
+   * @type {import("ol/Collection.js").default<Feature<import("ol/geom/Geometry.js").default>>}
+   * @private
+   */
+  this.ngeoFeatures_ = ngeoFeatures;
+
   // === Properties ===
 
   /**
@@ -118,6 +161,16 @@ export function EditingSnappingService(
    * @private
    */
   this.cache_ = {};
+
+  /**
+   * A cache for the File data sources that are added in the
+   * FileGroup, i.e. for example when a KML is added, then a File data
+   * source is added to the FileGroup's collection, and their features
+   * need to be snappable.
+   * @type {CacheFileDataSource}
+   * @private
+   */
+  this.cacheFileDataSource_ = {};
 
   /**
    * @type {Array<import("ol/events.js").EventsKey>}
@@ -141,6 +194,17 @@ export function EditingSnappingService(
   this.mapViewChangePromise_ = null;
 
   /**
+   * @type {!CustomSnap}
+   * @private
+   */
+  this.ngeoFeaturesSnapInteraction_ = new CustomSnap({
+    edge: gmfSnappingConfig.edge,
+    features: ngeoFeatures,
+    pixelTolerance: gmfSnappingConfig.tolerance,
+    vertex: gmfSnappingConfig.vertex,
+  });
+
+  /**
    * A reference to the OGC servers loaded by the theme service.
    * @type {import('gmf/themes.js').GmfOgcServers|null}
    * @private
@@ -154,21 +218,6 @@ export function EditingSnappingService(
   this.ngeoSnappingSource_ = this.injector_.has('ngeoSnappingSource')
     ? this.injector_.get('ngeoSnappingSource')
     : undefined;
-}
-
-class CustomSnap extends olInteractionSnap {
-  /**
-   * @param {import('ol/interaction/Snap.js').Options} options
-   */
-  constructor(options) {
-    super(options);
-    document.body.addEventListener('keydown', (evt) => {
-      this.setActive(evt.keyCode !== 17); // Ctrl key
-    });
-    document.body.addEventListener('keyup', () => {
-      this.setActive(true);
-    });
-  }
 }
 
 /**
@@ -185,6 +234,7 @@ EditingSnappingService.prototype.ensureSnapInteractionsOnTop = function () {
   }
   const map = this.map_;
 
+  // (1) Deal with the WMS items first
   let item;
   for (const uid in this.cache_) {
     item = this.cache_[uid];
@@ -196,6 +246,23 @@ EditingSnappingService.prototype.ensureSnapInteractionsOnTop = function () {
       map.addInteraction(item.interaction);
     }
   }
+
+  // (2) Then with the file data source items
+  for (const uid in this.cacheFileDataSource_) {
+    item = this.cacheFileDataSource_[uid];
+    if (item.active) {
+      if (!item.interaction) {
+        throw new Error('Missing item.interaction');
+      }
+      map.removeInteraction(item.interaction);
+      map.addInteraction(item.interaction);
+    }
+  }
+
+  // (3) Finally, deal with the ngeo features, a.k.a. the features in
+  //     the "draw" tool
+  map.removeInteraction(this.ngeoFeaturesSnapInteraction_);
+  map.addInteraction(this.ngeoFeaturesSnapInteraction_);
 };
 
 /**
@@ -213,11 +280,14 @@ EditingSnappingService.prototype.setMap = function (map) {
     this.unregisterAllTreeCtrl_();
     keys.forEach(unlistenByKey);
     keys.length = 0;
+    this.map_.removeInteraction(this.ngeoFeaturesSnapInteraction_);
   }
 
   this.map_ = map;
 
   if (map) {
+    // (1) Listen to the layer tree nodes changes to manage the WMS
+    //     (WFS) layers that support being snapped on.
     this.treeCtrlsUnregister_ = this.rootScope_.$watchCollection(
       () => {
         if (this.gmfTreeManager_.rootCtrl) {
@@ -240,9 +310,33 @@ EditingSnappingService.prototype.setMap = function (map) {
     );
 
     keys.push(
+      // (2) Listen when the themes change to reobtain the OGC servers
       listen(this.gmfThemes_, 'change', this.handleThemesChange_, this),
+      // (3) Listen when the map is moved to update the vector
+      //     features of the WMS (WFS) layers
       listen(map, 'moveend', this.handleMapMoveEnd_, this)
     );
+
+    // (4) Listen when File data sources are added to the File Group
+    //     (i.e. when vector files are imported using the Import tool,
+    //     they create File data sources, which contain features that have
+    //     to be snapped on)
+    const fileGroup = this.gmfDatasourceFileGroup_.fileGroup;
+    if (fileGroup) {
+      keys.push(
+        listen(fileGroup.dataSourcesCollection, 'add', this.handleFileGroupDataSourcesCollectionAdd_, this),
+        listen(
+          fileGroup.dataSourcesCollection,
+          'remove',
+          this.handleFileGroupDataSourcesCollectionRemove_,
+          this
+        )
+      );
+    }
+
+    // (5) Enable the snapping on 'ngeo features', i.e. on features
+    //     that are added/drawn using the Draw tool
+    map.addInteraction(this.ngeoFeaturesSnapInteraction_);
   }
 };
 
@@ -649,6 +743,117 @@ EditingSnappingService.prototype.refreshSnappingSource_ = function () {
 };
 
 /**
+ * Called when a File data source is added to the File Group (imported
+ * geospatial files). Make its features snappable.
+ * @param {Event|import("ol/events/Event.js").default} evt Event
+ * @private
+ */
+EditingSnappingService.prototype.handleFileGroupDataSourcesCollectionAdd_ = function (evt) {
+  if (!(evt instanceof CollectionEvent)) {
+    return;
+  }
+
+  const fileDataSource = evt.element;
+  if (!(fileDataSource instanceof ngeoDatasourceFile)) {
+    return;
+  }
+
+  // (1) Create Snap interaction and give it the features collection
+  //     of the data source.
+  const features = fileDataSource.featuresCollection;
+  const gmfSnappingConfig = this.gmfSnappingConfig_;
+  const interaction = new CustomSnap({
+    edge: gmfSnappingConfig.edge,
+    features,
+    pixelTolerance: gmfSnappingConfig.tolerance,
+    vertex: gmfSnappingConfig.vertex,
+  });
+
+  // (2) Watch the visible property of the data source. When ON, the
+  //     snap should be added. When OFF, it should be removed.
+  const visibleWatcherUnregister = this.rootScope_.$watch(() => {
+    return fileDataSource.visible;
+  }, this.handleFileDataSourceVisibleChange_.bind(this, fileDataSource));
+
+  const uid = olUtilGetUid(fileDataSource);
+
+  // (3) Create and add the cache item
+  this.cacheFileDataSource_[uid] = {
+    active: false,
+    fileDataSource,
+    interaction,
+    visibleWatcherUnregister,
+  };
+
+  // (4) Initialize the Snap interaction with the File DataSource,
+  //     depending on its current visible value
+  this.handleFileDataSourceVisibleChange_(fileDataSource);
+};
+
+/**
+ * Called when a File data source is removed from the File
+ * Group. Remove the features from being snappable.
+ * @param {Event|import("ol/events/Event.js").default} evt Event
+ * @private
+ */
+EditingSnappingService.prototype.handleFileGroupDataSourcesCollectionRemove_ = function (evt) {
+  if (!(evt instanceof CollectionEvent)) {
+    return;
+  }
+
+  const fileDataSource = evt.element;
+  if (!(fileDataSource instanceof ngeoDatasourceFile)) {
+    return;
+  }
+
+  const uid = olUtilGetUid(fileDataSource);
+  if (!this.cacheFileDataSource_[uid]) {
+    return;
+  }
+
+  const item = this.cacheFileDataSource_[uid];
+  const map = this.map_;
+
+  // (1) Unregister watcher
+  item.visibleWatcherUnregister();
+
+  // (2) Remove snap interaction, if item is active
+  if (item.active) {
+    map.removeInteraction(item.interaction);
+  }
+
+  // (3) Delete item from cache, and we're done
+  delete this.cacheFileDataSource_[uid];
+};
+
+/**
+ * Called when the "visible" property of a File data source
+ * changes. Add or remove the Snap interaction for that data source
+ * depending on the property value.
+ * @private
+ */
+EditingSnappingService.prototype.handleFileDataSourceVisibleChange_ = function (fileDataSource) {
+  const uid = olUtilGetUid(fileDataSource);
+  const item = this.cacheFileDataSource_[uid];
+  const visible = fileDataSource.visible;
+
+  // No need to do anything if DS visible/hidden and the item is
+  // active/inactive already.
+  if (item.active === visible) {
+    return;
+  }
+
+  item.active = visible;
+  const map = this.map_;
+
+  if (visible) {
+    map.addInteraction(item.interaction);
+  } else {
+    map.removeInteraction(item.interaction);
+  }
+};
+
+/**
  * @typedef {Object<string, CacheItem>} Cache
  */
 
@@ -668,6 +873,20 @@ EditingSnappingService.prototype.refreshSnappingSource_ = function () {
  */
 
 /**
+ * The key is: A uid string generated from the fileDataSource
+ * @typedef {Object<string, CacheFileDataSourceItem>} CacheFileDataSource
+ * @property {import('ngeo/datasource/File.js').default} fileDataSource
+ */
+
+/**
+ * @typedef {Object} CacheFileDataSourceItem
+ * @property {boolean} active
+ * @property {import("ngeo/datasource/File.js").default} fileDataSource
+ * @property {import("ol/interaction/Snap.js").default} interaction
+ * @property {Function} visibleWatcherUnregister
+ */
+
+/**
  * @typedef {Object} WFSConfig
  * @property {string} featureTypes
  * @property {string} url
@@ -678,10 +897,16 @@ EditingSnappingService.prototype.refreshSnappingSource_ = function () {
  * @hidden
  */
 const module = angular.module('gmfSnapping', [
+  gmfDatasourceFileGroup.name,
   gmfLayertreeTreeManager.name,
   gmfThemeThemes.name,
   ngeoLayertreeController.name,
 ]);
 module.service('gmfSnapping', EditingSnappingService);
+
+// Note: the gmfSnappingConfig are used for features from:
+// - the Draw tool
+// - the Layer Import / Local tool
+module.value('gmfSnappingConfig', {});
 
 export default module;
