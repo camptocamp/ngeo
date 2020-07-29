@@ -25,7 +25,7 @@ import {getDefaultModifyStyleFunction} from 'ngeo/interaction/common.js';
 import {getAzimut} from 'ngeo/interaction/MeasureAzimut.js';
 import {getUid as olUtilGetUid} from 'ol/util.js';
 import olFeature from 'ol/Feature.js';
-import olMapBrowserPointerEvent from 'ol/MapBrowserPointerEvent.js';
+import olMapBrowserEvent from 'ol/MapBrowserEvent.js';
 import * as olCoordinate from 'ol/coordinate.js';
 import {listen} from 'ol/events.js';
 import * as olExtent from 'ol/extent.js';
@@ -162,7 +162,7 @@ export default class extends olInteractionPointer {
   }
 
   /**
-   * @param {import("ol/MapBrowserPointerEvent.js").default} evt Map browser event
+   * @param {import("ol/MapBrowserEvent.js").default} evt MapBrowserEvent
    * @private
    */
   willModifyFeatures_(evt) {
@@ -386,7 +386,7 @@ export default class extends olInteractionPointer {
   }
 
   /**
-   * @param {import("ol/MapBrowserPointerEvent.js").default} evt Event.
+   * @param {import("ol/MapBrowserEvent.js").default} evt MapBrowserEvent.
    * @return {boolean} Start drag sequence?
    * @private
    */
@@ -430,7 +430,7 @@ export default class extends olInteractionPointer {
   }
 
   /**
-   * @param {import("ol/MapBrowserPointerEvent.js").default} evt Event.
+   * @param {import("ol/MapBrowserEvent.js").default} evt MapBrowserEvent.
    * @private
    */
   handleDragEvent_(evt) {
@@ -455,7 +455,7 @@ export default class extends olInteractionPointer {
   }
 
   /**
-   * @param {import("ol/MapBrowserPointerEvent.js").default} evt Event.
+   * @param {import("ol/MapBrowserEvent.js").default} evt MapBrowserEvent.
    * @return {boolean} Stop drag sequence?
    * @private
    */
@@ -478,7 +478,7 @@ export default class extends olInteractionPointer {
    * @return {boolean} `false` to stop event propagation.
    */
   handleEvent(mapBrowserEvent) {
-    if (!(mapBrowserEvent instanceof olMapBrowserPointerEvent)) {
+    if (!(mapBrowserEvent instanceof olMapBrowserEvent)) {
       return true;
     }
 

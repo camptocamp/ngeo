@@ -116,7 +116,7 @@ class DrawAzimut extends olInteractionPointer {
 
   /**
    * Handle move events.
-   * @param {import("ol/MapBrowserEvent.js").default} event A move event.
+   * @param {import("ol/MapBrowserEvent.js").default} event MapBrowserEvent, a move event.
    * @return {boolean} Pass the event to other interactions.
    * @private
    */
@@ -130,7 +130,7 @@ class DrawAzimut extends olInteractionPointer {
   }
 
   /**
-   * @param {import("ol/MapBrowserEvent.js").default} event Event.
+   * @param {import("ol/MapBrowserEvent.js").default} event MapBrowserEvent.
    * @private
    */
   createOrUpdateSketchPoint_(event) {
@@ -159,7 +159,7 @@ class DrawAzimut extends olInteractionPointer {
 
   /**
    * Start the drawing.
-   * @param {import("ol/MapBrowserEvent.js").default} event Event.
+   * @param {import("ol/MapBrowserEvent.js").default} event MapBrowserEvent.
    * @private
    */
   startDrawing_(event) {
@@ -177,7 +177,7 @@ class DrawAzimut extends olInteractionPointer {
 
   /**
    * Modify the drawing.
-   * @param {import("ol/MapBrowserEvent.js").default} event Event.
+   * @param {import("ol/MapBrowserEvent.js").default} event MapBrowserEvent.
    * @private
    */
   modifyDrawing_(event) {
@@ -259,7 +259,7 @@ class DrawAzimut extends olInteractionPointer {
   }
 
   /**
-   * @param {import("ol/MapBrowserPointerEvent.js").default} event Event.
+   * @param {import("ol/MapBrowserEvent.js").default} event MapBrowserEvent.
    * @return {boolean} If the event was consumed.
    */
   handleDownEvent(event) {
@@ -268,7 +268,7 @@ class DrawAzimut extends olInteractionPointer {
   }
 
   /**
-   * @param {import("ol/MapBrowserPointerEvent.js").default} event Event.
+   * @param {import("ol/MapBrowserEvent.js").default} event MapBrowserEvent.
    * @return {boolean} If the event was consumed.
    */
   handleUpEvent(event) {
@@ -294,7 +294,7 @@ class DrawAzimut extends olInteractionPointer {
   }
 
   /**
-   * @param {import("ol/MapBrowserPointerEvent.js").default} mapBrowserEvent Event.
+   * @param {import("ol/MapBrowserEvent.js").default} mapBrowserEvent MapBrowserEvent.
    * @return {boolean} If the event was consumed.
    */
   handleEvent(mapBrowserEvent) {
