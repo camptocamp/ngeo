@@ -862,7 +862,13 @@ ngeo-googlestreetview {
  * Ngeo Query Panel Component
  */
 ngeo-query-panel {
-  .ngeo-query-panel-actions {
+  .ngeo-query-panel-actions,
+  .ngeo-query-panel-help {
     margin: 2rem 0 0 0;
+  }
+
+  .ngeo-query-panel-help {
+    background-color: $nav-bg;
+    padding: $app-margin;
   }
 }
