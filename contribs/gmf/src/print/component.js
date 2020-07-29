@@ -40,7 +40,7 @@ import olLayerGroup from 'ol/layer/Group.js';
 import olMap from 'ol/Map.js';
 import {toDegrees, toRadians, clamp} from 'ol/math.js';
 import ImageWMS from 'ol/source/ImageWMS.js';
-import MapBrowserPointerEvent from 'ol/MapBrowserPointerEvent.js';
+import MapBrowserEvent from 'ol/MapBrowserEvent.js';
 import 'bootstrap/js/src/dropdown.js';
 import ExternalOGC from 'gmf/datasource/ExternalOGC.js';
 
@@ -991,7 +991,7 @@ export class PrintController {
    * @private
    */
   onPointerDrag_(e) {
-    if (e instanceof MapBrowserPointerEvent && this.onDragPreviousMousePosition_ && this.map) {
+    if (e instanceof MapBrowserEvent && this.onDragPreviousMousePosition_ && this.map) {
       const originalEvent = e.originalEvent;
       if (originalEvent instanceof KeyboardEvent) {
         const mapCenter = this.map.getView().getCenter();

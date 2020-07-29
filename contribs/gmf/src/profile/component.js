@@ -443,15 +443,14 @@ ProfileController.prototype.update_ = function () {
  */
 ProfileController.prototype.updateEventsListening_ = function () {
   if (this.active && this.map_ !== null) {
-    this.pointerMoveKey_ = listen(this.map_, 'pointermove', (event) => {
-      const e = /** @type {import("ol/MapBrowserPointerEvent.js").default} */ (event);
+    this.pointerMoveKey_ = listen(this.map_, 'pointermove', (mapBrowserEvent) => {
       if (!this.map_) {
         throw new Error('Missing map');
       }
-      if (e.dragging || !this.line) {
+      if (mapBrowserEvent.dragging || !this.line) {
         return;
       }
-      const coordinate = this.map_.getEventCoordinate(e.originalEvent);
+      const coordinate = this.map_.getEventCoordinate(mapBrowserEvent.originalEvent);
       const closestPoint = this.line.getClosestPoint(coordinate);
       // compute distance to line in pixels
       const eventToLine = new olGeomLineString([closestPoint, coordinate]);

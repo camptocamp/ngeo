@@ -98,12 +98,12 @@ export class AbstractAPIController extends AbstractAppController {
 
 /**
  * Allow map pan with all buttons except right click (context menu)
- * @param {import("ol/MapBrowserEvent.js").default} event MapBrowser event
+ * @param {import("ol/MapBrowserEvent.js").default} mapBrowserEvent MapBrowser event
  * @return {boolean}
  */
-function dragPanCondition(event) {
-  const pointerEvent = /** @type {import("ol/MapBrowserPointerEvent.js").default} */ (event).pointerEvent;
-  return noModifierKeys(event) && pointerEvent.button !== 2;
+function dragPanCondition(mapBrowserEvent) {
+  const event = mapBrowserEvent.originalEvent;
+  return noModifierKeys(mapBrowserEvent) && event.button !== 2;
 }
 
 /**

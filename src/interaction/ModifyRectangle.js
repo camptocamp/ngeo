@@ -190,7 +190,7 @@ class ModifyRectangle extends olInteractionPointer {
   }
 
   /**
-   * @param {import("ol/MapBrowserPointerEvent.js").default} evt Map browser event
+   * @param {import("ol/MapBrowserEvent.js").default} evt MapBrowserEvent
    * @private
    */
   willModifyFeatures_(evt) {
@@ -320,7 +320,7 @@ class ModifyRectangle extends olInteractionPointer {
   }
 
   /**
-   * @param {import("ol/MapBrowserPointerEvent.js").default} evt Event.
+   * @param {import("ol/MapBrowserEvent.js").default} evt MapBrowserEvent.
    * @return {boolean} Start drag sequence?
    * @private
    */
@@ -342,7 +342,7 @@ class ModifyRectangle extends olInteractionPointer {
   }
 
   /**
-   * @param {import("ol/MapBrowserPointerEvent.js").default} evt Event.
+   * @param {import("ol/MapBrowserEvent.js").default} evt MapBrowserEvent.
    * @private
    */
   handleDrag_(evt) {
@@ -406,7 +406,7 @@ class ModifyRectangle extends olInteractionPointer {
   }
 
   /**
-   * @param {import("ol/MapBrowserPointerEvent.js").default} evt Event.
+   * @param {import("ol/MapBrowserEvent.js").default} evt MapBrowserEvent.
    * @return {boolean} Stop drag sequence?
    * @private
    */
