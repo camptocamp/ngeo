@@ -104,6 +104,9 @@ export default class extends ngeoDatasourceGroup {
    */
   removeDataSource(dataSource) {
     super.removeDataSource(dataSource);
+    if (!this.unregister_.hasOwnProperty(dataSource.id)) {
+      return;
+    }
     if (!(dataSource instanceof ngeoDatasourceFile)) {
       throw new Error('Wrong datasource type');
     }
