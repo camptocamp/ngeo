@@ -25,6 +25,7 @@ import {listen} from 'ol/events.js';
 import ngeoMiscEventHelper from 'ngeo/misc/EventHelper.js';
 import ngeoMiscDatetimepickerComponent from 'ngeo/misc/datetimepickerComponent.js';
 import {ObjectEvent} from 'ol/Object.js';
+import './editing.css';
 
 /**
  * @type {angular.IModule}
