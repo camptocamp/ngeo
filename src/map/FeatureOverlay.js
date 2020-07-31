@@ -37,12 +37,6 @@ export function FeatureOverlay(manager, index) {
   this.manager_ = manager;
 
   /**
-   * @type {?import("ol/Collection.js").default<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>}
-   * @private
-   */
-  this.features_ = null;
-
-  /**
    * @type {number}
    * @private
    */
@@ -71,11 +65,11 @@ FeatureOverlay.prototype.removeFeature = function (feature) {
 };
 
 /**
- * Is empty.
- * @returns {boolean} Is empty.
+ * Check if featureOverlay has no features.
+ * @returns {boolean} True if there is no features. False otherwise.
  */
 FeatureOverlay.prototype.isEmpty = function () {
-  return !this.features_ || this.features_.getLength() == 0;
+  return this.manager_.isEmpty(this.index_);
 };
 
 /**
@@ -94,18 +88,19 @@ FeatureOverlay.prototype.clear = function () {
  * @param {import("ol/Collection.js").default<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>} features Feature collection.
  */
 FeatureOverlay.prototype.setFeatures = function (features) {
-  if (this.features_ !== null) {
-    this.features_.clear();
-    this.listenerKeys_.forEach(unlistenByKey);
-  }
+  // Remove old features collection.
+  this.clear();
+  this.listenerKeys_.forEach(unlistenByKey);
+
+  // Add new feature collection.
   if (features !== null) {
     features.forEach((feature) => {
       this.addFeature(feature);
     });
+    // Listen collection to sync features in the manager.
     this.listenerKeys_.push(listen(features, 'add', this.handleFeatureAdd_, this));
     this.listenerKeys_.push(listen(features, 'remove', this.handleFeatureRemove_, this));
   }
-  this.features_ = features;
 };
 
 /**
