@@ -194,7 +194,12 @@ const module = angular.module('Appdesktop_alt', [
 
 module.controller('AlternativeDesktopController', Controller);
 
-module.value('gmfLayertreeOptions', {'legendIcon': {'width': '30', 'height': '30'}});
+module.value('gmfLayertreeOptions', {
+  legendIcon: {
+    width: '30',
+    height: '30'
+  }
+});
 
 module.value('gmfPermalinkOptions', /** @type {import('gmf/permalink/Permalink.js').PermalinkOptions} */ ({
   crosshairStyle: [
