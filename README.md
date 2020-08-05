@@ -1,7 +1,5 @@
 # ngeo
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/camptocamp/ngeo.svg)](https://greenkeeper.io/)
-
 ngeo is a JS library that aims to ease the development of applications based on
 [AngularJS](https://angularjs.org/) and [OpenLayers](http://openlayers.org).
 
