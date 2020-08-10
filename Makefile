@@ -256,7 +256,7 @@ contribs/dist: .build/build-dll.timestamp
 	# We need the files for each app
 	# To simplify processing, we first copy them in gmfappsdeps directory, then from there to each app
 	$(foreach f,$^,mkdir -p .build/examples-hosted/gmfappsdeps/`dirname $(f)`; cp $(f) .build/examples-hosted/gmfappsdeps/$(f);)
-	rsync --recursive .build/examples-hosted/gmfappsdeps/contribs/gmf/ .build/examples-hosted/contribs/gmf/apps/;)
+	rsync --recursive .build/examples-hosted/gmfappsdeps/contribs/gmf/ .build/examples-hosted/contribs/gmf/apps/;
 	touch $@
 
 .build/examples-hosted/index.html: \
