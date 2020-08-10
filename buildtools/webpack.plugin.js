@@ -316,7 +316,6 @@ function manageContent(pluginOptions, usedContext, compilation, chunk, resolve, 
         }
         try {
           const assetUrl = url.getValue();
-          console.log('asset url', assetUrl);
           if (assetUrl[0] == '~' || assetUrl[0] === '.') {
             let assetName = assetUrl;
             if (assetUrl[0] == '~') {
