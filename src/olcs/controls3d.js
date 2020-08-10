@@ -254,7 +254,7 @@ const Controller = class {
     }
     const view = this.ol3dm.getOlView();
     const cur = view.getResolution();
-    const newResolution = view.constrainResolution(cur, delta);
+    const newResolution = view.getConstrainedResolution(cur, delta);
     if (view.getAnimating()) {
       view.cancelAnimations();
     }
