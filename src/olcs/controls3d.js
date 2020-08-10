@@ -68,13 +68,13 @@ const Controller = class {
     /**
      * @type {number}
      */
-    this.minTilt = -1;
+    this.minTilt;
 
     /**
      * @type {number}
      * @private
      */
-    this.maxTilt = -1;
+    this.maxTilt;
 
     /**
      * @type {?JQuery}
