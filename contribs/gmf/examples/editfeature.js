@@ -86,7 +86,6 @@ function MainController($scope, gmfEditFeature, gmfUser) {
    * @private
    */
   this.wmsSource_ = new olSourceImageWMS({
-    projection: undefined, // should be removed in next OL version
     url: appURL.MAPSERVER_PROXY,
     params: {'LAYERS': 'point'},
   });

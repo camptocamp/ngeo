@@ -238,7 +238,6 @@ export function createWMSLayer(config, ogcServer) {
   const layer = new ImageLayer({
     source: new ImageWMS({
       url: ogcServer.url,
-      projection: undefined, // FIXME: should be removed in next OL version
       params: {
         'LAYERS': config.layers,
       },

@@ -130,7 +130,6 @@ function MainController(ngeoDataSources, ngeoToolActivateMgr, ngeoQueryModeSelec
 
   const source1 = new olSourceImageWMS({
     url: MAPSERVER_PROXY,
-    projection: undefined, // should be removed in next OL version
     params: {'LAYERS': 'bus_stop'},
   });
   const busStopLayer = new olLayerImage({
@@ -139,7 +138,6 @@ function MainController(ngeoDataSources, ngeoToolActivateMgr, ngeoQueryModeSelec
 
   const source2 = new olSourceImageWMS({
     url: MAPSERVER_PROXY,
-    projection: undefined, // should be removed in next OL version
     params: {'LAYERS': 'information'},
   });
   const informationLayer = new olLayerImage({

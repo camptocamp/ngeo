@@ -22,6 +22,7 @@
 import './backgroundlayer.css';
 import angular from 'angular';
 import ngeoSourceAsitVD from 'ngeo/source/AsitVD.js';
+import {MAPSERVER_PROXY} from './url.js';
 
 import EPSG2056 from '@geoblocks/proj/src/EPSG_2056.js';
 import olMap from 'ol/Map.js';
@@ -158,15 +159,14 @@ function MainController($scope) {
     view: new olView({
       projection: EPSG2056,
       resolutions: [1000, 500, 200, 100, 50, 20, 10, 5, 2.5, 2, 1, 0.5],
-      center: [2600000, 1200000],
-      zoom: 1,
+      center: [2535000, 1160000],
+      zoom: 3,
     }),
   });
 
   const source = new olSourceImageWMS({
-    projection: undefined, // should be removed in next OL version
-    url: 'https://wms.geo.admin.ch',
-    params: {'LAYERS': 'ch.swisstopo.dreiecksvermaschung'},
+    url: MAPSERVER_PROXY,
+    params: {'LAYERS': 'default'},
     serverType: 'mapserver',
   });
   /**

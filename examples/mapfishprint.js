@@ -85,9 +85,8 @@ const PRINT_PAPER_SIZE_ = [555, 675];
 function MainController($timeout, ngeoCreatePrint, ngeoPrintUtils) {
   const source = new olSourceImageWMS({
     url: MAPSERVER_PROXY,
-    projection: undefined, // should be removed in next OL version
     params: {
-      'LAYERS': 'osm',
+      'LAYERS': 'default',
     },
     serverType: /** @type {import("ol/source/WMSServerType.js").default} */ ('mapserver'),
   });
