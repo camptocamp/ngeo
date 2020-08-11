@@ -138,7 +138,7 @@
     "terser-webpack-plugin": "4.0.0",
     "ts-node": "8.10.2",
     "tsconfig-paths": "3.9.0",
-    "typedoc": "0.17.8",
+    "typedoc": "0.18.0",
     "typescript": "3.9.7",
     "webpack": "4.44.1",
     "webpack-cli": "3.3.12",
