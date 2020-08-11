@@ -82,7 +82,6 @@ describe('ngeo.print.Service', () => {
     describe('ImageWMS', () => {
       beforeEach(() => {
         const source = new olSourceImageWMS({
-          projection: undefined, // should be removed in next OL version
           url: 'http://example.com/wms',
           params: {
             'LAYERS': 'foo,bar',
@@ -146,7 +145,6 @@ describe('ngeo.print.Service', () => {
         map.addLayer(
           new olLayerTile({
             source: new olSourceTileWMS({
-              projection: undefined, // should be removed in next OL version
               url: 'http://example.com/wms',
               params: {
                 'LAYERS': 'foo,bar',
@@ -627,7 +625,6 @@ describe('ngeo.print.Service', () => {
     describe('layer order', () => {
       beforeEach(() => {
         const source1 = new olSourceImageWMS({
-          projection: undefined, // should be removed in next OL version
           url: 'http://example.com/wms/bottom',
           params: {
             'LAYERS': 'foo,bar',
@@ -641,7 +638,6 @@ describe('ngeo.print.Service', () => {
         );
 
         const source2 = new olSourceImageWMS({
-          projection: undefined, // should be removed in next OL version
           url: 'http://example.com/wms/top',
           params: {
             'LAYERS': 'foo,bar',

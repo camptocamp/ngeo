@@ -53,7 +53,6 @@ function MainController($scope) {
   /** @type {import("ol/layer/Tile.js").default} */
   const boundaries = new olLayerTile({
     source: new olSourceTileWMS({
-      projection: undefined, // should be removed in next OL version
       url: 'https://wms.geo.admin.ch',
       params: {'LAYERS': 'ch.swisstopo.swissboundaries3d-gemeinde-flaeche.fill'},
       serverType: 'mapserver',
@@ -64,7 +63,6 @@ function MainController($scope) {
   /** @type {import("ol/layer/Tile.js").default} */
   const waterBodies = new olLayerTile({
     source: new olSourceTileWMS({
-      projection: undefined, // should be removed in next OL version
       url: 'https://wms.geo.admin.ch',
       params: {'LAYERS': 'ch.swisstopo.geologie-gravimetrischer_atlas'},
       serverType: 'mapserver',
@@ -75,7 +73,6 @@ function MainController($scope) {
   /** @type {import("ol/layer/Tile.js").default} */
   const cities = new olLayerTile({
     source: new olSourceTileWMS({
-      projection: undefined, // should be removed in next OL version
       url: 'https://wms.geo.admin.ch',
       params: {'LAYERS': 'ch.swisstopo.dreiecksvermaschung'},
       serverType: 'mapserver',
@@ -104,7 +101,6 @@ function MainController($scope) {
    */
   this.roads_ = new olLayerTile({
     source: new olSourceTileWMS({
-      projection: undefined, // should be removed in next OL version
       url: 'https://wms.geo.admin.ch',
       params: {'LAYERS': 'ch.bafu.laerm-strassenlaerm_tag'},
       serverType: 'mapserver',

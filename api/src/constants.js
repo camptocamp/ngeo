@@ -45,7 +45,7 @@ export default /** @type {APIConfig} */ ({
   resolutions: [250, 100, 50, 20, 10, 5, 2, 1, 0.5, 0.25, 0.1, 0.05],
 
   // The extent restriction, must be in the same projection as `config.projection`.
-  // the format is `[minx, miny, maxx, maxy]`for example: `[420000, 30000, 660000, 350000]`
+  // the format is `[minx, miny, maxx, maxy]`for example: `[2420000, 1030000, 2660000, 1350000]`
   // the default is ǹo restriction.
   // extent: undefined,
 

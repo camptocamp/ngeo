@@ -22,6 +22,7 @@
 import './elevationProfile.css';
 import angular from 'angular';
 import EPSG2056 from '@geoblocks/proj/src/EPSG_2056.js';
+import {MAPSERVER_PROXY} from './url.js';
 
 import olFeature from 'ol/Feature.js';
 import olMap from 'ol/Map.js';
@@ -53,16 +54,11 @@ function MainController($http, $scope) {
 
   const source = new olSourceVector();
   const source2 = new olSourceImageWMS({
-    projection: undefined, // should be removed in next OL version
-    url: 'https://wms.geo.admin.ch/',
+    url: MAPSERVER_PROXY,
     crossOrigin: 'anonymous',
-    attributions:
-      '&copy; ' +
-      '<a href="https://www.geo.admin.ch/internet/geoportal/' +
-      'en/home.html">Pixelmap 1:500000 / geo.admin.ch</a>',
+    attributions: '&copy; <a href="https:/osm.org/">OpoenStreetMap</a>',
     params: {
-      'LAYERS': 'ch.swisstopo.pixelkarte-farbe-pk1000.noscale',
-      'FORMAT': 'image/jpeg',
+      'LAYERS': 'default',
     },
     serverType: /** @type {import("ol/source/WMSServerType.js").default} */ ('mapserver'),
   });
@@ -81,9 +77,6 @@ function MainController($http, $scope) {
     ],
     view: new olView({
       projection: EPSG2056,
-      extent: [420000, 30000, 900000, 350000],
-      zoom: 0,
-      center: [0, 0],
     }),
   });
 

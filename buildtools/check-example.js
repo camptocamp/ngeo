@@ -85,21 +85,23 @@ function loaded(page, browser) {
       // @ts-ignore
       console.log(`Check finished in ${(new Date() - start) / 1000} seconds`);
       if (screenshot) {
-        page
-          .screenshot({
-            path: screenshotPath,
-          })
-          .then(
-            async () => {
-              console.log(`Screenshot saved at: ${screenshotPath}`);
-              await browser.close();
-            },
-            async (e) => {
-              console.log(`Screenshot error: ${e}`);
-              await browser.close();
-              process.exit(2);
-            }
-          );
+        timeout = setTimeout(async () => {
+          page
+            .screenshot({
+              path: screenshotPath,
+            })
+            .then(
+              async () => {
+                console.log(`Screenshot saved at: ${screenshotPath}`);
+                await browser.close();
+              },
+              async (e) => {
+                console.log(`Screenshot error: ${e}`);
+                await browser.close();
+                process.exit(2);
+              }
+            );
+        }, 100);
       } else {
         await browser.close();
       }

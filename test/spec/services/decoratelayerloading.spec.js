@@ -36,9 +36,7 @@ describe('ngeo.misc.DecorateLayerLoading test suite', () => {
   );
 
   it('should increment layerLoadingCount recursively', () => {
-    const imageSource = new olSourceImage({
-      projection: undefined, // should be removed in next OL version
-    });
+    const imageSource = new olSourceImage({});
     const layer = new olLayerImage({source: imageSource});
     const lg_1 = new olLayerGroup();
     const lg_2 = new olLayerGroup();
