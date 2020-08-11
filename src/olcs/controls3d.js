@@ -254,7 +254,9 @@ const Controller = class {
     }
     const view = this.ol3dm.getOlView();
     const cur = view.getResolution();
-    const newResolution = view.getConstrainedResolution(cur, delta);
+    // resolution constraint looks broken in OL
+    // Using a slightly larger delta than 1 workaround the issue.
+    const newResolution = view.getConstrainedResolution(cur, -delta * 1.01);
     if (view.getAnimating()) {
       view.cancelAnimations();
     }
