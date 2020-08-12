@@ -658,10 +658,7 @@ export function PermalinkService(
          * @param {import('ngeo/layertree/Controller.js').LayertreeController} ctrl
          */
         (ctrl) => {
-          /**
-           * @type {import('gmf/themes.js').GmfGroup}
-           */
-          const groupNode = treeCtrl.node;
+          const groupNode = /** @type {import('gmf/themes.js').GmfGroup} */ (ctrl.node);
           if (groupNode.children === undefined && ctrl.getState() === 'on') {
             gmfLayerNames.push(ctrl.node.name);
           }
