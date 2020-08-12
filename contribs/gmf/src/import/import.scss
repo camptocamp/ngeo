@@ -9,6 +9,9 @@ gmf-importdatasource {
   .btn.has-error {
     color: $danger;
   }
+  span.twitter-typeahead pre {
+    display: none;
+  }
 }
 
 gmf-wmscapabilitylayertreenode,
@@ -47,7 +50,7 @@ gmf-wmtscapabilitylayertree {
   > gmf-wmtscapabilitylayertree {
     background-color: white;
     border: 0.06rem solid #ccc;
-    height: calc(100% - 1.25rem);
+    height: calc(100% - 4em);
     padding: 0.31rem 0.31rem 0.31rem 1.25rem;
     overflow-y: auto;
   }
