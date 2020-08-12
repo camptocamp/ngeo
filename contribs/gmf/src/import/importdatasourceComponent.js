@@ -339,7 +339,7 @@ class Controller {
               displayKey: 'url',
               templates: {
                 suggestion: function (item) {
-                  return `<div> ${item.name}</div>`;
+                  return `<div>${item.name}</div>`;
                 },
               },
             }
