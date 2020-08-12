@@ -1,10 +1,9 @@
 ---
-
 name: Audit
 
 on:
   schedule:
-    - cron: "30 2 * * *"
+    - cron: '30 2 * * *'
 
 jobs:
   main:
@@ -23,7 +22,12 @@ jobs:
       - uses: actions/checkout@v1
         with:
           ref: ${{ matrix.branch }}
+      - run: sudo npm install --global better-npm-audit npm
       - run: npm install --package-lock
-      - run: npm audit fix --force
-      - run: git diff
-      - run: git diff-index --quiet HEAD
+      - run: |
+          node /usr/local/lib/node_modules/better-npm-audit audit \
+          --ignore=$(cat npm-cve-ignore 2> /dev/null || true) || (
+            npm audit fix --force
+            git diff
+            git diff-index --quiet HEAD
+          )
