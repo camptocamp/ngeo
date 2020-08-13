@@ -25,7 +25,7 @@ jobs:
       - run: sudo npm install --global better-npm-audit npm
       - run: npm install --package-lock
       - run: |
-          node /usr/local/lib/node_modules/better-npm-audit audit \
+          node /usr/local/lib/node_modules/better-npm-audit audit --level moderate \
           --ignore=$(cat npm-cve-ignore 2> /dev/null || true) || (
             npm audit fix --force
             git diff
