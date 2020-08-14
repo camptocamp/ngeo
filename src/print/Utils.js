@@ -49,6 +49,7 @@ export function PrintUtils() {
 export const INCHES_PER_METER = 39.37;
 
 /**
+ * The rederance DPI in the PDF
  * @hidden
  */
 export const DOTS_PER_INCH = 72;

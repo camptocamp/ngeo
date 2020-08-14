@@ -43,6 +43,7 @@ import ImageWMS from 'ol/source/ImageWMS.js';
 import MapBrowserEvent from 'ol/MapBrowserEvent.js';
 import 'bootstrap/js/src/dropdown.js';
 import ExternalOGC from 'gmf/datasource/ExternalOGC.js';
+import {dpi as screenDpi} from 'ngeo/utils.js';
 
 /**
  * Fields that can come from a print v3 server and can be used in the partial
@@ -1154,7 +1155,7 @@ export class PrintController {
     // Add feature overlay layer to print spec.
     /** @type {import('ngeo/print/mapfish-print-v3.js').MapFishPrintLayer[]} */
     const layers = [];
-    this.ngeoPrint_.encodeLayer(layers, this.featureOverlayLayer_, viewResolution);
+    this.ngeoPrint_.encodeLayer(layers, this.featureOverlayLayer_, viewResolution, this.layoutInfo.dpi);
     if (layers.length > 0) {
       spec.attributes.map.layers.unshift(layers[0]);
     }
@@ -1375,7 +1376,7 @@ export class PrintController {
             if (url) {
               icon_dpi = {
                 url: url,
-                dpi: 72,
+                dpi: screenDpi(),
               };
             }
           }
@@ -1421,7 +1422,7 @@ export class PrintController {
               }
               icon_dpi = {
                 url: url,
-                dpi: type === 'qgis' ? dpi : 72,
+                dpi: type === 'qgis' ? dpi : screenDpi(),
               };
             }
 
@@ -1434,7 +1435,7 @@ export class PrintController {
                     name: this.gmfLegendOptions_.label[type] === false ? '' : gettextCatalog.getString(name),
                     icons: [icon_dpi.url],
                   },
-                  icon_dpi.dpi != 72
+                  icon_dpi.dpi != screenDpi()
                     ? {
                         dpi: icon_dpi.dpi,
                       }
@@ -1494,11 +1495,14 @@ export class PrintController {
    * Return the metadata legendImage of a layer from the found corresponding node
    * or undefined.
    * @param {string} layerName a layer name.
-   * @param {number} [dpi=72] the image DPI.
+   * @param {number} [dpi=96] the image DPI.
    * @return {LegendURLDPI|undefined} The legendImage with selected DPI or undefined.
    * @private
    */
-  getMetadataLegendImage_(layerName, dpi = 72) {
+  getMetadataLegendImage_(layerName, dpi = -1) {
+    if (dpi == -1) {
+      dpi = screenDpi();
+    }
     const groupNode = findGroupByLayerNodeName(this.currentThemes_, layerName);
     let found_dpi = dpi;
     let node;
@@ -1513,8 +1517,8 @@ export class PrintController {
     }
     let dist = Number.MAX_VALUE;
     if (legendImage) {
-      dist = Math.abs(Math.log(72 / dpi));
-      found_dpi = 72;
+      dist = Math.abs(Math.log(screenDpi() / dpi));
+      found_dpi = screenDpi();
     }
     if (hiDPILegendImages) {
       for (const str_dpi in hiDPILegendImages) {

@@ -171,7 +171,7 @@ PrintService.prototype.createSpec = function (
     this.goodnessOfFit_ = goodnessOfFit;
   }
 
-  this.encodeMap_(map, scale, specMap);
+  this.encodeMap_(map, scale, specMap, dpi);
 
   /** @type {import('ngeo/print/mapfish-print-v3.js').MapFishPrintAttributes} */
   const attributes = {
@@ -200,9 +200,10 @@ PrintService.prototype.createSpec = function (
  * @param {import("ol/Map.js").default} map Map.
  * @param {number} scale Scale.
  * @param {import('ngeo/print/mapfish-print-v3.js').MapFishPrintMap} object Object.
+ * @param {number} destinationPrintDpi The destination print DPI.
  * @private
  */
-PrintService.prototype.encodeMap_ = function (map, scale, object) {
+PrintService.prototype.encodeMap_ = function (map, scale, object, destinationPrintDpi) {
   const view = map.getView();
   const viewCenter = view.getCenter();
   const viewProjection = view.getProjection();
@@ -237,7 +238,7 @@ PrintService.prototype.encodeMap_ = function (map, scale, object) {
 
   layers.forEach((layer) => {
     if (layer.getVisible()) {
-      this.encodeLayer(object.layers, layer, viewResolution);
+      this.encodeLayer(object.layers, layer, viewResolution, destinationPrintDpi);
     }
   });
 };
@@ -246,14 +247,15 @@ PrintService.prototype.encodeMap_ = function (map, scale, object) {
  * @param {Array<import('ngeo/print/mapfish-print-v3.js').MapFishPrintLayer>} arr Array.
  * @param {import("ol/layer/Base.js").default} layer Layer.
  * @param {number} resolution Resolution.
+ * @param {number} destinationPrintDpi The destination print DPI.
  */
-PrintService.prototype.encodeLayer = function (arr, layer, resolution) {
+PrintService.prototype.encodeLayer = function (arr, layer, resolution, destinationPrintDpi) {
   if (layer instanceof olLayerImage) {
     this.encodeImageLayer_(arr, layer);
   } else if (layer instanceof olLayerTile) {
     this.encodeTileLayer_(arr, layer);
   } else if (layer instanceof olLayerVector) {
-    this.encodeVectorLayer(arr, layer, resolution);
+    this.encodeVectorLayer(arr, layer, resolution, destinationPrintDpi);
   }
 };
 
@@ -261,9 +263,10 @@ PrintService.prototype.encodeLayer = function (arr, layer, resolution) {
  * @param {Array<import('ngeo/print/mapfish-print-v3.js').MapFishPrintLayer>} arr Array.
  * @param {olLayerVector} layer Layer.
  * @param {number} resolution Resolution.
+ * @param {number} destinationPrintDpi The destination print DPI.
  */
-PrintService.prototype.encodeVectorLayer = function (arr, layer, resolution) {
-  this.vectorEncoder.encodeVectorLayer(arr, layer, resolution, this.goodnessOfFit_);
+PrintService.prototype.encodeVectorLayer = function (arr, layer, resolution, destinationPrintDpi) {
+  this.vectorEncoder.encodeVectorLayer(arr, layer, resolution, destinationPrintDpi, this.goodnessOfFit_);
 };
 
 /**
