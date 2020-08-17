@@ -60,6 +60,7 @@ export class AbstractAPIController extends AbstractAppController {
     }
     const map = new olMap({
       pixelRatio: config.mapPixelRatio,
+      maxTilesLoading: config.maxTilesLoading || 128,
       layers: [],
       view: new olView(viewConfig),
       controls: config.mapControls || [

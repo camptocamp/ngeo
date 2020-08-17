@@ -69,6 +69,7 @@ class Controller extends AbstractDesktopController {
   constructor($scope, $injector) {
     super(
       {
+        maxTilesLoading: Infinity,
         srid: 2056,
         mapViewConfig: {
           center: [2632464, 1185457],
