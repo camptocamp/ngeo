@@ -66,6 +66,7 @@ export class AbstractMobileController extends AbstractAppController {
       config,
       new olMap({
         pixelRatio: config.mapPixelRatio,
+        maxTilesLoading: config.maxTilesLoading,
         layers: [],
         view: new olView(viewConfig),
         controls: config.mapControls || [

@@ -60,6 +60,7 @@ class Controller extends AbstractMobileController {
     super({
       autorotate: true,
       mapPixelRatio: 1,
+      maxTilesLoading: 64,
       srid: 2056,
       mapViewConfig: {
         center: [2632464, 1185457],
