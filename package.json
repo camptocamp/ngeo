@@ -74,6 +74,7 @@
     "angular-ui-slider": "0.4.0",
     "babel-loader": "8.1.0",
     "bootstrap": "4.4.1",
+    "chokidar": "2.1.8",
     "co": "4.6.0",
     "commander": "5.0.0",
     "console-control-strings": "1.1.0",
