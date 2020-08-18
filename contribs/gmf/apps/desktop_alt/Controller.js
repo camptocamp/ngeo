@@ -38,8 +38,6 @@ import gmfImportModule from 'gmf/import/module.js';
 import gmfFloorModule from 'gmf/floor/module.js';
 import ngeoGooglestreetviewModule from 'ngeo/googlestreetview/module.js';
 import ngeoRoutingModule from 'ngeo/routing/module.js';
-import EPSG2056 from '@geoblocks/proj/src/EPSG_2056.js';
-import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
 import ngeoStatemanagerWfsPermalink from 'ngeo/statemanager/WfsPermalink.js';
 import Style from 'ol/style/Style.js';
 import Circle from 'ol/style/Circle.js';
@@ -67,20 +65,7 @@ class Controller extends AbstractDesktopController {
    * @ngInject
    */
   constructor($scope, $injector) {
-    super(
-      {
-        maxTilesLoading: Infinity,
-        srid: 2056,
-        mapViewConfig: {
-          center: [2632464, 1185457],
-          zoom: 3,
-          resolutions: [250, 100, 50, 20, 10, 5, 2, 1, 0.5, 0.25, 0.1, 0.05],
-          constrainResolution: false,
-        },
-      },
-      $scope,
-      $injector
-    );
+    super($scope, $injector);
 
     if (this.dimensions.FLOOR == undefined) {
       this.dimensions.FLOOR = '*';
@@ -89,7 +74,7 @@ class Controller extends AbstractDesktopController {
     /**
      * @type {Array<string>}
      */
-    this.searchCoordinatesProjections = [EPSG21781, EPSG2056, 'EPSG:4326'];
+    this.searchCoordinatesProjections = ['EPSG:21781', 'EPSG:2056', 'EPSG:4326'];
 
     /**
      * @type {number}

@@ -55,14 +55,12 @@ import 'gmf/controllers/desktop.scss';
  */
 export class AbstractDesktopController extends AbstractAPIController {
   /**
-   * @param {import('gmf/controllers/AbstractAppController.js').Config} config A part of the application
-   *     config.
    * @param {angular.IScope} $scope Scope.
    * @param {angular.auto.IInjectorService} $injector Main injector.
    * @ngInject
    */
-  constructor(config, $scope, $injector) {
-    super(config, $scope, $injector);
+  constructor($scope, $injector) {
+    super($scope, $injector);
 
     /**
      * @type {boolean}

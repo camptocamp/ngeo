@@ -22,18 +22,10 @@
 import angular from 'angular';
 import gmfControllersAbstractAppController, {
   AbstractAppController,
-  getLocationIcon,
 } from 'gmf/controllers/AbstractAppController.js';
 import gmfMobileMeasureModule from 'gmf/mobile/measure/module.js';
 import gmfMobileNavigationModule from 'gmf/mobile/navigation/module.js';
 import gmfQueryWindowComponent from 'gmf/query/windowComponent.js';
-import * as olProj from 'ol/proj.js';
-import olMap from 'ol/Map.js';
-import olView from 'ol/View.js';
-import olControlScaleLine from 'ol/control/ScaleLine.js';
-import olControlZoom from 'ol/control/Zoom.js';
-import olControlRotate from 'ol/control/Rotate.js';
-import * as olInteraction from 'ol/interaction.js';
 import olStyleFill from 'ol/style/Fill.js';
 import olStyleRegularShape from 'ol/style/RegularShape.js';
 import olStyleStroke from 'ol/style/Stroke.js';
@@ -50,44 +42,12 @@ import 'gmf/controllers/mobile.scss';
  */
 export class AbstractMobileController extends AbstractAppController {
   /**
-   * @param {import('gmf/controllers/AbstractAppController.js').Config} config A part of the application
-   *     config.
    * @param {angular.IScope} $scope Scope.
    * @param {angular.auto.IInjectorService} $injector Main injector.
    * @ngInject
    */
-  constructor(config, $scope, $injector) {
-    const viewConfig = {
-      projection: olProj.get(`EPSG:${config.srid || 2056}`),
-    };
-    Object.assign(viewConfig, config.mapViewConfig || {});
-
-    super(
-      config,
-      new olMap({
-        pixelRatio: config.mapPixelRatio,
-        maxTilesLoading: config.maxTilesLoading,
-        layers: [],
-        view: new olView(viewConfig),
-        controls: config.mapControls || [
-          new olControlScaleLine({
-            // See: https://www.w3.org/TR/CSS21/syndata.html#length-units
-            dpi: 96,
-          }),
-          new olControlZoom({
-            zoomInTipLabel: '',
-            zoomOutTipLabel: '',
-          }),
-          new olControlRotate({
-            label: getLocationIcon(),
-            tipLabel: '',
-          }),
-        ],
-        interactions: config.mapInteractions || olInteraction.defaults({pinchRotate: true}),
-      }),
-      $scope,
-      $injector
-    );
+  constructor($scope, $injector) {
+    super($scope, $injector, true);
 
     /**
      * @type {import("ol/style/Style.js").default}
