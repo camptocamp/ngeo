@@ -40,7 +40,7 @@
             ng-switch-when="select"
             ng-model="attrCtrl.properties[attribute.name]"
             ng-change="attrCtrl.handleInputChange(attribute.name);"
-            class="form-control"
+            class="form-control ngeo-highlight-invalid"
             type="text">
           <option
               ng-repeat="attribute in ::attribute.choices"
@@ -57,7 +57,7 @@
             ng-change="attrCtrl.handleInputChange(attribute.name);"
             ngeo-datetimepicker
             ngeo-datetimepicker-options="'{&quot;timepicker&quot;: false, &quot;format&quot;: &quot;' + attribute.format + '&quot;, &quot;allowBlank&quot;: true, &quot;todayButton&quot;: false, &quot;mask&quot;: &quot;' + attribute.mask + '&quot;}'"
-            class="form-control"
+            class="form-control ngeo-highlight-invalid"
             type="text">
         </input>
 
@@ -70,7 +70,7 @@
             ng-change="attrCtrl.handleInputChange(attribute.name);"
             ngeo-datetimepicker
             ngeo-datetimepicker-options="'{&quot;datepicker&quot;: false, &quot;format&quot;: &quot;' + attribute.format + '&quot;, &quot;todayButton&quot;: false, &quot;mask&quot;: &quot;' + attribute.mask + '&quot;, &quot;defaultTime&quot;: &quot;00:00&quot;}'"
-            class="form-control"
+            class="form-control ngeo-highlight-invalid"
             type="text">
         </input>
 
@@ -82,7 +82,7 @@
             ng-change="attrCtrl.handleInputChange(attribute.name);"
             ngeo-datetimepicker
             ngeo-datetimepicker-options="'{&quot;scrollTime&quot;: false, &quot;format&quot;: &quot;' + attribute.format + '&quot;, &quot;allowBlank&quot;: true, &quot;todayButton&quot;: false, &quot;mask&quot;: &quot;' + attribute.mask + '&quot;, &quot;defaultTime&quot;: &quot;00:00&quot;}'"
-            class="form-control"
+            class="form-control ngeo-highlight-invalid"
             type="text">
         </input>
 
@@ -95,7 +95,7 @@
               ng-switch-when="integer"
               ng-model="attrCtrl.properties[attribute.name]"
               ng-change="attrCtrl.handleInputChange(attribute.name);"
-              class="form-control"
+              class="form-control ngeo-highlight-invalid"
               step="1"
               type="number">
           </input>
@@ -105,7 +105,7 @@
               ng-switch-default
               ng-model="attrCtrl.properties[attribute.name]"
               ng-change="attrCtrl.handleInputChange(attribute.name);"
-              class="form-control"
+              class="form-control ngeo-highlight-invalid"
               type="number">
           </input>
         </div>
@@ -117,7 +117,7 @@
             ng-model="attrCtrl.properties[attribute.name]"
             ng-change="attrCtrl.handleInputChange(attribute.name);"
             ng-maxlength="attribute.maxLength"
-            class="form-control"
+            class="form-control ngeo-highlight-invalid"
             type="text">
         </input>
 

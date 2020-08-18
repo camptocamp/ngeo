@@ -1,0 +1,7 @@
+.ngeo-highlight-invalid.ng-invalid.ng-dirty{
+   border-color: red;
+}
+
+select .ngeo-highlight-invalid.ng-invalid.ng-touched{
+   border-color: red;
+}
