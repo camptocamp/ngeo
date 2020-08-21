@@ -57,7 +57,11 @@ jobs:
       - run: "! (npm run typecheck|grep -v '^node_modules/'|grep '^[a-z]')"
       # Generate API doc
       - run: npm run doc
-      - run: npm run jsdoc
+      - run: npm run themes
+      - run: npm run options
+      - run: "sed -i 's/JSDoc: Module: src\\/options/Constants definitions/' jsdoc/options/module-src_options.html"
+      - run: "sed -i 's/Module: src\\/options/Constants definitions/' jsdoc/options/module-src_options.html"
+      - run: "sed -i 's/module:src\\/options~//g' jsdoc/options/module-src_options.html"
       - run: npm run build-api
       - uses: actions/upload-artifact@v1
         with:

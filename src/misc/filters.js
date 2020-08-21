@@ -24,12 +24,6 @@ import {modulo} from 'ol/math.js';
 import {padNumber} from 'ol/string.js';
 
 /**
- * @typedef {Object} StringToHtmlReplacement
- * @property {RegExp} expression The regex expression that must match to do the replacement.
- * @property {string} template The template to use to create a new value as replacement if the regex matches.
- */
-
-/**
  * Format a number with a precision.
  *
  * Arguments:
@@ -420,7 +414,7 @@ module.filter('ngeoTrustHtml', trustHtmlFilter);
  * @ngInject
  * @ngdoc filter
  * @param {angular.ISCEService} $sce Angular sce service.
- * @param {StringToHtmlReplacement[]}
+ * @param {import('ngeo/options.js').ngeoStringToHtmlReplacements}
  *     ngeoStringToHtmlReplacements List of replacements for string to html.
  * @ngname ngeoTrustHtmlAuto
  */
@@ -429,7 +423,10 @@ function trustHtmlAutoFilter($sce, ngeoStringToHtmlReplacements) {
     if (input !== undefined && input !== null) {
       if (typeof input === 'string') {
         for (const replacement of ngeoStringToHtmlReplacements) {
-          if (input.match(replacement.expression)) {
+          if (replacement.compiled_expression === undefined) {
+            replacement.compiled_expression = new RegExp(replacement.expression, replacement.flags);
+          }
+          if (input.match(replacement.compiled_expression)) {
             input = replacement.template.replace(/\$1/g, input);
             break;
           }
@@ -550,26 +547,6 @@ function DurationFilter(gettextCatalog) {
 }
 
 module.filter('ngeoDuration', DurationFilter);
-
-/**
- * @type {StringToHtmlReplacement[]}
- * @ngname ngeoStringToHtmlReplacements
- * @hidden
- */
-const StringToHtmlReplacements = [
-  // Hyperlink
-  {
-    expression: /^(https?:\/\/.+)$/gm,
-    template: '<a target="_blank" href="$1">$1</a>',
-  },
-  // Mailto
-  {
-    expression: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/gim,
-    template: '<a href="mailto:$1">$1</a>',
-  },
-];
-
-module.constant('ngeoStringToHtmlReplacements', StringToHtmlReplacements);
 
 /**
  * A filter used to remove the CDATA prefix and postfix.

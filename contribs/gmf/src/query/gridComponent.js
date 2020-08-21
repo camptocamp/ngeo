@@ -196,7 +196,7 @@ export function QueryGridController(
   ngeoCsvDownload,
   $element
 ) {
-  const queryOptions = /** @type {import('ngeo/query/MapQuerent.js').QueryOptions} */ ($injector.has(
+  const queryOptions = /** @type {import('ngeo/options.js').ngeoQueryOptions} */ ($injector.has(
     'ngeoQueryOptions'
   )
     ? $injector.get('ngeoQueryOptions')

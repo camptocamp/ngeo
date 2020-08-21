@@ -1,8 +1,8 @@
 {
-    "plugins": [
-        "jsdoc-plugin-typescript"
-    ],
-    "typescript": {
-      "moduleRoot": "contribs/gmf/src"
-    }
+  "plugins": [
+    "jsdoc-plugin-typescript"
+  ],
+  "typescript": {
+    "moduleRoot": "."
   }
+}

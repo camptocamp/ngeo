@@ -71,5 +71,6 @@ function MainController($rootScope, ngeoOlcsService) {
 }
 
 module.controller('MainController', MainController);
+module.constant('ngeoUsedKeyRegexp', []);
 
 export default module;

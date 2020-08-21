@@ -44,34 +44,6 @@ import olFormatWFS from 'ol/format/WFS.js';
  */
 
 /**
- * A WFS type. To be used with {@link WfsPermalinkOptions}.
- *
- * @typedef {Object} WfsType
- * @property {string} featureType The feature type name. Required.
- * @property {string} [label] The field of a feature used as label.
- * @property {string} [featureNS] The namespace URI used for features. If not given, the default namespace set
- *    in {@link WfsPermalinkOptions} will be used.
- * @property {string} [featurePrefix] The prefix for the feature namespace. If not given, the default prefix
- *    set in {@link WfsPermalinkOptions} will be used.
- * @property {string} [defaultFeatureNS] The default namespace URI used for features. This will be used if no
- *    custom namespace is given for a WFS type.
- * @property {string} [defaultFeaturePrefix] The default prefix for the feature namespace. This will be used
- *    if no custom prefix is given for a WFS type.
- */
-
-/**
- * The options for the WFS query service (permalink).
- *
- * @typedef {Object} WfsPermalinkOptions
- * @property {WfsType[]} wfsTypes The queryable WFS types.
- * @property {number} [pointRecenterZoom] Zoom level to use when result is a single point feature. If not set
- *    the map is not zoomed to a specific zoom level.
- * @property {number} [maxFeatures=50] The maximum number of records per request the query service should ask.
- * @property {string} defaultFeatureNS
- * @property {string} defaultFeaturePrefix
- */
-
-/**
  * @typedef {Object} WfsPermalinkData
  * @property {string} wfsType
  * @property {WfsPermalinkFilterGroup[]} filterGroups
@@ -130,9 +102,9 @@ import olFormatWFS from 'ol/format/WFS.js';
  *
  * @constructor
  * @param {angular.IHttpService} $http Angular $http service.
- * @param {string} ngeoPermalinkOgcserverUrl Url to the WFS server
+ * @param {import('ngeo/options.js').ngeoPermalinkOgcserverUrl} ngeoPermalinkOgcserverUrl URL to the WFS server
  * @param {QueryResult} ngeoQueryResult The ngeo query result service.
- * @param {WfsPermalinkOptions} ngeoWfsPermalinkOptions The options to
+ * @param {import('ngeo/options.js').ngeoWfsPermalinkOptions} ngeoWfsPermalinkOptions The options to
  *     configure the ngeo wfs permalink service with.
  * @ngdoc service
  * @ngname ngeoWfsPermalink
@@ -147,7 +119,7 @@ export function WfsPermalinkService(
   const options = ngeoWfsPermalinkOptions;
 
   /**
-   * @type {string}
+   * @type {import('ngeo/options.js').ngeoPermalinkOgcserverUrl}
    * @private
    */
   this.url_ = ngeoPermalinkOgcserverUrl;
@@ -159,7 +131,7 @@ export function WfsPermalinkService(
   this.maxFeatures_ = options.maxFeatures !== undefined ? options.maxFeatures : 50;
 
   /**
-   * @type {Object<string, WfsType>}
+   * @type {Object<string, import('ngeo/options.js').WfsType>}
    * @private
    */
   this.wfsTypes_ = {};
@@ -237,7 +209,7 @@ WfsPermalinkService.prototype.issue = function (queryData, map, zoomLevel = unde
 };
 
 /**
- * @param {WfsType} wfsType Type.
+ * @param {import('ngeo/options.js').WfsType} wfsType Type.
  * @param {import("ol/format/filter/Filter.js").default} filter Filter.
  * @param {import("ol/Map.js").default} map The ol3 map object to get the current projection from.
  * @param {boolean} showFeatures Show features or only zoom to feature extent?
@@ -410,25 +382,6 @@ WfsPermalinkService.prototype.clearResult_ = function () {
 const module = angular.module('ngeoWfsPermalink', [
   // FIXME add dependencies
 ]);
-
-/**
- * Set this value to enable WFS permalink.
- */
-module.value('ngeoPermalinkOgcserverUrl', '');
-
-/**
- * Value that is supposed to be set in applications to enable the WFS
- * permalink functionality.
- */
-module.value(
-  'ngeoWfsPermalinkOptions',
-  /** @type {WfsPermalinkOptions} */ ({
-    url: '',
-    wfsTypes: [],
-    defaultFeatureNS: '',
-    defaultFeaturePrefix: '',
-  })
-);
 
 module.service('ngeoWfsPermalink', WfsPermalinkService);
 

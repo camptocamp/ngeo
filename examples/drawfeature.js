@@ -98,5 +98,7 @@ function MainController($scope, ngeoFeatures, ngeoToolActivateMgr) {
 }
 
 module.controller('MainController', MainController);
+module.constant('ngeoMeasurePrecision', 0);
+module.constant('ngeoMeasureDecimals', 0);
 
 export default module;

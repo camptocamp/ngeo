@@ -16,7 +16,8 @@
     "build-gmf-apps-profile": "TARGET=gmf-apps webpack --profile --json > profile.json",
     "typecheck": "tsc",
     "doc": "typedoc --name ngeo --mode file --excludePrivate --excludeProtected --ignoreCompilerErrors --excludeExternals --exclude '**/examples/**,**/test/**' --readme buildtools/doc-readme.md --out apidoc",
-    "jsdoc": "jsdoc contribs/gmf/src/themes.js --configure jsdoc/config.json --destination jsdoc/build"
+    "themes": "jsdoc contribs/gmf/src/themes.js --configure jsdoc/config.json --destination jsdoc/themes",
+    "options": "jsdoc src/options.js --private --configure jsdoc/config.json --destination jsdoc/options"
   },
   "sideEffects": false,
   "repository": {

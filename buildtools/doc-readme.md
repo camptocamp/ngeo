@@ -1,6 +1,8 @@
 API documentation of ngeo.
 
-[Theme api](../jsdoc/global.html)
+[Constants definitions](../options/module-src_options.html)
+
+[Themes API](../themes/module-contribs_gmf_src_themes.html)
 
 [GitHub project page](https://github.com/camptocamp/ngeo/)
 

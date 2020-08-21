@@ -38,31 +38,6 @@ import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
  */
 
 /**
- * The options for the query service.
- *
- * @typedef {Object} QueryOptions
- * @property {number} [limit=50] The maximum number of records per request the query service should ask.
- *    Note that sources sharing the same URL are combined together in a single request. This limit will still
- *    apply to those.
- * @property {boolean} [queryCountFirst=false] For WFS sources, should the number of features first be
- *    requested with `resultType=hits` before requesting the actual features in an seconds request?
- * @property {string} [sourceIdsProperty='querySourceIds'] Defines the name of the layer property that holds
- *    the ids of the sources.
- *    Use this if you have more than one source bound to a layer.
- * @property {number} [tolerance=3] When issuing an identify feature request at a click position, either a
- *    WMS GetFeatureInfo or a WFS GetFeature request will be used. For GetFeature requests a bbox is built
- *    around the position. This `tolerance` in pixel determines the size of the bbox.
- * @property {number} [toleranceTouch=10] The tolerance on touch devices.
- * @property {string} [featureNS='http://mapserver.gis.umn.edu/mapserver'] The feature namespace for WFS
- *    GetFeature requests.
- * @property {string} [featurePrefix='feature'] The feature prefix for WFS GetFeature requests.
- * @property {string} [geometryName='geom'] The name of the geometry property for WFS GetFeature requests.
- * @property {boolean} [cursorHover]
- * @property {boolean} [bboxAsGETParam=false] Pass the queried bbox as a parameter of the GET query on WFS
- *    requests.
- */
-
-/**
  * @hidden
  */
 export class MapQuerent {
@@ -91,7 +66,9 @@ export class MapQuerent {
     ngeoQuerent,
     ngeoQueryResult
   ) {
-    const options = /** @type {QueryOptions} */ ($injector.has('ngeoQueryOptions')
+    const options = /** @type {import('ngeo/options.js').ngeoQueryOptions} */ ($injector.has(
+      'ngeoQueryOptions'
+    )
       ? $injector.get('ngeoQueryOptions')
       : {});
 

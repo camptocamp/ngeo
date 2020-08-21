@@ -96,12 +96,7 @@ export function createGeoJSONBloodhound(
     }
   );
   /** @type {Bloodhound.RemoteOptions<GeoJSON.FeatureCollection>} */
-  const remoteOptions = Object.assign(
-    {},
-    opt_remoteOptions || {
-      url: '',
-    }
-  );
+  const remoteOptions = Object.assign({}, opt_remoteOptions || {});
 
   if (options.remote) {
     // Move the remote options to opt_remoteOptions

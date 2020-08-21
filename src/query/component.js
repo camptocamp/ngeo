@@ -88,14 +88,14 @@ class QueryController {
      */
     this.ngeoQueryModeSelector_ = ngeoQueryModeSelector;
 
-    const ngeoQueryOptions = /** @type {import('ngeo/query/MapQuerent.js').QueryOptions} */ ($injector.has(
+    const ngeoQueryOptions = /** @type {import('ngeo/options.js').ngeoQueryOptions} */ ($injector.has(
       'ngeoQueryOptions'
     )
       ? $injector.get('ngeoQueryOptions')
       : {});
 
     /**
-     * @type {import('ngeo/query/MapQuerent.js').QueryOptions}
+     * @type {import('ngeo/options.js').ngeoQueryOptions}
      * @private
      */
     this.ngeoQueryOptions_ = ngeoQueryOptions;

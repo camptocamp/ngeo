@@ -20,8 +20,10 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 /**
- * The GeoMapFish "themes" web service.
+ * @module contribs/gmf/src/themes
  */
+
+// The GeoMapFish "themes" web service.
 
 /**
  * @typedef {Object} GmfThemes
