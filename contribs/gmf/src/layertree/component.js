@@ -181,7 +181,7 @@ function gmfLayertreeTemplate($element, $attrs, gmfLayertreeTemplate) {
  *      (See also printLayers and queryLayers metadata for more granularity). For WMTS Layers.
  *  * `printLayers`: A WMS layer that will be used instead of the WMTS layers in the print.
  *  * `queryLayers`: The WMS layers used as references to query the WMTS layers. For WMTS layers.
- *  * `isExpanded`: Whether the layer group is expanded by default. For layer groups (only).
+ *  * `isExpanded`: [Experimental] Whether the layer group is expanded by default. For layer groups (only).
  *  * `snappingConfig`: Whether the layer is used for snapping.
  *
  * @htmlAttribute {import("ol/Map.js").default} gmf-layertree-map The map.
