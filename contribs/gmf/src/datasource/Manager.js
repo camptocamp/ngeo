@@ -487,8 +487,8 @@ export class DatasourceManager {
       // Common options for WMTS
       wmtsLayer = gmfLayerWMTS.layer;
       wmtsUrl = gmfLayerWMTS.url;
-      maxResolution = meta.maxResolution;
-      minResolution = meta.minResolution;
+      maxResolution = meta.maxQueryResolution !== undefined ? meta.maxQueryResolution : meta.maxResolution;
+      minResolution = meta.minQueryResolution !== undefined ? meta.minQueryResolution : meta.minResolution;
 
       // OGC Layers
       const layers = meta.queryLayers || meta.wmsLayers;
