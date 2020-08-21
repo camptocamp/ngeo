@@ -20,7 +20,6 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import appURL from './url.js';
 import './wfspermalink.css';
 import gmfMapModule from 'gmf/map/module.js';
 
@@ -36,6 +35,7 @@ import olStyleStroke from 'ol/style/Stroke.js';
 import olStyleStyle from 'ol/style/Style.js';
 import olStyleFill from 'ol/style/Fill.js';
 import olStyleCircle from 'ol/style/Circle.js';
+import options from './options.js';
 
 /** @type {angular.IModule} **/
 const module = angular.module('gmfapp', [
@@ -44,19 +44,6 @@ const module = angular.module('gmfapp', [
   gmfQueryWindowComponent.name,
   ngeoStatemanagerWfsPermalink.name,
 ]);
-
-module.value('ngeoWfsPermalinkOptions', {
-  wfsTypes: [
-    {featureType: 'fuel', label: 'display_name'},
-    {featureType: 'osm_scale', label: 'display_name'},
-  ],
-  defaultFeatureNS: appURL.MAPSERVER_WFS_FEATURE_NS,
-  defaultFeaturePrefix: 'feature',
-});
-
-module.constant('ngeoPermalinkOgcserverUrl', appURL.MAPSERVER_PROXY);
-module.constant('defaultTheme', 'Demo');
-module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 /**
  * @constructor
@@ -99,6 +86,6 @@ function MainController() {
 }
 
 module.controller('MainController', MainController);
-module.constant('ngeoPointfilter', null);
+options(module);
 
 export default module;

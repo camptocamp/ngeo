@@ -250,7 +250,6 @@ class SearchController {
    * @param {angular.IScope} $scope The component's scope.
    * @param {angular.ICompileService} $compile Angular compile service.
    * @param {angular.ITimeoutService} $timeout Angular timeout service.
-   * @param {angular.auto.IInjectorService} $injector Main injector.
    * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
    * @param {import("ngeo/misc/AutoProjection.js").AutoProjectionService} ngeoAutoProjection The ngeo
    *    coordinates service.
@@ -263,6 +262,7 @@ class SearchController {
    *    service.
    * @param {import("gmf/search/FulltextSearch.js").FulltextSearchService} gmfSearchFulltextSearch
    *    gmf Full text search service.
+   * @param {import("ngeo/statemanager/Location.js").StatemanagerLocation} ngeoLocation The location service.
    * @ngInject
    * @ngdoc controller
    * @ngname GmfSearchController
@@ -272,14 +272,14 @@ class SearchController {
     $scope,
     $compile,
     $timeout,
-    $injector,
     gettextCatalog,
     ngeoAutoProjection,
     ngeoSearchCreateGeoJSONBloodhound,
     ngeoFeatureOverlayMgr,
     gmfThemes,
     gmfTreeManager,
-    gmfSearchFulltextSearch
+    gmfSearchFulltextSearch,
+    ngeoLocation
   ) {
     /**
      * @type {JQuery}
@@ -345,11 +345,7 @@ class SearchController {
      * @type {import("ngeo/statemanager/Location.js").StatemanagerLocation|undefined}
      * @private
      */
-    this.ngeoLocation_;
-
-    if ($injector.has('ngeoLocation')) {
-      this.ngeoLocation_ = $injector.get('ngeoLocation');
-    }
+    this.ngeoLocation_ = ngeoLocation;
 
     /**
      * @type {import("ngeo/misc/AutoProjection.js").AutoProjectionService}

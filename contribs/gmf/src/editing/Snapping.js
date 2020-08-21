@@ -904,9 +904,4 @@ const module = angular.module('gmfSnapping', [
 ]);
 module.service('gmfSnapping', EditingSnappingService);
 
-// Note: the gmfSnappingConfig are used for features from:
-// - the Draw tool
-// - the Layer Import / Local tool
-module.value('gmfSnappingConfig', {});
-
 export default module;

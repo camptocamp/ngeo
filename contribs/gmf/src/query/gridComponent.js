@@ -171,7 +171,6 @@ module.component('gmfDisplayquerygrid', queryGridComponent);
 /**
  * Controller for the query grid.
  *
- * @param {angular.auto.IInjectorService} $injector Main injector.
  * @param {angular.IScope} $scope Angular scope.
  * @param {import('ngeo/query/MapQuerent.js').QueryResult} ngeoQueryResult ngeo query result.
  * @param {import("ngeo/query/MapQuerent.js").MapQuerent} ngeoMapQuerent ngeo map querent service.
@@ -179,6 +178,8 @@ module.component('gmfDisplayquerygrid', queryGridComponent);
  *     overlay manager service.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @param {import("ngeo/download/Csv.js").DownloadCsvService} ngeoCsvDownload CSV download service.
+ * @param {import('ngeo/options.js').ngeoQueryOptions} ngeoQueryOptions The options.
+ * @param {import('gmf/options.js').gmfCsvFilename} gmfCsvFilename The CSV file name.
  * @param {JQuery} $element Element.
  * @constructor
  * @hidden
@@ -187,21 +188,16 @@ module.component('gmfDisplayquerygrid', queryGridComponent);
  * @ngname GmfDisplayquerygridController
  */
 export function QueryGridController(
-  $injector,
   $scope,
   ngeoQueryResult,
   ngeoMapQuerent,
   ngeoFeatureOverlayMgr,
   $timeout,
   ngeoCsvDownload,
+  ngeoQueryOptions,
+  gmfCsvFilename,
   $element
 ) {
-  const queryOptions = /** @type {import('ngeo/options.js').ngeoQueryOptions} */ ($injector.has(
-    'ngeoQueryOptions'
-  )
-    ? $injector.get('ngeoQueryOptions')
-    : {});
-
   /**
    * @type {angular.IScope}
    * @private
@@ -240,7 +236,7 @@ export function QueryGridController(
   /**
    * @type {number}
    */
-  this.maxResults = queryOptions.limit !== undefined ? queryOptions.limit : 50;
+  this.maxResults = ngeoQueryOptions.limit !== undefined ? ngeoQueryOptions.limit : 50;
 
   /**
    * @type {boolean}
@@ -315,10 +311,10 @@ export function QueryGridController(
 
   /**
    * Filename
-   * @type {string}
+   * @type {import('gmf/options.js').gmfCsvFilename}
    * @private
    */
-  this.filename_ = $injector.has('gmfCsvFilename') ? $injector.get('gmfCsvFilename') : 'query-results.csv';
+  this.filename_ = gmfCsvFilename;
 
   /**
    * @type {?import("ol/Map.js").default}

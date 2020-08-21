@@ -59,39 +59,6 @@ import olLayerGroup from 'ol/layer/Group.js';
 import {CollectionEvent} from 'ol/Collection.js';
 
 /**
- * Specify radius for regular polygons, or radius1 and radius2 for stars.
- * See also: https://openlayers.org/en/latest/examples/regularshape.html
- *
- * @typedef {Object} RegularShapeOptions
- * @property {import("ol/style/Fill.js").Options} [fill] Fill style.
- * @property {number} points Number of points for stars and regular polygons. In case of a polygon, the number of points
- * is the number of sides.
- * @property {number} [radius] Radius of a regular polygon.
- * @property {number} [radius1] Outer radius of a star.
- * @property {number} [radius2] Inner radius of a star.
- * @property {number} [angle=0] Shape's angle in degree. A value of 0 will have one of the shape's point facing up.
- * @property {Array<number>} [displacement=[0,0]] Displacement of the shape
- * @property {import("ol/style/Stroke.js").Options} [stroke] Stroke style.
- * @property {number} [rotation=0] Rotation in degree (positive rotation clockwise).
- * @property {boolean} [rotateWithView=false] Whether to rotate the shape with the view.
- */
-
-/**
- * Configuration options for the permalink service.
- * @typedef {Object} PermalinkOptions
- * @property {RegularShapeOptions[]} [crosshairStyle] An alternate
- * style for the crosshair feature added by the permalink service.
- * @property {boolean} [crosshairEnabledByDefault] Display the crosshair, gets overridden by the
- * `map_crosshair` parameter. Default is `false`.
- * @property {string[]} [projectionCodes] EPSG codes (e.g. 'EPSG:3857' or '3857').
- * The permalink service will accept coordinates in these projections and try to detect which projection
- * the given coordinates are in.
- * @property {boolean} [useLocalStorage] Store the values in the local storage. Default is `false`.
- * @property {number} [pointRecenterZoom] Zoom level to use when result is a single point feature.
- * If not set the map is not zoomed to a specific zoom level.
- */
-
-/**
  * @enum {string}
  * @hidden
  */
@@ -160,7 +127,7 @@ const ParamPrefix = {
  * - `eds_n` (string), `eds_u` (string)
  *     These parameters stand for:
  *      - eds_n: "External Data Sources Names"
- *      - eds_u: "External Data Sources Urls"
+ *      - eds_u: "External Data Sources URLs"
  *     These parameters define external WMS/WMTS data sources to add
  *     to the map upon initialization. Both values are comma-separated
  *     lists, `eds_u` containing the urls to the services and `eds_n`
@@ -300,6 +267,7 @@ const ParamPrefix = {
  * @param {import("ngeo/statemanager/Service.js").StatemanagerService} ngeoStateManager The ngeo statemanager
  *    service.
  * @param {import("ngeo/statemanager/Location.js").StatemanagerLocation} ngeoLocation ngeo location service.
+ * @param {import('gmf/options.js').gmfPermalinkOptions} gmfPermalinkOptions The options.
  * @ngInject
  * @ngdoc service
  * @ngname gmfPermalink
@@ -314,7 +282,8 @@ export function PermalinkService(
   ngeoEventHelper,
   ngeoStateManager,
   ngeoLocation,
-  gmfLayerBeingSwipe
+  gmfLayerBeingSwipe,
+  gmfPermalinkOptions
 ) {
   /**
    * @type {angular.IQService}
@@ -408,13 +377,6 @@ export function PermalinkService(
    */
   this.ngeoQuerent_ = $injector.has('ngeoQuerent') ? $injector.get('ngeoQuerent') : null;
 
-  /**
-   * The options to configure the gmf permalink service with.
-   * @type {PermalinkOptions}
-   */
-  const gmfPermalinkOptions = $injector.has('gmfPermalinkOptions')
-    ? $injector.get('gmfPermalinkOptions')
-    : {};
   if (gmfPermalinkOptions.useLocalStorage === true) {
     // localStorage is deactivated by default
     this.ngeoStateManager_.setUseLocalStorage(true);
@@ -825,15 +787,15 @@ PermalinkService.prototype.handleMapSwipeValue_ = function () {
  * @return {?import("ol/coordinate.js").Coordinate} The coordinate for the map view center.
  */
 PermalinkService.prototype.getMapCenter = function () {
-  if (!this.map_) {
-    throw new Error('Missing map');
-  }
   const x = this.ngeoStateManager_.getInitialNumberValue(PermalinkParam.MAP_X);
   const y = this.ngeoStateManager_.getInitialNumberValue(PermalinkParam.MAP_Y);
 
   if (x !== undefined && y !== undefined && !isNaN(x) && !isNaN(y)) {
     const center = [x, y];
     if (this.sourceProjections_ !== null && this.ngeoAutoProjection_) {
+      if (!this.map_) {
+        throw new Error('Missing map');
+      }
       const targetProjection = this.map_.getView().getProjection();
       const reprojectedCenter = this.ngeoAutoProjection_.tryProjectionsWithInversion(
         center,
@@ -1970,8 +1932,6 @@ const module = angular.module('gmfPermalink', [
 ]);
 
 module.service('gmfPermalink', PermalinkService);
-
-module.value('gmfPermalinkOptions', /** @type {PermalinkOptions} */ ({}));
 
 /** Configure the ngeo state manager */
 (function () {

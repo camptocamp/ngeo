@@ -97,7 +97,6 @@ function ngeoRoutingTemplateUrl($attrs, ngeoRoutingTemplateUrl) {
  */
 class Controller {
   /**
-   * @param {angular.auto.IInjectorService} $injector Main injector.
    * @param {angular.IScope} $scope Scope.
    * @param {import("ngeo/routing/RoutingService.js").RoutingService} ngeoRoutingService service for OSRM
    *    routing.
@@ -106,9 +105,10 @@ class Controller {
    * @param {angular.IQService} $q Angular q service
    * @param {import("ngeo/misc/debounce.js").miscDebounce<function(): void>} ngeoDebounce ngeo Debounce
    *    service.
+   * @param {import('ngeo/options.js').ngeoRoutingOptions} ngeoRoutingOptions The options.
    * @ngInject
    */
-  constructor($injector, $scope, ngeoRoutingService, ngeoNominatimService, $q, ngeoDebounce) {
+  constructor($scope, ngeoRoutingService, ngeoNominatimService, $q, ngeoDebounce, ngeoRoutingOptions) {
     /**
      * @type {angular.IScope}
      * @private
@@ -131,7 +131,7 @@ class Controller {
      * @type {import('ngeo/options.js').ngeoRoutingOptions}
      * @private
      */
-    this.routingOptions_ = $injector.has('ngeoRoutingOptions') ? $injector.get('ngeoRoutingOptions') : {};
+    this.routingOptions_ = ngeoRoutingOptions;
 
     /**
      * Available routing profiles.

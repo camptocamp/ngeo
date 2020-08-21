@@ -40,9 +40,10 @@ import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
  * Service to provide access to Nominatim, which allows to search for
  * OSM data by name and address.
  * @param {angular.IHttpService} $http Angular http service.
- * @param {angular.auto.IInjectorService} $injector Main injector.
  * @param {import("ngeo/misc/debounce.js").miscDebounce<function(string, function(Object[]): void, (function(NominatimSearchResult[]): void)|undefined): void>}  ngeoDebounce
  *    ngeo Debounce service.
+ * @param {string} ngeoNominatimUrl The nominatim URL.
+ * @param {import('ngeo/options.js').ngeoNominatimSearchDefaultParams} ngeoNominatimSearchDefaultParams The search parameters
  * @constructor
  * @ngdoc service
  * @ngInject
@@ -50,7 +51,7 @@ import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
  * @see https://wiki.openstreetmap.org/wiki/Nominatim
  * @hidden
  */
-export function NominatimService($http, $injector, ngeoDebounce) {
+export function NominatimService($http, ngeoDebounce, ngeoNominatimUrl, ngeoNominatimSearchDefaultParams) {
   /**
    * @type {angular.IHttpService}
    * @private
@@ -69,26 +70,18 @@ export function NominatimService($http, $injector, ngeoDebounce) {
    * @type {string}
    * @private
    */
-  this.nominatimUrl_ = 'https://nominatim.openstreetmap.org/';
+  this.nominatimUrl_ = ngeoNominatimUrl;
 
-  if ($injector.has('ngeoNominatimUrl')) {
-    this.nominatimUrl_ = $injector.get('ngeoNominatimUrl');
-
-    // the url is expected to end with a slash
-    if (this.nominatimUrl_.substr(-1) !== '/') {
-      this.nominatimUrl_ += '/';
-    }
+  // the url is expected to end with a slash
+  if (this.nominatimUrl_.substr(-1) !== '/') {
+    this.nominatimUrl_ += '/';
   }
 
   /**
    * @type {import('ngeo/options.js').ngeoNominatimSearchDefaultParams}
    * @private
    */
-  this.searchDefaultParams_ = {};
-
-  if ($injector.has('ngeoNominatimSearchDefaultParams')) {
-    this.searchDefaultParams_ = $injector.get('ngeoNominatimSearchDefaultParams');
-  }
+  this.searchDefaultParams_ = ngeoNominatimSearchDefaultParams;
 
   /**
    * Delay (in milliseconds) to avoid calling the API too often.

@@ -20,7 +20,6 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import appURL from './url.js';
 import './displayquerywindow.css';
 import './gmf-hidden.inc.css';
 import gmfDatasourceManager from 'gmf/datasource/Manager.js';
@@ -45,6 +44,7 @@ import olStyleFill from 'ol/style/Fill.js';
 import olStyleStroke from 'ol/style/Stroke.js';
 import olStyleStyle from 'ol/style/Style.js';
 import ngeoMapModule from 'ngeo/map/module.js';
+import options from './options.js';
 
 /**
  * @type {angular.IModule}
@@ -62,16 +62,6 @@ const module = angular.module('gmfapp', [
   ngeoMiscBtnComponent.name,
   ngeoQueryComponent.name,
 ]);
-
-module.value('ngeoQueryOptions', {
-  'limit': 20,
-});
-
-module.value('gmfTreeUrl', appURL.GMF_THEMES);
-
-const defaultTheme = 'Demo';
-module.constant('defaultTheme', defaultTheme);
-module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 /**
  * Demo, NOT USED.
@@ -111,9 +101,16 @@ module.controller('AppQueryresultController', QueryresultController);
  * @param {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *   overlay manager service.
  * @param {import("gmf/theme/Manager.js").ThemeManagerService} gmfThemeManager gmf Theme Manager service.
+ * @param {string} defaultTheme The default theme.
  * @ngInject
  */
-function MainController(gmfThemes, gmfDataSourcesManager, ngeoFeatureOverlayMgr, gmfThemeManager) {
+function MainController(
+  gmfThemes,
+  gmfDataSourcesManager,
+  ngeoFeatureOverlayMgr,
+  gmfThemeManager,
+  defaultTheme
+) {
   gmfThemes.loadThemes();
 
   /**
@@ -203,6 +200,6 @@ function MainController(gmfThemes, gmfDataSourcesManager, ngeoFeatureOverlayMgr,
 }
 
 module.controller('MainController', MainController);
-module.constant('ngeoPointfilter', null);
+options(module);
 
 export default module;

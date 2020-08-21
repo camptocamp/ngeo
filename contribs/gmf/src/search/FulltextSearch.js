@@ -24,14 +24,14 @@ import {encodeQueryString, decodeQueryString} from 'ngeo/utils.js';
 
 /**
  * Provides the c2c-geoportal full-text search.
- * @param {angular.auto.IInjectorService} $injector Main injector.
  * @param {angular.IHttpService} $http Angular http service.
+ * @param {string} fulltextsearchUrl The service URL.
  * @constructor
  * @ngInject
  * @ngname gmfFulltextSearch
  * @hidden
  */
-export function FulltextSearchService($injector, $http) {
+export function FulltextSearchService($http, fulltextsearchUrl) {
   /**
    * @type {angular.IHttpService}
    * @private
@@ -42,7 +42,7 @@ export function FulltextSearchService($injector, $http) {
    * @type {string}
    * @private
    */
-  this.url_ = /** @type {string} **/ ($injector.get('fulltextsearchUrl'));
+  this.url_ = fulltextsearchUrl;
 
   const url = this.url_.split('?');
   /**

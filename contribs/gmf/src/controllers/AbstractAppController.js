@@ -253,7 +253,7 @@ export function AbstractAppController($scope, $injector, mobile) {
   };
 
   /**
-   * Url to redirect to after login success.
+   * URL to redirect to after login success.
    * @type {?string}
    */
   this.loginRedirectUrl = null;
@@ -340,7 +340,9 @@ export function AbstractAppController($scope, $injector, mobile) {
   this.searchDatasources = [
     {
       labelKey: 'label',
-      groupValues: /** @type {string[]} **/ ($injector.get('gmfSearchGroups')),
+      groupValues: /** @type {import('gmf/options.js').gmfSearchGroups} **/ ($injector.get(
+        'gmfSearchGroups'
+      )),
       groupActions: /** @type {Array<import('gmf/search/component.js').gmfSearchAction>} **/ ($injector.get(
         'gmfSearchActions'
       )),

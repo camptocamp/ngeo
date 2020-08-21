@@ -36,13 +36,13 @@ const module = angular.module('ngeoMeasurearea', [ngeoDrawController.name]);
  * @param {angular.ICompileService} $compile Angular compile service.
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext service.
  * @param {angular.IFilterService} $filter Angular filter
- * @param {angular.auto.IInjectorService} $injector Main injector.
+ * @param {import('ngeo/options.js').ngeoMeasurePrecision} ngeoMeasurePrecision The precision.
  * @return {angular.IDirective} The directive specs.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoDrawpoint
  */
-function measureAreaComponent($compile, gettextCatalog, $filter, $injector) {
+function measureAreaComponent($compile, gettextCatalog, $filter, ngeoMeasurePrecision) {
   return {
     restrict: 'A',
     require: '^^ngeoDrawfeature',
@@ -68,9 +68,8 @@ function measureAreaComponent($compile, gettextCatalog, $filter, $injector) {
         startMsg: $compile(`<div translate>${helpMsg}</div>`)($scope)[0],
         continueMsg: $compile(`<div translate>${contMsg}</div>`)($scope)[0],
       };
-      if ($injector.has('ngeoMeasurePrecision')) {
-        options.precision = $injector.get('ngeoMeasurePrecision');
-      }
+      options.precision = ngeoMeasurePrecision;
+
       const measureArea = new ngeoInteractionMeasureArea($filter('ngeoUnitPrefix'), gettextCatalog, options);
 
       if (drawFeatureCtrl.uid) {

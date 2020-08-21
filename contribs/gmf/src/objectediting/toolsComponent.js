@@ -42,13 +42,6 @@ import {getUid as olUtilGetUid} from 'ol/util.js';
  */
 
 /**
- * Additional configuration options for the object editing tools directive.
- * @typedef {Object} ObjectEditingToolsOptions
- * @property {number} [regularPolygonRadius=100] The radius of the shapes created by the regular polygon
- * radius creation tool. The value is in map units.
- */
-
-/**
  * @enum {string}
  * @hidden
  */
@@ -79,14 +72,6 @@ module.run(
     $templateCache.put('gmf/objectediting/toolsComponent', require('./toolsComponent.html'));
   }
 );
-
-/**
- * A list of additional options for this directive that are not defined as
- * html attributes. All keys of this hash are optional. For the complete list
- * of keys and their possible values, see in js, under:
- * `ObjectEditingToolsOptions`.
- */
-module.value('gmfObjectEditingToolsOptions', {});
 
 /**
  * Directive used to edit the geometry of a single feature using advanced
@@ -159,10 +144,10 @@ module.directive('gmfObjecteditingtools', objectEditingToolsComponent);
 const NAMESPACE = 'oet';
 
 /**
- * @param {angular.auto.IInjectorService} $injector Main injector.
  * @param {angular.IScope} $scope Scope.
  * @param {import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate
  *    manager service.
+ * @param {import('gmf/options.js').gmfObjectEditingToolsOptions} gmfObjectEditingToolsOptions The options.
  * @constructor
  * @private
  * @hidden
@@ -170,7 +155,7 @@ const NAMESPACE = 'oet';
  * @ngdoc controller
  * @ngname GmfObjecteditingtoolsController
  */
-function Controller($injector, $scope, ngeoToolActivateMgr) {
+function Controller($scope, ngeoToolActivateMgr, gmfObjectEditingToolsOptions) {
   // == Scope properties ==
 
   /**
@@ -274,9 +259,7 @@ function Controller($injector, $scope, ngeoToolActivateMgr) {
    */
   this.triangleAngle = (Math.PI / 180) * 90; // 90 degrees
 
-  const oeToolsOptions = /** @type {ObjectEditingToolsOptions} */ ($injector.get(
-    'gmfObjectEditingToolsOptions'
-  ));
+  const oeToolsOptions = gmfObjectEditingToolsOptions;
 
   /**
    * @type {number}

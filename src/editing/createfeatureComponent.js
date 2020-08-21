@@ -100,6 +100,7 @@ module.directive('ngeoCreatefeature', editingCreateFeatureComponent);
  * @param {angular.IScope} $scope Scope.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @param {import("ngeo/misc/EventHelper.js").EventHelper} ngeoEventHelper Ngeo event helper service
+ * @param {import('ngeo/options.js').ngeoSnappingTolerance} ngeoSnappingTolerance The tolerance.
  * @constructor
  * @private
  * @hidden
@@ -107,7 +108,16 @@ module.directive('ngeoCreatefeature', editingCreateFeatureComponent);
  * @ngdoc controller
  * @ngname ngeoCreatefeatureController
  */
-function Controller(gettextCatalog, $compile, $filter, $injector, $scope, $timeout, ngeoEventHelper) {
+function Controller(
+  gettextCatalog,
+  $compile,
+  $filter,
+  $injector,
+  $scope,
+  $timeout,
+  ngeoEventHelper,
+  ngeoSnappingTolerance
+) {
   /**
    * @type {boolean}
    */
@@ -171,6 +181,12 @@ function Controller(gettextCatalog, $compile, $filter, $injector, $scope, $timeo
   this.injector_ = $injector;
 
   /**
+   * @type {import('ngeo/options.js').ngeoSnappingTolerance}
+   * @private
+   */
+  this.ngeoSnappingTolerance_ = ngeoSnappingTolerance;
+
+  /**
    * The draw or measure interaction responsible of drawing the vector feature.
    * The actual type depends on the geometry type.
    * @type {?import("ol/interaction/Interaction.js").default}
@@ -218,9 +234,7 @@ Controller.prototype.$onInit = function () {
       startMsg: this.compile_(`<div translate>${helpMsg}</div>`)(this.scope_)[0],
       continueMsg: this.compile_(`<div translate>${contMsg}</div>`)(this.scope_)[0],
     };
-    if (this.injector_.has('ngeoSnappingTolerance')) {
-      options.tolerance = this.injector_.get('ngeoSnappingTolerance');
-    }
+    options.tolerance = this.ngeoSnappingTolerance_;
     if (this.injector_.has('ngeoSnappingSource')) {
       options.source = this.injector_.get('ngeoSnappingSource');
     }

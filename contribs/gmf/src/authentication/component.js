@@ -41,17 +41,6 @@ import qruri from 'qruri';
  */
 
 /**
- * The Authentication configuration.
- * @typedef {Object} AuthenticationConfig
- * @property {boolean} allowPasswordReset Whether to show the password forgotten link. Default to true.
- * @property {boolean} allowPasswordChange Whether to show the change password button. Default to true.
- *    You can also specify a `PasswordValidator` Object to add constraint on user's new password.
- * @property {boolean} forcePasswordChange Force the user to change its password. Default to false.
- *    If you set it to true, you should also allow the user to change its password. Don't add this option
- *    alone, use it in a dedicated authentication component.
- */
-
-/**
  * @type {angular.IModule}
  * @hidden
  */
@@ -154,7 +143,7 @@ class AuthenticationController {
    * @param {import('gmf/authentication/Service.js').User} gmfUser User.
    * @param {import("ngeo/message/Notification.js").MessageNotification} ngeoNotification Ngeo notification
    *    service.
-   * @param {AuthenticationConfig} gmfAuthenticationConfig The configuration
+   * @param {import('gmf/options.js').gmfAuthenticationConfig} gmfAuthenticationConfig The configuration
    * @ngInject
    * @ngdoc controller
    * @ngname GmfAuthenticationController

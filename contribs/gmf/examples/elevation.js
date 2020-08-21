@@ -20,7 +20,6 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import appURL from './url.js';
 import './elevation.css';
 import gmfMapComponent from 'gmf/map/component.js';
 
@@ -30,17 +29,13 @@ import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
 import olLayerTile from 'ol/layer/Tile.js';
 import olSourceOSM from 'ol/source/OSM.js';
+import options from './options.js';
 
 /**
  * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('gmfapp', ['gettext', gmfMapComponent.name, gmfRasterModule.name]);
-
-module.value('gmfRasterUrl', appURL.RASTER);
-
-module.constant('defaultTheme', 'Demo');
-module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 /**
  * @constructor
@@ -76,5 +71,6 @@ function MainController() {
 }
 
 module.controller('MainController', MainController);
+options(module);
 
 export default module;

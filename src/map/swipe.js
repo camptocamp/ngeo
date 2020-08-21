@@ -74,7 +74,6 @@ class SwipeController {
   /**
    * @param {angular.IScope} $scope Angular scope.
    * @param {JQuery} $element Element.
-   * @param {angular.auto.IInjectorService} $injector Main injector.
    * @constructor
    * @private
    * @hidden
@@ -82,7 +81,7 @@ class SwipeController {
    * @ngdoc controller
    * @ngname ngeoMapswipeController
    */
-  constructor($scope, $element, $injector) {
+  constructor($scope, $element) {
     /**
      * @type {import('ol/Map.js').default}
      */

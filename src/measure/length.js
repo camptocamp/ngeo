@@ -38,12 +38,21 @@ const module = angular.module('ngeoMeasurelength', [ngeoDrawController.name, nge
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @param {angular.IFilterService} $filter Angular filter.
  * @param {angular.auto.IInjectorService} $injector Main injector.
+ * @param {import('ngeo/options.js').ngeoMeasurePrecision} ngeoMeasurePrecision The precision.
+ * @param {import('ngeo/options.js').ngeoSnappingTolerance} ngeoSnappingTolerance The tolerance.
  * @return {angular.IDirective} The directive specs.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoDrawpoint
  */
-function measureLengthComponent($compile, gettextCatalog, $filter, $injector) {
+function measureLengthComponent(
+  $compile,
+  gettextCatalog,
+  $filter,
+  $injector,
+  ngeoMeasurePrecision,
+  ngeoSnappingTolerance
+) {
   return {
     restrict: 'A',
     require: '^^ngeoDrawfeature',
@@ -69,12 +78,8 @@ function measureLengthComponent($compile, gettextCatalog, $filter, $injector) {
         startMsg: $compile(`<div translate>${helpMsg}</div>`)($scope)[0],
         continueMsg: $compile(`<div translate>${contMsg}</div>`)($scope)[0],
       };
-      if ($injector.has('ngeoMeasurePrecision')) {
-        options.precision = $injector.get('ngeoMeasurePrecision');
-      }
-      if ($injector.has('ngeoSnappingTolerance')) {
-        options.tolerance = $injector.get('ngeoSnappingTolerance');
-      }
+      options.precision = ngeoMeasurePrecision;
+      options.tolerance = ngeoSnappingTolerance;
       if ($injector.has('ngeoSnappingSource')) {
         options.source = $injector.get('ngeoSnappingSource');
       }

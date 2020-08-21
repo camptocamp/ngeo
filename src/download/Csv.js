@@ -33,15 +33,28 @@ import ngeoDownloadService from 'ngeo/download/service.js';
  * Service to generate and download a CSV file from tabular data.
  * Column headers are translated using {@link angular.gettext.gettextCatalog}.
  *
- * @param {angular.auto.IInjectorService} $injector Main injector.
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext service.
+ * @param {import('ngeo/download/service.js').Download} ngeoDownload The download service.
+ * @param {import('ngeo/options.js').ngeoCsvEncoding} ngeoCsvEncoding The encoding.
+ * @param {import('ngeo/options.js').ngeoCsvExtension} ngeoCsvExtension The extension.
+ * @param {import('ngeo/options.js').ngeoCsvIncludeHeader} ngeoCsvIncludeHeader Has headers.
+ * @param {import('ngeo/options.js').ngeoCsvQuote} ngeoCsvQuote The quote.
+ * @param {import('ngeo/options.js').ngeoCsvSeparator} ngeoCsvSeparator The separator.
  * @constructor
  * @ngdoc service
  * @ngname ngeoCsvDownload
  * @ngInject
  * @hidden
  */
-export function DownloadCsvService($injector, gettextCatalog) {
+export function DownloadCsvService(
+  gettextCatalog,
+  ngeoDownload,
+  ngeoCsvEncoding,
+  ngeoCsvExtension,
+  ngeoCsvIncludeHeader,
+  ngeoCsvQuote,
+  ngeoCsvSeparator
+) {
   /**
    * @type {angular.gettext.gettextCatalog}
    * @private
@@ -49,46 +62,46 @@ export function DownloadCsvService($injector, gettextCatalog) {
   this.gettextCatalog_ = gettextCatalog;
 
   /**
-   * File extension of the CSV file.
-   * @type {string}
+   * File encoding of the CSV file.
+   * @type {import('ngeo/options.js').ngeoCsvEncoding}
    * @private
    */
-  this.encoding_ = $injector.has('ngeoCsvEncoding') ? $injector.get('ngeoCsvEncoding') : 'utf-8';
+  this.encoding_ = ngeoCsvEncoding;
 
   /**
    * File extension of the CSV file.
-   * @type {string}
+   * @type {import('ngeo/options.js').ngeoCsvExtension}
    * @private
    */
-  this.extension_ = $injector.has('ngeoCsvExtension') ? $injector.get('ngeoCsvExtension') : '.csv';
+  this.extension_ = ngeoCsvExtension;
 
   /**
    * Whether to include the header in the exported file or not.
-   * @type {boolean}
+   * @type {import('ngeo/options.js').ngeoCsvIncludeHeader}
    * @private
    */
-  this.includeHeader_ = $injector.has('ngeoCsvIncludeHeader') ? $injector.get('ngeoCsvIncludeHeader') : true;
+  this.includeHeader_ = ngeoCsvIncludeHeader;
 
   /**
    * Quote character.
-   * @type {string}
+   * @type {import('ngeo/options.js').ngeoCsvQuote}
    * @private
    */
-  this.quote_ = $injector.has('ngeoCsvQuote') ? $injector.get('ngeoCsvQuote') : '"';
+  this.quote_ = ngeoCsvQuote;
 
   /**
    * Separator character.
-   * @type {string}
+   * @type {import('ngeo/options.js').ngeoCsvSeparator}
    * @private
    */
-  this.separator_ = $injector.has('ngeoCsvSeparator') ? $injector.get('ngeoCsvSeparator') : ',';
+  this.separator_ = ngeoCsvSeparator;
 
   /**
    * Download service.
    * @type {import('ngeo/download/service.js').Download}
    * @private
    */
-  this.download_ = $injector.get('ngeoDownload');
+  this.download_ = ngeoDownload;
 }
 
 /**

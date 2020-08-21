@@ -1,6 +1,8 @@
 API documentation of ngeo.
 
-[Constants definitions](../jsdoc/module-src_options.html)
+[ngeo constants definitions](../jsdoc/module-src_options.html)
+
+[Gmf constants definitions](../jsdoc/module-contribs_gmf_src_options.html)
 
 [Themes API](../jsdoc/module-contribs_gmf_src_themes.html)
 

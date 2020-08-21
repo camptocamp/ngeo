@@ -20,18 +20,14 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import appURL from './url.js';
 import './themeselector.css';
 import gmfThemeModule from 'gmf/theme/module.js';
 
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
+import options from './options.js';
 
 /** @type {angular.IModule} **/
 const module = angular.module('gmfapp', ['gettext', gmfLayertreeTreeManager.name, gmfThemeModule.name]);
-
-module.value('gmfTreeUrl', appURL.GMF_THEMES);
-
-module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 /**
  * @constructor
@@ -58,5 +54,6 @@ function MainController($http, gmfThemes, gmfThemeManager) {
 }
 
 module.controller('MainController', MainController);
+options(module);
 
 export default module;

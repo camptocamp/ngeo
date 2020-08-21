@@ -20,7 +20,6 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import appURL from './url.js';
 import './editfeature.css';
 import 'bootstrap/js/src/tooltip.js';
 import EPSG2056 from '@geoblocks/proj/src/EPSG_2056.js';
@@ -39,6 +38,7 @@ import olLayerTile from 'ol/layer/Tile.js';
 import olLayerImage from 'ol/layer/Image.js';
 import olSourceOSM from 'ol/source/OSM.js';
 import olSourceImageWMS from 'ol/source/ImageWMS.js';
+import options, {MAPSERVER_PROXY} from './options.js';
 
 /**
  * @type {angular.IModule}
@@ -50,12 +50,6 @@ const module = angular.module('gmfapp', [
   gmfEditingEditFeature.name,
   gmfMapComponent.name,
 ]);
-
-module.value('authenticationBaseUrl', appURL.GMF_DEMO);
-module.value('gmfLayersUrl', appURL.GMF_LAYERS);
-
-module.constant('defaultTheme', 'Demo');
-module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 /**
  * @param {angular.IScope} $scope Angular scope.
@@ -86,7 +80,7 @@ function MainController($scope, gmfEditFeature, gmfUser) {
    * @private
    */
   this.wmsSource_ = new olSourceImageWMS({
-    url: appURL.MAPSERVER_PROXY,
+    url: MAPSERVER_PROXY,
     params: {'LAYERS': 'point'},
   });
 
@@ -275,7 +269,6 @@ MainController.prototype.refreshWMSLayer_ = function () {
 };
 
 module.controller('MainController', MainController);
-module.constant('gmfAuthenticationConfig', {});
-module.constant('gmfTwoFactorAuth', false);
+options(module);
 
 export default module;

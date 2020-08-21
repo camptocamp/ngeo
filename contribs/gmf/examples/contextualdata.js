@@ -20,7 +20,6 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import appURL from './url.js';
 import './contextualdata.css';
 import gmfContextualdataModule from 'gmf/contextualdata/module.js';
 
@@ -31,6 +30,7 @@ import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
 import olLayerTile from 'ol/layer/Tile.js';
 import olSourceOSM from 'ol/source/OSM.js';
+import options from './options.js';
 
 /**
  * @type {angular.IModule}
@@ -43,12 +43,7 @@ const module = angular.module('gmfapp', [
   ngeoMiscFilters.name,
 ]);
 
-module.value('gmfRasterUrl', appURL.RASTER);
-
 module.value('gmfContextualdatacontentTemplateUrl', 'partials/contextualdata.html');
-
-module.constant('defaultTheme', 'Demo');
-module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 /**
  * @constructor
@@ -87,5 +82,6 @@ MainController.prototype.onRasterData = function (coordinate, data) {
 };
 
 module.controller('MainController', MainController);
+options(module);
 
 export default MainController;

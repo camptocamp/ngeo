@@ -1267,7 +1267,7 @@ class OGC extends ngeoDatasourceDataSource {
 
 /**
  * Guess the type of OGC service from a given url. Default returned value is WMS.
- * @param {string} url Url
+ * @param {string} url URL
  * @return {string} Guessed OGC service type.
  * @hidden
  */

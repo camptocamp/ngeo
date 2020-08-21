@@ -24,6 +24,56 @@
  */
 
 /**
+ * URL to the theme web service.
+ * @typedef {string} gmfTreeUrl
+ */
+
+/**
+ * URL to the authentication web service.
+ * @typedef {string} authenticationBaseUrl
+ */
+
+/**
+ * URL to the full-text search web service.
+ * @typedef {string} fulltextsearchUrl
+ */
+
+/**
+ * URL to the shortener web service.
+ * @typedef {string} gmfShortenerCreateUrl
+ */
+
+/**
+ * URL to the raster web service.
+ * @typedef {string} gmfRasterUrl
+ */
+
+/**
+ * URL to the profile web service.
+ * @typedef {string} gmfProfileJsonUrl
+ */
+
+/**
+ * URL to the layers web service.
+ * @typedef {string} gmfLayersUrl
+ */
+
+/**
+ * URL to MapFishPrint.
+ * @typedef {string} gmfPrintUrl
+ */
+
+/**
+ * URL of the test page to detect online/offline.
+ * @typedef {string} ngeoOfflineTestUrl
+ */
+
+/**
+ * URL to the WFS server.
+ * @typedef {string} ngeoPermalinkOgcserverUrl
+ */
+
+/**
  * @typedef {Object<string, string>} ngeoNominatimSearchDefaultParams
  */
 
@@ -86,18 +136,8 @@
  */
 
 /**
- * URL of the test page to detect online/offline.
- * @typedef {string} ngeoOfflineTestUrl
- */
-
-/**
  * Regexp used to identify the used keys.
  * @typedef {string[]} ngeoUsedKeyRegexp
- */
-
-/**
- * URL to the WFS server.
- * @typedef {string} ngeoPermalinkOgcserverUrl
  */
 
 /**
@@ -126,6 +166,51 @@
  * @property {number} [maxFeatures=50] The maximum number of records per request the query service should ask.
  * @property {string} defaultFeatureNS
  * @property {string} defaultFeaturePrefix
+ */
+
+/**
+ * @typedef {number} ngeoMeasurePrecision
+ */
+
+/**
+ * @typedef {number} ngeoMeasureDecimals
+ */
+
+/**
+ * @typedef {boolean} ngeoMeasureSpherical
+ */
+
+/**
+ * @typedef {number} ngeoSnappingTolerance
+ */
+
+/**
+ * @typedef {string} ngeoPointfilter
+ */
+
+/**
+ * File encoding of the CSV file.
+ * @typedef {string} ngeoCsvEncoding
+ */
+
+/**
+ * File extension of the CSV file.
+ * @typedef {string} ngeoCsvExtension
+ */
+
+/**
+ * Whether to include the header in the exported file or not.
+ * @typedef {boolean} ngeoCsvIncludeHeader
+ */
+
+/**
+ * Quote character.
+ * @typedef {string} ngeoCsvQuote
+ */
+
+/**
+ * Separator character.
+ * @typedef {string} ngeoCsvSeparator
  */
 
 export default null;

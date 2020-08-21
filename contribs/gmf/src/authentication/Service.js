@@ -111,15 +111,23 @@ export const RouteSuffix = {
 export class AuthenticationService extends olEventsEventTarget {
   /**
    * @param {angular.IHttpService} $http Angular http service.
-   * @param {angular.auto.IInjectorService} $injector Main injector.
    * @param {angular.IScope} $rootScope The directive's scope.
    * @param {string} authenticationBaseUrl URL to "authentication" web service.
    * @param {User} gmfUser User.
-   * @param {import("gmf/authentication/component.js").AuthenticationConfig} gmfAuthenticationConfig
+   * @param {import('gmf/options.js').gmfAuthenticationConfig} gmfAuthenticationConfig
    *    The configuration
+   * @param {import('gmf/options.js').gmfAuthenticationNoReloadRole} gmfAuthenticationNoReloadRole
+   *    The no reload roles
    * @ngInject
    */
-  constructor($http, $injector, $rootScope, authenticationBaseUrl, gmfUser, gmfAuthenticationConfig) {
+  constructor(
+    $http,
+    $rootScope,
+    authenticationBaseUrl,
+    gmfUser,
+    gmfAuthenticationConfig,
+    gmfAuthenticationNoReloadRole
+  ) {
     super();
 
     /**
@@ -155,12 +163,10 @@ export class AuthenticationService extends olEventsEventTarget {
     /**
      * Don't request a new user object from the back-end after
      * logging out if the logged-in user's role has this role.
-     * @type {?string}
+     * @type {?import('gmf/options.js').gmfAuthenticationNoReloadRole}
      * @private
      */
-    this.noReloadRole_ = $injector.has('gmfAuthenticationNoReloadRole')
-      ? $injector.get('gmfAuthenticationNoReloadRole')
-      : null;
+    this.noReloadRole_ = gmfAuthenticationNoReloadRole;
 
     this.load_();
   }

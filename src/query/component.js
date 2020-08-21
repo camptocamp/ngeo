@@ -49,14 +49,14 @@ class QueryController {
    *     ngeoMapQuerent The ngeo map querent service.
    * @param {import("ngeo/query/ModeSelector.js").QueryModeSelector}
    *     ngeoQueryModeSelector The ngeo query modeSelector service.
-   * @param {angular.auto.IInjectorService} $injector Main injector.
+   * @param {import('ngeo/options.js').ngeoQueryOptions} ngeoQueryOptions The options.
    * @param {angular.IScope} $scope Scope.
    * @private
    * @ngInject
    * @ngdoc controller
    * @ngname NgeoQueryController
    */
-  constructor(ngeoMapQuerent, ngeoQueryModeSelector, $injector, $scope) {
+  constructor(ngeoMapQuerent, ngeoQueryModeSelector, $scope, ngeoQueryOptions) {
     // === Binding properties ===
 
     /**
@@ -87,12 +87,6 @@ class QueryController {
      * @private
      */
     this.ngeoQueryModeSelector_ = ngeoQueryModeSelector;
-
-    const ngeoQueryOptions = /** @type {import('ngeo/options.js').ngeoQueryOptions} */ ($injector.has(
-      'ngeoQueryOptions'
-    )
-      ? $injector.get('ngeoQueryOptions')
-      : {});
 
     /**
      * @type {import('ngeo/options.js').ngeoQueryOptions}

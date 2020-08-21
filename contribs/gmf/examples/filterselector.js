@@ -21,7 +21,6 @@
 
 // Todo - use the 'Filter' theme instead if the 'Edit' theme
 import angular from 'angular';
-import appURL from './url.js';
 import './filterselector.css';
 import 'bootstrap/js/src/tooltip.js';
 import gmfAuthenticationModule from 'gmf/authentication/module.js';
@@ -44,6 +43,7 @@ import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
 import olLayerTile from 'ol/layer/Tile.js';
 import olSourceOSM from 'ol/source/OSM.js';
+import options from './options.js';
 
 /**
  * @type {angular.IModule}
@@ -62,13 +62,6 @@ const module = angular.module('gmfapp', [
   ngeoMiscToolActivateMgr.name,
   ngeoQueryComponent.name,
 ]);
-
-module.value('gmfTreeUrl', appURL.GMF_THEMES);
-module.value('authenticationBaseUrl', appURL.GMF_DEMO);
-module.value('gmfLayersUrl', appURL.GMF_LAYERS);
-
-module.constant('defaultTheme', 'Filters');
-module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 /**
  * @private
@@ -177,8 +170,8 @@ class MainController {
 }
 
 module.controller('MainController', MainController);
-module.constant('ngeoPointfilter', null);
-module.constant('gmfAuthenticationConfig', {});
-module.constant('gmfTwoFactorAuth', false);
+
+module.constant('defaultTheme', 'Filters');
+options(module);
 
 export default module;

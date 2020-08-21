@@ -28,7 +28,7 @@ import ngeoFormatXSDAttribute from 'ngeo/format/XSDAttribute.js';
  *
  * @constructor
  * @param {angular.IHttpService} $http Angular http service.
- * @param {string} gmfLayersUrl Url to the GeoMapFish layers service.
+ * @param {string} gmfLayersUrl URL to the GeoMapFish layers service.
  * @ngInject
  * @hidden
  */

@@ -318,11 +318,6 @@ const module = angular.module('GmfAbstractDesktopControllerModule', [
 
 module.controller('AbstractDesktopController', AbstractDesktopController);
 
-module.value('ngeoMeasurePrecision', 3);
-module.value('ngeoMeasureDecimals', 0);
-module.value('ngeoMeasureSpherical', false);
-
-module.value('ngeoSnappingTolerance', 20);
 module.value('ngeoSnappingSource', new olSourceVector());
 
 export default module;

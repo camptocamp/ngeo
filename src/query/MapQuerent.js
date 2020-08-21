@@ -46,7 +46,6 @@ export class MapQuerent {
    * queries using the Querent service. The result is stored inside this
    * service.
    *
-   * @param {angular.auto.IInjectorService} $injector Main injector.
    * @param {import("ngeo/datasource/DataSources.js").DataSource} ngeoDataSources Ngeo data sources service.
    * @param {import("ngeo/datasource/Helper.js").DatasourceHelper} ngeoDataSourcesHelper Ngeo data
    *     sources helper service.
@@ -54,23 +53,20 @@ export class MapQuerent {
    *     helper service.
    * @param {import("ngeo/query/Querent.js").Querent} ngeoQuerent The ngeo querent service.
    * @param {QueryResult} ngeoQueryResult The ngeo query result service.
+   * @param {import('ngeo/options.js').ngeoQueryOptions} ngeoQueryOptions The options.
    * @ngdoc service
    * @ngname ngeoQuerent
    * @ngInject
    */
   constructor(
-    $injector,
     ngeoDataSources,
     ngeoDataSourcesHelper,
     ngeoFeatureHelper,
     ngeoQuerent,
-    ngeoQueryResult
+    ngeoQueryResult,
+    ngeoQueryOptions
   ) {
-    const options = /** @type {import('ngeo/options.js').ngeoQueryOptions} */ ($injector.has(
-      'ngeoQueryOptions'
-    )
-      ? $injector.get('ngeoQueryOptions')
-      : {});
+    const options = ngeoQueryOptions;
 
     /**
      * @type {import("ngeo/datasource/DataSource.js").DataSources}

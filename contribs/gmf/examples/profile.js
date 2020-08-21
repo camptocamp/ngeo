@@ -20,7 +20,6 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import appURL from './url.js';
 import './profile.css';
 import gmfPermalinkPermalink from 'gmf/permalink/Permalink.js';
 
@@ -37,6 +36,7 @@ import olLayerTile from 'ol/layer/Tile.js';
 import olSourceOSM from 'ol/source/OSM.js';
 import olStyleStroke from 'ol/style/Stroke.js';
 import olStyleStyle from 'ol/style/Style.js';
+import options from './options.js';
 
 /**
  * @type {angular.IModule}
@@ -49,11 +49,6 @@ const module = angular.module('gmfapp', [
   gmfProfileModule.name,
   ngeoMapModule.name, // for ngeo.map.FeatureOverlay, perhaps remove me
 ]);
-
-module.value('gmfProfileJsonUrl', appURL.PROFILE);
-
-module.constant('defaultTheme', 'Demo');
-module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 /**
  * @param {angular.IScope} $scope Angular scope.
@@ -161,5 +156,6 @@ function MainController($scope, ngeoFeatureOverlayMgr) {
 }
 
 module.controller('MainController', MainController);
+options(module);
 
 export default module;

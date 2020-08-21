@@ -20,7 +20,6 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import appURL from './url.js';
 import './search.css';
 import gmfMapComponent from 'gmf/map/component.js';
 
@@ -38,6 +37,7 @@ import olStyleCircle from 'ol/style/Circle.js';
 import olStyleFill from 'ol/style/Fill.js';
 import olStyleStroke from 'ol/style/Stroke.js';
 import olStyleStyle from 'ol/style/Style.js';
+import options, {SEARCH} from './options.js';
 
 /**
  * @type {angular.IModule}
@@ -51,13 +51,6 @@ const module = angular.module('gmfapp', [
   ngeoMapModule.name, // for ngeo.map.FeatureOverlay, perhaps remove me
   ngeoMessageNotification.name,
 ]);
-
-module.value('gmfTreeUrl', appURL.GMF_THEMES);
-module.value('fulltextsearchUrl', `${appURL.SEARCH}?limit=30&partitionlimit=5&interface=desktop`);
-module.value('gmfLayersUrl', appURL.GMF_LAYERS);
-
-module.constant('defaultTheme', 'Demo');
-module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 /**
  * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes Themes service.
@@ -88,7 +81,7 @@ function MainController(gmfThemes, ngeoFeatureOverlayMgr, ngeoNotification) {
           rateLimitWait: 250,
         },
       }),
-      url: appURL.SEARCH,
+      url: SEARCH,
     },
   ];
 
@@ -149,5 +142,6 @@ function MainController(gmfThemes, ngeoFeatureOverlayMgr, ngeoNotification) {
 }
 
 module.controller('MainController', MainController);
+options(module);
 
 export default module;

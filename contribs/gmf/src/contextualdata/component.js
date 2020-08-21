@@ -98,15 +98,15 @@ module.directive('gmfContextualdata', contextualDataComponent);
  * @param {angular.ICompileService} $compile Angular compile service.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @param {angular.IScope} $scope Scope.
- * @param {import("gmf/raster/RasterService.js").RasterService} gmfRaster Gmf Raster service
- * @param {angular.auto.IInjectorService} $injector Angular injector service.
+ * @param {import('gmf/raster/RasterService.js').RasterService} gmfRaster Gmf Raster service
+ * @param {import('gmf/options.js').gmfContextualdataOptions} gmfContextualdataOptions The options.
  *
  * @constructor
  * @hidden
  * @ngdoc controller
  * @ngInject
  */
-export function ContextualdataController($compile, $timeout, $scope, gmfRaster, $injector) {
+export function ContextualdataController($compile, $timeout, $scope, gmfRaster, gmfContextualdataOptions) {
   /**
    * @type {?import("ol/Map.js").default}
    */
@@ -164,12 +164,10 @@ export function ContextualdataController($compile, $timeout, $scope, gmfRaster, 
   this.gmfRaster_ = gmfRaster;
 
   /**
-   * @type {Object}
+   * @type {import('gmf/options.js').gmfContextualdataOptions}
    * @private
    */
-  this.gmfContextualdataOptions_ = $injector.has('gmfContextualdataOptions')
-    ? $injector.get('gmfContextualdataOptions')
-    : {};
+  this.gmfContextualdataOptions_ = gmfContextualdataOptions;
 
   document.body.addEventListener('mousedown', (event) => {
     const element = this.overlay_.getElement();
@@ -376,7 +374,7 @@ module.controller('GmfContextualdataController', ContextualdataController);
  * See the [../examples/contribs/gmf/contextualdata.html](../examples/contribs/gmf/contextualdata.html)
  * example for a usage sample.
  *
- * @param {string} gmfContextualdatacontentTemplateUrl Url to template.
+ * @param {string} gmfContextualdatacontentTemplateUrl URL to template.
  * @return {angular.IDirective} The Directive Definition Object.
  * @ngInject
  * @ngdoc directive
