@@ -31,4 +31,4 @@ export const PRINT_PROXY = `${GMF_DEMO}printproxy`;
  * @type {string}
  * @hidden
  */
-export const SEARCH = `${GMF_DEMO}fulltextsearch?query=%QUERY`;
+export const SEARCH = `${GMF_DEMO}search?query=%QUERY`;

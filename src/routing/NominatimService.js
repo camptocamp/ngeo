@@ -81,7 +81,7 @@ export function NominatimService($http, $injector, ngeoDebounce) {
   }
 
   /**
-   * @type {Object<string, string>}
+   * @type {import('ngeo/options.js').ngeoNominatimSearchDefaultParams}
    * @private
    */
   this.searchDefaultParams_ = {};

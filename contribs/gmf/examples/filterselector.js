@@ -177,5 +177,8 @@ class MainController {
 }
 
 module.controller('MainController', MainController);
+module.constant('ngeoPointfilter', null);
+module.constant('gmfAuthenticationConfig', {});
+module.constant('gmfTwoFactorAuth', false);
 
 export default module;

@@ -242,5 +242,6 @@ MainController.prototype.handleMapSingleClick_ = function (evt) {
 };
 
 module.controller('MainController', MainController);
+module.constant('ngeoPointfilter', null);
 
 export default module;

@@ -462,6 +462,14 @@ build-dll: .build/build-dll.timestamp
 	mkdir -p $(dir $@)
 	touch $@
 
+.PHONY: jsdoc
+jsdoc:
+	npm run jsdoc
+	sed -i 's/JSDoc: Module: src\/options/Constants definitions/' jsdoc/build/module-src_options.html
+	sed -i 's/Module: src\/options/Constants definitions/' jsdoc/build/module-src_options.html
+	sed -i 's/module:src\/options~//g' jsdoc/build/module-src_options.html
+	echo 'nav { display: none; }' >> jsdoc/build/styles/jsdoc-default.css
+
 .PHONY: clean
 clean:
 	rm -f .build/*.check.timestamp

@@ -187,5 +187,6 @@ function MainController(gmfObjectEditingManager, gmfThemes, gmfTreeManager, ngeo
 }
 
 module.controller('MainController', MainController);
+module.constant('ngeoPointfilter', null);
 
 export default module;

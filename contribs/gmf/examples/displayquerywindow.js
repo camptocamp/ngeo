@@ -203,5 +203,6 @@ function MainController(gmfThemes, gmfDataSourcesManager, ngeoFeatureOverlayMgr,
 }
 
 module.controller('MainController', MainController);
+module.constant('ngeoPointfilter', null);
 
 export default module;

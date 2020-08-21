@@ -63,5 +63,7 @@ function MainController(gettextCatalog) {
 }
 
 module.controller('MainController', MainController);
+module.constant('gmfAuthenticationConfig', {});
+module.constant('gmfTwoFactorAuth', false);
 
 export default module;

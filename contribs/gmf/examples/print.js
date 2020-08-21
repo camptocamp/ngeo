@@ -114,5 +114,7 @@ function MainController(gmfThemes, ngeoFeatureOverlayMgr) {
 }
 
 module.controller('MainController', MainController);
+module.constant('ngeoPointfilter', null);
+module.constant('gmfAuthenticationConfig', {});
 
 export default module;

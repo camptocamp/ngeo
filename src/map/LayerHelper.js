@@ -37,7 +37,8 @@ import {ServerType} from 'ngeo/datasource/OGC.js';
  * Provides help functions that helps you to create and manage layers.
  * @param {angular.IQService} $q Angular promises/deferred service.
  * @param {angular.IHttpService} $http Angular http service.
- * @param {number} ngeoTilesPreloadingLimit Load tiles up to preload levels. By default preload is Infinity,
+ * @param {import('ngeo/options.js').ngeoTilesPreloadingLimit} ngeoTilesPreloadingLimit Load tiles up to preload levels.
+ *     By default preload is Infinity,
  *     which means load all tiles on the top of the visible level. See also preload value
  *     in documentation for ol.Layer.Tile.
  * @constructor
@@ -64,7 +65,7 @@ export function LayerHelper($q, $http, ngeoTilesPreloadingLimit) {
    * @type {number}
    * @private
    */
-  this.tilesPreloadingLimit_ = ngeoTilesPreloadingLimit;
+  this.tilesPreloadingLimit_ = ngeoTilesPreloadingLimit ? ngeoTilesPreloadingLimit : Infinity;
 }
 
 /**

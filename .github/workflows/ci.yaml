@@ -57,7 +57,7 @@ jobs:
       - run: "! (npm run typecheck|grep -v '^node_modules/'|grep '^[a-z]')"
       # Generate API doc
       - run: npm run doc
-      - run: npm run jsdoc
+      - run: make jsdoc
       - run: npm run build-api
       - uses: actions/upload-artifact@v1
         with:

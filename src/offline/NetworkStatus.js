@@ -42,7 +42,7 @@ const Service = class {
    * @param {angular.IWindowService} $window Angular window service.
    * @param {angular.ITimeoutService} $timeout Angular timeout service.
    * @param {angular.IScope} $rootScope The root scope.
-   * @param {string} ngeoOfflineTestUrl Url of the test page.
+   * @param {import('ngeo/options.js').ngeoOfflineTestUrl} ngeoOfflineTestUrl URL of the test page.
    */
   constructor($document, $window, $timeout, $rootScope, ngeoOfflineTestUrl) {
     /**
@@ -71,7 +71,7 @@ const Service = class {
 
     /**
      * @private
-     * @type {string}
+     * @type {import('ngeo/options.js').ngeoOfflineTestUrl}
      */
     this.ngeoOfflineTestUrl_ = ngeoOfflineTestUrl;
 
@@ -225,8 +225,6 @@ Service.module.configFunction_ = function ($httpProvider) {
   $httpProvider.interceptors.push('httpInterceptor');
 };
 Service.module.config(Service.module.configFunction_);
-
-Service.module.value('ngeoOfflineTestUrl', '');
 
 const exports = Service;
 

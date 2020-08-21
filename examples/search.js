@@ -80,7 +80,7 @@ function SearchController($element, $rootScope, $compile, ngeoSearchCreateGeoJSO
    * @type {import("ol/layer/Vector.js").default}
    * @private
    */
-  this.vectorLayer_ = this.createVectorLayer_();
+  this.vectorLayer_;
 
   /** @type {Bloodhound<*>} */
   const bloodhoundEngine = this.createAndInitBloodhound_(ngeoSearchCreateGeoJSONBloodhound);
@@ -160,6 +160,7 @@ function SearchController($element, $rootScope, $compile, ngeoSearchCreateGeoJSO
 /**
  */
 SearchController.prototype.$onInit = function () {
+  this.vectorLayer_ = this.createVectorLayer_();
   // Empty the search field on focus and blur.
   const input = this.$element.find('input');
   input.on('focus blur', () => {

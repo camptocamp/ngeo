@@ -80,5 +80,6 @@ function MainController() {
 }
 
 module.controller('MainController', MainController);
+module.constant('ngeoStringToHtmlReplacements', []);
 
 export default module;
