@@ -58,6 +58,10 @@ jobs:
       # Generate API doc
       - run: npm run doc
       - run: npm run themes
+
+      - run: "sed -i 's/JSDoc: Module: contribs\\/gmf\\/src\\/themes/Constants definitions/' jsdoc/options/module-contribs_gmf_src_themes.html"
+      - run: "sed -i 's/Module: contribs\\/gmf\\/src\\/themes/Constants definitions/' jsdoc/options/module-contribs_gmf_src_themes.html"
+      - run: "sed -i 's/module:contribs\\/gmf\\/src\\/themes~//g' jsdoc/options/module-contribs_gmf_src_themes.html"
       - run: npm run options
       - run: "sed -i 's/JSDoc: Module: src\\/options/Constants definitions/' jsdoc/options/module-src_options.html"
       - run: "sed -i 's/Module: src\\/options/Constants definitions/' jsdoc/options/module-src_options.html"

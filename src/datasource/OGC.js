@@ -30,11 +30,6 @@ import olFormatWFS from 'ol/format/WFS.js';
 import olFormatWMSGetFeatureInfo from 'ol/format/WMSGetFeatureInfo.js';
 
 /**
- * Dimensions definition.
- * @typedef {Object<string, ?string>} Dimensions
- */
-
-/**
  * Available OGC server types.
  * @enum {string}
  * @hidden
@@ -87,26 +82,15 @@ export const WMSInfoFormat = {
 };
 
 /**
- * @typedef {Object} DimensionFilterConfig
- * @property {string} field
- * @property {string} [value]
- */
-
-/**
- * Dimensions applied by filters configuration.
- * @typedef {Object<string, DimensionFilterConfig>} DimensionsFiltersConfig
- */
-
-/**
  * The options required to create a `OGC`.
  *
  * extends DataSourceOptions
  * @typedef {Object} OGCOptions
- * @property {Dimensions} [activeDimensions] The dimensions that are currently active on the data source.
+ * @property {import('gmf/themes.js').GmfDimensions} [activeDimensions] The dimensions that are currently active on the data source.
  * @property {boolean} [copyable] Whether the geometry from this data source can be copied to other data
  *    sources or not. Defaults to `false`.
- * @property {Dimensions} [dimensions] A reference to the dimensions.
- * @property {Dimensions} [dimensionsConfig] The dimensions configuration, which determines those supported
+ * @property {import('gmf/themes.js').GmfDimensions} [dimensions] A reference to the dimensions.
+ * @property {import('gmf/themes.js').GmfDimensions} [dimensionsConfig] The dimensions configuration, which determines those supported
  *    by this data source and whether they should use a static value or the one defined in the dimensions.
  * @property {string} [filterCondition] The filter condition to apply to the filter rules (if any).
  *    Defaults to `ngeo.filter.Condition.AND`.
@@ -132,7 +116,7 @@ export const WMSInfoFormat = {
  * @property {string} [timeAttributeName]  The name of the time attribute.
  * @property {number} [timeLowerValue] The time lower value, which can be combined with the time upper value
  *    to determine a range.
- * @property {TimeProperty} [timeProperty] The time property for the data source. Used to apply time filters.
+ * @property {import('gmf/themes.js').GmfTimeProperty} [timeProperty] The time property for the data source. Used to apply time filters.
  * @property {number} [timeUpperValue] The time upper value, which can be combined with the time lower value
  *    to determine a range.
  * @property {string} [wfsFeatureNS] The feature namespace to use with WFS requests.
@@ -146,7 +130,7 @@ export const WMSInfoFormat = {
  * @property {string} [wmtsLayer] The layer name to use for the (WMTS) requests.
  * @property {string} [wmtsUrl] The URL to use for (WMTS) requests.
  * @property {Array<import('ngeo/format/Attribute.js').Attribute>} [attributes] (DataSourceOptions)
- * @property {DimensionsFiltersConfig} [dimensionsFiltersConfig] (DataSourceOptions)
+ * @property {import('gmf/themes.js').GmfDimensionsFiltersConfig} [dimensionsFiltersConfig] (DataSourceOptions)
  * @property {number} id (DataSourceOptions)
  * @property {string} [identifierAttribute] (DataSourceOptions)
  * @property {boolean} [inRange] (DataSourceOptions)
@@ -172,20 +156,6 @@ export const WMSInfoFormat = {
  * @property {number} [minResolution] The minimum resolution the layer should be rendered (when visible).
  * @property {string} name The layer name (WMS) and/or feature type name (WFS)
  * @property {boolean} [queryable] Whether the the layer is queryable or not. Defaults to `false`.
- */
-
-/**
- * Time object
- * @typedef {Object} TimeProperty
- * @property {TimePropertyWidgetEnum} widget
- * @property {string} maxValue
- * @property {string} minValue
- * @property {string} [maxDefValue]
- * @property {string} [minDefValue]
- * @property {TimePropertyModeEnum} mode
- * @property {TimePropertyResolutionEnum} [resolution]
- * @property {string[]} [values]
- * @property {number[]} interval
  */
 
 /**
@@ -233,13 +203,13 @@ class OGC extends ngeoDatasourceDataSource {
 
     /**
      * The dimensions configuration for the data source.
-     * @type {?Dimensions}
+     * @type {?import('gmf/themes.js').GmfDimensions}
      */
     this.dimensionsConfig = options.dimensionsConfig || null;
 
     /**
      * The dimensions applied by filters configuration for the data source.
-     * @type {?DimensionsFiltersConfig}
+     * @type {?import('gmf/themes.js').GmfDimensionsFiltersConfig}
      */
     this.dimensionsFiltersConfig = options.dimensionsFiltersConfig || null;
 
@@ -277,7 +247,7 @@ class OGC extends ngeoDatasourceDataSource {
 
     /**
      * A reference to the dimensions object.
-     * @type {?Dimensions}
+     * @type {?import('gmf/themes.js').GmfDimensions}
      * @private
      */
     this.dimensions_ = options.dimensions || null;
@@ -383,7 +353,7 @@ class OGC extends ngeoDatasourceDataSource {
     this.timeLowerValue = options.timeLowerValue;
 
     /**
-     * @type {?TimeProperty}
+     * @type {?import('gmf/themes.js').GmfTimeProperty}
      * @private
      */
     this.timeProperty_ = options.timeProperty !== undefined ? options.timeProperty : null;
@@ -546,7 +516,7 @@ class OGC extends ngeoDatasourceDataSource {
   // === Dynamic property getters/setters ===
   // ========================================
   /**
-   * @return {?Dimensions} Current dimensions to use for this data source
+   * @return {?import('gmf/themes.js').GmfDimensions} Current dimensions to use for this data source
    */
   get dimensions() {
     return this.dimensions_;
@@ -712,7 +682,7 @@ class OGC extends ngeoDatasourceDataSource {
   }
 
   /**
-   * @return {?TimeProperty} Time property
+   * @return {?import('gmf/themes.js').GmfTimeProperty} Time property
    */
   get timeProperty() {
     return this.timeProperty_;
@@ -1157,7 +1127,7 @@ class OGC extends ngeoDatasourceDataSource {
    * WFS format does not allow constructing multiple typenames GetFeature
    * request with different filters we need to combine data sources depending
    * on active dimensions filters.
-   * @param {!ngeox.dataSource.OGC} dataSource Remote data source to
+   * @param {!OGC} dataSource Remote data source to
    *     compare with this one.
    * @return {boolean} Whether the two data sources have the same active
    *     dimensions filters. If both have no dimensions, they are considered
@@ -1282,39 +1252,5 @@ export function guessServiceTypeByUrl(url) {
 
   return type;
 }
-
-/**
- * Enum for the time property widget
- * Type of the widget to use
- * @enum {string}
- * @hidden
- */
-export const TimePropertyWidgetEnum = {
-  SLIDER: 'slider',
-  DATEPICKER: 'datepicker',
-};
-
-/**
- * Mode of the widget
- * @enum {string}
- * @hidden
- */
-export const TimePropertyModeEnum = {
-  RANGE: 'range',
-  VALUE: 'value',
-  DISABLED: 'disabled',
-};
-
-/**
- * resolution of the widget
- * @enum {string}
- * @hidden
- */
-export const TimePropertyResolutionEnum = {
-  DAY: 'day',
-  MONTH: 'month',
-  YEAR: 'year',
-  SECOND: 'second',
-};
 
 export default OGC;
