@@ -31,7 +31,9 @@ import EPSG2056 from '@geoblocks/proj/src/EPSG_2056.js';
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
 import olLayerTile from 'ol/layer/Tile.js';
-import olSourceTileWMS from 'ol/source/TileWMS.js';
+import olLayerImage from 'ol/layer/Image.js';
+import olSourceWMS from 'ol/source/ImageWMS.js';
+import {MAPSERVER_PROXY} from './url.js';
 
 /** @type {angular.IModule} **/
 const module = angular.module('app', ['gettext', ngeoMapModule.name, ngeoMiscSortableComponent.name]);
@@ -51,30 +53,39 @@ function MainController($scope) {
   asitvd.set('name', 'asitvd');
 
   /** @type {import("ol/layer/Tile.js").default} */
-  const boundaries = new olLayerTile({
-    source: new olSourceTileWMS({
-      url: 'https://wms.geo.admin.ch',
-      params: {'LAYERS': 'ch.swisstopo.swissboundaries3d-gemeinde-flaeche.fill'},
+  const boundaries = new olLayerImage({
+    source: new olSourceWMS({
+      url: MAPSERVER_PROXY,
+      params: {
+        'ogcserver': 'Main PNG',
+        'LAYERS': 'post_office',
+      },
       serverType: 'mapserver',
     }),
   });
   boundaries.set('name', 'Boundaries');
 
   /** @type {import("ol/layer/Tile.js").default} */
-  const waterBodies = new olLayerTile({
-    source: new olSourceTileWMS({
-      url: 'https://wms.geo.admin.ch',
-      params: {'LAYERS': 'ch.swisstopo.geologie-gravimetrischer_atlas'},
+  const waterBodies = new olLayerImage({
+    source: new olSourceWMS({
+      url: MAPSERVER_PROXY,
+      params: {
+        'ogcserver': 'Main PNG',
+        'LAYERS': 'entertainment',
+      },
       serverType: 'mapserver',
     }),
   });
   waterBodies.set('name', 'Water bodies');
 
   /** @type {import("ol/layer/Tile.js").default} */
-  const cities = new olLayerTile({
-    source: new olSourceTileWMS({
-      url: 'https://wms.geo.admin.ch',
-      params: {'LAYERS': 'ch.swisstopo.dreiecksvermaschung'},
+  const cities = new olLayerImage({
+    source: new olSourceWMS({
+      url: MAPSERVER_PROXY,
+      params: {
+        'ogcserver': 'Main PNG',
+        'LAYERS': 'sustenance',
+      },
       serverType: 'mapserver',
     }),
   });
@@ -89,7 +100,7 @@ function MainController($scope) {
       projection: EPSG2056,
       resolutions: [1000, 500, 200, 100, 50, 20, 10, 5, 2.5, 2, 1, 0.5],
       center: [2600000, 1200000],
-      zoom: 1,
+      zoom: 9,
     }),
   });
 
@@ -99,10 +110,13 @@ function MainController($scope) {
    * @type {import("ol/layer/Tile.js").default}
    * @private
    */
-  this.roads_ = new olLayerTile({
-    source: new olSourceTileWMS({
-      url: 'https://wms.geo.admin.ch',
-      params: {'LAYERS': 'ch.bafu.laerm-strassenlaerm_tag'},
+  this.roads_ = new olLayerImage({
+    source: new olSourceWMS({
+      url: MAPSERVER_PROXY,
+      params: {
+        'ogcserver': 'Main PNG',
+        'LAYERS': 'osm_scale',
+      },
       serverType: 'mapserver',
     }),
   });
