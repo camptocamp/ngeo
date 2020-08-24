@@ -34,8 +34,6 @@ import gmfControllersAbstractAPIController, {
   AbstractAPIController,
 } from 'gmf/controllers/AbstractAPIController.js';
 import appBase from '../appmodule.js';
-import EPSG2056 from '@geoblocks/proj/src/EPSG_2056.js';
-import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
 
 if (!window.requestAnimationFrame) {
   alert(
@@ -51,30 +49,7 @@ if (!window.requestAnimationFrame) {
 /**
  * @private
  */
-class Controller extends AbstractAPIController {
-  /**
-   * @param {angular.IScope} $scope Scope.
-   * @param {angular.auto.IInjectorService} $injector Main injector.
-   * @ngInject
-   */
-  constructor($scope, $injector) {
-    super(
-      {
-        srid: 2056,
-        mapViewConfig: {
-          center: [2632464, 1185457],
-          zoom: 3,
-          resolutions: [250, 100, 50, 20, 10, 5, 2, 1, 0.5, 0.25, 0.1, 0.05],
-        },
-      },
-      $scope,
-      $injector
-    );
-
-    this.EPSG2056 = EPSG2056;
-    this.EPSG21781 = EPSG21781;
-  }
-}
+class Controller extends AbstractAPIController {}
 
 /**
  * @hidden

@@ -34,8 +34,6 @@ import gmfControllersAbstractDesktopController, {
   AbstractDesktopController,
 } from 'gmf/controllers/AbstractDesktopController.js';
 import appBase from '../appmodule.js';
-import EPSG2056 from '@geoblocks/proj/src/EPSG_2056.js';
-import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
 
 if (!window.requestAnimationFrame) {
   alert(
@@ -58,25 +56,12 @@ class Controller extends AbstractDesktopController {
    * @ngInject
    */
   constructor($scope, $injector) {
-    super(
-      {
-        srid: 2056,
-        mapViewConfig: {
-          center: [2632464, 1185457],
-          zoom: 3,
-          resolutions: [250, 100, 50, 20, 10, 5, 2, 1, 0.5, 0.25, 0.1, 0.05],
-          constrainResolution: true,
-          extent: [2485071.54, 175346.36, 2828515.78, 1299941.84],
-        },
-      },
-      $scope,
-      $injector
-    );
+    super($scope, $injector);
 
     /**
      * @type {string[]}
      */
-    this.searchCoordinatesProjections = [EPSG21781, EPSG2056, 'EPSG:4326'];
+    this.searchCoordinatesProjections = ['EPSG:21781', 'EPSG:2056', 'EPSG:4326'];
 
     /**
      * @type {number[]}
@@ -124,12 +109,12 @@ class Controller extends AbstractDesktopController {
      */
     this.mousePositionProjections = [
       {
-        code: EPSG2056,
+        code: 'EPSG:2056',
         label: 'CH1903+ / LV95',
         filter: 'ngeoNumberCoordinates::{x}, {y} m',
       },
       {
-        code: EPSG21781,
+        code: 'EPSG:21781',
         label: 'CH1903 / LV03',
         filter: 'ngeoNumberCoordinates::{x}, {y} m',
       },

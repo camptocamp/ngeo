@@ -22,18 +22,8 @@
 import angular from 'angular';
 import gmfControllersAbstractAppController, {
   AbstractAppController,
-  getLocationIcon,
 } from 'gmf/controllers/AbstractAppController.js';
 import ngeoMapResizemap from 'ngeo/map/resizemap.js';
-import {get as getProjection} from 'ol/proj.js';
-import olMap from 'ol/Map.js';
-import olView from 'ol/View.js';
-import olControlScaleLine from 'ol/control/ScaleLine.js';
-import olControlZoom from 'ol/control/Zoom.js';
-import olControlRotate from 'ol/control/Rotate.js';
-import {defaults as interactionsDefaults} from 'ol/interaction.js';
-import olInteractionDragPan from 'ol/interaction/DragPan.js';
-import {noModifierKeys} from 'ol/events/condition.js';
 
 /**
  * API application abstract controller.
@@ -43,68 +33,13 @@ import {noModifierKeys} from 'ol/events/condition.js';
  */
 export class AbstractAPIController extends AbstractAppController {
   /**
-   * @param {import('gmf/controllers/AbstractAppController.js').Config} config A part of the application
    * @param {angular.IScope} $scope Scope.
    * @param {angular.auto.IInjectorService} $injector Main injector.
    * @ngInject
    */
-  constructor(config, $scope, $injector) {
-    const viewConfig = {
-      projection: getProjection(`EPSG:${config.srid || 2056}`),
-    };
-    Object.assign(viewConfig, config.mapViewConfig || {});
-
-    const scaleline = document.getElementById('scaleline');
-    if (!scaleline) {
-      throw new Error('Missing scaleline');
-    }
-    const map = new olMap({
-      pixelRatio: config.mapPixelRatio,
-      maxTilesLoading: config.maxTilesLoading || 128,
-      layers: [],
-      view: new olView(viewConfig),
-      controls: config.mapControls || [
-        new olControlScaleLine({
-          target: scaleline,
-          // See: https://www.w3.org/TR/CSS21/syndata.html#length-units
-          dpi: 96,
-        }),
-        new olControlZoom({
-          target: 'ol-zoom-control',
-          zoomInTipLabel: '',
-          zoomOutTipLabel: '',
-        }),
-        new olControlRotate({
-          label: getLocationIcon(),
-          tipLabel: '',
-        }),
-      ],
-      interactions:
-        config.mapInteractions ||
-        interactionsDefaults({
-          dragPan: false,
-          pinchRotate: true,
-          altShiftDragRotate: true,
-        }),
-    });
-    map.addInteraction(
-      new olInteractionDragPan({
-        condition: dragPanCondition,
-      })
-    );
-
-    super(config, map, $scope, $injector);
+  constructor($scope, $injector) {
+    super($scope, $injector, false);
   }
-}
-
-/**
- * Allow map pan with all buttons except right click (context menu)
- * @param {import("ol/MapBrowserEvent.js").default} mapBrowserEvent MapBrowser event
- * @return {boolean}
- */
-function dragPanCondition(mapBrowserEvent) {
-  const event = mapBrowserEvent.originalEvent;
-  return noModifierKeys(mapBrowserEvent) && event.button !== 2;
 }
 
 /**
