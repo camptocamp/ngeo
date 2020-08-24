@@ -132,6 +132,7 @@ class QueryController {
       condition: olEventsConditionAlways,
       geometryFunction: olInteractionDrawCreateBox(),
       source: this.vectorSource_,
+      stopClick: true,
       type: 'Circle',
     });
 
@@ -142,6 +143,7 @@ class QueryController {
     this.drawPolygonInteraction_ = new olInteractionDraw({
       condition: olEventsConditionAlways,
       source: this.vectorSource_,
+      stopClick: true,
       type: 'Polygon',
     });
 
