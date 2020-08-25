@@ -184,6 +184,7 @@ examples-hosted: \
 examples-hosted-ngeo: .build/examples-ngeo.timestamp .build/examples-hosted/index.html
 
 .build/examples-ngeo.timestamp: $(NGEO_ALL_SRC_FILES) $(WEBPACK_CONFIG_FILES) \
+		$(NGEO_EXAMPLES_HTML_FILES) $(NGEO_EXAMPLES_JS_FILES) \
 		.build/node_modules.timestamp \
 		.build/build-dll.timestamp \
 		.build/examples-hosted/dist \
@@ -195,6 +196,7 @@ examples-hosted-ngeo: .build/examples-ngeo.timestamp .build/examples-hosted/inde
 examples-hosted-gmf: .build/examples-gmf.timestamp .build/examples-hosted/contribs/gmf/index.html
 
 .build/examples-gmf.timestamp: $(GMF_ALL_SRC_FILES) $(WEBPACK_CONFIG_FILES) \
+		$(GMF_EXAMPLES_HTML_FILES) $(GMF_EXAMPLES_JS_FILES) \
 		.build/node_modules.timestamp \
 		.build/build-dll.timestamp \
 		.build/examples-hosted/dist
@@ -288,7 +290,7 @@ contribs/dist: .build/build-dll.timestamp
 		$< $(GMF_EXAMPLES_HTML_FILES) > $@
 
 .build/httpserver.timestamp:
-	python3 -m http.server 3000 &
+	python3 -m http.server 3001 &
 	touch $@
 
 .build/%.check.timestamp: .build/examples-ngeo.timestamp \
