@@ -156,6 +156,15 @@ LayerHelper.prototype.createBasicWMSLayer = function (
     source.updateParams(opt_params);
   }
 
+  if (!(opt_params && opt_params.STYLES)) {
+    params.STYLES = '';
+    let i = sourceLayersName.split(',').length;
+    while (i > 1) {
+      params.STYLES.concat(',');
+      i--;
+    }
+  }
+
   const layerOptions = Object.assign({}, opt_customLayerOptions, {source});
   return new olLayerImage(layerOptions);
 };

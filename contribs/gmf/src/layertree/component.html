@@ -103,13 +103,13 @@
         <ngeo-date-picker
           ng-if="::layertreeCtrl.node.time.widget === 'datepicker'"
           time="layertreeCtrl.node.time"
-          on-date-selected="gmfLayertreeCtrl.updateWMSTimeLayerState(layertreeCtrl, time)">
+          on-date-selected="gmfLayertreeCtrl.updateTimeData(layertreeCtrl, time)">
         </ngeo-date-picker>
 
         <gmf-time-slider
           ng-if="::layertreeCtrl.node.time.widget === 'slider'"
           gmf-time-slider-time="layertreeCtrl.node.time"
-          gmf-time-slider-on-date-selected="gmfLayertreeCtrl.updateWMSTimeLayerState(layertreeCtrl, time)">
+          gmf-time-slider-on-date-selected="gmfLayertreeCtrl.updateTimeData(layertreeCtrl, time)">
         </gmf-time-slider>
       </div>
     </span>
