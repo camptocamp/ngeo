@@ -188,3 +188,15 @@ export function extentToRectangle(extent) {
   ];
   return result;
 }
+
+/**
+ * Return the screen DPI.
+ * @return {number} The screen DPI.
+ */
+export function dpi() {
+  // See:
+  // - https://developer.mozilla.org/en/docs/Web/API/Window/devicePixelRatio
+  // - https://www.html5rocks.com/en/mobile/high-dpi/
+  // - https://www.w3.org/TR/css3-values/#absolute-lengths
+  return 96;
+}

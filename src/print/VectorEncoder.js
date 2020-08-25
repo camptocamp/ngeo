@@ -27,6 +27,7 @@ import {toDegrees} from 'ol/math.js';
 import olStyleIcon from 'ol/style/Icon.js';
 import olStyleCircle from 'ol/style/Circle.js';
 import {asArray as asColorArray} from 'ol/color.js';
+import {dpi} from 'ngeo/utils.js';
 
 /**
  * @constructor
@@ -74,9 +75,16 @@ const FEATURE_STYLE_PROP = '_ngeo_style';
  * @param {Array<import('ngeo/print/mapfish-print-v3.js').MapFishPrintLayer>} mapFishPrintLayer Array.
  * @param {import("ol/layer/Vector.js").default} layer Layer.
  * @param {number} resolution Resolution.
+ * @param {number} destinationPrintDpi The destination print DPI.
  * @param {number} [goodnessOfFit] Goodness of fit.
  */
-VectorEncoder.prototype.encodeVectorLayer = function (mapFishPrintLayer, layer, resolution, goodnessOfFit) {
+VectorEncoder.prototype.encodeVectorLayer = function (
+  mapFishPrintLayer,
+  layer,
+  resolution,
+  destinationPrintDpi,
+  goodnessOfFit
+) {
   /**
    * @type {import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>}
    */
@@ -139,7 +147,13 @@ VectorEncoder.prototype.encodeVectorLayer = function (mapFishPrintLayer, layer, 
     geojsonFeature.properties[FEATURE_STYLE_PROP] = styleValue;
     geojsonFeatures.push(geojsonFeature);
     for (const style of styles) {
-      const mapfishPrintStyle = this.encodeVectorStyle(geometryType, resolution, style, goodnessOfFit);
+      const mapfishPrintStyle = this.encodeVectorStyle(
+        geometryType,
+        resolution,
+        style,
+        destinationPrintDpi,
+        goodnessOfFit
+      );
       if (mapfishPrintStyle) {
         styleObject.symbolizers.push(mapfishPrintStyle);
       }
@@ -170,10 +184,17 @@ VectorEncoder.prototype.encodeVectorLayer = function (mapFishPrintLayer, layer, 
  * @param {import("ol/geom/GeometryType.js").default} geometryType Type of the GeoJSON geometry
  * @param {number} resolution Resolution.
  * @param {import("ol/style/Style.js").default} style Style.
+ * @param {number} destiontionPrintDpi The destination print DPI.
  * @param {number=} [goodnessOfFit] Goodness of fit.
  * @returns {import('ngeo/print/mapfish-print-v3.js').MapFishPrintSymbolizer} The style
  */
-VectorEncoder.prototype.encodeVectorStyle = function (geometryType, resolution, style, goodnessOfFit) {
+VectorEncoder.prototype.encodeVectorStyle = function (
+  geometryType,
+  resolution,
+  style,
+  destiontionPrintDpi,
+  goodnessOfFit
+) {
   if (!(geometryType in PRINT_STYLE_TYPES)) {
     // unsupported geometry type
     return;
@@ -193,7 +214,7 @@ VectorEncoder.prototype.encodeVectorStyle = function (geometryType, resolution, 
     }
   } else if (styleType === PrintStyleType.POINT) {
     if (imageStyle !== null) {
-      return this.encodeVectorStylePoint(resolution, imageStyle);
+      return this.encodeVectorStylePoint(resolution, imageStyle, destiontionPrintDpi);
     }
   }
   if (textStyle !== null) {
@@ -234,10 +255,11 @@ VectorEncoder.prototype.encodeVectorStyleLine = function (strokeStyle) {
 /**
  * @param {number} resolution Resolution.
  * @param {import("ol/style/Image.js").default} imageStyle Image style.
+ * @param {number} destiontionPrintDpi The destination print DPI.
  * @returns {import('ngeo/print/mapfish-print-v3.js').MapFishPrintSymbolizer} The style
  * @protected
  */
-VectorEncoder.prototype.encodeVectorStylePoint = function (resolution, imageStyle) {
+VectorEncoder.prototype.encodeVectorStylePoint = function (resolution, imageStyle, destiontionPrintDpi) {
   let symbolizer;
   if (imageStyle instanceof olStyleCircle) {
     symbolizer = /** @type {import('ngeo/print/mapfish-print-v3.js').MapFishPrintSymbolizerPoint} */ ({
@@ -288,7 +310,7 @@ VectorEncoder.prototype.encodeVectorStylePoint = function (resolution, imageStyl
      */
     symbolizer = /** @type {import('ngeo/print/mapfish-print-v3.js').MapFishPrintSymbolizerPoint} */ ({
       type: 'point',
-      externalGraphic: imageStyle.getImage(resolution / 92).toDataURL(),
+      externalGraphic: imageStyle.getImage(destiontionPrintDpi / dpi()).toDataURL(),
     });
 
     const [height, width] = imageStyle.getSize();

@@ -232,6 +232,19 @@ gh-pages: .build/python-venv.timestamp
 	./node_modules/.bin/eslint $(filter-out .build/node_modules.copyright.timestamp $(ESLINT_CONFIG_FILES), $^)
 	touch $@
 
+.PHONY: eslint-fix
+eslint-fix: .build/node_modules.copyright.timestamp $(ESLINT_CONFIG_FILES) \
+		$(API_JS_FILES) \
+		$(NGEO_JS_FILES) \
+		$(NGEO_TEST_JS_FILES) \
+		$(NGEO_EXAMPLES_JS_FILES) \
+		$(GMF_TEST_JS_FILES) \
+		$(GMF_JS_FILES) \
+		$(GMF_EXAMPLES_JS_FILES) \
+		$(GMF_APPS_JS_FILES) \
+		$(BUILD_JS_FILES)
+	./node_modules/.bin/eslint --fix $(filter-out .build/node_modules.copyright.timestamp $(ESLINT_CONFIG_FILES), $^)
+
 .build/examples-hosted/partials: examples/partials/
 	mkdir -p $(dir $@)
 	cp -r $< $@
