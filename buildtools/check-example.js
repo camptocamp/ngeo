@@ -32,7 +32,7 @@ if (!arg) {
 }
 const screenshot = !arg.startsWith('http');
 const screenshotPath = screenshot ? `${arg}.png` : undefined;
-const page_url = screenshot ? `http://localhost:3000/${arg}` : arg;
+const page_url = screenshot ? `http://localhost:3001/${arg}` : arg;
 
 function fileMock(name, contentType) {
   return {
@@ -167,7 +167,7 @@ function loaded(page, browser) {
         console.log(originalUrl);
         requestsURL.add(originalUrl);
         if (url.startsWith('https://geomapfish-demo')) {
-          request.headers().origin = 'http://localhost:3000';
+          request.headers().origin = 'http://localhost:3001';
         }
         console.log(`Request: ${url}`);
         request.continue({
@@ -242,8 +242,8 @@ function loaded(page, browser) {
     const type = message.type();
     const location = message.location();
     if (
-      !location.url.startsWith('http://localhost:3000/.build/examples-hosted/dist/vendor.js') &&
-      location.url.startsWith('http://localhost:3000/')
+      !location.url.startsWith('http://localhost:3001/.build/examples-hosted/dist/vendor.js') &&
+      location.url.startsWith('http://localhost:3001/')
     ) {
       console.log(`Console ${type}`);
       console.log(`On: ${location.url} ${location.lineNumber}:${location.columnNumber}.`);
