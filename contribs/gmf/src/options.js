@@ -264,4 +264,19 @@ export function buildStyle(styleDescriptor) {
  * @property {boolean} [collapsed] If the query result window is collapsed.
  */
 
+/**
+ * @typedef {Object} LayerConfig
+ * @property {string} [filter]
+ * @property {string[]} [args]
+ * @property {string} [postfix]
+ * @property {string} [separator]
+ */
+
+/**
+ * The elevation (raster) options.
+ * @typedef {Object} gmfElevationOptions
+ * @property {string[]} layers Elevation layers to use.
+ * @property {Object<string, LayerConfig>} layersConfig Elevation layers configurations.
+ */
+
 export default undefined;
