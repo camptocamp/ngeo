@@ -20,7 +20,6 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import appURL from './url.js';
 import './layertree.css';
 import gmfDisclaimerModule from 'gmf/disclaimer/module.js';
 
@@ -38,6 +37,7 @@ import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
 import olLayerTile from 'ol/layer/Tile.js';
 import olSourceOSM from 'ol/source/OSM.js';
+import options from './options.js';
 
 /**
  * @type {angular.IModule}
@@ -54,11 +54,6 @@ const module = angular.module('gmfapp', [
   ngeoLayertreeModule.name,
   gmfDisclaimerModule.name,
 ]);
-
-module.value('gmfTreeUrl', appURL.GMF_THEMES);
-
-module.constant('defaultTheme', 'Demo');
-module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 /**
  * @constructor
@@ -220,5 +215,6 @@ function MainController(gmfTreeManager, gmfThemes, gmfThemeManager, ngeoLocation
 }
 
 module.controller('MainController', MainController);
+options(module);
 
 export default module;

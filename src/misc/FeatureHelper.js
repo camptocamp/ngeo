@@ -78,15 +78,25 @@ export const FeatureFormatType = {
  *  - export
  *
  * @constructor
- * @param {angular.auto.IInjectorService} $injector Main injector.
  * @param {angular.IFilterService} $filter Angular filter.
+ * @param {import('ngeo/options.js').ngeoMeasurePrecision} ngeoMeasurePrecision The precision.
+ * @param {import('ngeo/options.js').ngeoMeasureDecimals} ngeoMeasureDecimals The decimals.
+ * @param {import('ngeo/options.js').ngeoMeasureSpherical} ngeoMeasureSpherical Spherical measure.
  * @param {import('ngeo/options.js').ngeoPointfilter} ngeoPointfilter the point filter.
+ * @param {import('ngeo/download/service.js').Download} ngeoDownload The donload service
  * @ngdoc service
  * @ngname ngeoFeatureHelper
  * @ngInject
  * @hidden
  */
-export function FeatureHelper($injector, $filter, ngeoPointfilter) {
+export function FeatureHelper(
+  $filter,
+  ngeoMeasurePrecision,
+  ngeoMeasureDecimals,
+  ngeoMeasureSpherical,
+  ngeoPointfilter,
+  ngeoDownload
+) {
   /**
    * @type {angular.IFilterService}
    * @private
@@ -94,30 +104,21 @@ export function FeatureHelper($injector, $filter, ngeoPointfilter) {
   this.$filter_ = $filter;
 
   /**
-   * @type {number|undefined}
+   * @type {import('ngeo/options.js').ngeoMeasureDecimals}
    * @private
    */
-  this.decimals_ = undefined;
-  if ($injector.has('ngeoMeasureDecimals')) {
-    this.decimals_ = $injector.get('ngeoMeasureDecimals');
-  }
+  this.decimals_ = ngeoMeasureDecimals;
 
   /**
-   * @type {number|undefined}
+   * @type {import('ngeo/options.js').ngeoMeasurePrecision}
    * @private
    */
-  this.precision_ = undefined;
-  if ($injector.has('ngeoMeasurePrecision')) {
-    this.precision_ = $injector.get('ngeoMeasurePrecision');
-  }
+  this.precision_ = ngeoMeasurePrecision;
 
   /**
-   * @type {boolean}
+   * @type {import('ngeo/options.js').ngeoMeasureSpherical}
    */
-  this.spherical = false;
-  if ($injector.has('ngeoMeasureSpherical')) {
-    this.spherical = $injector.get('ngeoMeasureSpherical');
-  }
+  this.spherical = ngeoMeasureSpherical;
 
   /**
    * @type {import('ngeo/misc/filters.js').formatNumber}
@@ -174,7 +175,7 @@ export function FeatureHelper($injector, $filter, ngeoPointfilter) {
    * @type {import('ngeo/download/service.js').Download}
    * @private
    */
-  this.download_ = $injector.get('ngeoDownload');
+  this.download_ = ngeoDownload;
 }
 
 /**

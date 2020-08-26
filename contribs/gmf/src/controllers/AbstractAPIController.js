@@ -55,8 +55,4 @@ module.controller('AbstractAPIController', AbstractAPIController);
 
 module.value('isDesktop', true);
 
-module.value('ngeoQueryOptions', {
-  'limit': 20,
-});
-
 export default module;

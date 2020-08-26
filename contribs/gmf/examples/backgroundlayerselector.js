@@ -20,7 +20,6 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import appURL from './url.js';
 import './backgroundlayerselector.css';
 import gmfBackgroundlayerselectorModule from 'gmf/backgroundlayerselector/module.js';
 
@@ -30,6 +29,7 @@ import gmfThemeThemes from 'gmf/theme/Themes.js';
 import EPSG2056 from '@geoblocks/proj/src/EPSG_2056.js';
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
+import options from './options.js';
 
 /**
  * @type {angular.IModule}
@@ -41,10 +41,6 @@ const module = angular.module('gmfapp', [
   gmfMapComponent.name,
   gmfThemeThemes.name,
 ]);
-
-module.value('gmfTreeUrl', appURL.GMF_THEMES);
-
-module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 /**
  * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes Themes service.
@@ -69,5 +65,6 @@ function MainController(gmfThemes) {
 }
 
 module.controller('MainController', MainController);
+options(module);
 
 export default module;

@@ -20,7 +20,6 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import appURL from './url.js';
 import './editfeatureselector.css';
 import './gmf-hidden.inc.css';
 import 'bootstrap/js/src/tooltip.js';
@@ -45,6 +44,7 @@ import olLayerTile from 'ol/layer/Tile.js';
 import olLayerVector from 'ol/layer/Vector.js';
 import olSourceOSM from 'ol/source/OSM.js';
 import olSourceVector from 'ol/source/Vector.js';
+import options from './options.js';
 
 /**
  * @type {angular.IModule}
@@ -61,13 +61,6 @@ const module = angular.module('gmfapp', [
   ngeoMiscFeatureHelper.name,
   ngeoMiscToolActivateMgr.name,
 ]);
-
-module.value('gmfTreeUrl', appURL.GMF_THEMES);
-module.value('authenticationBaseUrl', appURL.GMF_DEMO);
-module.value('gmfLayersUrl', appURL.GMF_LAYERS);
-
-module.constant('defaultTheme', 'Edit');
-module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 /**
  * @param {angular.IScope} $scope Angular scope.
@@ -176,8 +169,8 @@ function MainController($scope, gmfThemes, gmfTreeManager, gmfUser, ngeoFeatureH
 }
 
 module.controller('MainController', MainController);
-module.constant('ngeoPointfilter', null);
-module.constant('gmfAuthenticationConfig', {});
-module.constant('gmfTwoFactorAuth', false);
+
+module.constant('defaultTheme', 'Edit');
+options(module);
 
 export default module;

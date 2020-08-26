@@ -50,7 +50,7 @@ export const ThemeEventType = {
  * @constructor
  * @param {angular.IScope} $rootScope Angular rootScope.
  * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes gmf Themes service.
- * @param {boolean} gmfTreeManagerModeFlush Flush mode active?
+ * @param {import('gmf/options.js').gmfTreeManagerModeFlush} gmfTreeManagerModeFlush Flush mode active?
  * @param {import("gmf/layertree/TreeManager.js").LayertreeTreeManager} gmfTreeManager the tree manager.
  * @param {import("ngeo/statemanager/Service.js").StatemanagerService} ngeoStateManager The ngeo statemanager
  *    service.
@@ -79,7 +79,7 @@ export function ThemeManagerService(
   this.gmfThemes_ = gmfThemes;
 
   /**
-   * @type {boolean}
+   * @type {import('gmf/options.js').gmfTreeManagerModeFlush}
    */
   this.modeFlush = gmfTreeManagerModeFlush;
 
@@ -189,11 +189,6 @@ const module = angular.module('gmfThemeManager', [
   gmfThemeThemes.name,
   ngeoStatemanagerService.name,
 ]);
-
-/**
- * The default value for `modeFlush` that `gmf.layertree.TreeManager` is initialized with.
- */
-module.value('gmfTreeManagerModeFlush', true);
 
 module.service('gmfThemeManager', ThemeManagerService);
 

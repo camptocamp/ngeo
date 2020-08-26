@@ -41,6 +41,7 @@ import olLayerTile from 'ol/layer/Tile.js';
 import olLayerVector from 'ol/layer/Vector.js';
 import olSourceOSM from 'ol/source/OSM.js';
 import olSourceVector from 'ol/source/Vector.js';
+import options from './options.js';
 
 /**
  * @type {angular.IModule}
@@ -52,11 +53,6 @@ const module = angular.module('gmfapp', [
   gmfMapComponent.name,
   ngeoMiscFeatureHelper.name,
 ]);
-
-module.value('ngeoMeasureDecimals', 2);
-
-module.constant('defaultTheme', 'Demo');
-module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 /**
  * @constructor
@@ -242,6 +238,6 @@ MainController.prototype.handleMapSingleClick_ = function (evt) {
 };
 
 module.controller('MainController', MainController);
-module.constant('ngeoPointfilter', null);
+options(module);
 
 export default module;

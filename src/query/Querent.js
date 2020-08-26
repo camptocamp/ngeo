@@ -368,7 +368,7 @@ export class Querent {
   }
 
   /**
-   * @param {string} url Url of the WMTS server. Note that it must contain
+   * @param {string} url URL of the WMTS server. Note that it must contain
    *     all required arguments.
    * @param {boolean=} opt_cache Whether to use the cached capability, if
    *     available. Enabling this will also store the capability when required

@@ -29,6 +29,7 @@ import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
 import olLayerTile from 'ol/layer/Tile.js';
 import olSourceOSM from 'ol/source/OSM.js';
+import options from './options.js';
 
 /**
  * @type {angular.IModule}
@@ -78,5 +79,6 @@ function MainController($scope) {
 }
 
 module.controller('MainController', MainController);
+options(module);
 
 export default module;

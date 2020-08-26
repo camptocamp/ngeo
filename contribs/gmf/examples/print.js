@@ -20,7 +20,6 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import appURL from './url.js';
 import './print.css';
 import './gmf-hidden.inc.css';
 import gmfLayertreeComponent from 'gmf/layertree/component.js';
@@ -36,6 +35,7 @@ import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
 import olLayerTile from 'ol/layer/Tile.js';
 import olSourceOSM from 'ol/source/OSM.js';
+import options from './options.js';
 
 /**
  * @type {angular.IModule}
@@ -49,14 +49,6 @@ const module = angular.module('gmfapp', [
   gmfThemeThemes.name,
   ngeoMapModule.name, //for ngeo.map.FeatureOverlay, perhaps remove me
 ]);
-
-module.value('gmfTreeUrl', appURL.GMF_THEMES);
-module.value('gmfPrintUrl', appURL.PRINT_PROXY);
-module.value('authenticationBaseUrl', appURL.GMF_DEMO);
-module.value('gmfLayersUrl', appURL.GMF_LAYERS);
-
-module.constant('defaultTheme', 'Demo');
-module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 /**
  * @constructor
@@ -114,7 +106,6 @@ function MainController(gmfThemes, ngeoFeatureOverlayMgr) {
 }
 
 module.controller('MainController', MainController);
-module.constant('ngeoPointfilter', null);
-module.constant('gmfAuthenticationConfig', {});
+options(module);
 
 export default module;

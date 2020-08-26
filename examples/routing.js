@@ -69,5 +69,8 @@ function MainController() {
 }
 
 module.controller('MainController', MainController);
+module.constant('ngeoRoutingOptions', {});
+module.constant('ngeoNominatimUrl', 'https://nominatim.openstreetmap.org/');
+module.constant('ngeoNominatimSearchDefaultParams', {});
 
 export default module;

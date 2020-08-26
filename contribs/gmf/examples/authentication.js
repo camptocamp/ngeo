@@ -20,19 +20,15 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import appURL from './url.js';
 import './authentication.css';
 import gmfAuthenticationModule from 'gmf/authentication/module.js';
+import options from './options.js';
 
 /**
  * @type {angular.IModule}
  * @hidden
  */
 const module = angular.module('gmfapp', ['gettext', gmfAuthenticationModule.name]);
-
-module.value('authenticationBaseUrl', appURL.GMF_DEMO);
-
-module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 /**
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
@@ -63,7 +59,6 @@ function MainController(gettextCatalog) {
 }
 
 module.controller('MainController', MainController);
-module.constant('gmfAuthenticationConfig', {});
-module.constant('gmfTwoFactorAuth', false);
+options(module);
 
 export default module;

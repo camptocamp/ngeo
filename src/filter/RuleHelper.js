@@ -643,9 +643,6 @@ export class RuleHelper {
   createDimensionsFilterFromDataSource_(dataSource) {
     const config = dataSource.dimensionsFiltersConfig || {};
     const dimensions = dataSource.dimensions;
-    if (!dimensions) {
-      throw new Error('Missing dimensions');
-    }
 
     const conditions = [];
     for (const key in config) {

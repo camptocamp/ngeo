@@ -29,13 +29,6 @@ import VectorLayer from 'ol/layer/Vector.js';
 import VectorSource from 'ol/source/Vector.js';
 
 /**
- * Configuration options for the themes service.
- * @typedef {Object} ThemesOptions
- * @property {boolean} [addBlankBackgroundLayer] Whether to add a blank background layer to the list of
- *    available backgrounds.
- */
-
-/**
  * The Themes service. This service interacts
  * with c2cgeoportal's "themes" web service and exposes functions that return
  * objects in the tree returned by the "themes" web service.
@@ -48,10 +41,11 @@ export class ThemesService extends olEventsEventTarget {
    * @param {angular.IQService} $q Angular q service
    * @param {import("ngeo/map/LayerHelper.js").LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
    * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
-   * @param {ThemesOptions} gmfThemesOptions Themes options.
+   * @param {import('gmf/options.js').gmfThemesOptions} gmfThemesOptions Themes options.
+   * @param {string} gmfTreeUrl The tree URL.
    * @ngInject
    */
-  constructor($http, $injector, $q, ngeoLayerHelper, gettextCatalog, gmfThemesOptions) {
+  constructor($http, $injector, $q, ngeoLayerHelper, gettextCatalog, gmfThemesOptions, gmfTreeUrl) {
     super();
 
     /**
@@ -76,14 +70,10 @@ export class ThemesService extends olEventsEventTarget {
     this.$http_ = $http;
 
     /**
-     * @type {string|undefined}
+     * @type {string}
      * @private
      */
-    this.treeUrl_ = undefined;
-    if ($injector.has('gmfTreeUrl')) {
-      this.treeUrl_ = $injector.get('gmfTreeUrl');
-    }
-
+    this.treeUrl_ = gmfTreeUrl;
     /**
      * @type {?import("ngeo/statemanager/Location.js").StatemanagerLocation}
      * @private
@@ -665,7 +655,6 @@ export const ThemeNodeType = {
  */
 const module = angular.module('gmfThemes', [ngeoMapLayerHelper.name]);
 
-module.value('gmfThemesOptions', {});
 module.service('gmfThemes', ThemesService);
 
 export default module;

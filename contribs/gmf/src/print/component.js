@@ -232,21 +232,6 @@ const printComponent = {
 module.component('gmfPrint', printComponent);
 
 /**
- * @typedef {Object} OptionsLegendType
- * @property {boolean} [useBbox]
- * @property {Object<string, boolean>} label
- * @property {Object<string, Object<string, string>>} params
- */
-
-/**
- * @typedef {Object} OptionsType
- * @property {boolean} [scaleInput]
- * @property {OptionsLegendType} [legend]
- * @property {number} [goodnessOfFit]
- * @property {string} [defaultLayout]
- */
-
-/**
  * @private
  * @hidden
  */
@@ -257,14 +242,13 @@ export class PrintController {
    * @param {angular.IScope} $scope Angular scope.
    * @param {angular.ITimeoutService} $timeout Angular timeout service.
    * @param {angular.IQService} $q The Angular $q service.
-   * @param {angular.auto.IInjectorService} $injector Main injector.
    * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
    * @param {import("ngeo/map/LayerHelper.js").LayerHelper} ngeoLayerHelper The ngeo Layer Helper service.
    * @param {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr Ngeo Feature
    *    Overlay Manager service.
    * @param {import("ngeo/print/Utils.js").PrintUtils} ngeoPrintUtils The ngeo PrintUtils service.
    * @param {import("ngeo/print/Service.js").CreatePrint} ngeoCreatePrint The ngeo Create Print function.
-   * @param {string} gmfPrintUrl A MapFishPrint url.
+   * @param {string} gmfPrintUrl The MapFishPrint URL.
    * @param {import("gmf/authentication/Service.js").AuthenticationService} gmfAuthenticationService
    *    The authentication service.
    * @param {import('ngeo/query/MapQuerent.js').QueryResult} ngeoQueryResult ngeo query result.
@@ -272,6 +256,8 @@ export class PrintController {
    * @param {PrintState} gmfPrintState GMF print state.
    * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes The gmf Themes service.
    * @param {import("gmf/datasource/ExternalDataSourcesManager.js").ExternalDatSourcesManager} gmfExternalDataSourcesManager The ngeo Layer Helper service.
+   * @param {import('gmf/options.js').gmfPrintOptions} gmfPrintOptions The options.
+   * @param {string} cacheVersion The cache version
    * @ngInject
    * @ngdoc controller
    * @ngname GmfPrintController
@@ -282,7 +268,6 @@ export class PrintController {
     $scope,
     $timeout,
     $q,
-    $injector,
     gettextCatalog,
     ngeoLayerHelper,
     ngeoFeatureOverlayMgr,
@@ -294,7 +279,9 @@ export class PrintController {
     $filter,
     gmfPrintState,
     gmfThemes,
-    gmfExternalDataSourcesManager
+    gmfExternalDataSourcesManager,
+    gmfPrintOptions,
+    cacheVersion
   ) {
     /**
      * @type {PrintState}
@@ -421,10 +408,7 @@ export class PrintController {
      */
     this.gmfExternalDataSourcesManager_ = gmfExternalDataSourcesManager;
 
-    this.cacheVersion_ = '0';
-    if ($injector.has('cacheVersion')) {
-      this.cacheVersion_ = $injector.get('cacheVersion');
-    }
+    this.cacheVersion_ = cacheVersion;
 
     /**
      * @type {boolean}
@@ -447,23 +431,17 @@ export class PrintController {
      */
     this.goodnessOfFit_ = 0.5;
 
-    if ($injector.has('gmfPrintOptions')) {
-      /**
-       * @type {OptionsType}
-       */
-      const options = $injector.get('gmfPrintOptions');
-      if (options.scaleInput) {
-        this.scaleInput = options.scaleInput;
-      }
-      if (options.legend) {
-        Object.assign(this.gmfLegendOptions_, options.legend);
-      }
-      if (typeof options.goodnessOfFit === 'number') {
-        this.goodnessOfFit_ = options.goodnessOfFit;
-      }
-      if (options.defaultLayout) {
-        this.defaultLayout = options.defaultLayout;
-      }
+    if (gmfPrintOptions.scaleInput) {
+      this.scaleInput = gmfPrintOptions.scaleInput;
+    }
+    if (gmfPrintOptions.legend) {
+      Object.assign(this.gmfLegendOptions_, gmfPrintOptions.legend);
+    }
+    if (typeof gmfPrintOptions.goodnessOfFit === 'number') {
+      this.goodnessOfFit_ = gmfPrintOptions.goodnessOfFit;
+    }
+    if (gmfPrintOptions.defaultLayout) {
+      this.defaultLayout = gmfPrintOptions.defaultLayout;
     }
 
     /**

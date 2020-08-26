@@ -67,13 +67,26 @@ beforeEach(() => {
       $provide.value('ngeoPermalinkOgcserverUrl', 'http://fake/gmf/ogs_server');
       $provide.value('gmfContextualdatacontentTemplateUrl', 'contextualdata.html');
       $provide.value('defaultTheme', 'Demo');
+      $provide.value('cacheVersion', '0');
       $provide.value('gmfAuthenticationConfig', {});
+      $provide.value('gmfThemesOptions', {});
+      $provide.value('ngeoMeasurePrecision', 0);
+      $provide.value('ngeoMeasureDecimals', 0);
+      $provide.value('ngeoMeasureSpherical', false);
+      $provide.value('ngeoCsvEncoding', 'utf-8');
+      $provide.value('ngeoCsvExtension', '.csv');
+      $provide.value('ngeoCsvIncludeHeader', true);
+      $provide.value('ngeoCsvQuote', '"');
+      $provide.value('ngeoCsvSeparator', ',');
+      $provide.value('gmfCsvFilename', 'query-results.csv');
+      $provide.value('gmfAuthenticationNoReloadRole', null);
+      $provide.value('gmfTreeManagerModeFlush', true);
       $provide.value('ngeoPointfilter', null);
+      $provide.value('gmfPermalinkOptions', {});
+      $provide.value('ngeoQueryOptions', {});
+      $provide.value('gmfPrintOptions', {});
       $provide.value('ngeoWfsPermalinkOptions', {
-        url: '',
         wfsTypes: [],
-        defaultFeatureNS: '',
-        defaultFeaturePrefix: '',
       });
     }
   );

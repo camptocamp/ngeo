@@ -20,7 +20,6 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import appURL from './url.js';
 import './xsdattributes.css';
 import gmfThemeThemes from 'gmf/theme/Themes.js';
 
@@ -29,6 +28,7 @@ import ngeoEditingAttributesComponent from 'ngeo/editing/attributesComponent.js'
 import {getGeometryAttribute} from 'ngeo/format/XSDAttribute.js';
 import olFeature from 'ol/Feature.js';
 import 'jquery-datetimepicker/jquery.datetimepicker.css';
+import options from './options.js';
 
 /** @type {angular.IModule} **/
 const module = angular.module('gmfapp', [
@@ -37,11 +37,6 @@ const module = angular.module('gmfapp', [
   gmfThemeThemes.name,
   ngeoEditingAttributesComponent.name,
 ]);
-
-module.value('gmfTreeUrl', appURL.GMF_THEMES);
-module.value('gmfLayersUrl', appURL.GMF_LAYERS);
-
-module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 /**
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
@@ -176,5 +171,6 @@ MainController.prototype.getDistinctFlatNodes_ = function (node, nodes) {
 };
 
 module.controller('MainController', MainController);
+options(module);
 
 export default module;

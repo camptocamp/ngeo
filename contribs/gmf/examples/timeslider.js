@@ -29,6 +29,7 @@ import {
   TimePropertyResolutionEnum,
   TimePropertyModeEnum,
 } from 'ngeo/datasource/OGC.js';
+import options from './options.js';
 
 /** @type {angular.IModule} **/
 const module = angular.module('gmfapp', [
@@ -36,8 +37,6 @@ const module = angular.module('gmfapp', [
   gmfLayertreeTimeSliderComponent.name,
   ngeoMiscWMSTime.name,
 ]);
-
-module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 /**
  * @constructor
@@ -104,5 +103,6 @@ function MainController($scope, ngeoWMSTime) {
 }
 
 module.controller('MainController', MainController);
+options(module);
 
 export default module;

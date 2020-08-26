@@ -154,13 +154,13 @@ module.component('gmfDisplayquerywindow', queryWindowComponent);
 
 /**
  * @param {JQuery} $element Element.
- * @param {angular.auto.IInjectorService} $injector Main injector.
  * @param {angular.IScope} $scope Angular scope.
  * @param {import('ngeo/query/MapQuerent.js').QueryResult} ngeoQueryResult ngeo query result.
  * @param {import("ngeo/query/MapQuerent.js").MapQuerent} ngeoMapQuerent ngeo map querent service.
  * @param {import("ngeo/download/Csv.js").DownloadCsvService} ngeoCsvDownload CSV download service.
  * @param {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
+ * @param {import('gmf/options.js').gmfCsvFilename} gmfCsvFilename The CSV file name.
  * @constructor
  * @hidden
  * @ngInject
@@ -169,12 +169,12 @@ module.component('gmfDisplayquerywindow', queryWindowComponent);
  */
 export function QueryWindowController(
   $element,
-  $injector,
   $scope,
   ngeoQueryResult,
   ngeoMapQuerent,
   ngeoCsvDownload,
-  ngeoFeatureOverlayMgr
+  ngeoFeatureOverlayMgr,
+  gmfCsvFilename
 ) {
   /**
    * @type {Element|string}
@@ -216,10 +216,10 @@ export function QueryWindowController(
 
   /**
    * Filename
-   * @type {string}
+   * @type {import('gmf/options.js').gmfCsvFilename}
    * @private
    */
-  this.filename_ = $injector.has('gmfCsvFilename') ? $injector.get('gmfCsvFilename') : 'query-results.csv';
+  this.filename_ = gmfCsvFilename;
 
   /**
    * @type {?import('ngeo/statemanager/WfsPermalink.js').QueryResultSource}

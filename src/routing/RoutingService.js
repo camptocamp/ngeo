@@ -26,14 +26,14 @@ import angular from 'angular';
  * [Open Source Routing Machine (OSRM) backend](https://github.com/Project-OSRM/osrm-backend)
  * of version 5.8 and higher and its features.
  * @param {angular.IHttpService} $http Angular http service.
- * @param {angular.auto.IInjectorService} $injector Main injector.
+ * @param {import('ngeo/options.js').ngeoRoutingOptions} ngeoRoutingOptions The options.
  * @constructor
  * @ngdoc service
  * @ngInject
  * @ngname ngeoRoutingService
  * @hidden
  */
-export function RoutingService($http, $injector) {
+export function RoutingService($http, ngeoRoutingOptions) {
   /**
    * @type {angular.IHttpService}
    * @private
@@ -44,7 +44,7 @@ export function RoutingService($http, $injector) {
    * @type {import('ngeo/options.js').ngeoRoutingOptions}
    * @private
    */
-  this.routingOptions_ = $injector.has('ngeoRoutingOptions') ? $injector.get('ngeoRoutingOptions') : {};
+  this.routingOptions_ = ngeoRoutingOptions;
 
   /**
    * URL for OSRM backend API.

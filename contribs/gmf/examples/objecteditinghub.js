@@ -20,7 +20,6 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import appURL from './url.js';
 import './objecteditinghub.css';
 
 import gmfEditingXSDAttributes from 'gmf/editing/XSDAttributes.js';
@@ -28,6 +27,7 @@ import gmfObjecteditingManager, {ObjecteditingParam} from 'gmf/objectediting/Man
 import gmfThemeThemes from 'gmf/theme/Themes.js';
 import olFormatWFS from 'ol/format/WFS.js';
 import {getGeometryAttribute} from 'ngeo/format/XSDAttribute.js';
+import options from './options.js';
 
 /**
  * @type {angular.IModule}
@@ -39,12 +39,6 @@ const module = angular.module('gmfapp', [
   gmfObjecteditingManager.name,
   gmfThemeThemes.name,
 ]);
-
-module.value('gmfTreeUrl', appURL.GMF_THEMES);
-module.value('gmfLayersUrl', appURL.GMF_LAYERS);
-
-module.constant('defaultTheme', 'Demo');
-module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 /**
  * @param {angular.IHttpService} $http Angular $http service.
@@ -421,5 +415,6 @@ MainController.appendParams = function (uri, params) {
 };
 
 module.controller('MainController', MainController);
+options(module);
 
 export default module;

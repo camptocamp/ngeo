@@ -20,7 +20,6 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import appURL from './url.js';
 import './mobilemeasure.css';
 import gmfMapComponent from 'gmf/map/component.js';
 
@@ -36,6 +35,7 @@ import olView from 'ol/View.js';
 import olControlScaleLine from 'ol/control/ScaleLine.js';
 import olLayerTile from 'ol/layer/Tile.js';
 import olSourceOSM from 'ol/source/OSM.js';
+import options from './options.js';
 
 /**
  * @type {angular.IModule}
@@ -50,11 +50,6 @@ const module = angular.module('gmfapp', [
   gmfMobileMeasurePointComponent.name,
   ngeoMiscBtnComponent.name,
 ]);
-
-module.value('gmfRasterUrl', appURL.RASTER);
-
-module.constant('defaultTheme', 'Demo');
-module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 /**
  * @param {import("gmf/permalink/Permalink.js").PermalinkService} gmfPermalink The gmf permalink service.
@@ -114,5 +109,6 @@ function MainController(gmfPermalink) {
 }
 
 module.controller('MainController', MainController);
+options(module);
 
 export default module;

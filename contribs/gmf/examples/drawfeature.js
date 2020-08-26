@@ -27,13 +27,14 @@ import gmfMapComponent from 'gmf/map/component.js';
 import gmfDrawingModule from 'gmf/drawing/module.js';
 import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties.js';
 import ngeoMapModule from 'ngeo/map/module.js';
-import ngeoMiscFeatureHelper, {FeatureFormatType} from 'ngeo/misc/FeatureHelper.js';
+import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
 import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
 import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr.js';
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
 import olLayerTile from 'ol/layer/Tile.js';
 import olSourceOSM from 'ol/source/OSM.js';
+import options from './options.js';
 
 /**
  * @type {angular.IModule}
@@ -47,11 +48,6 @@ const module = angular.module('gmfapp', [
   ngeoMiscFeatureHelper.name,
   ngeoMiscToolActivateMgr.name,
 ]);
-
-module.value('ngeoExportFeatureFormats', [FeatureFormatType.KML, FeatureFormatType.GPX]);
-
-module.constant('defaultTheme', 'Demo');
-module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 /**
  * @param {angular.IScope} $scope Angular scope.
@@ -148,8 +144,6 @@ MainController.prototype.handleMapPointerMove_ = function (evt) {
 };
 
 module.controller('MainController', MainController);
-module.constant('ngeoPointfilter', null);
-module.constant('ngeoMeasurePrecision', 0);
-module.constant('ngeoMeasureDecimals', 0);
+options(module);
 
 export default module;

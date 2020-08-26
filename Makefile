@@ -273,7 +273,7 @@ contribs/dist: .build/build-dll.timestamp
 	# We need the files for each app
 	# To simplify processing, we first copy them in gmfappsdeps directory, then from there to each app
 	$(foreach f,$^,mkdir -p .build/examples-hosted/gmfappsdeps/`dirname $(f)`; cp $(f) .build/examples-hosted/gmfappsdeps/$(f);)
-	rsync --recursive .build/examples-hosted/gmfappsdeps/contribs/gmf/ .build/examples-hosted/contribs/gmf/apps/;)
+	rsync --recursive .build/examples-hosted/gmfappsdeps/contribs/gmf/ .build/examples-hosted/contribs/gmf/apps/;
 	touch $@
 
 .build/examples-hosted/index.html: \
@@ -478,9 +478,15 @@ build-dll: .build/build-dll.timestamp
 .PHONY: jsdoc
 jsdoc:
 	npm run jsdoc
-	sed -i 's/JSDoc: Module: src\/options/Constants definitions/' jsdoc/build/module-src_options.html
-	sed -i 's/Module: src\/options/Constants definitions/' jsdoc/build/module-src_options.html
+
+	sed -i 's/JSDoc: Module: src\/options/ngeo constants definitions/' jsdoc/build/module-src_options.html
+	sed -i 's/Module: src\/options/ngeo constants definitions/' jsdoc/build/module-src_options.html
 	sed -i 's/module:src\/options~//g' jsdoc/build/module-src_options.html
+
+	sed -i 's/JSDoc: Module: contribs\/gmf\/src\/options/Gmf constants definitions/' jsdoc/build/module-contribs_gmf_src_options.html
+	sed -i 's/Module: contribs\/gmf\/src\/options/Gmf constants definitions/' jsdoc/build/module-contribs_gmf_src_options.html
+	sed -i 's/module:contribs\/gmf\/src\/options~//g' jsdoc/build/module-contribs_gmf_src_options.html
+
 	echo 'nav { display: none; }' >> jsdoc/build/styles/jsdoc-default.css
 
 .PHONY: clean

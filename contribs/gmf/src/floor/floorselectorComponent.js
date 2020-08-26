@@ -71,7 +71,7 @@ class Controller {
   /**
    * @param {angular.IScope} $scope Angular scope.
    * @param {JQuery} $element Element.
-   * @param {Array<Object<string, string>>} gmfFloors Floor dimension values and labels.
+   * @param {import('gmf/options.js').gmfFloors} gmfFloors Floor dimension values and labels.
    * @private
    * @ngInject
    * @ngdoc controller
@@ -79,7 +79,7 @@ class Controller {
    */
   constructor($scope, $element, gmfFloors) {
     /**
-     * @type {Array<Object<string, string>>}
+     * @type {import('gmf/options.js').gmfFloors}
      */
     this.items = gmfFloors;
 

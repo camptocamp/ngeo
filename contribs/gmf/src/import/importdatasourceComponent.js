@@ -33,14 +33,6 @@ import ngeoQueryQuerent from 'ngeo/query/Querent.js';
 import {guessServiceTypeByUrl, Type} from 'ngeo/datasource/OGC.js';
 
 /**
- * The definition of an external OGC server
- * @typedef {Object} ExternalOGCServer
- * @property {string} name
- * @property {string} type
- * @property {string} url
- */
-
-/**
  * @type {angular.IModule}
  * @hidden
  */
@@ -103,19 +95,29 @@ class Controller {
   /**
    * @param {JQuery} $element Element.
    * @param {angular.IFilterService} $filter Angular filter.
-   * @param {angular.auto.IInjectorService} $injector Main injector.
    * @param {angular.IScope} $scope Angular scope.
    * @param {angular.ITimeoutService} $timeout Angular timeout service.
    * @param {import("gmf/datasource/ExternalDataSourcesManager.js").ExternalDatSourcesManager}
    *     gmfExternalDataSourcesManager GMF service responsible of managing
    *     external data sources.
    * @param {import("ngeo/query/Querent.js").Querent} ngeoQuerent Ngeo querent service.
+   * @param {import('gmf/options.js').gmfExternalOGCServers} gmfExternalOGCServers The options.
+   * @param {angular.gettext.gettextCatalog} gettextCatalog The gettextCatalog service.
    * @private
    * @ngInject
    * @ngdoc controller
    * @ngname GmfImportdatasourceController
    */
-  constructor($element, $filter, $injector, $scope, $timeout, gmfExternalDataSourcesManager, ngeoQuerent) {
+  constructor(
+    $element,
+    $filter,
+    $scope,
+    $timeout,
+    gmfExternalDataSourcesManager,
+    ngeoQuerent,
+    gmfExternalOGCServers,
+    gettextCatalog
+  ) {
     // Binding properties
 
     /**
@@ -201,10 +203,6 @@ class Controller {
      */
     this.modes = [Mode.LOCAL, Mode.ONLINE];
 
-    /**
-     * @type {angular.gettext.gettextCatalog}
-     */
-    const gettextCatalog = $injector.get('gettextCatalog');
     gettextCatalog.getString('Local');
     gettextCatalog.getString('Online');
 
@@ -244,8 +242,8 @@ class Controller {
      */
     this.isLoading = false;
 
-    /** @type {?ExternalOGCServer[]} */
-    const servers = $injector.has('gmfExternalOGCServers') ? $injector.get('gmfExternalOGCServers') : null;
+    /** @type {import('gmf/options.js').gmfExternalOGCServers} */
+    const servers = gmfExternalOGCServers;
 
     if (servers) {
       this.serversEngine_ = new Bloodhound({
@@ -257,7 +255,7 @@ class Controller {
          * Borrowed from:
          * https://stackoverflow.com/questions/22059933/twitter-typeahead-js-how-to-return-all-matched-elements-within-a-string
          *
-         * @param {ExternalOGCServer} datum Datum.
+         * @param {import('gmf/options.js').ExternalOGCServer} datum Datum.
          * @return {string[]} List of datum tokenizers.
          */
         datumTokenizer: (datum) => {

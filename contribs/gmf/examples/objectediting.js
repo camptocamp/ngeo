@@ -20,7 +20,6 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import appURL from './url.js';
 import './objectediting.css';
 import gmfLayertreeComponent from 'gmf/layertree/component.js';
 
@@ -43,6 +42,7 @@ import olLayerTile from 'ol/layer/Tile.js';
 import olLayerVector from 'ol/layer/Vector.js';
 import olSourceOSM from 'ol/source/OSM.js';
 import olSourceVector from 'ol/source/Vector.js';
+import options from './options.js';
 
 /**
  * @type {angular.IModule}
@@ -58,14 +58,6 @@ const module = angular.module('gmfapp', [
   gmfThemeThemes.name,
   ngeoMiscToolActivateMgr.name,
 ]);
-
-module.constant('defaultTheme', 'ObjectEditing');
-module.constant('gmfLayersUrl', appURL.GMF_LAYERS);
-module.constant('gmfTreeUrl', appURL.GMF_THEMES);
-module.constant('gmfObjectEditingToolsOptions', {
-  regularPolygonRadius: 150,
-});
-module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 /**
  * @param {import("gmf/objectediting/Manager.js").ObjecteditingManagerService} gmfObjectEditingManager The gmf
@@ -187,6 +179,8 @@ function MainController(gmfObjectEditingManager, gmfThemes, gmfTreeManager, ngeo
 }
 
 module.controller('MainController', MainController);
-module.constant('ngeoPointfilter', null);
+
+module.constant('defaultTheme', 'ObjectEditing');
+options(module);
 
 export default module;

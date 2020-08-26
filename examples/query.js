@@ -231,6 +231,9 @@ MainController.prototype.getSetQueryActive = function (val) {
 };
 
 module.controller('MainController', MainController);
+module.constant('ngeoMeasurePrecision', 0);
+module.constant('ngeoMeasureDecimals', 0);
+module.constant('ngeoMeasureSpherical', false);
 module.constant('ngeoPointfilter', null);
 
 export default module;

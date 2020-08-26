@@ -42,7 +42,7 @@ import angular from 'angular';
 /**
  * Service to handle the sharing of the permalink.
  * @param {angular.IHttpService} $http Angular http service.
- * @param  {string} gmfShortenerCreateUrl URL for the shortener API
+ * @param {string} gmfShortenerCreateUrl URL for the shortener API
  * @constructor
  * @ngInject
  * @ngname gmfShareService

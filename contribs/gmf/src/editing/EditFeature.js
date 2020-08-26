@@ -39,7 +39,7 @@ import {appendParams as olUriAppendParams} from 'ol/uri.js';
  *
  * @constructor
  * @param {angular.IHttpService} $http Angular http service.
- * @param {string} gmfLayersUrl Url to the GeoMapFish layers service.
+ * @param {string} gmfLayersUrl URL to the GeoMapFish layers service.
  * @ngInject
  * @hidden
  */
@@ -51,7 +51,7 @@ export function EditingEditFeature($http, gmfLayersUrl) {
   this.http_ = $http;
 
   /**
-   * Url to the GeoMapFish layers service. Required in applications that use:
+   * URL to the GeoMapFish layers service. Required in applications that use:
    * - the editfeature tools
    * - the objectediting tools
    *

@@ -39,13 +39,20 @@ const module = angular.module('ngeoMeasureazimut', [ngeoDrawController.name, nge
  * @param {angular.ICompileService} $compile Angular compile service.
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @param {angular.IFilterService} $filter Angular filter
- * @param {angular.auto.IInjectorService} $injector Main injector.
+ * @param {import('ngeo/options.js').ngeoMeasurePrecision} ngeoMeasurePrecision The precision.
+ * @param {import('ngeo/options.js').ngeoMeasureDecimals} ngeoMeasureDecimals The decimals.
  * @return {angular.IDirective} The directive specs.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoDrawpoint
  */
-function measureAzimutComponent($compile, gettextCatalog, $filter, $injector) {
+function measureAzimutComponent(
+  $compile,
+  gettextCatalog,
+  $filter,
+  ngeoMeasurePrecision,
+  ngeoMeasureDecimals
+) {
   return {
     restrict: 'A',
     require: '^^ngeoDrawfeature',
@@ -69,12 +76,8 @@ function measureAzimutComponent($compile, gettextCatalog, $filter, $injector) {
         startMsg: $compile(`<div translate>${helpMsg}</div>`)($scope)[0],
         continueMsg: $compile(`<div translate>${contMsg}</div>`)($scope)[0],
       };
-      if ($injector.get('ngeoMeasurePrecision')) {
-        options.precision = $injector.get('ngeoMeasurePrecision');
-      }
-      if ($injector.get('ngeoMeasureDecimals')) {
-        options.decimals = $injector.get('ngeoMeasureDecimals');
-      }
+      options.precision = ngeoMeasurePrecision;
+      options.decimals = ngeoMeasureDecimals;
       const measureAzimut = new ngeoInteractionMeasureAzimut(
         $filter('ngeoUnitPrefix'),
         $filter('number'),

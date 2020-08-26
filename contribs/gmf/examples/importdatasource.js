@@ -21,7 +21,6 @@
 
 // Todo - use the 'Filter' theme instead if the 'Edit' theme
 import angular from 'angular';
-import appURL from './url.js';
 import './importdatasource.css';
 import 'bootstrap/js/src/tooltip.js';
 import gmfDatasourceManager from 'gmf/datasource/Manager.js';
@@ -42,6 +41,7 @@ import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
 import olLayerTile from 'ol/layer/Tile.js';
 import olSourceOSM from 'ol/source/OSM.js';
+import options from './options.js';
 
 /**
  * @type {angular.IModule}
@@ -58,30 +58,6 @@ const module = angular.module('gmfapp', [
   ngeoDatasourceDataSources.name,
   ngeoQueryComponent.name,
 ]);
-
-module.value('gmfTreeUrl', appURL.GMF_THEMES);
-module.value('gmfLayersUrl', appURL.GMF_LAYERS);
-
-module.value('gmfExternalOGCServers', [
-  {
-    'name': 'Swiss Topo WMS',
-    'type': 'WMS',
-    'url': 'https://wms.geo.admin.ch/?lang=fr',
-  },
-  {
-    'name': 'ASIT VD',
-    'type': 'WMTS',
-    'url': 'https://ows.asitvd.ch/wmts/1.0.0/WMTSCapabilities.xml',
-  },
-  {
-    'name': 'Swiss Topo WMTS',
-    'type': 'WMTS',
-    'url': 'https://wmts.geo.admin.ch/1.0.0/WMTSCapabilities.xml?lang=fr',
-  },
-]);
-
-module.constant('defaultTheme', 'Filters');
-module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 /**
  * @private
@@ -157,6 +133,8 @@ class MainController {
 }
 
 module.controller('MainController', MainController);
-module.constant('ngeoPointfilter', null);
+
+module.constant('defaultTheme', 'Filters');
+options(module);
 
 export default module;
