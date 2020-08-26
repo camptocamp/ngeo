@@ -30,7 +30,19 @@ beforeEach(() => {
   module.requires.push(ngeoMainmodule.name);
 });
 
-beforeEach(angular.mock.module('app'));
+beforeEach(
+  angular.mock.module(
+    'app',
+    /**
+     * @param {angular.IModule} $provide
+     */
+    ($provide) => {
+      $provide.value('ngeoScaleSelectorOptions', {
+        'values': [500, 1000, 5000, 25000, 50000],
+      });
+    }
+  )
+);
 
 beforeEach(() => {
   jasmine.addMatchers({

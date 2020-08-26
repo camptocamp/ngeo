@@ -213,4 +213,11 @@
  * @typedef {string} ngeoCsvSeparator
  */
 
+/**
+ * The scale selector options
+ * @typedef {Object} ngeoScaleSelectorOptions
+ * @property {number[]} values The available scales
+ * @property {boolean} [dropup] True to get a drop menu that opens imself to the top, instead of the bottom.
+ */
+
 export default null;

@@ -53,23 +53,12 @@ function MainController($scope) {
       maxZoom: 4,
     }),
   });
-
-  /**
-   * The zoom level/scale map object for the ngeoScaleselector directive.
-   * @type {number[]}
-   * @const
-   */
-  this.scales = [600000000, 300000000, 150000000, 70000000, 40000000];
-
-  /**
-   * Use the "dropup" variation of the Bootstrap dropdown.
-   * @type {import('ngeo/map/scaleselector.js').ScaleselectorOptions}
-   */
-  this.options = {
-    dropup: true,
-  };
 }
 
 module.controller('MainController', MainController);
+module.constant('ngeoScaleSelectorOptions', {
+  values: [600000000, 300000000, 150000000, 70000000, 40000000],
+  dropup: true,
+});
 
 export default module;
