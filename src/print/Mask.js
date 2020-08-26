@@ -59,8 +59,8 @@ export default class Mask extends Layer {
    * @param {import("ol/PluggableMap").FrameState} frameState
    */
   render(frameState) {
-    this.context_.canvas.width = frameState.size[0] * frameState.pixelRatio;
-    this.context_.canvas.height = frameState.size[1] * frameState.pixelRatio;
+    this.context_.canvas.width = frameState.size[0];
+    this.context_.canvas.height = frameState.size[1];
     const center = [this.context_.canvas.width / 2, this.context_.canvas.height / 2];
 
     // background (clockwise)
@@ -73,8 +73,8 @@ export default class Mask extends Layer {
     this.context_.closePath();
 
     const size = this.getSize();
-    const height = size[1] * frameState.pixelRatio;
-    const width = size[0] * frameState.pixelRatio;
+    const height = size[1];
+    const width = size[0];
     const scale = this.getScale(frameState);
     const resolution = frameState.viewState.resolution;
 
