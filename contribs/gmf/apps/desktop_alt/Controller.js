@@ -160,11 +160,6 @@ class Controller extends AbstractDesktopController {
     gettextCatalog.getString('Add a theme');
     gettextCatalog.getString('Add a sub theme');
     gettextCatalog.getString('Add a layer');
-
-    /**
-     * @type {string}
-     */
-    this.bgOpacityOptions = 'orthophoto';
   }
 
   /**
