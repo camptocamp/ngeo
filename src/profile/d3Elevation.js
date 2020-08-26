@@ -80,10 +80,11 @@ import {
  *     ]
  *
  * @return {Object} D3js component.
- * @param {import('ngeo/profile/elevationComponent.js').ProfileOptions} options Profile options.
+ * @param {import('ngeo/options.js').ngeoProfileOptions} options Profile options.
+ * @param {import('ngeo/profile/elevationComponent.js').ProfileOptions} functions Profile options.
  * @private
  */
-function d3Elevation(options) {
+function d3Elevation(options, functions) {
   /**
    * Whether the simplified profile should be shown.
    * @type {boolean}
@@ -99,18 +100,18 @@ function d3Elevation(options) {
    * Hover callback function.
    * @type {function(Object, number, string, Object<string, number>, string): void}
    */
-  const hoverCallback = options.hoverCallback !== undefined ? options.hoverCallback : () => {};
+  const hoverCallback = functions.hoverCallback !== undefined ? functions.hoverCallback : () => {};
 
   /**
    * Out callback function.
    * @type {function}
    */
-  const outCallback = options.outCallback !== undefined ? options.outCallback : () => {};
+  const outCallback = functions.outCallback !== undefined ? functions.outCallback : () => {};
 
   /**
    * Distance data extractor used to get the dist values.
    */
-  const distanceExtractor = options.distanceExtractor;
+  const distanceExtractor = functions.distanceExtractor;
 
   /**
    * Line configuration object.
@@ -130,7 +131,7 @@ function d3Elevation(options) {
   /**
    * POI data extractor.
    */
-  const poiExtractor = options.poiExtractor;
+  const poiExtractor = functions.poiExtractor;
 
   /**
    * Optional SVG inline style.
@@ -145,7 +146,7 @@ function d3Elevation(options) {
   /**
    * @type {Object<string, string>}
    */
-  const i18n = options.i18n || {};
+  const i18n = functions.i18n || {};
 
   /**
    * @type {string}
@@ -195,8 +196,8 @@ function d3Elevation(options) {
     },
   };
 
-  if (options.formatter !== undefined) {
-    Object.assign(formatter, options.formatter);
+  if (functions.formatter !== undefined) {
+    Object.assign(formatter, functions.formatter);
   }
 
   /**
@@ -225,7 +226,7 @@ function d3Elevation(options) {
    * Scale modifier to allow customizing the x and y scales.
    * @type {function(function, function, number, number): void}
    */
-  const scaleModifier = options.scaleModifier;
+  const scaleModifier = functions.scaleModifier;
 
   /**
    * @type {import('d3').Selection<void, void, void, void>}

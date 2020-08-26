@@ -120,6 +120,8 @@ export default function (module) {
   module.constant('gmfBackgroundLayerSelectorOptions', {});
   module.constant('gmfDisclaimerOptions', {});
   module.constant('gmfDisplayQueryWindowOptions', {});
+  module.constant('ngeoProfileOptions', {});
+  module.constant('gmfProfileOptions', {});
 
   module.constant('ngeoQueryOptions', {
     'limit': 20,

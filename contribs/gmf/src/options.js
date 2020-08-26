@@ -175,12 +175,12 @@ import {createDefaultStyle} from 'ol/style/Style.js';
 
 /**
  * @typedef {Object} Fill
- * @property {number[]} [color] The color.
+ * @property {number[]|string} [color] The color.
  */
 
 /**
  * @typedef {Object} Stroke
- * @property {number[]} [color] The color.
+ * @property {number[]|string} [color] The color.
  * @property {CanvasLineCap} [lineCap='round'] Line cap style: `butt`, `round`, or `square`.
  * @property {CanvasLineJoin} [lineJoin='round'] Line join style: `bevel`, `round`, or `miter`.
  * @property {number[]} [lineDash] Line dash pattern. Default is `null` (no dash).
@@ -277,6 +277,13 @@ export function buildStyle(styleDescriptor) {
  * @typedef {Object} gmfElevationOptions
  * @property {string[]} layers Elevation layers to use.
  * @property {Object<string, LayerConfig>} layersConfig Elevation layers configurations.
+ */
+
+/**
+ * The elevation (raster) options.
+ * @typedef {object} gmfProfileOptions
+ * @property {number} [numberOfPoints=100] Maximum limit of points to request.
+ * @property {Style} hoverPointStyle The hover point style.
  */
 
 export default undefined;

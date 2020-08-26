@@ -25,9 +25,6 @@ import olFeature from 'ol/Feature.js';
 import olOverlay from 'ol/Overlay.js';
 import olGeomLineString from 'ol/geom/LineString.js';
 import olGeomPoint from 'ol/geom/Point.js';
-import olStyleCircle from 'ol/style/Circle.js';
-import olStyleFill from 'ol/style/Fill.js';
-import olStyleStyle from 'ol/style/Style.js';
 
 import ngeoDownloadCsv from 'ngeo/download/Csv.js';
 
@@ -35,15 +32,9 @@ import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr.js';
 
 import ngeoProfileElevationComponent from 'ngeo/profile/elevationComponent.js';
 
-import 'bootstrap/js/src/dropdown.js';
+import {buildStyle} from 'gmf/options.js';
 
-/**
- * Configuration object for one profile's line.
- * @typedef {Object} ProfileLineConfiguration
- * @property {string} [color] Color of the line (hex color string).
- * @property {function(Object): number} [zExtractor] Extract the elevation of a point
- * (an item of the elevation data array).
- */
+import 'bootstrap/js/src/dropdown.js';
 
 /**
  * Information to display for a given point in the profile. The point is
@@ -118,8 +109,7 @@ function gmfProfileTemplateUrl($element, $attrs, gmfProfileTemplateUrl) {
  *      <gmf-profile
  *        gmf-profile-active="ctrl.profileActive"
  *        gmf-profile-line="ctrl.profileLine"
- *        gmf-profile-map="::ctrl.map"
- *        gmf-profile-linesconfiguration="::ctrl.profileLinesconfiguration">
+ *        gmf-profile-map="::ctrl.map">
  *      </gmf-profile>
  *
  *
@@ -127,13 +117,8 @@ function gmfProfileTemplateUrl($element, $attrs, gmfProfileTemplateUrl) {
  * @htmlAttribute {import("ol/geom/LineString.js").default} gmf-profile-line The linestring geometry
  *     to use to draw the profile.
  * @htmlAttribute {import("ol/Map.js").default?} gmf-profile-map An optional map.
- * @htmlAttribute {Object<string, ProfileLineConfiguration>}
- *     gmf-profile-linesconfiguration The configuration of the lines. Each keys
- *     will be used to request elevation layers.
  * @htmlAttribute {import("ol/style/Style.js").default?} gmf-profile-hoverpointstyle Optional style
  *     for the 'on Hover' point on the line.
- * @htmlAttribute {number?} gmf-profile-numberofpoints Optional maximum limit of
- *     points to request. Default to 100.
  * @htmlAttribute {Object<string, *>?} gmf-profile-options Optional options
  *     object like {@link import('ngeo/profile/elevationComponent.js').ProfileOptions} but without any
  *     mandatory value. Will be passed to the ngeo profile component. Providing
@@ -149,9 +134,6 @@ const profileComponent = {
     'active': '=gmfProfileActive',
     'line': '=gmfProfileLine',
     'getMapFn': '&?gmfProfileMap',
-    'getLinesConfigurationFn': '&gmfProfileLinesconfiguration',
-    'getHoverPointStyleFn': '&?gmfProfileHoverpointstyle',
-    'getNbPointsFn': '&?gmfProfileNumberofpoints',
     'getOptionsFn': '&?gmfProfileOptions',
   },
   templateUrl: gmfProfileTemplateUrl,
@@ -169,6 +151,8 @@ module.component('gmfProfile', profileComponent);
  *     manager.
  * @param {string} gmfProfileJsonUrl URL of GMF service JSON profile.
  * @param {import("ngeo/download/Csv.js").DownloadCsvService} ngeoCsvDownload CSV Download service.
+ * @param {import('gmf/options.js').gmfProfileOptions} gmfProfileOptions The options.
+ * @param {import('ngeo/options.js').ngeoProfileOptions} ngeoProfileOptions The options.
  * @constructor
  * @private
  * @hidden
@@ -184,8 +168,13 @@ export function ProfileController(
   gettextCatalog,
   ngeoFeatureOverlayMgr,
   gmfProfileJsonUrl,
-  ngeoCsvDownload
+  ngeoCsvDownload,
+  gmfProfileOptions,
+  ngeoProfileOptions
 ) {
+  this.options = gmfProfileOptions;
+  this.ngeoOptions = ngeoProfileOptions;
+
   /**
    * @type {angular.IScope}
    * @private
@@ -238,12 +227,6 @@ export function ProfileController(
    * @private
    */
   this.map_ = null;
-
-  /**
-   * @type {?Object<string, ProfileLineConfiguration>}
-   * @private
-   */
-  this.linesConfiguration_ = null;
 
   /**
    * @type {string[]}
@@ -340,12 +323,6 @@ export function ProfileController(
    * @type {function():import("ol/Map.js").default}
    */
   this.getMapFn = () => null;
-  this.getNbPointsFn = () => 100;
-  /**
-   * @type {?() => olStyleStyle}
-   */
-  this.getHoverPointStyleFn = null;
-  this.getLinesConfigurationFn = () => ({});
   this.getOptionsFn = () => ({});
 
   // Watch the active value to activate/deactivate events listening.
@@ -376,39 +353,22 @@ export function ProfileController(
  */
 ProfileController.prototype.$onInit = function () {
   this.map_ = this.getMapFn();
-  this.nbPoints_ = this.getNbPointsFn();
+  this.nbPoints_ = this.options.numberOfPoints || 100;
 
-  let hoverPointStyle;
-  const hoverPointStyleFn = this.getHoverPointStyleFn;
-  if (hoverPointStyleFn) {
-    hoverPointStyle = hoverPointStyleFn();
-    if (!(hoverPointStyle instanceof olStyleStyle)) {
-      throw new Error('Wrong hoverPointStyle type');
-    }
-  } else {
-    hoverPointStyle = new olStyleStyle({
-      image: new olStyleCircle({
-        fill: new olStyleFill({color: '#ffffff'}),
-        radius: 3,
-      }),
-    });
-  }
-  this.pointHoverOverlay_.setStyle(hoverPointStyle);
+  this.pointHoverOverlay_.setStyle(buildStyle(this.options.hoverPointStyle));
 
-  this.linesConfiguration_ = this.getLinesConfigurationFn();
-
-  for (const name in this.linesConfiguration_) {
+  for (const name in this.ngeoOptions.linesConfiguration) {
     // Keep an array of all layer names.
     this.layersNames_.push(name);
     // Add generic zExtractor to lineConfiguration object that doesn't have one.
-    const lineConfig = this.linesConfiguration_[name];
+    const lineConfig = this.ngeoOptions.linesConfiguration[name];
     if (!lineConfig.zExtractor) {
-      this.linesConfiguration_[name].zExtractor = this.getZFactory_(name);
+      this.ngeoOptions.linesConfiguration[name].zExtractor = this.getZFactory_(name);
     }
   }
 
   this.profileOptions = /** @type {import('ngeo/profile/elevationComponent.js').ProfileOptions} */ ({
-    linesConfiguration: this.linesConfiguration_,
+    linesConfiguration: this.ngeoOptions.linesConfiguration,
     distanceExtractor: this.getDist_,
     hoverCallback: this.hoverCallback_.bind(this),
     outCallback: this.outCallback_.bind(this),
@@ -510,7 +470,7 @@ ProfileController.prototype.getDistanceOnALine_ = function (pointOnLine) {
  * @param {number} dist distance on the line.
  * @param {string} xUnits X units label.
  * @param {Object<string, number>} elevationsRef Elevations references.
- *  @param {string} yUnits Y units label.
+ * @param {string} yUnits Y units label.
  * @private
  */
 ProfileController.prototype.hoverCallback_ = function (point, dist, xUnits, elevationsRef, yUnits) {
@@ -618,10 +578,7 @@ ProfileController.prototype.removeMeasureTooltip_ = function () {
  * @return {object} The object representation of the style.
  */
 ProfileController.prototype.getStyle = function (layerName) {
-  if (!this.linesConfiguration_) {
-    throw new Error('Missing linesConfiguration');
-  }
-  const lineConfiguration = this.linesConfiguration_[layerName];
+  const lineConfiguration = this.ngeoOptions.linesConfiguration[layerName];
   if (!lineConfiguration) {
     return {};
   }

@@ -40,6 +40,35 @@ import ngeoProfileElevationComponent from 'ngeo/profile/elevationComponent.js';
 const module = angular.module('app', ['gettext', ngeoMapModule.name, ngeoProfileElevationComponent.name]);
 
 /**
+ * Factory for creating simple getter functions for extractors.
+ * If the value is in a child property, the opt_childKey must be defined.
+ * The type parameter is used by closure to type the returned function.
+ * @param {any} type An object of the expected result type.
+ * @param {string} key Key used for retrieving the value.
+ * @param {string=} opt_childKey Key of a child object.
+ * @return {function(Object): any} Getter function.
+ */
+const typedFunctionsFactory = function (type, key, opt_childKey) {
+  return (
+    /**
+     * @param {Object} item
+     * @return {any}
+     */
+    function (item) {
+      if (opt_childKey !== undefined) {
+        item = item[opt_childKey];
+      }
+      return item[key];
+    }
+  );
+};
+
+const types = {
+  number: 1,
+  string: '',
+};
+
+/**
  * @constructor
  * @param {angular.IHttpService} $http The $http angular service.
  * @param {angular.IScope} $scope The $scope angular service.
@@ -143,43 +172,7 @@ function MainController($http, $scope) {
     this.snapToGeometry(coordinate, geometry);
   });
 
-  /**
-   * Factory for creating simple getter functions for extractors.
-   * If the value is in a child property, the opt_childKey must be defined.
-   * The type parameter is used by closure to type the returned function.
-   * @param {any} type An object of the expected result type.
-   * @param {string} key Key used for retrieving the value.
-   * @param {string=} opt_childKey Key of a child object.
-   * @return {function(Object): any} Getter function.
-   */
-  const typedFunctionsFactory = function (type, key, opt_childKey) {
-    return (
-      /**
-       * @param {Object} item
-       * @return {any}
-       */
-      function (item) {
-        if (opt_childKey !== undefined) {
-          item = item[opt_childKey];
-        }
-        return item[key];
-      }
-    );
-  };
-
-  const types = {
-    number: 1,
-    string: '',
-  };
-
   const distanceExtractor = typedFunctionsFactory(types.number, 'dist');
-
-  const linesConfiguration = {
-    'line1': {
-      style: {},
-      zExtractor: typedFunctionsFactory(types.number, 'mnt', 'values'),
-    },
-  };
 
   /** @type {function(Object<string, number>): number} */
   const sort = typedFunctionsFactory(types.number, 'sort');
@@ -230,7 +223,6 @@ function MainController($http, $scope) {
    */
   this.profileOptions = {
     distanceExtractor,
-    linesConfiguration,
     poiExtractor,
     hoverCallback,
     outCallback,
@@ -275,5 +267,14 @@ MainController.prototype.snapToGeometry = function (coordinate, geometry) {
 };
 
 module.controller('MainController', MainController);
+
+module.constant('ngeoProfileOptions', {
+  linesConfiguration: {
+    'line1': {
+      style: {},
+      zExtractor: typedFunctionsFactory(types.number, 'mnt', 'values'),
+    },
+  },
+});
 
 export default module;

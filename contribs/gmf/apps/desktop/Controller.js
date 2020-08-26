@@ -64,14 +64,6 @@ class Controller extends AbstractDesktopController {
     this.searchCoordinatesProjections = ['EPSG:21781', 'EPSG:2056', 'EPSG:4326'];
 
     /**
-     * @type {Object<string, import('gmf/profile/component.js').ProfileLineConfiguration>}
-     */
-    this.profileLinesconfiguration = {
-      'aster': {color: '#0000A0'},
-      'srtm': {color: '#00A000'},
-    };
-
-    /**
      * @type {Array<import('gmf/map/mousepositionComponent.js').MousePositionProjection>}
      */
     this.mousePositionProjections = [
