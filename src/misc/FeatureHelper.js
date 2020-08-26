@@ -80,12 +80,13 @@ export const FeatureFormatType = {
  * @constructor
  * @param {angular.auto.IInjectorService} $injector Main injector.
  * @param {angular.IFilterService} $filter Angular filter.
+ * @param {import('ngeo/options.js').ngeoPointfilter} ngeoPointfilter the point filter.
  * @ngdoc service
  * @ngname ngeoFeatureHelper
  * @ngInject
  * @hidden
  */
-export function FeatureHelper($injector, $filter) {
+export function FeatureHelper($injector, $filter, ngeoPointfilter) {
   /**
    * @type {angular.IFilterService}
    * @private
@@ -151,8 +152,8 @@ export function FeatureHelper($injector, $filter) {
    */
   this.pointFilterArgs_ = [];
 
-  if ($injector.has('ngeoPointfilter')) {
-    const filterElements = $injector.get('ngeoPointfilter').split(':');
+  if (ngeoPointfilter) {
+    const filterElements = ngeoPointfilter.split(':');
     const filterName = filterElements.shift();
     const filter = this.$filter_(filterName);
     console.assert(typeof filter == 'function');

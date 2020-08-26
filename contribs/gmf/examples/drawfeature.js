@@ -148,5 +148,8 @@ MainController.prototype.handleMapPointerMove_ = function (evt) {
 };
 
 module.controller('MainController', MainController);
+module.constant('ngeoPointfilter', null);
+module.constant('ngeoMeasurePrecision', 0);
+module.constant('ngeoMeasureDecimals', 0);
 
 export default module;

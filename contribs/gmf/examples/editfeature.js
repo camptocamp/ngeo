@@ -275,5 +275,7 @@ MainController.prototype.refreshWMSLayer_ = function () {
 };
 
 module.controller('MainController', MainController);
+module.constant('gmfAuthenticationConfig', {});
+module.constant('gmfTwoFactorAuth', false);
 
 export default module;

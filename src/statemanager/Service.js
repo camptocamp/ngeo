@@ -30,7 +30,7 @@ import ngeoStatemanagerLocation from 'ngeo/statemanager/Location.js';
 export class StatemanagerService {
   /**
    * @param {import("ngeo/statemanager/Location.js").StatemanagerLocation} ngeoLocation ngeo location service.
-   * @param {RegExp[]} ngeoUsedKeyRegexp regexp used to identify the used keys.
+   * @param {import('ngeo/options.js').ngeoUsedKeyRegexp} ngeoUsedKeyRegexp regexp used to identify the used keys.
    * @ngInject
    */
   constructor(ngeoLocation, ngeoUsedKeyRegexp) {
@@ -48,7 +48,10 @@ export class StatemanagerService {
     /**
      * @type {RegExp[]}
      */
-    this.usedKeyRegexp = ngeoUsedKeyRegexp;
+    this.usedKeyRegexp = [];
+    for (const reg of ngeoUsedKeyRegexp) {
+      this.usedKeyRegexp.push(RegExp(reg));
+    }
 
     /**
      * @type {boolean}
@@ -192,6 +195,5 @@ export class StatemanagerService {
  */
 const module = angular.module('ngeoStateManager', [ngeoStatemanagerLocation.name]);
 module.service('ngeoStateManager', StatemanagerService);
-module.value('ngeoUsedKeyRegexp', [new RegExp('.*')]);
 
 export default module;

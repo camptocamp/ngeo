@@ -128,7 +128,7 @@ class Controller {
     this.ngeoNominatimService_ = ngeoNominatimService;
 
     /**
-     * @type {import('ngeo/routing/RoutingService').RoutingOptions}
+     * @type {import('ngeo/options.js').ngeoRoutingOptions}
      * @private
      */
     this.routingOptions_ = $injector.has('ngeoRoutingOptions') ? $injector.get('ngeoRoutingOptions') : {};
@@ -141,12 +141,12 @@ class Controller {
      *              profile: 'routed-car' // used as part of the query
      *            }
      *          ]
-     * @type {Array<import('ngeo/routing/RoutingService').RoutingProfile>}
+     * @type {Array<import('ngeo/options.js').RoutingProfile>}
      */
     this.routingProfiles = this.routingOptions_.profiles || [];
 
     /**
-     * @type {?import('ngeo/routing/RoutingService').RoutingProfile}
+     * @type {?import('ngeo/options.js').RoutingProfile}
      */
     this.selectedRoutingProfile = this.routingProfiles.length > 0 ? this.routingProfiles[0] : null;
 
