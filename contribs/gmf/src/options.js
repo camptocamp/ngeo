@@ -27,6 +27,7 @@ import olStyleCircle from 'ol/style/Circle.js';
 import olStyleFill from 'ol/style/Fill.js';
 import olStyleStroke from 'ol/style/Stroke.js';
 import olStyle from 'ol/style/Style.js';
+import {createDefaultStyle} from 'ol/style/Style.js';
 
 /**
  * Flush mode active?
@@ -215,7 +216,7 @@ export function buildStyle(styleDescriptor) {
   if (styleDescriptor instanceof olStyle) {
     return styleDescriptor;
   } else if (!styleDescriptor) {
-    return undefined;
+    return createDefaultStyle;
   } else {
     /** @type {import('ol/style/Style.js').Options} */
     const style = {};
@@ -253,6 +254,14 @@ export function buildStyle(styleDescriptor) {
  * @property {number} [maxRecenterZoom] Maximum zoom-level to use when zooming to selected features.
  * @property {GridMergeTabs} [mergeTabs] Configuration to merge grids with the same attributes into
  * a single grid.
+ */
+
+/**
+ * The display querry grid component options.
+ * @typedef {object} gmfDisplayQueryWindowOptions
+ * @property {Style} featuresStyle A style object for all features from the result of the query.
+ * @property {Style} selectedFeatureStyle A style object for the currently selected features.
+ * @property {boolean} [collapsed] If the query result window is collapsed.
  */
 
 export default undefined;

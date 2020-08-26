@@ -405,23 +405,6 @@ export function AbstractAppController($scope, $injector, mobile) {
    */
   this.rightNavVisible = false;
 
-  const queryFill = new olStyleFill({color: [255, 170, 0, 0.6]});
-  const queryStroke = new olStyleStroke({color: [255, 170, 0, 1], width: 2});
-
-  /**
-   * FeatureStyle used by the gmf.query.windowComponent
-   * @type {import("ol/style/Style.js").default}
-   */
-  this.queryFeatureStyle = new olStyleStyle({
-    fill: queryFill,
-    image: new olStyleCircle({
-      fill: queryFill,
-      radius: 5,
-      stroke: queryStroke,
-    }),
-    stroke: queryStroke,
-  });
-
   /**
    * @type {boolean}
    */
