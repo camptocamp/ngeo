@@ -10,10 +10,7 @@
   <body ng-controller="MainController as ctrl">
     <div style="position: relative;">
       <gmf-map gmf-map-map="ctrl.map"></gmf-map>
-      <gmf-disclaimer
-          gmf-disclaimer-modal="::ctrl.modal"
-          gmf-disclaimer-map="::ctrl.map">
-      </gmf-disclaimer>
+      <gmf-disclaimer gmf-disclaimer-map="::ctrl.map"></gmf-disclaimer>
     </div>
     <p id="desc">This example shows how to use the <code>gmf.Layertree</code> directive. This layertree needs a source object (that can change) that describes layers like the c2cgeoportal themes service. The wmsUrl is used by internals WMS layers but you can use WMS externals layers and WMTS layers too.</p>
     <div id="selections">
