@@ -124,15 +124,6 @@ class Controller extends AbstractDesktopController {
       },
     ];
 
-    /**
-     * @type {import('gmf/query/gridComponent.js').GridMergeTabs}
-     */
-    this.gridMergeTabs = {
-      'OSM_time_merged': ['osm_time', 'osm_time2'],
-      'transport (merged)': ['fuel', 'parking'],
-      'Learning [merged]': ['information', 'bus_stop'],
-    };
-
     const radius = 5;
     const fill = new Fill({color: [255, 255, 255, 0.6]});
     const stroke = new Stroke({color: [255, 0, 0, 1], width: 2});
