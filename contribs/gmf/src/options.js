@@ -24,6 +24,7 @@
  */
 
 import olStyleCircle from 'ol/style/Circle.js';
+import olStyleRegularShape from 'ol/style/RegularShape.js';
 import olStyleFill from 'ol/style/Fill.js';
 import olStyleStroke from 'ol/style/Stroke.js';
 import olStyle from 'ol/style/Style.js';
@@ -148,13 +149,13 @@ import {createDefaultStyle} from 'ol/style/Style.js';
 
 /**
  * The background layer selector options
- * @typedef {object} gmfBackgroundLayerSelectorOptions
+ * @typedef {Object} gmfBackgroundLayerSelectorOptions
  * @property {string} [opacityLayer] The background layer with an opacity slider.
  */
 
 /**
  * The disclaimers options
- * @typedef {object} gmfDisclaimerOptions
+ * @typedef {Object} gmfDisclaimerOptions
  * @property {boolean} [popup] Whether to show the disclaimer messages in popups or not.
  * Defaults to `false`.
  * @property {boolean} [layerVisibility] Only display the disclaimer if the layer is visible.
@@ -192,6 +193,22 @@ import {createDefaultStyle} from 'ol/style/Style.js';
  */
 
 /**
+ * Specify radius for regular polygons, or radius1 and radius2 for stars.
+ * @typedef {Object} RegularShape
+ * @property {Fill} [fill] Fill style.
+ * @property {number} points Number of points for stars and regular polygons. In case of a polygon, the number of points
+ * is the number of sides.
+ * @property {number} [radius] Radius of a regular polygon.
+ * @property {number} [radius1] Outer radius of a star.
+ * @property {number} [radius2] Inner radius of a star.
+ * @property {number} [angle=0] Shape's angle in radians. A value of 0 will have one of the shape's point facing up.
+ * @property {Array<number>} [displacement=[0,0]] Displacement of the shape
+ * @property {Stroke} [stroke] Stroke style.
+ * @property {number} [rotation=0] Rotation in radians (positive rotation clockwise).
+ * @property {boolean} [rotateWithView=false] Whether to rotate the shape with the view.
+ */
+
+/**
  * @typedef {Object} Circle
  * @property {Fill} [fill] Fill style.
  * @property {number} radius Circle radius.
@@ -201,10 +218,11 @@ import {createDefaultStyle} from 'ol/style/Style.js';
 
 /**
  * The style description.
- * @typedef {object} Style
+ * @typedef {Object} Style
  * @property {Fill} [fill] The fill color.
  * @property {Stroke} [stroke] The stoke config.
  * @property {Circle} [circle] The circle config.
+ * @property {RegularShape} [regularShape] The regular shape config.
  * @property {number} [zIndex] The z index.
  */
 
@@ -240,14 +258,28 @@ export function buildStyle(styleDescriptor) {
       style.image = new olStyleCircle(circleStyle);
       // @ts-ignore
       delete style.circle;
+    } else if (styleDescriptor.regularShape) {
+      const regularShapeStyle = /** @type {import('ol/style/RegularShape.js').Options} */ ({});
+      Object.assign(regularShapeStyle, styleDescriptor.regularShape);
+
+      if (styleDescriptor.regularShape.fill) {
+        regularShapeStyle.fill = new olStyleFill(styleDescriptor.regularShape.fill);
+      }
+      if (styleDescriptor.regularShape.stroke) {
+        regularShapeStyle.stroke = new olStyleStroke(styleDescriptor.regularShape.stroke);
+      }
+      style.image = new olStyleRegularShape(regularShapeStyle);
+      // @ts-ignore
+      delete style.regularShape;
     }
+
     return new olStyle(style);
   }
 }
 
 /**
  * The display querry grid component options.
- * @typedef {object} gmfDisplayQueryGridOptions
+ * @typedef {Object} gmfDisplayQueryGridOptions
  * @property {Style} [featuresStyle] A style object for all features from the result of the query.
  * @property {Style} selectedFeatureStyle A style object for the currently selected features.
  * @property {boolean} [removeEmptyColumns] Should empty columns be hidden? Default: `false`.
@@ -258,7 +290,7 @@ export function buildStyle(styleDescriptor) {
 
 /**
  * The display querry grid component options.
- * @typedef {object} gmfDisplayQueryWindowOptions
+ * @typedef {Object} gmfDisplayQueryWindowOptions
  * @property {Style} featuresStyle A style object for all features from the result of the query.
  * @property {Style} selectedFeatureStyle A style object for the currently selected features.
  * @property {boolean} [collapsed] If the query result window is collapsed.
@@ -281,9 +313,24 @@ export function buildStyle(styleDescriptor) {
 
 /**
  * The elevation (raster) options.
- * @typedef {object} gmfProfileOptions
+ * @typedef {Object} gmfProfileOptions
  * @property {number} [numberOfPoints=100] Maximum limit of points to request.
  * @property {Style} hoverPointStyle The hover point style.
+ */
+
+/**
+ * @typedef {Object} gmfSearchOptions
+ * @property {Object<string, Style>} styles A map of styles to apply on searched features. Keys must be the
+ *    'layer_name' property of features except for coordinates where the key ifor its style is the value of
+ *    the constant 'gmf.COORDINATES_LAYER_NAME'. The 'default' key is used to apply the default style.
+ * @property {string[]} coordinatesProjections codes of supported projections for coordinates search
+ *    (projections must be defined in ol3). If not provided, only the map's view projection format will be
+ *    supported.
+ * @property {boolean} [clearButton=true] Clear button in the input search.
+ * @property {number} [delay=50] bloodhound request delay in ms.
+ * @property {boolean} [colorChooser=false] Whether to let the user change the style of the feature on the map.
+ * @property {number} [maxZoom=16] maximum zoom we will zoom on result.
+ * @property {string} [placeholder="Search…"] The placeholder.
  */
 
 export default undefined;

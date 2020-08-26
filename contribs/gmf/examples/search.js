@@ -33,10 +33,6 @@ import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
 import olLayerTile from 'ol/layer/Tile.js';
 import olSourceOSM from 'ol/source/OSM.js';
-import olStyleCircle from 'ol/style/Circle.js';
-import olStyleFill from 'ol/style/Fill.js';
-import olStyleStroke from 'ol/style/Stroke.js';
-import olStyleStyle from 'ol/style/Style.js';
 import options, {SEARCH} from './options.js';
 
 /**
@@ -85,23 +81,6 @@ function MainController(gmfThemes, ngeoFeatureOverlayMgr, ngeoNotification) {
     },
   ];
 
-  const fill = new olStyleFill({color: [255, 255, 255, 0.6]});
-  const stroke = new olStyleStroke({color: [255, 0, 0, 1], width: 2});
-  /**
-   * @type {Object<string, import("ol/style/Style.js").default>} Map of styles for search overlay.
-   */
-  this.searchStyles = {
-    'osm': new olStyleStyle({
-      fill: fill,
-      image: new olStyleCircle({
-        fill: fill,
-        radius: 5,
-        stroke: stroke,
-      }),
-      stroke: stroke,
-    }),
-  };
-
   /**
    * @type {Twitter.Typeahead.Options}
    */
@@ -142,6 +121,23 @@ function MainController(gmfThemes, ngeoFeatureOverlayMgr, ngeoNotification) {
 }
 
 module.controller('MainController', MainController);
+
+module.constant('gmfSearchOptions', {
+  colorChooser: true,
+  delay: 50,
+  placeholder: 'Search for « Laus » for example…',
+  searchStyles: {
+    osm: {
+      fill: {color: [255, 255, 255, 0.6]},
+      circle: {
+        fill: {color: [255, 255, 255, 0.6]},
+        radius: 5,
+        stroke: {color: [255, 0, 0, 1], width: 2},
+      },
+      stroke: {color: [255, 0, 0, 1], width: 2},
+    },
+  },
+});
 options(module);
 
 export default module;

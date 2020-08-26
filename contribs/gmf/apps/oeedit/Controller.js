@@ -162,11 +162,6 @@ class Controller extends AbstractDesktopController {
     });
 
     /**
-     * @type {string[]}
-     */
-    this.searchCoordinatesProjections = ['EPSG:21781', 'EPSG:2056', 'EPSG:4326'];
-
-    /**
      * @type {Array<import('gmf/map/mousepositionComponent.js').MousePositionProjection>}
      */
     this.mousePositionProjections = [
