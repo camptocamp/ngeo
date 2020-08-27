@@ -125,8 +125,11 @@ export default class extends olInteractionInteraction {
 
     listen(this, 'change:active', this.updateState_, this);
 
+    // @ts-ignore: missing set
     this.set('dirty', false);
+    // @ts-ignore: missing set
     this.set('drawing', false);
+    // @ts-ignore: missing set
     this.set('valid', false);
   }
 
@@ -134,6 +137,7 @@ export default class extends olInteractionInteraction {
    * @param {import("ol/PluggableMap.js").default} map Map.
    */
   setMap(map) {
+    // @ts-ignore: missing getMap
     const currentMap = this.getMap();
     if (currentMap) {
       if (this.changeEventKey_) {
@@ -160,6 +164,7 @@ export default class extends olInteractionInteraction {
    * @observable
    */
   getDirty() {
+    // @ts-ignore: missing get
     return /** @type {boolean} */ (this.get('dirty'));
   }
 
@@ -169,6 +174,7 @@ export default class extends olInteractionInteraction {
    * @observable
    */
   getDrawing() {
+    // @ts-ignore: missing get
     return /** @type {boolean} */ (this.get('drawing'));
   }
 
@@ -180,6 +186,7 @@ export default class extends olInteractionInteraction {
    * @observable
    */
   getValid() {
+    // @ts-ignore: missing get
     return /** @type {boolean} */ (this.get('valid'));
   }
 
@@ -203,6 +210,7 @@ export default class extends olInteractionInteraction {
     }
 
     // no need to do anything if interaction is not active, nor drawing
+    // @ts-ignore: missing getActive
     const active = this.getActive();
     const drawing = this.getDrawing();
 
@@ -220,6 +228,7 @@ export default class extends olInteractionInteraction {
       if (!this.sketchFeature_) {
         this.sketchFeature_ = new olFeature(new olGeomPoint(coordinate));
         const event = new ngeoCustomEvent('drawstart', {feature: this.sketchFeature_});
+        // @ts-ignore: unfound dispatchEvent
         this.dispatchEvent(event);
       }
       sketchFeatureGeom = this.sketchFeature_.getGeometry();
@@ -236,6 +245,7 @@ export default class extends olInteractionInteraction {
         coordinates = [coordinate.slice(), coordinate.slice()];
         this.sketchFeature_ = new olFeature(new olGeomLineString(coordinates));
         const event = new ngeoCustomEvent('drawstart', {feature: this.sketchFeature_});
+        // @ts-ignore: unfound dispatchEvent
         this.dispatchEvent(event);
       } else {
         sketchFeatureGeom = this.sketchFeature_.getGeometry();
@@ -256,6 +266,7 @@ export default class extends olInteractionInteraction {
         const event = new ngeoCustomEvent('drawstart', {
           feature: this.sketchFeature_,
         });
+        // @ts-ignore: unfound dispatchEvent
         this.dispatchEvent(event);
       } else {
         sketchFeatureGeom = this.sketchFeature_.getGeometry();
@@ -270,6 +281,7 @@ export default class extends olInteractionInteraction {
 
     const dirty = this.getDirty();
     if (dirty) {
+      // @ts-ignore: missing set
       this.set('dirty', false);
     }
 
@@ -281,10 +293,12 @@ export default class extends olInteractionInteraction {
     if (this.type_ === 'LineString' || this.type_ === 'Polygon') {
       if (coordinates.length >= this.minPoints_) {
         if (!valid) {
+          // @ts-ignore: missing set
           this.set('valid', true);
         }
       } else {
         if (valid) {
+          // @ts-ignore: missing set
           this.set('valid', false);
         }
       }
@@ -301,7 +315,9 @@ export default class extends olInteractionInteraction {
    * Clear the drawing
    */
   clearDrawing() {
+    // @ts-ignore: missing setActive
     this.setActive(false);
+    // @ts-ignore: missing setActive
     this.setActive(true);
   }
 
@@ -310,6 +326,7 @@ export default class extends olInteractionInteraction {
    */
   finishDrawing() {
     // no need to do anything if interaction is not active, nor drawing
+    // @ts-ignore: missing setActive
     const active = this.getActive();
     const drawing = this.getDrawing();
 
@@ -321,9 +338,11 @@ export default class extends olInteractionInteraction {
       this.addToDrawing();
     }
 
+    // @ts-ignore: missing set
     this.set('drawing', false);
 
     const event = new ngeoCustomEvent('drawend', {feature: this.sketchFeature_});
+    // @ts-ignore: unfound dispatchEvent
     this.dispatchEvent(event);
   }
 
@@ -334,6 +353,7 @@ export default class extends olInteractionInteraction {
    * @private
    */
   startDrawing_() {
+    // @ts-ignore: missing set
     this.set('drawing', true);
     this.createOrUpdateSketchPoint_();
     this.updateSketchFeatures_();
@@ -376,6 +396,7 @@ export default class extends olInteractionInteraction {
 
     const dirty = this.getDirty();
     if (!dirty) {
+      // @ts-ignore: missing set
       this.set('dirty', true);
     }
   }
@@ -395,8 +416,11 @@ export default class extends olInteractionInteraction {
       );
     }
     this.sketchPoints_ = [];
+    // @ts-ignore: missing set
     this.set('dirty', false);
+    // @ts-ignore: missing set
     this.set('drawing', false);
+    // @ts-ignore: missing set
     this.set('valid', false);
     return sketchFeature;
   }
@@ -405,14 +429,16 @@ export default class extends olInteractionInteraction {
    * @private
    */
   updateState_() {
+    // @ts-ignore: missing getMap
     const map = this.getMap();
+    // @ts-ignore: missing getActive
     const active = this.getActive();
     if (!map || !active) {
       this.abortDrawing_();
     } else {
       this.startDrawing_();
     }
-    // @ts-ignore
+    // @ts-ignore: missing setMap
     this.overlay_.setMap(active ? map : null);
   }
 
@@ -422,6 +448,7 @@ export default class extends olInteractionInteraction {
    */
   handleViewCenterChange_(evt) {
     // no need to do anything if interaction is not active, nor drawing
+    // @ts-ignore: missing getActive
     const active = this.getActive();
     const drawing = this.getDrawing();
 
@@ -494,6 +521,7 @@ export default class extends olInteractionInteraction {
    * @private
    */
   getCenter_() {
+    // @ts-ignore
     const center = this.getMap().getView().getCenter();
     if (!Array.isArray(center)) {
       throw new Error('Missing center');

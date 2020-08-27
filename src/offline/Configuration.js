@@ -91,6 +91,7 @@ export default class extends olObservable {
    * @param {number} progress new progress.
    */
   dispatchProgress_(progress) {
+    // @ts-ignore: unfound dispatchEvent
     this.dispatchEvent(
       new ngeoCustomEvent('progress', {
         'progress': progress,

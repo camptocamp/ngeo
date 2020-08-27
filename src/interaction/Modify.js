@@ -42,13 +42,13 @@ import {CollectionEvent} from 'ol/Collection.js';
 
 /**
  * @typedef {Object} Options
- * @property {import("../events/condition.js").Condition} [condition] From ol/interaction/Modify.Options.
- * @property {import("../events/condition.js").Condition} [deleteCondition] From ol/interaction/Modify.Options.
- * @property {import("../events/condition.js").Condition} [insertVertexCondition] From ol/interaction/Modify.Options.
+ * @property {import("ol/events/condition.js").Condition} [condition] From ol/interaction/Modify.Options.
+ * @property {import("ol/events/condition.js").Condition} [deleteCondition] From ol/interaction/Modify.Options.
+ * @property {import("ol/events/condition.js").Condition} [insertVertexCondition] From ol/interaction/Modify.Options.
  * @property {number} [pixelTolerance=10] From ol/interaction/Modify.Options.
- * @property {import("../style/Style.js").StyleLike} [style] From ol/interaction/Modify.Options.
- * @property {VectorSource} [source] From ol/interaction/Modify.Options.
- * @property {Collection<Feature>} [features] From ol/interaction/Modify.Options.
+ * @property {import("ol/style/Style.js").StyleLike} [style] From ol/interaction/Modify.Options.
+ * @property {import('ol/source/Vector.js').VectorSource} [source] From ol/interaction/Modify.Options.
+ * @property {import('ol/Collection.js').Collection<import('ol/Feature.js').Feature>} [features] From ol/interaction/Modify.Options.
  * @property {boolean} [wrapX=false] From ol/interaction/Modify.Options.
  * @property {number} [nbPoints=64] The number of points in the circle.
  */
@@ -166,6 +166,7 @@ export default class extends olInteractionInteraction {
   setMap(map) {
     const interactions = this.interactions_;
 
+    // @ts-ignore
     const currentMap = this.getMap();
     if (currentMap) {
       interactions.forEach((interaction) => {
@@ -189,7 +190,9 @@ export default class extends olInteractionInteraction {
    * @private
    */
   setState_() {
+    // @ts-ignore
     const map = this.getMap();
+    // @ts-ignore
     const active = this.getActive();
     const interactions = this.interactions_;
     const keys = this.listenerKeys_;

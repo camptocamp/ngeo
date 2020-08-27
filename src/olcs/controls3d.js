@@ -231,10 +231,7 @@ const Controller = class {
       throw new Error('Missing ol3dm');
     }
     angle = toRadians(angle);
-    const tiltOnGlobe = this.ol3dm.getTiltOnGlobe();
-    if (tiltOnGlobe == undefined) {
-      throw new Error('Missing tiltOnGlobe');
-    }
+    const tiltOnGlobe = Number(this.ol3dm.getTiltOnGlobe());
     if (tiltOnGlobe + angle < this.minTilt) {
       angle = this.minTilt - tiltOnGlobe;
     } else if (tiltOnGlobe + angle > this.maxTilt) {

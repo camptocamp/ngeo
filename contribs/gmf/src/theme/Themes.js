@@ -471,6 +471,7 @@ export class ThemesService extends olEventsEventTarget {
           });
 
           this.deferred_.resolve(response.data);
+          // @ts-ignore: missing dispatchEvent
           this.dispatchEvent('change');
           this.loaded = true;
         },

@@ -285,6 +285,7 @@ export class Querent {
 
     return this.http_.get(url).then((response) => {
       const format = new ngeoWFSDescribeFeatureType();
+      // @ts-ignore
       return format.read(response.data);
     });
   }

@@ -75,11 +75,17 @@ describe('ngeo.map.scaleselector', () => {
 
   it('calls getScale', () => {
     const scope = element.scope();
+    // @ts-ignore: scope
     expect(scope.scaleselectorCtrl.getScale(0)).toBe(scales[0]);
+    // @ts-ignore: scope
     expect(scope.scaleselectorCtrl.getScale(0.5)).toEqual(750);
+    // @ts-ignore: scope
     expect(scope.scaleselectorCtrl.getScale(4)).toBe(scales[4]);
+    // @ts-ignore: scope
     expect(scope.scaleselectorCtrl.getScale(28)).toBe(2);
+    // @ts-ignore: scope
     expect(scope.scaleselectorCtrl.getScale(28.1)).toBeUndefined();
+    // @ts-ignore: scope
     expect(scope.scaleselectorCtrl.getScale(undefined)).toBeUndefined();
   });
 });

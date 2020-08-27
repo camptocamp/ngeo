@@ -25,6 +25,7 @@ import EPSG2056 from '@geoblocks/proj/src/EPSG_2056.js';
  * @typedef {Object} APIConfig
  * @property {?string} themesUrl
  * @property {?string} localeUrl
+ * @property {?string} searchUrl
  * @property {string} projection
  * @property {number[]} resolutions
  * @property {[number, number, number, number]} [extent]

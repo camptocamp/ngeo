@@ -85,6 +85,7 @@ export default class extends olInteractionInteraction {
   setActive(active) {
     super.setActive.call(this, active);
 
+    // @ts-ignore: missing getMap
     if (this.getMap()) {
       if (active) {
         this.enable_();
@@ -99,8 +100,10 @@ export default class extends olInteractionInteraction {
    * overlay is part of.
    */
   setMap(map) {
+    // @ts-ignore: missing getAvtive
     const active = this.getActive();
 
+    // @ts-ignore: missing getMap
     const currentMap = this.getMap();
     if (currentMap && active) {
       this.disable_();
@@ -118,6 +121,7 @@ export default class extends olInteractionInteraction {
    * @private
    */
   enable_() {
+    // @ts-ignore: missing getMap
     const map = this.getMap();
     console.assert(map, 'Map should be set.');
     this.listenerKeys_.push(listen(map, 'click', this.handleMapClick_, this));
@@ -128,6 +132,7 @@ export default class extends olInteractionInteraction {
    * @private
    */
   disable_() {
+    // @ts-ignore: missing getMap
     const map = this.getMap();
     console.assert(map, 'Map should be set.');
     this.listenerKeys_.forEach(unlistenByKey);
@@ -149,6 +154,7 @@ export default class extends olInteractionInteraction {
 
       /** @type {import('ngeo/interaction/common.js').DrawEvent} */
       const event = new ngeoCustomEvent('drawend', {feature: new olFeature(geometry)});
+      // @ts-ignore: unfound dispatchEvent
       this.dispatchEvent(event);
     }
   }

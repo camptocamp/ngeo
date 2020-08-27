@@ -82,6 +82,7 @@ export function MeasueMobileBaseController($scope, $filter, gettextCatalog) {
       if (!this.measure) {
         throw new Error('Missing measure');
       }
+      // @ts-ignore: unfound setActive
       this.measure.setActive(newVal);
     }
   );
@@ -152,6 +153,7 @@ MeasueMobileBaseController.prototype.init = function () {
     throw new Error('Missing measure');
   }
 
+  // @ts-ignore: unfound setActive
   this.measure.setActive(this.active);
   interactionDecoration(this.measure);
 

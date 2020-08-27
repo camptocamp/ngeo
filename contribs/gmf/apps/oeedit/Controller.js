@@ -242,7 +242,7 @@ module.run(
 
 module.value(
   'gmfPermalinkOptions',
-  /** @type {import('gmf/permalink/Permalink.js').PermalinkOptions} */ ({
+  /** @type {import('gmf/options.js').gmfPermalinkOptions} */ ({
     pointRecenterZoom: 10,
   })
 );

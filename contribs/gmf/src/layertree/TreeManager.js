@@ -247,16 +247,17 @@ LayertreeTreeManager.prototype.setInitialFirstLevelGroups = function (firstGroup
  * @param {import('gmf/themes.js').GmfGroup | import('gmf/themes.js').GmfLayer | import('gmf/themes.js').GmfRootNode} node Layer tree node to remove.
  */
 LayertreeTreeManager.prototype.parseTreeNodes = function (node) {
-  if (node.children) {
+  const group = /** @type {import('gmf/themes.js').GmfGroup} */ (node);
+  if (group.children) {
     /**
      * @param {any} child
      */
-    node.children.forEach((child) => {
+    group.children.forEach((child) => {
       this.parseTreeNodes(child);
     });
   }
-  if (node.popupId) {
-    this.removePopup_(node);
+  if (group.popupId) {
+    this.removePopup_(group);
   }
 };
 

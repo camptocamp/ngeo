@@ -110,7 +110,7 @@ export default class extends olInteractionPointer {
     this.changingFeature_ = false;
 
     /**
-     * @type {Array}
+     * @type {any[]}
      * @private
      */
     this.dragSegments_ = [];
@@ -154,6 +154,7 @@ export default class extends olInteractionPointer {
       const geometry = /** @type {import("ol/geom/Polygon.js").default}*/ (feature.getGeometry());
       this.writeCircleGeometry_(feature, geometry);
 
+      // @ts-ignore
       const map = this.getMap();
       if (map) {
         this.handlePointerAtPixel_(this.lastPixel_, map);
@@ -162,13 +163,14 @@ export default class extends olInteractionPointer {
   }
 
   /**
-   * @param {import("ol/MapBrowserEvent.js").default} evt MapBrowserEvent
+   * @param {import("ol/MapBrowserEvent.js").default<any>} evt MapBrowserEvent
    * @private
    */
   willModifyFeatures_(evt) {
     if (!this.modified_) {
       this.modified_ = true;
       const event = new ngeoCustomEvent('modifystart', {features: this.features_});
+      // @ts-ignore: unfound dispatchEvent
       this.dispatchEvent(event);
     }
   }
@@ -294,7 +296,7 @@ export default class extends olInteractionPointer {
   }
 
   /**
-   * @param {import("ol/MapBrowserEvent.js").default} evt Event.
+   * @param {import("ol/MapBrowserEvent.js").default<any>} evt Event.
    * @private
    */
   handlePointerMove_(evt) {
@@ -376,7 +378,7 @@ export default class extends olInteractionPointer {
 
   /**
    * @param {import("ol/geom/SimpleGeometry.js").default} geometry Geometry.
-   * @param {Array} coordinates Coordinates.
+   * @param {any[]} coordinates Coordinates.
    * @private
    */
   setGeometryCoordinates_(geometry, coordinates) {
@@ -386,7 +388,7 @@ export default class extends olInteractionPointer {
   }
 
   /**
-   * @param {import("ol/MapBrowserEvent.js").default} evt MapBrowserEvent.
+   * @param {import("ol/MapBrowserEvent.js").default<any>} evt MapBrowserEvent.
    * @return {boolean} Start drag sequence?
    * @private
    */
@@ -430,7 +432,7 @@ export default class extends olInteractionPointer {
   }
 
   /**
-   * @param {import("ol/MapBrowserEvent.js").default} evt MapBrowserEvent.
+   * @param {import("ol/MapBrowserEvent.js").default<any>} evt MapBrowserEvent.
    * @private
    */
   handleDragEvent_(evt) {
@@ -455,7 +457,7 @@ export default class extends olInteractionPointer {
   }
 
   /**
-   * @param {import("ol/MapBrowserEvent.js").default} evt MapBrowserEvent.
+   * @param {import("ol/MapBrowserEvent.js").default<any>} evt MapBrowserEvent.
    * @return {boolean} Stop drag sequence?
    * @private
    */
@@ -465,6 +467,7 @@ export default class extends olInteractionPointer {
 
     if (this.modified_) {
       const event = new ngeoCustomEvent('modifyend', {features: this.features_});
+      // @ts-ignore: unfound dispatchEvent
       this.dispatchEvent(event);
       this.modified_ = false;
     }
@@ -474,7 +477,7 @@ export default class extends olInteractionPointer {
   /**
    * Handles the {@link import("ol/MapBrowserEvent.js").default map browser event} and may modify the
    * geometry.
-   * @param {import("ol/MapBrowserEvent.js").default} mapBrowserEvent Map browser event.
+   * @param {import("ol/MapBrowserEvent.js").default<any>} mapBrowserEvent Map browser event.
    * @return {boolean} `false` to stop event propagation.
    */
   handleEvent(mapBrowserEvent) {
@@ -486,6 +489,7 @@ export default class extends olInteractionPointer {
     if (
       !mapBrowserEvent.map.getView().getInteracting() &&
       mapBrowserEvent.type == 'pointermove' &&
+      // @ts-ignore
       !this.handlingDownUpSequence
     ) {
       this.handlePointerMove_(mapBrowserEvent);

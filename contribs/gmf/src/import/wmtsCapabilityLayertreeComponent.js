@@ -43,8 +43,8 @@ module.run(
    */
   ($templateCache) => {
     $templateCache.put(
-      // @ts-ignore: webpack
       'ngeo/import/wmtsCapabilityLayertreeComponent',
+      // @ts-ignore: webpack
       require('./wmtsCapabilityLayertreeComponent.html')
     );
   }

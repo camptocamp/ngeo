@@ -53,8 +53,7 @@ jobs:
           path: .build/examples-hosted
         if: failure()
 
-      #- run: npm run typecheck
-      - run: "! (npm run typecheck|grep -v '^node_modules/'|grep '^[a-z]')"
+      - run: npm run typecheck
       # Generate API doc
       - run: npm run doc
       - run: make jsdoc

@@ -308,6 +308,7 @@ class Measure extends olInteractionInteraction {
       });
     });
 
+    // @ts-ignore: missing getMap
     this.postcomposeEventKey_ = listen(this.getMap(), 'postcompose', () => {
       if (this.measureTooltipOverlay_ && this.measureTooltipOverlayCoord_) {
         this.measureTooltipOverlay_.setPosition(this.measureTooltipOverlayCoord_);
@@ -334,6 +335,7 @@ class Measure extends olInteractionInteraction {
     this.measureTooltipOverlay_.setOffset([0, -7]);
     /** @type {MeasureEvent} */
     const event = new ngeoCustomEvent('measureend', {feature: this.sketchFeature});
+    // @ts-ignore: unfound dispatchEvent
     this.dispatchEvent(event);
     this.sketchFeature = null;
     this.unlistenerEvent_();
@@ -367,6 +369,7 @@ class Measure extends olInteractionInteraction {
         offset: [15, 0],
         positioning: 'center-left',
       });
+      // @ts-ignore: missing getMap
       this.getMap().addOverlay(this.helpTooltipOverlay_);
     }
   }
@@ -378,6 +381,7 @@ class Measure extends olInteractionInteraction {
   removeHelpTooltip_() {
     if (this.displayHelpTooltip_) {
       if (this.helpTooltipOverlay_ !== null) {
+        // @ts-ignore: missing getMap
         this.getMap().removeOverlay(this.helpTooltipOverlay_);
         this.helpTooltipOverlay_ = null;
       }
@@ -405,6 +409,7 @@ class Measure extends olInteractionInteraction {
       positioning: 'bottom-center',
       stopEvent: false,
     });
+    // @ts-ignore: missing getMap
     this.getMap().addOverlay(this.measureTooltipOverlay_);
   }
 
@@ -428,10 +433,12 @@ class Measure extends olInteractionInteraction {
    * @private
    */
   updateState_() {
+    // @ts-ignore: missing getActive
     const active = this.getActive();
     this.shouldHandleDrawInteractionActiveChange_ = false;
     this.drawInteraction_.setActive(active);
     this.shouldHandleDrawInteractionActiveChange_ = true;
+    // @ts-ignore: missing getMap
     if (!this.getMap()) {
       return;
     }
@@ -449,6 +456,7 @@ class Measure extends olInteractionInteraction {
         throw new Error('Missing measureTooltipOverlay');
       }
       source.clear(true);
+      // @ts-ignore: missing getMap
       this.getMap().removeOverlay(this.measureTooltipOverlay_);
       this.removeMeasureTooltip_();
       this.removeHelpTooltip_();
@@ -485,6 +493,7 @@ class Measure extends olInteractionInteraction {
    */
   handleDrawInteractionActiveChange_() {
     if (this.shouldHandleDrawInteractionActiveChange_) {
+      // @ts-ignore: missing getActive
       this.setActive(this.drawInteraction_.getActive());
     }
   }

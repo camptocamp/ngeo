@@ -91,7 +91,7 @@ export function FeatureOverlayMgr() {
 
 /**
  * @param {number} groupIndex The group groupIndex.
- * @returns {@boolean} True if the group has no features. False otherwise.
+ * @returns {boolean} True if the group has no features. False otherwise.
  */
 FeatureOverlayMgr.prototype.isEmpty = function (groupIndex) {
   console.assert(groupIndex >= 0);

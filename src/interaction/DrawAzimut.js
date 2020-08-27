@@ -172,6 +172,7 @@ class DrawAzimut extends olInteractionPointer {
     this.sketchFeature_.setGeometry(geometry);
     this.updateSketchFeatures_();
     const evt = new ngeoCustomEvent('drawstart', {feature: this.sketchFeature_});
+    // @ts-ignore: missing dispatchEvent
     this.dispatchEvent(evt);
   }
 
@@ -229,7 +230,9 @@ class DrawAzimut extends olInteractionPointer {
    * @private
    */
   updateState_() {
+    // @ts-ignore: missing getMap
     const map = this.getMap();
+    // @ts-ignore: missing getActive
     const active = this.getActive();
     if (map === null || !active) {
       this.abortDrawing_();
@@ -247,6 +250,7 @@ class DrawAzimut extends olInteractionPointer {
     this.source_.addFeature(sketchFeature);
 
     const event = new ngeoCustomEvent('drawend', {feature: this.sketchFeature_});
+    // @ts-ignore: missing dispatchEvent
     this.dispatchEvent(event);
   }
 

@@ -924,6 +924,7 @@ PermalinkService.prototype.setMapTooltip = function (tooltipText, opt_center) {
 PermalinkService.prototype.getFeatures = function () {
   const f = this.ngeoStateManager_.getInitialStringValue(PermalinkParam.FEATURES);
   if (f !== undefined && f !== '') {
+    // @ts-ignore: unfound readFeatures
     return this.featureHashFormat_.readFeatures(f);
   }
   return [];
@@ -1493,6 +1494,7 @@ PermalinkService.prototype.handleNgeoFeaturesChange_ = function () {
     return;
   }
   const features = this.ngeoFeatures_.getArray();
+  // @ts-ignore: unfound writeFeatures
   const data = this.featureHashFormat_.writeFeatures(features);
 
   /** @type {Object<string, string>} */
@@ -1841,7 +1843,7 @@ PermalinkService.prototype.setExternalDataSourcesState_ = function () {
 
       // (2b) layer names
       const wmtsGroupLayerNames = [];
-      /** @type {Array<import('ngeo/datasource/OGC').default>} */ for (const wmtsDataSource of wmtsGroup.dataSources) {
+      for (const wmtsDataSource of /** @type {import('ngeo/datasource/OGC.js').OGC[]} */ (wmtsGroup.dataSources)) {
         if (!wmtsDataSource.wmtsLayer) {
           throw new Error('Missing wmtsDataSource.wmtsLayer');
         }

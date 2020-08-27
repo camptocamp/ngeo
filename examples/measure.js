@@ -203,6 +203,7 @@ function MeasuretoolsController($scope, $compile, $sce, $filter, gettextCatalog)
     continueMsg: measureLengthContinueMsg[0],
   });
 
+  // @ts-ignore: unfound setActive
   this.measureLength.setActive(false);
   interactionDecoration(this.measureLength);
 
@@ -215,6 +216,7 @@ function MeasuretoolsController($scope, $compile, $sce, $filter, gettextCatalog)
     continueMsg: measureAreaContinueMsg[0],
   });
 
+  // @ts-ignore: unfound setActive
   this.measureArea.setActive(false);
   interactionDecoration(this.measureArea);
 
@@ -227,12 +229,14 @@ function MeasuretoolsController($scope, $compile, $sce, $filter, gettextCatalog)
     continueMsg: measureAzimutContinueMsg[0],
   });
 
+  // @ts-ignore: unfound setActive
   this.measureAzimut.setActive(false);
   interactionDecoration(this.measureAzimut);
 
   // the following code shows how one can add additional information to the
   // tooltip. This can be useful to display the elevation offset from the
   // 2 points of an azimut measurement.
+  // @ts-ignore: unfound on
   this.measureAzimut.on('measureend', (evt) => {
     const el = evt.target.getTooltipElement();
     el.innerHTML += '<br>Additional info';

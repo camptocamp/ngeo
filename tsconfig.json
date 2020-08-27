@@ -1,43 +1,65 @@
 {
-    "compilerOptions": {
-      "pretty": false,
-      /* Basic Options */
-      "target": "ES6",
-      "module": "system",
-      "lib": ["es2017", "dom"],
-      "allowJs": true,
-      "checkJs": true,
-      "noEmit": true,
-      "noImplicitAny": true,
-      "noImplicitThis": true,
-      "alwaysStrict": true,
-      "strictBindCallApply": true,
-      "strictFunctionTypes": true,
-      "baseUrl": "./",
-      "paths": {
-        "ngeo/*": ["src/*"],
-        "gmf/*": ["contribs/gmf/src/*"],
-        "ol/*": ["node_modules/ol/src/*"],
-        "olcs/*": ["node_modules/ol-cesium/src/olcs/*"],
-        "@geoblocks/proj/*": ["node_modules/@geoblocks/proj/*"],
-        "moment": ["node_modules/moment/moment.d.ts"],
-        "jsts/*": ["node_modules/@types/jsts/index.d.ts"],
-        "localforage/*": ["node_modules/localforage/*"],
-        "resize-observer-polyfill": ["node_modules/resize-observer-polyfill/src/index.d.ts"],
-        "qruri": ["node_modules/qruri/index.js"],
-      }
-    },
-    "include": [
-      "src/**/*.js",
-      "api/src/**/*.js",
-      "contribs/gmf/src/**/*.js",
-      "contribs/gmf/apps/**/*.js",
-      "test/spec/**/*.js",
-      "contribs/gmf/test/spec/**/*.js",
-      "examples/*.js",
-      "contribs/gmf/examples/*.js",
+  "compilerOptions": {
+    "pretty": false,
+    /* Basic Options */
+    "target": "ES2017",
+    "module": "commonjs",
+    "lib": [
+      "es2017",
+      "dom"
     ],
-    "files": [
-      "types/dom.d.ts",
-    ]
+    "esModuleInterop": true,
+    "allowJs": true,
+    "checkJs": true,
+    "noEmit": true,
+    //"noImplicitAny": true,
+    "noImplicitThis": true,
+    "alwaysStrict": true,
+    "strictBindCallApply": true,
+    "strictFunctionTypes": true,
+    "skipLibCheck": true,
+    "baseUrl": "./",
+    "paths": {
+      "ngeo/*": [
+        "src/*"
+      ],
+      "gmf/*": [
+        "contribs/gmf/src/*"
+      ],
+      "ol/*": [
+        "node_modules/ol/src/*"
+      ],
+      "olcs/*": [
+        "node_modules/ol-cesium/src/olcs/*"
+      ],
+      "@geoblocks/proj/*": [
+        "node_modules/@geoblocks/proj/*"
+      ],
+      "moment": [
+        "node_modules/moment/moment.d.ts"
+      ],
+      "jsts/*": [
+        "node_modules/@types/jsts/index.d.ts"
+      ],
+      "localforage/*": [
+        "node_modules/localforage/*"
+      ],
+      "resize-observer-polyfill": [
+        "node_modules/resize-observer-polyfill/src/index.d.ts"
+      ],
+    }
+  },
+  "include": [
+    "src/**/*.js",
+    "api/src/**/*.js",
+    "contribs/gmf/src/**/*.js",
+    "contribs/gmf/apps/**/*.js",
+    "test/spec/**/*.js",
+    "contribs/gmf/test/spec/**/*.js",
+    "examples/*.js",
+    "contribs/gmf/examples/*.js",
+  ],
+  "files": [
+    "types/dom.d.ts",
+  ]
 }

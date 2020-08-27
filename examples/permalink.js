@@ -239,6 +239,7 @@ DrawComponentController.prototype.$onInit = function () {
       })
     );
     const features = vectorSource.getFeatures();
+    // @ts-ignore: unfound writeFeatures
     const encodedFeatures = fhFormat.writeFeatures(features);
     this.scope_.$applyAsync(() => {
       this.ngeoLocation_.updateParams({'features': encodedFeatures});
@@ -247,6 +248,7 @@ DrawComponentController.prototype.$onInit = function () {
 
   const encodedFeatures = this.ngeoLocation_.getParam('features');
   if (encodedFeatures !== undefined) {
+    // @ts-ignore: unfound readFeatures
     const features = fhFormat.readFeatures(encodedFeatures);
     this.featureSeq_ = features.length;
     vectorSource.addFeatures(features);

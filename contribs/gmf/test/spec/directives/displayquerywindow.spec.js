@@ -71,14 +71,12 @@ describe('gmf.query.windowComponent', () => {
           id: 123,
           label: 'Test 1',
           pending: false,
-          queried: true,
         },
         {
           features: [],
           id: 234,
           label: 'Test 2',
           pending: false,
-          queried: true,
         },
         {
           features: [
@@ -93,7 +91,6 @@ describe('gmf.query.windowComponent', () => {
           id: 345,
           label: 'Test 3',
           pending: false,
-          queried: true,
         },
       ];
 
@@ -220,10 +217,13 @@ describe('gmf.query.windowComponent', () => {
     });
 
     it('Get csv data', () => {
+      // @ts-ignore
       expect(displayQueriesController.getCSVData_(null)).toBeUndefined();
 
+      // @ts-ignore
       expect(displayQueriesController.getCSVData_({features: []})).toBeUndefined();
 
+      // @ts-ignore
       expect(displayQueriesController.getCSVData_(sources[0])).toEqual([
         {bar: undefined, foo: 'bar', empty: undefined},
         {bar: 'baz', empty: undefined},
@@ -231,12 +231,14 @@ describe('gmf.query.windowComponent', () => {
     });
 
     it('Get csv header définition', () => {
+      // @ts-ignore
       expect(displayQueriesController.getCSVHeaderDefinition_(null)).toBeUndefined();
 
       const data = [
         {bar: undefined, foo: 'bar', empty: undefined},
         {bar: 'baz', empty: undefined},
       ];
+      // @ts-ignore
       expect(displayQueriesController.getCSVHeaderDefinition_(data)).toEqual([{name: 'foo'}, {name: 'bar'}]);
     });
   });
