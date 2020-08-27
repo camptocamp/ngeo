@@ -376,4 +376,11 @@ export function buildStyle(styleDescriptor) {
  * @property {Style} sketchStyle A style for the measure point.
  */
 
+/**
+ * @typedef {Object} gmfLayerTreeOptions
+ * @property {boolean} openlinksinnewwindow if true, open
+ *    metadataURLs in a new window. Otherwise open them in a popup.
+ * @property {boolean} isExpanded [Experimental] Whether all the layer group is expanded by default.
+ */
+
 export default undefined;

@@ -211,7 +211,7 @@
       class="gmf-layertree-metadata"
       ng-if="::layertreeCtrl.node.metadata.metadataUrl">
 
-      <span ng-if="::gmfLayertreeCtrl.openLinksInNewWindow === true">
+      <span ng-if="::gmfLayertreeCtrl.options.openLinksInNewWindow === true">
         <a
           title="{{'More information'|translate}}"
           href="{{::layertreeCtrl.node.metadata.metadataUrl}}"
@@ -219,7 +219,7 @@
         </a>
       </span>
 
-      <span ng-if="::gmfLayertreeCtrl.openLinksInNewWindow !== true">
+      <span ng-if="!(::gmfLayertreeCtrl.options.openLinksInNewWindow === true)">
         <a
           title="{{'More information'|translate}}"
           href="" ng-click="gmfLayertreeCtrl.displayMetadata(layertreeCtrl)">
@@ -307,7 +307,7 @@
 <ul
   id="gmf-layertree-layer-group-{{::layertreeCtrl.uid}}"
   ng-if="::layertreeCtrl.node.children"
-  ng-class="{collapse: !(layertreeCtrl.isRoot || gmfLayertreeCtrl.isExpanded), show: layertreeCtrl.node.metadata.isExpanded}"
+  ng-class="{collapse: !(layertreeCtrl.isRoot || gmfLayertreeCtrl.options.isExpanded), show: layertreeCtrl.node.metadata.isExpanded}"
   ngeo-sortable="::layertreeCtrl.isRoot && layertreeCtrl.node.children"
   ngeo-sortable-options="{handleClassName: 'ngeo-sortable-handle', draggerClassName: 'gmf-layertree-dragger', placeholderClassName : 'gmf-layertree-curr-drag-item'}"
   ngeo-sortable-callback="::gmfLayertreeCtrl.afterReorder"

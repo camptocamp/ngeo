@@ -122,6 +122,7 @@ export default function (module) {
   module.constant('gmfDisplayQueryWindowOptions', {});
   module.constant('ngeoProfileOptions', {});
   module.constant('gmfProfileOptions', {});
+  module.constant('gmfLayerTreeOptions', {});
 
   module.constant('ngeoQueryOptions', {
     'limit': 20,
