@@ -58,27 +58,6 @@ class Controller extends AbstractDesktopController {
   constructor($scope, $injector) {
     super($scope, $injector);
 
-    /**
-     * @type {Array<import('gmf/map/mousepositionComponent.js').MousePositionProjection>}
-     */
-    this.mousePositionProjections = [
-      {
-        code: 'EPSG:2056',
-        label: 'CH1903+ / LV95',
-        filter: 'ngeoNumberCoordinates::{x}, {y} m',
-      },
-      {
-        code: 'EPSG:21781',
-        label: 'CH1903 / LV03',
-        filter: 'ngeoNumberCoordinates::{x}, {y} m',
-      },
-      {
-        code: 'EPSG:4326',
-        label: 'WGS84',
-        filter: 'ngeoDMSCoordinates:2',
-      },
-    ];
-
     // Allow angular-gettext-tools to collect the strings to translate
     /** @type {angular.gettext.gettextCatalog} */
     const gettextCatalog = $injector.get('gettextCatalog');

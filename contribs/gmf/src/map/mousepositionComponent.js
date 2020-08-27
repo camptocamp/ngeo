@@ -26,16 +26,6 @@ import olControlMousePosition from 'ol/control/MousePosition.js';
 import 'bootstrap/js/src/dropdown.js';
 
 /**
- * Projection object for the MousePositionDirective. Define a label and a filter
- * to use to display coordinates for a projection.
- * @typedef {Object} MousePositionProjection
- * @property {string} code The epsg name of a projection.
- * @property {string} label The label to display with this projection.
- * @property {string} filter The filter function to use to format this projection. Arguments can be passed
- * with colon as separator (example: MyFilter:args1:args2:...)
- */
-
-/**
  * @type {angular.IModule}
  * @hidden
  */
@@ -83,13 +73,10 @@ function gmfMapMousepositionTemplateUrl($attrs, gmfMapMousepositionTemplateUrl) 
  * service.
  *
  * Example:
- *  <gmf-mouseposition gmf-mouseposition-map="ctrl.map"
- *     gmf-mouseposition-projections="ctrl.projections">
+ *  <gmf-mouseposition gmf-mouseposition-map="ctrl.map">
  *  </gmf-mouseposition>
  *
  * @htmlAttribute {import("ol/Map.js").default} gmf-mouseposition-map The map.
- * @htmlAttribute {MousePositionProjection[]}
- *    gmf-mouseposition-projection The list of the projections.
  *
  * @ngdoc component
  * @ngname gmfMouseposition
@@ -98,7 +85,6 @@ const mapMousepositionComponent = {
   controller: 'gmfMousepositionController as ctrl',
   bindings: {
     'map': '<gmfMousepositionMap',
-    'projections': '<gmfMousepositionProjections',
   },
   templateUrl: gmfMapMousepositionTemplateUrl,
 };
@@ -110,6 +96,7 @@ module.component('gmfMouseposition', mapMousepositionComponent);
  * @param {angular.IFilterService} $filter Angular filter.
  * @param {angular.IScope} $scope Angular scope.
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
+ * @param {import('gmf/options.js').gmfMousePositionOptions} gmfMousePositionOptions The options.
  * @constructor
  * @private
  * @hidden
@@ -117,19 +104,19 @@ module.component('gmfMouseposition', mapMousepositionComponent);
  * @ngdoc controller
  * @ngname gmfMousepositionController
  */
-function Controller($element, $filter, $scope, gettextCatalog) {
+function Controller($element, $filter, $scope, gettextCatalog, gmfMousePositionOptions) {
+  /**
+   * @type {import('gmf/options.js').gmfMousePositionOptions}
+   */
+  this.options = gmfMousePositionOptions;
+
   /**
    * @type {?import("ol/Map.js").default}
    */
   this.map = null;
 
   /**
-   * @type {MousePositionProjection[]}
-   */
-  this.projections = [];
-
-  /**
-   * @type {?MousePositionProjection}
+   * @type {?import('gmf/options.js').MousePositionProjection}
    */
   this.projection = null;
 
@@ -219,13 +206,13 @@ Controller.prototype.initOlControl_ = function () {
     undefinedHTML: gettextCatalog.getString('Coordinates'),
   });
 
-  this.setProjection(this.projections[0]);
+  this.setProjection(this.options.projections[0]);
 
   this.map.addControl(this.control_);
 };
 
 /**
- * @param {MousePositionProjection} projection The new projection to use.
+ * @param {import('gmf/options.js').MousePositionProjection} projection The new projection to use.
  */
 Controller.prototype.setProjection = function (projection) {
   if (!this.control_) {
