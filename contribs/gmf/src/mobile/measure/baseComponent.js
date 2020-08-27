@@ -23,10 +23,6 @@ import angular from 'angular';
 import {interactionDecoration} from 'ngeo/misc/decorate.js';
 import ngeoMiscFilters from 'ngeo/misc/filters.js';
 import {listen} from 'ol/events.js';
-import olStyleFill from 'ol/style/Fill.js';
-import olStyleRegularShape from 'ol/style/RegularShape.js';
-import olStyleStroke from 'ol/style/Stroke.js';
-import olStyleStyle from 'ol/style/Style.js';
 import MobileDraw from 'ngeo/interaction/MobileDraw.js';
 
 /**
@@ -83,35 +79,6 @@ export function MeasueMobileBaseController($scope, $filter, gettextCatalog) {
       this.measure.setActive(newVal);
     }
   );
-
-  /**
-   * @type {?number}
-   */
-  this.precision = null;
-
-  /**
-   * @type {import("ol/style/Style.js").StyleLike}
-   */
-  this.sketchStyle = new olStyleStyle({
-    fill: new olStyleFill({
-      color: 'rgba(255, 255, 255, 0.2)',
-    }),
-    stroke: new olStyleStroke({
-      color: 'rgba(0, 0, 0, 0.5)',
-      lineDash: [10, 10],
-      width: 2,
-    }),
-    image: new olStyleRegularShape({
-      stroke: new olStyleStroke({
-        color: 'rgba(0, 0, 0, 0.7)',
-        width: 2,
-      }),
-      points: 4,
-      radius: 8,
-      radius2: 0,
-      angle: 0,
-    }),
-  });
 
   /**
    * @type {?import("ngeo/interaction/Measure.js").default}

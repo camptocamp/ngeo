@@ -25,11 +25,8 @@ import ngeoInteractionMeasurePointMobile from 'ngeo/interaction/MeasurePointMobi
 import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
 import {interactionDecoration} from 'ngeo/misc/decorate.js';
 import {listen, unlistenByKey} from 'ol/events.js';
-import olStyleFill from 'ol/style/Fill.js';
-import olStyleRegularShape from 'ol/style/RegularShape.js';
-import olStyleStroke from 'ol/style/Stroke.js';
-import olStyleStyle from 'ol/style/Style.js';
 import MobileDraw from 'ngeo/interaction/MobileDraw.js';
+import {buildStyle} from 'gmf/options.js';
 
 /**
  * @type {angular.IModule}
@@ -69,7 +66,6 @@ module.run(
  *
  *      <div gmf-mobile-measurepoint
  *        gmf-mobile-measurepoint-active="ctrl.measurePointActive"
- *        gmf-mobile-measurepoint-layersconfig="::ctrl.measurePointLayers"
  *        gmf-mobile-measurepoint-map="::ctrl.map">
  *      </div>
  *
@@ -83,14 +79,7 @@ module.run(
  *
  * @htmlAttribute {boolean} gmf-mobile-measurepoint-active Used to active
  * or deactivate the component.
- * @htmlAttribute {number=} gmf-mobile-measurepoint-coordinatedecimals number
- *     of decimal to display for the coordinate.
- * @htmlAttribute {LayerConfig[]}
- *     gmf-mobile-measurepoint-layersconfig Raster elevation layers to get
- *     information under the point and its configuaration.
  * @htmlAttribute {import("ol/Map.js").default} gmf-mobile-measurepoint-map The map.
- * @htmlAttribute {import("ol/style/Style.js").StyleLike=}
- *     gmf-mobile-measurepoint-sketchstyle A style for the measure point.
  * @param {string|function(JQuery=, angular.IAttributes=): string}
  *     gmfMobileMeasurePointTemplateUrl Template URL for the directive.
  * @return {angular.IDirective} The Directive Definition Object.
@@ -103,11 +92,7 @@ function mobileMeasurePointComponent(gmfMobileMeasurePointTemplateUrl) {
     restrict: 'A',
     scope: {
       'active': '=gmfMobileMeasurepointActive',
-      'getCoordinateDecimalsFn': '&?gmfMobileMeasurepointCoordinatedecimals',
-      'getLayersConfigFn': '&gmfMobileMeasurepointLayersconfig',
       'map': '=gmfMobileMeasurepointMap',
-      'sketchStyle': '=?gmfMobileMeasurepointSketchstyle',
-      'format': '<gmfMobileMeasurepointFormat',
     },
     controller: 'GmfMobileMeasurePointController as ctrl',
     bindToController: true,
@@ -135,13 +120,26 @@ module.directive('gmfMobileMeasurepoint', mobileMeasurePointComponent);
  * @param {angular.IFilterService} $filter Angular filter service.
  * @param {import("gmf/raster/RasterService.js").RasterService} gmfRaster gmf Raster service.
  * @param {import("ngeo/misc/debounce.js").miscDebounce<function(): void>} ngeoDebounce ngeo Debounce factory.
+ * @param {import('gmf/options.js').gmfMobileMeasurePointOptions} gmfMobileMeasurePointOptions The options.
  * @constructor
  * @hidden
  * @ngInject
  * @ngdoc controller
  * @ngname GmfMobileMeasurePointController
  */
-export function MobileMeasurePointController(gettextCatalog, $scope, $filter, gmfRaster, ngeoDebounce) {
+export function MobileMeasurePointController(
+  gettextCatalog,
+  $scope,
+  $filter,
+  gmfRaster,
+  ngeoDebounce,
+  gmfMobileMeasurePointOptions
+) {
+  /**
+   * @type {import('gmf/options.js').gmfMobileMeasurePointOptions}
+   */
+  this.options = gmfMobileMeasurePointOptions;
+
   /**
    * @type {import("gmf/raster/RasterService.js").RasterService}
    */
@@ -172,8 +170,6 @@ export function MobileMeasurePointController(gettextCatalog, $scope, $filter, gm
    */
   this.active = false;
 
-  this.getCoordinateDecimalsFn = () => 0;
-
   $scope.$watch(
     () => this.active,
     (newVal) => {
@@ -187,51 +183,6 @@ export function MobileMeasurePointController(gettextCatalog, $scope, $filter, gm
     }
   );
 
-  const coordinateDecimalsFn = this.getCoordinateDecimalsFn;
-
-  /**
-   * @type {number}
-   */
-  this.coordinateDecimals = coordinateDecimalsFn ? coordinateDecimalsFn() : 0;
-
-  /**
-   * @type {LayerConfig[]}
-   */
-  this.layersConfig = [];
-
-  /**
-   * @type {import("ol/style/Style.js").StyleLike}
-   */
-  this.sketchStyle = [];
-
-  if (this.sketchStyle === undefined) {
-    this.sketchStyle = new olStyleStyle({
-      fill: new olStyleFill({
-        color: 'rgba(255, 255, 255, 0.2)',
-      }),
-      stroke: new olStyleStroke({
-        color: 'rgba(0, 0, 0, 0.5)',
-        lineDash: [10, 10],
-        width: 2,
-      }),
-      image: new olStyleRegularShape({
-        stroke: new olStyleStroke({
-          color: 'rgba(0, 0, 0, 0.7)',
-          width: 2,
-        }),
-        points: 4,
-        radius: 8,
-        radius2: 0,
-        angle: 0,
-      }),
-    });
-  }
-
-  /**
-   * @type {?string}
-   */
-  this.format = null;
-
   /**
    * @type {?import("ngeo/interaction/MeasurePointMobile.js").default}
    */
@@ -241,11 +192,6 @@ export function MobileMeasurePointController(gettextCatalog, $scope, $filter, gm
    * @type {?import("ngeo/interaction/MobileDraw.js").default}
    */
   this.drawInteraction = null;
-
-  /**
-   * @type {() => LayerConfig[]}
-   */
-  this.getLayersConfigFn = () => [];
 
   /**
    * The key for map view 'propertychange' event.
@@ -260,10 +206,10 @@ export function MobileMeasurePointController(gettextCatalog, $scope, $filter, gm
 MobileMeasurePointController.prototype.init = function () {
   this.measure = new ngeoInteractionMeasurePointMobile(
     /** @type {import('ngeo/misc/filters.js').numberCoordinates} */ (this.$filter_('ngeoNumberCoordinates')),
-    this.format || '{x}, {y}',
+    this.options.format,
     {
-      decimals: this.coordinateDecimals,
-      sketchStyle: this.sketchStyle,
+      decimals: this.options.decimals,
+      sketchStyle: buildStyle(this.options.sketchStyle),
     }
   );
   // @ts-ignore: unfound setActive
@@ -275,12 +221,6 @@ MobileMeasurePointController.prototype.init = function () {
   }
   this.drawInteraction = drawInteraction;
   interactionDecoration(this.drawInteraction);
-
-  const layersConfig = this.getLayersConfigFn();
-  if (!Array.isArray(layersConfig)) {
-    throw new Error('Wrong layersConfig type');
-  }
-  this.layersConfig = layersConfig;
 
   if (!this.map) {
     throw new Error('Missing map');
@@ -347,8 +287,11 @@ MobileMeasurePointController.prototype.getMeasure_ = function () {
   if (!Array.isArray(center)) {
     throw new Error('Wrong center');
   }
+  if (!this.options.rasterLayers || this.options.rasterLayers.length === 0) {
+    return;
+  }
   const params = {
-    'layers': this.layersConfig.map((config) => config.name).join(','),
+    'layers': this.options.rasterLayers.map((config) => config.name).join(','),
   };
   this.gmfRaster_.getRaster(center, params).then((object) => {
     if (!this.measure) {
@@ -359,7 +302,7 @@ MobileMeasurePointController.prototype.getMeasure_ = function () {
     const className = 'gmf-mobile-measure-point';
     ctn.className = className;
 
-    for (const config of this.layersConfig) {
+    for (const config of this.options.rasterLayers) {
       const key = config.name;
       if (key in object) {
         /** @type {string|number} */
@@ -383,12 +326,5 @@ MobileMeasurePointController.prototype.getMeasure_ = function () {
 };
 
 module.controller('GmfMobileMeasurePointController', MobileMeasurePointController);
-
-/**
- * @typedef {Object} LayerConfig
- * @property {string} name
- * @property {number} [decimals]
- * @property {string} [unit]
- */
 
 export default module;
