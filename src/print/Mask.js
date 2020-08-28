@@ -59,8 +59,10 @@ export default class Mask extends Layer {
    * @param {import("ol/PluggableMap").FrameState} frameState
    */
   render(frameState) {
-    const cwidth = this.context_.canvas.width = frameState.size[0];
-    const cheight = this.context_.canvas.height = frameState.size[1];
+    const cwidth = frameState.size[0];
+    this.context_.canvas.width = cwidth;
+    const cheight = frameState.size[1];
+    this.context_.canvas.height = cheight;
     const center = [cwidth / 2, cheight / 2];
 
     // background (clockwise)

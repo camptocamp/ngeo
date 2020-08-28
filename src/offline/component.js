@@ -30,7 +30,6 @@ import {DEVICE_PIXEL_RATIO} from 'ol/has.js';
 import angular from 'angular';
 import MaskLayer from './Mask.js';
 
-
 /**
  * @type {!angular.IModule}
  */
