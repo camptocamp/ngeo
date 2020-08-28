@@ -31,6 +31,10 @@ const exampleFilenamePrefix = process.env.DEV_SERVER ? 'examples/' : '';
 
 for (const filename of ls('examples/*.html')) {
   const name = filename.name;
+  if (process.env.ONE_EXAMPLE && process.env.ONE_EXAMPLE !== name) {
+    console.log('Skipping example', name, '!==', process.env.ONE_EXAMPLE);
+    continue;
+  }
   entry[name] = [
     './examples/common_dependencies.js', // Should be first
     'ngeo/mainmodule.js', // To have a big commons part
