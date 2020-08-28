@@ -8,8 +8,8 @@ ngeo-offline div {
 }
 ngeo-offline .main-button {
   position: absolute;
-  right: 1rem;
-  bottom: 5rem;
+  right: 10px;
+  bottom: 50px;
   cursor: pointer;
 }
 ngeo-offline .main-button .no-data {
@@ -22,35 +22,34 @@ ngeo-offline .main-button .no-data,
 ngeo-offline .main-button .with-data {
   background-color: white;
   text-align: center;
-  font-size: 2.5rem;
-  line-height: 2rem;
-  border-radius: 2rem;
-  font-family: FontAwesome;
+  font-size: 30px;
+  line-height: 20px;
+  border-radius: 20px;
 }
 
 ngeo-offline .validate-extent {
   position: absolute;
-  bottom: 0.5rem;
-  width: 10rem;
-  left: calc(50% - 5rem);
+  bottom: 5px;
+  width: 100px;
+  left: calc(50% - 50px);
 }
 ngeo-offline .in-progress {
   position: absolute;
-  left: calc(50% - 3.3rem);
-  top: calc(50% - 3rem);
+  left: calc(50% - 33px);
+  top: calc(50% - 33px);
   color: white;
   font-weight: bold;
   background-color: #337ab7;
-  padding: 2rem 2rem;
-  border-radius: 1rem;
+  padding: 20px 20px;
+  border-radius: 10px;
 }
 ngeo-offline .modal-content {
-  width: 30rem;
+  width: 300px;
 }
 ngeo-offline .modal-body button {
   display: block;
-  margin: 0.5rem auto;
-  width: 25rem;
+  margin: 5px auto;
+  width: 250px;
 }
 .offline-msg {
   display: none;
