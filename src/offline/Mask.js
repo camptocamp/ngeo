@@ -23,7 +23,6 @@ import Layer from 'ol/layer/Layer.js';
 import {createCanvasContext2D} from 'ol/dom.js';
 import {DEVICE_PIXEL_RATIO} from 'ol/has.js';
 
-
 /**
  * @extends {Layer<any>}
  */
@@ -50,7 +49,6 @@ export default class Mask extends Layer {
     this.extentInMeters_ = options.extentInMeters || 0;
   }
 
-
   /**
    * @param {number[]} center, a xy point.
    * @param {number} halfLength a half length of a square's side.
@@ -68,10 +66,12 @@ export default class Mask extends Layer {
    * @param {import("ol/PluggableMap").FrameState} frameState
    */
   render(frameState) {
-    const cwidth = this.context_.canvas.width = frameState.size[0];
-    const cheight = this.context_.canvas.height = frameState.size[1];
-
     const context = this.context_;
+    const cwidth = frameState.size[0];
+    context.canvas.width = cwidth;
+    const cheight = frameState.size[1];
+    context.canvas.height = cheight;
+
     // background (clockwise)
     context.beginPath();
     context.moveTo(0, 0);
@@ -81,9 +81,10 @@ export default class Mask extends Layer {
     context.lineTo(0, 0);
     context.closePath();
 
-    const extentLength = this.extentInMeters_ ?
-      DEVICE_PIXEL_RATIO * this.extentInMeters_ / frameState.viewState.resolution :
-      Math.min(cwidth, cheight) - this.margin_ * 2;
+    let extentLength = Math.min(cwidth, cheight) - this.margin_ * 2;
+    if (this.extentInMeters_) {
+      extentLength = (DEVICE_PIXEL_RATIO * this.extentInMeters_) / frameState.viewState.resolution;
+    }
 
     // Draw the get data zone
     const extent = this.createExtent([cwidth / 2, cheight / 2], Math.ceil(extentLength / 2));
