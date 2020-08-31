@@ -139,4 +139,10 @@
  * @typedef {string} gmfCsvFilename
  */
 
+/**
+ * The background layer selector options
+ * @typedef {object} gmfBackgroundLayerSelectorOptions
+ * @property {string} [opacityLayer] The background layer with an opacity slider.
+ */
+
 export default undefined;

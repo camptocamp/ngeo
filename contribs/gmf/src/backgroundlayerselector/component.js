@@ -78,7 +78,6 @@ function gmfBackgroundlayerselectorTemplateUrl($element, $attrs, gmfBackgroundla
  *
  *      <gmf-backgroundlayerselector
  *        gmf-backgroundlayerselector-map="::ctrl.map"
- *        gmf-backgroundlayer-opacity-options="::ctrl.bgOpacityOptions"
  *        gmf-backgroundlayerselector-select="onBackgroundSelected()">
  *      </gmf-backgroundlayerselector>
  *
@@ -91,7 +90,6 @@ function gmfBackgroundlayerselectorTemplateUrl($element, $attrs, gmfBackgroundla
  *  * `default_basemap`: Base maps to use by default.
  *
  * @htmlAttribute {import("ol/Map.js").default=} gmf-backgroundlayerselector-map The map.
- * @htmlAttribute {string} gmf-backgroundlayer-opacity-options The opacity slider options.
  * @htmlAttribute {Function} gmf-backgroundlayerselector-select Function called
  *     when a layer was selected by the user.
  *
@@ -102,7 +100,6 @@ const backgroundlayerselectorComponent = {
   controller: 'GmfBackgroundlayerselectorController as ctrl',
   bindings: {
     'map': '=gmfBackgroundlayerselectorMap',
-    'opacityOptions': '=gmfBackgroundlayerOpacityOptions',
     'select': '&?gmfBackgroundlayerselectorSelect',
   },
   templateUrl: gmfBackgroundlayerselectorTemplateUrl,
@@ -118,20 +115,21 @@ module.component('gmfBackgroundlayerselector', backgroundlayerselectorComponent)
  * @param {import("ngeo/map/BackgroundLayerMgr.js").MapBackgroundLayerManager} ngeoBackgroundLayerMgr
  *    Background layer manager.
  * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes Themes service.
+ * @param {import('gmf/options.js').gmfBackgroundLayerSelectorOptions} gmfBackgroundLayerSelectorOptions The options
  * @ngInject
  * @ngdoc controller
  * @ngname GmfBackgroundlayerselectorController
  */
-function Controller($scope, ngeoBackgroundLayerMgr, gmfThemes) {
+function Controller($scope, ngeoBackgroundLayerMgr, gmfThemes, gmfBackgroundLayerSelectorOptions) {
   /**
    * @type {?import("ol/Map.js").default}
    */
   this.map = null;
 
   /**
-   * @type {string|undefined}
+   * @type {import('gmf/options.js').gmfBackgroundLayerSelectorOptions}
    */
-  this.opacityOptions;
+  this.options = gmfBackgroundLayerSelectorOptions;
 
   /**
    * Function called when a layer was selected by the user.
@@ -207,8 +205,8 @@ Controller.prototype.handleThemesChange_ = function () {
   this.gmfThemes_.getBgLayers().then((layers) => {
     this.bgLayers = layers;
 
-    if (this.opacityOptions !== undefined) {
-      const opacityLayer = layers.find((layer) => layer.get('label') === this.opacityOptions);
+    if (this.options.opacityLayer !== undefined) {
+      const opacityLayer = layers.find((layer) => layer.get('label') === this.options.opacityLayer);
       if (opacityLayer !== undefined) {
         this.setOpacityBgLayer(opacityLayer);
 
