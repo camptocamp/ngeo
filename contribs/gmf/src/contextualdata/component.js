@@ -41,8 +41,7 @@ const module = angular.module('gmfContextualdata', [gmfRasterRasterService.name]
  *
  *     <gmf-map gmf-map-map="mainCtrl.map"
  *         gmf-contextualdata
- *         gmf-contextualdata-map="::mainCtrl.map"
- *         gmf-contextualdata-projections="::[2056,21781,4326]">
+ *         gmf-contextualdata-map="::mainCtrl.map">
  *
  * The content of the popover is managed in a partial that must be defined
  * using the `gmfContextualdatacontentTemplateUrl` value. See
@@ -58,7 +57,6 @@ const module = angular.module('gmfContextualdata', [gmfRasterRasterService.name]
  * example for a usage sample.
  *
  * @htmlAttribute {import("ol/Map.js").default} map The map.
- * @htmlAttribute {number[]} projections The list of projections.
  * @htmlAttribute {Function} callback A function called after server
  *    (raster) data is received in case some additional computing is required.
  *    Optional.
@@ -74,7 +72,6 @@ function contextualDataComponent() {
     bindToController: {
       'displayed': '=gmfContextualdataDisplayed',
       'map': '<gmfContextualdataMap',
-      'projections': '<gmfContextualdataProjections',
       'callback': '<gmfContextualdataCallback',
     },
     /**
@@ -113,9 +110,9 @@ export function ContextualdataController($compile, $timeout, $scope, gmfRaster, 
   this.map = null;
 
   /**
-   * @type {number[]}
+   * @type {import('gmf/options.js').gmfContextualdataOptions}
    */
-  this.projections = [];
+  this.options = gmfContextualdataOptions;
 
   /**
    * @type {boolean}
@@ -270,14 +267,15 @@ ContextualdataController.prototype.setContent_ = function (coordinate) {
   this.$compile_(this.content_)(scope);
 
   const mapProjection = this.map.getView().getProjection().getCode();
-  this.projections.forEach((proj) => {
-    const coord = olProj.transform(coordinate, mapProjection, `EPSG:${proj}`);
+  this.options.projections.forEach((proj) => {
+    const ref = proj.replace('EPSG:', '').replace(':', '_');
+    const coord = olProj.transform(coordinate, mapProjection, proj);
     // @ts-ignore: scope ...
-    scope[`coord_${proj}`] = coord;
+    scope[`coord_${ref}`] = coord;
     // @ts-ignore: scope ...
-    scope[`coord_${proj}_eastern`] = coord[0];
+    scope[`coord_${ref}_eastern`] = coord[0];
     // @ts-ignore: scope ...
-    scope[`coord_${proj}_northern`] = coord[1];
+    scope[`coord_${ref}_northern`] = coord[1];
   });
 
   this.gmfRaster_.getRaster(coordinate, this.gmfContextualdataOptions_.rasterParams).then(
