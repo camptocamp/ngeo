@@ -197,6 +197,7 @@ export default class extends olInteractionPointer {
     if (!this.modified_) {
       this.modified_ = true;
       const event = new ngeoCustomEvent('modifystart', {features: this.features_});
+      // @ts-ignore: unfound dispatchEvent
       this.dispatchEvent(event);
     }
   }
@@ -366,6 +367,7 @@ export default class extends olInteractionPointer {
       }
       /** @type {RotateEvent} */
       const event = new ngeoCustomEvent('rotateend', {feature: this.feature_});
+      // @ts-ignore: unfound dispatchEvent
       this.dispatchEvent(event);
       this.modified_ = false;
       this.setActive(false);

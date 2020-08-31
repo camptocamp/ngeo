@@ -80,10 +80,11 @@ const exports = class AbstractLocalforageWrapper {
      * @type {Action}
      */
     const action = {
-      'plugin': 'localforage',
-      'command': command,
-      'args': args,
-      'id': id,
+      plugin: 'localforage',
+      command: command,
+      args: args,
+      id: id,
+      context: null,
     };
     const waitingPromise = {
       resolve() {},

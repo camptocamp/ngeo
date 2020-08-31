@@ -125,7 +125,6 @@ describe('gmf.query.gridComponent', () => {
           id: 123,
           label: 'Test',
           pending: false,
-          queried: true,
         },
       ];
       $rootScope.$digest();
@@ -133,6 +132,7 @@ describe('gmf.query.gridComponent', () => {
       expect(queryGridController.active).toBe(true);
       expect(queryGridController.selectedTab).toBe('Test');
 
+      // @ts-ignore
       const featuresForSource = queryGridController.featuresForSources_['Test'];
       expect(Object.keys(featuresForSource).length).toBe(2);
 
@@ -182,7 +182,6 @@ describe('gmf.query.gridComponent', () => {
           id: 123,
           label: 'Test',
           pending: false,
-          queried: true,
         },
       ];
       $rootScope.$digest();
@@ -229,7 +228,6 @@ describe('gmf.query.gridComponent', () => {
           id: 123,
           label: 'Test',
           pending: false,
-          queried: true,
         },
       ];
       $rootScope.$digest();
@@ -257,14 +255,12 @@ describe('gmf.query.gridComponent', () => {
           id: 123,
           label: 'Test 1',
           pending: false,
-          queried: true,
         },
         {
           features: [],
           id: 234,
           label: 'Test 2',
           pending: false,
-          queried: true,
         },
         {
           features: [
@@ -276,7 +272,6 @@ describe('gmf.query.gridComponent', () => {
           id: 345,
           label: 'Test 3',
           pending: false,
-          queried: true,
         },
       ];
       $rootScope.$digest();
@@ -343,14 +338,12 @@ describe('gmf.query.gridComponent', () => {
           id: 123,
           label: 'Test 1',
           pending: false,
-          queried: true,
         },
         {
           features: [],
           id: 345,
           label: 'Test 3',
           pending: false,
-          queried: true,
           tooManyResults: true,
           totalFeatureCount: 351,
         },
@@ -378,7 +371,6 @@ describe('gmf.query.gridComponent', () => {
           id: 123,
           label: 'Test 1',
           pending: false,
-          queried: true,
           tooManyResults: true,
           totalFeatureCount: 123,
         },
@@ -387,7 +379,6 @@ describe('gmf.query.gridComponent', () => {
           id: 345,
           label: 'Test 3',
           pending: false,
-          queried: true,
           tooManyResults: true,
           totalFeatureCount: 351,
         },
@@ -426,7 +417,6 @@ describe('gmf.query.gridComponent', () => {
           id: 123,
           label: 'Test 1',
           pending: false,
-          queried: true,
         },
         {
           features: [
@@ -438,7 +428,6 @@ describe('gmf.query.gridComponent', () => {
           id: 234,
           label: 'Test 2',
           pending: false,
-          queried: true,
         },
         {
           features: [
@@ -450,7 +439,6 @@ describe('gmf.query.gridComponent', () => {
           id: 345,
           label: 'Test 3',
           pending: false,
-          queried: true,
         },
       ];
 
@@ -522,14 +510,12 @@ describe('gmf.query.gridComponent', () => {
           id: 123,
           label: 'Test 1',
           pending: false,
-          queried: true,
         },
         {
           features: [],
           id: 234,
           label: 'Test 2',
           pending: false,
-          queried: true,
           tooManyResults: true,
           totalFeatureCount: 351,
         },
@@ -543,7 +529,6 @@ describe('gmf.query.gridComponent', () => {
           id: 345,
           label: 'Test 3',
           pending: false,
-          queried: true,
         },
       ];
 
@@ -584,7 +569,6 @@ describe('gmf.query.gridComponent', () => {
           id: 123,
           label: 'Test 1',
           pending: false,
-          queried: true,
         },
         {
           features: [
@@ -596,7 +580,6 @@ describe('gmf.query.gridComponent', () => {
           id: 345,
           label: 'Test 3',
           pending: false,
-          queried: true,
         },
       ];
       $rootScope.$digest();
@@ -607,13 +590,18 @@ describe('gmf.query.gridComponent', () => {
       $timeout.flush();
       // check that the first source is selected by default
       expect(queryGridController.selectedTab).toBe('Test 1');
+      // @ts-ignore
       expect(queryGridController.features_.item(0).get('name')).toBe('A');
+      // @ts-ignore
       expect(queryGridController.highlightFeatures_.getLength()).toBe(0);
 
       // select the 2nd source
       queryGridController.selectTab(queryGridController.gridSources['Test 3']);
+      // @ts-ignore
       expect(queryGridController.selectedTab).toBe('Test 3');
+      // @ts-ignore
       expect(queryGridController.features_.item(0).get('label')).toBe('C');
+      // @ts-ignore
       expect(queryGridController.highlightFeatures_.getLength()).toBe(0);
     });
 
@@ -627,19 +615,25 @@ describe('gmf.query.gridComponent', () => {
 
       // check that the first source is selected by default
       expect(queryGridController.selectedTab).toBe('Test 1');
+      // @ts-ignore
       expect(queryGridController.features_.getLength()).toBe(0);
+      // @ts-ignore
       expect(queryGridController.highlightFeatures_.item(0).get('name')).toBe('A');
 
       // select the 2nd source
       queryGridController.selectTab(queryGridController.gridSources['Test 3']);
       expect(queryGridController.selectedTab).toBe('Test 3');
+      // @ts-ignore
       expect(queryGridController.features_.item(0).get('label')).toBe('C');
+      // @ts-ignore
       expect(queryGridController.highlightFeatures_.getLength()).toBe(0);
 
       // and then select again source 1
       queryGridController.selectTab(queryGridController.gridSources['Test 1']);
       expect(queryGridController.selectedTab).toBe('Test 1');
+      // @ts-ignore
       expect(queryGridController.features_.getLength()).toBe(0);
+      // @ts-ignore
       expect(queryGridController.highlightFeatures_.item(0).get('name')).toBe('A');
     });
   });

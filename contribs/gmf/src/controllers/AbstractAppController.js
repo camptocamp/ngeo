@@ -390,6 +390,7 @@ export function AbstractAppController($scope, $injector, mobile) {
     }
   );
 
+  // @ts-ignore: webpack
   this.backgroundLayerMgr_.on('change', () => {
     this.backgroundLayerMgr_.updateDimensions(this.map, this.dimensions);
   });
@@ -523,7 +524,7 @@ export function AbstractAppController($scope, $injector, mobile) {
   this.stateManager = $injector.get('ngeoStateManager');
 
   /**
-   * @type {angular.dynamicLocale.tmhDynamicLocaleService}
+   * @type {tmh.tmh.IDynamicLocale}
    */
   this.tmhDynamicLocale = $injector.get('tmhDynamicLocale');
 
@@ -815,12 +816,11 @@ export function AbstractAppController($scope, $injector, mobile) {
 
 /**
  * Allow map pan with all buttons except right click (context menu)
- * @param {import("ol/MapBrowserEvent.js").default} event MapBrowser event
+ * @param {import("ol/MapBrowserEvent.js").default<PointerEvent>} event MapBrowser event
  * @return {boolean}
  */
 function dragPanCondition(event) {
-  const pointerEvent = /** @type {import("ol/MapBrowserPointerEvent.js").default} */ (event).pointerEvent;
-  return noModifierKeys(event) && pointerEvent.button !== 2;
+  return noModifierKeys(event) && event.originalEvent.button !== 2;
 }
 
 /**

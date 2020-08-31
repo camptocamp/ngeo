@@ -111,6 +111,7 @@ class WFSDescribeFeatureType extends olFormatXML {}
  * @param {Document|Node|string} source The XML source.
  * @return {Object} An object representing the WFS DescribeFeatureType.
  */
+// @ts-ignore
 WFSDescribeFeatureType.prototype.read;
 
 /**

@@ -39,9 +39,11 @@ class CustomSnap extends olInteractionSnap {
   constructor(options) {
     super(options);
     document.body.addEventListener('keydown', (evt) => {
+      // @ts-ignore: unfound setActive
       this.setActive(evt.keyCode !== 17); // Ctrl key
     });
     document.body.addEventListener('keyup', () => {
+      // @ts-ignore: unfound setActive
       this.setActive(true);
     });
   }
@@ -65,18 +67,17 @@ class CustomSnap extends olInteractionSnap {
  * @param {angular.IScope} $rootScope Angular rootScope.
  * @param {angular.auto.IInjectorService} $injector Angular injector.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
- * @param {import('gmf/datasource/fileGroup.js').DataSourceFileGroup} gmfDatasourceFileGroup Group that contains file data sources.
+ * @param {import('gmf/datasource/fileGroup.js').DatasourceFileGroup} gmfDatasourceFileGroup Group that contains file data sources.
  * @param {import('gmf/themes.js').GmfSnappingConfig} gmfSnappingConfig Snapping configuration options for the
  *     features in the Draw tool and in the "Layer Import / Local" tool.
  * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes The gmf Themes service.
  * @param {import("gmf/layertree/TreeManager.js").LayertreeTreeManager} gmfTreeManager The gmf TreeManager
  *    service.
- * @param {import("ol/Collection.js").default<Feature<import("ol/geom/Geometry.js").default>>} ngeoFeatures Collection
+ * @param {import("ol/Collection.js").default<import("ol/Feature.js").default<import("ol/geom/Geometry.js").default>>} ngeoFeatures Collection
  *    of features.
  * @ngInject
  * @ngdoc service
  * @ngname gmfSnapping
- * @hidden
  */
 export function EditingSnappingService(
   $http,
@@ -123,7 +124,7 @@ export function EditingSnappingService(
   this.injector_ = $injector;
 
   /**
-   * @type {import('gmf/datasource/fileGroup.js').DataSourceFileGroup}
+   * @type {import('gmf/datasource/fileGroup.js').DatasourceFileGroup}
    * @private
    */
   this.gmfDatasourceFileGroup_ = gmfDatasourceFileGroup;
@@ -875,7 +876,6 @@ EditingSnappingService.prototype.handleFileDataSourceVisibleChange_ = function (
 /**
  * The key is: A uid string generated from the fileDataSource
  * @typedef {Object<string, CacheFileDataSourceItem>} CacheFileDataSource
- * @property {import('ngeo/datasource/File.js').default} fileDataSource
  */
 
 /**

@@ -162,6 +162,8 @@ export const WMSInfoFormat = {
  * @typedef {Object} WMSLayer
  * @property {string} name The layer name (WMS) and/or feature type name (WFS)
  * @property {boolean} [queryable] Whether the the layer is queryable or not. Defaults to `false`.
+ * @property {boolean|undefined} [getData] If the layer is queryable and this property is set to
+ *     false, then the layer won't be used in queries issued. Defaults to `true`.
  */
 
 /**
@@ -172,6 +174,8 @@ export const WMSInfoFormat = {
  * @property {number} [minResolution] The minimum resolution the layer should be rendered (when visible).
  * @property {string} name The layer name (WMS) and/or feature type name (WFS)
  * @property {boolean} [queryable] Whether the the layer is queryable or not. Defaults to `false`.
+ * @property {boolean|undefined} [getData] If the layer is queryable and this property is set to
+ *     false, then the layer won't be used in queries issued. Defaults to `true`.
  */
 
 /**
@@ -211,7 +215,7 @@ export const DEFAULT_GEOMETRY_NAME = 'geom';
  * @private
  * @hidden
  */
-class OGC extends ngeoDatasourceDataSource {
+export class OGC extends ngeoDatasourceDataSource {
   /**
    * A data source contains information of a single source of data that can
    * show or fetch the data using an OGC server. Several OGC service types are
@@ -1157,7 +1161,7 @@ class OGC extends ngeoDatasourceDataSource {
    * WFS format does not allow constructing multiple typenames GetFeature
    * request with different filters we need to combine data sources depending
    * on active dimensions filters.
-   * @param {!ngeox.dataSource.OGC} dataSource Remote data source to
+   * @param {!OGC} dataSource Remote data source to
    *     compare with this one.
    * @return {boolean} Whether the two data sources have the same active
    *     dimensions filters. If both have no dimensions, they are considered

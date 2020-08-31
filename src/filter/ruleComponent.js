@@ -555,6 +555,7 @@ class RuleController {
             const hasExpression = this.clone.getExpression() !== null;
             const isActive = this.rule.active === true;
             const editToolIsActive =
+              // @ts-ignore: missing getActive
               this.modify_.getActive() || this.rotate_.getActive() || this.translate_.getActive();
             return hasExpression && isActive && editToolIsActive;
           },

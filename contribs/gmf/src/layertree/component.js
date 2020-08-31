@@ -873,7 +873,7 @@ Controller.prototype.zoomToResolution = function (treeCtrl) {
 /**
  * Set the swipe option on the map.
  *    from the current node.
- *  @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl Ngeo tree controller.
+ * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl Ngeo tree controller.
  * @type {import('gmf/datasource/LayerBeingSwipe.js').LayerBeingSwipe}
  */
 Controller.prototype.toggleSwipeLayer = function (treeCtrl) {
@@ -966,12 +966,11 @@ Controller.prototype.supportsLegend = function (treeCtrl) {
  */
 Controller.prototype.supportsOpacityChange = function (treeCtrl) {
   const node = /** @type {import('gmf/themes.js').GmfGroup} */ (treeCtrl.node);
+  const parentNode = /** @type {import('gmf/themes.js').GmfGroup} */ (treeCtrl.parent.node);
   return (
     !!treeCtrl.layer &&
     ((treeCtrl.depth === 1 && !node.mixed) ||
-      (treeCtrl.depth > 1 &&
-        treeCtrl.parent.node.mixed &&
-        (!treeCtrl.node.children || (treeCtrl.node.children && !node.mixed))))
+      (treeCtrl.depth > 1 && parentNode.mixed && (!node.children || (node.children && !node.mixed))))
   );
 };
 
@@ -980,7 +979,7 @@ Controller.prototype.supportsOpacityChange = function (treeCtrl) {
  * @return {boolean} Whether the layer tree controller has a filtrable datasource or not.
  */
 Controller.prototype.isFiltrable = function (treeCtrl) {
-  const datasource = treeCtrl.getDataSource();
+  const datasource = /** @type {import('ngeo/datasource/OGC.js').OGC} */ (treeCtrl.getDataSource());
   return datasource ? datasource.filtrable : false;
 };
 
@@ -990,7 +989,7 @@ Controller.prototype.isFiltrable = function (treeCtrl) {
  *     opacity change or is filtrable. Or null if there is any parent with layer functions.
  */
 Controller.prototype.getFirstParentWithLayerFunctions = function (treeCtrl) {
-  const parentTreeCtrl = /** @type {import("ngeo/layertree/Controller.js"} */ (treeCtrl.parent);
+  const parentTreeCtrl = /** @type {import("ngeo/layertree/Controller.js").LayertreeController} */ (treeCtrl.parent);
   if (!parentTreeCtrl) {
     return null;
   }

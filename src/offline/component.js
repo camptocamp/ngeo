@@ -164,7 +164,6 @@ export const Controller = class {
      * @type {!import("ol/Map").default}
      * @export
      */
-    // @ts-ignore
     this.map;
 
     /**
@@ -311,6 +310,7 @@ export const Controller = class {
 
   $onInit() {
     this.offlineMode.registerComponent(this);
+    // @ts-ignore
     this.ngeoOfflineConfiguration_.on('progress', this.progressCallback_);
     this.maskMargin = this.maskMargin || 100;
     this.minZoom = this.minZoom || 10;
@@ -318,6 +318,7 @@ export const Controller = class {
   }
 
   $onDestroy() {
+    // @ts-ignore
     this.ngeoOfflineConfiguration_.un('progress', this.progressCallback_);
   }
 

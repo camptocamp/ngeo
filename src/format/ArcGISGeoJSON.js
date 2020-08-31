@@ -102,6 +102,7 @@ class ArcGISGeoJSON extends olFormatGeoJSON {
       if (this.layers_ && !olArrayIncludes(this.layers_, layerName)) {
         continue;
       }
+      // @ts-ignore: missing readFeatureFromObject
       features.push(this.readFeatureFromObject(geoJSONFeatures[i], opt_options));
     }
     return features;

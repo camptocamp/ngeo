@@ -45,8 +45,8 @@ module.run(
    */
   ($templateCache) => {
     $templateCache.put(
-      // @ts-ignore: webpack
       'gmf/import/wmsCapabilityLayertreeComponent',
+      // @ts-ignore: webpack
       require('./wmsCapabilityLayertreeComponent.html')
     );
   }

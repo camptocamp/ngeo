@@ -184,7 +184,9 @@ export function MobileMeasurePointController(gettextCatalog, $scope, $filter, gm
       if (!this.measure) {
         throw new Error('Missing measure');
       }
+      // @ts-ignore: unfound setActive
       this.measure.setActive(newVal);
+      // @ts-ignore
       this.handleMeasureActiveChange_();
     }
   );
@@ -271,6 +273,7 @@ MobileMeasurePointController.prototype.init = function () {
       sketchStyle: this.sketchStyle,
     }
   );
+  // @ts-ignore: unfound setActive
   this.measure.setActive(this.active);
   interactionDecoration(this.measure);
   const drawInteraction = this.measure.getDrawInteraction();
@@ -322,6 +325,7 @@ MobileMeasurePointController.prototype.handleMeasureActiveChange_ = function () 
   if (!this.measure) {
     throw new Error('Missing measure');
   }
+  // @ts-ignore: unfound setActive
   if (this.measure.getActive()) {
     const view = this.map.getView();
     this.mapViewPropertyChangeEventKey_ = listen(

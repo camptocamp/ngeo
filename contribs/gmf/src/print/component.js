@@ -416,7 +416,7 @@ export class PrintController {
     this.scaleInput = false;
 
     /**
-     * @type {OptionsLegendType}
+     * @type {import('gmf/options.js').OptionsLegendType}
      * @private
      */
     this.gmfLegendOptions_ = {

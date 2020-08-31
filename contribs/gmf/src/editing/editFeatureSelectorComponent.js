@@ -43,8 +43,8 @@ module.run(
    */
   ($templateCache) => {
     $templateCache.put(
-      // @ts-ignore: webpack
       'gmf/editing/editFeatureSelectorComponent',
+      // @ts-ignore: webpack
       require('./editFeatureSelectorComponent.html')
     );
   }

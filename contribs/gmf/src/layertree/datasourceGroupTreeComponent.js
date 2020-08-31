@@ -40,8 +40,8 @@ module.run(
    */
   ($templateCache) => {
     $templateCache.put(
-      // @ts-ignore: webpack
       'gmf/layertree/datasourceGroupTreeComponent',
+      // @ts-ignore: webpack
       require('./datasourceGroupTreeComponent.html')
     );
   }
@@ -80,7 +80,7 @@ class Controller {
   /**
    * @param {angular.IScope} $scope Angular scope.
    * @param {import("ngeo/datasource/DataSources.js").DataSource} ngeoDataSources Ngeo data sources service.
-   * @param {import("ngeo/map/LayerHelper.js")} ngeoLayerHelper Ngeo data sources service.
+   * @param {import("ngeo/map/LayerHelper.js").LayerHelper} ngeoLayerHelper Ngeo data sources service.
    * @private
    * @ngInject
    * @ngdoc controller

@@ -594,7 +594,6 @@ QueryGridController.prototype.getMergedSource_ = function (source, mergedSources
       label: mergeSourceId,
       limit: this.maxResults,
       pending: false,
-      queried: true,
       tooManyResults: false,
     };
     mergedSources[mergeSourceId] = mergeSource;

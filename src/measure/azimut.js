@@ -85,6 +85,7 @@ function measureAzimutComponent(
       );
 
       if (drawFeatureCtrl.uid) {
+        // @ts-ignore
         measureAzimut.set('ngeo-interaction-draw-uid', `${drawFeatureCtrl.uid}-azimut`);
       }
 

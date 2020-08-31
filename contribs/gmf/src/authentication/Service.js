@@ -297,12 +297,14 @@ export class AuthenticationService extends olEventsEventTarget {
   handleLogin_(checkingLoginStatus, resp) {
     if (resp.data.is_password_changed === false && this.forcePasswordChange) {
       const event = new ngeoCustomEvent('mustChangePassword', {user: resp.data});
+      // @ts-ignore: missing dispatchEvent
       this.dispatchEvent(event);
       return;
     }
     this.setUser_(resp.data, !checkingLoginStatus);
     if (checkingLoginStatus) {
       const event = new ngeoCustomEvent('ready', {user: this.user_});
+      // @ts-ignore: missing dispatchEvent
       this.dispatchEvent(event);
     }
     return resp;
@@ -327,6 +329,7 @@ export class AuthenticationService extends olEventsEventTarget {
     }
     if (emitEvent && respData.username !== undefined) {
       const event = new ngeoCustomEvent('login', {user: this.user_});
+      // @ts-ignore: missing dispatchEvent
       this.dispatchEvent(event);
     }
   }
@@ -343,6 +346,7 @@ export class AuthenticationService extends olEventsEventTarget {
       this.user_[key] = null;
     }
     const event = new ngeoCustomEvent('logout', {user: this.user_});
+    // @ts-ignore: missing dispatchEvent
     this.dispatchEvent(event);
     if (!noReload) {
       this.load_();

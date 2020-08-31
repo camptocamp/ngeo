@@ -275,7 +275,7 @@ class Map {
         this.map_.addLayer(vectorLayer);
 
         new Search({
-          container: element,
+          container: /** @type {HTMLElement} */ (element),
           url: constants.searchUrl,
           source: vectorLayer.getSource(),
           view: this.map_.getView(),

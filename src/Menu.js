@@ -123,6 +123,7 @@ export default class extends olOverlay {
       );
     });
 
+    // @ts-ignore
     this.setElement(contentEl[0]);
   }
 
@@ -131,6 +132,7 @@ export default class extends olOverlay {
    * @override
    */
   setMap(map) {
+    // @ts-ignore: unfound getMap
     const currentMap = this.getMap();
     if (currentMap) {
       this.listenerKeys_.forEach(unlistenByKey);
@@ -156,6 +158,7 @@ export default class extends olOverlay {
    * @param {import("ol/coordinate.js").Coordinate} coordinate Where to open the menu.
    */
   open(coordinate) {
+    // @ts-ignore
     this.setPosition(coordinate);
     if (!(document.documentElement instanceof EventTarget)) {
       throw new Error('Wrong document element type');
@@ -168,6 +171,7 @@ export default class extends olOverlay {
   /**
    */
   close() {
+    // @ts-ignore
     this.setPosition(undefined);
 
     if (this.clickOutListenerKey_ !== null) {
@@ -181,6 +185,7 @@ export default class extends olOverlay {
    * @private
    */
   handleActionClick_(action, evt) {
+    // @ts-ignore: missing dispatchEvent
     this.dispatchEvent(
       new ngeoCustomEvent('actionclick', {
         action: action,
@@ -200,6 +205,7 @@ export default class extends olOverlay {
    * @private
    */
   handleClickOut_(evt) {
+    // @ts-ignore
     const element = this.getElement();
     if (element && $(evt.target).closest(element).length === 0) {
       this.close();
@@ -218,6 +224,7 @@ export default class extends olOverlay {
   handleMapPointerMove_(evt) {
     const myEvent = /** @type {import("ol/MapBrowserEvent.js").default} */ (evt);
     const target = myEvent.originalEvent.target;
+    // @ts-ignore
     const element = this.getElement();
     if (target instanceof Element && element instanceof Element && element.contains(target)) {
       myEvent.coordinate = [Infinity, Infinity];

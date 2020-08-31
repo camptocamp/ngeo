@@ -232,7 +232,7 @@ class Controller {
     this.wmtsCapabilities = null;
 
     /**
-     * @type {?Bloodhound<ExternalOGCServer>}
+     * @type {?Bloodhound<import('gmf/options.js').ExternalOGCServer>}
      * @private
      */
     this.serversEngine_ = null;
@@ -307,7 +307,7 @@ class Controller {
     if (this.serversEngine_) {
       /**
        * @param {string} query Query string.
-       * @param {function(Array<ExternalOGCServer>):void} sync
+       * @param {function(import('gmf/options.js').ExternalOGCServer[]):void} sync
        */
       const serversEngineWithDefaults = (query, sync) => {
         if (!this.serversEngine_) {
@@ -326,6 +326,7 @@ class Controller {
         const $connectBtn = this.element_.find('button.gmf-importdatasource-connect-btn');
         $urlInput
           .typeahead(
+            // @ts-ignore: should be a string
             {
               hint: true,
               highlight: true,
