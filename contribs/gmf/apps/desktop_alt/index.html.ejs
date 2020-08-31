@@ -31,14 +31,18 @@
            ngeo-resizemap-state="mainCtrl.dataPanelActive"
            ng-class="{'gmf-app-inactive': !mainCtrl.dataPanelActive}">
         <div class="gmf-app-header">
-          <div class="dropdown" ng-cloak>
-            <a href class="btn btn-block prime dropdown-toggle" data-toggle="dropdown">
-              <span ng-if="mainCtrl.gmfThemeManager.isLoading()">
-                <span translate>Loading...</span>
+          <div class="dropdown">
+            <a href
+               class="btn btn-block prime dropdown-toggle"
+               data-toggle="dropdown">
+              <span class="fa fa-grid"></span>
+              <span ng-if="mainCtrl.gmfThemeManager.modeFlush">
+                <span translate>Theme:</span>
+                <b ng-if="mainCtrl.gmfThemeManager.isLoading()" translate>Loading...</b>
+                <b ng-if="!mainCtrl.gmfThemeManager.isLoading()">{{mainCtrl.gmfThemeManager.getThemeName()|translate}}</b>
               </span>
-              <span ng-if="!mainCtrl.gmfThemeManager.isLoading()">
-                <span class="fa fa-grid"></span>
-                <span translate>Themes</span>
+              <span ng-if="!mainCtrl.gmfThemeManager.modeFlush">
+                <b ng-if="!mainCtrl.gmfThemeManager.themeName" translate>Themes</b>
               </span>
             </a>
             <gmf-themeselector class="dropdown-menu"
@@ -54,8 +58,7 @@
           </gmf-layertree>
         </div>
       </div>
-      <div class="gmf-app-tools" ngeo-resizemap="mainCtrl.map"
-        ngeo-resizemap-state="mainCtrl.toolsActive">
+      <div class="gmf-app-tools" ngeo-resizemap="mainCtrl.map" ngeo-resizemap-state="mainCtrl.toolsActive">
         <div class="gmf-app-bar">
           <div ngeo-btn-group class="btn-group-vertical" ngeo-btn-group-active="mainCtrl.toolsActive">
             <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.loginActive"
@@ -75,11 +78,10 @@
               <span
                 class="fa"
                 ng-class="mainCtrl.gmfDataSourceBeingFiltered.dataSource && mainCtrl.gmfDataSourceBeingFiltered.dataSource.filterRules ? 'fa-funnel-dollar' : 'fa-filter'"></span>
-
             </button>
             <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.editFeatureActive"
               data-toggle="tooltip" data-placement="left" data-original-title="{{'Editing'|translate}}"
-              ng-show="mainCtrl.hasEditableLayers" ng-cloak>
+              ng-show="mainCtrl.hasEditableLayers">
               <span class="fa fa-edit"></span>
             </button>
             <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.drawProfilePanelActive"
@@ -98,7 +100,7 @@
               </span>
             </button>
             <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.importDataSourceActive"
-              data-toggle="tooltip" data-placement="left" data-original-title="{{'Import Layer'|translate}}">
+                    data-toggle="tooltip" data-placement="left" data-original-title="{{'Import Layer'|translate}}">
               <span class="fa fa-upload"></span>
             </button>
             <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.routingPanelActive"
@@ -123,8 +125,7 @@
                 {{'Login' | translate}}
                 <a class="btn close" ng-click="mainCtrl.loginActive = false">&times;</a>
               </div>
-              <gmf-authentication
-                  gmf-authentication-info-message="mainCtrl.loginInfoMessage">
+              <gmf-authentication gmf-authentication-info-message="mainCtrl.loginInfoMessage">
               </gmf-authentication>
               <div ng-if="mainCtrl.postLoading">
                 <i class="fa custom-spinner-connect fa-spin">
@@ -143,8 +144,6 @@
               <gmf-print
                 gmf-print-map="::mainCtrl.map"
                 gmf-print-active="mainCtrl.printActive"
-                gmf-print-hiddenattributes="::['debug']"
-                gmf-print-rotatemask="::true"
                 gmf-print-attributes-out="::attributes">
                   <span ng-if="mainCtrl.gmfUser.username">
                     <div ng-repeat="attribute in ::attributes">
@@ -257,8 +256,7 @@
                 {{'Import Layer'|translate}}
                 <a class="btn close" ng-click="mainCtrl.importDataSourceActive = false">&times;</a>
               </div>
-              <gmf-importdatasource
-                  map="mainCtrl.map">
+              <gmf-importdatasource map="mainCtrl.map">
               </gmf-importdatasource>
             </div>
           </div>
@@ -275,7 +273,7 @@
           </div>
         </div>
       </div>
-      <div class="gmf-app-map-container" ng-class="{'gmf-app-infobar-active': mainCtrl.showInfobar}">
+      <div class="gmf-app-map-container" ng-class="{'gmf-app-infobar-active': mainCtrl.options.showInfobar}">
         <gmf-search gmf-search-map="::mainCtrl.map"
           gmf-search-datasources="::mainCtrl.searchDatasources">
         </gmf-search>
@@ -296,6 +294,12 @@
           url="mainCtrl.displaywindowUrl"
           width="mainCtrl.displaywindowWidth"
         ></ngeo-displaywindow>
+        <button ngeo-geolocation=""
+            ngeo-geolocation-map="::mainCtrl.map"
+            ngeo-geolocation-options="::mainCtrl.geolocationOptions"
+            ng-if="::mainCtrl.options.geolocalisation">
+            <span class="far fa-dot-circle"></span>
+        </button>
         <div class="gmf-app-map-bottom-controls">
           <div class="gmf-backgroundlayerbutton btn-group dropup">
             <button
@@ -332,16 +336,16 @@
         </gmf-floorselector>
 
         <!--infobar-->
-        <div class="gmf-app-footer" ng-class="{'gmf-app-active': mainCtrl.showInfobar}">
-          <button class="btn fa gmf-app-map-info ng-cloak" ng-click="mainCtrl.showInfobar = !mainCtrl.showInfobar"
-                  ng-class="{'fa-angle-double-up': !mainCtrl.showInfobar, 'fa-angle-double-down': mainCtrl.showInfobar}"></button>
+        <div class="gmf-app-footer" ng-class="{'gmf-app-active': mainCtrl.options.showInfobar}">
+          <button class="btn fa gmf-app-map-info" ng-click="mainCtrl.options.showInfobar = !mainCtrl.options.showInfobar"
+                  ng-class="{'fa-angle-double-up': !mainCtrl.options.showInfobar, 'fa-angle-double-down': mainCtrl.options.showInfobar}"></button>
 
           <div ngeo-scaleselector ngeo-scaleselector-map="mainCtrl.map"></div>
           <div id="scaleline"></div>
           <div class="pull-right">
             <gmf-elevationwidget
                 gmf-elevationwidget-map="::mainCtrl.map"
-                gmf-elevationwidget-active="mainCtrl.showInfobar">
+                gmf-elevationwidget-active="mainCtrl.options.showInfobar">
             </gmf-elevationwidget>
             <gmf-mouseposition
                  gmf-mouseposition-map="mainCtrl.map"
@@ -350,9 +354,8 @@
           </div>
         </div>
       </div>
-
       <ngeo-modal ng-model="mainCtrl.modalShareShown">
-        <gmf-share ng-if="mainCtrl.modalShareShown" gmf-share-email="false"></gmf-share>
+        <gmf-share ng-if="mainCtrl.modalShareShown"></gmf-share>
       </ngeo-modal>
       <ngeo-modal ng-model="disclaimerVisibility">
         <div class="modal-header ui-draggable-handle">

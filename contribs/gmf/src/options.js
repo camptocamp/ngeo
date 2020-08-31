@@ -31,6 +31,128 @@ import olStyle from 'ol/style/Style.js';
 import {createDefaultStyle} from 'ol/style/Style.js';
 
 /**
+ * Default language
+ * @typedef {string} defaultLang
+ */
+
+/**
+ * Languages URL
+ * @typedef {Object<string, string>} langUrls
+ */
+
+/**
+ * The view definition.
+ * @typedef {Object} View
+ * @property {string} projection The main projection.
+ * @property {number[]} [center] The initial center for
+ * the view. If a user projection is not set, the coordinate system for the center is
+ * specified with the `projection` option. Layer sources will not be fetched if this
+ * is not set, but the center can be set later with {@link #setCenter}.
+ * @property {boolean|number} [constrainRotation=true] Rotation constraint.
+ * `false` means no constraint. `true` means no constraint, but snap to zero
+ * near zero. A number constrains the rotation to that number of values. For
+ * example, `4` will constrain the rotation to 0, 90, 180, and 270 degrees.
+ * @property {boolean} [enableRotation=true] Enable rotation.
+ * If `false`, a rotation constraint that always sets the rotation to zero is
+ * used. The `constrainRotation` option has no effect if `enableRotation` is
+ * `false`.
+ * @property {number[]} [extent] The extent that constrains the
+ * view, in other words, nothing outside of this extent can be visible on the map.
+ * @property {boolean} [constrainOnlyCenter=false] If true, the extent
+ * constraint will only apply to the view center and not the whole extent.
+ * @property {boolean} [smoothExtentConstraint=true] If true, the extent
+ * constraint will be applied smoothly, i.e. allow the view to go slightly outside
+ * of the given `extent`.
+ * @property {number} [maxResolution] The maximum resolution used to determine
+ * the resolution constraint. It is used together with `minResolution` (or
+ * `maxZoom`) and `zoomFactor`. If unspecified it is calculated in such a way
+ * that the projection's validity extent fits in a 256x256 px tile. If the
+ * projection is Spherical Mercator (the default) then `maxResolution` defaults
+ * to `40075016.68557849 / 256 = 156543.03392804097`.
+ * @property {number} [minResolution] The minimum resolution used to determine
+ * the resolution constraint.  It is used together with `maxResolution` (or
+ * `minZoom`) and `zoomFactor`.  If unspecified it is calculated assuming 29
+ * zoom levels (with a factor of 2). If the projection is Spherical Mercator
+ * (the default) then `minResolution` defaults to
+ * `40075016.68557849 / 256 / Math.pow(2, 28) = 0.0005831682455839253`.
+ * @property {number} [maxZoom=28] The maximum zoom level used to determine the
+ * resolution constraint. It is used together with `minZoom` (or
+ * `maxResolution`) and `zoomFactor`.  Note that if `minResolution` is also
+ * provided, it is given precedence over `maxZoom`.
+ * @property {number} [minZoom=0] The minimum zoom level used to determine the
+ * resolution constraint. It is used together with `maxZoom` (or
+ * `minResolution`) and `zoomFactor`.  Note that if `maxResolution` is also
+ * provided, it is given precedence over `minZoom`.
+ * @property {boolean} [multiWorld=false] If `false` the view is constrained so
+ * only one world is visible, and you cannot pan off the edge.  If `true` the map
+ * may show multiple worlds at low zoom levels.  Only used if the `projection` is
+ * global.  Note that if `extent` is also provided it is given precedence.
+ * @property {boolean} [constrainResolution=false] If true, the view will always
+ * animate to the closest zoom level after an interaction; false means
+ * intermediary zoom levels are allowed.
+ * @property {boolean} [smoothResolutionConstraint=true] If true, the resolution
+ * min/max values will be applied smoothly, i. e. allow the view to exceed slightly
+ * the given resolution or zoom bounds.
+ * @property {boolean} [showFullExtent=false] Allow the view to be zoomed out to
+ * show the full configured extent. By default, when a view is configured with an
+ * extent, users will not be able to zoom out so the viewport exceeds the extent in
+ * either dimension. This means the full extent may not be visible if the viewport
+ * is taller or wider than the aspect ratio of the configured extent. If
+ * showFullExtent is true, the user will be able to zoom out so that the viewport
+ * exceeds the height or width of the configured extent, but not both, allowing the
+ * full extent to be shown.
+ * @property {number} [resolution] The initial resolution for the view. The
+ * units are `projection` units per pixel (e.g. meters per pixel). An
+ * alternative to setting this is to set `zoom`. Layer sources will not be
+ * fetched if neither this nor `zoom` are defined, but they can be set later
+ * with {@link #setZoom} or {@link #setResolution}.
+ * @property {number[]} [resolutions] Resolutions to determine the
+ * resolution constraint. If set the `maxResolution`, `minResolution`,
+ * `minZoom`, `maxZoom`, and `zoomFactor` options are ignored.
+ * @property {number} [rotation=0] The initial rotation for the view in radians
+ * (positive rotation clockwise, 0 means North).
+ * @property {number} [zoom] Only used if `resolution` is not defined. Zoom
+ * level used to calculate the initial resolution for the view.
+ * @property {number} [zoomFactor=2] The zoom factor used to compute the
+ * corresponding resolution.
+ */
+
+/**
+ * The map definition.
+ * @typedef {Object} Map
+ * @property {string} projection The main projection.
+ * @property {number} [pixelRatio] The ratio between physical pixels and device-independent pixels (dips)
+ * on the device.
+ * @property {number} [maxTilesLoading=16] Maximum number tiles to load simultaneously.
+ * @property {number} [moveTolerance=1] The minimum distance in pixels the cursor must move to be detected
+ * as a map move event instead of a click. Increasing this value can make it easier to click on the map.
+ */
+
+/**
+ * The application wide options.
+ * @typedef {Object} gmfOptions
+ * @property {boolean} [showInfobar=false] Show the information bar.
+ * @property {boolean} [geolocalisation=false] Show the geolocalisation button.
+ * @property {View} view The view definition.
+ * @property {Map} map The map definition.
+ * @property {number} zoom The default zoom.
+ * @property {import('ol/control/Control.js').Control[]} [mapControls] The map control.
+ * @property {import('ol/interaction/Interaction.js').Interaction[]} [mapInteractions] The map interactions.
+ * @property {import('ol/interaction/Interaction.js').Interaction[]} [interationDefaults] The map interactions.
+ */
+
+/**
+ * A projection definitions.
+ * @typedef {Object} Projection
+ * @property {string[]} definition The definition.
+ * @property {number[]} extent The extent.
+ */
+/**
+ * The available projections definitions.
+ * @typedef {Object<string, Projection>} gmfProjectionsOptions
+ */
+
+/**
  * Flush mode active?
  * @typedef {boolean} gmfTreeManagerModeFlush
  */
@@ -381,6 +503,11 @@ export function buildStyle(styleDescriptor) {
  * @property {boolean} openlinksinnewwindow if true, open
  *    metadataURLs in a new window. Otherwise open them in a popup.
  * @property {boolean} isExpanded [Experimental] Whether all the layer group is expanded by default.
+ */
+
+/**
+ * @typedef {Object} gmfShareOptions
+ * @property {boolean} [enableEmail=true] Enhable email.
  */
 
 export default undefined;

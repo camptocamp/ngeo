@@ -17,8 +17,8 @@
         {{'Error, cannot get the shortened URL.' | translate}}
       </p>
     </div>
-    <hr ng-if="::$ctrl.enableEmail">
-    <div class="gmf-share-email" ng-if="::$ctrl.enableEmail">
+    <hr ng-if="::$ctrl.options.enableEmail !== false">
+    <div class="gmf-share-email" ng-if="::$ctrl.options.enableEmail !== false">
       <div class="form-group">
         <label for="gmfShareInputEmail-{{::$ctrl.uid}}" translate>Send this link to</label>
         <input type="email" class="form-control"  name="inputEmail" id="gmfShareInputEmail-{{::$ctrl.uid}}" placeholder="E-mail" ng-model="$ctrl.email" required>
@@ -47,7 +47,7 @@
     </div>
     <div class="text-right">
       <button type="button" class="btn btn-default" data-dismiss="modal" translate>Close</button>
-      <button ng-if="::$ctrl.enableEmail"
+      <button ng-if="::$ctrl.options.enableEmail !== false"
         type="submit" class="btn prime"
         ng-click="$ctrl.sendShortUrl()"
         ng-disabled="!gmfShareForm.$valid"

@@ -58,7 +58,6 @@ import '@geoblocks/proj/src/somerc.js';
 import '@geoblocks/proj/src/lcc.js';
 import '@geoblocks/proj/src/tmerc.js';
 import {create as createProjection} from '@geoblocks/proj/src/utils.js';
-import {get as getProjection} from 'ol/proj.js';
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
 import olControlScaleLine from 'ol/control/ScaleLine.js';
@@ -99,28 +98,28 @@ import {noModifierKeys} from 'ol/events/condition.js';
  * @ngInject
  */
 export function AbstractAppController($scope, $injector, mobile) {
+  /** @type {import('gmf/options.js').gmfProjectionsOptions} */
   const projections = $injector.get('gmfProjectionsOptions');
   for (const code in projections) {
     createProjection(code, projections[code].definition.join(' '), projections[code].extent);
   }
-  const config = $injector.get('gmfOptions');
-  const viewConfig = config.view;
-  viewConfig.projection = getProjection(`EPSG:${viewConfig.srid || 2056}`);
+  /** @type {import('gmf/options.js').gmfOptions} */
+  this.options = $injector.get('gmfOptions');
 
   const scaleline = document.getElementById('scaleline');
   const map = new olMap(
     Object.assign(
       {
         layers: [],
-        view: new olView(viewConfig),
-        controls: config.mapControls || [
+        view: new olView(this.options.view),
+        controls: this.options.mapControls || [
           new olControlScaleLine({
             target: scaleline,
             // See: https://www.w3.org/TR/CSS21/syndata.html#length-units
             dpi: 96,
           }),
           new olControlZoom(
-            config.zoom || {
+            this.options.zoom || {
               target: mobile ? undefined : 'ol-zoom-control',
               zoomInTipLabel: '',
               zoomOutTipLabel: '',
@@ -132,9 +131,9 @@ export function AbstractAppController($scope, $injector, mobile) {
           }),
         ],
         interactions:
-          config.mapInteractions ||
+          this.options.mapInteractions ||
           interactionsDefaults(
-            config.interationDefaults ||
+            this.options.interationDefaults ||
               (mobile
                 ? {pinchRotate: true}
                 : {
@@ -144,7 +143,7 @@ export function AbstractAppController($scope, $injector, mobile) {
                   })
           ),
       },
-      config.map
+      this.options.map
     )
   );
 
@@ -521,13 +520,13 @@ export function AbstractAppController($scope, $injector, mobile) {
 
   /**
    * Default language
-   * @type {string}
+   * @type {import('gmf/options.js').defaultLang}
    */
   this.defaultLang = $injector.get('defaultLang');
 
   /**
    * Languages URL
-   * @type {Object<string, string>}
+   * @type {import('gmf/options.js').langUrls}
    */
   this.langUrls = $injector.get('langUrls');
 
@@ -766,7 +765,7 @@ export function AbstractAppController($scope, $injector, mobile) {
   }
 
   const positionFeatureStyle =
-    config.positionFeatureStyle ||
+    this.config.positionFeatureStyle ||
     new olStyleStyle({
       image: new olStyleCircle({
         radius: 6,
@@ -776,7 +775,7 @@ export function AbstractAppController($scope, $injector, mobile) {
     });
 
   const accuracyFeatureStyle =
-    config.accuracyFeatureStyle ||
+    this.config.accuracyFeatureStyle ||
     new olStyleStyle({
       fill: new olStyleFill({color: 'rgba(100, 100, 230, 0.3)'}),
       stroke: new olStyleStroke({color: 'rgba(40, 40, 230, 1)', width: 2}),
@@ -788,8 +787,8 @@ export function AbstractAppController($scope, $injector, mobile) {
   this.geolocationOptions = {
     positionFeatureStyle: positionFeatureStyle,
     accuracyFeatureStyle: accuracyFeatureStyle,
-    zoom: config.geolocationZoom,
-    autorotate: config.autorotate,
+    zoom: this.config.geolocationZoom,
+    autorotate: this.config.autorotate,
   };
 }
 

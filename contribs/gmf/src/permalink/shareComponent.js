@@ -71,17 +71,11 @@ function gmfPermalinkShareTemplateUrl($attrs, gmfPermalinkShareTemplateUrl) {
 /**
  * Component to display a shortened permalink and share it by email Example:
  *
- *      <gmf-share
- *        gmf-share-email="true">
- *      </gmf-share>
+ *      <gmf-share></gmf-share>
  *
- * @htmlAttribute {boolean} gmf-share-email Enable emailing capability.
  * @type {angular.IComponentOptions}
  */
 const permalinkShareComponent = {
-  bindings: {
-    'enableEmail': '<gmfShareEmail',
-  },
   controller: 'GmfShareController',
   templateUrl: gmfPermalinkShareTemplateUrl,
 };
@@ -100,12 +94,15 @@ class ShareComponentController {
    *    sharing map.
    * @param {angular.IQService} $q Angular q service
    * @param {angular.IAttributes} $attrs Attributes.
+   * @param {import('gmf/options.js').gmfShareOptions} gmfShareOptions The options.
    * @constructor
    * @ngInject
    * @ngdoc controller
    * @ngname GmfShareController
    */
-  constructor($scope, ngeoLocation, gmfShareService, $q, $attrs) {
+  constructor($scope, ngeoLocation, gmfShareService, $q, $attrs, gmfShareOptions) {
+    this.options = gmfShareOptions;
+
     /**
      * @type {string}
      */
@@ -134,11 +131,6 @@ class ShareComponentController {
      * @private
      */
     this.ngeoLocation_ = ngeoLocation;
-
-    /**
-     * @type {boolean}
-     */
-    this.enableEmail = false;
 
     /**
      * @type {string}

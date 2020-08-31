@@ -219,9 +219,7 @@ const printComponent = {
   bindings: {
     'map': '<gmfPrintMap',
     'active': '=gmfPrintActive',
-    'rotateMask': '<?gmfPrintRotatemask',
     'fieldValues': '<?gmfPrintFieldvalues',
-    'hiddenAttributeNames': '<?gmfPrintHiddenattributes',
     'attributesOut': '=?gmfPrintAttributesOut',
   },
   controller: 'GmfPrintController',
