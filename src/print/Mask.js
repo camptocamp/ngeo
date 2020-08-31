@@ -59,16 +59,18 @@ export default class Mask extends Layer {
    * @param {import("ol/PluggableMap").FrameState} frameState
    */
   render(frameState) {
-    this.context_.canvas.width = frameState.size[0];
-    this.context_.canvas.height = frameState.size[1];
-    const center = [this.context_.canvas.width / 2, this.context_.canvas.height / 2];
+    const cwidth = frameState.size[0];
+    this.context_.canvas.width = cwidth;
+    const cheight = frameState.size[1];
+    this.context_.canvas.height = cheight;
+    const center = [cwidth / 2, cheight / 2];
 
     // background (clockwise)
     this.context_.beginPath();
     this.context_.moveTo(0, 0);
-    this.context_.lineTo(this.context_.canvas.width, 0);
-    this.context_.lineTo(this.context_.canvas.width, this.context_.canvas.height);
-    this.context_.lineTo(0, this.context_.canvas.height);
+    this.context_.lineTo(cwidth, 0);
+    this.context_.lineTo(cwidth, cheight);
+    this.context_.lineTo(0, cheight);
     this.context_.lineTo(0, 0);
     this.context_.closePath();
 

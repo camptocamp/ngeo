@@ -6,6 +6,12 @@ cd ngeo
 make serve-ngeo
 ```
 
+Use the *ONE_EXAMPLE* environment variable to build (and rebuild on each change) only one example.
+
+```
+ONE_EXAMPLE=offline make serve-ngeo
+```
+
 The ngeo examples are now available on your https://localhost:3000/examples/.
 
 ### Run GeoMapFish
