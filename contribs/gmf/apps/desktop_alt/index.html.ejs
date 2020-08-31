@@ -343,9 +343,7 @@
           <button class="btn fa gmf-app-map-info ng-cloak" ng-click="mainCtrl.showInfobar = !mainCtrl.showInfobar"
                   ng-class="{'fa-angle-double-up': !mainCtrl.showInfobar, 'fa-angle-double-down': mainCtrl.showInfobar}"></button>
 
-          <div ngeo-scaleselector="undefined"
-               ngeo-scaleselector-map="mainCtrl.map"
-               ngeo-scaleselector-options="mainCtrl.scaleSelectorOptions"></div>
+          <div ngeo-scaleselector ngeo-scaleselector-map="mainCtrl.map"></div>
           <div id="scaleline"></div>
           <div class="pull-right">
             <gmf-elevationwidget

@@ -28,8 +28,6 @@ describe('ngeo.map.scaleselector', () => {
   let element;
   /** @type {import('ol/Map.js').default} */
   let map;
-  /** @type {Object<string, *>} */
-  let scales;
 
   beforeEach(() => {
     map = new olMap({
@@ -39,14 +37,10 @@ describe('ngeo.map.scaleselector', () => {
       }),
     });
 
-    element = angular.element(
-      '<div ngeo-scaleselector="scales"' + 'ngeo-scaleselector-map="map">' + '</div>'
-    );
+    element = angular.element('<div ngeo-scaleselector ngeo-scaleselector-map="map"></div>');
 
     angular.mock.inject(($rootScope, $compile, $sce) => {
-      scales = [500, 1000, 5000, 25000, 50000];
       $rootScope.map = map;
-      $rootScope.scales = scales;
       $compile(element)($rootScope);
       $rootScope.$digest();
     });
@@ -55,6 +49,7 @@ describe('ngeo.map.scaleselector', () => {
   it('creates an element with expected number of li elements', () => {
     const lis = element.find('li');
     expect(lis.length).toBe(29);
+    expect(lis[0].innerText.trim()).toBe('1\u00a0:\u00a0500');
   });
 
   describe('calling setZoom in Angular context', () => {
@@ -69,18 +64,18 @@ describe('ngeo.map.scaleselector', () => {
 
       expect(test).not.toThrow();
       // @ts-ignore: scope
-      expect(scope.scaleselectorCtrl.currentScale).toBe(scales[4]);
+      expect(scope.scaleselectorCtrl.currentScale).toBe(50000);
     });
   });
 
   it('calls getScale', () => {
     const scope = element.scope();
     // @ts-ignore: scope
-    expect(scope.scaleselectorCtrl.getScale(0)).toBe(scales[0]);
+    expect(scope.scaleselectorCtrl.getScale(0)).toBe(500);
     // @ts-ignore: scope
     expect(scope.scaleselectorCtrl.getScale(0.5)).toEqual(750);
     // @ts-ignore: scope
-    expect(scope.scaleselectorCtrl.getScale(4)).toBe(scales[4]);
+    expect(scope.scaleselectorCtrl.getScale(4)).toBe(50000);
     // @ts-ignore: scope
     expect(scope.scaleselectorCtrl.getScale(28)).toBe(2);
     // @ts-ignore: scope

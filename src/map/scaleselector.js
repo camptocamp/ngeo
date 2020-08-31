@@ -20,17 +20,9 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import {numberSafeCompareFunction} from 'ol/array.js';
 import olMap from 'ol/Map.js';
 import {listen, unlistenByKey} from 'ol/events.js';
 import 'bootstrap/js/src/dropdown.js';
-
-/**
- * Options to configure the scale selector.
- *
- * @typedef {Object} ScaleselectorOptions
- * @property {boolean} [dropup] True to get a drop menu that opens imself to the top, instead of the bottom.
- */
 
 /**
  * @type {angular.IModule}
@@ -68,8 +60,7 @@ module.run(
  *
  * Example:
  *
- *     <div ngeo-scaleselector="ctrl.scales" ngeo-scaleselector-map="ctrl.map">
- *     </div>
+ *     <div ngeo-scaleselector ngeo-scaleselector-map="ctrl.map"></div>
  *
  * The expression passed to the ngeo-scaleselector attribute should return an
  * array of this form:
@@ -85,10 +76,7 @@ module.run(
  *
  * Example:
  *
- *     <div ngeo-scaleselector="ctrl.scales"
- *       ngeo-scaleselector-map="ctrl.map"
- *       ngeo-scaleselector-options="ctrl.scaleSelectorOptions">
- *     </div>
+ *     <div ngeo-scaleselector ngeo-scaleselector-map="ctrl.map"></div>
  *
  * By default the directive uses "scaleselector.html" as its templateUrl. This
  * can be changed by redefining the "ngeoScaleselectorTemplateUrl" value.
@@ -102,10 +90,7 @@ module.run(
  *
  * See our live example: [../examples/scaleselector.html](../examples/scaleselector.html)
  *
- * @htmlAttribute {number[]} ngeo-scaleselector The available scales.
  * @htmlAttribute {import("ol/Map.js").default} ngeo-scaleselector-map The map.
- * @htmlAttribute {ScaleselectorOptions} ngeo-scaleselector-options
- *    Optional. The configuration options.
  * @param {string|function(JQuery=, angular.IAttributes=): string} ngeoScaleselectorTemplateUrl Template URL
  *    for the directive.
  * @return {angular.IDirective} Directive Definition Object.
@@ -131,34 +116,16 @@ module.directive('ngeoScaleselector', mapScaleselectorComponent);
 class ScaleselectorController {
   /**
    * @param {angular.IScope} $scope Directive scope.
-   * @param {JQuery} $element Element.
    * @param {angular.IAttributes} $attrs Attributes.
+   * @param {import('ngeo/options.js').ngeoScaleSelectorOptions} ngeoScaleSelectorOptions The options.
    * @ngInject
    */
-  constructor($scope, $element, $attrs) {
-    const scalesExpr = $attrs.ngeoScaleselector;
-
+  constructor($scope, $attrs, ngeoScaleSelectorOptions) {
     /**
      * The zoom level/scale map object.
      * @type {number[]}
      */
-    this.scales = /** @type {number[]} */ ($scope.$eval(scalesExpr));
-
-    /**
-     * @type {number[]}
-     */
-    this.zoomLevels = [];
-
-    $scope.$watch(
-      () => Object.keys(this.scales).length,
-      /**
-       * @param {number} newLength
-       */
-      (newLength) => {
-        this.zoomLevels = Object.keys(this.scales).map(Number);
-        this.zoomLevels.sort(numberSafeCompareFunction);
-      }
-    );
+    this.scales = ngeoScaleSelectorOptions.values;
 
     const mapExpr = $attrs.ngeoScaleselectorMap;
 
@@ -169,13 +136,10 @@ class ScaleselectorController {
     this.map_ = /** @type {import("ol/Map.js").default} */ ($scope.$eval(mapExpr));
     console.assert(this.map_ instanceof olMap);
 
-    const optionsExpr = $attrs.ngeoScaleselectorOptions;
-    const options = $scope.$eval(optionsExpr);
-
     /**
-     * @type {ScaleselectorOptions}
+     * @type {import('ngeo/options.js').ngeoScaleSelectorOptions}
      */
-    this.options = getOptions_(options);
+    this.options = ngeoScaleSelectorOptions;
 
     /**
      * @type {angular.IScope}
@@ -238,6 +202,13 @@ class ScaleselectorController {
 
     // @ts-ignore
     $scope.scaleselectorCtrl = this;
+  }
+
+  /**
+   * @returns {number[]}
+   */
+  getZooms() {
+    return Object.keys(this.scales).map(Number);
   }
 
   /**
@@ -315,21 +286,6 @@ class ScaleselectorController {
     const view = this.map_.getView();
     this.resolutionChangeKey_ = listen(view, 'change:resolution', this.handleResolutionChange_, this);
   }
-}
-
-/**
- * @param {?} options Options after expression evaluation.
- * @return {ScaleselectorOptions} Options object.
- * @private
- */
-function getOptions_(options) {
-  let dropup = false;
-  if (options !== undefined) {
-    dropup = options.dropup == true;
-  }
-  return /** @type {ScaleselectorOptions} */ ({
-    dropup: dropup,
-  });
 }
 
 module.controller('NgeoScaleselectorController', ScaleselectorController);
