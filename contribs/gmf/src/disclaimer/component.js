@@ -71,6 +71,7 @@ const module = angular.module('gmfDisclaimer', [
  *    service.
  * @param {import("ngeo/misc/EventHelper.js").EventHelper} ngeoEventHelper Ngeo Event Helper.
  * @param {import("ngeo/map/LayerHelper.js").LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
+ * @param {import('gmf/options.js').gmfDisclaimerOptions} gmfDisclaimerOptions The options.
  * @ngInject
  * @constructor
  * @ngdoc controller
@@ -83,27 +84,18 @@ function DisclaimerController(
   gettextCatalog,
   ngeoDisclaimer,
   ngeoEventHelper,
-  ngeoLayerHelper
+  ngeoLayerHelper,
+  gmfDisclaimerOptions
 ) {
+  /**
+   * @type {import('gmf/options.js').gmfDisclaimerOptions}
+   */
+  this.options = gmfDisclaimerOptions;
+
   /**
    * @type {?import("ol/Map.js").default}
    */
   this.map = null;
-
-  /**
-   * @type {boolean|undefined}
-   */
-  this.layerVisibility;
-
-  /**
-   * @type {boolean|undefined}
-   */
-  this.external;
-
-  /**
-   * @type {boolean|undefined}
-   */
-  this.popup;
 
   /**
    * Visibility that is set to true when a new msg is there.
@@ -178,7 +170,6 @@ DisclaimerController.prototype.$onInit = function () {
   if (!this.map) {
     throw new Error('Missing map');
   }
-  this.layerVisibility = this.layerVisibility !== undefined ? this.layerVisibility : true;
 
   this.dataLayerGroup_ = this.ngeoLayerHelper_.getGroupFromMap(this.map, DATALAYERGROUP_NAME);
   this.registerLayer_(this.dataLayerGroup_);
@@ -235,7 +226,7 @@ DisclaimerController.prototype.registerLayer_ = function (layer) {
       this.registerLayer_(layer);
     });
   } else {
-    if (this.layerVisibility) {
+    if (this.options.layerVisibility || this.options.layerVisibility === undefined) {
       // Show disclaimer messages for this layer
       if (layer.getVisible()) {
         this.update_(layer);
@@ -291,7 +282,7 @@ DisclaimerController.prototype.$onDestroy = function () {
  */
 DisclaimerController.prototype.showDisclaimerMessage_ = function (layerUid, msg) {
   msg = this.gettextCatalog_.getString(msg);
-  if (this.external) {
+  if (this.options.external) {
     if (!this.msgs_.includes(msg)) {
       this.msgs_.push(msg);
     }
@@ -305,8 +296,8 @@ DisclaimerController.prototype.showDisclaimerMessage_ = function (layerUid, msg)
       target: this.element_,
       type: MessageType.WARNING,
     };
-    if (this.popup) {
-      options.popup = this.popup;
+    if (this.options.popup) {
+      options.popup = this.options.popup;
     }
     this.disclaimer_.alert(options);
   }
@@ -379,7 +370,7 @@ DisclaimerController.prototype.update_ = function (layer) {
  */
 DisclaimerController.prototype.closeDisclaimerMessage_ = function (layerUid, msg) {
   msg = this.gettextCatalog_.getString(msg);
-  if (this.external) {
+  if (this.options.external) {
     this.visibility = false;
     this.msgs_.length = 0;
     this.msg = '';
@@ -391,8 +382,8 @@ DisclaimerController.prototype.closeDisclaimerMessage_ = function (layerUid, msg
       target: this.element_,
       type: MessageType.WARNING,
     };
-    if (this.popup) {
-      options.popup = this.popup;
+    if (this.options.popup) {
+      options.popup = this.options.popup;
     }
     this.disclaimer_.close(options);
   }
@@ -405,7 +396,9 @@ DisclaimerController.prototype.closeDisclaimerMessage_ = function (layerUid, msg
  * Example:
  *
  *      <gmf-disclaimer
- *        gmf-disclaimer-map="::ctrl.map">
+ *        gmf-disclaimer-map="::ctrl.map"
+ *        gmf-disclaimer-external-msg="disclaimerMsg"
+ *        gmf-disclaimer-external-visibility="disclaimerVisibility">
  *      </gmf-disclaimer>
  *
  * You can also display the disclaimer messages in popups or use them in another
@@ -416,7 +409,6 @@ DisclaimerController.prototype.closeDisclaimerMessage_ = function (layerUid, msg
  *
  *      <gmf-disclaimer
  *        gmf-disclaimer-map="::ctrl.map"
- *        gmf-disclaimer-external="::true"
  *        gmf-disclaimer-external-msg="disclaimerMsg"
  *        gmf-disclaimer-external-visibility="disclaimerVisibility">
  *      </gmf-disclaimer>
@@ -430,21 +422,13 @@ DisclaimerController.prototype.closeDisclaimerMessage_ = function (layerUid, msg
  *       </div>
  *     </ngeo-modal>
  *
- * @htmlAttribute {boolean?} gmf-disclaimer-layer-visibility Only display the disclaimer
- *     if the layer is visible. Defaults to `true`.
- * @htmlAttribute {boolean} gmf-disclaimer-popup Whether to show the disclaimer
- *     messages in popups or not. Defaults to `false`.
- * @htmlAttribute {boolean?} gmf-disclaimer-external Whether to use disclaimer
- *     messages elsewhere or not. Default to `false`. If true, you should use
- *     the gmf-disclaimer-external-msg and the
- *     gmf-disclaimer-external-visibility too.
+ * @htmlAttribute {import("ol/Map.js").default=} gmf-disclaimer-map The map.
  * @htmlAttribute {boolean?} gmf-disclaimer-external-visibility variable that
  *     will be set to true if the disclaimers contain a new message. To uses it,
  *     you must set the gmf-disclaimer-external to true.
  * @htmlAttribute {string?} gmf-disclaimer-external-msg variable that will
  *     contains the disclaimer messages. To uses it, you must set the
  *     gmf-disclaimer-external to true.
- * @htmlAttribute {import("ol/Map.js").default=} gmf-disclaimer-map The map.
  *
  * @ngdoc component
  * @ngname gmfDisclaimer
@@ -452,10 +436,7 @@ DisclaimerController.prototype.closeDisclaimerMessage_ = function (layerUid, msg
 const disclaimerComponent = {
   controller: DisclaimerController,
   bindings: {
-    'layerVisibility': '<?gmfDisclaimerLayerVisibility',
-    'popup': '<?gmfDisclaimerPopup',
     'map': '=gmfDisclaimerMap',
-    'external': '<?gmfDisclaimerExternal',
     'visibility': '=?gmfDisclaimerExternalVisibility',
     'msg': '=?gmfDisclaimerExternalMsg',
   },

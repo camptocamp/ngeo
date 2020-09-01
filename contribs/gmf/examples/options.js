@@ -118,6 +118,7 @@ export default function (module) {
   module.constant('gmfContextualdataOptions', {});
   module.constant('gmfPrintOptions', {});
   module.constant('gmfBackgroundLayerSelectorOptions', {});
+  module.constant('gmfDisclaimerOptions', {});
 
   module.constant('ngeoQueryOptions', {
     'limit': 20,

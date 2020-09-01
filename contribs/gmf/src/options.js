@@ -146,4 +146,15 @@
  * @property {string} [opacityLayer] The background layer with an opacity slider.
  */
 
+/**
+ * The disclaimers options
+ * @typedef {object} gmfDisclaimerOptions
+ * @property {boolean} [popup] Whether to show the disclaimer messages in popups or not.
+ * Defaults to `false`.
+ * @property {boolean} [layerVisibility] Only display the disclaimer if the layer is visible.
+ * Defaults to `true`.
+ * @property {boolean} [external] Whether to use disclaimer messages elsewhere or not. Default to `false`.
+ * If true, you should use the externalMessage and the externalVisibility too.
+ */
+
 export default undefined;
