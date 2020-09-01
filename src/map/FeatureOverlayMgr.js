@@ -59,19 +59,16 @@ import {toFunction as toStyleFunction, createDefaultStyle as olStyleDefaultFunct
 export function FeatureOverlayMgr() {
   /**
    * @type {Object<string, number>}
-   * @private
    */
   this.featureUidToGroupIndex_ = {};
 
   /**
    * @type {MapFeatureOverlayGroup[]}
-   * @private
    */
   this.groups_ = [];
 
   /**
    * @type {import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>}
-   * @private
    */
   this.source_ = new olSourceVector({
     useSpatialIndex: false,
@@ -79,7 +76,6 @@ export function FeatureOverlayMgr() {
 
   /**
    * @type {import("ol/layer/Vector.js").default}
-   * @private
    */
   this.layer_ = new olLayerVector({
     source: this.source_,
@@ -179,7 +175,6 @@ FeatureOverlayMgr.prototype.setStyle = function (style, groupIndex) {
  * @param {import('ol/Feature.js').default<import('ol/geom/Geometry.js').default>|import("ol/render/Feature.js").default} feature Feature.
  * @param {number} resolution Resolution.
  * @return {Array<import("ol/style/Style.js").default>|import("ol/style/Style.js").default} Styles.
- * @private
  */
 FeatureOverlayMgr.prototype.styleFunction_ = function (feature, resolution) {
   const featureUid = olUtilGetUid(feature).toString();

@@ -213,7 +213,6 @@ module.component('gmfSearch', searchComponent);
  */
 class SearchController {
   /**
-   * @private
    * @param {JQuery} $element Element.
    * @param {angular.IScope} $scope The component's scope.
    * @param {angular.ICompileService} $compile Angular compile service.

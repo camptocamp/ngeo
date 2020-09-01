@@ -46,7 +46,6 @@ const module = angular.module('gmfapp', ['gettext', ngeoMiscDatepickerComponent.
 function MainController($scope, ngeoWMSTime) {
   /**
    * @type {import("ngeo/misc/WMSTime.js").WMSTime}
-   * @private
    */
   this.ngeoWMSTime_ = ngeoWMSTime;
 

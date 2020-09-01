@@ -121,7 +121,6 @@ class RuleController {
    * @param {import("ngeo/filter/RuleHelper.js").RuleHelper} ngeoRuleHelper Ngeo rule helper service.
    * @param {import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate
    *     manager service.
-   * @private
    * @ngInject
    * @ngdoc controller
    * @ngname NgeoRuleController

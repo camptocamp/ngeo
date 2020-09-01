@@ -44,13 +44,11 @@ const module = angular.module('app', ['gettext', ngeoMapModule.name, ngeoMiscFil
  */
 function MainController($scope) {
   /**
-   * @private
    * @type {import("ol/format/KML.js").default}
    */
   this.kmlFormat_ = new olFormatKML();
 
   /**
-   * @private
    * @type {import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>}
    */
   this.vectorSource_ = new olSourceVector();
@@ -88,7 +86,6 @@ function MainController($scope) {
 
 /**
  * @param {string} kml KML document.
- * @private
  */
 MainController.prototype.importKml_ = function (kml) {
   const map = this.map;

@@ -395,7 +395,6 @@ export class OGC extends ngeoDatasourceDataSource {
     /**
      * Time upper value.
      * @type {number|undefined}
-     * @private
      */
     this.timeUpperValue = options.timeUpperValue;
 
@@ -423,7 +422,6 @@ export class OGC extends ngeoDatasourceDataSource {
     /**
      * The url to use for (WFS) requests.
      * @type {?string}
-     * @private
      */
     this.wfsUrl_ = options.wfsUrl;
 

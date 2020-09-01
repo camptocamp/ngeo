@@ -107,7 +107,6 @@ module.component('ngeoOffline', component);
 
 export const Controller = class {
   /**
-   * @private
    * @param {angular.ITimeoutService} $timeout Angular timeout service.
    * @param {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr
    * ngeo feature overlay manager service.

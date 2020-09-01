@@ -143,13 +143,11 @@ function Controller($scope, ngeoEventHelper) {
 
   /**
    * @type {angular.IScope}
-   * @private
    */
   this.scope_ = $scope;
 
   /**
    * @type {import("ngeo/misc/EventHelper.js").EventHelper}
-   * @private
    */
   this.ngeoEventHelper_ = ngeoEventHelper;
 
@@ -161,7 +159,6 @@ function Controller($scope, ngeoEventHelper) {
    * applying changes coming from the form, this flag is set. While set, changes
    * from the feature inner properties are ignored.
    * @type {boolean}
-   * @private
    */
   this.updating_ = false;
 }
@@ -210,7 +207,6 @@ Controller.prototype.$onDestroy = function () {
 
 /**
  * @param {Event|import('ol/events/Event.js').default} evt Event.
- * @private
  */
 Controller.prototype.handleFeaturePropertyChange_ = function (evt) {
   if (evt instanceof ObjectEvent) {

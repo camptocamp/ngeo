@@ -103,7 +103,6 @@ class Controller {
    * @param {import("ngeo/query/Querent.js").Querent} ngeoQuerent Ngeo querent service.
    * @param {import('gmf/options.js').gmfExternalOGCServers} gmfExternalOGCServers The options.
    * @param {angular.gettext.gettextCatalog} gettextCatalog The gettextCatalog service.
-   * @private
    * @ngInject
    * @ngdoc controller
    * @ngname GmfImportdatasourceController

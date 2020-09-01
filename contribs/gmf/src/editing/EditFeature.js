@@ -46,7 +46,6 @@ import {appendParams as olUriAppendParams} from 'ol/uri.js';
 export function EditingEditFeature($http, gmfLayersUrl) {
   /**
    * @type {angular.IHttpService}
-   * @private
    */
   this.http_ = $http;
 
@@ -56,7 +55,6 @@ export function EditingEditFeature($http, gmfLayersUrl) {
    * - the objectediting tools
    *
    * @type {string}
-   * @private
    */
   this.baseUrl_ = gmfLayersUrl;
 }

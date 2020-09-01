@@ -111,7 +111,6 @@ function Controller($scope, gmfObjectEditingQuery) {
 
   /**
    * @type {import("gmf/objectediting/Query.js").ObjectEditingQuery}
-   * @private
    */
   this.gmfObjectEditingQuery_ = gmfObjectEditingQuery;
 
@@ -123,7 +122,6 @@ function Controller($scope, gmfObjectEditingQuery) {
 
 /**
  * @param {boolean} active Active.
- * @private
  */
 Controller.prototype.handleActiveChange_ = function (active) {
   if (!this.map) {
@@ -138,7 +136,6 @@ Controller.prototype.handleActiveChange_ = function (active) {
 
 /**
  * @param {Event|import('ol/events/Event.js').default} evt Event.
- * @private
  */
 Controller.prototype.handleMapClick_ = function (evt) {
   if (evt instanceof MapBrowserEvent) {

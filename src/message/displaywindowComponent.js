@@ -78,7 +78,6 @@ class Controller {
    * @param {angular.ISCEService} $sce Angular sce service.
    * @param {angular.IScope} $scope Scope.
    * @param {angular.ICompileService} $compile The compile provider.
-   * @private
    * @ngInject
    * @ngdoc controller
    * @ngname ngeoDisplaywindowComponentController

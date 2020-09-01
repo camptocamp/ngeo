@@ -114,7 +114,6 @@ class FilterController {
    * @param {angular.ITimeoutService} $timeout Angular timeout service.
    * @param {import("ngeo/query/MapQuerent.js").MapQuerent} ngeoMapQuerent The ngeo map querent service.
    * @param {import("ngeo/filter/RuleHelper.js").RuleHelper} ngeoRuleHelper Ngeo rule helper service.
-   * @private
    * @ngInject
    * @ngdoc controller
    * @ngname NgeoFilterController

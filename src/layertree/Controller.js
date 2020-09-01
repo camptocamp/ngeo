@@ -49,7 +49,6 @@ export function LayertreeController($scope, $rootScope, $attrs) {
 
   /**
    * @type {angular.IScope}
-   * @private
    */
   this.rootScope_ = $rootScope;
 
@@ -60,7 +59,6 @@ export function LayertreeController($scope, $rootScope, $attrs) {
 
   /**
    * @type {string}
-   * @private
    */
   this.state_ = 'off';
 
@@ -159,7 +157,6 @@ export function LayertreeController($scope, $rootScope, $attrs) {
 
   /**
    * @type {?import("ngeo/datasource/DataSource.js").default}
-   * @private
    */
   this.dataSource_ = null;
 

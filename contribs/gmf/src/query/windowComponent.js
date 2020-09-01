@@ -195,20 +195,17 @@ export function QueryWindowController(
 
   /**
    * @type {import("ngeo/query/MapQuerent.js").MapQuerent}
-   * @private
    */
   this.ngeoMapQuerent_ = ngeoMapQuerent;
 
   /**
    * @type {import("ngeo/download/Csv.js").DownloadCsvService}
-   * @private
    */
   this.ngeoCsvDownload_ = ngeoCsvDownload;
 
   /**
    * Filename
    * @type {import('gmf/options.js').gmfCsvFilename}
-   * @private
    */
   this.filename_ = gmfCsvFilename;
 
@@ -219,19 +216,16 @@ export function QueryWindowController(
 
   /**
    * @type {import("ol/Collection.js").default<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>}
-   * @private
    */
   this.features_ = new olCollection();
 
   /**
    * @type {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr}
-   * @private
    */
   this.ngeoFeatureOverlayMgr_ = ngeoFeatureOverlayMgr;
 
   /**
    * @type {import("ol/Collection.js").default<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>}
-   * @private
    */
   this.highlightFeatures_ = new olCollection();
 
@@ -267,7 +261,6 @@ export function QueryWindowController(
 
   /**
    * @const {JQuery}
-   * @private
    */
   this.element_ = $element;
 
@@ -329,9 +322,6 @@ QueryWindowController.prototype.show = function () {
   this.updateFeatures_();
 };
 
-/**
- * @private
- */
 QueryWindowController.prototype.updateFeatures_ = function () {
   this.setCurrentResult_(0, false);
   if (this.source !== null) {
@@ -347,7 +337,6 @@ QueryWindowController.prototype.updateFeatures_ = function () {
  * than the length of the first source, get it in the next source. Etc.
  * @param {boolean} setHighlight True to set the highlight automatically.
  * @return {boolean} True if result has changed. False else.
- * @private
  */
 QueryWindowController.prototype.setCurrentResult_ = function (position, setHighlight) {
   let hasChanged = false;
@@ -413,7 +402,6 @@ QueryWindowController.prototype.next = function () {
 /**
  * Remove features without properties from the query result.
  * @param {import('ngeo/query/MapQuerent.js').QueryResult} queryResult ngeo query result.
- * @private
  */
 QueryWindowController.prototype.updateQueryResult_ = function (queryResult) {
   this.ngeoQueryResult.total = 0;
@@ -476,7 +464,6 @@ QueryWindowController.prototype.getFeatureValues = function () {
  * animation.
  * @param {boolean} isNext used to indicate if the user wants to see the next
  * or the previous result.
- * @private
  */
 QueryWindowController.prototype.animate_ = function (isNext) {
   this.isNext = isNext;
@@ -485,7 +472,6 @@ QueryWindowController.prototype.animate_ = function (isNext) {
 
 /**
  * Collect all features in the queryResult object.
- * @private
  */
 QueryWindowController.prototype.collectFeatures_ = function () {
   const sources = this.ngeoQueryResult.sources;
@@ -506,7 +492,6 @@ QueryWindowController.prototype.collectFeatures_ = function () {
  * Highlight the current displayed feature.
  * @param {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>=} opt_lastFeature last highlighted feature. Require if
  * it exists because it must be added to the 'non-selected' features collection.
- * @private
  */
 QueryWindowController.prototype.highlightCurrentFeature_ = function (opt_lastFeature) {
   if (!this.feature) {
@@ -571,7 +556,6 @@ QueryWindowController.prototype.downloadCSV = function (source) {
 /**
  * @param {import('ngeo/statemanager/WfsPermalink.js').QueryResultSource} source The source to export as csv.
  * @return {Array<Object>} data.
- * @private
  */
 QueryWindowController.prototype.getCSVData_ = function (source) {
   if (!source || source.features.length <= 0) {
@@ -586,7 +570,6 @@ QueryWindowController.prototype.getCSVData_ = function (source) {
 /**
  * @param {Array<Object>} data where keys with at least one defined value will be used as csv column header.
  * @return {Array<import('ngeo/download/Csv.js').GridColumnDef>} columns definitions for the CSV.
- * @private
  */
 QueryWindowController.prototype.getCSVHeaderDefinition_ = function (data) {
   if (!data) {

@@ -53,25 +53,21 @@ const module = angular.module('gmfapp', [
 function MainController($http, $q, $scope, gmfThemes, gmfXSDAttributes) {
   /**
    * @type {angular.IHttpService}
-   * @private
    */
   this.http_ = $http;
 
   /**
    * @type {angular.IQService}
-   * @private
    */
   this.q_ = $q;
 
   /**
    * @type {import("gmf/theme/Themes.js").ThemesService}
-   * @private
    */
   this.gmfThemes_ = gmfThemes;
 
   /**
    * @type {import("gmf/editing/XSDAttributes.js").EditingXSDAttributeService}
-   * @private
    */
   this.gmfXSDAttributes_ = gmfXSDAttributes;
 
@@ -101,13 +97,11 @@ function MainController($http, $q, $scope, gmfThemes, gmfXSDAttributes) {
 
   /**
    * @type {?import('gmf/themes.js').GmfOgcServers} ogcServers OGC servers.
-   * @private
    */
   this.gmfServers_ = null;
 
   /**
    * @type {?import('gmf/themes.js').GmfOgcServer} ogcServer OGC server to use.
-   * @private
    */
   this.gmfServer_ = null;
 
@@ -138,7 +132,6 @@ function MainController($http, $q, $scope, gmfThemes, gmfXSDAttributes) {
 
   /**
    * @type {Object<number, string>}
-   * @private
    */
   this.geomTypeCache_ = {};
 
@@ -259,7 +252,6 @@ MainController.prototype.runEditor = function () {
 /**
  * @param {import('gmf/themes.js').GmfLayerWMS} gmfLayerNode Layer node.
  * @return {angular.IPromise<void>} The promise attached to the deferred object.
- * @private
  */
 MainController.prototype.getFeatures_ = function (gmfLayerNode) {
   this.getFeaturesDeferred_ = this.q_.defer();
@@ -277,7 +269,6 @@ MainController.prototype.getFeatures_ = function (gmfLayerNode) {
 
 /**
  * @param {import('gmf/themes.js').GmfLayerWMS} gmfLayerNode Layer node.
- * @private
  */
 MainController.prototype.issueGetFeatures_ = function (gmfLayerNode) {
   if (!this.gmfServer_) {
@@ -305,7 +296,6 @@ MainController.prototype.issueGetFeatures_ = function (gmfLayerNode) {
 
 /**
  * @param {import('gmf/themes.js').GmfLayerWMS} gmfLayerNode Layer node.
- * @private
  */
 MainController.prototype.handleGetFeatures_ = function (gmfLayerNode) {
   this.features = /** @type {Array<import("ol/Feature.js").default<import("ol/geom/Geometry.js").default>>} */ (this.getFeaturesFromCache_(
@@ -317,7 +307,6 @@ MainController.prototype.handleGetFeatures_ = function (gmfLayerNode) {
 /**
  * @param {import('gmf/themes.js').GmfLayerWMS} gmfLayerNode Layer node.
  * @return {?Array<import("ol/Feature.js").default<import("ol/geom/Geometry.js").default>>} List of features
- * @private
  */
 MainController.prototype.getFeaturesFromCache_ = function (gmfLayerNode) {
   const id = gmfLayerNode.id;
@@ -328,7 +317,6 @@ MainController.prototype.getFeaturesFromCache_ = function (gmfLayerNode) {
 /**
  * @param {import('gmf/themes.js').GmfLayerWMS} gmfLayerNode Layer node.
  * @return {angular.IPromise<void>} The promise attached to the deferred object.
- * @private
  */
 MainController.prototype.getGeometryType_ = function (gmfLayerNode) {
   this.getGeometryTypeDeferred_ = this.q_.defer();
@@ -346,7 +334,6 @@ MainController.prototype.getGeometryType_ = function (gmfLayerNode) {
 
 /**
  * @param {import('gmf/themes.js').GmfLayerWMS} gmfLayerNode Layer node.
- * @private
  */
 MainController.prototype.issueGetAttributesRequest_ = function (gmfLayerNode) {
   this.gmfXSDAttributes_.getAttributes(gmfLayerNode.id).then(
@@ -371,7 +358,6 @@ MainController.prototype.issueGetAttributesRequest_ = function (gmfLayerNode) {
 
 /**
  * @param {import('gmf/themes.js').GmfLayerWMS} gmfLayerNode Layer node.
- * @private
  */
 MainController.prototype.handleGetGeometryType_ = function (gmfLayerNode) {
   const geomType = this.getGeometryTypeFromCache_(gmfLayerNode);
@@ -381,7 +367,6 @@ MainController.prototype.handleGetGeometryType_ = function (gmfLayerNode) {
 /**
  * @param {import('gmf/themes.js').GmfLayerWMS} gmfLayerNode Layer node.
  * @return {string|undefined} The type of geometry.
- * @private
  */
 MainController.prototype.getGeometryTypeFromCache_ = function (gmfLayerNode) {
   const id = gmfLayerNode.id;

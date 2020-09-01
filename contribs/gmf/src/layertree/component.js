@@ -260,19 +260,16 @@ function Controller(
 
   /**
    * @type {angular.IScope}
-   * @private
    */
   this.scope_ = $scope;
 
   /**
    * @type {import("ngeo/map/LayerHelper.js").LayerHelper}
-   * @private
    */
   this.layerHelper_ = ngeoLayerHelper;
 
   /**
    * @type {import('gmf/datasource/LayerBeingSwipe.js').LayerBeingSwipe}
-   * @private
    */
   this.gmfLayerBeingSwipe = gmfLayerBeingSwipe;
 
@@ -288,13 +285,11 @@ function Controller(
 
   /**
    * @type {import("gmf/permalink/Permalink.js").PermalinkService}
-   * @private
    */
   this.gmfPermalink_ = gmfPermalink;
 
   /**
    * @type {import("gmf/layertree/TreeManager.js").LayertreeTreeManager}
-   * @private
    */
   this.gmfTreeManager_ = gmfTreeManager;
 
@@ -310,19 +305,16 @@ function Controller(
 
   /**
    * @type {import("gmf/layertree/SyncLayertreeMap.js").SyncLayertreeMap}
-   * @private
    */
   this.gmfSyncLayertreeMap_ = gmfSyncLayertreeMap;
 
   /**
    * @type {import("ngeo/misc/WMSTime.js").WMSTime}
-   * @private
    */
   this.ngeoWMSTime_ = ngeoWMSTime;
 
   /**
    * @type {Object<number, string[]>}
-   * @private
    */
   this.groupNodeStates_ = {};
 
@@ -333,7 +325,6 @@ function Controller(
 
   /**
    * @type {?import("ol/layer/Group.js").default}
-   * @private
    */
   this.dataLayerGroup_ = null;
 
@@ -344,13 +335,11 @@ function Controller(
 
   /**
    * @type {import("gmf/theme/Themes.js").ThemesService}
-   * @private
    */
   this.gmfThemes_ = gmfThemes;
 
   /**
    * @type {angular.ITimeoutService}
-   * @private
    */
   this.$timeout_ = $timeout;
 
@@ -402,7 +391,6 @@ Controller.prototype.$onInit = function () {
 
 /**
  * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl Layer tree controller.
- * @private
  */
 Controller.prototype.updateDimensions_ = function (treeCtrl) {
   treeCtrl.traverseDepthFirst((ctrl) => {
@@ -423,7 +411,6 @@ Controller.prototype.updateDimensions_ = function (treeCtrl) {
 /**
  * @param {olLayerLayer<import('ol/source/Source.js').default>} layer Layer to update.
  * @param {import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer} node Layer tree node.
- * @private
  */
 Controller.prototype.updateLayerDimensions_ = function (layer, node) {
   if (this.dimensions && node.dimensions) {
@@ -677,7 +664,6 @@ Controller.prototype.getNumberOfLegendsObject = function (treeCtrl) {
 /**
  * Return the current scale of the map.
  * @return {number} Scale.
- * @private
  */
 Controller.prototype.getScale_ = function () {
   const view = this.map.getView();

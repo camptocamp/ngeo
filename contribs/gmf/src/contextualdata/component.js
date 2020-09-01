@@ -126,43 +126,36 @@ export function ContextualdataController($compile, $timeout, $scope, gmfRaster, 
 
   /**
    * @type {?import("ol/Overlay.js").default}
-   * @private
    */
   this.overlay_ = null;
 
   /**
    * @type {number?}
-   * @private
    */
   this.longPressTimeout_ = null;
 
   /**
    * @type {angular.ICompileService}
-   * @private
    */
   this.$compile_ = $compile;
 
   /**
    * @type {angular.ITimeoutService}
-   * @private
    */
   this.timeout_ = $timeout;
 
   /**
    * @type {angular.IScope}
-   * @private
    */
   this.$scope_ = $scope;
 
   /**
    * @type {import("gmf/raster/RasterService.js").RasterService}
-   * @private
    */
   this.gmfRaster_ = gmfRaster;
 
   /**
    * @type {import('gmf/options.js').gmfContextualdataOptions}
-   * @private
    */
   this.gmfContextualdataOptions_ = gmfContextualdataOptions;
 
@@ -207,7 +200,6 @@ ContextualdataController.prototype.init = function () {
 
 /**
  * @param {Event} event Event.
- * @private
  */
 ContextualdataController.prototype.handleMapTouchStart_ = function (event) {
   // Don't open the context menu if 2-touch event is fired, ie. pinch the map on mobile
@@ -219,9 +211,6 @@ ContextualdataController.prototype.handleMapTouchStart_ = function (event) {
   }
 };
 
-/**
- * @private
- */
 ContextualdataController.prototype.handleMapTouchEnd_ = function () {
   if (this.longPressTimeout_) {
     clearTimeout(this.longPressTimeout_);
@@ -230,7 +219,6 @@ ContextualdataController.prototype.handleMapTouchEnd_ = function () {
 
 /**
  * @param {Event} event Event.
- * @private
  */
 ContextualdataController.prototype.handleMapContextMenu_ = function (event) {
   this.$scope_.$apply(() => {
@@ -291,9 +279,6 @@ ContextualdataController.prototype.setContent_ = function (coordinate) {
   );
 };
 
-/**
- * @private
- */
 ContextualdataController.prototype.preparePopover_ = function () {
   if (!this.map) {
     throw new Error('Missing map');

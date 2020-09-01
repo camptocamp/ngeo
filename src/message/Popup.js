@@ -81,27 +81,23 @@ export function MessagePopup($compile, $rootScope, $sce, $timeout) {
   );
 
   /**
-   * @private
    * @type {angular.ISCEService}
    */
   this.sce_ = $sce;
 
   /**
    * @type {angular.ITimeoutService}
-   * @private
    */
   this.timeout_ = $timeout;
 
   /**
    * The element.
    * @type {JQuery}
-   * @private
    */
   this.element_ = angular.element('<div ngeo-popup></div>');
 
   /**
    * @type {boolean}
-   * @private
    */
   this.autoDestroy_ = false;
 

@@ -51,7 +51,6 @@ class QueryController {
    *     ngeoQueryModeSelector The ngeo query modeSelector service.
    * @param {import('ngeo/options.js').ngeoQueryOptions} ngeoQueryOptions The options.
    * @param {angular.IScope} $scope Scope.
-   * @private
    * @ngInject
    * @ngdoc controller
    * @ngname NgeoQueryController

@@ -168,7 +168,6 @@ function Controller(
 
   /**
    * @type {number?}
-   * @private
    */
   this.longPressTimeout_ = null;
 
@@ -179,25 +178,21 @@ function Controller(
 
   /**
    * @type {angular.IScope}
-   * @private
    */
   this.scope_ = $scope;
 
   /**
    * @type {angular.ITimeoutService}
-   * @private
    */
   this.timeout_ = $timeout;
 
   /**
    * @type {import("gmf/editing/Snapping.js").EditingSnappingService}
-   * @private
    */
   this.gmfSnapping_ = gmfSnapping;
 
   /**
    * @type {import("ngeo/misc/FeatureHelper.js").FeatureHelper}
-   * @private
    */
   this.featureHelper_ = ngeoFeatureHelper;
 
@@ -208,7 +203,6 @@ function Controller(
 
   /**
    * @type {import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr}
-   * @private
    */
   this.ngeoToolActivateMgr_ = ngeoToolActivateMgr;
 
@@ -224,13 +218,11 @@ function Controller(
 
   /**
    * @type {import("ol/Collection.js").default<import('ol/interaction/Interaction.js').default>}
-   * @private
    */
   this.interactions_ = new olCollection();
 
   /**
    * @type {import("ngeo/interaction/Modify.js").default}
-   * @private
    */
   this.modify_ = new ngeoInteractionModify({
     features: this.selectedFeatures,
@@ -240,13 +232,11 @@ function Controller(
 
   /**
    * @type {?import("ngeo/Menu.js").default}
-   * @private
    */
   this.menu_ = null;
 
   /**
    * @type {?import("ol/events.js").EventsKey}
-   * @private
    */
   this.menuListenerKey_ = null;
 
@@ -257,7 +247,6 @@ function Controller(
 
   /**
    * @type {import("ngeo/interaction/Translate.js").default}
-   * @private
    */
   this.translate_ = new ngeoInteractionTranslate({
     features: this.selectedFeatures,
@@ -275,7 +264,6 @@ function Controller(
 
   /**
    * @type {import("ngeo/interaction/Rotate.js").default}
-   * @private
    */
   this.rotate_ = new ngeoInteractionRotate({
     features: this.selectedFeatures,
@@ -305,19 +293,16 @@ function Controller(
 
   /**
    * @type {import("ol/events.js").EventsKey[]}
-   * @private
    */
   this.listenerKeys_ = [];
 
   /**
    * @type {import("ol/events.js").EventsKey[]}
-   * @private
    */
   this.mainListenerKeys_ = [];
 
   /**
    * @type {import("ol/events.js").EventsKey[]}
-   * @private
    */
   this.mapListenerKeys_ = [];
 
@@ -326,7 +311,6 @@ function Controller(
    * from the selection of an item from the list or not (the map, contextual
    * menu, etc.)
    * @type {boolean}
-   * @private
    */
   this.listSelectionInProgress_ = false;
 
@@ -374,9 +358,6 @@ function Controller(
    */
   this.nameProperty = ngeoFormatFeatureProperties.NAME;
 
-  /**
-   * @private
-   */
   this.gettextCatalog_ = gettextCatalog;
 
   // --- Draw Interactions ---
@@ -437,7 +418,6 @@ Controller.prototype.$onDestroy = function () {
 
 /**
  * Close menu, if it exists.
- * @private
  * @hidden
  */
 Controller.prototype.closeMenu_ = function () {
@@ -456,7 +436,6 @@ Controller.prototype.closeMenu_ = function () {
 
 /**
  * Initialize interactions by setting them inactive and decorating them
- * @private
  */
 Controller.prototype.initializeInteractions_ = function () {
   this.interactions_.forEach((interaction) => {
@@ -467,7 +446,6 @@ Controller.prototype.initializeInteractions_ = function () {
 
 /**
  * Register interactions by adding them to the map
- * @private
  */
 Controller.prototype.registerInteractions_ = function () {
   this.interactions_.forEach((interaction) => {
@@ -480,7 +458,6 @@ Controller.prototype.registerInteractions_ = function () {
 
 /**
  * Register interactions by removing them to the map
- * @private
  */
 Controller.prototype.unregisterInteractions_ = function () {
   this.interactions_.forEach((interaction) => {
@@ -495,7 +472,6 @@ Controller.prototype.unregisterInteractions_ = function () {
  * Called when the active property of the this directive changes. Manage
  * the activation/deactivation accordingly (event management, etc.)
  * @param {boolean} active Whether the directive is active or not.
- * @private
  */
 Controller.prototype.handleActiveChange_ = function (active) {
   const keys = this.listenerKeys_;
@@ -586,7 +562,6 @@ Controller.prototype.removeFeature = function (feature) {
 
 /**
  * @param {Event|import('ol/events/Event.js').default} evt Event.
- * @private
  */
 Controller.prototype.handleFeaturesAdd_ = function (evt) {
   if (evt instanceof CollectionEvent) {
@@ -601,7 +576,6 @@ Controller.prototype.handleFeaturesAdd_ = function (evt) {
 
 /**
  * @param {Event|import('ol/events/Event.js').default} evt Event.
- * @private
  */
 Controller.prototype.handleFeaturesRemove_ = function (evt) {
   this.selectedFeature = null;
@@ -610,7 +584,6 @@ Controller.prototype.handleFeaturesRemove_ = function (evt) {
 /**
  * Called when the mapSelectActive property changes.
  * @param {boolean} active Whether the map select is active or not.
- * @private
  */
 Controller.prototype.handleMapSelectActiveChange_ = function (active) {
   if (!this.map) {
@@ -635,7 +608,6 @@ Controller.prototype.handleMapSelectActiveChange_ = function (active) {
 
 /**
  * @param {Event|import('ol/events/Event.js').default} evt Event.
- * @private
  */
 Controller.prototype.handleMapClick_ = function (evt) {
   if (evt instanceof MapBrowserEvent) {
@@ -676,7 +648,6 @@ Controller.prototype.handleMapClick_ = function (evt) {
 
 /**
  * @param {Event|import('ol/events/Event.js').default} evt Event.
- * @private
  */
 Controller.prototype.handleMapTouchStart_ = function (evt) {
   this.longPressTimeout_ = window.setTimeout(() => {
@@ -686,7 +657,6 @@ Controller.prototype.handleMapTouchStart_ = function (evt) {
 
 /**
  * @param {Event|import('ol/events/Event.js').default} evt Event.
- * @private
  */
 Controller.prototype.handleMapTouchEnd_ = function (evt) {
   if (!this.longPressTimeout_) {
@@ -697,7 +667,6 @@ Controller.prototype.handleMapTouchEnd_ = function (evt) {
 
 /**
  * @param {Event|import('ol/events/Event.js').default} evt Event.
- * @private
  */
 Controller.prototype.handleMapContextMenu_ = function (evt) {
   if (evt instanceof Event) {
@@ -804,7 +773,6 @@ Controller.prototype.handleMapContextMenu_ = function (evt) {
  * @param {?number[]} vertexInfo Vertex information, in case a
  *     vertex was clicked using the right button.
  * @param {Event|import('ol/events/Event.js').default} evt Event.
- * @private
  */
 Controller.prototype.handleMenuActionClick_ = function (vertexInfo, evt) {
   const action = /** @type {import('ngeo/filter/ruleComponent.js').MenuEvent} */ (evt).detail.action;
@@ -841,7 +809,6 @@ Controller.prototype.handleMenuActionClick_ = function (vertexInfo, evt) {
 
 /**
  * @param {Event|import('ol/events/Event.js').default} evt Event.
- * @private
  */
 Controller.prototype.handleTranslateEnd_ = function (evt) {
   this.translate_.setActive(false);
@@ -850,7 +817,6 @@ Controller.prototype.handleTranslateEnd_ = function (evt) {
 
 /**
  * @param {Event|import('ol/events/Event.js').default} evt Event.
- * @private
  */
 Controller.prototype.handleRotateEnd_ = function (evt) {
   this.rotate_.setActive(false);
@@ -859,7 +825,6 @@ Controller.prototype.handleRotateEnd_ = function (evt) {
 
 /**
  * @param {Event|import('ol/events/Event.js').default} evt Event.
- * @private
  */
 Controller.prototype.handleMapInteractionsAdd_ = function (evt) {
   if (!(evt instanceof CollectionEvent)) {

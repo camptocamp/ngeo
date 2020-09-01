@@ -226,7 +226,6 @@ VectorEncoder.prototype.encodeVectorStyle = function (
  * @param {import('ngeo/print/mapfish-print-v3.js').MapFishPrintSymbolizerPoint|import('ngeo/print/mapfish-print-v3.js').MapFishPrintSymbolizerPolygon} symbolizer
  *    MapFish Print symbolizer.
  * @param {import("ol/style/Fill.js").default} fillStyle Fill style.
- * @protected
  */
 VectorEncoder.prototype.encodeVectorStyleFill = function (symbolizer, fillStyle) {
   let fillColor = /** @type {import('ol/color.js').Color} */ (fillStyle.getColor());
@@ -242,7 +241,6 @@ VectorEncoder.prototype.encodeVectorStyleFill = function (symbolizer, fillStyle)
 /**
  * @param {import("ol/style/Stroke.js").default} strokeStyle Stroke style.
  * @returns {import('ngeo/print/mapfish-print-v3.js').MapFishPrintSymbolizer} The style
- * @protected
  */
 VectorEncoder.prototype.encodeVectorStyleLine = function (strokeStyle) {
   const symbolizer = /** @type {import('ngeo/print/mapfish-print-v3.js').MapFishPrintSymbolizerLine} */ ({
@@ -257,7 +255,6 @@ VectorEncoder.prototype.encodeVectorStyleLine = function (strokeStyle) {
  * @param {import("ol/style/Image.js").default} imageStyle Image style.
  * @param {number} destiontionPrintDpi The destination print DPI.
  * @returns {import('ngeo/print/mapfish-print-v3.js').MapFishPrintSymbolizer} The style
- * @protected
  */
 VectorEncoder.prototype.encodeVectorStylePoint = function (resolution, imageStyle, destiontionPrintDpi) {
   let symbolizer;
@@ -325,7 +322,6 @@ VectorEncoder.prototype.encodeVectorStylePoint = function (resolution, imageStyl
  * @param {import("ol/style/Fill.js").default} fillStyle Fill style.
  * @param {import("ol/style/Stroke.js").default} strokeStyle Stroke style.
  * @returns {import('ngeo/print/mapfish-print-v3.js').MapFishPrintSymbolizer} The style
- * @protected
  */
 VectorEncoder.prototype.encodeVectorStylePolygon = function (fillStyle, strokeStyle) {
   const symbolizer = /** @type {import('ngeo/print/mapfish-print-v3.js').MapFishPrintSymbolizerPolygon} */ ({
@@ -342,7 +338,6 @@ VectorEncoder.prototype.encodeVectorStylePolygon = function (fillStyle, strokeSt
  * @param {import('ngeo/print/mapfish-print-v3.js').MapFishPrintSymbolizerPoint|import('ngeo/print/mapfish-print-v3.js').MapFishPrintSymbolizerLine|import('ngeo/print/mapfish-print-v3.js').MapFishPrintSymbolizerPolygon}
  *      symbolizer MapFish Print symbolizer.
  * @param {import("ol/style/Stroke.js").default} strokeStyle Stroke style.
- * @protected
  */
 VectorEncoder.prototype.encodeVectorStyleStroke = function (symbolizer, strokeStyle) {
   const strokeColor = strokeStyle.getColor();
@@ -377,7 +372,6 @@ VectorEncoder.prototype.encodeVectorStyleStroke = function (symbolizer, strokeSt
  * @param {import("ol/style/Text.js").default} textStyle Text style.
  * @param {number=} [goodnessOfFit] Goodness of fit.
  * @returns {import('ngeo/print/mapfish-print-v3.js').MapFishPrintSymbolizer} The style
- * @protected
  */
 VectorEncoder.prototype.encodeTextStyle = function (textStyle, goodnessOfFit) {
   const symbolizer = /** @type {import('ngeo/print/mapfish-print-v3.js').MapFishPrintSymbolizerText} */ ({

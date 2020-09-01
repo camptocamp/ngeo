@@ -198,14 +198,12 @@ export function AbstractAppController($scope, $injector, mobile) {
 
   /**
    * @type {import("gmf/layertree/TreeManager.js").LayertreeTreeManager}
-   * @private
    */
   this.gmfTreeManager_ = $injector.get('gmfTreeManager');
 
   /**
    * Themes service
    * @type {import("gmf/theme/Themes.js").ThemesService}
-   * @protected
    */
   this.gmfThemes = $injector.get('gmfThemes');
 
@@ -228,7 +226,6 @@ export function AbstractAppController($scope, $injector, mobile) {
   /**
    * Permalink service
    * @type {import("gmf/permalink/Permalink.js").PermalinkService}
-   * @private
    */
   this.permalink_ = $injector.get('gmfPermalink');
 
@@ -243,9 +240,6 @@ export function AbstractAppController($scope, $injector, mobile) {
    */
   this.hasEditableLayers = false;
 
-  /**
-   * @private
-   */
   this.updateHasEditableLayers_ = function () {
     this.gmfThemes.hasEditableLayers().then((hasEditableLayers) => {
       this.hasEditableLayers = hasEditableLayers;
@@ -378,7 +372,6 @@ export function AbstractAppController($scope, $injector, mobile) {
 
   /**
    * @type {import("ngeo/map/BackgroundLayerMgr.js").MapBackgroundLayerManager}
-   * @private
    */
   this.backgroundLayerMgr_ = $injector.get('ngeoBackgroundLayerMgr');
 
@@ -445,7 +438,6 @@ export function AbstractAppController($scope, $injector, mobile) {
 
   /**
    * @type {import("ngeo/query/MapQuerent.js").MapQuerent}
-   * @private
    */
   this.ngeoMapQuerent_ = $injector.get('ngeoMapQuerent');
 
@@ -595,9 +587,7 @@ export function AbstractAppController($scope, $injector, mobile) {
   });
 
   /**
-   * @param {boolean} skipPermalink If True, don't use permalink
-   * background layer.
-   * @private
+   * @param {boolean} skipPermalink If True, don't use permalink background layer.
    */
   this.updateCurrentBackgroundLayer_ = (skipPermalink) => {
     this.gmfThemes.getBgLayers().then((layers) => {
@@ -865,7 +855,6 @@ AbstractAppController.prototype.initLanguage = function () {
 
 /**
  * @param {?import('gmf/themes.js').GmfTheme} theme Theme.
- * @private
  */
 AbstractAppController.prototype.setDefaultBackground_ = function (theme) {
   this.gmfThemes.getBgLayers().then((layers) => {

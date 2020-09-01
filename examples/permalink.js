@@ -79,13 +79,11 @@ function MapComponentController(ngeoLocation, ngeoDebounce) {
 
   /**
    * @type {import("ngeo/statemanager/Location.js").StatemanagerLocation}
-   * @private
    */
   this.ngeoLocation_ = ngeoLocation;
 
   /**
    * @type {import("ngeo/misc/debounce.js").miscDebounce<function(import("ol/events/Event.js").default): void>}
-   * @private
    */
   this.ngeoDebounce_ = ngeoDebounce;
 }
@@ -177,19 +175,16 @@ function DrawComponentController($scope, ngeoLocation) {
 
   /**
    * @type {import("ngeo/statemanager/Location.js").StatemanagerLocation}
-   * @private
    */
   this.ngeoLocation_ = ngeoLocation;
 
   /**
    * @type {angular.IScope}
-   * @private
    */
   this.scope_ = $scope;
 
   /**
    * @type {number}
-   * @private
    */
   this.featureSeq_ = 0;
 

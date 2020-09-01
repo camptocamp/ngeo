@@ -44,43 +44,36 @@ import {encodeQueryString, decodeQueryString} from 'ngeo/utils.js';
 export function StatemanagerLocation(location, history) {
   /**
    * @type {History}
-   * @private
    */
   this.history_ = history;
 
   /**
    * @type {string|undefined}
-   * @private
    */
   this.schema_ = location.protocol.substring(0, location.protocol.length - 1);
 
   /**
    * @type {string|undefined}
-   * @private
    */
   this.domain_ = location.hostname;
 
   /**
    * @type {number|undefined}
-   * @private
    */
   this.port_ = location.port ? parseInt(location.port, 10) : undefined;
 
   /**
    * @type {string|undefined}
-   * @private
    */
   this.path_ = location.pathname;
 
   /**
    * @type {Object<string, string>}
-   * @private
    */
   this.queryData_ = decodeQueryString(location.search);
 
   /**
    * @type {Object<string, string>}
-   * @private
    */
   this.fragment_ = decodeQueryString(location.hash);
 }

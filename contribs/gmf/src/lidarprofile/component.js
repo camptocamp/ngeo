@@ -96,7 +96,6 @@ module.component('gmfLidarprofile', lidarprofileComponent);
 class Controller {
   /**
    * @param {angular.IScope} $scope Angular scope.
-   * @private
    * @ngInject
    * @ngdo controller
    * @ngname GmfLidarprofileController

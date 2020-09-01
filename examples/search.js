@@ -66,7 +66,6 @@ module.component('appSearch', searchComponent);
  */
 function SearchController($element, $rootScope, $compile, ngeoSearchCreateGeoJSONBloodhound) {
   /**
-   * @private
    * @type {JQuery}
    */
   this.$element = $element;
@@ -78,7 +77,6 @@ function SearchController($element, $rootScope, $compile, ngeoSearchCreateGeoJSO
 
   /**
    * @type {import("ol/layer/Vector.js").default}
-   * @private
    */
   this.vectorLayer_;
 
@@ -170,7 +168,6 @@ SearchController.prototype.$onInit = function () {
 
 /**
  * @return {import("ol/layer/Vector.js").default} The vector layer.
- * @private
  */
 SearchController.prototype.createVectorLayer_ = function () {
   if (!this.map) {
@@ -189,7 +186,6 @@ SearchController.prototype.createVectorLayer_ = function () {
  * @param {function} ngeoSearchCreateGeoJSONBloodhound
  *    The ngeo create GeoJSON Bloodhound service.
  * @return {Bloodhound<*>} The bloodhound engine.
- * @private
  */
 SearchController.prototype.createAndInitBloodhound_ = function (ngeoSearchCreateGeoJSONBloodhound) {
   const url = SEARCH;

@@ -123,25 +123,19 @@ function MainController($timeout, ngeoCreatePrint, ngeoPrintUtils) {
 
   /**
    * @type {angular.ITimeoutService}
-   * @private
    */
   this.$timeout_ = $timeout;
 
   /**
    * @type {import("ngeo/print/Service.js").PrintService}
-   * @private
    */
   this.print_ = ngeoCreatePrint(PRINT_PROXY);
 
   /**
    * @type {import("ngeo/print/Utils.js").PrintUtils}
-   * @private
    */
   this.printUtils_ = ngeoPrintUtils;
 
-  /**
-   * @private
-   */
   this.maskLayer_ = new MaskLayer();
 
   this.maskLayer_.getSize = () => PRINT_PAPER_SIZE_;
@@ -194,7 +188,6 @@ MainController.prototype.print = function () {
 /**
  * @param {angular.IHttpResponse<import('ngeo/print/mapfish-print-v3.js').MapFishPrintReportResponse>} resp
  *    Response.
- * @private
  */
 MainController.prototype.handleCreateReportSuccess_ = function (resp) {
   this.getStatus_(resp.data.ref);
@@ -202,7 +195,6 @@ MainController.prototype.handleCreateReportSuccess_ = function (resp) {
 
 /**
  * @param {string} ref Ref.
- * @private
  */
 MainController.prototype.getStatus_ = function (ref) {
   this.print_
@@ -213,7 +205,6 @@ MainController.prototype.getStatus_ = function (ref) {
 /**
  * @param {angular.IHttpResponse<import('ngeo/print/mapfish-print-v3.js').MapFishPrintStatusResponse>} resp
  *    Response.
- * @private
  */
 MainController.prototype.handleCreateReportError_ = function (resp) {
   this.printState = 'Print error';
@@ -223,7 +214,6 @@ MainController.prototype.handleCreateReportError_ = function (resp) {
  * @param {string} ref Ref.
  * @param {angular.IHttpResponse<import('ngeo/print/mapfish-print-v3.js').MapFishPrintStatusResponse>} resp
  *    Response.
- * @private
  */
 MainController.prototype.handleGetStatusSuccess_ = function (ref, resp) {
   const mfResp = resp.data;
@@ -247,7 +237,6 @@ MainController.prototype.handleGetStatusSuccess_ = function (ref, resp) {
 /**
  * @param {angular.IHttpResponse<import('ngeo/print/mapfish-print-v3.js').MapFishPrintStatusResponse>} resp
  *    Response.
- * @private
  */
 MainController.prototype.handleGetStatusError_ = function (resp) {
   this.printState = 'Print error';

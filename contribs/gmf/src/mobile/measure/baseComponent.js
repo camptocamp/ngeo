@@ -50,19 +50,16 @@ const module = angular.module('gmfMobileMeasureBase', [ngeoMiscFilters.name]);
 export function MeasueMobileBaseController($scope, $filter, gettextCatalog) {
   /**
    * @type {angular.IScope}
-   * @protected
    */
   this.scope = $scope;
 
   /**
    * @type {angular.IFilterService}
-   * @protected
    */
   this.filter = $filter;
 
   /**
    * @type {angular.gettext.gettextCatalog}
-   * @protected
    */
   this.gettextCatalog = gettextCatalog;
 

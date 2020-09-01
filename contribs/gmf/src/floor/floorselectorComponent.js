@@ -72,7 +72,6 @@ class Controller {
    * @param {angular.IScope} $scope Angular scope.
    * @param {JQuery} $element Element.
    * @param {import('gmf/options.js').gmfFloors} gmfFloors Floor dimension values and labels.
-   * @private
    * @ngInject
    * @ngdoc controller
    * @ngname GmfFilterselectorController

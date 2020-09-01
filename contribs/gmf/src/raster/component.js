@@ -165,24 +165,9 @@ function Controller($scope, $filter, ngeoDebounce, gmfRaster, gettextCatalog, gm
    */
   this.options = gmfElevationOptions;
 
-  /**
-   * @private
-   */
   this.filter_ = $filter;
-
-  /**
-   * @private
-   */
   this.ngeoDebounce_ = ngeoDebounce;
-
-  /**
-   * @private
-   */
   this.gmfRaster_ = gmfRaster;
-
-  /**
-   * @private
-   */
   this.gettextCatalog = gettextCatalog;
 
   /**
@@ -207,19 +192,16 @@ function Controller($scope, $filter, ngeoDebounce, gmfRaster, gettextCatalog, gm
 
   /**
    * @type {Array<import("ol/events.js").EventsKey>}
-   * @private
    */
   this.listenerKeys_ = [];
 
   /**
    * @type {angular.IScope}
-   * @private
    */
   this.scope_ = $scope;
 
   /**
    * @type {boolean}
-   * @private
    */
   this.inViewport_ = false;
 
@@ -303,7 +285,6 @@ Controller.prototype.toggleActive_ = function (active) {
 
 /**
  * @param {Object<string, number>} resp Response of the get Raster service.
- * @private
  */
 Controller.prototype.getRasterSuccess_ = function (resp) {
   if (this.layer === undefined) {
@@ -332,9 +313,6 @@ Controller.prototype.getRasterSuccess_ = function (resp) {
   this.loading = false;
 };
 
-/**
- * @private
- */
 Controller.prototype.getRasterError_ = function () {
   console.error('Error on getting the raster.');
   this.elevation = null;

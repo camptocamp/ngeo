@@ -154,13 +154,11 @@ function Controller($scope, ngeoBackgroundLayerMgr, gmfThemes, gmfBackgroundLaye
 
   /**
    * @type {import("gmf/theme/Themes.js").ThemesService}
-   * @private
    */
   this.gmfThemes_ = gmfThemes;
 
   /**
    * @type {Array<import("ol/events.js").EventsKey>}
-   * @private
    */
   this.listenerKeys_ = [];
 
@@ -168,7 +166,6 @@ function Controller($scope, ngeoBackgroundLayerMgr, gmfThemes, gmfBackgroundLaye
 
   /**
    * @type {import("ngeo/map/BackgroundLayerMgr.js").MapBackgroundLayerManager}
-   * @private
    */
   this.backgroundLayerMgr_ = ngeoBackgroundLayerMgr;
 
@@ -199,7 +196,6 @@ Controller.prototype.$onInit = function () {
 
 /**
  * Called when the themes changes. Set (or reset) the background layers.
- * @private
  */
 Controller.prototype.handleThemesChange_ = function () {
   this.gmfThemes_.getBgLayers().then((layers) => {
@@ -268,9 +264,6 @@ Controller.prototype.setOpacityBgLayer = function (layer) {
   this.backgroundLayerMgr_.setOpacityBgLayer(this.map, layer);
 };
 
-/**
- * @private
- */
 Controller.prototype.handleDestroy_ = function () {
   this.listenerKeys_.forEach(unlistenByKey);
   this.listenerKeys_.length = 0;

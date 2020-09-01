@@ -114,19 +114,16 @@ function Controller(ngeoFeatureOverlayMgr, gmfPermalink, gmfSnapping) {
 
   /**
    * @type {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr}
-   * @private
    */
   this.ngeoFeatureOverlayMgr_ = ngeoFeatureOverlayMgr;
 
   /**
    * @type {import("gmf/permalink/Permalink.js").PermalinkService}
-   * @private
    */
   this.gmfPermalink_ = gmfPermalink;
 
   /**
    * @type {import("gmf/editing/Snapping.js").EditingSnappingService}
-   * @private
    */
   this.gmfSnapping_ = gmfSnapping;
 }

@@ -241,31 +241,26 @@ function Controller(
 
   /**
    * @type {angular.IScope}
-   * @private
    */
   this.scope_ = $scope;
 
   /**
    * @type {angular.ITimeoutService}
-   * @private
    */
   this.timeout_ = $timeout;
 
   /**
    * @type {angular.gettext.gettextCatalog}
-   * @private
    */
   this.gettextCatalog_ = gettextCatalog;
 
   /**
    * @type {import("gmf/editing/EditFeature.js").EditingEditFeature}
-   * @private
    */
   this.gmfEditFeature_ = gmfEditFeature;
 
   /**
    * @type {import("gmf/objectediting/Query.js").ObjectEditingQuery}
-   * @private
    */
   this.gmfObjectEditingQuery_ = gmfObjectEditingQuery;
 
@@ -304,25 +299,21 @@ function Controller(
 
   /**
    * @type {import("ngeo/map/LayerHelper.js").LayerHelper}
-   * @private
    */
   this.ngeoLayerHelper_ = ngeoLayerHelper;
 
   /**
    * @type {import("gmf/layertree/TreeManager.js").LayertreeTreeManager}
-   * @private
    */
   this.gmfTreeManager_ = gmfTreeManager;
 
   /**
    * @type {import("ngeo/misc/FeatureHelper.js").FeatureHelper}
-   * @private
    */
   this.ngeoFeatureHelper_ = ngeoFeatureHelper;
 
   /**
    * @type {import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr}
-   * @private
    */
   this.ngeoToolActivateMgr_ = ngeoToolActivateMgr;
 
@@ -330,7 +321,6 @@ function Controller(
 
   /**
    * @type {boolean}
-   * @private
    */
   this.skipGeometryChange_ = false;
 
@@ -341,13 +331,11 @@ function Controller(
 
   /**
    * @type {?import("ol/layer/Image.js").default|import("ol/layer/Tile.js").default}
-   * @private
    */
   this.editableWMSLayer_ = null;
 
   /**
    * @type {jsts.io.OL3Parser}
-   * @private
    */
   this.jstsOL3Parser_ = new OL3Parser(undefined, {
     geom: {
@@ -366,37 +354,31 @@ function Controller(
    * The state of the feature determines whether the next 'save' request
    * should be an 'insert' or 'update' one.
    * @type {?string}
-   * @private
    */
   this.state_ = null;
 
   /**
    * @type {Array<?import("ol/geom/Geometry.js").default>}
-   * @private
    */
   this.geometryChanges_ = [];
 
   /**
    * @type {StylesObject}
-   * @private
    */
   this.defaultStyles_ = {};
 
   /**
    * @type {StylesObject}
-   * @private
    */
   this.defaultStylesWoVertice_ = {};
 
   /**
    * @type {StylesObject}
-   * @private
    */
   this.dirtyStyles_ = {};
 
   /**
    * @type {StylesObject}
-   * @private
    */
   this.dirtyStylesWoVertice_ = {};
 
@@ -413,25 +395,21 @@ function Controller(
 
   /**
    * @type {Array<import("ol/events.js").EventsKey>}
-   * @private
    */
   this.listenerKeys_ = [];
 
   /**
    * @type {import("ol/Collection.js").default<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>}
-   * @private
    */
   this.features_ = new olCollection();
 
   /**
    * @type {import("ol/Collection.js").default<olInteractionModify>}
-   * @private
    */
   this.interactions_ = new olCollection();
 
   /**
    * @type {import("ol/interaction/Modify.js").default}
-   * @private
    */
   this.modify_ = new olInteractionModify({
     deleteCondition: deleteCondition,
@@ -442,7 +420,6 @@ function Controller(
 
   /**
    * @type {import("ngeo/misc/ToolActivate.js").default}
-   * @private
    */
   this.modifyToolActivate_ = new ngeoMiscToolActivate(this.modify_, 'active');
 
@@ -453,7 +430,6 @@ function Controller(
 
   /**
    * @type {import("ngeo/misc/ToolActivate.js").default}
-   * @private
    */
   this.toolsToolActivate_ = new ngeoMiscToolActivate(this, 'toolsActive');
 }
@@ -629,7 +605,6 @@ Controller.prototype.isStateInsert = function () {
 /**
  * Called after a delete request.
  * @param {angular.IHttpResponse<never>} resp Ajax response.
- * @private
  */
 Controller.prototype.handleDeleteFeature_ = function (resp) {
   if (!this.feature) {
@@ -645,7 +620,6 @@ Controller.prototype.handleDeleteFeature_ = function (resp) {
 /**
  * Called after an 'insert' or 'update' request.
  * @param {angular.IHttpResponse<never>} resp Ajax response.
- * @private
  */
 Controller.prototype.handleEditFeature_ = function (resp) {
   if (!this.feature) {
@@ -673,7 +647,6 @@ Controller.prototype.handleEditFeature_ = function (resp) {
 
 /**
  * Initialize interactions by setting them inactive and decorating them
- * @private
  */
 Controller.prototype.initializeInteractions_ = function () {
   this.interactions_.forEach((interaction) => {
@@ -684,7 +657,6 @@ Controller.prototype.initializeInteractions_ = function () {
 
 /**
  * Register interactions by adding them to the map
- * @private
  */
 Controller.prototype.registerInteractions_ = function () {
   this.interactions_.forEach((interaction) => {
@@ -697,7 +669,6 @@ Controller.prototype.registerInteractions_ = function () {
 
 /**
  * Unregister interactions, i.e. remove them from the map
- * @private
  */
 Controller.prototype.unregisterInteractions_ = function () {
   this.interactions_.forEach((interaction) => {
@@ -711,7 +682,6 @@ Controller.prototype.unregisterInteractions_ = function () {
 /**
  * Activate or deactivate this component.
  * @param {boolean} active Whether to activate this component or not.
- * @private
  */
 Controller.prototype.toggle_ = function (active) {
   if (!this.feature) {
@@ -767,7 +737,6 @@ Controller.prototype.toggle_ = function (active) {
 
 /**
  * Undo all current changes.
- * @private
  */
 Controller.prototype.undoAllChanges_ = function () {
   if (!this.feature) {
@@ -788,7 +757,6 @@ Controller.prototype.undoAllChanges_ = function () {
  * Reset the array of geometry changes.  If there are more than one changes,
  * reset them entirely. Then, if there's no changes, clone the current geometry
  * as the first entry. One entry means that there's no changes.
- * @private
  */
 Controller.prototype.resetGeometryChanges_ = function () {
   if (this.geometryChanges_.length > 1) {
@@ -812,7 +780,6 @@ Controller.prototype.resetGeometryChanges_ = function () {
  * before being pushed to the changes.
  *
  * @param {Event|import('ol/events/Event.js').default} evt Event.
- * @private
  */
 Controller.prototype.handleModifyInteractionModifyEnd_ = function (evt) {
   if (!this.feature) {
@@ -844,9 +811,7 @@ Controller.prototype.handleModifyInteractionModifyEnd_ = function (evt) {
 /**
  * @param {StylesObject} styles Hash of style.
  * @param {import('ol/color.js').Color} color Color.
- * @param {boolean=} opt_incVertice Whether to include vertice or not. Defaults
- *     to `true`.
- * @private
+ * @param {boolean=} [opt_incVertice=true] Whether to include vertice or not.
  */
 Controller.prototype.initializeStyles_ = function (styles, color, opt_incVertice) {
   const incVertice = opt_incVertice !== false;
@@ -927,8 +892,6 @@ Controller.prototype.initializeStyles_ = function (styles, color, opt_incVertice
  *  - the geometry type
  *  - the dirty state of the component
  *  - whether the modify control is active or not
- *
- * @private
  */
 Controller.prototype.setFeatureStyle_ = function () {
   if (!this.feature) {
@@ -967,7 +930,6 @@ Controller.prototype.setFeatureStyle_ = function () {
  * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl Layertree controller
  *    to register
  * @return {void}
- * @private
  */
 Controller.prototype.registerTreeCtrl_ = function (treeCtrl) {
   // Skip any Layertree controller that has a node that is not a leaf
@@ -991,8 +953,6 @@ Controller.prototype.registerTreeCtrl_ = function (treeCtrl) {
  *
  * Unset the WMS layer associated with the `layerNodeId` configured with
  * this component.
- *
- * @private
  */
 Controller.prototype.unregisterAllTreeCtrl_ = function () {
   this.editableWMSLayer_ = null;
@@ -1000,7 +960,6 @@ Controller.prototype.unregisterAllTreeCtrl_ = function () {
 
 /**
  * Refresh the WMS layer, if set.
- * @private
  */
 Controller.prototype.refreshWMSLayer_ = function () {
   if (this.editableWMSLayer_) {
@@ -1032,7 +991,6 @@ Controller.prototype.handleWindowBeforeUnload_ = function (e) {
  * the existing geometry.
  *
  * @param {Event|import('ol/events/Event.js').default} evt Event.
- * @private
  */
 Controller.prototype.handleSketchFeaturesAdd_ = function (evt) {
   if (evt instanceof CollectionEvent) {
@@ -1081,8 +1039,6 @@ Controller.prototype.handleSketchFeaturesAdd_ = function (evt) {
  * there's nothing to do here. Otherwise, it happens after the combinaison
  * of a sketch geometry with the existing feature geometry. This new geom
  * is pushed in the `geometryChanges_` array.
- *
- * @private
  */
 Controller.prototype.handleFeatureGeometryChange_ = function () {
   if (!this.feature) {
@@ -1113,7 +1069,6 @@ Controller.prototype.handleFeatureGeometryChange_ = function () {
 /**
  * @param {Array<import('gmf/objectediting/toolsComponent.js').ObjectEditingQueryableLayerInfo>} layersInfo
  *    List of queryable layers information, which contains the node and ogcServer.
- * @private
  */
 Controller.prototype.handleGetQueryableLayersInfo_ = function (layersInfo) {
   this.queryableLayersInfo = layersInfo;
@@ -1122,9 +1077,6 @@ Controller.prototype.handleGetQueryableLayersInfo_ = function (layersInfo) {
   }
 };
 
-/**
- * @private
- */
 Controller.prototype.handleDestroy_ = function () {
   this.features_.clear();
   this.toggle_(false);

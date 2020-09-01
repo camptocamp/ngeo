@@ -98,32 +98,27 @@ function LayertreeController($http, $sce, appGetLayer, ngeoCreatePopup) {
   });
 
   /**
-   * @private
    * @type {angular.IHttpService}
    */
   this.http_ = $http;
 
   /**
-   * @private
    * @type {angular.ISCEService}
    */
   this.sce_ = $sce;
 
   /**
-   * @private
    * @type {function(Object):import("ol/layer/Layer.js").default<import('ol/source/Source.js').default>}
    */
   this.getLayer_ = appGetLayer;
 
   /**
-   * @private
    * @type {import("ngeo/message/Popup.js").MessagePopup}
    */
   this.infoPopup_ = ngeoCreatePopup();
 
   /**
    * @type {Object<string, angular.IPromise<*>>}
-   * @private
    */
   this.promises_ = {};
 }

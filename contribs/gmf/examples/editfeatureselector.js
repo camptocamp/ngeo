@@ -77,7 +77,6 @@ const module = angular.module('gmfapp', [
 function MainController($scope, gmfThemes, gmfTreeManager, gmfUser, ngeoFeatureHelper, ngeoToolActivateMgr) {
   /**
    * @type {angular.IScope}
-   * @private
    */
   this.scope_ = $scope;
 
@@ -88,7 +87,6 @@ function MainController($scope, gmfThemes, gmfTreeManager, gmfUser, ngeoFeatureH
 
   /**
    * @type {import("ngeo/misc/FeatureHelper.js").FeatureHelper}
-   * @private
    */
   this.featureHelper_ = ngeoFeatureHelper;
 

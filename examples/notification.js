@@ -43,7 +43,6 @@ function MainController(ngeoNotification) {
 
   /**
    * @type {number}
-   * @private
    */
   this.i_ = 1;
 

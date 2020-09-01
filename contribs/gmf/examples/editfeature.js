@@ -61,7 +61,6 @@ const module = angular.module('gmfapp', [
 function MainController($scope, gmfEditFeature, gmfUser) {
   /**
    * @type {angular.IScope}
-   * @private
    */
   this.scope_ = $scope;
 
@@ -77,7 +76,6 @@ function MainController($scope, gmfEditFeature, gmfUser) {
 
   /**
    * @type {import("ol/source/ImageWMS.js").default}
-   * @private
    */
   this.wmsSource_ = new olSourceImageWMS({
     url: MAPSERVER_PROXY,
@@ -86,7 +84,6 @@ function MainController($scope, gmfEditFeature, gmfUser) {
 
   /**
    * @type {import("ol/layer/Image.js").default}
-   * @private
    */
   this.wmsLayer_ = new olLayerImage({
     source: this.wmsSource_,
@@ -94,13 +91,11 @@ function MainController($scope, gmfEditFeature, gmfUser) {
 
   /**
    * @type {number}
-   * @private
    */
   this.pixelBuffer_ = 10;
 
   /**
    * @type {number}
-   * @private
    */
   this.layerId_ = 113;
 
@@ -143,7 +138,6 @@ function MainController($scope, gmfEditFeature, gmfUser) {
 
 /**
  * @param {import("ol/MapBrowserEvent.js").default} evt MapBrowser event
- * @private
  */
 MainController.prototype.handleMapSingleClick_ = function (evt) {
   // (1) Launch query to fetch new features
@@ -170,7 +164,6 @@ MainController.prototype.handleMapSingleClick_ = function (evt) {
 
 /**
  * @param {Array<olFeature<import("ol/geom/Geometry.js").default>>} features Features.
- * @private
  */
 MainController.prototype.handleGetFeatures_ = function (features) {
   this.pending = false;
@@ -252,16 +245,12 @@ MainController.prototype.deleteFeature = function () {
 /**
  * Called after an insert, update or delete request.
  * @param {angular.IHttpResponse<void>} resp Ajax response.
- * @private
  */
 MainController.prototype.handleEditFeature_ = function (resp) {
   this.pending = false;
   this.refreshWMSLayer_();
 };
 
-/**
- * @private
- */
 MainController.prototype.refreshWMSLayer_ = function () {
   this.wmsSource_.updateParams({
     'random': Math.random(),

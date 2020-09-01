@@ -79,14 +79,12 @@ class Measure extends olInteractionInteraction {
     /**
      * The help tooltip element.
      * @type {?HTMLElement}
-     * @private
      */
     this.helpTooltipElement_ = null;
 
     /**
      * Overlay to show the help messages.
      * @type {?import("ol/Overlay.js").default}
-     * @private
      */
     this.helpTooltipOverlay_ = null;
 
@@ -114,7 +112,6 @@ class Measure extends olInteractionInteraction {
     /**
      * The sketch feature.
      * @type {?import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>}
-     * @protected
      */
     this.sketchFeature = null;
 
@@ -143,7 +140,6 @@ class Measure extends olInteractionInteraction {
     /**
      * Whether or not to display any tooltip
      * @type {boolean}
-     * @private
      */
     this.displayHelpTooltip_ = options.displayHelpTooltip !== undefined ? options.displayHelpTooltip : true;
 

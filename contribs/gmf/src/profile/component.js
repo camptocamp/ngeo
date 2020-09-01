@@ -177,19 +177,16 @@ export function ProfileController(
 
   /**
    * @type {angular.IScope}
-   * @private
    */
   this.$scope_ = $scope;
 
   /**
    * @type {angular.IHttpService}
-   * @private
    */
   this.$http_ = $http;
 
   /**
    * @type {JQuery}
-   * @private
    */
   this.$element_ = $element;
 
@@ -200,43 +197,36 @@ export function ProfileController(
 
   /**
    * @type {angular.gettext.gettextCatalog}
-   * @private
    */
   this.gettextCatalog_ = gettextCatalog;
 
   /**
    * @type {import("ngeo/map/FeatureOverlay.js").FeatureOverlay}
-   * @private
    */
   this.pointHoverOverlay_ = ngeoFeatureOverlayMgr.getFeatureOverlay();
 
   /**
    * @type {string}
-   * @private
    */
   this.gmfProfileJsonUrl_ = gmfProfileJsonUrl;
 
   /**
    * @type {import("ngeo/download/Csv.js").DownloadCsvService}
-   * @private
    */
   this.ngeoCsvDownload_ = ngeoCsvDownload;
 
   /**
    * @type {?import("ol/Map.js").default}
-   * @private
    */
   this.map_ = null;
 
   /**
    * @type {string[]}
-   * @private
    */
   this.layersNames_ = [];
 
   /**
    * @type {number}
-   * @private
    */
   this.nbPoints_ = 100;
 
@@ -266,27 +256,23 @@ export function ProfileController(
   /**
    * Overlay to show the measurement.
    * @type {?import("ol/Overlay.js").default}
-   * @private
    */
   this.measureTooltip_ = null;
 
   /**
    * The measure tooltip element.
    * @type {?HTMLElement}
-   * @private
    */
   this.measureTooltipElement_ = null;
 
   /**
    * @type {olFeature<import("ol/geom/Geometry.js").default>}
-   * @private
    */
   this.snappedPoint_ = new olFeature();
   this.pointHoverOverlay_.addFeature(this.snappedPoint_);
 
   /**
    * @type {import('ngeo/profile/elevationComponent.js').I18n}
-   * @private
    */
   this.profileLabels_ = {
     xAxis: gettextCatalog.getString('Distance'),
@@ -305,7 +291,6 @@ export function ProfileController(
 
   /**
    * @type {?import("ol/events.js").EventsKey}
-   * @private
    */
   this.pointerMoveKey_ = null;
 
@@ -385,9 +370,6 @@ ProfileController.prototype.$onInit = function () {
   }
 };
 
-/**
- * @private
- */
 ProfileController.prototype.update_ = function () {
   this.isErrored = false;
   if (this.line) {
@@ -398,9 +380,6 @@ ProfileController.prototype.update_ = function () {
   this.active = !!this.line;
 };
 
-/**
- * @private
- */
 ProfileController.prototype.updateEventsListening_ = function () {
   if (this.active && this.map_ !== null) {
     this.pointerMoveKey_ = listen(this.map_, 'pointermove', (mapBrowserEvent) => {
@@ -440,7 +419,6 @@ ProfileController.prototype.updateEventsListening_ = function () {
  * length of the line.
  * @param {import("ol/coordinate.js").Coordinate} pointOnLine A point on the given line.
  * @return {number} A distance.
- * @private
  */
 ProfileController.prototype.getDistanceOnALine_ = function (pointOnLine) {
   if (!this.line) {
@@ -471,7 +449,6 @@ ProfileController.prototype.getDistanceOnALine_ = function (pointOnLine) {
  * @param {string} xUnits X units label.
  * @param {Object<string, number>} elevationsRef Elevations references.
  * @param {string} yUnits Y units label.
- * @private
  */
 ProfileController.prototype.hoverCallback_ = function (point, dist, xUnits, elevationsRef, yUnits) {
   // Update information point.
@@ -491,9 +468,6 @@ ProfileController.prototype.hoverCallback_ = function (point, dist, xUnits, elev
   this.snappedPoint_.setGeometry(geom);
 };
 
-/**
- * @private
- */
 ProfileController.prototype.outCallback_ = function () {
   // Reset information point.
   delete this.currentPoint.coordinate;
@@ -509,7 +483,6 @@ ProfileController.prototype.outCallback_ = function () {
 
 /**
  * @return {string} A text formatted to a tooltip.
- * @private
  */
 ProfileController.prototype.getTooltipHTML_ = function () {
   const gettextCatalog = this.gettextCatalog_;
@@ -534,7 +507,6 @@ ProfileController.prototype.getTooltipHTML_ = function () {
 
 /**
  * Creates a new 'hover' tooltip
- * @private
  */
 ProfileController.prototype.createMeasureTooltip_ = function () {
   if (!this.map_) {
@@ -553,7 +525,6 @@ ProfileController.prototype.createMeasureTooltip_ = function () {
 
 /**
  * Destroy the 'hover' tooltip
- * @private
  */
 ProfileController.prototype.removeMeasureTooltip_ = function () {
   if (this.measureTooltipElement_ !== null) {
@@ -598,7 +569,6 @@ ProfileController.prototype.getLayersNames = function () {
 /**
  * @param {string} layerName name of the elevation layer.
  * @return {function(Object): number} Z extractor function.
- * @private
  */
 ProfileController.prototype.getZFactory_ = function (layerName) {
   /**
@@ -620,7 +590,6 @@ ProfileController.prototype.getZFactory_ = function (layerName) {
  * Extractor for the 'dist' value in profileData.
  * @param {Object} item The item.
  * @return {number} The distance.
- * @private
  */
 ProfileController.prototype.getDist_ = function (item) {
   if ('dist' in item) {
@@ -631,7 +600,6 @@ ProfileController.prototype.getDist_ = function (item) {
 
 /**
  * Request the profile.
- * @private
  */
 ProfileController.prototype.getJsonProfile_ = function () {
   if (!this.line) {
@@ -664,7 +632,6 @@ ProfileController.prototype.getJsonProfile_ = function () {
 
 /**
  * @param {angular.IHttpResponse<{profile: Object[]}>} resp Response.
- * @private
  */
 ProfileController.prototype.getProfileDataSuccess_ = function (resp) {
   const profileData = resp.data.profile;
@@ -676,7 +643,6 @@ ProfileController.prototype.getProfileDataSuccess_ = function (resp) {
 
 /**
  * @param {angular.IHttpResponse<never>} resp Response.
- * @private
  */
 ProfileController.prototype.getProfileDataError_ = function (resp) {
   this.isLoading = false;

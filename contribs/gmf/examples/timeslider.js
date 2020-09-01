@@ -47,7 +47,6 @@ const module = angular.module('gmfapp', [
 function MainController($scope, ngeoWMSTime) {
   /**
    * @type {import("ngeo/misc/WMSTime.js").WMSTime}
-   * @private
    */
   this.ngeoWMSTime_ = ngeoWMSTime;
 

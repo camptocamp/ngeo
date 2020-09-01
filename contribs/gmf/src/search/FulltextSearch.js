@@ -34,27 +34,23 @@ import {encodeQueryString, decodeQueryString} from 'ngeo/utils.js';
 export function FulltextSearchService($http, fulltextsearchUrl) {
   /**
    * @type {angular.IHttpService}
-   * @private
    */
   this.$http_ = $http;
 
   /**
    * @type {string}
-   * @private
    */
   this.url_ = fulltextsearchUrl;
 
   const url = this.url_.split('?');
   /**
    * @type {string}
-   * @private
    */
   this.baseUrl_ = url[0];
 
   const queryString = url.length == 2 ? `?${url[1]}` : '';
   /**
    * @type {Object<string, string>}
-   * @private
    */
   this.defaultParams_ = decodeQueryString(queryString);
 }

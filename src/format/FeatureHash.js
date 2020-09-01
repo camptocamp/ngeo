@@ -212,7 +212,6 @@ class FeatureHash extends olFormatTextFeature {
    * @param {string} text Text.
    * @param {number[]=} opt_flatCoordinates Flat coordinates array.
    * @return {number[]} Flat coordinates.
-   * @private
    */
   decodeCoordinates_(text, opt_flatCoordinates) {
     const len = text.length;
@@ -254,7 +253,6 @@ class FeatureHash extends olFormatTextFeature {
    * @param {number} offset Offset.
    * @param {number} end End.
    * @return {string} String.
-   * @private
    * @hidden
    */
   encodeCoordinates_(flatCoordinates, stride, offset, end) {

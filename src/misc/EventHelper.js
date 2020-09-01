@@ -34,7 +34,6 @@ import {unlistenByKey} from 'ol/events.js';
 export function EventHelper() {
   /**
    * @type {Object<number|string, Array<import("ol/events.js").EventsKey>>}
-   * @private
    */
   this.listenerKeys_ = {};
 }
@@ -67,7 +66,6 @@ EventHelper.prototype.clearListenerKey = function (uid) {
  * - unlisten any events if the array already exists for the given uid and
  *   empty the array.
  * @param {number|string} uid Unique id.
- * @private
  */
 EventHelper.prototype.initListenerKey_ = function (uid) {
   if (!this.listenerKeys_[uid]) {

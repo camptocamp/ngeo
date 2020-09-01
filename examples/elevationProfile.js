@@ -77,7 +77,6 @@ const types = {
 function MainController($http, $scope) {
   /**
    * @type {angular.IScope}
-   * @private
    */
   this.scope_ = $scope;
 

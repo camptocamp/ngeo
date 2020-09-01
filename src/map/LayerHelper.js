@@ -50,20 +50,17 @@ import {ServerType} from 'ngeo/datasource/OGC.js';
 export function LayerHelper($q, $http, ngeoTilesPreloadingLimit) {
   /**
    * @type {angular.IQService}
-   * @private
    */
   this.$q_ = $q;
 
   /**
    * @type {angular.IHttpService}
-   * @private
    */
   this.$http_ = $http;
 
   /**
    * The Tiles Preloading Limit value
    * @type {number}
-   * @private
    */
   this.tilesPreloadingLimit_ = ngeoTilesPreloadingLimit ? ngeoTilesPreloadingLimit : Infinity;
 }
@@ -382,7 +379,6 @@ LayerHelper.prototype.getFlatLayers = function (layer) {
  * @param {olLayerLayer<import('ol/source/Source.js').default>[]} array An array to add layers.
  * @param {number|undefined} computedOpacity Opacity inherited from ancestor layer groups.
  * @return {olLayerLayer<import('ol/source/Source.js').default>[]} Layers.
- * @private
  */
 LayerHelper.prototype.getFlatLayers_ = function (layer, array, computedOpacity) {
   const opacity = layer.getOpacity();

@@ -32,13 +32,11 @@ import {CollectionEvent} from 'ol/Collection.js';
 export function FeatureOverlay(manager, index) {
   /**
    * @type {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr}
-   * @private
    */
   this.manager_ = manager;
 
   /**
    * @type {number}
-   * @private
    */
   this.index_ = index;
 
@@ -114,7 +112,6 @@ FeatureOverlay.prototype.setStyle = function (style) {
 
 /**
  * @param {Event|import('ol/events/Event.js').default} evt Feature collection event.
- * @private
  */
 FeatureOverlay.prototype.handleFeatureAdd_ = function (evt) {
   if (evt instanceof CollectionEvent) {
@@ -125,7 +122,6 @@ FeatureOverlay.prototype.handleFeatureAdd_ = function (evt) {
 
 /**
  * @param {Event|import('ol/events/Event.js').default} evt Feature collection event.
- * @private
  */
 FeatureOverlay.prototype.handleFeatureRemove_ = function (evt) {
   if (evt instanceof CollectionEvent) {

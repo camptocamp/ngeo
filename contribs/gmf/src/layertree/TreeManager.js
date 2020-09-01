@@ -78,37 +78,31 @@ export function LayertreeTreeManager(
 ) {
   /**
    * @type {angular.ITimeoutService}
-   * @private
    */
   this.$timeout_ = $timeout;
 
   /**
    * @type {angular.auto.IInjectorService}
-   * @private
    */
   this.$injector_ = $injector;
 
   /**
    * @type {angular.gettext.gettextCatalog}
-   * @private
    */
   this.gettextCatalog_ = gettextCatalog;
 
   /**
    * @type {import("ngeo/map/LayerHelper.js").LayerHelper}
-   * @private
    */
   this.layerHelper_ = ngeoLayerHelper;
 
   /**
    * @type {import("ngeo/message/Notification.js").MessageNotification}
-   * @private
    */
   this.ngeoNotification_ = ngeoNotification;
 
   /**
    * @type {import("gmf/theme/Themes.js").ThemesService}
-   * @private
    */
   this.gmfThemes_ = gmfThemes;
 
@@ -140,32 +134,27 @@ export function LayertreeTreeManager(
 
   /**
    * @type {Array<import('gmf/themes.js').GmfGroup>}
-   * @private
    */
   this.groupsToAddInThisDigestLoop_ = [];
 
   /**
    * @type {?angular.IPromise<void>}
-   * @private
    */
   this.promiseForGroupsToAddInThisDigestLoop_ = null;
 
   /**
    * @type {import("ngeo/statemanager/Service.js").StatemanagerService}
-   * @private
    */
   this.ngeoStateManager_ = ngeoStateManager;
 
   /**
    * @type {Array.<import('gmf/themes.js').GmfGroup>|undefined}
-   * @private
    */
   this.initialLevelFirstGroups_ = undefined;
 
   /**
    * A reference to the OGC servers loaded by the theme service.
    * @type {?import('gmf/themes.js').GmfOgcServers}
-   * @private
    */
   this.ogcServers_ = null;
 
@@ -177,7 +166,6 @@ export function LayertreeTreeManager(
  * tree manager Layertree controllers array changes.
  * The themes could have been changed so it also call a refresh of the
  * layertree.
- * @private
  */
 LayertreeTreeManager.prototype.handleThemesChange_ = function () {
   this.gmfThemes_.getOgcServersObject().then((ogcServers) => {
@@ -263,7 +251,6 @@ LayertreeTreeManager.prototype.parseTreeNodes = function (node) {
 
 /**
  * @param {import('gmf/themes.js').GmfGroup} node Layer tree node to remove.
- * @private
  */
 LayertreeTreeManager.prototype.removePopup_ = function (node) {
   const popupId = node.popupId;
@@ -275,7 +262,6 @@ LayertreeTreeManager.prototype.removePopup_ = function (node) {
  * @param {array} array An array of groups.
  * @param {number} old_index The old index before reorder (the current one).
  * @param {number} new_index The new index after reorder.
- * @private
  */
 LayertreeTreeManager.prototype.reorderChild_ = function (array, old_index, new_index) {
   array.splice(new_index, 0, array.splice(old_index, 1)[0]);
@@ -284,7 +270,6 @@ LayertreeTreeManager.prototype.reorderChild_ = function (array, old_index, new_i
 /**
  * Update the application state with the list of first level groups in the tree
  * @param {Array<import('gmf/themes.js').GmfGroup>} groups firstlevel groups of the tree
- * @private
  */
 LayertreeTreeManager.prototype.updateTreeGroupsState_ = function (groups) {
   /**
@@ -305,7 +290,6 @@ LayertreeTreeManager.prototype.updateTreeGroupsState_ = function (groups) {
  * Add it only if it's not already in the tree.
  * @param {import('gmf/themes.js').GmfGroup} group The group to add.
  * @return {boolean} true if the group has been added.
- * @private
  */
 LayertreeTreeManager.prototype.addFirstLevelGroup_ = function (group) {
   let alreadyAdded = false;
@@ -487,7 +471,6 @@ LayertreeTreeManager.prototype.cloneGroupNode_ = function (group, names) {
  * @param {import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer} node The original node.
  * @param {string[]} names Array of node names to check (i.e. that
  *     should have their checkbox checked)
- * @private
  */
 LayertreeTreeManager.prototype.toggleNodeCheck_ = function (node, names) {
   const groupNode = /** @type {import('gmf/themes.js').GmfGroup} */ (node);
@@ -509,7 +492,6 @@ LayertreeTreeManager.prototype.toggleNodeCheck_ = function (node, names) {
  * tree.
  * @param {Array<import('gmf/themes.js').GmfGroup>} groups An array of groups that already in
  *   the tree.
- * @private
  */
 LayertreeTreeManager.prototype.notifyCantAddGroups_ = function (groups) {
   /** @type {string[]} */
@@ -585,7 +567,6 @@ LayertreeTreeManager.prototype.getOgcServer = function (treeCtrl) {
  * corresponding new node).
  * FIXME: Currently doesn't save nor restore the opacity.
  * @param {Array<import('gmf/themes.js').GmfTheme>} themes the array of themes to be based on.
- * @private
  */
 LayertreeTreeManager.prototype.refreshFirstLevelGroups_ = function (themes) {
   if (!this.rootCtrl) {
@@ -634,7 +615,6 @@ LayertreeTreeManager.prototype.refreshFirstLevelGroups_ = function (themes) {
  * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl the ngeo layertree
  *    controller to save.
  * @return {TreeManagerFullState} the fullState object.
- * @private
  */
 LayertreeTreeManager.prototype.getFirstLevelGroupFullState_ = function (treeCtrl) {
   /**
@@ -684,7 +664,6 @@ LayertreeTreeManager.prototype.getFirstLevelGroupFullState_ = function (treeCtrl
  * @param {TreeManagerFullState|undefined} fullState the fullState object
  *     to use.
  * @return {import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer} the node with modification.
- * @private
  */
 LayertreeTreeManager.prototype.setNodeMetadataFromFullState_ = function (node, fullState) {
   if (!fullState) {

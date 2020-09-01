@@ -153,7 +153,6 @@ module.directive('ngeoDatePicker', datePickerComponent);
 function Controller($scope, ngeoTime, gettextCatalog) {
   /**
    * @type {import("ngeo/misc/Time.js").Time}
-   * @private
    */
   this.ngeoTime_ = ngeoTime;
 
@@ -165,7 +164,6 @@ function Controller($scope, ngeoTime, gettextCatalog) {
   /**
    * The gettext catalog
    * @type {angular.gettext.gettextCatalog}
-   * @private
    */
   this.gettextCatalog_ = gettextCatalog;
 

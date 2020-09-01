@@ -126,7 +126,6 @@ class FilterSelectorController {
    * @param {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr Ngeo
    *    FeatureOverlay manager
    * @param {import("ngeo/filter/RuleHelper.js").RuleHelper} ngeoRuleHelper Ngeo rule helper service.
-   * @private
    * @ngInject
    * @ngdoc controller
    * @ngname GmfFilterselectorController
