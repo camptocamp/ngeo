@@ -45,7 +45,7 @@ import Geometry from 'ol/geom/Geometry.js';
  *
  * @typedef {Object} FeatureHashOptions
  * @property {number} [accuracy] The encoding and decoding accuracy. Optional. Default value is 1.
- * @property {Object<string, function(olFeature<import("ol/geom/Geometry.js").default>)>} [defaultValues] defaultValues.
+ * @property {Object<string, function(olFeature<import("ol/geom/Geometry.js").default>): void>} [defaultValues] defaultValues.
  * @property {boolean} [encodeStyles=true] Encode styles. Optional.
  * @property {function(olFeature<import("ol/geom/Geometry.js").default>): Object<string, (string|number|undefined)>} [properties]
  *    A function that returns serializable properties for a feature. Optional. By default the feature

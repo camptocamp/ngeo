@@ -86,6 +86,7 @@ function MainController($scope, ngeoWMSTime) {
 
   /**
    * @param {import('ngeo/datasource/OGC.js').TimeRange} date
+   * @this {MainController}
    */
   this.onDateSelected = function (date) {
     this.sliderValue = this.ngeoWMSTime_.formatWMSTimeParam(this.wmsTimeValueMode, date);
@@ -94,6 +95,7 @@ function MainController($scope, ngeoWMSTime) {
 
   /**
    * @param {import('ngeo/datasource/OGC.js').TimeRange} date
+   * @this {MainController}
    */
   this.onDateRangeSelected = function (date) {
     this.sliderRangeValue = this.ngeoWMSTime_.formatWMSTimeParam(this.wmsTimeRangeMode, date);

@@ -496,7 +496,7 @@ export class PrintController {
 
     /**
      * An array of attributes objects from capabilities.
-     * @type {Array<import('ngeo/print/mapfish-print-v3').MapFishPrintCapabilitiesLayout>}
+     * @type {import('ngeo/print/mapfish-print-v3').MapFishPrintCapabilitiesLayout[]}
      * @private
      */
     this.layouts_ = [];

@@ -38,7 +38,7 @@ import {normalizeURL, traverseLayer} from 'ngeo/offline/utils.js';
 import localforage from 'localforage/src/localforage.js';
 
 /**
- * @implements {ngeox.OfflineOnTileDownload}
+ * implements {import('ngeo/offline/index.js').OfflineOnTileDownload}
  */
 export default class extends olObservable {
   /**
@@ -77,6 +77,7 @@ export default class extends olObservable {
      * @private
      * @type {SerializerDeserializer}
      */
+    // @ts-ignore
     this.serDes_ = new SerializerDeserializer({gutter: ngeoOfflineGutter});
 
     /**
@@ -326,6 +327,7 @@ export default class extends olObservable {
         let layerSerialization;
         if (layer instanceof olLayerTile || layer instanceof olLayerImage) {
           layerType = 'tile';
+          // @ts-ignore
           layerSerialization = this.serDes_.serializeTileLayer(layer, source);
         } else if (layer instanceof olLayerVector) {
           layerType = 'vector';
@@ -384,6 +386,7 @@ export default class extends olObservable {
       const serialization = offlineLayer.layerSerialization;
       if (serialization) {
         const tileLoadFunction = this.createTileLoadFunction_(offlineLayer);
+        // @ts-ignore
         const layer = this.serDes_.deserializeTileLayer(serialization, tileLoadFunction);
         return layer;
       }

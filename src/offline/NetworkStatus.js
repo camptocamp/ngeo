@@ -221,10 +221,10 @@ Service.module.factory('httpInterceptor', httpInterceptor);
  * @private
  * @param {angular.IHttpProvider} $httpProvider .
  */
-Service.module.configFunction_ = function ($httpProvider) {
+function configFunction_($httpProvider) {
   $httpProvider.interceptors.push('httpInterceptor');
-};
-Service.module.config(Service.module.configFunction_);
+}
+Service.module.config(configFunction_);
 
 const exports = Service;
 
