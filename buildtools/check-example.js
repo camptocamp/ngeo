@@ -101,7 +101,7 @@ function loaded(page, browser) {
                 process.exit(2);
               }
             );
-        }, 200);
+        }, 500);
       } else {
         await browser.close();
       }
