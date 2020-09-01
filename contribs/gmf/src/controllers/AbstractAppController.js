@@ -76,8 +76,8 @@ import {noModifierKeys} from 'ol/events/condition.js';
  * @property {import("ol/style/Style.js").default} [accuracyFeatureStyle]
  * @property {number} [geolocationZoom]
  * @property {boolean} [autorotate]
- * @property {olx.MapOptions} [map]
- * @property {olx.ViewOptions} [view]
+ * @property {import('ol/Map.js').Options} [map]
+ * @property {import('ol/View.js').Options} [view]
  * @property {import("ol/Collection.js").default<import('ol/control/Control.js').default>|Array<import('ol/control/Control.js').default>} [mapControls]
  * @property {import("ol/Collection.js").default<import('ol/interaction/Interaction.js').default>|Array<import('ol/interaction/Interaction.js').default>} [mapInteractions]
  */
