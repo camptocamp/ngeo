@@ -221,7 +221,7 @@ class SearchController {
    * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
    * @param {import("ngeo/misc/AutoProjection.js").AutoProjectionService} ngeoAutoProjection The ngeo
    *    coordinates service.
-   * @param {import("ngeo/search/createGeoJSONBloodhound.js").createGeoJSONBloodhound} ngeoSearchCreateGeoJSONBloodhound
+   * @param {function} ngeoSearchCreateGeoJSONBloodhound
    *    The ngeo create GeoJSON Bloodhound service.
    * @param {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
    *     overlay manager service.
@@ -305,7 +305,7 @@ class SearchController {
     this.fullTextSearch_ = gmfSearchFulltextSearch;
 
     /**
-     * @type {import("ngeo/search/createGeoJSONBloodhound.js").createGeoJSONBloodhound}
+     * @type {function}
      * @private
      */
     this.ngeoSearchCreateGeoJSONBloodhound_ = ngeoSearchCreateGeoJSONBloodhound;
