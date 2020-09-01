@@ -85,6 +85,7 @@ beforeEach(() => {
       $provide.value('gmfPermalinkOptions', {});
       $provide.value('ngeoQueryOptions', {});
       $provide.value('gmfPrintOptions', {});
+      $provide.value('gmfDisplayQueryGridOptions', {});
       $provide.value('ngeoWfsPermalinkOptions', {
         wfsTypes: [],
       });

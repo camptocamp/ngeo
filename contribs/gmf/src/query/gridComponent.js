@@ -35,10 +35,7 @@ import ngeoQueryMapQuerent from 'ngeo/query/MapQuerent.js';
 import olCollection from 'ol/Collection.js';
 import * as olExtent from 'ol/extent.js';
 import olMap from 'ol/Map.js';
-import olStyleCircle from 'ol/style/Circle.js';
-import olStyleFill from 'ol/style/Fill.js';
-import olStyleStroke from 'ol/style/Stroke.js';
-import olStyleStyle from 'ol/style/Style.js';
+import {buildStyle} from 'gmf/options.js';
 
 import 'bootstrap/js/src/dropdown.js';
 
@@ -48,16 +45,6 @@ import 'bootstrap/js/src/dropdown.js';
  * @property {import("ngeo/grid/Config.js").default} [configuration] Configuration used to initialize a grid.
  * @property {import('ngeo/statemanager/WfsPermalink.js').QueryResultSource} source Results of the query
  *    source.
- */
-
-/**
- * Configuration option for {@link import("gmf/query/gridComponent.js").default} to merge
- * grid tabs.
- *
- * E.g. `'two_wheels_park': ['velo_park', 'moto_park']}` merges the sources
- * with label `velo_park` and `moto_park` into a new source `two_wheels_park`.
- *
- * @typedef {Object<string, string[]>} GridMergeTabs
  */
 
 /**
@@ -129,24 +116,10 @@ function gmfDisplayquerygridTemplateUrl($element, $attrs, gmfDisplayquerygridTem
  *
  * Example:
  *
- *      <gmf-displayquerygrid
- *        gmf-displayquerygrid-map="ctrl.map"
- *        gmf-displayquerygrid-featuresstyle="ctrl.styleForAllFeatures"
- *        gmf-displayquerygrid-selectedfeaturestyle="ctrl.styleForTheCurrentFeature">
- *      </gmf-displayquerygrid>
+ *      <gmf-displayquerygrid gmf-displayquerygrid-map="ctrl.map"></gmf-displayquerygrid>
  *
  * @htmlAttribute {boolean} gmf-displayquerygrid-active The active state of the component.
- * @htmlAttribute {import("ol/style/Style.js").default} gmf-displayquerygrid-featuresstyle A style
- *     object for all features from the result of the query.
- * @htmlAttribute {import("ol/style/Style.js").default} gmf-displayquerygrid-selectedfeaturestyle A style
- *     object for the currently selected features.
  * @htmlAttribute {import("ol/Map.js").default} gmf-displayquerygrid-map The map.
- * @htmlAttribute {boolean?} gmf-displayquerygrid-removeemptycolumns Optional. Should
- *     empty columns be hidden? Default: `false`.
- * @htmlAttribute {number?} gmf-displayquerygrid-maxrecenterzoom Optional. Maximum
- *     zoom-level to use when zooming to selected features.
- * @htmlAttribute {GridMergeTabs?} gmf-displayquerygrid-gridmergetabs Optional.
- *     Configuration to merge grids with the same attributes into a single grid.
  *
  * @ngdoc component
  * @ngname gmfDisplayquerygrid
@@ -155,13 +128,7 @@ const queryGridComponent = {
   controller: 'GmfDisplayquerygridController as ctrl',
   bindings: {
     'active': '=?gmfDisplayquerygridActive',
-    'featuresStyleFn': '&gmfDisplayquerygridFeaturesstyle',
-    'selectedFeatureStyleFn': '&gmfDisplayquerygridSelectedfeaturestyle',
     'getMapFn': '&gmfDisplayquerygridMap',
-    'removeEmptyColumnsFn': '&?gmfDisplayquerygridRemoveemptycolumns',
-    'maxResultsFn': '&?gmfDisplayquerygridMaxresults',
-    'maxRecenterZoomFn': '&?gmfDisplayquerygridMaxrecenterzoom',
-    'mergeTabs': '<?gmfDisplayquerygridMergetabs',
   },
   templateUrl: gmfDisplayquerygridTemplateUrl,
 };
@@ -181,6 +148,7 @@ module.component('gmfDisplayquerygrid', queryGridComponent);
  * @param {import('ngeo/options.js').ngeoQueryOptions} ngeoQueryOptions The options.
  * @param {import('gmf/options.js').gmfCsvFilename} gmfCsvFilename The CSV file name.
  * @param {JQuery} $element Element.
+ * @param {import('gmf/options.js').gmfDisplayQueryGridOptions} gmfDisplayQueryGridOptions The options.
  * @constructor
  * @hidden
  * @ngInject
@@ -196,8 +164,14 @@ export function QueryGridController(
   ngeoCsvDownload,
   ngeoQueryOptions,
   gmfCsvFilename,
-  $element
+  $element,
+  gmfDisplayQueryGridOptions
 ) {
+  /**
+   * @type {import('gmf/options.js').gmfDisplayQueryGridOptions}
+   */
+  this.options = gmfDisplayQueryGridOptions;
+
   /**
    * @type {angular.IScope}
    * @private
@@ -266,22 +240,6 @@ export function QueryGridController(
   this.selectedTab = null;
 
   /**
-   * @type {boolean}
-   * @private
-   */
-  this.removeEmptyColumns_ = false;
-
-  /**
-   * @type {number}
-   */
-  this.maxRecenterZoom;
-
-  /**
-   * @type {GridMergeTabs}
-   */
-  this.mergeTabs = {};
-
-  /**
    * A mapping between row uid and the corresponding feature for each
    * source.
    * @type {Object<string, Object<string, import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>>}
@@ -346,20 +304,6 @@ export function QueryGridController(
    */
   this.unregisterSelectWatcher_ = null;
 
-  this.removeEmptyColumnsFn = () => false;
-
-  /**
-   * @type {function():number}
-   */
-  this.maxRecenterZoomFn = () => undefined;
-  /**
-   * @type {?() => olStyleStyle}
-   */
-  this.featuresStyleFn = null;
-  /**
-   * @type {?() => olStyleStyle}
-   */
-  this.selectedFeatureStyleFn = null;
   /**
    * @type {?() => olMap}
    */
@@ -373,46 +317,15 @@ QueryGridController.prototype.$onInit = function () {
   if (!this.getMapFn) {
     throw new Error('Missing getMapFn');
   }
-  if (!this.featuresStyleFn) {
-    throw new Error('Missing featuresStyleFn');
-  }
-  if (!this.selectedFeatureStyleFn) {
-    throw new Error('Missing selectedFeatureStyleFn');
-  }
-  this.removeEmptyColumns_ = this.removeEmptyColumnsFn();
-  this.maxRecenterZoom = this.maxRecenterZoomFn();
 
   const featuresOverlay = this.ngeoFeatureOverlayMgr_.getFeatureOverlay();
   featuresOverlay.setFeatures(this.features_);
-  const featuresStyle = this.featuresStyleFn();
-  if (featuresStyle !== undefined) {
-    if (!(featuresStyle instanceof olStyleStyle)) {
-      throw new Error('Wrong featuresStyle type');
-    }
-    featuresOverlay.setStyle(featuresStyle);
-  }
+
+  featuresOverlay.setStyle(buildStyle(this.options.featuresStyle));
 
   const highlightFeaturesOverlay = this.ngeoFeatureOverlayMgr_.getFeatureOverlay();
   highlightFeaturesOverlay.setFeatures(this.highlightFeatures_);
-  let highlightFeatureStyle = this.selectedFeatureStyleFn();
-  if (highlightFeatureStyle !== undefined) {
-    if (!(highlightFeatureStyle instanceof olStyleStyle)) {
-      throw new Error('Wrong highlightFeatureStyle type');
-    }
-  } else {
-    const fill = new olStyleFill({color: [255, 0, 0, 0.6]});
-    const stroke = new olStyleStroke({color: [255, 0, 0, 1], width: 2});
-    highlightFeatureStyle = new olStyleStyle({
-      fill: fill,
-      image: new olStyleCircle({
-        fill: fill,
-        radius: 5,
-        stroke: stroke,
-      }),
-      stroke: stroke,
-      zIndex: 10,
-    });
-  }
+  const highlightFeatureStyle = buildStyle(this.options.selectedFeatureStyle);
   highlightFeaturesOverlay.setStyle(highlightFeatureStyle);
 
   const mapFn = this.getMapFn;
@@ -456,7 +369,7 @@ QueryGridController.prototype.updateData_ = function () {
   this.pending = false;
   let sources = this.ngeoQueryResult.sources;
   // merge sources if requested
-  if (Object.keys(this.mergeTabs).length > 0) {
+  if (Object.keys(this.options.mergeTabs || {}).length > 0) {
     sources = this.getMergedSources_(sources);
   }
 
@@ -569,8 +482,8 @@ QueryGridController.prototype.getMergedSources_ = function (sources) {
 QueryGridController.prototype.getMergedSource_ = function (source, mergedSources) {
   let mergeSourceId = null;
 
-  for (const currentMergeSourceId in this.mergeTabs) {
-    const sourceLabels = this.mergeTabs[currentMergeSourceId];
+  for (const currentMergeSourceId in this.options.mergeTabs || {}) {
+    const sourceLabels = this.options.mergeTabs[currentMergeSourceId];
     const containsSource = sourceLabels.some((sourceLabel) => sourceLabel == source.label);
     if (containsSource) {
       mergeSourceId = currentMergeSourceId;
@@ -676,7 +589,7 @@ QueryGridController.prototype.cleanProperties_ = function (allProperties, featur
     delete properties.ngeo_feature_type_;
   });
 
-  if (this.removeEmptyColumns_ === true) {
+  if (this.options.removeEmptyColumns === true) {
     this.removeEmptyColumnsFn_(allProperties);
   }
 };
@@ -968,7 +881,7 @@ QueryGridController.prototype.zoomToSelection = function () {
     if (!size) {
       throw new Error('Missing size');
     }
-    this.map_.getView().fit(extent, {size, maxZoom: this.maxRecenterZoom});
+    this.map_.getView().fit(extent, {size, maxZoom: this.options.maxRecenterZoom});
   }
 };
 

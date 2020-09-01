@@ -162,7 +162,7 @@ describe('gmf.query.gridComponent', () => {
     });
 
     it('removes empty columns', () => {
-      queryGridController.removeEmptyColumns_ = true;
+      queryGridController.options.removeEmptyColumns = true;
 
       ngeoQueryResult.total = 2;
       ngeoQueryResult.sources = [
@@ -210,7 +210,7 @@ describe('gmf.query.gridComponent', () => {
     });
 
     it('does not create a grid if only empty columns', () => {
-      queryGridController.removeEmptyColumns_ = true;
+      queryGridController.options.removeEmptyColumns = true;
 
       ngeoQueryResult.total = 2;
       ngeoQueryResult.sources = [
@@ -442,7 +442,7 @@ describe('gmf.query.gridComponent', () => {
         },
       ];
 
-      queryGridController.mergeTabs = {
+      queryGridController.options.mergeTabs = {
         'merged_source': ['Test 1', 'Test 2'],
       };
 
@@ -532,7 +532,7 @@ describe('gmf.query.gridComponent', () => {
         },
       ];
 
-      queryGridController.mergeTabs = {
+      queryGridController.options.mergeTabs = {
         'merged_source': ['Test 1', 'Test 2'],
       };
 

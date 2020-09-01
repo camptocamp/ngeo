@@ -23,6 +23,11 @@
  * @module contribs/gmf/src/options
  */
 
+import olStyleCircle from 'ol/style/Circle.js';
+import olStyleFill from 'ol/style/Fill.js';
+import olStyleStroke from 'ol/style/Stroke.js';
+import olStyle from 'ol/style/Style.js';
+
 /**
  * Flush mode active?
  * @typedef {boolean} gmfTreeManagerModeFlush
@@ -155,6 +160,99 @@
  * Defaults to `true`.
  * @property {boolean} [external] Whether to use disclaimer messages elsewhere or not. Default to `false`.
  * If true, you should use the externalMessage and the externalVisibility too.
+ */
+
+/**
+ * Configuration option for {@link import("gmf/query/gridComponent.js").default} to merge
+ * grid tabs.
+ *
+ * E.g. `'two_wheels_park': ['velo_park', 'moto_park']}` merges the sources
+ * with label `velo_park` and `moto_park` into a new source `two_wheels_park`.
+ *
+ * @typedef {Object<string, string[]>} GridMergeTabs
+ */
+
+/**
+ * @typedef {Object} Fill
+ * @property {number[]} [color] The color.
+ */
+
+/**
+ * @typedef {Object} Stroke
+ * @property {number[]} [color] The color.
+ * @property {CanvasLineCap} [lineCap='round'] Line cap style: `butt`, `round`, or `square`.
+ * @property {CanvasLineJoin} [lineJoin='round'] Line join style: `bevel`, `round`, or `miter`.
+ * @property {number[]} [lineDash] Line dash pattern. Default is `null` (no dash).
+ * Please note that Internet Explorer 10 and lower do not support the `setLineDash` method on
+ * the `CanvasRenderingContext2D` and therefore this option will have no visual effect in these browsers.
+ * @property {number} [lineDashOffset=0] Line dash offset.
+ * @property {number} [miterLimit=10] Miter limit.
+ * @property {number} [width] Width.
+ */
+
+/**
+ * @typedef {Object} Circle
+ * @property {Fill} [fill] Fill style.
+ * @property {number} radius Circle radius.
+ * @property {Stroke} [stroke] Stroke style.
+ * @property {number[]} [displacement=[0,0]] displacement
+ */
+
+/**
+ * The style description.
+ * @typedef {object} Style
+ * @property {Fill} [fill] The fill color.
+ * @property {Stroke} [stroke] The stoke config.
+ * @property {Circle} [circle] The circle config.
+ * @property {number} [zIndex] The z index.
+ */
+
+/**
+ * @param {olStyle|Style} styleDescriptor The description of the style
+ * @returns {olStyle}
+ */
+export function buildStyle(styleDescriptor) {
+  if (styleDescriptor instanceof olStyle) {
+    return styleDescriptor;
+  } else if (!styleDescriptor) {
+    return undefined;
+  } else {
+    /** @type {import('ol/style/Style.js').Options} */
+    const style = {};
+    Object.assign(style, styleDescriptor);
+    if (styleDescriptor.fill) {
+      style.fill = new olStyleFill(styleDescriptor.fill);
+    }
+    if (styleDescriptor.stroke) {
+      style.stroke = new olStyleStroke(styleDescriptor.stroke);
+    }
+    if (styleDescriptor.circle) {
+      const circleStyle = /** @type {import('ol/style/Circle.js').Options} */ ({});
+      Object.assign(circleStyle, styleDescriptor.circle);
+
+      if (styleDescriptor.circle.fill) {
+        circleStyle.fill = new olStyleFill(styleDescriptor.circle.fill);
+      }
+      if (styleDescriptor.circle.stroke) {
+        circleStyle.stroke = new olStyleStroke(styleDescriptor.circle.stroke);
+      }
+      style.image = new olStyleCircle(circleStyle);
+      // @ts-ignore
+      delete style.circle;
+    }
+    return new olStyle(style);
+  }
+}
+
+/**
+ * The display querry grid component options.
+ * @typedef {object} gmfDisplayQueryGridOptions
+ * @property {Style} [featuresStyle] A style object for all features from the result of the query.
+ * @property {Style} selectedFeatureStyle A style object for the currently selected features.
+ * @property {boolean} [removeEmptyColumns] Should empty columns be hidden? Default: `false`.
+ * @property {number} [maxRecenterZoom] Maximum zoom-level to use when zooming to selected features.
+ * @property {GridMergeTabs} [mergeTabs] Configuration to merge grids with the same attributes into
+ * a single grid.
  */
 
 export default undefined;
