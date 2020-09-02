@@ -112,8 +112,15 @@ class Controller {
    * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext service.
    * @ngInject
    */
-  constructor($scope, ngeoRoutingService, ngeoNominatimService, $q, ngeoDebounce,
-    ngeoRoutingOptions, gettextCatalog) {
+  constructor(
+    $scope,
+    ngeoRoutingService,
+    ngeoNominatimService,
+    $q,
+    ngeoDebounce,
+    ngeoRoutingOptions,
+    gettextCatalog
+  ) {
     /**
      * @type {angular.IScope}
      * @private
@@ -243,7 +250,7 @@ class Controller {
      */
     this.routeLayer_ = new olLayerVector({
       source: this.routeSource_,
-      style: ((feature) => {
+      style: (feature) => {
         const geometry = feature.getGeometry();
         // linestring style
         const styles = [
@@ -260,8 +267,8 @@ class Controller {
 
         // No arrow needed, return.
         if (this.selectedArrowDirection === 'none') {
-         return styles;
-        };
+          return styles;
+        }
 
         // Prepare arrow function
         const addArrowToSegment = (start, end) => {
@@ -296,13 +303,13 @@ class Controller {
 
           // Handle SelectedArrowDirection - Add arrow at the right place of the segment and the right
           // direction
-          if (this.selectedArrowDirection === 'forwards' || this.selectedArrowDirection === 'both')  {
+          if (this.selectedArrowDirection === 'forwards' || this.selectedArrowDirection === 'both') {
             styles.push(getArrowStyle(end, false));
           }
-          if (this.selectedArrowDirection === 'backwards' || this.selectedArrowDirection === 'both')  {
+          if (this.selectedArrowDirection === 'backwards' || this.selectedArrowDirection === 'both') {
             styles.push(getArrowStyle(start, true));
           }
-        }
+        };
 
         // Handle SelectedArrowPosition - Add arrow on the right segment.
         // On "first" segment only, add only arrow on the first feature.
@@ -337,7 +344,7 @@ class Controller {
         }
 
         return styles;
-      }),
+      },
     });
 
     /**
