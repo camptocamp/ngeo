@@ -36,6 +36,46 @@
     </ngeo-routing-feature>
   </div>
 
+  <div class="ngeo-routing-select-arrow-directions">
+    <p translate>Arrow direction</p>
+    <button
+      type="button"
+      class="btn btn-default form-control dropdown-toggle"
+      data-toggle="dropdown"
+      aria-expanded="false">
+      <span>{{$ctrl.arrowDirections[$ctrl.selectedArrowDirection]}}&nbsp;</span>
+    </button>
+    <ul
+      class="dropdown-menu dropdown-menu-right btn-block"
+      role="menu">
+      <li ng-repeat="(key, value) in $ctrl.arrowDirections">
+        <a
+          ng-click="$ctrl.selectedArrowDirection = key"
+          href="">{{value}}</a>
+      </li>
+    </ul>
+
+  <div class="ngeo-routing-select-arrow-positions">
+    <p translate>Arrow position</p>
+    <button
+      type="button"
+      class="btn btn-default form-control dropdown-toggle"
+      ng-disabled="$ctrl.selectedArrowDirection === 'none'"
+      data-toggle="dropdown"
+      aria-expanded="false">
+      <span>{{$ctrl.arrowPositions[$ctrl.selectedArrowPosition]}}&nbsp;</span>
+    </button>
+    <ul
+      class="dropdown-menu dropdown-menu-right btn-block"
+      role="menu">
+      <li ng-repeat="(key, value) in $ctrl.arrowPositions">
+        <a
+          ng-click="$ctrl.selectedArrowPosition = key"
+          href="">{{value}}</a>
+      </li>
+    </ul>
+  </div>
+
   <div class="form-group fill">
     <button type="button" class="btn prime" ng-click="$ctrl.clearRoute()">
       <span class="fa fa-trash"></span> <span translate>Clear</span>

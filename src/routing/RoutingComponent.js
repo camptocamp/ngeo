@@ -109,9 +109,11 @@ class Controller {
    * @param {import("ngeo/misc/debounce.js").miscDebounce<function(): void>} ngeoDebounce ngeo Debounce
    *    service.
    * @param {import('ngeo/options.js').ngeoRoutingOptions} ngeoRoutingOptions The options.
+   * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext service.
    * @ngInject
    */
-  constructor($scope, ngeoRoutingService, ngeoNominatimService, $q, ngeoDebounce, ngeoRoutingOptions) {
+  constructor($scope, ngeoRoutingService, ngeoNominatimService, $q, ngeoDebounce,
+    ngeoRoutingOptions, gettextCatalog) {
     /**
      * @type {angular.IScope}
      * @private
@@ -205,6 +207,35 @@ class Controller {
     this.routeSource_ = new olSourceVector({
       features: [],
     });
+
+    /**
+     * @type {object<string, string>}
+     */
+    this.arrowDirections = {
+      none: gettextCatalog.getString('None'),
+      forwards: gettextCatalog.getString('Forwards'),
+      backwards: gettextCatalog.getString('Backwards'),
+      both: gettextCatalog.getString('Both'),
+    };
+
+    /**
+     * @type {string}
+     */
+    this.selectedArrowDirection = Object.keys(this.arrowDirections)[0];
+
+    /**
+     * @type {object<string, string>}
+     */
+    this.arrowPositions = {
+      first: gettextCatalog.getString('First segment'),
+      last: gettextCatalog.getString('Last segment'),
+      every: gettextCatalog.getString('Every segement'),
+    };
+
+    /**
+     * @type {string}
+     */
+    this.selectedArrowPosition = Object.keys(this.arrowPositions)[0];
 
     /**
      * @type {import("ol/layer/Vector.js").default}
