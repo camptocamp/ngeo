@@ -31,10 +31,7 @@ import ngeoQueryMapQuerent from 'ngeo/query/MapQuerent.js';
 
 import olCollection from 'ol/Collection.js';
 import {isEmpty} from 'ol/obj.js';
-import olStyleCircle from 'ol/style/Circle.js';
-import olStyleFill from 'ol/style/Fill.js';
-import olStyleStroke from 'ol/style/Stroke.js';
-import olStyleStyle from 'ol/style/Style.js';
+import {buildStyle} from 'gmf/options.js';
 
 import 'jquery-ui/ui/widgets/resizable.js';
 import 'ngeo/sass/jquery-ui.scss';
@@ -121,20 +118,10 @@ function gmfDisplayquerywindowTemplateUrl($element, $attrs, gmfDisplayquerywindo
  *
  * Example:
  *
- *      <gmf-displayquerywindow
- *        gmf-displayquerywindow-featuresstyle="ctrl.styleForAllFeatures"
- *        gmf-displayquerywindow-selectedfeaturestyle="ctrl.styleForTheCurrentFeature">
- *      </gmf-displayquerywindow>
+ *      <gmf-displayquerywindow></gmf-displayquerywindow>
  *
- * @htmlAttribute {import("ol/style/Style.js").default} gmf-displayquerywindow-featuresstyle A style
- *     object for all features from the result of the query.
- * @htmlAttribute {import("ol/style/Style.js").default} selectedfeaturestyle A style
- *     object for the current displayed feature.
- * @htmlAttribute {boolean=} defaultcollapsed If the query result window is
- *     collapsed.
  * @htmlAttribute {boolean} desktop If the component is used in the desktop
  *     application.
- *
  * @ngdoc component
  * @ngname gmfDisplayquerywindow
  */
@@ -142,9 +129,6 @@ const queryWindowComponent = {
   controller: 'GmfDisplayquerywindowController as ctrl',
   bindings: {
     'draggableContainment': '<?gmfDisplayquerywindowDraggableContainment',
-    'featuresStyleFn': '&gmfDisplayquerywindowFeaturesstyle',
-    'selectedFeatureStyleFn': '&gmfDisplayquerywindowSelectedfeaturestyle',
-    'defaultCollapsedFn': '&?gmfDisplayquerywindowDefaultcollapsed',
     'desktop': '=gmfDisplayquerywindowDesktop',
   },
   templateUrl: gmfDisplayquerywindowTemplateUrl,
@@ -161,6 +145,7 @@ module.component('gmfDisplayquerywindow', queryWindowComponent);
  * @param {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
  * @param {import('gmf/options.js').gmfCsvFilename} gmfCsvFilename The CSV file name.
+ * @param {import('gmf/options.js').gmfDisplayQueryWindowOptions} gmfDisplayQueryWindowOptions The options.
  * @constructor
  * @hidden
  * @ngInject
@@ -174,8 +159,14 @@ export function QueryWindowController(
   ngeoMapQuerent,
   ngeoCsvDownload,
   ngeoFeatureOverlayMgr,
-  gmfCsvFilename
+  gmfCsvFilename,
+  gmfDisplayQueryWindowOptions
 ) {
+  /**
+   * @type {import('gmf/options.js').gmfDisplayQueryWindowOptions}
+   */
+  this.options = gmfDisplayQueryWindowOptions;
+
   /**
    * @type {Element|string}
    */
@@ -191,7 +182,7 @@ export function QueryWindowController(
    * When used for Desktop, it is shown non-collapsed.
    * @type {boolean}
    */
-  this.collapsed = !this.desktop;
+  this.collapsed = this.options.collapsed === undefined ? !this.desktop : this.options.collapsed;
 
   /**
    * @type {import('ngeo/query/MapQuerent.js').QueryResult}
@@ -280,17 +271,6 @@ export function QueryWindowController(
    */
   this.element_ = $element;
 
-  this.defaultCollapsedFn = () => !this.desktop;
-
-  /**
-   * @type {?() => olStyleStyle}
-   */
-  this.featuresStyleFn = null;
-  /**
-   * @type {?() => olStyleStyle}
-   */
-  this.selectedFeatureStyleFn = null;
-
   /**
    * @type {boolean}
    */
@@ -315,46 +295,15 @@ export function QueryWindowController(
  * Initialise the controller.
  */
 QueryWindowController.prototype.$onInit = function () {
-  if (!this.featuresStyleFn) {
-    throw new Error('Missing featuresStyleFn');
-  }
-  if (!this.selectedFeatureStyleFn) {
-    throw new Error('Missing selectedFeatureStyleFn');
-  }
   this.draggableContainment = this.draggableContainment || 'document';
-  this.collapsed = this.defaultCollapsedFn();
 
   const featuresOverlay = this.ngeoFeatureOverlayMgr_.getFeatureOverlay();
   featuresOverlay.setFeatures(this.features_);
-  const featuresStyle = this.featuresStyleFn();
-  if (featuresStyle !== undefined) {
-    if (!(featuresStyle instanceof olStyleStyle)) {
-      throw new Error('Wrong featuresStyle type');
-    }
-    featuresOverlay.setStyle(featuresStyle);
-  }
+  featuresOverlay.setStyle(buildStyle(this.options.featuresStyle));
 
   const highlightFeaturesOverlay = this.ngeoFeatureOverlayMgr_.getFeatureOverlay();
   highlightFeaturesOverlay.setFeatures(this.highlightFeatures_);
-  let highlightFeatureStyle = this.selectedFeatureStyleFn();
-  if (highlightFeatureStyle !== undefined) {
-    if (!(highlightFeatureStyle instanceof olStyleStyle)) {
-      throw new Error('Wrong highlightFeatureStyle type');
-    }
-  } else {
-    const fill = new olStyleFill({color: [255, 0, 0, 0.6]});
-    const stroke = new olStyleStroke({color: [255, 0, 0, 1], width: 2});
-    highlightFeatureStyle = new olStyleStyle({
-      fill: fill,
-      image: new olStyleCircle({
-        fill: fill,
-        radius: 5,
-        stroke: stroke,
-      }),
-      stroke: stroke,
-    });
-  }
-  highlightFeaturesOverlay.setStyle(highlightFeatureStyle);
+  highlightFeaturesOverlay.setStyle(buildStyle(this.options.selectedFeatureStyle));
 
   const windowContainer = this.element_.find('.gmf-displayquerywindow .windowcontainer');
   if (this.desktop) {

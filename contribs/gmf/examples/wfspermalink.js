@@ -31,10 +31,6 @@ import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
 import olLayerTile from 'ol/layer/Tile.js';
 import olSourceOSM from 'ol/source/OSM.js';
-import olStyleStroke from 'ol/style/Stroke.js';
-import olStyleStyle from 'ol/style/Style.js';
-import olStyleFill from 'ol/style/Fill.js';
-import olStyleCircle from 'ol/style/Circle.js';
 import options from './options.js';
 
 /** @type {angular.IModule} **/
@@ -66,26 +62,21 @@ function MainController() {
       zoom: 3,
     }),
   });
-
-  const fill = new olStyleFill({color: [255, 170, 0, 0.6]});
-  const stroke = new olStyleStroke({color: [255, 170, 0, 1], width: 2});
-
-  /**
-   * FeatureStyle used by the gmf.query.windowComponent
-   * @type {import("ol/style/Style.js").default}
-   */
-  this.featureStyle = new olStyleStyle({
-    fill: fill,
-    image: new olStyleCircle({
-      fill: fill,
-      radius: 5,
-      stroke: stroke,
-    }),
-    stroke: stroke,
-  });
 }
 
 module.controller('MainController', MainController);
+
+module.constant('gmfDisplayQueryWindowOptions', {
+  featuresStyle: {
+    fill: {color: [255, 170, 0, 0.6]},
+    stroke: {color: [255, 170, 0, 1], width: 2},
+    circle: {
+      radius: 5,
+      fill: {color: [255, 170, 0, 0.6]},
+      stroke: {color: [255, 170, 0, 1], width: 2},
+    },
+  },
+});
 options(module);
 
 export default module;
