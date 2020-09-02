@@ -28,14 +28,17 @@ import ngeoRoutingRoutingFeatureComponent from 'ngeo/routing/RoutingFeatureCompo
 import olFormatGeoJSON from 'ol/format/GeoJSON.js';
 import olSourceVector from 'ol/source/Vector.js';
 import olLayerVector from 'ol/layer/Vector.js';
-import olStyleStyle from 'ol/style/Style.js';
 import olStyleFill from 'ol/style/Fill.js';
+import olStyleIcon from 'ol/style/Icon.js';
+import olGeomPoint from 'ol/geom/Point.js';
+import olStyleStyle from 'ol/style/Style.js';
 import olStyleStroke from 'ol/style/Stroke.js';
 import {toLonLat} from 'ol/proj.js';
 import olFeature from 'ol/Feature.js';
 import olGeomLineString from 'ol/geom/LineString.js';
 import 'ngeo/sass/font.scss';
 import Point from 'ol/geom/Point.js';
+import ArrowIcon from 'ngeo/routing/arrow.png';
 
 /**
  * @typedef {Object} RoutingVia
@@ -209,14 +212,51 @@ class Controller {
      */
     this.routeLayer_ = new olLayerVector({
       source: this.routeSource_,
-      style: new olStyleStyle({
-        fill: new olStyleFill({
-          color: 'rgba(16, 112, 29, 0.6)',
-        }),
-        stroke: new olStyleStroke({
-          color: 'rgba(16, 112, 29, 0.6)',
-          width: 5,
-        }),
+      style: ((feature) => {
+        const geometry = feature.getGeometry();
+        const styles = [
+          // linestring
+          new olStyleStyle({
+            fill: new olStyleFill({
+              color: 'rgba(16, 112, 29, 0.6)',
+            }),
+            stroke: new olStyleStroke({
+              color: 'rgba(16, 112, 29, 0.6)',
+              width: 5,
+            }),
+          }),
+        ];
+      
+        geometry.forEachSegment((start, end) => {
+          const dx = end[0] - start[0];
+          const dy = end[1] - start[1];
+
+          // Remove supplementaries segments
+          // const length = Math.sqrt(dx^2 + dy^2);
+          // if (length < 2) {
+          //   // Don't add arrow on too small segment.
+          //   return;
+          // }
+          // const rotation = Math.atan2(dy, dx);
+          // if (Math.abs(rotation) < 2) {
+          //   // Don't add arrow on too small segment.
+          //   return;
+          // }
+
+          // Add arrows
+          styles.push(
+            new olStyleStyle({
+              geometry: new olGeomPoint(end),
+              image: new olStyleIcon({
+                src: ArrowIcon,
+                anchor: [0.75, 0.5],
+                rotateWithView: true,
+                rotation: -rotation,
+              }),
+            })
+          );
+        });
+        return styles;
       }),
     });
 
