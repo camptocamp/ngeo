@@ -966,7 +966,9 @@ Controller.prototype.supportsLegend = function (treeCtrl) {
  */
 Controller.prototype.supportsOpacityChange = function (treeCtrl) {
   const node = /** @type {import('gmf/themes.js').GmfGroup} */ (treeCtrl.node);
-  const parentNode = /** @type {import('gmf/themes.js').GmfGroup} */ (treeCtrl.parent.node);
+  const parentNode = treeCtrl.parent
+    ? /** @type {import('gmf/themes.js').GmfGroup} */ (treeCtrl.parent.node)
+    : undefined;
   return (
     !!treeCtrl.layer &&
     ((treeCtrl.depth === 1 && !node.mixed) ||
