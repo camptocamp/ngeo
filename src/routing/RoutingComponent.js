@@ -28,17 +28,15 @@ import ngeoRoutingRoutingFeatureComponent from 'ngeo/routing/RoutingFeatureCompo
 import olFormatGeoJSON from 'ol/format/GeoJSON.js';
 import olSourceVector from 'ol/source/Vector.js';
 import olLayerVector from 'ol/layer/Vector.js';
-import olStyleFill from 'ol/style/Fill.js';
-import olStyleIcon from 'ol/style/Icon.js';
 import olGeomPoint from 'ol/geom/Point.js';
+import olStyleFill from 'ol/style/Fill.js';
+import olStyleText from 'ol/style/Text.js';
 import olStyleStyle from 'ol/style/Style.js';
 import olStyleStroke from 'ol/style/Stroke.js';
 import {toLonLat} from 'ol/proj.js';
 import olFeature from 'ol/Feature.js';
 import olGeomLineString from 'ol/geom/LineString.js';
 import 'ngeo/sass/font.scss';
-import Point from 'ol/geom/Point.js';
-import ArrowIcon from 'ngeo/routing/arrow.png';
 
 /**
  * @typedef {Object} RoutingVia
@@ -199,12 +197,14 @@ class Controller {
      * @type {Object<string, string>}
      */
     this.colors = {
-      'start.fill': '#6BE62E',
-      'start.stroke': '#4CB01E',
-      'destination.fill': '#FF3E13',
-      'destination.stroke': '#CD3412',
-      'via.fill': '#767676',
-      'via.stroke': '#000000',
+      startFill: '#6BE62E',
+      startStroke: '#4CB01E',
+      destinationFill: '#FF3E13',
+      destinationStroke: '#CD3412',
+      viaFill: '#767676',
+      viaStroke: '#000000',
+      arrow: '#ffaa00',
+      lineRGBA: 'rgba(16, 112, 29, 0.6)',
     };
 
     /**
@@ -256,10 +256,10 @@ class Controller {
         const styles = [
           new olStyleStyle({
             fill: new olStyleFill({
-              color: 'rgba(16, 112, 29, 0.6)',
+              color: this.colors.lineRGBA,
             }),
             stroke: new olStyleStroke({
-              color: 'rgba(16, 112, 29, 0.6)',
+              color: this.colors.lineRGBA,
               width: 5,
             }),
           }),
@@ -291,10 +291,16 @@ class Controller {
           const getArrowStyle = (coordinate, invert) => {
             return new olStyleStyle({
               geometry: new olGeomPoint(coordinate),
-              zIndex: 1000,
-              image: new olStyleIcon({
-                src: ArrowIcon,
-                anchor: [0.75, 0.5],
+              text: new olStyleText({
+                fill: new olStyleFill({
+                  color: '#ffaa00',
+                }),
+                font: '900 30px "Font Awesome 5 Free"',
+                stroke: new olStyleStroke({
+                  width: 1,
+                  color: this.colors.arrow,
+                }),
+                text: '\uf105',
                 rotateWithView: true,
                 rotation: invert ? Math.PI - rotation : -rotation,
               }),
@@ -414,7 +420,7 @@ class Controller {
       return null;
     }
     const geometry = point.getGeometry();
-    if (!(geometry instanceof Point)) {
+    if (!(geometry instanceof olGeomPoint)) {
       throw new Error('Wrong time values type');
     }
     const coords = geometry.getCoordinates();

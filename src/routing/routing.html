@@ -3,8 +3,8 @@
     <ngeo-routing-feature
       ngeo-routing-feature-map="$ctrl.map"
       ngeo-routing-feature-feature="$ctrl.startFeature_"
-      ngeo-routing-feature-fill-color="$ctrl.colors['start.fill']"
-      ngeo-routing-feature-stroke-color="$ctrl.colors['start.stroke']"
+      ngeo-routing-feature-fill-color="$ctrl.colors.startFill"
+      ngeo-routing-feature-stroke-color="$ctrl.colors.startStroke"
       ngeo-routing-feature-on-change="$ctrl.handleChange">
     </ngeo-routing-feature>
   </div>
@@ -15,8 +15,8 @@
           <ngeo-routing-feature
             ngeo-routing-feature-map="$ctrl.map"
             ngeo-routing-feature-feature="via.feature"
-            ngeo-routing-feature-fill-color="$ctrl.colors['via.fill']"
-            ngeo-routing-feature-stroke-color="$ctrl.colors['via.stroke']"
+            ngeo-routing-feature-fill-color="$ctrl.colors.viaFill"
+            ngeo-routing-feature-stroke-color="$ctrl.colors.viaStroke"
             ngeo-routing-feature-on-change="$ctrl.handleChange">
           </ngeo-routing-feature>
         </div>
@@ -30,8 +30,8 @@
     <ngeo-routing-feature
       ngeo-routing-feature-map="$ctrl.map"
       ngeo-routing-feature-feature="$ctrl.targetFeature_"
-      ngeo-routing-feature-fill-color="$ctrl.colors['destination.fill']"
-      ngeo-routing-feature-stroke-color="$ctrl.colors['destination.stroke']"
+      ngeo-routing-feature-fill-color="$ctrl.colors.destinationFill"
+      ngeo-routing-feature-stroke-color="$ctrl.colors.destinationStroke"
       ngeo-routing-feature-on-change="$ctrl.handleChange">
     </ngeo-routing-feature>
   </div>
