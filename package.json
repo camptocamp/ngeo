@@ -108,7 +108,7 @@
     "jsdoc": "3.6.5",
     "jsdoc-plugin-typescript": "2.0.5",
     "jsts": "2.5.1",
-    "karma": "5.2.0",
+    "karma": "5.2.1",
     "karma-chrome-launcher": "3.1.0",
     "karma-jasmine": "4.0.1",
     "karma-sinon": "1.0.5",
