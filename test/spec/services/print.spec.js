@@ -126,7 +126,8 @@ describe('ngeo.print.Service', () => {
                 opacity: 1,
                 serverType: undefined,
                 version: undefined,
-                useNativeAngle: true
+                useNativeAngle: true,
+                styles: ['']
               }]
             },
             foo: 'fooval',
@@ -187,7 +188,8 @@ describe('ngeo.print.Service', () => {
                 opacity: 1,
                 serverType: undefined,
                 version: undefined,
-                useNativeAngle: true
+                useNativeAngle: true,
+                styles: ['']
               }]
             },
             foo: 'fooval',
