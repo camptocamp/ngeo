@@ -235,7 +235,7 @@ class Controller {
     /**
      * @type {string}
      */
-    this.selectedArrowPosition = Object.keys(this.arrowPositions)[0];
+    this.selectedArrowPosition = Object.keys(this.arrowPositions)[1];
 
     /**
      * @type {import("ol/layer/Vector.js").default}
@@ -245,8 +245,8 @@ class Controller {
       source: this.routeSource_,
       style: ((feature) => {
         const geometry = feature.getGeometry();
+        // linestring style
         const styles = [
-          // linestring
           new olStyleStyle({
             fill: new olStyleFill({
               color: 'rgba(16, 112, 29, 0.6)',
@@ -257,36 +257,85 @@ class Controller {
             }),
           }),
         ];
-      
-        geometry.forEachSegment((start, end) => {
+
+        // No arrow needed, return.
+        if (this.selectedArrowDirection === 'none') {
+         return styles;
+        };
+
+        // Prepare arrow function
+        const addArrowToSegment = (start, end) => {
           const dx = end[0] - start[0];
           const dy = end[1] - start[1];
 
           // Remove supplementaries segments
-          // const length = Math.sqrt(dx^2 + dy^2);
+          // const length = Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));
           // if (length < 2) {
           //   // Don't add arrow on too small segment.
           //   return;
           // }
-          // const rotation = Math.atan2(dy, dx);
+          const rotation = Math.atan2(dy, dx);
           // if (Math.abs(rotation) < 2) {
           //   // Don't add arrow on too small segment.
           //   return;
           // }
 
-          // Add arrows
-          styles.push(
-            new olStyleStyle({
-              geometry: new olGeomPoint(end),
+          // Add arrows fn
+          const getArrowStyle = (coordinate, invert) => {
+            return new olStyleStyle({
+              geometry: new olGeomPoint(coordinate),
+              zIndex: 1000,
               image: new olStyleIcon({
                 src: ArrowIcon,
                 anchor: [0.75, 0.5],
                 rotateWithView: true,
-                rotation: -rotation,
+                rotation: invert ? Math.PI - rotation : -rotation,
               }),
-            })
-          );
+            });
+          };
+
+          // Handle SelectedArrowDirection - Add arrow at the right place of the segment and the right
+          // direction
+          if (this.selectedArrowDirection === 'forwards' || this.selectedArrowDirection === 'both')  {
+            styles.push(getArrowStyle(end, false));
+          }
+          if (this.selectedArrowDirection === 'backwards' || this.selectedArrowDirection === 'both')  {
+            styles.push(getArrowStyle(start, true));
+          }
+        }
+
+        // Handle SelectedArrowPosition - Add arrow on the right segment.
+        // On "first" segment only, add only arrow on the first feature.
+        if (this.selectedArrowPosition === 'first' && feature.get('isStartToRouteFeature') !== true) {
+          return styles;
+        }
+        // On "last" segment only, add only arrow on the last feature.
+        if (this.selectedArrowPosition === 'last' && feature.get('isRouteToEndFeature') !== true) {
+          return styles;
+        }
+        let firstOrLastSegment = null;
+        geometry.forEachSegment((start, end) => {
+          // On "first" segment only, keep the segment and add arrow later.
+          if (this.selectedArrowPosition === 'first') {
+            if (firstOrLastSegment === null) {
+              firstOrLastSegment = [[...start], [...end]];
+            }
+            return;
+          }
+          // On "last" segment only, keep the segment and add arrow later.
+          if (this.selectedArrowPosition === 'last') {
+            firstOrLastSegment = [[...start], [...end]];
+            return;
+          }
+          // On every segments.
+          addArrowToSegment(start, end);
         });
+
+        // Add arrow on a specific segment.
+        if (firstOrLastSegment) {
+          addArrowToSegment(...firstOrLastSegment);
+        }
+
         return styles;
       }),
     });
@@ -472,10 +521,11 @@ class Controller {
         endRoute,
         /** @type {import("ol/geom/Point.js").default} */ (this.targetFeature_.getGeometry()).getCoordinates(),
       ];
-      const routeConnections = [
-        new olFeature(new olGeomLineString(startToRoute)),
-        new olFeature(new olGeomLineString(routeToEnd)),
-      ];
+      const startToRouteFeature = new olFeature(new olGeomLineString(startToRoute));
+      startToRouteFeature.set('isStartToRouteFeature', true);
+      const routeToEndFeature = new olFeature(new olGeomLineString(routeToEnd));
+      routeToEndFeature.set('isRouteToEndFeature', true);
+      const routeConnections = [startToRouteFeature, routeToEndFeature];
 
       // add them to the source
       this.routeSource_.addFeatures(routeConnections);
