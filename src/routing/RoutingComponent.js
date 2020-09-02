@@ -26,6 +26,7 @@ import ngeoRoutingNominatimService from 'ngeo/routing/NominatimService.js';
 import ngeoRoutingRoutingService from 'ngeo/routing/RoutingService.js';
 import ngeoRoutingRoutingFeatureComponent from 'ngeo/routing/RoutingFeatureComponent.js';
 import olFormatGeoJSON from 'ol/format/GeoJSON.js';
+import olGeomPoint from 'ol/geom/Point.js';
 import olSourceVector from 'ol/source/Vector.js';
 import olLayerVector from 'ol/layer/Vector.js';
 import olStyleStyle from 'ol/style/Style.js';
@@ -35,7 +36,6 @@ import {toLonLat} from 'ol/proj.js';
 import olFeature from 'ol/Feature.js';
 import olGeomLineString from 'ol/geom/LineString.js';
 import 'ngeo/sass/font.scss';
-import Point from 'ol/geom/Point.js';
 
 /**
  * @typedef {Object} RoutingVia
@@ -141,7 +141,7 @@ class Controller {
      *              profile: 'routed-car' // used as part of the query
      *            }
      *          ]
-     * @type {Array<import('ngeo/options.js').RoutingProfile>}
+     * @type {import('ngeo/options.js').RoutingProfile[]}
      */
     this.routingProfiles = this.routingOptions_.profiles || [];
 
@@ -187,12 +187,13 @@ class Controller {
      * @type {Object<string, string>}
      */
     this.colors = {
-      'start.fill': '#6BE62E',
-      'start.stroke': '#4CB01E',
-      'destination.fill': '#FF3E13',
-      'destination.stroke': '#CD3412',
-      'via.fill': '#767676',
-      'via.stroke': '#000000',
+      startFill: '#6BE62E',
+      startStroke: '#4CB01E',
+      destinationFill: '#FF3E13',
+      destinationStroke: '#CD3412',
+      viaFill: '#767676',
+      viaStroke: '#000000',
+      lineRGBA: 'rgba(16, 112, 29, 0.6)',
     };
 
     /**
@@ -211,10 +212,10 @@ class Controller {
       source: this.routeSource_,
       style: new olStyleStyle({
         fill: new olStyleFill({
-          color: 'rgba(16, 112, 29, 0.6)',
+          color: this.colors.lineRGBA,
         }),
         stroke: new olStyleStroke({
-          color: 'rgba(16, 112, 29, 0.6)',
+          color: this.colors.lineRGBA,
           width: 5,
         }),
       }),
@@ -287,7 +288,7 @@ class Controller {
       return null;
     }
     const geometry = point.getGeometry();
-    if (!(geometry instanceof Point)) {
+    if (!(geometry instanceof olGeomPoint)) {
       throw new Error('Wrong time values type');
     }
     const coords = geometry.getCoordinates();
@@ -312,7 +313,7 @@ class Controller {
 
   /**
    * @param {import('./RoutingService').Route} route Routes of OSRM response
-   * @return {Array<olFeature<import("ol/geom/Geometry.js").default>>} parsed route features
+   * @return {olFeature<import("ol/geom/Geometry.js").default>[]} parsed route features
    * @private
    */
   parseRoute_(route) {
@@ -326,7 +327,7 @@ class Controller {
       dataProjection: 'EPSG:4326',
       featureProjection: this.map.getView().getProjection(),
     };
-    // if there are is useful "legs" data, parse this
+    // if there are useful "legs" data, parse this
     if (route.legs) {
       /** @type {olFeature<import('ol/geom/Geometry.js').default>[][]} */
       const parsedRoutes_ = route.legs.map((leg) =>
@@ -350,88 +351,89 @@ class Controller {
   /**
    */
   calculateRoute() {
-    if (this.startFeature_ && this.targetFeature_) {
-      // remove rendered routes
-      this.routeSource_.clear();
-
-      const coordFrom = this.getLonLatFromPoint_(this.startFeature_);
-      const coordTo = this.getLonLatFromPoint_(this.targetFeature_);
-      const vias = this.viaArray
-        .filter((via) => via.feature !== null)
-        .map((via) => this.getLonLatFromPoint_(via.feature));
-      const route = /** @type {Array<number[]>} */ ([coordFrom].concat(vias, [coordTo]));
-
-      /**
-       * @param {angular.IHttpResponse<import('./RoutingService').Routes>} resp
-       * @return {any}
-       */
-      const onSuccess_ = (resp) => {
-        if (!this.map || !this.startFeature_ || !this.targetFeature_) {
-          return null;
-        }
-        const features = this.parseRoute_(resp.data.routes[0]);
-        if (features.length === 0) {
-          console.log('No route or not supported format.');
-          return;
-        }
-        this.routeSource_.addFeatures(features);
-
-        // recenter map on route
-        this.map.getView().fit(this.routeSource_.getExtent());
-
-        this.routeDistance = resp.data.routes[0].distance;
-        this.routeDuration = resp.data.routes[0].duration;
-
-        // get first and last coordinate of route
-        const startRoute = /** @type {import("ol/geom/LineString.js").default} */ (features[0].getGeometry()).getCoordinateAt(
-          0
-        );
-        const endRoute = /** @type {import("ol/geom/LineString.js").default} */ (features[
-          features.length - 1
-        ].getGeometry()).getCoordinateAt(1);
-
-        // build geometries to connect route to start and end point of query
-        const startToRoute = [
-          /** @type {import("ol/geom/Point.js").default} */ (this.startFeature_.getGeometry()).getCoordinates(),
-          startRoute,
-        ];
-        const routeToEnd = [
-          endRoute,
-          /** @type {import("ol/geom/Point.js").default} */ (this.targetFeature_.getGeometry()).getCoordinates(),
-        ];
-        const routeConnections = [
-          new olFeature(new olGeomLineString(startToRoute)),
-          new olFeature(new olGeomLineString(routeToEnd)),
-        ];
-
-        // add them to the source
-        this.routeSource_.addFeatures(routeConnections);
-      };
-
-      /**
-       * @param {angular.IHttpResponse<import('./RoutingService').Route>} resp
-       */
-      const onError_ = (resp) => {
-        this.errorMessage = 'Error: routing server not responding.';
-        console.log(resp);
-      };
-
-      /** @type {Object} */
-      const options = {};
-      options.steps = true;
-      options.overview = false;
-      options.geometries = 'geojson';
-
-      /** @type {import('./RoutingService').Config} */
-      const config = {};
-      config.options = options;
-
-      if (this.selectedRoutingProfile) {
-        config.instance = this.selectedRoutingProfile.profile;
-      }
-
-      this.$q_.when(this.ngeoRoutingService_.getRoute(route, config)).then(onSuccess_, onError_);
+    if (!this.startFeature_ || !this.targetFeature_) {
+      return;
     }
+    // remove rendered routes
+    this.routeSource_.clear();
+
+    const coordFrom = this.getLonLatFromPoint_(this.startFeature_);
+    const coordTo = this.getLonLatFromPoint_(this.targetFeature_);
+    const vias = this.viaArray
+      .filter((via) => via.feature !== null)
+      .map((via) => this.getLonLatFromPoint_(via.feature));
+    const route = /** @type {number[][]} */ ([coordFrom].concat(vias, [coordTo]));
+
+    /**
+     * @param {angular.IHttpResponse<import('./RoutingService').Routes>} resp
+     * @return {any}
+     */
+    const onSuccess_ = (resp) => {
+      if (!this.map || !this.startFeature_ || !this.targetFeature_) {
+        return;
+      }
+      const features = this.parseRoute_(resp.data.routes[0]);
+      if (features.length === 0) {
+        console.log('No route or not supported format.');
+        return;
+      }
+      this.routeSource_.addFeatures(features);
+
+      // recenter map on route
+      this.map.getView().fit(this.routeSource_.getExtent());
+
+      this.routeDistance = resp.data.routes[0].distance;
+      this.routeDuration = resp.data.routes[0].duration;
+
+      // get first and last coordinate of route
+      const startRoute = /** @type {import("ol/geom/LineString.js").default} */ (features[0].getGeometry()).getCoordinateAt(
+        0
+      );
+      const endRoute = /** @type {import("ol/geom/LineString.js").default} */ (features[
+        features.length - 1
+      ].getGeometry()).getCoordinateAt(1);
+
+      // build geometries to connect route to start and end point of query
+      const startToRoute = [
+        /** @type {import("ol/geom/Point.js").default} */ (this.startFeature_.getGeometry()).getCoordinates(),
+        startRoute,
+      ];
+      const routeToEnd = [
+        endRoute,
+        /** @type {import("ol/geom/Point.js").default} */ (this.targetFeature_.getGeometry()).getCoordinates(),
+      ];
+      const routeConnections = [
+        new olFeature(new olGeomLineString(startToRoute)),
+        new olFeature(new olGeomLineString(routeToEnd)),
+      ];
+
+      // add them to the source
+      this.routeSource_.addFeatures(routeConnections);
+    };
+
+    /**
+     * @param {angular.IHttpResponse<import('./RoutingService').Route>} resp
+     */
+    const onError_ = (resp) => {
+      this.errorMessage = 'Error: routing server not responding.';
+      console.log(resp);
+    };
+
+    /** @type {Object} */
+    const options = {};
+    options.steps = true;
+    options.overview = false;
+    options.geometries = 'geojson';
+
+    /** @type {import('./RoutingService').Config} */
+    const config = {};
+    config.options = options;
+
+    if (this.selectedRoutingProfile) {
+      config.instance = this.selectedRoutingProfile.profile;
+    }
+
+    this.$q_.when(this.ngeoRoutingService_.getRoute(route, config)).then(onSuccess_, onError_);
   }
 
   /**
