@@ -61,16 +61,6 @@ module.exports = function (config) {
     ],
   ];
 
-  const angularRule = {
-    test: require.resolve('angular'),
-    use: {
-      loader: 'expose-loader',
-      options: {
-        exposes: ['angular'],
-      },
-    },
-  };
-
   // Expose corejs-typeahead as window.Bloodhound
   const typeaheadRule = {
     test: require.resolve('corejs-typeahead'),
@@ -211,7 +201,7 @@ module.exports = function (config) {
       path: path.resolve(__dirname, '../dist/'),
     },
     module: {
-      rules: [angularRule, typeaheadRule, cssRule, sassRule, htmlRule, ngeoRule, otherRule],
+      rules: [typeaheadRule, cssRule, sassRule, htmlRule, ngeoRule, otherRule],
     },
     plugins: plugins,
     resolve: {
