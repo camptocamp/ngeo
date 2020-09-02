@@ -26,6 +26,7 @@ import ngeoRoutingNominatimService from 'ngeo/routing/NominatimService.js';
 import ngeoRoutingRoutingService from 'ngeo/routing/RoutingService.js';
 import ngeoRoutingRoutingFeatureComponent from 'ngeo/routing/RoutingFeatureComponent.js';
 import olFormatGeoJSON from 'ol/format/GeoJSON.js';
+import olGeomPoint from 'ol/geom/Point.js';
 import olSourceVector from 'ol/source/Vector.js';
 import olLayerVector from 'ol/layer/Vector.js';
 import olStyleStyle from 'ol/style/Style.js';
@@ -35,7 +36,6 @@ import {toLonLat} from 'ol/proj.js';
 import olFeature from 'ol/Feature.js';
 import olGeomLineString from 'ol/geom/LineString.js';
 import 'ngeo/sass/font.scss';
-import Point from 'ol/geom/Point.js';
 
 /**
  * @typedef {Object} RoutingVia
@@ -187,12 +187,13 @@ class Controller {
      * @type {Object<string, string>}
      */
     this.colors = {
-      'start.fill': '#6BE62E',
-      'start.stroke': '#4CB01E',
-      'destination.fill': '#FF3E13',
-      'destination.stroke': '#CD3412',
-      'via.fill': '#767676',
-      'via.stroke': '#000000',
+      startFill: '#6BE62E',
+      startStroke: '#4CB01E',
+      destinationFill: '#FF3E13',
+      destinationStroke: '#CD3412',
+      viaFill: '#767676',
+      viaStroke: '#000000',
+      lineRGBA: 'rgba(16, 112, 29, 0.6)',
     };
 
     /**
@@ -211,10 +212,10 @@ class Controller {
       source: this.routeSource_,
       style: new olStyleStyle({
         fill: new olStyleFill({
-          color: 'rgba(16, 112, 29, 0.6)',
+          color: this.colors.lineRGBA,
         }),
         stroke: new olStyleStroke({
-          color: 'rgba(16, 112, 29, 0.6)',
+          color: this.colors.lineRGBA,
           width: 5,
         }),
       }),
@@ -287,7 +288,7 @@ class Controller {
       return null;
     }
     const geometry = point.getGeometry();
-    if (!(geometry instanceof Point)) {
+    if (!(geometry instanceof olGeomPoint)) {
       throw new Error('Wrong time values type');
     }
     const coords = geometry.getCoordinates();
