@@ -43,16 +43,6 @@ const module = angular.module('gmfapp', ['gettext', gmfMapComponent.name, gmfRas
  */
 function MainController() {
   /**
-   * @type {string[]}
-   */
-  this.elevationLayers = ['aster', 'srtm'];
-
-  /**
-   * @type {string}
-   */
-  this.selectedElevationLayer = this.elevationLayers[0];
-
-  /**
    * @type {import("ol/Map.js").default}
    */
   this.map = new olMap({
@@ -71,6 +61,10 @@ function MainController() {
 }
 
 module.controller('MainController', MainController);
+
+module.constant('gmfElevationOptions', {
+  layers: ['aster', 'srtm'],
+});
 options(module);
 
 export default module;

@@ -87,16 +87,6 @@ class Controller extends AbstractDesktopController {
     this.showInfobar = true;
 
     /**
-     * @type {string[]}
-     */
-    this.elevationLayers = ['srtm-partial'];
-
-    /**
-     * @type {Object<string, import('gmf/mobile/measure/pointComponent.js').LayerConfig>}
-     */
-    this.elevationLayersConfig = {};
-
-    /**
      * @type {Object<string, import('gmf/profile/component.js').ProfileLineConfiguration>}
      */
     this.profileLinesconfiguration = {

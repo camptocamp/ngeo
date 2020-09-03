@@ -64,21 +64,6 @@ class Controller extends AbstractDesktopController {
     this.searchCoordinatesProjections = ['EPSG:21781', 'EPSG:2056', 'EPSG:4326'];
 
     /**
-     * @type {string[]}
-     */
-    this.elevationLayers = ['aster', 'srtm'];
-
-    /**
-     * @type {Object<string, import('gmf/mobile/measure/pointComponent.js').LayerConfig>}
-     */
-    this.elevationLayersConfig = {};
-
-    /**
-     * @type {string}
-     */
-    this.selectedElevationLayer = this.elevationLayers[0];
-
-    /**
      * @type {Object<string, import('gmf/profile/component.js').ProfileLineConfiguration>}
      */
     this.profileLinesconfiguration = {
