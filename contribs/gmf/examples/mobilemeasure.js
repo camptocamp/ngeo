@@ -95,20 +95,48 @@ function MainController(gmfPermalink) {
   this.measureLengthActive = false;
 
   /**
-   * @type {Array<import('gmf/mobile/measure/pointComponent.js').LayerConfig>}
-   */
-  this.measurePointLayersConfig = [
-    {name: 'aster', unit: 'm', decimals: 2},
-    {name: 'srtm', unit: 'm'},
-  ];
-
-  /**
    * @type {boolean}
    */
   this.measurePointActive = false;
 }
 
 module.controller('MainController', MainController);
+
+const sketchStyle = {
+  fill: {
+    color: 'rgba(255, 255, 255, 0.2)',
+  },
+  stroke: {
+    color: 'rgba(0, 0, 0, 0.5)',
+    lineDash: [10, 10],
+    width: 2,
+  },
+  regularShape: {
+    stroke: {
+      color: 'rgba(0, 0, 0, 0.7)',
+      width: 2,
+    },
+    points: 4,
+    radius: 8,
+    radius2: 0,
+    angle: 0,
+  },
+};
+module.constant('gmfMobileMeasurePointOptions', {
+  sketchStyle: sketchStyle,
+  decimals: 2,
+  format: '{x}, {y}',
+  rasterLayers: [
+    {name: 'aster', unit: 'm', decimals: 2},
+    {name: 'srtm', unit: 'm'},
+  ],
+});
+module.constant('gmfMobileMeasureLengthOptions', {
+  sketchStyle: sketchStyle,
+});
+module.constant('gmfMobileMeasureAreaOptions', {
+  sketchStyle: sketchStyle,
+});
 options(module);
 
 export default module;

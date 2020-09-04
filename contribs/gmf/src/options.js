@@ -347,4 +347,33 @@ export function buildStyle(styleDescriptor) {
  * @typedef {Object} gmfMousePositionOptions
  * @property {MousePositionProjection[]} projections The list of the projections.
  */
+
+/**
+ * @typedef {Object} gmfMobileMeasureAreaOptions
+ * @property {number} [precision=2] The number of significant digits to display.
+ * @property {Style} sketchStyle A style for the measure area.
+ */
+
+/**
+ * @typedef {Object} gmfMobileMeasureLengthOptions
+ * @property {number} [precision=2] The number of significant digits to display.
+ * @property {Style} sketchStyle A style for the measure length.
+ */
+
+/**
+ * @typedef {Object} MeasureRasterLayer
+ * @property {string} name
+ * @property {number} [decimals]
+ * @property {string} [unit]
+ */
+
+/**
+ * @typedef {Object} gmfMobileMeasurePointOptions
+ * @property {number} decimals The number of significant digits to display.
+ * @property {string} format The used formatter
+ * @property {MeasureRasterLayer[]} rasterLayers Raster elevation layers to get
+ *     information under the point and its configuaration.
+ * @property {Style} sketchStyle A style for the measure point.
+ */
+
 export default undefined;

@@ -23,6 +23,7 @@ import angular from 'angular';
 import ngeoMiscFilters from 'ngeo/misc/filters.js';
 import ngeoInteractionMeasureAreaMobile from 'ngeo/interaction/MeasureAreaMobile.js';
 import {MeasueMobileBaseController} from 'gmf/mobile/measure/baseComponent.js';
+import {buildStyle} from 'gmf/options.js';
 
 /**
  * @type {angular.IModule}
@@ -66,10 +67,7 @@ module.run(
  *
  * @htmlAttribute {boolean} gmf-mobile-measurearea-active Used to active
  * or deactivate the component.
- * @htmlAttribute {number=} gmf-mobile-measurearea-precision the number of significant digits to display. Default is 2.
  * @htmlAttribute {import("ol/Map.js").default} gmf-mobile-measurearea-map The map.
- * @htmlAttribute {import("ol/style/Style.js").StyleLike=}
- *     gmf-mobile-measurearea-sketchstyle A style for the measure area.
  * @param {string|function(JQuery=, angular.IAttributes=):string}
  *     gmfMobileMeasureAreaTemplateUrl Template URL for the directive.
  * @return {angular.IDirective} The Directive Definition Object.
@@ -82,9 +80,7 @@ function mobileMeasureAreaComponent(gmfMobileMeasureAreaTemplateUrl) {
     restrict: 'A',
     scope: {
       'active': '=gmfMobileMeasureareaActive',
-      'precision': '<?gmfMobileMeasureareaPrecision',
       'map': '=gmfMobileMeasureareaMap',
-      'sketchStyle': '=?gmfMobileMeasureareaSketchstyle',
     },
     controller: 'GmfMobileMeasureAreaController as ctrl',
     bindToController: true,
@@ -115,10 +111,15 @@ class Controller extends MeasueMobileBaseController {
    * @param {angular.IScope} $scope Angular scope.
    * @param {angular.IFilterService} $filter Angular filter
    * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
+   * @param {import('gmf/options.js').gmfMobileMeasureAreaOptions} gmfMobileMeasureAreaOptions The options.
    * @ngInject
    */
-  constructor($scope, $filter, gettextCatalog) {
+  constructor($scope, $filter, gettextCatalog, gmfMobileMeasureAreaOptions) {
     super($scope, $filter, gettextCatalog);
+    /**
+     * @type {import('gmf/options.js').gmfMobileMeasureAreaOptions}
+     */
+    this.options = gmfMobileMeasureAreaOptions;
 
     /**
      * @type {?import("ngeo/interaction/MeasureAreaMobile.js").default}
@@ -131,8 +132,8 @@ class Controller extends MeasueMobileBaseController {
    */
   init() {
     this.measure = new ngeoInteractionMeasureAreaMobile(this.filter('ngeoUnitPrefix'), this.gettextCatalog, {
-      precision: this.precision || 2,
-      sketchStyle: this.sketchStyle,
+      precision: this.options.precision || 2,
+      sketchStyle: buildStyle(this.options.sketchStyle),
     });
 
     super.init();

@@ -26,10 +26,6 @@ import gmfControllersAbstractAppController, {
 import gmfMobileMeasureModule from 'gmf/mobile/measure/module.js';
 import gmfMobileNavigationModule from 'gmf/mobile/navigation/module.js';
 import gmfQueryWindowComponent from 'gmf/query/windowComponent.js';
-import olStyleFill from 'ol/style/Fill.js';
-import olStyleRegularShape from 'ol/style/RegularShape.js';
-import olStyleStroke from 'ol/style/Stroke.js';
-import olStyleStyle from 'ol/style/Style.js';
 
 import 'gmf/controllers/vars_mobile.scss';
 import 'gmf/controllers/mobile.scss';
@@ -48,30 +44,6 @@ export class AbstractMobileController extends AbstractAppController {
    */
   constructor($scope, $injector) {
     super($scope, $injector, true);
-
-    /**
-     * @type {import("ol/style/Style.js").default}
-     */
-    this.customMeasureStyle = new olStyleStyle({
-      fill: new olStyleFill({
-        color: 'rgba(255, 128, 128, 0.2)',
-      }),
-      stroke: new olStyleStroke({
-        color: 'rgba(255, 0, 0, 0.5)',
-        lineDash: [10, 10],
-        width: 2,
-      }),
-      image: new olStyleRegularShape({
-        stroke: new olStyleStroke({
-          color: 'rgba(255, 0, 0, 0.7)',
-          width: 2,
-        }),
-        points: 4,
-        radius: 8,
-        radius2: 0,
-        angle: 0,
-      }),
-    });
 
     /**
      * @type {boolean}

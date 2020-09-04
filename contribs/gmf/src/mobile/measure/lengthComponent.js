@@ -23,6 +23,7 @@ import angular from 'angular';
 import ngeoMiscFilters from 'ngeo/misc/filters.js';
 import ngeoInteractionMeasureLengthMobile from 'ngeo/interaction/MeasureLengthMobile.js';
 import {MeasueMobileBaseController} from 'gmf/mobile/measure/baseComponent.js';
+import {buildStyle} from 'gmf/options.js';
 
 /**
  * @type {angular.IModule}
@@ -66,10 +67,7 @@ module.run(
  *
  * @htmlAttribute {boolean} gmf-mobile-measurelength-active Used to active
  * or deactivate the component.
- * @htmlAttribute {number=} gmf-mobile-measurelength-precision the number of significant digits to display. Default is 2.
  * @htmlAttribute {import("ol/Map.js").default} gmf-mobile-measurelength-map The map.
- * @htmlAttribute {import("ol/style/Style.js").StyleLike=}
- *     gmf-mobile-measurelength-sketchstyle A style for the measure length.
  * @param {string|function(JQuery=, angular.IAttributes=):string}
  *     gmfMobileMeasureLengthTemplateUrl Template URL for the directive.
  * @return {angular.IDirective} The Directive Definition Object.
@@ -82,9 +80,7 @@ function mobileMeasureLenthComponent(gmfMobileMeasureLengthTemplateUrl) {
     restrict: 'A',
     scope: {
       'active': '=gmfMobileMeasurelengthActive',
-      'precision': '<?gmfMobileMeasurelengthPrecision',
       'map': '=gmfMobileMeasurelengthMap',
-      'sketchStyle': '=?gmfMobileMeasurelengthSketchstyle',
     },
     controller: 'GmfMobileMeasureLengthController as ctrl',
     bindToController: true,
@@ -115,10 +111,15 @@ class Controller extends MeasueMobileBaseController {
    * @param {angular.IScope} $scope Angular scope.
    * @param {angular.IFilterService} $filter Angular filter
    * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
+   * @param {import('gmf/options.js').gmfMobileMeasureLengthOptions} gmfMobileMeasureLengthOptions The options.
    * @ngInject
    */
-  constructor($scope, $filter, gettextCatalog) {
+  constructor($scope, $filter, gettextCatalog, gmfMobileMeasureLengthOptions) {
     super($scope, $filter, gettextCatalog);
+    /**
+     * @type {import('gmf/options.js').gmfMobileMeasureLengthOptions}
+     */
+    this.options = gmfMobileMeasureLengthOptions;
 
     /**
      * @type {?import("ngeo/interaction/MeasureLengthMobile.js").default}
@@ -134,8 +135,8 @@ class Controller extends MeasueMobileBaseController {
       this.filter('ngeoUnitPrefix'),
       this.gettextCatalog,
       {
-        precision: this.precision || 3,
-        sketchStyle: this.sketchStyle,
+        precision: this.options.precision || 3,
+        sketchStyle: buildStyle(this.options.sketchStyle),
       }
     );
 
