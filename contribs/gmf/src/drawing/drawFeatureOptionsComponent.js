@@ -120,7 +120,7 @@ class DrawFeatureOptionsController {
     this.length = NaN;
 
     /**
-     * Measure unit for the length.  Possible values are: 'm', 'km'.
+     * Measure unit for the length. Possible values are: 'm', 'km'.
      * @type {string}
      */
     this.lengthUnits = 'm';
@@ -133,7 +133,7 @@ class DrawFeatureOptionsController {
     this.height = NaN;
 
     /**
-     * Measure unit for the height.  Possible values are: 'm', 'km'.
+     * Measure unit for the height. Possible values are: 'm', 'km'.
      * @type {string}
      */
     this.heightUnits = 'm';

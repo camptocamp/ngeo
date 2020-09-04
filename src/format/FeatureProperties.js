@@ -71,4 +71,12 @@ export default {
    * @type {string}
    */
   STROKE: 'k',
+  /**
+   * @type {string}
+   */
+  ARROW_DIRECTION: 'd',
+  /**
+   * @type {string}
+   */
+  ARROW_POSITION: 'p',
 };
