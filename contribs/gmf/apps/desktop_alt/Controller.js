@@ -76,27 +76,6 @@ class Controller extends AbstractDesktopController {
      */
     this.showInfobar = true;
 
-    /**
-     * @type {Array<import('gmf/map/mousepositionComponent.js').MousePositionProjection>}
-     */
-    this.mousePositionProjections = [
-      {
-        code: 'EPSG:2056',
-        label: 'CH1903+ / LV95',
-        filter: 'ngeoNumberCoordinates::{x}, {y} m',
-      },
-      {
-        code: 'EPSG:21781',
-        label: 'CH1903 / LV03',
-        filter: 'ngeoNumberCoordinates::{x}, {y} m',
-      },
-      {
-        code: 'EPSG:4326',
-        label: 'WGS84',
-        filter: 'ngeoDMSCoordinates:2',
-      },
-    ];
-
     const radius = 5;
     const fill = new Fill({color: [255, 255, 255, 0.6]});
     const stroke = new Stroke({color: [255, 0, 0, 1], width: 2});

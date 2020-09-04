@@ -314,11 +314,13 @@ Controller.prototype.getRasterSuccess_ = function (resp) {
     const options = this.options.layersConfig[this.layer] || {};
     const filter = options.filter || 'number';
     const custom_args = options.args || [];
+    /** @type {string} */
     const postfix = options.hasOwnProperty('postfix') ? options.postfix : 'm';
+    /** @type {string} */
     const separator =
       postfix.length > 0 ? (options.hasOwnProperty('separator') ? options.separator : '\u00a0') : '';
     const args = Array.prototype.concat([value], custom_args);
-    const elevation = this.filter_(filter)(...args);
+    const elevation = /** @type {string} */ (this.filter_(filter)(...args));
     if (typeof elevation != 'string') {
       throw new Error('Wrong elevation type');
     }

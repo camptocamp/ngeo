@@ -333,4 +333,18 @@ export function buildStyle(styleDescriptor) {
  * @property {string} [placeholder="Search…"] The placeholder.
  */
 
+/**
+ * Projection object for the MousePositionDirective. Define a label and a filter
+ * to use to display coordinates for a projection.
+ * @typedef {Object} MousePositionProjection
+ * @property {string} code The epsg name of a projection.
+ * @property {string} label The label to display with this projection.
+ * @property {string} filter The filter function to use to format this projection. Arguments can be passed
+ * with colon as separator (example: MyFilter:args1:args2:...)
+ */
+
+/**
+ * @typedef {Object} gmfMousePositionOptions
+ * @property {MousePositionProjection[]} projections The list of the projections.
+ */
 export default undefined;

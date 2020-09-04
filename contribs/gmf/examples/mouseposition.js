@@ -42,29 +42,6 @@ const module = angular.module('gmfapp', ['gettext', gmfMapModule.name]);
  * @ngInject
  */
 function MainController() {
-  const epsg2056template = 'Coordinates (m)&#58; {x}, {y}';
-
-  /**
-   * @type {Array<import('gmf/map/mousepositionComponent.js').MousePositionProjection>}
-   */
-  this.projections = [
-    {
-      code: EPSG2056,
-      label: 'CH1903+ / LV95',
-      filter: `ngeoNumberCoordinates:0:${epsg2056template}`,
-    },
-    {
-      code: EPSG21781,
-      label: 'CH1903 / LV03',
-      filter: 'ngeoNumberCoordinates:2:[{x} E; {y} N]',
-    },
-    {
-      code: 'EPSG:4326',
-      label: 'WGS84',
-      filter: 'ngeoDMSCoordinates:2',
-    },
-  ];
-
   /**
    * @type {import("ol/Map.js").default}
    */
@@ -82,6 +59,26 @@ function MainController() {
 }
 
 module.controller('MainController', MainController);
+
+module.constant('gmfMousePositionOptions', {
+  projections: [
+    {
+      code: EPSG2056,
+      label: 'CH1903+ / LV95',
+      filter: 'ngeoNumberCoordinates:0:Coordinates (m)&#58; {x}, {y}',
+    },
+    {
+      code: EPSG21781,
+      label: 'CH1903 / LV03',
+      filter: 'ngeoNumberCoordinates:2:[{x} E; {y} N]',
+    },
+    {
+      code: 'EPSG:4326',
+      label: 'WGS84',
+      filter: 'ngeoDMSCoordinates:2',
+    },
+  ],
+});
 options(module);
 
 export default module;
