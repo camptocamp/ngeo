@@ -2,6 +2,9 @@ gmf-map > div {
   width: 60rem;
   height: 30rem;
 }
+div.panel.gmf-profile-container {
+  height: 20rem;
+}
 .gmf-profile-container {
   display: flex;
 }

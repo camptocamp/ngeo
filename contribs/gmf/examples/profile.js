@@ -64,22 +64,6 @@ function MainController($scope, ngeoFeatureOverlayMgr) {
   this.profileLine = null;
 
   /**
-   * @type {Object<string, import('gmf/profile/component.js').ProfileLineConfiguration>}
-   */
-  this.profileLinesconfiguration = {
-    'aster': {
-      'color': '#0404A0',
-    },
-    'srtm': {
-      'color': '#04A004',
-    },
-  };
-
-  this.profileOptions = {
-    styleDefs: 'svg {background-color: #D3E5D7};',
-  };
-
-  /**
    * @type {import("ol/Map.js").default}
    */
   this.map = new olMap({
@@ -156,6 +140,18 @@ function MainController($scope, ngeoFeatureOverlayMgr) {
 }
 
 module.controller('MainController', MainController);
+
+module.constant('ngeoProfileOptions', {
+  styleDefs: 'svg {background-color: #D3E5D7};',
+  linesConfiguration: {
+    'aster': {
+      'color': '#0404A0',
+    },
+    'srtm': {
+      'color': '#04A004',
+    },
+  },
+});
 options(module);
 
 export default module;

@@ -220,4 +220,25 @@
  * @property {boolean} [dropup] True to get a drop menu that opens imself to the top, instead of the bottom.
  */
 
+/**
+ * Configuration object for one profile's line.
+ *
+ * @typedef {Object} LineConfiguration
+ * @property {string} [color] Color of the line (hex color string).
+ * @property {function(Object): number} zExtractor Extract the elevation of a point (an item of the
+ * elevation data array).
+ */
+
+/**
+ * Options for the profile.
+ *
+ * @typedef {Object} ngeoProfileOptions
+ * @property {Object<string, LineConfiguration>} linesConfiguration Configuration object for the profile's
+ * @property {string} [styleDefs] Inline CSS style definition to inject in the SVG.
+ * @property {number} [poiLabelAngle] Inline CSS style definition to inject in the SVG.
+ * lines. The key string of each object is used as class for its respective svg line.
+ * @property {boolean} [light] Show a simplified profile when true.
+ * @property {boolean} [lightXAxis] Show a simplified x axis with only both end ticks.
+ */
+
 export default null;

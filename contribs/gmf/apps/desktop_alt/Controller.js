@@ -87,13 +87,6 @@ class Controller extends AbstractDesktopController {
     this.showInfobar = true;
 
     /**
-     * @type {Object<string, import('gmf/profile/component.js').ProfileLineConfiguration>}
-     */
-    this.profileLinesconfiguration = {
-      'srtm-partial': {},
-    };
-
-    /**
      * @type {Array<import('gmf/map/mousepositionComponent.js').MousePositionProjection>}
      */
     this.mousePositionProjections = [

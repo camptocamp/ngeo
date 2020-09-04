@@ -39,15 +39,6 @@ import {select as d3select} from 'd3';
  */
 
 /**
- * Configuration object for one profile's line.
- *
- * @typedef {Object} LineConfiguration
- * @property {string} [color] Color of the line (hex color string).
- * @property {function(Object): number} zExtractor Extract the elevation of a point (an item of the
- * elevation data array).
- */
-
-/**
  * @typedef {Object} ProfileFormatter
  * @property {function(number, string): string} xhover Format the xhover distance.
  * @property {function(number, string): string} yhover Format the yhover elevation.
@@ -65,22 +56,17 @@ import {select as d3select} from 'd3';
  * Options for the profile.
  *
  * @typedef {Object} ProfileOptions
- * @property {string} [styleDefs] Inline CSS style definition to inject in the SVG.
- * @property {number} [poiLabelAngle] Inline CSS style definition to inject in the SVG.
  * @property {ProfileFormatter} [formatter] Formatter giving full control on how numbers are formatted.
  * @property {function(Object): number} distanceExtractor Extract the distance from origin of a point (an
  * item of the elevation data array).
- * @property {Object<string, LineConfiguration>} linesConfiguration Configuration object for the profile's
- * lines. The key string of each object is used as class for its respective svg line.
  * @property {PoiExtractor} [poiExtractor] Extractor for parsing POI data.
- * @property {boolean} [light] Show a simplified profile when true.
- * @property {boolean} [lightXAxis] Show a simplified x axis with only both end ticks.
  * @property {function(function, function, number, number): void} [scaleModifier] Allows to modify the raw x
  * and y scales. Notably, it is possible to modify the y domain according to XY ratio rules,
  * add padding or enforce y lower bound.
- * @property {function(Object)} [hoverCallback] A callback called from the profile when the mouse moves over
- * a point. The point, an item of the elevation data array, is passed as the first argument of the function.
- * @property {function()} [outCallback] A callback called from the profile when the mouse leaves the profile.
+ * @property {function(Object, number, string, Object<string, number>, string): void} [hoverCallback] A
+ * callback called from the profile when the mouse moves over a point. The point, an item of the elevation
+ * data array, is passed as the first argument of the function.
+ * @property {function(): void} [outCallback] A callback called from the profile when the mouse leaves the profile.
  * @property {I18n} [i18n]
  */
 
@@ -115,12 +101,13 @@ const module = angular.module('ngeoProfile', [ngeoMiscDebounce.name]);
  *    evaluated value may correspond to distance from origin.
  * @param {import("ngeo/misc/debounce.js").miscDebounce<function((Event|import('ol/events/Event.js').default)): void>} ngeoDebounce
  *    ngeo Debounce factory.
+ * @param {import('ngeo/options.js').ngeoProfileOptions} ngeoProfileOptions The options.
  * @return {angular.IDirective} Directive Definition Object.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoProfile
  */
-function profileElevationComponent(ngeoDebounce) {
+function profileElevationComponent(ngeoDebounce, ngeoProfileOptions) {
   return {
     restrict: 'A',
     /**
@@ -166,7 +153,7 @@ function profileElevationComponent(ngeoDebounce) {
             };
           }
 
-          profile = ngeoProfileD3Elevation(options);
+          profile = ngeoProfileD3Elevation(ngeoProfileOptions, options);
           refreshData();
         }
       });
