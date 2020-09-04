@@ -40,7 +40,7 @@ import 'ngeo/sass/font.scss';
 /**
  * @typedef {Object} RoutingVia
  * @property {olFeature<import("ol/geom/Geometry.js").default>} [feature]
- * @property {function(import('ngeo/routing/NominatimService').NominatimSearchResult)} [onSelect]
+ * @property {function(import('ngeo/routing/NominatimService').NominatimSearchResult): void} [onSelect]
  */
 
 /**

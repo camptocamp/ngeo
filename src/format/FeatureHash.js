@@ -45,7 +45,7 @@ import Geometry from 'ol/geom/Geometry.js';
  *
  * @typedef {Object} FeatureHashOptions
  * @property {number} [accuracy] The encoding and decoding accuracy. Optional. Default value is 1.
- * @property {Object<string, function(olFeature<import("ol/geom/Geometry.js").default>)>} [defaultValues] defaultValues.
+ * @property {Object<string, function(olFeature<import("ol/geom/Geometry.js").default>): void>} [defaultValues] defaultValues.
  * @property {boolean} [encodeStyles=true] Encode styles. Optional.
  * @property {function(olFeature<import("ol/geom/Geometry.js").default>): Object<string, (string|number|undefined)>} [properties]
  *    A function that returns serializable properties for a feature. Optional. By default the feature
@@ -212,7 +212,6 @@ class FeatureHash extends olFormatTextFeature {
    * @param {string} text Text.
    * @param {number[]=} opt_flatCoordinates Flat coordinates array.
    * @return {number[]} Flat coordinates.
-   * @private
    */
   decodeCoordinates_(text, opt_flatCoordinates) {
     const len = text.length;
@@ -254,7 +253,6 @@ class FeatureHash extends olFormatTextFeature {
    * @param {number} offset Offset.
    * @param {number} end End.
    * @return {string} String.
-   * @private
    * @hidden
    */
   encodeCoordinates_(flatCoordinates, stride, offset, end) {

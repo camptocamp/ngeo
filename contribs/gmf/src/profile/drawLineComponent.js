@@ -94,7 +94,6 @@ function Controller($scope, $timeout, ngeoFeatureOverlayMgr) {
 
   /**
    * @type {?import("ol/Map.js").default}
-   * @private
    */
   this.map_ = null;
 
@@ -105,7 +104,6 @@ function Controller($scope, $timeout, ngeoFeatureOverlayMgr) {
 
   /**
    * @type {import("ol/Collection.js").default<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>}
-   * @private
    */
   this.features_ = new olCollection();
 
@@ -194,7 +192,6 @@ Controller.prototype.$onInit = function () {
 
 /**
  * Clear the overlay and profile line.
- * @private
  */
 Controller.prototype.clear_ = function () {
   this.features_.clear();

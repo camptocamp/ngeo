@@ -73,7 +73,6 @@ const module = angular.module('gmfapp', [
 function MainController(gmfObjectEditingManager, gmfThemes, gmfTreeManager, ngeoToolActivateMgr) {
   /**
    * @type {import("gmf/layertree/TreeManager.js").LayertreeTreeManager}
-   * @private
    */
   this.gmfTreeManager_ = gmfTreeManager;
 
@@ -84,7 +83,6 @@ function MainController(gmfObjectEditingManager, gmfThemes, gmfTreeManager, ngeo
 
   /**
    * @type {import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>}
-   * @private
    */
   this.vectorSource_ = new olSourceVector({
     wrapX: false,
@@ -92,7 +90,6 @@ function MainController(gmfObjectEditingManager, gmfThemes, gmfTreeManager, ngeo
 
   /**
    * @type {import("ol/layer/Vector.js").default}
-   * @private
    */
   this.vectorLayer_ = new olLayerVector({
     source: this.vectorSource_,
@@ -105,7 +102,6 @@ function MainController(gmfObjectEditingManager, gmfThemes, gmfTreeManager, ngeo
 
   /**
    * @type {import("ol/layer/Vector.js").default}
-   * @private
    */
   this.sketchLayer_ = new olLayerVector({
     source: new olSourceVector({

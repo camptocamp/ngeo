@@ -108,7 +108,6 @@ module.component('ngeoGrid', gridComponent);
 export function GridController($scope) {
   /**
    * @type {angular.IScope}
-   * @private
    */
   this.scope_ = $scope;
 
@@ -202,7 +201,6 @@ GridController.prototype.clickRow = function (attributes, event) {
  * @param {Object} attributes An entry/row.
  * @param {boolean} shiftKey Shift pressed?
  * @param {boolean} platformModifierKey CTRL/Meta pressed?
- * @private
  */
 GridController.prototype.clickRow_ = function (attributes, shiftKey, platformModifierKey) {
   if (!this.configuration) {
@@ -225,7 +223,6 @@ GridController.prototype.clickRow_ = function (attributes, shiftKey, platformMod
 /**
  * Selects all rows between the given row and the closest already selected row.
  * @param {Object} attributes An entry/row.
- * @private
  */
 GridController.prototype.selectRange_ = function (attributes) {
   if (!this.configuration) {

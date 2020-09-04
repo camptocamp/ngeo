@@ -122,13 +122,11 @@ function Controller($scope, $element, gettextCatalog, ngeoFeatureOverlayMgr, nge
 
   /**
    * @type {angular.IScope}
-   * @private
    */
   this.$scope_ = $scope;
 
   /**
    * @type {import("ol/Map.js").default}
-   * @private
    */
   this.map_ = map;
 
@@ -138,19 +136,16 @@ function Controller($scope, $element, gettextCatalog, ngeoFeatureOverlayMgr, nge
 
   /**
    * @type {import("ngeo/message/Notification.js").MessageNotification}
-   * @private
    */
   this.notification_ = ngeoNotification;
 
   /**
    * @type {import("ngeo/map/FeatureOverlay.js").FeatureOverlay}
-   * @private
    */
   this.featureOverlay_ = ngeoFeatureOverlayMgr.getFeatureOverlay();
 
   /**
    * @type {import("ol/Geolocation.js").default}
-   * @private
    */
   this.geolocation_ = new olGeolocation({
     projection: map.getView().getProjection(),
@@ -187,7 +182,6 @@ function Controller($scope, $element, gettextCatalog, ngeoFeatureOverlayMgr, nge
 
   /**
    * @type {olFeature<import("ol/geom/Geometry.js").default>}
-   * @private
    */
   this.positionFeature_ = new olFeature();
 
@@ -197,7 +191,6 @@ function Controller($scope, $element, gettextCatalog, ngeoFeatureOverlayMgr, nge
 
   /**
    * @type {olFeature<import("ol/geom/Geometry.js").default>}
-   * @private
    */
   this.accuracyFeature_ = new olFeature();
 
@@ -207,14 +200,12 @@ function Controller($scope, $element, gettextCatalog, ngeoFeatureOverlayMgr, nge
 
   /**
    * @type {number|undefined}
-   * @private
    */
   this.zoom_ = options.zoom;
 
   /**
    * Whether to recenter the map at the position it gets updated
    * @type {boolean}
-   * @private
    */
   this.follow_ = false;
 
@@ -222,7 +213,6 @@ function Controller($scope, $element, gettextCatalog, ngeoFeatureOverlayMgr, nge
    * A flag used to determine whether the view was changed by me or something
    * else. In the latter case, stop following.
    * @type {boolean}
-   * @private
    */
   this.viewChangedByMe_ = false;
 
@@ -278,9 +268,6 @@ Controller.prototype.toggleTracking = function () {
   }
 };
 
-/**
- * @private
- */
 Controller.prototype.track_ = function () {
   this.featureOverlay_.addFeature(this.positionFeature_);
   this.featureOverlay_.addFeature(this.accuracyFeature_);
@@ -288,9 +275,6 @@ Controller.prototype.track_ = function () {
   this.geolocation_.setTracking(true);
 };
 
-/**
- * @private
- */
 Controller.prototype.untrack_ = function () {
   this.featureOverlay_.clear();
   this.follow_ = false;
@@ -298,9 +282,6 @@ Controller.prototype.untrack_ = function () {
   this.notification_.clear();
 };
 
-/**
- * @private
- */
 Controller.prototype.setPosition_ = function () {
   const view = this.map_.getView();
   const position = this.geolocation_.getPosition();
@@ -330,7 +311,6 @@ Controller.prototype.setPosition_ = function () {
 
 /**
  * @param {Event|import("ol/events/Event.js").default} event Event.
- * @private
  */
 Controller.prototype.handleViewChange_ = function (event) {
   if (this.follow_ && !this.viewChangedByMe_) {
@@ -380,10 +360,9 @@ Controller.prototype.autorotateListener = function () {
 
 /**
  * Handle rotation.
- * @param {number} eventAlpha .
- * @param {number} currentAlpha .
- * @return {number} .
- * @private
+ * @param {number} eventAlpha
+ * @param {number} currentAlpha
+ * @return {number}
  */
 Controller.prototype.handleRotate_ = function (eventAlpha, currentAlpha) {
   if (this.geolocation_.getTracking() && Math.abs(eventAlpha - currentAlpha) > 0.2) {

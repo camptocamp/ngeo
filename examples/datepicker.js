@@ -37,7 +37,6 @@ const module = angular.module('app', ['gettext', ngeoMiscDatepickerComponent.nam
 function MainController(ngeoTime) {
   /**
    * @type {import("ngeo/misc/Time.js").default}
-   * @private
    */
   this.ngeoTime_ = ngeoTime;
 

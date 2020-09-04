@@ -86,7 +86,6 @@ class GoogleStreetviewController {
    * @param {angular.IScope} $scope Scope.
    * @param {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr Ngeo
    *    FeatureOverlay manager.
-   * @private
    * @ngInject
    * @ngdoc controller
    * @ngname NgeoGooglestreetviewController

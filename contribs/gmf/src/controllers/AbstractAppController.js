@@ -76,8 +76,8 @@ import {noModifierKeys} from 'ol/events/condition.js';
  * @property {import("ol/style/Style.js").default} [accuracyFeatureStyle]
  * @property {number} [geolocationZoom]
  * @property {boolean} [autorotate]
- * @property {olx.MapOptions} [map]
- * @property {olx.ViewOptions} [view]
+ * @property {import('ol/Map.js').Options} [map]
+ * @property {import('ol/View.js').Options} [view]
  * @property {import("ol/Collection.js").default<import('ol/control/Control.js').default>|Array<import('ol/control/Control.js').default>} [mapControls]
  * @property {import("ol/Collection.js").default<import('ol/interaction/Interaction.js').default>|Array<import('ol/interaction/Interaction.js').default>} [mapInteractions]
  */
@@ -198,14 +198,12 @@ export function AbstractAppController($scope, $injector, mobile) {
 
   /**
    * @type {import("gmf/layertree/TreeManager.js").LayertreeTreeManager}
-   * @private
    */
   this.gmfTreeManager_ = $injector.get('gmfTreeManager');
 
   /**
    * Themes service
    * @type {import("gmf/theme/Themes.js").ThemesService}
-   * @protected
    */
   this.gmfThemes = $injector.get('gmfThemes');
 
@@ -228,7 +226,6 @@ export function AbstractAppController($scope, $injector, mobile) {
   /**
    * Permalink service
    * @type {import("gmf/permalink/Permalink.js").PermalinkService}
-   * @private
    */
   this.permalink_ = $injector.get('gmfPermalink');
 
@@ -244,7 +241,7 @@ export function AbstractAppController($scope, $injector, mobile) {
   this.hasEditableLayers = false;
 
   /**
-   * @private
+   * @this {AbstractAppController}
    */
   this.updateHasEditableLayers_ = function () {
     this.gmfThemes.hasEditableLayers().then((hasEditableLayers) => {
@@ -378,7 +375,6 @@ export function AbstractAppController($scope, $injector, mobile) {
 
   /**
    * @type {import("ngeo/map/BackgroundLayerMgr.js").MapBackgroundLayerManager}
-   * @private
    */
   this.backgroundLayerMgr_ = $injector.get('ngeoBackgroundLayerMgr');
 
@@ -445,7 +441,6 @@ export function AbstractAppController($scope, $injector, mobile) {
 
   /**
    * @type {import("ngeo/query/MapQuerent.js").MapQuerent}
-   * @private
    */
   this.ngeoMapQuerent_ = $injector.get('ngeoMapQuerent');
 
@@ -595,9 +590,7 @@ export function AbstractAppController($scope, $injector, mobile) {
   });
 
   /**
-   * @param {boolean} skipPermalink If True, don't use permalink
-   * background layer.
-   * @private
+   * @param {boolean} skipPermalink If True, don't use permalink background layer.
    */
   this.updateCurrentBackgroundLayer_ = (skipPermalink) => {
     this.gmfThemes.getBgLayers().then((layers) => {
@@ -865,7 +858,6 @@ AbstractAppController.prototype.initLanguage = function () {
 
 /**
  * @param {?import('gmf/themes.js').GmfTheme} theme Theme.
- * @private
  */
 AbstractAppController.prototype.setDefaultBackground_ = function (theme) {
   this.gmfThemes.getBgLayers().then((layers) => {

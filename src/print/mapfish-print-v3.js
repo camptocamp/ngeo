@@ -21,7 +21,7 @@
 
 /**
  * @typedef {Object} MapFishPrintCapabilities
- * @property {Object<srring, MapFishPrintCapabilitiesLayout>} layouts
+ * @property {MapFishPrintCapabilitiesLayout[]} layouts
  * @property {string[]} formats
  * @property {MapFishPrintCapabilitiesSMTP} [smtp] STMP object definition
  */
@@ -98,7 +98,7 @@
  * @typedef {Object} MapFishPrintVectorLayer
  * @property {string} type (MapFishPrintLayer)
  * @property {number} opacity (MapFishPrintLayer)
- * @property {import("geojson").Object} geoJson
+ * @property {import("geojson").GeoJsonObject} geoJson
  * @property {MapFishPrintVectorStyle} style
  */
 

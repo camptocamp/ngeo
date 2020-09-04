@@ -53,7 +53,6 @@ const module = angular.module('app', [
 function MainController($scope, ngeoFeatures, ngeoToolActivateMgr) {
   /**
    * @type {angular.IScope}
-   * @private
    */
   this.scope_ = $scope;
 

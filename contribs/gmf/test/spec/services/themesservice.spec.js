@@ -22,6 +22,7 @@
 import angular from 'angular';
 import gmfTestDataThemes from '../data/themes.js';
 import gmfTestDataThemescapabilities from '../data/themescapabilities.js';
+// @ts-ignore
 import {listen} from 'ol/events.js';
 
 describe('gmf.theme.Themes', () => {
@@ -66,6 +67,7 @@ describe('gmf.theme.Themes', () => {
     $httpBackend.flush();
 
     expect(spy.calls.count()).toBe(1);
+    // @ts-ignore
     const response = /** @type {import("ol/layer/Base.js").default[]} */ (spy.calls.mostRecent().args[0]);
     expect(response.length).toBe(4);
     const responseFirstBgName = response[1].get('label');
@@ -92,6 +94,7 @@ describe('gmf.theme.Themes', () => {
     const eventSpy = jasmine.createSpy();
     listen(gmfThemes, 'change', eventSpy);
 
+    // @ts-ignore
     gmfThemes.promise_.then(spy);
 
     gmfThemes.loadThemes();
@@ -102,6 +105,7 @@ describe('gmf.theme.Themes', () => {
 
   it('Load themes', () => {
     const spy = jasmine.createSpy();
+    // @ts-ignore
     gmfThemes.promise_.then(spy);
 
     $httpBackend.expectGET(treeUrl);

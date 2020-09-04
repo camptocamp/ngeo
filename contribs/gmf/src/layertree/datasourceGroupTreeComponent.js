@@ -81,7 +81,6 @@ class Controller {
    * @param {angular.IScope} $scope Angular scope.
    * @param {import("ngeo/datasource/DataSources.js").DataSource} ngeoDataSources Ngeo data sources service.
    * @param {import("ngeo/map/LayerHelper.js").LayerHelper} ngeoLayerHelper Ngeo data sources service.
-   * @private
    * @ngInject
    * @ngdoc controller
    * @ngname GmfDatasourcegrouptreeController

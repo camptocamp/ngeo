@@ -174,13 +174,11 @@ export function QueryGridController(
 
   /**
    * @type {angular.IScope}
-   * @private
    */
   this.$scope_ = $scope;
 
   /**
    * @type {angular.ITimeoutService}
-   * @private
    */
   this.$timeout_ = $timeout;
 
@@ -191,19 +189,16 @@ export function QueryGridController(
 
   /**
    * @type {import("ngeo/query/MapQuerent.js").MapQuerent}
-   * @private
    */
   this.ngeoMapQuerent_ = ngeoMapQuerent;
 
   /**
    * @type {import("ngeo/download/Csv.js").DownloadCsvService}
-   * @private
    */
   this.ngeoCsvDownload_ = ngeoCsvDownload;
 
   /**
    * @type {JQuery}
-   * @private
    */
   this.$element_ = $element;
 
@@ -243,7 +238,6 @@ export function QueryGridController(
    * A mapping between row uid and the corresponding feature for each
    * source.
    * @type {Object<string, Object<string, import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>>}
-   * @private
    */
   this.featuresForSources_ = {};
 
@@ -251,32 +245,27 @@ export function QueryGridController(
   // (highlightFeatures_) (user can set both styles).
   /**
    * @type {import("ol/Collection.js").default<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>}
-   * @private
    */
   this.features_ = new olCollection();
 
   /**
    * @type {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr}
-   * @private
    */
   this.ngeoFeatureOverlayMgr_ = ngeoFeatureOverlayMgr;
 
   /**
    * @type {import("ol/Collection.js").default<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>}
-   * @private
    */
   this.highlightFeatures_ = new olCollection();
 
   /**
    * Filename
    * @type {import('gmf/options.js').gmfCsvFilename}
-   * @private
    */
   this.filename_ = gmfCsvFilename;
 
   /**
    * @type {?import("ol/Map.js").default}
-   * @private
    */
   this.map_ = null;
 
@@ -300,7 +289,6 @@ export function QueryGridController(
    * An unregister function returned from `$scope.$watchCollection` for
    * "on-select" changes (when rows are selected/unselected).
    * @type {?function(): void}
-   * @private
    */
   this.unregisterSelectWatcher_ = null;
 
@@ -346,9 +334,6 @@ QueryGridController.prototype.getGridSources = function () {
   return this.loadedGridSources.map((sourceLabel) => this.gridSources[sourceLabel]);
 };
 
-/**
- * @private
- */
 QueryGridController.prototype.updateData_ = function () {
   // close if there are no results
   if (
@@ -404,7 +389,6 @@ QueryGridController.prototype.updateData_ = function () {
 };
 
 /**
- * @private
  * @return {boolean} If one of the source has too many results.
  */
 QueryGridController.prototype.hasOneWithTooManyResults_ = function () {
@@ -443,7 +427,6 @@ QueryGridController.prototype.isSelected = function (gridSource) {
  * Try to merge the mergable sources.
  * @param {Array<import('ngeo/statemanager/WfsPermalink.js').QueryResultSource>} sources Sources.
  * @return {Array<import('ngeo/statemanager/WfsPermalink.js').QueryResultSource>} The merged sources.
- * @private
  */
 QueryGridController.prototype.getMergedSources_ = function (sources) {
   /** @type {import('ngeo/statemanager/WfsPermalink').QueryResultSource[]} */
@@ -477,7 +460,6 @@ QueryGridController.prototype.getMergedSources_ = function (sources) {
  *    Merged sources.
  * @return {?import('ngeo/statemanager/WfsPermalink.js').QueryResultSource} A merged source of null if the
  *    source should not be merged.
- * @private
  */
 QueryGridController.prototype.getMergedSource_ = function (source, mergedSources) {
   let mergeSourceId = null;
@@ -540,7 +522,6 @@ QueryGridController.prototype.getMergedSource_ = function (source, mergedSources
 /**
  * Collect all features in the queryResult object.
  * @param {import('ngeo/statemanager/WfsPermalink.js').QueryResultSource} source Result source.
- * @private
  */
 QueryGridController.prototype.collectData_ = function (source) {
   const features = source.features;
@@ -578,7 +559,6 @@ QueryGridController.prototype.collectData_ = function (source) {
  * Remove all unwanted columns.
  * @param {Object[]} allProperties A row.
  * @param {string[]} featureGeometriesNames Geometry names.
- * @private
  */
 QueryGridController.prototype.cleanProperties_ = function (allProperties, featureGeometriesNames) {
   allProperties.forEach((properties) => {
@@ -597,7 +577,6 @@ QueryGridController.prototype.cleanProperties_ = function (allProperties, featur
 /**
  * Remove columns that will be completely empty between each properties.
  * @param {Object[]} allProperties A row.
- * @private
  */
 QueryGridController.prototype.removeEmptyColumnsFn_ = function (allProperties) {
   // Keep all keys that correspond to at least one value in a properties object.
@@ -632,7 +611,6 @@ QueryGridController.prototype.removeEmptyColumnsFn_ = function (allProperties) {
  * @param {?Object[]} data Grid rows.
  * @param {import('ngeo/statemanager/WfsPermalink.js').QueryResultSource} source Query source.
  * @return {boolean} Returns true if a grid was created.
- * @private
  */
 QueryGridController.prototype.makeGrid_ = function (data, source) {
   const sourceLabel = `${source.label}`;
@@ -658,7 +636,6 @@ QueryGridController.prototype.makeGrid_ = function (data, source) {
 /**
  * @param {Object[]} data Grid rows.
  * @return {?import("ngeo/grid/Config.js").default} Grid config.
- * @private
  */
 QueryGridController.prototype.getGridConfiguration_ = function (data) {
   if (!data.length) {
@@ -736,9 +713,6 @@ QueryGridController.prototype.selectTab = function (gridSource) {
   this.reflowGrid_();
 };
 
-/**
- * @private
- */
 QueryGridController.prototype.reflowGrid_ = function () {
   // This is a "work-around" to make sure that the grid is rendered correctly.
   // When a pane is activated by setting `this.selectedTab`, the class `active`
@@ -755,7 +729,6 @@ QueryGridController.prototype.reflowGrid_ = function () {
 
 /**
  * Called when the row selection has changed.
- * @private
  */
 QueryGridController.prototype.onSelectionChanged_ = function () {
   if (this.selectedTab === null) {
@@ -768,7 +741,6 @@ QueryGridController.prototype.onSelectionChanged_ = function () {
 
 /**
  * @param {GridSource} gridSource Grid source
- * @private
  */
 QueryGridController.prototype.updateFeatures_ = function (gridSource) {
   this.features_.clear();

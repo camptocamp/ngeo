@@ -51,13 +51,11 @@ import angular from 'angular';
 export function PermalinkShareService($http, gmfShortenerCreateUrl) {
   /**
    * @type {angular.IHttpService}
-   * @private
    */
   this.$http_ = $http;
 
   /**
    * @type {string}
-   * @private
    */
   this.gmfShortenerCreateUrl_ = gmfShortenerCreateUrl;
 }
@@ -108,9 +106,8 @@ PermalinkShareService.prototype.sendShortUrl = function (shortUrl, email, opt_me
 };
 
 /**
- * @param  {ShortenerAPIRequestParams} params parameters for the request
+ * @param {ShortenerAPIRequestParams} params parameters for the request
  * @return {angular.IHttpPromise<Object>} the promise attached to the shortener API request
- * @private
  */
 PermalinkShareService.prototype.postShortUrl_ = function (params) {
   // Override default behavior of $http.post method (sending data in json format)

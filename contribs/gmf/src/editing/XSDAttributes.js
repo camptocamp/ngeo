@@ -35,19 +35,16 @@ import ngeoFormatXSDAttribute from 'ngeo/format/XSDAttribute.js';
 export function EditingXSDAttributeService($http, gmfLayersUrl) {
   /**
    * @type {angular.IHttpService}
-   * @private
    */
   this.http_ = $http;
 
   /**
    * @type {string}
-   * @private
    */
   this.baseUrl_ = gmfLayersUrl;
 
   /**
    * @type {Object<number, angular.IPromise<import('ngeo/format/Attribute.js').Attribute[]>>}
-   * @private
    */
   this.promises_ = {};
 }

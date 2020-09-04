@@ -49,13 +49,11 @@ const module = angular.module('gmfapp', [
 function MainController($timeout, gmfThemes, gmfXSDAttributes) {
   /**
    * @type {angular.ITimeoutService}
-   * @private
    */
   this.timeout_ = $timeout;
 
   /**
    * @type {import("gmf/editing/XSDAttributes.js").EditingXSDAttributeService}
-   * @private
    */
   this.xsdAttributes_ = gmfXSDAttributes;
 

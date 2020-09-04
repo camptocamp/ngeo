@@ -54,13 +54,11 @@ import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
 export function NominatimService($http, ngeoDebounce, ngeoNominatimUrl, ngeoNominatimSearchDefaultParams) {
   /**
    * @type {angular.IHttpService}
-   * @private
    */
   this.$http_ = $http;
 
   /**
    * @type {import("ngeo/misc/debounce.js").miscDebounce<function(string, function(Object[]): void, (function(NominatimSearchResult[]): void)|undefined): void>}
-   * @private
    */
   this.ngeoDebounce_ = ngeoDebounce;
 
@@ -68,7 +66,6 @@ export function NominatimService($http, ngeoDebounce, ngeoNominatimUrl, ngeoNomi
    * URL for Nominatim backend
    * Defaults openstreetmap instance.
    * @type {string}
-   * @private
    */
   this.nominatimUrl_ = ngeoNominatimUrl;
 
@@ -79,7 +76,6 @@ export function NominatimService($http, ngeoDebounce, ngeoNominatimUrl, ngeoNomi
 
   /**
    * @type {import('ngeo/options.js').ngeoNominatimSearchDefaultParams}
-   * @private
    */
   this.searchDefaultParams_ = ngeoNominatimSearchDefaultParams;
 
@@ -88,7 +84,6 @@ export function NominatimService($http, ngeoDebounce, ngeoNominatimUrl, ngeoNomi
    * Only if there were no calls for that many milliseconds,
    * the last call will be executed.
    * @type {number}
-   * @private
    */
   this.typeaheadDebounceDelay_ = 500;
 
@@ -166,7 +161,6 @@ NominatimService.prototype.reverse = function (coordinate, params) {
  * @param {(result: NominatimSearchResult[]) => void} syncResults Callback for synchronous execution, unused
  * @param {(result: NominatimSearchResult[]) => void} [asyncResults] Callback for asynchronous execution
  * @return {void}
- * @private
  */
 NominatimService.prototype.typeaheadSource_ = function (query, syncResults, asyncResults) {
   /**

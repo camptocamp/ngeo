@@ -68,13 +68,11 @@ export function ThemeManagerService(
 ) {
   /**
    * @type {angular.IScope}
-   * @private
    */
   this.$rootScope_ = $rootScope;
 
   /**
    * @type {import("gmf/theme/Themes.js").ThemesService}
-   * @private
    */
   this.gmfThemes_ = gmfThemes;
 
@@ -85,19 +83,16 @@ export function ThemeManagerService(
 
   /**
    * @type {import("gmf/layertree/TreeManager.js").LayertreeTreeManager}
-   * @private
    */
   this.gmfTreeManager_ = gmfTreeManager;
 
   /**
    * @type {import("ngeo/statemanager/Service.js").StatemanagerService}
-   * @private
    */
   this.ngeoStateManager_ = ngeoStateManager;
 
   /**
    * @type {string}
-   * @private
    */
   this.themeName_ = '';
 }

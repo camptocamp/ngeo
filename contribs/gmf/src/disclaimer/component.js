@@ -116,49 +116,41 @@ function DisclaimerController(
 
   /**
    * @type {angular.ISCEService}
-   * @private
    */
   this.sce_ = $sce;
 
   /**
    * @type {angular.ITimeoutService}
-   * @private
    */
   this.timeout_ = $timeout;
 
   /**
    * @type {angular.gettext.gettextCatalog}
-   * @private
    */
   this.gettextCatalog_ = gettextCatalog;
 
   /**
    * @type {JQuery}
-   * @private
    */
   this.element_ = $element;
 
   /**
    * @type {import("ngeo/message/Disclaimer.js").MessageDisclaimerService}
-   * @private
    */
   this.disclaimer_ = ngeoDisclaimer;
 
   /**
    * @type {import("ngeo/misc/EventHelper.js").EventHelper}
-   * @private
    */
   this.eventHelper_ = ngeoEventHelper;
 
   /**
    * @type {import("ngeo/map/LayerHelper.js").LayerHelper}
-   * @private
    */
   this.ngeoLayerHelper_ = ngeoLayerHelper;
 
   /**
    * @type {?import("ol/layer/Group.js").default}
-   * @private
    */
   this.dataLayerGroup_ = null;
 }
@@ -177,7 +169,6 @@ DisclaimerController.prototype.$onInit = function () {
 
 /**
  * @param {Event|import('ol/events/Event.js').default} evt Event.
- * @private
  */
 DisclaimerController.prototype.handleLayersAdd_ = function (evt) {
   if (evt instanceof CollectionEvent) {
@@ -193,7 +184,6 @@ DisclaimerController.prototype.handleLayersAdd_ = function (evt) {
 
 /**
  * @param {Event|import('ol/events/Event.js').default} evt Event.
- * @private
  */
 DisclaimerController.prototype.handleLayersRemove_ = function (evt) {
   if (evt instanceof CollectionEvent) {
@@ -208,7 +198,6 @@ DisclaimerController.prototype.handleLayersRemove_ = function (evt) {
 
 /**
  * @param {import("ol/layer/Base.js").default} layer Layer.
- * @private
  */
 DisclaimerController.prototype.registerLayer_ = function (layer) {
   const layerUid = olUtilGetUid(layer);
@@ -251,7 +240,6 @@ DisclaimerController.prototype.registerLayer_ = function (layer) {
 
 /**
  * @param {import("ol/layer/Base.js").default} layer Layer.
- * @private
  */
 DisclaimerController.prototype.unregisterLayer_ = function (layer) {
   const layerUid = olUtilGetUid(layer);
@@ -278,7 +266,6 @@ DisclaimerController.prototype.$onDestroy = function () {
 /**
  * @param {string} layerUid Layer identifier.
  * @param {string} msg Disclaimer message.
- * @private
  */
 DisclaimerController.prototype.showDisclaimerMessage_ = function (layerUid, msg) {
   msg = this.gettextCatalog_.getString(msg);
@@ -305,7 +292,6 @@ DisclaimerController.prototype.showDisclaimerMessage_ = function (layerUid, msg)
 
 /**
  * @param {import("ol/layer/Base.js").default} layer Layer
- * @private
  */
 DisclaimerController.prototype.closeAll_ = function (layer) {
   const disclaimers = layer.get('disclaimers');
@@ -320,7 +306,6 @@ DisclaimerController.prototype.closeAll_ = function (layer) {
 
 /**
  * @param {import("ol/layer/Base.js").default} layer Layer
- * @private
  */
 DisclaimerController.prototype.showAll_ = function (layer) {
   const disclaimers = layer.get('disclaimers');
@@ -335,7 +320,6 @@ DisclaimerController.prototype.showAll_ = function (layer) {
 
 /**
  * @param {import("ol/layer/Base.js").default} layer Layer
- * @private
  */
 DisclaimerController.prototype.update_ = function (layer) {
   const disclaimers = layer.get('disclaimers');
@@ -366,7 +350,6 @@ DisclaimerController.prototype.update_ = function (layer) {
 /**
  * @param {string} layerUid Layer identifier.
  * @param {string} msg Disclaimer message.
- * @private
  */
 DisclaimerController.prototype.closeDisclaimerMessage_ = function (layerUid, msg) {
   msg = this.gettextCatalog_.getString(msg);

@@ -120,19 +120,16 @@ export function WfsPermalinkService(
 
   /**
    * @type {import('ngeo/options.js').ngeoPermalinkOgcserverUrl}
-   * @private
    */
   this.url_ = ngeoPermalinkOgcserverUrl;
 
   /**
    * @type {number}
-   * @private
    */
   this.maxFeatures_ = options.maxFeatures !== undefined ? options.maxFeatures : 50;
 
   /**
    * @type {Object<string, import('ngeo/options.js').WfsType>}
-   * @private
    */
   this.wfsTypes_ = {};
 
@@ -143,31 +140,26 @@ export function WfsPermalinkService(
 
   /**
    * @type {string}
-   * @private
    */
   this.defaultFeatureNS_ = options.defaultFeatureNS;
 
   /**
    * @type {string}
-   * @private
    */
   this.defaultFeaturePrefix_ = options.defaultFeaturePrefix;
 
   /**
    * @type {number|undefined}
-   * @private
    */
   this.pointRecenterZoom_ = options.pointRecenterZoom;
 
   /**
    * @type {angular.IHttpService}
-   * @private
    */
   this.$http_ = $http;
 
   /**
    * @type {QueryResult}
-   * @private
    */
   this.result_ = ngeoQueryResult;
 }
@@ -214,7 +206,6 @@ WfsPermalinkService.prototype.issue = function (queryData, map, zoomLevel = unde
  * @param {import("ol/Map.js").default} map The ol3 map object to get the current projection from.
  * @param {boolean} showFeatures Show features or only zoom to feature extent?
  * @param {number} [zoomLevel] The level to zoom on when recentering on features.
- * @private
  */
 WfsPermalinkService.prototype.issueRequest_ = function (
   wfsType,
@@ -271,7 +262,6 @@ WfsPermalinkService.prototype.issueRequest_ = function (
 /**
  * @param {Feature<import("ol/geom/Geometry.js").default>[]} features Features.
  * @return {import('ol/extent.js').Extent} The extent of all features.
- * @private
  */
 WfsPermalinkService.prototype.getExtent_ = function (features) {
   return /** @type {import('ol/extent.js').Extent} */ (
@@ -292,7 +282,6 @@ WfsPermalinkService.prototype.getExtent_ = function (features) {
  *
  * @param {WfsPermalinkFilterGroup[]} filterGroups Filter groups.
  * @return {?import("ol/format/filter/Filter.js").default} OGC filters.
- * @private
  */
 WfsPermalinkService.prototype.createFilters_ = function (filterGroups) {
   if (filterGroups.length == 0) {
@@ -326,7 +315,6 @@ WfsPermalinkService.prototype.createFilters_ = function (filterGroups) {
  *
  * @param {Array<import("ol/format/filter/Filter.js").default>} filters The filters to join.
  * @return {import("ol/format/filter/Filter.js").default} The joined filters.
- * @private
  */
 WfsPermalinkService.and_ = function (filters) {
   return WfsPermalinkService.joinFilters_(filters, and);
@@ -337,7 +325,6 @@ WfsPermalinkService.and_ = function (filters) {
  *
  * @param {Array<import("ol/format/filter/Filter.js").default>} filters The filters to join.
  * @return {import("ol/format/filter/Filter.js").default} The joined filters.
- * @private
  */
 WfsPermalinkService.or_ = function (filters) {
   return WfsPermalinkService.joinFilters_(filters, or);
@@ -350,7 +337,6 @@ WfsPermalinkService.or_ = function (filters) {
  * @param {function(import("ol/format/filter/Filter.js").default, import("ol/format/filter/Filter.js").default): import("ol/format/filter/Filter.js").default} joinFn
  *    The function to join two filters.
  * @return {import("ol/format/filter/Filter.js").default} The joined filters.
- * @private
  */
 WfsPermalinkService.joinFilters_ = function (filters, joinFn) {
   return filters.reduce((combinedFilters, currentFilter) => {
@@ -366,7 +352,6 @@ WfsPermalinkService.joinFilters_ = function (filters, joinFn) {
 /**
  * Clear every features for all result sources and reset the total counter
  * as well.
- * @private
  */
 WfsPermalinkService.prototype.clearResult_ = function () {
   this.result_.total = 0;

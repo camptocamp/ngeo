@@ -152,7 +152,6 @@ module.directive('gmfTimeSlider', layertreeTimeSliderComponent);
 function Controller(ngeoWMSTime, ngeoDebounce) {
   /**
    * @type {import("ngeo/misc/WMSTime.js").WMSTime}
-   * @private
    */
   this.ngeoWMSTime_ = ngeoWMSTime;
 
@@ -247,7 +246,6 @@ Controller.prototype.init = function () {
 /**
  * TimeSliderController.prototype.getTimeValueList_ - Get a list of time value instead
  * of using the wmstime interval as a list of possibles values
- * @private
  * @return {number[]}  - List of timestamp representing possible values
  */
 Controller.prototype.getTimeValueList_ = function () {

@@ -83,43 +83,36 @@ import olTilegridWMTS from 'ol/tilegrid/WMTS.js';
 export function PrintService(url, $http, gettextCatalog, ngeoLayerHelper) {
   /**
    * @type {string}
-   * @private
    */
   this.url_ = url;
 
   /**
    * @type {angular.IHttpService}
-   * @private
    */
   this.$http_ = $http;
 
   /**
    * @type {angular.gettext.gettextCatalog}
-   * @private
    */
   this.gettextCatalog_ = gettextCatalog;
 
   /**
    * @type {import("ngeo/map/LayerHelper.js").LayerHelper}
-   * @private
    */
   this.ngeoLayerHelper_ = ngeoLayerHelper;
 
   /**
    * @type {import("ngeo/print/VectorEncoder.js").default}
-   * @protected
    */
   this.vectorEncoder = new ngeoPrintVectorEncoder();
 
   /**
    * @type {boolean}
-   * @private
    */
   this.printNativeAngle_ = true;
 
   /**
    * @type {number}
-   * @private
    */
   this.goodnessOfFit_;
 }
@@ -201,7 +194,6 @@ PrintService.prototype.createSpec = function (
  * @param {number} scale Scale.
  * @param {import('ngeo/print/mapfish-print-v3.js').MapFishPrintMap} object Object.
  * @param {number} destinationPrintDpi The destination print DPI.
- * @private
  */
 PrintService.prototype.encodeMap_ = function (map, scale, object, destinationPrintDpi) {
   const view = map.getView();
@@ -272,7 +264,6 @@ PrintService.prototype.encodeVectorLayer = function (arr, layer, resolution, des
 /**
  * @param {Array<import('ngeo/print/mapfish-print-v3.js').MapFishPrintLayer>} arr Array.
  * @param {import("ol/layer/Image.js").default} layer Layer.
- * @private
  */
 PrintService.prototype.encodeImageLayer_ = function (arr, layer) {
   if (!(layer instanceof olLayerImage)) {
@@ -287,7 +278,6 @@ PrintService.prototype.encodeImageLayer_ = function (arr, layer) {
 /**
  * @param {Array<import('ngeo/print/mapfish-print-v3.js').MapFishPrintLayer>} arr Array.
  * @param {import("ol/layer/Image.js").default} layer Layer.
- * @private
  */
 PrintService.prototype.encodeImageWmsLayer_ = function (arr, layer) {
   if (!(layer instanceof olLayerImage)) {
@@ -309,7 +299,6 @@ PrintService.prototype.encodeImageWmsLayer_ = function (arr, layer) {
  * @param {import("ol/layer/Image.js").default|import("ol/layer/Tile.js").default} layer The layer.
  * @param {string} url URL of the WMS server.
  * @param {Object} params URL parameters
- * @private
  */
 PrintService.prototype.encodeWmsLayer_ = function (arr, layer, url, params) {
   if (url.startsWith('//')) {
@@ -376,7 +365,6 @@ function getAbsoluteUrl_(url) {
 /**
  * @param {Array<import('ngeo/print/mapfish-print-v3.js').MapFishPrintLayer>} arr Array.
  * @param {import("ol/layer/Tile.js").default} layer Layer.
- * @private
  */
 PrintService.prototype.encodeTileLayer_ = function (arr, layer) {
   if (!(layer instanceof olLayerTile)) {
@@ -393,7 +381,6 @@ PrintService.prototype.encodeTileLayer_ = function (arr, layer) {
 /**
  * @param {Array<import('ngeo/print/mapfish-print-v3.js').MapFishPrintLayer>} arr Array.
  * @param {import("ol/layer/Tile.js").default} layer Layer.
- * @private
  */
 PrintService.prototype.encodeTileWmtsLayer_ = function (arr, layer) {
   if (!(layer instanceof olLayerTile)) {
@@ -458,7 +445,6 @@ PrintService.prototype.encodeTileWmtsLayer_ = function (arr, layer) {
 /**
  * @param {Array<import('ngeo/print/mapfish-print-v3.js').MapFishPrintLayer>} arr Array.
  * @param {import("ol/layer/Tile.js").default} layer Layer.
- * @private
  */
 PrintService.prototype.encodeTileWmsLayer_ = function (arr, layer) {
   if (!(layer instanceof olLayerTile)) {
@@ -480,7 +466,6 @@ PrintService.prototype.encodeTileWmsLayer_ = function (arr, layer) {
  * Return the WMTS URL to use in the print spec.
  * @param {import("ol/source/WMTS.js").default} source The WMTS source.
  * @return {string} URL.
- * @private
  */
 PrintService.prototype.getWmtsUrl_ = function (source) {
   const urls = source.getUrls();
@@ -494,7 +479,6 @@ PrintService.prototype.getWmtsUrl_ = function (source) {
  * Return an opacity value for the specified layer.
  * @param {import("ol/layer/Base.js").default} layer Layer.
  * @return {number} opacity Opacity value.
- * @private
  */
 PrintService.prototype.getOpacityOrInherited_ = function (layer) {
   if (layer.get('inheritedOpacity') !== undefined) {

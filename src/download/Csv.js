@@ -57,49 +57,42 @@ export function DownloadCsvService(
 ) {
   /**
    * @type {angular.gettext.gettextCatalog}
-   * @private
    */
   this.gettextCatalog_ = gettextCatalog;
 
   /**
    * File encoding of the CSV file.
    * @type {import('ngeo/options.js').ngeoCsvEncoding}
-   * @private
    */
   this.encoding_ = ngeoCsvEncoding;
 
   /**
    * File extension of the CSV file.
    * @type {import('ngeo/options.js').ngeoCsvExtension}
-   * @private
    */
   this.extension_ = ngeoCsvExtension;
 
   /**
    * Whether to include the header in the exported file or not.
    * @type {import('ngeo/options.js').ngeoCsvIncludeHeader}
-   * @private
    */
   this.includeHeader_ = ngeoCsvIncludeHeader;
 
   /**
    * Quote character.
    * @type {import('ngeo/options.js').ngeoCsvQuote}
-   * @private
    */
   this.quote_ = ngeoCsvQuote;
 
   /**
    * Separator character.
    * @type {import('ngeo/options.js').ngeoCsvSeparator}
-   * @private
    */
   this.separator_ = ngeoCsvSeparator;
 
   /**
    * Download service.
    * @type {import('ngeo/download/service.js').Download}
-   * @private
    */
   this.download_ = ngeoDownload;
 }
@@ -132,7 +125,6 @@ DownloadCsvService.prototype.generateCsv = function (data, columnDefs) {
 /**
  * @param {Array<?>} values Values.
  * @return {string} CSV row.
- * @private
  */
 DownloadCsvService.prototype.getRow_ = function (values) {
   const matchAllQuotesRegex = new RegExp(this.quote_, 'g');

@@ -290,73 +290,61 @@ function Controller(
 
   /**
    * @type {JQuery}
-   * @private
    */
   this.element_ = $element;
 
   /**
    * @type {angular.IQService}
-   * @private
    */
   this.q_ = $q;
 
   /**
    * @type {angular.IScope}
-   * @private
    */
   this.scope_ = $scope;
 
   /**
    * @type {angular.ITimeoutService}
-   * @private
    */
   this.timeout_ = $timeout;
 
   /**
    * @type {angular.gettext.gettextCatalog}
-   * @private
    */
   this.gettextCatalog_ = gettextCatalog;
 
   /**
    * @type {import("gmf/editing/EditFeature.js").EditingEditFeature}
-   * @private
    */
   this.gmfEditFeature_ = gmfEditFeature;
 
   /**
    * @type {import("gmf/editing/Snapping.js").EditingSnappingService}
-   * @private
    */
   this.gmfSnapping_ = gmfSnapping;
 
   /**
    * @type {import("gmf/editing/XSDAttributes.js").EditingXSDAttributeService}
-   * @private
    */
   this.gmfXSDAttributes_ = gmfXSDAttributes;
 
   /**
    * @type {import("ngeo/misc/EventHelper.js").EventHelper}
-   * @private
    */
   this.ngeoEventHelper_ = ngeoEventHelper;
 
   /**
    * @type {import("ngeo/misc/FeatureHelper.js").FeatureHelper}
-   * @private
    */
   this.ngeoFeatureHelper_ = ngeoFeatureHelper;
 
   /**
    * @type {import("ngeo/map/LayerHelper.js").LayerHelper}
-   * @private
    */
   this.ngeoLayerHelper_ = ngeoLayerHelper;
 
   /**
    * @type {import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr}
-   * @private
    */
   this.ngeoToolActivateMgr_ = ngeoToolActivateMgr;
 
@@ -364,13 +352,11 @@ function Controller(
 
   /**
    * @type {?import('gmf/themes.js').GmfLayer}
-   * @private
    */
   this.editableNode_ = null;
 
   /**
    * @type {?import("ol/layer/Image.js").default|import("ol/layer/Tile.js").default}
-   * @private
    */
   this.editableWMSLayer_ = null;
 
@@ -378,7 +364,6 @@ function Controller(
    * A deferred object resolved after the confirm modal "continue w/o saving" or
    * "save" buttons are clicked.
    * @type {?angular.IDeferred<never>}
-   * @private
    */
   this.confirmDeferred_ = null;
 
@@ -392,7 +377,6 @@ function Controller(
   /**
    * Flag that is toggled while a request is pending, either one to get
    * features when a map is clicked or when saving
-   * @private
    */
   this.pending = false;
 
@@ -440,13 +424,11 @@ function Controller(
 
   /**
    * @type {import("ol/Collection.js").default<import('ol/interaction/Interaction.js').default>}
-   * @private
    */
   this.interactions_ = new olCollection();
 
   /**
    * @type {?import("ol/interaction/Modify.js").default}
-   * @private
    */
   this.modify_ = null;
 
@@ -457,7 +439,6 @@ function Controller(
 
   /**
    * @type {import("ngeo/Menu.js").default}
-   * @private
    */
   this.menu_ = new ngeoMenu({
     actions: [
@@ -476,7 +457,6 @@ function Controller(
 
   /**
    * @type {import("ngeo/Menu.js").default}
-   * @private
    */
   this.menuVertex_ = new ngeoMenu({
     actions: [
@@ -490,13 +470,11 @@ function Controller(
 
   /**
    * @type {?import("ngeo/interaction/Translate.js").default}
-   * @private
    */
   this.translate_ = null;
 
   /**
    * @type {?import("ngeo/interaction/Rotate.js").default}
-   * @private
    */
   this.rotate_ = null;
 
@@ -512,7 +490,6 @@ function Controller(
 
   /**
    * @type {import("ol/events.js").EventsKey[]}
-   * @private
    */
   this.listenerKeys_ = [];
 
@@ -553,7 +530,6 @@ function Controller(
 
   /**
    * @type {?number[]}
-   * @private
    */
   this.vertexInfo_ = null;
 }
@@ -804,7 +780,6 @@ Controller.prototype.confirmCancel = function () {
  *     when the confirm modal is not dismissed.
  * @return {angular.IPromise<void>} The promise attached to the confirm deferred
  *     object.
- * @private
  */
 Controller.prototype.checkForModifications_ = function (scopeApply) {
   this.confirmDeferred_ = this.q_.defer();
@@ -883,7 +858,6 @@ Controller.prototype.submit = function () {
 /**
  * Called after an insert, update or delete request.
  * @param {angular.IHttpResponse<ArrayBuffer|Document|Node|Object|string>} resp Ajax response.
- * @private
  */
 Controller.prototype.handleEditFeature_ = function (resp) {
   const features = new olFormatGeoJSON().readFeatures(resp.data);
@@ -904,7 +878,6 @@ Controller.prototype.handleEditFeature_ = function (resp) {
 
 /**
  * @param {Array<import('ngeo/format/Attribute.js').Attribute>} attributes Attributes.
- * @private
  */
 Controller.prototype.setAttributes_ = function (attributes) {
   // Set attributes
@@ -931,7 +904,6 @@ Controller.prototype.setAttributes_ = function (attributes) {
 
 /**
  * @param {Event|import('ol/events/Event.js').default} evt Event.
- * @private
  */
 Controller.prototype.handleFeatureAdd_ = function (evt) {
   if (evt instanceof CollectionEvent) {
@@ -986,7 +958,6 @@ Controller.prototype.handleFeatureAdd_ = function (evt) {
 /**
  * Activate or deactivate this directive.
  * @param {boolean} active Whether to activate this directive or not.
- * @private
  */
 Controller.prototype.toggle_ = function (active) {
   if (!this.modifyToolActivate) {
@@ -1060,7 +1031,6 @@ Controller.prototype.toggle_ = function (active) {
 /**
  * Called when the mapSelectActive property changes.
  * @param {boolean} active Whether the map select is active or not.
- * @private
  */
 Controller.prototype.handleMapSelectActiveChange_ = function (active) {
   if (!this.map) {
@@ -1097,7 +1067,6 @@ Controller.prototype.handleMapSelectActiveChange_ = function (active) {
  *     to fetch the features at the clicked location.
  *
  * @param {Event|import('ol/events/Event.js').default} evt Event.
- * @private
  */
 Controller.prototype.handleMapClick_ = function (evt) {
   if (evt instanceof MapBrowserEvent) {
@@ -1169,7 +1138,6 @@ Controller.prototype.handleMapClick_ = function (evt) {
 
 /**
  * @param {Event|import('ol/events/Event.js').default} evt Event.
- * @private
  */
 Controller.prototype.handleMapContextMenu_ = function (evt) {
   if (evt instanceof Event) {
@@ -1236,7 +1204,6 @@ Controller.prototype.handleMapContextMenu_ = function (evt) {
 
 /**
  * @param {Array<olFeature<import("ol/geom/Geometry.js").default>>} features Features.
- * @private
  */
 Controller.prototype.handleGetFeatures_ = function (features) {
   this.pending = false;
@@ -1255,7 +1222,6 @@ Controller.prototype.handleGetFeatures_ = function (features) {
 
 /**
  * Initialize interactions by setting them inactive and decorating them
- * @private
  */
 Controller.prototype.initializeInteractions_ = function () {
   this.interactions_.forEach((interaction) => {
@@ -1266,7 +1232,6 @@ Controller.prototype.initializeInteractions_ = function () {
 
 /**
  * Register interactions by adding them to the map
- * @private
  */
 Controller.prototype.registerInteractions_ = function () {
   this.interactions_.forEach((interaction) => {
@@ -1279,7 +1244,6 @@ Controller.prototype.registerInteractions_ = function () {
 
 /**
  * Unregister interactions, i.e. set them inactive and remove them from the map
- * @private
  */
 Controller.prototype.unregisterInteractions_ = function () {
   this.interactions_.forEach((interaction) => {
@@ -1293,7 +1257,6 @@ Controller.prototype.unregisterInteractions_ = function () {
 /**
  * @param {?olFeature<import("ol/geom/Geometry.js").default>} newFeature The new feature.
  * @param {?olFeature<import("ol/geom/Geometry.js").default>} oldFeature The old feature.
- * @private
  */
 Controller.prototype.handleFeatureChange_ = function (newFeature, oldFeature) {
   let geom;
@@ -1328,16 +1291,10 @@ Controller.prototype.handleFeatureChange_ = function (newFeature, oldFeature) {
   }
 };
 
-/**
- * @private
- */
 Controller.prototype.handleFeaturePropertyChange_ = function () {
   this.dirty = true;
 };
 
-/**
- * @private
- */
 Controller.prototype.handleFeatureGeometryChange_ = function () {
   this.dirty = true;
   this.scope_.$apply();
@@ -1345,7 +1302,6 @@ Controller.prototype.handleFeatureGeometryChange_ = function () {
 
 /**
  * @param {Event|import('ol/events/Event.js').default} evt Event.
- * @private
  */
 Controller.prototype.handleMenuActionClick_ = function (evt) {
   const action = /** @type {import('ngeo/filter/ruleComponent.js').MenuEvent} */ (evt).detail.action;
@@ -1372,7 +1328,6 @@ Controller.prototype.handleMenuActionClick_ = function (evt) {
 
 /**
  * @param {Event|import('ol/events/Event.js').default} evt Event.
- * @private
  */
 Controller.prototype.handleMenuVertexActionClick_ = function (evt) {
   const action = /** @type {import('ngeo/filter/ruleComponent.js').MenuEvent} */ (evt).detail.action;
@@ -1397,7 +1352,6 @@ Controller.prototype.handleMenuVertexActionClick_ = function (evt) {
 
 /**
  * @param {Event|import('ol/events/Event.js').default} evt Event.
- * @private
  */
 Controller.prototype.handleTranslateEnd_ = function (evt) {
   if (!this.translate_) {
@@ -1409,7 +1363,6 @@ Controller.prototype.handleTranslateEnd_ = function (evt) {
 
 /**
  * @param {Event|import('ol/events/Event.js').default} evt Event.
- * @private
  */
 Controller.prototype.handleRotateEnd_ = function (evt) {
   if (!this.rotate_) {
@@ -1419,9 +1372,6 @@ Controller.prototype.handleRotateEnd_ = function (evt) {
   this.scope_.$apply();
 };
 
-/**
- * @private
- */
 Controller.prototype.handleDestroy_ = function () {
   if (!this.features) {
     throw new Error('Missing features');

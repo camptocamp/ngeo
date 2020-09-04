@@ -36,13 +36,11 @@ import angular from 'angular';
 export function RoutingService($http, ngeoRoutingOptions) {
   /**
    * @type {angular.IHttpService}
-   * @private
    */
   this.$http_ = $http;
 
   /**
    * @type {import('ngeo/options.js').ngeoRoutingOptions}
-   * @private
    */
   this.routingOptions_ = ngeoRoutingOptions;
 
@@ -50,7 +48,6 @@ export function RoutingService($http, ngeoRoutingOptions) {
    * URL for OSRM backend API.
    * Defaults to demo backend.
    * @type {string}
-   * @private
    */
   this.ngeoOsrmBackendUrl_ = this.routingOptions_.backendUrl || 'https://router.project-osrm.org/';
 
@@ -63,7 +60,6 @@ export function RoutingService($http, ngeoRoutingOptions) {
    * Version of the protocol implemented by the service.
    * see: https://github.com/Project-OSRM/osrm-backend/blob/master/docs/http.md
    * @type {string}
-   * @private
    */
   this.protocolVersion_ = 'v1';
 }

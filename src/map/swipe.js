@@ -75,7 +75,6 @@ class SwipeController {
    * @param {angular.IScope} $scope Angular scope.
    * @param {JQuery} $element Element.
    * @constructor
-   * @private
    * @hidden
    * @ngInject
    * @ngdoc controller

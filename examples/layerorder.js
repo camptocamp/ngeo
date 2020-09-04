@@ -108,7 +108,6 @@ function MainController($scope) {
 
   /**
    * @type {import("ol/layer/Tile.js").default}
-   * @private
    */
   this.roads_ = new olLayerImage({
     source: new olSourceWMS({

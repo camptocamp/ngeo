@@ -148,13 +148,11 @@ function Controller($scope) {
 
   /**
    * @type {?import("ngeo/interaction/DrawRegularPolygonFromClick.js").default}
-   * @private
    */
   this.interaction_ = null;
 
   /**
    * @type {?import("ol/events.js").EventsKey}
-   * @private
    */
   this.interactionListenerKey_ = null;
 
@@ -187,7 +185,6 @@ Controller.prototype.$onInit = function () {
  * Called when a feature is finished being drawn. Add the feature to the
  * collection.
  * @param {Event|import('ol/events/Event.js').default} evt Event.
- * @private
  */
 Controller.prototype.handleDrawEnd_ = function (evt) {
   if (!this.features) {
@@ -200,7 +197,6 @@ Controller.prototype.handleDrawEnd_ = function (evt) {
 
 /**
  * Cleanup event listeners and remove the interaction from the map.
- * @private
  */
 Controller.prototype.handleDestroy_ = function () {
   if (!this.map) {

@@ -212,13 +212,11 @@ function Controller($scope, ngeoToolActivateMgr, gmfObjectEditingToolsOptions) {
 
   /**
    * @type {angular.IScope}
-   * @private
    */
   this.scope_ = $scope;
 
   /**
    * @type {import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr}
-   * @private
    */
   this.ngeoToolActivateMgr_ = ngeoToolActivateMgr;
 
@@ -231,7 +229,6 @@ function Controller($scope, ngeoToolActivateMgr, gmfObjectEditingToolsOptions) {
 
   /**
    * @type {string[]}
-   * @private
    */
   this.toolActiveNames_ = [];
 
@@ -268,9 +265,7 @@ function Controller($scope, ngeoToolActivateMgr, gmfObjectEditingToolsOptions) {
     oeToolsOptions.regularPolygonRadius !== undefined ? oeToolsOptions.regularPolygonRadius : 100;
 
   this.registerTool_('drawTriangleActive', ObjecteditingProcessType.ADD);
-
   this.registerTool_('copyFromActive', ObjecteditingProcessType.ADD, true);
-
   this.registerTool_('deleteFromActive', ObjecteditingProcessType.DELETE, true);
 
   $scope.$on('$destroy', this.handleDestroy_.bind(this));
@@ -312,7 +307,6 @@ Controller.prototype.$onInit = function () {
  *     and when sketch features are added.
  * @param {boolean=} opt_requiresLayer Whether the tool requires the queryable
  *     layer or not. Defaults to `false`.
- * @private
  */
 Controller.prototype.registerTool_ = function (toolActiveName, process, opt_requiresLayer) {
   const requiresLayer = opt_requiresLayer === true;
@@ -336,7 +330,6 @@ Controller.prototype.registerTool_ = function (toolActiveName, process, opt_requ
  * @param {boolean} requiresLayer Whether the tool requires the queryable
  *     layer or not.
  * @param {boolean|undefined} newVal New value.
- * @private
  */
 Controller.prototype.handleToolActiveChange_ = function (process, requiresLayer, newVal) {
   // Update process if a tool was activated.
@@ -357,9 +350,6 @@ Controller.prototype.handleToolActiveChange_ = function (process, requiresLayer,
   this.active = active;
 };
 
-/**
- * @private
- */
 Controller.prototype.handleDestroy_ = function () {};
 
 module.controller('GmfObjecteditingtoolsController', Controller);

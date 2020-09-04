@@ -134,7 +134,6 @@ function Controller($scope, gmfThemeManager, gmfThemes) {
 
   /**
    * @type {import("gmf/theme/Themes.js").ThemesService}
-   * @private
    */
   this.gmfThemes_ = gmfThemes;
 
@@ -150,7 +149,6 @@ function Controller($scope, gmfThemeManager, gmfThemes) {
 
   /**
    * @type {Array<import("ol/events.js").EventsKey>}
-   * @private
    */
   this.listenerKeys_ = [];
 
@@ -162,7 +160,6 @@ function Controller($scope, gmfThemeManager, gmfThemes) {
 /**
  * Store the loaded themes locally applying a filter (if any), then set the
  * current theme.
- * @private
  */
 Controller.prototype.setThemes_ = function () {
   this.gmfThemes_.getThemesObject().then((themes) => {
@@ -182,9 +179,6 @@ Controller.prototype.setTheme = function (theme, opt_silent) {
   }
 };
 
-/**
- * @private
- */
 Controller.prototype.handleDestroy_ = function () {
   this.listenerKeys_.forEach(unlistenByKey);
   this.listenerKeys_.length = 0;

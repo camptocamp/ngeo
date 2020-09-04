@@ -144,25 +144,21 @@ module.directive('gmfMobileMeasurepoint', mobileMeasurePointComponent);
 export function MobileMeasurePointController(gettextCatalog, $scope, $filter, gmfRaster, ngeoDebounce) {
   /**
    * @type {import("gmf/raster/RasterService.js").RasterService}
-   * @private
    */
   this.gmfRaster_ = gmfRaster;
 
   /**
    * @type {import("ngeo/misc/debounce.js").miscDebounce<function(): void>}
-   * @private
    */
   this.ngeoDebounce_ = ngeoDebounce;
 
   /**
    * @type {angular.gettext.gettextCatalog}
-   * @private
    */
   this.gettextCatalog_ = gettextCatalog;
 
   /**
    * @type {angular.IFilterService}
-   * @private
    */
   this.$filter_ = $filter;
 
@@ -195,13 +191,11 @@ export function MobileMeasurePointController(gettextCatalog, $scope, $filter, gm
 
   /**
    * @type {number}
-   * @private
    */
   this.coordinateDecimals = coordinateDecimalsFn ? coordinateDecimalsFn() : 0;
 
   /**
    * @type {LayerConfig[]}
-   * @private
    */
   this.layersConfig = [];
 
@@ -256,7 +250,6 @@ export function MobileMeasurePointController(gettextCatalog, $scope, $filter, gm
   /**
    * The key for map view 'propertychange' event.
    * @type {?import("ol/events.js").EventsKey}
-   * @private
    */
   this.mapViewPropertyChangeEventKey_ = null;
 }
@@ -344,7 +337,6 @@ MobileMeasurePointController.prototype.handleMeasureActiveChange_ = function () 
 /**
  * Call the elevation service to get information about the measure at
  * the current map center location.
- * @private
  * @hidden
  */
 MobileMeasurePointController.prototype.getMeasure_ = function () {

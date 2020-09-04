@@ -122,31 +122,26 @@ function Controller($element, $filter, $scope, gettextCatalog, gmfMousePositionO
 
   /**
    * @type {angular.IScope}
-   * @private
    */
   this.$scope_ = $scope;
 
   /**
    * @type {angular.gettext.gettextCatalog}
-   * @private
    */
   this.gettextCatalog_ = gettextCatalog;
 
   /**
    * @type {JQuery}
-   * @private
    */
   this.$element_ = $element;
 
   /**
    * @type {angular.IFilterService}
-   * @private
    */
   this.$filter_ = $filter;
 
   /**
    * @type {?import("ol/control/MousePosition.js").default}
-   * @private
    */
   this.control_ = null;
 }
@@ -165,7 +160,6 @@ Controller.prototype.$onInit = function () {
 
 /**
  * Init the ol.control.MousePosition
- * @private
  */
 Controller.prototype.initOlControl_ = function () {
   if (!this.map) {

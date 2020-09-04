@@ -39,14 +39,12 @@ const module = angular.module('gmfapp', ['gettext', ngeoMiscDatepickerComponent.
 
 /**
  * @constructor
- * @param {angular.IScope} $scope Angular scope.
  * @param {import("ngeo/misc/WMSTime.js").WMSTime} ngeoWMSTime wmstime service.
  * @ngInject
  */
-function MainController($scope, ngeoWMSTime) {
+function MainController(ngeoWMSTime) {
   /**
    * @type {import("ngeo/misc/WMSTime.js").WMSTime}
-   * @private
    */
   this.ngeoWMSTime_ = ngeoWMSTime;
 
@@ -86,6 +84,7 @@ function MainController($scope, ngeoWMSTime) {
 
   /**
    * @param {import('ngeo/datasource/OGC.js').TimeRange} date
+   * @this {MainController}
    */
   this.onDateSelected = function (date) {
     this.value = this.ngeoWMSTime_.formatWMSTimeParam(this.wmsTimeValueMode, date);
@@ -93,6 +92,7 @@ function MainController($scope, ngeoWMSTime) {
 
   /**
    * @param {import('ngeo/datasource/OGC.js').TimeRange} date
+   * @this {MainController}
    */
   this.onDateRangeSelected = function (date) {
     this.rangeValue = this.ngeoWMSTime_.formatWMSTimeParam(this.wmsTimeRangeMode, date);

@@ -60,14 +60,12 @@ import angular from 'angular';
 export function ToolActivateMgr($rootScope) {
   /**
    * @type {Object<string, miscToolActivateMgrEntry[]>}
-   * @private
    */
   this.groups_ = {};
 
   /**
    * The scope.
    * @type {angular.IScope}
-   * @private
    */
   this.scope_ = $rootScope;
 }
@@ -155,7 +153,6 @@ ToolActivateMgr.prototype.deactivateTool = function (tool) {
  *
  * @param {string} groupName Name of the group.
  * @param {import("ngeo/misc/ToolActivate.js").default} tool Tool to activate.
- * @private
  */
 ToolActivateMgr.prototype.deactivateTools_ = function (groupName, tool) {
   const entries = this.groups_[groupName];
@@ -170,7 +167,6 @@ ToolActivateMgr.prototype.deactivateTools_ = function (groupName, tool) {
  * Activate the default tool in the given group if no other tool is active.
  *
  * @param {string} groupName Name of the group.
- * @private
  */
 ToolActivateMgr.prototype.activateDefault_ = function (groupName) {
   const entries = this.groups_[groupName];

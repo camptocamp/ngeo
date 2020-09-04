@@ -64,7 +64,6 @@ const module = angular.module('gmfapp', [
 function MainController($scope, ngeoFeatureHelper, ngeoFeatures, ngeoToolActivateMgr, ngeoFeatureOverlayMgr) {
   /**
    * @type {angular.IScope}
-   * @private
    */
   this.scope_ = $scope;
 
@@ -131,7 +130,6 @@ function MainController($scope, ngeoFeatureHelper, ngeoFeatures, ngeoToolActivat
 
 /**
  * @param {import("ol/MapBrowserEvent.js").default} evt MapBrowser event
- * @private
  */
 MainController.prototype.handleMapPointerMove_ = function (evt) {
   const pixel = evt.pixel;

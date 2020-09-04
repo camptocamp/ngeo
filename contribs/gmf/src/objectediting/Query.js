@@ -41,25 +41,21 @@ import olSourceImageWMS from 'ol/source/ImageWMS.js';
 export function ObjectEditingQuery($http, $q, gmfThemes) {
   /**
    * @type {angular.IHttpService}
-   * @private
    */
   this.http_ = $http;
 
   /**
    * @type {angular.IQService}
-   * @private
    */
   this.q_ = $q;
 
   /**
    * @type {import("gmf/theme/Themes.js").ThemesService}
-   * @private
    */
   this.gmfThemes_ = gmfThemes;
 
   /**
    * @type {?angular.IDeferred<import('./toolsComponent').ObjectEditingQueryableLayerInfo[]>}
-   * @private
    */
   this.getQueryableLayerNodesDefered_ = null;
 }

@@ -148,25 +148,21 @@ function Controller($scope, $timeout, gmfThemes, gmfTreeManager) {
 
   /**
    * @type {angular.IScope}
-   * @private
    */
   this.scope_ = $scope;
 
   /**
    * @type {angular.ITimeoutService}
-   * @private
    */
   this.$timeout_ = $timeout;
 
   /**
    * @type {import("gmf/theme/Themes.js").ThemesService}
-   * @private
    */
   this.gmfThemes_ = gmfThemes;
 
   /**
    * @type {import("gmf/layertree/TreeManager.js").LayertreeTreeManager}
-   * @private
    */
   this.gmfTreeManager_ = gmfTreeManager;
 
@@ -196,7 +192,6 @@ function Controller($scope, $timeout, gmfThemes, gmfTreeManager) {
 
   /**
    * @type {function(): void}
-   * @private
    */
   this.treeCtrlsWatcherUnregister_ = $scope.$watchCollection(() => {
     if (gmfTreeManager.rootCtrl) {
@@ -272,7 +267,6 @@ Controller.prototype.stopEditing = function () {
  * Called when the active property of the this directive changes. Manage
  * the activation/deactivation accordingly.
  * @param {boolean} active Whether the directive is active or not.
- * @private
  */
 Controller.prototype.handleActiveChange_ = function (active) {
   if (!active) {
@@ -292,9 +286,6 @@ Controller.prototype.handleActiveChange_ = function (active) {
   }
 };
 
-/**
- * @private
- */
 Controller.prototype.handleDestroy_ = function () {
   this.treeCtrlsWatcherUnregister_();
 };

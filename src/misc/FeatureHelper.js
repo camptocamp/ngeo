@@ -99,19 +99,16 @@ export function FeatureHelper(
 ) {
   /**
    * @type {angular.IFilterService}
-   * @private
    */
   this.$filter_ = $filter;
 
   /**
    * @type {import('ngeo/options.js').ngeoMeasureDecimals}
-   * @private
    */
   this.decimals_ = ngeoMeasureDecimals;
 
   /**
    * @type {import('ngeo/options.js').ngeoMeasurePrecision}
-   * @private
    */
   this.precision_ = ngeoMeasurePrecision;
 
@@ -142,14 +139,12 @@ export function FeatureHelper(
   /**
    * Filter function to display point coordinates or null to don't use any filter.
    * @type {?angular.IFilterFilter}
-   * @private
    */
   this.pointFilterFn_ = null;
 
   /**
    * Arguments to apply to the point filter function.
    * @type {Array<*>}
-   * @private
    */
   this.pointFilterArgs_ = [];
 
@@ -166,14 +161,12 @@ export function FeatureHelper(
 
   /**
    * @type {?import("ol/proj/Projection.js").default}
-   * @private
    */
   this.projection_ = null;
 
   /**
    * Download service.
    * @type {import('ngeo/download/service.js').Download}
-   * @private
    */
   this.download_ = ngeoDownload;
 }
@@ -252,7 +245,6 @@ FeatureHelper.prototype.getStyle = function (feature) {
 /**
  * @param {olFeature<import("ol/geom/Geometry.js").default>} feature Feature with linestring geometry.
  * @return {Array<import("ol/style/Style.js").default>} Style.
- * @private
  */
 FeatureHelper.prototype.getLineStringStyle_ = function (feature) {
   const strokeWidth = this.getStrokeProperty(feature);
@@ -295,7 +287,6 @@ FeatureHelper.prototype.getLineStringStyle_ = function (feature) {
 /**
  * @param {olFeature<import("ol/geom/Geometry.js").default>} feature Feature with point geometry.
  * @return {Array<import("ol/style/Style.js").default>} Style.
- * @private
  */
 FeatureHelper.prototype.getPointStyle_ = function (feature) {
   const size = this.getSizeProperty(feature);
@@ -380,7 +371,6 @@ FeatureHelper.prototype.getNumber = function (feature, attrib) {
 /**
  * @param {olFeature<import("ol/geom/Geometry.js").default>} feature Feature with polygon geometry.
  * @return {Array<import("ol/style/Style.js").default>} Style.
- * @private
  */
 FeatureHelper.prototype.getPolygonStyle_ = function (feature) {
   const strokeWidth = this.getStrokeProperty(feature);
@@ -494,7 +484,6 @@ FeatureHelper.prototype.getPolygonStyle_ = function (feature) {
 /**
  * @param {olFeature<import("ol/geom/Geometry.js").default>} feature Feature with point geometry, rendered as text.
  * @return {import("ol/style/Style.js").default} Style.
- * @private
  */
 FeatureHelper.prototype.getTextStyle_ = function (feature) {
   return new olStyleStyle({
@@ -691,7 +680,6 @@ FeatureHelper.prototype.getVertexInfoAtCoordinate = function (feature, coordinat
  *     extent with.
  * @return {number} Index of the coordinate that hits. If none did, -1
  *     is returned.
- * @private
  */
 FeatureHelper.prototype.getCoordinateIndexThatHitsAt_ = function (coordinates, coordinate, min, buffer) {
   let index = -1;
@@ -872,7 +860,6 @@ FeatureHelper.prototype.removeVertex = function (feature, vertexInfo) {
 /**
  * @param {olFeature<import("ol/geom/Geometry.js").default>} feature Feature.
  * @return {boolean} Whether the feature supports vertex or not.
- * @private
  */
 FeatureHelper.prototype.supportsVertex_ = function (feature) {
   const supported = [
@@ -890,7 +877,6 @@ FeatureHelper.prototype.supportsVertex_ = function (feature) {
  * @param {olFeature<import("ol/geom/Geometry.js").default>} feature Feature.
  * @return {boolean} Whether the feature supports having its vertex
  *     removed or not. Does not validate the number of coordinates.
- * @private
  */
 FeatureHelper.prototype.supportsVertexRemoval_ = function (feature) {
   const supported = [
@@ -906,7 +892,6 @@ FeatureHelper.prototype.supportsVertexRemoval_ = function (feature) {
 /**
  * @param {olFeature<import("ol/geom/Geometry.js").default>} feature Feature.
  * @return {import("ol/style/Style.js").default} Style.
- * @private
  */
 FeatureHelper.prototype.getHaloStyle_ = function (feature) {
   const type = this.getType(feature);
@@ -1125,7 +1110,6 @@ FeatureHelper.prototype.exportKML = function (features) {
  * @param {import('ol/format/Feature.js').default} format Format
  * @param {string} fileName Name of the file.
  * @param {string=} opt_mimeType Mime type. Defaults to 'text/plain'.
- * @private
  */
 FeatureHelper.prototype.export_ = function (features, format, fileName, opt_mimeType) {
   const mimeType = opt_mimeType !== undefined ? opt_mimeType : 'text/plain';
@@ -1157,7 +1141,6 @@ FeatureHelper.prototype.export_ = function (features, format, fileName, opt_mime
 /**
  * @param {import('ngeo/rule/Text.js').TextOptions} options Options.
  * @return {import('ol/style/Text.js').default} Style.
- * @private
  */
 FeatureHelper.prototype.createTextStyle_ = function (options) {
   /** @type {import('ol/style/Text.js').Options} */

@@ -47,7 +47,6 @@ const module = angular.module('gmfapp', [
 function MainController($scope, ngeoWMSTime) {
   /**
    * @type {import("ngeo/misc/WMSTime.js").WMSTime}
-   * @private
    */
   this.ngeoWMSTime_ = ngeoWMSTime;
 
@@ -87,6 +86,7 @@ function MainController($scope, ngeoWMSTime) {
 
   /**
    * @param {import('ngeo/datasource/OGC.js').TimeRange} date
+   * @this {MainController}
    */
   this.onDateSelected = function (date) {
     this.sliderValue = this.ngeoWMSTime_.formatWMSTimeParam(this.wmsTimeValueMode, date);
@@ -95,6 +95,7 @@ function MainController($scope, ngeoWMSTime) {
 
   /**
    * @param {import('ngeo/datasource/OGC.js').TimeRange} date
+   * @this {MainController}
    */
   this.onDateRangeSelected = function (date) {
     this.sliderRangeValue = this.ngeoWMSTime_.formatWMSTimeParam(this.wmsTimeRangeMode, date);

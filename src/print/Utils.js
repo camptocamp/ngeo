@@ -32,13 +32,11 @@ import angular from 'angular';
 export function PrintUtils() {
   /**
    * @type {number}
-   * @private
    */
   this.extentHalfHorizontalDistance_ = -1;
 
   /**
    * @type {number}
-   * @private
    */
   this.extentHalfVerticalDistance_ = -1;
 }

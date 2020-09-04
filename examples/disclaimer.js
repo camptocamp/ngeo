@@ -63,30 +63,25 @@ function MainController(ngeoDisclaimer) {
 
   /**
    * @type {string}
-   * @private
    */
   this.successMsg_ = 'Disclaimer with success style';
 
   /**
    * @type {string}
-   * @private
    */
   this.infoMsg_ = 'Disclaimer with info style';
   /**
    * @type {string}
-   * @private
    */
   this.warningMsg_ = 'Disclaimer with warning style';
 
   /**
    * @type {string}
-   * @private
    */
   this.errorMsg_ = 'Disclaimer with error style';
 
   /**
    * @type {string[]}
-   * @private
    */
   this.inMapMsgs_ = [
     'Disclaimer inside the map',

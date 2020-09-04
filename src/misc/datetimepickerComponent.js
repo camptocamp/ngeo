@@ -70,21 +70,18 @@ module.directive('ngeoDatetimepicker', dateTimeComponent);
 function Controller($element, gettextCatalog) {
   /**
    * @const {JQuery}
-   * @private
    */
   this.element_ = $element;
 
   /**
    * The gettext catalog
    * @type {angular.gettext.gettextCatalog}
-   * @private
    */
   this.gettextCatalog_ = gettextCatalog;
 
   /**
    * The options
    * @type {Object|String}
-   * @private
    */
   this.options;
 }

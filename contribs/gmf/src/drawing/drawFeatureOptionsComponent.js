@@ -65,7 +65,6 @@ module.run(
 class DrawFeatureOptionsController {
   /**
    * @param {angular.IScope} $scope Scope.
-   * @private
    * @ngInject
    * @ngdoc controller
    * @ngname GmfDrawFeatureOptionsController

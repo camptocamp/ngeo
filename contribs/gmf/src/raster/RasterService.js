@@ -36,13 +36,11 @@ import angular from 'angular';
 export function RasterService($http, gmfRasterUrl) {
   /**
    * @type {angular.IHttpService}
-   * @private
    */
   this.$http_ = $http;
 
   /**
    * @type {string}
-   * @private
    */
   this.url_ = gmfRasterUrl;
 }

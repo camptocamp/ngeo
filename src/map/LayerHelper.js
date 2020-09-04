@@ -50,20 +50,17 @@ import {ServerType} from 'ngeo/datasource/OGC.js';
 export function LayerHelper($q, $http, ngeoTilesPreloadingLimit) {
   /**
    * @type {angular.IQService}
-   * @private
    */
   this.$q_ = $q;
 
   /**
    * @type {angular.IHttpService}
-   * @private
    */
   this.$http_ = $http;
 
   /**
    * The Tiles Preloading Limit value
    * @type {number}
-   * @private
    */
   this.tilesPreloadingLimit_ = ngeoTilesPreloadingLimit ? ngeoTilesPreloadingLimit : Infinity;
 }
@@ -215,8 +212,8 @@ LayerHelper.prototype.createBasicWMSLayerFromDataSource = function (dataSource, 
  * @param {string=} opt_matrixSet Optional WMTS matrix set.
  * @param {Object<string, ?string>=} opt_dimensions WMTS dimensions.
  * @param {Object=} opt_customOptions Some initial options.
- * @param {number|undefined} opt_minResolution WMTS minimum resolution.
- * @param {number|undefined} opt_maxResolution WMTS maximum resolution.
+ * @param {number=} opt_minResolution WMTS minimum resolution.
+ * @param {number=} opt_maxResolution WMTS maximum resolution.
  * @return {angular.IPromise<import("ol/layer/Tile.js").default>} A Promise with a layer (with source) on
  *    success, no layer else.
  */
@@ -382,7 +379,6 @@ LayerHelper.prototype.getFlatLayers = function (layer) {
  * @param {olLayerLayer<import('ol/source/Source.js').default>[]} array An array to add layers.
  * @param {number|undefined} computedOpacity Opacity inherited from ancestor layer groups.
  * @return {olLayerLayer<import('ol/source/Source.js').default>[]} Layers.
- * @private
  */
 LayerHelper.prototype.getFlatLayers_ = function (layer, array, computedOpacity) {
   const opacity = layer.getOpacity();

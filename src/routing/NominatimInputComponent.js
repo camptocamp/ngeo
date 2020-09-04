@@ -86,13 +86,11 @@ function ngeoRoutingNominatimInputComponentTemplateUrl(
 function Controller($element, $scope, ngeoNominatimService) {
   /**
    * @type {JQuery}
-   * @private
    */
   this.element_ = $element;
 
   /**
    * @type {angular.IScope}
-   * @private
    */
   this.$scope_ = $scope;
 
@@ -144,7 +142,6 @@ function Controller($element, $scope, ngeoNominatimService) {
  * @param {JQueryEventObject} event Event.
  * @param {import('ngeo/routing/NominatimService').NominatimSearchResult} suggestion Suggestion.
  * @param {Twitter.Typeahead.Dataset<void>} dataset Dataset.
- * @private
  * @hidden
  */
 Controller.prototype.select_ = function (event, suggestion, dataset) {

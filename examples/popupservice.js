@@ -35,13 +35,11 @@ const module = angular.module('app', ['gettext', ngeoMessagePopup.name]);
  */
 function MainController($sce, ngeoCreatePopup) {
   /**
-   * @private
    * @type {angular.ISCEService}
    */
   this.sce_ = $sce;
 
   /**
-   * @private
    * @type {import("ngeo/message/Popup.js").PopupFactory}
    */
   this.createPopup_ = ngeoCreatePopup;

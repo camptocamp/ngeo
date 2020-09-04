@@ -123,7 +123,6 @@ class Controller {
    * @param {import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate
    *    manager service
    * @param {import("ngeo/download/Csv.js").DownloadCsvService} ngeoCsvDownload CSV Download service.
-   * @private
    * @ngInject
    * @ngdoc controller
    * @ngname gmfLidarprofilePanelController
@@ -204,9 +203,6 @@ class Controller {
     );
   }
 
-  /**
-   * @private
-   */
   $onInit() {
     if (!this.map) {
       throw new Error('Missing map');

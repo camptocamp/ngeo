@@ -95,61 +95,51 @@ export function EditingSnappingService(
 
   /**
    * @type {angular.IHttpService}
-   * @private
    */
   this.http_ = $http;
 
   /**
    * @type {angular.IQService}
-   * @private
    */
   this.q_ = $q;
 
   /**
    * @type {angular.IScope}
-   * @private
    */
   this.rootScope_ = $rootScope;
 
   /**
    * @type {angular.ITimeoutService}
-   * @private
    */
   this.timeout_ = $timeout;
 
   /**
    * @type {angular.auto.IInjectorService}
-   * @private
    */
   this.injector_ = $injector;
 
   /**
    * @type {import('gmf/datasource/fileGroup.js').DatasourceFileGroup}
-   * @private
    */
   this.gmfDatasourceFileGroup_ = gmfDatasourceFileGroup;
 
   /**
    * @type {import('gmf/themes.js').GmfSnappingConfig}
-   * @private
    */
   this.gmfSnappingConfig_ = gmfSnappingConfig;
 
   /**
    * @type {import("gmf/theme/Themes.js").ThemesService}
-   * @private
    */
   this.gmfThemes_ = gmfThemes;
 
   /**
    * @type {import("gmf/layertree/TreeManager.js").LayertreeTreeManager}
-   * @private
    */
   this.gmfTreeManager_ = gmfTreeManager;
 
   /**
    * @type {import("ol/Collection.js").default<Feature<import("ol/geom/Geometry.js").default>>}
-   * @private
    */
   this.ngeoFeatures_ = ngeoFeatures;
 
@@ -159,7 +149,6 @@ export function EditingSnappingService(
    * A cache containing all available snappable items, in which the listening
    * of the state of the `treeCtrl` is registered and unregistered.
    * @type {Cache}
-   * @private
    */
   this.cache_ = {};
 
@@ -169,19 +158,16 @@ export function EditingSnappingService(
    * source is added to the FileGroup's collection, and their features
    * need to be snappable.
    * @type {CacheFileDataSource}
-   * @private
    */
   this.cacheFileDataSource_ = {};
 
   /**
    * @type {Array<import("ol/events.js").EventsKey>}
-   * @private
    */
   this.listenerKeys_ = [];
 
   /**
    * @type {?import("ol/Map.js").default}
-   * @private
    */
   this.map_ = null;
 
@@ -190,13 +176,11 @@ export function EditingSnappingService(
    * of the currently active cache items after the map view changed. Used
    * to cancel if the map view changes often within a short period of time.
    * @type {?angular.IPromise<void>}
-   * @private
    */
   this.mapViewChangePromise_ = null;
 
   /**
    * @type {!CustomSnap}
-   * @private
    */
   this.ngeoFeaturesSnapInteraction_ = new CustomSnap({
     edge: gmfSnappingConfig.edge,
@@ -208,13 +192,11 @@ export function EditingSnappingService(
   /**
    * A reference to the OGC servers loaded by the theme service.
    * @type {import('gmf/themes.js').GmfOgcServers|null}
-   * @private
    */
   this.ogcServers_ = null;
 
   /**
    * @type {import('ol/source/Vector.js').default<*>|undefined}
-   * @private
    */
   this.ngeoSnappingSource_ = this.injector_.has('ngeoSnappingSource')
     ? this.injector_.get('ngeoSnappingSource')
@@ -344,7 +326,6 @@ EditingSnappingService.prototype.setMap = function (map) {
 /**
  * Called when the themes change. Get the OGC servers, then listen to the
  * tree manager Layertree controllers array changes.
- * @private
  */
 EditingSnappingService.prototype.handleThemesChange_ = function () {
   this.ogcServers_ = null;
@@ -360,7 +341,6 @@ EditingSnappingService.prototype.handleThemesChange_ = function () {
  *
  * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl Layertree controller to
  *    register
- * @private
  */
 EditingSnappingService.prototype.registerTreeCtrl_ = function (treeCtrl) {
   // Skip any Layertree controller that has a node that is not a leaf
@@ -411,8 +391,6 @@ EditingSnappingService.prototype.registerTreeCtrl_ = function (treeCtrl) {
 /**
  * Unregisters all removed layertree controllers 'leaf'. Remove the according
  * cache item and deactivate it as well. Unregister events.
- *
- * @private
  */
 EditingSnappingService.prototype.unregisterAllTreeCtrl_ = function () {
   for (const uid in this.cache_) {
@@ -430,7 +408,6 @@ EditingSnappingService.prototype.unregisterAllTreeCtrl_ = function () {
  *
  * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl The layer tree controller
  * @return {?import('gmf/themes.js').GmfOgcServer} The OGC server.
- * @private
  */
 EditingSnappingService.prototype.getOGCServer_ = function (treeCtrl) {
   const gmfLayer = /** @type {import('gmf/themes.js').GmfLayer} */ (treeCtrl.node);
@@ -472,7 +449,6 @@ EditingSnappingService.prototype.getOGCServer_ = function (treeCtrl) {
  *
  * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl The layer tree controller
  * @return {?WFSConfig} The configuration object.
- * @private
  */
 EditingSnappingService.prototype.getWFSConfig_ = function (treeCtrl) {
   // (1)
@@ -522,7 +498,6 @@ EditingSnappingService.prototype.getWFSConfig_ = function (treeCtrl) {
 /**
  * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl The layer tree controller
  * @return {boolean} True if state is on and snapping is activated for that layer.
- * @private
  */
 EditingSnappingService.prototype.isSnappingActiveForTreeCtrl_ = function (treeCtrl) {
   // Note: a snappable treeCtrl can only be a leaf, therefore the only possible
@@ -544,7 +519,6 @@ EditingSnappingService.prototype.isSnappingActiveForTreeCtrl_ = function (treeCt
 /**
  * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl The layer tree controller
  * @param {boolean} newVal New value for the layer
- * @private
  */
 EditingSnappingService.prototype.handleTreeCtrlStateChange_ = function (treeCtrl, newVal) {
   const uid = olUtilGetUid(treeCtrl);
@@ -558,7 +532,6 @@ EditingSnappingService.prototype.handleTreeCtrlStateChange_ = function (treeCtrl
  * the initial request to get the features.
  *
  * @param {CacheItem} item Cache item.
- * @private
  */
 EditingSnappingService.prototype.activateItem_ = function (item) {
   if (!this.map_) {
@@ -593,7 +566,6 @@ EditingSnappingService.prototype.activateItem_ = function (item) {
  * existing features.
  *
  * @param {CacheItem} item Cache item.
- * @private
  */
 EditingSnappingService.prototype.deactivateItem_ = function (item) {
   if (!this.map_) {
@@ -626,9 +598,6 @@ EditingSnappingService.prototype.deactivateItem_ = function (item) {
   this.refreshSnappingSource_();
 };
 
-/**
- * @private
- */
 EditingSnappingService.prototype.loadAllItems_ = function () {
   this.mapViewChangePromise_ = null;
   let item;
@@ -653,7 +622,6 @@ EditingSnappingService.prototype.refresh = function () {
  * ones first).
  *
  * @param {CacheItem} item Cache item.
- * @private
  */
 EditingSnappingService.prototype.loadItemFeatures_ = function (item) {
   if (!this.map_) {
@@ -715,7 +683,6 @@ EditingSnappingService.prototype.loadItemFeatures_ = function (item) {
 /**
  * Called when the map view changes. Load all active cache items after a small
  * delay. Cancel any currently delayed call, if required.
- * @private
  */
 EditingSnappingService.prototype.handleMapMoveEnd_ = function () {
   if (this.mapViewChangePromise_) {
@@ -724,9 +691,6 @@ EditingSnappingService.prototype.handleMapMoveEnd_ = function () {
   this.mapViewChangePromise_ = this.timeout_(this.loadAllItems_.bind(this), 400);
 };
 
-/**
- * @private
- */
 EditingSnappingService.prototype.refreshSnappingSource_ = function () {
   if (this.ngeoSnappingSource_ === undefined) {
     return;
@@ -747,7 +711,6 @@ EditingSnappingService.prototype.refreshSnappingSource_ = function () {
  * Called when a File data source is added to the File Group (imported
  * geospatial files). Make its features snappable.
  * @param {Event|import("ol/events/Event.js").default} evt Event
- * @private
  */
 EditingSnappingService.prototype.handleFileGroupDataSourcesCollectionAdd_ = function (evt) {
   if (!(evt instanceof CollectionEvent)) {
@@ -795,7 +758,6 @@ EditingSnappingService.prototype.handleFileGroupDataSourcesCollectionAdd_ = func
  * Called when a File data source is removed from the File
  * Group. Remove the features from being snappable.
  * @param {Event|import("ol/events/Event.js").default} evt Event
- * @private
  */
 EditingSnappingService.prototype.handleFileGroupDataSourcesCollectionRemove_ = function (evt) {
   if (!(evt instanceof CollectionEvent)) {
@@ -831,7 +793,6 @@ EditingSnappingService.prototype.handleFileGroupDataSourcesCollectionRemove_ = f
  * Called when the "visible" property of a File data source
  * changes. Add or remove the Snap interaction for that data source
  * depending on the property value.
- * @private
  */
 EditingSnappingService.prototype.handleFileDataSourceVisibleChange_ = function (fileDataSource) {
   const uid = olUtilGetUid(fileDataSource);

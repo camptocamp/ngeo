@@ -80,13 +80,11 @@ module.directive('ngeoExportfeatures', editingExportFeaturesComponent);
 function Controller($element, $injector, $scope, ngeoFeatureHelper) {
   /**
    * @type {?import("ol/Collection.js").default<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>}
-   * @private
    */
   this.features = null;
 
   /**
    * @type {JQuery}
-   * @private
    */
   this.element_ = $element;
 
@@ -95,13 +93,11 @@ function Controller($element, $injector, $scope, ngeoFeatureHelper) {
 
   /**
    * @type {string}
-   * @private
    */
   this.id_ = id;
 
   /**
    * @type {import("ngeo/misc/FeatureHelper.js").FeatureHelper}
-   * @private
    */
   this.featureHelper_ = ngeoFeatureHelper;
 
@@ -115,13 +111,11 @@ function Controller($element, $injector, $scope, ngeoFeatureHelper) {
 
   /**
    * @type {?JQuery}
-   * @private
    */
   this.menu_ = null;
 
   /**
    * @type {JQuery[]}
-   * @private
    */
   this.items_ = [];
 
@@ -149,7 +143,6 @@ function Controller($element, $injector, $scope, ngeoFeatureHelper) {
 
   /**
    * @type {string[]}
-   * @private
    */
   this.formats_ = formats;
 
@@ -167,7 +160,6 @@ function Controller($element, $injector, $scope, ngeoFeatureHelper) {
  * more than one format set, some formats may not support the type of geometry.
  * If that's the case, then disable each format item in the drop-down menu
  * that doesn't support the type of geometry.
- * @private
  */
 Controller.prototype.handleElementClick_ = function () {
   if (!this.features) {
@@ -204,7 +196,6 @@ Controller.prototype.handleElementClick_ = function () {
  * format.
  * @param {string} format Format.
  * @param {JQueryEventObject} event Event.
- * @private
  */
 Controller.prototype.handleMenuItemClick_ = function (format, event) {
   if (!this.features) {
@@ -221,7 +212,6 @@ Controller.prototype.handleMenuItemClick_ = function (format, event) {
 
 /**
  * Cleanup event listeners and remove the menu from DOM, if any.
- * @private
  */
 Controller.prototype.handleDestroy_ = function () {
   const id = this.id_;

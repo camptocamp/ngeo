@@ -113,28 +113,24 @@ module.directive('gmfMobileNav', mobileNavigationComponent);
 function Controller() {
   /**
    * Stack of slid-in items.
-   * @private
    * @type {JQuery[]}
    */
   this.slid_ = [];
 
   /**
    * Currently active sliding box.
-   * @private
    * @type {?JQuery}
    */
   this.active_ = null;
 
   /**
    * The navigation header.
-   * @private
    * @type {?JQuery}
    */
   this.header_ = null;
 
   /**
    * The back button in the navigation header.
-   * @private
    * @type {?JQuery}
    */
   this.backButton_ = null;
@@ -203,7 +199,6 @@ Controller.prototype.init = function (element) {
 /**
  * @param {JQuery} active The currently active sliding box.
  * @param {boolean} back Whether to move back.
- * @private
  */
 Controller.prototype.updateNavigationHeader_ = function (active, back) {
   if (!this.header_) {
@@ -257,7 +252,6 @@ Controller.prototype.updateNavigationHeader_ = function (active, back) {
 
 /**
  * Return to the previous slide.
- * @private
  */
 Controller.prototype.back_ = function () {
   if (!this.active_) {

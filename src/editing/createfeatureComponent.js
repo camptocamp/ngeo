@@ -140,49 +140,41 @@ function Controller(
 
   /**
    * @type {angular.gettext.gettextCatalog}
-   * @private
    */
   this.gettextCatalog_ = gettextCatalog;
 
   /**
    * @type {angular.ICompileService}
-   * @private
    */
   this.compile_ = $compile;
 
   /**
    * @type {angular.IFilterService}
-   * @private
    */
   this.filter_ = $filter;
 
   /**
    * @type {angular.IScope}
-   * @private
    */
   this.scope_ = $scope;
 
   /**
    * @type {angular.ITimeoutService}
-   * @private
    */
   this.timeout_ = $timeout;
 
   /**
    * @type {import("ngeo/misc/EventHelper.js").EventHelper}
-   * @private
    */
   this.ngeoEventHelper_ = ngeoEventHelper;
 
   /**
    * @type {angular.auto.IInjectorService}
-   * @private
    */
   this.injector_ = $injector;
 
   /**
    * @type {import('ngeo/options.js').ngeoSnappingTolerance}
-   * @private
    */
   this.ngeoSnappingTolerance_ = ngeoSnappingTolerance;
 
@@ -190,7 +182,6 @@ function Controller(
    * The draw or measure interaction responsible of drawing the vector feature.
    * The actual type depends on the geometry type.
    * @type {?import("ol/interaction/Interaction.js").default}
-   * @private
    */
   this.interaction_ = null;
 

@@ -105,7 +105,6 @@ function BackgroundlayerController($http, ngeoBackgroundLayerMgr) {
 
   /**
    * @type {import("ngeo/map/BackgroundLayerMgr.js").MapBackgroundLayerManager}
-   * @private
    */
   this.backgroundLayerMgr_ = ngeoBackgroundLayerMgr;
 }
@@ -127,7 +126,6 @@ BackgroundlayerController.prototype.change = function () {
 /**
  * @param {string} layerName Layer name.
  * @return {import("ol/layer/Layer.js").default<*>} The layer.
- * @private
  */
 BackgroundlayerController.prototype.getLayer_ = function (layerName) {
   if (layerName === 'blank') {

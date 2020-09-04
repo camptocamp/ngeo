@@ -63,13 +63,11 @@ const module = angular.module('gmfapp', [
 function MainController($scope, ngeoFeatureHelper) {
   /**
    * @type {angular.IScope}
-   * @private
    */
   this.scope_ = $scope;
 
   /**
    * @type {import("ngeo/misc/FeatureHelper.js").FeatureHelper}
-   * @private
    */
   this.featureHelper_ = ngeoFeatureHelper;
 
@@ -212,7 +210,6 @@ function MainController($scope, ngeoFeatureHelper) {
 
 /**
  * @param {import("ol/MapBrowserEvent.js").default} evt MapBrowser event
- * @private
  */
 MainController.prototype.handleMapSingleClick_ = function (evt) {
   const pixel = evt.pixel;
