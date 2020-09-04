@@ -82,6 +82,7 @@ function gmfElevationwidgetTemplateUrl($attrs, gmfElevationwidgetTemplateUrl) {
  *      <span gmf-elevation
  *            gmf-elevation-active="elevationActive"
  *            gmf-elevation-elevation="elevationValue"
+ *            gmf-elevation-layer="mainCtrl.elevationLayer"
  *            gmf-elevation-map="::mainCtrl.map">
  *            {{elevationValue}}
  *      </span>
@@ -98,10 +99,9 @@ function gmfElevationwidgetTemplateUrl($attrs, gmfElevationwidgetTemplateUrl) {
  *      };
  *
  *
- * @htmlAttribute {boolean} gmf-elevation-active A boolean to set active or
- *     deactivate the component.
- * @htmlAttribute {number} gmf-elevation-elevation The value to set with the
- *     elevation value.
+ * @htmlAttribute {boolean} gmf-elevation-active A boolean to set active or deactivate the component.
+ * @htmlAttribute {number} gmf-elevation-elevation The value to set with the elevation value.
+ * @htmlAttribute {string} gmf-elevation-layer Elevation layer to use.
  * @htmlAttribute {import("ol/Map.js").default} gmf-elevation-map The map.
  * @return {angular.IDirective} Directive Definition Object.
  * @ngdoc directive
@@ -116,6 +116,7 @@ function rasterComponent() {
       'active': '<gmfElevationActive',
       'elevation': '=gmfElevationElevation',
       'loading': '=?gmfElevationLoading',
+      'layer': '<gmfElevationLayer',
       'map': '=gmfElevationMap',
     },
     link: (scope, element, attr) => {
@@ -292,7 +293,7 @@ Controller.prototype.getRasterSuccess_ = function (resp) {
   }
   const value = resp[this.layer];
   if (value !== undefined && value !== null) {
-    const options = this.options.layersConfig[this.layer] || {};
+    const options = (this.options.layersConfig || {})[this.layer] || {};
     const filter = options.filter || 'number';
     const custom_args = options.args || [];
     /** @type {string} */
@@ -369,9 +370,14 @@ function WidgetController(gmfElevationOptions) {
   this.active = false;
 
   /**
+   * @type {boolean}
+   */
+  this.show = this.options.layers && this.options.layers.length > 0;
+
+  /**
    * @type {string}
    */
-  this.selectedElevationLayer = this.options.layers[0];
+  this.selectedElevationLayer = this.show ? this.options.layers[0] : '';
 }
 
 module.controller('gmfElevationwidgetController', WidgetController);
