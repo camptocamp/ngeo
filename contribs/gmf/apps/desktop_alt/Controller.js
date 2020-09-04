@@ -72,16 +72,6 @@ class Controller extends AbstractDesktopController {
     }
 
     /**
-     * @type {Array<string>}
-     */
-    this.searchCoordinatesProjections = ['EPSG:21781', 'EPSG:2056', 'EPSG:4326'];
-
-    /**
-     * @type {number}
-     */
-    this.searchDelay = 500;
-
-    /**
      * @type {boolean}
      */
     this.showInfobar = true;

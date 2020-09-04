@@ -37,11 +37,6 @@ import {asArray as asColorArray} from 'ol/color.js';
 import olGeomPoint from 'ol/geom/Point.js';
 import olFormatGeoJSON from 'ol/format/GeoJSON.js';
 import * as olProj from 'ol/proj.js';
-import olStyleCircle from 'ol/style/Circle.js';
-import olStyleFill from 'ol/style/Fill.js';
-import olStyleRegularShape from 'ol/style/RegularShape.js';
-import olStyleStroke from 'ol/style/Stroke.js';
-import olStyleStyle from 'ol/style/Style.js';
 import {appendParams as olUriAppendParams} from 'ol/uri.js';
 import SimpleGeometry from 'ol/geom/SimpleGeometry.js';
 
@@ -136,9 +131,7 @@ function gmfSearchTemplateUrl($element, $attrs, gmfSearchTemplateUrl) {
  *
  *      <gmf-search gmf-search-map="::ctrl.map"
  *        gmf-search-options="::ctrl.searchOptions"
- *        gmf-search-styles="::ctrl.searchStyles"
- *        gmf-search-datasources="::ctrl.searchDatasources"
- *        gmf-search-coordinatesprojections="::ctrl.searchCoordinatesProjections">
+ *        gmf-search-datasources="::ctrl.searchDatasources">
  *      </gmf-search>
  *      <script>
  *        (function() {
@@ -159,9 +152,7 @@ function gmfSearchTemplateUrl($element, $attrs, gmfSearchTemplateUrl) {
  *
  *      <gmf-search gmf-search-map="::ctrl.map"
  *        gmf-search-options="::ctrl.searchOptions"
- *        gmf-search-styles="::ctrl.searchStyles"
- *        gmf-search-datasources="::ctrl.searchDatasources"
- *        gmf-search-coordinatesprojections="::ctrl.searchCoordinatesProjections">
+ *        gmf-search-datasources="::ctrl.searchDatasources">
  *      </gmf-search>
  *      <script>
  *        (function() {
@@ -190,24 +181,8 @@ function gmfSearchTemplateUrl($element, $attrs, gmfSearchTemplateUrl) {
  *    options.
  * @htmlAttribute {SearchComponentDatasource} gmf-search-datasource
  *    The datasources.
- * @htmlAttribute {Object<string, import("ol/style/Style.js").default>}
- *    gmf-search-styles A map of styles to apply on searched features. Keys
- *    must be the 'layer_name' property of features except for coordinates
- *    where the key ifor its style is the value of the constant
- *    'gmf.COORDINATES_LAYER_NAME'. The 'default' key is used to apply the
- *    default style.
- * @htmlAttribute {string[]} gmf-search-coordinatesprojections codes
- *    of supported projections for coordinates search (projections must be
- *    defined in ol3). If not provided, only the map's view projection
- *    format will be supported.
  * @htmlAttribute {SearchComponentListeners} gmf-search-listeners
  *    The listeners.
- * @htmlAttribute {boolean=} gmf-search-clearbutton Optional clear button in the input search.
- *    Default to true.
- * @htmlAttribute {number=} gmf-search-delay Optional bloodhound request delay in ms. Default to 50 ms.
- * @htmlAttribute {boolean=} gmf-search-colorchooser Optional. Whether to let the user
- *    change the style of the feature on the map. Default is false.
- * @htmlAttribute {number=} gmf-search-maxzoom Optional maximum zoom we will zoom on result, default is 16.
  * @htmlAttribute {function=} gmf-search-on-init Optional function called when the component is initialized.
  * @htmlAttribute {function=} gmf-search-action Optional function called when no default action is defined.
  * @ngdoc component
@@ -216,17 +191,10 @@ function gmfSearchTemplateUrl($element, $attrs, gmfSearchTemplateUrl) {
 const searchComponent = {
   bindings: {
     'inputValue': '=?gmfSearchInputValue',
-    'placeholder': '@?gmfSearchPlaceholder',
     'map': '<gmfSearchMap',
     'datasources': '<gmfSearchDatasources',
     'typeaheadOptions': '<?gmfSearchOptions',
-    'featuresStyles': '<?gmfSearchStyles',
-    'clearButton': '=?gmfSearchClearbutton',
-    'colorChooser': '<?gmfSearchColorchooser',
-    'coordinatesProjections': '<?gmfSearchCoordinatesprojections',
     'additionalListeners': '<gmfSearchListeners',
-    'maxZoom': '<?gmfSearchMaxzoom',
-    'delay': '<?gmfSearchDelay',
     'onInitCallback': '<?gmfSearchOnInit',
     'searchActionCallback': '&?gmfSearchAction',
   },
@@ -263,6 +231,7 @@ class SearchController {
    * @param {import("gmf/search/FulltextSearch.js").FulltextSearchService} gmfSearchFulltextSearch
    *    gmf Full text search service.
    * @param {import("ngeo/statemanager/Location.js").StatemanagerLocation} ngeoLocation The location service.
+   * @param {import('gmf/options.js').gmfSearchOptions} gmfSearchOptions The options.
    * @ngInject
    * @ngdoc controller
    * @ngname GmfSearchController
@@ -279,8 +248,14 @@ class SearchController {
     gmfThemes,
     gmfTreeManager,
     gmfSearchFulltextSearch,
-    ngeoLocation
+    ngeoLocation,
+    gmfSearchOptions
   ) {
+    /**
+     * @type {import('gmf/options.js').gmfSearchOptions}
+     */
+    this.options = gmfSearchOptions;
+
     /**
      * @type {JQuery}
      * @private
@@ -375,38 +350,9 @@ class SearchController {
     this.searchActionCallback;
 
     /**
-     * Whether or not to show a button to clear the search text.
-     * Default to true.
-     * @type {boolean}
-     */
-    this.clearButton = true;
-
-    /**
-     * @type {boolean}
-     */
-    this.colorChooser = false;
-
-    /**
      * @type {string}
      */
     this.placeholder = '';
-
-    /**
-     * @type {number}
-     */
-    this.delay = 0;
-
-    /**
-     * The maximum zoom we will zoom on result.
-     * @type {number}
-     */
-    this.maxZoom = 16;
-
-    /**
-     * Supported projections for coordinates search.
-     * @type {string[]}
-     */
-    this.coordinatesProjections = [];
 
     /**
      * Supported projections for coordinates search.
@@ -426,21 +372,11 @@ class SearchController {
     this.datasources = [];
 
     /**
-     * @type {?Twitter.Typeahead.Options}
-     */
-    this.typeaheadOptions = null;
-
-    /**
      * @type {Twitter.Typeahead.Options}
      */
-    this.options = /** @type {Twitter.Typeahead.Options} */ ({
+    this.typeaheadOptions = /** @type {Twitter.Typeahead.Options} */ ({
       highlight: true,
     });
-
-    /**
-     * @type {Object<string, import("ol/style/Style.js").default>}
-     */
-    this.featuresStyles = {};
 
     /**
      * @type {(Twitter.Typeahead.Dataset<olFeature<import('ol/geom/Geometry.js').default>>|Twitter.Typeahead.Dataset<CoordinateSuggestion>)[]}
@@ -484,20 +420,16 @@ class SearchController {
       throw new Error('Missing ngeoLocation');
     }
     const gettextCatalog = this.gettextCatalog_;
-    this.clearButton = this.clearButton !== false;
-    this.colorChooser = this.colorChooser === true;
-    if (this.delay === undefined) {
-      this.delay = 50;
-    }
-    this.placeholder = this.placeholder ? this.placeholder : gettextCatalog.getString('Search…');
+    gettextCatalog.getString('Search…');
+    this.placeholder = this.options.placeholder || 'Search…';
 
     // Init coordinates projections instances
     this.coordinatesProjectionsInstances =
-      this.coordinatesProjections === undefined
+      this.options.coordinatesProjections === undefined
         ? [this.map.getView().getProjection()]
-        : this.ngeoAutoProjection_.getProjectionList(this.coordinatesProjections);
+        : this.ngeoAutoProjection_.getProjectionList(this.options.coordinatesProjections);
 
-    if (!this.clearButton) {
+    if (!this.options.clearButton) {
       // Empty the search field on focus and blur.
       this.element_.find('input').on('focus blur', () => {
         this.clear();
@@ -508,13 +440,7 @@ class SearchController {
       this.onInitCallback();
     }
 
-    this.initStyles_();
-
     this.featureOverlay_.setStyle(this.getSearchStyle_.bind(this));
-
-    if (this.typeaheadOptions) {
-      Object.assign(this.options, this.typeaheadOptions);
-    }
 
     this.initDatasets_();
 
@@ -795,7 +721,7 @@ class SearchController {
   getBloodhoudRemoteOptions_() {
     const gettextCatalog = this.gettextCatalog_;
     return /** @type {Bloodhound.RemoteOptions<GeoJSON.FeatureCollection>} */ ({
-      rateLimitWait: this.delay,
+      rateLimitWait: this.options.delay == undefined ? 50 : this.options.delay,
       prepare: (query, settings) => {
         const url = settings.url;
         if (!url) {
@@ -840,7 +766,7 @@ class SearchController {
         coordinates,
         extent,
         viewProjection,
-        this.coordinatesProjections
+        this.options.coordinatesProjections
       );
       if (position === null) {
         return;
@@ -852,43 +778,6 @@ class SearchController {
       });
       callback(suggestions);
     };
-  }
-
-  /**
-   * Init the style object for the search results. It set defaults for the
-   * coordinates and the polygon styles, and both can be overloaded from component
-   * attributes. The styles from component attributes can specify custom styles
-   * for each search group.
-   * @private
-   */
-  initStyles_() {
-    this.styles_[COORDINATES_LAYER_NAME] = new olStyleStyle({
-      image: new olStyleRegularShape({
-        stroke: new olStyleStroke({color: [0, 0, 0, 0.7], width: 2}),
-        points: 4,
-        radius: 8,
-        radius2: 0,
-        angle: 0,
-      }),
-    });
-    const fill = new olStyleFill({
-      color: [65, 134, 240, 0.5],
-    });
-    const stroke = new olStyleStroke({
-      color: [65, 134, 240, 1],
-      width: 2,
-    });
-    this.styles_['default'] = new olStyleStyle({
-      fill: fill,
-      image: new olStyleCircle({
-        fill: fill,
-        radius: 5,
-        stroke: stroke,
-      }),
-      stroke: stroke,
-    });
-    const customStyles = this.featuresStyles || {};
-    Object.assign(this.styles_, customStyles);
   }
 
   /**
@@ -954,7 +843,7 @@ class SearchController {
    * @private
    */
   setTTDropdownVisibility_() {
-    if (this.clearButton) {
+    if (this.options.clearButton) {
       const ttDropdown = this.element_.find('.twitter-typeahead .tt-menu');
       this.inputValue ? ttDropdown.show() : ttDropdown.hide();
     }
@@ -1079,7 +968,7 @@ class SearchController {
         featureGeometry.getType() === 'GeometryCollection' ? featureGeometry.getExtent() : featureGeometry;
       view.fit(fitArray, {
         size: size,
-        maxZoom: this.maxZoom,
+        maxZoom: this.options.maxZoom || 16,
       });
     }
     this.leaveSearch_();
@@ -1089,7 +978,7 @@ class SearchController {
    * @private
    */
   leaveSearch_() {
-    if (!this.clearButton) {
+    if (!this.options.clearButton) {
       this.clear();
     }
     this.blur();
@@ -1100,7 +989,7 @@ class SearchController {
    * @private
    */
   close_(event) {
-    if (!this.clearButton) {
+    if (!this.options.clearButton) {
       this.setTTDropdownVisibility_();
     }
   }

@@ -65,11 +65,6 @@ class Controller extends AbstractMobileController {
       {name: 'aster', unit: 'm'},
       {name: 'srtm', unit: 'm'},
     ];
-
-    /**
-     * @type {string[]}
-     */
-    this.searchCoordinatesProjections = ['EPSG:21781', 'EPSG:2056', 'EPSG:4326'];
   }
 }
 
