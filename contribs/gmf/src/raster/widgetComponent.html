@@ -4,11 +4,12 @@
     gmf-elevation-elevation="ctrl.elevationValue"
     gmf-elevation-loading="ctrl.elevationLoading"
     gmf-elevation-layer="ctrl.selectedElevationLayer"
-    gmf-elevation-layersconfig="ctrl.layersconfig"
-    gmf-elevation-map="::ctrl.map">
+    gmf-elevation-layersconfig="::ctrl.options.layersconfig"
+    gmf-elevation-map="::ctrl.map"
+    ng-show="::ctrl.show">
   <a class="btn btn-default" aria-expanded="false"
-    ng-class="::{'dropdown-toggle': ctrl.layers.length > 1}"
-    ng-attr-data-toggle="{{::(ctrl.layers.length > 1) ? 'dropdown' : ''}}"
+    ng-class="::{'dropdown-toggle': ctrl.options.layers.length > 1}"
+    ng-attr-data-toggle="{{::(ctrl.options.layers.length > 1) ? 'dropdown' : ''}}"
     >
     <span class="gmf-elevationwidget-value">
       {{ctrl.elevationValue}}
@@ -16,12 +17,12 @@
           <%=require('gmf/icons/spinner.svg?viewbox&height=1rem')%>
       </span>
       <span ng-show="!ctrl.elevationValue && !ctrl.elevationLoading" translate>Elevation…</span>
-    </span><span class="caret" ng-if="::ctrl.layers.length > 1"></span>
+    </span><span class="caret" ng-if="::ctrl.options.layers.length > 1"></span>
   </a>
   <ul class="dropdown-menu dropdown-menu-right" role="menu"
-      ng-if="::ctrl.layers.length > 1">
+      ng-if="::ctrl.options.layers.length > 1">
     <li class="dropdown-header" translate>Elevation data sources</li>
-    <li ng-repeat="elevationItem in ::ctrl.layers">
+    <li ng-repeat="elevationItem in ::ctrl.options.layers">
       <a href ng-click="ctrl.selectedElevationLayer = elevationItem">
         <span class="fa fa-fw" ng-class="{'fa-check': ctrl.selectedElevationLayer === elevationItem}"></span>
         {{elevationItem | translate}}
