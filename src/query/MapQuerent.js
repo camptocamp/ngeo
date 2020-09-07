@@ -312,6 +312,7 @@ export class MapQuerent {
             pending: false,
             tooManyResults: tooManyResults,
             totalFeatureCount: totalFeatureCount,
+            identifierAttributeField: dataSource.identifierAttribute,
           });
           total += features.length;
         }

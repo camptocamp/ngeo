@@ -41,6 +41,7 @@ import olFormatWFS from 'ol/format/WFS.js';
  *    configured limit.
  * @property {number} [totalFeatureCount] If `tooManyResults` is `true`, this contains the total number of
  *    features.
+ * @property {string} [identifierAttributeField] The field to use to identify the feature.
  */
 
 /**
