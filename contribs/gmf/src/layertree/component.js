@@ -181,13 +181,11 @@ function gmfLayertreeTemplate($element, $attrs, gmfLayertreeTemplate) {
  *      (See also printLayers and queryLayers metadata for more granularity). For WMTS Layers.
  *  * `printLayers`: A WMS layer that will be used instead of the WMTS layers in the print.
  *  * `queryLayers`: The WMS layers used as references to query the WMTS layers. For WMTS layers.
- *  * `isExpanded`: [Experimental] Whether the layer group is expanded by default. For layer groups (only).
+ *  * `isExpanded`: Whether the layer group is expanded by default. For layer groups (only).
  *  * `snappingConfig`: Whether the layer is used for snapping.
  *
  * @htmlAttribute {import("ol/Map.js").default} gmf-layertree-map The map.
  * @htmlAttribute {Object<string, string>|undefined} gmf-layertree-dimensions Global dimensions object.
- * @htmlAttribute {boolean|undefined} gmf-layertree-openlinksinnewwindow if true, open
- *     metadataURLs in a new window. Otherwise open them in a popup.
  *
  * @ngdoc component
  * @ngname gmfLayertreeComponent
@@ -197,8 +195,6 @@ const layertreeComponent = {
   bindings: {
     'map': '=gmfLayertreeMap',
     'dimensions': '=?gmfLayertreeDimensions',
-    'openLinksInNewWindow': '<?gmfLayertreeOpenlinksinnewwindow',
-    'isExpanded': '<?gmfLayertreeIsexpanded',
   },
   template: gmfLayertreeTemplate,
 };
@@ -224,6 +220,7 @@ module.component('gmfLayertree', layertreeComponent);
  * @param {import("ngeo/misc/WMSTime.js").WMSTime} ngeoWMSTime wms time service.
  * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes The gmf Themes service.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
+ * @param {import('gmf/options.js').gmfLayerTreeOptions} gmfLayerTreeOptions The options.
  * @constructor
  * @private
  * @hidden
@@ -243,8 +240,14 @@ function Controller(
   gmfSyncLayertreeMap,
   ngeoWMSTime,
   gmfThemes,
-  $timeout
+  $timeout,
+  gmfLayerTreeOptions
 ) {
+  /**
+   * @type {import('gmf/options.js').gmfLayerTreeOptions}
+   */
+  this.options = gmfLayerTreeOptions;
+
   /**
    * @type {import("ol/Map.js").default}
    */
@@ -254,9 +257,6 @@ function Controller(
    * @type {?Object<string, string>}
    */
   this.dimensions = null;
-
-  /** @type {boolean} */
-  this.isExpanded;
 
   /**
    * @type {angular.IScope}
@@ -319,11 +319,6 @@ function Controller(
   this.groupNodeStates_ = {};
 
   /**
-   * @type {?boolean}
-   */
-  this.openLinksInNewWindow = null;
-
-  /**
    * @type {?import("ol/layer/Group.js").default}
    */
   this.dataLayerGroup_ = null;
@@ -353,7 +348,6 @@ function Controller(
  * Init the controller,
  */
 Controller.prototype.$onInit = function () {
-  this.openLinksInNewWindow = this.openLinksInNewWindow === true;
   this.dataLayerGroup_ = this.layerHelper_.getGroupFromMap(this.map, DATALAYERGROUP_NAME);
 
   ngeoMiscSyncArrays(this.dataLayerGroup_.getLayers().getArray(), this.layers, true, this.scope_, () => true);
