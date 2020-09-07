@@ -39,6 +39,7 @@ import olFormatGeoJSON from 'ol/format/GeoJSON.js';
 import * as olProj from 'ol/proj.js';
 import {appendParams as olUriAppendParams} from 'ol/uri.js';
 import SimpleGeometry from 'ol/geom/SimpleGeometry.js';
+import {buildStyle} from 'gmf/options.js';
 
 /**
  * @typedef {Object} gmfSearchAction
@@ -791,7 +792,9 @@ class SearchController {
     if (!feature) {
       throw new Error('Missing feature');
     }
-    const style = this.styles_[feature.get('layer_name')] || this.styles_['default'];
+    const style = buildStyle(
+      this.options.styles[feature.get('layer_name')] || this.options.styles['default']
+    );
     if (this.color) {
       const color = asColorArray(this.color);
 
