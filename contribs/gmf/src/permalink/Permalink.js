@@ -51,12 +51,9 @@ import {listen, unlistenByKey} from 'ol/events.js';
 import olFeature from 'ol/Feature.js';
 import olGeomMultiPoint from 'ol/geom/MultiPoint.js';
 import olGeomPoint from 'ol/geom/Point.js';
-import olStyleStyle from 'ol/style/Style.js';
-import RegularShape from 'ol/style/RegularShape.js';
-import Fill from 'ol/style/Fill.js';
-import Stroke from 'ol/style/Stroke.js';
 import olLayerGroup from 'ol/layer/Group.js';
 import {CollectionEvent} from 'ol/Collection.js';
+import {buildStyle} from 'gmf/options.js';
 
 /**
  * @enum {string}
@@ -465,54 +462,7 @@ export function PermalinkService(
   /**
    * @type {import("ol/style/Style.js").StyleLike}
    */
-  this.crosshairStyle_ = [];
-
-  const crosshairStyleDescription_ = gmfPermalinkOptions.crosshairStyle || [
-    {
-      stroke: {
-        color: 'white',
-        width: 5,
-      },
-      points: 4,
-      radius: 10,
-      radius2: 0,
-      angle: 0,
-    },
-    {
-      stroke: {
-        color: 'red',
-        width: 2,
-      },
-      points: 4,
-      radius: 10,
-      radius2: 0,
-      angle: 0,
-    },
-  ];
-  const crosshairStyleDescription = Array.isArray(crosshairStyleDescription_)
-    ? crosshairStyleDescription_
-    : [crosshairStyleDescription_];
-
-  for (const crosshairStyle of crosshairStyleDescription) {
-    const regularStyle = Object.assign({}, crosshairStyle);
-    if (regularStyle.stroke) {
-      regularStyle.stroke = new Stroke(regularStyle.stroke);
-    }
-    if (regularStyle.fill) {
-      regularStyle.fill = new Fill(regularStyle.fill);
-    }
-    if (regularStyle.angle) {
-      regularStyle.angle = (regularStyle.angle / 180) * Math.PI;
-    }
-    if (regularStyle.rotation) {
-      regularStyle.rotation = (regularStyle.angle / 180) * Math.PI;
-    }
-    this.crosshairStyle_.push(
-      new olStyleStyle({
-        image: new RegularShape(regularStyle),
-      })
-    );
-  }
+  this.crosshairStyle_ = buildStyle(gmfPermalinkOptions.crosshairStyle);
 
   /**
    * @type {?import("ngeo/Popover.js").default}

@@ -49,36 +49,18 @@ import {createDefaultStyle} from 'ol/style/Style.js';
  */
 
 /**
- * Specify radius for regular polygons, or radius1 and radius2 for stars.
- * See also: https://openlayers.org/en/latest/examples/regularshape.html
- *
- * @typedef {Object} RegularShapeOptions
- * @property {import("ol/style/Fill.js").Options} [fill] Fill style.
- * @property {number} points Number of points for stars and regular polygons. In case of a polygon, the number of points
- * is the number of sides.
- * @property {number} [radius] Radius of a regular polygon.
- * @property {number} [radius1] Outer radius of a star.
- * @property {number} [radius2] Inner radius of a star.
- * @property {number} [angle=0] Shape's angle in degree. A value of 0 will have one of the shape's point facing up.
- * @property {Array<number>} [displacement=[0,0]] Displacement of the shape
- * @property {import("ol/style/Stroke.js").Options} [stroke] Stroke style.
- * @property {number} [rotation=0] Rotation in degree (positive rotation clockwise).
- * @property {boolean} [rotateWithView=false] Whether to rotate the shape with the view.
- */
-
-/**
  * Configuration options for the permalink service.
  * @typedef {Object} gmfPermalinkOptions
- * @property {RegularShapeOptions[]} [crosshairStyle] An alternate
- * style for the crosshair feature added by the permalink service.
+ * @property {StyleLike} [crosshairStyle] An alternate style for the crosshair feature added by the
+ *    permalink service.
  * @property {boolean} [crosshairEnabledByDefault] Display the crosshair, gets overridden by the
- * `map_crosshair` parameter. Default is `false`.
+ *    `map_crosshair` parameter. Default is `false`.
  * @property {string[]} [projectionCodes] EPSG codes (e.g. 'EPSG:3857' or '3857').
- * The permalink service will accept coordinates in these projections and try to detect which projection
- * the given coordinates are in.
+ *    The permalink service will accept coordinates in these projections and try to detect which projection
+ *    the given coordinates are in.
  * @property {boolean} [useLocalStorage] Store the values in the local storage. Default is `false`.
  * @property {number} [pointRecenterZoom] Zoom level to use when result is a single point feature.
- * If not set the map is not zoomed to a specific zoom level.
+ *    If not set the map is not zoomed to a specific zoom level.
  */
 
 /**
@@ -194,6 +176,7 @@ import {createDefaultStyle} from 'ol/style/Style.js';
 
 /**
  * Specify radius for regular polygons, or radius1 and radius2 for stars.
+ * See also: https://openlayers.org/en/latest/examples/regularshape.html
  * @typedef {Object} RegularShape
  * @property {Fill} [fill] Fill style.
  * @property {number} points Number of points for stars and regular polygons. In case of a polygon, the number of points
@@ -227,46 +210,59 @@ import {createDefaultStyle} from 'ol/style/Style.js';
  */
 
 /**
- * @param {olStyle|Style} styleDescriptor The description of the style
- * @returns {olStyle}
+ * @param {StyleLike} styleDescriptor The description of the style
+ * @returns {import("ol/style/Style.js").StyleLike}
  */
 export function buildStyle(styleDescriptor) {
   if (styleDescriptor instanceof olStyle) {
     return styleDescriptor;
   } else if (!styleDescriptor) {
     return createDefaultStyle;
+  } else if (Array.isArray(styleDescriptor)) {
+    const result = [];
+    for (const style of styleDescriptor) {
+      result.push(buildStyle(style));
+    }
+    return result;
   } else {
     /** @type {import('ol/style/Style.js').Options} */
     const style = {};
     Object.assign(style, styleDescriptor);
-    if (styleDescriptor.fill) {
-      style.fill = new olStyleFill(styleDescriptor.fill);
+    const sd = /** @type {Style} */ (styleDescriptor);
+    if (sd.fill) {
+      style.fill = new olStyleFill(sd.fill);
     }
-    if (styleDescriptor.stroke) {
-      style.stroke = new olStyleStroke(styleDescriptor.stroke);
+    if (sd.stroke) {
+      style.stroke = new olStyleStroke(sd.stroke);
     }
-    if (styleDescriptor.circle) {
+    if (sd.circle) {
       const circleStyle = /** @type {import('ol/style/Circle.js').Options} */ ({});
-      Object.assign(circleStyle, styleDescriptor.circle);
+      Object.assign(circleStyle, sd.circle);
 
-      if (styleDescriptor.circle.fill) {
-        circleStyle.fill = new olStyleFill(styleDescriptor.circle.fill);
+      if (sd.circle.fill) {
+        circleStyle.fill = new olStyleFill(sd.circle.fill);
       }
-      if (styleDescriptor.circle.stroke) {
-        circleStyle.stroke = new olStyleStroke(styleDescriptor.circle.stroke);
+      if (sd.circle.stroke) {
+        circleStyle.stroke = new olStyleStroke(sd.circle.stroke);
       }
       style.image = new olStyleCircle(circleStyle);
       // @ts-ignore
       delete style.circle;
-    } else if (styleDescriptor.regularShape) {
+    } else if (sd.regularShape) {
       const regularShapeStyle = /** @type {import('ol/style/RegularShape.js').Options} */ ({});
-      Object.assign(regularShapeStyle, styleDescriptor.regularShape);
+      Object.assign(regularShapeStyle, sd.regularShape);
 
-      if (styleDescriptor.regularShape.fill) {
-        regularShapeStyle.fill = new olStyleFill(styleDescriptor.regularShape.fill);
+      if (sd.regularShape.fill) {
+        regularShapeStyle.fill = new olStyleFill(sd.regularShape.fill);
       }
-      if (styleDescriptor.regularShape.stroke) {
-        regularShapeStyle.stroke = new olStyleStroke(styleDescriptor.regularShape.stroke);
+      if (sd.regularShape.stroke) {
+        regularShapeStyle.stroke = new olStyleStroke(sd.regularShape.stroke);
+      }
+      if (sd.regularShape.angle) {
+        sd.regularShape.angle = (sd.regularShape.angle / 180) * Math.PI;
+      }
+      if (sd.regularShape.rotation) {
+        sd.regularShape.rotation = (sd.regularShape.angle / 180) * Math.PI;
       }
       style.image = new olStyleRegularShape(regularShapeStyle);
       // @ts-ignore
@@ -278,10 +274,14 @@ export function buildStyle(styleDescriptor) {
 }
 
 /**
+ * @typedef {import("ol/style/Style.js").StyleLike|Style[]|Style} StyleLike
+ */
+
+/**
  * The display querry grid component options.
  * @typedef {Object} gmfDisplayQueryGridOptions
- * @property {Style} [featuresStyle] A style object for all features from the result of the query.
- * @property {Style} selectedFeatureStyle A style object for the currently selected features.
+ * @property {StyleLike} featuresStyle A style object for all features from the result of the query.
+ * @property {StyleLike} selectedFeatureStyle A style object for the currently selected features.
  * @property {boolean} [removeEmptyColumns] Should empty columns be hidden? Default: `false`.
  * @property {number} [maxRecenterZoom] Maximum zoom-level to use when zooming to selected features.
  * @property {GridMergeTabs} [mergeTabs] Configuration to merge grids with the same attributes into
@@ -291,8 +291,8 @@ export function buildStyle(styleDescriptor) {
 /**
  * The display querry grid component options.
  * @typedef {Object} gmfDisplayQueryWindowOptions
- * @property {Style} featuresStyle A style object for all features from the result of the query.
- * @property {Style} selectedFeatureStyle A style object for the currently selected features.
+ * @property {StyleLike} featuresStyle A style object for all features from the result of the query.
+ * @property {StyleLike} selectedFeatureStyle A style object for the currently selected features.
  * @property {boolean} [collapsed] If the query result window is collapsed.
  */
 
@@ -315,7 +315,7 @@ export function buildStyle(styleDescriptor) {
  * The elevation (raster) options.
  * @typedef {Object} gmfProfileOptions
  * @property {number} [numberOfPoints=100] Maximum limit of points to request.
- * @property {Style} hoverPointStyle The hover point style.
+ * @property {StyleLike} hoverPointStyle The hover point style.
  */
 
 /**
@@ -351,13 +351,13 @@ export function buildStyle(styleDescriptor) {
 /**
  * @typedef {Object} gmfMobileMeasureAreaOptions
  * @property {number} [precision=2] The number of significant digits to display.
- * @property {Style} sketchStyle A style for the measure area.
+ * @property {StyleLike} sketchStyle A style for the measure area.
  */
 
 /**
  * @typedef {Object} gmfMobileMeasureLengthOptions
  * @property {number} [precision=2] The number of significant digits to display.
- * @property {Style} sketchStyle A style for the measure length.
+ * @property {StyleLike} sketchStyle A style for the measure length.
  */
 
 /**
@@ -373,7 +373,7 @@ export function buildStyle(styleDescriptor) {
  * @property {string} format The used formatter
  * @property {MeasureRasterLayer[]} rasterLayers Raster elevation layers to get
  *     information under the point and its configuaration.
- * @property {Style} sketchStyle A style for the measure point.
+ * @property {StyleLike} sketchStyle A style for the measure point.
  */
 
 /**
