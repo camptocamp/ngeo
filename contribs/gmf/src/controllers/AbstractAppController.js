@@ -745,6 +745,7 @@ export function AbstractAppController(config, map, $scope, $injector) {
     accuracyFeatureStyle: accuracyFeatureStyle,
     zoom: config.geolocationZoom,
     autorotate: config.autorotate,
+    afterloading: false,
   };
 }
 

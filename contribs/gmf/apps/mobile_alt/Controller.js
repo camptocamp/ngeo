@@ -86,6 +86,8 @@ class Controller extends AbstractMobileController {
      * @type {string[]}
      */
     this.searchCoordinatesProjections = [EPSG21781, EPSG2056, 'EPSG:4326'];
+
+    this.geolocationOptions['afterloading'] = true;
   }
 }
 

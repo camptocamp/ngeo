@@ -41,6 +41,7 @@ import Polygon from 'ol/geom/Polygon.js';
  * @property {number} [zoom] If set, in addition to recentering the map view at the location, determines
  * the zoom level to set when obtaining a new position
  * @property {boolean} [autorotate] Autorotate.
+ * @property {boolean} [afterloading] If true, geolocation is asked after the app is loaded.
  */
 
 /**
@@ -88,6 +89,7 @@ function geolocationComponent() {
     restrict: 'A',
     scope: {
       'getMapFn': '&ngeoGeolocationMap',
+      'getMainCtrlFn': '&ngeoGeolocationMainctrl',
       'getOptionsFn': '&ngeoGeolocationOptions',
     },
     controller: 'ngeoGeolocationController',
@@ -119,6 +121,12 @@ function Controller($scope, $element, gettextCatalog, ngeoFeatureOverlayMgr, nge
   if (!(map instanceof olMap)) {
     throw new Error('Wrong map type');
   }
+
+  /**
+   * FIXME type + optional param
+   * @private
+   */
+  this.mainCtrl_ = $scope.getMainCtrlFn();
 
   /**
    * @type {angular.IScope}
@@ -243,6 +251,17 @@ function Controller($scope, $element, gettextCatalog, ngeoFeatureOverlayMgr, nge
 
   listen(view, 'change:center', this.handleViewChange_, this);
   listen(view, 'change:resolution', this.handleViewChange_, this);
+
+  if (options.afterloading && this.mainCtrl_) {
+    $scope.$watch(
+      () => this.mainCtrl_.loading,
+      (newVal) => {
+        if (newVal === false) {
+          this.toggleTracking();
+        }
+      }
+    );
+  }
 }
 
 /**
