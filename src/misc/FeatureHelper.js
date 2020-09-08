@@ -340,7 +340,6 @@ FeatureHelper.prototype.getLineStringStyle_ = function (feature) {
  * @param {string} arrowPosition An ArrowPositions value.
  * @param {string} color an hex Color.
  * @return {Array<import("ol/style/Style.js").default>} Style Arrows style for the line.
- * @private
  */
 FeatureHelper.prototype.getArrowLineStyles_ = function (feature, arrowDirection, arrowPosition, color) {
   const geometry = feature.getGeometry();
