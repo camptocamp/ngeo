@@ -72,6 +72,48 @@ export const FeatureFormatType = {
 };
 
 /**
+ * Arrow possible direction on segments of lines.
+ * @enum {string}
+ */
+export const ArrowDirections = {
+  /**
+   * @type {string}
+   */
+  NONE: 'none',
+  /**
+   * @type {string}
+   */
+  FORWARDS: 'forwards',
+  /**
+   * @type {string}
+   */
+  BACKWARDS: 'backwards',
+  /**
+   * @type {string}
+   */
+  BOTH: 'both',
+};
+
+/**
+ * Arrow possible position on lines
+ * @enum {string}
+ */
+export const ArrowPositions = {
+  /**
+   * @type {string}
+   */
+  FIRST: 'first',
+  /**
+   * @type {string}
+   */
+  LAST: 'last',
+  /**
+   * @type {string}
+   */
+  EVERY: 'every',
+};
+
+/**
  * Provides methods for features, such as:
  *  - style setting / getting
  *  - measurement
@@ -251,6 +293,8 @@ FeatureHelper.prototype.getLineStringStyle_ = function (feature) {
   const showLabel = this.getShowLabelProperty(feature);
   const showMeasure = this.getShowMeasureProperty(feature);
   const color = this.getRGBAColorProperty(feature);
+  const arrowDirection = this.getArrowDirectionProperty(feature);
+  const arrowPosition = this.getArrowPositionProperty(feature);
 
   const styles = [
     new olStyleStyle({
@@ -260,7 +304,13 @@ FeatureHelper.prototype.getLineStringStyle_ = function (feature) {
       }),
     }),
   ];
-  //Label Style
+
+  // Add tyle for arrows
+  if (arrowDirection !== ArrowDirections.NONE) {
+    styles.push(...this.getArrowLineStyles_(feature, arrowDirection, arrowPosition, color));
+  }
+
+  // Label Style
   const textLabelValues = [];
   if (showMeasure) {
     textLabelValues.push(this.getMeasure(feature));
@@ -269,7 +319,7 @@ FeatureHelper.prototype.getLineStringStyle_ = function (feature) {
     textLabelValues.push(this.getNameProperty(feature));
   }
   if (showLabel || showMeasure) {
-    // display both label using \n
+    // Display both label using \n
     const textLabelValue = textLabelValues.join('\n');
     styles.push(
       new olStyleStyle({
@@ -282,6 +332,81 @@ FeatureHelper.prototype.getLineStringStyle_ = function (feature) {
     );
   }
   return styles;
+};
+
+/**
+ * @param {olFeature<import("ol/geom/Geometry.js").default>} feature Feature with linestring geometry.
+ * @param {string} arrowDirection An ArrowDirections value.
+ * @param {string} arrowPosition An ArrowPositions value.
+ * @param {string} color an hex Color.
+ * @return {Array<import("ol/style/Style.js").default>} Style Arrows style for the line.
+ * @private
+ */
+FeatureHelper.prototype.getArrowLineStyles_ = function (feature, arrowDirection, arrowPosition, color) {
+  const geometry = feature.getGeometry();
+  const arrowStyles = [];
+
+  // Add arrow to segment fn
+  const addArrowToSegment = (start, end) => {
+    const dx = end[0] - start[0];
+    const dy = end[1] - start[1];
+    const rotation = Math.atan2(dy, dx);
+
+    // Get arrow style fn
+    const getArrowStyle = (coordinate, invert) => {
+      return new olStyleStyle({
+        geometry: new olGeomPoint(coordinate),
+        text: new olStyleText({
+          fill: new olStyleFill({
+            color: color,
+          }),
+          font: '900 20px "Font Awesome 5 Free"',
+          stroke: new olStyleStroke({
+            width: 1,
+            color: color,
+          }),
+          text: '\uf054', // Arrow symbol (chevron-right)
+          rotateWithView: true,
+          rotation: invert ? Math.PI - rotation : -rotation,
+        }),
+      });
+    };
+
+    // Handle arrowDirection - Add arrow at the right place of the segment and the right
+    // direction
+    if (arrowDirection === ArrowDirections.FORWARDS || arrowDirection === ArrowDirections.BOTH) {
+      arrowStyles.push(getArrowStyle(end, false));
+    }
+    if (arrowDirection === ArrowDirections.BACKWARDS || arrowDirection === ArrowDirections.BOTH) {
+      arrowStyles.push(getArrowStyle(start, true));
+    }
+  };
+
+  // Handle arrowPosition - Add arrow on the right segment.
+  let firstOrLastSegment = null;
+  geometry.forEachSegment((start, end) => {
+    // On "first" segment only, keep the segment and add arrow later.
+    if (arrowPosition === ArrowPositions.FIRST) {
+      if (firstOrLastSegment === null) {
+        firstOrLastSegment = [[...start], [...end]];
+      }
+      return;
+    }
+    // On "last" segment only, keep the segment and add arrow later.
+    if (arrowPosition === ArrowPositions.LAST) {
+      firstOrLastSegment = [[...start], [...end]];
+      return;
+    }
+    // On every segments.
+    addArrowToSegment(start, end);
+  });
+
+  // Add an arrow on a specific segment.
+  if (firstOrLastSegment) {
+    addArrowToSegment(firstOrLastSegment[0], firstOrLastSegment[1]);
+  }
+
+  return arrowStyles;
 };
 
 /**
@@ -1053,6 +1178,30 @@ FeatureHelper.prototype.getSizeProperty = function (feature) {
  */
 FeatureHelper.prototype.getStrokeProperty = function (feature) {
   return this.getNumber(feature, ngeoFormatFeatureProperties.STROKE);
+};
+
+/**
+ * @param {olFeature<import("ol/geom/Geometry.js").default>} feature Feature.
+ * @return {string} The ArrowDirections value of the feature. ArrowDirections.NONE by default.
+ */
+FeatureHelper.prototype.getArrowDirectionProperty = function (feature) {
+  const arrowDirection = feature.get(ngeoFormatFeatureProperties.ARROW_DIRECTION);
+  if (Object.values(ArrowDirections).includes(arrowDirection)) {
+    return arrowDirection;
+  }
+  return ArrowDirections.NONE;
+};
+
+/**
+ * @param {olFeature<import("ol/geom/Geometry.js").default>} feature Feature.
+ * @return {string} The ArrowPositions value of the feature. ArrowPositions.FIRST by default.
+ */
+FeatureHelper.prototype.getArrowPositionProperty = function (feature) {
+  const arrowPosition = feature.get(ngeoFormatFeatureProperties.ARROW_POSITION);
+  if (Object.values(ArrowPositions).includes(arrowPosition)) {
+    return arrowPosition;
+  }
+  return ArrowPositions.FIRST;
 };
 
 // === EXPORT ===

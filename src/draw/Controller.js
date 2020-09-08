@@ -27,7 +27,7 @@ import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties.js';
 import ngeoGeometryType from 'ngeo/GeometryType.js';
 import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent.js';
 import {interactionDecoration as ngeoMiscDecorateInteraction} from 'ngeo/misc/decorate.js';
-import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
+import ngeoMiscFeatureHelper, {ArrowDirections, ArrowPositions} from 'ngeo/misc/FeatureHelper.js';
 import olFeature from 'ol/Feature.js';
 
 /**
@@ -206,6 +206,10 @@ export class DrawController {
         break;
       case ngeoGeometryType.TEXT:
         feature.set(prop.IS_TEXT, true);
+        break;
+      case ngeoGeometryType.LINE_STRING:
+        feature.set(prop.ARROW_DIRECTION, ArrowDirections.NONE);
+        feature.set(prop.ARROW_POSITION, ArrowPositions.FIRST);
         break;
       case ngeoGeometryType.RECTANGLE:
         feature.set(prop.IS_RECTANGLE, true);

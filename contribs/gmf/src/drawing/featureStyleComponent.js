@@ -26,7 +26,7 @@ import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties.js';
 
 import ngeoMiscColorpickerComponent from 'ngeo/misc/colorpickerComponent.js';
 
-import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
+import ngeoMiscFeatureHelper, {ArrowDirections, ArrowPositions} from 'ngeo/misc/FeatureHelper.js';
 
 /**
  * @type {angular.IModule}
@@ -118,9 +118,22 @@ function Controller($scope, ngeoFeatureHelper) {
   this.label = undefined;
 
   /**
+   * Value of the measure (line length, area, ...).
    * @type {string|undefined}
    */
   this.measure = undefined;
+
+  /**
+   * Arrow possible direction on segments of lines.
+   * @enum {string}
+   */
+  this.arrowDirections = ArrowDirections;
+
+  /**
+   * Arrow possible position on lines.
+   * @enum {string}
+   */
+  this.arrowPositions = ArrowPositions;
 
   $scope.$watch(() => this.color, this.handleColorSet_.bind(this));
 
@@ -130,6 +143,7 @@ function Controller($scope, ngeoFeatureHelper) {
   this.featureListenerKeys_ = [];
 
   /**
+   * Type of the geometry (text, point, circle, line, multiline, ...).
    * @type {string|undefined}
    */
   this.type;
@@ -164,6 +178,8 @@ Controller.prototype.handleFeatureSet_ = function (newFeature, previousFeature) 
       ngeoFormatFeatureProperties.SHOW_MEASURE,
       ngeoFormatFeatureProperties.SIZE,
       ngeoFormatFeatureProperties.STROKE,
+      ngeoFormatFeatureProperties.ARROW_DIRECTION,
+      ngeoFormatFeatureProperties.ARROW_POSITION,
     ].forEach((propName) => {
       keys.push(listen(newFeature, `change:${propName}`, this.handleFeatureChange_, this));
     });
@@ -249,6 +265,22 @@ Controller.prototype.getSetSize = function (value) {
  */
 Controller.prototype.getSetStroke = function (value) {
   return /** @type {number} */ (this.getSetProperty_(ngeoFormatFeatureProperties.STROKE, value));
+};
+
+/**
+ * @param {number|undefined} value A arrow-direction value to set or undefined to get.
+ * @return {number} The arrow-direction of the feature.
+ */
+Controller.prototype.getSetArrowDirection = function (value) {
+  return /** @type {number} */ (this.getSetProperty_(ngeoFormatFeatureProperties.ARROW_DIRECTION, value));
+};
+
+/**
+ * @param {number|undefined} value A arrow-position value to set or undefined to get.
+ * @return {number} The arrow-position of the feature.
+ */
+Controller.prototype.getSetArrowPosition = function (value) {
+  return /** @type {number} */ (this.getSetProperty_(ngeoFormatFeatureProperties.ARROW_POSITION, value));
 };
 
 /**
