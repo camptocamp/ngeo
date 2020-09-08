@@ -147,11 +147,14 @@ export function AbstractAppController($scope, $injector, mobile) {
       config.map
     )
   );
-  map.addInteraction(
-    new olInteractionDragPan({
-      condition: dragPanCondition,
-    })
-  );
+
+  if (!mobile) {
+    map.addInteraction(
+      new olInteractionDragPan({
+        condition: dragPanCondition,
+      })
+    );
+  }
 
   /**
    * Location service
