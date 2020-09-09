@@ -26,6 +26,7 @@ import gmfControllersAbstractAppController, {
 import gmfMobileMeasureModule from 'gmf/mobile/measure/module.js';
 import gmfMobileNavigationModule from 'gmf/mobile/navigation/module.js';
 import gmfQueryWindowComponent from 'gmf/query/windowComponent.js';
+import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
 
 import 'gmf/controllers/vars_mobile.scss';
 import 'gmf/controllers/mobile.scss';
@@ -59,6 +60,39 @@ export class AbstractMobileController extends AbstractAppController {
      * @type {boolean}
      */
     this.searchOverlayVisible = false;
+
+    /**
+     * The active state of the directive responsible of area measurements.
+     * @type {boolean}
+     */
+    this.measureAreaActive = false;
+
+    /**
+     * The active state of the directive responsible of point measurements.
+     * @type {boolean}
+     */
+    this.measurePointActive = false;
+
+    /**
+     * The active state of the directive responsible of length measurements.
+     * @type {boolean}
+     */
+    this.measureLengthActive = false;
+
+    /**
+     * The ngeo ToolActivate manager service.
+     * @type {import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr}
+     */
+    const ngeoToolActivateMgr = $injector.get('ngeoToolActivateMgr');
+
+    const measureAreaActivate = new ngeoMiscToolActivate(this, 'measureAreaActive');
+    ngeoToolActivateMgr.registerTool('mapTools', measureAreaActivate, false);
+
+    const measurePointActivate = new ngeoMiscToolActivate(this, 'measurePointActive');
+    ngeoToolActivateMgr.registerTool('mapTools', measurePointActivate, false);
+
+    const measureLengthActivate = new ngeoMiscToolActivate(this, 'measureLengthActive');
+    ngeoToolActivateMgr.registerTool('mapTools', measureLengthActivate, false);
 
     /**
      * @type {import('ngeo/search/searchDirective.js').SearchDirectiveListeners<never>}

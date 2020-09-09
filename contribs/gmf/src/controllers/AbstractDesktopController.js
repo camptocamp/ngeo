@@ -97,6 +97,62 @@ export class AbstractDesktopController extends AbstractAPIController {
      */
     this.googleStreetViewActive = false;
 
+    /**
+     * @type {boolean}
+     * @export
+     */
+    this.filterSelectorActive = false;
+
+    /**
+     * Set the clearing of the ngeoQuery after the deactivation of the query
+     * @type {boolean}
+     */
+    this.queryAutoClear = true;
+
+    /**
+     * @type {boolean}
+     */
+    this.contextdataActive;
+
+    /**
+     * @type {boolean}
+     */
+    this.printPanelActive = false;
+
+    /**
+     * @type {boolean}
+     */
+    this.printActive = false;
+
+    /**
+     * @type {boolean}
+     */
+    this.drawFeatureActive = false;
+
+    /**
+     * @type {boolean}
+     */
+    this.drawProfilePanelActive = false;
+
+    /**
+     * @type {boolean}
+     */
+    this.routingPanelActive = false;
+
+    // Don't deactivate ngeoQuery on print activation
+    $scope.$watch(
+      () => this.printPanelActive,
+      (newVal) => {
+        // Clear queries if another panel is open but not if user go back to the
+        // map form the print.
+        if (!newVal && !this.queryActive) {
+          this.ngeoMapQuerent_.clear();
+        }
+        this.queryAutoClear = !newVal;
+        this.printActive = newVal;
+      }
+    );
+
     $scope.$watch(
       () => this.googleStreetViewActive,
       (newVal) => {
@@ -179,6 +235,21 @@ export class AbstractDesktopController extends AbstractAPIController {
 
     const googleStreetViewActivate = new ngeoMiscToolActivate(this, 'googleStreetViewActive');
     ngeoToolActivateMgr.registerTool('mapTools', googleStreetViewActivate, false);
+
+    const contextdataActivate = new ngeoMiscToolActivate(this, 'contextdataActive');
+    ngeoToolActivateMgr.registerTool('mapTools', contextdataActivate, false);
+
+    const drawFeatureActivate = new ngeoMiscToolActivate(this, 'drawFeatureActive');
+    ngeoToolActivateMgr.registerTool('mapTools', drawFeatureActivate, false);
+
+    const drawProfilePanelActivate = new ngeoMiscToolActivate(this, 'drawProfilePanelActive');
+    ngeoToolActivateMgr.registerTool('mapTools', drawProfilePanelActivate, false);
+
+    const printPanelActivate = new ngeoMiscToolActivate(this, 'printPanelActive');
+    ngeoToolActivateMgr.registerTool('mapTools', printPanelActivate, false);
+
+    const routingPanelActive = new ngeoMiscToolActivate(this, 'routingPanelActive');
+    ngeoToolActivateMgr.registerTool('mapTools', routingPanelActive, false);
 
     /**
      * @type {?import("ol/geom/LineString.js").default}

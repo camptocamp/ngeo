@@ -361,23 +361,7 @@ export function AbstractAppController($scope, $injector, mobile) {
   /**
    * @type {boolean}
    */
-  this.leftNavVisible = false;
-
-  /**
-   * @type {boolean}
-   */
-  this.rightNavVisible = false;
-
-  /**
-   * @type {boolean}
-   */
   this.filterSelectorEnabled = false;
-
-  /**
-   * @type {boolean}
-   * @export
-   */
-  this.filterSelectorActive = false;
 
   /**
    * The active state of the ngeo query directive.
@@ -386,77 +370,9 @@ export function AbstractAppController($scope, $injector, mobile) {
   this.queryActive = true;
 
   /**
-   * Set the clearing of the ngeoQuery after the deactivation of the query
-   * @type {boolean}
-   */
-  this.queryAutoClear = true;
-
-  /**
-   * @type {boolean}
-   */
-  this.printPanelActive = false;
-
-  /**
-   * @type {boolean}
-   */
-  this.contextdataActive;
-
-  /**
-   * @type {boolean}
-   */
-  this.printActive = false;
-
-  /**
    * @type {import("ngeo/query/MapQuerent.js").MapQuerent}
    */
   this.ngeoMapQuerent_ = $injector.get('ngeoMapQuerent');
-
-  // Don't deactivate ngeoQuery on print activation
-  $scope.$watch(
-    () => this.printPanelActive,
-    (newVal) => {
-      // Clear queries if another panel is open but not if user go back to the
-      // map form the print.
-      if (!newVal && !this.queryActive) {
-        this.ngeoMapQuerent_.clear();
-      }
-      this.queryAutoClear = !newVal;
-      this.printActive = newVal;
-    }
-  );
-
-  /**
-   * The active state of the directive responsible of area measurements.
-   * @type {boolean}
-   */
-  this.measureAreaActive = false;
-
-  /**
-   * The active state of the directive responsible of point measurements.
-   * @type {boolean}
-   */
-  this.measurePointActive = false;
-
-  /**
-   * The active state of the directive responsible of length measurements.
-   * @type {boolean}
-   */
-  this.measureLengthActive = false;
-
-  /**
-   * @type {boolean}
-   */
-  this.drawFeatureActive = false;
-
-  /**
-   * @type {boolean}
-   */
-  this.drawProfilePanelActive = false;
-
-  /**
-   * @type {boolean}
-   */
-  this.routingPanelActive = false;
 
   /**
    * @type {import('gmf/authentication/Service.js').User}
@@ -503,12 +419,10 @@ export function AbstractAppController($scope, $injector, mobile) {
 
   this.initLanguage();
 
-  const mapTools = 'mapTools';
-
   /**
    * @type {string}
    */
-  this.mapToolsGroup = mapTools;
+  this.mapToolsGroup = 'mapTools';
 
   /**
    * The ngeo feature overlay manager service
@@ -524,31 +438,7 @@ export function AbstractAppController($scope, $injector, mobile) {
   const ngeoToolActivateMgr = $injector.get('ngeoToolActivateMgr');
 
   const queryToolActivate = new ngeoMiscToolActivate(this, 'queryActive');
-  ngeoToolActivateMgr.registerTool(mapTools, queryToolActivate, true);
-
-  const measureAreaActivate = new ngeoMiscToolActivate(this, 'measureAreaActive');
-  ngeoToolActivateMgr.registerTool(mapTools, measureAreaActivate, false);
-
-  const measurePointActivate = new ngeoMiscToolActivate(this, 'measurePointActive');
-  ngeoToolActivateMgr.registerTool(mapTools, measurePointActivate, false);
-
-  const measureLengthActivate = new ngeoMiscToolActivate(this, 'measureLengthActive');
-  ngeoToolActivateMgr.registerTool(mapTools, measureLengthActivate, false);
-
-  const drawFeatureActivate = new ngeoMiscToolActivate(this, 'drawFeatureActive');
-  ngeoToolActivateMgr.registerTool(mapTools, drawFeatureActivate, false);
-
-  const drawProfilePanelActivate = new ngeoMiscToolActivate(this, 'drawProfilePanelActive');
-  ngeoToolActivateMgr.registerTool(mapTools, drawProfilePanelActivate, false);
-
-  const printPanelActivate = new ngeoMiscToolActivate(this, 'printPanelActive');
-  ngeoToolActivateMgr.registerTool(mapTools, printPanelActivate, false);
-
-  const contextdataActivate = new ngeoMiscToolActivate(this, 'contextdataActive');
-  ngeoToolActivateMgr.registerTool(mapTools, contextdataActivate, false);
-
-  const routingPanelActive = new ngeoMiscToolActivate(this, 'routingPanelActive');
-  ngeoToolActivateMgr.registerTool(mapTools, routingPanelActive, false);
+  ngeoToolActivateMgr.registerTool(this.mapToolsGroup, queryToolActivate, true);
 
   $scope.$root.$on(ThemeEventType.THEME_NAME_SET, (event, name) => {
     this.gmfThemes.getThemeObject(name).then((theme) => {
