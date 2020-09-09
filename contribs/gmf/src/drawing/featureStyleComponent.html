@@ -57,122 +57,137 @@
   <div class="form-group">
     <div
         ngeo-colorpicker=""
-        ngeo-colorpicker-color="fsCtrl.color"
-        class="col-md-12">
+        ngeo-colorpicker-color="fsCtrl.color">
     </div>
   </div>
 
   <div
       ng-if="fsCtrl.type === 'Point'"
-      class="form-group form-group-nomargin">
-    <label class="col-form-label col-md-4">{{'Size' | translate}}</label>
-    <div class="col-md-8">
-      <input
-          type="range"
-          class="form-control"
-          min="3"
-          max="20"
-          step="1"
-          ng-model="fsCtrl.getSetSize"
-          ng-model-options="{getterSetter: true}"
-          />
+      class="form-group">
+    <div class="row">
+      <label class="col-form-label col-md-5">{{'Size' | translate}}</label>
+      <div class="col-md-7">
+        <input
+            type="range"
+            class="form-control"
+            min="3"
+            max="20"
+            step="1"
+            ng-model="fsCtrl.getSetSize"
+            ng-model-options="{getterSetter: true}"
+            />
+      </div>
     </div>
   </div>
 
   <div
       ng-if="fsCtrl.type === 'Text'"
-      class="form-group form-group-nomargin">
-    <label class="col-form-label col-md-4">{{'Size' | translate}}</label>
-    <div class="col-md-8">
-      <input
-          type="range"
-          class="form-control"
-          min="8"
-          max="30"
-          step="1"
-          ng-model="fsCtrl.getSetSize"
-          ng-model-options="{getterSetter: true}"
-          />
+      class="form-group">
+    <div class="row">
+      <label class="col-form-label col-md-5">{{'Size' | translate}}</label>
+      <div class="col-md-7">
+        <input
+            type="range"
+            class="form-control"
+            min="8"
+            max="30"
+            step="1"
+            ng-model="fsCtrl.getSetSize"
+            ng-model-options="{getterSetter: true}"
+            />
+      </div>
     </div>
   </div>
 
   <div
       ng-if="fsCtrl.type === 'Circle' || fsCtrl.type === 'LineString' || fsCtrl.type === 'Polygon' || fsCtrl.type === 'Rectangle'"
-      class="form-group form-group-nomargin">
-    <label class="col-form-label col-md-4">{{'Stroke' | translate}}</label>
-    <div class="col-md-8">
-      <input
-          type="range"
-          class="form-control"
-          min="0.5"
-          max="5"
-          step="0.5"
-          ng-model="fsCtrl.getSetStroke"
-          ng-model-options="{getterSetter: true}"
-          />
+      class="form-group">
+    <div class="row">
+      <label class="col-form-label col-md-5">{{'Stroke' | translate}}</label>
+      <div class="col-md-7">
+        <input
+            type="range"
+            class="form-control"
+            min="0.5"
+            max="5"
+            step="0.5"
+            ng-model="fsCtrl.getSetStroke"
+            ng-model-options="{getterSetter: true}"
+            />
+      </div>
     </div>
   </div>
 
-  <div
-      ng-if="fsCtrl.type === 'LineString'"
-      class="form-group form-group-nomargin">
-    <div>
-      <label>{{'Arrow direction:' | translate}}</label>
-      <select
-          class="form-control"
-          ng-model="fsCtrl.getSetArrowDirection"
-          ng-model-options="{getterSetter: true}">
-        <option value="{{::fsCtrl.arrowDirections.NONE}}">{{'None' | translate}}</option>
-        <option value="{{::fsCtrl.arrowDirections.FORWARDS}}">{{'Forwards' | translate}}</option>
-        <option value="{{::fsCtrl.arrowDirections.BACKWARDS}}">{{'Backwards' | translate}}</option>
-        <option value="{{::fsCtrl.arrowDirections.BOTH}}">{{'Both' | translate}}</option>
-      </select>
+  <div ng-if="fsCtrl.type === 'LineString'">
+    <div class="form-group">
+      <div class="row">
+        <label class="col-form-label col-md-5">{{'Arrow direction' | translate}}</label>
+        <div class="col-md-7">
+          <select
+              class="form-control"
+              ng-model="fsCtrl.getSetArrowDirection"
+              ng-model-options="{getterSetter: true}">
+            <option value="{{::fsCtrl.arrowDirections.NONE}}">{{'None' | translate}}</option>
+            <option value="{{::fsCtrl.arrowDirections.FORWARDS}}">{{'Forwards' | translate}}</option>
+            <option value="{{::fsCtrl.arrowDirections.BACKWARDS}}">{{'Backwards' | translate}}</option>
+            <option value="{{::fsCtrl.arrowDirections.BOTH}}">{{'Both' | translate}}</option>
+          </select>
+        </div>
+      </div>
     </div>
-    <div>
-      <label>{{'Arrow position:' | translate}}</label>
-      <select
-          class="form-control"
-          ng-disabled="fsCtrl.getSetArrowDirection() === 'none'"
-          ng-model="fsCtrl.getSetArrowPosition"
-          ng-model-options="{getterSetter: true}">
-        <option value="{{::fsCtrl.arrowPositions.FIRST}}">{{'First segment' | translate}}</option>
-        <option value="{{::fsCtrl.arrowPositions.LAST}}">{{'Last segment' | translate}}</option>
-        <option value="{{::fsCtrl.arrowPositions.EVERY}}">{{'Every segment' | translate}}</option>
-      </select>
+    <div class="form-group">
+      <div class="row">
+        <label class="col-md-5">{{'Arrow position' | translate}}</label>
+        <div class="col-md-7">
+          <select
+              class="form-control"
+              ng-disabled="fsCtrl.getSetArrowDirection() === 'none'"
+              ng-model="fsCtrl.getSetArrowPosition"
+              ng-model-options="{getterSetter: true}">
+            <option value="{{::fsCtrl.arrowPositions.FIRST}}">{{'First segment' | translate}}</option>
+            <option value="{{::fsCtrl.arrowPositions.LAST}}">{{'Last segment' | translate}}</option>
+            <option value="{{::fsCtrl.arrowPositions.EVERY}}">{{'Every segment' | translate}}</option>
+          </select>
+        </div>
+      </div>
     </div>
   </div>
 
   <div
       ng-if="fsCtrl.type === 'Circle' || fsCtrl.type === 'Polygon' || fsCtrl.type === 'Rectangle'"
-      class="form-group form-group-nomargin">
-    <label class="col-form-label col-md-4">{{'Opacity' | translate}}</label>
-    <div class="col-md-8">
-      <input
-          type="range"
-          class="form-control"
-          min="0"
-          max="1"
-          step="0.05"
-          ng-model="fsCtrl.getSetOpacity"
-          ng-model-options="{getterSetter: true}"
-          />
+      class="form-group">
+    <div class="row">
+      <label class="col-form-label col-md-5">{{'Opacity' | translate}}</label>
+      <div class="col-md-7">
+        <input
+            type="range"
+            class="form-control"
+            min="0"
+            max="1"
+            step="0.05"
+            ng-model="fsCtrl.getSetOpacity"
+            ng-model-options="{getterSetter: true}"
+            />
+      </div>
     </div>
   </div>
 
   <div
       ng-if="fsCtrl.type === 'Text'"
-      class="form-group form-group-nomargin">
-    <label class="col-form-label col-md-4">{{'Angle' | translate}}</label>
-    <div class="col-md-8">
-      <input
-          type="range"
-          class="form-control"
-          min="-180"
-          max="180"
-          step="22.5"
-          ng-model="fsCtrl.getSetAngle"
-          ng-model-options="{getterSetter: true}"
-          />
+      class="form-group">
+    <div class="row">
+      <label class="col-form-label col-md-5">{{'Angle' | translate}}</label>
+      <div class="col-md-7">
+        <input
+            type="range"
+            class="form-control"
+            min="-180"
+            max="180"
+            step="22.5"
+            ng-model="fsCtrl.getSetAngle"
+            ng-model-options="{getterSetter: true}"
+            />
+      </div>
     </div>
   </div>
 
