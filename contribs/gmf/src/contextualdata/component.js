@@ -255,7 +255,7 @@ ContextualdataController.prototype.setContent_ = function (coordinate) {
   this.$compile_(this.content_)(scope);
 
   const mapProjection = this.map.getView().getProjection().getCode();
-  this.options.projections.forEach((proj) => {
+  (this.options.projections || []).forEach((proj) => {
     const ref = proj.replace('EPSG:', '').replace(':', '_');
     const coord = olProj.transform(coordinate, mapProjection, proj);
     // @ts-ignore: scope ...
