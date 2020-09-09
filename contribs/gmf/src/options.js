@@ -23,12 +23,45 @@
  * @module contribs/gmf/src/options
  */
 
-import olStyleCircle from 'ol/style/Circle.js';
-import olStyleRegularShape from 'ol/style/RegularShape.js';
-import olStyleFill from 'ol/style/Fill.js';
-import olStyleStroke from 'ol/style/Stroke.js';
-import olStyle from 'ol/style/Style.js';
-import {createDefaultStyle} from 'ol/style/Style.js';
+/**
+ * URL to the theme web service.
+ * @typedef {string} gmfTreeUrl
+ */
+
+/**
+ * URL to the authentication web service.
+ * @typedef {string} authenticationBaseUrl
+ */
+
+/**
+ * URL to the full-text search web service.
+ * @typedef {string} fulltextsearchUrl
+ */
+
+/**
+ * URL to the shortener web service.
+ * @typedef {string} gmfShortenerCreateUrl
+ */
+
+/**
+ * URL to the raster web service.
+ * @typedef {string} gmfRasterUrl
+ */
+
+/**
+ * URL to the profile web service.
+ * @typedef {string} gmfProfileJsonUrl
+ */
+
+/**
+ * URL to the layers web service.
+ * @typedef {string} gmfLayersUrl
+ */
+
+/**
+ * URL to MapFishPrint.
+ * @typedef {string} gmfPrintUrl
+ */
 
 /**
  * Default language
@@ -173,7 +206,7 @@ import {createDefaultStyle} from 'ol/style/Style.js';
 /**
  * Configuration options for the permalink service.
  * @typedef {Object} gmfPermalinkOptions
- * @property {StyleLike} [crosshairStyle] An alternate style for the crosshair feature added by the
+ * @property {import('ngeo/options.js').StyleLike} [crosshairStyle] An alternate style for the crosshair feature added by the
  *    permalink service.
  * @property {boolean} [crosshairEnabledByDefault] Display the crosshair, gets overridden by the
  *    `map_crosshair` parameter. Default is `false`.
@@ -279,131 +312,10 @@ import {createDefaultStyle} from 'ol/style/Style.js';
  */
 
 /**
- * @typedef {Object} Fill
- * @property {number[]|string} [color] The color.
- */
-
-/**
- * @typedef {Object} Stroke
- * @property {number[]|string} [color] The color.
- * @property {CanvasLineCap} [lineCap='round'] Line cap style: `butt`, `round`, or `square`.
- * @property {CanvasLineJoin} [lineJoin='round'] Line join style: `bevel`, `round`, or `miter`.
- * @property {number[]} [lineDash] Line dash pattern. Default is `null` (no dash).
- * Please note that Internet Explorer 10 and lower do not support the `setLineDash` method on
- * the `CanvasRenderingContext2D` and therefore this option will have no visual effect in these browsers.
- * @property {number} [lineDashOffset=0] Line dash offset.
- * @property {number} [miterLimit=10] Miter limit.
- * @property {number} [width] Width.
- */
-
-/**
- * Specify radius for regular polygons, or radius1 and radius2 for stars.
- * See also: https://openlayers.org/en/latest/examples/regularshape.html
- * @typedef {Object} RegularShape
- * @property {Fill} [fill] Fill style.
- * @property {number} points Number of points for stars and regular polygons. In case of a polygon, the number of points
- * is the number of sides.
- * @property {number} [radius] Radius of a regular polygon.
- * @property {number} [radius1] Outer radius of a star.
- * @property {number} [radius2] Inner radius of a star.
- * @property {number} [angle=0] Shape's angle in radians. A value of 0 will have one of the shape's point facing up.
- * @property {Array<number>} [displacement=[0,0]] Displacement of the shape
- * @property {Stroke} [stroke] Stroke style.
- * @property {number} [rotation=0] Rotation in radians (positive rotation clockwise).
- * @property {boolean} [rotateWithView=false] Whether to rotate the shape with the view.
- */
-
-/**
- * @typedef {Object} Circle
- * @property {Fill} [fill] Fill style.
- * @property {number} radius Circle radius.
- * @property {Stroke} [stroke] Stroke style.
- * @property {number[]} [displacement=[0,0]] displacement
- */
-
-/**
- * The style description.
- * @typedef {Object} Style
- * @property {Fill} [fill] The fill color.
- * @property {Stroke} [stroke] The stoke config.
- * @property {Circle} [circle] The circle config.
- * @property {RegularShape} [regularShape] The regular shape config.
- * @property {number} [zIndex] The z index.
- */
-
-/**
- * @param {StyleLike} styleDescriptor The description of the style
- * @returns {import("ol/style/Style.js").StyleLike}
- */
-export function buildStyle(styleDescriptor) {
-  if (styleDescriptor instanceof olStyle) {
-    return styleDescriptor;
-  } else if (!styleDescriptor) {
-    return createDefaultStyle;
-  } else if (Array.isArray(styleDescriptor)) {
-    const result = [];
-    for (const style of styleDescriptor) {
-      result.push(buildStyle(style));
-    }
-    return result;
-  } else {
-    /** @type {import('ol/style/Style.js').Options} */
-    const style = {};
-    Object.assign(style, styleDescriptor);
-    const sd = /** @type {Style} */ (styleDescriptor);
-    if (sd.fill) {
-      style.fill = new olStyleFill(sd.fill);
-    }
-    if (sd.stroke) {
-      style.stroke = new olStyleStroke(sd.stroke);
-    }
-    if (sd.circle) {
-      const circleStyle = /** @type {import('ol/style/Circle.js').Options} */ ({});
-      Object.assign(circleStyle, sd.circle);
-
-      if (sd.circle.fill) {
-        circleStyle.fill = new olStyleFill(sd.circle.fill);
-      }
-      if (sd.circle.stroke) {
-        circleStyle.stroke = new olStyleStroke(sd.circle.stroke);
-      }
-      style.image = new olStyleCircle(circleStyle);
-      // @ts-ignore
-      delete style.circle;
-    } else if (sd.regularShape) {
-      const regularShapeStyle = /** @type {import('ol/style/RegularShape.js').Options} */ ({});
-      Object.assign(regularShapeStyle, sd.regularShape);
-
-      if (sd.regularShape.fill) {
-        regularShapeStyle.fill = new olStyleFill(sd.regularShape.fill);
-      }
-      if (sd.regularShape.stroke) {
-        regularShapeStyle.stroke = new olStyleStroke(sd.regularShape.stroke);
-      }
-      if (sd.regularShape.angle) {
-        sd.regularShape.angle = (sd.regularShape.angle / 180) * Math.PI;
-      }
-      if (sd.regularShape.rotation) {
-        sd.regularShape.rotation = (sd.regularShape.angle / 180) * Math.PI;
-      }
-      style.image = new olStyleRegularShape(regularShapeStyle);
-      // @ts-ignore
-      delete style.regularShape;
-    }
-
-    return new olStyle(style);
-  }
-}
-
-/**
- * @typedef {import("ol/style/Style.js").StyleLike|Style[]|Style} StyleLike
- */
-
-/**
  * The display querry grid component options.
  * @typedef {Object} gmfDisplayQueryGridOptions
- * @property {StyleLike} featuresStyle A style object for all features from the result of the query.
- * @property {StyleLike} selectedFeatureStyle A style object for the currently selected features.
+ * @property {import('ngeo/options.js').StyleLike} featuresStyle A style object for all features from the result of the query.
+ * @property {import('ngeo/options.js').StyleLike} selectedFeatureStyle A style object for the currently selected features.
  * @property {boolean} [removeEmptyColumns] Should empty columns be hidden? Default: `false`.
  * @property {number} [maxRecenterZoom] Maximum zoom-level to use when zooming to selected features.
  * @property {GridMergeTabs} [mergeTabs] Configuration to merge grids with the same attributes into
@@ -413,8 +325,8 @@ export function buildStyle(styleDescriptor) {
 /**
  * The display querry grid component options.
  * @typedef {Object} gmfDisplayQueryWindowOptions
- * @property {StyleLike} featuresStyle A style object for all features from the result of the query.
- * @property {StyleLike} selectedFeatureStyle A style object for the currently selected features.
+ * @property {import('ngeo/options.js').StyleLike} featuresStyle A style object for all features from the result of the query.
+ * @property {import('ngeo/options.js').StyleLike} selectedFeatureStyle A style object for the currently selected features.
  * @property {boolean} [collapsed] If the query result window is collapsed.
  */
 
@@ -437,7 +349,7 @@ export function buildStyle(styleDescriptor) {
  * The elevation (raster) options.
  * @typedef {Object} gmfProfileOptions
  * @property {number} [numberOfPoints=100] Maximum limit of points to request.
- * @property {StyleLike} hoverPointStyle The hover point style.
+ * @property {import('ngeo/options.js').StyleLike} hoverPointStyle The hover point style.
  */
 
 /**
@@ -467,7 +379,7 @@ export function buildStyle(styleDescriptor) {
 
 /**
  * @typedef {Object} gmfSearchOptions
- * @property {Object<string, Style>} styles A map of styles to apply on searched features. Keys must be the
+ * @property {Object<string, import('ngeo/options.js').StyleLike>} styles A map of styles to apply on searched features. Keys must be the
  *    'layer_name' property of features except for coordinates where the key ifor its style is the value of
  *    the constant 'gmf.COORDINATES_LAYER_NAME'. The 'default' key is used to apply the default style.
  * @property {string[]} coordinatesProjections codes of supported projections for coordinates search
@@ -479,10 +391,6 @@ export function buildStyle(styleDescriptor) {
  * @property {number} [maxZoom=16] maximum zoom we will zoom on result.
  * @property {string} [placeholder="Search…"] The placeholder.
  * @property {SearchComponentDatasource[]} datasources The used datasources.
- */
-
-/**
- * @typedef {string} fulltextsearchUrl The search service URL.
  */
 
 /**
@@ -503,13 +411,13 @@ export function buildStyle(styleDescriptor) {
 /**
  * @typedef {Object} gmfMobileMeasureAreaOptions
  * @property {number} [precision=2] The number of significant digits to display.
- * @property {StyleLike} sketchStyle A style for the measure area.
+ * @property {import('ngeo/options.js').StyleLike} sketchStyle A style for the measure area.
  */
 
 /**
  * @typedef {Object} gmfMobileMeasureLengthOptions
  * @property {number} [precision=2] The number of significant digits to display.
- * @property {StyleLike} sketchStyle A style for the measure length.
+ * @property {import('ngeo/options.js').StyleLike} sketchStyle A style for the measure length.
  */
 
 /**
@@ -525,7 +433,7 @@ export function buildStyle(styleDescriptor) {
  * @property {string} format The used formatter
  * @property {MeasureRasterLayer[]} rasterLayers Raster elevation layers to get
  *     information under the point and its configuaration.
- * @property {StyleLike} sketchStyle A style for the measure point.
+ * @property {import('ngeo/options.js').StyleLike} sketchStyle A style for the measure point.
  */
 
 /**

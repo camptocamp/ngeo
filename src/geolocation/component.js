@@ -29,19 +29,7 @@ import olGeolocation from 'ol/Geolocation.js';
 import olMap from 'ol/Map.js';
 import olGeomPoint from 'ol/geom/Point.js';
 import Polygon from 'ol/geom/Polygon.js';
-
-/**
- * Options for the geolocation directive.
- *
- * @typedef {Object} GeolocationDirectiveOptions
- * @property {import("ol/style/Style.js").StyleLike} [accuracyFeatureStyle] The style to
- * use to sketch the accuracy feature, which is a regular polygon.
- * @property {import("ol/style/Style.js").StyleLike} [positionFeatureStyle] The style to
- * use to sketch the position feature, which is a point.
- * @property {number} [zoom] If set, in addition to recentering the map view at the location, determines
- * the zoom level to set when obtaining a new position
- * @property {boolean} [autorotate] Autorotate.
- */
+import {buildStyle} from 'ngeo/options.js';
 
 /**
  * @type {angular.IModule}
@@ -70,8 +58,7 @@ const GeolocationEventType = {
  * Example:
  *
  *      <button ngeo-geolocation
- *        ngeo-geolocation-map="ctrl.map"
- *        ngeo-geolocation-options="ctrl.geolocationOptions">
+ *        ngeo-geolocation-map="ctrl.map">
  *      </button>
  *
  * See our live example: [../examples/mobilegeolocation.html](../examples/mobilegeolocation.html)
@@ -88,7 +75,6 @@ function geolocationComponent() {
     restrict: 'A',
     scope: {
       'getMapFn': '&ngeoGeolocationMap',
-      'getOptionsFn': '&ngeoGeolocationOptions',
     },
     controller: 'ngeoGeolocationController',
   };
@@ -107,11 +93,21 @@ module.directive('ngeoGeolocation', geolocationComponent);
  *    overlay manager service.
  * @param {import("ngeo/message/Notification.js").MessageNotification} ngeoNotification Ngeo notification
  *    service.
+ * @param {import('ngeo/options.js').ngeoGeolocationOptions} ngeoGeolocationOptions The options.
  * @ngInject
  * @ngdoc controller
  * @ngname ngeoGeolocationController
  */
-function Controller($scope, $element, gettextCatalog, ngeoFeatureOverlayMgr, ngeoNotification) {
+function Controller(
+  $scope,
+  $element,
+  gettextCatalog,
+  ngeoFeatureOverlayMgr,
+  ngeoNotification,
+  ngeoGeolocationOptions
+) {
+  this.options = ngeoGeolocationOptions;
+
   $element.on('click', this.toggleTracking.bind(this));
 
   // @ts-ignore
@@ -129,10 +125,6 @@ function Controller($scope, $element, gettextCatalog, ngeoFeatureOverlayMgr, nge
    * @type {import("ol/Map.js").default}
    */
   this.map_ = map;
-
-  // @ts-ignore
-  const options = $scope.getOptionsFn() || {};
-  console.assert(options);
 
   /**
    * @type {import("ngeo/message/Notification.js").MessageNotification}
@@ -154,7 +146,7 @@ function Controller($scope, $element, gettextCatalog, ngeoFeatureOverlayMgr, nge
     }),
   });
 
-  if (options.autorotate) {
+  if (this.options.autorotate) {
     this.autorotateListener();
   }
 
@@ -185,23 +177,14 @@ function Controller($scope, $element, gettextCatalog, ngeoFeatureOverlayMgr, nge
    */
   this.positionFeature_ = new olFeature();
 
-  if (options.positionFeatureStyle) {
-    this.positionFeature_.setStyle(options.positionFeatureStyle);
-  }
+  this.positionFeature_.setStyle(buildStyle(this.options.positionFeatureStyle));
 
   /**
    * @type {olFeature<import("ol/geom/Geometry.js").default>}
    */
   this.accuracyFeature_ = new olFeature();
 
-  if (options.accuracyFeatureStyle) {
-    this.accuracyFeature_.setStyle(options.accuracyFeatureStyle);
-  }
-
-  /**
-   * @type {number|undefined}
-   */
-  this.zoom_ = options.zoom;
+  this.accuracyFeature_.setStyle(buildStyle(this.options.accuracyFeatureStyle));
 
   /**
    * Whether to recenter the map at the position it gets updated
@@ -295,9 +278,9 @@ Controller.prototype.setPosition_ = function () {
 
   if (this.follow_) {
     this.viewChangedByMe_ = true;
-    if (this.zoom_ !== undefined) {
+    if (this.options.zoom !== undefined) {
       view.setCenter(position);
-      view.setZoom(this.zoom_);
+      view.setZoom(this.options.zoom);
     } else if (accuracy instanceof Polygon) {
       const size = this.map_.getSize();
       if (size === undefined) {

@@ -46,10 +46,6 @@ import ngeoStatemanagerWfsPermalink from 'ngeo/statemanager/WfsPermalink.js';
 import ngeoGeolocation from 'ngeo/geolocation/component.js';
 import * as olArray from 'ol/array.js';
 import {listen} from 'ol/events.js';
-import olStyleCircle from 'ol/style/Circle.js';
-import olStyleFill from 'ol/style/Fill.js';
-import olStyleStroke from 'ol/style/Stroke.js';
-import olStyleStyle from 'ol/style/Style.js';
 import {ThemeEventType} from 'gmf/theme/Manager.js';
 import {getBrowserLanguage} from 'ngeo/utils.js';
 // @ts-ignore
@@ -66,20 +62,6 @@ import olControlRotate from 'ol/control/Rotate.js';
 import {defaults as interactionsDefaults} from 'ol/interaction.js';
 import olInteractionDragPan from 'ol/interaction/DragPan.js';
 import {noModifierKeys} from 'ol/events/condition.js';
-
-/**
- * A part of the application config.
- *
- * @typedef {Object} Config
- * @property {import("ol/style/Style.js").default} [positionFeatureStyle]
- * @property {import("ol/style/Style.js").default} [accuracyFeatureStyle]
- * @property {number} [geolocationZoom]
- * @property {boolean} [autorotate]
- * @property {import('ol/Map.js').Options} [map]
- * @property {import('ol/View.js').Options} [view]
- * @property {import("ol/Collection.js").default<import('ol/control/Control.js').default>|Array<import('ol/control/Control.js').default>} [mapControls]
- * @property {import("ol/Collection.js").default<import('ol/interaction/Interaction.js').default>|Array<import('ol/interaction/Interaction.js').default>} [mapInteractions]
- */
 
 /**
  * Application abstract controller.
@@ -746,33 +728,6 @@ export function AbstractAppController($scope, $injector, mobile) {
       Sentry.setTag(tag, tags[tag]);
     }
   }
-
-  const positionFeatureStyle =
-    this.config.positionFeatureStyle ||
-    new olStyleStyle({
-      image: new olStyleCircle({
-        radius: 6,
-        fill: new olStyleFill({color: 'rgba(230, 100, 100, 1)'}),
-        stroke: new olStyleStroke({color: 'rgba(230, 40, 40, 1)', width: 2}),
-      }),
-    });
-
-  const accuracyFeatureStyle =
-    this.config.accuracyFeatureStyle ||
-    new olStyleStyle({
-      fill: new olStyleFill({color: 'rgba(100, 100, 230, 0.3)'}),
-      stroke: new olStyleStroke({color: 'rgba(40, 40, 230, 1)', width: 2}),
-    });
-
-  /**
-   * @type {import('ngeo/geolocation/component.js').GeolocationDirectiveOptions}
-   */
-  this.geolocationOptions = {
-    positionFeatureStyle: positionFeatureStyle,
-    accuracyFeatureStyle: accuracyFeatureStyle,
-    zoom: this.config.geolocationZoom,
-    autorotate: this.config.autorotate,
-  };
 }
 
 /**

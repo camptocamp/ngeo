@@ -39,7 +39,7 @@ import olFormatGeoJSON from 'ol/format/GeoJSON.js';
 import * as olProj from 'ol/proj.js';
 import {appendParams as olUriAppendParams} from 'ol/uri.js';
 import SimpleGeometry from 'ol/geom/SimpleGeometry.js';
-import {buildStyle} from 'gmf/options.js';
+import {buildStyle} from 'ngeo/options.js';
 
 /**
  * @type {angular.IModule}

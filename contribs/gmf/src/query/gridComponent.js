@@ -35,7 +35,7 @@ import ngeoQueryMapQuerent from 'ngeo/query/MapQuerent.js';
 import olCollection from 'ol/Collection.js';
 import * as olExtent from 'ol/extent.js';
 import olMap from 'ol/Map.js';
-import {buildStyle} from 'gmf/options.js';
+import {buildStyle} from 'ngeo/options.js';
 
 import 'bootstrap/js/src/dropdown.js';
 
