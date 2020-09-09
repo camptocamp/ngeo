@@ -115,7 +115,7 @@ export default function (module) {
   module.constant('gmfAuthenticationConfig', {});
   module.constant('gmfSnappingConfig', {});
   module.constant('gmfThemesOptions', {});
-  module.constant('gmfContextualdataOptions', {});
+  module.constant('gmfContextualDataOptions', {});
   module.constant('gmfPrintOptions', {});
   module.constant('gmfBackgroundLayerSelectorOptions', {});
   module.constant('gmfDisclaimerOptions', {});

@@ -191,7 +191,7 @@
  */
 
 /**
- * @typedef {Object} gmfContextualdataOptions
+ * @typedef {Object} gmfContextualDataOptions
  * @property {Object<string, string>} rasterParams The raster service parameters
  * @property {string[]} projections
  */
