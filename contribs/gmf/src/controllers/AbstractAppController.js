@@ -334,23 +334,6 @@ export function AbstractAppController($scope, $injector, mobile) {
   listen(gmfAuthentication, 'logout', userChange);
 
   /**
-   * @type {Array<import('gmf/search/component.js').SearchComponentDatasource>}
-   */
-  this.searchDatasources = [
-    {
-      labelKey: 'label',
-      groupValues: /** @type {import('gmf/options.js').gmfSearchGroups} **/ ($injector.get(
-        'gmfSearchGroups'
-      )),
-      groupActions: /** @type {Array<import('gmf/search/component.js').gmfSearchAction>} **/ ($injector.get(
-        'gmfSearchActions'
-      )),
-      projection: `EPSG:${config.srid || 2056}`,
-      url: /** @type {string} **/ ($injector.get('fulltextsearchUrl')),
-    },
-  ];
-
-  /**
    * @type {Object<string, string>}
    */
   this.dimensions = {};

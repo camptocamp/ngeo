@@ -63,25 +63,6 @@ function MainController(gmfThemes, ngeoFeatureOverlayMgr, ngeoNotification) {
   ngeoFeatureOverlayMgr.init(this.map);
 
   /**
-   * @type {Array<import('gmf/search/component.js').SearchComponentDatasource>}
-   */
-  this.searchDatasources = [
-    {
-      datasetTitle: 'test',
-      groupValues: ['osm', 'district'],
-      groupActions: [],
-      labelKey: 'label',
-      projection: EPSG2056,
-      bloodhoundOptions: /** @type {Bloodhound.BloodhoundOptions<any>} */ ({
-        remote: {
-          rateLimitWait: 250,
-        },
-      }),
-      url: SEARCH,
-    },
-  ];
-
-  /**
    * @type {Twitter.Typeahead.Options}
    */
   this.searchOptions = {
@@ -122,6 +103,7 @@ function MainController(gmfThemes, ngeoFeatureOverlayMgr, ngeoNotification) {
 
 module.controller('MainController', MainController);
 
+module.constant('gmfSearchGroups', []);
 module.constant('gmfSearchOptions', {
   colorChooser: true,
   delay: 50,
@@ -137,6 +119,21 @@ module.constant('gmfSearchOptions', {
       stroke: {color: [255, 0, 0, 1], width: 2},
     },
   },
+  datasources: [
+    {
+      datasetTitle: 'test',
+      groupValues: ['osm', 'district'],
+      groupActions: [],
+      labelKey: 'label',
+      projection: EPSG2056,
+      bloodhoundOptions: /** @type {Bloodhound.BloodhoundOptions<any>} */ ({
+        remote: {
+          rateLimitWait: 250,
+        },
+      }),
+      url: SEARCH,
+    },
+  ],
 });
 options(module);
 

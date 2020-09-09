@@ -274,9 +274,7 @@
         </div>
       </div>
       <div class="gmf-app-map-container" ng-class="{'gmf-app-infobar-active': mainCtrl.options.showInfobar}">
-        <gmf-search gmf-search-map="::mainCtrl.map"
-          gmf-search-datasources="::mainCtrl.searchDatasources">
-        </gmf-search>
+        <gmf-search gmf-search-map="::mainCtrl.map"></gmf-search>
         <ngeo-mapswipe
           ng-if="mainCtrl.gmfLayerBeingSwipe.layer != null"
           map="::mainCtrl.map"

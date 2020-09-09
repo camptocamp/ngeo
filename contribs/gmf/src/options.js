@@ -441,6 +441,31 @@ export function buildStyle(styleDescriptor) {
  */
 
 /**
+ * @typedef {Object} SearchAction
+ * @property {string} action The action
+ * @property {string} title The title
+ */
+
+/**
+ * Datasource configuration options for the search directive.
+ * @typedef {Object} SearchComponentDatasource
+ * @property {Bloodhound.BloodhoundOptions<GeoJSON.FeatureCollection>} [bloodhoundOptions] The optional Bloodhound configuration for this
+ * data set. See: https://github.com/twitter/typeahead.js/blob/master/doc/bloodhound.md
+ * @property {string} labelKey The name of a corresponding GeoJSON property key in the current dataset.
+ * The bound value of this property key will be used as label.
+ * @property {string[]} [groupValues] Possible values for the 'layer_name' key.
+ * Used to define groups of dataset.
+ * @property {SearchAction[]} [groupActions] List of allowed actions. The list may contain a
+ * combination of `add_theme`, `add_group` or `add_layer`
+ * @property {string} [projection] The geometry's projection for this set of data.
+ * @property {Twitter.Typeahead.Dataset<import('ol/Feature.js').default<import('ol/geom/Geometry.js').default>>} [typeaheadDatasetOptions] The optional Twitter.Typeahead.
+ *    configuration for this dataset. See: https://github.com/twitter/typeahead.js/blob/master/
+ * @property {string} [url] URL of the search service. Must contain a '%QUERY' term that will be
+ * replaced by the input string.
+ * @property {string} [datasetTitle]
+ */
+
+/**
  * @typedef {Object} gmfSearchOptions
  * @property {Object<string, Style>} styles A map of styles to apply on searched features. Keys must be the
  *    'layer_name' property of features except for coordinates where the key ifor its style is the value of
@@ -453,6 +478,11 @@ export function buildStyle(styleDescriptor) {
  * @property {boolean} [colorChooser=false] Whether to let the user change the style of the feature on the map.
  * @property {number} [maxZoom=16] maximum zoom we will zoom on result.
  * @property {string} [placeholder="Search…"] The placeholder.
+ * @property {SearchComponentDatasource[]} datasources The used datasources.
+ */
+
+/**
+ * @typedef {string} fulltextsearchUrl The search service URL.
  */
 
 /**
