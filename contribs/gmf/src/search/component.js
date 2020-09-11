@@ -275,12 +275,6 @@ class SearchController {
     this.map = null;
 
     /**
-     * @type {Object}
-     * @private
-     */
-    this.styles_ = {};
-
-    /**
      * @type {?function(): void}
      */
     this.onInitCallback = null;
@@ -293,7 +287,8 @@ class SearchController {
     /**
      * @type {string}
      */
-    this.placeholder = '';
+    this.placeholder = this.options.placeholder || 'Search…';
+    gettextCatalog.getString('Search…');
 
     /**
      * Supported projections for coordinates search.
@@ -343,27 +338,6 @@ class SearchController {
      * @type {import('ngeo/search/searchDirective.js').SearchDirectiveListeners<olFeature<import('ol/geom/Geometry.js').default>>}
      */
     this.additionalListeners = {};
-  }
-
-  /**
-   * Called on initialization of the controller.
-   */
-  $onInit() {
-    if (!this.map) {
-      throw new Error('Missing map');
-    }
-    if (!this.ngeoLocation_) {
-      throw new Error('Missing ngeoLocation');
-    }
-    const gettextCatalog = this.gettextCatalog_;
-    gettextCatalog.getString('Search…');
-    this.placeholder = this.options.placeholder || 'Search…';
-
-    // Init coordinates projections instances
-    this.coordinatesProjectionsInstances =
-      this.options.coordinatesProjections === undefined
-        ? [this.map.getView().getProjection()]
-        : this.ngeoAutoProjection_.getProjectionList(this.options.coordinatesProjections);
 
     if (!this.options.clearButton) {
       // Empty the search field on focus and blur.
@@ -372,22 +346,9 @@ class SearchController {
       });
     }
 
-    if (this.onInitCallback) {
-      this.onInitCallback();
-    }
-
     this.featureOverlay_.setStyle(this.getSearchStyle_.bind(this));
 
-    this.initDatasets_();
-
     this.scope_.$watch(() => this.color, this.setStyleColor.bind(this));
-
-    this.listeners = this.mergeListeners_(this.additionalListeners, {
-      select: this.select_.bind(this),
-      change: this.handleChange_.bind(this),
-      close: this.close_.bind(this),
-      datasetsempty: this.datasetsempty_.bind(this),
-    });
 
     if (this.ngeoLocation_) {
       const searchQuery = this.ngeoLocation_.getParam('search');
@@ -404,6 +365,29 @@ class SearchController {
         }
         this.fulltextsearch_(searchQuery, resultIndex, mapZoom);
       }
+    }
+  }
+
+  /**
+   * Called on initialization of the controller.
+   */
+  $onInit() {
+    this.coordinatesProjectionsInstances =
+      this.options.coordinatesProjections === undefined
+        ? [this.map.getView().getProjection()]
+        : this.ngeoAutoProjection_.getProjectionList(this.options.coordinatesProjections);
+
+    this.initDatasets_();
+
+    this.listeners = this.mergeListeners_(this.additionalListeners, {
+      select: this.select_.bind(this),
+      change: this.handleChange_.bind(this),
+      close: this.close_.bind(this),
+      datasetsempty: this.datasetsempty_.bind(this),
+    });
+
+    if (this.onInitCallback) {
+      this.onInitCallback();
     }
   }
 
@@ -448,9 +432,6 @@ class SearchController {
    * @private
    */
   initDatasets_() {
-    if (!this.map) {
-      throw new Error('Missing map');
-    }
     const gettextCatalog = this.gettextCatalog_;
     for (const datasource of this.options.datasources || []) {
       /** @type {string[]} */
