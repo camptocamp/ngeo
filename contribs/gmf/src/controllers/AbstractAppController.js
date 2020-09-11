@@ -117,11 +117,9 @@ export function AbstractAppController($scope, $injector, mobile) {
           interactionsDefaults(
             this.options.interationDefaults ||
               (mobile
-                ? {pinchRotate: true}
+                ? {}
                 : {
                     dragPan: false,
-                    pinchRotate: true,
-                    altShiftDragRotate: true,
                   })
           ),
       },
