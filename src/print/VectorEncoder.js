@@ -24,6 +24,8 @@ import {getUid as olUtilGetUid} from 'ol/util.js';
 import olFormatGeoJSON from 'ol/format/GeoJSON.js';
 import olStyleRegularShape from 'ol/style/RegularShape.js';
 import {toDegrees} from 'ol/math.js';
+import olFeature from 'ol/Feature.js';
+import {Style} from 'ol/style';
 import olStyleIcon from 'ol/style/Icon.js';
 import olStyleCircle from 'ol/style/Circle.js';
 import {asArray as asColorArray} from 'ol/color.js';
@@ -92,6 +94,8 @@ VectorEncoder.prototype.encodeVectorLayer = function (
 
   const features = source.getFeatures();
 
+  const featuresFromStyle = [];
+
   /** @type {Array<import("geojson").Feature>} */
   const geojsonFeatures = [];
   /** @type {import('ngeo/print/mapfish-print-v3.js').MapFishPrintVectorStyle} */
@@ -99,9 +103,7 @@ VectorEncoder.prototype.encodeVectorLayer = function (
     version: 2,
   };
 
-  for (let i = 0, ii = features.length; i < ii; ++i) {
-    const originalFeature = features[i];
-
+  const parseFeature = (originalFeature) => {
     /**
      * @type {import("ol/style/Style.js").default|Array<import("ol/style/Style.js").default>|void}
      */
@@ -110,18 +112,30 @@ VectorEncoder.prototype.encodeVectorLayer = function (
     if (styleFunction !== undefined) {
       styleData = styleFunction.call(layer, originalFeature, resolution);
     }
-    const origGeojsonFeature = this.geojsonFormat.writeFeatureObject(originalFeature);
-    /**
-     * @type {Array<import("ol/style/Style.js").default>}
-     */
-    const styles = Array.isArray(styleData) ? styleData : styleData ? [styleData] : null;
-    if (!styles) {
-      continue;
+
+    if (!styleData) {
+      return;
+    }
+
+    let styles = Array.isArray(styleData) ? styleData : [styleData];
+
+    // Each style with a geometry is filtered out and will be converted
+    // to a separated feature to be printed.at the correct location.
+    styles = styles.filter((style) => {
+      if (style.getGeometry()) {
+        featuresFromStyle.push(this.newFeatureFromStyle_(style));
+        return false;
+      }
+      return true;
+    });
+
+    if (styles.length === 0) {
+      return;
     }
 
     const geometry = /** @type {import("ol/geom/Geometry.js").default} */ (originalFeature.getGeometry());
     if (!geometry) {
-      continue;
+      return;
     }
     const geometryType = geometry.getType();
 
@@ -133,7 +147,7 @@ VectorEncoder.prototype.encodeVectorLayer = function (
     const styleKey = `[${FEATURE_STYLE_PROP} = '${styleValue}']`;
     // @ts-ignore: unrepresantable Mapfish print object
     if (mapfishStyleObject[styleKey]) {
-      continue;
+      return;
     }
 
     /** @type {import('ngeo/print/mapfish-print-v3.js').MapFishPrintSymbolizers} */
@@ -142,7 +156,7 @@ VectorEncoder.prototype.encodeVectorLayer = function (
     };
     // @ts-ignore: unrepresantable Mapfish print object
     mapfishStyleObject[styleKey] = styleObject;
-    const geojsonFeature = origGeojsonFeature;
+    const geojsonFeature = this.geojsonFormat.writeFeatureObject(originalFeature);
     if (geojsonFeature.properties === null) {
       geojsonFeature.properties = {};
     }
@@ -160,7 +174,10 @@ VectorEncoder.prototype.encodeVectorLayer = function (
         styleObject.symbolizers.push(mapfishPrintStyle);
       }
     }
-  }
+  };
+
+  features.forEach((feature) => parseFeature(feature));
+  featuresFromStyle.forEach((feature) => parseFeature(feature));
 
   // MapFish Print fails if there are no style rules, even if there are no
   // features either. To work around this we just ignore the layer if the
@@ -183,7 +200,31 @@ VectorEncoder.prototype.encodeVectorLayer = function (
 };
 
 /**
+<<<<<<< HEAD
  * @param {string} geometryType Type of the GeoJSON geometry
+=======
+ * Transforms a style with a geometry to a new feature.
+ * @param {import("ol/style/Style.js").default} style Style.
+ * @returns {olFeature<import("ol/geom/Geometry.js").default>} A feature from the style.
+ */
+VectorEncoder.prototype.newFeatureFromStyle_ = function (style) {
+  const feature = new olFeature({
+    geometry: style.getGeometry(),
+  });
+  feature.setStyle(
+    new Style({
+      fill: style.getFill(),
+      image: style.getImage(),
+      stroke: style.getStroke(),
+      text: style.getText(),
+    })
+  );
+  return feature;
+};
+
+/**
+ * @param {import("ol/geom/GeometryType.js").default} geometryType Type of the GeoJSON geometry
+>>>>>>> Print style with geometry as new feature
  * @param {number} resolution Resolution.
  * @param {import("ol/style/Style.js").default} style Style.
  * @param {number} destiontionPrintDpi The destination print DPI.
