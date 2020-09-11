@@ -25,7 +25,9 @@ import gmfControllersAbstractAPIController, {
 } from 'gmf/controllers/AbstractAPIController.js';
 import gmfContextualdataModule from 'gmf/contextualdata/module.js';
 import gmfDatasourceDataSourceBeingFiltered from 'gmf/datasource/DataSourceBeingFiltered.js';
+import gmfDrawingModule from 'gmf/drawing/module.js';
 import gmfEditingModule from 'gmf/editing/module.js';
+import gmfFiltersModule from 'gmf/filters/module.js';
 import gmfPermalinkShareComponent from 'gmf/permalink/shareComponent.js';
 import gmfPrintModule from 'gmf/print/module.js';
 import gmfProfileModule from 'gmf/profile/module.js';
@@ -366,18 +368,20 @@ export class AbstractDesktopController extends AbstractAPIController {
  * @hidden
  */
 const module = angular.module('GmfAbstractDesktopControllerModule', [
-  ngeoQueryPanelComponent.name,
   gmfControllersAbstractAPIController.name,
   gmfContextualdataModule.name,
   gmfDatasourceDataSourceBeingFiltered.name,
+  gmfDrawingModule.name,
   gmfEditingModule.name,
+  gmfFiltersModule.name,
+  gmfImportModule.name,
   gmfPermalinkShareComponent.name,
   gmfPrintModule.name,
   gmfProfileModule.name,
   gmfRasterComponent.name,
   ngeoDrawFeatures.name,
-  gmfImportModule.name,
   ngeoMapswipeModule.name,
+  ngeoQueryPanelComponent.name,
 ]);
 
 module.controller('AbstractDesktopController', AbstractDesktopController);
