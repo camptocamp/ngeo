@@ -20,13 +20,14 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import GeoJSON from 'ol/format/GeoJSON.js';
+// @ts-ignore
 import Autocomplete from '@trevoreyre/autocomplete-js';
 
 /**
  * @typedef {Object} SearchOptions
  * @property {HTMLElement} container
  * @property {string} url
- * @property {import("ol/source/Vector").default<any>} source
+ * @property {import("ol/source/Vector").default<unknown>} source
  * @property {import("ol/View").default} view
  */
 
@@ -93,7 +94,9 @@ export default class Search {
    */
   onSubmit_(result) {
     this.source_.clear();
-    const feature = this.format_.readFeature(result);
+    const feature = /** @type {import('ol/Feature').default<import('ol/geom/Geometry').default>} */ (this.format_.readFeature(
+      result
+    ));
     this.source_.addFeature(feature);
     this.view_.fit(this.source_.getExtent());
   }

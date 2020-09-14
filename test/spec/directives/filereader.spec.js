@@ -64,7 +64,7 @@ describe('ngeo.misc.filereaderComponent', () => {
     const customEvent = document.createEvent('CustomEvent');
     customEvent.initCustomEvent('change', true, true, {});
     input.dispatchEvent(customEvent);
-    // @ts-ignore
+    // @ts-ignore: scope ...
     expect(rootScope.fileContent).toBe('<kml></kml>');
   });
 });

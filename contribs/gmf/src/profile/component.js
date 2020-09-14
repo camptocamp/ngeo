@@ -37,6 +37,20 @@ import {buildStyle} from 'ngeo/options.js';
 import 'bootstrap/js/src/dropdown.js';
 
 /**
+ * @typedef {Object} ProfileElement
+ * @property {number} dist
+ * @property {number} x
+ * @property {number} y
+ * @property {Object<string, number>} values
+ */
+
+/**
+ * @typedef {Object} ProfileServiceResult
+ * The eesult of the profile service
+ * @property {ProfileElement[]} profile
+ */
+
+/**
  * Information to display for a given point in the profile. The point is
  * typically given by the profile's hover.
  * @typedef {Object} ProfileHoverPointInformations
@@ -236,7 +250,7 @@ export function ProfileController(
   this.line = null;
 
   /**
-   * @type {Object[]}
+   * @type {ProfileElement[]}
    */
   this.profileData = [];
 
@@ -280,7 +294,7 @@ export function ProfileController(
   };
 
   /**
-   * @type {?import('ngeo/profile/elevationComponent.js').ProfileOptions}
+   * @type {?import('ngeo/profile/elevationComponent.js').ProfileOptions<ProfileElement>}
    */
   this.profileOptions = null;
 
@@ -348,11 +362,12 @@ ProfileController.prototype.$onInit = function () {
     // Add generic zExtractor to lineConfiguration object that doesn't have one.
     const lineConfig = this.ngeoOptions.linesConfiguration[name];
     if (!lineConfig.zExtractor) {
+      // @ts-ignore: There look to have a type error in d3
       this.ngeoOptions.linesConfiguration[name].zExtractor = this.getZFactory_(name);
     }
   }
 
-  this.profileOptions = /** @type {import('ngeo/profile/elevationComponent.js').ProfileOptions} */ ({
+  this.profileOptions = /** @type {import('ngeo/profile/elevationComponent.js').ProfileOptions<ProfileElement>} */ ({
     linesConfiguration: this.ngeoOptions.linesConfiguration,
     distanceExtractor: this.getDist_,
     hoverCallback: this.hoverCallback_.bind(this),
@@ -382,30 +397,39 @@ ProfileController.prototype.update_ = function () {
 
 ProfileController.prototype.updateEventsListening_ = function () {
   if (this.active && this.map_ !== null) {
-    this.pointerMoveKey_ = listen(this.map_, 'pointermove', (mapBrowserEvent) => {
-      if (!this.map_) {
-        throw new Error('Missing map');
-      }
-      if (mapBrowserEvent.dragging || !this.line) {
-        return;
-      }
-      const coordinate = this.map_.getEventCoordinate(mapBrowserEvent.originalEvent);
-      const closestPoint = this.line.getClosestPoint(coordinate);
-      // compute distance to line in pixels
-      const eventToLine = new olGeomLineString([closestPoint, coordinate]);
-      const resolution = this.map_.getView().getResolution();
-      if (resolution === undefined) {
-        throw new Error('Missing resolution');
-      }
-      const pixelDist = eventToLine.getLength() / resolution;
+    this.pointerMoveKey_ = listen(
+      this.map_,
+      'pointermove',
+      /** @type {import('ol/events.js').ListenerFunction} */ (
+        /**
+         * @param {import('ol/MapBrowserEvent.js').default<MouseEvent>} mapBrowserEvent
+         */
+        (mapBrowserEvent) => {
+          if (!this.map_) {
+            throw new Error('Missing map');
+          }
+          if (mapBrowserEvent.dragging || !this.line) {
+            return;
+          }
+          const coordinate = this.map_.getEventCoordinate(mapBrowserEvent.originalEvent);
+          const closestPoint = this.line.getClosestPoint(coordinate);
+          // compute distance to line in pixels
+          const eventToLine = new olGeomLineString([closestPoint, coordinate]);
+          const resolution = this.map_.getView().getResolution();
+          if (resolution === undefined) {
+            throw new Error('Missing resolution');
+          }
+          const pixelDist = eventToLine.getLength() / resolution;
 
-      if (pixelDist < 16) {
-        this.profileHighlight = this.getDistanceOnALine_(closestPoint);
-      } else {
-        this.profileHighlight = -1;
-      }
-      this.$scope_.$apply();
-    });
+          if (pixelDist < 16) {
+            this.profileHighlight = this.getDistanceOnALine_(closestPoint);
+          } else {
+            this.profileHighlight = -1;
+          }
+          this.$scope_.$apply();
+        }
+      )
+    );
   } else {
     if (this.pointerMoveKey_) {
       unlistenByKey(this.pointerMoveKey_);
@@ -426,6 +450,7 @@ ProfileController.prototype.getDistanceOnALine_ = function (pointOnLine) {
   }
   let segment;
   let distOnLine = 0;
+  /** @type {[number, number, number, number]} */
   const fakeExtent = [pointOnLine[0] - 0.5, pointOnLine[1] - 0.5, pointOnLine[0] + 0.5, pointOnLine[1] + 0.5];
   this.line.forEachSegment((firstPoint, lastPoint) => {
     segment = new olGeomLineString([firstPoint, lastPoint]);
@@ -444,13 +469,20 @@ ProfileController.prototype.getDistanceOnALine_ = function (pointOnLine) {
 };
 
 /**
- * @param {Object} point Point.
+ * @typedef {Object} Point
+ * @property {number} x
+ * @property {number} y
+ */
+
+/**
+ * @param {unknown} pointObject Point.
  * @param {number} dist distance on the line.
  * @param {string} xUnits X units label.
  * @param {Object<string, number>} elevationsRef Elevations references.
  * @param {string} yUnits Y units label.
  */
-ProfileController.prototype.hoverCallback_ = function (point, dist, xUnits, elevationsRef, yUnits) {
+ProfileController.prototype.hoverCallback_ = function (pointObject, dist, xUnits, elevationsRef, yUnits) {
+  const point = /** @type {Point} */ (pointObject);
   // Update information point.
   const coordinate = [point.x, point.y];
 
@@ -568,18 +600,18 @@ ProfileController.prototype.getLayersNames = function () {
 
 /**
  * @param {string} layerName name of the elevation layer.
- * @return {function(Object): number} Z extractor function.
+ * @return {function(ProfileElement): number} Z extractor function.
  */
 ProfileController.prototype.getZFactory_ = function (layerName) {
   /**
    * Generic GMF extractor for the 'given' value in 'values' in profileData.
-   * @param {Object} item The item.
+   * @param {ProfileElement} item The item.
    * @return {number|null} The elevation or `null` if the value is not present in the data.
    * @private
    */
   const getZFn = function (item) {
     if ('values' in item && layerName in item.values && item.values[layerName]) {
-      return parseFloat(item.values[layerName]);
+      return item.values[layerName];
     }
     return null;
   };
@@ -588,7 +620,7 @@ ProfileController.prototype.getZFactory_ = function (layerName) {
 
 /**
  * Extractor for the 'dist' value in profileData.
- * @param {Object} item The item.
+ * @param {ProfileElement} item The item.
  * @return {number} The distance.
  */
 ProfileController.prototype.getDist_ = function (item) {
@@ -619,7 +651,7 @@ ProfileController.prototype.getJsonProfile_ = function () {
     'nbPoints': this.nbPoints_,
   };
 
-  /** @type {Function} */ (this.$http_)({
+  this.$http_({
     url: this.gmfProfileJsonUrl_,
     method: 'POST',
     params: params,
@@ -631,7 +663,7 @@ ProfileController.prototype.getJsonProfile_ = function () {
 };
 
 /**
- * @param {angular.IHttpResponse<{profile: Object[]}>} resp Response.
+ * @param {angular.IHttpResponse<ProfileServiceResult>} resp Response.
  */
 ProfileController.prototype.getProfileDataSuccess_ = function (resp) {
   const profileData = resp.data.profile;
@@ -658,7 +690,7 @@ ProfileController.prototype.downloadCsv = function () {
     return;
   }
 
-  /** @type {Array<import('ngeo/download/Csv.js').GridColumnDef>} */
+  /** @type {import('ngeo/download/Csv.js').GridColumnDef[]} */
   const headers = [];
   let hasDistance = false;
   const firstPoint = this.profileData[0];
@@ -676,7 +708,7 @@ ProfileController.prototype.downloadCsv = function () {
   headers.push({name: 'y'});
 
   const rows = this.profileData.map((point) => {
-    /** @type {Object<string, *>} */
+    /** @type {Object<string, unknown>} */
     const row = {};
     if (hasDistance) {
       row.distance = point.dist;

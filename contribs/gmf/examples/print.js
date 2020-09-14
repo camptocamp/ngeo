@@ -30,7 +30,7 @@ import gmfPrintComponent from 'gmf/print/component.js';
 
 import gmfThemeThemes from 'gmf/theme/Themes.js';
 import ngeoMapModule from 'ngeo/map/module.js';
-import EPSG2056 from '@geoblocks/proj/src/EPSG_2056.js';
+import EPSG2056 from '@geoblocks/proj/EPSG_2056.js';
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
 import olLayerTile from 'ol/layer/Tile.js';
@@ -78,12 +78,12 @@ function MainController(gmfThemes, ngeoFeatureOverlayMgr) {
   });
 
   /**
-   * @type {Object[]|undefined}
+   * @type {import('gmf/themes').GmfTheme[]|undefined}
    */
   this.themes = undefined;
 
   /**
-   * @type {Object|undefined}
+   * @type {import('gmf/themes').GmfTheme|undefined}
    */
   this.treeSource = undefined;
 

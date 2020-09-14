@@ -86,7 +86,7 @@ export default class {
    * @return {{
    *     bufferGeom: olFeature<import("ol/geom/LineString.js").default>,
    *     bufferStyle: olStyleStyle[],
-   *     clippedLine: Array<import("ol/coordinate.js").Coordinate>,
+   *     clippedLine: import("ol/coordinate.js").Coordinate[],
    *     distanceOffset: number
    * }} Object with clipped lined coordinates and left domain value
    */

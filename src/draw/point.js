@@ -52,7 +52,7 @@ function drawPointComponent() {
       }
 
       const drawPoint = new olInteractionDraw({
-        type: /** @type {import("ol/geom/GeometryType.js").default} */ ('Point'),
+        type: 'Point',
       });
 
       if (drawFeatureCtrl.uid) {

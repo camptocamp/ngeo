@@ -27,7 +27,7 @@ import ngeoMiscSortableComponent from 'ngeo/misc/sortableComponent.js';
 
 import ngeoMiscSyncArrays from 'ngeo/misc/syncArrays.js';
 import ngeoSourceAsitVD from 'ngeo/source/AsitVD.js';
-import EPSG2056 from '@geoblocks/proj/src/EPSG_2056.js';
+import EPSG2056 from '@geoblocks/proj/EPSG_2056.js';
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
 import olLayerTile from 'ol/layer/Tile.js';
@@ -44,7 +44,6 @@ const module = angular.module('app', ['gettext', ngeoMapModule.name, ngeoMiscSor
  * @ngInject
  */
 function MainController($scope) {
-  /** @type {import("ol/layer/Tile.js").default} */
   const asitvd = new olLayerTile({
     source: new ngeoSourceAsitVD({
       layer: 'asitvd.fond_couleur',
@@ -52,7 +51,6 @@ function MainController($scope) {
   });
   asitvd.set('name', 'asitvd');
 
-  /** @type {import("ol/layer/Tile.js").default} */
   const boundaries = new olLayerImage({
     source: new olSourceWMS({
       url: MAPSERVER_PROXY,
@@ -65,7 +63,6 @@ function MainController($scope) {
   });
   boundaries.set('name', 'Boundaries');
 
-  /** @type {import("ol/layer/Tile.js").default} */
   const waterBodies = new olLayerImage({
     source: new olSourceWMS({
       url: MAPSERVER_PROXY,
@@ -78,7 +75,6 @@ function MainController($scope) {
   });
   waterBodies.set('name', 'Water bodies');
 
-  /** @type {import("ol/layer/Tile.js").default} */
   const cities = new olLayerImage({
     source: new olSourceWMS({
       url: MAPSERVER_PROXY,
@@ -106,9 +102,6 @@ function MainController($scope) {
 
   const map = this.map;
 
-  /**
-   * @type {import("ol/layer/Tile.js").default}
-   */
   this.roads_ = new olLayerImage({
     source: new olSourceWMS({
       url: MAPSERVER_PROXY,

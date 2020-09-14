@@ -25,7 +25,7 @@ import {INCHES_PER_METER, DOTS_PER_INCH} from 'ngeo/print/Utils.js';
 import {toRadians} from 'ol/math.js';
 
 /**
- * @extends {Layer<any>}
+ * @extends {Layer<import("ol/source/Source").default>}
  */
 export default class Mask extends Layer {
   constructor(options = {}) {

@@ -25,7 +25,6 @@ import {extentToRectangle} from 'ngeo/utils.js';
 import olCollection from 'ol/Collection.js';
 import Feature from 'ol/Feature.js';
 import Polygon from 'ol/geom/Polygon.js';
-import olGeomGeometryLayout from 'ol/geom/GeometryLayout.js';
 import {DEVICE_PIXEL_RATIO} from 'ol/has.js';
 import angular from 'angular';
 import MaskLayer from './Mask.js';
@@ -294,10 +293,10 @@ export const Controller = class {
 
     /**
      * @private
-     * @param {import("ngeo/CustomEvent").default<any>} event the progress event.
+     * @param {import("ngeo/CustomEvent").default<{'progress': number}>} event the progress event.
      */
     this.progressCallback_ = (event) => {
-      const progress = event.detail['progress'];
+      const progress = event.detail.progress;
       this.progressPercents = Math.floor(progress * 100);
       if (progress === 1) {
         this.finishDownload_();
@@ -308,17 +307,16 @@ export const Controller = class {
 
   $onInit() {
     this.offlineMode.registerComponent(this);
-    // @ts-ignore
-    this.ngeoOfflineConfiguration_.on('progress', this.progressCallback_);
+    this.ngeoOfflineConfiguration_.on('progress', /** @type {function(?): ?} */ (this.progressCallback_));
     this.maskMargin = this.maskMargin || 100;
     this.minZoom = this.minZoom || 10;
     this.maxZoom = this.maxZoom || 15;
-    this.maskLayer_ = new MaskLayer({margin: this.maskMargin, extentInMeters: this.extentSize});
+    // @ts-ignore: extentInMeters does not exists...
+    this.maskLayer_ = new MaskLayer({extentInMeters: this.extentSize}, {margin: this.maskMargin});
   }
 
   $onDestroy() {
-    // @ts-ignore
-    this.ngeoOfflineConfiguration_.un('progress', this.progressCallback_);
+    this.ngeoOfflineConfiguration_.un('progress', /** @type {function(?): ?} */ (this.progressCallback_));
   }
 
   /**
@@ -521,7 +519,7 @@ export const Controller = class {
    */
   createPolygonFromExtent_(extent) {
     const projExtent = this.map.getView().getProjection().getExtent();
-    return new Polygon([extentToRectangle(projExtent), extentToRectangle(extent)], olGeomGeometryLayout.XY);
+    return new Polygon([extentToRectangle(projExtent), extentToRectangle(extent)], 'XY');
   }
 
   /**
@@ -529,7 +527,7 @@ export const Controller = class {
    * @private
    */
   getDowloadExtent_() {
-    const center = /** @type {import("ol/coordinate.js").Coordinate}*/ (this.map.getView().getCenter());
+    const center = this.map.getView().getCenter();
     const halfLength = Math.ceil(this.extentSize || this.getExtentSize_()) / 2;
     return this.maskLayer_.createExtent(center, halfLength);
   }

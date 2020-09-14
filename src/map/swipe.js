@@ -204,8 +204,7 @@ class SwipeController {
   }
 
   /**
-   * Called when the visibility of the layer changes. If it is no
-   * longer visible, deactivate the swipe component.
+   * Called when the visibility of the layer changes. If it is no longer visible, deactivate the swipe component.
    * @private
    */
   handleLayerVisibleChange_() {
@@ -215,8 +214,7 @@ class SwipeController {
   }
 
   /**
-   * Called when the rotation of the view changes. If the view is
-   * rotated, deactivate the swipe component.
+   * Called when the rotation of the view changes. If the view is rotated, deactivate the swipe component.
    * @private
    */
   handleViewRotationChange_() {

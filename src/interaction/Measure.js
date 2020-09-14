@@ -50,7 +50,7 @@ import VectorSource from 'ol/source/Vector.js';
  * drawing is finished.
  * @property {import("ol/style/Style.js").StyleLike} [sketchStyle] The style to be used
  * while drawing.
- * @property {import('ol/source/Vector.js').default} [source] The source.
+ * @property {import('ol/source/Vector.js').default<unknown>} [source] The source.
  */
 
 /**
@@ -225,7 +225,12 @@ class Measure extends olInteractionInteraction {
     this.shouldHandleDrawInteractionActiveChange_ = true;
 
     listen(this.drawInteraction_, 'change:active', this.handleDrawInteractionActiveChange_, this);
-    listen(this.drawInteraction_, 'drawstart', this.onDrawStart_, this);
+    listen(
+      this.drawInteraction_,
+      'drawstart',
+      /** @type {import('ol/events.js').ListenerFunction} */ (this.onDrawStart_),
+      this
+    );
     listen(this.drawInteraction_, 'drawend', this.onDrawEnd_, this);
     listen(this, 'change:active', this.updateState_, this);
   }
@@ -271,12 +276,14 @@ class Measure extends olInteractionInteraction {
 
   /**
    * Handle draw interaction `drawstart` event.
-   * @param {Event|import('ol/events/Event.js').default|import('ngeo/interaction/common.js').DrawEvent} evt Event.
+   * @param {import('lib/ol.interaction.Draw.js').DrawEvent|import('ngeo/CustomEvent.js').default<import('lib/ol.interaction.Draw.js').DrawEvent>} evt Event.
    * @private
    */
   onDrawStart_(evt) {
-    // @ts-ignore: evt should be of type {import('ol/interaction/Draw.js').DrawEvent but he is private
-    this.sketchFeature = evt.feature || evt.detail.feature;
+    /** @type {import('lib/ol.interaction.Draw.js').DrawEvent} */
+    // @ts-ignore
+    const event = evt.detail ? evt.detail : evt;
+    this.sketchFeature = event.feature;
     const source = this.vectorLayer_.getSource();
     if (!(source instanceof VectorSource)) {
       throw new Error('Missing source');
@@ -292,24 +299,33 @@ class Measure extends olInteractionInteraction {
       throw new Error('Missing geometry');
     }
 
-    this.changeEventKey_ = listen(geometry, 'change', () => {
-      this.handleMeasure((measure, coord) => {
-        if (coord !== null) {
-          if (!this.measureTooltipElement_) {
-            throw new Error('Missing measureTooltipElement');
+    this.changeEventKey_ = listen(
+      geometry,
+      'change',
+      /** @type {import("ol/events.js").ListenerFunction} */
+      (evt) => {
+        this.handleMeasure((measure, coord) => {
+          if (coord !== null) {
+            if (!this.measureTooltipElement_) {
+              throw new Error('Missing measureTooltipElement');
+            }
+            this.measureTooltipElement_.innerHTML = measure;
+            this.measureTooltipOverlayCoord_ = coord;
           }
-          this.measureTooltipElement_.innerHTML = measure;
-          this.measureTooltipOverlayCoord_ = coord;
-        }
-      });
-    });
-
-    // @ts-ignore: missing getMap
-    this.postcomposeEventKey_ = listen(this.getMap(), 'postcompose', () => {
-      if (this.measureTooltipOverlay_ && this.measureTooltipOverlayCoord_) {
-        this.measureTooltipOverlay_.setPosition(this.measureTooltipOverlayCoord_);
+        });
       }
-    });
+    );
+
+    this.postcomposeEventKey_ = listen(
+      this.getMap(),
+      'postcompose',
+      /** @type {import('ol/events.js').ListenerFunction} */
+      () => {
+        if (this.measureTooltipOverlay_ && this.measureTooltipOverlayCoord_) {
+          this.measureTooltipOverlay_.setPosition(this.measureTooltipOverlayCoord_);
+        }
+      }
+    );
   }
 
   /**
@@ -331,7 +347,6 @@ class Measure extends olInteractionInteraction {
     this.measureTooltipOverlay_.setOffset([0, -7]);
     /** @type {MeasureEvent} */
     const event = new ngeoCustomEvent('measureend', {feature: this.sketchFeature});
-    // @ts-ignore: unfound dispatchEvent
     this.dispatchEvent(event);
     this.sketchFeature = null;
     this.unlistenerEvent_();
@@ -365,7 +380,6 @@ class Measure extends olInteractionInteraction {
         offset: [15, 0],
         positioning: 'center-left',
       });
-      // @ts-ignore: missing getMap
       this.getMap().addOverlay(this.helpTooltipOverlay_);
     }
   }
@@ -377,7 +391,6 @@ class Measure extends olInteractionInteraction {
   removeHelpTooltip_() {
     if (this.displayHelpTooltip_) {
       if (this.helpTooltipOverlay_ !== null) {
-        // @ts-ignore: missing getMap
         this.getMap().removeOverlay(this.helpTooltipOverlay_);
         this.helpTooltipOverlay_ = null;
       }
@@ -405,7 +418,6 @@ class Measure extends olInteractionInteraction {
       positioning: 'bottom-center',
       stopEvent: false,
     });
-    // @ts-ignore: missing getMap
     this.getMap().addOverlay(this.measureTooltipOverlay_);
   }
 
@@ -426,15 +438,14 @@ class Measure extends olInteractionInteraction {
   }
 
   /**
+   * @param {Event|import("ol/events/Event.js").default} evt
    * @private
    */
-  updateState_() {
-    // @ts-ignore: missing getActive
+  updateState_(evt) {
     const active = this.getActive();
     this.shouldHandleDrawInteractionActiveChange_ = false;
     this.drawInteraction_.setActive(active);
     this.shouldHandleDrawInteractionActiveChange_ = true;
-    // @ts-ignore: missing getMap
     if (!this.getMap()) {
       return;
     }
@@ -452,7 +463,6 @@ class Measure extends olInteractionInteraction {
         throw new Error('Missing measureTooltipOverlay');
       }
       source.clear(true);
-      // @ts-ignore: missing getMap
       this.getMap().removeOverlay(this.measureTooltipOverlay_);
       this.removeMeasureTooltip_();
       this.removeHelpTooltip_();
@@ -485,11 +495,11 @@ class Measure extends olInteractionInteraction {
    * change is due to something else than this measure interactino, then
    * update follow the its active state accordingly.
    *
+   * @param {Event|import("ol/events/Event.js").default} evt
    * @private
    */
-  handleDrawInteractionActiveChange_() {
+  handleDrawInteractionActiveChange_(evt) {
     if (this.shouldHandleDrawInteractionActiveChange_) {
-      // @ts-ignore: missing getActive
       this.setActive(this.drawInteraction_.getActive());
     }
   }
@@ -574,7 +584,7 @@ export function getFormattedPoint(point, decimals, format, opt_template) {
 
 /**
  * Handle map browser event.
- * @param {import("ol/MapBrowserEvent.js").default} evt Map browser event.
+ * @param {import("ol/MapBrowserEvent.js").default<unknown>} evt Map browser event.
  * @return {boolean} `false` if event propagation should be stopped.
  * @private
  * @hidden

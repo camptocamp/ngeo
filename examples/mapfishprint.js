@@ -22,7 +22,7 @@
 import angular from 'angular';
 import {MAPSERVER_PROXY, PRINT_PROXY} from './url.js';
 import './mapfishprint.css';
-import EPSG2056 from '@geoblocks/proj/src/EPSG_2056.js';
+import EPSG2056 from '@geoblocks/proj/EPSG_2056.js';
 
 import ngeoPrintService from 'ngeo/print/Service.js';
 import ngeoPrintUtils from 'ngeo/print/Utils.js';
@@ -71,6 +71,7 @@ const PRINT_DPI_ = 72;
 /**
  * @private
  * @hidden
+ * @type {import('ol/size.js').Size}
  */
 const PRINT_PAPER_SIZE_ = [555, 675];
 
@@ -88,7 +89,7 @@ function MainController($timeout, ngeoCreatePrint, ngeoPrintUtils) {
     params: {
       'LAYERS': 'default',
     },
-    serverType: /** @type {import("ol/source/WMSServerType.js").default} */ ('mapserver'),
+    serverType: 'mapserver',
   });
   /**
    * @type {import("ol/Map.js").default}

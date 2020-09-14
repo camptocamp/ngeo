@@ -448,7 +448,7 @@ QueryWindowController.prototype.isLast = function () {
 /**
  * Delete the unwanted ol3 properties from the current feature then return the
  * properties.
- * @return {Object?} Filtered properties of the current feature or null.
+ * @return {Object<string, string|number|boolean>?} Filtered properties of the current feature or null.
  */
 QueryWindowController.prototype.getFeatureValues = function () {
   if (!this.feature) {
@@ -555,7 +555,7 @@ QueryWindowController.prototype.downloadCSV = function (source) {
 
 /**
  * @param {import('ngeo/statemanager/WfsPermalink.js').QueryResultSource} source The source to export as csv.
- * @return {Array<Object>} data.
+ * @return {Object<string, string|number|boolean>[]} data.
  */
 QueryWindowController.prototype.getCSVData_ = function (source) {
   if (!source || source.features.length <= 0) {
@@ -568,8 +568,8 @@ QueryWindowController.prototype.getCSVData_ = function (source) {
 };
 
 /**
- * @param {Array<Object>} data where keys with at least one defined value will be used as csv column header.
- * @return {Array<import('ngeo/download/Csv.js').GridColumnDef>} columns definitions for the CSV.
+ * @param {Object<string, string|number|boolean>[]} data where keys with at least one defined value will be used as csv column header.
+ * @return {import('ngeo/download/Csv.js').GridColumnDef[]} columns definitions for the CSV.
  */
 QueryWindowController.prototype.getCSVHeaderDefinition_ = function (data) {
   if (!data) {
@@ -584,6 +584,7 @@ QueryWindowController.prototype.getCSVHeaderDefinition_ = function (data) {
   });
 
   // From Set (distinct values) to array.
+  /** @type {import('ngeo/download/Csv.js').GridColumnDef[]} */
   const columnDefs = [];
   distinctKeys.forEach((key) => columnDefs.push({name: key}));
 

@@ -136,7 +136,7 @@ LayertreeController.prototype.getLayer = function (node) {
 };
 
 /**
- * @param {Object} node Tree node.
+ * @param {import('gmf/themes.js').GmfLayer} node Tree node.
  * @param {import("ol/layer/Layer.js").default<import('ol/source/Source.js').default>} layer Layer.
  */
 LayertreeController.prototype.onButtonClick = function (node, layer) {
@@ -163,7 +163,7 @@ module.controller('AppLayertreeController', LayertreeController);
  * the ngeoLayertree directive for creating layers from tree nodes. The
  * function returns `null` when no layer should be created for the node.
  *
- * @param {Object} node Layer tree node.
+ * @param {import('gmf/themes.js').GmfLayer} node Layer tree node.
  * @return {import("ol/layer/Layer.js").default} Layer.
  */
 const getLayer = (function () {
@@ -173,7 +173,7 @@ const getLayer = (function () {
   const layerCache = {};
   return (
     /**
-     * @param {Object} node Tree node.
+     * @param {import('gmf/themes.js').GmfLayer} node Tree node.
      * @return {?import("ol/layer/Layer.js").default<import('ol/source/Source.js').default>} Layer.
      */
     function (node) {

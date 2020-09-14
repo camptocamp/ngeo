@@ -63,24 +63,24 @@ describe('ngeo.map.scaleselector', () => {
       }
 
       expect(test).not.toThrow();
-      // @ts-ignore: scope
+      // @ts-ignore: scope ...
       expect(scope.scaleselectorCtrl.currentScale).toBe(50000);
     });
   });
 
   it('calls getScale', () => {
     const scope = element.scope();
-    // @ts-ignore: scope
+    // @ts-ignore: scope ...
     expect(scope.scaleselectorCtrl.getScale(0)).toBe(500);
-    // @ts-ignore: scope
+    // @ts-ignore: scope ...
     expect(scope.scaleselectorCtrl.getScale(0.5)).toEqual(750);
-    // @ts-ignore: scope
+    // @ts-ignore: scope ...
     expect(scope.scaleselectorCtrl.getScale(4)).toBe(50000);
-    // @ts-ignore: scope
+    // @ts-ignore: scope ...
     expect(scope.scaleselectorCtrl.getScale(28)).toBe(2);
-    // @ts-ignore: scope
+    // @ts-ignore: scope ...
     expect(scope.scaleselectorCtrl.getScale(28.1)).toBeUndefined();
-    // @ts-ignore: scope
+    // @ts-ignore: scope ...
     expect(scope.scaleselectorCtrl.getScale(undefined)).toBeUndefined();
   });
 });

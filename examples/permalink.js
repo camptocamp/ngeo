@@ -114,7 +114,7 @@ MapComponentController.prototype.$onInit = function () {
 
   view.on(
     'propertychange',
-    this.ngeoDebounce_(
+    /** @type {function(?): ?} */ (this.ngeoDebounce_(
       /**
        * @param {import("ol/events/Event.js").default} e Object event.
        */
@@ -132,7 +132,7 @@ MapComponentController.prototype.$onInit = function () {
       },
       300,
       /* invokeApply */ true
-    )
+    ))
   );
 };
 
@@ -207,7 +207,7 @@ DrawComponentController.prototype.$onInit = function () {
   const vectorSource = this.layer.getSource();
 
   this.interaction = new olInteractionDraw({
-    type: /** @type {import("ol/geom/GeometryType.js").default} */ ('LineString'),
+    type: 'LineString',
     source: vectorSource,
   });
 
@@ -215,36 +215,50 @@ DrawComponentController.prototype.$onInit = function () {
   this.map.addInteraction(this.interaction);
   interactionDecoration(this.interaction);
 
-  this.interaction.on('drawend', (e) => {
-    e.feature.set('id', ++this.featureSeq_);
-  });
+  this.interaction.on(
+    'drawend',
+    /** @type {function(?): ?} */ (
+      /**
+       * @param {import('ol/MapBrowserEvent.js').default<unknown>} evt
+       */ (e) => {
+        e.feature.set('id', ++this.featureSeq_);
+      }
+    )
+  );
 
   // Deal with the encoding and decoding of features in the URL.
 
   const fhFormat = new ngeoFormatFeatureHash();
 
-  vectorSource.on('addfeature', (e) => {
-    const feature = e.feature;
-    feature.setStyle(
-      new olStyleStyle({
-        stroke: new olStyleStroke({
-          color: [255, 0, 0, 1],
-          width: 2,
-        }),
-      })
-    );
-    const features = vectorSource.getFeatures();
-    // @ts-ignore: unfound writeFeatures
-    const encodedFeatures = fhFormat.writeFeatures(features);
-    this.scope_.$applyAsync(() => {
-      this.ngeoLocation_.updateParams({'features': encodedFeatures});
-    });
-  });
+  vectorSource.on(
+    'addfeature',
+    /** @type {function(?): ?} */ (
+      /**
+       * @param {import('ol/MapBrowserEvent.js').default<unknown>} evt
+       */ (e) => {
+        const feature = e.feature;
+        feature.setStyle(
+          new olStyleStyle({
+            stroke: new olStyleStroke({
+              color: [255, 0, 0, 1],
+              width: 2,
+            }),
+          })
+        );
+        const features = vectorSource.getFeatures();
+        const encodedFeatures = fhFormat.writeFeatures(features);
+        this.scope_.$applyAsync(() => {
+          this.ngeoLocation_.updateParams({'features': encodedFeatures});
+        });
+      }
+    )
+  );
 
   const encodedFeatures = this.ngeoLocation_.getParam('features');
   if (encodedFeatures !== undefined) {
-    // @ts-ignore: unfound readFeatures
-    const features = fhFormat.readFeatures(encodedFeatures);
+    const features = /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>[]} */ (fhFormat.readFeatures(
+      encodedFeatures
+    ));
     this.featureSeq_ = features.length;
     vectorSource.addFeatures(features);
   }

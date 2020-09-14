@@ -23,7 +23,7 @@ import {createEditingStyle} from 'ol/style/Style.js';
 
 /**
  * @typedef {Object} DrawEventItem
- * @property {import("ol/Feature.js").default} feature
+ * @property {import('ol/Feature.js').default<import('ol/geom/Geometry.js').default>} feature
  */
 
 /**

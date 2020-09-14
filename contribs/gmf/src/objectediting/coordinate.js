@@ -66,8 +66,8 @@ function toXY(coordinates, nesting) {
  * Convert a given coordinate or list of coordinates of any 'nesting' level
  * to XY, i.e. remove any extra dimensions to the coordinates and keep only 2.
  *
- * @param {Array<import("ol/coordinate.js").Coordinate>} coordinates Coordinates
- * @return {Array<import("ol/coordinate.js").Coordinate>} Converted coordinates.
+ * @param {Array<Coordinate>} coordinates Coordinates
+ * @return {Array<Coordinate>} Converted coordinates.
  * @hidden
  */
 export function coordinatesToXY1(coordinates) {
@@ -78,8 +78,8 @@ export function coordinatesToXY1(coordinates) {
  * Convert a given coordinate or list of coordinates of any 'nesting' level
  * to XY, i.e. remove any extra dimensions to the coordinates and keep only 2.
  *
- * @param {Array<Array<import("ol/coordinate.js").Coordinate>>} coordinates Coordinates
- * @return {Array<Array<import("ol/coordinate.js").Coordinate>>} Converted coordinates.
+ * @param {Array<Array<Coordinate>>} coordinates Coordinates
+ * @return {Array<Array<Coordinate>>} Converted coordinates.
  * @hidden
  */
 export function coordinatesToXY2(coordinates) {
@@ -90,8 +90,8 @@ export function coordinatesToXY2(coordinates) {
  * Convert a given coordinate or list of coordinates of any 'nesting' level
  * to XY, i.e. remove any extra dimensions to the coordinates and keep only 2.
  *
- * @param {Array<Array<Array<import("ol/coordinate.js").Coordinate>>>} coordinates Coordinates
- * @return {Array<Array<Array<import("ol/coordinate.js").Coordinate>>>} Converted coordinates.
+ * @param {Array<Array<Array<Coordinate>>>} coordinates Coordinates
+ * @return {Array<Array<Array<Coordinate>>>} Converted coordinates.
  * @hidden
  */
 export function coordinatesToXY3(coordinates) {

@@ -110,7 +110,7 @@ function Controller(
 
   $element.on('click', this.toggleTracking.bind(this));
 
-  // @ts-ignore
+  // @ts-ignore: scope ...
   const map = $scope.getMapFn();
   if (!(map instanceof olMap)) {
     throw new Error('Wrong map type');
@@ -151,26 +151,34 @@ function Controller(
   }
 
   // handle geolocation error.
-  this.geolocation_.on('error', (error) => {
-    this.untrack_();
-    let msg;
-    switch (error.code) {
-      case 1:
-        msg = gettextCatalog.getString('User denied the request for Geolocation.');
-        break;
-      case 2:
-        msg = gettextCatalog.getString('Location information is unavailable.');
-        break;
-      case 3:
-        msg = gettextCatalog.getString('The request to get user location timed out.');
-        break;
-      default:
-        msg = gettextCatalog.getString('Geolocation: An unknown error occurred.');
-        break;
-    }
-    this.notification_.error(msg);
-    $scope.$emit(GeolocationEventType.ERROR, error);
-  });
+  this.geolocation_.on(
+    'error',
+    /** @type {function(?): ?} */ (
+      /**
+       * @param {PositionError} error
+       */
+      (error) => {
+        this.untrack_();
+        let msg;
+        switch (error.code) {
+          case 1:
+            msg = gettextCatalog.getString('User denied the request for Geolocation.');
+            break;
+          case 2:
+            msg = gettextCatalog.getString('Location information is unavailable.');
+            break;
+          case 3:
+            msg = gettextCatalog.getString('The request to get user location timed out.');
+            break;
+          default:
+            msg = gettextCatalog.getString('Geolocation: An unknown error occurred.');
+            break;
+        }
+        this.notification_.error(msg);
+        $scope.$emit(GeolocationEventType.ERROR, error);
+      }
+    )
+  );
 
   /**
    * @type {olFeature<import("ol/geom/Geometry.js").default>}
@@ -199,18 +207,28 @@ function Controller(
    */
   this.viewChangedByMe_ = false;
 
-  listen(this.geolocation_, 'change:accuracyGeometry', () => {
-    const geometry = this.geolocation_.getAccuracyGeometry();
-    if (!geometry) {
-      throw new Error('Missing geometry');
+  listen(
+    this.geolocation_,
+    'change:accuracyGeometry',
+    /** @type {import("ol/events.js").ListenerFunction} */
+    (evt) => {
+      const geometry = this.geolocation_.getAccuracyGeometry();
+      if (!geometry) {
+        throw new Error('Missing geometry');
+      }
+      this.accuracyFeature_.setGeometry(geometry);
+      this.setPosition_();
     }
-    this.accuracyFeature_.setGeometry(geometry);
-    this.setPosition_();
-  });
+  );
 
-  listen(this.geolocation_, 'change:position', () => {
-    this.setPosition_();
-  });
+  listen(
+    this.geolocation_,
+    'change:position',
+    /** @type {import("ol/events.js").ListenerFunction} */
+    () => {
+      this.setPosition_();
+    }
+  );
 
   const view = map.getView();
 

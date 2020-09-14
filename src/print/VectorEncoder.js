@@ -53,7 +53,7 @@ const PrintStyleType = {
 };
 
 /**
- * @type {Object<import("ol/geom/GeometryType.js").default, PrintStyleType>}
+ * @type {Object<string, PrintStyleType>}
  * @private
  * @hidden
  */
@@ -103,7 +103,7 @@ VectorEncoder.prototype.encodeVectorLayer = function (
     const originalFeature = features[i];
 
     /**
-     * @type {?import("ol/style/Style.js").default|Array<import("ol/style/Style.js").default>}
+     * @type {import("ol/style/Style.js").default|Array<import("ol/style/Style.js").default>|void}
      */
     let styleData = null;
     const styleFunction = originalFeature.getStyleFunction() || layer.getStyleFunction();
@@ -112,9 +112,9 @@ VectorEncoder.prototype.encodeVectorLayer = function (
     }
     const origGeojsonFeature = this.geojsonFormat.writeFeatureObject(originalFeature);
     /**
-     * @type {?Array<import("ol/style/Style.js").default>}
+     * @type {Array<import("ol/style/Style.js").default>}
      */
-    const styles = Array.isArray(styleData) ? styleData : styleData === null ? null : [styleData];
+    const styles = Array.isArray(styleData) ? styleData : styleData ? [styleData] : null;
     if (!styles) {
       continue;
     }
@@ -131,6 +131,7 @@ VectorEncoder.prototype.encodeVectorLayer = function (
     }
     const styleValue = `${stylesValue.join(',')}-${geometryType}`;
     const styleKey = `[${FEATURE_STYLE_PROP} = '${styleValue}']`;
+    // @ts-ignore: unrepresantable Mapfish print object
     if (mapfishStyleObject[styleKey]) {
       continue;
     }
@@ -139,6 +140,7 @@ VectorEncoder.prototype.encodeVectorLayer = function (
     const styleObject = {
       symbolizers: [],
     };
+    // @ts-ignore: unrepresantable Mapfish print object
     mapfishStyleObject[styleKey] = styleObject;
     const geojsonFeature = origGeojsonFeature;
     if (geojsonFeature.properties === null) {
@@ -181,7 +183,7 @@ VectorEncoder.prototype.encodeVectorLayer = function (
 };
 
 /**
- * @param {import("ol/geom/GeometryType.js").default} geometryType Type of the GeoJSON geometry
+ * @param {string} geometryType Type of the GeoJSON geometry
  * @param {number} resolution Resolution.
  * @param {import("ol/style/Style.js").default} style Style.
  * @param {number} destiontionPrintDpi The destination print DPI.
@@ -199,6 +201,12 @@ VectorEncoder.prototype.encodeVectorStyle = function (
     // unsupported geometry type
     return;
   }
+  const test = '';
+  console.log(test.length);
+  /** @type {?} */
+  const test2 = '';
+  console.log(test2.length);
+
   const styleType = PRINT_STYLE_TYPES[geometryType];
   const fillStyle = style.getFill();
   const imageStyle = style.getImage();
@@ -288,7 +296,7 @@ VectorEncoder.prototype.encodeVectorStylePoint = function (resolution, imageStyl
       }
       const size = imageStyle.getSize();
       if (size !== null) {
-        let scale = imageStyle.getScale();
+        let scale = /** @type {number} */ (imageStyle.getScale());
         if (isNaN(scale)) {
           scale = 1;
         }
@@ -307,11 +315,13 @@ VectorEncoder.prototype.encodeVectorStylePoint = function (resolution, imageStyl
      */
     symbolizer = /** @type {import('ngeo/print/mapfish-print-v3.js').MapFishPrintSymbolizerPoint} */ ({
       type: 'point',
-      externalGraphic: imageStyle.getImage(destiontionPrintDpi / dpi()).toDataURL(),
+      externalGraphic: /** @type {HTMLCanvasElement} */ (imageStyle.getImage(
+        destiontionPrintDpi / dpi()
+      )).toDataURL(),
     });
 
     const [height, width] = imageStyle.getSize();
-    const scale = imageStyle.getScale();
+    const scale = /** @type {number} */ (imageStyle.getScale());
     symbolizer.graphicHeight = height * scale;
     symbolizer.graphicWidth = width * scale;
   }

@@ -604,7 +604,7 @@ Controller.prototype.isStateInsert = function () {
 
 /**
  * Called after a delete request.
- * @param {angular.IHttpResponse<never>} resp Ajax response.
+ * @param {angular.IHttpResponse<ArrayBuffer|Document|Node|Object|string>} resp Ajax response.
  */
 Controller.prototype.handleDeleteFeature_ = function (resp) {
   if (!this.feature) {
@@ -619,7 +619,7 @@ Controller.prototype.handleDeleteFeature_ = function (resp) {
 
 /**
  * Called after an 'insert' or 'update' request.
- * @param {angular.IHttpResponse<never>} resp Ajax response.
+ * @param {angular.IHttpResponse<ArrayBuffer|Document|Node|Object|string>} resp Ajax response.
  */
 Controller.prototype.handleEditFeature_ = function (resp) {
   if (!this.feature) {
@@ -707,13 +707,7 @@ Controller.prototype.toggle_ = function (active) {
     keys.push(listen(this.modify_, 'change:active', this.setFeatureStyle_, this));
     keys.push(listen(this.modify_, 'modifyend', this.handleModifyInteractionModifyEnd_, this));
     keys.push(
-      listen(
-        window,
-        'beforeunload',
-        // @ts-ignore: strange API
-        this.handleWindowBeforeUnload_,
-        this
-      )
+      listen(window, 'beforeunload', /** @type {function(?): ?} */ (this.handleWindowBeforeUnload_), this)
     );
     keys.push(listen(this.sketchFeatures, 'add', this.handleSketchFeaturesAdd_, this));
 
@@ -792,7 +786,6 @@ Controller.prototype.handleModifyInteractionModifyEnd_ = function (evt) {
 
   if (geometry.getType() === 'MultiPolygon') {
     const jstsGeom = this.jstsOL3Parser_.read(geometry);
-    // @ts-ignore: jsts issue?
     const jstsBuffered = jstsGeom.buffer(0, undefined, undefined);
     geometry = toMulti(this.jstsOL3Parser_.write(jstsBuffered));
     this.skipGeometryChange_ = true;
@@ -929,7 +922,6 @@ Controller.prototype.setFeatureStyle_ = function () {
  *
  * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl Layertree controller
  *    to register
- * @return {void}
  */
 Controller.prototype.registerTreeCtrl_ = function (treeCtrl) {
   // Skip any Layertree controller that has a node that is not a leaf
@@ -972,7 +964,6 @@ Controller.prototype.refreshWMSLayer_ = function () {
  * unsaved modifications.
  * @param {Event} e Event.
  * @return {string|undefined} Message
- * @private
  */
 Controller.prototype.handleWindowBeforeUnload_ = function (e) {
   const gettextCatalog = this.gettextCatalog_;

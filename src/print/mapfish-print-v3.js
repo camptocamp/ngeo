@@ -38,9 +38,27 @@
  * @typedef {Object} MapFishPrintCapabilitiesLayoutAttribute
  * @property {string} name Name of the form field.
  * @property {string|boolean|number} [default] Default value of the form field.
- * @property {string} value
+ * @property {string} [value] Not returned by the print, added by ngeo.
  * @property {string} type Type of the field. Can be 'String', 'Boolean' or 'Number'.
- * @property {string} [clientParams]
+ * @property {Object<string, MapFishPrintCapabilitiesLayoutAttributeClientParamsElement>} [clientParams] The client info description.
+ * @property {MapFishPrintCapabilitiesLayoutAttributeClientInfo} [clientInfo] Only for the map.
+ */
+
+/**
+ * @typedef {Object} MapFishPrintCapabilitiesLayoutAttributeClientParamsElement
+ * @property {string|boolean|number} [default] Default value of the form field.
+ * @property {string} type Type of the field. Can be 'String', 'Boolean' or 'Number'.
+ * @property {boolean} [isArray] Is an array
+ * @property {Object<string, MapFishPrintCapabilitiesLayoutAttributeClientParamsElement>} embeddedType The embedded types.
+ */
+
+/**
+ * @typedef {Object} MapFishPrintCapabilitiesLayoutAttributeClientInfo
+ * @property {number[]} dpiSuggestions
+ * @property {number[]} scales
+ * @property {number} maxDpi
+ * @property {number} width
+ * @property {number} height
  */
 
 /**
@@ -102,8 +120,10 @@
  * @property {MapFishPrintVectorStyle} style
  */
 
+/** @typedef {Object<string, import('ngeo/print/mapfish-print-v3.js').MapFishPrintSymbolizers>|MapFishPrintVectorStyleVersion} MapFishPrintVectorStyle
+
 /**
- * @typedef {Object} MapFishPrintVectorStyle
+ * @typedef {Object} MapFishPrintVectorStyleVersion
  * @property {number} version
  */
 

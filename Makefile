@@ -360,6 +360,15 @@ contribs/dist: .build/build-dll.timestamp
 .build/node_modules.timestamp: package.json
 	npm install
 	mkdir -p $(dir $@)
+
+	cp tsconfig-build.json node_modules/ol/src/tsconfig.json
+	(cd node_modules/ol/src; npx --package typescript@4.0.2 tsc --declaration)
+	find node_modules/ol -name '*.d.ts' -exec sed -i 's#from "ol/src/#from "ol/#g' {} \;
+	find node_modules/ol -name '*.d.ts' -exec sed -i 's#import("ol/src/#import("ol/#g' {} \;
+
+	cp tsconfig-build.json node_modules/@geoblocks/proj/src/tsconfig.json
+	(cd node_modules/@geoblocks/proj/src; npx --package typescript@4.0.2 tsc --declaration)
+
 	touch $@
 
 contribs/gmf/build/angular-locale_%.js: package.json

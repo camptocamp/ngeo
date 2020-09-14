@@ -285,15 +285,14 @@ export class Querent {
 
     return this.http_.get(url).then((response) => {
       const format = new ngeoWFSDescribeFeatureType();
-      // @ts-ignore
       return format.read(response.data);
     });
   }
 
   /**
-   * @param {Object[]} layerCapabilities List of WMS layer capabilities
+   * @param {Object<string, *>[]} layerCapabilities List of WMS layer capabilities
    * @param {string} layerName Name of the WMS layer
-   * @return {?Object} Found WMS layer capability
+   * @return {?Object<string, *>} Found WMS layer capability
    */
   wmsFindLayerCapability(layerCapabilities, layerName) {
     let found = null;
@@ -318,7 +317,7 @@ export class Querent {
    * @param {boolean=} opt_cache Whether to use the cached capability, if
    *     available. Enabling this will also store the capability when required
    *     for the first time. Defaults to: `true`.
-   * @return {angular.IPromise<Document|Element|string>} Promise.
+   * @return {angular.IPromise<void>} Promise.
    */
   wmsGetCapabilities(baseUrl, opt_cache) {
     const cache = opt_cache !== false;
@@ -353,9 +352,9 @@ export class Querent {
   }
 
   /**
-   * @param {Array} layerCapabilities List of WMTS layer capabilities
+   * @param {Object<string, *>[]} layerCapabilities List of WMTS layer capabilities
    * @param {string} layerName Name of the WMTS layer, a.k.a. the identifier.
-   * @return {?Object} Found WTMS layer capability
+   * @return {?Object<string, *>} Found WTMS layer capability
    */
   wmtsFindLayerCapability(layerCapabilities, layerName) {
     let found = null;
@@ -374,7 +373,7 @@ export class Querent {
    * @param {boolean=} opt_cache Whether to use the cached capability, if
    *     available. Enabling this will also store the capability when required
    *     for the first time. Defaults to: `true`.
-   * @return {angular.IPromise<Object>} Promise.
+   * @return {angular.IPromise<void>} Promise.
    */
   wmtsGetCapabilities(url, opt_cache) {
     const cache = opt_cache !== false;
@@ -456,12 +455,13 @@ export class Querent {
    * @param {ngeoDatasourceOGC} dataSource used to read the features.
    * @param {Document|Element|string} data the response data.
    * @param {boolean} wfs Whether the query was WFS or WMS.
-   * @return {Array<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>} returned features with a type in each features.
+   * @return {import('ol/Feature.js').default<import('ol/geom/Geometry.js').default>[]} returned features with a type in each features.
    * @private
    */
   readAndTypeFeatures_(dataSource, data, wfs) {
-    /** @type {Array<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>} */
+    /** @type {import('ol/Feature.js').default<import('ol/geom/Geometry.js').default>[]} */
     const features = [];
+    /** @type {import('ol/Feature.js').default<import('ol/geom/Geometry.js').default>[]} */
     let readFeatures;
     // Copy the types to be able to set it AND iterate on it.
     const featureTypes = this.getSetOlFormatTypes_(dataSource, wfs).slice();
@@ -472,12 +472,16 @@ export class Querent {
         if (!dataSource.wfsFormat) {
           throw new Error('Missing wfsFormat');
         }
-        readFeatures = dataSource.wfsFormat.readFeatures(data);
+        readFeatures = /** @type {import('ol/Feature.js').default<import('ol/geom/Geometry.js').default>[]} */ (dataSource.wfsFormat.readFeatures(
+          data
+        ));
       } else {
         if (!dataSource.wmsFormat) {
           throw new Error('Missing wmsFormat');
         }
-        readFeatures = dataSource.wmsFormat.readFeatures(data);
+        readFeatures = /** @type {import('ol/Feature.js').default<import('ol/geom/Geometry.js').default>[]} */ (dataSource.wmsFormat.readFeatures(
+          data
+        ));
       }
       if (readFeatures.length > 0) {
         readFeatures.forEach((feature) => {

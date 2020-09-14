@@ -461,10 +461,10 @@ export class PrintController {
     this.layout_ = null;
 
     /**
-     * @type {number[]}
+     * @type {import("ol/size.js").Size}
      * @private
      */
-    this.paperSize_ = [];
+    this.paperSize_ = null;
 
     /**
      * @type {PrintLayoutInfo}
@@ -528,7 +528,7 @@ export class PrintController {
     this.postcomposeListener_ = (e) => false;
 
     /**
-     * @type {?angular.IHttpPromise<Object>}
+     * @type {?angular.IHttpPromise<import('ngeo/print/mapfish-print-v3').MapFishPrintCapabilities>}
      * @private
      */
     this.capabilities_ = null;
@@ -553,9 +553,14 @@ export class PrintController {
     if (!this.map) {
       throw new Error('Missing map');
     }
-    listen(this.map.getView(), 'change:rotation', (event) => {
-      this.updateRotation_(Math.round(toDegrees(event.target.getRotation())));
-    });
+    listen(
+      this.map.getView(),
+      'change:rotation',
+      /** @type {import("ol/events.js").ListenerFunction} */
+      (event) => {
+        this.updateRotation_(Math.round(toDegrees(event.target.getRotation())));
+      }
+    );
 
     // Clear the capabilities if the roles changes
     this.$scope_.$watch(
@@ -595,11 +600,16 @@ export class PrintController {
       this.ogcServers_ = ogcServersObject;
     });
 
-    listen(this.gmfThemes_, 'change', () => {
-      this.gmfThemes_.getThemesObject().then((currentThemes) => {
-        this.currentThemes_ = currentThemes;
-      });
-    });
+    listen(
+      this.gmfThemes_,
+      'change',
+      /** @type {import("ol/events.js").ListenerFunction} */
+      () => {
+        this.gmfThemes_.getThemesObject().then((currentThemes) => {
+          this.currentThemes_ = currentThemes;
+        });
+      }
+    );
 
     /**
      * @return {import("ol/size.js").Size} Size in dots of the map to print.
@@ -673,9 +683,14 @@ export class PrintController {
             this.setLayout(this.options.defaultLayout);
           }
           this.pointerDragListenerKey_ = listen(this.map, 'pointerdrag', this.onPointerDrag_, this);
-          this.mapViewResolutionChangeKey_ = listen(this.map.getView(), 'change:resolution', () => {
-            this.scaleManuallySelected_ = false;
-          });
+          this.mapViewResolutionChangeKey_ = listen(
+            this.map.getView(),
+            'change:resolution',
+            /** @type {import("ol/events.js").ListenerFunction} */
+            () => {
+              this.scaleManuallySelected_ = false;
+            }
+          );
           this.map.render();
         },
         (resp) => {
@@ -865,7 +880,7 @@ export class PrintController {
   /**
    * Return a capabilities 'attribute' object corresponding to the given name.
    * @param {string} name Name of the attribute to get.
-   * @return {?Object} corresponding attribute or null.
+   * @return {?import('ngeo/print/mapfish-print-v3.js').MapFishPrintCapabilitiesLayoutAttribute} corresponding attribute or null.
    * @private
    */
   isAttributeInCurrentLayout_(name) {
@@ -983,7 +998,7 @@ export class PrintController {
     const scale = this.layoutInfo.scale || this.getOptimalScale_(mapSize, viewResolution);
     const datasource = this.getDataSource_();
 
-    /** @type {Object<string, *>} */
+    /** @type {Object<string, unknown>} */
     const customAttributes = {};
 
     if (this.layoutInfo.attributes.includes('datasource')) {
@@ -1141,9 +1156,9 @@ export class PrintController {
     const datasourceArr = [];
     const sources = this.ngeoQueryResult_.sources;
     sources.forEach((source) => {
-      /** @type {any[]} */
+      /** @type {Array<string|number|boolean>[]} */
       const data = [];
-      /** @type {any[]} */
+      /** @type {string[]} */
       let columns = [];
       source.features.forEach((feature, i) => {
         if (!feature) {
@@ -1270,7 +1285,7 @@ export class PrintController {
    * @param {number} scale The scale to get the legend (for wms layers only).
    * @param {number} dpi The DPI.
    * @param {number[]} bbox The bbox.
-   * @return {Object?} Legend object for print report or null.
+   * @return {unknown?} Legend object for print report or null.
    * @private
    */
   getLegend_(scale, dpi, bbox) {
@@ -1324,10 +1339,12 @@ export class PrintController {
             if (!this.map) {
               throw new Error('Missing map');
             }
+            // @ts-ignore: private...
             if (!source.serverType_) {
               throw new Error('Missing source.serverType_');
             }
             let icon_dpi = this.getMetadataLegendImage_(name, dpi);
+            // @ts-ignore: private...
             const type = icon_dpi ? 'image' : source.serverType_;
             if (!icon_dpi) {
               const url = this.ngeoLayerHelper_.getWMSLegendURL(
@@ -1337,10 +1354,12 @@ export class PrintController {
                 undefined,
                 undefined,
                 undefined,
+                // @ts-ignore: private...
                 source.serverType_,
                 dpi,
                 this.gmfLegendOptions_.useBbox ? bbox : undefined,
                 this.map.getView().getProjection().getCode(),
+                // @ts-ignore: private...
                 this.gmfLegendOptions_.params[source.serverType_]
               );
               if (!url) {

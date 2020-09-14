@@ -175,18 +175,14 @@ export class DrawController {
    * Called when a feature is finished being drawn. Set the default properties
    * for its style, then set its style and add it to the features collection.
    * @param {string} type Type of geometry being drawn.
-   * @param {Event|import('ol/events/Event.js').default|import('ngeo/interaction/Measure.js').MeasureEvent}
-   *    event Event.
+   * @param {import('lib/ol.interaction.Draw.js').DrawEvent|import('ngeo/CustomEvent.js').default<import('lib/ol.interaction.Draw.js').DrawEvent>} evt
+   *    Event.
    */
-  handleDrawEnd(type, event) {
-    let sketch;
-    // @ts-ignore: evt should be of type {import('ol/interaction/Draw.js').DrawEvent but he is private
-    if (event.feature) {
-      // @ts-ignore: evt should be of type {import('ol/interaction/Draw.js').DrawEvent but he is private
-      sketch = event.feature;
-    } else {
-      sketch = /** @type {import('ngeo/interaction/Measure.js').MeasureEvent} */ (event).detail.feature;
-    }
+  handleDrawEnd(type, evt) {
+    /** @type {import('lib/ol.interaction.Draw.js').DrawEvent} */
+    // @ts-ignore
+    const event = evt.detail ? evt.detail : evt;
+    const sketch = event.feature;
     console.assert(sketch);
 
     const azimut = sketch.get('azimut');

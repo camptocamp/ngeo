@@ -115,7 +115,6 @@ export default class extends ngeoInteractionMeasure {
    */
   linestringGeometryFunction(coordinates, opt_geometry) {
     if (modifierPressed) {
-      // @ts-ignore: missing getMap
       const viewRotation = this.getMap().getView().getRotation();
       const angle = Math.PI / 4;
       const from = coordinates[coordinates.length - 2];
@@ -129,7 +128,6 @@ export default class extends ngeoInteractionMeasure {
       to[1] = from[1] - length * Math.sin(rotation);
 
       if (this.tolerance !== undefined && this.source !== undefined) {
-        // @ts-ignore: missing getMap
         const view = this.getMap().getView();
         if (!view) {
           throw new Error('Missing view');
@@ -139,6 +137,7 @@ export default class extends ngeoInteractionMeasure {
           throw new Error('Missing resolution');
         }
         const delta = resolution * this.tolerance;
+        /** @type {import('ol/extent.js').Extent} */
         const bbox = [to[0] - delta, to[1] - delta, to[0] + delta, to[1] + delta];
 
         const layerSource = this.source;
@@ -212,7 +211,6 @@ export default class extends ngeoInteractionMeasure {
     if (!(geom instanceof LineString)) {
       throw new Error('Wrong geometry type');
     }
-    // @ts-ignore: missing getMap
     const proj = this.getMap().getView().getProjection();
     console.assert(proj);
     const output = getFormattedLength(geom, proj, this.precision, this.format, this.spherical);

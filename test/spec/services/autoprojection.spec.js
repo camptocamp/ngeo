@@ -20,7 +20,7 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
+import EPSG21781 from '@geoblocks/proj/EPSG_21781.js';
 import * as olProj from 'ol/proj.js';
 
 describe('ngeo.misc.AutoProjection', () => {

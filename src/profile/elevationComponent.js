@@ -31,11 +31,11 @@ import {select as d3select} from 'd3';
  * The POI is an item of the POI data array.
  *
  * @typedef {Object} PoiExtractor
- * @property {function(Object): string} id Extract the id of a POI.
- * @property {function(Object): number} dist Extract the distance from origin of a POI.
- * @property {function(Object, number=): number} z Extract the elevation of a POI.
- * @property {function(Object): number} sort Extract the sequence number of a POI.
- * @property {function(Object): string} title Extract the title of a POI.
+ * @property {function(unknown): string} id Extract the id of a POI.
+ * @property {function(unknown): number} dist Extract the distance from origin of a POI.
+ * @property {function(unknown, number=): number} z Extract the elevation of a POI.
+ * @property {function(unknown): number} sort Extract the sequence number of a POI.
+ * @property {function(unknown): string} title Extract the title of a POI.
  */
 
 /**
@@ -57,7 +57,7 @@ import {select as d3select} from 'd3';
  *
  * @typedef {Object} ProfileOptions
  * @property {ProfileFormatter} [formatter] Formatter giving full control on how numbers are formatted.
- * @property {function(Object): number} distanceExtractor Extract the distance from origin of a point (an
+ * @property {function(T): number} distanceExtractor Extract the distance from origin of a point (an
  * item of the elevation data array).
  * @property {PoiExtractor} [poiExtractor] Extractor for parsing POI data.
  * @property {function(function, function, number, number): void} [scaleModifier] Allows to modify the raw x
@@ -68,6 +68,7 @@ import {select as d3select} from 'd3';
  * data array, is passed as the first argument of the function.
  * @property {function(): void} [outCallback] A callback called from the profile when the mouse leaves the profile.
  * @property {I18n} [i18n]
+ * @template T
  */
 
 /**
@@ -124,7 +125,7 @@ function profileElevationComponent(ngeoDebounce, ngeoProfileOptions) {
       /** @type {*} */
       let profile = undefined;
       scope.$watchCollection(optionsAttr, (newVal) => {
-        /** @type {ProfileOptions} */
+        /** @type {ProfileOptions<unknown>} */
         const options = Object.assign({}, newVal);
 
         if (options !== undefined) {
@@ -185,10 +186,7 @@ function profileElevationComponent(ngeoDebounce, ngeoProfileOptions) {
 
       listen(window, 'resize', ngeoDebounce(refreshData, 50, true));
 
-      /**
-       * @param {Event|import("ol/events/Event.js").default=} evt Event
-       */
-      function refreshData(evt) {
+      function refreshData() {
         if (profile !== undefined) {
           selection.datum(elevationData).call(profile);
           if (elevationData !== undefined) {

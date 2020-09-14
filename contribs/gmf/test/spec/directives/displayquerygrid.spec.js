@@ -28,8 +28,8 @@ import olFeature from 'ol/Feature.js';
 /**
  * Compare two list of objects using only the properties of the expected objects.
  * For example to ignore 'ol_uid'.
- * @param {Array} data The data.
- * @param {Array} expectedData Expected data.
+ * @param {any[]} data The data.
+ * @param {any[]} expectedData Expected data.
  */
 const compareGridData = function (data, expectedData) {
   expect(data.length).toBe(expectedData.length);
@@ -132,7 +132,6 @@ describe('gmf.query.gridComponent', () => {
       expect(queryGridController.active).toBe(true);
       expect(queryGridController.selectedTab).toBe('Test');
 
-      // @ts-ignore
       const featuresForSource = queryGridController.featuresForSources_['Test'];
       expect(Object.keys(featuresForSource).length).toBe(2);
 
@@ -202,7 +201,6 @@ describe('gmf.query.gridComponent', () => {
           'name': 'B',
         },
       ];
-      // @ts-ignore
       compareGridData(gridConfig.data, expectedGridData);
 
       const expectedColumnDefs = [{'name': 'osm_id'}, {'name': 'name'}];
@@ -293,7 +291,6 @@ describe('gmf.query.gridComponent', () => {
           'name': 'B',
         },
       ];
-      // @ts-ignore
       compareGridData(gridConfig1.data, expectedGridData1);
 
       const expectedColumnDefs1 = [{'name': 'osm_id'}, {'name': 'name'}];
@@ -314,7 +311,6 @@ describe('gmf.query.gridComponent', () => {
           'label': 'C',
         },
       ];
-      // @ts-ignore
       compareGridData(gridConfig3.data, expectedGridData3);
 
       const expectedColumnDefs3 = [{'name': 'id'}, {'name': 'label'}];
@@ -359,7 +355,6 @@ describe('gmf.query.gridComponent', () => {
       // grid source 2
       const gridSource2 = queryGridController.gridSources['Test 3'];
       expect(gridSource2).toBeDefined();
-      // @ts-ignore
       expect(gridSource2.configuration).toBe(undefined);
     });
 
@@ -390,13 +385,11 @@ describe('gmf.query.gridComponent', () => {
       // grid source 1
       const gridSource1 = queryGridController.gridSources['Test 1'];
       expect(gridSource1).toBeDefined();
-      // @ts-ignore
       expect(gridSource1.configuration).toBe(undefined);
 
       // grid source 2
       const gridSource2 = queryGridController.gridSources['Test 3'];
       expect(gridSource2).toBeDefined();
-      // @ts-ignore
       expect(gridSource2.configuration).toBe(undefined);
     });
 
@@ -469,7 +462,6 @@ describe('gmf.query.gridComponent', () => {
           'name': 'C',
         },
       ];
-      // @ts-ignore
       compareGridData(gridConfig1.data, expectedGridData1);
 
       const expectedColumnDefs1 = [{'name': 'osm_id'}, {'name': 'name'}];
@@ -486,7 +478,6 @@ describe('gmf.query.gridComponent', () => {
           'label': 'D',
         },
       ];
-      // @ts-ignore
       compareGridData(gridConfig3.data, expectedGridData3);
 
       const expectedColumnDefs3 = [{'name': 'id'}, {'name': 'label'}];
@@ -543,7 +534,6 @@ describe('gmf.query.gridComponent', () => {
       // merged source
       const gridSource1 = queryGridController.gridSources['merged_source'];
       expect(gridSource1).toBeDefined();
-      // @ts-ignore
       expect(gridSource1.configuration).toBe(undefined);
       expect(gridSource1.source.tooManyResults).toBe(true);
       expect(gridSource1.source.totalFeatureCount).toBe(353);
@@ -590,24 +580,18 @@ describe('gmf.query.gridComponent', () => {
       $timeout.flush();
       // check that the first source is selected by default
       expect(queryGridController.selectedTab).toBe('Test 1');
-      // @ts-ignore
       expect(queryGridController.features_.item(0).get('name')).toBe('A');
-      // @ts-ignore
       expect(queryGridController.highlightFeatures_.getLength()).toBe(0);
 
       // select the 2nd source
       queryGridController.selectTab(queryGridController.gridSources['Test 3']);
-      // @ts-ignore
       expect(queryGridController.selectedTab).toBe('Test 3');
-      // @ts-ignore
       expect(queryGridController.features_.item(0).get('label')).toBe('C');
-      // @ts-ignore
       expect(queryGridController.highlightFeatures_.getLength()).toBe(0);
     });
 
     it('remembers selected rows when switching tabs', () => {
       const gridSource1 = queryGridController.gridSources['Test 1'];
-      // @ts-ignore
       const row1 = gridSource1.configuration.data[0];
       gridSource1.configuration.selectRow(row1);
       $rootScope.$digest();
@@ -615,25 +599,19 @@ describe('gmf.query.gridComponent', () => {
 
       // check that the first source is selected by default
       expect(queryGridController.selectedTab).toBe('Test 1');
-      // @ts-ignore
       expect(queryGridController.features_.getLength()).toBe(0);
-      // @ts-ignore
       expect(queryGridController.highlightFeatures_.item(0).get('name')).toBe('A');
 
       // select the 2nd source
       queryGridController.selectTab(queryGridController.gridSources['Test 3']);
       expect(queryGridController.selectedTab).toBe('Test 3');
-      // @ts-ignore
       expect(queryGridController.features_.item(0).get('label')).toBe('C');
-      // @ts-ignore
       expect(queryGridController.highlightFeatures_.getLength()).toBe(0);
 
       // and then select again source 1
       queryGridController.selectTab(queryGridController.gridSources['Test 1']);
       expect(queryGridController.selectedTab).toBe('Test 1');
-      // @ts-ignore
       expect(queryGridController.features_.getLength()).toBe(0);
-      // @ts-ignore
       expect(queryGridController.highlightFeatures_.item(0).get('name')).toBe('A');
     });
   });

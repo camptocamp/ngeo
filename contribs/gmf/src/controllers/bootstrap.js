@@ -26,7 +26,6 @@ import angular from 'angular';
  * @private
  * @hidden
  * @param {angular.IModule} module The module
- * @return {void}
  */
 function bootstrap(module) {
   // Hack to make the bootstrap type check working with polyfill.io

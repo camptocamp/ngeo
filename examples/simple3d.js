@@ -59,9 +59,6 @@ function MainController($rootScope, ngeoOlcsService) {
     ? 'https://cesium.com/downloads/cesiumjs/releases/1.62/Build/CesiumUnminified/Cesium.js'
     : 'https://cesium.com/downloads/cesiumjs/releases/1.62/Build/Cesium/Cesium.js';
 
-  /**
-   * @type {import('olcs/contrib/Manager.js').default}
-   */
   this.ol3dm = new ngeoOlcsManager(cesiumUrl, $rootScope, {
     map: this.map,
   });

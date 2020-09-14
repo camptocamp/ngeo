@@ -25,7 +25,7 @@ import gmfContextualdataModule from 'gmf/contextualdata/module.js';
 
 import gmfMapComponent from 'gmf/map/component.js';
 import ngeoMiscFilters from 'ngeo/misc/filters.js';
-import EPSG2056 from '@geoblocks/proj/src/EPSG_2056.js';
+import EPSG2056 from '@geoblocks/proj/EPSG_2056.js';
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
 import olLayerTile from 'ol/layer/Tile.js';
@@ -71,13 +71,13 @@ function MainController() {
 /**
  * @param {import("ol/coordinate.js").Coordinate} coordinate The coordinate for the right-clicked
  *     point.
- * @param {Object} data The data received from the raster service.
- * @return {Object} The additional data to add to the scope for the
+ * @param {Object<string, number>} data The data received from the raster service.
+ * @return {Object<string, number>} The additional data to add to the scope for the
  *     contextualdata popover.
  */
 MainController.prototype.onRasterData = function (coordinate, data) {
   return {
-    'elelvation_diff': data['srtm'] - data['aster'],
+    elelvation_diff: data.srtm - data.aster,
   };
 };
 

@@ -85,7 +85,7 @@ export function LayertreeController($scope, $rootScope, $attrs) {
   /**
    * @type {import("ngeo/layertree/Controller.js").LayertreeController}
    */
-  // @ts-ignore
+  // @ts-ignore: scope ...
   this.parent = $scope.$parent.layertreeCtrl;
 
   /**
@@ -118,9 +118,9 @@ export function LayertreeController($scope, $rootScope, $attrs) {
   // We set 'uid' and 'depth' in the scope as well to access the parent values
   // in the inherited scopes. This is intended to be used in the javascript not
   // in the templates.
-  // @ts-ignore
+  // @ts-ignore: scope ...
   $scope.uid = this.uid;
-  // @ts-ignore
+  // @ts-ignore: scope ...
   $scope.depth = this.depth;
 
   /**
@@ -164,9 +164,16 @@ export function LayertreeController($scope, $rootScope, $attrs) {
     layerLoading(this.layer, $scope);
     layerDecoration(this.layer);
 
-    listen(this.layer, 'change:opacity', () => {
-      this.rootScope_.$broadcast('ngeo-layertree-opacity', this);
-    });
+    listen(
+      this.layer,
+      'change:opacity',
+      /**
+       * @param {Event|import("ol/events/Event.js").default} evt
+       */
+      (evt) => {
+        this.rootScope_.$broadcast('ngeo-layertree-opacity', this);
+      }
+    );
   }
 
   let listenersExpr = $attrs.ngeoLayertreeListeners;
@@ -189,7 +196,7 @@ export function LayertreeController($scope, $rootScope, $attrs) {
     $scope.$eval(listenersExpr, {'treeScope': $scope, 'treeCtrl': this});
   }
 
-  // @ts-ignore
+  // @ts-ignore: scope ...
   $scope.layertreeCtrl = this;
 }
 

@@ -26,7 +26,7 @@
  * [../examples/mapquery.html](../examples/mapquery.html)
  * [../examples/toolActivate.html](../examples/toolActivate.html)
  *
- * @param {Object} toolContext An object which acts as the context for the tool.
+ * @param {unknown} toolContext An object which acts as the context for the tool.
  * @param {string} activePropertyName The name of a boolean property on
  *      `toolContext` which represents the active state of the tool.
  * @constructor
@@ -38,6 +38,7 @@ export default function (toolContext, activePropertyName) {
    * @return {boolean} Is active.
    */
   this.getActive = function () {
+    // @ts-ignore
     return toolContext[activePropertyName];
   };
 
@@ -46,6 +47,7 @@ export default function (toolContext, activePropertyName) {
    * @param {boolean} newVal New active state.
    */
   this.setActive = function (newVal) {
+    // @ts-ignore
     toolContext[activePropertyName] = newVal;
   };
 }

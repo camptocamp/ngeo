@@ -79,9 +79,9 @@ import {
  *         }, ...
  *     ]
  *
- * @return {Object} D3js component.
+ * @return {unknown} D3js component.
  * @param {import('ngeo/options.js').ngeoProfileOptions} options Profile options.
- * @param {import('ngeo/profile/elevationComponent.js').ProfileOptions} functions Profile options.
+ * @param {import('ngeo/profile/elevationComponent.js').ProfileOptions<unknown>} functions Profile options.
  * @private
  */
 function d3Elevation(options, functions) {
@@ -206,7 +206,7 @@ function d3Elevation(options, functions) {
   const lightXAxis = options.lightXAxis !== undefined ? options.lightXAxis : false;
 
   /**
-   * @type {Object}
+   * @type {import('d3-selection').Selection<import('d3-selection').BaseType, ?, import('d3-selection').ContainerElement, ?>}
    */
   let svg;
 
@@ -229,7 +229,7 @@ function d3Elevation(options, functions) {
   const scaleModifier = functions.scaleModifier;
 
   /**
-   * @type {import('d3').Selection<void, void, void, void>}
+   * @type {import('d3-selection').Selection<import('d3-selection').BaseType, ?, import('d3-selection').ContainerElement, ?>}
    */
   let g;
 
@@ -264,14 +264,16 @@ function d3Elevation(options, functions) {
   let xDomain;
 
   /**
-   * @param {any} selection The selection
+   * @param {d3.Selection<d3.BaseType, number[][], d3.BaseType, unknown>} selection The selection
    */
   const profile = function (selection) {
     /**
      * @this {d3.ContainerElement}
-     * @param {any} data The selected data
+     * @param {number[][]} data The selected data
+     * @param {number} index
+     * @param {d3.BaseType[] | ArrayLike<d3.BaseType>} groups
      */
-    const func = function (data) {
+    const func = function (data, index, groups) {
       d3select(this).selectAll('svg').remove();
       if (data === undefined) {
         return;
@@ -370,7 +372,7 @@ function d3Elevation(options, functions) {
       // Update the inner dimensions.
       g = svg.select('g').attr('transform', `translate(${margin.left},${margin.top})`);
 
-      xDomain = /** @type {[number, number]} */ (d3extent(data, (d) => distanceExtractor(d)));
+      xDomain = d3extent(data, (d) => distanceExtractor(d));
       x.domain(xDomain);
 
       // Return an array with the min and max value of the min/max values of
@@ -380,10 +382,7 @@ function d3Elevation(options, functions) {
         let elevationsValues = [];
         // Get min/max values (extent) of each lines.
         for (const name in linesConfiguration) {
-          /** @type {[number, number]} */
-          const extent = /** @type {[number, number]} */ (d3extent(data, (d) =>
-            linesConfiguration[name].zExtractor(d)
-          ));
+          const extent = d3extent(data, (d) => linesConfiguration[name].zExtractor(d));
           // only include defined extent
           if (extent.every(Number.isFinite)) {
             elevationsValues = elevationsValues.concat(extent);
@@ -408,10 +407,7 @@ function d3Elevation(options, functions) {
         if (!area) {
           throw new Error('Missing area');
         }
-        g.select('.area')
-          .transition()
-          // @ts-ignore: Wrong d3 type?
-          .attr('d', area);
+        g.select('.area').transition().attr('d', area);
       }
 
       // Set style and update the lines paths and y hover guides for each lines.
@@ -436,10 +432,7 @@ function d3Elevation(options, functions) {
           .defined((d) => linesConfiguration[name].zExtractor(d) !== null);
 
         // Update path for the line.
-        g.select(`.line.${name}`)
-          .transition()
-          // @ts-ignore: Wrong d3 type?
-          .attr('d', line);
+        g.select(`.line.${name}`).transition().attr('d', line);
       }
 
       xFactor = xDomain[1] > 2000 ? 1000 : 1;
@@ -460,7 +453,7 @@ function d3Elevation(options, functions) {
 
         g.select('.x.axis')
           .transition()
-          .call(/** @type {any}*/ (xAxis));
+          .call(/** @type {any} */ (xAxis));
 
         g.select('.x.label')
           .text(`${xAxisLabel} [${xUnits}]`)
@@ -474,12 +467,12 @@ function d3Elevation(options, functions) {
 
         g.select('.y.axis')
           .transition()
-          .call(/** @type {any}*/ (yAxis));
+          .call(/** @type {any} */ (yAxis));
       }
 
       g.select('.grid-y')
         .transition()
-        .call(/** @type {any}*/ (yAxis.tickSize(-width).tickFormat(null)))
+        .call(/** @type {any} */ (yAxis.tickSize(-width).tickFormat(null)))
         .selectAll('.tick line')
         .style('stroke', '#ccc')
         .style('opacity', 0.7);
@@ -593,7 +586,7 @@ function d3Elevation(options, functions) {
   };
 
   /**
-   * @param {void[]} pois
+   * @param {unknown[]} pois
    */
   profile.showPois = function (pois) {
     if (!svg) {
@@ -607,26 +600,20 @@ function d3Elevation(options, functions) {
     const profileData = svg.datum();
     const ps = g.select('.pois');
 
-    const p = ps.selectAll('.poi').data(
-      pois,
-      /**
-       * @param {void} d
-       */
-      (d) => {
-        const i = bisectDistance(profileData, Math.round(pe.dist(d) * 10) / 10, 1);
-        const point = profileData[i];
-        if (point) {
-          let lineName;
-          const elevations = [];
-          for (lineName in linesConfiguration) {
-            elevations.push(linesConfiguration[lineName].zExtractor(point));
-          }
-          const z = Math.max.apply(null, elevations);
-          pe.z(d, z);
+    const p = ps.selectAll('.poi').data(pois, (d) => {
+      const i = bisectDistance(profileData, Math.round(pe.dist(d) * 10) / 10, 1);
+      const point = profileData[i];
+      if (point) {
+        let lineName;
+        const elevations = [];
+        for (lineName in linesConfiguration) {
+          elevations.push(linesConfiguration[lineName].zExtractor(point));
         }
-        return pe.id(d);
+        const z = Math.max.apply(null, elevations);
+        pe.z(d, z);
       }
-    );
+      return pe.id(d);
+    });
 
     const poiEnterG = p.enter().append('g').attr('class', 'poi');
 
@@ -642,57 +629,22 @@ function d3Elevation(options, functions) {
 
     poiEnterG
       .selectAll('text')
-      .attr(
-        'transform',
-        /**
-         * @param {void} d
-         */
-        (d) => {
-          if (light) {
-            return [`translate(${x(pe.dist(d))},${y(pe.z(d)) - 10})`];
-          } else {
-            return [`translate(${x(pe.dist(d))},${y(pe.z(d)) - 20}) rotate(${poiLabelAngle})`];
-          }
+      .attr('transform', (d) => {
+        if (light) {
+          return `translate(${x(pe.dist(d))},${y(pe.z(d)) - 10})`;
+        } else {
+          return `translate(${x(pe.dist(d))},${y(pe.z(d)) - 20}) rotate(${poiLabelAngle})`;
         }
-      )
-      .text(
-        /**
-         * @param {void} d
-         */
-        (d) => `${pe.sort(d)}${light ? '' : ` - ${pe.title(d)}`}`
-      );
+      })
+      .text((d) => `${pe.sort(d)}${light ? '' : ` - ${pe.title(d)}`}`);
 
     poiEnterG
       .selectAll('line')
       .style('stroke', 'grey')
-      .attr(
-        'x1',
-        /**
-         * @param {void} d
-         */
-        (d) => x(pe.dist(d))
-      )
-      .attr(
-        'y1',
-        /**
-         * @param {void} d
-         */
-        (d) => y(y.domain()[0])
-      )
-      .attr(
-        'x2',
-        /**
-         * @param {void} d
-         */
-        (d) => x(pe.dist(d))
-      )
-      .attr(
-        'y2',
-        /**
-         * @param {void} d
-         */
-        (d) => y(pe.z(d))
-      );
+      .attr('x1', (d) => x(pe.dist(d)))
+      .attr('y1', (d) => y(y.domain()[0]))
+      .attr('x2', (d) => x(pe.dist(d)))
+      .attr('y2', (d) => y(pe.z(d)));
 
     // remove unused pois
     poiEnterG.exit().remove();

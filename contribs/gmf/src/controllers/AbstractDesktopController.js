@@ -396,14 +396,17 @@ export class AbstractDesktopController extends AbstractAPIController {
      */
     this.$toolsPanel_ = $toolsPanel;
 
-    const showRightPanelResize = function (active, ctrl) {
-      ctrl.$toolsPanel_.resizable(active ? 'enable' : 'disable');
+    /**
+     * @param {boolean} active
+     */
+    const showRightPanelResize = (active) => {
+      this.$toolsPanel_.resizable(active ? 'enable' : 'disable');
     };
 
     $scope.$watch(
       () => this.toolsActive,
       (newVal) => {
-        showRightPanelResize(newVal, this);
+        showRightPanelResize(newVal);
         if (!newVal) {
           this.setDataPanelMaxResizableWidth_(this.toolsPanelMinResizableWidth_);
         } else {
@@ -462,14 +465,15 @@ export class AbstractDesktopController extends AbstractAPIController {
    *
    * If, after resizing, the size of the data panel would be too big,
    * resize it as well.
+   * @param {number=} opt_newToolsPanelWidth
    * @private
    * @hidden
    */
-  setDataPanelMaxResizableWidth_(newToolsPanelWidth) {
+  setDataPanelMaxResizableWidth_(opt_newToolsPanelWidth) {
     const maxWidth = this.findMaxWidth_(
       this.$toolsPanel_,
       this.dataPanelMinResizableWidth_,
-      newToolsPanelWidth
+      opt_newToolsPanelWidth
     );
     this.$dataPanel_.resizable('option', 'maxWidth', maxWidth);
     this.dataPanelWidth_ = this.checkPanelWidth_(this.dataPanelWidth_, this.$dataPanel_);
@@ -482,14 +486,15 @@ export class AbstractDesktopController extends AbstractAPIController {
    *
    * If, after resizing, the size of the data panel would be too big,
    * resize it as well.
+   * @param {number=} opt_newDataPanelWidth
    * @private
    * @hidden
    */
-  setToolsPanelMaxResizableWidth_(newDataPanelWidth) {
+  setToolsPanelMaxResizableWidth_(opt_newDataPanelWidth) {
     const maxWidth = this.findMaxWidth_(
       this.$dataPanel_,
       this.toolsPanelMinResizableWidth_,
-      newDataPanelWidth
+      opt_newDataPanelWidth
     );
     this.$toolsPanel_.resizable('option', 'maxWidth', maxWidth);
     this.toolsPanelWidth_ = this.checkPanelWidth_(this.toolsPanelWidth_, this.$toolsPanel_);
@@ -498,6 +503,8 @@ export class AbstractDesktopController extends AbstractAPIController {
   /**
    * Check if the panel size is not exceeding its maximum allowed and
    * resize it to present maxSize if necessary
+   * @param {number} panelSize
+   * @param {JQuery} panelToResize
    * @private
    * @hidden
    */
@@ -516,6 +523,9 @@ export class AbstractDesktopController extends AbstractAPIController {
 
   /**
    * Get the new maximum size for the other panel
+   * @param {JQuery} resizedPanel
+   * @param {number} otherPanelMinResizableWidth
+   * @param {number} newPanelWidth
    * @private
    * @hidden
    */

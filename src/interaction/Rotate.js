@@ -190,14 +190,13 @@ export default class extends olInteractionPointer {
   }
 
   /**
-   * @param {import("ol/MapBrowserEvent.js").default} evt MapBrowserEvent
+   * @param {import("ol/MapBrowserEvent.js").default<unknown>} evt MapBrowserEvent
    * @private
    */
   willModifyFeatures_(evt) {
     if (!this.modified_) {
       this.modified_ = true;
       const event = new ngeoCustomEvent('modifystart', {features: this.features_});
-      // @ts-ignore: unfound dispatchEvent
       this.dispatchEvent(event);
     }
   }
@@ -259,7 +258,7 @@ export default class extends olInteractionPointer {
   }
 
   /**
-   * @param {import("ol/MapBrowserEvent.js").default} evt MapBrowserEvent.
+   * @param {import("ol/MapBrowserEvent.js").default<unknown>} evt MapBrowserEvent.
    * @return {boolean} Start drag sequence?
    * @private
    */
@@ -314,7 +313,7 @@ export default class extends olInteractionPointer {
   }
 
   /**
-   * @param {import("ol/MapBrowserEvent.js").default} evt MapBrowserEvent.
+   * @param {import("ol/MapBrowserEvent.js").default<unknown>} evt MapBrowserEvent.
    * @private
    */
   handleDrag_(evt) {
@@ -356,7 +355,7 @@ export default class extends olInteractionPointer {
   }
 
   /**
-   * @param {import("ol/MapBrowserEvent.js").default} evt MapBrowserEvent.
+   * @param {import("ol/MapBrowserEvent.js").default<unknown>} evt MapBrowserEvent.
    * @return {boolean} Stop drag sequence?
    * @private
    */
@@ -367,7 +366,6 @@ export default class extends olInteractionPointer {
       }
       /** @type {RotateEvent} */
       const event = new ngeoCustomEvent('rotateend', {feature: this.feature_});
-      // @ts-ignore: unfound dispatchEvent
       this.dispatchEvent(event);
       this.modified_ = false;
       this.setActive(false);

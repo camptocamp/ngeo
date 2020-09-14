@@ -109,12 +109,20 @@ function MainController(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
   if (!content) {
     throw new Error('Missing content');
   }
-  this.map.on('singleclick', (evt) => {
-    if (this.mapClickIsEnabled) {
-      const c = olCoordinate.toStringXY(evt.coordinate);
-      content.innerHTML = `<p>You clicked here: <code>${c}</code></p>`;
-    }
-  });
+  this.map.on(
+    'singleclick',
+    /** @type {function(?): ?} */ (
+      /**
+       * @param {import('ol/MapBrowserEvent.js').default<unknown>} evt
+       */
+      (evt) => {
+        if (this.mapClickIsEnabled) {
+          const c = olCoordinate.toStringXY(evt.coordinate);
+          content.innerHTML = `<p>You clicked here: <code>${c}</code></p>`;
+        }
+      }
+    )
+  );
 
   const mapClickTool = new ngeoMiscToolActivate(this, 'mapClickIsEnabled');
   ngeoToolActivateMgr.registerTool('mapTools', mapClickTool, true);

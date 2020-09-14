@@ -232,11 +232,19 @@ class Controller {
     this.modifyFeature_.setActive(true);
     this.map.addInteraction(this.modifyFeature_);
 
-    this.modifyFeature_.on('modifyend', (event) => {
-      const feature = event.features.getArray()[0];
-      this.vectorSource_.clear();
-      this.snapFeature_(feature);
-    });
+    this.modifyFeature_.on(
+      'modifyend',
+      /** @type {function(?): ?} */ (
+        /**
+         * @param {import('ol/interaction/Modify.js').ModifyEvent} event
+         */
+        (event) => {
+          const feature = event.features.getArray()[0];
+          this.vectorSource_.clear();
+          this.snapFeature_(/** @type {olFeature<import("ol/geom/Point.js").default>} */ (feature));
+        }
+      )
+    );
 
     this.scope_.$watch(
       () => this.feature,
@@ -285,13 +293,21 @@ class Controller {
       }
     });
 
-    this.draw_.on('drawend', (event) => {
-      if (this.draw_ && this.map) {
-        this.map.removeInteraction(this.draw_);
-      }
-      this.snapFeature_(event.feature);
-      this.modifyFeature_.setActive(true);
-    });
+    this.draw_.on(
+      'drawend',
+      /** @type {function(?): ?} */ (
+        /**
+         * @param {import('lib/ol.interaction.Draw.js').DrawEvent} event
+         */
+        (event) => {
+          if (this.draw_ && this.map) {
+            this.map.removeInteraction(this.draw_);
+          }
+          this.snapFeature_(/** @type {olFeature<import("ol/geom/Point.js").default>} */ (event.feature));
+          this.modifyFeature_.setActive(true);
+        }
+      )
+    );
 
     this.modifyFeature_.setActive(false);
     this.map.addInteraction(this.draw_);
@@ -310,10 +326,10 @@ class Controller {
     if (label === '') {
       label = transformedCoordinate.join('/');
     }
-    this.feature = new olFeature({
+    this.feature = /** @type {?olFeature<import('ol/geom/Geometry').default>} */ (new olFeature({
       geometry: new olGeomPoint(transformedCoordinate),
       name: label,
-    });
+    }));
   }
 
   onFeatureChange_() {
@@ -352,7 +368,7 @@ class Controller {
   /**
    * Snaps a feature to the street network using the getNearest
    * function of the routing service. Replaces the feature.
-   * @param {olFeature<import("ol/geom/Geometry.js").default>} feature Feature to snap
+   * @param {olFeature<import("ol/geom/Point.js").default>} feature Feature to snap
    * @private
    */
   snapFeature_(feature) {
@@ -360,6 +376,7 @@ class Controller {
     if (!coord) {
       return;
     }
+    /** @type {Object<string, string>} */
     const config = {};
 
     /**
@@ -386,7 +403,7 @@ class Controller {
 
   /**
    * Converts feature point into LonLat coordinate.
-   * @param {olFeature<import("ol/geom/Geometry.js").default>} point Feature point to convert
+   * @param {olFeature<import("ol/geom/Point.js").default>} point Feature point to convert
    * @return {?import("ol/coordinate.js").Coordinate} LonLat coordinate
    * @private
    */
@@ -395,9 +412,6 @@ class Controller {
       return null;
     }
     const geometry = point.getGeometry();
-    if (!(geometry instanceof olGeomPoint)) {
-      throw new Error('Wrong time values type');
-    }
     const coords = geometry.getCoordinates();
     const projection = this.map.getView().getProjection();
     return olProj.toLonLat(coords, projection);

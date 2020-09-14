@@ -429,15 +429,20 @@ class RuleController {
       // Watch 'expression'
       this.unlisteners_.push(
         this.scope_.$watch(
+          /**
+           * @returns {string|number}
+           */
           () => {
             if (!this.clone) {
               throw new Error('Missing clone');
             }
-            this.clone.getExpression();
+            return this.clone.getExpression();
           },
+          /**
+           * @param {string|number} newVal
+           */
           (newVal) => {
             if (typeof newVal == 'string') {
-              // @ts-ignore: Why?
               this.timeValueMode.minDefValue = newVal || this.createDate_();
             }
           }
@@ -454,7 +459,6 @@ class RuleController {
           },
           (newVal) => {
             if (typeof newVal == 'string') {
-              // @ts-ignore: Why?
               this.timeRangeMode.minDefValue = newVal || this.createWeekAgoDate_();
             }
           }
@@ -471,7 +475,6 @@ class RuleController {
           },
           (newVal) => {
             if (typeof newVal == 'string') {
-              // @ts-ignore: Why?
               this.timeRangeMode.maxDefValue = newVal || this.createDate_();
             }
           }
@@ -491,7 +494,6 @@ class RuleController {
           },
           (newVal) => {
             this.drawActive = false;
-            // @ts-ignore: Why?
             if (newVal && newVal === RuleSpatialOperatorType.CONTAINS) {
               const clone = this.clone;
               if (clone instanceof ngeoRuleGeometry) {
@@ -526,7 +528,6 @@ class RuleController {
             return this.clone.expression;
           },
           (newVal) => {
-            // @ts-ignore: Why?
             if (newVal) {
               const clone = this.clone;
               if (clone instanceof ngeoRuleGeometry) {
@@ -554,7 +555,6 @@ class RuleController {
             const hasExpression = this.clone.getExpression() !== null;
             const isActive = this.rule.active === true;
             const editToolIsActive =
-              // @ts-ignore: missing getActive
               this.modify_.getActive() || this.rotate_.getActive() || this.translate_.getActive();
             return hasExpression && isActive && editToolIsActive;
           },
@@ -676,7 +676,7 @@ class RuleController {
   }
 
   /**
-   * @param {Object} date Date
+   * @param {Object<string, number>} date Date
    */
   onDateSelected(date) {
     if (!this.clone) {
@@ -686,7 +686,7 @@ class RuleController {
   }
 
   /**
-   * @param {Object} date Date
+   * @param {Object<string, number>} date Date
    */
   onDateRangeSelected(date) {
     if (!this.clone) {
@@ -901,7 +901,7 @@ class RuleController {
    * @private
    */
   handleMapContextMenu_(evt) {
-    if (evt instanceof Event || evt instanceof TouchEvent) {
+    if (evt instanceof UIEvent) {
       if (!this.map) {
         throw new Error('Missing map');
       }

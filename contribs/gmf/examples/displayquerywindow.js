@@ -33,7 +33,7 @@ import gmfQueryWindowComponent from 'gmf/query/windowComponent.js';
 import gmfThemeManager from 'gmf/theme/Manager.js';
 import gmfThemeThemes from 'gmf/theme/Themes.js';
 import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent.js';
-import EPSG2056 from '@geoblocks/proj/src/EPSG_2056.js';
+import EPSG2056 from '@geoblocks/proj/EPSG_2056.js';
 import ngeoQueryComponent from 'ngeo/query/component.js';
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
@@ -142,7 +142,7 @@ function MainController(
   this.queryActive = true;
 
   /**
-   * @type {Object[]|undefined}
+   * @type {import('gmf/themes').GmfTheme[]|undefined}
    * export
    */
   this.themes = undefined;

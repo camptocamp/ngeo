@@ -21,7 +21,7 @@
 
 import angular from 'angular';
 import './svg.css';
-import EPSG2056 from '@geoblocks/proj/src/EPSG_2056.js';
+import EPSG2056 from '@geoblocks/proj/EPSG_2056.js';
 
 import Map from 'ol/Map.js';
 import View from 'ol/View.js';
@@ -50,7 +50,7 @@ function MainController() {
   feature1.setStyle([
     new Style({
       image: new Icon({
-        // @ts-ignore: For Webpack
+        // @ts-ignore: webpack
         src: 'data:image/svg+xml;base64,' + btoa(require('./inline.svg')),
         // For IE compatibility
         imgSize: [65, 65],
@@ -65,7 +65,7 @@ function MainController() {
   feature2.setStyle([
     new Style({
       image: new Icon({
-        // @ts-ignore: For Webpack
+        // @ts-ignore: webpack
         src: 'data:image/svg+xml;base64,' + btoa(require('./inline.svg?viewbox&width=30px')),
         // For IE compatibility
         imgSize: [30, 30],
@@ -80,7 +80,7 @@ function MainController() {
   feature3.setStyle([
     new Style({
       image: new Icon({
-        // @ts-ignore: For Webpack
+        // @ts-ignore: webpack
         src: require('./url.svg?url'),
         // For IE compatibility
         imgSize: [65, 65],

@@ -151,7 +151,9 @@ SyncLayertreeMap.prototype.updateLayerState_ = function (layer, treeCtrl) {
     treeCtrl.traverseDepthFirst((treeCtrl) => {
       const gmfGroup = /** @type {import('gmf/themes.js').GmfGroup} */ (treeCtrl.node);
       if (gmfGroup.children === undefined && treeCtrl.getState() === 'on') {
-        const gmfLayerWMS = /** @type {import('gmf/themes.js').GmfLayerWMS} */ (treeCtrl.node);
+        const gmfLayerWMS = /** @type {import('gmf/themes.js').GmfLayerWMS} */ (
+          /** @type {any} */ (treeCtrl.node)
+        );
         names.push(gmfLayerWMS.layers);
         const style = gmfLayerWMS.style !== undefined ? gmfLayerWMS.style : '';
         styles.push(style);
@@ -299,12 +301,14 @@ SyncLayertreeMap.prototype.createLeafInAMixedGroup_ = function (treeCtrl, map) {
   let layer;
   // Make layer.
   if (gmfLayer.type === 'WMTS') {
-    layer = this.createWMTSLayer_(/** @type {import('gmf/themes.js').GmfLayerWMTS} */ (gmfLayer));
+    layer = this.createWMTSLayer_(
+      /** @type {import('gmf/themes.js').GmfLayerWMTS} */ (/** @type {any} */ (gmfLayer))
+    );
   } else {
     if (!this.ogcServersObject_) {
       throw new Error('Missing ogcServersObject');
     }
-    const gmfLayerWMS = /** @type {import('gmf/themes.js').GmfLayerWMS} */ (gmfLayer);
+    const gmfLayerWMS = /** @type {import('gmf/themes.js').GmfLayerWMS} */ (/** @type {any} */ (gmfLayer));
     const timeParam = this.getTimeParam_(treeCtrl);
     const ogcServer = this.ogcServersObject_[gmfLayerWMS.ogcServer];
     if (!ogcServer) {

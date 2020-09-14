@@ -86,7 +86,6 @@ export default class extends ngeoInteractionMeasure {
     if (!(geom instanceof Polygon)) {
       throw new Error('Missing geometry');
     }
-    // @ts-ignore: missing getMap
     const proj = this.getMap().getView().getProjection();
     console.assert(proj);
     const output = getFormattedArea(geom, proj, this.precision, this.format);

@@ -214,7 +214,12 @@ class QueryController {
         this.map.addLayer(this.vectorLayer_);
         this.map.addInteraction(this.drawBoxInteraction_);
         this.listenerKeys_.push(
-          olEventsListen(this.drawBoxInteraction_, 'drawend', this.handleDrawBoxInteractionDrawEnd_, this)
+          olEventsListen(
+            this.drawBoxInteraction_,
+            'drawend',
+            /** @type {import('ol/events.js').ListenerFunction} */ (this.handleDrawBoxInteractionDrawEnd_),
+            this
+          )
         );
         break;
 
@@ -225,7 +230,8 @@ class QueryController {
           olEventsListen(
             this.drawPolygonInteraction_,
             'drawend',
-            this.handleDrawPolygonInteractionDrawEnd_,
+            /** @type {import('ol/events.js').ListenerFunction} */ (this
+              .handleDrawPolygonInteractionDrawEnd_),
             this
           )
         );
@@ -310,12 +316,10 @@ class QueryController {
 
   /**
    * Called when a box is drawn on the map. Use it to issue a query.
-   * @param {Event|import("ol/events/Event.js").default} evt The draw
-   *     interaction drawend event being fired.
+   * @param {import('lib/ol.interaction.Draw.js').DrawEvent} evt The draw interaction drawend event being fired.
    * @private
    */
   handleDrawBoxInteractionDrawEnd_(evt) {
-    // @ts-ignore: evt should be of type {import('ol/interaction/Draw.js').DrawEvent but it is private
     const feature = evt.feature;
 
     const action = this.ngeoQueryModeSelector_.action;
@@ -343,12 +347,10 @@ class QueryController {
 
   /**
    * Called when a polygon is drawn on the map. Use it to issue a query.
-   * @param {Event|import("ol/events/Event.js").default} evt The draw
-   *     interaction drawend event being fired.
+   * @param {import('lib/ol.interaction.Draw.js').DrawEvent} evt The draw interaction drawend event being fired.
    * @private
    */
   handleDrawPolygonInteractionDrawEnd_(evt) {
-    // @ts-ignore: evt should be of type {import('ol/interaction/Draw.js').DrawEvent but it is private
     const feature = evt.feature;
 
     const action = this.ngeoQueryModeSelector_.action;
@@ -375,11 +377,9 @@ class QueryController {
   }
 
   /**
-   * Called when the map is clicked while this component is active and
-   * the mode is "click". Issue a request to the query service using
-   * the coordinate that was clicked.
-   * @param {Event|import("ol/events/Event.js").default} evt The map
-   *     browser event being fired.
+   * Called when the map is clicked while this component is active and the mode is "click". Issue a request
+   * to the query service using the coordinate that was clicked.
+   * @param {Event|import("ol/events/Event.js").default} evt The map browser event being fired.
    * @private
    */
   handleMapClick_(evt) {
@@ -408,12 +408,10 @@ class QueryController {
   }
 
   /**
-   * Called when the pointer is moved over the map while this
-   * component is active and the mode is "click".  Change the
-   * mouse pointer when hovering a non-transparent pixel on the
-   * map.
-   * @param {Event|import("ol/events/Event.js").default} evt
-   *     The map browser event being fired.
+   * Called when the pointer is moved over the map while this component is active and the mode is "click".
+   * Change the mouse pointer when hovering a non-transparent pixel on the map.
+   * @returns {boolean}
+   * @param {Event|import("ol/events/Event.js").default} evt The map browser event being fired.
    */
   handleMapPointerMove_(evt) {
     // No need to do anything if user is dragging the map

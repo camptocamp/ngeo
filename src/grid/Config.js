@@ -22,7 +22,7 @@
 import {getUid as olUtilGetUid} from 'ol/util.js';
 
 /**
- * @param {Object[]|undefined} data Entries/objects to be shown in a grid.
+ * @param {Object<string, string|number|boolean>[]|undefined} data Entries/objects to be shown in a grid.
  * @param {Array<import('ngeo/download/Csv.js').GridColumnDef>|undefined} columnDefs Column definition of a
  *    grid.
  * @constructor
@@ -31,7 +31,7 @@ import {getUid as olUtilGetUid} from 'ol/util.js';
  */
 function GridConfig(data, columnDefs) {
   /**
-   * @type {Object[]|undefined}
+   * @type {Object<string, string|number|boolean>[]|undefined}
    */
   this.data = data;
 
@@ -48,7 +48,7 @@ function GridConfig(data, columnDefs) {
 
 /**
  * Get an ID for a row.
- * @param {Object} attributes An entry/row.
+ * @param {unknown} attributes An entry/row.
  * @return {string} Unique id for this object.
  * @hidden
  */
@@ -58,7 +58,7 @@ export function getRowUid(attributes) {
 
 /**
  * Is the given row selected?
- * @param {Object} attributes An entry/row.
+ * @param {unknown} attributes An entry/row.
  * @return {boolean} True if already selected. False otherwise.
  */
 GridConfig.prototype.isRowSelected = function (attributes) {
@@ -75,7 +75,7 @@ GridConfig.prototype.getSelectedCount = function () {
 
 /**
  * Returns the selected rows.
- * @return {Object[]} Selected rows in the current ordering.
+ * @return {unknown[]} Selected rows in the current ordering.
  */
 GridConfig.prototype.getSelectedRows = function () {
   if (!this.data) {
@@ -85,7 +85,7 @@ GridConfig.prototype.getSelectedRows = function () {
 };
 
 /**
- * @param {Object} attributes An entry/row.
+ * @param {unknown} attributes An entry/row.
  * @public
  */
 GridConfig.prototype.selectRow = function (attributes) {
@@ -94,7 +94,7 @@ GridConfig.prototype.selectRow = function (attributes) {
 };
 
 /**
- * @param {Object} attributes An entry/row.
+ * @param {unknown} attributes An entry/row.
  * @public
  */
 GridConfig.prototype.toggleRow = function (attributes) {

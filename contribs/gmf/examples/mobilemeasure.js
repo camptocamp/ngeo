@@ -29,7 +29,7 @@ import gmfMobileMeasureAreaComponent from 'gmf/mobile/measure/areaComponent.js';
 import gmfMobileMeasureLengthComponent from 'gmf/mobile/measure/lengthComponent.js';
 import gmfMobileMeasurePointComponent from 'gmf/mobile/measure/pointComponent.js';
 import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent.js';
-import EPSG2056 from '@geoblocks/proj/src/EPSG_2056.js';
+import EPSG2056 from '@geoblocks/proj/EPSG_2056.js';
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
 import olControlScaleLine from 'ol/control/ScaleLine.js';

@@ -108,11 +108,11 @@ export function FileService($q, $http, gettext) {
     return defer.promise;
   };
 
-  /** @type {angular.IDeferred<any>} */
+  /** @type {angular.IDeferred<unknown>} */
   let canceler;
   /**
    * @param {string} url .
-   * @param {angular.IDeferred<void>=} opt_cancelP .
+   * @param {angular.IDeferred<unknown>=} opt_cancelP .
    * @return {angular.IPromise<Blob>} .
    */
   this.load = function (url, opt_cancelP) {

@@ -27,7 +27,7 @@ import gmfMapComponent from 'gmf/map/component.js';
 
 import gmfProfileModule from 'gmf/profile/module.js';
 import ngeoMapModule from 'ngeo/map/module.js';
-import EPSG2056 from '@geoblocks/proj/src/EPSG_2056.js';
+import EPSG2056 from '@geoblocks/proj/EPSG_2056.js';
 import olCollection from 'ol/Collection.js';
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
@@ -104,7 +104,7 @@ function MainController($scope, ngeoFeatureOverlayMgr) {
    * @type {import("ol/interaction/Draw.js").default}
    */
   this.drawLine = new olInteractionDraw({
-    type: /** @type {import("ol/geom/GeometryType.js").default} */ ('LineString'),
+    type: 'LineString',
     features: features,
   });
 
@@ -132,11 +132,19 @@ function MainController($scope, ngeoFeatureOverlayMgr) {
     this.clear_();
   });
 
-  this.drawLine.on('drawend', (e) => {
-    // Update the profile with the new geometry
-    this.profileLine = e.feature.getGeometry();
-    $scope.$digest();
-  });
+  this.drawLine.on(
+    'drawend',
+    /** @type {function(?): ?} */ (
+      /**
+       * @param {import('lib/ol.interaction.Draw.js').DrawEvent} e
+       */
+      (e) => {
+        // Update the profile with the new geometry
+        this.profileLine = /** @type {?import("ol/geom/LineString.js").default} */ (e.feature.getGeometry());
+        $scope.$digest();
+      }
+    )
+  );
 }
 
 module.controller('MainController', MainController);

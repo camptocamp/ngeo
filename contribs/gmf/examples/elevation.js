@@ -24,7 +24,7 @@ import './elevation.css';
 import gmfMapComponent from 'gmf/map/component.js';
 
 import gmfRasterModule from 'gmf/raster/module.js';
-import EPSG2056 from '@geoblocks/proj/src/EPSG_2056.js';
+import EPSG2056 from '@geoblocks/proj/EPSG_2056.js';
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
 import olLayerTile from 'ol/layer/Tile.js';

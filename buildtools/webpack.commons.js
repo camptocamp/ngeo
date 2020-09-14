@@ -211,11 +211,13 @@ module.exports = function (config) {
         'ngeo/test': path.resolve(__dirname, '../test/spec'),
         'gmf/test': path.resolve(__dirname, '../contribs/gmf/test/spec'),
         'ngeo': path.resolve(__dirname, '../src'),
+        'lib': path.resolve(__dirname, '../lib'),
         'gmf': path.resolve(__dirname, '../contribs/gmf/src'),
         'jsts': 'jsts/org/locationtech/jts',
         'olcs': 'ol-cesium/src/olcs',
         'jquery-ui/datepicker': 'jquery-ui/ui/widgets/datepicker', // For angular-ui-date
         'proj4': 'proj4/lib',
+        '@geoblocks/proj': '@geoblocks/proj/src',
       },
     },
     optimization: {

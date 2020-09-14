@@ -223,13 +223,18 @@ DisclaimerController.prototype.registerLayer_ = function (layer) {
         this.closeAll_(layer);
       }
 
-      const listenerKey = listen(layer, 'propertychange', (event) => {
-        if (layer.getVisible()) {
-          this.update_(layer);
-        } else {
-          this.closeAll_(layer);
+      const listenerKey = listen(
+        layer,
+        'propertychange',
+        /** @type {import("ol/events.js").ListenerFunction} */
+        (event) => {
+          if (layer.getVisible()) {
+            this.update_(layer);
+          } else {
+            this.closeAll_(layer);
+          }
         }
-      });
+      );
       this.eventHelper_.addListenerKey(layerUid, listenerKey);
     } else {
       // Show disclaimer messages for this layer

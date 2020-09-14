@@ -20,9 +20,6 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 /**
- */
-
-/**
  * This example shows the ngeo routing directive.
  */
 import './routing.css';

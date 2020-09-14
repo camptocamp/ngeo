@@ -176,7 +176,12 @@ Controller.prototype.$onInit = function () {
   this.interaction_ = new ngeoInteractionDrawRegularPolygonFromClick(options);
   this.interaction_.setActive(this.active);
 
-  this.interactionListenerKey_ = listen(this.interaction_, 'drawend', this.handleDrawEnd_, this);
+  this.interactionListenerKey_ = listen(
+    this.interaction_,
+    'drawend',
+    /** @type {import('ol/events.js').ListenerFunction} */ (this.handleDrawEnd_),
+    this
+  );
 
   this.map.addInteraction(this.interaction_);
 };
@@ -184,13 +189,12 @@ Controller.prototype.$onInit = function () {
 /**
  * Called when a feature is finished being drawn. Add the feature to the
  * collection.
- * @param {Event|import('ol/events/Event.js').default} evt Event.
+ * @param {import('ngeo/CustomEvent.js').default<import('lib/ol.interaction.Draw.js').DrawEvent>} evt Event.
  */
 Controller.prototype.handleDrawEnd_ = function (evt) {
   if (!this.features) {
     throw new Error('Missing features');
   }
-  // @ts-ignore: evt should be of type {import('ol/interaction/Draw.js').DrawEvent but he is private
   const feature = new olFeature(evt.detail.feature.getGeometry());
   this.features.push(feature);
 };

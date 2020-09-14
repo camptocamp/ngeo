@@ -45,7 +45,6 @@ describe('gmf.permalink.ShareService', () => {
       shortenerUrl = _gmfShortenerCreateUrl_;
       $httpBackend.when('POST', shortenerUrl).respond(successResponse);
     });
-    // @ts-ignore: Don't understand ...
     if (!(gmfShareService instanceof PermalinkShareService)) {
       throw new Error('Missing gmfShareService');
     }
@@ -56,7 +55,6 @@ describe('gmf.permalink.ShareService', () => {
     };
 
     $httpBackend.expectPOST(shortenerUrl, $.param(params));
-    // @ts-ignore: Ununderstandable issue wisible only on CI...
     gmfShareService.getShortUrl(permalink);
     $httpBackend.flush();
 
@@ -65,7 +63,6 @@ describe('gmf.permalink.ShareService', () => {
     if (!params.email) {
       throw new Error('Missing params.email');
     }
-    // @ts-ignore: Ununderstandable issue wisible only on CI...
     gmfShareService.sendShortUrl(permalink, params.email);
     $httpBackend.flush();
   });
@@ -90,7 +87,6 @@ describe('gmf.permalink.ShareService', () => {
       shortenerUrl = _gmfShortenerCreateUrl_;
       $httpBackend.when('POST', shortenerUrl).respond(successResponse);
     });
-    // @ts-ignore: Don't understand ...
     if (!(gmfShareService instanceof PermalinkShareService)) {
       throw new Error('Missing gmfShareService');
     }
@@ -98,7 +94,6 @@ describe('gmf.permalink.ShareService', () => {
       throw new Error('Missing shortenerUrl');
     }
 
-    // @ts-ignore: Ununderstandable issue wisible only on CI...
     gmfShareService.getShortUrl(shortenerUrl);
     $httpBackend.verifyNoOutstandingExpectation();
   });

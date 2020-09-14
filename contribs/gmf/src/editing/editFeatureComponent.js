@@ -857,7 +857,7 @@ Controller.prototype.submit = function () {
 
 /**
  * Called after an insert, update or delete request.
- * @param {angular.IHttpResponse<ArrayBuffer|Document|Node|Object|string>} resp Ajax response.
+ * @param {angular.IHttpResponse<ArrayBuffer|Document|Node|string>} resp Ajax response.
  */
 Controller.prototype.handleEditFeature_ = function (resp) {
   const features = new olFormatGeoJSON().readFeatures(resp.data);
@@ -1140,7 +1140,7 @@ Controller.prototype.handleMapClick_ = function (evt) {
  * @param {Event|import('ol/events/Event.js').default} evt Event.
  */
 Controller.prototype.handleMapContextMenu_ = function (evt) {
-  if (evt instanceof Event) {
+  if (evt instanceof UIEvent) {
     if (!this.map) {
       throw new Error('Missing map');
     }

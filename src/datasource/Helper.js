@@ -73,7 +73,6 @@ export class DatasourceHelper {
     this.cache_ = {};
 
     // Events
-
     listen(this.collection_, 'add', this.handleDataSourcesAdd_, this);
     listen(this.collection_, 'remove', this.handleDataSourcesRemove_, this);
 
@@ -227,6 +226,7 @@ export class DatasourceHelper {
         const required = ogcAttribute.minOccurs != '0';
         const type = ogcAttribute.type;
 
+        /** @type {import('ngeo/format/Attribute.js').Attribute} */
         const attribute = {
           alias,
           name,
@@ -238,7 +238,6 @@ export class DatasourceHelper {
         // set depending on the geometry type. This is handled by the
         // method below. If the type is not any geometry one, then set
         // the one that was given.
-        // @ts-ignore
         if (!ngeoAttributeSetGeometryType(attribute, `gml:${type}`)) {
           attribute.type = type.toLowerCase();
         }

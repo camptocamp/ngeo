@@ -27,7 +27,7 @@ import gmfSearchModule from 'gmf/search/module.js';
 import gmfThemeThemes from 'gmf/theme/Themes.js';
 import ngeoMessageNotification from 'ngeo/message/Notification.js';
 import {MessageType} from 'ngeo/message/Message.js';
-import EPSG2056 from '@geoblocks/proj/src/EPSG_2056.js';
+import EPSG2056 from '@geoblocks/proj/EPSG_2056.js';
 import ngeoMapModule from 'ngeo/map/module.js';
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
@@ -126,7 +126,7 @@ module.constant('gmfSearchOptions', {
       groupActions: [],
       labelKey: 'label',
       projection: EPSG2056,
-      bloodhoundOptions: /** @type {Bloodhound.BloodhoundOptions<any>} */ ({
+      bloodhoundOptions: /** @type {Bloodhound.BloodhoundOptions<unknown>} */ ({
         remote: {
           rateLimitWait: 250,
         },

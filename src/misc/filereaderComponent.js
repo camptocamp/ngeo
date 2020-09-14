@@ -64,14 +64,14 @@ function filereaderComponent($window) {
      */
     link: (scope, element) => {
       const supported = 'FileReader' in $window;
-      // @ts-ignore
+      // @ts-ignore: scope ...
       scope.supported = supported;
       if (!supported) {
         return;
       }
 
       /**
-       * @param {JQuery.ChangeEvent<any, any, any, HTMLInputElement>} changeEvent The event
+       * @param {JQuery.ChangeEvent<unknown, unknown, unknown, HTMLInputElement>} changeEvent The event
        */
       const ce = (changeEvent) => {
         /** @type {FileReader} */
@@ -83,7 +83,7 @@ function filereaderComponent($window) {
           function (evt) {
             const target = /** @type {FileReader} */ (evt.target);
             scope.$apply(() => {
-              // @ts-ignore: scope
+              // @ts-ignore: scope ...
               scope.fileContent = target.result;
             });
           };

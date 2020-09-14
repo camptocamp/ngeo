@@ -209,7 +209,6 @@ describe('gmf.query.windowComponent', () => {
       displayQueriesController.previous();
 
       // show results for all sources
-      // @ts-ignore
       displayQueriesController.setSelectedSource(null);
       expect(displayQueriesController.getResultLength()).toBe(4);
       expect(displayQueriesController.source).toBe(ngeoQueryResult.sources[0]);
@@ -217,13 +216,11 @@ describe('gmf.query.windowComponent', () => {
     });
 
     it('Get csv data', () => {
-      // @ts-ignore
       expect(displayQueriesController.getCSVData_(null)).toBeUndefined();
 
       // @ts-ignore
       expect(displayQueriesController.getCSVData_({features: []})).toBeUndefined();
 
-      // @ts-ignore
       expect(displayQueriesController.getCSVData_(sources[0])).toEqual([
         {bar: undefined, foo: 'bar', empty: undefined},
         {bar: 'baz', empty: undefined},
@@ -231,14 +228,14 @@ describe('gmf.query.windowComponent', () => {
     });
 
     it('Get csv header définition', () => {
-      // @ts-ignore
       expect(displayQueriesController.getCSVHeaderDefinition_(null)).toBeUndefined();
 
       const data = [
+        // @ts-ignore
         {bar: undefined, foo: 'bar', empty: undefined},
+        // @ts-ignore
         {bar: 'baz', empty: undefined},
       ];
-      // @ts-ignore
       expect(displayQueriesController.getCSVHeaderDefinition_(data)).toEqual([{name: 'foo'}, {name: 'bar'}]);
     });
   });

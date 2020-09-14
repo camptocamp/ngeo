@@ -135,10 +135,8 @@ export default class extends olInteractionTranslate {
    * @override
    */
   setMap(map) {
-    // @ts-ignore
     const currentMap = this.getMap();
     if (currentMap) {
-      // @ts-ignore
       this.vectorLayer_.setMap(null);
     }
 
@@ -155,9 +153,7 @@ export default class extends olInteractionTranslate {
    * @private
    */
   setState_() {
-    // @ts-ignore
     const map = this.getMap();
-    // @ts-ignore
     const active = this.getActive();
     const features = this.myFeatures_;
     const keys = this.listenerKeys_;

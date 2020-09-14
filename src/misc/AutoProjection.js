@@ -58,7 +58,7 @@ AutoProjectionService.prototype.stringToCoordinates = function (str) {
  */
 AutoProjectionService.prototype.getProjectionList = function (projectionsCodes) {
   let code, proj;
-  /** @type {olProj.Projection[]} */
+  /** @type {import('ol/proj/Projection.js').default[]} */
   const projections = [];
   projectionsCodes.forEach((projection) => {
     code = projection.toUpperCase();

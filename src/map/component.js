@@ -91,27 +91,32 @@ function mapComponent($window) {
 
         const resizeTransition = /** @type {number|undefined} */ (scope.$eval(resizeTransitionProp));
 
-        listen($window, 'resize', () => {
-          if (resizeTransition) {
-            // Resize with transition
-            const start = Date.now();
-            let loop = true;
-            const adjustSize = function () {
+        listen(
+          $window,
+          'resize',
+          /** @type {import("ol/events.js").ListenerFunction} */
+          (evt) => {
+            if (resizeTransition) {
+              // Resize with transition
+              const start = Date.now();
+              let loop = true;
+              const adjustSize = function () {
+                map.updateSize();
+                map.renderSync();
+                if (loop) {
+                  $window.requestAnimationFrame(adjustSize);
+                }
+                if (Date.now() - start > resizeTransition) {
+                  loop = false;
+                }
+              };
+              adjustSize();
+            } else {
+              // A single plain resize
               map.updateSize();
-              map.renderSync();
-              if (loop) {
-                $window.requestAnimationFrame(adjustSize);
-              }
-              if (Date.now() - start > resizeTransition) {
-                loop = false;
-              }
-            };
-            adjustSize();
-          } else {
-            // A single plain resize
-            map.updateSize();
+            }
           }
-        });
+        );
       }
     },
   };

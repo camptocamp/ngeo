@@ -100,7 +100,6 @@ function MainController() {
   );
 
   const interaction = this.interaction;
-  // @ts-ignore: unfound setActive
   interaction.setActive(true);
   map.addInteraction(interaction);
 }

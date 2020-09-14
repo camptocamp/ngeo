@@ -109,13 +109,27 @@ function MainController($scope, ngeoFeatureHelper, ngeoFeatures, ngeoToolActivat
     () => this.pointerMoveActive,
     (newVal) => {
       if (newVal) {
-        this.map.on('pointermove', (evt) => {
-          this.handleMapPointerMove_(evt);
-        });
+        this.map.on(
+          'pointermove',
+          /** @type {function(?): ?} */ (
+            /**
+             * @param {import('ol/MapBrowserEvent.js').default<unknown>} evt
+             */ (evt) => {
+              this.handleMapPointerMove_(evt);
+            }
+          )
+        );
       } else {
-        this.map.un('pointermove', (evt) => {
-          this.handleMapPointerMove_(evt);
-        });
+        this.map.un(
+          'pointermove',
+          /** @type {function(?): ?} */ (
+            /**
+             * @param {import('ol/MapBrowserEvent.js').default<unknown>} evt
+             */ (evt) => {
+              this.handleMapPointerMove_(evt);
+            }
+          )
+        );
         $('#pointermove-feature').html('');
       }
     }
@@ -129,7 +143,7 @@ function MainController($scope, ngeoFeatureHelper, ngeoFeatures, ngeoToolActivat
 }
 
 /**
- * @param {import("ol/MapBrowserEvent.js").default} evt MapBrowser event
+ * @param {import("ol/MapBrowserEvent.js").default<unknown>} evt MapBrowser event
  */
 MainController.prototype.handleMapPointerMove_ = function (evt) {
   const pixel = evt.pixel;

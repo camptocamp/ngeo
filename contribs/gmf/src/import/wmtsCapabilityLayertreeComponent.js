@@ -119,7 +119,7 @@ class Controller {
   }
 
   /**
-   * @param {Object} layer WMTS Capability Layer object
+   * @param {unknown} layer WMTS Capability Layer object
    */
   createAndAddDataSource(layer) {
     if (!this.url) {
@@ -130,7 +130,7 @@ class Controller {
   }
 
   /**
-   * @param {Object} layer WMTS Capability Layer object
+   * @param {unknown} layer WMTS Capability Layer object
    * @return {string} Unique id for the Capability Layer.
    */
   getUid(layer) {

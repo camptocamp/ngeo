@@ -85,7 +85,6 @@ function measureAzimutComponent(
       );
 
       if (drawFeatureCtrl.uid) {
-        // @ts-ignore
         measureAzimut.set('ngeo-interaction-draw-uid', `${drawFeatureCtrl.uid}-azimut`);
       }
 
@@ -96,7 +95,7 @@ function measureAzimutComponent(
         measureAzimut,
         'measureend',
         /**
-         * @param {Event|import('ol/events/Event.js').default} event Event.
+         * @type {import('ol/events.js').ListenerFunction}
          */
         (event) => {
           const myEvent = /** @type {import('ngeo/interaction/Measure.js').MeasureEvent} */ (event);

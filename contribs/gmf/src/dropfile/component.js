@@ -58,7 +58,7 @@ const fileDrop = function (gmfExternalDataSourcesManager, ngeoNotification, gett
      * @param {angular.IAttributes} attrs Attributes.
      */
     link: function ($scope, element, attrs) {
-      // @ts-ignore: scope...
+      // @ts-ignore: scope ......
       if ($scope.ctrl.fileDropEnabled !== true) {
         return;
       }

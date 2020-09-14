@@ -193,7 +193,7 @@ function Controller($scope, ngeoTime, gettextCatalog) {
 
   /**
    * Datepicker options for the second datepicker (only for range mode)
-   * @type {Object}
+   * @type {unknown}
    */
   this.edateOptions = {
     'changeMonth': true,
@@ -202,7 +202,7 @@ function Controller($scope, ngeoTime, gettextCatalog) {
 
   /**
    * Datepicker options for the first datepicker
-   * @type {Object}
+   * @type {unknown}
    */
   this.sdateOptions = {
     'changeMonth': true,

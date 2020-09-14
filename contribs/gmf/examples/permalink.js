@@ -23,7 +23,7 @@ import './permalink.css';
 import angular from 'angular';
 import gmfMapModule from 'gmf/map/module.js';
 
-import EPSG2056 from '@geoblocks/proj/src/EPSG_2056.js';
+import EPSG2056 from '@geoblocks/proj/EPSG_2056.js';
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
 import olLayerTile from 'ol/layer/Tile.js';

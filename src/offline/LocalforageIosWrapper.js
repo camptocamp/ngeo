@@ -21,6 +21,11 @@
 
 import AbstractWrapper from 'ngeo/offline/AbstractLocalforageWrapper.js';
 
+/**
+ * @typedef {Object} Action
+ * @property {string} command
+ * @property {string[]} args
+ */
 const exports = class IosWrapper extends AbstractWrapper {
   constructor() {
     super();
@@ -29,12 +34,12 @@ const exports = class IosWrapper extends AbstractWrapper {
   }
 
   /**
-   * @param {Object} action
+   * @param {Action} action
    * @override
    */
   postToBackend(action) {
-    if (action['command'] === 'setItem') {
-      action['args'][1] = JSON.stringify(action['args'][1]);
+    if (action.command === 'setItem') {
+      action.args[1] = JSON.stringify(action.args[1]);
     }
     const stringified = JSON.stringify(action);
     // @ts-ignore

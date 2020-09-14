@@ -22,7 +22,7 @@
 import './asitvd.css';
 import angular from 'angular';
 import ngeoSourceAsitVD from 'ngeo/source/AsitVD.js';
-import EPSG2056 from '@geoblocks/proj/src/EPSG_2056.js';
+import EPSG2056 from '@geoblocks/proj/EPSG_2056.js';
 
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';

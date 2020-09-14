@@ -252,7 +252,7 @@ FeatureHelper.prototype.getStyle = function (feature) {
 
   switch (type) {
     case ngeoGeometryType.LINE_STRING:
-      style = this.getLineStringStyle_(feature);
+      style = this.getLineStringStyle_(/** @type {olFeature<olGeomLineString>} */ (feature));
       break;
     case ngeoGeometryType.POINT:
       style = this.getPointStyle_(feature);
@@ -285,7 +285,7 @@ FeatureHelper.prototype.getStyle = function (feature) {
 };
 
 /**
- * @param {olFeature<import("ol/geom/Geometry.js").default>} feature Feature with linestring geometry.
+ * @param {olFeature<olGeomLineString>} feature Feature with linestring geometry.
  * @return {Array<import("ol/style/Style.js").default>} Style.
  */
 FeatureHelper.prototype.getLineStringStyle_ = function (feature) {
@@ -335,23 +335,32 @@ FeatureHelper.prototype.getLineStringStyle_ = function (feature) {
 };
 
 /**
- * @param {olFeature<import("ol/geom/Geometry.js").default>} feature Feature with linestring geometry.
+ * @param {olFeature<olGeomLineString>} feature Feature with linestring geometry.
  * @param {string} arrowDirection An ArrowDirections value.
  * @param {string} arrowPosition An ArrowPositions value.
- * @param {string} color an hex Color.
+ * @param {import('ol/color.js').Color} color an hex Color.
  * @return {Array<import("ol/style/Style.js").default>} Style Arrows style for the line.
  */
 FeatureHelper.prototype.getArrowLineStyles_ = function (feature, arrowDirection, arrowPosition, color) {
   const geometry = feature.getGeometry();
+  /** @type {olStyleStyle[]} */
   const arrowStyles = [];
 
   // Add arrow to segment fn
+  /**
+   * @param {number[]} start
+   * @param {number[]} end
+   */
   const addArrowToSegment = (start, end) => {
     const dx = end[0] - start[0];
     const dy = end[1] - start[1];
     const rotation = Math.atan2(dy, dx);
 
     // Get arrow style fn
+    /**
+     * @param {number[]} coordinate
+     * @param {boolean} invert
+     */
     const getArrowStyle = (coordinate, invert) => {
       return new olStyleStyle({
         geometry: new olGeomPoint(coordinate),
@@ -382,23 +391,30 @@ FeatureHelper.prototype.getArrowLineStyles_ = function (feature, arrowDirection,
   };
 
   // Handle arrowPosition - Add arrow on the right segment.
+  /** @type {number[][]} */
   let firstOrLastSegment = null;
-  geometry.forEachSegment((start, end) => {
-    // On "first" segment only, keep the segment and add arrow later.
-    if (arrowPosition === ArrowPositions.FIRST) {
-      if (firstOrLastSegment === null) {
-        firstOrLastSegment = [[...start], [...end]];
+  geometry.forEachSegment(
+    /**
+     * @param {number[]} start
+     * @param {number[]} end
+     */
+    (start, end) => {
+      // On "first" segment only, keep the segment and add arrow later.
+      if (arrowPosition === ArrowPositions.FIRST) {
+        if (firstOrLastSegment === null) {
+          firstOrLastSegment = [[...start], [...end]];
+        }
+        return;
       }
-      return;
+      // On "last" segment only, keep the segment and add arrow later.
+      if (arrowPosition === ArrowPositions.LAST) {
+        firstOrLastSegment = [[...start], [...end]];
+        return;
+      }
+      // On every segments.
+      addArrowToSegment(start, end);
     }
-    // On "last" segment only, keep the segment and add arrow later.
-    if (arrowPosition === ArrowPositions.LAST) {
-      firstOrLastSegment = [[...start], [...end]];
-      return;
-    }
-    // On every segments.
-    addArrowToSegment(start, end);
-  });
+  );
 
   // Add an arrow on a specific segment.
   if (firstOrLastSegment) {
@@ -1075,7 +1091,7 @@ FeatureHelper.prototype.getHaloStyle_ = function (feature) {
  * Delete the unwanted ol3 properties from the current feature then return the properties.
  * Also delete the 'ngeo_feature_type_' from the ngeo query system.
  * @param {olFeature<import("ol/geom/Geometry.js").default>} feature Feature.
- * @return {Object<string, *>} Filtered properties of the current feature.
+ * @return {Object<string, string|number|boolean>} Filtered properties of the current feature.
  * @hidden
  */
 export function getFilteredFeatureValues(feature) {

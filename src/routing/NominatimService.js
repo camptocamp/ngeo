@@ -40,7 +40,7 @@ import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
  * Service to provide access to Nominatim, which allows to search for
  * OSM data by name and address.
  * @param {angular.IHttpService} $http Angular http service.
- * @param {import("ngeo/misc/debounce.js").miscDebounce<function(string, function(Object[]): void, (function(NominatimSearchResult[]): void)|undefined): void>}  ngeoDebounce
+ * @param {import("ngeo/misc/debounce.js").miscDebounce<function(string, function(NominatimSearchResult[]): void, (function(NominatimSearchResult[]): void)|undefined): void>}  ngeoDebounce
  *    ngeo Debounce service.
  * @param {string} ngeoNominatimUrl The nominatim URL.
  * @param {import('ngeo/options.js').ngeoNominatimSearchDefaultParams} ngeoNominatimSearchDefaultParams The search parameters
@@ -58,7 +58,7 @@ export function NominatimService($http, ngeoDebounce, ngeoNominatimUrl, ngeoNomi
   this.$http_ = $http;
 
   /**
-   * @type {import("ngeo/misc/debounce.js").miscDebounce<function(string, function(Object[]): void, (function(NominatimSearchResult[]): void)|undefined): void>}
+   * @type {import("ngeo/misc/debounce.js").miscDebounce<function(string, function(NominatimSearchResult[]): void, (function(NominatimSearchResult[]): void)|undefined): void>}
    */
   this.ngeoDebounce_ = ngeoDebounce;
 
@@ -88,7 +88,7 @@ export function NominatimService($http, ngeoDebounce, ngeoNominatimUrl, ngeoNomi
   this.typeaheadDebounceDelay_ = 500;
 
   /**
-   * @type {(query: string, syncResults: (result: NominatimSearchResult[]) => void, asyncResults?: ((result: NominatimSearchResult[]) => void) | undefined) => void}
+   * @type {(query: string, syncResults: (result: NominatimSearchResult[]) => void, asyncResults: ((result: NominatimSearchResult[]) => void) | undefined) => void}
    */
   this.typeaheadSourceDebounced = this.ngeoDebounce_(
     this.typeaheadSource_.bind(this),
@@ -100,8 +100,8 @@ export function NominatimService($http, ngeoDebounce, ngeoNominatimUrl, ngeoNomi
 /**
  * Search by name
  * @param {string} query Search query
- * @param {?Object} params Optional parameters
- * @return {angular.IHttpPromise<Object>} promise of the Nominatim API request
+ * @param {?Object<string, string>} params Optional parameters
+ * @return {angular.IHttpPromise<NominatimSearchResponseResult[]>} promise of the Nominatim API request
  * @see https://wiki.openstreetmap.org/wiki/Nominatim#Search
  */
 NominatimService.prototype.search = function (query, params) {
@@ -128,8 +128,8 @@ NominatimService.prototype.search = function (query, params) {
 /**
  * Reverse Geocoding
  * @param {import("ol/coordinate.js").Coordinate} coordinate Search coordinate in LonLat projection
- * @param {(Object|undefined)} params Optional parameters
- * @return {angular.IHttpPromise<Object>} promise of the Nominatim API request
+ * @param {(Object<string, string>|undefined)} params Optional parameters
+ * @return {angular.IHttpPromise<import('./NominatimService').NominatimSearchResponseResult>} promise of the Nominatim API request
  * @see https://wiki.openstreetmap.org/wiki/Nominatim#Reverse_Geocoding
  */
 NominatimService.prototype.reverse = function (coordinate, params) {
@@ -138,8 +138,8 @@ NominatimService.prototype.reverse = function (coordinate, params) {
   params = Object.assign({}, params);
 
   // coordinate
-  params.lon = coordinate[0];
-  params.lat = coordinate[1];
+  params.lon = `${coordinate[0]}`;
+  params.lat = `${coordinate[1]}`;
 
   // require JSON response
   params.format = 'json';
@@ -160,7 +160,6 @@ NominatimService.prototype.reverse = function (coordinate, params) {
  * @param {string} query Search query
  * @param {(result: NominatimSearchResult[]) => void} syncResults Callback for synchronous execution, unused
  * @param {(result: NominatimSearchResult[]) => void} [asyncResults] Callback for asynchronous execution
- * @return {void}
  */
 NominatimService.prototype.typeaheadSource_ = function (query, syncResults, asyncResults) {
   /**
