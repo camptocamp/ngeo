@@ -183,13 +183,14 @@ class Controller {
               fill: new olStyleFill({
                 color: this.fillColor || '#000000',
               }),
-              font: '900 30px "Font Awesome 5 Free"',
-              offsetY: -15,
+              font: '900 24px "sans-serif"',
               stroke: new olStyleStroke({
                 width: 3,
                 color: this.strokeColor || '#000000',
               }),
-              text: '\uf041',
+              offsetX: -5,
+              text: '\u27A4', // "BLACK RIGHTWARDS ARROWHEAD" HTML Dingbats symbol.
+              rotation: Math.PI / 2,
             }),
           }),
         ];
