@@ -145,7 +145,14 @@ VectorEncoder.prototype.encodeVectorLayer = function (
     }
     const styleValue = `${stylesValue.join(',')}-${geometryType}`;
     const styleKey = `[${FEATURE_STYLE_PROP} = '${styleValue}']`;
-    // @ts-ignore: unrepresantable Mapfish print object
+
+    const geojsonFeature = origGeojsonFeature;
+    if (geojsonFeature.properties === null) {
+      geojsonFeature.properties = {};
+    }
+    geojsonFeature.properties[FEATURE_STYLE_PROP] = styleValue;
+    geojsonFeatures.push(geojsonFeature);
+
     if (mapfishStyleObject[styleKey]) {
       return;
     }
@@ -156,12 +163,6 @@ VectorEncoder.prototype.encodeVectorLayer = function (
     };
     // @ts-ignore: unrepresantable Mapfish print object
     mapfishStyleObject[styleKey] = styleObject;
-    const geojsonFeature = this.geojsonFormat.writeFeatureObject(originalFeature);
-    if (geojsonFeature.properties === null) {
-      geojsonFeature.properties = {};
-    }
-    geojsonFeature.properties[FEATURE_STYLE_PROP] = styleValue;
-    geojsonFeatures.push(geojsonFeature);
     for (const style of styles) {
       const mapfishPrintStyle = this.encodeVectorStyle(
         geometryType,
@@ -200,9 +201,6 @@ VectorEncoder.prototype.encodeVectorLayer = function (
 };
 
 /**
-<<<<<<< HEAD
- * @param {string} geometryType Type of the GeoJSON geometry
-=======
  * Transforms a style with a geometry to a new feature.
  * @param {import("ol/style/Style.js").default} style Style.
  * @returns {olFeature<import("ol/geom/Geometry.js").default>} A feature from the style.
@@ -223,8 +221,7 @@ VectorEncoder.prototype.newFeatureFromStyle_ = function (style) {
 };
 
 /**
- * @param {import("ol/geom/GeometryType.js").default} geometryType Type of the GeoJSON geometry
->>>>>>> Print style with geometry as new feature
+ * @param {string} geometryType Type of the GeoJSON geometry
  * @param {number} resolution Resolution.
  * @param {import("ol/style/Style.js").default} style Style.
  * @param {number} destiontionPrintDpi The destination print DPI.
