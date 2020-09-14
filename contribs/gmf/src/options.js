@@ -231,6 +231,13 @@
  * @property {OptionsLegendType} [legend]
  * @property {number} [goodnessOfFit]
  * @property {string} [defaultLayout]
+ * @property {boolean} [rotateMask] True to apply rotation on the mask instead of the map. By default,
+ *    the map rotates.
+ * @property {Object<string, string|number|boolean>} [fieldValues] optional. Key, value object to define
+ *    default value in each of your print panel field. The key refers to the property's name of the field.
+ *    Example: {'comments': 'demo', 'legend': false}. Doesn't work for the DPI and the scale. Server's
+ *    values are used in priority.
+ * @property {string[]} [hiddenAttributes] The list of attributes that should be hidden.
  */
 
 /**

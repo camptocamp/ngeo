@@ -4,7 +4,7 @@
     <div
       ng-repeat="attribute in $ctrl.layoutInfo.simpleAttributes"
       class="gmf-print-layoutinfo form-group">
-      <div ng-if="$ctrl.hiddenAttributeNames === undefined || $ctrl.hiddenAttributeNames.indexOf(attribute.name) < 0">
+      <div ng-if="$ctrl.options.hiddenAttributes === undefined || $ctrl.options.hiddenAttributes.indexOf(attribute.name) < 0">
         <input
           ng-if="attribute.type === 'number'"
           ng-model="attribute.value"
@@ -106,7 +106,7 @@
                   ng-click="$ctrl.getSetScale(scale)"
                   href="">{{scale | ngeoScalify}}</a>
               </li>
-              <span ng-if="$ctrl.scaleInput">
+              <span ng-if="::$ctrl.options.scaleInput">
                 <li class="dropdown-header" translate>Manual entry</li>
                 <li>
                   <div class="gmf-print-custom-scale">
