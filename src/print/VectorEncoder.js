@@ -164,7 +164,7 @@ VectorEncoder.prototype.encodeVectorLayer = function (
     // @ts-ignore: unrepresantable Mapfish print object
     mapfishStyleObject[styleKey] = styleObject;
     for (const style of styles) {
-      const mapfishPrintStyle = this.encodeVectorStyle(
+      const mapfishPrintStyle = this.encodeVectorStyle_(
         geometryType,
         resolution,
         style,
@@ -228,7 +228,7 @@ VectorEncoder.prototype.newFeatureFromStyle_ = function (style) {
  * @param {number=} [goodnessOfFit] Goodness of fit.
  * @returns {import('ngeo/print/mapfish-print-v3.js').MapFishPrintSymbolizer} The style
  */
-VectorEncoder.prototype.encodeVectorStyle = function (
+VectorEncoder.prototype.encodeVectorStyle_ = function (
   geometryType,
   resolution,
   style,
@@ -252,19 +252,19 @@ VectorEncoder.prototype.encodeVectorStyle = function (
   const textStyle = style.getText();
   if (styleType === PrintStyleType.POLYGON) {
     if (fillStyle !== null) {
-      return this.encodeVectorStylePolygon(fillStyle, strokeStyle);
+      return this.encodeVectorStyle_Polygon_(fillStyle, strokeStyle);
     }
   } else if (styleType === PrintStyleType.LINE_STRING) {
     if (strokeStyle !== null) {
-      return this.encodeVectorStyleLine(strokeStyle);
+      return this.encodeVectorStyle_Line_(strokeStyle);
     }
   } else if (styleType === PrintStyleType.POINT) {
     if (imageStyle !== null) {
-      return this.encodeVectorStylePoint(resolution, imageStyle, destiontionPrintDpi);
+      return this.encodeVectorStyle_Point_(resolution, imageStyle, destiontionPrintDpi);
     }
   }
   if (textStyle !== null) {
-    return this.encodeTextStyle(textStyle, goodnessOfFit);
+    return this.encodeTextStyle_(textStyle, goodnessOfFit);
   }
 };
 
@@ -273,7 +273,7 @@ VectorEncoder.prototype.encodeVectorStyle = function (
  *    MapFish Print symbolizer.
  * @param {import("ol/style/Fill.js").default} fillStyle Fill style.
  */
-VectorEncoder.prototype.encodeVectorStyleFill = function (symbolizer, fillStyle) {
+VectorEncoder.prototype.encodeVectorStyle_Fill_ = function (symbolizer, fillStyle) {
   let fillColor = /** @type {import('ol/color.js').Color} */ (fillStyle.getColor());
   if (fillColor !== null) {
     console.assert(typeof fillColor === 'string' || Array.isArray(fillColor));
@@ -288,11 +288,11 @@ VectorEncoder.prototype.encodeVectorStyleFill = function (symbolizer, fillStyle)
  * @param {import("ol/style/Stroke.js").default} strokeStyle Stroke style.
  * @returns {import('ngeo/print/mapfish-print-v3.js').MapFishPrintSymbolizer} The style
  */
-VectorEncoder.prototype.encodeVectorStyleLine = function (strokeStyle) {
+VectorEncoder.prototype.encodeVectorStyle_Line_ = function (strokeStyle) {
   const symbolizer = /** @type {import('ngeo/print/mapfish-print-v3.js').MapFishPrintSymbolizerLine} */ ({
     type: 'line',
   });
-  this.encodeVectorStyleStroke(symbolizer, strokeStyle);
+  this.encodeVectorStyle_Stroke_(symbolizer, strokeStyle);
   return symbolizer;
 };
 
@@ -302,7 +302,7 @@ VectorEncoder.prototype.encodeVectorStyleLine = function (strokeStyle) {
  * @param {number} destiontionPrintDpi The destination print DPI.
  * @returns {import('ngeo/print/mapfish-print-v3.js').MapFishPrintSymbolizer} The style
  */
-VectorEncoder.prototype.encodeVectorStylePoint = function (resolution, imageStyle, destiontionPrintDpi) {
+VectorEncoder.prototype.encodeVectorStyle_Point_ = function (resolution, imageStyle, destiontionPrintDpi) {
   let symbolizer;
   if (imageStyle instanceof olStyleCircle) {
     symbolizer = /** @type {import('ngeo/print/mapfish-print-v3.js').MapFishPrintSymbolizerPoint} */ ({
@@ -311,11 +311,11 @@ VectorEncoder.prototype.encodeVectorStylePoint = function (resolution, imageStyl
     symbolizer.pointRadius = imageStyle.getRadius();
     const fillStyle = imageStyle.getFill();
     if (fillStyle !== null) {
-      this.encodeVectorStyleFill(symbolizer, fillStyle);
+      this.encodeVectorStyle_Fill_(symbolizer, fillStyle);
     }
     const strokeStyle = imageStyle.getStroke();
     if (strokeStyle !== null) {
-      this.encodeVectorStyleStroke(symbolizer, strokeStyle);
+      this.encodeVectorStyle_Stroke_(symbolizer, strokeStyle);
     }
   } else if (imageStyle instanceof olStyleIcon) {
     const imgSrc = imageStyle.getSrc();
@@ -371,13 +371,13 @@ VectorEncoder.prototype.encodeVectorStylePoint = function (resolution, imageStyl
  * @param {import("ol/style/Stroke.js").default} strokeStyle Stroke style.
  * @returns {import('ngeo/print/mapfish-print-v3.js').MapFishPrintSymbolizer} The style
  */
-VectorEncoder.prototype.encodeVectorStylePolygon = function (fillStyle, strokeStyle) {
+VectorEncoder.prototype.encodeVectorStyle_Polygon_ = function (fillStyle, strokeStyle) {
   const symbolizer = /** @type {import('ngeo/print/mapfish-print-v3.js').MapFishPrintSymbolizerPolygon} */ ({
     type: 'polygon',
   });
-  this.encodeVectorStyleFill(symbolizer, fillStyle);
+  this.encodeVectorStyle_Fill_(symbolizer, fillStyle);
   if (strokeStyle !== null) {
-    this.encodeVectorStyleStroke(symbolizer, strokeStyle);
+    this.encodeVectorStyle_Stroke_(symbolizer, strokeStyle);
   }
   return symbolizer;
 };
@@ -387,7 +387,7 @@ VectorEncoder.prototype.encodeVectorStylePolygon = function (fillStyle, strokeSt
  *      symbolizer MapFish Print symbolizer.
  * @param {import("ol/style/Stroke.js").default} strokeStyle Stroke style.
  */
-VectorEncoder.prototype.encodeVectorStyleStroke = function (symbolizer, strokeStyle) {
+VectorEncoder.prototype.encodeVectorStyle_Stroke_ = function (symbolizer, strokeStyle) {
   const strokeColor = strokeStyle.getColor();
   if (strokeColor !== null) {
     if (!(typeof strokeColor === 'string' || Array.isArray(strokeColor))) {
@@ -421,7 +421,7 @@ VectorEncoder.prototype.encodeVectorStyleStroke = function (symbolizer, strokeSt
  * @param {number=} [goodnessOfFit] Goodness of fit.
  * @returns {import('ngeo/print/mapfish-print-v3.js').MapFishPrintSymbolizer} The style
  */
-VectorEncoder.prototype.encodeTextStyle = function (textStyle, goodnessOfFit) {
+VectorEncoder.prototype.encodeTextStyle_ = function (textStyle, goodnessOfFit) {
   const symbolizer = /** @type {import('ngeo/print/mapfish-print-v3.js').MapFishPrintSymbolizerText} */ ({
     type: 'Text',
   });
