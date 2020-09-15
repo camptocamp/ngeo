@@ -13,6 +13,7 @@
     <link href="<%= htmlWebpackPlugin.files.css[css] %>" rel="stylesheet">
     <% } %>
   </head>
+
   <body ng-class="{'gmf-mobile-nav-is-visible': mainCtrl.navIsVisible(),
                    'gmf-mobile-nav-left-is-visible': mainCtrl.leftNavVisible,
                    'gmf-mobile-nav-right-is-visible': mainCtrl.rightNavVisible}">
@@ -25,7 +26,8 @@
       <gmf-map
         gmf-map-map="mainCtrl.map"
         gmf-map-manage-resize="mainCtrl.manageResize"
-        gmf-map-resize-transition="mainCtrl.resizeTransition"></gmf-map>
+        gmf-map-resize-transition="mainCtrl.resizeTransition">
+      </gmf-map>
 
       <div ng-show="!mainCtrl.leftNavVisible && !mainCtrl.rightNavVisible" class="nav-swipper nav-swipper-left" ng-swipe-right="mainCtrl.toggleLeftNavVisibility()"></div>
       <div ng-show="!mainCtrl.leftNavVisible && !mainCtrl.rightNavVisible" class="nav-swipper nav-swipper-right" ng-swipe-left="mainCtrl.toggleRightNavVisibility()"></div>
@@ -53,8 +55,7 @@
         ng-click="mainCtrl.toggleLeftNavVisibility()">
         <%=require('gmf/icons/layers.svg')%>
       </button>
-      <gmf-search gmf-search-map="mainCtrl.map"
-        gmf-search-datasources="mainCtrl.searchDatasources"
+      <gmf-search gmf-search-map="::mainCtrl.map"
         gmf-search-listeners="::mainCtrl.searchListeners">
       </gmf-search>
       <button class="gmf-mobile-nav-trigger gmf-mobile-nav-right-trigger"
@@ -72,7 +73,7 @@
       </div>
       <button ngeo-geolocation=""
         ngeo-geolocation-map="::mainCtrl.map"
-        ngeo-geolocation-options="::mainCtrl.geolocationOptions">
+        ng-if="::mainCtrl.options.geolocalisation">
         <span class="far fa-dot-circle"></span>
       </button>
       <ngeo-displaywindow

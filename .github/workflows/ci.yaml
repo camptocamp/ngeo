@@ -1,5 +1,4 @@
 ---
-
 name: Continuous integration
 
 on:
@@ -42,8 +41,9 @@ jobs:
       # Lint
       - run: make lint
       - run: make spell
-      - run: make check-examples-checker
+      - run: npm run typecheck
       - run: make test
+      - run: make check-examples-checker
       # Webpack build of ngeo/gmf examples and gmf apps
       - run: NODE_ENV=production make examples-hosted
       - run: make check-examples
@@ -53,7 +53,6 @@ jobs:
           path: .build/examples-hosted
         if: failure()
 
-      - run: npm run typecheck
       # Generate API doc
       - run: npm run doc
       - run: make jsdoc

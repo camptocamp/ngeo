@@ -62,7 +62,6 @@
         <%=require('gmf/icons/layers.svg')%>
       </button>
       <gmf-search gmf-search-map="::mainCtrl.map"
-        gmf-search-datasources="::mainCtrl.searchDatasources"
         gmf-search-listeners="::mainCtrl.searchListeners">
       </gmf-search>
       <button class="gmf-mobile-nav-trigger gmf-mobile-nav-right-trigger"
@@ -80,7 +79,7 @@
       </div>
       <button ngeo-geolocation=""
         ngeo-geolocation-map="::mainCtrl.map"
-        ngeo-geolocation-options="::mainCtrl.geolocationOptions">
+        ng-if="::mainCtrl.options.geolocalisation">
         <span class="far fa-dot-circle"></span>
       </button>
       <ngeo-displaywindow

@@ -39,10 +39,6 @@ import gmfFloorModule from 'gmf/floor/module.js';
 import ngeoGooglestreetviewModule from 'ngeo/googlestreetview/module.js';
 import ngeoRoutingModule from 'ngeo/routing/module.js';
 import ngeoStatemanagerWfsPermalink from 'ngeo/statemanager/WfsPermalink.js';
-import Style from 'ol/style/Style.js';
-import Circle from 'ol/style/Circle.js';
-import Fill from 'ol/style/Fill.js';
-import Stroke from 'ol/style/Stroke.js';
 
 if (!window.requestAnimationFrame) {
   alert(
@@ -62,57 +58,23 @@ class Controller extends AbstractDesktopController {
   /**
    * @param {angular.IScope} $scope Scope.
    * @param {angular.auto.IInjectorService} $injector Main injector.
+   * @param {angular.gettext.gettextCatalog} gettextCatalog The internationalisation catalogue.
    * @ngInject
    */
-  constructor($scope, $injector) {
+  constructor($scope, $injector, gettextCatalog) {
     super($scope, $injector);
 
     if (this.dimensions.FLOOR == undefined) {
       this.dimensions.FLOOR = '*';
     }
 
-    /**
-     * @type {boolean}
-     */
-    this.showInfobar = true;
-
-    const radius = 5;
-    const fill = new Fill({color: [255, 255, 255, 0.6]});
-    const stroke = new Stroke({color: [255, 0, 0, 1], width: 2});
-    const image = new Circle({fill, radius, stroke});
-    const defaultSearchStyle = new Style({
-      fill,
-      image,
-      stroke,
-    });
-
-    /**
-     * @type {Object<string, import('ol/style/Style.js').default>} Map of styles for search overlay.
-     * @export
-     */
-    this.searchStyles = {
-      'default': defaultSearchStyle,
-    };
-
     // Allow angular-gettext-tools to collect the strings to translate
-    /** @type {angular.gettext.gettextCatalog} */
-    const gettextCatalog = $injector.get('gettextCatalog');
     gettextCatalog.getString('OSM_time_merged');
     gettextCatalog.getString('OSM_time (merged)');
     gettextCatalog.getString('Learning [merged]');
     gettextCatalog.getString('Add a theme');
     gettextCatalog.getString('Add a sub theme');
     gettextCatalog.getString('Add a layer');
-  }
-
-  /**
-   * @param {JQueryEventObject} event keydown event.
-   */
-  onKeydown(event) {
-    if (event && event.ctrlKey && event.key === 'p') {
-      this.printPanelActive = true;
-      event.preventDefault();
-    }
   }
 }
 

@@ -39,32 +39,7 @@ import olFormatGeoJSON from 'ol/format/GeoJSON.js';
 import * as olProj from 'ol/proj.js';
 import {appendParams as olUriAppendParams} from 'ol/uri.js';
 import SimpleGeometry from 'ol/geom/SimpleGeometry.js';
-import {buildStyle} from 'gmf/options.js';
-
-/**
- * @typedef {Object} gmfSearchAction
- * @property {string} action The action
- * @property {string} title The title
- */
-
-/**
- * Datasource configuration options for the search directive.
- * @typedef {Object} SearchComponentDatasource
- * @property {Bloodhound.BloodhoundOptions<GeoJSON.FeatureCollection>} [bloodhoundOptions] The optional Bloodhound configuration for this
- * data set. See: https://github.com/twitter/typeahead.js/blob/master/doc/bloodhound.md
- * @property {string} labelKey The name of a corresponding GeoJSON property key in the current dataset.
- * The bound value of this property key will be used as label.
- * @property {string[]} [groupValues] Possible values for the 'layer_name' key.
- * Used to define groups of dataset.
- * @property {gmfSearchAction[]} [groupActions] List of allowed actions. The list may contain a
- * combination of `add_theme`, `add_group` or `add_layer`
- * @property {string} [projection] The geometry's projection for this set of data.
- * @property {Twitter.Typeahead.Dataset<olFeature<import('ol/geom/Geometry.js').default>>} [typeaheadDatasetOptions] The optional Twitter.Typeahead.
- *    configuration for this dataset. See: https://github.com/twitter/typeahead.js/blob/master/
- * @property {string} url URL of the search service. Must contain a '%QUERY' term that will be
- * replaced by the input string.
- * @property {string} [datasetTitle]
- */
+import {buildStyle} from 'ngeo/options.js';
 
 /**
  * @type {angular.IModule}
@@ -128,44 +103,11 @@ function gmfSearchTemplateUrl($element, $attrs, gmfSearchTemplateUrl) {
  * is responsible to initialize the {@link import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr}
  * with the map.
  *
- * Example flat results:
+ * Example:
  *
  *      <gmf-search gmf-search-map="::ctrl.map"
- *        gmf-search-options="::ctrl.searchOptions"
- *        gmf-search-datasources="::ctrl.searchDatasources">
+ *        gmf-search-options="::ctrl.searchOptions">
  *      </gmf-search>
- *      <script>
- *        (function() {
- *          let module = angular.module('app');
- *          module.value('fulltextsearchUrl', '${request.route_url(
- *            'fulltextsearch', _query={"limit": 20}
- *          ) | n}');
- *          module.value('gmfSearchGroups', []);
- *          module.constant('gmfSearchActions', [
- *                {action: 'add_theme', title: 'Add a theme'},
- *                {action: 'add_group', title: 'Add a sub theme'},
- *                {action: 'add_layer', title: 'Add a layer'}
- *          ]);
- *        })();
- *      </script>
- *
- * Example with categories:
- *
- *      <gmf-search gmf-search-map="::ctrl.map"
- *        gmf-search-options="::ctrl.searchOptions"
- *        gmf-search-datasources="::ctrl.searchDatasources">
- *      </gmf-search>
- *      <script>
- *        (function() {
- *          let module = angular.module('app');
- *          module.value('fulltextsearchUrl', '${request.route_url(
- *            'fulltextsearch',
- *            _query={"limit": 30, "partitionlimit": 5}
- *          ) | n}');
- *          module.value('gmfSearchGroups', ${dumps(fulltextsearch_groups) | n});
- *          module.value('gmfSearchActions', []);
- *        })();
- *     </scriptrchUrl' value in the examples above set three "_query" parameters: "limit",
  *
  * The 'fulltextsearchUrl' value in the examples above set three "_query" parameters: "limit",
  * "partitionlimit" and "ranksystem". For this last one "ts_rank_cd" is the only effective value. It's used to
@@ -173,17 +115,14 @@ function gmfSearchTemplateUrl($element, $attrs, gmfSearchTemplateUrl) {
  * this value, the PostgreSQL function "similarity" (module pg_trgm) is used for the ranking. Read the
  * full-text search c2cgeoportal documentation to know more.
  * You can also add these parameters to the "url" variable of one (or more) of the
- * SearchDirectiveDatasource given to this component (here within the "ctrl.searchDatasources"). That
+ * SearchDirectiveDatasource given to this component. That
  * allows you to have multiples configurations on one search component.
  *
  * @htmlAttribute {string} gmf-search-input-value The input value (read only).
  * @htmlAttribute {import("ol/Map.js").default} gmf-search-map The map.
  * @htmlAttribute {Twitter.Typeahead.Options|undefined} gmf-search-options Addition Twitter.Typeahead.
  *    options.
- * @htmlAttribute {SearchComponentDatasource} gmf-search-datasource
- *    The datasources.
- * @htmlAttribute {SearchComponentListeners} gmf-search-listeners
- *    The listeners.
+ * @htmlAttribute {SearchComponentListeners} gmf-search-listeners The listeners.
  * @htmlAttribute {function=} gmf-search-on-init Optional function called when the component is initialized.
  * @htmlAttribute {function=} gmf-search-action Optional function called when no default action is defined.
  * @ngdoc component
@@ -193,7 +132,6 @@ const searchComponent = {
   bindings: {
     'inputValue': '=?gmfSearchInputValue',
     'map': '<gmfSearchMap',
-    'datasources': '<gmfSearchDatasources',
     'typeaheadOptions': '<?gmfSearchOptions',
     'additionalListeners': '<gmfSearchListeners',
     'onInitCallback': '<?gmfSearchOnInit',
@@ -232,6 +170,8 @@ class SearchController {
    *    gmf Full text search service.
    * @param {import("ngeo/statemanager/Location.js").StatemanagerLocation} ngeoLocation The location service.
    * @param {import('gmf/options.js').gmfSearchOptions} gmfSearchOptions The options.
+   * @param {import('gmf/options.js').gmfSearchGroups} gmfSearchGroups The groups.
+   * @param {string} fulltextsearchUrl The service URL.
    * @ngInject
    * @ngdoc controller
    * @ngname GmfSearchController
@@ -249,12 +189,13 @@ class SearchController {
     gmfTreeManager,
     gmfSearchFulltextSearch,
     ngeoLocation,
-    gmfSearchOptions
+    gmfSearchOptions,
+    gmfSearchGroups,
+    fulltextsearchUrl
   ) {
-    /**
-     * @type {import('gmf/options.js').gmfSearchOptions}
-     */
     this.options = gmfSearchOptions;
+    this.groups = gmfSearchGroups;
+    this.fulltextsearchUrl = fulltextsearchUrl;
 
     /**
      * @type {JQuery}
@@ -334,12 +275,6 @@ class SearchController {
     this.map = null;
 
     /**
-     * @type {Object}
-     * @private
-     */
-    this.styles_ = {};
-
-    /**
      * @type {?function(): void}
      */
     this.onInitCallback = null;
@@ -352,7 +287,8 @@ class SearchController {
     /**
      * @type {string}
      */
-    this.placeholder = '';
+    this.placeholder = this.options.placeholder || 'Search…';
+    gettextCatalog.getString('Search…');
 
     /**
      * Supported projections for coordinates search.
@@ -365,11 +301,6 @@ class SearchController {
      * @private
      */
     this.featureOverlay_ = ngeoFeatureOverlayMgr.getFeatureOverlay();
-
-    /**
-     * @type {SearchComponentDatasource[]}
-     */
-    this.datasources = [];
 
     /**
      * @type {Twitter.Typeahead.Options}
@@ -407,27 +338,6 @@ class SearchController {
      * @type {import('ngeo/search/searchDirective.js').SearchDirectiveListeners<olFeature<import('ol/geom/Geometry.js').default>>}
      */
     this.additionalListeners = {};
-  }
-
-  /**
-   * Called on initialization of the controller.
-   */
-  $onInit() {
-    if (!this.map) {
-      throw new Error('Missing map');
-    }
-    if (!this.ngeoLocation_) {
-      throw new Error('Missing ngeoLocation');
-    }
-    const gettextCatalog = this.gettextCatalog_;
-    gettextCatalog.getString('Search…');
-    this.placeholder = this.options.placeholder || 'Search…';
-
-    // Init coordinates projections instances
-    this.coordinatesProjectionsInstances =
-      this.options.coordinatesProjections === undefined
-        ? [this.map.getView().getProjection()]
-        : this.ngeoAutoProjection_.getProjectionList(this.options.coordinatesProjections);
 
     if (!this.options.clearButton) {
       // Empty the search field on focus and blur.
@@ -436,22 +346,9 @@ class SearchController {
       });
     }
 
-    if (this.onInitCallback) {
-      this.onInitCallback();
-    }
-
     this.featureOverlay_.setStyle(this.getSearchStyle_.bind(this));
 
-    this.initDatasets_();
-
     this.scope_.$watch(() => this.color, this.setStyleColor.bind(this));
-
-    this.listeners = this.mergeListeners_(this.additionalListeners, {
-      select: this.select_.bind(this),
-      change: this.handleChange_.bind(this),
-      close: this.close_.bind(this),
-      datasetsempty: this.datasetsempty_.bind(this),
-    });
 
     if (this.ngeoLocation_) {
       const searchQuery = this.ngeoLocation_.getParam('search');
@@ -468,6 +365,29 @@ class SearchController {
         }
         this.fulltextsearch_(searchQuery, resultIndex, mapZoom);
       }
+    }
+  }
+
+  /**
+   * Called on initialization of the controller.
+   */
+  $onInit() {
+    this.coordinatesProjectionsInstances =
+      this.options.coordinatesProjections === undefined
+        ? [this.map.getView().getProjection()]
+        : this.ngeoAutoProjection_.getProjectionList(this.options.coordinatesProjections);
+
+    this.initDatasets_();
+
+    this.listeners = this.mergeListeners_(this.additionalListeners, {
+      select: this.select_.bind(this),
+      change: this.handleChange_.bind(this),
+      close: this.close_.bind(this),
+      datasetsempty: this.datasetsempty_.bind(this),
+    });
+
+    if (this.onInitCallback) {
+      this.onInitCallback();
     }
   }
 
@@ -512,15 +432,12 @@ class SearchController {
    * @private
    */
   initDatasets_() {
-    if (!this.map) {
-      throw new Error('Missing map');
-    }
     const gettextCatalog = this.gettextCatalog_;
-    for (const datasource of this.datasources) {
+    for (const datasource of this.options.datasources || []) {
       /** @type {string[]} */
-      const groupValues = datasource.groupValues !== undefined ? datasource.groupValues : [];
-      /** @type {gmfSearchAction[]} */
-      const groupActions = datasource.groupActions ? datasource.groupActions : [];
+      const groupValues = datasource.groupValues !== undefined ? datasource.groupValues : this.groups;
+      /** @type {import('gmf/options.js').SearchAction[]} */
+      const groupActions = datasource.groupActions || [];
       /** @type {{title: string, filter: function(import("geojson").Feature): boolean}[]} */
       const filters = [];
 
@@ -554,7 +471,7 @@ class SearchController {
               labelKey: datasource.labelKey,
               projection: datasource.projection,
               typeaheadDatasetOptions: datasource.typeaheadDatasetOptions,
-              url: datasource.url,
+              url: datasource.url || this.fulltextsearchUrl,
             },
             filter.filter
           )
@@ -587,7 +504,7 @@ class SearchController {
   }
 
   /**
-   * @param {SearchComponentDatasource} config The config of the dataset.
+   * @param {import('gmf/options.js').SearchComponentDatasource} config The config of the dataset.
    * @param {(function(import("geojson").Feature): boolean)=} opt_filter A filter function
    *     based on a GeoJSONFeaturesCollection's array.
    * @return {Twitter.Typeahead.Dataset<olFeature<import('ol/geom/Geometry.js').default>>} A typeahead dataset.
@@ -653,7 +570,9 @@ class SearchController {
           // add it to the corresponding group
           return (
             !properties.layer_name &&
-            /** @type {gmfSearchAction[]} */ (properties.actions).some((act) => act.action === action)
+            /** @type {import('gmf/options.js').SearchAction[]} */ (properties.actions).some(
+              (act) => act.action === action
+            )
           );
         } else {
           return false;
@@ -690,7 +609,7 @@ class SearchController {
   }
 
   /**
-   * @param {SearchComponentDatasource} config The config of the dataset.
+   * @param {import('gmf/options.js').SearchComponentDatasource} config The config of the dataset.
    * @param {(function(import("geojson").Feature): boolean)=} opt_filter Afilter function
    *     based on a GeoJSONFeaturesCollection's array.
    * @return {Bloodhound<olFeature<import('ol/geom/Geometry.js').default>[]>} The bloodhound engine.
@@ -940,7 +859,8 @@ class SearchController {
         } else if (actionName == 'add_group') {
           this.gmfTreeManager_.addGroupByName(actionData, true);
         } else if (actionName == 'add_layer') {
-          const groupActions = /** @type {gmfSearchAction[]} */ (this.datasources[0].groupActions);
+          const groupActions = /** @type {import('gmf/options.js').SearchAction[]} */ (this.options
+            .datasources[0].groupActions);
           let datasourcesActionsHaveAddLayer;
           groupActions.forEach((groupAction) => {
             if (groupAction.action === 'add_layer') {

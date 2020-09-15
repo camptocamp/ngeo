@@ -32,7 +32,7 @@ import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr.js';
 
 import ngeoProfileElevationComponent from 'ngeo/profile/elevationComponent.js';
 
-import {buildStyle} from 'gmf/options.js';
+import {buildStyle} from 'ngeo/options.js';
 
 import 'bootstrap/js/src/dropdown.js';
 

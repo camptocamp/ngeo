@@ -28,8 +28,6 @@ import gmfAuthenticationModule from 'gmf/authentication/module.js';
 import gmfBackgroundlayerselectorComponent from 'gmf/backgroundlayerselector/component.js';
 import gmfDatasourceModule from 'gmf/datasource/module.js';
 import gmfDisclaimerComponent from 'gmf/disclaimer/component.js';
-import gmfDrawingModule from 'gmf/drawing/module.js';
-import gmfFiltersModule from 'gmf/filters/module.js';
 import gmfLayertreeModule from 'gmf/layertree/module.js';
 import gmfMapModule from 'gmf/map/module.js';
 import gmfQueryExtraModule from 'gmf/query/extraModule.js';
@@ -46,10 +44,6 @@ import ngeoStatemanagerWfsPermalink from 'ngeo/statemanager/WfsPermalink.js';
 import ngeoGeolocation from 'ngeo/geolocation/component.js';
 import * as olArray from 'ol/array.js';
 import {listen} from 'ol/events.js';
-import olStyleCircle from 'ol/style/Circle.js';
-import olStyleFill from 'ol/style/Fill.js';
-import olStyleStroke from 'ol/style/Stroke.js';
-import olStyleStyle from 'ol/style/Style.js';
 import {ThemeEventType} from 'gmf/theme/Manager.js';
 import {getBrowserLanguage} from 'ngeo/utils.js';
 // @ts-ignore
@@ -58,7 +52,6 @@ import '@geoblocks/proj/src/somerc.js';
 import '@geoblocks/proj/src/lcc.js';
 import '@geoblocks/proj/src/tmerc.js';
 import {create as createProjection} from '@geoblocks/proj/src/utils.js';
-import {get as getProjection} from 'ol/proj.js';
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
 import olControlScaleLine from 'ol/control/ScaleLine.js';
@@ -67,20 +60,6 @@ import olControlRotate from 'ol/control/Rotate.js';
 import {defaults as interactionsDefaults} from 'ol/interaction.js';
 import olInteractionDragPan from 'ol/interaction/DragPan.js';
 import {noModifierKeys} from 'ol/events/condition.js';
-
-/**
- * A part of the application config.
- *
- * @typedef {Object} Config
- * @property {import("ol/style/Style.js").default} [positionFeatureStyle]
- * @property {import("ol/style/Style.js").default} [accuracyFeatureStyle]
- * @property {number} [geolocationZoom]
- * @property {boolean} [autorotate]
- * @property {import('ol/Map.js').Options} [map]
- * @property {import('ol/View.js').Options} [view]
- * @property {import("ol/Collection.js").default<import('ol/control/Control.js').default>|Array<import('ol/control/Control.js').default>} [mapControls]
- * @property {import("ol/Collection.js").default<import('ol/interaction/Interaction.js').default>|Array<import('ol/interaction/Interaction.js').default>} [mapInteractions]
- */
 
 /**
  * Application abstract controller.
@@ -99,28 +78,28 @@ import {noModifierKeys} from 'ol/events/condition.js';
  * @ngInject
  */
 export function AbstractAppController($scope, $injector, mobile) {
+  /** @type {import('gmf/options.js').gmfProjectionsOptions} */
   const projections = $injector.get('gmfProjectionsOptions');
   for (const code in projections) {
     createProjection(code, projections[code].definition.join(' '), projections[code].extent);
   }
-  const config = $injector.get('gmfOptions');
-  const viewConfig = config.view;
-  viewConfig.projection = getProjection(`EPSG:${viewConfig.srid || 2056}`);
+  /** @type {import('gmf/options.js').gmfOptions} */
+  this.options = $injector.get('gmfOptions');
 
   const scaleline = document.getElementById('scaleline');
   const map = new olMap(
     Object.assign(
       {
         layers: [],
-        view: new olView(viewConfig),
-        controls: config.mapControls || [
+        view: new olView(this.options.view),
+        controls: this.options.mapControls || [
           new olControlScaleLine({
             target: scaleline,
             // See: https://www.w3.org/TR/CSS21/syndata.html#length-units
             dpi: 96,
           }),
           new olControlZoom(
-            config.zoom || {
+            this.options.zoom || {
               target: mobile ? undefined : 'ol-zoom-control',
               zoomInTipLabel: '',
               zoomOutTipLabel: '',
@@ -132,19 +111,17 @@ export function AbstractAppController($scope, $injector, mobile) {
           }),
         ],
         interactions:
-          config.mapInteractions ||
+          this.options.mapInteractions ||
           interactionsDefaults(
-            config.interationDefaults ||
+            this.options.interationDefaults ||
               (mobile
-                ? {pinchRotate: true}
+                ? {}
                 : {
                     dragPan: false,
-                    pinchRotate: true,
-                    altShiftDragRotate: true,
                   })
           ),
       },
-      config.map
+      this.options.map
     )
   );
 
@@ -335,23 +312,6 @@ export function AbstractAppController($scope, $injector, mobile) {
   listen(gmfAuthentication, 'logout', userChange);
 
   /**
-   * @type {Array<import('gmf/search/component.js').SearchComponentDatasource>}
-   */
-  this.searchDatasources = [
-    {
-      labelKey: 'label',
-      groupValues: /** @type {import('gmf/options.js').gmfSearchGroups} **/ ($injector.get(
-        'gmfSearchGroups'
-      )),
-      groupActions: /** @type {Array<import('gmf/search/component.js').gmfSearchAction>} **/ ($injector.get(
-        'gmfSearchActions'
-      )),
-      projection: `EPSG:${config.srid || 2056}`,
-      url: /** @type {string} **/ ($injector.get('fulltextsearchUrl')),
-    },
-  ];
-
-  /**
    * @type {Object<string, string>}
    */
   this.dimensions = {};
@@ -397,23 +357,7 @@ export function AbstractAppController($scope, $injector, mobile) {
   /**
    * @type {boolean}
    */
-  this.leftNavVisible = false;
-
-  /**
-   * @type {boolean}
-   */
-  this.rightNavVisible = false;
-
-  /**
-   * @type {boolean}
-   */
   this.filterSelectorEnabled = false;
-
-  /**
-   * @type {boolean}
-   * @export
-   */
-  this.filterSelectorActive = false;
 
   /**
    * The active state of the ngeo query directive.
@@ -422,77 +366,9 @@ export function AbstractAppController($scope, $injector, mobile) {
   this.queryActive = true;
 
   /**
-   * Set the clearing of the ngeoQuery after the deactivation of the query
-   * @type {boolean}
-   */
-  this.queryAutoClear = true;
-
-  /**
-   * @type {boolean}
-   */
-  this.printPanelActive = false;
-
-  /**
-   * @type {boolean}
-   */
-  this.contextdataActive;
-
-  /**
-   * @type {boolean}
-   */
-  this.printActive = false;
-
-  /**
    * @type {import("ngeo/query/MapQuerent.js").MapQuerent}
    */
   this.ngeoMapQuerent_ = $injector.get('ngeoMapQuerent');
-
-  // Don't deactivate ngeoQuery on print activation
-  $scope.$watch(
-    () => this.printPanelActive,
-    (newVal) => {
-      // Clear queries if another panel is open but not if user go back to the
-      // map form the print.
-      if (!newVal && !this.queryActive) {
-        this.ngeoMapQuerent_.clear();
-      }
-      this.queryAutoClear = !newVal;
-      this.printActive = newVal;
-    }
-  );
-
-  /**
-   * The active state of the directive responsible of area measurements.
-   * @type {boolean}
-   */
-  this.measureAreaActive = false;
-
-  /**
-   * The active state of the directive responsible of point measurements.
-   * @type {boolean}
-   */
-  this.measurePointActive = false;
-
-  /**
-   * The active state of the directive responsible of length measurements.
-   * @type {boolean}
-   */
-  this.measureLengthActive = false;
-
-  /**
-   * @type {boolean}
-   */
-  this.drawFeatureActive = false;
-
-  /**
-   * @type {boolean}
-   */
-  this.drawProfilePanelActive = false;
-
-  /**
-   * @type {boolean}
-   */
-  this.routingPanelActive = false;
 
   /**
    * @type {import('gmf/authentication/Service.js').User}
@@ -521,13 +397,13 @@ export function AbstractAppController($scope, $injector, mobile) {
 
   /**
    * Default language
-   * @type {string}
+   * @type {import('gmf/options.js').defaultLang}
    */
   this.defaultLang = $injector.get('defaultLang');
 
   /**
    * Languages URL
-   * @type {Object<string, string>}
+   * @type {import('gmf/options.js').langUrls}
    */
   this.langUrls = $injector.get('langUrls');
 
@@ -539,12 +415,10 @@ export function AbstractAppController($scope, $injector, mobile) {
 
   this.initLanguage();
 
-  const mapTools = 'mapTools';
-
   /**
    * @type {string}
    */
-  this.mapToolsGroup = mapTools;
+  this.mapToolsGroup = 'mapTools';
 
   /**
    * The ngeo feature overlay manager service
@@ -560,31 +434,7 @@ export function AbstractAppController($scope, $injector, mobile) {
   const ngeoToolActivateMgr = $injector.get('ngeoToolActivateMgr');
 
   const queryToolActivate = new ngeoMiscToolActivate(this, 'queryActive');
-  ngeoToolActivateMgr.registerTool(mapTools, queryToolActivate, true);
-
-  const measureAreaActivate = new ngeoMiscToolActivate(this, 'measureAreaActive');
-  ngeoToolActivateMgr.registerTool(mapTools, measureAreaActivate, false);
-
-  const measurePointActivate = new ngeoMiscToolActivate(this, 'measurePointActive');
-  ngeoToolActivateMgr.registerTool(mapTools, measurePointActivate, false);
-
-  const measureLengthActivate = new ngeoMiscToolActivate(this, 'measureLengthActive');
-  ngeoToolActivateMgr.registerTool(mapTools, measureLengthActivate, false);
-
-  const drawFeatureActivate = new ngeoMiscToolActivate(this, 'drawFeatureActive');
-  ngeoToolActivateMgr.registerTool(mapTools, drawFeatureActivate, false);
-
-  const drawProfilePanelActivate = new ngeoMiscToolActivate(this, 'drawProfilePanelActive');
-  ngeoToolActivateMgr.registerTool(mapTools, drawProfilePanelActivate, false);
-
-  const printPanelActivate = new ngeoMiscToolActivate(this, 'printPanelActive');
-  ngeoToolActivateMgr.registerTool(mapTools, printPanelActivate, false);
-
-  const contextdataActivate = new ngeoMiscToolActivate(this, 'contextdataActive');
-  ngeoToolActivateMgr.registerTool(mapTools, contextdataActivate, false);
-
-  const routingPanelActive = new ngeoMiscToolActivate(this, 'routingPanelActive');
-  ngeoToolActivateMgr.registerTool(mapTools, routingPanelActive, false);
+  ngeoToolActivateMgr.registerTool(this.mapToolsGroup, queryToolActivate, true);
 
   $scope.$root.$on(ThemeEventType.THEME_NAME_SET, (event, name) => {
     this.gmfThemes.getThemeObject(name).then((theme) => {
@@ -764,33 +614,6 @@ export function AbstractAppController($scope, $injector, mobile) {
       Sentry.setTag(tag, tags[tag]);
     }
   }
-
-  const positionFeatureStyle =
-    config.positionFeatureStyle ||
-    new olStyleStyle({
-      image: new olStyleCircle({
-        radius: 6,
-        fill: new olStyleFill({color: 'rgba(230, 100, 100, 1)'}),
-        stroke: new olStyleStroke({color: 'rgba(230, 40, 40, 1)', width: 2}),
-      }),
-    });
-
-  const accuracyFeatureStyle =
-    config.accuracyFeatureStyle ||
-    new olStyleStyle({
-      fill: new olStyleFill({color: 'rgba(100, 100, 230, 0.3)'}),
-      stroke: new olStyleStroke({color: 'rgba(40, 40, 230, 1)', width: 2}),
-    });
-
-  /**
-   * @type {import('ngeo/geolocation/component.js').GeolocationDirectiveOptions}
-   */
-  this.geolocationOptions = {
-    positionFeatureStyle: positionFeatureStyle,
-    accuracyFeatureStyle: accuracyFeatureStyle,
-    zoom: config.geolocationZoom,
-    autorotate: config.autorotate,
-  };
 }
 
 /**
@@ -931,8 +754,6 @@ const module = angular.module('GmfAbstractAppControllerModule', [
   gmfBackgroundlayerselectorComponent.name,
   gmfDatasourceModule.name,
   gmfDisclaimerComponent.name,
-  gmfDrawingModule.name,
-  gmfFiltersModule.name,
   gmfLayertreeModule.name,
   gmfMapModule.name,
   gmfQueryExtraModule.name,

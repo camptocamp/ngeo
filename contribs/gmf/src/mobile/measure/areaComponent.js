@@ -23,7 +23,7 @@ import angular from 'angular';
 import ngeoMiscFilters from 'ngeo/misc/filters.js';
 import ngeoInteractionMeasureAreaMobile from 'ngeo/interaction/MeasureAreaMobile.js';
 import {MeasueMobileBaseController} from 'gmf/mobile/measure/baseComponent.js';
-import {buildStyle} from 'gmf/options.js';
+import {buildStyle} from 'ngeo/options.js';
 
 /**
  * @type {angular.IModule}

@@ -14,9 +14,10 @@ or PR from persons outside of Camptocamp customers or developers.
 - [Main principle](#main-principle)
 - [Coding style guide](#coding-style-guide)
 - [Main changes in the code between ngeo 2.2 and 2.3](#main-changes-in-the-code-between-ngeo-22-and-23)
-- [AngularJS names ](#angularJS-names)
+- [AngularJS names](#angularJS-names)
 - [Module management](#module-management)
 - [Good practices on components creation](#good-practices-on-components-creation)
+- [Options](#options)
 - [Limit the use of ng-controller](#limit-the-use-of-ng-controller)
 - [Templating](#templating)
   - [In `ngeo` avoid template when not needed](#in-ngeo-avoid-template-when-not-needed)
@@ -55,21 +56,9 @@ some rules that helps the code to be easly usable and customisable.
 
 ## Coding style guide
 
-We more or less follow the [AngularJS Style Guide for Closure Users at
-Google](https://google.github.io/styleguide/angularjs-google-style.html).
+Checked by puletter, can be fix with `eslint --fix`.
 
 We also use ES6 coding standards.
-
-
-## Main changes in the code between ngeo 2.2 and 2.3
-
-With Webpack, some things have changed between the current ngeo 2.3 version, and the last ones.
-
-- Functions from the goog library are no more allowed.
-- We export only one object per file. (That also means that we have split some files in multiple files).
-- We must have no more global value in the attached to the window (except in some very rare cases).
-- All AngularJS elements are now in a small module (see below in this documentation).
-- All modules import only what they need to work. No less, no more.
 
 
 ## AngularJS names
@@ -141,6 +130,36 @@ const myComponent = {
   templateUrl: ngeoMyComponentTemplateUrl
 };
 ```
+
+
+## Options
+
+We have 3 types of configurable input/output of an Angular component.
+
+### Link between component
+
+The variables that used to share data between components should be provided through the HTML attributes.
+
+### Options that can be represented as JSON
+
+All the options of a component that can be represented as JSON should be injected through one object in the
+component, should start with the prefix `ngeo` or `gmf` and should be described in one of the `options.js`
+files with a type name who is the same as the injected name.
+
+The styles should use the type
+[StyleLike](https://camptocamp.github.io/ngeo/master/jsdoc/module-contribs_gmf_src_options.html#~StyleLike)
+and be build with the function
+[buildStyle](https://camptocamp.github.io/ngeo/master/jsdoc/module-contribs_gmf_src_options.html#.buildStyle).
+
+For this kind of options we don't have to provide  a default value. It uses the standard injection mechanism,
+then the application should provide a value normally through the `dynamic.json`.
+
+For the value in the option the component don't fail if an argument is missing.
+
+### Options who is a function
+
+There is no recommendation for this kind of options.
+
 
 ## `$injector` usage
 

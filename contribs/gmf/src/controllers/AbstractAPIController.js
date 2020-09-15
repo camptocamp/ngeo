@@ -53,6 +53,4 @@ const module = angular.module('GmfAbstractAPIControllerModule', [
 
 module.controller('AbstractAPIController', AbstractAPIController);
 
-module.value('isDesktop', true);
-
 export default module;

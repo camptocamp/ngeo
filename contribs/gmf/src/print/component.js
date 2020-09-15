@@ -172,8 +172,7 @@ function gmfPrintTemplateUrl($element, $attrs, gmfPrintTemplateUrl) {
  *
  *      <gmf-print
  *        gmf-print-map="::mainCtrl.map"
- *        gmf-print-active="printActive"
- *        gmf-print-rotatemask="::true">
+ *        gmf-print-active="printActive">
  *      </gmf-print>
  *
  * Example with user defined attribute:
@@ -181,8 +180,6 @@ function gmfPrintTemplateUrl($element, $attrs, gmfPrintTemplateUrl) {
  *      <gmf-print
  *        gmf-print-map="::mainCtrl.map"
  *        gmf-print-active="printActive"
- *        gmf-print-rotatemask="::true"
- *        gmf-print-hiddenattributes="::['name']"
  *        gmf-print-attributes-out="::attributes">
  *        <div ng-repeat="attribute in ::attributes">
  *          <div ng-if="attribute.name == 'name'">
@@ -203,15 +200,6 @@ function gmfPrintTemplateUrl($element, $attrs, gmfPrintTemplateUrl) {
  * @htmlAttribute {import("ol/Map.js").default} gmf-print-map The map.
  * @htmlAttribute {boolean} gmf-print-active A boolean that informs if the
  *     panel is open or not.
- * @htmlAttribute {boolean} gmf-print-rotatemask Optional. True to apply
- *     rotation on the mask instead of the map. By default, the map rotates.
- * @htmlAttribute {Object<string, string|number|boolean>}
- *     gmf-print-fieldvalues optional. Key, value object to define default
- *     value in each of your print panel field. The key refers to the
- *     property's name of the field.
- *     Example: {'comments': 'demo', 'legend': false}. Doesn't work for the dpi
- *     and the scale. Server's values are used in priority.
- * @htmlAttribute {string[]} gmf-print-hiddenattributes The list of attributes that should be hidden.
  * @ngdoc component
  * @ngname gmfPrint
  */
@@ -219,9 +207,6 @@ const printComponent = {
   bindings: {
     'map': '<gmfPrintMap',
     'active': '=gmfPrintActive',
-    'rotateMask': '<?gmfPrintRotatemask',
-    'fieldValues': '<?gmfPrintFieldvalues',
-    'hiddenAttributeNames': '<?gmfPrintHiddenattributes',
     'attributesOut': '=?gmfPrintAttributesOut',
   },
   controller: 'GmfPrintController',
@@ -283,6 +268,8 @@ export class PrintController {
     gmfPrintOptions,
     cacheVersion
   ) {
+    this.options = gmfPrintOptions;
+
     /**
      * @type {PrintState}
      * @private
@@ -309,21 +296,6 @@ export class PrintController {
      * @type {boolean}
      */
     this.active = false;
-
-    /**
-     * @type {boolean}
-     */
-    this.rotateMask = false;
-
-    /**
-     * @type {Object<string, string|number|boolean>}
-     */
-    this.fieldValues = {};
-
-    /**
-     * @type {string}
-     */
-    this.defaultLayout;
 
     /**
      * @type {import('ngeo/print/mapfish-print-v3').MapFishPrintCapabilitiesLayoutAttribute[]}
@@ -411,11 +383,6 @@ export class PrintController {
     this.cacheVersion_ = cacheVersion;
 
     /**
-     * @type {boolean}
-     */
-    this.scaleInput = false;
-
-    /**
      * @type {import('gmf/options.js').OptionsLegendType}
      * @private
      */
@@ -425,23 +392,8 @@ export class PrintController {
       params: {},
     };
 
-    /**
-     * @type {number}
-     * @private
-     */
-    this.goodnessOfFit_ = 0.5;
-
-    if (gmfPrintOptions.scaleInput) {
-      this.scaleInput = gmfPrintOptions.scaleInput;
-    }
     if (gmfPrintOptions.legend) {
       Object.assign(this.gmfLegendOptions_, gmfPrintOptions.legend);
-    }
-    if (typeof gmfPrintOptions.goodnessOfFit === 'number') {
-      this.goodnessOfFit_ = gmfPrintOptions.goodnessOfFit;
-    }
-    if (gmfPrintOptions.defaultLayout) {
-      this.defaultLayout = gmfPrintOptions.defaultLayout;
     }
 
     /**
@@ -552,11 +504,6 @@ export class PrintController {
     this.smtpSupported = false;
 
     /**
-     * @type {string[]}
-     */
-    this.hiddenAttributeNames = [];
-
-    /**
      * @type {boolean}
      * @private
      */
@@ -660,7 +607,7 @@ export class PrintController {
     const getSizeFn = () => this.paperSize_;
 
     let getRotationFn;
-    if (this.rotateMask) {
+    if (this.options.rotateMask) {
       /**
        * @return {number} rotation to apply.
        */
@@ -722,8 +669,8 @@ export class PrintController {
           // Get capabilities - On success
           this.parseCapabilities_(resp);
           this.map.addLayer(this.maskLayer_);
-          if (this.defaultLayout) {
-            this.setLayout(this.defaultLayout);
+          if (this.options.defaultLayout) {
+            this.setLayout(this.options.defaultLayout);
           }
           this.pointerDragListenerKey_ = listen(this.map, 'pointerdrag', this.onPointerDrag_, this);
           this.mapViewResolutionChangeKey_ = listen(this.map.getView(), 'change:resolution', () => {
@@ -820,8 +767,9 @@ export class PrintController {
 
     this.updateCustomFields_();
 
+    const fieldValues = this.options.fieldValues || {};
     this.layoutInfo.legend = this.layoutInfo.attributes.includes('legend')
-      ? this.fieldValues['legend'] !== false
+      ? fieldValues['legend'] !== false
       : undefined;
     this.layoutInfo.scales = clientInfo.scales || [];
     this.layoutInfo.dpis = clientInfo.dpiSuggestions || [];
@@ -873,8 +821,8 @@ export class PrintController {
         let value =
           defaultValue !== undefined && defaultValue !== ''
             ? `${defaultValue}`
-            : name in this.fieldValues
-            ? `${this.fieldValues[name]}`
+            : name in (this.options.fieldValues || {})
+            ? `${this.options.fieldValues[name]}`
             : '';
 
         // Try to use existing form field type
@@ -945,7 +893,7 @@ export class PrintController {
     }
     this.updateRotation_(rotation);
     // Render the map to update the postcompose mask or rotate the map.
-    if (this.rotateMask) {
+    if (this.options.rotateMask) {
       this.map.render();
     } else {
       this.map.getView().setRotation(toRadians(this.rotation));
@@ -1127,7 +1075,7 @@ export class PrintController {
       format,
       customAttributes,
       email,
-      this.goodnessOfFit_
+      this.options.goodnessOfFit
     );
 
     // Add feature overlay layer to print spec.

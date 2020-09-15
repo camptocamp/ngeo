@@ -18,7 +18,7 @@
       </i>
     </div>
     <main>
-      <div class="gmf-app-map-container" ng-class="{'gmf-app-infobar-active': mainCtrl.showInfobar}">
+      <div class="gmf-app-map-container" ng-class="{'gmf-app-infobar-active': mainCtrl.options.showInfobar}">
         <div id="ol-zoom-control"></div>
         <ngeo-displaywindow
           content="mainCtrl.displaywindowContent"
@@ -69,7 +69,7 @@
         </gmf-layertree>
       </div>
       <ngeo-modal ng-model="mainCtrl.modalShareShown">
-        <gmf-share ng-if="mainCtrl.modalShareShown" gmf-share-email="true"></gmf-share>
+        <gmf-share ng-if="mainCtrl.modalShareShown"></gmf-share>
       </ngeo-modal>
     </main>
     <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=es6,default-3.6,Array.prototype.includes,Object.entries,Object.values"></script>

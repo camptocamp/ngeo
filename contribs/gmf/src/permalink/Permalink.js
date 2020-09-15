@@ -53,7 +53,7 @@ import olGeomMultiPoint from 'ol/geom/MultiPoint.js';
 import olGeomPoint from 'ol/geom/Point.js';
 import olLayerGroup from 'ol/layer/Group.js';
 import {CollectionEvent} from 'ol/Collection.js';
-import {buildStyle} from 'gmf/options.js';
+import {buildStyle} from 'ngeo/options.js';
 
 /**
  * @enum {string}

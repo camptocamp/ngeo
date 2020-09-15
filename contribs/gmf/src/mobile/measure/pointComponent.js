@@ -26,7 +26,7 @@ import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
 import {interactionDecoration} from 'ngeo/misc/decorate.js';
 import {listen, unlistenByKey} from 'ol/events.js';
 import MobileDraw from 'ngeo/interaction/MobileDraw.js';
-import {buildStyle} from 'gmf/options.js';
+import {buildStyle} from 'ngeo/options.js';
 
 /**
  * @type {angular.IModule}

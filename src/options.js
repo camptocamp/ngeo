@@ -23,44 +23,131 @@
  * @module src/options
  */
 
+import olStyleCircle from 'ol/style/Circle.js';
+import olStyleRegularShape from 'ol/style/RegularShape.js';
+import olStyleFill from 'ol/style/Fill.js';
+import olStyleStroke from 'ol/style/Stroke.js';
+import olStyle from 'ol/style/Style.js';
+import {createDefaultStyle} from 'ol/style/Style.js';
 /**
- * URL to the theme web service.
- * @typedef {string} gmfTreeUrl
+ * @typedef {Object} Fill
+ * @property {number[]|string} [color] The color.
  */
 
 /**
- * URL to the authentication web service.
- * @typedef {string} authenticationBaseUrl
+ * @typedef {Object} Stroke
+ * @property {number[]|string} [color] The color.
+ * @property {CanvasLineCap} [lineCap='round'] Line cap style: `butt`, `round`, or `square`.
+ * @property {CanvasLineJoin} [lineJoin='round'] Line join style: `bevel`, `round`, or `miter`.
+ * @property {number[]} [lineDash] Line dash pattern. Default is `null` (no dash).
+ * Please note that Internet Explorer 10 and lower do not support the `setLineDash` method on
+ * the `CanvasRenderingContext2D` and therefore this option will have no visual effect in these browsers.
+ * @property {number} [lineDashOffset=0] Line dash offset.
+ * @property {number} [miterLimit=10] Miter limit.
+ * @property {number} [width] Width.
  */
 
 /**
- * URL to the full-text search web service.
- * @typedef {string} fulltextsearchUrl
+ * Specify radius for regular polygons, or radius1 and radius2 for stars.
+ * See also: https://openlayers.org/en/latest/examples/regularshape.html
+ * @typedef {Object} RegularShape
+ * @property {Fill} [fill] Fill style.
+ * @property {number} points Number of points for stars and regular polygons. In case of a polygon, the number of points
+ * is the number of sides.
+ * @property {number} [radius] Radius of a regular polygon.
+ * @property {number} [radius1] Outer radius of a star.
+ * @property {number} [radius2] Inner radius of a star.
+ * @property {number} [angle=0] Shape's angle in radians. A value of 0 will have one of the shape's point facing up.
+ * @property {Array<number>} [displacement=[0,0]] Displacement of the shape
+ * @property {Stroke} [stroke] Stroke style.
+ * @property {number} [rotation=0] Rotation in radians (positive rotation clockwise).
+ * @property {boolean} [rotateWithView=false] Whether to rotate the shape with the view.
  */
 
 /**
- * URL to the shortener web service.
- * @typedef {string} gmfShortenerCreateUrl
+ * @typedef {Object} Circle
+ * @property {Fill} [fill] Fill style.
+ * @property {number} radius Circle radius.
+ * @property {Stroke} [stroke] Stroke style.
+ * @property {number[]} [displacement=[0,0]] displacement
  */
 
 /**
- * URL to the raster web service.
- * @typedef {string} gmfRasterUrl
+ * The style description.
+ * @typedef {Object} Style
+ * @property {Fill} [fill] The fill color.
+ * @property {Stroke} [stroke] The stoke config.
+ * @property {Circle} [circle] The circle config.
+ * @property {RegularShape} [regularShape] The regular shape config.
+ * @property {number} [zIndex] The z index.
  */
 
 /**
- * URL to the profile web service.
- * @typedef {string} gmfProfileJsonUrl
+ * @param {StyleLike} styleDescriptor The description of the style
+ * @returns {import("ol/style/Style.js").StyleLike}
  */
+export function buildStyle(styleDescriptor) {
+  if (styleDescriptor instanceof olStyle) {
+    return styleDescriptor;
+  } else if (!styleDescriptor) {
+    return createDefaultStyle;
+  } else if (Array.isArray(styleDescriptor)) {
+    const result = [];
+    for (const style of styleDescriptor) {
+      result.push(buildStyle(style));
+    }
+    return result;
+  } else {
+    /** @type {import('ol/style/Style.js').Options} */
+    const style = {};
+    Object.assign(style, styleDescriptor);
+    const sd = /** @type {Style} */ (styleDescriptor);
+    if (sd.fill) {
+      style.fill = new olStyleFill(sd.fill);
+    }
+    if (sd.stroke) {
+      style.stroke = new olStyleStroke(sd.stroke);
+    }
+    if (sd.circle) {
+      const circleStyle = /** @type {import('ol/style/Circle.js').Options} */ ({});
+      Object.assign(circleStyle, sd.circle);
+
+      if (sd.circle.fill) {
+        circleStyle.fill = new olStyleFill(sd.circle.fill);
+      }
+      if (sd.circle.stroke) {
+        circleStyle.stroke = new olStyleStroke(sd.circle.stroke);
+      }
+      style.image = new olStyleCircle(circleStyle);
+      // @ts-ignore
+      delete style.circle;
+    } else if (sd.regularShape) {
+      const regularShapeStyle = /** @type {import('ol/style/RegularShape.js').Options} */ ({});
+      Object.assign(regularShapeStyle, sd.regularShape);
+
+      if (sd.regularShape.fill) {
+        regularShapeStyle.fill = new olStyleFill(sd.regularShape.fill);
+      }
+      if (sd.regularShape.stroke) {
+        regularShapeStyle.stroke = new olStyleStroke(sd.regularShape.stroke);
+      }
+      if (sd.regularShape.angle) {
+        sd.regularShape.angle = (sd.regularShape.angle / 180) * Math.PI;
+      }
+      if (sd.regularShape.rotation) {
+        sd.regularShape.rotation = (sd.regularShape.angle / 180) * Math.PI;
+      }
+      style.image = new olStyleRegularShape(regularShapeStyle);
+      // @ts-ignore
+      delete style.regularShape;
+    }
+
+    return new olStyle(style);
+  }
+}
 
 /**
- * URL to the layers web service.
- * @typedef {string} gmfLayersUrl
- */
-
-/**
- * URL to MapFishPrint.
- * @typedef {string} gmfPrintUrl
+ * @typedef {import("ol/style/Style.js").StyleLike|Style[]|Style} StyleLike
  */
 
 /**
@@ -239,6 +326,19 @@
  * lines. The key string of each object is used as class for its respective svg line.
  * @property {boolean} [light] Show a simplified profile when true.
  * @property {boolean} [lightXAxis] Show a simplified x axis with only both end ticks.
+ */
+
+/**
+ * Options for the geolocation directive.
+ *
+ * @typedef {Object} ngeoGeolocationOptions
+ * @property {StyleLike} [accuracyFeatureStyle] The style to
+ * use to sketch the accuracy feature, which is a regular polygon.
+ * @property {StyleLike} [positionFeatureStyle] The style to
+ * use to sketch the position feature, which is a point.
+ * @property {number} [zoom] If set, in addition to recentering the map view at the location, determines
+ * the zoom level to set when obtaining a new position
+ * @property {boolean} [autorotate] Autorotate.
  */
 
 export default null;

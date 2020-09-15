@@ -96,23 +96,23 @@ module.directive('gmfContextualdata', contextualDataComponent);
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @param {angular.IScope} $scope Scope.
  * @param {import('gmf/raster/RasterService.js').RasterService} gmfRaster Gmf Raster service
- * @param {import('gmf/options.js').gmfContextualdataOptions} gmfContextualdataOptions The options.
+ * @param {import('gmf/options.js').gmfContextualDataOptions} gmfContextualDataOptions The options.
  *
  * @constructor
  * @hidden
  * @ngdoc controller
  * @ngInject
  */
-export function ContextualdataController($compile, $timeout, $scope, gmfRaster, gmfContextualdataOptions) {
+export function ContextualdataController($compile, $timeout, $scope, gmfRaster, gmfContextualDataOptions) {
   /**
    * @type {?import("ol/Map.js").default}
    */
   this.map = null;
 
   /**
-   * @type {import('gmf/options.js').gmfContextualdataOptions}
+   * @type {import('gmf/options.js').gmfContextualDataOptions}
    */
-  this.options = gmfContextualdataOptions;
+  this.options = gmfContextualDataOptions;
 
   /**
    * @type {boolean}
@@ -155,9 +155,9 @@ export function ContextualdataController($compile, $timeout, $scope, gmfRaster, 
   this.gmfRaster_ = gmfRaster;
 
   /**
-   * @type {import('gmf/options.js').gmfContextualdataOptions}
+   * @type {import('gmf/options.js').gmfContextualDataOptions}
    */
-  this.gmfContextualdataOptions_ = gmfContextualdataOptions;
+  this.gmfContextualDataOptions_ = gmfContextualDataOptions;
 
   document.body.addEventListener('mousedown', (event) => {
     const element = this.overlay_.getElement();
@@ -266,7 +266,7 @@ ContextualdataController.prototype.setContent_ = function (coordinate) {
     scope[`coord_${ref}_northern`] = coord[1];
   });
 
-  this.gmfRaster_.getRaster(coordinate, this.gmfContextualdataOptions_.rasterParams).then(
+  this.gmfRaster_.getRaster(coordinate, this.gmfContextualDataOptions_.rasterParams).then(
     (resp) => {
       Object.assign(scope, resp);
       if (this.callback) {

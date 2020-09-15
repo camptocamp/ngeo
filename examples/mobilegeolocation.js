@@ -26,10 +26,6 @@ import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
 import olLayerTile from 'ol/layer/Tile.js';
 import olSourceOSM from 'ol/source/OSM.js';
-import olStyleCircle from 'ol/style/Circle.js';
-import olStyleStyle from 'ol/style/Style.js';
-import olStyleFill from 'ol/style/Fill.js';
-import olStyleStroke from 'ol/style/Stroke.js';
 import ngeoMapModule from 'ngeo/map/module.js';
 import ngeoGeolocation from 'ngeo/geolocation/component.js';
 
@@ -44,29 +40,6 @@ const appmodule = angular.module('app', ['gettext', ngeoGeolocation.name, ngeoMa
  * @ngInject
  */
 function MainController($scope, ngeoFeatureOverlayMgr) {
-  const positionFeatureStyle = new olStyleStyle({
-    image: new olStyleCircle({
-      radius: 6,
-      fill: new olStyleFill({color: 'rgba(230, 100, 100, 1)'}),
-      stroke: new olStyleStroke({color: 'rgba(230, 40, 40, 1)', width: 2}),
-    }),
-  });
-
-  const accuracyFeatureStyle = new olStyleStyle({
-    fill: new olStyleFill({color: 'rgba(100, 100, 230, 0.3)'}),
-    stroke: new olStyleStroke({color: 'rgba(40, 40, 230, 1)', width: 2}),
-  });
-
-  /**
-   * @type {import('ngeo/geolocation/component.js').GeolocationDirectiveOptions}
-   */
-  this.geolocationOptions = {
-    positionFeatureStyle: positionFeatureStyle,
-    accuracyFeatureStyle: accuracyFeatureStyle,
-    zoom: 17,
-    autorotate: true,
-  };
-
   /**
    * @type {import("ol/Map.js").default}
    */
@@ -86,5 +59,21 @@ function MainController($scope, ngeoFeatureOverlayMgr) {
 }
 
 appmodule.controller('MainController', MainController);
+
+appmodule.constant('ngeoGeolocationOptions', {
+  positionFeatureStyle: {
+    circle: {
+      radius: 6,
+      fill: {color: 'rgba(230, 100, 100, 1)'},
+      stroke: {color: 'rgba(230, 40, 40, 1)', width: 2},
+    },
+  },
+  accuracyFeatureStyle: {
+    fill: {color: 'rgba(100, 100, 230, 0.3)'},
+    stroke: {color: 'rgba(40, 40, 230, 1)', width: 2},
+  },
+  zoom: 17,
+  autorotate: true,
+});
 
 export default module;

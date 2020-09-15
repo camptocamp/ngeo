@@ -25,7 +25,9 @@ import gmfControllersAbstractAPIController, {
 } from 'gmf/controllers/AbstractAPIController.js';
 import gmfContextualdataModule from 'gmf/contextualdata/module.js';
 import gmfDatasourceDataSourceBeingFiltered from 'gmf/datasource/DataSourceBeingFiltered.js';
+import gmfDrawingModule from 'gmf/drawing/module.js';
 import gmfEditingModule from 'gmf/editing/module.js';
+import gmfFiltersModule from 'gmf/filters/module.js';
 import gmfPermalinkShareComponent from 'gmf/permalink/shareComponent.js';
 import gmfPrintModule from 'gmf/print/module.js';
 import gmfProfileModule from 'gmf/profile/module.js';
@@ -96,6 +98,62 @@ export class AbstractDesktopController extends AbstractAPIController {
      * @type {boolean}
      */
     this.googleStreetViewActive = false;
+
+    /**
+     * @type {boolean}
+     * @export
+     */
+    this.filterSelectorActive = false;
+
+    /**
+     * Set the clearing of the ngeoQuery after the deactivation of the query
+     * @type {boolean}
+     */
+    this.queryAutoClear = true;
+
+    /**
+     * @type {boolean}
+     */
+    this.contextdataActive;
+
+    /**
+     * @type {boolean}
+     */
+    this.printPanelActive = false;
+
+    /**
+     * @type {boolean}
+     */
+    this.printActive = false;
+
+    /**
+     * @type {boolean}
+     */
+    this.drawFeatureActive = false;
+
+    /**
+     * @type {boolean}
+     */
+    this.drawProfilePanelActive = false;
+
+    /**
+     * @type {boolean}
+     */
+    this.routingPanelActive = false;
+
+    // Don't deactivate ngeoQuery on print activation
+    $scope.$watch(
+      () => this.printPanelActive,
+      (newVal) => {
+        // Clear queries if another panel is open but not if user go back to the
+        // map form the print.
+        if (!newVal && !this.queryActive) {
+          this.ngeoMapQuerent_.clear();
+        }
+        this.queryAutoClear = !newVal;
+        this.printActive = newVal;
+      }
+    );
 
     $scope.$watch(
       () => this.googleStreetViewActive,
@@ -179,6 +237,21 @@ export class AbstractDesktopController extends AbstractAPIController {
 
     const googleStreetViewActivate = new ngeoMiscToolActivate(this, 'googleStreetViewActive');
     ngeoToolActivateMgr.registerTool('mapTools', googleStreetViewActivate, false);
+
+    const contextdataActivate = new ngeoMiscToolActivate(this, 'contextdataActive');
+    ngeoToolActivateMgr.registerTool('mapTools', contextdataActivate, false);
+
+    const drawFeatureActivate = new ngeoMiscToolActivate(this, 'drawFeatureActive');
+    ngeoToolActivateMgr.registerTool('mapTools', drawFeatureActivate, false);
+
+    const drawProfilePanelActivate = new ngeoMiscToolActivate(this, 'drawProfilePanelActive');
+    ngeoToolActivateMgr.registerTool('mapTools', drawProfilePanelActivate, false);
+
+    const printPanelActivate = new ngeoMiscToolActivate(this, 'printPanelActive');
+    ngeoToolActivateMgr.registerTool('mapTools', printPanelActivate, false);
+
+    const routingPanelActive = new ngeoMiscToolActivate(this, 'routingPanelActive');
+    ngeoToolActivateMgr.registerTool('mapTools', routingPanelActive, false);
 
     /**
      * @type {?import("ol/geom/LineString.js").default}
@@ -295,18 +368,20 @@ export class AbstractDesktopController extends AbstractAPIController {
  * @hidden
  */
 const module = angular.module('GmfAbstractDesktopControllerModule', [
-  ngeoQueryPanelComponent.name,
   gmfControllersAbstractAPIController.name,
   gmfContextualdataModule.name,
   gmfDatasourceDataSourceBeingFiltered.name,
+  gmfDrawingModule.name,
   gmfEditingModule.name,
+  gmfFiltersModule.name,
+  gmfImportModule.name,
   gmfPermalinkShareComponent.name,
   gmfPrintModule.name,
   gmfProfileModule.name,
   gmfRasterComponent.name,
   ngeoDrawFeatures.name,
-  gmfImportModule.name,
   ngeoMapswipeModule.name,
+  ngeoQueryPanelComponent.name,
 ]);
 
 module.controller('AbstractDesktopController', AbstractDesktopController);

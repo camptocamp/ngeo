@@ -78,14 +78,6 @@ function MainController(gmfThemes, ngeoFeatureOverlayMgr) {
   });
 
   /**
-   * @type {Object<string, string|number|boolean>}
-   */
-  this.defaulPrintFieldstValues = {
-    'comments': 'Default comments example',
-    'legend': true,
-  };
-
-  /**
    * @type {Object[]|undefined}
    */
   this.themes = undefined;
@@ -106,6 +98,13 @@ function MainController(gmfThemes, ngeoFeatureOverlayMgr) {
 }
 
 module.controller('MainController', MainController);
+
+module.constant('gmfPrintOptions', {
+  fieldsValues: {
+    comments: 'Default comments example',
+    legend: true,
+  },
+});
 options(module);
 
 export default module;

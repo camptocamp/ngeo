@@ -71,7 +71,7 @@ const RASTER = `${GMF_DEMO}raster`;
  * Search service
  * @type {string}
  */
-export const SEARCH = `${GMF_DEMO}fulltextsearch`;
+export const SEARCH = `${GMF_DEMO}search`;
 
 /**
  * Search service
@@ -115,7 +115,7 @@ export default function (module) {
   module.constant('gmfAuthenticationConfig', {});
   module.constant('gmfSnappingConfig', {});
   module.constant('gmfThemesOptions', {});
-  module.constant('gmfContextualdataOptions', {});
+  module.constant('gmfContextualDataOptions', {});
   module.constant('gmfPrintOptions', {});
   module.constant('gmfBackgroundLayerSelectorOptions', {});
   module.constant('gmfDisclaimerOptions', {});
