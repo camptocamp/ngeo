@@ -312,7 +312,7 @@ PrintService.prototype.encodeWmsLayer_ = function(arr, layer, url, params) {
     opacity: this.getOpacityOrInherited_(layer),
     version: params['VERSION'],
     useNativeAngle: this.printNativeAngle_,
-    styles: 'STYLES' in params ? params['STYLES'].split(',') : [''],
+    styles: params['STYLES'] ? params['STYLES'].split(',') : [''],
   };
   arr.push(object);
 };
