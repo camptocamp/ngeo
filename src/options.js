@@ -340,6 +340,7 @@ export function buildStyle(styleDescriptor) {
  * @property {number} [zoom] If set, in addition to recentering the map view at the location, determines
  * the zoom level to set when obtaining a new position
  * @property {boolean} [autorotate] Autorotate.
+ * @property {boolean} [atLoadingTime=false] Toggle geolocating at loading time if true.
  */
 
 export default null;

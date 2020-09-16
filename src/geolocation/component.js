@@ -74,9 +74,11 @@ function geolocationComponent() {
   return {
     restrict: 'A',
     scope: {
-      'getMapFn': '&ngeoGeolocationMap',
+      'map': '<ngeoGeolocationMap',
+      'loading': '=ngeoGeolocationLoading',
     },
     controller: 'ngeoGeolocationController',
+    bindToController: true,
   };
 }
 
@@ -110,21 +112,10 @@ function Controller(
 
   $element.on('click', this.toggleTracking.bind(this));
 
-  // @ts-ignore: scope ...
-  const map = $scope.getMapFn();
-  if (!(map instanceof olMap)) {
-    throw new Error('Wrong map type');
-  }
-
   /**
    * @type {angular.IScope}
    */
   this.$scope_ = $scope;
-
-  /**
-   * @type {import("ol/Map.js").default}
-   */
-  this.map_ = map;
 
   /**
    * @type {import("ngeo/message/Notification.js").MessageNotification}
@@ -132,15 +123,44 @@ function Controller(
   this.notification_ = ngeoNotification;
 
   /**
+   * @type {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr}
+   */
+  this.ngeoFeatureOverlayMgr_ = ngeoFeatureOverlayMgr;
+
+  /**
+   * @type {angular.gettext.gettextCatalog}
+   */
+  this.gettextCatalog_ = gettextCatalog;
+
+  /**
+   * @type {import("ol/Map.js").default}
+   */
+  this.map;
+
+  /**
+   * A flag used to determine if the application has finished loading.
+   * @type {boolean}
+   */
+  this.loading;
+}
+
+/**
+ */
+Controller.prototype.$onInit = function () {
+  if (!(this.map instanceof olMap)) {
+    throw new Error('Wrong map type');
+  }
+
+  /**
    * @type {import("ngeo/map/FeatureOverlay.js").FeatureOverlay}
    */
-  this.featureOverlay_ = ngeoFeatureOverlayMgr.getFeatureOverlay();
+  this.featureOverlay_ = this.ngeoFeatureOverlayMgr_.getFeatureOverlay();
 
   /**
    * @type {import("ol/Geolocation.js").default}
    */
   this.geolocation_ = new olGeolocation({
-    projection: map.getView().getProjection(),
+    projection: this.map.getView().getProjection(),
     trackingOptions: /** @type {PositionOptions} */ ({
       enableHighAccuracy: true,
     }),
@@ -149,6 +169,9 @@ function Controller(
   if (this.options.autorotate) {
     this.autorotateListener();
   }
+
+  // Add alias for automatic i18n string collection
+  const gettextCatalog = this.gettextCatalog_;
 
   // handle geolocation error.
   this.geolocation_.on(
@@ -175,7 +198,7 @@ function Controller(
             break;
         }
         this.notification_.error(msg);
-        $scope.$emit(GeolocationEventType.ERROR, error);
+        this.$scope_.$emit(GeolocationEventType.ERROR, error);
       }
     )
   );
@@ -230,11 +253,22 @@ function Controller(
     }
   );
 
-  const view = map.getView();
+  const view = this.map.getView();
 
   listen(view, 'change:center', this.handleViewChange_, this);
   listen(view, 'change:resolution', this.handleViewChange_, this);
-}
+
+  if (this.options.atLoadingTime && this.loading !== undefined) {
+    this.$scope_.$watch(
+      () => this.loading,
+      (newVal) => {
+        if (newVal === false) {
+          this.toggleTracking();
+        }
+      }
+    );
+  }
+};
 
 /**
  */
@@ -250,7 +284,7 @@ Controller.prototype.toggleTracking = function () {
       return;
     }
     // stop tracking if the position is close to the center of the map.
-    const view = this.map_.getView();
+    const view = this.map.getView();
     const center = view.getCenter();
     if (!center) {
       throw new Error('Missing center');
@@ -284,7 +318,7 @@ Controller.prototype.untrack_ = function () {
 };
 
 Controller.prototype.setPosition_ = function () {
-  const view = this.map_.getView();
+  const view = this.map.getView();
   const position = this.geolocation_.getPosition();
   if (position === undefined) {
     throw new Error('Missing position');
@@ -300,7 +334,7 @@ Controller.prototype.setPosition_ = function () {
       view.setCenter(position);
       view.setZoom(this.options.zoom);
     } else if (accuracy instanceof Polygon) {
-      const size = this.map_.getSize();
+      const size = this.map.getSize();
       if (size === undefined) {
         throw new Error('Missing size');
       }
@@ -369,7 +403,7 @@ Controller.prototype.handleRotate_ = function (eventAlpha, currentAlpha) {
   if (this.geolocation_.getTracking() && Math.abs(eventAlpha - currentAlpha) > 0.2) {
     currentAlpha = eventAlpha;
     const radAlpha = (currentAlpha * Math.PI) / 180;
-    this.map_.getView().animate({
+    this.map.getView().animate({
       rotation: radAlpha,
       duration: 350,
       easing: olEasing.linear,
