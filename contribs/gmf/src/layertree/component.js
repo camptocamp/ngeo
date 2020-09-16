@@ -521,6 +521,20 @@ Controller.prototype.getNodeState = function (treeCtrl) {
 
 /**
  * Update the `timeRangeValue` property of the data source bound to the
+ * given tree controller and the state of the permalink using the given time.
+ *
+ * LayertreeController.prototype.updateTimeData - description
+ * @param {import("ngeo/layertree/Controller.js").LayertreeController} layertreeCtrl ngeo layertree controller
+ * @param {import("ngeo/datasource/OGC.js").TimeRange} time The start
+ * and optionally the end datetime (for time range selection) selected by user
+ */
+Controller.prototype.updateTimeData = function (layertreeCtrl, time) {
+  this.updateWMSTimeLayerState(layertreeCtrl, time);
+  this.gmfPermalink_.refreshLayerTime(layertreeCtrl, time);
+};
+
+/**
+ * Update the `timeRangeValue` property of the data source bound to the
  * given tree controller using the given time. If the tree controller has
  * no data source, it means that it has children and they might have
  * data sources.
@@ -530,7 +544,7 @@ Controller.prototype.getNodeState = function (treeCtrl) {
  *
  * LayertreeController.prototype.updateWMSTimeLayerState - description
  * @param {import("ngeo/layertree/Controller.js").LayertreeController} layertreeCtrl ngeo layertree controller
- * @param {{start : number, end : number}} time The start
+ * @param {import("ngeo/datasource/OGC.js").TimeRange} time The start
  * and optionally the end datetime (for time range selection) selected by user
  */
 Controller.prototype.updateWMSTimeLayerState = function (layertreeCtrl, time) {

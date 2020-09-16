@@ -33,6 +33,7 @@ import gmfThemeThemes, {findThemeByName, findGroupByName} from 'gmf/theme/Themes
 import ngeoPopover from 'ngeo/Popover.js';
 
 import ngeoDrawFeatures from 'ngeo/draw/features.js';
+import gmfDataSourcesManager from 'gmf/datasource/Manager.js';
 
 import ngeoDatasourceGroup from 'ngeo/datasource/Group.js';
 import ngeoDatasourceOGC, {guessServiceTypeByUrl, Type} from 'ngeo/datasource/OGC.js';
@@ -83,6 +84,7 @@ const ParamPrefix = {
   TREE_GROUP_LAYERS: 'tree_group_layers_',
   TREE_GROUP_OPACITY: 'tree_group_opacity_',
   TREE_OPACITY: 'tree_opacity_',
+  TREE_TIME: 'tree_time_',
   WFS: 'wfs_',
 };
 
@@ -94,6 +96,8 @@ const ParamPrefix = {
  * - the current background layer selected
  * - whether to add a crosshair feature in the map or not
  * - the dimensions value
+ *
+ * For time layers the time range or time value is added
  *
  * It can also be used to add different types of things in the map,
  * such as features, external data sources, etc.
@@ -226,6 +230,12 @@ const ParamPrefix = {
  *     Value: Number between 0 (transparent) and 1 (opaque)
  *     Defines the opacity of a layer group upon initialization.
  *
+ * - `tree_time_[]` (date)
+ *     Variable suffix: the name of a layer group or layer
+ *     Value: a date or date interval with the resolution of the time
+ *     of the layer or group
+ *     Defines the time or time interval for a time layer or a group.
+ *
  * - `wfs_[]` (string)
  *     Variable suffix: the name of an attribute
  *     Value: A comma-separated list of values for the attribute
@@ -263,6 +273,9 @@ const ParamPrefix = {
  * @param {import("ngeo/misc/EventHelper.js").EventHelper} ngeoEventHelper Ngeo event helper service
  * @param {import("ngeo/statemanager/Service.js").StatemanagerService} ngeoStateManager The ngeo statemanager
  *    service.
+ * @param {import("gmf/datasource/Manager.js").DatasourceManager} gmfDataSourcesManager The gmf datasourcemanager
+ *    service.
+ * @param {import("ngeo/misc/WMSTime.js").WMSTime} ngeoWMSTime The ngeo  wmstime service
  * @param {import("ngeo/statemanager/Location.js").StatemanagerLocation} ngeoLocation ngeo location service.
  * @param {import('gmf/options.js').gmfPermalinkOptions} gmfPermalinkOptions The options.
  * @ngInject
@@ -280,7 +293,9 @@ export function PermalinkService(
   ngeoStateManager,
   ngeoLocation,
   gmfLayerBeingSwipe,
-  gmfPermalinkOptions
+  gmfPermalinkOptions,
+  gmfDataSourcesManager,
+  ngeoWMSTime
 ) {
   /**
    * @type {angular.IQService}
@@ -321,6 +336,16 @@ export function PermalinkService(
    * @type {import("ngeo/statemanager/Service.js").StatemanagerService}
    */
   this.ngeoStateManager_ = ngeoStateManager;
+
+  /**
+   * @type {import("gmf/datasource/Manager.js").DatasourceManager}
+   */
+  this.gmfDataSourcesManager_ = gmfDataSourcesManager;
+
+  /**
+   * @type {import("ngeo/misc/WMSTime.js").WMSTime}
+   */
+  this.ngeoWMSTime_ = ngeoWMSTime;
 
   /**
    * @type {?import("ol/Collection.js").default<olFeature<import("ol/geom/Geometry.js").default>>}
@@ -1105,6 +1130,22 @@ PermalinkService.prototype.refreshFirstLevelGroups = function () {
 };
 
 /**
+ * Update the time values in the state.
+ * @param {import('ngeo/layertree/Controller.js').LayertreeController} treeCtrl Controller.
+ * @param {import("ngeo/datasource/OGC.js").TimeRange} time The start
+ * and optionally the end datetime (for time range selection) selected by user
+ */
+PermalinkService.prototype.refreshLayerTime = function (treeCtrl, time) {
+  /** @type {Object<string, string>} */
+  const newState = {};
+  const stateName = `${ParamPrefix.TREE_TIME}${treeCtrl.node.name}`;
+  const timenode = /** @type {import('gmf/themes.js').GmfGroup|!import('gmf/themes.js').GmfLayerWMS} */ (treeCtrl.node);
+  const timeParam = this.ngeoWMSTime_.formatWMSTimeParam(timenode.time, time);
+  newState[stateName] = timeParam;
+  this.ngeoStateManager_.updateState(newState);
+};
+
+/**
  * Return true if there is a theme specified in the URL path.
  * @param {string[]} pathElements Array of path elements.
  * @return {boolean} theme in path.
@@ -1278,6 +1319,10 @@ PermalinkService.prototype.initLayers_ = function () {
             }
             this.gmfLayerBeingSwipe_.layer = treeCtrl.layer;
           }
+        }
+        const timenode = /** @type {import('gmf/themes.js').GmfGroup|!import('gmf/themes.js').GmfLayerWMS} */ (treeCtrl.node);
+        if (timenode && timenode.time) {
+          this.setNodeTime_(treeCtrl);
         }
 
         if (treeCtrl.parent.node && parentGroupNode.mixed && groupNode.children == undefined) {
@@ -1811,6 +1856,41 @@ PermalinkService.prototype.cleanParams = function (groups) {
 };
 
 /**
+ * Set the time from permalink in datasource and widget.
+ * @param {import('ngeo/layertree/Controller.js').LayertreeController} treeCtrl Controller
+ */
+PermalinkService.prototype.setNodeTime_ = function (treeCtrl) {
+  const time = this.ngeoStateManager_.getInitialStringValue(ParamPrefix.TREE_TIME + treeCtrl.node.name);
+  if (time) {
+    const bounds = time.split('/');
+    const node = /** @type {import('gmf/themes.js').GmfGroup|!import('gmf/themes.js').GmfLayerWMS} */ (treeCtrl.node);
+    node.time.minDefValue = bounds[0];
+    node.time.maxDefValue = bounds[1];
+    const dataSource = /** @type {?import("ngeo/datasource/OGC").default} */ this.gmfDataSourcesManager_.getDatasource(
+      olUtilGetUid(treeCtrl.node)
+    );
+
+    if (dataSource) {
+      if (!(dataSource instanceof ngeoDatasourceOGC)) {
+        throw new Error('Wrong dataSource type');
+      }
+      dataSource.timeLowerValue = new Date(bounds[0]).getTime();
+      dataSource.timeUpperValue = new Date(bounds[1]).getTime();
+    } else if (treeCtrl.children) {
+      treeCtrl.children.forEach((child) => {
+        const dataSource = /** @type {?import("ngeo/datasource/OGC").default} */ this.gmfDataSourcesManager_.getDatasource(
+          olUtilGetUid(child.node)
+        );
+        if (dataSource) {
+          dataSource.timeLowerValue = new Date(bounds[0]).getTime();
+          dataSource.timeUpperValue = new Date(bounds[1]).getTime();
+        }
+      });
+    }
+  }
+};
+
+/**
  * @type {angular.IModule}
  * @hidden
  */
@@ -1818,6 +1898,7 @@ const module = angular.module('gmfPermalink', [
   gmfAuthenticationService.name,
   gmfThemeManager.name,
   gmfThemeThemes.name,
+  gmfDataSourcesManager.name,
   ngeoDrawFeatures.name,
   gmfLayerBeingSwipe.name,
   ngeoLayertreeController.name,

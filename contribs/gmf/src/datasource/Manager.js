@@ -244,6 +244,15 @@ export class DatasourceManager {
   }
 
   /**
+   * Get a datasource by its id.
+   * @param {number} id The id of the datasource.
+   * @hidden
+   */
+  getDatasource(id) {
+    return this.dataSourcesCache_[id];
+  }
+
+  /**
    * @param {import('ngeo/datasource/OGC.js').Dimensions} dimensions A reference to the dimensions
    *     object to keep a reference of in this service.
    * @hidden
