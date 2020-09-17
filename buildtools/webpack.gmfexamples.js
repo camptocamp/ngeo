@@ -20,7 +20,7 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 const path = require('path');
-const ls = require('ls');
+const ls = require('./ls.js');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const plugins = [];

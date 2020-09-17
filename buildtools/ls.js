@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2018-2020 Camptocamp SA
+// Copyright (c) 2020 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -19,42 +19,44 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+// Initially get from https://github.com/awnist/ls
+
+const glob = require('glob');
+
 const path = require('path');
-const ls = require('./ls.js');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const plugins = [];
-const entry = {};
+/**
+ * @typedef {Object} File
+ * @property {string} path
+ * @property {string} full
+ * @property {string} file
+ * @property {string} name
+ */
 
-const filenamePrefix = process.env.DEV_SERVER ? 'contribs/gmf/apps/' : '';
-
-for (const filename of ls('contribs/gmf/apps/*/index.html.ejs')) {
-  const name = path.basename(filename.path);
-  const folder = `contribs/gmf/apps/${name}`;
-  entry[name] = `./${folder}/Controller.js`;
-  plugins.push(
-    new HtmlWebpackPlugin({
-      template: `${folder}/index.html.ejs`,
-      inject: false,
-      chunksSortMode: 'manual',
-      filename: `${filenamePrefix}${name}.html`,
-      chunks: [name],
-      vars: {
-        version: 'dev',
-      },
-    })
-  );
-}
-
-module.exports = {
-  entry: entry,
-  plugins: plugins,
+/**
+ * @param {string[]|string} paths Path or array of paths to iterate over
+ * @return {File[]} Files found
+ */
+module.exports = function (paths) {
+  if (!Array.isArray(paths)) {
+    paths = [paths];
+  }
+  /** @type {File[]} */
+  const results = [];
+  let trypath;
+  while ((trypath = paths.shift())) {
+    glob
+      .sync(trypath, {
+        nonegate: true,
+      })
+      .forEach(function (file) {
+        results.push({
+          path: path.dirname(file),
+          full: file,
+          file: path.basename(file),
+          name: path.basename(file, path.extname(file)),
+        });
+      });
+  }
+  return results;
 };
-
-if (!process.env.DEV_SERVER) {
-  Object.assign(module.exports, {
-    output: {
-      path: path.resolve(__dirname, '../.build/examples-hosted/contribs/gmf/apps'),
-    },
-  });
-}
