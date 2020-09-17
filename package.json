@@ -115,7 +115,6 @@
     "karma-webpack": "4.0.2",
     "loader-utils": "2.0.0",
     "localforage": "1.7.3",
-    "ls": "0.2.1",
     "moment": "2.24.0",
     "node-sass": "4.13.1",
     "node-sass-importer": "1.0.0",
