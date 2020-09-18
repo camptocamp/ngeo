@@ -122,7 +122,7 @@
     "node-sass-importer": "1.0.0",
     "ol": "6.4.3",
     "ol-cesium": "2.11.3",
-    "ol-layerswitcher": "3.6.0",
+    "ol-layerswitcher": "3.7.0",
     "parse-absolute-css-unit": "1.0.2",
     "popper.js": "1.16.1",
     "prettier": "2.1.2",
