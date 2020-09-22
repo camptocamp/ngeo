@@ -245,4 +245,6 @@ MainController.prototype.handleGetStatusError_ = function (resp) {
 
 appmodule.controller('MainController', MainController);
 
+appmodule.constant('ngeoTilesPreloadingLimit', 0);
+
 export default module;

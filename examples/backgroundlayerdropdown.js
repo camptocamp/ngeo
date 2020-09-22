@@ -166,4 +166,6 @@ function MainController($scope) {
 
 module.controller('MainController', MainController);
 
+module.constant('ngeoTilesPreloadingLimit', 0);
+
 export default module;
