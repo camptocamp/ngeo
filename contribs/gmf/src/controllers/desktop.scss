@@ -262,9 +262,9 @@ gmf-search {
   }
 
   .gmf-app-data-panel-toggle-btn {
-    height: 2 * $icon-font-size;
+    height: 1.5 * $icon-font-size;
     left: -1px;
-    padding: 0.8rem 0.25rem;
+    padding: 0.5rem 0.1rem;
     position: relative;
     top: calc(50% - #{$icon-font-size});
     cursor: pointer;
@@ -310,18 +310,58 @@ gmf-backgroundlayerselector {
 }
 
 .gmf-app-tools {
-  display: block;
   float: right;
   background-color: $brand-secondary;
+  left: 0 !important;
+  display: flex;
+  width: fit-content;
+
+  &.gmf-app-inactive {
+    width: fit-content !important;
+  }
 
   .gmf-app-tools-content {
-    width: $right-panel-width;
-    padding: 0 $app-margin;
+    min-width: $right-panel-width;
+    padding: 0 0;
     margin-right: -$right-panel-width;
     transition: margin-right 0.2s ease, width 0.001s ease;
-    float: right;
     height: 100%;
-    overflow: auto;
+    flex-grow: 1;
+    order: 1;
+    width: $right-panel-width;
+    left: 0 !important;
+
+    .row {
+      padding: 0 $app-margin;
+    }
+
+
+    .gmf-app-tools-content-toggle-btn {
+      height: 1.5 * $icon-font-size !important;
+      right: 9px;
+      padding: 0.5rem 0.1rem;
+      position: relative;
+      top: calc(50% - #{$icon-font-size});
+      cursor: pointer;
+      z-index: 5;
+    }
+
+    .ui-resizable-w {
+      background-color: darken($brand-secondary, $standard-variation);
+      cursor: ew-resize;
+      border: {
+        left: $border;
+        right: $border;
+      }
+      left:5px;
+    }
+
+    .gmf-app-tools-content-collapse-btn {
+      display: block;
+    }
+    .gmf-app-tools-content-expand-btn {
+      display: none;
+    }
 
     & > div {
       height: 100%;
@@ -334,6 +374,10 @@ gmf-backgroundlayerselector {
 
     &.gmf-app-active {
       margin-right: 0;
+    }
+
+    &.gmf-app-inactive {
+      width: 0 !important;
     }
 
     textarea {
@@ -360,6 +404,14 @@ gmf-backgroundlayerselector {
       width: $streeview-width + $app-margin + $app-margin;
     }
 
+    .widget-scene-canvas {
+      width: 100% !important;
+    }
+
+    ngeo-googlestreetview {
+      width: 100%;
+    }
+
     .ngeo-routing {
       ngeo-nominatim-input {
         width: calc(100% - 1em - (2 * #{$app-margin}));
@@ -375,11 +427,11 @@ gmf-backgroundlayerselector {
   .gmf-app-bar {
     background-color: $brand-primary;
     border-left: $border;
-
-    float: right;
+    order: 2;
     height: 100%;
     position: relative;
     z-index: 2;
+    flex-shrink: 0;
 
     > .btn + .btn {
       margin-top: -0.06rem;
