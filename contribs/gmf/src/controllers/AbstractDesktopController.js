@@ -159,13 +159,6 @@ export class AbstractDesktopController extends AbstractAPIController {
       () => this.googleStreetViewActive,
       (newVal) => {
         this.setDataPanelMaxResizableWidth_();
-        if (newVal) {
-          this.toolsPanelWidth_ = this.checkPanelWidth_(this.toolsPanelWidth_, this.$toolsPanel_);
-          const maxAvailable = this.$toolsPanel_.resizable('option', 'maxWidth');
-          if (maxAvailable < this.googleStreetWidth_) {
-            this.$toolsPanel_.width(this.toolsPanelWidth_);
-          }
-        }
       }
     );
 
@@ -286,52 +279,14 @@ export class AbstractDesktopController extends AbstractAPIController {
      */
     this.dataPanelMinResizableWidth_ = 320;
 
-    /**
-     * @type {number}
-     * @private
-     */
-    this.toolsPanelMinResizableWidth_ = 280;
-
-    /**
-     * @type {number}
-     * @private
-     */
-    this.toolsPanelWidth_ = 280;
-
-    /**
-     * @type {number}
-     * @private
-     */
-    this.dataPanelWidth_ = 320;
-
-    /**
-     * @type {number}
-     * @private
-     */
-    this.appBarWidth_ = 32;
-
-    /**
-     * @type {number}
-     * @private
-     */
-    this.minimumMapWidth_ = 120;
-
-    /**
-     * @type {number}
-     * @private
-     */
-    this.googleStreetWidth_ = 400;
-
     // Make the data panel (on the left) resizable...
     const dataPanelCls = 'gmf-app-data-panel';
     const $dataPanel = $(`.${dataPanelCls}`).resizable({
-      ghost: true,
-      handles: 'e',
-      minWidth: this.dataPanelMinResizableWidth_,
-      stop: (event, ui) => {
+      'ghost': true,
+      'handles': 'e',
+      'minWidth': this.dataPanelMinResizableWidth_,
+      'stop': (event, ui) => {
         this.map.updateSize();
-        this.dataPanelWidth_ = ui.size.width;
-        this.setToolsPanelMaxResizableWidth_(ui.size.width);
       },
     });
 
@@ -364,95 +319,11 @@ export class AbstractDesktopController extends AbstractAPIController {
         })
       );
 
-    $scope.$watch(
-      () => this.dataPanelActive,
-      (newVal) => {
-        if (!newVal) {
-          this.setToolsPanelMaxResizableWidth_(this.dataPanelMinResizableWidth_);
-        } else {
-          this.dataPanelWidth_ = this.checkPanelWidth_(this.dataPanelWidth_, this.$dataPanel_);
-          this.setToolsPanelMaxResizableWidth_(this.dataPanelWidth_);
-        }
-      }
-    );
-
-    // Make the tools panel (on the right) resizable.
-    const toolsPanelCls = 'gmf-app-tools-content';
-    const $toolsPanel = $(`.${toolsPanelCls}`).resizable({
-      ghost: true,
-      handles: 'w',
-      minWidth: this.toolsPanelMinResizableWidth_,
-      stop: (event, ui) => {
-        this.map.updateSize();
-        this.toolsPanelWidth_ = ui.size.width;
-        this.setDataPanelMaxResizableWidth_(ui.size.width);
-      },
-      disabled: true,
-    });
-
-    /**
-     * @type {JQuery}
-     * @private
-     */
-    this.$toolsPanel_ = $toolsPanel;
-
-    const showRightPanelResize = function (active, ctrl) {
-      ctrl.$toolsPanel_.resizable(active ? 'enable' : 'disable');
-    };
-
-    $scope.$watch(
-      () => this.toolsActive,
-      (newVal) => {
-        showRightPanelResize(newVal, this);
-        if (!newVal) {
-          this.setDataPanelMaxResizableWidth_(this.toolsPanelMinResizableWidth_);
-        } else {
-          this.toolsPanelWidth_ = this.checkPanelWidth_(this.toolsPanelWidth_, this.$toolsPanel_);
-          const maxWidth = this.$toolsPanel_.resizable('option', 'maxWidth');
-          if (this.googleStreetViewActive && (!maxWidth || this.googleStreetWidth_ < maxWidth)) {
-            this.setDataPanelMaxResizableWidth_(this.googleStreetWidth_);
-          } else {
-            this.setDataPanelMaxResizableWidth_(this.toolsPanelWidth_);
-          }
-        }
-      }
-    );
-
-    // Make the tools panel (on the right) resizable and collapsible when the handle is clicked.
-    const $resizableToolsHandle = $toolsPanel.find('.ui-resizable-w').on('click', (evt) => {
-      this.toolsActive = false;
-      this.loginActive = false;
-      this.printActive = false;
-      this.drawFeatureActive = false;
-      this.filterSelectorActive = false;
-      this.editFeatureActive = false;
-      this.drawProfilePanelActive = false;
-      this.googleStreetViewActive = false;
-      this.queryPanelActive = false;
-      this.importDataSourceActive = false;
-      this.$toolsPanel_.resizable('disable');
-      this.$scope.$apply();
-    });
-
-    // Add an extra element to act as a button to be clicked on for
-    // collapse/expand
-    $('<div>', {
-      'class': `${toolsPanelCls}-toggle-btn btn prime btn-sm`,
-    })
-      .appendTo($resizableToolsHandle)
-      .append(
-        $('<span>', {
-          'class': `fa fa-angle-double-right ${toolsPanelCls}-collapse-btn`,
-        })
-      );
-
     // Listen to window resize to set the max resizable width
     // accordingly, and set it also right away.
     const ngeoDebounce = $injector.get('ngeoDebounce');
     listen(window, 'resize', ngeoDebounce(this.setDataPanelMaxResizableWidth_.bind(this), 50, true));
-    listen(window, 'resize', ngeoDebounce(this.setToolsPanelMaxResizableWidth_.bind(this), 50, true));
     this.setDataPanelMaxResizableWidth_();
-    this.setToolsPanelMaxResizableWidth_();
   }
 
   /**
@@ -465,72 +336,33 @@ export class AbstractDesktopController extends AbstractAPIController {
    * @private
    * @hidden
    */
-  setDataPanelMaxResizableWidth_(newToolsPanelWidth) {
-    const maxWidth = this.findMaxWidth_(
-      this.$toolsPanel_,
-      this.dataPanelMinResizableWidth_,
-      newToolsPanelWidth
-    );
+  setDataPanelMaxResizableWidth_() {
+    let rightPanelWidth = 320;
+    if (this.googleStreetViewActive) {
+      rightPanelWidth += 140;
+    }
+
+    const minimumMapWidth = 120;
+    const windowWidth = window.innerWidth;
+
+    let maxWidth = windowWidth - rightPanelWidth - minimumMapWidth;
+    if (maxWidth < this.dataPanelMinResizableWidth_) {
+      maxWidth = this.dataPanelMinResizableWidth_;
+    }
+
     this.$dataPanel_.resizable('option', 'maxWidth', maxWidth);
-    this.dataPanelWidth_ = this.checkPanelWidth_(this.dataPanelWidth_, this.$dataPanel_);
-  }
 
-  /**
-   * Set the tools panel (on the right) maximum resizable width depending
-   * on the current size of the window, taking into consideration the
-   * width the left panel has.
-   *
-   * If, after resizing, the size of the data panel would be too big,
-   * resize it as well.
-   * @private
-   * @hidden
-   */
-  setToolsPanelMaxResizableWidth_(newDataPanelWidth) {
-    const maxWidth = this.findMaxWidth_(
-      this.$dataPanel_,
-      this.toolsPanelMinResizableWidth_,
-      newDataPanelWidth
-    );
-    this.$toolsPanel_.resizable('option', 'maxWidth', maxWidth);
-    this.toolsPanelWidth_ = this.checkPanelWidth_(this.toolsPanelWidth_, this.$toolsPanel_);
-  }
-
-  /**
-   * Check if the panel size is not exceeding its maximum allowed and
-   * resize it to present maxSize if necessary
-   * @private
-   * @hidden
-   */
-  checkPanelWidth_(panelSize, panelToResize) {
-    const maxWidth = panelToResize.resizable('option', 'maxWidth');
-    if (panelSize !== 0 && !panelSize) {
+    const width = this.$dataPanel_.width();
+    if (!width) {
       throw new Error('Missing width');
     }
-    if (panelSize > maxWidth) {
-      panelToResize.width(maxWidth);
-      panelSize = maxWidth;
+    if (width > maxWidth) {
+      this.$dataPanel_.width(maxWidth);
       this.map.updateSize();
     }
-    return panelSize;
-  }
-
-  /**
-   * Get the new maximum size for the other panel
-   * @private
-   * @hidden
-   */
-  findMaxWidth_(resizedPanel, otherPanelMinResizableWidth, newPanelWidth) {
-    const windowWidth = window.innerWidth;
-    // resizedPanel.width() often has not the new value yet after resizing,
-    // so take the newPanelWidth taken from the event, if existing
-    const panelWidth = newPanelWidth ? newPanelWidth : resizedPanel.width();
-    let maxWidth = windowWidth - panelWidth - this.minimumMapWidth_ - this.appBarWidth_;
-    if (maxWidth < otherPanelMinResizableWidth) {
-      maxWidth = otherPanelMinResizableWidth;
-    }
-    return maxWidth;
   }
 }
+
 /**
  * @type {angular.IModule}
  * @hidden

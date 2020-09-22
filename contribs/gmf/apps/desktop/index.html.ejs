@@ -58,7 +58,7 @@
           </gmf-layertree>
         </div>
       </div>
-      <div class="gmf-app-tools" ngeo-resizemap="mainCtrl.map" ngeo-resizemap-state="mainCtrl.toolsActive"  ng-class="{'gmf-app-inactive' : !mainCtrl.toolsActive}">
+      <div class="gmf-app-tools" ngeo-resizemap="mainCtrl.map" ngeo-resizemap-state="mainCtrl.toolsActive">
         <div class="gmf-app-bar">
           <div ngeo-btn-group class="btn-group-vertical" ngeo-btn-group-active="mainCtrl.toolsActive">
             <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.loginActive"
@@ -110,7 +110,7 @@
         </div>
         <div
             class="gmf-app-tools-content container-fluid"
-            ng-class="{'gmf-app-active': mainCtrl.toolsActive, 'gmf-app-inactive': !mainCtrl.toolsActive }">
+            ng-class="{'gmf-app-active': mainCtrl.toolsActive}">
           <div ng-show="mainCtrl.loginActive" class="row">
             <div class="col-sm-12">
               <div class="gmf-app-tools-content-heading">
