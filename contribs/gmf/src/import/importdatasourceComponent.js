@@ -246,35 +246,8 @@ class Controller {
 
     if (servers) {
       this.serversEngine_ = new Bloodhound({
-        /**
-         * Allows search queries to match from string from anywhere within
-         * the url, and not only from the beginning of the string (which is
-         * the default, non-configurable behaviour of bloodhound).
-         *
-         * Borrowed from:
-         * https://stackoverflow.com/questions/22059933/twitter-typeahead-js-how-to-return-all-matched-elements-within-a-string
-         *
-         * @param {import('gmf/options.js').ExternalOGCServer} datum Datum.
-         * @return {string[]} List of datum tokenizers.
-         */
         datumTokenizer: (datum) => {
-          if (!(typeof datum === 'object' && datum.name && datum.url)) {
-            throw new Error('Wrong datum type');
-          }
-          const originalDatumTokenizers = Bloodhound.tokenizers.whitespace('name');
-          // const originalDatumTokenizers = Bloodhound.tokenizers.whitespace(datum);
-          if (!originalDatumTokenizers) {
-            throw new Error('Missing originalDatumTokenizers');
-          }
-          const datumTokenizers = [];
-          for (const originalDatumTokenizer of originalDatumTokenizers) {
-            let i = 0;
-            while (i + 1 < originalDatumTokenizer.length) {
-              datumTokenizers.push(originalDatumTokenizer.substr(i, originalDatumTokenizer.length));
-              i++;
-            }
-          }
-          return datumTokenizers;
+          return Bloodhound.tokenizers.whitespace('name');
         },
         queryTokenizer: Bloodhound.tokenizers.whitespace,
         local: servers,
@@ -312,11 +285,7 @@ class Controller {
         if (!this.serversEngine_) {
           throw new Error('Missing serversEngine');
         }
-        if (query === '') {
-          sync(this.serversEngine_.all());
-        } else {
-          this.serversEngine_.search(query, sync);
-        }
+        sync(this.serversEngine_.all());
       };
       // Timeout to let Angular render the placeholder of the input properly,
       // otherwise typeahead would copy the string with {{}} in it...
@@ -342,7 +311,7 @@ class Controller {
               },
             }
           )
-          .bind('typeahead:select', (ev, suggestion) => {
+          .on('typeahead:select', (ev, suggestion) => {
             this.timeout_(() => {
               this.url = suggestion.url;
               this.scope_.$apply();
