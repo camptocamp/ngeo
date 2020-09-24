@@ -10,6 +10,8 @@ ngeo-mapswipe {
     height: 100%;
     z-index: 1;
     cursor: ew-resize;
+    display: flex;
+    justify-content: center;
 
     .ngeo-swipe-line {
       position: absolute;
@@ -34,15 +36,15 @@ ngeo-mapswipe {
 
     .ngeo-swipe-arrow {
       position: absolute;
-      width: 100%;
-      height: 2.5rem;
-      left: 0;
+      width: fit-content;
+      padding: 0 1px 0 1px;
+      height: 1.5 * $icon-font-size;
       top: calc(50% - 1.25rem);
       background-color: $brand-primary;
       color: #fff;
       border: $border;
       svg {
-        font-size: 1rem;
+        font-size: 0.8rem;
         height: 100%;
         display: block;
         margin: auto;
