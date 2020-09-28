@@ -233,7 +233,8 @@ LayerHelper.prototype.createWMTSLayerFromCapabilitites = function (
   opt_dimensions,
   opt_customOptions,
   opt_minResolution,
-  opt_maxResolution
+  opt_maxResolution,
+  opacity
 ) {
   // Small hack to get perfect sync with the on resolution status and the zoom to resolution
   if (opt_maxResolution) {
@@ -275,6 +276,9 @@ LayerHelper.prototype.createWMTSLayerFromCapabilitites = function (
         return $q.reject(`Layer ${layerName} not available in WMTS capabilities from ${capabilitiesURL}`);
       }
       layer.set('capabilitiesStyles', l.Style);
+      if (opacity) {
+        layer.setOpacity(opacity);
+      }
 
       return $q.resolve(layer);
     }
