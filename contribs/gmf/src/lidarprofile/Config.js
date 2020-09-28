@@ -173,7 +173,6 @@ export class LidarprofileConfigService {
       this.clientConfig.pointAttributes = {
         // @ts-ignore
         availableOptions: attr,
-        // @ts-ignore
         selectedOption: selectedMat,
       };
     });

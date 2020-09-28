@@ -92,9 +92,10 @@ export function buildStyle(styleDescriptor) {
   } else if (!styleDescriptor) {
     return createDefaultStyle;
   } else if (Array.isArray(styleDescriptor)) {
+    /** @type {olStyle[]} */
     const result = [];
     for (const style of styleDescriptor) {
-      result.push(buildStyle(style));
+      result.push(/** @type {olStyle} */ (buildStyle(style)));
     }
     return result;
   } else {
@@ -312,7 +313,7 @@ export function buildStyle(styleDescriptor) {
  *
  * @typedef {Object} LineConfiguration
  * @property {string} [color] Color of the line (hex color string).
- * @property {function(Object): number} zExtractor Extract the elevation of a point (an item of the
+ * @property {function(number[]): number} zExtractor Extract the elevation of a point (an item of the
  * elevation data array).
  */
 

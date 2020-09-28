@@ -26,6 +26,7 @@ import ngeoMessageNotification from 'ngeo/message/Notification.js';
 import ngeoMessageModalComponent from 'ngeo/message/modalComponent.js';
 import {listen} from 'ol/events.js';
 
+// @ts-ignore
 import qruri from 'qruri';
 
 /**
@@ -232,18 +233,28 @@ class AuthenticationController {
      */
     this.userMustChangeItsPassword = false;
 
-    listen(gmfAuthenticationService, 'mustChangePassword', (event) => {
-      const username = /** @type {CustomEvent} */ (event).detail.user.username;
-      this.gmfUser = /** @type {CustomEvent} */ (event).detail.user;
-      this.changingPasswordUsername = username;
-      this.changingPassword = true;
-      this.userMustChangeItsPassword = true;
-    });
+    listen(
+      gmfAuthenticationService,
+      'mustChangePassword',
+      /** @type {import("ol/events.js").ListenerFunction} */
+      (event) => {
+        this.gmfUser = /** @type {import('ngeo/CustomEvent.js').default<import('gmf/authentication/Service.js').AuthenticationEventItem>} */ (event).detail.user;
+        const username = this.gmfUser.username;
+        this.changingPasswordUsername = username;
+        this.changingPassword = true;
+        this.userMustChangeItsPassword = true;
+      }
+    );
 
-    listen(gmfAuthenticationService, 'login', () => {
-      this.changingPassword = false;
-      this.userMustChangeItsPassword = false;
-    });
+    listen(
+      gmfAuthenticationService,
+      'login',
+      /** @type {import("ol/events.js").ListenerFunction} */
+      () => {
+        this.changingPassword = false;
+        this.userMustChangeItsPassword = false;
+      }
+    );
 
     /**
      * @type {boolean}

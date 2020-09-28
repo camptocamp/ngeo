@@ -205,7 +205,9 @@ function MainController($http, $q, $scope, gmfThemes, gmfXSDAttributes) {
       const gmfLayerNodes = [];
       for (i = 0, ii = groupNode.children.length; i < ii; i++) {
         if (groupNode.children[i].metadata.identifierAttributeField) {
-          gmfLayerNodes.push(/** @type {import('gmf/themes.js').GmfLayerWMS} */ (groupNode.children[i]));
+          gmfLayerNodes.push(
+            /** @type {import('gmf/themes.js').GmfLayerWMS} */ (/** @type {any} */ (groupNode.children[i]))
+          );
         }
       }
 
@@ -288,7 +290,9 @@ MainController.prototype.issueGetFeatures_ = function (gmfLayerNode) {
     if (!this.getFeaturesDeferred_) {
       throw new Error('Missing getFeaturesDeferred');
     }
-    const features = new olFormatWFS().readFeatures(response.data);
+    const features = /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>[]} */ (new olFormatWFS().readFeatures(
+      response.data
+    ));
     this.featuresCache_[id] = features;
     this.getFeaturesDeferred_.resolve();
   });
@@ -378,7 +382,7 @@ MainController.prototype.getGeometryTypeFromCache_ = function (gmfLayerNode) {
  * Appends query parameters to a URI.
  *
  * @param {string} uri The original URI, which may already have query data.
- * @param {Object} params An object where keys are URI-encoded parameter keys,
+ * @param {Object<string, string>} params An object where keys are URI-encoded parameter keys,
  *     and the values are arbitrary types or arrays.
  * @return {string} The new URI.
  */

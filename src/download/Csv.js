@@ -100,7 +100,7 @@ export function DownloadCsvService(
 /**
  * Generate a CSV.
  *
- * @param {Object[]} data Entries/objects to include in the CSV.
+ * @param {Object<string, any>[]} data Entries/objects to include in the CSV.
  * @param {GridColumnDef[]} columnDefs Column definitions.
  * @return {string} The CSV file as string.
  */

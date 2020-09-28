@@ -89,7 +89,7 @@ function mapResenterComponent() {
 
       // if the children is an option inside a select
       /**
-       * @param {JQuery.ChangeEvent<any, any, any, HTMLSelectElement>} event The event
+       * @param {JQuery.ChangeEvent<unknown, unknown, unknown, HTMLSelectElement>} event The event
        */
       const ce = (event) => {
         const selected = event.target.options[event.target.selectedIndex];

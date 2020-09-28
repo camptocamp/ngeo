@@ -174,7 +174,7 @@ FeatureOverlayMgr.prototype.setStyle = function (style, groupIndex) {
 /**
  * @param {import('ol/Feature.js').default<import('ol/geom/Geometry.js').default>|import("ol/render/Feature.js").default} feature Feature.
  * @param {number} resolution Resolution.
- * @return {Array<import("ol/style/Style.js").default>|import("ol/style/Style.js").default} Styles.
+ * @return {Array<import("ol/style/Style.js").default>|import("ol/style/Style.js").default|void} Styles.
  */
 FeatureOverlayMgr.prototype.styleFunction_ = function (feature, resolution) {
   const featureUid = olUtilGetUid(feature).toString();

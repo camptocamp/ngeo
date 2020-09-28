@@ -246,7 +246,7 @@ export class MapQuerent {
         // Use properties aliases if any
         if (dataSource.attributes && dataSource.attributes.length) {
           const properties = feature.getProperties();
-          /** @type {Object<string, any>} */
+          /** @type {Object<string, unknown>} */
           const filteredProperties = {};
           dataSource.attributes.forEach((attribute) => {
             if (attribute.alias) {

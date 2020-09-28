@@ -373,9 +373,6 @@ export default class {
       classification_colors
     );
 
-    /**
-     * @type {import("ol/source/Vector.js").default<import("ol/geom/Point.js").default>}
-     */
     const source = this.manager_.lidarPointHighlight.getSource();
     if (p != undefined) {
       cx = this.updateScaleX(p.distance) + margin.left;

@@ -208,7 +208,7 @@ Controller.prototype.$onInit = function () {
   let interaction;
   if (this.geomType === ngeoGeometryType.POINT || this.geomType === ngeoGeometryType.MULTI_POINT) {
     interaction = new olInteractionDraw({
-      type: /** @type {import("ol/geom/GeometryType.js").default} */ ('Point'),
+      type: 'Point',
     });
   } else if (
     this.geomType === ngeoGeometryType.LINE_STRING ||
@@ -257,30 +257,42 @@ Controller.prototype.$onInit = function () {
 
   const uid = olUtilGetUid(this);
   if (interaction instanceof olInteractionDraw) {
-    this.ngeoEventHelper_.addListenerKey(uid, listen(interaction, 'drawend', this.handleDrawEnd_, this));
+    this.ngeoEventHelper_.addListenerKey(
+      uid,
+      listen(
+        interaction,
+        'drawend',
+        /** @type {import('ol/events.js').ListenerFunction } */ (this.handleDrawEnd_),
+        this
+      )
+    );
   } else if (
     interaction instanceof ngeoInteractionMeasureLength ||
     interaction instanceof ngeoInteractionMeasureArea
   ) {
-    this.ngeoEventHelper_.addListenerKey(uid, listen(interaction, 'measureend', this.handleDrawEnd_, this));
+    this.ngeoEventHelper_.addListenerKey(
+      uid,
+      listen(
+        interaction,
+        'measureend',
+        /** @type {import('ol/events.js').ListenerFunction } */ (this.handleDrawEnd_),
+        this
+      )
+    );
   }
 };
 
 /**
  * Called when a feature is finished being drawn. Add the feature to the
  * collection.
- * @param {Event|import('ol/events/Event.js').default|import('ngeo/interaction/Measure.js').MeasureEvent} event
+ * @param {import('lib/ol.interaction.Draw.js').DrawEvent|import('ngeo/CustomEvent.js').default<import('lib/ol.interaction.Draw.js').DrawEvent>} evt
  *    Event.
  */
-Controller.prototype.handleDrawEnd_ = function (event) {
-  let sketch;
-  // @ts-ignore: evt should be of type {import('ol/interaction/Draw.js').DrawEvent but he is private
-  if (event.feature) {
-    // @ts-ignore: evt should be of type {import('ol/interaction/Draw.js').DrawEvent but he is private
-    sketch = event.feature;
-  } else {
-    sketch = /** @type {import('ngeo/interaction/Measure.js').MeasureEvent} */ (event).detail.feature;
-  }
+Controller.prototype.handleDrawEnd_ = function (evt) {
+  /** @type {import('lib/ol.interaction.Draw.js').DrawEvent} */
+  // @ts-ignore
+  const event = evt.detail ? evt.detail : evt;
+  const sketch = event.feature;
   console.assert(sketch);
 
   // convert to multi if geomType is multi and feature is not

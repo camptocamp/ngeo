@@ -73,7 +73,7 @@ function _compare(str1, str2) {
 /**
  * @private
  * @hidden
- * @param {Object} value Value
+ * @param {unknown} value Value
  * @param {number} length Length
  * @param {string} [chr] Char
  * @return {string}
@@ -87,8 +87,8 @@ function _lpad(value, length, chr) {
 /**
  * @private
  * @hidden
- * @param {Object} [out] Out
- * @return {Object}
+ * @param {unknown} [out] Out
+ * @return {unknown}
  */
 function _extend(out) {
   out = out || {};
@@ -170,26 +170,18 @@ export default class DateFormatter {
   constructor(options) {
     const self = this,
       config = _extend(defaultSettings, options);
-    // @ts-ignore: not checked file
     self.dateSettings = config.dateSettings;
-    // @ts-ignore: not checked file
     self.separators = config.separators;
-    // @ts-ignore: not checked file
     self.validParts = config.validParts;
-    // @ts-ignore: not checked file
     self.intParts = config.intParts;
-    // @ts-ignore: not checked file
     self.tzParts = config.tzParts;
-    // @ts-ignore: not checked file
     self.tzClip = config.tzClip;
   }
 
   getMonth(val) {
     const self = this;
-    // @ts-ignore: not checked file
     let i = _indexOf(val, self.dateSettings.monthsShort) + 1;
     if (i === 0) {
-      // @ts-ignore: not checked file
       i = _indexOf(val, self.dateSettings.months) + 1;
     }
     return i;
@@ -201,7 +193,6 @@ export default class DateFormatter {
    * @returns {?Date}
    */
   parseDate(vDate, vFormat) {
-    // @ts-ignore: not checked file
     const self = this,
       vSettings = self.dateSettings,
       out = {date: null, year: null, month: null, day: null, hour: 0, min: 0, sec: 0};
@@ -226,12 +217,10 @@ export default class DateFormatter {
       default:
         return null;
     }
-    // @ts-ignore: not checked file
     const vFormatParts = vFormat.match(self.validParts);
     if (!vFormatParts || vFormatParts.length === 0) {
       throw new Error('Invalid date format definition.');
     }
-    // @ts-ignore: not checked file
     const vDateParts = vDate.replace(self.separators, '\0').split('\0');
     for (i = 0; i < vDateParts.length; i++) {
       const vDatePart = vDateParts[i];
@@ -348,10 +337,8 @@ export default class DateFormatter {
       return vDateStr;
     }
     const self = this;
-    // @ts-ignore: not checked file
     const vParts = vDateStr.replace(self.separators, '\0').split('\0'),
       vPattern = /^[djmn]/g;
-    // @ts-ignore: not checked file
     const vFormatParts = vFormat.match(self.validParts);
     const vDate = new Date();
 
@@ -410,7 +397,6 @@ export default class DateFormatter {
   }
   parseFormat(vChar, vDate) {
     let fmt = null;
-    // @ts-ignore: not checked file
     const self = this,
       vSettings = self.dateSettings,
       backslash = /\\?(.?)/gi,
@@ -470,7 +456,6 @@ export default class DateFormatter {
       z() {
         const a = new Date(fmt.Y(), fmt.n() - 1, fmt.j()),
           b = new Date(fmt.Y(), 0, 1);
-        // @ts-ignore: not checked file
         return Math.round((a - b) / DAY);
       },
 
@@ -484,7 +469,6 @@ export default class DateFormatter {
       W() {
         const a = new Date(fmt.Y(), fmt.n() - 1, fmt.j() - fmt.N() + 3);
         const b = new Date(a.getFullYear(), 0, 4);
-        // @ts-ignore: not checked file
         return _lpad(1 + Math.round((a - b) / DAY / 7), 2);
       },
 
@@ -661,7 +645,6 @@ export default class DateFormatter {
           c = Date.UTC(fmt.Y(), 0),
           b = new Date(fmt.Y(), 6),
           d = Date.UTC(fmt.Y(), 6);
-        // @ts-ignore: not checked file
         return a - c !== b - d ? 1 : 0;
       },
       /**
@@ -686,7 +669,6 @@ export default class DateFormatter {
        * @return {string}
        */
       T() {
-        // @ts-ignore: not checked file
         const str = (String(vDate).match(self.tzParts) || ['']).pop().replace(self.tzClip, '');
         return str || 'UTC';
       },
@@ -747,10 +729,8 @@ export default class DateFormatter {
           continue;
         }
         let str = self.parseFormat(vChar, vDate);
-        // @ts-ignore: not checked file
         if (i !== len - 1 && self.intParts.test(vChar) && vFormat.charAt(i + 1) === 'S') {
           const n = parseInt(str) || 0;
-          // @ts-ignore: not checked file
           str += self.dateSettings.ordinal(n);
         }
         vDateStr += str;

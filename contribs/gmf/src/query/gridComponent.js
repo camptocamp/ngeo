@@ -557,7 +557,7 @@ QueryGridController.prototype.collectData_ = function (source) {
 
 /**
  * Remove all unwanted columns.
- * @param {Object[]} allProperties A row.
+ * @param {Object<string, string|number|boolean>[]} allProperties A row.
  * @param {string[]} featureGeometriesNames Geometry names.
  */
 QueryGridController.prototype.cleanProperties_ = function (allProperties, featureGeometriesNames) {
@@ -576,7 +576,7 @@ QueryGridController.prototype.cleanProperties_ = function (allProperties, featur
 
 /**
  * Remove columns that will be completely empty between each properties.
- * @param {Object[]} allProperties A row.
+ * @param {Object<string, string|number|boolean>[]} allProperties A row.
  */
 QueryGridController.prototype.removeEmptyColumnsFn_ = function (allProperties) {
   // Keep all keys that correspond to at least one value in a properties object.
@@ -608,7 +608,7 @@ QueryGridController.prototype.removeEmptyColumnsFn_ = function (allProperties) {
 };
 
 /**
- * @param {?Object[]} data Grid rows.
+ * @param {?Object<string, string|number|boolean>[]} data Grid rows.
  * @param {import('ngeo/statemanager/WfsPermalink.js').QueryResultSource} source Query source.
  * @return {boolean} Returns true if a grid was created.
  */
@@ -634,7 +634,7 @@ QueryGridController.prototype.makeGrid_ = function (data, source) {
 };
 
 /**
- * @param {Object[]} data Grid rows.
+ * @param {Object<string, string|number|boolean>[]} data Grid rows.
  * @return {?import("ngeo/grid/Config.js").default} Grid config.
  */
 QueryGridController.prototype.getGridConfiguration_ = function (data) {
@@ -647,7 +647,7 @@ QueryGridController.prototype.getGridConfiguration_ = function (data) {
   delete clone.ol_uid;
   const columns = Object.keys(clone);
 
-  /** @type {Array<import('ngeo/download/Csv.js').GridColumnDef>} */
+  /** @type {import('ngeo/download/Csv.js').GridColumnDef[]} */
   const columnDefs = [];
   columns.forEach((column) => {
     columnDefs.push(

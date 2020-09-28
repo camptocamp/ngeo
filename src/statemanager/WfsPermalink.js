@@ -261,7 +261,7 @@ WfsPermalinkService.prototype.issueRequest_ = function (
 };
 
 /**
- * @param {Feature<import("ol/geom/Geometry.js").default>[]} features Features.
+ * @param {import('ol/Feature.js').FeatureLike[]} features Features.
  * @return {import('ol/extent.js').Extent} The extent of all features.
  */
 WfsPermalinkService.prototype.getExtent_ = function (features) {

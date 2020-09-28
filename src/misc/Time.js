@@ -105,8 +105,8 @@ Time.prototype.getOptions = function (time) {
 /**
  * Time.prototype.getUTCDate - Get UTC date from a local date object
  *
- * @param  {Object} localDate loacl date object in
- * @return {Object} UTC date
+ * @param  {Date} localDate loacl date object in
+ * @return {Date} UTC date
  */
 Time.prototype.getUTCDate = function (localDate) {
   return new Date(localDate.getUTCFullYear(), localDate.getUTCMonth(), localDate.getUTCDate());

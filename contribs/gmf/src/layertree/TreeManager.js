@@ -162,10 +162,9 @@ export function LayertreeTreeManager(
 }
 
 /**
- * Called when the themes change. Get the OGC servers, then listen to the
- * tree manager Layertree controllers array changes.
- * The themes could have been changed so it also call a refresh of the
- * layertree.
+ * Called when the themes change. Get the OGC servers, then listen to the tree manager Layertree
+ * controllers array changes.
+ * The themes could have been changed so it also call a refresh of the layertree.
  */
 LayertreeTreeManager.prototype.handleThemesChange_ = function () {
   this.gmfThemes_.getOgcServersObject().then((ogcServers) => {
@@ -238,7 +237,7 @@ LayertreeTreeManager.prototype.parseTreeNodes = function (node) {
   const group = /** @type {import('gmf/themes.js').GmfGroup} */ (node);
   if (group.children) {
     /**
-     * @param {any} child
+     * @param {unknown} child
      */
     group.children.forEach((child) => {
       this.parseTreeNodes(child);
@@ -259,7 +258,7 @@ LayertreeTreeManager.prototype.removePopup_ = function (node) {
 };
 
 /**
- * @param {array} array An array of groups.
+ * @param {import('gmf/themes.js').GmfGroup[]} array An array of groups.
  * @param {number} old_index The old index before reorder (the current one).
  * @param {number} new_index The new index after reorder.
  */
@@ -393,7 +392,7 @@ LayertreeTreeManager.prototype.addGroupByLayerName = function (layerName, opt_ad
           console.warn('Tree controller not found, unable to add the group');
           return;
         }
-        /** @type {any} */
+        /** @type {unknown} */
         let treeCtrlToActive = null;
         treeCtrl.traverseDepthFirst((treeCtrl) => {
           if (treeCtrl.node.name === layerName) {
@@ -542,7 +541,9 @@ LayertreeTreeManager.prototype.getOgcServer = function (treeCtrl) {
   }
   const gmfParentGroup = /** @type {import('gmf/themes.js').GmfGroup} */ (treeCtrl.parent.node);
   if (gmfParentGroup.mixed) {
-    const gmfLayerWMS = /** @type {import('gmf/themes.js').GmfLayerWMS} */ (treeCtrl.node);
+    const gmfLayerWMS = /** @type {import('gmf/themes.js').GmfLayerWMS} */ (
+      /** @type {any} */ (treeCtrl.node)
+    );
     if (!gmfLayerWMS.ogcServer) {
       throw new Error('Missing gmfLayerWMS.ogcServer');
     }

@@ -339,7 +339,6 @@ class Controller {
         )
       );
       // flatten
-      // @ts-ignore: syntay seem not supported
       parsedRoutes = [].concat(...parsedRoutes_);
     } else if (route.geometry) {
       // otherwise parse (overview) geometry
@@ -366,7 +365,7 @@ class Controller {
 
     /**
      * @param {angular.IHttpResponse<import('./RoutingService').Routes>} resp
-     * @return {any}
+     * @return {unknown}
      */
     const onSuccess_ = (resp) => {
       if (!this.map || !this.startFeature_ || !this.targetFeature_) {
@@ -419,7 +418,7 @@ class Controller {
       console.log(resp);
     };
 
-    /** @type {Object} */
+    /** @type {Object<string, string|boolean>} */
     const options = {};
     options.steps = true;
     options.overview = false;

@@ -86,13 +86,13 @@ export default class TileDownloader {
 
     /**
      * @private
-     * @type {?function(): any}
+     * @type {?function(): unknown}
      */
     this.resolvePromise_ = null;
 
     /**
      * @private
-     * @type {?Promise}
+     * @type {?Promise<function(): unknown>}
      */
     this.promise_ = null;
 
@@ -114,7 +114,7 @@ export default class TileDownloader {
   }
 
   /**
-   * @return {Promise} A promise that resolves when the downloads are complete (failing or not)
+   * @return {Promise<function(): unknown>} A promise that resolves when the downloads are complete (failing or not)
    */
   download() {
     if (this.promise_) {
@@ -160,8 +160,7 @@ export default class TileDownloader {
     };
 
     /**
-     *
-     * @param {any} _ Unused.
+     * @param {unknown} _ Unused.
      */
     const errorCallback = (_) => {
       if (this.cancel_) {

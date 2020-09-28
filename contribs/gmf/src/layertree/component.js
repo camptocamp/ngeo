@@ -588,7 +588,7 @@ Controller.prototype.getLegendIconURL = function (treeCtrl) {
     return undefined;
   }
 
-  const gmfLayerWMS = /** @type {import('gmf/themes.js').GmfLayerWMS} */ (gmfLayer);
+  const gmfLayerWMS = /** @type {import('gmf/themes.js').GmfLayerWMS} */ (/** @type {any} */ (gmfLayer));
 
   const legendRule = gmfLayerWMS.metadata.legendRule;
 
@@ -635,7 +635,7 @@ Controller.prototype.getLegendsObject = function (treeCtrl) {
     }
     return wmtsLegendURL ? legendsObject : null;
   } else {
-    const gmfLayerWMS = /** @type {import('gmf/themes.js').GmfLayerWMS} */ (gmfLayer);
+    const gmfLayerWMS = /** @type {import('gmf/themes.js').GmfLayerWMS} */ (/** @type {any} */ (gmfLayer));
     const layersNames = gmfLayerWMS.layers;
     const gmfOgcServer = this.gmfTreeManager_.getOgcServer(treeCtrl);
     const scale = this.getScale_();
@@ -842,7 +842,7 @@ Controller.prototype.getResolutionStyle = function (gmfLayer) {
  *    from the current node.
  */
 Controller.prototype.zoomToResolution = function (treeCtrl) {
-  const gmfLayer = /** @type {import('gmf/themes.js').GmfLayerWMS} */ (treeCtrl.node);
+  const gmfLayer = /** @type {import('gmf/themes.js').GmfLayerWMS} */ (/** @type {any} */ (treeCtrl.node));
   const view = this.map.getView();
   const resolution = view.getResolution();
   if (resolution === undefined) {

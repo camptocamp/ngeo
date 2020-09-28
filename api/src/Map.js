@@ -41,7 +41,7 @@ import {createStringXY} from 'ol/coordinate.js';
 import ScaleLine from 'ol/control/ScaleLine.js';
 import OverviewMap from 'ol/control/OverviewMap.js';
 
-// @ts-ignore there is no existing types for ol-layerswitcher
+// @ts-ignore: there is no existing types for ol-layerswitcher
 import LayerSwitcher from 'ol-layerswitcher';
 
 import {
@@ -76,6 +76,13 @@ import Search from './Search.js';
  * @property {boolean} [searchDiv]
  * @property {string[]} [layers]
  * @property {string[]} [backgroundLayers]
+ */
+
+/**
+ * @typedef {Object} CustomLayer
+ * @property {string[]} [attr=['title', 'description']]
+ * @property {function(): void} [success]
+ * @property {function(): void} [error]
  */
 
 /**
@@ -162,7 +169,6 @@ class Map {
             this.map_.addControl(
               new OverviewMap({
                 collapsed: !options.miniMapExpanded,
-                // @ts-ignore: OpenLayers issue
                 layers: [layer],
                 view: new View({
                   projection: this.view_.getProjection(),
@@ -233,37 +239,53 @@ class Map {
     });
     this.map_.addInteraction(this.selectInteraction_);
 
-    this.selectInteraction_.on('select', (event) => {
-      const selected = event.selected[0];
-      if (selected) {
-        this.selectObject(selected.getId());
-      }
-    });
-
-    this.map_.on('singleclick', (event) => {
-      const resolution = this.map_.getView().getResolution();
-      if (resolution === undefined) {
-        throw new Error('Missing resolution');
-      }
-      const visibleLayers = this.map_
-        .getLayers()
-        .getArray()
-        .filter((layer) => layer.getVisible());
-      const visibleLayersName = visibleLayers.map((layer) => layer.get('config.name'));
-
-      this.clearSelection();
-
-      for (const layer of constants.queryableLayers) {
-        if (visibleLayersName.includes(layer)) {
-          getFeaturesFromCoordinates(layer, event.coordinate, resolution).then((feature) => {
-            if (feature) {
-              this.vectorSource_.addFeature(feature);
-              this.selectObject(feature.getId(), event.coordinate, true);
-            }
-          });
+    this.selectInteraction_.on(
+      'select',
+      /** @type {function(?): ?} */ (
+        /**
+         * @param {import('lib/ol.interaction.Select.js').SelectEvent} event
+         */
+        (event) => {
+          const selected = event.selected[0];
+          if (selected) {
+            this.selectObject(selected.getId());
+          }
         }
-      }
-    });
+      )
+    );
+
+    this.map_.on(
+      'singleclick',
+      /** @type {function(?): ?} */ (
+        /**
+         * @param {import('ol/MapBrowserEvent.js').default<unknown>} event
+         */
+        (event) => {
+          const resolution = this.map_.getView().getResolution();
+          if (resolution === undefined) {
+            throw new Error('Missing resolution');
+          }
+          const visibleLayers = this.map_
+            .getLayers()
+            .getArray()
+            .filter((layer) => layer.getVisible());
+          const visibleLayersName = visibleLayers.map((layer) => layer.get('config.name'));
+
+          this.clearSelection();
+
+          for (const layer of constants.queryableLayers) {
+            if (visibleLayersName.includes(layer)) {
+              getFeaturesFromCoordinates(layer, event.coordinate, resolution).then((feature) => {
+                if (feature) {
+                  this.vectorSource_.addFeature(feature);
+                  this.selectObject(feature.getId(), event.coordinate, true);
+                }
+              });
+            }
+          }
+        }
+      )
+    );
 
     if (options.searchDiv) {
       const element = document.querySelector(`#${options.searchDiv}`);
@@ -392,10 +414,7 @@ class Map {
    * @param {string} type Layer type, only 'text' format is supported.
    * @param {string} name Name.
    * @param {string} url URL.
-   * @param {Object} [options] Options
-   * @property {string[]} [attr=['title', 'description']]
-   * @property {function()} [success]
-   * @property {function()} [error]
+   * @param {CustomLayer} [options] Options
    */
   addCustomLayer(type, name, url, options = {}) {
     fetch(url)
@@ -410,11 +429,14 @@ class Map {
         const columns = shiftedLines.split('\t');
         for (const line of lines) {
           if (line) {
-            const values = zip(columns, line.split('\t'));
+            const values = /** @type {Object<string, string>} */ (
+              /** @type {any} */ (zip(columns, line.split('\t')))
+            );
             // reverse to order of the coordinates to be compatible with the old api.
             const marker = new Feature({
               geometry: new Point(values.point.split(',').reverse().map(parseFloat)),
             });
+            // @ts-ignore: Template don't look to work :-(
             marker.setProperties(filterByKeys(values, attr));
             marker.setId(values.id);
             let anchor;
@@ -519,13 +541,14 @@ class Map {
 
 /**
  * @param {string[]} keys Keys.
- * @param {Array<*>} values Values.
- * @return {Object<string, *>} Object.
+ * @param {Array<T>} values Values.
+ * @return {Object<string, T>} Object.
+ * @template T
  * @private
  * @hidden
  */
 function zip(keys, values) {
-  /** @type {Object<string, *>} */
+  /** @type {Object<string, T>} */
   const obj = {};
   keys.forEach((key, index) => {
     obj[key] = values[index];
@@ -534,14 +557,15 @@ function zip(keys, values) {
 }
 
 /**
- * @param {Object<string, *>} obj Object.
+ * @param {Object<string, T>} obj Object.
  * @param {string[]} keys keys.
- * @return {Object<string, *>} Object.
+ * @return {Object<string, T>} Object.
+ * @template T
  * @private
  * @hidden
  */
 function filterByKeys(obj, keys) {
-  /** @type {Object<string, *>} */
+  /** @type {Object<string, T>} */
   const filtered = {};
   keys.forEach((key) => {
     filtered[key] = obj[key];

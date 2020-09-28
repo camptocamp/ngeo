@@ -81,9 +81,9 @@ const REFRESH_PARAM = 'random';
  * Copy each properties from a layer onto an other layer, with the
  * option to exclude specific ones.
  *
- * @param {import("ol/layer/Layer.js").default} layerFrom The layer
+ * @param {import('ol/layer/Layer.js').default<import('ol/source/Source.js').default>} layerFrom The layer
  *     from which to copy the properties.
- * @param {import("ol/layer/Layer.js").default} layerTo The layer onto
+ * @param {import('ol/layer/Layer.js').default<import('ol/source/Source.js').default>} layerTo The layer onto
  *     which the properties are copied.
  * @param {string[]=} opt_excludes A list of properties that should
  *     not be copied.
@@ -116,8 +116,8 @@ LayerHelper.prototype.copyProperties = function (layerFrom, layerTo, opt_exclude
  * @param {string=} opt_time time parameter for layer queryable by time/period
  * @param {Object<string, string>=} opt_params WMS parameters.
  * @param {string=} opt_crossOrigin crossOrigin.
- * @param {Object=} opt_customSourceOptions Some initial options.
- * @param {Object=} opt_customLayerOptions The layer opacity.
+ * @param {unknown=} opt_customSourceOptions Some initial options.
+ * @param {unknown=} opt_customLayerOptions The layer opacity.
  * @return {import("ol/layer/Image.js").default} WMS Layer.
  */
 LayerHelper.prototype.createBasicWMSLayer = function (
@@ -286,8 +286,8 @@ LayerHelper.prototype.createWMTSLayerFromCapabilitites = function (
  * Create and return a WMTS layer using a formatted capabilities response
  * and a capability layer.
  *
- * @param {Object} capabilities The complete capabilities object of the service
- * @param {Object} layerCap The layer capability object
+ * @param {Object<string, any>} capabilities The complete capabilities object of the service
+ * @param {Object<string, any>} layerCap The layer capability object
  * @param {Object<string, string>=} opt_dimensions WMTS dimensions.
  * @return {import("ol/layer/Tile.js").default} WMTS layer
  */

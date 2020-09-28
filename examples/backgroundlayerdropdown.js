@@ -24,7 +24,7 @@ import angular from 'angular';
 import ngeoSourceAsitVD from 'ngeo/source/AsitVD.js';
 import {MAPSERVER_PROXY} from './url.js';
 
-import EPSG2056 from '@geoblocks/proj/src/EPSG_2056.js';
+import EPSG2056 from '@geoblocks/proj/EPSG_2056.js';
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
 import olLayerImage from 'ol/layer/Image.js';
@@ -97,7 +97,7 @@ function BackgroundlayerController($http, ngeoBackgroundLayerMgr) {
 /**
  * Function called when the user selects a new background layer in the
  * dropdown. Called by the ng-click directive used in the partial.
- * @param {Object} layerSpec Layer specification object.
+ * @param {Object<string, *>} layerSpec Layer specification object.
  */
 BackgroundlayerController.prototype.setLayer = function (layerSpec) {
   if (!this.map) {

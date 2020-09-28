@@ -29,8 +29,8 @@
  * @typedef {Object} OfflineLayerMetadata
  * @property {import("ol/Map.js").default} map
  * @property {OfflineExtentByZoom[]} extentByZoom
- * @property {import("ol/layer/Layer.js").default} layer
- * @property {import("ol/source/Source.js").default} source
+ * @property {import('ol/layer/Layer.js').default<unknown>} layer
+ * @property {import('ol/source/Source.js').default} source
  * @property {string|undefined} layerType
  * @property {string|undefined} layerSerialization
  * @property {boolean} backgroundLayer

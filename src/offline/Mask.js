@@ -24,11 +24,21 @@ import {createCanvasContext2D} from 'ol/dom.js';
 import {DEVICE_PIXEL_RATIO} from 'ol/has.js';
 
 /**
- * @extends {Layer<any>}
+ * @typedef {Object} Options
+ * @property {number} [margin]
+ * @property {number} [extentInMeters]
+ */
+
+/**
+ * @extends {Layer<import("ol/source/Source.js").default>}
  */
 export default class Mask extends Layer {
-  constructor(options = {}) {
-    super(options);
+  /**
+   * @param {import('ol/layer/Layer.js').Options} layerOptions
+   * @param {Options} maskOptions
+   */
+  constructor(layerOptions = {}, maskOptions = {}) {
+    super(layerOptions);
 
     /**
      * @private
@@ -38,21 +48,14 @@ export default class Mask extends Layer {
     this.context_.canvas.style.opacity = '0.5';
     this.context_.canvas.style.position = 'absolute';
 
-    /**
-     * @type {number}
-     */
-    this.margin_ = options.margin || 100;
-
-    /**
-     * @type {number}
-     */
-    this.extentInMeters_ = options.extentInMeters || 0;
+    this.margin_ = maskOptions.margin || 100;
+    this.extentInMeters_ = maskOptions.extentInMeters || 0;
   }
 
   /**
-   * @param {number[]} center, a xy point.
+   * @param {import("ol/coordinate.js").Coordinate} center, a xy point.
    * @param {number} halfLength a half length of a square's side.
-   * @return {number[]} an extent.
+   * @return {import("ol/extent.js").Extent} an extent.
    */
   createExtent(center, halfLength) {
     const minx = center[0] - halfLength;

@@ -127,7 +127,7 @@ function sortableComponent($timeout) {
         /** @type {JQueryUI.SortableOptions} */
         const sortableOptions = {
           axis: 'y',
-          // @ts-ignore
+          // @ts-ignore: classes is missing?
           classes: {
             'ui-sortable-helper': options.draggerClassName,
           },

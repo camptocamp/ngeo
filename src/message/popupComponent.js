@@ -88,8 +88,8 @@ function messagePopopComponent(ngeoPopupTemplateUrl) {
       /**
        * @param {JQueryEventObject} evt Event.
        */
-      // @ts-ignore
-      scope['close'] = function (evt) {
+      // @ts-ignore: scope ...
+      scope.close = function (evt) {
         if (evt) {
           evt.stopPropagation();
           evt.preventDefault();

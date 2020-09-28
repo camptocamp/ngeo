@@ -50,9 +50,9 @@ class ServiceManager {
   }
 
   /**
-   * @param {string|Object} serviceLike A service like.
+   * @param {string|unknown} serviceLike A service like.
    * @param {string} method A method.
-   * @return {Object} A returned object.
+   * @return {unknown} A returned object.
    */
   getOfflineService_(serviceLike, method) {
     if (typeof serviceLike === 'string') {
@@ -67,6 +67,7 @@ class ServiceManager {
       }
       return service;
     }
+    // @ts-ignore
     if (!serviceLike[method]) {
       console.error(`The provided offline service does not have a ${method} method`);
       return;

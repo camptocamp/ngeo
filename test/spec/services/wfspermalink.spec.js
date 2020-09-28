@@ -117,20 +117,23 @@ describe('ngeo.statemanager.WfsPermalink', () => {
 
   describe('#createFilters_', () => {
     /**
-     * @param {*} filter1
-     * @param {*} filter2
+     * @param {import("ol/format/filter/Filter.js").default} filter1
+     * @param {import("ol/format/filter/Filter.js").default} filter2
      */
     const expectFiltersToEqual = function (filter1, filter2) {
       expect(filter1.constructor).toBe(filter2.constructor, 'same filter type');
       if (filter1 instanceof olFormatFilterLogicalNary && filter2 instanceof olFormatFilterLogicalNary) {
-        expectFiltersToEqual(filter1.conditions.length, filter2.conditions.length);
+        expect(filter1.conditions.length).toBe(filter2.conditions.length);
         for (let i = 0; i < filter1.conditions.length; ++i) {
           expectFiltersToEqual(filter1.conditions[i], filter2.conditions[i]);
         }
       } else {
         expect(filter1 instanceof olFormatFilterEqualTo);
-        expect(filter1.propertyName).toBe(filter2.propertyName);
-        expect(filter1.expression).toBe(filter2.expression);
+        expect(filter2 instanceof olFormatFilterEqualTo);
+        if (filter1 instanceof olFormatFilterEqualTo && filter2 instanceof olFormatFilterEqualTo) {
+          expect(filter1.propertyName).toBe(filter2.propertyName);
+          expect(filter1.expression).toBe(filter2.expression);
+        }
       }
     };
 

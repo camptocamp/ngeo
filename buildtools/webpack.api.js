@@ -85,5 +85,10 @@ module.exports = (env, argv) => {
         ],
       }),
     ],
+    resolve: {
+      alias: {
+        '@geoblocks/proj': '@geoblocks/proj/src',
+      },
+    },
   };
 };

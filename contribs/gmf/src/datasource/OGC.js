@@ -42,13 +42,13 @@ import ngeoDatasourceOGC from 'ngeo/datasource/OGC.js';
  *    the one defined in the dimensions.
  * @property {string} [filterCondition] The filter condition to apply to the filter rules (if any).
  *    Defaults to `ngeo.filter.Condition.AND`.
- * @property {Array<import('ngeo/rule/Rule.js').default>} [filterRules] A list of filter rules to apply
+ * @property {import('ngeo/rule/Rule.js').default[]} [filterRules] A list of filter rules to apply
  *    to this data source using the filter condition.
  * @property {boolean} [filtrable] Whether the data source is filtrable or not.
  * @property {string} [ogcImageType] The type of images to fetch by queries by the (WMS) or (WMTS).
- * @property {Array<import('ngeo/datasource/OGC').WMSLayer>} [wmsLayers] A list of layer definitions that are used by WMS queries.
+ * @property {import('ngeo/datasource/OGC.js').WMSLayer[]} [wmsLayers] A list of layer definitions that are used by WMS queries.
  *    These are **not** used by the (WMTS) queries (the wmtsLayers is used by WMTS queries).
- * @property {Array<import('ngeo/datasource/OGC').WFSLayer>} [wfsLayers] A list of layer definitions that
+ * @property {import('ngeo/datasource/OGC.js').WFSLayer[]} [wfsLayers] A list of layer definitions that
  *    are used by WFS queries.
  *    These are **not** used by the (WMTS) queries (the wmtsLayers is used by WMTS queries).
  * @property {string} [ogcServerType] The type of OGC server.
@@ -65,7 +65,7 @@ import ngeoDatasourceOGC from 'ngeo/datasource/OGC.js';
  * @property {string} [timeAttributeName]  The name of the time attribute.
  * @property {number} [timeLowerValue] The time lower value, which can be combined with the time upper value
  *    to determine a range.
- * @property {import('ngeo/datasource/OGC').TimeProperty} [timeProperty] The time property for the data
+ * @property {import('ngeo/datasource/OGC.js').TimeProperty} [timeProperty] The time property for the data
  *    source. Used to apply time filters.
  * @property {number} [timeUpperValue] The time upper value, which can be combined with the time lower value
  *    to determine a range.

@@ -71,8 +71,11 @@ export function getFeaturesFromIds(layer, ids) {
         return;
       }
 
-      const gmfLayer = /** @type import('gmf/themes.js').GmfLayerWMS */ (overlayDef.layer);
+      const gmfLayer = /** @type {import('gmf/themes.js').GmfLayerWMS} */ (
+        /** @type {any} */ (overlayDef.layer)
+      );
       const childLayerNames = [];
+      /** @type {string[]} */
       let featureIds = [];
       for (const childLayer of gmfLayer.childLayers) {
         childLayerNames.push(childLayer.name);
@@ -96,7 +99,9 @@ export function getFeaturesFromIds(layer, ids) {
               featureNS: overlayDef.ogcServer.namespace,
               gmlFormat: new olFormatGML2(),
             });
-            features = wfsFormat.readFeatures(responseText);
+            features = /** @type {Array<import('ol/Feature').default<import('ol/geom/Geometry').default>>} */ (wfsFormat.readFeatures(
+              responseText
+            ));
           })
         )
         .catch((response) => {
@@ -153,7 +158,9 @@ export function getFeaturesFromCoordinates(layer, coordinate, resolution) {
               featureNS: overlayDef.ogcServer.namespace,
               gmlFormat: new olFormatGML2(),
             });
-            feature = wfsFormat.readFeature(responseText);
+            feature = /** @type {import('ol/Feature').default<import('ol/geom/Geometry').default>} */ (wfsFormat.readFeature(
+              responseText
+            ));
           })
         )
         .catch((response) => {

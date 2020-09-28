@@ -36,7 +36,7 @@ import gmfThemeThemes from 'gmf/theme/Themes.js';
 import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
 import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
 import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr.js';
-import EPSG2056 from '@geoblocks/proj/src/EPSG_2056.js';
+import EPSG2056 from '@geoblocks/proj/EPSG_2056.js';
 import olCollection from 'ol/Collection.js';
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';

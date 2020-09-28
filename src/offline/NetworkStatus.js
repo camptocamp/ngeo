@@ -114,10 +114,10 @@ const Service = class {
     // @ts-ignore
     if (this.$document_.ajaxError) {
       /**
-       * @param {any} evt
-       * @param {any} jqxhr
-       * @param {any} settings
-       * @param {any} thrownError
+       * @param {unknown} evt
+       * @param {unknown} jqxhr
+       * @param {unknown} settings
+       * @param {string} thrownError
        */
       const onAjaxError = (evt, jqxhr, settings, thrownError) => {
         // Filter out canceled requests

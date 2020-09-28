@@ -116,7 +116,7 @@ class DrawAzimut extends olInteractionPointer {
 
   /**
    * Handle move events.
-   * @param {import("ol/MapBrowserEvent.js").default} event MapBrowserEvent, a move event.
+   * @param {import('ol/MapBrowserEvent.js').default<unknown>} event MapBrowserEvent, a move event.
    * @return {boolean} Pass the event to other interactions.
    * @private
    */
@@ -130,7 +130,7 @@ class DrawAzimut extends olInteractionPointer {
   }
 
   /**
-   * @param {import("ol/MapBrowserEvent.js").default} event MapBrowserEvent.
+   * @param {import('ol/MapBrowserEvent.js').default<unknown>} event MapBrowserEvent.
    * @private
    */
   createOrUpdateSketchPoint_(event) {
@@ -159,7 +159,7 @@ class DrawAzimut extends olInteractionPointer {
 
   /**
    * Start the drawing.
-   * @param {import("ol/MapBrowserEvent.js").default} event MapBrowserEvent.
+   * @param {import('ol/MapBrowserEvent.js').default<unknown>} event MapBrowserEvent.
    * @private
    */
   startDrawing_(event) {
@@ -172,13 +172,12 @@ class DrawAzimut extends olInteractionPointer {
     this.sketchFeature_.setGeometry(geometry);
     this.updateSketchFeatures_();
     const evt = new ngeoCustomEvent('drawstart', {feature: this.sketchFeature_});
-    // @ts-ignore: missing dispatchEvent
     this.dispatchEvent(evt);
   }
 
   /**
    * Modify the drawing.
-   * @param {import("ol/MapBrowserEvent.js").default} event MapBrowserEvent.
+   * @param {import('ol/MapBrowserEvent.js').default<unknown>} event MapBrowserEvent.
    * @private
    */
   modifyDrawing_(event) {
@@ -230,9 +229,7 @@ class DrawAzimut extends olInteractionPointer {
    * @private
    */
   updateState_() {
-    // @ts-ignore: missing getMap
     const map = this.getMap();
-    // @ts-ignore: missing getActive
     const active = this.getActive();
     if (map === null || !active) {
       this.abortDrawing_();
@@ -250,7 +247,6 @@ class DrawAzimut extends olInteractionPointer {
     this.source_.addFeature(sketchFeature);
 
     const event = new ngeoCustomEvent('drawend', {feature: this.sketchFeature_});
-    // @ts-ignore: missing dispatchEvent
     this.dispatchEvent(event);
   }
 
@@ -263,7 +259,7 @@ class DrawAzimut extends olInteractionPointer {
   }
 
   /**
-   * @param {import("ol/MapBrowserEvent.js").default} event MapBrowserEvent.
+   * @param {import('ol/MapBrowserEvent.js').default<unknown>} event MapBrowserEvent.
    * @return {boolean} If the event was consumed.
    */
   handleDownEvent(event) {
@@ -272,7 +268,7 @@ class DrawAzimut extends olInteractionPointer {
   }
 
   /**
-   * @param {import("ol/MapBrowserEvent.js").default} event MapBrowserEvent.
+   * @param {import('ol/MapBrowserEvent.js').default<unknown>} event MapBrowserEvent.
    * @return {boolean} If the event was consumed.
    */
   handleUpEvent(event) {
@@ -298,7 +294,7 @@ class DrawAzimut extends olInteractionPointer {
   }
 
   /**
-   * @param {import("ol/MapBrowserEvent.js").default} mapBrowserEvent MapBrowserEvent.
+   * @param {import('ol/MapBrowserEvent.js').default<unknown>} mapBrowserEvent MapBrowserEvent.
    * @return {boolean} If the event was consumed.
    */
   handleEvent(mapBrowserEvent) {

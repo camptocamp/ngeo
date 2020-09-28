@@ -138,7 +138,7 @@ function Controller($scope, gmfThemeManager, gmfThemes) {
   this.gmfThemes_ = gmfThemes;
 
   /**
-   * @type {Object[]}
+   * @type {import('gmf/themes').GmfTheme[]}
    */
   this.themes = [];
 
@@ -158,8 +158,7 @@ function Controller($scope, gmfThemeManager, gmfThemes) {
 }
 
 /**
- * Store the loaded themes locally applying a filter (if any), then set the
- * current theme.
+ * Store the loaded themes locally applying a filter (if any), then set the current theme.
  */
 Controller.prototype.setThemes_ = function () {
   this.gmfThemes_.getThemesObject().then((themes) => {

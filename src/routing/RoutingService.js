@@ -69,7 +69,7 @@ export function RoutingService($http, ngeoRoutingOptions) {
  * @property {string} [service]
  * @property {string} [profile]
  * @property {string} [instance]
- * @property {Object} [options]
+ * @property {Object<string, string|boolean>} [options]
  */
 
 /**

@@ -46,7 +46,6 @@ export default class extends olOverlay {
   }
 
   close() {
-    // @ts-ignore: unfound getMap
     const map = this.getMap();
     if (map) {
       map.removeOverlay(this);
@@ -58,13 +57,11 @@ export default class extends olOverlay {
    * overlay is part of.
    */
   setMap(map) {
-    // @ts-ignore
     const element = this.getElement();
     if (!element) {
       throw new Error('Missing element');
     }
 
-    // @ts-ignore: unfound getMap
     const currentMap = this.getMap();
     if (currentMap) {
       $(element).popover('dispose');

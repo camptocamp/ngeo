@@ -35,6 +35,7 @@ import LocalforageAndroidWrapper from 'ngeo/offline/LocalforageAndroidWrapper.js
 import LocalforageIosWrapper from 'ngeo/offline/LocalforageIosWrapper.js';
 import ngeoCustomEvent from 'ngeo/CustomEvent.js';
 import {normalizeURL, traverseLayer} from 'ngeo/offline/utils.js';
+// @ts-ignore
 import localforage from 'localforage/src/localforage.js';
 
 /**
@@ -92,7 +93,6 @@ export default class extends olObservable {
    * @param {number} progress new progress.
    */
   dispatchProgress_(progress) {
-    // @ts-ignore: unfound dispatchEvent
     this.dispatchEvent(
       new ngeoCustomEvent('progress', {
         'progress': progress,
@@ -164,7 +164,6 @@ export default class extends olObservable {
    * @return {Promise<?>} A promise
    */
   getItem(key) {
-    // @ts-ignore
     const promise = this.localforage_['getItem'](key);
     return this.traceGetSetItem('getItem', key, promise);
   }
@@ -174,7 +173,6 @@ export default class extends olObservable {
    * @return {Promise<?>} .
    */
   removeItem(key) {
-    // @ts-ignore
     const promise = this.localforage_['removeItem'](key);
     return this.traceGetSetItem('removeItem', key, promise);
   }
@@ -185,18 +183,16 @@ export default class extends olObservable {
    * @return {Promise<?>} A promise
    */
   setItem(key, value) {
-    // @ts-ignore
     const promise = this.localforage_['setItem'](key, value);
     return this.traceGetSetItem('setItem', key, promise);
   }
 
   /**
-   * @return {Promise} A promise
+   * @return {Promise<void>} A promise
    */
   clear() {
     this.setHasOfflineData(false);
-    // @ts-ignore
-    const promise = this.localforage_['clear']();
+    const promise = this.localforage_.clear();
     return this.traceGetSetItem('clear', '', promise);
   }
 
@@ -220,7 +216,7 @@ export default class extends olObservable {
    * @override
    * @param {number} progress The download progress
    * @param {import("./index.js").OfflineTile} tile The tile
-   * @return {Promise} A promise
+   * @return {Promise<void>} A promise
    */
   onTileDownloadSuccess(progress, tile) {
     this.dispatchProgress_(progress);
@@ -234,7 +230,7 @@ export default class extends olObservable {
   /**
    * @override
    * @param {number} progress The progress
-   * @return {Promise} A promise
+   * @return {Promise<void>} A promise
    */
   onTileDownloadError(progress) {
     this.dispatchProgress_(progress);

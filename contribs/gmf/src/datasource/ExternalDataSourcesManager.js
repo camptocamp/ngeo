@@ -336,8 +336,8 @@ export class ExternalDatSourcesManager {
   }
 
   /**
-   * @param {Object} layer WMS Capability Layer object.
-   * @param {Object} capabilities  WMS Capabilities definition
+   * @param {any} layer WMS Capability Layer object.
+   * @param {any} capabilities  WMS Capabilities definition
    * @param {?string} url The WMS service url.
    */
   createAndAddDataSourceFromWMSCapability(layer, capabilities, url) {
@@ -424,8 +424,8 @@ export class ExternalDatSourcesManager {
   }
 
   /**
-   * @param {Object} layer WTMS Capability Layer object.
-   * @param {Object} capabilities  WMTS Capabilities definition
+   * @param {any} layer WTMS Capability Layer object.
+   * @param {any} capabilities  WMTS Capabilities definition
    * @param {string} wmtsUrl The WMTS capabilities url
    */
   createAndAddDataSourceFromWMTSCapability(layer, capabilities, wmtsUrl) {
@@ -560,15 +560,22 @@ export class ExternalDatSourcesManager {
         if (!this.map_) {
           throw new Error('Missing map');
         }
+        /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>[]} */
         let features;
         const readOptions = {
           featureProjection: this.map_.getView().getProjection(),
         };
 
         if (ngeoFile.isKml(content)) {
-          features = new olFormatKML().readFeatures(content, readOptions);
+          features = /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>[]} */ (new olFormatKML().readFeatures(
+            content,
+            readOptions
+          ));
         } else if (ngeoFile.isGpx(content)) {
-          features = new olFormatGPX().readFeatures(content, readOptions);
+          features = /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>[]} */ (new olFormatGPX().readFeatures(
+            content,
+            readOptions
+          ));
         }
 
         if (features) {

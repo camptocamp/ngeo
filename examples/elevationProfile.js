@@ -21,7 +21,7 @@
 
 import './elevationProfile.css';
 import angular from 'angular';
-import EPSG2056 from '@geoblocks/proj/src/EPSG_2056.js';
+import EPSG2056 from '@geoblocks/proj/EPSG_2056.js';
 import {MAPSERVER_PROXY} from './url.js';
 
 import olFeature from 'ol/Feature.js';
@@ -43,29 +43,25 @@ const module = angular.module('app', ['gettext', ngeoMapModule.name, ngeoProfile
  * Factory for creating simple getter functions for extractors.
  * If the value is in a child property, the opt_childKey must be defined.
  * The type parameter is used by closure to type the returned function.
- * @param {any} type An object of the expected result type.
  * @param {string} key Key used for retrieving the value.
  * @param {string=} opt_childKey Key of a child object.
- * @return {function(Object): any} Getter function.
+ * @return {function(unknown): any} Getter function.
  */
-const typedFunctionsFactory = function (type, key, opt_childKey) {
+const typedFunctionsFactory = function (key, opt_childKey) {
   return (
     /**
-     * @param {Object} item
+     * @param {unknown} item
      * @return {any}
      */
     function (item) {
       if (opt_childKey !== undefined) {
+        // @ts-ignore
         item = item[opt_childKey];
       }
+      // @ts-ignore
       return item[key];
     }
   );
-};
-
-const types = {
-  number: 1,
-  string: '',
 };
 
 /**
@@ -88,7 +84,7 @@ function MainController($http, $scope) {
     params: {
       'LAYERS': 'default',
     },
-    serverType: /** @type {import("ol/source/WMSServerType.js").default} */ ('mapserver'),
+    serverType: 'mapserver',
   });
 
   /**
@@ -142,10 +138,7 @@ function MainController($http, $scope) {
 
     let i;
     const len = data.length;
-    const lineString = new olGeomLineString(
-      [],
-      /** @type {import("ol/geom/GeometryLayout.js").default} */ ('XYM')
-    );
+    const lineString = new olGeomLineString([], 'XYM');
     for (i = 0; i < len; i++) {
       const p = data[i];
       lineString.appendCoordinate([p.x, p.y, p.dist]);
@@ -159,28 +152,35 @@ function MainController($http, $scope) {
     map.getView().fit(source.getExtent(), {size});
   });
 
-  map.on('pointermove', (evt) => {
-    if (evt.dragging) {
-      return;
-    }
-    const coordinate = map.getEventCoordinate(evt.originalEvent);
-    const geometry = source.getFeatures()[0].getGeometry();
-    if (!geometry) {
-      throw new Error('Missing geometry');
-    }
-    this.snapToGeometry(coordinate, geometry);
-  });
+  map.on(
+    'pointermove',
+    /** @type {function(?): ?} */ (
+      /**
+       * @param {import('ol/MapBrowserEvent.js').default<MouseEvent>} evt
+       */ (evt) => {
+        if (evt.dragging) {
+          return;
+        }
+        const coordinate = map.getEventCoordinate(evt.originalEvent);
+        const geometry = source.getFeatures()[0].getGeometry();
+        if (!geometry) {
+          throw new Error('Missing geometry');
+        }
+        this.snapToGeometry(coordinate, geometry);
+      }
+    )
+  );
 
-  const distanceExtractor = typedFunctionsFactory(types.number, 'dist');
+  const distanceExtractor = typedFunctionsFactory('dist');
 
-  /** @type {function(Object<string, number>): number} */
-  const sort = typedFunctionsFactory(types.number, 'sort');
-  /** @type {function(Object<string, string>): string} */
-  const id = typedFunctionsFactory(types.string, 'id');
-  /** @type {function(Object<string, number>): number} */
-  const dist = typedFunctionsFactory(types.number, 'dist');
-  /** @type {function(Object<string, string>): string} */
-  const title = typedFunctionsFactory(types.string, 'title');
+  /** @type {function(Object): number} */
+  const sort = typedFunctionsFactory('sort');
+  /** @type {function(Object): string} */
+  const id = typedFunctionsFactory('id');
+  /** @type {function(Object): number} */
+  const dist = typedFunctionsFactory('dist');
+  /** @type {function(Object): string} */
+  const title = typedFunctionsFactory('title');
 
   /**
    * @type {import('ngeo/profile/elevationComponent.js').PoiExtractor}
@@ -197,8 +197,10 @@ function MainController($http, $scope) {
      */
     z: (item, opt_z) => {
       if (opt_z !== undefined) {
+        // @ts-ignore
         item.z = opt_z;
       }
+      // @ts-ignore
       return item.z;
     },
   };
@@ -209,6 +211,7 @@ function MainController($http, $scope) {
   const hoverCallback = (point) => {
     // An item in the list of points given to the profile.
     this.point = point;
+    // @ts-ignore
     this.snappedPoint_.setGeometry(new olGeomPoint([point.x, point.y]));
   };
 
@@ -271,7 +274,7 @@ module.constant('ngeoProfileOptions', {
   linesConfiguration: {
     'line1': {
       style: {},
-      zExtractor: typedFunctionsFactory(types.number, 'mnt', 'values'),
+      zExtractor: typedFunctionsFactory('mnt', 'values'),
     },
   },
 });

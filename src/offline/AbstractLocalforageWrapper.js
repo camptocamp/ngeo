@@ -20,16 +20,14 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 /**
- * @typedef {{
- *   id: number,
- *   plugin: string,
- *   command: string,
- *   args: !Array<*>,
- *   context: (*|undefined)
- * }}
+ * @typedef {Object} Action
+ * @property {number} id
+ * @property {string} plugin
+ * @property {string} command
+ * @property {!Array<*>} args
+ * @property {?} context
+ * @property {string} [msg]
  */
-// eslint-disable-next-line no-unused-vars
-let Action;
 
 /**
  * @abstract
@@ -41,7 +39,7 @@ const exports = class AbstractLocalforageWrapper {
   }
 
   /**
-   * @param  {...any} args Some arguments.
+   * @param  {...unknown} args Some arguments.
    * @return Promise
    */
   setItem(...args) {
@@ -49,7 +47,7 @@ const exports = class AbstractLocalforageWrapper {
   }
 
   /**
-   * @param  {...any} args Some arguments.
+   * @param  {...unknown} args Some arguments.
    * @return Promise
    */
   getItem(...args) {
@@ -61,7 +59,7 @@ const exports = class AbstractLocalforageWrapper {
   }
 
   /**
-   * @param  {...any} args Some arguments.
+   * @param  {...unknown} args Some arguments.
    * @return Promise
    */
   config(...args) {
@@ -71,8 +69,8 @@ const exports = class AbstractLocalforageWrapper {
   /**
    * @export
    * @param {string} command .
-   * @param  {...*} args .
-   * @return {Promise} .
+   * @param  {...unknown} args .
+   * @return {Promise<void>} .
    */
   createAction(command, ...args) {
     const id = ++this.currentId_;
@@ -107,12 +105,12 @@ const exports = class AbstractLocalforageWrapper {
     /**
      * @type {Action}
      */
-    const action = event['data'];
-    const id = action['id'];
-    const command = action['command'];
-    const args = action['args'] || [];
-    const context = action['context'];
-    const msg = action['msg'];
+    const action = event.data;
+    const id = action.id;
+    const command = action.command;
+    const args = action.args || [];
+    const context = action.context;
+    const msg = action.msg;
 
     const waitingPromise = this.waitingPromises_.get(id);
     if (command === 'error') {

@@ -229,7 +229,6 @@ export class DatasourceManager {
     this.treeCtrlsUnregister_ = null;
 
     // === Events ===
-
     listen(this.ngeoBackgroundLayerMgr_, 'change', this.handleNgeoBackgroundLayerChange_, this);
     listen(this.gmfThemes_, 'change', this.handleThemesChange_, this);
   }
@@ -245,7 +244,7 @@ export class DatasourceManager {
 
   /**
    * Get a datasource by its id.
-   * @param {number} id The id of the datasource.
+   * @param {string} id The id of the datasource.
    * @hidden
    */
   getDatasource(id) {
@@ -481,17 +480,26 @@ export class DatasourceManager {
     const ogcType = gmfLayer.type;
     let maxResolution = 0;
     let minResolution = 0;
-    let wmsLayers;
-    let wfsLayers;
-    let ogcServer;
+    /** @type {string} */
     let wmtsLayer;
+    /** @type {string} */
     let wmtsUrl;
+    /** @type {string} */
     let ogcImageType;
+    /** @type {import('ngeo/datasource/OGC.js').WMSLayer[]} */
+    let wmsLayers;
+    /** @type {import('ngeo/datasource/OGC.js').WFSLayer[]} */
+    let wfsLayers;
+    /** @type {import('ngeo/datasource/OGC.js').TimeProperty} */
     let timeProperty;
+    /** @type {import('gmf/themes.js').GmfOgcServer} */
+    let ogcServer;
 
     if (ogcType === ThemeNodeType.WMTS) {
       // (3) Manage WMTS
-      const gmfLayerWMTS = /** @type {import('gmf/themes.js').GmfLayerWMTS} */ (gmfLayer);
+      const gmfLayerWMTS = /** @type {import('gmf/themes.js').GmfLayerWMTS} */ (
+        /** @type {any} */ (gmfLayer)
+      );
 
       // Common options for WMTS
       wmtsLayer = gmfLayerWMTS.layer;
@@ -525,7 +533,7 @@ export class DatasourceManager {
       ogcImageType = gmfLayerWMTS.imageType;
     } else if (ogcType === ThemeNodeType.WMS) {
       // (4) Manage WMS
-      const gmfLayerWMS = /** @type {import('gmf/themes.js').GmfLayerWMS} */ (gmfLayer);
+      const gmfLayerWMS = /** @type {import('gmf/themes.js').GmfLayerWMS} */ (/** @type {any} */ (gmfLayer));
 
       // Common options for WMS
       maxResolution = gmfLayerWMS.maxResolutionHint;
@@ -553,6 +561,7 @@ export class DatasourceManager {
       const queryLayers = meta.queryLayers ? meta.queryLayers.split(',') : null;
 
       wmsLayers = gmfLayerWMS.layers.split(',').map((childLayer) => {
+        /** @type {import('ngeo/datasource/OGC.js').WMSLayer} */
         const item = {
           name: childLayer,
           queryable: queryable,
@@ -563,6 +572,7 @@ export class DatasourceManager {
         return item;
       });
       wfsLayers = gmfLayerWMS.childLayers.map((childLayer) => {
+        /** @type {import('ngeo/datasource/OGC.js').WFSLayer} */
         const item = {
           maxResolution: childLayer.maxResolutionHint,
           minResolution: childLayer.minResolutionHint,
@@ -616,6 +626,7 @@ export class DatasourceManager {
     // (8) Time values (lower or lower/upper)
     let timeLowerValue;
     let timeUpperValue;
+
     if (timeProperty) {
       const timeValues = this.ngeoWMSTime_.getOptions(timeProperty).values;
       if (Array.isArray(timeValues)) {
@@ -634,7 +645,7 @@ export class DatasourceManager {
     const visible = meta.isChecked === true;
     const ogcAttributes = ogcServer ? ogcServer.attributes : null;
 
-    /** @type {import('./OGC').OGCOptions} */
+    /** @type {import('gmf/datasource/OGC.js').OGCOptions} */
     const options = {
       copyable,
       dimensionsConfig,
@@ -920,7 +931,9 @@ export class DatasourceManager {
         if (!(dataSource instanceof gmfOGC)) {
           throw new Error('Wrong dataSource type');
         }
-        const gmfLayerWMS = /** @type {import('gmf/themes.js').GmfLayerWMS} */ (dataSource.gmfLayer);
+        const gmfLayerWMS = /** @type {import('gmf/themes.js').GmfLayerWMS} */ (
+          /** @type {any} */ (dataSource.gmfLayer)
+        );
         if (
           olUtilGetUid(dsLayer) == olUtilGetUid(layer) &&
           layer.get('querySourceIds').includes(String(dataSource.id)) &&

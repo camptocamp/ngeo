@@ -169,7 +169,9 @@ export class ThemesService extends olEventsEventTarget {
      */
     const layerLayerCreationFn = function (ogcServers, gmfLayer) {
       if (gmfLayer.type === 'WMTS') {
-        const gmfLayerWMTS = /** @type {import('gmf/themes.js').GmfLayerWMTS} */ (gmfLayer);
+        const gmfLayerWMTS = /** @type {import('gmf/themes.js').GmfLayerWMTS} */ (
+          /** @type {any} */ (gmfLayer)
+        );
         if (!gmfLayerWMTS.url) {
           throw 'Layer URL is required';
         }
@@ -197,7 +199,9 @@ export class ThemesService extends olEventsEventTarget {
           });
         return /** @type {angular.IPromise<import("ol/layer/Base.js").default>} */ (layer);
       } else if (gmfLayer.type === 'WMS') {
-        const gmfLayerWMS = /** @type {import('gmf/themes.js').GmfLayerWMS} */ (gmfLayer);
+        const gmfLayerWMS = /** @type {import('gmf/themes.js').GmfLayerWMS} */ (
+          /** @type {any} */ (gmfLayer)
+        );
         if (!gmfLayerWMS.ogcServer) {
           throw new Error('Missing gmfLayerWMS.ogcServer');
         }
@@ -270,7 +274,7 @@ export class ThemesService extends olEventsEventTarget {
      * @return {angular.IPromise<import("ol/layer/Base.js").default[]>} Promise.
      */
     const promiseSuccessFn = (data) => {
-      const promises = /** @type {angular.IPromise<*>} */ (
+      const promises = /** @type {angular.IPromise<unknown>} */ (
         /** @type {*} */ (data.background_layers.map((item) => {
           const itemLayer = /** @type {import('gmf/themes.js').GmfLayer} */ (item);
           const itemGroup = /** @type {import('gmf/themes.js').GmfGroup} */ (item);
@@ -413,14 +417,14 @@ export class ThemesService extends olEventsEventTarget {
    * @return {boolean} Editable layers?
    */
   hasNodeEditableLayers_(node) {
-    // @ts-ignore: children only on GmfLayer
-    if (node.editable) {
+    const gmfGroup = /** @type {import('gmf/themes.js').GmfGroup} */ (node);
+    const gmfLayer = /** @type {import('gmf/themes.js').GmfLayer} */ (node);
+    if (gmfLayer.editable) {
       return true;
     }
 
     let hasEditableLayers = false;
-    // @ts-ignore: children only on GmfGroup
-    const children = node.children;
+    const children = gmfGroup.children;
     if (children && children.length) {
       hasEditableLayers = children.some(this.hasNodeEditableLayers_.bind(this));
     }
@@ -471,7 +475,6 @@ export class ThemesService extends olEventsEventTarget {
           });
 
           this.deferred_.resolve(response.data);
-          // @ts-ignore: missing dispatchEvent
           this.dispatchEvent('change');
           this.loaded = true;
         },
@@ -560,8 +563,8 @@ export function findThemeByName(themes, themeName) {
  * @hidden
  */
 function getFlatInternalNodes(node, nodes) {
-  // @ts-ignore: children only on GmfGroup
-  const children = node.children;
+  const gmfGroup = /** @type {import('gmf/themes.js').GmfGroup} */ (node);
+  const children = gmfGroup.children;
   if (children !== undefined) {
     nodes.push(node);
     for (const child of children) {
@@ -578,8 +581,8 @@ function getFlatInternalNodes(node, nodes) {
  * @hidden
  */
 export function getFlatNodes(node, nodes) {
-  // @ts-ignore: children only on GmfGroup
-  const children = node.children;
+  const gmfGroup = /** @type {import('gmf/themes.js').GmfGroup} */ (node);
+  const children = gmfGroup.children;
   if (children !== undefined) {
     for (const child of children) {
       getFlatNodes(child, nodes);
@@ -614,8 +617,8 @@ export function getSnappingConfig(node) {
  */
 export function getNodeMaxResolution(gmfLayer) {
   const metadata = gmfLayer.metadata;
-  // @ts-ignore: ignore error about maxResolutionHint no present in GmfLayerWMTS typedef
-  let maxResolution = gmfLayer.maxResolutionHint;
+  const gmfLayerWMS = /** @type {import('gmf/themes.js').GmfLayerWMS} */ (gmfLayer);
+  let maxResolution = gmfLayerWMS.maxResolutionHint;
   if (maxResolution === undefined && metadata !== undefined) {
     maxResolution = metadata.maxResolution;
   }
@@ -631,8 +634,8 @@ export function getNodeMaxResolution(gmfLayer) {
  */
 export function getNodeMinResolution(gmfLayer) {
   const metadata = gmfLayer.metadata;
-  // @ts-ignore: ignore error about minResolutionHint no present in GmfLayerWMTS typedef
-  let minResolution = gmfLayer.minResolutionHint;
+  const gmfLayerWMS = /** @type {import('gmf/themes.js').GmfLayerWMS} */ (gmfLayer);
+  let minResolution = gmfLayerWMS.minResolutionHint;
   if (minResolution === undefined && metadata !== undefined) {
     minResolution = metadata.minResolution;
   }

@@ -34,7 +34,9 @@ describe('ngeo.print.Utils', () => {
 
   describe('#getOptimalResolution', () => {
     it('returns the optimal resolution', () => {
+      /** @type {[number, number]} */
       const mapSize = [2, 1]; // px
+      /** @type {[number, number]} */
       const printMapSize = [
         (640 * DOTS_PER_INCH) / INCHES_PER_METER / 2,
         (320 * DOTS_PER_INCH) / INCHES_PER_METER / 2,

@@ -36,6 +36,9 @@ describe('ngeo.grid.component', () => {
       $rootScope = _$rootScope_;
       $scope = $rootScope.$new();
 
+      /**
+       * @type Object<string, string|number>[]
+       */
       const gridConfigData = [
         {
           'name': 'row_1',

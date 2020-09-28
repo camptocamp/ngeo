@@ -28,8 +28,9 @@ import OlLayerTile from 'ol/layer/Tile.js';
 
 const SerDes = class {
   /**
-   * @param {Object} options The options
+   * @param {unknown} options The options
    */
+  // @ts-ignore
   constructor({gutter}) {
     /**
      * @private
@@ -40,7 +41,7 @@ const SerDes = class {
   /**
    * @private
    * @param {import("ol/Object.js").default} olObject An OL object
-   * @return {Object} The serializable properties of the object
+   * @return {Object<string, string|number|string[]|boolean>} The serializable properties of the object
    */
   createBaseObject_(olObject) {
     const properties = olObject.getProperties();
@@ -64,7 +65,7 @@ const SerDes = class {
    */
   serializeTilegrid(tilegrid) {
     /**
-     * @type {Object<string, any>}
+     * @type {Object<string, unknown>}
      */
     const obj = {};
     obj.extent = tilegrid.getExtent();
@@ -96,7 +97,13 @@ const SerDes = class {
       return undefined;
     }
     /**
-     * @type {Object<string, any>}
+     * @type {{
+     *   'extent': import('ol/extent.js').Extent,
+     *   'minZoom': number,
+     *   'matrixIds': string[],
+     *   'resolutions': number[],
+     *   'origins': import('ol/coordinate.js').Coordinate[],
+     * }}
      */
     const obj = {};
     const resolutions = tilegrid.getResolutions();

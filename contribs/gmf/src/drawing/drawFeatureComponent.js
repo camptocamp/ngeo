@@ -669,7 +669,7 @@ Controller.prototype.handleMapTouchEnd_ = function (evt) {
  * @param {Event|import('ol/events/Event.js').default} evt Event.
  */
 Controller.prototype.handleMapContextMenu_ = function (evt) {
-  if (evt instanceof Event) {
+  if (evt instanceof UIEvent) {
     if (!this.map) {
       throw new Error('Missing map');
     }

@@ -22,7 +22,7 @@
 import angular from 'angular';
 import './editfeature.css';
 import 'bootstrap/js/src/tooltip.js';
-import EPSG2056 from '@geoblocks/proj/src/EPSG_2056.js';
+import EPSG2056 from '@geoblocks/proj/EPSG_2056.js';
 
 import gmfAuthenticationModule from 'gmf/authentication/module.js';
 import gmfEditingEditFeature from 'gmf/editing/EditFeature.js';
@@ -127,7 +127,7 @@ function MainController($scope, gmfEditFeature, gmfUser) {
     }),
   });
 
-  this.map.on('singleclick', this.handleMapSingleClick_.bind(this));
+  this.map.on('singleclick', /** @type {function(?): ?} */ (this.handleMapSingleClick_.bind(this)));
 
   // initialize tooltips
   $('[data-toggle="tooltip"]').tooltip({
@@ -137,7 +137,7 @@ function MainController($scope, gmfEditFeature, gmfUser) {
 }
 
 /**
- * @param {import("ol/MapBrowserEvent.js").default} evt MapBrowser event
+ * @param {import("ol/MapBrowserEvent.js").default<unknown>} evt MapBrowser event
  */
 MainController.prototype.handleMapSingleClick_ = function (evt) {
   // (1) Launch query to fetch new features
@@ -244,7 +244,7 @@ MainController.prototype.deleteFeature = function () {
 
 /**
  * Called after an insert, update or delete request.
- * @param {angular.IHttpResponse<void>} resp Ajax response.
+ * @param {angular.IHttpResponse<ArrayBuffer|Document|Node|Object|string>} resp Ajax response.
  */
 MainController.prototype.handleEditFeature_ = function (resp) {
   this.pending = false;

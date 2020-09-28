@@ -35,7 +35,7 @@ const module = angular.module('gmfDatasourceFileGroup', []);
  * It is used in the GMF Snapping to be able for drawn/edited features
  * to be snapped onto features that were imported in such a manner.
  *
- * @typedef {object} DatasourceFileGroup
+ * @typedef {Object} DatasourceFileGroup
  * @property {import("ngeo/datasource/FileGroup.js").default|null} fileGroup
  */
 

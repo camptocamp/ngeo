@@ -70,7 +70,6 @@ function loaded(page, browser) {
   }
   timeout = setTimeout(async () => {
     if (requestsURL.size) {
-      // @ts-ignore
       if (new Date() - start > 60000) {
         console.log(`The page take more than 60s. to load (${(new Date() - start) / 1000}).`);
         console.log('Pending requests:');
@@ -82,7 +81,6 @@ function loaded(page, browser) {
         loaded(page, browser);
       }
     } else {
-      // @ts-ignore
       console.log(`Check finished in ${(new Date() - start) / 1000} seconds`);
       if (screenshot) {
         timeout = setTimeout(async () => {

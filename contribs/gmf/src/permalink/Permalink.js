@@ -690,7 +690,7 @@ PermalinkService.prototype.handleLayerBeingSwipeChange_ = function (layer, oldLa
     return;
   }
   if (layer) {
-    /** @type {Object<string, object>} */
+    /** @type {Object<string, string>} */
     const object = {};
     const mapSwipeValue = this.gmfLayerBeingSwipe_.swipeValue;
     if (mapSwipeValue === null) {
@@ -698,7 +698,7 @@ PermalinkService.prototype.handleLayerBeingSwipeChange_ = function (layer, oldLa
     }
     const dataSourceId = layer.get('dataSourceId');
     object[PermalinkParam.MAP_SWIPE] = dataSourceId;
-    object[PermalinkParam.MAP_SWIPE_VALUE] = mapSwipeValue;
+    object[PermalinkParam.MAP_SWIPE_VALUE] = `${mapSwipeValue}`;
     this.ngeoStateManager_.updateState(object);
   } else {
     this.ngeoStateManager_.deleteParam(PermalinkParam.MAP_SWIPE);
@@ -711,10 +711,10 @@ PermalinkService.prototype.handleLayerBeingSwipeChange_ = function (layer, oldLa
  */
 PermalinkService.prototype.handleMapSwipeValue_ = function () {
   const mapSwipeValue = this.gmfLayerBeingSwipe_.swipeValue;
-  /** @type {Object<string, object>} */
+  /** @type {Object<string, string>} */
   const object = {};
   if (mapSwipeValue) {
-    object[PermalinkParam.MAP_SWIPE_VALUE] = mapSwipeValue;
+    object[PermalinkParam.MAP_SWIPE_VALUE] = `${mapSwipeValue}`;
     this.ngeoStateManager_.updateState(object);
   }
 };
@@ -861,13 +861,14 @@ PermalinkService.prototype.setMapTooltip = function (tooltipText, opt_center) {
 
 /**
  * Get the ngeo features from the state manager for initialization purpose
- * @return {Array<olFeature<import("ol/geom/Geometry.js").default>>} The features read from the state manager.
+ * @return {olFeature<import("ol/geom/Geometry.js").default>[]} The features read from the state manager.
  */
 PermalinkService.prototype.getFeatures = function () {
   const f = this.ngeoStateManager_.getInitialStringValue(PermalinkParam.FEATURES);
   if (f !== undefined && f !== '') {
-    // @ts-ignore: unfound readFeatures
-    return this.featureHashFormat_.readFeatures(f);
+    return /** @type {olFeature<import("ol/geom/Geometry.js").default>[]} */ (this.featureHashFormat_.readFeatures(
+      f
+    ));
   }
   return [];
 };
@@ -981,6 +982,7 @@ PermalinkService.prototype.registerMap_ = function (map, oeFeature) {
     view,
     'propertychange',
     this.ngeoDebounce_(
+      /** @type {import("ol/events.js").ListenerFunction} */
       () => {
         const center = view.getCenter();
         if (!center) {
@@ -1094,13 +1096,18 @@ PermalinkService.prototype.handleBackgroundLayerManagerChange_ = function () {
       object[PermalinkParam.BG_LAYER_OPACITY] = `${opacity * 100}`;
       this.ngeoStateManager_.updateState(object);
     }
-    listen(backgroundLayer, 'change:opacity', () => {
-      const opacity = backgroundLayer.getOpacity();
-      /** @type {Object<string, string>} */
-      const object = {};
-      object[PermalinkParam.BG_LAYER_OPACITY] = `${opacity * 100}`;
-      this.ngeoStateManager_.updateState(object);
-    });
+    listen(
+      backgroundLayer,
+      'change:opacity',
+      /** @type {import("ol/events.js").ListenerFunction} */
+      () => {
+        const opacity = backgroundLayer.getOpacity();
+        /** @type {Object<string, string>} */
+        const object = {};
+        object[PermalinkParam.BG_LAYER_OPACITY] = `${opacity * 100}`;
+        this.ngeoStateManager_.updateState(object);
+      }
+    );
   }
 };
 
@@ -1443,7 +1450,6 @@ PermalinkService.prototype.handleNgeoFeaturesChange_ = function () {
     return;
   }
   const features = this.ngeoFeatures_.getArray();
-  // @ts-ignore: unfound writeFeatures
   const data = this.featureHashFormat_.writeFeatures(features);
 
   /** @type {Object<string, string>} */

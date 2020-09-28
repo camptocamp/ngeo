@@ -1,18 +1,17 @@
 {
   "compilerOptions": {
-    "pretty": false,
     /* Basic Options */
-    "target": "ES2017",
+    "target": "ES2020",
     "module": "commonjs",
     "lib": [
-      "es2017",
+      "es2020",
       "dom"
     ],
     "esModuleInterop": true,
     "allowJs": true,
     "checkJs": true,
     "noEmit": true,
-    //"noImplicitAny": true,
+    "noImplicitAny": true,
     "noImplicitThis": true,
     "alwaysStrict": true,
     "strictBindCallApply": true,
@@ -26,8 +25,8 @@
       "gmf/*": [
         "contribs/gmf/src/*"
       ],
-      "ol/*": [
-        "node_modules/ol/src/*"
+      "lib/*": [
+        "lib/*"
       ],
       "olcs/*": [
         "node_modules/ol-cesium/src/olcs/*"
@@ -51,6 +50,7 @@
   },
   "include": [
     "src/**/*.js",
+    "lib/**/*.js",
     "api/src/**/*.js",
     "contribs/gmf/src/**/*.js",
     "contribs/gmf/apps/**/*.js",

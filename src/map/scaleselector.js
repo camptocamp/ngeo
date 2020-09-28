@@ -200,7 +200,7 @@ class ScaleselectorController {
 
     this.registerResolutionChangeListener_();
 
-    // @ts-ignore
+    // @ts-ignore: scope ...
     $scope.scaleselectorCtrl = this;
   }
 

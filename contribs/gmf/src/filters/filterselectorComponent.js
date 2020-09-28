@@ -428,7 +428,6 @@ class FilterSelectorController {
    * is set. Otherwise, it's used.
    *
    * @param {import("gmf/datasource/OGC.js").default} dataSource Data source
-   * @return {void}
    * @private
    * @hidden
    */

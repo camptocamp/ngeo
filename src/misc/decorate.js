@@ -132,10 +132,18 @@ export function layerLoading(layer, $scope) {
   layer.set('load_count', 0, true);
 
   if (layer instanceof olLayerGroup) {
-    layer.getLayers().on('add', (olEvent) => {
-      const newLayer = olEvent.element;
-      newLayer.set('parent_group', layer);
-    });
+    layer.getLayers().on(
+      'add',
+      /** @type {function(?): ?} */ (
+        /**
+         * @param {import("ol/Collection.js").CollectionEvent} olEvent the progress event.
+         */
+        (olEvent) => {
+          const newLayer = olEvent.element;
+          newLayer.set('parent_group', layer);
+        }
+      )
+    );
   }
 
   if (layer instanceof olLayerLayer) {

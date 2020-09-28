@@ -75,9 +75,7 @@ describe('gmf.authentication.Service', () => {
     if (!event_) {
       throw new Error('Missing event_');
     }
-    // @ts-ignore: ???
     expect(event_.type).toBe('ready');
-    // @ts-ignore: ???
     expect(event_.detail.user.username).toBe(null);
   });
 
@@ -100,9 +98,7 @@ describe('gmf.authentication.Service', () => {
     if (!event_) {
       throw new Error('Missing event_');
     }
-    // @ts-ignore: ???
     expect(event_.type).toBe('login');
-    // @ts-ignore: ???
     expect(event_.detail.user.username).toBe('user');
   });
 

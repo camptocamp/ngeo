@@ -176,9 +176,7 @@ export function MobileMeasurePointController(
       if (!this.measure) {
         throw new Error('Missing measure');
       }
-      // @ts-ignore: unfound setActive
       this.measure.setActive(newVal);
-      // @ts-ignore
       this.handleMeasureActiveChange_();
     }
   );
@@ -212,7 +210,6 @@ MobileMeasurePointController.prototype.init = function () {
       sketchStyle: buildStyle(this.options.sketchStyle),
     }
   );
-  // @ts-ignore: unfound setActive
   this.measure.setActive(this.active);
   interactionDecoration(this.measure);
   const drawInteraction = this.measure.getDrawInteraction();
@@ -248,7 +245,6 @@ MobileMeasurePointController.prototype.translate = function (str) {
  * - on activate, listen to the map property changes to call for the elevation
  *   service.
  * - on deactivate, unlisten
- * @private
  * @hidden
  */
 MobileMeasurePointController.prototype.handleMeasureActiveChange_ = function () {
@@ -258,7 +254,6 @@ MobileMeasurePointController.prototype.handleMeasureActiveChange_ = function () 
   if (!this.measure) {
     throw new Error('Missing measure');
   }
-  // @ts-ignore: unfound setActive
   if (this.measure.getActive()) {
     const view = this.map.getView();
     this.mapViewPropertyChangeEventKey_ = listen(

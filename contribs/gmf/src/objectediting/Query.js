@@ -130,7 +130,7 @@ function getQueryableLayersInfoFromThemes(themes, ogcServers) {
           continue;
         }
 
-        const nodeWMS = /** @type {import('gmf/themes.js').GmfLayerWMS} */ (nodes[k]);
+        const nodeWMS = /** @type {import('gmf/themes.js').GmfLayerWMS} */ (/** @type {any} */ (nodes[k]));
 
         if (nodeWMS.childLayers && nodeWMS.childLayers[0] && nodeWMS.childLayers[0].queryable) {
           queryableLayersInfo.push({
@@ -187,7 +187,9 @@ ObjectEditingQuery.prototype.getFeatureInfo = function (layerInfo, coordinate, m
   }));
 
   return this.http_.get(url).then((response) => {
-    const features = format.readFeatures(response.data);
+    const features = /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>[]} */ (format.readFeatures(
+      response.data
+    ));
     return features && features[0] ? features[0] : null;
   });
 };

@@ -228,7 +228,7 @@ class DrawFeatureOptionsController {
     }
 
     if (drawInteraction instanceof OLInteractionDraw) {
-      this.drawInteraction_ = drawInteraction;
+      this.drawInteraction_ = /** @type {OLInteractionDraw} */ (drawInteraction);
     } else {
       throw 'No draw interaction given to DrawFeatureOptions component';
     }
@@ -311,7 +311,7 @@ class DrawFeatureOptionsController {
   }
 
   /**
-   * Called every time the geometry of the feature being drawn changes
+   * Called every time the geometry of the feature being drawn changes.
    * @private
    */
   handleFeatureGeometryChange_() {
@@ -431,7 +431,7 @@ class DrawFeatureOptionsController {
    * Override handler method of the map browser event for the snap
    * interaction. If the event is 'pointerup', if the following map
    * browser event is 'dblclick', then we should stop drawing.
-   * @param {import("ol/MapBrowserEvent.js").default} evt Map browser event.
+   * @param {import("ol/MapBrowserEvent.js").default<unknown>} evt Map browser event.
    * @return {boolean} `false` to stop event propagation.
    * @private
    */

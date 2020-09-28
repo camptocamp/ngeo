@@ -164,12 +164,19 @@ function MainController() {
   interaction.setActive(false);
   map.addInteraction(interaction);
 
-  map.on('singleclick', (evt) => {
-    const feature = this.map.forEachFeatureAtPixel(evt.pixel, (feature) => feature);
-    if (feature) {
-      this.interaction.setActive(true);
-    }
-  });
+  map.on(
+    'singleclick',
+    /** @type {function(?): ?} */ (
+      /**
+       * @param {import('ol/MapBrowserEvent.js').default<unknown>} evt
+       */ (evt) => {
+        const feature = this.map.forEachFeatureAtPixel(evt.pixel, (feature) => feature);
+        if (feature) {
+          this.interaction.setActive(true);
+        }
+      }
+    )
+  );
 }
 
 appmodule.controller('MainController', MainController);

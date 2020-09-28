@@ -22,6 +22,20 @@
 import angular from 'angular';
 
 /**
+ * @typedef {Object} Coordinates
+ * @property {number} x
+ * @property {number} y
+ */
+
+/**
+ * @typedef {Object} EventHandlers
+ * @property {function(Coordinates, JQueryEventObject): void} [start]
+ * @property {function(Coordinates, JQueryEventObject): void} [end]
+ * @property {function(JQuery.TriggeredEvent<?, undefined, ?, ?>|JQueryEventObject): void} [cancel]
+ * @property {function(Coordinates, JQueryEventObject): void} [move]
+ */
+
+/**
  * @type {angular.IModule}
  * @hidden
  */
@@ -82,6 +96,7 @@ module.factory('$verticalSwipe', [
 
     /**
      * @param {JQueryEventObject} event
+     * @returns {Coordinates}
      */
     function getCoordinates(event) {
       let uiEvent;
@@ -118,8 +133,8 @@ module.factory('$verticalSwipe', [
        * @ngdoc method
        * @name $verticalSwipe#bind
        * @param {JQuery} element Element.
-       * @param {Object} eventHandlers - Event handlers object with `start`, `cancel` and `end` callbacks
-       * @param {string[]} pointerTypes - Types of pointer
+       * @param {EventHandlers} eventHandlers Event handlers object with callbacks
+       * @param {string[]} pointerTypes Types of pointer
        *
        * @description
        * The main method of `$verticalSwipe`. It takes an element to be watched for swipe motions, and an
@@ -266,7 +281,6 @@ module.factory('$verticalSwipe', [
  * @param {string} directiveName Directive name
  * @param {number} direction Direction
  * @param {string} eventName Event name
- * @return {void}
  */
 function makeSwipeDirective_(directiveName, direction, eventName) {
   module.directive(directiveName, [

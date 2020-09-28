@@ -23,11 +23,6 @@ import {includes as olArrayIncludes} from 'ol/array.js';
 import olFormatGeoJSON from 'ol/format/GeoJSON.js';
 
 /**
- * @typedef {import("geojson").GeoJSON} GeoJSONObject
- * @typedef {import("geojson").FeatureCollection} GeoJSONFeatureCollection
- */
-
-/**
  * @typedef {Object} Options
  * // Properties for ArcGISGeoJSON
  * @property {Array<string>} [layers] If set, only features of the given layers will be returned by the format when read.
@@ -79,30 +74,33 @@ class ArcGISGeoJSON extends olFormatGeoJSON {
   }
 
   /**
-   * @param {Object} object Object.
+   * @param {import("geojson").GeoJSON} object Object.
    * @param {import("ol/format/Feature.js").ReadOptions=} opt_options Read options.
    * @protected
    * @return {Array<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>} Features.
    * @override
    */
   readFeaturesFromObject(object, opt_options) {
-    const geoJSONObject = /** @type {GeoJSONObject} */ (object);
+    const geoJSONObject = /** @type {import("geojson").GeoJSON} */ (object);
     /** @type {Array<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>} */
     const features = [];
+    /** @type {import("geojson").Feature[]} */
     let geoJSONFeatures = null;
-    if (geoJSONObject['type'] === 'FeatureCollection') {
-      const geoJSONFeatureCollection = /** @type {GeoJSONFeatureCollection} */ (object);
-      geoJSONFeatures = geoJSONFeatureCollection['features'];
+    if (geoJSONObject.type === 'FeatureCollection') {
+      const geoJSONFeatureCollection = /** @type {import("geojson").FeatureCollection} */ (object);
+      geoJSONFeatures = geoJSONFeatureCollection.features;
     } else {
-      geoJSONFeatures = [object];
+      geoJSONFeatures = [/** @type {import("geojson").Feature} */ (object)];
     }
     for (let i = 0, ii = geoJSONFeatures.length; i < ii; ++i) {
-      const layerName = geoJSONFeatures[i][layerIdentifier];
+      const feature = geoJSONFeatures[i];
+      /** @type {string} */
+      // @ts-ignore: Arcgis specific
+      const layerName = feature[layerIdentifier];
       // Exclude feature if its layer name is not set among the layers
       if (this.layers_ && !olArrayIncludes(this.layers_, layerName)) {
         continue;
       }
-      // @ts-ignore: missing readFeatureFromObject
       features.push(this.readFeatureFromObject(geoJSONFeatures[i], opt_options));
     }
     return features;

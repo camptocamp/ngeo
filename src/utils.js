@@ -164,7 +164,7 @@ export function encodeQueryString(queryData) {
 
 /**
  * Delete condition passed to the modify interaction
- * @param {import("ol/MapBrowserEvent.js").default} event Browser event.
+ * @param {import('ol/MapBrowserEvent.js').default<unknown>} event Browser event.
  * @return {boolean} The result.
  * @hidden
  */

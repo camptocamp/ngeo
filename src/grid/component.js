@@ -134,7 +134,7 @@ export function GridController($scope) {
 
   /**
    * Configuration object for float-thead.
-   * @type {Object}
+   * @type {unknown}
    */
   this.floatTheadConfig = {
     /**
@@ -187,7 +187,7 @@ GridController.prototype.sort = function (columnName) {
 
 /**
  * Handler for clicks on a row.
- * @param {Object} attributes An entry/row.
+ * @param {unknown} attributes An entry/row.
  * @param {JQueryEventObject} event Event.
  */
 GridController.prototype.clickRow = function (attributes, event) {
@@ -198,7 +198,7 @@ GridController.prototype.clickRow = function (attributes, event) {
 };
 
 /**
- * @param {Object} attributes An entry/row.
+ * @param {unknown} attributes An entry/row.
  * @param {boolean} shiftKey Shift pressed?
  * @param {boolean} platformModifierKey CTRL/Meta pressed?
  */
@@ -222,7 +222,7 @@ GridController.prototype.clickRow_ = function (attributes, shiftKey, platformMod
 
 /**
  * Selects all rows between the given row and the closest already selected row.
- * @param {Object} attributes An entry/row.
+ * @param {unknown} attributes An entry/row.
  */
 GridController.prototype.selectRange_ = function (attributes) {
   if (!this.configuration) {

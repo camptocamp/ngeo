@@ -123,7 +123,6 @@ const Downloader = class {
         }
       });
 
-      // @ts-ignore
       const centerTileCoord = [z, (minX + maxX) / 2, (minY + maxY) / 2];
       queueByZ.sort((a, b) => magnitude2(a.coord, centerTileCoord) - magnitude2(b.coord, centerTileCoord));
       queue.push(...queueByZ);
@@ -133,7 +132,7 @@ const Downloader = class {
   /**
    * @param {import("ol/extent.js").Extent} extent The extent to download.
    * @param {import("ol/Map.js").default} map The map to work on.
-   * @return {Promise} A promise resolving when save is finished.
+   * @return {Promise<*>} A promise resolving when save is finished.
    */
   save(extent, map) {
     /**

@@ -144,13 +144,21 @@ function Controller($scope, $timeout, ngeoFeatureOverlayMgr) {
   });
 
   // Update the profile with the new geometry.
-  this.interaction.on('drawend', (event) => {
-    this.line = event.feature.getGeometry();
-    // using timeout to prevent double click to zoom the map
-    $timeout(() => {
-      this.interaction.setActive(false);
-    }, 0);
-  });
+  this.interaction.on(
+    'drawend',
+    /** @type {function(?): ?} */ (
+      /**
+       * @param {import('lib/ol.interaction.Draw.js').DrawEvent} event
+       */
+      (event) => {
+        this.line = /** @type {import('ol/geom/LineString.js').default} */ (event.feature.getGeometry());
+        // using timeout to prevent double click to zoom the map
+        $timeout(() => {
+          this.interaction.setActive(false);
+        }, 0);
+      }
+    )
+  );
 
   // Line may be removed from an other component
   // for example closing the chart panel

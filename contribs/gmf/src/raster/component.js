@@ -120,7 +120,7 @@ function rasterComponent() {
       'map': '=gmfElevationMap',
     },
     link: (scope, element, attr) => {
-      // @ts-ignore: scope...
+      // @ts-ignore: scope ......
       const ctrl = scope.ctrl;
 
       // Watch active or not.
@@ -228,10 +228,7 @@ Controller.prototype.toggleActive_ = function (active) {
     }
 
     // Moving the mouse clears previously displayed elevation
-    /**
-     * @param {Event|import("ol/events/Event.js").default} event The event
-     * @return {void}
-     */
+    /** @type {import("ol/events.js").ListenerFunction} */
     const listener = (event) => {
       this.scope_.$apply(() => {
         this.inViewport_ = true;
@@ -248,9 +245,7 @@ Controller.prototype.toggleActive_ = function (active) {
         this.map,
         'pointermove',
         this.ngeoDebounce_(
-          /**
-           * @param {Event|import('ol/events/Event.js').default} e
-           */
+          /** @type {import("ol/events.js").ListenerFunction} */
           (e) => {
             if (this.inViewport_ && e instanceof MapBrowserEvent) {
               this.loading = true;
@@ -269,13 +264,18 @@ Controller.prototype.toggleActive_ = function (active) {
     );
 
     this.listenerKeys_.push(
-      listen(this.map.getViewport(), 'mouseout', () => {
-        this.scope_.$apply(() => {
-          this.elevation = null;
-          this.inViewport_ = false;
-          this.loading = false;
-        });
-      })
+      listen(
+        this.map.getViewport(),
+        'mouseout',
+        /** @type {import("ol/events.js").ListenerFunction} */
+        (evt) => {
+          this.scope_.$apply(() => {
+            this.elevation = null;
+            this.inViewport_ = false;
+            this.loading = false;
+          });
+        }
+      )
     );
   } else {
     this.elevation = null;

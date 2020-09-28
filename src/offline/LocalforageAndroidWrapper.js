@@ -29,7 +29,7 @@ const exports = class AndroidWrapper extends AbstractWrapper {
   }
 
   /**
-   * @param {Object} action
+   * @param {unknown} action
    * @override
    */
   postToBackend(action) {

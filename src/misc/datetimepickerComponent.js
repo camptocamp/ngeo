@@ -81,7 +81,7 @@ function Controller($element, gettextCatalog) {
 
   /**
    * The options
-   * @type {Object|String}
+   * @type {DateTimePickerOptions}
    */
   this.options;
 }

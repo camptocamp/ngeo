@@ -109,7 +109,6 @@ export class LidarprofileManager {
 
     /**
      * The hovered point geometry (point) in D3 profile highlighted on the 2D map
-     * @type {import("ol/layer/Vector.js").default}
      */
     this.lidarPointHighlight = new olLayerVector({
       source: new olSourceVector({}),
@@ -212,7 +211,7 @@ export class LidarprofileManager {
 
   /**
    * Load profile data (lidar points) by successive Levels Of Details using asynchronous requests
-   * @param {Array} clippedLine an array of the clipped line coordinates
+   * @param {import("ol/coordinate.js").Coordinate[]} clippedLine an array of the clipped line coordinates
    * @param {number} distanceOffset the left side of D3 profile domain at current zoom and pan configuration
    * @param {boolean} resetPlot whether to reset D3 plot or not
    * @param {number} minLOD minimum Level Of Detail

@@ -220,13 +220,13 @@ class Controller {
 
     /**
      * Current WMS Capabilities that were connected.
-     * @type {?Object}
+     * @type {?any}
      */
     this.wmsCapabilities = null;
 
     /**
      * Current WTMS Capabilities that were connected.
-     * @type {?Object}
+     * @type {?any}
      */
     this.wmtsCapabilities = null;
 
@@ -294,7 +294,7 @@ class Controller {
         const $connectBtn = this.element_.find('button.gmf-importdatasource-connect-btn');
         $urlInput
           .typeahead(
-            // @ts-ignore: should be a string
+            // @ts-ignore: should be string?
             {
               hint: true,
               highlight: true,
@@ -311,13 +311,20 @@ class Controller {
               },
             }
           )
-          .on('typeahead:select', (ev, suggestion) => {
-            this.timeout_(() => {
-              this.url = suggestion.url;
-              this.scope_.$apply();
-              $connectBtn.focus();
-            });
-          });
+          .on(
+            'typeahead:select',
+            /**
+             * @param {unknown} ev
+             * @param {import('gmf/options.js').ExternalOGCServer} suggestion
+             */
+            (ev, suggestion) => {
+              this.timeout_(() => {
+                this.url = suggestion.url;
+                this.scope_.$apply();
+                $connectBtn.focus();
+              });
+            }
+          );
       });
     }
   }
@@ -426,7 +433,7 @@ class Controller {
    * - _searchPrefix: substring before searchText in layer.Title.
    * - _searchMatch: substring matching searchText in layer.Title.
    * - _searchSuffix: substring after searchText in layer.Title.
-   * @param {Object} layer WMS Capability Layer object.
+   * @param {any} layer WMS Capability Layer object.
    * @param {boolean} visible Force layer to be visible.
    */
   filterLayer(layer, visible = false) {

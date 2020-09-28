@@ -280,7 +280,7 @@ class SearchController {
     this.onInitCallback = null;
 
     /**
-     * @type {function(any): void}
+     * @type {function(unknown): void}
      */
     this.searchActionCallback;
 
@@ -292,7 +292,7 @@ class SearchController {
 
     /**
      * Supported projections for coordinates search.
-     * @type {olProj.Projection[]}
+     * @type {import('ol/proj/Projection.js').default[]}
      */
     this.coordinatesProjectionsInstances = [];
 
@@ -714,39 +714,41 @@ class SearchController {
     const style = buildStyle(
       this.options.styles[feature.get('layer_name')] || this.options.styles['default']
     );
+    const trueStyle = /** @type {import('ol/style/Style.js').default} */ (style);
     if (this.color) {
       const color = asColorArray(this.color);
 
-      const strokeStyle = style.getStroke();
-      const prevStrokeColor = strokeStyle.getColor();
+      const strokeStyle = trueStyle.getStroke();
+      const prevStrokeColor = /** @type {number[]} */ (strokeStyle.getColor());
       const strokeColor = color.slice();
       strokeColor[3] = prevStrokeColor[3];
       if (strokeStyle) {
         strokeStyle.setColor(strokeColor);
       }
-      const fillStyle = style.getFill();
-      const prevFillColor = fillStyle.getColor();
+      const fillStyle = trueStyle.getFill();
+      const prevFillColor = /** @type {number[]} */ (fillStyle.getColor());
       const fillColor = color.slice();
       fillColor[3] = prevFillColor[3];
       if (fillStyle) {
         fillStyle.setColor(fillColor);
       }
       // the image style can't be changed in place, the colors are updated on a clone.
-      let imageStyle = style.getImage();
+      let imageStyle = trueStyle.getImage();
       if (imageStyle) {
         imageStyle = imageStyle.clone();
-        const imageStrokeStyle = imageStyle.getStroke();
+        const circleStyle = /** @type {import('ol/style/Circle.js').default} */ (imageStyle);
+        const imageStrokeStyle = circleStyle.getStroke();
         if (imageStrokeStyle) {
           imageStrokeStyle.setColor(strokeColor);
         }
-        const imageFillStyle = imageStyle.getFill();
+        const imageFillStyle = circleStyle.getFill();
         if (imageFillStyle) {
           imageFillStyle.setColor(fillColor);
         }
-        style.setImage(imageStyle);
+        trueStyle.setImage(imageStyle);
       }
     }
-    return style;
+    return trueStyle;
   }
 
   /**
@@ -804,7 +806,7 @@ class SearchController {
 
   /**
    * @param {JQueryEventObject} event Event.
-   * @param {Object|olFeature<import('ol/geom/Geometry.js').default>} suggestion Suggestion.
+   * @param {olFeature<import('ol/geom/Geometry.js').default>|CoordinateSuggestion} suggestion Suggestion.
    * @param {Twitter.Typeahead.Dataset<olFeature<import('ol/geom/Geometry.js').default>>} dataset Dataset.
    * @private
    */
@@ -812,8 +814,10 @@ class SearchController {
     if (!this.map) {
       throw new Error('Missing map');
     }
+    // @ts-ignore: extra parameter
     if (suggestion.tt_source === 'coordinates') {
-      const geom = new olGeomPoint(suggestion.position);
+      const coordinateSuggestion = /** @type {CoordinateSuggestion} */ (suggestion);
+      const geom = new olGeomPoint(coordinateSuggestion.position);
 
       this.featureOverlay_.clear();
       this.featureOverlay_.addFeature(
@@ -822,7 +826,7 @@ class SearchController {
           'layer_name': COORDINATES_LAYER_NAME,
         })
       );
-      this.map.getView().setCenter(suggestion.position);
+      this.map.getView().setCenter(coordinateSuggestion.position);
       this.leaveSearch_();
     } else {
       if (!(suggestion instanceof olFeature)) {
@@ -907,10 +911,9 @@ class SearchController {
   }
 
   /**
-   * @param {JQueryEventObject} event Event.
    * @private
    */
-  close_(event) {
+  close_() {
     if (!this.options.clearButton) {
       this.setTTDropdownVisibility_();
     }
@@ -963,7 +966,9 @@ class SearchController {
       }
       if (data && data.features[resultIndex - 1]) {
         const format = new olFormatGeoJSON();
-        const feature = format.readFeature(data.features[resultIndex - 1]);
+        const feature = /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>} */ (format.readFeature(
+          data.features[resultIndex - 1]
+        ));
         this.featureOverlay_.addFeature(feature);
         /**
          * @type {import('ol/View.js').FitOptions}
@@ -971,7 +976,7 @@ class SearchController {
         const fitOptions = {};
         if (opt_zoom !== undefined) {
           fitOptions.maxZoom = opt_zoom;
-          fitOptions.size = this.map.getSize() || [];
+          fitOptions.size = this.map.getSize() || null;
         }
         const geometry = feature.getGeometry();
         if (!geometry) {

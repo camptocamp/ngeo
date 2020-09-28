@@ -115,7 +115,7 @@ function Controller($element, $scope, ngeoNominatimService) {
   this.options = /** @type {Twitter.Typeahead.Options} */ ({});
 
   /**
-   * @type {Array<Twitter.Typeahead.Dataset<import('./NominatimService').NominatimSearchResult>>}
+   * @type {Twitter.Typeahead.Dataset<import('./NominatimService').NominatimSearchResult>[]}
    */
   this.datasets = [
     {
@@ -126,7 +126,7 @@ function Controller($element, $scope, ngeoNominatimService) {
   ];
 
   /**
-   * @type {import('ngeo/search/searchDirective.js').SearchDirectiveListeners<void>}
+   * @type {import('ngeo/search/searchDirective.js').SearchDirectiveListeners<import('ngeo/routing/NominatimService').NominatimSearchResult>}
    */
   this.listeners = {
     select: this.select_.bind(this),
@@ -141,7 +141,7 @@ function Controller($element, $scope, ngeoNominatimService) {
 /**
  * @param {JQueryEventObject} event Event.
  * @param {import('ngeo/routing/NominatimService').NominatimSearchResult} suggestion Suggestion.
- * @param {Twitter.Typeahead.Dataset<void>} dataset Dataset.
+ * @param {Twitter.Typeahead.Dataset<import('ngeo/routing/NominatimService').NominatimSearchResult>} dataset Dataset.
  * @hidden
  */
 Controller.prototype.select_ = function (event, suggestion, dataset) {

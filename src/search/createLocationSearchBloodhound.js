@@ -24,7 +24,7 @@
 import angular from 'angular';
 import * as olProj from 'ol/proj.js';
 
-import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
+import EPSG21781 from '@geoblocks/proj/EPSG_21781.js';
 
 import olGeomPoint from 'ol/geom/Point.js';
 import olFeature from 'ol/Feature.js';
@@ -180,8 +180,8 @@ function createLocationSearchBloodhound(opt_options) {
     {},
     options.options || {
       /**
-       * @param {any} datum
-       * @return {any}
+       * @param {Results} datum
+       * @return {string[]}
        */
       datumTokenizer: (datum) => {
         return [];

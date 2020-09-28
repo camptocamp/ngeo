@@ -108,7 +108,8 @@
  * @property {string} [style]
  * @property {string} type WMS or WMTS.
  * @property {string} [ogcServer]
- * @property {string} [popupId] a popup identifier for the associate submenu.
+ * @property {string} [popupId] A popup identifier for the associate submenu.
+ * @property {string} layerType The layer type.
  */
 
 /**

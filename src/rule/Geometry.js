@@ -61,7 +61,6 @@ export default class extends ngeoRuleRule {
     const properties = options.featureProperties || {};
 
     /**
-     * @type {olFeature<import("ol/geom/Geometry.js").default>}
      * @private
      */
     this.feature_ = new olFeature(properties);
@@ -146,8 +145,8 @@ export default class extends ngeoRuleRule {
   // === Other methods ===
 
   /**
-   * Called when the geometry property in the feature changes. Update the
-   * expression accordingly.
+   * Called when the geometry property in the feature changes. Update the expression accordingly.
+   * @returns {boolean}
    * @private
    */
   handleFeatureGeometryChange_() {
@@ -190,7 +189,7 @@ export default class extends ngeoRuleRule {
     let geometry = null;
     if (this.expression) {
       // An expression can only have a string value with a geometry rule.
-      const expression = this.expression;
+      const expression = `${this.expression}`;
       geometry = this.format_.readGeometry(expression);
     }
     this.geometry = geometry;

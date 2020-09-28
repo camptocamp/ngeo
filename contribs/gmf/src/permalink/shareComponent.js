@@ -209,7 +209,7 @@ class ShareComponentController {
     this.successfullySent = false;
     this.isFinishedState = false;
 
-    // @ts-ignore: scope...
+    // @ts-ignore: scope ......
     if (this.$scope_.gmfShareForm.$valid) {
       this.$q_.when(this.gmfShareService_.sendShortUrl(this.permalink_, this.email, this.message)).then(
         (resp) => {

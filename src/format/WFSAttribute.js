@@ -24,6 +24,14 @@ import ngeoFormatAttributeType from 'ngeo/format/AttributeType.js';
 import {FormatNumberType} from 'ngeo/format/XSDAttribute.js';
 
 /**
+ * @typedef {Object} Element
+ * @property {string} name
+ * @property {string} alias
+ * @property {string} [minOccurs]
+ * @property {string} type
+ */
+
+/**
  * @hidden
  */
 export default class {
@@ -34,7 +42,7 @@ export default class {
    */
 
   /**
-   * @param {Object[]} complexTypeElements Complex type element
+   * @param {Element[]} complexTypeElements Complex type element
    * @return {Array<import('ngeo/format/Attribute.js').Attribute>} Attributes
    */
   read(complexTypeElements) {
@@ -42,7 +50,7 @@ export default class {
   }
 
   /**
-   * @param {Object} object Complex type element
+   * @param {Element} object Complex type element
    * @return {import('ngeo/format/Attribute.js').Attribute} Attribute
    * @private
    */

@@ -120,7 +120,7 @@ export function ContextualdataController($compile, $timeout, $scope, gmfRaster, 
   this.displayed = false;
 
   /**
-   * @type {function(import("ol/coordinate.js").Coordinate, Object):Object}
+   * @type {function(import("ol/coordinate.js").Coordinate, unknown): unknown}
    */
   this.callback = (c, o) => ({});
 
@@ -199,11 +199,10 @@ ContextualdataController.prototype.init = function () {
 };
 
 /**
- * @param {Event} event Event.
+ * @param {TouchEvent} event Event.
  */
 ContextualdataController.prototype.handleMapTouchStart_ = function (event) {
   // Don't open the context menu if 2-touch event is fired, ie. pinch the map on mobile
-  // @ts-ignore
   if (event.targetTouches.length < 2 && event.changedTouches.length < 2) {
     this.longPressTimeout_ = window.setTimeout(() => {
       this.handleMapContextMenu_(event);
@@ -218,7 +217,7 @@ ContextualdataController.prototype.handleMapTouchEnd_ = function () {
 };
 
 /**
- * @param {Event} event Event.
+ * @param {UIEvent} event Event.
  */
 ContextualdataController.prototype.handleMapContextMenu_ = function (event) {
   this.$scope_.$apply(() => {

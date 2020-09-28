@@ -28,11 +28,11 @@ const exports = class CordovaWrapper extends AbstractWrapper {
   }
 
   /**
-   * @param {Object} action
+   * @param {unknown} action
    * @override
    */
   postToBackend(action) {
-    window['parent'].postMessage(action, '*');
+    window.parent.postMessage(action, '*');
   }
 };
 

@@ -90,7 +90,6 @@ function measureLengthComponent(
       );
 
       if (drawFeatureCtrl.uid) {
-        // @ts-ignore
         measureLength.set('ngeo-interaction-draw-uid', `${drawFeatureCtrl.uid}-length`);
       }
 

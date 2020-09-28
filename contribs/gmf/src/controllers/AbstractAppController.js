@@ -46,12 +46,11 @@ import * as olArray from 'ol/array.js';
 import {listen} from 'ol/events.js';
 import {ThemeEventType} from 'gmf/theme/Manager.js';
 import {getBrowserLanguage} from 'ngeo/utils.js';
-// @ts-ignore
 import * as Sentry from '@sentry/browser';
 import '@geoblocks/proj/src/somerc.js';
 import '@geoblocks/proj/src/lcc.js';
 import '@geoblocks/proj/src/tmerc.js';
-import {create as createProjection} from '@geoblocks/proj/src/utils.js';
+import {create as createProjection} from '@geoblocks/proj/utils.js';
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
 import olControlScaleLine from 'ol/control/ScaleLine.js';
@@ -99,7 +98,7 @@ export function AbstractAppController($scope, $injector, mobile) {
             dpi: 96,
           }),
           new olControlZoom(
-            this.options.zoom || {
+            this.options.controlZoom || {
               target: mobile ? undefined : 'ol-zoom-control',
               zoomInTipLabel: '',
               zoomOutTipLabel: '',
@@ -349,7 +348,6 @@ export function AbstractAppController($scope, $injector, mobile) {
     }
   );
 
-  // @ts-ignore: webpack
   this.backgroundLayerMgr_.on('change', () => {
     this.backgroundLayerMgr_.updateDimensions(this.map, this.dimensions);
   });
@@ -502,8 +500,6 @@ export function AbstractAppController($scope, $injector, mobile) {
   // closure remove them. "export" tag doesn't work on static function below,
   // we "export" them as externs in the gmfx options file.
   const gmfx = window.gmfx || {};
-  /**
-   */
   // @ts-ignore: We do want to define a new property on `window`.
   window.gmfx = gmfx;
 
@@ -548,13 +544,10 @@ export function AbstractAppController($scope, $injector, mobile) {
   this.resizeTransition;
 
   const cgxp = window.cgxp || {};
-  /**
-   */
   // @ts-ignore: We do want to define a new property on `window`.
   window.cgxp = cgxp;
-  /**
-   */
   cgxp.tools = window.cgxp.tools || {};
+
   /**
    * Static function to create a popup with an iframe.
    * @param {string} url an url.
@@ -618,7 +611,7 @@ export function AbstractAppController($scope, $injector, mobile) {
 
 /**
  * Allow map pan with all buttons except right click (context menu)
- * @param {import("ol/MapBrowserEvent.js").default<PointerEvent>} event MapBrowser event
+ * @param {import("ol/MapBrowserEvent.js").default<MouseEvent>} event MapBrowser event
  * @return {boolean}
  */
 function dragPanCondition(event) {

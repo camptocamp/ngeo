@@ -73,7 +73,6 @@ function measureAreaComponent($compile, gettextCatalog, $filter, ngeoMeasurePrec
       const measureArea = new ngeoInteractionMeasureArea($filter('ngeoUnitPrefix'), gettextCatalog, options);
 
       if (drawFeatureCtrl.uid) {
-        // @ts-ignore
         measureArea.set('ngeo-interaction-draw-uid', `${drawFeatureCtrl.uid}-area`);
       }
 

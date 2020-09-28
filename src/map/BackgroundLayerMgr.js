@@ -155,7 +155,6 @@ export class MapBackgroundLayerManager extends olObservable {
       current: layer,
       previous: previous,
     });
-    // @ts-ignore: unfound dispatchEvent
     this.dispatchEvent(event);
 
     return previous;

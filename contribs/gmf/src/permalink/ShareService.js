@@ -64,7 +64,7 @@ export function PermalinkShareService($http, gmfShortenerCreateUrl) {
  * Get a short URL of the permalink by calling the url shortener service.
  * - If no shortener API url have been specified, it returns the permalink itself.
  * @param  {string} url the permalink
- * @return {ShortenerAPIResponse|angular.IHttpPromise<Object>} an object containing the permalink not
+ * @return {ShortenerAPIResponse|angular.IHttpPromise<void>} an object containing the permalink not
  *    shortened or the promise attached to the shortener API request
  */
 PermalinkShareService.prototype.getShortUrl = function (url) {
@@ -90,7 +90,7 @@ PermalinkShareService.prototype.getShortUrl = function (url) {
  * @param  {string} shortUrl the short permalink to send
  * @param  {string} email the email to which the short url must be send
  * @param  {string=} opt_message message for the email
- * @return {angular.IHttpPromise<Object>} the promise attached to the shortener API request
+ * @return {angular.IHttpPromise<void>} the promise attached to the shortener API request
  */
 PermalinkShareService.prototype.sendShortUrl = function (shortUrl, email, opt_message) {
   const params = /** @type {ShortenerAPIRequestParams} */ ({
@@ -99,7 +99,7 @@ PermalinkShareService.prototype.sendShortUrl = function (shortUrl, email, opt_me
   });
 
   if (opt_message) {
-    params['message'] = opt_message;
+    params.message = opt_message;
   }
 
   return this.postShortUrl_(params);
@@ -107,7 +107,7 @@ PermalinkShareService.prototype.sendShortUrl = function (shortUrl, email, opt_me
 
 /**
  * @param {ShortenerAPIRequestParams} params parameters for the request
- * @return {angular.IHttpPromise<Object>} the promise attached to the shortener API request
+ * @return {angular.IHttpPromise<void>} the promise attached to the shortener API request
  */
 PermalinkShareService.prototype.postShortUrl_ = function (params) {
   // Override default behavior of $http.post method (sending data in json format)

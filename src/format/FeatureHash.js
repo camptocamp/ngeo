@@ -26,7 +26,6 @@ import {asArray as asColorArray} from 'ol/color.js';
 import olFeature from 'ol/Feature.js';
 import {transformGeometryWithOptions} from 'ol/format/Feature.js';
 import olFormatTextFeature from 'ol/format/TextFeature.js';
-import olGeomGeometryLayout from 'ol/geom/GeometryLayout.js';
 import olGeomLineString from 'ol/geom/LineString.js';
 import olGeomMultiLineString from 'ol/geom/MultiLineString.js';
 import olGeomMultiPoint from 'ol/geom/MultiPoint.js';
@@ -74,7 +73,7 @@ let LegacyProperties_ = {};
 const DEFAULT_ACCURACY = 0.1;
 
 /**
- * @type {Object<import("ol/geom/GeometryType.js").default, import("ngeo/format/FeatureHashStyleType.js").default>}
+ * @type {Object<string, import("ngeo/format/FeatureHashStyleType.js").default>}
  * @private
  * @hidden
  */
@@ -153,6 +152,7 @@ class FeatureHash extends olFormatTextFeature {
   constructor(opt_options) {
     super();
 
+    /** @type {FeatureHashOptions} */
     const options = opt_options || {};
 
     /**
@@ -421,7 +421,7 @@ class FeatureHash extends olFormatTextFeature {
       const styleFunction = feature.getStyleFunction();
       if (styleFunction !== undefined) {
         let styles = styleFunction(feature, 0);
-        if (styles !== null) {
+        if (styles) {
           /** @type {string[]} */
           const encodedStyles = [];
           styles = Array.isArray(styles) ? styles : [styles];
@@ -538,7 +538,7 @@ function encodeNumber_(num) {
  * a logical sequence of characters and put the result into the given encoded
  * styles's array.
  * @param {Array<import("ol/style/Style.js").default>} styles Styles.
- * @param {import("ol/geom/GeometryType.js").default} geometryType Geometry type.
+ * @param {string} geometryType Geometry type.
  * @param {string[]} encodedStyles Encoded styles array.
  * @private
  * @hidden
@@ -720,7 +720,7 @@ function readLineStringGeometry_(text) {
   console.assert(text.endsWith(')'));
   text = text.substring(2, text.length - 1);
   const flatCoordinates = this.decodeCoordinates_(text);
-  return new olGeomLineString(flatCoordinates, olGeomGeometryLayout.XY);
+  return new olGeomLineString(flatCoordinates, 'XY');
 }
 
 /**
@@ -744,7 +744,7 @@ function readMultiLineStringGeometry_(text) {
     flatCoordinates = this.decodeCoordinates_(lineStrings[i], flatCoordinates);
     ends[i] = flatCoordinates.length;
   }
-  return new olGeomMultiLineString(flatCoordinates, olGeomGeometryLayout.XY, ends);
+  return new olGeomMultiLineString(flatCoordinates, 'XY', ends);
 }
 
 /**
@@ -762,7 +762,7 @@ function readPointGeometry_(text) {
   text = text.substring(2, text.length - 1);
   const flatCoordinates = this.decodeCoordinates_(text);
   console.assert(flatCoordinates.length === 2);
-  return new olGeomPoint(flatCoordinates, olGeomGeometryLayout.XY);
+  return new olGeomPoint(flatCoordinates, 'XY');
 }
 
 /**
@@ -779,7 +779,7 @@ function readMultiPointGeometry_(text) {
   console.assert(text.endsWith(')'));
   text = text.substring(2, text.length - 1);
   const flatCoordinates = this.decodeCoordinates_(text);
-  return new olGeomMultiPoint(flatCoordinates, olGeomGeometryLayout.XY);
+  return new olGeomMultiPoint(flatCoordinates, 'XY');
 }
 
 /**
@@ -811,7 +811,7 @@ function readPolygonGeometry_(text) {
     }
     ends[i] = end;
   }
-  return new olGeomPolygon(flatCoordinates, olGeomGeometryLayout.XY, ends);
+  return new olGeomPolygon(flatCoordinates, 'XY', ends);
 }
 
 /**
@@ -849,7 +849,7 @@ function readMultiPolygonGeometry_(text) {
       ends[j] = end;
     }
   }
-  return new olGeomMultiPolygon(flatCoordinates, olGeomGeometryLayout.XY, endss);
+  return new olGeomMultiPolygon(flatCoordinates, 'XY', endss);
 }
 
 /**

@@ -156,7 +156,7 @@ Controller.prototype.init = function (element) {
 
   /**
    * Watch for clicks on "slide-in" elements
-   * @param {JQuery.ClickEvent<any, any, any, HTMLElement>} evt The event
+   * @param {JQuery.ClickEvent<unknown, unknown, JQuery<HTMLElement>, HTMLElement>} evt The event
    */
   const onClick = (evt) => {
     const slideOut = $(evt.currentTarget).parents(`.${CLASS_NAMES.SLIDE}`);

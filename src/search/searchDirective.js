@@ -23,11 +23,11 @@ import angular from 'angular';
 
 /**
  * @typedef {Object} SearchDirectiveListeners
- * @property {Function} [open]
- * @property {Function} [close]
- * @property {function(JQueryEventObject, Object, Twitter.Typeahead.Dataset<T>): void} [cursorchange]
- * @property {function(JQueryEventObject, Object, Twitter.Typeahead.Dataset<T>): void} [select]
- * @property {function(JQueryEventObject, Object, Twitter.Typeahead.Dataset<T>): void} [autocomplete]
+ * @property {function(): void} [open]
+ * @property {function(): void} [close]
+ * @property {function(JQueryEventObject, T, Twitter.Typeahead.Dataset<T>): void} [cursorchange]
+ * @property {function(JQueryEventObject, T, Twitter.Typeahead.Dataset<T>): void} [select]
+ * @property {function(JQueryEventObject, T, Twitter.Typeahead.Dataset<T>): void} [autocomplete]
  * @property {function(JQueryEventObject, string, boolean): void} [datasetsempty]
  * @property {function(JQueryEventObject, string): void} [change]
  * @template T
@@ -97,7 +97,7 @@ function searchComponent() {
         'typeahead:cursorchange',
         /**
          * @param {JQueryEventObject} event Event.
-         * @param {Object} suggestion Suggestion.
+         * @param {T} suggestion Suggestion.
          * @param {Twitter.Typeahead.Dataset<T>} dataset Dataset.
          */
         (event, suggestion, dataset) => {
@@ -111,7 +111,7 @@ function searchComponent() {
         'typeahead:select',
         /**
          * @param {JQueryEventObject} event Event.
-         * @param {Object} suggestion Suggestion.
+         * @param {T} suggestion Suggestion.
          * @param {Twitter.Typeahead.Dataset<T>} dataset Dataset.
          */
         (event, suggestion, dataset) => {
@@ -125,7 +125,7 @@ function searchComponent() {
         'typeahead:autocomplete',
         /**
          * @param {JQueryEventObject} event Event.
-         * @param {Object} suggestion Suggestion.
+         * @param {T} suggestion Suggestion.
          * @param {Twitter.Typeahead.Dataset<T>} dataset Dataset.
          */
         (event, suggestion, dataset) => {

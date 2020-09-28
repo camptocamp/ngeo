@@ -209,7 +209,7 @@ function MainController($scope, ngeoFeatureHelper) {
 }
 
 /**
- * @param {import("ol/MapBrowserEvent.js").default} evt MapBrowser event
+ * @param {import("ol/MapBrowserEvent.js").default<unknown>} evt MapBrowser event
  */
 MainController.prototype.handleMapSingleClick_ = function (evt) {
   const pixel = evt.pixel;

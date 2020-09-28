@@ -47,7 +47,7 @@ export function createGeoJSONBloodhound(
   opt_remoteOptions
 ) {
   const geojsonFormat = new olFormatGeoJSON();
-  /** @type {Bloodhound.BloodhoundOptions<GeoJSON.FeatureCollection|Array<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>>} */
+  /** @type {Bloodhound.BloodhoundOptions<GeoJSON.FeatureCollection|import('ol/Feature.js').FeatureLike[]>} */
   const bloodhoundOptions = {
     remote: {
       url,
@@ -86,8 +86,8 @@ export function createGeoJSONBloodhound(
     {},
     opt_options || {
       /**
-       * @param {any} datum
-       * @returns {any[]}
+       * @param {GeoJSON.FeatureCollection} datum
+       * @returns {string[]}
        */
       datumTokenizer: (datum) => {
         return [];

@@ -96,7 +96,6 @@ export default class extends ngeoInteractionMeasure {
     }
     const output = getFormattedAzimutRadius(
       line,
-      // @ts-ignore: missing getMap
       this.getMap().getView().getProjection(),
       this.decimals,
       this.precision,

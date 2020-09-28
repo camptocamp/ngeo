@@ -24,7 +24,7 @@ import {SEARCH} from './url.js';
 import './search.css';
 
 import ngeoMapModule from 'ngeo/map/module.js';
-import {proj as EPSG2056} from '@geoblocks/proj/src/EPSG_2056.js';
+import {proj as EPSG2056} from '@geoblocks/proj/EPSG_2056.js';
 import ngeoSearchModule from 'ngeo/search/module.js';
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
@@ -109,9 +109,9 @@ function SearchController($element, $rootScope, $compile, ngeoSearchCreateGeoJSO
 
           // A scope for the ng-click on the suggestion's « i » button.
           const scope = $rootScope.$new(true);
-          // @ts-ignore: scope...
+          // @ts-ignore: scope ......
           scope.feature = feature;
-          // @ts-ignore: scope...
+          // @ts-ignore: scope ......
           scope.click = function (event) {
             window.alert(feature.get('label'));
             event.stopPropagation();

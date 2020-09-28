@@ -62,7 +62,6 @@ class ModifyRectangle extends olInteractionPointer {
       source: new olSourceVector({
         wrapX: !!options.wrapX,
       }),
-      // @ts-ignore
       visible: this.getActive(),
       style: options.style || getDefaultModifyStyleFunction(),
       updateWhileAnimating: true,
@@ -136,6 +135,7 @@ class ModifyRectangle extends olInteractionPointer {
       // each point is then associated with 2 siblings in order to update the
       // siblings geometry at the same time when a point gets dragged around.
       // mark each one as 'corner'
+      /** @type {number[][]} */
       const corners = featureGeom.getCoordinates()[0];
       while (corners.length > 4) {
         if (corners[0][0] < corners[1][0] && corners[0][1] <= corners[1][1]) {
@@ -191,14 +191,13 @@ class ModifyRectangle extends olInteractionPointer {
   }
 
   /**
-   * @param {import("ol/MapBrowserEvent.js").default} evt MapBrowserEvent
+   * @param {import("ol/MapBrowserEvent.js").default<unknown>} evt MapBrowserEvent
    * @private
    */
   willModifyFeatures_(evt) {
     if (!this.modified_) {
       this.modified_ = true;
       const event = new ngeoCustomEvent('modifystart', {features: this.features_});
-      // @ts-ignore: unfound dispatchEvent
       this.dispatchEvent(event);
       this.params_ = this.initializeParams_();
     }
@@ -224,7 +223,6 @@ class ModifyRectangle extends olInteractionPointer {
     const originPoint = origin.getGeometry();
     console.assert(originPoint instanceof olGeomPoint);
     const originCoordinate = originPoint.getCoordinates();
-    // @ts-ignore
     const originPixel = this.getMap().getPixelFromCoordinate(originCoordinate);
 
     // 2. Find the origin's X sibling and the normal vector from the origin to it
@@ -233,7 +231,6 @@ class ModifyRectangle extends olInteractionPointer {
     const siblingXPoint = siblingX.getGeometry();
     console.assert(siblingXPoint instanceof olGeomPoint);
     const siblingXCoordinate = siblingXPoint.getCoordinates();
-    // @ts-ignore
     const siblingXPixel = this.getMap().getPixelFromCoordinate(siblingXCoordinate);
     let vectorX = [siblingXPixel[0] - originPixel[0], siblingXPixel[1] - originPixel[1]];
     const vectorXMagnitude = Math.sqrt(vectorX[0] * vectorX[0] + vectorX[1] * vectorX[1]);
@@ -244,7 +241,6 @@ class ModifyRectangle extends olInteractionPointer {
     const siblingYPoint = siblingY.getGeometry();
     console.assert(siblingYPoint instanceof olGeomPoint);
     const siblingYCoordinate = siblingYPoint.getCoordinates();
-    // @ts-ignore
     const siblingYPixel = this.getMap().getPixelFromCoordinate(siblingYCoordinate);
     let vectorY = [siblingYPixel[0] - originPixel[0], siblingYPixel[1] - originPixel[1]];
     const vectorYMagnitude = Math.sqrt(vectorY[0] * vectorY[0] + vectorY[1] * vectorY[1]);
@@ -325,7 +321,7 @@ class ModifyRectangle extends olInteractionPointer {
   }
 
   /**
-   * @param {import("ol/MapBrowserEvent.js").default} evt MapBrowserEvent.
+   * @param {import("ol/MapBrowserEvent.js").default<unknown>} evt MapBrowserEvent.
    * @return {boolean} Start drag sequence?
    * @private
    */
@@ -347,7 +343,7 @@ class ModifyRectangle extends olInteractionPointer {
   }
 
   /**
-   * @param {import("ol/MapBrowserEvent.js").default} evt MapBrowserEvent.
+   * @param {import("ol/MapBrowserEvent.js").default<unknown>} evt MapBrowserEvent.
    * @private
    */
   handleDrag_(evt) {
@@ -376,12 +372,10 @@ class ModifyRectangle extends olInteractionPointer {
 
       // Calculate new positions of siblings
       const b2Pixel = this.calculateNewPixel_(originPixel, destinationPixel, vectorX);
-      // @ts-ignore
       const b2Coordinate = this.getMap().getCoordinateFromPixel(b2Pixel);
       siblingXPoint.setCoordinates(b2Coordinate);
 
       const c2Pixel = this.calculateNewPixel_(originPixel, destinationPixel, vectorY);
-      // @ts-ignore
       const c2Coordinate = this.getMap().getCoordinateFromPixel(c2Pixel);
       siblingYPoint.setCoordinates(c2Coordinate);
 
@@ -413,14 +407,13 @@ class ModifyRectangle extends olInteractionPointer {
   }
 
   /**
-   * @param {import("ol/MapBrowserEvent.js").default} evt MapBrowserEvent.
+   * @param {import("ol/MapBrowserEvent.js").default<unknown>} evt MapBrowserEvent.
    * @return {boolean} Stop drag sequence?
    * @private
    */
   handleUp_(evt) {
     if (this.modified_) {
       const event = new ngeoCustomEvent('modifyend', {features: this.features_});
-      // @ts-ignore: unfound dispatchEvent
       this.dispatchEvent(event);
       this.params_ = null;
       this.modified_ = false;

@@ -39,11 +39,9 @@ class CustomSnap extends olInteractionSnap {
   constructor(options) {
     super(options);
     document.body.addEventListener('keydown', (evt) => {
-      // @ts-ignore: unfound setActive
       this.setActive(evt.keyCode !== 17); // Ctrl key
     });
     document.body.addEventListener('keyup', () => {
-      // @ts-ignore: unfound setActive
       this.setActive(true);
     });
   }
@@ -139,7 +137,7 @@ export function EditingSnappingService(
   this.gmfTreeManager_ = gmfTreeManager;
 
   /**
-   * @type {import("ol/Collection.js").default<Feature<import("ol/geom/Geometry.js").default>>}
+   * @type {import("ol/Collection.js").default<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>}
    */
   this.ngeoFeatures_ = ngeoFeatures;
 
@@ -196,7 +194,7 @@ export function EditingSnappingService(
   this.ogcServers_ = null;
 
   /**
-   * @type {import('ol/source/Vector.js').default<*>|undefined}
+   * @type {import('ol/source/Vector.js').default<unknown>|undefined}
    */
   this.ngeoSnappingSource_ = this.injector_.has('ngeoSnappingSource')
     ? this.injector_.get('ngeoSnappingSource')
@@ -414,7 +412,7 @@ EditingSnappingService.prototype.getOGCServer_ = function (treeCtrl) {
   if (gmfLayer.type !== ThemeNodeType.WMS) {
     return null;
   }
-  const gmfLayerWMS = /** @type {import('gmf/themes.js').GmfLayerWMS} */ (gmfLayer);
+  const gmfLayerWMS = /** @type {import('gmf/themes.js').GmfLayerWMS} */ (/** @type {any} */ (gmfLayer));
 
   let ogcServerName;
   const gmfGroup = /** @type {import('gmf/themes.js').GmfGroup} */ (treeCtrl.parent.node);
@@ -463,7 +461,7 @@ EditingSnappingService.prototype.getWFSConfig_ = function (treeCtrl) {
     return null;
   }
 
-  const gmfLayerWMS = /** @type {import('gmf/themes.js').GmfLayerWMS} */ (gmfLayer);
+  const gmfLayerWMS = /** @type {import('gmf/themes.js').GmfLayerWMS} */ (/** @type {any} */ (gmfLayer));
 
   // (3)
   const featureTypes = [];
@@ -672,7 +670,9 @@ EditingSnappingService.prototype.loadItemFeatures_ = function (item) {
     item.features.clear();
 
     // (3) Read features from request response and add them to the item
-    const readFeatures = new olFormatWFS().readFeatures(response.data);
+    const readFeatures = /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>[]} */ (new olFormatWFS().readFeatures(
+      response.data
+    ));
     if (readFeatures) {
       item.features.extend(readFeatures);
       this.refreshSnappingSource_();
@@ -793,6 +793,7 @@ EditingSnappingService.prototype.handleFileGroupDataSourcesCollectionRemove_ = f
  * Called when the "visible" property of a File data source
  * changes. Add or remove the Snap interaction for that data source
  * depending on the property value.
+ * @param {ngeoDatasourceFile} fileDataSource
  */
 EditingSnappingService.prototype.handleFileDataSourceVisibleChange_ = function (fileDataSource) {
   const uid = olUtilGetUid(fileDataSource);
@@ -827,7 +828,7 @@ EditingSnappingService.prototype.handleFileDataSourceVisibleChange_ = function (
  * @property {import("ol/Collection.js").default<import("ol/Feature.js").default<import("ol/geom/Geometry.js").default>>} features
  * @property {?import("ol/interaction/Snap.js").default} interaction
  * @property {number} maxFeatures
- * @property {?angular.IDeferred<void>} requestDeferred
+ * @property {?angular.IDeferred<unknown>} requestDeferred
  * @property {import('gmf/themes.js').GmfSnappingConfig} snappingConfig
  * @property {Function} stateWatcherUnregister
  * @property {import('ngeo/layertree/Controller.js').LayertreeController} treeCtrl

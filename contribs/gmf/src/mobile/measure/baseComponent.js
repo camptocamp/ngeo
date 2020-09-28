@@ -75,7 +75,6 @@ export function MeasueMobileBaseController($scope, $filter, gettextCatalog) {
       if (!this.measure) {
         throw new Error('Missing measure');
       }
-      // @ts-ignore: unfound setActive
       this.measure.setActive(newVal);
     }
   );
@@ -117,7 +116,6 @@ MeasueMobileBaseController.prototype.init = function () {
     throw new Error('Missing measure');
   }
 
-  // @ts-ignore: unfound setActive
   this.measure.setActive(this.active);
   interactionDecoration(this.measure);
 
@@ -137,6 +135,7 @@ MeasueMobileBaseController.prototype.init = function () {
   listen(
     drawInteraction,
     'change:dirty',
+    /** @type {import("ol/events.js").ListenerFunction} */
     (evt) => {
       this.dirty = drawInteraction.getDirty();
 
@@ -153,6 +152,7 @@ MeasueMobileBaseController.prototype.init = function () {
   listen(
     drawInteraction,
     'change:drawing',
+    /** @type {import("ol/events.js").ListenerFunction} */
     (evt) => {
       this.drawing = drawInteraction.getDrawing();
     },
@@ -162,6 +162,7 @@ MeasueMobileBaseController.prototype.init = function () {
   listen(
     drawInteraction,
     'change:valid',
+    /** @type {import("ol/events.js").ListenerFunction} */
     (evt) => {
       this.valid = drawInteraction.getValid();
     },

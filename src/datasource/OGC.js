@@ -795,8 +795,8 @@ export class OGC extends ngeoDatasourceDataSource {
   get activeDimensions() {
     /** @type {DimensionsActive} */
     const active = {};
-    const dimensions = this.dimensions_ || {};
-    const config = this.dimensionsConfig || {};
+    const dimensions = this.dimensions_ || /** @type {Dimensions} */ ({});
+    const config = this.dimensionsConfig || /** @type {Dimensions} */ ({});
 
     for (const key in config) {
       const configValue = config[key];
@@ -1168,9 +1168,12 @@ export class OGC extends ngeoDatasourceDataSource {
    * @override
    */
   haveTheSameActiveDimensionsFilters(dataSource) {
-    const myConfig = this.dimensionsFiltersConfig || {};
-    const itsConfig = dataSource.dimensionsFiltersConfig || {};
+    const myConfig = this.dimensionsFiltersConfig || /** @type {DimensionsFiltersConfig} */ ({});
+    const itsConfig = dataSource.dimensionsFiltersConfig || /** @type {DimensionsFiltersConfig} */ ({});
 
+    /**
+     * @param {string} key
+     */
     const equals = (key) => {
       const myKeyConfig = myConfig[key];
       const itsKeyConfig = itsConfig[key];

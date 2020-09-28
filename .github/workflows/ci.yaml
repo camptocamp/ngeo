@@ -37,11 +37,13 @@ jobs:
       - run: git config --global user.email "ci@comptocamp.org"
       - run: ls -al
       - run: buildtools/set-version
+      - run: make .build/node_modules.timestamp
 
       # Lint
-      - run: make lint
-      - run: make spell
+      - run: npx tsc --version
       - run: npm run typecheck
+      - run: make spell
+      - run: make lint
       - run: make test
       - run: make check-examples-checker
       # Webpack build of ngeo/gmf examples and gmf apps

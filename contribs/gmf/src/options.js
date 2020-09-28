@@ -169,9 +169,10 @@
  * @property {View} view The view definition.
  * @property {Map} map The map definition.
  * @property {number} zoom The default zoom.
- * @property {import('ol/control/Control.js').Control[]} [mapControls] The map control.
- * @property {import('ol/interaction/Interaction.js').Interaction[]} [mapInteractions] The map interactions.
- * @property {import('ol/interaction/Interaction.js').Interaction[]} [interationDefaults] The map interactions.
+ * @property {import('ol/control/Control.js').default[]} [mapControls] The map control.
+ * @property {import('ol/interaction/Interaction.js').default[]} [mapInteractions] The map interactions.
+ * @property {import('ol/interaction.js').DefaultsOptions} [interationDefaults] The map interactions.
+ * @property {import('ol/control/Zoom.js').Options} controlZoom The zoom control options
  */
 
 /**
