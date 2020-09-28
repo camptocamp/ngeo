@@ -329,6 +329,7 @@ PrintService.prototype.encodeWmsLayer_ = function (arr, layer, url, params) {
   delete customParams.FORMAT;
   delete customParams.SERVERTYPE;
   delete customParams.VERSION;
+  delete customParams.STYLES;
 
   let serverType = undefined;
   if (params.SERVERTYPE !== 'arcgis') {
@@ -346,6 +347,7 @@ PrintService.prototype.encodeWmsLayer_ = function (arr, layer, url, params) {
     opacity: this.getOpacityOrInherited_(layer),
     version: params.VERSION,
     useNativeAngle: this.printNativeAngle_,
+    styles: params.STYLES ? params.STYLES.split(',') : [''],
   };
   arr.push(object);
 };
