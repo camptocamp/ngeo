@@ -160,13 +160,6 @@ class Controller extends AbstractDesktopController {
         this.vectorSource_.addFeature(feature);
       }
     });
-
-    // Allow angular-gettext-tools to collect the strings to translate
-    /** @type {angular.gettext.gettextCatalog} */
-    const gettextCatalog = $injector.get('gettextCatalog');
-    gettextCatalog.getString('Add a theme');
-    gettextCatalog.getString('Add a sub theme');
-    gettextCatalog.getString('Add a layer');
   }
 }
 
