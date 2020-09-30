@@ -103,7 +103,6 @@ export default class extends olOverlay {
 
     /**
      * @type {JQuery[]}
-     * @private
      */
     this.actions_ = [];
 

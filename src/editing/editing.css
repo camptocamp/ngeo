@@ -5,3 +5,11 @@
 select .ngeo-highlight-invalid.ng-invalid.ng-touched{
    border-color: red;
 }
+
+.gmf-feature-menu-item {
+   padding: 0.15rem 0.2rem;
+ }
+
+.gmf-feature-menu-item:hover {
+  background-color: #d6dbdf;
+}

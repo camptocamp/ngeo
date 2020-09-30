@@ -41,6 +41,7 @@ import ngeoInteractionRotate from 'ngeo/interaction/Rotate.js';
 import ngeoInteractionTranslate from 'ngeo/interaction/Translate.js';
 import ngeoMapLayerHelper from 'ngeo/map/LayerHelper.js';
 import ngeoMenu from 'ngeo/Menu.js';
+import ngeoMenuMulti from 'gmf/menu/MenuMultiFeature.js';
 
 import ngeoMessageModalComponent from 'ngeo/message/modalComponent.js';
 
@@ -68,6 +69,8 @@ import olStyleText from 'ol/style/Text.js';
 import MapBrowserEvent from 'ol/MapBrowserEvent.js';
 import {CollectionEvent} from 'ol/Collection.js';
 import VectorSource from 'ol/source/Vector.js';
+import olLayerVector from 'ol/layer/Vector.js';
+import {buildStyle} from 'ngeo/options';
 
 /**
  * The different possible values of the `state` inner property.
@@ -164,9 +167,7 @@ module.run(
  *         gmf-editfeature-editabletreectrl="::ctrl.treeCtrl"
  *         gmf-editfeature-map="::ctrl.map"
  *         gmf-editfeature-state="efsCtrl.state"
- *         gmf-editfeature-tolerance="::ctrl.tolerance"
  *         gmf-editfeature-vector="::ctrl.vectorLayer">
- *         gmf-editfeature-closeaftersave="::ctrl.closeaftersave">
  *     </gmf-editfeature>
  *
  * @htmlAttribute {boolean} gmf-editfeature-dirty Flag that is toggled as soon
@@ -179,12 +180,8 @@ module.run(
  * @htmlAttribute {string} gmf-editfeature-state The state property shared
  *     with the `gmf-editfeatureselector` directive. For more info, see in
  *     that directive.
- * @htmlAttribute {number|undefined} gmf-editfeatureselector-tolerance The
- *     buffer in pixels to use when making queries to get the features.
  * @htmlAttribute {import("ol/layer/Vector.js").default} gmf-editfeature-vector The vector layer in
  *     which to draw the vector features.
- * @htmlAttribute {boolean} gmf-editfeatureselector-closeaftersave If true,
- *     immediately return to the main edit panel after save. Default is false.
  * @return {angular.IDirective} The directive specs.
  * @ngdoc directive
  * @ngname gmfEditfeature
@@ -197,9 +194,7 @@ function editingEditFeatureComponent() {
       'editableTreeCtrl': '=gmfEditfeatureEditabletreectrl',
       'map': '<gmfEditfeatureMap',
       'state': '=gmfEditfeatureState',
-      'tolerance': '<?gmfEditfeatureTolerance',
       'vectorLayer': '<gmfEditfeatureVector',
-      'closeAfterSave': '=?gmfEditfeatureCloseaftersave',
     },
     bindToController: true,
     templateUrl: 'gmf/editing/editFeatureComponent',
@@ -223,6 +218,7 @@ module.directive('gmfEditfeature', editingEditFeatureComponent);
  * @param {import("ngeo/map/LayerHelper.js").LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @param {import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate
  *    manager service.
+ * @param {import('gmf/options.js').gmfEditFeatureOptions} gmfEditFeatureOptions The options.
  * @constructor
  * @private
  * @hidden
@@ -242,7 +238,8 @@ function Controller(
   ngeoEventHelper,
   ngeoFeatureHelper,
   ngeoLayerHelper,
-  ngeoToolActivateMgr
+  ngeoToolActivateMgr,
+  gmfEditFeatureOptions
 ) {
   // === Binding properties ===
 
@@ -273,7 +270,7 @@ function Controller(
   /**
    * @type {number}
    */
-  this.tolerance = 0;
+  this.tolerance = gmfEditFeatureOptions.tolerance ? gmfEditFeatureOptions.tolerance : 0;
 
   /**
    * @type {?import("ol/layer/Vector.js").default}
@@ -284,7 +281,7 @@ function Controller(
    * @type {boolean}
    * @export
    */
-  this.closeAfterSave = false;
+  this.closeAfterSave = gmfEditFeatureOptions.closeAfterSave ? gmfEditFeatureOptions.closeAfterSave : false;
 
   // === Injected properties ===
 
@@ -423,6 +420,16 @@ function Controller(
   this.features = null;
 
   /**
+   * @type {?import("ol/layer/Vector.js").default}
+   */
+  this.highlightVectorLayer = null;
+
+  /**
+   * @type {?import("ol/Collection.js").default<olFeature<import("ol/geom/Geometry.js").default>>}
+   */
+  this.highlightedFeatures_ = null;
+
+  /**
    * @type {import("ol/Collection.js").default<import('ol/interaction/Interaction.js').default>}
    */
   this.interactions_ = new olCollection();
@@ -469,6 +476,11 @@ function Controller(
   });
 
   /**
+   * @type {import("gmf/menu/MenuMultiFeature.js").default}
+   */
+  this.menuMultiple_ = null;
+
+  /**
    * @type {?import("ngeo/interaction/Translate.js").default}
    */
   this.translate_ = null;
@@ -504,6 +516,11 @@ function Controller(
   this.mapListenerKeys_ = [];
 
   /**
+   * @type {import("ol/events.js").EventsKey[]}
+   */
+  this.menuMultipleListenerKeys_ = [];
+
+  /**
    * @type {?import('ngeo/format/Attribute.js').Attribute[]}
    */
   this.attributes = null;
@@ -532,6 +549,11 @@ function Controller(
    * @type {?number[]}
    */
   this.vertexInfo_ = null;
+
+  /**
+   * @type {import('gmf/options.js').gmfEditFeatureOptions}
+   */
+  this.options_ = gmfEditFeatureOptions;
 }
 
 /**
@@ -541,6 +563,20 @@ Controller.prototype.$onInit = function () {
   if (!this.map) {
     throw new Error('Missing map');
   }
+
+  /**
+   * @type {import("ol/layer/Vector.js").default}
+   */
+  this.highlightVectorLayer = new olLayerVector({
+    source: new VectorSource({
+      wrapX: false,
+      features: new olCollection(),
+    }),
+    style: buildStyle(this.options_.highlightStyle),
+  });
+  this.highlightVectorLayer.setMap(this.map);
+  this.hightlightedFeatures_ = this.highlightVectorLayer.getSource().getFeaturesCollection();
+
   const lang = this.gettextCatalog_.getCurrentLanguage();
 
   // @ts-ignore: $.datetimepicker is available, as it is imported
@@ -1125,7 +1161,7 @@ Controller.prototype.handleMapClick_ = function (evt) {
       // (3) Launch query to fetch features
       this.gmfEditFeature_
         .getFeaturesInExtent([this.editableNode_.id], extent)
-        .then(this.handleGetFeatures_.bind(this));
+        .then(this.handleGetFeatures_.bind(this, coordinate));
 
       // (4) Clear any previously selected feature
       this.cancel();
@@ -1203,21 +1239,76 @@ Controller.prototype.handleMapContextMenu_ = function (evt) {
 };
 
 /**
+ *@param {?olFeature<import("ol/geom/Geometry.js").default>} feature The feature to edit.
+ */
+Controller.prototype.setFeature_ = function (feature) {
+  this.feature = feature;
+  this.features.push(feature);
+};
+
+/**
+ * @param {Array<number>} coordinate The click coordinates.
  * @param {Array<olFeature<import("ol/geom/Geometry.js").default>>} features Features.
  */
-Controller.prototype.handleGetFeatures_ = function (features) {
+Controller.prototype.handleGetFeatures_ = function (coordinate, features) {
   this.pending = false;
 
   this.timeout_(() => {
     if (!this.features) {
       throw new Error('Missing features');
     }
-    if (features.length) {
-      const feature = features[0];
-      this.feature = feature;
-      this.features.push(feature);
+
+    if (features.length === 1) {
+      this.setFeature_(features[0]);
+    } else if (features.length > 1) {
+      this.openFeatureMenu_(coordinate, features);
     }
   }, 0);
+};
+
+/**
+ *@param {Array<number>} coordinate The click coordinates.
+ *@param {Array<olFeature<import("ol/geom/Geometry.js").default>>} features Features.
+ */
+Controller.prototype.openFeatureMenu_ = function (coordinate, features) {
+  /** @type {import('ngeo/Menu').MenuActionOptions[]} */
+  const actions = [];
+  features.forEach((feature) => {
+    const label = feature.get('name') ? feature.get('name') : feature.getId();
+    /** @type {import('ngeo/Menu').MenuActionOptions} */
+    const choice = {
+      cls: '',
+      label: label,
+      name: feature.getId().toString(),
+    };
+    actions.push(choice);
+  });
+
+  this.menuMultiple_ = new ngeoMenuMulti({
+    actions,
+  });
+  this.menuMultipleListenerKeys_.push(
+    listen(
+      this.menuMultiple_,
+      'actionmouseenter',
+      this.handleMultiMenuActionMouseEnter_.bind(this, features),
+      this
+    )
+  );
+  this.menuMultipleListenerKeys_.push(
+    listen(
+      this.menuMultiple_,
+      'actionmouseout',
+      this.handleMultiMenuActionMouseOut_.bind(this, features),
+      this
+    )
+  );
+  this.menuMultipleListenerKeys_.push(
+    listen(this.menuMultiple_, 'actionclick', this.handleMenuMultipleActionClick_.bind(this, features), this)
+  );
+
+  this.map.addOverlay(this.menuMultiple_);
+  this.menuMultiple_.open(coordinate);
 };
 
 /**
@@ -1384,6 +1475,38 @@ Controller.prototype.handleDestroy_ = function () {
   this.toggle_(false);
   this.handleMapSelectActiveChange_(false);
   this.unregisterInteractions_();
+};
+
+/**
+ * Handles the click on element in the feature menu
+ * In the call the parameters are in inverse order!
+ *
+ * @param {Array<olFeature<import("ol/geom/Geometry.js").default>>} features Features.
+ * @param {Event|import('ol/events/Event.js').default} evt Event.
+ */
+Controller.prototype.handleMenuMultipleActionClick_ = function (features, evt) {
+  const action = /** @type {import('ngeo/filter/ruleComponent.js').MenuEvent} */ (evt).detail.action;
+  const feature = Object.values(features).filter((feature) => feature.getId() === action);
+  this.setFeature_(feature[0]);
+  this.hightlightedFeatures_.clear();
+};
+
+/**
+ * Handles mouse entering a menu item of the multiple feature menu
+ * @param {Array<olFeature<import("ol/geom/Geometry.js").default>>} features Features.
+ * @param {Event|import('ol/events/Event.js').default} evt Event.
+ */
+Controller.prototype.handleMultiMenuActionMouseEnter_ = function (features, evt) {
+  const action = /** @type {import('ngeo/filter/ruleComponent.js').MenuEvent} */ (evt).detail.action;
+  const feature = Object.values(features).filter((feature) => feature.getId() === action);
+  this.hightlightedFeatures_.push(feature[0]);
+};
+
+/**
+ * Handles mouse leaving a menu item of the multiple feature menu
+ */
+Controller.prototype.handleMultiMenuActionMouseOut_ = function () {
+  this.hightlightedFeatures_.clear();
 };
 
 module.controller('GmfEditfeatureController', Controller);
