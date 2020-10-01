@@ -3,3 +3,37 @@
 @import "~bootstrap/scss/_functions.scss";
 @import "~bootstrap/scss/_variables.scss";
 @import "~@fortawesome/fontawesome-free/scss/_variables.scss";
+
+
+$table-border-color: $border-color !default;
+
+:root {
+  --brand-primary: #{$brand-primary};
+  --brand-secondary: #{$brand-secondary};
+  --nav-bg: #{$nav-bg};
+  --color: #{$color};
+  --color-light: #{$color-light};
+  --color-04: #{$color-04};
+  --nav-header-bg: #{$nav-header-bg};
+  --map-tools-bg-color: #{$map-tools-bg-color};
+  --map-tools-color: #{$map-tools-color};
+  --onhover-color: #{$onhover-color};
+  --onhover-color-darken: #{$onhover-color-darken};
+  --main-bg-color: #{$main-bg-color};
+  --main-bg-color-lighten: #{$main-bg-color-lighten};
+  --main-bg-color-09: #{$main-bg-color-09};
+  --main-bg-color-08: #{$main-bg-color-08};
+  --input-border-focus: #{$input-border-focus};
+  --input-border-focus-darken: #{$input-border-focus-darken};
+  --light-box-shadow-color: #{$light-box-shadow-color};
+  --eavy-box-shadow-color: #{$eavy-box-shadow-color};
+  --border-color: #{$border-color};
+  --hover-background-color: #{$hover-background-color};
+  --brand-secondary-dark: #{$brand-secondary-dark};
+  --gmf-gray-dark: #{$gray-dark};
+  --btn-default-border: #{$btn-default-border};
+  --link-color: #{$link-color};
+  --link-hover-color: #{$link-hover-color};
+  --table-border-color: #{$table-border-color};
+  --input-btn-focus-color: #{$input-btn-focus-color};
+}

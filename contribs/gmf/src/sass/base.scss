@@ -29,26 +29,37 @@ a {
 
 .btn.prime {
   background-color: $brand-primary;
+  background-color: var(--brand-primary);
   border-color: $input-border-focus;
+  border-color: var(--input-border-focus);
    &.active {
-    box-shadow: inset $light-box-shadow;
+    box-shadow: inset $light-box-shadow $light-box-shadow-color;
+    box-shadow: inset $light-box-shadow var(--light-box-shadow-color);
   } color: white;
   &:hover, &.active {
     background-color: $input-border-focus;
-    border-color: darken($input-border-focus, $standard-variation);
+    background-color: var(--input-border-focus);
+    border-color: $input-border-focus-darken;
+    border-color: var(--input-border-focus-darken);
   }
 }
 
 .btn.btn-default {
   background-color: $map-tools-bg-color;
+  background-color: var(--map-tools-bg-color);
   border-color: $onhover-color;
+  border-color: var(--onhover-color);
   color: $map-tools-color;
+  color: var(--map-tools-color);
   &.active {
-    box-shadow: inset $light-box-shadow;
+    box-shadow: inset $light-box-shadow $light-box-shadow-color;
+    box-shadow: inset $light-box-shadow var(--light-box-shadow-color);
   }
   &:hover, &.active {
     background-color: $onhover-color;
-    border-color: darken($onhover-color, $standard-variation);
+    background-color: var(--onhover-color);
+    border-color: $onhover-color-darken;
+    border-color: var(--onhover-color-darken);
   }
 }
 
@@ -160,4 +171,37 @@ i, cite, em, var, address, dfn {
   fill: black;
   font-size: 2rem;
   margin: 20px 45%;
+}
+/** Make some Bootstrap values configurable */
+body {
+  a, .btn-link {
+    color: var(--link-color);
+  }
+
+  a:hover, .btn-link:hover {
+    color: var(--link-hover-color);
+  }
+
+  .btn, .form-control {
+    &:focus,
+    &.focus {
+      box-shadow: 0 0 0 $input-btn-focus-width var(--input-btn-focus-color);
+      border-color: var(--brand-primary);
+    }
+  }
+
+  .modal-header {
+    border-color: var(--link-color);
+  }
+  .table tr {
+    td, th {
+      border-color: var(--table-border-color);
+    }
+  }
+
+  .nav-pills {
+    .nav-link.active, .show > .nav-link {
+      background-color: var(--brand-primary);
+    }
+  }
 }

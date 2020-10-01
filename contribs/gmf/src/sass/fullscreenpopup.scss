@@ -18,10 +18,14 @@
   }
   .popover-title {
     background-color: $nav-bg;
+    background-color: var(--nav-bg);
     border-bottom-color: $color;
+    border-bottom-color: var(--color);
     color: $color;
+    color: var(--color);
     .close {
       color: $color;
+      color: var(--color);
       line-height: 0.8;
       opacity: 1;
     }

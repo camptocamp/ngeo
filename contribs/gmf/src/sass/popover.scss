@@ -1,10 +1,9 @@
 @import '~gmf/sass/vars.scss';
 
-$popover-nb-col : 12;
-$popover-icon-max-width : ($popover-max-width / $popover-nb-col) * 3;
-$popover-action-name-max-width : ($popover-max-width / $popover-nb-col) * 5;
-$popover-action-max-width : ($popover-max-width / $popover-nb-col) * 4;
-$popover-text-color : $color-light;
+$popover-nb-col: 12;
+$popover-icon-max-width: ($popover-max-width / $popover-nb-col) * 3;
+$popover-action-name-max-width: ($popover-max-width / $popover-nb-col) * 5;
+$popover-action-max-width: ($popover-max-width / $popover-nb-col) * 4;
 
 .popover {
   border-radius: 0;
@@ -17,7 +16,8 @@ $popover-text-color : $color-light;
     }
 
     li {
-      color: $popover-text-color;
+      color: $color-light;
+      color: var(--color-light);
       list-style: none;
       margin-bottom: $half-app-margin;
       font-size: $font-size-small;
@@ -36,7 +36,8 @@ $popover-text-color : $color-light;
       }
 
       a {
-        color: $popover-text-color;
+        color: $color-light;
+        color: var(--color-light);
       }
 
       input {

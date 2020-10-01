@@ -8,6 +8,7 @@ gmf-importdatasource {
   }
   .btn.has-error {
     color: $danger;
+    color: var(--danger);
   }
   span.twitter-typeahead pre {
     display: none;

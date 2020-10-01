@@ -170,6 +170,8 @@ module.exports = function (config) {
               // GeoMapFish project sass vars files
               '/apps/sass/vars_',
               '/controllers/vars_',
+              // For the examples
+              'examples/vars.scss',
               // For the tests
               'sass/vars.scss',
             ],

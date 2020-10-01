@@ -10,19 +10,26 @@ gmf-floorselector.gmf-floorselector {
     height: $map-tools-size;
     width: $map-tools-size;
     background-color: $map-tools-bg-color;
+    background-color: var(--map-tools-bg-color);
     border: $border;
+    border-color: $border-color;
+    border-color: var(--border-color);
     color: $map-tools-color;
+    color: var(--map-tools-color);
     &:hover {
       background-color: $map-tools-bg-color;
+      background-color: var(--map-tools-bg-color);
     }
     &:focus {
       background-color: $map-tools-bg-color;
+      background-color: var(--map-tools-bg-color);
       outline: none;
       box-shadow: none;
     }
     &.active {
       outline: none;
       background-color: $brand-secondary;
+      background-color: var(--brand-secondary);
     }
   }
   .btn-group-floors {

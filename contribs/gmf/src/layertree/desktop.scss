@@ -1,4 +1,4 @@
-$layertree-group-box-shadow: 0 0 0.25rem 0.06rem $input-border-focus;
+$layertree-group-box-shadow: 0 0 0.25rem 0.06rem;
 
 gmf-layertree {
   display: block;
@@ -33,7 +33,9 @@ gmf-layertree {
   &.gmf-layertree-depth-1 {
     //styling first level node for desktop app
     background-color: $nav-bg;
-    box-shadow: $layertree-group-box-shadow;
+    background-color: var(--nav-bg);
+    box-shadow: $layertree-group-box-shadow $input-border-focus;
+    box-shadow: $layertree-group-box-shadow var(--input-border-focus);
 
     > ul {
       // no padding for the first list in first level nodes
@@ -59,6 +61,7 @@ gmf-layertree {
 
   .gmf-layertree-group.gmf-layertree-depth-1 {
     background-color: $main-bg-color;
+    background-color: var(--main-bg-color);
     padding: $half-app-margin;
   }
 
@@ -98,7 +101,7 @@ gmf-layertree {
     left: 0;
     top: 0;
     height: 100%;
-    width : $app-margin;
+    width: $app-margin;
     margin: 0.12rem 0 0;
   }
 
@@ -115,7 +118,8 @@ gmf-layertree {
 .gmf-layertree-curr-drag-item {
   border: 0.06rem dashed black;
   margin: 0 $micro-app-margin $app-margin $micro-app-margin;
-  box-shadow: $layertree-group-box-shadow;
+  box-shadow: $layertree-group-box-shadow $input-border-focus;
+  box-shadow: $layertree-group-box-shadow var(--input-border-focus);
 }
 
 .gmf-imported-legend {

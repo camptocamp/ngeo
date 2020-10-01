@@ -18,6 +18,7 @@
   }
 }
 .spinner-loading-mask {
-  color: red;
+  color: $brand-primary;
+  color: var(--brand-primary);
   font-size: 3rem;
 }

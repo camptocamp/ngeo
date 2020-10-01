@@ -7,6 +7,7 @@
 .more-options-info {
   font-style: italic;
   color: $color;
+  color: var(--color);
 }
 
 .gmf-layertree-node {
@@ -31,7 +32,9 @@
 
   a {
     color: $color;
+    color: var(--color);
     fill: $color;
+    fill: var(--color);
     display: inline;
     line-height: inherit;
     padding-left: 0;
@@ -40,7 +43,8 @@
     }
 
     &.gmf-layertree-expand-node.fa {
-      color : $color-light;
+      color: $color-light;
+      color: var(--color-light);
       display: inline-block;
       margin-top: $micro-app-margin;
       padding-right: $half-app-margin;
@@ -55,7 +59,9 @@
 
   .gmf-layertree-state {
     color: $color;
+    color: var(--color);
     fill: $color;
+    fill: var(--color);
   }
 
   .off {
@@ -164,8 +170,11 @@
   .gmf-layertree-legend {
     margin: 0 $app-margin;
     position: relative;
-    border: 0.06rem solid $main-bg-color;
-    background-color: lighten($main-bg-color, 8%);
+    border: 0.06rem solid;
+    border-color: $main-bg-color;
+    border-color: var(--main-bg-color);
+    background-color: $main-bg-color-lighten;
+    background-color: var(--main-bg-color-lighten);
 
     display: none;
     &.show {
