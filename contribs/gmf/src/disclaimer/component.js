@@ -234,6 +234,7 @@ DisclaimerController.prototype.registerLayer_ = function (layer) {
     layer.getLayers().forEach((layer) => {
       this.registerLayer_(layer);
     });
+    this.update_(layer);
   } else {
     if (this.layerVisibility) {
       // Show disclaimer messages for this layer
@@ -333,12 +334,13 @@ DisclaimerController.prototype.closeAll_ = function (layer) {
  */
 DisclaimerController.prototype.showAll_ = function (layer) {
   const disclaimers = layer.get('disclaimers');
-  if (disclaimers) {
-    const layerUid = olUtilGetUid(layer);
-    for (const key in disclaimers) {
-      const uid = `${layerUid}-${key}`;
-      this.showDisclaimerMessage_(uid, disclaimers[key]);
-    }
+  if (!disclaimers) {
+    return;
+  }
+  const layerUid = olUtilGetUid(layer);
+  for (const key in disclaimers) {
+    const uid = `${layerUid}-${key}`;
+    this.showDisclaimerMessage_(uid, disclaimers[key]);
   }
 };
 
@@ -348,24 +350,25 @@ DisclaimerController.prototype.showAll_ = function (layer) {
  */
 DisclaimerController.prototype.update_ = function (layer) {
   const disclaimers = layer.get('disclaimers');
-  if (disclaimers) {
-    if ('all' in disclaimers) {
-      // the disclaimer is for all the layers, WMS or WMTS.
-      console.assert(Object.keys(disclaimers).length === 1);
-      this.showAll_(layer);
-    } else {
-      const layerWMS = /** @type {import("ol/layer/Layer.js").default<import("ol/source/ImageWMS.js").default>} */ (layer);
-      const sourceWMS = layerWMS.getSource();
-      if (sourceWMS.getParams) {
-        const layers = sourceWMS.getParams()['LAYERS'];
-        const layerUid = olUtilGetUid(layer);
-        for (const key in disclaimers) {
-          const uid = `${layerUid}-${key}`;
-          if (layers.indexOf(key) !== -1) {
-            this.showDisclaimerMessage_(uid, disclaimers[key]);
-          } else {
-            this.closeDisclaimerMessage_(uid, disclaimers[key]);
-          }
+  if (!disclaimers) {
+    return;
+  }
+  if ('all' in disclaimers) {
+    // the disclaimer is for all the layers, WMS or WMTS.
+    console.assert(Object.keys(disclaimers).length === 1);
+    this.showAll_(layer);
+  } else {
+    const layerWMS = /** @type {import("ol/layer/Layer.js").default<import("ol/source/ImageWMS.js").default>} */ (layer);
+    const sourceWMS = layerWMS.getSource();
+    if (sourceWMS.getParams) {
+      const layers = sourceWMS.getParams()['LAYERS'];
+      const layerUid = olUtilGetUid(layer);
+      for (const key in disclaimers) {
+        const uid = `${layerUid}-${key}`;
+        if (layers.indexOf(key) !== -1) {
+          this.showDisclaimerMessage_(uid, disclaimers[key]);
+        } else {
+          this.closeDisclaimerMessage_(uid, disclaimers[key]);
         }
       }
     }

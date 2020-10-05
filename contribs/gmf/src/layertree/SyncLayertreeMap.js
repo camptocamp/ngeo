@@ -247,6 +247,7 @@ SyncLayertreeMap.prototype.createLayerFromGroup_ = function (treeCtrl, mixed) {
   if (mixed) {
     // Will be one ol.layer per each node.
     layer = this.layerHelper_.createBasicGroup();
+    this.updateLayerReferences_(treeCtrl.node, layer);
   } else {
     // Will be one ol.layer for multiple WMS nodes.
     if (!this.ogcServersObject_) {
@@ -281,7 +282,7 @@ SyncLayertreeMap.prototype.createLayerFromGroup_ = function (treeCtrl, mixed) {
     let hasActiveChildren = false;
     treeCtrl.traverseDepthFirst((ctrl) => {
       // Update layer information and tree state.
-      this.updateLayerReferences_(/** @type {import('gmf/themes.js').GmfLayer} */ (ctrl.node), layer);
+      this.updateLayerReferences_(/** @type {import('gmf/themes.js').GmfBaseNode} */ (ctrl.node), layer);
       if (ctrl.node.metadata.isChecked) {
         ctrl.setState('on', false);
         this.updateLayerState_(/** @type {import("ol/layer/Image.js").default} */ (layer), ctrl);
@@ -425,26 +426,28 @@ SyncLayertreeMap.prototype.createWMTSLayer_ = function (gmfLayerWMTS) {
 
 /**
  * Update properties of a layer with the node of a given leafNode.
- * @param {import('gmf/themes.js').GmfLayer|import('gmf/themes.js').GmfLayerWMS} leafNode a leaf node.
+ * @param {import('gmf/themes.js').GmfBaseNode} node a tree node.
  * @param {import("ol/layer/Base.js").default} layer A layer.
  * @private
  */
-SyncLayertreeMap.prototype.updateLayerReferences_ = function (leafNode, layer) {
-  const id = olUtilGetUid(leafNode);
+SyncLayertreeMap.prototype.updateLayerReferences_ = function (node, layer) {
+  // Set query source
+  const id = olUtilGetUid(node);
   const querySourceIds = layer.get('querySourceIds') || [];
   querySourceIds.push(id);
   layer.set('querySourceIds', querySourceIds);
 
-  const disclaimer = leafNode.metadata.disclaimer;
+  // Set disclaimer
+  const disclaimer = node.metadata.disclaimer;
   if (disclaimer) {
     const disclaimers = layer.get('disclaimers') || {};
 
     // 'all' means that the disclaimer is for all the layer.
     let layers = 'all';
-    if ('layers' in leafNode) {
-      layers = /** @type {import('gmf/themes.js').GmfLayerWMS} */ (leafNode).layers;
+    if ('layers' in node) {
+      layers = /** @type {import('gmf/themes.js').GmfLayerWMS} */ (node).layers;
     }
-    disclaimers[layers] = leafNode.metadata.disclaimer;
+    disclaimers[layers] = disclaimer;
     layer.set('disclaimers', disclaimers);
   }
 };
