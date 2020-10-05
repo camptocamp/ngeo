@@ -37,6 +37,7 @@ import ngeoPrintVectorEncoder from 'ngeo/print/VectorEncoder';
 describe('ngeo.print.VectorEncoder', () => {
   /** @type {import('ngeo/print/VectorEncoder').default} */
   const vectorEncoder = new ngeoPrintVectorEncoder();
+  /** @type {Array<import('ngeo/print/mapfish-print-v3.js').MapFishPrintVectorLayer>} */
   const layersMFP = [];
   const resolution = 20;
   const dpi = 254;
@@ -88,15 +89,19 @@ describe('ngeo.print.VectorEncoder', () => {
     vectorEncoder.encodeVectorLayer(layersMFP, layer, resolution, dpi, goodnessOfFit);
     expect(layersMFP.length).toBe(1);
 
-    const features = layersMFP[0].geoJson.features;
+    const geoJson = /** @type {import("geojson").FeatureCollection} */ (layersMFP[0].geoJson);
+    const features = geoJson.features;
     expect(features.length).toBe(1);
     expect(features[0].properties._ngeo_style).toBeTruthy();
 
     const style = layersMFP[0].style;
     const styleKey = `[_ngeo_style = '${features[0].properties._ngeo_style}']`;
     expect(style.version).toBe(2);
+
+    // @ts-ignore: unrepresantable Mapfish print object
     expect(style[styleKey]).toBeTruthy();
 
+    // @ts-ignore: unrepresantable Mapfish print object
     const symbolizers = style[styleKey].symbolizers;
     expect(symbolizers.length).toBe(2);
 
@@ -119,18 +124,22 @@ describe('ngeo.print.VectorEncoder', () => {
   it('Encode two polygons with same style', () => {
     const feature1 = new olFeature({
       geometry: new olGeomPolygon([
-        [46, 7],
-        [47, 8],
-        [46, 8],
-        [46, 7],
+        [
+          [46, 7],
+          [47, 8],
+          [46, 8],
+          [46, 7],
+        ],
       ]),
     });
     const feature2 = new olFeature({
       geometry: new olGeomPolygon([
-        [43, 7],
-        [44, 8],
-        [43, 8],
-        [43, 7],
+        [
+          [43, 7],
+          [44, 8],
+          [43, 8],
+          [43, 7],
+        ],
       ]),
     });
     const inputStyle = new olStyleStyle({
@@ -145,15 +154,18 @@ describe('ngeo.print.VectorEncoder', () => {
     vectorEncoder.encodeVectorLayer(layersMFP, layer, resolution, dpi, goodnessOfFit);
     expect(layersMFP.length).toBe(1);
 
-    const features = layersMFP[0].geoJson.features;
+    const geoJson = /** @type {import("geojson").FeatureCollection} */ (layersMFP[0].geoJson);
+    const features = geoJson.features;
     expect(features.length).toBe(2);
 
     const style = layersMFP[0].style;
     const styleKey1 = `[_ngeo_style = '${features[0].properties._ngeo_style}']`;
     const styleKey2 = `[_ngeo_style = '${features[1].properties._ngeo_style}']`;
     expect(styleKey1).toEqual(styleKey2);
+    // @ts-ignore: unrepresantable Mapfish print object
     expect(style[styleKey1]).toBeTruthy();
 
+    // @ts-ignore: unrepresantable Mapfish print object
     const symbolizers = style[styleKey1].symbolizers;
     expect(symbolizers.length).toBe(1);
     expect(symbolizers[0].type).toEqual('polygon');
@@ -180,47 +192,60 @@ describe('ngeo.print.VectorEncoder', () => {
       })
     );
     // Text at end of segments
-    feature.getGeometry().forEachSegment((start, end) => {
-      inputStyles.push(
-        new olStyleStyle({
-          geometry: new olGeomPoint(end),
-          text: new olStyleText({
-            fill: new olStyleStroke({
-              color: '#aa0000',
+    // @ts-ignore: is a line string
+    feature.getGeometry().forEachSegment(
+      /**
+       * @param {number[]} start
+       * @param {number[]} end
+       */
+      (start, end) => {
+        inputStyles.push(
+          new olStyleStyle({
+            geometry: new olGeomPoint(end),
+            text: new olStyleText({
+              fill: new olStyleFill({
+                color: '#aa0000',
+              }),
+              font: '900 16px "Sans serif"',
+              offsetX: -2,
+              offsetY: -4,
+              text: 'Sample',
+              rotateWithView: true,
+              rotation: Math.PI / 2,
             }),
-            font: '900 16px "Sans serif"',
-            offsetX: -2,
-            offsetY: -4,
-            text: 'Sample',
-            rotateWithView: true,
-            rotation: Math.PI / 2,
-          }),
-        })
-      );
-    });
+          })
+        );
+      }
+    );
     feature.setStyle(inputStyles);
     inputFeatures.push(feature);
 
     vectorEncoder.encodeVectorLayer(layersMFP, layer, resolution, dpi, goodnessOfFit);
     expect(layersMFP.length).toBe(1);
 
-    const features = layersMFP[0].geoJson.features;
+    const geoJson = /** @type {import("geojson").FeatureCollection} */ (layersMFP[0].geoJson);
+    const features = geoJson.features;
     // One feature and two style with geometries resulting as two new features.
     expect(features.length).toBe(3);
     expect(features[0].properties._ngeo_style).toBeTruthy();
     expect(features[1].properties._ngeo_style).toBeTruthy();
     expect(features[2].properties._ngeo_style).toBeTruthy();
+    // @ts-ignore: coordinates exits on geometry
     expect(features[1].geometry.coordinates).not.toEqual(features[2].geometry.coordinates);
 
     const style = layersMFP[0].style;
     const styleKey1 = `[_ngeo_style = '${features[0].properties._ngeo_style}']`;
     const styleKey2 = `[_ngeo_style = '${features[1].properties._ngeo_style}']`;
     const styleKey3 = `[_ngeo_style = '${features[2].properties._ngeo_style}']`;
+    // @ts-ignore: unrepresantable Mapfish print object
     expect(style[styleKey1]).toBeTruthy();
+    // @ts-ignore: unrepresantable Mapfish print object
     expect(style[styleKey2]).toBeTruthy();
+    // @ts-ignore: unrepresantable Mapfish print object
     expect(style[styleKey3]).toBeTruthy();
 
     // Line style
+    // @ts-ignore: unrepresantable Mapfish print object
     const symbolizers1 = style[styleKey1].symbolizers;
     expect(symbolizers1[0].type).toEqual('line');
     expect(symbolizers1[0].strokeColor).toEqual('#aaaaaa');
@@ -228,6 +253,7 @@ describe('ngeo.print.VectorEncoder', () => {
     expect(symbolizers1[0].strokeWidth).toEqual(3);
 
     // Text styles (same for the two features)
+    // @ts-ignore: unrepresantable Mapfish print object
     const fnExpectSymText = (symbolizers) => {
       expect(symbolizers[0].type).toEqual('Text');
       expect(symbolizers[0].label).toEqual('Sample');
@@ -242,7 +268,9 @@ describe('ngeo.print.VectorEncoder', () => {
       expect(symbolizers[0].goodnessOfFit).toEqual(goodnessOfFit);
     };
 
+    // @ts-ignore: unrepresantable Mapfish print object
     fnExpectSymText(style[styleKey2].symbolizers);
+    // @ts-ignore: unrepresantable Mapfish print object
     fnExpectSymText(style[styleKey3].symbolizers);
   });
 });

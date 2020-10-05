@@ -305,7 +305,7 @@ FeatureHelper.prototype.getLineStringStyle_ = function (feature) {
     }),
   ];
 
-  // Add tyle for arrows
+  // Add style for arrows
   if (arrowDirection !== ArrowDirections.NONE) {
     styles.push(...this.getArrowLineStyles_(feature, arrowDirection, arrowPosition, color));
   }

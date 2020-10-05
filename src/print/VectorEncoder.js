@@ -94,6 +94,7 @@ VectorEncoder.prototype.encodeVectorLayer = function (
 
   const features = source.getFeatures();
 
+  /** @type {Array<olFeature<import("ol/geom/Geometry.js").default>>} */
   const featuresFromStyle = [];
 
   /** @type {Array<import("geojson").Feature>} */
@@ -103,6 +104,9 @@ VectorEncoder.prototype.encodeVectorLayer = function (
     version: 2,
   };
 
+  /**
+   * @param {olFeature<import("ol/geom/Geometry.js").default>} originalFeature
+   */
   const parseFeature = (originalFeature) => {
     /**
      * @type {import("ol/style/Style.js").default|Array<import("ol/style/Style.js").default>|void}
@@ -146,13 +150,14 @@ VectorEncoder.prototype.encodeVectorLayer = function (
     const styleValue = `${stylesValue.join(',')}-${geometryType}`;
     const styleKey = `[${FEATURE_STYLE_PROP} = '${styleValue}']`;
 
-    const geojsonFeature = origGeojsonFeature;
+    const geojsonFeature = this.geojsonFormat.writeFeatureObject(originalFeature);
     if (geojsonFeature.properties === null) {
       geojsonFeature.properties = {};
     }
     geojsonFeature.properties[FEATURE_STYLE_PROP] = styleValue;
     geojsonFeatures.push(geojsonFeature);
 
+    // @ts-ignore: unrepresantable Mapfish print object
     if (mapfishStyleObject[styleKey]) {
       return;
     }
