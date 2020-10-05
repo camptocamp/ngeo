@@ -1,7 +1,3 @@
-#map {
-  width: 600px;
-  height: 400px;
-}
 @media (max-width: 768px) {
   #map {
     height: 200px;

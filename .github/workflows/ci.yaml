@@ -6,7 +6,7 @@ on:
 
 jobs:
   main:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     name: Continuous integration
     timeout-minutes: 30
     if: "!startsWith(github.event.head_commit.message, '[skip ci] ')"
@@ -30,7 +30,7 @@ jobs:
       - run: npm --version
 
       - run: sudo apt update
-      - run: sudo apt install g++-4.8 libgbm1 python3-venv graphicsmagick fonts-liberation2
+      - run: sudo apt install g++-10 libgbm1 python3-venv graphicsmagick fonts-liberation2
 
       - uses: actions/checkout@v1
       - run: git config --global user.name "Continuous integration"

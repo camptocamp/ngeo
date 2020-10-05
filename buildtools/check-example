@@ -1,0 +1,62 @@
+#!/usr/bin/env python3
+
+import os
+import subprocess
+import sys
+import tempfile
+
+
+def main():
+    """
+    Compare similarity of tow images, we can use an optional mash file.
+    On error a diff image is generated.
+
+    Usage: check-example <generated image> <reference image>
+
+    ex:
+    Generated image (should ends with .html.png): .build/examples-hosted/simple.html.png
+    Reference image (should ends with -ref.png): examples/simple-ref.png
+    =>
+    Optional mask image (name from Reference image): examples/simple-mask.png
+    Generate diff image (name from Generated image): .build/examples-hosted/simple-diff.png
+    """
+    current = sys.argv[1]
+    ref = sys.argv[2]
+    mask = ref.replace("-ref", "-mask")
+    diff = current.replace(".html.png", "-diff.png")
+
+    if os.path.exists(mask):
+        print("Apply mask: " + mask)
+        old_current = current
+        old_ref = ref
+        current = tempfile.NamedTemporaryFile(suffix="-current.png").name
+        ref = tempfile.NamedTemporaryFile(suffix="-ref.png").name
+        subprocess.check_call(
+            ["gm", "composite", "-compose", "Multiply", old_current, mask, current]
+        )
+        subprocess.check_call(
+            ["gm", "composite", "-compose", "Multiply", old_ref, mask, ref]
+        )
+
+    result = subprocess.check_output(
+        [
+            "gm",
+            "compare",
+            "-metric",
+            "RMSE",
+            "-highlight-style",
+            "assign",
+            current,
+            ref,
+            "-file",
+            diff,
+        ]
+    )
+    result = float(result.decode().split("\n")[-2].split()[1])
+    if result > 0.0011:
+        print("{} > 0.0011 => {}".format(result, diff))
+        sys.exit(1)
+
+
+if __name__ == "__main__":
+    main()

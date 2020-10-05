@@ -1,8 +1,3 @@
-
-#map {
-  width: 60rem;
-  height: 40rem;
-}
 .ngeo-createfeature-point:before {
   content: 'Point'
 }

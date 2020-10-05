@@ -1,14 +1,12 @@
-
 ngeo-googlestreetview {
   display: block;
-}
-ngeo-googlestreetview,
-#map {
-  border: 1px solid #666666;
   height: 40rem;
+  width: 60rem;
+}
+ngeo-googlestreetview, #map {
+  border: 1px solid #666666;
   float: left;
   margin: 0.5rem;
-  width: 60rem;
 }
 
 .desc {
