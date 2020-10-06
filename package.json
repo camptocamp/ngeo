@@ -54,7 +54,7 @@
     "@types/d3-transition": "1.3.0",
     "@types/file-saver": "2.0.1",
     "@types/geojson": "7946.0.7",
-    "@types/googlemaps": "3.39.13",
+    "@types/googlemaps": "3.39.14",
     "@types/jasmine": "3.5.14",
     "@types/jquery": "3.5.2",
     "@types/jquery.ui.datetimepicker": "0.3.29",
