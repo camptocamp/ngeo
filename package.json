@@ -1,6 +1,6 @@
 {
   "name": "ngeo",
-  "version": "lux2.5.0",
+  "version": "2.5.0-lux.0",
   "description": "AngularJS OpenLayers Library",
   "scripts": {
     "build-dll": "webpack --config=buildtools/webpack.config.dll.js --mode=production",
