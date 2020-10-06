@@ -69,7 +69,7 @@
 /**
  * @typedef {Object} DataSourceTableObject
  * @property {string[]} columns
- * @property {Array<Array<string|number|boolean>>} data
+ * @property {(string|number|boolean)[][]} data
  */
 
 /**
@@ -120,11 +120,10 @@
  * @property {MapFishPrintVectorStyle} style
  */
 
-/** @typedef {Object<string, import('ngeo/print/mapfish-print-v3.js').MapFishPrintSymbolizers>|MapFishPrintVectorStyleVersion} MapFishPrintVectorStyle
-
 /**
- * @typedef {Object} MapFishPrintVectorStyleVersion
- * @property {number} version
+ * A MapFishPrintVectorStyle Must contains one key "version" with the version the use as value.
+ * Others key-values are MapFishPrintSymbolizers.
+ * @typedef {Object<string, number|import('ngeo/print/mapfish-print-v3.js').MapFishPrintSymbolizers>} MapFishPrintVectorStyle
  */
 
 /**

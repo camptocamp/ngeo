@@ -74,7 +74,7 @@ const PRINT_STYLE_TYPES = {
 const FEATURE_STYLE_PROP = '_ngeo_style';
 
 /**
- * @param {Array<import('ngeo/print/mapfish-print-v3.js').MapFishPrintLayer>} mapFishPrintLayer Array.
+ * @param {import('ngeo/print/mapfish-print-v3.js').MapFishPrintLayer[]} mapFishPrintLayer Array.
  * @param {import("ol/layer/Vector.js").default} layer Layer.
  * @param {number} resolution Resolution.
  * @param {number} destinationPrintDpi The destination print DPI.
@@ -94,10 +94,10 @@ VectorEncoder.prototype.encodeVectorLayer = function (
 
   const features = source.getFeatures();
 
-  /** @type {Array<olFeature<import("ol/geom/Geometry.js").default>>} */
+  /** @type {olFeature<import("ol/geom/Geometry.js").default>[]} */
   const featuresFromStyle = [];
 
-  /** @type {Array<import("geojson").Feature>} */
+  /** @type {import("geojson").Feature[]} */
   const geojsonFeatures = [];
   /** @type {import('ngeo/print/mapfish-print-v3.js').MapFishPrintVectorStyle} */
   const mapfishStyleObject = {
@@ -109,7 +109,7 @@ VectorEncoder.prototype.encodeVectorLayer = function (
    */
   const parseFeature = (originalFeature) => {
     /**
-     * @type {import("ol/style/Style.js").default|Array<import("ol/style/Style.js").default>|void}
+     * @type {import("ol/style/Style.js").default|import("ol/style/Style.js").default[]|void}
      */
     let styleData = null;
     const styleFunction = originalFeature.getStyleFunction() || layer.getStyleFunction();
@@ -157,7 +157,6 @@ VectorEncoder.prototype.encodeVectorLayer = function (
     geojsonFeature.properties[FEATURE_STYLE_PROP] = styleValue;
     geojsonFeatures.push(geojsonFeature);
 
-    // @ts-ignore: unrepresantable Mapfish print object
     if (mapfishStyleObject[styleKey]) {
       return;
     }
@@ -166,7 +165,6 @@ VectorEncoder.prototype.encodeVectorLayer = function (
     const styleObject = {
       symbolizers: [],
     };
-    // @ts-ignore: unrepresantable Mapfish print object
     mapfishStyleObject[styleKey] = styleObject;
     for (const style of styles) {
       const mapfishPrintStyle = this.encodeVectorStyle_(
