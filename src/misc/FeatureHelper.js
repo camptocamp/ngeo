@@ -305,7 +305,7 @@ FeatureHelper.prototype.getLineStringStyle_ = function (feature) {
     }),
   ];
 
-  // Add tyle for arrows
+  // Add style for arrows
   if (arrowDirection !== ArrowDirections.NONE) {
     styles.push(...this.getArrowLineStyles_(feature, arrowDirection, arrowPosition, color));
   }
@@ -362,20 +362,22 @@ FeatureHelper.prototype.getArrowLineStyles_ = function (feature, arrowDirection,
      * @param {boolean} invert
      */
     const getArrowStyle = (coordinate, invert) => {
+      const symRotation = Math.PI / 2 + rotation; // Rotation to have an arrow with the used symbol.
       return new olStyleStyle({
         geometry: new olGeomPoint(coordinate),
         text: new olStyleText({
           fill: new olStyleFill({
             color: color,
           }),
-          font: '900 20px "Font Awesome 5 Free"',
+          font: '900 16px "Sans serif"',
           stroke: new olStyleStroke({
             width: 1,
             color: color,
           }),
-          text: '\uf054', // Arrow symbol (chevron-right)
+          offsetY: -6, // Offset to well place the used symbol.
+          text: '\u22C1', // "N-ARY LOGICAL OR" HTML math operator symbol (somehow a "V").
           rotateWithView: true,
-          rotation: invert ? Math.PI - rotation : -rotation,
+          rotation: invert ? Math.PI - symRotation : -symRotation,
         }),
       });
     };

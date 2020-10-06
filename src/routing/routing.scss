@@ -2,17 +2,22 @@
   color: darkred;
 }
 
-.ngeo-routing-start .fa-map-marker {
+.map-marker {
+  display: block;
+  transform: rotate(90deg);
+}
+
+.ngeo-routing-start .map-marker {
   color: #6BE62E;
   text-shadow: -1px 0 #4CB01E, 0 1px #4CB01E, 1px 0 #4CB01E, 0 -1px #4CB01E;
 }
 
-.ngeo-routing-destination .fa-map-marker {
+.ngeo-routing-destination .map-marker {
   color: #FF3E13;
   text-shadow: -1px 0 #CD3412, 0 1px #CD3412, 1px 0 #CD3412, 0 -1px #CD3412;
 }
 
-.ngeo-routing-vias .fa-map-marker {
+.ngeo-routing-vias .map-marker {
   color: #767676;
   text-shadow: -1px 0 #000000, 0 1px #000000, 1px 0 #000000, 0 -1px #000000;
 }

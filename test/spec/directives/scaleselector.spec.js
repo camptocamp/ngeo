@@ -39,11 +39,17 @@ describe('ngeo.map.scaleselector', () => {
 
     element = angular.element('<div ngeo-scaleselector ngeo-scaleselector-map="map"></div>');
 
+    // Silent warnings throw by the ngeo-scaleselector component.
+    const logWarnFn = console.warn;
+    console.warn = () => {};
+
     angular.mock.inject(($rootScope, $compile, $sce) => {
       $rootScope.map = map;
       $compile(element)($rootScope);
       $rootScope.$digest();
     });
+    // Enable again warnings
+    console.warn = logWarnFn;
   });
 
   it('creates an element with expected number of li elements', () => {

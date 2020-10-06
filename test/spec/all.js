@@ -24,6 +24,7 @@ import 'angular';
 import 'angular-mocks';
 import 'angular-gettext';
 import './ngeo/getbrowserlanguage.spec.js';
+import './ngeo/vectorencoder.spec.js';
 import './beforeeach.js';
 import './search/createlocationsearchbloodhound.spec.js';
 import './services/wmstime.spec.js';
