@@ -242,7 +242,6 @@ SyncLayertreeMap.prototype.createLayerFromGroup_ = function (treeCtrl, mixed) {
   if (mixed) {
     // Will be one ol.layer per each node.
     layer = this.layerHelper_.createBasicGroup();
-    this.updateLayerReferences_(treeCtrl.node, layer);
   } else {
     // Will be one ol.layer for multiple WMS nodes.
     if (!this.ogcServersObject_) {

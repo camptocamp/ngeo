@@ -214,7 +214,6 @@ DisclaimerController.prototype.registerLayer_ = function (layer) {
     layer.getLayers().forEach((layer) => {
       this.registerLayer_(layer);
     });
-    this.update_(layer);
   } else {
     if (this.options.layerVisibility || this.options.layerVisibility === undefined) {
       // Show disclaimer messages for this layer
