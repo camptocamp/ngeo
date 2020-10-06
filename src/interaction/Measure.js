@@ -204,11 +204,11 @@ class Measure extends olInteractionInteraction {
      */
     this.vectorLayer_ =
       options.layer !== undefined
-      ? options.layer
-      : new olLayerVector({
+        ? options.layer
+        : new olLayerVector({
             source: new olSourceVector(),
             style: style,
-      });
+          });
 
     const source = this.vectorLayer_.getSource();
     if (!(source instanceof VectorSource)) {
