@@ -116,6 +116,7 @@ export class AuthenticationService extends olEventsEventTarget {
    * @param {import('gmf/options.js').gmfAuthenticationConfig} gmfAuthenticationConfig
    *    The configuration
    * @param {import('gmf/options.js').gmfAuthenticationNoReloadRole} gmfAuthenticationNoReloadRole
+   * @param {angular.IIntervalService} $interval Angular interval service
    *    The no reload roles
    * @ngInject
    */
@@ -125,7 +126,8 @@ export class AuthenticationService extends olEventsEventTarget {
     authenticationBaseUrl,
     gmfUser,
     gmfAuthenticationConfig,
-    gmfAuthenticationNoReloadRole
+    gmfAuthenticationNoReloadRole,
+    $interval
   ) {
     super();
 
@@ -168,6 +170,36 @@ export class AuthenticationService extends olEventsEventTarget {
     this.noReloadRole_ = gmfAuthenticationNoReloadRole;
 
     this.load_();
+
+    this.verifyConnection_ = $interval(() => {
+      this.checkConnection_();
+    }, 60000);
+  }
+
+  /**
+   * Check whether the user is connected or not like on load.
+   * @private
+   */
+  checkConnection_() {
+    if (this.user_.username) {
+      const url = `${this.baseUrl_}/${RouteSuffix.IS_LOGGED_IN}`;
+      this.$http_
+        .get(url, {withCredentials: true})
+        .then((resp) => {
+          if (this.user_.username !== resp.data.username) {
+            this.handleDisconnection();
+          }
+        })
+        .catch((err) => {
+          console.error(`Error on connection check: ${err.statusText}`);
+        });
+    }
+  }
+
+  handleDisconnection() {
+    this.logout();
+    const eventDisconnect = new ngeoCustomEvent('disconnected', {user: this.user_});
+    this.dispatchEvent(eventDisconnect);
   }
 
   /**

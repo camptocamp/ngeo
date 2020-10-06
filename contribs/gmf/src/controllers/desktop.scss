@@ -329,6 +329,10 @@ gmf-backgroundlayerselector {
   }
 }
 
+.authentication-lost-dialog .modal-dialog {
+    top: 40%;
+}
+
 .gmf-app-tools {
   float: right;
   background-color: $brand-secondary;

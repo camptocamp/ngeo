@@ -256,10 +256,24 @@ class AuthenticationController {
       }
     );
 
+    listen(
+      gmfAuthenticationService,
+      'disconnected',
+      /** @type {import("ol/events.js").ListenerFunction} */
+      (event) => {
+        this.disconnectedShown = true;
+      }
+    );
+
     /**
      * @type {boolean}
      */
     this.resetPasswordModalShown = false;
+
+    /**
+     * @type {boolean}
+     */
+    this.disconnectedShown = false;
 
     /**
      * @type {boolean}
