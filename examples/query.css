@@ -1,12 +1,5 @@
-
-#map,
-.app-query {
+#map, .app-query {
   float: left;
-}
-
-#map {
-  width: 600px;
-  height: 400px;
 }
 
 .app-query {
