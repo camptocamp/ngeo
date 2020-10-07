@@ -321,7 +321,7 @@ contribs/dist: .build/build-dll.timestamp
 		.build/examples-hosted/contribs/gmf/$*.html
 	[ "$$(gm compare -metric RMSE -highlight-style xor .build/examples-hosted/contribs/gmf/$*.html.png \
 		contribs/gmf/examples/$*-ref.png -file .build/examples-hosted/contribs/gmf/$*-diff.png 2>&1 | \
-		tail --lines=1 | sed 's/.* \([0-9\.]\+\) .*/\1/g')" \< 0.005 ]
+		tail --lines=1 | sed 's/.* \([0-9\.]\+\) .*/\1/g')" \< 0.01 ]
 	touch $@
 
 .build/contribs/gmf/apps/%.check.timestamp: .build/gmf-apps.timestamp \
