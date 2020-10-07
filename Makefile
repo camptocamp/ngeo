@@ -288,7 +288,7 @@ contribs/dist: .build/build-dll.timestamp
 		.build/examples-hosted/$*.html
 	[ "$$(gm compare -metric RMSE -highlight-style xor .build/examples-hosted/$*.html.png \
 		examples/$*-ref.png -file .build/examples-hosted/$*.html.png-diff.png 2>&1 | \
-		tail --lines=1 | sed 's/.* \([0-9\.]\+\) .*/\1/g')" \< 0.005 ]
+		tail --lines=1 | sed 's/.* \([0-9\.]\+\) .*/\1/g')" \< 0.01 ]
 	touch $@
 
 .build/error.check.timestamp: .build/examples-ngeo.timestamp \
