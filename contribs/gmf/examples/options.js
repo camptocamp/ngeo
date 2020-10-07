@@ -111,6 +111,7 @@ export default function (module) {
   module.constant('ngeoCsvQuote', '"');
   module.constant('ngeoCsvSeparator', ',');
   module.constant('gmfCsvFilename', 'query-results.csv');
+  module.constant('ngeoTilesPreloadingLimit', 0);
 
   module.constant('gmfAuthenticationConfig', {});
   module.constant('gmfSnappingConfig', {});

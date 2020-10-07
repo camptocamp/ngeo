@@ -40,6 +40,7 @@ beforeEach(
       $provide.value('ngeoScaleSelectorOptions', {
         'values': [500, 1000, 5000, 25000, 50000],
       });
+      $provide.value('ngeoTilesPreloadingLimit', 0);
     }
   )
 );

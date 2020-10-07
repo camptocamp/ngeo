@@ -62,7 +62,7 @@ export function LayerHelper($q, $http, ngeoTilesPreloadingLimit) {
    * The Tiles Preloading Limit value
    * @type {number}
    */
-  this.tilesPreloadingLimit_ = ngeoTilesPreloadingLimit ? ngeoTilesPreloadingLimit : Infinity;
+  this.tilesPreloadingLimit_ = ngeoTilesPreloadingLimit === null ? Infinity : ngeoTilesPreloadingLimit;
 }
 
 /**
@@ -614,6 +614,5 @@ LayerHelper.prototype.getQuerySourceIds = function (layer) {
  */
 const module = angular.module('ngeoLayerHelper', []);
 module.service('ngeoLayerHelper', LayerHelper);
-module.value('ngeoTilesPreloadingLimit', Infinity);
 
 export default module;
