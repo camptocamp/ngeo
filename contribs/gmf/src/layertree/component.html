@@ -219,7 +219,7 @@
         </a>
       </span>
 
-      <span ng-if="!(::gmfLayertreeCtrl.options.openLinksInNewWindow === true)">
+      <span ng-if="::gmfLayertreeCtrl.options.openLinksInNewWindow !== true">
         <a
           title="{{'More information'|translate}}"
           href="" ng-click="gmfLayertreeCtrl.displayMetadata(layertreeCtrl)">
