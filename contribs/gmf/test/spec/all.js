@@ -22,6 +22,7 @@
 import 'gmf/sass/vars.scss';
 import './beforeeach.js';
 import './controllers/gmfprintcontroller.spec.js';
+import './controllers/calculateCssVars.spec.js';
 import './services/share.spec.js';
 import './services/themesservice.spec.js';
 import './services/syncLayertreeMap.spec.js';

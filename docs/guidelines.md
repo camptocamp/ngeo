@@ -28,6 +28,7 @@ or PR from persons outside of Camptocamp customers or developers.
 - [Styling](#styling)
   - [CSS class names convention](#css-class-names-convention)
   - [Styling with sass](#styling-with-sass)
+  - [CSS variable](#css-variable)
 - [Property renaming](#property-renaming)
   - [Exports vs private elements](#exports-vs-private-elements)
   - [Object typing](#object-typing)
@@ -394,9 +395,25 @@ to get the element needed.
 To be able to do calculations directly with sass we encourage to use a subset of the CSS units.
 We choose units that don't depend on parent tags and are relative.
 
- * rem: 1 rem is the font size of the root element (<html>).
- * vw: 1 vw is 1/100th of the width of the viewport.
- * vh: 1 vh is 1/100th of the height of the viewport.
+ * `rem`: `1 rem` is the font size of the root element (`<html>`).
+ * `vw`: `1 vw` is 1/100th of the width of the viewport.
+ * `vh`: `1 vh` is 1/100th of the height of the viewport.
+
+### CSS variable
+
+Note: Not supported by IE
+
+Now it's possible to configure some variable in the CSS to make the variable,
+they should be defined and used like that (with backward compatilility for IE):
+  - In the `contribs/gmf/src/sass/vars_only.scss` file:
+      `$my-variable: ... !default;`.
+  - In the `contribs/gmf/src/sass/vars.scss` file, in the `:root` section:
+      `--my-variable: #{$my-variable};`.
+  - In your scss file:
+      `the-css-property: $my-css-variable;`,
+      `the-css-property: var(--my-css-variable);`.
+
+All collors calculated from `brand-primary` and `brand-secoundary` should be exposed as variable, and they should also be calculates in the `contribs/gmf/src/controllers/calculateCssVars.js` file.
 
 
 ## Property renaming
