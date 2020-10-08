@@ -1,11 +1,11 @@
-# Contributing to ngeo
+ Contributing to ngeo
 
 Thanks for your interest in contributing to the GeoMapFish project.
 
 ## Asking Questions
 
-When you want to get involved and discuss new features or changes, please contact the [GeoMapFish user group]
-(https://geomapfish.org/).
+When you want to get involved and discuss new features or changes, please contact the
+[GeoMapFish user group](https://geomapfish.org/).
 
 
 ## Submitting Bug Reports
@@ -19,19 +19,18 @@ new issue, do a quick search to see if the problem has been reported already.
 See [`DEVELOPING.md`](https://github.com/camptocamp/ngeo/blob/master/DEVELOPING.md) to learn how to
 get started developing.
 
-Our preferred means of receiving contributions is through [pull requests]
-(https://help.github.com/articles/using-pull-requests). Make sure that your pull request follows our pull
-request guidelines below before submitting it.
+Our preferred means of receiving contributions is through
+[pull requests](https://help.github.com/articles/using-pull-requests). Make sure that your pull request
+follows our pull request guidelines below before submitting it.
 
 This page describes what you need to know to contribute code to c2cgeopoertal as a developer.
 
 
 ## Contributor License Agreement
 
-Your contribution will be under our [license]
-(https://raw.githubusercontent.com/camptocamp/ngeo/master/LICENSE.md) as per
-[GitHub's terms of service]
-(https://help.github.com/articles/github-terms-of-service/#6-contributions-under-repository-license).
+Your contribution will be under our
+[license](https://raw.githubusercontent.com/camptocamp/ngeo/master/LICENSE.md) as per
+[GitHub's terms of service](https://help.github.com/articles/github-terms-of-service/#6-contributions-under-repository-license).
 
 
 ## Pull request guidelines
@@ -67,8 +66,9 @@ The commit history explains to the reviewer the series of modifications to the c
 breaks the overall contribution into a series of easily-understandable chunks.  Any individual commit should
 not add more than one new class or one new function.  Do not submit commits that change thousands of lines
 or that contain more than one distinct logical change.  Trivial commits, e.g. to fix lint errors, should be
-merged into the commit that introduced the error.  See the [Atomic Commit Convention on Wikipedia]
-(http://en.wikipedia.org/wiki/Atomic_commit#Atomic_Commit_Convention) for more detail.
+merged into the commit that introduced the error.  See the
+[Atomic Commit Convention on Wikipedia](http://en.wikipedia.org/wiki/Atomic_commit#Atomic_Commit_Convention)
+for more detail.
 
 `git apply --patch` and `git rebase` can help you create a clean commit history.
 [Reviewboard.org](http://www.reviewboard.org/docs/codebase/dev/git/clean-commits/)
@@ -96,3 +96,8 @@ Please keep the header line short, no more than 50 characters.
 Occasionally other changes to `master` might mean that your pull request cannot be merged automatically.
 In this case you may need to rebase your branch on a more recent `master`, resolve any conflicts, and
 `git push --force` to update your branch so that it can be merged automatically.
+
+### Code of contuct
+
+Contributors to GeoMapFish are expected to act respectfully toward others in accordance with the
+[OSGeo code of conduct for open source projects](https://www.osgeo.org/resources/osgeo-code-of-conduct/).
