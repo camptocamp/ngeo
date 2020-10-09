@@ -58,23 +58,14 @@ class Controller extends AbstractDesktopController {
   /**
    * @param {angular.IScope} $scope Scope.
    * @param {angular.auto.IInjectorService} $injector Main injector.
-   * @param {angular.gettext.gettextCatalog} gettextCatalog The internationalisation catalogue.
    * @ngInject
    */
-  constructor($scope, $injector, gettextCatalog) {
+  constructor($scope, $injector) {
     super($scope, $injector);
 
     if (this.dimensions.FLOOR == undefined) {
       this.dimensions.FLOOR = '*';
     }
-
-    // Allow angular-gettext-tools to collect the strings to translate
-    gettextCatalog.getString('OSM_time_merged');
-    gettextCatalog.getString('OSM_time (merged)');
-    gettextCatalog.getString('Learning [merged]');
-    gettextCatalog.getString('Add a theme');
-    gettextCatalog.getString('Add a sub theme');
-    gettextCatalog.getString('Add a layer');
   }
 }
 
