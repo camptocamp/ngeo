@@ -14,3 +14,7 @@ $standard-variation: 15% !default;
 $back-color: darken($nav-bg, $standard-variation) !default;
 
 @import '~gmf/sass/vars.scss';
+
+:root {
+  --back-color: #{$back-color};
+}

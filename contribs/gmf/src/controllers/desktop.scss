@@ -300,6 +300,7 @@ gmf-search {
 
 gmf-themeselector {
   width: $half-app-margin * 2 + $theme-selector-columns * $theme-selector-column-width;
+  width: calc(#{$half-app-margin} * 2 + var(--theme-selector-columns) * var(--theme-selector-column-width));
   max-height: $theme-selector-height;
   overflow: hidden;
   overflow-y: auto;
@@ -315,6 +316,7 @@ gmf-backgroundlayerselector {
 .gmf-theme-selector li {
   float: left;
   width: calc((100% - #{$theme-selector-columns} * 2 * #{$half-app-margin}) / #{$theme-selector-columns});
+  width: calc((100% - var(--theme-selector-columns) * 2 * #{$half-app-margin}) / var(--theme-selector-columns));
 }
 .gmf-backgroundlayerselector {
   margin-bottom: 0;
