@@ -80,6 +80,16 @@ export class AbstractMobileController extends AbstractAppController {
     this.measureLengthActive = false;
 
     /**
+     * @type {?string}
+     */
+    this.displaywindowHeight = '100vh';
+
+    /**
+     * @type {?string}
+     */
+    this.displaywindowWidth = '100vw';
+
+    /**
      * The ngeo ToolActivate manager service.
      * @type {import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr}
      */
