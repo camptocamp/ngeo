@@ -422,7 +422,7 @@ function Controller(
   /**
    * @type {?import("ol/layer/Vector.js").default}
    */
-  this.highlightVectorLayer = null;
+  this.highlightVectorLayer_ = null;
 
   /**
    * @type {?import("ol/Collection.js").default<olFeature<import("ol/geom/Geometry.js").default>>}
@@ -567,15 +567,15 @@ Controller.prototype.$onInit = function () {
   /**
    * @type {import("ol/layer/Vector.js").default}
    */
-  this.highlightVectorLayer = new olLayerVector({
+  this.highlightVectorLayer_ = new olLayerVector({
     source: new VectorSource({
       wrapX: false,
       features: new olCollection(),
     }),
     style: buildStyle(this.options_.highlightStyle),
   });
-  this.highlightVectorLayer.setMap(this.map);
-  this.hightlightedFeatures_ = this.highlightVectorLayer.getSource().getFeaturesCollection();
+  this.highlightVectorLayer_.setMap(this.map);
+  this.hightlightedFeatures_ = this.highlightVectorLayer_.getSource().getFeaturesCollection();
 
   const lang = this.gettextCatalog_.getCurrentLanguage();
 
