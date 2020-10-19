@@ -5,6 +5,7 @@ gmf-search {
   top: $app-margin;
   z-index: $content-index;
   border-color: $border-color;
+  border-color: var(--border-color);
   border-radius: $border-radius-base;
 
   & > * {
@@ -15,6 +16,7 @@ gmf-search {
   .gmf-search {
     margin-right: $half-app-margin;
     background-color: $map-tools-bg-color;
+    background-color: var(--map-tools-bg-color);
     height: $map-tools-size;
     position: relative;
   }
@@ -60,6 +62,7 @@ gmf-search {
       position: absolute;
       content: fa-content($fa-var-times);
       color: $map-tools-color;
+      color: var(--map-tools-color);
       font-family: 'Font Awesome 5 Free';
       font-weight: 900;
       right: 0;
@@ -73,10 +76,15 @@ gmf-search {
     width: $map-tools-size;
     height: $map-tools-size;
     background-color: $map-tools-bg-color;
+    background-color: var(--map-tools-bg-color);
     border: $border;
+    border-color: $border-color;
+    border-color: var(--border-color);
     color: $map-tools-color;
+    color: var(--map-tools-color);
     &:hover {
       background-color: $onhover-color;
+      background-color: var(--onhover-color);
     }
   }
   .form-control {
@@ -84,8 +92,11 @@ gmf-search {
     height: 100%;
     padding: $half-app-margin $map-tools-size;
     border: $border;
+    border-color: $border-color;
+    border-color: var(--border-color);
     &:focus {
       border-color: $border-color;
+      border-color: var(--border-color);
       box-shadow: none;
     }
   }
@@ -109,6 +120,7 @@ gmf-search {
         background-color: #eee;
         text-transform: uppercase;
         color: $color-light;
+        color: var(--color-light);
       }
       .gmf-search-datum {
         p {
@@ -116,9 +128,11 @@ gmf-search {
         }
         .gmf-search-label {
           color: $color;
+          color: var(--color);
         }
         .gmf-search-group {
           color: $color-light;
+          color: var(--color-light);
           font-size: 80%;
         }
       }
@@ -158,6 +172,7 @@ gmf-search {
         font-family: 'Font Awesome 5 Free';
         font-weight: 900;
         color: $color;
+        color: var(--color);
         position: absolute;
         top: $half-app-margin;
         left: $app-margin;

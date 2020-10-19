@@ -66,16 +66,19 @@ main {
 }
 
 .dropdown-menu {
-  box-shadow: $eavy-box-shadow;
+  box-shadow: $eavy-box-shadow $eavy-box-shadow-color;
+  box-shadow: $eavy-box-shadow var(--eavy-box-shadow-color);
   min-width: 100%;
   li > a {
     color: $color;
+    color: var(--color);
     padding: $input-btn-padding-y $input-btn-padding-x;
     display: block;
     white-space: nowrap;
     &:hover {
       text-decoration: none;
       background-color: $onhover-color;
+      background-color: var(--onhover-color);
     }
   }
   .divider {
@@ -83,6 +86,7 @@ main {
     margin: $app-margin 0;
     overflow: hidden;
     background-color: $brand-secondary;
+    background-color: var(--brand-secondary);
   }
 }
 
@@ -94,7 +98,9 @@ $footer-height: $input-height-base + 2 * $padding-base-vertical;
   overflow: hidden;
   position: relative;
   display: block;
-  border-top: 0.06rem solid $btn-default-border;
+  border-top: 0.06rem solid;
+  border-top-color: $btn-default-border;
+  border-top-color: var(--btn-default-border);
   .gmf-map,
   .gmf-map > div {
     position: absolute;
@@ -111,13 +117,16 @@ $footer-height: $input-height-base + 2 * $padding-base-vertical;
     bottom:  -$footer-height;
     // prevent footer to be displayed on 2 lines when screen width is small
     max-height: $footer-height;
-    background-color: rgba($main-bg-color, .9);
+    background-color: $main-bg-color-09;
+    background-color: var(--main-bg-color-09);
     width: 100%;
     /* cancel default navbar bottom margin */
     margin-bottom: 0;
     /* buttons or inputs in bar are supposed to be '-sm' */
     transition: 0.2s ease-out all;
     border-top: $border;
+    border-top-color: $border-color;
+    border-top-color: var(--border-color);
     &.gmf-app-active {
       bottom: 0;
     }
@@ -133,7 +142,8 @@ $footer-height: $input-height-base + 2 * $padding-base-vertical;
       border-top-right-radius: $border-radius-base;
       border-bottom-left-radius: 0;
       border-bottom-right-radius: 0;
-      background-color: rgba($main-bg-color, .8);
+      background-color: $main-bg-color-08;
+      background-color: var(--main-bg-color-08);
       padding: 0;
       left: 50%;
       $width: 2.50rem;
@@ -141,6 +151,8 @@ $footer-height: $input-height-base + 2 * $padding-base-vertical;
       margin-left: -($width / 2);
       border-bottom: none;
       border: $border;
+      border-color: $border-color;
+      border-color: var(--border-color);
       font-weight: 900;
     }
   }
@@ -226,6 +238,7 @@ gmf-search {
   display: block;
   float: left;
   background-color: $brand-secondary;
+  background-color: var(--brand-secondary);
   width: $left-panel-width;
   height: 100%;
   display: flex;
@@ -271,17 +284,23 @@ gmf-search {
   }
 
   .ui-resizable-e {
-    background-color: darken($brand-secondary, $standard-variation);
+    background-color: $brand-secondary-dark;
+    background-color: var(--brand-secondary-dark);
     cursor: ew-resize;
     border: {
       left: $border;
+      left-color: $border-color;
+      left-color: var(--border-color);
       right: $border;
+      right-color: $border-color;
+      right-color: var(--border-color);
     }
   }
 }
 
 gmf-themeselector {
   width: $half-app-margin * 2 + $theme-selector-columns * $theme-selector-column-width;
+  width: calc(#{$half-app-margin} * 2 + var(--theme-selector-columns) * var(--theme-selector-column-width));
   max-height: $theme-selector-height;
   overflow: hidden;
   overflow-y: auto;
@@ -297,6 +316,7 @@ gmf-backgroundlayerselector {
 .gmf-theme-selector li {
   float: left;
   width: calc((100% - #{$theme-selector-columns} * 2 * #{$half-app-margin}) / #{$theme-selector-columns});
+  width: calc((100% - var(--theme-selector-columns) * 2 * #{$half-app-margin}) / var(--theme-selector-columns));
 }
 .gmf-backgroundlayerselector {
   margin-bottom: 0;
@@ -312,6 +332,7 @@ gmf-backgroundlayerselector {
 .gmf-app-tools {
   float: right;
   background-color: $brand-secondary;
+  background-color: var(--brand-secondary);
   left: 0 !important;
   display: flex;
   width: fit-content;
@@ -347,11 +368,16 @@ gmf-backgroundlayerselector {
     }
 
     .ui-resizable-w {
-      background-color: darken($brand-secondary, $standard-variation);
+      background-color: $brand-secondary-dark;
+      background-color: var(--brand-secondary-dark);
       cursor: ew-resize;
       border: {
         left: $border;
+        left-color: $border-color;
+        left-color: var(--border-color);
         right: $border;
+        right-color: $border-color;
+        right-color: var(--border-color);
       }
       left:5px;
     }
@@ -387,10 +413,13 @@ gmf-backgroundlayerselector {
 
     .gmf-app-tools-content-heading {
       color: $color-light;
+      color: var(--color-light);
       padding-bottom: $app-margin;
       margin-bottom: $app-margin;
       margin-top: $grid-gutter-width / 2;
-      border-bottom: 0.06rem solid $color-light;
+      border-bottom: 0.06rem solid;
+      border-bottom-color: $color-light;
+      border-bottom-color: var(--color-light);
       .close {
         padding: 0;
       }
@@ -426,7 +455,10 @@ gmf-backgroundlayerselector {
 
   .gmf-app-bar {
     background-color: $brand-primary;
+    background-color: var(--brand-primary);
     border-left: $border;
+    border-left-color: $border-color;
+    border-left-color: var(--border-color);
     order: 2;
     height: 100%;
     position: relative;
@@ -441,10 +473,12 @@ gmf-backgroundlayerselector {
       width: 100%;
       border-width: 0;
       background-color: $brand-primary;
+      background-color: var(--brand-primary);
       margin-left: 0;
       border-radius: 0 !important;
       &:hover {
-        background-color: lighten($brand-primary, $standard-variation);
+        background-color: $hover-background-color;
+        background-color: var(--hover-background-color);
       }
     }
 
@@ -452,6 +486,8 @@ gmf-backgroundlayerselector {
       width: 100%;
       .btn {
         border: $border;
+        border-color: $border-color;
+        border-color: var(--border-color);
         border-right-width: 0;
         border-left-width: 0;
 
@@ -461,7 +497,10 @@ gmf-backgroundlayerselector {
         }
         &.active {
           background-color: $brand-secondary;
-          border-left: 0.06rem solid $brand-secondary;
+          background-color: var(--brand-secondary);
+          border-left: 0.06rem solid;
+          border-left-color: $brand-secondary;
+          border-left-color: var(--brand-secondary);
           margin-left: -0.06rem;
         }
       }
@@ -478,6 +517,7 @@ gmf-backgroundlayerselector {
 
 ::-webkit-scrollbar-track {
   background: $main-bg-color;
+  background: var(--main-bg-color);
 }
 
 ::-webkit-scrollbar {
@@ -485,6 +525,7 @@ gmf-backgroundlayerselector {
 }
 ::-webkit-scrollbar-thumb {
   background: $brand-primary;
+  background: var(--brand-primary);
 }
 
 
@@ -501,6 +542,7 @@ gmf-backgroundlayerselector {
 
 hr.gmf-drawfeature-separator {
   border-color: $color;
+  border-color: var(--color);
   margin: $app-margin 0;
 }
 
@@ -599,7 +641,8 @@ gmf-featurestyle {
         top: -$app-margin;
         left: -$app-margin;
         border: 0.12rem solid #fff;
-        box-shadow: $eavy-box-shadow;
+        box-shadow: $eavy-box-shadow $eavy-box-shadow-color;
+        box-shadow: $eavy-box-shadow var(--eavy-box-shadow-color);
         z-index: $above-search-index;
       }
     }
@@ -658,6 +701,7 @@ gmf-featurestyle {
 
   button {
     background-color: $map-tools-bg-color;
+    background-color: var(--map-tools-bg-color);
     padding: $padding-small-vertical;
     &::after {
       display: none !important;
@@ -666,7 +710,8 @@ gmf-featurestyle {
 
   button,
   gmf-backgroundlayerselector {
-    box-shadow: $eavy-box-shadow;
+    box-shadow: $eavy-box-shadow $eavy-box-shadow-color;
+    box-shadow: $eavy-box-shadow var(--eavy-box-shadow-color);
   }
 
 }
@@ -700,6 +745,8 @@ $bgselector-image-size: 3.00rem;
  */
 gmf-editfeature > div {
   border-top: $border;
+  border-top-color: $border-color;
+  border-top-color: var(--border-color);
   margin-top: $app-margin;
   padding-top: $app-margin;
 }
@@ -710,6 +757,8 @@ gmf-editfeature > div {
  */
 gmf-objecteditingtools {
   border-bottom: $border;
+  border-bottom-color: $border-color;
+  border-bottom-color: var(--border-color);
   display: block;
   margin: 0 0 $app-margin 0;
   padding: 0 0 $app-margin 0;
@@ -722,10 +771,12 @@ gmf-objecteditingtools {
 .gmf-filterselector-separator {
   margin: $app-margin 0 $half-app-margin 0;
   border-color: $color;
+  border-color: var(--color);
 }
 
 .gmf-filterselector-savefilter-desc {
   color: $gray-dark;
+  color: var(--gmf-gray-dark);
 }
 
 .gmf-filterselector-savedfilters {
@@ -819,6 +870,7 @@ hr.ngeo-filter-separator-criteria {
 hr.ngeo-filter-separator-criteria,
 hr.ngeo-filter-separator-rules {
   border-color: $color;
+  border-color: var(--color);
 }
 
 // handle long text in dropdown
@@ -869,14 +921,18 @@ ngeo-rule {
   }
 
   .ngeo-rule-value {
-    border: 0.06rem solid $color-light;
+    border: 0.06rem solid;
+    border-color: $color-light;
+    border-color: var(--color-light);
     border-radius: $border-radius-sm;
     border-top: 0;
     color: $color-light;
+    color: var(--color-light);
     padding: $micro-app-margin $half-app-margin;
 
     a.btn {
       color: $color-light;
+      color: var(--color-light);
       float: right;
       margin-right: $half-app-margin;
       padding: 0;
@@ -885,6 +941,7 @@ ngeo-rule {
     a.btn:hover,
     a.btn:focus {
       color: $gray-dark;
+      color: var(--gray-dark);
     }
 
     ngeo-date-picker {
@@ -921,6 +978,7 @@ ngeo-query-panel {
 
   .ngeo-query-panel-help {
     background-color: $nav-bg;
+    background-color: var(--nav-bg);
     padding: $app-margin;
   }
 }

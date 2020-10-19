@@ -19,10 +19,15 @@ ngeo-mapswipe {
       width: 7px;
       margin-left: -3.5px;
       height: 100%;
-      background-color: darken($brand-secondary, $standard-variation);
+      background-color: $brand-secondary-dark;
+      background-color: var(--brand-secondary-dark);
       border: {
         left: $border;
+        left-color: $border-color;
+        left-color: var(--border-color);
         right: $border;
+        right-color: $border-color;
+        right-color: var(--border-color);
       }
     }
 
@@ -41,8 +46,11 @@ ngeo-mapswipe {
       height: 1.5 * $icon-font-size;
       top: calc(50% - 1.25rem);
       background-color: $brand-primary;
+      background-color: var(--brand-primary);
       color: #fff;
       border: $border;
+      border-color: $border-color;
+      border-color: var(--border-color);
       svg {
         font-size: 0.8rem;
         height: 100%;

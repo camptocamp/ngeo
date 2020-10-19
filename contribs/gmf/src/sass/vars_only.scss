@@ -9,23 +9,33 @@ $micro-app-margin: 0.12rem !default;
 $standard-variation: 15% !default;
 $nav-bg: white !default;
 $color: #555 !default;
-$color-light: lighten($color, $standard-variation);
+$color-light: lighten($color, $standard-variation) !default;
+$color-04: rgba($color, .4) !default;
 $nav-header-bg: darken($nav-bg, 50%) !default;
 $link-color: hsl(hue($brand-primary), 25%, 50%) !default;
 $map-tools-size: 2rem !default;
 $map-tools-bg-color: white !default;
 $map-tools-color: black !default;
 $onhover-color: darken($nav-bg, $standard-variation) !default;
+$onhover-color-darken: darken($onhover-color, $standard-variation) !default;
 $main-bg-color: #e2e3df !default; // grey light
+$main-bg-color-lighten: lighten($main-bg-color, $standard-variation / 2) !default;
+$main-bg-color-09: rgba($main-bg-color, .9) !default;
+$main-bg-color-08: rgba($main-bg-color, .8) !default;
 $search-width: 6 * $map-tools-size !default;
 $border-radius-base: 0 !default;
 $nav-width: 20rem !default;
 $input-border-focus: darken($brand-primary, $standard-variation) !default;
-$light-box-shadow: 0 0.37rem 0.75rem rgba(0, 0, 0, 0.1) !default;
-$eavy-box-shadow: 0 0.37rem 0.75rem rgba(0, 0, 0, 0.3) !default;
+$input-border-focus-darken: darken($input-border-focus, $standard-variation) !default;
+$light-box-shadow: 0 0.37rem 0.75rem !default;
+$light-box-shadow-color: rgba(0, 0, 0, 0.1) !default;
+$eavy-box-shadow: 0 0.37rem 0.75rem !default;
+$eavy-box-shadow-color: rgba(0, 0, 0, 0.3) !default;
 $icon-font-size: 1.25rem !default;
 $border-color: darken($brand-primary, $standard-variation) !default;
-$border: 0.06rem solid $border-color !default;
+$border: 0.06rem solid !default;
+$hover-background-color: lighten($brand-primary, $standard-variation) !default;
+$brand-secondary-dark: darken($brand-secondary, $standard-variation) !default;
 
 $displayquerywindow-desktop-height: 15rem !default;
 

@@ -33,6 +33,7 @@ import gmfMapModule from 'gmf/map/module.js';
 import gmfQueryExtraModule from 'gmf/query/extraModule.js';
 import gmfSearchModule from 'gmf/search/module.js';
 import gmfThemeModule from 'gmf/theme/module.js';
+import calculateCssVars from 'gmf/controllers/calculateCssVars';
 import ngeoMessageDisplaywindowComponent from 'ngeo/message/displaywindowComponent.js';
 import ngeoMiscExtraModule from 'ngeo/misc/extraModule.js';
 import ngeoMiscFeatureHelper, {FeatureFormatType} from 'ngeo/misc/FeatureHelper.js';
@@ -84,6 +85,14 @@ export function AbstractAppController($scope, $injector, mobile) {
   }
   /** @type {import('gmf/options.js').gmfOptions} */
   this.options = $injector.get('gmfOptions');
+
+  if (this.options.cssVars) {
+    const cssVars = calculateCssVars(this.options.cssVars);
+    const style = document.documentElement.style;
+    for (const cssVar in cssVars) {
+      style.setProperty(`--${cssVar}`, cssVars[cssVar]);
+    }
+  }
 
   const scaleline = document.getElementById('scaleline');
   const map = new olMap(

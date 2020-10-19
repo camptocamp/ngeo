@@ -6,6 +6,7 @@
 main {
   position: fixed;
   background-color: $main-bg-color;
+  background-color: var(--main-bg-color);
   box-shadow: 0 0 $app-margin black;
   width: 100%;
   height: 100%;
@@ -36,6 +37,7 @@ main {
     left: 0;
     cursor: pointer;
     background-color: rgba($color, .4);
+    background-color: rgba(var(--color), .4);
     visibility: hidden;
     opacity: 0;
 
@@ -92,6 +94,7 @@ nav.gmf-mobile-nav-right {
   width: $nav-width;
   height: 100%;
   background-color: $nav-bg;
+  background-color: var(--nav-bg);
   overflow-x: hidden;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
@@ -103,6 +106,7 @@ nav.gmf-mobile-nav-right {
     height: $nav-bar-height;
     line-height: $nav-bar-height;
     background-color: $nav-header-bg;
+    background-color: var(--nav-header-bg);
 
     .gmf-mobile-nav-header-title {
       font-weight: bold;
@@ -124,6 +128,7 @@ nav.gmf-mobile-nav-right {
       width: $nav-back-width;
       padding-left: 1.50rem;
       color: $back-color;
+      color: var(--back-color);
 
       &.gmf-mobile-nav-active {
         opacity: 1;
@@ -273,10 +278,14 @@ nav.gmf-mobile-nav-right {
 .gmf-mobile-nav-trigger {
   top: $app-margin;
   background-color: $map-tools-bg-color;
+  background-color: var(--map-tools-bg-color);
   color: $map-tools-color;
+  color: var(--map-tools-color);
   z-index: $above-search-index;
   height: $map-tools-size;
   border: $border;
+  border-color: $border-color;
+  border-color: var(--border-color);
   .fa, svg {
     font-size: $icon-font-size;
   }
@@ -311,11 +320,14 @@ nav.gmf-mobile-nav-right {
 @media (min-width: map-get($grid-breakpoints, "sm")) {
   main button:hover{
     background-color: $onhover-color;
+    background-color: var(--onhover-color);
   }
 
   .gmf-mobile-nav-trigger {
     margin: 0;
     border: $border;
+    border-color: $border-color;
+    border-color: var(--border-color);
   }
 
   .gmf-mobile-nav-right-trigger {

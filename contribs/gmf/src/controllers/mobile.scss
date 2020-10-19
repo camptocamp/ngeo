@@ -73,11 +73,14 @@ gmf-map {
   .ngeo-tooltip-static {
     background-color: #ffcc33;
     color: $color;
+    color: var(--color);
     border: 0.06rem solid white;
   }
   .ngeo-tooltip-measure::before,
   .ngeo-tooltip-static::before {
-    border-top: $half-app-margin solid $border-color;
+    border-top: $half-app-margin solid;
+    border-top-color: $border-color;
+    border-top-color: var(--border-color);
     border-right: $half-app-margin solid transparent;
     border-left: $half-app-margin solid transparent;
     content: "";
@@ -116,6 +119,7 @@ gmf-map {
   button {
     &:hover {
       background-color: $map-tools-bg-color;
+      background-color: var(--map-tools-bg-color);
     }
   }
 }

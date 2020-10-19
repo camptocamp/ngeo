@@ -13,18 +13,24 @@
     overflow-x: hidden;
     overflow-y: auto;
     background-color: $map-tools-bg-color;
-    box-shadow: $light-box-shadow;
+    box-shadow: inset $light-box-shadow $light-box-shadow-color;
+    box-shadow: inset $light-box-shadow var(--light-box-shadow-color);
     border: $border;
+    border-color: $border-color;
+    border-color: var(--border-color);
 
     .tt-suggestion {
       text-align: left;
       padding: $app-margin;
       margin: 0;
       border-bottom: $border;
+      border-bottom-color: $border-color;
+      border-bottom-color: var(--border-color);
 
       &:hover, &.tt-cursor {
         cursor: pointer;
         background-color: $onhover-color;
+        background-color: var(--onhover-color);
       }
     }
   }

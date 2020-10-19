@@ -37,7 +37,10 @@ div.ngeo-displaywindow {
   z-index: $above-all;
   .collapse-button {
     background-color: $nav-bg;
+    background-color: var(--nav-bg);
     border: $border;
+    border-color: $border-color;
+    border-color: var(--border-color);
     border-bottom-width: 0;
     border-radius: $border-radius-base $border-radius-base 0 0;
     line-height: 0.5;
@@ -52,7 +55,10 @@ div.ngeo-displaywindow {
   }
   .windowcontainer {
     background-color: $nav-bg;
+    background-color: var(--nav-bg);
     border: $border;
+    border-color: $border-color;
+    border-color: var(--border-color);
     position: relative;
     height: 100%;
     width: 100%;
@@ -137,6 +143,8 @@ div.ngeo-displaywindow {
   }
   .navigate {
     border-top: $border;
+    border-top-color: $border-color;
+    border-top-color: var(--border-color);
     height: $map-tools-size;
     display: flex;
     justify-content: space-between;
@@ -170,11 +178,13 @@ div.ngeo-displaywindow {
   }
   button {
     background-color: $nav-bg;
+    background-color: var(--nav-bg);
     border: none;
     height: 100%;
     width: $map-tools-size;
     &:hover {
       background-color: $nav-bg;
+      background-color: var(--nav-bg);
     }
     &.close {
       z-index: $above-content-index;

@@ -27,10 +27,12 @@
     border: $gmf-input-range-track-border;
     border-radius: $gmf-input-range-track-border-radius;
     background-color: $brand-secondary;
+    background-color: var(--brand-secondary);
   }
 
   .ui-slider-range {
     background-color: $brand-primary;
+    background-color: var(--brand-primary);
     cursor: $gmf-input-range-cursor;
   }
 
@@ -46,6 +48,6 @@
 
 .gmf-time-slider-start-date,
 .gmf-time-slider-end-date {
-  font-size : $font-size-small;
+  font-size: $font-size-small;
   margin-top: $half-app-margin;
 }

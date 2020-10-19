@@ -173,6 +173,8 @@
  * @property {import('ol/interaction/Interaction.js').default[]} [mapInteractions] The map interactions.
  * @property {import('ol/interaction.js').DefaultsOptions} [interationDefaults] The map interactions.
  * @property {import('ol/control/Zoom.js').Options} controlZoom The zoom control options
+ * @property {Object<string, string>} cssVars The css variables, in particular brand-primary and
+ *    brand-secondary that will set all the branding.
  */
 
 /**

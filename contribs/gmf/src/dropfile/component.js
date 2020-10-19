@@ -21,6 +21,7 @@
 
 import angular from 'angular';
 import {MessageType} from 'ngeo/message/Message.js';
+import gmfExternalDataSourcesManager from 'gmf/datasource/ExternalDataSourcesManager.js';
 
 /**
  * This function handles drag and drop on the element. It is used on the map
@@ -154,7 +155,7 @@ function processDrop_(element, gmfExternalDataSourcesManager, ngeoNotification, 
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfFileDropZone', []);
+const module = angular.module('gmfFileDropZone', [gmfExternalDataSourcesManager.name]);
 
 module.directive('gmfFileDropZone', fileDrop);
 
