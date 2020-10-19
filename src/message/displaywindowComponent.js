@@ -191,6 +191,10 @@ class Controller {
     this.open = this.open === true;
     this.height = this.height || '240px';
     this.width = this.width || '240px';
+    const element = document.getElementsByClassName('ngeo-displaywindow')[0];
+    const margin = parseFloat(window.getComputedStyle(element).left);
+    this.maxWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0) - 2 * margin;
+    this.maxHeigth = Math.max(document.documentElement.clientHeight, window.innerHeight || 0) - 2 * margin;
 
     this.draggable = this.draggable !== undefined ? this.draggable : this.desktop;
     this.resizable = this.resizable !== undefined ? this.resizable : this.desktop;
@@ -253,6 +257,8 @@ class Controller {
     return {
       height: this.height,
       width: this.width,
+      'max-width': this.maxWidth.toString() + 'px',
+      'max-height': this.maxHeigth.toString() + 'px',
     };
   }
 
