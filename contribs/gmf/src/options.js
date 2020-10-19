@@ -456,4 +456,12 @@
  * @property {boolean} [enableEmail=true] Enhable email.
  */
 
+/**
+ * @typedef {Object} gmfEditFeatureOptions
+ * @property {import('ngeo/options.js').StyleLike} highlightStyle A style object for highlighting of feature.
+ * @property {number} tolerance The buffer in pixels to use when making queries to get the features.
+ * @property {boolean} closeAfterSave If true,
+ * immediately return to the main edit panel after save. Default is false.
+ */
+
 export default undefined;

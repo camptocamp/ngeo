@@ -61,23 +61,17 @@ module.run(
  *     <gmf-editfeatureselector
  *         gmf-editfeatureselector-active="ctrl.editFeatureSelectorActive"
  *         gmf-editfeatureselector-map="::ctrl.map"
- *         gmf-editfeatureselector-tolerance="::ctrl.tolerance"
  *         gmf-editfeatureselector-vector="::ctrl.vectorLayer"
  *         gmf-editfeatureselector-tree="ctrl.selectedEditableTreeCtrl"
- *         gmf-editfeatureselector-closeaftersave="::true">
  *     </gmf-editfeatureselector>
  *
  * @htmlAttribute {boolean} gmf-editfeatureselector-active Whether the
  *     directive is active or not.
  * @htmlAttribute {import("ol/Map.js").default} gmf-editfeatureselector-map The map.
- * @htmlAttribute {number|undefined} gmf-editfeatureselector-tolerance The
- *     buffer in pixels to use when making queries to get the features.
  * @htmlAttribute {import("ol/layer/Vector.js").default} gmf-editfeatureselector-vector The vector
  *     layer where the selected or created features are drawn.
  * @htmlAttribute {import("ngeo/layertree/Controller.js").default} gmf-editfeatureselector-tree The
  *     layertree controller handling the selectable editable layers list.
- * @htmlAttribute {boolean} gmf-editfeatureselector-closeaftersave If true,
- *     immediately return to the main edit panel after save. Default is false.
  * @return {angular.IDirective} The directive specs.
  * @ngdoc directive
  * @ngname gmfEditfeatureselector
@@ -88,10 +82,8 @@ function editingEditFeatureComponent() {
     scope: {
       'active': '=gmfEditfeatureselectorActive',
       'map': '<gmfEditfeatureselectorMap',
-      'tolerance': '<?gmfEditfeatureselectorTolerance',
       'vectorLayer': '<gmfEditfeatureselectorVector',
       'selectedEditableTreeCtrl': '=?gmfEditfeatureselectorTree',
-      'closeAfterSave': '=?gmfEditfeatureselectorCloseaftersave',
     },
     bindToController: true,
     templateUrl: 'gmf/editing/editFeatureSelectorComponent',
@@ -129,20 +121,9 @@ function Controller($scope, $timeout, gmfThemes, gmfTreeManager) {
   this.map = null;
 
   /**
-   * @type {?number}
-   */
-  this.tolerance = null;
-
-  /**
    * @type {?import("ol/layer/Vector.js").default}
    */
   this.vectorLayer = null;
-
-  /**
-   * @type {boolean}
-   * @export
-   */
-  this.closeAfterSave = false;
 
   // === Injected services ===
 
