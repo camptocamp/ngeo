@@ -12,19 +12,12 @@
     <% } %>
   </head>
   <body ng-class="{'gmf-profile-chart-active': !!profileChartActive}">
-  <div ng-show="mainCtrl.loading" class="loading-mask">
-    <i class="fa custom-spinner-loading fa-spin spinner-loading-mask">
-      <%=require('gmf/icons/spinner.svg?viewbox&height=1em')%>
-    </i>
-  </div>
-  <header>
-    <div class="logo">
-      <span></span>
+    <div ng-show="mainCtrl.loading" class="loading-mask">
+      <i class="fa custom-spinner-loading fa-spin spinner-loading-mask">
+        <%=require('gmf/icons/spinner.svg?viewbox&height=1em')%>
+      </i>
     </div>
-    <div class="logo-right">
-      <span></span>
-    </div>
-  </header>
+    <ng-include src="'desktop/header.html'"></ng-include>
     <main>
       <div class="gmf-app-data-panel"
            ngeo-resizemap="mainCtrl.map"
