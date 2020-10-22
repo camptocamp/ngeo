@@ -74,7 +74,7 @@
     "angular-gettext-tools": "2.5.3",
     "angular-mocks": "1.8.1",
     "angular-sanitize": "1.8.1",
-    "angular-touch": "1.8.1",
+    "angular-touch": "1.8.2",
     "angular-ui-date": "1.1.1",
     "angular-ui-slider": "0.4.0",
     "babel-loader": "8.1.0",
