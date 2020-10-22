@@ -125,4 +125,31 @@ describe('gmf.authentication.Service', () => {
 
     expect(spy.calls.count()).toBe(1);
   });
+
+  it('emits disconnected if user has changed', () => {
+    const spy = jasmine.createSpy();
+    /** @type {?import('gmf/authentication/Service.js').AuthenticationEvent} */
+    let event_ = null;
+    listenOnce(gmfAuthentication, 'disconnected', (evt) => {
+      event_ = /** @type {import('gmf/authentication/Service.js').AuthenticationEvent} */ (evt);
+      spy();
+    });
+    listenOnce(gmfAuthentication, 'logout', spy);
+    $httpBackend.when('GET', logoutUrl).respond('true');
+
+    gmfAuthentication.user_.username = 'hans';
+    $httpBackend.when('GET', isLoggedInUrl).respond({'username': null});
+
+    gmfAuthentication.checkConnection_();
+    $httpBackend.flush();
+
+    expect(spy.calls.count()).toBe(2);
+    expect(event_).toBeDefined();
+    if (!event_) {
+      throw new Error('Missing event_');
+    }
+    expect(event_.type).toBe('disconnected');
+    expect(event_.detail.user.username).toBe(null);
+    expect(gmfAuthentication.user_.username).toBe(null);
+  });
 });

@@ -315,9 +315,18 @@ export function AbstractAppController($scope, $injector, mobile) {
     this.updateHasEditableLayers_();
   };
 
+  /**
+   * @param {Event|import('ol/events/Event.js').default} evt Event.
+   */
+  const connectionLost = (evt) => {
+    this.loginActive = true;
+    userChange(evt);
+  };
+
   listen(gmfAuthentication, 'ready', userChange);
   listen(gmfAuthentication, 'login', userChange);
   listen(gmfAuthentication, 'logout', userChange);
+  listen(gmfAuthentication, 'disconnected', connectionLost);
 
   /**
    * @type {Object<string, string>}
