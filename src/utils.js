@@ -27,6 +27,22 @@ import olGeomMultiPolygon from 'ol/geom/MultiPolygon.js';
 import olGeomPoint from 'ol/geom/Point.js';
 import olGeomPolygon from 'ol/geom/Polygon.js';
 import {getTopLeft, getTopRight, getBottomLeft, getBottomRight} from 'ol/extent.js';
+import {MAC} from 'ol/has.js';
+
+/**
+ * Return wheter the passed event has the 'ctrl' key (or 'meta' key on Mac) pressed or not.
+ * @param {Event|import("ol/events/Event.js").default} evt Event.
+ * @return {boolean}
+ */
+export function isEventUsinCtrlKey(evt) {
+  if (!evt) {
+    return false;
+  }
+  // Check also if the key equals 'Control' for Firefox as sometimes it doesn't assign the ctrlKey.
+  const res = evt.key === 'Control' || (MAC ? evt.metaKey : evt.ctrlKey);
+  console.log(res);
+  return res;
+}
 
 /**
  * Return whether the primary pointing device is coarse or 'false' if unsupported (Internet Explorer).
