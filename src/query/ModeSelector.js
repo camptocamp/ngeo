@@ -22,9 +22,9 @@
 import angular from 'angular';
 import ngeoQueryAction from 'ngeo/query/Action.js';
 import ngeoQueryMode from 'ngeo/query/Mode.js';
+import {isEventUsinCtrlKey} from 'ngeo/utils.js';
 
 import {listen as olEventsListen} from 'ol/events.js';
-import {MAC} from 'ol/has.js';
 
 /**
  * @hidden
@@ -230,7 +230,7 @@ export class QueryModeSelector {
         this.activeActionKey_ = key;
         this.rootScope_.$apply();
       }
-    } else if ((MAC ? evt.metaKey : evt.ctrlKey) && !this.previousMode_) {
+    } else if (isEventUsinCtrlKey(evt) && !this.previousMode_) {
       // The 'ctrl' (or 'meta' key) on mac was pressed
       this.previousMode_ = this.mode;
       this.mode = ngeoQueryMode.DRAW_BOX;
@@ -249,9 +249,9 @@ export class QueryModeSelector {
 
     let updateScope = false;
 
-    // On any 'keyup', if no 'ctrl' (or 'meta' on mac) is pressed and
+    // On any 'keyup', if it comes from a 'ctrl' (or 'meta' on mac) release and
     // there is a previous mode set, then set it as new active mode.
-    if (!(evt.metaKey || evt.ctrlKey) && this.previousMode_) {
+    if (isEventUsinCtrlKey(evt) && this.previousMode_) {
       if (this.pending) {
         this.wasPending_ = true;
       } else {

@@ -27,6 +27,40 @@ import olGeomMultiPolygon from 'ol/geom/MultiPolygon.js';
 import olGeomPoint from 'ol/geom/Point.js';
 import olGeomPolygon from 'ol/geom/Polygon.js';
 import {getTopLeft, getTopRight, getBottomLeft, getBottomRight} from 'ol/extent.js';
+import {MAC} from 'ol/has.js';
+
+/**
+ * Return whether the passed event has the 'ctrl' key (or 'meta' key on Mac) pressed or not.
+ * @param {JQueryEventObject|KeyboardEvent} evt Event.
+ * @return {boolean}
+ */
+export function isEventUsinCtrlKey(evt) {
+  if (!evt) {
+    return false;
+  }
+  // Do not use evt.ctrlKey (or evt.metaKey on Mac) Because Firefox sometimes doesn't assign the ctrlKey.
+  return MAC ? evt.key === 'Meta' : evt.key === 'Control';
+}
+
+/**
+ * Same as `ol.events.condition.platformModifierKeyOnly` but for JQueryEventObject.
+ * @param {JQueryEventObject} evt Event.
+ * @return {boolean} True if only the platform modifier key (ctrl) is pressed.
+ * @private
+ */
+export function isPlatformModifierKeyOnly(evt) {
+  return !evt.altKey && isEventUsinCtrlKey(evt) && !evt.shiftKey;
+}
+
+/**
+ * Same as `ol.events.condition.shiftKeyOnly` but for JQueryEventObject.
+ * @param {JQueryEventObject} evt Event.
+ * @return {boolean} True if only the shift key is pressed.
+ * @private
+ */
+export function isShiftKeyOnly(evt) {
+  return !evt.altKey && !isEventUsinCtrlKey(evt) && evt.shiftKey;
+}
 
 /**
  * Return whether the primary pointing device is coarse or 'false' if unsupported (Internet Explorer).

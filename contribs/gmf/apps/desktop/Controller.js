@@ -30,6 +30,7 @@ import './sass/desktop.scss';
 import './sass/vars_desktop.scss';
 
 import angular from 'angular';
+import {isEventUsinCtrlKey} from 'ngeo/utils.js';
 import gmfControllersAbstractDesktopController, {
   AbstractDesktopController,
 } from 'gmf/controllers/AbstractDesktopController.js';
@@ -54,7 +55,7 @@ class Controller extends AbstractDesktopController {
    * @param {JQueryEventObject} event keydown event.
    */
   onKeydown(event) {
-    if (event && event.ctrlKey && event.key === 'p') {
+    if (event && isEventUsinCtrlKey(event) && event.key === 'p') {
       this.printPanelActive = true;
       event.preventDefault();
     }

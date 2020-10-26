@@ -20,9 +20,9 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
+import {isPlatformModifierKeyOnly, isShiftKeyOnly} from 'ngeo/utils.js';
 import ngeoMiscFilters from 'ngeo/misc/filters.js';
 import {getRowUid} from 'ngeo/grid/Config.js';
-import {MAC} from 'ol/has.js';
 
 import 'floatthead';
 import 'angular-float-thead';
@@ -293,26 +293,6 @@ GridController.prototype.preventTextSelection = function (event) {
     event.preventDefault();
   }
 };
-
-/**
- * Same as `ol.events.condition.platformModifierKeyOnly`.
- * @param {JQueryEventObject} event Event.
- * @return {boolean} True if only the platform modifier key is pressed.
- * @private
- */
-function isPlatformModifierKeyOnly(event) {
-  return !event.altKey && (MAC ? event.metaKey : event.ctrlKey) && !event.shiftKey;
-}
-
-/**
- * Same as `ol.events.condition.shiftKeyOnly`.
- * @param {JQueryEventObject} event Event.
- * @return {boolean} True if only the shift key is pressed.
- * @private
- */
-function isShiftKeyOnly(event) {
-  return !event.altKey && !(event.metaKey || event.ctrlKey) && event.shiftKey;
-}
 
 module.controller('ngeoGridController', GridController);
 
