@@ -22,7 +22,7 @@
 import angular from 'angular';
 import ngeoQueryAction from 'ngeo/query/Action.js';
 import ngeoQueryMode from 'ngeo/query/Mode.js';
-import {isEventUsinCtrlKey} from 'ngeo/utils.js'
+import {isEventUsinCtrlKey} from 'ngeo/utils.js';
 
 import {listen as olEventsListen} from 'ol/events.js';
 
