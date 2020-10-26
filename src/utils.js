@@ -30,7 +30,7 @@ import {getTopLeft, getTopRight, getBottomLeft, getBottomRight} from 'ol/extent.
 import {MAC} from 'ol/has.js';
 
 /**
- * Return wheter the passed event has the 'ctrl' key (or 'meta' key on Mac) pressed or not.
+ * Return whether the passed event has the 'ctrl' key (or 'meta' key on Mac) pressed or not.
  * @param {Event|import("ol/events/Event.js").default} evt Event.
  * @return {boolean}
  */
@@ -39,9 +39,27 @@ export function isEventUsinCtrlKey(evt) {
     return false;
   }
   // Check also if the key equals 'Control' for Firefox as sometimes it doesn't assign the ctrlKey.
-  const res = evt.key === 'Control' || (MAC ? evt.metaKey : evt.ctrlKey);
-  console.log(res);
-  return res;
+  return evt.key === 'Control' || (MAC ? evt.metaKey : evt.ctrlKey);
+}
+
+/**
+ * Same as `ol.events.condition.platformModifierKeyOnly` but for JQueryEventObject.
+ * @param {JQueryEventObject} event Event.
+ * @return {boolean} True if only the platform modifier key (ctrl) is pressed.
+ * @private
+ */
+export function isPlatformModifierKeyOnly(evt) {
+  return !evt.altKey && isEventUsinCtrlKey(evt) && !evt.shiftKey;
+}
+
+/**
+ * Same as `ol.events.condition.shiftKeyOnly` but for JQueryEventObject.
+ * @param {JQueryEventObject} event Event.
+ * @return {boolean} True if only the shift key is pressed.
+ * @private
+ */
+export function isShiftKeyOnly(evt) {
+  return !evt.altKey && !isEventUsinCtrlKey(evt) && evt.shiftKey;
 }
 
 /**
