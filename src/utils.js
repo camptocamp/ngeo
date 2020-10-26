@@ -38,8 +38,8 @@ export function isEventUsinCtrlKey(evt) {
   if (!evt) {
     return false;
   }
-  // Check also if the key equals 'Control' for Firefox as sometimes it doesn't assign the ctrlKey.
-  return evt.key === 'Control' || (MAC ? evt.metaKey : evt.ctrlKey);
+  // Do not use evt.ctrlKey (or evt.metaKey on Mac) Because Firefox sometimes doesn't assign the ctrlKey.
+  return MAC ? evt.key === 'Meta' : evt.key === 'Control';
 }
 
 /**
