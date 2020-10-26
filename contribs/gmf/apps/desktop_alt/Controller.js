@@ -37,6 +37,7 @@ import appBase from '../appmodule.js';
 import gmfImportModule from 'gmf/import/module.js';
 import gmfFloorModule from 'gmf/floor/module.js';
 import ngeoGooglestreetviewModule from 'ngeo/googlestreetview/module.js';
+import {isEventUsinCtrlKey} from 'ngeo/utils.js';
 import ngeoRoutingModule from 'ngeo/routing/module.js';
 import EPSG2056 from '@geoblocks/proj/src/EPSG_2056.js';
 import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
@@ -177,7 +178,7 @@ class Controller extends AbstractDesktopController {
    * @param {JQueryEventObject} event keydown event.
    */
   onKeydown(event) {
-    if (event && event.ctrlKey && event.key === 'p') {
+    if (event && isEventUsinCtrlKey(event) && event.key === 'p') {
       this.printPanelActive = true;
       event.preventDefault();
     }
