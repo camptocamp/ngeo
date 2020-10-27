@@ -465,45 +465,46 @@ class Map {
    */
   selectObject(id, position = null, table = false) {
     const feature = this.vectorSource_.getFeatureById(id);
-    if (feature) {
-      if (!position) {
-        const point = feature.getGeometry();
-        if (!(point instanceof Point)) {
-          throw new Error('Wrong geometry type');
-        }
-        position = point.getCoordinates();
-      }
-      const geometryName = feature.getGeometryName();
-      const properties = feature.getProperties();
-      themes.getLocalePromise().then((translations) => {
-        let contentHTML = '';
-        if (table) {
-          contentHTML += '<table><tbody>';
-          for (const key in properties) {
-            if (!EXCLUDE_PROPERTIES.includes(key) && key !== geometryName && properties[key] !== undefined) {
-              contentHTML += '<tr>';
-              contentHTML += `<th>${translations[key] || key}</th>`;
-              contentHTML += `<td>${properties[key]}</td>`;
-              contentHTML += '</tr>';
-            }
-          }
-          contentHTML += '</tbody></table>';
-        } else {
-          contentHTML += `<div><b>${properties.title}</b></div>`;
-          contentHTML += `<p>${properties.description}</p>`;
-        }
-        const element = this.overlay_.getElement();
-        if (!element) {
-          throw new Error('Missing element');
-        }
-        const content = element.querySelector('.ol-popup-content');
-        if (!content) {
-          throw new Error('Missing content');
-        }
-        content.innerHTML = contentHTML;
-        this.overlay_.setPosition(position);
-      });
+    if (!feature) {
+      console.error(`No feature with id ${id}`);
     }
+    if (!position) {
+      const point = feature.getGeometry();
+      if (!(point instanceof Point)) {
+        throw new Error('Wrong geometry type');
+      }
+      position = point.getCoordinates();
+    }
+    const geometryName = feature.getGeometryName();
+    const properties = feature.getProperties();
+    themes.getLocalePromise().then((translations) => {
+      let contentHTML = '';
+      if (table) {
+        contentHTML += '<table><tbody>';
+        for (const key in properties) {
+          if (!EXCLUDE_PROPERTIES.includes(key) && key !== geometryName && properties[key] !== undefined) {
+            contentHTML += '<tr>';
+            contentHTML += `<th>${translations[key] || key}</th>`;
+            contentHTML += `<td>${properties[key]}</td>`;
+            contentHTML += '</tr>';
+          }
+        }
+        contentHTML += '</tbody></table>';
+      } else {
+        contentHTML += `<div><b>${properties.title}</b></div>`;
+        contentHTML += `<p>${properties.description}</p>`;
+      }
+      const element = this.overlay_.getElement();
+      if (!element) {
+        throw new Error('Missing element');
+      }
+      const content = element.querySelector('.ol-popup-content');
+      if (!content) {
+        throw new Error('Missing content');
+      }
+      content.innerHTML = contentHTML;
+      this.overlay_.setPosition(position);
+    });
   }
 
   /**
