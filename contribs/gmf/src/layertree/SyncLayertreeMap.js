@@ -158,8 +158,19 @@ SyncLayertreeMap.prototype.updateLayerState_ = function (layer, treeCtrl) {
       if (gmfGroup.children === undefined && treeCtrl.getState() === 'on') {
         const gmfLayerWMS = /** @type {import('gmf/themes.js').GmfLayerWMS} */ (treeCtrl.node);
         names.push(gmfLayerWMS.layers);
-        const style = gmfLayerWMS.style !== undefined ? gmfLayerWMS.style : '';
-        styles.push(style);
+        if (gmfLayerWMS.style !== undefined) {
+          if (gmfLayerWMS.style.split(',').length > 1) {
+            if (gmfLayerWMS.style.split(',').length === gmfLayerWMS.layers.split(',').length) {
+              gmfLayerWMS.style.split(',').forEach((style) => styles.push(style));
+            } else {
+              throw new Error('Number of styles not corresponding to number of layers');
+            }
+          } else {
+            gmfLayerWMS.layers.split(',').forEach(() => styles.push(gmfLayerWMS.style));
+          }
+        } else {
+          gmfLayerWMS.layers.split(',').forEach(() => styles.push(''));
+        }
         return LayertreeVisitorDecision.DESCEND;
       }
     });
