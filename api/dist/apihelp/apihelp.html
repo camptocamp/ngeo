@@ -69,7 +69,7 @@ window.onload = function() {
                     <h2>A map</h2>
                     <div id='map1' class="map"></div>
                     <pre data-language="javascript">
-var map = new demo.Map({
+const map1 = new demo.Map({
     div: 'map1', // id of the div element to put the map in
     zoom: 4,
     center: [2544500, 1210100]
@@ -81,13 +81,13 @@ var map = new demo.Map({
                     <h2>A map with a marker on its center</h2>
                     <div id='map2' class="map"></div>
                     <pre data-language="javascript">
-var map = new demo.Map({
+const map2 = new demo.Map({
     div: 'map2',
-    zoom: 8,
+    zoom: 7,
     backgroundLayers: ['OSM map'],
     center: [2544500, 1210100]
 });
-map.addMarker();
+map2.addMarker();
                     </pre>
                 </div>
 
@@ -95,22 +95,22 @@ map.addMarker();
                     <h2>A map with several custom markers</h2>
                     <div id='map3' class="map"></div>
                     <pre data-language="javascript">
-var map = new demo.Map({
+const map3 = new demo.Map({
     div: 'map3',
-    zoom: 8,
+    zoom: 7,
     center: [2544500, 1210100]
 });
-map.addMarker({
+map3.addMarker({
     position: [2544410, 1210100],
     size: [14, 14],
     icon: 'img/info.png'
 });
-map.addMarker({
+map3.addMarker({
     position: [2544450, 1210000],
     size: [18, 18],
     icon: 'img/essence.png'
 });
-map.addMarker({
+map3.addMarker({
     position: [2544310, 1210200],
     size: [14, 14],
     icon: 'img/parking.png'
@@ -122,7 +122,7 @@ map.addMarker({
                     <h2>A map with a subset of overlays</h2>
                     <div id='map4' class="map"></div>
                     <pre data-language="javascript">
-var map = new demo.Map({
+const map4 = new demo.Map({
     div: 'map4',
     zoom: 0,
     center: [2590000, 1170000],
@@ -135,7 +135,7 @@ var map = new demo.Map({
                     <h2>A map with some additional controls</h2>
                     <div id='map5' class="map"></div>
                     <pre data-language="javascript">
-var map = new demo.Map({
+const map5 = new demo.Map({
     div: 'map5',
     zoom: 3,
     center: [2544500, 1210100],
@@ -155,18 +155,18 @@ var map = new demo.Map({
                     <br />
                     <div id='map6' class="map"></div>
                     <pre data-language="javascript">
-var map_ = new demo.Map({
+const map6 = new demo.Map({
     div: 'map6',
     addMiniMap: true,
     miniMapExpanded: false
 });
-var button1 = document.getElementById('button1');
+const button1 = document.getElementById('button1');
 button1.onclick = function() {
-    map_.recenter([2543500, 1202154], 7);
+    map6.recenter([2543500, 1202154], 7);
 }
-var button2 = document.getElementById('button2');
+const button2 = document.getElementById('button2');
 button2.onclick = function() {
-    map_.recenter([2564500, 1216100], 9);
+    map6.recenter([2564500, 1216100], 9);
 }
                     </pre>
                 </div>
@@ -175,11 +175,11 @@ button2.onclick = function() {
                     <h2>Recenter the map on objects</h2>
                     <div id='map7' class="map"></div>
                     <pre data-language="javascript">
-var map = new demo.Map({
+const map7 = new demo.Map({
     div: 'map7',
     layers: ['polygon']
 });
-map.recenterOnObjects(
+map7.recenterOnObjects(
     /* the layer name */
     'polygon',
     /* the ids of the objects */
@@ -194,14 +194,14 @@ map.recenterOnObjects(
                     <h2>Load data from a text file</h2>
                     See <a href="data.txt" target="_blank">data.txt</a>.
                     <br />
-                    <div id='map9' class="map"></div>
+                    <div id='map8' class="map"></div>
                     <pre data-language="javascript">
-var map = new demo.Map({
-    div: 'map9'
+const map8 = new demo.Map({
+    div: 'map8'
 });
-map.addCustomLayer('text', 'My custom txt layer', 'data.txt', {
+map8.addCustomLayer('text', 'My custom txt layer', 'data.txt', {
   success: function() {
-    map.selectObject(2);
+    map8.selectObject(2);
   }
 });
                     </pre>
@@ -209,14 +209,14 @@ map.addCustomLayer('text', 'My custom txt layer', 'data.txt', {
 
                 <div class="api">
                     <h2>Search input</h2>
-                    <div id='map10search' style="width: 400px;"></div>
-                    <div id='map10' class="map"></div>
+                    <div id='map9search' style="width: 400px;"></div>
+                    <div id='map9' class="map"></div>
                     <pre data-language="javascript">
-var map = new demo.Map({
-    div: 'map10',
+const map9 = new demo.Map({
+    div: 'map9',
     zoom: 3,
     center: [2544500, 1210100],
-    searchDiv: 'map10search'
+    searchDiv: 'map9search'
 });
                     </pre>
                 </div>
@@ -224,9 +224,9 @@ var map = new demo.Map({
 
         </div>
         <script>
-         var apis = document.getElementsByTagName('pre');
-         for (var i = 0; i < apis.length; i++) {
-           var language = apis[i].attributes.getNamedItem('data-language');
+         const apis = document.getElementsByTagName('pre');
+         for (let i = 0; i < apis.length; i++) {
+           const language = apis[i].attributes.getNamedItem('data-language');
            if (language && language.nodeValue == 'javascript') {
              eval(apis[i].innerHTML)
            }
