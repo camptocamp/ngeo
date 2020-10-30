@@ -73,7 +73,7 @@ appmodule.constant('ngeoGeolocationOptions', {
     stroke: {color: 'rgba(40, 40, 230, 1)', width: 2},
   },
   zoom: 17,
-  autorotate: true,
+  autoRotate: true,
 });
 
 export default module;

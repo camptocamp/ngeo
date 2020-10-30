@@ -166,8 +166,8 @@ Controller.prototype.$onInit = function () {
     }),
   });
 
-  if (this.options.autorotate) {
-    this.autorotateListener();
+  if (this.options.autoRotate) {
+    this.autoRotateListener();
   }
 
   // Add alias for automatic i18n string collection
@@ -354,7 +354,7 @@ Controller.prototype.handleViewChange_ = function (event) {
 };
 
 // Orientation control events
-Controller.prototype.autorotateListener = function () {
+Controller.prototype.autoRotateListener = function () {
   let currentAlpha = 0;
   if (window.hasOwnProperty('ondeviceorientationabsolute')) {
     window.addEventListener(

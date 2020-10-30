@@ -339,7 +339,7 @@ export function buildStyle(styleDescriptor) {
  * use to sketch the position feature, which is a point.
  * @property {number} [zoom] If set, in addition to recentering the map view at the location, determines
  * the zoom level to set when obtaining a new position
- * @property {boolean} [autorotate] Autorotate.
+ * @property {boolean} [autoRotate] Autorotate.
  * @property {boolean} [atLoadingTime=false] Toggle geolocating at loading time if true.
  */
 
