@@ -1,5 +1,4 @@
 ---
-
 name: Lint pull request title
 
 on:
@@ -22,9 +21,10 @@ jobs:
       - uses: morrisoncole/pr-lint-action@v1.4.1
         with:
           title-regex: "^(\\[.*\\] )?[A-Z0-9].*"
-          on-failed-regex-comment: "The title should start with a capital (regex: %regex%)."
+          on-failed-regex-comment: 'The title should start with a capital (regex: %regex%).'
+          on-failed-regex-fail-action: true
           on-failed-regex-create-review: false
-          repo-token: "${{ secrets.GITHUB_TOKEN }}"
+          repo-token: '${{ secrets.GITHUB_TOKEN }}'
         if: github.actor != 'dependabot-preview[bot]'
 
       - name: Update status
