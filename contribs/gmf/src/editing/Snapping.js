@@ -607,14 +607,35 @@ EditingSnappingService.prototype.loadItemFeatures_ = function (item) {
 
     // (2) Clear any previous features in the item
     item.features.clear();
-
     // (3) Read features from request response and add them to the item
     const readFeatures = new olFormatWFS().readFeatures(response.data);
+    const me = this;
     if (readFeatures) {
+      if (item.snappingConfig.invertXY) {
+        readFeatures.forEach(function(f) {
+          const geom = f.getGeometry();
+          if (geom) {
+            const coordinates = geom.getCoordinates();
+            me.switchXY_(coordinates);
+            f.getGeometry().setCoordinates(coordinates);
+          }
+        });
+      }
       item.features.extend(readFeatures);
       this.refreshSnappingSource_();
     }
   });
+};
+
+/**
+ * Change the order of xy. This is to deal with the GML output format
+ * from qgisServer that returns inverted coordinates
+ * https://gis.stackexchange.com/questions/296239/gml-axis-order-problem-in-qgis
+ * Loops over all coordinates and only swap X and Y
+ * @private
+ */
+EditingSnappingService.prototype.switchXY_ = function(c) {
+  return Array.isArray(c[0]) ? c.forEach(this.switchXY_) : [c[0], c[1]] = [c[1], c[0]];
 };
 
 /**

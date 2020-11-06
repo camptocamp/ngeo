@@ -598,6 +598,7 @@ export class DatasourceManager {
     const snappingTolerance = meta.snappingConfig ? meta.snappingConfig.tolerance : undefined;
     const snappingToEdges = meta.snappingConfig ? meta.snappingConfig.edge : undefined;
     const snappingToVertice = meta.snappingConfig ? meta.snappingConfig.vertex : undefined;
+    const snappingInvertXY = meta.snappingConfig ? meta.snappingConfig.invertXY : undefined;
 
     // (7) Dimensions
     const dimensions = this.dimensions_;
@@ -637,6 +638,10 @@ export class DatasourceManager {
       ogcType,
       ogcAttributes,
       snappable,
+      snappingTolerance,
+      snappingToEdges,
+      snappingToVertice,
+      snappingInvertXY,
       timeAttributeName,
       visible,
       wfsOutputFormat,
