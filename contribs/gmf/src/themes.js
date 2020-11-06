@@ -238,6 +238,7 @@
  * @property {number} [tolerance=10] The tolerance in pixels the snapping should occur for the node layer.
  * @property {boolean} [vertex=true] Determines whethers the vertices of features from the node layer can be
  * snapped or not.
+ * @property {boolean} [invertXY=false] Switches coordinates while reading a GML getFeature request
  */
 
 
