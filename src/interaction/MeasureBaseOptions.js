@@ -28,7 +28,7 @@
  * @property {Element} [startMsg]
  * @property {import("ol/style/Style.js").StyleLike} [style]
  * @property {import("ol/style/Style.js").StyleLike} [sketchStyle]
- * @property {import("ol/layer/Vector.js").VectorLayer} [layer]
+ * @property {import("ol/layer/Vector.js").default} [layer]
  */
 
 export default null;
