@@ -198,10 +198,13 @@ class Measure extends olInteractionInteraction {
      * @type {import("ol/layer/Vector.js").default}
      * @private
      */
-    this.vectorLayer_ = new olLayerVector({
-      source: new olSourceVector(),
-      style: style,
-    });
+    this.vectorLayer_ =
+      options.layer !== undefined
+        ? options.layer
+        : new olLayerVector({
+            source: new olSourceVector(),
+            style: style,
+          });
 
     const source = this.vectorLayer_.getSource();
     if (!(source instanceof VectorSource)) {
