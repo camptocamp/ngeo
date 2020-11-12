@@ -18,3 +18,8 @@ $search-results-max-height: calc(100vh - #{$topbar-height} + #{$map-tools-size} 
 $notification-width: 12.5rem !default;
 
 @import '~gmf/sass/vars.scss';
+
+:root {
+  --theme-selector-columns: #{$theme-selector-columns};
+  --theme-selector-column-width: #{$theme-selector-column-width};
+}
