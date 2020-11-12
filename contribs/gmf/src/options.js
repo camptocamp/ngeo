@@ -223,15 +223,19 @@
 
 /**
  * @typedef {Object} OptionsLegendType
- * @property {boolean} [useBbox]
- * @property {Object<string, boolean>} label
- * @property {Object<string, Object<string, string>>} params
+ * @property {boolean} [useBbox] Use or not the bbox. Default to true. For QGIS server only.
+ * @property {Object<string, boolean>} label The key is the server type (`mapserver`, `qgis`, ...), if the
+ *    value is `false` the name of the layer will be not displayed. This is used to avoid duplicated title,
+ *    as text and in the legend image.
+ * @property {Object<string, Object<string, string>>} params The key is the server type (`mapserver`,
+ *    `qgis`, ...) or `image` for an URL from a metadata. The value is some additional parameters set in the
+ *    query string.
  */
 
 /**
  * @typedef {Object} gmfPrintOptions
  * @property {boolean} [scaleInput]
- * @property {OptionsLegendType} [legend]
+ * @property {OptionsLegendType} [legend] Options used to build the legend.
  * @property {number} [goodnessOfFit]
  * @property {string} [defaultLayout]
  * @property {boolean} [rotateMask] True to apply rotation on the mask instead of the map. By default,
