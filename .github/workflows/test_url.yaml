@@ -1,3 +1,4 @@
+---
 name: Add message on pull requests with the related examples
 
 on:
@@ -7,6 +8,7 @@ on:
 
 jobs:
   all:
+    name: Add message on pull requests with the related examples
     runs-on: ubuntu-latest
     steps:
       - run: npm install --production @actions/github
