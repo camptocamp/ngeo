@@ -1,3 +1,4 @@
+---
 name: Auto merge Dependabot updates
 
 on:
@@ -10,7 +11,7 @@ on:
 
 jobs:
   auto-merge:
-    name: Auto merge
+    name: Auto merge Dependabot updates
     runs-on: ubuntu-18.04
     timeout-minutes: 5
     steps:
