@@ -67,8 +67,6 @@ import olSourceImageWMS from 'ol/source/ImageWMS.js';
  *    - `replace`: newly queried features are used as result
  *    - `add`:     newly queried features are added to the existing ones
  *    - `remove`:  newly queried features are removed from the existing ones
- * @property {import("ol/extent.js").Extent} [bbox] The bbox to issue the requests with,
- *    which will end up with a WFS request.
  * @property {import("ol/coordinate.js").Coordinate} [coordinate] The coordinate to issue the requests with,
  *    which can end up with either WMS or WFS requests.
  * @property {Array<import('ngeo/datasource/DataSource.js').default>} [dataSources] list of data sources to
