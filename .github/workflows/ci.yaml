@@ -67,7 +67,7 @@ jobs:
       - uses: camptocamp/initialise-gopass-summon-action@v1
         with:
           ci-gpg-private-key: ${{secrets.CI_GPG_PRIVATE_KEY}}
-          github-gopass-ci-token: ${{secrets.GITHUB_GOPASS_CI_TOKEN}}
+          github-gopass-ci-token: ${{secrets.GOPASS_CI_GITHUB_TOKEN}}
         if: github.repository == 'camptocamp/ngeo'
       - run: echo "//registry.npmjs.org/:_authToken=$(gopass gs/ci/npm/token)" > ~/.npmrc
         if: github.repository == 'camptocamp/ngeo'
@@ -92,7 +92,7 @@ jobs:
         run: >
           curl --request POST --header "Content-Type: application/json"
           --header 'Accept: application/vnd.github.v3+json'
-          --header "Authorization: token ${{ secrets.GITHUB_GOPASS_CI_TOKEN }}"
+          --header "Authorization: token ${{ secrets.GOPASS_CI_GITHUB_TOKEN }}"
           https://api.github.com/repos/camptocamp/c2cgeoportal/dispatches
           --data '{"event_type": "ngeo_25_updated"}'
         if: >
