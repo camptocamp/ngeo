@@ -43,6 +43,7 @@ import './services/location.spec.js';
 import './services/printutils.spec.js';
 import './services/autoprojection.spec.js';
 import './services/debounce.spec.js';
+import './services/querent.spec.js';
 import './ol-ext/format/featurehash.spec.js';
 import './directives/filereader.spec.js';
 import './directives/scaleselector.spec.js';

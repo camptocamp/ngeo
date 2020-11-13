@@ -576,11 +576,14 @@ export class Querent {
     // (2) Launch one request per combinaison of data sources
     const wfsFormat = new olFormatWFS();
     const xmlSerializer = new XMLSerializer();
+    let hasOneQueryIconPosition = false;
     for (const dataSources of combinedDataSources) {
       /** @type {?import('ol/format/WFS.js').WriteGetFeatureOptions} */
       let getFeatureCommonOptions = null;
       /** @type {string[]} */
-      let featureTypes = [];
+      let featureTypesNames = [];
+      /** @type {import('ol/format/WFS.js').FeatureType[]} */
+      const featureTypesObjects = [];
       /** @type {?string} */
       let url = null;
       /** @type {Object<string, string>} */
@@ -592,13 +595,13 @@ export class Querent {
 
       // (3) Build query options
       for (const dataSource of dataSources) {
-        const currentFeatureTypes = dataSource.getInRangeWFSLayerNames(resolution, true);
+        const currentFeatureTypesNames = dataSource.getInRangeWFSLayerNames(resolution, true);
+        const geometryName = dataSource.geometryName(currentFeatureTypesNames[0]);
 
         // (a) Create common options, if not done yet
         if (!getFeatureCommonOptions) {
           const featureNS = dataSource.wfsFeatureNS;
           const featurePrefix = dataSource.wfsFeaturePrefix;
-          const geometryName = dataSource.geometryName(currentFeatureTypes[0]);
           const outputFormat = dataSource.wfsOutputFormat;
           if (!geometryName) {
             throw new Error('Missing geometryName');
@@ -620,8 +623,8 @@ export class Querent {
           Object.assign(params, dataSource.activeDimensions);
         }
 
-        // (b) Add queryable layer names in featureTypes array
-        featureTypes = featureTypes.concat(currentFeatureTypes);
+        // (b) Add queryable layer names in featureTypesNames array
+        featureTypesNames = featureTypesNames.concat(currentFeatureTypesNames);
 
         // (c) Add filter, if any. If the case, then only one data source
         //     is expected to be used for this request.
@@ -657,23 +660,48 @@ export class Querent {
         // create and add a spatial filter it to the existing filter
         // as well.
         if (options.geometry) {
-          const spatialFilter = olFormatFilter.intersects(
-            geometryName,
-            options.geometry,
-            srsName
-          );
+          const spatialFilter = olFormatFilter.intersects(geometryName, options.geometry, srsName);
           filter = this.ngeoRuleHelper_.joinFilters(filter, spatialFilter);
         }
 
         if (filter) {
           getFeatureCommonOptions.filter = filter;
         }
+
+        // (e) Define featureTypes (objects) option with dataSource.queryIconPosition
+        // as bbox or the default bbox if the datasource don't have such option.
+        // This option will be added only if there is at least one dataSource with
+        // queryIconPosition.
+        let queryIconPosition;
+        if (dataSource.queryIconPosition) {
+          hasOneQueryIconPosition = true;
+          queryIconPosition = this.extendBboxWithQueryIconPosition_(
+            dataSource.queryIconPosition,
+            resolution,
+            bbox
+          );
+          console.assert(queryIconPosition !== null, 'Bad queryIconPosition values');
+        }
+        featureTypesObjects.push({
+          geometryName,
+          name: currentFeatureTypesNames,
+          bbox: queryIconPosition || bbox,
+        });
       }
+
       if (!getFeatureCommonOptions) {
         throw new Error('Missing getFeatureCommonOptions');
       }
 
-      getFeatureCommonOptions.featureTypes = featureTypes;
+      if (hasOneQueryIconPosition) {
+        getFeatureCommonOptions.featureTypes = featureTypesObjects;
+        // If featureTypes is set with FeatureType objects then bbox and geometryName is
+        // not used. Delete them for clarity.
+        delete getFeatureCommonOptions.bbox;
+        delete getFeatureCommonOptions.geometryName;
+      }
+
+      getFeatureCommonOptions.featureTypes = featureTypesObjects;
       if (!url) {
         throw new Error('Missing url');
       }
@@ -767,6 +795,38 @@ export class Querent {
     }
 
     return this.q_.all(promises).then(handleCombinedQueryResult_);
+  }
+
+  /**
+   * Extend the given bbox with the queryIconPosition values.
+   * @param {!number[]} queryIconPosition The values in px to buffer the bbox.
+   * @param {number} resolution The map view resolution to define the px size correctly.
+   * @param {!import("ol/extent.js").Extent} bbox The bbox to extend.
+   * @return {!import("ol/extent.js").Extent} The extended bbox or null if the queryIconPosition param
+   * is not valid.
+   * @private
+   */
+  extendBboxWithQueryIconPosition_(queryIconPosition, resolution, bbox) {
+    const buffers = queryIconPosition.map((value) => value * resolution);
+    const length = buffers.length;
+    if (!length || length > 4) {
+      // Bad format.
+      return null;
+    }
+    if (length === 1) {
+      // Same buffer all around.
+      return olExtent.buffer(bbox, buffers[0]);
+    }
+    return [
+      // bbox[0] is top, always set with buffer[0];
+      bbox[0] - buffers[0], // bbox[0] is top, always set with buffer[0];
+      // bbox[1] is right, always set with buffer[1] for length > 1;
+      bbox[1] - buffers[1],
+      // bbox[2] is bottom. Length === 2 is top-bottom and right-left. Length > 2 defines the bottom value.
+      bbox[2] + (length === 2 ? buffers[0] : buffers[2]),
+      // bbox[3] is left. Length === 4 is each side defined and the only manner to define the left value.
+      bbox[3] + (length === 4 ? buffers[3] : buffers[1]),
+    ];
   }
 
   /**
