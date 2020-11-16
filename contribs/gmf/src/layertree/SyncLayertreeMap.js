@@ -409,7 +409,8 @@ SyncLayertreeMap.prototype.createWMTSLayer_ = function (gmfLayerWMTS) {
       gmfLayerWMTS.dimensions,
       undefined,
       minResolution,
-      maxResolution
+      maxResolution,
+      gmfLayerWMTS.metadata.opacity
     )
     .then((layer) => {
       this.layerHelper_.copyProperties(layer, newLayer, ['visible']);

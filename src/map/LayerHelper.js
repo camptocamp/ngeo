@@ -223,6 +223,7 @@ LayerHelper.prototype.createBasicWMSLayerFromDataSource = function (dataSource, 
  * @param {Object=} opt_customOptions Some initial options.
  * @param {number=} opt_minResolution WMTS minimum resolution.
  * @param {number=} opt_maxResolution WMTS maximum resolution.
+ * @param {number=} opt_opacity The opacity.
  * @return {angular.IPromise<import("ol/layer/Tile.js").default>} A Promise with a layer (with source) on
  *    success, no layer else.
  */
@@ -233,7 +234,8 @@ LayerHelper.prototype.createWMTSLayerFromCapabilitites = function (
   opt_dimensions,
   opt_customOptions,
   opt_minResolution,
-  opt_maxResolution
+  opt_maxResolution,
+  opt_opacity
 ) {
   // Small hack to get perfect sync with the on resolution status and the zoom to resolution
   if (opt_maxResolution) {
@@ -275,6 +277,9 @@ LayerHelper.prototype.createWMTSLayerFromCapabilitites = function (
         return $q.reject(`Layer ${layerName} not available in WMTS capabilities from ${capabilitiesURL}`);
       }
       layer.set('capabilitiesStyles', l.Style);
+      if (opt_opacity !== undefined) {
+        layer.setOpacity(opt_opacity);
+      }
 
       return $q.resolve(layer);
     }
