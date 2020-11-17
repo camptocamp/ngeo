@@ -85,9 +85,8 @@ import olSourceImageWMS from 'ol/source/ImageWMS.js';
  * @property {QueryableDataSources} [queryableDataSources] A hash of queryable data sources, which must meet
  *    all requirements. The querent service requires either the `dataSources` or `queryableDataSources`
  *    property to be set.
- *
- * @property {number} [tolerancePx] A tolerance value in pixels used to create an extent from a coordinate
- *    to issue WFS requests.
+ * @property {number} [tolerance] A minimal buffer value in pixels to ensure a minimal bbox around a
+ *    coordinate to issue WFS requests.
  * @property {boolean} [wfsCount] When set, before making WFS GetFeature requests to fetch features,
  *    WFS GetFeature requests with `resultType = 'hits'` are made first. If
  *    the number of records for the request would exceed the limit, then
@@ -565,10 +564,9 @@ export class Querent {
     let bbox;
     const coordinate = options.coordinate;
     if (coordinate) {
-      const tolerancePx = options.tolerancePx;
-      console.assert(tolerancePx);
-      const tolerance = tolerancePx * resolution;
-      bbox = olExtent.buffer(olExtent.createOrUpdateFromCoordinate(coordinate), tolerance);
+      const tolerance = options.tolerance;
+      console.assert(tolerance);
+      bbox = olExtent.buffer(olExtent.createOrUpdateFromCoordinate(coordinate), tolerance * resolution);
     } else {
       bbox = options.extent;
     }
@@ -576,7 +574,7 @@ export class Querent {
     // (2) Launch one request per combinaison of data sources
     const wfsFormat = new olFormatWFS();
     const xmlSerializer = new XMLSerializer();
-    let hasOneQueryIconPosition = false;
+    let hasAtLeastOneQueryIconPosition = false;
     for (const dataSources of combinedDataSources) {
       /** @type {?import('ol/format/WFS.js').WriteGetFeatureOptions} */
       let getFeatureCommonOptions = null;
@@ -668,32 +666,36 @@ export class Querent {
           getFeatureCommonOptions.filter = filter;
         }
 
-        // (e) Define featureTypes (objects) option with dataSource.queryIconPosition
-        // as bbox or the default bbox if the datasource don't have such option.
-        // This option will be added only if there is at least one dataSource with
-        // queryIconPosition.
-        let queryIconPosition;
-        if (dataSource.queryIconPosition) {
-          hasOneQueryIconPosition = true;
-          queryIconPosition = this.extendBboxWithQueryIconPosition_(
-            dataSource.queryIconPosition,
-            resolution,
-            bbox
-          );
-          console.assert(queryIconPosition !== null, 'Bad queryIconPosition values');
+        // (e) For coordinate (click) query, and if at least one dataSource has a
+        // queryIconPosition, define featureTypes as Object to use a custom bbox per layer.
+        if (coordinate) {
+          let queryIconPosition;
+          if (dataSource.queryIconPosition) {
+            hasAtLeastOneQueryIconPosition = true;
+            queryIconPosition = this.extendBboxWithQueryIconPosition_(
+              dataSource.queryIconPosition,
+              resolution,
+              olExtent.createOrUpdateFromCoordinate(coordinate)
+            );
+            console.assert(queryIconPosition !== null, 'Bad queryIconPosition values');
+            // Be sure it respects a minimal bbox.
+            queryIconPosition = olExtent.extend(queryIconPosition, bbox);
+          }
+          currentFeatureTypesNames.forEach((name) => {
+            featureTypesObjects.push({
+              geometryName,
+              name,
+              bbox: queryIconPosition || bbox,
+            });
+          });
         }
-        featureTypesObjects.push({
-          geometryName,
-          name: currentFeatureTypesNames,
-          bbox: queryIconPosition || bbox,
-        });
       }
 
       if (!getFeatureCommonOptions) {
         throw new Error('Missing getFeatureCommonOptions');
       }
 
-      if (hasOneQueryIconPosition) {
+      if (hasAtLeastOneQueryIconPosition) {
         getFeatureCommonOptions.featureTypes = featureTypesObjects;
         // If featureTypes is set with FeatureType objects then bbox and geometryName is
         // not used. Delete them for clarity.
@@ -701,7 +703,6 @@ export class Querent {
         delete getFeatureCommonOptions.geometryName;
       }
 
-      getFeatureCommonOptions.featureTypes = featureTypesObjects;
       if (!url) {
         throw new Error('Missing url');
       }

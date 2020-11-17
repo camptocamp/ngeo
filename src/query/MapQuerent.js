@@ -119,12 +119,12 @@ export class MapQuerent {
      * @type {number}
      * @private
      */
-    this.tolerancePx_;
+    this.tolerance_;
 
     if (hasCoarsePointingDevice()) {
-      this.tolerancePx_ = options.toleranceTouch !== undefined ? options.toleranceTouch : 10;
+      this.tolerance_ = options.toleranceTouch !== undefined ? options.toleranceTouch : 10;
     } else {
-      this.tolerancePx_ = options.tolerance !== undefined ? options.tolerance : 3;
+      this.tolerance_ = options.tolerance !== undefined ? options.tolerance : 3;
     }
 
     /**
@@ -173,7 +173,7 @@ export class MapQuerent {
     Object.assign(options, {
       queryableDataSources: queryableDataSources,
       limit: limit,
-      tolerancePx: this.tolerancePx_,
+      tolerance: this.tolerance_,
       wfsCount: this.queryCountFirst_,
       bboxAsGETParam: this.bboxAsGETParam_,
     });

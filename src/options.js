@@ -179,8 +179,8 @@ export function buildStyle(styleDescriptor) {
  *    Use this if you have more than one source bound to a layer.
  * @property {number} [tolerance=3] When issuing an identify feature request at a click position, either a
  *    WMS GetFeatureInfo or a WFS GetFeature request will be used. For GetFeature requests a bbox is built
- *    around the position. This `tolerance` in pixel determines the size of the bbox.
- * @property {number} [toleranceTouch=10] The tolerance on touch devices.
+ *    around the position. This `tolerance` in pixel determines the minimal size of the bbox.
+ * @property {number} [toleranceTouch=10] Same as `tolerance` but for touch devices.
  * @property {string} [featureNS='http://mapserver.gis.umn.edu/mapserver'] The feature namespace for WFS
  *    GetFeature requests.
  * @property {string} [featurePrefix='feature'] The feature prefix for WFS GetFeature requests.
