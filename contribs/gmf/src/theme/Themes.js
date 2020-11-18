@@ -185,7 +185,8 @@ export class ThemesService extends olEventsEventTarget {
             gmfLayer.dimensions,
             gmfLayerWMTS.metadata.customOpenLayersOptions,
             minResolution,
-            maxResolution
+            maxResolution,
+            gmfLayerWMTS.metadata.opacity
           )
           .then(callback.bind(null, gmfLayer))
           .then(null, (response) => {
