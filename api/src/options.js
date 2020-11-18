@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2018-2020 Camptocamp SA
+// Copyright (c) 2020 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -20,13 +20,23 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 /**
- * @typedef {Object} DynamicUrl
- * @property {?string} dynamicUrl
+ * A projection definitions.
+ * @typedef {Object} Projection
+ * @property {string[]} definition The definition.
+ * @property {number[]} extent The extent.
  */
 
-/** @type {DynamicUrl} */
-export const dynamicUrl = {
-  dynamicUrl: undefined,
-};
+/**
+ * @typedef {Object} APIConfig
+ * @property {string} [themesUrl]
+ * @property {string} [localeUrl]
+ * @property {string} [searchUrl]
+ * @property {string} [projection]
+ * @property {Object<string, Projection>} [projections]
+ * @property {number[]} [resolutions]
+ * @property {[number, number, number, number]} [extent]
+ * @property {string} [backgroundLayer]
+ * @property {string[]} [queryableLayers]
+ */
 
-export default /** @type {import('api/options.js').APIConfig} */ ({});
+export default undefined;

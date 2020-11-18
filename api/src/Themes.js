@@ -26,7 +26,7 @@ import TileLayer from 'ol/layer/Tile.js';
 import ImageLayer from 'ol/layer/Image.js';
 import GroupLayer from 'ol/layer/Group.js';
 
-import constants from './constants.js';
+import constants from 'api/constants.js';
 
 /**
  * @type {Promise<import('gmf/themes.js').GmfThemesResponse>}

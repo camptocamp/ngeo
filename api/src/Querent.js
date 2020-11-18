@@ -19,7 +19,7 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import {getOverlayDefs} from './Themes.js';
+import {getOverlayDefs} from 'api/Themes.js';
 import {appendParams as olUriAppendParams} from 'ol/uri.js';
 import olFormatGML2 from 'ol/format/GML2.js';
 import olFormatWFS from 'ol/format/WFS.js';

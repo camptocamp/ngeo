@@ -213,6 +213,7 @@ module.exports = function (config) {
         'ngeo/test': path.resolve(__dirname, '../test/spec'),
         'gmf/test': path.resolve(__dirname, '../contribs/gmf/test/spec'),
         'ngeo': path.resolve(__dirname, '../src'),
+        'api': path.resolve(__dirname, '../api/src'),
         'lib': path.resolve(__dirname, '../lib'),
         'gmf': path.resolve(__dirname, '../contribs/gmf/src'),
         'jsts': 'jsts/org/locationtech/jts',
