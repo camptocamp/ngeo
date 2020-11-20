@@ -70,12 +70,32 @@
     ng-model="dfCtrl.drawText.active">
     <%=require('gmf/icons/text.svg?viewbox&height=1em')%>
   </a>
+  <!--Custom gr_webmap-->
+  <a
+    data-toggle="tooltip"
+    title="{{'Draw a line-to-polygon on the map' | translate}}"
+    href
+    ngeo-btn
+    ngeo-drawlinepolygon
+    class="btn btn-default ngeo-drawfeature-linestring"
+    ng-class="{active: dfCtrl.drawLinePolygon.active}"
+    ng-model="dfCtrl.drawLinePolygon.active">
+    <i class="fas fa-bacon"></i>
+  </a>
+  <!-- End custom gr_webmap-->
 </ngeo-drawfeature>
 
 <div ng-switch="efCtrl.selectedFeature">
 
   <hr class="gmf-drawfeature-separator" ng-show="efCtrl.getFeaturesArray().length > 0">
   <div ng-switch-when="null">
+    <!--Custom gr_webmap-->
+    <ngeo-drawlinepolygonbuffer
+      ng-show="active"
+      active="active"
+      map="efCtrl.map">
+    </ngeo-drawfeaturebuffer>
+    <!-- End custom gr_webmap-->
     <div ng-show="efCtrl.getFeaturesArray().length > 0">
       <div class="ngeo-drawfeature-actionbuttons">
         <button

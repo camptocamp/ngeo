@@ -7,6 +7,10 @@ import ngeoDrawText from 'ngeo/draw/text.js';
 import ngeoMeasureArea from 'ngeo/measure/area.js';
 import ngeoMeasureAzimut from 'ngeo/measure/azimut.js';
 import ngeoMeasureLength from 'ngeo/measure/length.js';
+// custom gr_webmap
+import ngeoDrawLinePolygon from 'ngeo/draw/linepolygon.js';
+
+
 
 
 /**
@@ -21,6 +25,7 @@ const module = angular.module('ngeoDrawfeature', [
   ngeoMeasureArea.name,
   ngeoMeasureAzimut.name,
   ngeoMeasureLength.name,
+  ngeoDrawLinePolygon.name,
 ]);
 
 
