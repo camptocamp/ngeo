@@ -53,8 +53,8 @@ def main():
         ]
     )
     result = float(result.decode().split("\n")[-2].split()[1])
-    if result > 0.0011:
-        print("{} > 0.0011 => {}".format(result, diff))
+    if result > 0.0012:
+        print("{} > 0.0012 => {}".format(result, diff))
         sys.exit(1)
 
 
