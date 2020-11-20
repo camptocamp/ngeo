@@ -316,39 +316,49 @@ contribs/dist: .build/build-dll.timestamp
 	mkdir -p $(dir $@)
 	CI=true LANGUAGE=en_US buildtools/retry node buildtools/check-example.js \
 		.build/examples-hosted/$*.html
+	echo "::group::Check ngeo example $*"
 	buildtools/check-example .build/examples-hosted/$*.html.png examples/$*-ref.png
+	echo "::endgroup::"
 	touch $@
 
 .build/error.check.timestamp: .build/examples-ngeo.timestamp \
 		.build/node_modules.timestamp \
 		.build/httpserver.timestamp
 	mkdir -p $(dir $@)
+	echo "::group::Check error"
 	CI=true LANGUAGE=en_US buildtools/retry node buildtools/check-example.js \
 		.build/examples-hosted/error.html
 	! buildtools/check-example .build/examples-hosted/error.html.png examples/error-ref.png
+	echo "::endgroup::"
 	touch $@
 
 .build/contribs/gmf/%.check.timestamp: .build/examples-gmf.timestamp \
 		.build/node_modules.timestamp \
 		.build/httpserver.timestamp
 	mkdir -p $(dir $@)
+	echo "::group::Check gmf example $*"
 	CI=true LANGUAGE=en_US buildtools/retry node buildtools/check-example.js \
 		.build/examples-hosted/contribs/gmf/$*.html
 	buildtools/check-example .build/examples-hosted/contribs/gmf/$*.html.png contribs/gmf/examples/$*-ref.png
+	echo "::endgroup::"
 	touch $@
 
 .build/contribs/gmf/apps/%.check.timestamp: .build/gmf-apps.timestamp \
 		.build/httpserver.timestamp
 	mkdir -p $(dir $@)
+	echo "::group::Check gmf app $*"
 	CI=true LANGUAGE=en_US buildtools/retry node buildtools/check-example.js \
 		.build/examples-hosted/contribs/gmf/apps/$*.html
 	buildtools/check-example .build/examples-hosted/contribs/gmf/apps/$*.html.png contribs/gmf/apps/$*-ref.png
+	echo "::endgroup::"
 	touch $@
 
 .build/test-check-example/%.check.timestamp: \
 		.build/httpserver.timestamp test/check-example/%.html
 	mkdir -p $(dir $@)
+	echo "::group::Check checker $*"
 	( ! CI=true LANGUAGE=en_US buildtools/retry node buildtools/check-example.js test/check-example/$*.html)
+	echo "::endgroup::"
 	touch $@
 
 .build/node_modules.timestamp: package.json
