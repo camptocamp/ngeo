@@ -32,29 +32,29 @@ describe('ngeo.Querent', () => {
     });
   });
 
-  it('Extends bbox with queryIconPosition', () => {
+  it('Buffers bbox with queryIconPosition', () => {
     const resolution = 10;
     const bbox = [50, 51, 52, 53];
 
-    let result = ngeoQuerent.extendBboxWithQueryIconPosition_([], resolution, bbox);
+    let result = ngeoQuerent.bufferBboxWithQueryIconPosition_([], resolution, bbox);
     expect(result).toBe(null);
 
-    result = ngeoQuerent.extendBboxWithQueryIconPosition_([1], resolution, bbox);
+    result = ngeoQuerent.bufferBboxWithQueryIconPosition_([1], resolution, bbox);
     expect(result).toEqual([40, 41, 62, 63]);
 
-    result = ngeoQuerent.extendBboxWithQueryIconPosition_([1, 2], resolution, bbox);
+    result = ngeoQuerent.bufferBboxWithQueryIconPosition_([1, 2], resolution, bbox);
     expect(result).toEqual([40, 31, 62, 73]);
 
-    result = ngeoQuerent.extendBboxWithQueryIconPosition_([1, 2, 3], resolution, bbox);
+    result = ngeoQuerent.bufferBboxWithQueryIconPosition_([1, 2, 3], resolution, bbox);
     expect(result).toEqual([40, 31, 82, 73]);
 
-    result = ngeoQuerent.extendBboxWithQueryIconPosition_([1, 2, 3, 4], resolution, bbox);
+    result = ngeoQuerent.bufferBboxWithQueryIconPosition_([1, 2, 3, 4], resolution, bbox);
     expect(result).toEqual([40, 31, 82, 93]);
 
-    result = ngeoQuerent.extendBboxWithQueryIconPosition_([0, 0, 0, 4], resolution, bbox);
+    result = ngeoQuerent.bufferBboxWithQueryIconPosition_([0, 0, 0, 4], resolution, bbox);
     expect(result).toEqual([50, 51, 52, 93]);
 
-    result = ngeoQuerent.extendBboxWithQueryIconPosition_([1, 2, 3, 4, 5], resolution, bbox);
+    result = ngeoQuerent.bufferBboxWithQueryIconPosition_([1, 2, 3, 4, 5], resolution, bbox);
     expect(result).toBe(null);
   });
 });
