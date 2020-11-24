@@ -32,29 +32,29 @@ describe('ngeo.Querent', () => {
     });
   });
 
-  it('Buffers bbox with queryIconPosition', () => {
+  it('Buffers coordinates with queryIconPosition', () => {
     const resolution = 10;
-    const bbox = [50, 51, 52, 53];
+    const coordinate = [50, 51];
 
-    let result = ngeoQuerent.bufferBboxWithQueryIconPosition_([], resolution, bbox);
+    let result = ngeoQuerent.makeBboxWithQueryIconPosition_([], resolution, coordinate);
     expect(result).toBe(null);
 
-    result = ngeoQuerent.bufferBboxWithQueryIconPosition_([1], resolution, bbox);
-    expect(result).toEqual([40, 41, 62, 63]);
+    result = ngeoQuerent.makeBboxWithQueryIconPosition_([1], resolution, coordinate);
+    expect(result).toEqual([40, 41, 60, 61]);
 
-    result = ngeoQuerent.bufferBboxWithQueryIconPosition_([1, 2], resolution, bbox);
-    expect(result).toEqual([40, 31, 62, 73]);
+    result = ngeoQuerent.makeBboxWithQueryIconPosition_([1, 2], resolution, coordinate);
+    expect(result).toEqual([30, 41, 70, 61]);
 
-    result = ngeoQuerent.bufferBboxWithQueryIconPosition_([1, 2, 3], resolution, bbox);
-    expect(result).toEqual([40, 31, 82, 73]);
+    result = ngeoQuerent.makeBboxWithQueryIconPosition_([1, 2, 3], resolution, coordinate);
+    expect(result).toEqual([30, 41, 70, 81]);
 
-    result = ngeoQuerent.bufferBboxWithQueryIconPosition_([1, 2, 3, 4], resolution, bbox);
-    expect(result).toEqual([40, 31, 82, 93]);
+    result = ngeoQuerent.makeBboxWithQueryIconPosition_([1, 2, 3, 4], resolution, coordinate);
+    expect(result).toEqual([30, 41, 90, 81]);
 
-    result = ngeoQuerent.bufferBboxWithQueryIconPosition_([0, 0, 0, 4], resolution, bbox);
-    expect(result).toEqual([50, 51, 52, 93]);
+    result = ngeoQuerent.makeBboxWithQueryIconPosition_([0, 0, 0, 4], resolution, coordinate);
+    expect(result).toEqual([50, 51, 90, 51]);
 
-    result = ngeoQuerent.bufferBboxWithQueryIconPosition_([1, 2, 3, 4, 5], resolution, bbox);
+    result = ngeoQuerent.makeBboxWithQueryIconPosition_([1, 2, 3, 4, 5], resolution, coordinate);
     expect(result).toBe(null);
   });
 });

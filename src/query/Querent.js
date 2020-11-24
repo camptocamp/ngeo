@@ -561,6 +561,7 @@ export class Querent {
     }
 
     // (1) Extent (bbox), which is optional, i.e. its value can stay undefined
+    /** @type {import("ol/extent.js").Extent} */
     let bbox;
     const coordinate = options.coordinate;
     if (coordinate) {
@@ -669,13 +670,14 @@ export class Querent {
         // (e) For coordinate (click) query, and if at least one dataSource has a
         // queryIconPosition, define featureTypes as Object to use a custom bbox per layer.
         if (coordinate) {
+          /** @type {import("ol/extent.js").Extent} */
           let queryIconPosition;
           if (dataSource.queryIconPosition) {
             hasAtLeastOneQueryIconPosition = true;
-            queryIconPosition = this.bufferBboxWithQueryIconPosition_(
+            queryIconPosition = this.makeBboxWithQueryIconPosition_(
               dataSource.queryIconPosition,
               resolution,
-              olExtent.createOrUpdateFromCoordinate(coordinate)
+              coordinate
             );
             console.assert(queryIconPosition !== null, 'Bad queryIconPosition values');
             // Be sure it respects a minimal bbox.
@@ -799,15 +801,17 @@ export class Querent {
   }
 
   /**
-   * Add a buffer (based on the queryIconPosition values) around the given bbox.
-   * @param {!number[]} queryIconPosition The values in px to buffer the bbox.
-   * @param {number} resolution The map view resolution to define the px size correctly.
-   * @param {!import("ol/extent.js").Extent} bbox The bbox to buffer.
+   * Create and add a buffer around the given coordinate.
+   * The buffer is built with the flipped (horizontally and vertically) values of the queryIconPosition.
+   * @param {!number[]} queryIconPosition The values in px to buffer the bbox (1 to 4 values, css system).
+   * @param {!number} resolution The map view resolution to define the px size correctly.
+   * @param {!import("ol/coordinate.js").Coordinate} coordinate The bbox to buffer.
    * @return {!import("ol/extent.js").Extent} The new bbox or null if the queryIconPosition param
    * is not valid.
    * @private
    */
-  bufferBboxWithQueryIconPosition_(queryIconPosition, resolution, bbox) {
+  makeBboxWithQueryIconPosition_(queryIconPosition, resolution, coordinate) {
+    const bbox = olExtent.createOrUpdateFromCoordinate(coordinate);
     const buffers = queryIconPosition.map((value) => value * resolution);
     const length = buffers.length;
     if (!length || length > 4) {
@@ -817,17 +821,20 @@ export class Querent {
       // Same buffer all around.
       return olExtent.buffer(bbox, buffers[0]);
     }
+    const fourValuesBuffers = [
+      buffers[0], // Top is always set.
+      buffers[1], // Right is always set (with length > 1).
+      length === 2 ? buffers[0] : buffers[2], // Take bottom.
+      length === 4 ? buffers[3] : buffers[1], // Take left.
+    ];
+    // To includes the feature's point into the queried zone relative to the click. Flip vertically and
+    // horizontally the queryIconPosition (that is relative to the icon).
+    // Ol extent coordinate order is [left, bottom, right, top].
     return [
-      // bbox[0] is top, always set with buffer[0];
-      bbox[0] - buffers[0], // bbox[0] is top, always set with buffer[0];
-      // bbox[1] is right, always set with buffer[1] for length > 1;
-      bbox[1] - buffers[1],
-      // bbox[2] is bottom. For length === 2 (top-bottom, right-left), use buffer[0] (top).
-      // For length === 3 (top, right-left, bottom) or length === 4, use buffer[2] (specific bottom).
-      bbox[2] + (length === 2 ? buffers[0] : buffers[2]),
-      // bbox[3] is left. For length === 4 (top, right, bottom, left), use buffer[3] (specific left).
-      // For length === 2 (top-bottom, right-left) or length === 3 (top, right-left, bottom), use buffer[1].
-      bbox[3] + (length === 4 ? buffers[3] : buffers[1]),
+      bbox[0] - fourValuesBuffers[1], // Use right buffer for left.
+      bbox[1] - fourValuesBuffers[0], // Use top buffer for bottom.
+      bbox[2] + fourValuesBuffers[3], // Use left buffer for right.
+      bbox[3] + fourValuesBuffers[2], // Use bottom buffer for top.
     ];
   }
 
