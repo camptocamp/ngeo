@@ -55,6 +55,9 @@ import ngeoDatasourceOGC from 'ngeo/datasource/OGC.js';
  * @property {string} [ogcType] The type data source. Can be: 'WMS' or 'WMTS'.
  * @property {?Object<string, Object<string, import('gmf/themes.js').GmfOgcServerAttribute>>} [ogcAttributes]
  *    The attributes of the OGC server.
+ * @property {number[]} [queryIconPosition] values to define the shape (bbox) to use to query
+ *    the layer. The values are used like a padding in css with 1, 2, 3 or 4 comma separated
+ *    values: all / top-bottom, left-right / top, right-left, bottom / top, right, bottom, left.
  * @property {boolean} [snappable] Whether the geometry from this data source can be used to snap the geometry
  *    of features from other data sources that are being edited. Defaults to `false`.
  * @property {boolean} [snappingToEdges] Determines whether external features can be snapped to the edges of

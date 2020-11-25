@@ -234,6 +234,9 @@
  * @property {number} [minQueryResolution] The min resolution where the layer is queryable. For WMTS layers.
  * @property {number} [minResolution] The min resolution where the layer is visible. For WMS layers.
  *      On WMTS layers it will have an effect on the node in the layertree but not on the layer directly.
+ * @property {number[]} [queryIconPosition] values to define the shape (bbox) to use to query
+ *      the layer. The values are used like a padding in css with 1, 2, 3 or 4 comma separated
+ *      values: all / top-bottom, left-right / top, right-left, bottom / top, right, bottom, left.
  * @property {string} [ogcServer] The corresponding OGC server for a WMTS layer. For WMTS layers.
  * @property {number} [opacity=1.0] Layer opacity. 1.0 means fully visible, 0 means invisible, For WMS and
  *      WMTS layers.

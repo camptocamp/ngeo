@@ -641,6 +641,7 @@ export class DatasourceManager {
     const copyable = meta.copyable;
     const identifierAttribute = meta.identifierAttributeField;
     const name = gmfLayer.name;
+    const queryIconPosition = meta.queryIconPosition;
     const timeAttributeName = meta.timeAttribute;
     const visible = meta.isChecked === true;
     const ogcAttributes = ogcServer ? ogcServer.attributes : null;
@@ -656,6 +657,7 @@ export class DatasourceManager {
       name,
       ogcType,
       ogcAttributes,
+      queryIconPosition,
       snappable,
       timeAttributeName,
       visible,
@@ -673,17 +675,8 @@ export class DatasourceManager {
     if (ogcImageType) {
       options.ogcImageType = ogcImageType;
     }
-    if (wmsLayers) {
-      options.wmsLayers = wmsLayers;
-    }
-    if (wfsLayers) {
-      options.wfsLayers = wfsLayers;
-    }
     if (ogcServerType) {
       options.ogcServerType = ogcServerType;
-    }
-    if (wfsFeatureNS) {
-      options.wfsFeatureNS = wfsFeatureNS;
     }
     if (snappingTolerance) {
       options.snappingTolerance = snappingTolerance;
@@ -703,11 +696,20 @@ export class DatasourceManager {
     if (timeUpperValue) {
       options.timeUpperValue = timeUpperValue;
     }
+    if (wfsFeatureNS) {
+      options.wfsFeatureNS = wfsFeatureNS;
+    }
+    if (wfsLayers) {
+      options.wfsLayers = wfsLayers;
+    }
     if (wfsUrl) {
       options.wfsUrl = wfsUrl;
     }
     if (wmsIsSingleTile) {
       options.wmsIsSingleTile = wmsIsSingleTile;
+    }
+    if (wmsLayers) {
+      options.wmsLayers = wmsLayers;
     }
     if (wmsUrl) {
       options.wmsUrl = wmsUrl;

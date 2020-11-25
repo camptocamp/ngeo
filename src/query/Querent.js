@@ -67,8 +67,6 @@ import olSourceImageWMS from 'ol/source/ImageWMS.js';
  *    - `replace`: newly queried features are used as result
  *    - `add`:     newly queried features are added to the existing ones
  *    - `remove`:  newly queried features are removed from the existing ones
- * @property {import("ol/extent.js").Extent} [bbox] The bbox to issue the requests with,
- *    which will end up with a WFS request.
  * @property {import("ol/coordinate.js").Coordinate} [coordinate] The coordinate to issue the requests with,
  *    which can end up with either WMS or WFS requests.
  * @property {Array<import('ngeo/datasource/DataSource.js').default>} [dataSources] list of data sources to
@@ -87,9 +85,8 @@ import olSourceImageWMS from 'ol/source/ImageWMS.js';
  * @property {QueryableDataSources} [queryableDataSources] A hash of queryable data sources, which must meet
  *    all requirements. The querent service requires either the `dataSources` or `queryableDataSources`
  *    property to be set.
- *
- * @property {number} [tolerancePx] A tolerance value in pixels used to create an extent from a coordinate
- *    to issue WFS requests.
+ * @property {number} [tolerance] A minimal buffer value in pixels to ensure a minimal bbox around a
+ *    coordinate to issue WFS requests.
  * @property {boolean} [wfsCount] When set, before making WFS GetFeature requests to fetch features,
  *    WFS GetFeature requests with `resultType = 'hits'` are made first. If
  *    the number of records for the request would exceed the limit, then
@@ -564,13 +561,13 @@ export class Querent {
     }
 
     // (1) Extent (bbox), which is optional, i.e. its value can stay undefined
+    /** @type {import("ol/extent.js").Extent} */
     let bbox;
     const coordinate = options.coordinate;
     if (coordinate) {
-      const tolerancePx = options.tolerancePx;
-      console.assert(tolerancePx);
-      const tolerance = tolerancePx * resolution;
-      bbox = olExtent.buffer(olExtent.createOrUpdateFromCoordinate(coordinate), tolerance);
+      const tolerance = options.tolerance;
+      console.assert(tolerance);
+      bbox = olExtent.buffer(olExtent.createOrUpdateFromCoordinate(coordinate), tolerance * resolution);
     } else {
       bbox = options.extent;
     }
@@ -578,11 +575,14 @@ export class Querent {
     // (2) Launch one request per combinaison of data sources
     const wfsFormat = new olFormatWFS();
     const xmlSerializer = new XMLSerializer();
+    let hasAtLeastOneQueryIconPosition = false;
     for (const dataSources of combinedDataSources) {
       /** @type {?import('ol/format/WFS.js').WriteGetFeatureOptions} */
       let getFeatureCommonOptions = null;
       /** @type {string[]} */
-      let featureTypes = [];
+      let featureTypesNames = [];
+      /** @type {import('ol/format/WFS.js').FeatureType[]} */
+      const featureTypesObjects = [];
       /** @type {?string} */
       let url = null;
       /** @type {Object<string, string>} */
@@ -594,13 +594,13 @@ export class Querent {
 
       // (3) Build query options
       for (const dataSource of dataSources) {
-        const currentFeatureTypes = dataSource.getInRangeWFSLayerNames(resolution, true);
+        const currentFeatureTypesNames = dataSource.getInRangeWFSLayerNames(resolution, true);
+        const geometryName = dataSource.geometryName(currentFeatureTypesNames[0]);
 
         // (a) Create common options, if not done yet
         if (!getFeatureCommonOptions) {
           const featureNS = dataSource.wfsFeatureNS;
           const featurePrefix = dataSource.wfsFeaturePrefix;
-          const geometryName = dataSource.geometryName(currentFeatureTypes[0]);
           const outputFormat = dataSource.wfsOutputFormat;
           if (!geometryName) {
             throw new Error('Missing geometryName');
@@ -622,8 +622,8 @@ export class Querent {
           Object.assign(params, dataSource.activeDimensions);
         }
 
-        // (b) Add queryable layer names in featureTypes array
-        featureTypes = featureTypes.concat(currentFeatureTypes);
+        // (b) Add queryable layer names in featureTypesNames array
+        featureTypesNames = featureTypesNames.concat(currentFeatureTypesNames);
 
         // (c) Add filter, if any. If the case, then only one data source
         //     is expected to be used for this request.
@@ -659,23 +659,52 @@ export class Querent {
         // create and add a spatial filter it to the existing filter
         // as well.
         if (options.geometry) {
-          const spatialFilter = olFormatFilter.intersects(
-            dataSource.geometryName(),
-            options.geometry,
-            srsName
-          );
+          const spatialFilter = olFormatFilter.intersects(geometryName, options.geometry, srsName);
           filter = this.ngeoRuleHelper_.joinFilters(filter, spatialFilter);
         }
 
         if (filter) {
           getFeatureCommonOptions.filter = filter;
         }
+
+        // (e) For coordinate (click) query, and if at least one dataSource has a
+        // queryIconPosition, define featureTypes as Object to use a custom bbox per layer.
+        if (coordinate) {
+          /** @type {import("ol/extent.js").Extent} */
+          let queryIconPosition;
+          if (dataSource.queryIconPosition) {
+            hasAtLeastOneQueryIconPosition = true;
+            queryIconPosition = this.makeBboxWithQueryIconPosition_(
+              dataSource.queryIconPosition,
+              resolution,
+              coordinate
+            );
+            console.assert(queryIconPosition !== null, 'Bad queryIconPosition values');
+            // Be sure it respects a minimal bbox.
+            queryIconPosition = olExtent.extend(queryIconPosition, bbox);
+          }
+          currentFeatureTypesNames.forEach((name) => {
+            featureTypesObjects.push({
+              geometryName,
+              name,
+              bbox: queryIconPosition || bbox,
+            });
+          });
+        }
       }
+
       if (!getFeatureCommonOptions) {
         throw new Error('Missing getFeatureCommonOptions');
       }
 
-      getFeatureCommonOptions.featureTypes = featureTypes;
+      if (hasAtLeastOneQueryIconPosition) {
+        getFeatureCommonOptions.featureTypes = featureTypesObjects;
+        // If featureTypes is set with FeatureType objects then bbox and geometryName is
+        // not used. Delete them for clarity.
+        delete getFeatureCommonOptions.bbox;
+        delete getFeatureCommonOptions.geometryName;
+      }
+
       if (!url) {
         throw new Error('Missing url');
       }
@@ -769,6 +798,44 @@ export class Querent {
     }
 
     return this.q_.all(promises).then(handleCombinedQueryResult_);
+  }
+
+  /**
+   * Create and add a buffer around the given coordinate.
+   * The buffer is built with the flipped (horizontally and vertically) values of the queryIconPosition.
+   * @param {!number[]} queryIconPosition The values in px to buffer the bbox (1 to 4 values, css system).
+   * @param {!number} resolution The map view resolution to define the px size correctly.
+   * @param {!import("ol/coordinate.js").Coordinate} coordinate The bbox to buffer.
+   * @return {!import("ol/extent.js").Extent} The new bbox or null if the queryIconPosition param
+   * is not valid.
+   * @private
+   */
+  makeBboxWithQueryIconPosition_(queryIconPosition, resolution, coordinate) {
+    const bbox = olExtent.createOrUpdateFromCoordinate(coordinate);
+    const buffers = queryIconPosition.map((value) => value * resolution);
+    const length = buffers.length;
+    if (!length || length > 4) {
+      return null;
+    }
+    if (length === 1) {
+      // Same buffer all around.
+      return olExtent.buffer(bbox, buffers[0]);
+    }
+    const fourValuesBuffers = [
+      buffers[0], // Top is always set.
+      buffers[1], // Right is always set (with length > 1).
+      length === 2 ? buffers[0] : buffers[2], // Take bottom.
+      length === 4 ? buffers[3] : buffers[1], // Take left.
+    ];
+    // To includes the feature's point into the queried zone relative to the click. Flip vertically and
+    // horizontally the queryIconPosition (that is relative to the icon).
+    // Ol extent coordinate order is [left, bottom, right, top].
+    return [
+      bbox[0] - fourValuesBuffers[1], // Use right buffer for left.
+      bbox[1] - fourValuesBuffers[0], // Use top buffer for bottom.
+      bbox[2] + fourValuesBuffers[3], // Use left buffer for right.
+      bbox[3] + fourValuesBuffers[2], // Use bottom buffer for top.
+    ];
   }
 
   /**
