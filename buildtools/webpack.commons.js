@@ -53,7 +53,7 @@ module.exports = function (config) {
       {
         'targets': {
           // See browser list on: https://browserl.ist/
-          'browsers': ['> 0.5% in CH', '> 0.5% in FR', 'Firefox ESR', 'ie 11'],
+          esmodules: true,
         },
         'modules': false,
         'loose': true,
