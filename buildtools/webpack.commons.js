@@ -207,7 +207,7 @@ module.exports = function (config) {
     },
     plugins: plugins,
     resolve: {
-      modules: ['../node_modules', '../node_modules/d3/node_modules'],
+      modules: ['../node_modules'],
       mainFields: ['geoblocks_src', 'module', 'jsnext:main', 'main'],
       alias: {
         'ngeo/test': path.resolve(__dirname, '../test/spec'),
