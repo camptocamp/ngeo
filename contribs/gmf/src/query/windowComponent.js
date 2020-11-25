@@ -182,7 +182,7 @@ export function QueryWindowController(
    * When used for Desktop, it is shown non-collapsed.
    * @type {boolean}
    */
-  this.collapsed = this.options.collapsed === undefined ? !this.desktop : this.options.collapsed;
+  this.collapsed = false;
 
   /**
    * @type {import('ngeo/query/MapQuerent.js').QueryResult}
@@ -288,6 +288,7 @@ export function QueryWindowController(
  * Initialise the controller.
  */
 QueryWindowController.prototype.$onInit = function () {
+  this.collapsed = this.options.collapsed === undefined ? !this.desktop : this.options.collapsed;
   this.draggableContainment = this.draggableContainment || 'document';
 
   const featuresOverlay = this.ngeoFeatureOverlayMgr_.getFeatureOverlay();
