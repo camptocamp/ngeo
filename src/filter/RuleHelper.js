@@ -468,9 +468,10 @@ export class RuleHelper {
    */
   createFilterString(options) {
     let filterString = null;
+    const defaultWFSVersion = '1.1.0';
     const filter = this.createFilter(options);
     if (filter) {
-      const filterNode = writeFilter(filter);
+      const filterNode = writeFilter(filter, defaultWFSVersion);
       const xmlSerializer = new XMLSerializer();
       filterString = xmlSerializer.serializeToString(filterNode);
     }
