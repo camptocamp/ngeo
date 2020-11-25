@@ -28,7 +28,7 @@ import {
   axisBottom as d3axisBottom,
   axisLeft as d3axisLeft,
   line as d3line,
-  mouse as d3mouse,
+  pointer as d3pointer,
 } from 'd3';
 
 /**
@@ -496,7 +496,7 @@ function d3Elevation(options, functions) {
        * @this {d3.ContainerElement}
        */
       function mousemove() {
-        const mouseX = d3mouse(this)[0];
+        const mouseX = d3pointer(this)[0];
         const x0 = x.invert(mouseX);
 
         profile.highlight(x0);

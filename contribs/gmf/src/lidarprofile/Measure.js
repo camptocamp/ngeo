@@ -19,7 +19,7 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import {mouse as d3mouse, select as d3select} from 'd3';
+import {pointer as d3pointer, select as d3select} from 'd3-selection';
 
 /**
  * @hidden
@@ -92,8 +92,8 @@ export default class {
     const canvas = d3select('#gmf-lidarprofile-container .lidar-canvas');
     const canvasEl = /** @type {HTMLCanvasElement} */ (canvas.node());
 
-    const svgCoordinates = d3mouse(svgEl);
-    const canvasCoordinates = d3mouse(canvasEl);
+    const svgCoordinates = d3pointer(svgEl);
+    const canvasCoordinates = d3pointer(canvasEl);
     const margin = this.manager_.config.clientConfig.margin;
     const xs = svgCoordinates[0];
     const ys = svgCoordinates[1];

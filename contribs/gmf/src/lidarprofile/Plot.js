@@ -28,8 +28,7 @@ import {
   axisBottom as d3axisBottom,
   axisLeft as d3axisLeft,
   scaleLinear as d3scaleLinear,
-  event as d3event,
-  mouse as d3mouse,
+  pointer as d3pointer,
   select as d3select,
   zoom as d3zoom,
 } from 'd3';
@@ -277,9 +276,10 @@ export default class {
 
   /**
    * Update the plot data at the end of the zoom process
+   * @param {any} event
    */
-  zoomEnd() {
-    if (d3event.sourceEvent && this.moved_ === false) {
+  zoomEnd(event) {
+    if (event.sourceEvent && this.moved_ === false) {
       return;
     }
     this.moved_ = false;
@@ -295,8 +295,9 @@ export default class {
 
   /**
    * Update the plot axis during the zoom process
+   * @param {any} event
    */
-  zoomed() {
+  zoomed(event) {
     if (!this.manager_.measure) {
       throw new Error('Missing manager.measure');
     }
@@ -306,16 +307,16 @@ export default class {
     if (!this.scaleY) {
       throw new Error('Missing scaleY');
     }
-    if (d3event.sourceEvent && d3event.sourceEvent.type === 'mousemove') {
+    if (event.sourceEvent && event.sourceEvent.type === 'mousemove') {
       this.moved_ = true;
-      if (d3event.sourceEvent.movementX == 0 && d3event.sourceEvent.movementY == 0) {
+      if (event.sourceEvent.movementX == 0 && event.sourceEvent.movementY == 0) {
         return;
       }
     }
 
     this.manager_.measure.clearMeasure();
 
-    const tr = d3event.transform;
+    const tr = event.transform;
     const svg = d3select('#gmf-lidarprofile-container svg.lidar-svg');
     const xAxis = d3axisBottom(this.scaleX);
     const yAxis = d3axisLeft(this.scaleY).tickSize(-this.width_);
@@ -359,7 +360,7 @@ export default class {
 
     const canvas = d3select('#gmf-lidarprofile-container .lidar-canvas');
     const canvasEl = /** @type {HTMLCanvasElement} */ (canvas.node());
-    const canvasCoordinates = d3mouse(canvasEl);
+    const canvasCoordinates = d3pointer(canvasEl);
     const classification_colors = this.manager_.config.serverConfig.classification_colors;
 
     let cx, cy;
