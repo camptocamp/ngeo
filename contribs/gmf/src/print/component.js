@@ -829,8 +829,23 @@ export class PrintController {
     // The attributes without 'clientParams' are the custom layout information (defined by end user).
     this.layout_.attributes.forEach((attribute) => {
       this.layoutInfo.attributes.push(attribute.name);
+
       if (!attribute.clientParams) {
         const name = `${attribute.name}`;
+
+        // Special case for timezone, hide it and fill it with browser timezone.
+        if (name == 'timezone') {
+          if (this.options.hiddenAttributes.includes('timezone')) {
+            this.options.hiddenAttributes.push('timezone');
+          }
+          this.layoutInfo.simpleAttributes.push({
+            name: 'timezone',
+            type: 'text',
+            value: Intl.DateTimeFormat().resolvedOptions().timeZone,
+          });
+          return;
+        }
+
         const defaultValue = attribute.default;
         /** @type {string} */
         let value =
