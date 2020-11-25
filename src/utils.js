@@ -38,8 +38,9 @@ export function isEventUsinCtrlKey(evt) {
   if (!evt) {
     return false;
   }
-  // Do not use evt.ctrlKey (or evt.metaKey on Mac) Because Firefox sometimes doesn't assign the ctrlKey.
-  return MAC ? evt.key === 'Meta' : evt.key === 'Control';
+  // Check also evt.key because Firefox on Ubuntu sometimes doesn't assign the ctrlKey flag.
+  // Don't check only the evt.key because pressing multiples keys at once shows only one key.
+  return (MAC ? evt.metaKey : evt.ctrlKey) || evt.key === 'Control';
 }
 
 /**
