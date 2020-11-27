@@ -554,6 +554,16 @@ EditingSnappingService.prototype.loadItemFeatures_ = function(item) {
       // (3) Read features from request response and add them to the item
       const readFeatures = new olFormatWFS().readFeatures(response.data);
       if (readFeatures) {
+        if (item.snappingConfig.invertXY) {
+          readFeatures.forEach(f => {
+            const geom = f.getGeometry();
+            if (geom) {
+              const coordinates = geom.getCoordinates();
+              this.switchXY_(coordinates);
+              f.getGeometry().setCoordinates(coordinates);
+            }
+          });
+        }
         item.features.extend(readFeatures);
         this.refreshSnappingSource_();
       }
@@ -561,6 +571,20 @@ EditingSnappingService.prototype.loadItemFeatures_ = function(item) {
 
 };
 
+
+/**
+ * Change the order of xy. This is to deal with the GML output format
+ * from qgisServer that returns inverted coordinates
+ * https://gis.stackexchange.com/questions/296239/gml-axis-order-problem-in-qgis
+ * Loops over all coordinates and only swap X and Y
+ * @property {coordinates} OpenLayers coordinates
+ * @return coordinates OpenLayers coordinates
+ * @private
+ */
+EditingSnappingService.prototype.switchXY_ = function(coordinates) {
+  return Array.isArray(coordinates[0]) ? coordinates.forEach(this.switchXY_) :
+    [coordinates[0], coordinates[1]] = [coordinates[1], coordinates[0]];
+};
 
 /**
  * Called when the map view changes. Load all active cache items after a small

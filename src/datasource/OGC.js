@@ -113,6 +113,7 @@ export const WMSInfoFormat = {
  * @property {boolean} [snappingToVertice] Determines whether external features can be snapped to the
  *    vertice of features from this data source or not. Defaults to `true`. Requires `snappable` to be set.
  * @property {number} [snappingTolerance=10] The tolerance in pixels the snapping should occur.
+ * @property {boolean} [snappingInvertXY=false] Whether to switch X and Y coordinates
  * @property {string} [timeAttributeName]  The name of the time attribute.
  * @property {number} [timeLowerValue] The time lower value, which can be combined with the time upper value
  *    to determine a range.
@@ -362,6 +363,14 @@ class OGC extends ngeoDatasourceDataSource {
      * @private
      */
     this.snappingTolerance_ = options.snappingTolerance !== undefined ? options.snappingTolerance : 10;
+
+    /**
+     * Determines whether to switch X and Y coordinates upon reading a GML formatted
+     * getFeature request
+     * @type {boolean}
+     * @private
+     */
+    this.snappingInvertXY_ = options.snappingInvertXY === true;
 
     /**
      * The name of the time attribute.
@@ -668,6 +677,13 @@ class OGC extends ngeoDatasourceDataSource {
    */
   get snappingTolerance() {
     return this.snappingTolerance_;
+  }
+
+  /**
+   * @return {boolean} InvertXY
+   */
+  get snappingInvertXY() {
+    return this.snappingInvertXY_;
   }
 
   /**
