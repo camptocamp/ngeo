@@ -111,11 +111,6 @@ export function DrawController($scope, gettextCatalog, ngeoFeatureHelper, ngeoFe
    */
   this.drawText;
 
-  /**
-   * Custom gr_webmap
-   * @type {import("ol/interaction/MeasureLength.js").default}
-   */
-  this.drawLinePolygon;
 
   // Watch the "active" property, and disable the draw interactions
   // when "active" gets set to false.
