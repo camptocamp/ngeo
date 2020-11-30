@@ -216,6 +216,7 @@ LayerHelper.prototype.createBasicWMSLayerFromDataSource = function (dataSource, 
  * @param {Object=} opt_customOptions Some initial options.
  * @param {number|undefined} opt_minResolution WMTS minimum resolution.
  * @param {number|undefined} opt_maxResolution WMTS maximum resolution.
+ * @param {number|undefined} opacity opacity.
  * @return {angular.IPromise<import("ol/layer/Tile.js").default>} A Promise with a layer (with source) on
  *    success, no layer else.
  */
