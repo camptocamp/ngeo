@@ -40,6 +40,7 @@ import MousePosition from 'ol/control/MousePosition.js';
 import {createStringXY} from 'ol/coordinate.js';
 import ScaleLine from 'ol/control/ScaleLine.js';
 import OverviewMap from 'ol/control/OverviewMap.js';
+import {create as createProjection} from '@geoblocks/proj/utils.js';
 
 // @ts-ignore: there is no existing types for ol-layerswitcher
 import LayerSwitcher from 'ol-layerswitcher';
@@ -52,11 +53,11 @@ import {
 } from 'ol/extent.js';
 import {get as getProjection} from 'ol/proj.js';
 
-import constants from './constants.js';
+import constants, {dynamicUrl} from './constants.js';
 
 import {getFeaturesFromIds, getFeaturesFromCoordinates} from './Querent.js';
-import * as themes from './Themes.js';
-import Search from './Search.js';
+import * as themes from 'api/Themes.js';
+import Search from 'api/Search.js';
 
 /**
  * @typedef {Object} MarkerOptions
@@ -99,6 +100,23 @@ class Map {
    * @param {MapOptions} options API options.
    */
   constructor(options) {
+    const request = new XMLHttpRequest();
+    request.open('GET', dynamicUrl.dynamicUrl, false);
+    request.send(null);
+
+    if (request.status !== 200) {
+      throw new Error('Error on getting the dynamic configuration');
+    }
+
+    Object.assign(constants, JSON.parse(request.responseText)['constants']);
+    for (const code in constants.projections) {
+      createProjection(
+        code,
+        constants.projections[code].definition.join(' '),
+        constants.projections[code].extent
+      );
+    }
+
     /** @type {import('ol/View.js').ViewOptions} */
     const viewOptions = {
       projection: getProjection(constants.projection),

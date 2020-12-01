@@ -25,6 +25,9 @@
       "gmf/*": [
         "contribs/gmf/src/*"
       ],
+      "api/*": [
+        "api/src/*"
+      ],
       "lib/*": [
         "lib/*"
       ],

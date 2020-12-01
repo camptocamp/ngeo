@@ -178,14 +178,8 @@
  */
 
 /**
- * A projection definitions.
- * @typedef {Object} Projection
- * @property {string[]} definition The definition.
- * @property {number[]} extent The extent.
- */
-/**
  * The available projections definitions.
- * @typedef {Object<string, Projection>} gmfProjectionsOptions
+ * @typedef {Object<string, import('api/options.js').Projection>} gmfProjectionsOptions
  */
 
 /**
