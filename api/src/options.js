@@ -20,6 +20,10 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 /**
+ * @module api/src/options
+ */
+
+/**
  * A projection definitions.
  * @typedef {Object} Projection
  * @property {string[]} definition The definition.
@@ -34,7 +38,7 @@
  * @property {string} [projection]
  * @property {Object<string, Projection>} [projections]
  * @property {number[]} [resolutions]
- * @property {[number, number, number, number]} [extent]
+ * @property {number[]} [extent]
  * @property {string} [backgroundLayer]
  * @property {string[]} [queryableLayers]
  */
