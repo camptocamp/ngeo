@@ -31,12 +31,8 @@ def main():
         old_ref = ref
         current = tempfile.NamedTemporaryFile(suffix="-current.png").name
         ref = tempfile.NamedTemporaryFile(suffix="-ref.png").name
-        subprocess.check_call(
-            ["gm", "composite", "-compose", "Multiply", old_current, mask, current]
-        )
-        subprocess.check_call(
-            ["gm", "composite", "-compose", "Multiply", old_ref, mask, ref]
-        )
+        subprocess.check_call(["gm", "composite", "-compose", "Multiply", old_current, mask, current])
+        subprocess.check_call(["gm", "composite", "-compose", "Multiply", old_ref, mask, ref])
 
     result = subprocess.check_output(
         [

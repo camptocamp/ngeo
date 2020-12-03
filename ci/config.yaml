@@ -1,0 +1,10 @@
+checks:
+  required_workflows:
+    rebuild.yaml: False
+  versions:
+    rebuild: False
+  codespell:
+    ignore_re:
+      - ^contribs/gmf/test/spec/data/themescapabilities\.js$
+      - ^contribs/gmf/test/spec/data/themes\.js$
+      - ^buildtools/asitvd.capabilities\.xml$

@@ -15,34 +15,39 @@ jobs:
       MAIN_BRANCH: master
       CI: true
       PATH: /bin:/usr/bin:/usr/local/bin:/home/runner/.local/bin
-      SUMMON_PROVIDER: /usr/local/bin/gopass
 
     steps:
-      - run: python3 --version
-      - run: python3 -m pip --version
       - run: /opt/google/chrome/chrome --version
 
       - uses: actions/setup-node@v1
         with:
           node-version: '14.x'
 
-      - run: node --version
-      - run: npm --version
+      - uses: actions/checkout@v2
 
-      - run: sudo apt update
-      - run: sudo apt install g++-10 libgbm1 python3-venv graphicsmagick fonts-liberation2
+      - uses: camptocamp/initialise-gopass-summon-action@v2
+        with:
+          ci-gpg-private-key: ${{secrets.CI_GPG_PRIVATE_KEY}}
+          github-gopass-ci-token: ${{secrets.GOPASS_CI_GITHUB_TOKEN}}
+          patterns: pypi docker
+        if: github.repository == 'camptocamp/ngeo'
 
-      - uses: actions/checkout@v1
-      - run: git config --global user.name "Continuous integration"
-      - run: git config --global user.email "ci@comptocamp.org"
-      - run: ls -al
+      - run: sudo python3 -m pip install --requirement=ci/requirements.txt
+
+      - name: Checks
+        run: c2cciutils-checks
+
+      - run: |
+          sudo rm /etc/apt/sources.list.d/*.list
+          sudo apt update
+          sudo apt install g++-10 libgbm1 graphicsmagick fonts-liberation2
+
       - run: buildtools/set-version
       - run: make .build/node_modules.timestamp
 
       # Lint
       - run: npx tsc --version
       - run: npm run typecheck
-      - run: make spell
       - run: make lint
       - run: make test
       - run: make check-examples-checker
@@ -65,11 +70,6 @@ jobs:
           path: /home/runner/.npm/_logs
         if: failure()
 
-      - uses: camptocamp/initialise-gopass-summon-action@v1
-        with:
-          ci-gpg-private-key: ${{secrets.CI_GPG_PRIVATE_KEY}}
-          github-gopass-ci-token: ${{secrets.GOPASS_CI_GITHUB_TOKEN}}
-        if: github.repository == 'camptocamp/ngeo'
       - run: echo "//registry.npmjs.org/:_authToken=$(gopass gs/ci/npm/token)" > ~/.npmrc
         if: github.repository == 'camptocamp/ngeo'
       - name: Build ~/.transifexrc

@@ -8,7 +8,7 @@
     "build-gmf-examples": "TARGET=gmf-examples webpack --mode=development --progress --debug",
     "build-gmf-apps": "TARGET=gmf-apps webpack --mode=development --progress --debug",
     "build-api": "webpack --config buildtools/webpack.api.js --mode=development --progress --debug",
-    "eclint": "editorconfig-checker --exclude secrets.tar.enc",
+    "eclint": "editorconfig-checker -disable-indentation -disable-max-line-length --exclude secrets.tar.enc",
     "serve-ngeo-examples": "DEV_SERVER=1 TARGET=ngeo-examples webpack-dev-server --https --cert=private.crt --key=private.key --port=3000 --mode=development --progress --watch --debug",
     "serve-gmf-examples": "DEV_SERVER=1 TARGET=gmf-examples webpack-dev-server --https --cert=private.crt --key=private.key --port=3000 --mode=development --progress --watch --debug",
     "serve-gmf-apps": "DEV_SERVER=1 TARGET=gmf-apps webpack-dev-server --https --cert=private.crt --key=private.key --port=3000 --mode=development --progress --debug",
