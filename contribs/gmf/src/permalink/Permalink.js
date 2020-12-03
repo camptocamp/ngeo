@@ -153,7 +153,7 @@ const ParamPrefix = {
  *
  * - `rl_features` (string)
  *     This parameter defines vector features to add to the map upon
- *     initializaiton. In addition, if the application includes the
+ *     initialization. In addition, if the application includes the
  *     draw tool, the features added can be modified. The draw tool
  *     can also be used to add new features, which are automatically
  *     added in the url.

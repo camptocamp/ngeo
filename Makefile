@@ -110,7 +110,7 @@ help:
 	@echo
 
 .PHONY: check
-check: lint spell check-examples-checker check-examples test examples-hosted-apps
+check: lint check-examples-checker check-examples test examples-hosted-apps
 
 .PHONY: check-examples-checker
 check-example-checker: $(CHECK_EXAMPLE_CHECKER)
@@ -119,32 +119,15 @@ check-example-checker: $(CHECK_EXAMPLE_CHECKER)
 check-examples: $(BUILD_EXAMPLES_CHECK_TIMESTAMP_FILES)
 
 .PHONY: lint
-lint: .build/eslint.timestamp git-attributes eof-newline lint-extra
+lint: .build/eslint.timestamp lint-extra
 
 .PHONY: lint-extra
 lint-extra:
 	if [ "`git grep @fileoverview src contribs`" != "" ]; then echo "Using @fileoverview breaks the documentation main page"; false; fi
 	if [ "`git grep @example src contribs`" != "" ]; then echo "We don't use @example to have the example in the description"; false; fi
 
-.PHONY: spell
-spell: .build/python-venv.timestamp
-	$(PY_VENV_BIN)/codespell --quiet-level=2 --ignore-words=spell-ignore-words.txt \
-		$(shell find -name 'node_modules' -prune -or -name '.build' -prune -or -name '.git' -prune \
-		-or -name '__pycache__' -prune -or -name 'build' -prune \
-		-or \( -type f -and -not -name '*.png' -and -not -name '*.mo' -and -not -name '*.po*' -and -not -name '*_translation' \
-		-and -not -name 'themescapabilities.js' -and -not -name 'themes.js' -and -not -name 'prettify.js' \
-		-and -not -name 'package-lock.json' \) -print)
-
 .PHONY: eslint
 eslint: .build/eslint.timestamp
-
-.PHONY: git-attributes
-git-attributes:
-	git --no-pager diff --check `git log --oneline | tail -1 | cut -f 1 -d ' '`
-
-.PHONY: eof-newline
-eof-newline:
-	buildtools/test-eof-newline
 
 .PHONY: test
 test: .build/node_modules.timestamp

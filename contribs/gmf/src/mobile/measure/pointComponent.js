@@ -64,7 +64,7 @@ module.run(/* @ngInject */ ($templateCache) => {
  *     of decimal to display for the coordinate.
  * @htmlAttribute {Array<LayerConfig>}
  *     gmf-mobile-measurepoint-layersconfig Raster elevation layers to get
- *     information under the point and its configuaration.
+ *     information under the point and its configuration.
  * @htmlAttribute {import("ol/Map.js").default} gmf-mobile-measurepoint-map The map.
  * @htmlAttribute {import("ol/style/Style.js").StyleLike=}
  *     gmf-mobile-measurepoint-sketchstyle A style for the measure point.
