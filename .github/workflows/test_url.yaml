@@ -7,7 +7,10 @@ on:
 
 jobs:
   all:
-    runs-on: ubuntu-latest
+    name: Add message on pull requests with the related examples
+    runs-on: ubuntu-20.04
+    timeout-minutes: 2
+
     steps:
       - run: npm install --production @actions/github
       - run: |

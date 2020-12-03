@@ -12,8 +12,8 @@ if len(os.environ.get("GITHUB_REF", "")) == 0:
 with open("package.json") as package_json_file:
     package_json = json.loads(package_json_file.read())
 
-version = os.environ["GITHUB_REF"].split('/')
-if len(version) != 3 or version[1] != 'tags':
+version = os.environ["GITHUB_REF"].split("/")
+if len(version) != 3 or version[1] != "tags":
     sys.exit(0)
 version = version[2]
 
