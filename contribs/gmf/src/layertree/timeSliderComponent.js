@@ -266,7 +266,11 @@ Controller.prototype.getTimeValueList_ = function () {
       timeValueList.push(new Date(date).getTime());
     });
   } else {
-    const maxNbValues = 1024;
+    let maxNbValues = 1024;
+    // if maxNbOfValues is too small with day resolution the end date will be smaller than the maxDate and no values added to the timeValueList
+    if (wmsTime.resolution == 'day') {
+      maxNbValues *= 12;
+    }
     const endDate = new Date(minDate.getTime());
     endDate.setFullYear(minDate.getFullYear() + maxNbValues * wmsTime.interval[0]);
     endDate.setMonth(
