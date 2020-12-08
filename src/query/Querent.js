@@ -703,6 +703,9 @@ export class Querent {
         // not used. Delete them for clarity.
         delete getFeatureCommonOptions.bbox;
         delete getFeatureCommonOptions.geometryName;
+      } else {
+        // If there is no queryIconPosition, use a simple array of names and a common geom.
+        getFeatureCommonOptions.featureTypes = featureTypesNames;
       }
 
       if (!url) {
