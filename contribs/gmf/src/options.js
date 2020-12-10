@@ -440,7 +440,7 @@
  * @property {number} decimals The number of significant digits to display.
  * @property {string} format The used formatter
  * @property {MeasureRasterLayer[]} rasterLayers Raster elevation layers to get
- *     information under the point and its configuaration.
+ *     information under the point and its configuration.
  * @property {import('ngeo/options.js').StyleLike} sketchStyle A style for the measure point.
  */
 

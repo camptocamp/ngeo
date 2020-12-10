@@ -6,8 +6,8 @@ on:
     - cron: '30 2 * * *'
 
 jobs:
-  main:
-    runs-on: ubuntu-18.04
+  audit:
+    runs-on: ubuntu-20.04
     name: Audit
     timeout-minutes: 5
 
@@ -17,17 +17,14 @@ jobs:
         branch:
           - '2.4'
           - '2.5'
+          - master
 
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
         with:
           ref: ${{ matrix.branch }}
-      - run: sudo npm install --global better-npm-audit npm
-      - run: npm install --package-lock
-      - run: |
-          node /usr/local/lib/node_modules/better-npm-audit audit --level moderate \
-          --ignore=$(cat npm-cve-ignore 2> /dev/null || true) || (
-            npm audit fix --force
-            git diff
-            git diff-index --quiet HEAD
-          )
+
+      - run: sudo python3 -m pip install --requirement=ci/requirements.txt
+
+      - name: Audit
+        run: c2cciutils-audit

@@ -424,7 +424,7 @@ QueryGridController.prototype.isSelected = function (gridSource) {
 };
 
 /**
- * Try to merge the mergable sources.
+ * Try to merge the mergeable sources.
  * @param {Array<import('ngeo/statemanager/WfsPermalink.js').QueryResultSource>} sources Sources.
  * @return {Array<import('ngeo/statemanager/WfsPermalink.js').QueryResultSource>} The merged sources.
  */
@@ -453,7 +453,7 @@ QueryGridController.prototype.getMergedSources_ = function (sources) {
 
 /**
  * Check if the given source should be merged. If so, an artificial source
- * that will contain the features of all mergable sources is returned. If not,
+ * that will contain the features of all mergeable sources is returned. If not,
  * `null` is returned.
  * @param {import('ngeo/statemanager/WfsPermalink.js').QueryResultSource} source Source.
  * @param {Object<string, import('ngeo/statemanager/WfsPermalink.js').QueryResultSource>} mergedSources

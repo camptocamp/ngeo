@@ -34,14 +34,11 @@ import re
 all_required_js = set()
 IMPORT_FROM = re.compile(r"^import +.* +from +'(.*)';$")
 ONLY_IMPORT = re.compile(r"^import +'(.*)';$")
-for pathname in (
-    'src/**/*.js',
-    'contribs/gmf/src/**/*.js'
-):
+for pathname in ("src/**/*.js", "contribs/gmf/src/**/*.js"):
     for filename in glob.glob(pathname, recursive=True):
         with open(filename) as js:
-            js = js.read().split('\n')
-            js = [e for e in js if 'import' in e]
+            js = js.read().split("\n")
+            js = [e for e in js if "import" in e]
             for line in js:
                 match = IMPORT_FROM.match(line)
                 if match:
@@ -52,15 +49,15 @@ for pathname in (
                         all_required_js.add(match.group(1))
 
 all_required_js = {a.strip() for a in all_required_js}
-all_required_js = {a for a in all_required_js if not a.startswith('./')}
-all_required_js = {a for a in all_required_js if not a.startswith('ngeo/')}
-all_required_js = {a for a in all_required_js if not a.startswith('gmf/')}
-all_required_js = {a for a in all_required_js if not a.startswith('goog/')}
-all_required_js = {a for a in all_required_js if not a.startswith('olcs/')}
-all_required_js = {a for a in all_required_js if not a.startswith('jsts/')}
-all_required_js = {a for a in all_required_js if a not in (
-    'corejs-typeahead', 'angular-float-thead', 'moment'
-)}
-all_required_js = {a for a in all_required_js if not a.endswith('.css')}
+all_required_js = {a for a in all_required_js if not a.startswith("./")}
+all_required_js = {a for a in all_required_js if not a.startswith("ngeo/")}
+all_required_js = {a for a in all_required_js if not a.startswith("gmf/")}
+all_required_js = {a for a in all_required_js if not a.startswith("goog/")}
+all_required_js = {a for a in all_required_js if not a.startswith("olcs/")}
+all_required_js = {a for a in all_required_js if not a.startswith("jsts/")}
+all_required_js = {
+    a for a in all_required_js if a not in ("corejs-typeahead", "angular-float-thead", "moment")
+}
+all_required_js = {a for a in all_required_js if not a.endswith(".css")}
 for js in sorted(all_required_js):
     print("require('{}')".format(js))

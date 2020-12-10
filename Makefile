@@ -113,7 +113,7 @@ help:
 	@echo
 
 .PHONY: check
-check: lint spell check-examples-checker check-examples test examples-hosted-apps
+check: lint check-examples-checker check-examples test examples-hosted-apps
 
 .PHONY: check-examples-checker
 check-examples-checker: $(CHECK_EXAMPLE_CHECKER)
@@ -128,15 +128,6 @@ lint: .build/eslint.timestamp eclint lint-extra
 lint-extra:
 	if [ "`git grep @fileoverview src contribs`" != "" ]; then echo "Using @fileoverview breaks the documentation main page"; false; fi
 	if [ "`git grep @example src contribs`" != "" ]; then echo "We don't use @example to have the example in the description"; false; fi
-
-.PHONY: spell
-spell: .build/python-venv.timestamp
-	$(PY_VENV_BIN)/codespell --quiet-level=2 --ignore-words=spell-ignore-words.txt \
-		$(shell find -name 'node_modules' -prune -or -name '.build' -prune -or -name '.git' -prune \
-		-or -name '__pycache__' -prune -or -name 'build' -prune \
-		-or \( -type f -and -not -name '*.png' -and -not -name '*.mo' -and -not -name '*.po*' -and -not -name '*_translation' \
-		-and -not -name 'themescapabilities.js' -and -not -name 'themes.js' -and -not -name 'prettify.js' \
-		-and -not -name 'asitvd.capabilities.xml' \) -print)
 
 .PHONY: eslint
 eslint: .build/eslint.timestamp
@@ -372,7 +363,6 @@ contribs/gmf/build/angular-locale_%.js: package.json
 .build/python-venv.timestamp: requirements.txt
 	mkdir -p $(dir $@)
 	python3 -m venv .build/python-venv
-	$(PY_VENV_BIN)/pip install `grep ^pip== requirements.txt --colour=never`
 	$(PY_VENV_BIN)/pip install -r requirements.txt
 	touch $@
 
