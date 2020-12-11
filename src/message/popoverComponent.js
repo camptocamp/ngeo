@@ -180,7 +180,7 @@ function PopoverController($scope) {
 }
 
 /**
- * Dissmiss popover function
+ * Dismiss popover function
  */
 PopoverController.prototype.dismissPopover = function () {
   if (!this.anchorElm) {
