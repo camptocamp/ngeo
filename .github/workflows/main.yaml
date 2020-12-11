@@ -24,6 +24,8 @@ jobs:
           node-version: '14.x'
 
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
       - uses: camptocamp/initialise-gopass-summon-action@v2
         with:
