@@ -55,7 +55,6 @@ before_script:
 script:
 # Lint
 - make lint
-- make spell
 - make check-examples-checker
 - make test
 # Webpack build of ngeo/gmf examples and gmf apps

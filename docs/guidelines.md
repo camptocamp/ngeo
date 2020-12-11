@@ -50,7 +50,7 @@ maintainable, reusable, evolving.
 
 In `ngeo`, we want to have very generic code that is shared between `gmf` and
 other web map applications. When you add some code in `ngeo`, you need to follow
-some rules that helps the code to be easly usable and customisable.
+some rules that helps the code to be easily usable and customisable.
 
 
 ## Coding style guide

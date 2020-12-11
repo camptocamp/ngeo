@@ -1,0 +1,7 @@
+checks:
+  black: False
+  isort: False
+  codespell: False
+  required_workflows: False
+  versions:
+    rebuild: False

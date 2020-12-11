@@ -143,7 +143,7 @@ function PopoverController($scope) {
 
 
 /**
- * Dissmiss popover function
+ * Dismiss popover function
  */
 PopoverController.prototype.dismissPopover = function() {
   this.shown = false;
