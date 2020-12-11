@@ -31,7 +31,7 @@ jobs:
         with:
           ci-gpg-private-key: ${{secrets.CI_GPG_PRIVATE_KEY}}
           github-gopass-ci-token: ${{secrets.GOPASS_CI_GITHUB_TOKEN}}
-          patterns: pypi docker
+          patterns: npm
         if: github.repository == 'camptocamp/ngeo'
 
       - run: sudo python3 -m pip install --requirement=ci/requirements.txt
