@@ -24,11 +24,8 @@
         role="tab"
         data-toggle="tab">
 
-        <span ng-if="gridSource.source.tooManyResults !== true">
+        <span>
           {{gridSource.source.label | translate}} ({{gridSource.source.features.length}})
-        </span>
-        <span ng-if="gridSource.source.tooManyResults === true">
-          {{gridSource.source.label | translate}} ({{gridSource.source.totalFeatureCount}}*)
         </span>
       </a>
     </li>
@@ -43,83 +40,78 @@
       id="{{ctrl.escapeValue(gridSource.source.label)}}">
 
       <ngeo-grid
-        ngeo-grid-configuration="gridSource.configuration"
-        ng-if="gridSource.source.tooManyResults !== true">
+        ngeo-grid-configuration="gridSource.configuration">
       </ngeo-grid>
+  </div>
+  <div class="container-fluid">
+  <div ng-show="!ctrl.pending && ctrl.getActiveGridSource() && ctrl.getActiveGridSource().configuration !== null" class="row">
+    <div class="col-md-5 my-auto" translate>
+      <span ng-if="ctrl.hasActiveSourceTooManyResults()" class="gmf-query-grid-too-many text-warning">{{'Only' | translate}} {{ctrl.getActiveGridSourceLimit()}} {{'of' | translate}} {{ctrl.getActiveGridSourceTotalFeatures()}} {{'results displayed, as the maximum number is reached. Please refine your query.' | translate }}</span>
+    </div>
+    <div class="col-md-7" class="pull-right">
+      <ul class="nav justify-content-end">
+        <li
+          class="ng-hide"
+          ng-show="ctrl.isOneSelected()">
+          <div class="btn btn-sm ng-binding">
+            {{ctrl.getSelectedRowCount()}} <span translate>selected element(s)</span>
+          </div>
+        </li>
 
-      <div ng-if="gridSource.source.tooManyResults === true">
-        <div class="gmf-displayquerygrid-message alert alert-warning">
-          <p><span translate>The results can not be displayed because the maximum number has been reached</span> ({{gridSource.source.limit}}).</p>
-          <p translate>Please refine your query.</p>
-        </div>
-      </div>
+        <li
+          ng-show="ctrl.isOneSelected()"
+          class="ng-hide">
+          <button
+            class="btn btn-link btn-sm"
+            title="{{'Zoom to selection' | translate}}"
+            ng-click="ctrl.zoomToSelection()">
+            <i class="fa fa-search-plus"></i> <span translate>Zoom to</span>
+          </button>
+        </li>
+
+        <li
+          ng-show="ctrl.isOneSelected()"
+          class="ng-hide">
+          <button
+            class="btn btn-link btn-sm"
+            title="{{'Export selection as CSV' | translate}}"
+            ng-click="ctrl.downloadCsv()">
+            <i class="fa fa-download"></i> <span translate>Export as CSV</span>
+          </button>
+        </li>
+
+        <li class="dropdown">
+          <button
+            type="button"
+            class="dropup btn btn-default btn-sm dropdown-toggle"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false">
+            <span translate>Select</span>
+          </button>
+          <ul
+            class="dropdown-menu"
+            aria-labelledby="dLabel">
+            <li>
+              <a
+                href=""
+                ng-click="ctrl.selectAll()" translate>All</a>
+            </li>
+            <li>
+              <a
+                href=""
+                ng-click="ctrl.unselectAll()" translate>None</a>
+            </li>
+            <li>
+              <a
+                href=""
+                ng-click="ctrl.invertSelection()" translate>Reverse selection</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
     </div>
   </div>
-
-  <div ng-show="!ctrl.pending && ctrl.getActiveGridSource() && ctrl.getActiveGridSource().configuration !== null">
-
-    <ul class="nav justify-content-end">
-
-      <li
-        class="ng-hide"
-        ng-show="ctrl.isOneSelected()">
-        <div class="btn btn-sm ng-binding">
-          {{ctrl.getSelectedRowCount()}} <span translate>selected element(s)</span>
-        </div>
-      </li>
-
-      <li
-        ng-show="ctrl.isOneSelected()"
-        class="ng-hide">
-        <button
-          class="btn btn-link btn-sm"
-          title="{{'Zoom to selection' | translate}}"
-          ng-click="ctrl.zoomToSelection()">
-          <i class="fa fa-search-plus"></i> <span translate>Zoom to</span>
-        </button>
-      </li>
-
-      <li
-        ng-show="ctrl.isOneSelected()"
-        class="ng-hide">
-        <button
-          class="btn btn-link btn-sm"
-          title="{{'Export selection as CSV' | translate}}"
-          ng-click="ctrl.downloadCsv()">
-          <i class="fa fa-download"></i> <span translate>Export as CSV</span>
-        </button>
-      </li>
-
-      <li class="dropdown">
-        <button
-          type="button"
-          class="dropup btn btn-default btn-sm dropdown-toggle"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false">
-          <span translate>Select</span>
-        </button>
-        <ul
-          class="dropdown-menu"
-          aria-labelledby="dLabel">
-          <li>
-            <a
-              href=""
-              ng-click="ctrl.selectAll()" translate>All</a>
-          </li>
-          <li>
-            <a
-              href=""
-              ng-click="ctrl.unselectAll()" translate>None</a>
-          </li>
-          <li>
-            <a
-              href=""
-              ng-click="ctrl.invertSelection()" translate>Reverse selection</a>
-          </li>
-        </ul>
-      </li>
-    </ul>
   </div>
 
   <div ng-show="ctrl.pending" class="spinner-grid">

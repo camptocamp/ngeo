@@ -49,6 +49,7 @@ import olSourceImageWMS from 'ol/source/ImageWMS.js';
  * @property {number} limit
  * @property {boolean} [tooManyFeatures]
  * @property {number} [totalFeatureCount]
+ * @property {string []} [requestPartners] All datasources requested in the same request
  */
 
 /**
@@ -87,10 +88,6 @@ import olSourceImageWMS from 'ol/source/ImageWMS.js';
  *    property to be set.
  * @property {number} [tolerance] A minimal buffer value in pixels to ensure a minimal bbox around a
  *    coordinate to issue WFS requests.
- * @property {boolean} [wfsCount] When set, before making WFS GetFeature requests to fetch features,
- *    WFS GetFeature requests with `resultType = 'hits'` are made first. If
- *    the number of records for the request would exceed the limit, then
- *    no features are returned.
  * @property {boolean} [bboxAsGETParam=false] Pass the queried bbox as a parameter of the GET query on WFS
  *    requests.
  */
@@ -254,7 +251,6 @@ export class Querent {
         }
       }
     }
-
     return queryableDataSources;
   }
 
@@ -399,6 +395,53 @@ export class Querent {
   // === PRIVATE methods ===
 
   /**
+   * Handles the result of a single WFS GetFeature
+   * request. Read features from the response and return them.
+   *
+   * @param {ngeoDatasourceOGC[]} dataSources List of
+   *     queryable data sources that were used to do the query.
+   * @param {number} maxFeatures The maximum number of features to get with the query.
+   * @param {number} totalFeatureCount Count of features of the query.
+   * @param {boolean} wfs Whether the query was WFS or WMS.
+   * @param {angular.IHttpResponse<Document|Element|string>} response Response.
+   * @return {QuerentResult} Hash of features by data source ids.
+   * @private
+   */
+  handleWFSQueryResult_(dataSources, maxFeatures, totalFeatureCount, wfs, response) {
+    /** @type {QuerentResult} */
+    const hash = {};
+    // For combination of layers the service gives some less than the maxFeatures allowed, so recompute the effective obtained number
+    const formatWFS = new olFormatWFS();
+    const limit = formatWFS.readFeatures(response.data).length;
+    const tooManyFeatures = totalFeatureCount > limit;
+    /** @type {string[]} */
+    const datasourceNames = [];
+    for (const dataSource of dataSources) {
+      const dataSourceId = dataSource.id;
+      datasourceNames.push(dataSource.name);
+      /** @type {Array<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>} */
+      const features =
+        dataSource instanceof ngeoDatasourceOGC
+          ? this.readAndTypeFeatures_(dataSource, response.data, wfs)
+          : [];
+      this.setUniqueIds_(features, dataSource.id);
+      hash[dataSourceId] = {
+        features,
+        limit,
+        tooManyFeatures,
+        totalFeatureCount,
+      };
+    }
+    Object.values(hash).forEach(function (value, index) {
+      value.limit = limit;
+      value.tooManyFeatures = tooManyFeatures;
+      value.requestPartners = datasourceNames;
+    });
+
+    return hash;
+  }
+
+  /**
    * Handles the result of a single WMS GetFeatureInfo or WFS GetFeature
    * request. Read features from the response and return them.
    *
@@ -538,6 +581,7 @@ export class Querent {
    * @private
    */
   issueCombinedWFS_(combinedDataSources, options) {
+    /** @type {angular.IPromise<QuerentResult>[]} */
     const promises = [];
 
     // The 'limit' option is mandatory in the querent service
@@ -548,13 +592,6 @@ export class Querent {
     const resolution = view.getResolution();
     const projection = view.getProjection();
     const srsName = projection.getCode();
-
-    // === NOTE - TEMPORARY FIX ===
-    // The wfsCount property (a.k.a. "queryCountFirst" option of the
-    // query tool) has been temporarily disabled to allow WFS queries
-    // to always be made until we come up with a better fix.
-    //const wfsCount = options.wfsCount === true;
-    const wfsCount = false;
 
     if (resolution === undefined) {
       throw new Error('Missing resolution');
@@ -691,7 +728,7 @@ export class Querent {
             });
           });
         }
-      }
+      } //for each datasource
 
       if (!getFeatureCommonOptions) {
         throw new Error('Missing getFeatureCommonOptions');
@@ -722,26 +759,22 @@ export class Querent {
       //
       //     If we do not need to count features first, then proceed with
       //     an normal WFS GetFeature request.
-      const getFeatureDefer = this.q_.defer();
-      promises.push(
-        getFeatureDefer.promise.then(this.handleQueryResult_.bind(this, dataSources, maxFeatures, true))
-      );
 
       // (4.1) Count, if required
       /** @type {angular.IPromise<number|void>} */
-      let countPromise;
-      if (wfsCount) {
-        /** @type {import('ol/format/WFS.js').WriteGetFeatureOptions} */
-        const getCountOptions = Object.assign(
-          {
-            resultType: 'hits',
-          },
-          getFeatureCommonOptions
-        );
-        const featureCountXml = wfsFormat.writeGetFeature(getCountOptions);
-        const featureCountRequest = xmlSerializer.serializeToString(featureCountXml);
-        const canceler = this.registerCanceler_();
-        countPromise = this.http_
+      /** @type {import('ol/format/WFS.js').WriteGetFeatureOptions} */
+      const getCountOptions = Object.assign(
+        {
+          resultType: 'hits',
+        },
+        getFeatureCommonOptions
+      );
+      const featureCountXml = wfsFormat.writeGetFeature(getCountOptions);
+      const featureCountRequest = xmlSerializer.serializeToString(featureCountXml);
+      const canceler = this.registerCanceler_();
+      /** @type {angular.IPromise<QuerentResult>} */
+      const countPromise = new Promise((resolve, reject) => {
+        this.http_
           .post(url, featureCountRequest, {
             params: params,
             headers: {'Content-Type': 'text/xml; charset=UTF-8'},
@@ -751,56 +784,45 @@ export class Querent {
             if (!dataSources[0].wfsFormat) {
               throw new Error('Missing wfsFormat');
             }
-            const meta = dataSources[0].wfsFormat.readFeatureCollectionMetadata(response.data);
-            if (!meta) {
-              throw new Error('Missing meta');
+
+            const metadata = dataSources[0].wfsFormat.readFeatureCollectionMetadata(response.data);
+            if (!metadata) {
+              throw new Error('Missing metadata');
             }
-            return meta.numberOfFeatures;
+            const numberOfFeatures = metadata.numberOfFeatures;
+            const getFeatureOptions = Object.assign(
+              {
+                maxFeatures,
+              },
+              getFeatureCommonOptions
+            );
+            const featureRequestXml = wfsFormat.writeGetFeature(getFeatureOptions);
+            const featureRequest = xmlSerializer.serializeToString(featureRequestXml);
+            if (typeof url !== 'string') {
+              throw new Error('Wrong URL type');
+            }
+            const canceler = this.registerCanceler_();
+            this.http_
+              .post(url, featureRequest, {
+                params: params,
+                headers: {'Content-Type': 'text/xml; charset=UTF-8'},
+                timeout: canceler.promise,
+              })
+              .then((response) => {
+                const results = this.handleWFSQueryResult_(
+                  dataSources,
+                  maxFeatures,
+                  numberOfFeatures,
+                  true,
+                  response
+                );
+                resolve(results);
+              });
           });
-      } else {
-        countPromise = this.q_.resolve();
-      }
-
-      // (4.2) After count, do GetFeature (if required)
-      /**
-       * @param {number|void} numberOfFeatures value
-       * @return {?angular.IPromise<never>}
-       */
-      const afterCount_ = (numberOfFeatures) => {
-        // `true` is returned if a count request was made AND there would
-        // be too many features.
-        if (numberOfFeatures === undefined || numberOfFeatures < maxFeatures) {
-          /** @type {import('ol/format/WFS.js').WriteGetFeatureOptions} */
-          const getFeatureOptions = Object.assign(
-            {
-              maxFeatures,
-            },
-            getFeatureCommonOptions
-          );
-          const featureRequestXml = wfsFormat.writeGetFeature(getFeatureOptions);
-          const featureRequest = xmlSerializer.serializeToString(featureRequestXml);
-          if (typeof url !== 'string') {
-            throw new Error('Wrong URL type');
-          }
-          const canceler = this.registerCanceler_();
-          this.http_
-            .post(url, featureRequest, {
-              params: params,
-              headers: {'Content-Type': 'text/xml; charset=UTF-8'},
-              timeout: canceler.promise,
-            })
-            .then((response) => {
-              getFeatureDefer.resolve(response);
-            });
-        } else {
-          getFeatureDefer.resolve(numberOfFeatures);
-        }
-        return null;
-      };
-      countPromise.then(afterCount_);
+      });
+      promises.push(countPromise);
     }
-
-    return this.q_.all(promises).then(handleCombinedQueryResult_);
+    return Promise.all(promises).then(handleCombinedQueryResult_);
   }
 
   /**

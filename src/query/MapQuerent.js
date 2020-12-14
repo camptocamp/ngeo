@@ -105,17 +105,6 @@ export class MapQuerent {
     this.limit_ = options.limit !== undefined ? options.limit : 50;
 
     /**
-     * When set, before making WFS GetFeature requests to fetch features,
-     * WFS GetFeature requests with `resultType = 'hits'` are made first. If
-     * the number of records for the request would exceed the limit, then
-     * no features are returned.
-     *
-     * @type {boolean}
-     * @private
-     */
-    this.queryCountFirst_ = options.queryCountFirst !== undefined ? options.queryCountFirst : false;
-
-    /**
      * @type {number}
      * @private
      */
@@ -174,7 +163,6 @@ export class MapQuerent {
       queryableDataSources: queryableDataSources,
       limit: limit,
       tolerance: this.tolerance_,
-      wfsCount: this.queryCountFirst_,
       bboxAsGETParam: this.bboxAsGETParam_,
     });
     this.result_.pending = true;
@@ -234,6 +222,7 @@ export class MapQuerent {
       const limit = querentResultItem.limit;
       const tooManyResults = querentResultItem.tooManyFeatures === true;
       const totalFeatureCount = querentResultItem.totalFeatureCount;
+      const requestPartners = querentResultItem.requestPartners;
 
       /** @type {Object<string, Array<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>>} */
       const typeSeparatedFeatures = {};
@@ -313,6 +302,7 @@ export class MapQuerent {
             tooManyResults: tooManyResults,
             totalFeatureCount: totalFeatureCount,
             identifierAttributeField: dataSource.identifierAttribute,
+            requestPartners: requestPartners,
           });
           total += features.length;
         }

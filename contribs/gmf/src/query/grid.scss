@@ -99,3 +99,9 @@ $table-height: $displayquerygrid-height - $app-margin - 2 * $map-tools-size;
 .gmf-query-grid-active main {
   height: calc(100% - #{$displayquerygrid-height});
 }
+
+.gmf-query-grid-too-many {
+  font-style: italic;
+  position: relative;
+  top: 50%;
+}
