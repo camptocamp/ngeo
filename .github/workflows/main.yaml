@@ -32,7 +32,7 @@ jobs:
         with:
           ci-gpg-private-key: ${{secrets.CI_GPG_PRIVATE_KEY}}
           github-gopass-ci-token: ${{secrets.GOPASS_CI_GITHUB_TOKEN}}
-          patterns: npm
+          patterns: npm transifex
         if: github.repository == 'camptocamp/ngeo'
 
       - run: |
@@ -75,16 +75,6 @@ jobs:
           name: Npm logs
           path: /home/runner/.npm/_logs
         if: failure()
-
-      - run: echo "//registry.npmjs.org/:_authToken=$(gopass gs/ci/npm/token)" > ~/.npmrc
-        if: github.repository == 'camptocamp/ngeo'
-      - name: Build ~/.transifexrc
-        run: |
-          summon --yaml '
-            USERNAME: !var gs/ci/transifex/rw/username
-            PASSWORD: !var gs/ci/transifex/rw/password
-          ' bash -c 'envsubst < buildtools/transifexrc.tmpl > ~/.transifexrc'
-        if: github.repository == 'camptocamp/ngeo'
 
       - run: make transifex-send
         if: github.repository == 'camptocamp/ngeo' && github.ref == format('refs/heads/{0}', env.MAIN_BRANCH)
