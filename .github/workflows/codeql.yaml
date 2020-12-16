@@ -10,6 +10,7 @@ jobs:
     name: CodeQL scanning
     runs-on: ubuntu-20.04
     timeout-minutes: 15
+    if: "!startsWith(github.event.head_commit.message, '[skip ci] ')"
 
     steps:
       - name: Checkout repository
