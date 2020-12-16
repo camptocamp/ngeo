@@ -35,7 +35,7 @@
     "@babel/plugin-proposal-class-properties": "7.12.1",
     "@babel/plugin-syntax-object-rest-spread": "7.8.3",
     "@babel/plugin-transform-spread": "7.12.1",
-    "@babel/preset-env": "7.12.10",
+    "@babel/preset-env": "7.12.11",
     "@camptocamp/babel-plugin-angularjs-annotate": "0.8.2",
     "@fortawesome/fontawesome-free": "5.15.1",
     "@geoblocks/proj": "0.4.2",
