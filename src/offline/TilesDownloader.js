@@ -92,7 +92,7 @@ export default class TileDownloader {
 
     /**
      * @private
-     * @type {?Promise<function(): unknown>}
+     * @type {?Promise<void>}
      */
     this.promise_ = null;
 
@@ -114,7 +114,7 @@ export default class TileDownloader {
   }
 
   /**
-   * @return {Promise<function(): unknown>} A promise that resolves when the downloads are complete (failing or not)
+   * @return {Promise<void>} A promise that resolves when the downloads are complete (failing or not)
    */
   download() {
     if (this.promise_) {
