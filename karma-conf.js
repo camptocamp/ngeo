@@ -55,9 +55,9 @@ module.exports = function(config) {
 
     customLaunchers: {
       optchrome: {
-        base: 'Chrome',
-        flags: ['--no-sandbox']
-      }
+        base: 'ChromeHeadless',
+        flags: ['--no-sandbox'],
+      },
     },
 
     // Continuous Integration mode
