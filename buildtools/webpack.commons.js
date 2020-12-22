@@ -42,7 +42,7 @@ module.exports = function (config) {
     // See https://github.com/webpack/webpack/issues/582
     'window.jQuery': 'jquery',
     // For Bootstrap
-    'jQuery': 'jquery',
+    jQuery: 'jquery',
     // For own scripts
     $: 'jquery',
   });
@@ -51,12 +51,12 @@ module.exports = function (config) {
     [
       require.resolve('@babel/preset-env'),
       {
-        'targets': {
+        targets: {
           // See browser list on: https://browserl.ist/
-          'browsers': ['> 0.5% in CH', '> 0.5% in FR', 'Firefox ESR', 'ie 11'],
+          browsers: ['> 0.5% in CH', '> 0.5% in FR', 'Firefox ESR', 'ie 11'],
         },
-        'modules': false,
-        'loose': true,
+        modules: false,
+        loose: true,
       },
     ],
   ];
@@ -126,7 +126,7 @@ module.exports = function (config) {
         babelrc: false,
         comments: false,
         presets: babelPresets,
-        plugins: [require.resolve('@camptocamp/babel-plugin-angularjs-annotate')],
+        plugins: [require.resolve('babel-plugin-angularjs-annotate')],
       },
     },
   };
@@ -212,14 +212,14 @@ module.exports = function (config) {
       alias: {
         'ngeo/test': path.resolve(__dirname, '../test/spec'),
         'gmf/test': path.resolve(__dirname, '../contribs/gmf/test/spec'),
-        'ngeo': path.resolve(__dirname, '../src'),
-        'api': path.resolve(__dirname, '../api/src'),
-        'lib': path.resolve(__dirname, '../lib'),
-        'gmf': path.resolve(__dirname, '../contribs/gmf/src'),
-        'jsts': 'jsts/org/locationtech/jts',
-        'olcs': 'ol-cesium/src/olcs',
+        ngeo: path.resolve(__dirname, '../src'),
+        api: path.resolve(__dirname, '../api/src'),
+        lib: path.resolve(__dirname, '../lib'),
+        gmf: path.resolve(__dirname, '../contribs/gmf/src'),
+        jsts: 'jsts/org/locationtech/jts',
+        olcs: 'ol-cesium/src/olcs',
         'jquery-ui/datepicker': 'jquery-ui/ui/widgets/datepicker', // For angular-ui-date
-        'proj4': 'proj4/lib',
+        proj4: 'proj4/lib',
         '@geoblocks/proj': '@geoblocks/proj/src',
       },
     },
