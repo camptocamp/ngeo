@@ -8,3 +8,8 @@ checks:
       - ^contribs/gmf/test/spec/data/themescapabilities\.js$
       - ^contribs/gmf/test/spec/data/themes\.js$
       - ^buildtools/asitvd.capabilities\.xml$
+
+audit:
+  npm:
+    cwe_ignore:
+      - CWE-400
