@@ -85,8 +85,14 @@ const exports = class AbstractLocalforageWrapper {
       context: null,
     };
     const waitingPromise = {
-      resolve() {},
-      reject() {},
+      /**
+       * @param {any} _any
+       */
+      resolve(_any) {},
+      /**
+       * @param {any} _any
+       */
+      reject(_any) {},
     };
     const promise = new Promise((resolve, reject) => {
       waitingPromise.resolve = resolve;

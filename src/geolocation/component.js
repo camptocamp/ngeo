@@ -178,7 +178,7 @@ Controller.prototype.$onInit = function () {
     'error',
     /** @type {function(?): ?} */ (
       /**
-       * @param {PositionError} error
+       * @param {GeolocationPositionError} error
        */
       (error) => {
         this.untrack_();
