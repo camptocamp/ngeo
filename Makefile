@@ -68,10 +68,8 @@ endif
 
 ifneq (,$(findstring CYGWIN,$(OS)))
 	PY_VENV_BIN = .build/python-venv/Scripts
-	PY_VERSION =
 else
 	PY_VENV_BIN = .build/python-venv/bin
-	PY_VERSION = --python python3
 endif
 
 
@@ -274,7 +272,7 @@ contribs/gmf/build/angular-locale_%.js: package.json
 
 .build/python-venv.timestamp: requirements.txt
 	mkdir -p $(dir $@)
-	virtualenv $(PY_VERSION) --no-site-packages .build/python-venv
+	python3 -m venv .build/python-venv
 	$(PY_VENV_BIN)/pip install `grep ^pip== requirements.txt --colour=never`
 	$(PY_VENV_BIN)/pip install -r requirements.txt
 	touch $@

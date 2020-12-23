@@ -1,5 +1,4 @@
 ---
-
 name: Continuous integration
 
 on:
@@ -13,11 +12,12 @@ jobs:
     if: "!startsWith(github.event.head_commit.message, '[skip ci] ')"
 
     env:
-      MAIN_BRANCH: 2.5
-      CI: true
-      PATH: /bin:/usr/bin:/usr/local/bin:/home/runner/.local/bin
+      MAIN_BRANCH: 2.4
 
     steps:
+      - run: echo "/opt/google/chrome" >> ${GITHUB_PATH}
+      - run: chrome --version
+
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
@@ -26,7 +26,7 @@ jobs:
         with:
           ci-gpg-private-key: ${{secrets.CI_GPG_PRIVATE_KEY}}
           github-gopass-ci-token: ${{secrets.GOPASS_CI_GITHUB_TOKEN}}
-          patterns: npm
+          patterns: npm transifex
         if: github.repository == 'camptocamp/ngeo'
 
       - run: |
@@ -34,7 +34,39 @@ jobs:
           sudo apt update
           sudo apt install python3-wheel python3-setuptools
 
-      - run: sudo python3 -m pip install --requirement=ci/requirements.txt
+      - run: echo "${HOME}/.local/bin" >> ${GITHUB_PATH}
+      - run: python3 -m pip install --user --requirement=ci/requirements.txt
 
       - name: Checks
         run: c2cciutils-checks
+
+      - run: buildtools/set-version
+      - run: python3 -c 'print("::set-env GIT_BRANCH=" + "/".join("head/ref/branch/sub".split("/")[2:]))'
+      - run: echo "::set-env IS_HOME=FALSE"
+      - run: echo "::set-env IS_HOME=TRUE"
+        if: >
+          github.ref == format('refs/heads/{0}', env.MAIN_BRANCH)
+          && github.repository == 'camptocamp/c2cgeoportal'
+      - run: echo "::set-env PACKAGE_VERSION=`buildtools/get-version.sh version`"
+      # Lint
+      - run: make lint
+      - run: make check-examples-checker
+      - run: make test
+      # Webpack build of ngeo/gmf examples and gmf apps
+      - run: echo "::set-env NODE_ENV=production"
+        if: >
+          github.ref == format('refs/heads/{0}', env.MAIN_BRANCH)
+      - run: make examples-hosted
+      - run: buildtools/test_examples.py 1/1
+      # - run: npm run typecheck
+      # Generate API doc
+      - run: npm install --prefix openlayers_src https://api.github.com/repos/openlayers/openlayers/tarball/v5.3.1
+      - run: '! (npm run typecheck|sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g"|grep ^src)'
+      - run: '! (npm run typecheck|grep api)'
+      - run: '! (npm run typecheck|grep gmf)'
+      - run: '! (npm run typecheck|grep test)'
+      - run: '! (npm run typecheck|grep examples)'
+      - run: npm run doc > /dev/null
+      - run: npm run build-api
+      # deploy
+      - run: buildtools/travis-deploy.sh
