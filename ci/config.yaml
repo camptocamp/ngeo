@@ -5,3 +5,8 @@ checks:
   required_workflows: False
   versions:
     rebuild: False
+
+audit:
+  npm:
+    cwe_ignore:
+      - CWE-400
