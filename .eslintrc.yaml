@@ -14,12 +14,6 @@ rules:
   import/no-unresolved: 0
   valid-jsdoc: 0
   no-unused-vars: error
-  prettier/prettier:
-    - error
-    - singleQuote: true
-      bracketSpacing: false
-      quoteProps: preserve
-      printWidth: 110
   sort-imports-es6-autofix/sort-imports-es6: 0
   copyright/copyright: error
   '@typescript-eslint/indent': 0

@@ -17,6 +17,9 @@ block_comment_start = /*
 block_comment = *
 block_comment_end = */
 
+[.jshintrc]
+indent_size = 2
+
 [*.{json,yaml,yml}]
 indent_size = 2
 
