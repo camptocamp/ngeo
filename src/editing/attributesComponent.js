@@ -178,6 +178,16 @@ Controller.prototype.$onInit = function () {
     uid,
     listen(this.feature, 'propertychange', this.handleFeaturePropertyChange_, this)
   );
+
+  this.attributes.forEach((attribute) => {
+    if (
+      attribute.type === 'boolean' &&
+      (this.feature.getProperties()[attribute.name] === null ||
+        this.feature.getProperties()[attribute.name] === undefined)
+    ) {
+      this.feature.set(attribute.name, false);
+    }
+  });
 };
 
 /**
