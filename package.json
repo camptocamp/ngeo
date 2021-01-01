@@ -144,7 +144,7 @@
     "tinycolor2": "1.4.2",
     "ts-node": "9.1.1",
     "tsconfig-paths": "3.9.0",
-    "typedoc": "0.19.2",
+    "typedoc": "0.20.6",
     "typescript": "4.1.3",
     "webpack": "4.44.2",
     "webpack-cli": "3.3.12",
