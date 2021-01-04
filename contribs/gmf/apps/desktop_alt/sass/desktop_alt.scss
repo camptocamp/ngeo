@@ -1,39 +1,39 @@
 header {
-  .logo {
-    background-image: url('../image/logo.svg');
-    span {
-      left: 18.5rem;
-      position: absolute;
-      bottom: 0.2rem;
+    .logo {
+        background-image: url('../image/logo.svg');
+        span {
+            left: 18.5rem;
+            position: absolute;
+            bottom: 0.2rem;
+        }
+        span::before {
+            content: 'by Camptocamp';
+        }
     }
-    span::before {
-      content: "by Camptocamp";
-    }
-  }
 }
 
 .gmf-theme-selector li {
-  flex-direction: column;
-  span.gmf-text {
-    width: auto;
-  }
+    flex-direction: column;
+    span.gmf-text {
+        width: auto;
+    }
 }
 .gmf-theme-selector .gmf-thumb {
-  height: 3rem;
+    height: 3rem;
 }
 
 .gmf-layertree-node .gmf-layertree-legend {
-  border: none;
-  background-color: transparent;
+    border: none;
+    background-color: transparent;
 }
 
 div .ngeo-displaywindow {
-  $displaywindow-min-height: 15rem;
-  left: $app-margin + $left-panel-width + $displaywindow-min-height / 2;
-  right: initial;
-  top: $topbar-height + $app-margin + 3 * $map-tools-size;
+    $displaywindow-min-height: 15rem;
+    left: $app-margin + $left-panel-width + $displaywindow-min-height / 2;
+    right: initial;
+    top: $topbar-height + $app-margin + 3 * $map-tools-size;
 }
 
 .offset-info-icon {
-  position: absolute;
+    position: absolute;
 }

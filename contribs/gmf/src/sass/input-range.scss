@@ -1,4 +1,3 @@
-
 $gmf-input-range-track-box-shadow: 0.06rem 0.06rem 0.06rem rgba(0, 0, 0, 0), 0 0 0.06rem rgba(13, 13, 13, 0);
 $gmf-input-range-track-height: 0.31rem;
 $gmf-input-range-track-border: 0.01rem solid rgba(1, 1, 1, 0.2);
@@ -8,96 +7,98 @@ $gmf-input-range-thumb-width: 0.62rem;
 $gmf-input-range-thumb-border-radius: 0.31rem;
 $gmf-input-range-thumb-border: 0.06rem solid rgba(0, 0, 30, 0.2);
 $gmf-input-range-thumb-background: #ffffff;
-$gmf-input-range-thumb-box-shadow: 0.06rem 0.06rem 0.06rem rgba(0, 0, 49, 0.2), 0 0 0.06rem rgba(0, 0, 75, 0.2);
+$gmf-input-range-thumb-box-shadow: 0.06rem 0.06rem 0.06rem rgba(0, 0, 49, 0.2),
+    0 0 0.06rem rgba(0, 0, 75, 0.2);
 $gmf-input-range-cursor: pointer;
 
-input[type=range] {
-  -webkit-appearance: none;
-  width: 100%;
-  padding-right: 0 !important;
-  padding-left: 0 !important;
-  border: 0;
-  background-color: transparent;
-
-  &:hover, &:focus {
-    outline: none;
-    box-shadow: none;
+input[type='range'] {
+    -webkit-appearance: none;
+    width: 100%;
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+    border: 0;
     background-color: transparent;
-  }
+
+    &:hover,
+    &:focus {
+        outline: none;
+        box-shadow: none;
+        background-color: transparent;
+    }
 }
-input[type=range]::-webkit-slider-runnable-track {
-  width: 100%;
-  height: $gmf-input-range-track-height;
-  cursor: $gmf-input-range-cursor;
-  box-shadow: $gmf-input-range-track-box-shadow;
-  background: $brand-primary;
-  background: var(--brand-primary);
-  border-radius: $gmf-input-range-track-border-radius;
-  border: $gmf-input-range-track-border;
+input[type='range']::-webkit-slider-runnable-track {
+    width: 100%;
+    height: $gmf-input-range-track-height;
+    cursor: $gmf-input-range-cursor;
+    box-shadow: $gmf-input-range-track-box-shadow;
+    background: $brand-primary;
+    background: var(--brand-primary);
+    border-radius: $gmf-input-range-track-border-radius;
+    border: $gmf-input-range-track-border;
 }
-input[type=range]::-webkit-slider-thumb {
-  box-shadow: $gmf-input-range-thumb-box-shadow;
-  border: $gmf-input-range-thumb-border;
-  height: $gmf-input-range-thumb-height;
-  width: $gmf-input-range-thumb-width;
-  border-radius: $gmf-input-range-thumb-border-radius;
-  background: $gmf-input-range-thumb-background;
-  cursor: $gmf-input-range-cursor;
-  -webkit-appearance: none;
-  margin-top: -0.48rem;
+input[type='range']::-webkit-slider-thumb {
+    box-shadow: $gmf-input-range-thumb-box-shadow;
+    border: $gmf-input-range-thumb-border;
+    height: $gmf-input-range-thumb-height;
+    width: $gmf-input-range-thumb-width;
+    border-radius: $gmf-input-range-thumb-border-radius;
+    background: $gmf-input-range-thumb-background;
+    cursor: $gmf-input-range-cursor;
+    -webkit-appearance: none;
+    margin-top: -0.48rem;
 }
-input[type=range]::-moz-range-track {
-  width: 100%;
-  height: $gmf-input-range-track-height;
-  cursor: $gmf-input-range-cursor;
-  box-shadow: $gmf-input-range-track-box-shadow;
-  background: $brand-secondary;
-  background: var(--brand-secondary);
-  border-radius: $gmf-input-range-track-border-radius;
-  border: $gmf-input-range-track-border;
+input[type='range']::-moz-range-track {
+    width: 100%;
+    height: $gmf-input-range-track-height;
+    cursor: $gmf-input-range-cursor;
+    box-shadow: $gmf-input-range-track-box-shadow;
+    background: $brand-secondary;
+    background: var(--brand-secondary);
+    border-radius: $gmf-input-range-track-border-radius;
+    border: $gmf-input-range-track-border;
 }
-input[type=range]::-moz-range-progress {
-  background: $brand-primary;
-  background: var(--brand-primary);
-  height: $gmf-input-range-track-height;
+input[type='range']::-moz-range-progress {
+    background: $brand-primary;
+    background: var(--brand-primary);
+    height: $gmf-input-range-track-height;
 }
-input[type=range]::-moz-range-thumb {
-  box-shadow: $gmf-input-range-thumb-box-shadow;
-  border: $gmf-input-range-thumb-border;
-  height: $gmf-input-range-thumb-height;
-  width: $gmf-input-range-thumb-width;
-  border-radius: $gmf-input-range-thumb-border-radius;
-  background: $gmf-input-range-thumb-background;
-  cursor: $gmf-input-range-cursor;
+input[type='range']::-moz-range-thumb {
+    box-shadow: $gmf-input-range-thumb-box-shadow;
+    border: $gmf-input-range-thumb-border;
+    height: $gmf-input-range-thumb-height;
+    width: $gmf-input-range-thumb-width;
+    border-radius: $gmf-input-range-thumb-border-radius;
+    background: $gmf-input-range-thumb-background;
+    cursor: $gmf-input-range-cursor;
 }
-input[type=range]::-ms-track {
-  width: 100%;
-  height: $gmf-input-range-track-height;
-  cursor: $gmf-input-range-cursor;
-  background: transparent;
-  border-color: transparent;
-  color: transparent;
+input[type='range']::-ms-track {
+    width: 100%;
+    height: $gmf-input-range-track-height;
+    cursor: $gmf-input-range-cursor;
+    background: transparent;
+    border-color: transparent;
+    color: transparent;
 }
-input[type=range]::-ms-fill-lower {
-  background: $brand-primary;
-  background: var(--brand-primary);
-  border: $gmf-input-range-track-border;
-  border-radius: 0.12rem;
-  box-shadow: $gmf-input-range-track-box-shadow;
+input[type='range']::-ms-fill-lower {
+    background: $brand-primary;
+    background: var(--brand-primary);
+    border: $gmf-input-range-track-border;
+    border-radius: 0.12rem;
+    box-shadow: $gmf-input-range-track-box-shadow;
 }
-input[type=range]::-ms-fill-upper {
-  background: $brand-secondary;
-  background: var(--brand-secondary);
-  border: $gmf-input-range-track-border;
-  border-radius: 0.12rem;
-  box-shadow: $gmf-input-range-track-box-shadow;
+input[type='range']::-ms-fill-upper {
+    background: $brand-secondary;
+    background: var(--brand-secondary);
+    border: $gmf-input-range-track-border;
+    border-radius: 0.12rem;
+    box-shadow: $gmf-input-range-track-box-shadow;
 }
-input[type=range]::-ms-thumb {
-  box-shadow: $gmf-input-range-thumb-box-shadow;
-  border: $gmf-input-range-thumb-border;
-  height: $gmf-input-range-thumb-height;
-  width: $gmf-input-range-thumb-width;
-  border-radius: $gmf-input-range-thumb-border-radius;
-  background: $gmf-input-range-thumb-background;
-  cursor: $gmf-input-range-cursor;
+input[type='range']::-ms-thumb {
+    box-shadow: $gmf-input-range-thumb-box-shadow;
+    border: $gmf-input-range-thumb-border;
+    height: $gmf-input-range-thumb-height;
+    width: $gmf-input-range-thumb-width;
+    border-radius: $gmf-input-range-thumb-border-radius;
+    background: $gmf-input-range-thumb-background;
+    cursor: $gmf-input-range-cursor;
 }

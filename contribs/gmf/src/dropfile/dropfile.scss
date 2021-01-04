@@ -1,43 +1,42 @@
-
-$bgselector-image-size: 3.00rem;
+$bgselector-image-size: 3rem;
 .gmf-file-alert-contained {
-  position: relative;
-  z-index: $above-all;
+    position: relative;
+    z-index: $above-all;
 }
 
 .gmf-file-alert-alone {
-  position: absolute;
-  z-index: $above-all;
-  bottom: $app-margin + 3rem;
-  margin-left: calc(2 * #{$app-margin} + #{$bgselector-image-size} + 2 * #{$padding-small-vertical});
-  .alert {
-    padding: 0.4rem;
-  }
+    position: absolute;
+    z-index: $above-all;
+    bottom: $app-margin + 3rem;
+    margin-left: calc(2 * #{$app-margin} + #{$bgselector-image-size} + 2 * #{$padding-small-vertical});
+    .alert {
+        padding: 0.4rem;
+    }
 }
 
 .drop-zone {
-  pointer-events: none;
-  position: absolute;
-  border-width: 5px;
-  border-color: #ff0000;
-  border-style: dashed;
-  left: 5px;
-  width: calc(100% - 5px);
-  height: 100%;
-  z-index: 2;
-  text-align: center;
-  background-color: rgba(191, 190, 190, 0.4);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  p {
-    opacity: 100%;
-    font-size: 2em;
-    color: #2b2b2b;
-    z-index: $above-all;
-  }
+    pointer-events: none;
+    position: absolute;
+    border-width: 5px;
+    border-color: #ff0000;
+    border-style: dashed;
+    left: 5px;
+    width: calc(100% - 5px);
+    height: 100%;
+    z-index: 2;
+    text-align: center;
+    background-color: rgba(191, 190, 190, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    p {
+        opacity: 100%;
+        font-size: 2em;
+        color: #2b2b2b;
+        z-index: $above-all;
+    }
 }
 
 .drop-zone-off {
-  display: none;
+    display: none;
 }

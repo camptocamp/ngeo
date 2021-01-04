@@ -2,25 +2,25 @@
 
 // Hack for ios Safari browser (UI overlapping on iOS 10)
 @media all and (orientation: landscape) {
-  $ios-margin: 3.12rem;
+    $ios-margin: 3.12rem;
 
-  body.ios-margin {
-    button.gmf-mobile-nav-left-trigger,
-    button.gmf-mobile-nav-right-trigger,
-    gmf-search {
-      margin-top: $ios-margin;
-    }
+    body.ios-margin {
+        button.gmf-mobile-nav-left-trigger,
+        button.gmf-mobile-nav-right-trigger,
+        gmf-search {
+            margin-top: $ios-margin;
+        }
 
-    div.ol-zoom {
-      top: ($app-margin + $map-tools-size + $app-margin) + $ios-margin;
-    }
+        div.ol-zoom {
+            top: ($app-margin + $map-tools-size + $app-margin) + $ios-margin;
+        }
 
-    div.ol-rotate {
-      top: (4 * $map-tools-size + 2 * $app-margin + 3 * $micro-app-margin) + $ios-margin;
-    }
+        div.ol-rotate {
+            top: (4 * $map-tools-size + 2 * $app-margin + 3 * $micro-app-margin) + $ios-margin;
+        }
 
-    button[ngeo-geolocation] {
-      top: (3 * $map-tools-size + 2 * $app-margin + 2 * $micro-app-margin) + $ios-margin;
+        button[ngeo-geolocation] {
+            top: (3 * $map-tools-size + 2 * $app-margin + 2 * $micro-app-margin) + $ios-margin;
+        }
     }
-  }
 }

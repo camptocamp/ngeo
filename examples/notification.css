@@ -1,13 +1,13 @@
 .buttons {
-  width: 300px;
+    width: 300px;
 }
 .buttons .btn {
-  margin: 0 0 5px 0;
+    margin: 0 0 5px 0;
 }
 .ngeo-notification {
-  left: 50%;
-  margin: 0 0 0 -100px;
-  position: absolute;
-  top: 0;
-  width: 200px;
+    left: 50%;
+    margin: 0 0 0 -100px;
+    position: absolute;
+    top: 0;
+    width: 200px;
 }

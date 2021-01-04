@@ -2,52 +2,51 @@
 @import '~gmf/sass/input-range.scss';
 
 .gmf-time-slider {
+    // 1.75rem come from bootstrap popover class .popover-content { padding: 0.56rem 0.87rem; }
+    min-width: calc(#{$popover-max-width} - 1.75rem);
 
-  // 1.75rem come from bootstrap popover class .popover-content { padding: 0.56rem 0.87rem; }
-  min-width: calc(#{$popover-max-width} - 1.75rem);
+    .ui-widget-content {
+        border: none;
+    }
 
-  .ui-widget-content {
-    border: none;
-  }
+    .ui-slider-handle {
+        top: -(($gmf-input-range-thumb-height / 2) - $gmf-input-range-track-height / 2);
+        cursor: $gmf-input-range-cursor;
+        margin-left: -$gmf-input-range-thumb-width / 2;
+        box-shadow: $gmf-input-range-thumb-box-shadow;
+        border: $gmf-input-range-thumb-border;
+        height: $gmf-input-range-thumb-height;
+        width: $gmf-input-range-thumb-width;
+        border-radius: $gmf-input-range-thumb-border-radius;
+    }
 
-  .ui-slider-handle {
-    top: -(($gmf-input-range-thumb-height / 2) - $gmf-input-range-track-height / 2) ;
-    cursor: $gmf-input-range-cursor;
-    margin-left: -$gmf-input-range-thumb-width / 2;
-    box-shadow: $gmf-input-range-thumb-box-shadow;
-    border: $gmf-input-range-thumb-border;
-    height: $gmf-input-range-thumb-height;
-    width: $gmf-input-range-thumb-width;
-    border-radius: $gmf-input-range-thumb-border-radius;
-  }
+    .ui-slider-horizontal {
+        height: $gmf-input-range-track-height;
+        margin: $half-app-margin 0;
+        border: $gmf-input-range-track-border;
+        border-radius: $gmf-input-range-track-border-radius;
+        background-color: $brand-secondary;
+        background-color: var(--brand-secondary);
+    }
 
-  .ui-slider-horizontal {
-    height: $gmf-input-range-track-height;
-    margin: $half-app-margin 0;
-    border: $gmf-input-range-track-border;
-    border-radius: $gmf-input-range-track-border-radius;
-    background-color: $brand-secondary;
-    background-color: var(--brand-secondary);
-  }
+    .ui-slider-range {
+        background-color: $brand-primary;
+        background-color: var(--brand-primary);
+        cursor: $gmf-input-range-cursor;
+    }
 
-  .ui-slider-range {
-    background-color: $brand-primary;
-    background-color: var(--brand-primary);
-    cursor: $gmf-input-range-cursor;
-  }
-
-  .tooltip {
-    min-width: 4.06rem;
-  }
+    .tooltip {
+        min-width: 4.06rem;
+    }
 }
 
 .gmf-time-slider-displayed-dates {
-  display: flex;
-  justify-content: space-between;
+    display: flex;
+    justify-content: space-between;
 }
 
 .gmf-time-slider-start-date,
 .gmf-time-slider-end-date {
-  font-size: $font-size-small;
-  margin-top: $half-app-margin;
+    font-size: $font-size-small;
+    margin-top: $half-app-margin;
 }

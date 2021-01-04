@@ -2,21 +2,18 @@
 
 GIT_REF=$(git rev-parse HEAD)
 
-if [ -z "${GITHUB_REF}" ]
-then
-  GIT_BRANCH=$(git rev-parse --symbolic-full-name --abbrev-ref HEAD)
-elif [[ "${GITHUB_REF}" =~ ^refs/heads/.* ]]
-then
-  GIT_BRANCH=$(echo "${GITHUB_REF}"|sed 's|^refs/heads/||g')
+if [ -z "${GITHUB_REF}" ]; then
+    GIT_BRANCH=$(git rev-parse --symbolic-full-name --abbrev-ref HEAD)
+elif [[ "${GITHUB_REF}" =~ ^refs/heads/.* ]]; then
+    GIT_BRANCH=$(echo "${GITHUB_REF}" | sed 's|^refs/heads/||g')
 else
-  echo "Build is not on a branch"
-  exit
+    echo "Build is not on a branch"
+    exit
 fi
 
-if [[ ${GIT_BRANCH} =~ "/" ]]
-then
-  echo "Skipping deploy of external branch ${GIT_BRANCH}"
-  exit
+if [[ ${GIT_BRANCH} =~ "/" ]]; then
+    echo "Skipping deploy of external branch ${GIT_BRANCH}"
+    exit
 fi
 
 cp -r api/dist api/dist_

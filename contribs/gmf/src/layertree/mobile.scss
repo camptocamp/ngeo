@@ -1,36 +1,36 @@
 gmf-layertree {
-  border-top: 0.06rem solid $back-color;
+    border-top: 0.06rem solid $back-color;
 }
 
 nav.gmf-mobile-nav-left .gmf-layertree-node a[data-toggle] {
-  //override rule: nav.gmf-mobile-nav-left a[data-toggle] padding-right: 2.50rem
-  padding-right: 0;
+    //override rule: nav.gmf-mobile-nav-left a[data-toggle] padding-right: 2.50rem
+    padding-right: 0;
 }
 
 .gmf-layertree-node {
-  .ngeo-sortable-handle {
-    display: none;
-  }
-  .extra-actions {
-    display: none;
-  }
+    .ngeo-sortable-handle {
+        display: none;
+    }
+    .extra-actions {
+        display: none;
+    }
 
-  [ngeo-popover] {
-    display: none;
-  }
+    [ngeo-popover] {
+        display: none;
+    }
 
-  .fas.fa-magnet {
-    display: none;
-  }
+    .fas.fa-magnet {
+        display: none;
+    }
 }
 
 .gmf-layertree-node-menu {
-  border-bottom: 0.06rem solid $back-color;
-  border-top: 0.06rem solid $back-color;
-  padding: 0.62rem 0;
-  margin: 0.62rem 0;
+    border-bottom: 0.06rem solid $back-color;
+    border-top: 0.06rem solid $back-color;
+    padding: 0.62rem 0;
+    margin: 0.62rem 0;
 
-  input[type=range] {
-    margin: 0.50rem 0 0.31rem 0;
-  }
+    input[type='range'] {
+        margin: 0.5rem 0 0.31rem 0;
+    }
 }

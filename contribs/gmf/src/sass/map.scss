@@ -5,14 +5,71 @@
  */
 .ol-rotate,
 .ol-zoom {
-  background-color: transparent;
-  padding: 0;
-  z-index: $below-content-index;
-  button {
-    margin: 0;
-    margin-bottom: $micro-app-margin;
-    height: $map-tools-size;
-    width: $map-tools-size;
+    background-color: transparent;
+    padding: 0;
+    z-index: $below-content-index;
+    button {
+        margin: 0;
+        margin-bottom: $micro-app-margin;
+        height: $map-tools-size;
+        width: $map-tools-size;
+        background-color: $map-tools-bg-color;
+        background-color: var(--map-tools-bg-color);
+        border: $border;
+        border-color: $border-color;
+        border-color: var(--border-color);
+        color: $map-tools-color;
+        color: var(--map-tools-color);
+        &:hover {
+            background-color: $onhover-color;
+            background-color: var(--onhover-color);
+        }
+        &:focus {
+            background-color: $map-tools-bg-color;
+            background-color: var(--map-tools-bg-color);
+            outline: none;
+        }
+        &:active {
+            outline: none;
+        }
+    }
+    &:hover {
+        background-color: transparent;
+    }
+}
+
+/**
+ * Only affects webkit desktop browsers
+ */
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+    .ol-rotate,
+    .ol-zoom {
+        button {
+            &:active {
+                background-color: $onhover-color;
+                background-color: var(--onhover-color);
+                outline: -webkit-focus-ring-color auto 0.31rem;
+            }
+        }
+    }
+}
+
+.ol-attribution {
+    display: none;
+}
+
+.ol-scale-line,
+.ol-scale-line-inner {
+    background-color: $map-tools-bg-color;
+    background-color: var(--map-tools-bg-color);
+    border-color: $border-color;
+    border-color: var(--border-color);
+    border-width: 0.12rem;
+    color: $map-tools-color;
+    color: var(--map-tools-color);
+}
+
+button[ngeo-geolocation] {
     background-color: $map-tools-bg-color;
     background-color: var(--map-tools-bg-color);
     border: $border;
@@ -20,159 +77,103 @@
     border-color: var(--border-color);
     color: $map-tools-color;
     color: var(--map-tools-color);
-    &:hover {
-      background-color: $onhover-color;
-      background-color: var(--onhover-color);
+    .fa {
+        font-size: $icon-font-size;
     }
-    &:focus {
-      background-color: $map-tools-bg-color;
-      background-color: var(--map-tools-bg-color);
-      outline: none;
-    }
-    &:active {
-      outline: none;
-    }
-  }
-  &:hover {
-    background-color: transparent;
-  }
-}
-
-/**
- * Only affects webkit desktop browsers
- */
-@media screen and (-webkit-min-device-pixel-ratio:0) {
-  .ol-rotate,
-  .ol-zoom {
-    button {
-      &:active {
-        background-color: $onhover-color;
-        background-color: var(--onhover-color);
-        outline: -webkit-focus-ring-color auto 0.31rem;
-      }
-    }
-  }
-}
-
-.ol-attribution {
-  display:none;
-}
-
-.ol-scale-line, .ol-scale-line-inner {
-  background-color: $map-tools-bg-color;
-  background-color: var(--map-tools-bg-color);
-  border-color: $border-color;
-  border-color: var(--border-color);
-  border-width: 0.12rem;
-  color: $map-tools-color;
-  color: var(--map-tools-color);
-}
-
-button[ngeo-geolocation] {
-  background-color: $map-tools-bg-color;
-  background-color: var(--map-tools-bg-color);
-  border: $border;
-  border-color: $border-color;
-  border-color: var(--border-color);
-  color: $map-tools-color;
-  color: var(--map-tools-color);
-  .fa {
-    font-size: $icon-font-size;
-  }
 }
 
 .gmf-theme-selector,
 .gmf-backgroundlayerselector {
-  list-style: none;
+    list-style: none;
 
-  li {
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    min-height: 1.88rem;
-    border: 0.06rem solid transparent;
-    padding: $half-app-margin;
+    li {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        min-height: 1.88rem;
+        border: 0.06rem solid transparent;
+        padding: $half-app-margin;
 
-    &::before {
-      // same as fa-fw
-      width: (18em / 14);
-      content: '';
-      text-align: center;
+        &::before {
+            // same as fa-fw
+            width: (18em / 14);
+            content: '';
+            text-align: center;
+        }
+        &:hover,
+        &.gmf-backgroundlayerselector-active,
+        &.gmf-theme-selector-active {
+            border-color: $brand-secondary;
+            border-color: var(--brand-secondary);
+            background-color: #f5f5f5;
+        }
+        &.gmf-backgroundlayerselector-active,
+        &.gmf-theme-selector-active {
+            &::before {
+                font-family: 'Font Awesome 5 Free';
+                font-weight: 900;
+                content: fa-content($fa-var-check);
+            }
+        }
+
+        &.gmf-backgroundlayerselector-disabled {
+            border-top-color: $map-tools-color;
+            pointer-events: none;
+        }
+
+        span.gmf-backgroundlayerselector-opacity-check {
+            &::after {
+                width: (18em / 14);
+                font-family: 'Font Awesome 5 Free';
+                font-weight: 900;
+                content: fa-content($fa-var-check);
+                text-align: center;
+            }
+        }
     }
-    &:hover,
-    &.gmf-backgroundlayerselector-active,
-    &.gmf-theme-selector-active {
-      border-color: $brand-secondary;
-      border-color: var(--brand-secondary);
-      background-color: #f5f5f5;
-    }
-    &.gmf-backgroundlayerselector-active,
-    &.gmf-theme-selector-active {
-      &::before {
-        font-family: 'Font Awesome 5 Free';
-        font-weight: 900;
-        content: fa-content($fa-var-check);
-      }
+
+    .gmf-text {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        flex: 1 1 auto;
+        width: inherit;
     }
 
-    &.gmf-backgroundlayerselector-disabled{
-      border-top-color: $map-tools-color;
-      pointer-events: none;
+    .gmf-thumb {
+        height: $map-tools-size;
+        margin: 0 $half-app-margin;
     }
 
-    span.gmf-backgroundlayerselector-opacity-check {
-      &::after {
-        width: (18em / 14);
-        font-family: 'Font Awesome 5 Free';
-        font-weight: 900;
-        content: fa-content($fa-var-check);
-        text-align: center;
-      }
+    input.gmf-backgroundlayerselector-opacity-slider {
+        margin: 0.62rem 0 1.25rem 0;
+        padding-left: $half-app-margin !important;
+        padding-right: $half-app-margin !important;
     }
-  }
-
-  .gmf-text {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    flex: 1 1 auto;
-    width: inherit;
-  }
-
-  .gmf-thumb {
-    height: $map-tools-size;
-    margin: 0 $half-app-margin;
-  }
-
-  input.gmf-backgroundlayerselector-opacity-slider {
-    margin: 0.62rem 0 1.25rem 0;
-    padding-left: $half-app-margin !important;
-    padding-right: $half-app-margin !important;
-  }
 }
 
 /** Disclaimer and tablet redirect */
 .gmf-app-map-messages {
-  position: absolute;
-  bottom: $app-margin;
-  left: $app-margin;
-  width: 18.75rem;
-  z-index: $above-menus-index;
+    position: absolute;
+    bottom: $app-margin;
+    left: $app-margin;
+    width: 18.75rem;
+    z-index: $above-menus-index;
 
-  .alert {
-    padding: $half-app-margin calc(#{$app-margin} + 1rem) $half-app-margin $app-margin;
-    margin: $half-app-margin 0 0;
-  }
+    .alert {
+        padding: $half-app-margin calc(#{$app-margin} + 1rem) $half-app-margin $app-margin;
+        margin: $half-app-margin 0 0;
+    }
 
-  .alert-dismissable .close,
-  .alert-dismissible .close {
-    right: 0;
-    padding: $half-app-margin $app-margin;
-    height: inherit;
-  }
+    .alert-dismissable .close,
+    .alert-dismissible .close {
+        right: 0;
+        padding: $half-app-margin $app-margin;
+        height: inherit;
+    }
 }
 
 .gmf-permalink-tooltip {
-  white-space: nowrap;
-  margin-right: 2em;
+    white-space: nowrap;
+    margin-right: 2em;
 }

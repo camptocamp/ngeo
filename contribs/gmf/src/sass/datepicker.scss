@@ -1,25 +1,25 @@
 $datepicker-font-size: 0.69rem;
 #ui-datepicker-div {
-  font-family: $font-family-base;
-  font-size: $datepicker-font-size;
-  border-radius: inherit;
-  box-shadow: $eavy-box-shadow $eavy-box-shadow-color;
-  box-shadow: $eavy-box-shadow var(--eavy-box-shadow-color);
-
-  .ui-datepicker-header {
+    font-family: $font-family-base;
+    font-size: $datepicker-font-size;
     border-radius: inherit;
-  }
+    box-shadow: $eavy-box-shadow $eavy-box-shadow-color;
+    box-shadow: $eavy-box-shadow var(--eavy-box-shadow-color);
+
+    .ui-datepicker-header {
+        border-radius: inherit;
+    }
 }
 
 .ngeo-datepicker {
-  font-size: $datepicker-font-size;
-  .ngeo-datepicker-form {
-    .ngeo-datepicker-start-date,
-    .ngeo-datepicker-end-date {
-      display: inline-block;
-      input {
-        max-width: 4.38rem;
-      }
+    font-size: $datepicker-font-size;
+    .ngeo-datepicker-form {
+        .ngeo-datepicker-start-date,
+        .ngeo-datepicker-end-date {
+            display: inline-block;
+            input {
+                max-width: 4.38rem;
+            }
+        }
     }
-  }
 }

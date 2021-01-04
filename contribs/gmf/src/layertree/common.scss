@@ -1,210 +1,211 @@
-
 .gmf-layertree-root-tools {
-  text-align: right;
-  padding: $micro-app-margin;
+    text-align: right;
+    padding: $micro-app-margin;
 }
 
 .more-options-info {
-  font-style: italic;
-  color: $color;
-  color: var(--color);
+    font-style: italic;
+    color: $color;
+    color: var(--color);
 }
 
 .gmf-layertree-node {
-  /**
+    /**
    * Style rules for treenodes in the layertree
    */
-  margin-left: $app-margin; // left shifting (indentation)
-
-  &.gmf-layertree-depth-1 {
-    margin: 0 $micro-app-margin $app-margin $micro-app-margin;
-  }
-
-  ul {
-    ul {
-      //nested ul (i.e node groups into node groups should not add extra padding)
-      padding-right: 0;
-      li:last-child {
-        padding-bottom: 0;
-      }
-    }
-  }
-
-  a {
-    color: $color;
-    color: var(--color);
-    fill: $color;
-    fill: var(--color);
-    display: inline;
-    line-height: inherit;
-    padding-left: 0;
-    &:hover, &:focus {
-      text-decoration: none;
-    }
-
-    &.gmf-layertree-expand-node.fa {
-      color: $color-light;
-      color: var(--color-light);
-      display: inline-block;
-      margin-top: $micro-app-margin;
-      padding-right: $half-app-margin;
-      &::before {
-        content: fa-content($fa-var-chevron-right);
-      }
-      &[aria-expanded="true"]::before {
-        content: fa-content($fa-var-chevron-down);
-      }
-    }
-  }
-
-  .gmf-layertree-state {
-    color: $color;
-    color: var(--color);
-    fill: $color;
-    fill: var(--color);
-  }
-
-  .off {
-    opacity: 0.5;
-  }
-
-  .gmf-layertree-leaf,
-  .gmf-layertree-group {
-    position: relative;
-    padding: $micro-app-margin;
-    display: flex;
-
-    > * {
-      margin-top: auto;
-      margin-bottom: auto;
-    }
-  }
-
-  .gmf-layertree-leaf .gmf-layertree-state::after {
-    content: "\e603";
-  }
-
-  .gmf-layertree-group {
-    .gmf-layertree-state.gmf-intermediate {
-      display: none;
-    }
-    &.indeterminate .gmf-layertree-state.gmf-not-intermediate {
-      display: none;
-    }
-    &.indeterminate .gmf-layertree-state.gmf-intermediate {
-      display: inline;
-    }
-    .gmf-layertree-layer-icon {
-      display: none;
-    }
+    margin-left: $app-margin; // left shifting (indentation)
 
     &.gmf-layertree-depth-1 {
-      .gmf-layertree-name {
-        font-weight: bold;
-        color: black;
-      }
+        margin: 0 $micro-app-margin $app-margin $micro-app-margin;
     }
-  }
 
-  .gmf-layertree-layer-icon {
-    width: $icon-font-size;
-    padding: 0;
-    display: flex;
-
-    img, svg {
-      // Don't let the legend icons images to break the layout by being too
-      // tall or too large
-      max-width: 100%;
-      max-height: $icon-font-size;
-      vertical-align: initial;
-      margin-left: auto;
-      margin-right: auto;
+    ul {
+        ul {
+            //nested ul (i.e node groups into node groups should not add extra padding)
+            padding-right: 0;
+            li:last-child {
+                padding-bottom: 0;
+            }
+        }
     }
-    img {
-      // Align default svg and images
-      padding-right: 0.06rem;
-    }
-  }
 
-  .gmf-layertree-name {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    flex: 2;
-    padding-left: $half-app-margin;
-    padding-right: $half-app-margin;
-  }
-
-  .gmf-layertree-metadata {
     a {
-      padding: 0;
-      &::after {
-        content: fa-content($fa-var-info);
+        color: $color;
+        color: var(--color);
+        fill: $color;
+        fill: var(--color);
         display: inline;
-        font-family: 'Font Awesome 5 Free';
-        font-weight: 900;
-      }
-    }
-  }
+        line-height: inherit;
+        padding-left: 0;
+        &:hover,
+        &:focus {
+            text-decoration: none;
+        }
 
-  .gmf-layertree-zoom {
-    display: none;
-    // leave space after text label
-    padding-left: 0.25rem;
-    &:hover {
-      cursor: pointer;
+        &.gmf-layertree-expand-node.fa {
+            color: $color-light;
+            color: var(--color-light);
+            display: inline-block;
+            margin-top: $micro-app-margin;
+            padding-right: $half-app-margin;
+            &::before {
+                content: fa-content($fa-var-chevron-right);
+            }
+            &[aria-expanded='true']::before {
+                content: fa-content($fa-var-chevron-down);
+            }
+        }
     }
-  }
 
-  .out-of-resolution {
+    .gmf-layertree-state {
+        color: $color;
+        color: var(--color);
+        fill: $color;
+        fill: var(--color);
+    }
+
+    .off {
+        opacity: 0.5;
+    }
+
+    .gmf-layertree-leaf,
+    .gmf-layertree-group {
+        position: relative;
+        padding: $micro-app-margin;
+        display: flex;
+
+        > * {
+            margin-top: auto;
+            margin-bottom: auto;
+        }
+    }
+
+    .gmf-layertree-leaf .gmf-layertree-state::after {
+        content: '\e603';
+    }
+
+    .gmf-layertree-group {
+        .gmf-layertree-state.gmf-intermediate {
+            display: none;
+        }
+        &.indeterminate .gmf-layertree-state.gmf-not-intermediate {
+            display: none;
+        }
+        &.indeterminate .gmf-layertree-state.gmf-intermediate {
+            display: inline;
+        }
+        .gmf-layertree-layer-icon {
+            display: none;
+        }
+
+        &.gmf-layertree-depth-1 {
+            .gmf-layertree-name {
+                font-weight: bold;
+                color: black;
+            }
+        }
+    }
+
+    .gmf-layertree-layer-icon {
+        width: $icon-font-size;
+        padding: 0;
+        display: flex;
+
+        img,
+        svg {
+            // Don't let the legend icons images to break the layout by being too
+            // tall or too large
+            max-width: 100%;
+            max-height: $icon-font-size;
+            vertical-align: initial;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        img {
+            // Align default svg and images
+            padding-right: 0.06rem;
+        }
+    }
+
     .gmf-layertree-name {
-      font-style: italic;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        flex: 2;
+        padding-left: $half-app-margin;
+        padding-right: $half-app-margin;
     }
+
+    .gmf-layertree-metadata {
+        a {
+            padding: 0;
+            &::after {
+                content: fa-content($fa-var-info);
+                display: inline;
+                font-family: 'Font Awesome 5 Free';
+                font-weight: 900;
+            }
+        }
+    }
+
     .gmf-layertree-zoom {
-      display: inline;
-    }
-    &.gmf-layertree-leaf .gmf-layertree-state::after {
-      content: "\e604";
-    }
-  }
-
-  .gmf-layertree-legend {
-    margin: 0 $app-margin;
-    position: relative;
-    border: 0.06rem solid;
-    border-color: $main-bg-color;
-    border-color: var(--main-bg-color);
-    background-color: $main-bg-color-lighten;
-    background-color: var(--main-bg-color-lighten);
-
-    display: none;
-    &.show {
-      // legend is displayed
-      display: block;
-      &.off {
-        // legend is displayed but the layer is not visible
         display: none;
-      }
+        // leave space after text label
+        padding-left: 0.25rem;
+        &:hover {
+            cursor: pointer;
+        }
     }
 
-    a {
-      display: none;
-      position: absolute;
-      right: $half-app-margin;
-      font-size: 0.69rem;
+    .out-of-resolution {
+        .gmf-layertree-name {
+            font-style: italic;
+        }
+        .gmf-layertree-zoom {
+            display: inline;
+        }
+        &.gmf-layertree-leaf .gmf-layertree-state::after {
+            content: '\e604';
+        }
+    }
 
-      &::before {
+    .gmf-layertree-legend {
+        margin: 0 $app-margin;
+        position: relative;
+        border: 0.06rem solid;
+        border-color: $main-bg-color;
+        border-color: var(--main-bg-color);
+        background-color: $main-bg-color-lighten;
+        background-color: var(--main-bg-color-lighten);
+
         display: none;
-      }
+        &.show {
+            // legend is displayed
+            display: block;
+            &.off {
+                // legend is displayed but the layer is not visible
+                display: none;
+            }
+        }
 
-      &:hover {
-        text-decoration: underline;
-      }
+        a {
+            display: none;
+            position: absolute;
+            right: $half-app-margin;
+            font-size: 0.69rem;
+
+            &::before {
+                display: none;
+            }
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+        p {
+            margin: 0 0 0 0.62rem;
+        }
+        img {
+            margin-bottom: 0.62rem;
+        }
     }
-    p {
-      margin: 0 0 0 0.62rem;
-    }
-    img {
-      margin-bottom: 0.62rem;
-    }
-  }
 }

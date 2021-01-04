@@ -3,10 +3,7 @@
     /* Basic Options */
     "target": "ES2020",
     "module": "commonjs",
-    "lib": [
-      "es2020",
-      "dom"
-    ],
+    "lib": ["es2020", "dom"],
     "esModuleInterop": true,
     "allowJs": true,
     "checkJs": true,
@@ -19,36 +16,16 @@
     "skipLibCheck": true,
     "baseUrl": "./",
     "paths": {
-      "ngeo/*": [
-        "src/*"
-      ],
-      "gmf/*": [
-        "contribs/gmf/src/*"
-      ],
-      "api/*": [
-        "api/src/*"
-      ],
-      "lib/*": [
-        "lib/*"
-      ],
-      "olcs/*": [
-        "node_modules/ol-cesium/src/olcs/*"
-      ],
-      "@geoblocks/proj/*": [
-        "node_modules/@geoblocks/proj/*"
-      ],
-      "moment": [
-        "node_modules/moment/moment.d.ts"
-      ],
-      "jsts/*": [
-        "node_modules/@types/jsts/index.d.ts"
-      ],
-      "localforage/*": [
-        "node_modules/localforage/*"
-      ],
-      "resize-observer-polyfill": [
-        "node_modules/resize-observer-polyfill/src/index.d.ts"
-      ],
+      "ngeo/*": ["src/*"],
+      "gmf/*": ["contribs/gmf/src/*"],
+      "api/*": ["api/src/*"],
+      "lib/*": ["lib/*"],
+      "olcs/*": ["node_modules/ol-cesium/src/olcs/*"],
+      "@geoblocks/proj/*": ["node_modules/@geoblocks/proj/*"],
+      "moment": ["node_modules/moment/moment.d.ts"],
+      "jsts/*": ["node_modules/@types/jsts/index.d.ts"],
+      "localforage/*": ["node_modules/localforage/*"],
+      "resize-observer-polyfill": ["node_modules/resize-observer-polyfill/src/index.d.ts"]
     }
   },
   "include": [
@@ -58,9 +35,7 @@
     "contribs/gmf/src/**/*.js",
     "contribs/gmf/apps/**/*.js",
     "examples/*.js",
-    "contribs/gmf/examples/*.js",
+    "contribs/gmf/examples/*.js"
   ],
-  "files": [
-    "types/dom.d.ts",
-  ]
+  "files": ["types/dom.d.ts"]
 }

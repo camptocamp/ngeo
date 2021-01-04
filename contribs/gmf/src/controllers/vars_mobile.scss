@@ -1,4 +1,4 @@
-$map-tools-size: 2.50rem !default;
+$map-tools-size: 2.5rem !default;
 $border-color: black !default;
 
 $notification-width: 12.5rem !default;
@@ -16,5 +16,5 @@ $back-color: darken($nav-bg, $standard-variation) !default;
 @import '~gmf/sass/vars.scss';
 
 :root {
-  --back-color: #{$back-color};
+    --back-color: #{$back-color};
 }

@@ -16,187 +16,187 @@
 
 @import '~gmf/layertree/mobile.scss';
 
-
 /**
  * Mobile specific css only !
  * Please, use shared less files to describe desktop-mobile shared css
  */
 
-main>* {
-  position: absolute;
+main > * {
+    position: absolute;
 }
 
 main button {
-  height: $map-tools-size;
-  width: $map-tools-size;
-  padding: 0;
-  border-radius: $border-radius-base;
+    height: $map-tools-size;
+    width: $map-tools-size;
+    padding: 0;
+    border-radius: $border-radius-base;
 }
 
 gmf-map {
-  position: static;
-  text-align: initial;
-  > div {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-  }
+    position: static;
+    text-align: initial;
+    > div {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+    }
 }
 
 .gmf-mobile-measure {
-  bottom: $app-margin;
-  right: $app-margin;
-  a {
-    display: block;
-    float: left;
-    margin-left: $micro-app-margin;
-  }
+    bottom: $app-margin;
+    right: $app-margin;
+    a {
+        display: block;
+        float: left;
+        margin-left: $micro-app-margin;
+    }
 }
 
 gmf-map {
-  .tooltip {
-    position: relative;
-    background: rgba(0, 0, 0, 0.5);
-    border-radius: $border-radius-base;
-    color: white;
-    padding: $half-app-margin $app-margin;
-    opacity: 0.7;
-    white-space: nowrap;
-  }
-  .ngeo-tooltip-measure {
-    opacity: 1;
-    font-weight: bold;
-    z-index: $content-index;
-  }
-  .ngeo-tooltip-static {
-    background-color: #ffcc33;
-    color: $color;
-    color: var(--color);
-    border: 0.06rem solid white;
-  }
-  .ngeo-tooltip-measure::before,
-  .ngeo-tooltip-static::before {
-    border-top: $half-app-margin solid;
-    border-top-color: $border-color;
-    border-top-color: var(--border-color);
-    border-right: $half-app-margin solid transparent;
-    border-left: $half-app-margin solid transparent;
-    content: "";
-    position: absolute;
-    bottom: -$half-app-margin;
-    margin-left: -$half-app-margin;
-    left: 50%;
-  }
-  .ngeo-tooltip-static::before {
-    border-top-color: #ffcc33;
-  }
+    .tooltip {
+        position: relative;
+        background: rgba(0, 0, 0, 0.5);
+        border-radius: $border-radius-base;
+        color: white;
+        padding: $half-app-margin $app-margin;
+        opacity: 0.7;
+        white-space: nowrap;
+    }
+    .ngeo-tooltip-measure {
+        opacity: 1;
+        font-weight: bold;
+        z-index: $content-index;
+    }
+    .ngeo-tooltip-static {
+        background-color: #ffcc33;
+        color: $color;
+        color: var(--color);
+        border: 0.06rem solid white;
+    }
+    .ngeo-tooltip-measure::before,
+    .ngeo-tooltip-static::before {
+        border-top: $half-app-margin solid;
+        border-top-color: $border-color;
+        border-top-color: var(--border-color);
+        border-right: $half-app-margin solid transparent;
+        border-left: $half-app-margin solid transparent;
+        content: '';
+        position: absolute;
+        bottom: -$half-app-margin;
+        margin-left: -$half-app-margin;
+        left: 50%;
+    }
+    .ngeo-tooltip-static::before {
+        border-top-color: #ffcc33;
+    }
 }
 
 .ol-rotate {
-  top: 4 * $map-tools-size + 2 * $app-margin + 3 * $micro-app-margin;
-  right: $app-margin;
-  left: auto;
-  font-size: 0.6rem;
-  .ol-rotate-reset {
-    border-radius: $border-radius-base;
-  }
+    top: 4 * $map-tools-size + 2 * $app-margin + 3 * $micro-app-margin;
+    right: $app-margin;
+    left: auto;
+    font-size: 0.6rem;
+    .ol-rotate-reset {
+        border-radius: $border-radius-base;
+    }
 }
 
 .ol-zoom {
-  top: $app-margin + $map-tools-size + $app-margin;
-  right: $app-margin;
-  left: auto;
-  .ol-zoom-in, .ol-zoom-out {
-    font-size: $icon-font-size;
-    border-radius: $border-radius-base;
-  }
+    top: $app-margin + $map-tools-size + $app-margin;
+    right: $app-margin;
+    left: auto;
+    .ol-zoom-in,
+    .ol-zoom-out {
+        font-size: $icon-font-size;
+        border-radius: $border-radius-base;
+    }
 }
 
 .ol-rotate,
 .ol-zoom {
-  button {
-    &:hover {
-      background-color: $map-tools-bg-color;
-      background-color: var(--map-tools-bg-color);
+    button {
+        &:hover {
+            background-color: $map-tools-bg-color;
+            background-color: var(--map-tools-bg-color);
+        }
     }
-  }
 }
 
 .ol-scale-line {
-  bottom: $app-margin;
-  left: $app-margin;
+    bottom: $app-margin;
+    left: $app-margin;
 }
 
 button[ngeo-geolocation] {
-  right: $app-margin;
-  top: 3 * $map-tools-size + 2 * $app-margin + 2 * $micro-app-margin;
+    right: $app-margin;
+    top: 3 * $map-tools-size + 2 * $app-margin + 2 * $micro-app-margin;
 }
 
 .ngeo-notification {
-  left: 50%;
-  margin: 0 0 0 calc(-#{$notification-width} / 2);
-  position: absolute;
-  top: 0;
-  width: $notification-width;
-  z-index: $above-all;
+    left: 50%;
+    margin: 0 0 0 calc(-#{$notification-width} / 2);
+    position: absolute;
+    top: 0;
+    width: $notification-width;
+    z-index: $above-all;
 }
 
 // Overrides for tablet devices and up
-@media (min-width: map-get($grid-breakpoints, "sm")) {
-  .gmf-mobile-measure {
-    right: 2 * $app-margin + $map-tools-size;
-  }
-  .ol-rotate {
-    top: $app-margin + $map-tools-size + $micro-app-margin;
-  }
-  .ol-zoom {
-    top: auto;
-    bottom: $app-margin + $map-tools-size;
-  }
-  button[ngeo-geolocation] {
-    top: auto;
-    bottom: $app-margin;
-  }
+@media (min-width: map-get($grid-breakpoints, 'sm')) {
+    .gmf-mobile-measure {
+        right: 2 * $app-margin + $map-tools-size;
+    }
+    .ol-rotate {
+        top: $app-margin + $map-tools-size + $micro-app-margin;
+    }
+    .ol-zoom {
+        top: auto;
+        bottom: $app-margin + $map-tools-size;
+    }
+    button[ngeo-geolocation] {
+        top: auto;
+        bottom: $app-margin;
+    }
 }
 
 /** Disclaimer, and tablet redirect */
 main .gmf-app-map-messages {
-  bottom: 50px;
-  text-align: left;
+    bottom: 50px;
+    text-align: left;
 
-  .alert.fade:not(.show) {
-    display: none;
-  }
+    .alert.fade:not(.show) {
+        display: none;
+    }
 }
 
 /** ngeo-displayquery-window */
 main div.ngeo-displaywindow {
-  top: $map-tools-size + 2 * $app-margin;
-  left: $app-margin;
-  right: initial;
+    top: $map-tools-size + 2 * $app-margin;
+    left: $app-margin;
+    right: initial;
 }
 
 gmf-search {
-  span.twitter-typeahead {
-    &::before {
-      font-size: $icon-font-size;
+    span.twitter-typeahead {
+        &::before {
+            font-size: $icon-font-size;
+        }
     }
-  }
 }
 
 .nav-swipper {
-  width: 20px;
-  position: absolute;
-  z-index: 3;
-  top: 0;
-  height: 100%;
-  &.nav-swipper-left {
-    float: left;
-  }
-  &.nav-swipper-right {
-    float: right;
-    right: 0;
-  }
+    width: 20px;
+    position: absolute;
+    z-index: 3;
+    top: 0;
+    height: 100%;
+    &.nav-swipper-left {
+        float: left;
+    }
+    &.nav-swipper-right {
+        float: right;
+        right: 0;
+    }
 }

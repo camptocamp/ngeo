@@ -1,10 +1,10 @@
 button[ngeo-geolocation]:after {
-  content: 'Toggle tracking'
+    content: 'Toggle tracking';
 }
 .ngeo-notification {
-  left: 50%;
-  margin: 0 0 0 -100px;
-  position: absolute;
-  top: 0;
-  width: 200px;
+    left: 50%;
+    margin: 0 0 0 -100px;
+    position: absolute;
+    top: 0;
+    width: 200px;
 }

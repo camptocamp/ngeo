@@ -1,25 +1,25 @@
 #map {
-  width: 600px;
-  height: 400px;
-  display: block;
+    width: 600px;
+    height: 400px;
+    display: block;
 }
 #map > div {
-  width: 100%;
-  height: 100%;
+    width: 100%;
+    height: 100%;
 }
 
 .btn.btn-default {
-  background-color: white;
-  border-color: #ccc;
-  color: #333;
+    background-color: white;
+    border-color: #ccc;
+    color: #333;
 }
 
 .btn.btn-default.active {
-  box-shadow: inset 0 3px 5px rgba(0,0,0,.125);
+    box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
 }
 
 .btn.btn-default.active,
 .btn.btn-default.hover {
-  background-color: #e6e6e6;
-  border-color: #adadad;
+    background-color: #e6e6e6;
+    border-color: #adadad;
 }

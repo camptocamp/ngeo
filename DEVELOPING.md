@@ -6,7 +6,7 @@ cd ngeo
 make serve-ngeo
 ```
 
-Use the *ONE_EXAMPLE* environment variable to build (and rebuild on each change) only one example.
+Use the _ONE_EXAMPLE_ environment variable to build (and rebuild on each change) only one example.
 
 ```
 ONE_EXAMPLE=offline make serve-ngeo
@@ -33,7 +33,6 @@ make serve-gmf-apps
 then visit them using
 https://localhost:3000/contribs/gmf/apps/<app_name>.html, for example:
 https://localhost:3000/contribs/gmf/apps/desktop.html
-
 
 ### Run the Simple API Help
 

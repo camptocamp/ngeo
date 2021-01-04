@@ -1,21 +1,22 @@
-#map, .app-query {
-  float: left;
+#map,
+.app-query {
+    float: left;
 }
 
 .app-query {
-  margin: 1rem;
+    margin: 1rem;
 }
 
 #desc {
-  clear: both;
+    clear: both;
 }
 
 ngeo-query-panel {
-  display: block;
-  margin: 1rem 0 0 0;
+    display: block;
+    margin: 1rem 0 0 0;
 }
 
 ngeo-query-panel .ngeo-query-panel-actions,
 ngeo-query-panel .ngeo-query-panel-help {
-  margin: 1rem 0 0 0;
+    margin: 1rem 0 0 0;
 }

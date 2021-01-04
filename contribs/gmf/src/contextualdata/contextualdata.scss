@@ -1,19 +1,19 @@
 @import '~gmf/sass/vars.scss';
 
 .popover.gmf-contextualdata {
-  width: 25rem;
-  font-size: $font-size-small;
+    width: 25rem;
+    font-size: $font-size-small;
 
-  .arrow {
-    left: 130px;
-  }
-
-  table {
-    width: 100%;
-    tr {
-      td {
-        white-space: nowrap;
-      }
+    .arrow {
+        left: 130px;
     }
-  }
+
+    table {
+        width: 100%;
+        tr {
+            td {
+                white-space: nowrap;
+            }
+        }
+    }
 }

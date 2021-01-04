@@ -1,59 +1,58 @@
-
 $lidarprofile-height: 21.88rem;
 $profile-legend-width: 9.38rem;
 #gmf-lidarprofile-container {
-  position: relative;
-  overflow: hidden;
-  padding: $app-margin;
-  border-top: solid 0.06rem black;
-  background-color: white;
-  height: $lidarprofile-height;
-  display: flex;
-
-  .lidarprofile {
-    width: calc(100% - #{$profile-legend-width});
-    background-color: #f5f5f5;
-  }
-
-  .lidar-legend {
-    list-style-type: none;
-    width: $profile-legend-width;
+    position: relative;
+    overflow: hidden;
     padding: $app-margin;
-  }
+    border-top: solid 0.06rem black;
+    background-color: white;
+    height: $lidarprofile-height;
+    display: flex;
 
-  .close {
-    height: 0.62rem;
-  }
+    .lidarprofile {
+        width: calc(100% - #{$profile-legend-width});
+        background-color: #f5f5f5;
+    }
 
-  .lidar-error {
-    visibility: hidden;
-    position: absolute;
-    z-index: 10;
-    margin: $app-margin;
-    padding-left: 6.25rem;
-    padding-top: 6.25rem;
-    width:  calc(100% - 3.12rem - #{$profile-legend-width});
-    height: calc(#{$lidarprofile-height} - 3.12rem);
-    font-size: 1.5em;
-    opacity: 1;
-    background: #e1f1f7;
-    color: #4b717f;
-  }
+    .lidar-legend {
+        list-style-type: none;
+        width: $profile-legend-width;
+        padding: $app-margin;
+    }
 
-  .lod-info {
-    max-height: 6.25rem;
-    overflow-y: auto;
-  }
+    .close {
+        height: 0.62rem;
+    }
+
+    .lidar-error {
+        visibility: hidden;
+        position: absolute;
+        z-index: 10;
+        margin: $app-margin;
+        padding-left: 6.25rem;
+        padding-top: 6.25rem;
+        width: calc(100% - 3.12rem - #{$profile-legend-width});
+        height: calc(#{$lidarprofile-height} - 3.12rem);
+        font-size: 1.5em;
+        opacity: 1;
+        background: #e1f1f7;
+        color: #4b717f;
+    }
+
+    .lod-info {
+        max-height: 6.25rem;
+        overflow-y: auto;
+    }
 }
 
 .gmf-lidarprofile-automatic-width {
-  color: gray;
+    color: gray;
 }
 
 .gmf-lidarprofile-chart-active main {
-  height: calc(100% - #{$lidarprofile-height});
+    height: calc(100% - #{$lidarprofile-height});
 }
 
 .gmf-tooltip-measure {
-  font-weight: bold;
+    font-weight: bold;
 }

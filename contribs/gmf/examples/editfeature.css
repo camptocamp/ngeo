@@ -1,20 +1,20 @@
 body {
-  padding: 0.5rem;
+    padding: 0.5rem;
 }
 gmf-map > div {
-  width: 60rem;
-  height: 40rem;
+    width: 60rem;
+    height: 40rem;
 }
 .panel {
-  display: block;
-  width: 30rem;
+    display: block;
+    width: 30rem;
 }
 .no-feature:before {
-  content: "No feature";
+    content: 'No feature';
 }
 .pending:before {
-  content: "Query in progress...";
+    content: 'Query in progress...';
 }
 .form {
-  margin: 1rem 0 0 0;
+    margin: 1rem 0 0 0;
 }

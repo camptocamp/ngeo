@@ -1,58 +1,58 @@
 @import '~gmf/sass/vars.scss';
 
 [ngeo-popup] {
-  &.popover {
-    position: fixed;
-    top: 0;
-    left: auto;
-    right: auto;
-    max-width: calc(100vw - 2 * #{$app-margin});
-    width: calc(100vw - 2 * #{$app-margin});
-    height: calc(100vh - 2 * #{$app-margin});
-    max-height: calc(100vh - 2 * #{$app-margin});
-    margin: $app-margin;
-    /* Like bootstrap modal border-radius */
-    border-radius: 0.37rem;
-    /* Under bootstrap modal */
-    z-index: 1040;
-  }
-  .popover-title {
-    background-color: $nav-bg;
-    background-color: var(--nav-bg);
-    border-bottom-color: $color;
-    border-bottom-color: var(--color);
-    color: $color;
-    color: var(--color);
-    .close {
-      color: $color;
-      color: var(--color);
-      line-height: 0.8;
-      opacity: 1;
-    }
-  }
-  .popover-body {
-    height: 90vh;
-    -webkit-overflow-scrolling: touch;
-  }
-}
-
-@media (min-width: map-get($grid-breakpoints, "sm")) {
-  $fullscreenpopup-tablet-width: 12 * $map-tools-size;
-  $fullscreenpopup-topbar-height: 2.81rem; // Same value as the topbar-height in desktop.scss
-  $fullscreenpopup-tablet-top: $fullscreenpopup-topbar-height + $app-margin + 2 * $map-tools-size;
-  [ngeo-popup] {
     &.popover {
-      position: fixed;
-      top: $fullscreenpopup-tablet-top;
-      left: $nav-width;
-      max-width: calc(100vw - (2 * #{$nav-width} + 2 * #{$app-margin}));
-      width: $fullscreenpopup-tablet-width;
-      max-height: calc(100vh - (#{$fullscreenpopup-tablet-top} + #{$app-margin}));
-      height: $fullscreenpopup-tablet-width + $map-tools-size;
+        position: fixed;
+        top: 0;
+        left: auto;
+        right: auto;
+        max-width: calc(100vw - 2 * #{$app-margin});
+        width: calc(100vw - 2 * #{$app-margin});
+        height: calc(100vh - 2 * #{$app-margin});
+        max-height: calc(100vh - 2 * #{$app-margin});
+        margin: $app-margin;
+        /* Like bootstrap modal border-radius */
+        border-radius: 0.37rem;
+        /* Under bootstrap modal */
+        z-index: 1040;
+    }
+    .popover-title {
+        background-color: $nav-bg;
+        background-color: var(--nav-bg);
+        border-bottom-color: $color;
+        border-bottom-color: var(--color);
+        color: $color;
+        color: var(--color);
+        .close {
+            color: $color;
+            color: var(--color);
+            line-height: 0.8;
+            opacity: 1;
+        }
     }
     .popover-body {
-      overflow: auto;
-      height: calc(100% - 4 * #{$app-margin});
+        height: 90vh;
+        -webkit-overflow-scrolling: touch;
     }
-  }
+}
+
+@media (min-width: map-get($grid-breakpoints, 'sm')) {
+    $fullscreenpopup-tablet-width: 12 * $map-tools-size;
+    $fullscreenpopup-topbar-height: 2.81rem; // Same value as the topbar-height in desktop.scss
+    $fullscreenpopup-tablet-top: $fullscreenpopup-topbar-height + $app-margin + 2 * $map-tools-size;
+    [ngeo-popup] {
+        &.popover {
+            position: fixed;
+            top: $fullscreenpopup-tablet-top;
+            left: $nav-width;
+            max-width: calc(100vw - (2 * #{$nav-width} + 2 * #{$app-margin}));
+            width: $fullscreenpopup-tablet-width;
+            max-height: calc(100vh - (#{$fullscreenpopup-tablet-top} + #{$app-margin}));
+            height: $fullscreenpopup-tablet-width + $map-tools-size;
+        }
+        .popover-body {
+            overflow: auto;
+            height: calc(100% - 4 * #{$app-margin});
+        }
+    }
 }

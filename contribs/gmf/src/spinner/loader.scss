@@ -1,15 +1,15 @@
 @import '~gmf/sass/vars.scss';
 
 .request-spinner {
-  z-index: $above-all;
-  position: fixed;
-  user-select: none;
-  display: none;
-
-  i {
+    z-index: $above-all;
     position: fixed;
-    height: 3rem;
-    top: 48%;
-    left: 37%;
-  }
+    user-select: none;
+    display: none;
+
+    i {
+        position: fixed;
+        height: 3rem;
+        top: 48%;
+        left: 37%;
+    }
 }

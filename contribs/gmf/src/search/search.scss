@@ -1,182 +1,181 @@
 @import '~gmf/sass/vars.scss';
-@import "~gmf/sass/typeahead.scss";
+@import '~gmf/sass/typeahead.scss';
 
 gmf-search {
-  top: $app-margin;
-  z-index: $content-index;
-  border-color: $border-color;
-  border-color: var(--border-color);
-  border-radius: $border-radius-base;
-
-  & > * {
-    display: block;
-    float: left;
-  }
-
-  .gmf-search {
-    margin-right: $half-app-margin;
-    background-color: $map-tools-bg-color;
-    background-color: var(--map-tools-bg-color);
-    height: $map-tools-size;
-    position: relative;
-  }
-
-  /*loading spiner for search inputs*/
-  .gmf-search .twitter-typeahead {
-    &.search-loading {
-      &::before {
-        display: inline-block;
-        position: absolute;
-        content: "";
-        height: 20px;
-        width: 20px;
-        animation: spin 2.5s infinite linear;
-        background-size: 20px;
-        background-repeat: no-repeat;
-        background-image: url("../icons/spinner.svg");
-      }
-    }
-  }
-
-  @keyframes spin {
-    from {
-        transform:rotate(0deg);
-    }
-    to {
-        transform:rotate(360deg);
-    }
-  }
-
-
-  // hide the native "clear x" in Edge
-  input::-ms-clear {
-    display: none;
-  }
-  .gmf-clear-button {
-    position: absolute;
-    top: $half-app-margin;
-    right: $app-margin;
-    height: $map-tools-size;
-    opacity: 0.5;
-    &::after {
-      position: absolute;
-      content: fa-content($fa-var-times);
-      color: $map-tools-color;
-      color: var(--map-tools-color);
-      font-family: 'Font Awesome 5 Free';
-      font-weight: 900;
-      right: 0;
-    }
-    &:hover {
-      opacity: 1;
-      cursor: pointer;
-    }
-  }
-  .gmf-color-button {
-    width: $map-tools-size;
-    height: $map-tools-size;
-    background-color: $map-tools-bg-color;
-    background-color: var(--map-tools-bg-color);
-    border: $border;
+    top: $app-margin;
+    z-index: $content-index;
     border-color: $border-color;
     border-color: var(--border-color);
-    color: $map-tools-color;
-    color: var(--map-tools-color);
-    &:hover {
-      background-color: $onhover-color;
-      background-color: var(--onhover-color);
-    }
-  }
-  .form-control {
-    box-shadow: none;
-    height: 100%;
-    padding: $half-app-margin $map-tools-size;
-    border: $border;
-    border-color: $border-color;
-    border-color: var(--border-color);
-    &:focus {
-      border-color: $border-color;
-      border-color: var(--border-color);
-      box-shadow: none;
-    }
-  }
+    border-radius: $border-radius-base;
 
-  .gmf-search-is-active & {
-    z-index: $search-index;
-  }
-
-  .twitter-typeahead {
-    .tt-menu {
-      max-height: 75vh;
-      .gmf-search-no-results {
-        padding: $app-margin;
-        cursor: default;
-      }
-      border-top: none;
-      .gmf-search-header {
-        padding: $app-margin;
+    & > * {
         display: block;
-        font-size: $font-size-small;
-        background-color: #eee;
-        text-transform: uppercase;
-        color: $color-light;
-        color: var(--color-light);
-      }
-      .gmf-search-datum {
-        p {
-          margin: 0;
-        }
-        .gmf-search-label {
-          color: $color;
-          color: var(--color);
-        }
-        .gmf-search-group {
-          color: $color-light;
-          color: var(--color-light);
-          font-size: 80%;
-        }
-      }
+        float: left;
     }
-  }
-  .tt-menu.tt-open.gmf-search-no-results {
-    display: block !important;
-  }
+
+    .gmf-search {
+        margin-right: $half-app-margin;
+        background-color: $map-tools-bg-color;
+        background-color: var(--map-tools-bg-color);
+        height: $map-tools-size;
+        position: relative;
+    }
+
+    /*loading spiner for search inputs*/
+    .gmf-search .twitter-typeahead {
+        &.search-loading {
+            &::before {
+                display: inline-block;
+                position: absolute;
+                content: '';
+                height: 20px;
+                width: 20px;
+                animation: spin 2.5s infinite linear;
+                background-size: 20px;
+                background-repeat: no-repeat;
+                background-image: url('../icons/spinner.svg');
+            }
+        }
+    }
+
+    @keyframes spin {
+        from {
+            transform: rotate(0deg);
+        }
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    // hide the native "clear x" in Edge
+    input::-ms-clear {
+        display: none;
+    }
+    .gmf-clear-button {
+        position: absolute;
+        top: $half-app-margin;
+        right: $app-margin;
+        height: $map-tools-size;
+        opacity: 0.5;
+        &::after {
+            position: absolute;
+            content: fa-content($fa-var-times);
+            color: $map-tools-color;
+            color: var(--map-tools-color);
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            right: 0;
+        }
+        &:hover {
+            opacity: 1;
+            cursor: pointer;
+        }
+    }
+    .gmf-color-button {
+        width: $map-tools-size;
+        height: $map-tools-size;
+        background-color: $map-tools-bg-color;
+        background-color: var(--map-tools-bg-color);
+        border: $border;
+        border-color: $border-color;
+        border-color: var(--border-color);
+        color: $map-tools-color;
+        color: var(--map-tools-color);
+        &:hover {
+            background-color: $onhover-color;
+            background-color: var(--onhover-color);
+        }
+    }
+    .form-control {
+        box-shadow: none;
+        height: 100%;
+        padding: $half-app-margin $map-tools-size;
+        border: $border;
+        border-color: $border-color;
+        border-color: var(--border-color);
+        &:focus {
+            border-color: $border-color;
+            border-color: var(--border-color);
+            box-shadow: none;
+        }
+    }
+
+    .gmf-search-is-active & {
+        z-index: $search-index;
+    }
+
+    .twitter-typeahead {
+        .tt-menu {
+            max-height: 75vh;
+            .gmf-search-no-results {
+                padding: $app-margin;
+                cursor: default;
+            }
+            border-top: none;
+            .gmf-search-header {
+                padding: $app-margin;
+                display: block;
+                font-size: $font-size-small;
+                background-color: #eee;
+                text-transform: uppercase;
+                color: $color-light;
+                color: var(--color-light);
+            }
+            .gmf-search-datum {
+                p {
+                    margin: 0;
+                }
+                .gmf-search-label {
+                    color: $color;
+                    color: var(--color);
+                }
+                .gmf-search-group {
+                    color: $color-light;
+                    color: var(--color-light);
+                    font-size: 80%;
+                }
+            }
+        }
+    }
+    .tt-menu.tt-open.gmf-search-no-results {
+        display: block !important;
+    }
 }
 
 // Overrides for small browser widths only
-@media (max-width: map-get($grid-breakpoints, "sm")) {
-  gmf-search {
-    .gmf-search {
-      width: 100%;
+@media (max-width: map-get($grid-breakpoints, 'sm')) {
+    gmf-search {
+        .gmf-search {
+            width: 100%;
+        }
+        .form-control {
+            padding-left: $half-app-margin;
+        }
     }
-    .form-control {
-      padding-left: $half-app-margin;
-    }
-  }
 }
 
 // Overrides for tablet devices and up
-@media (min-width: map-get($grid-breakpoints, "sm")) {
-  gmf-search {
-    .gmf-search {
-      width: $search-width;
-    }
-    .gmf-clear-button {
-      margin-right: $app-margin;
-      right: 0;
-    }
+@media (min-width: map-get($grid-breakpoints, 'sm')) {
+    gmf-search {
+        .gmf-search {
+            width: $search-width;
+        }
+        .gmf-clear-button {
+            margin-right: $app-margin;
+            right: 0;
+        }
 
-    span.twitter-typeahead {
-      &::before {
-        content: fa-content($fa-var-search);
-        font-family: 'Font Awesome 5 Free';
-        font-weight: 900;
-        color: $color;
-        color: var(--color);
-        position: absolute;
-        top: $half-app-margin;
-        left: $app-margin;
-      }
+        span.twitter-typeahead {
+            &::before {
+                content: fa-content($fa-var-search);
+                font-family: 'Font Awesome 5 Free';
+                font-weight: 900;
+                color: $color;
+                color: var(--color);
+                position: absolute;
+                top: $half-app-margin;
+                left: $app-margin;
+            }
+        }
     }
-  }
 }

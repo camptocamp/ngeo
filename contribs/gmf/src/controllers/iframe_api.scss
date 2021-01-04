@@ -1,34 +1,34 @@
 @import '~gmf/controllers/desktop.scss';
 
 body {
-  padding: 0;
+    padding: 0;
 }
 
 .gmf-app-map-container .gmf-displayquerywindow,
 .ngeo-displaywindow {
-  bottom: $app-margin;
-  left: auto;
-  right: $app-margin;
+    bottom: $app-margin;
+    left: auto;
+    right: $app-margin;
 }
 
 .gmf-app-map-messages {
-  bottom: $app-margin + 2rem;
+    bottom: $app-margin + 2rem;
 }
 
 .gmf-backgroundlayerbutton {
-  bottom: $app-margin + 2rem;
+    bottom: $app-margin + 2rem;
 }
 
 gmf-layertree {
-  display: none;
+    display: none;
 }
 
 #scaleline {
-  position: absolute;
-  bottom: 0;
+    position: absolute;
+    bottom: 0;
 }
 
 .ol-scale-line {
-  bottom: $app-margin;
-  left: $app-margin;
+    bottom: $app-margin;
+    left: $app-margin;
 }

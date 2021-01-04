@@ -1,15 +1,10 @@
 const path = require('path');
-const { merge } = require('webpack-merge');
+const {merge} = require('webpack-merge');
 
+const webpackConfig = merge(require('./buildtools/webpack.commons')(), require('./buildtools/webpack.dev')());
 
-const webpackConfig = merge(
-  require('./buildtools/webpack.commons')(),
-  require('./buildtools/webpack.dev')()
-);
-
-module.exports = function(config) {
+module.exports = function (config) {
   config.set({
-
     jasmin: {
       random: false,
     },
@@ -26,8 +21,9 @@ module.exports = function(config) {
       {
         pattern: path.resolve(__dirname, 'dist/vendor.js'),
         watched: false,
-        served: true
-      }, 'test/spec/all.js',
+        served: true,
+      },
+      'test/spec/all.js',
     ],
 
     // preprocess matching files before serving them to the browser
@@ -64,8 +60,8 @@ module.exports = function(config) {
     customLaunchers: {
       optchrome: {
         base: 'ChromeHeadless',
-        flags: ['--no-sandbox']
-      }
+        flags: ['--no-sandbox'],
+      },
     },
 
     // Continuous Integration mode

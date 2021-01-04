@@ -4,76 +4,76 @@ $grid-height: 15.62rem;
 $table-height: $grid-height - $app-margin - 2 * $map-tools-size;
 
 .panel.gmf-displayquerygrid {
-  padding: $half-app-margin;
-  border-top: solid 0.06rem black;
-  background-color: white;
-  height: $grid-height;
-  position: fixed;
-  width: 100%;
-
-  .ngeo-grid-table-container {
-    height: $table-height;
-    overflow: auto;
-  }
-
-  .table {
+    padding: $half-app-margin;
+    border-top: solid 0.06rem black;
     background-color: white;
+    height: $grid-height;
+    position: fixed;
     width: 100%;
-  }
 
-  .table th {
-    cursor: pointer;
-    white-space: nowrap;
-    font-weight: bold;
-  }
-
-  .table > tbody > tr.ngeo-grid-active > td {
-    background-color: #C9C9C9;
-  }
-
-  .nav-pills {
-    padding-bottom: $half-app-margin;
-    font-size: $font-size-small;
-  }
-
-  .nav-pills > li > a {
-    padding: 0.12rem 0.44rem;
-    margin-right: 0rem;
-  }
-
-  table>tbody>tr>td,
-  table>tbody>tr>th,
-  table>tfoot>tr>td,
-  table>tfoot>tr>th,
-  table>thead>tr>td,
-  table>thead>tr>th {
-    padding: 0.12rem;
-  }
-
-  .gmf-displayquerygrid-message {
-    width: 18.75rem;
-    text-align: center;
-    font-style: italic;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: $app-margin;
-  }
-
-  .spinner-grid {
-    width: 100%;
-    i {
-      fill: black;
-      margin-top: 2rem;
-      margin-left: 50%;
-      margin-right: 50%;
+    .ngeo-grid-table-container {
+        height: $table-height;
+        overflow: auto;
     }
-  }
 
-  .floatThead-container {
-    z-index: initial !important;
-  }
+    .table {
+        background-color: white;
+        width: 100%;
+    }
+
+    .table th {
+        cursor: pointer;
+        white-space: nowrap;
+        font-weight: bold;
+    }
+
+    .table > tbody > tr.ngeo-grid-active > td {
+        background-color: #c9c9c9;
+    }
+
+    .nav-pills {
+        padding-bottom: $half-app-margin;
+        font-size: $font-size-small;
+    }
+
+    .nav-pills > li > a {
+        padding: 0.12rem 0.44rem;
+        margin-right: 0rem;
+    }
+
+    table > tbody > tr > td,
+    table > tbody > tr > th,
+    table > tfoot > tr > td,
+    table > tfoot > tr > th,
+    table > thead > tr > td,
+    table > thead > tr > th {
+        padding: 0.12rem;
+    }
+
+    .gmf-displayquerygrid-message {
+        width: 18.75rem;
+        text-align: center;
+        font-style: italic;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: $app-margin;
+    }
+
+    .spinner-grid {
+        width: 100%;
+        i {
+            fill: black;
+            margin-top: 2rem;
+            margin-left: 50%;
+            margin-right: 50%;
+        }
+    }
+
+    .floatThead-container {
+        z-index: initial !important;
+    }
 }
 
 .gmf-query-grid-active main {
-  height: calc(100% - #{$grid-height});
+    height: calc(100% - #{$grid-height});
 }

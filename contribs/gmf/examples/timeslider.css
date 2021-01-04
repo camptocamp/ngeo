@@ -1,9 +1,9 @@
 ul {
-  width: 50%;
+    width: 50%;
 }
 li {
-  list-style: none;
+    list-style: none;
 }
 .tooltip {
-  min-width: 6.5rem;
+    min-width: 6.5rem;
 }

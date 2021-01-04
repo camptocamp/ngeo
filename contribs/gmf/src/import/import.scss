@@ -1,150 +1,148 @@
 @import '~gmf/sass/vars.scss';
-@import "~gmf/sass/typeahead.scss";
+@import '~gmf/sass/typeahead.scss';
 
 gmf-importdatasource {
-
-  .gmf-importdatasource-url-form-group {
-    background-color: #fff;
-  }
-  .btn.has-error {
-    color: $danger;
-    color: var(--danger-color);
-  }
-  span.twitter-typeahead pre {
-    display: none;
-  }
+    .gmf-importdatasource-url-form-group {
+        background-color: #fff;
+    }
+    .btn.has-error {
+        color: $danger;
+        color: var(--danger-color);
+    }
+    span.twitter-typeahead pre {
+        display: none;
+    }
 }
 
 gmf-wmscapabilitylayertreenode,
 gmf-wmtscapabilitylayertree {
-  display: block;
+    display: block;
 
-  a {
-    color: black;
-    text-decoration: none;
+    a {
+        color: black;
+        text-decoration: none;
 
-    &:focus,
-    &:hover {
-      text-decoration: none;
+        &:focus,
+        &:hover {
+            text-decoration: none;
+        }
     }
-  }
 
-  ul {
-    margin: 0;
-    padding: 0;
-  }
+    ul {
+        margin: 0;
+        padding: 0;
+    }
 
-  li {
-    list-style: none;
-    padding: 0.12rem;
-  }
+    li {
+        list-style: none;
+        padding: 0.12rem;
+    }
 
-  > ul > li > gmf-wmscapabilitylayertreenode {
-    margin: 0.31rem 0 0.31rem 0.62rem;
-  }
+    > ul > li > gmf-wmscapabilitylayertreenode {
+        margin: 0.31rem 0 0.31rem 0.62rem;
+    }
 }
 
 .gmf-importdatasource-layers {
-  height: calc(100% - 11.88rem);
+    height: calc(100% - 11.88rem);
 
-  > gmf-wmscapabilitylayertreenode,
-  > gmf-wmtscapabilitylayertree {
-    background-color: white;
-    border: 0.06rem solid #ccc;
-    height: calc(100% - 4em);
-    padding: 0.31rem 0.31rem 0.31rem 1.25rem;
-    overflow-y: auto;
-  }
+    > gmf-wmscapabilitylayertreenode,
+    > gmf-wmtscapabilitylayertree {
+        background-color: white;
+        border: 0.06rem solid #ccc;
+        height: calc(100% - 4em);
+        padding: 0.31rem 0.31rem 0.31rem 1.25rem;
+        overflow-y: auto;
+    }
 }
 
 .gmf-wmscapabilitylayertreenode-expand-node,
 .gmf-wmscapabilitylayertreenode-group,
 .gmf-wmscapabilitylayertreenode-no-icon {
-  margin: auto 0;
-  width: 1.06rem;
+    margin: auto 0;
+    width: 1.06rem;
 }
 
 a.gmf-wmscapabilitylayertreenode-expand-node.fa {
-  display: inline-block;
+    display: inline-block;
 
-  &::before {
-    content: "\f054";
-  }
-  &[aria-expanded="true"]::before {
-    content: "\f078";
-  }
+    &::before {
+        content: '\f054';
+    }
+    &[aria-expanded='true']::before {
+        content: '\f078';
+    }
 }
 
 .gmf-wmscapabilitylayertreenode-popover-container {
-  margin: auto 0;
+    margin: auto 0;
 }
 
 .gmf-wmscapabilitylayertreenode-popover-content {
-  ul {
-    margin: 0;
-    padding: 0;
-  }
+    ul {
+        margin: 0;
+        padding: 0;
+    }
 
-  li {
-    list-style: none;
-  }
+    li {
+        list-style: none;
+    }
 
-  a {
-    cursor: pointer;
-  }
+    a {
+        cursor: pointer;
+    }
 }
 
 .gmf-wmscapabilitylayertreenode-actions {
-  cursor: pointer;
-  opacity: 0;
-  margin: 0 0 0 -0.87rem;
+    cursor: pointer;
+    opacity: 0;
+    margin: 0 0 0 -0.87rem;
 }
 
 .gmf-wmscapabilitylayertreenode-header {
-  display: flex;
-  flex-wrap: wrap;
+    display: flex;
+    flex-wrap: wrap;
 
-  &:hover > span > .gmf-wmscapabilitylayertreenode-actions {
-    opacity: 1;
-  }
+    &:hover > span > .gmf-wmscapabilitylayertreenode-actions {
+        opacity: 1;
+    }
 }
 
 .gmf-wmscapabilitylayertreenode-no-icon {
-  font-size: 0.44rem;
-  vertical-align: middle;
+    font-size: 0.44rem;
+    vertical-align: middle;
 }
 
 .gmf-wmscapabilitylayertreenode-title {
-  flex: 2;
-  padding: 0 0.31rem;
-  .highlight {
-    background-color: yellow;
-  }
+    flex: 2;
+    padding: 0 0.31rem;
+    .highlight {
+        background-color: yellow;
+    }
 }
 
 .gmf-wmscapabilitylayertreenode-description {
-  background-color: #fafafa;
-  border: 0.06rem solid #ddd;
-  order: 1;
-  padding: 0.62rem;
+    background-color: #fafafa;
+    border: 0.06rem solid #ddd;
+    order: 1;
+    padding: 0.62rem;
 
-  a {
-    color: #929292;
-    cursor: pointer;
-    font-size: 9pt;
+    a {
+        color: #929292;
+        cursor: pointer;
+        font-size: 9pt;
 
-    &:hover {
-      text-decoration: underline;
+        &:hover {
+            text-decoration: underline;
+        }
     }
-  }
 }
 
 .gmf-wmscapabilitylayertreenode-description-toggle {
-  display: block;
-  text-align: right;
+    display: block;
+    text-align: right;
 }
 
-
 gmf-datasourcegrouptree {
-  display: block;
+    display: block;
 }

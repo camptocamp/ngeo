@@ -1,18 +1,18 @@
 #themes .gmf-theme-selector {
-  display: flex;
-  flex-wrap: wrap;
+    display: flex;
+    flex-wrap: wrap;
 
-  li {
-    flex-direction: column;
-    flex-basis: 50%;
-  }
+    li {
+        flex-direction: column;
+        flex-basis: 50%;
+    }
 }
 
 gmf-displayquerywindow {
-  position: inherit;
-
-  .spinner-window {
     position: inherit;
-    right: 65px;
-  }
+
+    .spinner-window {
+        position: inherit;
+        right: 65px;
+    }
 }

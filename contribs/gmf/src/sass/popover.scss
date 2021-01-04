@@ -6,47 +6,47 @@ $popover-action-name-max-width: ($popover-max-width / $popover-nb-col) * 5;
 $popover-action-max-width: ($popover-max-width / $popover-nb-col) * 4;
 
 .popover {
-  border-radius: 0;
-  z-index: $above-content-index;
-  .popover-body {
-    ul {
-      margin-bottom: 0;
-      /* fix issue with IE11 not sizing correctly the popover box */
-      min-width: 11.25rem;
+    border-radius: 0;
+    z-index: $above-content-index;
+    .popover-body {
+        ul {
+            margin-bottom: 0;
+            /* fix issue with IE11 not sizing correctly the popover box */
+            min-width: 11.25rem;
+        }
+
+        li {
+            color: $color-light;
+            color: var(--color-light);
+            list-style: none;
+            margin-bottom: $half-app-margin;
+            font-size: $font-size-small;
+
+            &:last-child {
+                margin: 0;
+            }
+
+            i {
+                margin-right: $half-app-margin;
+                max-width: calc(#{$popover-icon-max-width} - #{$half-app-margin});
+            }
+
+            span {
+                max-width: $popover-action-name-max-width;
+            }
+
+            a {
+                color: $color-light;
+                color: var(--color-light);
+            }
+
+            input {
+                margin-left: $half-app-margin;
+                display: inline-block;
+                max-width: calc(#{$popover-action-max-width} - #{$half-app-margin});
+                /* fix issue with IE11 not sizing correctly the popover box */
+                padding: 0;
+            }
+        }
     }
-
-    li {
-      color: $color-light;
-      color: var(--color-light);
-      list-style: none;
-      margin-bottom: $half-app-margin;
-      font-size: $font-size-small;
-
-      &:last-child {
-        margin: 0;
-      }
-
-      i {
-        margin-right: $half-app-margin;
-        max-width: calc(#{$popover-icon-max-width} - #{$half-app-margin});
-      }
-
-      span {
-        max-width: $popover-action-name-max-width;
-      }
-
-      a {
-        color: $color-light;
-        color: var(--color-light);
-      }
-
-      input {
-        margin-left: $half-app-margin;
-        display: inline-block;
-        max-width: calc(#{$popover-action-max-width} - #{$half-app-margin});
-        /* fix issue with IE11 not sizing correctly the popover box */
-        padding: 0;
-      }
-    }
-  }
 }

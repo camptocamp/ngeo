@@ -1,26 +1,26 @@
 header {
-  .logo {
-    background-image: url('../image/logo.png');
-    span {
-      left: 19.5rem;
-      position: absolute;
-      bottom: 0.2rem;
+    .logo {
+        background-image: url('../image/logo.png');
+        span {
+            left: 19.5rem;
+            position: absolute;
+            bottom: 0.2rem;
+        }
+        span::before {
+            content: 'by Camptocamp';
+        }
     }
-    span::before {
-      content: "by Camptocamp";
-    }
-  }
 }
 
 .gmf-displayquerywindow {
-  width: 22.50rem;
-  max-width: 22.50rem;
+    width: 22.5rem;
+    max-width: 22.5rem;
 }
 
 .gmf-displayquerywindow .details {
-  overflow-x: auto;
+    overflow-x: auto;
 }
 
 ::-webkit-scrollbar {
-  height: $half-app-margin;
+    height: $half-app-margin;
 }

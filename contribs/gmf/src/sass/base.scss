@@ -5,66 +5,69 @@
 @import '~gmf/css/reset.css';
 @import '~bootstrap/scss/bootstrap.scss';
 
-
-html, body {
-  height: 100%;
+html,
+body {
+    height: 100%;
 }
 
 body {
-  overflow: hidden;
+    overflow: hidden;
 }
 
 footer {
-  position: relative;
-  z-index: $above-content-index;
+    position: relative;
+    z-index: $above-content-index;
 }
 
 a {
-  text-decoration: none;
+    text-decoration: none;
 }
 
 .pull-right {
-  float: right;
+    float: right;
 }
 
 .btn.prime {
-  background-color: $brand-primary;
-  background-color: var(--brand-primary);
-  border-color: $input-border-focus;
-  border-color: var(--input-border-focus);
-   &.active {
-    box-shadow: inset $light-box-shadow $light-box-shadow-color;
-    box-shadow: inset $light-box-shadow var(--light-box-shadow-color);
-  } color: white;
-  &:hover, &.active {
-    background-color: $input-border-focus;
-    background-color: var(--input-border-focus);
-    border-color: $input-border-focus-darken;
-    border-color: var(--input-border-focus-darken);
-  }
+    background-color: $brand-primary;
+    background-color: var(--brand-primary);
+    border-color: $input-border-focus;
+    border-color: var(--input-border-focus);
+    &.active {
+        box-shadow: inset $light-box-shadow $light-box-shadow-color;
+        box-shadow: inset $light-box-shadow var(--light-box-shadow-color);
+    }
+    color: white;
+    &:hover,
+    &.active {
+        background-color: $input-border-focus;
+        background-color: var(--input-border-focus);
+        border-color: $input-border-focus-darken;
+        border-color: var(--input-border-focus-darken);
+    }
 }
 
 .btn.btn-default {
-  background-color: $map-tools-bg-color;
-  background-color: var(--map-tools-bg-color);
-  border-color: $onhover-color;
-  border-color: var(--onhover-color);
-  color: $map-tools-color;
-  color: var(--map-tools-color);
-  &.active {
-    box-shadow: inset $light-box-shadow $light-box-shadow-color;
-    box-shadow: inset $light-box-shadow var(--light-box-shadow-color);
-  }
-  &:hover, &.active {
-    background-color: $onhover-color;
-    background-color: var(--onhover-color);
-    border-color: $onhover-color-darken;
-    border-color: var(--onhover-color-darken);
-  }
+    background-color: $map-tools-bg-color;
+    background-color: var(--map-tools-bg-color);
+    border-color: $onhover-color;
+    border-color: var(--onhover-color);
+    color: $map-tools-color;
+    color: var(--map-tools-color);
+    &.active {
+        box-shadow: inset $light-box-shadow $light-box-shadow-color;
+        box-shadow: inset $light-box-shadow var(--light-box-shadow-color);
+    }
+    &:hover,
+    &.active {
+        background-color: $onhover-color;
+        background-color: var(--onhover-color);
+        border-color: $onhover-color-darken;
+        border-color: var(--onhover-color-darken);
+    }
 }
 
-html [type="button"] {
-  -webkit-appearance: none;
+html [type='button'] {
+    -webkit-appearance: none;
 }
 
 /**
@@ -72,136 +75,148 @@ html [type="button"] {
  * See: https://github.com/FortAwesome/Font-Awesome/issues/671
  */
 .fa-refresh {
-  filter: blur(0);
+    filter: blur(0);
 }
 
 .list-group-sm .list-group-item {
-  padding: $padding-small-vertical $padding-small-horizontal;
+    padding: $padding-small-vertical $padding-small-horizontal;
 }
 
-.input-sm, select.input-sm {
-  height: inherit;
-  line-height: inherit;
+.input-sm,
+select.input-sm {
+    height: inherit;
+    line-height: inherit;
 }
 
-i, cite, em, var, address, dfn {
-  font-style: italic;
+i,
+cite,
+em,
+var,
+address,
+dfn {
+    font-style: italic;
 }
 
 .small {
-  font-size: 90%;
+    font-size: 90%;
 }
 
 .col-form-label {
-  font-weight: normal;
+    font-weight: normal;
 }
 
 .modal-content {
-  border-radius: 0;
+    border-radius: 0;
 }
 
-.modal-body, .modal-header {
-  padding: 0.62rem;
+.modal-body,
+.modal-header {
+    padding: 0.62rem;
 }
 
 .modal-title {
-  font-weight: bold;
-  font-size: inherit;
+    font-weight: bold;
+    font-size: inherit;
 }
 
 .ui-draggable-handle {
-  cursor: grab;
-  cursor: -webkit-grab;
-  cursor:-moz-grab;
+    cursor: grab;
+    cursor: -webkit-grab;
+    cursor: -moz-grab;
 }
 
 .ui-draggable-dragging {
-  .ui-draggable-handle {
-    cursor: move;
-  }
+    .ui-draggable-handle {
+        cursor: move;
+    }
 
-  iframe {
-    display: none;
-  }
+    iframe {
+        display: none;
+    }
 }
 
 .ui-resizable {
-  &.ui-resizable-resizing {
-    iframe {
-      display: none;
+    &.ui-resizable-resizing {
+        iframe {
+            display: none;
+        }
     }
-  }
 }
 
 // default z-index is 90 but it is not configurable.
 // See https://api.jqueryui.com/resizable/
 .ui-resizable-handle {
-  z-index: 2 !important;
+    z-index: 2 !important;
 }
 
 .list-group > .list-group-item {
-  text-align: left;
-  padding: 0.25rem 0.5rem;
+    text-align: left;
+    padding: 0.25rem 0.5rem;
 }
 
 // Spinner for loading app
 .custom-spinner-loading {
-  fill: red;
-  font-size: 3rem;
+    fill: red;
+    font-size: 3rem;
 }
 
 // Spinner for generic purpose
 .custom-spinner-generic {
-  fill: black;
+    fill: black;
 }
 
 // Spinner for login panel
 .login-spinner {
-  float: left;
-  margin-right: 20px;
+    float: left;
+    margin-right: 20px;
 
-  .custom-spinner-connect {
-    fill: black;
-    font-size: 1.3rem;
-  }
+    .custom-spinner-connect {
+        fill: black;
+        font-size: 1.3rem;
+    }
 }
 
 // Spinner for KML import panel
 .custom-spinner-importkml {
-  fill: black;
-  font-size: 2rem;
-  margin: 20px 45%;
+    fill: black;
+    font-size: 2rem;
+    margin: 20px 45%;
 }
 /** Make some Bootstrap values configurable */
 body {
-  a, .btn-link {
-    color: var(--link-color);
-  }
-
-  a:hover, .btn-link:hover {
-    color: var(--link-hover-color);
-  }
-
-  .btn, .form-control {
-    &:focus,
-    &.focus {
-      box-shadow: 0 0 0 $input-btn-focus-width var(--input-btn-focus-color);
-      border-color: var(--brand-primary);
+    a,
+    .btn-link {
+        color: var(--link-color);
     }
-  }
 
-  .modal-header {
-    border-color: var(--link-color);
-  }
-  .table tr {
-    td, th {
-      border-color: var(--table-border-color);
+    a:hover,
+    .btn-link:hover {
+        color: var(--link-hover-color);
     }
-  }
 
-  .nav-pills {
-    .nav-link.active, .show > .nav-link {
-      background-color: var(--brand-primary);
+    .btn,
+    .form-control {
+        &:focus,
+        &.focus {
+            box-shadow: 0 0 0 $input-btn-focus-width var(--input-btn-focus-color);
+            border-color: var(--brand-primary);
+        }
     }
-  }
+
+    .modal-header {
+        border-color: var(--link-color);
+    }
+    .table tr {
+        td,
+        th {
+            border-color: var(--table-border-color);
+        }
+    }
+
+    .nav-pills {
+        .nav-link.active,
+        .show > .nav-link {
+            background-color: var(--brand-primary);
+        }
+    }
 }

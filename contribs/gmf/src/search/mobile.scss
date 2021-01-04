@@ -1,34 +1,34 @@
-@import "search.scss";
+@import 'search.scss';
 
 gmf-search {
-  font-size: 1rem;
-  .tt-menu {
-    font-size: 0.8rem;
-  }
+    font-size: 1rem;
+    .tt-menu {
+        font-size: 0.8rem;
+    }
 }
 
 // Overrides for tablet devices and up
-@media (min-width: map-get($grid-breakpoints, "sm")) {
-  gmf-search {
-    left: 2 * $app-margin + $map-tools-size;
-  }
+@media (min-width: map-get($grid-breakpoints, 'sm')) {
+    gmf-search {
+        left: 2 * $app-margin + $map-tools-size;
+    }
 }
 
 // Overrides for phone devices only
-@media (max-width: map-get($grid-breakpoints, "sm")) {
-  gmf-search {
-    left: 0;
-    right: 0;
-    margin: 0 $app-margin + $map-tools-size;
-    .gmf-search {
-      width: 100%;
+@media (max-width: map-get($grid-breakpoints, 'sm')) {
+    gmf-search {
+        left: 0;
+        right: 0;
+        margin: 0 $app-margin + $map-tools-size;
+        .gmf-search {
+            width: 100%;
+        }
+        .tt-menu {
+            position: fixed !important;
+            top: $app-margin + $map-tools-size !important;
+            right: 0;
+            bottom: 0;
+            max-height: none;
+        }
     }
-    .tt-menu {
-      position: fixed !important;
-      top: $app-margin + $map-tools-size !important;
-      right: 0;
-      bottom: 0;
-      max-height: none;
-    }
-  }
 }

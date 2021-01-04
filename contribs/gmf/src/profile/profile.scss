@@ -1,53 +1,52 @@
-
-$profile-height: 12.50rem;
+$profile-height: 12.5rem;
 .panel.gmf-profile-container {
-  position: relative;
-  overflow: hidden;
-  $profile-legend-width: 9.38rem;
-  padding: $app-margin;
-  border-top: solid 0.06rem black;
-  background-color: white;
-  height: $profile-height;
-  display: flex;
-
-  .ngeo-profile {
-    width: calc(100% - #{$profile-legend-width});
-    background-color: #f5f5f5;
-  }
-
-  .gmf-profile-legend {
-    list-style-type: none;
-    width: $profile-legend-width;
+    position: relative;
+    overflow: hidden;
+    $profile-legend-width: 9.38rem;
     padding: $app-margin;
-  }
+    border-top: solid 0.06rem black;
+    background-color: white;
+    height: $profile-height;
+    display: flex;
 
-  .gmf-profile-export {
-    position: absolute;
-    right: $app-margin;
-    bottom: $app-margin;
-  }
+    .ngeo-profile {
+        width: calc(100% - #{$profile-legend-width});
+        background-color: #f5f5f5;
+    }
 
-  .gmf-profile-error {
-    width: 100%;
-  }
+    .gmf-profile-legend {
+        list-style-type: none;
+        width: $profile-legend-width;
+        padding: $app-margin;
+    }
 
-  .close {
-    top: 0.62rem;
-    right: 0.62rem;
-    position: absolute;
-  }
+    .gmf-profile-export {
+        position: absolute;
+        right: $app-margin;
+        bottom: $app-margin;
+    }
+
+    .gmf-profile-error {
+        width: 100%;
+    }
+
+    .close {
+        top: 0.62rem;
+        right: 0.62rem;
+        position: absolute;
+    }
 }
 
 .gmf-profile-chart-active main {
-  height: calc(100% - #{$profile-height});
+    height: calc(100% - #{$profile-height});
 }
 
 .spinner-profile {
-  width: 100%;
-  i {
-    fill: black;
-    margin-top: 2rem;
-    margin-left: 50%;
-    margin-right: 50%;
-  }
+    width: 100%;
+    i {
+        fill: black;
+        margin-top: 2rem;
+        margin-left: 50%;
+        margin-right: 50%;
+    }
 }

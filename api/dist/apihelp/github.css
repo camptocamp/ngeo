@@ -28,7 +28,8 @@ pre code {
     border-radius: 0px;
 }
 
-pre, code {
+pre,
+code {
     font-family: Consolas, 'Liberation Mono', Courier, monospace;
     color: #333;
     background: #f8f8f8;
@@ -37,7 +38,8 @@ pre, code {
     border-radius: 3px;
 }
 
-pre, pre code {
+pre,
+pre code {
     font-size: 13px;
 }
 
@@ -46,22 +48,36 @@ pre .comment {
 }
 
 pre .support {
-    color: #0086B3;
+    color: #0086b3;
 }
 
-pre .tag, pre .tag-name {
+pre .tag,
+pre .tag-name {
     color: navy;
 }
 
-pre .keyword, pre .css-property, pre .vendor-prefix, pre .sass, pre .class, pre .id, pre .css-value, pre .entity.function, pre .storage.function {
+pre .keyword,
+pre .css-property,
+pre .vendor-prefix,
+pre .sass,
+pre .class,
+pre .id,
+pre .css-value,
+pre .entity.function,
+pre .storage.function {
     font-weight: bold;
 }
 
-pre .css-property, pre .css-value, pre .vendor-prefix, pre .support.namespace {
+pre .css-property,
+pre .css-value,
+pre .vendor-prefix,
+pre .support.namespace {
     color: #333;
 }
 
-pre .constant.numeric, pre .keyword.unit, pre .hex-color {
+pre .constant.numeric,
+pre .keyword.unit,
+pre .hex-color {
     font-weight: normal;
     color: #099;
 }
@@ -70,15 +86,18 @@ pre .entity.class {
     color: #458;
 }
 
-pre .entity.id, pre .entity.function {
+pre .entity.id,
+pre .entity.function {
     color: #900;
 }
 
-pre .attribute, pre .variable {
+pre .attribute,
+pre .variable {
     color: teal;
 }
 
-pre .string, pre .support.value  {
+pre .string,
+pre .support.value {
     font-weight: normal;
     color: #d14;
 }

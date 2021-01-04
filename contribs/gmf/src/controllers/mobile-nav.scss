@@ -2,335 +2,335 @@
  * Styles for mobile navigation menus (side menus).
  */
 
-
 main {
-  position: fixed;
-  background-color: $main-bg-color;
-  background-color: var(--main-bg-color);
-  box-shadow: 0 0 $app-margin black;
-  width: 100%;
-  height: 100%;
-  z-index: $content-index;
-  text-align: center;
+    position: fixed;
+    background-color: $main-bg-color;
+    background-color: var(--main-bg-color);
+    box-shadow: 0 0 $app-margin black;
+    width: 100%;
+    height: 100%;
+    z-index: $content-index;
+    text-align: center;
 
-  transform: translateZ(0);
-  transition: transform $duration;
-  will-change: transform;
-  .gmf-mobile-nav-left-is-visible & {
-    transform: translateX($nav-width);
-  }
-  .gmf-mobile-nav-right-is-visible & {
-    transform: translateX(-$nav-width);
-  }
+    transform: translateZ(0);
+    transition: transform $duration;
+    will-change: transform;
+    .gmf-mobile-nav-left-is-visible & {
+        transform: translateX($nav-width);
+    }
+    .gmf-mobile-nav-right-is-visible & {
+        transform: translateX(-$nav-width);
+    }
 
-  &.dragging {
-    transition: none;
-  }
+    &.dragging {
+        transition: none;
+    }
 
-  .overlay {
-    /* shadow layer visible when navigation is active */
+    .overlay {
+        /* shadow layer visible when navigation is active */
+        position: absolute;
+        z-index: $above-search-index;
+        height: 100vh;
+        width: 100vw;
+        top: 0;
+        left: 0;
+        cursor: pointer;
+        background-color: rgba($color, 0.4);
+        background-color: rgba(var(--color), 0.4);
+        visibility: hidden;
+        opacity: 0;
+
+        transition: opacity $duration, visibility $duration;
+        backface-visibility: hidden;
+
+        .gmf-mobile-nav-is-visible & {
+            visibility: visible;
+            opacity: 1;
+        }
+    }
+}
+
+.gmf-search-overlay {
+    /* shadow layer visible when search is active */
     position: absolute;
-    z-index: $above-search-index;
+    z-index: $above-menus-index;
     height: 100vh;
     width: 100vw;
     top: 0;
     left: 0;
     cursor: pointer;
-    background-color: rgba($color, .4);
-    background-color: rgba(var(--color), .4);
+    background-color: white;
     visibility: hidden;
     opacity: 0;
 
     transition: opacity $duration, visibility $duration;
     backface-visibility: hidden;
 
-    .gmf-mobile-nav-is-visible & {
-      visibility: visible;
-      opacity: 1;
+    @media (max-width: map-get($grid-breakpoints, 'sm')) {
+        .gmf-search-is-active & {
+            visibility: visible;
+            opacity: 1;
+        }
     }
-  }
-}
-
-.gmf-search-overlay {
-  /* shadow layer visible when search is active */
-  position: absolute;
-  z-index: $above-menus-index;
-  height: 100vh;
-  width: 100vw;
-  top: 0;
-  left: 0;
-  cursor: pointer;
-  background-color: white;
-  visibility: hidden;
-  opacity: 0;
-
-  transition: opacity $duration, visibility $duration;
-  backface-visibility: hidden;
-
-  @media (max-width: map-get($grid-breakpoints, "sm")) {
-    .gmf-search-is-active & {
-      visibility: visible;
-      opacity: 1;
-    }
-  }
 }
 
 $nav-bar-height: 3.12rem;
 
 .gmf-mobile-nav-left-is-visible nav.gmf-mobile-nav-right,
-.gmf-mobile-nav-right-is-visible nav.gmf-mobile-nav-left  {
-  display: none;
+.gmf-mobile-nav-right-is-visible nav.gmf-mobile-nav-left {
+    display: none;
 }
 
 .gmf-mobile-nav-left-is-visible nav.gmf-mobile-nav-left,
-.gmf-mobile-nav-right-is-visible nav.gmf-mobile-nav-right  {
-  visibility: visible;
+.gmf-mobile-nav-right-is-visible nav.gmf-mobile-nav-right {
+    visibility: visible;
 }
 
 nav.gmf-mobile-nav-left,
 nav.gmf-mobile-nav-right {
-  position: fixed;
-  top: 0;
-  width: $nav-width;
-  height: 100%;
-  background-color: $nav-bg;
-  background-color: var(--nav-bg);
-  overflow-x: hidden;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-  z-index: $below-content-index;
-  visibility: hidden;
-
-  header {
-    display: block;
-    height: $nav-bar-height;
-    line-height: $nav-bar-height;
-    background-color: $nav-header-bg;
-    background-color: var(--nav-header-bg);
-
-    .gmf-mobile-nav-header-title {
-      font-weight: bold;
-      color: white;
-      padding-right: 1em;
-      float: right;
-      text-shadow: 0 0 1px black;
-    }
-
-    .gmf-mobile-nav-go-back {
-      position: absolute;
-      left: 0;
-      z-index: 2;
-      transition: opacity 1s;
-      will-change: opacity, visibility;
-      opacity: 0;
-      visibility: hidden;
-      height: $nav-bar-height;
-      width: $nav-back-width;
-      padding-left: 1.50rem;
-      color: $back-color;
-      color: var(--back-color);
-
-      &.gmf-mobile-nav-active {
-        opacity: 1;
-        visibility: visible;
-      }
-
-      &::before, &::after {
-        transform-origin: 0.06rem 50%;
-        left: $app-margin;
-      }
-    }
-
-
-    > nav {
-      position: absolute;
-      width: $nav-width;
-      left: $nav-width;
-      transform: translateX(0);
-      transition: transform $duration, opacity $duration;
-      will-change: transform, opacity;
-      opacity: 0;
-      text-align: center;
-
-
-      &.gmf-mobile-nav-active {
-        transform: translateX(-100%);
-        opacity: 1;
-      }
-      &.gmf-mobile-nav-slide-out {
-        transform: translateX(-120%);
-        opacity: 0;
-      }
-    }
-
-    &.gmf-mobile-nav-back {
-      > nav {
-        transform: translate(-120%);
-      }
-      > nav.gmf-mobile-nav-active {
-        transform: translateX(-100%);
-      }
-      > nav.gmf-mobile-nav-slide-out {
-        transform: translateX(0);
-      }
-    }
-  }
-
-  a[data-toggle] {
-    position: relative;
-    padding-right: $map-tools-size;
-
-    &::before, &::after {
-      /* arrow goes on the right side - children navigation */
-      right: 0;
-      transform-origin: 0.56rem 50%;
-    }
-  }
-
-  .gmf-mobile-nav-go-back,
-  a[data-toggle=slide-in] {
-    &::before, &::after {
-      /* arrow icon in CSS - for element with nested unordered lists */
-      content: '';
-      position: absolute;
-      top: 50%;
-      margin-top: -0.06rem;
-      display: inline-block;
-      height: 0.12rem;
-      width: $app-margin;
-      background: $back-color;
-      backface-visibility: hidden;
-    }
-
-    &::before {
-      transform: rotate(45deg);
-    }
-    &::after {
-      transform: rotate(-45deg);
-    }
-  }
-
-  .gmf-mobile-nav-slide {
     position: fixed;
-    height: calc(100% - #{$nav-bar-height});
+    top: 0;
     width: $nav-width;
-    transform: translateX(100%);
-    transition: transform $duration, opacity $duration;
-    will-change: transform, opacity;
-    opacity: 0;
+    height: 100%;
+    background-color: $nav-bg;
+    background-color: var(--nav-bg);
+    overflow-x: hidden;
     overflow-y: auto;
-    & > * {
-      padding: $app-margin;
-      margin: 0;
-      // make it so tags like "gmf-layertree" are correctly displayed
-      //  (ie. that padding and margin correctly apply)
-      display: block;
+    -webkit-overflow-scrolling: touch;
+    z-index: $below-content-index;
+    visibility: hidden;
+
+    header {
+        display: block;
+        height: $nav-bar-height;
+        line-height: $nav-bar-height;
+        background-color: $nav-header-bg;
+        background-color: var(--nav-header-bg);
+
+        .gmf-mobile-nav-header-title {
+            font-weight: bold;
+            color: white;
+            padding-right: 1em;
+            float: right;
+            text-shadow: 0 0 1px black;
+        }
+
+        .gmf-mobile-nav-go-back {
+            position: absolute;
+            left: 0;
+            z-index: 2;
+            transition: opacity 1s;
+            will-change: opacity, visibility;
+            opacity: 0;
+            visibility: hidden;
+            height: $nav-bar-height;
+            width: $nav-back-width;
+            padding-left: 1.5rem;
+            color: $back-color;
+            color: var(--back-color);
+
+            &.gmf-mobile-nav-active {
+                opacity: 1;
+                visibility: visible;
+            }
+
+            &::before,
+            &::after {
+                transform-origin: 0.06rem 50%;
+                left: $app-margin;
+            }
+        }
+
+        > nav {
+            position: absolute;
+            width: $nav-width;
+            left: $nav-width;
+            transform: translateX(0);
+            transition: transform $duration, opacity $duration;
+            will-change: transform, opacity;
+            opacity: 0;
+            text-align: center;
+
+            &.gmf-mobile-nav-active {
+                transform: translateX(-100%);
+                opacity: 1;
+            }
+            &.gmf-mobile-nav-slide-out {
+                transform: translateX(-120%);
+                opacity: 0;
+            }
+        }
+
+        &.gmf-mobile-nav-back {
+            > nav {
+                transform: translate(-120%);
+            }
+            > nav.gmf-mobile-nav-active {
+                transform: translateX(-100%);
+            }
+            > nav.gmf-mobile-nav-slide-out {
+                transform: translateX(0);
+            }
+        }
     }
 
-    &.gmf-mobile-nav-active {
-      transform: translateX(0%);
-      opacity: 1;
+    a[data-toggle] {
+        position: relative;
+        padding-right: $map-tools-size;
+
+        &::before,
+        &::after {
+            /* arrow goes on the right side - children navigation */
+            right: 0;
+            transform-origin: 0.56rem 50%;
+        }
     }
-    &.gmf-mobile-nav-slide-out {
-      transform: translateX(-20%);
-      opacity: 0;
+
+    .gmf-mobile-nav-go-back,
+    a[data-toggle='slide-in'] {
+        &::before,
+        &::after {
+            /* arrow icon in CSS - for element with nested unordered lists */
+            content: '';
+            position: absolute;
+            top: 50%;
+            margin-top: -0.06rem;
+            display: inline-block;
+            height: 0.12rem;
+            width: $app-margin;
+            background: $back-color;
+            backface-visibility: hidden;
+        }
+
+        &::before {
+            transform: rotate(45deg);
+        }
+        &::after {
+            transform: rotate(-45deg);
+        }
     }
-  }
+
+    .gmf-mobile-nav-slide {
+        position: fixed;
+        height: calc(100% - #{$nav-bar-height});
+        width: $nav-width;
+        transform: translateX(100%);
+        transition: transform $duration, opacity $duration;
+        will-change: transform, opacity;
+        opacity: 0;
+        overflow-y: auto;
+        & > * {
+            padding: $app-margin;
+            margin: 0;
+            // make it so tags like "gmf-layertree" are correctly displayed
+            //  (ie. that padding and margin correctly apply)
+            display: block;
+        }
+
+        &.gmf-mobile-nav-active {
+            transform: translateX(0%);
+            opacity: 1;
+        }
+        &.gmf-mobile-nav-slide-out {
+            transform: translateX(-20%);
+            opacity: 0;
+        }
+    }
 }
 
 // For small devices (in portrait mode) we want the navigation menus to take
 // 90% of the viewport width
-@media (max-width: map-get($grid-breakpoints, "sm")) {
-  main {
-    .gmf-mobile-nav-left-is-visible & {
-      transform: translateX(90vw);
+@media (max-width: map-get($grid-breakpoints, 'sm')) {
+    main {
+        .gmf-mobile-nav-left-is-visible & {
+            transform: translateX(90vw);
+        }
+        .gmf-mobile-nav-right-is-visible & {
+            transform: translateX(-90vw);
+        }
     }
-    .gmf-mobile-nav-right-is-visible & {
-      transform: translateX(-90vw);
-    }
-  }
-  nav.gmf-mobile-nav-left,
-  nav.gmf-mobile-nav-right {
-    width: 90vw;
-    .gmf-mobile-nav-slide {
-      width: 90vw;
-    }
+    nav.gmf-mobile-nav-left,
+    nav.gmf-mobile-nav-right {
+        width: 90vw;
+        .gmf-mobile-nav-slide {
+            width: 90vw;
+        }
 
-    header > nav {
-      width: 90vw;
-      left: 90vw;
+        header > nav {
+            width: 90vw;
+            left: 90vw;
+        }
     }
-  }
 }
 
 .gmf-mobile-nav-left {
-  left: 0;
-  right: auto;
+    left: 0;
+    right: auto;
 }
 
 .gmf-mobile-nav-right {
-  right: 0;
+    right: 0;
 }
 
 /**
  * Buttons to open right and left navigation menus
  */
 .gmf-mobile-nav-trigger {
-  top: $app-margin;
-  background-color: $map-tools-bg-color;
-  background-color: var(--map-tools-bg-color);
-  color: $map-tools-color;
-  color: var(--map-tools-color);
-  z-index: $above-search-index;
-  height: $map-tools-size;
-  border: $border;
-  border-color: $border-color;
-  border-color: var(--border-color);
-  .fa, svg {
-    font-size: $icon-font-size;
-  }
+    top: $app-margin;
+    background-color: $map-tools-bg-color;
+    background-color: var(--map-tools-bg-color);
+    color: $map-tools-color;
+    color: var(--map-tools-color);
+    z-index: $above-search-index;
+    height: $map-tools-size;
+    border: $border;
+    border-color: $border-color;
+    border-color: var(--border-color);
+    .fa,
+    svg {
+        font-size: $icon-font-size;
+    }
 }
 
 .gmf-mobile-nav-left-trigger {
-  left: $app-margin;
-  border-right: none;
+    left: $app-margin;
+    border-right: none;
 }
 
 .gmf-mobile-nav-right-trigger {
-  right: $app-margin;
-  border-left: none;
+    right: $app-margin;
+    border-left: none;
 }
 
 /**
  * Buttons for tool buttons (for example measure tools)
  */
 .gmf-mobile-nav-button {
-  display: block;
-  padding: $app-margin 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  &:hover {
-    text-decoration: none;
-  }
+    display: block;
+    padding: $app-margin 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    &:hover {
+        text-decoration: none;
+    }
 }
 
-
 //For tablet only
-@media (min-width: map-get($grid-breakpoints, "sm")) {
-  main button:hover{
-    background-color: $onhover-color;
-    background-color: var(--onhover-color);
-  }
+@media (min-width: map-get($grid-breakpoints, 'sm')) {
+    main button:hover {
+        background-color: $onhover-color;
+        background-color: var(--onhover-color);
+    }
 
-  .gmf-mobile-nav-trigger {
-    margin: 0;
-    border: $border;
-    border-color: $border-color;
-    border-color: var(--border-color);
-  }
+    .gmf-mobile-nav-trigger {
+        margin: 0;
+        border: $border;
+        border-color: $border-color;
+        border-color: var(--border-color);
+    }
 
-  .gmf-mobile-nav-right-trigger {
-    left: auto;
-  }
+    .gmf-mobile-nav-right-trigger {
+        left: auto;
+    }
 }

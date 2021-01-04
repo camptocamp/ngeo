@@ -6,258 +6,266 @@ $displayquerywindow-detailed-details-line-height: 1.25rem;
 $displayquerywindow-detailed-details-height: 9 * $displayquerywindow-detailed-details-line-height;
 
 div.gmf-displayquerywindow {
-  pointer-events: none;
-  div.windowcontainer,
-  button.collapse-button {
-    pointer-events: all;
-  }
+    pointer-events: none;
+    div.windowcontainer,
+    button.collapse-button {
+        pointer-events: all;
+    }
 }
 
 div.ngeo-displaywindow {
-  margin: 0 auto;
-  .animation-container {
-    height: 100%;
-    width: 100%;
-  }
-  .details.iframe {
-    overflow: hidden;
-  }
+    margin: 0 auto;
+    .animation-container {
+        height: 100%;
+        width: 100%;
+    }
+    .details.iframe {
+        overflow: hidden;
+    }
 }
 
-.gmf-displayquerywindow, .ngeo-displaywindow {
-  right: $app-margin + $map-tools-size + $app-margin;
-  left: initial;
-  bottom: $app-margin;
-  width: $displayquerywindow-tablet-width;
-  margin-left: -$displayquerywindow-tablet-width / 2;
-  position: fixed;
-  z-index: $above-all;
-  .collapse-button {
-    background-color: $nav-bg;
-    background-color: var(--nav-bg);
-    border: $border;
-    border-color: $border-color;
-    border-color: var(--border-color);
-    border-bottom-width: 0;
-    border-radius: $border-radius-base $border-radius-base 0 0;
-    line-height: 0.5;
-    height: $map-tools-size;
-    width: $map-tools-size + $map-tools-size * 2/3;
-  }
-  .collapse-button-up::after {
-    content: fa-content($fa-var-chevron-up);
-  }
-  .collapse-button-down::after {
-    content: fa-content($fa-var-chevron-down);
-  }
-  .windowcontainer {
-    background-color: $nav-bg;
-    background-color: var(--nav-bg);
-    border: $border;
-    border-color: $border-color;
-    border-color: var(--border-color);
-    position: relative;
-    height: 100%;
-    width: 100%;
-  }
-  .animation-container {
-    position: relative;
-    overflow: hidden;
-    margin: 0;
-    transition: 0.3s ease-in all;
-    .slide-animation {
-      display: flex;
-      flex-direction: column;
-      width: 100%;
-      height: 100%;
-      text-align: left;
-      overflow: hidden;
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      &.ng-enter, &.ng-leave {
+.gmf-displayquerywindow,
+.ngeo-displaywindow {
+    right: $app-margin + $map-tools-size + $app-margin;
+    left: initial;
+    bottom: $app-margin;
+    width: $displayquerywindow-tablet-width;
+    margin-left: -$displayquerywindow-tablet-width / 2;
+    position: fixed;
+    z-index: $above-all;
+    .collapse-button {
+        background-color: $nav-bg;
+        background-color: var(--nav-bg);
+        border: $border;
+        border-color: $border-color;
+        border-color: var(--border-color);
+        border-bottom-width: 0;
+        border-radius: $border-radius-base $border-radius-base 0 0;
+        line-height: 0.5;
+        height: $map-tools-size;
+        width: $map-tools-size + $map-tools-size * 2/3;
+    }
+    .collapse-button-up::after {
+        content: fa-content($fa-var-chevron-up);
+    }
+    .collapse-button-down::after {
+        content: fa-content($fa-var-chevron-down);
+    }
+    .windowcontainer {
+        background-color: $nav-bg;
+        background-color: var(--nav-bg);
+        border: $border;
+        border-color: $border-color;
+        border-color: var(--border-color);
+        position: relative;
+        height: 100%;
+        width: 100%;
+    }
+    .animation-container {
+        position: relative;
+        overflow: hidden;
+        margin: 0;
         transition: 0.3s ease-in all;
-      }
-      .content-template-container {
-        overflow: auto;
-      }
-      .header {
-        padding: $app-margin $app-margin 0 $app-margin;
-      }
-      .details {
-        padding: 0 $app-margin $app-margin $app-margin;
-        // small margin so that the scrollbar and the window resize are not in conflict.
-        margin-right: $half-app-margin;
-      }
+        .slide-animation {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            height: 100%;
+            text-align: left;
+            overflow: hidden;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            &.ng-enter,
+            &.ng-leave {
+                transition: 0.3s ease-in all;
+            }
+            .content-template-container {
+                overflow: auto;
+            }
+            .header {
+                padding: $app-margin $app-margin 0 $app-margin;
+            }
+            .details {
+                padding: 0 $app-margin $app-margin $app-margin;
+                // small margin so that the scrollbar and the window resize are not in conflict.
+                margin-right: $half-app-margin;
+            }
+        }
     }
-  }
-  .animation-container-detailed {
-    height: calc(100% - 1.88rem);
-    .details {
-      display: block;
-    }
-  }
-  .next {
-    .slide-animation {
-      &.ng-enter,
-      &.ng-enter-prepare {
-        left: 100%;
-      }
-      &.ng-enter-active, &.ng-leave {
-        left: 0;
-      }
-      &.ng-leave-active {
-        left: -100%;
-      }
-    }
-  }
-  .previous {
-    .slide-animation {
-      &.ng-enter,
-      &.ng-enter-prepare {
-        left: -100%;
-      }
-      &.ng-enter-active, &.ng-leave {
-        left: 0;
-      }
-      &.ng-leave-active {
-        left: 100%;
-      }
-    }
-  }
-  .title {
-    font-weight: bold;
-  }
-  .details {
-    flex: 1;
-    line-height: $displayquerywindow-detailed-details-line-height;
-    overflow-x: hidden;
-    overflow-y: auto;
-    .details-key {
-      padding-right: $app-margin;
-    }
-  }
-  .navigate {
-    border-top: $border;
-    border-top-color: $border-color;
-    border-top-color: var(--border-color);
-    height: $map-tools-size;
-    display: flex;
-    justify-content: space-between;
-    position: absolute;
-    width: 100%;
-    bottom: 0;
-    .placeholder {
-      // these elements are necessary when only the middle element (results)
-      // is shown to center it in the middle (with 'justify-content')
-      height: 100%;
-    }
-    .results {
-      .dropup {
-        display: inline;
-      }
-    }
-    .previous {
-      &::before {
-        content: fa-content($fa-var-chevron-left);
-      }
+    .animation-container-detailed {
+        height: calc(100% - 1.88rem);
+        .details {
+            display: block;
+        }
     }
     .next {
-      &::after {
-        content: fa-content($fa-var-chevron-right);
-      }
+        .slide-animation {
+            &.ng-enter,
+            &.ng-enter-prepare {
+                left: 100%;
+            }
+            &.ng-enter-active,
+            &.ng-leave {
+                left: 0;
+            }
+            &.ng-leave-active {
+                left: -100%;
+            }
+        }
+    }
+    .previous {
+        .slide-animation {
+            &.ng-enter,
+            &.ng-enter-prepare {
+                left: -100%;
+            }
+            &.ng-enter-active,
+            &.ng-leave {
+                left: 0;
+            }
+            &.ng-leave-active {
+                left: 100%;
+            }
+        }
+    }
+    .title {
+        font-weight: bold;
+    }
+    .details {
+        flex: 1;
+        line-height: $displayquerywindow-detailed-details-line-height;
+        overflow-x: hidden;
+        overflow-y: auto;
+        .details-key {
+            padding-right: $app-margin;
+        }
+    }
+    .navigate {
+        border-top: $border;
+        border-top-color: $border-color;
+        border-top-color: var(--border-color);
+        height: $map-tools-size;
+        display: flex;
+        justify-content: space-between;
+        position: absolute;
+        width: 100%;
+        bottom: 0;
+        .placeholder {
+            // these elements are necessary when only the middle element (results)
+            // is shown to center it in the middle (with 'justify-content')
+            height: 100%;
+        }
+        .results {
+            .dropup {
+                display: inline;
+            }
+        }
+        .previous {
+            &::before {
+                content: fa-content($fa-var-chevron-left);
+            }
+        }
+        .next {
+            &::after {
+                content: fa-content($fa-var-chevron-right);
+            }
+        }
+        button {
+            width: inherit;
+            padding: 0 $app-margin;
+        }
     }
     button {
-      width: inherit;
-      padding: 0 $app-margin;
-    }
-  }
-  button {
-    background-color: $nav-bg;
-    background-color: var(--nav-bg);
-    border: none;
-    height: 100%;
-    width: $map-tools-size;
-    &:hover {
-      background-color: $nav-bg;
-      background-color: var(--nav-bg);
-    }
-    &.close {
-      z-index: $above-content-index;
-      position: absolute;
-      top: 0;
-      right: 0;
-      width: $map-tools-size;
-      height: $map-tools-size;
-      font-weight: normal;
-      font-size: 0.94rem;
-    }
-    &::before, &::after {
-      font-family: 'Font Awesome 5 Free';
-      font-weight: 900;
-    }
-  }
-  .ui-draggable {
-    tr {
-      cursor: text;
-    }
-  }
-  &.desktop {
-    .windowcontainer {
-      height: $displayquerywindow-desktop-height;
-      .slide-animation {
+        background-color: $nav-bg;
+        background-color: var(--nav-bg);
+        border: none;
         height: 100%;
-      }
+        width: $map-tools-size;
+        &:hover {
+            background-color: $nav-bg;
+            background-color: var(--nav-bg);
+        }
+        &.close {
+            z-index: $above-content-index;
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: $map-tools-size;
+            height: $map-tools-size;
+            font-weight: normal;
+            font-size: 0.94rem;
+        }
+        &::before,
+        &::after {
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+        }
     }
-  }
-  &.mobile {
-    button.close {
-      font-size: 1.31rem;
+    .ui-draggable {
+        tr {
+            cursor: text;
+        }
     }
-    .slide-animation {
-      height: calc(100% - (#{$map-tools-size} + #{$app-margin}));
+    &.desktop {
+        .windowcontainer {
+            height: $displayquerywindow-desktop-height;
+            .slide-animation {
+                height: 100%;
+            }
+        }
     }
+    &.mobile {
+        button.close {
+            font-size: 1.31rem;
+        }
+        .slide-animation {
+            height: calc(100% - (#{$map-tools-size} + #{$app-margin}));
+        }
 
-    .animation-container {
-      height: $map-tools-size * 2;
-      &.animation-container-detailed {
-        height: ($displayquerywindow-detailed-header-height + $displayquerywindow-detailed-details-height / 2 + $app-margin * 3) + $map-tools-size;
-      }
+        .animation-container {
+            height: $map-tools-size * 2;
+            &.animation-container-detailed {
+                height: (
+                        $displayquerywindow-detailed-header-height +
+                            $displayquerywindow-detailed-details-height / 2 + $app-margin * 3
+                    ) + $map-tools-size;
+            }
+        }
+        .results {
+            padding: $app-margin 0 0 0;
+        }
     }
-    .results {
-      padding: $app-margin 0 0 0;
-    }
-  }
 }
 
-@media (max-width: map-get($grid-breakpoints, "sm")) {
-  .gmf-displayquerywindow.mobile {
-    width: 100%;
-    max-width: 100%;
-    margin-left: -50%;
-    right: 50%;
-    left: 50%;
-    bottom: 0;
-    /** prevent glitch for swipe animation **/
-    .details table {
-      .details-key {
-        min-width: calc(30vw - 2 * #{$app-margin});
-        max-width: calc(30vw - 2 * #{$app-margin});
-      }
-      .details-value {
-        min-width: calc(70vw - 2 * #{$app-margin});
-        max-width: calc(70vw - 2 * #{$app-margin});
-      }
+@media (max-width: map-get($grid-breakpoints, 'sm')) {
+    .gmf-displayquerywindow.mobile {
+        width: 100%;
+        max-width: 100%;
+        margin-left: -50%;
+        right: 50%;
+        left: 50%;
+        bottom: 0;
+        /** prevent glitch for swipe animation **/
+        .details table {
+            .details-key {
+                min-width: calc(30vw - 2 * #{$app-margin});
+                max-width: calc(30vw - 2 * #{$app-margin});
+            }
+            .details-value {
+                min-width: calc(70vw - 2 * #{$app-margin});
+                max-width: calc(70vw - 2 * #{$app-margin});
+            }
+        }
     }
-  }
 }
 
 .spinner-window {
-  position: absolute;
-  bottom: 35px;
-  right: 50px;
-  i {
-    fill: black;
-  }
+    position: absolute;
+    bottom: 35px;
+    right: 50px;
+    i {
+        fill: black;
+    }
 }

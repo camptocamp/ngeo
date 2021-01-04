@@ -365,7 +365,8 @@ export default class extends olObservable {
         if (!content) {
           // use a transparent 1x1 image to make the map consistent
           /* eslint-disable-next-line */
-          content = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=';
+          content =
+            'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=';
         }
         /** @type {HTMLImageElement} */ (imageTile.getImage()).src = content;
       });

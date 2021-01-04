@@ -1,130 +1,130 @@
 $layertree-group-box-shadow: 0 0 0.25rem 0.06rem;
 
 gmf-layertree {
-  display: block;
-  padding: 0 $app-margin;
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  ul {
-    margin-bottom: 0;
-  }
-  > :first-child {
-    margin-right: $half-app-margin;
-    width: 100%;
+    display: block;
+    padding: 0 $app-margin;
+    position: absolute;
     height: 100%;
-    display: flex;
-    flex-direction: column;
-  }
+    width: 100%;
+    ul {
+        margin-bottom: 0;
+    }
+    > :first-child {
+        margin-right: $half-app-margin;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
 }
 
 .gmf-layertree-node {
-
-  .gmf-layertree-right-buttons {
-    display: none;
-    cursor: pointer;
-    margin-right: $half-app-margin;
-
-    .gmf-layertree-node-menu-btn {
-      display: none;
-    }
-  }
-
-  &.gmf-layertree-depth-1 {
-    //styling first level node for desktop app
-    background-color: $nav-bg;
-    background-color: var(--nav-bg);
-    box-shadow: $layertree-group-box-shadow $input-border-focus;
-    box-shadow: $layertree-group-box-shadow var(--input-border-focus);
-
-    > ul {
-      // no padding for the first list in first level nodes
-      padding-left: 0;
-      > li:last-child {
-        padding-bottom: $half-app-margin;
-      }
-    }
-
-    &:hover {
-      .gmf-layertree-sortable-handle-icon {
-        visibility: visible;
-      }
-    }
-  }
-
-  &.gmf-layertree-dragger {
-    * {
-      cursor: -webkit-grabbing;
-      cursor: grabbing;
-    }
-  }
-
-  .gmf-layertree-group.gmf-layertree-depth-1 {
-    background-color: $main-bg-color;
-    background-color: var(--main-bg-color);
-    padding: $half-app-margin;
-  }
-
-  .gmf-layertree-group, .gmf-layertree-leaf {
-    &:hover {
-      .gmf-layertree-right-buttons {
-        display: block;
-      }
-    }
-    &.off {
-      .extra-actions {
+    .gmf-layertree-right-buttons {
         display: none;
-      }
+        cursor: pointer;
+        margin-right: $half-app-margin;
+
+        .gmf-layertree-node-menu-btn {
+            display: none;
+        }
     }
-  }
 
-  .gmf-layertree-leaf {
-    padding-right: $half-app-margin;
-  }
+    &.gmf-layertree-depth-1 {
+        //styling first level node for desktop app
+        background-color: $nav-bg;
+        background-color: var(--nav-bg);
+        box-shadow: $layertree-group-box-shadow $input-border-focus;
+        box-shadow: $layertree-group-box-shadow var(--input-border-focus);
 
-  .gmf-layertree-legend:hover {
-    a {
-      cursor: pointer;
-      display: inline-block;
+        > ul {
+            // no padding for the first list in first level nodes
+            padding-left: 0;
+            > li:last-child {
+                padding-bottom: $half-app-margin;
+            }
+        }
+
+        &:hover {
+            .gmf-layertree-sortable-handle-icon {
+                visibility: visible;
+            }
+        }
     }
-  }
 
-  // leave space for the drag handle
-  .gmf-layertree-depth-1 a.gmf-layertree-expand-node.fa {
-    margin-left: $half-app-margin;
-  }
+    &.gmf-layertree-dragger {
+        * {
+            cursor: -webkit-grabbing;
+            cursor: grabbing;
+        }
+    }
 
-  div.ngeo-sortable-handle {
-    cursor: -webkit-grab;
-    cursor: grab;
-    position: absolute;
-    left: 0;
-    top: 0;
-    height: 100%;
-    width: $app-margin;
-    margin: 0.12rem 0 0;
-  }
+    .gmf-layertree-group.gmf-layertree-depth-1 {
+        background-color: $main-bg-color;
+        background-color: var(--main-bg-color);
+        padding: $half-app-margin;
+    }
 
-  .gmf-layertree-sortable-handle-icon {
-    color:#555;
-    visibility: hidden;
-    position: absolute;
-    top: 50%;
-    right: 0;
-    transform: translate(-50%, -50%);
-  }
+    .gmf-layertree-group,
+    .gmf-layertree-leaf {
+        &:hover {
+            .gmf-layertree-right-buttons {
+                display: block;
+            }
+        }
+        &.off {
+            .extra-actions {
+                display: none;
+            }
+        }
+    }
+
+    .gmf-layertree-leaf {
+        padding-right: $half-app-margin;
+    }
+
+    .gmf-layertree-legend:hover {
+        a {
+            cursor: pointer;
+            display: inline-block;
+        }
+    }
+
+    // leave space for the drag handle
+    .gmf-layertree-depth-1 a.gmf-layertree-expand-node.fa {
+        margin-left: $half-app-margin;
+    }
+
+    div.ngeo-sortable-handle {
+        cursor: -webkit-grab;
+        cursor: grab;
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: $app-margin;
+        margin: 0.12rem 0 0;
+    }
+
+    .gmf-layertree-sortable-handle-icon {
+        color: #555;
+        visibility: hidden;
+        position: absolute;
+        top: 50%;
+        right: 0;
+        transform: translate(-50%, -50%);
+    }
 }
 
 .gmf-layertree-curr-drag-item {
-  border: 0.06rem dashed black;
-  margin: 0 $micro-app-margin $app-margin $micro-app-margin;
-  box-shadow: $layertree-group-box-shadow $input-border-focus;
-  box-shadow: $layertree-group-box-shadow var(--input-border-focus);
+    border: 0.06rem dashed black;
+    margin: 0 $micro-app-margin $app-margin $micro-app-margin;
+    box-shadow: $layertree-group-box-shadow $input-border-focus;
+    box-shadow: $layertree-group-box-shadow var(--input-border-focus);
 }
 
 .gmf-imported-legend {
-  padding-top:0.8rem;
-  .gmf-legend-image {
-    overflow-y: auto;
-  }
+    padding-top: 0.8rem;
+    .gmf-legend-image {
+        overflow-y: auto;
+    }
 }
