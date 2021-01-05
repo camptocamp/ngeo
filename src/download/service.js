@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2020 Camptocamp SA
+// Copyright (c) 2016-2021 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -40,10 +40,9 @@ const module = angular.module('ngeoDownload', []);
  * @return {Download} The download function.
  * @ngdoc service
  * @ngname ngeoDownload
- * @private
  * @hidden
  */
-function factory() {
+export function factory() {
   /**
    * @param {string} content The file content.
    * @param {string} fileName The file name.

@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2018-2020 Camptocamp SA
+// Copyright (c) 2018-2021 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -103,10 +103,9 @@ function mobileMeasureAreaComponent(gmfMobileMeasureAreaTemplateUrl) {
 module.directive('gmfMobileMeasurearea', mobileMeasureAreaComponent);
 
 /**
- * @private
  * @hidden
  */
-class Controller extends MeasueMobileBaseController {
+export class Controller extends MeasueMobileBaseController {
   /**
    * @param {angular.IScope} $scope Angular scope.
    * @param {angular.IFilterService} $filter Angular filter

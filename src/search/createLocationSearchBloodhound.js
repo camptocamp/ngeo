@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2020 Camptocamp SA
+// Copyright (c) 2016-2021 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -72,10 +72,9 @@ import 'corejs-typeahead';
 /**
  * @param {LocationSearchOptions=} opt_options Options.
  * @return {Bloodhound<olFeature<import('ol/geom/Geometry.js').default>[]>} The Bloodhound object.
- * @private
  * @hidden
  */
-function createLocationSearchBloodhound(opt_options) {
+export function createLocationSearchBloodhound(opt_options) {
   /** @type {LocationSearchOptions} */
   const options = opt_options || {};
 

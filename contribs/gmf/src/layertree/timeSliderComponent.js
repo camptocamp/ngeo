@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2020 Camptocamp SA
+// Copyright (c) 2016-2021 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -143,13 +143,12 @@ module.directive('gmfTimeSlider', layertreeTimeSliderComponent);
  * @param {import("ngeo/misc/WMSTime.js").WMSTime} ngeoWMSTime WMSTime service.
  * @param {import("ngeo/misc/debounce.js").miscDebounce<function(): void>} ngeoDebounce ngeo Debounce factory.
  * @constructor
- * @private
  * @hidden
  * @ngInject
  * @ngdoc controller
  * @ngname gmfTimeSliderController
  */
-function Controller(ngeoWMSTime, ngeoDebounce) {
+export function Controller(ngeoWMSTime, ngeoDebounce) {
   /**
    * @type {import("ngeo/misc/WMSTime.js").WMSTime}
    */

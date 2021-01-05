@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2020 Camptocamp SA
+// Copyright (c) 2016-2021 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -109,7 +109,6 @@ module.component('gmfBackgroundlayerselector', backgroundlayerselectorComponent)
 
 /**
  * @constructor
- * @private
  * @hidden
  * @param {angular.IScope} $scope Angular scope.
  * @param {import("ngeo/map/BackgroundLayerMgr.js").MapBackgroundLayerManager} ngeoBackgroundLayerMgr
@@ -120,7 +119,7 @@ module.component('gmfBackgroundlayerselector', backgroundlayerselectorComponent)
  * @ngdoc controller
  * @ngname GmfBackgroundlayerselectorController
  */
-function Controller($scope, ngeoBackgroundLayerMgr, gmfThemes, gmfBackgroundLayerSelectorOptions) {
+export function Controller($scope, ngeoBackgroundLayerMgr, gmfThemes, gmfBackgroundLayerSelectorOptions) {
   /**
    * @type {?import("ol/Map.js").default}
    */

@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2020 Camptocamp SA
+// Copyright (c) 2016-2021 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -109,13 +109,12 @@ module.component('ngeoAttributes', editingAttributeComponent);
  * @param {angular.IScope} $scope Angular scope.
  * @param {import("ngeo/misc/EventHelper.js").EventHelper} ngeoEventHelper Ngeo event helper service
  * @constructor
- * @private
  * @hidden
  * @ngInject
  * @ngdoc controller
  * @ngname ngeoAttributesController
  */
-function Controller($scope, ngeoEventHelper) {
+export function Controller($scope, ngeoEventHelper) {
   /**
    * The list of attributes to create the form with.
    * @type {Array<import('ngeo/format/Attribute.js').Attribute>}

@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2020 Camptocamp SA
+// Copyright (c) 2020-2021 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -29,7 +29,7 @@ import olFormatFilterComparison from 'ol/format/filter/Comparison.js';
  * Represents a `<PropertyIsBetween>` temporal comparison operator,
  * suitable for QGIS server that does not support `<During>`.
  */
-class DateIsBetween extends olFormatFilterComparison {
+export class DateIsBetween extends olFormatFilterComparison {
   /**
    * @param {!string} propertyName Name of the context property to compare.
    * @param {!string} lowerBoundary The lower bound of the range.

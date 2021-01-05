@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2017-2020 Camptocamp SA
+// Copyright (c) 2017-2021 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -80,7 +80,7 @@ function ngeoGooglestreetviewTemplateUrl($attrs, ngeoGooglestreetviewTemplateUrl
  *                 map="mainCtrl.map">
  *             </ngeo-googlestreetview>
  */
-class GoogleStreetviewController {
+export class GoogleStreetviewController {
   /**
    * @param {JQuery} $element Element.
    * @param {angular.IScope} $scope Scope.

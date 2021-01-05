@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2020 Camptocamp SA
+// Copyright (c) 2015-2021 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -593,7 +593,7 @@ export function getFormattedPoint(point, decimals, format, opt_template) {
  * @hidden
  * @this {Measure}
  */
-function handleEvent_(evt) {
+export function handleEvent_(evt) {
   if (evt.type != 'pointermove' || evt.dragging) {
     return true;
   }

@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2020 Camptocamp SA
+// Copyright (c) 2015-2021 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -104,13 +104,12 @@ module.directive('gmfMobileNav', mobileNavigationComponent);
 
 /**
  * @constructor
- * @private
  * @hidden
  * @ngInject
  * @ngdoc controller
  * @ngname gmfMobileNavController
  */
-function Controller() {
+export function Controller() {
   /**
    * Stack of slid-in items.
    * @type {JQuery[]}

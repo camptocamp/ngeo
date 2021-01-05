@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2020 Camptocamp SA
+// Copyright (c) 2016-2021 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -98,13 +98,12 @@ module.component('gmfMouseposition', mapMousepositionComponent);
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @param {import('gmf/options.js').gmfMousePositionOptions} gmfMousePositionOptions The options.
  * @constructor
- * @private
  * @hidden
  * @ngInject
  * @ngdoc controller
  * @ngname gmfMousepositionController
  */
-function Controller($element, $filter, $scope, gettextCatalog, gmfMousePositionOptions) {
+export function Controller($element, $filter, $scope, gettextCatalog, gmfMousePositionOptions) {
   /**
    * @type {import('gmf/options.js').gmfMousePositionOptions}
    */

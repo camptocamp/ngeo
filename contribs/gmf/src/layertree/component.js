@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2020 Camptocamp SA
+// Copyright (c) 2016-2021 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -222,13 +222,12 @@ module.component('gmfLayertree', layertreeComponent);
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @param {import('gmf/options.js').gmfLayerTreeOptions} gmfLayerTreeOptions The options.
  * @constructor
- * @private
  * @hidden
  * @ngInject
  * @ngdoc controller
  * @ngname gmfLayertreeController
  */
-function Controller(
+export function Controller(
   $element,
   $scope,
   ngeoLayerHelper,
