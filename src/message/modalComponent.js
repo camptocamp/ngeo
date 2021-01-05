@@ -90,10 +90,9 @@ const messageModalComponent = {
 module.component('ngeoModal', messageModalComponent);
 
 /**
- * @private
  * @hidden
  */
-class Controller {
+export class Controller {
   /**
    * @ngInject
    * @param {angular.IScope} $scope Scope.

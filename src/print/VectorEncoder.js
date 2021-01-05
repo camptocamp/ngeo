@@ -33,7 +33,6 @@ import {dpi} from 'ngeo/utils.js';
 
 /**
  * @constructor
- * @private
  * @hidden
  */
 function VectorEncoder() {

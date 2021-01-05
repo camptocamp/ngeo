@@ -80,7 +80,7 @@ function ngeoGooglestreetviewTemplateUrl($attrs, ngeoGooglestreetviewTemplateUrl
  *                 map="mainCtrl.map">
  *             </ngeo-googlestreetview>
  */
-class GoogleStreetviewController {
+export class GoogleStreetviewController {
   /**
    * @param {JQuery} $element Element.
    * @param {angular.IScope} $scope Scope.

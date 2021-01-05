@@ -86,7 +86,6 @@ module.directive('ngeoGeolocation', geolocationComponent);
 
 /**
  * @constructor
- * @private
  * @hidden
  * @param {angular.IScope} $scope The directive's scope.
  * @param {JQuery} $element Element.
@@ -100,7 +99,7 @@ module.directive('ngeoGeolocation', geolocationComponent);
  * @ngdoc controller
  * @ngname ngeoGeolocationController
  */
-function Controller(
+export function Controller(
   $scope,
   $element,
   gettextCatalog,

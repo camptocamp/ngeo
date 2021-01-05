@@ -110,10 +110,9 @@ const mapScaleselectorComponent = function (ngeoScaleselectorTemplateUrl) {
 module.directive('ngeoScaleselector', mapScaleselectorComponent);
 
 /**
- * @private
  * @hidden
  */
-class ScaleselectorController {
+export class ScaleselectorController {
   /**
    * @param {angular.IScope} $scope Directive scope.
    * @param {angular.IAttributes} $attrs Attributes.

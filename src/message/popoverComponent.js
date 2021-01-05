@@ -132,10 +132,9 @@ function messagePopoverContentComponent() {
  * @ngdoc controller
  * @ngname NgeoPopoverController
  * @param {angular.IScope} $scope Scope.
- * @private
  * @hidden
  */
-function PopoverController($scope) {
+export function PopoverController($scope) {
   /**
    * The state of the popover (displayed or not)
    * @type {boolean}

@@ -593,7 +593,7 @@ export function getFormattedPoint(point, decimals, format, opt_template) {
  * @hidden
  * @this {Measure}
  */
-function handleEvent_(evt) {
+export function handleEvent_(evt) {
   if (evt.type != 'pointermove' || evt.dragging) {
     return true;
   }

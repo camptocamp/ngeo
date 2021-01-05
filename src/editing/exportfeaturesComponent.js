@@ -71,13 +71,12 @@ module.directive('ngeoExportfeatures', editingExportFeaturesComponent);
  * @param {angular.IScope} $scope Angular scope.
  * @param {import("ngeo/misc/FeatureHelper.js").FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
  * @constructor
- * @private
  * @hidden
  * @ngInject
  * @ngdoc controller
  * @ngname ngeoExportfeaturesController
  */
-function Controller($element, $injector, $scope, ngeoFeatureHelper) {
+export function Controller($element, $injector, $scope, ngeoFeatureHelper) {
   /**
    * @type {?import("ol/Collection.js").default<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>}
    */

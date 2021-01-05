@@ -127,10 +127,9 @@ export function getAzimut(line) {
  * @param {number|undefined} decimals Decimals.
  * @param {import('ngeo/misc/filters.js').formatNumber} format The format function.
  * @return {string} Formatted measure.
- * @private
  * @hidden
  */
-function getFormattedAzimut(line, decimals, format) {
+export function getFormattedAzimut(line, decimals, format) {
   const azimut = getAzimut(line);
   return `${format(azimut, decimals)}°`;
 }

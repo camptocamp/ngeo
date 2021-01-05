@@ -553,10 +553,9 @@ PrintService.prototype.getCapabilities = function (opt_httpConfig) {
  * @ngInject
  * @ngdoc service
  * @ngname ngeoCreatePrint
- * @private
  * @hidden
  */
-function createPrintServiceFactory($http, gettextCatalog, ngeoLayerHelper) {
+export function createPrintServiceFactory($http, gettextCatalog, ngeoLayerHelper) {
   return (
     /**
      * @param {string} url URL to MapFish print service.

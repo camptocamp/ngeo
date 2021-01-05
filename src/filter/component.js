@@ -104,10 +104,9 @@ module.component('ngeoFilter', {
 });
 
 /**
- * @private
  * @hidden
  */
-class FilterController {
+export class FilterController {
   /**
    * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext service.
    * @param {angular.IScope} $scope Angular scope.

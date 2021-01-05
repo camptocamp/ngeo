@@ -102,13 +102,12 @@ module.directive('ngeoCreatefeature', editingCreateFeatureComponent);
  * @param {import("ngeo/misc/EventHelper.js").EventHelper} ngeoEventHelper Ngeo event helper service
  * @param {import('ngeo/options.js').ngeoSnappingTolerance} ngeoSnappingTolerance The tolerance.
  * @constructor
- * @private
  * @hidden
  * @ngInject
  * @ngdoc controller
  * @ngname ngeoCreatefeatureController
  */
-function Controller(
+export function Controller(
   gettextCatalog,
   $compile,
   $filter,

@@ -98,11 +98,10 @@ function buttonGroupComponent($parse) {
 module.directive('ngeoBtnGroup', buttonGroupComponent);
 
 /**
- * @private
  * @hidden
  * @type {angular.IController}
  */
-class BtnGroupController {
+export class BtnGroupController {
   /**
    * @param {angular.IScope} $scope Scope.
    * @ngInject

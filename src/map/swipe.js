@@ -70,7 +70,7 @@ function ngeoMapswipeTemplateUrl($attrs, ngeoMapswipeTemplateUrl) {
 /**
  * The controller for the Mapswipe component.
  */
-class SwipeController {
+export class SwipeController {
   /**
    * @param {angular.IScope} $scope Angular scope.
    * @param {JQuery} $element Element.

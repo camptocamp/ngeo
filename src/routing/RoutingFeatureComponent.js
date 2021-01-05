@@ -87,13 +87,12 @@ function ngeoRoutingFeatureTemplateUrl($attrs, ngeoRoutingFeatureTemplateUrl) {
  * @param {import("ngeo/routing/NominatimService.js").NominatimService} ngeoNominatimService service for
  *    Nominatim
  * @constructor
- * @private
  * @hidden
  * @ngInject
  * @ngdoc controller
  * @ngname NgeoRoutingFeatureController
  */
-class Controller {
+export class Controller {
   /**
    * @param {angular.IScope} $scope
    * @param {angular.ITimeoutService} $timeout

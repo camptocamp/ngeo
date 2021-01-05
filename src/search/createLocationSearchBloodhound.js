@@ -72,10 +72,9 @@ import 'corejs-typeahead';
 /**
  * @param {LocationSearchOptions=} opt_options Options.
  * @return {Bloodhound<olFeature<import('ol/geom/Geometry.js').default>[]>} The Bloodhound object.
- * @private
  * @hidden
  */
-function createLocationSearchBloodhound(opt_options) {
+export function createLocationSearchBloodhound(opt_options) {
   /** @type {LocationSearchOptions} */
   const options = opt_options || {};
 

@@ -77,13 +77,12 @@ function ngeoRoutingNominatimInputComponentTemplateUrl(
  * @param {import("ngeo/routing/NominatimService.js").NominatimService} ngeoNominatimService service for
  *    Nominatim
  * @constructor
- * @private
  * @hidden
  * @ngInject
  * @ngdoc controller
  * @ngname NgeoNominatimInputController
  */
-function Controller($element, $scope, ngeoNominatimService) {
+export function Controller($element, $scope, ngeoNominatimService) {
   /**
    * @type {JQuery}
    */
