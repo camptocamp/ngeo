@@ -101,7 +101,7 @@ export class Controller {
    */
   constructor($scope) {
     /**
-     * The Openlayer LineStringt that defines the profile
+     * The OpenLayers LineStringt that defines the profile
      * @type {?import("ol/geom/LineString.js").default}
      */
     this.line = null;
