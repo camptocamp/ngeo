@@ -354,13 +354,8 @@ module.component('gmfElevationwidget', rasterWidgetComponent);
  * @ngdoc controller
  * @param {import('gmf/options.js').gmfElevationOptions} gmfElevationOptions The options.
  */
-<<<<<<< HEAD
-function WidgetController(gmfElevationOptions) {
+export function WidgetController(gmfElevationOptions) {
   this.options = gmfElevationOptions;
-
-=======
-export function WidgetController() {
->>>>>>> 3def9f252... More exports in gmf
   /**
    * @type {?import("ol/Map.js").default}
    */
