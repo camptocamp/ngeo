@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2020 Camptocamp SA
+// Copyright (c) 2015-2021 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -240,12 +240,10 @@ module.value('gmfSearchTemplateUrl', gmfSearchTemplateUrl_);
 module.component('gmfSearch', searchComponent);
 
 /**
- * @private
  * @hidden
  */
-class SearchController {
+export class SearchController {
   /**
-   * @private
    * @param {JQuery} $element Element.
    * @param {angular.IScope} $scope The component's scope.
    * @param {angular.ICompileService} $compile Angular compile service.

@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2017-2020 Camptocamp SA
+// Copyright (c) 2017-2021 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -110,7 +110,7 @@ function gmfFilterselectorTemplateUrl($attrs, gmfFilterselectorTemplateUrl) {
  *      Note: although this is a list, only one can be defined.
  *  * `filterable_layers`: A list of layer names that can be filtered, if empty the component will be hidden.
  */
-class FilterSelectorController {
+export class FilterSelectorController {
   /**
    * @param {angular.IScope} $scope Angular scope.
    * @param {angular.ITimeoutService} $timeout Angular timeout service.

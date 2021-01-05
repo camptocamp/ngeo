@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2020 Camptocamp SA
+// Copyright (c) 2016-2021 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -144,13 +144,12 @@ module.directive('ngeoDatePicker', datePickerComponent);
  * @param {import("ngeo/misc/Time.js").Time} ngeoTime time service.
  * @param {angular.gettext.gettextCatalog} gettextCatalog service.
  * @constructor
- * @private
  * @hidden
  * @ngInject
  * @ngdoc controller
  * @ngname ngeoDatePickerController
  */
-function Controller($scope, ngeoTime, gettextCatalog) {
+export function Controller($scope, ngeoTime, gettextCatalog) {
   /**
    * @type {import("ngeo/misc/Time.js").Time}
    * @private

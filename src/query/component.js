@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2019-2020 Camptocamp SA
+// Copyright (c) 2019-2021 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -40,10 +40,9 @@ import {Vector as olSourceVector} from 'ol/source.js';
 const module = angular.module('ngeoQuery', [ngeoQueryModeSelector.name, ngeoQueryMapQuerent.name]);
 
 /**
- * @private
  * @hidden
  */
-class QueryController {
+export class QueryController {
   /**
    * @param {import("ngeo/query/MapQuerent.js").MapQuerent}
    *     ngeoMapQuerent The ngeo map querent service.

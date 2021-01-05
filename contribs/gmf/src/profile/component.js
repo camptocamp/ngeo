@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2020 Camptocamp SA
+// Copyright (c) 2016-2021 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -170,7 +170,6 @@ module.component('gmfProfile', profileComponent);
  * @param {string} gmfProfileJsonUrl URL of GMF service JSON profile.
  * @param {import("ngeo/download/Csv.js").DownloadCsvService} ngeoCsvDownload CSV Download service.
  * @constructor
- * @private
  * @hidden
  * @ngInject
  * @ngdoc controller

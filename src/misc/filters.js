@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2020 Camptocamp SA
+// Copyright (c) 2016-2021 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -103,7 +103,7 @@ const module = angular.module('ngeoAngularFilters', []);
  * @ngdoc filter
  * @ngname ngeoScalify
  */
-function ScalifyFilter($filter) {
+export function ScalifyFilter($filter) {
   const numberFilter = $filter('ngeoNumber');
   /**
    * @param {number} scale
@@ -142,7 +142,7 @@ module.filter('ngeoScalify', ScalifyFilter);
  * @ngdoc filter
  * @ngname ngeoNumber
  */
-function NumberFilter($locale) {
+export function NumberFilter($locale) {
   const formats = $locale.NUMBER_FORMATS;
 
   /**
@@ -224,7 +224,7 @@ module.filter('ngeoNumber', NumberFilter);
  * @ngdoc filter
  * @ngname ngeoUnitPrefix
  */
-function UnitPrefixFilter($filter) {
+export function UnitPrefixFilter($filter) {
   /** @type {function(number, number=): string} */
   const numberFilter = $filter('ngeoNumber');
   const standardPrefix = ['', 'k', 'M', 'G', 'T', 'P'];
@@ -294,7 +294,7 @@ module.filter('ngeoUnitPrefix', UnitPrefixFilter);
  * @ngdoc filter
  * @ngname ngeoNumberCoordinates
  */
-function NumberCoordinatesFilter($filter) {
+export function NumberCoordinatesFilter($filter) {
   /**
    * @param {import("ol/coordinate.js").Coordinate} coordinates Array of two numbers.
    * @param {(number|string)=} opt_fractionDigits Optional number of digit.
@@ -337,7 +337,7 @@ module.filter('ngeoNumberCoordinates', NumberCoordinatesFilter);
  * @ngdoc filter
  * @ngname ngeoDMSCoordinates
  */
-function DMSCoordinatesFilter() {
+export function DMSCoordinatesFilter() {
   /**
    * @param {number} degrees
    * @param {string} hemispheres
@@ -394,7 +394,7 @@ module.filter('ngeoDMSCoordinates', DMSCoordinatesFilter);
  * @param {angular.ISCEService} $sce Angular sce service.
  * @ngname ngeoTrustHtml
  */
-function trustHtmlFilter($sce) {
+export function trustHtmlFilter($sce) {
   return function (input) {
     if (input !== undefined && input !== null) {
       return $sce.trustAsHtml(`${input}`);
@@ -424,7 +424,7 @@ module.filter('ngeoTrustHtml', trustHtmlFilter);
  *     ngeoStringToHtmlReplacements List of replacements for string to html.
  * @ngname ngeoTrustHtmlAuto
  */
-function trustHtmlAutoFilter($sce, ngeoStringToHtmlReplacements) {
+export function trustHtmlAutoFilter($sce, ngeoStringToHtmlReplacements) {
   return function (input) {
     if (input !== undefined && input !== null) {
       if (typeof input === 'string') {
@@ -463,7 +463,7 @@ module.filter('ngeoTrustHtmlAuto', trustHtmlAutoFilter);
  * @ngdoc filter
  * @ngname ngeoDuration
  */
-function DurationFilter(gettextCatalog) {
+export function DurationFilter(gettextCatalog) {
   // time unit enum
   const TimeUnits = Object.freeze({
     SECONDS: Symbol('seconds'),
@@ -579,7 +579,7 @@ module.constant('ngeoStringToHtmlReplacements', StringToHtmlReplacements);
  * @ngname ngeoDuration
  * @hidden
  */
-const removeCDATA = function () {
+export const removeCDATA = function () {
   return function (input) {
     if (input && input.replace) {
       return input.replace(/<!\[CDATA\[(.*)\]\]>/, '$1');

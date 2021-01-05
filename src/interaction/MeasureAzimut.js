@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2020 Camptocamp SA
+// Copyright (c) 2015-2021 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -127,10 +127,9 @@ export function getAzimut(line) {
  * @param {number|undefined} decimals Decimals.
  * @param {import('ngeo/misc/filters.js').formatNumber} format The format function.
  * @return {string} Formatted measure.
- * @private
  * @hidden
  */
-function getFormattedAzimut(line, decimals, format) {
+export function getFormattedAzimut(line, decimals, format) {
   const azimut = getAzimut(line);
   return `${format(azimut, decimals)}°`;
 }

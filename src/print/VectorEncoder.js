@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2018-2020 Camptocamp SA
+// Copyright (c) 2018-2021 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -30,7 +30,6 @@ import {asArray as asColorArray} from 'ol/color.js';
 
 /**
  * @constructor
- * @private
  * @hidden
  */
 function VectorEncoder() {

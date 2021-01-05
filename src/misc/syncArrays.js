@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2020 Camptocamp SA
+// Copyright (c) 2015-2021 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -47,7 +47,6 @@
  * @param {function(T):boolean} filter Filter function.
  * @return {function()} Function to call to stop synchronization
  * @template T
- * @private
  * @hidden
  */
 function syncArrays(arr1, arr2, reverse, scope, filter) {

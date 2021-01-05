@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2020 Camptocamp SA
+// Copyright (c) 2015-2021 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -254,10 +254,9 @@ MessagePopup.prototype.open = function (options) {
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @return {PopupFactory} The function to create a popup.
  * @ngInject
- * @private
  * @hidden
  */
-function Factory($compile, $rootScope, $sce, $timeout) {
+export function Factory($compile, $rootScope, $sce, $timeout) {
   return (
     /**
      * @return {MessagePopup} The popup instance.

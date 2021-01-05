@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2020 Camptocamp SA
+// Copyright (c) 2016-2021 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -80,13 +80,12 @@ module.directive('gmfDrawprofileline', profileDarwLineComponent);
  * @param {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr Feature overlay
  *    manager.
  * @constructor
- * @private
  * @hidden
  * @ngInject
  * @ngdoc controller
  * @ngname gmfDrawprofilelineController
  */
-function Controller($scope, $timeout, ngeoFeatureOverlayMgr) {
+export function Controller($scope, $timeout, ngeoFeatureOverlayMgr) {
   /**
    * @type {?import("ol/geom/LineString.js").default}
    */

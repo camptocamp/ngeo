@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2020 Camptocamp SA
+// Copyright (c) 2015-2021 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -86,13 +86,12 @@ module.directive('gmfMap', gmfMapComponent);
  * @param {import("gmf/permalink/Permalink.js").PermalinkService} gmfPermalink The gmf permalink service.
  * @param {import("gmf/editing/Snapping.js").EditingSnappingService} gmfSnapping The gmf snapping service.
  * @constructor
- * @private
  * @hidden
  * @ngInject
  * @ngdoc controller
  * @ngname GmfMapController
  */
-function Controller(ngeoFeatureOverlayMgr, gmfPermalink, gmfSnapping) {
+export function Controller(ngeoFeatureOverlayMgr, gmfPermalink, gmfSnapping) {
   // Scope properties
 
   /**

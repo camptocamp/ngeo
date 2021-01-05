@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2020 Camptocamp SA
+// Copyright (c) 2016-2021 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -158,13 +158,12 @@ module.directive('gmfElevation', rasterComponent);
  * @param {import("gmf/raster/RasterService.js").RasterService} gmfRaster Gmf Raster service
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @constructor
- * @private
  * @hidden
  * @ngInject
  * @ngdoc controller
  * @ngname gmfElevationController
  */
-function Controller($scope, $filter, ngeoDebounce, gmfRaster, gettextCatalog) {
+export function Controller($scope, $filter, ngeoDebounce, gmfRaster, gettextCatalog) {
   /**
    * @private
    */
@@ -382,11 +381,10 @@ module.component('gmfElevationwidget', rasterWidgetComponent);
 
 /**
  * @constructor
- * @private
  * @hidden
  * @ngdoc controller
  */
-function WidgetController() {
+export function WidgetController() {
   /**
    * @type {?import("ol/Map.js").default}
    */

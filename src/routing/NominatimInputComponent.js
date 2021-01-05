@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2018-2020 Camptocamp SA
+// Copyright (c) 2018-2021 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -77,13 +77,12 @@ function ngeoRoutingNominatimInputComponentTemplateUrl(
  * @param {import("ngeo/routing/NominatimService.js").NominatimService} ngeoNominatimService service for
  *    Nominatim
  * @constructor
- * @private
  * @hidden
  * @ngInject
  * @ngdoc controller
  * @ngname NgeoNominatimInputController
  */
-function Controller($element, $scope, ngeoNominatimService) {
+export function Controller($element, $scope, ngeoNominatimService) {
   /**
    * @type {JQuery}
    * @private

@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2020 Camptocamp SA
+// Copyright (c) 2015-2021 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -98,7 +98,6 @@ module.directive('ngeoGeolocation', geolocationComponent);
 
 /**
  * @constructor
- * @private
  * @hidden
  * @param {angular.IScope} $scope The directive's scope.
  * @param {JQuery} $element Element.
@@ -111,7 +110,7 @@ module.directive('ngeoGeolocation', geolocationComponent);
  * @ngdoc controller
  * @ngname ngeoGeolocationController
  */
-function Controller($scope, $element, gettextCatalog, ngeoFeatureOverlayMgr, ngeoNotification) {
+export function Controller($scope, $element, gettextCatalog, ngeoFeatureOverlayMgr, ngeoNotification) {
   $element.on('click', this.toggleTracking.bind(this));
 
   // @ts-ignore

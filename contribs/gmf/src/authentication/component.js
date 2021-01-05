@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2020 Camptocamp SA
+// Copyright (c) 2016-2021 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -140,10 +140,9 @@ module.value('gmfAuthenticationTemplateUrl', gmfAuthenticationTemplateUrl_);
 module.component('gmfAuthentication', authenticationComponent);
 
 /**
- * @private
  * @hidden
  */
-class AuthenticationController {
+export class AuthenticationController {
   /**
    * @param {angular.IScope} $scope Scope.
    * @param {JQuery} $element Element.
