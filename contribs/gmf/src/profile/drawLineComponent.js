@@ -80,13 +80,12 @@ module.directive('gmfDrawprofileline', profileDarwLineComponent);
  * @param {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr Feature overlay
  *    manager.
  * @constructor
- * @private
  * @hidden
  * @ngInject
  * @ngdoc controller
  * @ngname gmfDrawprofilelineController
  */
-function Controller($scope, $timeout, ngeoFeatureOverlayMgr) {
+export function Controller($scope, $timeout, ngeoFeatureOverlayMgr) {
   /**
    * @type {?import("ol/geom/LineString.js").default}
    */

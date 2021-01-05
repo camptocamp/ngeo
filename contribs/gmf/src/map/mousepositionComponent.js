@@ -111,13 +111,12 @@ module.component('gmfMouseposition', mapMousepositionComponent);
  * @param {angular.IScope} $scope Angular scope.
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @constructor
- * @private
  * @hidden
  * @ngInject
  * @ngdoc controller
  * @ngname gmfMousepositionController
  */
-function Controller($element, $filter, $scope, gettextCatalog) {
+export function Controller($element, $filter, $scope, gettextCatalog) {
   /**
    * @type {?import("ol/Map.js").default}
    */

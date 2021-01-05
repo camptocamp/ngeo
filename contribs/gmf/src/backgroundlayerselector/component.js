@@ -112,7 +112,6 @@ module.component('gmfBackgroundlayerselector', backgroundlayerselectorComponent)
 
 /**
  * @constructor
- * @private
  * @hidden
  * @param {angular.IScope} $scope Angular scope.
  * @param {import("ngeo/map/BackgroundLayerMgr.js").MapBackgroundLayerManager} ngeoBackgroundLayerMgr
@@ -122,7 +121,7 @@ module.component('gmfBackgroundlayerselector', backgroundlayerselectorComponent)
  * @ngdoc controller
  * @ngname GmfBackgroundlayerselectorController
  */
-function Controller($scope, ngeoBackgroundLayerMgr, gmfThemes) {
+export function Controller($scope, ngeoBackgroundLayerMgr, gmfThemes) {
   /**
    * @type {?import("ol/Map.js").default}
    */

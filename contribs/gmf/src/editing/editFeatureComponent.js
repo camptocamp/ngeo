@@ -224,13 +224,12 @@ module.directive('gmfEditfeature', editingEditFeatureComponent);
  * @param {import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate
  *    manager service.
  * @constructor
- * @private
  * @hidden
  * @ngInject
  * @ngdoc controller
  * @ngname GmfEditfeatureController
  */
-function Controller(
+export function Controller(
   $element,
   $q,
   $scope,

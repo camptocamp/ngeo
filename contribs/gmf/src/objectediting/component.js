@@ -188,13 +188,12 @@ module.component('gmfObjectediting', objecteditingComponent);
  * @param {import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate
  *    manager service.
  * @constructor
- * @private
  * @hidden
  * @ngInject
  * @ngdoc controller
  * @ngname GmfObjecteditingController
  */
-function Controller(
+export function Controller(
   $scope,
   $timeout,
   gettextCatalog,

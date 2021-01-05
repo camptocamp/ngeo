@@ -59,10 +59,9 @@ module.run(
 );
 
 /**
- * @private
  * @hidden
  */
-class DrawFeatureOptionsController {
+export class DrawFeatureOptionsController {
   /**
    * @param {angular.IScope} $scope Scope.
    * @private

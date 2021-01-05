@@ -170,7 +170,6 @@ module.component('gmfProfile', profileComponent);
  * @param {string} gmfProfileJsonUrl URL of GMF service JSON profile.
  * @param {import("ngeo/download/Csv.js").DownloadCsvService} ngeoCsvDownload CSV Download service.
  * @constructor
- * @private
  * @hidden
  * @ngInject
  * @ngdoc controller

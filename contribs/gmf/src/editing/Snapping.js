@@ -156,7 +156,7 @@ export function EditingSnappingService(
     : undefined;
 }
 
-class CustomSnap extends olInteractionSnap {
+export class CustomSnap extends olInteractionSnap {
   /**
    * @param {import('ol/interaction/Snap.js').Options} options
    */

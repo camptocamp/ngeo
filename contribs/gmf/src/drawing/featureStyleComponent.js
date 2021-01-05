@@ -80,13 +80,12 @@ module.directive('gmfFeaturestyle', drawingDrawFeatureComponent);
  * @param {angular.IScope} $scope Angular scope.
  * @param {import("ngeo/misc/FeatureHelper.js").FeatureHelper} ngeoFeatureHelper Gmf feature helper service.
  * @constructor
- * @private
  * @hidden
  * @ngInject
  * @ngdoc controller
  * @ngname GmfFeaturestyleController
  */
-function Controller($scope, ngeoFeatureHelper) {
+export function Controller($scope, ngeoFeatureHelper) {
   /**
    * @type {string}
    */

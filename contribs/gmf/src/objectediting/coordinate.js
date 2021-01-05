@@ -47,10 +47,9 @@ export function coordinatesToXY0(coordinates) {
  * @param {T[]} coordinates Coordinates
  * @param {number} nesting Nesting level.
  * @return {T[]} Converted coordinates.
- * @private
  * @hidden
  */
-function toXY(coordinates, nesting) {
+export function toXY(coordinates, nesting) {
   if (nesting === 0) {
     return /** @type {T[]} */ (coordinatesToXY0(/** @type {Coordinate} */ (coordinates)));
   } else {

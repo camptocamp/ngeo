@@ -225,13 +225,12 @@ module.component('gmfLayertree', layertreeComponent);
  * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes The gmf Themes service.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @constructor
- * @private
  * @hidden
  * @ngInject
  * @ngdoc controller
  * @ngname gmfLayertreeController
  */
-function Controller(
+export function Controller(
   $element,
   $scope,
   ngeoLayerHelper,

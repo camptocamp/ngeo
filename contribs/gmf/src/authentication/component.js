@@ -140,10 +140,9 @@ module.value('gmfAuthenticationTemplateUrl', gmfAuthenticationTemplateUrl_);
 module.component('gmfAuthentication', authenticationComponent);
 
 /**
- * @private
  * @hidden
  */
-class AuthenticationController {
+export class AuthenticationController {
   /**
    * @param {angular.IScope} $scope Scope.
    * @param {JQuery} $element Element.
