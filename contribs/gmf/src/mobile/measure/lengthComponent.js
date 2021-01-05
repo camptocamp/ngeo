@@ -103,10 +103,9 @@ function mobileMeasureLenthComponent(gmfMobileMeasureLengthTemplateUrl) {
 module.directive('gmfMobileMeasurelength', mobileMeasureLenthComponent);
 
 /**
- * @private
  * @hidden
  */
-class Controller extends MeasueMobileBaseController {
+export class Controller extends MeasueMobileBaseController {
   /**
    * @param {angular.IScope} $scope Angular scope.
    * @param {angular.IFilterService} $filter Angular filter

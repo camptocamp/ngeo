@@ -82,10 +82,9 @@ const permalinkShareComponent = {
 module.component('gmfShare', permalinkShareComponent);
 
 /**
- * @private
  * @hidden
  */
-class ShareComponentController {
+export class ShareComponentController {
   /**
    * The controller for the share component
    * @param {angular.IScope} $scope Scope.

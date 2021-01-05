@@ -88,10 +88,9 @@ const Mode = {
 };
 
 /**
- * @private
  * @hidden
  */
-class Controller {
+export class Controller {
   /**
    * @param {JQuery} $element Element.
    * @param {angular.IFilterService} $filter Angular filter.

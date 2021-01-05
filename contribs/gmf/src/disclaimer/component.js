@@ -77,7 +77,7 @@ const module = angular.module('gmfDisclaimer', [
  * @ngdoc controller
  * @ngname GmfDisclaimerController
  */
-function DisclaimerController(
+export function DisclaimerController(
   $element,
   $sce,
   $timeout,

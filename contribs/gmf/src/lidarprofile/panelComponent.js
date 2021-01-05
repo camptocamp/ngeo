@@ -110,10 +110,9 @@ const lidarprofilePanelComponent = {
 module.component('gmfLidarprofilePanel', lidarprofilePanelComponent);
 
 /**
- * @private
  * @hidden
  */
-class Controller {
+export class Controller {
   /**
    * @param {angular.IScope} $scope Angular scope.
    * @param {import("gmf/lidarprofile/Manager.js").LidarprofileManager} gmfLidarprofileManager gmf

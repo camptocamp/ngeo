@@ -220,13 +220,12 @@ module.directive('gmfEditfeature', editingEditFeatureComponent);
  *    manager service.
  * @param {import('gmf/options.js').gmfEditFeatureOptions} gmfEditFeatureOptions The options.
  * @constructor
- * @private
  * @hidden
  * @ngInject
  * @ngdoc controller
  * @ngname GmfEditfeatureController
  */
-function Controller(
+export function Controller(
   $element,
   $q,
   $scope,

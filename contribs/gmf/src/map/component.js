@@ -89,13 +89,12 @@ module.directive('gmfMap', gmfMapComponent);
  * @param {import("gmf/editing/Snapping.js").EditingSnappingService} gmfSnapping The gmf snapping service.
  * @param {angular.auto.IInjectorService} $injector Main injector.
  * @constructor
- * @private
  * @hidden
  * @ngInject
  * @ngdoc controller
  * @ngname GmfMapController
  */
-function Controller(ngeoFeatureOverlayMgr, gmfPermalink, gmfSnapping, $injector) {
+export function Controller(ngeoFeatureOverlayMgr, gmfPermalink, gmfSnapping, $injector) {
   // Scope properties
 
   /**

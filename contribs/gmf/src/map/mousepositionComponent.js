@@ -98,13 +98,12 @@ module.component('gmfMouseposition', mapMousepositionComponent);
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @param {import('gmf/options.js').gmfMousePositionOptions} gmfMousePositionOptions The options.
  * @constructor
- * @private
  * @hidden
  * @ngInject
  * @ngdoc controller
  * @ngname gmfMousepositionController
  */
-function Controller($element, $filter, $scope, gettextCatalog, gmfMousePositionOptions) {
+export function Controller($element, $filter, $scope, gettextCatalog, gmfMousePositionOptions) {
   /**
    * @type {import('gmf/options.js').gmfMousePositionOptions}
    */

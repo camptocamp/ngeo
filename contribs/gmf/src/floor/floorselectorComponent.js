@@ -64,10 +64,9 @@ function gmfFloorselectorTemplateUrl($attrs, gmfFloorselectorTemplateUrl) {
 }
 
 /**
- * @private
  * @hidden
  */
-class Controller {
+export class Controller {
   /**
    * @param {angular.IScope} $scope Angular scope.
    * @param {JQuery} $element Element.

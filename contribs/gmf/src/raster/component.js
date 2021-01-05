@@ -154,13 +154,12 @@ module.directive('gmfElevation', rasterComponent);
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @param {import('gmf/options.js').gmfElevationOptions} gmfElevationOptions The options
  * @constructor
- * @private
  * @hidden
  * @ngInject
  * @ngdoc controller
  * @ngname gmfElevationController
  */
-function Controller($scope, $filter, ngeoDebounce, gmfRaster, gettextCatalog, gmfElevationOptions) {
+export function Controller($scope, $filter, ngeoDebounce, gmfRaster, gettextCatalog, gmfElevationOptions) {
   /**
    * @type {import('gmf/options.js').gmfElevationOptions}
    */
@@ -350,15 +349,18 @@ module.component('gmfElevationwidget', rasterWidgetComponent);
 
 /**
  * @constructor
- * @private
  * @hidden
  * @nginject
  * @ngdoc controller
  * @param {import('gmf/options.js').gmfElevationOptions} gmfElevationOptions The options.
  */
+<<<<<<< HEAD
 function WidgetController(gmfElevationOptions) {
   this.options = gmfElevationOptions;
 
+=======
+export function WidgetController() {
+>>>>>>> 3def9f252... More exports in gmf
   /**
    * @type {?import("ol/Map.js").default}
    */

@@ -76,13 +76,12 @@ module.directive('gmfObjecteditinggetwmsfeature', objectEditingGetWMSFeatureComp
  * @param {import("gmf/objectediting/Query.js").ObjectEditingQuery} gmfObjectEditingQuery GMF ObjectEditing
  *     query service.
  * @constructor
- * @private
  * @hidden
  * @ngInject
  * @ngdoc controller
  * @ngname GmfObjecteditinggetwmsfeatureController
  */
-function Controller($scope, gmfObjectEditingQuery) {
+export function Controller($scope, gmfObjectEditingQuery) {
   // Scope properties
 
   /**

@@ -75,10 +75,9 @@ function gmfWmtscapabilitylayertreTemplateUrl($attrs, gmfWmtscapabilitylayertreT
 }
 
 /**
- * @private
  * @hidden
  */
-class Controller {
+export class Controller {
   /**
    * @param {import("gmf/datasource/ExternalDataSourcesManager.js").ExternalDatSourcesManager}
    *     gmfExternalDataSourcesManager GMF service responsible of managing

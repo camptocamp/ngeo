@@ -222,13 +222,12 @@ module.component('gmfLayertree', layertreeComponent);
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @param {import('gmf/options.js').gmfLayerTreeOptions} gmfLayerTreeOptions The options.
  * @constructor
- * @private
  * @hidden
  * @ngInject
  * @ngdoc controller
  * @ngname gmfLayertreeController
  */
-function Controller(
+export function Controller(
   $element,
   $scope,
   ngeoLayerHelper,

@@ -120,13 +120,12 @@ module.component('gmfThemeselector', themeSelectorComponent);
  * @param {import("gmf/theme/Manager.js").ThemeManagerService} gmfThemeManager Tree manager service.
  * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes Themes service.
  * @constructor
- * @private
  * @hidden
  * @ngInject
  * @ngdoc controller
  * @ngname gmfThemeselectorController
  */
-function Controller($scope, gmfThemeManager, gmfThemes) {
+export function Controller($scope, gmfThemeManager, gmfThemes) {
   /**
    * @type {import("gmf/theme/Manager.js").ThemeManagerService}
    */

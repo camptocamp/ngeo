@@ -121,13 +121,12 @@ module.directive('gmfDrawfeature', drawinfDrawFeatureComponent);
  * @param {import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate
  *    manager service.
  * @constructor
- * @private
  * @hidden
  * @ngInject
  * @ngdoc controller
  * @ngname GmfDrawfeatureController
  */
-function Controller(
+export function Controller(
   $scope,
   $timeout,
   gettextCatalog,

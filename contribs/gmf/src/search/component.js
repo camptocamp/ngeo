@@ -147,10 +147,9 @@ module.value('gmfSearchTemplateUrl', gmfSearchTemplateUrl_);
 module.component('gmfSearch', searchComponent);
 
 /**
- * @private
  * @hidden
  */
-class SearchController {
+export class SearchController {
   /**
    * @param {JQuery} $element Element.
    * @param {angular.IScope} $scope The component's scope.

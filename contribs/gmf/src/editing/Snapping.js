@@ -32,7 +32,7 @@ import olCollection, {CollectionEvent} from 'ol/Collection.js';
 import olFormatWFS from 'ol/format/WFS.js';
 import olInteractionSnap from 'ol/interaction/Snap.js';
 
-class CustomSnap extends olInteractionSnap {
+export class CustomSnap extends olInteractionSnap {
   /**
    * @param {import('ol/interaction/Snap.js').Options} options
    */

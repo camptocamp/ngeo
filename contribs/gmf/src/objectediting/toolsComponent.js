@@ -149,13 +149,12 @@ const NAMESPACE = 'oet';
  *    manager service.
  * @param {import('gmf/options.js').gmfObjectEditingToolsOptions} gmfObjectEditingToolsOptions The options.
  * @constructor
- * @private
  * @hidden
  * @ngInject
  * @ngdoc controller
  * @ngname GmfObjecteditingtoolsController
  */
-function Controller($scope, ngeoToolActivateMgr, gmfObjectEditingToolsOptions) {
+export function Controller($scope, ngeoToolActivateMgr, gmfObjectEditingToolsOptions) {
   // == Scope properties ==
 
   /**

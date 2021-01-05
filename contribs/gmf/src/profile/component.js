@@ -168,7 +168,6 @@ module.component('gmfProfile', profileComponent);
  * @param {import('gmf/options.js').gmfProfileOptions} gmfProfileOptions The options.
  * @param {import('ngeo/options.js').ngeoProfileOptions} ngeoProfileOptions The options.
  * @constructor
- * @private
  * @hidden
  * @ngInject
  * @ngdoc controller
