@@ -343,4 +343,12 @@ export function buildStyle(styleDescriptor) {
  * @property {boolean} [atLoadingTime=false] Toggle geolocating at loading time if true.
  */
 
+/**
+ * Configuration object for streetview.
+ *
+ * @typedef {Object} ngeoStreetviewOptions
+ * @property {string} viewer The viewer to use (google or mapillary)
+ * @property {string} key ClientId for Mapillary
+ */
+
 export default null;

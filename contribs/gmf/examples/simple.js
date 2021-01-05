@@ -33,7 +33,7 @@ import options from './options.js';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfapp', ['gettext', gmfMapComponent.name]);
+const myModule = angular.module('gmfapp', ['gettext', gmfMapComponent.name]);
 
 /**
  * @constructor
@@ -56,7 +56,7 @@ function MainController() {
   });
 }
 
-module.controller('MainController', MainController);
-options(module);
+myModule.controller('MainController', MainController);
+options(myModule);
 
-export default module;
+export default myModule;

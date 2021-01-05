@@ -55,6 +55,7 @@ all_required_js = {a for a in all_required_js if not a.startswith("gmf/")}
 all_required_js = {a for a in all_required_js if not a.startswith("goog/")}
 all_required_js = {a for a in all_required_js if not a.startswith("olcs/")}
 all_required_js = {a for a in all_required_js if not a.startswith("jsts/")}
+all_required_js = {a for a in all_required_js if not a.startswith("mapillary-js/")}
 all_required_js = {
     a for a in all_required_js if a not in ("corejs-typeahead", "angular-float-thead", "moment")
 }

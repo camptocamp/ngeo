@@ -27,6 +27,6 @@ import control from 'ngeo/olcs/controls3d.js';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoOlcsModule', [control.name, Service.name]);
+const myModule = angular.module('ngeoOlcsModule', [control.name, Service.name]);
 
-export default module;
+export default myModule;

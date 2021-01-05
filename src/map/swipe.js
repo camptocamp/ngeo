@@ -30,9 +30,9 @@ import 'jquery-ui/ui/widgets/draggable.js';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoMapswipe', []);
+const myModule = angular.module('ngeoMapswipe', []);
 
-module.run(
+myModule.run(
   /**
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
@@ -43,7 +43,7 @@ module.run(
   }
 );
 
-module.value(
+myModule.value(
   'ngeoMapswipeTemplateUrl',
   /**
    * @param {angular.IAttributes} $attrs Attributes.
@@ -231,7 +231,7 @@ export class SwipeController {
   }
 }
 
-module.component('ngeoMapswipe', {
+myModule.component('ngeoMapswipe', {
   controller: SwipeController,
   bindings: {
     map: '<',
@@ -241,4 +241,4 @@ module.component('ngeoMapswipe', {
   templateUrl: ngeoMapswipeTemplateUrl,
 });
 
-export default module;
+export default myModule;

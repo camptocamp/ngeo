@@ -172,10 +172,10 @@ ObjecteditingManagerService.prototype.handleGetFeatures_ = function (key, value,
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfObjectEditingManager', [
+const myModule = angular.module('gmfObjectEditingManager', [
   gmfEditingEditFeature.name,
   ngeoStatemanagerLocation.name,
 ]);
-module.service('gmfObjectEditingManager', ObjecteditingManagerService);
+myModule.service('gmfObjectEditingManager', ObjecteditingManagerService);
 
-export default module;
+export default myModule;

@@ -26,9 +26,9 @@ import {findIndex as findIndexInArray} from 'ol/array.js';
  * @type {!angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfFloorSelector', []);
+const myModule = angular.module('gmfFloorSelector', []);
 
-module.run(
+myModule.run(
   /**
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
@@ -39,7 +39,7 @@ module.run(
   }
 );
 
-module.value(
+myModule.value(
   'gmfFloorselectorTemplateUrl',
   /**
    * @param {!angular.IAttributes} $attrs Attributes.
@@ -223,6 +223,6 @@ const floorSelectorComponent = {
   templateUrl: gmfFloorselectorTemplateUrl,
 };
 
-module.component('gmfFloorselector', floorSelectorComponent);
+myModule.component('gmfFloorselector', floorSelectorComponent);
 
-export default module;
+export default myModule;

@@ -30,16 +30,16 @@ import olStyleFill from 'ol/style/Fill.js';
 import olStyleStroke from 'ol/style/Stroke.js';
 import olStyleStyle from 'ol/style/Style.js';
 import olStyleText from 'ol/style/Text.js';
-import ngeoGooglestreetviewModule from 'ngeo/googlestreetview/module.js';
+import ngeoStreetviewModule from 'ngeo/streetview/module.js';
 import ngeoMapModule from 'ngeo/map/module.js';
 import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
 import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr.js';
 
 /** @type {angular.IModule} **/
-const module = angular.module('app', [
+const myModule = angular.module('app', [
   'gettext',
   ngeoMapModule.name,
-  ngeoGooglestreetviewModule.name,
+  ngeoStreetviewModule.name,
   ngeoMiscToolActivateMgr.name,
 ]);
 
@@ -104,6 +104,10 @@ function MainController(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
   ngeoToolActivateMgr.registerTool('mapTools', dummyToolActivate, false);
 }
 
-module.controller('MainController', MainController);
+myModule.controller('MainController', MainController);
 
-export default module;
+myModule.constant('ngeoStreetviewOptions', {
+  'viewer': 'google',
+});
+
+export default myModule;

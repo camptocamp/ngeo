@@ -29,7 +29,7 @@ import olGeomPolygon from 'ol/geom/Polygon.js';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoDrawrectangle', []);
+const myModule = angular.module('ngeoDrawrectangle', []);
 
 /**
  * @return {angular.IDirective} The directive specs.
@@ -90,6 +90,6 @@ function drawRectangleComponent() {
   };
 }
 
-module.directive('ngeoDrawrectangle', drawRectangleComponent);
+myModule.directive('ngeoDrawrectangle', drawRectangleComponent);
 
-export default module;
+export default myModule;

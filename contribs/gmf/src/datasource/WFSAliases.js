@@ -69,7 +69,7 @@ export class DatasourceWFSAlias {
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfDatasourceWFSAliases', [ngeoDatasourceHelper.name]);
-module.service('gmfWFSAliases', DatasourceWFSAlias);
+const myModule = angular.module('gmfDatasourceWFSAliases', [ngeoDatasourceHelper.name]);
+myModule.service('gmfWFSAliases', DatasourceWFSAlias);
 
-export default module;
+export default myModule;

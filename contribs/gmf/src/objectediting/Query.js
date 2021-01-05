@@ -198,7 +198,7 @@ ObjectEditingQuery.prototype.getFeatureInfo = function (layerInfo, coordinate, m
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfObjectEditingQuery', [gmfThemeThemes.name]);
-module.service('gmfObjectEditingQuery', ObjectEditingQuery);
+const myModule = angular.module('gmfObjectEditingQuery', [gmfThemeThemes.name]);
+myModule.service('gmfObjectEditingQuery', ObjectEditingQuery);
 
-export default module;
+export default myModule;

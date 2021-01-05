@@ -24,7 +24,7 @@ import angular from 'angular';
 import ngeoMiscDatetimepickerComponent from 'ngeo/misc/datetimepickerComponent.js';
 
 /** @type {angular.IModule} **/
-const module = angular.module('app', ['gettext', ngeoMiscDatetimepickerComponent.name]);
+const myModule = angular.module('app', ['gettext', ngeoMiscDatetimepickerComponent.name]);
 
 /**
  * @constructor
@@ -47,6 +47,6 @@ function MainController() {
   this.datetime = '2018-01-01 12:00:00';
 }
 
-module.controller('MainController', MainController);
+myModule.controller('MainController', MainController);
 
-export default module;
+export default myModule;

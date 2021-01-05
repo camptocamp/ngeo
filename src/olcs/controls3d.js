@@ -52,7 +52,7 @@ import olcsCore from 'olcs/core.js';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoOlcsControls3d', []);
+const myModule = angular.module('ngeoOlcsControls3d', []);
 
 /**
  * @private
@@ -297,7 +297,7 @@ function ngeoOlcsControls3dTemplateUrlInjectable($attrs, ngeoOlcsControls3dTempl
   return templateUrl ? templateUrl : 'ngeo/olsc/controls3d';
 }
 
-module.run(
+myModule.run(
   /**
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
@@ -337,8 +337,8 @@ const olscControls3dComponent = {
   templateUrl: ngeoOlcsControls3dTemplateUrlInjectable,
 };
 
-module.component('ngeoOlcsControls3d', olscControls3dComponent);
+myModule.component('ngeoOlcsControls3d', olscControls3dComponent);
 
-module.value('ngeoOlcsControls3dTemplateUrl', '');
+myModule.value('ngeoOlcsControls3dTemplateUrl', '');
 
-export default module;
+export default myModule;

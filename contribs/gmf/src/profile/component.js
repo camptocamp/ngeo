@@ -66,13 +66,13 @@ import 'bootstrap/js/src/dropdown.js';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfProfile', [
+const myModule = angular.module('gmfProfile', [
   ngeoDownloadCsv.name,
   ngeoMapFeatureOverlayMgr.name,
   ngeoProfileElevationComponent.name,
 ]);
 
-module.value(
+myModule.value(
   'gmfProfileTemplateUrl',
   /**
    * @param {JQuery} $element Element.
@@ -85,7 +85,7 @@ module.value(
   }
 );
 
-module.run(
+myModule.run(
   /**
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
@@ -153,7 +153,7 @@ const profileComponent = {
   templateUrl: gmfProfileTemplateUrl,
 };
 
-module.component('gmfProfile', profileComponent);
+myModule.component('gmfProfile', profileComponent);
 
 /**
  * @param {angular.IScope} $scope Angular scope.
@@ -726,6 +726,6 @@ ProfileController.prototype.downloadCsv = function () {
   this.ngeoCsvDownload_.startDownload(rows, headers, 'profile.csv');
 };
 
-module.controller('GmfProfileController', ProfileController);
+myModule.controller('GmfProfileController', ProfileController);
 
-export default module;
+export default myModule;

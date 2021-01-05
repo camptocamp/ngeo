@@ -36,7 +36,7 @@ import olLayerTile from 'ol/layer/Tile.js';
 import olSourceOSM from 'ol/source/OSM.js';
 
 /** @type {angular.IModule} **/
-const module = angular.module('app', ['gettext', ngeoMapModule.name, ngeoRoutingModule.name]);
+const myModule = angular.module('app', ['gettext', ngeoMapModule.name, ngeoRoutingModule.name]);
 
 /**
  * The application's main directive.
@@ -65,9 +65,9 @@ function MainController() {
   this.routingPanelActive = true;
 }
 
-module.controller('MainController', MainController);
-module.constant('ngeoRoutingOptions', {});
-module.constant('ngeoNominatimUrl', 'https://nominatim.openstreetmap.org/');
-module.constant('ngeoNominatimSearchDefaultParams', {});
+myModule.controller('MainController', MainController);
+myModule.constant('ngeoRoutingOptions', {});
+myModule.constant('ngeoNominatimUrl', 'https://nominatim.openstreetmap.org/');
+myModule.constant('ngeoNominatimSearchDefaultParams', {});
 
-export default module;
+export default myModule;

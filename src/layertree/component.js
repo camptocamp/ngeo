@@ -28,9 +28,9 @@ import 'bootstrap/js/src/collapse.js'; // needed to collapse a layertree
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoLayertree', [ngeoLayertreeController.name]);
+const myModule = angular.module('ngeoLayertree', [ngeoLayertreeController.name]);
 
-module.value(
+myModule.value(
   'ngeoLayertreeTemplateUrl',
   /**
    * @param {JQuery} element Element.
@@ -43,7 +43,7 @@ module.value(
   }
 );
 
-module.run(
+myModule.run(
   /**
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
@@ -150,6 +150,6 @@ function gmfLayertreeComponent(ngeoLayertreeTemplateUrl) {
   };
 }
 
-module.directive('ngeoLayertree', gmfLayertreeComponent);
+myModule.directive('ngeoLayertree', gmfLayertreeComponent);
 
-export default module;
+export default myModule;

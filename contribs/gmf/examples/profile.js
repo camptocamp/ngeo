@@ -42,7 +42,7 @@ import options from './options.js';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfapp', [
+const myModule = angular.module('gmfapp', [
   'gettext',
   gmfPermalinkPermalink.name,
   gmfMapComponent.name,
@@ -147,9 +147,9 @@ function MainController($scope, ngeoFeatureOverlayMgr) {
   );
 }
 
-module.controller('MainController', MainController);
+myModule.controller('MainController', MainController);
 
-module.constant('ngeoProfileOptions', {
+myModule.constant('ngeoProfileOptions', {
   styleDefs: 'svg {background-color: #D3E5D7};',
   linesConfiguration: {
     'aster': {
@@ -160,6 +160,6 @@ module.constant('ngeoProfileOptions', {
     },
   },
 });
-options(module);
+options(myModule);
 
-export default module;
+export default myModule;

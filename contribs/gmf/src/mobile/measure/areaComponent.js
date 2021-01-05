@@ -29,9 +29,9 @@ import {buildStyle} from 'ngeo/options.js';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfMobileMeasureArea', [ngeoMiscFilters.name]);
+const myModule = angular.module('gmfMobileMeasureArea', [ngeoMiscFilters.name]);
 
-module.value(
+myModule.value(
   'gmfMobileMeasureAreaTemplateUrl',
   /**
    * @param {JQuery} element Element.
@@ -44,7 +44,7 @@ module.value(
   }
 );
 
-module.run(
+myModule.run(
   /**
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
@@ -100,7 +100,7 @@ function mobileMeasureAreaComponent(gmfMobileMeasureAreaTemplateUrl) {
   };
 }
 
-module.directive('gmfMobileMeasurearea', mobileMeasureAreaComponent);
+myModule.directive('gmfMobileMeasurearea', mobileMeasureAreaComponent);
 
 /**
  * @hidden
@@ -176,6 +176,6 @@ export class Controller extends MeasueMobileBaseController {
   }
 }
 
-module.controller('GmfMobileMeasureAreaController', Controller);
+myModule.controller('GmfMobileMeasureAreaController', Controller);
 
-export default module;
+export default myModule;

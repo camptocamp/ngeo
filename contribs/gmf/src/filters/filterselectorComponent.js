@@ -48,7 +48,7 @@ import 'bootstrap/js/src/dropdown.js';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfFilterselector', [
+const myModule = angular.module('gmfFilterselector', [
   gmfAuthenticationService.name,
   gmfDatasourceDataSourceBeingFiltered.name,
   gmfDatasourceHelper.name,
@@ -60,7 +60,7 @@ const module = angular.module('gmfFilterselector', [
   gmfFiltersSavedFilters.name,
 ]);
 
-module.run(
+myModule.run(
   /**
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
@@ -71,7 +71,7 @@ module.run(
   }
 );
 
-module.value(
+myModule.value(
   'gmfFilterselectorTemplateUrl',
   /**
    * @param {angular.IAttributes} $attrs Attributes.
@@ -732,7 +732,7 @@ export class FilterSelectorController {
  * @property {Array<import('ngeo/rule/Rule.js').default>} directedRules
  */
 
-module.component('gmfFilterselector', {
+myModule.component('gmfFilterselector', {
   bindings: {
     active: '=',
     map: '<',
@@ -743,4 +743,4 @@ module.component('gmfFilterselector', {
   templateUrl: gmfFilterselectorTemplateUrl,
 });
 
-export default module;
+export default myModule;

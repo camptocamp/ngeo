@@ -33,7 +33,7 @@ import options from './options.js';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfapp', [
+const myModule = angular.module('gmfapp', [
   'gettext',
   gmfEditingXSDAttributes.name,
   gmfObjecteditingManager.name,
@@ -403,7 +403,7 @@ MainController.appendParams = function (uri, params) {
   return uri + qs;
 };
 
-module.controller('MainController', MainController);
-options(module);
+myModule.controller('MainController', MainController);
+options(myModule);
 
-export default module;
+export default myModule;

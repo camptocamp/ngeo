@@ -41,7 +41,7 @@ import options from './options.js';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfapp', [
+const myModule = angular.module('gmfapp', [
   'gettext',
   gmfMapComponent.name,
   gmfPermalinkPermalink.name,
@@ -100,7 +100,7 @@ function MainController(gmfPermalink) {
   this.measurePointActive = false;
 }
 
-module.controller('MainController', MainController);
+myModule.controller('MainController', MainController);
 
 const sketchStyle = {
   fill: {
@@ -122,7 +122,7 @@ const sketchStyle = {
     angle: 0,
   },
 };
-module.constant('gmfMobileMeasurePointOptions', {
+myModule.constant('gmfMobileMeasurePointOptions', {
   sketchStyle: sketchStyle,
   decimals: 2,
   format: '{x}, {y}',
@@ -131,12 +131,12 @@ module.constant('gmfMobileMeasurePointOptions', {
     {name: 'srtm', unit: 'm'},
   ],
 });
-module.constant('gmfMobileMeasureLengthOptions', {
+myModule.constant('gmfMobileMeasureLengthOptions', {
   sketchStyle: sketchStyle,
 });
-module.constant('gmfMobileMeasureAreaOptions', {
+myModule.constant('gmfMobileMeasureAreaOptions', {
   sketchStyle: sketchStyle,
 });
-options(module);
+options(myModule);
 
-export default module;
+export default myModule;

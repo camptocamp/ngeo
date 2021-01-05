@@ -155,8 +155,8 @@ function processDrop_(element, gmfExternalDataSourcesManager, ngeoNotification, 
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfFileDropZone', [gmfExternalDataSourcesManager.name]);
+const myModule = angular.module('gmfFileDropZone', [gmfExternalDataSourcesManager.name]);
 
-module.directive('gmfFileDropZone', fileDrop);
+myModule.directive('gmfFileDropZone', fileDrop);
 
-export default module;
+export default myModule;

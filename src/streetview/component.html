@@ -1,0 +1,14 @@
+
+<div
+  class="ngeo-streetview-instructions"
+  ng-if="$ctrl.location === null"
+  translate>
+  Click on a road on the map to start StreetView.
+</div>
+<div
+  class="ngeo-streetview-nodata"
+  ng-if="$ctrl.streetViewService_.noDataAtLocation && $ctrl.location !== null"
+  translate>
+  Street View data not found for this location.
+</div>
+<div id='mly' style='width: 100%; height: 100%;'></div>

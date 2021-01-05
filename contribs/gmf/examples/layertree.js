@@ -43,7 +43,7 @@ import options from './options.js';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfapp', [
+const myModule = angular.module('gmfapp', [
   'gettext',
   gmfLayertreeComponent.name,
   gmfLayertreeTreeManager.name,
@@ -214,7 +214,7 @@ function MainController(gmfTreeManager, gmfThemes, gmfThemeManager, ngeoLocation
   };
 }
 
-module.controller('MainController', MainController);
-options(module);
+myModule.controller('MainController', MainController);
+options(myModule);
 
-export default module;
+export default myModule;

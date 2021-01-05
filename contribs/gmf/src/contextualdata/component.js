@@ -28,7 +28,7 @@ import * as olProj from 'ol/proj.js';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfContextualdata', [gmfRasterRasterService.name]);
+const myModule = angular.module('gmfContextualdata', [gmfRasterRasterService.name]);
 
 /**
  * Provide a directive responsible of displaying contextual data after a right
@@ -89,7 +89,7 @@ function contextualDataComponent() {
   };
 }
 
-module.directive('gmfContextualdata', contextualDataComponent);
+myModule.directive('gmfContextualdata', contextualDataComponent);
 
 /**
  * @param {angular.ICompileService} $compile Angular compile service.
@@ -332,7 +332,7 @@ ContextualdataController.prototype.hidePopover = function () {
   this.displayed = false;
 };
 
-module.controller('GmfContextualdataController', ContextualdataController);
+myModule.controller('GmfContextualdataController', ContextualdataController);
 
 /**
  * Provide a directive responsible of formatting the content of the popover for
@@ -371,6 +371,6 @@ function contextualDataComponentContent(gmfContextualdatacontentTemplateUrl) {
   };
 }
 
-module.directive('gmfContextualdatacontent', contextualDataComponentContent);
+myModule.directive('gmfContextualdatacontent', contextualDataComponentContent);
 
-export default module;
+export default myModule;

@@ -27,9 +27,9 @@ import ngeoQueryModeSelector from 'ngeo/query/ModeSelector.js';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoQueryPanel', [ngeoQueryModeSelector.name]);
+const myModule = angular.module('ngeoQueryPanel', [ngeoQueryModeSelector.name]);
 
-module.run(
+myModule.run(
   /**
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
@@ -43,7 +43,7 @@ module.run(
   }
 );
 
-module.value(
+myModule.value(
   'ngeoQueryPanelTemplateUrl',
   /**
    * @param {angular.IAttributes} $attrs Attributes.
@@ -86,9 +86,9 @@ export class QueryPanelController {
   }
 }
 
-module.component('ngeoQueryPanel', {
+myModule.component('ngeoQueryPanel', {
   controller: QueryPanelController,
   templateUrl: ngeoQueryPanelTemplateUrl,
 });
 
-export default module;
+export default myModule;

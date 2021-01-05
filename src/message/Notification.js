@@ -181,8 +181,8 @@ export class MessageNotification extends ngeoMessageMessage {
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoNotification', []);
+const myModule = angular.module('ngeoNotification', []);
 
-module.service('ngeoNotification', MessageNotification);
+myModule.service('ngeoNotification', MessageNotification);
 
-export default module;
+export default myModule;

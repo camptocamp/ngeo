@@ -33,9 +33,9 @@ import 'bootstrap/js/src/dropdown.js';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfRasterComponent', [gmfRasterRasterService.name, ngeoMiscDebounce.name]);
+const myModule = angular.module('gmfRasterComponent', [gmfRasterRasterService.name, ngeoMiscDebounce.name]);
 
-module.run(
+myModule.run(
   /**
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
@@ -46,7 +46,7 @@ module.run(
   }
 );
 
-module.value(
+myModule.value(
   'gmfElevationwidgetTemplateUrl',
   /**
    * @param {angular.IAttributes} $attrs Attributes.
@@ -143,7 +143,7 @@ function rasterComponent() {
   };
 }
 
-module.directive('gmfElevation', rasterComponent);
+myModule.directive('gmfElevation', rasterComponent);
 
 /**
  * @hidden
@@ -319,7 +319,7 @@ Controller.prototype.getRasterError_ = function () {
   this.loading = false;
 };
 
-module.controller('GmfElevationController', Controller);
+myModule.controller('GmfElevationController', Controller);
 
 /**
  * Provides a component which encapsulates the elevation component (see above)
@@ -345,7 +345,7 @@ const rasterWidgetComponent = {
   },
   templateUrl: gmfElevationwidgetTemplateUrl,
 };
-module.component('gmfElevationwidget', rasterWidgetComponent);
+myModule.component('gmfElevationwidget', rasterWidgetComponent);
 
 /**
  * @constructor
@@ -377,6 +377,6 @@ export function WidgetController(gmfElevationOptions) {
   this.selectedElevationLayer = this.show ? this.options.layers[0] : '';
 }
 
-module.controller('gmfElevationwidgetController', WidgetController);
+myModule.controller('gmfElevationwidgetController', WidgetController);
 
-export default module;
+export default myModule;

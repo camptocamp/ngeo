@@ -166,14 +166,14 @@ class Controller extends AbstractDesktopController {
 /**
  * @hidden
  */
-const module = angular.module('Appoeedit', [
+const appModule = angular.module('Appoeedit', [
   appBase.name,
   gmfControllersAbstractDesktopController.name,
   gmfObjecteditingModule.name,
 ]);
 
-module.value('gmfContextualdatacontentTemplateUrl', 'gmf/contextualdata');
-module.run(
+appModule.value('gmfContextualdatacontentTemplateUrl', 'gmf/contextualdata');
+appModule.run(
   /**
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
@@ -184,13 +184,13 @@ module.run(
   }
 );
 
-module.value(
+appModule.value(
   'gmfPermalinkOptions',
   /** @type {import('gmf/options.js').gmfPermalinkOptions} */ ({
     pointRecenterZoom: 10,
   })
 );
 
-module.controller('OEEditController', Controller);
+appModule.controller('OEEditController', Controller);
 
-export default module;
+export default appModule;

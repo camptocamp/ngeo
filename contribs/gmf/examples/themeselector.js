@@ -27,7 +27,7 @@ import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
 import options from './options.js';
 
 /** @type {angular.IModule} **/
-const module = angular.module('gmfapp', ['gettext', gmfLayertreeTreeManager.name, gmfThemeModule.name]);
+const myModule = angular.module('gmfapp', ['gettext', gmfLayertreeTreeManager.name, gmfThemeModule.name]);
 
 /**
  * @constructor
@@ -53,7 +53,7 @@ function MainController($http, gmfThemes, gmfThemeManager) {
   gmfThemes.loadThemes();
 }
 
-module.controller('MainController', MainController);
-options(module);
+myModule.controller('MainController', MainController);
+options(myModule);
 
-export default module;
+export default myModule;

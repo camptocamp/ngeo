@@ -383,7 +383,6 @@ gmf-backgroundlayerselector {
       padding: 0 $app-margin;
     }
 
-
     .gmf-app-tools-content-toggle-btn {
       height: 1.5 * $icon-font-size !important;
       right: 9px;
@@ -456,15 +455,15 @@ gmf-backgroundlayerselector {
       width: 100%;
     }
 
-    &.gmf-app-googlestreetview-active {
-      width: $streeview-width + $app-margin + $app-margin;
+    &.gmf-app-streetview-active {
+      width: $streetview-width + $app-margin + $app-margin;
     }
 
     .widget-scene-canvas {
       width: 100% !important;
     }
 
-    ngeo-googlestreetview {
+    ngeo-streetview {
       width: 100%;
     }
 
@@ -986,12 +985,12 @@ ngeo-rule {
 
 
 /**
- * Ngeo Google Street View Component
+ * Ngeo Street View Component
  */
-ngeo-googlestreetview {
+ngeo-streetview {
   display: block;
   height: calc(100% - 3.75rem);
-  width: $streeview-width;
+  width: $streetview-width;
 }
 
 /**

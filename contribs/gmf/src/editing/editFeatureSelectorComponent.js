@@ -30,13 +30,13 @@ import gmfThemeThemes from 'gmf/theme/Themes.js';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('GmfEditingFeatureSelectorComponent', [
+const myModule = angular.module('GmfEditingFeatureSelectorComponent', [
   gmfEditingEditFeatureComponent.name,
   gmfLayertreeTreeManager.name,
   gmfThemeThemes.name,
 ]);
 
-module.run(
+myModule.run(
   /**
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
@@ -90,7 +90,7 @@ function editingEditFeatureComponent() {
   };
 }
 
-module.directive('gmfEditfeatureselector', editingEditFeatureComponent);
+myModule.directive('gmfEditfeatureselector', editingEditFeatureComponent);
 
 /**
  * @param {angular.IScope} $scope Angular scope.
@@ -270,6 +270,6 @@ Controller.prototype.handleDestroy_ = function () {
   this.treeCtrlsWatcherUnregister_();
 };
 
-module.controller('GmfEditfeatureselectorController', Controller);
+myModule.controller('GmfEditfeatureselectorController', Controller);
 
-export default module;
+export default myModule;

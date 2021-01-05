@@ -162,7 +162,7 @@ EditingEditFeature.prototype.deleteFeature = function (layerId, feature) {
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfEditFeature', []);
-module.service('gmfEditFeature', EditingEditFeature);
+const myModule = angular.module('gmfEditFeature', []);
+myModule.service('gmfEditFeature', EditingEditFeature);
 
-export default module;
+export default myModule;

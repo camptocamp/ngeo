@@ -120,7 +120,7 @@ function* mergeSources(opts, entry, resolve, level) {
       // test again
       if (loaderUtils.isUrlRequest(file)) {
         if (file.startsWith('~') || file.startsWith('data:')) {
-          return `url(${left}${file}${right})`;
+          return total;
         }
         const absoluteFile = path.normalize(path.resolve(entryDir, file));
         // fix for windows path
@@ -363,7 +363,7 @@ function manageContent(pluginOptions, usedContext, compilation, chunk, resolve, 
       parseOptions.functions['url($url)'] = function (url) {
         const assetUrl = url.getValue();
         if (assetUrl.startsWith('data:')) {
-          return url;
+          return nodeSass.types.String(`url(${assetUrl})`);
         }
         return nodeSass.types.String(`url(${replacements[assetUrl]})`);
       };

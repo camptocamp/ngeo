@@ -188,7 +188,7 @@ FeatureOverlayMgr.prototype.styleFunction_ = function (feature, resolution) {
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoFeatureOverlayMgr', [ngeoMapFeatureOverlay.name]);
-module.service('ngeoFeatureOverlayMgr', FeatureOverlayMgr);
+const myModule = angular.module('ngeoFeatureOverlayMgr', [ngeoMapFeatureOverlay.name]);
+myModule.service('ngeoFeatureOverlayMgr', FeatureOverlayMgr);
 
-export default module;
+export default myModule;

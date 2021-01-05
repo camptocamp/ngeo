@@ -51,7 +51,7 @@ import 'bootstrap/js/src/dropdown.js';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfQueryGridComponent', [
+const myModule = angular.module('gmfQueryGridComponent', [
   ngeoDownloadCsv.name,
   ngeoDownloadService.name,
   ngeoGridComponent.name,
@@ -59,7 +59,7 @@ const module = angular.module('gmfQueryGridComponent', [
   ngeoQueryMapQuerent.name,
 ]);
 
-module.value(
+myModule.value(
   'gmfDisplayquerygridTemplateUrl',
   /**
    * @param {JQuery} $element Element.
@@ -72,7 +72,7 @@ module.value(
   }
 );
 
-module.run(
+myModule.run(
   /**
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
@@ -133,7 +133,7 @@ const queryGridComponent = {
   templateUrl: gmfDisplayquerygridTemplateUrl,
 };
 
-module.component('gmfDisplayquerygrid', queryGridComponent);
+myModule.component('gmfDisplayquerygrid', queryGridComponent);
 
 /**
  * Controller for the query grid.
@@ -873,6 +873,6 @@ QueryGridController.prototype.downloadCsv = function () {
   }
 };
 
-module.controller('GmfDisplayquerygridController', QueryGridController);
+myModule.controller('GmfDisplayquerygridController', QueryGridController);
 
-export default module;
+export default myModule;

@@ -45,7 +45,7 @@ import {buildStyle} from 'ngeo/options.js';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfSearch', [
+const myModule = angular.module('gmfSearch', [
   gmfLayertreeTreeManager.name,
   gmfSearchFulltextSearch.name,
   gmfThemeThemes.name,
@@ -68,7 +68,7 @@ function gmfSearchTemplateUrl_(element, attrs) {
   return templateUrl !== undefined ? templateUrl : 'gmf/search';
 }
 
-module.run(
+myModule.run(
   /**
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
@@ -141,10 +141,10 @@ const searchComponent = {
   templateUrl: gmfSearchTemplateUrl,
 };
 
-module.value('gmfSearchTemplateUrl', gmfSearchTemplateUrl_);
+myModule.value('gmfSearchTemplateUrl', gmfSearchTemplateUrl_);
 
 // Register the controller in the module
-module.component('gmfSearch', searchComponent);
+myModule.component('gmfSearch', searchComponent);
 
 /**
  * @hidden
@@ -1004,6 +1004,6 @@ export class SearchController {
 }
 
 // Register the controller in the module
-module.controller('gmfSearchController', SearchController);
+myModule.controller('gmfSearchController', SearchController);
 
-export default module;
+export default myModule;

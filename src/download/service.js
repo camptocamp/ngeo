@@ -32,7 +32,7 @@ import {saveAs} from 'file-saver';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoDownload', []);
+const myModule = angular.module('ngeoDownload', []);
 
 /**
  * A service to start a download for a file.
@@ -70,6 +70,6 @@ export function factory() {
   return download;
 }
 
-module.factory('ngeoDownload', factory);
+myModule.factory('ngeoDownload', factory);
 
-export default module;
+export default myModule;

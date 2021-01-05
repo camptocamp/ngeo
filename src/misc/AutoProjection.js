@@ -141,7 +141,7 @@ AutoProjectionService.prototype.tryProjectionsWithInversion = function (
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoAutoProjection', []);
-module.service('ngeoAutoProjection', AutoProjectionService);
+const myModule = angular.module('ngeoAutoProjection', []);
+myModule.service('ngeoAutoProjection', AutoProjectionService);
 
-export default module;
+export default myModule;

@@ -66,20 +66,24 @@ jobs:
       # Webpack build of ngeo/gmf examples and gmf apps
       - run: NODE_ENV=production make examples-hosted
       - run: make check-examples
-      - uses: actions/upload-artifact@v1
+      - uses: actions/upload-artifact@v2
         with:
           name: Examples hosted
           path: .build/examples-hosted
+          if-no-files-found: ignore
+          retention-days: 5
         if: failure()
 
       # Generate API doc
       - run: npm run doc
       - run: make jsdoc
       - run: npm run build-api
-      - uses: actions/upload-artifact@v1
+      - uses: actions/upload-artifact@v2
         with:
           name: Npm logs
           path: /home/runner/.npm/_logs
+          if-no-files-found: ignore
+          retention-days: 5
         if: failure()
 
       - run: make transifex-send

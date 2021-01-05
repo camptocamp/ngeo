@@ -692,12 +692,12 @@ LayertreeTreeManager.prototype.setNodeMetadataFromFullState_ = function (node, f
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfTreeManager', [
+const myModule = angular.module('gmfTreeManager', [
   gmfThemeThemes.name,
   ngeoLayertreeController.name,
   ngeoMessageNotification.name,
   ngeoStatemanagerService.name,
 ]);
-module.service('gmfTreeManager', LayertreeTreeManager);
+myModule.service('gmfTreeManager', LayertreeTreeManager);
 
-export default module;
+export default myModule;

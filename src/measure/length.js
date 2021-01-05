@@ -31,7 +31,7 @@ import olStyleStyle from 'ol/style/Style.js';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoMeasurelength', [ngeoDrawController.name, ngeoMiscFilters.name]);
+const myModule = angular.module('ngeoMeasurelength', [ngeoDrawController.name, ngeoMiscFilters.name]);
 
 /**
  * @param {angular.ICompileService} $compile Angular compile service.
@@ -107,6 +107,6 @@ function measureLengthComponent(
   };
 }
 
-module.directive('ngeoMeasurelength', measureLengthComponent);
+myModule.directive('ngeoMeasurelength', measureLengthComponent);
 
-export default module;
+export default myModule;

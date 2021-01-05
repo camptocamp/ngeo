@@ -24,9 +24,9 @@ import gmfSpinnerDirective from 'gmf/spinner/directive.js';
 
 import './loader.scss';
 
-const module = angular.module('gmfSpinnerModule', [gmfSpinnerDirective.name]);
+const myModule = angular.module('gmfSpinnerModule', [gmfSpinnerDirective.name]);
 
 /**
  * @type {angular.IModule}
  */
-export default module;
+export default myModule;

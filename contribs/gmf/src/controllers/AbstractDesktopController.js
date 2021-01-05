@@ -108,7 +108,7 @@ export class AbstractDesktopController extends AbstractAPIController {
     /**
      * @type {boolean}
      */
-    this.googleStreetViewActive = false;
+    this.streetViewActive = false;
 
     /**
      * @type {boolean}
@@ -167,14 +167,14 @@ export class AbstractDesktopController extends AbstractAPIController {
     );
 
     $scope.$watch(
-      () => this.googleStreetViewActive,
+      () => this.streetViewActive,
       (newVal) => {
         this.setDataPanelMaxResizableWidth_();
         if (newVal) {
-          this.toolsPanelWidth_ = this.checkPanelWidth_(this.toolsPanelWidth_, this.$toolsPanel_);
+          this.toolsPanelWidth = this.checkPanelWidth_(this.toolsPanelWidth, this.$toolsPanel_);
           const maxAvailable = this.$toolsPanel_.resizable('option', 'maxWidth');
-          if (maxAvailable < this.googleStreetWidth_) {
-            this.$toolsPanel_.width(this.toolsPanelWidth_);
+          if (maxAvailable < this.streetViewWidth_) {
+            this.$toolsPanel_.width(this.toolsPanelWidth);
           }
         }
       }
@@ -183,7 +183,7 @@ export class AbstractDesktopController extends AbstractAPIController {
     /**
      * @type {import("ol/style/Style.js").default}
      */
-    this.googleStreetViewStyle = new olStyleStyle({
+    this.streetViewStyle = new olStyleStyle({
       text: new olStyleText({
         fill: new olStyleFill({color: '#279B61'}),
         font: '900 30px "Font Awesome 5 Free"',
@@ -257,8 +257,8 @@ export class AbstractDesktopController extends AbstractAPIController {
     const editFeatureActivate = new ngeoMiscToolActivate(this, 'editFeatureActive');
     ngeoToolActivateMgr.registerTool('mapTools', editFeatureActivate, false);
 
-    const googleStreetViewActivate = new ngeoMiscToolActivate(this, 'googleStreetViewActive');
-    ngeoToolActivateMgr.registerTool('mapTools', googleStreetViewActivate, false);
+    const streetViewActivate = new ngeoMiscToolActivate(this, 'streetViewActive');
+    ngeoToolActivateMgr.registerTool('mapTools', streetViewActivate, false);
 
     const contextdataActivate = new ngeoMiscToolActivate(this, 'contextdataActive');
     ngeoToolActivateMgr.registerTool('mapTools', contextdataActivate, false);
@@ -311,7 +311,7 @@ export class AbstractDesktopController extends AbstractAPIController {
      * @type {number}
      * @private
      */
-    this.toolsPanelWidth_ = 280;
+    this.toolsPanelWidth = 280;
 
     /**
      * @type {number}
@@ -335,7 +335,7 @@ export class AbstractDesktopController extends AbstractAPIController {
      * @type {number}
      * @private
      */
-    this.googleStreetWidth_ = 400;
+    this.streetViewWidth_ = 400;
 
     // Make the data panel (on the left) resizable...
     const dataPanelCls = 'gmf-app-data-panel';
@@ -399,7 +399,7 @@ export class AbstractDesktopController extends AbstractAPIController {
       minWidth: this.toolsPanelMinResizableWidth_,
       stop: (event, ui) => {
         this.map.updateSize();
-        this.toolsPanelWidth_ = ui.size.width;
+        this.toolsPanelWidth = ui.size.width;
         this.setDataPanelMaxResizableWidth_(ui.size.width);
       },
       disabled: true,
@@ -425,12 +425,12 @@ export class AbstractDesktopController extends AbstractAPIController {
         if (!newVal) {
           this.setDataPanelMaxResizableWidth_(this.toolsPanelMinResizableWidth_);
         } else {
-          this.toolsPanelWidth_ = this.checkPanelWidth_(this.toolsPanelWidth_, this.$toolsPanel_);
+          this.toolsPanelWidth = this.checkPanelWidth_(this.toolsPanelWidth, this.$toolsPanel_);
           const maxWidth = this.$toolsPanel_.resizable('option', 'maxWidth');
-          if (this.googleStreetViewActive && (!maxWidth || this.googleStreetWidth_ < maxWidth)) {
-            this.setDataPanelMaxResizableWidth_(this.googleStreetWidth_);
+          if (this.streetViewActive && (!maxWidth || this.streetViewWidth_ < maxWidth)) {
+            this.setDataPanelMaxResizableWidth_(this.streetViewWidth_);
           } else {
-            this.setDataPanelMaxResizableWidth_(this.toolsPanelWidth_);
+            this.setDataPanelMaxResizableWidth_(this.toolsPanelWidth);
           }
         }
       }
@@ -445,7 +445,7 @@ export class AbstractDesktopController extends AbstractAPIController {
       this.filterSelectorActive = false;
       this.editFeatureActive = false;
       this.drawProfilePanelActive = false;
-      this.googleStreetViewActive = false;
+      this.streetViewActive = false;
       this.queryPanelActive = false;
       this.importDataSourceActive = false;
       this.$toolsPanel_.resizable('disable');
@@ -512,7 +512,7 @@ export class AbstractDesktopController extends AbstractAPIController {
       opt_newDataPanelWidth
     );
     this.$toolsPanel_.resizable('option', 'maxWidth', maxWidth);
-    this.toolsPanelWidth_ = this.checkPanelWidth_(this.toolsPanelWidth_, this.$toolsPanel_);
+    this.toolsPanelWidth = this.checkPanelWidth_(this.toolsPanelWidth, this.$toolsPanel_);
   }
 
   /**
@@ -560,7 +560,7 @@ export class AbstractDesktopController extends AbstractAPIController {
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('GmfAbstractDesktopControllerModule', [
+const myModule = angular.module('GmfAbstractDesktopControllerModule', [
   gmfControllersAbstractAPIController.name,
   gmfContextualdataModule.name,
   gmfDatasourceDataSourceBeingFiltered.name,
@@ -577,9 +577,9 @@ const module = angular.module('GmfAbstractDesktopControllerModule', [
   ngeoQueryPanelComponent.name,
 ]);
 
-module.controller('AbstractDesktopController', AbstractDesktopController);
+myModule.controller('AbstractDesktopController', AbstractDesktopController);
 
-module.value('ngeoSnappingSource', new olSourceVector());
-module.value('gmfFileDropEnabled', true);
+myModule.value('ngeoSnappingSource', new olSourceVector());
+myModule.value('gmfFileDropEnabled', true);
 
-export default module;
+export default myModule;

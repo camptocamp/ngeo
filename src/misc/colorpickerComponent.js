@@ -25,9 +25,9 @@ import angular from 'angular';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoColorpicker', []);
+const myModule = angular.module('ngeoColorpicker', []);
 
-module.value(
+myModule.value(
   'ngeoColorpickerTemplateUrl',
   /**
    * @param {JQuery} element Element.
@@ -40,7 +40,7 @@ module.value(
   }
 );
 
-module.run(
+myModule.run(
   /**
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
@@ -81,7 +81,7 @@ function colorPickerComponent(ngeoColorpickerTemplateUrl) {
   };
 }
 
-module.directive('ngeoColorpicker', colorPickerComponent);
+myModule.directive('ngeoColorpicker', colorPickerComponent);
 
 /**
  * Default colors for the colorpicker
@@ -151,6 +151,6 @@ Controller.prototype.setColor = function (color) {
   this.color = color;
 };
 
-module.controller('NgeoColorpickerController', Controller);
+myModule.controller('NgeoColorpickerController', Controller);
 
-export default module;
+export default myModule;

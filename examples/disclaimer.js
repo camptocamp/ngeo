@@ -32,7 +32,7 @@ import olSourceOSM from 'ol/source/OSM.js';
 import ngeoMapModule from 'ngeo/map/module.js';
 
 /** @type {angular.IModule} **/
-const module = angular.module('app', ['gettext', ngeoMapModule.name, ngeoMessageDisclaimer.name]);
+const myModule = angular.module('app', ['gettext', ngeoMapModule.name, ngeoMessageDisclaimer.name]);
 
 /**
  * @param {import("ngeo/message/Disclaimer.js").MessageDisclaimerService} ngeoDisclaimer Ngeo disclaimer
@@ -168,6 +168,6 @@ MainController.prototype.closeAll = function () {
   });
 };
 
-module.controller('MainController', MainController);
+myModule.controller('MainController', MainController);
 
-export default module;
+export default myModule;

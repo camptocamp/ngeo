@@ -201,8 +201,8 @@ RoutingService.prototype.getNearest = function (coordinate, config) {
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoRoutingService', []);
+const myModule = angular.module('ngeoRoutingService', []);
 
-module.service('ngeoRoutingService', RoutingService);
+myModule.service('ngeoRoutingService', RoutingService);
 
-export default module;
+export default myModule;

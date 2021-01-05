@@ -27,7 +27,7 @@ import olMap from 'ol/Map.js';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoMap', []);
+const myModule = angular.module('ngeoMap', []);
 
 /**
  * Provides a directive used to insert a user-defined OpenLayers
@@ -123,6 +123,6 @@ function mapComponent($window) {
 }
 
 // Register the directive in the module
-module.directive('ngeoMap', mapComponent);
+myModule.directive('ngeoMap', mapComponent);
 
-export default module;
+export default myModule;

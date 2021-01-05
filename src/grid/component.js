@@ -32,9 +32,9 @@ import 'ngeo/sass/font.scss';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoGrid', [ngeoMiscFilters.name, 'floatThead']);
+const myModule = angular.module('ngeoGrid', [ngeoMiscFilters.name, 'floatThead']);
 
-module.run(
+myModule.run(
   /**
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
@@ -45,7 +45,7 @@ module.run(
   }
 );
 
-module.value(
+myModule.value(
   'ngeoGridTemplateUrl',
   /**
    * @param {angular.IAttributes} $attrs Attributes.
@@ -94,7 +94,7 @@ const gridComponent = {
   templateUrl: ngeoGridTemplateUrl,
 };
 
-module.component('ngeoGrid', gridComponent);
+myModule.component('ngeoGrid', gridComponent);
 
 /**
  * @param {angular.IScope} $scope Angular scope.
@@ -294,6 +294,6 @@ GridController.prototype.preventTextSelection = function (event) {
   }
 };
 
-module.controller('ngeoGridController', GridController);
+myModule.controller('ngeoGridController', GridController);
 
-export default module;
+export default myModule;

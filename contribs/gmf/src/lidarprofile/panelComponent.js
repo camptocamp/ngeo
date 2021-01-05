@@ -32,7 +32,7 @@ import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr.js';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfLidarprofilePanel', [
+const myModule = angular.module('gmfLidarprofilePanel', [
   gmfLidarprofileConfig.name,
   gmfLidarprofileManager.name,
   gmfProfileDrawLineComponent.name,
@@ -41,7 +41,7 @@ const module = angular.module('gmfLidarprofilePanel', [
   ngeoMiscToolActivateMgr.name,
 ]);
 
-module.value(
+myModule.value(
   'gmfLidarprofilePanelTemplateUrl',
   /**
    * @param {JQuery} $element Element.
@@ -54,7 +54,7 @@ module.value(
   }
 );
 
-module.run(
+myModule.run(
   /**
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
@@ -107,7 +107,7 @@ const lidarprofilePanelComponent = {
   templateUrl: gmfLidarprofilePanelTemplateUrl,
 };
 
-module.component('gmfLidarprofilePanel', lidarprofilePanelComponent);
+myModule.component('gmfLidarprofilePanel', lidarprofilePanelComponent);
 
 /**
  * @hidden
@@ -382,6 +382,6 @@ export class Controller {
   }
 }
 
-module.controller('gmfLidarprofilePanelController', Controller);
+myModule.controller('gmfLidarprofilePanelController', Controller);
 
-export default module;
+export default myModule;

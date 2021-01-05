@@ -41,7 +41,7 @@ import options from './options.js';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfapp', [
+const myModule = angular.module('gmfapp', [
   'gettext',
   gmfLayertreeComponent.name,
   gmfMapComponent.name,
@@ -97,14 +97,14 @@ function MainController(gmfThemes, ngeoFeatureOverlayMgr) {
   ngeoFeatureOverlayMgr.init(this.map);
 }
 
-module.controller('MainController', MainController);
+myModule.controller('MainController', MainController);
 
-module.constant('gmfPrintOptions', {
+myModule.constant('gmfPrintOptions', {
   fieldsValues: {
     comments: 'Default comments example',
     legend: true,
   },
 });
-options(module);
+options(myModule);
 
-export default module;
+export default myModule;

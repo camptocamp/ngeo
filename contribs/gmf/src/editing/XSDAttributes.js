@@ -65,7 +65,7 @@ EditingXSDAttributeService.prototype.getAttributes = function (id) {
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfXSDAttributes', []);
-module.service('gmfXSDAttributes', EditingXSDAttributeService);
+const myModule = angular.module('gmfXSDAttributes', []);
+myModule.service('gmfXSDAttributes', EditingXSDAttributeService);
 
-export default module;
+export default myModule;

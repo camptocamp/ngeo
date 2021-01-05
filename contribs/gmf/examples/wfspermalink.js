@@ -34,7 +34,7 @@ import olSourceOSM from 'ol/source/OSM.js';
 import options from './options.js';
 
 /** @type {angular.IModule} **/
-const module = angular.module('gmfapp', [
+const myModule = angular.module('gmfapp', [
   'gettext',
   gmfMapModule.name,
   gmfQueryWindowComponent.name,
@@ -64,9 +64,9 @@ function MainController() {
   });
 }
 
-module.controller('MainController', MainController);
+myModule.controller('MainController', MainController);
 
-module.constant('gmfDisplayQueryWindowOptions', {
+myModule.constant('gmfDisplayQueryWindowOptions', {
   featuresStyle: {
     fill: {color: [255, 170, 0, 0.6]},
     stroke: {color: [255, 170, 0, 1], width: 2},
@@ -77,6 +77,6 @@ module.constant('gmfDisplayQueryWindowOptions', {
     },
   },
 });
-options(module);
+options(myModule);
 
-export default module;
+export default myModule;

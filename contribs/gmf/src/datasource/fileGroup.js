@@ -25,7 +25,7 @@ import angular from 'angular';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfDatasourceFileGroup', []);
+const myModule = angular.module('gmfDatasourceFileGroup', []);
 
 /**
  * The "gmfDatasourceFileGroup" angular value serves as a placeholder
@@ -39,8 +39,8 @@ const module = angular.module('gmfDatasourceFileGroup', []);
  * @property {import("ngeo/datasource/FileGroup.js").default|null} fileGroup
  */
 
-module.value('gmfDatasourceFileGroup', {
+myModule.value('gmfDatasourceFileGroup', {
   fileGroup: null,
 });
 
-export default module;
+export default myModule;

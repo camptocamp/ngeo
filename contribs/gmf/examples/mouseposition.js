@@ -35,7 +35,7 @@ import options from './options.js';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfapp', ['gettext', gmfMapModule.name]);
+const myModule = angular.module('gmfapp', ['gettext', gmfMapModule.name]);
 
 /**
  * @constructor
@@ -58,9 +58,9 @@ function MainController() {
   });
 }
 
-module.controller('MainController', MainController);
+myModule.controller('MainController', MainController);
 
-module.constant('gmfMousePositionOptions', {
+myModule.constant('gmfMousePositionOptions', {
   projections: [
     {
       code: EPSG2056,
@@ -79,6 +79,6 @@ module.constant('gmfMousePositionOptions', {
     },
   ],
 });
-options(module);
+options(myModule);
 
-export default module;
+export default myModule;

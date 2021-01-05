@@ -32,9 +32,12 @@ import {buildStyle} from 'ngeo/options.js';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfMobileMeasurePoint', [gmfRasterRasterService.name, ngeoMiscDebounce.name]);
+const myModule = angular.module('gmfMobileMeasurePoint', [
+  gmfRasterRasterService.name,
+  ngeoMiscDebounce.name,
+]);
 
-module.value(
+myModule.value(
   'gmfMobileMeasurePointTemplateUrl',
   /**
    * @param {JQuery} element Element.
@@ -47,7 +50,7 @@ module.value(
   }
 );
 
-module.run(
+myModule.run(
   /**
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
@@ -112,7 +115,7 @@ function mobileMeasurePointComponent(gmfMobileMeasurePointTemplateUrl) {
   };
 }
 
-module.directive('gmfMobileMeasurepoint', mobileMeasurePointComponent);
+myModule.directive('gmfMobileMeasurepoint', mobileMeasurePointComponent);
 
 /**
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
@@ -320,6 +323,6 @@ MobileMeasurePointController.prototype.getMeasure_ = function () {
   });
 };
 
-module.controller('GmfMobileMeasurePointController', MobileMeasurePointController);
+myModule.controller('GmfMobileMeasurePointController', MobileMeasurePointController);
 
-export default module;
+export default myModule;

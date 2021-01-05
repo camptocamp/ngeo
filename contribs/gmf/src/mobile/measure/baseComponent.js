@@ -29,7 +29,7 @@ import MobileDraw from 'ngeo/interaction/MobileDraw.js';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfMobileMeasureBase', [ngeoMiscFilters.name]);
+const myModule = angular.module('gmfMobileMeasureBase', [ngeoMiscFilters.name]);
 
 /**
  * Base controller class for Length and Area components.
@@ -172,6 +172,6 @@ MeasueMobileBaseController.prototype.init = function () {
   this.map.addInteraction(this.measure);
 };
 
-module.controller('gmfMeasueMobileBaseController', MeasueMobileBaseController);
+myModule.controller('gmfMeasueMobileBaseController', MeasueMobileBaseController);
 
-export default module;
+export default myModule;

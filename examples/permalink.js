@@ -36,7 +36,7 @@ import olStyleStroke from 'ol/style/Stroke.js';
 import olStyleStyle from 'ol/style/Style.js';
 
 /** @type {angular.IModule} **/
-const module = angular.module('app', [
+const myModule = angular.module('app', [
   'gettext',
   ngeoMapModule.name,
   ngeoMiscDebounce.name,
@@ -61,7 +61,7 @@ const mapComponent = {
   template: '<div ngeo-map=ctrl.map></div>',
 };
 
-module.component('appMap', mapComponent);
+myModule.component('appMap', mapComponent);
 
 /**
  * @param {import("ngeo/statemanager/Location.js").StatemanagerLocation} ngeoLocation ngeo Location service.
@@ -87,7 +87,7 @@ function MapComponentController(ngeoLocation, ngeoDebounce) {
   this.ngeoDebounce_ = ngeoDebounce;
 }
 
-module.controller('AppMapController', MapComponentController);
+myModule.controller('AppMapController', MapComponentController);
 
 MapComponentController.prototype.$onInit = function () {
   if (!this.map) {
@@ -153,7 +153,7 @@ const drawComponent = {
     '<button ng-click="ctrl.clearLayer()">Clear layer</button>',
 };
 
-module.component('appDraw', drawComponent);
+myModule.component('appDraw', drawComponent);
 
 /**
  * @param {angular.IScope} $scope Scope.
@@ -279,7 +279,7 @@ DrawComponentController.prototype.clearLayer = function () {
   this.ngeoLocation_.deleteParam('features');
 };
 
-module.controller('AppDrawController', DrawComponentController);
+myModule.controller('AppDrawController', DrawComponentController);
 
 /**
  * @constructor
@@ -310,6 +310,6 @@ function MainController() {
   this.vectorLayer.setMap(this.map);
 }
 
-module.controller('MainController', MainController);
+myModule.controller('MainController', MainController);
 
-export default module;
+export default myModule;

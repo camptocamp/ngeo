@@ -32,9 +32,12 @@ import MaskLayer from './Mask.js';
 /**
  * @type {!angular.IModule}
  */
-const module = angular.module('ngeoOffline', [ngeoMapFeatureOverlayMgr.name, ngeoMessageModalComponent.name]);
+const myModule = angular.module('ngeoOffline', [
+  ngeoMapFeatureOverlayMgr.name,
+  ngeoMessageModalComponent.name,
+]);
 
-module.value(
+myModule.value(
   'ngeoOfflineTemplateUrl',
   /**
    * @param {JQuery} element Element.
@@ -47,7 +50,7 @@ module.value(
   }
 );
 
-module.run(
+myModule.run(
   /**
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
@@ -102,7 +105,7 @@ const component = {
   templateUrl: ngeoOfflineTemplateUrl,
 };
 
-module.component('ngeoOffline', component);
+myModule.component('ngeoOffline', component);
 
 export const Controller = class {
   /**
@@ -540,6 +543,6 @@ export const Controller = class {
   }
 };
 
-module.controller('ngeoOfflineController', Controller);
+myModule.controller('ngeoOfflineController', Controller);
 
-export default module;
+export default myModule;

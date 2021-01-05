@@ -187,8 +187,8 @@ export const OlcsService = class {
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular
+const myModule = angular
   .module(name, [ngeoMiscDebounce.name, ngeoStatemanagerLocation.name, ngeoStatemanagerService.name])
   .service('ngeoOlcsService', OlcsService);
 
-export default module;
+export default myModule;

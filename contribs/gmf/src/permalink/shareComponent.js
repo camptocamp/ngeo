@@ -28,12 +28,12 @@ import {getUid as olUtilGetUid} from 'ol/util.js';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfPermalinkShareComponent', [
+const myModule = angular.module('gmfPermalinkShareComponent', [
   gmfPermalinkShareService.name,
   ngeoStatemanagerLocation.name,
 ]);
 
-module.run(
+myModule.run(
   /**
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
@@ -44,7 +44,7 @@ module.run(
   }
 );
 
-module.value(
+myModule.value(
   'gmfPermalinkShareTemplateUrl',
   /**
    * @param {angular.IAttributes} $attrs Attributes.
@@ -79,7 +79,7 @@ const permalinkShareComponent = {
   controller: 'GmfShareController',
   templateUrl: gmfPermalinkShareTemplateUrl,
 };
-module.component('gmfShare', permalinkShareComponent);
+myModule.component('gmfShare', permalinkShareComponent);
 
 /**
  * @hidden
@@ -224,6 +224,6 @@ export class ShareComponentController {
   }
 }
 
-module.controller('GmfShareController', ShareComponentController);
+myModule.controller('GmfShareController', ShareComponentController);
 
-export default module;
+export default myModule;

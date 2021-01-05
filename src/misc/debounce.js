@@ -25,7 +25,7 @@ import angular from 'angular';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoDebounce', []);
+const myModule = angular.module('ngeoDebounce', []);
 
 /**
  * Provides a debounce function used to debounce calls to a user-provided function.
@@ -85,6 +85,6 @@ function factory($timeout) {
   };
 }
 
-module.factory('ngeoDebounce', factory);
+myModule.factory('ngeoDebounce', factory);
 
-export default module;
+export default myModule;

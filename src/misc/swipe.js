@@ -39,7 +39,7 @@ import angular from 'angular';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoMiscSwipe', []);
+const myModule = angular.module('ngeoMiscSwipe', []);
 
 /**
  * ===========================================
@@ -68,7 +68,7 @@ const module = angular.module('ngeoMiscSwipe', []);
  * which is to be watched for swipes, and an object with four handler functions. See the
  * documentation for `bind` below.
  */
-module.factory('$verticalSwipe', [
+myModule.factory('$verticalSwipe', [
   function () {
     // The total distance in any direction before we make the call on swipe vs. scroll.
     const MOVE_BUFFER_RADIUS = 10;
@@ -283,7 +283,7 @@ module.factory('$verticalSwipe', [
  * @param {string} eventName Event name
  */
 function makeSwipeDirective_(directiveName, direction, eventName) {
-  module.directive(directiveName, [
+  myModule.directive(directiveName, [
     '$parse',
     '$verticalSwipe',
     function ($parse, $verticalSwipe) {
@@ -376,4 +376,4 @@ function makeSwipeDirective_(directiveName, direction, eventName) {
 makeSwipeDirective_('ngeoSwipeDown', 1, 'swipedown');
 makeSwipeDirective_('ngeoSwipeUp', -1, 'swipeup');
 
-export default module;
+export default myModule;

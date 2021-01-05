@@ -45,7 +45,7 @@ import qruri from 'qruri';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfAuthentication', [
+const myModule = angular.module('gmfAuthentication', [
   gmfAuthenticationService.name,
   ngeoMessageNotification.name,
   ngeoMessageModalComponent.name,
@@ -63,7 +63,7 @@ function gmfAuthenticationTemplateUrl_(element, attrs) {
   return templateUrl !== undefined ? templateUrl : 'gmf/authentication';
 }
 
-module.run(
+myModule.run(
   /**
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
@@ -125,9 +125,9 @@ const authenticationComponent = {
   templateUrl: gmfAuthenticationTemplateUrl,
 };
 
-module.value('gmfAuthenticationTemplateUrl', gmfAuthenticationTemplateUrl_);
+myModule.value('gmfAuthenticationTemplateUrl', gmfAuthenticationTemplateUrl_);
 
-module.component('gmfAuthentication', authenticationComponent);
+myModule.component('gmfAuthentication', authenticationComponent);
 
 /**
  * @hidden
@@ -547,6 +547,6 @@ export class AuthenticationController {
   }
 }
 
-module.controller('GmfAuthenticationController', AuthenticationController);
+myModule.controller('GmfAuthenticationController', AuthenticationController);
 
-export default module;
+export default myModule;

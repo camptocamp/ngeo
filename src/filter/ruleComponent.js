@@ -63,7 +63,7 @@ import 'ngeo/sass/font.scss';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoRule', [
+const myModule = angular.module('ngeoRule', [
   ngeoDrawComponent.name,
   ngeoFilterRuleHelper.name,
   ngeoMapFeatureOverlay.name,
@@ -72,7 +72,7 @@ const module = angular.module('ngeoRule', [
   ngeoMiscToolActivateMgr.name,
 ]);
 
-module.run(
+myModule.run(
   /**
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
@@ -83,7 +83,7 @@ module.run(
   }
 );
 
-module.value(
+myModule.value(
   'ngeoRuleTemplateUrl',
   /**
    * @param {angular.IAttributes} $attrs Attributes.
@@ -1041,7 +1041,7 @@ export class RuleController {
  * Also, changes are not made on-the-fly. A button must be clicked for the
  * changes to be applied to the rule.
  */
-module.component('ngeoRule', {
+myModule.component('ngeoRule', {
   bindings: {
     'featureOverlay': '<',
     'map': '<',
@@ -1052,4 +1052,4 @@ module.component('ngeoRule', {
   templateUrl: ngeoRuleTemplateUrl,
 });
 
-export default module;
+export default myModule;

@@ -44,7 +44,7 @@ import 'bootstrap/js/src/dropdown.js';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfQueryWindowComponent', [
+const myModule = angular.module('gmfQueryWindowComponent', [
   ngeoDownloadCsv.name,
   ngeoDownloadService.name,
   ngeoMapFeatureOverlayMgr.name,
@@ -55,7 +55,7 @@ const module = angular.module('gmfQueryWindowComponent', [
   'ngTouch',
 ]);
 
-module.config([
+myModule.config([
   '$animateProvider',
   /**
    * For performance reason, only perform animation on elements that have the
@@ -67,7 +67,7 @@ module.config([
   },
 ]);
 
-module.value(
+myModule.value(
   'gmfDisplayquerywindowTemplateUrl',
   /**
    * @param {JQuery} $element Element.
@@ -80,7 +80,7 @@ module.value(
   }
 );
 
-module.run(
+myModule.run(
   /**
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
@@ -134,7 +134,7 @@ const queryWindowComponent = {
   templateUrl: gmfDisplayquerywindowTemplateUrl,
 };
 
-module.component('gmfDisplayquerywindow', queryWindowComponent);
+myModule.component('gmfDisplayquerywindow', queryWindowComponent);
 
 /**
  * @param {JQuery} $element Element.
@@ -592,6 +592,6 @@ QueryWindowController.prototype.getCSVHeaderDefinition_ = function (data) {
   return columnDefs;
 };
 
-module.controller('GmfDisplayquerywindowController', QueryWindowController);
+myModule.controller('GmfDisplayquerywindowController', QueryWindowController);
 
-export default module;
+export default myModule;

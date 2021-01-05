@@ -281,7 +281,7 @@ export class QueryModeSelector {
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoQueryModeSelector', []);
-module.service('ngeoQueryModeSelector', QueryModeSelector);
+const myModule = angular.module('ngeoQueryModeSelector', []);
+myModule.service('ngeoQueryModeSelector', QueryModeSelector);
 
-export default module;
+export default myModule;

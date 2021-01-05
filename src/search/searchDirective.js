@@ -221,9 +221,9 @@ function adaptListeners_(object) {
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoSearchDirective', []);
+const myModule = angular.module('ngeoSearchDirective', []);
 
 // Register the directive in the module
-module.directive('ngeoSearch', searchComponent);
+myModule.directive('ngeoSearch', searchComponent);
 
-export default module;
+export default myModule;

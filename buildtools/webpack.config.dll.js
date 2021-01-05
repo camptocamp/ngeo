@@ -86,7 +86,6 @@ module.exports = {
     minimizer: [
       new TerserPlugin({
         parallel: true,
-        sourceMap: true,
       }),
     ],
     sideEffects: false,

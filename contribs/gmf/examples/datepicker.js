@@ -35,7 +35,11 @@ import options from './options.js';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfapp', ['gettext', ngeoMiscDatepickerComponent.name, ngeoMiscWMSTime.name]);
+const myModule = angular.module('gmfapp', [
+  'gettext',
+  ngeoMiscDatepickerComponent.name,
+  ngeoMiscWMSTime.name,
+]);
 
 /**
  * @constructor
@@ -99,7 +103,7 @@ function MainController(ngeoWMSTime) {
   };
 }
 
-module.controller('MainController', MainController);
-options(module);
+myModule.controller('MainController', MainController);
+options(myModule);
 
-export default module;
+export default myModule;

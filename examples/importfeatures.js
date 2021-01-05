@@ -34,7 +34,7 @@ import olSourceOSM from 'ol/source/OSM.js';
 import olSourceVector from 'ol/source/Vector.js';
 
 /** @type {angular.IModule} **/
-const module = angular.module('app', ['gettext', ngeoMapModule.name, ngeoMiscFilereaderComponent.name]);
+const myModule = angular.module('app', ['gettext', ngeoMapModule.name, ngeoMiscFilereaderComponent.name]);
 
 /**
  * @constructor
@@ -104,6 +104,6 @@ MainController.prototype.importKml_ = function (kml) {
   }
 };
 
-module.controller('MainController', MainController);
+myModule.controller('MainController', MainController);
 
-export default module;
+export default myModule;

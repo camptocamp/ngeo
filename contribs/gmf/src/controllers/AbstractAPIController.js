@@ -46,11 +46,11 @@ export class AbstractAPIController extends AbstractAppController {
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('GmfAbstractAPIControllerModule', [
+const myModule = angular.module('GmfAbstractAPIControllerModule', [
   gmfControllersAbstractAppController.name,
   ngeoMapResizemap.name,
 ]);
 
-module.controller('AbstractAPIController', AbstractAPIController);
+myModule.controller('AbstractAPIController', AbstractAPIController);
 
-export default module;
+export default myModule;

@@ -47,7 +47,7 @@ import options from './options.js';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfapp', [
+const myModule = angular.module('gmfapp', [
   'gettext',
   gmfDatasourceManager.name,
   gmfLayertreeComponent.name,
@@ -74,7 +74,7 @@ const queryresultComponent = {
   template: require('./partials/queryresult.html'),
 };
 
-module.component('gmfappQueryresult', queryresultComponent);
+myModule.component('gmfappQueryresult', queryresultComponent);
 
 /**
  * Demo, NOT USED.
@@ -89,7 +89,7 @@ function QueryresultController(ngeoQueryResult) {
   this.result = ngeoQueryResult;
 }
 
-module.controller('gmfappQueryresultController', QueryresultController);
+myModule.controller('gmfappQueryresultController', QueryresultController);
 
 /**
  * @constructor
@@ -180,9 +180,9 @@ function MainController(
   ngeoFeatureOverlayMgr.init(this.map);
 }
 
-module.controller('MainController', MainController);
+myModule.controller('MainController', MainController);
 
-module.constant('gmfDisplayQueryGridOptions', {
+myModule.constant('gmfDisplayQueryGridOptions', {
   featuresStyle: {
     fill: {color: [255, 170, 0, 0.6]},
     circle: {
@@ -193,6 +193,6 @@ module.constant('gmfDisplayQueryGridOptions', {
     stroke: {color: [255, 170, 0, 1], width: 2},
   },
 });
-options(module);
+options(myModule);
 
-export default module;
+export default myModule;

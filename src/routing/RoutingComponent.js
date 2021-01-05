@@ -47,7 +47,7 @@ import 'ngeo/sass/font.scss';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoRoutingComponent', [
+const myModule = angular.module('ngeoRoutingComponent', [
   ngeoMiscDebounce.name,
   ngeoMiscFilters.name,
   ngeoRoutingNominatimService.name,
@@ -55,7 +55,7 @@ const module = angular.module('ngeoRoutingComponent', [
   ngeoRoutingRoutingFeatureComponent.name,
 ]);
 
-module.run(
+myModule.run(
   /**
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
@@ -66,7 +66,7 @@ module.run(
   }
 );
 
-module.value(
+myModule.value(
   'ngeoRoutingTemplateUrl',
   /**
    * @param {angular.IAttributes} $attrs Attributes.
@@ -451,7 +451,7 @@ export class Controller {
   }
 }
 
-module.component('ngeoRouting', {
+myModule.component('ngeoRouting', {
   controller: Controller,
   bindings: {
     'map': '<ngeoRoutingMap',
@@ -459,4 +459,4 @@ module.component('ngeoRouting', {
   templateUrl: ngeoRoutingTemplateUrl,
 });
 
-export default module;
+export default myModule;

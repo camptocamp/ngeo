@@ -28,7 +28,7 @@ import options from './options.js';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfapp', ['gettext', gmfAuthenticationModule.name]);
+const myModule = angular.module('gmfapp', ['gettext', gmfAuthenticationModule.name]);
 
 /**
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
@@ -58,7 +58,7 @@ function MainController(gettextCatalog) {
   };
 }
 
-module.controller('MainController', MainController);
-options(module);
+myModule.controller('MainController', MainController);
+options(myModule);
 
-export default module;
+export default myModule;

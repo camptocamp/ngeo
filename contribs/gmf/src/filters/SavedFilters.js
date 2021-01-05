@@ -227,9 +227,9 @@ export class SavedFilter {
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfSavedFilters', []);
+const myModule = angular.module('gmfSavedFilters', []);
 
-module.service('gmfSavedFilters', SavedFilter);
+myModule.service('gmfSavedFilters', SavedFilter);
 
 /**
  * The definition of a saved filter item.
@@ -268,4 +268,4 @@ SavedFilterItem.prototype.directedRules;
  */
 SavedFilterItem.prototype.name;
 
-export default module;
+export default myModule;

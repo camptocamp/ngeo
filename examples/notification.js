@@ -27,7 +27,7 @@ import {MessageType} from 'ngeo/message/Message.js';
 import ngeoMessageNotification from 'ngeo/message/Notification.js';
 
 /** @type {angular.IModule} **/
-const module = angular.module('app', ['gettext', ngeoMessageNotification.name]);
+const myModule = angular.module('app', ['gettext', ngeoMessageNotification.name]);
 
 /**
  * @param {import("ngeo/message/Notification.js").MessageNotification} ngeoNotification
@@ -101,6 +101,6 @@ MainController.prototype.notifyQuick = function () {
   });
 };
 
-module.controller('MainController', MainController);
+myModule.controller('MainController', MainController);
 
-export default module;
+export default myModule;

@@ -25,7 +25,7 @@ import angular from 'angular';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfMobileNav', []);
+const myModule = angular.module('gmfMobileNav', []);
 
 /**
  * CSS class names toggled by the controller.
@@ -100,7 +100,7 @@ function mobileNavigationComponent() {
   };
 }
 
-module.directive('gmfMobileNav', mobileNavigationComponent);
+myModule.directive('gmfMobileNav', mobileNavigationComponent);
 
 /**
  * @constructor
@@ -142,7 +142,7 @@ export function Controller() {
   this.back = this.back_.bind(this);
 }
 
-module.controller('gmfMobileNavController', Controller);
+myModule.controller('gmfMobileNavController', Controller);
 
 /**
  * Initialize the directive with the linked element.
@@ -334,7 +334,7 @@ function mobileNavigationBackComponent() {
   };
 }
 
-module.directive('gmfMobileNavBack', mobileNavigationBackComponent);
+myModule.directive('gmfMobileNavBack', mobileNavigationBackComponent);
 
 /**
  * A directive to be used in conjunction with {@link import("gmf/mobile/navigation.js").default.component}.
@@ -377,6 +377,6 @@ function mobileNavigationBackOnClickComponent() {
   };
 }
 
-module.directive('gmfMobileNavBackOnClick', mobileNavigationBackOnClickComponent);
+myModule.directive('gmfMobileNavBackOnClick', mobileNavigationBackOnClickComponent);
 
-export default module;
+export default myModule;

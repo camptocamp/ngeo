@@ -35,14 +35,14 @@ import options from './options.js';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfapp', [
+const myModule = angular.module('gmfapp', [
   'gettext',
   gmfMapComponent.name,
   gmfLidarprofileModule.name,
   ngeoMapModule.name, // for ngeo.map.FeatureOverlay, perhaps remove me
 ]);
 
-module.value('pytreeLidarprofileJsonUrl', 'https://sitn.ne.ch/pytree');
+myModule.value('pytreeLidarprofileJsonUrl', 'https://sitn.ne.ch/pytree');
 
 /**
  * @param {angular.IScope} $scope Angular scope.
@@ -78,7 +78,7 @@ function MainController($scope) {
   });
 }
 
-module.controller('MainController', MainController);
-options(module);
+myModule.controller('MainController', MainController);
+options(myModule);
 
-export default module;
+export default myModule;

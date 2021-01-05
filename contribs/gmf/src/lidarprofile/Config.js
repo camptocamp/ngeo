@@ -183,7 +183,7 @@ export class LidarprofileConfigService {
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfLidarprofileConfig', []);
-module.service('gmfLidarprofileConfig', LidarprofileConfigService);
+const myModule = angular.module('gmfLidarprofileConfig', []);
+myModule.service('gmfLidarprofileConfig', LidarprofileConfigService);
 
-export default module;
+export default myModule;

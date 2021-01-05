@@ -50,7 +50,7 @@ import 'angular-sanitize';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfDisclaimer', [
+const myModule = angular.module('gmfDisclaimer', [
   'ngSanitize',
   ngeoMapLayerHelper.name,
   ngeoMessageDisclaimer.name,
@@ -432,6 +432,6 @@ const disclaimerComponent = {
   },
 };
 
-module.component('gmfDisclaimer', disclaimerComponent);
+myModule.component('gmfDisclaimer', disclaimerComponent);
 
-export default module;
+export default myModule;

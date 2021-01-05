@@ -35,7 +35,7 @@ import options from './options.js';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfapp', ['gettext', gmfMapComponent.name, gmfRasterModule.name]);
+const myModule = angular.module('gmfapp', ['gettext', gmfMapComponent.name, gmfRasterModule.name]);
 
 /**
  * @constructor
@@ -60,11 +60,11 @@ function MainController() {
   });
 }
 
-module.controller('MainController', MainController);
+myModule.controller('MainController', MainController);
 
-module.constant('gmfElevationOptions', {
+myModule.constant('gmfElevationOptions', {
   layers: ['aster', 'srtm'],
 });
-options(module);
+options(myModule);
 
-export default module;
+export default myModule;

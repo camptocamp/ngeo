@@ -34,7 +34,7 @@ import olSourceOSM from 'ol/source/OSM.js';
 import olSourceVector from 'ol/source/Vector.js';
 
 /** @type {angular.IModule} **/
-const module = angular.module('app', [
+const myModule = angular.module('app', [
   'gettext',
   ngeoDrawModule.name,
   ngeoMapModule.name,
@@ -96,6 +96,6 @@ function MainController($scope, ngeoFeatures, ngeoToolActivateMgr) {
   ngeoToolActivateMgr.registerTool('mapTools', dummyToolActivate, true);
 }
 
-module.controller('MainController', MainController);
+myModule.controller('MainController', MainController);
 
-export default module;
+export default myModule;

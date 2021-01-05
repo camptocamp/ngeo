@@ -254,10 +254,10 @@ export class DatasourceHelper {
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoDataSourcesHelper', [
+const myModule = angular.module('ngeoDataSourcesHelper', [
   ngeoDatasourceDataSources.name,
   ngeoQueryQuerent.name,
 ]);
-module.service('ngeoDataSourcesHelper', DatasourceHelper);
+myModule.service('ngeoDataSourcesHelper', DatasourceHelper);
 
-export default module;
+export default myModule;

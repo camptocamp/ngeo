@@ -605,7 +605,7 @@ export class LidarprofileManager {
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfLidarprofileManager', [ngeoMiscDebounce.name]);
-module.service('gmfLidarprofileManager', LidarprofileManager);
+const myModule = angular.module('gmfLidarprofileManager', [ngeoMiscDebounce.name]);
+myModule.service('gmfLidarprofileManager', LidarprofileManager);
 
-export default module;
+export default myModule;

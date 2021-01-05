@@ -756,12 +756,12 @@ function getId(layer) {
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfExternalDataSourcesManager', [
+const myModule = angular.module('gmfExternalDataSourcesManager', [
   gmfDatasourceFileGroup.name,
   ngeoMapLayerHelper.name,
   ngeoMiscFile.name,
   ngeoDatasourceDataSources.name,
 ]);
-module.service('gmfExternalDataSourcesManager', ExternalDatSourcesManager);
+myModule.service('gmfExternalDataSourcesManager', ExternalDatSourcesManager);
 
-export default module;
+export default myModule;

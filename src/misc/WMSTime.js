@@ -127,7 +127,7 @@ export class WMSTime extends Time {
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoWMSTime', [ngeoMiscTime.name]);
-module.service('ngeoWMSTime', WMSTime);
+const myModule = angular.module('ngeoWMSTime', [ngeoMiscTime.name]);
+myModule.service('ngeoWMSTime', WMSTime);
 
-export default module;
+export default myModule;

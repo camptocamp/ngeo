@@ -28,7 +28,7 @@ import 'bootstrap/js/src/modal.js';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoModal', []);
+const myModule = angular.module('ngeoModal', []);
 
 /**
  * Provides the "ngeoModal" component.
@@ -87,7 +87,7 @@ const messageModalComponent = {
   },
 };
 
-module.component('ngeoModal', messageModalComponent);
+myModule.component('ngeoModal', messageModalComponent);
 
 /**
  * @hidden
@@ -200,6 +200,6 @@ export class Controller {
   }
 }
 
-module.controller('ngeoModalController', Controller);
+myModule.controller('ngeoModalController', Controller);
 
-export default module;
+export default myModule;

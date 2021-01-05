@@ -28,7 +28,7 @@ import olFeature from 'ol/Feature.js';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoCreateregularpolygonfromclick', []);
+const myModule = angular.module('ngeoCreateregularpolygonfromclick', []);
 
 /**
  * A directive used to draw vector features of a single geometry type using
@@ -90,7 +90,7 @@ function editingCreateRegularPolygonFromClickComponent() {
   };
 }
 
-module.directive('ngeoCreateregularpolygonfromclick', editingCreateRegularPolygonFromClickComponent);
+myModule.directive('ngeoCreateregularpolygonfromclick', editingCreateRegularPolygonFromClickComponent);
 
 /**
  * @param {angular.IScope} $scope Scope.
@@ -216,6 +216,6 @@ Controller.prototype.handleDestroy_ = function () {
   this.map.removeInteraction(this.interaction_);
 };
 
-module.controller('ngeoCreateregularpolygonfromclickController', Controller);
+myModule.controller('ngeoCreateregularpolygonfromclickController', Controller);
 
-export default module;
+export default myModule;

@@ -658,8 +658,8 @@ export const ThemeNodeType = {
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfThemes', [ngeoMapLayerHelper.name]);
+const myModule = angular.module('gmfThemes', [ngeoMapLayerHelper.name]);
 
-module.service('gmfThemes', ThemesService);
+myModule.service('gmfThemes', ThemesService);
 
-export default module;
+export default myModule;

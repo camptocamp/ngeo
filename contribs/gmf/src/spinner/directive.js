@@ -57,8 +57,8 @@ const loaderSpinner = function ($http) {
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfLoaderSpinner', []);
+const myModule = angular.module('gmfLoaderSpinner', []);
 
-module.directive('gmfLoaderSpinner', loaderSpinner);
+myModule.directive('gmfLoaderSpinner', loaderSpinner);
 
-export default module;
+export default myModule;

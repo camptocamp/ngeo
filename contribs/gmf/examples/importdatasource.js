@@ -47,7 +47,7 @@ import options from './options.js';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfapp', [
+const myModule = angular.module('gmfapp', [
   'gettext',
   gmfDatasourceManager.name,
   gmfImportImportdatasourceComponent.name,
@@ -132,9 +132,9 @@ class MainController {
   }
 }
 
-module.controller('MainController', MainController);
+myModule.controller('MainController', MainController);
 
-module.constant('defaultTheme', 'Filters');
-options(module);
+myModule.constant('defaultTheme', 'Filters');
+options(myModule);
 
-export default module;
+export default myModule;

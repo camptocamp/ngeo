@@ -32,12 +32,12 @@ import ngeoMiscFeatureHelper, {ArrowDirections, ArrowPositions} from 'ngeo/misc/
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfDrawingFeatureStyle', [
+const myModule = angular.module('gmfDrawingFeatureStyle', [
   ngeoMiscColorpickerComponent.name,
   ngeoMiscFeatureHelper.name,
 ]);
 
-module.run(
+myModule.run(
   /**
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
@@ -74,7 +74,7 @@ function drawingDrawFeatureComponent() {
   };
 }
 
-module.directive('gmfFeaturestyle', drawingDrawFeatureComponent);
+myModule.directive('gmfFeaturestyle', drawingDrawFeatureComponent);
 
 /**
  * @param {angular.IScope} $scope Angular scope.
@@ -322,6 +322,6 @@ Controller.prototype.handleGeometryChange_ = function () {
   this.scope_.$apply();
 };
 
-module.controller('GmfFeaturestyleController', Controller);
+myModule.controller('GmfFeaturestyleController', Controller);
 
-export default module;
+export default myModule;

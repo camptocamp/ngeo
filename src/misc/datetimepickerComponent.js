@@ -28,7 +28,7 @@ import 'jquery-datetimepicker/jquery.datetimepicker.css';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoDateTimePicker', ['gettext']);
+const myModule = angular.module('ngeoDateTimePicker', ['gettext']);
 
 /**
  * A directive used to display a date or time picker
@@ -55,7 +55,7 @@ function dateTimeComponent() {
   };
 }
 
-module.directive('ngeoDatetimepicker', dateTimeComponent);
+myModule.directive('ngeoDatetimepicker', dateTimeComponent);
 
 /**
  * @param {JQuery} $element Element.
@@ -100,6 +100,6 @@ Controller.prototype.$onInit = function () {
   this.element_.datetimepicker(this.options);
 };
 
-module.controller('ngeoDateTimePickerController', Controller);
+myModule.controller('ngeoDateTimePickerController', Controller);
 
-export default module;
+export default myModule;

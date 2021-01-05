@@ -85,7 +85,7 @@ export const NAMESPACE = 'oe';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfObjectEditingComponent', [
+const myModule = angular.module('gmfObjectEditingComponent', [
   gmfEditingEditFeature.name,
   gmfLayertreeSyncLayertreeMap.name,
   gmfLayertreeTreeManager.name,
@@ -96,7 +96,7 @@ const module = angular.module('gmfObjectEditingComponent', [
   ngeoMiscToolActivateMgr.name,
 ]);
 
-module.run(
+myModule.run(
   /**
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
@@ -107,7 +107,7 @@ module.run(
   }
 );
 
-module.value(
+myModule.value(
   'gmfObjecteditingTemplateUrl',
   /**
    * @param {JQuery} $element Element.
@@ -172,7 +172,7 @@ const objecteditingComponent = {
   templateUrl: gmfObjecteditingTemplateUrl,
 };
 
-module.component('gmfObjectediting', objecteditingComponent);
+myModule.component('gmfObjectediting', objecteditingComponent);
 
 /**
  * @param {angular.IScope} $scope Angular scope.
@@ -1093,6 +1093,6 @@ function cloneGeometry(geometry) {
   return clone;
 }
 
-module.controller('GmfObjecteditingController', Controller);
+myModule.controller('GmfObjecteditingController', Controller);
 
-export default module;
+export default myModule;

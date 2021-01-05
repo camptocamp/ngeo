@@ -179,12 +179,12 @@ ThemeManagerService.prototype.removeAll = function () {
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfThemeManager', [
+const myModule = angular.module('gmfThemeManager', [
   gmfLayertreeTreeManager.name,
   gmfThemeThemes.name,
   ngeoStatemanagerService.name,
 ]);
 
-module.service('gmfThemeManager', ThemeManagerService);
+myModule.service('gmfThemeManager', ThemeManagerService);
 
-export default module;
+export default myModule;

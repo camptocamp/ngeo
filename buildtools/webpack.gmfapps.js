@@ -26,8 +26,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const plugins = [];
 const entry = {};
 
-const filenamePrefix = process.env.DEV_SERVER ? 'contribs/gmf/apps/' : '';
-
 for (const filename of ls('contribs/gmf/apps/*/index.html.ejs')) {
   const name = path.basename(filename.path);
   const folder = `contribs/gmf/apps/${name}`;
@@ -37,7 +35,7 @@ for (const filename of ls('contribs/gmf/apps/*/index.html.ejs')) {
       template: `${folder}/index.html.ejs`,
       inject: false,
       chunksSortMode: 'manual',
-      filename: `${filenamePrefix}${name}.html`,
+      filename: `${name}.html`,
       chunks: [name],
       vars: {
         version: 'dev',
@@ -55,6 +53,12 @@ if (!process.env.DEV_SERVER) {
   Object.assign(module.exports, {
     output: {
       path: path.resolve(__dirname, '../.build/examples-hosted/contribs/gmf/apps'),
+    },
+  });
+} else {
+  Object.assign(module.exports, {
+    output: {
+      publicPath: '/contribs/gmf/apps/',
     },
   });
 }

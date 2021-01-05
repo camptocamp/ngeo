@@ -31,9 +31,9 @@ import 'angular-sanitize';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoMessageDisplaywindowComponent', ['ngSanitize']);
+const myModule = angular.module('ngeoMessageDisplaywindowComponent', ['ngSanitize']);
 
-module.run(
+myModule.run(
   /**
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
@@ -44,7 +44,7 @@ module.run(
   }
 );
 
-module.value(
+myModule.value(
   'ngeoMessageDisplaywindowTemplateUrl',
   /**
    * @param {angular.IAttributes} $attrs Attributes.
@@ -344,6 +344,6 @@ const ngeoMessageDisplaywindowComponent = {
   controller: Controller,
   templateUrl: ngeoMessageDisplaywindowTemplateUrl,
 };
-module.component('ngeoDisplaywindow', ngeoMessageDisplaywindowComponent);
+myModule.component('ngeoDisplaywindow', ngeoMessageDisplaywindowComponent);
 
-export default module;
+export default myModule;
