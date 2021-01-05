@@ -254,10 +254,9 @@ MessagePopup.prototype.open = function (options) {
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @return {PopupFactory} The function to create a popup.
  * @ngInject
- * @private
  * @hidden
  */
-function Factory($compile, $rootScope, $sce, $timeout) {
+export function Factory($compile, $rootScope, $sce, $timeout) {
   return (
     /**
      * @return {MessagePopup} The popup instance.

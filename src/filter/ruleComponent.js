@@ -108,10 +108,9 @@ function ngeoRuleTemplateUrl($attrs, ngeoRuleTemplateUrl) {
 }
 
 /**
- * @private
  * @hidden
  */
-class RuleController {
+export class RuleController {
   /**
    * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext service.
    * @param {angular.IScope} $scope Angular scope.

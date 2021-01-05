@@ -144,13 +144,12 @@ module.directive('ngeoDatePicker', datePickerComponent);
  * @param {import("ngeo/misc/Time.js").Time} ngeoTime time service.
  * @param {angular.gettext.gettextCatalog} gettextCatalog service.
  * @constructor
- * @private
  * @hidden
  * @ngInject
  * @ngdoc controller
  * @ngname ngeoDatePickerController
  */
-function Controller($scope, ngeoTime, gettextCatalog) {
+export function Controller($scope, ngeoTime, gettextCatalog) {
   /**
    * @type {import("ngeo/misc/Time.js").Time}
    * @private

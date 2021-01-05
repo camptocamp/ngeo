@@ -30,7 +30,6 @@ import {asArray as asColorArray} from 'ol/color.js';
 
 /**
  * @constructor
- * @private
  * @hidden
  */
 function VectorEncoder() {

@@ -69,10 +69,9 @@ function ngeoMessageDisplaywindowTemplateUrl($attrs, ngeoMessageDisplaywindowTem
 }
 
 /**
- * @private
  * @hidden
  */
-class Controller {
+export class Controller {
   /**
    * @param {JQuery} $element Element.
    * @param {angular.ISCEService} $sce Angular sce service.

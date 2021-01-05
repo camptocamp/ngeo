@@ -95,13 +95,12 @@ module.directive('ngeoCreateregularpolygonfromclick', editingCreateRegularPolygo
 /**
  * @param {angular.IScope} $scope Scope.
  * @constructor
- * @private
  * @hidden
  * @ngInject
  * @ngdoc controller
  * @ngname ngeoCreateregularpolygonfromclickController
  */
-function Controller($scope) {
+export function Controller($scope) {
   // == Scope properties ==
 
   /**

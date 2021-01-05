@@ -101,13 +101,12 @@ module.directive('ngeoCreatefeature', editingCreateFeatureComponent);
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @param {import("ngeo/misc/EventHelper.js").EventHelper} ngeoEventHelper Ngeo event helper service
  * @constructor
- * @private
  * @hidden
  * @ngInject
  * @ngdoc controller
  * @ngname ngeoCreatefeatureController
  */
-function Controller(gettextCatalog, $compile, $filter, $injector, $scope, $timeout, ngeoEventHelper) {
+export function Controller(gettextCatalog, $compile, $filter, $injector, $scope, $timeout, ngeoEventHelper) {
   /**
    * @type {boolean}
    */

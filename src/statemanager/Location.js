@@ -347,10 +347,9 @@ StatemanagerLocation.prototype.setPath = function (path) {
  * @param {angular.IWindowService} $window Angular window service.
  * @return {StatemanagerLocation} The ngeo location service.
  * @ngInject
- * @private
  * @hidden
  */
-function LocationFactory($rootScope, $window) {
+export function LocationFactory($rootScope, $window) {
   const history = $window.history;
   const service = new StatemanagerLocation($window.location, $window.history);
 

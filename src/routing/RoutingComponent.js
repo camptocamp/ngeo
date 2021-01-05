@@ -92,10 +92,9 @@ function ngeoRoutingTemplateUrl($attrs, ngeoRoutingTemplateUrl) {
 
 /**
  * The controller for the routing directive.
- * @private
  * @hidden
  */
-class Controller {
+export class Controller {
   /**
    * @param {angular.auto.IInjectorService} $injector Main injector.
    * @param {angular.IScope} $scope Scope.

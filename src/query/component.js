@@ -40,10 +40,9 @@ import {Vector as olSourceVector} from 'ol/source.js';
 const module = angular.module('ngeoQuery', [ngeoQueryModeSelector.name, ngeoQueryMapQuerent.name]);
 
 /**
- * @private
  * @hidden
  */
-class QueryController {
+export class QueryController {
   /**
    * @param {import("ngeo/query/MapQuerent.js").MapQuerent}
    *     ngeoMapQuerent The ngeo map querent service.

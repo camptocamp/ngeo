@@ -44,10 +44,9 @@ function shouldUpdate(older, newer) {
 }
 
 /**
- * @private
  * @hidden
  */
-const Controller = class {
+export const Controller = class {
   /**
    * @ngInject
    * @param {JQuery} $element The element

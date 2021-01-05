@@ -61,13 +61,12 @@ module.directive('ngeoDatetimepicker', dateTimeComponent);
  * @param {JQuery} $element Element.
  * @param {angular.gettext.gettextCatalog} gettextCatalog service.
  * @constructor
- * @private
  * @hidden
  * @ngInject
  * @ngdoc controller
  * @ngname ngeoDatetimepickerController
  */
-function Controller($element, gettextCatalog) {
+export function Controller($element, gettextCatalog) {
   /**
    * @const {JQuery}
    * @private

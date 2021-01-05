@@ -68,10 +68,9 @@ function ngeoQueryPanelTemplateUrl($attrs, ngeoQueryPanelTemplateUrl) {
 }
 
 /**
- * @private
  * @hidden
  */
-class QueryPanelController {
+export class QueryPanelController {
   /**
    * @param {import("ngeo/query/ModeSelector.js").QueryModeSelector}
    *     ngeoQueryModeSelector The ngeo query modeSelector service.
