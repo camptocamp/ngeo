@@ -833,11 +833,8 @@ export class PrintController {
       if (!attribute.clientParams) {
         const name = `${attribute.name}`;
 
-        // Special case for timezone, hide it and fill it with browser timezone.
+        // Special case for timezone, fill it with browser timezone.
         if (name == 'timezone') {
-          if (this.options.hiddenAttributes.includes('timezone')) {
-            this.options.hiddenAttributes.push('timezone');
-          }
           this.layoutInfo.simpleAttributes.push({
             name: 'timezone',
             type: 'text',
