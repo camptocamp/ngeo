@@ -182,14 +182,13 @@ export class Controller {
               fill: new olStyleFill({
                 color: this.fillColor || '#000000',
               }),
-              font: '900 24px "sans-serif"',
+              font: '900 24px "Font Awesome 5 Free"',
               stroke: new olStyleStroke({
                 width: 3,
                 color: this.strokeColor || '#000000',
               }),
-              offsetX: -5,
-              text: '\u27A4', // "BLACK RIGHTWARDS ARROWHEAD" HTML Dingbats symbol.
-              rotation: Math.PI / 2,
+              offsetY: -15,
+              text: '\uf041', // map-marker
             }),
           }),
         ];

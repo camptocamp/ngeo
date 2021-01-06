@@ -154,7 +154,7 @@ export class Controller {
     this.map = null;
 
     /**
-     * The Openlayers LineString geometry of the profle
+     * The OpenLayers LineString geometry of the profle
      * @type {?import("ol/geom/LineString.js").default}
      */
     this.line = null;

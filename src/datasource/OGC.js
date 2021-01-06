@@ -1173,7 +1173,7 @@ export class OGC extends ngeoDatasourceDataSource {
   }
 
   /**
-   * Compare active dimensions filters of two data sources. As Openlayers
+   * Compare active dimensions filters of two data sources. As OpenLayers
    * WFS format does not allow constructing multiple typenames GetFeature
    * request with different filters we need to combine data sources depending
    * on active dimensions filters.

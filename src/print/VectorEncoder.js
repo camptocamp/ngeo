@@ -458,13 +458,16 @@ VectorEncoder.prototype.encodeTextStyle_ = function (textStyle, goodnessOfFit) {
       symbolizer.labelAlign = 'cm';
     }
 
+    // Handle CanvasRenderingContext2D.font like OpenLayers text font. Example: '900 20px serif'.
     const fontStyle = textStyle.getFont();
     if (fontStyle !== undefined) {
       const font = fontStyle.split(' ');
       if (font.length >= 3) {
         symbolizer.fontWeight = font[0];
         symbolizer.fontSize = font[1];
-        symbolizer.fontFamily = font.splice(2).join(' ');
+        const fontFamily = font.splice(2).join(' ');
+        // Remove simple quotes and double quotes for fonts with spaces like "Font Awesome".
+        symbolizer.fontFamily = fontFamily.replace(/\'|\"/g, '');
       }
     }
 

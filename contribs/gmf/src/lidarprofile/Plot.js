@@ -341,7 +341,7 @@ export default class {
   }
 
   /**
-   * Update the Openlayers overlay that displays point position and attributes values
+   * Update the OpenLayers overlay that displays point position and attributes values
    */
   pointHighlight() {
     if (!this.manager_.config) {

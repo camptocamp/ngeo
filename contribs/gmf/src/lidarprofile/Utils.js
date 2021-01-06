@@ -80,7 +80,7 @@ export default class {
    * @param {import("gmf/lidarprofile/Config.js").LidarprofileConfigService} config the LIDAR profile config
    *    instance
    * @param {number} map_resolution the current resolution of the map
-   * @param {import("ol/geom/LineString.js").default} linestring an OpenLayer Linestring
+   * @param {import("ol/geom/LineString.js").default} linestring an OpenLayers Linestring
    * @param {number} dLeft domain minimum
    * @param {number} dRight domain maximum
    * @return {{
@@ -370,7 +370,7 @@ export default class {
   }
 
   /**
-   * Transform Openlayers linestring into a cPotree compatible definition
+   * Transform OpenLayers linestring into a cPotree compatible definition
    * @param {import("ol/geom/LineString.js").default} line the profile 2D line
    * @return {string} linestring in a cPotree/pytree compatible string definition
    */

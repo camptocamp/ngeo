@@ -211,7 +211,7 @@ describe('ngeo.print.VectorEncoder', () => {
               fill: new olStyleFill({
                 color: '#aa0000',
               }),
-              font: '900 16px "Sans serif"',
+              font: '900 16px "sans serif"',
               offsetX: -2,
               offsetY: -4,
               text: 'Sample',
@@ -268,7 +268,7 @@ describe('ngeo.print.VectorEncoder', () => {
       expect(symbolizers[0].labelRotation).toEqual('90');
       expect(symbolizers[0].fontWeight).toEqual('900');
       expect(symbolizers[0].fontSize).toEqual('16px');
-      expect(symbolizers[0].fontFamily).toEqual('"Sans serif"');
+      expect(symbolizers[0].fontFamily).toEqual('sans serif');
       expect(symbolizers[0].fontColor).toEqual('#aa0000');
       expect(symbolizers[0].labelXOffset).toEqual(-2);
       expect(symbolizers[0].labelYOffset).toEqual(4); // Inverted for MFP
