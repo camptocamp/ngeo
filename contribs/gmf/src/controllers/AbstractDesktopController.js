@@ -67,6 +67,11 @@ export class AbstractDesktopController extends AbstractAPIController {
     /**
      * @type {boolean}
      */
+    this.queryGrid = false;
+
+    /**
+     * @type {boolean}
+     */
     this.dataPanelActive = true;
 
     /**
@@ -188,6 +193,10 @@ export class AbstractDesktopController extends AbstractAPIController {
     this.importDataSourceActive = false;
 
     const body = $('body');
+
+    if ($injector.has('gmfQueryGrid')) {
+      this.queryGrid = $injector.get('gmfQueryGrid');
+    }
 
     // initialize tooltips
     body.tooltip(

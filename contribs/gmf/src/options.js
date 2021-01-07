@@ -320,6 +320,11 @@
  */
 
 /**
+ * Use the query grid instead the query window to display the query result.
+ * @typedef {boolean} gmfQueryGrid
+ */
+
+/**
  * The display querry grid component options.
  * @typedef {Object} gmfDisplayQueryGridOptions
  * @property {import('ngeo/options.js').StyleLike} featuresStyle A style object for all features from the result of the query.
