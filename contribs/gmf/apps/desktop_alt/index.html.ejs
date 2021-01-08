@@ -310,6 +310,11 @@
               gmf-disclaimer-external-visibility="disclaimerVisibility">
             </gmf-disclaimer>
           </div>
+          <gmf-displayquerywindow
+            ng-if="!mainCtrl.queryGrid"
+            gmf-displayquerywindow-draggable-containment="::mainCtrl.displaywindowDraggableContainment"
+            gmf-displayquerywindow-desktop="::true">
+          </gmf-displayquerywindow>
         </div>
         <gmf-map
           class="gmf-map"
@@ -365,8 +370,8 @@
         ngeo-resizemap="mainCtrl.map"
         ngeo-resizemap-state="profileChartActive">
       </gmf-profile>
-
       <gmf-displayquerygrid
+        ng-if="mainCtrl.queryGrid"
         gmf-displayquerygrid-active="queryGridActive"
         gmf-displayquerygrid-map="::mainCtrl.map"
         ngeo-resizemap="mainCtrl.map"
