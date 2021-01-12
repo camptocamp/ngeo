@@ -11,7 +11,8 @@
     <link href="<%= htmlWebpackPlugin.files.css[css] %>" rel="stylesheet">
     <% } %>
   </head>
-  <body ng-class="{'gmf-profile-chart-active': !!profileChartActive}">
+  <body ng-class="{'gmf-profile-chart-active': !!profileChartActive, 'gmf-query-grid-active': !!queryGridActive}" ng-keydown="mainCtrl.onKeydown($e
+  vent)">
     <div ng-show="mainCtrl.loading" class="loading-mask">
       <i class="fa custom-spinner-loading fa-spin spinner-loading-mask">
         <%=require('gmf/icons/spinner.svg?viewbox&height=1em')%>

@@ -67,6 +67,11 @@ class Controller extends AbstractDesktopController {
       this.dimensions.FLOOR = '*';
     }
   }
+
+  /**
+   * @param {JQueryEventObject} event keydown event.
+   */
+  onKeydown(event) {}
 }
 
 /**
