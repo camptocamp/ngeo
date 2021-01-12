@@ -21,12 +21,11 @@
 
 import angular from 'angular';
 
-import {DATALAYERGROUP_NAME} from 'gmf/index.js';
-
 import gmfAuthenticationService from 'gmf/authentication/Service.js';
 
+import gmfThemeThemes from 'gmf/theme/Themes.js';
+import LegendMapFishPrintV3 from 'gmf/print/LegendMapFishPrintV3.js';
 import MaskLayer from 'ngeo/print/Mask.js';
-import gmfThemeThemes, {findGroupByLayerNodeName, findObjectByName} from 'gmf/theme/Themes.js';
 import ngeoMapLayerHelper from 'ngeo/map/LayerHelper.js';
 import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr.js';
 import ngeoMiscFeatureHelper, {getFilteredFeatureValues} from 'ngeo/misc/FeatureHelper.js';
@@ -35,15 +34,11 @@ import ngeoPrintUtils, {INCHES_PER_METER, DOTS_PER_INCH} from 'ngeo/print/Utils.
 import ngeoQueryMapQuerent from 'ngeo/query/MapQuerent.js';
 import {listen, unlistenByKey} from 'ol/events.js';
 import olLayerImage from 'ol/layer/Image.js';
-import olLayerTile from 'ol/layer/Tile.js';
 import olLayerGroup from 'ol/layer/Group.js';
 import olMap from 'ol/Map.js';
 import {toDegrees, toRadians, clamp} from 'ol/math.js';
-import ImageWMS from 'ol/source/ImageWMS.js';
 import MapBrowserEvent from 'ol/MapBrowserEvent.js';
 import 'bootstrap/js/src/dropdown.js';
-import ExternalOGC from 'gmf/datasource/ExternalOGC.js';
-import {dpi as screenDpi} from 'ngeo/utils.js';
 
 /**
  * Fields that can come from a print v3 server and can be used in the partial
@@ -380,21 +375,12 @@ export class PrintController {
      */
     this.gmfExternalDataSourcesManager_ = gmfExternalDataSourcesManager;
 
-    this.cacheVersion_ = cacheVersion;
-
     /**
-     * @type {import('gmf/options.js').OptionsLegendType}
-     * @private
+     * @type {?import("gmf/print/LegendMapFishPrintV3").default}
      */
-    this.gmfLegendOptions_ = {
-      useBbox: true,
-      label: {},
-      params: {},
-    };
+    this.legendMapFishPrintV3_ = null;
 
-    if (gmfPrintOptions.legend) {
-      Object.assign(this.gmfLegendOptions_, gmfPrintOptions.legend);
-    }
+    this.cacheVersion_ = cacheVersion;
 
     /**
      * @type {?angular.IDeferred<never>}
@@ -553,6 +539,15 @@ export class PrintController {
     if (!this.map) {
       throw new Error('Missing map');
     }
+
+    this.legendMapFishPrintV3_ = new LegendMapFishPrintV3(
+      this.gettextCatalog_,
+      this.ngeoLayerHelper_,
+      this.gmfExternalDataSourcesManager_,
+      this.options.legend,
+      this.map
+    );
+
     listen(
       this.map.getView(),
       'change:rotation',
@@ -1031,7 +1026,12 @@ export class PrintController {
       const deltaX = (this.paperSize_[0] * scale) / 2 / INCHES_PER_METER / DOTS_PER_INCH;
       const deltaY = (this.paperSize_[1] * scale) / 2 / INCHES_PER_METER / DOTS_PER_INCH;
       const bbox = [center[0] - deltaX, center[1] - deltaY, center[0] + deltaX, center[1] + deltaY];
-      const legend = this.getLegend_(scale, this.layoutInfo.dpi, bbox);
+      const legend = this.legendMapFishPrintV3_.getLegend(
+        this.currentThemes_,
+        scale,
+        this.layoutInfo.dpi,
+        bbox
+      );
       if (legend !== null) {
         customAttributes.legend = legend;
       }
@@ -1291,255 +1291,6 @@ export class PrintController {
    */
   handleCreateReportError_() {
     this.resetPrintStates_(PrintStateEnum.ERROR_ON_REPORT);
-  }
-
-  /**
-   * @param {number} scale The scale to get the legend (for wms layers only).
-   * @param {number} dpi The DPI.
-   * @param {number[]} bbox The bbox.
-   * @return {unknown?} Legend object for print report or null.
-   * @private
-   */
-  getLegend_(scale, dpi, bbox) {
-    if (!this.map) {
-      throw new Error('Missing map');
-    }
-    /** @type {import('ngeo/print/mapfish-print-v3').MapFishPrintLegend} */
-    const legend = {classes: []};
-
-    // Get layers from layertree only.
-    const dataLayerGroup = this.ngeoLayerHelper_.getGroupFromMap(this.map, DATALAYERGROUP_NAME);
-    const layers = this.ngeoLayerHelper_.getFlatLayers(dataLayerGroup);
-
-    // For each visible layer in reverse order, get the legend url.
-    layers.reverse().forEach((layer) => {
-      /** @type {import('ngeo/print/mapfish-print-v3').MapFishPrintLegendClass[]} */
-      const classes = [];
-      if (layer.getVisible() && layer.getSource()) {
-        // For WMTS layers.
-        if (layer instanceof olLayerTile) {
-          this.addClassItemToArray_(classes, this.getLegendItemFromTileLayer_(layer, dpi));
-        } else {
-          const legendItem = this.getLegendItemFromWMSLayer_(
-            /** @type {import("ol/layer/Layer.js").default<import("ol/source/ImageWMS.js").default>} */ (layer),
-            scale,
-            dpi,
-            bbox
-          );
-          this.addClassItemToArray_(classes, legendItem);
-        }
-      }
-
-      // Add classes object only if it contains something.
-      if (classes.length > 0) {
-        legend.classes = legend.classes.concat(classes);
-      }
-    });
-
-    // Get external layers
-    const wmsGroups = this.gmfExternalDataSourcesManager_.wmsGroups;
-
-    /** @type {import('ngeo/print/mapfish-print-v3').MapFishPrintLegendClass[]} */
-    const classes = [];
-
-    wmsGroups.forEach((group) => {
-      group.dataSourcesCollection.forEach((dataSource) => {
-        this.addClassItemToArray_(classes, this.getLegendItemFromExternalDatasource_(dataSource, scale));
-      });
-    });
-
-    // Add classes object if it contains something.
-    if (classes.length > 0) {
-      legend.classes = legend.classes.concat(classes);
-    }
-
-    return legend.classes.length > 0 ? legend : null;
-  }
-
-  /**
-   * Add a class to a class array if the class to add is not null.
-   * @param {import('ngeo/print/mapfish-print-v3').MapFishPrintLegendClass[]} classes Array to add an element.
-   * @param {import('ngeo/print/mapfish-print-v3').MapFishPrintLegendClass} classItem The class to add.
-   * @private
-   */
-  addClassItemToArray_(classes, classItem) {
-    if (classItem) {
-      classes.push(classItem);
-    }
-  }
-
-  /**
-   * Create a legend item from the given WMTS layer.
-   * @param {import("ol/layer/Tile.js").default} layer The layer to extract the legend from.
-   * @param {number} dpi The DPI.
-   * @return {import('ngeo/print/mapfish-print-v3').MapFishPrintLegendClass} Legend object for print report
-   * or null.
-   * @private
-   */
-  getLegendItemFromTileLayer_(layer, dpi) {
-    const gettextCatalog = this.gettextCatalog_;
-    const layerName = `${layer.get('layerNodeName')}`;
-    let icon_dpi = this.getMetadataLegendImage_(layerName, dpi);
-    if (!icon_dpi) {
-      const url = this.ngeoLayerHelper_.getWMTSLegendURL(layer);
-      if (url) {
-        icon_dpi = {
-          url: url,
-          dpi: screenDpi(),
-        };
-      }
-    }
-    // Add only classes without legend url.
-    if (icon_dpi) {
-      return {
-        name: gettextCatalog.getString(layerName),
-        icons: [icon_dpi.url],
-      };
-    }
-    return null;
-  }
-
-  /**
-   * Create a legend item from the given WMS layer.
-   * @param {import("ol/layer/Layer.js").default<import("ol/source/ImageWMS.js").default>} layer The layer
-   * to extract the legend from.
-   * @param {number} scale The scale to get the legend.
-   * @param {number} dpi The DPI.
-   * @param {number[]} bbox The bbox.
-   * @return {import('ngeo/print/mapfish-print-v3').MapFishPrintLegendClass} Legend object for print report
-   * or null.
-   * @private
-   */
-  getLegendItemFromWMSLayer_(layer, scale, dpi, bbox) {
-    const gettextCatalog = this.gettextCatalog_;
-    const source = layer.getSource();
-    if (!(source instanceof ImageWMS)) {
-      throw new Error('Wrong source type');
-    }
-    // @ts-ignore: private...
-    if (!source.serverType_) {
-      throw new Error('Missing source.serverType_');
-    }
-    // For each name in a WMS layer.
-    const layerNames = /** @type {string} */ (source.getParams().LAYERS).split(',');
-    /** @type {import('ngeo/print/mapfish-print-v3').MapFishPrintLegendClass[]} */
-    const layerLegendClasses = [];
-    layerNames.forEach((name) => {
-      // Don't add classes without legend url or from layers without any
-      // active name.
-      if (name.length !== 0) {
-        let icon_dpi = this.getMetadataLegendImage_(name, dpi);
-        // @ts-ignore: private...
-        const type = icon_dpi ? 'image' : source.serverType_;
-        if (!icon_dpi) {
-          const url = this.ngeoLayerHelper_.getWMSLegendURL(
-            source.getUrl(),
-            name,
-            scale,
-            undefined,
-            undefined,
-            undefined,
-            // @ts-ignore: private...
-            source.serverType_,
-            dpi,
-            this.gmfLegendOptions_.useBbox ? bbox : undefined,
-            this.map.getView().getProjection().getCode(),
-            // @ts-ignore: private...
-            this.gmfLegendOptions_.params[source.serverType_]
-          );
-          if (!url) {
-            throw new Error('Missing url');
-          }
-          icon_dpi = {
-            url: url,
-            dpi: type === 'qgis' ? dpi : screenDpi(),
-          };
-        }
-        const classItem = {
-          name: this.gmfLegendOptions_.label[type] === false ? '' : gettextCatalog.getString(name),
-          icons: [icon_dpi.url],
-        };
-        if (icon_dpi.dpi != screenDpi()) {
-          Object.assign(classItem, {dpi: icon_dpi.dpi});
-        }
-        layerLegendClasses.push(classItem);
-      }
-    });
-    return {classes: layerLegendClasses};
-  }
-
-  /**
-   * Create a legend item from the given external datasource.
-   * @param {import("ngeo/datasource/DataSource.js").default} dataSource The datasource to extract the legend
-   * from.
-   * @param {number} scale The scale to get the legend.
-   * @return {import('ngeo/print/mapfish-print-v3').MapFishPrintLegendClass} Legend object for print report
-   * or null.
-   * @private
-   */
-  getLegendItemFromExternalDatasource_(dataSource, scale) {
-    if (dataSource instanceof ExternalOGC && dataSource.visible) {
-      const url = this.ngeoLayerHelper_.getWMSLegendURL(dataSource.legend.url, dataSource.legend.name, scale);
-      return {
-        name: dataSource.legend.title,
-        icons: [url],
-      };
-    }
-  }
-
-  /**
-   * @typedef {Object} LegendURLDPI
-   * @property {string} url The URL
-   * @property {number} dpi The DPI
-   */
-
-  /**
-   * Return the metadata legendImage of a layer from the found corresponding node
-   * or undefined.
-   * @param {string} layerName a layer name.
-   * @param {number} [dpi=96] the image DPI.
-   * @return {LegendURLDPI|undefined} The legendImage with selected DPI or undefined.
-   * @private
-   */
-  getMetadataLegendImage_(layerName, dpi = -1) {
-    if (dpi == -1) {
-      dpi = screenDpi();
-    }
-    const groupNode = findGroupByLayerNodeName(this.currentThemes_, layerName);
-    let found_dpi = dpi;
-    let node;
-    if (groupNode && groupNode.children) {
-      node = findObjectByName(groupNode.children, layerName);
-    }
-    let legendImage;
-    let hiDPILegendImages;
-    if (node && node.metadata) {
-      legendImage = node.metadata.legendImage;
-      hiDPILegendImages = node.metadata.hiDPILegendImages;
-    }
-    let dist = Number.MAX_VALUE;
-    if (legendImage) {
-      dist = Math.abs(Math.log(screenDpi() / dpi));
-      found_dpi = screenDpi();
-    }
-    if (hiDPILegendImages) {
-      for (const str_dpi in hiDPILegendImages) {
-        const new_dpi = parseFloat(str_dpi);
-        const new_dist = Math.abs(Math.log(new_dpi / dpi));
-        if (new_dist < dist) {
-          dist = new_dist;
-          found_dpi = new_dpi;
-          legendImage = hiDPILegendImages[str_dpi];
-        }
-      }
-    }
-
-    if (legendImage) {
-      return {
-        url: legendImage,
-        dpi: found_dpi,
-      };
-    }
   }
 
   /**
