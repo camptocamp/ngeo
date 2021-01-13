@@ -133,7 +133,7 @@ export default class LegendMapFishPrintV3 {
      * - Create a legend item for the group (with a name if the layer has a name, which should be the case
      *   except for the tree's top-level group).
      * - Call this function on layer's children and try to add the resulting legendItem to the group.
-     * - Return the group item.
+     * - Return the group item (simplified if possible).
      */
     if (layer instanceof olLayerGroup) {
       const gettextCatalog = this.gettextCatalog_;
@@ -149,7 +149,7 @@ export default class LegendMapFishPrintV3 {
         const child = this.collectLegendClassesInTree_(layer, currentThemes, scale, dpi, bbox);
         this.addClassItemToArray_(groupClasses, child);
       });
-      return legendGroupItem;
+      return this.tryToSimplifyLegendGroup_(legendGroupItem);
     }
 
     // Case of leaf layer: Create a legend class item matching the layer.
@@ -205,6 +205,22 @@ export default class LegendMapFishPrintV3 {
     if (classItem && (classItem.classes ? classItem.classes.length > 0 : true)) {
       classes.push(classItem);
     }
+  }
+
+  /**
+   * If a Legend item have only one children and the children name is identical to its name, then return
+   * only the children (cut one level).
+   * Otherwise return the given legend item.
+   * @param {import('ngeo/print/mapfish-print-v3').MapFishPrintLegendClass} legendGroupItem A legend item.
+   * @return {import('ngeo/print/mapfish-print-v3').MapFishPrintLegendClass} The same legend item or a
+   * shrunk one.
+   * @private
+   */
+  tryToSimplifyLegendGroup_(legendGroupItem) {
+    if (legendGroupItem.classes.length === 1 && legendGroupItem.classes[0].name === legendGroupItem.name) {
+      return legendGroupItem.classes[0];
+    }
+    return legendGroupItem;
   }
 
   /**
@@ -311,7 +327,7 @@ export default class LegendMapFishPrintV3 {
         legendLayerClasses.push(legendLayerItem);
       }
     });
-    return legendGroupItem;
+    return this.tryToSimplifyLegendGroup_(legendGroupItem);
   }
 
   /**
