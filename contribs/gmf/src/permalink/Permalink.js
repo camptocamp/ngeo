@@ -41,8 +41,8 @@ import {Permalink3dParam} from 'ngeo/olcs/constants.js';
 import ngeoFormatFeatureHash from 'ngeo/format/FeatureHash.js';
 import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties.js';
 
+import {LAYER_NODE_NAME_KEY} from 'ngeo/map/LayerHelper.js';
 import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
-
 import ngeoMiscEventHelper from 'ngeo/misc/EventHelper.js';
 import ngeoStatemanagerModule from 'ngeo/statemanager/module.js';
 import ngeoStatemanagerService from 'ngeo/statemanager/Service.js';
@@ -1724,7 +1724,7 @@ PermalinkService.prototype.containsLayerName = function (layer, name) {
     }
     return false;
   } else {
-    return layer.get('layerNodeName') == name;
+    return layer.get(LAYER_NODE_NAME_KEY) == name;
   }
 };
 

@@ -22,6 +22,7 @@
 import angular from 'angular';
 import gmfThemeThemes, {getNodeMinResolution, getNodeMaxResolution} from 'gmf/theme/Themes.js';
 import ngeoLayertreeController, {LayertreeVisitorDecision} from 'ngeo/layertree/Controller.js';
+import {LAYER_NODE_NAME_KEY} from 'ngeo/map/LayerHelper.js';
 import ngeoMiscWMSTime from 'ngeo/misc/WMSTime.js';
 import {getUid as olUtilGetUid} from 'ol/util.js';
 import olLayerImage from 'ol/layer/Image.js';
@@ -268,7 +269,8 @@ SyncLayertreeMap.prototype.createLayerFromGroup_ = function (treeCtrl, mixed) {
       ogcServer.type,
       timeParam,
       undefined, // WMS parameters
-      ogcServer.credential ? 'use-credentials' : 'anonymous'
+      ogcServer.credential ? 'use-credentials' : 'anonymous',
+      undefined // Source options
     );
 
     layer.set('dataSourceId', groupNode.id);
@@ -285,8 +287,8 @@ SyncLayertreeMap.prototype.createLayerFromGroup_ = function (treeCtrl, mixed) {
       }
     });
     layer.setVisible(hasActiveChildren);
-    layer.set('layerNodeName', groupNode.name); //Really useful ?
   }
+  layer.set(LAYER_NODE_NAME_KEY, groupNode.name);
   return layer;
 };
 
@@ -341,7 +343,7 @@ SyncLayertreeMap.prototype.createLeafInAMixedGroup_ = function (treeCtrl, map) {
   }
   layer.set('dataSourceId', gmfLayer.id);
   // Update layer information and tree state.
-  layer.set('layerNodeName', gmfLayer.name); // Really useful ?
+  layer.set(LAYER_NODE_NAME_KEY, gmfLayer.name);
   this.updateLayerReferences_(gmfLayer, layer);
   const checked = gmfLayer.metadata.isChecked === true;
   if (checked) {
