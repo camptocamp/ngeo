@@ -32,6 +32,7 @@ describe('AbstractAppController', () => {
       'input-border-focus': '#6d90b1',
       'input-border-focus-darken': '#496a89',
       'border-color': '#6d90b1',
+      'table-border-color': '#6d90b1',
       'hover-background-color': '#d1dce7',
       'link-color': '#60809f',
       'link-hover-color': '#435a70',
