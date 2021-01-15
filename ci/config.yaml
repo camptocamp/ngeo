@@ -1,5 +1,6 @@
 checks:
   required_workflows:
+    main.yaml: False
     rebuild.yaml: False
   versions:
     rebuild: False
