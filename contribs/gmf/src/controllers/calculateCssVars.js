@@ -39,6 +39,7 @@ export default function (options) {
     cssVars['input-border-focus'] = border.toHexString();
     cssVars['input-border-focus-darken'] = border.clone().darken(15).toHexString();
     cssVars['border-color'] = border.toHexString();
+    cssVars['table-border-color'] = border.toHexString();
 
     cssVars['hover-background-color'] = primary.clone().lighten(15).toHexString();
 

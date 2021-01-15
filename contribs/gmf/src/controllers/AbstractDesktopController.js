@@ -70,6 +70,12 @@ export class AbstractDesktopController extends AbstractAPIController {
     this.queryGrid = false;
 
     /**
+     * To toggle the activation query grid in the HTML, shouldn't be touch (it's managed by angular).
+     * @type {boolean}
+     */
+    this.queryGridActive = false;
+
+    /**
      * @type {boolean}
      */
     this.dataPanelActive = true;
