@@ -140,13 +140,14 @@ export default class LegendMapFishPrintV3 {
       /** @type {import('ngeo/print/mapfish-print-v3').MapFishPrintLegendClass[]} */
       const groupClasses = [];
       /** @type {import('ngeo/print/mapfish-print-v3').MapFishPrintLegendClass} */
-      const legendGroupItem = {classes: groupClasses};
+      const legendGroupItem = {};
       if (layer.get(LAYER_NODE_NAME_KEY)) {
         legendGroupItem.name = gettextCatalog.getString(layer.get(LAYER_NODE_NAME_KEY));
       }
+      legendGroupItem.classes = groupClasses;
       const sublayers = layer.getLayers();
-      sublayers.forEach((layer) => {
-        const child = this.collectLegendClassesInTree_(layer, currentThemes, scale, dpi, bbox);
+      sublayers.forEach((sublayer) => {
+        const child = this.collectLegendClassesInTree_(sublayer, currentThemes, scale, dpi, bbox);
         this.addClassItemToArray_(groupClasses, child);
       });
       return this.tryToSimplifyLegendGroup_(legendGroupItem);
