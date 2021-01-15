@@ -5,6 +5,14 @@ on:
   push:
 
 jobs:
+  not-failed-backport:
+    runs-on: ubuntu-20.04
+    name: Test that's not a failed backport
+    timeout-minutes: 5
+    steps:
+      - run: 'false'
+        if: "github.event.head_commit.message == '[skip ci] Add instructions to finish the backport.'"
+
   main:
     runs-on: ubuntu-18.04
     name: Continuous integration
@@ -15,6 +23,7 @@ jobs:
       MAIN_BRANCH: 2.4
 
     steps:
+      - run: '! ls BACKPORT_TODO'
       - run: echo "/opt/google/chrome" >> ${GITHUB_PATH}
       - run: chrome --version
 
