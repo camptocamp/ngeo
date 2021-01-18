@@ -173,11 +173,8 @@ Controller.prototype.$onInit = function () {
 
   // Listen to the feature inner properties change and apply them to the form
   const uid = olUtilGetUid(this);
-  this.ngeoEventHelper_.addListenerKey(
-    uid,
-    listen(this.feature, 'propertychange', this.handleFeaturePropertyChange_, this)
-  );
 
+  // Set properties before starting to listen to changes to avoid multi AngularJS apply error.
   this.attributes.forEach((attribute) => {
     if (
       attribute.type === 'boolean' &&
@@ -187,6 +184,11 @@ Controller.prototype.$onInit = function () {
       this.feature.set(attribute.name, false);
     }
   });
+
+  this.ngeoEventHelper_.addListenerKey(
+    uid,
+    listen(this.feature, 'propertychange', this.handleFeaturePropertyChange_, this)
+  );
 };
 
 /**
