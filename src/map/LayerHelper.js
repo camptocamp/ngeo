@@ -66,6 +66,12 @@ export function LayerHelper($q, $http, ngeoTilesPreloadingLimit) {
 }
 
 /**
+ * Layer node name key in layer parameters.
+ * To identify the OpenLayers layer by its name.
+ */
+export const LAYER_NODE_NAME_KEY = 'layerNodeName';
+
+/**
  * @private
  * @hidden
  */
@@ -116,8 +122,8 @@ LayerHelper.prototype.copyProperties = function (layerFrom, layerTo, opt_exclude
  * @param {string=} opt_time time parameter for layer queryable by time/period
  * @param {Object<string, string>=} opt_params WMS parameters.
  * @param {string=} opt_crossOrigin crossOrigin.
- * @param {unknown=} opt_customSourceOptions Some initial options.
- * @param {unknown=} opt_customLayerOptions The layer opacity.
+ * @param {unknown=} opt_customSourceOptions Some layer's source initial options.
+ * @param {unknown=} opt_customLayerOptions Some layer initial options.
  * @return {import("ol/layer/Image.js").default} WMS Layer.
  */
 LayerHelper.prototype.createBasicWMSLayer = function (
@@ -416,7 +422,7 @@ LayerHelper.prototype.getFlatLayers_ = function (layer, array, computedOpacity) 
 };
 
 /**
- * Get a layer that has a `layerName` property equal to a given layer name from
+ * Get a layer that has the LAYER_NODE_NAME_KEY property equal to a given layer name from
  * an array of layers. If one of the layers in the array is a group, then the
  * layers contained in that group are searched as well.
  * @param {string} layerName The name of the layer we're looking for.
@@ -430,7 +436,7 @@ LayerHelper.prototype.getLayerByName = function (layerName, layers) {
     if (layer instanceof olLayerGroup) {
       const sublayers = layer.getLayers().getArray();
       found = this.getLayerByName(layerName, sublayers);
-    } else if (layer.get('layerNodeName') === layerName) {
+    } else if (layer.get(LAYER_NODE_NAME_KEY) === layerName) {
       found = layer;
     }
     return !!found;

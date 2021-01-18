@@ -21,6 +21,7 @@
 
 import 'gmf/sass/vars.scss';
 import './beforeeach.js';
+import './classes/legendmapfishprintv3.spec.js';
 import './controllers/gmfprintcontroller.spec.js';
 import './controllers/calculateCssVars.spec.js';
 import './services/share.spec.js';

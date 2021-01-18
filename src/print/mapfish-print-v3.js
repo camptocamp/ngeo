@@ -265,8 +265,10 @@
 
 /**
  * @typedef {Object} MapFishPrintLegendClass
- * @property {string} name
- * @property {string[]} icons
+ * @property {string} [name]
+ * @property {string[]} [icons]
+ * @property {number} [dpi]
+ * @property {MapFishPrintLegendClass[]} [classes]
  */
 
 /**
