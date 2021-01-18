@@ -28,21 +28,20 @@ import olLayerLayer from 'ol/layer/Layer.js';
 import olSourceImageWMS from 'ol/source/ImageWMS.js';
 import olSourceTileImage from 'ol/source/TileImage.js';
 import {LAYER_NODE_NAME_KEY} from 'ngeo/map/LayerHelper.js';
+import ngeoDatasourceWMSGroup from 'ngeo/datasource/WMSGroup.js';
 import LegendMapFishPrintV3 from 'gmf/print/LegendMapFishPrintV3.js';
 import {DATALAYERGROUP_NAME} from 'gmf/index.js';
+import gmfExternalDatasourceOGC from 'gmf/datasource/ExternalOGC.js';
 
 describe('gmf.print.LegendMapFishPrintV3', () => {
-  /*
-   * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
-   * @param {import("ngeo/map/LayerHelper.js").LayerHelper} ngeoLayerHelper The ngeo Layer Helper service.
-   * @param {import("gmf/datasource/ExternalDataSourcesManager.js").ExternalDatSourcesManager} gmfExternalDataSourcesManager The manager of external datasources.
-   * @param {import('gmf/options.js').OptionsLegendType} legendOptions The options for the legend.
-   * @param {import("ol/Map.js").default} map the map to extract the legend from.
-   */
-  //constructor(gettextCatalog, ngeoLayerHelper, gmfExternalDataSourcesManager, legendOptions, map) {
-
   /** @type {import('gmf/print/LegendMapFishPrintV3.js').default} */
-  let legendMapFishPrintV3 = null;
+  let legendMapFishPrintV3;
+  /** @type {angular.auto.IInjectorService} */
+  let injector;
+  /** @type {import('ngeo/map/LayerHelper.js').LayerHelper} */
+  let ngeoLayerHelper;
+  /** @type {import('gmf/datasource/ExternalDataSourcesManager.js').ExternalDatSourcesManager} */
+  let gmfExternalDataSourcesManager;
 
   const layerTile = new olLayerTile({
     source: new olSourceTileImage({
@@ -103,12 +102,15 @@ describe('gmf.print.LegendMapFishPrintV3', () => {
   };
 
   beforeEach(() => {
+    // Reset map layers
+    mapLayerGroup.setLayers(new olCollection());
+
     angular.mock.inject(($injector) => {
-      const gettextCatalog = $injector.get('gettextCatalog');
-      const ngeoLayerHelper = $injector.get('ngeoLayerHelper');
-      const gmfExternalDataSourcesManager = $injector.get('gmfExternalDataSourcesManager');
+      injector = $injector;
+      ngeoLayerHelper = $injector.get('ngeoLayerHelper');
+      gmfExternalDataSourcesManager = $injector.get('gmfExternalDataSourcesManager');
       legendMapFishPrintV3 = new LegendMapFishPrintV3(
-        gettextCatalog,
+        $injector.get('gettextCatalog'),
         ngeoLayerHelper,
         gmfExternalDataSourcesManager,
         legendOptions,
@@ -180,6 +182,86 @@ describe('gmf.print.LegendMapFishPrintV3', () => {
         {
           'name': 'layerTile',
           'icons': ['http://tile.com/icon'],
+        },
+      ],
+    });
+  });
+
+  it('Should make legend for an external datasource', () => {
+    const dsOptions = {
+      'id': 1,
+      'name': 'External layer',
+      'ogcImageType': 'image/png',
+      'wmsLayers': [
+        {
+          'name': 'ch.test.externallayer',
+          'queryable': true,
+        },
+      ],
+      'ogcType': 'WMS',
+      'visible': true,
+      'wmsUrl': 'https://external.test.ch/?',
+      'wmsInfoFormat': 'application/vnd.ogc.gml',
+    };
+    const dsLegend1 = {
+      'title': 'External layer legend 1',
+      'url': 'https://external.1.test.legend.ch',
+      'name': 'ch.test.1.legend.externallayer',
+    };
+    const dsLegend2 = {
+      'title': 'External layer legend 2',
+      'url': 'https://external.2.test.legend.ch',
+      'name': 'ch.test.2.legend.externallayer',
+    };
+    const dataSource1 = new gmfExternalDatasourceOGC(dsOptions, dsLegend1);
+    const dataSource2 = new gmfExternalDatasourceOGC(dsOptions, dsLegend2);
+    const wmsGroup1 = new ngeoDatasourceWMSGroup(
+      {
+        injector,
+        dataSources: [dataSource1, dataSource1],
+        // Same group name than the layer but two elements: it will be not simplified.
+        title: 'External layer legend 1',
+        url: 'https://external.1.test.ch/?',
+      },
+      ngeoLayerHelper
+    );
+    const wmsGroup2 = new ngeoDatasourceWMSGroup(
+      {
+        injector,
+        dataSources: [dataSource2],
+        // Same group name than the layer: it will be simplified.
+        title: 'External layer legend 2',
+        url: 'https://external.2.test.ch/?',
+      },
+      ngeoLayerHelper
+    );
+    gmfExternalDataSourcesManager.wmsGroupsCollection.push(wmsGroup1);
+    gmfExternalDataSourcesManager.wmsGroupsCollection.push(wmsGroup2);
+    const legend = legendMapFishPrintV3.getLegend([], 25000, 254, [0, 0]);
+    expect(legend).toEqual({
+      'classes': [
+        {
+          'name': 'External layer legend 1',
+          'classes': [
+            {
+              'name': 'External layer legend 1',
+              'icons': [
+                'https://external.1.test.legend.ch?FORMAT=image%2Fpng&TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&LAYER=ch.test.1.legend.externallayer&SCALE=25000',
+              ],
+            },
+            {
+              'name': 'External layer legend 1',
+              'icons': [
+                'https://external.1.test.legend.ch?FORMAT=image%2Fpng&TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&LAYER=ch.test.1.legend.externallayer&SCALE=25000',
+              ],
+            },
+          ],
+        },
+        {
+          'name': 'External layer legend 2',
+          'icons': [
+            'https://external.2.test.legend.ch?FORMAT=image%2Fpng&TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&LAYER=ch.test.2.legend.externallayer&SCALE=25000',
+          ],
         },
       ],
     });

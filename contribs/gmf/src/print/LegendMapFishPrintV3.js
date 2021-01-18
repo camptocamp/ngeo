@@ -37,7 +37,7 @@ export default class LegendMapFishPrintV3 {
    * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
    * @param {import("ngeo/map/LayerHelper.js").LayerHelper} ngeoLayerHelper The ngeo Layer Helper service.
    * @param {import("gmf/datasource/ExternalDataSourcesManager.js").ExternalDatSourcesManager} gmfExternalDataSourcesManager The manager of external datasources.
-   * @param {import('gmf/options.js').OptionsLegendType} legendOptions The options for the legend.
+   * @param {import("gmf/options.js").OptionsLegendType} legendOptions The options for the legend.
    * @param {import("ol/Map.js").default} map the map to extract the legend from.
    */
   constructor(gettextCatalog, ngeoLayerHelper, gmfExternalDataSourcesManager, legendOptions, map) {
@@ -183,15 +183,25 @@ export default class LegendMapFishPrintV3 {
     const wmsGroups = this.gmfExternalDataSourcesManager_.wmsGroups;
 
     /** @type {import('ngeo/print/mapfish-print-v3').MapFishPrintLegendClass[]} */
-    const classes = [];
+    const topClasses = [];
 
     wmsGroups.forEach((group) => {
+      /** @type {import('ngeo/print/mapfish-print-v3').MapFishPrintLegendClass[]} */
+      const groupClasses = [];
+      /** @type {import('ngeo/print/mapfish-print-v3').MapFishPrintLegendClass} */
+      const legendGroupItem = {
+        name: group.title,
+        classes: groupClasses,
+      };
+
       group.dataSourcesCollection.forEach((dataSource) => {
-        this.addClassItemToArray_(classes, this.getLegendItemFromExternalDatasource_(dataSource, scale));
+        this.addClassItemToArray_(groupClasses, this.getLegendItemFromExternalDatasource_(dataSource, scale));
       });
+
+      this.addClassItemToArray_(topClasses, this.tryToSimplifyLegendGroup_(legendGroupItem));
     });
 
-    return classes;
+    return topClasses;
   }
 
   /**
