@@ -79,7 +79,7 @@
     "babel-loader": "8.2.2",
     "babel-plugin-angularjs-annotate": "0.10.0",
     "bootstrap": "4.5.3",
-    "chokidar": "3.5.0",
+    "chokidar": "3.5.1",
     "co": "4.6.0",
     "commander": "7.0.0",
     "console-control-strings": "1.1.0",
