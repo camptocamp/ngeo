@@ -38,7 +38,13 @@ function factory() {
     const fileType = opt_fileType !== undefined && !isSafari() ?
       opt_fileType : 'text/plain;charset=utf-8';
 
-    const blob = new Blob([content], {type: fileType});
+    const blob = new Blob(
+      [
+        new Uint8Array([0xef, 0xbb, 0xbf]), // UTF-8 BOM
+        content,
+      ],
+      {type: fileType}
+    );
     saveAs(blob, fileName);
   }
 
