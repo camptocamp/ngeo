@@ -195,6 +195,13 @@ i, cite, em, var, address, dfn {
   font-size: 2rem;
   margin: 20px 45%;
 }
+
+// Avoid dropdown menus expanding out of viewport
+.dropdown-menu {
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
 /** Make some Bootstrap values configurable */
 body {
   a, .btn-link {
