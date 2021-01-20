@@ -615,14 +615,19 @@ export function AbstractAppController($scope, $injector, mobile) {
 
   if ($injector.has('sentryOptions')) {
     const options = $injector.get('sentryOptions');
-    const tags = options.tags || [];
-    delete options.tags;
-    Object.assign(options, {
-      beforeBreadcrumb: augmentBreadcrumb,
-    });
-    Sentry.init(options);
-    for (const tag in tags) {
-      Sentry.setTag(tag, tags[tag]);
+    if (options.dsn) {
+      const tags = options.tags || [];
+      delete options.tags;
+      Object.assign(options, {
+        beforeBreadcrumb: augmentBreadcrumb,
+      });
+      Sentry.init(options);
+      if ($injector.has('interface') && !tags['interface']) {
+        Sentry.setTag('interface', $injector.get('interface'));
+      }
+      for (const tag in tags) {
+        Sentry.setTag(tag, tags[tag]);
+      }
     }
   }
 }
