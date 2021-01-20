@@ -1099,6 +1099,16 @@ export function getFilteredFeatureValues(feature) {
   delete properties.boundedBy;
   delete properties[feature.getGeometryName()];
   delete properties.ngeo_feature_type_;
+  for (const key in properties) {
+    const value = properties[key];
+    if (typeof value == 'object') {
+      if (value['xsi:nil'] == 'true') {
+        properties[key] = undefined;
+      } else if (value['_content_']) {
+        properties[key] = value['_content_'];
+      }
+    }
+  }
   return properties;
 }
 
