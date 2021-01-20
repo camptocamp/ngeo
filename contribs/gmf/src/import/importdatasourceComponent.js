@@ -36,14 +36,14 @@ import {guessServiceTypeByUrl, Type} from 'ngeo/datasource/OGC.js';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfImportdatasource', [
+const myModule = angular.module('gmfImportdatasource', [
   gmfDatasourceExternalDataSourcesManager.name,
   gmfImportWmsCapabilityLayertreeComponent.name,
   gmfImportWmtsCapabilityLayertreeComponent.name,
   ngeoQueryQuerent.name,
 ]);
 
-module.run(
+myModule.run(
   /**
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
@@ -54,7 +54,7 @@ module.run(
   }
 );
 
-module.value(
+myModule.value(
   'gmfImportdatasourceTemplateUrl',
   /**
    * @param {angular.IAttributes} $attrs Attributes.
@@ -506,7 +506,7 @@ export class Controller {
   }
 }
 
-module.component('gmfImportdatasource', {
+myModule.component('gmfImportdatasource', {
   bindings: {
     'map': '<',
   },
@@ -514,4 +514,4 @@ module.component('gmfImportdatasource', {
   templateUrl: gmfImportdatasourceTemplateUrl,
 });
 
-export default module;
+export default myModule;

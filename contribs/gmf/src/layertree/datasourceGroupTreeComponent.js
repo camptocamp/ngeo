@@ -28,12 +28,12 @@ import {getUid as olUtilGetUid} from 'ol/util.js';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfLayertreeDatasourceGroupTreeComponent', [
+const myModule = angular.module('gmfLayertreeDatasourceGroupTreeComponent', [
   ngeoDatasourceDataSources.name,
   ngeoMapLayerHelper.name,
 ]);
 
-module.run(
+myModule.run(
   /**
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
@@ -47,7 +47,7 @@ module.run(
   }
 );
 
-module.value(
+myModule.value(
   'gmfLayertreeDatasourceGroupTreeTemplateUrl',
   /**
    * @param {angular.IAttributes} $attrs Attributes.
@@ -208,7 +208,7 @@ export class Controller {
   }
 }
 
-module.component('gmfDatasourcegrouptree', {
+myModule.component('gmfDatasourcegrouptree', {
   bindings: {
     'group': '<',
     'getScale': '&',
@@ -217,4 +217,4 @@ module.component('gmfDatasourcegrouptree', {
   templateUrl: gmfLayertreeDatasourceGroupTreeTemplateUrl,
 });
 
-export default module;
+export default myModule;

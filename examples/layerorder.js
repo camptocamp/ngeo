@@ -36,7 +36,7 @@ import olSourceWMS from 'ol/source/ImageWMS.js';
 import {MAPSERVER_PROXY} from './url.js';
 
 /** @type {angular.IModule} **/
-const module = angular.module('app', ['gettext', ngeoMapModule.name, ngeoMiscSortableComponent.name]);
+const myModule = angular.module('app', ['gettext', ngeoMapModule.name, ngeoMiscSortableComponent.name]);
 
 /**
  * @param {angular.IScope} $scope Scope.
@@ -162,6 +162,6 @@ MainController.prototype.toggleRoadsLayer = function (val) {
   }
 };
 
-module.controller('MainController', MainController);
+myModule.controller('MainController', MainController);
 
-export default module;
+export default myModule;

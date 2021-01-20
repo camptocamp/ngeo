@@ -245,11 +245,11 @@ export class DrawController {
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoDrawfeatureController', [
+const myModule = angular.module('ngeoDrawfeatureController', [
   ngeoDrawFeatures.name,
   ngeoMiscBtnComponent.name,
   ngeoMiscFeatureHelper.name,
 ]);
-module.controller('ngeoDrawfeatureController', DrawController);
+myModule.controller('ngeoDrawfeatureController', DrawController);
 
-export default module;
+export default myModule;

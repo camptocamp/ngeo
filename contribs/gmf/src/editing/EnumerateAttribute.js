@@ -77,7 +77,7 @@ export class EditingEnumerateAttributeService {
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfEnumerateAttribute', []);
-module.service('gmfEnumerateAttribute', EditingEnumerateAttributeService);
+const myModule = angular.module('gmfEnumerateAttribute', []);
+myModule.service('gmfEnumerateAttribute', EditingEnumerateAttributeService);
 
-export default module;
+export default myModule;

@@ -24,10 +24,10 @@
 import angular from 'angular';
 import ngeoMainmodule from 'ngeo/mainmodule.js';
 
-const module = angular.module('app', []);
+const myModule = angular.module('app', []);
 
 beforeEach(() => {
-  module.requires.push(ngeoMainmodule.name);
+  myModule.requires.push(ngeoMainmodule.name);
 });
 
 beforeEach(
@@ -85,4 +85,4 @@ beforeEach(() => {
   });
 });
 
-export default module;
+export default myModule;

@@ -36,7 +36,7 @@ import olSourceVector from 'ol/source/Vector.js';
 import SimpleGeometry from 'ol/geom/SimpleGeometry.js';
 
 /** @type {angular.IModule} **/
-const module = angular.module('app', ['gettext', ngeoMapModule.name, ngeoSearchModule.name]);
+const myModule = angular.module('app', ['gettext', ngeoMapModule.name, ngeoSearchModule.name]);
 
 /**
  * @type {angular.IComponentOptions}
@@ -53,7 +53,7 @@ const searchComponent = {
     'ngeo-search-listeners="$ctrl.listeners">',
 };
 
-module.component('appSearch', searchComponent);
+myModule.component('appSearch', searchComponent);
 
 /**
  * @constructor
@@ -194,7 +194,7 @@ SearchController.prototype.createAndInitBloodhound_ = function (ngeoSearchCreate
   return bloodhound;
 };
 
-module.controller('AppSearchController', SearchController);
+myModule.controller('AppSearchController', SearchController);
 
 /**
  * @constructor
@@ -217,6 +217,6 @@ function MainController() {
   });
 }
 
-module.controller('MainController', MainController);
+myModule.controller('MainController', MainController);
 
-export default module;
+export default myModule;

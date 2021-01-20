@@ -40,12 +40,12 @@ import 'ngeo/sass/font.scss';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoRoutingFeatureComponent', [
+const myModule = angular.module('ngeoRoutingFeatureComponent', [
   ngeoRoutingNominatimService.name,
   ngeoRoutingNominatimInputComponent.name,
 ]);
 
-module.run(
+myModule.run(
   /**
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
@@ -56,7 +56,7 @@ module.run(
   }
 );
 
-module.value(
+myModule.value(
   'ngeoRoutingFeatureTemplateUrl',
   /**
    * @param {angular.IAttributes} $attrs Attributes.
@@ -458,6 +458,6 @@ const routingFeatureComponent = {
   templateUrl: ngeoRoutingFeatureTemplateUrl,
 };
 
-module.component('ngeoRoutingFeature', routingFeatureComponent);
+myModule.component('ngeoRoutingFeature', routingFeatureComponent);
 
-export default module;
+export default myModule;

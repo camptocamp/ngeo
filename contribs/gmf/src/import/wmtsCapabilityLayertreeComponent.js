@@ -31,12 +31,12 @@ import {getUid as olUtilGetUid} from 'ol/util.js';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfWmtscapabilitylayertree', [
+const myModule = angular.module('gmfWmtscapabilitylayertree', [
   gmfDatasourceExternalDataSourcesManager.name,
   ngeoMessagePopup.name,
 ]);
 
-module.run(
+myModule.run(
   /**
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
@@ -50,7 +50,7 @@ module.run(
   }
 );
 
-module.value(
+myModule.value(
   'gmfWmtscapabilitylayertreTemplateUrl',
   /**
    * @param {angular.IAttributes} $attrs Attributes.
@@ -137,7 +137,7 @@ export class Controller {
   }
 }
 
-module.component('gmfWmtscapabilitylayertree', {
+myModule.component('gmfWmtscapabilitylayertree', {
   bindings: {
     'capabilities': '<',
     'layers': '<',
@@ -147,4 +147,4 @@ module.component('gmfWmtscapabilitylayertree', {
   templateUrl: gmfWmtscapabilitylayertreTemplateUrl,
 });
 
-export default module;
+export default myModule;

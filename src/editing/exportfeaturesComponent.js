@@ -27,7 +27,7 @@ import {getUid as olUtilGetUid} from 'ol/util.js';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoExportfeatures', [ngeoMiscFeatureHelper.name]);
+const myModule = angular.module('ngeoExportfeatures', [ngeoMiscFeatureHelper.name]);
 
 /**
  * Directive used to export vector features in different types of format.
@@ -63,7 +63,7 @@ function editingExportFeaturesComponent() {
   };
 }
 
-module.directive('ngeoExportfeatures', editingExportFeaturesComponent);
+myModule.directive('ngeoExportfeatures', editingExportFeaturesComponent);
 
 /**
  * @param {JQuery} $element Element.
@@ -227,6 +227,6 @@ Controller.prototype.handleDestroy_ = function () {
   }
 };
 
-module.controller('ngeoExportfeaturesController', Controller);
+myModule.controller('ngeoExportfeaturesController', Controller);
 
-export default module;
+export default myModule;

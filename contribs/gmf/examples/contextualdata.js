@@ -36,14 +36,14 @@ import options from './options.js';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfapp', [
+const myModule = angular.module('gmfapp', [
   'gettext',
   gmfContextualdataModule.name,
   gmfMapComponent.name,
   ngeoMiscFilters.name,
 ]);
 
-module.value('gmfContextualdatacontentTemplateUrl', 'partials/contextualdata.html');
+myModule.value('gmfContextualdatacontentTemplateUrl', 'partials/contextualdata.html');
 
 /**
  * @constructor
@@ -81,7 +81,7 @@ MainController.prototype.onRasterData = function (coordinate, data) {
   };
 };
 
-module.controller('MainController', MainController);
-options(module);
+myModule.controller('MainController', MainController);
+options(myModule);
 
 export default MainController;

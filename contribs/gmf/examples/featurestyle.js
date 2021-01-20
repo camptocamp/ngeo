@@ -47,7 +47,7 @@ import options from './options.js';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfapp', [
+const myModule = angular.module('gmfapp', [
   'gettext',
   gmfDrawingFeatureStyleComponent.name,
   gmfMapComponent.name,
@@ -234,7 +234,7 @@ MainController.prototype.handleMapSingleClick_ = function (evt) {
   this.scope_.$apply();
 };
 
-module.controller('MainController', MainController);
-options(module);
+myModule.controller('MainController', MainController);
+options(myModule);
 
-export default module;
+export default myModule;

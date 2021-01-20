@@ -86,11 +86,11 @@ import ngeoMyRequiredService from 'ngeo/myrequired/service.js'
 /**
  * @type {!angular.IModule}
  */
-const module = angular.module('ngeoExampleService', [
+const myModule = angular.module('ngeoExampleService', [
   ngeoMyRequiredService.name
 ]);
-module.service('ngeoExampleService', exports);
-export default module;
+myModule.service('ngeoExampleService', exports);
+export default myModule;
 ```
 
 You can see that we stock the module in a `module` variable on the class. For Component, we prefers to stock

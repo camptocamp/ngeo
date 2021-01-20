@@ -35,9 +35,9 @@ import olSourceImageWMS from 'ol/source/ImageWMS.js';
 import ngeoMapModule from 'ngeo/map/module.js';
 
 /** @type {angular.IModule} **/
-const module = angular.module('app', ['gettext', ngeoMapModule.name]);
+const myModule = angular.module('app', ['gettext', ngeoMapModule.name]);
 
-module.run(
+myModule.run(
   /**
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
@@ -69,7 +69,7 @@ const backgroundlayerComponent = {
   controller: 'AppBackgroundlayerController',
 };
 
-module.component('appBackgroundlayer', backgroundlayerComponent);
+myModule.component('appBackgroundlayer', backgroundlayerComponent);
 
 /**
  * @constructor
@@ -142,7 +142,7 @@ BackgroundlayerController.prototype.getLayer_ = function (layerName) {
   return new olLayerTile({source});
 };
 
-module.controller('AppBackgroundlayerController', BackgroundlayerController);
+myModule.controller('AppBackgroundlayerController', BackgroundlayerController);
 
 /**
  * @constructor
@@ -178,7 +178,7 @@ function MainController($scope) {
   this.map.addLayer(overlay);
 }
 
-module.controller('MainController', MainController);
-module.constant('ngeoTilesPreloadingLimit', 0);
+myModule.controller('MainController', MainController);
+myModule.constant('ngeoTilesPreloadingLimit', 0);
 
-export default module;
+export default myModule;

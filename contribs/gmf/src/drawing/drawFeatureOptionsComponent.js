@@ -42,9 +42,9 @@ import {unlistenByKeys as ngeoEventsUnlistenByKeys} from 'ngeo/events.js';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('GmfDrawFeatureOptionsComponent', []);
+const myModule = angular.module('GmfDrawFeatureOptionsComponent', []);
 
-module.run(
+myModule.run(
   /**
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
@@ -489,7 +489,7 @@ export class DrawFeatureOptionsController {
   }
 }
 
-module.component('gmfDrawfeatureoptions', {
+myModule.component('gmfDrawfeatureoptions', {
   bindings: {
     'map': '<',
     // Note - only one of the below properties should be set at a time
@@ -502,4 +502,4 @@ module.component('gmfDrawfeatureoptions', {
   templateUrl: 'gmf/drawing/drawFeatureOptionsComponent',
 });
 
-export default module;
+export default myModule;

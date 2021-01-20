@@ -79,20 +79,20 @@ class MainController {
 }
 
 /** @type {!angular.IModule} **/
-const module = angular.module('app', [
+const myModule = angular.module('app', [
   'gettext',
   ngeoMapModule.name,
   ngeoOfflineModule.name,
   NgeoOfflineServiceManager.module.name,
 ]);
 
-module.value('ngeoOfflineTestUrl', '../../src/offline/component.html');
+myModule.value('ngeoOfflineTestUrl', '../../src/offline/component.html');
 
 // Define the offline download configuration service
-module.service('ngeoOfflineConfiguration', ngeoOfflineConfiguration);
+myModule.service('ngeoOfflineConfiguration', ngeoOfflineConfiguration);
 
-module.controller('MainController', MainController);
+myModule.controller('MainController', MainController);
 
-module.constant('ngeoTilesPreloadingLimit', 0);
+myModule.constant('ngeoTilesPreloadingLimit', 0);
 
 export default MainController;

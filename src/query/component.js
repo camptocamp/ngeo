@@ -37,7 +37,7 @@ import {Vector as olSourceVector} from 'ol/source.js';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoQuery', [ngeoQueryModeSelector.name, ngeoQueryMapQuerent.name]);
+const myModule = angular.module('ngeoQuery', [ngeoQueryModeSelector.name, ngeoQueryMapQuerent.name]);
 
 /**
  * @hidden
@@ -435,7 +435,7 @@ export class QueryController {
   }
 }
 
-module.component('ngeoQuery', {
+myModule.component('ngeoQuery', {
   bindings: {
     'active': '=',
     'autoclear': '=?',
@@ -444,4 +444,4 @@ module.component('ngeoQuery', {
   controller: QueryController,
 });
 
-export default module;
+export default myModule;

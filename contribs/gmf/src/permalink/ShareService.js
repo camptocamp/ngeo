@@ -136,8 +136,8 @@ export const URL_PATH_MAX_LEN = 2048;
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfShareService', []);
+const myModule = angular.module('gmfShareService', []);
 
-module.service('gmfShareService', PermalinkShareService);
+myModule.service('gmfShareService', PermalinkShareService);
 
-export default module;
+export default myModule;

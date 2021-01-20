@@ -43,7 +43,7 @@ import olStyleFill from 'ol/style/Fill.js';
 import 'angular-sanitize';
 
 /** @type {angular.IModule} **/
-const module = angular.module('app', [
+const myModule = angular.module('app', [
   'gettext',
   ngeoMapModule.name,
   ngeoMiscBtnComponent.name,
@@ -51,7 +51,7 @@ const module = angular.module('app', [
   'ngSanitize',
 ]);
 
-module.run(
+myModule.run(
   /**
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
@@ -78,7 +78,7 @@ const measuretoolsComponent = {
   templateUrl: 'partials/measuretools',
 };
 
-module.component('appMeasuretools', measuretoolsComponent);
+myModule.component('appMeasuretools', measuretoolsComponent);
 
 /**
  * @param {angular.IScope} $scope Angular scope.
@@ -246,7 +246,7 @@ function MeasuretoolsController($scope, $compile, $sce, $filter, gettextCatalog)
   );
 }
 
-module.controller('AppMeasuretoolsController', MeasuretoolsController);
+myModule.controller('AppMeasuretoolsController', MeasuretoolsController);
 
 MeasuretoolsController.prototype.$onInit = function () {
   if (!this.map) {
@@ -290,6 +290,6 @@ function MainController() {
   );
 }
 
-module.controller('MainController', MainController);
+myModule.controller('MainController', MainController);
 
-export default module;
+export default myModule;

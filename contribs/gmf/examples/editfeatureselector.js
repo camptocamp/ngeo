@@ -50,7 +50,7 @@ import options from './options.js';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfapp', [
+const myModule = angular.module('gmfapp', [
   'gettext',
   gmfAuthenticationModule.name,
   gmfEditingEditFeatureSelectorComponent.name,
@@ -166,9 +166,9 @@ function MainController($scope, gmfThemes, gmfTreeManager, gmfUser, ngeoFeatureH
   });
 }
 
-module.controller('MainController', MainController);
+myModule.controller('MainController', MainController);
 
-module.constant('defaultTheme', 'Edit');
-options(module);
+myModule.constant('defaultTheme', 'Edit');
+options(myModule);
 
-export default module;
+export default myModule;

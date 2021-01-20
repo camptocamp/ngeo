@@ -37,7 +37,7 @@ import ngeoMapModule from 'ngeo/map/module.js';
 import ngeoMessagePopup from 'ngeo/message/Popup.js';
 
 /** @type {angular.IModule} **/
-const module = angular.module('app', [
+const myModule = angular.module('app', [
   'gettext',
   ngeoLayertreeModule.name,
   ngeoMapModule.name,
@@ -65,7 +65,7 @@ const layertreeComponent = {
     '</div>',
 };
 
-module.run(
+myModule.run(
   /**
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
@@ -76,7 +76,7 @@ module.run(
   }
 );
 
-module.component('appLayertree', layertreeComponent);
+myModule.component('appLayertree', layertreeComponent);
 
 /**
  * @constructor
@@ -155,7 +155,7 @@ LayertreeController.prototype.onButtonClick = function (node, layer) {
   });
 };
 
-module.controller('AppLayertreeController', LayertreeController);
+myModule.controller('AppLayertreeController', LayertreeController);
 
 /**
  * A function that returns a layer for a node. A cache is used, so always the
@@ -218,7 +218,7 @@ const getLayer = (function () {
   );
 })();
 
-module.value('appGetLayer', getLayer);
+myModule.value('appGetLayer', getLayer);
 
 /**
  * The application's main directive.
@@ -242,6 +242,6 @@ function MainController() {
   });
 }
 
-module.controller('MainController', MainController);
+myModule.controller('MainController', MainController);
 
-export default module;
+export default myModule;

@@ -208,9 +208,9 @@ export function createLocationSearchBloodhound(opt_options) {
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoCreateLocationSearchBloodhound', []);
+const myModule = angular.module('ngeoCreateLocationSearchBloodhound', []);
 
-module.value('ngeoCreateLocationSearchBloodhound', createLocationSearchBloodhound);
+myModule.value('ngeoCreateLocationSearchBloodhound', createLocationSearchBloodhound);
 
 /**
  * Provides a function that creates a Bloodhound engine
@@ -234,4 +234,4 @@ module.value('ngeoCreateLocationSearchBloodhound', createLocationSearchBloodhoun
  */
 export function createLocationSearchBloodhoundFunction() {}
 
-export default module;
+export default myModule;

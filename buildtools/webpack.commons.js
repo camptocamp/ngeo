@@ -22,6 +22,8 @@
 const path = require('path');
 const webpack = require('webpack');
 const SassPlugin = require('./webpack.plugin.js');
+const EventHooksPlugin = require('event-hooks-webpack-plugin');
+const {PromiseTask} = require('event-hooks-webpack-plugin/lib/tasks');
 
 const devMode = process.env.NODE_ENV !== 'production';
 
@@ -118,8 +120,15 @@ module.exports = function (config) {
     };
   }
 
+  const files = {};
   const ngeoRule = {
-    test: /\/ngeo\/(?!node_modules\/).*\.js$/,
+    // Collect every .js file in ngeo/src/, ngeo/api/ and ngeo/contrib/.
+    test: (file) => {
+      const result = /\/(ngeo)\/(src|api|contribs)\/.*\.js$/.test(file);
+      files[file] = files[file] || {};
+      files[file]['ngeo'] = result;
+      return result;
+    },
     use: {
       loader: 'babel-loader',
       options: {
@@ -131,7 +140,19 @@ module.exports = function (config) {
     },
   };
   const otherRule = {
-    test: /\/node_modules\/(?!ngeo\/|angular\/).*\.js$/,
+    // Collect every .js file in the node_modules folder except ones that the folder's name
+    // starts with "angular" or "mapillary".
+    test: (file) => {
+      const js = file.endsWith('.js');
+      const nodeModules = file.includes('/node_modules/');
+      const ngeo = file.includes('/node_modules/ngeo');
+      const angular = file.includes('/node_modules/angular/');
+      const mapillary = file.includes('/node_modules/mapillary-js/');
+      const result = js && nodeModules && !ngeo && !angular && !mapillary;
+      files[file] = files[file] || {};
+      files[file]['other'] = result;
+      return result;
+    },
     use: {
       loader: 'babel-loader',
       options: {
@@ -146,12 +167,13 @@ module.exports = function (config) {
       },
     },
   };
+
   const plugins = [
     providePlugin,
     new SassPlugin({
       filename: devMode ? '[name].css' : '[name].[hash:6].css',
       assetname: '[name].[hash:6].[ext]',
-      //tempfile: '/tmp/t.scss',
+      // tempfile: '/tmp/t.scss',
       blacklistedChunks: ['commons'],
       filesOrder: (chunk, chunksFiles) => {
         const files = chunksFiles.commons
@@ -197,6 +219,17 @@ module.exports = function (config) {
     plugins.push(dllPlugin);
   }
 
+  plugins.push(
+    new EventHooksPlugin({
+      afterCompile: new PromiseTask(async () => {
+        console.log('Babel compilations rules');
+        for (const file in files) {
+          console.log(file + ': ' + JSON.stringify(files[file]));
+        }
+      }),
+    })
+  );
+
   return {
     context: path.resolve(__dirname, '../'),
     output: {
@@ -220,6 +253,7 @@ module.exports = function (config) {
         olcs: 'ol-cesium/src/olcs',
         'jquery-ui/datepicker': 'jquery-ui/ui/widgets/datepicker', // For angular-ui-date
         proj4: 'proj4/lib',
+        'mapillary-js/src/Mapillary': 'mapillary-js/dist/mapillary.min.js',
         '@geoblocks/proj': '@geoblocks/proj/src',
       },
     },

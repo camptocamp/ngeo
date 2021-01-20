@@ -32,7 +32,7 @@ import {interactionDecoration} from 'ngeo/misc/decorate.js';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfDrawProfileLine', [ngeoMapFeatureOverlayMgr.name]);
+const myModule = angular.module('gmfDrawProfileLine', [ngeoMapFeatureOverlayMgr.name]);
 
 /**
  * Simple directive that can be put on any element. The directive listen on
@@ -72,7 +72,7 @@ function profileDarwLineComponent() {
   };
 }
 
-module.directive('gmfDrawprofileline', profileDarwLineComponent);
+myModule.directive('gmfDrawprofileline', profileDarwLineComponent);
 
 /**
  * @param {angular.IScope} $scope Scope.
@@ -205,6 +205,6 @@ Controller.prototype.clear_ = function () {
   this.line = null;
 };
 
-module.controller('GmfDrawprofilelineController', Controller);
+myModule.controller('GmfDrawprofilelineController', Controller);
 
-export default module;
+export default myModule;

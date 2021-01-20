@@ -45,7 +45,7 @@ import olSourceImageWMS from 'ol/source/ImageWMS.js';
 import olSourceOSM from 'ol/source/OSM.js';
 
 /** @type {angular.IModule} **/
-const module = angular.module('app', [
+const myModule = angular.module('app', [
   'gettext',
   ngeoDatasourceDataSources.name,
   ngeoMapModule.name,
@@ -56,7 +56,7 @@ const module = angular.module('app', [
   ngeoQueryModule.name,
 ]);
 
-module.run(
+myModule.run(
   /**
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
@@ -67,7 +67,7 @@ module.run(
   }
 );
 
-module.value('ngeoQueryOptions', {
+myModule.value('ngeoQueryOptions', {
   'cursorHover': true,
   'limit': 20,
 });
@@ -82,7 +82,7 @@ const queryresultComponent = {
   templateUrl: 'partials/queryresult',
 };
 
-module.component('appQueryresult', queryresultComponent);
+myModule.component('appQueryresult', queryresultComponent);
 
 /**
  * @param {import('ngeo/query/MapQuerent.js').QueryResult} ngeoQueryResult The ngeo query service.
@@ -96,7 +96,7 @@ function QueryresultController(ngeoQueryResult) {
   this.result = ngeoQueryResult;
 }
 
-module.controller('AppQueryresultController', QueryresultController);
+myModule.controller('AppQueryresultController', QueryresultController);
 
 /**
  * @param {import("ngeo/datasource/DataSources.js").DataSource} ngeoDataSources Ngeo data sources service.
@@ -230,10 +230,10 @@ MainController.prototype.getSetQueryActive = function (val) {
   }
 };
 
-module.controller('MainController', MainController);
-module.constant('ngeoMeasurePrecision', 0);
-module.constant('ngeoMeasureDecimals', 0);
-module.constant('ngeoMeasureSpherical', false);
-module.constant('ngeoPointfilter', null);
+myModule.controller('MainController', MainController);
+myModule.constant('ngeoMeasurePrecision', 0);
+myModule.constant('ngeoMeasureDecimals', 0);
+myModule.constant('ngeoMeasureSpherical', false);
+myModule.constant('ngeoPointfilter', null);
 
-export default module;
+export default myModule;

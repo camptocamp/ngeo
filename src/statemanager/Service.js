@@ -193,7 +193,7 @@ export class StatemanagerService {
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoStateManager', [ngeoStatemanagerLocation.name]);
-module.service('ngeoStateManager', StatemanagerService);
+const myModule = angular.module('ngeoStateManager', [ngeoStatemanagerLocation.name]);
+myModule.service('ngeoStateManager', StatemanagerService);
 
-export default module;
+export default myModule;

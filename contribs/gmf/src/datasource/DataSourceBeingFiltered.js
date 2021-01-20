@@ -30,10 +30,10 @@ import angular from 'angular';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfDataSourceBeingFiltered', []);
+const myModule = angular.module('gmfDataSourceBeingFiltered', []);
 // type DataSourceBeingFiltered
-module.value('gmfDataSourceBeingFiltered', {
+myModule.value('gmfDataSourceBeingFiltered', {
   dataSource: null,
 });
 
-export default module;
+export default myModule;

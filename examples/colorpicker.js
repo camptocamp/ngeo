@@ -24,7 +24,7 @@ import angular from 'angular';
 import ngeoMiscColorpickerComponent from 'ngeo/misc/colorpickerComponent.js';
 
 /** @type {angular.IModule} **/
-const module = angular.module('app', ['gettext', ngeoMiscColorpickerComponent.name]);
+const myModule = angular.module('app', ['gettext', ngeoMiscColorpickerComponent.name]);
 
 /**
  * The application-specific color picker component, based on the
@@ -37,7 +37,7 @@ const colorpickerComponent = {
   controller: 'AppColorpickerController',
 };
 
-module.component('appColorpicker', colorpickerComponent);
+myModule.component('appColorpicker', colorpickerComponent);
 
 /**
  * @constructor
@@ -55,7 +55,7 @@ function ColorPickerController() {
   ];
 }
 
-module.controller('AppColorpickerController', ColorPickerController);
+myModule.controller('AppColorpickerController', ColorPickerController);
 
 /**
  * @constructor
@@ -70,6 +70,6 @@ function MainController($scope) {
   this.color = 'red';
 }
 
-module.controller('MainController', MainController);
+myModule.controller('MainController', MainController);
 
-export default module;
+export default myModule;

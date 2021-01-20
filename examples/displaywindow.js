@@ -24,7 +24,7 @@ import angular from 'angular';
 import ngeoMessageDisplaywindowComponent from 'ngeo/message/displaywindowComponent.js';
 
 /** @type {angular.IModule} **/
-const module = angular.module('app', [ngeoMessageDisplaywindowComponent.name]);
+const myModule = angular.module('app', [ngeoMessageDisplaywindowComponent.name]);
 
 /**
  * @param {angular.IScope} $scope Scope.
@@ -100,6 +100,6 @@ function MainController($scope) {
   this.windowScope = $scope;
 }
 
-module.controller('MainController', MainController);
+myModule.controller('MainController', MainController);
 
-export default module;
+export default myModule;

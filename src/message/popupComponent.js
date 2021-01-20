@@ -26,9 +26,9 @@ import 'angular-sanitize';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoPopup', ['ngSanitize']);
+const myModule = angular.module('ngeoPopup', ['ngSanitize']);
 
-module.value(
+myModule.value(
   'ngeoPopupTemplateUrl',
   /**
    * @param {JQuery} element Element.
@@ -41,7 +41,7 @@ module.value(
   }
 );
 
-module.run(
+myModule.run(
   /**
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
@@ -105,6 +105,6 @@ function messagePopopComponent(ngeoPopupTemplateUrl) {
   };
 }
 
-module.directive('ngeoPopup', messagePopopComponent);
+myModule.directive('ngeoPopup', messagePopopComponent);
 
-export default module;
+export default myModule;

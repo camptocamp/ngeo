@@ -267,7 +267,7 @@ export function Factory($compile, $rootScope, $sce, $timeout) {
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoCreatePopup', [ngeoMessagePopupComponent.name]);
-module.factory('ngeoCreatePopup', Factory);
+const myModule = angular.module('ngeoCreatePopup', [ngeoMessagePopupComponent.name]);
+myModule.factory('ngeoCreatePopup', Factory);
 
-export default module;
+export default myModule;

@@ -54,7 +54,7 @@ export const ObjecteditingProcessType = {
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfObjecteditingToolsComponent', [
+const myModule = angular.module('gmfObjecteditingToolsComponent', [
   gmfObjecteditingGetWMSFeatureComponent.name,
   ngeoEditingCreatefeatureComponent.name,
   ngeoEditingCreateregularpolygonfromclickComponent.name,
@@ -62,7 +62,7 @@ const module = angular.module('gmfObjecteditingToolsComponent', [
   ngeoMiscToolActivateMgr.name,
 ]);
 
-module.run(
+myModule.run(
   /**
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
@@ -135,7 +135,7 @@ function objectEditingToolsComponent() {
   };
 }
 
-module.directive('gmfObjecteditingtools', objectEditingToolsComponent);
+myModule.directive('gmfObjecteditingtools', objectEditingToolsComponent);
 
 /**
  * @private
@@ -351,6 +351,6 @@ Controller.prototype.handleToolActiveChange_ = function (process, requiresLayer,
 
 Controller.prototype.handleDestroy_ = function () {};
 
-module.controller('GmfObjecteditingtoolsController', Controller);
+myModule.controller('GmfObjecteditingtoolsController', Controller);
 
-export default module;
+export default myModule;

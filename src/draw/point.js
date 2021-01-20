@@ -28,7 +28,7 @@ import olInteractionDraw from 'ol/interaction/Draw.js';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoDrawpoint', []);
+const myModule = angular.module('ngeoDrawpoint', []);
 
 /**
  * @return {angular.IDirective} The directive specs.
@@ -73,6 +73,6 @@ function drawPointComponent() {
   };
 }
 
-module.directive('ngeoDrawpoint', drawPointComponent);
+myModule.directive('ngeoDrawpoint', drawPointComponent);
 
-export default module;
+export default myModule;

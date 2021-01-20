@@ -99,8 +99,8 @@ class Mode {
 /**
  * @type {!angular.IModule}
  */
-const module = angular.module('ngeoOfflineMode', []);
-module.service('ngeoOfflineMode', Mode);
-Mode.module = module;
+const myModule = angular.module('ngeoOfflineMode', []);
+myModule.service('ngeoOfflineMode', Mode);
+Mode.module = myModule;
 
 export default Mode;

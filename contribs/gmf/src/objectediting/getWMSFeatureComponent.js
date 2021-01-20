@@ -28,7 +28,7 @@ import MapBrowserEvent from 'ol/MapBrowserEvent.js';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfObjecteditingGetWMSFeatureComponent', [gmfObjecteditingQuery.name]);
+const myModule = angular.module('gmfObjecteditingGetWMSFeatureComponent', [gmfObjecteditingQuery.name]);
 
 /**
  * When activated, this directive registers clicks on an OL3 map and use the
@@ -69,7 +69,7 @@ function objectEditingGetWMSFeatureComponent() {
   };
 }
 
-module.directive('gmfObjecteditinggetwmsfeature', objectEditingGetWMSFeatureComponent);
+myModule.directive('gmfObjecteditinggetwmsfeature', objectEditingGetWMSFeatureComponent);
 
 /**
  * @param {angular.IScope} $scope Scope.
@@ -155,6 +155,6 @@ Controller.prototype.handleMapClick_ = function (evt) {
   }
 };
 
-module.controller('gmfObjecteditinggetwmsfeatureController', Controller);
+myModule.controller('gmfObjecteditinggetwmsfeatureController', Controller);
 
-export default module;
+export default myModule;

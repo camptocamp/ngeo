@@ -39,7 +39,7 @@ import olGeomPolygon from 'ol/geom/Polygon.js';
 import ngeoMapModule from 'ngeo/map/module.js';
 
 /** @type {angular.IModule} **/
-const module = angular.module('app', ['gettext', ngeoMapModule.name]);
+const myModule = angular.module('app', ['gettext', ngeoMapModule.name]);
 
 /** @type {angular.IModule} **/
 const appmodule = angular.module('app', ['ngeo']);
@@ -180,4 +180,4 @@ function MainController() {
 
 appmodule.controller('MainController', MainController);
 
-export default module;
+export default myModule;

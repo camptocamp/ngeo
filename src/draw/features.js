@@ -26,8 +26,8 @@ import olCollection from 'ol/Collection.js';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoFeatures', []);
+const myModule = angular.module('ngeoFeatures', []);
 
-module.value('ngeoFeatures', new olCollection());
+myModule.value('ngeoFeatures', new olCollection());
 
-export default module;
+export default myModule;

@@ -25,7 +25,7 @@ import ngeoDownloadModule from 'ngeo/download/module.js';
 import ngeoDrawModule from 'ngeo/draw/module.js';
 import ngeoEditingModule from 'ngeo/editing/module.js';
 import ngeoFilterModule from 'ngeo/filter/module.js';
-import ngeoGooglestreetviewModule from 'ngeo/googlestreetview/module.js';
+import ngeoStreetviewModule from 'ngeo/streetview/module.js';
 import ngeoGridModule from 'ngeo/grid/module.js';
 import ngeoLayertreeModule from 'ngeo/layertree/module.js';
 import ngeoMapModule from 'ngeo/map/module.js';
@@ -45,7 +45,7 @@ export default angular.module('ngeo', [
   ngeoDrawModule.name,
   ngeoEditingModule.name,
   ngeoFilterModule.name,
-  ngeoGooglestreetviewModule.name,
+  ngeoStreetviewModule.name,
   ngeoGridModule.name,
   ngeoLayertreeModule.name,
   ngeoMapModule.name,

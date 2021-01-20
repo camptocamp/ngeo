@@ -30,7 +30,7 @@ import olSourceOSM from 'ol/source/OSM.js';
 import ngeoMapModule from 'ngeo/map/module.js';
 
 /** @type {angular.IModule} **/
-const module = angular.module('app', ['gettext', ngeoMapModule.name, ngeoMiscFilters.name]);
+const myModule = angular.module('app', ['gettext', ngeoMapModule.name, ngeoMiscFilters.name]);
 
 /**
  * @constructor
@@ -55,10 +55,10 @@ function MainController($scope) {
   });
 }
 
-module.controller('MainController', MainController);
-module.constant('ngeoScaleSelectorOptions', {
+myModule.controller('MainController', MainController);
+myModule.constant('ngeoScaleSelectorOptions', {
   values: [600000000, 300000000, 150000000, 70000000, 40000000],
   dropup: true,
 });
 
-export default module;
+export default myModule;

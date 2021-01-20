@@ -77,7 +77,7 @@ import {padNumber} from 'ol/string.js';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoAngularFilters', []);
+const myModule = angular.module('ngeoAngularFilters', []);
 
 /**
  * Format a number as a localized scale.
@@ -114,7 +114,7 @@ export function ScalifyFilter($filter) {
   return filterFn;
 }
 
-module.filter('ngeoScalify', ScalifyFilter);
+myModule.filter('ngeoScalify', ScalifyFilter);
 
 /**
  * A filter used to format a number with a precision, using the locale.
@@ -194,7 +194,7 @@ export function NumberFilter($locale) {
   return result;
 }
 
-module.filter('ngeoNumber', NumberFilter);
+myModule.filter('ngeoNumber', NumberFilter);
 
 /**
  * A filter used to format a number with the prefix and unit
@@ -258,7 +258,7 @@ export function UnitPrefixFilter($filter) {
   return result;
 }
 
-module.filter('ngeoUnitPrefix', UnitPrefixFilter);
+myModule.filter('ngeoUnitPrefix', UnitPrefixFilter);
 
 /**
  * Format a couple of numbers as number coordinates.
@@ -311,7 +311,7 @@ export function NumberCoordinatesFilter($filter) {
   return filterFn;
 }
 
-module.filter('ngeoNumberCoordinates', NumberCoordinatesFilter);
+myModule.filter('ngeoNumberCoordinates', NumberCoordinatesFilter);
 
 /**
  * Format coordinates as DMS coordinates.
@@ -372,7 +372,7 @@ export function DMSCoordinatesFilter() {
   return filterFn;
 }
 
-module.filter('ngeoDMSCoordinates', DMSCoordinatesFilter);
+myModule.filter('ngeoDMSCoordinates', DMSCoordinatesFilter);
 
 /**
  * A filter to mark a value as trusted HTML.
@@ -398,7 +398,7 @@ export function trustHtmlFilter($sce) {
   };
 }
 
-module.filter('ngeoTrustHtml', trustHtmlFilter);
+myModule.filter('ngeoTrustHtml', trustHtmlFilter);
 
 /**
  * A filter to mark a value as trusted HTML, with the addition of
@@ -441,7 +441,7 @@ export function trustHtmlAutoFilter($sce, ngeoStringToHtmlReplacements) {
   };
 }
 
-module.filter('ngeoTrustHtmlAuto', trustHtmlAutoFilter);
+myModule.filter('ngeoTrustHtmlAuto', trustHtmlAutoFilter);
 
 /**
  * A filter used to format a time duration in seconds into a more
@@ -546,7 +546,7 @@ export function DurationFilter(gettextCatalog) {
   return result;
 }
 
-module.filter('ngeoDuration', DurationFilter);
+myModule.filter('ngeoDuration', DurationFilter);
 
 /**
  * A filter used to remove the CDATA prefix and postfix.
@@ -564,6 +564,6 @@ export const removeCDATA = function () {
   };
 };
 
-module.filter('removeCDATA', removeCDATA);
+myModule.filter('removeCDATA', removeCDATA);
 
-export default module;
+export default myModule;

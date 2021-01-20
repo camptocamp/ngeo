@@ -25,7 +25,7 @@ import ngeoGridConfig from 'ngeo/grid/Config.js';
 import ngeoGridModule from 'ngeo/grid/module.js';
 
 /** @type {angular.IModule} **/
-const module = angular.module('app', ['gettext', ngeoGridModule.name]);
+const myModule = angular.module('app', ['gettext', ngeoGridModule.name]);
 
 /**
  * @constructor
@@ -79,7 +79,7 @@ function MainController() {
   this.gridConfig = new ngeoGridConfig(data, columnDefs);
 }
 
-module.controller('MainController', MainController);
-module.constant('ngeoStringToHtmlReplacements', []);
+myModule.controller('MainController', MainController);
+myModule.constant('ngeoStringToHtmlReplacements', []);
 
-export default module;
+export default myModule;

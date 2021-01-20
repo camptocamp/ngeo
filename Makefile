@@ -346,13 +346,20 @@ contribs/dist: .build/build-dll.timestamp
 	npm install
 	mkdir -p $(dir $@)
 
-	cp tsconfig-build.json node_modules/ol/src/tsconfig.json
-	(cd node_modules/ol/src; npx --package typescript@4.0.2 tsc --declaration)
-	find node_modules/ol -name '*.d.ts' -exec sed -i 's#from "ol/src/#from "ol/#g' {} \;
-	find node_modules/ol -name '*.d.ts' -exec sed -i 's#import("ol/src/#import("ol/#g' {} \;
+	[ -e node_modules/ol/gen-ts ] || cp tsconfig-build.json node_modules/ol/src/tsconfig.json
+	[ -e node_modules/ol/gen-ts ] || (cd node_modules/ol/src; npx --package typescript@4.0.2 tsc --declaration)
+	[ -e node_modules/ol/gen-ts ] || find node_modules/ol -name '*.d.ts' -exec sed -i 's#from "ol/src/#from "ol/#g' {} \;
+	[ -e node_modules/ol/gen-ts ] || find node_modules/ol -name '*.d.ts' -exec sed -i 's#import("ol/src/#import("ol/#g' {} \;
+	touch node_modules/ol/gen-ts
 
-	cp tsconfig-build.json node_modules/@geoblocks/proj/src/tsconfig.json
-	(cd node_modules/@geoblocks/proj/src; npx --package typescript@4.0.2 tsc --declaration)
+	[ -e node_modules/@geoblocks/proj/gen-ts ] || cp tsconfig-build.json node_modules/@geoblocks/proj/src/tsconfig.json
+	[ -e node_modules/@geoblocks/proj/gen-ts ] || (cd node_modules/@geoblocks/proj/src; npx --package typescript@4.0.2 tsc --declaration)
+	touch node_modules/@geoblocks/proj/gen-ts
+
+	[ -e node_modules/mapillary-js/gen-ts ] || (cd node_modules/mapillary-js; npm install --ignore-scripts)
+	[ -e node_modules/mapillary-js/gen-ts ] || (cd node_modules/mapillary-js; node_modules/.bin/tsc --declaration)
+	[ -e node_modules/mapillary-js/gen-ts ] || find node_modules/mapillary-js/src -name '*.ts'|grep -v .d.ts| while read f; do rm "$$f"; done
+	touch node_modules/mapillary-js/gen-ts
 
 	touch $@
 

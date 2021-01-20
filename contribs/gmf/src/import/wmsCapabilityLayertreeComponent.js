@@ -33,12 +33,12 @@ import 'bootstrap/js/src/collapse.js';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfWmscapabilitylayertreenode', [
+const myModule = angular.module('gmfWmscapabilitylayertreenode', [
   gmfDatasourceExternalDataSourcesManager.name,
   ngeoMessagePopup.name,
 ]);
 
-module.run(
+myModule.run(
   /**
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
@@ -52,7 +52,7 @@ module.run(
   }
 );
 
-module.value(
+myModule.value(
   'gmfWmscapabilitylayertreenodeTemplateUrl',
   /**
    * @param {angular.IAttributes} $attrs Attributes.
@@ -140,7 +140,7 @@ export class Controller {
   }
 }
 
-module.component('gmfWmscapabilitylayertreenode', {
+myModule.component('gmfWmscapabilitylayertreenode', {
   bindings: {
     'capabilities': '<',
     'layer': '<',
@@ -150,4 +150,4 @@ module.component('gmfWmscapabilitylayertreenode', {
   templateUrl: gmfWmscapabilitylayertreenodeTemplateUrl,
 });
 
-export default module;
+export default myModule;

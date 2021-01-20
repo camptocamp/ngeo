@@ -26,7 +26,7 @@ import olMap from 'ol/Map.js';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoResizemap', []);
+const myModule = angular.module('ngeoResizemap', []);
 
 /**
  * Provides a directive that resizes the map in an animation loop
@@ -100,6 +100,6 @@ function mapResizeComponent($window) {
   };
 }
 
-module.directive('ngeoResizemap', mapResizeComponent);
+myModule.directive('ngeoResizemap', mapResizeComponent);
 
-export default module;
+export default myModule;

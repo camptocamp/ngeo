@@ -33,7 +33,7 @@ import olStyleStyle from 'ol/style/Style.js';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoMeasureazimut', [ngeoDrawController.name, ngeoMiscFilters.name]);
+const myModule = angular.module('ngeoMeasureazimut', [ngeoDrawController.name, ngeoMiscFilters.name]);
 
 /**
  * @param {angular.ICompileService} $compile Angular compile service.
@@ -127,6 +127,6 @@ function measureAzimutComponent(
   };
 }
 
-module.directive('ngeoMeasureazimut', measureAzimutComponent);
+myModule.directive('ngeoMeasureazimut', measureAzimutComponent);
 
-export default module;
+export default myModule;

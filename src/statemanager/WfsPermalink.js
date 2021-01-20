@@ -365,10 +365,10 @@ WfsPermalinkService.prototype.clearResult_ = function () {
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoWfsPermalink', [
+const myModule = angular.module('ngeoWfsPermalink', [
   // FIXME add dependencies
 ]);
 
-module.service('ngeoWfsPermalink', WfsPermalinkService);
+myModule.service('ngeoWfsPermalink', WfsPermalinkService);
 
-export default module;
+export default myModule;

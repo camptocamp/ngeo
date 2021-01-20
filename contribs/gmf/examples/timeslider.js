@@ -32,7 +32,7 @@ import {
 import options from './options.js';
 
 /** @type {angular.IModule} **/
-const module = angular.module('gmfapp', [
+const myModule = angular.module('gmfapp', [
   'gettext',
   gmfLayertreeTimeSliderComponent.name,
   ngeoMiscWMSTime.name,
@@ -103,7 +103,7 @@ function MainController($scope, ngeoWMSTime) {
   };
 }
 
-module.controller('MainController', MainController);
-options(module);
+myModule.controller('MainController', MainController);
+options(myModule);
 
-export default module;
+export default myModule;

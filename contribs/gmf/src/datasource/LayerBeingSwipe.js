@@ -33,10 +33,10 @@ import angular from 'angular';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfLayerBeingSwipe', []);
-module.value('gmfLayerBeingSwipe', {
+const myModule = angular.module('gmfLayerBeingSwipe', []);
+myModule.value('gmfLayerBeingSwipe', {
   layer: null,
   swipeValue: null,
 });
 
-export default module;
+export default myModule;

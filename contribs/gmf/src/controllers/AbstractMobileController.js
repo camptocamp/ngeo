@@ -183,15 +183,15 @@ export class AbstractMobileController extends AbstractAppController {
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('GmfAbstractMobileControllerModule', [
+const myModule = angular.module('GmfAbstractMobileControllerModule', [
   gmfControllersAbstractAppController.name,
   gmfMobileMeasureModule.name,
   gmfMobileNavigationModule.name,
   gmfQueryWindowComponent.name,
 ]);
 
-module.controller('AbstractMobileController', AbstractMobileController);
+myModule.controller('AbstractMobileController', AbstractMobileController);
 
-module.value('isMobile', true);
+myModule.value('isMobile', true);
 
-export default module;
+export default myModule;

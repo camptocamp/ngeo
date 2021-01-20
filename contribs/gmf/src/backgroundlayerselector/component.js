@@ -28,12 +28,12 @@ import {listen, unlistenByKey} from 'ol/events.js';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfBackgroundlayerselector', [
+const myModule = angular.module('gmfBackgroundlayerselector', [
   gmfThemeThemes.name,
   ngeoMapBackgroundLayerMgr.name,
 ]);
 
-module.value(
+myModule.value(
   'gmfBackgroundlayerselectorTemplateUrl',
   /**
    * @param {JQuery} $element Element.
@@ -46,7 +46,7 @@ module.value(
   }
 );
 
-module.run(
+myModule.run(
   /**
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
@@ -105,7 +105,7 @@ const backgroundlayerselectorComponent = {
   templateUrl: gmfBackgroundlayerselectorTemplateUrl,
 };
 
-module.component('gmfBackgroundlayerselector', backgroundlayerselectorComponent);
+myModule.component('gmfBackgroundlayerselector', backgroundlayerselectorComponent);
 
 /**
  * @constructor
@@ -266,6 +266,6 @@ Controller.prototype.handleDestroy_ = function () {
   this.listenerKeys_.length = 0;
 };
 
-module.controller('GmfBackgroundlayerselectorController', Controller);
+myModule.controller('GmfBackgroundlayerselectorController', Controller);
 
-export default module;
+export default myModule;

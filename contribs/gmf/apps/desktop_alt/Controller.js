@@ -36,7 +36,7 @@ import gmfControllersAbstractDesktopController, {
 import appBase from '../appmodule.js';
 import gmfImportModule from 'gmf/import/module.js';
 import gmfFloorModule from 'gmf/floor/module.js';
-import ngeoGooglestreetviewModule from 'ngeo/googlestreetview/module.js';
+import ngeoStreetviewModule from 'ngeo/streetview/module.js';
 import ngeoRoutingModule from 'ngeo/routing/module.js';
 import ngeoStatemanagerWfsPermalink from 'ngeo/statemanager/WfsPermalink.js';
 
@@ -77,16 +77,16 @@ class Controller extends AbstractDesktopController {
 /**
  * @hidden
  */
-const module = angular.module('Appdesktop_alt', [
+const appModule = angular.module('Appdesktop_alt', [
   appBase.name,
   gmfControllersAbstractDesktopController.name,
   gmfImportModule.name,
   gmfFloorModule.name,
   ngeoRoutingModule.name,
-  ngeoGooglestreetviewModule.name,
+  ngeoStreetviewModule.name,
   ngeoStatemanagerWfsPermalink.name,
 ]);
 
-module.controller('AlternativeDesktopController', Controller);
+appModule.controller('AlternativeDesktopController', Controller);
 
-export default module;
+export default appModule;

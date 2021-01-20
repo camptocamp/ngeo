@@ -368,7 +368,7 @@ export function LocationFactory($rootScope, $window) {
  * @hidden
  * FIXME add utils dependencies.
  */
-const module = angular.module('ngeoLocation', []);
-module.factory('ngeoLocation', LocationFactory);
+const myModule = angular.module('ngeoLocation', []);
+myModule.factory('ngeoLocation', LocationFactory);
 
-export default module;
+export default myModule;

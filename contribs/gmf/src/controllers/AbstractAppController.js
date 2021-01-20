@@ -763,7 +763,7 @@ function augmentBreadcrumb(breadcrumb, hint) {
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('GmfAbstractAppControllerModule', [
+const myModule = angular.module('GmfAbstractAppControllerModule', [
   'gettext',
   'tmh.dynamicLocale',
   gmfAuthenticationModule.name,
@@ -785,11 +785,11 @@ const module = angular.module('GmfAbstractAppControllerModule', [
   ngeoGeolocation.name,
 ]);
 
-module.controller('AbstractController', AbstractAppController);
+myModule.controller('AbstractController', AbstractAppController);
 
-module.value('ngeoExportFeatureFormats', [FeatureFormatType.KML, FeatureFormatType.GPX]);
+myModule.value('ngeoExportFeatureFormats', [FeatureFormatType.KML, FeatureFormatType.GPX]);
 
-module.config([
+myModule.config([
   'tmhDynamicLocaleProvider',
   'angularLocaleScript',
   /**
@@ -803,6 +803,6 @@ module.config([
   },
 ]);
 
-bootstrap(module);
+bootstrap(myModule);
 
-export default module;
+export default myModule;

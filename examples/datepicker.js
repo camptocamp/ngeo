@@ -27,7 +27,7 @@ import ngeoMiscTime from 'ngeo/misc/Time.js';
 import {TimePropertyWidgetEnum, TimePropertyModeEnum} from 'ngeo/datasource/OGC.js';
 
 /** @type {angular.IModule} **/
-const module = angular.module('app', ['gettext', ngeoMiscDatepickerComponent.name, ngeoMiscTime.name]);
+const myModule = angular.module('app', ['gettext', ngeoMiscDatepickerComponent.name, ngeoMiscTime.name]);
 
 /**
  * @constructor
@@ -87,6 +87,6 @@ function MainController(ngeoTime) {
   };
 }
 
-module.controller('MainController', MainController);
+myModule.controller('MainController', MainController);
 
-export default module;
+export default myModule;

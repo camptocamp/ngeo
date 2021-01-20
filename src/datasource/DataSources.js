@@ -193,8 +193,8 @@ export class DataSource {
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoDataSources', []);
+const myModule = angular.module('ngeoDataSources', []);
 // DataSources with the DataSources type.
-module.service('ngeoDataSources', DataSource);
+myModule.service('ngeoDataSources', DataSource);
 
-export default module;
+export default myModule;

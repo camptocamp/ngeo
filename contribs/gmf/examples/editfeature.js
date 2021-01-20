@@ -44,7 +44,7 @@ import options, {MAPSERVER_PROXY} from './options.js';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfapp', [
+const myModule = angular.module('gmfapp', [
   'gettext',
   gmfAuthenticationModule.name,
   gmfEditingEditFeature.name,
@@ -257,7 +257,7 @@ MainController.prototype.refreshWMSLayer_ = function () {
   });
 };
 
-module.controller('MainController', MainController);
-options(module);
+myModule.controller('MainController', MainController);
+options(myModule);
 
-export default module;
+export default myModule;

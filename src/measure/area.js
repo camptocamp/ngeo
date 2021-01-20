@@ -30,7 +30,7 @@ import olStyleStyle from 'ol/style/Style.js';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoMeasurearea', [ngeoDrawController.name]);
+const myModule = angular.module('ngeoMeasurearea', [ngeoDrawController.name]);
 
 /**
  * @param {angular.ICompileService} $compile Angular compile service.
@@ -90,6 +90,6 @@ function measureAreaComponent($compile, gettextCatalog, $filter, ngeoMeasurePrec
   };
 }
 
-module.directive('ngeoMeasurearea', measureAreaComponent);
+myModule.directive('ngeoMeasurearea', measureAreaComponent);
 
-export default module;
+export default myModule;

@@ -35,9 +35,9 @@ import 'jquery-ui/ui/i18n/datepicker-it.js';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoDatePicker', [ngeoMiscTime.name, 'ui.date']);
+const myModule = angular.module('ngeoDatePicker', [ngeoMiscTime.name, 'ui.date']);
 
-module.value(
+myModule.value(
   'ngeoDatePickerTemplateUrl',
   /**
    * @param {JQuery} element Element.
@@ -50,7 +50,7 @@ module.value(
   }
 );
 
-module.run(
+myModule.run(
   /**
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
@@ -136,7 +136,7 @@ function datePickerComponent(ngeoDatePickerTemplateUrl, $timeout) {
   };
 }
 
-module.directive('ngeoDatePicker', datePickerComponent);
+myModule.directive('ngeoDatePicker', datePickerComponent);
 
 /**
  * DatePickerController - directive conttroller
@@ -270,6 +270,6 @@ Controller.prototype.init = function () {
   }
 };
 
-module.controller('ngeoDatePickerController', Controller);
+myModule.controller('ngeoDatePickerController', Controller);
 
-export default module;
+export default myModule;

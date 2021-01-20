@@ -1154,7 +1154,7 @@ function handleCombinedQueryResult_(response) {
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoQuerent', [ngeoFilterRuleHelper.name, ngeoMiscWMSTime.name]);
-module.service('ngeoQuerent', Querent);
+const myModule = angular.module('ngeoQuerent', [ngeoFilterRuleHelper.name, ngeoMiscWMSTime.name]);
+myModule.service('ngeoQuerent', Querent);
 
-export default module;
+export default myModule;

@@ -44,14 +44,14 @@ import 'ngeo/sass/font.scss';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoFilter', [
+const myModule = angular.module('ngeoFilter', [
   ngeoFilterRuleHelper.name,
   ngeoFilterRuleComponent.name,
   ngeoMapFeatureOverlay.name,
   ngeoQueryMapQuerent.name,
 ]);
 
-module.run(
+myModule.run(
   /**
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
@@ -62,7 +62,7 @@ module.run(
   }
 );
 
-module.value(
+myModule.value(
   'ngeoFilterTemplateUrl',
   /**
    * @param {angular.IAttributes} $attrs Attributes.
@@ -86,7 +86,7 @@ function ngeoFilterTemplateUrl($attrs, ngeoFilterTemplateUrl) {
   return ngeoFilterTemplateUrl($attrs);
 }
 
-module.component('ngeoFilter', {
+myModule.component('ngeoFilter', {
   bindings: {
     'aRuleIsActive': '=',
     'customRules': '<',
@@ -520,6 +520,6 @@ export class FilterController {
   }
 }
 
-module.controller('ngeoFilterController', FilterController);
+myModule.controller('ngeoFilterController', FilterController);
 
-export default module;
+export default myModule;

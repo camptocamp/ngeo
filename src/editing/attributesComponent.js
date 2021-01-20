@@ -31,12 +31,12 @@ import './editing.css';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoAttributes', [
+const myModule = angular.module('ngeoAttributes', [
   ngeoMiscDatetimepickerComponent.name,
   ngeoMiscEventHelper.name,
 ]);
 
-module.run(
+myModule.run(
   /**
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
@@ -47,7 +47,7 @@ module.run(
   }
 );
 
-module.value(
+myModule.value(
   'ngeoAttributesTemplateUrl',
   /**
    * @param {angular.IAttributes} $attrs Attributes.
@@ -103,7 +103,7 @@ const editingAttributeComponent = {
   templateUrl: ngeoAttributesTemplateUrl,
 };
 
-module.component('ngeoAttributes', editingAttributeComponent);
+myModule.component('ngeoAttributes', editingAttributeComponent);
 
 /**
  * @param {angular.IScope} $scope Angular scope.
@@ -229,6 +229,6 @@ Controller.prototype.handleFeaturePropertyChange_ = function (evt) {
   }
 };
 
-module.controller('ngeoAttributesController', Controller);
+myModule.controller('ngeoAttributesController', Controller);
 
-export default module;
+export default myModule;

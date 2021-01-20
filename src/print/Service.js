@@ -571,8 +571,8 @@ export function createPrintServiceFactory($http, gettextCatalog, ngeoLayerHelper
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoPrint', [ngeoMapLayerHelper.name]);
-module.service('ngeoPrintService', PrintService);
-module.factory('ngeoCreatePrint', createPrintServiceFactory);
+const myModule = angular.module('ngeoPrint', [ngeoMapLayerHelper.name]);
+myModule.service('ngeoPrintService', PrintService);
+myModule.factory('ngeoCreatePrint', createPrintServiceFactory);
 
-export default module;
+export default myModule;

@@ -32,9 +32,9 @@ import {decodeQueryString} from 'ngeo/utils.js';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('app', []);
+const appModule = angular.module('app', []);
 
-module.config([
+appModule.config([
   '$compileProvider',
   /**
    * @param {angular.ICompileProvider} $compileProvider
@@ -47,4 +47,4 @@ module.config([
   },
 ]);
 
-export default module;
+export default appModule;

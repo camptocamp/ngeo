@@ -39,7 +39,7 @@ import options, {SEARCH} from './options.js';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfapp', [
+const myModule = angular.module('gmfapp', [
   'gettext',
   gmfMapComponent.name,
   gmfSearchModule.name,
@@ -101,10 +101,10 @@ function MainController(gmfThemes, ngeoFeatureOverlayMgr, ngeoNotification) {
   };
 }
 
-module.controller('MainController', MainController);
+myModule.controller('MainController', MainController);
 
-module.constant('gmfSearchGroups', []);
-module.constant('gmfSearchOptions', {
+myModule.constant('gmfSearchGroups', []);
+myModule.constant('gmfSearchOptions', {
   colorChooser: true,
   delay: 50,
   placeholder: 'Search for « Laus » for example…',
@@ -135,6 +135,6 @@ module.constant('gmfSearchOptions', {
     },
   ],
 });
-options(module);
+options(myModule);
 
-export default module;
+export default myModule;

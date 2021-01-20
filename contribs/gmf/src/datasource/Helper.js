@@ -144,10 +144,10 @@ export class DatasourceHelper {
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfDataSourcesHelper', [
+const myModule = angular.module('gmfDataSourcesHelper', [
   ngeoDatasourceHelper.name,
   gmfEditingEnumerateAttribute.name,
 ]);
-module.service('gmfDataSourcesHelper', DatasourceHelper);
+myModule.service('gmfDataSourcesHelper', DatasourceHelper);
 
-export default module;
+export default myModule;

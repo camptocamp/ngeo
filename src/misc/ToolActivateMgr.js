@@ -190,7 +190,7 @@ ToolActivateMgr.prototype.activateDefault_ = function (groupName) {
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoToolActivateMgr', []);
-module.service('ngeoToolActivateMgr', ToolActivateMgr);
+const myModule = angular.module('ngeoToolActivateMgr', []);
+myModule.service('ngeoToolActivateMgr', ToolActivateMgr);
 
-export default module;
+export default myModule;

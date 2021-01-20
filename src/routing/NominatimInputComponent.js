@@ -27,12 +27,12 @@ import ngeoRoutingNominatimService from 'ngeo/routing/NominatimService.js';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoRoutingNominatimInputComponent', [
+const myModule = angular.module('ngeoRoutingNominatimInputComponent', [
   ngeoSearchSearchDirective.name,
   ngeoRoutingNominatimService.name,
 ]);
 
-module.run(
+myModule.run(
   /**
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
@@ -43,7 +43,7 @@ module.run(
   }
 );
 
-module.value(
+myModule.value(
   'ngeoRoutingNominatimInputComponentTemplateUrl',
   /**
    * @param {angular.IAttributes} $attrs Attributes.
@@ -183,6 +183,6 @@ const routingNominatimInputComponent = {
   templateUrl: ngeoRoutingNominatimInputComponentTemplateUrl,
 };
 
-module.component('ngeoNominatimInput', routingNominatimInputComponent);
+myModule.component('ngeoNominatimInput', routingNominatimInputComponent);
 
-export default module;
+export default myModule;

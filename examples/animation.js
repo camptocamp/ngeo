@@ -29,7 +29,7 @@ import olSourceOSM from 'ol/source/OSM.js';
 import ngeoMapModule from 'ngeo/map/module.js';
 
 /** @type {angular.IModule} */
-const module = angular.module('app', ['gettext', ngeoMapModule.name]);
+const myModule = angular.module('app', ['gettext', ngeoMapModule.name]);
 
 /**
  * App-specific component wrapping the ngeo map component. The component's
@@ -46,7 +46,7 @@ const mapComponent = {
   template: '<div ngeo-map="$ctrl.map"></div>',
 };
 
-module.component('appMap', mapComponent);
+myModule.component('appMap', mapComponent);
 
 /**
  * The application's main controller.
@@ -88,6 +88,6 @@ function MainController($timeout) {
   }, 0);
 }
 
-module.controller('MainController', MainController);
+myModule.controller('MainController', MainController);
 
-export default module;
+export default myModule;

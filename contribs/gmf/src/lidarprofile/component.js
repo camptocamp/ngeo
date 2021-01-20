@@ -25,9 +25,9 @@ import angular from 'angular';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfLidarprofile', []);
+const myModule = angular.module('gmfLidarprofile', []);
 
-module.value(
+myModule.value(
   'gmfLidarprofileTemplateUrl',
   /**
    * @param {JQuery} $element Element.
@@ -40,7 +40,7 @@ module.value(
   }
 );
 
-module.run(
+myModule.run(
   /**
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
@@ -87,7 +87,7 @@ const lidarprofileComponent = {
   templateUrl: gmfLidarprofileTemplateUrl,
 };
 
-module.component('gmfLidarprofile', lidarprofileComponent);
+myModule.component('gmfLidarprofile', lidarprofileComponent);
 
 /**
  * @hidden
@@ -124,6 +124,6 @@ export class Controller {
   }
 }
 
-module.controller('GmfLidarprofileController', Controller);
+myModule.controller('GmfLidarprofileController', Controller);
 
-export default module;
+export default myModule;

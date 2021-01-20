@@ -35,7 +35,7 @@ import 'jquery-ui-touch-punch';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoSortable', []);
+const myModule = angular.module('ngeoSortable', []);
 
 /**
  * Provides a directive that allows drag-and-dropping DOM items between them.
@@ -189,6 +189,6 @@ function sortableComponent($timeout) {
   };
 }
 
-module.directive('ngeoSortable', sortableComponent);
+myModule.directive('ngeoSortable', sortableComponent);
 
-export default module;
+export default myModule;

@@ -54,8 +54,8 @@ class Controller extends AbstractAPIController {}
 /**
  * @hidden
  */
-const module = angular.module('Appiframe_api', [appBase.name, gmfControllersAbstractAPIController.name]);
+const appModule = angular.module('Appiframe_api', [appBase.name, gmfControllersAbstractAPIController.name]);
 
-module.controller('IframeAPIController', Controller);
+appModule.controller('IframeAPIController', Controller);
 
-export default module;
+export default appModule;

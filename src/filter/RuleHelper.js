@@ -728,7 +728,7 @@ export class RuleHelper {
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoRuleHelper', [ngeoMiscFeatureHelper.name, ngeoMiscWMSTime.name]);
-module.service('ngeoRuleHelper', RuleHelper);
+const myModule = angular.module('ngeoRuleHelper', [ngeoMiscFeatureHelper.name, ngeoMiscWMSTime.name]);
+myModule.service('ngeoRuleHelper', RuleHelper);
 
-export default module;
+export default myModule;

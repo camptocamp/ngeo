@@ -623,7 +623,7 @@ LayerHelper.prototype.getQuerySourceIds = function (layer) {
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoLayerHelper', []);
-module.service('ngeoLayerHelper', LayerHelper);
+const myModule = angular.module('ngeoLayerHelper', []);
+myModule.service('ngeoLayerHelper', LayerHelper);
 
-export default module;
+export default myModule;

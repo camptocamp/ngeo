@@ -37,7 +37,7 @@ import olStyleStyle from 'ol/style/Style.js';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoCreatefeature', [ngeoMiscEventHelper.name, ngeoMiscFilters.name]);
+const myModule = angular.module('ngeoCreatefeature', [ngeoMiscEventHelper.name, ngeoMiscFilters.name]);
 
 /**
  * A directive used to draw vector features of a single geometry type using
@@ -90,7 +90,7 @@ function editingCreateFeatureComponent() {
   };
 }
 
-module.directive('ngeoCreatefeature', editingCreateFeatureComponent);
+myModule.directive('ngeoCreatefeature', editingCreateFeatureComponent);
 
 /**
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
@@ -329,5 +329,5 @@ Controller.prototype.$onDestroy = function () {
   }, 0);
 };
 
-module.controller('ngeoCreatefeatureController', Controller);
-export default module;
+myModule.controller('ngeoCreatefeatureController', Controller);
+export default myModule;

@@ -25,7 +25,7 @@ import angular from 'angular';
 import ngeoMessagePopup from 'ngeo/message/Popup.js';
 
 /** @type {angular.IModule} **/
-const module = angular.module('app', ['gettext', ngeoMessagePopup.name]);
+const myModule = angular.module('app', ['gettext', ngeoMessagePopup.name]);
 
 /**
  * @param {angular.ISCEService} $sce Angular sce service.
@@ -131,6 +131,6 @@ MainController.prototype.openPopupWithUrl = function () {
   });
 };
 
-module.controller('MainController', MainController);
+myModule.controller('MainController', MainController);
 
-export default module;
+export default myModule;

@@ -1628,7 +1628,7 @@ FeatureHelper.prototype.findFeatureIndexByFid = function (features, fid) {
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoFeatureHelper', [ngeoDownloadService.name, ngeoMiscFilters.name]);
-module.service('ngeoFeatureHelper', FeatureHelper);
+const myModule = angular.module('ngeoFeatureHelper', [ngeoDownloadService.name, ngeoMiscFilters.name]);
+myModule.service('ngeoFeatureHelper', FeatureHelper);
 
-export default module;
+export default myModule;

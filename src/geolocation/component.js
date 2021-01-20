@@ -35,7 +35,7 @@ import {buildStyle} from 'ngeo/options.js';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoGeolocation', [
+const myModule = angular.module('ngeoGeolocation', [
   ngeoMapFeatureOverlayMgr.name,
   ngeoMessageNotification.name,
 ]);
@@ -82,7 +82,7 @@ function geolocationComponent() {
   };
 }
 
-module.directive('ngeoGeolocation', geolocationComponent);
+myModule.directive('ngeoGeolocation', geolocationComponent);
 
 /**
  * @constructor
@@ -411,6 +411,6 @@ Controller.prototype.handleRotate_ = function (eventAlpha, currentAlpha) {
   return currentAlpha;
 };
 
-module.controller('ngeoGeolocationController', Controller);
+myModule.controller('ngeoGeolocationController', Controller);
 
-export default module;
+export default myModule;

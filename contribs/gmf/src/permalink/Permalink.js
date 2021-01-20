@@ -1900,7 +1900,7 @@ PermalinkService.prototype.setNodeTime_ = function (treeCtrl) {
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfPermalink', [
+const myModule = angular.module('gmfPermalink', [
   gmfAuthenticationService.name,
   gmfThemeManager.name,
   gmfThemeThemes.name,
@@ -1913,7 +1913,7 @@ const module = angular.module('gmfPermalink', [
   ngeoStatemanagerModule.name,
 ]);
 
-module.service('gmfPermalink', PermalinkService);
+myModule.service('gmfPermalink', PermalinkService);
 
 /** Configure the ngeo state manager */
 (function () {
@@ -1927,4 +1927,4 @@ module.service('gmfPermalink', PermalinkService);
   ngeoStatemanagerService.value('ngeoUsedKeyRegexp', regexp);
 })();
 
-export default module;
+export default myModule;

@@ -1095,7 +1095,7 @@ export class DatasourceManager {
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfDataSourcesManager', [
+const myModule = angular.module('gmfDataSourcesManager', [
   gmfDatasourceWFSAliases.name,
   gmfLayertreeSyncLayertreeMap.name,
   gmfLayertreeTreeManager.name,
@@ -1106,6 +1106,6 @@ const module = angular.module('gmfDataSourcesManager', [
   ngeoMapLayerHelper.name,
   ngeoMiscWMSTime.name,
 ]);
-module.service('gmfDataSourcesManager', DatasourceManager);
+myModule.service('gmfDataSourcesManager', DatasourceManager);
 
-export default module;
+export default myModule;

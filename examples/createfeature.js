@@ -39,7 +39,7 @@ import olSourceVector from 'ol/source/Vector.js';
 import ngeoMapModule from 'ngeo/map/module.js';
 
 /** @type {angular.IModule} **/
-const module = angular.module('app', [
+const myModule = angular.module('app', [
   'gettext',
   ngeoMapModule.name,
   ngeoMiscBtnComponent.name,
@@ -130,6 +130,6 @@ function MainController(ngeoToolActivateMgr) {
   ngeoToolActivateMgr.registerTool('mapTools', dummyToolActivate, true);
 }
 
-module.controller('MainController', MainController);
+myModule.controller('MainController', MainController);
 
-export default module;
+export default myModule;

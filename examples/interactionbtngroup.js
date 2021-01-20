@@ -38,7 +38,7 @@ import olStyleStroke from 'ol/style/Stroke.js';
 import olStyleStyle from 'ol/style/Style.js';
 
 /** @type {angular.IModule} **/
-const module = angular.module('app', ['gettext', ngeoMapModule.name, ngeoMiscBtnComponent.name]);
+const myModule = angular.module('app', ['gettext', ngeoMapModule.name, ngeoMiscBtnComponent.name]);
 
 /**
  * @param {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr Feature overlay
@@ -141,6 +141,6 @@ function MainController(ngeoFeatureOverlayMgr) {
   map.addInteraction(drawLine);
 }
 
-module.controller('MainController', MainController);
+myModule.controller('MainController', MainController);
 
-export default module;
+export default myModule;

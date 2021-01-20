@@ -385,14 +385,14 @@ export class AuthenticationService extends olEventsEventTarget {
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfAuthenticationService', []);
-module.service('gmfAuthenticationService', AuthenticationService);
+const myModule = angular.module('gmfAuthenticationService', []);
+myModule.service('gmfAuthenticationService', AuthenticationService);
 
-module.value('gmfUser', {
+myModule.value('gmfUser', {
   functionalities: null,
   is_password_changed: null,
   roles: null,
   username: null,
 });
 
-export default module;
+export default myModule;

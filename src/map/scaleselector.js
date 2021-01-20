@@ -28,9 +28,9 @@ import 'bootstrap/js/src/dropdown.js';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoScaleselector', []);
+const myModule = angular.module('ngeoScaleselector', []);
 
-module.value(
+myModule.value(
   'ngeoScaleselectorTemplateUrl',
   /**
    * @param {JQuery} element Element.
@@ -43,7 +43,7 @@ module.value(
   }
 );
 
-module.run(
+myModule.run(
   /**
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
@@ -107,7 +107,7 @@ const mapScaleselectorComponent = function (ngeoScaleselectorTemplateUrl) {
   };
 };
 
-module.directive('ngeoScaleselector', mapScaleselectorComponent);
+myModule.directive('ngeoScaleselector', mapScaleselectorComponent);
 
 /**
  * @hidden
@@ -287,6 +287,6 @@ export class ScaleselectorController {
   }
 }
 
-module.controller('NgeoScaleselectorController', ScaleselectorController);
+myModule.controller('NgeoScaleselectorController', ScaleselectorController);
 
-export default module;
+export default myModule;

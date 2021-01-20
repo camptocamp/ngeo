@@ -31,7 +31,7 @@ import ngeoMapModule from 'ngeo/map/module.js';
 import ngeoOlcsManager from 'ngeo/olcs/Manager.js';
 
 /** @type {angular.IModule} **/
-const module = angular.module('app', ['gettext', ngeoMapModule.name, ngeoOlcsOlcsModule.name]);
+const myModule = angular.module('app', ['gettext', ngeoMapModule.name, ngeoOlcsOlcsModule.name]);
 
 /**
  * @constructor
@@ -67,7 +67,7 @@ function MainController($rootScope, ngeoOlcsService) {
   ngeoOlcsService.initialize(this.ol3dm);
 }
 
-module.controller('MainController', MainController);
-module.constant('ngeoUsedKeyRegexp', []);
+myModule.controller('MainController', MainController);
+myModule.constant('ngeoUsedKeyRegexp', []);
 
-export default module;
+export default myModule;

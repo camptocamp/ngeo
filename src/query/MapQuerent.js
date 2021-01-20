@@ -330,19 +330,19 @@ export class MapQuerent {
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoMapQuerent', [
+const myModule = angular.module('ngeoMapQuerent', [
   ngeoDatasourceDataSources.name,
   ngeoDatasourceHelper.name,
   ngeoQueryQuerent.name,
   ngeoMiscFeatureHelper.name,
 ]);
-module.service('ngeoMapQuerent', MapQuerent);
+myModule.service('ngeoMapQuerent', MapQuerent);
 
 /**
  * The `ngeoQueryResult` is the value service where the features of the query
  * result are added.
  */
-module.value(
+myModule.value(
   'ngeoQueryResult',
   /** @type {QueryResult} */ ({
     sources: [],
@@ -351,4 +351,4 @@ module.value(
   })
 );
 
-export default module;
+export default myModule;

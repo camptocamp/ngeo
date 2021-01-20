@@ -114,7 +114,7 @@ export const EditingState = {
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('GmfEditingFeatureComponent', [
+const myModule = angular.module('GmfEditingFeatureComponent', [
   gmfEditingEditFeature.name,
   gmfEditingSnapping.name,
   gmfEditingXSDAttributes.name,
@@ -128,7 +128,7 @@ const module = angular.module('GmfEditingFeatureComponent', [
   ngeoMiscToolActivateMgr.name,
 ]);
 
-module.run(
+myModule.run(
   /**
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
@@ -201,7 +201,7 @@ function editingEditFeatureComponent() {
   };
 }
 
-module.directive('gmfEditfeature', editingEditFeatureComponent);
+myModule.directive('gmfEditfeature', editingEditFeatureComponent);
 
 /**
  * @param {JQuery} $element Element.
@@ -1508,6 +1508,6 @@ Controller.prototype.handleMultiMenuActionMouseOut_ = function () {
   this.hightlightedFeatures_.clear();
 };
 
-module.controller('GmfEditfeatureController', Controller);
+myModule.controller('GmfEditfeatureController', Controller);
 
-export default module;
+export default myModule;

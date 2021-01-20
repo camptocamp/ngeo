@@ -147,8 +147,8 @@ export function FileService($q, $http, gettext) {
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoFile', []);
+const myModule = angular.module('ngeoFile', []);
 
-module.service('ngeoFile', FileService);
+myModule.service('ngeoFile', FileService);
 
-export default module;
+export default myModule;

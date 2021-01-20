@@ -19,79 +19,96 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-/* global google */
-
 import angular from 'angular';
 import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr.js';
 import * as olArray from 'ol/array.js';
 import {listen, unlistenByKey} from 'ol/events.js';
-import * as olProj from 'ol/proj.js';
 import olFeature from 'ol/Feature.js';
 import olGeomPoint from 'ol/geom/Point.js';
 import MapBrowserEvent from 'ol/MapBrowserEvent.js';
+import GoogleStreetviewService from './GoogleStreetviewService.js';
+import MapillaryService from './MapillaryService.js';
 
 /**
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoGooglestreetview', [ngeoMapFeatureOverlayMgr.name]);
+const myModule = angular.module('ngeoStreetview', [ngeoMapFeatureOverlayMgr.name]);
 
-module.value(
-  'ngeoGooglestreetviewTemplateUrl',
+myModule.value(
+  'ngeoStreetviewTemplateUrl',
   /**
    * @param {angular.IAttributes} $attrs Attributes.
    * @return {string} The template url.
    */
   ($attrs) => {
-    const templateUrl = $attrs.ngeoGooglestreetviewTemplateUrl;
-    return templateUrl !== undefined ? templateUrl : 'ngeo/googlestreetview';
+    const templateUrl = $attrs.ngeoStreetviewTemplateUrl;
+    return templateUrl !== undefined ? templateUrl : 'ngeo/streetview';
   }
 );
 
-module.run(
+myModule.run(
   /**
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
   ($templateCache) => {
     // @ts-ignore: webpack
-    $templateCache.put('ngeo/googlestreetview', require('./component.html'));
+    $templateCache.put('ngeo/streetview', require('./component.html'));
   }
 );
 
 /**
  * @param {angular.IAttributes} $attrs Attributes.
- * @param {function(angular.IAttributes): string} ngeoGooglestreetviewTemplateUrl Template function.
+ * @param {function(angular.IAttributes): string} ngeoStreetviewTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
  * @private
  * @hidden
  */
-function ngeoGooglestreetviewTemplateUrl($attrs, ngeoGooglestreetviewTemplateUrl) {
-  return ngeoGooglestreetviewTemplateUrl($attrs);
+function ngeoStreetviewTemplateUrl($attrs, ngeoStreetviewTemplateUrl) {
+  return ngeoStreetviewTemplateUrl($attrs);
 }
 
 /**
+ * This component is used to integrate a streetview tool (googlestreetview or mapillary)
+ * The tool has to be declared in the constant 'ngeoStreetviewOptions'. For mapillary
+ * the key (clientId) is needed as well.
+ *
+ * module.constant('ngeoStreetviewOptions', {
+ *  'viewer': 'google',
+ * });
+ *
+ * module.constant('ngeoStreetviewOptions', {
+ * 'viewer': 'mapillary',
+ * 'key': '<your_key>',
+ * });
+ *
  * Example:
  *
- *             <ngeo-googlestreetview
- *                 active="mainCtrl.googleStreetViewActive"
- *                 feature-style="mainCtrl.googleStreetViewStyle"
- *                 map="mainCtrl.map">
- *             </ngeo-googlestreetview>
+ *             <ngeo-streetview
+ *                 active="mainCtrl.streetViewActive"
+ *                 feature-style="mainCtrl.streetViewStyle"
+ *                 map="mainCtrl.map"
+ *                 panel-width="mainCtrl.toolsPanelWidth">
+ *             </ngeo-streetview>
  */
-export class GoogleStreetviewController {
+class StreetviewController {
   /**
    * @param {JQuery} $element Element.
    * @param {angular.IScope} $scope Scope.
    * @param {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr Ngeo
+   * @param {angular.auto.IInjectorService} $injector Main injector.
+   * @param {angular.ITimeoutService} $timeout
    *    FeatureOverlay manager.
    * @ngInject
    * @ngdoc controller
-   * @ngname NgeoGooglestreetviewController
+   * @ngname NgeoStreetviewController
    */
-  constructor($element, $scope, ngeoFeatureOverlayMgr) {
+  constructor($element, $scope, ngeoFeatureOverlayMgr, $injector, $timeout) {
     // Binding properties
+
+    this.timeout_ = $timeout;
 
     /**
      * @type {boolean}
@@ -105,6 +122,11 @@ export class GoogleStreetviewController {
      * @type {?import("ol/style/Style.js").StyleLike}
      */
     this.featureStyle = null;
+
+    /**
+     * @type {number}
+     */
+    this.panelWidth = null;
 
     /**
      * @type {?import("ol/Map.js").default}
@@ -123,6 +145,18 @@ export class GoogleStreetviewController {
      * @private
      */
     this.scope_ = $scope;
+
+    /**
+     * @type {angular.auto.IInjectorService}
+     * @private
+     */
+    this.injector_ = $injector;
+
+    /**
+     * @type {JQuery}
+     * @private
+     */
+    this.element_ = $element;
 
     // Inner properties
 
@@ -152,31 +186,6 @@ export class GoogleStreetviewController {
     this.location = null;
 
     /**
-     * Flag that determines whether there's data at a given location or not.
-     * @type {boolean}
-     */
-    this.noDataAtLocation = false;
-
-    /**
-     * @type {google.maps.StreetViewPanorama}
-     * @private
-     */
-    this.panorama_ = new google.maps.StreetViewPanorama($element[0], {
-      pov: {
-        heading: 0,
-        pitch: 0,
-      },
-      visible: false,
-      zoom: 1,
-    });
-
-    /**
-     * @type {?google.maps.MapsEventListener}
-     * @private
-     */
-    this.panoramaListener_ = null;
-
-    /**
      * @type {import("ol/geom/Point.js").default}
      * @private
      */
@@ -185,16 +194,31 @@ export class GoogleStreetviewController {
     this.feature_.setGeometry(this.point_);
 
     /**
-     * @type {google.maps.StreetViewService}
+     * @type {import("./Service.js").StreetviewService}
      * @private
      */
-    this.streetViewService_ = new google.maps.StreetViewService();
+    this.streetViewService_ = null;
 
     /**
      * @type {boolean}
      * @private
      */
     this.panoramaPositionChanging_ = false;
+
+    /**
+     * Called when the 'location' property of this component changes.
+     * @param  {?import("ol/coordinate.js").Coordinate} newCoordinates new coordinates in the streetview.
+     * @private
+     */
+    this.handlePanoramaPositionChange_ = (newCoordinates) => {
+      this.panoramaPositionChanging_ = true;
+      this.map.getView().setCenter(newCoordinates);
+      const point = /** @type  {import('ol/geom/Point.js').default} */ (this.feature_.getGeometry());
+      point.setCoordinates(newCoordinates);
+      this.location = newCoordinates;
+      this.scope_.$apply();
+      this.panoramaPositionChanging_ = false;
+    };
   }
 
   /**
@@ -219,32 +243,53 @@ export class GoogleStreetviewController {
       () => {
         const isActive = this.active;
         const hasLocation = this.location !== null;
-        const hasData = this.noDataAtLocation === false;
+        const hasData = this.streetViewService_.noDataAtLocation === false;
         return isActive && hasLocation && hasData;
       },
       (show, oldShow) => {
         if (show === oldShow) {
           return;
         }
-
-        this.panorama_.setVisible(show);
-
-        if (show) {
-          this.panoramaListener_ = google.maps.event.addListener(
-            this.panorama_,
-            'position_changed',
-            this.handlePanoramaPositionChange_.bind(this)
-          );
-        } else if (this.panoramaListener_) {
-          google.maps.event.removeListener(this.panoramaListener_);
-          this.panoramaListener_ = null;
-        }
+        this.streetViewService_.toggleShow(show);
       }
     );
 
     // Other initialization
     if (this.featureStyle) {
       this.feature_.setStyle(this.featureStyle);
+    }
+    /**
+     * @type {string}
+     */
+    this.viewer_ = this.injector_.has('ngeoStreetviewOptions')
+      ? this.injector_.get('ngeoStreetviewOptions').viewer
+      : 'mapillary';
+
+    if (this.viewer_ === 'mapillary') {
+      const clientId = this.injector_.has('ngeoStreetviewOptions')
+        ? this.injector_.get('ngeoStreetviewOptions').key
+        : null;
+      const mapillaryService = new MapillaryService(
+        this.scope_,
+        this.map,
+        this.handlePanoramaPositionChange_,
+        clientId
+      );
+      this.scope_.$watch(
+        () => this.panelWidth,
+        (newVal) => {
+          mapillaryService.resize();
+        }
+      );
+      this.streetViewService_ = mapillaryService;
+    } else {
+      this.streetViewService_ = new GoogleStreetviewService(
+        this.scope_,
+        this.map,
+        this.handlePanoramaPositionChange_,
+        this.radius,
+        this.element_
+      );
     }
   }
 
@@ -288,17 +333,7 @@ export class GoogleStreetviewController {
 
     // (3) Update StreetView location
     if (location && !this.panoramaPositionChanging_) {
-      const lonLat = this.toLonLat_(location);
-      this.streetViewService_.getPanorama(
-        {
-          location: {
-            lat: lonLat[1],
-            lng: lonLat[0],
-          },
-          radius: this.radius,
-        },
-        this.handleStreetViewServiceGetPanorama_.bind(this)
-      );
+      this.streetViewService_.getPanorama(location);
     }
   }
 
@@ -335,86 +370,25 @@ export class GoogleStreetviewController {
 
     if (ready) {
       this.featureOverlay_.addFeature(this.feature_);
+      setTimeout(() => {
+        this.map.updateSize();
+      }, 50);
     } else {
       this.featureOverlay_.removeFeature(this.feature_);
     }
   }
-
-  /**
-   * @param {?google.maps.StreetViewPanoramaData} data Data.
-   * @param {google.maps.StreetViewStatus} status Status.
-   * @private
-   */
-  handleStreetViewServiceGetPanorama_(data, status) {
-    if (!data) {
-      return;
-    }
-    if (!data.location) {
-      throw new Error('Missing data.location');
-    }
-    if (!data.location.latLng) {
-      throw new Error('Missing data.location.latLng');
-    }
-    const panorama = this.panorama_;
-
-    if (status === google.maps.StreetViewStatus.OK) {
-      this.noDataAtLocation = false;
-      panorama.setPosition(data.location.latLng);
-    } else {
-      this.noDataAtLocation = true;
-    }
-
-    this.scope_.$apply();
-  }
-
-  /**
-   * Called when the panorama position changes. Update the location.
-   * @private
-   */
-  handlePanoramaPositionChange_() {
-    this.panoramaPositionChanging_ = true;
-    const position = this.panorama_.getPosition();
-    const lonLat = [position.lng(), position.lat()];
-    const location = this.fromLonLat_(lonLat);
-    this.location = location;
-    this.scope_.$apply();
-    this.panoramaPositionChanging_ = false;
-  }
-
-  // Utility methods
-
-  /**
-   * @param {import("ol/coordinate.js").Coordinate} lonLat LonLat coordinate.
-   * @return {import("ol/coordinate.js").Coordinate} Map view projection coordinate.
-   */
-  fromLonLat_(lonLat) {
-    if (!this.map) {
-      throw new Error('Missing map');
-    }
-    return olProj.fromLonLat(lonLat, this.map.getView().getProjection());
-  }
-
-  /**
-   * @param {import("ol/coordinate.js").Coordinate} coordinate Map view projection coordinate.
-   * @return {import("ol/coordinate.js").Coordinate} LonLat coordinate.
-   */
-  toLonLat_(coordinate) {
-    if (!this.map) {
-      throw new Error('Missing map');
-    }
-    return olProj.toLonLat(coordinate, this.map.getView().getProjection());
-  }
 }
 
-module.component('ngeoGooglestreetview', {
+myModule.component('ngeoStreetview', {
   bindings: {
     'active': '<',
     'featureStyle': '<?',
     'map': '<',
     'radius': '<?',
+    'panelWidth': '<?',
   },
-  controller: GoogleStreetviewController,
-  templateUrl: ngeoGooglestreetviewTemplateUrl,
+  controller: StreetviewController,
+  templateUrl: ngeoStreetviewTemplateUrl,
 });
 
-export default module;
+export default myModule;

@@ -29,7 +29,7 @@ import olSourceOSM, {ATTRIBUTION} from 'ol/source/OSM.js';
 import olView from 'ol/View.js';
 
 /** @type {angular.IModule} **/
-const module = angular.module('app', ['gettext', ngeoMapModule.name, ngeoMapswipeModule.name]);
+const myModule = angular.module('app', ['gettext', ngeoMapModule.name, ngeoMapswipeModule.name]);
 
 /**
  * @constructor
@@ -63,6 +63,6 @@ function MainController() {
   });
 }
 
-module.controller('MainController', MainController);
+myModule.controller('MainController', MainController);
 
-export default module;
+export default myModule;

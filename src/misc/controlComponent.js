@@ -27,7 +27,7 @@ import olControlControl from 'ol/control/Control.js';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoControl', []);
+const myModule = angular.module('ngeoControl', []);
 
 /**
  * Provides a directive that can be used to add a control to the map
@@ -72,6 +72,6 @@ function controlComponent() {
   };
 }
 
-module.directive('ngeoControl', controlComponent);
+myModule.directive('ngeoControl', controlComponent);
 
-export default module;
+export default myModule;

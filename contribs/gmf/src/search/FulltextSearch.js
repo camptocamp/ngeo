@@ -80,7 +80,7 @@ FulltextSearchService.prototype.search = function (query, params) {
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfSearchFulltextSearch', []);
-module.service('gmfSearchFulltextSearch', FulltextSearchService);
+const myModule = angular.module('gmfSearchFulltextSearch', []);
+myModule.service('gmfSearchFulltextSearch', FulltextSearchService);
 
-export default module;
+export default myModule;

@@ -31,7 +31,7 @@ import 'jquery-datetimepicker/jquery.datetimepicker.css';
 import options from './options.js';
 
 /** @type {angular.IModule} **/
-const module = angular.module('gmfapp', [
+const myModule = angular.module('gmfapp', [
   'gettext',
   gmfEditingXSDAttributes.name,
   gmfThemeThemes.name,
@@ -168,7 +168,7 @@ MainController.prototype.getDistinctFlatNodes_ = function (node, nodes) {
   }
 };
 
-module.controller('MainController', MainController);
-options(module);
+myModule.controller('MainController', MainController);
+options(myModule);
 
-export default module;
+export default myModule;

@@ -65,10 +65,10 @@ class Controller extends AbstractDesktopController {
 /**
  * @hidden
  */
-const module = angular.module('Appdesktop', [appBase.name, gmfControllersAbstractDesktopController.name]);
+const appModule = angular.module('Appdesktop', [appBase.name, gmfControllersAbstractDesktopController.name]);
 
-module.value('gmfContextualdatacontentTemplateUrl', 'gmf/contextualdata');
-module.run(
+appModule.value('gmfContextualdatacontentTemplateUrl', 'gmf/contextualdata');
+appModule.run(
   /**
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
@@ -79,6 +79,6 @@ module.run(
   }
 );
 
-module.controller('DesktopController', Controller);
+appModule.controller('DesktopController', Controller);
 
-export default module;
+export default appModule;

@@ -134,6 +134,6 @@ FeatureOverlay.prototype.handleFeatureRemove_ = function (evt) {
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoFeatureOverlay', []);
+const myModule = angular.module('ngeoFeatureOverlay', []);
 
-export default module;
+export default myModule;

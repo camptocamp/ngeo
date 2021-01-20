@@ -82,7 +82,7 @@
               data-toggle="tooltip" data-placement="left" data-original-title="{{'Profile'|translate}}">
               <span class="fa fa-chart-area"></span>
             </button>
-            <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.googleStreetViewActive"
+            <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.streetViewActive"
               data-toggle="tooltip" data-placement="left" data-original-title="{{'Street View'|translate}}">
               <span class="fa fa-street-view"></span>
             </button>
@@ -112,7 +112,7 @@
         </div>
         <div
             class="gmf-app-tools-content container-fluid"
-            ng-class="{'gmf-app-active': mainCtrl.toolsActive,'gmf-app-googlestreetview-active': mainCtrl.googleStreetViewActive, 'gmf-app-inactive' : !mainCtrl.toolsActive}">
+            ng-class="{'gmf-app-active': mainCtrl.toolsActive,'gmf-app-streetview-active': mainCtrl.streetViewActive, 'gmf-app-inactive' : !mainCtrl.toolsActive}">
           <div ng-show="mainCtrl.loginActive" class="row">
             <div class="col-sm-12">
               <div class="gmf-app-tools-content-heading">
@@ -222,17 +222,18 @@
               </div>
             </div>
           </div>
-          <div ng-show="mainCtrl.googleStreetViewActive" class="row">
+          <div ng-show="mainCtrl.streetViewActive" class="row">
             <div class="col-sm-12">
               <div class="gmf-app-tools-content-heading">
                 {{'Street View'|translate}}
-                <a class="btn close" ng-click="mainCtrl.googleStreetViewActive = false">&times;</a>
+                <a class="btn close" ng-click="mainCtrl.streetViewActive = false">&times;</a>
               </div>
-              <ngeo-googlestreetview
-                  active="mainCtrl.googleStreetViewActive"
-                  feature-style="mainCtrl.googleStreetViewStyle"
-                  map="mainCtrl.map">
-              </ngeo-googlestreetview>
+              <ngeo-streetview
+                  active="mainCtrl.streetViewActive"
+                  feature-style="mainCtrl.streetViewStyle"
+                  map="mainCtrl.map"
+                  panel-width="mainCtrl.toolsPanelWidth">
+              </ngeo-streetview>
             </div>
           </div>
           <div ng-show="mainCtrl.queryPanelActive" class="row">

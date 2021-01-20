@@ -534,11 +534,11 @@ export function getLayer(treeCtrl) {
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfSyncLayertreeMap', [
+const myModule = angular.module('gmfSyncLayertreeMap', [
   gmfThemeThemes.name,
   ngeoLayertreeController.name,
   ngeoMiscWMSTime.name,
 ]);
-module.service('gmfSyncLayertreeMap', SyncLayertreeMap);
+myModule.service('gmfSyncLayertreeMap', SyncLayertreeMap);
 
-export default module;
+export default myModule;

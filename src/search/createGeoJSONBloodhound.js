@@ -119,9 +119,9 @@ export function createGeoJSONBloodhound(
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoSearchCreategeojsonbloodhound', []);
+const myModule = angular.module('ngeoSearchCreategeojsonbloodhound', []);
 
-module.value('ngeoSearchCreateGeoJSONBloodhound', createGeoJSONBloodhound);
+myModule.value('ngeoSearchCreateGeoJSONBloodhound', createGeoJSONBloodhound);
 
 /**
  * Provides a function that creates a Bloodhound engine
@@ -158,4 +158,4 @@ module.value('ngeoSearchCreateGeoJSONBloodhound', createGeoJSONBloodhound);
  * @typedef {function(string, (function(import("geojson").Feature): boolean)=, import("ol/proj/Projection.js").default=, import("ol/proj/Projection.js").default=, Bloodhound.Options=, Bloodhound.RemoteOptions=):Bloodhound<GeoJSON.FeatureCollection|Array<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>>}
  */
 
-export default module;
+export default myModule;

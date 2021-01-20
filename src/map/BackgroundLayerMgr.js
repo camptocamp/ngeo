@@ -241,7 +241,7 @@ export class MapBackgroundLayerManager extends olObservable {
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoBackgroundLayerMgr', [ngeoLayerHelper.name]);
-module.service('ngeoBackgroundLayerMgr', MapBackgroundLayerManager);
+const myModule = angular.module('ngeoBackgroundLayerMgr', [ngeoLayerHelper.name]);
+myModule.service('ngeoBackgroundLayerMgr', MapBackgroundLayerManager);
 
-export default module;
+export default myModule;

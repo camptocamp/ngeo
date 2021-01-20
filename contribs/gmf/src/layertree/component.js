@@ -67,7 +67,7 @@ import 'bootstrap/js/src/collapse.js';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfLayertreeComponent', [
+const myModule = angular.module('gmfLayertreeComponent', [
   gmfDatasourceDataSourceBeingFiltered.name,
   gmfDatasourceExternalDataSourcesManager.name,
   gmfPermalinkPermalink.name,
@@ -84,7 +84,7 @@ const module = angular.module('gmfLayertreeComponent', [
 
 // Overrides the path to the layertree template (used by each node, except
 // the root node that path is defined by the gmfLayertreeTemplate value.
-module.value(
+myModule.value(
   'ngeoLayertreeTemplateUrl',
   /**
    * @param {JQuery} element Element.
@@ -94,7 +94,7 @@ module.value(
   (element, attrs) => 'gmf/layertree'
 );
 
-module.run(
+myModule.run(
   /**
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
@@ -105,7 +105,7 @@ module.run(
   }
 );
 
-module.value(
+myModule.value(
   'gmfLayertreeTemplate',
   /**
    * @param {JQuery} $element Element.
@@ -199,7 +199,7 @@ const layertreeComponent = {
   template: gmfLayertreeTemplate,
 };
 
-module.component('gmfLayertree', layertreeComponent);
+myModule.component('gmfLayertree', layertreeComponent);
 
 /**
  * @param {JQuery} $element Element.
@@ -994,6 +994,6 @@ Controller.prototype.getFirstParentWithLayerFunctions = function (treeCtrl) {
   return this.getFirstParentWithLayerFunctions(parentTreeCtrl);
 };
 
-module.controller('GmfLayertreeController', Controller);
+myModule.controller('GmfLayertreeController', Controller);
 
-export default module;
+export default myModule;

@@ -25,7 +25,7 @@ import angular from 'angular';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoBtnComponent', []);
+const myModule = angular.module('ngeoBtnComponent', []);
 
 /**
  * Provides two directives: ngeo-btn-group and ngeo-btn.
@@ -95,7 +95,7 @@ function buttonGroupComponent($parse) {
   };
 }
 
-module.directive('ngeoBtnGroup', buttonGroupComponent);
+myModule.directive('ngeoBtnGroup', buttonGroupComponent);
 
 /**
  * @hidden
@@ -142,7 +142,7 @@ export class BtnGroupController {
   }
 }
 
-module.controller('ngeoBtnGroupController', BtnGroupController);
+myModule.controller('ngeoBtnGroupController', BtnGroupController);
 
 /**
  * The ngeo-btn allows creating toggle buttons working with ng-model. It is
@@ -210,6 +210,6 @@ function buttonComponent($parse) {
   };
 }
 
-module.directive('ngeoBtn', buttonComponent);
+myModule.directive('ngeoBtn', buttonComponent);
 
-export default module;
+export default myModule;

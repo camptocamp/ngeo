@@ -29,9 +29,9 @@ import 'bootstrap/js/src/dropdown.js';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfMapMouseposition', [ngeoMiscFilters.name]);
+const myModule = angular.module('gmfMapMouseposition', [ngeoMiscFilters.name]);
 
-module.run(
+myModule.run(
   /**
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
@@ -42,7 +42,7 @@ module.run(
   }
 );
 
-module.value(
+myModule.value(
   'gmfMapMousepositionTemplateUrl',
   /**
    * @param {angular.IAttributes} $attrs Attributes.
@@ -89,7 +89,7 @@ const mapMousepositionComponent = {
   templateUrl: gmfMapMousepositionTemplateUrl,
 };
 
-module.component('gmfMouseposition', mapMousepositionComponent);
+myModule.component('gmfMouseposition', mapMousepositionComponent);
 
 /**
  * @param {JQuery} $element Element.
@@ -215,6 +215,6 @@ Controller.prototype.setProjection = function (projection) {
   this.projection = projection;
 };
 
-module.controller('gmfMousepositionController', Controller);
+myModule.controller('gmfMousepositionController', Controller);
 
-export default module;
+export default myModule;

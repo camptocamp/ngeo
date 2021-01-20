@@ -75,7 +75,7 @@ import {select as d3select} from 'd3';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoProfile', [ngeoMiscDebounce.name]);
+const myModule = angular.module('ngeoProfile', [ngeoMiscDebounce.name]);
 
 /**
  * Provides a directive used to insert an elevation profile chart
@@ -198,6 +198,6 @@ function profileElevationComponent(ngeoDebounce, ngeoProfileOptions) {
   };
 }
 
-module.directive('ngeoProfile', profileElevationComponent);
+myModule.directive('ngeoProfile', profileElevationComponent);
 
-export default module;
+export default myModule;

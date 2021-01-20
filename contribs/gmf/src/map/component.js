@@ -30,7 +30,7 @@ import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr.js';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfMapComponent', [
+const myModule = angular.module('gmfMapComponent', [
   gmfPermalinkModule.name,
   gmfEditingSnapping.name,
   gmfFileDropZoneModule.name,
@@ -38,7 +38,7 @@ const module = angular.module('gmfMapComponent', [
   ngeoMapFeatureOverlayMgr.name,
 ]);
 
-module.run(
+myModule.run(
   /**
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
@@ -81,7 +81,7 @@ function gmfMapComponent() {
   };
 }
 
-module.directive('gmfMap', gmfMapComponent);
+myModule.directive('gmfMap', gmfMapComponent);
 
 /**
  * @param {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
@@ -132,7 +132,7 @@ export function Controller(ngeoFeatureOverlayMgr, gmfPermalink, gmfSnapping, $in
   /**
    * @type {?boolean}
    */
-  this.fileDropEnabled = $injector.has('gmfFileDropEnabled') ? $injector.has('gmfFileDropEnabled') : false;
+  this.fileDropEnabled = $injector.has('gmfFileDropEnabled') ? $injector.get('gmfFileDropEnabled') : false;
 }
 
 /**
@@ -147,6 +147,6 @@ Controller.prototype.$onInit = function () {
   this.gmfSnapping_.setMap(this.map);
 };
 
-module.controller('GmfMapController', Controller);
+myModule.controller('GmfMapController', Controller);
 
-export default module;
+export default myModule;

@@ -858,12 +858,12 @@ EditingSnappingService.prototype.handleFileDataSourceVisibleChange_ = function (
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfSnapping', [
+const myModule = angular.module('gmfSnapping', [
   gmfDatasourceFileGroup.name,
   gmfLayertreeTreeManager.name,
   gmfThemeThemes.name,
   ngeoLayertreeController.name,
 ]);
-module.service('gmfSnapping', EditingSnappingService);
+myModule.service('gmfSnapping', EditingSnappingService);
 
-export default module;
+export default myModule;

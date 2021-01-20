@@ -27,7 +27,7 @@ import 'bootstrap/js/src/popover.js';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoPopover', []);
+const myModule = angular.module('ngeoPopover', []);
 
 /**
  * Provides a directive used to display a Bootstrap popover.
@@ -189,9 +189,9 @@ PopoverController.prototype.dismissPopover = function () {
   this.anchorElm.popover('hide');
 };
 
-module.controller('NgeoPopoverController', PopoverController);
-module.directive('ngeoPopover', messagePopoverComponent);
-module.directive('ngeoPopoverAnchor', messagePopoverAnchorComponent);
-module.directive('ngeoPopoverContent', messagePopoverContentComponent);
+myModule.controller('NgeoPopoverController', PopoverController);
+myModule.directive('ngeoPopover', messagePopoverComponent);
+myModule.directive('ngeoPopoverAnchor', messagePopoverAnchorComponent);
+myModule.directive('ngeoPopoverContent', messagePopoverContentComponent);
 
-export default module;
+export default myModule;

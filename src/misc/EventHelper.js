@@ -82,7 +82,7 @@ EventHelper.prototype.initListenerKey_ = function (uid) {
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoEventHelper', []);
-module.service('ngeoEventHelper', EventHelper);
+const myModule = angular.module('ngeoEventHelper', []);
+myModule.service('ngeoEventHelper', EventHelper);
 
-export default module;
+export default myModule;

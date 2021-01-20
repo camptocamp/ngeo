@@ -69,7 +69,7 @@ import 'bootstrap/js/src/dropdown.js';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfPrintComponent', [
+const myModule = angular.module('gmfPrintComponent', [
   gmfAuthenticationService.name,
   gmfThemeThemes.name,
   ngeoMapLayerHelper.name,
@@ -80,7 +80,7 @@ const module = angular.module('gmfPrintComponent', [
   ngeoQueryMapQuerent.name,
 ]);
 
-module.value(
+myModule.value(
   'gmfPrintTemplateUrl',
   /**
    * @param {JQuery} element Element.
@@ -93,7 +93,7 @@ module.value(
   }
 );
 
-module.run(
+myModule.run(
   /**
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
@@ -140,7 +140,7 @@ const PrintStateEnum = {
  * @property {PrintStateEnum} state
  */
 
-module.value('gmfPrintState', {
+myModule.value('gmfPrintState', {
   state: PrintStateEnum.CAPABILITIES_NOT_LOADED,
 });
 
@@ -209,7 +209,7 @@ const printComponent = {
   transclude: true,
 };
 
-module.component('gmfPrint', printComponent);
+myModule.component('gmfPrint', printComponent);
 
 /**
  * @private
@@ -1361,6 +1361,6 @@ export class PrintController {
   }
 }
 
-module.controller('GmfPrintController', PrintController);
+myModule.controller('GmfPrintController', PrintController);
 
-export default module;
+export default myModule;

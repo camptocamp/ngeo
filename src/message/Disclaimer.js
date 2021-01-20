@@ -291,8 +291,8 @@ export class MessageDisclaimerService extends ngeoMessageMessage {
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoDisclaimer', [ngeoMessagePopup.name]);
+const myModule = angular.module('ngeoDisclaimer', [ngeoMessagePopup.name]);
 
-module.service('ngeoDisclaimer', MessageDisclaimerService);
+myModule.service('ngeoDisclaimer', MessageDisclaimerService);
 
-export default module;
+export default myModule;

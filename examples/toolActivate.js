@@ -40,7 +40,7 @@ import olStyleStroke from 'ol/style/Stroke.js';
 import olStyleStyle from 'ol/style/Style.js';
 
 /** @type {angular.IModule} **/
-const module = angular.module('app', [
+const myModule = angular.module('app', [
   'gettext',
   ngeoMapModule.name,
   ngeoMiscBtnComponent.name,
@@ -178,6 +178,6 @@ function MainController(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
   ngeoToolActivateMgr.registerTool('mapTools', drawPolygonTool);
 }
 
-module.controller('MainController', MainController);
+myModule.controller('MainController', MainController);
 
-export default module;
+export default myModule;

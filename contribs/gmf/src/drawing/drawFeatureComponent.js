@@ -56,7 +56,7 @@ import 'bootstrap/js/src/dropdown.js';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('GmfDrawFeatureComponent', [
+const myModule = angular.module('GmfDrawFeatureComponent', [
   gmfDrawingDrawFeatureOptionsComponent.name,
   gmfDrawingFeatureStyleComponent.name,
   ngeoEditingExportfeaturesComponent.name,
@@ -66,7 +66,7 @@ const module = angular.module('GmfDrawFeatureComponent', [
   ngeoMiscToolActivateMgr.name,
 ]);
 
-module.run(
+myModule.run(
   /**
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
@@ -108,7 +108,7 @@ function drawinfDrawFeatureComponent() {
   };
 }
 
-module.directive('gmfDrawfeature', drawinfDrawFeatureComponent);
+myModule.directive('gmfDrawfeature', drawinfDrawFeatureComponent);
 
 /**
  * @param {angular.IScope} $scope Angular scope.
@@ -860,6 +860,6 @@ Controller.prototype.handleMapInteractionsAdd_ = function (evt) {
   }
 };
 
-module.controller('GmfDrawfeatureController', Controller);
+myModule.controller('GmfDrawfeatureController', Controller);
 
-export default module;
+export default myModule;

@@ -54,8 +54,8 @@ class Controller extends AbstractMobileController {}
 /**
  * @hidden
  */
-const module = angular.module('Appmobile', [appBase.name, gmfControllersAbstractMobileController.name]);
+const appModule = angular.module('Appmobile', [appBase.name, gmfControllersAbstractMobileController.name]);
 
-module.controller('MobileController', Controller);
+appModule.controller('MobileController', Controller);
 
-export default module;
+export default appModule;

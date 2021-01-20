@@ -29,9 +29,9 @@ import {buildStyle} from 'ngeo/options.js';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfMobileMeasureLength', [ngeoMiscFilters.name]);
+const myModule = angular.module('gmfMobileMeasureLength', [ngeoMiscFilters.name]);
 
-module.value(
+myModule.value(
   'gmfMobileMeasureLengthTemplateUrl',
   /**
    * @param {JQuery} element Element.
@@ -44,7 +44,7 @@ module.value(
   }
 );
 
-module.run(
+myModule.run(
   /**
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
@@ -100,7 +100,7 @@ function mobileMeasureLenthComponent(gmfMobileMeasureLengthTemplateUrl) {
   };
 }
 
-module.directive('gmfMobileMeasurelength', mobileMeasureLenthComponent);
+myModule.directive('gmfMobileMeasurelength', mobileMeasureLenthComponent);
 
 /**
  * @hidden
@@ -180,6 +180,6 @@ export class Controller extends MeasueMobileBaseController {
   }
 }
 
-module.controller('GmfMobileMeasureLengthController', Controller);
+myModule.controller('GmfMobileMeasureLengthController', Controller);
 
-export default module;
+export default myModule;

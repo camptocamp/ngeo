@@ -37,7 +37,7 @@ import ngeoMapModule from 'ngeo/map/module.js';
 import ngeoProfileElevationComponent from 'ngeo/profile/elevationComponent.js';
 
 /** @type {angular.IModule} **/
-const module = angular.module('app', ['gettext', ngeoMapModule.name, ngeoProfileElevationComponent.name]);
+const myModule = angular.module('app', ['gettext', ngeoMapModule.name, ngeoProfileElevationComponent.name]);
 
 /**
  * Factory for creating simple getter functions for extractors.
@@ -268,9 +268,9 @@ MainController.prototype.snapToGeometry = function (coordinate, geometry) {
   this.scope_.$apply();
 };
 
-module.controller('MainController', MainController);
+myModule.controller('MainController', MainController);
 
-module.constant('ngeoProfileOptions', {
+myModule.constant('ngeoProfileOptions', {
   linesConfiguration: {
     'line1': {
       style: {},
@@ -279,4 +279,4 @@ module.constant('ngeoProfileOptions', {
   },
 });
 
-export default module;
+export default myModule;
