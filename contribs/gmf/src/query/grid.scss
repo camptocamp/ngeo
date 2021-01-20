@@ -1,13 +1,12 @@
 @import '~gmf/sass/vars.scss';
 
-$grid-height: 15.62rem;
-$table-height: $grid-height - $app-margin - 2 * $map-tools-size;
+$table-height: $displayquerygrid-height - $app-margin - 2 * $map-tools-size;
 
 .panel.gmf-displayquerygrid {
   padding: $half-app-margin;
   border-top: solid 0.06rem black;
   background-color: white;
-  height: $grid-height;
+  height: $displayquerygrid-height;
   position: fixed;
   width: 100%;
 
@@ -75,5 +74,5 @@ $table-height: $grid-height - $app-margin - 2 * $map-tools-size;
 }
 
 .gmf-query-grid-active main {
-  height: calc(100% - #{$grid-height});
+  height: calc(100% - #{$displayquerygrid-height});
 }
