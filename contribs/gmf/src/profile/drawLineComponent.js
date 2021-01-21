@@ -58,7 +58,7 @@ const myModule = angular.module('gmfDrawProfileLine', [ngeoMapFeatureOverlayMgr.
  * @ngdoc directive
  * @ngname gmfDrawprofileline
  */
-function profileDarwLineComponent() {
+function profileDrawLineComponent() {
   return {
     scope: true,
     controller: 'GmfDrawprofilelineController as ctrl',
@@ -72,7 +72,7 @@ function profileDarwLineComponent() {
   };
 }
 
-myModule.directive('gmfDrawprofileline', profileDarwLineComponent);
+myModule.directive('gmfDrawprofileline', profileDrawLineComponent);
 
 /**
  * @param {angular.IScope} $scope Scope.
