@@ -224,6 +224,8 @@
  * @property {Object<string, Object<string, string>>} params The key is the server type (`mapserver`,
  *    `qgis`, ...) or `image` for an URL from a metadata. The value is some additional parameters set in the
  *    query string.
+ * @property {boolean} [showGroupsTitle] Display or not groups title in the legend. default to
+ *    true. Switching to false is useful to obtains a "flat" legend.
  */
 
 /**
