@@ -92,12 +92,7 @@ module.exports = function () {
     optimization: {
       minimizer: [
         new TerserPlugin({
-          test: (file) => {
-            const js = file.endsWith('.js');
-            const mapillary = file.includes('/node_modules/mapillary-js/');
-            const result = js && !mapillary;
-            return result;
-          },
+          exclude: /^(?!.*mapillary\.js$).*$/,
           parallel: true,
           terserOptions: {
             compress: false,
