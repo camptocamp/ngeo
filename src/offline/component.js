@@ -260,28 +260,28 @@ export const Controller = class {
      * @type {number}
      * @export
      */
-    this.minZoom = 0;
+    this.minZoom;
 
     /**
      * Maximum zoom where offline is enable.
      * @type {number}
      * @export
      */
-    this.maxZoom = 0;
+    this.maxZoom;
 
     /**
      * Map view max zoom constraint.
      * @type {number}
      * @export
      */
-    this.originalMinZoom = 0;
+    this.originalMinZoom;
 
     /**
      * Map view min zoom constraint.
      * @type {number}
      * @export
      */
-    this.originalMaxZoom = 0;
+    this.originalMaxZoom;
 
     /**
      * @type {number}
@@ -509,8 +509,10 @@ export const Controller = class {
    */
   removeZoomConstraints_() {
     const view = this.map.getView();
-    view.setMaxZoom(this.originalMaxZoom);
-    view.setMinZoom(this.originalMinZoom);
+    if (this.originalMaxZoom !== undefined && this.originalMinZoom !== undefined) {
+      view.setMaxZoom(this.originalMaxZoom);
+      view.setMinZoom(this.originalMinZoom);
+    }
   }
 
   /**
