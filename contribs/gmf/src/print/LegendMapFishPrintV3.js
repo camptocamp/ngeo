@@ -67,6 +67,7 @@ export default class LegendMapFishPrintV3 {
       useBbox: true,
       label: {},
       params: {},
+      showGroupsTitle: true,
     };
     if (legendOptions) {
       Object.assign(this.gmfLegendOptions_, legendOptions);
@@ -141,7 +142,7 @@ export default class LegendMapFishPrintV3 {
       const groupClasses = [];
       /** @type {import('ngeo/print/mapfish-print-v3').MapFishPrintLegendClass} */
       const legendGroupItem = {};
-      if (layer.get(LAYER_NODE_NAME_KEY)) {
+      if (layer.get(LAYER_NODE_NAME_KEY) && this.gmfLegendOptions_.showGroupsTitle) {
         legendGroupItem.name = gettextCatalog.getString(layer.get(LAYER_NODE_NAME_KEY));
       }
       legendGroupItem.classes = groupClasses;
@@ -190,9 +191,11 @@ export default class LegendMapFishPrintV3 {
       const groupClasses = [];
       /** @type {import('ngeo/print/mapfish-print-v3').MapFishPrintLegendClass} */
       const legendGroupItem = {
-        name: group.title,
         classes: groupClasses,
       };
+      if (this.gmfLegendOptions_.showGroupsTitle) {
+        legendGroupItem.name = group.title;
+      }
 
       group.dataSourcesCollection.forEach((dataSource) => {
         this.addClassItemToArray_(groupClasses, this.getLegendItemFromExternalDatasource_(dataSource, scale));
@@ -220,7 +223,7 @@ export default class LegendMapFishPrintV3 {
 
   /**
    * If a Legend item have only one children and the children name is identical to its name, then return
-   * only the children (cut one level).
+   * only the children (cut one level). Shrink also if both names are null or undefined.
    * Otherwise return the given legend item.
    * @param {import('ngeo/print/mapfish-print-v3').MapFishPrintLegendClass} legendGroupItem A legend item.
    * @return {import('ngeo/print/mapfish-print-v3').MapFishPrintLegendClass} The same legend item or a
@@ -292,9 +295,11 @@ export default class LegendMapFishPrintV3 {
     const legendLayerClasses = [];
     /** @type {import('ngeo/print/mapfish-print-v3').MapFishPrintLegendClass} */
     const legendGroupItem = {
-      name: gettextCatalog.getString(layer.get(LAYER_NODE_NAME_KEY)),
       classes: legendLayerClasses,
     };
+    if (this.gmfLegendOptions_.showGroupsTitle) {
+      legendGroupItem.name = gettextCatalog.getString(layer.get(LAYER_NODE_NAME_KEY));
+    }
     // For each name in a WMS layer.
     const layerNames = /** @type {string} */ (source.getParams().LAYERS).split(',');
     layerNames.forEach((name) => {

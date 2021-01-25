@@ -156,6 +156,35 @@ describe('gmf.print.LegendMapFishPrintV3', () => {
     });
   });
 
+  it('Should make legend for a wms with two layers (no title)', () => {
+    setMapLayers([layerWMS1], 'layerGroup');
+    // @ts-ignore: private.
+    legendMapFishPrintV3.gmfLegendOptions_.showGroupsTitle = false;
+    const legend = legendMapFishPrintV3.getLegend([], 25000, 254, [0, 0]);
+    expect(legend).toEqual({
+      'classes': [
+        {
+          'classes': [
+            {
+              'name': 'layerwms1',
+              'icons': [
+                'http://wmslayer1.com?FORMAT=image%2Fpng&TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&LAYER=layerwms1&SCALE=25000&DPI=254&BBOX=0%2C0&SRS=EPSG%3A3857&WIDTH=NaN&HEIGHT=NaN&ITEMFONTFAMILY=DejaVu%20Sans&ITEMFONTSIZE=8&LAYERFONTFAMILY=DejaVu%20Sans&LAYERFONTSIZE=10',
+              ],
+              'dpi': 254,
+            },
+            {
+              'name': ' layerwms2',
+              'icons': [
+                'http://wmslayer1.com?FORMAT=image%2Fpng&TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&LAYER=%20layerwms2&SCALE=25000&DPI=254&BBOX=0%2C0&SRS=EPSG%3A3857&WIDTH=NaN&HEIGHT=NaN&ITEMFONTFAMILY=DejaVu%20Sans&ITEMFONTSIZE=8&LAYERFONTFAMILY=DejaVu%20Sans&LAYERFONTSIZE=10',
+              ],
+              'dpi': 254,
+            },
+          ],
+        },
+      ],
+    });
+  });
+
   it('Should make legend for a wms with one layer having the same name than the group', () => {
     // Same group name than the layer: it will be simplified.
     setMapLayers([layerWMS2], 'layerwms');
@@ -187,7 +216,7 @@ describe('gmf.print.LegendMapFishPrintV3', () => {
     });
   });
 
-  it('Should make legend for an external datasource', () => {
+  const prepareExternalDatasource = () => {
     const dsOptions = {
       'id': 1,
       'name': 'External layer',
@@ -237,6 +266,10 @@ describe('gmf.print.LegendMapFishPrintV3', () => {
     );
     gmfExternalDataSourcesManager.wmsGroupsCollection.push(wmsGroup1);
     gmfExternalDataSourcesManager.wmsGroupsCollection.push(wmsGroup2);
+  };
+
+  it('Should make legend for an external datasource', () => {
+    prepareExternalDatasource();
     const legend = legendMapFishPrintV3.getLegend([], 25000, 254, [0, 0]);
     expect(legend).toEqual({
       'classes': [
@@ -261,6 +294,43 @@ describe('gmf.print.LegendMapFishPrintV3', () => {
           'name': 'External layer legend 2',
           'icons': [
             'https://external.2.test.legend.ch?FORMAT=image%2Fpng&TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&LAYER=ch.test.2.legend.externallayer&SCALE=25000',
+          ],
+        },
+      ],
+    });
+  });
+
+  it('Should make legend for an external datasource (no title)', () => {
+    prepareExternalDatasource();
+    // @ts-ignore: private.
+    legendMapFishPrintV3.gmfLegendOptions_.showGroupsTitle = false;
+    const legend = legendMapFishPrintV3.getLegend([], 25000, 254, [0, 0]);
+    expect(legend).toEqual({
+      'classes': [
+        {
+          'classes': [
+            {
+              'name': 'External layer legend 1',
+              'icons': [
+                'https://external.1.test.legend.ch?FORMAT=image%2Fpng&TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&LAYER=ch.test.1.legend.externallayer&SCALE=25000',
+              ],
+            },
+            {
+              'name': 'External layer legend 1',
+              'icons': [
+                'https://external.1.test.legend.ch?FORMAT=image%2Fpng&TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&LAYER=ch.test.1.legend.externallayer&SCALE=25000',
+              ],
+            },
+          ],
+        },
+        {
+          'classes': [
+            {
+              'name': 'External layer legend 2',
+              'icons': [
+                'https://external.2.test.legend.ch?FORMAT=image%2Fpng&TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&LAYER=ch.test.2.legend.externallayer&SCALE=25000',
+              ],
+            },
           ],
         },
       ],
