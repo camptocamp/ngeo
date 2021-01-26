@@ -76,17 +76,30 @@ describe('gmf.print.LegendMapFishPrintV3', () => {
 
   const setMapLayers =
     /**
-     * Add layers in a named group and add this group to the map.
-     * @param {import('ol/layer/Layer').default<import("ol/source/Source.js").default>[]} layers the array
-     * of layers to add to the map.
+     * Add layers in a "data" group and to the map.
+     * This first "data" group is not kept in the legend. Only deeper levels are kept.
+     * @param {import('ol/layer/Group').default[]} layers the array of layers to add to the map.
+     */
+    (layers) => {
+      const layerGroup = new olLayerGroup();
+      layerGroup.setLayers(new olCollection(layers));
+      layerGroup.set('groupName', DATALAYERGROUP_NAME); // For layerHelper to find the group.
+      mapLayerGroup.setLayers(new olCollection([layerGroup]));
+    };
+
+  const addlayersInGroup =
+    /**
+     * Add layers in a group and return this group.
+     * @param {import('ol/layer/Layer').default<import("ol/source/Source.js").default>[]} layers the
+     * array of layers to add to the map.
      * @param {string} groupName The group name.
+     * @return {import('ol/layer/Group').default} a layer group.
      */
     (layers, groupName) => {
       const layerGroup = new olLayerGroup();
       layerGroup.setLayers(new olCollection(layers));
-      layerGroup.set('groupName', DATALAYERGROUP_NAME); // For layerHelper to find the group.
       layerGroup.set(LAYER_NODE_NAME_KEY, groupName);
-      mapLayerGroup.setLayers(new olCollection([layerGroup]));
+      return layerGroup;
     };
 
   const legendOptions = {
@@ -124,7 +137,8 @@ describe('gmf.print.LegendMapFishPrintV3', () => {
   });
 
   it('Should make legend for a wms with two layers', () => {
-    setMapLayers([layerWMS1], 'layerGroup');
+    const group = addlayersInGroup([layerWMS1], 'layerGroup');
+    setMapLayers([group]);
     const legend = legendMapFishPrintV3.getLegend([], 25000, 254, [0, 0]);
     expect(legend).toEqual({
       'classes': [
@@ -135,16 +149,16 @@ describe('gmf.print.LegendMapFishPrintV3', () => {
               'name': 'layerwms1',
               'classes': [
                 {
-                  'name': 'layerwms1',
+                  'name': ' layerwms2',
                   'icons': [
-                    'http://wmslayer1.com?FORMAT=image%2Fpng&TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&LAYER=layerwms1&SCALE=25000&DPI=254&BBOX=0%2C0&SRS=EPSG%3A3857&WIDTH=NaN&HEIGHT=NaN&ITEMFONTFAMILY=DejaVu%20Sans&ITEMFONTSIZE=8&LAYERFONTFAMILY=DejaVu%20Sans&LAYERFONTSIZE=10',
+                    'http://wmslayer1.com?FORMAT=image%2Fpng&TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&LAYER=%20layerwms2&SCALE=25000&DPI=254&BBOX=0%2C0&SRS=EPSG%3A3857&WIDTH=NaN&HEIGHT=NaN&ITEMFONTFAMILY=DejaVu%20Sans&ITEMFONTSIZE=8&LAYERFONTFAMILY=DejaVu%20Sans&LAYERFONTSIZE=10',
                   ],
                   'dpi': 254,
                 },
                 {
-                  'name': ' layerwms2',
+                  'name': 'layerwms1',
                   'icons': [
-                    'http://wmslayer1.com?FORMAT=image%2Fpng&TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&LAYER=%20layerwms2&SCALE=25000&DPI=254&BBOX=0%2C0&SRS=EPSG%3A3857&WIDTH=NaN&HEIGHT=NaN&ITEMFONTFAMILY=DejaVu%20Sans&ITEMFONTSIZE=8&LAYERFONTFAMILY=DejaVu%20Sans&LAYERFONTSIZE=10',
+                    'http://wmslayer1.com?FORMAT=image%2Fpng&TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&LAYER=layerwms1&SCALE=25000&DPI=254&BBOX=0%2C0&SRS=EPSG%3A3857&WIDTH=NaN&HEIGHT=NaN&ITEMFONTFAMILY=DejaVu%20Sans&ITEMFONTSIZE=8&LAYERFONTFAMILY=DejaVu%20Sans&LAYERFONTSIZE=10',
                   ],
                   'dpi': 254,
                 },
@@ -157,29 +171,26 @@ describe('gmf.print.LegendMapFishPrintV3', () => {
   });
 
   it('Should make legend for a wms with two layers (no title)', () => {
-    setMapLayers([layerWMS1], 'layerGroup');
+    const group = addlayersInGroup([layerWMS1], 'layerGroup');
+    setMapLayers([group]);
     // @ts-ignore: private.
     legendMapFishPrintV3.gmfLegendOptions_.showGroupsTitle = false;
     const legend = legendMapFishPrintV3.getLegend([], 25000, 254, [0, 0]);
     expect(legend).toEqual({
       'classes': [
         {
-          'classes': [
-            {
-              'name': 'layerwms1',
-              'icons': [
-                'http://wmslayer1.com?FORMAT=image%2Fpng&TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&LAYER=layerwms1&SCALE=25000&DPI=254&BBOX=0%2C0&SRS=EPSG%3A3857&WIDTH=NaN&HEIGHT=NaN&ITEMFONTFAMILY=DejaVu%20Sans&ITEMFONTSIZE=8&LAYERFONTFAMILY=DejaVu%20Sans&LAYERFONTSIZE=10',
-              ],
-              'dpi': 254,
-            },
-            {
-              'name': ' layerwms2',
-              'icons': [
-                'http://wmslayer1.com?FORMAT=image%2Fpng&TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&LAYER=%20layerwms2&SCALE=25000&DPI=254&BBOX=0%2C0&SRS=EPSG%3A3857&WIDTH=NaN&HEIGHT=NaN&ITEMFONTFAMILY=DejaVu%20Sans&ITEMFONTSIZE=8&LAYERFONTFAMILY=DejaVu%20Sans&LAYERFONTSIZE=10',
-              ],
-              'dpi': 254,
-            },
+          'name': ' layerwms2',
+          'icons': [
+            'http://wmslayer1.com?FORMAT=image%2Fpng&TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&LAYER=%20layerwms2&SCALE=25000&DPI=254&BBOX=0%2C0&SRS=EPSG%3A3857&WIDTH=NaN&HEIGHT=NaN&ITEMFONTFAMILY=DejaVu%20Sans&ITEMFONTSIZE=8&LAYERFONTFAMILY=DejaVu%20Sans&LAYERFONTSIZE=10',
           ],
+          'dpi': 254,
+        },
+        {
+          'name': 'layerwms1',
+          'icons': [
+            'http://wmslayer1.com?FORMAT=image%2Fpng&TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&LAYER=layerwms1&SCALE=25000&DPI=254&BBOX=0%2C0&SRS=EPSG%3A3857&WIDTH=NaN&HEIGHT=NaN&ITEMFONTFAMILY=DejaVu%20Sans&ITEMFONTSIZE=8&LAYERFONTFAMILY=DejaVu%20Sans&LAYERFONTSIZE=10',
+          ],
+          'dpi': 254,
         },
       ],
     });
@@ -187,7 +198,8 @@ describe('gmf.print.LegendMapFishPrintV3', () => {
 
   it('Should make legend for a wms with one layer having the same name than the group', () => {
     // Same group name than the layer: it will be simplified.
-    setMapLayers([layerWMS2], 'layerwms');
+    const group = addlayersInGroup([layerWMS2], 'layerwms');
+    setMapLayers([group]);
     const legend = legendMapFishPrintV3.getLegend([], 25000, 254, [0, 0]);
     expect(legend).toEqual({
       'classes': [
@@ -204,7 +216,8 @@ describe('gmf.print.LegendMapFishPrintV3', () => {
 
   it('Should make legend for a tile layer', () => {
     // Same group name than the layer: it will be simplified.
-    setMapLayers([layerTile], 'layerTile');
+    const group = addlayersInGroup([layerTile], 'layerTile');
+    setMapLayers([group]);
     const legend = legendMapFishPrintV3.getLegend([], 25000, 254, [0, 0]);
     expect(legend).toEqual({
       'classes': [
