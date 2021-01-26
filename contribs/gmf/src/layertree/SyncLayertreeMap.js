@@ -22,7 +22,7 @@
 import angular from 'angular';
 import gmfThemeThemes, {getNodeMinResolution, getNodeMaxResolution} from 'gmf/theme/Themes.js';
 import ngeoLayertreeController, {LayertreeVisitorDecision} from 'ngeo/layertree/Controller.js';
-import {LAYER_NODE_NAME_KEY} from 'ngeo/map/LayerHelper.js';
+import {DATASOURCE_ID, LAYER_NODE_NAME_KEY, NODE_IS_LEAF} from 'ngeo/map/LayerHelper.js';
 import ngeoMiscWMSTime from 'ngeo/misc/WMSTime.js';
 import {getUid as olUtilGetUid} from 'ol/util.js';
 import olLayerImage from 'ol/layer/Image.js';
@@ -273,7 +273,7 @@ SyncLayertreeMap.prototype.createLayerFromGroup_ = function (treeCtrl, mixed) {
       undefined // Source options
     );
 
-    layer.set('dataSourceId', groupNode.id);
+    layer.set(DATASOURCE_ID, groupNode.id);
 
     let hasActiveChildren = false;
     treeCtrl.traverseDepthFirst((ctrl) => {
@@ -341,9 +341,10 @@ SyncLayertreeMap.prototype.createLeafInAMixedGroup_ = function (treeCtrl, map) {
       ogcServer.credential ? 'use-credentials' : 'anonymous'
     );
   }
-  layer.set('dataSourceId', gmfLayer.id);
   // Update layer information and tree state.
+  layer.set(DATASOURCE_ID, gmfLayer.id);
   layer.set(LAYER_NODE_NAME_KEY, gmfLayer.name);
+  layer.set(NODE_IS_LEAF, true);
   this.updateLayerReferences_(gmfLayer, layer);
   const checked = gmfLayer.metadata.isChecked === true;
   if (checked) {

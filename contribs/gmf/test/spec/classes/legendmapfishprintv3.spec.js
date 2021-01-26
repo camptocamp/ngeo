@@ -27,7 +27,7 @@ import olLayerTile from 'ol/layer/Tile.js';
 import olLayerLayer from 'ol/layer/Layer.js';
 import olSourceImageWMS from 'ol/source/ImageWMS.js';
 import olSourceTileImage from 'ol/source/TileImage.js';
-import {LAYER_NODE_NAME_KEY} from 'ngeo/map/LayerHelper.js';
+import {NODE_IS_LEAF, LAYER_NODE_NAME_KEY} from 'ngeo/map/LayerHelper.js';
 import ngeoDatasourceWMSGroup from 'ngeo/datasource/WMSGroup.js';
 import LegendMapFishPrintV3 from 'gmf/print/LegendMapFishPrintV3.js';
 import {DATALAYERGROUP_NAME} from 'gmf/index.js';
@@ -68,6 +68,16 @@ describe('gmf.print.LegendMapFishPrintV3', () => {
   const layerWMS2 = new olLayerLayer({source: sourceWMS2});
   // Same name than then unique WMS layer: it will be simplified.
   layerWMS2.set(LAYER_NODE_NAME_KEY, 'layerwms');
+
+  const sourceWMS3 = new olSourceImageWMS({
+    params: {LAYERS: 'wms'},
+    url: 'http://wmslayer.com',
+    serverType: 'qgis',
+  });
+
+  const layerWMS3 = new olLayerLayer({source: sourceWMS3});
+  layerWMS3.set(LAYER_NODE_NAME_KEY, 'mixedWMSLayer');
+  layerWMS3.set(NODE_IS_LEAF, true); // For mixed wms leaf layer.
 
   const mapLayerGroup = new olLayerGroup();
   const map = new olMap({
@@ -209,6 +219,30 @@ describe('gmf.print.LegendMapFishPrintV3', () => {
             'http://wmslayer2.com?FORMAT=image%2Fpng&TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&LAYER=layerwms&SCALE=25000&DPI=254&BBOX=0%2C0&SRS=EPSG%3A3857&WIDTH=NaN&HEIGHT=NaN&ITEMFONTFAMILY=DejaVu%20Sans&ITEMFONTSIZE=8&LAYERFONTFAMILY=DejaVu%20Sans&LAYERFONTSIZE=10',
           ],
           'dpi': 254,
+        },
+      ],
+    });
+  });
+
+  it('Should make legend for a wms with one wms name in a mixed wms layer', () => {
+    // In a mixed wms layer with only one wms sub-layer, we do not want to show the wms name but the
+    // wms layer (node) name.
+    const group = addlayersInGroup([layerWMS3], 'groupLayer');
+    setMapLayers([group]);
+    const legend = legendMapFishPrintV3.getLegend([], 25000, 254, [0, 0]);
+    expect(legend).toEqual({
+      'classes': [
+        {
+          'name': 'groupLayer',
+          'classes': [
+            {
+              'name': 'mixedWMSLayer',
+              'icons': [
+                'http://wmslayer.com?FORMAT=image%2Fpng&TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&LAYER=wms&SCALE=25000&DPI=254&BBOX=0%2C0&SRS=EPSG%3A3857&WIDTH=NaN&HEIGHT=NaN&ITEMFONTFAMILY=DejaVu%20Sans&ITEMFONTSIZE=8&LAYERFONTFAMILY=DejaVu%20Sans&LAYERFONTSIZE=10',
+              ],
+              'dpi': 254,
+            },
+          ],
         },
       ],
     });

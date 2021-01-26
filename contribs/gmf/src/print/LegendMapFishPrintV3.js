@@ -23,7 +23,7 @@ import olLayerGroup from 'ol/layer/Group.js';
 import olLayerTile from 'ol/layer/Tile.js';
 import ImageWMS from 'ol/source/ImageWMS.js';
 import {dpi as screenDpi} from 'ngeo/utils.js';
-import {LAYER_NODE_NAME_KEY} from 'ngeo/map/LayerHelper.js';
+import {NODE_IS_LEAF, LAYER_NODE_NAME_KEY} from 'ngeo/map/LayerHelper.js';
 import {DATALAYERGROUP_NAME} from 'gmf/index.js';
 import ExternalOGC from 'gmf/datasource/ExternalOGC.js';
 import {findGroupByLayerNodeName, findObjectByName} from 'gmf/theme/Themes.js';
@@ -341,6 +341,14 @@ export default class LegendMapFishPrintV3 {
         legendLayerClasses.push(legendLayerItem);
       }
     });
+    // For wms layer in a mixed wms-group with only one element, do not show the name of the wms but only
+    // the name of the tree leaf node.
+    if (layer.get(NODE_IS_LEAF) && legendLayerClasses.length == 1) {
+      const firstLegendLayer = legendLayerClasses[0];
+      firstLegendLayer.name = legendGroupItem.name;
+      delete firstLegendLayer.classes;
+      return firstLegendLayer;
+    }
     return this.tryToSimplifyLegendGroup_(legendGroupItem);
   }
 
