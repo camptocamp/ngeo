@@ -89,7 +89,7 @@ export default class LegendMapFishPrintV3 {
    * @return {unknown?} Legend object for print report or null.
    */
   getLegend(currentThemes, scale, dpi, bbox) {
-   /** @type {import('ngeo/print/mapfish-print-v3').MapFishPrintLegendClass[]} */
+    /** @type {import('ngeo/print/mapfish-print-v3').MapFishPrintLegendClass[]} */
     const internalLegend = this.getInternalLegendItems_(currentThemes, scale, dpi, bbox);
     /** @type {import('ngeo/print/mapfish-print-v3').MapFishPrintLegendClass[]} */
     const externalLegend = this.getExternalLegendItems_(scale);
@@ -111,10 +111,7 @@ export default class LegendMapFishPrintV3 {
   getInternalLegendItems_(currentThemes, scale, dpi, bbox) {
     const dataLayerGroup = this.ngeoLayerHelper_.getGroupFromMap(this.map_, DATALAYERGROUP_NAME);
     const legend = this.collectLegendClassesInTree_(dataLayerGroup, currentThemes, scale, dpi, bbox);
-    /** @type {import('ngeo/print/mapfish-print-v3').MapFishPrintLegendClass[]} */
-    const legendClasses = [];
-    this.addClassItemToArray_(legendClasses, legend);
-    return legendClasses;
+    return legend ? legend.classes : [];
   }
 
   /**
@@ -145,9 +142,9 @@ export default class LegendMapFishPrintV3 {
         legendGroupItem.name = gettextCatalog.getString(layer.get(LAYER_NODE_NAME_KEY));
       }
       legendGroupItem.classes = groupClasses;
-      const sublayers = layer.getLayers();
       // Iterate with a "reverse" to have top-level layers at the top of the legend.
-      sublayers.getArray().reverse().forEach((sublayer) => {
+      const sublayers = layer.getLayers().getArray().reverse();
+      sublayers.forEach((sublayer) => {
         const child = this.collectLegendClassesInTree_(sublayer, currentThemes, scale, dpi, bbox);
         this.addClassItemToArray_(groupClasses, child);
       });
