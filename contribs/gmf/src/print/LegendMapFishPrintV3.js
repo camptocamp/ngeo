@@ -89,13 +89,12 @@ export default class LegendMapFishPrintV3 {
    * @return {unknown?} Legend object for print report or null.
    */
   getLegend(currentThemes, scale, dpi, bbox) {
-    /** @type {import('ngeo/print/mapfish-print-v3').MapFishPrintLegendClass[]} */
-    const legendInternal = this.getInternalLegendItems_(currentThemes, scale, dpi, bbox);
+   /** @type {import('ngeo/print/mapfish-print-v3').MapFishPrintLegendClass[]} */
+    const internalLegend = this.getInternalLegendItems_(currentThemes, scale, dpi, bbox);
     /** @type {import('ngeo/print/mapfish-print-v3').MapFishPrintLegendClass[]} */
     const externalLegend = this.getExternalLegendItems_(scale);
-
     /** @type {import('ngeo/print/mapfish-print-v3').MapFishPrintLegend} */
-    const legend = {classes: [...legendInternal, ...externalLegend]};
+    const legend = {classes: [...externalLegend, ...internalLegend]};
 
     return legend.classes.length > 0 ? legend : null;
   }
@@ -147,7 +146,8 @@ export default class LegendMapFishPrintV3 {
       }
       legendGroupItem.classes = groupClasses;
       const sublayers = layer.getLayers();
-      sublayers.forEach((sublayer) => {
+      // Iterate with a "reverse" to have top-level layers at the top of the legend.
+      sublayers.getArray().reverse().forEach((sublayer) => {
         const child = this.collectLegendClassesInTree_(sublayer, currentThemes, scale, dpi, bbox);
         this.addClassItemToArray_(groupClasses, child);
       });
@@ -302,7 +302,8 @@ export default class LegendMapFishPrintV3 {
     }
     // For each name in a WMS layer.
     const layerNames = /** @type {string} */ (source.getParams().LAYERS).split(',');
-    layerNames.forEach((name) => {
+    // Iterate with a "reverse" to have top-level layers at the top of the legend.
+    layerNames.reverse().forEach((name) => {
       // Don't add classes without legend url or from layers without any
       // active name.
       if (name.length !== 0) {
