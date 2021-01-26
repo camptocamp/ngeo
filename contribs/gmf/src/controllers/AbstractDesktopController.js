@@ -357,7 +357,7 @@ export class AbstractDesktopController extends AbstractAPIController {
     this.$dataPanel_ = $dataPanel;
 
     // ... and collapsible when the handle is clicked.
-    const $resizableEastHandle = $dataPanel.find('.ui-resizable-e').on('click', (evt) => {
+    const $resizableEastHandle = $dataPanel.find('.ui-resizable-e').on('click touchstart', (evt) => {
       this.dataPanelActive = !this.dataPanelActive;
       this.$scope.$apply();
     });
