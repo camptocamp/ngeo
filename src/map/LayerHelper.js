@@ -72,6 +72,18 @@ export function LayerHelper($q, $http, ngeoTilesPreloadingLimit) {
 export const LAYER_NODE_NAME_KEY = 'layerNodeName';
 
 /**
+ * Key to know if the layer is used as a leaf in a tree.
+ * In mixed WMS groups that would be probably the case but not in a
+ * not-mixed WMS groups where we want to toggle each wms names (sub-layers).
+ */
+export const NODE_IS_LEAF = 'layerIsLeaf';
+
+/**
+ * Id of the datasource
+ */
+export const DATASOURCE_ID = 'dataSourceId';
+
+/**
  * @private
  * @hidden
  */
@@ -209,8 +221,8 @@ LayerHelper.prototype.createBasicWMSLayerFromDataSource = function (dataSource, 
   // (3) Reference to the data source
   layer.set('querySourceIds', [dataSource.id]);
 
-  // (4) Set the `dataSourceId` property
-  layer.set('dataSourceId', dataSource.id);
+  // (4) Set the datasource id property
+  layer.set(DATASOURCE_ID, dataSource.id);
 
   return layer;
 };

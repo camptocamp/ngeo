@@ -20,7 +20,7 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import ngeoMapLayerHelper from 'ngeo/map/LayerHelper.js';
+import ngeoMapLayerHelper, {DATASOURCE_ID} from 'ngeo/map/LayerHelper.js';
 import {getUid as olUtilGetUid} from 'ol/util.js';
 import * as olArray from 'ol/array.js';
 import olCollection from 'ol/Collection.js';
@@ -157,7 +157,7 @@ export class ThemesService extends olEventsEventTarget {
       const ids = [];
       getIds(item, ids);
       layer.set('querySourceIds', ids);
-      layer.set('dataSourceId', item.id);
+      layer.set(DATASOURCE_ID, item.id);
       return layer;
     };
 
