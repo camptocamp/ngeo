@@ -74,12 +74,6 @@ Time.prototype.getOptions = function (time) {
 
   const minTime = this.getTime(minDate);
   const maxTime = this.getTime(maxDate);
-  if (!minTime) {
-    throw new Error('Missing minTime');
-  }
-  if (!maxTime) {
-    throw new Error('Missing maxTime');
-  }
 
   const minDefaultTime = this.getTime(minDefaultDate);
   const maxDefaultTime = this.getTime(maxDefaultDate);
