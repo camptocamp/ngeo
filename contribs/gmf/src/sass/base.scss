@@ -142,3 +142,9 @@ i, cite, em, var, address, dfn {
   text-align: left;
   padding: 0.25rem 0.5rem;
 }
+
+// Avoid dropdown menus expanding out of viewport
+.dropdown-menu {
+  max-height: 80vh;
+  overflow-y: auto;
+}
