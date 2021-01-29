@@ -216,6 +216,7 @@ export class DatasourceHelper {
   createDataSourceAttributesFromOGCAttributes_(dataSource) {
     let attributes = null;
 
+    const formatWFSAttribute = new ngeoFormatWFSAttribute();
     const ogcAttributes = dataSource.ogcAttributesWFS;
     if (ogcAttributes) {
       attributes = [];
@@ -237,9 +238,9 @@ export class DatasourceHelper {
         // then the attribute type is set to geometry and geomType is
         // set depending on the geometry type. This is handled by the
         // method below. If the type is not any geometry one, then set
-        // the one that was given.
+        // it to a ngeoFormatAttributeType.
         if (!ngeoAttributeSetGeometryType(attribute, `gml:${type}`)) {
-          attribute.type = type.toLowerCase();
+          formatWFSAttribute.setAttributeType(attribute, type.toLowerCase());
         }
 
         attributes.push(attribute);

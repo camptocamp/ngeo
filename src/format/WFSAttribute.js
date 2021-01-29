@@ -50,6 +50,30 @@ export default class {
   }
 
   /**
+   * @param {import('ngeo/format/Attribute.js').Attribute} attribute
+   * @param {string} type the type
+   */
+  setAttributeType(attribute, type) {
+    if (type === 'gml:TimeInstantType' || type === 'dateTime') {
+      attribute.type = ngeoFormatAttributeType.DATETIME;
+    } else if (type === 'date') {
+      attribute.type = ngeoFormatAttributeType.DATE;
+    } else if (type === 'time') {
+      attribute.type = ngeoFormatAttributeType.TIME;
+    } else if (type === 'decimal' || type === 'double') {
+      attribute.type = ngeoFormatAttributeType.NUMBER;
+      attribute.numType = FormatNumberType.FLOAT;
+    } else if (type === 'integer' || type === 'long') {
+      attribute.type = ngeoFormatAttributeType.NUMBER;
+      attribute.numType = FormatNumberType.INTEGER;
+    } else if (type === 'boolean') {
+      attribute.type = ngeoFormatAttributeType.BOOLEAN;
+    } else {
+      attribute.type = ngeoFormatAttributeType.TEXT;
+    }
+  }
+
+  /**
    * @param {Element} object Complex type element
    * @return {import('ngeo/format/Attribute.js').Attribute} Attribute
    * @private
@@ -69,23 +93,7 @@ export default class {
     const type = object.type;
 
     if (!setGeometryType(attribute, type)) {
-      if (type === 'gml:TimeInstantType' || type === 'dateTime') {
-        attribute.type = ngeoFormatAttributeType.DATETIME;
-      } else if (type === 'date') {
-        attribute.type = ngeoFormatAttributeType.DATE;
-      } else if (type === 'time') {
-        attribute.type = ngeoFormatAttributeType.TIME;
-      } else if (type === 'decimal' || type === 'double') {
-        attribute.type = ngeoFormatAttributeType.NUMBER;
-        attribute.numType = FormatNumberType.FLOAT;
-      } else if (type === 'integer' || type === 'long') {
-        attribute.type = ngeoFormatAttributeType.NUMBER;
-        attribute.numType = FormatNumberType.INTEGER;
-      } else if (type === 'boolean') {
-        attribute.type = ngeoFormatAttributeType.BOOLEAN;
-      } else {
-        attribute.type = ngeoFormatAttributeType.TEXT;
-      }
+      this.setAttributeType(attribute, type);
     }
 
     return attribute;
