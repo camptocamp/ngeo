@@ -2,6 +2,7 @@
  * @module ngeo.interaction.MeasureLength
  */
 import googAsserts from 'goog/asserts.js';
+import ngeoGeometryType from 'ngeo/GeometryType.js';
 import ngeoInteractionMeasure from 'ngeo/interaction/Measure.js';
 import * as olBase from 'ol/index.js';
 import olGeomLineString from 'ol/geom/LineString.js';
@@ -89,7 +90,7 @@ exports.prototype.createDrawInteraction = function(style, source) {
 
 /**
  * Create a `linestringGeometryFunction` that will create a line string with segments
- * snapped to π/4 angle.
+ * snapped to pi/4 angle.
  * Use this with the draw interaction and `type: 'LineString'`.
  * @param {LineCoordType} coordinates Coordinates.
  * @param {LineString=} opt_geometry Geometry.
@@ -117,34 +118,43 @@ exports.prototype.linestringGeometryFunction = function(coordinates, opt_geometr
       const featuresInExtent = layerSource.getFeaturesInExtent(bbox);
       featuresInExtent.forEach((feature) => {
 
-        let lastIntersection = [];
-        let bestIntersection = [];
-        let bestDistance = Infinity;
+        const geom = feature.getGeometry();
 
-        // Line points are: from A to M (to B that we need to find)
-        const distanceFromTo = distance(from, to);
-        const ax = from[0];
-        const ay = from[1];
-        const mx = to[0];
-        const my = to[1];
-        const unitVector = [(mx - ax) / distanceFromTo, (my - ay) / distanceFromTo];
-        const b = [(ax + (distanceFromTo + delta) * unitVector[0]), (ay + (distanceFromTo + delta) * unitVector[1])];
+        if (geom.getType() === ngeoGeometryType.POINT) {
+            // ignore point geometry
+            return;
+        } else {
 
-        feature.getGeometry().forEachSegment((point1, point2) => {
-          // intersection calculation
-          lastIntersection = this.computeLineSegmentIntersection(from, b, point1, point2);
-          if (lastIntersection !== undefined && containsXY(bbox, lastIntersection[0], lastIntersection[1])) {
-            const lastDistance = distance(to, lastIntersection);
-            if (lastDistance < bestDistance) {
-              bestDistance = lastDistance;
-              bestIntersection = lastIntersection;
+            let lastIntersection = [];
+            let bestIntersection = [];
+            let bestDistance = Infinity;
+
+            // Line points are: from A to M (to B that we need to find)
+            const distanceFromTo = distance(from, to);
+            const ax = from[0];
+            const ay = from[1];
+            const mx = to[0];
+            const my = to[1];
+            const unitVector = [(mx - ax) / distanceFromTo, (my - ay) / distanceFromTo];
+            const b = [(ax + (distanceFromTo + delta) * unitVector[0]), (ay + (distanceFromTo + delta) * unitVector[1])];
+
+            geom.forEachSegment((point1, point2) => {
+            //feature.getGeometry().forEachSegment((point1, point2) => {
+              // intersection calculation
+              lastIntersection = this.computeLineSegmentIntersection(from, b, point1, point2);
+              if (lastIntersection !== undefined && containsXY(bbox, lastIntersection[0], lastIntersection[1])) {
+                const lastDistance = distance(to, lastIntersection);
+                if (lastDistance < bestDistance) {
+                  bestDistance = lastDistance;
+                  bestIntersection = lastIntersection;
+                }
+              }
+            });
+
+            if (bestIntersection) {
+              to[0] = bestIntersection[0] || to[0];
+              to[1] = bestIntersection[1] || to[1];
             }
-          }
-        });
-
-        if (bestIntersection) {
-          to[0] = bestIntersection[0] || to[0];
-          to[1] = bestIntersection[1] || to[1];
         }
       });
     }
