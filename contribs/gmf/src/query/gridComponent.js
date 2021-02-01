@@ -360,7 +360,7 @@ QueryGridController.prototype.updateData_ = function () {
 
   // create grids (only for source with features or with too many results)
   sources.forEach((source) => {
-    if (source.tooManyResults) {
+    if (source.tooManyResults && source.features.length === 0) {
       this.makeGrid_(null, source);
     } else {
       source.id = this.escapeValue(source.id);
@@ -478,18 +478,26 @@ QueryGridController.prototype.getMergedSource_ = function (source, mergedSources
     return null;
   }
 
+  /** @type {boolean} */
+  let newRequest = true;
+
   /** @type {import('ngeo/statemanager/WfsPermalink.js').QueryResultSource} */
   let mergeSource;
   if (mergeSourceId in mergedSources) {
     mergeSource = mergedSources[mergeSourceId];
+    if (source.requestPartners) {
+      newRequest = !source.requestPartners.some((label) => mergeSource.mergeComposants.includes(label));
+    }
+    mergeSource.mergeComposants.push(source.label);
   } else {
     mergeSource = {
       features: [],
       id: mergeSourceId,
       label: mergeSourceId,
-      limit: this.maxResults,
+      limit: 0, //the sum of the obtained results of the query is computed later
       pending: false,
       tooManyResults: false,
+      mergeComposants: [source.label],
     };
     mergedSources[mergeSourceId] = mergeSource;
   }
@@ -500,20 +508,19 @@ QueryGridController.prototype.getMergedSource_ = function (source, mergedSources
   });
 
   // if one of the source has too many results, the resulting merged source will
-  // also be marked with `tooManyResults` and will not contain any features.
+  // also be marked with `tooManyResults`.
   mergeSource.tooManyResults = mergeSource.tooManyResults || source.tooManyResults;
-  if (mergeSource.tooManyResults) {
-    mergeSource.totalFeatureCount =
-      mergeSource.totalFeatureCount !== undefined
-        ? mergeSource.totalFeatureCount + mergeSource.features.length
-        : mergeSource.features.length;
-    mergeSource.features = [];
-  }
-  if (source.totalFeatureCount !== undefined) {
-    mergeSource.totalFeatureCount =
-      mergeSource.totalFeatureCount !== undefined
-        ? mergeSource.totalFeatureCount + source.totalFeatureCount
-        : source.totalFeatureCount;
+
+  // for layers called with the previous request the totalFeatureCount (available results) and the limit (obtained results)
+  // are still valid
+  if (newRequest) {
+    if (source.totalFeatureCount !== undefined) {
+      mergeSource.totalFeatureCount =
+        mergeSource.totalFeatureCount !== undefined
+          ? mergeSource.totalFeatureCount + source.totalFeatureCount
+          : source.totalFeatureCount;
+    }
+    mergeSource.limit += source.limit;
   }
 
   return mergeSource;
@@ -774,6 +781,37 @@ QueryGridController.prototype.getActiveGridSource = function () {
   } else {
     return this.gridSources[`${this.selectedTab}`];
   }
+};
+
+/**
+ * Returns if the source of currently active grid had too many results to show
+ * @return {boolean} Are there too many results?
+ */
+QueryGridController.prototype.hasActiveSourceTooManyResults = function () {
+  const source = this.getActiveGridSource();
+  if (source === null || source.configuration === null) {
+    return false;
+  } else {
+    return source.source.tooManyResults;
+  }
+};
+
+/**
+ * Returns the limit of results for this source
+ * @return {number} limit
+ */
+QueryGridController.prototype.getActiveGridSourceLimit = function () {
+  const source = this.getActiveGridSource();
+  return source.source.limit;
+};
+
+/**
+ * Returns the total number of features available
+ * @return {number} total number of features
+ */
+QueryGridController.prototype.getActiveGridSourceTotalFeatures = function () {
+  const source = this.getActiveGridSource();
+  return source.source.totalFeatureCount;
 };
 
 /**

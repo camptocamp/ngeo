@@ -42,6 +42,8 @@ import olFormatWFS from 'ol/format/WFS.js';
  * @property {number} [totalFeatureCount] If `tooManyResults` is `true`, this contains the total number of
  *    features.
  * @property {string} [identifierAttributeField] The field to use to identify the feature.
+ * @property {string[]} [mergeComposants] The original datasources merged in merged result.
+ * @property {string[]} [requestPartners] The datasources of the request (which are summed in totalFeatureCount).
  */
 
 /**

@@ -501,6 +501,7 @@ describe('gmf.query.gridComponent', () => {
           id: 123,
           label: 'Test 1',
           pending: false,
+          totalFeatureCount: 2,
         },
         {
           features: [],
@@ -534,10 +535,10 @@ describe('gmf.query.gridComponent', () => {
       // merged source
       const gridSource1 = queryGridController.gridSources['merged_source'];
       expect(gridSource1).toBeDefined();
-      expect(gridSource1.configuration).toBe(undefined);
+      expect(gridSource1.configuration).toBeDefined();
       expect(gridSource1.source.tooManyResults).toBe(true);
       expect(gridSource1.source.totalFeatureCount).toBe(353);
-      expect(gridSource1.source.features).toEqual([]);
+      expect(gridSource1.source.features.length).toBe(2);
 
       // grid source 3
       const gridSource3 = queryGridController.gridSources['Test 3'];
