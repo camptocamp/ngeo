@@ -20,7 +20,7 @@ jobs:
     if: "!startsWith(github.event.head_commit.message, '[skip ci] ')"
 
     env:
-      MAIN_BRANCH: master
+      MAIN_BRANCH: 2.6
       CI: true
       PATH: /bin:/usr/bin:/usr/local/bin:/home/runner/.local/bin
 
