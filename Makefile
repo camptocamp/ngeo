@@ -1,5 +1,5 @@
-TX_VERSION ?= 2_6
-DEMO_BRANCH ?= prod-2-6
+TX_VERSION ?= 2_7
+DEMO_BRANCH ?= prod-2-7
 
 ANGULAR_VERSION := $(shell buildtools/get-version angular)
 
