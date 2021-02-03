@@ -21,6 +21,7 @@
 
 import angular from 'angular';
 import {COORDINATES_LAYER_NAME} from 'gmf/index.js';
+import {gmfBackgroundlayerStatus} from 'gmf/backgroundlayerselector/status.js';
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
 import gmfSearchFulltextSearch from 'gmf/search/FulltextSearch.js';
 import gmfThemeThemes, {findThemeByName} from 'gmf/theme/Themes.js';
@@ -856,6 +857,7 @@ export class SearchController {
           this.gmfThemes_.getThemesObject().then((themes) => {
             const theme = findThemeByName(themes, actionData);
             if (theme) {
+              gmfBackgroundlayerStatus.touchedByUser = true;
               this.gmfTreeManager_.addFirstLevelGroups(theme.children);
             }
           });

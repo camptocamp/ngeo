@@ -26,6 +26,7 @@ import 'angular-dynamic-locale';
 import bootstrap from 'gmf/controllers/bootstrap.js';
 import gmfAuthenticationModule from 'gmf/authentication/module.js';
 import gmfBackgroundlayerselectorComponent from 'gmf/backgroundlayerselector/component.js';
+import {gmfBackgroundlayerStatus} from 'gmf/backgroundlayerselector/status.js';
 import gmfDatasourceModule from 'gmf/datasource/module.js';
 import gmfDisclaimerComponent from 'gmf/disclaimer/component.js';
 import gmfLayertreeModule from 'gmf/layertree/module.js';
@@ -465,7 +466,7 @@ export function AbstractAppController($scope, $injector, mobile) {
     this.gmfThemes.getBgLayers().then((layers) => {
       let background;
       if (!skipPermalink) {
-        // get the background from the permalink
+        // get the initial background from the permalink
         background = this.permalink_.getBackgroundLayer(layers);
       }
       if (!background) {
@@ -705,8 +706,10 @@ AbstractAppController.prototype.setDefaultBackground_ = function (theme) {
   this.gmfThemes.getBgLayers().then((layers) => {
     let layer;
 
-    // get the background from the permalink
-    layer = this.permalink_.getBackgroundLayer(layers);
+    // get the initial background from the permalink
+    if (!gmfBackgroundlayerStatus.touchedByUser) {
+      layer = this.permalink_.getBackgroundLayer(layers);
+    }
 
     if (!layer && this.gmfUser.functionalities) {
       // get the background from the user settings
