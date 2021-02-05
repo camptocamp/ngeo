@@ -460,41 +460,6 @@ export function AbstractAppController($scope, $injector, mobile) {
   });
 
   /**
-   * @param {boolean} skipPermalink If True, don't use permalink background layer.
-   */
-  this.updateCurrentBackgroundLayer_ = (skipPermalink) => {
-    this.gmfThemes.getBgLayers().then((layers) => {
-      let background;
-      if (!skipPermalink) {
-        // get the initial background from the permalink
-        background = this.permalink_.getBackgroundLayer(layers);
-      }
-      if (!background) {
-        // get the background from the user settings
-        const functionalities = this.gmfUser.functionalities;
-        if (functionalities) {
-          const defaultBasemapArray = functionalities.default_basemap;
-          if (defaultBasemapArray.length > 0) {
-            const defaultBasemapLabel = defaultBasemapArray[0];
-            background = olArray.find(layers, (layer) => layer.get('label') === defaultBasemapLabel);
-          }
-        }
-      }
-      if (!background && layers[1]) {
-        // fallback to the layers list, use the second one because the first
-        // is the blank layer
-        background = layers[1];
-      }
-
-      if (background) {
-        this.backgroundLayerMgr_.set(this.map, background);
-      }
-    });
-  };
-
-  this.updateCurrentBackgroundLayer_(false);
-
-  /**
    * @param {string} title (text).
    * @param {number=} opt_width CSS width in pixel.
    * @param {number=} opt_height CSS height in pixel.
