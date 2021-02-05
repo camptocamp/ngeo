@@ -2,8 +2,7 @@ checks:
   required_workflows:
     main.yaml: False
     rebuild.yaml: False
-  versions:
-    rebuild: False
+  versions: False
   codespell:
     ignore_re:
       - ^contribs/gmf/test/spec/data/themescapabilities\.js$
