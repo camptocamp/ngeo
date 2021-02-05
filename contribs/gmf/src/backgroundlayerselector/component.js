@@ -1,4 +1,5 @@
 import angular from 'angular';
+import {gmfBackgroundlayerStatus} from 'gmf/backgroundlayerselector/status.js';
 import gmfThemeThemes from 'gmf/theme/Themes.js';
 import ngeoMapBackgroundLayerMgr from 'ngeo/map/BackgroundLayerMgr.js';
 import * as olEvents from 'ol/events.js';
@@ -216,6 +217,7 @@ Controller.prototype.getSetBgLayerOpacity = function(val) {
  * @param {boolean=} opt_silent Do not notify listeners.
  */
 Controller.prototype.setLayer = function(layer, opt_silent) {
+  gmfBackgroundlayerStatus.touchedByUser = true;
   const opacity = this.opacityLayer ? this.opacityLayer.getOpacity() : 0;
   this.bgLayer = layer;
   this.backgroundLayerMgr_.set(this.map, layer);

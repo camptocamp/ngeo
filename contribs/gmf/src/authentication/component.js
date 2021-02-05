@@ -1,5 +1,6 @@
 import angular from 'angular';
 import gmfAuthenticationService from 'gmf/authentication/Service.js';
+import {gmfBackgroundlayerStatus} from 'gmf/backgroundlayerselector/status.js';
 import {MessageType} from 'ngeo/message/Message.js';
 import ngeoMessageNotification from 'ngeo/message/Notification.js';
 
@@ -335,8 +336,8 @@ class AuthenticationController {
    * Calls the authentication service login method.
    */
   login() {
+    this.manualLoginLogout_();
     const gettextCatalog = this.gettextCatalog;
-
     const errors = [];
     if (this.loginVal === '') {
       errors.push(gettextCatalog.getString('The username is required.'));
@@ -361,6 +362,7 @@ class AuthenticationController {
    * Calls the authentication service logout method.
    */
   logout() {
+    this.manualLoginLogout_();
     const gettextCatalog = this.gettextCatalog;
     this.gmfAuthenticationService_.logout()
       .then(() => {
@@ -369,6 +371,14 @@ class AuthenticationController {
       .catch(() => {
         this.setError_(gettextCatalog.getString('Could not log out.'));
       });
+  }
+
+  /**
+   * Effects on manual try to login/logout.
+   */
+  manualLoginLogout_() {
+    // Set the user could lead to a new background.
+    gmfBackgroundlayerStatus.touchedByUser = true;
   }
 
   /**

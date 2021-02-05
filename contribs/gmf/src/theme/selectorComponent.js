@@ -1,4 +1,5 @@
 import angular from 'angular';
+import {gmfBackgroundlayerStatus} from 'gmf/backgroundlayerselector/status.js';
 import gmfThemeManager from 'gmf/theme/Manager.js';
 import gmfThemeThemes from 'gmf/theme/Themes.js';
 import * as olEvents from 'ol/events.js';
@@ -161,6 +162,7 @@ Controller.prototype.setThemes_ = function() {
  *     the theme should be added but it's already added.
  */
 Controller.prototype.setTheme = function(theme, opt_silent) {
+  gmfBackgroundlayerStatus.touchedByUser = true;
   if (theme) {
     this.gmfThemeManager.addTheme(theme, opt_silent);
   }
