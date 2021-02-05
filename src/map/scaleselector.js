@@ -213,7 +213,7 @@ export class ScaleselectorController {
         } else {
           if (Math.exp(Math.abs(Math.log(calculatedScale / scale))) > warningRatio) {
             console.warn(
-              `Big deferance between configured scale '${scale}' ` +
+              `Big difference between configured scale '${scale}' ` +
                 `for zoom '${zoom}' and real calculated scale '${calculatedScale}'.`
             );
           }
