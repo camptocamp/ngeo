@@ -6,9 +6,9 @@
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
     <meta name="dynamicUrl" content="https://geomapfish-demo-2-6.camptocamp.com/dynamic.json">
     <meta name="interface" content="desktop_alt">
-    <link rel="shortcut icon" href="<%=require("./image/favicon.ico")%>" />
+    <link rel="shortcut icon" href="<%=require("./image/favicon.ico")%>" crossorigin="anonymous" />
     <% for (var css in htmlWebpackPlugin.files.css) { %>
-    <link href="<%= htmlWebpackPlugin.files.css[css] %>" rel="stylesheet">
+    <link href="<%= htmlWebpackPlugin.files.css[css] %>" rel="stylesheet" crossorigin="anonymous">
     <% } %>
   </head>
   <body ng-class="{'gmf-profile-chart-active': !!profileChartActive, 'gmf-query-grid-active': !!mainCtrl.queryGridActive}" ng-keydown="mainCtrl.onKeydown($event)">
@@ -297,7 +297,7 @@
             <button
                 class="btn btn-default dropdown-toggle"
                 data-toggle="dropdown">
-              <img src="<%=require('./image/background-layer-button.png')%>" alt="" />
+              <img src="<%=require('./image/background-layer-button.png')%>" alt="" crossorigin="anonymous" />
             </button>
             <gmf-backgroundlayerselector
               gmf-backgroundlayerselector-map="::mainCtrl.map"
@@ -379,11 +379,11 @@
         ngeo-resizemap-state="mainCtrl.queryGridActive">
       </gmf-displayquerygrid>
     </footer>
-    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=es6,default-3.6,Array.prototype.includes,Object.entries,Object.values"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyA3NVIy-HOYT0a0CkChA6nFwqEFqHYWBVk"></script>
-    <script src="../../../dist/vendor.js?${htmlWebpackPlugin.options.vars.version}"></script>
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=es6,default-3.6,Array.prototype.includes,Object.entries,Object.values" crossorigin="anonymous"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyA3NVIy-HOYT0a0CkChA6nFwqEFqHYWBVk" crossorigin="anonymous"></script>
+    <script src="../../../dist/vendor.js?${htmlWebpackPlugin.options.vars.version}" crossorigin="anonymous"></script>
     <% for (var js in htmlWebpackPlugin.files.js) { %>
-    <script src="<%= htmlWebpackPlugin.files.js[js] %>"></script>
+    <script src="<%= htmlWebpackPlugin.files.js[js] %>" crossorigin="anonymous"></script>
     <% } %>
   </body>
 </html>
