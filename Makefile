@@ -269,6 +269,8 @@ contribs/dist: .build/build-dll.timestamp
 	cp ./contribs/gmf/apps/desktop/header.html .build/examples-hosted/contribs/gmf/apps/desktop
 	mkdir -p .build/examples-hosted/contribs/gmf/apps/desktop_alt
 	cp ./contribs/gmf/apps/desktop_alt/header.html .build/examples-hosted/contribs/gmf/apps/desktop_alt
+	mkdir -p .build/examples-hosted/contribs/gmf/apps/oeedit
+	cp ./contribs/gmf/apps/oeedit/header.html .build/examples-hosted/contribs/gmf/apps/oeedit
 	touch $@
 
 .build/examples-hosted/index.html: \

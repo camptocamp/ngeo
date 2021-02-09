@@ -28,6 +28,7 @@ import gmfDisclaimerModule from 'gmf/disclaimer/module.js';
 import gmfDrawingModule from 'gmf/drawing/module.js';
 import gmfEditingModule from 'gmf/editing/module.js';
 import gmfFiltersModule from 'gmf/filters/module.js';
+import gmfHeaderModule from 'gmf/header/module.js';
 import gmfImportModule from 'gmf/import/module.js';
 import gmfLayertreeModule from 'gmf/layertree/module.js';
 import gmfLidarprofileModule from 'gmf/lidarprofile/module.js';
@@ -50,6 +51,7 @@ export default angular.module('gmf', [
   gmfDrawingModule.name,
   gmfEditingModule.name,
   gmfFiltersModule.name,
+  gmfHeaderModule.name,
   gmfImportModule.name,
   gmfLayertreeModule.name,
   gmfLidarprofileModule.name,
