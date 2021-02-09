@@ -132,7 +132,7 @@
     "popper.js": "1.16.1",
     "prettier": "2.2.1",
     "proj4": "2.7.0",
-    "puppeteer": "7.0.1",
+    "puppeteer": "7.0.3",
     "qruri": "0.0.4",
     "resize-observer-polyfill": "1.5.1",
     "simple-html-tokenizer": "0.5.11",
