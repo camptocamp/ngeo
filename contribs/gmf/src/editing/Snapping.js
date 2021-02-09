@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2020 Camptocamp SA
+// Copyright (c) 2016-2021 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -612,7 +612,7 @@ EditingSnappingService.prototype.loadItemFeatures_ = function (item) {
     const readFeatures = new olFormatWFS().readFeatures(response.data);
     if (readFeatures) {
       if (item.snappingConfig.invertXY) {
-        readFeatures.forEach(f => {
+        readFeatures.forEach((f) => {
           const geom = f.getGeometry();
           if (geom) {
             const coordinates = geom.getCoordinates();
@@ -636,9 +636,10 @@ EditingSnappingService.prototype.loadItemFeatures_ = function (item) {
  * @return coordinates OpenLayers coordinates
  * @private
  */
-EditingSnappingService.prototype.switchXY_ = function(coordinates) {
-  return Array.isArray(coordinates[0]) ? coordinates.forEach(this.switchXY_) :
-    [coordinates[0], coordinates[1]] = [coordinates[1], coordinates[0]];
+EditingSnappingService.prototype.switchXY_ = function (coordinates) {
+  return Array.isArray(coordinates[0])
+    ? coordinates.forEach(this.switchXY_)
+    : ([coordinates[0], coordinates[1]] = [coordinates[1], coordinates[0]]);
 };
 
 /**
