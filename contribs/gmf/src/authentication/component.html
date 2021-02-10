@@ -32,8 +32,12 @@
   </form>
 </div>
 
-<div class="alert alert-warning" ng-show="$ctrl.infoMessage">
+<div ng-if="$ctrl.infoMessage" class="alert alert-warning">
   <span>{{ $ctrl.infoMessage }}</span>
+</div>
+
+<div ng-if="$ctrl.disconnectedShown" class="alert alert-warning" translate>
+  You are not logged in any more. The Interface has been reloaded.
 </div>
 
 <div ng-if="!$ctrl.gmfUser.username && !$ctrl.changingPassword">
@@ -160,20 +164,5 @@
     </div>
   </form>
 </div>
-
-<ngeo-modal ng-model="$ctrl.disconnectedShown" class="authentication-lost-dialog">
-  <div class="modal-header ui-draggable-handle">
-    <h4 class="modal-title">
-      {{'Autentication lost' | translate}}
-    </h4>
-    <button type="button"
-            class="close"
-            data-dismiss="modal"
-            aria-label="{{'Close' | translate}}">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body" translate>You are not logged in any more. The Interface has been reloaded.</div>
-</ngeo-modal>
 
 <div ng-show="$ctrl.error" class="gmf-authentication-error help-block"></div>
