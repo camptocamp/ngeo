@@ -1,12 +1,8 @@
-<div ng-if="$ctrl.gmfUser.is_intranet">
+<div ng-if="$ctrl.gmfUser.is_intranet" class="form-group">
   <span>{{'You are recognized as an intranet user.' | translate}}</span>
-</div>
-<div class="alert alert-warning" ng-show="$ctrl.infoMessage">
-  <span>{{ $ctrl.infoMessage }}</span>
 </div>
 
 <div ng-if="$ctrl.gmfUser.username">
-
   <div class="form-group">
     <span>{{'Logged in as' | translate}}</span>
     <strong>{{ ::$ctrl.gmfUser.username }}</strong>.
@@ -36,14 +32,17 @@
   </form>
 </div>
 
+<div class="alert alert-warning" ng-show="$ctrl.infoMessage">
+  <span>{{ $ctrl.infoMessage }}</span>
+</div>
+
 <div ng-if="!$ctrl.gmfUser.username && !$ctrl.changingPassword">
   <form
       name="loginForm"
       role="form"
       ng-submit="$ctrl.login()"
       ng-controller="GmfAuthenticationController"
-      ng-class="{'has-error': $ctrl.error}"
-      ng-if="!$ctrl.changingPassword">
+      ng-class="{'has-error': $ctrl.error}">
     <div class="form-group">
       <input
           type="text"
@@ -86,10 +85,13 @@
          href="">{{'Password forgotten?' | translate}}</a>
     </div>
   </form>
+
+  <div ng-if="$ctrl.resetPasswordShown" class="alert alert-info" translate>
+    A new password has just been sent to you by e-mail.
+  </div>
 </div>
 
 <div ng-if="$ctrl.changingPassword">
-
   <div
       class="alert alert-warning"
       ng_if="$ctrl.userMustChangeItsPassword">
@@ -157,10 +159,6 @@
           ng-click="$ctrl.changePasswordReset()" />
     </div>
   </form>
-
-  <div ng-if="$ctrl.resetPasswordShown" class="alert alert-info" translate>
-    A new password has just been sent to you by e-mail.
-  </div>
 </div>
 
 <div ng-show="$ctrl.error" class="gmf-authentication-error help-block"></div>
