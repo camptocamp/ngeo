@@ -207,7 +207,7 @@ gh-pages: .build/python-venv.timestamp
 	# We need the files for each app
 	# To simplify processing, we first copy them in gmfappsdeps directory, then from there to each app
 	$(foreach f,$^,mkdir -p .build/examples-hosted/gmfappsdeps/`dirname $(f)`; cp $(f) .build/examples-hosted/gmfappsdeps/$(f);)
-	rsync --recursive .build/examples-hosted/gmfappsdeps/contribs/gmf/ .build/examples-hosted/contribs/gmf/apps/;)
+	rsync --recursive .build/examples-hosted/gmfappsdeps/contribs/gmf/ .build/examples-hosted/contribs/gmf/apps/;
 	touch $@
 
 .build/examples-hosted/index.html: \
@@ -273,7 +273,6 @@ contribs/gmf/build/angular-locale_%.js: package.json
 .build/python-venv.timestamp: requirements.txt
 	mkdir -p $(dir $@)
 	python3 -m venv .build/python-venv
-	$(PY_VENV_BIN)/pip install `grep ^pip== requirements.txt --colour=never`
 	$(PY_VENV_BIN)/pip install -r requirements.txt
 	touch $@
 
