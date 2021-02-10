@@ -273,7 +273,6 @@ contribs/gmf/build/angular-locale_%.js: package.json
 .build/python-venv.timestamp: requirements.txt
 	mkdir -p $(dir $@)
 	python3 -m venv .build/python-venv
-	$(PY_VENV_BIN)/pip install `grep ^pip== requirements.txt --colour=never`
 	$(PY_VENV_BIN)/pip install -r requirements.txt
 	touch $@
 
