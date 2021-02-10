@@ -221,7 +221,7 @@ class AuthenticationController {
     /**
      * @type {boolean}
      */
-    this.resetPasswordModalShown = false;
+    this.resetPasswordShown = false;
 
     /**
      * @type {boolean}
@@ -394,7 +394,7 @@ class AuthenticationController {
 
     this.gmfAuthenticationService_.resetPassword(this.loginVal)
       .then(() => {
-        this.resetPasswordModalShown = true;
+        this.resetPasswordShown = true;
         this.resetError_();
       })
       .catch(() => {
