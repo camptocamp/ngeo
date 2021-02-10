@@ -27,6 +27,7 @@ import ngeoRuleRule from 'ngeo/rule/Rule.js';
  * @typedef {Object} DateOptions
  * @property {boolean} [active=false] (RuleOptions)
  * @property {number|string} [expression] (RuleOptions)
+ * @property {number|string|string[]} [literal] (RuleOptions)
  * @property {boolean} [isCustom] (RuleOptions)
  * @property {number} [lowerBoundary] (RuleOptions)
  * @property {string} name (RuleOptions)

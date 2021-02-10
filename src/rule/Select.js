@@ -28,6 +28,7 @@ import ngeoRuleRule, {RuleOperatorType} from 'ngeo/rule/Rule.js';
  * @property {string[]} choices List of choices available for selection.
  * @property {boolean} [active=false] (RuleOptions)
  * @property {number|string} [expression] (RuleOptions)
+ * @property {number|string|string[]} [literal] (RuleOptions)
  * @property {boolean} [isCustom] (RuleOptions)
  * @property {number} [lowerBoundary] (RuleOptions)
  * @property {string} name (RuleOptions)
@@ -46,7 +47,7 @@ export default class extends ngeoRuleRule {
    * A select rule, which allows the selection of multiple values among a list
    * of choices.
    *
-   * The expression property holds the list of selected choices, which is
+   * The literal property holds the list of selected choices, which is
    * comma-separated.
    *
    * @param {SelectOptions} options Options.
@@ -83,9 +84,8 @@ export default class extends ngeoRuleRule {
   get selectedChoices() {
     /** @type {string[]} */
     let selectedChoices;
-    if (this.expression) {
-      const stringExpression = String(this.expression);
-      selectedChoices = stringExpression.split(',');
+    if (this.literal) {
+      selectedChoices = /** @type {string[]} */ (this.literal);
     } else {
       selectedChoices = [];
     }

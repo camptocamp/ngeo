@@ -31,6 +31,7 @@ import olFormatGeoJSON from 'ol/format/GeoJSON.js';
  * @property {Object<string, *>} [featureProperties] Properties for the feature.
  * @property {boolean} [active=false] (RuleOptions)
  * @property {number|string} [expression] (RuleOptions)
+ * @property {number|string|string[]} [literal] (RuleOptions)
  * @property {boolean} [isCustom] (RuleOptions)
  * @property {number} [lowerBoundary] (RuleOptions)
  * @property {string} name (RuleOptions)
@@ -47,7 +48,7 @@ import olFormatGeoJSON from 'ol/format/GeoJSON.js';
 export default class extends ngeoRuleRule {
   /**
    * A rule bound to the geometry of a `ol.Feature` object. Changes made
-   * to the geometry are applied to the `expression` property of the rule.
+   * to the geometry are applied to the `literal` property of the rule.
    *
    * @param {GeometryOptions} options Options.
    */
@@ -75,7 +76,7 @@ export default class extends ngeoRuleRule {
      * @type {boolean}
      * @private
      */
-    this.updatingExpression_ = false;
+    this.updatingLiteral_ = false;
 
     /**
      * @type {boolean}
@@ -98,7 +99,7 @@ export default class extends ngeoRuleRule {
       )
     );
 
-    this.setGeometryFromExpression_();
+    this.setGeometryFromLiteral_();
   }
 
   // === Static property getters/setters ===
@@ -111,19 +112,26 @@ export default class extends ngeoRuleRule {
   }
 
   /**
-   * @param {?number|string} expression
+   * @return {?number|string|string[]} Literal
    */
-  setExpression(expression) {
-    this.updatingExpression_ = true;
-    super.setExpression(expression);
+  get literal() {
+    return this.literal_;
+  }
+
+  /**
+   * @param {?number|string|string[]} literal Literal
+   */
+  set literal(literal) {
+    this.updatingLiteral_ = true;
+    this.literal_ = literal;
 
     if (!this.updatingGeometry_) {
-      this.setGeometryFromExpression_();
+      this.setGeometryFromLiteral_();
     }
 
     this.registerGeometryChange_();
 
-    this.updatingExpression_ = false;
+    this.updatingLiteral_ = false;
   }
 
   // === Calculated property getters/setters ===
@@ -145,12 +153,12 @@ export default class extends ngeoRuleRule {
   // === Other methods ===
 
   /**
-   * Called when the geometry property in the feature changes. Update the expression accordingly.
+   * Called when the geometry property in the feature changes. Update the literal accordingly.
    * @returns {boolean}
    * @private
    */
   handleFeatureGeometryChange_() {
-    if (this.updatingExpression_) {
+    if (this.updatingLiteral_) {
       return;
     }
 
@@ -158,9 +166,9 @@ export default class extends ngeoRuleRule {
 
     const geometry = this.feature_.getGeometry();
     if (geometry) {
-      this.expression = this.format_.writeGeometry(geometry);
+      this.literal_ = this.format_.writeGeometry(geometry);
     } else {
-      this.expression = null;
+      this.literal_ = null;
     }
 
     this.registerGeometryChange_();
@@ -169,7 +177,7 @@ export default class extends ngeoRuleRule {
   }
 
   /**
-   * Called when the geometry of the features changes. Update the expression
+   * Called when the geometry of the features changes. Update the literal
    * accordingly.
    * @param {Event|import("ol/events/Event.js").default} evt Event
    * @private
@@ -177,20 +185,20 @@ export default class extends ngeoRuleRule {
   handleGeometryChange_(evt) {
     const geometry = evt.target;
     this.updatingGeometry_ = true;
-    this.expression = this.format_.writeGeometry(geometry);
+    this.literal_ = this.format_.writeGeometry(geometry);
     this.updatingGeometry_ = false;
   }
 
   /**
-   * Set geometry property using the expression property.
+   * Set geometry property using the literal property.
    * @private
    */
-  setGeometryFromExpression_() {
+  setGeometryFromLiteral_() {
     let geometry = null;
-    if (this.expression) {
-      // An expression can only have a string value with a geometry rule.
-      const expression = `${this.expression}`;
-      geometry = this.format_.readGeometry(expression);
+    if (this.literal) {
+      // A literal can only have a string value with a geometry rule.
+      const literal = `${this.literal}`;
+      geometry = this.format_.readGeometry(literal);
     }
     this.geometry = geometry;
   }

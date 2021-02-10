@@ -165,7 +165,7 @@
             class="form-group ol-unselectable"
             ng-repeat="choice in ::$ctrl.clone.choices">
           <input
-              ng-checked="$ctrl.clone.getExpression() && $ctrl.clone.getExpression().split(',').indexOf(choice) > -1"
+              ng-checked="$ctrl.clone.literal && $ctrl.clone.literal.indexOf(choice) > -1"
               ng-click="$ctrl.toggleChoiceSelection(choice)"
               type="checkbox"
               value="choice" />
@@ -193,12 +193,12 @@
                 type="number"
                 class="form-control"
                 ng-if="$ctrl.clone.type === 'number'"
-                ng-model="$ctrl.clone.expression"/>
+                ng-model="$ctrl.clone.literal"/>
             <input
                 type="text"
                 class="form-control"
                 ng-if="$ctrl.clone.type !== 'number'"
-                ng-model="$ctrl.clone.expression"/>
+                ng-model="$ctrl.clone.literal"/>
           </div>
         </div>
       </div>
@@ -245,7 +245,7 @@
         </div>
         <div ng-switch-default>
           <span>{{ $ctrl.operatorsShortFormat[$ctrl.rule.operator] }}</span>
-          <span>{{ $ctrl.timeToDate($ctrl.rule.getExpression()) }}</span>
+          <span>{{ $ctrl.timeToDate($ctrl.rule.literal) }}</span>
         </div>
       </div>
     </div>
@@ -277,7 +277,7 @@
     </div>
 
     <div ng-switch-when="select">
-      <span ng-repeat="choice in $ctrl.rule.getExpression().split(',')">
+      <span ng-repeat="choice in $ctrl.rule.literal">
         {{ choice | translate }}{{ $last ? '' : ', ' }}
       </span>
     </div>
@@ -292,7 +292,7 @@
         </div>
         <div ng-switch-default>
           <span>{{ $ctrl.operatorsShortFormat[$ctrl.rule.operator] }}</span>
-          <span>{{ $ctrl.rule.getExpression() }}</span>
+          <span>{{ $ctrl.rule.literal }}</span>
         </div>
       </div>
     </div>
