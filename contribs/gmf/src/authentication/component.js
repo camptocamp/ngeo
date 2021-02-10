@@ -259,7 +259,7 @@ export class AuthenticationController {
     /**
      * @type {boolean}
      */
-    this.resetPasswordModalShown = false;
+    this.resetPasswordShown = false;
 
     /**
      * @type {boolean}
@@ -480,7 +480,7 @@ export class AuthenticationController {
       .resetPassword(this.loginVal)
       .then(() => {
         this.isLoading = false;
-        this.resetPasswordModalShown = true;
+        this.resetPasswordShown = true;
         this.resetError_();
       })
       .catch(() => {
