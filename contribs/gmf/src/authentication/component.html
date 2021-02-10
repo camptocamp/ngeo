@@ -79,8 +79,6 @@
           ng-click="$ctrl.logout()" />
     </div>
   </form>
-
-  <div ng-show="$ctrl.error" class="gmf-authentication-error help-block"></div>
 </div>
 
 <div ng-if="!$ctrl.gmfUser.username">
@@ -123,29 +121,9 @@
     </div>
   </form>
 
-  <div ng-show="$ctrl.error" class="gmf-authentication-error help-block"></div>
-
-  <ngeo-modal
-      ng-model="$ctrl.resetPasswordModalShown">
-    <div class="modal-header ui-draggable-handle">
-      <button type="button"
-              class="close"
-              data-dismiss="modal"
-              aria-label="{{'Close' | translate}}">
-        <span aria-hidden="true">&times;</span>
-      </button>
-      <h4 class="modal-title">
-        {{'Password forgotten?' | translate}}
-      </h4>
-    </div>
-    <div class="modal-body" translate>
-      A new password has just been sent to you by e-mail.
-    </div>
-    <div class="modal-footer">
-      <button type="button"
-              class="btn btn-default"
-              data-dismiss="modal">{{'OK' | translate}}</button>
-    </div>
-  </ngeo-modal>
-
+  <div ng-if="$ctrl.resetPasswordShown" class="alert alert-info" translate>
+    A new password has just been sent to you by e-mail.
+  </div>
 </div>
+
+<div ng-show="$ctrl.error" class="gmf-authentication-error help-block"></div>
