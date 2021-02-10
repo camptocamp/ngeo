@@ -1,0 +1,8 @@
+Error on backporting to branch 2.6, error on cherry picking d7772fc3506d7f2e6ddce1a447b26e90a2f16ba5:
+
+
+
+to continue do:
+git fetch && git checkout backport/6804-to-2.6 && git reset --hard HEAD^
+git cherry-pick d7772fc3506d7f2e6ddce1a447b26e90a2f16ba5
+git push origin backport/6804-to-2.6 --force
