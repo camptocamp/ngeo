@@ -2,9 +2,6 @@
 name: Auto merge Dependabot updates
 
 on:
-  check_suite:
-    types:
-      - completed
   pull_request:
     types:
       - opened
@@ -19,4 +16,4 @@ jobs:
         uses: ridedott/dependabot-auto-merge-action@master
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          MERGE_METHOD: dependabot-preview
+          GITHUB_LOGIN: dependabot-preview[bot]
