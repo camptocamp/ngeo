@@ -24,17 +24,18 @@ import {unlistenByKey} from 'ol/events.js';
 /**
  * @typedef {Object} RuleOptions
  * @property {boolean} [active=false] Whether the rule is active or not. Used by the `ngeo-rule` component.
- * @property {number|string} [expression] The expression of the rule. The expression and boundaries are
+ * @property {number|string} [expression] Deprecated. Use literal instead. Kept for compatibility with saved filters.
+ * @property {number|string|string[]} [literal] The literal of the rule. The literal and boundaries are
  *    mutually exclusives.
  * @property {boolean} [isCustom] Whether the rule is a custom one or not. Defaults to `true`.
- * @property {number} [lowerBoundary] The lower boundary of the rule. The expression and boundaries are
+ * @property {number} [lowerBoundary] The lower boundary of the rule. The literal and boundaries are
  *    mutually exclusives.
  * @property {string} name The human-readable name of the rule.
  * @property {string} [operator] The rule operator.
  * @property {string[]} [operators] The rule operators.
  * @property {string} propertyName The property name (a.k.a. the attribute name).
  * @property {string} [type] The type of rule.
- * @property {number} [upperBoundary] The upper boundary of the rule. The expression and boundaries are
+ * @property {number} [upperBoundary] The upper boundary of the rule. The literal and boundaries are
  *    mutually exclusives.
  */
 
@@ -46,7 +47,7 @@ import {unlistenByKey} from 'ol/events.js';
 
 /**
  * @typedef {Object} RuleSimpleValue
- * @property {number|string} expression The expression of the rule value.
+ * @property {number|string|string[]} literal The literal of the rule value.
  * extends RuleBaseValue
  * @property {string} operator The operator of the rule value.
  * @property {string} propertyName The property name of the rule value
@@ -109,7 +110,7 @@ export default class Rule {
    *
    * - a property name, for example 'city_name'
    * - an operator, for example 'is equal to'
-   * - and an expression, for example 'Chicoutimi'.
+   * - and an literal, for example 'Chicoutimi'.
    *
    * A rule is useful to hold those properties and change them on the fly.
    * For example, changing an operator from 'is equal to' to 'like'.
@@ -120,7 +121,7 @@ export default class Rule {
    * not null.
    *
    * When the operator is `between`, the `lowerBoundary` and `upperBoundary`
-   * properties are used instead of `expression`.
+   * properties are used instead of `literal`.
    *
    * @param {RuleOptions} options Options.
    */
@@ -135,20 +136,15 @@ export default class Rule {
     this.active = options.active === true;
 
     /**
-     * The expression of the rule. The expression and boundaries are mutually
+     * The literal of the rule. The literal and boundaries are mutually
      * exclusives.
-     *
-     * Note: exported (instead of private) due to the problem with the
-     * compiler. See the getter/setter methods below...  As a setter, the
-     * `expression` property would support being bond to an `ng-model`. Without
-     * it, it can't unless we expose the property directly.
-     *
-     * @type {?number|string}
+     * @type {?number|string|string[]}
+     * @protected
      */
-    this.expression = options.expression !== undefined ? options.expression : null;
+    this.literal_ = options.literal !== undefined ? options.literal : null;
 
     /**
-     * The lower boundary of the rule. The expression and boundaries are
+     * The lower boundary of the rule. The literal and boundaries are
      * mutually exclusives.
      * @type {?number}
      */
@@ -161,7 +157,7 @@ export default class Rule {
     this.operator = options.operator || null;
 
     /**
-     * The upper boundary of the rule. The expression and boundaries are
+     * The upper boundary of the rule. The literal and boundaries are
      * mutually exclusives.
      * @type {?number}
      */
@@ -214,23 +210,17 @@ export default class Rule {
   }
 
   /**
-   * The `expression` property does not have conventionnal getter/setters
-   * method because of a limitation of the compiler. It doesn't support
-   * yet having such methods being extended in child classes.
-   *
-   * See: https://github.com/google/closure-compiler/issues/1089
-   *
-   * @return {?number|string} Expression
+   * @return {?number|string|string[]} Literal
    */
-  getExpression() {
-    return this.expression;
+  get literal() {
+    return this.literal_;
   }
 
   /**
-   * @param {?number|string} expression Expression
+   * @param {?number|string|string[]} literal Literal
    */
-  setExpression(expression) {
-    this.expression = expression;
+  set literal(literal) {
+    this.literal_ = literal;
   }
 
   // === Static property getters/setters ===
@@ -278,7 +268,7 @@ export default class Rule {
   get value() {
     let value = null;
 
-    const expression = this.getExpression();
+    const literal = this.literal;
     const lowerBoundary = this.lowerBoundary;
     const operator = this.operator;
     const propertyName = this.propertyName;
@@ -295,9 +285,9 @@ export default class Rule {
           };
         }
       } else {
-        if (expression !== null) {
+        if (literal !== null) {
           value = {
-            expression,
+            literal,
             operator,
             propertyName,
           };
@@ -311,12 +301,12 @@ export default class Rule {
   // === Other utility methods ===
 
   /**
-   * Reset the following properties to `null`: expression, lowerBoundary,
+   * Reset the following properties to `null`: literal, lowerBoundary,
    * upperBoundary.
    */
   reset() {
-    if (this.getExpression() !== null) {
-      this.setExpression(null);
+    if (this.literal !== null) {
+      this.literal = null;
     }
     if (this.lowerBoundary !== null) {
       this.lowerBoundary = null;

@@ -425,7 +425,7 @@ export class RuleController {
       this.clone.type === ngeoFormatAttributeType.DATE ||
       this.clone.type === ngeoFormatAttributeType.DATETIME
     ) {
-      // Watch 'expression'
+      // Watch 'literal'
       this.unlisteners_.push(
         this.scope_.$watch(
           /**
@@ -435,7 +435,8 @@ export class RuleController {
             if (!this.clone) {
               throw new Error('Missing clone');
             }
-            return this.clone.getExpression();
+            const literal = /** @type {string|number} */ (this.clone.literal);
+            return literal;
           },
           /**
            * @param {string|number} newVal
@@ -482,7 +483,7 @@ export class RuleController {
     } else if (this.clone.type === ngeoFormatAttributeType.GEOMETRY) {
       // Watch 'operator' of clone. Make sure any existing geometry is
       // supported by the newly selected operator. If it doesn't, reset
-      // the expression, i.e. geometry.
+      // the literal, i.e. geometry.
       this.unlisteners_.push(
         this.scope_.$watch(
           () => {
@@ -508,7 +509,7 @@ export class RuleController {
                     if (!this.clone) {
                       throw new Error('Missing clone');
                     }
-                    this.clone.setExpression(null);
+                    this.clone.literal = null;
                   }
                 }
               }
@@ -517,14 +518,14 @@ export class RuleController {
         )
       );
 
-      // Watch 'expression' of clone. Set 'geomType' property accordingly.
+      // Watch 'literal' of clone. Set 'geomType' property accordingly.
       this.unlisteners_.push(
         this.scope_.$watch(
           () => {
             if (!this.clone) {
               throw new Error('Missing clone');
             }
-            return this.clone.expression;
+            return this.clone.literal;
           },
           (newVal) => {
             if (newVal) {
@@ -539,7 +540,7 @@ export class RuleController {
         )
       );
 
-      // Watch both 'expression', 'active' and the modify control to be all
+      // Watch both 'literal', 'active' and the modify control to be all
       // thruthy. When that's the case, the clone feature is added to the
       // selection collection.
       this.unlisteners_.push(
@@ -551,11 +552,11 @@ export class RuleController {
             if (!this.rule) {
               throw new Error('Missing rule');
             }
-            const hasExpression = this.clone.getExpression() !== null;
+            const hasLiteral = this.clone.literal !== null;
             const isActive = this.rule.active === true;
             const editToolIsActive =
               this.modify_.getActive() || this.rotate_.getActive() || this.translate_.getActive();
-            return hasExpression && isActive && editToolIsActive;
+            return hasLiteral && isActive && editToolIsActive;
           },
           (newVal) => {
             if (newVal) {
@@ -656,7 +657,7 @@ export class RuleController {
 
   /**
    * Called when a choice is clicked, when using a `ngeo.rule.Select` rule type.
-   * Add/remove the choice to/from the `expression` of the rule.
+   * Add/remove the choice to/from the `literal` of the rule.
    * @param {string} choice Choice that has been clicked.
    */
   toggleChoiceSelection(choice) {
@@ -664,14 +665,14 @@ export class RuleController {
       throw new Error('Missing clone');
     }
     const rule = this.clone;
-    const choices = rule.getExpression() ? /** @type {string} */ (rule.getExpression()).split(',') : [];
+    const choices = rule.literal ? /** @type {string[]} */ (rule.literal) : [];
     const idx = choices.indexOf(choice);
     if (idx > -1) {
       choices.splice(idx, 1);
     } else {
       choices.push(choice);
     }
-    rule.setExpression(choices.length ? choices.join(',') : null);
+    rule.literal = choices.length ? choices : null;
   }
 
   /**
@@ -681,7 +682,7 @@ export class RuleController {
     if (!this.clone) {
       throw new Error('Missing clone');
     }
-    this.clone.setExpression(date.start);
+    this.clone.literal = date.start;
   }
 
   /**
@@ -1035,7 +1036,7 @@ export class RuleController {
 
 /**
  * The rule component is bound to a `import('ngeo/rule/Rule.js').default` object and shows UI
- * components to be able to edit its properties, such as: operator, expression,
+ * components to be able to edit its properties, such as: operator, literal,
  * etc. The actual properties depend on the type of rule.
  *
  * Also, changes are not made on-the-fly. A button must be clicked for the
