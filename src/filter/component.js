@@ -293,18 +293,18 @@ export class FilterController {
   }
 
   /**
-   * @return {boolean} True if at least one rule is currently defined with an expression.
+   * @return {boolean} True if at least one rule is currently defined with a literal.
    */
   hasARuleActive() {
     let customRuleActive = false;
     let directedRuleActive = false;
     for (const rule of this.customRules) {
-      if (rule.expression) {
+      if (rule.literal) {
         customRuleActive = true;
       }
     }
     for (const rule of this.directedRules) {
-      if (rule.expression) {
+      if (rule.literal) {
         directedRuleActive = true;
       }
     }

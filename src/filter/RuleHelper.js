@@ -244,6 +244,10 @@ export class RuleHelper {
    * @return {import("ngeo/rule/Rule.js").default} Rule.
    */
   createRule(options) {
+    // Compatibility with filters saved before version 2.6
+    if (options.expression) {
+      options.literal = options.expression;
+    }
     let rule;
     switch (options.type) {
       case ngeoFormatAttributeType.DATE:
@@ -254,6 +258,11 @@ export class RuleHelper {
         rule = new ngeoRuleGeometry(options);
         break;
       case ngeoFormatAttributeType.SELECT:
+        // Compatibility with filters saved before version 2.6
+        if (options.expression) {
+          const expression = /** @type {string} */ (options.expression);
+          options.literal = expression.split(',');
+        }
         const selectOptions = /** @type {import('ngeo/rule/Select.js').SelectOptions} */ (options);
         console.assert(selectOptions.choices);
         rule = new ngeoRuleSelect(selectOptions);
@@ -279,9 +288,9 @@ export class RuleHelper {
       propertyName: rule.propertyName,
       type: rule.type,
     };
-    const expression = rule.getExpression();
-    if (expression !== null) {
-      options.expression = expression;
+    const literal = rule.literal;
+    if (literal !== null) {
+      options.literal = literal;
     }
     if (rule.lowerBoundary !== null) {
       options.lowerBoundary = rule.lowerBoundary;
@@ -326,8 +335,8 @@ export class RuleHelper {
    *     properties are set.
    */
   extendRule(sourceRule, destRule) {
-    if (destRule.getExpression() !== sourceRule.getExpression()) {
-      destRule.setExpression(sourceRule.getExpression());
+    if (destRule.literal !== sourceRule.literal) {
+      destRule.literal = sourceRule.literal;
     }
 
     if (destRule.lowerBoundary !== sourceRule.lowerBoundary) {
@@ -372,8 +381,8 @@ export class RuleHelper {
       type: rule.type,
     };
 
-    if (rule.expression !== null) {
-      obj.expression = rule.expression;
+    if (rule.literal !== null) {
+      obj.literal = rule.literal;
     }
 
     if (rule.lowerBoundary !== null) {
@@ -521,7 +530,7 @@ export class RuleHelper {
       return null;
     }
 
-    const expression = /** @type {import("ngeo/rule/Rule.js").RuleOptions} */ (value).expression;
+    const literal = /** @type {import("ngeo/rule/Rule.js").RuleOptions} */ (value).literal;
     const lowerBoundary = /** @type {import("ngeo/rule/Rule.js").RuleOptions} */ (value).lowerBoundary;
     const operator = value.operator;
     const propertyName = value.propertyName;
@@ -548,16 +557,16 @@ export class RuleHelper {
         beginValue = moment(lowerBoundary).format('YYYY-MM-DD');
         endValue = moment(upperBoundary).format('YYYY-MM-DD');
       } else if (operator === rtot.EQUALS) {
-        beginValue = moment(expression).format('YYYY-MM-DD');
+        beginValue = moment(literal).format('YYYY-MM-DD');
         endValue = beginValue;
       } else if (operator === rtot.BEGINS) {
-        beginValue = moment(expression).format('YYYY-MM-DD');
+        beginValue = moment(literal).format('YYYY-MM-DD');
         // NOTE: end value is CURRENT + 30 years
-        endValue = moment(expression).add(30, 'years').format('YYYY-MM-DD');
+        endValue = moment(literal).add(30, 'years').format('YYYY-MM-DD');
       } else if (operator === rtot.ENDS) {
         // NOTE: begin value is hardcoded to 1970-01-01
         beginValue = '1970-01-01';
-        endValue = moment(expression).format('YYYY-MM-DD');
+        endValue = moment(literal).format('YYYY-MM-DD');
       }
       if (beginValue && endValue) {
         if (dataSource.ogcServerType == 'qgisserver') {
@@ -597,37 +606,34 @@ export class RuleHelper {
         }
       }
     } else if (numericTypes.includes(operator)) {
-      if (typeof expression !== 'number') {
-        throw new Error('Wrong expression type');
+      if (typeof literal !== 'number') {
+        throw new Error('Wrong literal type');
       }
       if (operator === rot.GREATER_THAN) {
-        filter = olFormatFilter.greaterThan(propertyName, expression);
+        filter = olFormatFilter.greaterThan(propertyName, literal);
       } else if (operator === rot.GREATER_THAN_OR_EQUAL_TO) {
-        filter = olFormatFilter.greaterThanOrEqualTo(propertyName, expression);
+        filter = olFormatFilter.greaterThanOrEqualTo(propertyName, literal);
       } else if (operator === rot.LESSER_THAN) {
-        filter = olFormatFilter.lessThan(propertyName, expression);
+        filter = olFormatFilter.lessThan(propertyName, literal);
       } else if (operator === rot.LESSER_THAN_OR_EQUAL_TO) {
-        filter = olFormatFilter.lessThanOrEqualTo(propertyName, expression);
+        filter = olFormatFilter.lessThanOrEqualTo(propertyName, literal);
       }
     } else if (operator === rot.BETWEEN) {
       filter = olFormatFilter.between(propertyName, lowerBoundary, upperBoundary);
     } else if (operator === rot.EQUAL_TO) {
-      filter = olFormatFilter.equalTo(propertyName, expression);
+      filter = olFormatFilter.equalTo(propertyName, /** @type {?number|string} */ (literal));
     } else if (operator === rot.LIKE) {
-      const stringExpression = String(expression)
-        .replace(/!/g, '!!')
-        .replace(/\./g, '!.')
-        .replace(/\*/g, '!*');
+      const stringLiteral = String(literal).replace(/!/g, '!!').replace(/\./g, '!.').replace(/\*/g, '!*');
       filter = olFormatFilter.like(
         propertyName,
-        `*${stringExpression}*`,
+        `*${stringLiteral}*`,
         '*' /* wildCard */,
         '.' /* singleChar */,
         '!' /* escapeChar */,
         false /* matchCase */
       );
     } else if (operator === rot.NOT_EQUAL_TO) {
-      filter = olFormatFilter.notEqualTo(propertyName, expression);
+      filter = olFormatFilter.notEqualTo(propertyName, /** @type {?number|string} */ (literal));
     }
 
     return filter;
