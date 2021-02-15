@@ -51,11 +51,6 @@ jobs:
 
       - run: buildtools/set-version
       - run: python3 -c 'print("::set-env GIT_BRANCH=" + "/".join("head/ref/branch/sub".split("/")[2:]))'
-      - run: echo "::set-env IS_HOME=FALSE"
-      - run: echo "::set-env IS_HOME=TRUE"
-        if: >
-          github.ref == format('refs/heads/{0}', env.MAIN_BRANCH)
-          && github.repository == 'camptocamp/c2cgeoportal'
       - run: echo "::set-env PACKAGE_VERSION=`buildtools/get-version.sh version`"
       # Lint
       - run: make lint
