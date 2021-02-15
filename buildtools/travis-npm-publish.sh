@@ -1,30 +1,29 @@
 #!/bin/bash -e
 
-echo "Trying to publish tag $TRAVIS_TAG from package $PACKAGE_VERSION on $TRAVIS_REPO_SLUG"
+echo "Trying to publish tag $GITHUB_REF from package $PACKAGE_VERSION on $GITHUB_REPOSITORY"
 
-if [[ $@ =~ "--dry-run" ]]; then RUN="echo "; fi
+for value in "$@"; do
+    if [[ $value == "--dry-run" ]]; then RUN="echo "; fi
+done
 
-if [ "$TRAVIS_REPO_SLUG" = "camptocamp/ngeo" ]
-then
-    if [ -n "$TRAVIS_TAG"  ]
-    then
-        echo "The tag $TRAVIS_TAG should be published to npm"
-        if [[ $TRAVIS_TAG =~ ^[0-9]+\.[0-9]+\.[0-9]+-[a-z]+\.[0-9]+$ ]]
-        then
+if [ "$GITHUB_REPOSITORY" = "camptocamp/ngeo" ]; then
+    if [[ "$GITHUB_REF" =~ ^refs/tags/.* ]]; then
+        echo "The tag $GITHUB_REF should be published to npm"
+        if [[ $GITHUB_REF =~ ^refs/tags/([0-9]+\.[0-9]+\.[0-9]+-[a-z]+\.[0-9]+)$ ]]; then
             echo "This is a regular version (not a dev version)"
-            export TAG="--tag version-$(echo $TRAVIS_TAG | awk -F[.-] '{print $4}')"
+            for t in $(echo "${GITHUB_REF}" | tr '/' "\n"); do GITHUB_TAG=$t; done
+            TAG="--tag version-$(echo "${GITHUB_TAG}" | awk -F[.-] '{print $4}')"
+            export TAG
         else
             echo "This is not a regular version"
         fi
-        if [ "$PACKAGE_VERSION" = "$TRAVIS_TAG" ]
-        then
-            $RUN npm publish --quiet --tag=version-${MAIN_BRANCH} $TAG
+        if [ "refs/tags/$PACKAGE_VERSION" = "$GITHUB_REF" ]; then
+            $RUN npm publish --quiet "--tag=version-${MAIN_BRANCH}" "${TAG}"
         else
             echo "Skipping publication, the travis tag and package version differ"
         fi
     else
-        if [ "${TRAVIS_BRANCH}" = "${MAIN_BRANCH}" ]
-        then
+        if [ "${GITHUB_REF}" = "refs/heads/${MAIN_BRANCH}" ]; then
             echo "Publish daily version"
             $RUN npm install --no-save fluid-publish
             $RUN npm config set loglevel warn && node_modules/.bin/fluid-publish devTag="version-${MAIN_BRANCH}-latest"
