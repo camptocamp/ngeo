@@ -46,7 +46,7 @@
   <div class="container-fluid">
   <div ng-show="!ctrl.pending && ctrl.getActiveGridSource() && ctrl.getActiveGridSource().configuration !== null" class="row">
     <div class="col-md-5 my-auto">
-      <span ng-if="ctrl.hasActiveSourceTooManyResults()" class="gmf-query-grid-too-many text-warning">{{'Only' | translate}} {{ctrl.getActiveGridSourceLimit()}} {{'of' | translate}} {{ctrl.getActiveGridSourceTotalFeatures()}} {{'results displayed, as the maximum number is reached. Please refine your query.' | translate }}</span>
+      <span ng-if="ctrl.hasOneWithTooManyResults_()" class="gmf-query-grid-too-many text-warning">{{'Only' | translate}} {{ctrl.sumOfFeatures}} {{'of' | translate}} {{ctrl.sumOfAvailableResults}} {{'results displayed, as the maximum number is reached. Please refine your query.' | translate }}</span>
     </div>
     <div class="col-md-7" class="pull-right">
       <ul class="nav justify-content-end">

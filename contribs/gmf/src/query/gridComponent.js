@@ -269,6 +269,18 @@ export function QueryGridController(
    */
   this.map_ = null;
 
+  /**
+   * Sum over all tabs of the obtained results
+   * @type {number}
+   */
+  this.sumOfFeatures = 0;
+
+  /**
+   * Sum over all tabs of the available results
+   * @type {number}
+   */
+  this.sumOfAvailableResults = 0;
+
   // Watch the ngeo query result service.
   this.$scope_.$watchCollection(
     () => ngeoQueryResult,
@@ -349,6 +361,23 @@ QueryGridController.prototype.updateData_ = function () {
     }
     return;
   }
+
+  this.sumOfAvailableResults = 0;
+  this.sumOfFeatures = 0;
+
+  /**
+   * @type {Array<string>}
+   */
+  const countedSources = [];
+  this.ngeoQueryResult.sources.forEach((source) => {
+    if (!countedSources.includes(source.label)) {
+      this.sumOfFeatures += source.features.length;
+    }
+    if (!source.requestPartners || !source.requestPartners.some((label) => countedSources.includes(label))) {
+      this.sumOfAvailableResults += source.totalFeatureCount;
+    }
+    countedSources.push(source.label);
+  });
 
   this.active = true;
   this.pending = false;
@@ -673,6 +702,18 @@ QueryGridController.prototype.getGridConfiguration_ = function (data) {
 };
 
 /**
+ * Get the currently shown grid source.
+ * @return {GridSource|null} Grid source.
+ */
+QueryGridController.prototype.getActiveGridSource = function () {
+  if (this.selectedTab === null) {
+    return null;
+  } else {
+    return this.gridSources[`${this.selectedTab}`];
+  }
+};
+
+/**
  * Remove the current selected feature and source and remove all features
  * from the map.
  */
@@ -769,49 +810,6 @@ QueryGridController.prototype.updateFeatures_ = function (gridSource) {
       this.features_.push(feature);
     }
   }
-};
-
-/**
- * Get the currently shown grid source.
- * @return {GridSource|null} Grid source.
- */
-QueryGridController.prototype.getActiveGridSource = function () {
-  if (this.selectedTab === null) {
-    return null;
-  } else {
-    return this.gridSources[`${this.selectedTab}`];
-  }
-};
-
-/**
- * Returns if the source of currently active grid had too many results to show
- * @return {boolean} Are there too many results?
- */
-QueryGridController.prototype.hasActiveSourceTooManyResults = function () {
-  const source = this.getActiveGridSource();
-  if (source === null || source.configuration === null) {
-    return false;
-  } else {
-    return source.source.tooManyResults;
-  }
-};
-
-/**
- * Returns the limit of results for this source
- * @return {number} limit
- */
-QueryGridController.prototype.getActiveGridSourceLimit = function () {
-  const source = this.getActiveGridSource();
-  return source.source.limit;
-};
-
-/**
- * Returns the total number of features available
- * @return {number} total number of features
- */
-QueryGridController.prototype.getActiveGridSourceTotalFeatures = function () {
-  const source = this.getActiveGridSource();
-  return source.source.totalFeatureCount;
 };
 
 /**
