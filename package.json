@@ -41,7 +41,7 @@
     "@sentry/browser": "6.1.0",
     "@sentry/types": "6.1.0",
     "@trevoreyre/autocomplete-js": "2.2.0",
-    "@types/angular": "1.8.0",
+    "@types/angular": "1.8.1",
     "@types/angular-animate": "1.5.10",
     "@types/angular-dynamic-locale": "0.1.34",
     "@types/angular-gettext": "2.1.34",
