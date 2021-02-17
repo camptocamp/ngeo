@@ -12,7 +12,7 @@
  * @hidden
  */
 export function coordinatesToXY0(coordinates) {
-  if (coordinates.length > 2) {
+  if (coordinates.length >= 2) {
     const coord = /** @type{import("ol/coordinate.js").Coordinate} */(coordinates);
     return [coord[0], coord[1]];
   }
