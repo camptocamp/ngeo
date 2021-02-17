@@ -142,10 +142,7 @@ VectorEncoder.prototype.encodeVectorLayer = function (
     }
     const geometryType = geometry.getType();
 
-    const stylesValue = [];
-    for (const style of styles) {
-      stylesValue.push(olUtilGetUid(style).toString());
-    }
+    const stylesValue = styles.map((style) => olUtilGetUid(style).toString());
     const styleValue = `${stylesValue.join(',')}-${geometryType}`;
     const styleKey = `[${FEATURE_STYLE_PROP} = '${styleValue}']`;
 
@@ -241,11 +238,6 @@ VectorEncoder.prototype.encodeVectorStyle_ = function (
     // unsupported geometry type
     return;
   }
-  const test = '';
-  console.log(test.length);
-  /** @type {?} */
-  const test2 = '';
-  console.log(test2.length);
 
   const styleType = PRINT_STYLE_TYPES[geometryType];
   const fillStyle = style.getFill();
