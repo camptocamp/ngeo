@@ -339,7 +339,12 @@ export class SearchController {
      */
     this.additionalListeners = {};
 
-    if (!this.options.clearButton) {
+    /**
+     * @type {boolean}
+     */
+    this.clearButton = this.options.clearButton !== false;
+
+    if (this.clearButton) {
       // Empty the search field on focus and blur.
       this.element_.find('input').on('focus blur', () => {
         this.clear();
@@ -766,7 +771,7 @@ export class SearchController {
    * @private
    */
   setTTDropdownVisibility_() {
-    if (this.options.clearButton) {
+    if (this.clearButton) {
       const ttDropdown = this.element_.find('.twitter-typeahead .tt-menu');
       this.inputValue ? ttDropdown.show() : ttDropdown.hide();
     }
@@ -905,7 +910,7 @@ export class SearchController {
    * @private
    */
   leaveSearch_() {
-    if (!this.options.clearButton) {
+    if (!this.clearButton) {
       this.clear();
     }
     this.blur();
@@ -915,7 +920,7 @@ export class SearchController {
    * @private
    */
   close_() {
-    if (!this.options.clearButton) {
+    if (!this.clearButton) {
       this.setTTDropdownVisibility_();
     }
   }
