@@ -142,10 +142,7 @@ VectorEncoder.prototype.encodeVectorLayer = function (
     }
     const geometryType = geometry.getType();
 
-    const stylesValue = [];
-    for (const style of styles) {
-      stylesValue.push(olUtilGetUid(style).toString());
-    }
+    const stylesValue = styles.map((style) => olUtilGetUid(style).toString());
     const styleValue = `${stylesValue.join(',')}-${geometryType}`;
     const styleKey = `[${FEATURE_STYLE_PROP} = '${styleValue}']`;
 
@@ -173,8 +170,8 @@ VectorEncoder.prototype.encodeVectorLayer = function (
         destinationPrintDpi,
         goodnessOfFit
       );
-      if (mapfishPrintStyle) {
-        styleObject.symbolizers.push(mapfishPrintStyle);
+      if (mapfishPrintStyle && mapfishPrintStyle.length > 0) {
+        styleObject.symbolizers.push(...mapfishPrintStyle);
       }
     }
   };
@@ -228,7 +225,7 @@ VectorEncoder.prototype.newFeatureFromStyle_ = function (style) {
  * @param {import("ol/style/Style.js").default} style Style.
  * @param {number} destiontionPrintDpi The destination print DPI.
  * @param {number=} [goodnessOfFit] Goodness of fit.
- * @returns {import('ngeo/print/mapfish-print-v3.js').MapFishPrintSymbolizer} The style
+ * @returns {import('ngeo/print/mapfish-print-v3.js').MapFishPrintSymbolizer[]} The styles
  */
 VectorEncoder.prototype.encodeVectorStyle_ = function (
   geometryType,
@@ -239,35 +236,34 @@ VectorEncoder.prototype.encodeVectorStyle_ = function (
 ) {
   if (!(geometryType in PRINT_STYLE_TYPES)) {
     // unsupported geometry type
-    return;
+    return null;
   }
-  const test = '';
-  console.log(test.length);
-  /** @type {?} */
-  const test2 = '';
-  console.log(test2.length);
+
+  const symbolizers = [];
+
+  const textStyle = style.getText();
+  if (textStyle !== null) {
+    symbolizers.push(this.encodeTextStyle_(textStyle, goodnessOfFit));
+  }
 
   const styleType = PRINT_STYLE_TYPES[geometryType];
   const fillStyle = style.getFill();
-  const imageStyle = style.getImage();
   const strokeStyle = style.getStroke();
-  const textStyle = style.getText();
   if (styleType === PrintStyleType.POLYGON) {
     if (fillStyle !== null) {
-      return this.encodeVectorStyle_Polygon_(fillStyle, strokeStyle);
+      symbolizers.push(this.encodeVectorStyle_Polygon_(fillStyle, strokeStyle));
     }
   } else if (styleType === PrintStyleType.LINE_STRING) {
     if (strokeStyle !== null) {
-      return this.encodeVectorStyle_Line_(strokeStyle);
+      symbolizers.push(this.encodeVectorStyle_Line_(strokeStyle));
     }
   } else if (styleType === PrintStyleType.POINT) {
+    const imageStyle = style.getImage();
     if (imageStyle !== null) {
-      return this.encodeVectorStyle_Point_(resolution, imageStyle, destiontionPrintDpi);
+      symbolizers.push(this.encodeVectorStyle_Point_(resolution, imageStyle, destiontionPrintDpi));
     }
   }
-  if (textStyle !== null) {
-    return this.encodeTextStyle_(textStyle, goodnessOfFit);
-  }
+  return symbolizers;
 };
 
 /**
