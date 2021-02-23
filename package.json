@@ -98,7 +98,7 @@
     "event-hooks-webpack-plugin": "2.2.0",
     "expose-loader": "1.0.3",
     "extract-loader": "5.1.0",
-    "fast-sass-loader": "1.5.0",
+    "fast-sass-loader": "2.0.0",
     "file-loader": "6.2.0",
     "file-saver": "2.0.5",
     "floatthead": "2.2.1",
