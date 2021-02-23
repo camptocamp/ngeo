@@ -123,7 +123,7 @@
     "loader-utils": "2.0.0",
     "localforage": "1.9.0",
     "moment": "2.29.1",
-    "node-sass": "4.14.1",
+    "node-sass": "5.0.0",
     "node-sass-importer": "2.0.2",
     "ol": "6.5.0",
     "ol-cesium": "2.12.0",
