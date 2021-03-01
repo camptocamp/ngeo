@@ -38,7 +38,7 @@
     "@babel/preset-env": "7.13.8",
     "@fortawesome/fontawesome-free": "5.15.2",
     "@geoblocks/proj": "0.4.2",
-    "@sentry/browser": "6.2.0",
+    "@sentry/browser": "6.2.1",
     "@sentry/types": "6.2.1",
     "@trevoreyre/autocomplete-js": "2.2.0",
     "@types/angular": "1.8.1",
