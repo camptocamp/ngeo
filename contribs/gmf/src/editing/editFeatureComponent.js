@@ -1307,7 +1307,16 @@ Controller.prototype.openFeatureMenu_ = function (coordinate, features) {
   );
 
   this.map.addOverlay(this.menuMultiple_);
-  this.menuMultiple_.open(coordinate);
+  if (features[0].getGeometry().getType() === 'MultiPoint') {
+    const resolution = this.map.getView().getResolution();
+    if (resolution === undefined) {
+      throw new Error('Missing resolution');
+    }
+    const offset = resolution * 10;
+    this.menuMultiple_.open([coordinate[0] + offset, coordinate[1] + offset]);
+  } else {
+    this.menuMultiple_.open(coordinate);
+  }
 };
 
 /**

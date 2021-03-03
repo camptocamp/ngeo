@@ -38,6 +38,7 @@ export default class extends menu {
     this.actions_.forEach((action) => {
       action[0].addEventListener('mouseenter', this.handleMouseEnter_.bind(this, action.data().name));
       action[0].addEventListener('mouseout', this.handleMouseOut_.bind(this, action.data().name));
+      action[0].addEventListener('pointermove', this.handlePointerMove_.bind(this));
       action[0].classList.add('gmf-feature-menu-item');
     });
   }
@@ -53,6 +54,16 @@ export default class extends menu {
         action: actionName,
       })
     );
+    evt.stopPropagation();
+  }
+
+  /**
+   * Prevent strange, error generating, activities on mouse move
+   * @param {Event|import("ol/events/Event.js").default} evt Event.
+   * @private
+   */
+  handlePointerMove_(evt) {
+    evt.preventDefault();
     evt.stopPropagation();
   }
 
