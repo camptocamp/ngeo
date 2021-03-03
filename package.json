@@ -131,7 +131,7 @@
     "parse-absolute-css-unit": "1.0.2",
     "popper.js": "1.16.1",
     "prettier": "2.2.1",
-    "proj4": "2.7.0",
+    "proj4": "2.7.2",
     "puppeteer": "8.0.0",
     "qruri": "0.0.4",
     "resize-observer-polyfill": "1.5.1",
