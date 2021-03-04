@@ -11,7 +11,7 @@
     <link href="<%= htmlWebpackPlugin.files.css[css] %>" rel="stylesheet" crossorigin="anonymous">
     <% } %>
   </head>
-  <body ng-class="{'gmf-profile-chart-active': !!profileChartActive, 'gmf-query-grid-active': !!mainCtrl.queryGridActive}" ng-keydown="mainCtrl.onKeydown($event)">
+  <body ng-class="{'gmf-profile-chart-active': !!profileChartActive, 'gmf-lidarprofile-chart-active': !!lidarProfileChartActive, 'gmf-query-grid-active': !!mainCtrl.queryGridActive}" ng-keydown="mainCtrl.onKeydown($event)">
     <div ng-show="mainCtrl.loading" class="loading-mask">
       <i class="fa custom-spinner-loading fa-spin spinner-loading-mask">
         <%=require('gmf/icons/spinner.svg?viewbox&height=1em')%>
@@ -79,8 +79,12 @@
               <span class="fa fa-edit"></span>
             </button>
             <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.drawProfilePanelActive"
-              data-toggle="tooltip" data-placement="left" data-original-title="{{'Profile'|translate}}">
+              data-toggle="tooltip" data-placement="left" data-original-title="{{'Elevation profile'|translate}}">
               <span class="fa fa-chart-area"></span>
+            </button>
+            <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.drawLidarprofilePanelActive"
+              data-toggle="tooltip" data-placement="left" data-original-title="{{'LIDAR profile'|translate}}">
+              <span class="fa fa-chart-line"></span>
             </button>
             <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.streetViewActive"
               data-toggle="tooltip" data-placement="left" data-original-title="{{'Street View'|translate}}">
@@ -199,7 +203,7 @@
           <div ng-show="mainCtrl.drawProfilePanelActive" class="row profile-panel">
             <div class="col-sm-12">
               <div class="gmf-app-tools-content-heading">
-                {{'Profile'|translate}}
+                {{'Elevation profile'|translate}}
                 <a class="btn close" ng-click="mainCtrl.drawProfilePanelActive = false">&times;</a>
               </div>
               <div gmf-drawprofileline
@@ -220,6 +224,19 @@
                   </em>
                 </p>
               </div>
+            </div>
+          </div>
+          <div ng-show="mainCtrl.drawLidarprofilePanelActive" class="row profile-panel">
+            <div class="col-sm-12">
+              <div class="gmf-app-tools-content-heading">
+                {{'Lidar profile'|translate}}
+                <a class="btn close" ng-click="mainCtrl.drawLidarprofilePanelActive = false">&times;</a>
+              </div>
+              <gmf-lidarprofile-panel
+                   gmf-lidarprofile-panel-active="mainCtrl.drawLidarprofilePanelActive"
+                   gmf-lidarprofile-panel-map="::mainCtrl.map"
+                   gmf-lidarprofile-panel-line="mainCtrl.lidarProfileLine">
+              </gmf-lidarprofile-panel>
             </div>
           </div>
           <div ng-show="mainCtrl.streetViewActive" class="row">
@@ -378,6 +395,13 @@
         ngeo-resizemap="mainCtrl.map"
         ngeo-resizemap-state="mainCtrl.queryGridActive">
       </gmf-displayquerygrid>
+      <gmf-lidarprofile
+        gmf-lidarprofile-active="lidarProfileChartActive"
+        gmf-lidarprofile-line="mainCtrl.lidarProfileLine"
+        ngeo-resizemap="mainCtrl.map"
+        ngeo-resizemap-state="lidarProfileChartActive">
+      </gmf-lidarprofile>
+      </div>
     </footer>
     <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=es6,default-3.6,Array.prototype.includes,Object.entries,Object.values" crossorigin="anonymous"></script>
     <script src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyA3NVIy-HOYT0a0CkChA6nFwqEFqHYWBVk" crossorigin="anonymous"></script>
