@@ -259,7 +259,9 @@ Controller.prototype.setOpacityBgLayer = function (layer) {
   layer.setOpacity(opacity);
   this.opacityLayer = layer;
   this.opacityLayer.setVisible(opacity !== 0);
-  this.bgLayer.setVisible(opacity !== 1);
+  if (this.bgLayer) {
+    this.bgLayer.setVisible(opacity !== 1);
+  }
   this.backgroundLayerMgr_.setOpacityBgLayer(this.map, layer);
 };
 
