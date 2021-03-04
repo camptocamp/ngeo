@@ -1326,6 +1326,8 @@ FeatureHelper.prototype.createTextStyle_ = function (options) {
     delete options.angle;
   }
 
+  text_options.overflow = true;
+
   text_options.font = ['normal', `${options.size || 10}pt`, 'Arial'].join(' ');
 
   if (options.color) {
