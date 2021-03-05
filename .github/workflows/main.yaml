@@ -101,7 +101,7 @@ jobs:
           --header 'Accept: application/vnd.github.v3+json'
           --header "Authorization: token ${{ secrets.GOPASS_CI_GITHUB_TOKEN }}"
           https://api.github.com/repos/camptocamp/c2cgeoportal/dispatches
-          --data '{"event_type": "geomapfish_${{ env.MAIN_BRANCH }}_updated"}'
+          --data '{"event_type": "ngeo_${{ env.MAIN_BRANCH }}_updated"}'
         if: >
           github.ref == format('refs/heads/{0}', env.MAIN_BRANCH)
           && github.repository == 'camptocamp/ngeo'
