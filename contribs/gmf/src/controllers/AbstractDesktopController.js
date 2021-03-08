@@ -163,7 +163,7 @@ export class AbstractDesktopController extends AbstractAPIController {
      * The ngeo ToolActivate manager service.
      * @type {import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr}
      */
-    const ngeoToolActivateMgr = $injector.get('ngeoToolActivateMgr');
+    this.ngeoToolActivateMgr = $injector.get('ngeoToolActivateMgr');
 
     /**
      * @type {import('gmf/datasource/DataSourceBeingFiltered.js').DataSourceBeingFiltered}
@@ -177,7 +177,7 @@ export class AbstractDesktopController extends AbstractAPIController {
     this.gmfLayerBeingSwipe = $injector.get('gmfLayerBeingSwipe');
 
     const editFeatureActivate = new ngeoMiscToolActivate(this, 'editFeatureActive');
-    ngeoToolActivateMgr.registerTool('mapTools', editFeatureActivate, false);
+    this.ngeoToolActivateMgr.registerTool('mapTools', editFeatureActivate, false);
 
     const googleStreetViewActivate = new ngeoMiscToolActivate(this, 'googleStreetViewActive');
     ngeoToolActivateMgr.registerTool('mapTools', googleStreetViewActivate, false);
