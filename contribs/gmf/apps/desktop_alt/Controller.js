@@ -37,6 +37,7 @@ import appBase from '../appmodule.js';
 import gmfImportModule from 'gmf/import/module.js';
 import gmfFloorModule from 'gmf/floor/module.js';
 import gmfLidarprofileModule from 'gmf/lidarprofile/module.js';
+import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
 import ngeoStreetviewModule from 'ngeo/streetview/module.js';
 import ngeoRoutingModule from 'ngeo/routing/module.js';
 import ngeoStatemanagerWfsPermalink from 'ngeo/statemanager/WfsPermalink.js';
@@ -67,6 +68,14 @@ class Controller extends AbstractDesktopController {
     if (this.dimensions.FLOOR == undefined) {
       this.dimensions.FLOOR = '*';
     }
+
+    /**
+     * @type {boolean}
+     */
+    this.drawLidarprofilePanelActive = false;
+
+    const drawLidarprofilePanelActive = new ngeoMiscToolActivate(this, 'drawLidarprofilePanelActive');
+    this.ngeoToolActivateMgr.registerTool('mapTools', drawLidarprofilePanelActive, false);
   }
 
   /**
