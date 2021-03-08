@@ -196,9 +196,9 @@ i, cite, em, var, address, dfn {
   margin: 20px 45%;
 }
 
-// Avoid dropdown menus expanding out of viewport
+// Avoid dropdown menus expanding out of viewport.
 .dropdown-menu {
-  max-height: 80vh;
+  max-height: 50vh;
   overflow-y: auto;
 }
 
