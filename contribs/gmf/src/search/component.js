@@ -293,8 +293,9 @@ export class SearchController {
     /**
      * Supported projections for coordinates search.
      * @type {import('ol/proj/Projection.js').default[]}
+     * @private
      */
-    this.coordinatesProjectionsInstances = [];
+    this.coordinatesProjectionsInstances_ = [];
 
     /**
      * @type {import("ngeo/map/FeatureOverlay.js").FeatureOverlay}
@@ -377,7 +378,7 @@ export class SearchController {
    * Called on initialization of the controller.
    */
   $onInit() {
-    this.coordinatesProjectionsInstances =
+    this.coordinatesProjectionsInstances_ =
       this.options.coordinatesProjections === undefined
         ? [this.map.getView().getProjection()]
         : this.ngeoAutoProjection_.getProjectionList(this.options.coordinatesProjections);
@@ -690,7 +691,7 @@ export class SearchController {
         coordinates,
         extent,
         viewProjection,
-        this.options.coordinatesProjections
+        this.coordinatesProjectionsInstances_.map((proj) => proj.getCode())
       );
       if (position === null) {
         return;
