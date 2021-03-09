@@ -242,7 +242,7 @@ export class AbstractDesktopController extends AbstractAPIController {
      * The ngeo ToolActivate manager service.
      * @type {import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr}
      */
-    const ngeoToolActivateMgr = $injector.get('ngeoToolActivateMgr');
+    this.ngeoToolActivateMgr = $injector.get('ngeoToolActivateMgr');
 
     /**
      * @type {import('gmf/datasource/DataSourceBeingFiltered.js').DataSourceBeingFiltered}
@@ -256,25 +256,25 @@ export class AbstractDesktopController extends AbstractAPIController {
     this.gmfLayerBeingSwipe = $injector.get('gmfLayerBeingSwipe');
 
     const editFeatureActivate = new ngeoMiscToolActivate(this, 'editFeatureActive');
-    ngeoToolActivateMgr.registerTool('mapTools', editFeatureActivate, false);
+    this.ngeoToolActivateMgr.registerTool('mapTools', editFeatureActivate, false);
 
     const streetViewActivate = new ngeoMiscToolActivate(this, 'streetViewActive');
-    ngeoToolActivateMgr.registerTool('mapTools', streetViewActivate, false);
+    this.ngeoToolActivateMgr.registerTool('mapTools', streetViewActivate, false);
 
     const contextdataActivate = new ngeoMiscToolActivate(this, 'contextdataActive');
-    ngeoToolActivateMgr.registerTool('mapTools', contextdataActivate, false);
+    this.ngeoToolActivateMgr.registerTool('mapTools', contextdataActivate, false);
 
     const drawFeatureActivate = new ngeoMiscToolActivate(this, 'drawFeatureActive');
-    ngeoToolActivateMgr.registerTool('mapTools', drawFeatureActivate, false);
+    this.ngeoToolActivateMgr.registerTool('mapTools', drawFeatureActivate, false);
 
     const drawProfilePanelActivate = new ngeoMiscToolActivate(this, 'drawProfilePanelActive');
-    ngeoToolActivateMgr.registerTool('mapTools', drawProfilePanelActivate, false);
+    this.ngeoToolActivateMgr.registerTool('mapTools', drawProfilePanelActivate, false);
 
     const printPanelActivate = new ngeoMiscToolActivate(this, 'printPanelActive');
-    ngeoToolActivateMgr.registerTool('mapTools', printPanelActivate, false);
+    this.ngeoToolActivateMgr.registerTool('mapTools', printPanelActivate, false);
 
     const routingPanelActive = new ngeoMiscToolActivate(this, 'routingPanelActive');
-    ngeoToolActivateMgr.registerTool('mapTools', routingPanelActive, false);
+    this.ngeoToolActivateMgr.registerTool('mapTools', routingPanelActive, false);
 
     /**
      * @type {?import("ol/geom/LineString.js").default}
