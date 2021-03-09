@@ -10,9 +10,7 @@ plugins:
   - copyright
 rules:
   no-console: 0
-  comma-dangle: 0
   import/no-unresolved: 0
-  valid-jsdoc: 0
   no-unused-vars: error
   prettier/prettier:
     - error
@@ -21,6 +19,11 @@ rules:
       quoteProps: preserve
       printWidth: 110
   sort-imports-es6-autofix/sort-imports-es6: 0
+  jsdoc/require-param-description: 0
+  jsdoc/require-property-description: 0
+  jsdoc/require-returns-description: 0
+  jsdoc/check-types: 0
+  jsdoc/check-tag-names: 0
   copyright/copyright: error
   '@typescript-eslint/indent': 0
   '@typescript-eslint/no-unused-vars': 0
@@ -52,4 +55,5 @@ rules:
 settings:
   jsdoc:
     preferredTypes:
+      '[]':
       'Array<>': '[]'
