@@ -97,13 +97,21 @@ myModule.directive('gmfContextualdata', contextualDataComponent);
  * @param {angular.IScope} $scope Scope.
  * @param {import('gmf/raster/RasterService.js').RasterService} gmfRaster Gmf Raster service
  * @param {import('gmf/options.js').gmfContextualDataOptions} gmfContextualDataOptions The options.
- *
+ * @param {import("ngeo/misc/AutoProjection.js").AutoProjectionService} ngeoAutoProjection The
+ * ngeo auto projection service
  * @constructor
  * @hidden
  * @ngdoc controller
  * @ngInject
  */
-export function ContextualdataController($compile, $timeout, $scope, gmfRaster, gmfContextualDataOptions) {
+export function ContextualdataController(
+  $compile,
+  $timeout,
+  $scope,
+  gmfRaster,
+  gmfContextualDataOptions,
+  ngeoAutoProjection
+) {
   /**
    * @type {?import("ol/Map.js").default}
    */
@@ -113,6 +121,11 @@ export function ContextualdataController($compile, $timeout, $scope, gmfRaster, 
    * @type {import('gmf/options.js').gmfContextualDataOptions}
    */
   this.options = gmfContextualDataOptions;
+
+  /**
+   * @type {import('ol/proj/Projection.js').default[]}
+   */
+  this.projections = [];
 
   /**
    * @type {boolean}
@@ -159,6 +172,11 @@ export function ContextualdataController($compile, $timeout, $scope, gmfRaster, 
    */
   this.gmfContextualDataOptions_ = gmfContextualDataOptions;
 
+  /**
+   * @type {import("ngeo/misc/AutoProjection.js").AutoProjectionService}
+   */
+  this.ngeoAutoProjection = ngeoAutoProjection;
+
   document.body.addEventListener('mousedown', (event) => {
     const element = this.overlay_.getElement();
     const target = /** @type {Node} */ (event.target);
@@ -172,9 +190,14 @@ export function ContextualdataController($compile, $timeout, $scope, gmfRaster, 
 }
 
 /**
- *
+ * Init
  */
 ContextualdataController.prototype.init = function () {
+  this.projections =
+    this.options.projections === undefined
+      ? [this.map.getView().getProjection()]
+      : this.ngeoAutoProjection.getProjectionList(this.options.projections);
+
   this.preparePopover_();
   if (!this.map) {
     throw new Error('Missing map');
@@ -254,9 +277,9 @@ ContextualdataController.prototype.setContent_ = function (coordinate) {
   this.$compile_(this.content_)(scope);
 
   const mapProjection = this.map.getView().getProjection().getCode();
-  (this.options.projections || []).forEach((proj) => {
-    const ref = proj.replace('EPSG:', '').replace(':', '_');
-    const coord = olProj.transform(coordinate, mapProjection, proj);
+  this.projections.forEach((proj) => {
+    const ref = proj.getCode().replace('EPSG:', '').replace(':', '_');
+    const coord = olProj.transform(coordinate, mapProjection, proj.getCode());
     // @ts-ignore: scope ...
     scope[`coord_${ref}`] = coord;
     // @ts-ignore: scope ...
