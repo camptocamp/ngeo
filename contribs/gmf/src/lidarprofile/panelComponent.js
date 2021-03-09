@@ -22,11 +22,7 @@
 import angular from 'angular';
 import gmfLidarprofileConfig from 'gmf/lidarprofile/Config.js';
 import gmfLidarprofileManager from 'gmf/lidarprofile/Manager.js';
-import gmfProfileDrawLineComponent from 'gmf/profile/drawLineComponent.js';
-import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent.js';
 import ngeoDownloadCsv from 'ngeo/download/Csv.js';
-import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
-import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr.js';
 
 /**
  * @type {angular.IModule}
@@ -35,10 +31,7 @@ import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr.js';
 const module = angular.module('gmfLidarprofilePanel', [
   gmfLidarprofileConfig.name,
   gmfLidarprofileManager.name,
-  gmfProfileDrawLineComponent.name,
-  ngeoMiscBtnComponent.name,
   ngeoDownloadCsv.name,
-  ngeoMiscToolActivateMgr.name,
 ]);
 
 module.value(
@@ -172,16 +165,6 @@ export class Controller {
      */
     this.ngeoCsvDownload_ = ngeoCsvDownload;
 
-    /**
-     * @type {import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr}
-     * @private
-     */
-    this.ngeoToolActivateMgr_ = ngeoToolActivateMgr;
-
-    // Initialize the tools inside of the tool manager
-    this.tool = new ngeoMiscToolActivate(this, 'active');
-    this.ngeoToolActivateMgr_.registerTool('mapTools', this.tool, false);
-
     // Activate the controls inside the panel.
     $scope.$watch(
       () => this.active,
@@ -219,7 +202,6 @@ export class Controller {
   initConfigAndActivateTool_() {
     this.profileConfig_.initProfileConfig().then((resp) => {
       this.ready = true;
-      this.ngeoToolActivateMgr_.activateTool(this.tool);
     });
   }
 
@@ -231,12 +213,9 @@ export class Controller {
     if (activate === true) {
       if (!this.ready) {
         this.initConfigAndActivateTool_();
-      } else {
-        this.ngeoToolActivateMgr_.activateTool(this.tool);
       }
     } else {
       this.clearAll();
-      this.ngeoToolActivateMgr_.deactivateTool(this.tool);
     }
   }
 
