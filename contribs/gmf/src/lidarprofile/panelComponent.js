@@ -277,7 +277,7 @@ export class Controller {
 
   /**
    * Get all available point attributes.
-   * @return {Array<import("gmf/lidarprofile/Config.js").LidarprofileServerConfigPointAttributes>|undefined}
+   * @return {import("gmf/lidarprofile/Config.js").LidarprofileServerConfigPointAttributes[] | undefined}
    *    Available point attributes.
    */
   getAvailablePointAttributes() {

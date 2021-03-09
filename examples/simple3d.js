@@ -34,7 +34,7 @@ import ngeoOlcsManager from 'ngeo/olcs/Manager.js';
 const myModule = angular.module('app', ['gettext', ngeoMapModule.name, ngeoOlcsOlcsModule.name]);
 
 /**
- * @constructor
+ * @class
  * @ngInject
  * @param {angular.IScope} $rootScope Root scope.
  * @param {import("ngeo/olcs/Service.js").OlcsService} ngeoOlcsService The service.

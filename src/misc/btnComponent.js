@@ -109,7 +109,7 @@ export class BtnGroupController {
    */
   constructor($scope) {
     /**
-     * @type {Array<angular.ICompiledExpression>}
+     * @type {angular.ICompiledExpression[]}
      * @private
      */
     this.buttons_ = [];

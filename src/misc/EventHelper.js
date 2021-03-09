@@ -25,7 +25,7 @@ import {unlistenByKey} from 'ol/events.js';
 /**
  * Provides methods to manage the listening/unlistening of OpenLayers events
  *
- * @constructor
+ * @class
  * @ngdoc service
  * @ngname ngeoEventHelper
  * @ngInject
@@ -33,7 +33,7 @@ import {unlistenByKey} from 'ol/events.js';
  */
 export function EventHelper() {
   /**
-   * @type {Object<number|string, Array<import("ol/events.js").EventsKey>>}
+   * @type {Object<number | string, import("ol/events.js").EventsKey[]>}
    */
   this.listenerKeys_ = {};
 }

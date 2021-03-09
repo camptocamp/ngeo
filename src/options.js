@@ -58,7 +58,7 @@ import {createDefaultStyle} from 'ol/style/Style.js';
  * @property {number} [radius1] Outer radius of a star.
  * @property {number} [radius2] Inner radius of a star.
  * @property {number} [angle=0] Shape's angle in radians. A value of 0 will have one of the shape's point facing up.
- * @property {Array<number>} [displacement=[0,0]] Displacement of the shape
+ * @property {number[]} [displacement=[0,0]] Displacement of the shape
  * @property {Stroke} [stroke] Stroke style.
  * @property {number} [rotation=0] Rotation in radians (positive rotation clockwise).
  * @property {boolean} [rotateWithView=false] Whether to rotate the shape with the view.
@@ -84,7 +84,7 @@ import {createDefaultStyle} from 'ol/style/Style.js';
 
 /**
  * @param {StyleLike} styleDescriptor The description of the style
- * @returns {import("ol/style/Style.js").StyleLike}
+ * @return {import("ol/style/Style.js").StyleLike}
  */
 export function buildStyle(styleDescriptor) {
   if (styleDescriptor instanceof olStyle) {
@@ -212,7 +212,7 @@ export function buildStyle(styleDescriptor) {
 
 /**
  * List of replacements for string to html.
- * @typedef {Array<StringToHtmlReplacement>} ngeoStringToHtmlReplacements
+ * @typedef {StringToHtmlReplacement[]} ngeoStringToHtmlReplacements
  */
 
 /**

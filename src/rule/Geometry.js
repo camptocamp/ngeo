@@ -154,7 +154,7 @@ export default class extends ngeoRuleRule {
 
   /**
    * Called when the geometry property in the feature changes. Update the literal accordingly.
-   * @returns {boolean}
+   * @return {boolean}
    * @private
    */
   handleFeatureGeometryChange_() {

@@ -34,7 +34,7 @@ import olSourceImageWMS from 'ol/source/ImageWMS.js';
  * @param {angular.IHttpService} $http Angular $http service.
  * @param {angular.IQService} $q Angular $q service.
  * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes The gmf themes service.
- * @constructor
+ * @class
  * @ngInject
  * @hidden
  */
@@ -99,9 +99,9 @@ ObjectEditingQuery.prototype.getQueryableLayersInfo = function () {
  * A list of OGC servers is given in order to bind each queryable layer node
  * to its associated server and be able to build requests.
  *
- * @param {Array<import('gmf/themes.js').GmfTheme>} themes List of theme nodes.
+ * @param {import('gmf/themes.js').GmfTheme[]} themes List of theme nodes.
  * @param {import('gmf/themes.js').GmfOgcServers} ogcServers List of ogc servers
- * @return {Array<import('gmf/objectediting/toolsComponent.js').ObjectEditingQueryableLayerInfo>} List of
+ * @return {import('gmf/objectediting/toolsComponent.js').ObjectEditingQueryableLayerInfo[]} List of
  *     queryable layers information.
  * @private
  * @hidden
@@ -119,7 +119,7 @@ function getQueryableLayersInfoFromThemes(themes, ogcServers) {
         continue;
       }
 
-      /** @type {Array<import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer>} */
+      /** @type {(import('gmf/themes.js').GmfGroup | import('gmf/themes.js').GmfLayer)[]} */
       const nodes = [];
       getFlatNodes(group, nodes);
 

@@ -48,7 +48,7 @@ const myModule = angular.module('app', [
  *    Ngeo FeatureOverlay manager.
  * @param {import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr} ngeoToolActivateMgr
  *    Ngeo ToolActivate manager service.
- * @constructor
+ * @class
  * @ngInject
  */
 function MainController(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {

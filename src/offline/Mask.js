@@ -54,6 +54,7 @@ export default class Mask extends Layer {
 
   /**
    * @param {import("ol/coordinate.js").Coordinate} center, a xy point.
+   * @param center
    * @param {number} halfLength a half length of a square's side.
    * @return {import("ol/extent.js").Extent} an extent.
    */

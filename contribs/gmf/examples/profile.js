@@ -54,7 +54,7 @@ const myModule = angular.module('gmfapp', [
  * @param {angular.IScope} $scope Angular scope.
  * @param {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr Feature overlay
  *     manager.
- * @constructor
+ * @class
  * @ngInject
  */
 function MainController($scope, ngeoFeatureOverlayMgr) {

@@ -120,7 +120,7 @@ myModule.component('gmfThemeselector', themeSelectorComponent);
  * @param {angular.IScope} $scope Angular scope.
  * @param {import("gmf/theme/Manager.js").ThemeManagerService} gmfThemeManager Tree manager service.
  * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes Themes service.
- * @constructor
+ * @class
  * @hidden
  * @ngInject
  * @ngdoc controller
@@ -148,7 +148,7 @@ export function Controller($scope, gmfThemeManager, gmfThemes) {
   this.filter = (theme) => undefined;
 
   /**
-   * @type {Array<import("ol/events.js").EventsKey>}
+   * @type {import("ol/events.js").EventsKey[]}
    */
   this.listenerKeys_ = [];
 

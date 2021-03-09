@@ -33,7 +33,7 @@ import ngeoMapModule from 'ngeo/map/module.js';
 const myModule = angular.module('app', ['gettext', ngeoMapModule.name, ngeoMiscFilters.name]);
 
 /**
- * @constructor
+ * @class
  * @param {angular.IScope} $scope Controller scope.
  * @ngInject
  */

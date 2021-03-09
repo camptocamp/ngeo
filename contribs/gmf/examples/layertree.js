@@ -56,7 +56,7 @@ const myModule = angular.module('gmfapp', [
 ]);
 
 /**
- * @constructor
+ * @class
  * @param {import("gmf/layertree/TreeManager.js").LayertreeTreeManager} gmfTreeManager gmf Tree Manager
  *    service.
  * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes The gmf themes service.
@@ -103,23 +103,23 @@ function MainController(gmfTreeManager, gmfThemes, gmfThemeManager, ngeoLocation
   this.gmfThemeManager = gmfThemeManager;
 
   /**
-   * @type {Array<import('gmf/themes.js').GmfTheme>}
+   * @type {import('gmf/themes.js').GmfTheme[]}
    */
   this.themes = [];
 
   /**
-   * @type {Array<import('gmf/themes.js').GmfGroup>}
+   * @type {import('gmf/themes.js').GmfGroup[]}
    */
   this.groups = [];
 
   /**
-   * @type {Array<import('gmf/themes.js').GmfLayer>}
+   * @type {import('gmf/themes.js').GmfLayer[]}
    */
   this.layers = [];
 
   /**
    * @param {import('gmf/themes.js').GmfTheme|undefined} value A theme or undefined to get Themes.
-   * @return {Array<import('gmf/themes.js').GmfTheme>} All themes.
+   * @return {import('gmf/themes.js').GmfTheme[]} All themes.
    */
   this.getSetTheme = function (value) {
     if (value) {
@@ -130,7 +130,7 @@ function MainController(gmfTreeManager, gmfThemes, gmfThemeManager, ngeoLocation
 
   /**
    * @param {import('gmf/themes.js').GmfGroup|undefined} value A group or undefined to get groups.
-   * @return {Array<import('gmf/themes.js').GmfGroup>} All groups in all themes.
+   * @return {import('gmf/themes.js').GmfGroup[]} All groups in all themes.
    */
   this.getSetGroup = function (value) {
     if (value !== undefined) {
@@ -141,7 +141,7 @@ function MainController(gmfTreeManager, gmfThemes, gmfThemeManager, ngeoLocation
 
   /**
    * @param {import('gmf/themes.js').GmfLayer|undefined} value A group or undefined to get groups.
-   * @return {Array<import('gmf/themes.js').GmfLayer>} All groups in all themes.
+   * @return {import('gmf/themes.js').GmfLayer[]} All groups in all themes.
    */
   this.getSetLayers = function (value) {
     if (value !== undefined) {
@@ -153,7 +153,7 @@ function MainController(gmfTreeManager, gmfThemes, gmfThemeManager, ngeoLocation
   /**
    * @param {import('gmf/themes.js').GmfGroup|undefined} value A GeoMapFish group, or undefined
    *     to get the groups of the tree manager.
-   * @return {Array<import('gmf/themes.js').GmfGroup>} All groups in the tree manager.
+   * @return {import('gmf/themes.js').GmfGroup[]} All groups in the tree manager.
    */
   this.getSetRemoveTree = function (value) {
     if (value !== undefined) {
@@ -167,7 +167,7 @@ function MainController(gmfTreeManager, gmfThemes, gmfThemeManager, ngeoLocation
       this.themes = themes;
 
       // Get an array with all nodes entities existing in "themes".
-      /** @type {Array<import('gmf/themes.js').GmfTheme|import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer>} */
+      /** @type {(import('gmf/themes.js').GmfTheme | import('gmf/themes.js').GmfGroup | import('gmf/themes.js').GmfLayer)[]} */
       const flatNodes = [];
       this.themes.forEach((theme) => {
         theme.children.forEach((group) => {
@@ -189,7 +189,7 @@ function MainController(gmfTreeManager, gmfThemes, gmfThemeManager, ngeoLocation
    * Just for this example
    * @param {import('gmf/themes.js').GmfTheme|import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer} node
    *    A theme, group or layer node.
-   * @param {Array<import('gmf/themes.js').GmfTheme|import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer>} nodes
+   * @param {(import('gmf/themes.js').GmfTheme | import('gmf/themes.js').GmfGroup | import('gmf/themes.js').GmfLayer)[]} nodes
    *    An Array of nodes.
    */
   this.getDistinctFlatNodes_ = function (node, nodes) {

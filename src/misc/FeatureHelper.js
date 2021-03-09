@@ -119,7 +119,7 @@ export const ArrowPositions = {
  *  - measurement
  *  - export
  *
- * @constructor
+ * @class
  * @param {angular.IFilterService} $filter Angular filter.
  * @param {import('ngeo/options.js').ngeoMeasurePrecision} ngeoMeasurePrecision The precision.
  * @param {import('ngeo/options.js').ngeoMeasureDecimals} ngeoMeasureDecimals The decimals.
@@ -186,7 +186,7 @@ export function FeatureHelper(
 
   /**
    * Arguments to apply to the point filter function.
-   * @type {Array<*>}
+   * @type {*[]}
    */
   this.pointFilterArgs_ = [];
 
@@ -244,7 +244,7 @@ FeatureHelper.prototype.setStyle = function (feature, opt_select) {
  * Create and return a style object from a given feature using its inner
  * properties and depending on its geometry type.
  * @param {olFeature<import("ol/geom/Geometry.js").default>} feature Feature.
- * @return {Array<import("ol/style/Style.js").default>} The style object.
+ * @return {import("ol/style/Style.js").default[]} The style object.
  */
 FeatureHelper.prototype.getStyle = function (feature) {
   const type = this.getType(feature);
@@ -273,7 +273,7 @@ FeatureHelper.prototype.getStyle = function (feature) {
     throw new Error('Missing style');
   }
 
-  /** @type {Array<import("ol/style/Style.js").default>} */
+  /** @type {import("ol/style/Style.js").default[]} */
   let styles;
   if (style instanceof Array) {
     styles = style;
@@ -286,7 +286,7 @@ FeatureHelper.prototype.getStyle = function (feature) {
 
 /**
  * @param {olFeature<olGeomLineString>} feature Feature with linestring geometry.
- * @return {Array<import("ol/style/Style.js").default>} Style.
+ * @return {import("ol/style/Style.js").default[]} Style.
  */
 FeatureHelper.prototype.getLineStringStyle_ = function (feature) {
   const strokeWidth = this.getStrokeProperty(feature);
@@ -339,7 +339,7 @@ FeatureHelper.prototype.getLineStringStyle_ = function (feature) {
  * @param {string} arrowDirection An ArrowDirections value.
  * @param {string} arrowPosition An ArrowPositions value.
  * @param {import('ol/color.js').Color} color an hex Color.
- * @return {Array<import("ol/style/Style.js").default>} Style Arrows style for the line.
+ * @return {import("ol/style/Style.js").default[]} Style Arrows style for the line.
  */
 FeatureHelper.prototype.getArrowLineStyles_ = function (feature, arrowDirection, arrowPosition, color) {
   const geometry = feature.getGeometry();
@@ -426,7 +426,7 @@ FeatureHelper.prototype.getArrowLineStyles_ = function (feature, arrowDirection,
 
 /**
  * @param {olFeature<import("ol/geom/Geometry.js").default>} feature Feature with point geometry.
- * @return {Array<import("ol/style/Style.js").default>} Style.
+ * @return {import("ol/style/Style.js").default[]} Style.
  */
 FeatureHelper.prototype.getPointStyle_ = function (feature) {
   const size = this.getSizeProperty(feature);
@@ -510,7 +510,7 @@ FeatureHelper.prototype.getNumber = function (feature, attrib) {
 
 /**
  * @param {olFeature<import("ol/geom/Geometry.js").default>} feature Feature with polygon geometry.
- * @return {Array<import("ol/style/Style.js").default>} Style.
+ * @return {import("ol/style/Style.js").default[]} Style.
  */
 FeatureHelper.prototype.getPolygonStyle_ = function (feature) {
   const strokeWidth = this.getStrokeProperty(feature);
@@ -642,7 +642,7 @@ FeatureHelper.prototype.getTextStyle_ = function (feature) {
 
 /**
  * @param {olFeature<import("ol/geom/Geometry.js").default>} feature Feature to create the editing styles with.
- * @return {Array<import("ol/style/Style.js").default>} List of style.
+ * @return {import("ol/style/Style.js").default[]} List of style.
  */
 FeatureHelper.prototype.createEditingStyles = function (feature) {
   // (1) Style definition depends on geometry type
@@ -811,7 +811,7 @@ FeatureHelper.prototype.getVertexInfoAtCoordinate = function (feature, coordinat
  * Loop in the given coordinates and look one that hits an other given
  * coordinate using a buffer. If one does, return its index.
  *
- * @param {Array<import("ol/coordinate.js").Coordinate>} coordinates Coordinates in which to
+ * @param {import("ol/coordinate.js").Coordinate[]} coordinates Coordinates in which to
  *     loop to find the one that hits the other given coordinate.
  * @param {import("ol/coordinate.js").Coordinate} coordinate Coordinate that has to hit.
  * @param {number} min Minimum number of coordinates required to look
@@ -1243,7 +1243,7 @@ FeatureHelper.prototype.getArrowPositionProperty = function (feature) {
 /**
  * Export features in the given format. The projection of the exported features
  * is: `EPSG:4326`.
- * @param {Array<olFeature<import("ol/geom/Geometry.js").default>>} features Array of vector features.
+ * @param {olFeature<import("ol/geom/Geometry.js").default>[]} features Array of vector features.
  * @param {string} formatType Format type to export the features.
  */
 FeatureHelper.prototype.export = function (features, formatType) {
@@ -1262,7 +1262,7 @@ FeatureHelper.prototype.export = function (features, formatType) {
 /**
  * Export features in GPX and download the result to the browser. The
  * projection of the exported features is: `EPSG:4326`.
- * @param {Array<olFeature<import("ol/geom/Geometry.js").default>>} features Array of vector features.
+ * @param {olFeature<import("ol/geom/Geometry.js").default>[]} features Array of vector features.
  */
 FeatureHelper.prototype.exportGPX = function (features) {
   const format = new olFormatGPX();
@@ -1275,7 +1275,7 @@ FeatureHelper.prototype.exportGPX = function (features) {
 /**
  * Export features in KML and download the result to the browser. The
  * projection of the exported features is: `EPSG:4326`.
- * @param {Array<olFeature<import("ol/geom/Geometry.js").default>>} features Array of vector features.
+ * @param {olFeature<import("ol/geom/Geometry.js").default>[]} features Array of vector features.
  */
 FeatureHelper.prototype.exportKML = function (features) {
   const format = new olFormatKML();
@@ -1289,7 +1289,7 @@ FeatureHelper.prototype.exportKML = function (features) {
  * Export features using a given format to a specific filename and download
  * the result to the browser. The projection of the exported features is:
  * `EPSG:4326`.
- * @param {Array<olFeature<import("ol/geom/Geometry.js").default>>} features Array of vector features.
+ * @param {olFeature<import("ol/geom/Geometry.js").default>[]} features Array of vector features.
  * @param {import('ol/format/Feature.js').default} format Format
  * @param {string} fileName Name of the file.
  * @param {string=} opt_mimeType Mime type. Defaults to 'text/plain'.
@@ -1630,7 +1630,7 @@ FeatureHelper.prototype.clearNonSpatialProperties = function (feature) {
 };
 
 /**
- * @param {Array<olFeature<import("ol/geom/Geometry.js").default>>} features Features.
+ * @param {olFeature<import("ol/geom/Geometry.js").default>[]} features Features.
  * @param {string} fid Feature id
  * @return {number} Index of found feature
  */

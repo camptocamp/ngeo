@@ -30,7 +30,7 @@ import {remove as removeFromArray} from 'ol/array.js';
  * @typedef {Object} WMSGroupOptions
  * @property {angular.auto.IInjectorService} injector Angular main injector.
  * @property {string} url (WMSGroupOptions)
- * @property {Array<import('ngeo/datasource/DataSource.js').default>} dataSources (GroupOptions)
+ * @property {import('ngeo/datasource/DataSource.js').default[]} dataSources (GroupOptions)
  * @property {string} title (GroupOptions)
  */
 

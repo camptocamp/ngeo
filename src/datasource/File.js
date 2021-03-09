@@ -31,7 +31,7 @@ import olSourceVector from 'ol/source/Vector.js';
  * @typedef {Object} FileOptions
  * @property {import("ol/Collection.js").default<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>} [features]
  *    Collection of `import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>` objects.
- * @property {Array<import('ngeo/format/Attribute.js').Attribute>} [attributes] (DataSourceOptions)
+ * @property {import('ngeo/format/Attribute.js').Attribute[]} [attributes] (DataSourceOptions)
  * @property {import('ngeo/datasource/OGC.js').DimensionsFiltersConfig} [dimensionsFiltersConfig]
  *    (DataSourceOptions)
  * @property {number} id (DataSourceOptions)
@@ -86,7 +86,7 @@ export default class extends ngeoDatasourceDataSource {
   // ========================================
 
   /**
-   * @return {Array<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>} Features
+   * @return {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>[]} Features
    */
   get features() {
     return this.featuresCollection_.getArray();

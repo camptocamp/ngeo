@@ -67,6 +67,7 @@ myModule.run(
  *
  * @htmlAttribute {boolean} gmf-mobile-measurearea-active Used to active
  * or deactivate the component.
+ * @param gmfMobileMeasureAreaTemplateUrl
  * @htmlAttribute {import("ol/Map.js").default} gmf-mobile-measurearea-map The map.
  * @param {string|function(JQuery=, angular.IAttributes=):string}
  *     gmfMobileMeasureAreaTemplateUrl Template URL for the directive.

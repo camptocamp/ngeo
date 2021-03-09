@@ -42,7 +42,7 @@ const myModule = angular.module('gmfapp', [
 ]);
 
 /**
- * @constructor
+ * @class
  * @ngInject
  */
 function MainController() {

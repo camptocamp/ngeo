@@ -48,6 +48,8 @@ export class QueryController {
    *     ngeoMapQuerent The ngeo map querent service.
    * @param {import("ngeo/query/ModeSelector.js").QueryModeSelector}
    *     ngeoQueryModeSelector The ngeo query modeSelector service.
+   * @param ngeoQueryModeSelector
+   * @param ngeoMapQuerent
    * @param {import('ngeo/options.js').ngeoQueryOptions} ngeoQueryOptions The options.
    * @param {angular.IScope} $scope Scope.
    * @ngInject
@@ -142,7 +144,7 @@ export class QueryController {
     /**
      * The event keys of the currently active "mode".
      *
-     * @type {Array<import('ol/events.js').EventsKey>}
+     * @type {import('ol/events.js').EventsKey[]}
      * @private
      */
     this.listenerKeys_ = [];
@@ -409,7 +411,7 @@ export class QueryController {
   /**
    * Called when the pointer is moved over the map while this component is active and the mode is "click".
    * Change the mouse pointer when hovering a non-transparent pixel on the map.
-   * @returns {boolean}
+   * @return {boolean}
    * @param {Event|import("ol/events/Event.js").default} evt The map browser event being fired.
    */
   handleMapPointerMove_(evt) {

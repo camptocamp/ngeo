@@ -28,7 +28,7 @@ import ngeoGridModule from 'ngeo/grid/module.js';
 const myModule = angular.module('app', ['gettext', ngeoGridModule.name]);
 
 /**
- * @constructor
+ * @class
  * @ngInject
  */
 function MainController() {

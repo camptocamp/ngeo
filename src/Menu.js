@@ -64,7 +64,7 @@ export default class extends olOverlay {
     super(options);
 
     /**
-     * @type {Array<import("ol/events.js").EventsKey>}
+     * @type {import("ol/events.js").EventsKey[]}
      * @private
      */
     this.listenerKeys_ = [];

@@ -79,7 +79,7 @@ myModule.directive('gmfDrawprofileline', profileDrawLineComponent);
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @param {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr Feature overlay
  *    manager.
- * @constructor
+ * @class
  * @hidden
  * @ngInject
  * @ngdoc controller

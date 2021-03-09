@@ -149,7 +149,7 @@ myModule.component('gmfDisplayquerygrid', queryGridComponent);
  * @param {import('gmf/options.js').gmfCsvFilename} gmfCsvFilename The CSV file name.
  * @param {JQuery} $element Element.
  * @param {import('gmf/options.js').gmfDisplayQueryGridOptions} gmfDisplayQueryGridOptions The options.
- * @constructor
+ * @class
  * @hidden
  * @ngInject
  * @ngdoc controller
@@ -366,7 +366,7 @@ QueryGridController.prototype.updateData_ = function () {
   this.sumOfFeatures = 0;
 
   /**
-   * @type {Array<string>}
+   * @type {string[]}
    */
   const countedSources = [];
   this.ngeoQueryResult.sources.forEach((source) => {
@@ -454,8 +454,8 @@ QueryGridController.prototype.isSelected = function (gridSource) {
 
 /**
  * Try to merge the mergeable sources.
- * @param {Array<import('ngeo/statemanager/WfsPermalink.js').QueryResultSource>} sources Sources.
- * @return {Array<import('ngeo/statemanager/WfsPermalink.js').QueryResultSource>} The merged sources.
+ * @param {import('ngeo/statemanager/WfsPermalink.js').QueryResultSource[]} sources Sources.
+ * @return {import('ngeo/statemanager/WfsPermalink.js').QueryResultSource[]} The merged sources.
  */
 QueryGridController.prototype.getMergedSources_ = function (sources) {
   /** @type {import('ngeo/statemanager/WfsPermalink').QueryResultSource[]} */

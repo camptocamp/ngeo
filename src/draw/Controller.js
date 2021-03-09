@@ -97,7 +97,7 @@ export class DrawController {
     this.ngeoFeatures_ = ngeoFeatures;
 
     /**
-     * @type {Array<import("ol/interaction/Interaction.js").default>}
+     * @type {import("ol/interaction/Interaction.js").default[]}
      * @private
      */
     this.interactions_ = [];

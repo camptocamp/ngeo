@@ -126,7 +126,7 @@ export class FilterController {
     this.aRuleIsActive = false;
 
     /**
-     * @type {Array<import("ngeo/rule/Rule.js").default>}
+     * @type {import("ngeo/rule/Rule.js").default[]}
      */
     this.customRules = [];
 
@@ -136,7 +136,7 @@ export class FilterController {
     this.datasource = null;
 
     /**
-     * @type {Array<import("ngeo/rule/Rule.js").default>}
+     * @type {import("ngeo/rule/Rule.js").default[]}
      */
     this.directedRules = [];
 
@@ -214,13 +214,13 @@ export class FilterController {
 
     /**
      * List of geometry attributes.
-     * @type {Array<import('ngeo/format/Attribute.js').Attribute>}
+     * @type {import('ngeo/format/Attribute.js').Attribute[]}
      */
     this.geometryAttributes = [];
 
     /**
      * List of other attribute names.
-     * @type {Array<import('ngeo/format/Attribute.js').Attribute>}
+     * @type {import('ngeo/format/Attribute.js').Attribute[]}
      */
     this.otherAttributes = [];
 
@@ -377,7 +377,7 @@ export class FilterController {
 
   /**
    * Loop in all directed and custom rules and collect those with a value.
-   * @return {Array<import("ngeo/rule/Rule.js").default>} Rules with value.
+   * @return {import("ngeo/rule/Rule.js").default[]} Rules with value.
    * @private
    */
   getRulesWithValue_() {

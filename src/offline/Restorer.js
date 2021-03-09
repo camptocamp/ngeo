@@ -28,6 +28,8 @@ class Restorer {
    * @param {import("ngeo/offline/Configuration.js").default}
    * ngeoOfflineConfiguration A service for customizing offline behaviour.
    * @param {import("ngeo/map/BackgroundLayerMgr.js").MapBackgroundLayerManager}
+   * @param ngeoOfflineConfiguration
+   * @param ngeoBackgroundLayerMgr
    * ngeoBackgroundLayerMgr The background layer manager.
    */
   constructor(ngeoOfflineConfiguration, ngeoBackgroundLayerMgr) {

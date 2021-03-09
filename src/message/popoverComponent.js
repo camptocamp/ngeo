@@ -127,7 +127,7 @@ function messagePopoverContentComponent() {
 
 /**
  * The controller for the 'popover' directive.
- * @constructor
+ * @class
  * @ngInject
  * @ngdoc controller
  * @ngname NgeoPopoverController

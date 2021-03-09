@@ -38,7 +38,7 @@ const myModule = angular.module('app', ['gettext', ngeoMapModule.name, ngeoMessa
  * @param {import("ngeo/message/Disclaimer.js").MessageDisclaimerService} ngeoDisclaimer Ngeo disclaimer
  *    service.
  * @ngInject
- * @constructor
+ * @class
  */
 function MainController(ngeoDisclaimer) {
   /**

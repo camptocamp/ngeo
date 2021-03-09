@@ -233,7 +233,7 @@ myModule.service('gmfSavedFilters', SavedFilter);
 
 /**
  * The definition of a saved filter item.
- * @constructor
+ * @class
  * @hidden
  */
 export function SavedFilterItem() {}
@@ -246,7 +246,7 @@ SavedFilterItem.prototype.condition;
 
 /**
  * The list of custom rules of the saved filter item.
- * @type {Array<import("ngeo/filter/RuleHelper.js").AnyOptions>}
+ * @type {import("ngeo/filter/RuleHelper.js").AnyOptions[]}
  */
 SavedFilterItem.prototype.customRules;
 
@@ -258,7 +258,7 @@ SavedFilterItem.prototype.dataSourceId;
 
 /**
  * The list of directed rules of the saved filter item.
- * @type {Array<import("ngeo/filter/RuleHelper.js").AnyOptions>}
+ * @type {import("ngeo/filter/RuleHelper.js").AnyOptions[]}
  */
 SavedFilterItem.prototype.directedRules;
 

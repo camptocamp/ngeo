@@ -35,7 +35,7 @@ import Group from 'ol/layer/Group.js';
  * This layer is also used to synchronise a state of ngeo.layertree.Controller
  * and its corresponding layer in the map.
  *
- * @constructor
+ * @class
  * @param {angular.IScope} $rootScope Angular rootScope.
  * @param {import("ngeo/map/LayerHelper.js").LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @param {import("ngeo/misc/WMSTime.js").WMSTime} ngeoWMSTime wms time service.

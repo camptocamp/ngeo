@@ -23,9 +23,9 @@ import {getUid as olUtilGetUid} from 'ol/util.js';
 
 /**
  * @param {Object<string, string|number|boolean>[]|undefined} data Entries/objects to be shown in a grid.
- * @param {Array<import('ngeo/download/Csv.js').GridColumnDef>|undefined} columnDefs Column definition of a
+ * @param {import('ngeo/download/Csv.js').GridColumnDef[] | undefined} columnDefs Column definition of a
  *    grid.
- * @constructor
+ * @class
  * @private
  * @hidden
  */
@@ -36,7 +36,7 @@ function GridConfig(data, columnDefs) {
   this.data = data;
 
   /**
-   * @type {Array<import('ngeo/download/Csv.js').GridColumnDef>|undefined}
+   * @type {import('ngeo/download/Csv.js').GridColumnDef[] | undefined}
    */
   this.columnDefs = columnDefs;
 

@@ -24,7 +24,7 @@ import angular from 'angular';
 /**
  * Provides a service with print utility functions.
  *
- * @constructor
+ * @class
  * @ngdoc service
  * @ngname ngeoPrintUtils
  * @hidden

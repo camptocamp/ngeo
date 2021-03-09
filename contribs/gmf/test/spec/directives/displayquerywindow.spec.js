@@ -33,7 +33,7 @@ describe('gmf.query.windowComponent', () => {
   let $scope;
   /** @type {angular.IScope} */
   let $rootScope;
-  /** @type {Array<import('ngeo/statemanager/WfsPermalink.js').QueryResultSource>} */
+  /** @type {import('ngeo/statemanager/WfsPermalink.js').QueryResultSource[]} */
   let sources;
 
   beforeEach(

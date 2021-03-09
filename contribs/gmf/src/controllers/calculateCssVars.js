@@ -23,10 +23,10 @@ import tinycolor from 'tinycolor2';
 
 /**
  * @param {Object<string, string>} options
- * @returns {Object<string, string>}
+ * @return {Object<string, string>}
  */
 export default function (options) {
-  /** @type {Object<String, String>} */
+  /** @type {Object<string, string>} */
   const cssVars = {};
   if (options['brand-primary']) {
     const primary = tinycolor(options['brand-primary']);

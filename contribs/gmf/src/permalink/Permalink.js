@@ -262,7 +262,7 @@ const ParamPrefix = {
  *
  *  * `default_theme`: Theme to use by default.
  *
- * @constructor
+ * @class
  * @param {angular.IQService} $q The Angular $q service.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @param {angular.IScope} $rootScope Angular rootScope.
@@ -469,7 +469,7 @@ export function PermalinkService(
 
   /**
    * A list of projections that the coordinates in the permalink can be in.
-   * @type {?Array<import("ol/proj/Projection.js").default>}
+   * @type {?import("ol/proj/Projection.js").default[]}
    */
   this.sourceProjections_ = null;
   if (gmfPermalinkOptions.projectionCodes !== undefined && this.ngeoAutoProjection_) {
@@ -1035,7 +1035,7 @@ PermalinkService.prototype.unregisterMap_ = function () {
 
 /**
  * Get the background layer object to use to initialize the map from the state manager.
- * @param {Array<import("ol/layer/Base.js").default>} layers Array of background layer objects.
+ * @param {import("ol/layer/Base.js").default[]} layers Array of background layer objects.
  * @return {?import("ol/layer/Base.js").default} Background layer.
  */
 PermalinkService.prototype.getBackgroundLayer = function (layers) {
@@ -1257,7 +1257,7 @@ PermalinkService.prototype.initLayers_ = function () {
     }
 
     /**
-     * @type {Array<(import('gmf/themes.js').GmfGroup)>}
+     * @type {(import('gmf/themes.js').GmfGroup)[]}
      */
     let firstLevelGroups = [];
     let theme;
@@ -1512,7 +1512,7 @@ PermalinkService.prototype.getWfsPermalinkData_ = function () {
  */
 PermalinkService.prototype.createFilterGroup_ = function (prefix, paramKeys) {
   /**
-   * @type {Array<import('ngeo/statemanager/WfsPermalink.js').WfsPermalinkFilter>}
+   * @type {import('ngeo/statemanager/WfsPermalink.js').WfsPermalinkFilter[]}
    */
   const filters = [];
 
@@ -1812,7 +1812,7 @@ PermalinkService.prototype.setExternalDataSourcesState_ = function () {
 
 /**
  * Clean the permalink parameters
- * @param {Array<import('gmf/themes.js').GmfGroup>} groups firstlevel groups of the tree
+ * @param {import('gmf/themes.js').GmfGroup[]} groups firstlevel groups of the tree
  */
 PermalinkService.prototype.cleanParams = function (groups) {
   const keys = this.ngeoLocation_.getParamKeys();

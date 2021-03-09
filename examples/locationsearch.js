@@ -51,7 +51,7 @@ const locationSearchComponent = {
 appmodule.component('appLocationSearch', locationSearchComponent);
 
 /**
- * @constructor
+ * @class
  * @param {import("ngeo/search/createLocationSearchBloodhound.js").createLocationSearchBloodhoundFunction} ngeoCreateLocationSearchBloodhound
  *    Bloodhound service.
  * @ngInject
@@ -76,7 +76,7 @@ function SearchController(ngeoCreateLocationSearchBloodhound) {
   });
 
   /**
-   * @type {Array<Twitter.Typeahead.Dataset<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>>}
+   * @type {Twitter.Typeahead.Dataset<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>[]}
    */
   this.datasets = [
     {
@@ -148,7 +148,7 @@ SearchController.prototype.createAndInitBloodhound_ = function (ngeoCreateLocati
 appmodule.controller('AppSearchController', SearchController);
 
 /**
- * @constructor
+ * @class
  * @ngInject
  */
 function MainController() {

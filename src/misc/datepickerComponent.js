@@ -67,6 +67,7 @@ myModule.run(
  *
  * @param {string|function(JQuery=, angular.IAttributes=): string}
  * ngeoDatePickerTemplateUrl Template for the directive.
+ * @param ngeoDatePickerTemplateUrl
  * @param {angular.ITimeoutService} $timeout angular timeout service
  * @return {angular.IDirective} The directive specs.
  * @ngInject
@@ -143,7 +144,7 @@ myModule.directive('ngeoDatePicker', datePickerComponent);
  * @param {angular.IScope} $scope Angular scope.
  * @param {import("ngeo/misc/Time.js").Time} ngeoTime time service.
  * @param {angular.gettext.gettextCatalog} gettextCatalog service.
- * @constructor
+ * @class
  * @hidden
  * @ngInject
  * @ngdoc controller

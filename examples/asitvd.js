@@ -32,7 +32,7 @@ import ngeoMapModule from 'ngeo/map/module.js';
 const myModule = angular.module('app', ['gettext', ngeoMapModule.name]);
 
 /**
- * @constructor
+ * @class
  * @ngInject
  */
 function MainController() {

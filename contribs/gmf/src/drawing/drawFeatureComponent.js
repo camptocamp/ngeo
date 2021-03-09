@@ -120,7 +120,7 @@ myModule.directive('gmfDrawfeature', drawinfDrawFeatureComponent);
  *    of features.
  * @param {import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate
  *    manager service.
- * @constructor
+ * @class
  * @hidden
  * @ngInject
  * @ngdoc controller
@@ -532,7 +532,7 @@ Controller.prototype.selectFeatureFromList = function (feature) {
 };
 
 /**
- * @return {Array<Feature<import("ol/geom/Geometry.js").default>>} Array.
+ * @return {Feature<import("ol/geom/Geometry.js").default>[]} Array.
  */
 Controller.prototype.getFeaturesArray = function () {
   return this.features.getArray();

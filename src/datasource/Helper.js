@@ -211,7 +211,7 @@ export class DatasourceHelper {
    * ogcAttributes list, then `null` is returned.
    *
    * @param {import("ngeo/datasource/OGC.js").default} dataSource Filtrable data source.
-   * @return {Array<import('ngeo/format/Attribute.js').Attribute>} attributes Attributes
+   * @return {import('ngeo/format/Attribute.js').Attribute[]} attributes Attributes
    */
   createDataSourceAttributesFromOGCAttributes_(dataSource) {
     let attributes = null;

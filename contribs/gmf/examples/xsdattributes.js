@@ -43,7 +43,7 @@ const myModule = angular.module('gmfapp', [
  * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes The gmf themes service.
  * @param {import("gmf/editing/XSDAttributes.js").EditingXSDAttributeService} gmfXSDAttributes
  *    The gmf XSDAttributes service.
- * @constructor
+ * @class
  * @ngInject
  */
 function MainController($timeout, gmfThemes, gmfXSDAttributes) {
@@ -58,7 +58,7 @@ function MainController($timeout, gmfThemes, gmfXSDAttributes) {
   this.xsdAttributes_ = gmfXSDAttributes;
 
   /**
-   * @type {?Array<import('ngeo/format/Attribute.js').Attribute>}
+   * @type {?import('ngeo/format/Attribute.js').Attribute[]}
    */
   this.attributes = null;
 
@@ -68,7 +68,7 @@ function MainController($timeout, gmfThemes, gmfXSDAttributes) {
   this.feature = null;
 
   /**
-   * @type {Array<import('gmf/themes.js').GmfLayer>}
+   * @type {import('gmf/themes.js').GmfLayer[]}
    */
   this.layers = [];
 
@@ -83,7 +83,7 @@ function MainController($timeout, gmfThemes, gmfXSDAttributes) {
       return;
     }
     // Get an array with all nodes entities existing in "themes".
-    /** @type {Array<import('gmf/themes.js').GmfTheme|import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer>} */
+    /** @type {(import('gmf/themes.js').GmfTheme | import('gmf/themes.js').GmfGroup | import('gmf/themes.js').GmfLayer)[]} */
     const flatNodes = [];
     themes.forEach((theme) => {
       theme.children.forEach((group) => {
@@ -102,7 +102,7 @@ function MainController($timeout, gmfThemes, gmfXSDAttributes) {
 
 /**
  * @param {import('gmf/themes.js').GmfLayer|undefined} value A layer or undefined to get layers.
- * @return {Array<import('gmf/themes.js').GmfLayer>} All layers in all themes.
+ * @return {import('gmf/themes.js').GmfLayer[]} All layers in all themes.
  */
 MainController.prototype.getSetLayers = function (value) {
   if (value !== undefined && value !== null) {
@@ -112,7 +112,7 @@ MainController.prototype.getSetLayers = function (value) {
 };
 
 /**
- * @param {Array<import('ngeo/format/Attribute.js').Attribute>} attributes Attributes.
+ * @param {import('ngeo/format/Attribute.js').Attribute[]} attributes Attributes.
  */
 MainController.prototype.setAttributes_ = function (attributes) {
   // (1) Reset first
@@ -144,7 +144,7 @@ MainController.prototype.getGeomType = function () {
  * Just for this example
  * @param {import('gmf/themes.js').GmfTheme|import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer} node
  *    A theme, group or layer node.
- * @param {Array<import('gmf/themes.js').GmfTheme|import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer>} nodes
+ * @param {(import('gmf/themes.js').GmfTheme | import('gmf/themes.js').GmfGroup | import('gmf/themes.js').GmfLayer)[]} nodes
  *    An Array of nodes.
  */
 MainController.prototype.getDistinctFlatNodes_ = function (node, nodes) {

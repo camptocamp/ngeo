@@ -28,7 +28,7 @@ import ngeoDatasourceGroup from 'ngeo/datasource/Group.js';
  * extends GroupOptions
  * @typedef {Object} FileGroupOptions
  * @property {angular.auto.IInjectorService} injector Angular main injector.
- * @property {Array<import('ngeo/datasource/DataSource.js').default>} dataSources (GroupOptions)
+ * @property {import('ngeo/datasource/DataSource.js').default[]} dataSources (GroupOptions)
  * @property {string} title (GroupOptions)
  */
 

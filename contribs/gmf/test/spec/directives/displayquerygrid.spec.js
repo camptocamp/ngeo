@@ -140,7 +140,7 @@ describe('gmf.query.gridComponent', () => {
 
       const gridConfig = gridSource.configuration;
       /**
-       * @type {Array<any>}
+       * @type {any[]}
        */
       const expectedGridData = [
         {

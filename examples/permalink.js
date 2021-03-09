@@ -67,7 +67,7 @@ myModule.component('appMap', mapComponent);
  * @param {import("ngeo/statemanager/Location.js").StatemanagerLocation} ngeoLocation ngeo Location service.
  * @param {import("ngeo/misc/debounce.js").miscDebounce<function(import("ol/events/Event.js").default): void>} ngeoDebounce
  *    ngeo Debounce factory.
- * @constructor
+ * @class
  * @ngInject
  */
 function MapComponentController(ngeoLocation, ngeoDebounce) {
@@ -158,7 +158,7 @@ myModule.component('appDraw', drawComponent);
 /**
  * @param {angular.IScope} $scope Scope.
  * @param {import("ngeo/statemanager/Location.js").StatemanagerLocation} ngeoLocation ngeo Location service.
- * @constructor
+ * @class
  * @ngInject
  */
 function DrawComponentController($scope, ngeoLocation) {
@@ -219,6 +219,7 @@ DrawComponentController.prototype.$onInit = function () {
     /** @type {function(?): ?} */ (
       /**
        * @param {import('ol/MapBrowserEvent.js').default<unknown>} evt
+       * @param e
        */ (e) => {
         e.feature.set('id', ++this.featureSeq_);
       }
@@ -234,6 +235,7 @@ DrawComponentController.prototype.$onInit = function () {
     /** @type {function(?): ?} */ (
       /**
        * @param {import('ol/MapBrowserEvent.js').default<unknown>} evt
+       * @param e
        */ (e) => {
         const feature = e.feature;
         feature.setStyle(
@@ -282,7 +284,7 @@ DrawComponentController.prototype.clearLayer = function () {
 myModule.controller('AppDrawController', DrawComponentController);
 
 /**
- * @constructor
+ * @class
  */
 function MainController() {
   /**

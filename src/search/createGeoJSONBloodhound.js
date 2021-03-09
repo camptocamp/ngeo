@@ -87,7 +87,7 @@ export function createGeoJSONBloodhound(
     opt_options || {
       /**
        * @param {GeoJSON.FeatureCollection} datum
-       * @returns {string[]}
+       * @return {string[]}
        */
       datumTokenizer: (datum) => {
         return [];
@@ -155,7 +155,7 @@ myModule.value('ngeoSearchCreateGeoJSONBloodhound', createGeoJSONBloodhound);
  *     );
  *     bloodhound.initialize();
  *
- * @typedef {function(string, (function(import("geojson").Feature): boolean)=, import("ol/proj/Projection.js").default=, import("ol/proj/Projection.js").default=, Bloodhound.Options=, Bloodhound.RemoteOptions=):Bloodhound<GeoJSON.FeatureCollection|Array<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>>}
+ * @typedef {function(string, (function(import("geojson").Feature): boolean)=, import("ol/proj/Projection.js").default=, import("ol/proj/Projection.js").default=, Bloodhound.Options=, Bloodhound.RemoteOptions=): Bloodhound<GeoJSON.FeatureCollection | import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>[]>}
  */
 
 export default myModule;

@@ -52,7 +52,7 @@ import {listen} from 'ol/events.js';
  * This service's theme is a GmfTheme with only children and a name.
  * Thought to be the tree source of the gmf layertree directive.
  *
- * @constructor
+ * @class
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @param {angular.auto.IInjectorService} $injector Angular injector service.
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
@@ -133,7 +133,7 @@ export function LayertreeTreeManager(
   this.numberOfGroupsToAddInThisDigestLoop = 0;
 
   /**
-   * @type {Array<import('gmf/themes.js').GmfGroup>}
+   * @type {import('gmf/themes.js').GmfGroup[]}
    */
   this.groupsToAddInThisDigestLoop_ = [];
 
@@ -148,7 +148,7 @@ export function LayertreeTreeManager(
   this.ngeoStateManager_ = ngeoStateManager;
 
   /**
-   * @type {Array.<import('gmf/themes.js').GmfGroup>|undefined}
+   * @type {import('gmf/themes.js').GmfGroup[] | undefined}
    */
   this.initialLevelFirstGroups_ = undefined;
 
@@ -182,7 +182,7 @@ LayertreeTreeManager.prototype.handleThemesChange_ = function () {
  * Set some groups as tree's children. If the service use mode 'flush', the
  * previous tree's children will be removed. Add only groups that are not
  * already in the tree.
- * @param {Array<import('gmf/themes.js').GmfGroup>} firstLevelGroups An array of gmf theme group.
+ * @param {import('gmf/themes.js').GmfGroup[]} firstLevelGroups An array of gmf theme group.
  * @return {boolean} True if the group has been added. False otherwise.
  */
 LayertreeTreeManager.prototype.setFirstLevelGroups = function (firstLevelGroups) {
@@ -198,7 +198,7 @@ LayertreeTreeManager.prototype.setFirstLevelGroups = function (firstLevelGroups)
  * Add some groups as tree's children. If the service use mode 'flush', the
  * previous tree's children will be removed. Add only groups that are not
  * already in the tree.
- * @param {Array<import('gmf/themes.js').GmfGroup>} firstLevelGroups An array of gmf theme
+ * @param {import('gmf/themes.js').GmfGroup[]} firstLevelGroups An array of gmf theme
  *     group.
  * @param {boolean=} opt_add if true, force to use the 'add' mode this time.
  * @param {boolean=} opt_silent if true notifyCantAddGroups_ is not called.
@@ -224,7 +224,7 @@ LayertreeTreeManager.prototype.addFirstLevelGroups = function (firstLevelGroups,
 };
 
 /**
- * @param {Array.<import('gmf/themes.js').GmfGroup>} firstGroups The groups we add to the layertree
+ * @param {import('gmf/themes.js').GmfGroup[]} firstGroups The groups we add to the layertree
  */
 LayertreeTreeManager.prototype.setInitialFirstLevelGroups = function (firstGroups) {
   this.initialLevelFirstGroups_ = firstGroups;
@@ -268,7 +268,7 @@ LayertreeTreeManager.prototype.reorderChild_ = function (array, old_index, new_i
 
 /**
  * Update the application state with the list of first level groups in the tree
- * @param {Array<import('gmf/themes.js').GmfGroup>} groups firstlevel groups of the tree
+ * @param {import('gmf/themes.js').GmfGroup[]} groups firstlevel groups of the tree
  */
 LayertreeTreeManager.prototype.updateTreeGroupsState_ = function (groups) {
   /**
@@ -489,7 +489,7 @@ LayertreeTreeManager.prototype.toggleNodeCheck_ = function (node, names) {
 /**
  * Display a notification that informs that the given groups are already in the
  * tree.
- * @param {Array<import('gmf/themes.js').GmfGroup>} groups An array of groups that already in
+ * @param {import('gmf/themes.js').GmfGroup[]} groups An array of groups that already in
  *   the tree.
  */
 LayertreeTreeManager.prototype.notifyCantAddGroups_ = function (groups) {
@@ -567,7 +567,7 @@ LayertreeTreeManager.prototype.getOgcServer = function (treeCtrl) {
  * the corresponding saved state (when possible, otherwise, juste take the
  * corresponding new node).
  * FIXME: Currently doesn't save nor restore the opacity.
- * @param {Array<import('gmf/themes.js').GmfTheme>} themes the array of themes to be based on.
+ * @param {import('gmf/themes.js').GmfTheme[]} themes the array of themes to be based on.
  */
 LayertreeTreeManager.prototype.refreshFirstLevelGroups_ = function (themes) {
   if (!this.rootCtrl) {

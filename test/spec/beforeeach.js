@@ -50,6 +50,8 @@ beforeEach(() => {
     /**
      * A matcher similar to `expect(...).toBeCloseTo(...)` to check that
      * numbers in two arrays are almost equal.
+     * @param util
+     * @param customEqualityTesters
      */
     arrayToBeCloseTo(util, customEqualityTesters) {
       return {

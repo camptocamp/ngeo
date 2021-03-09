@@ -24,7 +24,7 @@
  * @property {number} id
  * @property {string} plugin
  * @property {string} command
- * @property {!Array<*>} args
+ * @property {!*[]} args
  * @property {?} context
  * @property {string} [msg]
  */

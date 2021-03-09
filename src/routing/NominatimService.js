@@ -26,7 +26,7 @@ import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
  * @typedef {Object} NominatimSearchResult
  * @property {string} name
  * @property {string} [label]
- * @property {Array<string>} coordinate
+ * @property {string[]} coordinate
  */
 
 /**
@@ -44,7 +44,7 @@ import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
  *    ngeo Debounce service.
  * @param {string} ngeoNominatimUrl The nominatim URL.
  * @param {import('ngeo/options.js').ngeoNominatimSearchDefaultParams} ngeoNominatimSearchDefaultParams The search parameters
- * @constructor
+ * @class
  * @ngdoc service
  * @ngInject
  * @ngname ngeoNominatimService

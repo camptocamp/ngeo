@@ -74,7 +74,7 @@ import {noModifierKeys} from 'ol/events/condition.js';
  * @param {angular.IScope} $scope Scope.
  * @param {angular.auto.IInjectorService} $injector Main injector.
  * @param {boolean} [mobile] Is mobile.
- * @constructor
+ * @class
  * @ngdoc controller
  * @ngInject
  */
@@ -608,7 +608,7 @@ function dragPanCondition(event) {
 }
 
 /**
- * @param {Array<import("ol/layer/Base.js").default>} layers Layers list.
+ * @param {import("ol/layer/Base.js").default[]} layers Layers list.
  * @param {string[]} labels default_basemap list.
  * @return {?import("ol/layer/Base.js").default} layer or null
  * @private

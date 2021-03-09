@@ -342,13 +342,13 @@ export class ThemesService extends olEventsEventTarget {
 
   /**
    * Get an array of theme objects.
-   * @return {angular.IPromise<Array<import('gmf/themes.js').GmfTheme>>} Promise.
+   * @return {angular.IPromise<import('gmf/themes.js').GmfTheme[]>} Promise.
    */
   getThemesObject() {
     return this.promise_.then(
       /**
        * @param {import('gmf/themes.js').GmfThemesResponse} data The "themes" web service response.
-       * @return {Array<import('gmf/themes.js').GmfTheme>} The themes object.
+       * @return {import('gmf/themes.js').GmfTheme[]} The themes object.
        */
       (data) => data.themes
     );
@@ -356,7 +356,7 @@ export class ThemesService extends olEventsEventTarget {
 
   /**
    * Get an array of background layer objects.
-   * @return {angular.IPromise<Array<import('gmf/themes.js').GmfLayer|import('gmf/themes.js').GmfGroup>>}
+   * @return {angular.IPromise<(import('gmf/themes.js').GmfLayer | import('gmf/themes.js').GmfGroup)[]>}
    *   Promise.
    */
   getBackgroundLayersObject() {
@@ -366,7 +366,7 @@ export class ThemesService extends olEventsEventTarget {
     return this.promise_.then(
       /**
        * @param {import('gmf/themes.js').GmfThemesResponse} data The "themes" web service response.
-       * @return {Array<import('gmf/themes.js').GmfLayer|import('gmf/themes.js').GmfGroup>}
+       * @return {(import('gmf/themes.js').GmfLayer | import('gmf/themes.js').GmfGroup)[]}
        *    The background layers object.
        */
       (data) => data.background_layers
@@ -487,7 +487,7 @@ export class ThemesService extends olEventsEventTarget {
 }
 
 /**
- * @param {Array<import('gmf/themes.js').GmfTheme>} themes Array of "theme" objects.
+ * @param {import('gmf/themes.js').GmfTheme[]} themes Array of "theme" objects.
  * @param {string} name The layer name.
  * @return {?import('gmf/themes.js').GmfGroup} The group.
  * @hidden
@@ -510,7 +510,7 @@ export function findGroupByLayerNodeName(themes, name) {
 
 /**
  * Find a layer group object by its name. Return null if not found.
- * @param {Array<import('gmf/themes.js').GmfTheme>} themes Array of "theme" objects.
+ * @param {import('gmf/themes.js').GmfTheme[]} themes Array of "theme" objects.
  * @param {string} name The group name.
  * @return {?import('gmf/themes.js').GmfGroup} The group.
  * @hidden
@@ -535,6 +535,7 @@ export function findGroupByName(themes, name) {
  * Find an object by its name. Return null if not found.
  * @param {(import('gmf/themes.js').GmfTheme|import("gmf/themes").GmfGroup|import("gmf/themes").GmfLayer)[]}
  *    objects Array of objects with a 'name' attribute.
+ * @param objects
  * @param {string} objectName The object name.
  * @return {?(import('gmf/themes.js').GmfTheme|import("gmf/themes").GmfGroup|import("gmf/themes").GmfLayer)}
  *    The object or null.
@@ -546,7 +547,7 @@ export function findObjectByName(objects, objectName) {
 
 /**
  * Find a theme object by its name. Return null if not found.
- * @param {Array<import('gmf/themes.js').GmfTheme>} themes Array of "theme" objects.
+ * @param {import('gmf/themes.js').GmfTheme[]} themes Array of "theme" objects.
  * @param {string} themeName The theme name.
  * @return {?import('gmf/themes.js').GmfTheme} The theme object or null.
  * @hidden
@@ -559,7 +560,7 @@ export function findThemeByName(themes, themeName) {
  * Fill the given "nodes" array with all internal nodes (non-leaf nones) in the given node.
  *
  * @param {import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer} node Layertree node.
- * @param {Array<import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer>} nodes An array.
+ * @param {(import('gmf/themes.js').GmfGroup | import('gmf/themes.js').GmfLayer)[]} nodes An array.
  * @private
  * @hidden
  */
@@ -578,7 +579,7 @@ function getFlatInternalNodes(node, nodes) {
  * Fill the given "nodes" array with all leaf nodes in the given node.
  *
  * @param {import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer} node Layertree node.
- * @param {Array<import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer>} nodes An array.
+ * @param {(import('gmf/themes.js').GmfGroup | import('gmf/themes.js').GmfLayer)[]} nodes An array.
  * @hidden
  */
 export function getFlatNodes(node, nodes) {

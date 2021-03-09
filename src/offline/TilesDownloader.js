@@ -27,7 +27,7 @@ function blobToDataUrl(blob) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onload = function () {
-      resolve(/** @type {String} */ (reader.result));
+      resolve(/** @type {string} */ (reader.result));
     };
     reader.onerror = reject;
     reader.readAsDataURL(blob);
@@ -36,7 +36,7 @@ function blobToDataUrl(blob) {
 
 export default class TileDownloader {
   /**
-   * @param {Array<import("./index.js").OfflineTile>} tiles An array of tiles to download.
+   * @param {import("./index.js").OfflineTile[]} tiles An array of tiles to download.
    * @param {import("./index.js").OfflineOnTileDownload} callbacks The callbacks.
    * @param {number} workers The maximum number of workers.
    */
@@ -53,7 +53,7 @@ export default class TileDownloader {
     this.wasStarted_ = false;
 
     /**
-     * @type {Array<import("./index.js").OfflineTile>}
+     * @type {import("./index.js").OfflineTile[]}
      * @private
      */
     this.tiles_ = tiles;
@@ -141,7 +141,7 @@ export default class TileDownloader {
   }
 
   /**
-   * @private to download.
+   * @private
    */
   downloadTile_() {
     if (this.cancel_ || this.tileIndex_ >= this.tiles_.length) {

@@ -87,13 +87,13 @@ export default class extends olInteractionInteraction {
     this.features_ = options.features;
 
     /**
-     * @type {Array<import("ol/events.js").EventsKey>}
+     * @type {import("ol/events.js").EventsKey[]}
      * @private
      */
     this.listenerKeys_ = [];
 
     /**
-     * @type {Array<import("ol/interaction/Interaction.js").default>}
+     * @type {import("ol/interaction/Interaction.js").default[]}
      * @private
      */
     this.interactions_ = [];

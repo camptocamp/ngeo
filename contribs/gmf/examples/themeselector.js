@@ -30,7 +30,7 @@ import options from './options.js';
 const myModule = angular.module('gmfapp', ['gettext', gmfLayertreeTreeManager.name, gmfThemeModule.name]);
 
 /**
- * @constructor
+ * @class
  * @param {angular.IHttpService} $http Angular's $http service.
  * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes Themes service.
  * @param {import("gmf/theme/Manager.js").ThemeManagerService} gmfThemeManager gmf Tree Manager service.

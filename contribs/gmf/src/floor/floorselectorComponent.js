@@ -141,7 +141,7 @@ export class Controller {
       this.items,
       /**
        * @param {Object<string, string>} item
-       * @returns {boolean}
+       * @return {boolean}
        */
       function (item) {
         return item.value === value;

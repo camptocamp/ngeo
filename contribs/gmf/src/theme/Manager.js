@@ -47,7 +47,7 @@ export const ThemeEventType = {
  *
  * This service's theme is a GmfTheme with only children and a name.
  * Thought to be the tree source of the gmf layertree directive.
- * @constructor
+ * @class
  * @param {angular.IScope} $rootScope Angular rootScope.
  * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes gmf Themes service.
  * @param {import('gmf/options.js').gmfTreeManagerModeFlush} gmfTreeManagerModeFlush Flush mode active?

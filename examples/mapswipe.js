@@ -32,7 +32,7 @@ import olView from 'ol/View.js';
 const myModule = angular.module('app', ['gettext', ngeoMapModule.name, ngeoMapswipeModule.name]);
 
 /**
- * @constructor
+ * @class
  * @ngInject
  */
 function MainController() {

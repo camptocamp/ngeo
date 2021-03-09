@@ -21,7 +21,7 @@
 
 // @ts-nocheck
 
-/*!
+/**!
  * @copyright Copyright &copy; Kartik Visweswaran, Krajee.com, 2014 - 2017
  * @version 1.3.4
  *
@@ -190,7 +190,7 @@ export default class DateFormatter {
    *
    * @param {Date|string|number} vDate
    * @param {?string} vFormat
-   * @returns {?Date}
+   * @return {?Date}
    */
   parseDate(vDate, vFormat) {
     const self = this,

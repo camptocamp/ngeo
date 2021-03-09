@@ -27,7 +27,7 @@
  *
  *
  * @typedef {Object} DataSourceOptions
- * @property {Array<import('ngeo/format/Attribute.js').Attribute>} [attributes] The attributes of the data
+ * @property {import('ngeo/format/Attribute.js').Attribute[]} [attributes] The attributes of the data
  *    source.
  * @property {import('ngeo/datasource/OGC.js').DimensionsFiltersConfig} [dimensionsFiltersConfig]
  *    The dimensions filters configuration, which determines dimensions supported by this data source using
@@ -99,7 +99,7 @@ class DataSource {
      * Note: `attributes` is not using the conventionnal getter/setter due
      * to:  See: https://github.com/google/closure-compiler/issues/1089
      *
-     * @type {?Array<import('ngeo/format/Attribute.js').Attribute>}
+     * @type {?import('ngeo/format/Attribute.js').Attribute[]}
      */
     this.attributes = options.attributes || null;
 
@@ -146,14 +146,14 @@ class DataSource {
   // =======================================
 
   /**
-   * @return {?Array<import('ngeo/format/Attribute.js').Attribute>} Attributes
+   * @return {?import('ngeo/format/Attribute.js').Attribute[]} Attributes
    */
   getAttributes() {
     return this.attributes;
   }
 
   /**
-   * @param {Array<import('ngeo/format/Attribute.js').Attribute>} attributes Attributes
+   * @param {import('ngeo/format/Attribute.js').Attribute[]} attributes Attributes
    */
   setAttributes(attributes) {
     this.attributes = attributes;

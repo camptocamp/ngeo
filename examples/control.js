@@ -34,7 +34,7 @@ import olSourceOSM from 'ol/source/OSM.js';
 const myModule = angular.module('app', ['gettext', ngeoMapModule.name, ngeoMiscControlComponent.name]);
 
 /**
- * @constructor
+ * @class
  * @ngInject
  */
 function MainController() {

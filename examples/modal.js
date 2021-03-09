@@ -26,7 +26,7 @@ import ngeoMessageModalComponent from 'ngeo/message/modalComponent.js';
 const myModule = angular.module('app', ['gettext', ngeoMessageModalComponent.name]);
 
 /**
- * @constructor
+ * @class
  * @ngInject
  */
 function MainController() {

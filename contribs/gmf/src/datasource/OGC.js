@@ -87,7 +87,7 @@ import ngeoDatasourceOGC from 'ngeo/datasource/OGC.js';
  *
  * TODO - inherit typedef properly once TypeScript supports it
  * Extends (ngeo/datasource/OGC.js).DataSourceOptions
- * @property {Array<import('ngeo/format/Attribute.js').Attribute>} [attributes] (DataSourceOptions)
+ * @property {import('ngeo/format/Attribute.js').Attribute[]} [attributes] (DataSourceOptions)
  * @property {import('ngeo/datasource/OGC.js').DimensionsFiltersConfig} [dimensionsFiltersConfig]
  *    (DataSourceOptions)
  * @property {number} id (DataSourceOptions)

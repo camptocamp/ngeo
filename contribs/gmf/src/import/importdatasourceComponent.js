@@ -99,6 +99,7 @@ export class Controller {
    * @param {import("gmf/datasource/ExternalDataSourcesManager.js").ExternalDatSourcesManager}
    *     gmfExternalDataSourcesManager GMF service responsible of managing
    *     external data sources.
+   * @param gmfExternalDataSourcesManager
    * @param {import("ngeo/query/Querent.js").Querent} ngeoQuerent Ngeo querent service.
    * @param {import('gmf/options.js').gmfExternalOGCServers} gmfExternalOGCServers The options.
    * @param {angular.gettext.gettextCatalog} gettextCatalog The gettextCatalog service.

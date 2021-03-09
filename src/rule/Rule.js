@@ -203,7 +203,7 @@ export default class Rule {
     // === Other properties ===
 
     /**
-     * @type {Array<import("ol/events.js").EventsKey>}
+     * @type {import("ol/events.js").EventsKey[]}
      * @protected
      */
     this.listenerKeys = [];

@@ -104,7 +104,7 @@ function d3Elevation(options, functions) {
 
   /**
    * Out callback function.
-   * @type {function}
+   * @type {Function}
    */
   const outCallback = functions.outCallback !== undefined ? functions.outCallback : () => {};
 
@@ -224,7 +224,7 @@ function d3Elevation(options, functions) {
 
   /**
    * Scale modifier to allow customizing the x and y scales.
-   * @type {function(function, function, number, number): void}
+   * @type {function(Function, Function, number, number): void}
    */
   const scaleModifier = functions.scaleModifier;
 

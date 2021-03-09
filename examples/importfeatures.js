@@ -37,7 +37,7 @@ import olSourceVector from 'ol/source/Vector.js';
 const myModule = angular.module('app', ['gettext', ngeoMapModule.name, ngeoMiscFilereaderComponent.name]);
 
 /**
- * @constructor
+ * @class
  * @param {angular.IScope} $scope Scope.
  * @ngInject
  */

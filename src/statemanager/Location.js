@@ -36,7 +36,7 @@ import {encodeQueryString, decodeQueryString} from 'ngeo/utils.js';
  *
  * @param {Location} location Location.
  * @param {History} history History.
- * @constructor
+ * @class
  * @ngdoc service
  * @ngname ngeoLocation
  * @hidden

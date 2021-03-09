@@ -32,7 +32,7 @@ import {select as d3select} from 'd3';
 /**
  * The lidar point attribute list width default option
  * @typedef {Object} LidarPointAttributeList
- * @property {Array<import("gmf/lidarprofile/Config.js").LidarprofileServerConfigPointAttributes>} [availableOptions]
+ * @property {import("gmf/lidarprofile/Config.js").LidarprofileServerConfigPointAttributes[]} [availableOptions]
  * @property {import("gmf/lidarprofile/Config.js").LidarprofileServerConfigPointAttribute} [selectedOption]
  */
 
@@ -318,7 +318,7 @@ export default class {
   /**
    * Get the data for a CSV export of the profile.
    * @param {LidarPoint[]} points A list of lidar profile point objects.
-   * @return {Array<Object<string, *>>} Objects for a csv export (column: value).
+   * @return {Object<string, *>[]} Objects for a csv export (column: value).
    */
   getCSVData(points) {
     return points.map((point) => {

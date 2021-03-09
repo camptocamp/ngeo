@@ -67,6 +67,7 @@ myModule.run(
  *
  * @htmlAttribute {boolean} gmf-mobile-measurelength-active Used to active
  * or deactivate the component.
+ * @param gmfMobileMeasureLengthTemplateUrl
  * @htmlAttribute {import("ol/Map.js").default} gmf-mobile-measurelength-map The map.
  * @param {string|function(JQuery=, angular.IAttributes=):string}
  *     gmfMobileMeasureLengthTemplateUrl Template URL for the directive.

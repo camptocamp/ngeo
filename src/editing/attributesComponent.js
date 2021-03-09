@@ -81,7 +81,7 @@ function ngeoAttributesTemplateUrl($attrs, ngeoAttributesTemplateUrl) {
  *       ngeo-attributes-feature="::ctrl.feature">
  *     </ngeo-attributes>
  *
- * @htmlAttribute {Array<import('ngeo/format/Attribute.js').Attribute>} ngeo-attributes-attributes The
+ * @htmlAttribute {import('ngeo/format/Attribute.js').Attribute[]} ngeo-attributes-attributes The
  *     list of attributes to use.
  * @htmlAttribute {boolean} ngeo-attributes-disabled Whether the fieldset should
  *     be disabled or not.
@@ -108,7 +108,7 @@ myModule.component('ngeoAttributes', editingAttributeComponent);
 /**
  * @param {angular.IScope} $scope Angular scope.
  * @param {import("ngeo/misc/EventHelper.js").EventHelper} ngeoEventHelper Ngeo event helper service
- * @constructor
+ * @class
  * @hidden
  * @ngInject
  * @ngdoc controller
@@ -117,7 +117,7 @@ myModule.component('ngeoAttributes', editingAttributeComponent);
 export function Controller($scope, ngeoEventHelper) {
   /**
    * The list of attributes to create the form with.
-   * @type {Array<import('ngeo/format/Attribute.js').Attribute>}
+   * @type {import('ngeo/format/Attribute.js').Attribute[]}
    */
   this.attributes = [];
 

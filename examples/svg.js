@@ -38,7 +38,7 @@ import MapModule from 'ngeo/map/module.js';
 const appmodule = angular.module('app', [MapModule.name]);
 
 /**
- * @constructor
+ * @class
  * @ngInject
  * @hidden
  */

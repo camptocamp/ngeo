@@ -51,7 +51,7 @@ import {toFunction as toStyleFunction, createDefaultStyle as olStyleDefaultFunct
  *     featureOverlay.setStyle(myStyle);
  *     featureOverlay.addFeature(myFeature);
  *
- * @constructor
+ * @class
  * @ngdoc service
  * @ngname ngeoFeatureOverlayMgr
  * @hidden
@@ -87,7 +87,7 @@ export function FeatureOverlayMgr() {
 
 /**
  * @param {number} groupIndex The group groupIndex.
- * @returns {boolean} True if the group has no features. False otherwise.
+ * @return {boolean} True if the group has no features. False otherwise.
  */
 FeatureOverlayMgr.prototype.isEmpty = function (groupIndex) {
   console.assert(groupIndex >= 0);
@@ -174,7 +174,7 @@ FeatureOverlayMgr.prototype.setStyle = function (style, groupIndex) {
 /**
  * @param {import('ol/Feature.js').default<import('ol/geom/Geometry.js').default>|import("ol/render/Feature.js").default} feature Feature.
  * @param {number} resolution Resolution.
- * @return {Array<import("ol/style/Style.js").default>|import("ol/style/Style.js").default|void} Styles.
+ * @return {import("ol/style/Style.js").default[] | import("ol/style/Style.js").default | void} Styles.
  */
 FeatureOverlayMgr.prototype.styleFunction_ = function (feature, resolution) {
   const featureUid = olUtilGetUid(feature).toString();

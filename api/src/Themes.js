@@ -83,7 +83,7 @@ let overlayDefPromise;
 
 /**
  * @hidden
- * @return {Promise<Array<TileLayer|ImageLayer|GroupLayer>>} Promise
+ * @return {Promise<(TileLayer | ImageLayer | GroupLayer)[]>} Promise
  */
 export function getBackgroundLayers() {
   return getThemesPromise().then((themes) => {
@@ -140,7 +140,7 @@ export function getBackgroundLayers() {
         );
       }
     }
-    return Promise.all(/** @type {Array<Promise<TileLayer|ImageLayer|GroupLayer>>} */ (promises));
+    return Promise.all(/** @type {Promise<TileLayer | ImageLayer | GroupLayer>[]} */ (promises));
   });
 }
 

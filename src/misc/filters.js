@@ -413,6 +413,7 @@ myModule.filter('ngeoTrustHtml', trustHtmlFilter);
  * @return {function(?):string} The filter function.
  * @ngInject
  * @ngdoc filter
+ * @param ngeoStringToHtmlReplacements
  * @param {angular.ISCEService} $sce Angular sce service.
  * @param {import('ngeo/options.js').ngeoStringToHtmlReplacements}
  *     ngeoStringToHtmlReplacements List of replacements for string to html.

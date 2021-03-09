@@ -25,7 +25,7 @@ import olCollection from 'ol/Collection.js';
  * The options required to create a `Group`.
  *
  * @typedef {Object} GroupOptions
- * @property {Array<import('ngeo/datasource/DataSource.js').default>} dataSources List of data source
+ * @property {import('ngeo/datasource/DataSource.js').default[]} dataSources List of data source
  *    combined in the group.
  *    At least one must be defined upon the cration of the group.
  * @property {string} title A human-readable title for the group. Usually, the WMS Server title is
@@ -83,7 +83,7 @@ class Group {
   // ========================================
 
   /**
-   * @return {Array<import("ngeo/datasource/DataSource.js").default>} Data sources
+   * @return {import("ngeo/datasource/DataSource.js").default[]} Data sources
    */
   get dataSources() {
     return this.dataSourcesCollection_.getArray();

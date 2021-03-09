@@ -110,7 +110,7 @@ export const WMSInfoFormat = {
  *    by this data source and whether they should use a static value or the one defined in the dimensions.
  * @property {string} [filterCondition] The filter condition to apply to the filter rules (if any).
  *    Defaults to `ngeo.filter.Condition.AND`.
- * @property {Array<import('ngeo/rule/Rule.js').default>} [filterRules] A list of filter rules to apply to
+ * @property {import('ngeo/rule/Rule.js').default[]} [filterRules] A list of filter rules to apply to
  *    this data source using the filter condition.
  * @property {boolean} [filtrable] Whether the data source is filtrable or not.
  * @property {string} [ogcImageType] The type of images to fetch by queries by the (WMS) or (WMTS).
@@ -148,7 +148,7 @@ export const WMSInfoFormat = {
  * @property {string} [wmsUrl] The URL to use for (WMS) requests.
  * @property {string} [wmtsLayer] The layer name to use for the (WMTS) requests.
  * @property {string} [wmtsUrl] The URL to use for (WMTS) requests.
- * @property {Array<import('ngeo/format/Attribute.js').Attribute>} [attributes] (DataSourceOptions)
+ * @property {import('ngeo/format/Attribute.js').Attribute[]} [attributes] (DataSourceOptions)
  * @property {DimensionsFiltersConfig} [dimensionsFiltersConfig] (DataSourceOptions)
  * @property {number} id (DataSourceOptions)
  * @property {string} [identifierAttribute] (DataSourceOptions)
@@ -259,7 +259,7 @@ export class OGC extends ngeoDatasourceDataSource {
     /**
      * A list of filter rules to apply to this data source using the filter
      * condition.
-     * @type {?Array<import("ngeo/rule/Rule.js").default>}
+     * @type {?import("ngeo/rule/Rule.js").default[]}
      */
     this.filterRules = options.filterRules || null;
 
@@ -307,7 +307,7 @@ export class OGC extends ngeoDatasourceDataSource {
      * A list of layer definitions that are used by WMS queries.
      * These are **not** used by the (WMTS) queries (the wmtsLayers is used
      * by WMTS queries).
-     * @type {?Array<WMSLayer>}
+     * @type {?WMSLayer[]}
      * @private
      */
     this.wmsLayers_ = options.wmsLayers || null;
@@ -616,7 +616,7 @@ export class OGC extends ngeoDatasourceDataSource {
   // =======================================
 
   /**
-   * @param {Array<import('ngeo/format/Attribute.js').Attribute>} attributes Attributes
+   * @param {import('ngeo/format/Attribute.js').Attribute[]} attributes Attributes
    */
   setAttributes(attributes) {
     super.setAttributes(attributes);
@@ -669,7 +669,7 @@ export class OGC extends ngeoDatasourceDataSource {
   }
 
   /**
-   * @return {?Array<WFSLayer>} WFS layers
+   * @return {?WFSLayer[]} WFS layers
    */
   get wfsLayers() {
     return this.wfsLayers_;
@@ -1039,7 +1039,7 @@ export class OGC extends ngeoDatasourceDataSource {
    * Returns the list of WMS layer names.
    * @param {boolean} queryableOnly Whether to additionally check if the
    *     WMS layer is queryable as well or not. Defaults to `false`.
-   * @return {Array<string>} The WMS layer names.
+   * @return {string[]} The WMS layer names.
    */
   getWMSLayerNames(queryableOnly = false) {
     const layerNames = [];
@@ -1239,7 +1239,7 @@ export class OGC extends ngeoDatasourceDataSource {
    * returned, then the Filter tool have the possibilily to filter the
    * data source using spatial filters.
    *
-   * @param {Array<string>} layerNames List of layer names
+   * @param {string[]} layerNames List of layer names
    * @return {?Object<string, import('gmf/themes.js').GmfOgcServerAttribute>}
    */
   getCommonOGCAttributes_(layerNames) {

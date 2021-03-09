@@ -43,6 +43,7 @@ export default class extends ngeoInteractionMeasureLength {
   /**
    * @param {import("ol/style/Style.js").StyleLike}
    *     style The sketchStyle used for the drawing interaction.
+   * @param style
    * @param {import("ol/source/Vector.js").default<import("ol/geom/LineString.js").default>} source Vector source.
    * @return {ngeoInteractionMobileDraw} The interaction
    */

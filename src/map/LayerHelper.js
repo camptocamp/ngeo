@@ -41,7 +41,7 @@ import {ServerType} from 'ngeo/datasource/OGC.js';
  *     By default preload is Infinity,
  *     which means load all tiles on the top of the visible level. See also preload value
  *     in documentation for ol.Layer.Tile.
- * @constructor
+ * @class
  * @ngdoc service
  * @ngname ngeoLayerHelper
  * @ngInject
@@ -386,7 +386,7 @@ LayerHelper.prototype.getGroupFromMap = function (map, groupName) {
  * Get an array of all layers in a group. The group can contain multiple levels
  * of others groups.
  * @param {import("ol/layer/Base.js").default} layer The base layer, mostly a group of layers.
- * @return {Array<import("ol/layer/Layer.js").default<import('ol/source/Source.js').default>>} Layers.
+ * @return {import("ol/layer/Layer.js").default<import('ol/source/Source.js').default>[]} Layers.
  */
 LayerHelper.prototype.getFlatLayers = function (layer) {
   if (layer instanceof olLayerGroup) {
@@ -438,7 +438,7 @@ LayerHelper.prototype.getFlatLayers_ = function (layer, array, computedOpacity) 
  * an array of layers. If one of the layers in the array is a group, then the
  * layers contained in that group are searched as well.
  * @param {string} layerName The name of the layer we're looking for.
- * @param {Array<import("ol/layer/Base.js").default>} layers Layers.
+ * @param {import("ol/layer/Base.js").default[]} layers Layers.
  * @return {?import("ol/layer/Base.js").default} Layer.
  */
 LayerHelper.prototype.getLayerByName = function (layerName, layers) {

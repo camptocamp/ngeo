@@ -124,8 +124,8 @@ function gmfSearchTemplateUrl($element, $attrs, gmfSearchTemplateUrl) {
  * @htmlAttribute {Twitter.Typeahead.Options|undefined} gmf-search-options Addition Twitter.Typeahead.
  *    options.
  * @htmlAttribute {SearchComponentListeners} gmf-search-listeners The listeners.
- * @htmlAttribute {function=} gmf-search-on-init Optional function called when the component is initialized.
- * @htmlAttribute {function=} gmf-search-action Optional function called when no default action is defined.
+ * @htmlAttribute {Function=} gmf-search-on-init Optional function called when the component is initialized.
+ * @htmlAttribute {Function=} gmf-search-action Optional function called when no default action is defined.
  * @ngdoc component
  * @ngname gmfSearch
  */
@@ -159,7 +159,7 @@ export class SearchController {
    * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
    * @param {import("ngeo/misc/AutoProjection.js").AutoProjectionService} ngeoAutoProjection The ngeo
    *    coordinates service.
-   * @param {function} ngeoSearchCreateGeoJSONBloodhound
+   * @param {Function} ngeoSearchCreateGeoJSONBloodhound
    *    The ngeo create GeoJSON Bloodhound service.
    * @param {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
    *     overlay manager service.
@@ -246,7 +246,7 @@ export class SearchController {
     this.fullTextSearch_ = gmfSearchFulltextSearch;
 
     /**
-     * @type {function}
+     * @type {Function}
      * @private
      */
     this.ngeoSearchCreateGeoJSONBloodhound_ = ngeoSearchCreateGeoJSONBloodhound;

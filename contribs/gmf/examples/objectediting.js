@@ -67,7 +67,7 @@ const myModule = angular.module('gmfapp', [
  *    service.
  * @param {import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate
  *    manager service.
- * @constructor
+ * @class
  * @ngInject
  */
 function MainController(gmfObjectEditingManager, gmfThemes, gmfTreeManager, ngeoToolActivateMgr) {

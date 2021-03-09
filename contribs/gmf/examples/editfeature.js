@@ -55,7 +55,7 @@ const myModule = angular.module('gmfapp', [
  * @param {angular.IScope} $scope Angular scope.
  * @param {import("gmf/editing/EditFeature.js").EditingEditFeature} gmfEditFeature Gmf edit feature service.
  * @param {import('gmf/authentication/Service.js').User} gmfUser User.
- * @constructor
+ * @class
  * @ngInject
  */
 function MainController($scope, gmfEditFeature, gmfUser) {
@@ -163,7 +163,7 @@ MainController.prototype.handleMapSingleClick_ = function (evt) {
 };
 
 /**
- * @param {Array<olFeature<import("ol/geom/Geometry.js").default>>} features Features.
+ * @param {olFeature<import("ol/geom/Geometry.js").default>[]} features Features.
  */
 MainController.prototype.handleGetFeatures_ = function (features) {
   this.pending = false;

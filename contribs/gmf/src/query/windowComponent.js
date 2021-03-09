@@ -146,7 +146,7 @@ myModule.component('gmfDisplayquerywindow', queryWindowComponent);
  *     overlay manager service.
  * @param {import('gmf/options.js').gmfCsvFilename} gmfCsvFilename The CSV file name.
  * @param {import('gmf/options.js').gmfDisplayQueryWindowOptions} gmfDisplayQueryWindowOptions The options.
- * @constructor
+ * @class
  * @hidden
  * @ngInject
  * @ngdoc controller

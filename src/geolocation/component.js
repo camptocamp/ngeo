@@ -85,7 +85,7 @@ function geolocationComponent() {
 myModule.directive('ngeoGeolocation', geolocationComponent);
 
 /**
- * @constructor
+ * @class
  * @hidden
  * @param {angular.IScope} $scope The directive's scope.
  * @param {JQuery} $element Element.

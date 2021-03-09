@@ -148,7 +148,7 @@ const NAMESPACE = 'oet';
  * @param {import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate
  *    manager service.
  * @param {import('gmf/options.js').gmfObjectEditingToolsOptions} gmfObjectEditingToolsOptions The options.
- * @constructor
+ * @class
  * @hidden
  * @ngInject
  * @ngdoc controller

@@ -98,7 +98,7 @@ myModule.component('ngeoGrid', gridComponent);
 
 /**
  * @param {angular.IScope} $scope Angular scope.
- * @constructor
+ * @class
  * @private
  * @hidden
  * @ngInject

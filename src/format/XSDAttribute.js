@@ -46,11 +46,11 @@ export const FormatNumberType = {
 class XSDAttribute extends olFormatXML {
   /**
    * @param {Document|Element|string} source Source.
-   * @return {Array<import('ngeo/format/Attribute.js').Attribute>} The parsed result.
+   * @return {import('ngeo/format/Attribute.js').Attribute[]} The parsed result.
    * @override
    */
   read(source) {
-    return /** @type {Array<import('ngeo/format/Attribute.js').Attribute>} */ olFormatXML.prototype.read.call(
+    return /** @type {import('ngeo/format/Attribute.js').Attribute[]} */ olFormatXML.prototype.read.call(
       this,
       source
     );
@@ -58,7 +58,7 @@ class XSDAttribute extends olFormatXML {
 
   /**
    * @param {Document} doc Document.
-   * @return {?Array<import('ngeo/format/Attribute.js').Attribute>} List of attributes.
+   * @return {?import('ngeo/format/Attribute.js').Attribute[]} List of attributes.
    * @override
    */
   readFromDocument(doc) {
@@ -80,7 +80,7 @@ class XSDAttribute extends olFormatXML {
 
   /**
    * @param {Element} node Node.
-   * @return {Array<import('ngeo/format/Attribute.js').Attribute>} List of attributes.
+   * @return {import('ngeo/format/Attribute.js').Attribute[]} List of attributes.
    * @override
    */
   readFromNode(node) {
@@ -223,7 +223,7 @@ class XSDAttribute extends olFormatXML {
 
 /**
  * Returns the first geometry attribute among a given list of attributes.
- * @param {Array<import('ngeo/format/Attribute.js').Attribute>} attributes The list of attributes.
+ * @param {import('ngeo/format/Attribute.js').Attribute[]} attributes The list of attributes.
  * @return {?import('ngeo/format/Attribute.js').Attribute} A geometry attribute object.
  * @hidden
  */

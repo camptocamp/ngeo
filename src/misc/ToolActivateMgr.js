@@ -51,7 +51,7 @@ import angular from 'angular';
  * [../examples/toolActivate.html](../examples/toolActivate.html)
  *
  * @param {angular.IScope} $rootScope The rootScope provider.
- * @constructor
+ * @class
  * @ngdoc service
  * @ngname ngeoToolActivateMgr
  * @ngInject

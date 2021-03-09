@@ -82,6 +82,7 @@ export class Controller {
    * @param {import("gmf/datasource/ExternalDataSourcesManager.js").ExternalDatSourcesManager}
    *     gmfExternalDataSourcesManager GMF service responsible of managing
    *     external data sources.
+   * @param gmfExternalDataSourcesManager
    * @ngInject
    * @ngdoc controller
    * @ngname GmfWmtscapabilitylayertreeController

@@ -45,7 +45,7 @@ import olSourceImageWMS from 'ol/source/ImageWMS.js';
 
 /**
  * @typedef {Object} QuerentResultItem
- * @property {Array<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>} features
+ * @property {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>[]} features
  * @property {number} limit
  * @property {boolean} [tooManyFeatures]
  * @property {number} [totalFeatureCount]
@@ -70,7 +70,7 @@ import olSourceImageWMS from 'ol/source/ImageWMS.js';
  *    - `remove`:  newly queried features are removed from the existing ones
  * @property {import("ol/coordinate.js").Coordinate} [coordinate] The coordinate to issue the requests with,
  *    which can end up with either WMS or WFS requests.
- * @property {Array<import('ngeo/datasource/DataSource.js').default>} [dataSources] list of data sources to
+ * @property {import('ngeo/datasource/DataSource.js').default[]} [dataSources] list of data sources to
  *    query. Only those that meet the requirements will actually be queried. The querent service requires
  *    either the `dataSources` or `queryableDataSources` property to be set.
  * @property {import("ol/extent.js").Extent} [extent] The extent to issue the requests with, which can end up
@@ -148,7 +148,7 @@ export class Querent {
 
     /**
      * Promises that can be resolved to cancel started requests.
-     * @type {Array<angular.IDeferred<Document|Element|string>>}
+     * @type {angular.IDeferred<Document | Element | string>[]}
      * @private
      */
     this.requestCancelers_ = [];
@@ -222,7 +222,7 @@ export class Querent {
    *
    * The map view resolution determines if the inner ogc layers are in range.
    *
-   * @param {Array<import('ngeo/datasource/DataSource.js').default>} dataSources Data sources
+   * @param {import('ngeo/datasource/DataSource.js').default[]} dataSources Data sources
    * @param {import("ol/Map.js").default} map Map.
    * @return {QueryableDataSources} Queryable data sources.
    */
@@ -419,7 +419,7 @@ export class Querent {
     for (const dataSource of dataSources) {
       const dataSourceId = dataSource.id;
       datasourceNames.push(dataSource.name);
-      /** @type {Array<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>} */
+      /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>[]} */
       const features =
         dataSource instanceof ngeoDatasourceOGC
           ? this.readAndTypeFeatures_(dataSource, response.data, wfs)
@@ -461,7 +461,7 @@ export class Querent {
       const dataSourceId = dataSource.id;
 
       if (typeof response === 'number') {
-        /** @type {Array<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>} */
+        /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>[]} */
         const features = [];
         const tooManyFeatures = true;
         const totalFeatureCount = response;
@@ -1106,7 +1106,7 @@ export class Querent {
   /**
    * Make sure that feature ids are unique, because the same features might
    * be returned for different layers.
-   * @param {Array<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>} features Features
+   * @param {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>[]} features Features
    * @param {number} dataSourceId Data source id.
    * @private
    */

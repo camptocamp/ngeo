@@ -60,9 +60,10 @@ import 'bootstrap/js/src/dropdown.js';
 /**
  * Object that can be used to generate a form field.
  * @typedef {Object}
- * @protected default {string|boolean|number|undefined} Default value of the form field.
- * @protected name {string} Name of the form field.
- * @protected type {string} Type of the field. Can be `String`, `Boolean` or `Number`.
+ * @protected
+ * @protected
+ * @protected
+ * @property
  */
 
 /**
@@ -526,7 +527,7 @@ export class PrintController {
     this.ogcServers_ = null;
 
     /**
-     * @type {Array<import('gmf/themes.js').GmfTheme>}
+     * @type {import('gmf/themes.js').GmfTheme[]}
      * @private
      */
     this.currentThemes_ = [];
@@ -1160,7 +1161,7 @@ export class PrintController {
   /**
    * Get datasource object for print report
    * @private
-   * @return {Array<import('ngeo/print/mapfish-print-v3').DataSourcePrintReportObject>} the data
+   * @return {import('ngeo/print/mapfish-print-v3').DataSourcePrintReportObject[]} the data
    *     source object for the print report
    */
   getDataSource_() {
@@ -1168,7 +1169,7 @@ export class PrintController {
     const datasourceArr = [];
     const sources = this.ngeoQueryResult_.sources;
     sources.forEach((source) => {
-      /** @type {Array<string|number|boolean>[]} */
+      /** @type {(string | number | boolean)[][]} */
       const data = [];
       /** @type {string[]} */
       let columns = [];
@@ -1260,6 +1261,7 @@ export class PrintController {
    * @param {string} ref Ref.
    * @param {angular.IHttpResponse<import('ngeo/print/mapfish-print-v3.js').MapFishPrintStatusResponse>}
    *    resp Response.
+   * @param resp
    * @private
    */
   handleGetStatusSuccess_(ref, resp) {

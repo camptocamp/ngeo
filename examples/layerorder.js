@@ -40,7 +40,7 @@ const myModule = angular.module('app', ['gettext', ngeoMapModule.name, ngeoMiscS
 
 /**
  * @param {angular.IScope} $scope Scope.
- * @constructor
+ * @class
  * @ngInject
  */
 function MainController($scope) {
@@ -115,7 +115,7 @@ function MainController($scope) {
   this.roads_.set('name', 'Roads');
 
   /**
-   * @type {Array<import("ol/layer/Base.js").default>}
+   * @type {import("ol/layer/Base.js").default[]}
    * @const
    */
   this.selectedLayers = [];

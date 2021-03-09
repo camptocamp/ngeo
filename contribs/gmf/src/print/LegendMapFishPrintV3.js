@@ -82,7 +82,7 @@ export default class LegendMapFishPrintV3 {
 
   /**
    * Return a legend for MapFishPrint V3 based on the map and the GMF layertree.
-   * @param {Array<import('gmf/themes.js').GmfTheme>} currentThemes the current themes.
+   * @param {import('gmf/themes.js').GmfTheme[]} currentThemes the current themes.
    * @param {number} scale The scale to get the legend (for wms layers only).
    * @param {number} dpi The DPI.
    * @param {number[]} bbox The bbox.
@@ -101,7 +101,7 @@ export default class LegendMapFishPrintV3 {
 
   /**
    * Get legend classes from the layertree only.
-   * @param {Array<import('gmf/themes.js').GmfTheme>} currentThemes the current themes.
+   * @param {import('gmf/themes.js').GmfTheme[]} currentThemes the current themes.
    * @param {number} scale The scale to get the legend.
    * @param {number} dpi The DPI.
    * @param {number[]} bbox The bbox.
@@ -117,7 +117,7 @@ export default class LegendMapFishPrintV3 {
   /**
    * Extract recursively a legend from a layer.
    * @param {import("ol/layer/Base.js").default} layer or layer group to extract the legend from.
-   * @param {Array<import('gmf/themes.js').GmfTheme>} currentThemes the current themes.
+   * @param {import('gmf/themes.js').GmfTheme[]} currentThemes the current themes.
    * @param {number} scale The scale to get the legend.
    * @param {number} dpi The DPI.
    * @param {number[]} bbox The bbox.
@@ -236,7 +236,7 @@ export default class LegendMapFishPrintV3 {
 
   /**
    * Create a legend item from the given WMTS layer.
-   * @param {Array<import('gmf/themes.js').GmfTheme>} currentThemes the current themes.
+   * @param {import('gmf/themes.js').GmfTheme[]} currentThemes the current themes.
    * @param {import("ol/layer/Tile.js").default} layer The layer to extract the legend from.
    * @param {number} dpi The DPI.
    * @return {import('ngeo/print/mapfish-print-v3').MapFishPrintLegendClass} Legend object for print report
@@ -270,7 +270,7 @@ export default class LegendMapFishPrintV3 {
    * Create a legend item from the given WMS layer.
    * @param {import("ol/layer/Layer.js").default<import("ol/source/ImageWMS.js").default>} layer The layer
    * to extract the legend from.
-   * @param {Array<import('gmf/themes.js').GmfTheme>} currentThemes the current themes.
+   * @param {import('gmf/themes.js').GmfTheme[]} currentThemes the current themes.
    * @param {number} scale The scale to get the legend.
    * @param {number} dpi The DPI.
    * @param {number[]} bbox The bbox.
@@ -382,7 +382,7 @@ export default class LegendMapFishPrintV3 {
    * or undefined.
    * @param {string} layerName a layer name.
    * @param {number} [dpi=96] the image DPI.
-   * @param {Array<import('gmf/themes.js').GmfTheme>} currentThemes the current themes.
+   * @param {import('gmf/themes.js').GmfTheme[]} currentThemes the current themes.
    * @return {LegendURLDPI|undefined} The legendImage with selected DPI or undefined.
    * @private
    */

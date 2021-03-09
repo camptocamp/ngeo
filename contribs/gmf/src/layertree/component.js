@@ -212,6 +212,7 @@ myModule.component('gmfLayertree', layertreeComponent);
  * @param {import("gmf/datasource/ExternalDataSourcesManager.js").ExternalDatSourcesManager}
  *    gmfExternalDataSourcesManager The Gmf external data sources manager
  *    service. Used here to fetch the external WMS groups.
+ * @param gmfExternalDataSourcesManager
  * @param {import("gmf/permalink/Permalink.js").PermalinkService} gmfPermalink The gmf permalink service.
  * @param {import("gmf/layertree/TreeManager.js").LayertreeTreeManager} gmfTreeManager
  *    gmf Tree Manager service.
@@ -221,7 +222,7 @@ myModule.component('gmfLayertree', layertreeComponent);
  * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes The gmf Themes service.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @param {import('gmf/options.js').gmfLayerTreeOptions} gmfLayerTreeOptions The options.
- * @constructor
+ * @class
  * @hidden
  * @ngInject
  * @ngdoc controller
@@ -323,7 +324,7 @@ export function Controller(
   this.dataLayerGroup_ = null;
 
   /**
-   * @type {Array<import("ol/layer/Base.js").default>}
+   * @type {import("ol/layer/Base.js").default[]}
    */
   this.layers = [];
 

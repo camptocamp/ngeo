@@ -109,7 +109,7 @@ const backgroundlayerselectorComponent = {
 myModule.component('gmfBackgroundlayerselector', backgroundlayerselectorComponent);
 
 /**
- * @constructor
+ * @class
  * @hidden
  * @param {angular.IScope} $scope Angular scope.
  * @param {import("ngeo/map/BackgroundLayerMgr.js").MapBackgroundLayerManager} ngeoBackgroundLayerMgr
@@ -143,7 +143,7 @@ export function Controller($scope, ngeoBackgroundLayerMgr, gmfThemes, gmfBackgro
   this.bgLayer = null;
 
   /**
-   * @type {?Array<import("ol/layer/Base.js").default>}
+   * @type {?import("ol/layer/Base.js").default[]}
    */
   this.bgLayers = null;
 
@@ -158,7 +158,7 @@ export function Controller($scope, ngeoBackgroundLayerMgr, gmfThemes, gmfBackgro
   this.gmfThemes_ = gmfThemes;
 
   /**
-   * @type {Array<import("ol/events.js").EventsKey>}
+   * @type {import("ol/events.js").EventsKey[]}
    */
   this.listenerKeys_ = [];
 

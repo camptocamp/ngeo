@@ -322,7 +322,7 @@ class FeatureHash extends olFormatTextFeature {
    * Read multiple features from a logical sequence of characters.
    * @param {string} text Text.
    * @param {import('ol/format/Feature.js').ReadOptions=} opt_options Read options.
-   * @return {Array<olFeature<import("ol/geom/Geometry.js").default>>} Features.
+   * @return {olFeature<import("ol/geom/Geometry.js").default>[]} Features.
    * @protected
    * @override
    */
@@ -330,7 +330,7 @@ class FeatureHash extends olFormatTextFeature {
     console.assert(text.startsWith('F'));
     this.prevX_ = 0;
     this.prevY_ = 0;
-    /** @type {Array<olFeature<import("ol/geom/Geometry.js").default>>} */
+    /** @type {olFeature<import("ol/geom/Geometry.js").default>[]} */
     const features = [];
     text = text.substring(1);
     while (text.length > 0) {
@@ -445,7 +445,7 @@ class FeatureHash extends olFormatTextFeature {
 
   /**
    * Encode an array of features into a logical sequence of characters.
-   * @param {Array<olFeature<import("ol/geom/Geometry.js").default>>} features Feature.
+   * @param {olFeature<import("ol/geom/Geometry.js").default>[]} features Feature.
    * @param {import('ol/format/Feature.js').ReadOptions=} opt_options Read options.
    * @return {string} Encoded features.
    * @protected
@@ -537,7 +537,7 @@ function encodeNumber_(num) {
  * For a type of geometry, transforms an array of {@link import("ol/style/Style.js").default} into
  * a logical sequence of characters and put the result into the given encoded
  * styles's array.
- * @param {Array<import("ol/style/Style.js").default>} styles Styles.
+ * @param {import("ol/style/Style.js").default[]} styles Styles.
  * @param {string} geometryType Geometry type.
  * @param {string[]} encodedStyles Encoded styles array.
  * @private

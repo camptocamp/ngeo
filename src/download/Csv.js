@@ -40,7 +40,7 @@ import ngeoDownloadService from 'ngeo/download/service.js';
  * @param {import('ngeo/options.js').ngeoCsvIncludeHeader} ngeoCsvIncludeHeader Has headers.
  * @param {import('ngeo/options.js').ngeoCsvQuote} ngeoCsvQuote The quote.
  * @param {import('ngeo/options.js').ngeoCsvSeparator} ngeoCsvSeparator The separator.
- * @constructor
+ * @class
  * @ngdoc service
  * @ngname ngeoCsvDownload
  * @ngInject
@@ -123,7 +123,7 @@ DownloadCsvService.prototype.generateCsv = function (data, columnDefs) {
 };
 
 /**
- * @param {Array<?>} values Values.
+ * @param {?[]} values Values.
  * @return {string} CSV row.
  */
 DownloadCsvService.prototype.getRow_ = function (values) {

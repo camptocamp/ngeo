@@ -116,6 +116,7 @@ myModule.run(
  *
  * @htmlAttribute {Object} ngeo-layertree One theme (JSON).
  * @htmlAttribute {string} ngeo-layertree-templateurl The template URL.
+ * @param ngeoLayertreeTemplateUrl
  * @htmlAttribute {import("ol/Map.js").default} ngeo-layertree-map The map.
  * @htmlAttribute {string} ngeo-layertree-nodelayer Expression that will be parsed
  *      to be a {@link Function} that return a {@link import("ol/layer/Layer.js").default}

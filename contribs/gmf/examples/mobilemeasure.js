@@ -53,7 +53,7 @@ const myModule = angular.module('gmfapp', [
 
 /**
  * @param {import("gmf/permalink/Permalink.js").PermalinkService} gmfPermalink The gmf permalink service.
- * @constructor
+ * @class
  * @ngInject
  */
 function MainController(gmfPermalink) {

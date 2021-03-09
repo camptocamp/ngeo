@@ -36,7 +36,7 @@ const appmodule = angular.module('app', ['gettext', ngeoGeolocation.name, ngeoMa
  * @param {angular.IScope} $scope Scope.
  * @param {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
- * @constructor
+ * @class
  * @ngInject
  */
 function MainController($scope, ngeoFeatureOverlayMgr) {

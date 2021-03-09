@@ -37,7 +37,7 @@ import {appendParams as olUriAppendParams} from 'ol/uri.js';
  *
  * The GeoJSON format is used when obtaining or sending features.
  *
- * @constructor
+ * @class
  * @param {angular.IHttpService} $http Angular http service.
  * @param {string} gmfLayersUrl URL to the GeoMapFish layers service.
  * @ngInject
@@ -120,7 +120,7 @@ EditingEditFeature.prototype.getFeaturesWithComparisonFilters = function (layerI
 
 /**
  * @param {number} layerId The layer id that contains the feature.
- * @param {Array<import("ol/Feature.js").default<import("ol/geom/Geometry.js").default>>} features List of features to insert.
+ * @param {import("ol/Feature.js").default<import("ol/geom/Geometry.js").default>[]} features List of features to insert.
  * @return {angular.IHttpPromise<ArrayBuffer|Document|Node|string>} Promise.
  */
 EditingEditFeature.prototype.insertFeatures = function (layerId, features) {

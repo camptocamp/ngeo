@@ -58,7 +58,7 @@ export const ObjecteditingParam = {
  * @param {angular.IQService} $q Angular $q service.
  * @param {import("gmf/editing/EditFeature.js").EditingEditFeature} gmfEditFeature Gmf edit feature service.
  * @param {import("ngeo/statemanager/Location.js").StatemanagerLocation} ngeoLocation ngeo location service.
- * @constructor
+ * @class
  * @ngInject
  * @hidden
  */
@@ -147,7 +147,7 @@ ObjecteditingManagerService.prototype.getLayerNodeId = function () {
  *
  * @param {string} key Property key.
  * @param {string} value Property value.
- * @param {Array<olFeature<import("ol/geom/Geometry.js").default>>} features List of features.
+ * @param {olFeature<import("ol/geom/Geometry.js").default>[]} features List of features.
  */
 ObjecteditingManagerService.prototype.handleGetFeatures_ = function (key, value, features) {
   let feature;

@@ -75,7 +75,7 @@ const PRINT_DPI_ = 72;
 const PRINT_PAPER_SIZE_ = [555, 675];
 
 /**
- * @constructor
+ * @class
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @param {import("ngeo/print/Service.js").CreatePrint} ngeoCreatePrint The ngeo Create Print function.
  * @param {import("ngeo/print/Utils.js").PrintUtils} ngeoPrintUtils The ngeo PrintUtils service.

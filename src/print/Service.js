@@ -73,7 +73,7 @@ import olTilegridWMTS from 'ol/tilegrid/WMTS.js';
  *   to use within the sprite. This type of icons won't be printed correctly
  *   as MapFish Print does not support sprite icons.
  *
- * @constructor
+ * @class
  * @param {string} url URL to MapFish print web service.
  * @param {angular.IHttpService} $http Angular $http service.
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext service.
@@ -236,7 +236,7 @@ PrintService.prototype.encodeMap_ = function (map, scale, object, destinationPri
 };
 
 /**
- * @param {Array<import('ngeo/print/mapfish-print-v3.js').MapFishPrintLayer>} arr Array.
+ * @param {import('ngeo/print/mapfish-print-v3.js').MapFishPrintLayer[]} arr Array.
  * @param {import("ol/layer/Base.js").default} layer Layer.
  * @param {number} resolution Resolution.
  * @param {number} destinationPrintDpi The destination print DPI.
@@ -252,7 +252,7 @@ PrintService.prototype.encodeLayer = function (arr, layer, resolution, destinati
 };
 
 /**
- * @param {Array<import('ngeo/print/mapfish-print-v3.js').MapFishPrintLayer>} arr Array.
+ * @param {import('ngeo/print/mapfish-print-v3.js').MapFishPrintLayer[]} arr Array.
  * @param {olLayerVector} layer Layer.
  * @param {number} resolution Resolution.
  * @param {number} destinationPrintDpi The destination print DPI.
@@ -262,7 +262,7 @@ PrintService.prototype.encodeVectorLayer = function (arr, layer, resolution, des
 };
 
 /**
- * @param {Array<import('ngeo/print/mapfish-print-v3.js').MapFishPrintLayer>} arr Array.
+ * @param {import('ngeo/print/mapfish-print-v3.js').MapFishPrintLayer[]} arr Array.
  * @param {import("ol/layer/Image.js").default} layer Layer.
  */
 PrintService.prototype.encodeImageLayer_ = function (arr, layer) {
@@ -276,7 +276,7 @@ PrintService.prototype.encodeImageLayer_ = function (arr, layer) {
 };
 
 /**
- * @param {Array<import('ngeo/print/mapfish-print-v3.js').MapFishPrintLayer>} arr Array.
+ * @param {import('ngeo/print/mapfish-print-v3.js').MapFishPrintLayer[]} arr Array.
  * @param {import("ol/layer/Image.js").default} layer Layer.
  */
 PrintService.prototype.encodeImageWmsLayer_ = function (arr, layer) {
@@ -295,7 +295,7 @@ PrintService.prototype.encodeImageWmsLayer_ = function (arr, layer) {
 };
 
 /**
- * @param {Array<import('ngeo/print/mapfish-print-v3.js').MapFishPrintLayer>} arr Array.
+ * @param {import('ngeo/print/mapfish-print-v3.js').MapFishPrintLayer[]} arr Array.
  * @param {import("ol/layer/Image.js").default|import("ol/layer/Tile.js").default} layer The layer.
  * @param {string} url URL of the WMS server.
  * @param {Object<string, string>} params URL parameters
@@ -365,7 +365,7 @@ function getAbsoluteUrl_(url) {
 }
 
 /**
- * @param {Array<import('ngeo/print/mapfish-print-v3.js').MapFishPrintLayer>} arr Array.
+ * @param {import('ngeo/print/mapfish-print-v3.js').MapFishPrintLayer[]} arr Array.
  * @param {import("ol/layer/Tile.js").default} layer Layer.
  */
 PrintService.prototype.encodeTileLayer_ = function (arr, layer) {
@@ -381,7 +381,7 @@ PrintService.prototype.encodeTileLayer_ = function (arr, layer) {
 };
 
 /**
- * @param {Array<import('ngeo/print/mapfish-print-v3.js').MapFishPrintLayer>} arr Array.
+ * @param {import('ngeo/print/mapfish-print-v3.js').MapFishPrintLayer[]} arr Array.
  * @param {import("ol/layer/Tile.js").default} layer Layer.
  */
 PrintService.prototype.encodeTileWmtsLayer_ = function (arr, layer) {
@@ -407,7 +407,7 @@ PrintService.prototype.encodeTileWmtsLayer_ = function (arr, layer) {
   }
   const matrixIds = tileGrid.getMatrixIds();
 
-  /** @type {Array<import('ngeo/print/mapfish-print-v3.js').MapFishPrintWmtsMatrix>} */
+  /** @type {import('ngeo/print/mapfish-print-v3.js').MapFishPrintWmtsMatrix[]} */
   const matrices = [];
 
   for (let i = 0, ii = matrixIds.length; i < ii; ++i) {
@@ -445,7 +445,7 @@ PrintService.prototype.encodeTileWmtsLayer_ = function (arr, layer) {
 };
 
 /**
- * @param {Array<import('ngeo/print/mapfish-print-v3.js').MapFishPrintLayer>} arr Array.
+ * @param {import('ngeo/print/mapfish-print-v3.js').MapFishPrintLayer[]} arr Array.
  * @param {import("ol/layer/Tile.js").default} layer Layer.
  */
 PrintService.prototype.encodeTileWmsLayer_ = function (arr, layer) {

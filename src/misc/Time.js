@@ -23,7 +23,7 @@ import angular from 'angular';
 
 /**
  * ngeo - Time service
- * @constructor
+ * @class
  * @ngInject
  * @ngdoc service
  * @ngname ngeoTime

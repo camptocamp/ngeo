@@ -32,7 +32,7 @@ import {asArray as asColorArray} from 'ol/color.js';
 import {dpi} from 'ngeo/utils.js';
 
 /**
- * @constructor
+ * @class
  * @hidden
  */
 function VectorEncoder() {
@@ -202,7 +202,7 @@ VectorEncoder.prototype.encodeVectorLayer = function (
 /**
  * Transforms a style with a geometry to a new feature.
  * @param {import("ol/style/Style.js").default} style Style.
- * @returns {olFeature<import("ol/geom/Geometry.js").default>} A feature from the style.
+ * @return {olFeature<import("ol/geom/Geometry.js").default>} A feature from the style.
  */
 VectorEncoder.prototype.newFeatureFromStyle_ = function (style) {
   const feature = new olFeature({
@@ -225,7 +225,7 @@ VectorEncoder.prototype.newFeatureFromStyle_ = function (style) {
  * @param {import("ol/style/Style.js").default} style Style.
  * @param {number} destinationPrintDpi The destination print DPI.
  * @param {number=} [goodnessOfFit] Goodness of fit.
- * @returns {import('ngeo/print/mapfish-print-v3.js').MapFishPrintSymbolizer[]} The styles
+ * @return {import('ngeo/print/mapfish-print-v3.js').MapFishPrintSymbolizer[]} The styles
  */
 VectorEncoder.prototype.encodeVectorStyle_ = function (
   geometryType,
@@ -284,7 +284,7 @@ VectorEncoder.prototype.encodeVectorStyleFill_ = function (symbolizer, fillStyle
 
 /**
  * @param {import("ol/style/Stroke.js").default} strokeStyle Stroke style.
- * @returns {import('ngeo/print/mapfish-print-v3.js').MapFishPrintSymbolizer} The style
+ * @return {import('ngeo/print/mapfish-print-v3.js').MapFishPrintSymbolizer} The style
  */
 VectorEncoder.prototype.encodeVectorStyleLine_ = function (strokeStyle) {
   const symbolizer = /** @type {import('ngeo/print/mapfish-print-v3.js').MapFishPrintSymbolizerLine} */ ({
@@ -298,7 +298,7 @@ VectorEncoder.prototype.encodeVectorStyleLine_ = function (strokeStyle) {
  * @param {number} resolution Resolution.
  * @param {import("ol/style/Image.js").default} imageStyle Image style.
  * @param {number} destinationPrintDpi The destination print DPI.
- * @returns {import('ngeo/print/mapfish-print-v3.js').MapFishPrintSymbolizer} The style
+ * @return {import('ngeo/print/mapfish-print-v3.js').MapFishPrintSymbolizer} The style
  */
 VectorEncoder.prototype.encodeVectorStyle_Point_ = function (resolution, imageStyle, destinationPrintDpi) {
   let symbolizer;
@@ -367,7 +367,7 @@ VectorEncoder.prototype.encodeVectorStyle_Point_ = function (resolution, imageSt
 /**
  * @param {import("ol/style/Fill.js").default} fillStyle Fill style.
  * @param {import("ol/style/Stroke.js").default} strokeStyle Stroke style.
- * @returns {import('ngeo/print/mapfish-print-v3.js').MapFishPrintSymbolizer} The style
+ * @return {import('ngeo/print/mapfish-print-v3.js').MapFishPrintSymbolizer} The style
  */
 VectorEncoder.prototype.encodeVectorStylePolygon_ = function (fillStyle, strokeStyle) {
   const symbolizer = /** @type {import('ngeo/print/mapfish-print-v3.js').MapFishPrintSymbolizerPolygon} */ ({
@@ -383,6 +383,7 @@ VectorEncoder.prototype.encodeVectorStylePolygon_ = function (fillStyle, strokeS
 /**
  * @param {import('ngeo/print/mapfish-print-v3.js').MapFishPrintSymbolizerPoint|import('ngeo/print/mapfish-print-v3.js').MapFishPrintSymbolizerLine|import('ngeo/print/mapfish-print-v3.js').MapFishPrintSymbolizerPolygon}
  *      symbolizer MapFish Print symbolizer.
+ * @param symbolizer
  * @param {import("ol/style/Stroke.js").default} strokeStyle Stroke style.
  */
 VectorEncoder.prototype.encodeVectorStyleStroke_ = function (symbolizer, strokeStyle) {
@@ -417,7 +418,7 @@ VectorEncoder.prototype.encodeVectorStyleStroke_ = function (symbolizer, strokeS
 /**
  * @param {import("ol/style/Text.js").default} textStyle Text style.
  * @param {number=} [goodnessOfFit] Goodness of fit.
- * @returns {import('ngeo/print/mapfish-print-v3.js').MapFishPrintSymbolizer} The style
+ * @return {import('ngeo/print/mapfish-print-v3.js').MapFishPrintSymbolizer} The style
  */
 VectorEncoder.prototype.encodeTextStyle_ = function (textStyle, goodnessOfFit) {
   const symbolizer = /** @type {import('ngeo/print/mapfish-print-v3.js').MapFishPrintSymbolizerText} */ ({

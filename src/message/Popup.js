@@ -51,7 +51,7 @@ import ngeoMessagePopupComponent from 'ngeo/message/popupComponent.js';
  *     popup.setContent("Some content");
  *     popup.setOpen(true);
  *
- * @constructor
+ * @class
  * @param {angular.ICompileService} $compile The compile provider.
  * @param {angular.IScope} $rootScope The rootScope provider.
  * @param {angular.ISCEService} $sce Angular sce service.

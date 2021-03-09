@@ -76,7 +76,7 @@ function ngeoRoutingNominatimInputComponentTemplateUrl(
  * @param {angular.IScope} $scope Scope.
  * @param {import("ngeo/routing/NominatimService.js").NominatimService} ngeoNominatimService service for
  *    Nominatim
- * @constructor
+ * @class
  * @hidden
  * @ngInject
  * @ngdoc controller

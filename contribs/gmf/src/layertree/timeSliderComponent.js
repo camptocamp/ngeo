@@ -142,7 +142,7 @@ myModule.directive('gmfTimeSlider', layertreeTimeSliderComponent);
  * TimeSliderController - directive controller
  * @param {import("ngeo/misc/WMSTime.js").WMSTime} ngeoWMSTime WMSTime service.
  * @param {import("ngeo/misc/debounce.js").miscDebounce<function(): void>} ngeoDebounce ngeo Debounce factory.
- * @constructor
+ * @class
  * @hidden
  * @ngInject
  * @ngdoc controller

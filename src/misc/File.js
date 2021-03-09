@@ -22,7 +22,7 @@
 import angular from 'angular';
 
 /**
- * @constructor
+ * @class
  * @param {angular.IQService} $q .
  * @param {angular.IHttpService} $http .
  * @param {angular.gettext.gettextFunction} gettext .

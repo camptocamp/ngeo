@@ -25,7 +25,7 @@ import olFormatGeoJSON from 'ol/format/GeoJSON.js';
 /**
  * @typedef {Object} Options
  * // Properties for ArcGISGeoJSON
- * @property {Array<string>} [layers] If set, only features of the given layers will be returned by the format when read.
+ * @property {string[]} [layers] If set, only features of the given layers will be returned by the format when read.
  * // Properties from GeoJSON
  * @property {import("ol/proj.js").ProjectionLike} [dataProjection='EPSG:4326'] Default data projection.
  * @property {import("ol/proj.js").ProjectionLike} [featureProjection] Projection for features read or
@@ -54,20 +54,20 @@ class ArcGISGeoJSON extends olFormatGeoJSON {
 
     /**
      * @private
-     * @type {Array<string>}
+     * @type {string[]}
      */
     this.layers_ = options.layers ? options.layers : null;
   }
 
   /**
-   * @return {Array<string>} layers
+   * @return {string[]} layers
    */
   getLayers() {
     return this.layers_;
   }
 
   /**
-   * @param {Array<string>} layers Layers to parse.
+   * @param {string[]} layers Layers to parse.
    */
   setLayers(layers) {
     this.layers_ = layers;
@@ -77,12 +77,12 @@ class ArcGISGeoJSON extends olFormatGeoJSON {
    * @param {import("geojson").GeoJSON} object Object.
    * @param {import("ol/format/Feature.js").ReadOptions=} opt_options Read options.
    * @protected
-   * @return {Array<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>} Features.
+   * @return {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>[]} Features.
    * @override
    */
   readFeaturesFromObject(object, opt_options) {
     const geoJSONObject = /** @type {import("geojson").GeoJSON} */ (object);
-    /** @type {Array<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>} */
+    /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>[]} */
     const features = [];
     /** @type {import("geojson").Feature[]} */
     let geoJSONFeatures = null;

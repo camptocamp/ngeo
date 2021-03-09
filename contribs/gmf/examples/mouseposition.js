@@ -38,7 +38,7 @@ import options from './options.js';
 const myModule = angular.module('gmfapp', ['gettext', gmfMapModule.name]);
 
 /**
- * @constructor
+ * @class
  * @ngInject
  */
 function MainController() {

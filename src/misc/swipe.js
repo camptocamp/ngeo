@@ -96,7 +96,7 @@ myModule.factory('$verticalSwipe', [
 
     /**
      * @param {JQueryEventObject} event
-     * @returns {Coordinates}
+     * @return {Coordinates}
      */
     function getCoordinates(event) {
       let uiEvent;

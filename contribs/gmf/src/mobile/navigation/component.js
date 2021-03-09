@@ -103,7 +103,7 @@ function mobileNavigationComponent() {
 myModule.directive('gmfMobileNav', mobileNavigationComponent);
 
 /**
- * @constructor
+ * @class
  * @hidden
  * @ngInject
  * @ngdoc controller

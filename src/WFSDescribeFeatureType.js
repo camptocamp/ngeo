@@ -25,7 +25,7 @@ import * as olXml from 'ol/xml.js';
 /**
  * @private
  * @hidden
- * @type {Array<?string>}
+ * @type {?string[]}
  */
 const NAMESPACE_URIS_ = [null, 'http://www.w3.org/2001/XMLSchema'];
 
@@ -39,7 +39,7 @@ const NAMESPACE_URIS_ = [null, 'http://www.w3.org/2001/XMLSchema'];
  */
 
 /**
- * @param {Array<?string>} namespaceURIs Namespace URIs.
+ * @param {?string[]} namespaceURIs Namespace URIs.
  * @param {parserStructure} structure Structure.
  * @return {Object<string, parserStructure>} Namespaced structure.
  * @private
@@ -142,7 +142,7 @@ WFSDescribeFeatureType.prototype.readFromNode = function (node) {
  * @private
  * @hidden
  * @param {Element} node Node.
- * @param {Array<*>} objectStack Object stack.
+ * @param {*[]} objectStack Object stack.
  * @return {Object<string, string>} Attributes.
  */
 function readElement_(node, objectStack) {
@@ -170,7 +170,7 @@ function readElement_(node, objectStack) {
  * @private
  * @hidden
  * @param {Element} node Node.
- * @param {Array<*>} objectStack Object stack.
+ * @param {*[]} objectStack Object stack.
  * @return {Object<string, ?string>} Object.
  */
 function readComplexType_(node, objectStack) {
@@ -187,7 +187,7 @@ function readComplexType_(node, objectStack) {
  * @private
  * @hidden
  * @param {Element} node Node.
- * @param {Array<*>} objectStack Object stack.
+ * @param {*[]} objectStack Object stack.
  * @return {Object<string, string>} Object.
  */
 function readComplexContent_(node, objectStack) {
@@ -198,7 +198,7 @@ function readComplexContent_(node, objectStack) {
  * @private
  * @hidden
  * @param {Element} node Node.
- * @param {Array<*>} objectStack Object stack.
+ * @param {*[]} objectStack Object stack.
  * @return {Object<string, string>} Object.
  */
 function readExtension_(node, objectStack) {
@@ -209,7 +209,7 @@ function readExtension_(node, objectStack) {
  * @private
  * @hidden
  * @param {Element} node Node.
- * @param {Array<*>} objectStack Object stack.
+ * @param {*[]} objectStack Object stack.
  * @return {Object<string, string>} Object.
  */
 function readSequence_(node, objectStack) {

@@ -32,7 +32,7 @@ const myModule = angular.module('gmfapp', ['gettext', gmfAuthenticationModule.na
 
 /**
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
- * @constructor
+ * @class
  * @ngInject
  */
 function MainController(gettextCatalog) {

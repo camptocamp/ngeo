@@ -102,8 +102,8 @@ myModule.directive('gmfContextualdata', contextualDataComponent);
  * @param {import('gmf/raster/RasterService.js').RasterService} gmfRaster Gmf Raster service
  * @param {import('gmf/options.js').gmfContextualDataOptions} gmfContextualDataOptions The options.
  * @param {import("ngeo/misc/AutoProjection.js").AutoProjectionService} ngeoAutoProjection The
- * ngeo auto projection service
- * @constructor
+ *    ngeo auto projection service
+ * @class
  * @hidden
  * @ngdoc controller
  * @ngInject

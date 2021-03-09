@@ -40,7 +40,7 @@ const colorpickerComponent = {
 myModule.component('appColorpicker', colorpickerComponent);
 
 /**
- * @constructor
+ * @class
  * @ngInject
  */
 function ColorPickerController() {
@@ -58,7 +58,7 @@ function ColorPickerController() {
 myModule.controller('AppColorpickerController', ColorPickerController);
 
 /**
- * @constructor
+ * @class
  * @param {angular.IScope} $scope Controller scope.
  * @ngInject
  */

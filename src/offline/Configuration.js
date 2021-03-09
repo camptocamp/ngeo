@@ -240,9 +240,9 @@ export default class extends olObservable {
   /**
    * @param {import("ol/Map.js").default} map A map
    * @param {import("ol/layer/Layer.js").default<import("ol/source/Source.js").default>} layer A layer
-   * @param {Array<import("ol/layer/Group.js").default>} ancestors The ancestors of that layer
+   * @param {import("ol/layer/Group.js").default[]} ancestors The ancestors of that layer
    * @param {import("ol/extent.js").Extent} userExtent The extent selected by the user.
-   * @return {Array<import("./index.js").OfflineExtentByZoom>} The extent to download per zoom level
+   * @return {import("./index.js").OfflineExtentByZoom[]} The extent to download per zoom level
    */
   getExtentByZoom(map, layer, ancestors, userExtent) {
     const currentZoom = map.getView().getZoom();
@@ -295,7 +295,7 @@ export default class extends olObservable {
   /**
    * @param {import("ol/Map.js").default} map The map to work on.
    * @param {import("ol/extent.js").Extent} userExtent The extent selected by the user.
-   * @return {!Array<import("./index.js").OfflineLayerMetadata>} the downloadable layers and metadata.
+   * @return {!import("./index.js").OfflineLayerMetadata[]} the downloadable layers and metadata.
    */
   createLayerMetadatas(map, userExtent) {
     /**

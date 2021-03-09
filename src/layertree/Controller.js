@@ -31,7 +31,7 @@ import olLayerLayer from 'ol/layer/Layer.js';
  * @param {angular.IScope} $scope Scope.
  * @param {angular.IScope} $rootScope Angular rootScope.
  * @param {angular.IAttributes} $attrs Attributes.
- * @constructor
+ * @class
  * @ngInject
  * @ngdoc controller
  * @ngname NgeoLayertreeController

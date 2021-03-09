@@ -167,7 +167,7 @@ myModule.component('gmfProfile', profileComponent);
  * @param {import("ngeo/download/Csv.js").DownloadCsvService} ngeoCsvDownload CSV Download service.
  * @param {import('gmf/options.js').gmfProfileOptions} gmfProfileOptions The options.
  * @param {import('ngeo/options.js').ngeoProfileOptions} ngeoProfileOptions The options.
- * @constructor
+ * @class
  * @hidden
  * @ngInject
  * @ngdoc controller
