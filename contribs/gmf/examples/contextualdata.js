@@ -82,6 +82,10 @@ MainController.prototype.onRasterData = function (coordinate, data) {
 };
 
 myModule.controller('MainController', MainController);
+myModule.constant('gmfContextualDataOptions', {
+  projections: ['EPSG:2056', 'EPSG:21781', 'EPSG:4326'],
+});
+
 options(myModule);
 
 export default MainController;

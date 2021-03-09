@@ -21,6 +21,7 @@
 
 import angular from 'angular';
 import gmfRasterRasterService from 'gmf/raster/RasterService.js';
+import ngeoMiscAutoProjection from 'ngeo/misc/AutoProjection.js';
 import olOverlay from 'ol/Overlay.js';
 import * as olProj from 'ol/proj.js';
 
@@ -28,7 +29,10 @@ import * as olProj from 'ol/proj.js';
  * @type {angular.IModule}
  * @hidden
  */
-const myModule = angular.module('gmfContextualdata', [gmfRasterRasterService.name]);
+const myModule = angular.module('gmfContextualdata', [
+  gmfRasterRasterService.name,
+  ngeoMiscAutoProjection.name,
+]);
 
 /**
  * Provide a directive responsible of displaying contextual data after a right
