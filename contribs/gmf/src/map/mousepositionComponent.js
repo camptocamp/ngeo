@@ -107,12 +107,17 @@ export function Controller($element, $filter, $scope, gettextCatalog, gmfMousePo
   /**
    * @type {import('gmf/options.js').gmfMousePositionOptions}
    */
-  this.options = gmfMousePositionOptions;
+  this.options_ = gmfMousePositionOptions;
 
   /**
    * @type {?import("ol/Map.js").default}
    */
   this.map = null;
+
+  /**
+   * @type {?import('gmf/options.js').MousePositionProjection[]}
+   */
+  this.projections = this.options_.projections;
 
   /**
    * @type {?import('gmf/options.js').MousePositionProjection}
@@ -199,7 +204,7 @@ Controller.prototype.initOlControl_ = function () {
     undefinedHTML: gettextCatalog.getString('Coordinates'),
   });
 
-  this.setProjection(this.options.projections[0]);
+  this.setProjection(this.projections[0]);
 
   this.map.addControl(this.control_);
 };
