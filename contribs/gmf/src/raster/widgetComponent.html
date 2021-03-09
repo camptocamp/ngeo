@@ -16,12 +16,12 @@
       <span ng-show="ctrl.elevationLoading" class="fa custom-spinner-generic">
           <%=require('gmf/icons/spinner.svg?viewbox&height=1rem')%>
       </span>
-      <span ng-show="!ctrl.elevationValue && !ctrl.elevationLoading" translate>Elevation…</span>
+      <span ng-show="!ctrl.elevationValue && !ctrl.elevationLoading" translate>Raster</span>
     </span><span class="caret" ng-if="::ctrl.options.layers.length > 1"></span>
   </a>
   <ul class="dropdown-menu dropdown-menu-right" role="menu"
       ng-if="::ctrl.options.layers.length > 1">
-    <li class="dropdown-header" translate>Elevation data sources</li>
+    <li class="dropdown-header" translate>Data source</li>
     <li ng-repeat="elevationItem in ::ctrl.options.layers">
       <a href ng-click="ctrl.selectedElevationLayer = elevationItem">
         <span class="fa fa-fw" ng-class="{'fa-check': ctrl.selectedElevationLayer === elevationItem}"></span>
