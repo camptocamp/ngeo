@@ -135,14 +135,16 @@ export default function (module) {
   });
   module.constant('gmfPermalinkOptions', {
     crosshairStyle: {
-      stroke: {
-        color: 'rgba(0, 0, 255, 1)',
-        width: 2,
+      regularShape: {
+        stroke: {
+          color: 'rgba(0, 0, 255, 1)',
+          width: 2,
+        },
+        points: 4,
+        radius: 8,
+        radius2: 0,
+        angle: 0,
       },
-      points: 4,
-      radius: 8,
-      radius2: 0,
-      angle: 0,
     },
   });
   module.constant('gmfExternalOGCServers', [
