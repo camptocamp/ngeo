@@ -117,6 +117,7 @@ MapComponentController.prototype.$onInit = function () {
       /**
        * @param {import("ol/events/Event.js").default} e Object event.
        */
+      // @ts-ignore
       (e) => {
         const center = view.getCenter();
         if (!center) {
@@ -218,9 +219,9 @@ DrawComponentController.prototype.$onInit = function () {
     'drawend',
     /** @type {function(?): ?} */ (
       /**
-       * @param {import('ol/MapBrowserEvent.js').default<unknown>} evt
-       * @param e
+       * @param {import('ol/MapBrowserEvent.js').default<unknown>} e
        */ (e) => {
+        // @ts-ignore
         e.feature.set('id', ++this.featureSeq_);
       }
     )
@@ -234,9 +235,9 @@ DrawComponentController.prototype.$onInit = function () {
     'addfeature',
     /** @type {function(?): ?} */ (
       /**
-       * @param {import('ol/MapBrowserEvent.js').default<unknown>} evt
-       * @param e
+       * @param {import('ol/MapBrowserEvent.js').default<unknown>} e
        */ (e) => {
+        // @ts-ignore
         const feature = e.feature;
         feature.setStyle(
           new olStyleStyle({

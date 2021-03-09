@@ -252,7 +252,7 @@
 
 /**
  * Floor dimension values and labels.
- * @typedef {Object<string, string>[]} gmfFloors
+ * @typedef {Array<Object<string, string>>} gmfFloors
  */
 
 /**

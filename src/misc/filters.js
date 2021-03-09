@@ -101,7 +101,8 @@ export function ScalifyFilter($filter) {
   const numberFilter = $filter('ngeoNumber');
   /**
    * @param {number} scale
-   * @param {number=} opt_precision The used precision, default is 2.
+   * @param {number} [opt_precision] The used precision, default is 2.
+   * @return {string}
    */
   const filterFn = function (scale, opt_precision) {
     if (opt_precision === undefined) {
@@ -141,7 +142,7 @@ export function NumberFilter($locale) {
 
   /**
    * @param {number} number The number to format.
-   * @param {number=} opt_precision The used precision, default is 3.
+   * @param {number} [opt_precision] The used precision, default is 3.
    * @return {string} The formatted string.
    */
   const result = function (number, opt_precision) {
@@ -225,9 +226,9 @@ export function UnitPrefixFilter($filter) {
   const binaryPrefix = ['', 'Ki', 'Mi', 'Gi', 'Ti', 'Pi'];
   /**
    * @param {number} number The number to format.
-   * @param {string=} opt_unit The unit to used, default is ''.
-   * @param {string=} opt_type (unit|square|binary) the type of units, default is 'unit'.
-   * @param {number=} opt_precision The used precision, default is 3.
+   * @param {string} [opt_unit] The unit to used, default is ''.
+   * @param {string} [opt_type] (unit|square|binary) the type of units, default is 'unit'.
+   * @param {number} [opt_precision] The used precision, default is 3.
    * @return {string} The formatted string.
    */
   const result = function (number, opt_unit, opt_type, opt_precision) {
@@ -291,9 +292,9 @@ myModule.filter('ngeoUnitPrefix', UnitPrefixFilter);
 export function NumberCoordinatesFilter($filter) {
   /**
    * @param {import("ol/coordinate.js").Coordinate} coordinates Array of two numbers.
-   * @param {(number|string)=} opt_fractionDigits Optional number of digit.
+   * @param {(number|string)} [opt_fractionDigits] Optional number of digit.
    *     Default to 0.
-   * @param {string=} opt_template Optional template. Default to '{x} {y}'.
+   * @param {string} [opt_template] Optional template. Default to '{x} {y}'.
    *     Where "{x}" will be replaced by the easting coordinate and "{y}" by the
    *     northing one. Note: Use a html entity to use the semicolon symbol
    *     into a template.
@@ -336,6 +337,7 @@ export function DMSCoordinatesFilter() {
    * @param {number} degrees
    * @param {string} hemispheres
    * @param {number} fractionDigits
+   * @return {string}
    */
   const degreesToStringHDMS = function (degrees, hemispheres, fractionDigits) {
     const normalizedDegrees = modulo(degrees + 180, 360) - 180;
@@ -350,9 +352,9 @@ export function DMSCoordinatesFilter() {
 
   /**
    * @param {import("ol/coordinate.js").Coordinate} coordinates Array of two numbers.
-   * @param {(number|string)=} opt_fractionDigits Optional number of digit.
+   * @param {(number|string)} [opt_fractionDigits] Optional number of digit.
    *     Default to 0.
-   * @param {string=} opt_template Optional template. Default to
+   * @param {string} [opt_template] Optional template. Default to
    *     '{x} {y}'. Where "{x}" will be replaced by the easting
    *     coordinate, {y} by the northing one. Note: Use a html entity to use the
    *     semicolon symbol into a template.
@@ -413,10 +415,9 @@ myModule.filter('ngeoTrustHtml', trustHtmlFilter);
  * @return {function(?):string} The filter function.
  * @ngInject
  * @ngdoc filter
- * @param ngeoStringToHtmlReplacements
  * @param {angular.ISCEService} $sce Angular sce service.
- * @param {import('ngeo/options.js').ngeoStringToHtmlReplacements}
- *     ngeoStringToHtmlReplacements List of replacements for string to html.
+ * @param {import('ngeo/options.js').ngeoStringToHtmlReplacements} ngeoStringToHtmlReplacements
+ *     List of replacements for string to html.
  * @ngname ngeoTrustHtmlAuto
  */
 export function trustHtmlAutoFilter($sce, ngeoStringToHtmlReplacements) {

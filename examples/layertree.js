@@ -82,9 +82,8 @@ myModule.component('appLayertree', layertreeComponent);
  * @class
  * @param {angular.IHttpService} $http Angular http service.
  * @param {angular.ISCEService} $sce Angular sce service.
- * @param {function(Object):import("ol/layer/Layer.js").default<import('ol/source/Source.js').default>}
- *    appGetLayer Get layer service.
- * @param appGetLayer
+ * @param {function(Object):import("ol/layer/Layer.js").default<import('ol/source/Source.js').default>} appGetLayer
+ *    Get layer service.
  * @param {import("ngeo/message/Popup.js").PopupFactory} ngeoCreatePopup Popup service.
  * @ngInject
  */

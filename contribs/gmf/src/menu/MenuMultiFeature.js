@@ -29,7 +29,7 @@ import ngeoCustomEvent from 'ngeo/CustomEvent.js';
 export default class extends menu {
   /**
    * @param {import('ngeo/Menu.js').MenuOptions} menuOptions Menu options.
-   * @param {import('ol/Overlay.js').Options=} options Overlay options.
+   * @param {import('ol/Overlay.js').Options} [options] Overlay options.
    */
   constructor(menuOptions, options = {}) {
     super(menuOptions, options);

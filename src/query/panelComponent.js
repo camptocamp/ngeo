@@ -72,9 +72,8 @@ function ngeoQueryPanelTemplateUrl($attrs, ngeoQueryPanelTemplateUrl) {
  */
 export class QueryPanelController {
   /**
-   * @param {import("ngeo/query/ModeSelector.js").QueryModeSelector}
-   *     ngeoQueryModeSelector The ngeo query modeSelector service.
-   * @param ngeoQueryModeSelector
+   * @param {import("ngeo/query/ModeSelector.js").QueryModeSelector} ngeoQueryModeSelector
+   *     The ngeo query modeSelector service.
    * @ngInject
    * @ngdoc controller
    * @ngname NgeoQueryController

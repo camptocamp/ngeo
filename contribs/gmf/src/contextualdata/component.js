@@ -82,7 +82,7 @@ function contextualDataComponent() {
      * @param {angular.IScope} scope Scope.
      * @param {JQuery} element Element.
      * @param {angular.IAttributes} attrs Attributes.
-     * @param {angular.IController=} controller Controller.
+     * @param {angular.IController} [controller] Controller.
      */
     link: (scope, element, attrs, controller) => {
       if (!controller) {

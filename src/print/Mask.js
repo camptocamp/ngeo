@@ -57,6 +57,7 @@ export default class Mask extends Layer {
 
   /**
    * @param {import("ol/PluggableMap").FrameState} frameState
+   * @return {HTMLElement}
    */
   render(frameState) {
     const cwidth = frameState.size[0];

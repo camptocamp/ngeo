@@ -31,7 +31,7 @@ class MeasureAreaMobile extends ngeoInteractionMeasureArea {
   /**
    * @param {import('ngeo/misc/filters.js').unitPrefix} format The format function
    * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
-   * @param {import('ngeo/interaction/Measure.js').MeasureOptions=} options Options
+   * @param {import('ngeo/interaction/Measure.js').MeasureOptions} [options] Options
    */
   constructor(format, gettextCatalog, options = {}) {
     Object.assign(options, {displayHelpTooltip: false});

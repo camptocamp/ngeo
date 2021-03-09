@@ -380,9 +380,10 @@ export default class LegendMapFishPrintV3 {
   /**
    * Return the metadata legendImage of a layer from the found corresponding node
    * or undefined.
+   *
+   * @param {import('gmf/themes.js').GmfTheme[]} currentThemes the current themes.
    * @param {string} layerName a layer name.
    * @param {number} [dpi=96] the image DPI.
-   * @param {import('gmf/themes.js').GmfTheme[]} currentThemes the current themes.
    * @return {LegendURLDPI|undefined} The legendImage with selected DPI or undefined.
    * @private
    */

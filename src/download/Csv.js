@@ -109,12 +109,14 @@ DownloadCsvService.prototype.generateCsv = function (data, columnDefs) {
     return '';
   }
 
+  /** @type {any[]} */
   const translatedColumnHeaders = columnDefs.map((columnHeader) =>
     this.gettextCatalog_.getString(columnHeader.name)
   );
 
   const header = this.getRow_(translatedColumnHeaders);
   const dataRows = data.map((values) => {
+    /** @type {any[]} */
     const rowValues = columnDefs.map((columnHeader) => values[columnHeader.name]);
     return this.getRow_(rowValues);
   });
@@ -123,7 +125,7 @@ DownloadCsvService.prototype.generateCsv = function (data, columnDefs) {
 };
 
 /**
- * @param {?[]} values Values.
+ * @param {any[]} values Values.
  * @return {string} CSV row.
  */
 DownloadCsvService.prototype.getRow_ = function (values) {
@@ -132,9 +134,9 @@ DownloadCsvService.prototype.getRow_ = function (values) {
 
   const rowValues = values.map((value) => {
     if (value !== undefined && value !== null) {
-      value = `${value}`;
+      const strValue = `${value}`;
       // wrap each value into quotes and escape quotes with double quotes
-      return `${this.quote_}${value.replace(matchAllQuotesRegex, doubleQuote)}${this.quote_}`;
+      return `${this.quote_}${strValue.replace(matchAllQuotesRegex, doubleQuote)}${this.quote_}`;
     } else {
       return '';
     }

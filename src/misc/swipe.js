@@ -55,7 +55,6 @@ const myModule = angular.module('ngeoMiscSwipe', []);
  * @ngdoc service
  * @name $verticalSwipe
  *
- * @description
  * The `$verticalSwipe` service is a service that abstracts the messier details of hold-and-drag swipe
  * behavior, to make implementing swipe-related directives more convenient.
  *
@@ -67,8 +66,12 @@ const myModule = angular.module('ngeoMiscSwipe', []);
  * The `$verticalSwipe` service is an object with a single method: `bind`. `bind` takes an element
  * which is to be watched for swipes, and an object with four handler functions. See the
  * documentation for `bind` below.
+ * @return {void}
  */
 myModule.factory('$verticalSwipe', [
+  /**
+   * @return {{ bind(element: JQuery<HTMLElement>, eventHandlers: EventHandlers, pointerTypes: string[]): void; }}
+   */
   function () {
     // The total distance in any direction before we make the call on swipe vs. scroll.
     const MOVE_BUFFER_RADIUS = 10;
@@ -115,6 +118,7 @@ myModule.factory('$verticalSwipe', [
     /**
      * @param {string[]} pointerTypes
      * @param {string} eventType
+     * @return {string}
      */
     function getEvents(pointerTypes, eventType) {
       /** @type {string[]} */
@@ -135,8 +139,8 @@ myModule.factory('$verticalSwipe', [
        * @param {JQuery} element Element.
        * @param {EventHandlers} eventHandlers Event handlers object with callbacks
        * @param {string[]} pointerTypes Types of pointer
+       * @return {void}
        *
-       * @description
        * The main method of `$verticalSwipe`. It takes an element to be watched for swipe motions, and an
        * object containing event handlers.
        * The pointer types that should be used can be specified via the optional
@@ -163,7 +167,6 @@ myModule.factory('$verticalSwipe', [
        *
        * `cancel` is called either on a `touchcancel` or `pointercancel`  from the browser, or when we begin
        * scrolling as described above.
-       *
        */
       bind(element, eventHandlers, pointerTypes) {
         // Absolute total movement, used to control swipe vs. scroll.
@@ -304,6 +307,7 @@ function makeSwipeDirective_(directiveName, direction, eventName) {
 
         /**
          * @param {{x: number, y: number}} coords
+         * @return {boolean}
          */
         function validSwipe(coords) {
           // Check that it's within the coordinates.

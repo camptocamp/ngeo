@@ -65,9 +65,8 @@ myModule.run(
  * Provide a directive to select a single date or a range of dates. Requires
  * jQuery UI for the 'datepicker' widget.
  *
- * @param {string|function(JQuery=, angular.IAttributes=): string}
- * ngeoDatePickerTemplateUrl Template for the directive.
- * @param ngeoDatePickerTemplateUrl
+ * @param {string|function(JQuery=, angular.IAttributes=): string} ngeoDatePickerTemplateUrl
+ *    Template for the directive.
  * @param {angular.ITimeoutService} $timeout angular timeout service
  * @return {angular.IDirective} The directive specs.
  * @ngInject

@@ -480,7 +480,7 @@ export class FilterSelectorController {
    * configured properly. In this case, a warning notification can be shown.
    *
    * @param {import("gmf/datasource/OGC.js").default} dataSource GMF data source object
-   * @param {boolean=} opt_notify Whether to show a warning notification or not
+   * @param {boolean} [opt_notify] Whether to show a warning notification or not
    *     in case of a data source that has its name is in the list of
    *     filtrable layer node names but it doesn't match the other requirements.
    *     Defaults to `true.`

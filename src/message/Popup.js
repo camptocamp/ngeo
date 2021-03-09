@@ -147,7 +147,7 @@ MessagePopup.prototype.setTitle = function (title) {
  * Note: the type of the `content` param is `*` instead of `string`, this
  * is because the content may be trusted using `$sce.trustAsHtml`.
  * @param {string} content The content.
- * @param {boolean=} opt_trusted Whether the content can be trusted.
+ * @param {boolean} [opt_trusted] Whether the content can be trusted.
  *     Default is false.
  */
 MessagePopup.prototype.setContent = function (content, opt_trusted) {

@@ -53,8 +53,7 @@ export default class Mask extends Layer {
   }
 
   /**
-   * @param {import("ol/coordinate.js").Coordinate} center, a xy point.
-   * @param center
+   * @param {import("ol/coordinate.js").Coordinate} center center, a xy point.
    * @param {number} halfLength a half length of a square's side.
    * @return {import("ol/extent.js").Extent} an extent.
    */
@@ -68,6 +67,7 @@ export default class Mask extends Layer {
 
   /**
    * @param {import("ol/PluggableMap").FrameState} frameState
+   * @return {HTMLElement}
    */
   render(frameState) {
     const context = this.context_;

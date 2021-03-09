@@ -33,6 +33,7 @@ export function FileService($q, $http, gettext) {
   // Test the validity of the file size
   /**
    * @param {number} fileSize
+   * @return {boolean}
    */
   this.isValidFileSize = function (fileSize) {
     return fileSize <= 20000000; // 20 Mo
@@ -40,6 +41,7 @@ export function FileService($q, $http, gettext) {
 
   /**
    * @param {string} fileContent
+   * @return {boolean}
    */
   this.isWmsGetCap = function (fileContent) {
     return /<(WMT_MS_Capabilities|WMS_Capabilities)/.test(fileContent);
@@ -47,6 +49,7 @@ export function FileService($q, $http, gettext) {
 
   /**
    * @param {string} fileContent
+   * @return {boolean}
    */
   this.isWmtsGetCap = function (fileContent) {
     return fileContent.includes('<Capabilities');
@@ -54,6 +57,7 @@ export function FileService($q, $http, gettext) {
 
   /**
    * @param {string} fileContent
+   * @return {boolean}
    */
   this.isKml = function (fileContent) {
     return fileContent.includes('<kml') && fileContent.includes('</kml>');
@@ -61,6 +65,7 @@ export function FileService($q, $http, gettext) {
 
   /**
    * @param {string} fileContent
+   * @return {boolean}
    */
   this.isGpx = function (fileContent) {
     return fileContent.includes('<gpx') && fileContent.includes('</gpx>');
@@ -112,7 +117,7 @@ export function FileService($q, $http, gettext) {
   let canceler;
   /**
    * @param {string} url .
-   * @param {angular.IDeferred<unknown>=} opt_cancelP .
+   * @param {angular.IDeferred<unknown>} [opt_cancelP] .
    * @return {angular.IPromise<Blob>} .
    */
   this.load = function (url, opt_cancelP) {

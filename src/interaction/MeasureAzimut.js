@@ -34,7 +34,7 @@ export default class extends ngeoInteractionMeasure {
    * @fires import('ngeo/interaction/Measure.js').MeasureEvent
    * @param {import('ngeo/misc/filters.js').unitPrefix} unitPrefixFormat The format function
    * @param {import('ngeo/misc/filters.js').formatNumber} numberFormat The format function
-   * @param {import('ngeo/interaction/Measure.js').MeasureOptions=} options Options
+   * @param {import('ngeo/interaction/Measure.js').MeasureOptions} [options] Options
    */
   constructor(unitPrefixFormat, numberFormat, options = {}) {
     super(options);

@@ -120,7 +120,7 @@ export function PrintService(url, $http, gettextCatalog, ngeoLayerHelper) {
 /**
  * Cancel a report.
  * @param {string} ref Print report reference.
- * @param {angular.IRequestShortcutConfig=} opt_httpConfig $http config object.
+ * @param {angular.IRequestShortcutConfig} [opt_httpConfig] $http config object.
  * @return {angular.IHttpPromise<Object>} HTTP promise.
  */
 PrintService.prototype.cancel = function (ref, opt_httpConfig) {
@@ -140,8 +140,8 @@ PrintService.prototype.cancel = function (ref, opt_httpConfig) {
  * @param {string} layout Layout.
  * @param {string} format Formats.
  * @param {Object<string, *>} customAttributes Custom attributes.
- * @param {string=} email Email to send the file to.
- * @param {number=} goodnessOfFit Goodness of fit.
+ * @param {string} [email] Email to send the file to.
+ * @param {number} [goodnessOfFit] Goodness of fit.
  * @return {import('ngeo/print/mapfish-print-v3.js').MapFishPrintSpec} The print spec.
  */
 PrintService.prototype.createSpec = function (
@@ -492,7 +492,7 @@ PrintService.prototype.getOpacityOrInherited_ = function (layer) {
 /**
  * Send a create report request to the MapFish Print service.
  * @param {import('ngeo/print/mapfish-print-v3.js').MapFishPrintSpec} printSpec Print specification.
- * @param {angular.IRequestShortcutConfig=} opt_httpConfig $http config object.
+ * @param {angular.IRequestShortcutConfig} [opt_httpConfig] $http config object.
  * @return {angular.IHttpPromise<import('ngeo/print/mapfish-print-v3.js').MapFishPrintReportResponse>} HTTP promise.
  */
 PrintService.prototype.createReport = function (printSpec, opt_httpConfig) {
@@ -510,7 +510,7 @@ PrintService.prototype.createReport = function (printSpec, opt_httpConfig) {
 /**
  * Get the status of a report.
  * @param {string} ref Print report reference.
- * @param {angular.IRequestShortcutConfig=} opt_httpConfig $http config object.
+ * @param {angular.IRequestShortcutConfig} [opt_httpConfig] $http config object.
  * @return {angular.IHttpPromise<import('ngeo/print/mapfish-print-v3.js').MapFishPrintStatusResponse>} HTTP promise.
  */
 PrintService.prototype.getStatus = function (ref, opt_httpConfig) {
@@ -531,7 +531,7 @@ PrintService.prototype.getReportUrl = function (ref) {
 
 /**
  * Get the print capabilities from MapFish Print.
- * @param {angular.IRequestShortcutConfig=} opt_httpConfig $http config object.
+ * @param {angular.IRequestShortcutConfig} [opt_httpConfig] $http config object.
  * @return {angular.IHttpPromise<import('ngeo/print/mapfish-print-v3').MapFishPrintCapabilities>} HTTP promise.
  */
 PrintService.prototype.getCapabilities = function (opt_httpConfig) {

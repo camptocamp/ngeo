@@ -44,7 +44,7 @@ const myModule = angular.module('app', ['gettext', ngeoMapModule.name, ngeoProfi
  * If the value is in a child property, the opt_childKey must be defined.
  * The type parameter is used by closure to type the returned function.
  * @param {string} key Key used for retrieving the value.
- * @param {string=} opt_childKey Key of a child object.
+ * @param {string} [opt_childKey] Key of a child object.
  * @return {function(unknown): any} Getter function.
  */
 const typedFunctionsFactory = function (key, opt_childKey) {
@@ -192,7 +192,7 @@ function MainController($http, $scope) {
     title,
     /**
      * @param {Object} item POI.
-     * @param {number=} opt_z Z value.
+     * @param {number} [opt_z] Z value.
      * @return {number} Z value.
      */
     z: (item, opt_z) => {

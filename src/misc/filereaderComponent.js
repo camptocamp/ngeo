@@ -42,7 +42,7 @@ const myModule = angular.module('ngeoFilereader', []);
  * See our live example: [../examples/importfeatures.html](../examples/importfeatures.html)
  *
  * @htmlAttribute {string} ngeo-filereader The content of the file read.
- * @htmlAttribute {boolean=} ngeo-filereader-supported Whether the FileReader API is supported.
+ * @htmlAttribute {boolean} [ngeo]-filereader-supported Whether the FileReader API is supported.
  * @param {angular.IWindowService} $window The Angular $window service.
  * @return {angular.IDirective} Directive Definition Object.
  * @ngInject

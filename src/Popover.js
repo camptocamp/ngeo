@@ -28,7 +28,7 @@ import olOverlay from 'ol/Overlay.js';
  */
 export default class extends olOverlay {
   /**
-   * @param {import('ol/Overlay.js').Options=} options Overlay options.
+   * @param {import('ol/Overlay.js').Options} [options] Overlay options.
    */
   constructor(options = {}) {
     const originalEl = options.element ? options.element : document.createElement('div');

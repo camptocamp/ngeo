@@ -65,8 +65,8 @@ import angular from 'angular';
  *     Classes names normalized
  * @property {Object<number, string>} [classes_names_standard]
  *     Classes names standard
- * @property {LidarprofileServerConfigClassifications}
- *     [classification_colors] Classification colors
+ * @property {LidarprofileServerConfigClassifications} [classification_colors]
+ *     Classification colors
  * @property {boolean} [debug] Debug
  * @property {string} [default_attribute] Default attribute
  * @property {string} [default_color] Default color
@@ -77,8 +77,8 @@ import angular from 'angular';
  * @property {LidarprofileServerConfigLevels} [max_levels] Max levels
  * @property {number} [max_point_number] Max point number
  * @property {number} [minLOD] Min LOD
- * @property {LidarprofileServerConfigPointAttributes}
- *     [point_attributes] Point attributes
+ * @property {LidarprofileServerConfigPointAttributes} [point_attributes]
+ *     Point attributes
  * @property {number} [point_size] Point size
  * @property {number} [vertical_pan_tolerance] Vertical pan tolerance
  * @property {number} [width] Width

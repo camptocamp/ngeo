@@ -58,9 +58,9 @@ import 'bootstrap/js/src/collapse.js';
  * @typedef {Function} openIframePopup
  * @param {string} url an url.
  * @param {string} title (text).
- * @param {string=} opt_width CSS width.
- * @param {string=} opt_height CSS height.
- * @param {boolean=} opt_apply If true, trigger the Angular digest loop. Default to true.
+ * @param {string} [opt_width] CSS width.
+ * @param {string} [opt_height] CSS height.
+ * @param {boolean} [opt_apply] If true, trigger the Angular digest loop. Default to true.
  */
 
 /**
@@ -205,14 +205,12 @@ myModule.component('gmfLayertree', layertreeComponent);
  * @param {JQuery} $element Element.
  * @param {angular.IScope} $scope Angular scope.
  * @param {import("ngeo/map/LayerHelper.js").LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
+ * @param {import('gmf/datasource/LayerBeingSwipe.js').LayerBeingSwipe} gmfLayerBeingSwipe
  * @param {import('gmf/datasource/DataSourceBeingFiltered.js').DataSourceBeingFiltered} gmfDataSourceBeingFiltered
  *    The Gmf value service that determines the data source currently being
  *    filtered.
- * @param {import('gmf/datasource/LayerBeingSwipe.js').LayerBeingSwipe} gmfLayerBeingSwipe
- * @param {import("gmf/datasource/ExternalDataSourcesManager.js").ExternalDatSourcesManager}
- *    gmfExternalDataSourcesManager The Gmf external data sources manager
- *    service. Used here to fetch the external WMS groups.
- * @param gmfExternalDataSourcesManager
+ * @param {import("gmf/datasource/ExternalDataSourcesManager.js").ExternalDatSourcesManager} gmfExternalDataSourcesManager
+ *    The Gmf external data sources manager service. Used here to fetch the external WMS groups.
  * @param {import("gmf/permalink/Permalink.js").PermalinkService} gmfPermalink The gmf permalink service.
  * @param {import("gmf/layertree/TreeManager.js").LayertreeTreeManager} gmfTreeManager
  *    gmf Tree Manager service.

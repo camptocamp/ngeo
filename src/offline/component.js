@@ -343,7 +343,7 @@ export const Controller = class {
   }
   /**
    * Toggle the selecting extent view.
-   * @param {boolean=} finished If just finished downloading.
+   * @param {boolean} [finished] If just finished downloading.
    * @export
    */
   toggleViewExtentSelection(finished) {

@@ -42,8 +42,8 @@ import gmfExternalDataSourcesManager from 'gmf/datasource/ExternalDataSourcesMan
  *
  *
  * @ngInject
- * @param {import("ngeo/message/Notification.js").MessageNotification} ngeoNotification Ngeo notification
  * @param {import("gmf/datasource/ExternalDataSourcesManager.js").ExternalDatSourcesManager} gmfExternalDataSourcesManager The manager of external datasources.
+ * @param {import("ngeo/message/Notification.js").MessageNotification} ngeoNotification Ngeo notification
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @return {angular.IDirective} The Directive Definition Object.
  * @ngdoc directive
@@ -107,8 +107,8 @@ function processDrag_() {
  * the message desappears after a delay of 4 seconds
  *
  * @param {JQuery} element Element.
- * @param {import("ngeo/message/Notification.js").MessageNotification} ngeoNotification Ngeo notification
  * @param {import("gmf/datasource/ExternalDataSourcesManager.js").ExternalDatSourcesManager} gmfExternalDataSourcesManager The manager of external datasources.
+ * @param {import("ngeo/message/Notification.js").MessageNotification} ngeoNotification Ngeo notification
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog
  * @param {JQuery.DropEvent} event drop event.
  * @private

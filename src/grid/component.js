@@ -139,6 +139,7 @@ export function GridController($scope) {
   this.floatTheadConfig = {
     /**
      * @param {JQuery} $table
+     * @return {JQuery<HTMLElement>}
      */
     scrollContainer: function ($table) {
       return $table.closest('.ngeo-grid-table-container');

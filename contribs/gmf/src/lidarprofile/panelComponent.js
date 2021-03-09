@@ -286,7 +286,7 @@ export class Controller {
 
   /**
    * Get / Set the selected point attribute
-   * @param {import("gmf/lidarprofile/Config.js").LidarprofileServerConfigPointAttribute=} opt_selectedOption
+   * @param {import("gmf/lidarprofile/Config.js").LidarprofileServerConfigPointAttribute} [opt_selectedOption]
    *    The new selected point attribute.
    * @return {import("gmf/lidarprofile/Config.js").LidarprofileServerConfigPointAttribute|undefined}
    *    Selected point attribute

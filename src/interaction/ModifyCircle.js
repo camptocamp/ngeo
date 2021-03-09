@@ -313,6 +313,7 @@ export default class extends olInteractionPointer {
     /**
      * @param {import("ol/interaction/Modify.js").SegmentData} a
      * @param {import("ol/interaction/Modify.js").SegmentData} b
+     * @return {number}
      */
     const sortByDistance = function (a, b) {
       return (

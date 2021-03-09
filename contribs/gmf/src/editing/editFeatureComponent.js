@@ -811,7 +811,7 @@ Controller.prototype.confirmCancel = function () {
 /**
  * Check if there's a feature selected and if it contains modifications
  * (a.k.a. is dirty), then the confirmation modal is shown.
- * @param {boolean=} scopeApply Whether to force scope to refresh or not.
+ * @param {boolean} [scopeApply] Whether to force scope to refresh or not.
  *     when the confirm modal is not dismissed.
  * @return {angular.IPromise<void>} The promise attached to the confirm deferred
  *     object.

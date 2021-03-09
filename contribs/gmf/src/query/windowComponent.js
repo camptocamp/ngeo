@@ -491,7 +491,7 @@ QueryWindowController.prototype.collectFeatures_ = function () {
 
 /**
  * Highlight the current displayed feature.
- * @param {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>=} opt_lastFeature last highlighted feature. Require if
+ * @param {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>} [opt_lastFeature] last highlighted feature. Require if
  * it exists because it must be added to the 'non-selected' features collection.
  */
 QueryWindowController.prototype.highlightCurrentFeature_ = function (opt_lastFeature) {

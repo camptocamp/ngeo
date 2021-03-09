@@ -466,6 +466,7 @@ class Map {
                 .map(
                   /**
                    * @param {number} val
+                   * @return {number}
                    */
                   (val) => val * Math.sign(val)
                 );

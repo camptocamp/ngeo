@@ -56,6 +56,7 @@ export function debounce(func, wait, invokeApply, $timeout) {
     function (...args) {
       const later = () => {
         timeout = null;
+        // @ts-ignore
         func.apply(this, args);
       };
       if (timeout !== null) {

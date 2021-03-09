@@ -133,7 +133,7 @@ const Service = class {
   /**
    * Check fir network status
    *
-   * @param {number=} timeout Delay for timeout.
+   * @param {number} [timeout] Delay for timeout.
    */
   check(timeout) {
     if (this.promise_) {

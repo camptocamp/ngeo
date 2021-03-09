@@ -124,8 +124,8 @@ function gmfSearchTemplateUrl($element, $attrs, gmfSearchTemplateUrl) {
  * @htmlAttribute {Twitter.Typeahead.Options|undefined} gmf-search-options Addition Twitter.Typeahead.
  *    options.
  * @htmlAttribute {SearchComponentListeners} gmf-search-listeners The listeners.
- * @htmlAttribute {Function=} gmf-search-on-init Optional function called when the component is initialized.
- * @htmlAttribute {Function=} gmf-search-action Optional function called when no default action is defined.
+ * @htmlAttribute {Function} [gmf]-search-on-init Optional function called when the component is initialized.
+ * @htmlAttribute {Function} [gmf]-search-action Optional function called when no default action is defined.
  * @ngdoc component
  * @ngname gmfSearch
  */
@@ -497,6 +497,7 @@ export class SearchController {
         },
         /**
          * @param {CoordinateSuggestion} suggestion
+         * @return {string}
          */
         suggestion: (suggestion) => {
           const coordinates = suggestion.label;
@@ -511,7 +512,7 @@ export class SearchController {
 
   /**
    * @param {import('gmf/options.js').SearchComponentDatasource} config The config of the dataset.
-   * @param {(function(import("geojson").Feature): boolean)=} opt_filter A filter function
+   * @param {(function(import("geojson").Feature): boolean)} [opt_filter] A filter function
    *     based on a GeoJSONFeaturesCollection's array.
    * @return {Twitter.Typeahead.Dataset<olFeature<import('ol/geom/Geometry.js').default>>} A typeahead dataset.
    * @private
@@ -588,7 +589,7 @@ export class SearchController {
   }
 
   /**
-   * @param {string=} opt_layerName The layerName to keep. If null, keep all layers
+   * @param {string} [opt_layerName] The layerName to keep. If null, keep all layers
    *     (In all cases, except actions layers).
    * @return {function(import("geojson").Feature): boolean} A filter function based on a
    *     GeoJSONFeaturesCollection's array.
@@ -616,7 +617,7 @@ export class SearchController {
 
   /**
    * @param {import('gmf/options.js').SearchComponentDatasource} config The config of the dataset.
-   * @param {(function(import("geojson").Feature): boolean)=} opt_filter Afilter function
+   * @param {(function(import("geojson").Feature): boolean)} [opt_filter] Afilter function
    *     based on a GeoJSONFeaturesCollection's array.
    * @return {Bloodhound<olFeature<import('ol/geom/Geometry.js').default>[]>} The bloodhound engine.
    * @private
@@ -959,7 +960,7 @@ export class SearchController {
    * Performs a full-text search and centers the map on the first search result.
    * @param {string} query Search query.
    * @param {number} resultIndex Return nth result instead.
-   * @param {number=} opt_zoom Optional zoom level.
+   * @param {number} [opt_zoom] Optional zoom level.
    * @private
    */
   fulltextsearch_(query, resultIndex, opt_zoom) {

@@ -82,10 +82,9 @@ myModule.run(
  *
  * @htmlAttribute {boolean} gmf-mobile-measurepoint-active Used to active
  * or deactivate the component.
- * @param gmfMobileMeasurePointTemplateUrl
  * @htmlAttribute {import("ol/Map.js").default} gmf-mobile-measurepoint-map The map.
- * @param {string|function(JQuery=, angular.IAttributes=): string}
- *     gmfMobileMeasurePointTemplateUrl Template URL for the directive.
+ * @param {string|function(JQuery=, angular.IAttributes=): string} gmfMobileMeasurePointTemplateUrl
+ *     Template URL for the directive.
  * @return {angular.IDirective} The Directive Definition Object.
  * @ngInject
  * @ngdoc directive
@@ -105,7 +104,7 @@ function mobileMeasurePointComponent(gmfMobileMeasurePointTemplateUrl) {
      * @param {angular.IScope} scope Scope.
      * @param {JQuery} element Element.
      * @param {angular.IAttributes} attrs Attributes.
-     * @param {angular.IController=} controller Controller.
+     * @param {angular.IController} [controller] Controller.
      */
     link: (scope, element, attrs, controller) => {
       if (!controller) {

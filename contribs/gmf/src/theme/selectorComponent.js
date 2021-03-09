@@ -169,7 +169,7 @@ Controller.prototype.setThemes_ = function () {
 
 /**
  * @param {import('gmf/themes.js').GmfTheme} theme Theme.
- * @param {boolean=} opt_silent if true it will be no user message if
+ * @param {boolean} [opt_silent] if true it will be no user message if
  *     the theme should be added but it's already added.
  */
 Controller.prototype.setTheme = function (theme, opt_silent) {

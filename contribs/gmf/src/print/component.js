@@ -44,8 +44,8 @@ import 'bootstrap/js/src/dropdown.js';
  * Fields that can come from a print v3 server and can be used in the partial
  * of the gmf print panel.
  * @typedef {Object} PrintLayoutInfo
- * @property {import('ngeo/print/mapfish-print-v3').MapFishPrintCapabilitiesLayoutAttribute[]}
- *    [simpleAttributes] Custom print layoutInfo.
+ * @property {import('ngeo/print/mapfish-print-v3').MapFishPrintCapabilitiesLayoutAttribute[]} [simpleAttributes]
+ *    Custom print layoutInfo.
  * @property {string[]} [attributes] The list of all the attributes name.
  * @property {number} [dpi] The selected 'dpi'.
  * @property {number[]} [dpis] The list of 'dpis'.
@@ -55,15 +55,6 @@ import 'bootstrap/js/src/dropdown.js';
  * @property {boolean} [legend] The legend checkbox.
  * @property {number} [scale] The selected 'scale'.
  * @property {number[]} [scales] The list of 'scales'
- */
-
-/**
- * Object that can be used to generate a form field.
- * @typedef {Object}
- * @protected
- * @protected
- * @protected
- * @property
  */
 
 /**
@@ -1150,7 +1141,7 @@ export class PrintController {
   }
 
   /**
-   * @param {PrintStateEnum=} opt_printState the print state.
+   * @param {PrintStateEnum} [opt_printState] the print state.
    * @private
    */
   resetPrintStates_(opt_printState) {
@@ -1259,9 +1250,8 @@ export class PrintController {
 
   /**
    * @param {string} ref Ref.
-   * @param {angular.IHttpResponse<import('ngeo/print/mapfish-print-v3.js').MapFishPrintStatusResponse>}
-   *    resp Response.
-   * @param resp
+   * @param {angular.IHttpResponse<import('ngeo/print/mapfish-print-v3.js').MapFishPrintStatusResponse>} resp
+   *    Response.
    * @private
    */
   handleGetStatusSuccess_(ref, resp) {
@@ -1315,7 +1305,7 @@ export class PrintController {
 
   /**
    * Get or set the print scale value and adapt the zoom to match with this new scale.
-   * @param {number=} opt_scale A scale value as existing in the scales list field.
+   * @param {number} [opt_scale] A scale value as existing in the scales list field.
    * @return {number|undefined} New scale.
    */
   getSetScale(opt_scale) {

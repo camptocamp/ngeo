@@ -52,8 +52,8 @@ import olOverlayPositioning from 'ol/OverlayPositioning.js';
  */
 export default class extends olOverlay {
   /**
-   * @param {MenuOptions=} menuOptions Menu options.
-   * @param {import('ol/Overlay.js').Options=} options Overlay options.
+   * @param {MenuOptions} [menuOptions] Menu options.
+   * @param {import('ol/Overlay.js').Options} [options] Overlay options.
    */
   constructor(menuOptions, options = {}) {
     options.positioning = olOverlayPositioning.TOP_LEFT;

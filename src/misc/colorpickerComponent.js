@@ -61,9 +61,8 @@ myModule.run(
  *     </div>
  *
  *
- * @param {string|function(JQuery=, angular.IAttributes=): string}
- *     ngeoColorpickerTemplateUrl Template URL for the directive.
- * @param ngeoColorpickerTemplateUrl
+ * @param {string|function(JQuery=, angular.IAttributes=): string} ngeoColorpickerTemplateUrl
+ *     Template URL for the directive.
  * @return {angular.IDirective} Directive Definition Object.
  * @ngInject
  * @ngdoc directive

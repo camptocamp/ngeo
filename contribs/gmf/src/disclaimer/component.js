@@ -412,7 +412,7 @@ DisclaimerController.prototype.closeDisclaimerMessage_ = function (layerUid, msg
  *       </div>
  *     </ngeo-modal>
  *
- * @htmlAttribute {import("ol/Map.js").default=} gmf-disclaimer-map The map.
+ * @htmlAttribute {import("ol/Map.js").default} [gmf]-disclaimer-map The map.
  * @htmlAttribute {boolean?} gmf-disclaimer-external-visibility variable that
  *     will be set to true if the disclaimers contain a new message. To uses it,
  *     you must set the gmf-disclaimer-external to true.

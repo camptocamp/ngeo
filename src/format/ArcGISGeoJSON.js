@@ -45,7 +45,7 @@ const layerIdentifier = 'layerName';
 
 class ArcGISGeoJSON extends olFormatGeoJSON {
   /**
-   * @param {Options=} opt_options Options.
+   * @param {Options} [opt_options] Options.
    */
   constructor(opt_options) {
     const options = opt_options ? opt_options : {};
@@ -75,7 +75,7 @@ class ArcGISGeoJSON extends olFormatGeoJSON {
 
   /**
    * @param {import("geojson").GeoJSON} object Object.
-   * @param {import("ol/format/Feature.js").ReadOptions=} opt_options Read options.
+   * @param {import("ol/format/Feature.js").ReadOptions} [opt_options] Read options.
    * @protected
    * @return {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>[]} Features.
    * @override

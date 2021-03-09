@@ -26,13 +26,8 @@
 // The GeoMapFish "themes" web service.
 
 /**
- * @typedef {Object} GmfThemes
- * @property
- */
-
-/**
  * @typedef {Object} GmfThemesResponse
- * @property {(GmfLayer | GmfGroup)[]} background_layers
+ * @property {Array<GmfLayer | GmfGroup>} background_layers
  * @property {string[]} errors
  * @property {GmfOgcServers} ogcServers
  * @property {GmfTheme[]} themes
@@ -73,7 +68,7 @@
  * @property {number} id (GmfBaseNode)
  * @property {GmfMetaData} metadata (GmfBaseNode)
  * @property {string} name (GmfBaseNode)
- * @property {(GmfGroup | GmfLayer)[]} children
+ * @property {Array<GmfGroup | GmfLayer>} children
  * @property {import('ngeo/datasource/OGC.js').Dimensions} dimensions The dimensions managed by the
  *      OpenLayers layer, if the value is null we will take the dimension from the application.
  *      This is present only on non mixed first level group.

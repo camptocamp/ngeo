@@ -60,7 +60,7 @@ function measureAzimutComponent(
      * @param {angular.IScope} $scope Scope.
      * @param {JQuery} element Element.
      * @param {angular.IAttributes} attrs Attributes.
-     * @param {angular.IController=} drawFeatureCtrl Controller.
+     * @param {angular.IController} [drawFeatureCtrl] Controller.
      */
     link: ($scope, element, attrs, drawFeatureCtrl) => {
       if (!drawFeatureCtrl) {

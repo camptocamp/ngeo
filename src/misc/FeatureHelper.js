@@ -226,7 +226,7 @@ FeatureHelper.prototype.setProjection = function (projection) {
  * Set the style of a feature using its inner properties and depending on
  * its geometry type.
  * @param {olFeature<import("ol/geom/Geometry.js").default>} feature Feature.
- * @param {boolean=} opt_select Whether the feature should be rendered as
+ * @param {boolean} [opt_select] Whether the feature should be rendered as
  *     selected, which includes additional vertex and halo styles.
  */
 FeatureHelper.prototype.setStyle = function (feature, opt_select) {
@@ -360,6 +360,7 @@ FeatureHelper.prototype.getArrowLineStyles_ = function (feature, arrowDirection,
     /**
      * @param {number[]} coordinate
      * @param {boolean} invert
+     * @return {olStyleStyle}
      */
     const getArrowStyle = (coordinate, invert) => {
       return new olStyleStyle({
@@ -843,7 +844,7 @@ FeatureHelper.prototype.getCoordinateIndexThatHitsAt_ = function (coordinates, c
 
 /**
  * Create and return a style object to be used for vertex.
- * @param {boolean=} opt_incGeomFunc Whether to include the geometry function
+ * @param {boolean} [opt_incGeomFunc] Whether to include the geometry function
  *     or not. One wants to use the geometry function when you want to draw
  *     the vertex of features that don't have point geometries. One doesn't
  *     want to include the geometry function if you just want to have the
@@ -1292,7 +1293,7 @@ FeatureHelper.prototype.exportKML = function (features) {
  * @param {olFeature<import("ol/geom/Geometry.js").default>[]} features Array of vector features.
  * @param {import('ol/format/Feature.js').default} format Format
  * @param {string} fileName Name of the file.
- * @param {string=} opt_mimeType Mime type. Defaults to 'text/plain'.
+ * @param {string} [opt_mimeType] Mime type. Defaults to 'text/plain'.
  */
 FeatureHelper.prototype.export_ = function (features, format, fileName, opt_mimeType) {
   const mimeType = opt_mimeType !== undefined ? opt_mimeType : 'text/plain';
@@ -1479,7 +1480,7 @@ FeatureHelper.prototype.getType = function (feature) {
  *
  * @param {olFeature<import("ol/geom/Geometry.js").default>} feature Feature.
  * @param {import("ol/Map.js").default} map Map.
- * @param {number=} opt_duration Aimation duration. Defaults to `250`.
+ * @param {number} [opt_duration] Aimation duration. Defaults to `250`.
  */
 FeatureHelper.prototype.fitMapToFeature = function (feature, map, opt_duration) {
   const duration = opt_duration !== undefined ? opt_duration : 250;

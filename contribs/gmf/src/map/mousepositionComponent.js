@@ -176,6 +176,7 @@ Controller.prototype.initOlControl_ = function () {
   // function that apply the filter.
   /**
    * @param {number[]|undefined} coordinates
+   * @return {string}
    */
   const formatFn = (coordinates) => {
     if (!this.projection) {

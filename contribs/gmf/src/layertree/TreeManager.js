@@ -200,8 +200,8 @@ LayertreeTreeManager.prototype.setFirstLevelGroups = function (firstLevelGroups)
  * already in the tree.
  * @param {import('gmf/themes.js').GmfGroup[]} firstLevelGroups An array of gmf theme
  *     group.
- * @param {boolean=} opt_add if true, force to use the 'add' mode this time.
- * @param {boolean=} opt_silent if true notifyCantAddGroups_ is not called.
+ * @param {boolean} [opt_add] if true, force to use the 'add' mode this time.
+ * @param {boolean} [opt_silent] if true notifyCantAddGroups_ is not called.
  * @return {boolean} True if the group has been added. False otherwise.
  */
 LayertreeTreeManager.prototype.addFirstLevelGroups = function (firstLevelGroups, opt_add, opt_silent) {
@@ -362,7 +362,7 @@ LayertreeTreeManager.prototype.addFirstLevelGroup_ = function (group) {
  * Retrieve a group (first found) by its name and add in the tree. Do nothing
  * if any corresponding group is found.
  * @param {string} groupName Name of the group to add.
- * @param {boolean=} opt_add if true, force to use the 'add' mode this time.
+ * @param {boolean} [opt_add] if true, force to use the 'add' mode this time.
  */
 LayertreeTreeManager.prototype.addGroupByName = function (groupName, opt_add) {
   this.gmfThemes_.getThemesObject().then((themes) => {
@@ -378,8 +378,8 @@ LayertreeTreeManager.prototype.addGroupByName = function (groupName, opt_add) {
  * (first found). This group will be added in the tree. Do nothing if any
  * corresponding group is found.
  * @param {string} layerName Name of the layer inside the group to add.
- * @param {boolean=} opt_add if true, force to use the 'add' mode this time.
- * @param {boolean=} opt_silent if true notifyCantAddGroups_ is not called
+ * @param {boolean} [opt_add] if true, force to use the 'add' mode this time.
+ * @param {boolean} [opt_silent] if true notifyCantAddGroups_ is not called
  */
 LayertreeTreeManager.prototype.addGroupByLayerName = function (layerName, opt_add, opt_silent) {
   this.gmfThemes_.getThemesObject().then((themes) => {

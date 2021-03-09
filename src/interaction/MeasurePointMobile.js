@@ -31,7 +31,7 @@ export default class extends ngeoInteractionMeasure {
   /**
    * @param {import('ngeo/misc/filters.js').numberCoordinates} format the number formatter
    * @param {string} coordFormat the coordinates formatter
-   * @param {import('ngeo/interaction/Measure.js').MeasureOptions=} options Options
+   * @param {import('ngeo/interaction/Measure.js').MeasureOptions} [options] Options
    */
   constructor(format, coordFormat, options = {}) {
     Object.assign(options, {displayHelpTooltip: false});

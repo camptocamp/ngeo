@@ -75,9 +75,9 @@ export default class {
    * Show disclaimer message string or object or list of disclame message
    * strings or objects.
    *
-   * @param {string | Message | (string | Message)[]}
-   *     object A message or list of messages as text or configuration objects.
-   * @param object
+   * @param {string | Message | (string | Message)[]} object
+   *     A message or list of messages as text or configuration objects.
+   * @return {void}
    */
   show(object) {
     const msgObjects = this.getMessageObjects(object);
@@ -122,10 +122,9 @@ export default class {
    * message strings, message object or list message objects. The type can be
    * overridden here as well OR defined (if the message(s) is/are string(s),
    * defaults to 'information').
-   * @param {string | Message | (string | Message)[]}
-   *     object A message or list of messages as text or configuration objects.
-   * @param object
-   * @param {string=} opt_type The type of message to override the messages with.
+   * @param {string | Message | (string | Message)[]}object
+   *     A message or list of messages as text or configuration objects.
+   * @param {string} [opt_type] The type of message to override the messages with.
    * @return {Message[]} List of message objects.
    * @protected
    */

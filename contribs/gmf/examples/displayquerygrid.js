@@ -144,7 +144,7 @@ function MainController(
   this.queryActive = true;
 
   /**
-   * @type {import('gmf/themes').GmfThemes[]|undefined}
+   * @type {import('gmf/themes').GmfTheme[]|undefined}
    * export
    */
   this.themes = undefined;

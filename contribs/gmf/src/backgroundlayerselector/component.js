@@ -90,7 +90,7 @@ function gmfBackgroundlayerselectorTemplateUrl($element, $attrs, gmfBackgroundla
  *
  *  * `default_basemap`: Base maps to use by default.
  *
- * @htmlAttribute {import("ol/Map.js").default=} gmf-backgroundlayerselector-map The map.
+ * @htmlAttribute {import("ol/Map.js").default} [gmf]-backgroundlayerselector-map The map.
  * @htmlAttribute {Function} gmf-backgroundlayerselector-select Function called
  *     when a layer was selected by the user.
  *
@@ -233,7 +233,7 @@ Controller.prototype.getSetBgLayerOpacity = function (val) {
 
 /**
  * @param {import("ol/layer/Base.js").default} layer Layer.
- * @param {boolean=} opt_silent Do not notify listeners.
+ * @param {boolean} [opt_silent] Do not notify listeners.
  */
 Controller.prototype.setLayer = function (layer, opt_silent) {
   gmfBackgroundlayerStatus.touchedByUser = true;

@@ -104,7 +104,7 @@ export class RuleHelper {
 
   /**
    * @param {import('ngeo/format/Attribute.js').Attribute[]} attributes Attributes.
-   * @param {boolean=} opt_isCustom Whether the created rules should be marked
+   * @param {boolean} [opt_isCustom] Whether the created rules should be marked
    *     as custom or not. Defaults to `false`.
    * @return {import("ngeo/rule/Rule.js").default[]} Rules.
    */
@@ -118,7 +118,7 @@ export class RuleHelper {
 
   /**
    * @param {import('ngeo/format/Attribute.js').Attribute} attribute Attribute.
-   * @param {boolean=} opt_isCustom Whether the created rule should be marked
+   * @param {boolean} [opt_isCustom] Whether the created rule should be marked
    *     as custom or not. Defaults to `false`.
    * @return {import("ngeo/rule/Rule.js").default} Rule.
    */
@@ -517,7 +517,7 @@ export class RuleHelper {
   /**
    * @param {import("ngeo/rule/Rule.js").default} rule Rule.
    * @param {import("ngeo/datasource/OGC.js").default} dataSource Data source.
-   * @param {string=} opt_srsName SRS name. No srsName attribute will be
+   * @param {string} [opt_srsName] SRS name. No srsName attribute will be
    *     set on geometries when this is not provided.
    * @return {?import("ol/format/filter/Filter.js").default} filter Filter;
    * @private

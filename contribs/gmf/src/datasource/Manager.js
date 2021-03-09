@@ -245,6 +245,7 @@ export class DatasourceManager {
   /**
    * Get a datasource by its id.
    * @param {string} id The id of the datasource.
+   * @return {GmfDatasourceOGC}
    * @hidden
    */
   getDatasource(id) {

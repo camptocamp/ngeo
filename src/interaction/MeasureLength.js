@@ -37,7 +37,7 @@ export default class extends ngeoInteractionMeasure {
   /**
    * @param {import('ngeo/misc/filters.js').unitPrefix} format The format function
    * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
-   * @param {import('ngeo/interaction/Measure.js').MeasureOptions=} options Options
+   * @param {import('ngeo/interaction/Measure.js').MeasureOptions} [options] Options
    */
   constructor(format, gettextCatalog, options = {}) {
     super(options);
@@ -110,7 +110,7 @@ export default class extends ngeoInteractionMeasure {
    * Use this with the draw interaction and `type: 'LineString'`.
    *
    * @param {number[][]} coordinates Coordinates.
-   * @param {import('ol/geom/SimpleGeometry.js').default|undefined=} opt_geometry Geometry.
+   * @param {import('ol/geom/SimpleGeometry.js').default|undefined} [opt_geometry] Geometry.
    * @return {import('ol/geom/SimpleGeometry.js').default} Geometry.
    */
   linestringGeometryFunction(coordinates, opt_geometry) {

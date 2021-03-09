@@ -304,24 +304,24 @@ export class Controller {
  *        title="'Window 1 - The simplest window (close kills it)'">
  *      </ngeo-displaywindow>
  *
- * @htmlAttribute {boolean=} ngeo-displaywindow-clear-on-close Whether to clear the content on close or not.
- * @htmlAttribute {string=} ngeo-displaywindow-content The html content. If not provided, you must provide
+ * @htmlAttribute {boolean} [ngeo]-displaywindow-clear-on-close Whether to clear the content on close or not.
+ * @htmlAttribute {string} [ngeo]-displaywindow-content The html content. If not provided, you must provide
  *     an url.
- * @htmlAttribute {string=} ngeo-displaywindow-content-template AngularJS template. It gets compiled during
+ * @htmlAttribute {string} [ngeo]-displaywindow-content-template AngularJS template. It gets compiled during
  *    runtime with the supplied scope (ngeo-displaywindow-content-scope).
- * @htmlAttribute {angular.IScope=} ngeo-displaywindow-content-scope Scope used for
+ * @htmlAttribute {angular.IScope} [ngeo]-displaywindow-content-scope Scope used for
  *    ngeo-displaywindow-content-template.
- * @htmlAttribute {boolean=} ngeo-displaywindow-desktop If true, the window is draggable and resizable. If
+ * @htmlAttribute {boolean} [ngeo]-displaywindow-desktop If true, the window is draggable and resizable. If
  *     not set, you must set manually both parameter.
- * @htmlAttribute {boolean=} ngeo-displaywindow-draggable Whether the window is draggable or not.
- * @htmlAttribute {string=} ngeo-displaywindow-draggable-containment The zone (CSS selector) where the window
+ * @htmlAttribute {boolean} [ngeo]-displaywindow-draggable Whether the window is draggable or not.
+ * @htmlAttribute {string} [ngeo]-displaywindow-draggable-containment The zone (CSS selector) where the window
  *     is authorized to be dragged.
- * @htmlAttribute {string=} ngeo-displaywindow-height The default height of the window.
- * @htmlAttribute {boolean=} ngeo-displaywindow-open Whether the window is open or not.
- * @htmlAttribute {string=} ngeo-displaywindow-title The html title of the window.
- * @htmlAttribute {string=} ngeo-displaywindow-url The URL to open in an iframe, in the window. The content
+ * @htmlAttribute {string} [ngeo]-displaywindow-height The default height of the window.
+ * @htmlAttribute {boolean} [ngeo]-displaywindow-open Whether the window is open or not.
+ * @htmlAttribute {string} [ngeo]-displaywindow-title The html title of the window.
+ * @htmlAttribute {string} [ngeo]-displaywindow-url The URL to open in an iframe, in the window. The content
  *     attribute must not be provided.
- * @htmlAttribute {string=} ngeo-displaywindow-width The default width of the window.
+ * @htmlAttribute {string} [ngeo]-displaywindow-width The default width of the window.
  * @ngdoc component
  * @ngname ngeoDisplaywindow
  */

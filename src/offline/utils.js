@@ -24,9 +24,8 @@ import olLayerGroup from 'ol/layer/Group.js';
 /**
  * @param {import("ol/layer/Base.js").default} layer A layer tree.
  * @param {!import("ol/layer/Group.js").default[]} ancestors The groups to which the layer belongs to.
- * @param {function(import("ol/layer/Base.js").default, import("ol/layer/Group.js").default[]): boolean}
- * visitor A function which will return false if descend must stop.
- * @param visitor
+ * @param {function(import("ol/layer/Base.js").default, import("ol/layer/Group.js").default[]): boolean} visitor
+ *    A function which will return false if descend must stop.
  */
 export function traverseLayer(layer, ancestors, visitor) {
   const descend = visitor(layer, ancestors);

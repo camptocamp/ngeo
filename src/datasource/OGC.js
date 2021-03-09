@@ -631,7 +631,7 @@ export class OGC extends ngeoDatasourceDataSource {
   }
 
   /**
-   * @param {string=} layer The layer name.
+   * @param {string} [layer] The layer name.
    * @return {?string} Geometry name
    */
   geometryName(layer) {
@@ -903,6 +903,7 @@ export class OGC extends ngeoDatasourceDataSource {
    * Whether the data source is queryable or not. For an OGC data source to be
    * queryable, it requires the support of WFS or WMS and at least one ogc
    * layer to be querable.
+   * @return {boolean}
    */
   get queryable() {
     let queryable = false;
@@ -1191,6 +1192,7 @@ export class OGC extends ngeoDatasourceDataSource {
 
     /**
      * @param {string} key
+     * @return {boolean}
      */
     const equals = (key) => {
       const myKeyConfig = myConfig[key];

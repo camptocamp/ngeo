@@ -89,7 +89,7 @@ PermalinkShareService.prototype.getShortUrl = function (url) {
  * - If email is provided, the short permalink will be sent to this email
  * @param  {string} shortUrl the short permalink to send
  * @param  {string} email the email to which the short url must be send
- * @param  {string=} opt_message message for the email
+ * @param  {string} [opt_message] message for the email
  * @return {angular.IHttpPromise<void>} the promise attached to the shortener API request
  */
 PermalinkShareService.prototype.sendShortUrl = function (shortUrl, email, opt_message) {

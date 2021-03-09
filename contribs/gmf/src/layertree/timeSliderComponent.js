@@ -107,6 +107,7 @@ function layertreeTimeSliderComponent() {
         /**
          * @param {never} e
          * @param {{value: ?string, values: ?string[]}} sliderUi
+         * @return {{start: number, end?: number}}
          */
         function computeDates_(e, sliderUi) {
           if (!ctrl) {

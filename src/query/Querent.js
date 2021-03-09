@@ -307,7 +307,7 @@ export class Querent {
 
   /**
    * @param {string} baseUrl Base url of the WMS server.
-   * @param {boolean=} opt_cache Whether to use the cached capability, if
+   * @param {boolean} [opt_cache] Whether to use the cached capability, if
    *     available. Enabling this will also store the capability when required
    *     for the first time. Defaults to: `true`.
    * @return {angular.IPromise<void>} Promise.
@@ -363,7 +363,7 @@ export class Querent {
   /**
    * @param {string} url URL of the WMTS server. Note that it must contain
    *     all required arguments.
-   * @param {boolean=} opt_cache Whether to use the cached capability, if
+   * @param {boolean} [opt_cache] Whether to use the cached capability, if
    *     available. Enabling this will also store the capability when required
    *     for the first time. Defaults to: `true`.
    * @return {angular.IPromise<void>} Promise.
@@ -541,7 +541,7 @@ export class Querent {
    * types if one is given.
    * @param {ngeoDatasourceOGC} dataSource that contains the format object.
    * @param {boolean} wfs Whether the query was WFS or WMS.
-   * @param {string[]=} opt_types An array of type if you want to set the
+   * @param {string[]} [opt_types] An array of type if you want to set the
    *     type of the format object.
    * @return {string[]} The types defined in the format.
    * @private

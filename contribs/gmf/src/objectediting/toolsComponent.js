@@ -304,7 +304,7 @@ Controller.prototype.$onInit = function () {
  * @param {string} toolActiveName The name of the active property for the tool.
  * @param {string} process The behavior the tool should use when active
  *     and when sketch features are added.
- * @param {boolean=} opt_requiresLayer Whether the tool requires the queryable
+ * @param {boolean} [opt_requiresLayer] Whether the tool requires the queryable
  *     layer or not. Defaults to `false`.
  */
 Controller.prototype.registerTool_ = function (toolActiveName, process, opt_requiresLayer) {

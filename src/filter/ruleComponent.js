@@ -697,7 +697,7 @@ export class RuleController {
   }
 
   /**
-   * @param {number=} opt_timeDelta Time delta to go back in the past.
+   * @param {number} [opt_timeDelta] Time delta to go back in the past.
    * @return {string} ISO string of the date
    * @private
    */

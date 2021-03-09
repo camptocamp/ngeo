@@ -44,14 +44,12 @@ const myModule = angular.module('ngeoQuery', [ngeoQueryModeSelector.name, ngeoQu
  */
 export class QueryController {
   /**
-   * @param {import("ngeo/query/MapQuerent.js").MapQuerent}
-   *     ngeoMapQuerent The ngeo map querent service.
-   * @param {import("ngeo/query/ModeSelector.js").QueryModeSelector}
-   *     ngeoQueryModeSelector The ngeo query modeSelector service.
-   * @param ngeoQueryModeSelector
-   * @param ngeoMapQuerent
-   * @param {import('ngeo/options.js').ngeoQueryOptions} ngeoQueryOptions The options.
+   * @param {import("ngeo/query/MapQuerent.js").MapQuerent} ngeoMapQuerent
+   *    The ngeo map querent service.
+   * @param {import("ngeo/query/ModeSelector.js").QueryModeSelector} ngeoQueryModeSelector
+   *    The ngeo query modeSelector service.
    * @param {angular.IScope} $scope Scope.
+   * @param {import('ngeo/options.js').ngeoQueryOptions} ngeoQueryOptions The options.
    * @ngInject
    * @ngdoc controller
    * @ngname NgeoQueryController
@@ -411,19 +409,21 @@ export class QueryController {
   /**
    * Called when the pointer is moved over the map while this component is active and the mode is "click".
    * Change the mouse pointer when hovering a non-transparent pixel on the map.
-   * @return {boolean}
+   *
    * @param {Event|import("ol/events/Event.js").default} evt The map browser event being fired.
+   * @return {boolean}
    */
   handleMapPointerMove_(evt) {
     // No need to do anything if user is dragging the map
     if (!(evt instanceof MapBrowserEvent) || evt.dragging) {
-      return;
+      return false;
     }
 
     const pixel = this.map.getEventPixel(evt.originalEvent);
 
     /**
      * @param {import('ol/layer/Base').default} layer
+     * @return {boolean}
      */
     const queryable = function (layer) {
       const visible = layer.get('visible');

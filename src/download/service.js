@@ -46,7 +46,7 @@ export function factory() {
   /**
    * @param {string} content The file content.
    * @param {string} fileName The file name.
-   * @param {string=} opt_fileType The file type. If not given,
+   * @param {string} [opt_fileType] The file type. If not given,
    *    `text/plain;charset=utf-8` is used.
    */
   function download(content, fileName, opt_fileType) {

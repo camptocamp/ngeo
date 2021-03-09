@@ -103,7 +103,7 @@ myModule.controller('AppQueryresultController', QueryresultController);
  * @param {import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr} ngeoToolActivateMgr The ngeo ToolActivate
  *     manager.
  * @param {import("ngeo/query/ModeSelector.js").QueryModeSelector} ngeoQueryModeSelector The ngeo QueryModeSelector service
- 
+ *
  * @class
  * @ngInject
  */

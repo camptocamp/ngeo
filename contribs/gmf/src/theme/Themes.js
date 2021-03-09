@@ -433,7 +433,7 @@ export class ThemesService extends olEventsEventTarget {
   }
 
   /**
-   * @param {string=} opt_roleId The role id to send in the request.
+   * @param {string} [opt_roleId] The role id to send in the request.
    * Load themes from the "themes" service.
    */
   loadThemes(opt_roleId) {
@@ -533,9 +533,8 @@ export function findGroupByName(themes, name) {
 
 /**
  * Find an object by its name. Return null if not found.
- * @param {(import('gmf/themes.js').GmfTheme|import("gmf/themes").GmfGroup|import("gmf/themes").GmfLayer)[]}
- *    objects Array of objects with a 'name' attribute.
- * @param objects
+ * @param {(import('gmf/themes.js').GmfTheme|import("gmf/themes").GmfGroup|import("gmf/themes").GmfLayer)[]} objects
+ *    Array of objects with a 'name' attribute.
  * @param {string} objectName The object name.
  * @return {?(import('gmf/themes.js').GmfTheme|import("gmf/themes").GmfGroup|import("gmf/themes").GmfLayer)}
  *    The object or null.

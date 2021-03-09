@@ -803,7 +803,7 @@ Controller.prototype.handleModifyInteractionModifyEnd_ = function (evt) {
 /**
  * @param {StylesObject} styles Hash of style.
  * @param {import('ol/color.js').Color} color Color.
- * @param {boolean=} [opt_incVertice=true] Whether to include vertice or not.
+ * @param {boolean} [opt_incVertice=true] Whether to include vertice or not.
  */
 Controller.prototype.initializeStyles_ = function (styles, color, opt_incVertice) {
   const incVertice = opt_incVertice !== false;
