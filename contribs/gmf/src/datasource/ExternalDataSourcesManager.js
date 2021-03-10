@@ -227,7 +227,7 @@ export class ExternalDatSourcesManager {
   }
 
   /**
-   * @return {Array<import("ngeo/datasource/WMSGroup.js").default>} List of WMS groups.
+   * @return {import("ngeo/datasource/WMSGroup.js").default[]} List of WMS groups.
    */
   get wmsGroups() {
     return this.wmsGroupsCollection_.getArray();
@@ -275,7 +275,7 @@ export class ExternalDatSourcesManager {
   }
 
   /**
-   * @return {Array<import("ngeo/datasource/OGCGroup.js").default>} List of groups for WMTS data sources.
+   * @return {import("ngeo/datasource/OGCGroup.js").default[]} List of groups for WMTS data sources.
    */
   get wmtsGroups() {
     return this.wmtsGroupsCollection_.getArray();

@@ -31,7 +31,7 @@ import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
  * Results of the query source.
  *
  * @typedef {Object} QueryResult
- * @property {Array<import('ngeo/statemanager/WfsPermalink.js').QueryResultSource>} sources Results for
+ * @property {import('ngeo/statemanager/WfsPermalink.js').QueryResultSource[]} sources Results for
  *    each query source.
  * @property {number} total The number of results for all sources.
  * @property {boolean} pending If at least one source is pending.
@@ -224,7 +224,7 @@ export class MapQuerent {
       const totalFeatureCount = querentResultItem.totalFeatureCount;
       const requestPartners = querentResultItem.requestPartners;
 
-      /** @type {Object<string, Array<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>>} */
+      /** @type {Object<string, import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>[]>} */
       const typeSeparatedFeatures = {};
       features.forEach((feature) => {
         /** @type {string} */

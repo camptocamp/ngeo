@@ -66,7 +66,7 @@ const myModule = angular.module('ngeoSortable', []);
  *
  * See our live example: [../examples/layerorder.html](../examples/layerorder.html)
  *
- * @htmlAttribute {Array<import("ol/layer/Base.js").default>} ngeo-sortable The layers to sort.
+ * @htmlAttribute {import("ol/layer/Base.js").default[]} ngeo-sortable The layers to sort.
  * @htmlAttribute {miscSortableOptions} ngeo-sortable-options The options.
  * @htmlAttribute {Function(JQuery, Array)?} ngeo-sortable-callback
  *     Callback function called after the move end. The Function will be called

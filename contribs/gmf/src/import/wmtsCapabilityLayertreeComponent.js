@@ -79,9 +79,8 @@ function gmfWmtscapabilitylayertreTemplateUrl($attrs, gmfWmtscapabilitylayertreT
  */
 export class Controller {
   /**
-   * @param {import("gmf/datasource/ExternalDataSourcesManager.js").ExternalDatSourcesManager}
-   *     gmfExternalDataSourcesManager GMF service responsible of managing
-   *     external data sources.
+   * @param {import("gmf/datasource/ExternalDataSourcesManager.js").ExternalDatSourcesManager} gmfExternalDataSourcesManager
+   *     GMF service responsible of managing external data sources.
    * @ngInject
    * @ngdoc controller
    * @ngname GmfWmtscapabilitylayertreeController

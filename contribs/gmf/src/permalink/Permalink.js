@@ -262,22 +262,22 @@ const ParamPrefix = {
  *
  *  * `default_theme`: Theme to use by default.
  *
- * @constructor
+ * @class
  * @param {angular.IQService} $q The Angular $q service.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @param {angular.IScope} $rootScope Angular rootScope.
  * @param {angular.auto.IInjectorService} $injector Main injector.
- * @param {import('gmf/datasource/LayerBeingSwipe.js').LayerBeingSwipe} gmfLayerBeingSwipe
  * @param {import("ngeo/misc/debounce.js").miscDebounce<function(): void>} ngeoDebounce ngeo Debounce factory.
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext service.
  * @param {import("ngeo/misc/EventHelper.js").EventHelper} ngeoEventHelper Ngeo event helper service
  * @param {import("ngeo/statemanager/Service.js").StatemanagerService} ngeoStateManager The ngeo statemanager
  *    service.
+ * @param {import("ngeo/statemanager/Location.js").StatemanagerLocation} ngeoLocation ngeo location service.
+ * @param {import('gmf/datasource/LayerBeingSwipe.js').LayerBeingSwipe} gmfLayerBeingSwipe
+ * @param {import('gmf/options.js').gmfPermalinkOptions} gmfPermalinkOptions The options.
  * @param {import("gmf/datasource/Manager.js").DatasourceManager} gmfDataSourcesManager The gmf datasourcemanager
  *    service.
  * @param {import("ngeo/misc/WMSTime.js").WMSTime} ngeoWMSTime The ngeo  wmstime service
- * @param {import("ngeo/statemanager/Location.js").StatemanagerLocation} ngeoLocation ngeo location service.
- * @param {import('gmf/options.js').gmfPermalinkOptions} gmfPermalinkOptions The options.
  * @ngInject
  * @ngdoc service
  * @ngname gmfPermalink
@@ -469,7 +469,7 @@ export function PermalinkService(
 
   /**
    * A list of projections that the coordinates in the permalink can be in.
-   * @type {?Array<import("ol/proj/Projection.js").default>}
+   * @type {?import("ol/proj/Projection.js").default[]}
    */
   this.sourceProjections_ = null;
   if (gmfPermalinkOptions.projectionCodes !== undefined && this.ngeoAutoProjection_) {
@@ -774,7 +774,7 @@ PermalinkService.prototype.getMapCrosshair = function () {
 /**
  * Sets the map crosshair to the center (or the map center if nothing provided).
  * Overwrites an existing map crosshair.
- * @param {?import("ol/coordinate.js").Coordinate=} opt_center Optional center coordinate.
+ * @param {?import("ol/coordinate.js").Coordinate} [opt_center] Optional center coordinate.
  */
 PermalinkService.prototype.setMapCrosshair = function (opt_center) {
   if (!this.map_) {
@@ -819,7 +819,7 @@ PermalinkService.prototype.getMapTooltip = function () {
  * Sets the map tooltip to the center (or the map center if nothing provided).
  * Overwrites an existing map tooltip.
  * @param {string} tooltipText Text to display in tooltip.
- * @param {?import("ol/coordinate.js").Coordinate=} opt_center Optional center coordinate.
+ * @param {?import("ol/coordinate.js").Coordinate} [opt_center] Optional center coordinate.
  */
 PermalinkService.prototype.setMapTooltip = function (tooltipText, opt_center) {
   if (!this.map_) {
@@ -1035,7 +1035,7 @@ PermalinkService.prototype.unregisterMap_ = function () {
 
 /**
  * Get the background layer object to use to initialize the map from the state manager.
- * @param {Array<import("ol/layer/Base.js").default>} layers Array of background layer objects.
+ * @param {import("ol/layer/Base.js").default[]} layers Array of background layer objects.
  * @return {?import("ol/layer/Base.js").default} Background layer.
  */
 PermalinkService.prototype.getBackgroundLayer = function (layers) {
@@ -1257,7 +1257,7 @@ PermalinkService.prototype.initLayers_ = function () {
     }
 
     /**
-     * @type {Array<(import('gmf/themes.js').GmfGroup)>}
+     * @type {(import('gmf/themes.js').GmfGroup)[]}
      */
     let firstLevelGroups = [];
     let theme;
@@ -1512,7 +1512,7 @@ PermalinkService.prototype.getWfsPermalinkData_ = function () {
  */
 PermalinkService.prototype.createFilterGroup_ = function (prefix, paramKeys) {
   /**
-   * @type {Array<import('ngeo/statemanager/WfsPermalink.js').WfsPermalinkFilter>}
+   * @type {import('ngeo/statemanager/WfsPermalink.js').WfsPermalinkFilter[]}
    */
   const filters = [];
 
@@ -1812,7 +1812,7 @@ PermalinkService.prototype.setExternalDataSourcesState_ = function () {
 
 /**
  * Clean the permalink parameters
- * @param {Array<import('gmf/themes.js').GmfGroup>} groups firstlevel groups of the tree
+ * @param {import('gmf/themes.js').GmfGroup[]} groups firstlevel groups of the tree
  */
 PermalinkService.prototype.cleanParams = function (groups) {
   const keys = this.ngeoLocation_.getParamKeys();
@@ -1872,9 +1872,7 @@ PermalinkService.prototype.setNodeTime_ = function (treeCtrl) {
     const node = /** @type {import('gmf/themes.js').GmfGroup|!import('gmf/themes.js').GmfLayerWMS} */ (treeCtrl.node);
     node.time.minDefValue = bounds[0];
     node.time.maxDefValue = bounds[1];
-    const dataSource = /** @type {?import("ngeo/datasource/OGC").default} */ this.gmfDataSourcesManager_.getDatasource(
-      olUtilGetUid(treeCtrl.node)
-    );
+    const dataSource = this.gmfDataSourcesManager_.getDatasource(olUtilGetUid(treeCtrl.node));
 
     if (dataSource) {
       if (!(dataSource instanceof ngeoDatasourceOGC)) {
@@ -1884,9 +1882,7 @@ PermalinkService.prototype.setNodeTime_ = function (treeCtrl) {
       dataSource.timeUpperValue = new Date(bounds[1]).getTime();
     } else if (treeCtrl.children) {
       treeCtrl.children.forEach((child) => {
-        const dataSource = /** @type {?import("ngeo/datasource/OGC").default} */ this.gmfDataSourcesManager_.getDatasource(
-          olUtilGetUid(child.node)
-        );
+        const dataSource = this.gmfDataSourcesManager_.getDatasource(olUtilGetUid(child.node));
         if (dataSource) {
           dataSource.timeLowerValue = new Date(bounds[0]).getTime();
           dataSource.timeUpperValue = new Date(bounds[1]).getTime();

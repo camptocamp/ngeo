@@ -72,7 +72,7 @@ const backgroundlayerComponent = {
 myModule.component('appBackgroundlayer', backgroundlayerComponent);
 
 /**
- * @constructor
+ * @class
  * @param {angular.IHttpService} $http Angular http service.
  * @param {import("ngeo/map/BackgroundLayerMgr.js").MapBackgroundLayerManager} ngeoBackgroundLayerMgr
  *    Background layer manager.
@@ -145,7 +145,7 @@ BackgroundlayerController.prototype.getLayer_ = function (layerName) {
 myModule.controller('AppBackgroundlayerController', BackgroundlayerController);
 
 /**
- * @constructor
+ * @class
  * @param {angular.IScope} $scope Controller scope.
  * @ngInject
  */

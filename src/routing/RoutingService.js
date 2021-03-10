@@ -27,7 +27,7 @@ import angular from 'angular';
  * of version 5.8 and higher and its features.
  * @param {angular.IHttpService} $http Angular http service.
  * @param {import('ngeo/options.js').ngeoRoutingOptions} ngeoRoutingOptions The options.
- * @constructor
+ * @class
  * @ngdoc service
  * @ngInject
  * @ngname ngeoRoutingService
@@ -97,7 +97,7 @@ export function RoutingService($http, ngeoRoutingOptions) {
 
 /**
  * Route request
- * @param {Array<import("ol/coordinate.js").Coordinate>} coordinates coordinates of the route (at least two!)
+ * @param {import("ol/coordinate.js").Coordinate[]} coordinates coordinates of the route (at least two!)
  * @param {?Config} config optional configuration
  * @return {angular.IHttpPromise<Routes>} promise of the OSRM API request
  */

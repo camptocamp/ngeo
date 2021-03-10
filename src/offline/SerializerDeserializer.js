@@ -150,7 +150,7 @@ const SerDes = class {
 
   /**
    * @param {string} serialization .
-   * @param {function(import("ol/ImageTile.js").default, string)=} tileLoadFunction .
+   * @param {function(import("ol/ImageTile.js").default, string): void} [tileLoadFunction] .
    * @return {OlSourceTileWMS} source .
    */
   deserializeSourceTileWMS(serialization, tileLoadFunction) {
@@ -194,7 +194,7 @@ const SerDes = class {
 
   /**
    * @param {string} serialization .
-   * @param {function(import("ol/ImageTile.js").default, string)=} tileLoadFunction .
+   * @param {function(import("ol/ImageTile.js").default, string): void} [tileLoadFunction] .
    * @return {OlSourceWMTS} .
    */
   deserializeSourceWMTS(serialization, tileLoadFunction) {
@@ -224,7 +224,7 @@ const SerDes = class {
 
   /**
    * @param {!import("ol/layer/Tile.js").default|import("ol/layer/Image").default} layer .
-   * @param {import("ol/source/Source.js").default=} source .
+   * @param {import("ol/source/Source.js").default} [source] .
    * @return {string} .
    */
   serializeTileLayer(layer, source) {
@@ -247,7 +247,7 @@ const SerDes = class {
 
   /**
    * @param {string} serialization .
-   * @param {function(import("ol/ImageTile.js").default, string)=} tileLoadFunction .
+   * @param {function(import("ol/ImageTile.js").default, string): void} [tileLoadFunction] .
    * @return {!import("ol/layer/Tile.js").default} .
    */
   deserializeTileLayer(serialization, tileLoadFunction) {

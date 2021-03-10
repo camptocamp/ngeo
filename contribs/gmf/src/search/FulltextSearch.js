@@ -26,7 +26,7 @@ import {encodeQueryString, decodeQueryString} from 'ngeo/utils.js';
  * Provides the c2c-geoportal full-text search.
  * @param {angular.IHttpService} $http Angular http service.
  * @param {string} fulltextsearchUrl The service URL.
- * @constructor
+ * @class
  * @ngInject
  * @ngname gmfFulltextSearch
  * @hidden

@@ -51,7 +51,7 @@ const myModule = angular.module('gmfapp', [
 ]);
 
 /**
- * @constructor
+ * @class
  * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes The gmf themes service.
  * @param {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *   overlay manager service.

@@ -79,7 +79,7 @@ myModule.directive('gmfFeaturestyle', drawingDrawFeatureComponent);
 /**
  * @param {angular.IScope} $scope Angular scope.
  * @param {import("ngeo/misc/FeatureHelper.js").FeatureHelper} ngeoFeatureHelper Gmf feature helper service.
- * @constructor
+ * @class
  * @hidden
  * @ngInject
  * @ngdoc controller
@@ -137,7 +137,7 @@ export function Controller($scope, ngeoFeatureHelper) {
   $scope.$watch(() => this.color, this.handleColorSet_.bind(this));
 
   /**
-   * @type {Array<import("ol/events.js").EventsKey>}
+   * @type {import("ol/events.js").EventsKey[]}
    */
   this.featureListenerKeys_ = [];
 

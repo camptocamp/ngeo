@@ -364,7 +364,7 @@ export class Controller {
 
     /**
      * @param {angular.IHttpResponse<import('./RoutingService').Routes>} resp
-     * @return {unknown}
+     * @return {void}
      */
     const onSuccess_ = (resp) => {
       if (!this.map || !this.startFeature_ || !this.targetFeature_) {

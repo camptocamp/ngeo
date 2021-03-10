@@ -46,7 +46,7 @@ myModule.value('pytreeLidarprofileJsonUrl', 'https://sitn.ne.ch/pytree');
 
 /**
  * @param {angular.IScope} $scope Angular scope.
- * @constructor
+ * @class
  * @ngInject
  */
 function MainController($scope) {

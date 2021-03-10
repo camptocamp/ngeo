@@ -219,7 +219,7 @@ myModule.directive('gmfEditfeature', editingEditFeatureComponent);
  * @param {import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate
  *    manager service.
  * @param {import('gmf/options.js').gmfEditFeatureOptions} gmfEditFeatureOptions The options.
- * @constructor
+ * @class
  * @hidden
  * @ngInject
  * @ngdoc controller
@@ -811,7 +811,7 @@ Controller.prototype.confirmCancel = function () {
 /**
  * Check if there's a feature selected and if it contains modifications
  * (a.k.a. is dirty), then the confirmation modal is shown.
- * @param {boolean=} scopeApply Whether to force scope to refresh or not.
+ * @param {boolean} [scopeApply] Whether to force scope to refresh or not.
  *     when the confirm modal is not dismissed.
  * @return {angular.IPromise<void>} The promise attached to the confirm deferred
  *     object.
@@ -912,7 +912,7 @@ Controller.prototype.handleEditFeature_ = function (resp) {
 };
 
 /**
- * @param {Array<import('ngeo/format/Attribute.js').Attribute>} attributes Attributes.
+ * @param {import('ngeo/format/Attribute.js').Attribute[]} attributes Attributes.
  */
 Controller.prototype.setAttributes_ = function (attributes) {
   // Set attributes
@@ -1246,8 +1246,8 @@ Controller.prototype.setFeature_ = function (feature) {
 };
 
 /**
- * @param {Array<number>} coordinate The click coordinates.
- * @param {Array<olFeature<import("ol/geom/Geometry.js").default>>} features Features.
+ * @param {number[]} coordinate The click coordinates.
+ * @param {olFeature<import("ol/geom/Geometry.js").default>[]} features Features.
  */
 Controller.prototype.handleGetFeatures_ = function (coordinate, features) {
   this.pending = false;
@@ -1266,8 +1266,8 @@ Controller.prototype.handleGetFeatures_ = function (coordinate, features) {
 };
 
 /**
- *@param {Array<number>} coordinate The click coordinates.
- *@param {Array<olFeature<import("ol/geom/Geometry.js").default>>} features Features.
+ *@param {number[]} coordinate The click coordinates.
+ *@param {olFeature<import("ol/geom/Geometry.js").default>[]} features Features.
  */
 Controller.prototype.openFeatureMenu_ = function (coordinate, features) {
   /** @type {import('ngeo/Menu').MenuActionOptions[]} */
@@ -1480,7 +1480,7 @@ Controller.prototype.handleDestroy_ = function () {
  * Handles the click on element in the feature menu
  * In the call the parameters are in inverse order!
  *
- * @param {Array<olFeature<import("ol/geom/Geometry.js").default>>} features Features.
+ * @param {olFeature<import("ol/geom/Geometry.js").default>[]} features Features.
  * @param {Event|import('ol/events/Event.js').default} evt Event.
  */
 Controller.prototype.handleMenuMultipleActionClick_ = function (features, evt) {
@@ -1492,7 +1492,7 @@ Controller.prototype.handleMenuMultipleActionClick_ = function (features, evt) {
 
 /**
  * Handles mouse entering a menu item of the multiple feature menu
- * @param {Array<olFeature<import("ol/geom/Geometry.js").default>>} features Features.
+ * @param {olFeature<import("ol/geom/Geometry.js").default>[]} features Features.
  * @param {Event|import('ol/events/Event.js').default} evt Event.
  */
 Controller.prototype.handleMultiMenuActionMouseEnter_ = function (features, evt) {

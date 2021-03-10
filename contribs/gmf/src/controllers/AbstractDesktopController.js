@@ -481,7 +481,7 @@ export class AbstractDesktopController extends AbstractAPIController {
    *
    * If, after resizing, the size of the data panel would be too big,
    * resize it as well.
-   * @param {number=} opt_newToolsPanelWidth
+   * @param {number} [opt_newToolsPanelWidth]
    * @private
    * @hidden
    */
@@ -502,7 +502,7 @@ export class AbstractDesktopController extends AbstractAPIController {
    *
    * If, after resizing, the size of the data panel would be too big,
    * resize it as well.
-   * @param {number=} opt_newDataPanelWidth
+   * @param {number} [opt_newDataPanelWidth]
    * @private
    * @hidden
    */
@@ -519,8 +519,10 @@ export class AbstractDesktopController extends AbstractAPIController {
   /**
    * Check if the panel size is not exceeding its maximum allowed and
    * resize it to present maxSize if necessary
+   *
    * @param {number} panelSize
    * @param {JQuery} panelToResize
+   * @return {number}
    * @private
    * @hidden
    */
@@ -542,6 +544,7 @@ export class AbstractDesktopController extends AbstractAPIController {
    * @param {JQuery} resizedPanel
    * @param {number} otherPanelMinResizableWidth
    * @param {number} newPanelWidth
+   * @return {number}
    * @private
    * @hidden
    */

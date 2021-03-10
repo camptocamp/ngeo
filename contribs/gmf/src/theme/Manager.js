@@ -47,7 +47,7 @@ export const ThemeEventType = {
  *
  * This service's theme is a GmfTheme with only children and a name.
  * Thought to be the tree source of the gmf layertree directive.
- * @constructor
+ * @class
  * @param {angular.IScope} $rootScope Angular rootScope.
  * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes gmf Themes service.
  * @param {import('gmf/options.js').gmfTreeManagerModeFlush} gmfTreeManagerModeFlush Flush mode active?
@@ -101,7 +101,7 @@ export function ThemeManagerService(
  * Set the current theme name (mode 'flush' only) and add its children. Add
  * only groups that are not already in the tree.
  * @param {import('gmf/themes.js').GmfTheme} theme A theme object.
- * @param {boolean=} opt_silent if true it will be no user message if
+ * @param {boolean} [opt_silent] if true it will be no user message if
  *     the theme should be added but it's already added.
  */
 ThemeManagerService.prototype.addTheme = function (theme, opt_silent) {
@@ -133,7 +133,7 @@ ThemeManagerService.prototype.isLoading = function () {
 /**
  * @param {?string} themeName wanted theme name.
  * @param {string} fallbackThemeName fallback theme name.
- * @param {boolean=} opt_silent if true notifyCantAddGroups_ is not called.
+ * @param {boolean} [opt_silent] if true notifyCantAddGroups_ is not called.
  * @export
  */
 ThemeManagerService.prototype.updateCurrentTheme = function (themeName, fallbackThemeName, opt_silent) {
@@ -159,7 +159,7 @@ ThemeManagerService.prototype.updateCurrentTheme = function (themeName, fallback
 
 /**
  * @param {string} name The new theme name.
- * @param {boolean=} opt_silent Don't emit a theme change event, default is false.
+ * @param {boolean} [opt_silent] Don't emit a theme change event, default is false.
  */
 ThemeManagerService.prototype.setThemeName = function (name, opt_silent) {
   this.themeName_ = name;

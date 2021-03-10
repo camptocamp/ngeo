@@ -89,7 +89,7 @@ function mobileNavigationComponent() {
      * @param {angular.IScope} scope Scope.
      * @param {JQuery} element Element.
      * @param {angular.IAttributes} attrs Attributes.
-     * @param {angular.IController=} navCtrl Controller.
+     * @param {angular.IController} [navCtrl] Controller.
      */
     link: (scope, element, attrs, navCtrl) => {
       if (!navCtrl) {
@@ -103,7 +103,7 @@ function mobileNavigationComponent() {
 myModule.directive('gmfMobileNav', mobileNavigationComponent);
 
 /**
- * @constructor
+ * @class
  * @hidden
  * @ngInject
  * @ngdoc controller
@@ -319,7 +319,7 @@ function mobileNavigationBackComponent() {
      * @param {angular.IScope} scope Scope.
      * @param {JQuery} element Element.
      * @param {angular.IAttributes} attrs Attributes.
-     * @param {angular.IController=} navCtrl Controller.
+     * @param {angular.IController} [navCtrl] Controller.
      */
     link: (scope, element, attrs, navCtrl) => {
       scope.$watch(attrs.gmfMobileNavBack, (newVal, oldVal) => {
@@ -364,7 +364,7 @@ function mobileNavigationBackOnClickComponent() {
      * @param {angular.IScope} scope Scope.
      * @param {JQuery} element Element.
      * @param {angular.IAttributes} attrs Attributes.
-     * @param {angular.IController=} navCtrl Controller.
+     * @param {angular.IController} [navCtrl] Controller.
      */
     link: (scope, element, attrs, navCtrl) => {
       element.on('click', () => {

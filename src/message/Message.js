@@ -57,7 +57,7 @@ export const MessageType = {
 /**
  * Abstract class for services that display messages.
  *
- * @constructor
+ * @class
  * @abstract
  * @hidden
  */
@@ -75,8 +75,9 @@ export default class {
    * Show disclaimer message string or object or list of disclame message
    * strings or objects.
    *
-   * @param {string|Message|Array<string|Message>}
-   *     object A message or list of messages as text or configuration objects.
+   * @param {string | Message | (string | Message)[]} object
+   *     A message or list of messages as text or configuration objects.
+   * @return {void}
    */
   show(object) {
     const msgObjects = this.getMessageObjects(object);
@@ -121,9 +122,9 @@ export default class {
    * message strings, message object or list message objects. The type can be
    * overridden here as well OR defined (if the message(s) is/are string(s),
    * defaults to 'information').
-   * @param {string|Message|Array<string|Message>}
-   *     object A message or list of messages as text or configuration objects.
-   * @param {string=} opt_type The type of message to override the messages with.
+   * @param {string | Message | (string | Message)[]}object
+   *     A message or list of messages as text or configuration objects.
+   * @param {string} [opt_type] The type of message to override the messages with.
    * @return {Message[]} List of message objects.
    * @protected
    */
@@ -138,7 +139,7 @@ export default class {
         type: opt_type !== undefined ? opt_type : defaultType,
       });
     } else if (Array.isArray(object)) {
-      /** @type {Array<string|Message>} */ (object).forEach((msg) => {
+      /** @type {(string | Message)[]} */ (object).forEach((msg) => {
         if (typeof object === 'string') {
           msgObjects.push({
             msg: /** @type {string} */ (msg),

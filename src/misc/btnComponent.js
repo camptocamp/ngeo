@@ -68,7 +68,7 @@ function buttonGroupComponent($parse) {
      * @param {angular.IScope} scope Scope.
      * @param {JQuery} element Element.
      * @param {angular.IAttributes} attrs Attributes.
-     * @param {angular.IController=} controller Controller.
+     * @param {angular.IController} [controller] Controller.
      */
     link: (scope, element, attrs, controller) => {
       if (!controller) {
@@ -83,6 +83,7 @@ function buttonGroupComponent($parse) {
             controller.buttons_.some(
               /**
                * @param {function(angular.IScope): boolean} buttonModel
+               * @return {boolean}
                */
               (buttonModel) => buttonModel(scope) === true
             ),
@@ -109,7 +110,7 @@ export class BtnGroupController {
    */
   constructor($scope) {
     /**
-     * @type {Array<angular.ICompiledExpression>}
+     * @type {angular.ICompiledExpression[]}
      * @private
      */
     this.buttons_ = [];

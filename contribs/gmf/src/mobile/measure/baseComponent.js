@@ -37,7 +37,7 @@ const myModule = angular.module('gmfMobileMeasureBase', [ngeoMiscFilters.name]);
  * @param {angular.IScope} $scope Angular scope.
  * @param {angular.IFilterService} $filter Angular filter
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
- * @constructor
+ * @class
  * @ngInject
  * @ngdoc controller
  * @ngname GmfMobileMeasureBaseController

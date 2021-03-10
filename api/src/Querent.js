@@ -51,13 +51,13 @@ function querable(def) {
  *
  * @param {string} layer Name of the layer to query
  * @param {string[]} ids List of ids
- * @return {Promise<Array<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>>} Promise.
+ * @return {Promise<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>[]>} Promise.
  * @hidden
  */
 export function getFeaturesFromIds(layer, ids) {
   return new Promise((resolve, reject) => {
     getOverlayDefs().then((overlayDefs) => {
-      /** @type {Array<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>} */
+      /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>[]} */
       let features = [];
       const overlayDef = overlayDefs.get(layer);
 
@@ -99,7 +99,7 @@ export function getFeaturesFromIds(layer, ids) {
               featureNS: overlayDef.ogcServer.namespace,
               gmlFormat: new olFormatGML2(),
             });
-            features = /** @type {Array<import('ol/Feature').default<import('ol/geom/Geometry').default>>} */ (wfsFormat.readFeatures(
+            features = /** @type {import('ol/Feature').default<import('ol/geom/Geometry').default>[]} */ (wfsFormat.readFeatures(
               responseText
             ));
           })

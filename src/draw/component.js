@@ -104,14 +104,14 @@ const myModule = angular.module('ngeoDrawfeature', [
  *
  * @htmlAttribute {boolean} ngeo-drawfeature-active Whether the directive is
  *     active or not.
- * @htmlAttribute {import("ol/Collection.js").default=} ngeo-drawfeature-features The features
+ * @htmlAttribute {import("ol/Collection.js").default} [ngeo]-drawfeature-features The features
  *     collection in which to push the drawn features. If none is provided,
  *     then the `ngeoFeatures` collection is used.
  * @htmlAttribute {import("ol/Map.js").default} ngeo-drawfeature-map The map.
  * @htmlAttribute {boolean} ngeo-drawfeature-showmeasure. Checks the
  *      checkbox in order to display the feature measurements as a label.
  *      Default to false.
- * @htmlAttribute {string=} ngeo-drawfeature-uid A prefix to use to
+ * @htmlAttribute {string} [ngeo]-drawfeature-uid A prefix to use to
  *      create unique ids for each created draw interaction as
  *      property. Used to find those draw interactions later on from the
  *      map, using the property set.

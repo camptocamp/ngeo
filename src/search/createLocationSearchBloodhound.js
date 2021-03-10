@@ -70,7 +70,7 @@ import 'corejs-typeahead';
  */
 
 /**
- * @param {LocationSearchOptions=} opt_options Options.
+ * @param {LocationSearchOptions} [opt_options] Options.
  * @return {Bloodhound<olFeature<import('ol/geom/Geometry.js').default>[]>} The Bloodhound object.
  * @hidden
  */
@@ -97,11 +97,13 @@ export function createLocationSearchBloodhound(opt_options) {
 
   /**
    * @param {string} label
+   * @return {string}
    */
   const removeHtmlTags = (label) => label.replace(/<\/?[ib]>/g, '');
 
   /**
    * @param {string} label
+   * @return {string}
    */
   const extractName = (label) => {
     const regex = /<b>(.*?)<\/b>/g;

@@ -61,8 +61,8 @@ myModule.run(
  *     </div>
  *
  *
- * @param {string|function(JQuery=, angular.IAttributes=): string}
- *     ngeoColorpickerTemplateUrl Template URL for the directive.
+ * @param {string|function(JQuery=, angular.IAttributes=): string} ngeoColorpickerTemplateUrl
+ *     Template URL for the directive.
  * @return {angular.IDirective} Directive Definition Object.
  * @ngInject
  * @ngdoc directive
@@ -124,7 +124,7 @@ const DEFAULT_COLORS = [
 ];
 
 /**
- * @constructor
+ * @class
  * @hidden
  * @ngInject
  * @ngdoc controller

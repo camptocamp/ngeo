@@ -51,8 +51,8 @@ const myModule = angular.module('gmfDrawProfileLine', [ngeoMapFeatureOverlayMgr.
  * @htmlAttribute {import("ol/Map.js").default} gmf-drawprofileline-map The map.
  * @htmlAttribute {import("ol/geom/LineString.js").default} gmf-drawprofileline-line The variable to
  *     connect with the drawn line.
- * @htmlAttribute {boolean=} gmf-drawprofileline-active Active the component.
- * @htmlAttribute {import("ol/style/Style.js").default=} gmf-drawprofileline-style Optional style
+ * @htmlAttribute {boolean} [gmf]-drawprofileline-active Active the component.
+ * @htmlAttribute {import("ol/style/Style.js").default} [gmf]-drawprofileline-style Optional style
  *     for the drawn line.
  * @return {angular.IDirective} Directive Definition Object.
  * @ngdoc directive
@@ -79,7 +79,7 @@ myModule.directive('gmfDrawprofileline', profileDrawLineComponent);
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @param {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr Feature overlay
  *    manager.
- * @constructor
+ * @class
  * @hidden
  * @ngInject
  * @ngdoc controller

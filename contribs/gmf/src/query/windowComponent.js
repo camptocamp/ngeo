@@ -146,7 +146,7 @@ myModule.component('gmfDisplayquerywindow', queryWindowComponent);
  *     overlay manager service.
  * @param {import('gmf/options.js').gmfCsvFilename} gmfCsvFilename The CSV file name.
  * @param {import('gmf/options.js').gmfDisplayQueryWindowOptions} gmfDisplayQueryWindowOptions The options.
- * @constructor
+ * @class
  * @hidden
  * @ngInject
  * @ngdoc controller
@@ -491,7 +491,7 @@ QueryWindowController.prototype.collectFeatures_ = function () {
 
 /**
  * Highlight the current displayed feature.
- * @param {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>=} opt_lastFeature last highlighted feature. Require if
+ * @param {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>} [opt_lastFeature] last highlighted feature. Require if
  * it exists because it must be added to the 'non-selected' features collection.
  */
 QueryWindowController.prototype.highlightCurrentFeature_ = function (opt_lastFeature) {

@@ -56,11 +56,11 @@ const searchComponent = {
 myModule.component('appSearch', searchComponent);
 
 /**
- * @constructor
+ * @class
  * @param {JQuery} $element Element.
  * @param {angular.IScope} $rootScope Angular root scope.
  * @param {angular.ICompileService} $compile Angular compile service.
- * @param {function} ngeoSearchCreateGeoJSONBloodhound
+ * @param {Function} ngeoSearchCreateGeoJSONBloodhound
  *    The ngeo create GeoJSON Bloodhound service.
  * @ngInject
  */
@@ -93,7 +93,7 @@ function SearchController($element, $rootScope, $compile, ngeoSearchCreateGeoJSO
   });
 
   /**
-   * @type {Array<Twitter.Typeahead.Dataset<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>>}
+   * @type {Twitter.Typeahead.Dataset<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>[]}
    */
   this.datasets = [
     {
@@ -183,7 +183,7 @@ SearchController.prototype.createVectorLayer_ = function () {
 };
 
 /**
- * @param {function} ngeoSearchCreateGeoJSONBloodhound
+ * @param {Function} ngeoSearchCreateGeoJSONBloodhound
  *    The ngeo create GeoJSON Bloodhound service.
  * @return {Bloodhound<*>} The bloodhound engine.
  */
@@ -197,7 +197,7 @@ SearchController.prototype.createAndInitBloodhound_ = function (ngeoSearchCreate
 myModule.controller('AppSearchController', SearchController);
 
 /**
- * @constructor
+ * @class
  * @ngInject
  */
 function MainController() {

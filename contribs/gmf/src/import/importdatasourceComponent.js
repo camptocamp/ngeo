@@ -96,9 +96,8 @@ export class Controller {
    * @param {angular.IFilterService} $filter Angular filter.
    * @param {angular.IScope} $scope Angular scope.
    * @param {angular.ITimeoutService} $timeout Angular timeout service.
-   * @param {import("gmf/datasource/ExternalDataSourcesManager.js").ExternalDatSourcesManager}
-   *     gmfExternalDataSourcesManager GMF service responsible of managing
-   *     external data sources.
+   * @param {import("gmf/datasource/ExternalDataSourcesManager.js").ExternalDatSourcesManager} gmfExternalDataSourcesManager
+   *     GMF service responsible of managing external data sources.
    * @param {import("ngeo/query/Querent.js").Querent} ngeoQuerent Ngeo querent service.
    * @param {import('gmf/options.js').gmfExternalOGCServers} gmfExternalOGCServers The options.
    * @param {angular.gettext.gettextCatalog} gettextCatalog The gettextCatalog service.
@@ -487,7 +486,7 @@ export class Controller {
   }
 
   /**
-   * @param {boolean=} opt_hasError Whether we stopped working because of after
+   * @param {boolean} [opt_hasError] Whether we stopped working because of after
    *     an error.
    * @private
    */

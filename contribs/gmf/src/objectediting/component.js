@@ -64,7 +64,7 @@ import {OL3Parser} from 'jsts/io.js';
 import 'jsts/monkey.js';
 
 /**
- * @typedef {Object<string, import("ol/style/Style.js").default|Array<import("ol/style/Style.js").default>>} StylesObject
+ * @typedef {Object<string, import("ol/style/Style.js").default | import("ol/style/Style.js").default[]>} StylesObject
  */
 
 /**
@@ -187,7 +187,7 @@ myModule.component('gmfObjectediting', objecteditingComponent);
  * @param {import("ngeo/map/LayerHelper.js").LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @param {import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate
  *    manager service.
- * @constructor
+ * @class
  * @hidden
  * @ngInject
  * @ngdoc controller
@@ -264,7 +264,7 @@ export function Controller(
   this.gmfObjectEditingQuery_ = gmfObjectEditingQuery;
 
   /**
-   * @type {Array<import('gmf/objectediting/toolsComponent.js').ObjectEditingQueryableLayerInfo>}
+   * @type {import('gmf/objectediting/toolsComponent.js').ObjectEditingQueryableLayerInfo[]}
    */
   this.queryableLayersInfo = [];
 
@@ -357,7 +357,7 @@ export function Controller(
   this.state_ = null;
 
   /**
-   * @type {Array<?import("ol/geom/Geometry.js").default>}
+   * @type {?import("ol/geom/Geometry.js").default[]}
    */
   this.geometryChanges_ = [];
 
@@ -393,7 +393,7 @@ export function Controller(
   this.dirty = false;
 
   /**
-   * @type {Array<import("ol/events.js").EventsKey>}
+   * @type {import("ol/events.js").EventsKey[]}
    */
   this.listenerKeys_ = [];
 
@@ -803,7 +803,7 @@ Controller.prototype.handleModifyInteractionModifyEnd_ = function (evt) {
 /**
  * @param {StylesObject} styles Hash of style.
  * @param {import('ol/color.js').Color} color Color.
- * @param {boolean=} [opt_incVertice=true] Whether to include vertice or not.
+ * @param {boolean} [opt_incVertice=true] Whether to include vertice or not.
  */
 Controller.prototype.initializeStyles_ = function (styles, color, opt_incVertice) {
   const incVertice = opt_incVertice !== false;
@@ -1057,7 +1057,7 @@ Controller.prototype.handleFeatureGeometryChange_ = function () {
 };
 
 /**
- * @param {Array<import('gmf/objectediting/toolsComponent.js').ObjectEditingQueryableLayerInfo>} layersInfo
+ * @param {import('gmf/objectediting/toolsComponent.js').ObjectEditingQueryableLayerInfo[]} layersInfo
  *    List of queryable layers information, which contains the node and ogcServer.
  */
 Controller.prototype.handleGetQueryableLayersInfo_ = function (layersInfo) {

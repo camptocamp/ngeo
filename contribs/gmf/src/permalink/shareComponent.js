@@ -94,7 +94,7 @@ export class ShareComponentController {
    * @param {angular.IQService} $q Angular q service
    * @param {angular.IAttributes} $attrs Attributes.
    * @param {import('gmf/options.js').gmfShareOptions} gmfShareOptions The options.
-   * @constructor
+   * @class
    * @ngInject
    * @ngdoc controller
    * @ngname GmfShareController

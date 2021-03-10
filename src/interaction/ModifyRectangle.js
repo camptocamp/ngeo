@@ -424,7 +424,7 @@ class ModifyRectangle extends olInteractionPointer {
 
 /**
  * @typedef {Object} CacheItem
- * @property {Array<olFeature<import("ol/geom/Geometry.js").default>>} corners
+ * @property {olFeature<import("ol/geom/Geometry.js").default>[]} corners
  */
 
 /**

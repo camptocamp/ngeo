@@ -358,7 +358,7 @@ export class RuleController {
     this.interactions_.push(this.translate_);
 
     /**
-     * @type {Array<import("ol/events.js").EventsKey>}
+     * @type {import("ol/events.js").EventsKey[]}
      * @private
      */
     this.listenerKeys_ = [];
@@ -429,7 +429,7 @@ export class RuleController {
       this.unlisteners_.push(
         this.scope_.$watch(
           /**
-           * @returns {string|number}
+           * @return {string|number}
            */
           () => {
             if (!this.clone) {
@@ -697,7 +697,7 @@ export class RuleController {
   }
 
   /**
-   * @param {number=} opt_timeDelta Time delta to go back in the past.
+   * @param {number} [opt_timeDelta] Time delta to go back in the past.
    * @return {string} ISO string of the date
    * @private
    */

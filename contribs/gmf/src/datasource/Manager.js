@@ -245,6 +245,7 @@ export class DatasourceManager {
   /**
    * Get a datasource by its id.
    * @param {string} id The id of the datasource.
+   * @return {GmfDatasourceOGC}
    * @hidden
    */
   getDatasource(id) {
@@ -365,7 +366,7 @@ export class DatasourceManager {
    * are added or removed, pushing it to the cache or removing it from the
    * cache.
    *
-   * @param {Array<import("ngeo/layertree/Controller.js").LayertreeController>|undefined} value List of tree
+   * @param {import("ngeo/layertree/Controller.js").LayertreeController[] | undefined} value List of tree
    *     controllers.
    * @private
    * @hidden

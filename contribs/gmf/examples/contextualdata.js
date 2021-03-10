@@ -46,7 +46,7 @@ const myModule = angular.module('gmfapp', [
 myModule.value('gmfContextualdatacontentTemplateUrl', 'partials/contextualdata.html');
 
 /**
- * @constructor
+ * @class
  * @ngInject
  */
 function MainController() {

@@ -48,8 +48,8 @@
 /**
  * @typedef {Object} OfflinePersistentContent
  * @property {import("ol/extent.js").Extent} extent
- * @property {!Array<OfflinePersistentLayer>} layers
- * @property {!Array<number>} zooms
+ * @property {!OfflinePersistentLayer[]} layers
+ * @property {!number[]} zooms
  */
 
 /**

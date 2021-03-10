@@ -50,11 +50,13 @@ export function debounce(func, wait, invokeApply, $timeout) {
   let timeout = null;
   return /** @type {T} */ (
     /**
+     * @param {...any} args
      * @this {unknown} The context
      */
     function (...args) {
       const later = () => {
         timeout = null;
+        // @ts-ignore
         func.apply(this, args);
       };
       if (timeout !== null) {

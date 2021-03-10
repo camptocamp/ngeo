@@ -51,7 +51,7 @@ const myModule = angular.module('app', [
  * @param {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr Feature overlay
  *     manager.
  * @param {import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr} ngeoToolActivateMgr ToolActivate manager.
- * @constructor
+ * @class
  * @ngInject
  */
 function MainController(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {

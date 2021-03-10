@@ -69,7 +69,7 @@ import VectorSource from 'ol/source/Vector.js';
  */
 class Measure extends olInteractionInteraction {
   /**
-   * @param {import("ngeo/interaction/MeasureBaseOptions.js").MeasueBaseOptions=} options Options
+   * @param {import("ngeo/interaction/MeasureBaseOptions.js").MeasueBaseOptions} [options] Options
    */
   constructor(options = {}) {
     super({
@@ -577,7 +577,7 @@ export function getFormattedLength(lineString, projection, precision, format, sp
  * @param {number|undefined} decimals Decimals.
  * @param {import('ngeo/misc/filters.js').numberCoordinates} format A function to format coordinate into
  * text
- * @param {string=} opt_template The template.
+ * @param {string} [opt_template] The template.
  * @return {string} Formatted string of coordinate.
  * @hidden
  */

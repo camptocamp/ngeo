@@ -90,7 +90,7 @@ function gmfBackgroundlayerselectorTemplateUrl($element, $attrs, gmfBackgroundla
  *
  *  * `default_basemap`: Base maps to use by default.
  *
- * @htmlAttribute {import("ol/Map.js").default=} gmf-backgroundlayerselector-map The map.
+ * @htmlAttribute {import("ol/Map.js").default} [gmf]-backgroundlayerselector-map The map.
  * @htmlAttribute {Function} gmf-backgroundlayerselector-select Function called
  *     when a layer was selected by the user.
  *
@@ -109,7 +109,7 @@ const backgroundlayerselectorComponent = {
 myModule.component('gmfBackgroundlayerselector', backgroundlayerselectorComponent);
 
 /**
- * @constructor
+ * @class
  * @hidden
  * @param {angular.IScope} $scope Angular scope.
  * @param {import("ngeo/map/BackgroundLayerMgr.js").MapBackgroundLayerManager} ngeoBackgroundLayerMgr
@@ -143,7 +143,7 @@ export function Controller($scope, ngeoBackgroundLayerMgr, gmfThemes, gmfBackgro
   this.bgLayer = null;
 
   /**
-   * @type {?Array<import("ol/layer/Base.js").default>}
+   * @type {?import("ol/layer/Base.js").default[]}
    */
   this.bgLayers = null;
 
@@ -158,7 +158,7 @@ export function Controller($scope, ngeoBackgroundLayerMgr, gmfThemes, gmfBackgro
   this.gmfThemes_ = gmfThemes;
 
   /**
-   * @type {Array<import("ol/events.js").EventsKey>}
+   * @type {import("ol/events.js").EventsKey[]}
    */
   this.listenerKeys_ = [];
 
@@ -233,7 +233,7 @@ Controller.prototype.getSetBgLayerOpacity = function (val) {
 
 /**
  * @param {import("ol/layer/Base.js").default} layer Layer.
- * @param {boolean=} opt_silent Do not notify listeners.
+ * @param {boolean} [opt_silent] Do not notify listeners.
  */
 Controller.prototype.setLayer = function (layer, opt_silent) {
   gmfBackgroundlayerStatus.touchedByUser = true;

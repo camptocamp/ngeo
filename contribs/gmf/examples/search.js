@@ -54,7 +54,7 @@ const myModule = angular.module('gmfapp', [
  *    feature overlay manager service.
  * @param {import("ngeo/message/Notification.js").MessageNotification} ngeoNotification Ngeo notification
  *    service.
- * @constructor
+ * @class
  * @ngInject
  */
 function MainController(gmfThemes, ngeoFeatureOverlayMgr, ngeoNotification) {

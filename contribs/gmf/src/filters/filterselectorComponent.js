@@ -240,17 +240,17 @@ export class FilterSelectorController {
     this.aRuleIsActive = false;
 
     /**
-     * @type {?Array<import("ngeo/rule/Rule.js").default>}
+     * @type {?import("ngeo/rule/Rule.js").default[]}
      */
     this.customRules = null;
 
     /**
-     * @type {?Array<import("ngeo/rule/Rule.js").default>}
+     * @type {?import("ngeo/rule/Rule.js").default[]}
      */
     this.directedRules = null;
 
     /**
-     * @type {Array<import("gmf/datasource/OGC.js").default>}
+     * @type {import("gmf/datasource/OGC.js").default[]}
      */
     this.filtrableDataSources = [];
 
@@ -267,7 +267,7 @@ export class FilterSelectorController {
     this.gmfDataSources_ = /** @type {import("ol/Collection.js").default<import("gmf/datasource/OGC.js").default>} */ (gmfDataSourcesHelper.collection);
 
     /**
-     * @type {Array<import("ol/events.js").EventsKey>}
+     * @type {import("ol/events.js").EventsKey[]}
      * @private
      */
     this.listenerKeys_ = [];
@@ -480,7 +480,7 @@ export class FilterSelectorController {
    * configured properly. In this case, a warning notification can be shown.
    *
    * @param {import("gmf/datasource/OGC.js").default} dataSource GMF data source object
-   * @param {boolean=} opt_notify Whether to show a warning notification or not
+   * @param {boolean} [opt_notify] Whether to show a warning notification or not
    *     in case of a data source that has its name is in the list of
    *     filtrable layer node names but it doesn't match the other requirements.
    *     Defaults to `true.`
@@ -728,8 +728,8 @@ export class FilterSelectorController {
 
 /**
  * @typedef {Object} RuleCacheItem
- * @property {Array<import('ngeo/rule/Rule.js').default>} customRules
- * @property {Array<import('ngeo/rule/Rule.js').default>} directedRules
+ * @property {import('ngeo/rule/Rule.js').default[]} customRules
+ * @property {import('ngeo/rule/Rule.js').default[]} directedRules
  */
 
 myModule.component('gmfFilterselector', {

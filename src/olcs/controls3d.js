@@ -261,7 +261,7 @@ export const Controller = class {
   }
 
   /**
-   * @param {number} delta -1 to zoom out and 1 to zoom in.
+   * @param {number} delta 1 to zoom out and 1 to zoom in.
    */
   zoom(delta) {
     if (!this.ol3dm) {

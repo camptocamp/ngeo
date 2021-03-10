@@ -101,7 +101,7 @@ myModule.directive('ngeoCreatefeature', editingCreateFeatureComponent);
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @param {import("ngeo/misc/EventHelper.js").EventHelper} ngeoEventHelper Ngeo event helper service
  * @param {import('ngeo/options.js').ngeoSnappingTolerance} ngeoSnappingTolerance The tolerance.
- * @constructor
+ * @class
  * @hidden
  * @ngInject
  * @ngdoc controller

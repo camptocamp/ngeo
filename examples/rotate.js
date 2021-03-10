@@ -45,7 +45,7 @@ const myModule = angular.module('app', ['gettext', ngeoMapModule.name]);
 const appmodule = angular.module('app', ['ngeo']);
 
 /**
- * @constructor
+ * @class
  * @ngInject
  */
 function MainController() {

@@ -86,7 +86,7 @@ function ngeoRoutingFeatureTemplateUrl($attrs, ngeoRoutingFeatureTemplateUrl) {
  * @param {angular.IQService} $q Angular q service
  * @param {import("ngeo/routing/NominatimService.js").NominatimService} ngeoNominatimService service for
  *    Nominatim
- * @constructor
+ * @class
  * @hidden
  * @ngInject
  * @ngdoc controller

@@ -66,7 +66,7 @@ const Downloader = class {
 
   /**
    * @param {import("./index.js").OfflineLayerMetadata} layerMetadata Layers metadata.
-   * @param {Array<import("./index.js").OfflineTile>} queue Queue of tiles to download.
+   * @param {import("./index.js").OfflineTile[]} queue Queue of tiles to download.
    */
   queueLayerTiles_(layerMetadata, queue) {
     const source = /** @type {olSourceTileWMS|olSourceWMTS} */ (layerMetadata.source);
@@ -136,12 +136,12 @@ const Downloader = class {
    */
   save(extent, map) {
     /**
-     * @type {!Array<import("./index.js").OfflineLayerMetadata>}
+     * @type {!import("./index.js").OfflineLayerMetadata[]}
      */
     const layersMetadatas = this.configuration_.createLayerMetadatas(map, extent);
 
     /**
-     * @type {!Array<import("./index.js").OfflinePersistentLayer>}
+     * @type {!import("./index.js").OfflinePersistentLayer[]}
      */
     const persistentLayers = [];
     /**

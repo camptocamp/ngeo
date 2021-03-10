@@ -87,7 +87,7 @@ import Search from 'api/Search.js';
  */
 
 /**
- * @type {Array<string>}
+ * @type {string[]}
  */
 const EXCLUDE_PROPERTIES = ['boundedBy'];
 
@@ -466,6 +466,7 @@ class Map {
                 .map(
                   /**
                    * @param {number} val
+                   * @return {number}
                    */
                   (val) => val * Math.sign(val)
                 );
@@ -560,7 +561,7 @@ class Map {
 
 /**
  * @param {string[]} keys Keys.
- * @param {Array<T>} values Values.
+ * @param {T[]} values Values.
  * @return {Object<string, T>} Object.
  * @template T
  * @private

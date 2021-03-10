@@ -33,7 +33,7 @@ const myModule = angular.module('app', ['gettext', ngeoMessageNotification.name]
  * @param {import("ngeo/message/Notification.js").MessageNotification} ngeoNotification
  *    Ngeo notification service.
  * @ngInject
- * @constructor
+ * @class
  */
 function MainController(ngeoNotification) {
   /**

@@ -60,7 +60,7 @@ import {select as d3select} from 'd3';
  * @property {function(T): number} distanceExtractor Extract the distance from origin of a point (an
  * item of the elevation data array).
  * @property {PoiExtractor} [poiExtractor] Extractor for parsing POI data.
- * @property {function(function, function, number, number): void} [scaleModifier] Allows to modify the raw x
+ * @property {function(Function, Function, number, number): void} [scaleModifier] Allows to modify the raw x
  * and y scales. Notably, it is possible to modify the y domain according to XY ratio rules,
  * add padding or enforce y lower bound.
  * @property {function(Object, number, string, Object<string, number>, string): void} [hoverCallback] A

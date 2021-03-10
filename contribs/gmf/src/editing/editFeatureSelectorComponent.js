@@ -98,7 +98,7 @@ myModule.directive('gmfEditfeatureselector', editingEditFeatureComponent);
  * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes The gmf Themes service.
  * @param {import("gmf/layertree/TreeManager.js").LayertreeTreeManager} gmfTreeManager The gmf TreeManager
  *    service.
- * @constructor
+ * @class
  * @hidden
  * @ngInject
  * @ngdoc controller
@@ -147,7 +147,7 @@ export function Controller($scope, $timeout, gmfThemes, gmfTreeManager) {
   this.gmfTreeManager_ = gmfTreeManager;
 
   /**
-   * @param {Array<import("ngeo/layertree/Controller.js").LayertreeController>} value First level
+   * @param {import("ngeo/layertree/Controller.js").LayertreeController[]} value First level
    *    controllers.
    */
   const updateEditableTreeCtrls = (value) => {
@@ -191,7 +191,7 @@ export function Controller($scope, $timeout, gmfThemes, gmfTreeManager) {
 
   /**
    * List of editable Layertree controllers.
-   * @type {Array<import("ngeo/layertree/Controller.js").LayertreeController>}
+   * @type {import("ngeo/layertree/Controller.js").LayertreeController[]}
    */
   this.editableTreeCtrls = [];
 

@@ -47,7 +47,7 @@ import angular from 'angular';
  * See our live example: [../examples/search.html](../examples/search.html)
  *
  * @htmlAttribute {Twitter.Typeahead.Options} ngeo-search The options.
- * @htmlAttribute {Array<Twitter.Typeahead.Dataset>} ngeo-search-datasets The sources datasets.
+ * @htmlAttribute {Twitter.Typeahead.Dataset[]} ngeo-search-datasets The sources datasets.
  * @htmlAttribute {SearchDirectiveListeners} ngeo-search-listeners The listeners.
  * @return {angular.IDirective} Directive Definition Object.
  * @ngInject
@@ -67,7 +67,7 @@ function searchComponent() {
       const typeaheadOptions = scope.$eval(typeaheadOptionsExpr);
 
       const typeaheadDatasetsExpr = attrs.ngeoSearchDatasets;
-      /** @type {Array<Twitter.Typeahead.Dataset<T>>} */
+      /** @type {Twitter.Typeahead.Dataset<T>[]} */
       const typeaheadDatasets = scope.$eval(typeaheadDatasetsExpr);
 
       element.typeahead(typeaheadOptions, typeaheadDatasets);

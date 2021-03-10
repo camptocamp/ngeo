@@ -59,7 +59,7 @@ export class CustomSnap extends olInteractionSnap {
  * features are drawn or modified.
  *
  *
- * @constructor
+ * @class
  * @param {angular.IHttpService} $http Angular $http service.
  * @param {angular.IQService} $q The Angular $q service.
  * @param {angular.IScope} $rootScope Angular rootScope.
@@ -160,7 +160,7 @@ export function EditingSnappingService(
   this.cacheFileDataSource_ = {};
 
   /**
-   * @type {Array<import("ol/events.js").EventsKey>}
+   * @type {import("ol/events.js").EventsKey[]}
    */
   this.listenerKeys_ = [];
 

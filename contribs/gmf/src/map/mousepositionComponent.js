@@ -97,7 +97,7 @@ myModule.component('gmfMouseposition', mapMousepositionComponent);
  * @param {angular.IScope} $scope Angular scope.
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @param {import('gmf/options.js').gmfMousePositionOptions} gmfMousePositionOptions The options.
- * @constructor
+ * @class
  * @hidden
  * @ngInject
  * @ngdoc controller
@@ -176,6 +176,7 @@ Controller.prototype.initOlControl_ = function () {
   // function that apply the filter.
   /**
    * @param {number[]|undefined} coordinates
+   * @return {string}
    */
   const formatFn = (coordinates) => {
     if (!this.projection) {

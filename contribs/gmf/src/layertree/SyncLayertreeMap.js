@@ -35,7 +35,7 @@ import Group from 'ol/layer/Group.js';
  * This layer is also used to synchronise a state of ngeo.layertree.Controller
  * and its corresponding layer in the map.
  *
- * @constructor
+ * @class
  * @param {angular.IScope} $rootScope Angular rootScope.
  * @param {import("ngeo/map/LayerHelper.js").LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @param {import("ngeo/misc/WMSTime.js").WMSTime} ngeoWMSTime wms time service.
@@ -78,7 +78,7 @@ export function SyncLayertreeMap($rootScope, ngeoLayerHelper, ngeoWMSTime, gmfTh
  *     level group layer.
  * @param {import("ol/layer/Group.js").default} dataLayerGroup the layer group to insert the first
  *     level group layer.
- * @param {number=} opt_position for first level Group, you can precise the
+ * @param {number} [opt_position] for first level Group, you can precise the
  *     position to add the group in the array of layers of the dataLayerGroup.
  * @return {?import("ol/layer/Base.js").default|import("ol/layer/Group.js").default} a new layer.
  * @public
@@ -189,7 +189,7 @@ SyncLayertreeMap.prototype.updateLayerState_ = function (layer, treeCtrl) {
  *     level group layer.
  * @param {import("ol/layer/Group.js").default} dataLayerGroup the layer group to insert the first
  *     level group layer.
- * @param {number=} opt_position for first level Group, you can precise the
+ * @param {number} [opt_position] for first level Group, you can precise the
  *     position to add the group in the array of layers of the dataLayerGroup.
  * @return {import("ol/layer/Image.js").default|import("ol/layer/Group.js").default} a new layer.
  */

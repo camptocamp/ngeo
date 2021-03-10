@@ -28,12 +28,12 @@ import 'corejs-typeahead';
 
 /**
  * @param {string} url an URL to a search service.
- * @param {(function(GeoJSON.Feature): boolean)=} opt_filter function to filter results.
- * @param {import("ol/proj/Projection.js").default=} opt_featureProjection Feature projection.
- * @param {import("ol/proj/Projection.js").default=} opt_dataProjection Data projection.
- * @param {Bloodhound.BloodhoundOptions<GeoJSON.FeatureCollection>=} opt_options optional Bloodhound options. If
+ * @param {(function(GeoJSON.Feature): boolean)} [opt_filter] function to filter results.
+ * @param {import("ol/proj/Projection.js").default} [opt_featureProjection] Feature projection.
+ * @param {import("ol/proj/Projection.js").default} [opt_dataProjection] Data projection.
+ * @param {Bloodhound.BloodhoundOptions<GeoJSON.FeatureCollection>} [opt_options] optional Bloodhound options. If
  *     undefined, the default Bloodhound config will be used.
- * @param {Bloodhound.RemoteOptions<GeoJSON.FeatureCollection>=} opt_remoteOptions optional Bloodhound
+ * @param {Bloodhound.RemoteOptions<GeoJSON.FeatureCollection>} [opt_remoteOptions] optional Bloodhound
  * remote options. Effective only if `remote` is not defined in `opt_options`.
  * @return {Bloodhound<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>[]>} The Bloodhound object.
  * @hidden
@@ -87,7 +87,7 @@ export function createGeoJSONBloodhound(
     opt_options || {
       /**
        * @param {GeoJSON.FeatureCollection} datum
-       * @returns {string[]}
+       * @return {string[]}
        */
       datumTokenizer: (datum) => {
         return [];
@@ -155,7 +155,7 @@ myModule.value('ngeoSearchCreateGeoJSONBloodhound', createGeoJSONBloodhound);
  *     );
  *     bloodhound.initialize();
  *
- * @typedef {function(string, (function(import("geojson").Feature): boolean)=, import("ol/proj/Projection.js").default=, import("ol/proj/Projection.js").default=, Bloodhound.Options=, Bloodhound.RemoteOptions=):Bloodhound<GeoJSON.FeatureCollection|Array<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>>}
+ * @typedef {function(string, (function(import("geojson").Feature): boolean)=, import("ol/proj/Projection.js").default=, import("ol/proj/Projection.js").default=, Bloodhound.Options=, Bloodhound.RemoteOptions=): Bloodhound<GeoJSON.FeatureCollection | import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>[]>}
  */
 
 export default myModule;

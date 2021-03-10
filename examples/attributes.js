@@ -35,7 +35,7 @@ const myModule = angular.module('app', ['gettext', ngeoMapModule.name, ngeoEditi
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @param {angular.IScope} $scope Scope.
  * @ngInject
- * @constructor
+ * @class
  */
 function MainController($http, $timeout, $scope) {
   /**
@@ -44,7 +44,7 @@ function MainController($http, $timeout, $scope) {
   this.timeout_ = $timeout;
 
   /**
-   * @type {?Array<import('ngeo/format/Attribute.js').Attribute>}
+   * @type {?import('ngeo/format/Attribute.js').Attribute[]}
    */
   this.attributes = null;
 
@@ -92,7 +92,7 @@ function MainController($http, $timeout, $scope) {
 
 /**
  * @param {angular.IHttpResponse<string|Document|Element>} resp Ajax response.
- * @return {Array<import('ngeo/format/Attribute.js').Attribute>} List of attributes.
+ * @return {import('ngeo/format/Attribute.js').Attribute[]} List of attributes.
  */
 MainController.prototype.handleXSDAttributeGet_ = function (resp) {
   const format = new ngeoFormatXSDAttribute();

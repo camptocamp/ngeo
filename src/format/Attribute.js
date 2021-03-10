@@ -50,7 +50,6 @@ import ngeoFormatAttributeType from 'ngeo/format/AttributeType.js';
  *    or not. Defaults to `false`.
  * @property {boolean} [required] Whether the attribute is required to have a value set or not.
  *    Defaults to `false`.
- * @property {string} type The attribute type, which determines how to render it.
  * @property {string} [format] The format used in the date, time and datetime type.
  * @property {string} [mask] The mask used in the date, time and datetime type.
  */

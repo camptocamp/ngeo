@@ -26,7 +26,7 @@ import ngeoFormatXSDAttribute from 'ngeo/format/XSDAttribute.js';
  * An service used to fetch the XSD attribute definition of layers using their
  * id from a GeoMapFish server.
  *
- * @constructor
+ * @class
  * @param {angular.IHttpService} $http Angular http service.
  * @param {string} gmfLayersUrl URL to the GeoMapFish layers service.
  * @ngInject

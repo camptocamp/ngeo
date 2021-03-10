@@ -364,8 +364,8 @@ export class DrawFeatureOptionsController {
    *
    * @param {number} length Length
    * @param {string} lengthUnits Length units
-   * @param {number=} opt_height Height
-   * @param {string=} opt_heightUnits Height units
+   * @param {number} [opt_height] Height
+   * @param {string} [opt_heightUnits] Height units
    * @private
    */
   adjustSnapFeature_(length, lengthUnits, opt_height, opt_heightUnits) {

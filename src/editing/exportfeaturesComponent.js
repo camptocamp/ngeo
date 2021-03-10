@@ -70,7 +70,7 @@ myModule.directive('ngeoExportfeatures', editingExportFeaturesComponent);
  * @param {angular.auto.IInjectorService} $injector Main injector.
  * @param {angular.IScope} $scope Angular scope.
  * @param {import("ngeo/misc/FeatureHelper.js").FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
- * @constructor
+ * @class
  * @hidden
  * @ngInject
  * @ngdoc controller

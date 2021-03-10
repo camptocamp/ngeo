@@ -25,7 +25,7 @@ import angular from 'angular';
  * The Raster service.
  * Uses the c2cgeoportal's raster to obtain different kinds of
  * information at a specific coordinate.
- * @constructor
+ * @class
  * @param {angular.IHttpService} $http Angular http service.
  * @param {string} gmfRasterUrl URL to a the c2cgeoportal raster service.
  * @ngInject
@@ -56,7 +56,7 @@ const Param = {
 
 /**
  * @param {import("ol/coordinate.js").Coordinate} coordinate Coordinate.
- * @param {Object<string, string|number>=} opt_params Optional parameters for the request.
+ * @param {Object<string, string|number>} [opt_params] Optional parameters for the request.
  * @return {angular.IPromise<Object<string, number>>} Promise.
  */
 RasterService.prototype.getRaster = function (coordinate, opt_params) {

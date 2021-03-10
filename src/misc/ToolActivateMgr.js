@@ -51,7 +51,7 @@ import angular from 'angular';
  * [../examples/toolActivate.html](../examples/toolActivate.html)
  *
  * @param {angular.IScope} $rootScope The rootScope provider.
- * @constructor
+ * @class
  * @ngdoc service
  * @ngname ngeoToolActivateMgr
  * @ngInject
@@ -74,7 +74,7 @@ export function ToolActivateMgr($rootScope) {
  * Register a tool.
  * @param {string} groupName Name of the group of this tool.
  * @param {import("ngeo/misc/ToolActivate.js").default} tool Tool to register.
- * @param {boolean=} opt_defaultActivate If true, this tool will be activated
+ * @param {boolean} [opt_defaultActivate] If true, this tool will be activated
  *     when all other tools in the group are deactivated.
  */
 ToolActivateMgr.prototype.registerTool = function (groupName, tool, opt_defaultActivate) {

@@ -196,7 +196,7 @@ export default class extends olInteractionPointer {
    */
   removeFeatureSegmentData_(feature) {
     const rBush = this.rBush_;
-    /** @type {Array<import("ol/interaction/Modify.js").SegmentData>} */
+    /** @type {import("ol/interaction/Modify.js").SegmentData[]} */
     const nodesToRemove = [];
     rBush.forEach(
       /**
@@ -313,6 +313,7 @@ export default class extends olInteractionPointer {
     /**
      * @param {import("ol/interaction/Modify.js").SegmentData} a
      * @param {import("ol/interaction/Modify.js").SegmentData} b
+     * @return {number}
      */
     const sortByDistance = function (a, b) {
       return (
@@ -404,7 +405,7 @@ export default class extends olInteractionPointer {
       const vertex = geometry.getCoordinates();
       const vertexExtent = olExtent.boundingExtent([vertex]);
       const segmentDataMatches = this.rBush_.getInExtent(vertexExtent);
-      /** @type {Object<string, Array<import("ol/interaction/Modify.js").SegmentData>>} */
+      /** @type {Object<string, import("ol/interaction/Modify.js").SegmentData[]>} */
       const componentSegments = {};
       segmentDataMatches.sort(compareIndexes);
       for (let i = 0, ii = segmentDataMatches.length; i < ii; ++i) {

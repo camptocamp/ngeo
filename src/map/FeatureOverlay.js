@@ -24,7 +24,7 @@ import {listen, unlistenByKey} from 'ol/events.js';
 import {CollectionEvent} from 'ol/Collection.js';
 
 /**
- * @constructor
+ * @class
  * @param {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} manager The feature overlay manager.
  * @param {number} index This feature overlay's index.
  * @hidden
@@ -64,7 +64,7 @@ FeatureOverlay.prototype.removeFeature = function (feature) {
 
 /**
  * Check if featureOverlay has no features.
- * @returns {boolean} True if there is no features. False otherwise.
+ * @return {boolean} True if there is no features. False otherwise.
  */
 FeatureOverlay.prototype.isEmpty = function () {
   return this.manager_.isEmpty(this.index_);
@@ -103,7 +103,7 @@ FeatureOverlay.prototype.setFeatures = function (features) {
 
 /**
  * Set a style for the feature overlay.
- * @param {import("ol/style/Style.js").default|Array<import("ol/style/Style.js").default>|import('ol/style/Style.js').StyleFunction} style
+ * @param {import("ol/style/Style.js").default | import("ol/style/Style.js").default[] | import('ol/style/Style.js').StyleFunction} style
  * Style.
  */
 FeatureOverlay.prototype.setStyle = function (style) {

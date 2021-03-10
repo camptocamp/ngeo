@@ -74,7 +74,7 @@ import {noModifierKeys} from 'ol/events/condition.js';
  * @param {angular.IScope} $scope Scope.
  * @param {angular.auto.IInjectorService} $injector Main injector.
  * @param {boolean} [mobile] Is mobile.
- * @constructor
+ * @class
  * @ngdoc controller
  * @ngInject
  */
@@ -461,9 +461,9 @@ export function AbstractAppController($scope, $injector, mobile) {
 
   /**
    * @param {string} title (text).
-   * @param {number=} opt_width CSS width in pixel.
-   * @param {number=} opt_height CSS height in pixel.
-   * @param {boolean=} opt_apply If true, trigger the Angular digest loop. Default to true.
+   * @param {number} [opt_width] CSS width in pixel.
+   * @param {number} [opt_height] CSS height in pixel.
+   * @param {boolean} [opt_apply] If true, trigger the Angular digest loop. Default to true.
    */
   const openPopup_ = (title, opt_width, opt_height, opt_apply) => {
     this.displaywindowTitle = title;
@@ -491,9 +491,9 @@ export function AbstractAppController($scope, $injector, mobile) {
    * Static function to create a popup with an iframe.
    * @param {string} url an url.
    * @param {string} title (text).
-   * @param {number=} opt_width CSS width.
-   * @param {number=} opt_height CSS height.
-   * @param {boolean=} opt_apply If true, trigger the Angular digest loop. Default to true.
+   * @param {number} [opt_width] CSS width.
+   * @param {number} [opt_height] CSS height.
+   * @param {boolean} [opt_apply] If true, trigger the Angular digest loop. Default to true.
    */
   gmfx.openIframePopup = (url, title, opt_width, opt_height, opt_apply) => {
     this.displaywindowUrl = url;
@@ -504,9 +504,9 @@ export function AbstractAppController($scope, $injector, mobile) {
    * Static function to create a popup with html content.
    * @param {string} content (text or html).
    * @param {string} title (text).
-   * @param {number=} opt_width CSS width in pixel.
-   * @param {number=} opt_height CSS height in pixel.
-   * @param {boolean=} opt_apply If true, trigger the Angular digest loop. Default to true.
+   * @param {number} [opt_width] CSS width in pixel.
+   * @param {number} [opt_height] CSS height in pixel.
+   * @param {boolean} [opt_apply] If true, trigger the Angular digest loop. Default to true.
    */
   gmfx.openTextPopup = (content, title, opt_width, opt_height, opt_apply) => {
     this.displaywindowContent = content;
@@ -536,9 +536,9 @@ export function AbstractAppController($scope, $injector, mobile) {
    * Static function to create a popup with an iframe.
    * @param {string} url an url.
    * @param {string} title (text).
-   * @param {number=} opt_width CSS width in pixel.
-   * @param {number=} opt_height CSS height in pixel.
-   * @param {boolean=} opt_apply If true, trigger the Angular digest loop. Default to true.
+   * @param {number} [opt_width] CSS width in pixel.
+   * @param {number} [opt_height] CSS height in pixel.
+   * @param {boolean} [opt_apply] If true, trigger the Angular digest loop. Default to true.
    */
   cgxp.tools.openInfoWindow = function (url, title, opt_width, opt_height, opt_apply) {
     gmfx.openIframePopup(url, title, opt_width, opt_height, opt_apply);
@@ -608,7 +608,7 @@ function dragPanCondition(event) {
 }
 
 /**
- * @param {Array<import("ol/layer/Base.js").default>} layers Layers list.
+ * @param {import("ol/layer/Base.js").default[]} layers Layers list.
  * @param {string[]} labels default_basemap list.
  * @return {?import("ol/layer/Base.js").default} layer or null
  * @private

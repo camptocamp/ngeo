@@ -31,7 +31,7 @@ import olFormatWFS from 'ol/format/WFS.js';
 /**
  * Results for a query source.
  * @typedef {Object} QueryResultSource
- * @property {Array<Feature<import("ol/geom/Geometry.js").default>>} features The matching features for this source.
+ * @property {Feature<import("ol/geom/Geometry.js").default>[]} features The matching features for this source.
  * @property {number|string} id Identifier (can be not unique).
  * @property {string} label Label.
  * @property {number} [limit] The maximum number of features that can be returned for a query with this
@@ -103,7 +103,7 @@ import olFormatWFS from 'ol/format/WFS.js';
  * will load parcels #12, 34 and 56 of the city of Oslo as well as
  * parcels #78 and 90 of the city of Paris.
  *
- * @constructor
+ * @class
  * @param {angular.IHttpService} $http Angular $http service.
  * @param {import('ngeo/options.js').ngeoPermalinkOgcserverUrl} ngeoPermalinkOgcserverUrl URL to the WFS server
  * @param {QueryResult} ngeoQueryResult The ngeo query result service.
@@ -316,7 +316,7 @@ WfsPermalinkService.prototype.createFilters_ = function (filterGroups) {
 /**
  * Join a list of filters with `and(...)`.
  *
- * @param {Array<import("ol/format/filter/Filter.js").default>} filters The filters to join.
+ * @param {import("ol/format/filter/Filter.js").default[]} filters The filters to join.
  * @return {import("ol/format/filter/Filter.js").default} The joined filters.
  */
 WfsPermalinkService.and_ = function (filters) {
@@ -326,7 +326,7 @@ WfsPermalinkService.and_ = function (filters) {
 /**
  * Join a list of filters with `or(...)`.
  *
- * @param {Array<import("ol/format/filter/Filter.js").default>} filters The filters to join.
+ * @param {import("ol/format/filter/Filter.js").default[]} filters The filters to join.
  * @return {import("ol/format/filter/Filter.js").default} The joined filters.
  */
 WfsPermalinkService.or_ = function (filters) {
@@ -336,7 +336,7 @@ WfsPermalinkService.or_ = function (filters) {
 /**
  * Join a list of filters with a given join function.
  *
- * @param {Array<import("ol/format/filter/Filter.js").default>} filters The filters to join.
+ * @param {import("ol/format/filter/Filter.js").default[]} filters The filters to join.
  * @param {function(import("ol/format/filter/Filter.js").default, import("ol/format/filter/Filter.js").default): import("ol/format/filter/Filter.js").default} joinFn
  *    The function to join two filters.
  * @return {import("ol/format/filter/Filter.js").default} The joined filters.

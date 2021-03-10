@@ -23,7 +23,7 @@ import {includes as olArrayIncludes} from 'ol/array.js';
 
 /**
  * Push an object in an array, unless already there.
- * @param {Array.<*>} arr The array to push the element.
+ * @param {*[]} arr The array to push the element.
  * @param {*} obj The object for which to test.
  * @return {boolean} The object has been pushed in the array.
  */

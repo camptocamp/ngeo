@@ -173,7 +173,7 @@ class StreetviewController {
     this.featureOverlay_ = ngeoFeatureOverlayMgr.getFeatureOverlay();
 
     /**
-     * @type {Array<import("ol/events.js").EventsKey>}
+     * @type {import("ol/events.js").EventsKey[]}
      * @private
      */
     this.listenerKeys_ = [];

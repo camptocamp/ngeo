@@ -29,7 +29,7 @@
  * @param {unknown} toolContext An object which acts as the context for the tool.
  * @param {string} activePropertyName The name of a boolean property on
  *      `toolContext` which represents the active state of the tool.
- * @constructor
+ * @class
  * @ngname ngeoToolActivate
  */
 export default function (toolContext, activePropertyName) {

@@ -43,7 +43,7 @@ const myModule = angular.module('app', ['gettext', ngeoMapModule.name, ngeoMiscB
 /**
  * @param {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr Feature overlay
  *     manager.
- * @constructor
+ * @class
  * @ngInject
  */
 function MainController(ngeoFeatureOverlayMgr) {

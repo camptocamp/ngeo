@@ -41,7 +41,7 @@ import {ServerType} from 'ngeo/datasource/OGC.js';
  *     By default preload is Infinity,
  *     which means load all tiles on the top of the visible level. See also preload value
  *     in documentation for ol.Layer.Tile.
- * @constructor
+ * @class
  * @ngdoc service
  * @ngname ngeoLayerHelper
  * @ngInject
@@ -103,7 +103,7 @@ const REFRESH_PARAM = 'random';
  *     from which to copy the properties.
  * @param {import('ol/layer/Layer.js').default<import('ol/source/Source.js').default>} layerTo The layer onto
  *     which the properties are copied.
- * @param {string[]=} opt_excludes A list of properties that should
+ * @param {string[]} [opt_excludes] A list of properties that should
  *     not be copied.
  */
 LayerHelper.prototype.copyProperties = function (layerFrom, layerTo, opt_excludes) {
@@ -129,13 +129,13 @@ LayerHelper.prototype.copyProperties = function (layerFrom, layerTo, opt_exclude
  * @param {string} sourceURL The source URL.
  * @param {string} sourceLayersName A comma separated names string.
  * @param {string} sourceFormat Image format, for example 'image/png'.
- * @param {string=} opt_serverType Type of the server ("mapserver",
+ * @param {string} [opt_serverType] Type of the server ("mapserver",
  *     "geoserver", "qgisserver", …).
- * @param {string=} opt_time time parameter for layer queryable by time/period
- * @param {Object<string, string>=} opt_params WMS parameters.
- * @param {string=} opt_crossOrigin crossOrigin.
- * @param {unknown=} opt_customSourceOptions Some layer's source initial options.
- * @param {unknown=} opt_customLayerOptions Some layer initial options.
+ * @param {string} [opt_time] time parameter for layer queryable by time/period
+ * @param {Object<string, string>} [opt_params] WMS parameters.
+ * @param {string} [opt_crossOrigin] crossOrigin.
+ * @param {unknown} [opt_customSourceOptions] Some layer's source initial options.
+ * @param {unknown} [opt_customLayerOptions] Some layer initial options.
  * @return {import("ol/layer/Image.js").default} WMS Layer.
  */
 LayerHelper.prototype.createBasicWMSLayer = function (
@@ -191,7 +191,7 @@ LayerHelper.prototype.createBasicWMSLayer = function (
  * Create and return a basic WMS layer using an OGC data source.
  *
  * @param {import("ngeo/datasource/OGC.js").default} dataSource OGC data source.
- * @param {string=} opt_crossOrigin crossOrigin.
+ * @param {string} [opt_crossOrigin] crossOrigin.
  * @return {import("ol/layer/Image.js").default} WMS Layer.
  */
 LayerHelper.prototype.createBasicWMSLayerFromDataSource = function (dataSource, opt_crossOrigin) {
@@ -236,12 +236,12 @@ LayerHelper.prototype.createBasicWMSLayerFromDataSource = function (dataSource, 
  * as key 'capabilitiesStyles' as param of the new layer.
  * @param {string} capabilitiesURL The getCapabilities url.
  * @param {string} layerName The name of the layer.
- * @param {string=} opt_matrixSet Optional WMTS matrix set.
- * @param {Object<string, ?string>=} opt_dimensions WMTS dimensions.
- * @param {Object=} opt_customOptions Some initial options.
- * @param {number=} opt_minResolution WMTS minimum resolution.
- * @param {number=} opt_maxResolution WMTS maximum resolution.
- * @param {number=} opt_opacity The opacity.
+ * @param {string} [opt_matrixSet] Optional WMTS matrix set.
+ * @param {Object<string, ?string>} [opt_dimensions] WMTS dimensions.
+ * @param {Object} [opt_customOptions] Some initial options.
+ * @param {number} [opt_minResolution] WMTS minimum resolution.
+ * @param {number} [opt_maxResolution] WMTS maximum resolution.
+ * @param {number} [opt_opacity] The opacity.
  * @return {angular.IPromise<import("ol/layer/Tile.js").default>} A Promise with a layer (with source) on
  *    success, no layer else.
  */
@@ -311,7 +311,7 @@ LayerHelper.prototype.createWMTSLayerFromCapabilitites = function (
  *
  * @param {Object<string, any>} capabilities The complete capabilities object of the service
  * @param {Object<string, any>} layerCap The layer capability object
- * @param {Object<string, string>=} opt_dimensions WMTS dimensions.
+ * @param {Object<string, string>} [opt_dimensions] WMTS dimensions.
  * @return {import("ol/layer/Tile.js").default} WMTS layer
  */
 LayerHelper.prototype.createWMTSLayerFromCapabilititesObj = function (
@@ -342,7 +342,7 @@ LayerHelper.prototype.createWMTSLayerFromCapabilititesObj = function (
 /**
  * Create and return an ol.layer.Group. You can pass a collection of layers to
  * directly add them in the returned group.
- * @param {import("ol/Collection.js").default<import("ol/layer/Base.js").default>=} opt_layers The layer to
+ * @param {import("ol/Collection.js").default<import("ol/layer/Base.js").default>} [opt_layers] The layer to
  *    add to the returned Group.
  * @return {import("ol/layer/Group.js").default} Layer group.
  */
@@ -386,7 +386,7 @@ LayerHelper.prototype.getGroupFromMap = function (map, groupName) {
  * Get an array of all layers in a group. The group can contain multiple levels
  * of others groups.
  * @param {import("ol/layer/Base.js").default} layer The base layer, mostly a group of layers.
- * @return {Array<import("ol/layer/Layer.js").default<import('ol/source/Source.js').default>>} Layers.
+ * @return {import("ol/layer/Layer.js").default<import('ol/source/Source.js').default>[]} Layers.
  */
 LayerHelper.prototype.getFlatLayers = function (layer) {
   if (layer instanceof olLayerGroup) {
@@ -438,7 +438,7 @@ LayerHelper.prototype.getFlatLayers_ = function (layer, array, computedOpacity) 
  * an array of layers. If one of the layers in the array is a group, then the
  * layers contained in that group are searched as well.
  * @param {string} layerName The name of the layer we're looking for.
- * @param {Array<import("ol/layer/Base.js").default>} layers Layers.
+ * @param {import("ol/layer/Base.js").default[]} layers Layers.
  * @return {?import("ol/layer/Base.js").default} Layer.
  */
 LayerHelper.prototype.getLayerByName = function (layerName, layers) {
@@ -480,15 +480,15 @@ LayerHelper.prototype.getWMTSLegendURL = function (layer) {
  * Get the WMS legend URL for the given node.
  * @param {string|undefined} url The base url of the wms service.
  * @param {string} layerName The name of a wms layer.
- * @param {number=} opt_scale A scale.
- * @param {string=} opt_legendRule rule parameters to add to the returned URL.
- * @param {number=} opt_legendWidth the legend width.
- * @param {number=} opt_legendHeight the legend height.
- * @param {string=} opt_servertype the OpenLayers server type.
- * @param {number=} opt_dpi the DPI.
- * @param {number[]=} opt_bbox the bbox.
- * @param {string=} opt_srs The projection code.
- * @param {Object<string, string>=} opt_additionalQueryString Additional query string parameters.
+ * @param {number} [opt_scale] A scale.
+ * @param {string} [opt_legendRule] rule parameters to add to the returned URL.
+ * @param {number} [opt_legendWidth] the legend width.
+ * @param {number} [opt_legendHeight] the legend height.
+ * @param {string} [opt_servertype] the OpenLayers server type.
+ * @param {number} [opt_dpi] the DPI.
+ * @param {number[]} [opt_bbox] the bbox.
+ * @param {string} [opt_srs] The projection code.
+ * @param {Object<string, string>} [opt_additionalQueryString] Additional query string parameters.
  * @return {string|undefined} The legend URL or undefined.
  */
 LayerHelper.prototype.getWMSLegendURL = function (
@@ -600,7 +600,7 @@ LayerHelper.prototype.setZIndexToFirstLevelChildren = function (element, ZIndex)
  * @param {import("ol/layer/Image.js").default} layer The WMS layer.
  * @param {string} names The names that will be used to set
  * the LAYERS parameter.
- * @param {string=} opt_time The start
+ * @param {string} [opt_time] The start
  * and optionally the end datetime (for time range selection) selected by user
  * in a ISO-8601 string datetime or time interval format
  */

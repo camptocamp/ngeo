@@ -204,7 +204,7 @@ export class ScaleselectorController {
   }
 
   /**
-   * @returns {number[]}
+   * @return {number[]}
    */
   getZooms() {
     return Object.keys(this.scales).map(Number);

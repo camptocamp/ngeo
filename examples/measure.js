@@ -86,7 +86,7 @@ myModule.component('appMeasuretools', measuretoolsComponent);
  * @param {angular.ISCEService} $sce Angular sce service.
  * @param {angular.IFilterService} $filter Angular filter service.
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
- * @constructor
+ * @class
  * @ngInject
  */
 function MeasuretoolsController($scope, $compile, $sce, $filter, gettextCatalog) {
@@ -258,7 +258,7 @@ MeasuretoolsController.prototype.$onInit = function () {
 };
 
 /**
- * @constructor
+ * @class
  * @ngInject
  */
 function MainController() {

@@ -31,7 +31,7 @@ import olLayerLayer from 'ol/layer/Layer.js';
  * @param {angular.IScope} $scope Scope.
  * @param {angular.IScope} $rootScope Angular rootScope.
  * @param {angular.IAttributes} $attrs Attributes.
- * @constructor
+ * @class
  * @ngInject
  * @ngdoc controller
  * @ngname NgeoLayertreeController
@@ -212,7 +212,7 @@ LayertreeController.prototype.getState = function () {
  * Set the state of this treeCtrl. Update its children with its value and then
  * ask its parent to refresh its state.
  * @param {string} state 'on' or 'off'.
- * @param {boolean=} opt_broadcast Broadcast.
+ * @param {boolean} [opt_broadcast] Broadcast.
  */
 LayertreeController.prototype.setState = function (state, opt_broadcast) {
   if (state === this.state_) {
@@ -263,9 +263,9 @@ LayertreeController.prototype.setStateInternal_ = function (state) {
  * Refresh the state of this treeCtrl based on it's children value. The call its
  * parent to do the same.
  *
- * @param {import("ngeo/layertree/Controller.js").LayertreeController=} opt_onChild Child tree
+ * @param {import("ngeo/layertree/Controller.js").LayertreeController} [opt_onChild] Child tree
  *     controller that had its state changed to 'on'.
- * @param {boolean=} opt_broadcast Broadcast.
+ * @param {boolean} [opt_broadcast] Broadcast.
  * @public
  */
 LayertreeController.prototype.refreshState = function (opt_onChild, opt_broadcast) {

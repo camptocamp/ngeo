@@ -88,7 +88,7 @@ myModule.directive('gmfMap', gmfMapComponent);
  * @param {import("gmf/permalink/Permalink.js").PermalinkService} gmfPermalink The gmf permalink service.
  * @param {import("gmf/editing/Snapping.js").EditingSnappingService} gmfSnapping The gmf snapping service.
  * @param {angular.auto.IInjectorService} $injector Main injector.
- * @constructor
+ * @class
  * @hidden
  * @ngInject
  * @ngdoc controller

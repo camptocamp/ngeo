@@ -37,7 +37,7 @@ export default class extends ngeoInteractionMeasure {
   /**
    * @param {import('ngeo/misc/filters.js').unitPrefix} format The format function
    * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
-   * @param {import('ngeo/interaction/Measure.js').MeasureOptions=} options Options
+   * @param {import('ngeo/interaction/Measure.js').MeasureOptions} [options] Options
    */
   constructor(format, gettextCatalog, options = {}) {
     super(options);
@@ -110,7 +110,7 @@ export default class extends ngeoInteractionMeasure {
    * Use this with the draw interaction and `type: 'LineString'`.
    *
    * @param {number[][]} coordinates Coordinates.
-   * @param {import('ol/geom/SimpleGeometry.js').default|undefined=} opt_geometry Geometry.
+   * @param {import('ol/geom/SimpleGeometry.js').default|undefined} [opt_geometry] Geometry.
    * @return {import('ol/geom/SimpleGeometry.js').default} Geometry.
    */
   linestringGeometryFunction(coordinates, opt_geometry) {
@@ -143,9 +143,9 @@ export default class extends ngeoInteractionMeasure {
         const layerSource = this.source;
         const featuresInExtent = layerSource.getFeaturesInExtent(bbox);
         featuresInExtent.forEach((feature) => {
-          /** @type {Array<number>|undefined} */
+          /** @type {number[] | undefined} */
           let lastIntersection = [];
-          /** @type {Array<number>|undefined} */
+          /** @type {number[] | undefined} */
           let bestIntersection = [];
           let bestDistance = Infinity;
 
@@ -223,7 +223,7 @@ export default class extends ngeoInteractionMeasure {
    *
    * @param {number[][]} line1 The coordinates of the first line.
    * @param {number[][]} line2 The coordinates of the second line.
-   * @return {Array<number>|undefined} The intersection point, undefined if there is no intersection point or lines are coincident.
+   * @return {number[] | undefined} The intersection point, undefined if there is no intersection point or lines are coincident.
    */
   computeLineSegmentIntersection(line1, line2) {
     const numerator1A =
