@@ -306,6 +306,7 @@ export class DrawFeatureOptionsController {
     this.feature_ = feature;
 
     const geometry = feature.getGeometry();
+    this.handleFeatureGeometryChange_(); //on mobile the next 'change will already need to have the verticesCounter set
     this.listenerKeys_.push(olEventsListen(geometry, 'change', this.handleFeatureGeometryChange_, this));
   }
 
@@ -385,12 +386,18 @@ export class DrawFeatureOptionsController {
           snapGeometry = new OLGeomCircle(center, lengthMeters);
         }
       }
-    } else if (this.measureArea && this.verticesCounter_ !== 2) {
+    } else if (this.measureArea && this.verticesCounter_) {
       // Area, i.e. Polygon
       const polygonGeometry = this.feature_.getGeometry();
       if (polygonGeometry instanceof OLGeomPolygon) {
         const coordinates = polygonGeometry.getCoordinates()[0];
-        const center = coordinates[this.verticesCounter_ - 3];
+        let center = null;
+        //mobile needs a center for snapGeometry already after the first point
+        if (this.verticesCounter_ == 2) {
+          center = coordinates[0];
+        } else {
+          center = coordinates[this.verticesCounter_ - 3];
+        }
         if (center) {
           snapGeometry = new OLGeomCircle(center, lengthMeters);
         }
