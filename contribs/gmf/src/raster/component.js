@@ -212,75 +212,80 @@ export function Controller($scope, $filter, ngeoDebounce, gmfRaster, gettextCata
 }
 
 /**
- * Activate or deactivate the request of the raster each 500 ms on pointermove.
+ * Activate or deactivate the listeners of the component.
  * @param {boolean} active true to make requests.
  * @private
  */
 Controller.prototype.toggleActive_ = function (active) {
-  this.elevation = null;
-  if (active) {
-    if (this.listenerKeys_.length) {
-      throw new Error('Unexpexted listenerKeys');
-    }
-    if (!this.map) {
-      throw new Error('Missing map');
-    }
+  this.clear_();
+  active ? this.activate_() : this.deactivate_();
+};
 
-    // Moving the mouse clears previously displayed elevation
-    /** @type {import("ol/events.js").ListenerFunction} */
-    const listener = (event) => {
-      this.scope_.$apply(() => {
-        this.inViewport_ = true;
-        this.elevation = null;
-        this.loading = false;
-      });
-    };
-    this.listenerKeys_.push(listen(this.map, 'pointermove', listener));
-
-    // Launch the elevation service request when the user stops moving the
-    // mouse for less short delay
-    this.listenerKeys_.push(
-      listen(
-        this.map,
-        'pointermove',
-        this.ngeoDebounce_(
-          /** @type {import("ol/events.js").ListenerFunction} */
-          (e) => {
-            if (this.inViewport_ && e instanceof MapBrowserEvent) {
-              this.loading = true;
-              const params = {
-                'layers': this.layer,
-              };
-              this.gmfRaster_
-                .getRaster(e.coordinate, params)
-                .then(this.getRasterSuccess_.bind(this), this.getRasterError_.bind(this));
-            }
-          },
-          500,
-          true
-        )
-      )
-    );
-
-    this.listenerKeys_.push(
-      listen(
-        this.map.getViewport(),
-        'mouseout',
-        /** @type {import("ol/events.js").ListenerFunction} */
-        (evt) => {
-          this.scope_.$apply(() => {
-            this.elevation = null;
-            this.inViewport_ = false;
-            this.loading = false;
-          });
-        }
-      )
-    );
-  } else {
-    this.elevation = null;
-    this.listenerKeys_.forEach(unlistenByKey);
-    this.listenerKeys_.length = 0;
+/**
+ * Activate the listeners of the component.
+ */
+Controller.prototype.activate_ = function () {
+  if (this.listenerKeys_.length) {
+    throw new Error('Unexpexted listenerKeys');
   }
+  if (!this.map) {
+    throw new Error('Missing map');
+  }
+
+  // Moving the mouse clears previously displayed elevation
+  this.listenerKeys_.push(listen(this.map, 'pointermove', this.onPointerMove_.bind(this)));
+
+  // Launch the raster service request when the user stops moving the mouse for less short delay.
+  this.listenerKeys_.push(
+    listen(this.map, 'pointermove', this.ngeoDebounce_(this.afterPointerMove_.bind(this), 500, true))
+  );
+
+  // Clear the elevation and set inViewport_ to false.
+  this.listenerKeys_.push(listen(this.map.getViewport(), 'mouseout', this.onMouseout_.bind(this)));
+};
+
+/**
+ * Deactivate the listeners of the component
+ */
+Controller.prototype.deactivate_ = function () {
+  this.listenerKeys_.forEach(unlistenByKey);
+  this.listenerKeys_.length = 0;
+};
+
+/**
+ * Clears previously displayed raster info and set inViewport_ to true.
+ */
+Controller.prototype.onPointerMove_ = function () {
+  this.scope_.$apply(() => {
+    this.clear_();
+    this.inViewport_ = true;
+    this.loading = true;
+  });
+};
+
+/**
+ * Set the state of the component and query the raster service with the coordinate.
+ * @param {Event|import('ol/events/Event.js').default} evt Event.
+ */
+Controller.prototype.afterPointerMove_ = function (evt) {
+  if (this.inViewport_ && evt instanceof MapBrowserEvent) {
+    const params = {
+      'layers': this.layer,
+    };
+    this.gmfRaster_
+      .getRaster(evt.coordinate, params)
+      .then(this.getRasterSuccess_.bind(this), this.getRasterError_.bind(this));
+  }
+};
+
+/**
+ * Clears previously displayed raster info and set inViewport_ to false.
+ */
+Controller.prototype.onMouseout_ = function () {
+  this.scope_.$apply(() => {
+    this.clear_();
+    this.inViewport_ = false;
+  });
 };
 
 /**
@@ -315,6 +320,13 @@ Controller.prototype.getRasterSuccess_ = function (resp) {
 
 Controller.prototype.getRasterError_ = function () {
   console.error('Error on getting the raster.');
+  this.clear_();
+};
+
+/**
+ * Clear the state.
+ */
+Controller.prototype.clear_ = function () {
   this.elevation = null;
   this.loading = false;
 };
