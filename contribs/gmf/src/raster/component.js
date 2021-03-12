@@ -257,8 +257,9 @@ Controller.prototype.deactivate_ = function () {
  */
 Controller.prototype.onPointerMove_ = function () {
   this.scope_.$apply(() => {
-    this.inViewport_ = true;
     this.clear_();
+    this.inViewport_ = true;
+    this.loading = true;
   });
 };
 
@@ -268,7 +269,6 @@ Controller.prototype.onPointerMove_ = function () {
  */
 Controller.prototype.afterPointerMove_ = function (evt) {
   if (this.inViewport_ && evt instanceof MapBrowserEvent) {
-    this.loading = true;
     const params = {
       'layers': this.layer,
     };
@@ -283,8 +283,8 @@ Controller.prototype.afterPointerMove_ = function (evt) {
  */
 Controller.prototype.onMouseout_ = function () {
   this.scope_.$apply(() => {
-    this.inViewport_ = false;
     this.clear_();
+    this.inViewport_ = false;
   });
 };
 
