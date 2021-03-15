@@ -315,7 +315,8 @@ Controller.prototype.handleGeometryChange_ = function () {
   this.measure = this.featureHelper_.getMeasure(this.feature);
 
   const showMeasure = this.featureHelper_.getShowMeasureProperty(this.feature);
-  if (showMeasure) {
+  const showArrow = this.featureHelper_.getShowArrowsProperty(this.feature);
+  if (showMeasure || showArrow) {
     this.handleFeatureChange_();
   }
 

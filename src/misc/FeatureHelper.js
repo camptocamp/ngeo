@@ -1191,6 +1191,15 @@ FeatureHelper.prototype.getShowLabelProperty = function (feature) {
 
 /**
  * @param {olFeature<import("ol/geom/Geometry.js").default>} feature Feature.
+ * @return {boolean} Show at least one arrow.
+ */
+FeatureHelper.prototype.getShowArrowsProperty = function (feature) {
+  const arrowDirection = feature.get(ngeoFormatFeatureProperties.ARROW_DIRECTION);
+  return arrowDirection !== undefined && arrowDirection !== ArrowDirections.NONE;
+};
+
+/**
+ * @param {olFeature<import("ol/geom/Geometry.js").default>} feature Feature.
  * @return {number} Size.
  */
 FeatureHelper.prototype.getSizeProperty = function (feature) {
