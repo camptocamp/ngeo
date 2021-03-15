@@ -144,7 +144,7 @@ export class AuthenticationController {
    * @param {import('gmf/authentication/Service.js').User} gmfUser User.
    * @param {import("ngeo/message/Notification.js").MessageNotification} ngeoNotification Ngeo notification
    *    service.
-   * @param {import('gmf/options.js').gmfAuthenticationConfig} gmfAuthenticationConfig The configuration
+   * @param {import('gmf/options.js').gmfAuthenticationConfig} gmfAuthenticationConfig The auth configuration.
    * @ngInject
    * @ngdoc controller
    * @ngname GmfAuthenticationController
