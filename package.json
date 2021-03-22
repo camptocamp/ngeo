@@ -63,7 +63,7 @@
     "@types/sinon": "9.0.11",
     "@types/tinycolor2": "1.4.2",
     "@types/typeahead": "0.11.32",
-    "@typescript-eslint/eslint-plugin": "4.18.0",
+    "@typescript-eslint/eslint-plugin": "4.19.0",
     "@typescript-eslint/parser": "4.19.0",
     "angular": "1.8.2",
     "angular-animate": "1.8.2",
