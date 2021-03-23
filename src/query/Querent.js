@@ -411,7 +411,11 @@ export class Querent {
     /** @type {QuerentResult} */
     const hash = {};
     // For combination of layers the service gives some less than the maxFeatures allowed, so recompute the effective obtained number
-    const formatWFS = new olFormatWFS();
+    let formatWFS = new olFormatWFS();
+    if (dataSources.length > 0 && dataSources[0].wfsOutputFormat === 'GML2') {
+      formatWFS = new olFormatWFS({'version': '1.0.0'});
+    }
+
     const limit = formatWFS.readFeatures(response.data).length;
     const tooManyFeatures = totalFeatureCount > limit;
     /** @type {string[]} */
