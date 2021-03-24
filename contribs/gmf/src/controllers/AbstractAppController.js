@@ -49,6 +49,12 @@ import {listen} from 'ol/events.js';
 import {ThemeEventType} from 'gmf/theme/Manager.js';
 import {getBrowserLanguage} from 'ngeo/utils.js';
 import * as Sentry from '@sentry/browser';
+import {Integrations} from '@sentry/tracing';
+import * as Raven from 'raven-js';
+// @ts-ignore
+import RavenPluginsAngular from 'raven-js/plugins/angular.js';
+// @ts-ignore
+import ngRaven from 'ng-raven';
 import '@geoblocks/proj/src/somerc.js';
 import '@geoblocks/proj/src/lcc.js';
 import '@geoblocks/proj/src/tmerc.js';
@@ -582,6 +588,12 @@ export function AbstractAppController($scope, $injector, mobile) {
   if ($injector.has('sentryOptions')) {
     const options = $injector.get('sentryOptions');
     if (options.dsn) {
+      // For Angularjs code
+      options.serverName = options.environment;
+      Raven.config(options.dsn, options).addPlugin(RavenPluginsAngular, angular).install();
+
+      // For non Angularjs code
+      options.integrations = [new Integrations.BrowserTracing()];
       const tags = options.tags || [];
       delete options.tags;
       Object.assign(options, {
@@ -734,6 +746,7 @@ function augmentBreadcrumb(breadcrumb, hint) {
 const myModule = angular.module('GmfAbstractAppControllerModule', [
   'gettext',
   'tmh.dynamicLocale',
+  ngRaven,
   gmfAuthenticationModule.name,
   gmfBackgroundlayerselectorComponent.name,
   gmfDatasourceModule.name,
