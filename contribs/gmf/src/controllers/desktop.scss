@@ -387,8 +387,6 @@ gmf-backgroundlayerselector {
     order: 1;
     width: $right-panel-width;
     left: 0 !important;
-    overflow-y: auto;
-    overflow-x: hidden;
 
     .row {
       padding: 0 $app-margin;
@@ -432,6 +430,8 @@ gmf-backgroundlayerselector {
       margin-left: -$app-margin;
       & > div {
         height: 100%;
+        overflow-x: hidden;
+        overflow-y: auto;
       }
     }
 
