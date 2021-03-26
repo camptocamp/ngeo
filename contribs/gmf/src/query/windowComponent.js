@@ -288,7 +288,9 @@ export function QueryWindowController(
  * Initialise the controller.
  */
 QueryWindowController.prototype.$onInit = function () {
-  this.collapsed = this.options.collapsed === undefined ? !this.desktop : this.options.collapsed;
+  if (this.options.collapsed !== undefined) {
+    this.collapsed = this.options.collapsed;
+  }
   this.draggableContainment = this.draggableContainment || 'document';
 
   const featuresOverlay = this.ngeoFeatureOverlayMgr_.getFeatureOverlay();
