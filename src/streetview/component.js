@@ -90,7 +90,8 @@ function ngeoStreetviewTemplateUrl($attrs, ngeoStreetviewTemplateUrl) {
  *                 active="mainCtrl.streetViewActive"
  *                 feature-style="mainCtrl.streetViewStyle"
  *                 map="mainCtrl.map"
- *                 panel-width="mainCtrl.toolsPanelWidth">
+ *                 panel-width="mainCtrl.toolsPanelWidth"
+ *                 options-name="ngeoSreetviewOptions">
  *             </ngeo-streetview>
  */
 class StreetviewController {
@@ -108,7 +109,15 @@ class StreetviewController {
   constructor($element, $scope, ngeoFeatureOverlayMgr, $injector, $timeout) {
     // Binding properties
 
+    /**
+     * @type {angular.ITimeoutService}
+     */
     this.timeout_ = $timeout;
+
+    /**
+     * @type {string}
+     */
+    this.optionsName = null;
 
     /**
      * @type {boolean}
@@ -200,6 +209,11 @@ class StreetviewController {
     this.streetViewService_ = null;
 
     /**
+     * @type {string}
+     */
+    this.viewer = 'mapillary';
+
+    /**
      * @type {boolean}
      * @private
      */
@@ -225,6 +239,38 @@ class StreetviewController {
    * Called on initialization of the controller.
    */
   $onInit() {
+    // Initialization
+    if (this.featureStyle) {
+      this.feature_.setStyle(this.featureStyle);
+    }
+
+    /**
+     * @type {string}
+     */
+    const config = this.optionsName || 'ngeoStreetviewOptions';
+
+    /**
+     * @type {import('ngeo/options.js').ngeoStreetviewOptions}
+     */
+    this.options = this.injector_.has(config) ? this.injector_.get(config) : null;
+
+    this.viewer = this.options.viewer || 'mapillary';
+
+    if (this.viewer === 'mapillary') {
+      this.initMapillary_();
+    } else {
+      this.streetViewService_ = new GoogleStreetviewService(
+        this.scope_,
+        this.map,
+        this.handlePanoramaPositionChange_,
+        this.radius,
+        this.element_
+      );
+      this.addWatchers_();
+    }
+  }
+
+  addWatchers_() {
     // === Watchers ===
 
     // (1) Watch for any change in the location
@@ -253,22 +299,19 @@ class StreetviewController {
         this.streetViewService_.toggleShow(show);
       }
     );
+  }
 
-    // Other initialization
-    if (this.featureStyle) {
-      this.feature_.setStyle(this.featureStyle);
+  /**
+   * Init the mapillary functionality.
+   * @private
+   */
+  initMapillary_() {
+    if (!this.options || !this.options.key) {
+      throw new Error('Missing mapillary key');
     }
-    /**
-     * @type {string}
-     */
-    this.viewer_ = this.injector_.has('ngeoStreetviewOptions')
-      ? this.injector_.get('ngeoStreetviewOptions').viewer
-      : 'mapillary';
-
-    if (this.viewer_ === 'mapillary') {
-      const clientId = this.injector_.has('ngeoStreetviewOptions')
-        ? this.injector_.get('ngeoStreetviewOptions').key
-        : null;
+    const clientId = this.options.key;
+    //wait for the mly div to be there before making the service which needs it
+    this.timeout_(() => {
       const mapillaryService = new MapillaryService(
         this.scope_,
         this.map,
@@ -282,15 +325,8 @@ class StreetviewController {
         }
       );
       this.streetViewService_ = mapillaryService;
-    } else {
-      this.streetViewService_ = new GoogleStreetviewService(
-        this.scope_,
-        this.map,
-        this.handlePanoramaPositionChange_,
-        this.radius,
-        this.element_
-      );
-    }
+      this.addWatchers_();
+    });
   }
 
   /**
@@ -382,6 +418,7 @@ class StreetviewController {
 myModule.component('ngeoStreetview', {
   bindings: {
     'active': '<',
+    'optionsName': '@',
     'featureStyle': '<?',
     'map': '<',
     'radius': '<?',

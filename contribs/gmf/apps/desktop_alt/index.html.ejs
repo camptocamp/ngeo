@@ -86,8 +86,12 @@
               data-toggle="tooltip" data-placement="left" data-original-title="{{'LIDAR profile'|translate}}">
               <span class="fa fa-chart-line"></span>
             </button>
-            <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.streetViewActive"
-              data-toggle="tooltip" data-placement="left" data-original-title="{{'Street View'|translate}}">
+            <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.googleStreetViewActive"
+              data-toggle="tooltip" data-placement="left" data-original-title="{{'Google Street View'|translate}}">
+              <span class="fa fa-street-view"></span>
+            </button>
+            <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.mapillaryStreetViewActive"
+              data-toggle="tooltip" data-placement="left" data-original-title="{{'Mapillary'|translate}}">
               <span class="fa fa-street-view"></span>
             </button>
             <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.queryPanelActive"
@@ -116,7 +120,7 @@
         </div>
         <div
             class="gmf-app-tools-content container-fluid"
-            ng-class="{'gmf-app-active': mainCtrl.toolsActive,'gmf-app-streetview-active': mainCtrl.streetViewActive, 'gmf-app-inactive' : !mainCtrl.toolsActive}">
+            ng-class="{'gmf-app-active': mainCtrl.toolsActive,'gmf-app-streetview-active': mainCtrl.googleStreetViewActive || mainCtrl.mapillaryStreetViewActive , 'gmf-app-inactive' : !mainCtrl.toolsActive}">
           <div ng-show="mainCtrl.loginActive" class="row">
             <div class="col-sm-12">
               <div class="gmf-app-tools-content-heading">
@@ -239,17 +243,33 @@
               </gmf-lidarprofile-panel>
             </div>
           </div>
-          <div ng-show="mainCtrl.streetViewActive" class="row">
+          <div ng-show="mainCtrl.googleStreetViewActive" class="row">
             <div class="col-sm-12">
               <div class="gmf-app-tools-content-heading">
-                {{'Street View'|translate}}
-                <a class="btn close" ng-click="mainCtrl.streetViewActive = false">&times;</a>
+                {{'Google Street View'|translate}}
+                <a class="btn close" ng-click="mainCtrl.googleStreetViewActive = false">&times;</a>
               </div>
               <ngeo-streetview
-                  active="mainCtrl.streetViewActive"
+                  active="mainCtrl.googleStreetViewActive"
                   feature-style="mainCtrl.streetViewStyle"
                   map="mainCtrl.map"
-                  panel-width="mainCtrl.toolsPanelWidth">
+                  panel-width="mainCtrl.toolsPanelWidth"
+                  options-name="ngeoGoogleStreetviewOptions">
+              </ngeo-streetview>
+            </div>
+          </div>
+          <div ng-show="mainCtrl.mapillaryStreetViewActive" class="row">
+            <div class="col-sm-12">
+              <div class="gmf-app-tools-content-heading">
+                {{'Mapillary Street View'|translate}}
+                <a class="btn close" ng-click="mainCtrl.mapillaryStreetViewActive = false">&times;</a>
+              </div>
+              <ngeo-streetview
+                  active="mainCtrl.mapillaryStreetViewActive"
+                  feature-style="mainCtrl.streetViewStyle"
+                  map="mainCtrl.map"
+                  panel-width="mainCtrl.toolsPanelWidth"
+                  options-name="ngeoStreetviewOptions">
               </ngeo-streetview>
             </div>
           </div>
@@ -404,7 +424,7 @@
       </div>
     </footer>
     <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=es6,default-3.6,Array.prototype.includes,Object.entries,Object.values" crossorigin="anonymous"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyA3NVIy-HOYT0a0CkChA6nFwqEFqHYWBVk" crossorigin="anonymous"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyA3NVIy-HOYT0a0CkChA6nFwqEFqHYWBVk"></script>
     <script src="../../../dist/vendor.js?${htmlWebpackPlugin.options.vars.version}" crossorigin="anonymous"></script>
     <% for (var js in htmlWebpackPlugin.files.js) { %>
     <script src="<%= htmlWebpackPlugin.files.js[js] %>" crossorigin="anonymous"></script>
