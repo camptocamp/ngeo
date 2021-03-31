@@ -225,7 +225,8 @@ LayertreeController.prototype.setState = function (state, opt_broadcast) {
     this.parent.refreshState(this, opt_broadcast);
   }
 
-  const firstParents = this.isRoot ? this.children : [getFirstParentTree(this)];
+  // As all Themes where cleaned before, it needs to reset the state for all of them!
+  const firstParents = this.isRoot ? this.children : getFirstParentTree(this).parent.children;
 
   if (opt_broadcast === undefined || opt_broadcast) {
     firstParents.forEach((firstParent) => {

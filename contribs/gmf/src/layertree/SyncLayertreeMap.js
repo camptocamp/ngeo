@@ -380,7 +380,7 @@ SyncLayertreeMap.prototype.initGmfLayerInANotMixedGroup_ = function (treeCtrl, m
   // Update layer information and tree state.
   this.updateLayerReferences_(leafNode, layer);
   if (leafNode.metadata.isChecked) {
-    treeCtrl.setState('on', false);
+    treeCtrl.setState('on', true);
     this.updateLayerState_(layer, firstLevelGroup);
   } else {
     treeCtrl.parent.refreshState();
