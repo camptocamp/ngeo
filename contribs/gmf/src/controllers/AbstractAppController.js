@@ -56,6 +56,11 @@ import {ThemeEventType} from 'gmf/theme/Manager.js';
 import {getBrowserLanguage} from 'ngeo/utils.js';
 // @ts-ignore
 import * as Sentry from '@sentry/browser';
+import * as Raven from 'raven-js';
+// @ts-ignore
+import RavenPluginsAngular from 'raven-js/plugins/angular.js';
+// @ts-ignore
+import ngRaven from 'ng-raven';
 
 /**
  * A part of the application config.
@@ -710,6 +715,11 @@ export function AbstractAppController(config, map, $scope, $injector) {
 
   if ($injector.has('sentryOptions')) {
     const options = $injector.get('sentryOptions');
+    // For Angularjs code
+    options.serverName = options.environment;
+    Raven.config(options.dsn, options).addPlugin(RavenPluginsAngular, angular).install();
+
+    // For non Angularjs code
     const tags = options.tags || [];
     delete options.tags;
     Object.assign(options, {
@@ -877,6 +887,7 @@ function augmentBreadcrumb(breadcrumb, hint) {
 const module = angular.module('GmfAbstractAppControllerModule', [
   'gettext',
   'tmh.dynamicLocale',
+  ngRaven,
   gmfAuthenticationModule.name,
   gmfBackgroundlayerselectorComponent.name,
   gmfDatasourceModule.name,
