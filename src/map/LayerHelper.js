@@ -541,8 +541,9 @@ LayerHelper.prototype.getWMSLegendURL = function (
     ) {
       queryString.BBOX = opt_bbox.join(',');
       queryString.SRS = opt_srs;
-      queryString.WIDTH = Math.round(((opt_bbox[2] - opt_bbox[0]) / opt_scale) * 39.37 * opt_dpi);
-      queryString.HEIGHT = Math.round(((opt_bbox[3] - opt_bbox[1]) / opt_scale) * 39.37 * opt_dpi);
+      queryString.SRCWIDTH = Math.round(((opt_bbox[2] - opt_bbox[0]) / opt_scale) * 39.37 * opt_dpi);
+      queryString.SRCHEIGHT = Math.round(((opt_bbox[3] - opt_bbox[1]) / opt_scale) * 39.37 * opt_dpi);
+      delete queryString.SCALE; // QGIS calculate it from the BBOX the SRCWIDTH and the SRCHEIGHT.
     }
   }
   if (opt_additionalQueryString) {
