@@ -52,7 +52,7 @@
     "@types/d3": "6.2.0",
     "@types/d3-selection": "1.4.2",
     "@types/d3-transition": "2.0.0",
-    "@types/file-saver": "2.0.1",
+    "@types/file-saver": "2.0.2",
     "@types/geojson": "7946.0.7",
     "@types/googlemaps": "3.43.3",
     "@types/jasmine": "3.6.9",
