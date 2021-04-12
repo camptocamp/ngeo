@@ -221,17 +221,18 @@ LayertreeTreeManager.prototype.reorderChild_ = function(array, old_index, new_in
 
 /**
  * Update the application state with the list of first level groups in the tree
- * @param {Array.<import('gmf/themes.js').GmfGroup>} groups firstlevel groups of the tree
+ * @param {Array.<import('gmf/themes.js').GmfGroup>} groups current firstlevel groups of the tree
+ * @param {Array.<import('gmf/themes.js').GmfGroup>} removedGroups groups removed within this operation.
  * @private
  */
-LayertreeTreeManager.prototype.updateTreeGroupsState_ = function(groups) {
+LayertreeTreeManager.prototype.updateTreeGroupsState_ = function(groups, removedGroups) {
   const treeGroupsParam = /** @type Object.<string, string> */ ({});
   treeGroupsParam[PermalinkParam.TREE_GROUPS] = groups.map(node => node.name).join(',');
   this.ngeoStateManager_.updateState(treeGroupsParam);
   if (this.$injector_.has('gmfPermalink')) {
     /** @type {import("gmf/permalink/Permalink.js").PermalinkService} */(
       this.$injector_.get('gmfPermalink')
-    ).cleanParams(groups);
+    ).cleanParams(removedGroups);
   }
 };
 
@@ -294,7 +295,7 @@ LayertreeTreeManager.prototype.addFirstLevelGroup_ = function(group) {
     });
     this.initialLevelFirstGroups_ = undefined;
     //Update the permalink
-    this.updateTreeGroupsState_(this.root.children);
+    this.updateTreeGroupsState_(this.root.children, []);
     // Reset the groups and the promise state. Don't reset the
     // numberOfGroupsToAddInThisDigestLoop, it must persist because the layers
     // will be added into the map after that the layertree template is
@@ -380,8 +381,8 @@ LayertreeTreeManager.prototype.removeGroup = function(group) {
     index++;
   });
   if (found) {
-    children.splice(index, 1);
-    this.updateTreeGroupsState_(children);
+    const removedChildren = children.splice(index, 1);
+    this.updateTreeGroupsState_(children, removedChildren);
   }
 };
 
@@ -545,7 +546,7 @@ LayertreeTreeManager.prototype.refreshFirstLevelGroups_ = function(themes) {
 
   // Wait that Angular has created the layetree, then update the permalink.
   this.$timeout_(() => {
-    this.updateTreeGroupsState_(this.root.children);
+    this.updateTreeGroupsState_(this.root.children, []);
   });
 };
 
