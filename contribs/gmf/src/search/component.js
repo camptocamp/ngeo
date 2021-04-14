@@ -345,7 +345,7 @@ export class SearchController {
      */
     this.clearButton = this.options.clearButton !== false;
 
-    if (this.clearButton) {
+    if (!this.clearButton) {
       // Empty the search field on focus and blur.
       this.element_.find('input').on('focus blur', () => {
         this.clear();
@@ -937,6 +937,12 @@ export class SearchController {
     // the datasets are empty.
     // based on https://github.com/twitter/typeahead.js/issues/780#issuecomment-251554452
     // FIXME: remove this workaround when https://github.com/corejavascript/typeahead.js/issues/60 is fixed
+
+    // If there is no clear button clean the map and colorpicker.
+    if (!this.clearButton) {
+      this.featureOverlay_.clear();
+      this.displayColorPicker = false;
+    }
 
     const menu = this.element_.find('.twitter-typeahead .tt-menu');
     const message = menu.children('.gmf-search-no-results');
