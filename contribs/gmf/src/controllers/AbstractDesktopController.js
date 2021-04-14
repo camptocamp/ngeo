@@ -109,7 +109,12 @@ export class AbstractDesktopController extends AbstractAPIController {
     /**
      * @type {boolean}
      */
-    this.streetViewActive = false;
+    this.googleStreetViewActive = false;
+
+    /**
+     * @type {boolean}
+     */
+    this.mapillaryStreetViewActive = false;
 
     /**
      * @type {boolean}
@@ -168,7 +173,7 @@ export class AbstractDesktopController extends AbstractAPIController {
     );
 
     $scope.$watch(
-      () => this.streetViewActive,
+      () => this.googleStreetViewActive || this.mapillaryStreetViewActive,
       (newVal) => {
         this.setDataPanelMaxResizableWidth_();
         if (newVal) {
@@ -258,8 +263,11 @@ export class AbstractDesktopController extends AbstractAPIController {
     const editFeatureActivate = new ngeoMiscToolActivate(this, 'editFeatureActive');
     this.ngeoToolActivateMgr.registerTool('mapTools', editFeatureActivate, false);
 
-    const streetViewActivate = new ngeoMiscToolActivate(this, 'streetViewActive');
-    this.ngeoToolActivateMgr.registerTool('mapTools', streetViewActivate, false);
+    const googleStreetViewActivate = new ngeoMiscToolActivate(this, 'googleStreetViewActive');
+    this.ngeoToolActivateMgr.registerTool('mapTools', googleStreetViewActivate, false);
+
+    const mapillaryStreetViewActivate = new ngeoMiscToolActivate(this, 'mapillaryStreetViewActive');
+    this.ngeoToolActivateMgr.registerTool('mapTools', mapillaryStreetViewActivate, false);
 
     const contextdataActivate = new ngeoMiscToolActivate(this, 'contextdataActive');
     this.ngeoToolActivateMgr.registerTool('mapTools', contextdataActivate, false);
@@ -428,7 +436,10 @@ export class AbstractDesktopController extends AbstractAPIController {
         } else {
           this.toolsPanelWidth = this.checkPanelWidth_(this.toolsPanelWidth, this.$toolsPanel_);
           const maxWidth = this.$toolsPanel_.resizable('option', 'maxWidth');
-          if (this.streetViewActive && (!maxWidth || this.streetViewWidth_ < maxWidth)) {
+          if (
+            (this.googleStreetViewActive || this.mapillaryStreetViewActive) &&
+            (!maxWidth || this.streetViewWidth_ < maxWidth)
+          ) {
             this.setDataPanelMaxResizableWidth_(this.streetViewWidth_);
           } else {
             this.setDataPanelMaxResizableWidth_(this.toolsPanelWidth);
@@ -446,7 +457,8 @@ export class AbstractDesktopController extends AbstractAPIController {
       this.filterSelectorActive = false;
       this.editFeatureActive = false;
       this.drawProfilePanelActive = false;
-      this.streetViewActive = false;
+      this.googleStreetViewActive = false;
+      this.mapillaryStreetViewActive = false;
       this.queryPanelActive = false;
       this.importDataSourceActive = false;
       this.$toolsPanel_.resizable('disable');
