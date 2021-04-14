@@ -938,7 +938,7 @@ export class SearchController {
     // based on https://github.com/twitter/typeahead.js/issues/780#issuecomment-251554452
     // FIXME: remove this workaround when https://github.com/corejavascript/typeahead.js/issues/60 is fixed
 
-    //if there is no clear button clean the map and colorpicker
+    // If there is no clear button clean the map and colorpicker.
     if (!this.clearButton) {
       this.featureOverlay_.clear();
       this.displayColorPicker = false;
