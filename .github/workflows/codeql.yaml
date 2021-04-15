@@ -5,6 +5,9 @@ on:
   push:
   pull_request:
 
+env:
+  HAS_SECRETS: ${{ secrets.HAS_SECRETS }}
+
 jobs:
   codeql:
     name: CodeQL scanning
@@ -14,8 +17,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-        with:
-          fetch-depth: 1
 
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v1
@@ -24,6 +25,8 @@ jobs:
       # If this step fails, then you should remove it and run the build manually (see below)
       - name: Autobuild
         uses: github/codeql-action/autobuild@v1
+        if: env.HAS_SECRETS == 'HAS_SECRETS'
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v1
+        if: env.HAS_SECRETS == 'HAS_SECRETS'
