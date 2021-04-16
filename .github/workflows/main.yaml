@@ -3,6 +3,10 @@ name: Continuous integration
 
 on:
   push:
+  pull_request:
+
+env:
+  HAS_SECRETS: ${{ secrets.HAS_SECRETS }}
 
 jobs:
   not-failed-backport:
@@ -41,7 +45,7 @@ jobs:
           ci-gpg-private-key: ${{secrets.CI_GPG_PRIVATE_KEY}}
           github-gopass-ci-token: ${{secrets.GOPASS_CI_GITHUB_TOKEN}}
           patterns: npm transifex
-        if: github.repository == 'camptocamp/ngeo'
+        if: env.HAS_SECRETS == 'HAS_SECRETS'
 
       - run: echo "${HOME}/.local/bin" >> ${GITHUB_PATH}
       - run: python3 -m pip install --user --requirement=ci/requirements.txt
@@ -87,13 +91,13 @@ jobs:
         if: failure()
 
       - run: make transifex-send
-        if: github.repository == 'camptocamp/ngeo' && github.ref == format('refs/heads/{0}', env.MAIN_BRANCH)
+        if: env.HAS_SECRETS == 'HAS_SECRETS' && github.ref == format('refs/heads/{0}', env.MAIN_BRANCH)
       - run: buildtools/publish
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        if: github.repository == 'camptocamp/ngeo'
+        if: env.HAS_SECRETS == 'HAS_SECRETS'
       - run: buildtools/npm-publish
-        if: github.repository == 'camptocamp/ngeo'
+        if: env.HAS_SECRETS == 'HAS_SECRETS'
 
       - name: Notify c2cgeoportal
         run: >
@@ -104,4 +108,4 @@ jobs:
           --data '{"event_type": "ngeo_${{ env.MAIN_BRANCH }}_updated"}'
         if: >
           github.ref == format('refs/heads/{0}', env.MAIN_BRANCH)
-          && github.repository == 'camptocamp/ngeo'
+          && env.HAS_SECRETS == 'HAS_SECRETS'
