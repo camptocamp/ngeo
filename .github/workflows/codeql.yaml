@@ -3,7 +3,6 @@ name: CodeQL scanning
 
 on:
   push:
-  pull_request:
 
 env:
   HAS_SECRETS: ${{ secrets.HAS_SECRETS }}
@@ -17,9 +16,11 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+        if: env.HAS_SECRETS == 'HAS_SECRETS'
 
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v1
+        if: env.HAS_SECRETS == 'HAS_SECRETS'
 
       # Autobuild attempts to build any compiled languages  (C/C++, C#, or Java).
       # If this step fails, then you should remove it and run the build manually (see below)
