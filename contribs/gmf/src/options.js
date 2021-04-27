@@ -471,4 +471,14 @@
  * immediately return to the main edit panel after save. Default is false.
  */
 
+/**
+ * Use to inject custom javascript from an URL.
+ * @typedef {string} gmfCustomJavascriptUrl
+ */
+
+/**
+ * Use to inject custom stylesheet from an URL.
+ * @typedef {string} gmfCustomStylesheetUrl
+ */
+
 export default undefined;
