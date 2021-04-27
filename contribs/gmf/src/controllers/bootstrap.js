@@ -65,6 +65,20 @@ function bootstrap(module) {
       }
     }
 
+    if ('gmfCustomJavascriptUrl' in dynamic.constants) {
+      const script = document.createElement('script');
+      script.src = dynamic.constants.gmfCustomJavascriptUrl;
+      script.crossOrigin = 'anonymous';
+      document.body.append(script);
+    }
+    if ('gmfCustomStylesheetUrl' in dynamic.constants) {
+      const style = document.createElement('link');
+      style.href = dynamic.constants.gmfCustomStylesheetUrl;
+      style.rel = 'stylesheet';
+      style.crossOrigin = 'anonymous';
+      document.head.append(style);
+    }
+
     for (const name in dynamic.constants) {
       module.constant(name, dynamic.constants[name]);
     }
