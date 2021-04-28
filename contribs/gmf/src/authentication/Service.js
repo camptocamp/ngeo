@@ -157,11 +157,6 @@ export class AuthenticationService extends olEventsEventTarget {
     this.user_ = gmfUser;
 
     /**
-     * @type {boolean}
-     */
-    this.forcePasswordChange = gmfAuthenticationConfig.forcePasswordChange === true;
-
-    /**
      * Don't request a new user object from the back-end after
      * logging out if the logged-in user's role has this role.
      * @type {?import('gmf/options.js').gmfAuthenticationNoReloadRole}
@@ -326,7 +321,7 @@ export class AuthenticationService extends olEventsEventTarget {
    * @private
    */
   handleLogin_(checkingLoginStatus, resp) {
-    if (resp.data.is_password_changed === false && this.forcePasswordChange) {
+    if (resp.data.is_password_changed === false) {
       const event = new ngeoCustomEvent('mustChangePassword', {user: resp.data});
       this.dispatchEvent(event);
       return;
