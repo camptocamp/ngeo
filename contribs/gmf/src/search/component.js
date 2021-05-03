@@ -383,6 +383,11 @@ export class SearchController {
         ? [this.map.getView().getProjection()]
         : this.ngeoAutoProjection_.getProjectionList(this.options.coordinatesProjections);
 
+    // Merge typeahead options from the controller options with the constant options
+    if (this.typeaheadOptions) {
+      Object.assign(this.options, this.typeaheadOptions);
+    }
+
     this.initDatasets_();
 
     this.listeners = this.mergeListeners_(this.additionalListeners, {
