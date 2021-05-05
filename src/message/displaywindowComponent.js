@@ -190,10 +190,25 @@ export class Controller {
     this.open = this.open === true;
     this.height = this.height || '240px';
     this.width = this.width || '240px';
-    const element = document.getElementsByClassName('ngeo-displaywindow')[0];
-    const margin = parseFloat(window.getComputedStyle(element).left);
-    this.maxWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0) - 2 * margin;
-    this.maxHeigth = Math.max(document.documentElement.clientHeight, window.innerHeight || 0) - 2 * margin;
+
+    /**
+     * @type {Element}
+     */
+    this.containingElement = null;
+
+    if (typeof this.draggableContainment === 'string') {
+      if (this.draggableContainment !== 'document') {
+        let className = String(this.draggableContainment);
+        if (className.startsWith('.')) {
+          className = className.substring(1);
+        }
+        this.containingElement = document.getElementsByClassName(className)[0];
+      } else {
+        this.containingElement = document.documentElement;
+      }
+    } else {
+      this.containingElement = this.draggableContainment;
+    }
 
     this.draggable = this.draggable !== undefined ? this.draggable : this.desktop;
     this.resizable = this.resizable !== undefined ? this.resizable : this.desktop;
@@ -211,6 +226,10 @@ export class Controller {
       this.element_.find('.ngeo-displaywindow .windowcontainer').resizable({
         'minHeight': 240,
         'minWidth': 240,
+        resize: (event, ui) => {
+          this.height = `${ui.size.height}px`;
+          this.width = `${ui.size.width}px`;
+        },
       });
     }
 
@@ -253,11 +272,13 @@ export class Controller {
    * @return {Object<string, string>} CSS style when using width/height
    */
   get style() {
+    this.maxWidth = this.containingElement.clientWidth - 20;
+    this.maxHeight = this.containingElement.clientHeight - 20;
     return {
       height: this.height,
       width: this.width,
       'max-width': this.maxWidth.toString() + 'px',
-      'max-height': this.maxHeigth.toString() + 'px',
+      'max-height': this.maxHeight.toString() + 'px',
     };
   }
 
