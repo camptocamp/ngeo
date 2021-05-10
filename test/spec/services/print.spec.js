@@ -86,6 +86,7 @@ describe('ngeo.print.Service', () => {
           params: {
             'LAYERS': 'foo,bar',
             'FORMAT': 'image/jpeg',
+            'STYLES': '',
           },
         });
         map.addLayer(
@@ -127,7 +128,7 @@ describe('ngeo.print.Service', () => {
                   serverType: undefined,
                   version: undefined,
                   useNativeAngle: true,
-                  styles: [''],
+                  styles: ['', ''],
                 },
               ],
             },
@@ -150,6 +151,7 @@ describe('ngeo.print.Service', () => {
               params: {
                 'LAYERS': 'foo,bar',
                 'FORMAT': 'image/jpeg',
+                'STYLES': '',
               },
             }),
           })
@@ -187,7 +189,7 @@ describe('ngeo.print.Service', () => {
                   serverType: undefined,
                   version: undefined,
                   useNativeAngle: true,
-                  styles: [''],
+                  styles: ['', ''],
                 },
               ],
             },
@@ -631,6 +633,7 @@ describe('ngeo.print.Service', () => {
           params: {
             'LAYERS': 'foo,bar',
             'FORMAT': 'image/jpeg',
+            'STYLES': '',
           },
         });
         map.addLayer(
@@ -644,6 +647,7 @@ describe('ngeo.print.Service', () => {
           params: {
             'LAYERS': 'foo,bar',
             'FORMAT': 'image/jpeg',
+            'STYLES': '',
           },
         });
         map.addLayer(
