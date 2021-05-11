@@ -192,7 +192,8 @@ export class AuthenticationService extends olEventsEventTarget {
   }
 
   handleDisconnection() {
-    this.logout();
+    const noReload = this.noReloadRole_ ? this.getRolesNames().includes(this.noReloadRole_) : false;
+    this.resetUser_(noReload);
     const eventDisconnect = new ngeoCustomEvent('disconnected', {user: this.user_});
     this.dispatchEvent(eventDisconnect);
   }
