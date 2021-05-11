@@ -336,6 +336,11 @@ PrintService.prototype.encodeWmsLayer_ = function (arr, layer, url, params) {
     serverType = params.SERVERTYPE;
   }
 
+  // Get the same amount of styles than layers to print
+  while (params.LAYERS.split(',').length > params.STYLES.split(',').length) {
+    params.STYLES += ',';
+  }
+
   /** @type {import('ngeo/print/mapfish-print-v3.js').MapFishPrintWmsLayer} */
   const object = {
     baseURL: getAbsoluteUrl_(url_url.origin + url_url.pathname),
