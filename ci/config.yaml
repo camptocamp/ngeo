@@ -9,6 +9,10 @@ checks:
       - ^contribs/gmf/test/spec/data/themescapabilities\.js$
       - ^contribs/gmf/test/spec/data/themes\.js$
       - ^buildtools/asitvd.capabilities\.xml$
+  dependabot_config:
+    update_ignore:
+      - directory: /
+        package-ecosystem: npm
 
 audit:
   npm:
