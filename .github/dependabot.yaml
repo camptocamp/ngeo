@@ -17,7 +17,6 @@ updates:
     time: "02:00"
   ignore:
     - dependency-name: bootstrap
-    - dependency-name: '@types/bootstrap'
     - dependency-name: webpack
     - dependency-name: webpack-cli
     - dependency-name: copy-webpack-plugin
