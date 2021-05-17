@@ -108,7 +108,7 @@ myModule.constant('gmfSearchOptions', {
   colorChooser: true,
   delay: 50,
   placeholder: 'Search for « Laus » for example…',
-  searchStyles: {
+  styles: {
     osm: {
       fill: {color: [255, 255, 255, 0.6]},
       circle: {
