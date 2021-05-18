@@ -106,7 +106,7 @@ function MainController(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
 
 myModule.controller('MainController', MainController);
 
-myModule.constant('ngeoStreetviewOptions', {
+myModule.constant('ngeoGoogleStreetviewOptions', {
   'viewer': 'google',
 });
 
