@@ -135,7 +135,7 @@
     "popper.js": "1.16.1",
     "prettier": "2.2.1",
     "proj4": "2.7.2",
-    "puppeteer": "8.0.0",
+    "puppeteer": "9.1.1",
     "qruri": "0.0.4",
     "raven-js": "3.27.2",
     "resize-observer-polyfill": "1.5.1",
