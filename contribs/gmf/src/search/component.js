@@ -743,10 +743,9 @@ export class SearchController {
       if (fillStyle) {
         fillStyle.setColor(fillColor);
       }
-      // the image style can't be changed in place, the colors are updated on a clone.
+
       let imageStyle = trueStyle.getImage();
       if (imageStyle) {
-        imageStyle = imageStyle.clone();
         const circleStyle = /** @type {import('ol/style/Circle.js').default} */ (imageStyle);
         const imageStrokeStyle = circleStyle.getStroke();
         if (imageStrokeStyle) {
@@ -756,6 +755,8 @@ export class SearchController {
         if (imageFillStyle) {
           imageFillStyle.setColor(fillColor);
         }
+        // clone the image as only new ones are rerendered
+        imageStyle = imageStyle.clone();
         trueStyle.setImage(imageStyle);
       }
     }
