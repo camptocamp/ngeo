@@ -1,0 +1,10 @@
+{
+  "name": "ngeo",
+  "entryPoints": ["src/*", "contribs/gmf/src/*", "api/src/*"],
+  "readme": "buildtools/doc-readme.md",
+  "out": "apidoc",
+  "excludePrivate": true,
+  "excludeProtected": true,
+  "excludeExternals": true,
+  "exclude": ["**/examples/**", "**/test/**", "**/node_modules/rxjs/**", "**/.build/**"]
+}
