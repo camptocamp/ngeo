@@ -40,7 +40,7 @@ import MousePosition from 'ol/control/MousePosition.js';
 import {createStringXY} from 'ol/coordinate.js';
 import ScaleLine from 'ol/control/ScaleLine.js';
 import OverviewMap from 'ol/control/OverviewMap.js';
-import {create as createProjection} from '@geoblocks/proj/utils.js';
+import createProjection from 'ngeo/proj/utils.js';
 
 // @ts-ignore: there is no existing types for ol-layerswitcher
 import LayerSwitcher from 'ol-layerswitcher';

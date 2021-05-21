@@ -55,10 +55,7 @@ import * as Raven from 'raven-js';
 import RavenPluginsAngular from 'raven-js/plugins/angular.js';
 // @ts-ignore
 import ngRaven from 'ng-raven';
-import '@geoblocks/proj/src/somerc.js';
-import '@geoblocks/proj/src/lcc.js';
-import '@geoblocks/proj/src/tmerc.js';
-import {create as createProjection} from '@geoblocks/proj/utils.js';
+import createProjection from 'ngeo/proj/utils.js';
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
 import olControlScaleLine from 'ol/control/ScaleLine.js';

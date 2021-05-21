@@ -354,10 +354,6 @@ contribs/dist: .build/build-dll.timestamp
 	[ -e node_modules/ol/gen-ts ] || find node_modules/ol -name '*.d.ts' -exec sed -i 's#import("ol/src/#import("ol/#g' {} \;
 	touch node_modules/ol/gen-ts
 
-	[ -e node_modules/@geoblocks/proj/gen-ts ] || cp tsconfig-build.json node_modules/@geoblocks/proj/src/tsconfig.json
-	[ -e node_modules/@geoblocks/proj/gen-ts ] || (cd node_modules/@geoblocks/proj/src; npx --package typescript@4.0.2 tsc --declaration)
-	touch node_modules/@geoblocks/proj/gen-ts
-
 	[ -e node_modules/mapillary-js/gen-ts ] || (cd node_modules/mapillary-js; npm install --ignore-scripts)
 	[ -e node_modules/mapillary-js/gen-ts ] || (cd node_modules/mapillary-js; node_modules/.bin/tsc --declaration)
 	[ -e node_modules/mapillary-js/gen-ts ] || find node_modules/mapillary-js/src -name '*.ts'|grep -v .d.ts| while read f; do rm "$$f"; done

@@ -21,7 +21,7 @@
 
 import angular from 'angular';
 import './svg.css';
-import EPSG2056 from '@geoblocks/proj/EPSG_2056.js';
+import EPSG2056 from 'ngeo/proj/EPSG_2056.js';
 
 import Map from 'ol/Map.js';
 import View from 'ol/View.js';

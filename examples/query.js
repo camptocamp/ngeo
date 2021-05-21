@@ -23,7 +23,7 @@ import angular from 'angular';
 import {MAPSERVER_PROXY, MAPSERVER_WFS_FEATURE_NS} from './url.js';
 import './base.css';
 import './query.css';
-import EPSG2056 from '@geoblocks/proj/EPSG_2056.js';
+import EPSG2056 from 'ngeo/proj/EPSG_2056.js';
 
 import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources.js';
 import ngeoDatasourceOGC from 'ngeo/datasource/OGC.js';

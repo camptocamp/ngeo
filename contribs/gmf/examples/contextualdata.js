@@ -25,7 +25,8 @@ import gmfContextualdataModule from 'gmf/contextualdata/module.js';
 
 import gmfMapComponent from 'gmf/map/component.js';
 import ngeoMiscFilters from 'ngeo/misc/filters.js';
-import EPSG2056 from '@geoblocks/proj/EPSG_2056.js';
+import EPSG2056 from 'ngeo/proj/EPSG_2056.js';
+import 'ngeo/proj/EPSG_21781.js';
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
 import olLayerTile from 'ol/layer/Tile.js';

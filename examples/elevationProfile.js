@@ -21,7 +21,7 @@
 
 import './elevationProfile.css';
 import angular from 'angular';
-import EPSG2056 from '@geoblocks/proj/EPSG_2056.js';
+import EPSG2056 from 'ngeo/proj/EPSG_2056.js';
 import {MAPSERVER_PROXY} from './url.js';
 
 import olFeature from 'ol/Feature.js';

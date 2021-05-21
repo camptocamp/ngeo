@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2021 Camptocamp SA
+// Copyright (c) 2018-2021 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -19,47 +19,20 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import './permalink.css';
-import angular from 'angular';
-import gmfMapModule from 'gmf/map/module.js';
-
-import EPSG2056 from 'ngeo/proj/EPSG_2056.js';
-import olMap from 'ol/Map.js';
-import olView from 'ol/View.js';
-import olLayerTile from 'ol/layer/Tile.js';
-import olSourceOSM from 'ol/source/OSM.js';
-import options from './options.js';
+import {get as getProjection} from 'ol/proj.js';
+import {register} from 'ol/proj/proj4.js';
+import proj4 from 'proj4';
 
 /**
- * @type {angular.IModule}
- * @hidden
+ * @param {string} code
+ * @param {string} def
+ * @param {number[]} extent
+ * @return {import('ol/proj/Projection.js').default}
  */
-const myModule = angular.module('gmfapp', ['gettext', gmfMapModule.name]);
-
-/**
- * @class
- * @ngInject
- */
-function MainController() {
-  /**
-   * @type {import("ol/Map.js").default}
-   */
-  this.map = new olMap({
-    layers: [
-      new olLayerTile({
-        source: new olSourceOSM(),
-      }),
-    ],
-    view: new olView({
-      projection: EPSG2056,
-      resolutions: [200, 100, 50, 20, 10, 5, 2.5, 2, 1, 0.5],
-      center: [2537635, 1152640],
-      zoom: 3,
-    }),
-  });
+export default function create(code, def, extent) {
+  proj4.defs(code, def.trim());
+  register(proj4);
+  const proj = getProjection(code);
+  proj.setExtent(extent);
+  return proj;
 }
-
-myModule.controller('MainController', MainController);
-options(myModule);
-
-export default myModule;

@@ -27,7 +27,7 @@ import gmfMapComponent from 'gmf/map/component.js';
 
 import gmfProfileModule from 'gmf/profile/module.js';
 import ngeoMapModule from 'ngeo/map/module.js';
-import EPSG2056 from '@geoblocks/proj/EPSG_2056.js';
+import EPSG2056 from 'ngeo/proj/EPSG_2056.js';
 import olCollection from 'ol/Collection.js';
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';

@@ -33,7 +33,7 @@ import gmfObjecteditingManager from 'gmf/objectediting/Manager.js';
 import gmfThemeThemes from 'gmf/theme/Themes.js';
 import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
 import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr.js';
-import EPSG2056 from '@geoblocks/proj/EPSG_2056.js';
+import EPSG2056 from 'ngeo/proj/EPSG_2056.js';
 import * as olProj from 'ol/proj.js';
 import olCollection from 'ol/Collection.js';
 import olMap from 'ol/Map.js';

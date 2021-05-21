@@ -20,7 +20,7 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import EPSG21781 from '@geoblocks/proj/EPSG_21781.js';
+import EPSG2056 from 'ngeo/proj/EPSG_2056.js';
 import * as olProj from 'ol/proj.js';
 
 describe('ngeo.misc.AutoProjection', () => {
@@ -42,9 +42,9 @@ describe('ngeo.misc.AutoProjection', () => {
     result = ngeoAutoProjection.stringToCoordinates(str);
     expect(result).toBeNull();
 
-    str = '600000 200000';
+    str = '2600000 1200000';
     result = ngeoAutoProjection.stringToCoordinates(str);
-    expect(result).toEqual([600000, 200000]);
+    expect(result).toEqual([2600000, 1200000]);
   });
 
   it('Get Projection list from codes', () => {
@@ -58,11 +58,11 @@ describe('ngeo.misc.AutoProjection', () => {
   });
 
   it('Try projections', () => {
-    const coordinatesA = [600000, 200000];
+    const coordinatesA = [2600000, 1200000];
     const coordinatesB = [8, 47];
-    const viewProjection = olProj.get(EPSG21781);
+    const viewProjection = olProj.get(EPSG2056);
     const extent = viewProjection.getExtent();
-    const projections = [olProj.get(EPSG21781), olProj.get('EPSG:4326')];
+    const projections = [olProj.get(EPSG2056), olProj.get('EPSG:4326')];
 
     let point = ngeoAutoProjection.tryProjections(coordinatesA, extent, viewProjection);
     expect(point).toEqual(coordinatesA);
@@ -77,7 +77,7 @@ describe('ngeo.misc.AutoProjection', () => {
 
   it('Try projections with inversion', () => {
     const coordinates = [47, 8];
-    const viewProjection = olProj.get(EPSG21781);
+    const viewProjection = olProj.get(EPSG2056);
     const extent = viewProjection.getExtent();
     const projections = [olProj.get('EPSG:4326')];
     const coordinatesTransformed = olProj.transform(coordinates.reverse(), projections[0], viewProjection);

@@ -29,6 +29,8 @@ import gmfPermalinkModule from 'gmf/permalink/module.js';
 import gmfPrintComponent from 'gmf/print/component.js';
 import gmfProfileModule from 'gmf/profile/module.js';
 import gmfQueryExtraModule from 'gmf/query/extraModule.js';
+import 'ngeo/proj/EPSG_2056.js';
+import 'ngeo/proj/EPSG_21781.js';
 
 /**
  * @type {angular.IModule}
