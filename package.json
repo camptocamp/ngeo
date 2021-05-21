@@ -15,7 +15,7 @@
     "serve-api": "webpack-dev-server --content-base=api/dist/apihelp/ --config=buildtools/webpack.api.js --https --cert=private.crt --key=private.key --port=3000 --mode=development --progress --watch --debug",
     "build-gmf-apps-profile": "TARGET=gmf-apps webpack --profile --json > profile.json",
     "typecheck": "tsc",
-    "doc": "typedoc --name ngeo --mode file --excludePrivate --excludeProtected --ignoreCompilerErrors --excludeExternals --exclude '**/examples/**,**/test/**' --readme buildtools/doc-readme.md --out apidoc",
+    "doc": "typedoc",
     "jsdoc": "jsdoc contribs/gmf/src/themes.js src/options.js contribs/gmf/src/options.js api/src/options.js --configure jsdoc/config.json --destination jsdoc/build"
   },
   "sideEffects": false,
@@ -149,7 +149,7 @@
     "tinycolor2": "1.4.2",
     "ts-node": "9.1.1",
     "tsconfig-paths": "3.9.0",
-    "typedoc": "0.19.2",
+    "typedoc": "0.20.36",
     "typescript": "4.2.4",
     "webpack": "4.46.0",
     "webpack-cli": "3.3.12",
