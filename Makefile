@@ -346,19 +346,21 @@ contribs/dist: .build/build-dll.timestamp
 
 .build/node_modules.timestamp: package.json
 	npm install
-	mkdir -p $(dir $@)
+	# Installed from peer dependency from ol-layerswitcher and that breaks our types
+	rm -rf ./node_modules/@types/openlayers
 
 	[ -e node_modules/ol/gen-ts ] || cp tsconfig-build.json node_modules/ol/src/tsconfig.json
-	[ -e node_modules/ol/gen-ts ] || (cd node_modules/ol/src; npx --package typescript@4.0.2 tsc --declaration)
+	[ -e node_modules/ol/gen-ts ] || (cd node_modules/ol/src; ../../.bin/tsc --declaration)
 	[ -e node_modules/ol/gen-ts ] || find node_modules/ol -name '*.d.ts' -exec sed -i 's#from "ol/src/#from "ol/#g' {} \;
 	[ -e node_modules/ol/gen-ts ] || find node_modules/ol -name '*.d.ts' -exec sed -i 's#import("ol/src/#import("ol/#g' {} \;
 	touch node_modules/ol/gen-ts
 
 	[ -e node_modules/mapillary-js/gen-ts ] || (cd node_modules/mapillary-js; npm install --ignore-scripts)
-	[ -e node_modules/mapillary-js/gen-ts ] || (cd node_modules/mapillary-js; node_modules/.bin/tsc --declaration)
+	[ -e node_modules/mapillary-js/gen-ts ] || (cd node_modules/mapillary-js; ../.bin/tsc --declaration)
 	[ -e node_modules/mapillary-js/gen-ts ] || find node_modules/mapillary-js/src -name '*.ts'|grep -v .d.ts| while read f; do rm "$$f"; done
 	touch node_modules/mapillary-js/gen-ts
 
+	mkdir -p $(dir $@)
 	touch $@
 
 contribs/gmf/build/angular-locale_%.js: package.json
