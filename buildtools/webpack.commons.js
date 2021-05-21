@@ -253,6 +253,7 @@ module.exports = function (config) {
         olcs: 'ol-cesium/src/olcs',
         'jquery-ui/datepicker': 'jquery-ui/ui/widgets/datepicker', // For angular-ui-date
         'mapillary-js/src/Mapillary': 'mapillary-js/dist/mapillary.min.js',
+        '@sentry/integrations': '@sentry/integrations/dist/angular.js',
       },
     },
     optimization: {
