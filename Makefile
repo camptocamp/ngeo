@@ -145,7 +145,7 @@ test-debug: .build/node_modules.timestamp .build/build-dll.timestamp .build/node
 	TS_NODE_PROJECT=disable.json ./node_modules/karma/bin/karma start karma-conf.js --browsers=Chrome --single-run=false --autoWatch=true
 
 .build/node_modules_karma-chrome-launcher.timestamp:
-	npm install karma-chrome-launcher
+	npm install --no-optional karma-chrome-launcher
 	mkdir -p $(dir $@)
 	touch $@
 
@@ -209,7 +209,7 @@ gh-pages: .build/python-venv.timestamp
 	buildtools/deploy.sh
 
 .build/node_modules.copyright.timestamp: .build/node_modules.timestamp
-	npm install --no-save -no-optional --no-package-lock buildtools/copyright
+	npm install --no-save --no-optional --no-package-lock ./buildtools/copyright
 	touch $@
 
 .build/eslint.timestamp: .build/node_modules.copyright.timestamp $(ESLINT_CONFIG_FILES) \
@@ -345,7 +345,7 @@ contribs/dist: .build/build-dll.timestamp
 	touch $@
 
 .build/node_modules.timestamp: package.json
-	npm install
+	npm install --no-optional
 	# Installed from peer dependency from ol-layerswitcher and that breaks our types
 	rm -rf ./node_modules/@types/openlayers
 
@@ -355,7 +355,7 @@ contribs/dist: .build/build-dll.timestamp
 	[ -e node_modules/ol/gen-ts ] || find node_modules/ol -name '*.d.ts' -exec sed -i 's#import("ol/src/#import("ol/#g' {} \;
 	touch node_modules/ol/gen-ts
 
-	[ -e node_modules/mapillary-js/gen-ts ] || (cd node_modules/mapillary-js; npm install --ignore-scripts)
+	[ -e node_modules/mapillary-js/gen-ts ] || (cd node_modules/mapillary-js; npm install --no-optional --ignore-scripts)
 	[ -e node_modules/mapillary-js/gen-ts ] || (cd node_modules/mapillary-js; ../.bin/tsc --declaration)
 	[ -e node_modules/mapillary-js/gen-ts ] || find node_modules/mapillary-js/src -name '*.ts'|grep -v .d.ts| while read f; do rm "$$f"; done
 	touch node_modules/mapillary-js/gen-ts
