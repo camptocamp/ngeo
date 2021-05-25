@@ -363,7 +363,10 @@ export class ExternalDatSourcesManager {
 
       // wmsInfoFormat
       const infoFormats = req.GetFeatureInfo.Format;
-      const wmsInfoFormat = infoFormats.includes(WMSInfoFormat.GML) ? WMSInfoFormat.GML : undefined;
+      let wmsInfoFormat = infoFormats.includes(WMSInfoFormat.GML) ? WMSInfoFormat.GML : undefined;
+      if (wmsInfoFormat === undefined) {
+        wmsInfoFormat = infoFormats.includes(WMSInfoFormat.GEOJSON) ? WMSInfoFormat.GEOJSON : undefined;
+      }
 
       // queryable
       const queryable = layer.queryable === true && wmsInfoFormat !== undefined;
