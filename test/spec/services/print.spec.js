@@ -22,7 +22,7 @@
 // @ts-nocheck
 import angular from 'angular';
 import {PrintService} from 'ngeo/print/Service.js';
-import {getUid} from 'ol/index.js';
+import {getUid} from 'ol/util.js';
 import olFeature from 'ol/Feature.js';
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';

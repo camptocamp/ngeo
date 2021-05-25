@@ -25,7 +25,7 @@ import olFormatGeoJSON from 'ol/format/GeoJSON.js';
 import olStyleRegularShape from 'ol/style/RegularShape.js';
 import {toDegrees} from 'ol/math.js';
 import olFeature from 'ol/Feature.js';
-import {Style} from 'ol/style';
+import Style from 'ol/style/Style.js';
 import olStyleIcon from 'ol/style/Icon.js';
 import olStyleCircle from 'ol/style/Circle.js';
 import {asArray as asColorArray} from 'ol/color.js';

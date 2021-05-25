@@ -349,6 +349,10 @@ contribs/dist: .build/build-dll.timestamp
 	# Installed from peer dependency from ol-layerswitcher and that breaks our types
 	rm -rf ./node_modules/@types/openlayers
 
+	# Remove index file that includes too many dependencies (not possible to definitively remove them because olsc use them)
+	# [ -e node_modules/ol/gen-ts ] || (cd node_modules/ol; rm format.js geom.js index.js layer.js source.js)
+	# [ -e node_modules/ol/gen-ts ] || (cd node_modules/ol/src; rm format.js geom.js index.js layer.js source.js)
+
 	[ -e node_modules/ol/gen-ts ] || cp tsconfig-build.json node_modules/ol/src/tsconfig.json
 	[ -e node_modules/ol/gen-ts ] || (cd node_modules/ol/src; ../../.bin/tsc --declaration)
 	[ -e node_modules/ol/gen-ts ] || find node_modules/ol -name '*.d.ts' -exec sed -i 's#from "ol/src/#from "ol/#g' {} \;
