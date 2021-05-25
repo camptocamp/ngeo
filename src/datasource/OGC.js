@@ -540,11 +540,9 @@ export class OGC extends ngeoDatasourceDataSource {
           layers: wmsLayerNames,
         });
       } else if (this.wmsInfoFormat === WMSInfoFormat.GEOJSON) {
-        if (this.ogcServerType_ === ServerType.ARCGIS) {
-          wmsFormat = new ngeoFormatArcGISGeoJSON({
-            layers: wmsLayerNames,
-          });
-        }
+        wmsFormat = new ngeoFormatArcGISGeoJSON({
+          layers: wmsLayerNames,
+        });
       }
     }
 
