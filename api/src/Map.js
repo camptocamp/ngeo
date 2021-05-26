@@ -187,6 +187,7 @@ class Map {
             this.map_.addControl(
               new OverviewMap({
                 collapsed: !options.miniMapExpanded,
+                // @ts-ignore: Group didn't extent Layer
                 layers: [layer],
                 view: new View({
                   projection: this.view_.getProjection(),

@@ -1318,7 +1318,7 @@ export class PrintController {
       const res = this.ngeoPrintUtils_.getOptimalResolution(mapSize, this.paperSize_, opt_scale);
 
       const view = this.map.getView();
-      const contrainRes = view.getConstraints().resolution(res, 1, mapSize);
+      const contrainRes = view.getConstraints().resolution(res, 1, mapSize, undefined);
       view.setResolution(contrainRes);
       // Render the map to update the postcompose mask manually
       this.map.render();
