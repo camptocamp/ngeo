@@ -24,7 +24,7 @@ import angular from 'angular';
 import ngeoSourceAsitVD from 'ngeo/source/AsitVD.js';
 import {MAPSERVER_PROXY} from './url.js';
 
-import EPSG2056 from '@geoblocks/proj/EPSG_2056.js';
+import EPSG2056 from 'ngeo/proj/EPSG_2056.js';
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
 import olLayerImage from 'ol/layer/Image.js';

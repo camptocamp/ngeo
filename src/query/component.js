@@ -29,9 +29,9 @@ import ngeoQueryMapQuerent from 'ngeo/query/MapQuerent.js';
 import {listen as olEventsListen} from 'ol/events.js';
 import {always as olEventsConditionAlways} from 'ol/events/condition.js';
 import olInteractionDraw, {createBox as olInteractionDrawCreateBox} from 'ol/interaction/Draw.js';
-import {Vector as olLayerVector} from 'ol/layer.js';
+import olLayerVector from 'ol/layer/Vector.js';
 import MapBrowserEvent from 'ol/MapBrowserEvent.js';
-import {Vector as olSourceVector} from 'ol/source.js';
+import olSourceVector from 'ol/source/Vector.js';
 
 /**
  * @type {angular.IModule}

@@ -23,7 +23,7 @@ import './lidarprofile.css';
 import angular from 'angular';
 import gmfMapComponent from 'gmf/map/component.js';
 import gmfLidarprofileModule from 'gmf/lidarprofile/module.js';
-import EPSG2056 from '@geoblocks/proj/EPSG_2056.js';
+import EPSG2056 from 'ngeo/proj/EPSG_2056.js';
 import ngeoMapModule from 'ngeo/map/module.js';
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';

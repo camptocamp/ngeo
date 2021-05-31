@@ -23,12 +23,10 @@ import angular from 'angular';
 
 import {listen as olEventsListen} from 'ol/events.js';
 import OLFeature from 'ol/Feature.js';
-import {
-  Circle as OLGeomCircle,
-  GeometryCollection as OLGeomGeometryCollection,
-  LineString as OLGeomLineString,
-  Polygon as OLGeomPolygon,
-} from 'ol/geom.js';
+import OLGeomCircle from 'ol/geom/Circle.js';
+import OLGeomGeometryCollection from 'ol/geom/GeometryCollection.js';
+import OLGeomLineString from 'ol/geom/LineString.js';
+import OLGeomPolygon from 'ol/geom/Polygon.js';
 import {fromExtent as olGeomPolygonFromExtent} from 'ol/geom/Polygon.js';
 import OLInteractionDraw from 'ol/interaction/Draw.js';
 import OLInteractionPointer from 'ol/interaction/Pointer.js';

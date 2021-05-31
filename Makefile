@@ -145,7 +145,7 @@ test-debug: .build/node_modules.timestamp .build/build-dll.timestamp .build/node
 	TS_NODE_PROJECT=disable.json ./node_modules/karma/bin/karma start karma-conf.js --browsers=Chrome --single-run=false --autoWatch=true
 
 .build/node_modules_karma-chrome-launcher.timestamp:
-	npm install karma-chrome-launcher
+	npm install --no-optional karma-chrome-launcher
 	mkdir -p $(dir $@)
 	touch $@
 
@@ -209,7 +209,7 @@ gh-pages: .build/python-venv.timestamp
 	buildtools/deploy.sh
 
 .build/node_modules.copyright.timestamp: .build/node_modules.timestamp
-	npm install --no-save -no-optional --no-package-lock buildtools/copyright
+	npm install --no-save --no-optional --no-package-lock ./buildtools/copyright
 	touch $@
 
 .build/eslint.timestamp: .build/node_modules.copyright.timestamp $(ESLINT_CONFIG_FILES) \
@@ -345,24 +345,26 @@ contribs/dist: .build/build-dll.timestamp
 	touch $@
 
 .build/node_modules.timestamp: package.json
-	npm install
-	mkdir -p $(dir $@)
+	npm install --no-optional
+	# Installed from peer dependency from ol-layerswitcher and that breaks our types
+	rm -rf ./node_modules/@types/openlayers
+
+	# Remove index file that includes too many dependencies (not possible to definitively remove them because olsc use them)
+	# [ -e node_modules/ol/gen-ts ] || (cd node_modules/ol; rm format.js geom.js index.js layer.js source.js)
+	# [ -e node_modules/ol/gen-ts ] || (cd node_modules/ol/src; rm format.js geom.js index.js layer.js source.js)
 
 	[ -e node_modules/ol/gen-ts ] || cp tsconfig-build.json node_modules/ol/src/tsconfig.json
-	[ -e node_modules/ol/gen-ts ] || (cd node_modules/ol/src; npx --package typescript@4.0.2 tsc --declaration)
+	[ -e node_modules/ol/gen-ts ] || (cd node_modules/ol/src; ../../.bin/tsc --declaration)
 	[ -e node_modules/ol/gen-ts ] || find node_modules/ol -name '*.d.ts' -exec sed -i 's#from "ol/src/#from "ol/#g' {} \;
 	[ -e node_modules/ol/gen-ts ] || find node_modules/ol -name '*.d.ts' -exec sed -i 's#import("ol/src/#import("ol/#g' {} \;
 	touch node_modules/ol/gen-ts
 
-	[ -e node_modules/@geoblocks/proj/gen-ts ] || cp tsconfig-build.json node_modules/@geoblocks/proj/src/tsconfig.json
-	[ -e node_modules/@geoblocks/proj/gen-ts ] || (cd node_modules/@geoblocks/proj/src; npx --package typescript@4.0.2 tsc --declaration)
-	touch node_modules/@geoblocks/proj/gen-ts
-
-	[ -e node_modules/mapillary-js/gen-ts ] || (cd node_modules/mapillary-js; npm install --ignore-scripts)
-	[ -e node_modules/mapillary-js/gen-ts ] || (cd node_modules/mapillary-js; node_modules/.bin/tsc --declaration)
+	[ -e node_modules/mapillary-js/gen-ts ] || (cd node_modules/mapillary-js; npm install --no-optional --ignore-scripts)
+	[ -e node_modules/mapillary-js/gen-ts ] || (cd node_modules/mapillary-js; ../.bin/tsc --declaration)
 	[ -e node_modules/mapillary-js/gen-ts ] || find node_modules/mapillary-js/src -name '*.ts'|grep -v .d.ts| while read f; do rm "$$f"; done
 	touch node_modules/mapillary-js/gen-ts
 
+	mkdir -p $(dir $@)
 	touch $@
 
 contribs/gmf/build/angular-locale_%.js: package.json

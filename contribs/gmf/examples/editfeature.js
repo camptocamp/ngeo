@@ -22,7 +22,7 @@
 import angular from 'angular';
 import './editfeature.css';
 import 'bootstrap/js/src/tooltip.js';
-import EPSG2056 from '@geoblocks/proj/EPSG_2056.js';
+import EPSG2056 from 'ngeo/proj/EPSG_2056.js';
 
 import gmfAuthenticationModule from 'gmf/authentication/module.js';
 import gmfEditingEditFeature from 'gmf/editing/EditFeature.js';

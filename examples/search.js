@@ -24,7 +24,7 @@ import {SEARCH} from './url.js';
 import './search.css';
 
 import ngeoMapModule from 'ngeo/map/module.js';
-import {proj as EPSG2056} from '@geoblocks/proj/EPSG_2056.js';
+import {proj as EPSG2056} from 'ngeo/proj/EPSG_2056.js';
 import ngeoSearchModule from 'ngeo/search/module.js';
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';

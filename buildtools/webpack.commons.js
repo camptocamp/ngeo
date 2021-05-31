@@ -252,9 +252,8 @@ module.exports = function (config) {
         jsts: 'jsts/org/locationtech/jts',
         olcs: 'ol-cesium/src/olcs',
         'jquery-ui/datepicker': 'jquery-ui/ui/widgets/datepicker', // For angular-ui-date
-        proj4: 'proj4/lib',
         'mapillary-js/src/Mapillary': 'mapillary-js/dist/mapillary.min.js',
-        '@geoblocks/proj': '@geoblocks/proj/src',
+        '@sentry/integrations': '@sentry/integrations/dist/angular.js',
       },
     },
     optimization: {

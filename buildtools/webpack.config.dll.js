@@ -79,7 +79,7 @@ module.exports = {
   resolve: {
     alias: {
       'jquery-ui/datepicker': 'jquery-ui/ui/widgets/datepicker', // For angular-ui-date
-      '@geoblocks/proj': '@geoblocks/proj/src',
+      '@sentry/integrations': '@sentry/integrations/dist/angular.js',
     },
   },
   optimization: {

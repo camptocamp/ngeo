@@ -80,10 +80,16 @@ export default class MapillaryService extends StreetviewService {
   getPanorama(coordinates) {
     const lonLat = this.toLonLat_(coordinates);
     this.mly.moveCloseTo(lonLat[1], lonLat[0]).then(
+      /**
+       * @param {any} node
+       */
       (node) => {
         this.noDataAtLocation = false;
         this.scope_.$apply();
       },
+      /**
+       * @param {any} error
+       */
       (error) => {
         this.noDataAtLocation = true;
         this.scope_.$apply();

@@ -21,7 +21,7 @@
 
 import angular from 'angular';
 import {MAPSERVER_PROXY, PRINT_PROXY} from './url.js';
-import EPSG2056 from '@geoblocks/proj/EPSG_2056.js';
+import EPSG2056 from 'ngeo/proj/EPSG_2056.js';
 
 import ngeoPrintService from 'ngeo/print/Service.js';
 import ngeoPrintUtils from 'ngeo/print/Utils.js';

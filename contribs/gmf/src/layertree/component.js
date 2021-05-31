@@ -853,11 +853,11 @@ Controller.prototype.zoomToResolution = function (treeCtrl) {
     throw new Error('Missing size');
   }
   if (minResolution !== undefined && resolution < minResolution) {
-    view.setResolution(constrainResolution(minResolution, 1, size));
+    view.setResolution(constrainResolution(minResolution, 1, size, undefined));
   } else {
     const maxResolution = getNodeMaxResolution(gmfLayer);
     if (maxResolution !== undefined && resolution > maxResolution) {
-      view.setResolution(constrainResolution(maxResolution, -1, size));
+      view.setResolution(constrainResolution(maxResolution, -1, size, undefined));
     }
   }
 };

@@ -38,7 +38,7 @@ import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources.js';
 import ngeoQueryComponent from 'ngeo/query/component.js';
 import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
 import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr.js';
-import EPSG2056 from '@geoblocks/proj/EPSG_2056.js';
+import EPSG2056 from 'ngeo/proj/EPSG_2056.js';
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
 import olLayerTile from 'ol/layer/Tile.js';

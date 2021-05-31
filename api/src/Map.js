@@ -29,8 +29,8 @@ import OLMap from 'ol/Map.js';
 import Feature from 'ol/Feature.js';
 import Overlay from 'ol/Overlay.js';
 import Point from 'ol/geom/Point.js';
-import {Icon, Style} from 'ol/style.js';
-import {createDefaultStyle} from 'ol/style/Style.js';
+import Icon from 'ol/style/Icon.js';
+import Style, {createDefaultStyle} from 'ol/style/Style.js';
 import View from 'ol/View.js';
 import VectorSource from 'ol/source/Vector.js';
 import VectorLayer from 'ol/layer/Vector.js';
@@ -40,7 +40,7 @@ import MousePosition from 'ol/control/MousePosition.js';
 import {createStringXY} from 'ol/coordinate.js';
 import ScaleLine from 'ol/control/ScaleLine.js';
 import OverviewMap from 'ol/control/OverviewMap.js';
-import {create as createProjection} from '@geoblocks/proj/utils.js';
+import createProjection from 'ngeo/proj/utils.js';
 
 // @ts-ignore: there is no existing types for ol-layerswitcher
 import LayerSwitcher from 'ol-layerswitcher';
@@ -187,6 +187,7 @@ class Map {
             this.map_.addControl(
               new OverviewMap({
                 collapsed: !options.miniMapExpanded,
+                // @ts-ignore: Group didn't extent Layer
                 layers: [layer],
                 view: new View({
                   projection: this.view_.getProjection(),

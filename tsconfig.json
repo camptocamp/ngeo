@@ -21,7 +21,6 @@
       "api/*": ["api/src/*"],
       "lib/*": ["lib/*"],
       "olcs/*": ["node_modules/ol-cesium/src/olcs/*"],
-      "@geoblocks/proj/*": ["node_modules/@geoblocks/proj/*"],
       "moment": ["node_modules/moment/moment.d.ts"],
       "jsts/*": ["node_modules/@types/jsts/index.d.ts"],
       "localforage/*": ["node_modules/localforage/*"],

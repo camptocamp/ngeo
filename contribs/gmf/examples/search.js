@@ -27,7 +27,7 @@ import gmfSearchModule from 'gmf/search/module.js';
 import gmfThemeThemes from 'gmf/theme/Themes.js';
 import ngeoMessageNotification from 'ngeo/message/Notification.js';
 import {MessageType} from 'ngeo/message/Message.js';
-import EPSG2056 from '@geoblocks/proj/EPSG_2056.js';
+import EPSG2056 from 'ngeo/proj/EPSG_2056.js';
 import ngeoMapModule from 'ngeo/map/module.js';
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';

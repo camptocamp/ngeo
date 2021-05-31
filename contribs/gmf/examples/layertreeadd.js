@@ -31,7 +31,7 @@ import gmfMapComponent from 'gmf/map/component.js';
 import gmfThemeThemes from 'gmf/theme/Themes.js';
 
 import gmfThemeManager from 'gmf/theme/Manager.js';
-import EPSG2056 from '@geoblocks/proj/EPSG_2056.js';
+import EPSG2056 from 'ngeo/proj/EPSG_2056.js';
 import ngeoStatemanagerLocation from 'ngeo/statemanager/Location.js';
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';

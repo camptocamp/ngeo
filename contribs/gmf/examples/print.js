@@ -30,7 +30,7 @@ import gmfPrintComponent from 'gmf/print/component.js';
 
 import gmfThemeThemes from 'gmf/theme/Themes.js';
 import ngeoMapModule from 'ngeo/map/module.js';
-import EPSG2056 from '@geoblocks/proj/EPSG_2056.js';
+import EPSG2056 from 'ngeo/proj/EPSG_2056.js';
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
 import olLayerTile from 'ol/layer/Tile.js';

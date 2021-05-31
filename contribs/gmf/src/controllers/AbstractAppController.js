@@ -50,15 +50,8 @@ import {ThemeEventType} from 'gmf/theme/Manager.js';
 import {getBrowserLanguage} from 'ngeo/utils.js';
 import * as Sentry from '@sentry/browser';
 import {Integrations} from '@sentry/tracing';
-import * as Raven from 'raven-js';
-// @ts-ignore
-import RavenPluginsAngular from 'raven-js/plugins/angular.js';
-// @ts-ignore
-import ngRaven from 'ng-raven';
-import '@geoblocks/proj/src/somerc.js';
-import '@geoblocks/proj/src/lcc.js';
-import '@geoblocks/proj/src/tmerc.js';
-import {create as createProjection} from '@geoblocks/proj/utils.js';
+import {Angular as AngularIntegration} from '@sentry/integrations';
+import createProjection from 'ngeo/proj/utils.js';
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
 import olControlScaleLine from 'ol/control/ScaleLine.js';
@@ -590,10 +583,11 @@ export function AbstractAppController($scope, $injector, mobile) {
     if (options.dsn) {
       // For Angularjs code
       options.serverName = options.environment;
-      Raven.config(options.dsn, options).addPlugin(RavenPluginsAngular, angular).install();
+
+      // For booth
+      options.integrations = [new Integrations.BrowserTracing(), new AngularIntegration()];
 
       // For non Angularjs code
-      options.integrations = [new Integrations.BrowserTracing()];
       const tags = options.tags || [];
       delete options.tags;
       Object.assign(options, {
@@ -746,7 +740,7 @@ function augmentBreadcrumb(breadcrumb, hint) {
 const myModule = angular.module('GmfAbstractAppControllerModule', [
   'gettext',
   'tmh.dynamicLocale',
-  ngRaven,
+  //'ngSentry',
   gmfAuthenticationModule.name,
   gmfBackgroundlayerselectorComponent.name,
   gmfDatasourceModule.name,
