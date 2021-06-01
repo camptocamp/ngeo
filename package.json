@@ -38,7 +38,7 @@
     "@babel/preset-env": "7.14.4",
     "@fortawesome/fontawesome-free": "5.15.3",
     "@sentry/browser": "6.4.1",
-    "@sentry/integrations": "6.4.1",
+    "@sentry/integrations": "6.5.0",
     "@sentry/tracing": "6.5.0",
     "@sentry/types": "6.5.0",
     "@trevoreyre/autocomplete-js": "2.2.0",
