@@ -6,7 +6,6 @@ updates:
     directory: '/'
     schedule:
       interval: daily
-      time: '02:00'
     ignore:
       - dependency-name: none
 
@@ -14,7 +13,7 @@ updates:
     directory: '/'
     schedule:
       interval: daily
-      time: '02:00'
+    open-pull-requests-limit: 20
     ignore:
       - dependency-name: bootstrap
       - dependency-name: webpack
@@ -28,6 +27,5 @@ updates:
     directory: '/buildtools/copyright'
     schedule:
       interval: daily
-      time: '02:00'
     ignore:
       - dependency-name: none
