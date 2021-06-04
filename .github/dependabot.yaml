@@ -2,32 +2,30 @@
 
 version: 2
 updates:
-- package-ecosystem: pip
-  directory: "/"
-  schedule:
-    interval: daily
-    time: "02:00"
-  ignore:
+  - package-ecosystem: pip
+    directory: '/'
+    schedule:
+      interval: daily
+    ignore:
       - dependency-name: none
 
-- package-ecosystem: npm
-  directory: "/"
-  schedule:
-    interval: daily
-    time: "02:00"
-  ignore:
-    - dependency-name: bootstrap
-    - dependency-name: webpack
-    - dependency-name: webpack-cli
-    - dependency-name: copy-webpack-plugin
-    - dependency-name: expose-loader
-    - dependency-name: terser-webpack-plugin
-    - dependency-name: html-webpack-plugin
+  - package-ecosystem: npm
+    directory: '/'
+    schedule:
+      interval: daily
+    open-pull-requests-limit: 20
+    ignore:
+      - dependency-name: bootstrap
+      - dependency-name: webpack
+      - dependency-name: webpack-cli
+      - dependency-name: copy-webpack-plugin
+      - dependency-name: expose-loader
+      - dependency-name: terser-webpack-plugin
+      - dependency-name: html-webpack-plugin
 
-- package-ecosystem: npm
-  directory: "/buildtools/copyright"
-  schedule:
-    interval: daily
-    time: "02:00"
-  ignore:
+  - package-ecosystem: npm
+    directory: '/buildtools/copyright'
+    schedule:
+      interval: daily
+    ignore:
       - dependency-name: none
