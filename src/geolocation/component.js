@@ -329,7 +329,7 @@ Controller.prototype.setPosition_ = function () {
 
   if (this.follow_) {
     this.viewChangedByMe_ = true;
-    if (this.options.zoom !== undefined) {
+    if (this.options.zoom || this.options.zoom === 0) {
       view.setCenter(position);
       view.setZoom(this.options.zoom);
     } else if (accuracy instanceof Polygon) {
