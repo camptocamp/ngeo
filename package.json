@@ -90,7 +90,7 @@
     "d3": "5.16.0",
     "editorconfig-checker": "4.0.2",
     "ejs-loader": "0.5.0",
-    "eslint": "7.27.0",
+    "eslint": "7.28.0",
     "eslint-config-openlayers": "15.0.0",
     "eslint-plugin-googshift": "0.9.3",
     "eslint-plugin-import": "2.23.4",
