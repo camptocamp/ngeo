@@ -129,7 +129,7 @@ class DrawAzimut extends olInteractionPointer {
   }
 
   /**
-   * Redraw the skecth features.
+   * Redraw the sketch features.
    * @private
    */
   updateSketchFeatures_() {
