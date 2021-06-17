@@ -89,12 +89,11 @@ function MainController($scope) {
 MainController.prototype.importKml_ = function (kml) {
   const map = this.map;
   const vectorSource = this.vectorSource_;
-  const features = /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>[]} */ (this.kmlFormat_.readFeatures(
-    kml,
-    {
+  const features = /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>[]} */ (
+    this.kmlFormat_.readFeatures(kml, {
       featureProjection: 'EPSG:3857',
-    }
-  ));
+    })
+  );
   vectorSource.clear(true);
   vectorSource.addFeatures(features);
   const extent = vectorSource.getExtent();

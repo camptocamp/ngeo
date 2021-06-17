@@ -463,7 +463,9 @@ Controller.prototype.getLayer = function (treeCtrl) {
   const layer = this.gmfSyncLayertreeMap_.createLayer(treeCtrl, this.map, this.dataLayerGroup_, opt_position);
 
   if (layer instanceof olLayerLayer) {
-    const node = /** @type {import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer} */ (treeCtrl.node);
+    const node = /** @type {import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer} */ (
+      treeCtrl.node
+    );
     this.updateLayerDimensions_(layer, node);
   }
 
@@ -983,7 +985,9 @@ Controller.prototype.isFiltrable = function (treeCtrl) {
  *     opacity change or is filtrable. Or null if there is any parent with layer functions.
  */
 Controller.prototype.getFirstParentWithLayerFunctions = function (treeCtrl) {
-  const parentTreeCtrl = /** @type {import("ngeo/layertree/Controller.js").LayertreeController} */ (treeCtrl.parent);
+  const parentTreeCtrl = /** @type {import("ngeo/layertree/Controller.js").LayertreeController} */ (
+    treeCtrl.parent
+  );
   if (!parentTreeCtrl) {
     return null;
   }

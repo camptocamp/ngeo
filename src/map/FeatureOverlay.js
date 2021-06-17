@@ -115,7 +115,9 @@ FeatureOverlay.prototype.setStyle = function (style) {
  */
 FeatureOverlay.prototype.handleFeatureAdd_ = function (evt) {
   if (evt instanceof CollectionEvent) {
-    const feature = /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>} */ (evt.element);
+    const feature = /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>} */ (
+      evt.element
+    );
     this.addFeature(feature);
   }
 };
@@ -125,7 +127,9 @@ FeatureOverlay.prototype.handleFeatureAdd_ = function (evt) {
  */
 FeatureOverlay.prototype.handleFeatureRemove_ = function (evt) {
   if (evt instanceof CollectionEvent) {
-    const feature = /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>} */ (evt.element);
+    const feature = /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>} */ (
+      evt.element
+    );
     this.removeFeature(feature);
   }
 };

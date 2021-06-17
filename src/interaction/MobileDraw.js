@@ -464,7 +464,9 @@ export default class extends olInteractionInteraction {
     if (this.sketchPoint_) {
       sketchFeatures.push(this.sketchPoint_);
     }
-    const overlaySource = /** @type {olSourceVector<import("ol/geom/Geometry.js").default>} */ (this.overlay_.getSource());
+    const overlaySource = /** @type {olSourceVector<import("ol/geom/Geometry.js").default>} */ (
+      this.overlay_.getSource()
+    );
     overlaySource.clear(true);
     overlaySource.addFeatures(sketchFeatures);
     overlaySource.addFeatures(this.sketchPoints_);

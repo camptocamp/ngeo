@@ -184,9 +184,9 @@ export default class extends olInteractionPointer {
     const point = new olGeomPoint(this.getCenterCoordinate_(geometry));
     const centerFeature = new olFeature(point);
     this.centerFeatures_[uid] = centerFeature;
-    /** @type {olSourceVector<import("ol/geom/Geometry.js").default>} */ (this.overlay_.getSource()).addFeature(
-      centerFeature
-    );
+    /** @type {olSourceVector<import("ol/geom/Geometry.js").default>} */ (
+      this.overlay_.getSource()
+    ).addFeature(centerFeature);
   }
 
   /**
