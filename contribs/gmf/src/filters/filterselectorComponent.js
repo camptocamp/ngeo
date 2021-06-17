@@ -264,7 +264,10 @@ export class FilterSelectorController {
      * @type {import("ol/Collection.js").default<import("gmf/datasource/OGC.js").default>}
      * @private
      */
-    this.gmfDataSources_ = /** @type {import("ol/Collection.js").default<import("gmf/datasource/OGC.js").default>} */ (gmfDataSourcesHelper.collection);
+    this.gmfDataSources_ =
+      /** @type {import("ol/Collection.js").default<import("gmf/datasource/OGC.js").default>} */ (
+        gmfDataSourcesHelper.collection
+      );
 
     /**
      * @type {import("ol/events.js").EventsKey[]}

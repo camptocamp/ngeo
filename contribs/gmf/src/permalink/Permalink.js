@@ -866,9 +866,9 @@ PermalinkService.prototype.setMapTooltip = function (tooltipText, opt_center) {
 PermalinkService.prototype.getFeatures = function () {
   const f = this.ngeoStateManager_.getInitialStringValue(PermalinkParam.FEATURES);
   if (f !== undefined && f !== '') {
-    return /** @type {olFeature<import("ol/geom/Geometry.js").default>[]} */ (this.featureHashFormat_.readFeatures(
-      f
-    ));
+    return /** @type {olFeature<import("ol/geom/Geometry.js").default>[]} */ (
+      this.featureHashFormat_.readFeatures(f)
+    );
   }
   return [];
 };
@@ -1146,7 +1146,9 @@ PermalinkService.prototype.refreshLayerTime = function (treeCtrl, time) {
   /** @type {Object<string, string>} */
   const newState = {};
   const stateName = `${ParamPrefix.TREE_TIME}${treeCtrl.node.name}`;
-  const timenode = /** @type {import('gmf/themes.js').GmfGroup|!import('gmf/themes.js').GmfLayerWMS} */ (treeCtrl.node);
+  const timenode = /** @type {import('gmf/themes.js').GmfGroup|!import('gmf/themes.js').GmfLayerWMS} */ (
+    treeCtrl.node
+  );
   const timeParam = this.ngeoWMSTime_.formatWMSTimeParam(timenode.time, time);
   newState[stateName] = timeParam;
   this.ngeoStateManager_.updateState(newState);
@@ -1327,7 +1329,10 @@ PermalinkService.prototype.initLayers_ = function () {
             this.gmfLayerBeingSwipe_.layer = treeCtrl.layer;
           }
         }
-        const timenode = /** @type {import('gmf/themes.js').GmfGroup|!import('gmf/themes.js').GmfLayerWMS} */ (treeCtrl.node);
+        const timenode =
+          /** @type {import('gmf/themes.js').GmfGroup|!import('gmf/themes.js').GmfLayerWMS} */ (
+            treeCtrl.node
+          );
         if (timenode && timenode.time) {
           this.setNodeTime_(treeCtrl);
         }
@@ -1790,7 +1795,9 @@ PermalinkService.prototype.setExternalDataSourcesState_ = function () {
 
       // (2b) layer names
       const wmtsGroupLayerNames = [];
-      for (const wmtsDataSource of /** @type {import('ngeo/datasource/OGC.js').OGC[]} */ (wmtsGroup.dataSources)) {
+      for (const wmtsDataSource of /** @type {import('ngeo/datasource/OGC.js').OGC[]} */ (
+        wmtsGroup.dataSources
+      )) {
         if (!wmtsDataSource.wmtsLayer) {
           throw new Error('Missing wmtsDataSource.wmtsLayer');
         }
@@ -1869,7 +1876,9 @@ PermalinkService.prototype.setNodeTime_ = function (treeCtrl) {
   const time = this.ngeoStateManager_.getInitialStringValue(ParamPrefix.TREE_TIME + treeCtrl.node.name);
   if (time) {
     const bounds = time.split('/');
-    const node = /** @type {import('gmf/themes.js').GmfGroup|!import('gmf/themes.js').GmfLayerWMS} */ (treeCtrl.node);
+    const node = /** @type {import('gmf/themes.js').GmfGroup|!import('gmf/themes.js').GmfLayerWMS} */ (
+      treeCtrl.node
+    );
     node.time.minDefValue = bounds[0];
     node.time.maxDefValue = bounds[1];
     const dataSource = this.gmfDataSourcesManager_.getDatasource(olUtilGetUid(treeCtrl.node));

@@ -199,9 +199,9 @@ export function createLocationSearchBloodhound(opt_options) {
   Object.assign(bloodhoundOptions, bhOptions);
   Object.assign(bloodhoundOptions.remote, remoteOptions);
 
-  return /** @type {Bloodhound<olFeature<import('ol/geom/Geometry.js').default>[]>} */ (new Bloodhound(
-    bloodhoundOptions
-  ));
+  return /** @type {Bloodhound<olFeature<import('ol/geom/Geometry.js').default>[]>} */ (
+    new Bloodhound(bloodhoundOptions)
+  );
 }
 
 /**

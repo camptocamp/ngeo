@@ -152,7 +152,9 @@ export default class LegendMapFishPrintV3 {
     }
 
     // Case of leaf layer: Create a legend class item matching the layer.
-    const leafLayer = /** @type {import('ol/layer/Layer').default<import("ol/source/Source.js").default>} */ (layer);
+    const leafLayer = /** @type {import('ol/layer/Layer').default<import("ol/source/Source.js").default>} */ (
+      layer
+    );
     if (leafLayer.getVisible() && leafLayer.getSource()) {
       // For WMTS layers.
       if (leafLayer instanceof olLayerTile) {
@@ -160,7 +162,9 @@ export default class LegendMapFishPrintV3 {
       }
 
       return this.getLegendItemFromWMSLayer_(
-        /** @type {import("ol/layer/Layer.js").default<import("ol/source/ImageWMS.js").default>} */ (leafLayer),
+        /** @type {import("ol/layer/Layer.js").default<import("ol/source/ImageWMS.js").default>} */ (
+          leafLayer
+        ),
         currentThemes,
         scale,
         dpi,

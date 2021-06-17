@@ -384,12 +384,12 @@ export class Controller {
       this.routeDuration = resp.data.routes[0].duration;
 
       // get first and last coordinate of route
-      const startRoute = /** @type {import("ol/geom/LineString.js").default} */ (features[0].getGeometry()).getCoordinateAt(
-        0
-      );
-      const endRoute = /** @type {import("ol/geom/LineString.js").default} */ (features[
-        features.length - 1
-      ].getGeometry()).getCoordinateAt(1);
+      const startRoute = /** @type {import("ol/geom/LineString.js").default} */ (
+        features[0].getGeometry()
+      ).getCoordinateAt(0);
+      const endRoute = /** @type {import("ol/geom/LineString.js").default} */ (
+        features[features.length - 1].getGeometry()
+      ).getCoordinateAt(1);
 
       // build geometries to connect route to start and end point of query
       const startToRoute = [
@@ -398,7 +398,9 @@ export class Controller {
       ];
       const routeToEnd = [
         endRoute,
-        /** @type {import("ol/geom/Point.js").default} */ (this.targetFeature_.getGeometry()).getCoordinates(),
+        /** @type {import("ol/geom/Point.js").default} */ (
+          this.targetFeature_.getGeometry()
+        ).getCoordinates(),
       ];
       const routeConnections = [
         new olFeature(new olGeomLineString(startToRoute)),

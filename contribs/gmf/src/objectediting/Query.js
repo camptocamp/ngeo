@@ -180,16 +180,18 @@ ObjectEditingQuery.prototype.getFeatureInfo = function (layerInfo, coordinate, m
     },
   });
 
-  const url = /** @type {string} */ (wmsSource.getFeatureInfoUrl(coordinate, resolution, projCode, {
-    'INFO_FORMAT': infoFormat,
-    'FEATURE_COUNT': 1,
-    'QUERY_LAYERS': layersParam,
-  }));
+  const url = /** @type {string} */ (
+    wmsSource.getFeatureInfoUrl(coordinate, resolution, projCode, {
+      'INFO_FORMAT': infoFormat,
+      'FEATURE_COUNT': 1,
+      'QUERY_LAYERS': layersParam,
+    })
+  );
 
   return this.http_.get(url).then((response) => {
-    const features = /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>[]} */ (format.readFeatures(
-      response.data
-    ));
+    const features = /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>[]} */ (
+      format.readFeatures(response.data)
+    );
     return features && features[0] ? features[0] : null;
   });
 };

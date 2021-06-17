@@ -167,16 +167,16 @@ export function FeatureHelper(
   /**
    * @type {import('ngeo/misc/filters.js').unitPrefix}
    */
-  this.unitPrefixFormat_ = /** @type {import('ngeo/misc/filters.js').unitPrefix} */ ($filter(
-    'ngeoUnitPrefix'
-  ));
+  this.unitPrefixFormat_ = /** @type {import('ngeo/misc/filters.js').unitPrefix} */ (
+    $filter('ngeoUnitPrefix')
+  );
 
   /**
    * @type {import('ngeo/misc/filters.js').numberCoordinates}
    */
-  this.ngeoNumberCoordinates_ = /** @type {import('ngeo/misc/filters.js').numberCoordinates} */ ($filter(
-    'ngeoNumberCoordinates'
-  ));
+  this.ngeoNumberCoordinates_ = /** @type {import('ngeo/misc/filters.js').numberCoordinates} */ (
+    $filter('ngeoNumberCoordinates')
+  );
 
   /**
    * Filter function to display point coordinates or null to don't use any filter.
