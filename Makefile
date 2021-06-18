@@ -360,7 +360,7 @@ contribs/dist: .build/build-dll.timestamp
 	touch node_modules/ol/gen-ts
 
 	[ -e node_modules/mapillary-js/gen-ts ] || (cd node_modules/mapillary-js; npm install --no-optional --ignore-scripts)
-	[ -e node_modules/mapillary-js/gen-ts ] || (cd node_modules/mapillary-js; ../.bin/tsc --declaration)
+	[ -e node_modules/mapillary-js/gen-ts ] || (cd node_modules/mapillary-js; node_modules/.bin/tsc --declaration)
 	[ -e node_modules/mapillary-js/gen-ts ] || find node_modules/mapillary-js/src -name '*.ts'|grep -v .d.ts| while read f; do rm "$$f"; done
 	touch node_modules/mapillary-js/gen-ts
 
