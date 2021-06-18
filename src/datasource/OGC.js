@@ -780,7 +780,6 @@ export class OGC extends ngeoDatasourceDataSource {
 
   /**
    * @return {string|undefined} WMS url
-   * @override
    */
   get wmsUrl() {
     return this.wmsUrl_;
@@ -795,7 +794,6 @@ export class OGC extends ngeoDatasourceDataSource {
 
   /**
    * @return {string|undefined} WMTS url
-   * @override
    */
   get wmtsUrl() {
     return this.wmtsUrl_;
@@ -838,7 +836,6 @@ export class OGC extends ngeoDatasourceDataSource {
    *
    * @return {boolean} Whether the data source can be combined to an other
    *     data source to fetch features in a single WFS request.
-   * @override
    */
   get combinableForWFS() {
     return this.filterRules === null && this.timeRangeValue === null;
@@ -853,7 +850,6 @@ export class OGC extends ngeoDatasourceDataSource {
    *
    * @return {boolean} Whether the data source can be combined to an other
    *     data source to fetch features in a single WMS request.
-   * @override
    */
   get combinableForWMS() {
     return this.filterRules === null && this.timeRangeValue === null;
@@ -920,9 +916,7 @@ export class OGC extends ngeoDatasourceDataSource {
   }
 
   /**
-   * @return {boolean} Whether the data source supports making WFS requests
-   *     or not.
-   * @override
+   * @return {boolean} Whether the data source supports making WFS requests or not.
    */
   get supportsWFS() {
     return this.wfsUrl !== undefined;
@@ -950,17 +944,14 @@ export class OGC extends ngeoDatasourceDataSource {
   }
 
   /**
-   * @return {boolean} Whether the data source supports making WMS requests
-   *     or not.
-   * @override
+   * @return {boolean} Whether the data source supports making WMS requests or not.
    */
   get supportsWMS() {
     return this.wmsUrl !== undefined;
   }
 
   /**
-   * @return {boolean} Whether the data source supports making WTMS requests
-   *     or not.
+   * @return {boolean} Whether the data source supports making WTMS requests or not.
    */
   get supportsWMTS() {
     return this.wmtsUrl !== undefined;
@@ -988,7 +979,6 @@ export class OGC extends ngeoDatasourceDataSource {
    * @param {OGC} dataSource Data source.
    * @return {boolean} Whether this data source can be combined to the given
    *     other data source to fetch features in a single WFS request.
-   * @override
    */
   combinableWithDataSourceForWFS(dataSource) {
     return (
@@ -1008,7 +998,6 @@ export class OGC extends ngeoDatasourceDataSource {
    * @param {OGC} dataSource Data source.
    * @return {boolean} Whether this data source can be combined to the given
    *     other data source to fetch features in a single WMS request.
-   * @override
    */
   combinableWithDataSourceForWMS(dataSource) {
     return (
@@ -1144,7 +1133,6 @@ export class OGC extends ngeoDatasourceDataSource {
    * @return {boolean} Whether the two data sources have the same active
    *     dimensions. If both have no dimensions, they are considered to be
    *     sharing the same dimensions.
-   * @override
    */
   haveTheSameActiveDimensions(dataSource) {
     let share = true;
@@ -1182,7 +1170,6 @@ export class OGC extends ngeoDatasourceDataSource {
    *     dimensions filters. If both have no dimensions, they are considered
    *     to be sharing the same dimensions filters.
    * @export
-   * @override
    */
   haveTheSameActiveDimensionsFilters(dataSource) {
     const myConfig = this.dimensionsFiltersConfig || /** @type {DimensionsFiltersConfig} */ ({});

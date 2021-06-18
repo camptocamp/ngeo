@@ -213,7 +213,6 @@ export default class extends olObservable {
   }
 
   /**
-   * @override
    * @param {number} progress The download progress
    * @param {import("./index.js").OfflineTile} tile The tile
    * @return {Promise<void>} A promise
@@ -228,7 +227,6 @@ export default class extends olObservable {
   }
 
   /**
-   * @override
    * @param {number} progress The progress
    * @return {Promise<void>} A promise
    */
