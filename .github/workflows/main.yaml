@@ -1,5 +1,4 @@
 ---
-
 name: Continuous integration
 
 on:
@@ -44,13 +43,9 @@ jobs:
           patterns: npm transifex
         if: github.repository == 'camptocamp/ngeo'
 
-      - run: |
-          sudo rm /etc/apt/sources.list.d/*.list
-          sudo apt update
-          sudo apt install python3-wheel python3-setuptools
-
-      - run: sudo python3 -m pip install --requirement=ci/requirements.txt
-
+      - uses: actions/setup-python@v2
+      - run: python -m pip install setuptools
+      - run: python -m pip install --requirement=ci/requirements.txt
       - name: Checks
         run: c2cciutils-checks
 

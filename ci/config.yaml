@@ -9,6 +9,7 @@ checks:
       - ^contribs/gmf/test/spec/data/themescapabilities\.js$
       - ^contribs/gmf/test/spec/data/themes\.js$
       - ^buildtools/asitvd.capabilities\.xml$
+      - ^examples/measure\.js$
 
 audit:
   npm:
