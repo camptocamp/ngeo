@@ -243,7 +243,10 @@ VectorEncoder.prototype.encodeVectorStyle_ = function (
 
   const textStyle = style.getText();
   if (textStyle !== null) {
-    symbolizers.push(this.encodeTextStyle_(textStyle, goodnessOfFit));
+    const encodedStyle = this.encodeTextStyle_(textStyle, goodnessOfFit);
+    if (encodedStyle !== undefined) {
+      symbolizers.push(encodedStyle);
+    }
   }
 
   const styleType = PRINT_STYLE_TYPES[geometryType];
