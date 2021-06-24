@@ -6,12 +6,10 @@ import olFormatGML3 from 'ol/format/GML3.js';
 import olFormatWFS from 'ol/format/WFS.js';
 import olFormatWMSGetFeatureInfo from 'ol/format/WMSGetFeatureInfo.js';
 
-
 /**
  * Dimensions definition.
  * @typedef {Object.<string, ?string>} Dimensions
  */
-
 
 /**
  * Available OGC server types.
@@ -21,9 +19,8 @@ import olFormatWMSGetFeatureInfo from 'ol/format/WMSGetFeatureInfo.js';
 export const ServerType = {
   GEOSERVER: 'geoserver',
   MAPSERVER: 'mapserver',
-  QGISSERVER: 'qgisserver'
+  QGISSERVER: 'qgisserver',
 };
-
 
 /**
  * Available OGC types.
@@ -32,9 +29,8 @@ export const ServerType = {
  */
 export const Type = {
   WMS: 'WMS',
-  WMTS: 'WMTS'
+  WMTS: 'WMTS',
 };
-
 
 /**
  * Available Feature prefix for WFS requests.
@@ -43,9 +39,8 @@ export const Type = {
  * @hidden
  */
 const WFSFeaturePrefix = {
-  FEATURE: 'feature'
+  FEATURE: 'feature',
 };
-
 
 /**
  * Available OutputFormat for WFS requests.
@@ -54,9 +49,8 @@ const WFSFeaturePrefix = {
  */
 export const WFSOutputFormat = {
   GML2: 'GML2',
-  GML3: 'GML3'
+  GML3: 'GML3',
 };
-
 
 /**
  * Available InfoFormat for WMS requests.
@@ -64,9 +58,8 @@ export const WFSOutputFormat = {
  * @hidden
  */
 export const WMSInfoFormat = {
-  GML: 'application/vnd.ogc.gml'
+  GML: 'application/vnd.ogc.gml',
 };
-
 
 /**
  * @typedef {Object} DimensionFilterConfig
@@ -74,12 +67,10 @@ export const WMSInfoFormat = {
  * @property {string} [value]
  */
 
-
 /**
-* Dimensions applied by filters configuration.
-* @typedef {Object.<string, DimensionFilterConfig>} DimensionsFiltersConfig
-*/
-
+ * Dimensions applied by filters configuration.
+ * @typedef {Object.<string, DimensionFilterConfig>} DimensionsFiltersConfig
+ */
 
 /**
  * The options required to create a `OGC`.
@@ -141,7 +132,6 @@ export const WMSInfoFormat = {
  * @property {boolean} [visible=false] (DataSourceOptions)
  */
 
-
 /**
  * The definition of a single layer (WMS) and/or featureType (WFS).
  *
@@ -149,7 +139,6 @@ export const WMSInfoFormat = {
  * @property {string} name The layer name (WMS) and/or feature type name (WFS)
  * @property {boolean} [queryable] Whether the the layer is queryable or not. Defaults to `false`.
  */
-
 
 /**
  * The definition of a single layer (WMS) and/or featureType (WFS).
@@ -160,7 +149,6 @@ export const WMSInfoFormat = {
  * @property {string} name The layer name (WMS) and/or feature type name (WFS)
  * @property {boolean} [queryable] Whether the the layer is queryable or not. Defaults to `false`.
  */
-
 
 /**
  * Time object
@@ -176,19 +164,16 @@ export const WMSInfoFormat = {
  * @property {Array<number>} interval
  */
 
-
 /**
  * @typedef {Object} TimeRange
  * @property {number} [end]
  * @property {number} start
  */
 
-
 /**
  * Active dimensions definition, where the value can't be null.
  * @typedef {Object.<string, string>} DimensionsActive
  */
-
 
 /**
  * Default name of the geometry attribute.
@@ -198,13 +183,11 @@ export const WMSInfoFormat = {
  */
 const DEFAULT_GEOMETRY_NAME = 'geom';
 
-
 /**
  * @private
  * @hidden
  */
 class OGC extends ngeoDatasourceDataSource {
-
   /**
    * A data source contains information of a single source of data that can
    * show or fetch the data using an OGC server. Several OGC service types are
@@ -220,7 +203,6 @@ class OGC extends ngeoDatasourceDataSource {
    * @param {OGCOptions} options Options.
    */
   constructor(options) {
-
     super(options);
 
     // === DYNAMIC properties (i.e. that can change / be watched) ===
@@ -258,7 +240,6 @@ class OGC extends ngeoDatasourceDataSource {
      * @type {?boolean}
      */
     this.filtrable = options.filtrable || null;
-
 
     // === STATIC properties (i.e. that never change) ===
 
@@ -462,7 +443,6 @@ class OGC extends ngeoDatasourceDataSource {
      */
     this.wmtsUrl_ = options.wmtsUrl;
 
-
     // === Calculated properties ===
 
     // Get queryable ogc layer names
@@ -476,7 +456,7 @@ class OGC extends ngeoDatasourceDataSource {
     }
     const wmsLayers = [];
     if (this.queryable) {
-      for (const wmsLayer of (this.wmsLayers || [])) {
+      for (const wmsLayer of this.wmsLayers || []) {
         if (wmsLayer.queryable) {
           wmsLayers.push(wmsLayer.name);
         }
@@ -500,7 +480,7 @@ class OGC extends ngeoDatasourceDataSource {
       wfsFormat = new olFormatWFS({
         featureNS: this.wfsFeatureNS,
         featureType: wfsLayers,
-        gmlFormat: format
+        gmlFormat: format,
       });
     }
 
@@ -514,7 +494,7 @@ class OGC extends ngeoDatasourceDataSource {
     if (this.supportsWMS && wmsLayers.length) {
       if (this.wmsInfoFormat === WMSInfoFormat.GML) {
         wmsFormat = new olFormatWMSGetFeatureInfo({
-          layers: wmsLayers
+          layers: wmsLayers,
         });
       }
       // Todo, support more formats for WMS
@@ -558,10 +538,10 @@ class OGC extends ngeoDatasourceDataSource {
     let range = null;
     const lower = this.timeLowerValue;
     const upper = this.timeUpperValue;
-    if (lower !== undefined) {
+    if (lower || lower === 0) {
       range = {
         end: upper,
-        start: lower
+        start: lower,
       };
     }
     return range;
@@ -863,11 +843,12 @@ class OGC extends ngeoDatasourceDataSource {
    * @return {boolean} Supports attributes.
    */
   get supportsAttributes() {
-    return this.attributes !== null || (
-      this.supportsWFS &&
-      this.wfsLayers !== null &&
-      this.wfsLayers.length === 1 &&
-      this.wfsLayers[0].queryable === true
+    return (
+      this.attributes !== null ||
+      (this.supportsWFS &&
+        this.wfsLayers !== null &&
+        this.wfsLayers.length === 1 &&
+        this.wfsLayers[0].queryable === true)
     );
   }
 
@@ -913,11 +894,16 @@ class OGC extends ngeoDatasourceDataSource {
    * @override
    */
   combinableWithDataSourceForWFS(dataSource) {
-    return this.combinableForWFS && dataSource.combinableForWFS &&
-      this.supportsWFS && dataSource.supportsWFS &&
-      this.queryable && dataSource.queryable &&
+    return (
+      this.combinableForWFS &&
+      dataSource.combinableForWFS &&
+      this.supportsWFS &&
+      dataSource.supportsWFS &&
+      this.queryable &&
+      dataSource.queryable &&
       this.wfsUrl === dataSource.wfsUrl &&
-      this.haveTheSameActiveDimensions(dataSource);
+      this.haveTheSameActiveDimensions(dataSource)
+    );
   }
 
   /**
@@ -927,11 +913,16 @@ class OGC extends ngeoDatasourceDataSource {
    * @override
    */
   combinableWithDataSourceForWMS(dataSource) {
-    return this.combinableForWMS && dataSource.combinableForWMS &&
-      this.supportsWMS && dataSource.supportsWMS &&
-      this.queryable && dataSource.queryable &&
+    return (
+      this.combinableForWMS &&
+      dataSource.combinableForWMS &&
+      this.supportsWMS &&
+      dataSource.supportsWMS &&
+      this.queryable &&
+      dataSource.queryable &&
       this.wmsUrl === dataSource.wmsUrl &&
-      this.haveTheSameActiveDimensions(dataSource);
+      this.haveTheSameActiveDimensions(dataSource)
+    );
   }
 
   /**
@@ -942,7 +933,7 @@ class OGC extends ngeoDatasourceDataSource {
    * @return {boolean} At least one OGC layer is in range.
    */
   isAnyOGCLayerInRange(res, queryableOnly = false) {
-    return !!(this.getInRangeWFSLayerNames(res, queryableOnly).length);
+    return !!this.getInRangeWFSLayerNames(res, queryableOnly).length;
   }
 
   /**
@@ -952,7 +943,6 @@ class OGC extends ngeoDatasourceDataSource {
    * @return {Array<string>} The WMS layer names.
    */
   getWMSLayerNames(queryableOnly = false) {
-
     const layerNames = [];
 
     if (this.wmsLayers) {
@@ -975,7 +965,6 @@ class OGC extends ngeoDatasourceDataSource {
    * @return {Array<string>} The WFS layer names that are in range.
    */
   getInRangeWFSLayerNames(res, queryableOnly = false) {
-
     const layerNames = [];
 
     if (this.wfsLayers) {
@@ -1002,7 +991,6 @@ class OGC extends ngeoDatasourceDataSource {
    * @return {Array<string>} The WFS layer names.
    */
   getWFSLayerNames(queryableOnly = false) {
-
     const layerNames = [];
 
     if (this.wfsLayers) {
@@ -1079,7 +1067,6 @@ class OGC extends ngeoDatasourceDataSource {
   }
 }
 
-
 /**
  * Guess the type of OGC service from a given url. Default returned value is WMS.
  * @param {string} url Url
@@ -1098,7 +1085,6 @@ export function guessServiceTypeByUrl(url) {
   return type;
 }
 
-
 /**
  * Enum for the time property widget
  * Type of the widget to use
@@ -1107,7 +1093,7 @@ export function guessServiceTypeByUrl(url) {
  */
 export const TimePropertyWidgetEnum = {
   SLIDER: 'slider',
-  DATEPICKER: 'datepicker'
+  DATEPICKER: 'datepicker',
 };
 
 /**
@@ -1118,7 +1104,7 @@ export const TimePropertyWidgetEnum = {
 export const TimePropertyModeEnum = {
   RANGE: 'range',
   VALUE: 'value',
-  DISABLED: 'disabled'
+  DISABLED: 'disabled',
 };
 
 /**
@@ -1130,7 +1116,7 @@ export const TimePropertyResolutionEnum = {
   DAY: 'day',
   MONTH: 'month',
   YEAR: 'year',
-  SECOND: 'second'
+  SECOND: 'second',
 };
 
 export default OGC;
