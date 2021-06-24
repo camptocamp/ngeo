@@ -585,11 +585,11 @@ export class OGC extends ngeoDatasourceDataSource {
     let range = null;
     const lower = this.timeLowerValue;
     const upper = this.timeUpperValue;
-    if (lower !== undefined) {
+    if (lower || lower === 0) {
       range = {
         start: lower,
       };
-      if (upper != undefined) {
+      if (upper || upper === 0) {
         range.end = upper;
       }
     }
