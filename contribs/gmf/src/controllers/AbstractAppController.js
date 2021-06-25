@@ -302,7 +302,6 @@ export function AbstractAppController($scope, $injector, mobile) {
 
     // Reload theme when login status changes.
     const previousThemeName = this.gmfThemeManager.getThemeName();
-    this.gmfThemeManager.setThemeName('', true);
 
     // Reload themes and background layer when login status changes.
     this.gmfThemes.loadThemes(roleId);
