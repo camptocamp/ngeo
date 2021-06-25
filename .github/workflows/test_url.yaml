@@ -21,7 +21,7 @@ jobs:
             // Get client and context
             const client = new github.getOctokit(process.env.GITHUB_TOKEN);
 
-            await client.pulls.createReview({
+            await client.rest.pulls.createReview({
               owner: github.context.issue.owner,
               repo: github.context.issue.repo,
               pull_number: github.context.issue.number,
