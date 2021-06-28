@@ -28,7 +28,7 @@ export default '<?xml version=\'1.0\' encoding="UTF-8" ?>' +
   '   xmlns:wfs="http://www.opengis.net/wfs"' +
   '   xmlns:ogc="http://www.opengis.net/ogc"' +
   '   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +
-  '   xsi:schemaLocation="http://mapserver.gis.umn.edu/mapserver https://geomapfish-demo-2-6.camptocamp.com/mapserv?SERVICE=WFS&amp;VERSION=1.1.0&amp;REQUEST=DescribeFeatureType&amp;TYPENAME=feature:fuel&amp;OUTPUTFORMAT=SFE_XMLSCHEMA  http://www.opengis.net/wfs http://schemas.opengis.net/wfs/1.1.0/wfs.xsd">' +
+  '   xsi:schemaLocation="http://mapserver.gis.umn.edu/mapserver https://geomapfish-demo-2-7.camptocamp.com/mapserv?SERVICE=WFS&amp;VERSION=1.1.0&amp;REQUEST=DescribeFeatureType&amp;TYPENAME=feature:fuel&amp;OUTPUTFORMAT=SFE_XMLSCHEMA  http://www.opengis.net/wfs http://schemas.opengis.net/wfs/1.1.0/wfs.xsd">' +
   '      <gml:boundedBy>' +
   '        <gml:Envelope srsName="EPSG:21781">' +
   '          <gml:lowerCorner>545277.898290 148729.093947</gml:lowerCorner>' +
