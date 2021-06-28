@@ -227,6 +227,7 @@ function loaded(page, browser) {
     const url = request.url();
     if (
       !url.startsWith('https://www.camptocamp.com/') &&
+      !url.startsWith('https://o330647.ingest.sentry.io/') &&
       !url.startsWith('https://cdn.polyfill.io/') &&
       !url.startsWith('https://maps.googleapis.com/')
     ) {
