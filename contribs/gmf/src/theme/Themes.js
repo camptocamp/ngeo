@@ -497,7 +497,7 @@ export function findGroupByLayerNodeName(themes, name) {
     const theme = themes[i];
     for (let j = 0, jj = theme.children.length; j < jj; j++) {
       const group = theme.children[j];
-      /** @type {(import("gmf/themes").GmfGroup | import("gmf/themes").GmfLayer)[]} */
+      /** @type {import("gmf/themes").GmfLayer[]} */
       const childNodes = [];
       getFlatNodes(group, childNodes);
       if (findObjectByName(childNodes, name)) {
@@ -520,7 +520,7 @@ export function findGroupByName(themes, name) {
     const theme = themes[i];
     for (let j = 0, jj = theme.children.length; j < jj; j++) {
       const group = theme.children[j];
-      /** @type {(import("gmf/themes").GmfGroup | import("gmf/themes").GmfLayer)[]} */
+      /** @type {import("gmf/themes").GmfGroup[]} */
       const internalNodes = [];
       getFlatInternalNodes(group, internalNodes);
       if (findObjectByName(internalNodes, name)) {
@@ -559,7 +559,7 @@ export function findThemeByName(themes, themeName) {
  * Fill the given "nodes" array with all internal nodes (non-leaf nones) in the given node.
  *
  * @param {import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer} node Layertree node.
- * @param {Array<import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer>} nodes An array.
+ * @param {Array<import('gmf/themes.js').GmfGroup>} nodes An array.
  * @private
  * @hidden
  */
@@ -567,7 +567,7 @@ function getFlatInternalNodes(node, nodes) {
   const gmfGroup = /** @type {import('gmf/themes.js').GmfGroup} */ (node);
   const children = gmfGroup.children;
   if (children !== undefined) {
-    nodes.push(node);
+    nodes.push(/** @type {import('gmf/themes.js').GmfGroup} */ (node));
     for (const child of children) {
       getFlatInternalNodes(child, nodes);
     }
@@ -577,19 +577,19 @@ function getFlatInternalNodes(node, nodes) {
 /**
  * Fill the given "nodes" array with all leaf nodes in the given node.
  *
- * @param {import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer} node Layertree node.
- * @param {Array<import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer>} nodes An array.
+ * @param {import('gmf/themes.js').GmfTheme|import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer} node Layertree node.
+ * @param {Array<import('gmf/themes.js').GmfLayer>} nodes An array.
  * @hidden
  */
 export function getFlatNodes(node, nodes) {
-  const gmfGroup = /** @type {import('gmf/themes.js').GmfGroup} */ (node);
+  const gmfGroup = /** @type {import('gmf/themes.js').GmfTheme|import('gmf/themes.js').GmfGroup} */ (node);
   const children = gmfGroup.children;
   if (children !== undefined) {
     for (const child of children) {
       getFlatNodes(child, nodes);
     }
   } else {
-    nodes.push(node);
+    nodes.push(/** @type {import('gmf/themes.js').GmfLayer} */ (node));
   }
 }
 
