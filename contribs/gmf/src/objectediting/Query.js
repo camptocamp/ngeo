@@ -119,12 +119,12 @@ function getQueryableLayersInfoFromThemes(themes, ogcServers) {
         continue;
       }
 
-      /** @type {Array<import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer>} */
+      /** @type {Array<import('gmf/themes.js').GmfLayer>} */
       const nodes = [];
       getFlatNodes(group, nodes);
 
       for (let k = 0, kk = nodes.length; k < kk; k++) {
-        const nodeGroup = /** @type {import('gmf/themes.js').GmfGroup} */ (nodes[k]);
+        const nodeGroup = /** @type {import('gmf/themes.js').GmfGroup} */ (/** @type {any} */ (nodes[k]));
         // Skip groups within groups
         if (nodeGroup.children && nodeGroup.children.length) {
           continue;

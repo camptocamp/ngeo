@@ -26,7 +26,7 @@ import {dpi as screenDpi} from 'ngeo/utils.js';
 import {NODE_IS_LEAF, LAYER_NODE_NAME_KEY} from 'ngeo/map/LayerHelper.js';
 import {DATALAYERGROUP_NAME} from 'gmf/index.js';
 import ExternalOGC from 'gmf/datasource/ExternalOGC.js';
-import {findGroupByLayerNodeName, findObjectByName} from 'gmf/theme/Themes.js';
+import {getFlatNodes, findObjectByName} from 'gmf/theme/Themes.js';
 
 /**
  * Get the print legend for MapFishPrint V3 from the OpenLayers map and the GMF Layertree.
@@ -390,12 +390,14 @@ export default class LegendMapFishPrintV3 {
     if (dpi == -1) {
       dpi = screenDpi();
     }
-    const groupNode = findGroupByLayerNodeName(currentThemes, layerName);
-    let found_dpi = dpi;
-    let node;
-    if (groupNode && groupNode.children) {
-      node = findObjectByName(groupNode.children, layerName);
+    /** @type {import("gmf/themes").GmfLayer[]} */
+    const nodes = [];
+    for (const theme of currentThemes) {
+      getFlatNodes(theme, nodes);
     }
+    const node = findObjectByName(nodes, layerName);
+
+    let found_dpi = dpi;
     let legendImage;
     let hiDPILegendImages;
     if (node && node.metadata) {
