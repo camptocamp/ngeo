@@ -3,4 +3,4 @@ glob2==0.7
 htmlmin==0.1.12
 Mako==1.1.4
 requests==2.25.1
-transifex-client==0.14.2
+transifex-client==0.14.3
