@@ -265,8 +265,10 @@ export default class {
 
     svg.select('.y.axis').selectAll('g.tick line').style('stroke', '#b7cff7');
 
+    // @ts-ignore
     svg.append('g').attr('class', 'y axis').call(yAxis);
 
+    // @ts-ignore
     svg.append('g').attr('class', 'x axis').call(xAxis);
 
     svg.select('.y.axis').attr('transform', `translate(${margin.left}, ${margin.top})`);
