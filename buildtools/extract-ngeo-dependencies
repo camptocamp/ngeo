@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 
 # Copyright (c) 2018-2019, Camptocamp SA
 # All rights reserved.
@@ -61,4 +60,4 @@ all_required_js = {
 }
 all_required_js = {a for a in all_required_js if not a.endswith(".css")}
 for js in sorted(all_required_js):
-    print("require('{}')".format(js))
+    print(f"require('{js}')")
