@@ -124,12 +124,6 @@ function getQueryableLayersInfoFromThemes(themes, ogcServers) {
       getFlatNodes(group, nodes);
 
       for (let k = 0, kk = nodes.length; k < kk; k++) {
-        const nodeGroup = /** @type {import('gmf/themes.js').GmfGroup} */ (/** @type {any} */ (nodes[k]));
-        // Skip groups within groups
-        if (nodeGroup.children && nodeGroup.children.length) {
-          continue;
-        }
-
         const nodeWMS = /** @type {import('gmf/themes.js').GmfLayerWMS} */ (/** @type {any} */ (nodes[k]));
 
         if (nodeWMS.childLayers && nodeWMS.childLayers[0] && nodeWMS.childLayers[0].queryable) {
