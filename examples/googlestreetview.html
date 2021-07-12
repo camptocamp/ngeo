@@ -1,21 +1,20 @@
 <!DOCTYPE html>
-<html ng-app='app'>
+<html ng-app="app">
   <head>
     <title>GoogleStreetView Example</title>
-    <meta charset="utf-8">
-    <meta name="viewport"
-          content="initial-scale=1.0, user-scalable=no, width=device-width">
-    <meta name="mobile-web-app-capable" content="yes">
-
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width" />
+    <meta name="mobile-web-app-capable" content="yes" />
   </head>
   <body ng-controller="MainController as ctrl">
     <div id="map" ngeo-map="ctrl.map"></div>
     <ngeo-streetview
-        active="ctrl.googleStreetViewActive"
-        feature-style="ctrl.style"
-        map="ctrl.map"
-        radius="ctrl.radius"
-        options-name="ngeoGoogleStreetviewOptions">
+      active="ctrl.googleStreetViewActive"
+      feature-style="ctrl.style"
+      map="ctrl.map"
+      radius="ctrl.radius"
+      options-name="ngeoGoogleStreetviewOptions"
+    >
     </ngeo-streetview>
 
     <div class="desc">
@@ -25,15 +24,10 @@
       </p>
 
       <div class="panel panel-default panel-body">
-        <input
-            type="checkbox"
-            id="checkbox-googlestreetview"
-            ng-model="ctrl.googleStreetViewActive" />
+        <input type="checkbox" id="checkbox-googlestreetview" ng-model="ctrl.googleStreetViewActive" />
         <label for="checkbox-googlestreetview"> GoogleStreetView</label>
 
-        <input type="checkbox"
-               id="checkbox-dummy"
-               ng-model="ctrl.dummyActive" />
+        <input type="checkbox" id="checkbox-dummy" ng-model="ctrl.dummyActive" />
         <label for="checkbox-dummy"> Dummy tool</label>
       </div>
     </div>

@@ -37,7 +37,7 @@ div.panel.gmf-profile-container {
   border-top: 0.5rem solid rgba(0, 0, 0, 0.5);
   border-right: 0.5rem solid transparent;
   border-left: 0.5rem solid transparent;
-  content: "";
+  content: '';
   position: absolute;
   bottom: -0.5rem;
   margin-left: -0.5rem;

@@ -1,21 +1,39 @@
 <div class="ngeo-grid-table-container">
-  <table float-thead="$ctrl.floatTheadConfig" ng-model="$ctrl.configuration.data"
-         class="table table-bordered table-striped table-hover">
+  <table
+    float-thead="$ctrl.floatTheadConfig"
+    ng-model="$ctrl.configuration.data"
+    class="table table-bordered table-striped table-hover"
+  >
     <thead class="table-header">
       <tr>
-        <th ng-repeat="columnDefs in $ctrl.configuration.columnDefs"
-            ng-click="$ctrl.sort(columnDefs.name)" ng-bind-html="columnDefs.name | ngeoTrustHtml | translate">
+        <th
+          ng-repeat="columnDefs in $ctrl.configuration.columnDefs"
+          ng-click="$ctrl.sort(columnDefs.name)"
+          ng-bind-html="columnDefs.name | ngeoTrustHtml | translate"
+        >
           <i ng-show="$ctrl.sortedBy !== columnDefs.name" class="fa fa-fw"></i>
-          <i ng-show="$ctrl.sortedBy === columnDefs.name && $ctrl.sortAscending === true" class="fa fa-caret-up"></i>
-          <i ng-show="$ctrl.sortedBy === columnDefs.name && $ctrl.sortAscending === false" class="fa fa-caret-down"></i>
+          <i
+            ng-show="$ctrl.sortedBy === columnDefs.name && $ctrl.sortAscending === true"
+            class="fa fa-caret-up"
+          ></i>
+          <i
+            ng-show="$ctrl.sortedBy === columnDefs.name && $ctrl.sortAscending === false"
+            class="fa fa-caret-down"
+          ></i>
         </th>
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="attributes in $ctrl.configuration.data"
-          ng-class="['row-' + $ctrl.configuration.getRowUid(attributes), $ctrl.configuration.isRowSelected(attributes) ? 'ngeo-grid-active': '']"
-          ng-click="$ctrl.clickRow(attributes, $event)" ng-mousedown="$ctrl.preventTextSelection($event)">
-        <td ng-repeat="columnDefs in $ctrl.configuration.columnDefs" ng-bind-html="attributes[columnDefs.name] | removeCDATA | ngeoTrustHtmlAuto"></td>
+      <tr
+        ng-repeat="attributes in $ctrl.configuration.data"
+        ng-class="['row-' + $ctrl.configuration.getRowUid(attributes), $ctrl.configuration.isRowSelected(attributes) ? 'ngeo-grid-active': '']"
+        ng-click="$ctrl.clickRow(attributes, $event)"
+        ng-mousedown="$ctrl.preventTextSelection($event)"
+      >
+        <td
+          ng-repeat="columnDefs in $ctrl.configuration.columnDefs"
+          ng-bind-html="attributes[columnDefs.name] | removeCDATA | ngeoTrustHtmlAuto"
+        ></td>
       </tr>
     </tbody>
   </table>

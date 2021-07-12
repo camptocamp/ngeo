@@ -1,12 +1,13 @@
 <div class="ngeo-routing-feature">
-    <div class="input-group">
-      <ngeo-nominatim-input
-        ngeo-nominatim-input-value="$ctrl.featureLabel"
-        ngeo-nominatim-input-placeholder="{{'Search...' | translate}}"
-        ngeo-nominatim-input-on-select="$ctrl.onSelect">
-      </ngeo-nominatim-input>
-      <div class="input-group-addon btn" ng-click="$ctrl.set()">
-        <span class="fa fa-map-marker"></span>
-      </div>
+  <div class="input-group">
+    <ngeo-nominatim-input
+      ngeo-nominatim-input-value="$ctrl.featureLabel"
+      ngeo-nominatim-input-placeholder="{{'Search...' | translate}}"
+      ngeo-nominatim-input-on-select="$ctrl.onSelect"
+    >
+    </ngeo-nominatim-input>
+    <div class="input-group-addon btn" ng-click="$ctrl.set()">
+      <span class="fa fa-map-marker"></span>
     </div>
+  </div>
 </div>

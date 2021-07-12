@@ -21,7 +21,6 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-
 $lidarprofile-height: 21.88rem;
 $profile-legend-width: 9.38rem;
 #gmf-lidarprofile-container {
@@ -55,7 +54,7 @@ $profile-legend-width: 9.38rem;
     margin: $app-margin;
     padding-left: 6.25rem;
     padding-top: 6.25rem;
-    width:  calc(100% - 3.12rem - #{$profile-legend-width});
+    width: calc(100% - 3.12rem - #{$profile-legend-width});
     height: calc(#{$lidarprofile-height} - 3.12rem);
     font-size: 1.5em;
     opacity: 1;

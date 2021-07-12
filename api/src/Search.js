@@ -97,9 +97,9 @@ export default class Search {
    */
   onSubmit_(result) {
     this.source_.clear();
-    const feature = /** @type {import('ol/Feature').default<import('ol/geom/Geometry').default>} */ (
-      this.format_.readFeature(result)
-    );
+    const feature = /** @type {import('ol/Feature').default<import('ol/geom/Geometry').default>} */ (this.format_.readFeature(
+      result
+    ));
     this.source_.addFeature(feature);
     this.view_.fit(this.source_.getExtent());
   }

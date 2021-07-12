@@ -12,7 +12,7 @@ gmf-map > div {
 
 /* DisplayQueryGrid */
 .gmf-displayquerygrid {
-  padding: .5rem;
+  padding: 0.5rem;
   border-top: solid 1px black;
   background-color: white;
   height: 25rem;
@@ -35,7 +35,7 @@ gmf-map > div {
 }
 
 .table > tbody > tr.active > td {
-  background-color: #C9C9C9;
+  background-color: #c9c9c9;
 }
 
 .nav-pills {
@@ -47,12 +47,12 @@ gmf-map > div {
   margin-right: 0px;
 }
 
-table>tbody>tr>td,
-table>tbody>tr>th,
-table>tfoot>tr>td,
-table>tfoot>tr>th,
-table>thead>tr>td,
-table>thead>tr>th {
+table > tbody > tr > td,
+table > tbody > tr > th,
+table > tfoot > tr > td,
+table > tfoot > tr > th,
+table > thead > tr > td,
+table > thead > tr > th {
   padding: 2px;
 }
 
@@ -60,14 +60,14 @@ table>thead>tr>th {
 ul {
   list-style-type: none;
 }
-gmf-layertree a{
+gmf-layertree a {
   color: black;
   text-decoration: none;
   padding-right: 5px;
 }
 gmf-layertree .gmf-layertree-metadata a:before {
   font-family: FontAwesome;
-  content: "\f129";
+  content: '\f129';
 }
 gmf-layertree .gmf-layertree-layer-icon {
   display: inline-flex;
@@ -82,14 +82,14 @@ gmf-layertree .gmf-layertree-zoom:hover {
 }
 gmf-layertree .gmf-layertree-zoom:before {
   font-family: FontAwesome;
-  content: "\f18e";
+  content: '\f18e';
 }
 gmf-layertree .outOfResolution .gmf-layertree-legend {
   display: none;
 }
 gmf-layertree .gmf-layertree-legend-button a:after {
   font-family: FontAwesome;
-  content: "\f036";
+  content: '\f036';
 }
 gmf-layertree .gmf-layertree-legend img {
   padding-left: 15px;
@@ -98,7 +98,7 @@ gmf-layertree .noSource {
   opacity: 0.3;
 }
 gmf-layertree .noSource:after {
-  content: "(source not available)";
+  content: '(source not available)';
 }
 gmf-layertree .outOfResolution {
   opacity: 0.6;
@@ -111,13 +111,13 @@ gmf-layertree .gmf-layertree-state {
   font-weight: lighter;
 }
 gmf-layertree .on .gmf-layertree-state:before {
-  content: "\f14a";
+  content: '\f14a';
 }
 gmf-layertree .off .gmf-layertree-state:before {
-  content: "\f096";
+  content: '\f096';
 }
 gmf-layertree .indeterminate .gmf-layertree-state:before {
-  content: "\f147";
+  content: '\f147';
 }
 [ngeo-popup] {
   top: 20px;

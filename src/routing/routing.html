@@ -5,26 +5,28 @@
       ngeo-routing-feature-feature="$ctrl.startFeature_"
       ngeo-routing-feature-fill-color="$ctrl.colors.startFill"
       ngeo-routing-feature-stroke-color="$ctrl.colors.startStroke"
-      ngeo-routing-feature-on-change="$ctrl.handleChange">
+      ngeo-routing-feature-on-change="$ctrl.handleChange"
+    >
     </ngeo-routing-feature>
   </div>
 
-    <div class="ngeo-routing-vias form-group" ng-repeat="(index, via) in $ctrl.viaArray">
-      <div class="form-inline">
-        <div class="form-group">
-          <ngeo-routing-feature
-            ngeo-routing-feature-map="$ctrl.map"
-            ngeo-routing-feature-feature="via.feature"
-            ngeo-routing-feature-fill-color="$ctrl.colors.viaFill"
-            ngeo-routing-feature-stroke-color="$ctrl.colors.viaStroke"
-            ngeo-routing-feature-on-change="$ctrl.handleChange">
-          </ngeo-routing-feature>
-        </div>
-        <button type="button" class="btn prime delete-via" ng-click="$ctrl.deleteVia(index)">
-          <span class="fa fa-trash"></span>
-        </button>
+  <div class="ngeo-routing-vias form-group" ng-repeat="(index, via) in $ctrl.viaArray">
+    <div class="form-inline">
+      <div class="form-group">
+        <ngeo-routing-feature
+          ngeo-routing-feature-map="$ctrl.map"
+          ngeo-routing-feature-feature="via.feature"
+          ngeo-routing-feature-fill-color="$ctrl.colors.viaFill"
+          ngeo-routing-feature-stroke-color="$ctrl.colors.viaStroke"
+          ngeo-routing-feature-on-change="$ctrl.handleChange"
+        >
+        </ngeo-routing-feature>
       </div>
+      <button type="button" class="btn prime delete-via" ng-click="$ctrl.deleteVia(index)">
+        <span class="fa fa-trash"></span>
+      </button>
     </div>
+  </div>
 
   <div class="ngeo-routing-destination form-group">
     <ngeo-routing-feature
@@ -32,7 +34,8 @@
       ngeo-routing-feature-feature="$ctrl.targetFeature_"
       ngeo-routing-feature-fill-color="$ctrl.colors.destinationFill"
       ngeo-routing-feature-stroke-color="$ctrl.colors.destinationStroke"
-      ngeo-routing-feature-on-change="$ctrl.handleChange">
+      ngeo-routing-feature-on-change="$ctrl.handleChange"
+    >
     </ngeo-routing-feature>
   </div>
 
@@ -61,8 +64,7 @@
     </div>
   </div>
 
-  <div class="ngeo-routing-error form-group clearfix"
-       ng-hide="$ctrl.errorMessage === ''">
+  <div class="ngeo-routing-error form-group clearfix" ng-hide="$ctrl.errorMessage === ''">
     {{$ctrl.errorMessage}}
   </div>
 
@@ -75,21 +77,13 @@
       </div>
     </div>
     <div class="row" ng-hide="$ctrl.routeDuration === null">
-      <div class="col-md-4 text-right" translate>
-        Duration
-      </div>
-      <div class="col-md-8">
-        {{$ctrl.routeDuration | ngeoDuration}}
-      </div>
+      <div class="col-md-4 text-right" translate>Duration</div>
+      <div class="col-md-8">{{$ctrl.routeDuration | ngeoDuration}}</div>
     </div>
 
     <div class="row" ng-hide="$ctrl.routeDistance <= 0">
-      <div class="col-md-4 text-right" translate>
-        Distance
-      </div>
-      <div class="col-md-8">
-        {{$ctrl.routeDistance | ngeoUnitPrefix:'m'}}
-      </div>
+      <div class="col-md-4 text-right" translate>Distance</div>
+      <div class="col-md-8">{{$ctrl.routeDistance | ngeoUnitPrefix:'m'}}</div>
     </div>
   </div>
 </div>

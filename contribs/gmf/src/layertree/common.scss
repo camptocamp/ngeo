@@ -21,7 +21,6 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-
 .gmf-layertree-root-tools {
   text-align: right;
   padding: $micro-app-margin;
@@ -61,7 +60,8 @@
     display: inline;
     line-height: inherit;
     padding-left: 0;
-    &:hover, &:focus {
+    &:hover,
+    &:focus {
       text-decoration: none;
     }
 
@@ -74,7 +74,7 @@
       &::before {
         content: fa-content($fa-var-chevron-right);
       }
-      &[aria-expanded="true"]::before {
+      &[aria-expanded='true']::before {
         content: fa-content($fa-var-chevron-down);
       }
     }
@@ -104,7 +104,7 @@
   }
 
   .gmf-layertree-leaf .gmf-layertree-state::after {
-    content: "\e603";
+    content: '\e603';
   }
 
   .gmf-layertree-group {
@@ -134,7 +134,8 @@
     padding: 0;
     display: flex;
 
-    img, svg {
+    img,
+    svg {
       // Don't let the legend icons images to break the layout by being too
       // tall or too large
       max-width: 100%;
@@ -186,7 +187,7 @@
       display: inline;
     }
     &.gmf-layertree-leaf .gmf-layertree-state::after {
-      content: "\e604";
+      content: '\e604';
     }
   }
 

@@ -337,8 +337,7 @@ DisclaimerController.prototype.update_ = function (layer) {
     console.assert(Object.keys(disclaimers).length === 1);
     this.showAll_(layer);
   } else {
-    const layerWMS =
-      /** @type {import("ol/layer/Layer.js").default<import("ol/source/ImageWMS.js").default>} */ (layer);
+    const layerWMS = /** @type {import("ol/layer/Layer.js").default<import("ol/source/ImageWMS.js").default>} */ (layer);
     const sourceWMS = layerWMS.getSource();
     if (sourceWMS.getParams) {
       const layers = sourceWMS.getParams()['LAYERS'];

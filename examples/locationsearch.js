@@ -104,9 +104,7 @@ function SearchController(ngeoCreateLocationSearchBloodhound) {
       if (!this.map) {
         throw new Error('Missing map');
       }
-      const feature = /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>} */ (
-        suggestion
-      );
+      const feature = /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>} */ (suggestion);
       /**
        * @type {import("ol/extent.js").Extent}
        */

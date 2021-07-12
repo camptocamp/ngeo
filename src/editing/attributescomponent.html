@@ -1,129 +1,118 @@
 <fieldset ng-disabled="attrCtrl.disabled">
-  <div
-      class="form-group"
-      ng-repeat="attribute in ::attrCtrl.attributes">
+  <div class="form-group" ng-repeat="attribute in ::attrCtrl.attributes">
     <div ng-if="attribute.type !== 'geometry'">
-      <label
-          ng-if="::attribute.type !== 'boolean'"
-          class="col-form-label">{{ ::attribute.name | translate }} <span class="text-muted">{{::attribute.required ? "*" : ""}}</span>
+      <label ng-if="::attribute.type !== 'boolean'" class="col-form-label"
+        >{{ ::attribute.name | translate }}
+        <span class="text-muted">{{::attribute.required ? "*" : ""}}</span>
       </label>
 
-      <div
-          class="form-control"
-          ng-if="::attribute.readonly"
-          readonly>
+      <div class="form-control" ng-if="::attribute.readonly" readonly>
         {{::attrCtrl.properties[attribute.name]}}
       </div>
 
-      <div
-          ng-if="::!attribute.readonly"
-          ng-switch="::attribute.type">
-
-        <div
-            ng-switch-when="boolean"
-            class="form-check">
+      <div ng-if="::!attribute.readonly" ng-switch="::attribute.type">
+        <div ng-switch-when="boolean" class="form-check">
           <label class="form-check-label">
             <input
-                name="{{::attribute.name}}"
-                class="form-check-input"
-                ng-model="attrCtrl.properties[attribute.name]"
-                ng-change="attrCtrl.handleInputChange(attribute.name);"
-                type="checkbox">
-            </input>
-            <span> {{ ::attribute.name | translate }} <span class="text-muted">{{::attribute.required ? "*" : ""}}</span></span>
+              name="{{::attribute.name}}"
+              class="form-check-input"
+              ng-model="attrCtrl.properties[attribute.name]"
+              ng-change="attrCtrl.handleInputChange(attribute.name);"
+              type="checkbox"
+            />
+            <span>
+              {{ ::attribute.name | translate }}
+              <span class="text-muted">{{::attribute.required ? "*" : ""}}</span></span
+            >
           </label>
         </div>
 
         <select
-            name="{{::attribute.name}}"
-            ng-required="attribute.required"
-            ng-switch-when="select"
-            ng-model="attrCtrl.properties[attribute.name]"
-            ng-change="attrCtrl.handleInputChange(attribute.name);"
-            class="form-control ngeo-highlight-invalid"
-            type="text">
-          <option
-              ng-repeat="attribute in ::attribute.choices"
-              value="{{ ::attribute }}">
+          name="{{::attribute.name}}"
+          ng-required="attribute.required"
+          ng-switch-when="select"
+          ng-model="attrCtrl.properties[attribute.name]"
+          ng-change="attrCtrl.handleInputChange(attribute.name);"
+          class="form-control ngeo-highlight-invalid"
+          type="text"
+        >
+          <option ng-repeat="attribute in ::attribute.choices" value="{{ ::attribute }}">
             {{ ::attribute | translate }}
           </option>
         </select>
 
         <input
-            name="{{::attribute.name}}"
-            ng-required="attribute.required"
-            ng-switch-when="date"
-            ng-model="attrCtrl.properties[attribute.name]"
-            ng-change="attrCtrl.handleInputChange(attribute.name);"
-            ngeo-datetimepicker
-            ngeo-datetimepicker-options="'{&quot;timepicker&quot;: false, &quot;format&quot;: &quot;' + attribute.format + '&quot;, &quot;allowBlank&quot;: true, &quot;todayButton&quot;: false, &quot;mask&quot;: &quot;' + attribute.mask + '&quot;}'"
-            class="form-control ngeo-highlight-invalid"
-            type="text">
-        </input>
+          name="{{::attribute.name}}"
+          ng-required="attribute.required"
+          ng-switch-when="date"
+          ng-model="attrCtrl.properties[attribute.name]"
+          ng-change="attrCtrl.handleInputChange(attribute.name);"
+          ngeo-datetimepicker
+          ngeo-datetimepicker-options='&apos;{"timepicker": false, "format": "&apos; + attribute.format + &apos;", "allowBlank": true, "todayButton": false, "mask": "&apos; + attribute.mask + &apos;"}&apos;'
+          class="form-control ngeo-highlight-invalid"
+          type="text"
+        />
 
         <input
-            name="{{::attribute.name}}"
-            id="time"
-            ng-required="attribute.required"
-            ng-switch-when="time"
-            ng-model="attrCtrl.properties[attribute.name]"
-            ng-change="attrCtrl.handleInputChange(attribute.name);"
-            ngeo-datetimepicker
-            ngeo-datetimepicker-options="'{&quot;datepicker&quot;: false, &quot;format&quot;: &quot;' + attribute.format + '&quot;, &quot;todayButton&quot;: false, &quot;mask&quot;: &quot;' + attribute.mask + '&quot;, &quot;defaultTime&quot;: &quot;00:00&quot;}'"
-            class="form-control ngeo-highlight-invalid"
-            type="text">
-        </input>
+          name="{{::attribute.name}}"
+          id="time"
+          ng-required="attribute.required"
+          ng-switch-when="time"
+          ng-model="attrCtrl.properties[attribute.name]"
+          ng-change="attrCtrl.handleInputChange(attribute.name);"
+          ngeo-datetimepicker
+          ngeo-datetimepicker-options='&apos;{"datepicker": false, "format": "&apos; + attribute.format + &apos;", "todayButton": false, "mask": "&apos; + attribute.mask + &apos;", "defaultTime": "00:00"}&apos;'
+          class="form-control ngeo-highlight-invalid"
+          type="text"
+        />
 
         <input
-            name="{{::attribute.name}}"
-            ng-required="attribute.required"
-            ng-switch-when="datetime"
-            ng-model="attrCtrl.properties[attribute.name]"
-            ng-change="attrCtrl.handleInputChange(attribute.name);"
-            ngeo-datetimepicker
-            ngeo-datetimepicker-options="'{&quot;scrollTime&quot;: false, &quot;format&quot;: &quot;' + attribute.format + '&quot;, &quot;allowBlank&quot;: true, &quot;todayButton&quot;: false, &quot;mask&quot;: &quot;' + attribute.mask + '&quot;, &quot;defaultTime&quot;: &quot;00:00&quot;}'"
-            class="form-control ngeo-highlight-invalid"
-            type="text">
-        </input>
+          name="{{::attribute.name}}"
+          ng-required="attribute.required"
+          ng-switch-when="datetime"
+          ng-model="attrCtrl.properties[attribute.name]"
+          ng-change="attrCtrl.handleInputChange(attribute.name);"
+          ngeo-datetimepicker
+          ngeo-datetimepicker-options='&apos;{"scrollTime": false, "format": "&apos; + attribute.format + &apos;", "allowBlank": true, "todayButton": false, "mask": "&apos; + attribute.mask + &apos;", "defaultTime": "00:00"}&apos;'
+          class="form-control ngeo-highlight-invalid"
+          type="text"
+        />
 
-        <div
-            ng-switch-when="number"
-            ng-switch="::attribute.numType">
+        <div ng-switch-when="number" ng-switch="::attribute.numType">
           <input
-              name="{{::attribute.name}}"
-              ng-required="attribute.required"
-              ng-switch-when="integer"
-              ng-model="attrCtrl.properties[attribute.name]"
-              ng-change="attrCtrl.handleInputChange(attribute.name);"
-              class="form-control ngeo-highlight-invalid"
-              step="1"
-              type="number">
-          </input>
+            name="{{::attribute.name}}"
+            ng-required="attribute.required"
+            ng-switch-when="integer"
+            ng-model="attrCtrl.properties[attribute.name]"
+            ng-change="attrCtrl.handleInputChange(attribute.name);"
+            class="form-control ngeo-highlight-invalid"
+            step="1"
+            type="number"
+          />
           <input
-              name="{{::attribute.name}}"
-              ng-required="attribute.required"
-              ng-switch-default
-              ng-model="attrCtrl.properties[attribute.name]"
-              ng-change="attrCtrl.handleInputChange(attribute.name);"
-              class="form-control ngeo-highlight-invalid"
-              type="number">
-          </input>
-        </div>
-
-        <input
             name="{{::attribute.name}}"
             ng-required="attribute.required"
             ng-switch-default
             ng-model="attrCtrl.properties[attribute.name]"
             ng-change="attrCtrl.handleInputChange(attribute.name);"
-            ng-maxlength="attribute.maxLength"
             class="form-control ngeo-highlight-invalid"
-            type="text">
-        </input>
+            type="number"
+          />
+        </div>
+
+        <input
+          name="{{::attribute.name}}"
+          ng-required="attribute.required"
+          ng-switch-default
+          ng-model="attrCtrl.properties[attribute.name]"
+          ng-change="attrCtrl.handleInputChange(attribute.name);"
+          ng-maxlength="attribute.maxLength"
+          class="form-control ngeo-highlight-invalid"
+          type="text"
+        />
 
         <div ng-show="attrCtrl.form.$submitted || attrCtrl.form[attribute.name].$touched">
-          <p class="text-danger"
-             ng-show="attrCtrl.form[attribute.name].$error.required">
+          <p class="text-danger" ng-show="attrCtrl.form[attribute.name].$error.required">
             {{'This field is required' | translate}}
           </p>
         </div>

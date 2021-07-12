@@ -162,7 +162,8 @@ function* mergeSources(opts, entry, resolve, level) {
     // must reset lastIndex
     MATCH_FILES.lastIndex = 0;
 
-    while (matched = MATCH_FILES.exec(total)) { // eslint-disable-line
+    while ((matched = MATCH_FILES.exec(total))) {
+      // eslint-disable-line
       const originalImport = matched[2].trim();
       if (!originalImport) {
         const err = new Error(`import file cannot be empty: "${total}" @${entry}`);

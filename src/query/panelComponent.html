@@ -1,6 +1,4 @@
-<div
-  class="btn-group"
->
+<div class="btn-group">
   <button
     data-toggle="tooltip"
     title="{{'While active, click on the map to issue a query' | translate}}"
@@ -38,9 +36,8 @@
         class="form-check-input"
         ng-model="$ctrl.ngeoQueryModeSelector.action"
         value="add"
-      >
-        <span>{{'Add' | translate }}</span>
-      </input>
+      />
+      <span>{{'Add' | translate }}</span>
     </label>
   </div>
   <div class="form-check">
@@ -50,9 +47,8 @@
         class="form-check-input"
         ng-model="$ctrl.ngeoQueryModeSelector.action"
         value="remove"
-      >
-        <span>{{'Remove' | translate }}</span>
-      </input>
+      />
+      <span>{{'Remove' | translate }}</span>
     </label>
   </div>
   <div class="form-check">
@@ -62,21 +58,23 @@
         class="form-check-input"
         ng-model="$ctrl.ngeoQueryModeSelector.action"
         value="replace"
-      >
-        <span>{{'Replace' | translate }}</span>
-      </input>
+      />
+      <span>{{'Replace' | translate }}</span>
     </label>
   </div>
 </div>
 
 <div class="ngeo-query-panel-help">
-  <span
-    ng-show="$ctrl.ngeoQueryModeSelector.mode === 'click'"
-  >{{'Query by "click" on the map is currently active. All queryable layers, including WMS and WFS, will return results.' | translate }}</span>
-  <span
-    ng-show="$ctrl.ngeoQueryModeSelector.mode === 'drawbox'"
-  >{{'Query by "box" on the map is currently active. Not all queryable layers will return results. Only those that support WFS will do so.' | translate }}</span>
-  <span
-    ng-show="$ctrl.ngeoQueryModeSelector.mode === 'drawpolygon'"
-  >{{'Query by "polygon" on the map is currently active. Not all queryable layers will return results. Only those that support WFS will do so.' | translate }}</span>
+  <span ng-show="$ctrl.ngeoQueryModeSelector.mode === 'click'"
+    >{{'Query by "click" on the map is currently active. All queryable layers, including WMS and WFS, will
+    return results.' | translate }}</span
+  >
+  <span ng-show="$ctrl.ngeoQueryModeSelector.mode === 'drawbox'"
+    >{{'Query by "box" on the map is currently active. Not all queryable layers will return results. Only
+    those that support WFS will do so.' | translate }}</span
+  >
+  <span ng-show="$ctrl.ngeoQueryModeSelector.mode === 'drawpolygon'"
+    >{{'Query by "polygon" on the map is currently active. Not all queryable layers will return results. Only
+    those that support WFS will do so.' | translate }}</span
+  >
 </div>

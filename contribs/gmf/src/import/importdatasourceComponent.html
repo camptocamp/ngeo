@@ -3,20 +3,16 @@
     class="form-control"
     ng-model="$ctrl.mode"
     ng-options="mode | translate for mode in $ctrl.modes"
-    ng-click="$ctrl.hasError = false">
-  </select>
+    ng-click="$ctrl.hasError = false"
+  ></select>
 </div>
 
 <div>
-
-  <form
-    name="idsl_form"
-    novalidate
-    ng-show="$ctrl.mode === 'Local'">
+  <form name="idsl_form" novalidate ng-show="$ctrl.mode === 'Local'">
     <div class="form-group">
       <div class="input-group">
         <div class="custom-file">
-          <input type="file" class="custom-file-input" required>
+          <input type="file" class="custom-file-input" required />
           <label class="custom-file-label" translate>No file</label>
         </div>
       </div>
@@ -36,10 +32,7 @@
     </div>
   </form>
 
-  <form
-    name="idsc_form"
-    novalidate
-    ng-show="$ctrl.mode === 'Online'">
+  <form name="idsc_form" novalidate ng-show="$ctrl.mode === 'Online'">
     <div class="form-group gmf-importdatasource-url-form-group">
       <input
         autocomplete="off"
@@ -61,19 +54,12 @@
         ng-click="idsc_form.$valid && $ctrl.connect()"
         ng-disabled="idsc_form.$invalid || $ctrl.pending"
       >
-        <span
-          ng-if="$ctrl.pending"
-        >{{'Connecting, please wait...' | translate}}</span>
-        <span
-          ng-if="!$ctrl.pending && $ctrl.hasError"
-        >{{'Failed to connect' | translate}}</span>
-        <span
-          ng-if="!$ctrl.pending && !$ctrl.hasError"
-        >{{'Connect' | translate}}</span>
+        <span ng-if="$ctrl.pending">{{'Connecting, please wait...' | translate}}</span>
+        <span ng-if="!$ctrl.pending && $ctrl.hasError">{{'Failed to connect' | translate}}</span>
+        <span ng-if="!$ctrl.pending && !$ctrl.hasError">{{'Connect' | translate}}</span>
       </button>
     </div>
   </form>
-
 </div>
 
 <div ng-if="$ctrl.isLoading">
@@ -84,7 +70,8 @@
 
 <div
   class="gmf-importdatasource-layers"
-  ng-if="($ctrl.wmsCapabilities !== null || $ctrl.wmtsCapabilities !== null) && $ctrl.mode === 'Online'">
+  ng-if="($ctrl.wmsCapabilities !== null || $ctrl.wmtsCapabilities !== null) && $ctrl.mode === 'Online'"
+>
   <hr />
   <input
     class="form-control"
@@ -98,12 +85,14 @@
     capabilities="::$ctrl.wmsCapabilities"
     layer="::$ctrl.wmsCapabilities.Capability.Layer"
     url="::$ctrl.url"
-    ng-if="$ctrl.wmsCapabilities !== null">
+    ng-if="$ctrl.wmsCapabilities !== null"
+  >
   </gmf-wmscapabilitylayertreenode>
   <gmf-wmtscapabilitylayertree
     capabilities="::$ctrl.wmtsCapabilities"
     layers="::$ctrl.wmtsCapabilities.Contents.Layer"
     url="::$ctrl.url"
-    ng-if="$ctrl.wmtsCapabilities !== null">
+    ng-if="$ctrl.wmtsCapabilities !== null"
+  >
   </gmf-wmtscapabilitylayertree>
 </div>

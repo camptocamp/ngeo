@@ -1,20 +1,19 @@
 <!DOCTYPE html>
-<html ng-app='app'>
+<html ng-app="app">
   <head>
     <title>Mapillary Example</title>
-    <meta charset="utf-8">
-    <meta name="viewport"
-          content="initial-scale=1.0, user-scalable=no, width=device-width">
-    <meta name="mobile-web-app-capable" content="yes">
-
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width" />
+    <meta name="mobile-web-app-capable" content="yes" />
   </head>
   <body ng-controller="MainController as ctrl">
     <div id="map" ngeo-map="ctrl.map"></div>
     <ngeo-streetview
-        active="ctrl.streetViewActive"
-        feature-style="ctrl.style"
-        map="ctrl.map"
-        options-name="ngeoStreetviewOptions">
+      active="ctrl.streetViewActive"
+      feature-style="ctrl.style"
+      map="ctrl.map"
+      options-name="ngeoStreetviewOptions"
+    >
     </ngeo-streetview>
 
     <div class="desc">
@@ -24,15 +23,10 @@
       </p>
 
       <div class="panel panel-default panel-body">
-        <input
-            type="checkbox"
-            id="checkbox-streetview"
-            ng-model="ctrl.streetViewActive" />
+        <input type="checkbox" id="checkbox-streetview" ng-model="ctrl.streetViewActive" />
         <label for="checkbox-mapillaryStreetview"> Mapillary</label>
 
-        <input type="checkbox"
-               id="checkbox-dummy"
-               ng-model="ctrl.dummyActive" />
+        <input type="checkbox" id="checkbox-dummy" ng-model="ctrl.dummyActive" />
         <label for="checkbox-dummy"> Dummy tool</label>
       </div>
     </div>

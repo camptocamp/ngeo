@@ -113,28 +113,26 @@ MapComponentController.prototype.$onInit = function () {
 
   view.on(
     'propertychange',
-    /** @type {function(?): ?} */ (
-      this.ngeoDebounce_(
-        /**
-         * @param {import("ol/events/Event.js").default} e Object event.
-         */
-        // @ts-ignore
-        (e) => {
-          const center = view.getCenter();
-          if (!center) {
-            throw new Error('Missing center');
-          }
-          const params = {
-            'z': `${view.getZoom()}`,
-            'x': `${Math.round(center[0])}`,
-            'y': `${Math.round(center[1])}`,
-          };
-          this.ngeoLocation_.updateParams(params);
-        },
-        300,
-        /* invokeApply */ true
-      )
-    )
+    /** @type {function(?): ?} */ (this.ngeoDebounce_(
+      /**
+       * @param {import("ol/events/Event.js").default} e Object event.
+       */
+      // @ts-ignore
+      (e) => {
+        const center = view.getCenter();
+        if (!center) {
+          throw new Error('Missing center');
+        }
+        const params = {
+          'z': `${view.getZoom()}`,
+          'x': `${Math.round(center[0])}`,
+          'y': `${Math.round(center[1])}`,
+        };
+        this.ngeoLocation_.updateParams(params);
+      },
+      300,
+      /* invokeApply */ true
+    ))
   );
 };
 
@@ -260,9 +258,9 @@ DrawComponentController.prototype.$onInit = function () {
 
   const encodedFeatures = this.ngeoLocation_.getParam('features');
   if (encodedFeatures !== undefined) {
-    const features = /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>[]} */ (
-      fhFormat.readFeatures(encodedFeatures)
-    );
+    const features = /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>[]} */ (fhFormat.readFeatures(
+      encodedFeatures
+    ));
     this.featureSeq_ = features.length;
     vectorSource.addFeatures(features);
   }

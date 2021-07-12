@@ -1,7 +1,5 @@
 {
-  "plugins": [
-    "jsdoc-plugin-typescript"
-  ],
+  "plugins": ["jsdoc-plugin-typescript"],
   "typescript": {
     "moduleRoot": "."
   },

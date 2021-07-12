@@ -1,11 +1,11 @@
 .ngeo-createfeature-point:before {
-  content: 'Point'
+  content: 'Point';
 }
 .ngeo-createfeature-linestring:before {
-  content: 'Line'
+  content: 'Line';
 }
 .ngeo-createfeature-polygon:before {
-  content: 'Polygon'
+  content: 'Polygon';
 }
 .tooltip {
   position: relative;
@@ -28,7 +28,7 @@
   border-top: 6px solid rgba(0, 0, 0, 0.5);
   border-right: 6px solid transparent;
   border-left: 6px solid transparent;
-  content: "";
+  content: '';
   position: absolute;
   bottom: -6px;
   margin-left: -7px;

@@ -47,7 +47,8 @@ div.ngeo-displaywindow {
   }
 }
 
-.gmf-displayquerywindow, .ngeo-displaywindow {
+.gmf-displayquerywindow,
+.ngeo-displaywindow {
   right: $app-margin + $map-tools-size + $app-margin;
   left: initial;
   bottom: $app-margin;
@@ -99,7 +100,8 @@ div.ngeo-displaywindow {
       top: 0;
       left: 0;
       right: 0;
-      &.ng-enter, &.ng-leave {
+      &.ng-enter,
+      &.ng-leave {
         transition: 0.3s ease-in all;
       }
       .content-template-container {
@@ -127,7 +129,8 @@ div.ngeo-displaywindow {
       &.ng-enter-prepare {
         left: 100%;
       }
-      &.ng-enter-active, &.ng-leave {
+      &.ng-enter-active,
+      &.ng-leave {
         left: 0;
       }
       &.ng-leave-active {
@@ -141,7 +144,8 @@ div.ngeo-displaywindow {
       &.ng-enter-prepare {
         left: -100%;
       }
-      &.ng-enter-active, &.ng-leave {
+      &.ng-enter-active,
+      &.ng-leave {
         left: 0;
       }
       &.ng-leave-active {
@@ -216,7 +220,8 @@ div.ngeo-displaywindow {
       font-weight: normal;
       font-size: 0.94rem;
     }
-    &::before, &::after {
+    &::before,
+    &::after {
       font-family: 'Font Awesome 5 Free';
       font-weight: 900;
     }
@@ -245,7 +250,10 @@ div.ngeo-displaywindow {
     .animation-container {
       height: $map-tools-size * 2;
       &.animation-container-detailed {
-        height: ($displayquerywindow-detailed-header-height + $displayquerywindow-detailed-details-height / 2 + $app-margin * 3) + $map-tools-size;
+        height: (
+            $displayquerywindow-detailed-header-height + $displayquerywindow-detailed-details-height / 2 +
+              $app-margin * 3
+          ) + $map-tools-size;
       }
     }
     .results {
@@ -254,7 +262,7 @@ div.ngeo-displaywindow {
   }
 }
 
-@media (max-width: map-get($grid-breakpoints, "sm")) {
+@media (max-width: map-get($grid-breakpoints, 'sm')) {
   .gmf-displayquerywindow.mobile {
     width: 100%;
     max-width: 100%;

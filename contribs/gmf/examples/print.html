@@ -1,40 +1,36 @@
 <!DOCTYPE html>
-<html ng-app='gmfapp'>
+<html ng-app="gmfapp">
   <head>
     <title>GeoMapFish Print example</title>
-    <meta charset="utf-8">
-    <meta name="viewport"
-          content="initial-scale=1.0, user-scalable=no, width=device-width">
-    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
   </head>
   <body ng-controller="MainController as ctrl">
-
-  <gmf-map gmf-map-map="ctrl.map"></gmf-map>
+    <gmf-map gmf-map-map="ctrl.map"></gmf-map>
 
     <div id="tree-container">
       <div>
-        <span>Theme:
-        <select
-            ng-model="ctrl.treeSource"
-            ng-options="theme.name for theme in ctrl.themes">
-        </select>
+        <span
+          >Theme:
+          <select ng-model="ctrl.treeSource" ng-options="theme.name for theme in ctrl.themes"></select>
         </span>
       </div>
       <div class="gmf-hidden">
-        <gmf-layertree gmf-layertree-map="::ctrl.map">
-        </gmf-layertree>
+        <gmf-layertree gmf-layertree-map="::ctrl.map"> </gmf-layertree>
       </div>
     </div>
 
     <div class="clear-left"></div>
 
     <p id="desc">
-      This example shows how to use the <code>gmf.print.component</code>.
-      Component that generates layout information and manages tools to print with a
-      MapFishPrint v3.
+      This example shows how to use the <code>gmf.print.component</code>. Component that generates layout
+      information and manages tools to print with a MapFishPrint v3.
     </p>
 
-    <button ng-init="printActive = false"  ng-show="printActive === false" ng-click="printActive = true">Show print panel</button>
+    <button ng-init="printActive = false" ng-show="printActive === false" ng-click="printActive = true">
+      Show print panel
+    </button>
     <div class="printpanel" ng-show="printActive">
       <div class="row">
         <div class="col-sm-12">
@@ -45,29 +41,31 @@
           <gmf-print
             gmf-print-map="::ctrl.map"
             gmf-print-active="printActive"
-            gmf-print-attributes-out="::attributes">
-            <div
-              ng-repeat="attribute in attributes"
-              class="gmf-print-layoutinfo">
-
-              <div ng-if="attribute.name == 'title'" class="form-group" style="margin-top: 1rem;">
+            gmf-print-attributes-out="::attributes"
+          >
+            <div ng-repeat="attribute in attributes" class="gmf-print-layoutinfo">
+              <div ng-if="attribute.name == 'title'" class="form-group" style="margin-top: 1rem">
                 <label class="col-form-label col-md-5">{{ "Title" | translate }}</label>
                 <div class="col-md-7">
                   <div class="btn-group btn-block">
                     <button
                       type="button"
                       class="btn btn-default form-control dropdown-toggle"
-                      data-toggle="dropdown">
+                      data-toggle="dropdown"
+                    >
                       <span>{{attribute.value | translate}}&nbsp;</span>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-right btn-block" role="menu">
-                      <li><a
-                          ng-click="attribute.value = 'First title'"
-                          href="">{{ 'First title' | translate}}</a>
+                      <li>
+                        <a ng-click="attribute.value = 'First title'" href=""
+                          >{{ 'First title' | translate}}</a
+                        >
                       </li>
-                      <li><a
-                          ng-click="attribute.value = 'Second title'"
-                          href="">{{ 'Second title' | translate}}</a>
+
+                      <li>
+                        <a ng-click="attribute.value = 'Second title'" href=""
+                          >{{ 'Second title' | translate}}</a
+                        >
                       </li>
                     </ul>
                   </div>
@@ -81,17 +79,21 @@
                     <button
                       type="button"
                       class="btn btn-default form-control dropdown-toggle"
-                      data-toggle="dropdown">
+                      data-toggle="dropdown"
+                    >
                       <span>{{attribute.value | translate}}&nbsp;</span>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-right btn-block" role="menu">
-                      <li><a
-                          ng-click="attribute.value = 'First comment'"
-                          href="">{{ 'First comment' | translate}}</a>
+                      <li>
+                        <a ng-click="attribute.value = 'First comment'" href=""
+                          >{{ 'First comment' | translate}}</a
+                        >
                       </li>
-                      <li><a
-                          ng-click="attribute.value = 'Second comment'"
-                          href="">{{ 'Second comment' | translate}}</a>
+
+                      <li>
+                        <a ng-click="attribute.value = 'Second comment'" href=""
+                          >{{ 'Second comment' | translate}}</a
+                        >
                       </li>
                     </ul>
                   </div>

@@ -516,18 +516,16 @@ export class Querent {
         if (!dataSource.wfsFormat) {
           throw new Error('Missing wfsFormat');
         }
-        readFeatures =
-          /** @type {import('ol/Feature.js').default<import('ol/geom/Geometry.js').default>[]} */ (
-            dataSource.wfsFormat.readFeatures(data)
-          );
+        readFeatures = /** @type {import('ol/Feature.js').default<import('ol/geom/Geometry.js').default>[]} */ (dataSource.wfsFormat.readFeatures(
+          data
+        ));
       } else {
         if (!dataSource.wmsFormat) {
           throw new Error('Missing wmsFormat');
         }
-        readFeatures =
-          /** @type {import('ol/Feature.js').default<import('ol/geom/Geometry.js').default>[]} */ (
-            dataSource.wmsFormat.readFeatures(data)
-          );
+        readFeatures = /** @type {import('ol/Feature.js').default<import('ol/geom/Geometry.js').default>[]} */ (dataSource.wmsFormat.readFeatures(
+          data
+        ));
       }
       if (readFeatures.length > 0) {
         readFeatures.forEach((feature) => {

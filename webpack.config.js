@@ -1,4 +1,4 @@
-const { merge } = require('webpack-merge');
+const {merge} = require('webpack-merge');
 
 module.exports = (env, args) => {
   const nodeEnv = args.mode || 'production';

@@ -2,7 +2,7 @@ gmf-map > div {
   width: 600px;
   height: 400px;
 }
-gmf-mouseposition>div {
+gmf-mouseposition > div {
   min-width: 260px;
 }
 .dropdown-menu {

@@ -36,7 +36,9 @@ $half-app-margin: 0.32rem !default;
 $padding-base-vertical: $half-app-margin !default;
 $padding-base-horizontal: $app-margin !default;
 $form-group-margin-bottom: $app-margin !default;
-$search-results-max-height: calc(100vh - #{$topbar-height} + #{$map-tools-size} + (2 * #{$app-margin})) !default;
+$search-results-max-height: calc(
+  100vh - #{$topbar-height} + #{$map-tools-size} + (2 * #{$app-margin})
+) !default;
 
 $notification-width: 12.5rem !default;
 

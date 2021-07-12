@@ -96,8 +96,9 @@ function check(context) {
       const headerLines = Array.prototype.concat(headerLines1, headerLines2, headerLines3);
       const fixLines = Array.prototype.concat(headerLines1, fixLines2, headerLines3);
 
-      const leadingComments = (
-        node.body.length ? context.getComments(node.body[0]).leading : context.getComments(node).leading
+      const leadingComments = (node.body.length
+        ? context.getComments(node.body[0]).leading
+        : context.getComments(node).leading
       ).filter(function (comment) {
         return comment.type !== 'Shebang';
       });

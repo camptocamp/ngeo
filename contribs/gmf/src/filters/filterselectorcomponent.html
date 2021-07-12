@@ -1,13 +1,12 @@
-<div
-    class="form-group"
-    ng-switch="$ctrl.filtrableDataSources.length">
+<div class="form-group" ng-switch="$ctrl.filtrableDataSources.length">
   <span ng-switch-when="0" translate>No filtrable layer available!</span>
   <select
-      class="form-control"
-      ng-disabled="$ctrl.aRuleIsActive"
-      ng-switch-default
-      ng-model="$ctrl.gmfDataSourceBeingFiltered.dataSource"
-      ng-options="dataSource.name | translate for dataSource in $ctrl.filtrableDataSources">
+    class="form-control"
+    ng-disabled="$ctrl.aRuleIsActive"
+    ng-switch-default
+    ng-model="$ctrl.gmfDataSourceBeingFiltered.dataSource"
+    ng-options="dataSource.name | translate for dataSource in $ctrl.filtrableDataSources"
+  >
     <option value="" translate>-- Layer to filter --</option>
   </select>
 
@@ -16,26 +15,24 @@
 
     <div class="dropdown gmf-filterselector-savedfilters">
       <button
-          class="btn btn-link dropdown-toggle ngeo-filter-condition-button"
-          ng-class="{disabled: $ctrl.aRuleIsActive || $ctrl.gmfSavedFilters.currentDataSourceItems.length === 0}"
-          type="button"
-          data-toggle="dropdown"
-          ng-disabled="$ctrl.aRuleIsActive || $ctrl.gmfSavedFilters.currentDataSourceItems.length === 0">
+        class="btn btn-link dropdown-toggle ngeo-filter-condition-button"
+        ng-class="{disabled: $ctrl.aRuleIsActive || $ctrl.gmfSavedFilters.currentDataSourceItems.length === 0}"
+        type="button"
+        data-toggle="dropdown"
+        ng-disabled="$ctrl.aRuleIsActive || $ctrl.gmfSavedFilters.currentDataSourceItems.length === 0"
+      >
         <span translate>Saved</span>
       </button>
       <ul class="dropdown-menu">
         <li ng-repeat="item in $ctrl.gmfSavedFilters.currentDataSourceItems">
-          <a
-              href
-              ng-click="$ctrl.saveFilterLoadItem(item)">
+          <a href ng-click="$ctrl.saveFilterLoadItem(item)">
             <span>{{::item.name}}</span>
           </a>
         </li>
+
         <li role="separator" class="divider"></li>
         <li>
-          <a
-              href
-              ng-click="$ctrl.saveFilterManage()">
+          <a href ng-click="$ctrl.saveFilterManage()">
             <span translate>Manage saved filters</span>
           </a>
         </li>
@@ -43,22 +40,24 @@
     </div>
 
     <ngeo-filter
-        a-rule-is-active="$ctrl.aRuleIsActive"
-        custom-rules="$ctrl.customRules"
-        datasource="$ctrl.readyDataSource"
-        directed-rules="$ctrl.directedRules"
-        feature-overlay="$ctrl.featureOverlay"
-        filter-is-applied="$ctrl.filterIsApplied"
-        map="$ctrl.map"
-        tool-group="$ctrl.toolGroup">
+      a-rule-is-active="$ctrl.aRuleIsActive"
+      custom-rules="$ctrl.customRules"
+      datasource="$ctrl.readyDataSource"
+      directed-rules="$ctrl.directedRules"
+      feature-overlay="$ctrl.featureOverlay"
+      filter-is-applied="$ctrl.filterIsApplied"
+      map="$ctrl.map"
+      tool-group="$ctrl.toolGroup"
+    >
     </ngeo-filter>
 
     <div>
       <button
-          class="btn btn-link gmf-filterselector-savebtn"
-          type="button"
-          ng-click="!$ctrl.aRuleIsActive && $ctrl.saveFilterShowModal()"
-          ng-disabled="$ctrl.aRuleIsActive">
+        class="btn btn-link gmf-filterselector-savebtn"
+        type="button"
+        ng-click="!$ctrl.aRuleIsActive && $ctrl.saveFilterShowModal()"
+        ng-disabled="$ctrl.aRuleIsActive"
+      >
         <span class="fa fa-save"></span>
         <span translate>Save</span>
       </button>
@@ -68,11 +67,7 @@
   <ngeo-modal ng-model="$ctrl.saveFilterSaveModalShown">
     <div class="modal-header ui-draggable-handle">
       <h4 class="modal-title">{{'Save filter' | translate}}</h4>
-      <button
-          type="button"
-          class="close"
-          data-dismiss="modal"
-          aria-label="{{'Close' | translate}}">
+      <button type="button" class="close" data-dismiss="modal" aria-label="{{'Close' | translate}}">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
@@ -81,22 +76,23 @@
         You can save the filter that you created to re-load it later.
       </p>
       <input
-          type="text"
-          class="form-control"
-          name="name"
-          ng-model="$ctrl.saveFilterName"
-          placeholder="{{'Filter name' | translate}}" />
+        type="text"
+        class="form-control"
+        name="name"
+        ng-model="$ctrl.saveFilterName"
+        placeholder="{{'Filter name' | translate}}"
+      />
     </div>
     <div class="modal-footer">
+      <button type="button" class="btn btn-default" data-dismiss="modal">{{'Cancel' | translate}}</button>
       <button
-          type="button"
-          class="btn btn-default"
-          data-dismiss="modal">{{'Cancel' | translate}}</button>
-      <button
-          type="button"
-          ng-click="$ctrl.saveFilterSave()"
-          ng-disabled="$ctrl.saveFilterName === ''"
-          class="btn prime">{{'Save' | translate}}</button>
+        type="button"
+        ng-click="$ctrl.saveFilterSave()"
+        ng-disabled="$ctrl.saveFilterName === ''"
+        class="btn prime"
+      >
+        {{'Save' | translate}}
+      </button>
     </div>
   </ngeo-modal>
 
@@ -104,11 +100,7 @@
     <div class="gmf-filterselector-managefilter-modal">
       <div class="modal-header ui-draggable-handle">
         <h4 class="modal-title">{{'Manage filters' | translate}}</h4>
-        <button
-            type="button"
-            class="close"
-            data-dismiss="modal"
-            aria-label="{{'Close' | translate}}">
+        <button type="button" class="close" data-dismiss="modal" aria-label="{{'Close' | translate}}">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -116,22 +108,14 @@
         <ul>
           <li ng-repeat="item in $ctrl.gmfSavedFilters.currentDataSourceItems">
             <span>{{::item.name}}</span>
-            <a
-                href
-                ng-click="$ctrl.saveFilterRemoveItem(item)">
-                {{ 'Delete' | translate }}
-            </a>
+            <a href ng-click="$ctrl.saveFilterRemoveItem(item)"> {{ 'Delete' | translate }} </a>
             <div class="gmf-eol"></div>
           </li>
         </ul>
       </div>
       <div class="modal-footer">
-        <button
-            type="button"
-            class="btn btn-default"
-            data-dismiss="modal">{{'Close' | translate}}</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">{{'Close' | translate}}</button>
       </div>
     </div>
   </ngeo-modal>
-
 </div>

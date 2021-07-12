@@ -4,7 +4,7 @@ import Map from './src/Map.js';
 dynamicUrl.dynamicUrl = 'https://geomapfish-demo-2-7.camptocamp.com/dynamic.json?interface=api';
 
 const lib = {
-  Map
+  Map,
 };
 
 export default lib;

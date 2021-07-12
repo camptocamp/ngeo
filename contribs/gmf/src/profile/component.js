@@ -366,14 +366,13 @@ ProfileController.prototype.$onInit = function () {
     }
   }
 
-  this.profileOptions =
-    /** @type {import('ngeo/profile/elevationComponent.js').ProfileOptions<ProfileElement>} */ ({
-      linesConfiguration: this.ngeoOptions.linesConfiguration,
-      distanceExtractor: this.getDist_,
-      hoverCallback: this.hoverCallback_.bind(this),
-      outCallback: this.outCallback_.bind(this),
-      i18n: this.profileLabels_,
-    });
+  this.profileOptions = /** @type {import('ngeo/profile/elevationComponent.js').ProfileOptions<ProfileElement>} */ ({
+    linesConfiguration: this.ngeoOptions.linesConfiguration,
+    distanceExtractor: this.getDist_,
+    hoverCallback: this.hoverCallback_.bind(this),
+    outCallback: this.outCallback_.bind(this),
+    i18n: this.profileLabels_,
+  });
 
   const optionsFn = this.getOptionsFn;
   if (optionsFn) {

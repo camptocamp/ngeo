@@ -229,9 +229,8 @@ export class QueryController {
           olEventsListen(
             this.drawPolygonInteraction_,
             'drawend',
-            /** @type {import('ol/events.js').ListenerFunction} */ (
-              this.handleDrawPolygonInteractionDrawEnd_
-            ),
+            /** @type {import('ol/events.js').ListenerFunction} */ (this
+              .handleDrawPolygonInteractionDrawEnd_),
             this
           )
         );

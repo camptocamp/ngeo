@@ -75,9 +75,9 @@ EditingEditFeature.prototype.getFeaturesInExtent = function (layerIds, extent) {
     .get(url)
     .then(
       (response) =>
-        /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>[]} */ (
-          new olFormatGeoJSON().readFeatures(response.data)
-        )
+        /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>[]} */ (new olFormatGeoJSON().readFeatures(
+          response.data
+        ))
     );
 };
 
@@ -112,9 +112,9 @@ EditingEditFeature.prototype.getFeaturesWithComparisonFilters = function (layerI
     .get(url)
     .then(
       (response) =>
-        /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>[]} */ (
-          new olFormatGeoJSON().readFeatures(response.data)
-        )
+        /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>[]} */ (new olFormatGeoJSON().readFeatures(
+          response.data
+        ))
     );
 };
 

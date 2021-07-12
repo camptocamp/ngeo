@@ -3,7 +3,8 @@
     <td
       ng-repeat="color in ::colors"
       ng-click="ctrl.setColor(color)"
-      ng-class="{'ngeo-colorpicker-selected': color == ctrl.color}">
+      ng-class="{'ngeo-colorpicker-selected': color == ctrl.color}"
+    >
       <div ng-style="::{'background-color': color}"></div>
     </td>
   </tr>

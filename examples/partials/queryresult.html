@@ -1,17 +1,17 @@
 <h3>Total: {{ $ctrl.result.total }}</h3>
 
-<ul class="nav nav-tabs"
-    role="tablist">
-  <li ng-repeat="source in $ctrl.result.sources"
-      role="presentation">
-    <a href="#{{ ::source.label }}"
-       aria-controls="{{ ::source.label }}"
-       ng-attr-aria-selected="{{ $first }}"
-       class="nav-link"
-       id="{{ ::source.label }}-tab"
-       ng-class="::{active: $first}"
-       role="tab"
-       data-toggle="tab">
+<ul class="nav nav-tabs" role="tablist">
+  <li ng-repeat="source in $ctrl.result.sources" role="presentation">
+    <a
+      href="#{{ ::source.label }}"
+      aria-controls="{{ ::source.label }}"
+      ng-attr-aria-selected="{{ $first }}"
+      class="nav-link"
+      id="{{ ::source.label }}-tab"
+      ng-class="::{active: $first}"
+      role="tab"
+      data-toggle="tab"
+    >
       <span>{{ ::source.label }}</span>
       <span ng-switch="source.pending">
         <span ng-switch-when="true">(...)</span>
@@ -22,12 +22,14 @@
 </ul>
 
 <div class="tab-content">
-  <div ng-repeat="source in $ctrl.result.sources"
-       aria-labelledby="{{ ::source.label }}-tab"
-       role="tabpanel"
-       class="tab-pane fade"
-       ng-class="::{active: $first, show: $first}"
-       id="{{ ::source.label }}">
+  <div
+    ng-repeat="source in $ctrl.result.sources"
+    aria-labelledby="{{ ::source.label }}-tab"
+    role="tabpanel"
+    class="tab-pane fade"
+    ng-class="::{active: $first, show: $first}"
+    id="{{ ::source.label }}"
+  >
     <div ng-switch="source.features.length">
       <div ng-switch-when="0">
         <span ng-switch="source.pending">
@@ -38,8 +40,10 @@
       <div ng-switch-default="">
         <div ng-repeat="feature in ::source.features">
           <h3>{{ ::feature.get('display_name') }}</h3>
-          <div ng-repeat="(key, value) in ::feature.getProperties()"
-               ng-init="value = value !== undefined ? value : ''">
+          <div
+            ng-repeat="(key, value) in ::feature.getProperties()"
+            ng-init="value = value !== undefined ? value : ''"
+          >
             <span ng-if="::(key !== feature.getGeometryName() && key !== 'ngeo_feature_type_')">
               <span ng-bind="::key"></span>:
               <span ng-bind="::value"></span>

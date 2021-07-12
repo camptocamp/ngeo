@@ -1,4 +1,6 @@
-<select class="form-control backgroundlayer-selector"
+<select
+  class="form-control backgroundlayer-selector"
   ng-options="layer.name for layer in ::$ctrl.bgLayers"
-  ng-model="$ctrl.bgLayer" ng-change="$ctrl.change()">
-</select>
+  ng-model="$ctrl.bgLayer"
+  ng-change="$ctrl.change()"
+></select>

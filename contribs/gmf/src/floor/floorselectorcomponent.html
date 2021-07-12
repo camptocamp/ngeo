@@ -1,8 +1,21 @@
 <div role="group" class="btn-group-floors btn-group-vertical">
-  <button type="button" class="btn btn-floor"
+  <button
+    type="button"
+    class="btn btn-floor"
     ng-repeat="item in ::$ctrl.items"
     ng-class="{active: item.value == $ctrl.value}"
-    ng-click="$ctrl.value = item.value">{{::item.label}}</button>
+    ng-click="$ctrl.value = item.value"
+  >
+    {{::item.label}}
+  </button>
 </div>
-<button type="button" class="btn btn-floor btn-floor-up increment fa fa-2x fa-angle-up" ng-click="$ctrl.move(+1)"></button>
-<button type="button" class="btn btn-floor btn-floor-down decrement fa fa-2x fa-angle-down" ng-click="$ctrl.move(-1)"></button>
+<button
+  type="button"
+  class="btn btn-floor btn-floor-up increment fa fa-2x fa-angle-up"
+  ng-click="$ctrl.move(+1)"
+></button>
+<button
+  type="button"
+  class="btn btn-floor btn-floor-down decrement fa fa-2x fa-angle-down"
+  ng-click="$ctrl.move(-1)"
+></button>

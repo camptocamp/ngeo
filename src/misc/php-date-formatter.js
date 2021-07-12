@@ -159,8 +159,7 @@ const defaultSettings = {
   separators: /[ \-+/.T:@]/g,
   validParts: /[dDjlNSwzWFmMntLoYyaABgGhHisueTIOPZcrU]/g,
   intParts: /[djwNzmnyYhHgGis]/g,
-  tzParts:
-    /\b(?:[PMCEA][SDP]T|(?:Pacific|Mountain|Central|Eastern|Atlantic) (?:Standard|Daylight|Prevailing) Time|(?:GMT|UTC)(?:[-+]\d{4})?)\b/g,
+  tzParts: /\b(?:[PMCEA][SDP]T|(?:Pacific|Mountain|Central|Eastern|Atlantic) (?:Standard|Daylight|Prevailing) Time|(?:GMT|UTC)(?:[-+]\d{4})?)\b/g,
   tzClip: /[^-+\dA-Z]/g,
 };
 

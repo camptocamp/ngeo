@@ -50,7 +50,7 @@ $table-height: $displayquerygrid-height - $app-margin - 2 * $map-tools-size;
   }
 
   .table > tbody > tr.ngeo-grid-active > td {
-    background-color: #C9C9C9;
+    background-color: #c9c9c9;
   }
 
   .nav-pills {
@@ -63,12 +63,12 @@ $table-height: $displayquerygrid-height - $app-margin - 2 * $map-tools-size;
     margin-right: 0rem;
   }
 
-  table>tbody>tr>td,
-  table>tbody>tr>th,
-  table>tfoot>tr>td,
-  table>tfoot>tr>th,
-  table>thead>tr>td,
-  table>thead>tr>th {
+  table > tbody > tr > td,
+  table > tbody > tr > th,
+  table > tfoot > tr > td,
+  table > tfoot > tr > th,
+  table > thead > tr > td,
+  table > thead > tr > th {
     padding: 0.12rem;
   }
 

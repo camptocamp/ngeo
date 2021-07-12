@@ -21,7 +21,7 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-$fa-font-path: "~@fortawesome/fontawesome-free/webfonts" !default;
+$fa-font-path: '~@fortawesome/fontawesome-free/webfonts' !default;
 
 $brand-primary: #94ac9a !default;
 $brand-secondary: #d3e5d7 !default;
@@ -33,7 +33,7 @@ $standard-variation: 15% !default;
 $nav-bg: white !default;
 $color: #555 !default;
 $color-light: lighten($color, $standard-variation) !default;
-$color-04: rgba($color, .4) !default;
+$color-04: rgba($color, 0.4) !default;
 $nav-header-bg: darken($nav-bg, 50%) !default;
 $link-color: hsl(hue($brand-primary), 25%, 50%) !default;
 $map-tools-size: 2rem !default;
@@ -43,8 +43,8 @@ $onhover-color: darken($nav-bg, $standard-variation) !default;
 $onhover-color-darken: darken($onhover-color, $standard-variation) !default;
 $main-bg-color: #e2e3df !default; // grey light
 $main-bg-color-lighten: lighten($main-bg-color, $standard-variation / 2) !default;
-$main-bg-color-09: rgba($main-bg-color, .9) !default;
-$main-bg-color-08: rgba($main-bg-color, .8) !default;
+$main-bg-color-09: rgba($main-bg-color, 0.9) !default;
+$main-bg-color-08: rgba($main-bg-color, 0.8) !default;
 $search-width: 6 * $map-tools-size !default;
 $border-radius-base: 0 !default;
 $nav-width: 20rem !default;
@@ -75,7 +75,7 @@ $above-all: 9999;
 
 // Bootstrap 3 compatibility layer
 $gray-base: #000 !default;
-$gray-dark: lighten($gray-base, 20%) !default;  // #333
+$gray-dark: lighten($gray-base, 20%) !default; // #333
 $padding-small-vertical: 0.36rem !default;
 $padding-small-horizontal: 0.72rem !default;
 $input-height-base: 1.88rem !default;

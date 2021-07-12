@@ -1,27 +1,40 @@
 <!DOCTYPE html>
-<html ng-app='gmfapp'>
+<html ng-app="gmfapp">
   <head>
     <title>GeoMapFish Datepicker example</title>
-    <meta charset="utf-8">
-    <meta name="viewport"
-          content="initial-scale=1.0, user-scalable=no, width=device-width">
-    <meta name="mobile-web-app-capable" content="yes">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width" />
+    <meta name="mobile-web-app-capable" content="yes" />
   </head>
   <body ng-controller="MainController as ctrl">
-    <p id="desc">This example shows how to use the <code>ngeo-date-picker</code> directive with the gmf WMS time service in order to format the date for WMS.</p>
+    <p id="desc">
+      This example shows how to use the <code>ngeo-date-picker</code> directive with the gmf WMS time service
+      in order to format the date for WMS.
+    </p>
     <ul>
-      <li>Select a period with a datepicker
-          <ngeo-date-picker time="ctrl.wmsTimeRangeMode" on-date-selected="ctrl.onDateRangeSelected(time)"></ngeo-date-picker>
+      <li>
+        Select a period with a datepicker
+        <ngeo-date-picker
+          time="ctrl.wmsTimeRangeMode"
+          on-date-selected="ctrl.onDateRangeSelected(time)"
+        ></ngeo-date-picker>
       </li>
+
       <li style="margin-top: 50px">
         Date formatted for a WMS request (resolution set on 'day'):
         <pre>
           {{ctrl.rangeValue}}
         </pre>
       </li>
-      <li>Select a single date with a datepicker
-          <ngeo-date-picker time="ctrl.wmsTimeValueMode" on-date-selected="ctrl.onDateSelected(time)"></ngeo-date-picker>
+
+      <li>
+        Select a single date with a datepicker
+        <ngeo-date-picker
+          time="ctrl.wmsTimeValueMode"
+          on-date-selected="ctrl.onDateSelected(time)"
+        ></ngeo-date-picker>
       </li>
+
       <li style="margin-top: 50px">
         Date formatted for a WMS request (resolution set on 'month'):
         <pre>
@@ -29,6 +42,7 @@
         </pre>
       </li>
     </ul>
+
     <script type="text/javascript" src="../../dist/vendor.js"></script>
   </body>
 </html>

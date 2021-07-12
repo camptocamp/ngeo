@@ -570,13 +570,15 @@ export class ExternalDatSourcesManager {
         };
 
         if (ngeoFile.isKml(content)) {
-          features = /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>[]} */ (
-            new olFormatKML().readFeatures(content, readOptions)
-          );
+          features = /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>[]} */ (new olFormatKML().readFeatures(
+            content,
+            readOptions
+          ));
         } else if (ngeoFile.isGpx(content)) {
-          features = /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>[]} */ (
-            new olFormatGPX().readFeatures(content, readOptions)
-          );
+          features = /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>[]} */ (new olFormatGPX().readFeatures(
+            content,
+            readOptions
+          ));
         }
 
         if (features) {

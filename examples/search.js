@@ -99,17 +99,13 @@ function SearchController($element, $rootScope, $compile, ngeoSearchCreateGeoJSO
     {
       source: bloodhoundEngine.ttAdapter(),
       display: (suggestion) => {
-        const feature =
-          /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>} */ (suggestion);
+        const feature = /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>} */ (suggestion);
         return feature.get('label');
       },
       templates: {
         header: () => '<div class="ngeo-header">Addresses</div>',
         suggestion: (suggestion) => {
-          const feature =
-            /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>} */ (
-              suggestion
-            );
+          const feature = /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>} */ (suggestion);
 
           // A scope for the ng-click on the suggestion's « i » button.
           const scope = $rootScope.$new(true);
@@ -136,9 +132,7 @@ function SearchController($element, $rootScope, $compile, ngeoSearchCreateGeoJSO
       if (!this.map) {
         throw new Error('Missing map');
       }
-      const feature = /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>} */ (
-        suggestion
-      );
+      const feature = /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>} */ (suggestion);
       const featureGeometry = feature.getGeometry();
       if (!(featureGeometry instanceof SimpleGeometry)) {
         throw new Error('Missing Wrong geometry type');

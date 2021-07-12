@@ -3,7 +3,8 @@
   type="checkbox"
   ng-if="::layertreeCtrl.node && !layertreeCtrl.node.children"
   ng-model="layertreeCtrl.getSetActive"
-  ng-model-options="{getterSetter: true}"/>
+  ng-model-options="{getterSetter: true}"
+/>
 <ul ng-if="::layertreeCtrl.node.children">
   <li
     ng-repeat="node in ::layertreeCtrl.node.children"
@@ -11,6 +12,6 @@
     ngeo-layertree-notroot
     ngeo-layertree-map="layertreeCtrl.map"
     ngeo-layertree-nodelayerexpr="layertreeCtrl.nodelayerExpr"
-    ngeo-layertree-listenersexpr="layertreeCtrl.listenersExpr">
-  </li>
+    ngeo-layertree-listenersexpr="layertreeCtrl.listenersExpr"
+  ></li>
 </ul>

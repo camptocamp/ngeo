@@ -1,20 +1,23 @@
 <ul class="gmf-backgroundlayerselector">
-  <li ng-repeat="layer in ctrl.bgLayers"
-      ng-click="ctrl.setLayer(layer)"
-      ng-class="{'gmf-backgroundlayerselector-active': ctrl.bgLayer == layer, 'gmf-backgroundlayerselector-disabled': ctrl.opacityLayer == layer}">
-    <img class="gmf-thumb"
-         ng-src="{{::layer.get('metadata')['thumbnail']}}" />
+  <li
+    ng-repeat="layer in ctrl.bgLayers"
+    ng-click="ctrl.setLayer(layer)"
+    ng-class="{'gmf-backgroundlayerselector-active': ctrl.bgLayer == layer, 'gmf-backgroundlayerselector-disabled': ctrl.opacityLayer == layer}"
+  >
+    <img class="gmf-thumb" ng-src="{{::layer.get('metadata')['thumbnail']}}" />
     <span class="gmf-text">{{layer.get("label") | translate}}</span>
     <span ng-class="{'gmf-backgroundlayerselector-opacity-check': ctrl.opacityLayer == layer}"></span>
   </li>
 
-  <input ng-if="ctrl.opacityLayer"
-         class="input-action gmf-backgroundlayerselector-opacity-slider"
-         name="bg-layer-opacity"
-         type="range"
-         min="0"
-         max="1"
-         step="0.01"
-         ng-model="ctrl.getSetBgLayerOpacity"
-         ng-model-options="{getterSetter: true}">
+  <input
+    ng-if="ctrl.opacityLayer"
+    class="input-action gmf-backgroundlayerselector-opacity-slider"
+    name="bg-layer-opacity"
+    type="range"
+    min="0"
+    max="1"
+    step="0.01"
+    ng-model="ctrl.getSetBgLayerOpacity"
+    ng-model-options="{getterSetter: true}"
+  />
 </ul>
