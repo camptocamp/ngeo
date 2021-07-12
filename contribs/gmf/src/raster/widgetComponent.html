@@ -1,26 +1,29 @@
-<div class="text-center btn-group dropup"
-    gmf-elevation
-    gmf-elevation-active="ctrl.active"
-    gmf-elevation-elevation="ctrl.elevationValue"
-    gmf-elevation-loading="ctrl.elevationLoading"
-    gmf-elevation-layer="ctrl.selectedElevationLayer"
-    gmf-elevation-layersconfig="::ctrl.options.layersconfig"
-    gmf-elevation-map="::ctrl.map"
-    ng-show="::ctrl.show">
-  <a class="btn btn-default" aria-expanded="false"
+<div
+  class="text-center btn-group dropup"
+  gmf-elevation
+  gmf-elevation-active="ctrl.active"
+  gmf-elevation-elevation="ctrl.elevationValue"
+  gmf-elevation-loading="ctrl.elevationLoading"
+  gmf-elevation-layer="ctrl.selectedElevationLayer"
+  gmf-elevation-layersconfig="::ctrl.options.layersconfig"
+  gmf-elevation-map="::ctrl.map"
+  ng-show="::ctrl.show"
+>
+  <a
+    class="btn btn-default"
+    aria-expanded="false"
     ng-class="::{'dropdown-toggle': ctrl.options.layers.length > 1}"
     ng-attr-data-toggle="{{::(ctrl.options.layers.length > 1) ? 'dropdown' : ''}}"
-    >
+  >
     <span class="gmf-elevationwidget-value">
       {{ctrl.elevationValue}}
       <span ng-show="ctrl.elevationLoading" class="fa fa-spin custom-spinner-generic">
-          <%=require('gmf/icons/spinner.svg?viewbox&height=1rem')%>
+        <%=require('gmf/icons/spinner.svg?viewbox&height=1rem')%>
       </span>
-      <span ng-show="!ctrl.elevationValue && !ctrl.elevationLoading" translate>Raster</span>
-    </span><span class="caret" ng-if="::ctrl.options.layers.length > 1"></span>
+      <span ng-show="!ctrl.elevationValue && !ctrl.elevationLoading" translate>Raster</span> </span
+    ><span class="caret" ng-if="::ctrl.options.layers.length > 1"></span>
   </a>
-  <ul class="dropdown-menu dropdown-menu-right" role="menu"
-      ng-if="::ctrl.options.layers.length > 1">
+  <ul class="dropdown-menu dropdown-menu-right" role="menu" ng-if="::ctrl.options.layers.length > 1">
     <li class="dropdown-header" translate>Data source</li>
     <li ng-repeat="elevationItem in ::ctrl.options.layers">
       <a href ng-click="ctrl.selectedElevationLayer = elevationItem">

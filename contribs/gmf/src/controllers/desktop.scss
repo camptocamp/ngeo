@@ -37,8 +37,8 @@
 
 @import '~gmf/layertree/desktop.scss';
 
-
-html, body {
+html,
+body {
   position: relative;
   height: 100%;
   li {
@@ -81,7 +81,7 @@ main {
 }
 
 .btn {
-  padding: $half-app-margin $app-margin
+  padding: $half-app-margin $app-margin;
 }
 
 .close {
@@ -137,7 +137,7 @@ $footer-height: $input-height-base + 2 * $padding-base-vertical;
     padding: $padding-small-vertical;
     position: absolute;
     z-index: 2;
-    bottom:  -$footer-height;
+    bottom: -$footer-height;
     // prevent footer to be displayed on 2 lines when screen width is small
     max-height: $footer-height;
     background-color: $main-bg-color-09;
@@ -169,7 +169,7 @@ $footer-height: $input-height-base + 2 * $padding-base-vertical;
       background-color: var(--main-bg-color-08);
       padding: 0;
       left: 50%;
-      $width: 2.50rem;
+      $width: 2.5rem;
       width: $width;
       margin-left: -($width / 2);
       border-bottom: none;
@@ -196,7 +196,8 @@ $footer-height: $input-height-base + 2 * $padding-base-vertical;
 
   #scaleline {
     vertical-align: middle;
-    .ol-scale-line, .ol-scale-line-inner {
+    .ol-scale-line,
+    .ol-scale-line-inner {
       background-color: transparent;
       bottom: auto;
       position: relative;
@@ -263,7 +264,7 @@ gmf-search {
   border-color: var(--brand-secondary);
   background-color: $brand-secondary;
   background-color: var(--brand-secondary);
-  opacity: .4;
+  opacity: 0.4;
 }
 
 .gmf-app-data-panel {
@@ -348,7 +349,9 @@ gmf-backgroundlayerselector {
 .gmf-theme-selector li {
   float: left;
   width: calc((100% - #{$theme-selector-columns} * 2 * #{$half-app-margin}) / #{$theme-selector-columns});
-  width: calc((100% - var(--theme-selector-columns) * 2 * #{$half-app-margin}) / var(--theme-selector-columns));
+  width: calc(
+    (100% - var(--theme-selector-columns) * 2 * #{$half-app-margin}) / var(--theme-selector-columns)
+  );
 }
 .gmf-backgroundlayerselector {
   margin-bottom: 0;
@@ -362,7 +365,7 @@ gmf-backgroundlayerselector {
 }
 
 .authentication-lost-dialog .modal-dialog {
-    top: 40%;
+  top: 40%;
 }
 
 .gmf-app-tools {
@@ -414,7 +417,7 @@ gmf-backgroundlayerselector {
         right-color: $border-color;
         right-color: var(--border-color);
       }
-      left:5px;
+      left: 5px;
     }
 
     .gmf-app-tools-content-collapse-btn {
@@ -551,7 +554,6 @@ gmf-backgroundlayerselector {
   position: relative;
 }
 
-
 ::-webkit-scrollbar-track {
   background: $main-bg-color;
   background: var(--main-bg-color);
@@ -564,7 +566,6 @@ gmf-backgroundlayerselector {
   background: $brand-primary;
   background: var(--brand-primary);
 }
-
 
 /**
  * GMF DrawFeature directive
@@ -591,7 +592,6 @@ gmf-drawfeatureoptions label,
 .gmf-drawfeatureoptions-help-rectangle {
   margin: 1rem 0 0 0;
 }
-
 
 /**
  * NGEO DrawFeature directive & map tooltips
@@ -623,7 +623,7 @@ gmf-drawfeatureoptions label,
     border-top: $half-app-margin solid rgba(0, 0, 0, 0.5);
     border-right: $half-app-margin solid transparent;
     border-left: $half-app-margin solid transparent;
-    content: "";
+    content: '';
     position: absolute;
     bottom: -$half-app-margin;
     margin-left: -$half-app-margin;
@@ -634,7 +634,6 @@ gmf-drawfeatureoptions label,
   }
 }
 
-
 /**
  * GMF FeatureStyle directive
  */
@@ -642,7 +641,6 @@ gmf-featurestyle {
   display: block;
   margin-top: $app-margin;
 }
-
 
 /**
  * Color palette within GMF FeatureStyle directive
@@ -700,7 +698,6 @@ gmf-featurestyle {
   }
 }
 
-
 /**
  * Notifications
  */
@@ -712,7 +709,6 @@ gmf-featurestyle {
   width: $notification-width;
   z-index: $above-all;
 }
-
 
 /**
  * Controls at the bottom of the map
@@ -750,7 +746,6 @@ gmf-featurestyle {
     box-shadow: $eavy-box-shadow $eavy-box-shadow-color;
     box-shadow: $eavy-box-shadow var(--eavy-box-shadow-color);
   }
-
 }
 
 div.gmf-displayquerywindow {
@@ -765,17 +760,16 @@ div.gmf-displayquerywindow {
 main div.ngeo-displaywindow {
   top: $topbar-height + 2 * $app-margin + 2 * $map-tools-size;
   left: $nav-width + $app-margin;
-  right: inherit
+  right: inherit;
 }
 
 /** Disclaimer */
-$bgselector-image-size: 3.00rem;
+$bgselector-image-size: 3rem;
 .gmf-app-map-messages {
   position: absolute;
   vertical-align: bottom;
   left: calc(2 * #{$app-margin} + #{$bgselector-image-size} + 2 * #{$padding-small-vertical});
 }
-
 
 /**
  * GMF EditFeature directive
@@ -788,7 +782,6 @@ gmf-editfeature > div {
   padding-top: $app-margin;
 }
 
-
 /**
  * GMF ObjectEditingTools directive
  */
@@ -800,7 +793,6 @@ gmf-objecteditingtools {
   margin: 0 0 $app-margin 0;
   padding: 0 0 $app-margin 0;
 }
-
 
 /**
  * GMF FilterSelector component
@@ -870,7 +862,6 @@ gmf-objecteditingtools {
     }
   }
 }
-
 
 /**
  * Ngeo Filter component
@@ -993,7 +984,6 @@ ngeo-rule {
     margin: $half-app-margin;
   }
 }
-
 
 /**
  * Ngeo Street View Component

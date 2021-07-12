@@ -8,46 +8,43 @@
   gmf-objecteditingtools-process="oeCtrl.process"
   gmf-objecteditingtools-queryablelayerinfo="oeCtrl.selectedQueryableLayerInfo"
   gmf-objecteditingtools-requireslayer="oeCtrl.queryableLayerListShown"
-  gmf-objecteditingtools-sketchfeatures="::oeCtrl.sketchFeatures">
+  gmf-objecteditingtools-sketchfeatures="::oeCtrl.sketchFeatures"
+>
 </gmf-objecteditingtools>
 
-<div
-  class="form-group"
-  ng-show="oeCtrl.queryableLayerListShown">
-  <label
-    ng-show="oeCtrl.copyFromActive === true"
-    class="col-form-label">{{'Copy from:' | translate}}</label>
-  <label
-    ng-show="oeCtrl.deleteFromActive === true"
-    class="col-form-label">{{'Cut from:' | translate}}</label>
+<div class="form-group" ng-show="oeCtrl.queryableLayerListShown">
+  <label ng-show="oeCtrl.copyFromActive === true" class="col-form-label">{{'Copy from:' | translate}}</label>
+  <label ng-show="oeCtrl.deleteFromActive === true" class="col-form-label">{{'Cut from:' | translate}}</label>
   <select
     class="form-control"
     ng-model="oeCtrl.selectedQueryableLayerInfo"
-    ng-options="layerInfo.layerNode.name | translate for layerInfo in oeCtrl.queryableLayersInfo">
-  </select>
+    ng-options="layerInfo.layerNode.name | translate for layerInfo in oeCtrl.queryableLayersInfo"
+  ></select>
 </div>
 
-<form
-  novalidate
-  name="form"
-  class="form gmf-objectediting-form">
+<form novalidate name="form" class="form gmf-objectediting-form">
   <input
     type="submit"
     value="{{'Save' | translate}}"
     class="btn btn-sm btn-default gmf-objectediting-btn-save"
     ng-click="form.$valid && oeCtrl.save()"
     ng-disabled="!oeCtrl.dirty || oeCtrl.pending || !oeCtrl.featureHasGeom"
-    title="{{'Save modifications' | translate}}"></input>
+    title="{{'Save modifications' | translate}}"
+  />
   <a
     class="btn btn-sm btn-link gmf-objectediting-btn-undo"
     ng-click="oeCtrl.undo()"
     ng-disabled="!oeCtrl.dirty || oeCtrl.pending"
     title="{{'Undo latest modifications' | translate}}"
-    href>{{'Undo' | translate}}</a>
+    href
+    >{{'Undo' | translate}}</a
+  >
   <a
     class="btn btn-sm btn-link gmf-objectediting-btn-delete"
     ng-click="oeCtrl.delete()"
     ng-disabled="oeCtrl.isStateInsert() || oeCtrl.pending"
     title="{{'Delete the feature' | translate}}"
-    href>{{'Delete' | translate}}</a>
+    href
+    >{{'Delete' | translate}}</a
+  >
 </form>

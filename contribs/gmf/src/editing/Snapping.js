@@ -670,10 +670,9 @@ EditingSnappingService.prototype.loadItemFeatures_ = function (item) {
     item.features.clear();
 
     // (3) Read features from request response and add them to the item
-    const readFeatures =
-      /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>[]} */ (
-        new olFormatWFS().readFeatures(response.data)
-      );
+    const readFeatures = /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>[]} */ (new olFormatWFS().readFeatures(
+      response.data
+    ));
     if (readFeatures) {
       item.features.extend(readFeatures);
       this.refreshSnappingSource_();

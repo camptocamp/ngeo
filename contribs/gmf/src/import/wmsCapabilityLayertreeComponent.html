@@ -1,111 +1,92 @@
 <ul>
-  <li
-    ng-repeat="layer in ::$ctrl.layer.Layer"
-    ng-show="layer._visible"
-  >
-
-    <div
-      class="gmf-wmscapabilitylayertreenode-header"
-    >
-
-    <span
-      class="gmf-wmscapabilitylayertreenode-popover-container"
-      ng-if="::(layer.Name !== undefined || layer.Abstract !== undefined)"
-      ngeo-popover
-      ngeo-popover-dismiss=".content"
-      ngeo-popover-placement="left"
-    >
-
+  <li ng-repeat="layer in ::$ctrl.layer.Layer" ng-show="layer._visible">
+    <div class="gmf-wmscapabilitylayertreenode-header">
       <span
-        ngeo-popover-anchor
-        class="fa fa-cog gmf-wmscapabilitylayertreenode-actions">
+        class="gmf-wmscapabilitylayertreenode-popover-container"
+        ng-if="::(layer.Name !== undefined || layer.Abstract !== undefined)"
+        ngeo-popover
+        ngeo-popover-dismiss=".content"
+        ngeo-popover-placement="left"
+      >
+        <span ngeo-popover-anchor class="fa fa-cog gmf-wmscapabilitylayertreenode-actions"> </span>
+
+        <div class="gmf-wmscapabilitylayertreenode-popover-content" ngeo-popover-content>
+          <ul>
+            <li ng-if="::(layer.Name !== undefined)">
+              <i class="fa fa-plus fa-fw"></i>
+              <a href="" ng-click="$ctrl.createAndAddDataSource(layer); popoverCtrl.dismissPopover()">
+                <span translate>Add layer</span>
+              </a>
+            </li>
+
+            <li ng-if="::(layer.Abstract !== undefined)">
+              <i class="fa fa-th-list fa-fw"></i>
+              <a
+                aria-expanded="false"
+                data-toggle="collapse"
+                href="#gmf-wmscapabilitylayertreenode-description-{{::$ctrl.getUid(layer)}}"
+                ng-click="popoverCtrl.dismissPopover()"
+              >
+                <span translate>Open/Close description</span>
+              </a>
+            </li>
+          </ul>
+        </div>
       </span>
 
-      <div
-        class="gmf-wmscapabilitylayertreenode-popover-content"
-        ngeo-popover-content>
-        <ul>
-          <li
-              ng-if="::(layer.Name !== undefined)">
-            <i class="fa fa-plus fa-fw"></i>
-            <a
-              href=""
-              ng-click="$ctrl.createAndAddDataSource(layer); popoverCtrl.dismissPopover()"
-            >
-              <span translate>Add layer</span>
-            </a>
-          </li>
-          <li
-              ng-if="::(layer.Abstract !== undefined)">
-            <i class="fa fa-th-list fa-fw"></i>
-            <a
-              aria-expanded="false"
-              data-toggle="collapse"
-              href="#gmf-wmscapabilitylayertreenode-description-{{::$ctrl.getUid(layer)}}"
-              ng-click="popoverCtrl.dismissPopover()"
-            >
-              <span translate>Open/Close description</span>
-            </a>
-          </li>
-        </ul>
-      </div>
-    </span>
-
-    <a
-      aria-expanded="{{ layer._expanded }}"
-      class="fa gmf-wmscapabilitylayertreenode-expand-node fa-fw"
-      data-toggle="collapse"
-      href="#gmf-wmscapabilitylayertreenode-children-{{::$ctrl.getUid(layer)}}"
-      ng-if="::(layer.Layer !== undefined && layer.Layer.length)"
-    ></a>
-
-    <span
-      ng-if="::(layer.Layer !== undefined && layer.Layer.length)"
-      class="fa fa-fw gmf-wmscapabilitylayertreenode-group"
-    ><%=require('gmf/icons/layers.svg?viewbox&height=1em')%></span>
-
-    <a
-      class="fa fa-circle-thin gmf-wmscapabilitylayertreenode-no-icon fa-fw "
-      ng-if="::(layer.Layer === undefined || layer.Layer.length === 0)"
-    ></a>
-
-    <span
-      class="gmf-wmscapabilitylayertreenode-title"
-      ng-if="!layer._searchMatch"
-    >{{ ::layer.Title }}</span>
-    <span
-      class="gmf-wmscapabilitylayertreenode-title"
-      ng-if="layer._searchMatch"
-    >{{ layer._searchPrefix }}<span class=highlight>{{ layer._searchMatch }}</span>{{ layer._searchSuffix }}</span>
-
-    <div
-      class="collapse gmf-wmscapabilitylayertreenode-description"
-      id="gmf-wmscapabilitylayertreenode-description-{{::$ctrl.getUid(layer)}}"
-      ng-if="::(layer.Abstract !== undefined)"
-    >
       <a
-        aria-expanded="false"
-        class="gmf-wmscapabilitylayertreenode-description-toggle"
+        aria-expanded="{{ layer._expanded }}"
+        class="fa gmf-wmscapabilitylayertreenode-expand-node fa-fw"
         data-toggle="collapse"
-        href="#gmf-wmscapabilitylayertreenode-description-{{::$ctrl.getUid(layer)}}"
-        >
-        <span translate>Hide description</span>
-      </a>
-      <span
-        class="gmf-wmscapabilitylayertreenode-description-content"
-      >{{ ::layer.Abstract }}</span>
-    </div>
+        href="#gmf-wmscapabilitylayertreenode-children-{{::$ctrl.getUid(layer)}}"
+        ng-if="::(layer.Layer !== undefined && layer.Layer.length)"
+      ></a>
 
+      <span
+        ng-if="::(layer.Layer !== undefined && layer.Layer.length)"
+        class="fa fa-fw gmf-wmscapabilitylayertreenode-group"
+        ><%=require('gmf/icons/layers.svg?viewbox&height=1em')%></span
+      >
+
+      <a
+        class="fa fa-circle-thin gmf-wmscapabilitylayertreenode-no-icon fa-fw"
+        ng-if="::(layer.Layer === undefined || layer.Layer.length === 0)"
+      ></a>
+
+      <span class="gmf-wmscapabilitylayertreenode-title" ng-if="!layer._searchMatch"
+        >{{ ::layer.Title }}</span
+      >
+      <span class="gmf-wmscapabilitylayertreenode-title" ng-if="layer._searchMatch"
+        >{{ layer._searchPrefix }}<span class="highlight">{{ layer._searchMatch }}</span>{{
+        layer._searchSuffix }}</span
+      >
+
+      <div
+        class="collapse gmf-wmscapabilitylayertreenode-description"
+        id="gmf-wmscapabilitylayertreenode-description-{{::$ctrl.getUid(layer)}}"
+        ng-if="::(layer.Abstract !== undefined)"
+      >
+        <a
+          aria-expanded="false"
+          class="gmf-wmscapabilitylayertreenode-description-toggle"
+          data-toggle="collapse"
+          href="#gmf-wmscapabilitylayertreenode-description-{{::$ctrl.getUid(layer)}}"
+        >
+          <span translate>Hide description</span>
+        </a>
+        <span class="gmf-wmscapabilitylayertreenode-description-content">{{ ::layer.Abstract }}</span>
+      </div>
     </div>
 
     <gmf-wmscapabilitylayertreenode
-        class="collapse"
-        ng-class="layer._expanded ? 'show' : ''"
-        id="gmf-wmscapabilitylayertreenode-children-{{::$ctrl.getUid(layer)}}"
-        capabilities="::$ctrl.capabilities"
-        layer="::layer"
-        url="::$ctrl.url"
-        ng-if="::(layer.Layer !== undefined)">
+      class="collapse"
+      ng-class="layer._expanded ? 'show' : ''"
+      id="gmf-wmscapabilitylayertreenode-children-{{::$ctrl.getUid(layer)}}"
+      capabilities="::$ctrl.capabilities"
+      layer="::layer"
+      url="::$ctrl.url"
+      ng-if="::(layer.Layer !== undefined)"
+    >
     </gmf-wmscapabilitylayertreenode>
   </li>
 </ul>

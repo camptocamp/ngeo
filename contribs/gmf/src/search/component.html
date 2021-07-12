@@ -1,19 +1,27 @@
 <div class="gmf-search">
-  <input type="text" ng-attr-placeholder="{{$ctrl.placeholder|translate}}"
+  <input
+    type="text"
+    ng-attr-placeholder="{{$ctrl.placeholder|translate}}"
     class="form-control"
     ng-model="$ctrl.inputValue"
     ngeo-search="$ctrl.options"
     ngeo-search-datasets="$ctrl.datasets"
-    ngeo-search-listeners="$ctrl.listeners">
-  <span class="gmf-clear-button ng-hide"
+    ngeo-search-listeners="$ctrl.listeners"
+  />
+  <span
+    class="gmf-clear-button ng-hide"
     ng-hide="!$ctrl.clearButton || $ctrl.inputValue == '' && $ctrl.featureOverlay_.isEmpty()"
-    ng-click="$ctrl.onClearButton()">
+    ng-click="$ctrl.onClearButton()"
+  >
   </span>
 </div>
 <span ng-if="$ctrl.options.colorChooser">
   <span ng-show="$ctrl.displayColorPicker" ngeo-popover ngeo-popover-placement="bottom">
-    <button class="gmf-color-button fa fa-tint" ngeo-popover-anchor
-            data-original-title="{{'Change the color of the search result'|translate}}"></button>
+    <button
+      class="gmf-color-button fa fa-tint"
+      ngeo-popover-anchor
+      data-original-title="{{'Change the color of the search result'|translate}}"
+    ></button>
     <div ngeo-popover-content>
       <div ngeo-colorpicker ngeo-colorpicker-color="$ctrl.color"></div>
     </div>

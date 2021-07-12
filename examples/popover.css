@@ -1,5 +1,5 @@
 .ngeo-popover {
-  margin: 30px
+  margin: 30px;
 }
 
 .popover {
@@ -13,6 +13,6 @@
   overflow: scroll;
 }
 
-.blank{
+.blank {
   height: 100vh;
 }

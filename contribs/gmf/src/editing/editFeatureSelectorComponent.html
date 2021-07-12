@@ -1,17 +1,14 @@
-<div
-    ng-switch="efsCtrl.selectedEditableTreeCtrl">
-
+<div ng-switch="efsCtrl.selectedEditableTreeCtrl">
   <div ng-switch-when="null">
     <select
-        class="form-control"
-        ng-model="efsCtrl.selectedEditableTreeCtrl"
-        ng-show="efsCtrl.editableTreeCtrls.length > 0"
-        ng-options="treeCtrl.node.name | translate for treeCtrl in efsCtrl.editableTreeCtrls">
+      class="form-control"
+      ng-model="efsCtrl.selectedEditableTreeCtrl"
+      ng-show="efsCtrl.editableTreeCtrls.length > 0"
+      ng-options="treeCtrl.node.name | translate for treeCtrl in efsCtrl.editableTreeCtrls"
+    >
       <option value="" translate>-- Choose a layer --</option>
     </select>
-    <span
-      ng-show="efsCtrl.editableTreeCtrls.length == 0"
-      translate>No editable layer available!</span>
+    <span ng-show="efsCtrl.editableTreeCtrls.length == 0" translate>No editable layer available!</span>
   </div>
 
   <div ng-switch-default>
@@ -20,10 +17,8 @@
         <span translate>Currently editing: </span>
         <b>{{ efsCtrl.selectedEditableTreeCtrl.node.name | translate }}</b>
         <span class="fa fa-edit"></span>
-        <br>
-        <button
-            ng-click="efsCtrl.stopEditing()"
-            class="btn btn-link btn-sm pull-right">
+        <br />
+        <button ng-click="efsCtrl.stopEditing()" class="btn btn-link btn-sm pull-right">
           <span class="fa fa-times"></span>
           {{'Stop editing' | translate}}
         </button>
@@ -31,13 +26,12 @@
     </div>
 
     <gmf-editfeature
-        gmf-editfeature-dirty="efsCtrl.dirty"
-        gmf-editfeature-editabletreectrl="::efsCtrl.selectedEditableTreeCtrl"
-        gmf-editfeature-map="::efsCtrl.map"
-        gmf-editfeature-state="efsCtrl.state"
-        gmf-editfeature-vector="::efsCtrl.vectorLayer">
+      gmf-editfeature-dirty="efsCtrl.dirty"
+      gmf-editfeature-editabletreectrl="::efsCtrl.selectedEditableTreeCtrl"
+      gmf-editfeature-map="::efsCtrl.map"
+      gmf-editfeature-state="efsCtrl.state"
+      gmf-editfeature-vector="::efsCtrl.vectorLayer"
+    >
     </gmf-editfeature>
-
   </div>
-
 </div>

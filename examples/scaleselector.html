@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<html ng-app='app'>
+<html ng-app="app">
   <head>
     <title>Scale selector example</title>
-    <meta charset="utf-8">
-    <meta name="viewport"
-          content="initial-scale=1.0, user-scalable=no, width=device-width">
-    <meta name="mobile-web-app-capable" content="yes">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width" />
+    <meta name="mobile-web-app-capable" content="yes" />
   </head>
   <body ng-controller="MainController as mainCtrl">
     <div id="map" ngeo-map="mainCtrl.map"></div>
@@ -14,7 +13,15 @@
       <div class="scaleselector" ngeo-scaleselector ngeo-scaleselector-map="::mainCtrl.map"></div>
     </label>
     <div>
-      <p id="desc">This example shows how to write an application-specific directive (<code>app-scaleselecor</code>) based on <code><a href="../apidoc/ngeo.map.scaleselector.html" title="Read our documentation">ngeo-scaleselector</a></code>to create a scale selector.</p>
+      <p id="desc">
+        This example shows how to write an application-specific directive (<code>app-scaleselecor</code>)
+        based on
+        <code
+          ><a href="../apidoc/ngeo.map.scaleselector.html" title="Read our documentation"
+            >ngeo-scaleselector</a
+          ></code
+        >to create a scale selector.
+      </p>
     </div>
     <script type="text/javascript" src="dist/vendor.js"></script>
   </body>

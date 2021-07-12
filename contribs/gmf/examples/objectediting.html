@@ -1,28 +1,20 @@
 <!DOCTYPE html>
-<html ng-app='gmfapp'>
+<html ng-app="gmfapp">
   <head>
     <title>ObjectEditing example</title>
-    <meta charset="utf-8">
-    <meta name="viewport"
-          content="initial-scale=1.0, user-scalable=no, width=device-width">
-    <meta name="mobile-web-app-capable" content="yes">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width" />
+    <meta name="mobile-web-app-capable" content="yes" />
   </head>
   <body ng-controller="MainController as ctrl">
     <gmf-map gmf-map-map="ctrl.map"></gmf-map>
 
-    <gmf-layertree
-        class="panel panel-default panel-body"
-        gmf-layertree-map="::ctrl.map">
-    </gmf-layertree>
+    <gmf-layertree class="panel panel-default panel-body" gmf-layertree-map="::ctrl.map"> </gmf-layertree>
 
-    <input type="checkbox"
-       id="checkbox-objectediting"
-       ng-model="ctrl.objectEditingActive" />
+    <input type="checkbox" id="checkbox-objectediting" ng-model="ctrl.objectEditingActive" />
     <label for="checkbox-objectediting"> ObjectEditing</label>
 
-    <input type="checkbox"
-       id="checkbox-dummy"
-       ng-model="ctrl.dummyActive" />
+    <input type="checkbox" id="checkbox-dummy" ng-model="ctrl.dummyActive" />
     <label for="checkbox-dummy"> Dummy tool</label>
 
     <h2>ObjectEditing</h2>
@@ -34,23 +26,22 @@
       gmf-objectediting-geomtype="::ctrl.objectEditingGeomType"
       gmf-objectediting-layernodeid="::ctrl.objectEditingLayerNodeId"
       gmf-objectediting-map="::ctrl.map"
-      gmf-objectediting-sketchfeatures="::ctrl.sketchFeatures">
+      gmf-objectediting-sketchfeatures="::ctrl.sketchFeatures"
+    >
     </gmf-objectediting>
 
     <p id="desc">
       This example shows how to use the <code>gmf-objectediting</code>
       directive to edit a single feature with advanced editing tools.
     </p>
-    <p>
-      In order for this example to work properly, you must:
-      <ul>
-        <li>be <a href="authentication.html">logged in</a> first</li>
-        <li>
-          come from the
-          <a href="objecteditinghub.html">ObjectEditing Hub</a> example page
-        </li>
-      </ul>
-    </p>
+    <p>In order for this example to work properly, you must:</p>
+    <ul>
+      <li>be <a href="authentication.html">logged in</a> first</li>
+      <li>
+        come from the
+        <a href="objecteditinghub.html">ObjectEditing Hub</a> example page
+      </li>
+    </ul>
     <script type="text/javascript" src="../../dist/vendor.js"></script>
   </body>
 </html>

@@ -15,31 +15,29 @@ standalone builds of ngeo can be created.
 
 To know more about ngeo take a look at:
 
-* The [examples](https://camptocamp.github.io/ngeo/master/examples)
-* The documentation can be found in each file. There is currently no API web-documentation for this
+- The [examples](https://camptocamp.github.io/ngeo/master/examples)
+- The documentation can be found in each file. There is currently no API web-documentation for this
   version (you may also use [API documentation](https://camptocamp.github.io/ngeo/master/apidoc/index.html)).
 
 ngeo also includes a [contribs](contribs) directory where non-core
-contributions may be placed. ngeo currently includes one contrib: `gmf`.  That
+contributions may be placed. ngeo currently includes one contrib: `gmf`. That
 contrib includes components specific to the
 [GeoMapFish](https://geomapfish.org/) project, that is components that rely on
 GeoMapFish-specific web services. The `gmf` contrib examples are also available
 [online](https://camptocamp.github.io/ngeo/master/examples/contribs/gmf/).
 
-
 ## Requirements
 
-* [make](https://www.gnu.org/software/make/) – GNU Make.
-* [node](https://www.nodejs.org/) – nodejs JS runtime environment.
-* [npm](https://www.npmjs.com/) – npm package manager.
-
+- [make](https://www.gnu.org/software/make/) – GNU Make.
+- [node](https://www.nodejs.org/) – nodejs JS runtime environment.
+- [npm](https://www.npmjs.com/) – npm package manager.
 
 ### Go further
 
-* [Developer guide](docs/developer-guide.md) – This guide is for ngeo developers.
-* [Application development guidelines](docs/guidelines.md) – This guide is for
+- [Developer guide](docs/developer-guide.md) – This guide is for ngeo developers.
+- [Application development guidelines](docs/guidelines.md) – This guide is for
   application developers using ngeo.
 
-
 ## Other docs related to ngeo:
-* [Transifex](https://www.transifex.com/camptocamp/ngeo/) – Translation platform.
+
+- [Transifex](https://www.transifex.com/camptocamp/ngeo/) – Translation platform.

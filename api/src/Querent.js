@@ -99,9 +99,9 @@ export function getFeaturesFromIds(layer, ids) {
               featureNS: overlayDef.ogcServer.namespace,
               gmlFormat: new olFormatGML2(),
             });
-            features = /** @type {import('ol/Feature').default<import('ol/geom/Geometry').default>[]} */ (
-              wfsFormat.readFeatures(responseText)
-            );
+            features = /** @type {import('ol/Feature').default<import('ol/geom/Geometry').default>[]} */ (wfsFormat.readFeatures(
+              responseText
+            ));
           })
         )
         .catch((response) => {
@@ -158,9 +158,9 @@ export function getFeaturesFromCoordinates(layer, coordinate, resolution) {
               featureNS: overlayDef.ogcServer.namespace,
               gmlFormat: new olFormatGML2(),
             });
-            feature = /** @type {import('ol/Feature').default<import('ol/geom/Geometry').default>} */ (
-              wfsFormat.readFeature(responseText)
-            );
+            feature = /** @type {import('ol/Feature').default<import('ol/geom/Geometry').default>} */ (wfsFormat.readFeature(
+              responseText
+            ));
           })
         )
         .catch((response) => {

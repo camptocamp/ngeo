@@ -385,9 +385,7 @@ export class DatasourceManager {
        * @param {import('ngeo/layertree/Controller.js').LayertreeController} treeCtrl
        */
       const visitor = (treeCtrl) => {
-        const node = /** @type {import('gmf/themes.js').GmfGroup|!import('gmf/themes.js').GmfLayer} */ (
-          treeCtrl.node
-        );
+        const node = /** @type {import('gmf/themes.js').GmfGroup|!import('gmf/themes.js').GmfLayer} */ (treeCtrl.node);
         const groupNode = /** @type {import('gmf/themes.js').GmfGroup} */ (node);
         const children = groupNode.children;
         if (!children) {

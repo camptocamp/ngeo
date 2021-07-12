@@ -1,28 +1,21 @@
 <!DOCTYPE html>
-<html ng-app='app'>
+<html ng-app="app">
   <head>
     <title>Attributes example</title>
-    <meta charset="utf-8">
-    <meta name="viewport"
-          content="initial-scale=1.0, user-scalable=no, width=device-width">
-    <meta name="mobile-web-app-capable" content="yes">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width" />
+    <meta name="mobile-web-app-capable" content="yes" />
   </head>
   <body ng-controller="MainController as ctrl">
-
     <div class="container">
       <div class="row">
         <div class="col-sm-6">
           <p id="desc">
             This example shows how to use the <code>ngeo-attributes</code>
             directive, which binds a form to the inner properties of a
-            <code>ol.Feature</code> object. Changes made through the form are
-            applied to the feature and vice-versa. Try playing with the form
-            or click
-            <input
-                type="button"
-                ng-click="ctrl.updateName()"
-                value="Change name" >
-            </input>
+            <code>ol.Feature</code> object. Changes made through the form are applied to the feature and
+            vice-versa. Try playing with the form or click
+            <input type="button" ng-click="ctrl.updateName()" value="Change name" />
             to change the name. You can also
             <label for="disable">Disable the form</label>
             <input id="disable" type="checkbox" ng-model="ctrl.disabled" />.
@@ -34,7 +27,8 @@
               ng-if="ctrl.attributes"
               ngeo-attributes-attributes="::ctrl.attributes"
               ngeo-attributes-disabled="ctrl.disabled"
-              ngeo-attributes-feature="::ctrl.feature">
+              ngeo-attributes-feature="::ctrl.feature"
+            >
             </ngeo-attributes>
           </form>
         </div>

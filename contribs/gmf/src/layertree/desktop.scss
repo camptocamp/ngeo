@@ -42,7 +42,6 @@ gmf-layertree {
 }
 
 .gmf-layertree-node {
-
   .gmf-layertree-right-buttons {
     display: none;
     cursor: pointer;
@@ -88,7 +87,8 @@ gmf-layertree {
     padding: $half-app-margin;
   }
 
-  .gmf-layertree-group, .gmf-layertree-leaf {
+  .gmf-layertree-group,
+  .gmf-layertree-leaf {
     &:hover {
       .gmf-layertree-right-buttons {
         display: block;
@@ -129,7 +129,7 @@ gmf-layertree {
   }
 
   .gmf-layertree-sortable-handle-icon {
-    color:#555;
+    color: #555;
     visibility: hidden;
     position: absolute;
     top: 50%;
@@ -146,7 +146,7 @@ gmf-layertree {
 }
 
 .gmf-imported-legend {
-  padding-top:0.8rem;
+  padding-top: 0.8rem;
   .gmf-legend-image {
     overflow-y: auto;
   }

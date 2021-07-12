@@ -1,19 +1,27 @@
 <!DOCTYPE html>
-<html ng-app='app'>
+<html ng-app="app">
   <head>
     <title>SVG example</title>
-    <meta charset="utf-8">
-    <meta name="viewport"
-          content="initial-scale=1.0, user-scalable=no, width=device-width">
-    <meta name="mobile-web-app-capable" content="yes">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width" />
+    <meta name="mobile-web-app-capable" content="yes" />
   </head>
   <body ng-controller="MainController as ctrl">
     <p id="desc">This example shows different ways to include an SVG in the application using Webpack.</p>
     <h5>In the HTML</h5>
     <p>Default: <%=require("./inline.svg")%>.</p>
-    <p id="font2">With <code>?viewbox&height=1em</code>, 2rem, style on circle: <%=require("./font.svg?viewbox&height=1em")%>.</p>
-    <p id="font4">With <code>?viewbox&height=1em</code>, 4rem, style on circle: <%=require("./font.svg?viewbox&height=1em")%>.</p>
-    <p id="fa">Font Awesome <code>?viewbox&height=2em</code>, style <code>fill: #65b0ff</code>: <%=require("@fortawesome/fontawesome-free/svgs/regular/check-circle.svg?viewbox&height=2em")%>.</p>
+    <p id="font2">
+      With <code>?viewbox&height=1em</code>, 2rem, style on circle:
+      <%=require("./font.svg?viewbox&height=1em")%>.
+    </p>
+    <p id="font4">
+      With <code>?viewbox&height=1em</code>, 4rem, style on circle:
+      <%=require("./font.svg?viewbox&height=1em")%>.
+    </p>
+    <p id="fa">
+      Font Awesome <code>?viewbox&height=2em</code>, style <code>fill: #65b0ff</code>:
+      <%=require("@fortawesome/fontawesome-free/svgs/regular/check-circle.svg?viewbox&height=2em")%>.
+    </p>
     <p>With <code>?viewbox</code>: <%=require("./inline.svg?viewbox")%>.</p>
     <p>With <code>?viewbox&width=3em</code>: <%=require("./inline.svg?viewbox&width=3em")%>.</p>
     <p>With <code>?viewbox&height=3em</code>: <%=require("./inline.svg?viewbox&height=3em")%>.</p>
@@ -27,6 +35,7 @@
       <li><code>'data:image/svg+xml;base64,' + btoa(require('./inline.svg?viewbox&width=30px'))</code></li>
       <li><code>require('./url.svg?url')</code></li>
     </ul>
+
     <script type="text/javascript" src="dist/vendor.js"></script>
   </body>
 </html>

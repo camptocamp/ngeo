@@ -1,4 +1,5 @@
-#map, ngeo-mapswipe {
+#map,
+ngeo-mapswipe {
   width: 100%;
   height: 400px;
 }
@@ -21,7 +22,7 @@ ngeo-mapswipe {
   margin-left: -2px;
   height: 100%;
   background-color: #f00;
- }
+}
 
 .ngeo-swipe-arrow {
   position: absolute;

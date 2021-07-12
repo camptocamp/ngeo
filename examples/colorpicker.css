@@ -34,9 +34,9 @@ body {
   top: -10px;
   left: -10px;
   border: 2px solid #fff;
-  -webkit-box-shadow: rgba(0,0,0,0.3) 0 1px 3px 0;
-  -webkit-box-shadow: rgba(0,0,0,0.3) 0 1px 3px 0;
-  box-shadow: rgba(0,0,0,0.3) 0 1px 3px 0;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.3) 0 1px 3px 0;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.3) 0 1px 3px 0;
+  box-shadow: rgba(0, 0, 0, 0.3) 0 1px 3px 0;
   z-index: 11;
 }
 .ngeo-colorpicker-palette td.ngeo-colorpicker-selected > div::after {

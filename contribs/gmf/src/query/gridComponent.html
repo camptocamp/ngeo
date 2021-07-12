@@ -1,20 +1,13 @@
 <div class="gmf-displayquerygrid panel" ng-show="ctrl.active">
-  <div
-    class="close"
-    ng-click="ctrl.clear()">
-    &times;
-  </div>
+  <div class="close" ng-click="ctrl.clear()">&times;</div>
 
-  <ul
-    class="nav nav-pills"
-    role="tablist">
-
+  <ul class="nav nav-pills" role="tablist">
     <li
       class="nav-item"
       ng-repeat="gridSource in ctrl.getGridSources() track by gridSource.source.label"
       role="presentation"
-      ng-click="ctrl.selectTab(gridSource)">
-
+      ng-click="ctrl.selectTab(gridSource)"
+    >
       <a
         class="nav-link"
         href="#{{ctrl.escapeValue(gridSource.source.label)}}"
@@ -22,11 +15,9 @@
         data-target="#{{ctrl.escapeValue(gridSource.source.label)}}"
         aria-controls="{{ctrl.escapeValue(gridSource.source.label)}}"
         role="tab"
-        data-toggle="tab">
-
-        <span>
-          {{gridSource.source.label | translate}} ({{gridSource.source.features.length}})
-        </span>
+        data-toggle="tab"
+      >
+        <span> {{gridSource.source.label | translate}} ({{gridSource.source.features.length}}) </span>
       </a>
     </li>
   </ul>
@@ -37,86 +28,81 @@
       role="tabpanel"
       class="tab-pane"
       ng-class="{'active' : ctrl.isSelected(gridSource)}"
-      id="{{ctrl.escapeValue(gridSource.source.label)}}">
-
-      <ngeo-grid
-        ngeo-grid-configuration="gridSource.configuration">
-      </ngeo-grid>
-  </div>
-  <div class="container-fluid">
-  <div ng-show="!ctrl.pending && ctrl.getActiveGridSource() && ctrl.getActiveGridSource().configuration !== null" class="row">
-    <div class="col-md-5 my-auto">
-      <span ng-if="ctrl.hasOneWithTooManyResults_()" class="gmf-query-grid-too-many text-warning">{{'Only' | translate}} {{ctrl.sumOfFeatures}} {{'of' | translate}} {{ctrl.sumOfAvailableResults}} {{'results displayed, as the maximum number is reached. Please refine your query.' | translate }}</span>
+      id="{{ctrl.escapeValue(gridSource.source.label)}}"
+    >
+      <ngeo-grid ngeo-grid-configuration="gridSource.configuration"> </ngeo-grid>
     </div>
-    <div class="col-md-7" class="pull-right">
-      <ul class="nav justify-content-end">
-        <li
-          class="ng-hide"
-          ng-show="ctrl.isOneSelected()">
-          <div class="btn btn-sm ng-binding">
-            {{ctrl.getSelectedRowCount()}} <span translate>selected element(s)</span>
-          </div>
-        </li>
-
-        <li
-          ng-show="ctrl.isOneSelected()"
-          class="ng-hide">
-          <button
-            class="btn btn-link btn-sm"
-            title="{{'Zoom to selection' | translate}}"
-            ng-click="ctrl.zoomToSelection()">
-            <i class="fa fa-search-plus"></i> <span translate>Zoom to</span>
-          </button>
-        </li>
-
-        <li
-          ng-show="ctrl.isOneSelected()"
-          class="ng-hide">
-          <button
-            class="btn btn-link btn-sm"
-            title="{{'Export selection as CSV' | translate}}"
-            ng-click="ctrl.downloadCsv()">
-            <i class="fa fa-download"></i> <span translate>Export as CSV</span>
-          </button>
-        </li>
-
-        <li class="dropdown">
-          <button
-            type="button"
-            class="dropup btn btn-default btn-sm dropdown-toggle"
-            data-toggle="dropdown"
-            aria-haspopup="true"
-            aria-expanded="false">
-            <span translate>Select</span>
-          </button>
-          <ul
-            class="dropdown-menu"
-            aria-labelledby="dLabel">
-            <li>
-              <a
-                href=""
-                ng-click="ctrl.selectAll()" translate>All</a>
+    <div class="container-fluid">
+      <div
+        ng-show="!ctrl.pending && ctrl.getActiveGridSource() && ctrl.getActiveGridSource().configuration !== null"
+        class="row"
+      >
+        <div class="col-md-5 my-auto">
+          <span ng-if="ctrl.hasOneWithTooManyResults_()" class="gmf-query-grid-too-many text-warning"
+            >{{'Only' | translate}} {{ctrl.sumOfFeatures}} {{'of' | translate}} {{ctrl.sumOfAvailableResults}}
+            {{'results displayed, as the maximum number is reached. Please refine your query.' | translate
+            }}</span
+          >
+        </div>
+        <div class="col-md-7" class="pull-right">
+          <ul class="nav justify-content-end">
+            <li class="ng-hide" ng-show="ctrl.isOneSelected()">
+              <div class="btn btn-sm ng-binding">
+                {{ctrl.getSelectedRowCount()}} <span translate>selected element(s)</span>
+              </div>
             </li>
-            <li>
-              <a
-                href=""
-                ng-click="ctrl.unselectAll()" translate>None</a>
+
+            <li ng-show="ctrl.isOneSelected()" class="ng-hide">
+              <button
+                class="btn btn-link btn-sm"
+                title="{{'Zoom to selection' | translate}}"
+                ng-click="ctrl.zoomToSelection()"
+              >
+                <i class="fa fa-search-plus"></i> <span translate>Zoom to</span>
+              </button>
             </li>
-            <li>
-              <a
-                href=""
-                ng-click="ctrl.invertSelection()" translate>Reverse selection</a>
+
+            <li ng-show="ctrl.isOneSelected()" class="ng-hide">
+              <button
+                class="btn btn-link btn-sm"
+                title="{{'Export selection as CSV' | translate}}"
+                ng-click="ctrl.downloadCsv()"
+              >
+                <i class="fa fa-download"></i> <span translate>Export as CSV</span>
+              </button>
+            </li>
+
+            <li class="dropdown">
+              <button
+                type="button"
+                class="dropup btn btn-default btn-sm dropdown-toggle"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                <span translate>Select</span>
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="dLabel">
+                <li>
+                  <a href="" ng-click="ctrl.selectAll()" translate>All</a>
+                </li>
+
+                <li>
+                  <a href="" ng-click="ctrl.unselectAll()" translate>None</a>
+                </li>
+
+                <li>
+                  <a href="" ng-click="ctrl.invertSelection()" translate>Reverse selection</a>
+                </li>
+              </ul>
             </li>
           </ul>
-        </li>
-      </ul>
+        </div>
+      </div>
     </div>
-  </div>
-  </div>
 
-  <div ng-show="ctrl.pending" class="spinner-grid">
-    <i class="fa fa-spin">
-      <%=require('gmf/icons/spinner.svg?viewbox&height=3rem')%>
-    </i>
+    <div ng-show="ctrl.pending" class="spinner-grid">
+      <i class="fa fa-spin"> <%=require('gmf/icons/spinner.svg?viewbox&height=3rem')%> </i>
+    </div>
   </div>
 </div>

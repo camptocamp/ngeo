@@ -676,24 +676,22 @@ Controller.prototype.handleMapContextMenu_ = function (evt) {
     const pixel = this.map.getEventPixel(evt);
     const coordinate = this.map.getCoordinateFromPixel(pixel);
 
-    let feature = /** @type {?import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>} */ (
-      this.map.forEachFeatureAtPixel(
-        pixel,
-        (feature) => {
-          if (feature instanceof Feature) {
-            let ret = null;
-            if (this.features.getArray().includes(feature)) {
-              ret = feature;
-            }
-            return ret;
+    let feature = /** @type {?import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>} */ (this.map.forEachFeatureAtPixel(
+      pixel,
+      (feature) => {
+        if (feature instanceof Feature) {
+          let ret = null;
+          if (this.features.getArray().includes(feature)) {
+            ret = feature;
           }
-        },
-        {
-          hitTolerance: 7,
-          layerFilter: undefined,
+          return ret;
         }
-      )
-    );
+      },
+      {
+        hitTolerance: 7,
+        layerFilter: undefined,
+      }
+    ));
 
     feature = feature ? feature : null;
 

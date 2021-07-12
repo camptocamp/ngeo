@@ -290,9 +290,9 @@ MainController.prototype.issueGetFeatures_ = function (gmfLayerNode) {
     if (!this.getFeaturesDeferred_) {
       throw new Error('Missing getFeaturesDeferred');
     }
-    const features = /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>[]} */ (
-      new olFormatWFS().readFeatures(response.data)
-    );
+    const features = /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>[]} */ (new olFormatWFS().readFeatures(
+      response.data
+    ));
     this.featuresCache_[id] = features;
     this.getFeaturesDeferred_.resolve();
   });
@@ -302,9 +302,9 @@ MainController.prototype.issueGetFeatures_ = function (gmfLayerNode) {
  * @param {import('gmf/themes.js').GmfLayerWMS} gmfLayerNode Layer node.
  */
 MainController.prototype.handleGetFeatures_ = function (gmfLayerNode) {
-  this.features = /** @type {import("ol/Feature.js").default<import("ol/geom/Geometry.js").default>[]} */ (
-    this.getFeaturesFromCache_(gmfLayerNode)
-  );
+  this.features = /** @type {import("ol/Feature.js").default<import("ol/geom/Geometry.js").default>[]} */ (this.getFeaturesFromCache_(
+    gmfLayerNode
+  ));
   this.selectedFeature = this.features[0];
 };
 

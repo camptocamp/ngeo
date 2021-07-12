@@ -171,9 +171,7 @@ export class LidarprofileManager {
    */
   clearBuffer() {
     if (this.lidarBuffer) {
-      /** @type {olSourceVector<import("ol/geom/LineString.js").default>} */ (
-        this.lidarBuffer.getSource()
-      ).clear();
+      /** @type {olSourceVector<import("ol/geom/LineString.js").default>} */ (this.lidarBuffer.getSource()).clear();
     }
   }
 

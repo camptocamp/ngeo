@@ -1,19 +1,19 @@
 #map {
-    width: 400px;
-    height: 150px;
+  width: 400px;
+  height: 150px;
 }
 #font2 svg {
-    font-size: 2rem
+  font-size: 2rem;
 }
 #font2 circle {
-    fill: #65b0ff
+  fill: #65b0ff;
 }
 #font4 svg {
-    font-size: 4rem
+  font-size: 4rem;
 }
 #font4 circle {
-    fill: #65b0ff
+  fill: #65b0ff;
 }
 #fa {
-    fill: #65b0ff
+  fill: #65b0ff;
 }

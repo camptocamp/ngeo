@@ -4,13 +4,21 @@
       <div class="ngeo-datepicker-start-date">
         <span ng-if="::datepickerCtrl.time.mode === 'range'" translate>From:</span>
         <span ng-if="::datepickerCtrl.time.mode !== 'range'" translate>Date:</span>
-        <input name="sdate" ui-date="datepickerCtrl.sdateOptions" ng-model="datepickerCtrl.sdate" required=""/>
+        <input
+          name="sdate"
+          ui-date="datepickerCtrl.sdateOptions"
+          ng-model="datepickerCtrl.sdate"
+          required=""
+        />
       </div>
-      <div
-        class="ngeo-datepicker-end-date"
-        ng-if="::datepickerCtrl.time.mode === 'range'">
+      <div class="ngeo-datepicker-end-date" ng-if="::datepickerCtrl.time.mode === 'range'">
         <span translate>To:</span>
-        <input name="edate" ui-date="datepickerCtrl.edateOptions" ng-model="datepickerCtrl.edate" required=""/>
+        <input
+          name="edate"
+          ui-date="datepickerCtrl.edateOptions"
+          ng-model="datepickerCtrl.edate"
+          required=""
+        />
       </div>
     </div>
   </form>

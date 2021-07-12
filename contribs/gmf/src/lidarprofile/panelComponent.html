@@ -1,64 +1,81 @@
-<div class="lidar-panel"
-     gmf-drawprofileline
-     gmf-drawprofileline-active="$ctrl.active"
-     gmf-drawprofileline-map="::$ctrl.map"
-     gmf-drawprofileline-line="$ctrl.line">
-   <p>
-    <button class="btn btn-default"
-      ngeo-btn ng-model="ctrl.interaction.active"
-      translate>Draw LIDAR profile line
+<div
+  class="lidar-panel"
+  gmf-drawprofileline
+  gmf-drawprofileline-active="$ctrl.active"
+  gmf-drawprofileline-map="::$ctrl.map"
+  gmf-drawprofileline-line="$ctrl.line"
+>
+  <p>
+    <button class="btn btn-default" ngeo-btn ng-model="ctrl.interaction.active" translate>
+      Draw LIDAR profile line
     </button>
   </p>
   <p>
     <em ng-if="ctrl.interaction.active" class="text-muted small" translate>
-      Draw a line on the map to display the corresponding LIDAR profile. Use double-click to finish the drawing.
+      Draw a line on the map to display the corresponding LIDAR profile. Use double-click to finish the
+      drawing.
     </em>
   </p>
   <div ng-if="$ctrl.ready">
     <div ng-if="!!$ctrl.line">
       <div>
-        <button class="btn btn-default" ng-click="$ctrl.csvExport()" translate>
-          CSV export
-        </button>
-        <button class="btn btn-default" ng-click="$ctrl.pngExport()" translate>
-          PNG export
-        </button>
-        <button class="btn btn-default"
+        <button class="btn btn-default" ng-click="$ctrl.csvExport()" translate>CSV export</button>
+        <button class="btn btn-default" ng-click="$ctrl.pngExport()" translate>PNG export</button>
+        <button
+          class="btn btn-default"
           ng-if="!!$ctrl.line"
           ng-click="$ctrl.resetPlot()"
-          data-toggle="tooltip" data-placement="left" data-original-title="{{'Reset profile'|translate}}">
+          data-toggle="tooltip"
+          data-placement="left"
+          data-original-title="{{'Reset profile'|translate}}"
+        >
           <span class="fa fa-sync"></span>
         </button>
       </div>
-      <hr>
-      <button class="btn btn-default"
-        ngeo-btn ng-model="measureActive"
+      <hr />
+      <button
+        class="btn btn-default"
+        ngeo-btn
+        ng-model="measureActive"
         ng-click="$ctrl.setMeasureActive()"
         data-toggle="tooltip"
         data-placement="left"
         data-original-title="{{'Take measure on the graph'|translate}}"
-        translate> Take measure
+        translate
+      >
+        Take measure
       </button>
-      <button class="btn btn-default"
+      <button
+        class="btn btn-default"
         ng-if="!!$ctrl.line"
         ng-click="$ctrl.clearMeasure()"
-        data-toggle="tooltip" data-placement="left" data-original-title="{{'Clear measure'|translate}}">
+        data-toggle="tooltip"
+        data-placement="left"
+        data-original-title="{{'Clear measure'|translate}}"
+      >
         <span class="fa fa-eraser"></span>
       </button>
     </div>
     <div>
-    <hr>
-    <p translate>Material</p>
-    <select
-      ng-options="option.name | translate for option in ::$ctrl.getAvailablePointAttributes()"
-      ng-model-options="{getterSetter: true}"
-      ng-model="$ctrl.getSetSelectedPointAttribute">
-    </select>
+      <hr />
+      <p translate>Material</p>
+      <select
+        ng-options="option.name | translate for option in ::$ctrl.getAvailablePointAttributes()"
+        ng-model-options="{getterSetter: true}"
+        ng-model="$ctrl.getSetSelectedPointAttribute"
+      ></select>
     </div>
-    <hr>
+    <hr />
     <p translate>Classes</p>
     <div ng-repeat="(key, classification) in ::$ctrl.getClassification()">
-      <input ng-true-value="1" ng-false-value="0" ng-model="classification.visible" ng-change="$ctrl.setClassification(classification, key)" ng-checked="!!classification.visible" type="checkbox">
+      <input
+        ng-true-value="1"
+        ng-false-value="0"
+        ng-model="classification.visible"
+        ng-change="$ctrl.setClassification(classification, key)"
+        ng-checked="!!classification.visible"
+        type="checkbox"
+      />
       <span>{{classification.name}}</span>
     </div>
   </div>

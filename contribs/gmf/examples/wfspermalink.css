@@ -33,10 +33,10 @@ gmf-map > div {
   margin-left: calc(50% - 24px);
 }
 .collapse-button-up:after {
-  content: "\f077";
+  content: '\f077';
 }
 .collapse-button-down:after {
-  content: "\f078";
+  content: '\f078';
 }
 .windowcontainer {
   background-color: white;
@@ -63,7 +63,8 @@ gmf-map > div {
   left: 0;
   right: 0;
 }
-.slide-animation.ng-enter, .slide-animation.ng-leave {
+.slide-animation.ng-enter,
+.slide-animation.ng-leave {
   transition: 0.3s ease-in all;
 }
 /* Left to right animation */
@@ -104,7 +105,7 @@ gmf-map > div {
   overflow-x: hidden;
   overflow-y: auto;
   margin-left: 10px;
-  padding-bottom: 10px
+  padding-bottom: 10px;
 }
 .details table {
   font-size: 0.9em;
@@ -126,13 +127,13 @@ gmf-map > div {
   float: left;
 }
 .navigate .previous:after {
-  content: "\f053";
+  content: '\f053';
 }
 .navigate .next {
   float: right;
 }
 .navigate .next:after {
-  content: "\f054";
+  content: '\f054';
 }
 @media (max-width: 768px) {
   .gmf-displayquerywindow {

@@ -90,9 +90,9 @@ export class DatasourceHelper {
    * @return {?import("gmf/datasource/OGC.js").default} Data source.
    */
   getDataSource(id) {
-    return /** @type {?import("gmf/datasource/OGC.js").default} */ (
-      this.ngeoDataSourcesHelper_.getDataSource(id)
-    );
+    return /** @type {?import("gmf/datasource/OGC.js").default} */ (this.ngeoDataSourcesHelper_.getDataSource(
+      id
+    ));
   }
 
   /**

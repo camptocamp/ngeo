@@ -1,4 +1,4 @@
- Contributing to ngeo
+Contributing to ngeo
 
 Thanks for your interest in contributing to the GeoMapFish project.
 
@@ -7,12 +7,10 @@ Thanks for your interest in contributing to the GeoMapFish project.
 When you want to get involved and discuss new features or changes, please contact the
 [GeoMapFish user group](https://geomapfish.org/).
 
-
 ## Submitting Bug Reports
 
 Please use the [GitHub issue tracker](https://github.com/camptocamp/ngeo/issues). Before creating a
 new issue, do a quick search to see if the problem has been reported already.
-
 
 ## Contributing Code
 
@@ -25,13 +23,11 @@ follows our pull request guidelines below before submitting it.
 
 This page describes what you need to know to contribute code to c2cgeopoertal as a developer.
 
-
 ## Contributor License Agreement
 
 Your contribution will be under our
 [license](https://raw.githubusercontent.com/camptocamp/ngeo/master/LICENSE.md) as per
 [GitHub's terms of service](https://help.github.com/articles/github-terms-of-service/#6-contributions-under-repository-license).
-
 
 ## Pull request guidelines
 
@@ -42,38 +38,35 @@ pull request. The pull request description should reference the original issue.
 
 Your pull request must:
 
- * Follow ngeo's coding style (as checked by the Continuous Integration system).
+- Follow ngeo's coding style (as checked by the Continuous Integration system).
 
- * Pass the integration tests run automatically by the Continuous Integration system.
+- Pass the integration tests run automatically by the Continuous Integration system.
 
- * Address a single issue or add a single item of functionality.
+- Address a single issue or add a single item of functionality.
 
- * Contain a clean history of small, incremental, logically separate commits, with no merge commits.
+- Contain a clean history of small, incremental, logically separate commits, with no merge commits.
 
- * Use clear commit messages.
+- Use clear commit messages.
 
- * Be possible to merge automatically.
-
+- Be possible to merge automatically.
 
 ### Address a single issue or add a single item of functionality
 
-Please submit separate pull requests for separate issues.  This allows each to be reviewed on its own merits.
-
+Please submit separate pull requests for separate issues. This allows each to be reviewed on its own merits.
 
 ### Contain a clean history of small, incremental, logically separate commits, with no merge commits
 
 The commit history explains to the reviewer the series of modifications to the code that you have made and
-breaks the overall contribution into a series of easily-understandable chunks.  Any individual commit should
-not add more than one new class or one new function.  Do not submit commits that change thousands of lines
-or that contain more than one distinct logical change.  Trivial commits, e.g. to fix lint errors, should be
-merged into the commit that introduced the error.  See the
+breaks the overall contribution into a series of easily-understandable chunks. Any individual commit should
+not add more than one new class or one new function. Do not submit commits that change thousands of lines
+or that contain more than one distinct logical change. Trivial commits, e.g. to fix lint errors, should be
+merged into the commit that introduced the error. See the
 [Atomic Commit Convention on Wikipedia](http://en.wikipedia.org/wiki/Atomic_commit#Atomic_Commit_Convention)
 for more detail.
 
 `git apply --patch` and `git rebase` can help you create a clean commit history.
 [Reviewboard.org](http://www.reviewboard.org/docs/codebase/dev/git/clean-commits/)
 and [Pro GIT](http://git-scm.com/book/en/Git-Tools-Rewriting-History) explain how to use them.
-
 
 ### Use clear commit messages
 

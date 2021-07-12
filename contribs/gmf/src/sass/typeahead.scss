@@ -50,7 +50,8 @@
       border-bottom-color: $border-color;
       border-bottom-color: var(--border-color);
 
-      &:hover, &.tt-cursor {
+      &:hover,
+      &.tt-cursor {
         cursor: pointer;
         background-color: $onhover-color;
         background-color: var(--onhover-color);

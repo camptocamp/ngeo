@@ -26,13 +26,13 @@
 }
 
 .ngeo-routing-start .fa-map-marker {
-  color: #6BE62E;
-  text-shadow: -1px 0 #4CB01E, 0 1px #4CB01E, 1px 0 #4CB01E, 0 -1px #4CB01E;
+  color: #6be62e;
+  text-shadow: -1px 0 #4cb01e, 0 1px #4cb01e, 1px 0 #4cb01e, 0 -1px #4cb01e;
 }
 
 .ngeo-routing-destination .fa-map-marker {
-  color: #FF3E13;
-  text-shadow: -1px 0 #CD3412, 0 1px #CD3412, 1px 0 #CD3412, 0 -1px #CD3412;
+  color: #ff3e13;
+  text-shadow: -1px 0 #cd3412, 0 1px #cd3412, 1px 0 #cd3412, 0 -1px #cd3412;
 }
 
 .ngeo-routing-vias .fa-map-marker {
@@ -48,7 +48,8 @@
   border: 1px solid #ccc;
 }
 
-.tt-suggestion.tt-is-under-cursor, .tt-suggestion:hover {
+.tt-suggestion.tt-is-under-cursor,
+.tt-suggestion:hover {
   color: #fff;
   background-color: #0097cf;
 }

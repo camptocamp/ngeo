@@ -1,19 +1,15 @@
 <!DOCTYPE html>
-<html ng-app='app'>
+<html ng-app="app">
   <head>
     <title>Create Feature Example</title>
-    <meta charset="utf-8">
-    <meta name="viewport"
-          content="initial-scale=1.0, user-scalable=no, width=device-width">
-    <meta name="mobile-web-app-capable" content="yes">
-
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width" />
+    <meta name="mobile-web-app-capable" content="yes" />
   </head>
   <body ng-controller="MainController as ctrl">
     <div id="map" ngeo-map="ctrl.map"></div>
 
-    <div
-        ngeo-btn-group
-        class="btn-group">
+    <div ngeo-btn-group class="btn-group">
       <a
         href
         translate
@@ -25,7 +21,8 @@
         ngeo-createfeature-map="::ctrl.map"
         class="btn btn-default ngeo-createfeature-point"
         ng-class="{active: ctrl.createPointActive}"
-        ng-model="ctrl.createPointActive">
+        ng-model="ctrl.createPointActive"
+      >
       </a>
       <a
         href
@@ -38,7 +35,8 @@
         ngeo-createfeature-map="::ctrl.map"
         class="btn btn-default ngeo-createfeature-linestring"
         ng-class="{active: ctrl.createLineStringActive}"
-        ng-model="ctrl.createLineStringActive">
+        ng-model="ctrl.createLineStringActive"
+      >
       </a>
       <a
         href
@@ -51,17 +49,16 @@
         ngeo-createfeature-map="::ctrl.map"
         class="btn btn-default ngeo-createfeature-polygon"
         ng-class="{active: ctrl.createPolygonActive}"
-        ng-model="ctrl.createPolygonActive">
+        ng-model="ctrl.createPolygonActive"
+      >
       </a>
     </div>
 
-    <input type="checkbox"
-       ng-model="ctrl.dummyActive" /> Dummy
+    <input type="checkbox" ng-model="ctrl.dummyActive" /> Dummy
 
     <p id="desc">
       This example shows how to use the <code>ngeo-createfeature</code>
-      directive to draw point, linestring or polygon vector features on
-      a map.
+      directive to draw point, linestring or polygon vector features on a map.
     </p>
 
     <script type="text/javascript" src="dist/vendor.js"></script>
