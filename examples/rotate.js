@@ -164,7 +164,7 @@ function MainController() {
   map.addInteraction(interaction);
 
   map.on(
-    'singleclick',
+    /** @type {import('ol/Observable.js').EventTypes} */ ('singleclick'),
     /** @type {function(?): ?} */ (
       /**
        * @param {import('ol/MapBrowserEvent.js').default<unknown>} evt

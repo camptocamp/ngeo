@@ -109,7 +109,7 @@ function MainController(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
     throw new Error('Missing content');
   }
   this.map.on(
-    'singleclick',
+    /** @type {import('ol/Observable.js').EventTypes} */ ('singleclick'),
     /** @type {function(?): ?} */ (
       /**
        * @param {import('ol/MapBrowserEvent.js').default<unknown>} evt

@@ -180,7 +180,7 @@ myModule.run(
  * @htmlAttribute {string} gmf-editfeature-state The state property shared
  *     with the `gmf-editfeatureselector` directive. For more info, see in
  *     that directive.
- * @htmlAttribute {import("ol/layer/Vector.js").default} gmf-editfeature-vector The vector layer in
+ * @htmlAttribute {import("ol/layer/Vector.js").default<import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>>} gmf-editfeature-vector The vector layer in
  *     which to draw the vector features.
  * @return {angular.IDirective} The directive specs.
  * @ngdoc directive
@@ -272,7 +272,7 @@ export function Controller(
   this.tolerance = gmfEditFeatureOptions.tolerance ? gmfEditFeatureOptions.tolerance : 0;
 
   /**
-   * @type {?import("ol/layer/Vector.js").default}
+   * @type {?import("ol/layer/Vector.js").default<import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>>}
    */
   this.vectorLayer = null;
 
@@ -352,7 +352,7 @@ export function Controller(
   this.editableNode_ = null;
 
   /**
-   * @type {?import("ol/layer/Image.js").default|import("ol/layer/Tile.js").default}
+   * @type {?import("ol/layer/Image.js").default<import("ol/source/Image.js").default>|import("ol/layer/Tile.js").default<import("ol/source/Tile.js").default>}
    */
   this.editableWMSLayer_ = null;
 
@@ -419,7 +419,7 @@ export function Controller(
   this.features = null;
 
   /**
-   * @type {?import("ol/layer/Vector.js").default}
+   * @type {?import("ol/layer/Vector.js").default<import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>>}
    */
   this.highlightVectorLayer_ = null;
 
@@ -564,7 +564,7 @@ Controller.prototype.$onInit = function () {
   }
 
   /**
-   * @type {import("ol/layer/Vector.js").default}
+   * @type {import("ol/layer/Vector.js").default<import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>>}
    */
   this.highlightVectorLayer_ = new olLayerVector({
     source: new VectorSource({

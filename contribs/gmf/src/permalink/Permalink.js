@@ -1454,7 +1454,11 @@ PermalinkService.prototype.handleNgeoFeaturesChange_ = function () {
 
   /** @type {Object<string, string>} */
   const object = {};
-  object[PermalinkParam.FEATURES] = data;
+  if (typeof data == 'string') {
+    object[PermalinkParam.FEATURES] = data;
+  } else {
+    console.error(`Unsupported type: ${typeof data}`);
+  }
   this.ngeoStateManager_.updateState(object);
 };
 

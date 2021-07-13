@@ -204,7 +204,7 @@ export class Controller {
     });
 
     /**
-     * @type {import("ol/layer/Vector.js").default}
+     * @type {import("ol/layer/Vector.js").default<import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>>}
      * @private
      */
     this.routeLayer_ = new olLayerVector({

@@ -36,6 +36,7 @@ import {listen, unlistenByKey} from 'ol/events.js';
 import olLayerImage from 'ol/layer/Image.js';
 import olLayerGroup from 'ol/layer/Group.js';
 import olMap from 'ol/Map.js';
+import olView from 'ol/View.js';
 import {toDegrees, toRadians, clamp} from 'ol/math.js';
 import MapBrowserEvent from 'ol/MapBrowserEvent.js';
 import 'bootstrap/js/src/dropdown.js';
@@ -326,7 +327,7 @@ export class PrintController {
     this.ngeoLayerHelper_ = ngeoLayerHelper;
 
     /**
-     * @type {import("ol/layer/Vector.js").default}
+     * @type {import("ol/layer/Vector.js").default<import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>>}
      * @private
      */
     this.featureOverlayLayer_ = ngeoFeatureOverlayMgr.getLayer();
@@ -545,7 +546,10 @@ export class PrintController {
       'change:rotation',
       /** @type {import("ol/events.js").ListenerFunction} */
       (event) => {
-        this.updateRotation_(Math.round(toDegrees(event.target.getRotation())));
+        const target = event.target;
+        if (target instanceof olView) {
+          this.updateRotation_(Math.round(toDegrees(target.getRotation())));
+        }
       }
     );
 

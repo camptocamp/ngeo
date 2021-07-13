@@ -310,7 +310,10 @@ export const Controller = class {
 
   $onInit() {
     this.offlineMode.registerComponent(this);
-    this.ngeoOfflineConfiguration_.on('progress', /** @type {function(?): ?} */ (this.progressCallback_));
+    this.ngeoOfflineConfiguration_.on(
+      /** @type {import('ol/Observable.js').EventTypes} */ ('progress'),
+      /** @type {function(?): ?} */ (this.progressCallback_)
+    );
     this.maskMargin = this.maskMargin || 100;
     this.minZoom = this.minZoom || 10;
     this.maxZoom = this.maxZoom || 15;
@@ -319,7 +322,10 @@ export const Controller = class {
   }
 
   $onDestroy() {
-    this.ngeoOfflineConfiguration_.un('progress', /** @type {function(?): ?} */ (this.progressCallback_));
+    this.ngeoOfflineConfiguration_.un(
+      /** @type {import('ol/Observable.js').EventTypes} */ ('progress'),
+      /** @type {function(?): ?} */ (this.progressCallback_)
+    );
   }
 
   /**

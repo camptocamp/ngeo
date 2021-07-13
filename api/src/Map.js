@@ -237,7 +237,7 @@ class Map {
 
     /**
      * @private
-     * @type {VectorLayer}
+     * @type {VectorLayer<VectorSource<import("ol/geom/Geometry.js").default>>}
      */
     this.vectorLayer_ = new VectorLayer({
       zIndex: 1,
@@ -259,7 +259,7 @@ class Map {
     this.map_.addInteraction(this.selectInteraction_);
 
     this.selectInteraction_.on(
-      'select',
+      /** @type {import('ol/Observable.js').EventTypes} */ ('select'),
       /** @type {function(?): ?} */ (
         /**
          * @param {import('lib/ol.interaction.Select.js').SelectEvent} event
@@ -274,7 +274,7 @@ class Map {
     );
 
     this.map_.on(
-      'singleclick',
+      /** @type {import('ol/Observable.js').EventTypes} */ ('singleclick'),
       /** @type {function(?): ?} */ (
         /**
          * @param {import('ol/MapBrowserEvent.js').default<unknown>} event

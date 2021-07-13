@@ -68,7 +68,7 @@ describe('ngeo.map.LayerHelper', () => {
 
     expect(spy.calls.count()).toBe(1);
     /**
-     * @type {import("ol/layer/Tile.js").default}
+     * @type {import("ol/layer/Tile.js").default<import("ol/source/Tile.js").default>}
      */
     const layer = spy.calls.mostRecent().args[0];
     /**
@@ -126,7 +126,7 @@ describe('ngeo.map.LayerHelper', () => {
 
     expect(spy.calls.count()).toBe(1);
     /**
-     * @type {import("ol/layer/Tile.js").default}
+     * @type {import("ol/layer/Tile.js").default<import("ol/source/Tile.js").default>}
      */
     const layer = spy.calls.mostRecent().args[0];
     const capabilitiesStyles = [{legendURL: [{href: 'http://legendURL'}]}];

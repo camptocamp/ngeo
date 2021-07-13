@@ -41,6 +41,7 @@ import olStyleCircle from 'ol/style/Circle.js';
 import olStyleStroke from 'ol/style/Stroke.js';
 import olStyleFill from 'ol/style/Fill.js';
 import 'angular-sanitize';
+import Measure from 'ngeo/interaction/Measure';
 
 /** @type {angular.IModule} **/
 const myModule = angular.module('app', [
@@ -234,13 +235,16 @@ function MeasuretoolsController($scope, $compile, $sce, $filter, gettextCatalog)
   // tooltip. This can be useful to display the elevation offset from the
   // 2 points of an azimut measurement.
   this.measureAzimut.on(
-    'measureend',
+    /** @type {import('ol/Observable.js').EventTypes} */ ('measureend'),
     /** @type {function(?): ?} */ (
       /**
        * @param {import('ol/MapBrowserEvent.js').default<unknown>} evt
        */ (evt) => {
-        const el = evt.target.getTooltipElement();
-        el.innerHTML += '<br>Additional info';
+        const target = evt.target;
+        if (target instanceof Measure) {
+          const el = target.getTooltipElement();
+          el.innerHTML += '<br>Additional info';
+        }
       }
     )
   );

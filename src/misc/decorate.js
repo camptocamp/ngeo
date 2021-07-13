@@ -133,7 +133,7 @@ export function layerLoading(layer, $scope) {
 
   if (layer instanceof olLayerGroup) {
     layer.getLayers().on(
-      'add',
+      /** @type {import('ol/Observable.js').EventTypes} */ ('add'),
       /** @type {function(?): ?} */ (
         /**
          * @param {import("ol/Collection.js").CollectionEvent} olEvent the progress event.

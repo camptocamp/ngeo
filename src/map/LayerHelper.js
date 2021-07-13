@@ -136,7 +136,7 @@ LayerHelper.prototype.copyProperties = function (layerFrom, layerTo, opt_exclude
  * @param {string} [opt_crossOrigin] crossOrigin.
  * @param {unknown} [opt_customSourceOptions] Some layer's source initial options.
  * @param {unknown} [opt_customLayerOptions] Some layer initial options.
- * @return {import("ol/layer/Image.js").default} WMS Layer.
+ * @return {import("ol/layer/Image.js").default<import("ol/source/Image.js").default>} WMS Layer.
  */
 LayerHelper.prototype.createBasicWMSLayer = function (
   sourceURL,
@@ -192,7 +192,7 @@ LayerHelper.prototype.createBasicWMSLayer = function (
  *
  * @param {import("ngeo/datasource/OGC.js").default} dataSource OGC data source.
  * @param {string} [opt_crossOrigin] crossOrigin.
- * @return {import("ol/layer/Image.js").default} WMS Layer.
+ * @return {import("ol/layer/Image.js").default<import("ol/source/Image.js").default>} WMS Layer.
  */
 LayerHelper.prototype.createBasicWMSLayerFromDataSource = function (dataSource, opt_crossOrigin) {
   const url = dataSource.wmsUrl;
@@ -242,7 +242,7 @@ LayerHelper.prototype.createBasicWMSLayerFromDataSource = function (dataSource, 
  * @param {number} [opt_minResolution] WMTS minimum resolution.
  * @param {number} [opt_maxResolution] WMTS maximum resolution.
  * @param {number} [opt_opacity] The opacity.
- * @return {angular.IPromise<import("ol/layer/Tile.js").default>} A Promise with a layer (with source) on
+ * @return {angular.IPromise<import("ol/layer/Tile.js").default<import("ol/source/Tile.js").default>>} A Promise with a layer (with source) on
  *    success, no layer else.
  */
 LayerHelper.prototype.createWMTSLayerFromCapabilitites = function (
@@ -312,7 +312,7 @@ LayerHelper.prototype.createWMTSLayerFromCapabilitites = function (
  * @param {Object<string, any>} capabilities The complete capabilities object of the service
  * @param {Object<string, any>} layerCap The layer capability object
  * @param {Object<string, string>} [opt_dimensions] WMTS dimensions.
- * @return {import("ol/layer/Tile.js").default} WMTS layer
+ * @return {import("ol/layer/Tile.js").default<import("ol/source/Tile.js").default>} WMTS layer
  */
 LayerHelper.prototype.createWMTSLayerFromCapabilititesObj = function (
   capabilities,
@@ -459,7 +459,7 @@ LayerHelper.prototype.getLayerByName = function (layerName, layers) {
 
 /**
  * Get the WMTS legend URL for the given layer.
- * @param {import("ol/layer/Tile.js").default} layer Tile layer as returned by the
+ * @param {import("ol/layer/Tile.js").default<import("ol/source/Tile.js").default>} layer Tile layer as returned by the
  * ngeo layerHelper service.
  * @return {string|undefined} The legend URL or undefined.
  */
@@ -572,7 +572,7 @@ LayerHelper.prototype.isLayerVisible = function (layer, map) {
 
 /**
  * Force a WMS layer to refresh using a random value.
- * @param {import("ol/layer/Image.js").default|import("ol/layer/Tile.js").default} layer Layer to refresh.
+ * @param {import("ol/layer/Image.js").default<import("ol/source/Image.js").default>|import("ol/layer/Tile.js").default<import("ol/source/Tile.js").default>} layer Layer to refresh.
  */
 LayerHelper.prototype.refreshWMSLayer = function (layer) {
   const source_ = layer.getSource();
@@ -598,7 +598,7 @@ LayerHelper.prototype.setZIndexToFirstLevelChildren = function (element, ZIndex)
 
 /**
  * Update the LAYERS parameter of the source of the given WMS layer.
- * @param {import("ol/layer/Image.js").default} layer The WMS layer.
+ * @param {import("ol/layer/Image.js").default<import("ol/source/Image.js").default>} layer The WMS layer.
  * @param {string} names The names that will be used to set
  * the LAYERS parameter.
  * @param {string} [opt_time] The start
@@ -624,7 +624,7 @@ LayerHelper.prototype.updateWMSLayerState = function (layer, names, opt_time) {
 };
 
 /**
- * @param {import("ol/layer/Image.js").default} layer The WMS layer.
+ * @param {import("ol/layer/Image.js").default<import("ol/source/Image.js").default>} layer The WMS layer.
  * @return {number[]|undefined} List of query source ids, a.k.a.
  *     the data source ids this layer is composed of.
  */

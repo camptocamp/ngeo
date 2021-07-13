@@ -253,7 +253,7 @@ PrintService.prototype.encodeLayer = function (arr, layer, resolution, destinati
 
 /**
  * @param {import('ngeo/print/mapfish-print-v3.js').MapFishPrintLayer[]} arr Array.
- * @param {olLayerVector} layer Layer.
+ * @param {olLayerVector<import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>>} layer Layer.
  * @param {number} resolution Resolution.
  * @param {number} destinationPrintDpi The destination print DPI.
  */
@@ -263,7 +263,7 @@ PrintService.prototype.encodeVectorLayer = function (arr, layer, resolution, des
 
 /**
  * @param {import('ngeo/print/mapfish-print-v3.js').MapFishPrintLayer[]} arr Array.
- * @param {import("ol/layer/Image.js").default} layer Layer.
+ * @param {import("ol/layer/Image.js").default<import("ol/source/Image.js").default>} layer Layer.
  */
 PrintService.prototype.encodeImageLayer_ = function (arr, layer) {
   if (!(layer instanceof olLayerImage)) {
@@ -277,7 +277,7 @@ PrintService.prototype.encodeImageLayer_ = function (arr, layer) {
 
 /**
  * @param {import('ngeo/print/mapfish-print-v3.js').MapFishPrintLayer[]} arr Array.
- * @param {import("ol/layer/Image.js").default} layer Layer.
+ * @param {import("ol/layer/Image.js").default<import("ol/source/Image.js").default>} layer Layer.
  */
 PrintService.prototype.encodeImageWmsLayer_ = function (arr, layer) {
   if (!(layer instanceof olLayerImage)) {
@@ -296,7 +296,7 @@ PrintService.prototype.encodeImageWmsLayer_ = function (arr, layer) {
 
 /**
  * @param {import('ngeo/print/mapfish-print-v3.js').MapFishPrintLayer[]} arr Array.
- * @param {import("ol/layer/Image.js").default|import("ol/layer/Tile.js").default} layer The layer.
+ * @param {import("ol/layer/Image.js").default<import("ol/source/Image.js").default>|import("ol/layer/Tile.js").default<import("ol/source/Tile.js").default>} layer The layer.
  * @param {string} url URL of the WMS server.
  * @param {Object<string, string>} params URL parameters
  */
@@ -371,7 +371,7 @@ function getAbsoluteUrl_(url) {
 
 /**
  * @param {import('ngeo/print/mapfish-print-v3.js').MapFishPrintLayer[]} arr Array.
- * @param {import("ol/layer/Tile.js").default} layer Layer.
+ * @param {import("ol/layer/Tile.js").default<import("ol/source/Tile.js").default>} layer Layer.
  */
 PrintService.prototype.encodeTileLayer_ = function (arr, layer) {
   if (!(layer instanceof olLayerTile)) {
@@ -387,7 +387,7 @@ PrintService.prototype.encodeTileLayer_ = function (arr, layer) {
 
 /**
  * @param {import('ngeo/print/mapfish-print-v3.js').MapFishPrintLayer[]} arr Array.
- * @param {import("ol/layer/Tile.js").default} layer Layer.
+ * @param {import("ol/layer/Tile.js").default<import("ol/source/Tile.js").default>} layer Layer.
  */
 PrintService.prototype.encodeTileWmtsLayer_ = function (arr, layer) {
   if (!(layer instanceof olLayerTile)) {
@@ -451,7 +451,7 @@ PrintService.prototype.encodeTileWmtsLayer_ = function (arr, layer) {
 
 /**
  * @param {import('ngeo/print/mapfish-print-v3.js').MapFishPrintLayer[]} arr Array.
- * @param {import("ol/layer/Tile.js").default} layer Layer.
+ * @param {import("ol/layer/Tile.js").default<import("ol/source/Tile.js").default>} layer Layer.
  */
 PrintService.prototype.encodeTileWmsLayer_ = function (arr, layer) {
   if (!(layer instanceof olLayerTile)) {

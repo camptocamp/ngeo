@@ -32,7 +32,7 @@ import * as olExtent from 'ol/extent.js';
 import olGeomCircle from 'ol/geom/Circle.js';
 import olGeomLineString from 'ol/geom/LineString.js';
 import olGeomPoint from 'ol/geom/Point.js';
-import {fromCircle} from 'ol/geom/Polygon.js';
+import Polygon, {fromCircle} from 'ol/geom/Polygon.js';
 import olInteractionPointer from 'ol/interaction/Pointer.js';
 import olLayerVector from 'ol/layer/Vector.js';
 import olSourceVector from 'ol/source/Vector.js';
@@ -118,7 +118,7 @@ export default class extends olInteractionPointer {
 
     /**
      * Draw overlay where sketch features are drawn.
-     * @type {import("ol/layer/Vector.js").default}
+     * @type {import("ol/layer/Vector.js").default<import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>>}
      * @private
      */
     this.overlay_ = new olLayerVector({
@@ -463,10 +463,13 @@ export default class extends olInteractionPointer {
    */
   handleUpEvent_(evt) {
     this.rBush_.clear();
-    this.writeCircleGeometry_(
-      this.dragSegments_[0][0].feature,
-      /** @type {import('ol/geom/Polygon.js').default} */ (this.dragSegments_[0][0].geometry)
-    );
+    const geometry = this.dragSegments_[0][0].geometry;
+    if (geometry instanceof Polygon) {
+      this.writeCircleGeometry_(
+        /** @type {olFeature<import("ol/geom/Geometry.js").default>} */ (this.dragSegments_[0][0].feature),
+        geometry
+      );
+    }
 
     if (this.modified_) {
       const event = new ngeoCustomEvent('modifyend', {features: this.features_});

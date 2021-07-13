@@ -224,6 +224,7 @@ Controller.prototype.handleFeaturePropertyChange_ = function (evt) {
     if (this.updating_) {
       return;
     }
+    // @ts-ignore
     this.properties[evt.key] = evt.target.get(evt.key);
     this.scope_.$apply();
   }

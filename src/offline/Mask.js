@@ -34,7 +34,7 @@ import {DEVICE_PIXEL_RATIO} from 'ol/has.js';
  */
 export default class Mask extends Layer {
   /**
-   * @param {import('ol/layer/Layer.js').Options} layerOptions
+   * @param {import('ol/layer/Layer.js').Options<import("ol/source/Source.js").default>} layerOptions
    * @param {Options} maskOptions
    */
   constructor(layerOptions = {}, maskOptions = {}) {

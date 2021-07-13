@@ -87,7 +87,7 @@ export class SwipeController {
     this.map;
 
     /**
-     * @type {import('ol/layer/Tile.js').default}
+     * @type {import('ol/layer/Tile.js').default<import("ol/source/Tile.js").default>}
      */
     this.layer;
 

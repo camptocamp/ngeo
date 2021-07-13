@@ -73,7 +73,7 @@ export default class extends ngeoDatasourceDataSource {
     });
 
     /**
-     * @type {import("ol/layer/Vector.js").default}
+     * @type {import("ol/layer/Vector.js").default<import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>>}
      * @private
      */
     this.layer_ = new olLayerVector({
@@ -104,7 +104,7 @@ export default class extends ngeoDatasourceDataSource {
   }
 
   /**
-   * @return {import("ol/layer/Vector.js").default} Vector layer.
+   * @return {import("ol/layer/Vector.js").default<import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>>} Vector layer.
    */
   get layer() {
     return this.layer_;

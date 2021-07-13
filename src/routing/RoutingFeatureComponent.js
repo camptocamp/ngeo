@@ -170,7 +170,7 @@ export class Controller {
     });
 
     /**
-     * @type {import("ol/layer/Vector.js").default}
+     * @type {import("ol/layer/Vector.js").default<import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>>}
      * @private
      */
     this.vectorLayer_ = new olLayerVector({
@@ -232,7 +232,7 @@ export class Controller {
     this.map.addInteraction(this.modifyFeature_);
 
     this.modifyFeature_.on(
-      'modifyend',
+      /** @type {import('ol/Observable.js').EventTypes} */ ('modifyend'),
       /** @type {function(?): ?} */ (
         /**
          * @param {import('ol/interaction/Modify.js').ModifyEvent} event
@@ -286,14 +286,14 @@ export class Controller {
       type: 'Point',
     });
 
-    this.draw_.on('drawstart', () => {
+    this.draw_.on(/** @type {import('ol/Observable.js').EventTypes} */ ('drawstart'), () => {
       if (this.feature) {
         this.vectorSource_.removeFeature(this.feature);
       }
     });
 
     this.draw_.on(
-      'drawend',
+      /** @type {import('ol/Observable.js').EventTypes} */ ('drawend'),
       /** @type {function(?): ?} */ (
         /**
          * @param {import('lib/ol.interaction.Draw.js').DrawEvent} event

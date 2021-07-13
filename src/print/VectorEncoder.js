@@ -74,7 +74,7 @@ const FEATURE_STYLE_PROP = '_ngeo_style';
 
 /**
  * @param {import('ngeo/print/mapfish-print-v3.js').MapFishPrintLayer[]} mapFishPrintLayer Array.
- * @param {import("ol/layer/Vector.js").default} layer Layer.
+ * @param {import("ol/layer/Vector.js").default<import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>>} layer Layer.
  * @param {number} resolution Resolution.
  * @param {number} destinationPrintDpi The destination print DPI.
  * @param {number} [goodnessOfFit] Goodness of fit.

@@ -83,7 +83,7 @@ function MainController($scope, gmfEditFeature, gmfUser) {
   });
 
   /**
-   * @type {import("ol/layer/Image.js").default}
+   * @type {import("ol/layer/Image.js").default<import("ol/source/Image.js").default>}
    */
   this.wmsLayer_ = new olLayerImage({
     source: this.wmsSource_,
@@ -127,7 +127,10 @@ function MainController($scope, gmfEditFeature, gmfUser) {
     }),
   });
 
-  this.map.on('singleclick', /** @type {function(?): ?} */ (this.handleMapSingleClick_.bind(this)));
+  this.map.on(
+    /** @type {import('ol/Observable.js').EventTypes} */ ('singleclick'),
+    /** @type {function(?): ?} */ (this.handleMapSingleClick_.bind(this))
+  );
 
   // initialize tooltips
   $('[data-toggle="tooltip"]').tooltip({

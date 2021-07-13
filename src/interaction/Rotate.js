@@ -117,7 +117,7 @@ export default class extends olInteractionPointer {
 
     /**
      * Draw overlay where sketch features are drawn.
-     * @type {import("ol/layer/Vector.js").default}
+     * @type {import("ol/layer/Vector.js").default<import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>>}
      * @private
      */
     this.overlay_ = new olLayerVector({

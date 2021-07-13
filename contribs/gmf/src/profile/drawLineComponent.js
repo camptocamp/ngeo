@@ -138,13 +138,13 @@ export function Controller($scope, $timeout, ngeoFeatureOverlayMgr) {
   interactionDecoration(this.interaction);
 
   // Clear the line as soon as a new drawing is started.
-  this.interaction.on('drawstart', (event) => {
+  this.interaction.on(/** @type {import('ol/Observable.js').EventTypes} */ ('drawstart'), (event) => {
     this.features_.clear();
   });
 
   // Update the profile with the new geometry.
   this.interaction.on(
-    'drawend',
+    /** @type {import('ol/Observable.js').EventTypes} */ ('drawend'),
     /** @type {function(?): ?} */ (
       /**
        * @param {import('lib/ol.interaction.Draw.js').DrawEvent} event

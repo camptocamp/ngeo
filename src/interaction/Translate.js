@@ -90,7 +90,7 @@ export default class extends olInteractionTranslate {
     });
 
     /**
-     * @type {import("ol/layer/Vector.js").default}
+     * @type {import("ol/layer/Vector.js").default<import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>>}
      * @private
      */
     this.vectorLayer_ = new olLayerVector({
@@ -252,11 +252,11 @@ export default class extends olInteractionTranslate {
    */
   handleGeometryChange_(feature, evt) {
     const geometry = evt.target;
-    console.assert(geometry instanceof olGeomGeometry);
-
-    const point = this.getGeometryCenterPoint_(geometry);
-    const uid = olUtilGetUid(feature);
-    this.centerFeatures_[uid].setGeometry(point);
+    if (geometry instanceof olGeomGeometry) {
+      const point = this.getGeometryCenterPoint_(geometry);
+      const uid = olUtilGetUid(feature);
+      this.centerFeatures_[uid].setGeometry(point);
+    }
   }
 
   /**

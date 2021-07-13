@@ -329,7 +329,7 @@ export function Controller(
   this.process = ObjecteditingProcessType.ADD;
 
   /**
-   * @type {?import("ol/layer/Image.js").default|import("ol/layer/Tile.js").default}
+   * @type {?import("ol/layer/Image.js").default<import("ol/source/Image.js").default>|import("ol/layer/Tile.js").default<import("ol/source/Tile.js").default>}
    */
   this.editableWMSLayer_ = null;
 

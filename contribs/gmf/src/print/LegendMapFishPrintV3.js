@@ -237,7 +237,7 @@ export default class LegendMapFishPrintV3 {
   /**
    * Create a legend item from the given WMTS layer.
    * @param {import('gmf/themes.js').GmfTheme[]} currentThemes the current themes.
-   * @param {import("ol/layer/Tile.js").default} layer The layer to extract the legend from.
+   * @param {import("ol/layer/Tile.js").default<import("ol/source/Tile.js").default>} layer The layer to extract the legend from.
    * @param {number} dpi The DPI.
    * @return {import('ngeo/print/mapfish-print-v3').MapFishPrintLegendClass} Legend object for print report
    * or null.

@@ -58,7 +58,7 @@ import olSourceTileWMS from 'ol/source/TileWMS.js';
  * @property {Function} [timeLowerValueWatcherUnregister]
  * @property {Function} [timeUpperValueWatcherUnregister]
  * @property {import('ngeo/layertree/Controller.js').LayertreeController} treeCtrl
- * @property {import("ol/layer/Image.js").default} [wmsLayer]
+ * @property {import("ol/layer/Image.js").default<import("ol/source/Image.js").default>} [wmsLayer]
  */
 
 /**
