@@ -31,7 +31,7 @@ describe('ngeo.map.FeatureOverlayMgr', () => {
   let ngeoFeatureOverlayMgr;
   /** @type {import('ol/Map.js').default} */
   let map;
-  /** @type {import("ol/layer/Vector.js").default} */
+  /** @type {import("ol/layer/Vector.js").default<import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>>} */
   let layer;
 
   beforeEach(() => {

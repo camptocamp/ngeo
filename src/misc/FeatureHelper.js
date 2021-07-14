@@ -1317,7 +1317,11 @@ FeatureHelper.prototype.export_ = function (features, format, fileName, opt_mime
     : {};
 
   const data = format.writeFeatures(clones, writeOptions);
-  this.download_(data, fileName, `${mimeType};charset=utf-8`);
+  if (typeof data == 'string') {
+    this.download_(data, fileName, `${mimeType};charset=utf-8`);
+  } else {
+    console.error(`Unsupported type: ${typeof data}`);
+  }
 };
 
 // === OTHER UTILITY METHODS ===

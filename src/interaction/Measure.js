@@ -195,7 +195,7 @@ class Measure extends olInteractionInteraction {
 
     /**
      * The vector layer used to show final measure features.
-     * @type {import("ol/layer/Vector.js").default}
+     * @type {import("ol/layer/Vector.js").default<import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>>}
      * @private
      */
     this.vectorLayer_ =

@@ -83,7 +83,7 @@ let overlayDefPromise;
 
 /**
  * @hidden
- * @return {Promise<(TileLayer | ImageLayer | GroupLayer)[]>} Promise
+ * @return {Promise<(TileLayer<import("ol/source/Tile.js").default>|ImageLayer<import("ol/source/Image.js").default>|GroupLayer)[]>} Promise
  */
 export function getBackgroundLayers() {
   return getThemesPromise().then((themes) => {
@@ -113,7 +113,7 @@ export function getBackgroundLayers() {
 
         // create all the layers for the layer group
 
-        /** @type {Promise<TileLayer|ImageLayer>[]} */
+        /** @type {Promise<TileLayer<import("ol/source/Tile.js").default>|ImageLayer<import("ol/source/Image.js").default>>[]} */
         const groupPromises = reversed.map((item) => {
           const child = /** @type {import('gmf/themes.js').GmfLayer} */ (item);
           if (child.type === 'WMTS') {
@@ -140,7 +140,9 @@ export function getBackgroundLayers() {
         );
       }
     }
-    return Promise.all(/** @type {Promise<TileLayer | ImageLayer | GroupLayer>[]} */ (promises));
+    return Promise.all(
+      /** @type {Promise<TileLayer<import("ol/source/Tile.js").default>|ImageLayer<import("ol/source/Image.js").default>|GroupLayer>[]} */ (promises)
+    );
   });
 }
 
@@ -200,12 +202,12 @@ export function writeOverlayDefs(config, ogcServers, opt_ogcServer) {
  * Returns a list of OpenLayers layer objects from the given layer names.
  *
  * @param {string[]} layerNames List of layer names
- * @return {Promise<(TileLayer|ImageLayer)[]>} Promise.
+ * @return {Promise<(TileLayer<import("ol/source/Tile.js").default>|ImageLayer<import("ol/source/Image.js").default>)[]>} Promise.
  * @hidden
  */
 export function getOverlayLayers(layerNames) {
   return getOverlayDefs().then((overlayDefs) => {
-    /** @type {Promise<TileLayer|ImageLayer>[]} */
+    /** @type {Promise<TileLayer<import("ol/source/Tile.js").default>|ImageLayer<import("ol/source/Image.js").default>>[]} */
     const promises = [];
     for (const layerName of layerNames) {
       const overlayDef = overlayDefs.get(layerName);
@@ -236,7 +238,7 @@ export function getOverlayLayers(layerNames) {
 /**
  * @param {import('gmf/themes.js').GmfLayerWMS} config Layer config (i.e. gmf layer node)
  * @param {import('gmf/themes.js').GmfOgcServer} ogcServer OGC server configuration used to create the layer.
- * @return {Promise<ImageLayer>} Promise.
+ * @return {Promise<ImageLayer<import("ol/source/Image.js").default>>} Promise.
  * @hidden
  */
 export function createWMSLayer(config, ogcServer) {
@@ -260,7 +262,7 @@ export function createWMSLayer(config, ogcServer) {
 
 /**
  * @param {import('gmf/themes.js').GmfLayerWMTS} config Layer config (i.e. gmf layer node)
- * @return {Promise<?TileLayer>} Promise.
+ * @return {Promise<?TileLayer<import("ol/source/Tile.js").default>>} Promise.
  * @hidden
  */
 export function createWMTSLayer(config) {

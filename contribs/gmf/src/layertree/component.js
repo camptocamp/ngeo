@@ -426,7 +426,7 @@ Controller.prototype.updateLayerDimensions_ = function (layer, node) {
         source.updateParams(dimensions);
       } else {
         // the source is not ready yet
-        layer.once('change:source', () => {
+        layer.once(/** @type {import('ol/Observable.js').EventTypes} */ ('change:source'), () => {
           if (!(layer instanceof olLayerLayer)) {
             throw new Error('Wrong feature type');
           }

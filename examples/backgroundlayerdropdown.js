@@ -155,7 +155,7 @@ function MainController($scope) {
   });
   /**
    * An overlay layer.
-   * @type {import("ol/layer/Image.js").default}
+   * @type {import("ol/layer/Image.js").default<import("ol/source/Image.js").default>}
    */
   const overlay = new olLayerImage({
     source,

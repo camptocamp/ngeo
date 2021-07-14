@@ -218,7 +218,7 @@ ContextualdataController.prototype.init = function () {
   mapDiv.addEventListener('touchmove', this.handleMapTouchEnd_.bind(this));
   mapDiv.addEventListener('touchend', this.handleMapTouchEnd_.bind(this));
 
-  this.map.on('pointerdown', () => {
+  this.map.on(/** @type {import('ol/Observable.js').EventTypes} */ ('pointerdown'), () => {
     this.$scope_.$apply(() => {
       this.hidePopover();
     });

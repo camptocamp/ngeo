@@ -125,7 +125,7 @@ export class LidarprofileManager {
     /**
      * The profile footpring represented as a LineString represented
      * with real mapunites stroke width
-     * @type {import("ol/layer/Vector.js").default}
+     * @type {import("ol/layer/Vector.js").default<import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>>}
      */
     this.lidarBuffer = new olLayerVector({
       source: new olSourceVector({}),

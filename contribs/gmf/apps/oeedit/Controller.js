@@ -97,7 +97,7 @@ class Controller extends AbstractDesktopController {
     });
 
     /**
-     * @type {import("ol/layer/Vector.js").default}
+     * @type {import("ol/layer/Vector.js").default<import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>>}
      * @private
      */
     this.vectorLayer_ = new olLayerVector({
@@ -110,7 +110,7 @@ class Controller extends AbstractDesktopController {
     this.sketchFeatures = new olCollection();
 
     /**
-     * @type {import("ol/layer/Vector.js").default}
+     * @type {import("ol/layer/Vector.js").default<import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>>}
      * @private
      */
     this.sketchLayer_ = new olLayerVector({

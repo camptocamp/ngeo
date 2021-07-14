@@ -153,7 +153,7 @@ function MainController($http, $scope) {
   });
 
   map.on(
-    'pointermove',
+    /** @type {import('ol/Observable.js').EventTypes} */ ('pointermove'),
     /** @type {function(?): ?} */ (
       /**
        * @param {import('ol/MapBrowserEvent.js').default<MouseEvent>} evt

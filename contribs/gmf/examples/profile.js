@@ -128,12 +128,12 @@ function MainController($scope, ngeoFeatureOverlayMgr) {
     this.profileLine = null; // To reset the profile.
   };
 
-  this.drawLine.on('drawstart', () => {
+  this.drawLine.on(/** @type {import('ol/Observable.js').EventTypes} */ ('drawstart'), () => {
     this.clear_();
   });
 
   this.drawLine.on(
-    'drawend',
+    /** @type {import('ol/Observable.js').EventTypes} */ ('drawend'),
     /** @type {function(?): ?} */ (
       /**
        * @param {import('lib/ol.interaction.Draw.js').DrawEvent} e

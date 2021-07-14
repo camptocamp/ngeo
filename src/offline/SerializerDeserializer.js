@@ -223,7 +223,7 @@ const SerDes = class {
   }
 
   /**
-   * @param {!import("ol/layer/Tile.js").default|import("ol/layer/Image").default} layer .
+   * @param {!import("ol/layer/Tile.js").default<import("ol/source/Tile.js").default>|import("ol/layer/Image.js").default<import("ol/source/Image.js").default>} layer .
    * @param {import("ol/source/Source.js").default} [source] .
    * @return {string} .
    */
@@ -248,11 +248,11 @@ const SerDes = class {
   /**
    * @param {string} serialization .
    * @param {function(import("ol/ImageTile.js").default, string): void} [tileLoadFunction] .
-   * @return {!import("ol/layer/Tile.js").default} .
+   * @return {!import("ol/layer/Tile.js").default<import("ol/source/Tile.js").default>} .
    */
   deserializeTileLayer(serialization, tileLoadFunction) {
     /**
-     * @type {import('ol/layer/BaseTile.js').Options}
+     * @type {import('ol/layer/BaseTile.js').Options<import("ol/source/Tile.js").default>}
      */
     const options = JSON.parse(serialization);
     // @ts-ignore

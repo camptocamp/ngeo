@@ -68,7 +68,7 @@ myModule.run(
  * @htmlAttribute {boolean} gmf-editfeatureselector-active Whether the
  *     directive is active or not.
  * @htmlAttribute {import("ol/Map.js").default} gmf-editfeatureselector-map The map.
- * @htmlAttribute {import("ol/layer/Vector.js").default} gmf-editfeatureselector-vector The vector
+ * @htmlAttribute {import("ol/layer/Vector.js").default<import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>>} gmf-editfeatureselector-vector The vector
  *     layer where the selected or created features are drawn.
  * @htmlAttribute {import("ngeo/layertree/Controller.js").default} gmf-editfeatureselector-tree The
  *     layertree controller handling the selectable editable layers list.
@@ -120,7 +120,7 @@ export function Controller($scope, $timeout, gmfThemes, gmfTreeManager) {
   this.map = null;
 
   /**
-   * @type {?import("ol/layer/Vector.js").default}
+   * @type {?import("ol/layer/Vector.js").default<import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>>}
    */
   this.vectorLayer = null;
 

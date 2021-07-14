@@ -166,7 +166,12 @@ export default class extends ngeoRuleRule {
 
     const geometry = this.feature_.getGeometry();
     if (geometry) {
-      this.literal_ = this.format_.writeGeometry(geometry);
+      const literal = this.format_.writeGeometry(geometry);
+      if (typeof literal == 'string') {
+        this.literal_ = literal;
+      } else {
+        console.error(`Unsupported type: ${typeof literal}`);
+      }
     } else {
       this.literal_ = null;
     }
@@ -183,9 +188,14 @@ export default class extends ngeoRuleRule {
    * @private
    */
   handleGeometryChange_(evt) {
-    const geometry = evt.target;
+    const geometry = /** @type {import("ol/geom/Geometry.js").default} */ (evt.target);
     this.updatingGeometry_ = true;
-    this.literal_ = this.format_.writeGeometry(geometry);
+    const literal = this.format_.writeGeometry(geometry);
+    if (typeof literal == 'string') {
+      this.literal_ = literal;
+    } else {
+      console.error(`Unsupported type: ${typeof literal}`);
+    }
     this.updatingGeometry_ = false;
   }
 

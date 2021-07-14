@@ -100,7 +100,7 @@ class DrawAzimut extends olInteractionPointer {
 
     /**
      * Vector layer where our sketch features are drawn.
-     * @type {import("ol/layer/Vector.js").default}
+     * @type {import("ol/layer/Vector.js").default<import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>>}
      * @private
      */
     this.sketchLayer_ = new olLayerVector({

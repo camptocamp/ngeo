@@ -41,7 +41,7 @@ function MainController() {
   });
 
   /**
-   * @type {import('ol/layer/Tile.js').default}
+   * @type {import('ol/layer/Tile.js').default<import("ol/source/Tile.js").default>}
    */
   this.openSeaMapLayer = new olLayerTile({
     source: new olSourceOSM({

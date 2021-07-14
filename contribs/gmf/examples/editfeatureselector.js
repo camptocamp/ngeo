@@ -98,7 +98,7 @@ function MainController($scope, gmfThemes, gmfTreeManager, gmfUser, ngeoFeatureH
   this.gmfTreeManager = gmfTreeManager;
 
   /**
-   * @type {import("ol/layer/Vector.js").default}
+   * @type {import("ol/layer/Vector.js").default<import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>>}
    */
   this.vectorLayer = new olLayerVector({
     source: new olSourceVector({

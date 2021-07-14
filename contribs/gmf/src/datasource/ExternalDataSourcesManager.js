@@ -44,7 +44,7 @@ import {CollectionEvent} from 'ol/Collection.js';
 
 /**
  * @typedef {Object} ExternalDataSourcesManagerWMTSCacheItem
- * @property {import("ol/layer/Tile.js").default} layerObj
+ * @property {import("ol/layer/Tile.js").default<import("ol/source/Tile.js").default>} layerObj
  * @property {Function} unregister
  */
 
@@ -606,7 +606,7 @@ export class ExternalDatSourcesManager {
   }
 
   /**
-   * @param {import("ol/layer/Tile.js").default} layer WMTS layer
+   * @param {import("ol/layer/Tile.js").default<import("ol/source/Tile.js").default>} layer WMTS layer
    * @param {boolean|undefined} value Current visible property of the DS
    * @param {boolean|undefined} oldValue Old visible property of the DS
    * @private

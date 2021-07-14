@@ -57,7 +57,7 @@ export default class extends ngeoDatasourceOGCGroup {
     // === PRIVATE properties ===
 
     /**
-     * @type {?import("ol/layer/Image.js").default}
+     * @type {?import("ol/layer/Image.js").default<import("ol/source/Image.js").default>}
      * @private
      */
     this.layer_ = null;
@@ -117,7 +117,7 @@ export default class extends ngeoDatasourceOGCGroup {
   // =======================================
 
   /**
-   * @return {import("ol/layer/Image.js").default} layer
+   * @return {import("ol/layer/Image.js").default<import("ol/source/Image.js").default>} layer
    */
   get layer() {
     if (!this.layer_) {

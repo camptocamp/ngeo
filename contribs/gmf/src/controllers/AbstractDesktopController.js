@@ -231,7 +231,7 @@ export class AbstractDesktopController extends AbstractAPIController {
     const ngeoFeatureHelper = $injector.get('ngeoFeatureHelper');
 
     /**
-     * @type {import("ol/layer/Vector.js").default}
+     * @type {import("ol/layer/Vector.js").default<import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>>}
      */
     this.editFeatureVectorLayer = new olLayerVector({
       source: new olSourceVector({

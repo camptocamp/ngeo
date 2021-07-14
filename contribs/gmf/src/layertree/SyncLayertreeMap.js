@@ -121,7 +121,7 @@ SyncLayertreeMap.prototype.sync_ = function (treeCtrl) {
     const gmfGroup = /** @type {import('gmf/themes.js').GmfGroup} */ (treeCtrl.node);
     if (treeCtrl.layer && !gmfGroup.mixed) {
       this.updateLayerState_(
-        /** @type {import("ol/layer/Image.js").default|import("ol/layer/Tile.js").default} */ (treeCtrl.layer),
+        /** @type {import("ol/layer/Image.js").default<import("ol/source/Image.js").default>|import("ol/layer/Tile.js").default<import("ol/source/Tile.js").default>} */ (treeCtrl.layer),
         treeCtrl
       );
       return LayertreeVisitorDecision.DESCEND;
@@ -131,7 +131,7 @@ SyncLayertreeMap.prototype.sync_ = function (treeCtrl) {
 
 /**
  * Set the active state of a layer based on its treeCtrl state.
- * @param {import("ol/layer/Tile.js").default|import("ol/layer/Image.js").default} layer A layer.
+ * @param {import("ol/layer/Tile.js").default<import("ol/source/Tile.js").default>|import("ol/layer/Image.js").default<import("ol/source/Image.js").default>} layer A layer.
  * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl ngeo layertree controller.
  */
 SyncLayertreeMap.prototype.updateLayerState_ = function (layer, treeCtrl) {
@@ -191,7 +191,7 @@ SyncLayertreeMap.prototype.updateLayerState_ = function (layer, treeCtrl) {
  *     level group layer.
  * @param {number} [opt_position] for first level Group, you can precise the
  *     position to add the group in the array of layers of the dataLayerGroup.
- * @return {import("ol/layer/Image.js").default|import("ol/layer/Group.js").default} a new layer.
+ * @return {import("ol/layer/Image.js").default<import("ol/source/Image.js").default>|import("ol/layer/Group.js").default} a new layer.
  */
 SyncLayertreeMap.prototype.createGroup_ = function (treeCtrl, map, dataLayerGroup, opt_position) {
   const groupNode = /** @type {import('gmf/themes.js').GmfGroup} */ (treeCtrl.node);
@@ -234,10 +234,10 @@ SyncLayertreeMap.prototype.createGroup_ = function (treeCtrl, map, dataLayerGrou
  * for mixed case).
  * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl ngeo layertree controller.
  * @param {boolean} mixed True for a group layer, false for a WMS layer.
- * @return {import("ol/layer/Image.js").default|import("ol/layer/Group.js").default} a new layer.
+ * @return {import("ol/layer/Image.js").default<import("ol/source/Image.js").default>|import("ol/layer/Group.js").default} a new layer.
  */
 SyncLayertreeMap.prototype.createLayerFromGroup_ = function (treeCtrl, mixed) {
-  /** @type {import("ol/layer/Image.js").default|import("ol/layer/Group.js").default} */
+  /** @type {import("ol/layer/Image.js").default<import("ol/source/Image.js").default>|import("ol/layer/Group.js").default} */
   let layer;
   const groupNode = /** @type {import('gmf/themes.js').GmfGroup} */ (treeCtrl.node);
   if (mixed) {
@@ -281,7 +281,10 @@ SyncLayertreeMap.prototype.createLayerFromGroup_ = function (treeCtrl, mixed) {
       this.updateLayerReferences_(/** @type {import('gmf/themes.js').GmfBaseNode} */ (ctrl.node), layer);
       if (ctrl.node.metadata.isChecked) {
         ctrl.setState('on', false);
-        this.updateLayerState_(/** @type {import("ol/layer/Image.js").default} */ (layer), ctrl);
+        this.updateLayerState_(
+          /** @type {import("ol/layer/Image.js").default<import("ol/source/Image.js").default>} */ (layer),
+          ctrl
+        );
         hasActiveChildren = true;
         return LayertreeVisitorDecision.DESCEND;
       }
@@ -296,7 +299,7 @@ SyncLayertreeMap.prototype.createLayerFromGroup_ = function (treeCtrl, mixed) {
  * Create and insert a layer from a leaf in a mixed group.
  * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl ngeo layertree controller.
  * @param {import("ol/Map.js").default} map A map that contains the group to insert the layer.
- * @return {import("ol/layer/Tile.js").default|import("ol/layer/Image.js").default} a new layer.
+ * @return {import("ol/layer/Tile.js").default<import("ol/source/Tile.js").default>|import("ol/layer/Image.js").default<import("ol/source/Image.js").default>} a new layer.
  */
 SyncLayertreeMap.prototype.createLeafInAMixedGroup_ = function (treeCtrl, map) {
   const gmfLayer = /** @type {import('gmf/themes.js').GmfLayer} */ (treeCtrl.node);
@@ -390,7 +393,7 @@ SyncLayertreeMap.prototype.initGmfLayerInANotMixedGroup_ = function (treeCtrl, m
 /**
  * Create and return a Tile layer.
  * @param {import('gmf/themes.js').GmfLayerWMTS} gmfLayerWMTS A leaf node.
- * @return {import("ol/layer/Tile.js").default} a Tile WMTS layer. (Source and capabilities can come
+ * @return {import("ol/layer/Tile.js").default<import("ol/source/Tile.js").default>} a Tile WMTS layer. (Source and capabilities can come
  *     later).
  */
 SyncLayertreeMap.prototype.createWMTSLayer_ = function (gmfLayerWMTS) {

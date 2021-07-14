@@ -89,7 +89,7 @@ function MainController(gmfObjectEditingManager, gmfThemes, gmfTreeManager, ngeo
   });
 
   /**
-   * @type {import("ol/layer/Vector.js").default}
+   * @type {import("ol/layer/Vector.js").default<import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>>}
    */
   this.vectorLayer_ = new olLayerVector({
     source: this.vectorSource_,
@@ -101,7 +101,7 @@ function MainController(gmfObjectEditingManager, gmfThemes, gmfTreeManager, ngeo
   this.sketchFeatures = new olCollection();
 
   /**
-   * @type {import("ol/layer/Vector.js").default}
+   * @type {import("ol/layer/Vector.js").default<import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>>}
    */
   this.sketchLayer_ = new olLayerVector({
     source: new olSourceVector({

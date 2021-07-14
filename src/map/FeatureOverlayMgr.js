@@ -75,7 +75,7 @@ export function FeatureOverlayMgr() {
   });
 
   /**
-   * @type {import("ol/layer/Vector.js").default}
+   * @type {import("ol/layer/Vector.js").default<import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>>}
    */
   this.layer_ = new olLayerVector({
     source: this.source_,
@@ -135,7 +135,7 @@ FeatureOverlayMgr.prototype.clear = function (groupIndex) {
 };
 
 /**
- * @return {import("ol/layer/Vector.js").default} The vector layer used internally.
+ * @return {import("ol/layer/Vector.js").default<import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>>} The vector layer used internally.
  */
 FeatureOverlayMgr.prototype.getLayer = function () {
   return this.layer_;

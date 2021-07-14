@@ -112,7 +112,7 @@ MapComponentController.prototype.$onInit = function () {
   });
 
   view.on(
-    'propertychange',
+    /** @type {import('ol/Observable.js').EventTypes} */ ('propertychange'),
     /** @type {function(?): ?} */ (this.ngeoDebounce_(
       /**
        * @param {import("ol/events/Event.js").default} e Object event.
@@ -169,7 +169,7 @@ function DrawComponentController($scope, ngeoLocation) {
   this.map = null;
 
   /**
-   * @type {?import("ol/layer/Vector.js").default}
+   * @type {?import("ol/layer/Vector.js").default<import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>>}
    */
   this.layer = null;
 
@@ -216,7 +216,7 @@ DrawComponentController.prototype.$onInit = function () {
   interactionDecoration(this.interaction);
 
   this.interaction.on(
-    'drawend',
+    /** @type {import('ol/Observable.js').EventTypes} */ ('drawend'),
     /** @type {function(?): ?} */ (
       /**
        * @param {import('ol/MapBrowserEvent.js').default<unknown>} e
@@ -232,7 +232,7 @@ DrawComponentController.prototype.$onInit = function () {
   const fhFormat = new ngeoFormatFeatureHash();
 
   vectorSource.on(
-    'addfeature',
+    /** @type {import('ol/Observable.js').EventTypes} */ ('addfeature'),
     /** @type {function(?): ?} */ (
       /**
        * @param {import('ol/MapBrowserEvent.js').default<unknown>} e
@@ -249,9 +249,13 @@ DrawComponentController.prototype.$onInit = function () {
         );
         const features = vectorSource.getFeatures();
         const encodedFeatures = fhFormat.writeFeatures(features);
-        this.scope_.$applyAsync(() => {
-          this.ngeoLocation_.updateParams({'features': encodedFeatures});
-        });
+        if (typeof encodedFeatures == 'string') {
+          this.scope_.$applyAsync(() => {
+            this.ngeoLocation_.updateParams({'features': encodedFeatures});
+          });
+        } else {
+          console.error(`Unsupported type: ${typeof encodedFeatures}`);
+        }
       }
     )
   );
@@ -302,7 +306,7 @@ function MainController() {
   const vectorSource = new olSourceVector();
 
   /**
-   * @type {import("ol/layer/Vector.js").default}
+   * @type {import("ol/layer/Vector.js").default<import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>>}
    */
   this.vectorLayer = new olLayerVector({
     source: vectorSource,

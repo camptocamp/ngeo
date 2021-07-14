@@ -76,7 +76,7 @@ function SearchController($element, $rootScope, $compile, ngeoSearchCreateGeoJSO
   this.map = null;
 
   /**
-   * @type {import("ol/layer/Vector.js").default}
+   * @type {import("ol/layer/Vector.js").default<import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>>}
    */
   this.vectorLayer_;
 
@@ -167,7 +167,7 @@ SearchController.prototype.$onInit = function () {
 };
 
 /**
- * @return {import("ol/layer/Vector.js").default} The vector layer.
+ * @return {import("ol/layer/Vector.js").default<import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>>} The vector layer.
  */
 SearchController.prototype.createVectorLayer_ = function () {
   if (!this.map) {

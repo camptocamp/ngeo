@@ -109,7 +109,7 @@ export class QueryController {
     });
 
     /**
-     * @type {olLayerVector}
+     * @type {olLayerVector<olSourceVector<import("ol/geom/Polygon.js").default>>}
      * @private
      */
     this.vectorLayer_ = new olLayerVector({

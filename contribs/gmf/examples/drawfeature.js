@@ -110,7 +110,7 @@ function MainController($scope, ngeoFeatureHelper, ngeoFeatures, ngeoToolActivat
     (newVal) => {
       if (newVal) {
         this.map.on(
-          'pointermove',
+          /** @type {import('ol/Observable.js').EventTypes} */ ('pointermove'),
           /** @type {function(?): ?} */ (
             /**
              * @param {import('ol/MapBrowserEvent.js').default<unknown>} evt
@@ -121,7 +121,7 @@ function MainController($scope, ngeoFeatureHelper, ngeoFeatures, ngeoToolActivat
         );
       } else {
         this.map.un(
-          'pointermove',
+          /** @type {import('ol/Observable.js').EventTypes} */ ('pointermove'),
           /** @type {function(?): ?} */ (
             /**
              * @param {import('ol/MapBrowserEvent.js').default<unknown>} evt
