@@ -71,7 +71,9 @@ $above-menus-index: 4;
 $search-index: 5;
 $above-search-index: 6;
 $zindex-navbar-fixed: 7;
-$above-all: 9999;
+$above-all: 9998;
+// Above above-all
+$loading: 9999;
 
 // Bootstrap 3 compatibility layer
 $gray-base: #000 !default;
