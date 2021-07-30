@@ -121,7 +121,9 @@ SyncLayertreeMap.prototype.sync_ = function (treeCtrl) {
     const gmfGroup = /** @type {import('gmf/themes.js').GmfGroup} */ (treeCtrl.node);
     if (treeCtrl.layer && !gmfGroup.mixed) {
       this.updateLayerState_(
-        /** @type {import("ol/layer/Image.js").default<import("ol/source/Image.js").default>|import("ol/layer/Tile.js").default<import("ol/source/Tile.js").default>} */ (treeCtrl.layer),
+        /** @type {import("ol/layer/Image.js").default<import("ol/source/Image.js").default>|import("ol/layer/Tile.js").default<import("ol/source/Tile.js").default>} */ (
+          treeCtrl.layer
+        ),
         treeCtrl
       );
       return LayertreeVisitorDecision.DESCEND;

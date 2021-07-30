@@ -212,9 +212,9 @@ export class Controller {
      * @type {import('ngeo/misc/filters.js').unitPrefix}
      * @private
      */
-    this.unitPrefixFormat_ = /** @type {import('ngeo/misc/filters.js').unitPrefix} */ ($filter(
-      'ngeoUnitPrefix'
-    ));
+    this.unitPrefixFormat_ = /** @type {import('ngeo/misc/filters.js').unitPrefix} */ (
+      $filter('ngeoUnitPrefix')
+    );
 
     /**
      * Current WMS Capabilities that were connected.

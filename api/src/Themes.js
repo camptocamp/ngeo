@@ -141,7 +141,9 @@ export function getBackgroundLayers() {
       }
     }
     return Promise.all(
-      /** @type {Promise<TileLayer<import("ol/source/Tile.js").default>|ImageLayer<import("ol/source/Image.js").default>|GroupLayer>[]} */ (promises)
+      /** @type {Promise<TileLayer<import("ol/source/Tile.js").default>|ImageLayer<import("ol/source/Image.js").default>|GroupLayer>[]} */ (
+        promises
+      )
     );
   });
 }

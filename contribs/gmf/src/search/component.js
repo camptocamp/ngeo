@@ -877,8 +877,9 @@ export class SearchController {
         } else if (actionName == 'add_group') {
           this.gmfTreeManager_.addGroupByName(actionData, true);
         } else if (actionName == 'add_layer') {
-          const groupActions = /** @type {import('gmf/options.js').SearchAction[]} */ (this.options
-            .datasources[0].groupActions);
+          const groupActions = /** @type {import('gmf/options.js').SearchAction[]} */ (
+            this.options.datasources[0].groupActions
+          );
           let datasourcesActionsHaveAddLayer;
           groupActions.forEach((groupAction) => {
             if (groupAction.action === 'add_layer') {
@@ -986,9 +987,10 @@ export class SearchController {
       }
       if (data && data.features[resultIndex - 1]) {
         const format = new olFormatGeoJSON();
-        const feature = /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>} */ (format.readFeature(
-          data.features[resultIndex - 1]
-        ));
+        const feature =
+          /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>} */ (
+            format.readFeature(data.features[resultIndex - 1])
+          );
         this.featureOverlay_.addFeature(feature);
         /**
          * @type {import('ol/View.js').FitOptions}
