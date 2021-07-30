@@ -325,10 +325,12 @@ export class Controller {
     if (label === '') {
       label = transformedCoordinate.join('/');
     }
-    this.feature = /** @type {?olFeature<import('ol/geom/Geometry').default>} */ (new olFeature({
-      geometry: new olGeomPoint(transformedCoordinate),
-      name: label,
-    }));
+    this.feature = /** @type {?olFeature<import('ol/geom/Geometry').default>} */ (
+      new olFeature({
+        geometry: new olGeomPoint(transformedCoordinate),
+        name: label,
+      })
+    );
   }
 
   onFeatureChange_() {
@@ -360,7 +362,9 @@ export class Controller {
     const coordinate = selected.coordinate.map(parseFloat);
     const label = selected.label;
     this.setFeature_(coordinate, label);
-    const newCoordinates = /** @type {import("ol/geom/Point.js").default} */ (this.feature.getGeometry()).getCoordinates();
+    const newCoordinates = /** @type {import("ol/geom/Point.js").default} */ (
+      this.feature.getGeometry()
+    ).getCoordinates();
     this.map.getView().setCenter(newCoordinates);
   }
 

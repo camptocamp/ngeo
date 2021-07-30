@@ -277,9 +277,9 @@ class ModifyRectangle extends olInteractionPointer {
     const item = this.cache_[uid];
     const corners = item.corners;
     for (const corner of corners) {
-      /** @type {olSourceVector<import("ol/geom/Geometry.js").default>} */ (this.vectorPoints_.getSource()).removeFeature(
-        corner
-      );
+      /** @type {olSourceVector<import("ol/geom/Geometry.js").default>} */ (
+        this.vectorPoints_.getSource()
+      ).removeFeature(corner);
     }
     this.feature_ = null;
     corners.length = 0;
@@ -328,10 +328,11 @@ class ModifyRectangle extends olInteractionPointer {
   handleDown_(evt) {
     const map = evt.map;
 
-    const feature = /** @type {olFeature<import("ol/geom/Geometry.js").default>} */ (map.forEachFeatureAtPixel(
-      evt.pixel,
-      (feature) => (feature.get('siblingX') && feature.get('siblingY') ? feature : undefined)
-    ));
+    const feature = /** @type {olFeature<import("ol/geom/Geometry.js").default>} */ (
+      map.forEachFeatureAtPixel(evt.pixel, (feature) =>
+        feature.get('siblingX') && feature.get('siblingY') ? feature : undefined
+      )
+    );
 
     if (feature) {
       this.feature_ = feature;

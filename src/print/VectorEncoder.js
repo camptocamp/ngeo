@@ -354,9 +354,9 @@ VectorEncoder.prototype.encodeVectorStyle_Point_ = function (resolution, imageSt
      */
     symbolizer = /** @type {import('ngeo/print/mapfish-print-v3.js').MapFishPrintSymbolizerPoint} */ ({
       type: 'point',
-      externalGraphic: /** @type {HTMLCanvasElement} */ (imageStyle.getImage(
-        destinationPrintDpi / dpi()
-      )).toDataURL(),
+      externalGraphic: /** @type {HTMLCanvasElement} */ (
+        imageStyle.getImage(destinationPrintDpi / dpi())
+      ).toDataURL(),
     });
 
     const [height, width] = imageStyle.getSize();
@@ -403,9 +403,9 @@ VectorEncoder.prototype.encodeVectorStyleStroke_ = function (symbolizer, strokeS
   }
   const strokeDashstyle = strokeStyle.getLineDash();
   if (strokeDashstyle !== null) {
-    /** @type {import('ngeo/print/mapfish-print-v3.js').MapFishPrintSymbolizerLine} */ (symbolizer).strokeDashstyle = strokeDashstyle.join(
-      ' '
-    );
+    /** @type {import('ngeo/print/mapfish-print-v3.js').MapFishPrintSymbolizerLine} */ (
+      symbolizer
+    ).strokeDashstyle = strokeDashstyle.join(' ');
   }
   const strokeWidth = strokeStyle.getWidth();
   if (strokeWidth !== undefined) {
@@ -413,7 +413,9 @@ VectorEncoder.prototype.encodeVectorStyleStroke_ = function (symbolizer, strokeS
   }
   const strokeLineCap = strokeStyle.getLineCap();
   if (strokeLineCap) {
-    /** @type {import('ngeo/print/mapfish-print-v3.js').MapFishPrintSymbolizerLine} */ (symbolizer).strokeLinecap = strokeLineCap;
+    /** @type {import('ngeo/print/mapfish-print-v3.js').MapFishPrintSymbolizerLine} */ (
+      symbolizer
+    ).strokeLinecap = strokeLineCap;
   }
 };
 

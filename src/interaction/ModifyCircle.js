@@ -183,9 +183,9 @@ export default class extends olInteractionPointer {
     // Remove the vertex feature if the collection of canditate features
     // is empty.
     if (this.vertexFeature_ && this.features_.getLength() === 0) {
-      /** @type {olSourceVector<import("ol/geom/Geometry.js").default>} */ (this.overlay_.getSource()).removeFeature(
-        this.vertexFeature_
-      );
+      /** @type {olSourceVector<import("ol/geom/Geometry.js").default>} */ (
+        this.overlay_.getSource()
+      ).removeFeature(this.vertexFeature_);
       this.vertexFeature_ = null;
     }
   }
@@ -281,9 +281,9 @@ export default class extends olInteractionPointer {
     if (!vertexFeature) {
       vertexFeature = new olFeature(new olGeomPoint(coordinates));
       this.vertexFeature_ = vertexFeature;
-      /** @type {olSourceVector<import("ol/geom/Geometry.js").default>} */ (this.overlay_.getSource()).addFeature(
-        vertexFeature
-      );
+      /** @type {olSourceVector<import("ol/geom/Geometry.js").default>} */ (
+        this.overlay_.getSource()
+      ).addFeature(vertexFeature);
     } else {
       const geometry = vertexFeature.getGeometry();
       if (!(geometry instanceof olGeomPoint)) {

@@ -238,7 +238,10 @@ export class AuthenticationController {
       'mustChangePassword',
       /** @type {import("ol/events.js").ListenerFunction} */
       (event) => {
-        this.gmfUser = /** @type {import('ngeo/CustomEvent.js').default<import('gmf/authentication/Service.js').AuthenticationEventItem>} */ (event).detail.user;
+        this.gmfUser =
+          /** @type {import('ngeo/CustomEvent.js').default<import('gmf/authentication/Service.js').AuthenticationEventItem>} */ (
+            event
+          ).detail.user;
         const username = this.gmfUser.username;
         this.changingPasswordUsername = username;
         this.changingPassword = true;

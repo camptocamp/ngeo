@@ -128,9 +128,11 @@ export default class {
       mileage_start += segLine.getLength();
     });
 
-    const feat = /** @type {olFeature<import("ol/geom/LineString.js").default>} */ (new olFeature({
-      geometry: clippedLine,
-    }));
+    const feat = /** @type {olFeature<import("ol/geom/LineString.js").default>} */ (
+      new olFeature({
+        geometry: clippedLine,
+      })
+    );
 
     const lineStyle = new olStyleStyle({
       stroke: new olStyleStroke({

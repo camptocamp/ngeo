@@ -390,9 +390,10 @@ LayerHelper.prototype.getGroupFromMap = function (map, groupName) {
  */
 LayerHelper.prototype.getFlatLayers = function (layer) {
   if (layer instanceof olLayerGroup) {
-    const sublayers = /** @type {import("ol/layer/Layer.js").default<import('ol/source/Source.js').default>[]} */ (layer
-      .getLayers()
-      .getArray());
+    const sublayers =
+      /** @type {import("ol/layer/Layer.js").default<import('ol/source/Source.js').default>[]} */ (
+        layer.getLayers().getArray()
+      );
     const hasGroupLayer = sublayers.some((sublayer) => sublayer instanceof olLayerGroup);
     if (!hasGroupLayer) {
       return sublayers.slice();
@@ -577,7 +578,8 @@ LayerHelper.prototype.isLayerVisible = function (layer, map) {
 LayerHelper.prototype.refreshWMSLayer = function (layer) {
   const source_ = layer.getSource();
   console.assert(source_ instanceof olSourceImageWMS || source_ instanceof olSourceTileWMS);
-  const source = /** @type {import("ol/source/ImageWMS.js").default|import("ol/source/TileWMS.js").default} */ (source_);
+  const source =
+    /** @type {import("ol/source/ImageWMS.js").default|import("ol/source/TileWMS.js").default} */ (source_);
   const params = source.getParams();
   params[REFRESH_PARAM] = Math.random();
   source.updateParams(params);

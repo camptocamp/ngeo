@@ -276,28 +276,29 @@ export class ThemesService extends olEventsEventTarget {
      */
     const promiseSuccessFn = (data) => {
       const promises = /** @type {angular.IPromise<unknown>} */ (
-        /** @type {*} */ (data.background_layers.map((item) => {
-          const itemLayer = /** @type {import('gmf/themes.js').GmfLayer} */ (item);
-          const itemGroup = /** @type {import('gmf/themes.js').GmfGroup} */ (item);
-          const itemType = itemLayer.type;
-          if (itemType === 'WMTS' || itemType === 'WMS') {
-            return layerLayerCreationFn(data.ogcServers, itemLayer);
-          } else if (itemGroup.children) {
-            // group of layers
-            return layerGroupCreationFn(data.ogcServers, itemGroup);
-          } else {
-            return undefined;
-          }
-        }))
+        /** @type {*} */ (
+          data.background_layers.map((item) => {
+            const itemLayer = /** @type {import('gmf/themes.js').GmfLayer} */ (item);
+            const itemGroup = /** @type {import('gmf/themes.js').GmfGroup} */ (item);
+            const itemType = itemLayer.type;
+            if (itemType === 'WMTS' || itemType === 'WMS') {
+              return layerLayerCreationFn(data.ogcServers, itemLayer);
+            } else if (itemGroup.children) {
+              // group of layers
+              return layerGroupCreationFn(data.ogcServers, itemGroup);
+            } else {
+              return undefined;
+            }
+          })
+        )
       );
       return /** @type {angular.IPromise<import("ol/layer/Base.js").default[]>} */ (
         /** @type {*} */ ($q.all(promises))
       );
     };
 
-    this.bgLayerPromise_ = /** @type {angular.IPromise<import("ol/layer/Base.js").default[]>} */ (this.promise_
-      .then(promiseSuccessFn)
-      .then((values) => {
+    this.bgLayerPromise_ = /** @type {angular.IPromise<import("ol/layer/Base.js").default[]>} */ (
+      this.promise_.then(promiseSuccessFn).then((values) => {
         /** @type {import('ol/layer/Base.js').default[]} */
         const layers = [];
 
@@ -320,7 +321,8 @@ export class ThemesService extends olEventsEventTarget {
           }
         });
         return layers;
-      }));
+      })
+    );
 
     return this.bgLayerPromise_;
   }

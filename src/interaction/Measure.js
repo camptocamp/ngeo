@@ -522,9 +522,9 @@ class Measure extends olInteractionInteraction {
 export function getFormattedArea(polygon, projection, precision, format, spherical = false) {
   let area;
   if (spherical) {
-    const geom = /** @type {import("ol/geom/Polygon.js").default} */ (polygon
-      .clone()
-      .transform(projection, 'EPSG:4326'));
+    const geom = /** @type {import("ol/geom/Polygon.js").default} */ (
+      polygon.clone().transform(projection, 'EPSG:4326')
+    );
     area = Math.abs(getArea(geom, {'projection': 'EPSG:4326'}));
   } else {
     area = polygon.getArea();
