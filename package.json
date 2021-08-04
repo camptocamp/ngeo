@@ -36,7 +36,7 @@
     "@babel/plugin-syntax-object-rest-spread": "7.8.3",
     "@babel/plugin-transform-spread": "7.14.6",
     "@babel/preset-env": "7.14.9",
-    "@fortawesome/fontawesome-free": "5.15.3",
+    "@fortawesome/fontawesome-free": "5.15.4",
     "@sentry/browser": "6.10.0",
     "@sentry/integrations": "6.10.0",
     "@sentry/tracing": "6.10.0",
