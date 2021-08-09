@@ -9,4 +9,5 @@ checks:
 audit:
   npm:
     cwe_ignore:
-      - CWE-400
+      - CWE-400 # Uncontrolled Resource Consumption
+      - CWE-22 # Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')
