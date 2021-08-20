@@ -1,6 +1,6 @@
 beautifulsoup4==4.9.3
 glob2==0.7
 htmlmin==0.1.12
-Mako==1.1.4
+Mako==1.1.5
 requests==2.26.0
 transifex-client==0.14.3
