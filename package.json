@@ -140,7 +140,7 @@
     "svg-inline-loader": "0.8.2",
     "svgo": "2.4.0",
     "svgo-loader": "3.0.0",
-    "terser": "5.7.1",
+    "terser": "5.7.2",
     "terser-webpack-plugin": "4.2.3",
     "tinycolor2": "1.4.2",
     "ts-node": "10.2.1",
