@@ -27,6 +27,8 @@
 
 import angular from 'angular';
 import {decodeQueryString} from 'ngeo/utils.js';
+import 'regenerator-runtime/runtime'
+
 
 /**
  * @type {angular.IModule}
