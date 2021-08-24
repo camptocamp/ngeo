@@ -29,6 +29,11 @@
 import './sass/desktop.scss';
 import './sass/vars_desktop.scss';
 
+import user from 'ngeo/store/user.ts'
+
+// Test the user FIXME remove me
+window.gmfUserTest = user;
+
 import angular from 'angular';
 import {isEventUsinCtrlKey} from 'ngeo/utils.js';
 import gmfControllersAbstractDesktopController, {
