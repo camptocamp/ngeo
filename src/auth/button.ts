@@ -1,7 +1,7 @@
 import {LitElement, html} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 
-import './auth.scss';
+import './auth.css';
 
 @customElement('auth-button')
 export default class AuthButton extends LitElement {
