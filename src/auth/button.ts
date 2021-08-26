@@ -23,6 +23,8 @@ export default class AuthButton extends LitElement {
 
   clickHandler() {
     this.opened = !this.opened
-    console.log(this.opened);
+    this.dispatchEvent(new CustomEvent('click',{
+      detail: this.opened
+    }))
   }
 }

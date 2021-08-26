@@ -43,6 +43,7 @@ import ngeoRoutingModule from 'ngeo/routing/module.js';
 import ngeoStatemanagerWfsPermalink from 'ngeo/statemanager/WfsPermalink.js';
 
 import 'ngeo/auth/button.ts';
+import 'ngeo/auth/panel.ts';
 
 if (!window.requestAnimationFrame) {
   alert(
@@ -64,7 +65,7 @@ class Controller extends AbstractDesktopController {
    * @param {angular.auto.IInjectorService} $injector Main injector.
    * @ngInject
    */
-  constructor($scope, $injector) {
+  constructor($scope, $injector, $rootScope) {
     super($scope, $injector);
 
     if (this.dimensions.FLOOR == undefined) {
@@ -78,7 +79,20 @@ class Controller extends AbstractDesktopController {
 
     const drawLidarprofilePanelActive = new ngeoMiscToolActivate(this, 'drawLidarprofilePanelActive');
     this.ngeoToolActivateMgr.registerTool('mapTools', drawLidarprofilePanelActive, false);
+
+    $rootScope.$on('closePanel', (e) => {
+      console.log(e);
+    });
   }
+
+  // authButtonClick(event) {
+  //   if (event.originalEvent instanceof CustomEvent) {
+  //     console.log(event);
+  //     event.preventDefault();
+  //     event.stopPropagation();
+  //     this.loginActive2 = event.detail;
+  //   }
+  // }
 
   /**
    * @param {JQueryEventObject} event keydown event.
