@@ -65,7 +65,7 @@ class Controller extends AbstractDesktopController {
    * @param {angular.auto.IInjectorService} $injector Main injector.
    * @ngInject
    */
-  constructor($scope, $injector, $rootScope) {
+  constructor($scope, $injector) {
     super($scope, $injector);
 
     if (this.dimensions.FLOOR == undefined) {
@@ -80,9 +80,6 @@ class Controller extends AbstractDesktopController {
     const drawLidarprofilePanelActive = new ngeoMiscToolActivate(this, 'drawLidarprofilePanelActive');
     this.ngeoToolActivateMgr.registerTool('mapTools', drawLidarprofilePanelActive, false);
 
-    $rootScope.$on('closePanel', (e) => {
-      console.log(e);
-    });
   }
 
   // authButtonClick(event) {
@@ -93,6 +90,16 @@ class Controller extends AbstractDesktopController {
   //     this.loginActive2 = event.detail;
   //   }
   // }
+
+  closePanelEvent(event) {
+      this.loginActive2 = event.detail;
+  }
+
+  eventCallback(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    console.log(event);
+  }
 
   /**
    * @param {JQueryEventObject} event keydown event.

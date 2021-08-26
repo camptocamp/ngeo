@@ -1,10 +1,10 @@
 import {LitElement, html} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
+import {Service} from 'apps/service.js';
 
 @customElement('ngeo-auth-form')
-class MyHeader extends LitElement {
-  @property({type: String}) user = '';
-  @property({type: String}) password = '';
+class ngeoAuthForm extends LitElement {
+  @property({type: Boolean}) isLoading = false;
   render() {
     return html`
       <div>
@@ -12,13 +12,13 @@ class MyHeader extends LitElement {
             name="loginForm"
             role="form"
             @submit=${(e: any) => this.submit(e)}>
-          <div class="form-group">
-                <input
-                    type="text"
-                    class="form-control"
-                    name="login"
-                    placeholder="Username"
-                />
+            <div class="form-group">
+              <input
+                  type="text"
+                  class="form-control"
+                  name="login"
+                  placeholder="Username"
+              />
             </div>
             <div class="form-group">
                 <input
@@ -31,6 +31,11 @@ class MyHeader extends LitElement {
             <div class="form-group">
               <input type="submit" class="form-control btn prime" value="Connect" />
             </div>
+            ${this.isLoading ? html`
+            <div class="login-spinner">
+              <i class="fa fa-spin fa-spinner"></i>
+            </div>
+            `: ''}
           </form>
       </div>
     `;
@@ -41,14 +46,19 @@ class MyHeader extends LitElement {
   }
 
   submit(e: any) {
+    this.isLoading = true;
     e.preventDefault();
     let form = e.target;
-    let login = {
+    let loginObject = {
       username: form.login.value,
       password: form.password.value
     };
-    console.log(login);
+    this.dispatchEvent(new CustomEvent('login-event', {bubbles: true, composed: true, detail: loginObject}));
     form.reset();
+
+    Service.auth.login();
+
+    setTimeout(() => this.isLoading = false, 2000);
   }
 
   log(evt: any) {

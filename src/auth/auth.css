@@ -1,3 +1,8 @@
 .btn-lit-element {
     background: red !important;
 }
+
+.svg-lit-element {
+    width: 1rem;
+    margin-right: 5px;
+}

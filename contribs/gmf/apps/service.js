@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2021 Camptocamp SA
+// Copyright (c) 2016-2021 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -20,42 +20,14 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 /**
- * This file provides the "app" namespace, which is the
- * application's main namespace. And it defines the application's Angular
- * module.
+ * Application entry point.
+ *
+ * This file includes `import`'s for all the components/directives used
+ * by the HTML page and the controller to provide the configuration.
  */
 
-import angular from 'angular';
-import {decodeQueryString} from 'ngeo/utils.js';
-import 'regenerator-runtime/runtime';
-import {Service} from './service.js';
-
-
-/**
- * @type {angular.IModule}
- * @hidden
- */
-const appModule = angular.module('app', []);
-
-appModule.config([
-  '$compileProvider',
-  /**
-   * @param {angular.ICompileProvider} $compileProvider
-   */
-  function ($compileProvider) {
-    if (!('debug' in decodeQueryString(window.location.search))) {
-      // Disable the debug info
-      $compileProvider.debugInfoEnabled(false);
-    }
-  },
-]);
-
-/**
- * @ngInject
- */
-appModule.run(($injector) => {
-  Service.http = $injector.get('$http');
-  Service.auth = $injector.get('gmfAuthenticationService');
-});
-
-export default appModule;
+export const Service = {
+    /** @type {angular.IHttpService} */
+    http: null,
+    auth: null
+};
