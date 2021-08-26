@@ -6,14 +6,14 @@
     "lib": ["es2020", "dom"],
     "esModuleInterop": true,
     "allowJs": true,
-    "checkJs": true,
-    "noEmit": true,
     "noImplicitAny": true,
     "noImplicitThis": true,
     "alwaysStrict": true,
     "strictBindCallApply": true,
     "strictFunctionTypes": true,
     "skipLibCheck": true,
+    "sourceMap": true,
+    "experimentalDecorators": true,
     "baseUrl": "./",
     "paths": {
       "ngeo/*": ["src/*"],
@@ -36,7 +36,7 @@
     "test/spec/**/*.js",
     "contribs/gmf/test/spec/**/*.js",
     "examples/*.js",
-    "contribs/gmf/examples/*.js"
-  ],
+    "contribs/gmf/examples/*.js",
+    "src/**/*.ts"],
   "files": ["types/dom.d.ts"]
 }

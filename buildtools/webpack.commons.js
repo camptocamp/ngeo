@@ -98,6 +98,12 @@ module.exports = function (config) {
     },
   };
 
+  const tsRule = {
+    test: /\.tsx?$/,
+    use: 'ts-loader',
+    exclude: /node_modules/,
+  }
+
   function get_comp(firsts, lasts) {
     return (f1, f2) => {
       for (const pattern of firsts) {
@@ -236,7 +242,7 @@ module.exports = function (config) {
       path: path.resolve(__dirname, '../dist/'),
     },
     module: {
-      rules: [typeaheadRule, cssRule, sassRule, htmlRule, ngeoRule, otherRule],
+      rules: [typeaheadRule, cssRule, sassRule, htmlRule, tsRule, ngeoRule, otherRule],
     },
     plugins: plugins,
     resolve: {
