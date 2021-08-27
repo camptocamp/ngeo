@@ -1,6 +1,7 @@
 extends:
   - openlayers
   - plugin:@typescript-eslint/recommended
+parser: '@typescript-eslint/parser'
 env:
   jquery: true
 parserOptions:
@@ -8,6 +9,7 @@ parserOptions:
   project: ./tsconfig-eslint.json
 plugins:
   - copyright
+  - '@typescript-eslint'
 rules:
   no-console: 0
   import/no-unresolved: 0
