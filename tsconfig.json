@@ -37,7 +37,6 @@
     "contribs/gmf/test/spec/**/*.js",
     "examples/*.js",
     "contribs/gmf/examples/*.js",
-    "src/**/*.ts"
-  ],
+    "src/**/*.ts"],
   "files": ["types/dom.d.ts"]
 }

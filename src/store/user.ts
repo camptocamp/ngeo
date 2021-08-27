@@ -70,7 +70,6 @@ export interface User {
 }
 
 export class UserModel {
-
   /**
    * The observable user's config.
    * @private
@@ -80,11 +79,6 @@ export class UserModel {
   constructor() {
     this.config_ = new BehaviorSubject<User>(null);
   }
-
-  // Notation one. Shorter, less clear, hard to follow (grep...)
-  // get config () {
-  //  return this.config_;
-  // }
 
   /**
    * Return the observable User's config.
@@ -101,27 +95,6 @@ export class UserModel {
   }
 }
 
-// Export default user instantiated (to use it as singleton).
+// Export default user instantiated (to use it as a singleton).
 const user = new UserModel();
 export default user;
-
-// In a component file.
-// import user from 'here.js';
-
-//  /**
-//   * Show the current User's config value (null);
-//   */
-// console.log(user.getConfig().getValue());
-
-//  /**
-//   * Subscribe to the config to log each update.
-//   * Will immediately log the current value (null)
-//   */
-// user.getConfig().subscribe({
-//  next: (config) => console.log(config)
-// });
-
-//  /**
-//   * Set the config, will be logged by the subscribe above.
-//   */
-// user.setConfig({username: 'toto'});
