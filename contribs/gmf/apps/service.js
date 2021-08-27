@@ -29,5 +29,10 @@
 export const Service = {
     /** @type {angular.IHttpService} */
     http: null,
-    auth: null
+
+    /** @type {import("gmf/authentication/Service.js").AuthenticationService} */
+    auth: null,
+
+    /** @type {import('gmf/authentication/Service.js').User} */
+    user: null,
 };

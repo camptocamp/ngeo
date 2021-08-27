@@ -56,6 +56,7 @@ appModule.config([
 appModule.run(($injector) => {
   Service.http = $injector.get('$http');
   Service.auth = $injector.get('gmfAuthenticationService');
+  Service.user = $injector.get('gmfUser');
 });
 
 export default appModule;

@@ -82,19 +82,6 @@ class Controller extends AbstractDesktopController {
 
   }
 
-  // authButtonClick(event) {
-  //   if (event.originalEvent instanceof CustomEvent) {
-  //     console.log(event);
-  //     event.preventDefault();
-  //     event.stopPropagation();
-  //     this.loginActive2 = event.detail;
-  //   }
-  // }
-
-  closePanelEvent(event) {
-      this.loginActive2 = event.detail;
-  }
-
   eventCallback(event) {
     event.preventDefault();
     event.stopPropagation();

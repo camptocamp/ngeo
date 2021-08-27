@@ -29,8 +29,7 @@ export default class AuthPanel extends LitElement {
             {{'Login' | translate}}
             <a class="btn close" @click=${this.closePanel}>&times;</a>
           </div>
-          <ngeo-auth-form @login-event=${this.eventCallback}></ngeo-auth-form>
-          <hr>
+          <ngeo-auth-form @login-event=${this.eventCallback} .login-message=${this.loginInfoMessage}></ngeo-auth-form>
           <!-- <gmf-authentication gmf-authentication-info-message=${this.loginInfoMessage}></gmf-authentication> -->
           ${spinnerTemplate}
         </div>
