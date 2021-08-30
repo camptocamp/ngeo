@@ -78,7 +78,6 @@ class Controller extends AbstractDesktopController {
 
     const drawLidarprofilePanelActive = new ngeoMiscToolActivate(this, 'drawLidarprofilePanelActive');
     this.ngeoToolActivateMgr.registerTool('mapTools', drawLidarprofilePanelActive, false);
-
   }
 
   /**

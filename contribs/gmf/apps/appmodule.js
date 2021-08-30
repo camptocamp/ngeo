@@ -26,9 +26,8 @@
  */
 
 import angular from 'angular';
-import { ServerType } from 'ngeo/datasource/OGC.js';
-import {decodeQueryString} from 'ngeo/utils.js';
 import 'regenerator-runtime/runtime';
+import {decodeQueryString} from 'ngeo/utils.js';
 import {Service} from './service.js';
 
 
