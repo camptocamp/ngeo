@@ -16,7 +16,8 @@
     "build-gmf-apps-profile": "TARGET=gmf-apps webpack --profile --json > profile.json",
     "typecheck": "tsc --noEmit",
     "doc": "typedoc",
-    "jsdoc": "jsdoc contribs/gmf/src/themes.js src/options.js contribs/gmf/src/options.js api/src/options.js --configure jsdoc/config.json --destination jsdoc/build"
+    "jsdoc": "jsdoc contribs/gmf/src/themes.js src/options.js contribs/gmf/src/options.js api/src/options.js --configure jsdoc/config.json --destination jsdoc/build",
+    "storybook": "export NODE_ENV='env' && export TARGET='ngeo-examples' && start-storybook -p 6006"
   },
   "sideEffects": false,
   "repository": {
@@ -41,6 +42,10 @@
     "@sentry/integrations": "6.11.0",
     "@sentry/tracing": "6.11.0",
     "@sentry/types": "6.11.0",
+    "@storybook/addon-actions": "^6.3.7",
+    "@storybook/addon-essentials": "^6.3.7",
+    "@storybook/addon-links": "^6.3.7",
+    "@storybook/web-components": "^6.3.7",
     "@trevoreyre/autocomplete-js": "2.2.0",
     "@types/angular": "1.8.2",
     "@types/angular-animate": "1.5.11",
@@ -155,5 +160,6 @@
     "webpack-cli": "3.3.12",
     "webpack-dev-server": "3.11.2",
     "webpack-merge": "5.8.0"
-  }
+  },
+  "dependencies": {}
 }
