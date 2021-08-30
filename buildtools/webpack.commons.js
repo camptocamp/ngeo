@@ -98,12 +98,6 @@ module.exports = function (config) {
     },
   };
 
-  const tsRule = {
-    test: /\.tsx?$/,
-    use: 'ts-loader',
-    exclude: /node_modules/,
-  }
-
   function get_comp(firsts, lasts) {
     return (f1, f2) => {
       for (const pattern of firsts) {
@@ -126,6 +120,12 @@ module.exports = function (config) {
     };
   }
 
+  // Collect every ts(x) files.
+  const tsRule = {
+    test: /\.tsx?$/,
+    use: 'ts-loader',
+    exclude: /node_modules/,
+  }
   const files = {};
   const ngeoRule = {
     // Collect every .js file in ngeo/src/, ngeo/api/ and ngeo/contrib/.
