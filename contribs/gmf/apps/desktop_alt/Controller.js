@@ -42,7 +42,6 @@ import ngeoStreetviewModule from 'ngeo/streetview/module.js';
 import ngeoRoutingModule from 'ngeo/routing/module.js';
 import ngeoStatemanagerWfsPermalink from 'ngeo/statemanager/WfsPermalink.js';
 
-import 'ngeo/auth/button.ts';
 import 'ngeo/auth/panel.ts';
 
 if (!window.requestAnimationFrame) {
