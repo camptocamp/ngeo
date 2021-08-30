@@ -19,16 +19,18 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import {LitElement, html} from 'lit';
+import {html} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {unsafeSVG} from 'lit/directives/unsafe-svg.js';
 import loadingSvg from 'gmf/icons/spinner.svg';
+import i18next from 'i18next';
+import {LitElementI18n} from 'ngeo/localize/i18n';
 
 import './component.ts';
 import './auth.css';
 
 @customElement('ngeo-auth-panel')
-export default class AuthPanel extends LitElement {
+export default class AuthPanel extends LitElementI18n {
   @property({type: String}) loginInfoMessage = '';
   @property({type: Boolean}) postLoading = false;
 
@@ -37,7 +39,7 @@ export default class AuthPanel extends LitElement {
       ? html`
           <div>
             <i class="fa fa-spin svg-lit-element"> ${unsafeSVG(loadingSvg)} </i>
-            {{'Loading themes, please wait...' | translate}}
+            ${i18next.t("Loading themes, please wait...")}
           </div>
         `
       : '';
@@ -45,7 +47,7 @@ export default class AuthPanel extends LitElement {
       <div class="row">
         <div class="col-sm-12">
           <div class="gmf-app-tools-content-heading">
-            {{'Login' | translate}}
+          ${i18next.t("Login")}
             <a class="btn close" @click=${this.closePanel}>&times;</a>
           </div>
           <ngeo-auth-component .loginInfoMessage=${this.loginInfoMessage}></ngeo-auth-component>
@@ -62,4 +64,5 @@ export default class AuthPanel extends LitElement {
   closePanel() {
     this.dispatchEvent(new CustomEvent('close-panel', {detail: false}));
   }
+
 }

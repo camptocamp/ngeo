@@ -16,3 +16,11 @@ type = PO
 % for lang in languages.split():
 trans.${lang} = .build/locale/${lang}/LC_MESSAGES/gmf.po
 % endfor
+
+[ngeo.webcomponent-${tx_version.strip()}]
+source_file = .build/locale/webcomponent.json
+source_lang = en
+type = KEYVALUEJSON
+% for lang in languages.split():
+trans.${lang} = locales/${lang}/app.json
+% endfor
