@@ -72,8 +72,8 @@ class ngeoAuthForm extends LitElement {
       `}
 
       ${this.infoMessage ? html`
-        <div ng-if="$ctrl.infoMessage" class="alert alert-warning">
-          <span>{{ $ctrl.infoMessage }}</span>
+        <div class="alert alert-warning">
+          <span>${this.infoMessage}</span>
         </div>
       `: ''}
 
