@@ -26,6 +26,7 @@
  */
 
 import angular from 'angular';
+import { ServerType } from 'ngeo/datasource/OGC.js';
 import {decodeQueryString} from 'ngeo/utils.js';
 import 'regenerator-runtime/runtime';
 import {Service} from './service.js';
@@ -57,6 +58,7 @@ appModule.run(($injector) => {
   Service.http = $injector.get('$http');
   Service.auth = $injector.get('gmfAuthenticationService');
   Service.user = $injector.get('gmfUser');
+  Service.notification = $injector.get('ngeoNotification');
 });
 
 export default appModule;

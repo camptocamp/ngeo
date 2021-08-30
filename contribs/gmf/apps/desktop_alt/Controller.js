@@ -82,12 +82,6 @@ class Controller extends AbstractDesktopController {
 
   }
 
-  eventCallback(event) {
-    event.preventDefault();
-    event.stopPropagation();
-    console.log(event);
-  }
-
   /**
    * @param {JQueryEventObject} event keydown event.
    */

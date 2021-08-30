@@ -35,4 +35,7 @@ export const Service = {
 
     /** @type {import('gmf/authentication/Service.js').User} */
     user: null,
+
+    /** @type {} */
+    notification: null,
 };

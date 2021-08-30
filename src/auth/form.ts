@@ -1,15 +1,17 @@
 import {LitElement, html} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {Service} from 'apps/service.js';
+import {MessageType} from 'ngeo/message/Message.js';
 
 @customElement('ngeo-auth-form')
 class ngeoAuthForm extends LitElement {
   @property({type: Boolean}) isLoading = false;
   @property({type: Boolean}) allowPasswordChange = false;
+  @property({type: Boolean}) error = false;
   @property({type: String}) infoMessage = '';
   render() {
     return html`
-      ${Service.user ? html`
+      ${Service.user && Service.user.username !== null ? html`
         <div>
           <div class="form-group">
             <span>Logged in as</span>
@@ -72,7 +74,11 @@ class ngeoAuthForm extends LitElement {
       ${this.infoMessage ? html`
         <div ng-if="$ctrl.infoMessage" class="alert alert-warning">
           <span>{{ $ctrl.infoMessage }}</span>
-        </div>      
+        </div>
+      `: ''}
+
+      ${this.error ? html`
+        <div class="authentication-error help-block"></div>
       `: ''}
 
     `;
@@ -83,30 +89,75 @@ class ngeoAuthForm extends LitElement {
   }
 
   submit(e: any) {
-    this.isLoading = true;
     e.preventDefault();
-    let form = e.target;
-    let user = form.login.value;
-    const pwd = form.password.value;
-    //this.dispatchEvent(new CustomEvent('login-event', {bubbles: true, composed: true, detail: loginObject}));
 
-    Service.auth.login(user, pwd).then(() => {
-      this.isLoading = false
-      form.reset();
-    }).catch(() => {
+    this.isLoading = true;
+    const errors = [];
+    let form = e.target;
+
+    if (form.login.value === '') {
+      errors.push('The username is required.');
+    }
+    if (form.password.value === '') {
+      errors.push('The password is required.');
+    }
+    if (errors.length) {
       this.isLoading = false;
-      form.reset();
-      // TODO error handling
-    });
+      this.setError_(errors);
+    } else {
+      Service.auth.login(form.login.value, form.password.value).then(() => {
+        this.isLoading = false
+        form.reset();
+        this.resetError_();
+      }).catch(() => {
+        this.isLoading = false;
+        form.reset();
+        this.setError_('Incorrect credentials or disabled account.');
+      });
+    }
   }
+
 
   logout(e: any) {
     this.isLoading = true;
     Service.auth.logout().then(() => {
       this.isLoading = false;
+      this.resetError_();
     }).catch(() => {
       this.isLoading = false;
-      // TODO error handling
+      this.setError_('Could not log out.');
     });
   }
+
+  setError_(errors: string|string[], messageType?: MessageType) {
+    if (messageType == undefined) {
+      messageType = MessageType.ERROR;
+    }
+    if (this.error) {
+      this.resetError_();
+    }
+    this.error = true;
+    const container = jQuery('.authentication-error');
+
+    if (!Array.isArray(errors)) {
+      errors = [errors];
+    }
+
+    errors.forEach((error) => {
+      const options: import('ngeo/message/Message.js').Message = {
+        msg: error,
+        target: container,
+      };
+      if (messageType) {
+        options.type = messageType;
+      }
+      Service.notification.notify(options);
+    });
+  }
+
+  resetError_() {
+    Service.notification.clear();
+    this.error = false;
+  }
+
 }
