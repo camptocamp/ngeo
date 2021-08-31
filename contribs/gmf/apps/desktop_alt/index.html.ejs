@@ -59,6 +59,10 @@
               data-toggle="tooltip" data-placement="left" data-original-title="{{'Login'|translate}}">
               <span class="fa fa-user" ng-class="mainCtrl.gmfUser.username ? 'fa-user-times' : 'fa-user'"></span>
             </button>
+            <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.ngeoAuthActive"
+              data-toggle="tooltip" data-placement="left" data-original-title="{{'Login'|translate}}">
+              <span class="fa fa-users" ng-class="mainCtrl.gmfUser.username ? 'fa-user-times' : 'fa-users'"></span>
+            </button>
             <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.printPanelActive"
               data-toggle="tooltip" data-placement="left" data-original-title="{{'Print'|translate}}">
               <span class="fa fa-print"></span>
@@ -137,6 +141,11 @@
               </div>
             </div>
           </div>
+          <ngeo-auth-panel ng-show="mainCtrl.ngeoAuthActive"
+          .loginInfoMessage="mainCtrl.loginInfoMessage"
+          .postLoading="mainCtrl.postLoading"
+          ng-on-close-panel="mainCtrl.ngeoAuthActive = $event.detail"
+          ></ngeo-auth-panel>
           <div ng-show="mainCtrl.printPanelActive" class="row">
             <div class="col-sm-12">
               <div class="gmf-app-tools-content-heading">

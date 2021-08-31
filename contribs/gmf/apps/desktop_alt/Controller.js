@@ -42,6 +42,8 @@ import ngeoStreetviewModule from 'ngeo/streetview/module.js';
 import ngeoRoutingModule from 'ngeo/routing/module.js';
 import ngeoStatemanagerWfsPermalink from 'ngeo/statemanager/WfsPermalink.js';
 
+import 'ngeo/auth/panel.ts';
+
 if (!window.requestAnimationFrame) {
   alert(
     'Your browser is not supported, please update it or use another one. You will be redirected.\n\n' +
