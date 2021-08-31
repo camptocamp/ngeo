@@ -26,9 +26,8 @@
  */
 
 import angular from 'angular';
-import 'regenerator-runtime/runtime';
 import {decodeQueryString} from 'ngeo/utils.js';
-import {Service} from './service.js';
+import AngularServices from 'ngeo/services.js';
 
 
 /**
@@ -54,10 +53,9 @@ appModule.config([
  * @ngInject
  */
 appModule.run(($injector) => {
-  Service.http = $injector.get('$http');
-  Service.auth = $injector.get('gmfAuthenticationService');
-  Service.user = $injector.get('gmfUser');
-  Service.notification = $injector.get('ngeoNotification');
+  AngularServices.auth = $injector.get('gmfAuthenticationService');
+  AngularServices.user = $injector.get('gmfUser');
+  AngularServices.notification = $injector.get('ngeoNotification');
 });
 
 export default appModule;

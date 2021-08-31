@@ -60,6 +60,7 @@ import olControlRotate from 'ol/control/Rotate.js';
 import {defaults as interactionsDefaults} from 'ol/interaction.js';
 import olInteractionDragPan from 'ol/interaction/DragPan.js';
 import {noModifierKeys} from 'ol/events/condition.js';
+import 'regenerator-runtime/runtime';
 
 /**
  * Application abstract controller.

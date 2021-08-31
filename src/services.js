@@ -26,16 +26,13 @@
  * by the HTML page and the controller to provide the configuration.
  */
 
-export const Service = {
-    /** @type {angular.IHttpService} */
-    http: null,
-
+export default {
     /** @type {import("gmf/authentication/Service.js").AuthenticationService} */
-    auth: null,
+    auth: undefined,
 
     /** @type {import('gmf/authentication/Service.js').User} */
-    user: null,
+    user: undefined,
 
     /** @type {import("ngeo/message/Notification.js").MessageNotification} */
-    notification: null,
+    notification: undefined,
 };

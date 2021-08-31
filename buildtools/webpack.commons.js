@@ -255,7 +255,6 @@ module.exports = function (config) {
         api: path.resolve(__dirname, '../api/src'),
         lib: path.resolve(__dirname, '../lib'),
         gmf: path.resolve(__dirname, '../contribs/gmf/src'),
-        apps: path.resolve(__dirname, '../contribs/gmf/apps'),
         jsts: 'jsts/org/locationtech/jts',
         olcs: 'ol-cesium/src/olcs',
         'jquery-ui/datepicker': 'jquery-ui/ui/widgets/datepicker', // For angular-ui-date

@@ -1,27 +1,27 @@
-import {LitElement, html} from 'lit';
-import {customElement, property} from 'lit/decorators.js';
-import {Service} from 'apps/service.js';
-import {MessageType} from 'ngeo/message/Message.js';
+import { LitElement, html } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
+import AngularServices from 'ngeo/services';
+import { MessageType } from 'ngeo/message/Message.js';
 
-@customElement('ngeo-auth-form')
-class ngeoAuthForm extends LitElement {
-  @property({type: Boolean}) isLoading = false;
-  @property({type: Boolean}) allowPasswordChange = false;
-  @property({type: Boolean}) error = false;
-  @property({type: String}) infoMessage = '';
+@customElement('ngeo-auth-component')
+class ngeoAuthComponent extends LitElement {
+  @property({ type: Boolean }) isLoading = false;
+  @property({ type: Boolean }) allowPasswordChange = false;
+  @property({ type: Boolean }) error = false;
+  @property({ type: String }) infoMessage = '';
   render() {
     return html`
-      ${Service.user && Service.user.username !== null ? html`
+      ${AngularServices.user && AngularServices.user.username !== null ? html`
         <div>
           <div class="form-group">
             <span>Logged in as</span>
-            <strong>${Service.user.username}</strong>.
+            <strong>${AngularServices.user.username}</strong>.
           </div>
 
           <form
             name="logoutForm"
             role="form"
-            @submit=${(e: any) => this.logout(e)}
+            @submit=${this.logout}
           >
             <div class="form-group">
               <input type="submit" class="form-control btn prime" value="Logout" />
@@ -42,7 +42,7 @@ class ngeoAuthForm extends LitElement {
           <form
             name="loginForm"
             role="form"
-            @submit=${(e: any) => this.submit(e)}>
+            @submit=${(evt: Event) => this.submit(evt)}>
             <div class="form-group">
               <input
                   type="text"
@@ -78,7 +78,7 @@ class ngeoAuthForm extends LitElement {
       `: ''}
 
       ${this.error ? html`
-        <div class="authentication-error help-block"></div>
+        <div class="auth-error help-block"></div>
       `: ''}
 
     `;
@@ -88,12 +88,16 @@ class ngeoAuthForm extends LitElement {
     return this;
   }
 
-  submit(e: any) {
-    e.preventDefault();
+  /**
+   * Login action
+   * @param evt Event from the form submit action.
+   */
+  submit(evt: Event) {
+    evt.preventDefault();
 
     this.isLoading = true;
     const errors = [];
-    let form = e.target;
+    const form = evt.target as HTMLFormElement;
 
     if (form.login.value === '') {
       errors.push('The username is required.');
@@ -105,31 +109,37 @@ class ngeoAuthForm extends LitElement {
       this.isLoading = false;
       this.setError_(errors);
     } else {
-      Service.auth.login(form.login.value, form.password.value).then(() => {
-        this.isLoading = false
-        form.reset();
+      AngularServices.auth.login(form.login.value, form.password.value).then(() => {
         this.resetError_();
       }).catch(() => {
+        this.setError_(['Incorrect credentials or disabled account.']);
+      }).finally(() => {
         this.isLoading = false;
         form.reset();
-        this.setError_('Incorrect credentials or disabled account.');
       });
     }
   }
 
-
-  logout(e: any) {
+  /**
+   * Logout action
+   */
+  logout() {
     this.isLoading = true;
-    Service.auth.logout().then(() => {
-      this.isLoading = false;
+    AngularServices.auth.logout().then(() => {
       this.resetError_();
     }).catch(() => {
+      this.setError_(['Could not log out.']);
+    }).finally(() => {
       this.isLoading = false;
-      this.setError_('Could not log out.');
     });
   }
 
-  setError_(errors: string|string[], messageType?: MessageType) {
+  /**
+   * Set an error notification
+   * @param errors 
+   * @param messageType 
+   */
+  setError_(errors: string[], messageType?: MessageType) {
     if (messageType == undefined) {
       messageType = MessageType.ERROR;
     }
@@ -137,11 +147,7 @@ class ngeoAuthForm extends LitElement {
       this.resetError_();
     }
     this.error = true;
-    const container = jQuery('.authentication-error');
-
-    if (!Array.isArray(errors)) {
-      errors = [errors];
-    }
+    const container = document.querySelector('.auth-error');
 
     errors.forEach((error) => {
       const options: import('ngeo/message/Message.js').Message = {
@@ -151,12 +157,15 @@ class ngeoAuthForm extends LitElement {
       if (messageType) {
         options.type = messageType;
       }
-      Service.notification.notify(options);
+      AngularServices.notification.notify(options);
     });
   }
 
+  /**
+   * Reset the error notification
+   */
   resetError_() {
-    Service.notification.clear();
+    AngularServices.notification.clear();
     this.error = false;
   }
 

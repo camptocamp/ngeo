@@ -1,15 +1,15 @@
-import {LitElement, html} from 'lit';
-import {customElement, property} from 'lit/decorators.js';
+import { LitElement, html } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
 import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 import loadingSvg from 'gmf/icons/spinner.svg';
 
-import './form.ts';
+import './component.ts';
 import './auth.css';
 
 @customElement('ngeo-auth-panel')
 export default class AuthPanel extends LitElement {
-  @property({type: String}) loginInfoMessage = '';
-  @property({type: Boolean}) postLoading = false;
+  @property({ type: String }) loginInfoMessage = '';
+  @property({ type: Boolean }) postLoading = false;
 
 
   protected render() {
@@ -28,7 +28,7 @@ export default class AuthPanel extends LitElement {
             {{'Login' | translate}}
             <a class="btn close" @click=${this.closePanel}>&times;</a>
           </div>
-          <ngeo-auth-form .login-message=${this.loginInfoMessage}></ngeo-auth-form>
+          <ngeo-auth-component .login-message=${this.loginInfoMessage}></ngeo-auth-component>
           ${spinnerTemplate}
         </div>
       </div>
@@ -40,6 +40,6 @@ export default class AuthPanel extends LitElement {
   }
 
   closePanel() {
-    this.dispatchEvent(new CustomEvent('close-panel', {detail: false}));
+    this.dispatchEvent(new CustomEvent('close-panel', { detail: false }));
   }
 }

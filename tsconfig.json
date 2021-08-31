@@ -18,7 +18,6 @@
     "paths": {
       "ngeo/*": ["src/*"],
       "gmf/*": ["contribs/gmf/src/*"],
-      "apps/*": ["contribs/gmf/apps/*"],
       "api/*": ["api/src/*"],
       "lib/*": ["lib/*"],
       "olcs/*": ["node_modules/ol-cesium/src/olcs/*"],
