@@ -109,7 +109,6 @@ help:
 	@echo "Secondary targets:"
 	@echo
 	@echo "- lint                    Check the code with the linter"
-	@echo "- gh-pages                Update the GitHub pages"
 	@echo
 
 .PHONY: check
@@ -203,10 +202,6 @@ examples-hosted-apps: .build/gmf-apps.timestamp
 		.build/examples-hosted-gmf-apps-deps.timestamp
 	npm run build-gmf-apps
 	touch $@
-
-.PHONY: gh-pages
-gh-pages: .build/python-venv.timestamp
-	buildtools/deploy.sh
 
 .build/node_modules.copyright.timestamp: .build/node_modules.timestamp
 	npm install --no-save --no-optional --no-package-lock ./buildtools/copyright
