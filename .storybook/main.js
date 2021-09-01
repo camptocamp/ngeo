@@ -1,3 +1,5 @@
+// Storybook Webpack configuration.
+
 const {merge} = require('webpack-merge');
 
 module.exports = (env, args) => {
