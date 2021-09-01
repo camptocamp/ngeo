@@ -293,12 +293,12 @@ export class AuthenticationController {
      */
     this.subscriptions_ = [];
     this.subscriptions_.push(
-      user.getState().subscribe({
-        next: (userState) => {
-          this.gmfUser = user.getProperties().value;
+      user.getProperties().subscribe({
+        next: (properties) => {
+          this.gmfUser = properties;
           this.setOtpImage_();
           this.checkUserMustChangeItsPassword_();
-          this.onUserStateUpdate_(userState);
+          this.onUserStateUpdate_(user.getState());
         }
       })
     );

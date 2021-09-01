@@ -308,7 +308,7 @@ export function AbstractAppController($scope, $injector, mobile) {
     // Reload themes and background layer when login status changes.
     this.gmfThemes.loadThemes(roleId);
 
-    if (user.getState().value !== UserState.READY) {
+    if (user.getState() !== UserState.READY) {
       const themeName = this.permalink_.defaultThemeNameFromFunctionalities();
       this.gmfThemeManager.updateCurrentTheme(themeName, previousThemeName, true);
     }
@@ -321,10 +321,11 @@ export function AbstractAppController($scope, $injector, mobile) {
    */
   this.gmfUser = null;
 
-  // On user state update, set features user based.
-  user.getState().subscribe({
-    next: (userState) => {
-      this.gmfUser = user.getProperties().value;
+  // On user update, set features user based.
+  user.getProperties().subscribe({
+    next: (properties) => {
+      this.gmfUser = properties;
+      const userState = user.getState();
       if (userState === UserState.NOT_INITIALIZED) {
         return;
       }

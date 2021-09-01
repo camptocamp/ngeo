@@ -88,11 +88,11 @@ export class UserModel {
    * The observable state of the user. Default to NOT_INITIALIZED.
    * @private
    */
-  state_: BehaviorSubject<UserState>;
+  state_: UserState;
 
   constructor() {
     this.properties_ = new BehaviorSubject<User>(this.getEmptyUserProperties());
-    this.state_ = new BehaviorSubject<UserState>(UserState.NOT_INITIALIZED);
+    this.state_ = UserState.NOT_INITIALIZED;
   }
 
   /**
@@ -105,7 +105,7 @@ export class UserModel {
   /**
    * Return the observable user state.
    */
-  getState(): BehaviorSubject<UserState> {
+  getState(): UserState {
     return this.state_;
   }
 
@@ -116,7 +116,7 @@ export class UserModel {
     if (properties === null) {
       console.error('The user can not be null');
     }
-    this.state_.next(state);
+    this.state_ = state;
     this.properties_.next(properties);
   }
 
