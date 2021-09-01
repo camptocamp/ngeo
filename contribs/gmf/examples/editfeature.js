@@ -73,7 +73,20 @@ function MainController($scope, gmfEditFeature) {
   /**
    * @type {import('gmf/authentication/Service.js').User}
    */
-  this.gmfUser = user.getConfig().value;
+  this.gmfUser = null;
+
+  /**
+   * @type {Subscription[]}
+   * @private
+   */
+  this.subscriptions_ = [];
+
+  this.subscriptions_.push(
+    user.getProperties().subscribe({
+      next: (value) => this.gmfUser = value
+    })
+  );
+
 
   /**
    * @type {import("ol/source/ImageWMS.js").default}
@@ -164,6 +177,13 @@ MainController.prototype.handleMapSingleClick_ = function (evt) {
   this.pending = true;
 
   this.scope_.$apply();
+};
+
+/**
+ * Clear subscriptions.
+ */
+MainController.prototype.$onDestroy = function () {
+  this.subscriptions_.forEach((sub) => sub.unsubscribe());
 };
 
 /**

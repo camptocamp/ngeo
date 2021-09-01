@@ -69,39 +69,71 @@ export interface User {
   otp_url: string;
 }
 
+export enum UserState {
+  LOGGED_IN = 'logged in',
+  LOGGED_OUT = 'logged out',
+  DISCONNECTED = 'disconnected',
+  READY = 'ready',
+  NOT_INITIALIZED = 'not initialized',
+}
+
 export class UserModel {
   /**
-   * The observable user's config.
+   * The observable user's properties. The default user is empty.
    * @private
    */
-  config_: BehaviorSubject<User>;
+  properties_: BehaviorSubject<User>;
+
+  /**
+   * The observable state of the user. Default to NOT_INITIALIZED.
+   * @private
+   */
+  state_: BehaviorSubject<UserState>;
 
   constructor() {
-    const defaultUser: User = {
-      email: null,
-      is_intranet: null,
-      functionalities: null,
-      is_password_changed: null,
-      roles: null,
-      username: null,
-      otp_key: null,
-      otp_url: null,
+    this.properties_ = new BehaviorSubject<User>(this.getEmptyUserProperties());
+    this.state_ = new BehaviorSubject<UserState>(UserState.NOT_INITIALIZED);
+  }
+
+  /**
+   * Return the observable user's properties.
+   */
+  getProperties(): BehaviorSubject<User> {
+    return this.properties_;
+  }
+
+  /**
+   * Return the observable user state.
+   */
+  getState(): BehaviorSubject<UserState> {
+    return this.state_;
+  }
+
+  /**
+   * Set the current User's properties and state.
+   */
+  setUser(properties: User, state: UserState) {
+    if (properties === null) {
+      console.error('The user can not be null');
     }
-    this.config_ = new BehaviorSubject<User>(defaultUser);
+    this.state_.next(state);
+    this.properties_.next(properties);
   }
 
   /**
-   * Return the observable User's config.
+   * Return an empty user.
    */
-  getConfig(): BehaviorSubject<User> {
-    return this.config_;
-  }
-
-  /**
-   * Set the current User's config.
-   */
-  setConfig(config: User) {
-    this.config_.next(config);
+  getEmptyUserProperties(): User {
+    return {
+        email: null,
+        is_intranet: null,
+        functionalities: null,
+        is_password_changed: null,
+        roles: null,
+        username: null,
+        otp_key: null,
+        otp_url: null,
+    };
   }
 }
 

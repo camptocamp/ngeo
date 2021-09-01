@@ -450,9 +450,12 @@ export function PermalinkService(
   this.ngeoWfsPermalink_ = $injector.has('ngeoWfsPermalink') ? $injector.get('ngeoWfsPermalink') : null;
 
   /**
-   * @type {?import('gmf/authentication/Service.js').User}
+   * @type {import('gmf/authentication/Service.js').User}
    */
-  this.gmfUser = user.getConfig().value;
+  this.gmfUser = null;
+  user.getProperties().subscribe({
+    next: (value) => this.gmfUser = value
+  });
 
   /**
    * @type {?import("ol/Map.js").default}

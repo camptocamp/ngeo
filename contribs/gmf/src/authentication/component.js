@@ -30,7 +30,7 @@ import {listen} from 'ol/events.js';
 // @ts-ignore
 import qruri from 'qruri';
 
-import user from 'ngeo/store/user.ts';
+import user, {UserState} from 'ngeo/store/user.ts';
 
 /**
  * @typedef {import("gmf/authentication/Service").AuthenticationLoginResponsePromise} AuthenticationLoginResponsePromise
@@ -166,11 +166,6 @@ export class AuthenticationController {
     this.$element_ = $element;
 
     /**
-     * @type {import('gmf/authentication/Service.js').User}
-     */
-    this.gmfUser = user.getConfig().value;
-
-    /**
      * @type {angular.gettext.gettextCatalog}
      * @private
      */
@@ -233,41 +228,6 @@ export class AuthenticationController {
      */
     this.userMustChangeItsPassword = false;
 
-    listen(
-      gmfAuthenticationService,
-      'mustChangePassword',
-      /** @type {import("ol/events.js").ListenerFunction} */
-      (event) => {
-        this.gmfUser =
-          /** @type {import('ngeo/CustomEvent.js').default<import('gmf/authentication/Service.js').AuthenticationEventItem>} */ (
-            event
-          ).detail.user;
-        const username = this.gmfUser.username;
-        this.changingPasswordUsername = username;
-        this.changingPassword = true;
-        this.userMustChangeItsPassword = true;
-      }
-    );
-
-    listen(
-      gmfAuthenticationService,
-      'login',
-      /** @type {import("ol/events.js").ListenerFunction} */
-      () => {
-        this.changingPassword = false;
-        this.userMustChangeItsPassword = false;
-      }
-    );
-
-    listen(
-      gmfAuthenticationService,
-      'disconnected',
-      /** @type {import("ol/events.js").ListenerFunction} */
-      (event) => {
-        this.disconnectedShown = true;
-      }
-    );
-
     /**
      * @type {boolean}
      */
@@ -322,15 +282,25 @@ export class AuthenticationController {
      */
     this.isLoading = false;
 
-    $scope.$watch(
-      () => this.gmfUser.otp_uri,
-      (val) => {
-        if (val) {
-          this.otpImage = qruri(val, {
-            margin: 2,
-          });
+    /**
+     * @type {import('gmf/authentication/Service.js').User}
+     */
+    this.gmfUser = null;
+
+    /**
+     * @type {Subscription[]}
+     * @private
+     */
+    this.subscriptions_ = [];
+    this.subscriptions_.push(
+      user.getState().subscribe({
+        next: (userState) => {
+          this.gmfUser = user.getProperties().value;
+          this.setOtpImage_();
+          this.checkUserMustChangeItsPassword_();
+          this.onUserStateUpdate_(userState);
         }
-      }
+      })
     );
   }
 
@@ -341,6 +311,46 @@ export class AuthenticationController {
     if (this.onSuccessfulLogin) {
       this.gmfAuthenticationService_.onSuccessfulLogin = this.onSuccessfulLogin;
     }
+  }
+
+  /**
+   * Clear subscriptions.
+   */
+  $onDestroy() {
+    this.subscriptions_.forEach((sub) => sub.unsubscribe());
+  };
+
+  /**
+   * @private
+   */
+  setOtpImage_() {
+    if (this.gmfUser.otp_uri) {
+      this.otpImage = qruri(val, {
+        margin: 2,
+      });
+    }
+  }
+
+  /**
+   * @params {UserState} state of the user.
+   * @private
+   */
+  onUserStateUpdate_(userState) {
+    if (userState === UserState.LOGGED_IN) {
+      this.changingPassword = false;
+      this.userMustChangeItsPassword = false;
+    } else if (userState === UserState.DISCONNECTED) {
+      this.disconnectedShown = true;
+    }
+  }
+
+  checkUserMustChangeItsPassword_() {
+    if (this.gmfUser.is_password_changed !== false) {
+      return;
+    }
+    this.changingPasswordUsername = this.gmfUser.username;
+    this.changingPassword = true;
+    this.userMustChangeItsPassword = true;
   }
 
   // METHODS THAT CALL THE AUTHENTICATION SERVICE METHODS

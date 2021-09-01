@@ -211,9 +211,22 @@ export class FilterSelectorController {
      * @type {import('gmf/authentication/Service.js').User}
      * @private
      */
-    this.gmfUser_ = user.getConfig().value;
+    this.gmfUser_ = null;
 
-    $scope.$watch(() => this.gmfUser_.functionalities, this.handleGmfUserFunctionalitiesChange_.bind(this));
+    /**
+     * @type {Subscription[]}
+     * @private
+     */
+    this.subscriptions_ = [];
+
+    this.subscriptions_.push(
+      user.getProperties().subscribe({
+        next: (value) => {
+          this.gmfUser_ = value
+          this.handleGmfUserFunctionalitiesChange_();
+        }
+      })
+    );
 
     /**
      * @type {import("ngeo/message/Notification.js").MessageNotification}
@@ -332,6 +345,13 @@ export class FilterSelectorController {
     // Initialize the data sources registration
     this.toggleDataSourceRegistration_();
   }
+
+  /**
+   * Clear subscriptions.
+   */
+  $onDestroy() {
+    this.subscriptions_.forEach((sub) => sub.unsubscribe());
+  };
 
   /**
    * @private

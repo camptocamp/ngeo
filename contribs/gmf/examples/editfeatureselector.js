@@ -84,7 +84,19 @@ function MainController($scope, gmfThemes, gmfTreeManager, ngeoFeatureHelper, ng
   /**
    * @type {import('gmf/authentication/Service.js').User}
    */
-  this.gmfUser = user.getConfig().value;
+  this.gmfUser = null;
+
+  /**
+   * @type {Subscription[]}
+   * @private
+   */
+  this.subscriptions_ = [];
+
+  this.subscriptions_.push(
+    user.getProperties().subscribe({
+      next: (value) => this.gmfUser = value
+    })
+  );
 
   /**
    * @type {import("ngeo/misc/FeatureHelper.js").FeatureHelper}
@@ -166,6 +178,13 @@ function MainController($scope, gmfThemes, gmfTreeManager, ngeoFeatureHelper, ng
     trigger: 'hover',
   });
 }
+
+/**
+ * Clear subscriptions.
+ */
+MainController.prototype.$onDestroy = function () {
+  this.subscriptions_.forEach((sub) => sub.unsubscribe());
+};
 
 myModule.controller('MainController', MainController);
 
