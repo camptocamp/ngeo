@@ -30,6 +30,8 @@ import {listen} from 'ol/events.js';
 // @ts-ignore
 import qruri from 'qruri';
 
+import user from 'ngeo/store/user.ts';
+
 /**
  * @typedef {import("gmf/authentication/Service").AuthenticationLoginResponsePromise} AuthenticationLoginResponsePromise
  */
@@ -141,7 +143,6 @@ export class AuthenticationController {
    * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
    * @param {import("gmf/authentication/Service.js").AuthenticationService} gmfAuthenticationService
    *    GMF Authentication service
-   * @param {import('gmf/authentication/Service.js').User} gmfUser User.
    * @param {import("ngeo/message/Notification.js").MessageNotification} ngeoNotification Ngeo notification
    *    service.
    * @param {import('gmf/options.js').gmfAuthenticationConfig} gmfAuthenticationConfig The configuration
@@ -155,7 +156,6 @@ export class AuthenticationController {
     gmfTwoFactorAuth,
     gettextCatalog,
     gmfAuthenticationService,
-    gmfUser,
     ngeoNotification,
     gmfAuthenticationConfig
   ) {
@@ -168,7 +168,7 @@ export class AuthenticationController {
     /**
      * @type {import('gmf/authentication/Service.js').User}
      */
-    this.gmfUser = gmfUser;
+    this.gmfUser = user.getConfig().value;
 
     /**
      * @type {angular.gettext.gettextCatalog}

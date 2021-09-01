@@ -46,6 +46,8 @@ import olSourceOSM from 'ol/source/OSM.js';
 import olSourceVector from 'ol/source/Vector.js';
 import options from './options.js';
 
+import user from 'ngeo/store/user.ts';
+
 /**
  * @type {angular.IModule}
  * @hidden
@@ -67,14 +69,13 @@ const myModule = angular.module('gmfapp', [
  * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes The gmf themes service.
  * @param {import("gmf/layertree/TreeManager.js").LayertreeTreeManager} gmfTreeManager gmf Tree Manager
  *    service.
- * @param {import('gmf/authentication/Service.js').User} gmfUser User.
  * @param {import("ngeo/misc/FeatureHelper.js").FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
  * @param {import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate
  *    manager service.
  * @ngInject
  * @class
  */
-function MainController($scope, gmfThemes, gmfTreeManager, gmfUser, ngeoFeatureHelper, ngeoToolActivateMgr) {
+function MainController($scope, gmfThemes, gmfTreeManager, ngeoFeatureHelper, ngeoToolActivateMgr) {
   /**
    * @type {angular.IScope}
    */
@@ -83,7 +84,7 @@ function MainController($scope, gmfThemes, gmfTreeManager, gmfUser, ngeoFeatureH
   /**
    * @type {import('gmf/authentication/Service.js').User}
    */
-  this.gmfUser = gmfUser;
+  this.gmfUser = user.getConfig().value;
 
   /**
    * @type {import("ngeo/misc/FeatureHelper.js").FeatureHelper}

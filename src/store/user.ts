@@ -77,7 +77,17 @@ export class UserModel {
   config_: BehaviorSubject<User>;
 
   constructor() {
-    this.config_ = new BehaviorSubject<User>(null);
+    const defaultUser: User = {
+      email: null,
+      is_intranet: null,
+      functionalities: null,
+      is_password_changed: null,
+      roles: null,
+      username: null,
+      otp_key: null,
+      otp_url: null,
+    }
+    this.config_ = new BehaviorSubject<User>(defaultUser);
   }
 
   /**

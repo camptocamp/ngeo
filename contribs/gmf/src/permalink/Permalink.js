@@ -56,6 +56,8 @@ import olLayerGroup from 'ol/layer/Group.js';
 import {CollectionEvent} from 'ol/Collection.js';
 import {buildStyle} from 'ngeo/options.js';
 
+import user from 'ngeo/store/user.ts';
+
 /**
  * @enum {string}
  * @hidden
@@ -450,7 +452,7 @@ export function PermalinkService(
   /**
    * @type {?import('gmf/authentication/Service.js').User}
    */
-  this.gmfUser_ = $injector.has('gmfUser') ? $injector.get('gmfUser') : null;
+  this.gmfUser = user.getConfig().value;
 
   /**
    * @type {?import("ol/Map.js").default}

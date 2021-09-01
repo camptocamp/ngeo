@@ -62,6 +62,8 @@ import olInteractionDragPan from 'ol/interaction/DragPan.js';
 import {noModifierKeys} from 'ol/events/condition.js';
 import 'regenerator-runtime/runtime';
 
+import user from 'ngeo/store/user.ts';
+
 /**
  * Application abstract controller.
  *
@@ -389,7 +391,7 @@ export function AbstractAppController($scope, $injector, mobile) {
   /**
    * @type {import('gmf/authentication/Service.js').User}
    */
-  this.gmfUser = $injector.get('gmfUser');
+  this.gmfUser = user.getConfig().value;
 
   /**
    * @type {import("ngeo/statemanager/Service.js").StatemanagerService}

@@ -24,6 +24,8 @@ import ngeoCustomEvent from 'ngeo/CustomEvent.js';
 import olEventsEventTarget from 'ol/events/Target.js';
 import * as Sentry from '@sentry/browser';
 
+import user from 'ngeo/store/user.ts'
+
 /**
  * Availables functionalities.
  * @typedef {Object} AuthenticationFunctionalities
@@ -112,7 +114,6 @@ export class AuthenticationService extends olEventsEventTarget {
    * @param {angular.IHttpService} $http Angular http service.
    * @param {angular.IScope} $rootScope The directive's scope.
    * @param {string} authenticationBaseUrl URL to "authentication" web service.
-   * @param {User} gmfUser User.
    * @param {import('gmf/options.js').gmfAuthenticationConfig} gmfAuthenticationConfig
    *    The configuration
    * @param {import('gmf/options.js').gmfAuthenticationNoReloadRole} gmfAuthenticationNoReloadRole
@@ -124,7 +125,6 @@ export class AuthenticationService extends olEventsEventTarget {
     $http,
     $rootScope,
     authenticationBaseUrl,
-    gmfUser,
     gmfAuthenticationConfig,
     gmfAuthenticationNoReloadRole,
     $interval
@@ -154,7 +154,7 @@ export class AuthenticationService extends olEventsEventTarget {
      * @type {User}
      * @private
      */
-    this.user_ = gmfUser;
+    this.user_ = user.getConfig().value;
 
     /**
      * Don't request a new user object from the back-end after
@@ -383,12 +383,5 @@ export class AuthenticationService extends olEventsEventTarget {
  */
 const myModule = angular.module('gmfAuthenticationService', []);
 myModule.service('gmfAuthenticationService', AuthenticationService);
-
-myModule.value('gmfUser', {
-  functionalities: null,
-  is_password_changed: null,
-  roles: null,
-  username: null,
-});
 
 export default myModule;
