@@ -30,5 +30,7 @@ addons.setConfig({
 // Set default width of the panel to have more space.
 // See https://github.com/storybookjs/storybook/issues/9682
 const storybookLayout = JSON.parse(localStorage["storybook-layout"]);
-const newLayout = { resizerPanel: { x: window.innerWidth - 400, y: 0 }};
-localStorage["storybook-layout"] = JSON.stringify({...storybookLayout, ...newLayout});
+if (storybookLayout) {
+  const newLayout = { resizerPanel: { x: window.innerWidth - 400, y: 0 }};
+  localStorage["storybook-layout"] = JSON.stringify({...storybookLayout, ...newLayout});
+}

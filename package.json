@@ -42,9 +42,7 @@
     "@sentry/integrations": "6.11.0",
     "@sentry/tracing": "6.11.0",
     "@sentry/types": "6.11.0",
-    "@storybook/addon-actions": "^6.3.7",
     "@storybook/addon-essentials": "^6.3.7",
-    "@storybook/addon-links": "^6.3.7",
     "@storybook/web-components": "^6.3.7",
     "@trevoreyre/autocomplete-js": "2.2.0",
     "@types/angular": "1.8.2",
@@ -160,6 +158,5 @@
     "webpack-cli": "3.3.12",
     "webpack-dev-server": "3.11.2",
     "webpack-merge": "5.8.0"
-  },
-  "dependencies": {}
+  }
 }
