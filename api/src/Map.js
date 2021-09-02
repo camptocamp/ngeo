@@ -260,7 +260,7 @@ class Map {
 
     this.selectInteraction_.on(
       /** @type {import('ol/Observable.js').EventTypes} */ ('select'),
-      /** @type {function(?): ?} */ (
+      /** @type {function(any): any} */ (
         /**
          * @param {import('lib/ol.interaction.Select.js').SelectEvent} event
          */
@@ -367,9 +367,6 @@ class Map {
 
   /**
    * @param {MarkerOptions} options Options.
-   * @property {import("ol/coordinate.js").Coordinate} position
-   * @property {string} [icon]
-   * @property {import("ol/size.js").Size} [size]
    */
   addMarker(options = {}) {
     const position = options.position ? options.position : this.view_.getCenter();
