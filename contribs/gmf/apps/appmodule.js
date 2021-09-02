@@ -29,7 +29,6 @@ import angular from 'angular';
 import {decodeQueryString} from 'ngeo/utils.js';
 import AngularServices from 'ngeo/services.js';
 
-
 /**
  * @type {angular.IModule}
  * @hidden

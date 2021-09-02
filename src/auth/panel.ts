@@ -27,7 +27,7 @@ export default class AuthPanel extends LitElement {
             {{'Login' | translate}}
             <a class="btn close" @click=${this.closePanel}>&times;</a>
           </div>
-          <ngeo-auth-component .login-message=${this.loginInfoMessage}></ngeo-auth-component>
+          <ngeo-auth-component .loginInfoMessage=${this.loginInfoMessage}></ngeo-auth-component>
           ${spinnerTemplate}
         </div>
       </div>
