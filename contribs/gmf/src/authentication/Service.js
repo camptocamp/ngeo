@@ -52,6 +52,7 @@ import user, {UserState} from 'ngeo/store/user.ts'
  * @property {string|null} username The name of the user.
  * @property {string|null} otp_key
  * @property {string|null} otp_uri
+ * @property {string|null} two_factor_totp_secret
  */
 
 /**
