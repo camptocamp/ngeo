@@ -20,9 +20,9 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import ngeoCustomEvent from 'ngeo/CustomEvent.js';
-import olEventsEventTarget from 'ol/events/Target.js';
 import * as Sentry from '@sentry/browser';
+
+import user, {UserState} from 'ngeo/store/user.ts'
 
 /**
  * Availables functionalities.
@@ -107,12 +107,11 @@ export const RouteSuffix = {
  * - resetPassword
  * @hidden
  */
-export class AuthenticationService extends olEventsEventTarget {
+export class AuthenticationService {
   /**
    * @param {angular.IHttpService} $http Angular http service.
    * @param {angular.IScope} $rootScope The directive's scope.
    * @param {string} authenticationBaseUrl URL to "authentication" web service.
-   * @param {User} gmfUser User.
    * @param {import('gmf/options.js').gmfAuthenticationConfig} gmfAuthenticationConfig
    *    The configuration
    * @param {import('gmf/options.js').gmfAuthenticationNoReloadRole} gmfAuthenticationNoReloadRole
@@ -124,13 +123,10 @@ export class AuthenticationService extends olEventsEventTarget {
     $http,
     $rootScope,
     authenticationBaseUrl,
-    gmfUser,
     gmfAuthenticationConfig,
     gmfAuthenticationNoReloadRole,
     $interval
   ) {
-    super();
-
     /**
      * @type {angular.IHttpService}
      * @private
@@ -154,7 +150,12 @@ export class AuthenticationService extends olEventsEventTarget {
      * @type {User}
      * @private
      */
-    this.user_ = gmfUser;
+    this.user_ = null;
+    user.getProperties().subscribe({
+      next: (properties) => {
+        this.user_ = properties;
+      }
+    });
 
     /**
      * Don't request a new user object from the back-end after
@@ -193,9 +194,7 @@ export class AuthenticationService extends olEventsEventTarget {
 
   handleDisconnection() {
     const noReload = this.noReloadRole_ ? this.getRolesNames().includes(this.noReloadRole_) : false;
-    this.resetUser_(noReload);
-    const eventDisconnect = new ngeoCustomEvent('disconnected', {user: this.user_});
-    this.dispatchEvent(eventDisconnect);
+    this.resetUser_(UserState.DISCONNECTED, noReload);
   }
 
   /**
@@ -235,7 +234,7 @@ export class AuthenticationService extends olEventsEventTarget {
         }
       )
       .then((resp) => {
-        this.setUser_(resp.data, true);
+        this.setUser_(resp.data, UserState.LOGGED_IN);
       });
   }
 
@@ -258,10 +257,14 @@ export class AuthenticationService extends olEventsEventTarget {
         withCredentials: true,
       })
       .then((resp) => this.onSuccessfulLogin(resp))
-      .then((resp) => this.handleLogin_(false, resp));
+      .then(
+        (resp) => this.handleLogin_(false, resp),
+        (resp) => console.error('Login fail.')
+      );
   }
 
   /**
+   * Method defined in the aim to be replaced.
    * @param {AuthenticationLoginResponsePromise} resp Ajax response.
    * @return {AuthenticationLoginResponsePromise} Response.
    */
@@ -276,7 +279,7 @@ export class AuthenticationService extends olEventsEventTarget {
     const noReload = this.noReloadRole_ ? this.getRolesNames().includes(this.noReloadRole_) : false;
     const url = `${this.baseUrl_}/${RouteSuffix.LOGOUT}`;
     return this.$http_.get(url, {withCredentials: true}).then(() => {
-      this.resetUser_(noReload);
+      this.resetUser_(UserState.LOGGED_OUT, noReload);
     });
   }
 
@@ -322,55 +325,33 @@ export class AuthenticationService extends olEventsEventTarget {
    * @private
    */
   handleLogin_(checkingLoginStatus, resp) {
-    if (resp.data.is_password_changed === false) {
-      const event = new ngeoCustomEvent('mustChangePassword', {user: resp.data});
-      this.dispatchEvent(event);
-      return;
-    }
-    this.setUser_(resp.data, !checkingLoginStatus);
-    if (checkingLoginStatus) {
-      const event = new ngeoCustomEvent('ready', {user: this.user_});
-      this.dispatchEvent(event);
-    }
+    const userState = checkingLoginStatus ? UserState.READY : UserState.LOGGED_IN;
+    this.setUser_(resp.data, userState);
     return resp;
   }
 
   /**
    * @param {AuthenticationLoginResponse} respData Response.
-   * @param {boolean} emitEvent Emit a login event?
+   * @param {UserState} userState state of the user.
+   * @private
    */
-  setUser_(respData, emitEvent) {
+  setUser_(respData, userState) {
     Sentry.setUser({
       username: respData.username,
     });
 
-    for (const key in this.user_) {
-      // @ts-ignore: unsupported syntax
-      this.user_[key] = null;
-    }
-    for (const key in respData) {
-      // @ts-ignore: unsupported syntax
-      this.user_[key] = respData[key];
-    }
-    if (emitEvent && respData.username !== undefined) {
-      const event = new ngeoCustomEvent('login', {user: this.user_});
-      this.dispatchEvent(event);
-    }
+    user.setUser(respData, userState);
   }
 
   /**
-   * @private
+   * @param {UserState} userState state of the user.
    * @param {boolean} noReload Don't request a new user object from
    * the back-end after logging out, defaults to false.
+   * @private
    */
-  resetUser_(noReload) {
-    noReload = noReload || false;
-    for (const key in this.user_) {
-      // @ts-ignore: unsupported syntax
-      this.user_[key] = null;
-    }
-    const event = new ngeoCustomEvent('logout', {user: this.user_});
-    this.dispatchEvent(event);
+  resetUser_(userState, noReload) {
+    const emptyUserProperties = user.getEmptyUserProperties();
+    user.setUser(emptyUserProperties, userState);
     if (!noReload) {
       this.load_();
     }
@@ -383,12 +364,5 @@ export class AuthenticationService extends olEventsEventTarget {
  */
 const myModule = angular.module('gmfAuthenticationService', []);
 myModule.service('gmfAuthenticationService', AuthenticationService);
-
-myModule.value('gmfUser', {
-  functionalities: null,
-  is_password_changed: null,
-  roles: null,
-  username: null,
-});
 
 export default myModule;

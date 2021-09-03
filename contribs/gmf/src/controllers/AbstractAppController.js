@@ -45,7 +45,6 @@ import ngeoStatemanagerModule from 'ngeo/statemanager/module.js';
 import ngeoStatemanagerWfsPermalink from 'ngeo/statemanager/WfsPermalink.js';
 import ngeoGeolocation from 'ngeo/geolocation/component.js';
 import * as olArray from 'ol/array.js';
-import {listen} from 'ol/events.js';
 import {ThemeEventType} from 'gmf/theme/Manager.js';
 import {getBrowserLanguage} from 'ngeo/utils.js';
 import * as Sentry from '@sentry/browser';
@@ -61,6 +60,8 @@ import {defaults as interactionsDefaults} from 'ol/interaction.js';
 import olInteractionDragPan from 'ol/interaction/DragPan.js';
 import {noModifierKeys} from 'ol/events/condition.js';
 import 'regenerator-runtime/runtime';
+
+import user, {UserState} from 'ngeo/store/user.ts';
 
 /**
  * Application abstract controller.
@@ -273,9 +274,9 @@ export function AbstractAppController($scope, $injector, mobile) {
   });
 
   /**
-   * @param {Event|import('ol/events/Event.js').default} evt Event.
+   * Update the page with the user settings.
    */
-  const userChange = (evt) => {
+  const userChange = () => {
     if (this.loginRedirectUrl) {
       window.location.href = this.loginRedirectUrl;
       return;
@@ -307,7 +308,7 @@ export function AbstractAppController($scope, $injector, mobile) {
     // Reload themes and background layer when login status changes.
     this.gmfThemes.loadThemes(roleId);
 
-    if (evt.type !== 'ready') {
+    if (user.getState() !== UserState.READY) {
       const themeName = this.permalink_.defaultThemeNameFromFunctionalities();
       this.gmfThemeManager.updateCurrentTheme(themeName, previousThemeName, true);
     }
@@ -316,17 +317,24 @@ export function AbstractAppController($scope, $injector, mobile) {
   };
 
   /**
-   * @param {Event|import('ol/events/Event.js').default} evt Event.
+   * @type {import('gmf/authentication/Service.js').User}
    */
-  const connectionLost = (evt) => {
-    this.loginActive = true;
-    userChange(evt);
-  };
+  this.gmfUser = null;
 
-  listen(gmfAuthentication, 'ready', userChange);
-  listen(gmfAuthentication, 'login', userChange);
-  listen(gmfAuthentication, 'logout', userChange);
-  listen(gmfAuthentication, 'disconnected', connectionLost);
+  // On user update, set features user based.
+  user.getProperties().subscribe({
+    next: (properties) => {
+      this.gmfUser = properties;
+      const userState = user.getState();
+      if (userState === UserState.NOT_INITIALIZED) {
+        return;
+      }
+      if (userState === UserState.DISCONNECTED) {
+        this.loginActive = true;
+      }
+      userChange();
+    },
+  });
 
   /**
    * @type {Object<string, string>}
@@ -385,11 +393,6 @@ export function AbstractAppController($scope, $injector, mobile) {
    * @type {import("ngeo/query/MapQuerent.js").MapQuerent}
    */
   this.ngeoMapQuerent_ = $injector.get('ngeoMapQuerent');
-
-  /**
-   * @type {import('gmf/authentication/Service.js').User}
-   */
-  this.gmfUser = $injector.get('gmfUser');
 
   /**
    * @type {import("ngeo/statemanager/Service.js").StatemanagerService}

@@ -44,6 +44,8 @@ import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr.js';
 
 import 'bootstrap/js/src/dropdown.js';
 
+import user from 'ngeo/store/user.ts';
+
 /**
  * @type {angular.IModule}
  * @hidden
@@ -120,7 +122,6 @@ export class FilterSelectorController {
    * @param {import("gmf/datasource/Helper.js").DatasourceHelper} gmfDataSourcesHelper Gmf data
    *     sources helper service.
    * @param {import("gmf/filters/SavedFilters.js").SavedFilter} gmfSavedFilters Gmf saved filters service.
-   * @param {import('gmf/authentication/Service.js').User} gmfUser User.
    * @param {import("ngeo/message/Notification.js").MessageNotification} ngeoNotification Ngeo notification
    *    service.
    * @param {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr Ngeo
@@ -137,7 +138,6 @@ export class FilterSelectorController {
     gmfDataSourceBeingFiltered,
     gmfDataSourcesHelper,
     gmfSavedFilters,
-    gmfUser,
     ngeoNotification,
     ngeoFeatureOverlayMgr,
     ngeoRuleHelper
@@ -211,9 +211,22 @@ export class FilterSelectorController {
      * @type {import('gmf/authentication/Service.js').User}
      * @private
      */
-    this.gmfUser_ = gmfUser;
+    this.gmfUser_ = null;
 
-    $scope.$watch(() => this.gmfUser_.functionalities, this.handleGmfUserFunctionalitiesChange_.bind(this));
+    /**
+     * @type {Subscription[]}
+     * @private
+     */
+    this.subscriptions_ = [];
+
+    this.subscriptions_.push(
+      user.getProperties().subscribe({
+        next: (value) => {
+          this.gmfUser_ = value
+          this.handleGmfUserFunctionalitiesChange_();
+        }
+      })
+    );
 
     /**
      * @type {import("ngeo/message/Notification.js").MessageNotification}
@@ -331,6 +344,13 @@ export class FilterSelectorController {
 
     // Initialize the data sources registration
     this.toggleDataSourceRegistration_();
+  }
+
+  /**
+   * Clear subscriptions.
+   */
+  $onDestroy() {
+    this.subscriptions_.forEach((sub) => sub.unsubscribe());
   }
 
   /**

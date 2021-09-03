@@ -69,29 +69,71 @@ export interface User {
   otp_url: string;
 }
 
+export enum UserState {
+  LOGGED_IN = 'logged in',
+  LOGGED_OUT = 'logged out',
+  DISCONNECTED = 'disconnected',
+  READY = 'ready',
+  NOT_INITIALIZED = 'not initialized',
+}
+
 export class UserModel {
   /**
-   * The observable user's config.
+   * The observable user's properties. The default user is empty.
    * @private
    */
-  config_: BehaviorSubject<User>;
+  properties_: BehaviorSubject<User>;
+
+  /**
+   * The observable state of the user. Default to NOT_INITIALIZED.
+   * @private
+   */
+  state_: UserState;
 
   constructor() {
-    this.config_ = new BehaviorSubject<User>(null);
+    this.properties_ = new BehaviorSubject<User>(this.getEmptyUserProperties());
+    this.state_ = UserState.NOT_INITIALIZED;
   }
 
   /**
-   * Return the observable User's config.
+   * Return the observable user's properties.
    */
-  getConfig(): BehaviorSubject<User> {
-    return this.config_;
+  getProperties(): BehaviorSubject<User> {
+    return this.properties_;
   }
 
   /**
-   * Set the current User's config.
+   * Return the observable user state.
    */
-  setConfig(config: User) {
-    this.config_.next(config);
+  getState(): UserState {
+    return this.state_;
+  }
+
+  /**
+   * Set the current User's properties and state.
+   */
+  setUser(properties: User, state: UserState) {
+    if (properties === null) {
+      console.error('The user can not be null');
+    }
+    this.state_ = state;
+    this.properties_.next(properties);
+  }
+
+  /**
+   * Return an empty user.
+   */
+  getEmptyUserProperties(): User {
+    return {
+        email: null,
+        is_intranet: null,
+        functionalities: null,
+        is_password_changed: null,
+        roles: null,
+        username: null,
+        otp_key: null,
+        otp_url: null,
+    };
   }
 }
 

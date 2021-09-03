@@ -40,6 +40,8 @@ import olSourceOSM from 'ol/source/OSM.js';
 import olSourceImageWMS from 'ol/source/ImageWMS.js';
 import options, {MAPSERVER_PROXY} from './options.js';
 
+import user from 'ngeo/store/user.ts';
+
 /**
  * @type {angular.IModule}
  * @hidden
@@ -54,11 +56,10 @@ const myModule = angular.module('gmfapp', [
 /**
  * @param {angular.IScope} $scope Angular scope.
  * @param {import("gmf/editing/EditFeature.js").EditingEditFeature} gmfEditFeature Gmf edit feature service.
- * @param {import('gmf/authentication/Service.js').User} gmfUser User.
  * @class
  * @ngInject
  */
-function MainController($scope, gmfEditFeature, gmfUser) {
+function MainController($scope, gmfEditFeature) {
   /**
    * @type {angular.IScope}
    */
@@ -72,7 +73,20 @@ function MainController($scope, gmfEditFeature, gmfUser) {
   /**
    * @type {import('gmf/authentication/Service.js').User}
    */
-  this.gmfUser = gmfUser;
+  this.gmfUser = null;
+
+  /**
+   * @type {Subscription[]}
+   * @private
+   */
+  this.subscriptions_ = [];
+
+  this.subscriptions_.push(
+    user.getProperties().subscribe({
+      next: (value) => this.gmfUser = value
+    })
+  );
+
 
   /**
    * @type {import("ol/source/ImageWMS.js").default}
@@ -163,6 +177,13 @@ MainController.prototype.handleMapSingleClick_ = function (evt) {
   this.pending = true;
 
   this.scope_.$apply();
+};
+
+/**
+ * Clear subscriptions.
+ */
+MainController.prototype.$onDestroy = function () {
+  this.subscriptions_.forEach((sub) => sub.unsubscribe());
 };
 
 /**

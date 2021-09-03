@@ -56,6 +56,8 @@ import olLayerGroup from 'ol/layer/Group.js';
 import {CollectionEvent} from 'ol/Collection.js';
 import {buildStyle} from 'ngeo/options.js';
 
+import user from 'ngeo/store/user.ts';
+
 /**
  * @enum {string}
  * @hidden
@@ -448,9 +450,12 @@ export function PermalinkService(
   this.ngeoWfsPermalink_ = $injector.has('ngeoWfsPermalink') ? $injector.get('ngeoWfsPermalink') : null;
 
   /**
-   * @type {?import('gmf/authentication/Service.js').User}
+   * @type {import('gmf/authentication/Service.js').User}
    */
-  this.gmfUser_ = $injector.has('gmfUser') ? $injector.get('gmfUser') : null;
+  this.gmfUser = null;
+  user.getProperties().subscribe({
+    next: (value) => this.gmfUser = value
+  });
 
   /**
    * @type {?import("ol/Map.js").default}

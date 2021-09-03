@@ -22,7 +22,7 @@
 // @ts-nocheck
 import angular from 'angular';
 import {RouteSuffix} from 'gmf/authentication/Service.js';
-import {listenOnce} from 'ol/events.js';
+import user, {UserState} from 'ngeo/store/user.ts';
 
 describe('gmf.authentication.Service', () => {
   let gmfAuthentication;
@@ -43,7 +43,10 @@ describe('gmf.authentication.Service', () => {
       logoutUrl = `${authenticationBaseUrl}/${RouteSuffix.LOGOUT}`;
 
       $httpBackend = _$httpBackend_;
-      $httpBackend.when('GET', isLoggedInUrl).respond({});
+      const expectedUser = user.getEmptyUserProperties();
+      $httpBackend.when('GET', isLoggedInUrl).respond(expectedUser);
+
+
 
       // need to flush after the initialization to process the request which
       // queries the initial logged-in status
@@ -58,65 +61,92 @@ describe('gmf.authentication.Service', () => {
 
   it('emits READY after login status check', () => {
     const spy = jasmine.createSpy();
-    /** @type {?import('gmf/authentication/Service.js').AuthenticationEvent} */
-    let event_ = null;
-    listenOnce(gmfAuthentication, 'ready', (evt) => {
-      event_ = /** @type {import('gmf/authentication/Service.js').AuthenticationEvent} */ (evt);
-      spy();
+    /** @type {User} */
+    let countCall = 0;
+    let gmfUser = null;
+    const sub = user.getProperties().subscribe({
+      next: (properties) => {
+        if (user.getState() === UserState.READY) {
+          countCall += 1;
+          if (countCall === 2) {
+            // Get only the second call (called here). The first call is
+            // done in the service itself in the constructor.
+            gmfUser = properties;
+            sub.unsubscribe();
+            spy();
+          }
+        }
+      }
     });
 
-    $httpBackend.when('GET', isLoggedInUrl).respond({});
+    const expectedUser = user.getEmptyUserProperties();
+    $httpBackend.when('GET', isLoggedInUrl).respond(expectedUser);
 
     gmfAuthentication.load_();
     $httpBackend.flush();
 
     expect(spy.calls.count()).toBe(1);
-    expect(event_).toBeDefined();
-    if (!event_) {
-      throw new Error('Missing event_');
-    }
-    expect(event_.type).toBe('ready');
-    expect(event_.detail.user.username).toBe(null);
+    expect(countCall).toBe(2);
+    expect(gmfUser).toBeDefined();
+    expect(gmfUser.username).toBe(null);
   });
 
   it('logins successful', () => {
     const spy = jasmine.createSpy();
-    /** @type {?import('gmf/authentication/Service.js').AuthenticationEvent} */
-    let event_ = null;
-    listenOnce(gmfAuthentication, 'login', (evt) => {
-      event_ = /** @type {import('gmf/authentication/Service.js').AuthenticationEvent} */ (evt);
-      spy();
+    /** @type {User} */
+    let gmfUser = null;
+    const sub = user.getProperties().subscribe({
+      next: (properties) => {
+        if (user.getState() === UserState.LOGGED_IN) {
+          gmfUser = properties;
+          sub.unsubscribe();
+          spy();
+        }
+      }
     });
 
-    $httpBackend.when('POST', loginUrl).respond({'username': 'user'});
+    const expectedUser = user.getEmptyUserProperties();
+    expectedUser.username = 'user';
+    $httpBackend.when('POST', loginUrl).respond(expectedUser);
 
     gmfAuthentication.login('user', 'pwd');
     $httpBackend.flush();
 
     expect(spy.calls.count()).toBe(1);
-    expect(event_).toBeDefined();
-    if (!event_) {
-      throw new Error('Missing event_');
-    }
-    expect(event_.type).toBe('login');
-    expect(event_.detail.user.username).toBe('user');
+    expect(gmfUser).toBeDefined();
+    expect(gmfUser.username).toBe('user');
   });
 
-  it('trys to login with wrong credentials', () => {
+  it('Try to login with wrong credentials', () => {
     const spy = jasmine.createSpy();
-    listenOnce(gmfAuthentication, 'login', spy);
+    const sub = user.getProperties().subscribe({
+      next: (properties) => {
+        if (user.getState() === UserState.LOGGED_IN) {
+          sub.unsubscribe();
+          spy();
+        }
+      }
+    });
 
-    $httpBackend.when('POST', loginUrl).respond({});
+    $httpBackend.when('POST', loginUrl).respond(401);
 
     gmfAuthentication.login('user', 'wrong-pwd');
     $httpBackend.flush();
-
     expect(spy.calls.count()).toBe(0);
   });
 
   it('logs out', () => {
     const spy = jasmine.createSpy();
-    listenOnce(gmfAuthentication, 'logout', spy);
+    let gmfUser = null;
+    const sub = user.getProperties().subscribe({
+      next: (properties) => {
+        if (user.getState() === UserState.LOGGED_OUT) {
+          gmfUser = properties;
+          sub.unsubscribe();
+          spy();
+        }
+      }
+    });
 
     $httpBackend.when('GET', logoutUrl).respond('true');
 
@@ -124,32 +154,35 @@ describe('gmf.authentication.Service', () => {
     $httpBackend.flush();
 
     expect(spy.calls.count()).toBe(1);
+    expect(gmfUser.username).toBe(null);
   });
 
   it('emits disconnected if user has changed', () => {
     const spy = jasmine.createSpy();
-    /** @type {?import('gmf/authentication/Service.js').AuthenticationEvent} */
-    let event_ = null;
-    listenOnce(gmfAuthentication, 'disconnected', (evt) => {
-      event_ = /** @type {import('gmf/authentication/Service.js').AuthenticationEvent} */ (evt);
-      spy();
+    let gmfUser = null;
+    const sub = user.getProperties().subscribe({
+      next: (properties) => {
+        if (user.getState() === UserState.DISCONNECTED) {
+          gmfUser = properties;
+          sub.unsubscribe();
+          spy();
+        }
+      }
     });
-    listenOnce(gmfAuthentication, 'logout', spy);
     $httpBackend.when('GET', logoutUrl).respond('true');
 
     gmfAuthentication.user_.username = 'hans';
-    $httpBackend.when('GET', isLoggedInUrl).respond({'username': null});
+    const newUser = user.getProperties().value;
+    newUser.username = 'hans';
+    user.setUser(newUser, UserState.LOGGED_IN);
+    const expectedUser = user.getEmptyUserProperties();
+    $httpBackend.when('GET', isLoggedInUrl).respond(expectedUser);
 
     gmfAuthentication.checkConnection_();
     $httpBackend.flush();
 
-    expect(spy.calls.count()).toBe(2);
-    expect(event_).toBeDefined();
-    if (!event_) {
-      throw new Error('Missing event_');
-    }
-    expect(event_.type).toBe('disconnected');
-    expect(event_.detail.user.username).toBe(null);
+    expect(spy.calls.count()).toBe(1);
+    expect(gmfUser.username).toBe(null);
     expect(gmfAuthentication.user_.username).toBe(null);
   });
 });
