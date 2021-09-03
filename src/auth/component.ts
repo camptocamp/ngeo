@@ -45,22 +45,43 @@ class ngeoAuthComponent extends LitElement {
                 <strong>${AngularServices.user.username}</strong>.
               </div>
 
-              <form name="logoutForm" role="form" @submit=${this.logout}>
-                <div class="form-group">
-                  <input type="submit" class="form-control btn prime" value="Logout" />
-                </div>
-                <div class="form-group">
-                  <input
-                    ?hidden="${!this.allowPasswordChange}"
-                    type="button"
-                    class="form-control btn btn-default"
-                    value="Change password"
-                  />
-                </div>
-              </form>
+              ${!this.changingPassword
+                ? html`
+                    <form name="logoutForm" role="form" @submit=${this.logout}>
+                      <div class="form-group">
+                        <input type="submit" class="form-control btn prime" value="Logout" />
+                      </div>
+                      <div class="form-group">
+                        <input
+                          ?hidden="${!this.allowPasswordChange}"
+                          type="button"
+                          class="form-control btn btn-default"
+                          value="Change password"
+                          @click=${() => (this.changingPassword = true)}
+                        />
+                      </div>
+                    </form>
+                  `
+                : ''}
             </div>
           `
-        : html`
+        : ''}
+      ${this.loginInfoMessage
+        ? html`
+            <div class="alert alert-warning">
+              <span>${this.loginInfoMessage}</span>
+            </div>
+          `
+        : ''}
+      ${this.disconnectedShown
+        ? html`
+            <div class="alert alert-warning">
+              You are not logged in any more. The Interface has been reloaded.
+            </div>
+          `
+        : ''}
+      ${AngularServices.user && AngularServices.user.username === null && !this.changingPassword
+        ? html`
             <div>
               <form name="loginForm" role="form" @submit=${(evt: Event) => this.login(evt)}>
                 <div class="form-group">
@@ -103,19 +124,6 @@ class ngeoAuthComponent extends LitElement {
                     A new password has just been sent to you by e-mail.
                   </div>`
                 : ''}
-            </div>
-          `}
-      ${this.loginInfoMessage
-        ? html`
-            <div class="alert alert-warning">
-              <span>${this.loginInfoMessage}</span>
-            </div>
-          `
-        : ''}
-      ${this.disconnectedShown
-        ? html`
-            <div class="alert alert-warning">
-              You are not logged in any more. The Interface has been reloaded.
             </div>
           `
         : ''}
