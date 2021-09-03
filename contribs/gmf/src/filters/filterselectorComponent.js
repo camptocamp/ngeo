@@ -351,7 +351,7 @@ export class FilterSelectorController {
    */
   $onDestroy() {
     this.subscriptions_.forEach((sub) => sub.unsubscribe());
-  };
+  }
 
   /**
    * @private

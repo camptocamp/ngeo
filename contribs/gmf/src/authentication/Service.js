@@ -323,7 +323,7 @@ export class AuthenticationService {
 
   /**
    * @param {AuthenticationLoginResponse} respData Response.
-   * @param {userState} UserState state of the user.
+   * @param {UserState} userState state of the user.
    * @private
    */
   setUser_(respData, userState) {
@@ -335,7 +335,7 @@ export class AuthenticationService {
   }
 
   /**
-   * @param {userState} UserState state of the user.
+   * @param {UserState} userState state of the user.
    * @param {boolean} noReload Don't request a new user object from
    * the back-end after logging out, defaults to false.
    * @private

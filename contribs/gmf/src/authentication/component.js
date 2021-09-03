@@ -25,7 +25,6 @@ import {gmfBackgroundlayerStatus} from 'gmf/backgroundlayerselector/status.js';
 import {MessageType} from 'ngeo/message/Message.js';
 import ngeoMessageNotification from 'ngeo/message/Notification.js';
 import ngeoMessageModalComponent from 'ngeo/message/modalComponent.js';
-import {listen} from 'ol/events.js';
 
 // @ts-ignore
 import qruri from 'qruri';
@@ -318,21 +317,21 @@ export class AuthenticationController {
    */
   $onDestroy() {
     this.subscriptions_.forEach((sub) => sub.unsubscribe());
-  };
+  }
 
   /**
    * @private
    */
   setOtpImage_() {
     if (this.gmfUser.otp_uri) {
-      this.otpImage = qruri(val, {
+      this.otpImage = qruri(this.gmfUser.otp_uri, {
         margin: 2,
       });
     }
   }
 
   /**
-   * @params {UserState} state of the user.
+   * @param {UserState} userState state of the user.
    * @private
    */
   onUserStateUpdate_(userState) {
