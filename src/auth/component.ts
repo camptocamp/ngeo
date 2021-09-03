@@ -4,7 +4,13 @@ import AngularServices from 'ngeo/services';
 import {MessageType} from 'ngeo/message/Message.js';
 import {unsafeSVG} from 'lit/directives/unsafe-svg.js';
 import loadingSvg from 'gmf/icons/spinner.svg';
-import {PasswordValidator} from 'gmf/authentication/component'; // FIXME: passwordValidator typedef
+import {gmfBackgroundlayerStatus} from 'gmf/backgroundlayerselector/status.js';
+
+/** Type definition for PasswordValidator */
+type PasswordValidator = {
+  isPasswordValid: (val: string) => boolean;
+  notValidMessage: string;
+};
 
 @customElement('ngeo-auth-component')
 class ngeoAuthComponent extends LitElement {
@@ -19,7 +25,7 @@ class ngeoAuthComponent extends LitElement {
   @property({type: Boolean}) error = false;
   @property({type: String}) loginInfoMessage = '';
   @property({type: String}) otpImage = ''; // TODO: with qruri
-  @property({type: Object}) passwordValidator: PasswordValidator = null; // FIXME: passwordValidator typedef
+  @property({type: Object}) passwordValidator: PasswordValidator = null;
   @property({type: String}) changingPasswordUsername = '';
 
   render() {
@@ -326,7 +332,7 @@ class ngeoAuthComponent extends LitElement {
    */
   manualLoginLogout_() {
     // Set the user could lead to a new background.
-    // TODO: reimplementation
+    gmfBackgroundlayerStatus.touchedByUser = true;
   }
 
   /**

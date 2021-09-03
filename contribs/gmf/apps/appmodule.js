@@ -53,6 +53,7 @@ appModule.config([
  */
 appModule.run(($injector) => {
   AngularServices.auth = $injector.get('gmfAuthenticationService');
+  AngularServices.user = $injector.get('gmfUser');
   AngularServices.notification = $injector.get('ngeoNotification');
 });
 

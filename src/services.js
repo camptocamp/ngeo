@@ -27,12 +27,12 @@
  */
 
 export default {
-    /** @type {import("gmf/authentication/Service.js").AuthenticationService} */
-    auth: undefined,
+  /** @type {import("gmf/authentication/Service.js").AuthenticationService} */
+  auth: undefined,
 
-    /** @type {import('gmf/authentication/Service.js').User} */
-    user: undefined,
+  /** @type {import('gmf/authentication/Service.js').User} */
+  user: undefined,
 
-    /** @type {import("ngeo/message/Notification.js").MessageNotification} */
-    notification: undefined,
+  /** @type {import("ngeo/message/Notification.js").MessageNotification} */
+  notification: undefined,
 };
