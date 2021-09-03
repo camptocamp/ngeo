@@ -150,7 +150,12 @@ export class AuthenticationService {
      * @type {User}
      * @private
      */
-    this.user_ = user.getProperties().value;
+    this.user_ = null;
+    user.getProperties().subscribe({
+      next: (properties) => {
+        this.user_ = properties;
+      }
+    });
 
     /**
      * Don't request a new user object from the back-end after
@@ -252,10 +257,14 @@ export class AuthenticationService {
         withCredentials: true,
       })
       .then((resp) => this.onSuccessfulLogin(resp))
-      .then((resp) => this.handleLogin_(false, resp));
+      .then(
+        (resp) => this.handleLogin_(false, resp),
+        (resp) => console.error('Login fail.')
+      );
   }
 
   /**
+   * Method defined in the aim to be replaced.
    * @param {AuthenticationLoginResponsePromise} resp Ajax response.
    * @return {AuthenticationLoginResponsePromise} Response.
    */
