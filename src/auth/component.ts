@@ -5,6 +5,11 @@ import {MessageType} from 'ngeo/message/Message.js';
 import {unsafeSVG} from 'lit/directives/unsafe-svg.js';
 import loadingSvg from 'gmf/icons/spinner.svg';
 import {gmfBackgroundlayerStatus} from 'gmf/backgroundlayerselector/status.js';
+import {Subscription} from 'rxjs';
+// @ts-ignore
+import user, {User, UserState} from 'ngeo/store/user.ts';
+// @ts-ignore
+import qruri from 'qruri';
 
 /** Type definition for PasswordValidator */
 type PasswordValidator = {
@@ -24,25 +29,46 @@ class ngeoAuthComponent extends LitElement {
   @property({type: Boolean}) userMustChangeItsPassword = false;
   @property({type: Boolean}) error = false;
   @property({type: String}) loginInfoMessage = '';
-  @property({type: String}) otpImage = ''; // TODO: with qruri
+  @property({type: String}) otpImage = '';
   @property({type: Object}) passwordValidator: PasswordValidator = null;
   @property({type: String}) changingPasswordUsername = '';
+  @property({type: Object}) gmfUser: User = null;
+  @property({type: Array}) subscriptions_: Subscription[] = [];
+
+  connectedCallback() {
+    super.connectedCallback();
+    this.subscriptions_.push(
+      user.getProperties().subscribe({
+        next: (properties: User) => {
+          this.gmfUser = properties;
+          this.setOtpImage_();
+          this.checkUserMustChangeItsPassword_();
+          this.onUserStateUpdate_(user.getState());
+        },
+      })
+    );
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    this.subscriptions_.forEach((sub) => sub.unsubscribe());
+  }
 
   render() {
     return html`
-      ${AngularServices.user && AngularServices.user.is_intranet
+      ${this.gmfUser.is_intranet
         ? html`
             <div class="form-group">
               <span>You are recognized as an intranet user.</span>
             </div>
           `
         : ''}
-      ${AngularServices.user && AngularServices.user.username !== null
+      ${this.gmfUser.username !== null
         ? html`
             <div>
               <div class="form-group">
                 <span>Logged in as</span>
-                <strong>${AngularServices.user.username}</strong>.
+                <strong>${this.gmfUser.username}</strong>.
               </div>
 
               ${!this.changingPassword
@@ -80,7 +106,7 @@ class ngeoAuthComponent extends LitElement {
             </div>
           `
         : ''}
-      ${AngularServices.user && AngularServices.user.username === null && !this.changingPassword
+      ${this.gmfUser.username === null && !this.changingPassword
         ? html`
             <div>
               <form name="loginForm" role="form" @submit=${(evt: Event) => this.login(evt)}>
@@ -149,7 +175,7 @@ class ngeoAuthComponent extends LitElement {
                     placeholder="Confirm new password"
                   />
                 </div>
-                ${AngularServices.user.otp_uri
+                ${this.gmfUser.otp_uri
                   ? html`
                       <div class="form-group">
                         <label>Two factor authentication QR code:</label>
@@ -157,12 +183,11 @@ class ngeoAuthComponent extends LitElement {
                       </div>
                     `
                   : ''}
-                <!-- TODO: check if better solution for attr two_factor_totp_secret  -->
-                ${AngularServices.user.two_factor_totp_secret
+                ${this.gmfUser.two_factor_totp_secret
                   ? html`
                       <div class="form-group">
                         <label>Two factor authentication key:</label>
-                        <code>${AngularServices.user.two_factor_totp_secret}</code>
+                        <code>${this.gmfUser.two_factor_totp_secret}</code>
                       </div>
                     `
                   : ''}
@@ -202,6 +227,39 @@ class ngeoAuthComponent extends LitElement {
   // Disable shadow DOM
   protected createRenderRoot() {
     return this;
+  }
+
+  /**
+   * @private
+   */
+  setOtpImage_() {
+    if (this.gmfUser.otp_uri) {
+      this.otpImage = qruri(this.gmfUser.otp_uri, {
+        margin: 2,
+      });
+    }
+  }
+
+  /**
+   * @param {UserState} userState state of the user.
+   * @private
+   */
+  onUserStateUpdate_(userState: UserState) {
+    if (userState === UserState.LOGGED_IN) {
+      this.changingPassword = false;
+      this.userMustChangeItsPassword = false;
+    } else if (userState === UserState.DISCONNECTED) {
+      this.disconnectedShown = true;
+    }
+  }
+
+  checkUserMustChangeItsPassword_() {
+    if (this.gmfUser.is_password_changed !== false) {
+      return;
+    }
+    this.changingPasswordUsername = this.gmfUser.username;
+    this.changingPassword = true;
+    this.userMustChangeItsPassword = true;
   }
 
   // METHODS THAT CALL THE AUTHENTICATION SERVICE METHODS
@@ -253,7 +311,7 @@ class ngeoAuthComponent extends LitElement {
         if (this.userMustChangeItsPassword) {
           username = this.changingPasswordUsername;
         } else {
-          username = AngularServices.user.username;
+          username = this.gmfUser.username;
         }
         console.assert(username);
         AngularServices.auth

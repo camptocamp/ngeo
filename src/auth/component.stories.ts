@@ -1,6 +1,6 @@
-import { html } from 'lit-html';
-import AngularServices from 'ngeo/services.js';
+import {html} from 'lit-html';
 import './component.ts';
+import user, {UserState} from 'ngeo/store/user';
 
 export default {
   title: 'Auth component',
@@ -8,38 +8,32 @@ export default {
 };
 
 const Template = (args: any) => {
-    AngularServices.user = args.user;
-    const optAttr = [];
-    optAttr.push(args.isLoading ? ' isLoading' : '');
-    optAttr.push(args.allowPasswordChange ? ' allowPasswordChange' : '');
-    optAttr.push(args.error ? ' error' : '');
-    return `
+  user.setUser(args.user, UserState.READY);
+  const optAttr = [];
+  optAttr.push(args.isLoading ? ' isLoading' : '');
+  optAttr.push(args.allowPasswordChange ? ' allowPasswordChange' : '');
+  optAttr.push(args.error ? ' error' : '');
+  return `
     <ngeo-auth-component
       ${optAttr.join(' ')}
-      infoMessage="${args.infoMessage}">
+      loginInfoMessage="${args.loginInfoMessage}">
     </ngeo-auth-component>`;
-}
+};
 
 const defaultProperties: any = {
   isLoading: false,
   allowPasswordChange: false,
   error: false,
-  infoMessage: '',
+  loginInfoMessage: '',
   user: null,
 };
 
 export const Empty: any = Template.bind({});
 Empty.args = {...defaultProperties};
+Empty.args.user = user.getEmptyUserProperties();
 
 export const WithUser: any = Template.bind({});
 WithUser.args = {...defaultProperties};
-WithUser.args.user = {
-  username: 'George',
-  email: null,
-  is_intranet: null,
-  functionalities: null,
-  is_password_changed: null,
-  roles: null,
-  otp_key: null,
-  otp_uri: null
-};
+const login = user.getEmptyUserProperties();
+login.username = 'George';
+WithUser.args.user = login;
