@@ -55,15 +55,6 @@ import user, {UserState} from 'ngeo/store/user.ts'
  */
 
 /**
- * @typedef {Object} AuthenticationEventItem
- * @property {User} user
- */
-
-/**
- * @typedef {import("ngeo/CustomEvent.js").default<AuthenticationEventItem>} AuthenticationEvent
- */
-
-/**
  * @typedef {Object} AuthenticationLoginResponse
  * @property {AuthenticationFunctionalities} [functionalities]
  * @property {boolean} [is_password_changed]
@@ -204,7 +195,13 @@ export class AuthenticationService {
    */
   load_() {
     const url = `${this.baseUrl_}/${RouteSuffix.IS_LOGGED_IN}`;
-    this.$http_.get(url, {withCredentials: true}).then((resp) => this.handleLogin_(true, resp));
+    this.$http_
+      .get(url, {withCredentials: true})
+      .then((resp) => this.checkUser_(resp))
+      .then(
+        (resp) => this.handleLogin_(true, resp),
+        (resp) => console.error('Login fail.')
+      );
   }
 
   /**
@@ -233,9 +230,11 @@ export class AuthenticationService {
           withCredentials: true,
         }
       )
-      .then((resp) => {
-        this.setUser_(resp.data, UserState.LOGGED_IN);
-      });
+      .then((resp) => this.checkUser_(resp))
+      .then(
+        (resp) => this.setUser_(resp.data, UserState.LOGGED_IN),
+        (resp) => console.error('Change password fail.')
+      );
   }
 
   /**
@@ -256,11 +255,26 @@ export class AuthenticationService {
         headers: {'Content-Type': 'application/x-www-form-urlencoded'},
         withCredentials: true,
       })
+      .then((resp) => this.checkUser_(resp))
       .then((resp) => this.onSuccessfulLogin(resp))
       .then(
         (resp) => this.handleLogin_(false, resp),
         (resp) => console.error('Login fail.')
       );
+  }
+
+  /**
+   * Check the user to have a user with all parameters in all cases.
+   * @param {AuthenticationLoginResponsePromise} resp Ajax response.
+   * @return {AuthenticationLoginResponsePromise} Response.
+   */
+  checkUser_(resp) {
+    if (!resp.data) {
+      return resp;
+    }
+    const emptyUserProperties = user.getEmptyUserProperties();
+    resp.data = {...emptyUserProperties, ...resp.data};
+    return resp;
   }
 
   /**

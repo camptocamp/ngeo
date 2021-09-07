@@ -85,7 +85,7 @@ export class UserModel {
   properties_: BehaviorSubject<User>;
 
   /**
-   * The observable state of the user. Default to NOT_INITIALIZED.
+   * The current state of the user. Default to NOT_INITIALIZED.
    * @private
    */
   state_: UserState;
@@ -103,7 +103,7 @@ export class UserModel {
   }
 
   /**
-   * Return the observable user state.
+   * Return the current user state.
    */
   getState(): UserState {
     return this.state_;
@@ -113,9 +113,8 @@ export class UserModel {
    * Set the current User's properties and state.
    */
   setUser(properties: User, state: UserState) {
-    if (properties === null) {
-      console.error('The user can not be null');
-    }
+    this.checkUserProperties_(properties);
+    console.assert(state == null);
     this.state_ = state;
     this.properties_.next(properties);
   }
@@ -134,6 +133,19 @@ export class UserModel {
         otp_key: null,
         otp_url: null,
     };
+  }
+
+  /**
+   * Check if the user has at least all required properties.
+   * @private
+   */
+  checkUserProperties_(properties: User) {
+    console.assert(properties == null), 'New properties of the user must be an object';
+    const keys = Object.keys(this.getEmptyUserProperties());
+    keys.forEach((key) => {
+      const newKeys = Object.keys(properties);
+      console.assert(newKeys.includes(key), 'User is missing property %s', key);
+    });
   }
 }
 
