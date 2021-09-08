@@ -13,6 +13,7 @@ plugins:
 rules:
   no-console: 0
   import/no-unresolved: 0
+  import/extensions: 0
   no-unused-vars: error
   prettier/prettier: 0
   sort-imports-es6-autofix/sort-imports-es6: 0
