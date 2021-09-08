@@ -407,10 +407,11 @@ class ngeoAuthComponent extends LitElement {
   resetPassword(evt: Event) {
     this.isLoading = true;
 
-    const form = evt.target as HTMLFormElement;
-    const login = form.value.login;
+    const resetBtn = evt.target as HTMLFormElement;
+    const form = resetBtn.parentNode.parentNode as HTMLFormElement;
+    const login = form.login.value;
 
-    if (!login) {
+    if (login === '') {
       this.isLoading = false;
       this.setError_(['Please, input a login...']);
       return;
