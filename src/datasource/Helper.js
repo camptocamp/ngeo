@@ -20,13 +20,13 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import ngeoDatasourceDataSource from 'ngeo/datasource/DataSource.js';
-import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources.js';
-import {setGeometryType as ngeoAttributeSetGeometryType} from 'ngeo/format/Attribute.js';
-import ngeoFormatWFSAttribute from 'ngeo/format/WFSAttribute.js';
-import ngeoQueryQuerent from 'ngeo/query/Querent.js';
-import {listen} from 'ol/events.js';
-import {CollectionEvent} from 'ol/Collection.js';
+import ngeoDatasourceDataSource from 'ngeo/datasource/DataSource';
+import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources';
+import {setGeometryType as ngeoAttributeSetGeometryType} from 'ngeo/format/Attribute';
+import ngeoFormatWFSAttribute from 'ngeo/format/WFSAttribute';
+import ngeoQueryQuerent from 'ngeo/query/Querent';
+import {listen} from 'ol/events';
+import {CollectionEvent} from 'ol/Collection';
 
 /**
  * @hidden
@@ -36,9 +36,9 @@ export class DatasourceHelper {
    * A service that provides utility methods to manipulate or get data sources.
    *
    * @param {angular.IQService} $q The Angular $q service.
-   * @param {import("ngeo/datasource/DataSources.js").DataSource} ngeoDataSources Ngeo data source
+   * @param {import('ngeo/datasource/DataSources').DataSource} ngeoDataSources Ngeo data source
    *     service.
-   * @param {import("ngeo/query/Querent.js").Querent} ngeoQuerent Ngeo querent service.
+   * @param {import('ngeo/query/Querent').Querent} ngeoQuerent Ngeo querent service.
    * @ngdoc service
    * @ngname ngeoDataSourcesHelper
    * @ngInject
@@ -53,13 +53,13 @@ export class DatasourceHelper {
     this.q_ = $q;
 
     /**
-     * @type {import('ngeo/datasource/DataSource.js').DataSources}
+     * @type {import('ngeo/datasource/DataSource').DataSources}
      * @private
      */
     this.collection_ = ngeoDataSources.collection;
 
     /**
-     * @type {import("ngeo/query/Querent.js").Querent}
+     * @type {import('ngeo/query/Querent').Querent}
      * @private
      */
     this.ngeoQuerent_ = ngeoQuerent;
@@ -67,7 +67,7 @@ export class DatasourceHelper {
     // === Other properties ===
 
     /**
-     * @type {Object<number, import("ngeo/datasource/DataSource.js").default>}
+     * @type {Object<number, import('ngeo/datasource/DataSource').default>}
      * @private
      */
     this.cache_ = {};
@@ -81,7 +81,7 @@ export class DatasourceHelper {
   }
 
   /**
-   * @return {import('ngeo/datasource/DataSource.js').DataSources} Data sources collection.
+   * @return {import('ngeo/datasource/DataSource').DataSources} Data sources collection.
    */
   get collection() {
     return this.collection_;
@@ -90,7 +90,7 @@ export class DatasourceHelper {
   /**
    * Return a data source using its id.
    * @param {number} id Data source id.
-   * @return {?import("ngeo/datasource/DataSource.js").default} Data source.
+   * @return {?import('ngeo/datasource/DataSource').default} Data source.
    */
   getDataSource(id) {
     return this.cache_[id] || null;
@@ -104,7 +104,7 @@ export class DatasourceHelper {
    * Please, note that in order to be dynamically set, the data source must
    * only have 1 ogcLayer set and be queryable.
    *
-   * @param {import("ngeo/datasource/OGC.js").default} dataSource Filtrable data source.
+   * @param {import('ngeo/datasource/OGC').default} dataSource Filtrable data source.
    * @return {angular.IPromise<import('ngeo/format/Attribute').Attribute[]>} Promise.
    */
   getDataSourceAttributes(dataSource) {
@@ -176,7 +176,7 @@ export class DatasourceHelper {
   /**
    * Called when a new data source is added to the ngeo collection. Add it
    * to the cache.
-   * @param {Event|import("ol/events/Event.js").default} evt Event
+   * @param {Event|import('ol/events/Event').default} evt Event
    * @private
    */
   handleDataSourcesAdd_(evt) {
@@ -190,7 +190,7 @@ export class DatasourceHelper {
   /**
    * Called when a data source is removed from the ngeo collection. Remove it
    * from the cache.
-   * @param {Event|import("ol/events/Event.js").default} evt Event
+   * @param {Event|import('ol/events/Event').default} evt Event
    * @private
    */
   handleDataSourcesRemove_(evt) {
@@ -210,8 +210,8 @@ export class DatasourceHelper {
    * If there are no WFS layer in the data source that are in the
    * ogcAttributes list, then `null` is returned.
    *
-   * @param {import("ngeo/datasource/OGC.js").default} dataSource Filtrable data source.
-   * @return {import('ngeo/format/Attribute.js').Attribute[]} attributes Attributes
+   * @param {import('ngeo/datasource/OGC').default} dataSource Filtrable data source.
+   * @return {import('ngeo/format/Attribute').Attribute[]} attributes Attributes
    */
   createDataSourceAttributesFromOGCAttributes_(dataSource) {
     let attributes = null;
@@ -227,7 +227,7 @@ export class DatasourceHelper {
         const required = ogcAttribute.minOccurs != '0';
         const type = ogcAttribute.type;
 
-        /** @type {import('ngeo/format/Attribute.js').Attribute} */
+        /** @type {import('ngeo/format/Attribute').Attribute} */
         const attribute = {
           alias,
           name,

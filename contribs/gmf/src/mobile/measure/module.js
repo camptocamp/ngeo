@@ -20,9 +20,9 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import gmfMobileMeasureAreaComponent from 'gmf/mobile/measure/areaComponent.js';
-import gmfMobileMeasureLengthComponent from 'gmf/mobile/measure/lengthComponent.js';
-import gmfMobileMeasurePointComponent from 'gmf/mobile/measure/pointComponent.js';
+import gmfMobileMeasureAreaComponent from 'gmf/mobile/measure/areaComponent';
+import gmfMobileMeasureLengthComponent from 'gmf/mobile/measure/lengthComponent';
+import gmfMobileMeasurePointComponent from 'gmf/mobile/measure/pointComponent';
 
 /**
  * @type {angular.IModule}

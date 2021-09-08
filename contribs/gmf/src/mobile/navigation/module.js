@@ -20,7 +20,7 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import gmfMobileNavigationComponent from 'gmf/mobile/navigation/component.js';
+import gmfMobileNavigationComponent from 'gmf/mobile/navigation/component';
 
 /**
  * @type {angular.IModule}

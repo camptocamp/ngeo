@@ -20,7 +20,7 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import ngeoFormatXSDAttribute from 'ngeo/format/XSDAttribute.js';
+import ngeoFormatXSDAttribute from 'ngeo/format/XSDAttribute';
 
 /**
  * An service used to fetch the XSD attribute definition of layers using their
@@ -44,14 +44,14 @@ export function EditingXSDAttributeService($http, gmfLayersUrl) {
   this.baseUrl_ = gmfLayersUrl;
 
   /**
-   * @type {Object<number, angular.IPromise<import('ngeo/format/Attribute.js').Attribute[]>>}
+   * @type {Object<number, angular.IPromise<import('ngeo/format/Attribute').Attribute[]>>}
    */
   this.promises_ = {};
 }
 
 /**
  * @param {number} id Layer id.
- * @return {angular.IPromise<import('ngeo/format/Attribute.js').Attribute[]>} Promise.
+ * @return {angular.IPromise<import('ngeo/format/Attribute').Attribute[]>} Promise.
  */
 EditingXSDAttributeService.prototype.getAttributes = function (id) {
   if (!this.promises_[id]) {

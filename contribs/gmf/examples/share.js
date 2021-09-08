@@ -21,10 +21,10 @@
 
 import angular from 'angular';
 import './share.css';
-import gmfPermalinkShareComponent from 'gmf/permalink/shareComponent.js';
+import gmfPermalinkShareComponent from 'gmf/permalink/shareComponent';
 
-import ngeoMessageModalComponent from 'ngeo/message/modalComponent.js';
-import options from './options.js';
+import ngeoMessageModalComponent from 'ngeo/message/modalComponent';
+import options from './options';
 
 /**
  * @type {angular.IModule}

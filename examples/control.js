@@ -20,15 +20,15 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import ngeoMapModule from 'ngeo/map/module.js';
+import ngeoMapModule from 'ngeo/map/module';
 
-import ngeoMiscControlComponent from 'ngeo/misc/controlComponent.js';
+import ngeoMiscControlComponent from 'ngeo/misc/controlComponent';
 
-import olMap from 'ol/Map.js';
-import olView from 'ol/View.js';
-import olControlMousePosition from 'ol/control/MousePosition.js';
-import olLayerTile from 'ol/layer/Tile.js';
-import olSourceOSM from 'ol/source/OSM.js';
+import olMap from 'ol/Map';
+import olView from 'ol/View';
+import olControlMousePosition from 'ol/control/MousePosition';
+import olLayerTile from 'ol/layer/Tile';
+import olSourceOSM from 'ol/source/OSM';
 
 /** @type {angular.IModule} **/
 const myModule = angular.module('app', ['gettext', ngeoMapModule.name, ngeoMiscControlComponent.name]);
@@ -39,7 +39,7 @@ const myModule = angular.module('app', ['gettext', ngeoMapModule.name, ngeoMiscC
  */
 function MainController() {
   /**
-   * @type {import("ol/Map.js").default}
+   * @type {import('ol/Map').default}
    */
   this.map = new olMap({
     layers: [
@@ -54,7 +54,7 @@ function MainController() {
   });
 
   /**
-   * @type {import('ol/control/Control.js').default}
+   * @type {import('ol/control/Control').default}
    */
   this.control = new olControlMousePosition({
     className: 'mouse-position',

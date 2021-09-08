@@ -19,12 +19,12 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import OlTilegridTileGrid from 'ol/tilegrid/TileGrid.js';
-import OlTilegridWMTS from 'ol/tilegrid/WMTS.js';
-import * as olProj from 'ol/proj.js';
-import OlSourceTileWMS from 'ol/source/TileWMS.js';
-import OlSourceWMTS from 'ol/source/WMTS.js';
-import OlLayerTile from 'ol/layer/Tile.js';
+import OlTilegridTileGrid from 'ol/tilegrid/TileGrid';
+import OlTilegridWMTS from 'ol/tilegrid/WMTS';
+import * as olProj from 'ol/proj';
+import OlSourceTileWMS from 'ol/source/TileWMS';
+import OlSourceWMTS from 'ol/source/WMTS';
+import OlLayerTile from 'ol/layer/Tile';
 
 const SerDes = class {
   /**
@@ -40,7 +40,7 @@ const SerDes = class {
 
   /**
    * @private
-   * @param {import("ol/Object.js").default} olObject An OL object
+   * @param {import('ol/Object').default} olObject An OL object
    * @return {Object<string, string|number|string[]|boolean>} The serializable properties of the object
    */
   createBaseObject_(olObject) {
@@ -98,11 +98,11 @@ const SerDes = class {
     }
     /**
      * @type {{
-     *   'extent': import('ol/extent.js').Extent,
+     *   'extent': import('ol/extent').Extent,
      *   'minZoom': number,
      *   'matrixIds': string[],
      *   'resolutions': number[],
-     *   'origins': import('ol/coordinate.js').Coordinate[],
+     *   'origins': import('ol/coordinate').Coordinate[],
      * }}
      */
     const obj = {};
@@ -150,7 +150,7 @@ const SerDes = class {
 
   /**
    * @param {string} serialization .
-   * @param {function(import("ol/ImageTile.js").default, string): void} [tileLoadFunction] .
+   * @param {function(import('ol/ImageTile').default, string): void} [tileLoadFunction] .
    * @return {OlSourceTileWMS} source .
    */
   deserializeSourceTileWMS(serialization, tileLoadFunction) {
@@ -194,7 +194,7 @@ const SerDes = class {
 
   /**
    * @param {string} serialization .
-   * @param {function(import("ol/ImageTile.js").default, string): void} [tileLoadFunction] .
+   * @param {function(import('ol/ImageTile').default, string): void} [tileLoadFunction] .
    * @return {OlSourceWMTS} .
    */
   deserializeSourceWMTS(serialization, tileLoadFunction) {
@@ -223,8 +223,8 @@ const SerDes = class {
   }
 
   /**
-   * @param {!import("ol/layer/Tile.js").default<import("ol/source/Tile.js").default>|import("ol/layer/Image.js").default<import("ol/source/Image.js").default>} layer .
-   * @param {import("ol/source/Source.js").default} [source] .
+   * @param {!import('ol/layer/Tile').default<import('ol/source/Tile').default>|import('ol/layer/Image').default<import('ol/source/Image').default>} layer .
+   * @param {import('ol/source/Source').default} [source] .
    * @return {string} .
    */
   serializeTileLayer(layer, source) {
@@ -247,12 +247,12 @@ const SerDes = class {
 
   /**
    * @param {string} serialization .
-   * @param {function(import("ol/ImageTile.js").default, string): void} [tileLoadFunction] .
-   * @return {!import("ol/layer/Tile.js").default<import("ol/source/Tile.js").default>} .
+   * @param {function(import('ol/ImageTile').default, string): void} [tileLoadFunction] .
+   * @return {!import('ol/layer/Tile').default<import('ol/source/Tile').default>} .
    */
   deserializeTileLayer(serialization, tileLoadFunction) {
     /**
-     * @type {import('ol/layer/BaseTile.js').Options<import("ol/source/Tile.js").default>}
+     * @type {import('ol/layer/BaseTile').Options<import('ol/source/Tile').default>}
      */
     const options = JSON.parse(serialization);
     // @ts-ignore

@@ -21,12 +21,12 @@
 
 // @ts-nocheck
 import angular from 'angular';
-import ngeoTestDataGeoAdminLocationSearch from '../data/geoAdminLocationSearch.js';
-import * as olProj from 'ol/proj.js';
+import ngeoTestDataGeoAdminLocationSearch from '../data/geoAdminLocationSearch';
+import * as olProj from 'ol/proj';
 
 describe('ngeo.search.createLocationSearchBloodhound', () => {
   /**
-   * @type {import("ngeo/search/createLocationSearchBloodhound.js").createLocationSearchBloodhoundFunction}
+   * @type {import('ngeo/search/createLocationSearchBloodhound').createLocationSearchBloodhoundFunction}
    */
   let ngeoCreateLocationSearchBloodhound;
 

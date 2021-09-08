@@ -20,18 +20,18 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import ngeoMiscFilters from 'ngeo/misc/filters.js';
-import ngeoGeometryType from 'ngeo/GeometryType.js';
-import ngeoInteractionMeasureArea from 'ngeo/interaction/MeasureArea.js';
-import ngeoInteractionMeasureLength from 'ngeo/interaction/MeasureLength.js';
-import ngeoMiscEventHelper from 'ngeo/misc/EventHelper.js';
-import {toMulti} from 'ngeo/utils.js';
-import {getUid as olUtilGetUid} from 'ol/util.js';
-import olCollection from 'ol/Collection.js';
-import {listen} from 'ol/events.js';
-import olFeature from 'ol/Feature.js';
-import olInteractionDraw from 'ol/interaction/Draw.js';
-import olStyleStyle from 'ol/style/Style.js';
+import ngeoMiscFilters from 'ngeo/misc/filters';
+import ngeoGeometryType from 'ngeo/GeometryType';
+import ngeoInteractionMeasureArea from 'ngeo/interaction/MeasureArea';
+import ngeoInteractionMeasureLength from 'ngeo/interaction/MeasureLength';
+import ngeoMiscEventHelper from 'ngeo/misc/EventHelper';
+import {toMulti} from 'ngeo/utils';
+import {getUid as olUtilGetUid} from 'ol/util';
+import olCollection from 'ol/Collection';
+import {listen} from 'ol/events';
+import olFeature from 'ol/Feature';
+import olInteractionDraw from 'ol/interaction/Draw';
+import olStyleStyle from 'ol/style/Style';
 
 /**
  * @type {angular.IModule}
@@ -67,11 +67,11 @@ const myModule = angular.module('ngeoCreatefeature', [ngeoMiscEventHelper.name, 
  *
  * @htmlAttribute {boolean} ngeo-createfeature-active Whether the directive is
  *     active or not.
- * @htmlAttribute {import("ol/Collection.js").default} ngeo-createfeature-features The collection of
+ * @htmlAttribute {import('ol/Collection').default} ngeo-createfeature-features The collection of
  *     features where to add those created by this directive.
  * @htmlAttribute {string} ngeo-createfeature-geom-type Determines the type
  *     of geometry this directive should draw.
- * @htmlAttribute {import("ol/Map.js").default} ngeo-createfeature-map The map.
+ * @htmlAttribute {import('ol/Map').default} ngeo-createfeature-map The map.
  *
  * @return {angular.IDirective} The directive specs.
  * @ngdoc directive
@@ -99,8 +99,8 @@ myModule.directive('ngeoCreatefeature', editingCreateFeatureComponent);
  * @param {angular.auto.IInjectorService} $injector Angular injector service.
  * @param {angular.IScope} $scope Scope.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
- * @param {import("ngeo/misc/EventHelper.js").EventHelper} ngeoEventHelper Ngeo event helper service
- * @param {import('ngeo/options.js').ngeoSnappingTolerance} ngeoSnappingTolerance The tolerance.
+ * @param {import('ngeo/misc/EventHelper').EventHelper} ngeoEventHelper Ngeo event helper service
+ * @param {import('ngeo/options').ngeoSnappingTolerance} ngeoSnappingTolerance The tolerance.
  * @class
  * @hidden
  * @ngInject
@@ -123,7 +123,7 @@ export function Controller(
   this.active = false;
 
   /**
-   * @type {?import("ol/Collection.js").default<olFeature<import("ol/geom/Geometry.js").default>>|import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>}
+   * @type {?import('ol/Collection').default<olFeature<import('ol/geom/Geometry').default>>|import('ol/source/Vector').default<import('ol/geom/Geometry').default>}
    */
   this.features = null;
 
@@ -133,7 +133,7 @@ export function Controller(
   this.geomType = '';
 
   /**
-   * @type {?import("ol/Map.js").default}
+   * @type {?import('ol/Map').default}
    */
   this.map = null;
 
@@ -163,7 +163,7 @@ export function Controller(
   this.timeout_ = $timeout;
 
   /**
-   * @type {import("ngeo/misc/EventHelper.js").EventHelper}
+   * @type {import('ngeo/misc/EventHelper').EventHelper}
    */
   this.ngeoEventHelper_ = ngeoEventHelper;
 
@@ -173,14 +173,14 @@ export function Controller(
   this.injector_ = $injector;
 
   /**
-   * @type {import('ngeo/options.js').ngeoSnappingTolerance}
+   * @type {import('ngeo/options').ngeoSnappingTolerance}
    */
   this.ngeoSnappingTolerance_ = ngeoSnappingTolerance;
 
   /**
    * The draw or measure interaction responsible of drawing the vector feature.
    * The actual type depends on the geometry type.
-   * @type {?import("ol/interaction/Interaction.js").default}
+   * @type {?import('ol/interaction/Interaction').default}
    */
   this.interaction_ = null;
 
@@ -218,7 +218,7 @@ Controller.prototype.$onInit = function () {
       'Click to continue drawing<br/>' + 'Double-click or click last point to finish'
     );
 
-    /** @type {import('ngeo/interaction/Measure.js').MeasureOptions} */
+    /** @type {import('ngeo/interaction/Measure').MeasureOptions} */
     const options = {
       style: new olStyleStyle(),
       startMsg: this.compile_(`<div translate>${helpMsg}</div>`)(this.scope_)[0],
@@ -261,7 +261,7 @@ Controller.prototype.$onInit = function () {
       listen(
         interaction,
         'drawend',
-        /** @type {import('ol/events.js').ListenerFunction } */ (this.handleDrawEnd_),
+        /** @type {import('ol/events').ListenerFunction } */ (this.handleDrawEnd_),
         this
       )
     );
@@ -274,7 +274,7 @@ Controller.prototype.$onInit = function () {
       listen(
         interaction,
         'measureend',
-        /** @type {import('ol/events.js').ListenerFunction } */ (this.handleDrawEnd_),
+        /** @type {import('ol/events').ListenerFunction } */ (this.handleDrawEnd_),
         this
       )
     );
@@ -284,11 +284,11 @@ Controller.prototype.$onInit = function () {
 /**
  * Called when a feature is finished being drawn. Add the feature to the
  * collection.
- * @param {import('lib/ol.interaction.Draw.js').DrawEvent|import('ngeo/CustomEvent.js').default<import('lib/ol.interaction.Draw.js').DrawEvent>} evt
+ * @param {import('lib/ol.interaction.Draw').DrawEvent|import('ngeo/CustomEvent').default<import('lib/ol.interaction.Draw').DrawEvent>} evt
  *    Event.
  */
 Controller.prototype.handleDrawEnd_ = function (evt) {
-  /** @type {import('lib/ol.interaction.Draw.js').DrawEvent} */
+  /** @type {import('lib/ol.interaction.Draw').DrawEvent} */
   // @ts-ignore
   const event = evt.detail ? evt.detail : evt;
   const sketch = event.feature;

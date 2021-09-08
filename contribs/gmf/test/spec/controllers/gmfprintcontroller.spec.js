@@ -20,9 +20,9 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import gmfTestDataPrintcapabilities from '../data/printcapabilities.js';
-import olMap from 'ol/Map.js';
-import olView from 'ol/View.js';
+import gmfTestDataPrintcapabilities from '../data/printcapabilities';
+import olMap from 'ol/Map';
+import olView from 'ol/View';
 
 describe('GmfPrintController', () => {
   let $controller;
@@ -30,7 +30,7 @@ describe('GmfPrintController', () => {
   let $rootScope;
   /** @type {angular.IScope} */
   let $scope;
-  /** @type {import('gmf/print/component.js').PrintController} */
+  /** @type {import('gmf/print/component').PrintController} */
   let gmfPrintCtrl;
 
   beforeEach(

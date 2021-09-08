@@ -20,13 +20,13 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import gmfRasterRasterService from 'gmf/raster/RasterService.js';
-import ngeoInteractionMeasurePointMobile from 'ngeo/interaction/MeasurePointMobile.js';
-import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
-import {interactionDecoration} from 'ngeo/misc/decorate.js';
-import {listen, unlistenByKey} from 'ol/events.js';
-import MobileDraw from 'ngeo/interaction/MobileDraw.js';
-import {buildStyle} from 'ngeo/options.js';
+import gmfRasterRasterService from 'gmf/raster/RasterService';
+import ngeoInteractionMeasurePointMobile from 'ngeo/interaction/MeasurePointMobile';
+import ngeoMiscDebounce from 'ngeo/misc/debounce';
+import {interactionDecoration} from 'ngeo/misc/decorate';
+import {listen, unlistenByKey} from 'ol/events';
+import MobileDraw from 'ngeo/interaction/MobileDraw';
+import {buildStyle} from 'ngeo/options';
 
 /**
  * @type {angular.IModule}
@@ -82,7 +82,7 @@ myModule.run(
  *
  * @htmlAttribute {boolean} gmf-mobile-measurepoint-active Used to active
  * or deactivate the component.
- * @htmlAttribute {import("ol/Map.js").default} gmf-mobile-measurepoint-map The map.
+ * @htmlAttribute {import('ol/Map').default} gmf-mobile-measurepoint-map The map.
  * @param {string|function(JQuery=, angular.IAttributes=): string} gmfMobileMeasurePointTemplateUrl
  *     Template URL for the directive.
  * @return {angular.IDirective} The Directive Definition Object.
@@ -121,9 +121,9 @@ myModule.directive('gmfMobileMeasurepoint', mobileMeasurePointComponent);
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @param {angular.IScope} $scope Angular scope.
  * @param {angular.IFilterService} $filter Angular filter service.
- * @param {import("gmf/raster/RasterService.js").RasterService} gmfRaster gmf Raster service.
- * @param {import("ngeo/misc/debounce.js").miscDebounce<function(): void>} ngeoDebounce ngeo Debounce factory.
- * @param {import('gmf/options.js').gmfMobileMeasurePointOptions} gmfMobileMeasurePointOptions The options.
+ * @param {import('gmf/raster/RasterService').RasterService} gmfRaster gmf Raster service.
+ * @param {import('ngeo/misc/debounce').miscDebounce<function(): void>} ngeoDebounce ngeo Debounce factory.
+ * @param {import('gmf/options').gmfMobileMeasurePointOptions} gmfMobileMeasurePointOptions The options.
  * @class
  * @hidden
  * @ngInject
@@ -139,17 +139,17 @@ export function MobileMeasurePointController(
   gmfMobileMeasurePointOptions
 ) {
   /**
-   * @type {import('gmf/options.js').gmfMobileMeasurePointOptions}
+   * @type {import('gmf/options').gmfMobileMeasurePointOptions}
    */
   this.options = gmfMobileMeasurePointOptions;
 
   /**
-   * @type {import("gmf/raster/RasterService.js").RasterService}
+   * @type {import('gmf/raster/RasterService').RasterService}
    */
   this.gmfRaster_ = gmfRaster;
 
   /**
-   * @type {import("ngeo/misc/debounce.js").miscDebounce<function(): void>}
+   * @type {import('ngeo/misc/debounce').miscDebounce<function(): void>}
    */
   this.ngeoDebounce_ = ngeoDebounce;
 
@@ -164,7 +164,7 @@ export function MobileMeasurePointController(
   this.$filter_ = $filter;
 
   /**
-   * @type {?import("ol/Map.js").default}
+   * @type {?import('ol/Map').default}
    */
   this.map = null;
 
@@ -185,18 +185,18 @@ export function MobileMeasurePointController(
   );
 
   /**
-   * @type {?import("ngeo/interaction/MeasurePointMobile.js").default}
+   * @type {?import('ngeo/interaction/MeasurePointMobile').default}
    */
   this.measure = null;
 
   /**
-   * @type {?import("ngeo/interaction/MobileDraw.js").default}
+   * @type {?import('ngeo/interaction/MobileDraw').default}
    */
   this.drawInteraction = null;
 
   /**
    * The key for map view 'propertychange' event.
-   * @type {?import("ol/events.js").EventsKey}
+   * @type {?import('ol/events').EventsKey}
    */
   this.mapViewPropertyChangeEventKey_ = null;
 }
@@ -206,7 +206,7 @@ export function MobileMeasurePointController(
  */
 MobileMeasurePointController.prototype.init = function () {
   this.measure = new ngeoInteractionMeasurePointMobile(
-    /** @type {import('ngeo/misc/filters.js').numberCoordinates} */ (this.$filter_('ngeoNumberCoordinates')),
+    /** @type {import('ngeo/misc/filters').numberCoordinates} */ (this.$filter_('ngeoNumberCoordinates')),
     this.options.format,
     {
       decimals: this.options.decimals,

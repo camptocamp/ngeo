@@ -19,10 +19,10 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import ngeoInteractionDrawAzimut from 'ngeo/interaction/DrawAzimut.js';
-import ngeoInteractionMeasure, {getFormattedLength} from 'ngeo/interaction/Measure.js';
-import LineString from 'ol/geom/LineString.js';
-import GeometryCollection from 'ol/geom/GeometryCollection.js';
+import ngeoInteractionDrawAzimut from 'ngeo/interaction/DrawAzimut';
+import ngeoInteractionMeasure, {getFormattedLength} from 'ngeo/interaction/Measure';
+import LineString from 'ol/geom/LineString';
+import GeometryCollection from 'ol/geom/GeometryCollection';
 
 /**
  * Interaction dedicated to measure length.
@@ -31,10 +31,10 @@ import GeometryCollection from 'ol/geom/GeometryCollection.js';
  */
 export default class extends ngeoInteractionMeasure {
   /**
-   * @fires import('ngeo/interaction/Measure.js').MeasureEvent
-   * @param {import('ngeo/misc/filters.js').unitPrefix} unitPrefixFormat The format function
-   * @param {import('ngeo/misc/filters.js').formatNumber} numberFormat The format function
-   * @param {import('ngeo/interaction/Measure.js').MeasureOptions} [options] Options
+   * @fires import('ngeo/interaction/Measure').MeasureEvent
+   * @param {import('ngeo/misc/filters').unitPrefix} unitPrefixFormat The format function
+   * @param {import('ngeo/misc/filters').formatNumber} numberFormat The format function
+   * @param {import('ngeo/interaction/Measure').MeasureOptions} [options] Options
    */
   constructor(unitPrefixFormat, numberFormat, options = {}) {
     super(options);
@@ -53,23 +53,23 @@ export default class extends ngeoInteractionMeasure {
 
     /**
      * The format function
-     * @type {import('ngeo/misc/filters.js').formatNumber}
+     * @type {import('ngeo/misc/filters').formatNumber}
      */
     this.numberFormat = numberFormat;
 
     /**
      * The format function
-     * @type {import('ngeo/misc/filters.js').unitPrefix}
+     * @type {import('ngeo/misc/filters').unitPrefix}
      */
     this.unitPrefixFormat = unitPrefixFormat;
   }
 
   /**
-   * @param {import("ol/style/Style.js").StyleLike} style The sketchStyle used for the drawing
+   * @param {import('ol/style/Style').StyleLike} style The sketchStyle used for the drawing
    *    interaction.
-   * @param {import('ol/source/Vector.js').default<import("ol/geom/LineString.js").default>} source Vector source.
-   * @return {?import("ol/interaction/Draw.js").default|import("ngeo/interaction/DrawAzimut.js").default|
-   *    import("ngeo/interaction/MobileDraw.js").default} The interaction
+   * @param {import('ol/source/Vector').default<import('ol/geom/LineString').default>} source Vector source.
+   * @return {?import('ol/interaction/Draw').default|import('ngeo/interaction/DrawAzimut').default|
+   *    import('ngeo/interaction/MobileDraw').default} The interaction
    */
   createDrawInteraction(style, source) {
     return new ngeoInteractionDrawAzimut({
@@ -79,7 +79,7 @@ export default class extends ngeoInteractionMeasure {
   }
 
   /**
-   * @param {function(string, ?import("ol/coordinate.js").Coordinate): void} callback The function
+   * @param {function(string, ?import('ol/coordinate').Coordinate): void} callback The function
    *     to be called.
    */
   handleMeasure(callback) {
@@ -108,7 +108,7 @@ export default class extends ngeoInteractionMeasure {
 
 /**
  * Compute azimut from a 2 points line.
- * @param {import("ol/geom/LineString.js").default} line LineString.
+ * @param {import('ol/geom/LineString').default} line LineString.
  * @return {number} Azimut value.
  * @hidden
  */
@@ -123,9 +123,9 @@ export function getAzimut(line) {
 
 /**
  * Format measure output of azimut.
- * @param {import("ol/geom/LineString.js").default} line LineString.
+ * @param {import('ol/geom/LineString').default} line LineString.
  * @param {number|undefined} decimals Decimals.
- * @param {import('ngeo/misc/filters.js').formatNumber} format The format function.
+ * @param {import('ngeo/misc/filters').formatNumber} format The format function.
  * @return {string} Formatted measure.
  * @hidden
  */
@@ -136,12 +136,12 @@ export function getFormattedAzimut(line, decimals, format) {
 
 /**
  * Format measure output of azimut and radius.
- * @param {import("ol/geom/LineString.js").default} line LineString.
- * @param {import("ol/proj/Projection.js").default} projection Projection of the polygon coords.
+ * @param {import('ol/geom/LineString').default} line LineString.
+ * @param {import('ol/proj/Projection').default} projection Projection of the polygon coords.
  * @param {number|undefined} decimals Decimals.
  * @param {number|undefined} precision Precision.
- * @param {import('ngeo/misc/filters.js').unitPrefix} formatLength The format function.
- * @param {import('ngeo/misc/filters.js').formatNumber} formatAzimut The format function.
+ * @param {import('ngeo/misc/filters').unitPrefix} formatLength The format function.
+ * @param {import('ngeo/misc/filters').formatNumber} formatAzimut The format function.
  * @return {string} Formatted measure.
  * @hidden
  */

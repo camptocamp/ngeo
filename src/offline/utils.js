@@ -19,12 +19,12 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import olLayerGroup from 'ol/layer/Group.js';
+import olLayerGroup from 'ol/layer/Group';
 
 /**
- * @param {import("ol/layer/Base.js").default} layer A layer tree.
- * @param {!import("ol/layer/Group.js").default[]} ancestors The groups to which the layer belongs to.
- * @param {function(import("ol/layer/Base.js").default, import("ol/layer/Group.js").default[]): boolean} visitor
+ * @param {import('ol/layer/Base').default} layer A layer tree.
+ * @param {!import('ol/layer/Group').default[]} ancestors The groups to which the layer belongs to.
+ * @param {function(import('ol/layer/Base').default, import('ol/layer/Group').default[]): boolean} visitor
  *    A function which will return false if descend must stop.
  */
 export function traverseLayer(layer, ancestors, visitor) {

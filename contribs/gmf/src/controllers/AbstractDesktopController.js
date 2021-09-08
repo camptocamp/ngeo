@@ -22,30 +22,30 @@
 import angular from 'angular';
 import gmfControllersAbstractAPIController, {
   AbstractAPIController,
-} from 'gmf/controllers/AbstractAPIController.js';
-import gmfContextualdataModule from 'gmf/contextualdata/module.js';
-import gmfDatasourceDataSourceBeingFiltered from 'gmf/datasource/DataSourceBeingFiltered.js';
-import gmfDrawingModule from 'gmf/drawing/module.js';
-import gmfEditingModule from 'gmf/editing/module.js';
-import gmfFiltersModule from 'gmf/filters/module.js';
-import gmfHeaderModule from 'gmf/header/module.js';
-import gmfPermalinkShareComponent from 'gmf/permalink/shareComponent.js';
-import gmfPrintModule from 'gmf/print/module.js';
-import gmfProfileModule from 'gmf/profile/module.js';
-import gmfRasterComponent from 'gmf/raster/component.js';
-import ngeoMapswipeModule from 'ngeo/map/swipe.js';
-import ngeoDrawFeatures from 'ngeo/draw/features.js';
-import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
-import ngeoQueryPanelComponent from 'ngeo/query/panelComponent.js';
-import gmfImportModule from 'gmf/import/module.js';
-import olCollection from 'ol/Collection.js';
-import {listen} from 'ol/events.js';
-import olLayerVector from 'ol/layer/Vector.js';
-import olSourceVector from 'ol/source/Vector.js';
-import olStyleFill from 'ol/style/Fill.js';
-import olStyleStroke from 'ol/style/Stroke.js';
-import olStyleStyle from 'ol/style/Style.js';
-import olStyleText from 'ol/style/Text.js';
+} from 'gmf/controllers/AbstractAPIController';
+import gmfContextualdataModule from 'gmf/contextualdata/module';
+import gmfDatasourceDataSourceBeingFiltered from 'gmf/datasource/DataSourceBeingFiltered';
+import gmfDrawingModule from 'gmf/drawing/module';
+import gmfEditingModule from 'gmf/editing/module';
+import gmfFiltersModule from 'gmf/filters/module';
+import gmfHeaderModule from 'gmf/header/module';
+import gmfPermalinkShareComponent from 'gmf/permalink/shareComponent';
+import gmfPrintModule from 'gmf/print/module';
+import gmfProfileModule from 'gmf/profile/module';
+import gmfRasterComponent from 'gmf/raster/component';
+import ngeoMapswipeModule from 'ngeo/map/swipe';
+import ngeoDrawFeatures from 'ngeo/draw/features';
+import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate';
+import ngeoQueryPanelComponent from 'ngeo/query/panelComponent';
+import gmfImportModule from 'gmf/import/module';
+import olCollection from 'ol/Collection';
+import {listen} from 'ol/events';
+import olLayerVector from 'ol/layer/Vector';
+import olSourceVector from 'ol/source/Vector';
+import olStyleFill from 'ol/style/Fill';
+import olStyleStroke from 'ol/style/Stroke';
+import olStyleStyle from 'ol/style/Style';
+import olStyleText from 'ol/style/Text';
 
 import 'gmf/controllers/vars_desktop.scss';
 import 'gmf/controllers/desktop.scss';
@@ -187,7 +187,7 @@ export class AbstractDesktopController extends AbstractAPIController {
     );
 
     /**
-     * @type {import("ol/style/Style.js").default}
+     * @type {import('ol/style/Style').default}
      */
     this.streetViewStyle = new olStyleStyle({
       text: new olStyleText({
@@ -231,7 +231,7 @@ export class AbstractDesktopController extends AbstractAPIController {
     const ngeoFeatureHelper = $injector.get('ngeoFeatureHelper');
 
     /**
-     * @type {import("ol/layer/Vector.js").default<import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>>}
+     * @type {import('ol/layer/Vector').default<import('ol/source/Vector').default<import('ol/geom/Geometry').default>>}
      */
     this.editFeatureVectorLayer = new olLayerVector({
       source: new olSourceVector({
@@ -245,18 +245,18 @@ export class AbstractDesktopController extends AbstractAPIController {
 
     /**
      * The ngeo ToolActivate manager service.
-     * @type {import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr}
+     * @type {import('ngeo/misc/ToolActivateMgr').ToolActivateMgr}
      */
     this.ngeoToolActivateMgr = $injector.get('ngeoToolActivateMgr');
 
     /**
-     * @type {import('gmf/datasource/DataSourceBeingFiltered.js').DataSourceBeingFiltered}
+     * @type {import('gmf/datasource/DataSourceBeingFiltered').DataSourceBeingFiltered}
      */
     this.gmfDataSourceBeingFiltered = $injector.get('gmfDataSourceBeingFiltered');
 
     /**
      * The gmf layer being swipe.
-     * @type {import('gmf/datasource/LayerBeingSwipe.js').LayerBeingSwipe}
+     * @type {import('gmf/datasource/LayerBeingSwipe').LayerBeingSwipe}
      */
     this.gmfLayerBeingSwipe = $injector.get('gmfLayerBeingSwipe');
 
@@ -285,7 +285,7 @@ export class AbstractDesktopController extends AbstractAPIController {
     this.ngeoToolActivateMgr.registerTool('mapTools', routingPanelActive, false);
 
     /**
-     * @type {?import("ol/geom/LineString.js").default}
+     * @type {?import('ol/geom/LineString').default}
      */
     this.profileLine = null;
 

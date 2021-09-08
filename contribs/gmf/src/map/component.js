@@ -20,11 +20,11 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import gmfPermalinkModule from 'gmf/permalink/module.js';
-import gmfEditingSnapping from 'gmf/editing/Snapping.js';
-import gmfFileDropZoneModule from 'gmf/dropfile/module.js';
-import ngeoMapModule from 'ngeo/map/module.js';
-import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr.js';
+import gmfPermalinkModule from 'gmf/permalink/module';
+import gmfEditingSnapping from 'gmf/editing/Snapping';
+import gmfFileDropZoneModule from 'gmf/dropfile/module';
+import ngeoMapModule from 'ngeo/map/module';
+import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr';
 
 /**
  * @type {angular.IModule}
@@ -56,7 +56,7 @@ myModule.run(
  *
  *      <gmf-map gmf-map-map="mainCtrl.map"></gmf-map>
  *
- * @htmlAttribute {import("ol/Map.js").default} gmf-map-map The map.
+ * @htmlAttribute {import('ol/Map').default} gmf-map-map The map.
  * @htmlAttribute {boolean|undefined} gmf-map-manage-resize Whether to update
  *     the size of the map on browser window resize.
  * @htmlAttribute {boolean|undefined} gmf-map-resize-transition The duration
@@ -84,9 +84,9 @@ function gmfMapComponent() {
 myModule.directive('gmfMap', gmfMapComponent);
 
 /**
- * @param {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
- * @param {import("gmf/permalink/Permalink.js").PermalinkService} gmfPermalink The gmf permalink service.
- * @param {import("gmf/editing/Snapping.js").EditingSnappingService} gmfSnapping The gmf snapping service.
+ * @param {import('ngeo/map/FeatureOverlayMgr').FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
+ * @param {import('gmf/permalink/Permalink').PermalinkService} gmfPermalink The gmf permalink service.
+ * @param {import('gmf/editing/Snapping').EditingSnappingService} gmfSnapping The gmf snapping service.
  * @param {angular.auto.IInjectorService} $injector Main injector.
  * @class
  * @hidden
@@ -98,7 +98,7 @@ export function Controller(ngeoFeatureOverlayMgr, gmfPermalink, gmfSnapping, $in
   // Scope properties
 
   /**
-   * @type {?import("ol/Map.js").default}
+   * @type {?import('ol/Map').default}
    */
   this.map = null;
 
@@ -115,17 +115,17 @@ export function Controller(ngeoFeatureOverlayMgr, gmfPermalink, gmfSnapping, $in
   // Injected properties
 
   /**
-   * @type {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr}
+   * @type {import('ngeo/map/FeatureOverlayMgr').FeatureOverlayMgr}
    */
   this.ngeoFeatureOverlayMgr_ = ngeoFeatureOverlayMgr;
 
   /**
-   * @type {import("gmf/permalink/Permalink.js").PermalinkService}
+   * @type {import('gmf/permalink/Permalink').PermalinkService}
    */
   this.gmfPermalink_ = gmfPermalink;
 
   /**
-   * @type {import("gmf/editing/Snapping.js").EditingSnappingService}
+   * @type {import('gmf/editing/Snapping').EditingSnappingService}
    */
   this.gmfSnapping_ = gmfSnapping;
 

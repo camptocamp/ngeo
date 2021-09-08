@@ -20,7 +20,7 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import GridConfig from 'ngeo/grid/Config.js';
+import GridConfig from 'ngeo/grid/Config';
 
 describe('ngeo.grid.component', () => {
   /** @type {angular.IController} */

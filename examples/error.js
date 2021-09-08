@@ -20,12 +20,12 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import olMap from 'ol/Map.js';
+import olMap from 'ol/Map';
 
-import olView from 'ol/View.js';
-import olLayerTile from 'ol/layer/Tile.js';
-import olSourceOSM from 'ol/source/OSM.js';
-import ngeoMapModule from 'ngeo/map/module.js';
+import olView from 'ol/View';
+import olLayerTile from 'ol/layer/Tile';
+import olSourceOSM from 'ol/source/OSM';
+import ngeoMapModule from 'ngeo/map/module';
 
 /** @type {angular.IModule} **/
 const myModule = angular.module('app', ['gettext', ngeoMapModule.name]);
@@ -36,7 +36,7 @@ const myModule = angular.module('app', ['gettext', ngeoMapModule.name]);
  */
 function MainController() {
   /**
-   * @type {import("ol/Map.js").default}
+   * @type {import('ol/Map').default}
    */
   this.map = new olMap({
     layers: [

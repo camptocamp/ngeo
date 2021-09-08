@@ -20,24 +20,24 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import './notification.css';
-import 'bootstrap/js/src/tooltip.js';
+import 'bootstrap/js/src/tooltip';
 import angular from 'angular';
-import {MessageType} from 'ngeo/message/Message.js';
+import {MessageType} from 'ngeo/message/Message';
 
-import ngeoMessageNotification from 'ngeo/message/Notification.js';
+import ngeoMessageNotification from 'ngeo/message/Notification';
 
 /** @type {angular.IModule} **/
 const myModule = angular.module('app', ['gettext', ngeoMessageNotification.name]);
 
 /**
- * @param {import("ngeo/message/Notification.js").MessageNotification} ngeoNotification
+ * @param {import('ngeo/message/Notification').MessageNotification} ngeoNotification
  *    Ngeo notification service.
  * @ngInject
  * @class
  */
 function MainController(ngeoNotification) {
   /**
-   * @type {import("ngeo/message/Notification.js").MessageNotification}
+   * @type {import('ngeo/message/Notification').MessageNotification}
    */
   this.notification = ngeoNotification;
 

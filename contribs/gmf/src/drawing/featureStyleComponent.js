@@ -20,13 +20,13 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import {getUid as olUtilGetUid} from 'ol/util.js';
-import {listen, unlistenByKey} from 'ol/events.js';
-import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties.js';
+import {getUid as olUtilGetUid} from 'ol/util';
+import {listen, unlistenByKey} from 'ol/events';
+import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties';
 
-import ngeoMiscColorpickerComponent from 'ngeo/misc/colorpickerComponent.js';
+import ngeoMiscColorpickerComponent from 'ngeo/misc/colorpickerComponent';
 
-import ngeoMiscFeatureHelper, {ArrowDirections, ArrowPositions} from 'ngeo/misc/FeatureHelper.js';
+import ngeoMiscFeatureHelper, {ArrowDirections, ArrowPositions} from 'ngeo/misc/FeatureHelper';
 
 /**
  * @type {angular.IModule}
@@ -57,7 +57,7 @@ myModule.run(
  *         gmf-featurestyle-feature="ctrl.selectedFeature">
  *     </gmf-featurestyle>
  *
- * @htmlAttribute {import("ol/Feature.js").default<import("ol/geom/Geometry.js").default>} gmf-featurestyle-feature The feature.
+ * @htmlAttribute {import('ol/Feature').default<import('ol/geom/Geometry').default>} gmf-featurestyle-feature The feature.
  * @return {angular.IDirective} The directive specs.
  * @ngInject
  * @ngdoc directive
@@ -78,7 +78,7 @@ myModule.directive('gmfFeaturestyle', drawingDrawFeatureComponent);
 
 /**
  * @param {angular.IScope} $scope Angular scope.
- * @param {import("ngeo/misc/FeatureHelper.js").FeatureHelper} ngeoFeatureHelper Gmf feature helper service.
+ * @param {import('ngeo/misc/FeatureHelper').FeatureHelper} ngeoFeatureHelper Gmf feature helper service.
  * @class
  * @hidden
  * @ngInject
@@ -92,7 +92,7 @@ export function Controller($scope, ngeoFeatureHelper) {
   this.uid = olUtilGetUid(this);
 
   /**
-   * @type {?import("ol/Feature.js").default<import("ol/geom/Geometry.js").default>}
+   * @type {?import('ol/Feature').default<import('ol/geom/Geometry').default>}
    */
   this.feature = null;
 
@@ -102,7 +102,7 @@ export function Controller($scope, ngeoFeatureHelper) {
   this.scope_ = $scope;
 
   /**
-   * @type {import("ngeo/misc/FeatureHelper.js").FeatureHelper}
+   * @type {import('ngeo/misc/FeatureHelper').FeatureHelper}
    */
   this.featureHelper_ = ngeoFeatureHelper;
 
@@ -137,7 +137,7 @@ export function Controller($scope, ngeoFeatureHelper) {
   $scope.$watch(() => this.color, this.handleColorSet_.bind(this));
 
   /**
-   * @type {import("ol/events.js").EventsKey[]}
+   * @type {import('ol/events').EventsKey[]}
    */
   this.featureListenerKeys_ = [];
 
@@ -152,8 +152,8 @@ export function Controller($scope, ngeoFeatureHelper) {
 
 /**
  * Called when a new feature is set, which can also be null.
- * @param {?import("ol/Feature.js").default<import("ol/geom/Geometry.js").default>} newFeature New feature or null value.
- * @param {?import("ol/Feature.js").default<import("ol/geom/Geometry.js").default>} previousFeature Previous feature or null value.
+ * @param {?import('ol/Feature').default<import('ol/geom/Geometry').default>} newFeature New feature or null value.
+ * @param {?import('ol/Feature').default<import('ol/geom/Geometry').default>} previousFeature Previous feature or null value.
  */
 Controller.prototype.handleFeatureSet_ = function (newFeature, previousFeature) {
   const keys = this.featureListenerKeys_;

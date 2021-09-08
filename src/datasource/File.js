@@ -19,20 +19,20 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import ngeoDatasourceDataSource from 'ngeo/datasource/DataSource.js';
-import olCollection from 'ol/Collection.js';
-import olLayerVector from 'ol/layer/Vector.js';
-import olSourceVector from 'ol/source/Vector.js';
+import ngeoDatasourceDataSource from 'ngeo/datasource/DataSource';
+import olCollection from 'ol/Collection';
+import olLayerVector from 'ol/layer/Vector';
+import olSourceVector from 'ol/source/Vector';
 
 /**
  * The options required to create a `File`.
  *
  * extends DataSourceOptions
  * @typedef {Object} FileOptions
- * @property {import("ol/Collection.js").default<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>} [features]
- *    Collection of `import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>` objects.
- * @property {import('ngeo/format/Attribute.js').Attribute[]} [attributes] (DataSourceOptions)
- * @property {import('ngeo/datasource/OGC.js').DimensionsFiltersConfig} [dimensionsFiltersConfig]
+ * @property {import('ol/Collection').default<import('ol/Feature').default<import('ol/geom/Geometry').default>>} [features]
+ *    Collection of `import('ol/Feature').default<import('ol/geom/Geometry').default>` objects.
+ * @property {import('ngeo/format/Attribute').Attribute[]} [attributes] (DataSourceOptions)
+ * @property {import('ngeo/datasource/OGC').DimensionsFiltersConfig} [dimensionsFiltersConfig]
  *    (DataSourceOptions)
  * @property {number} id (DataSourceOptions)
  * @property {string} [identifierAttribute] (DataSourceOptions)
@@ -58,13 +58,13 @@ export default class extends ngeoDatasourceDataSource {
     // === STATIC properties (i.e. that never change) ===
 
     /**
-     * @type {import("ol/Collection.js").default<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>}
+     * @type {import('ol/Collection').default<import('ol/Feature').default<import('ol/geom/Geometry').default>>}
      * @private
      */
     this.featuresCollection_ = options.features || new olCollection();
 
     /**
-     * @type {import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>}
+     * @type {import('ol/source/Vector').default<import('ol/geom/Geometry').default>}
      * @private
      */
     this.source_ = new olSourceVector({
@@ -73,7 +73,7 @@ export default class extends ngeoDatasourceDataSource {
     });
 
     /**
-     * @type {import("ol/layer/Vector.js").default<import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>>}
+     * @type {import('ol/layer/Vector').default<import('ol/source/Vector').default<import('ol/geom/Geometry').default>>}
      * @private
      */
     this.layer_ = new olLayerVector({
@@ -86,7 +86,7 @@ export default class extends ngeoDatasourceDataSource {
   // ========================================
 
   /**
-   * @return {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>[]} Features
+   * @return {import('ol/Feature').default<import('ol/geom/Geometry').default>[]} Features
    */
   get features() {
     return this.featuresCollection_.getArray();
@@ -97,14 +97,14 @@ export default class extends ngeoDatasourceDataSource {
   // =======================================
 
   /**
-   * @return {import("ol/Collection.js").default<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>} Features collection
+   * @return {import('ol/Collection').default<import('ol/Feature').default<import('ol/geom/Geometry').default>>} Features collection
    */
   get featuresCollection() {
     return this.featuresCollection_;
   }
 
   /**
-   * @return {import("ol/layer/Vector.js").default<import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>>} Vector layer.
+   * @return {import('ol/layer/Vector').default<import('ol/source/Vector').default<import('ol/geom/Geometry').default>>} Vector layer.
    */
   get layer() {
     return this.layer_;
@@ -115,7 +115,7 @@ export default class extends ngeoDatasourceDataSource {
   // ===================================
 
   /**
-   * @return {import("ol/extent.js").Extent} Extent.
+   * @return {import('ol/extent').Extent} Extent.
    */
   get extent() {
     return this.source_.getExtent();

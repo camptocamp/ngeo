@@ -22,7 +22,7 @@
 // @ts-nocheck
 /* eslint valid-jsdoc: 0 */
 import angular from 'angular';
-import ngeoMainmodule from 'ngeo/mainmodule.js';
+import ngeoMainmodule from 'ngeo/mainmodule';
 
 const myModule = angular.module('app', []);
 

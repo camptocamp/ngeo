@@ -20,8 +20,8 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import {modulo} from 'ol/math.js';
-import {padNumber} from 'ol/string.js';
+import {modulo} from 'ol/math';
+import {padNumber} from 'ol/string';
 
 /**
  * Format a number with a precision.
@@ -52,7 +52,7 @@ import {padNumber} from 'ol/string.js';
  * - opt_template Optional template. Default to '{x} {y}'.
  *     Where "{x}" will be replaced by the easting coordinate and "{y}" by the northing one. Note:
  *     Use a html entity to use the semicolon symbol into a template.
- * @typedef {function(import("ol/coordinate.js").Coordinate, (number|string)=, string=, (boolean|string)=): string} numberCoordinates
+ * @typedef {function(import('ol/coordinate').Coordinate, (number|string)=, string=, (boolean|string)=): string} numberCoordinates
  */
 
 /**
@@ -63,7 +63,7 @@ import {padNumber} from 'ol/string.js';
  * - opt_template Optional template. Default to '{x} {y}'.
  *     Where "{x}" will be replaced by the easting coordinate, {y} by the northing one. Note: Use a html
  *     entity to use the semicolon symbol into a template.
- * @typedef {function(import("ol/coordinate.js").Coordinate, (number|string)=, string=): string} dmsCoordinates
+ * @typedef {function(import('ol/coordinate').Coordinate, (number|string)=, string=): string} dmsCoordinates
  */
 
 /**
@@ -291,7 +291,7 @@ myModule.filter('ngeoUnitPrefix', UnitPrefixFilter);
  */
 export function NumberCoordinatesFilter($filter) {
   /**
-   * @param {import("ol/coordinate.js").Coordinate} coordinates Array of two numbers.
+   * @param {import('ol/coordinate').Coordinate} coordinates Array of two numbers.
    * @param {(number|string)} [opt_fractionDigits] Optional number of digit.
    *     Default to 0.
    * @param {string} [opt_template] Optional template. Default to '{x} {y}'.
@@ -351,7 +351,7 @@ export function DMSCoordinatesFilter() {
   };
 
   /**
-   * @param {import("ol/coordinate.js").Coordinate} coordinates Array of two numbers.
+   * @param {import('ol/coordinate').Coordinate} coordinates Array of two numbers.
    * @param {(number|string)} [opt_fractionDigits] Optional number of digit.
    *     Default to 0.
    * @param {string} [opt_template] Optional template. Default to
@@ -416,7 +416,7 @@ myModule.filter('ngeoTrustHtml', trustHtmlFilter);
  * @ngInject
  * @ngdoc filter
  * @param {angular.ISCEService} $sce Angular sce service.
- * @param {import('ngeo/options.js').ngeoStringToHtmlReplacements} ngeoStringToHtmlReplacements
+ * @param {import('ngeo/options').ngeoStringToHtmlReplacements} ngeoStringToHtmlReplacements
  *     List of replacements for string to html.
  * @ngname ngeoTrustHtmlAuto
  */

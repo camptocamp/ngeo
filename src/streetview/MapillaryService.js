@@ -18,7 +18,7 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-import {StreetviewService} from './Service.js';
+import {StreetviewService} from './Service';
 import 'mapillary-js/dist/mapillary.min.css';
 
 /**
@@ -27,8 +27,8 @@ import 'mapillary-js/dist/mapillary.min.css';
 export default class MapillaryService extends StreetviewService {
   /**
    * @param {angular.IScope} $scope Scope.
-   * @param {?import("ol/Map.js").default} map The map
-   * @param {(newCoordinates: import("ol/coordinate.js").Coordinate | null) => void} handlePanoramaPositionChange Position change handler
+   * @param {?import('ol/Map').default} map The map
+   * @param {(newCoordinates: import('ol/coordinate').Coordinate | null) => void} handlePanoramaPositionChange Position change handler
    * @param {string} clientId The key to access the mapillary api
    * @ngInject
    */
@@ -75,7 +75,7 @@ export default class MapillaryService extends StreetviewService {
 
   /**
    * Get image for the given location.
-   * @param {import("ol/coordinate.js").Coordinate} coordinates Map view projection coordinates.
+   * @param {import('ol/coordinate').Coordinate} coordinates Map view projection coordinates.
    */
   getPanorama(coordinates) {
     const lonLat = this.toLonLat_(coordinates);

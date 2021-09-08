@@ -19,9 +19,9 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import {setGeometryType} from 'ngeo/format/Attribute.js';
-import ngeoFormatAttributeType from 'ngeo/format/AttributeType.js';
-import {FormatNumberType} from 'ngeo/format/XSDAttribute.js';
+import {setGeometryType} from 'ngeo/format/Attribute';
+import ngeoFormatAttributeType from 'ngeo/format/AttributeType';
+import {FormatNumberType} from 'ngeo/format/XSDAttribute';
 
 /**
  * @typedef {Object} Element
@@ -43,14 +43,14 @@ export default class {
 
   /**
    * @param {Element[]} complexTypeElements Complex type element
-   * @return {import('ngeo/format/Attribute.js').Attribute[]} Attributes
+   * @return {import('ngeo/format/Attribute').Attribute[]} Attributes
    */
   read(complexTypeElements) {
     return complexTypeElements.map(this.readFromComplexTypeElement_);
   }
 
   /**
-   * @param {import('ngeo/format/Attribute.js').Attribute} attribute
+   * @param {import('ngeo/format/Attribute').Attribute} attribute
    * @param {string} type the type
    */
   setAttributeType(attribute, type) {
@@ -75,7 +75,7 @@ export default class {
 
   /**
    * @param {Element} object Complex type element
-   * @return {import('ngeo/format/Attribute.js').Attribute} Attribute
+   * @return {import('ngeo/format/Attribute').Attribute} Attribute
    * @private
    */
   readFromComplexTypeElement_(object) {
@@ -83,7 +83,7 @@ export default class {
     const alias = object.alias || null;
     const required = object.minOccurs != '0';
 
-    /** @type {import('ngeo/format/Attribute.js').Attribute} */
+    /** @type {import('ngeo/format/Attribute').Attribute} */
     const attribute = {
       name,
       alias,

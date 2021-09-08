@@ -20,8 +20,8 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import ngeoPrintService from 'ngeo/print/Service.js';
-import ngeoPrintUtils from 'ngeo/print/Utils.js';
+import ngeoPrintService from 'ngeo/print/Service';
+import ngeoPrintUtils from 'ngeo/print/Utils';
 
 /**
  * @type {angular.IModule}

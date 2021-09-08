@@ -20,11 +20,11 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import gmfAuthenticationService from 'gmf/authentication/Service.js';
-import {gmfBackgroundlayerStatus} from 'gmf/backgroundlayerselector/status.js';
-import {MessageType} from 'ngeo/message/Message.js';
-import ngeoMessageNotification from 'ngeo/message/Notification.js';
-import ngeoMessageModalComponent from 'ngeo/message/modalComponent.js';
+import gmfAuthenticationService from 'gmf/authentication/Service';
+import {gmfBackgroundlayerStatus} from 'gmf/backgroundlayerselector/status';
+import {MessageType} from 'ngeo/message/Message';
+import ngeoMessageNotification from 'ngeo/message/Notification';
+import ngeoMessageModalComponent from 'ngeo/message/modalComponent';
 
 // @ts-ignore
 import qruri from 'qruri';
@@ -140,11 +140,11 @@ export class AuthenticationController {
    * @param {JQuery} $element Element.
    * @param {boolean} gmfTwoFactorAuth Two factor authentication is required.
    * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
-   * @param {import("gmf/authentication/Service.js").AuthenticationService} gmfAuthenticationService
+   * @param {import('gmf/authentication/Service').AuthenticationService} gmfAuthenticationService
    *    GMF Authentication service
-   * @param {import("ngeo/message/Notification.js").MessageNotification} ngeoNotification Ngeo notification
+   * @param {import('ngeo/message/Notification').MessageNotification} ngeoNotification Ngeo notification
    *    service.
-   * @param {import('gmf/options.js').gmfAuthenticationConfig} gmfAuthenticationConfig The configuration
+   * @param {import('gmf/options').gmfAuthenticationConfig} gmfAuthenticationConfig The configuration
    * @ngInject
    * @ngdoc controller
    * @ngname GmfAuthenticationController
@@ -171,13 +171,13 @@ export class AuthenticationController {
     this.gettextCatalog = gettextCatalog;
 
     /**
-     * @type {import("gmf/authentication/Service.js").AuthenticationService}
+     * @type {import('gmf/authentication/Service').AuthenticationService}
      * @private
      */
     this.gmfAuthenticationService_ = gmfAuthenticationService;
 
     /**
-     * @type {import("ngeo/message/Notification.js").MessageNotification}
+     * @type {import('ngeo/message/Notification').MessageNotification}
      * @private
      */
     this.notification_ = ngeoNotification;
@@ -282,7 +282,7 @@ export class AuthenticationController {
     this.isLoading = false;
 
     /**
-     * @type {import('gmf/authentication/Service.js').User}
+     * @type {import('gmf/authentication/Service').User}
      */
     this.gmfUser = null;
 
@@ -298,7 +298,7 @@ export class AuthenticationController {
           this.setOtpImage_();
           this.checkUserMustChangeItsPassword_();
           this.onUserStateUpdate_(user.getState());
-        }
+        },
       })
     );
   }
@@ -549,7 +549,7 @@ export class AuthenticationController {
     }
 
     errors.forEach((error) => {
-      /** @type {import('ngeo/message/Message.js').Message} */
+      /** @type {import('ngeo/message/Message').Message} */
       const options = {
         msg: error,
         target: container,

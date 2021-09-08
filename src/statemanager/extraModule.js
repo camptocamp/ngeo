@@ -20,7 +20,7 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import ngeoStatemanagerWfsPermalink from 'ngeo/statemanager/WfsPermalink.js';
+import ngeoStatemanagerWfsPermalink from 'ngeo/statemanager/WfsPermalink';
 
 /**
  * @type {angular.IModule}

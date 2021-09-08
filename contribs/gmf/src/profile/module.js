@@ -20,8 +20,8 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import gmfProfileComponent from 'gmf/profile/component.js';
-import gmfProfileDrawLineComponent from 'gmf/profile/drawLineComponent.js';
+import gmfProfileComponent from 'gmf/profile/component';
+import gmfProfileDrawLineComponent from 'gmf/profile/drawLineComponent';
 
 import './profile.scss';
 

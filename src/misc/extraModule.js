@@ -20,20 +20,20 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import ngeoMiscAutoProjection from 'ngeo/misc/AutoProjection.js';
-import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent.js';
-import ngeoMiscControlComponent from 'ngeo/misc/controlComponent.js';
-import ngeoMiscDatepickerComponent from 'ngeo/misc/datepickerComponent.js';
-import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
-import ngeoMiscEventHelper from 'ngeo/misc/EventHelper.js';
-import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
-import ngeoMiscFile from 'ngeo/misc/File.js';
-import ngeoMiscFilereaderComponent from 'ngeo/misc/filereaderComponent.js';
-import ngeoMiscFilters from 'ngeo/misc/filters.js';
-import ngeoMiscSortableComponent from 'ngeo/misc/sortableComponent.js';
-import ngeoMiscTime from 'ngeo/misc/Time.js';
-import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr.js';
-import ngeoMiscWMSTime from 'ngeo/misc/WMSTime.js';
+import ngeoMiscAutoProjection from 'ngeo/misc/AutoProjection';
+import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent';
+import ngeoMiscControlComponent from 'ngeo/misc/controlComponent';
+import ngeoMiscDatepickerComponent from 'ngeo/misc/datepickerComponent';
+import ngeoMiscDebounce from 'ngeo/misc/debounce';
+import ngeoMiscEventHelper from 'ngeo/misc/EventHelper';
+import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper';
+import ngeoMiscFile from 'ngeo/misc/File';
+import ngeoMiscFilereaderComponent from 'ngeo/misc/filereaderComponent';
+import ngeoMiscFilters from 'ngeo/misc/filters';
+import ngeoMiscSortableComponent from 'ngeo/misc/sortableComponent';
+import ngeoMiscTime from 'ngeo/misc/Time';
+import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr';
+import ngeoMiscWMSTime from 'ngeo/misc/WMSTime';
 
 /**
  * @type {angular.IModule}

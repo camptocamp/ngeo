@@ -21,22 +21,22 @@
 
 import angular from 'angular';
 import './profile.css';
-import gmfPermalinkPermalink from 'gmf/permalink/Permalink.js';
+import gmfPermalinkPermalink from 'gmf/permalink/Permalink';
 
-import gmfMapComponent from 'gmf/map/component.js';
+import gmfMapComponent from 'gmf/map/component';
 
-import gmfProfileModule from 'gmf/profile/module.js';
-import ngeoMapModule from 'ngeo/map/module.js';
-import EPSG2056 from 'ngeo/proj/EPSG_2056.js';
-import olCollection from 'ol/Collection.js';
-import olMap from 'ol/Map.js';
-import olView from 'ol/View.js';
-import olInteractionDraw from 'ol/interaction/Draw.js';
-import olLayerTile from 'ol/layer/Tile.js';
-import olSourceOSM from 'ol/source/OSM.js';
-import olStyleStroke from 'ol/style/Stroke.js';
-import olStyleStyle from 'ol/style/Style.js';
-import options from './options.js';
+import gmfProfileModule from 'gmf/profile/module';
+import ngeoMapModule from 'ngeo/map/module';
+import EPSG2056 from 'ngeo/proj/EPSG_2056';
+import olCollection from 'ol/Collection';
+import olMap from 'ol/Map';
+import olView from 'ol/View';
+import olInteractionDraw from 'ol/interaction/Draw';
+import olLayerTile from 'ol/layer/Tile';
+import olSourceOSM from 'ol/source/OSM';
+import olStyleStroke from 'ol/style/Stroke';
+import olStyleStyle from 'ol/style/Style';
+import options from './options';
 
 /**
  * @type {angular.IModule}
@@ -52,19 +52,19 @@ const myModule = angular.module('gmfapp', [
 
 /**
  * @param {angular.IScope} $scope Angular scope.
- * @param {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr Feature overlay
+ * @param {import('ngeo/map/FeatureOverlayMgr').FeatureOverlayMgr} ngeoFeatureOverlayMgr Feature overlay
  *     manager.
  * @class
  * @ngInject
  */
 function MainController($scope, ngeoFeatureOverlayMgr) {
   /**
-   * @type {?import("ol/geom/LineString.js").default}
+   * @type {?import('ol/geom/LineString').default}
    */
   this.profileLine = null;
 
   /**
-   * @type {import("ol/Map.js").default}
+   * @type {import('ol/Map').default}
    */
   this.map = new olMap({
     layers: [
@@ -88,7 +88,7 @@ function MainController($scope, ngeoFeatureOverlayMgr) {
   });
 
   /**
-   * @type {import("ol/Collection.js").default<import("ol/Feature.js").default<import("ol/geom/LineString.js").default>>}
+   * @type {import('ol/Collection').default<import('ol/Feature').default<import('ol/geom/LineString').default>>}
    */
   const features = new olCollection();
 
@@ -101,7 +101,7 @@ function MainController($scope, ngeoFeatureOverlayMgr) {
 
   /**
    * Draw line interaction.
-   * @type {import("ol/interaction/Draw.js").default}
+   * @type {import('ol/interaction/Draw').default}
    */
   this.drawLine = new olInteractionDraw({
     type: 'LineString',
@@ -128,19 +128,19 @@ function MainController($scope, ngeoFeatureOverlayMgr) {
     this.profileLine = null; // To reset the profile.
   };
 
-  this.drawLine.on(/** @type {import('ol/Observable.js').EventTypes} */ ('drawstart'), () => {
+  this.drawLine.on(/** @type {import('ol/Observable').EventTypes} */ ('drawstart'), () => {
     this.clear_();
   });
 
   this.drawLine.on(
-    /** @type {import('ol/Observable.js').EventTypes} */ ('drawend'),
+    /** @type {import('ol/Observable').EventTypes} */ ('drawend'),
     /** @type {function(?): ?} */ (
       /**
-       * @param {import('lib/ol.interaction.Draw.js').DrawEvent} e
+       * @param {import('lib/ol.interaction.Draw').DrawEvent} e
        */
       (e) => {
         // Update the profile with the new geometry
-        this.profileLine = /** @type {?import("ol/geom/LineString.js").default} */ (e.feature.getGeometry());
+        this.profileLine = /** @type {?import('ol/geom/LineString').default} */ (e.feature.getGeometry());
         $scope.$digest();
       }
     )

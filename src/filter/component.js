@@ -20,18 +20,18 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import ngeoQueryMapQuerent from 'ngeo/query/MapQuerent.js';
-import ngeoFilterCondition from 'ngeo/filter/Condition.js';
+import ngeoQueryMapQuerent from 'ngeo/query/MapQuerent';
+import ngeoFilterCondition from 'ngeo/filter/Condition';
 
-import ngeoFilterRuleComponent from 'ngeo/filter/ruleComponent.js';
+import ngeoFilterRuleComponent from 'ngeo/filter/ruleComponent';
 
-import ngeoFilterRuleHelper from 'ngeo/filter/RuleHelper.js';
+import ngeoFilterRuleHelper from 'ngeo/filter/RuleHelper';
 
-import ngeoFormatAttributeType from 'ngeo/format/AttributeType.js';
-import ngeoRuleGeometry from 'ngeo/rule/Geometry.js';
-import ngeoMapFeatureOverlay from 'ngeo/map/FeatureOverlay.js';
-import {getUid as olUtilGetUid} from 'ol/util.js';
-import {remove as removeFromArray} from 'ol/array.js';
+import ngeoFormatAttributeType from 'ngeo/format/AttributeType';
+import ngeoRuleGeometry from 'ngeo/rule/Geometry';
+import ngeoMapFeatureOverlay from 'ngeo/map/FeatureOverlay';
+import {getUid as olUtilGetUid} from 'ol/util';
+import {remove as removeFromArray} from 'ol/array';
 import 'ngeo/sass/font.scss';
 
 /**
@@ -111,8 +111,8 @@ export class FilterController {
    * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext service.
    * @param {angular.IScope} $scope Angular scope.
    * @param {angular.ITimeoutService} $timeout Angular timeout service.
-   * @param {import("ngeo/query/MapQuerent.js").MapQuerent} ngeoMapQuerent The ngeo map querent service.
-   * @param {import("ngeo/filter/RuleHelper.js").RuleHelper} ngeoRuleHelper Ngeo rule helper service.
+   * @param {import('ngeo/query/MapQuerent').MapQuerent} ngeoMapQuerent The ngeo map querent service.
+   * @param {import('ngeo/filter/RuleHelper').RuleHelper} ngeoRuleHelper Ngeo rule helper service.
    * @ngInject
    * @ngdoc controller
    * @ngname NgeoFilterController
@@ -126,27 +126,27 @@ export class FilterController {
     this.aRuleIsActive = false;
 
     /**
-     * @type {import("ngeo/rule/Rule.js").default[]}
+     * @type {import('ngeo/rule/Rule').default[]}
      */
     this.customRules = [];
 
     /**
-     * @type {?import("ngeo/datasource/OGC.js").default}
+     * @type {?import('ngeo/datasource/OGC').default}
      */
     this.datasource = null;
 
     /**
-     * @type {import("ngeo/rule/Rule.js").default[]}
+     * @type {import('ngeo/rule/Rule').default[]}
      */
     this.directedRules = [];
 
     /**
-     * @type {?import("ngeo/map/FeatureOverlay.js").FeatureOverlay}
+     * @type {?import('ngeo/map/FeatureOverlay').FeatureOverlay}
      */
     this.featureOverlay = null;
 
     /**
-     * @type {?import("ol/Map.js").default}
+     * @type {?import('ol/Map').default}
      */
     this.map = null;
 
@@ -181,13 +181,13 @@ export class FilterController {
     this.timeout_ = $timeout;
 
     /**
-     * @type {import("ngeo/query/MapQuerent.js").MapQuerent}
+     * @type {import('ngeo/query/MapQuerent').MapQuerent}
      * @private
      */
     this.ngeoMapQuerent_ = ngeoMapQuerent;
 
     /**
-     * @type {import("ngeo/filter/RuleHelper.js").RuleHelper}
+     * @type {import('ngeo/filter/RuleHelper').RuleHelper}
      * @private
      */
     this.ngeoRuleHelper_ = ngeoRuleHelper;
@@ -214,13 +214,13 @@ export class FilterController {
 
     /**
      * List of geometry attributes.
-     * @type {import('ngeo/format/Attribute.js').Attribute[]}
+     * @type {import('ngeo/format/Attribute').Attribute[]}
      */
     this.geometryAttributes = [];
 
     /**
      * List of other attribute names.
-     * @type {import('ngeo/format/Attribute.js').Attribute[]}
+     * @type {import('ngeo/format/Attribute').Attribute[]}
      */
     this.otherAttributes = [];
 
@@ -377,7 +377,7 @@ export class FilterController {
 
   /**
    * Loop in all directed and custom rules and collect those with a value.
-   * @return {import("ngeo/rule/Rule.js").default[]} Rules with value.
+   * @return {import('ngeo/rule/Rule').default[]} Rules with value.
    * @private
    */
   getRulesWithValue_() {
@@ -398,7 +398,7 @@ export class FilterController {
   /**
    * Create and add a new custom rule using an attribute. The rule is activated
    * after being created.
-   * @param {import('ngeo/format/Attribute.js').Attribute} attribute Attribute to use to create the custom
+   * @param {import('ngeo/format/Attribute').Attribute} attribute Attribute to use to create the custom
    * rule.
    */
   createAndAddCustomRule(attribute) {
@@ -427,7 +427,7 @@ export class FilterController {
   /**
    * Remove a custom rule. Deactivate it first, then give time to the
    * `ngeo-rule` directive to manage the deactivation of the rule.
-   * @param {import("ngeo/rule/Rule.js").default} rule Custom rule to remove.
+   * @param {import('ngeo/rule/Rule').default} rule Custom rule to remove.
    */
   removeCustomRule(rule) {
     rule.active = false;
@@ -439,7 +439,7 @@ export class FilterController {
   }
 
   /**
-   * @param {import("ngeo/rule/Rule.js").default} rule Rule.
+   * @param {import('ngeo/rule/Rule').default} rule Rule.
    */
   registerRule_(rule) {
     if (!this.featureOverlay) {
@@ -457,7 +457,7 @@ export class FilterController {
   }
 
   /**
-   * @param {import("ngeo/rule/Rule.js").default} rule Rule.
+   * @param {import('ngeo/rule/Rule').default} rule Rule.
    */
   unregisterRule_(rule) {
     if (!this.featureOverlay) {

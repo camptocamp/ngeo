@@ -19,9 +19,9 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import ngeoInteractionMeasure, {getFormattedPoint} from 'ngeo/interaction/Measure.js';
-import ngeoInteractionMobileDraw from 'ngeo/interaction/MobileDraw.js';
-import Point from 'ol/geom/Point.js';
+import ngeoInteractionMeasure, {getFormattedPoint} from 'ngeo/interaction/Measure';
+import ngeoInteractionMobileDraw from 'ngeo/interaction/MobileDraw';
+import Point from 'ol/geom/Point';
 
 /**
  * Interaction dedicated to measure by coordinate (point) on mobile devices.
@@ -29,9 +29,9 @@ import Point from 'ol/geom/Point.js';
  */
 export default class extends ngeoInteractionMeasure {
   /**
-   * @param {import('ngeo/misc/filters.js').numberCoordinates} format the number formatter
+   * @param {import('ngeo/misc/filters').numberCoordinates} format the number formatter
    * @param {string} coordFormat the coordinates formatter
-   * @param {import('ngeo/interaction/Measure.js').MeasureOptions} [options] Options
+   * @param {import('ngeo/interaction/Measure').MeasureOptions} [options] Options
    */
   constructor(format, coordFormat, options = {}) {
     Object.assign(options, {displayHelpTooltip: false});
@@ -39,7 +39,7 @@ export default class extends ngeoInteractionMeasure {
     super(options);
 
     /**
-     * @type {import('ngeo/misc/filters.js').numberCoordinates}
+     * @type {import('ngeo/misc/filters').numberCoordinates}
      * @private
      */
     this.format_ = format;
@@ -52,11 +52,11 @@ export default class extends ngeoInteractionMeasure {
   }
 
   /**
-   * @param {import("ol/style/Style.js").StyleLike} style The sketchStyle used for the drawing
+   * @param {import('ol/style/Style').StyleLike} style The sketchStyle used for the drawing
    *    interaction.
-   * @param {import('ol/source/Vector.js').default<import("ol/geom/Point.js").default>} source Vector source.
-   * @return {import("ol/interaction/Draw.js").default|import("ngeo/interaction/DrawAzimut.js").default|
-   *    import("ngeo/interaction/MobileDraw.js").default} The interaction
+   * @param {import('ol/source/Vector').default<import('ol/geom/Point').default>} source Vector source.
+   * @return {import('ol/interaction/Draw').default|import('ngeo/interaction/DrawAzimut').default|
+   *    import('ngeo/interaction/MobileDraw').default} The interaction
    */
   createDrawInteraction(style, source) {
     return new ngeoInteractionMobileDraw({
@@ -66,7 +66,7 @@ export default class extends ngeoInteractionMeasure {
   }
 
   /**
-   * @param {function(string, ?import("ol/coordinate.js").Coordinate): void} callback The function
+   * @param {function(string, ?import('ol/coordinate').Coordinate): void} callback The function
    *     to be called.
    */
   handleMeasure(callback) {

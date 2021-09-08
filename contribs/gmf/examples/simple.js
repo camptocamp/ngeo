@@ -21,13 +21,13 @@
 
 import './simple.css';
 import angular from 'angular';
-import gmfMapComponent from 'gmf/map/component.js';
+import gmfMapComponent from 'gmf/map/component';
 
-import olMap from 'ol/Map.js';
-import olView from 'ol/View.js';
-import olLayerTile from 'ol/layer/Tile.js';
-import olSourceOSM from 'ol/source/OSM.js';
-import options from './options.js';
+import olMap from 'ol/Map';
+import olView from 'ol/View';
+import olLayerTile from 'ol/layer/Tile';
+import olSourceOSM from 'ol/source/OSM';
+import options from './options';
 
 /**
  * @type {angular.IModule}
@@ -41,7 +41,7 @@ const myModule = angular.module('gmfapp', ['gettext', gmfMapComponent.name]);
  */
 function MainController() {
   /**
-   * @type {import("ol/Map.js").default}
+   * @type {import('ol/Map').default}
    */
   this.map = new olMap({
     layers: [

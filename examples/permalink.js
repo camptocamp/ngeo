@@ -20,20 +20,20 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import ngeoFormatFeatureHash from 'ngeo/format/FeatureHash.js';
+import ngeoFormatFeatureHash from 'ngeo/format/FeatureHash';
 
-import ngeoMapModule from 'ngeo/map/module.js';
-import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
-import {interactionDecoration} from 'ngeo/misc/decorate.js';
-import ngeoStatemanagerModule from 'ngeo/statemanager/module.js';
-import olMap from 'ol/Map.js';
-import olInteractionDraw from 'ol/interaction/Draw.js';
-import olLayerTile from 'ol/layer/Tile.js';
-import olLayerVector from 'ol/layer/Vector.js';
-import olSourceOSM from 'ol/source/OSM.js';
-import olSourceVector from 'ol/source/Vector.js';
-import olStyleStroke from 'ol/style/Stroke.js';
-import olStyleStyle from 'ol/style/Style.js';
+import ngeoMapModule from 'ngeo/map/module';
+import ngeoMiscDebounce from 'ngeo/misc/debounce';
+import {interactionDecoration} from 'ngeo/misc/decorate';
+import ngeoStatemanagerModule from 'ngeo/statemanager/module';
+import olMap from 'ol/Map';
+import olInteractionDraw from 'ol/interaction/Draw';
+import olLayerTile from 'ol/layer/Tile';
+import olLayerVector from 'ol/layer/Vector';
+import olSourceOSM from 'ol/source/OSM';
+import olSourceVector from 'ol/source/Vector';
+import olStyleStroke from 'ol/style/Stroke';
+import olStyleStyle from 'ol/style/Style';
 
 /** @type {angular.IModule} **/
 const myModule = angular.module('app', [
@@ -64,25 +64,25 @@ const mapComponent = {
 myModule.component('appMap', mapComponent);
 
 /**
- * @param {import("ngeo/statemanager/Location.js").StatemanagerLocation} ngeoLocation ngeo Location service.
- * @param {import("ngeo/misc/debounce.js").miscDebounce<function(import("ol/events/Event.js").default): void>} ngeoDebounce
+ * @param {import('ngeo/statemanager/Location').StatemanagerLocation} ngeoLocation ngeo Location service.
+ * @param {import('ngeo/misc/debounce').miscDebounce<function(import('ol/events/Event').default): void>} ngeoDebounce
  *    ngeo Debounce factory.
  * @class
  * @ngInject
  */
 function MapComponentController(ngeoLocation, ngeoDebounce) {
   /**
-   * @type {?import("ol/Map.js").default}
+   * @type {?import('ol/Map').default}
    */
   this.map = null;
 
   /**
-   * @type {import("ngeo/statemanager/Location.js").StatemanagerLocation}
+   * @type {import('ngeo/statemanager/Location').StatemanagerLocation}
    */
   this.ngeoLocation_ = ngeoLocation;
 
   /**
-   * @type {import("ngeo/misc/debounce.js").miscDebounce<function(import("ol/events/Event.js").default): void>}
+   * @type {import('ngeo/misc/debounce').miscDebounce<function(import('ol/events/Event').default): void>}
    */
   this.ngeoDebounce_ = ngeoDebounce;
 }
@@ -112,11 +112,11 @@ MapComponentController.prototype.$onInit = function () {
   });
 
   view.on(
-    /** @type {import('ol/Observable.js').EventTypes} */ ('propertychange'),
+    /** @type {import('ol/Observable').EventTypes} */ ('propertychange'),
     /** @type {function(?): ?} */ (
       this.ngeoDebounce_(
         /**
-         * @param {import("ol/events/Event.js").default} e Object event.
+         * @param {import('ol/events/Event').default} e Object event.
          */
         // @ts-ignore
         (e) => {
@@ -160,23 +160,23 @@ myModule.component('appDraw', drawComponent);
 
 /**
  * @param {angular.IScope} $scope Scope.
- * @param {import("ngeo/statemanager/Location.js").StatemanagerLocation} ngeoLocation ngeo Location service.
+ * @param {import('ngeo/statemanager/Location').StatemanagerLocation} ngeoLocation ngeo Location service.
  * @class
  * @ngInject
  */
 function DrawComponentController($scope, ngeoLocation) {
   /**
-   * @type {?import("ol/Map.js").default}
+   * @type {?import('ol/Map').default}
    */
   this.map = null;
 
   /**
-   * @type {?import("ol/layer/Vector.js").default<import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>>}
+   * @type {?import('ol/layer/Vector').default<import('ol/source/Vector').default<import('ol/geom/Geometry').default>>}
    */
   this.layer = null;
 
   /**
-   * @type {import("ngeo/statemanager/Location.js").StatemanagerLocation}
+   * @type {import('ngeo/statemanager/Location').StatemanagerLocation}
    */
   this.ngeoLocation_ = ngeoLocation;
 
@@ -191,7 +191,7 @@ function DrawComponentController($scope, ngeoLocation) {
   this.featureSeq_ = 0;
 
   /**
-   * @type {?import("ol/interaction/Draw.js").default}
+   * @type {?import('ol/interaction/Draw').default}
    */
   this.interaction = null;
 }
@@ -204,7 +204,7 @@ DrawComponentController.prototype.$onInit = function () {
     throw new Error('Missing layer');
   }
   /**
-   * @type {olSourceVector<import("ol/geom/Geometry.js").default>}
+   * @type {olSourceVector<import('ol/geom/Geometry').default>}
    */
   const vectorSource = this.layer.getSource();
 
@@ -218,10 +218,10 @@ DrawComponentController.prototype.$onInit = function () {
   interactionDecoration(this.interaction);
 
   this.interaction.on(
-    /** @type {import('ol/Observable.js').EventTypes} */ ('drawend'),
+    /** @type {import('ol/Observable').EventTypes} */ ('drawend'),
     /** @type {function(?): ?} */ (
       /**
-       * @param {import('ol/MapBrowserEvent.js').default<unknown>} e
+       * @param {import('ol/MapBrowserEvent').default<unknown>} e
        */ (e) => {
         // @ts-ignore
         e.feature.set('id', ++this.featureSeq_);
@@ -234,10 +234,10 @@ DrawComponentController.prototype.$onInit = function () {
   const fhFormat = new ngeoFormatFeatureHash();
 
   vectorSource.on(
-    /** @type {import('ol/Observable.js').EventTypes} */ ('addfeature'),
+    /** @type {import('ol/Observable').EventTypes} */ ('addfeature'),
     /** @type {function(?): ?} */ (
       /**
-       * @param {import('ol/MapBrowserEvent.js').default<unknown>} e
+       * @param {import('ol/MapBrowserEvent').default<unknown>} e
        */ (e) => {
         // @ts-ignore
         const feature = e.feature;
@@ -264,7 +264,7 @@ DrawComponentController.prototype.$onInit = function () {
 
   const encodedFeatures = this.ngeoLocation_.getParam('features');
   if (encodedFeatures !== undefined) {
-    const features = /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>[]} */ (
+    const features = /** @type {import('ol/Feature').default<import('ol/geom/Geometry').default>[]} */ (
       fhFormat.readFeatures(encodedFeatures)
     );
     this.featureSeq_ = features.length;
@@ -295,7 +295,7 @@ myModule.controller('AppDrawController', DrawComponentController);
  */
 function MainController() {
   /**
-   * @type {import("ol/Map.js").default}
+   * @type {import('ol/Map').default}
    */
   this.map = new olMap({
     layers: [
@@ -308,7 +308,7 @@ function MainController() {
   const vectorSource = new olSourceVector();
 
   /**
-   * @type {import("ol/layer/Vector.js").default<import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>>}
+   * @type {import('ol/layer/Vector').default<import('ol/source/Vector').default<import('ol/geom/Geometry').default>>}
    */
   this.vectorLayer = new olLayerVector({
     source: vectorSource,

@@ -20,7 +20,7 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
+import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate';
 
 describe('ngeo.misc.ToolActivateMgr', () => {
   /** @type {Object<string, *>} */
@@ -35,7 +35,7 @@ describe('ngeo.misc.ToolActivateMgr', () => {
   let tool2;
   /** @type {ngeoMiscToolActivate} */
   let tool3;
-  /** @type {import('ngeo/misc/ToolActivateMgr.js').ToolActivateMgr} */
+  /** @type {import('ngeo/misc/ToolActivateMgr').ToolActivateMgr} */
   let ngeoToolActivateMgr;
   /** @type {angular.IScope} */
   let $rootScope;

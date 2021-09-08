@@ -23,7 +23,7 @@ import angular from 'angular';
 
 class Mode {
   /**
-   * @param {import("ngeo/offline/Configuration.js").default} ngeoOfflineConfiguration
+   * @param {import('ngeo/offline/Configuration').default} ngeoOfflineConfiguration
    * ngeo offline configuration service.
    * @ngInject
    * @ngdoc service
@@ -39,14 +39,14 @@ class Mode {
 
     /**
      * Offline component.
-     * @type {?import("ngeo/offline/component.js").Controller}
+     * @type {?import('ngeo/offline/component').Controller}
      * @private
      */
     this.component_ = null;
 
     /**
      * @private
-     * @type {import("ngeo/offline/Configuration.js").default}
+     * @type {import('ngeo/offline/Configuration').default}
      */
     this.ngeoOfflineConfiguration_ = ngeoOfflineConfiguration;
   }
@@ -70,7 +70,7 @@ class Mode {
 
   /**
    *
-   * @param {import("ngeo/offline/component.js").Controller} component Offline component.
+   * @param {import('ngeo/offline/component').Controller} component Offline component.
    * @export
    */
   registerComponent(component) {

@@ -19,8 +19,8 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import olFormatXML from 'ol/format/XML.js';
-import * as olXml from 'ol/xml.js';
+import olFormatXML from 'ol/format/XML';
+import * as olXml from 'ol/xml';
 
 /**
  * @private
@@ -30,12 +30,12 @@ import * as olXml from 'ol/xml.js';
 const NAMESPACE_URIS_ = [null, 'http://www.w3.org/2001/XMLSchema'];
 
 /**
- * @typedef {Object<string, import("ol/xml.js").Parser>} parserStructure
+ * @typedef {Object<string, import('ol/xml').Parser>} parserStructure
  */
 
 /**
  * typedef {Object<string, parserStructure>} parsersStructure
- * @typedef {Object<string, Object<string, import("ol/xml.js").Parser>>} parsersStructure
+ * @typedef {Object<string, Object<string, import('ol/xml').Parser>>} parsersStructure
  */
 
 /**

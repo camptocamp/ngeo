@@ -19,15 +19,15 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import {pushUnlessIncluded} from 'ngeo/array.js';
-import ngeoDatasourceDataSource from 'ngeo/datasource/DataSource.js';
-import ngeoFilterCondition from 'ngeo/filter/Condition.js';
-import ngeoFormatArcGISGeoJSON from 'ngeo/format/ArcGISGeoJSON.js';
-import ngeoFormatAttributeType from 'ngeo/format/AttributeType.js';
-import olFormatGML2 from 'ol/format/GML2.js';
-import olFormatGML3 from 'ol/format/GML3.js';
-import olFormatWFS from 'ol/format/WFS.js';
-import olFormatWMSGetFeatureInfo from 'ol/format/WMSGetFeatureInfo.js';
+import {pushUnlessIncluded} from 'ngeo/array';
+import ngeoDatasourceDataSource from 'ngeo/datasource/DataSource';
+import ngeoFilterCondition from 'ngeo/filter/Condition';
+import ngeoFormatArcGISGeoJSON from 'ngeo/format/ArcGISGeoJSON';
+import ngeoFormatAttributeType from 'ngeo/format/AttributeType';
+import olFormatGML2 from 'ol/format/GML2';
+import olFormatGML3 from 'ol/format/GML3';
+import olFormatWFS from 'ol/format/WFS';
+import olFormatWMSGetFeatureInfo from 'ol/format/WMSGetFeatureInfo';
 
 /**
  * Dimensions definition.
@@ -110,7 +110,7 @@ export const WMSInfoFormat = {
  *    by this data source and whether they should use a static value or the one defined in the dimensions.
  * @property {string} [filterCondition] The filter condition to apply to the filter rules (if any).
  *    Defaults to `ngeo.filter.Condition.AND`.
- * @property {import('ngeo/rule/Rule.js').default[]} [filterRules] A list of filter rules to apply to
+ * @property {import('ngeo/rule/Rule').default[]} [filterRules] A list of filter rules to apply to
  *    this data source using the filter condition.
  * @property {boolean} [filtrable] Whether the data source is filtrable or not.
  * @property {string} [ogcImageType] The type of images to fetch by queries by the (WMS) or (WMTS).
@@ -120,7 +120,7 @@ export const WMSInfoFormat = {
  *    These are **not** used by the (WMTS) queries (the wmtsLayers is used by WMTS queries).
  * @property {string} [ogcServerType] The type of OGC server.
  * @property {string} [ogcType] The type data source. Can be: 'WMS' or 'WMTS'.
- * @property {?Object<string, Object<string, import('gmf/themes.js').GmfOgcServerAttribute>>} [ogcAttributes]
+ * @property {?Object<string, Object<string, import('gmf/themes').GmfOgcServerAttribute>>} [ogcAttributes]
  *    The attributes of the OGC server.
  * @property {number[]} [queryIconPosition] values to define the shape (bbox) to use to query
  *    the layer. The values are used like a padding in css with 1, 2, 3 or 4 comma separated
@@ -148,7 +148,7 @@ export const WMSInfoFormat = {
  * @property {string} [wmsUrl] The URL to use for (WMS) requests.
  * @property {string} [wmtsLayer] The layer name to use for the (WMTS) requests.
  * @property {string} [wmtsUrl] The URL to use for (WMTS) requests.
- * @property {import('ngeo/format/Attribute.js').Attribute[]} [attributes] (DataSourceOptions)
+ * @property {import('ngeo/format/Attribute').Attribute[]} [attributes] (DataSourceOptions)
  * @property {DimensionsFiltersConfig} [dimensionsFiltersConfig] (DataSourceOptions)
  * @property {number} id (DataSourceOptions)
  * @property {string} [identifierAttribute] (DataSourceOptions)
@@ -259,7 +259,7 @@ export class OGC extends ngeoDatasourceDataSource {
     /**
      * A list of filter rules to apply to this data source using the filter
      * condition.
-     * @type {?import("ngeo/rule/Rule.js").default[]}
+     * @type {?import('ngeo/rule/Rule').default[]}
      */
     this.filterRules = options.filterRules || null;
 
@@ -337,7 +337,7 @@ export class OGC extends ngeoDatasourceDataSource {
 
     /**
      * The attributes of the OGC server.
-     * @type {?Object<string, Object<string, import('gmf/themes.js').GmfOgcServerAttribute>>}
+     * @type {?Object<string, Object<string, import('gmf/themes').GmfOgcServerAttribute>>}
      * @private
      */
     this.ogcAttributes_ = options.ogcAttributes;
@@ -528,7 +528,7 @@ export class OGC extends ngeoDatasourceDataSource {
     }
 
     /**
-     * @type {?import("ol/format/WFS.js").default}
+     * @type {?import('ol/format/WFS').default}
      * @private
      */
     this.wfsFormat_ = wfsFormat;
@@ -614,7 +614,7 @@ export class OGC extends ngeoDatasourceDataSource {
   // =======================================
 
   /**
-   * @param {import('ngeo/format/Attribute.js').Attribute[]} attributes Attributes
+   * @param {import('ngeo/format/Attribute').Attribute[]} attributes Attributes
    */
   setAttributes(attributes) {
     super.setAttributes(attributes);
@@ -859,7 +859,7 @@ export class OGC extends ngeoDatasourceDataSource {
    * Returns the ogc attributes of only the WFS layers of this data
    * source that are queryable.
    *
-   * @return {?Object<string, import('gmf/themes.js').GmfOgcServerAttribute>}
+   * @return {?Object<string, import('gmf/themes').GmfOgcServerAttribute>}
    */
   get ogcAttributesWFS() {
     // (1) Collect queryable WFS layer names
@@ -878,7 +878,7 @@ export class OGC extends ngeoDatasourceDataSource {
    * Returns the ogc attributes of only the WMS layers of this data
    * source that are queryable.
    *
-   * @return {?Object<string, import('gmf/themes.js').GmfOgcServerAttribute>}
+   * @return {?Object<string, import('gmf/themes').GmfOgcServerAttribute>}
    */
   get ogcAttributesWMS() {
     // (1) Collect queryable WMS layer names
@@ -958,7 +958,7 @@ export class OGC extends ngeoDatasourceDataSource {
   }
 
   /**
-   * @return {?import("ol/format/WFS.js").default} WFS format.
+   * @return {?import('ol/format/WFS').default} WFS format.
    */
   get wfsFormat() {
     return this.wfsFormat_;
@@ -1227,7 +1227,7 @@ export class OGC extends ngeoDatasourceDataSource {
    * data source using spatial filters.
    *
    * @param {string[]} layerNames List of layer names
-   * @return {?Object<string, import('gmf/themes.js').GmfOgcServerAttribute>}
+   * @return {?Object<string, import('gmf/themes').GmfOgcServerAttribute>}
    */
   getCommonOGCAttributes_(layerNames) {
     const allLayersAttributes = this.ogcAttributes_;
@@ -1253,7 +1253,7 @@ export class OGC extends ngeoDatasourceDataSource {
     }
 
     // List of common attributes
-    const attributes = /** @type {Object<string, import('gmf/themes.js').GmfOgcServerAttribute>} */ ({});
+    const attributes = /** @type {Object<string, import('gmf/themes').GmfOgcServerAttribute>} */ ({});
 
     // Collect the attributes that are in shared among all the layers
     const firstLayerAttributes = layersAttributes.shift();

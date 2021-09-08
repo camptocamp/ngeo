@@ -20,11 +20,11 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import {listen, unlistenByKey} from 'ol/events.js';
-import RenderEvent from 'ol/render/Event.js';
+import {listen, unlistenByKey} from 'ol/events';
+import RenderEvent from 'ol/render/Event';
 
 import ResizeObserver from 'resize-observer-polyfill';
-import 'jquery-ui/ui/widgets/draggable.js';
+import 'jquery-ui/ui/widgets/draggable';
 
 /**
  * @type {angular.IModule}
@@ -82,12 +82,12 @@ export class SwipeController {
    */
   constructor($scope, $element) {
     /**
-     * @type {import('ol/Map.js').default}
+     * @type {import('ol/Map').default}
      */
     this.map;
 
     /**
-     * @type {import('ol/layer/Tile.js').default<import("ol/source/Tile.js").default>}
+     * @type {import('ol/layer/Tile').default<import('ol/source/Tile').default>}
      */
     this.layer;
 
@@ -109,7 +109,7 @@ export class SwipeController {
     this.draggableElement_ = $element.find('.ngeo-swipe-line-draggable');
 
     /**
-     * @type {import("ol/events.js").EventsKey[]}
+     * @type {import('ol/events').EventsKey[]}
      * @private
      */
     this.listenerKeys_ = [];
@@ -171,7 +171,7 @@ export class SwipeController {
   }
 
   /**
-   * @param {?Event|import("ol/events/Event.js").default} evt OpenLayers object event.
+   * @param {?Event|import('ol/events/Event').default} evt OpenLayers object event.
    * @private
    */
   handleLayerPrerender_(evt) {
@@ -190,7 +190,7 @@ export class SwipeController {
   }
 
   /**
-   * @param {?Event|import("ol/events/Event.js").default} evt OpenLayers object event.
+   * @param {?Event|import('ol/events/Event').default} evt OpenLayers object event.
    * @private
    */
   handleLayerPostrender_(evt) {

@@ -19,23 +19,23 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import {getDefaultDrawStyleFunction} from 'ngeo/interaction/common.js';
-import ngeoCustomEvent from 'ngeo/CustomEvent.js';
-import Feature from 'ol/Feature.js';
-import {listen} from 'ol/events.js';
-import {FALSE} from 'ol/functions.js';
-import olGeomCircle from 'ol/geom/Circle.js';
-import olGeomGeometryCollection from 'ol/geom/GeometryCollection.js';
-import olGeomLineString from 'ol/geom/LineString.js';
-import olGeomPoint from 'ol/geom/Point.js';
-import olInteractionPointer from 'ol/interaction/Draw.js';
-import olLayerVector from 'ol/layer/Vector.js';
-import VectorSource from 'ol/source/Vector.js';
+import {getDefaultDrawStyleFunction} from 'ngeo/interaction/common';
+import ngeoCustomEvent from 'ngeo/CustomEvent';
+import Feature from 'ol/Feature';
+import {listen} from 'ol/events';
+import {FALSE} from 'ol/functions';
+import olGeomCircle from 'ol/geom/Circle';
+import olGeomGeometryCollection from 'ol/geom/GeometryCollection';
+import olGeomLineString from 'ol/geom/LineString';
+import olGeomPoint from 'ol/geom/Point';
+import olInteractionPointer from 'ol/interaction/Draw';
+import olLayerVector from 'ol/layer/Vector';
+import VectorSource from 'ol/source/Vector';
 
 /**
  * @typedef {Object} Options
- * @property {!VectorSource<import("ol/geom/Geometry.js").default>} source
- * @property {import('ol/style/Style.js').StyleLike} style
+ * @property {!VectorSource<import('ol/geom/Geometry').default>} source
+ * @property {import('ol/style/Style').StyleLike} style
  */
 
 /**
@@ -56,14 +56,14 @@ class DrawAzimut extends olInteractionPointer {
     this.shouldStopEvent = FALSE;
 
     /**
-     * @type {import("ol/pixel.js").Pixel}
+     * @type {import('ol/pixel').Pixel}
      * @private
      */
     this.downPx_ = [];
 
     /**
      * Target source for drawn features.
-     * @type {!import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>}
+     * @type {!import('ol/source/Vector').default<import('ol/geom/Geometry').default>}
      * @private
      */
     this.source_ = options.source;
@@ -77,14 +77,14 @@ class DrawAzimut extends olInteractionPointer {
 
     /**
      * Sketch feature.
-     * @type {Feature<import("ol/geom/GeometryCollection.js").default>}
+     * @type {Feature<import('ol/geom/GeometryCollection').default>}
      * @private
      */
     this.sketchFeature_ = new Feature();
 
     /**
      * Sketch point.
-     * @type {Feature<import("ol/geom/Point.js").default>}
+     * @type {Feature<import('ol/geom/Point').default>}
      * @private
      */
     this.sketchPoint_ = new Feature();
@@ -100,7 +100,7 @@ class DrawAzimut extends olInteractionPointer {
 
     /**
      * Vector layer where our sketch features are drawn.
-     * @type {import("ol/layer/Vector.js").default<import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>>}
+     * @type {import('ol/layer/Vector').default<import('ol/source/Vector').default<import('ol/geom/Geometry').default>>}
      * @private
      */
     this.sketchLayer_ = new olLayerVector({
@@ -116,7 +116,7 @@ class DrawAzimut extends olInteractionPointer {
 
   /**
    * Handle move events.
-   * @param {import('ol/MapBrowserEvent.js').default<unknown>} event MapBrowserEvent, a move event.
+   * @param {import('ol/MapBrowserEvent').default<unknown>} event MapBrowserEvent, a move event.
    * @return {boolean} Pass the event to other interactions.
    * @private
    */
@@ -130,7 +130,7 @@ class DrawAzimut extends olInteractionPointer {
   }
 
   /**
-   * @param {import('ol/MapBrowserEvent.js').default<unknown>} event MapBrowserEvent.
+   * @param {import('ol/MapBrowserEvent').default<unknown>} event MapBrowserEvent.
    * @private
    */
   createOrUpdateSketchPoint_(event) {
@@ -159,7 +159,7 @@ class DrawAzimut extends olInteractionPointer {
 
   /**
    * Start the drawing.
-   * @param {import('ol/MapBrowserEvent.js').default<unknown>} event MapBrowserEvent.
+   * @param {import('ol/MapBrowserEvent').default<unknown>} event MapBrowserEvent.
    * @private
    */
   startDrawing_(event) {
@@ -177,7 +177,7 @@ class DrawAzimut extends olInteractionPointer {
 
   /**
    * Modify the drawing.
-   * @param {import('ol/MapBrowserEvent.js').default<unknown>} event MapBrowserEvent.
+   * @param {import('ol/MapBrowserEvent').default<unknown>} event MapBrowserEvent.
    * @private
    */
   modifyDrawing_(event) {
@@ -209,7 +209,7 @@ class DrawAzimut extends olInteractionPointer {
 
   /**
    * Stop drawing without adding the sketch feature to the target layer.
-   * @return {Feature<import("ol/geom/Geometry.js").default>} The sketch feature (or null if none).
+   * @return {Feature<import('ol/geom/Geometry').default>} The sketch feature (or null if none).
    * @private
    */
   abortDrawing_() {
@@ -251,7 +251,7 @@ class DrawAzimut extends olInteractionPointer {
   }
 
   /**
-   * @param {import("ol/PluggableMap.js").default} map Map.
+   * @param {import('ol/PluggableMap').default} map Map.
    */
   setMap(map) {
     olInteractionPointer.prototype.setMap.call(this, map);
@@ -259,7 +259,7 @@ class DrawAzimut extends olInteractionPointer {
   }
 
   /**
-   * @param {import('ol/MapBrowserEvent.js').default<unknown>} event MapBrowserEvent.
+   * @param {import('ol/MapBrowserEvent').default<unknown>} event MapBrowserEvent.
    * @return {boolean} If the event was consumed.
    */
   handleDownEvent(event) {
@@ -268,7 +268,7 @@ class DrawAzimut extends olInteractionPointer {
   }
 
   /**
-   * @param {import('ol/MapBrowserEvent.js').default<unknown>} event MapBrowserEvent.
+   * @param {import('ol/MapBrowserEvent').default<unknown>} event MapBrowserEvent.
    * @return {boolean} If the event was consumed.
    */
   handleUpEvent(event) {
@@ -294,7 +294,7 @@ class DrawAzimut extends olInteractionPointer {
   }
 
   /**
-   * @param {import('ol/MapBrowserEvent.js').default<unknown>} mapBrowserEvent MapBrowserEvent.
+   * @param {import('ol/MapBrowserEvent').default<unknown>} mapBrowserEvent MapBrowserEvent.
    * @return {boolean} If the event was consumed.
    */
   handleEvent(mapBrowserEvent) {

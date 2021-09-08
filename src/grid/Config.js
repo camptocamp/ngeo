@@ -19,11 +19,11 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import {getUid as olUtilGetUid} from 'ol/util.js';
+import {getUid as olUtilGetUid} from 'ol/util';
 
 /**
  * @param {Object<string, string|number|boolean>[]|undefined} data Entries/objects to be shown in a grid.
- * @param {import('ngeo/download/Csv.js').GridColumnDef[] | undefined} columnDefs Column definition of a
+ * @param {import('ngeo/download/Csv').GridColumnDef[] | undefined} columnDefs Column definition of a
  *    grid.
  * @class
  * @private
@@ -36,7 +36,7 @@ function GridConfig(data, columnDefs) {
   this.data = data;
 
   /**
-   * @type {import('ngeo/download/Csv.js').GridColumnDef[] | undefined}
+   * @type {import('ngeo/download/Csv').GridColumnDef[] | undefined}
    */
   this.columnDefs = columnDefs;
 

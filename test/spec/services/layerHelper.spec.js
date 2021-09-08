@@ -21,14 +21,14 @@
 
 // @ts-nocheck
 import angular from 'angular';
-import olLayerGroup from 'ol/layer/Group.js';
-import olLayerImage from 'ol/layer/Image.js';
-import olSourceImageWMS from 'ol/source/ImageWMS.js';
-import olCollection from 'ol/Collection.js';
-import ngeoTestDataWmtsCapabilities from '../data/wmtsCapabilities.js';
+import olLayerGroup from 'ol/layer/Group';
+import olLayerImage from 'ol/layer/Image';
+import olSourceImageWMS from 'ol/source/ImageWMS';
+import olCollection from 'ol/Collection';
+import ngeoTestDataWmtsCapabilities from '../data/wmtsCapabilities';
 
 describe('ngeo.map.LayerHelper', () => {
-  /** @type {import("ngeo/map/LayerHelper.js").LayerHelper} */
+  /** @type {import('ngeo/map/LayerHelper').LayerHelper} */
   let ngeoLayerHelper;
   const wmtsSrc = 'http://fake/wmts/capabilities.xml';
   const wmtsName = 'layer-7328';
@@ -68,11 +68,11 @@ describe('ngeo.map.LayerHelper', () => {
 
     expect(spy.calls.count()).toBe(1);
     /**
-     * @type {import("ol/layer/Tile.js").default<import("ol/source/Tile.js").default>}
+     * @type {import('ol/layer/Tile').default<import('ol/source/Tile').default>}
      */
     const layer = spy.calls.mostRecent().args[0];
     /**
-     * @type {import("ol/source/WMTS.js").default}
+     * @type {import('ol/source/WMTS').default}
      */
     const source = layer.getSource();
     expect(source.getLayer()).toBe(wmtsName);
@@ -126,7 +126,7 @@ describe('ngeo.map.LayerHelper', () => {
 
     expect(spy.calls.count()).toBe(1);
     /**
-     * @type {import("ol/layer/Tile.js").default<import("ol/source/Tile.js").default>}
+     * @type {import('ol/layer/Tile').default<import('ol/source/Tile').default>}
      */
     const layer = spy.calls.mostRecent().args[0];
     const capabilitiesStyles = [{legendURL: [{href: 'http://legendURL'}]}];

@@ -21,13 +21,13 @@
 
 // @ts-nocheck
 import angular from 'angular';
-import gmfTestDataThemes from '../data/themes.js';
-import {DATALAYERGROUP_NAME} from 'gmf/index.js';
-import EPSG2056 from 'ngeo/proj/EPSG_2056.js';
-import olMap from 'ol/Map.js';
-import olView from 'ol/View.js';
-import olCollection from 'ol/Collection.js';
-import * as olProj from 'ol/proj.js';
+import gmfTestDataThemes from '../data/themes';
+import {DATALAYERGROUP_NAME} from 'gmf/index';
+import EPSG2056 from 'ngeo/proj/EPSG_2056';
+import olMap from 'ol/Map';
+import olView from 'ol/View';
+import olCollection from 'ol/Collection';
+import * as olProj from 'ol/proj';
 
 describe('Permalink service', () => {
   let PermalinkService;

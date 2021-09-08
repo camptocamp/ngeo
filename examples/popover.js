@@ -21,7 +21,7 @@
 
 import './popover.css';
 import angular from 'angular';
-import ngeoMessagePopoverComponent from 'ngeo/message/popoverComponent.js';
+import ngeoMessagePopoverComponent from 'ngeo/message/popoverComponent';
 
 /** @type {angular.IModule} **/
 const myModule = angular.module('app', ['gettext', ngeoMessagePopoverComponent.name]);

@@ -21,20 +21,20 @@
 
 import angular from 'angular';
 import './drawfeature.css';
-import 'bootstrap/js/src/tooltip.js';
-import gmfMapComponent from 'gmf/map/component.js';
+import 'bootstrap/js/src/tooltip';
+import gmfMapComponent from 'gmf/map/component';
 
-import gmfDrawingModule from 'gmf/drawing/module.js';
-import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties.js';
-import ngeoMapModule from 'ngeo/map/module.js';
-import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
-import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
-import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr.js';
-import olMap from 'ol/Map.js';
-import olView from 'ol/View.js';
-import olLayerTile from 'ol/layer/Tile.js';
-import olSourceOSM from 'ol/source/OSM.js';
-import options from './options.js';
+import gmfDrawingModule from 'gmf/drawing/module';
+import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties';
+import ngeoMapModule from 'ngeo/map/module';
+import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper';
+import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate';
+import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr';
+import olMap from 'ol/Map';
+import olView from 'ol/View';
+import olLayerTile from 'ol/layer/Tile';
+import olSourceOSM from 'ol/source/OSM';
+import options from './options';
 
 /**
  * @type {angular.IModule}
@@ -51,12 +51,12 @@ const myModule = angular.module('gmfapp', [
 
 /**
  * @param {angular.IScope} $scope Angular scope.
- * @param {import("ngeo/misc/FeatureHelper.js").FeatureHelper} ngeoFeatureHelper Gmf feature helper service.
- * @param {import("ol/Collection.js").default<import("ol/Feature.js").default<import("ol/geom/Geometry.js").default>>} ngeoFeatures Collection of
+ * @param {import('ngeo/misc/FeatureHelper').FeatureHelper} ngeoFeatureHelper Gmf feature helper service.
+ * @param {import('ol/Collection').default<import('ol/Feature').default<import('ol/geom/Geometry').default>>} ngeoFeatures Collection of
  *    features.
- * @param {import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate
+ * @param {import('ngeo/misc/ToolActivateMgr').ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate
  *    manager service.
- * @param {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr Ngeo
+ * @param {import('ngeo/map/FeatureOverlayMgr').FeatureOverlayMgr} ngeoFeatureOverlayMgr Ngeo
  *    FeatureOverlay manager
  * @class
  * @ngInject
@@ -78,7 +78,7 @@ function MainController($scope, ngeoFeatureHelper, ngeoFeatures, ngeoToolActivat
   featureOverlay.setFeatures(ngeoFeatures);
 
   /**
-   * @type {import("ol/Map.js").default}
+   * @type {import('ol/Map').default}
    */
   this.map = new olMap({
     layers: [
@@ -110,10 +110,10 @@ function MainController($scope, ngeoFeatureHelper, ngeoFeatures, ngeoToolActivat
     (newVal) => {
       if (newVal) {
         this.map.on(
-          /** @type {import('ol/Observable.js').EventTypes} */ ('pointermove'),
+          /** @type {import('ol/Observable').EventTypes} */ ('pointermove'),
           /** @type {function(?): ?} */ (
             /**
-             * @param {import('ol/MapBrowserEvent.js').default<unknown>} evt
+             * @param {import('ol/MapBrowserEvent').default<unknown>} evt
              */ (evt) => {
               this.handleMapPointerMove_(evt);
             }
@@ -121,10 +121,10 @@ function MainController($scope, ngeoFeatureHelper, ngeoFeatures, ngeoToolActivat
         );
       } else {
         this.map.un(
-          /** @type {import('ol/Observable.js').EventTypes} */ ('pointermove'),
+          /** @type {import('ol/Observable').EventTypes} */ ('pointermove'),
           /** @type {function(?): ?} */ (
             /**
-             * @param {import('ol/MapBrowserEvent.js').default<unknown>} evt
+             * @param {import('ol/MapBrowserEvent').default<unknown>} evt
              */ (evt) => {
               this.handleMapPointerMove_(evt);
             }
@@ -143,7 +143,7 @@ function MainController($scope, ngeoFeatureHelper, ngeoFeatures, ngeoToolActivat
 }
 
 /**
- * @param {import("ol/MapBrowserEvent.js").default<unknown>} evt MapBrowser event
+ * @param {import('ol/MapBrowserEvent').default<unknown>} evt MapBrowser event
  */
 MainController.prototype.handleMapPointerMove_ = function (evt) {
   const pixel = evt.pixel;

@@ -20,7 +20,7 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import gmfContextualdataComponent from 'gmf/contextualdata/component.js';
+import gmfContextualdataComponent from 'gmf/contextualdata/component';
 
 import './contextualdata.scss';
 

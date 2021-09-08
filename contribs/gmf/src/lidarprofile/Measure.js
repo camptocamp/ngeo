@@ -27,12 +27,12 @@ import {mouse as d3mouse, select as d3select} from 'd3';
 export default class {
   /**
    * Measure tool for the d3 chart
-   * @param {import("gmf/lidarprofile/Manager.js").LidarprofileManager} gmfLidarprofileManagerInstance
+   * @param {import('gmf/lidarprofile/Manager').LidarprofileManager} gmfLidarprofileManagerInstance
    *    gmf lidar profile manager instance
    */
   constructor(gmfLidarprofileManagerInstance) {
     /**
-     * @type {import("gmf/lidarprofile/Manager.js").LidarprofileManager}
+     * @type {import('gmf/lidarprofile/Manager').LidarprofileManager}
      * @private
      */
     this.manager_ = gmfLidarprofileManagerInstance;

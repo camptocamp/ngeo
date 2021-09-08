@@ -20,7 +20,7 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import {remove as removeFromArray} from 'ol/array.js';
+import {remove as removeFromArray} from 'ol/array';
 
 /**
  * @hidden
@@ -246,7 +246,7 @@ SavedFilterItem.prototype.condition;
 
 /**
  * The list of custom rules of the saved filter item.
- * @type {import("ngeo/filter/RuleHelper.js").AnyOptions[]}
+ * @type {import('ngeo/filter/RuleHelper').AnyOptions[]}
  */
 SavedFilterItem.prototype.customRules;
 
@@ -258,7 +258,7 @@ SavedFilterItem.prototype.dataSourceId;
 
 /**
  * The list of directed rules of the saved filter item.
- * @type {import("ngeo/filter/RuleHelper.js").AnyOptions[]}
+ * @type {import('ngeo/filter/RuleHelper').AnyOptions[]}
  */
 SavedFilterItem.prototype.directedRules;
 

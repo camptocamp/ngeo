@@ -22,13 +22,13 @@
 import './locationsearch.css';
 import angular from 'angular';
 
-import ngeoMapModule from 'ngeo/map/module.js';
-import ngeoSearchModule from 'ngeo/search/module.js';
-import * as olProj from 'ol/proj.js';
-import olMap from 'ol/Map.js';
-import olView from 'ol/View.js';
-import olLayerTile from 'ol/layer/Tile.js';
-import olSourceOSM from 'ol/source/OSM.js';
+import ngeoMapModule from 'ngeo/map/module';
+import ngeoSearchModule from 'ngeo/search/module';
+import * as olProj from 'ol/proj';
+import olMap from 'ol/Map';
+import olView from 'ol/View';
+import olLayerTile from 'ol/layer/Tile';
+import olSourceOSM from 'ol/source/OSM';
 
 /** @type {angular.IModule} **/
 const appmodule = angular.module('app', ['gettext', ngeoMapModule.name, ngeoSearchModule.name]);
@@ -52,18 +52,18 @@ appmodule.component('appLocationSearch', locationSearchComponent);
 
 /**
  * @class
- * @param {import("ngeo/search/createLocationSearchBloodhound.js").createLocationSearchBloodhoundFunction} ngeoCreateLocationSearchBloodhound
+ * @param {import('ngeo/search/createLocationSearchBloodhound').createLocationSearchBloodhoundFunction} ngeoCreateLocationSearchBloodhound
  *    Bloodhound service.
  * @ngInject
  */
 function SearchController(ngeoCreateLocationSearchBloodhound) {
   /**
-   * @type {?import("ol/Map.js").default}
+   * @type {?import('ol/Map').default}
    */
   this.map = null;
 
   const limit = 10;
-  /** @type {Bloodhound<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>[]>} */
+  /** @type {Bloodhound<import('ol/Feature').default<import('ol/geom/Geometry').default>[]>} */
   const bloodhoundEngine = this.createAndInitBloodhound_(ngeoCreateLocationSearchBloodhound, limit);
 
   /**
@@ -76,7 +76,7 @@ function SearchController(ngeoCreateLocationSearchBloodhound) {
   });
 
   /**
-   * @type {Twitter.Typeahead.Dataset<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>[]}
+   * @type {Twitter.Typeahead.Dataset<import('ol/Feature').default<import('ol/geom/Geometry').default>>[]}
    */
   this.datasets = [
     {
@@ -97,18 +97,18 @@ function SearchController(ngeoCreateLocationSearchBloodhound) {
   ];
 
   /**
-   * @type {import('ngeo/search/searchDirective.js').SearchDirectiveListeners<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>}
+   * @type {import('ngeo/search/searchDirective').SearchDirectiveListeners<import('ol/Feature').default<import('ol/geom/Geometry').default>>}
    */
   this.listeners = {
     select: (event, suggestion, dataset) => {
       if (!this.map) {
         throw new Error('Missing map');
       }
-      const feature = /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>} */ (
+      const feature = /** @type {import('ol/Feature').default<import('ol/geom/Geometry').default>} */ (
         suggestion
       );
       /**
-       * @type {import("ol/extent.js").Extent}
+       * @type {import('ol/extent').Extent}
        */
       const bbox = feature.get('bbox');
       const size = this.map.getSize();
@@ -122,10 +122,10 @@ function SearchController(ngeoCreateLocationSearchBloodhound) {
 }
 
 /**
- * @param {import("ngeo/search/createLocationSearchBloodhound.js").createLocationSearchBloodhoundFunction} ngeoCreateLocationSearchBloodhound
+ * @param {import('ngeo/search/createLocationSearchBloodhound').createLocationSearchBloodhoundFunction} ngeoCreateLocationSearchBloodhound
  *     Bloodhound service.
  * @param {number} limit Limit.
- * @return {Bloodhound<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>[]>} The bloodhound engine.
+ * @return {Bloodhound<import('ol/Feature').default<import('ol/geom/Geometry').default>[]>} The bloodhound engine.
  */
 SearchController.prototype.createAndInitBloodhound_ = function (ngeoCreateLocationSearchBloodhound, limit) {
   const epsg3857 = olProj.get('EPSG:3857');
@@ -155,7 +155,7 @@ appmodule.controller('AppSearchController', SearchController);
  */
 function MainController() {
   /**
-   * @type {import("ol/Map.js").default}
+   * @type {import('ol/Map').default}
    */
   this.map = new olMap({
     layers: [

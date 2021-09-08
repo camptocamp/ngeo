@@ -23,12 +23,12 @@
  * @module src/options
  */
 
-import olStyleCircle from 'ol/style/Circle.js';
-import olStyleRegularShape from 'ol/style/RegularShape.js';
-import olStyleFill from 'ol/style/Fill.js';
-import olStyleStroke from 'ol/style/Stroke.js';
-import olStyle from 'ol/style/Style.js';
-import {createDefaultStyle} from 'ol/style/Style.js';
+import olStyleCircle from 'ol/style/Circle';
+import olStyleRegularShape from 'ol/style/RegularShape';
+import olStyleFill from 'ol/style/Fill';
+import olStyleStroke from 'ol/style/Stroke';
+import olStyle from 'ol/style/Style';
+import {createDefaultStyle} from 'ol/style/Style';
 /**
  * @typedef {Object} Fill
  * @property {number[]|string} [color] The color.
@@ -84,7 +84,7 @@ import {createDefaultStyle} from 'ol/style/Style.js';
 
 /**
  * @param {StyleLike} styleDescriptor The description of the style
- * @return {import("ol/style/Style.js").StyleLike}
+ * @return {import('ol/style/Style').StyleLike}
  */
 export function buildStyle(styleDescriptor) {
   if (styleDescriptor instanceof olStyle) {
@@ -99,7 +99,7 @@ export function buildStyle(styleDescriptor) {
     }
     return result;
   } else {
-    /** @type {import('ol/style/Style.js').Options} */
+    /** @type {import('ol/style/Style').Options} */
     const style = {};
     Object.assign(style, styleDescriptor);
     const sd = /** @type {Style} */ (styleDescriptor);
@@ -110,7 +110,7 @@ export function buildStyle(styleDescriptor) {
       style.stroke = new olStyleStroke(sd.stroke);
     }
     if (sd.circle) {
-      const circleStyle = /** @type {import('ol/style/Circle.js').Options} */ ({});
+      const circleStyle = /** @type {import('ol/style/Circle').Options} */ ({});
       Object.assign(circleStyle, sd.circle);
 
       if (sd.circle.fill) {
@@ -123,7 +123,7 @@ export function buildStyle(styleDescriptor) {
       // @ts-ignore
       delete style.circle;
     } else if (sd.regularShape) {
-      const regularShapeStyle = /** @type {import('ol/style/RegularShape.js').Options} */ ({});
+      const regularShapeStyle = /** @type {import('ol/style/RegularShape').Options} */ ({});
       Object.assign(regularShapeStyle, sd.regularShape);
 
       if (sd.regularShape.fill) {
@@ -148,7 +148,7 @@ export function buildStyle(styleDescriptor) {
 }
 
 /**
- * @typedef {import("ol/style/Style.js").StyleLike|Style[]|Style} StyleLike
+ * @typedef {import('ol/style/Style').StyleLike|Style[]|Style} StyleLike
  */
 
 /**

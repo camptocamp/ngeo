@@ -21,12 +21,12 @@
 
 import './mapswipe.css';
 import angular from 'angular';
-import ngeoMapswipeModule from 'ngeo/map/swipe.js';
-import ngeoMapModule from 'ngeo/map/module.js';
-import olLayerTile from 'ol/layer/Tile.js';
-import olMap from 'ol/Map.js';
-import olSourceOSM, {ATTRIBUTION} from 'ol/source/OSM.js';
-import olView from 'ol/View.js';
+import ngeoMapswipeModule from 'ngeo/map/swipe';
+import ngeoMapModule from 'ngeo/map/module';
+import olLayerTile from 'ol/layer/Tile';
+import olMap from 'ol/Map';
+import olSourceOSM, {ATTRIBUTION} from 'ol/source/OSM';
+import olView from 'ol/View';
 
 /** @type {angular.IModule} **/
 const myModule = angular.module('app', ['gettext', ngeoMapModule.name, ngeoMapswipeModule.name]);
@@ -41,7 +41,7 @@ function MainController() {
   });
 
   /**
-   * @type {import('ol/layer/Tile.js').default<import("ol/source/Tile.js").default>}
+   * @type {import('ol/layer/Tile').default<import('ol/source/Tile').default>}
    */
   this.openSeaMapLayer = new olLayerTile({
     source: new olSourceOSM({
@@ -52,7 +52,7 @@ function MainController() {
   });
 
   /**
-   * @type {import('ol/Map.js').default}
+   * @type {import('ol/Map').default}
    */
   this.map = new olMap({
     layers: [openStreetMapLayer, this.openSeaMapLayer],

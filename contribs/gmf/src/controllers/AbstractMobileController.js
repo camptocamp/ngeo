@@ -22,11 +22,11 @@
 import angular from 'angular';
 import gmfControllersAbstractAppController, {
   AbstractAppController,
-} from 'gmf/controllers/AbstractAppController.js';
-import gmfMobileMeasureModule from 'gmf/mobile/measure/module.js';
-import gmfMobileNavigationModule from 'gmf/mobile/navigation/module.js';
-import gmfQueryWindowComponent from 'gmf/query/windowComponent.js';
-import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
+} from 'gmf/controllers/AbstractAppController';
+import gmfMobileMeasureModule from 'gmf/mobile/measure/module';
+import gmfMobileNavigationModule from 'gmf/mobile/navigation/module';
+import gmfQueryWindowComponent from 'gmf/query/windowComponent';
+import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate';
 
 import 'gmf/controllers/vars_mobile.scss';
 import 'gmf/controllers/mobile.scss';
@@ -91,7 +91,7 @@ export class AbstractMobileController extends AbstractAppController {
 
     /**
      * The ngeo ToolActivate manager service.
-     * @type {import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr}
+     * @type {import('ngeo/misc/ToolActivateMgr').ToolActivateMgr}
      */
     const ngeoToolActivateMgr = $injector.get('ngeoToolActivateMgr');
 
@@ -105,7 +105,7 @@ export class AbstractMobileController extends AbstractAppController {
     ngeoToolActivateMgr.registerTool('mapTools', measureLengthActivate, false);
 
     /**
-     * @type {import('ngeo/search/searchDirective.js').SearchDirectiveListeners<never>}
+     * @type {import('ngeo/search/searchDirective').SearchDirectiveListeners<never>}
      */
     this.searchListeners = {
       open: () => {

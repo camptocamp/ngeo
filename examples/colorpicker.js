@@ -21,7 +21,7 @@
 
 import './colorpicker.css';
 import angular from 'angular';
-import ngeoMiscColorpickerComponent from 'ngeo/misc/colorpickerComponent.js';
+import ngeoMiscColorpickerComponent from 'ngeo/misc/colorpickerComponent';
 
 /** @type {angular.IModule} **/
 const myModule = angular.module('app', ['gettext', ngeoMiscColorpickerComponent.name]);

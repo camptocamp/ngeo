@@ -36,7 +36,7 @@ const myModule = angular.module('gmfDatasourceFileGroup', []);
  * to be snapped onto features that were imported in such a manner.
  *
  * @typedef {Object} DatasourceFileGroup
- * @property {import("ngeo/datasource/FileGroup.js").default|null} fileGroup
+ * @property {import('ngeo/datasource/FileGroup').default|null} fileGroup
  */
 
 myModule.value('gmfDatasourceFileGroup', {

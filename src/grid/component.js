@@ -20,9 +20,9 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import {isPlatformModifierKeyOnly, isShiftKeyOnly} from 'ngeo/utils.js';
-import ngeoMiscFilters from 'ngeo/misc/filters.js';
-import {getRowUid} from 'ngeo/grid/Config.js';
+import {isPlatformModifierKeyOnly, isShiftKeyOnly} from 'ngeo/utils';
+import ngeoMiscFilters from 'ngeo/misc/filters';
+import {getRowUid} from 'ngeo/grid/Config';
 
 import 'floatthead';
 import 'angular-float-thead';
@@ -80,7 +80,7 @@ function ngeoGridTemplateUrl($attrs, ngeoGridTemplateUrl) {
  *       ngeo-grid-configuration="::ctrl.gridConfiguration"
  *     </ngeo-grid>
  *
- * @htmlAttribute {import("ngeo/grid/Config.js").default} ngeo-grid-configuration The
+ * @htmlAttribute {import('ngeo/grid/Config').default} ngeo-grid-configuration The
  * configuration to use.
  *
  * @ngdoc component
@@ -112,7 +112,7 @@ export function GridController($scope) {
   this.scope_ = $scope;
 
   /**
-   * @type {?import("ngeo/grid/Config.js").default}
+   * @type {?import('ngeo/grid/Config').default}
    */
   this.configuration = null;
 

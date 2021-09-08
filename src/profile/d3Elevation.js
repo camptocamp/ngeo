@@ -80,8 +80,8 @@ import {
  *     ]
  *
  * @return {unknown} D3js component.
- * @param {import('ngeo/options.js').ngeoProfileOptions} options Profile options.
- * @param {import('ngeo/profile/elevationComponent.js').ProfileOptions<unknown>} functions Profile options.
+ * @param {import('ngeo/options').ngeoProfileOptions} options Profile options.
+ * @param {import('ngeo/profile/elevationComponent').ProfileOptions<unknown>} functions Profile options.
  * @private
  */
 function d3Elevation(options, functions) {
@@ -159,7 +159,7 @@ function d3Elevation(options, functions) {
   const yAxisLabel = i18n.yAxis || 'Elevation';
 
   /**
-   * @type {import('ngeo/profile/elevationComponent.js').ProfileFormatter}
+   * @type {import('ngeo/profile/elevationComponent').ProfileFormatter}
    */
   const formatter = {
     /**

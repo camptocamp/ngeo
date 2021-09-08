@@ -20,9 +20,9 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import ngeoMeasureArea from 'ngeo/measure/area.js';
-import ngeoMeasureAzimut from 'ngeo/measure/azimut.js';
-import ngeoMeasureLength from 'ngeo/measure/length.js';
+import ngeoMeasureArea from 'ngeo/measure/area';
+import ngeoMeasureAzimut from 'ngeo/measure/azimut';
+import ngeoMeasureLength from 'ngeo/measure/length';
 
 /**
  * @type {angular.IModule}

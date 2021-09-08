@@ -22,26 +22,26 @@
 // Todo - use the 'Filter' theme instead if the 'Edit' theme
 import angular from 'angular';
 import './importdatasource.css';
-import 'bootstrap/js/src/tooltip.js';
-import gmfDatasourceManager from 'gmf/datasource/Manager.js';
+import 'bootstrap/js/src/tooltip';
+import gmfDatasourceManager from 'gmf/datasource/Manager';
 
-import gmfImportImportdatasourceComponent from 'gmf/import/importdatasourceComponent.js';
-import gmfLayertreeComponent from 'gmf/layertree/component.js';
-import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
+import gmfImportImportdatasourceComponent from 'gmf/import/importdatasourceComponent';
+import gmfLayertreeComponent from 'gmf/layertree/component';
+import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager';
 
-import gmfMapComponent from 'gmf/map/component.js';
+import gmfMapComponent from 'gmf/map/component';
 
-import gmfThemeThemes from 'gmf/theme/Themes.js';
-import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources.js';
+import gmfThemeThemes from 'gmf/theme/Themes';
+import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources';
 
-import ngeoQueryComponent from 'ngeo/query/component.js';
+import ngeoQueryComponent from 'ngeo/query/component';
 
-import EPSG2056 from 'ngeo/proj/EPSG_2056.js';
-import olMap from 'ol/Map.js';
-import olView from 'ol/View.js';
-import olLayerTile from 'ol/layer/Tile.js';
-import olSourceOSM from 'ol/source/OSM.js';
-import options from './options.js';
+import EPSG2056 from 'ngeo/proj/EPSG_2056';
+import olMap from 'ol/Map';
+import olView from 'ol/View';
+import olLayerTile from 'ol/layer/Tile';
+import olSourceOSM from 'ol/source/OSM';
+import options from './options';
 
 /**
  * @type {angular.IModule}
@@ -65,12 +65,12 @@ const myModule = angular.module('gmfapp', [
 class MainController {
   /**
    * @param {angular.IScope} $scope Angular scope.
-   * @param {import("gmf/datasource/Manager.js").DatasourceManager} gmfDataSourcesManager The gmf
+   * @param {import('gmf/datasource/Manager').DatasourceManager} gmfDataSourcesManager The gmf
    *    data sources manager service.
-   * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes The gmf themes service.
-   * @param {import("gmf/layertree/TreeManager.js").LayertreeTreeManager} gmfTreeManager gmf Tree Manager
+   * @param {import('gmf/theme/Themes').ThemesService} gmfThemes The gmf themes service.
+   * @param {import('gmf/layertree/TreeManager').LayertreeTreeManager} gmfTreeManager gmf Tree Manager
    *    service.
-   * @param {import("ngeo/datasource/DataSources.js").DataSource} ngeoDataSources Ngeo data sources service.
+   * @param {import('ngeo/datasource/DataSources').DataSource} ngeoDataSources Ngeo data sources service.
    * @ngInject
    */
   constructor($scope, gmfDataSourcesManager, gmfThemes, gmfTreeManager, ngeoDataSources) {
@@ -83,12 +83,12 @@ class MainController {
     gmfThemes.loadThemes();
 
     /**
-     * @type {import("gmf/layertree/TreeManager.js").LayertreeTreeManager}
+     * @type {import('gmf/layertree/TreeManager').LayertreeTreeManager}
      */
     this.gmfTreeManager = gmfTreeManager;
 
     /**
-     * @type {import("ol/Map.js").default}
+     * @type {import('ol/Map').default}
      */
     this.map = new olMap({
       layers: [

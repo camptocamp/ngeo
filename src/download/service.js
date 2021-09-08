@@ -20,7 +20,7 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import {isSafari} from 'ngeo/utils.js';
+import {isSafari} from 'ngeo/utils';
 
 import {saveAs} from 'file-saver';
 

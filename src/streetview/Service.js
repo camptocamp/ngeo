@@ -19,7 +19,7 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import * as olProj from 'ol/proj.js';
+import * as olProj from 'ol/proj';
 
 /**
  * Abstract service for streetview
@@ -28,8 +28,8 @@ import * as olProj from 'ol/proj.js';
 export class StreetviewService {
   /**
    * @param {angular.IScope} $scope Scope.
-   * @param {?import("ol/Map.js").default} map The map
-   * @param {(newCoordinates: import("ol/coordinate.js").Coordinate | null) => void} handlePanoramePositionChange Position change handler. Executes the necessary changes in the component.
+   * @param {?import('ol/Map').default} map The map
+   * @param {(newCoordinates: import('ol/coordinate').Coordinate | null) => void} handlePanoramePositionChange Position change handler. Executes the necessary changes in the component.
    */
   constructor($scope, map, handlePanoramePositionChange) {
     this.scope_ = $scope;
@@ -40,7 +40,7 @@ export class StreetviewService {
 
   /**
    * Get image for the given location.
-   * @param {import("ol/coordinate.js").Coordinate} coordinates Map view projection coordinates.
+   * @param {import('ol/coordinate').Coordinate} coordinates Map view projection coordinates.
    */
   getPanorama(coordinates) {}
 
@@ -52,7 +52,7 @@ export class StreetviewService {
 
   /**
    * Set new position on the map.
-   * @param {import("ol/coordinate.js").Coordinate} newCoordinates array of longitude and latitude.
+   * @param {import('ol/coordinate').Coordinate} newCoordinates array of longitude and latitude.
    */
   panoramaPositionChange(newCoordinates) {
     this.handlePanoramaPositionChange_(newCoordinates);
@@ -61,8 +61,8 @@ export class StreetviewService {
   // Utility methods
 
   /**
-   * @param {import("ol/coordinate.js").Coordinate} lonLat LonLat coordinate.
-   * @return {import("ol/coordinate.js").Coordinate} Map view projection coordinate.
+   * @param {import('ol/coordinate').Coordinate} lonLat LonLat coordinate.
+   * @return {import('ol/coordinate').Coordinate} Map view projection coordinate.
    */
   fromLonLat_(lonLat) {
     if (!this.map_) {
@@ -72,8 +72,8 @@ export class StreetviewService {
   }
 
   /**
-   * @param {import("ol/coordinate.js").Coordinate} coordinate Map view projection coordinate.
-   * @return {import("ol/coordinate.js").Coordinate} LonLat coordinate.
+   * @param {import('ol/coordinate').Coordinate} coordinate Map view projection coordinate.
+   * @return {import('ol/coordinate').Coordinate} LonLat coordinate.
    */
   toLonLat_(coordinate) {
     if (!this.map_) {

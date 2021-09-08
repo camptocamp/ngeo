@@ -20,27 +20,27 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import olMap from 'ol/Map.js';
-import olCollection from 'ol/Collection.js';
-import olLayerGroup from 'ol/layer/Group.js';
-import olLayerTile from 'ol/layer/Tile.js';
-import olLayerLayer from 'ol/layer/Layer.js';
-import olSourceImageWMS from 'ol/source/ImageWMS.js';
-import olSourceTileImage from 'ol/source/TileImage.js';
-import {NODE_IS_LEAF, LAYER_NODE_NAME_KEY} from 'ngeo/map/LayerHelper.js';
-import ngeoDatasourceWMSGroup from 'ngeo/datasource/WMSGroup.js';
-import LegendMapFishPrintV3 from 'gmf/print/LegendMapFishPrintV3.js';
-import {DATALAYERGROUP_NAME} from 'gmf/index.js';
-import gmfExternalDatasourceOGC from 'gmf/datasource/ExternalOGC.js';
+import olMap from 'ol/Map';
+import olCollection from 'ol/Collection';
+import olLayerGroup from 'ol/layer/Group';
+import olLayerTile from 'ol/layer/Tile';
+import olLayerLayer from 'ol/layer/Layer';
+import olSourceImageWMS from 'ol/source/ImageWMS';
+import olSourceTileImage from 'ol/source/TileImage';
+import {NODE_IS_LEAF, LAYER_NODE_NAME_KEY} from 'ngeo/map/LayerHelper';
+import ngeoDatasourceWMSGroup from 'ngeo/datasource/WMSGroup';
+import LegendMapFishPrintV3 from 'gmf/print/LegendMapFishPrintV3';
+import {DATALAYERGROUP_NAME} from 'gmf/index';
+import gmfExternalDatasourceOGC from 'gmf/datasource/ExternalOGC';
 
 describe('gmf.print.LegendMapFishPrintV3', () => {
-  /** @type {import('gmf/print/LegendMapFishPrintV3.js').default} */
+  /** @type {import('gmf/print/LegendMapFishPrintV3').default} */
   let legendMapFishPrintV3;
   /** @type {angular.auto.IInjectorService} */
   let injector;
-  /** @type {import('ngeo/map/LayerHelper.js').LayerHelper} */
+  /** @type {import('ngeo/map/LayerHelper').LayerHelper} */
   let ngeoLayerHelper;
-  /** @type {import('gmf/datasource/ExternalDataSourcesManager.js').ExternalDatSourcesManager} */
+  /** @type {import('gmf/datasource/ExternalDataSourcesManager').ExternalDatSourcesManager} */
   let gmfExternalDataSourcesManager;
 
   const layerTile = new olLayerTile({
@@ -100,7 +100,7 @@ describe('gmf.print.LegendMapFishPrintV3', () => {
   const addlayersInGroup =
     /**
      * Add layers in a group and return this group.
-     * @param {import('ol/layer/Layer').default<import("ol/source/Source.js").default>[]} layers the
+     * @param {import('ol/layer/Layer').default<import('ol/source/Source').default>[]} layers the
      * array of layers to add to the map.
      * @param {string} groupName The group name.
      * @return {import('ol/layer/Group').default} a layer group.

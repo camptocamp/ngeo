@@ -52,7 +52,7 @@ Time.prototype.getTime = function (date, defaultValue = null) {
 /**
  * Get options regarding the time property of a node;
  *
- * @param {import('ngeo/datasource/OGC.js').TimeProperty} time the time property of a node
+ * @param {import('ngeo/datasource/OGC').TimeProperty} time the time property of a node
  * @return {{
  *  minDate: number,
  *  maxDate: number,

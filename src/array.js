@@ -19,7 +19,7 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import {includes as olArrayIncludes} from 'ol/array.js';
+import {includes as olArrayIncludes} from 'ol/array';
 
 /**
  * Push an object in an array, unless already there.

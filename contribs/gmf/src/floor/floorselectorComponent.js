@@ -20,7 +20,7 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import {findIndex as findIndexInArray} from 'ol/array.js';
+import {findIndex as findIndexInArray} from 'ol/array';
 
 /**
  * @type {!angular.IModule}
@@ -70,14 +70,14 @@ export class Controller {
   /**
    * @param {angular.IScope} $scope Angular scope.
    * @param {JQuery} $element Element.
-   * @param {import('gmf/options.js').gmfFloors} gmfFloors Floor dimension values and labels.
+   * @param {import('gmf/options').gmfFloors} gmfFloors Floor dimension values and labels.
    * @ngInject
    * @ngdoc controller
    * @ngname GmfFilterselectorController
    */
   constructor($scope, $element, gmfFloors) {
     /**
-     * @type {import('gmf/options.js').gmfFloors}
+     * @type {import('gmf/options').gmfFloors}
      */
     this.items = gmfFloors;
 

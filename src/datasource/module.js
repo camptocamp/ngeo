@@ -20,8 +20,8 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources.js';
-import ngeoDatasourceHelper from 'ngeo/datasource/Helper.js';
+import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources';
+import ngeoDatasourceHelper from 'ngeo/datasource/Helper';
 
 /**
  * @type {angular.IModule}

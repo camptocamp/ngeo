@@ -19,9 +19,9 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import ngeoDatasourceOGCGroup from 'ngeo/datasource/OGCGroup.js';
-import ngeoDatasourceOGC from 'ngeo/datasource/OGC.js';
-import {remove as removeFromArray} from 'ol/array.js';
+import ngeoDatasourceOGCGroup from 'ngeo/datasource/OGCGroup';
+import ngeoDatasourceOGC from 'ngeo/datasource/OGC';
+import {remove as removeFromArray} from 'ol/array';
 
 /**
  * The options required to create a `WMSGroup`.
@@ -30,7 +30,7 @@ import {remove as removeFromArray} from 'ol/array.js';
  * @typedef {Object} WMSGroupOptions
  * @property {angular.auto.IInjectorService} injector Angular main injector.
  * @property {string} url (WMSGroupOptions)
- * @property {import('ngeo/datasource/DataSource.js').default[]} dataSources (GroupOptions)
+ * @property {import('ngeo/datasource/DataSource').default[]} dataSources (GroupOptions)
  * @property {string} title (GroupOptions)
  */
 
@@ -47,7 +47,7 @@ export default class extends ngeoDatasourceOGCGroup {
    * Note: the layer is not added to the map here.
    *
    * @param {WMSGroupOptions} options Options.
-   * @param {import("ngeo/map/LayerHelper.js").LayerHelper} ngeoLayerHelper the ngeo map LayerHelper service.
+   * @param {import('ngeo/map/LayerHelper').LayerHelper} ngeoLayerHelper the ngeo map LayerHelper service.
    */
   constructor(options, ngeoLayerHelper) {
     super(options);
@@ -57,13 +57,13 @@ export default class extends ngeoDatasourceOGCGroup {
     // === PRIVATE properties ===
 
     /**
-     * @type {?import("ol/layer/Image.js").default<import("ol/source/Image.js").default>}
+     * @type {?import('ol/layer/Image').default<import('ol/source/Image').default>}
      * @private
      */
     this.layer_ = null;
 
     /**
-     * @type {import("ngeo/map/LayerHelper.js").LayerHelper}
+     * @type {import('ngeo/map/LayerHelper').LayerHelper}
      * @private
      */
     this.ngeoLayerHelper_ = ngeoLayerHelper;
@@ -117,7 +117,7 @@ export default class extends ngeoDatasourceOGCGroup {
   // =======================================
 
   /**
-   * @return {import("ol/layer/Image.js").default<import("ol/source/Image.js").default>} layer
+   * @return {import('ol/layer/Image').default<import('ol/source/Image').default>} layer
    */
   get layer() {
     if (!this.layer_) {
@@ -131,7 +131,7 @@ export default class extends ngeoDatasourceOGCGroup {
   // =======================
 
   /**
-   * @param {import("ngeo/datasource/DataSource.js").default} dataSource Data source to add.
+   * @param {import('ngeo/datasource/DataSource').default} dataSource Data source to add.
    */
   addDataSource(dataSource) {
     super.addDataSource(dataSource);
@@ -192,7 +192,7 @@ export default class extends ngeoDatasourceOGCGroup {
   }
 
   /**
-   * @param {import("ngeo/datasource/DataSource.js").default} dataSource Data source to remove.
+   * @param {import('ngeo/datasource/DataSource').default} dataSource Data source to remove.
    */
   removeDataSource(dataSource) {
     super.removeDataSource(dataSource);
@@ -202,7 +202,7 @@ export default class extends ngeoDatasourceOGCGroup {
   }
 
   /**
-   * @param {import("ngeo/datasource/OGC.js").default} dataSource OGC data source to unregister.
+   * @param {import('ngeo/datasource/OGC').default} dataSource OGC data source to unregister.
    * @private
    */
   unregisterDataSource_(dataSource) {

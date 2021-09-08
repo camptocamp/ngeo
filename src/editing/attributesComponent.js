@@ -20,11 +20,11 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import {getUid as olUtilGetUid} from 'ol/util.js';
-import {listen} from 'ol/events.js';
-import ngeoMiscEventHelper from 'ngeo/misc/EventHelper.js';
-import ngeoMiscDatetimepickerComponent from 'ngeo/misc/datetimepickerComponent.js';
-import {ObjectEvent} from 'ol/Object.js';
+import {getUid as olUtilGetUid} from 'ol/util';
+import {listen} from 'ol/events';
+import ngeoMiscEventHelper from 'ngeo/misc/EventHelper';
+import ngeoMiscDatetimepickerComponent from 'ngeo/misc/datetimepickerComponent';
+import {ObjectEvent} from 'ol/Object';
 import './editing.css';
 
 /**
@@ -81,11 +81,11 @@ function ngeoAttributesTemplateUrl($attrs, ngeoAttributesTemplateUrl) {
  *       ngeo-attributes-feature="::ctrl.feature">
  *     </ngeo-attributes>
  *
- * @htmlAttribute {import('ngeo/format/Attribute.js').Attribute[]} ngeo-attributes-attributes The
+ * @htmlAttribute {import('ngeo/format/Attribute').Attribute[]} ngeo-attributes-attributes The
  *     list of attributes to use.
  * @htmlAttribute {boolean} ngeo-attributes-disabled Whether the fieldset should
  *     be disabled or not.
- * @htmlAttribute {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>} ngeo-attributes-feature The feature.
+ * @htmlAttribute {import('ol/Feature').default<import('ol/geom/Geometry').default>} ngeo-attributes-feature The feature.
  *
  * @ngdoc component
  * @ngname ngeoAttributes
@@ -107,7 +107,7 @@ myModule.component('ngeoAttributes', editingAttributeComponent);
 
 /**
  * @param {angular.IScope} $scope Angular scope.
- * @param {import("ngeo/misc/EventHelper.js").EventHelper} ngeoEventHelper Ngeo event helper service
+ * @param {import('ngeo/misc/EventHelper').EventHelper} ngeoEventHelper Ngeo event helper service
  * @class
  * @hidden
  * @ngInject
@@ -117,7 +117,7 @@ myModule.component('ngeoAttributes', editingAttributeComponent);
 export function Controller($scope, ngeoEventHelper) {
   /**
    * The list of attributes to create the form with.
-   * @type {import('ngeo/format/Attribute.js').Attribute[]}
+   * @type {import('ngeo/format/Attribute').Attribute[]}
    */
   this.attributes = [];
 
@@ -129,7 +129,7 @@ export function Controller($scope, ngeoEventHelper) {
 
   /**
    * The feature containing the values.
-   * @type {?import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>}
+   * @type {?import('ol/Feature').default<import('ol/geom/Geometry').default>}
    */
   this.feature = null;
 
@@ -146,7 +146,7 @@ export function Controller($scope, ngeoEventHelper) {
   this.scope_ = $scope;
 
   /**
-   * @type {import("ngeo/misc/EventHelper.js").EventHelper}
+   * @type {import('ngeo/misc/EventHelper').EventHelper}
    */
   this.ngeoEventHelper_ = ngeoEventHelper;
 
@@ -217,7 +217,7 @@ Controller.prototype.$onDestroy = function () {
 };
 
 /**
- * @param {Event|import('ol/events/Event.js').default} evt Event.
+ * @param {Event|import('ol/events/Event').default} evt Event.
  */
 Controller.prototype.handleFeaturePropertyChange_ = function (evt) {
   if (evt instanceof ObjectEvent) {

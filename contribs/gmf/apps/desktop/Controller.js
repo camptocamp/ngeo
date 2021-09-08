@@ -30,11 +30,11 @@ import './sass/desktop.scss';
 import './sass/vars_desktop.scss';
 
 import angular from 'angular';
-import {isEventUsinCtrlKey} from 'ngeo/utils.js';
+import {isEventUsinCtrlKey} from 'ngeo/utils';
 import gmfControllersAbstractDesktopController, {
   AbstractDesktopController,
-} from 'gmf/controllers/AbstractDesktopController.js';
-import appBase from '../appmodule.js';
+} from 'gmf/controllers/AbstractDesktopController';
+import appBase from '../appmodule';
 
 if (!window.requestAnimationFrame) {
   alert(

@@ -20,9 +20,9 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import ngeoInteractionDrawRegularPolygonFromClick from 'ngeo/interaction/DrawRegularPolygonFromClick.js';
-import {listen, unlistenByKey} from 'ol/events.js';
-import olFeature from 'ol/Feature.js';
+import ngeoInteractionDrawRegularPolygonFromClick from 'ngeo/interaction/DrawRegularPolygonFromClick';
+import {listen, unlistenByKey} from 'ol/events';
+import olFeature from 'ol/Feature';
 
 /**
  * @type {angular.IModule}
@@ -63,9 +63,9 @@ const myModule = angular.module('ngeoCreateregularpolygonfromclick', []);
  * @htmlAttribute {number|undefined} ngeo-createregularpolygonfromclick-angle
  *     Angle in radians. A value of 0 will have one of the shape's point
  *     facing up. Default value is 0.
- * @htmlAttribute {import("ol/Collection.js").default} ngeo-createregularpolygonfromclick-features
+ * @htmlAttribute {import('ol/Collection').default} ngeo-createregularpolygonfromclick-features
  *     The collection of features where to add those created by this directive.
- * @htmlAttribute {import("ol/Map.js").default} ngeo-createregularpolygonfromclick-map The map.
+ * @htmlAttribute {import('ol/Map').default} ngeo-createregularpolygonfromclick-map The map.
  * @htmlAttribute {number} ngeo-createregularpolygonfromclick-radius Radius
  *     size in map units.
  * @htmlAttribute {number|undefined} ngeo-createregularpolygonfromclick-sides
@@ -124,12 +124,12 @@ export function Controller($scope) {
   this.angle = null;
 
   /**
-   * @type {?import("ol/Collection.js").default<olFeature<import("ol/geom/Geometry.js").default>>}
+   * @type {?import('ol/Collection').default<olFeature<import('ol/geom/Geometry').default>>}
    */
   this.features = null;
 
   /**
-   * @type {?import("ol/Map.js").default}
+   * @type {?import('ol/Map').default}
    */
   this.map = null;
 
@@ -146,12 +146,12 @@ export function Controller($scope) {
   // == Other properties ==
 
   /**
-   * @type {?import("ngeo/interaction/DrawRegularPolygonFromClick.js").default}
+   * @type {?import('ngeo/interaction/DrawRegularPolygonFromClick').default}
    */
   this.interaction_ = null;
 
   /**
-   * @type {?import("ol/events.js").EventsKey}
+   * @type {?import('ol/events').EventsKey}
    */
   this.interactionListenerKey_ = null;
 
@@ -162,7 +162,7 @@ export function Controller($scope) {
  * Initialize the directive.
  */
 Controller.prototype.$onInit = function () {
-  /** @type {import('ngeo/interaction/DrawRegularPolygonFromClick.js').DrawRegularPolygonFromClickOptions} */
+  /** @type {import('ngeo/interaction/DrawRegularPolygonFromClick').DrawRegularPolygonFromClickOptions} */
   const options = {
     radius: this.radius,
   };
@@ -178,7 +178,7 @@ Controller.prototype.$onInit = function () {
   this.interactionListenerKey_ = listen(
     this.interaction_,
     'drawend',
-    /** @type {import('ol/events.js').ListenerFunction} */ (this.handleDrawEnd_),
+    /** @type {import('ol/events').ListenerFunction} */ (this.handleDrawEnd_),
     this
   );
 
@@ -188,7 +188,7 @@ Controller.prototype.$onInit = function () {
 /**
  * Called when a feature is finished being drawn. Add the feature to the
  * collection.
- * @param {import('ngeo/CustomEvent.js').default<import('lib/ol.interaction.Draw.js').DrawEvent>} evt Event.
+ * @param {import('ngeo/CustomEvent').default<import('lib/ol.interaction.Draw').DrawEvent>} evt Event.
  */
 Controller.prototype.handleDrawEnd_ = function (evt) {
   if (!this.features) {

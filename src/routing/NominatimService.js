@@ -20,7 +20,7 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
+import ngeoMiscDebounce from 'ngeo/misc/debounce';
 
 /**
  * @typedef {Object} NominatimSearchResult
@@ -40,10 +40,10 @@ import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
  * Service to provide access to Nominatim, which allows to search for
  * OSM data by name and address.
  * @param {angular.IHttpService} $http Angular http service.
- * @param {import("ngeo/misc/debounce.js").miscDebounce<function(string, function(NominatimSearchResult[]): void, (function(NominatimSearchResult[]): void)|undefined): void>}  ngeoDebounce
+ * @param {import('ngeo/misc/debounce').miscDebounce<function(string, function(NominatimSearchResult[]): void, (function(NominatimSearchResult[]): void)|undefined): void>}  ngeoDebounce
  *    ngeo Debounce service.
  * @param {string} ngeoNominatimUrl The nominatim URL.
- * @param {import('ngeo/options.js').ngeoNominatimSearchDefaultParams} ngeoNominatimSearchDefaultParams The search parameters
+ * @param {import('ngeo/options').ngeoNominatimSearchDefaultParams} ngeoNominatimSearchDefaultParams The search parameters
  * @class
  * @ngdoc service
  * @ngInject
@@ -58,7 +58,7 @@ export function NominatimService($http, ngeoDebounce, ngeoNominatimUrl, ngeoNomi
   this.$http_ = $http;
 
   /**
-   * @type {import("ngeo/misc/debounce.js").miscDebounce<function(string, function(NominatimSearchResult[]): void, (function(NominatimSearchResult[]): void)|undefined): void>}
+   * @type {import('ngeo/misc/debounce').miscDebounce<function(string, function(NominatimSearchResult[]): void, (function(NominatimSearchResult[]): void)|undefined): void>}
    */
   this.ngeoDebounce_ = ngeoDebounce;
 
@@ -75,7 +75,7 @@ export function NominatimService($http, ngeoDebounce, ngeoNominatimUrl, ngeoNomi
   }
 
   /**
-   * @type {import('ngeo/options.js').ngeoNominatimSearchDefaultParams}
+   * @type {import('ngeo/options').ngeoNominatimSearchDefaultParams}
    */
   this.searchDefaultParams_ = ngeoNominatimSearchDefaultParams;
 
@@ -127,7 +127,7 @@ NominatimService.prototype.search = function (query, params) {
 
 /**
  * Reverse Geocoding
- * @param {import("ol/coordinate.js").Coordinate} coordinate Search coordinate in LonLat projection
+ * @param {import('ol/coordinate').Coordinate} coordinate Search coordinate in LonLat projection
  * @param {(Object<string, string>|undefined)} params Optional parameters
  * @return {angular.IHttpPromise<import('./NominatimService').NominatimSearchResponseResult>} promise of the Nominatim API request
  * @see https://wiki.openstreetmap.org/wiki/Nominatim#Reverse_Geocoding

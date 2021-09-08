@@ -20,7 +20,7 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import {encodeQueryString, decodeQueryString} from 'ngeo/utils.js';
+import {encodeQueryString, decodeQueryString} from 'ngeo/utils';
 
 /**
  * Provides the c2c-geoportal full-text search.

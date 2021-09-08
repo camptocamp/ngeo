@@ -21,24 +21,24 @@
 
 import angular from 'angular';
 import './editfeature.css';
-import 'bootstrap/js/src/tooltip.js';
-import EPSG2056 from 'ngeo/proj/EPSG_2056.js';
+import 'bootstrap/js/src/tooltip';
+import EPSG2056 from 'ngeo/proj/EPSG_2056';
 
-import gmfAuthenticationModule from 'gmf/authentication/module.js';
-import gmfEditingEditFeature from 'gmf/editing/EditFeature.js';
+import gmfAuthenticationModule from 'gmf/authentication/module';
+import gmfEditingEditFeature from 'gmf/editing/EditFeature';
 
-import gmfMapComponent from 'gmf/map/component.js';
+import gmfMapComponent from 'gmf/map/component';
 
-import olFeature from 'ol/Feature.js';
-import olMap from 'ol/Map.js';
-import olView from 'ol/View.js';
-import * as olExtent from 'ol/extent.js';
-import olGeomMultiPoint from 'ol/geom/MultiPoint.js';
-import olLayerTile from 'ol/layer/Tile.js';
-import olLayerImage from 'ol/layer/Image.js';
-import olSourceOSM from 'ol/source/OSM.js';
-import olSourceImageWMS from 'ol/source/ImageWMS.js';
-import options, {MAPSERVER_PROXY} from './options.js';
+import olFeature from 'ol/Feature';
+import olMap from 'ol/Map';
+import olView from 'ol/View';
+import * as olExtent from 'ol/extent';
+import olGeomMultiPoint from 'ol/geom/MultiPoint';
+import olLayerTile from 'ol/layer/Tile';
+import olLayerImage from 'ol/layer/Image';
+import olSourceOSM from 'ol/source/OSM';
+import olSourceImageWMS from 'ol/source/ImageWMS';
+import options, {MAPSERVER_PROXY} from './options';
 
 import user from 'ngeo/store/user.ts';
 
@@ -55,7 +55,7 @@ const myModule = angular.module('gmfapp', [
 
 /**
  * @param {angular.IScope} $scope Angular scope.
- * @param {import("gmf/editing/EditFeature.js").EditingEditFeature} gmfEditFeature Gmf edit feature service.
+ * @param {import('gmf/editing/EditFeature').EditingEditFeature} gmfEditFeature Gmf edit feature service.
  * @class
  * @ngInject
  */
@@ -66,12 +66,12 @@ function MainController($scope, gmfEditFeature) {
   this.scope_ = $scope;
 
   /**
-   * @type {import("gmf/editing/EditFeature.js").EditingEditFeature}
+   * @type {import('gmf/editing/EditFeature').EditingEditFeature}
    */
   this.editFeature_ = gmfEditFeature;
 
   /**
-   * @type {import('gmf/authentication/Service.js').User}
+   * @type {import('gmf/authentication/Service').User}
    */
   this.gmfUser = null;
 
@@ -83,13 +83,12 @@ function MainController($scope, gmfEditFeature) {
 
   this.subscriptions_.push(
     user.getProperties().subscribe({
-      next: (value) => this.gmfUser = value
+      next: (value) => (this.gmfUser = value),
     })
   );
 
-
   /**
-   * @type {import("ol/source/ImageWMS.js").default}
+   * @type {import('ol/source/ImageWMS').default}
    */
   this.wmsSource_ = new olSourceImageWMS({
     url: MAPSERVER_PROXY,
@@ -97,7 +96,7 @@ function MainController($scope, gmfEditFeature) {
   });
 
   /**
-   * @type {import("ol/layer/Image.js").default<import("ol/source/Image.js").default>}
+   * @type {import('ol/layer/Image').default<import('ol/source/Image').default>}
    */
   this.wmsLayer_ = new olLayerImage({
     source: this.wmsSource_,
@@ -114,7 +113,7 @@ function MainController($scope, gmfEditFeature) {
   this.layerId_ = 113;
 
   /**
-   * @type {?olFeature<import("ol/geom/Geometry.js").default>}
+   * @type {?olFeature<import('ol/geom/Geometry').default>}
    */
   this.feature = null;
 
@@ -124,7 +123,7 @@ function MainController($scope, gmfEditFeature) {
   this.pending = false;
 
   /**
-   * @type {import("ol/Map.js").default}
+   * @type {import('ol/Map').default}
    */
   this.map = new olMap({
     layers: [
@@ -142,7 +141,7 @@ function MainController($scope, gmfEditFeature) {
   });
 
   this.map.on(
-    /** @type {import('ol/Observable.js').EventTypes} */ ('singleclick'),
+    /** @type {import('ol/Observable').EventTypes} */ ('singleclick'),
     /** @type {function(?): ?} */ (this.handleMapSingleClick_.bind(this))
   );
 
@@ -154,7 +153,7 @@ function MainController($scope, gmfEditFeature) {
 }
 
 /**
- * @param {import("ol/MapBrowserEvent.js").default<unknown>} evt MapBrowser event
+ * @param {import('ol/MapBrowserEvent').default<unknown>} evt MapBrowser event
  */
 MainController.prototype.handleMapSingleClick_ = function (evt) {
   // (1) Launch query to fetch new features
@@ -187,7 +186,7 @@ MainController.prototype.$onDestroy = function () {
 };
 
 /**
- * @param {olFeature<import("ol/geom/Geometry.js").default>[]} features Features.
+ * @param {olFeature<import('ol/geom/Geometry').default>[]} features Features.
  */
 MainController.prototype.handleGetFeatures_ = function (features) {
   this.pending = false;

@@ -25,22 +25,22 @@
  * @module api/Map.js
  */
 
-import OLMap from 'ol/Map.js';
-import Feature from 'ol/Feature.js';
-import Overlay from 'ol/Overlay.js';
-import Point from 'ol/geom/Point.js';
-import Icon from 'ol/style/Icon.js';
-import Style, {createDefaultStyle} from 'ol/style/Style.js';
-import View from 'ol/View.js';
-import VectorSource from 'ol/source/Vector.js';
-import VectorLayer from 'ol/layer/Vector.js';
-import SelectInteraction from 'ol/interaction/Select.js';
+import OLMap from 'ol/Map';
+import Feature from 'ol/Feature';
+import Overlay from 'ol/Overlay';
+import Point from 'ol/geom/Point';
+import Icon from 'ol/style/Icon';
+import Style, {createDefaultStyle} from 'ol/style/Style';
+import View from 'ol/View';
+import VectorSource from 'ol/source/Vector';
+import VectorLayer from 'ol/layer/Vector';
+import SelectInteraction from 'ol/interaction/Select';
 
-import MousePosition from 'ol/control/MousePosition.js';
-import {createStringXY} from 'ol/coordinate.js';
-import ScaleLine from 'ol/control/ScaleLine.js';
-import OverviewMap from 'ol/control/OverviewMap.js';
-import createProjection from 'ngeo/proj/utils.js';
+import MousePosition from 'ol/control/MousePosition';
+import {createStringXY} from 'ol/coordinate';
+import ScaleLine from 'ol/control/ScaleLine';
+import OverviewMap from 'ol/control/OverviewMap';
+import createProjection from 'ngeo/proj/utils';
 
 // @ts-ignore: there is no existing types for ol-layerswitcher
 import LayerSwitcher from 'ol-layerswitcher';
@@ -50,14 +50,14 @@ import {
   extend as olExtentExtend,
   getCenter,
   isEmpty as olExtentIsEmpty,
-} from 'ol/extent.js';
-import {get as getProjection} from 'ol/proj.js';
+} from 'ol/extent';
+import {get as getProjection} from 'ol/proj';
 
-import constants, {dynamicUrl} from './constants.js';
+import constants, {dynamicUrl} from './constants';
 
-import {getFeaturesFromIds, getFeaturesFromCoordinates} from './Querent.js';
-import * as themes from 'api/Themes.js';
-import Search from 'api/Search.js';
+import {getFeaturesFromIds, getFeaturesFromCoordinates} from './Querent';
+import * as themes from 'api/Themes';
+import Search from 'api/Search';
 
 /**
  * @typedef {Object} MarkerOptions
@@ -68,7 +68,7 @@ import Search from 'api/Search.js';
 /**
  * @typedef {Object} MapOptions
  * @property {string} div
- * @property {import("ol/coordinate.js").Coordinate} center
+ * @property {import('ol/coordinate').Coordinate} center
  * @property {number} [zoom=10]
  * @property {boolean} [showCoords=true]
  * @property {boolean} [addMiniMap=false]
@@ -117,7 +117,7 @@ class Map {
       );
     }
 
-    /** @type {import('ol/View.js').ViewOptions} */
+    /** @type {import('ol/View').ViewOptions} */
     const viewOptions = {
       projection: getProjection(constants.projection),
       resolutions: constants.resolutions,
@@ -231,13 +231,13 @@ class Map {
 
     /**
      * @private
-     * @type {VectorSource<import("ol/geom/Geometry.js").default>}
+     * @type {VectorSource<import('ol/geom/Geometry').default>}
      */
     this.vectorSource_ = new VectorSource();
 
     /**
      * @private
-     * @type {VectorLayer<VectorSource<import("ol/geom/Geometry.js").default>>}
+     * @type {VectorLayer<VectorSource<import('ol/geom/Geometry').default>>}
      */
     this.vectorLayer_ = new VectorLayer({
       zIndex: 1,
@@ -259,10 +259,10 @@ class Map {
     this.map_.addInteraction(this.selectInteraction_);
 
     this.selectInteraction_.on(
-      /** @type {import('ol/Observable.js').EventTypes} */ ('select'),
+      /** @type {import('ol/Observable').EventTypes} */ ('select'),
       /** @type {function(any): any} */ (
         /**
-         * @param {import('lib/ol.interaction.Select.js').SelectEvent} event
+         * @param {import('lib/ol.interaction.Select').SelectEvent} event
          */
         (event) => {
           const selected = event.selected[0];
@@ -274,10 +274,10 @@ class Map {
     );
 
     this.map_.on(
-      /** @type {import('ol/Observable.js').EventTypes} */ ('singleclick'),
+      /** @type {import('ol/Observable').EventTypes} */ ('singleclick'),
       /** @type {function(?): ?} */ (
         /**
-         * @param {import('ol/MapBrowserEvent.js').default<unknown>} event
+         * @param {import('ol/MapBrowserEvent').default<unknown>} event
          */
         (event) => {
           const resolution = this.map_.getView().getResolution();
@@ -357,7 +357,7 @@ class Map {
   }
 
   /**
-   * @param {import("ol/coordinate.js").Coordinate} center Center.
+   * @param {import('ol/coordinate').Coordinate} center Center.
    * @param {number} zoom Zoom.
    */
   recenter(center, zoom) {
@@ -499,7 +499,7 @@ class Map {
 
   /**
    * @param {string|number} id Identifier.
-   * @param {import("ol/coordinate.js").Coordinate} position
+   * @param {import('ol/coordinate').Coordinate} position
    * @param {boolean} table Display all properties in a table
    */
   selectObject(id, position = null, table = false) {

@@ -21,7 +21,7 @@
 
 import './displaywindow.css';
 import angular from 'angular';
-import ngeoMessageDisplaywindowComponent from 'ngeo/message/displaywindowComponent.js';
+import ngeoMessageDisplaywindowComponent from 'ngeo/message/displaywindowComponent';
 
 /** @type {angular.IModule} **/
 const myModule = angular.module('app', [ngeoMessageDisplaywindowComponent.name]);

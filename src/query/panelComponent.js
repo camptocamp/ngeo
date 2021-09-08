@@ -21,7 +21,7 @@
 
 import angular from 'angular';
 
-import ngeoQueryModeSelector from 'ngeo/query/ModeSelector.js';
+import ngeoQueryModeSelector from 'ngeo/query/ModeSelector';
 
 /**
  * @type {angular.IModule}
@@ -72,7 +72,7 @@ function ngeoQueryPanelTemplateUrl($attrs, ngeoQueryPanelTemplateUrl) {
  */
 export class QueryPanelController {
   /**
-   * @param {import("ngeo/query/ModeSelector.js").QueryModeSelector} ngeoQueryModeSelector
+   * @param {import('ngeo/query/ModeSelector').QueryModeSelector} ngeoQueryModeSelector
    *     The ngeo query modeSelector service.
    * @ngInject
    * @ngdoc controller
@@ -80,7 +80,7 @@ export class QueryPanelController {
    */
   constructor(ngeoQueryModeSelector) {
     /**
-     * @type {import("ngeo/query/ModeSelector.js").QueryModeSelector}
+     * @type {import('ngeo/query/ModeSelector').QueryModeSelector}
      */
     this.ngeoQueryModeSelector = ngeoQueryModeSelector;
   }

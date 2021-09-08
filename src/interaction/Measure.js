@@ -19,19 +19,19 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import ngeoCustomEvent from 'ngeo/CustomEvent.js';
-import {removeChildren} from 'ol/dom.js';
-import {transform} from 'ol/proj.js';
-import olOverlay from 'ol/Overlay.js';
-import {getArea, getDistance} from 'ol/sphere.js';
-import {listen, unlistenByKey} from 'ol/events.js';
-import olInteractionInteraction from 'ol/interaction/Interaction.js';
-import olLayerVector from 'ol/layer/Vector.js';
-import olSourceVector from 'ol/source/Vector.js';
-import olStyleFill from 'ol/style/Fill.js';
-import olStyleStroke from 'ol/style/Stroke.js';
-import olStyleStyle from 'ol/style/Style.js';
-import VectorSource from 'ol/source/Vector.js';
+import ngeoCustomEvent from 'ngeo/CustomEvent';
+import {removeChildren} from 'ol/dom';
+import {transform} from 'ol/proj';
+import olOverlay from 'ol/Overlay';
+import {getArea, getDistance} from 'ol/sphere';
+import {listen, unlistenByKey} from 'ol/events';
+import olInteractionInteraction from 'ol/interaction/Interaction';
+import olLayerVector from 'ol/layer/Vector';
+import olSourceVector from 'ol/source/Vector';
+import olStyleFill from 'ol/style/Fill';
+import olStyleStroke from 'ol/style/Stroke';
+import olStyleStyle from 'ol/style/Style';
+import VectorSource from 'ol/source/Vector';
 
 /**
  * Interactions for measure tools.
@@ -46,20 +46,20 @@ import VectorSource from 'ol/source/Vector.js';
  * @property {number} [decimals] Defines the number of decimals to keep in the measurement. If not defined,
  * then the default behaviour occurs depending on the measure type.
  * @property {number} [tolerance] Defines the tolerance.
- * @property {import("ol/style/Style.js").StyleLike} [style] The style to be used when
+ * @property {import('ol/style/Style').StyleLike} [style] The style to be used when
  * drawing is finished.
- * @property {import("ol/style/Style.js").StyleLike} [sketchStyle] The style to be used
+ * @property {import('ol/style/Style').StyleLike} [sketchStyle] The style to be used
  * while drawing.
- * @property {import('ol/source/Vector.js').default<unknown>} [source] The source.
+ * @property {import('ol/source/Vector').default<unknown>} [source] The source.
  */
 
 /**
  * @typedef {Object} MeasureEventItem
- * @property {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>} feature
+ * @property {import('ol/Feature').default<import('ol/geom/Geometry').default>} feature
  */
 
 /**
- * @typedef {import('ngeo/CustomEvent.js').default<MeasureEventItem>} MeasureEvent
+ * @typedef {import('ngeo/CustomEvent').default<MeasureEventItem>} MeasureEvent
  */
 
 /**
@@ -69,7 +69,7 @@ import VectorSource from 'ol/source/Vector.js';
  */
 class Measure extends olInteractionInteraction {
   /**
-   * @param {import("ngeo/interaction/MeasureBaseOptions.js").MeasueBaseOptions} [options] Options
+   * @param {import('ngeo/interaction/MeasureBaseOptions').MeasueBaseOptions} [options] Options
    */
   constructor(options = {}) {
     super({
@@ -84,7 +84,7 @@ class Measure extends olInteractionInteraction {
 
     /**
      * Overlay to show the help messages.
-     * @type {?import("ol/Overlay.js").default}
+     * @type {?import('ol/Overlay').default}
      */
     this.helpTooltipOverlay_ = null;
 
@@ -97,21 +97,21 @@ class Measure extends olInteractionInteraction {
 
     /**
      * Overlay to show the measurement.
-     * @type {?import("ol/Overlay.js").default}
+     * @type {?import('ol/Overlay').default}
      * @private
      */
     this.measureTooltipOverlay_ = null;
 
     /**
      * The measurement overlay coordinate.
-     * @type {?import("ol/coordinate.js").Coordinate}
+     * @type {?import('ol/coordinate').Coordinate}
      * @private
      */
     this.measureTooltipOverlayCoord_ = null;
 
     /**
      * The sketch feature.
-     * @type {?import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>}
+     * @type {?import('ol/Feature').default<import('ol/geom/Geometry').default>}
      */
     this.sketchFeature = null;
 
@@ -158,14 +158,14 @@ class Measure extends olInteractionInteraction {
 
     /**
      * The key for geometry change event.
-     * @type {?import("ol/events.js").EventsKey}
+     * @type {?import('ol/events').EventsKey}
      * @private
      */
     this.changeEventKey_ = null;
 
     /**
      * The key for map postcompose event.
-     * @type {?import("ol/events.js").EventsKey}
+     * @type {?import('ol/events').EventsKey}
      * @private
      */
     this.postcomposeEventKey_ = null;
@@ -195,7 +195,7 @@ class Measure extends olInteractionInteraction {
 
     /**
      * The vector layer used to show final measure features.
-     * @type {import("ol/layer/Vector.js").default<import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>>}
+     * @type {import('ol/layer/Vector').default<import('ol/source/Vector').default<import('ol/geom/Geometry').default>>}
      * @private
      */
     this.vectorLayer_ =
@@ -216,7 +216,7 @@ class Measure extends olInteractionInteraction {
     }
     /**
      * The draw interaction to be used.
-     * @type {import("ol/interaction/Draw.js").default|import("ngeo/interaction/DrawAzimut.js").default|import("ngeo/interaction/MobileDraw.js").default}
+     * @type {import('ol/interaction/Draw').default|import('ngeo/interaction/DrawAzimut').default|import('ngeo/interaction/MobileDraw').default}
      * @private
      */
     this.drawInteraction_ = drawInteraction;
@@ -231,7 +231,7 @@ class Measure extends olInteractionInteraction {
     listen(
       this.drawInteraction_,
       'drawstart',
-      /** @type {import('ol/events.js').ListenerFunction} */ (this.onDrawStart_),
+      /** @type {import('ol/events').ListenerFunction} */ (this.onDrawStart_),
       this
     );
     listen(this.drawInteraction_, 'drawend', this.onDrawEnd_, this);
@@ -239,7 +239,7 @@ class Measure extends olInteractionInteraction {
   }
 
   /**
-   * @return {import("ol/interaction/Draw.js").default|import("ngeo/interaction/DrawAzimut.js").default|import("ngeo/interaction/MobileDraw.js").default}
+   * @return {import('ol/interaction/Draw').default|import('ngeo/interaction/DrawAzimut').default|import('ngeo/interaction/MobileDraw').default}
    *    The draw interaction.
    */
   getDrawInteraction() {
@@ -249,10 +249,10 @@ class Measure extends olInteractionInteraction {
   /**
    * Creates the draw interaction.
    *
-   * @param {import("ol/style/Style.js").StyleLike} style The sketchStyle used for the drawing
+   * @param {import('ol/style/Style').StyleLike} style The sketchStyle used for the drawing
    *    interaction.
-   * @param {VectorSource<import("ol/geom/Geometry.js").default>} source Vector source.
-   * @return {?import("ol/interaction/Draw.js").default|import("ngeo/interaction/DrawAzimut.js").default|import("ngeo/interaction/MobileDraw.js").default}
+   * @param {VectorSource<import('ol/geom/Geometry').default>} source Vector source.
+   * @return {?import('ol/interaction/Draw').default|import('ngeo/interaction/DrawAzimut').default|import('ngeo/interaction/MobileDraw').default}
    *    The interaction
    */
   createDrawInteraction(style, source) {
@@ -260,7 +260,7 @@ class Measure extends olInteractionInteraction {
   }
 
   /**
-   * @param {import("ol/PluggableMap.js").default} map Map.
+   * @param {import('ol/PluggableMap').default} map Map.
    */
   setMap(map) {
     olInteractionInteraction.prototype.setMap.call(this, map);
@@ -279,11 +279,11 @@ class Measure extends olInteractionInteraction {
 
   /**
    * Handle draw interaction `drawstart` event.
-   * @param {import('lib/ol.interaction.Draw.js').DrawEvent|import('ngeo/CustomEvent.js').default<import('lib/ol.interaction.Draw.js').DrawEvent>} evt Event.
+   * @param {import('lib/ol.interaction.Draw').DrawEvent|import('ngeo/CustomEvent').default<import('lib/ol.interaction.Draw').DrawEvent>} evt Event.
    * @private
    */
   onDrawStart_(evt) {
-    /** @type {import('lib/ol.interaction.Draw.js').DrawEvent} */
+    /** @type {import('lib/ol.interaction.Draw').DrawEvent} */
     // @ts-ignore
     const event = evt.detail ? evt.detail : evt;
     this.sketchFeature = event.feature;
@@ -305,7 +305,7 @@ class Measure extends olInteractionInteraction {
     this.changeEventKey_ = listen(
       geometry,
       'change',
-      /** @type {import("ol/events.js").ListenerFunction} */
+      /** @type {import('ol/events').ListenerFunction} */
       (evt) => {
         this.handleMeasure((measure, coord) => {
           if (coord !== null) {
@@ -322,7 +322,7 @@ class Measure extends olInteractionInteraction {
     this.postcomposeEventKey_ = listen(
       this.getMap(),
       'postcompose',
-      /** @type {import('ol/events.js').ListenerFunction} */
+      /** @type {import('ol/events').ListenerFunction} */
       () => {
         if (this.measureTooltipOverlay_ && this.measureTooltipOverlayCoord_) {
           this.measureTooltipOverlay_.setPosition(this.measureTooltipOverlayCoord_);
@@ -333,7 +333,7 @@ class Measure extends olInteractionInteraction {
 
   /**
    * Handle draw interaction `drawend` event.
-   * @param {Event|import('ol/events/Event.js').default|import('ngeo/interaction/common.js').DrawEvent} evt Event.
+   * @param {Event|import('ol/events/Event').default|import('ngeo/interaction/common').DrawEvent} evt Event.
    * @private
    */
   onDrawEnd_(evt) {
@@ -441,7 +441,7 @@ class Measure extends olInteractionInteraction {
   }
 
   /**
-   * @param {Event|import("ol/events/Event.js").default} evt
+   * @param {Event|import('ol/events/Event').default} evt
    * @private
    */
   updateState_(evt) {
@@ -477,7 +477,7 @@ class Measure extends olInteractionInteraction {
    * Function implemented in inherited classes to compute measurement, determine
    * where to place the tooltip and determine which help message to display.
    *
-   * @param {function(string, ?import("ol/coordinate.js").Coordinate): void} callback The function
+   * @param {function(string, ?import('ol/coordinate').Coordinate): void} callback The function
    *     to be called.
    */
   handleMeasure(callback) {}
@@ -498,7 +498,7 @@ class Measure extends olInteractionInteraction {
    * change is due to something else than this measure interactino, then
    * update follow the its active state accordingly.
    *
-   * @param {Event|import("ol/events/Event.js").default} evt
+   * @param {Event|import('ol/events/Event').default} evt
    * @private
    */
   handleDrawInteractionActiveChange_(evt) {
@@ -511,10 +511,10 @@ class Measure extends olInteractionInteraction {
 /**
  * Calculate the area of the passed polygon and return a formatted string
  * of the area.
- * @param {import("ol/geom/Polygon.js").default} polygon Polygon.
- * @param {import("ol/proj/Projection.js").default} projection Projection of the polygon coords.
+ * @param {import('ol/geom/Polygon').default} polygon Polygon.
+ * @param {import('ol/proj/Projection').default} projection Projection of the polygon coords.
  * @param {number|undefined} precision Precision.
- * @param {import('ngeo/misc/filters.js').unitPrefix} format The format function.
+ * @param {import('ngeo/misc/filters').unitPrefix} format The format function.
  * @param {boolean} [spherical=false] Whether to use the spherical area.
  * @return {string} Formatted string of the area.
  * @hidden
@@ -522,7 +522,7 @@ class Measure extends olInteractionInteraction {
 export function getFormattedArea(polygon, projection, precision, format, spherical = false) {
   let area;
   if (spherical) {
-    const geom = /** @type {import("ol/geom/Polygon.js").default} */ (
+    const geom = /** @type {import('ol/geom/Polygon').default} */ (
       polygon.clone().transform(projection, 'EPSG:4326')
     );
     area = Math.abs(getArea(geom, {'projection': 'EPSG:4326'}));
@@ -534,9 +534,9 @@ export function getFormattedArea(polygon, projection, precision, format, spheric
 
 /**
  * Calculate the area of the passed circle and return a formatted string of the area.
- * @param {import("ol/geom/Circle.js").default} circle Circle
+ * @param {import('ol/geom/Circle').default} circle Circle
  * @param {number|undefined} precision Precision.
- * @param {import('ngeo/misc/filters.js').unitPrefix} format The format function.
+ * @param {import('ngeo/misc/filters').unitPrefix} format The format function.
  * @return {string} Formatted string of the area.
  * @hidden
  */
@@ -548,10 +548,10 @@ export function getFormattedCircleArea(circle, precision, format) {
 /**
  * Calculate the length of the passed line string and return a formatted
  * string of the length.
- * @param {import("ol/geom/LineString.js").default} lineString Line string.
- * @param {import("ol/proj/Projection.js").default} projection Projection of the line string coords.
+ * @param {import('ol/geom/LineString').default} lineString Line string.
+ * @param {import('ol/proj/Projection').default} projection Projection of the line string coords.
  * @param {number|undefined} precision Precision.
- * @param {import('ngeo/misc/filters.js').unitPrefix} format The format function.
+ * @param {import('ngeo/misc/filters').unitPrefix} format The format function.
  * @param {boolean} [spherical=false] Whether to use the spherical distance.
  * @return {string} Formatted string of length.
  * @hidden
@@ -573,9 +573,9 @@ export function getFormattedLength(lineString, projection, precision, format, sp
 
 /**
  * Return a formatted string of the point.
- * @param {import("ol/geom/Point.js").default} point Point.
+ * @param {import('ol/geom/Point').default} point Point.
  * @param {number|undefined} decimals Decimals.
- * @param {import('ngeo/misc/filters.js').numberCoordinates} format A function to format coordinate into
+ * @param {import('ngeo/misc/filters').numberCoordinates} format A function to format coordinate into
  * text
  * @param {string} [opt_template] The template.
  * @return {string} Formatted string of coordinate.
@@ -587,7 +587,7 @@ export function getFormattedPoint(point, decimals, format, opt_template) {
 
 /**
  * Handle map browser event.
- * @param {import("ol/MapBrowserEvent.js").default<unknown>} evt Map browser event.
+ * @param {import('ol/MapBrowserEvent').default<unknown>} evt Map browser event.
  * @return {boolean} `false` if event propagation should be stopped.
  * @private
  * @hidden

@@ -32,8 +32,8 @@ import './sass/mobile_alt.scss';
 import angular from 'angular';
 import gmfControllersAbstractMobileController, {
   AbstractMobileController,
-} from 'gmf/controllers/AbstractMobileController.js';
-import appBase from '../appmodule.js';
+} from 'gmf/controllers/AbstractMobileController';
+import appBase from '../appmodule';
 
 if (!window.requestAnimationFrame) {
   alert(

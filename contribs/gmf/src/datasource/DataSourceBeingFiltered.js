@@ -23,7 +23,7 @@ import angular from 'angular';
 
 /**
  * @typedef {Object} DataSourceBeingFiltered
- * @property {import('gmf/datasource/OGC.js').default|null} dataSource
+ * @property {import('gmf/datasource/OGC').default|null} dataSource
  */
 
 /**

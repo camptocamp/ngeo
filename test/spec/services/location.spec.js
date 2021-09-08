@@ -23,7 +23,7 @@ import angular from 'angular';
 describe('ngeo.statemanager.Location', () => {
   /** @type {Object<string, *>} */
   let win;
-  /** @type {import("ngeo/statemanager/Location.js").StatemanagerLocation} */
+  /** @type {import('ngeo/statemanager/Location').StatemanagerLocation} */
   let ngeoLocation;
 
   beforeEach(() => {

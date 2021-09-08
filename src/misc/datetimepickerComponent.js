@@ -20,8 +20,8 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import DateFormatter from 'ngeo/misc/php-date-formatter.js';
-import 'jquery-datetimepicker/jquery.datetimepicker.js';
+import DateFormatter from 'ngeo/misc/php-date-formatter';
+import 'jquery-datetimepicker/jquery.datetimepicker';
 import 'jquery-datetimepicker/jquery.datetimepicker.css';
 
 /**

@@ -21,25 +21,25 @@
 
 import './measure.css';
 import angular from 'angular';
-import ngeoInteractionMeasureArea from 'ngeo/interaction/MeasureArea.js';
+import ngeoInteractionMeasureArea from 'ngeo/interaction/MeasureArea';
 
-import ngeoInteractionMeasureAzimut from 'ngeo/interaction/MeasureAzimut.js';
-import ngeoInteractionMeasureLength from 'ngeo/interaction/MeasureLength.js';
-import ngeoMapModule from 'ngeo/map/module.js';
+import ngeoInteractionMeasureAzimut from 'ngeo/interaction/MeasureAzimut';
+import ngeoInteractionMeasureLength from 'ngeo/interaction/MeasureLength';
+import ngeoMapModule from 'ngeo/map/module';
 
-import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent.js';
+import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent';
 
-import {interactionDecoration} from 'ngeo/misc/decorate.js';
-import ngeoMiscFilters from 'ngeo/misc/filters.js';
-import olMap from 'ol/Map.js';
-import olView from 'ol/View.js';
-import olControlScaleLine from 'ol/control/ScaleLine.js';
-import olLayerTile from 'ol/layer/Tile.js';
-import olSourceOSM from 'ol/source/OSM.js';
-import olStyleStyle from 'ol/style/Style.js';
-import olStyleCircle from 'ol/style/Circle.js';
-import olStyleStroke from 'ol/style/Stroke.js';
-import olStyleFill from 'ol/style/Fill.js';
+import {interactionDecoration} from 'ngeo/misc/decorate';
+import ngeoMiscFilters from 'ngeo/misc/filters';
+import olMap from 'ol/Map';
+import olView from 'ol/View';
+import olControlScaleLine from 'ol/control/ScaleLine';
+import olLayerTile from 'ol/layer/Tile';
+import olSourceOSM from 'ol/source/OSM';
+import olStyleStyle from 'ol/style/Style';
+import olStyleCircle from 'ol/style/Circle';
+import olStyleStroke from 'ol/style/Stroke';
+import olStyleFill from 'ol/style/Fill';
 import 'angular-sanitize';
 import Measure from 'ngeo/interaction/Measure';
 
@@ -92,7 +92,7 @@ myModule.component('appMeasuretools', measuretoolsComponent);
  */
 function MeasuretoolsController($scope, $compile, $sce, $filter, gettextCatalog) {
   /**
-   * @type {?import("ol/Map.js").default}
+   * @type {?import('ol/Map').default}
    */
   this.map = null;
 
@@ -196,7 +196,7 @@ function MeasuretoolsController($scope, $compile, $sce, $filter, gettextCatalog)
   });
 
   /**
-   * @type {import("ngeo/interaction/MeasureLength.js").default}
+   * @type {import('ngeo/interaction/MeasureLength').default}
    */
   this.measureLength = new ngeoInteractionMeasureLength($filter('ngeoUnitPrefix'), gettextCatalog, {
     sketchStyle: style,
@@ -208,7 +208,7 @@ function MeasuretoolsController($scope, $compile, $sce, $filter, gettextCatalog)
   interactionDecoration(this.measureLength);
 
   /**
-   * @type {import("ngeo/interaction/MeasureArea.js").default}
+   * @type {import('ngeo/interaction/MeasureArea').default}
    */
   this.measureArea = new ngeoInteractionMeasureArea($filter('ngeoUnitPrefix'), gettextCatalog, {
     sketchStyle: style,
@@ -220,7 +220,7 @@ function MeasuretoolsController($scope, $compile, $sce, $filter, gettextCatalog)
   interactionDecoration(this.measureArea);
 
   /**
-   * @type {import("ngeo/interaction/MeasureAzimut.js").default}
+   * @type {import('ngeo/interaction/MeasureAzimut').default}
    */
   this.measureAzimut = new ngeoInteractionMeasureAzimut($filter('ngeoUnitPrefix'), $filter('ngeoNumber'), {
     sketchStyle: style,
@@ -235,10 +235,10 @@ function MeasuretoolsController($scope, $compile, $sce, $filter, gettextCatalog)
   // tooltip. This can be useful to display the elevation offset from the
   // 2 points of an azimut measurement.
   this.measureAzimut.on(
-    /** @type {import('ol/Observable.js').EventTypes} */ ('measureend'),
+    /** @type {import('ol/Observable').EventTypes} */ ('measureend'),
     /** @type {function(?): ?} */ (
       /**
-       * @param {import('ol/MapBrowserEvent.js').default<unknown>} evt
+       * @param {import('ol/MapBrowserEvent').default<unknown>} evt
        */ (evt) => {
         const target = evt.target;
         if (target instanceof Measure) {
@@ -272,7 +272,7 @@ function MainController() {
   this.lang = 'en';
 
   /**
-   * @type {import("ol/Map.js").default}
+   * @type {import('ol/Map').default}
    */
   this.map = new olMap({
     layers: [

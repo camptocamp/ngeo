@@ -19,8 +19,8 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import ngeoInteractionMeasureLength from 'ngeo/interaction/MeasureLength.js';
-import ngeoInteractionMobileDraw from 'ngeo/interaction/MobileDraw.js';
+import ngeoInteractionMeasureLength from 'ngeo/interaction/MeasureLength';
+import ngeoInteractionMobileDraw from 'ngeo/interaction/MobileDraw';
 
 /**
  * Interaction dedicated to measure length on mobile devices.
@@ -28,9 +28,9 @@ import ngeoInteractionMobileDraw from 'ngeo/interaction/MobileDraw.js';
  */
 export default class extends ngeoInteractionMeasureLength {
   /**
-   * @param {import('ngeo/misc/filters.js').unitPrefix} format The format function
+   * @param {import('ngeo/misc/filters').unitPrefix} format The format function
    * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
-   * @param {import('ngeo/interaction/Measure.js').MeasureOptions} [opt_options] Options
+   * @param {import('ngeo/interaction/Measure').MeasureOptions} [opt_options] Options
    */
   constructor(format, gettextCatalog, opt_options) {
     const options = opt_options !== undefined ? opt_options : {};
@@ -41,9 +41,9 @@ export default class extends ngeoInteractionMeasureLength {
   }
 
   /**
-   * @param {import("ol/style/Style.js").StyleLike} style
+   * @param {import('ol/style/Style').StyleLike} style
    *     The sketchStyle used for the drawing interaction.
-   * @param {import("ol/source/Vector.js").default<import("ol/geom/LineString.js").default>} source Vector source.
+   * @param {import('ol/source/Vector').default<import('ol/geom/LineString').default>} source Vector source.
    * @return {ngeoInteractionMobileDraw} The interaction
    */
   createDrawInteraction(style, source) {

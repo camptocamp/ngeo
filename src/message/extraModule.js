@@ -20,13 +20,13 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import ngeoMessageNotification from 'ngeo/message/Notification.js';
-import ngeoMessageDisclaimer from 'ngeo/message/Disclaimer.js';
-import ngeoMessageDisplaywindowComponent from 'ngeo/message/displaywindowComponent.js';
-import ngeoMessagePopupComponent from 'ngeo/message/popupComponent.js';
-import ngeoMessagePopup from 'ngeo/message/Popup.js';
-import ngeoMessagePopoverComponent from 'ngeo/message/popoverComponent.js';
-import ngeoMessageModalComponent from 'ngeo/message/modalComponent.js';
+import ngeoMessageNotification from 'ngeo/message/Notification';
+import ngeoMessageDisclaimer from 'ngeo/message/Disclaimer';
+import ngeoMessageDisplaywindowComponent from 'ngeo/message/displaywindowComponent';
+import ngeoMessagePopupComponent from 'ngeo/message/popupComponent';
+import ngeoMessagePopup from 'ngeo/message/Popup';
+import ngeoMessagePopoverComponent from 'ngeo/message/popoverComponent';
+import ngeoMessageModalComponent from 'ngeo/message/modalComponent';
 
 /**
  * @type {angular.IModule}

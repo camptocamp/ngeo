@@ -20,7 +20,7 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import ngeoStatemanagerLocation from 'ngeo/statemanager/Location.js';
+import ngeoStatemanagerLocation from 'ngeo/statemanager/Location';
 
 /**
  * Provides a service for managing the application state.
@@ -29,8 +29,8 @@ import ngeoStatemanagerLocation from 'ngeo/statemanager/Location.js';
  */
 export class StatemanagerService {
   /**
-   * @param {import("ngeo/statemanager/Location.js").StatemanagerLocation} ngeoLocation ngeo location service.
-   * @param {import('ngeo/options.js').ngeoUsedKeyRegexp} ngeoUsedKeyRegexp regexp used to identify the used keys.
+   * @param {import('ngeo/statemanager/Location').StatemanagerLocation} ngeoLocation ngeo location service.
+   * @param {import('ngeo/options').ngeoUsedKeyRegexp} ngeoUsedKeyRegexp regexp used to identify the used keys.
    * @ngInject
    */
   constructor(ngeoLocation, ngeoUsedKeyRegexp) {
@@ -41,7 +41,7 @@ export class StatemanagerService {
     this.initialState = {};
 
     /**
-     * @type {import("ngeo/statemanager/Location.js").StatemanagerLocation}
+     * @type {import('ngeo/statemanager/Location').StatemanagerLocation}
      */
     this.ngeoLocation = ngeoLocation;
 

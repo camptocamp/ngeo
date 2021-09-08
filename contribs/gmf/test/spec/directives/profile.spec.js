@@ -23,9 +23,9 @@
 import angular from 'angular';
 
 describe('gmf.GmfProfileController', () => {
-  /** @type {import('gmf/profile/component.js').ProfileController} */
+  /** @type {import('gmf/profile/component').ProfileController} */
   let profileController;
-  /** @type {import("ngeo/download/Csv.js").DownloadCsvService} */
+  /** @type {import('ngeo/download/Csv').DownloadCsvService} */
   let csvDownloadServiceMock;
   /** @type {angular.IScope} */
   let $scope;

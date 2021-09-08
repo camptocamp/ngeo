@@ -55,9 +55,9 @@ export const DOTS_PER_INCH = 72;
 /**
  * Get the optimal print scale for a map, the map being defined by its
  * size (in pixels) and resolution (in map units per pixel).
- * @param {import("ol/size.js").Size} mapSize Size of the map on the screen (px).
+ * @param {import('ol/size').Size} mapSize Size of the map on the screen (px).
  * @param {number} mapResolution Resolution of the map on the screen.
- * @param {import("ol/size.js").Size} printMapSize Size of the map on the paper (dots).
+ * @param {import('ol/size').Size} printMapSize Size of the map on the paper (dots).
  * @param {number[]} printMapScales Supported map scales on the paper.
  * The scales are provided as scale denominators, sorted in ascending order.
  * E.g. `[500, 1000, 2000, 4000]`.
@@ -86,8 +86,8 @@ PrintUtils.prototype.getOptimalScale = function (mapSize, mapResolution, printMa
 
 /**
  * Get the optimal map resolution for a print scale and a map size.
- * @param {import("ol/size.js").Size} mapSize Size of the map on the screen (px).
- * @param {import("ol/size.js").Size} printMapSize Size of the map on the paper (dots).
+ * @param {import('ol/size').Size} mapSize Size of the map on the screen (px).
+ * @param {import('ol/size').Size} printMapSize Size of the map on the paper (dots).
  * @param {number} printMapScale Map scale on the paper.
  * @return {number} The optimal map resolution.
  */
@@ -104,8 +104,8 @@ PrintUtils.prototype.getOptimalResolution = function (mapSize, printMapSize, pri
 
 /**
  * Get the coordinates of the bottom left corner of the printed map.
- * @param {import("ol/coordinate.js").Coordinate} mapCenter Center of the map to print.
- * @return {import("ol/coordinate.js").Coordinate} The coordinates of the bottom left corner.
+ * @param {import('ol/coordinate').Coordinate} mapCenter Center of the map to print.
+ * @return {import('ol/coordinate').Coordinate} The coordinates of the bottom left corner.
  */
 PrintUtils.prototype.getBottomLeftCorner = function (mapCenter) {
   return [mapCenter[0] - this.extentHalfHorizontalDistance_, mapCenter[1] - this.extentHalfVerticalDistance_];
@@ -113,8 +113,8 @@ PrintUtils.prototype.getBottomLeftCorner = function (mapCenter) {
 
 /**
  * Get the coordinates of the bottom right corner of the printed map.
- * @param {import("ol/coordinate.js").Coordinate} mapCenter Center of the map to print.ç
- * @return {import("ol/coordinate.js").Coordinate} The coordinates of the bottom right corner.
+ * @param {import('ol/coordinate').Coordinate} mapCenter Center of the map to print.ç
+ * @return {import('ol/coordinate').Coordinate} The coordinates of the bottom right corner.
  */
 PrintUtils.prototype.getBottomRightCorner = function (mapCenter) {
   return [mapCenter[0] + this.extentHalfHorizontalDistance_, mapCenter[1] - this.extentHalfVerticalDistance_];
@@ -122,8 +122,8 @@ PrintUtils.prototype.getBottomRightCorner = function (mapCenter) {
 
 /**
  * Get the coordinates of the up left corner of the printed map.
- * @param {import("ol/coordinate.js").Coordinate} mapCenter Center of the map to print.
- * @return {import("ol/coordinate.js").Coordinate} The coordinates of the up left corner.
+ * @param {import('ol/coordinate').Coordinate} mapCenter Center of the map to print.
+ * @return {import('ol/coordinate').Coordinate} The coordinates of the up left corner.
  */
 PrintUtils.prototype.getUpLeftCorner = function (mapCenter) {
   return [mapCenter[0] - this.extentHalfHorizontalDistance_, mapCenter[1] + this.extentHalfVerticalDistance_];
@@ -131,8 +131,8 @@ PrintUtils.prototype.getUpLeftCorner = function (mapCenter) {
 
 /**
  * Get the coordinates of the up right corner of the printed map.
- * @param {import("ol/coordinate.js").Coordinate} mapCenter Center of the map to print.
- * @return {import("ol/coordinate.js").Coordinate} The coordinates of the up right corner.
+ * @param {import('ol/coordinate').Coordinate} mapCenter Center of the map to print.
+ * @return {import('ol/coordinate').Coordinate} The coordinates of the up right corner.
  */
 PrintUtils.prototype.getUpRightCorner = function (mapCenter) {
   return [mapCenter[0] + this.extentHalfHorizontalDistance_, mapCenter[1] + this.extentHalfVerticalDistance_];

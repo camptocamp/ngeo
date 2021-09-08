@@ -19,7 +19,7 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import calculateCssVars from 'gmf/controllers/calculateCssVars.js';
+import calculateCssVars from 'gmf/controllers/calculateCssVars';
 
 describe('AbstractAppController', () => {
   it('Calculate primary colors', () => {

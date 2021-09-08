@@ -21,40 +21,40 @@
 
 import angular from 'angular';
 
-import {PermalinkParam} from 'gmf/index.js';
+import {PermalinkParam} from 'gmf/index';
 
-import gmfAuthenticationService from 'gmf/authentication/Service.js';
+import gmfAuthenticationService from 'gmf/authentication/Service';
 
-import gmfLayerBeingSwipe from 'gmf/datasource/LayerBeingSwipe.js';
+import gmfLayerBeingSwipe from 'gmf/datasource/LayerBeingSwipe';
 
-import gmfThemeManager, {ThemeEventType} from 'gmf/theme/Manager.js';
+import gmfThemeManager, {ThemeEventType} from 'gmf/theme/Manager';
 
-import gmfThemeThemes, {findThemeByName, findGroupByName} from 'gmf/theme/Themes.js';
-import ngeoPopover from 'ngeo/Popover.js';
+import gmfThemeThemes, {findThemeByName, findGroupByName} from 'gmf/theme/Themes';
+import ngeoPopover from 'ngeo/Popover';
 
-import ngeoDrawFeatures from 'ngeo/draw/features.js';
-import gmfDataSourcesManager from 'gmf/datasource/Manager.js';
+import ngeoDrawFeatures from 'ngeo/draw/features';
+import gmfDataSourcesManager from 'gmf/datasource/Manager';
 
-import ngeoDatasourceGroup from 'ngeo/datasource/Group.js';
-import ngeoDatasourceOGC, {guessServiceTypeByUrl, Type} from 'ngeo/datasource/OGC.js';
-import {Permalink3dParam} from 'ngeo/olcs/constants.js';
-import ngeoFormatFeatureHash from 'ngeo/format/FeatureHash.js';
-import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties.js';
+import ngeoDatasourceGroup from 'ngeo/datasource/Group';
+import ngeoDatasourceOGC, {guessServiceTypeByUrl, Type} from 'ngeo/datasource/OGC';
+import {Permalink3dParam} from 'ngeo/olcs/constants';
+import ngeoFormatFeatureHash from 'ngeo/format/FeatureHash';
+import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties';
 
-import {LAYER_NODE_NAME_KEY} from 'ngeo/map/LayerHelper.js';
-import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
-import ngeoMiscEventHelper from 'ngeo/misc/EventHelper.js';
-import ngeoStatemanagerModule from 'ngeo/statemanager/module.js';
-import ngeoStatemanagerService from 'ngeo/statemanager/Service.js';
-import ngeoLayertreeController, {LayertreeVisitorDecision} from 'ngeo/layertree/Controller.js';
-import {getUid as olUtilGetUid} from 'ol/util.js';
-import {listen, unlistenByKey} from 'ol/events.js';
-import olFeature from 'ol/Feature.js';
-import olGeomMultiPoint from 'ol/geom/MultiPoint.js';
-import olGeomPoint from 'ol/geom/Point.js';
-import olLayerGroup from 'ol/layer/Group.js';
-import {CollectionEvent} from 'ol/Collection.js';
-import {buildStyle} from 'ngeo/options.js';
+import {LAYER_NODE_NAME_KEY} from 'ngeo/map/LayerHelper';
+import ngeoMiscDebounce from 'ngeo/misc/debounce';
+import ngeoMiscEventHelper from 'ngeo/misc/EventHelper';
+import ngeoStatemanagerModule from 'ngeo/statemanager/module';
+import ngeoStatemanagerService from 'ngeo/statemanager/Service';
+import ngeoLayertreeController, {LayertreeVisitorDecision} from 'ngeo/layertree/Controller';
+import {getUid as olUtilGetUid} from 'ol/util';
+import {listen, unlistenByKey} from 'ol/events';
+import olFeature from 'ol/Feature';
+import olGeomMultiPoint from 'ol/geom/MultiPoint';
+import olGeomPoint from 'ol/geom/Point';
+import olLayerGroup from 'ol/layer/Group';
+import {CollectionEvent} from 'ol/Collection';
+import {buildStyle} from 'ngeo/options';
 
 import user from 'ngeo/store/user.ts';
 
@@ -269,17 +269,17 @@ const ParamPrefix = {
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @param {angular.IScope} $rootScope Angular rootScope.
  * @param {angular.auto.IInjectorService} $injector Main injector.
- * @param {import("ngeo/misc/debounce.js").miscDebounce<function(): void>} ngeoDebounce ngeo Debounce factory.
+ * @param {import('ngeo/misc/debounce').miscDebounce<function(): void>} ngeoDebounce ngeo Debounce factory.
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext service.
- * @param {import("ngeo/misc/EventHelper.js").EventHelper} ngeoEventHelper Ngeo event helper service
- * @param {import("ngeo/statemanager/Service.js").StatemanagerService} ngeoStateManager The ngeo statemanager
+ * @param {import('ngeo/misc/EventHelper').EventHelper} ngeoEventHelper Ngeo event helper service
+ * @param {import('ngeo/statemanager/Service').StatemanagerService} ngeoStateManager The ngeo statemanager
  *    service.
- * @param {import("ngeo/statemanager/Location.js").StatemanagerLocation} ngeoLocation ngeo location service.
- * @param {import('gmf/datasource/LayerBeingSwipe.js').LayerBeingSwipe} gmfLayerBeingSwipe
- * @param {import('gmf/options.js').gmfPermalinkOptions} gmfPermalinkOptions The options.
- * @param {import("gmf/datasource/Manager.js").DatasourceManager} gmfDataSourcesManager The gmf datasourcemanager
+ * @param {import('ngeo/statemanager/Location').StatemanagerLocation} ngeoLocation ngeo location service.
+ * @param {import('gmf/datasource/LayerBeingSwipe').LayerBeingSwipe} gmfLayerBeingSwipe
+ * @param {import('gmf/options').gmfPermalinkOptions} gmfPermalinkOptions The options.
+ * @param {import('gmf/datasource/Manager').DatasourceManager} gmfDataSourcesManager The gmf datasourcemanager
  *    service.
- * @param {import("ngeo/misc/WMSTime.js").WMSTime} ngeoWMSTime The ngeo  wmstime service
+ * @param {import('ngeo/misc/WMSTime').WMSTime} ngeoWMSTime The ngeo  wmstime service
  * @ngInject
  * @ngdoc service
  * @ngname gmfPermalink
@@ -318,73 +318,73 @@ export function PermalinkService(
 
   /**
    * The key for map view 'propertychange' event.
-   * @type {?import("ol/events.js").EventsKey}
+   * @type {?import('ol/events').EventsKey}
    */
   this.mapViewPropertyChangeEventKey_ = null;
 
   // == properties from params ==
 
   /**
-   * @type {import("ngeo/misc/debounce.js").miscDebounce<function(): void>}
+   * @type {import('ngeo/misc/debounce').miscDebounce<function(): void>}
    */
   this.ngeoDebounce_ = ngeoDebounce;
 
   /**
-   * @type {import("ngeo/misc/EventHelper.js").EventHelper}
+   * @type {import('ngeo/misc/EventHelper').EventHelper}
    */
   this.ngeoEventHelper_ = ngeoEventHelper;
 
   /**
-   * @type {import("ngeo/statemanager/Service.js").StatemanagerService}
+   * @type {import('ngeo/statemanager/Service').StatemanagerService}
    */
   this.ngeoStateManager_ = ngeoStateManager;
 
   /**
-   * @type {import("gmf/datasource/Manager.js").DatasourceManager}
+   * @type {import('gmf/datasource/Manager').DatasourceManager}
    */
   this.gmfDataSourcesManager_ = gmfDataSourcesManager;
 
   /**
-   * @type {import("ngeo/misc/WMSTime.js").WMSTime}
+   * @type {import('ngeo/misc/WMSTime').WMSTime}
    */
   this.ngeoWMSTime_ = ngeoWMSTime;
 
   /**
-   * @type {?import("ol/Collection.js").default<olFeature<import("ol/geom/Geometry.js").default>>}
+   * @type {?import('ol/Collection').default<olFeature<import('ol/geom/Geometry').default>>}
    */
   this.ngeoFeatures_ = $injector.has('ngeoFeatures') ? $injector.get('ngeoFeatures') : null;
 
   /**
-   * @type {?import("ngeo/map/BackgroundLayerMgr.js").MapBackgroundLayerManager}
+   * @type {?import('ngeo/map/BackgroundLayerMgr').MapBackgroundLayerManager}
    */
   this.ngeoBackgroundLayerMgr_ = $injector.has('ngeoBackgroundLayerMgr')
     ? $injector.get('ngeoBackgroundLayerMgr')
     : null;
 
   /**
-   * @type {import('gmf/datasource/LayerBeingSwipe.js').LayerBeingSwipe}
+   * @type {import('gmf/datasource/LayerBeingSwipe').LayerBeingSwipe}
    */
   this.gmfLayerBeingSwipe_ = gmfLayerBeingSwipe;
 
   /**
-   * @type {?import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr}
+   * @type {?import('ngeo/map/FeatureOverlayMgr').FeatureOverlayMgr}
    */
   const ngeoFeatureOverlayMgr = $injector.has('ngeoFeatureOverlayMgr')
     ? $injector.get('ngeoFeatureOverlayMgr')
     : null;
 
   /**
-   * @type {?import("ngeo/map/FeatureOverlay.js").FeatureOverlay}
+   * @type {?import('ngeo/map/FeatureOverlay').FeatureOverlay}
    */
   this.featureOverlay_ = ngeoFeatureOverlayMgr ? ngeoFeatureOverlayMgr.getFeatureOverlay() : null;
 
   /**
-   * @type {?import("ngeo/misc/FeatureHelper.js").FeatureHelper}
+   * @type {?import('ngeo/misc/FeatureHelper').FeatureHelper}
    */
   this.featureHelper_ = $injector.has('ngeoFeatureHelper') ? $injector.get('ngeoFeatureHelper') : null;
 
   /**
-   * @type {?import("ngeo/query/Querent.js").Querent}
+   * @type {?import('ngeo/query/Querent').Querent}
    */
   this.ngeoQuerent_ = $injector.has('ngeoQuerent') ? $injector.get('ngeoQuerent') : null;
 
@@ -404,26 +404,26 @@ export function PermalinkService(
   this.pointRecenterZoom_ = gmfPermalinkOptions.pointRecenterZoom;
 
   /**
-   * @type {?import("gmf/datasource/ExternalDataSourcesManager.js").ExternalDatSourcesManager}
+   * @type {?import('gmf/datasource/ExternalDataSourcesManager').ExternalDatSourcesManager}
    */
   this.gmfExternalDataSourcesManager_ = $injector.has('gmfExternalDataSourcesManager')
     ? $injector.get('gmfExternalDataSourcesManager')
     : null;
 
   /**
-   * @type {?import("gmf/theme/Themes.js").ThemesService}
+   * @type {?import('gmf/theme/Themes').ThemesService}
    */
   this.gmfThemes_ = $injector.has('gmfThemes') ? $injector.get('gmfThemes') : null;
 
   /**
-   * @type {?import("gmf/objectediting/Manager.js").ObjecteditingManagerService}
+   * @type {?import('gmf/objectediting/Manager').ObjecteditingManagerService}
    */
   this.gmfObjectEditingManager_ = $injector.has('gmfObjectEditingManager')
     ? $injector.get('gmfObjectEditingManager')
     : null;
 
   /**
-   * @type {?import("gmf/theme/Manager.js").ThemeManagerService}
+   * @type {?import('gmf/theme/Manager').ThemeManagerService}
    */
   this.gmfThemeManager_ = $injector.has('gmfThemeManager') ? $injector.get('gmfThemeManager') : null;
 
@@ -433,48 +433,48 @@ export function PermalinkService(
   this.defaultTheme_ = $injector.has('defaultTheme') ? $injector.get('defaultTheme') : undefined;
 
   /**
-   * @type {?import("gmf/layertree/TreeManager.js").LayertreeTreeManager}
+   * @type {?import('gmf/layertree/TreeManager').LayertreeTreeManager}
    */
   this.gmfTreeManager_ = $injector.has('gmfTreeManager') ? $injector.get('gmfTreeManager') : null;
 
   // == other properties ==
 
   /**
-   * @type {import("ngeo/statemanager/Location.js").StatemanagerLocation}
+   * @type {import('ngeo/statemanager/Location').StatemanagerLocation}
    */
   this.ngeoLocation_ = ngeoLocation;
 
   /**
-   * @type {?import("ngeo/statemanager/WfsPermalink.js").WfsPermalinkService}
+   * @type {?import('ngeo/statemanager/WfsPermalink').WfsPermalinkService}
    */
   this.ngeoWfsPermalink_ = $injector.has('ngeoWfsPermalink') ? $injector.get('ngeoWfsPermalink') : null;
 
   /**
-   * @type {import('gmf/authentication/Service.js').User}
+   * @type {import('gmf/authentication/Service').User}
    */
   this.gmfUser = null;
   user.getProperties().subscribe({
-    next: (value) => this.gmfUser = value
+    next: (value) => (this.gmfUser = value),
   });
 
   /**
-   * @type {?import("ol/Map.js").default}
+   * @type {?import('ol/Map').default}
    */
   this.map_ = null;
 
   /**
-   * @type {?import("ngeo/misc/AutoProjection.js").AutoProjectionService}
+   * @type {?import('ngeo/misc/AutoProjection').AutoProjectionService}
    */
   this.ngeoAutoProjection_ = $injector.has('ngeoAutoProjection') ? $injector.get('ngeoAutoProjection') : null;
 
   /**
-   * @type {import("ol/events.js").EventsKey[]}
+   * @type {import('ol/events').EventsKey[]}
    */
   this.listenerKeys_ = [];
 
   /**
    * A list of projections that the coordinates in the permalink can be in.
-   * @type {?import("ol/proj/Projection.js").default[]}
+   * @type {?import('ol/proj/Projection').default[]}
    */
   this.sourceProjections_ = null;
   if (gmfPermalinkOptions.projectionCodes !== undefined && this.ngeoAutoProjection_) {
@@ -485,22 +485,22 @@ export function PermalinkService(
   }
 
   /**
-   * @type {?olFeature<import("ol/geom/Geometry.js").default>}
+   * @type {?olFeature<import('ol/geom/Geometry').default>}
    */
   this.crosshairFeature_ = null;
 
   /**
-   * @type {import("ol/style/Style.js").StyleLike}
+   * @type {import('ol/style/Style').StyleLike}
    */
   this.crosshairStyle_ = buildStyle(gmfPermalinkOptions.crosshairStyle);
 
   /**
-   * @type {?import("ngeo/Popover.js").default}
+   * @type {?import('ngeo/Popover').default}
    */
   this.mapTooltip_ = null;
 
   /**
-   * @type {import("ngeo/format/FeatureHash.js").default}
+   * @type {import('ngeo/format/FeatureHash').default}
    */
   this.featureHashFormat_ = new ngeoFormatFeatureHash({
     setStyle: false,
@@ -552,10 +552,10 @@ export function PermalinkService(
       const visible = state === 'on';
       treeCtrl.traverseDepthFirst(
         /**
-         * @param {import('ngeo/layertree/Controller.js').LayertreeController} ctrl
+         * @param {import('ngeo/layertree/Controller').LayertreeController} ctrl
          */
         (ctrl) => {
-          const groupNode = /** @type {import('gmf/themes.js').GmfGroup} */ (ctrl.node);
+          const groupNode = /** @type {import('gmf/themes').GmfGroup} */ (ctrl.node);
           if (groupNode.children === undefined) {
             const param = ParamPrefix.TREE_ENABLE + ctrl.node.name;
             newState[param] = `${visible}`;
@@ -567,10 +567,10 @@ export function PermalinkService(
       const gmfLayerNames = [];
       firstParent.traverseDepthFirst(
         /**
-         * @param {import('ngeo/layertree/Controller.js').LayertreeController} ctrl
+         * @param {import('ngeo/layertree/Controller').LayertreeController} ctrl
          */
         (ctrl) => {
-          const groupNode = /** @type {import('gmf/themes.js').GmfGroup} */ (ctrl.node);
+          const groupNode = /** @type {import('gmf/themes').GmfGroup} */ (ctrl.node);
           if (groupNode.children === undefined && ctrl.getState() === 'on') {
             gmfLayerNames.push(ctrl.node.name);
           }
@@ -687,8 +687,8 @@ export function PermalinkService(
 
 /**
  * Called when layer being swipe
- * @param {?import("ol/layer/Layer.js").default<import('ol/source/Source.js').default>|import("ol/layer/Group.js").default} layer layer object.
- * @param {?import("ol/layer/Layer.js").default<import('ol/source/Source.js').default>|import("ol/layer/Group.js").default} oldLayer  old layer object.
+ * @param {?import('ol/layer/Layer').default<import('ol/source/Source').default>|import('ol/layer/Group').default} layer layer object.
+ * @param {?import('ol/layer/Layer').default<import('ol/source/Source').default>|import('ol/layer/Group').default} oldLayer  old layer object.
  */
 PermalinkService.prototype.handleLayerBeingSwipeChange_ = function (layer, oldLayer) {
   if (layer === oldLayer) {
@@ -728,7 +728,7 @@ PermalinkService.prototype.handleMapSwipeValue_ = function () {
 
 /**
  * Get the coordinate to use to initialize the map view from the state manager.
- * @return {?import("ol/coordinate.js").Coordinate} The coordinate for the map view center.
+ * @return {?import('ol/coordinate').Coordinate} The coordinate for the map view center.
  */
 PermalinkService.prototype.getMapCenter = function () {
   const x = this.ngeoStateManager_.getInitialNumberValue(PermalinkParam.MAP_X);
@@ -779,7 +779,7 @@ PermalinkService.prototype.getMapCrosshair = function () {
 /**
  * Sets the map crosshair to the center (or the map center if nothing provided).
  * Overwrites an existing map crosshair.
- * @param {?import("ol/coordinate.js").Coordinate} [opt_center] Optional center coordinate.
+ * @param {?import('ol/coordinate').Coordinate} [opt_center] Optional center coordinate.
  */
 PermalinkService.prototype.setMapCrosshair = function (opt_center) {
   if (!this.map_) {
@@ -824,13 +824,13 @@ PermalinkService.prototype.getMapTooltip = function () {
  * Sets the map tooltip to the center (or the map center if nothing provided).
  * Overwrites an existing map tooltip.
  * @param {string} tooltipText Text to display in tooltip.
- * @param {?import("ol/coordinate.js").Coordinate} [opt_center] Optional center coordinate.
+ * @param {?import('ol/coordinate').Coordinate} [opt_center] Optional center coordinate.
  */
 PermalinkService.prototype.setMapTooltip = function (tooltipText, opt_center) {
   if (!this.map_) {
     throw new Error('Missing map');
   }
-  /** @type {import("ol/coordinate.js").Coordinate} */
+  /** @type {import('ol/coordinate').Coordinate} */
   let tooltipPosition;
   if (opt_center) {
     tooltipPosition = opt_center;
@@ -866,13 +866,13 @@ PermalinkService.prototype.setMapTooltip = function (tooltipText, opt_center) {
 
 /**
  * Get the ngeo features from the state manager for initialization purpose
- * @return {olFeature<import("ol/geom/Geometry.js").default>[]} The features read from the state manager.
+ * @return {olFeature<import('ol/geom/Geometry').default>[]} The features read from the state manager.
  */
 PermalinkService.prototype.getFeatures = function () {
   const f = this.ngeoStateManager_.getInitialStringValue(PermalinkParam.FEATURES);
   if (f !== undefined && f !== '') {
-    return /** @type {olFeature<import("ol/geom/Geometry.js").default>[]} */ (
-      this.featureHashFormat_.readFeatures(f)
+    return /** @type {olFeature<import('ol/geom/Geometry').default>[]} */ this.featureHashFormat_.readFeatures(
+      f
     );
   }
   return [];
@@ -912,7 +912,7 @@ PermalinkService.prototype.setDimensions = function (dimensions) {
  *
  * If the service is already bound to a map, those events are unlistened first.
  *
- * @param {?import("ol/Map.js").default} map The ol3 map object.
+ * @param {?import('ol/Map').default} map The ol3 map object.
  */
 PermalinkService.prototype.setMap = function (map) {
   if (map === this.map_) {
@@ -938,8 +938,8 @@ PermalinkService.prototype.setMap = function (map) {
 
 /**
  * Listen to the map view property change and update the state accordingly.
- * @param {import("ol/Map.js").default} map The ol3 map object.
- * @param {?olFeature<import("ol/geom/Geometry.js").default>} oeFeature ObjectEditing feature
+ * @param {import('ol/Map').default} map The ol3 map object.
+ * @param {?olFeature<import('ol/geom/Geometry').default>} oeFeature ObjectEditing feature
  */
 PermalinkService.prototype.registerMap_ = function (map, oeFeature) {
   const view = map.getView();
@@ -959,7 +959,7 @@ PermalinkService.prototype.registerMap_ = function (map, oeFeature) {
     if (geom instanceof olGeomPoint || geom instanceof olGeomMultiPoint) {
       maxZoom = this.pointRecenterZoom_;
     }
-    /** @type {import('ol/View.js').FitOptions} */
+    /** @type {import('ol/View').FitOptions} */
     const options = {
       size,
     };
@@ -987,7 +987,7 @@ PermalinkService.prototype.registerMap_ = function (map, oeFeature) {
     view,
     'propertychange',
     this.ngeoDebounce_(
-      /** @type {import("ol/events.js").ListenerFunction} */
+      /** @type {import('ol/events').ListenerFunction} */
       () => {
         const center = view.getCenter();
         if (!center) {
@@ -1040,8 +1040,8 @@ PermalinkService.prototype.unregisterMap_ = function () {
 
 /**
  * Get the background layer object to use to initialize the map from the state manager.
- * @param {import("ol/layer/Base.js").default[]} layers Array of background layer objects.
- * @return {?import("ol/layer/Base.js").default} Background layer.
+ * @param {import('ol/layer/Base').default[]} layers Array of background layer objects.
+ * @return {?import('ol/layer/Base').default} Background layer.
  */
 PermalinkService.prototype.getBackgroundLayer = function (layers) {
   const layerName = this.ngeoStateManager_.getInitialStringValue(PermalinkParam.BG_LAYER);
@@ -1104,7 +1104,7 @@ PermalinkService.prototype.handleBackgroundLayerManagerChange_ = function () {
     listen(
       backgroundLayer,
       'change:opacity',
-      /** @type {import("ol/events.js").ListenerFunction} */
+      /** @type {import('ol/events').ListenerFunction} */
       () => {
         const opacity = backgroundLayer.getOpacity();
         /** @type {Object<string, string>} */
@@ -1130,7 +1130,7 @@ PermalinkService.prototype.refreshFirstLevelGroups = function () {
     throw new Error('Missing gmfTreeManager_.rootCtrl');
   }
   // Get first-level-groups order
-  const groupNode = /** @type {import('gmf/themes.js').GmfGroup} */ (this.gmfTreeManager_.rootCtrl.node);
+  const groupNode = /** @type {import('gmf/themes').GmfGroup} */ (this.gmfTreeManager_.rootCtrl.node);
   const groupNodes = groupNode.children;
   const orderedNames = groupNodes ? groupNodes.map((node) => node.name) : [];
 
@@ -1143,15 +1143,15 @@ PermalinkService.prototype.refreshFirstLevelGroups = function () {
 
 /**
  * Update the time values in the state.
- * @param {import('ngeo/layertree/Controller.js').LayertreeController} treeCtrl Controller.
- * @param {import("ngeo/datasource/OGC.js").TimeRange} time The start
+ * @param {import('ngeo/layertree/Controller').LayertreeController} treeCtrl Controller.
+ * @param {import('ngeo/datasource/OGC').TimeRange} time The start
  * and optionally the end datetime (for time range selection) selected by user
  */
 PermalinkService.prototype.refreshLayerTime = function (treeCtrl, time) {
   /** @type {Object<string, string>} */
   const newState = {};
   const stateName = `${ParamPrefix.TREE_TIME}${treeCtrl.node.name}`;
-  const timenode = /** @type {import('gmf/themes.js').GmfGroup|!import('gmf/themes.js').GmfLayerWMS} */ (
+  const timenode = /** @type {import('gmf/themes').GmfGroup|!import('gmf/themes').GmfLayerWMS} */ (
     treeCtrl.node
   );
   const timeParam = this.ngeoWMSTime_.formatWMSTimeParam(timenode.time, time);
@@ -1264,7 +1264,7 @@ PermalinkService.prototype.initLayers_ = function () {
     }
 
     /**
-     * @type {(import('gmf/themes.js').GmfGroup)[]}
+     * @type {(import('gmf/themes').GmfGroup)[]}
      */
     let firstLevelGroups = [];
     let theme;
@@ -1304,15 +1304,15 @@ PermalinkService.prototype.initLayers_ = function () {
       const mapSwipeValue = this.ngeoStateManager_.getInitialNumberValue(PermalinkParam.MAP_SWIPE_VALUE);
       /**
        * Enable the layers and set the opacity
-       * @param {import('ngeo/layertree/Controller.js').LayertreeController} treeCtrl Controller
+       * @param {import('ngeo/layertree/Controller').LayertreeController} treeCtrl Controller
        * @return {LayertreeVisitorDecision|undefined} the result
        */
       const visitor = (treeCtrl) => {
         if (treeCtrl.isRoot) {
           return undefined;
         }
-        const groupNode = /** @type {import('gmf/themes.js').GmfGroup} */ (treeCtrl.node);
-        const parentGroupNode = /** @type {import('gmf/themes.js').GmfGroup} */ (treeCtrl.parent.node);
+        const groupNode = /** @type {import('gmf/themes').GmfGroup} */ (treeCtrl.node);
+        const parentGroupNode = /** @type {import('gmf/themes').GmfGroup} */ (treeCtrl.parent.node);
         const opacity = this.ngeoStateManager_.getInitialNumberValue(
           (parentGroupNode.mixed ? ParamPrefix.TREE_OPACITY : ParamPrefix.TREE_GROUP_OPACITY) +
             treeCtrl.node.name
@@ -1334,10 +1334,9 @@ PermalinkService.prototype.initLayers_ = function () {
             this.gmfLayerBeingSwipe_.layer = treeCtrl.layer;
           }
         }
-        const timenode =
-          /** @type {import('gmf/themes.js').GmfGroup|!import('gmf/themes.js').GmfLayerWMS} */ (
-            treeCtrl.node
-          );
+        const timenode = /** @type {import('gmf/themes').GmfGroup|!import('gmf/themes').GmfLayerWMS} */ (
+          treeCtrl.node
+        );
         if (timenode && timenode.time) {
           this.setNodeTime_(treeCtrl);
         }
@@ -1360,11 +1359,11 @@ PermalinkService.prototype.initLayers_ = function () {
 
             /**
              * Enable the layers and set the opacity
-             * @param {import('ngeo/layertree/Controller.js').LayertreeController} treeCtrl Controller
+             * @param {import('ngeo/layertree/Controller').LayertreeController} treeCtrl Controller
              * @return {LayertreeVisitorDecision|undefined} the result
              */
             const visitor = (treeCtrl) => {
-              const groupNode = /** @type {import('gmf/themes.js').GmfGroup} */ (treeCtrl.node);
+              const groupNode = /** @type {import('gmf/themes').GmfGroup} */ (treeCtrl.node);
               if (groupNode.children === undefined) {
                 const enable = groupLayersArray.includes(treeCtrl.node.name);
                 if (enable) {
@@ -1402,7 +1401,7 @@ PermalinkService.prototype.initLayers_ = function () {
 // === ngeoFeatures, A.K.A features from the DrawFeature, RedLining  ===
 
 /**
- * @param {Event|import('ol/events/Event.js').default} event Collection event.
+ * @param {Event|import('ol/events/Event').default} event Collection event.
  */
 PermalinkService.prototype.handleNgeoFeaturesAdd_ = function (event) {
   if (event instanceof CollectionEvent) {
@@ -1415,7 +1414,7 @@ PermalinkService.prototype.handleNgeoFeaturesAdd_ = function (event) {
 };
 
 /**
- * @param {Event|import('ol/events/Event.js').default} event Collection event.
+ * @param {Event|import('ol/events/Event').default} event Collection event.
  */
 PermalinkService.prototype.handleNgeoFeaturesRemove_ = function (event) {
   if (event instanceof CollectionEvent) {
@@ -1430,7 +1429,7 @@ PermalinkService.prototype.handleNgeoFeaturesRemove_ = function (event) {
 /**
  * Listen to any changes that may occur within the feature in order to
  * update the state of the permalink accordingly.
- * @param {olFeature<import("ol/geom/Geometry.js").default>} feature Feature.
+ * @param {olFeature<import('ol/geom/Geometry').default>} feature Feature.
  */
 PermalinkService.prototype.addNgeoFeature_ = function (feature) {
   const uid = olUtilGetUid(feature);
@@ -1442,7 +1441,7 @@ PermalinkService.prototype.addNgeoFeature_ = function (feature) {
 
 /**
  * Unregister any event listener from the feature.
- * @param {olFeature<import("ol/geom/Geometry.js").default>} feature Feature.
+ * @param {olFeature<import('ol/geom/Geometry').default>} feature Feature.
  */
 PermalinkService.prototype.removeNgeoFeature_ = function (feature) {
   const uid = olUtilGetUid(feature);
@@ -1474,7 +1473,7 @@ PermalinkService.prototype.handleNgeoFeaturesChange_ = function () {
 
 /**
  * Get the query data for a WFS permalink.
- * @return {?import('ngeo/statemanager/WfsPermalink.js').WfsPermalinkData} The query data.
+ * @return {?import('ngeo/statemanager/WfsPermalink').WfsPermalinkData} The query data.
  */
 PermalinkService.prototype.getWfsPermalinkData_ = function () {
   const wfsLayer = this.ngeoLocation_.getParam(PermalinkParam.WFS_LAYER);
@@ -1522,11 +1521,11 @@ PermalinkService.prototype.getWfsPermalinkData_ = function () {
  * Create a filter group for a given prefix from the query params.
  * @param {string} prefix E.g. `wfs_` or `wfs_0_`.
  * @param {string[]} paramKeys All param keys starting with `wfs_`.
- * @return {import('ngeo/statemanager/WfsPermalink.js').WfsPermalinkFilterGroup|null} A filter group.
+ * @return {import('ngeo/statemanager/WfsPermalink').WfsPermalinkFilterGroup|null} A filter group.
  */
 PermalinkService.prototype.createFilterGroup_ = function (prefix, paramKeys) {
   /**
-   * @type {import('ngeo/statemanager/WfsPermalink.js').WfsPermalinkFilter[]}
+   * @type {import('ngeo/statemanager/WfsPermalink').WfsPermalinkFilter[]}
    */
   const filters = [];
 
@@ -1697,7 +1696,7 @@ PermalinkService.prototype.initExternalDataSources_ = function () {
 };
 
 /**
- * @param {Event|import('ol/events/Event.js').default} evt Collection event.
+ * @param {Event|import('ol/events/Event').default} evt Collection event.
  */
 PermalinkService.prototype.handleExternalDSGroupCollectionAdd_ = function (evt) {
   if (evt instanceof CollectionEvent) {
@@ -1711,7 +1710,7 @@ PermalinkService.prototype.handleExternalDSGroupCollectionAdd_ = function (evt) 
 };
 
 /**
- * @param {import("ngeo/datasource/Group.js").default} group Data source group.
+ * @param {import('ngeo/datasource/Group').default} group Data source group.
  */
 PermalinkService.prototype.registerExternalDSGroup_ = function (group) {
   this.listenerKeys_.push(
@@ -1722,7 +1721,7 @@ PermalinkService.prototype.registerExternalDSGroup_ = function (group) {
 
 /**
  * Contains the layer name
- * @param {import("ol/layer/Base.js").default} layer The layer to inspect
+ * @param {import('ol/layer/Base').default} layer The layer to inspect
  * @param {string} name The layer name to find
  * @return {boolean} The containing status
  */
@@ -1743,7 +1742,7 @@ PermalinkService.prototype.containsLayerName = function (layer, name) {
 };
 
 /**
- * @param {Event|import('ol/events/Event.js').default} evt Collection event.
+ * @param {Event|import('ol/events/Event').default} evt Collection event.
  */
 PermalinkService.prototype.handleExternalDSGroupCollectionRemove_ = function (evt) {
   if (evt instanceof CollectionEvent) {
@@ -1757,7 +1756,7 @@ PermalinkService.prototype.handleExternalDSGroupCollectionRemove_ = function (ev
 };
 
 /**
- * @param {import("ngeo/datasource/Group.js").default} group Data source group.
+ * @param {import('ngeo/datasource/Group').default} group Data source group.
  */
 PermalinkService.prototype.unregisterExternalDSGroup_ = function (group) {
   this.listenerKeys_.forEach(unlistenByKey);
@@ -1804,7 +1803,7 @@ PermalinkService.prototype.setExternalDataSourcesState_ = function () {
 
       // (2b) layer names
       const wmtsGroupLayerNames = [];
-      for (const wmtsDataSource of /** @type {import('ngeo/datasource/OGC.js').OGC[]} */ (
+      for (const wmtsDataSource of /** @type {import('ngeo/datasource/OGC').OGC[]} */ (
         wmtsGroup.dataSources
       )) {
         if (!wmtsDataSource.wmtsLayer) {
@@ -1828,7 +1827,7 @@ PermalinkService.prototype.setExternalDataSourcesState_ = function () {
 
 /**
  * Clean the permalink parameters
- * @param {import('gmf/themes.js').GmfGroup[]} groups firstlevel groups of the tree
+ * @param {import('gmf/themes').GmfGroup[]} groups firstlevel groups of the tree
  */
 PermalinkService.prototype.cleanParams = function (groups) {
   const keys = this.ngeoLocation_.getParamKeys();
@@ -1879,13 +1878,13 @@ PermalinkService.prototype.cleanParams = function (groups) {
 
 /**
  * Set the time from permalink in datasource and widget.
- * @param {import('ngeo/layertree/Controller.js').LayertreeController} treeCtrl Controller
+ * @param {import('ngeo/layertree/Controller').LayertreeController} treeCtrl Controller
  */
 PermalinkService.prototype.setNodeTime_ = function (treeCtrl) {
   const time = this.ngeoStateManager_.getInitialStringValue(ParamPrefix.TREE_TIME + treeCtrl.node.name);
   if (time) {
     const bounds = time.split('/');
-    const node = /** @type {import('gmf/themes.js').GmfGroup|!import('gmf/themes.js').GmfLayerWMS} */ (
+    const node = /** @type {import('gmf/themes').GmfGroup|!import('gmf/themes').GmfLayerWMS} */ (
       treeCtrl.node
     );
     node.time.minDefValue = bounds[0];

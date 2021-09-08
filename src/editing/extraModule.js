@@ -20,7 +20,7 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import ngeoEditingExportfeaturesComponent from 'ngeo/editing/exportfeaturesComponent.js';
+import ngeoEditingExportfeaturesComponent from 'ngeo/editing/exportfeaturesComponent';
 
 /**
  * @type {angular.IModule}

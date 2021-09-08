@@ -21,8 +21,8 @@
 
 import './grid.css';
 import angular from 'angular';
-import ngeoGridConfig from 'ngeo/grid/Config.js';
-import ngeoGridModule from 'ngeo/grid/module.js';
+import ngeoGridConfig from 'ngeo/grid/Config';
+import ngeoGridModule from 'ngeo/grid/module';
 
 /** @type {angular.IModule} **/
 const myModule = angular.module('app', ['gettext', ngeoGridModule.name]);
@@ -74,7 +74,7 @@ function MainController() {
   const columnDefs = [{name: 'name'}, {name: 'display_name'}, {name: 'timestamp'}, {name: 'type'}];
 
   /**
-   * @type {import("ngeo/grid/Config.js").default}
+   * @type {import('ngeo/grid/Config').default}
    */
   this.gridConfig = new ngeoGridConfig(data, columnDefs);
 }

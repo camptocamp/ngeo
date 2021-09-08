@@ -21,27 +21,27 @@
 
 import './datepicker.css';
 import angular from 'angular';
-import ngeoMiscDatepickerComponent from 'ngeo/misc/datepickerComponent.js';
+import ngeoMiscDatepickerComponent from 'ngeo/misc/datepickerComponent';
 
-import ngeoMiscTime from 'ngeo/misc/Time.js';
-import {TimePropertyWidgetEnum, TimePropertyModeEnum} from 'ngeo/datasource/OGC.js';
+import ngeoMiscTime from 'ngeo/misc/Time';
+import {TimePropertyWidgetEnum, TimePropertyModeEnum} from 'ngeo/datasource/OGC';
 
 /** @type {angular.IModule} **/
 const myModule = angular.module('app', ['gettext', ngeoMiscDatepickerComponent.name, ngeoMiscTime.name]);
 
 /**
  * @class
- * @param {import("ngeo/misc/Time.js").default} ngeoTime time service.
+ * @param {import('ngeo/misc/Time').default} ngeoTime time service.
  * @ngInject
  */
 function MainController(ngeoTime) {
   /**
-   * @type {import("ngeo/misc/Time.js").default}
+   * @type {import('ngeo/misc/Time').default}
    */
   this.ngeoTime_ = ngeoTime;
 
   /**
-   * @type {import('ngeo/datasource/OGC.js').TimeProperty}
+   * @type {import('ngeo/datasource/OGC').TimeProperty}
    */
   this.timeRangeMode = {
     widget: TimePropertyWidgetEnum.DATEPICKER,
@@ -52,7 +52,7 @@ function MainController(ngeoTime) {
   };
 
   /**
-   * @type {import('ngeo/datasource/OGC.js').TimeProperty}
+   * @type {import('ngeo/datasource/OGC').TimeProperty}
    */
   this.timeValueMode = {
     widget: TimePropertyWidgetEnum.DATEPICKER,

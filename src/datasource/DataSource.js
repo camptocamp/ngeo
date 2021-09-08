@@ -27,9 +27,9 @@
  *
  *
  * @typedef {Object} DataSourceOptions
- * @property {import('ngeo/format/Attribute.js').Attribute[]} [attributes] The attributes of the data
+ * @property {import('ngeo/format/Attribute').Attribute[]} [attributes] The attributes of the data
  *    source.
- * @property {import('ngeo/datasource/OGC.js').DimensionsFiltersConfig} [dimensionsFiltersConfig]
+ * @property {import('ngeo/datasource/OGC').DimensionsFiltersConfig} [dimensionsFiltersConfig]
  *    The dimensions filters configuration, which determines dimensions supported by this data source using
  *    filters and give the corresponding field and whether they should use a static value or the one defined
  *    in the dimensions.
@@ -77,7 +77,7 @@ class DataSource {
      * required for the `inRange` property to be dynamic, otherwise its
      * value is always `true` by default.
      *
-     * The synchronization is made in the `import('ngeo/datasource/DataSource.js').DataSources`
+     * The synchronization is made in the `import('ngeo/datasource/DataSource').DataSources`
      * service.
      *
      * @type {boolean}
@@ -99,7 +99,7 @@ class DataSource {
      * Note: `attributes` is not using the conventionnal getter/setter due
      * to:  See: https://github.com/google/closure-compiler/issues/1089
      *
-     * @type {?import('ngeo/format/Attribute.js').Attribute[]}
+     * @type {?import('ngeo/format/Attribute').Attribute[]}
      */
     this.attributes = options.attributes || null;
 
@@ -146,14 +146,14 @@ class DataSource {
   // =======================================
 
   /**
-   * @return {?import('ngeo/format/Attribute.js').Attribute[]} Attributes
+   * @return {?import('ngeo/format/Attribute').Attribute[]} Attributes
    */
   getAttributes() {
     return this.attributes;
   }
 
   /**
-   * @param {import('ngeo/format/Attribute.js').Attribute[]} attributes Attributes
+   * @param {import('ngeo/format/Attribute').Attribute[]} attributes Attributes
    */
   setAttributes(attributes) {
     this.attributes = attributes;
@@ -216,7 +216,7 @@ class DataSource {
 }
 
 /**
- * @typedef {import("ol/Collection.js").default<DataSource>} DataSources
+ * @typedef {import('ol/Collection').default<DataSource>} DataSources
  */
 
 export default DataSource;

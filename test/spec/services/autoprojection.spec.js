@@ -20,11 +20,11 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import EPSG2056 from 'ngeo/proj/EPSG_2056.js';
-import * as olProj from 'ol/proj.js';
+import EPSG2056 from 'ngeo/proj/EPSG_2056';
+import * as olProj from 'ol/proj';
 
 describe('ngeo.misc.AutoProjection', () => {
-  /** @type {import("ngeo/misc/AutoProjection.js").AutoProjectionService} */
+  /** @type {import('ngeo/misc/AutoProjection').AutoProjectionService} */
   let ngeoAutoProjection;
 
   beforeEach(() => {

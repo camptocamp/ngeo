@@ -20,17 +20,17 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import ngeoPrintVectorEncoder from 'ngeo/print/VectorEncoder.js';
-import ngeoMapLayerHelper from 'ngeo/map/LayerHelper.js';
-import {stableSort} from 'ol/array.js';
-import olLayerImage from 'ol/layer/Image.js';
-import olLayerTile from 'ol/layer/Tile.js';
-import olLayerVector from 'ol/layer/Vector.js';
-import * as olSize from 'ol/size.js';
-import olSourceImageWMS from 'ol/source/ImageWMS.js';
-import olSourceTileWMS from 'ol/source/TileWMS.js';
-import olSourceWMTS from 'ol/source/WMTS.js';
-import olTilegridWMTS from 'ol/tilegrid/WMTS.js';
+import ngeoPrintVectorEncoder from 'ngeo/print/VectorEncoder';
+import ngeoMapLayerHelper from 'ngeo/map/LayerHelper';
+import {stableSort} from 'ol/array';
+import olLayerImage from 'ol/layer/Image';
+import olLayerTile from 'ol/layer/Tile';
+import olLayerVector from 'ol/layer/Vector';
+import * as olSize from 'ol/size';
+import olSourceImageWMS from 'ol/source/ImageWMS';
+import olSourceTileWMS from 'ol/source/TileWMS';
+import olSourceWMTS from 'ol/source/WMTS';
+import olTilegridWMTS from 'ol/tilegrid/WMTS';
 
 /**
  * @typedef {function(string): PrintService} CreatePrint
@@ -77,7 +77,7 @@ import olTilegridWMTS from 'ol/tilegrid/WMTS.js';
  * @param {string} url URL to MapFish print web service.
  * @param {angular.IHttpService} $http Angular $http service.
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext service.
- * @param {import("ngeo/map/LayerHelper.js").LayerHelper} ngeoLayerHelper Ngeo Layer Helper service.
+ * @param {import('ngeo/map/LayerHelper').LayerHelper} ngeoLayerHelper Ngeo Layer Helper service.
  * @hidden
  */
 export function PrintService(url, $http, gettextCatalog, ngeoLayerHelper) {
@@ -97,12 +97,12 @@ export function PrintService(url, $http, gettextCatalog, ngeoLayerHelper) {
   this.gettextCatalog_ = gettextCatalog;
 
   /**
-   * @type {import("ngeo/map/LayerHelper.js").LayerHelper}
+   * @type {import('ngeo/map/LayerHelper').LayerHelper}
    */
   this.ngeoLayerHelper_ = ngeoLayerHelper;
 
   /**
-   * @type {import("ngeo/print/VectorEncoder.js").default}
+   * @type {import('ngeo/print/VectorEncoder').default}
    */
   this.vectorEncoder = new ngeoPrintVectorEncoder();
 
@@ -133,7 +133,7 @@ PrintService.prototype.cancel = function (ref, opt_httpConfig) {
 
 /**
  * Create a report specification.
- * @param {import("ol/Map.js").default} map Map.
+ * @param {import('ol/Map').default} map Map.
  * @param {number} scale Scale.
  * @param {number} rotation Rotation.
  * @param {number} dpi DPI.
@@ -142,7 +142,7 @@ PrintService.prototype.cancel = function (ref, opt_httpConfig) {
  * @param {Object<string, *>} customAttributes Custom attributes.
  * @param {string} [email] Email to send the file to.
  * @param {number} [goodnessOfFit] Goodness of fit.
- * @return {import('ngeo/print/mapfish-print-v3.js').MapFishPrintSpec} The print spec.
+ * @return {import('ngeo/print/mapfish-print-v3').MapFishPrintSpec} The print spec.
  */
 PrintService.prototype.createSpec = function (
   map,
@@ -155,7 +155,7 @@ PrintService.prototype.createSpec = function (
   email,
   goodnessOfFit
 ) {
-  const specMap = /** @type {import('ngeo/print/mapfish-print-v3.js').MapFishPrintMap} */ ({
+  const specMap = /** @type {import('ngeo/print/mapfish-print-v3').MapFishPrintMap} */ ({
     dpi: dpi,
     rotation: rotation,
   });
@@ -166,7 +166,7 @@ PrintService.prototype.createSpec = function (
 
   this.encodeMap_(map, scale, specMap, dpi);
 
-  /** @type {import('ngeo/print/mapfish-print-v3.js').MapFishPrintAttributes} */
+  /** @type {import('ngeo/print/mapfish-print-v3').MapFishPrintAttributes} */
   const attributes = {
     map: specMap,
   };
@@ -174,7 +174,7 @@ PrintService.prototype.createSpec = function (
 
   const lang = this.gettextCatalog_.getCurrentLanguage();
 
-  /** @type {import('ngeo/print/mapfish-print-v3.js').MapFishPrintSpec} */
+  /** @type {import('ngeo/print/mapfish-print-v3').MapFishPrintSpec} */
   const spec = {
     attributes,
     format,
@@ -190,9 +190,9 @@ PrintService.prototype.createSpec = function (
 };
 
 /**
- * @param {import("ol/Map.js").default} map Map.
+ * @param {import('ol/Map').default} map Map.
  * @param {number} scale Scale.
- * @param {import('ngeo/print/mapfish-print-v3.js').MapFishPrintMap} object Object.
+ * @param {import('ngeo/print/mapfish-print-v3').MapFishPrintMap} object Object.
  * @param {number} destinationPrintDpi The destination print DPI.
  */
 PrintService.prototype.encodeMap_ = function (map, scale, object, destinationPrintDpi) {
@@ -236,8 +236,8 @@ PrintService.prototype.encodeMap_ = function (map, scale, object, destinationPri
 };
 
 /**
- * @param {import('ngeo/print/mapfish-print-v3.js').MapFishPrintLayer[]} arr Array.
- * @param {import("ol/layer/Base.js").default} layer Layer.
+ * @param {import('ngeo/print/mapfish-print-v3').MapFishPrintLayer[]} arr Array.
+ * @param {import('ol/layer/Base').default} layer Layer.
  * @param {number} resolution Resolution.
  * @param {number} destinationPrintDpi The destination print DPI.
  */
@@ -252,8 +252,8 @@ PrintService.prototype.encodeLayer = function (arr, layer, resolution, destinati
 };
 
 /**
- * @param {import('ngeo/print/mapfish-print-v3.js').MapFishPrintLayer[]} arr Array.
- * @param {olLayerVector<import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>>} layer Layer.
+ * @param {import('ngeo/print/mapfish-print-v3').MapFishPrintLayer[]} arr Array.
+ * @param {olLayerVector<import('ol/source/Vector').default<import('ol/geom/Geometry').default>>} layer Layer.
  * @param {number} resolution Resolution.
  * @param {number} destinationPrintDpi The destination print DPI.
  */
@@ -262,8 +262,8 @@ PrintService.prototype.encodeVectorLayer = function (arr, layer, resolution, des
 };
 
 /**
- * @param {import('ngeo/print/mapfish-print-v3.js').MapFishPrintLayer[]} arr Array.
- * @param {import("ol/layer/Image.js").default<import("ol/source/Image.js").default>} layer Layer.
+ * @param {import('ngeo/print/mapfish-print-v3').MapFishPrintLayer[]} arr Array.
+ * @param {import('ol/layer/Image').default<import('ol/source/Image').default>} layer Layer.
  */
 PrintService.prototype.encodeImageLayer_ = function (arr, layer) {
   if (!(layer instanceof olLayerImage)) {
@@ -276,8 +276,8 @@ PrintService.prototype.encodeImageLayer_ = function (arr, layer) {
 };
 
 /**
- * @param {import('ngeo/print/mapfish-print-v3.js').MapFishPrintLayer[]} arr Array.
- * @param {import("ol/layer/Image.js").default<import("ol/source/Image.js").default>} layer Layer.
+ * @param {import('ngeo/print/mapfish-print-v3').MapFishPrintLayer[]} arr Array.
+ * @param {import('ol/layer/Image').default<import('ol/source/Image').default>} layer Layer.
  */
 PrintService.prototype.encodeImageWmsLayer_ = function (arr, layer) {
   if (!(layer instanceof olLayerImage)) {
@@ -295,8 +295,8 @@ PrintService.prototype.encodeImageWmsLayer_ = function (arr, layer) {
 };
 
 /**
- * @param {import('ngeo/print/mapfish-print-v3.js').MapFishPrintLayer[]} arr Array.
- * @param {import("ol/layer/Image.js").default<import("ol/source/Image.js").default>|import("ol/layer/Tile.js").default<import("ol/source/Tile.js").default>} layer The layer.
+ * @param {import('ngeo/print/mapfish-print-v3').MapFishPrintLayer[]} arr Array.
+ * @param {import('ol/layer/Image').default<import('ol/source/Image').default>|import('ol/layer/Tile').default<import('ol/source/Tile').default>} layer The layer.
  * @param {string} url URL of the WMS server.
  * @param {Object<string, string>} params URL parameters
  */
@@ -341,7 +341,7 @@ PrintService.prototype.encodeWmsLayer_ = function (arr, layer, url, params) {
     params.STYLES += ',';
   }
 
-  /** @type {import('ngeo/print/mapfish-print-v3.js').MapFishPrintWmsLayer} */
+  /** @type {import('ngeo/print/mapfish-print-v3').MapFishPrintWmsLayer} */
   const object = {
     baseURL: getAbsoluteUrl_(url_url.origin + url_url.pathname),
     imageFormat: 'FORMAT' in params ? params.FORMAT : 'image/png',
@@ -370,8 +370,8 @@ function getAbsoluteUrl_(url) {
 }
 
 /**
- * @param {import('ngeo/print/mapfish-print-v3.js').MapFishPrintLayer[]} arr Array.
- * @param {import("ol/layer/Tile.js").default<import("ol/source/Tile.js").default>} layer Layer.
+ * @param {import('ngeo/print/mapfish-print-v3').MapFishPrintLayer[]} arr Array.
+ * @param {import('ol/layer/Tile').default<import('ol/source/Tile').default>} layer Layer.
  */
 PrintService.prototype.encodeTileLayer_ = function (arr, layer) {
   if (!(layer instanceof olLayerTile)) {
@@ -386,8 +386,8 @@ PrintService.prototype.encodeTileLayer_ = function (arr, layer) {
 };
 
 /**
- * @param {import('ngeo/print/mapfish-print-v3.js').MapFishPrintLayer[]} arr Array.
- * @param {import("ol/layer/Tile.js").default<import("ol/source/Tile.js").default>} layer Layer.
+ * @param {import('ngeo/print/mapfish-print-v3').MapFishPrintLayer[]} arr Array.
+ * @param {import('ol/layer/Tile').default<import('ol/source/Tile').default>} layer Layer.
  */
 PrintService.prototype.encodeTileWmtsLayer_ = function (arr, layer) {
   if (!(layer instanceof olLayerTile)) {
@@ -412,13 +412,13 @@ PrintService.prototype.encodeTileWmtsLayer_ = function (arr, layer) {
   }
   const matrixIds = tileGrid.getMatrixIds();
 
-  /** @type {import('ngeo/print/mapfish-print-v3.js').MapFishPrintWmtsMatrix[]} */
+  /** @type {import('ngeo/print/mapfish-print-v3').MapFishPrintWmtsMatrix[]} */
   const matrices = [];
 
   for (let i = 0, ii = matrixIds.length; i < ii; ++i) {
     const tileRange = tileGrid.getFullTileRange(i);
     matrices.push(
-      /** @type {import('ngeo/print/mapfish-print-v3.js').MapFishPrintWmtsMatrix} */ ({
+      /** @type {import('ngeo/print/mapfish-print-v3').MapFishPrintWmtsMatrix} */ ({
         identifier: matrixIds[i],
         scaleDenominator: (tileGrid.getResolution(i) * metersPerUnit) / 0.28e-3,
         tileSize: olSize.toSize(tileGrid.getTileSize(i)),
@@ -431,7 +431,7 @@ PrintService.prototype.encodeTileWmtsLayer_ = function (arr, layer) {
   const dimensions = source.getDimensions();
   const dimensionKeys = Object.keys(dimensions);
 
-  const object = /** @type {import('ngeo/print/mapfish-print-v3.js').MapFishPrintWmtsLayer} */ ({
+  const object = /** @type {import('ngeo/print/mapfish-print-v3').MapFishPrintWmtsLayer} */ ({
     baseURL: this.getWmtsUrl_(source),
     dimensions: dimensionKeys,
     dimensionParams: dimensions,
@@ -450,8 +450,8 @@ PrintService.prototype.encodeTileWmtsLayer_ = function (arr, layer) {
 };
 
 /**
- * @param {import('ngeo/print/mapfish-print-v3.js').MapFishPrintLayer[]} arr Array.
- * @param {import("ol/layer/Tile.js").default<import("ol/source/Tile.js").default>} layer Layer.
+ * @param {import('ngeo/print/mapfish-print-v3').MapFishPrintLayer[]} arr Array.
+ * @param {import('ol/layer/Tile').default<import('ol/source/Tile').default>} layer Layer.
  */
 PrintService.prototype.encodeTileWmsLayer_ = function (arr, layer) {
   if (!(layer instanceof olLayerTile)) {
@@ -471,7 +471,7 @@ PrintService.prototype.encodeTileWmsLayer_ = function (arr, layer) {
 
 /**
  * Return the WMTS URL to use in the print spec.
- * @param {import("ol/source/WMTS.js").default} source The WMTS source.
+ * @param {import('ol/source/WMTS').default} source The WMTS source.
  * @return {string} URL.
  */
 PrintService.prototype.getWmtsUrl_ = function (source) {
@@ -484,7 +484,7 @@ PrintService.prototype.getWmtsUrl_ = function (source) {
 
 /**
  * Return an opacity value for the specified layer.
- * @param {import("ol/layer/Base.js").default} layer Layer.
+ * @param {import('ol/layer/Base').default} layer Layer.
  * @return {number} opacity Opacity value.
  */
 PrintService.prototype.getOpacityOrInherited_ = function (layer) {
@@ -496,9 +496,9 @@ PrintService.prototype.getOpacityOrInherited_ = function (layer) {
 
 /**
  * Send a create report request to the MapFish Print service.
- * @param {import('ngeo/print/mapfish-print-v3.js').MapFishPrintSpec} printSpec Print specification.
+ * @param {import('ngeo/print/mapfish-print-v3').MapFishPrintSpec} printSpec Print specification.
  * @param {angular.IRequestShortcutConfig} [opt_httpConfig] $http config object.
- * @return {angular.IHttpPromise<import('ngeo/print/mapfish-print-v3.js').MapFishPrintReportResponse>} HTTP promise.
+ * @return {angular.IHttpPromise<import('ngeo/print/mapfish-print-v3').MapFishPrintReportResponse>} HTTP promise.
  */
 PrintService.prototype.createReport = function (printSpec, opt_httpConfig) {
   const format = printSpec.format || 'pdf';
@@ -516,7 +516,7 @@ PrintService.prototype.createReport = function (printSpec, opt_httpConfig) {
  * Get the status of a report.
  * @param {string} ref Print report reference.
  * @param {angular.IRequestShortcutConfig} [opt_httpConfig] $http config object.
- * @return {angular.IHttpPromise<import('ngeo/print/mapfish-print-v3.js').MapFishPrintStatusResponse>} HTTP promise.
+ * @return {angular.IHttpPromise<import('ngeo/print/mapfish-print-v3').MapFishPrintStatusResponse>} HTTP promise.
  */
 PrintService.prototype.getStatus = function (ref, opt_httpConfig) {
   const httpConfig =
@@ -553,7 +553,7 @@ PrintService.prototype.getCapabilities = function (opt_httpConfig) {
 /**
  * @param {angular.IHttpService} $http Angular $http service.
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext service.
- * @param {import("ngeo/map/LayerHelper.js").LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
+ * @param {import('ngeo/map/LayerHelper').LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @return {CreatePrint} The function to create a print service.
  * @ngInject
  * @ngdoc service

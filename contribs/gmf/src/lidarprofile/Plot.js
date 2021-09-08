@@ -19,11 +19,11 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import olFeature from 'ol/Feature.js';
-import olGeomPoint from 'ol/geom/Point.js';
-import olStyleCircle from 'ol/style/Circle.js';
-import olStyleFill from 'ol/style/Fill.js';
-import olStyleStyle from 'ol/style/Style.js';
+import olFeature from 'ol/Feature';
+import olGeomPoint from 'ol/geom/Point';
+import olStyleCircle from 'ol/style/Circle';
+import olStyleFill from 'ol/style/Fill';
+import olStyleStyle from 'ol/style/Style';
 import {
   axisBottom as d3axisBottom,
   axisLeft as d3axisLeft,
@@ -42,12 +42,12 @@ export default class {
    * Provides a service to create an SVG element with defined axis and a LIDAR
    * point drawing mechanism.
    *
-   * @param {import("gmf/lidarprofile/Manager.js").LidarprofileManager} gmfLidarprofileManagerInstance
+   * @param {import('gmf/lidarprofile/Manager').LidarprofileManager} gmfLidarprofileManagerInstance
    *    gmf lidar profile manager instance
    */
   constructor(gmfLidarprofileManagerInstance) {
     /**
-     * @type {import("gmf/lidarprofile/Manager.js").LidarprofileManager}
+     * @type {import('gmf/lidarprofile/Manager').LidarprofileManager}
      * @private
      */
     this.manager_ = gmfLidarprofileManagerInstance;
@@ -108,7 +108,7 @@ export default class {
 
   /**
    * Draw the points to the canvas element
-   * @param {import("gmf/lidarprofile/Utils.js").LidarprofilePoints} points of the profile
+   * @param {import('gmf/lidarprofile/Utils').LidarprofilePoints} points of the profile
    */
   drawPoints(points) {
     if (!this.manager_.config) {
@@ -429,8 +429,8 @@ export default class {
   }
 
   /**
-   * @param {import("gmf/lidarprofile/Utils.js").LidarPoint} point the concerned point.
-   * @param {import("gmf/lidarprofile/Config.js").LidarprofileServerConfigClassification} classification_color
+   * @param {import('gmf/lidarprofile/Utils').LidarPoint} point the concerned point.
+   * @param {import('gmf/lidarprofile/Config').LidarprofileServerConfigClassification} classification_color
    *    the classification object concerning this point.
    * @param {number} distDecimal the number of decimal to keep.
    * @return {string} the text for the html info.
@@ -483,7 +483,7 @@ export default class {
 
   /**
    * Show/Hide classes in the profile
-   * @param {import("gmf/lidarprofile/Config.js").LidarprofileServerConfigClassifications} classification
+   * @param {import('gmf/lidarprofile/Config').LidarprofileServerConfigClassifications} classification
    *   value as defined in the Pytree classification_colors configuration
    * @param {string} material  value as defined in Pytree attribute configuration
    */

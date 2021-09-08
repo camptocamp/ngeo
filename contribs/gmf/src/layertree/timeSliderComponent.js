@@ -20,10 +20,10 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import ngeoMiscWMSTime from 'ngeo/misc/WMSTime.js';
-import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
+import ngeoMiscWMSTime from 'ngeo/misc/WMSTime';
+import ngeoMiscDebounce from 'ngeo/misc/debounce';
 
-import 'jquery-ui/ui/widgets/slider.js';
+import 'jquery-ui/ui/widgets/slider';
 import 'ngeo/sass/jquery-ui.scss';
 import 'angular-ui-slider';
 import './timeslider.scss';
@@ -61,7 +61,7 @@ myModule.run(
  *          gmf-time-slider-on-date-selected="ctrl.onDateSelected(time)">
  *      </gmf-time-slider>
  *
- * @htmlAttribute {import('ngeo/datasource/OGC.js').TimeProperty} gmf-time-slider-time parameter
+ * @htmlAttribute {import('ngeo/datasource/OGC').TimeProperty} gmf-time-slider-time parameter
  *    for initialization.
  * @htmlAttribute {function()} gmf-time-slider-on-date-selected Expression evaluated after
  * date(s) changed
@@ -141,8 +141,8 @@ myModule.directive('gmfTimeSlider', layertreeTimeSliderComponent);
 
 /**
  * TimeSliderController - directive controller
- * @param {import("ngeo/misc/WMSTime.js").WMSTime} ngeoWMSTime WMSTime service.
- * @param {import("ngeo/misc/debounce.js").miscDebounce<function(): void>} ngeoDebounce ngeo Debounce factory.
+ * @param {import('ngeo/misc/WMSTime').WMSTime} ngeoWMSTime WMSTime service.
+ * @param {import('ngeo/misc/debounce').miscDebounce<function(): void>} ngeoDebounce ngeo Debounce factory.
  * @class
  * @hidden
  * @ngInject
@@ -151,12 +151,12 @@ myModule.directive('gmfTimeSlider', layertreeTimeSliderComponent);
  */
 export function Controller(ngeoWMSTime, ngeoDebounce) {
   /**
-   * @type {import("ngeo/misc/WMSTime.js").WMSTime}
+   * @type {import('ngeo/misc/WMSTime').WMSTime}
    */
   this.ngeoWMSTime_ = ngeoWMSTime;
 
   /**
-   * @type {import("ngeo/misc/debounce.js").miscDebounce<function(): void>}
+   * @type {import('ngeo/misc/debounce').miscDebounce<function(): void>}
    */
   this.ngeoDebounce_ = ngeoDebounce;
 
@@ -168,7 +168,7 @@ export function Controller(ngeoWMSTime, ngeoDebounce) {
 
   /**
    * A time object for directive initialization
-   * @type {?import('ngeo/datasource/OGC.js').TimeProperty}
+   * @type {?import('ngeo/datasource/OGC').TimeProperty}
    */
   this.time = null;
 

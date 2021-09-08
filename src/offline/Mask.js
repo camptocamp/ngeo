@@ -19,9 +19,9 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import Layer from 'ol/layer/Layer.js';
-import {createCanvasContext2D} from 'ol/dom.js';
-import {DEVICE_PIXEL_RATIO} from 'ol/has.js';
+import Layer from 'ol/layer/Layer';
+import {createCanvasContext2D} from 'ol/dom';
+import {DEVICE_PIXEL_RATIO} from 'ol/has';
 
 /**
  * @typedef {Object} Options
@@ -30,11 +30,11 @@ import {DEVICE_PIXEL_RATIO} from 'ol/has.js';
  */
 
 /**
- * @extends {Layer<import("ol/source/Source.js").default>}
+ * @extends {Layer<import('ol/source/Source').default>}
  */
 export default class Mask extends Layer {
   /**
-   * @param {import('ol/layer/Layer.js').Options<import("ol/source/Source.js").default>} layerOptions
+   * @param {import('ol/layer/Layer').Options<import('ol/source/Source').default>} layerOptions
    * @param {Options} maskOptions
    */
   constructor(layerOptions = {}, maskOptions = {}) {
@@ -53,9 +53,9 @@ export default class Mask extends Layer {
   }
 
   /**
-   * @param {import("ol/coordinate.js").Coordinate} center center, a xy point.
+   * @param {import('ol/coordinate').Coordinate} center center, a xy point.
    * @param {number} halfLength a half length of a square's side.
-   * @return {import("ol/extent.js").Extent} an extent.
+   * @return {import('ol/extent').Extent} an extent.
    */
   createExtent(center, halfLength) {
     const minx = center[0] - halfLength;

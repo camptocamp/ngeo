@@ -19,7 +19,7 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import olOverlay from 'ol/Overlay.js';
+import olOverlay from 'ol/Overlay';
 
 /**
  * An openlayers overlay that uses bootstrap popover to produce a popup for maps.
@@ -28,7 +28,7 @@ import olOverlay from 'ol/Overlay.js';
  */
 export default class extends olOverlay {
   /**
-   * @param {import('ol/Overlay.js').Options} [options] Overlay options.
+   * @param {import('ol/Overlay').Options} [options] Overlay options.
    */
   constructor(options = {}) {
     const originalEl = options.element ? options.element : document.createElement('div');
@@ -53,7 +53,7 @@ export default class extends olOverlay {
   }
 
   /**
-   * @param {import("ol/PluggableMap.js").default|undefined} map The map that the
+   * @param {import('ol/PluggableMap').default|undefined} map The map that the
    * overlay is part of.
    */
   setMap(map) {

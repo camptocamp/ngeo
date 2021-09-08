@@ -20,8 +20,8 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import ngeoSearchSearchDirective from 'ngeo/search/searchDirective.js';
-import ngeoRoutingNominatimService from 'ngeo/routing/NominatimService.js';
+import ngeoSearchSearchDirective from 'ngeo/search/searchDirective';
+import ngeoRoutingNominatimService from 'ngeo/routing/NominatimService';
 
 /**
  * @type {angular.IModule}
@@ -74,7 +74,7 @@ function ngeoRoutingNominatimInputComponentTemplateUrl(
 /**
  * @param {JQuery} $element Element.
  * @param {angular.IScope} $scope Scope.
- * @param {import("ngeo/routing/NominatimService.js").NominatimService} ngeoNominatimService service for
+ * @param {import('ngeo/routing/NominatimService').NominatimService} ngeoNominatimService service for
  *    Nominatim
  * @class
  * @hidden
@@ -94,7 +94,7 @@ export function Controller($element, $scope, ngeoNominatimService) {
   this.$scope_ = $scope;
 
   /**
-   * @type {import("ngeo/routing/NominatimService.js").NominatimService}
+   * @type {import('ngeo/routing/NominatimService').NominatimService}
    */
   this.ngeoNominatimService = ngeoNominatimService;
 
@@ -125,7 +125,7 @@ export function Controller($element, $scope, ngeoNominatimService) {
   ];
 
   /**
-   * @type {import('ngeo/search/searchDirective.js').SearchDirectiveListeners<import('ngeo/routing/NominatimService').NominatimSearchResult>}
+   * @type {import('ngeo/search/searchDirective').SearchDirectiveListeners<import('ngeo/routing/NominatimService').NominatimSearchResult>}
    */
   this.listeners = {
     select: this.select_.bind(this),
@@ -151,7 +151,7 @@ Controller.prototype.select_ = function (event, suggestion, dataset) {
 
 /**
  * Input form field which provides Nominatim typeahead lookup using
- * {@link import("ngeo/routing/NominatimService.js").default}.
+ * {@link import('ngeo/routing/NominatimService').default}.
  *
  * Example:
  *
@@ -160,7 +160,7 @@ Controller.prototype.select_ = function (event, suggestion, dataset) {
  *         ngeo-nominatim-input-placeholder="type to search"
  *         ngeo-nominatim-input-on-select="ctrl.onSelect">
  *
- * Is used in in the partial of {@link import("ngeo/routingFeatureComponent.js").default}.
+ * Is used in in the partial of {@link import('ngeo/routingFeatureComponent').default}.
  *
  * See the [../examples/routing.html](../examples/routing.html) example to see it in action.
  *

@@ -21,7 +21,7 @@
 
 // @ts-nocheck
 import angular from 'angular';
-import {RouteSuffix} from 'gmf/authentication/Service.js';
+import {RouteSuffix} from 'gmf/authentication/Service';
 import user, {UserState} from 'ngeo/store/user.ts';
 
 describe('gmf.authentication.Service', () => {
@@ -45,8 +45,6 @@ describe('gmf.authentication.Service', () => {
       $httpBackend = _$httpBackend_;
       const expectedUser = user.getEmptyUserProperties();
       $httpBackend.when('GET', isLoggedInUrl).respond(expectedUser);
-
-
 
       // need to flush after the initialization to process the request which
       // queries the initial logged-in status
@@ -76,7 +74,7 @@ describe('gmf.authentication.Service', () => {
             spy();
           }
         }
-      }
+      },
     });
 
     const expectedUser = user.getEmptyUserProperties();
@@ -102,7 +100,7 @@ describe('gmf.authentication.Service', () => {
           sub.unsubscribe();
           spy();
         }
-      }
+      },
     });
 
     const expectedUser = user.getEmptyUserProperties();
@@ -125,7 +123,7 @@ describe('gmf.authentication.Service', () => {
           sub.unsubscribe();
           spy();
         }
-      }
+      },
     });
 
     $httpBackend.when('POST', loginUrl).respond(401);
@@ -145,7 +143,7 @@ describe('gmf.authentication.Service', () => {
           sub.unsubscribe();
           spy();
         }
-      }
+      },
     });
 
     $httpBackend.when('GET', logoutUrl).respond('true');
@@ -167,7 +165,7 @@ describe('gmf.authentication.Service', () => {
           sub.unsubscribe();
           spy();
         }
-      }
+      },
     });
     $httpBackend.when('GET', logoutUrl).respond('true');
 

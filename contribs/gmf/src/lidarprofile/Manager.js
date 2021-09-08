@@ -20,16 +20,16 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import gmfLidarprofileMeasure from 'gmf/lidarprofile/Measure.js';
-import gmfLidarprofilePlot from 'gmf/lidarprofile/Plot.js';
-import gmfLidarprofileUtils from 'gmf/lidarprofile/Utils.js';
-import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
-import olLayerVector from 'ol/layer/Vector.js';
-import olOverlay from 'ol/Overlay.js';
-import olSourceVector from 'ol/source/Vector.js';
-import olStyleFill from 'ol/style/Fill.js';
-import olStyleCircle from 'ol/style/Circle.js';
-import olStyleStyle from 'ol/style/Style.js';
+import gmfLidarprofileMeasure from 'gmf/lidarprofile/Measure';
+import gmfLidarprofilePlot from 'gmf/lidarprofile/Plot';
+import gmfLidarprofileUtils from 'gmf/lidarprofile/Utils';
+import ngeoMiscDebounce from 'ngeo/misc/debounce';
+import olLayerVector from 'ol/layer/Vector';
+import olOverlay from 'ol/Overlay';
+import olSourceVector from 'ol/source/Vector';
+import olStyleFill from 'ol/style/Fill';
+import olStyleCircle from 'ol/style/Circle';
+import olStyleStyle from 'ol/style/Style';
 import {select as d3select} from 'd3';
 
 /**
@@ -43,7 +43,7 @@ export class LidarprofileManager {
    * @param {angular.IHttpService} $http Angular http service.
    * @param {angular.IFilterService} $filter Angular filter.
    * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
-   * @param {import("ngeo/misc/debounce.js").miscDebounce<function(): void>} ngeoDebounce ngeo debounce
+   * @param {import('ngeo/misc/debounce').miscDebounce<function(): void>} ngeoDebounce ngeo debounce
    *    service.
    * @ngInject
    * @ngdoc service
@@ -66,7 +66,7 @@ export class LidarprofileManager {
     this.gettextCatalog = gettextCatalog;
 
     /**
-     * @type {import("ngeo/misc/debounce.js").miscDebounce<function(): void>}
+     * @type {import('ngeo/misc/debounce').miscDebounce<function(): void>}
      * @private
      */
     this.ngeoDebounce_ = ngeoDebounce;
@@ -78,29 +78,29 @@ export class LidarprofileManager {
     this.promise = null;
 
     /**
-     * @type {?import("gmf/lidarprofile/Plot.js").default}
+     * @type {?import('gmf/lidarprofile/Plot').default}
      */
     this.plot = null;
 
     /**
-     * @type {?import("gmf/lidarprofile/Measure.js").default}
+     * @type {?import('gmf/lidarprofile/Measure').default}
      */
     this.measure = null;
 
     /**
-     * @type {?import("gmf/lidarprofile/Config.js").LidarprofileConfigService}
+     * @type {?import('gmf/lidarprofile/Config').LidarprofileConfigService}
      */
     this.config = null;
 
     /**
-     * @type {?import("ol/Map.js").default}
+     * @type {?import('ol/Map').default}
      * @private
      */
     this.map_ = null;
 
     /**
      * The hovered point attributes in D3 profile highlighted on the 2D map
-     * @type {import("ol/Overlay.js").default}
+     * @type {import('ol/Overlay').default}
      */
     this.cartoHighlight = new olOverlay({
       offset: [0, -15],
@@ -125,7 +125,7 @@ export class LidarprofileManager {
     /**
      * The profile footpring represented as a LineString represented
      * with real mapunites stroke width
-     * @type {import("ol/layer/Vector.js").default<import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>>}
+     * @type {import('ol/layer/Vector').default<import('ol/source/Vector').default<import('ol/geom/Geometry').default>>}
      */
     this.lidarBuffer = new olLayerVector({
       source: new olSourceVector({}),
@@ -133,7 +133,7 @@ export class LidarprofileManager {
 
     /**
      * The variable where all points of the profile are stored
-     * @type {import("gmf/lidarprofile/Utils.js").LidarprofilePoints}
+     * @type {import('gmf/lidarprofile/Utils').LidarprofilePoints}
      */
     this.profilePoints = this.getEmptyProfilePoints_();
 
@@ -144,20 +144,20 @@ export class LidarprofileManager {
     this.isPlotSetup_ = false;
 
     /**
-     * @type {?import("ol/geom/LineString.js").default}
+     * @type {?import('ol/geom/LineString').default}
      * @private
      */
     this.line_ = null;
 
     /**
-     * @type {import("gmf/lidarprofile/Utils.js").default}
+     * @type {import('gmf/lidarprofile/Utils').default}
      */
     this.utils = new gmfLidarprofileUtils();
   }
 
   /**
-   * @param {import("gmf/lidarprofile/Config.js").LidarprofileConfigService} config Config
-   * @param {import("ol/Map.js").default} map The map.
+   * @param {import('gmf/lidarprofile/Config').LidarprofileConfigService} config Config
+   * @param {import('ol/Map').default} map The map.
    */
   init(config, map) {
     this.config = config;
@@ -171,7 +171,7 @@ export class LidarprofileManager {
    */
   clearBuffer() {
     if (this.lidarBuffer) {
-      /** @type {olSourceVector<import("ol/geom/LineString.js").default>} */ (
+      /** @type {olSourceVector<import('ol/geom/LineString').default>} */ (
         this.lidarBuffer.getSource()
       ).clear();
     }
@@ -179,7 +179,7 @@ export class LidarprofileManager {
 
   /**
    * Set the line for the profile
-   * @param {?import("ol/geom/LineString.js").default} line that defines the profile
+   * @param {?import('ol/geom/LineString').default} line that defines the profile
    */
   setLine(line) {
     this.line_ = line;
@@ -187,7 +187,7 @@ export class LidarprofileManager {
 
   /**
    * Set the map used by the profile
-   * @param {import("ol/Map.js").default} map The map.
+   * @param {import('ol/Map').default} map The map.
    */
   setMap(map) {
     this.map_ = map;
@@ -197,7 +197,7 @@ export class LidarprofileManager {
   }
 
   /**
-   * @return {import("gmf/lidarprofile/Utils.js").LidarprofilePoints} An empty lidarprofile points object.
+   * @return {import('gmf/lidarprofile/Utils').LidarprofilePoints} An empty lidarprofile points object.
    * @private
    */
   getEmptyProfilePoints_() {
@@ -213,7 +213,7 @@ export class LidarprofileManager {
 
   /**
    * Load profile data (lidar points) by successive Levels Of Details using asynchronous requests
-   * @param {import("ol/coordinate.js").Coordinate[]} clippedLine an array of the clipped line coordinates
+   * @param {import('ol/coordinate').Coordinate[]} clippedLine an array of the clipped line coordinates
    * @param {number} distanceOffset the left side of D3 profile domain at current zoom and pan configuration
    * @param {boolean} resetPlot whether to reset D3 plot or not
    * @param {number} minLOD minimum Level Of Detail
@@ -575,7 +575,7 @@ export class LidarprofileManager {
     );
 
     /**
-     * @type {olSourceVector<import("ol/geom/Geometry.js").default>}
+     * @type {olSourceVector<import('ol/geom/Geometry').default>}
      */
     const source = this.lidarBuffer.getSource();
     source.clear();

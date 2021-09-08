@@ -20,16 +20,16 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import ngeoMiscTime from 'ngeo/misc/Time.js';
+import ngeoMiscTime from 'ngeo/misc/Time';
 
 import 'angular-ui-date';
 import 'ngeo/sass/jquery-ui.scss';
 
 // FIXME: import the locales in the applications
-import 'jquery-ui/ui/i18n/datepicker-fr.js';
-import 'jquery-ui/ui/i18n/datepicker-en-GB.js';
-import 'jquery-ui/ui/i18n/datepicker-de.js';
-import 'jquery-ui/ui/i18n/datepicker-it.js';
+import 'jquery-ui/ui/i18n/datepicker-fr';
+import 'jquery-ui/ui/i18n/datepicker-en-GB';
+import 'jquery-ui/ui/i18n/datepicker-de';
+import 'jquery-ui/ui/i18n/datepicker-it';
 
 /**
  * @type {angular.IModule}
@@ -141,7 +141,7 @@ myModule.directive('ngeoDatePicker', datePickerComponent);
 /**
  * DatePickerController - directive conttroller
  * @param {angular.IScope} $scope Angular scope.
- * @param {import("ngeo/misc/Time.js").Time} ngeoTime time service.
+ * @param {import('ngeo/misc/Time').Time} ngeoTime time service.
  * @param {angular.gettext.gettextCatalog} gettextCatalog service.
  * @class
  * @hidden
@@ -151,12 +151,12 @@ myModule.directive('ngeoDatePicker', datePickerComponent);
  */
 export function Controller($scope, ngeoTime, gettextCatalog) {
   /**
-   * @type {import("ngeo/misc/Time.js").Time}
+   * @type {import('ngeo/misc/Time').Time}
    */
   this.ngeoTime_ = ngeoTime;
 
   /**
-   * @type {?import('ngeo/datasource/OGC.js').TimeProperty}
+   * @type {?import('ngeo/datasource/OGC').TimeProperty}
    */
   this.time = null;
 

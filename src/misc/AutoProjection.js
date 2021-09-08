@@ -20,8 +20,8 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import * as olProj from 'ol/proj.js';
-import * as olExtent from 'ol/extent.js';
+import * as olProj from 'ol/proj';
+import * as olExtent from 'ol/extent';
 
 /**
  * @class
@@ -35,7 +35,7 @@ export function AutoProjectionService() {}
  * Parse a string and return a coordinate if the result is valid. Given string
  * must be a two numbers separated by a space.
  * @param {string} str the string to parse.
- * @return {?import("ol/coordinate.js").Coordinate} A coordinate or null if the format is not valid.
+ * @return {?import('ol/coordinate').Coordinate} A coordinate or null if the format is not valid.
  */
 AutoProjectionService.prototype.stringToCoordinates = function (str) {
   const coords = str.match(/([\d\.']+)[\s,]+([\d\.']+)/);
@@ -54,11 +54,11 @@ AutoProjectionService.prototype.stringToCoordinates = function (str) {
  *     for each code that are not defined in ol projections.
  * @param {string[]} projectionsCodes EPSG codes (e.g. 'EPSG:3857',
  *     'epsg:3857' or '3857').
- * @return {import("ol/proj/Projection.js").default[]} An array of projections.
+ * @return {import('ol/proj/Projection').default[]} An array of projections.
  */
 AutoProjectionService.prototype.getProjectionList = function (projectionsCodes) {
   let code, proj;
-  /** @type {import('ol/proj/Projection.js').default[]} */
+  /** @type {import('ol/proj/Projection').default[]} */
   const projections = [];
   projectionsCodes.forEach((projection) => {
     code = projection.toUpperCase();
@@ -78,13 +78,13 @@ AutoProjectionService.prototype.getProjectionList = function (projectionsCodes) 
 /**
  * It projects the point using the projection array and finds the first one for
  * which it falls inside of the viewProjection extent.
- * @param {import("ol/coordinate.js").Coordinate} coordinates The point to test.
- * @param {import("ol/extent.js").Extent} extent Limits in which coordinates can be valid.
- * @param {import("ol/proj/Projection.js").default} viewProjection Target projection the point.
- * @param {(import("ol/proj/Projection.js").default | string)[]} [opt_projections] optional array of
+ * @param {import('ol/coordinate').Coordinate} coordinates The point to test.
+ * @param {import('ol/extent').Extent} extent Limits in which coordinates can be valid.
+ * @param {import('ol/proj/Projection').default} viewProjection Target projection the point.
+ * @param {(import('ol/proj/Projection').default | string)[]} [opt_projections] optional array of
  *     projections. The point is tested in each projection, in the order of
  *     the array.
- * @return {?import("ol/coordinate.js").Coordinate} A coordinates in the view's projection if it matches
+ * @return {?import('ol/coordinate').Coordinate} A coordinates in the view's projection if it matches
  *     in one of the given projections, or null else.
  */
 AutoProjectionService.prototype.tryProjections = function (
@@ -115,13 +115,13 @@ AutoProjectionService.prototype.tryProjections = function (
 /**
  * Same as AutoProjection.tryProjections but if tryProjections return null,
  * re-call it with coordinates in reverse order.
- * @param {import("ol/coordinate.js").Coordinate} coordinates The point to test.
- * @param {import("ol/extent.js").Extent} extent Limits in which coordinates can be valid.
- * @param {import("ol/proj/Projection.js").default} viewProjection Target projection the point.
- * @param {(import("ol/proj/Projection.js").default | string)[]} [opt_projections] optional array of
+ * @param {import('ol/coordinate').Coordinate} coordinates The point to test.
+ * @param {import('ol/extent').Extent} extent Limits in which coordinates can be valid.
+ * @param {import('ol/proj/Projection').default} viewProjection Target projection the point.
+ * @param {(import('ol/proj/Projection').default | string)[]} [opt_projections] optional array of
  *     projections. The point is tested in each projection, in the order of
  *     the array.
- * @return {?import("ol/coordinate.js").Coordinate} A coordinates in the view's projection if it matches
+ * @return {?import('ol/coordinate').Coordinate} A coordinates in the view's projection if it matches
  *     in one of the given projections, or null else.
  */
 AutoProjectionService.prototype.tryProjectionsWithInversion = function (

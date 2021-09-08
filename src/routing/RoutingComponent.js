@@ -20,26 +20,26 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
-import ngeoMiscFilters from 'ngeo/misc/filters.js';
-import ngeoRoutingNominatimService from 'ngeo/routing/NominatimService.js';
-import ngeoRoutingRoutingService from 'ngeo/routing/RoutingService.js';
-import ngeoRoutingRoutingFeatureComponent from 'ngeo/routing/RoutingFeatureComponent.js';
-import olFormatGeoJSON from 'ol/format/GeoJSON.js';
-import olGeomPoint from 'ol/geom/Point.js';
-import olSourceVector from 'ol/source/Vector.js';
-import olLayerVector from 'ol/layer/Vector.js';
-import olStyleStyle from 'ol/style/Style.js';
-import olStyleFill from 'ol/style/Fill.js';
-import olStyleStroke from 'ol/style/Stroke.js';
-import {toLonLat} from 'ol/proj.js';
-import olFeature from 'ol/Feature.js';
-import olGeomLineString from 'ol/geom/LineString.js';
+import ngeoMiscDebounce from 'ngeo/misc/debounce';
+import ngeoMiscFilters from 'ngeo/misc/filters';
+import ngeoRoutingNominatimService from 'ngeo/routing/NominatimService';
+import ngeoRoutingRoutingService from 'ngeo/routing/RoutingService';
+import ngeoRoutingRoutingFeatureComponent from 'ngeo/routing/RoutingFeatureComponent';
+import olFormatGeoJSON from 'ol/format/GeoJSON';
+import olGeomPoint from 'ol/geom/Point';
+import olSourceVector from 'ol/source/Vector';
+import olLayerVector from 'ol/layer/Vector';
+import olStyleStyle from 'ol/style/Style';
+import olStyleFill from 'ol/style/Fill';
+import olStyleStroke from 'ol/style/Stroke';
+import {toLonLat} from 'ol/proj';
+import olFeature from 'ol/Feature';
+import olGeomLineString from 'ol/geom/LineString';
 import 'ngeo/sass/font.scss';
 
 /**
  * @typedef {Object} RoutingVia
- * @property {olFeature<import("ol/geom/Geometry.js").default>} [feature]
+ * @property {olFeature<import('ol/geom/Geometry').default>} [feature]
  * @property {function(import('ngeo/routing/NominatimService').NominatimSearchResult): void} [onSelect]
  */
 
@@ -97,14 +97,14 @@ function ngeoRoutingTemplateUrl($attrs, ngeoRoutingTemplateUrl) {
 export class Controller {
   /**
    * @param {angular.IScope} $scope Scope.
-   * @param {import("ngeo/routing/RoutingService.js").RoutingService} ngeoRoutingService service for OSRM
+   * @param {import('ngeo/routing/RoutingService').RoutingService} ngeoRoutingService service for OSRM
    *    routing.
-   * @param {import("ngeo/routing/NominatimService.js").NominatimService} ngeoNominatimService service for
+   * @param {import('ngeo/routing/NominatimService').NominatimService} ngeoNominatimService service for
    *    Nominatim.
    * @param {angular.IQService} $q Angular q service
-   * @param {import("ngeo/misc/debounce.js").miscDebounce<function(): void>} ngeoDebounce ngeo Debounce
+   * @param {import('ngeo/misc/debounce').miscDebounce<function(): void>} ngeoDebounce ngeo Debounce
    *    service.
-   * @param {import('ngeo/options.js').ngeoRoutingOptions} ngeoRoutingOptions The options.
+   * @param {import('ngeo/options').ngeoRoutingOptions} ngeoRoutingOptions The options.
    * @ngInject
    */
   constructor($scope, ngeoRoutingService, ngeoNominatimService, $q, ngeoDebounce, ngeoRoutingOptions) {
@@ -115,19 +115,19 @@ export class Controller {
     this.$scope_ = $scope;
 
     /**
-     * @type {import("ngeo/routing/RoutingService.js").RoutingService}
+     * @type {import('ngeo/routing/RoutingService').RoutingService}
      * @private
      */
     this.ngeoRoutingService_ = ngeoRoutingService;
 
     /**
-     * @type {import("ngeo/routing/NominatimService.js").NominatimService}
+     * @type {import('ngeo/routing/NominatimService').NominatimService}
      * @private
      */
     this.ngeoNominatimService_ = ngeoNominatimService;
 
     /**
-     * @type {import('ngeo/options.js').ngeoRoutingOptions}
+     * @type {import('ngeo/options').ngeoRoutingOptions}
      * @private
      */
     this.routingOptions_ = ngeoRoutingOptions;
@@ -140,12 +140,12 @@ export class Controller {
      *              profile: 'routed-car' // used as part of the query
      *            }
      *          ]
-     * @type {import('ngeo/options.js').RoutingProfile[]}
+     * @type {import('ngeo/options').RoutingProfile[]}
      */
     this.routingProfiles = this.routingOptions_.profiles || [];
 
     /**
-     * @type {?import('ngeo/options.js').RoutingProfile}
+     * @type {?import('ngeo/options').RoutingProfile}
      */
     this.selectedRoutingProfile = this.routingProfiles.length > 0 ? this.routingProfiles[0] : null;
 
@@ -158,7 +158,7 @@ export class Controller {
     this.$q_ = $q;
 
     /**
-     * @type {?import("ol/Map.js").default}
+     * @type {?import('ol/Map').default}
      */
     this.map = null;
 
@@ -168,12 +168,12 @@ export class Controller {
     this.errorMessage = '';
 
     /**
-     * @type {?olFeature<import("ol/geom/Geometry.js").default>}
+     * @type {?olFeature<import('ol/geom/Geometry').default>}
      */
     this.startFeature_ = null;
 
     /**
-     * @type {?olFeature<import("ol/geom/Geometry.js").default>}
+     * @type {?olFeature<import('ol/geom/Geometry').default>}
      */
     this.targetFeature_ = null;
 
@@ -196,7 +196,7 @@ export class Controller {
     };
 
     /**
-     * @type {import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>}
+     * @type {import('ol/source/Vector').default<import('ol/geom/Geometry').default>}
      * @private
      */
     this.routeSource_ = new olSourceVector({
@@ -204,7 +204,7 @@ export class Controller {
     });
 
     /**
-     * @type {import("ol/layer/Vector.js").default<import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>>}
+     * @type {import('ol/layer/Vector').default<import('ol/source/Vector').default<import('ol/geom/Geometry').default>>}
      * @private
      */
     this.routeLayer_ = new olLayerVector({
@@ -239,7 +239,7 @@ export class Controller {
     this.regexIsFormattedCoord = /\d+\.\d+\/\d+\.\d+/;
 
     /**
-     * @type {?import("ol/interaction/Draw.js").default}
+     * @type {?import('ol/interaction/Draw').default}
      * @private
      */
     this.draw_ = null;
@@ -278,8 +278,8 @@ export class Controller {
 
   /**
    * Converts feature point into LonLat coordinate.
-   * @param {olFeature<import("ol/geom/Geometry.js").default>} point Feature point to convert
-   * @return {?import("ol/coordinate.js").Coordinate} LonLat coordinate
+   * @param {olFeature<import('ol/geom/Geometry').default>} point Feature point to convert
+   * @return {?import('ol/coordinate').Coordinate} LonLat coordinate
    * @private
    */
   getLonLatFromPoint_(point) {
@@ -312,14 +312,14 @@ export class Controller {
 
   /**
    * @param {import('./RoutingService').Route} route Routes of OSRM response
-   * @return {olFeature<import("ol/geom/Geometry.js").default>[]} parsed route features
+   * @return {olFeature<import('ol/geom/Geometry').default>[]} parsed route features
    * @private
    */
   parseRoute_(route) {
     if (!this.map) {
       return [];
     }
-    /** @type {olFeature<import('ol/geom/Geometry.js').default>[]} */
+    /** @type {olFeature<import('ol/geom/Geometry').default>[]} */
     let parsedRoutes = [];
     const format = new olFormatGeoJSON();
     const formatConfig = {
@@ -328,7 +328,7 @@ export class Controller {
     };
     // if there are useful "legs" data, parse this
     if (route.legs) {
-      /** @type {olFeature<import('ol/geom/Geometry.js').default>[][]} */
+      /** @type {olFeature<import('ol/geom/Geometry').default>[][]} */
       const parsedRoutes_ = route.legs.map((leg) =>
         leg.steps.map(
           (step) =>
@@ -384,23 +384,21 @@ export class Controller {
       this.routeDuration = resp.data.routes[0].duration;
 
       // get first and last coordinate of route
-      const startRoute = /** @type {import("ol/geom/LineString.js").default} */ (
+      const startRoute = /** @type {import('ol/geom/LineString').default} */ (
         features[0].getGeometry()
       ).getCoordinateAt(0);
-      const endRoute = /** @type {import("ol/geom/LineString.js").default} */ (
+      const endRoute = /** @type {import('ol/geom/LineString').default} */ (
         features[features.length - 1].getGeometry()
       ).getCoordinateAt(1);
 
       // build geometries to connect route to start and end point of query
       const startToRoute = [
-        /** @type {import("ol/geom/Point.js").default} */ (this.startFeature_.getGeometry()).getCoordinates(),
+        /** @type {import('ol/geom/Point').default} */ (this.startFeature_.getGeometry()).getCoordinates(),
         startRoute,
       ];
       const routeToEnd = [
         endRoute,
-        /** @type {import("ol/geom/Point.js").default} */ (
-          this.targetFeature_.getGeometry()
-        ).getCoordinates(),
+        /** @type {import('ol/geom/Point').default} */ (this.targetFeature_.getGeometry()).getCoordinates(),
       ];
       const routeConnections = [
         new olFeature(new olGeomLineString(startToRoute)),

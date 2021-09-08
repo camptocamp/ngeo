@@ -20,17 +20,17 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import ngeoDatasourceOGC from 'ngeo/datasource/OGC.js';
-import ngeoFilterRuleHelper from 'ngeo/filter/RuleHelper.js';
-import ngeoMiscWMSTime from 'ngeo/misc/WMSTime.js';
-import * as olFormatFilter from 'ol/format/filter.js';
-import olFormatWFS from 'ol/format/WFS.js';
-import ngeoWFSDescribeFeatureType from 'ngeo/WFSDescribeFeatureType.js';
-import olFormatWMSCapabilities from 'ol/format/WMSCapabilities.js';
-import olFormatWMTSCapabilities from 'ol/format/WMTSCapabilities.js';
-import {appendParams as olUriAppendParams} from 'ol/uri.js';
-import * as olExtent from 'ol/extent.js';
-import olSourceImageWMS from 'ol/source/ImageWMS.js';
+import ngeoDatasourceOGC from 'ngeo/datasource/OGC';
+import ngeoFilterRuleHelper from 'ngeo/filter/RuleHelper';
+import ngeoMiscWMSTime from 'ngeo/misc/WMSTime';
+import * as olFormatFilter from 'ol/format/filter';
+import olFormatWFS from 'ol/format/WFS';
+import ngeoWFSDescribeFeatureType from 'ngeo/WFSDescribeFeatureType';
+import olFormatWMSCapabilities from 'ol/format/WMSCapabilities';
+import olFormatWMTSCapabilities from 'ol/format/WMTSCapabilities';
+import {appendParams as olUriAppendParams} from 'ol/uri';
+import * as olExtent from 'ol/extent';
+import olSourceImageWMS from 'ol/source/ImageWMS';
 
 /**
  * A hash that contains 2 lists of queryable data sources: `wfs` and `wms`.
@@ -45,7 +45,7 @@ import olSourceImageWMS from 'ol/source/ImageWMS.js';
 
 /**
  * @typedef {Object} QuerentResultItem
- * @property {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>[]} features
+ * @property {import('ol/Feature').default<import('ol/geom/Geometry').default>[]} features
  * @property {number} limit
  * @property {boolean} [tooManyFeatures]
  * @property {number} [totalFeatureCount]
@@ -68,20 +68,20 @@ import olSourceImageWMS from 'ol/source/ImageWMS.js';
  *    - `replace`: newly queried features are used as result
  *    - `add`:     newly queried features are added to the existing ones
  *    - `remove`:  newly queried features are removed from the existing ones
- * @property {import("ol/coordinate.js").Coordinate} [coordinate] The coordinate to issue the requests with,
+ * @property {import('ol/coordinate').Coordinate} [coordinate] The coordinate to issue the requests with,
  *    which can end up with either WMS or WFS requests.
- * @property {import('ngeo/datasource/DataSource.js').default[]} [dataSources] list of data sources to
+ * @property {import('ngeo/datasource/DataSource').default[]} [dataSources] list of data sources to
  *    query. Only those that meet the requirements will actually be queried. The querent service requires
  *    either the `dataSources` or `queryableDataSources` property to be set.
- * @property {import("ol/extent.js").Extent} [extent] The extent to issue the requests with, which can end up
+ * @property {import('ol/extent').Extent} [extent] The extent to issue the requests with, which can end up
  *    with WFS requests only.
- * @property {import("ol/format/filter/Filter.js").default} [filter] A filter to additionally use with the
+ * @property {import('ol/format/filter/Filter').default} [filter] A filter to additionally use with the
  *    query. Only used by WFS requests.
  *    If a filter is defined, then it is used instead of the data source's filter rules.
- * @property {import("ol/geom/Geometry.js").default} [geometry] The geometry to use as filter for the
+ * @property {import('ol/geom/Geometry').default} [geometry] The geometry to use as filter for the
  *    requests, which can end up with WFS requests only.
  * @property {number} [limit] The maximum number of features to get per request.
- * @property {import("ol/Map.js").default} map The ol3 map object. Used to fill some parameters of the
+ * @property {import('ol/Map').default} map The ol3 map object. Used to fill some parameters of the
  *    queries, such as 'srs' and filter the queryable layers within the data sources.
  * @property {QueryableDataSources} [queryableDataSources] A hash of queryable data sources, which must meet
  *    all requirements. The querent service requires either the `dataSources` or `queryableDataSources`
@@ -111,8 +111,8 @@ export class Querent {
    *
    * @param {angular.IHttpService} $http Angular $http service.
    * @param {angular.IQService} $q The Angular $q service.
-   * @param {import("ngeo/filter/RuleHelper.js").RuleHelper} ngeoRuleHelper Ngeo rule helper service.
-   * @param {import("ngeo/misc/WMSTime.js").WMSTime} ngeoWMSTime wms time service.
+   * @param {import('ngeo/filter/RuleHelper').RuleHelper} ngeoRuleHelper Ngeo rule helper service.
+   * @param {import('ngeo/misc/WMSTime').WMSTime} ngeoWMSTime wms time service.
    * @ngdoc service
    * @ngname ngeoQuerent
    * @ngInject
@@ -133,13 +133,13 @@ export class Querent {
     this.q_ = $q;
 
     /**
-     * @type {import("ngeo/filter/RuleHelper.js").RuleHelper}
+     * @type {import('ngeo/filter/RuleHelper').RuleHelper}
      * @private
      */
     this.ngeoRuleHelper_ = ngeoRuleHelper;
 
     /**
-     * @type {import("ngeo/misc/WMSTime.js").WMSTime}
+     * @type {import('ngeo/misc/WMSTime').WMSTime}
      * @private
      */
     this.ngeoWMSTime_ = ngeoWMSTime;
@@ -222,8 +222,8 @@ export class Querent {
    *
    * The map view resolution determines if the inner ogc layers are in range.
    *
-   * @param {import('ngeo/datasource/DataSource.js').default[]} dataSources Data sources
-   * @param {import("ol/Map.js").default} map Map.
+   * @param {import('ngeo/datasource/DataSource').default[]} dataSources Data sources
+   * @param {import('ol/Map').default} map Map.
    * @return {QueryableDataSources} Queryable data sources.
    */
   getQueryableDataSources(dataSources, map) {
@@ -423,7 +423,7 @@ export class Querent {
     for (const dataSource of dataSources) {
       const dataSourceId = dataSource.id;
       datasourceNames.push(dataSource.name);
-      /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>[]} */
+      /** @type {import('ol/Feature').default<import('ol/geom/Geometry').default>[]} */
       const features =
         dataSource instanceof ngeoDatasourceOGC
           ? this.readAndTypeFeatures_(dataSource, response.data, wfs)
@@ -465,7 +465,7 @@ export class Querent {
       const dataSourceId = dataSource.id;
 
       if (typeof response === 'number') {
-        /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>[]} */
+        /** @type {import('ol/Feature').default<import('ol/geom/Geometry').default>[]} */
         const features = [];
         const tooManyFeatures = true;
         const totalFeatureCount = response;
@@ -499,13 +499,13 @@ export class Querent {
    * @param {ngeoDatasourceOGC} dataSource used to read the features.
    * @param {Document|Element|string} data the response data.
    * @param {boolean} wfs Whether the query was WFS or WMS.
-   * @return {import('ol/Feature.js').default<import('ol/geom/Geometry.js').default>[]} returned features with a type in each features.
+   * @return {import('ol/Feature').default<import('ol/geom/Geometry').default>[]} returned features with a type in each features.
    * @private
    */
   readAndTypeFeatures_(dataSource, data, wfs) {
-    /** @type {import('ol/Feature.js').default<import('ol/geom/Geometry.js').default>[]} */
+    /** @type {import('ol/Feature').default<import('ol/geom/Geometry').default>[]} */
     const features = [];
-    /** @type {import('ol/Feature.js').default<import('ol/geom/Geometry.js').default>[]} */
+    /** @type {import('ol/Feature').default<import('ol/geom/Geometry').default>[]} */
     let readFeatures;
     // Copy the types to be able to set it AND iterate on it.
     const featureTypes = this.getSetOlFormatTypes_(dataSource, wfs).slice();
@@ -516,18 +516,16 @@ export class Querent {
         if (!dataSource.wfsFormat) {
           throw new Error('Missing wfsFormat');
         }
-        readFeatures =
-          /** @type {import('ol/Feature.js').default<import('ol/geom/Geometry.js').default>[]} */ (
-            dataSource.wfsFormat.readFeatures(data)
-          );
+        readFeatures = /** @type {import('ol/Feature').default<import('ol/geom/Geometry').default>[]} */ (
+          dataSource.wfsFormat.readFeatures(data)
+        );
       } else {
         if (!dataSource.wmsFormat) {
           throw new Error('Missing wmsFormat');
         }
-        readFeatures =
-          /** @type {import('ol/Feature.js').default<import('ol/geom/Geometry.js').default>[]} */ (
-            dataSource.wmsFormat.readFeatures(data)
-          );
+        readFeatures = /** @type {import('ol/Feature').default<import('ol/geom/Geometry').default>[]} */ (
+          dataSource.wmsFormat.readFeatures(data)
+        );
       }
       if (readFeatures.length > 0) {
         readFeatures.forEach((feature) => {
@@ -604,7 +602,7 @@ export class Querent {
     }
 
     // (1) Extent (bbox), which is optional, i.e. its value can stay undefined
-    /** @type {import("ol/extent.js").Extent} */
+    /** @type {import('ol/extent').Extent} */
     let bbox;
     const coordinate = options.coordinate;
     if (coordinate) {
@@ -620,11 +618,11 @@ export class Querent {
     const xmlSerializer = new XMLSerializer();
     let hasAtLeastOneQueryIconPosition = false;
     for (const dataSources of combinedDataSources) {
-      /** @type {?import('ol/format/WFS.js').WriteGetFeatureOptions} */
+      /** @type {?import('ol/format/WFS').WriteGetFeatureOptions} */
       let getFeatureCommonOptions = null;
       /** @type {string[]} */
       let featureTypesNames = [];
-      /** @type {import('ol/format/WFS.js').FeatureType[]} */
+      /** @type {import('ol/format/WFS').FeatureType[]} */
       const featureTypesObjects = [];
       /** @type {?string} */
       let url = null;
@@ -713,7 +711,7 @@ export class Querent {
         // (e) For coordinate (click) query, and if at least one dataSource has a
         // queryIconPosition, define featureTypes as Object to use a custom bbox per layer.
         if (coordinate) {
-          /** @type {import("ol/extent.js").Extent} */
+          /** @type {import('ol/extent').Extent} */
           let queryIconPosition;
           if (dataSource.queryIconPosition) {
             hasAtLeastOneQueryIconPosition = true;
@@ -768,7 +766,7 @@ export class Querent {
 
       // (4.1) Count, if required
       /** @type {angular.IPromise<number|void>} */
-      /** @type {import('ol/format/WFS.js').WriteGetFeatureOptions} */
+      /** @type {import('ol/format/WFS').WriteGetFeatureOptions} */
       const getCountOptions = Object.assign(
         {
           resultType: 'hits',
@@ -836,8 +834,8 @@ export class Querent {
    * The buffer is built with the flipped (horizontally and vertically) values of the queryIconPosition.
    * @param {!number[]} queryIconPosition The values in px to buffer the bbox (1 to 4 values, css system).
    * @param {!number} resolution The map view resolution to define the px size correctly.
-   * @param {!import("ol/coordinate.js").Coordinate} coordinate The bbox to buffer.
-   * @return {!import("ol/extent.js").Extent} The new bbox or null if the queryIconPosition param
+   * @param {!import('ol/coordinate').Coordinate} coordinate The bbox to buffer.
+   * @return {!import('ol/extent').Extent} The new bbox or null if the queryIconPosition param
    * is not valid.
    * @private
    */
@@ -952,7 +950,7 @@ export class Querent {
           console.assert(dataSources.length === 1);
           params.TIME = this.ngeoWMSTime_.formatWMSTimeParam(
             dataSource.timeProperty,
-            /** @type {import('ngeo/datasource/OGC.js').TimeRange} */ (dataSource.timeRangeValue)
+            /** @type {import('ngeo/datasource/OGC').TimeRange} */ (dataSource.timeRangeValue)
           );
         }
       }
@@ -1090,7 +1088,7 @@ export class Querent {
    * - queryable (using the native getter)
    * - have at least one OGC layer in range of current map view resolution.
    *
-   * @param {import('ngeo/datasource/DataSource.js').default} ds Data source
+   * @param {import('ngeo/datasource/DataSource').default} ds Data source
    * @param {number} res Resolution.
    * @return {boolean} Whether the data source is queryable
    * @private
@@ -1112,7 +1110,7 @@ export class Querent {
   /**
    * Make sure that feature ids are unique, because the same features might
    * be returned for different layers.
-   * @param {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>[]} features Features
+   * @param {import('ol/Feature').default<import('ol/geom/Geometry').default>[]} features Features
    * @param {number} dataSourceId Data source id.
    * @private
    */
