@@ -31,9 +31,9 @@ class ngeoAuthComponent extends LitElement {
   @property({type: String}) loginInfoMessage = '';
   @property({type: String}) otpImage = '';
   @property({type: Object}) passwordValidator: PasswordValidator = null;
-  @property({type: String}) changingPasswordUsername = '';
   @property({type: Object}) gmfUser: User = null;
-  @property({type: Array}) subscriptions_: Subscription[] = [];
+  @property({state: true, type: String}) private changingPasswordUsername_ = '';
+  @property({state: true, type: Array}) private subscriptions_: Subscription[] = [];
 
   connectedCallback() {
     super.connectedCallback();
@@ -257,7 +257,7 @@ class ngeoAuthComponent extends LitElement {
     if (this.gmfUser.is_password_changed !== false) {
       return;
     }
-    this.changingPasswordUsername = this.gmfUser.username;
+    this.changingPasswordUsername_ = this.gmfUser.username;
     this.changingPassword = true;
     this.userMustChangeItsPassword = true;
   }
@@ -309,7 +309,7 @@ class ngeoAuthComponent extends LitElement {
         // Send request with current credentials, which may fail if the old password given is incorrect.
         let username;
         if (this.userMustChangeItsPassword) {
-          username = this.changingPasswordUsername;
+          username = this.changingPasswordUsername_;
         } else {
           username = this.gmfUser.username;
         }
