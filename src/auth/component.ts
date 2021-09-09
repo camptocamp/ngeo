@@ -73,7 +73,7 @@ class ngeoAuthComponent extends LitElement {
 
               ${!this.changingPassword
                 ? html`
-                    <form name="logoutForm" role="form" @submit=${this.logout}>
+                    <form name="logoutForm" role="form" @submit=${(evt: Event) => this.logout(evt)}>
                       <div class="form-group">
                         <input type="submit" class="form-control btn prime" value="Logout" />
                       </div>
@@ -268,6 +268,8 @@ class ngeoAuthComponent extends LitElement {
    * Calls the authentication service changePassword method.
    */
   changePassword(evt: Event) {
+    evt.preventDefault();
+
     const errors = [];
     const form = evt.target as HTMLFormElement;
     const oldPwd = form.oldPwdVal.value;
@@ -338,9 +340,9 @@ class ngeoAuthComponent extends LitElement {
    * @param evt Event from the form submit action.
    */
   login(evt: Event) {
-    this.manualLoginLogout_();
-
     evt.preventDefault();
+
+    this.manualLoginLogout_();
 
     this.isLoading = true;
     const errors = [];
@@ -376,7 +378,9 @@ class ngeoAuthComponent extends LitElement {
   /**
    * Calls the authentication service logout method.
    */
-  logout() {
+  logout(evt: Event) {
+    evt.preventDefault();
+
     this.manualLoginLogout_();
 
     this.isLoading = true;
