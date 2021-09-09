@@ -377,6 +377,7 @@ class ngeoAuthComponent extends LitElement {
 
   /**
    * Calls the authentication service logout method.
+   * @param evt Event from the form submit action.
    */
   logout(evt: Event) {
     evt.preventDefault();
@@ -407,6 +408,7 @@ class ngeoAuthComponent extends LitElement {
 
   /**
    * Calls the authentication service resetPassword method.
+   * @param evt Event from the form submit action.
    */
   resetPassword(evt: Event) {
     this.isLoading = true;
