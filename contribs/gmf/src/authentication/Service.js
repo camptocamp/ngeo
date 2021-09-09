@@ -22,7 +22,7 @@
 import angular from 'angular';
 import * as Sentry from '@sentry/browser';
 
-import user, {UserState} from 'ngeo/store/user.ts'
+import user, {UserState} from 'ngeo/store/user.ts';
 
 /**
  * Availables functionalities.
@@ -146,7 +146,7 @@ export class AuthenticationService {
     user.getProperties().subscribe({
       next: (properties) => {
         this.user_ = properties;
-      }
+      },
     });
 
     /**
