@@ -117,7 +117,7 @@ export class LidarprofileConfigService {
 
     /**
      * The client configuration.
-     * @type {import("gmf/lidarprofile/Utils.js").LidarprofileClientConfig}
+     * @type {import('gmf/lidarprofile/Utils').LidarprofileClientConfig}
      */
     this.clientConfig = {
       autoWidth: true,
@@ -134,7 +134,7 @@ export class LidarprofileConfigService {
 
     /**
      * The configuration from the LIDAR server.
-     * @type {?import("gmf/lidarprofile/Config.js").LidarprofileServerConfig}
+     * @type {?import('gmf/lidarprofile/Config').LidarprofileServerConfig}
      */
     this.serverConfig = null;
   }

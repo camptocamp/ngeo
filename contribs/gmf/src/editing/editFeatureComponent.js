@@ -20,56 +20,56 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import gmfEditingEditFeature from 'gmf/editing/EditFeature.js';
+import gmfEditingEditFeature from 'gmf/editing/EditFeature';
 
-import gmfEditingSnapping from 'gmf/editing/Snapping.js';
+import gmfEditingSnapping from 'gmf/editing/Snapping';
 
-import gmfEditingXSDAttributes from 'gmf/editing/XSDAttributes.js';
-import {getLayer as syncLayertreeMapGetLayer} from 'gmf/layertree/SyncLayertreeMap.js';
-import DateFormatter from 'ngeo/misc/php-date-formatter.js';
-import 'jquery-datetimepicker/jquery.datetimepicker.js';
+import gmfEditingXSDAttributes from 'gmf/editing/XSDAttributes';
+import {getLayer as syncLayertreeMapGetLayer} from 'gmf/layertree/SyncLayertreeMap';
+import DateFormatter from 'ngeo/misc/php-date-formatter';
+import 'jquery-datetimepicker/jquery.datetimepicker';
 import 'jquery-datetimepicker/jquery.datetimepicker.css';
 
-import ngeoEditingAttributesComponent from 'ngeo/editing/attributesComponent.js';
+import ngeoEditingAttributesComponent from 'ngeo/editing/attributesComponent';
 
-import ngeoEditingCreatefeatureComponent from 'ngeo/editing/createfeatureComponent.js';
+import ngeoEditingCreatefeatureComponent from 'ngeo/editing/createfeatureComponent';
 
-import {deleteCondition} from 'ngeo/utils.js';
-import {getGeometryAttribute} from 'ngeo/format/XSDAttribute.js';
-import ngeoGeometryType from 'ngeo/GeometryType.js';
-import ngeoInteractionRotate from 'ngeo/interaction/Rotate.js';
-import ngeoInteractionTranslate from 'ngeo/interaction/Translate.js';
-import ngeoMapLayerHelper from 'ngeo/map/LayerHelper.js';
-import ngeoMenu from 'ngeo/Menu.js';
-import ngeoMenuMulti from 'gmf/menu/MenuMultiFeature.js';
+import {deleteCondition} from 'ngeo/utils';
+import {getGeometryAttribute} from 'ngeo/format/XSDAttribute';
+import ngeoGeometryType from 'ngeo/GeometryType';
+import ngeoInteractionRotate from 'ngeo/interaction/Rotate';
+import ngeoInteractionTranslate from 'ngeo/interaction/Translate';
+import ngeoMapLayerHelper from 'ngeo/map/LayerHelper';
+import ngeoMenu from 'ngeo/Menu';
+import ngeoMenuMulti from 'gmf/menu/MenuMultiFeature';
 
-import ngeoMessageModalComponent from 'ngeo/message/modalComponent.js';
+import ngeoMessageModalComponent from 'ngeo/message/modalComponent';
 
-import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent.js';
+import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent';
 
-import {interactionDecoration as ngeoMiscDecorateInteraction} from 'ngeo/misc/decorate.js';
-import ngeoMiscEventHelper from 'ngeo/misc/EventHelper.js';
-import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
-import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
+import {interactionDecoration as ngeoMiscDecorateInteraction} from 'ngeo/misc/decorate';
+import ngeoMiscEventHelper from 'ngeo/misc/EventHelper';
+import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper';
+import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate';
 
-import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr.js';
+import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr';
 
-import {getUid as olUtilGetUid} from 'ol/util.js';
-import olCollection from 'ol/Collection.js';
-import {listen, unlistenByKey} from 'ol/events.js';
-import * as olExtent from 'ol/extent.js';
-import olFeature from 'ol/Feature.js';
-import olFormatGeoJSON from 'ol/format/GeoJSON.js';
-import olInteractionModify from 'ol/interaction/Modify.js';
-import olLayerImage from 'ol/layer/Image.js';
-import olLayerTile from 'ol/layer/Tile.js';
-import olStyleFill from 'ol/style/Fill.js';
-import olStyleStyle from 'ol/style/Style.js';
-import olStyleText from 'ol/style/Text.js';
-import MapBrowserEvent from 'ol/MapBrowserEvent.js';
-import {CollectionEvent} from 'ol/Collection.js';
-import VectorSource from 'ol/source/Vector.js';
-import olLayerVector from 'ol/layer/Vector.js';
+import {getUid as olUtilGetUid} from 'ol/util';
+import olCollection from 'ol/Collection';
+import {listen, unlistenByKey} from 'ol/events';
+import * as olExtent from 'ol/extent';
+import olFeature from 'ol/Feature';
+import olFormatGeoJSON from 'ol/format/GeoJSON';
+import olInteractionModify from 'ol/interaction/Modify';
+import olLayerImage from 'ol/layer/Image';
+import olLayerTile from 'ol/layer/Tile';
+import olStyleFill from 'ol/style/Fill';
+import olStyleStyle from 'ol/style/Style';
+import olStyleText from 'ol/style/Text';
+import MapBrowserEvent from 'ol/MapBrowserEvent';
+import {CollectionEvent} from 'ol/Collection';
+import VectorSource from 'ol/source/Vector';
+import olLayerVector from 'ol/layer/Vector';
 import {buildStyle} from 'ngeo/options';
 
 /**
@@ -173,14 +173,14 @@ myModule.run(
  * @htmlAttribute {boolean} gmf-editfeature-dirty Flag that is toggled as soon
  *     as the feature changes, i.e. if any of its properties change, which
  *     includes the geometry.
- * @htmlAttribute {import("ngeo/layertree/Controller.js").LayertreeController} gmf-editfeature-editabletreectrl
+ * @htmlAttribute {import('ngeo/layertree/Controller').LayertreeController} gmf-editfeature-editabletreectrl
  *     A reference to the editable Layertree controller, which contains a
  *     a reference to the node and WMS layer.
- * @htmlAttribute {import("ol/Map.js").default} gmf-editfeature-map The map.
+ * @htmlAttribute {import('ol/Map').default} gmf-editfeature-map The map.
  * @htmlAttribute {string} gmf-editfeature-state The state property shared
  *     with the `gmf-editfeatureselector` directive. For more info, see in
  *     that directive.
- * @htmlAttribute {import("ol/layer/Vector.js").default<import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>>} gmf-editfeature-vector The vector layer in
+ * @htmlAttribute {import('ol/layer/Vector').default<import('ol/source/Vector').default<import('ol/geom/Geometry').default>>} gmf-editfeature-vector The vector layer in
  *     which to draw the vector features.
  * @return {angular.IDirective} The directive specs.
  * @ngdoc directive
@@ -209,16 +209,16 @@ myModule.directive('gmfEditfeature', editingEditFeatureComponent);
  * @param {angular.IScope} $scope Angular scope.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
- * @param {import("gmf/editing/EditFeature.js").EditingEditFeature} gmfEditFeature Gmf edit feature service.
- * @param {import("gmf/editing/Snapping.js").EditingSnappingService} gmfSnapping The gmf snapping service.
- * @param {import("gmf/editing/XSDAttributes.js").EditingXSDAttributeService} gmfXSDAttributes The gmf
+ * @param {import('gmf/editing/EditFeature').EditingEditFeature} gmfEditFeature Gmf edit feature service.
+ * @param {import('gmf/editing/Snapping').EditingSnappingService} gmfSnapping The gmf snapping service.
+ * @param {import('gmf/editing/XSDAttributes').EditingXSDAttributeService} gmfXSDAttributes The gmf
  *    XSDAttributes service.
- * @param {import("ngeo/misc/EventHelper.js").EventHelper} ngeoEventHelper Ngeo Event Helper.
- * @param {import("ngeo/misc/FeatureHelper.js").FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
- * @param {import("ngeo/map/LayerHelper.js").LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
- * @param {import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate
+ * @param {import('ngeo/misc/EventHelper').EventHelper} ngeoEventHelper Ngeo Event Helper.
+ * @param {import('ngeo/misc/FeatureHelper').FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
+ * @param {import('ngeo/map/LayerHelper').LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
+ * @param {import('ngeo/misc/ToolActivateMgr').ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate
  *    manager service.
- * @param {import('gmf/options.js').gmfEditFeatureOptions} gmfEditFeatureOptions The options.
+ * @param {import('gmf/options').gmfEditFeatureOptions} gmfEditFeatureOptions The options.
  * @class
  * @hidden
  * @ngInject
@@ -250,12 +250,12 @@ export function Controller(
   this.dirty = false;
 
   /**
-   * @type {?import("ngeo/layertree/Controller.js").LayertreeController}
+   * @type {?import('ngeo/layertree/Controller').LayertreeController}
    */
   this.editableTreeCtrl = null;
 
   /**
-   * @type {?import("ol/Map.js").default}
+   * @type {?import('ol/Map').default}
    */
   this.map = null;
 
@@ -272,7 +272,7 @@ export function Controller(
   this.tolerance = gmfEditFeatureOptions.tolerance ? gmfEditFeatureOptions.tolerance : 0;
 
   /**
-   * @type {?import("ol/layer/Vector.js").default<import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>>}
+   * @type {?import('ol/layer/Vector').default<import('ol/source/Vector').default<import('ol/geom/Geometry').default>>}
    */
   this.vectorLayer = null;
 
@@ -310,49 +310,49 @@ export function Controller(
   this.gettextCatalog_ = gettextCatalog;
 
   /**
-   * @type {import("gmf/editing/EditFeature.js").EditingEditFeature}
+   * @type {import('gmf/editing/EditFeature').EditingEditFeature}
    */
   this.gmfEditFeature_ = gmfEditFeature;
 
   /**
-   * @type {import("gmf/editing/Snapping.js").EditingSnappingService}
+   * @type {import('gmf/editing/Snapping').EditingSnappingService}
    */
   this.gmfSnapping_ = gmfSnapping;
 
   /**
-   * @type {import("gmf/editing/XSDAttributes.js").EditingXSDAttributeService}
+   * @type {import('gmf/editing/XSDAttributes').EditingXSDAttributeService}
    */
   this.gmfXSDAttributes_ = gmfXSDAttributes;
 
   /**
-   * @type {import("ngeo/misc/EventHelper.js").EventHelper}
+   * @type {import('ngeo/misc/EventHelper').EventHelper}
    */
   this.ngeoEventHelper_ = ngeoEventHelper;
 
   /**
-   * @type {import("ngeo/misc/FeatureHelper.js").FeatureHelper}
+   * @type {import('ngeo/misc/FeatureHelper').FeatureHelper}
    */
   this.ngeoFeatureHelper_ = ngeoFeatureHelper;
 
   /**
-   * @type {import("ngeo/map/LayerHelper.js").LayerHelper}
+   * @type {import('ngeo/map/LayerHelper').LayerHelper}
    */
   this.ngeoLayerHelper_ = ngeoLayerHelper;
 
   /**
-   * @type {import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr}
+   * @type {import('ngeo/misc/ToolActivateMgr').ToolActivateMgr}
    */
   this.ngeoToolActivateMgr_ = ngeoToolActivateMgr;
 
   // === Private properties ===
 
   /**
-   * @type {?import('gmf/themes.js').GmfLayer}
+   * @type {?import('gmf/themes').GmfLayer}
    */
   this.editableNode_ = null;
 
   /**
-   * @type {?import("ol/layer/Image.js").default<import("ol/source/Image.js").default>|import("ol/layer/Tile.js").default<import("ol/source/Tile.js").default>}
+   * @type {?import('ol/layer/Image').default<import('ol/source/Image').default>|import('ol/layer/Tile').default<import('ol/source/Tile').default>}
    */
   this.editableWMSLayer_ = null;
 
@@ -387,7 +387,7 @@ export function Controller(
   this.createActive = false;
 
   /**
-   * @type {import("ngeo/misc/ToolActivate.js").default}
+   * @type {import('ngeo/misc/ToolActivate').default}
    */
   this.createToolActivate = new ngeoMiscToolActivate(this, 'createActive');
 
@@ -397,12 +397,12 @@ export function Controller(
   this.mapSelectActive = true;
 
   /**
-   * @type {import("ngeo/misc/ToolActivate.js").default}
+   * @type {import('ngeo/misc/ToolActivate').default}
    */
   this.mapSelectToolActivate = new ngeoMiscToolActivate(this, 'mapSelectActive');
 
   /**
-   * @type {?olFeature<import("ol/geom/Geometry.js").default>}
+   * @type {?olFeature<import('ol/geom/Geometry').default>}
    */
   this.feature = null;
 
@@ -414,37 +414,37 @@ export function Controller(
   this.featureId = undefined;
 
   /**
-   * @type {?import("ol/Collection.js").default<olFeature<import("ol/geom/Geometry.js").default>>}
+   * @type {?import('ol/Collection').default<olFeature<import('ol/geom/Geometry').default>>}
    */
   this.features = null;
 
   /**
-   * @type {?import("ol/layer/Vector.js").default<import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>>}
+   * @type {?import('ol/layer/Vector').default<import('ol/source/Vector').default<import('ol/geom/Geometry').default>>}
    */
   this.highlightVectorLayer_ = null;
 
   /**
-   * @type {?import("ol/Collection.js").default<olFeature<import("ol/geom/Geometry.js").default>>}
+   * @type {?import('ol/Collection').default<olFeature<import('ol/geom/Geometry').default>>}
    */
   this.highlightedFeatures_ = null;
 
   /**
-   * @type {import("ol/Collection.js").default<import('ol/interaction/Interaction.js').default>}
+   * @type {import('ol/Collection').default<import('ol/interaction/Interaction').default>}
    */
   this.interactions_ = new olCollection();
 
   /**
-   * @type {?import("ol/interaction/Modify.js").default}
+   * @type {?import('ol/interaction/Modify').default}
    */
   this.modify_ = null;
 
   /**
-   * @type {?import("ngeo/misc/ToolActivate.js").default}
+   * @type {?import('ngeo/misc/ToolActivate').default}
    */
   this.modifyToolActivate = null;
 
   /**
-   * @type {import("ngeo/Menu.js").default}
+   * @type {import('ngeo/Menu').default}
    */
   this.menu_ = new ngeoMenu({
     actions: [
@@ -462,7 +462,7 @@ export function Controller(
   });
 
   /**
-   * @type {import("ngeo/Menu.js").default}
+   * @type {import('ngeo/Menu').default}
    */
   this.menuVertex_ = new ngeoMenu({
     actions: [
@@ -475,52 +475,52 @@ export function Controller(
   });
 
   /**
-   * @type {import("gmf/menu/MenuMultiFeature.js").default}
+   * @type {import('gmf/menu/MenuMultiFeature').default}
    */
   this.menuMultiple_ = null;
 
   /**
-   * @type {?import("ngeo/interaction/Translate.js").default}
+   * @type {?import('ngeo/interaction/Translate').default}
    */
   this.translate_ = null;
 
   /**
-   * @type {?import("ngeo/interaction/Rotate.js").default}
+   * @type {?import('ngeo/interaction/Rotate').default}
    */
   this.rotate_ = null;
 
   /**
-   * @type {?import("ngeo/misc/ToolActivate.js").default}
+   * @type {?import('ngeo/misc/ToolActivate').default}
    */
   this.rotateToolActivate = null;
 
   /**
-   * @type {?import("ngeo/misc/ToolActivate.js").default}
+   * @type {?import('ngeo/misc/ToolActivate').default}
    */
   this.translateToolActivate = null;
 
   /**
-   * @type {import("ol/events.js").EventsKey[]}
+   * @type {import('ol/events').EventsKey[]}
    */
   this.listenerKeys_ = [];
 
   /**
-   * @type {import("ol/events.js").EventsKey[]}
+   * @type {import('ol/events').EventsKey[]}
    */
   this.geomListenerKeys_ = [];
 
   /**
-   * @type {import("ol/events.js").EventsKey[]}
+   * @type {import('ol/events').EventsKey[]}
    */
   this.mapListenerKeys_ = [];
 
   /**
-   * @type {import("ol/events.js").EventsKey[]}
+   * @type {import('ol/events').EventsKey[]}
    */
   this.menuMultipleListenerKeys_ = [];
 
   /**
-   * @type {?import('ngeo/format/Attribute.js').Attribute[]}
+   * @type {?import('ngeo/format/Attribute').Attribute[]}
    */
   this.attributes = null;
 
@@ -550,7 +550,7 @@ export function Controller(
   this.vertexInfo_ = null;
 
   /**
-   * @type {import('gmf/options.js').gmfEditFeatureOptions}
+   * @type {import('gmf/options').gmfEditFeatureOptions}
    */
   this.options_ = gmfEditFeatureOptions;
 }
@@ -564,7 +564,7 @@ Controller.prototype.$onInit = function () {
   }
 
   /**
-   * @type {import("ol/layer/Vector.js").default<import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>>}
+   * @type {import('ol/layer/Vector').default<import('ol/source/Vector').default<import('ol/geom/Geometry').default>>}
    */
   this.highlightVectorLayer_ = new olLayerVector({
     source: new VectorSource({
@@ -588,7 +588,7 @@ Controller.prototype.$onInit = function () {
   if (!this.editableTreeCtrl) {
     throw new Error('Missing editableTreeCtrl');
   }
-  this.editableNode_ = /** @type {import('gmf/themes.js').GmfLayer} */ (this.editableTreeCtrl.node);
+  this.editableNode_ = /** @type {import('gmf/themes').GmfLayer} */ (this.editableTreeCtrl.node);
   if (!this.vectorLayer) {
     throw new Error('Missing vectorLayer');
   }
@@ -912,7 +912,7 @@ Controller.prototype.handleEditFeature_ = function (resp) {
 };
 
 /**
- * @param {import('ngeo/format/Attribute.js').Attribute[]} attributes Attributes.
+ * @param {import('ngeo/format/Attribute').Attribute[]} attributes Attributes.
  */
 Controller.prototype.setAttributes_ = function (attributes) {
   // Set attributes
@@ -938,7 +938,7 @@ Controller.prototype.setAttributes_ = function (attributes) {
 };
 
 /**
- * @param {Event|import('ol/events/Event.js').default} evt Event.
+ * @param {Event|import('ol/events/Event').default} evt Event.
  */
 Controller.prototype.handleFeatureAdd_ = function (evt) {
   if (evt instanceof CollectionEvent) {
@@ -1101,7 +1101,7 @@ Controller.prototype.handleMapSelectActiveChange_ = function (active) {
  *     modifications or with modifications that were canceled, launch a query
  *     to fetch the features at the clicked location.
  *
- * @param {Event|import('ol/events/Event.js').default} evt Event.
+ * @param {Event|import('ol/events/Event').default} evt Event.
  */
 Controller.prototype.handleMapClick_ = function (evt) {
   if (evt instanceof MapBrowserEvent) {
@@ -1172,7 +1172,7 @@ Controller.prototype.handleMapClick_ = function (evt) {
 };
 
 /**
- * @param {Event|import('ol/events/Event.js').default} evt Event.
+ * @param {Event|import('ol/events/Event').default} evt Event.
  */
 Controller.prototype.handleMapContextMenu_ = function (evt) {
   if (evt instanceof UIEvent) {
@@ -1238,7 +1238,7 @@ Controller.prototype.handleMapContextMenu_ = function (evt) {
 };
 
 /**
- *@param {?olFeature<import("ol/geom/Geometry.js").default>} feature The feature to edit.
+ *@param {?olFeature<import('ol/geom/Geometry').default>} feature The feature to edit.
  */
 Controller.prototype.setFeature_ = function (feature) {
   this.feature = feature;
@@ -1247,7 +1247,7 @@ Controller.prototype.setFeature_ = function (feature) {
 
 /**
  * @param {number[]} coordinate The click coordinates.
- * @param {olFeature<import("ol/geom/Geometry.js").default>[]} features Features.
+ * @param {olFeature<import('ol/geom/Geometry').default>[]} features Features.
  */
 Controller.prototype.handleGetFeatures_ = function (coordinate, features) {
   this.pending = false;
@@ -1267,7 +1267,7 @@ Controller.prototype.handleGetFeatures_ = function (coordinate, features) {
 
 /**
  *@param {number[]} coordinate The click coordinates.
- *@param {olFeature<import("ol/geom/Geometry.js").default>[]} features Features.
+ *@param {olFeature<import('ol/geom/Geometry').default>[]} features Features.
  */
 Controller.prototype.openFeatureMenu_ = function (coordinate, features) {
   /** @type {import('ngeo/Menu').MenuActionOptions[]} */
@@ -1354,8 +1354,8 @@ Controller.prototype.unregisterInteractions_ = function () {
 };
 
 /**
- * @param {?olFeature<import("ol/geom/Geometry.js").default>} newFeature The new feature.
- * @param {?olFeature<import("ol/geom/Geometry.js").default>} oldFeature The old feature.
+ * @param {?olFeature<import('ol/geom/Geometry').default>} newFeature The new feature.
+ * @param {?olFeature<import('ol/geom/Geometry').default>} oldFeature The old feature.
  */
 Controller.prototype.handleFeatureChange_ = function (newFeature, oldFeature) {
   let geom;
@@ -1400,10 +1400,10 @@ Controller.prototype.handleFeatureGeometryChange_ = function () {
 };
 
 /**
- * @param {Event|import('ol/events/Event.js').default} evt Event.
+ * @param {Event|import('ol/events/Event').default} evt Event.
  */
 Controller.prototype.handleMenuActionClick_ = function (evt) {
-  const action = /** @type {import('ngeo/filter/ruleComponent.js').MenuEvent} */ (evt).detail.action;
+  const action = /** @type {import('ngeo/filter/ruleComponent').MenuEvent} */ (evt).detail.action;
 
   switch (action) {
     case 'move':
@@ -1426,10 +1426,10 @@ Controller.prototype.handleMenuActionClick_ = function (evt) {
 };
 
 /**
- * @param {Event|import('ol/events/Event.js').default} evt Event.
+ * @param {Event|import('ol/events/Event').default} evt Event.
  */
 Controller.prototype.handleMenuVertexActionClick_ = function (evt) {
-  const action = /** @type {import('ngeo/filter/ruleComponent.js').MenuEvent} */ (evt).detail.action;
+  const action = /** @type {import('ngeo/filter/ruleComponent').MenuEvent} */ (evt).detail.action;
 
   switch (action) {
     case 'delete':
@@ -1450,7 +1450,7 @@ Controller.prototype.handleMenuVertexActionClick_ = function (evt) {
 };
 
 /**
- * @param {Event|import('ol/events/Event.js').default} evt Event.
+ * @param {Event|import('ol/events/Event').default} evt Event.
  */
 Controller.prototype.handleTranslateEnd_ = function (evt) {
   if (!this.translate_) {
@@ -1461,7 +1461,7 @@ Controller.prototype.handleTranslateEnd_ = function (evt) {
 };
 
 /**
- * @param {Event|import('ol/events/Event.js').default} evt Event.
+ * @param {Event|import('ol/events/Event').default} evt Event.
  */
 Controller.prototype.handleRotateEnd_ = function (evt) {
   if (!this.rotate_) {
@@ -1489,11 +1489,11 @@ Controller.prototype.handleDestroy_ = function () {
  * Handles the click on element in the feature menu
  * In the call the parameters are in inverse order!
  *
- * @param {olFeature<import("ol/geom/Geometry.js").default>[]} features Features.
- * @param {Event|import('ol/events/Event.js').default} evt Event.
+ * @param {olFeature<import('ol/geom/Geometry').default>[]} features Features.
+ * @param {Event|import('ol/events/Event').default} evt Event.
  */
 Controller.prototype.handleMenuMultipleActionClick_ = function (features, evt) {
-  const action = /** @type {import('ngeo/filter/ruleComponent.js').MenuEvent} */ (evt).detail.action;
+  const action = /** @type {import('ngeo/filter/ruleComponent').MenuEvent} */ (evt).detail.action;
   const feature = Object.values(features).filter((feature) => feature.getId() === action);
   this.setFeature_(feature[0]);
   this.hightlightedFeatures_.clear();
@@ -1501,11 +1501,11 @@ Controller.prototype.handleMenuMultipleActionClick_ = function (features, evt) {
 
 /**
  * Handles mouse entering a menu item of the multiple feature menu
- * @param {olFeature<import("ol/geom/Geometry.js").default>[]} features Features.
- * @param {Event|import('ol/events/Event.js').default} evt Event.
+ * @param {olFeature<import('ol/geom/Geometry').default>[]} features Features.
+ * @param {Event|import('ol/events/Event').default} evt Event.
  */
 Controller.prototype.handleMultiMenuActionMouseEnter_ = function (features, evt) {
-  const action = /** @type {import('ngeo/filter/ruleComponent.js').MenuEvent} */ (evt).detail.action;
+  const action = /** @type {import('ngeo/filter/ruleComponent').MenuEvent} */ (evt).detail.action;
   const feature = Object.values(features).filter((feature) => feature.getId() === action);
   this.hightlightedFeatures_.push(feature[0]);
 };

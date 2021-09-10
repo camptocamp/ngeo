@@ -19,13 +19,13 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import olCollection from 'ol/Collection.js';
+import olCollection from 'ol/Collection';
 
 /**
  * The options required to create a `Group`.
  *
  * @typedef {Object} GroupOptions
- * @property {import('ngeo/datasource/DataSource.js').default[]} dataSources List of data source
+ * @property {import('ngeo/datasource/DataSource').default[]} dataSources List of data source
  *    combined in the group.
  *    At least one must be defined upon the cration of the group.
  * @property {string} title A human-readable title for the group. Usually, the WMS Server title is
@@ -60,7 +60,7 @@ class Group {
     // === DYNAMIC properties (i.e. that can change / be watched ===
 
     /**
-     * @type {import("ol/Collection.js").default<import("ngeo/datasource/DataSource.js").default>}
+     * @type {import('ol/Collection').default<import('ngeo/datasource/DataSource').default>}
      * @protected
      */
     this.dataSourcesCollection_ = new olCollection(options.dataSources);
@@ -83,14 +83,14 @@ class Group {
   // ========================================
 
   /**
-   * @return {import("ngeo/datasource/DataSource.js").default[]} Data sources
+   * @return {import('ngeo/datasource/DataSource').default[]} Data sources
    */
   get dataSources() {
     return this.dataSourcesCollection_.getArray();
   }
 
   /**
-   * @return {import("ol/Collection.js").default<import("ngeo/datasource/DataSource.js").default>}
+   * @return {import('ol/Collection').default<import('ngeo/datasource/DataSource').default>}
    *    Data sources
    */
   get dataSourcesCollection() {
@@ -143,7 +143,7 @@ class Group {
   // =======================
 
   /**
-   * @param {import("ngeo/datasource/DataSource.js").default} dataSource Data source.
+   * @param {import('ngeo/datasource/DataSource').default} dataSource Data source.
    * @return {string} Visible state of a data source
    */
   getDataSourceState(dataSource) {
@@ -151,14 +151,14 @@ class Group {
   }
 
   /**
-   * @param {import("ngeo/datasource/DataSource.js").default} dataSource Data source to add.
+   * @param {import('ngeo/datasource/DataSource').default} dataSource Data source to add.
    */
   addDataSource(dataSource) {
     this.dataSourcesCollection_.push(dataSource);
   }
 
   /**
-   * @param {import("ngeo/datasource/DataSource.js").default} dataSource Data source to remove.
+   * @param {import('ngeo/datasource/DataSource').default} dataSource Data source to remove.
    */
   removeDataSource(dataSource) {
     this.dataSourcesCollection_.remove(dataSource);

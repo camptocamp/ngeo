@@ -21,22 +21,22 @@
 
 import './createfeature.css';
 import angular from 'angular';
-import ngeoEditingCreatefeatureComponent from 'ngeo/editing/createfeatureComponent.js';
+import ngeoEditingCreatefeatureComponent from 'ngeo/editing/createfeatureComponent';
 
-import ngeoGeometryType from 'ngeo/GeometryType.js';
+import ngeoGeometryType from 'ngeo/GeometryType';
 
-import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent.js';
+import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent';
 
-import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
-import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr.js';
-import olCollection from 'ol/Collection.js';
-import olMap from 'ol/Map.js';
-import olView from 'ol/View.js';
-import olLayerTile from 'ol/layer/Tile.js';
-import olLayerVector from 'ol/layer/Vector.js';
-import olSourceOSM from 'ol/source/OSM.js';
-import olSourceVector from 'ol/source/Vector.js';
-import ngeoMapModule from 'ngeo/map/module.js';
+import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate';
+import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr';
+import olCollection from 'ol/Collection';
+import olMap from 'ol/Map';
+import olView from 'ol/View';
+import olLayerTile from 'ol/layer/Tile';
+import olLayerVector from 'ol/layer/Vector';
+import olSourceOSM from 'ol/source/OSM';
+import olSourceVector from 'ol/source/Vector';
+import ngeoMapModule from 'ngeo/map/module';
 
 /** @type {angular.IModule} **/
 const myModule = angular.module('app', [
@@ -48,14 +48,14 @@ const myModule = angular.module('app', [
 ]);
 
 /**
- * @param {import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate
+ * @param {import('ngeo/misc/ToolActivateMgr').ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate
  *    manager service.
  * @class
  * @ngInject
  */
 function MainController(ngeoToolActivateMgr) {
   /**
-   * @type {import("ol/Collection.js").default<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>}
+   * @type {import('ol/Collection').default<import('ol/Feature').default<import('ol/geom/Geometry').default>>}
    */
   this.features = new olCollection();
 
@@ -82,7 +82,7 @@ function MainController(ngeoToolActivateMgr) {
   });
 
   /**
-   * @type {import("ol/Map.js").default}
+   * @type {import('ol/Map').default}
    */
   this.map = new olMap({
     layers: [

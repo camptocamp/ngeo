@@ -20,7 +20,7 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import ngeoRoutingRoutingComponent from 'ngeo/routing/RoutingComponent.js';
+import ngeoRoutingRoutingComponent from 'ngeo/routing/RoutingComponent';
 
 import './routing.scss';
 

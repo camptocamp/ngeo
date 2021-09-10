@@ -55,7 +55,7 @@ const Param = {
 };
 
 /**
- * @param {import("ol/coordinate.js").Coordinate} coordinate Coordinate.
+ * @param {import('ol/coordinate').Coordinate} coordinate Coordinate.
  * @param {Object<string, string|number>} [opt_params] Optional parameters for the request.
  * @return {angular.IPromise<Object<string, number>>} Promise.
  */

@@ -21,17 +21,17 @@
 
 import angular from 'angular';
 import './contextualdata.css';
-import gmfContextualdataModule from 'gmf/contextualdata/module.js';
+import gmfContextualdataModule from 'gmf/contextualdata/module';
 
-import gmfMapComponent from 'gmf/map/component.js';
-import ngeoMiscFilters from 'ngeo/misc/filters.js';
-import EPSG2056 from 'ngeo/proj/EPSG_2056.js';
-import 'ngeo/proj/EPSG_21781.js';
-import olMap from 'ol/Map.js';
-import olView from 'ol/View.js';
-import olLayerTile from 'ol/layer/Tile.js';
-import olSourceOSM from 'ol/source/OSM.js';
-import options from './options.js';
+import gmfMapComponent from 'gmf/map/component';
+import ngeoMiscFilters from 'ngeo/misc/filters';
+import EPSG2056 from 'ngeo/proj/EPSG_2056';
+import 'ngeo/proj/EPSG_21781';
+import olMap from 'ol/Map';
+import olView from 'ol/View';
+import olLayerTile from 'ol/layer/Tile';
+import olSourceOSM from 'ol/source/OSM';
+import options from './options';
 
 /**
  * @type {angular.IModule}
@@ -52,7 +52,7 @@ myModule.value('gmfContextualdatacontentTemplateUrl', 'partials/contextualdata.h
  */
 function MainController() {
   /**
-   * @type {import("ol/Map.js").default}
+   * @type {import('ol/Map').default}
    */
   this.map = new olMap({
     layers: [
@@ -70,7 +70,7 @@ function MainController() {
 }
 
 /**
- * @param {import("ol/coordinate.js").Coordinate} coordinate The coordinate for the right-clicked
+ * @param {import('ol/coordinate').Coordinate} coordinate The coordinate for the right-clicked
  *     point.
  * @param {Object<string, number>} data The data received from the raster service.
  * @return {Object<string, number>} The additional data to add to the scope for the

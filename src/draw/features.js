@@ -20,7 +20,7 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import olCollection from 'ol/Collection.js';
+import olCollection from 'ol/Collection';
 
 /**
  * @type {angular.IModule}

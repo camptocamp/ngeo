@@ -21,15 +21,15 @@
 
 import angular from 'angular';
 import './backgroundlayerselector.css';
-import gmfBackgroundlayerselectorModule from 'gmf/backgroundlayerselector/module.js';
+import gmfBackgroundlayerselectorModule from 'gmf/backgroundlayerselector/module';
 
-import gmfMapComponent from 'gmf/map/component.js';
+import gmfMapComponent from 'gmf/map/component';
 
-import gmfThemeThemes from 'gmf/theme/Themes.js';
-import EPSG2056 from 'ngeo/proj/EPSG_2056.js';
-import olMap from 'ol/Map.js';
-import olView from 'ol/View.js';
-import options from './options.js';
+import gmfThemeThemes from 'gmf/theme/Themes';
+import EPSG2056 from 'ngeo/proj/EPSG_2056';
+import olMap from 'ol/Map';
+import olView from 'ol/View';
+import options from './options';
 
 /**
  * @type {angular.IModule}
@@ -43,7 +43,7 @@ const myModule = angular.module('gmfapp', [
 ]);
 
 /**
- * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes Themes service.
+ * @param {import('gmf/theme/Themes').ThemesService} gmfThemes Themes service.
  * @class
  * @ngInject
  */
@@ -51,7 +51,7 @@ function MainController(gmfThemes) {
   gmfThemes.loadThemes();
 
   /**
-   * @type {import("ol/Map.js").default}
+   * @type {import('ol/Map').default}
    */
   this.map = new olMap({
     layers: [],

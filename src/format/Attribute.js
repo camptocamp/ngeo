@@ -19,7 +19,7 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import ngeoFormatAttributeType from 'ngeo/format/AttributeType.js';
+import ngeoFormatAttributeType from 'ngeo/format/AttributeType';
 
 /**
  * geomType: Set only if the attribute is a geometry type. Determines the type of geometry.

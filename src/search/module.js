@@ -20,9 +20,9 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import ngeoSearchSearchDirective from 'ngeo/search/searchDirective.js';
-import ngeoSearchCreateGeoJSONBloodhound from 'ngeo/search/createGeoJSONBloodhound.js';
-import ngeoSearchCreateLocationSearchBloodhound from 'ngeo/search/createLocationSearchBloodhound.js';
+import ngeoSearchSearchDirective from 'ngeo/search/searchDirective';
+import ngeoSearchCreateGeoJSONBloodhound from 'ngeo/search/createGeoJSONBloodhound';
+import ngeoSearchCreateLocationSearchBloodhound from 'ngeo/search/createLocationSearchBloodhound';
 
 /**
  * @type {angular.IModule}

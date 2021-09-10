@@ -20,7 +20,7 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import gmfHeaderComponent from 'gmf/header/component.js';
+import gmfHeaderComponent from 'gmf/header/component';
 
 /**
  * @type {angular.IModule}

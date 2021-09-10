@@ -123,7 +123,7 @@
 /**
  * A MapFishPrintVectorStyle Must contains one key "version" with the version the use as value.
  * Others key-values are MapFishPrintSymbolizers.
- * @typedef {Object<string, number|import('ngeo/print/mapfish-print-v3.js').MapFishPrintSymbolizers>} MapFishPrintVectorStyle
+ * @typedef {Object<string, number|import('ngeo/print/mapfish-print-v3').MapFishPrintSymbolizers>} MapFishPrintVectorStyle
  */
 
 /**

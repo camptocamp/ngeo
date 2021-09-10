@@ -21,14 +21,14 @@
 
 import './permalink.css';
 import angular from 'angular';
-import gmfMapModule from 'gmf/map/module.js';
+import gmfMapModule from 'gmf/map/module';
 
-import EPSG2056 from 'ngeo/proj/EPSG_2056.js';
-import olMap from 'ol/Map.js';
-import olView from 'ol/View.js';
-import olLayerTile from 'ol/layer/Tile.js';
-import olSourceOSM from 'ol/source/OSM.js';
-import options from './options.js';
+import EPSG2056 from 'ngeo/proj/EPSG_2056';
+import olMap from 'ol/Map';
+import olView from 'ol/View';
+import olLayerTile from 'ol/layer/Tile';
+import olSourceOSM from 'ol/source/OSM';
+import options from './options';
 
 /**
  * @type {angular.IModule}
@@ -42,7 +42,7 @@ const myModule = angular.module('gmfapp', ['gettext', gmfMapModule.name]);
  */
 function MainController() {
   /**
-   * @type {import("ol/Map.js").default}
+   * @type {import('ol/Map').default}
    */
   this.map = new olMap({
     layers: [

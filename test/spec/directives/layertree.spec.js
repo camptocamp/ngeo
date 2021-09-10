@@ -20,13 +20,13 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import olMap from 'ol/Map.js';
-import olView from 'ol/View.js';
-import olLayerImage from 'ol/layer/Image.js';
-import {getFirstParentTree, LayertreeVisitorDecision} from 'ngeo/layertree/Controller.js';
+import olMap from 'ol/Map';
+import olView from 'ol/View';
+import olLayerImage from 'ol/layer/Image';
+import {getFirstParentTree, LayertreeVisitorDecision} from 'ngeo/layertree/Controller';
 
 describe('ngeo.layertree.component', () => {
-  /** @type {import("ngeo/layertree/Controller.js").LayertreeController} */
+  /** @type {import('ngeo/layertree/Controller').LayertreeController} */
   let roottreeCtrl;
 
   beforeEach(() => {
@@ -66,7 +66,7 @@ describe('ngeo.layertree.component', () => {
 
     /**
      * @param {*} node
-     * @return {olLayerImage<import("ol/source/Image.js").default>}
+     * @return {olLayerImage<import('ol/source/Image').default>}
      */
     const getLayer = function (node) {
       return new olLayerImage();

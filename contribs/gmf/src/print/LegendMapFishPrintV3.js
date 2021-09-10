@@ -19,14 +19,14 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import olLayerGroup from 'ol/layer/Group.js';
-import olLayerTile from 'ol/layer/Tile.js';
-import ImageWMS from 'ol/source/ImageWMS.js';
-import {dpi as screenDpi} from 'ngeo/utils.js';
-import {NODE_IS_LEAF, LAYER_NODE_NAME_KEY} from 'ngeo/map/LayerHelper.js';
-import {DATALAYERGROUP_NAME} from 'gmf/index.js';
-import ExternalOGC from 'gmf/datasource/ExternalOGC.js';
-import {getFlatNodes, findObjectByName} from 'gmf/theme/Themes.js';
+import olLayerGroup from 'ol/layer/Group';
+import olLayerTile from 'ol/layer/Tile';
+import ImageWMS from 'ol/source/ImageWMS';
+import {dpi as screenDpi} from 'ngeo/utils';
+import {NODE_IS_LEAF, LAYER_NODE_NAME_KEY} from 'ngeo/map/LayerHelper';
+import {DATALAYERGROUP_NAME} from 'gmf/index';
+import ExternalOGC from 'gmf/datasource/ExternalOGC';
+import {getFlatNodes, findObjectByName} from 'gmf/theme/Themes';
 
 /**
  * Get the print legend for MapFishPrint V3 from the OpenLayers map and the GMF Layertree.
@@ -35,10 +35,10 @@ import {getFlatNodes, findObjectByName} from 'gmf/theme/Themes.js';
 export default class LegendMapFishPrintV3 {
   /**
    * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
-   * @param {import("ngeo/map/LayerHelper.js").LayerHelper} ngeoLayerHelper The ngeo Layer Helper service.
-   * @param {import("gmf/datasource/ExternalDataSourcesManager.js").ExternalDatSourcesManager} gmfExternalDataSourcesManager The manager of external datasources.
-   * @param {import("gmf/options.js").OptionsLegendType} legendOptions The options for the legend.
-   * @param {import("ol/Map.js").default} map the map to extract the legend from.
+   * @param {import('ngeo/map/LayerHelper').LayerHelper} ngeoLayerHelper The ngeo Layer Helper service.
+   * @param {import('gmf/datasource/ExternalDataSourcesManager').ExternalDatSourcesManager} gmfExternalDataSourcesManager The manager of external datasources.
+   * @param {import('gmf/options').OptionsLegendType} legendOptions The options for the legend.
+   * @param {import('ol/Map').default} map the map to extract the legend from.
    */
   constructor(gettextCatalog, ngeoLayerHelper, gmfExternalDataSourcesManager, legendOptions, map) {
     /**
@@ -48,19 +48,19 @@ export default class LegendMapFishPrintV3 {
     this.gettextCatalog_ = gettextCatalog;
 
     /**
-     * @type {import("ngeo/map/LayerHelper.js").LayerHelper}
+     * @type {import('ngeo/map/LayerHelper').LayerHelper}
      * @private
      */
     this.ngeoLayerHelper_ = ngeoLayerHelper;
 
     /**
-     * @type {import("gmf/datasource/ExternalDataSourcesManager.js").ExternalDatSourcesManager}
+     * @type {import('gmf/datasource/ExternalDataSourcesManager').ExternalDatSourcesManager}
      * @private
      */
     this.gmfExternalDataSourcesManager_ = gmfExternalDataSourcesManager;
 
     /**
-     * @type {import('gmf/options.js').OptionsLegendType}
+     * @type {import('gmf/options').OptionsLegendType}
      * @private
      */
     this.gmfLegendOptions_ = {
@@ -74,7 +74,7 @@ export default class LegendMapFishPrintV3 {
     }
 
     /**
-     * @type {import("ol/Map.js").default}
+     * @type {import('ol/Map').default}
      * @private
      */
     this.map_ = map;
@@ -82,7 +82,7 @@ export default class LegendMapFishPrintV3 {
 
   /**
    * Return a legend for MapFishPrint V3 based on the map and the GMF layertree.
-   * @param {import('gmf/themes.js').GmfTheme[]} currentThemes the current themes.
+   * @param {import('gmf/themes').GmfTheme[]} currentThemes the current themes.
    * @param {number} scale The scale to get the legend (for wms layers only).
    * @param {number} dpi The DPI.
    * @param {number[]} bbox The bbox.
@@ -101,7 +101,7 @@ export default class LegendMapFishPrintV3 {
 
   /**
    * Get legend classes from the layertree only.
-   * @param {import('gmf/themes.js').GmfTheme[]} currentThemes the current themes.
+   * @param {import('gmf/themes').GmfTheme[]} currentThemes the current themes.
    * @param {number} scale The scale to get the legend.
    * @param {number} dpi The DPI.
    * @param {number[]} bbox The bbox.
@@ -116,8 +116,8 @@ export default class LegendMapFishPrintV3 {
 
   /**
    * Extract recursively a legend from a layer.
-   * @param {import("ol/layer/Base.js").default} layer or layer group to extract the legend from.
-   * @param {import('gmf/themes.js').GmfTheme[]} currentThemes the current themes.
+   * @param {import('ol/layer/Base').default} layer or layer group to extract the legend from.
+   * @param {import('gmf/themes').GmfTheme[]} currentThemes the current themes.
    * @param {number} scale The scale to get the legend.
    * @param {number} dpi The DPI.
    * @param {number[]} bbox The bbox.
@@ -152,7 +152,7 @@ export default class LegendMapFishPrintV3 {
     }
 
     // Case of leaf layer: Create a legend class item matching the layer.
-    const leafLayer = /** @type {import('ol/layer/Layer').default<import("ol/source/Source.js").default>} */ (
+    const leafLayer = /** @type {import('ol/layer/Layer').default<import('ol/source/Source').default>} */ (
       layer
     );
     if (leafLayer.getVisible() && leafLayer.getSource()) {
@@ -162,9 +162,7 @@ export default class LegendMapFishPrintV3 {
       }
 
       return this.getLegendItemFromWMSLayer_(
-        /** @type {import("ol/layer/Layer.js").default<import("ol/source/ImageWMS.js").default>} */ (
-          leafLayer
-        ),
+        /** @type {import('ol/layer/Layer').default<import('ol/source/ImageWMS').default>} */ (leafLayer),
         currentThemes,
         scale,
         dpi,
@@ -240,8 +238,8 @@ export default class LegendMapFishPrintV3 {
 
   /**
    * Create a legend item from the given WMTS layer.
-   * @param {import('gmf/themes.js').GmfTheme[]} currentThemes the current themes.
-   * @param {import("ol/layer/Tile.js").default<import("ol/source/Tile.js").default>} layer The layer to extract the legend from.
+   * @param {import('gmf/themes').GmfTheme[]} currentThemes the current themes.
+   * @param {import('ol/layer/Tile').default<import('ol/source/Tile').default>} layer The layer to extract the legend from.
    * @param {number} dpi The DPI.
    * @return {import('ngeo/print/mapfish-print-v3').MapFishPrintLegendClass} Legend object for print report
    * or null.
@@ -272,9 +270,9 @@ export default class LegendMapFishPrintV3 {
 
   /**
    * Create a legend item from the given WMS layer.
-   * @param {import("ol/layer/Layer.js").default<import("ol/source/ImageWMS.js").default>} layer The layer
+   * @param {import('ol/layer/Layer').default<import('ol/source/ImageWMS').default>} layer The layer
    * to extract the legend from.
-   * @param {import('gmf/themes.js').GmfTheme[]} currentThemes the current themes.
+   * @param {import('gmf/themes').GmfTheme[]} currentThemes the current themes.
    * @param {number} scale The scale to get the legend.
    * @param {number} dpi The DPI.
    * @param {number[]} bbox The bbox.
@@ -358,7 +356,7 @@ export default class LegendMapFishPrintV3 {
 
   /**
    * Create a legend item from the given external datasource.
-   * @param {import("ngeo/datasource/DataSource.js").default} dataSource The datasource to extract the legend
+   * @param {import('ngeo/datasource/DataSource').default} dataSource The datasource to extract the legend
    * from.
    * @param {number} scale The scale to get the legend.
    * @return {import('ngeo/print/mapfish-print-v3').MapFishPrintLegendClass} Legend object for print report
@@ -385,7 +383,7 @@ export default class LegendMapFishPrintV3 {
    * Return the metadata legendImage of a layer from the found corresponding node
    * or undefined.
    *
-   * @param {import('gmf/themes.js').GmfTheme[]} currentThemes the current themes.
+   * @param {import('gmf/themes').GmfTheme[]} currentThemes the current themes.
    * @param {string} layerName a layer name.
    * @param {number} [dpi=96] the image DPI.
    * @return {LegendURLDPI|undefined} The legendImage with selected DPI or undefined.

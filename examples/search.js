@@ -20,20 +20,20 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import {SEARCH} from './url.js';
+import {SEARCH} from './url';
 import './search.css';
 
-import ngeoMapModule from 'ngeo/map/module.js';
-import {proj as EPSG2056} from 'ngeo/proj/EPSG_2056.js';
-import ngeoSearchModule from 'ngeo/search/module.js';
-import olMap from 'ol/Map.js';
-import olView from 'ol/View.js';
-import olLayerTile from 'ol/layer/Tile.js';
-import olLayerVector from 'ol/layer/Vector.js';
-import * as olProj from 'ol/proj.js';
-import olSourceOSM from 'ol/source/OSM.js';
-import olSourceVector from 'ol/source/Vector.js';
-import SimpleGeometry from 'ol/geom/SimpleGeometry.js';
+import ngeoMapModule from 'ngeo/map/module';
+import {proj as EPSG2056} from 'ngeo/proj/EPSG_2056';
+import ngeoSearchModule from 'ngeo/search/module';
+import olMap from 'ol/Map';
+import olView from 'ol/View';
+import olLayerTile from 'ol/layer/Tile';
+import olLayerVector from 'ol/layer/Vector';
+import * as olProj from 'ol/proj';
+import olSourceOSM from 'ol/source/OSM';
+import olSourceVector from 'ol/source/Vector';
+import SimpleGeometry from 'ol/geom/SimpleGeometry';
 
 /** @type {angular.IModule} **/
 const myModule = angular.module('app', ['gettext', ngeoMapModule.name, ngeoSearchModule.name]);
@@ -71,12 +71,12 @@ function SearchController($element, $rootScope, $compile, ngeoSearchCreateGeoJSO
   this.$element = $element;
 
   /**
-   * @type {?import("ol/Map.js").default}
+   * @type {?import('ol/Map').default}
    */
   this.map = null;
 
   /**
-   * @type {import("ol/layer/Vector.js").default<import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>>}
+   * @type {import('ol/layer/Vector').default<import('ol/source/Vector').default<import('ol/geom/Geometry').default>>}
    */
   this.vectorLayer_;
 
@@ -93,23 +93,23 @@ function SearchController($element, $rootScope, $compile, ngeoSearchCreateGeoJSO
   });
 
   /**
-   * @type {Twitter.Typeahead.Dataset<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>[]}
+   * @type {Twitter.Typeahead.Dataset<import('ol/Feature').default<import('ol/geom/Geometry').default>>[]}
    */
   this.datasets = [
     {
       source: bloodhoundEngine.ttAdapter(),
       display: (suggestion) => {
-        const feature =
-          /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>} */ (suggestion);
+        const feature = /** @type {import('ol/Feature').default<import('ol/geom/Geometry').default>} */ (
+          suggestion
+        );
         return feature.get('label');
       },
       templates: {
         header: () => '<div class="ngeo-header">Addresses</div>',
         suggestion: (suggestion) => {
-          const feature =
-            /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>} */ (
-              suggestion
-            );
+          const feature = /** @type {import('ol/Feature').default<import('ol/geom/Geometry').default>} */ (
+            suggestion
+          );
 
           // A scope for the ng-click on the suggestion's « i » button.
           const scope = $rootScope.$new(true);
@@ -129,14 +129,14 @@ function SearchController($element, $rootScope, $compile, ngeoSearchCreateGeoJSO
   ];
 
   /**
-   * @type {import('ngeo/search/searchDirective.js').SearchDirectiveListeners<*>}
+   * @type {import('ngeo/search/searchDirective').SearchDirectiveListeners<*>}
    */
   this.listeners = {
     select: (event, suggestion, dataset) => {
       if (!this.map) {
         throw new Error('Missing map');
       }
-      const feature = /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>} */ (
+      const feature = /** @type {import('ol/Feature').default<import('ol/geom/Geometry').default>} */ (
         suggestion
       );
       const featureGeometry = feature.getGeometry();
@@ -148,7 +148,7 @@ function SearchController($element, $rootScope, $compile, ngeoSearchCreateGeoJSO
         throw new Error('Missing size');
       }
       /**
-       * @type {olSourceVector<import("ol/geom/Geometry.js").default>}
+       * @type {olSourceVector<import('ol/geom/Geometry').default>}
        */
       const source = this.vectorLayer_.getSource();
       source.clear(true);
@@ -173,7 +173,7 @@ SearchController.prototype.$onInit = function () {
 };
 
 /**
- * @return {import("ol/layer/Vector.js").default<import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>>} The vector layer.
+ * @return {import('ol/layer/Vector').default<import('ol/source/Vector').default<import('ol/geom/Geometry').default>>} The vector layer.
  */
 SearchController.prototype.createVectorLayer_ = function () {
   if (!this.map) {
@@ -208,7 +208,7 @@ myModule.controller('AppSearchController', SearchController);
  */
 function MainController() {
   /**
-   * @type {import("ol/Map.js").default}
+   * @type {import('ol/Map').default}
    */
   this.map = new olMap({
     layers: [

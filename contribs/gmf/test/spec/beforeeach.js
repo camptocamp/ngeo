@@ -21,16 +21,16 @@
 
 import angular from 'angular';
 import 'angular-dynamic-locale';
-import gmfContextualdataComponent from 'gmf/contextualdata/component.js';
+import gmfContextualdataComponent from 'gmf/contextualdata/component';
 
-import gmfLayertreeModule from 'gmf/layertree/module.js';
-import gmfMapComponent from 'gmf/map/component.js';
-import gmfPermalinkModule from 'gmf/permalink/module.js';
-import gmfPrintComponent from 'gmf/print/component.js';
-import gmfProfileModule from 'gmf/profile/module.js';
-import gmfQueryExtraModule from 'gmf/query/extraModule.js';
-import 'ngeo/proj/EPSG_2056.js';
-import 'ngeo/proj/EPSG_21781.js';
+import gmfLayertreeModule from 'gmf/layertree/module';
+import gmfMapComponent from 'gmf/map/component';
+import gmfPermalinkModule from 'gmf/permalink/module';
+import gmfPrintComponent from 'gmf/print/component';
+import gmfProfileModule from 'gmf/profile/module';
+import gmfQueryExtraModule from 'gmf/query/extraModule';
+import 'ngeo/proj/EPSG_2056';
+import 'ngeo/proj/EPSG_21781';
 
 /**
  * @type {angular.IModule}

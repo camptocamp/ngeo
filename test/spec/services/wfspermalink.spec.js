@@ -20,19 +20,19 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import olMap from 'ol/Map.js';
-import olView from 'ol/View.js';
-import * as olProj from 'ol/proj.js';
-import * as olFormatFilter from 'ol/format/filter.js';
-import olFormatFilterEqualTo from 'ol/format/filter/EqualTo.js';
-import olFormatFilterLogicalNary from 'ol/format/filter/LogicalNary.js';
-import {WfsPermalinkService} from 'ngeo/statemanager/WfsPermalink.js';
-import ngeoTestDataMsGMLOutputFuel from '../data/msGMLOutputFuel.js';
+import olMap from 'ol/Map';
+import olView from 'ol/View';
+import * as olProj from 'ol/proj';
+import * as olFormatFilter from 'ol/format/filter';
+import olFormatFilterEqualTo from 'ol/format/filter/EqualTo';
+import olFormatFilterLogicalNary from 'ol/format/filter/LogicalNary';
+import {WfsPermalinkService} from 'ngeo/statemanager/WfsPermalink';
+import ngeoTestDataMsGMLOutputFuel from '../data/msGMLOutputFuel';
 
 describe('ngeo.statemanager.WfsPermalink', () => {
-  /** @type {import('ngeo/statemanager/WfsPermalink.js').WfsPermalinkService} */
+  /** @type {import('ngeo/statemanager/WfsPermalink').WfsPermalinkService} */
   let ngeoWfsPermalink;
-  /** @type {import('ngeo/query/MapQuerent.js').QueryResult} */
+  /** @type {import('ngeo/query/MapQuerent').QueryResult} */
   let ngeoQueryResult;
 
   beforeEach(() => {
@@ -67,7 +67,7 @@ describe('ngeo.statemanager.WfsPermalink', () => {
   describe('#issue', () => {
     /** @type {angular.IHttpBackendService} */
     let $httpBackend;
-    /** @type {import('ol/Map.js').default} */
+    /** @type {import('ol/Map').default} */
     let map;
 
     beforeEach(() => {
@@ -117,8 +117,8 @@ describe('ngeo.statemanager.WfsPermalink', () => {
 
   describe('#createFilters_', () => {
     /**
-     * @param {import("ol/format/filter/Filter.js").default} filter1
-     * @param {import("ol/format/filter/Filter.js").default} filter2
+     * @param {import('ol/format/filter/Filter').default} filter1
+     * @param {import('ol/format/filter/Filter').default} filter2
      */
     const expectFiltersToEqual = function (filter1, filter2) {
       expect(filter1.constructor).toBe(filter2.constructor, 'same filter type');

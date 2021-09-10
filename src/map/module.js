@@ -20,12 +20,12 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import ngeoMapBackgroundLayerMgr from 'ngeo/map/BackgroundLayerMgr.js';
-import ngeoMapComponent from 'ngeo/map/component.js';
-import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr.js';
-import ngeoMapRecenter from 'ngeo/map/recenter.js';
-import ngeoMapResizemap from 'ngeo/map/resizemap.js';
-import ngeoMapScaleselector from 'ngeo/map/scaleselector.js';
+import ngeoMapBackgroundLayerMgr from 'ngeo/map/BackgroundLayerMgr';
+import ngeoMapComponent from 'ngeo/map/component';
+import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr';
+import ngeoMapRecenter from 'ngeo/map/recenter';
+import ngeoMapResizemap from 'ngeo/map/resizemap';
+import ngeoMapScaleselector from 'ngeo/map/scaleselector';
 
 /**
  * Also related to the map but not included in the module:

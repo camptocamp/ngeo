@@ -21,18 +21,18 @@
 
 import angular from 'angular';
 import './svg.css';
-import EPSG2056 from 'ngeo/proj/EPSG_2056.js';
+import EPSG2056 from 'ngeo/proj/EPSG_2056';
 
-import Map from 'ol/Map.js';
-import View from 'ol/View.js';
-import LayerVector from 'ol/layer/Vector.js';
-import SourceVector from 'ol/source/Vector.js';
-import Feature from 'ol/Feature.js';
-import Point from 'ol/geom/Point.js';
-import Style from 'ol/style/Style.js';
-import Icon from 'ol/style/Icon.js';
+import Map from 'ol/Map';
+import View from 'ol/View';
+import LayerVector from 'ol/layer/Vector';
+import SourceVector from 'ol/source/Vector';
+import Feature from 'ol/Feature';
+import Point from 'ol/geom/Point';
+import Style from 'ol/style/Style';
+import Icon from 'ol/style/Icon';
 
-import MapModule from 'ngeo/map/module.js';
+import MapModule from 'ngeo/map/module';
 
 /** @type {!angular.IModule} **/
 const appmodule = angular.module('app', [MapModule.name]);

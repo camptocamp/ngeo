@@ -21,29 +21,29 @@
 
 // @ts-nocheck
 import angular from 'angular';
-import {PrintService} from 'ngeo/print/Service.js';
-import {getUid} from 'ol/util.js';
-import olFeature from 'ol/Feature.js';
-import olMap from 'ol/Map.js';
-import olView from 'ol/View.js';
-import * as olExtent from 'ol/extent.js';
-import * as olProj from 'ol/proj.js';
-import olGeomLineString from 'ol/geom/LineString.js';
-import olGeomPoint from 'ol/geom/Point.js';
-import olGeomPolygon from 'ol/geom/Polygon.js';
-import olLayerImage from 'ol/layer/Image.js';
-import olLayerTile from 'ol/layer/Tile.js';
-import olLayerVector from 'ol/layer/Vector.js';
-import olSourceImageWMS from 'ol/source/ImageWMS.js';
-import olSourceTileWMS from 'ol/source/TileWMS.js';
-import olSourceVector from 'ol/source/Vector.js';
-import olSourceWMTS from 'ol/source/WMTS.js';
-import olStyleCircle from 'ol/style/Circle.js';
-import olStyleStroke from 'ol/style/Stroke.js';
-import olStyleStyle from 'ol/style/Style.js';
-import olStyleText from 'ol/style/Text.js';
-import olStyleFill from 'ol/style/Fill.js';
-import olTilegridWMTS from 'ol/tilegrid/WMTS.js';
+import {PrintService} from 'ngeo/print/Service';
+import {getUid} from 'ol/util';
+import olFeature from 'ol/Feature';
+import olMap from 'ol/Map';
+import olView from 'ol/View';
+import * as olExtent from 'ol/extent';
+import * as olProj from 'ol/proj';
+import olGeomLineString from 'ol/geom/LineString';
+import olGeomPoint from 'ol/geom/Point';
+import olGeomPolygon from 'ol/geom/Polygon';
+import olLayerImage from 'ol/layer/Image';
+import olLayerTile from 'ol/layer/Tile';
+import olLayerVector from 'ol/layer/Vector';
+import olSourceImageWMS from 'ol/source/ImageWMS';
+import olSourceTileWMS from 'ol/source/TileWMS';
+import olSourceVector from 'ol/source/Vector';
+import olSourceWMTS from 'ol/source/WMTS';
+import olStyleCircle from 'ol/style/Circle';
+import olStyleStroke from 'ol/style/Stroke';
+import olStyleStyle from 'ol/style/Style';
+import olStyleText from 'ol/style/Text';
+import olStyleFill from 'ol/style/Fill';
+import olTilegridWMTS from 'ol/tilegrid/WMTS';
 
 /**
  * @typedef {import('ngeo/print/mapfish-print-v3').MapFishPrintStatusResponse} MapFishPrintStatusResponse

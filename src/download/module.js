@@ -20,8 +20,8 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import ngeoDownloadCsv from 'ngeo/download/Csv.js';
-import ngeoDownloadService from 'ngeo/download/service.js';
+import ngeoDownloadCsv from 'ngeo/download/Csv';
+import ngeoDownloadService from 'ngeo/download/service';
 
 /**
  * @type {angular.IModule}

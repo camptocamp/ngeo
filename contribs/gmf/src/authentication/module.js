@@ -20,9 +20,9 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import gmfAuthenticationComponent from 'gmf/authentication/component.js';
+import gmfAuthenticationComponent from 'gmf/authentication/component';
 
-import gmfAuthenticationService from 'gmf/authentication/Service.js';
+import gmfAuthenticationService from 'gmf/authentication/Service';
 
 /**
  * @type {angular.IModule}

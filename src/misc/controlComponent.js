@@ -20,8 +20,8 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import olMap from 'ol/Map.js';
-import olControlControl from 'ol/control/Control.js';
+import olMap from 'ol/Map';
+import olControlControl from 'ol/control/Control';
 
 /**
  * @type {angular.IModule}
@@ -43,7 +43,7 @@ const myModule = angular.module('ngeoControl', []);
  *
  * See our live example: [../examples/control.html](../examples/control.html)
  *
- * @htmlAttribute {import("ol/Map.js").default} ngeo-control-map The map.
+ * @htmlAttribute {import('ol/Map').default} ngeo-control-map The map.
  * @return {angular.IDirective} The directive specs.
  * @ngInject
  * @ngdoc directive
@@ -59,11 +59,11 @@ function controlComponent() {
      */
     link: (scope, element, attrs) => {
       const control =
-        /** @type {import('ol/control/Control.js').default} */
+        /** @type {import('ol/control/Control').default} */
         (scope.$eval(attrs['ngeoControl']));
       console.assert(control instanceof olControlControl);
 
-      const map = /** @type {import('ol/Map.js').default} */ (scope.$eval(attrs['ngeoControlMap']));
+      const map = /** @type {import('ol/Map').default} */ (scope.$eval(attrs['ngeoControlMap']));
       console.assert(map instanceof olMap);
 
       control.setTarget(element[0]);

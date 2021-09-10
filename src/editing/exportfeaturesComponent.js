@@ -20,8 +20,8 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import ngeoMiscFeatureHelper, {FeatureFormatType} from 'ngeo/misc/FeatureHelper.js';
-import {getUid as olUtilGetUid} from 'ol/util.js';
+import ngeoMiscFeatureHelper, {FeatureFormatType} from 'ngeo/misc/FeatureHelper';
+import {getUid as olUtilGetUid} from 'ol/util';
 
 /**
  * @type {angular.IModule}
@@ -46,7 +46,7 @@ const myModule = angular.module('ngeoExportfeatures', [ngeoMiscFeatureHelper.nam
  *       ngeo-exportfeatures-features="ctrl.features"
  *       class="btn btn-link">Export</button>
  *
- * @htmlAttribute {import("ol/Collection.js").default<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>}
+ * @htmlAttribute {import('ol/Collection').default<import('ol/Feature').default<import('ol/geom/Geometry').default>>}
  *    ngeo-exportfeatures-features The features to export
  * @return {angular.IDirective} The directive specs.
  * @ngInject
@@ -69,7 +69,7 @@ myModule.directive('ngeoExportfeatures', editingExportFeaturesComponent);
  * @param {JQuery} $element Element.
  * @param {angular.auto.IInjectorService} $injector Main injector.
  * @param {angular.IScope} $scope Angular scope.
- * @param {import("ngeo/misc/FeatureHelper.js").FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
+ * @param {import('ngeo/misc/FeatureHelper').FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
  * @class
  * @hidden
  * @ngInject
@@ -78,7 +78,7 @@ myModule.directive('ngeoExportfeatures', editingExportFeaturesComponent);
  */
 export function Controller($element, $injector, $scope, ngeoFeatureHelper) {
   /**
-   * @type {?import("ol/Collection.js").default<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>}
+   * @type {?import('ol/Collection').default<import('ol/Feature').default<import('ol/geom/Geometry').default>>}
    */
   this.features = null;
 
@@ -96,7 +96,7 @@ export function Controller($element, $injector, $scope, ngeoFeatureHelper) {
   this.id_ = id;
 
   /**
-   * @type {import("ngeo/misc/FeatureHelper.js").FeatureHelper}
+   * @type {import('ngeo/misc/FeatureHelper').FeatureHelper}
    */
   this.featureHelper_ = ngeoFeatureHelper;
 

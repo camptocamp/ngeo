@@ -19,34 +19,34 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties.js';
-import ngeoFormatFeatureHashStyleType from 'ngeo/format/FeatureHashStyleType.js';
-import {rgbArrayToHex} from 'ngeo/utils.js';
-import {asArray as asColorArray} from 'ol/color.js';
-import olFeature from 'ol/Feature.js';
-import {transformGeometryWithOptions} from 'ol/format/Feature.js';
-import olFormatTextFeature from 'ol/format/TextFeature.js';
-import olGeomLineString from 'ol/geom/LineString.js';
-import olGeomMultiLineString from 'ol/geom/MultiLineString.js';
-import olGeomMultiPoint from 'ol/geom/MultiPoint.js';
-import olGeomMultiPolygon from 'ol/geom/MultiPolygon.js';
-import olGeomPoint from 'ol/geom/Point.js';
-import olGeomPolygon from 'ol/geom/Polygon.js';
-import olStyleCircle from 'ol/style/Circle.js';
-import olStyleFill from 'ol/style/Fill.js';
-import olStyleStroke from 'ol/style/Stroke.js';
-import olStyleStyle from 'ol/style/Style.js';
-import olStyleText from 'ol/style/Text.js';
-import Geometry from 'ol/geom/Geometry.js';
+import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties';
+import ngeoFormatFeatureHashStyleType from 'ngeo/format/FeatureHashStyleType';
+import {rgbArrayToHex} from 'ngeo/utils';
+import {asArray as asColorArray} from 'ol/color';
+import olFeature from 'ol/Feature';
+import {transformGeometryWithOptions} from 'ol/format/Feature';
+import olFormatTextFeature from 'ol/format/TextFeature';
+import olGeomLineString from 'ol/geom/LineString';
+import olGeomMultiLineString from 'ol/geom/MultiLineString';
+import olGeomMultiPoint from 'ol/geom/MultiPoint';
+import olGeomMultiPolygon from 'ol/geom/MultiPolygon';
+import olGeomPoint from 'ol/geom/Point';
+import olGeomPolygon from 'ol/geom/Polygon';
+import olStyleCircle from 'ol/style/Circle';
+import olStyleFill from 'ol/style/Fill';
+import olStyleStroke from 'ol/style/Stroke';
+import olStyleStyle from 'ol/style/Style';
+import olStyleText from 'ol/style/Text';
+import Geometry from 'ol/geom/Geometry';
 
 /**
  * accuracy: The encoding and decoding accuracy. Optional. Default value is 1.
  *
  * @typedef {Object} FeatureHashOptions
  * @property {number} [accuracy] The encoding and decoding accuracy. Optional. Default value is 1.
- * @property {Object<string, function(olFeature<import("ol/geom/Geometry.js").default>): void>} [defaultValues] defaultValues.
+ * @property {Object<string, function(olFeature<import('ol/geom/Geometry').default>): void>} [defaultValues] defaultValues.
  * @property {boolean} [encodeStyles=true] Encode styles. Optional.
- * @property {function(olFeature<import("ol/geom/Geometry.js").default>): Object<string, (string|number|undefined)>} [properties]
+ * @property {function(olFeature<import('ol/geom/Geometry').default>): Object<string, (string|number|undefined)>} [properties]
  *    A function that returns serializable properties for a feature. Optional. By default the feature
  *    properties (as returned by `feature.getProperties()`) are used. To be serializable the returned
  *    properties should be numbers or strings.
@@ -73,7 +73,7 @@ let LegacyProperties_ = {};
 const DEFAULT_ACCURACY = 0.1;
 
 /**
- * @type {Object<string, import("ngeo/format/FeatureHashStyleType.js").default>}
+ * @type {Object<string, import('ngeo/format/FeatureHashStyleType').default>}
  * @private
  * @hidden
  */
@@ -168,7 +168,7 @@ class FeatureHash extends olFormatTextFeature {
     this.encodeStyles_ = options.encodeStyles || true;
 
     /**
-     * @type {function(olFeature<import("ol/geom/Geometry.js").default>):Object<string, (string|number|undefined)>}
+     * @type {function(olFeature<import('ol/geom/Geometry').default>):Object<string, (string|number|undefined)>}
      * @private
      */
     this.propertiesFunction_ = options.properties || defaultPropertiesFunction_;
@@ -198,7 +198,7 @@ class FeatureHash extends olFormatTextFeature {
     LegacyProperties_ = options.propertiesType || {};
 
     /**
-     * @type {Object<string, function(olFeature<import("ol/geom/Geometry.js").default>): void>}
+     * @type {Object<string, function(olFeature<import('ol/geom/Geometry').default>): void>}
      * @private
      */
     this.defaultValues_ = options.defaultValues || {};
@@ -274,8 +274,8 @@ class FeatureHash extends olFormatTextFeature {
   /**
    * Read a feature from a logical sequence of characters.
    * @param {string} text Text.
-   * @param {import('ol/format/Feature.js').ReadOptions} [opt_options] Read options.
-   * @return {olFeature<import("ol/geom/Geometry.js").default>} Feature.
+   * @param {import('ol/format/Feature').ReadOptions} [opt_options] Read options.
+   * @return {olFeature<import('ol/geom/Geometry').default>} Feature.
    * @protected
    * @override
    */
@@ -321,8 +321,8 @@ class FeatureHash extends olFormatTextFeature {
   /**
    * Read multiple features from a logical sequence of characters.
    * @param {string} text Text.
-   * @param {import('ol/format/Feature.js').ReadOptions} [opt_options] Read options.
-   * @return {olFeature<import("ol/geom/Geometry.js").default>[]} Features.
+   * @param {import('ol/format/Feature').ReadOptions} [opt_options] Read options.
+   * @return {olFeature<import('ol/geom/Geometry').default>[]} Features.
    * @protected
    * @override
    */
@@ -330,7 +330,7 @@ class FeatureHash extends olFormatTextFeature {
     console.assert(text.startsWith('F'));
     this.prevX_ = 0;
     this.prevY_ = 0;
-    /** @type {olFeature<import("ol/geom/Geometry.js").default>[]} */
+    /** @type {olFeature<import('ol/geom/Geometry').default>[]} */
     const features = [];
     text = text.substring(1);
     while (text.length > 0) {
@@ -356,7 +356,7 @@ class FeatureHash extends olFormatTextFeature {
   /**
    * Read a geometry from a logical sequence of characters.
    * @param {string} text Text.
-   * @param {import('ol/format/Feature.js').ReadOptions} [opt_options] Read options.
+   * @param {import('ol/format/Feature').ReadOptions} [opt_options] Read options.
    * @return {Geometry} Geometry.
    * @protected
    * @override
@@ -369,8 +369,8 @@ class FeatureHash extends olFormatTextFeature {
 
   /**
    * Encode a feature into a logical sequence of characters.
-   * @param {olFeature<import("ol/geom/Geometry.js").default>} feature Feature.
-   * @param {import('ol/format/Feature.js').ReadOptions} [opt_options] Read options.
+   * @param {olFeature<import('ol/geom/Geometry').default>} feature Feature.
+   * @param {import('ol/format/Feature').ReadOptions} [opt_options] Read options.
    * @return {string} Encoded feature.
    * @protected
    * @override
@@ -445,8 +445,8 @@ class FeatureHash extends olFormatTextFeature {
 
   /**
    * Encode an array of features into a logical sequence of characters.
-   * @param {olFeature<import("ol/geom/Geometry.js").default>[]} features Feature.
-   * @param {import('ol/format/Feature.js').ReadOptions} [opt_options] Read options.
+   * @param {olFeature<import('ol/geom/Geometry').default>[]} features Feature.
+   * @param {import('ol/format/Feature').ReadOptions} [opt_options] Read options.
    * @return {string} Encoded features.
    * @protected
    * @override
@@ -467,7 +467,7 @@ class FeatureHash extends olFormatTextFeature {
   /**
    * Encode a geometry into a logical sequence of characters.
    * @param {Geometry} geometry Geometry.
-   * @param {import('ol/format/Feature.js').ReadOptions} [opt_options] Read options.
+   * @param {import('ol/format/Feature').ReadOptions} [opt_options] Read options.
    * @return {string} Encoded geometry.
    * @protected
    * @override
@@ -491,7 +491,7 @@ export default FeatureHash;
 
 /**
  * Get features's properties.
- * @param {olFeature<import("ol/geom/Geometry.js").default>} feature Feature.
+ * @param {olFeature<import('ol/geom/Geometry').default>} feature Feature.
  * @return {Object<string, (string|number|undefined)>} The feature properties to
  * serialize.
  * @private
@@ -534,10 +534,10 @@ function encodeNumber_(num) {
 }
 
 /**
- * For a type of geometry, transforms an array of {@link import("ol/style/Style.js").default} into
+ * For a type of geometry, transforms an array of {@link import('ol/style/Style').default} into
  * a logical sequence of characters and put the result into the given encoded
  * styles's array.
- * @param {import("ol/style/Style.js").default[]} styles Styles.
+ * @param {import('ol/style/Style').default[]} styles Styles.
  * @param {string} geometryType Geometry type.
  * @param {string[]} encodedStyles Encoded styles array.
  * @private
@@ -571,9 +571,9 @@ function encodeStyles_(styles, geometryType, encodedStyles) {
 }
 
 /**
- * Transform an {@link import("ol/style/Stroke.js").default} into a logical sequence of
+ * Transform an {@link import('ol/style/Stroke').default} into a logical sequence of
  * characters and put the result into the given encoded styles's array.
- * @param {import("ol/style/Stroke.js").default} strokeStyle Stroke style.
+ * @param {import('ol/style/Stroke').default} strokeStyle Stroke style.
  * @param {string[]} encodedStyles Encoded styles array.
  * @private
  * @hidden
@@ -583,9 +583,9 @@ function encodeStyleLine_(strokeStyle, encodedStyles) {
 }
 
 /**
- * Transform an {@link import("ol/style/Circle.js").default} into a logical sequence of
+ * Transform an {@link import('ol/style/Circle').default} into a logical sequence of
  * characters and put the result into the given encoded styles's array.
- * @param {import("ol/style/Image.js").default} imageStyle Image style.
+ * @param {import('ol/style/Image').default} imageStyle Image style.
  * @param {string[]} encodedStyles Encoded styles array.
  * @private
  * @hidden
@@ -609,11 +609,11 @@ function encodeStylePoint_(imageStyle, encodedStyles) {
 }
 
 /**
- * Transform an {@link import("ol/style/Fill.js").default} and an
- * {@link import("ol/style/Stroke.js").default} into a logical sequence of characters and put the result into
+ * Transform an {@link import('ol/style/Fill').default} and an
+ * {@link import('ol/style/Stroke').default} into a logical sequence of characters and put the result into
  * the given encoded styles's array.
- * @param {import("ol/style/Fill.js").default} fillStyle Fill style.
- * @param {import("ol/style/Stroke.js").default} strokeStyle Stroke style.
+ * @param {import('ol/style/Fill').default} fillStyle Fill style.
+ * @param {import('ol/style/Stroke').default} strokeStyle Stroke style.
  * @param {string[]} encodedStyles Encoded styles array.
  * @private
  * @hidden
@@ -626,10 +626,10 @@ function encodeStylePolygon_(fillStyle, strokeStyle, encodedStyles) {
 }
 
 /**
- * Transform an {@link import("ol/style/Fill.js").default} and optionally its properties into
+ * Transform an {@link import('ol/style/Fill').default} and optionally its properties into
  * a logical sequence of characters and put the result into the given encoded
  * styles's array.
- * @param {import("ol/style/Fill.js").default} fillStyle Fill style.
+ * @param {import('ol/style/Fill').default} fillStyle Fill style.
  * @param {string[]} encodedStyles Encoded styles array.
  * @param {string} [propertyName='fillColor'] Property name.
  * @private
@@ -654,9 +654,9 @@ function encodeStyleFill_(fillStyle, encodedStyles, propertyName = 'fillColor') 
 }
 
 /**
- * Transform an {@link import("ol/style/Stroke.js").default} into a logical sequence of
+ * Transform an {@link import('ol/style/Stroke').default} into a logical sequence of
  * characters and put the result into the given encoded styles's array.
- * @param {import("ol/style/Stroke.js").default} strokeStyle Stroke style.
+ * @param {import('ol/style/Stroke').default} strokeStyle Stroke style.
  * @param {string[]} encodedStyles Encoded styles array.
  * @private
  * @hidden
@@ -682,9 +682,9 @@ function encodeStyleStroke_(strokeStyle, encodedStyles) {
 }
 
 /**
- * Transform an {@link import("ol/style/Text.js").default} into a logical sequence of characters and
+ * Transform an {@link import('ol/style/Text').default} into a logical sequence of characters and
  * put the result into the given encoded styles's array.
- * @param {import("ol/style/Text.js").default} textStyle Text style.
+ * @param {import('ol/style/Text').default} textStyle Text style.
  * @param {string[]} encodedStyles Encoded styles array.
  * @private
  * @hidden
@@ -708,9 +708,9 @@ function encodeStyleText_(textStyle, encodedStyles) {
 
 /**
  * Read a logical sequence of characters and return a corresponding
- * {@link import("ol/geom/LineString.js").default}.
+ * {@link import('ol/geom/LineString').default}.
  * @param {string} text Text.
- * @return {import("ol/geom/LineString.js").default} Line string.
+ * @return {import('ol/geom/LineString').default} Line string.
  * @private
  * @hidden
  * @this {FeatureHash}
@@ -725,9 +725,9 @@ function readLineStringGeometry_(text) {
 
 /**
  * Read a logical sequence of characters and return a corresponding
- * {@link import("ol/geom/MultiLineString.js").default}.
+ * {@link import('ol/geom/MultiLineString').default}.
  * @param {string} text Text.
- * @return {import("ol/geom/MultiLineString.js").default} Line string.
+ * @return {import('ol/geom/MultiLineString').default} Line string.
  * @private
  * @hidden
  * @this {FeatureHash}
@@ -749,9 +749,9 @@ function readMultiLineStringGeometry_(text) {
 
 /**
  * Read a logical sequence of characters and return a corresponding
- * {@link import("ol/geom/Point.js").default}.
+ * {@link import('ol/geom/Point').default}.
  * @param {string} text Text.
- * @return {import("ol/geom/Point.js").default} Point.
+ * @return {import('ol/geom/Point').default} Point.
  * @private
  * @hidden
  * @this {FeatureHash}
@@ -767,9 +767,9 @@ function readPointGeometry_(text) {
 
 /**
  * Read a logical sequence of characters and return a corresponding
- * {@link import("ol/geom/MultiPoint.js").default}.
+ * {@link import('ol/geom/MultiPoint').default}.
  * @param {string} text Text.
- * @return {import("ol/geom/MultiPoint.js").default} MultiPoint.
+ * @return {import('ol/geom/MultiPoint').default} MultiPoint.
  * @private
  * @hidden
  * @this {FeatureHash}
@@ -784,9 +784,9 @@ function readMultiPointGeometry_(text) {
 
 /**
  * Read a logical sequence of characters and return a corresponding
- * {@link import("ol/geom/Polygon.js").default}.
+ * {@link import('ol/geom/Polygon').default}.
  * @param {string} text Text.
- * @return {import("ol/geom/Polygon.js").default} Polygon.
+ * @return {import('ol/geom/Polygon').default} Polygon.
  * @private
  * @hidden
  * @this {FeatureHash}
@@ -816,9 +816,9 @@ function readPolygonGeometry_(text) {
 
 /**
  * Read a logical sequence of characters and return a corresponding
- * {@link import("ol/geom/MultiPolygon.js").default}.
+ * {@link import('ol/geom/MultiPolygon').default}.
  * @param {string} text Text.
- * @return {import("ol/geom/MultiPolygon.js").default} MultiPolygon.
+ * @return {import('ol/geom/MultiPolygon').default} MultiPolygon.
  * @private
  * @hidden
  * @this {FeatureHash}
@@ -859,7 +859,7 @@ function readMultiPolygonGeometry_(text) {
  * Read a logical sequence of characters and apply the decoded style on the
  * given feature.
  * @param {string} text Text.
- * @param {olFeature<import("ol/geom/Geometry.js").default>} feature Feature.
+ * @param {olFeature<import('ol/geom/Geometry').default>} feature Feature.
  * @private
  * @hidden
  */
@@ -896,7 +896,7 @@ function setStyleInFeature_(text, feature) {
     if (typeof pointRadius != 'number') {
       throw new Error('Missing pointRadius');
     }
-    /** @type {import('ol/style/Circle.js').Options} */
+    /** @type {import('ol/style/Circle').Options} */
     const options = {
       radius: pointRadius,
     };
@@ -941,7 +941,7 @@ function setStyleInFeature_(text, feature) {
  * style properties for the feature. Legacy keys are converted to the new ones
  * for compatibility.
  * @param {string} text Text.
- * @param {olFeature<import("ol/geom/Geometry.js").default>} feature Feature.
+ * @param {olFeature<import('ol/geom/Geometry').default>} feature Feature.
  * @private
  * @hidden
  */
@@ -1041,7 +1041,7 @@ function castValue_(key, value) {
  * depending on the property. Some properties are also deleted when they don't
  * match the geometry of the feature.
  * @param {string} text Text.
- * @param {olFeature<import("ol/geom/Geometry.js").default>} feature Feature.
+ * @param {olFeature<import('ol/geom/Geometry').default>} feature Feature.
  * @return {Object<string, boolean|number|string|undefined>} The style properties for the feature.
  * @private
  * @hidden
@@ -1065,7 +1065,7 @@ function getStyleProperties_(text, feature) {
 }
 
 /**
- * Encode a {@link import("ol/geom/LineString.js").default} geometry into a logical sequence of
+ * Encode a {@link import('ol/geom/LineString').default} geometry into a logical sequence of
  * characters.
  * @param {Geometry} geometry Geometry.
  * @return {?string} Encoded geometry.
@@ -1084,7 +1084,7 @@ function writeLineStringGeometry_(geometry) {
 }
 
 /**
- * Encode a {@link import("ol/geom/MultiLineString.js").default} geometry into a logical sequence
+ * Encode a {@link import('ol/geom/MultiLineString').default} geometry into a logical sequence
  * of characters.
  * @param {Geometry} geometry Geometry.
  * @return {?string} Encoded geometry.
@@ -1116,7 +1116,7 @@ function writeMultiLineStringGeometry_(geometry) {
 }
 
 /**
- * Encode a {@link import("ol/geom/Point.js").default} geometry into a logical sequence of
+ * Encode a {@link import('ol/geom/Point').default} geometry into a logical sequence of
  * characters.
  * @param {Geometry} geometry Geometry.
  * @return {?string} Encoded geometry.
@@ -1135,7 +1135,7 @@ function writePointGeometry_(geometry) {
 }
 
 /**
- * Encode an {@link import("ol/geom/MultiPoint.js").default} geometry into a logical sequence
+ * Encode an {@link import('ol/geom/MultiPoint').default} geometry into a logical sequence
  * of characters.
  * @param {Geometry} geometry Geometry.
  * @return {?string} Encoded geometry.
@@ -1154,7 +1154,7 @@ function writeMultiPointGeometry_(geometry) {
 }
 
 /**
- * Helper to encode an {@link import("ol/geom/Polygon.js").default} geometry.
+ * Helper to encode an {@link import('ol/geom/Polygon').default} geometry.
  * @param {number[]} flatCoordinates Flat coordinates.
  * @param {number} stride Stride.
  * @param {number} offset Offset.
@@ -1181,7 +1181,7 @@ function encodeRings_(flatCoordinates, stride, offset, ends, textArray) {
 }
 
 /**
- * Encode an {@link import("ol/geom/Polygon.js").default} geometry into a logical sequence
+ * Encode an {@link import('ol/geom/Polygon').default} geometry into a logical sequence
  * of characters.
  * @param {Geometry} geometry Geometry.
  * @return {?string} Encoded geometry.
@@ -1204,7 +1204,7 @@ function writePolygonGeometry_(geometry) {
 }
 
 /**
- * Encode an {@link import("ol/geom/MultiPoligon.js").default} geometry into a logical sequence of
+ * Encode an {@link import('ol/geom/MultiPoligon').default} geometry into a logical sequence of
  * characters.
  * @param {Geometry} geometry Geometry.
  * @return {string} Encoded geometry.

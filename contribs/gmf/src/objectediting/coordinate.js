@@ -20,7 +20,7 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 /**
- * @typedef {import("ol/coordinate.js").Coordinate} Coordinate
+ * @typedef {import('ol/coordinate').Coordinate} Coordinate
  */
 
 /**

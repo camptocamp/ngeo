@@ -20,9 +20,9 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import ngeoLayertreeController, {LayertreeController} from 'ngeo/layertree/Controller.js';
+import ngeoLayertreeController, {LayertreeController} from 'ngeo/layertree/Controller';
 
-import 'bootstrap/js/src/collapse.js'; // needed to collapse a layertree
+import 'bootstrap/js/src/collapse'; // needed to collapse a layertree
 
 /**
  * @type {angular.IModule}
@@ -116,9 +116,9 @@ myModule.run(
  *
  * @htmlAttribute {Object} ngeo-layertree One theme (JSON).
  * @htmlAttribute {string} ngeo-layertree-templateurl The template URL.
- * @htmlAttribute {import("ol/Map.js").default} ngeo-layertree-map The map.
+ * @htmlAttribute {import('ol/Map').default} ngeo-layertree-map The map.
  * @htmlAttribute {string} ngeo-layertree-nodelayer Expression that will be parsed
- *      to be a {@link Function} that return a {@link import("ol/layer/Layer.js").default}
+ *      to be a {@link Function} that return a {@link import('ol/layer/Layer').default}
  *      with the argument:
  *      {
  *          'node': {@link Object}|undefined,
@@ -130,7 +130,7 @@ myModule.run(
  *      to be a {@link Function} with the argument:
  *      {
  *          'treeScope': !{@link angular.IScope},
- *          'treeCtrl': {@link import("ngeo/layertree/Controller.js").LayertreeController}
+ *          'treeCtrl': {@link import('ngeo/layertree/Controller').LayertreeController}
  *      }
  * @htmlAttribute {string} ngeo-layertree-listenersexpr Expression that will be parsed
  *      to be a {@link ngeo-layertree-listeners}.

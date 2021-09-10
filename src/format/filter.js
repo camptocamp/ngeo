@@ -22,7 +22,7 @@
 /**
  * @module ngeo.format.filter
  */
-import olFormatFilterComparison from 'ol/format/filter/Comparison.js';
+import olFormatFilterComparison from 'ol/format/filter/Comparison';
 
 /**
  * @classdesc

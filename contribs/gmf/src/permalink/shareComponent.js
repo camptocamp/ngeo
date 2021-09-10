@@ -20,9 +20,9 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import gmfPermalinkShareService, {URL_MAX_LEN, URL_PATH_MAX_LEN} from 'gmf/permalink/ShareService.js';
-import ngeoStatemanagerLocation from 'ngeo/statemanager/Location.js';
-import {getUid as olUtilGetUid} from 'ol/util.js';
+import gmfPermalinkShareService, {URL_MAX_LEN, URL_PATH_MAX_LEN} from 'gmf/permalink/ShareService';
+import ngeoStatemanagerLocation from 'ngeo/statemanager/Location';
+import {getUid as olUtilGetUid} from 'ol/util';
 
 /**
  * @type {angular.IModule}
@@ -88,12 +88,12 @@ export class ShareComponentController {
   /**
    * The controller for the share component
    * @param {angular.IScope} $scope Scope.
-   * @param {import("ngeo/statemanager/Location.js").StatemanagerLocation} ngeoLocation ngeo Location service.
-   * @param {import("gmf/permalink/ShareService.js").PermalinkShareService} gmfShareService service for
+   * @param {import('ngeo/statemanager/Location').StatemanagerLocation} ngeoLocation ngeo Location service.
+   * @param {import('gmf/permalink/ShareService').PermalinkShareService} gmfShareService service for
    *    sharing map.
    * @param {angular.IQService} $q Angular q service
    * @param {angular.IAttributes} $attrs Attributes.
-   * @param {import('gmf/options.js').gmfShareOptions} gmfShareOptions The options.
+   * @param {import('gmf/options').gmfShareOptions} gmfShareOptions The options.
    * @class
    * @ngInject
    * @ngdoc controller
@@ -114,7 +114,7 @@ export class ShareComponentController {
     this.$scope_ = $scope;
 
     /**
-     * @type {import("gmf/permalink/ShareService.js").PermalinkShareService}
+     * @type {import('gmf/permalink/ShareService').PermalinkShareService}
      * @private
      */
     this.gmfShareService_ = gmfShareService;
@@ -126,7 +126,7 @@ export class ShareComponentController {
     this.$q_ = $q;
 
     /**
-     * @type {import("ngeo/statemanager/Location.js").StatemanagerLocation}
+     * @type {import('ngeo/statemanager/Location').StatemanagerLocation}
      * @private
      */
     this.ngeoLocation_ = ngeoLocation;

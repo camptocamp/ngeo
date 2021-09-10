@@ -20,9 +20,9 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import gmfPermalinkPermalink from 'gmf/permalink/Permalink.js';
-import gmfPermalinkShareService from 'gmf/permalink/ShareService.js';
-import gmfPermalinkShareComponent from 'gmf/permalink/shareComponent.js';
+import gmfPermalinkPermalink from 'gmf/permalink/Permalink';
+import gmfPermalinkShareService from 'gmf/permalink/ShareService';
+import gmfPermalinkShareComponent from 'gmf/permalink/shareComponent';
 
 import './share.scss';
 

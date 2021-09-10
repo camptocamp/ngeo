@@ -19,19 +19,19 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import {createEditingStyle} from 'ol/style/Style.js';
+import {createEditingStyle} from 'ol/style/Style';
 
 /**
  * @typedef {Object} DrawEventItem
- * @property {import('ol/Feature.js').default<import('ol/geom/Geometry.js').default>} feature
+ * @property {import('ol/Feature').default<import('ol/geom/Geometry').default>} feature
  */
 
 /**
- * @typedef {import("ngeo/CustomEvent.js").default<DrawEventItem>} DrawEvent
+ * @typedef {import('ngeo/CustomEvent').default<DrawEventItem>} DrawEvent
  */
 
 /**
- * @return {import('ol/style/Style.js').StyleFunction} Styles.
+ * @return {import('ol/style/Style').StyleFunction} Styles.
  * @hidden
  */
 export function getDefaultDrawStyleFunction() {
@@ -45,7 +45,7 @@ export function getDefaultDrawStyleFunction() {
 }
 
 /**
- * @return {import('ol/style/Style.js').StyleFunction} Styles.
+ * @return {import('ol/style/Style').StyleFunction} Styles.
  * @hidden
  */
 export function getDefaultModifyStyleFunction() {

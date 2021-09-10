@@ -20,8 +20,8 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import ngeoDatasourceHelper from 'ngeo/datasource/Helper.js';
-import {ServerType} from 'ngeo/datasource/OGC.js';
+import ngeoDatasourceHelper from 'ngeo/datasource/Helper';
+import {ServerType} from 'ngeo/datasource/OGC';
 
 /**
  * @hidden
@@ -31,7 +31,7 @@ export class DatasourceWFSAlias {
    * Service that provides methods to get additional information and actions
    * when performing WFS requests.
    *
-   * @param {import("ngeo/datasource/Helper.js").DatasourceHelper} ngeoDataSourcesHelper Ngeo data
+   * @param {import('ngeo/datasource/Helper').DatasourceHelper} ngeoDataSourcesHelper Ngeo data
    *     source helper service.
    * @ngdoc service
    * @ngname gmfWFSAliases
@@ -41,14 +41,14 @@ export class DatasourceWFSAlias {
     // === Injected properties ===
 
     /**
-     * @type {import("ngeo/datasource/Helper.js").DatasourceHelper}
+     * @type {import('ngeo/datasource/Helper').DatasourceHelper}
      * @private
      */
     this.ngeoDataSourcesHelper_ = ngeoDataSourcesHelper;
   }
 
   /**
-   * @param {import("ngeo/datasource/OGC.js").default} dataSource Data source.
+   * @param {import('ngeo/datasource/OGC').default} dataSource Data source.
    */
   describe(dataSource) {
     // Only QGIS Server supports WFS aliases

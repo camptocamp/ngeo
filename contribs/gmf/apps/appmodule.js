@@ -26,8 +26,8 @@
  */
 
 import angular from 'angular';
-import {decodeQueryString} from 'ngeo/utils.js';
-import AngularServices from 'ngeo/services.js';
+import {decodeQueryString} from 'ngeo/utils';
+import AngularServices from 'ngeo/services';
 
 /**
  * @type {angular.IModule}

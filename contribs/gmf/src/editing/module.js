@@ -20,12 +20,12 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import gmfEditingEditFeature from 'gmf/editing/EditFeature.js';
-import gmfEditingEditFeatureComponent from 'gmf/editing/editFeatureComponent.js';
-import gmfEditingEditFeatureSelectorComponent from 'gmf/editing/editFeatureSelectorComponent.js';
-import gmfEditingEnumerateAttribute from 'gmf/editing/EnumerateAttribute.js';
-import gmfEditingSnapping from 'gmf/editing/Snapping.js';
-import gmfEditingXSDAttributes from 'gmf/editing/XSDAttributes.js';
+import gmfEditingEditFeature from 'gmf/editing/EditFeature';
+import gmfEditingEditFeatureComponent from 'gmf/editing/editFeatureComponent';
+import gmfEditingEditFeatureSelectorComponent from 'gmf/editing/editFeatureSelectorComponent';
+import gmfEditingEnumerateAttribute from 'gmf/editing/EnumerateAttribute';
+import gmfEditingSnapping from 'gmf/editing/Snapping';
+import gmfEditingXSDAttributes from 'gmf/editing/XSDAttributes';
 
 /**
  * @type {angular.IModule}

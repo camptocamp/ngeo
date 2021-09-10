@@ -21,27 +21,27 @@
 
 import angular from 'angular';
 import './featurestyle.css';
-import gmfDrawingFeatureStyleComponent from 'gmf/drawing/featureStyleComponent.js';
+import gmfDrawingFeatureStyleComponent from 'gmf/drawing/featureStyleComponent';
 
-import gmfMapComponent from 'gmf/map/component.js';
+import gmfMapComponent from 'gmf/map/component';
 
-import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties.js';
-import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
-import olFeature from 'ol/Feature.js';
-import olMap from 'ol/Map.js';
-import olView from 'ol/View.js';
-import olGeomCircle from 'ol/geom/Circle.js';
-import olGeomLineString from 'ol/geom/LineString.js';
-import olGeomPoint from 'ol/geom/Point.js';
+import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties';
+import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper';
+import olFeature from 'ol/Feature';
+import olMap from 'ol/Map';
+import olView from 'ol/View';
+import olGeomCircle from 'ol/geom/Circle';
+import olGeomLineString from 'ol/geom/LineString';
+import olGeomPoint from 'ol/geom/Point';
 import olGeomPolygon, {
   fromCircle as olGeomPolygonFromCircle,
   fromExtent as olGeomPolygonFromExtent,
-} from 'ol/geom/Polygon.js';
-import olLayerTile from 'ol/layer/Tile.js';
-import olLayerVector from 'ol/layer/Vector.js';
-import olSourceOSM from 'ol/source/OSM.js';
-import olSourceVector from 'ol/source/Vector.js';
-import options from './options.js';
+} from 'ol/geom/Polygon';
+import olLayerTile from 'ol/layer/Tile';
+import olLayerVector from 'ol/layer/Vector';
+import olSourceOSM from 'ol/source/OSM';
+import olSourceVector from 'ol/source/Vector';
+import options from './options';
 
 /**
  * @type {angular.IModule}
@@ -57,7 +57,7 @@ const myModule = angular.module('gmfapp', [
 /**
  * @class
  * @param {angular.IScope} $scope Angular scope.
- * @param {import("ngeo/misc/FeatureHelper.js").FeatureHelper} ngeoFeatureHelper Gmf feature helper service.
+ * @param {import('ngeo/misc/FeatureHelper').FeatureHelper} ngeoFeatureHelper Gmf feature helper service.
  * @ngInject
  */
 function MainController($scope, ngeoFeatureHelper) {
@@ -67,7 +67,7 @@ function MainController($scope, ngeoFeatureHelper) {
   this.scope_ = $scope;
 
   /**
-   * @type {import("ngeo/misc/FeatureHelper.js").FeatureHelper}
+   * @type {import('ngeo/misc/FeatureHelper').FeatureHelper}
    */
   this.featureHelper_ = ngeoFeatureHelper;
 
@@ -181,7 +181,7 @@ function MainController($scope, ngeoFeatureHelper) {
   });
 
   /**
-   * @type {import("ol/Map.js").default}
+   * @type {import('ol/Map').default}
    */
   this.map = new olMap({
     layers: [
@@ -199,7 +199,7 @@ function MainController($scope, ngeoFeatureHelper) {
   });
 
   /**
-   * @type {?olFeature<import("ol/geom/Geometry.js").default>}
+   * @type {?olFeature<import('ol/geom/Geometry').default>}
    */
   this.selectedFeature = null;
 
@@ -210,12 +210,12 @@ function MainController($scope, ngeoFeatureHelper) {
 }
 
 /**
- * @param {import("ol/MapBrowserEvent.js").default<unknown>} evt MapBrowser event
+ * @param {import('ol/MapBrowserEvent').default<unknown>} evt MapBrowser event
  */
 MainController.prototype.handleMapSingleClick_ = function (evt) {
   const pixel = evt.pixel;
 
-  const feature = /** @type {olFeature<import("ol/geom/Geometry.js").default>} */ (
+  const feature = /** @type {olFeature<import('ol/geom/Geometry').default>} */ (
     this.map.forEachFeatureAtPixel(pixel, (feature) => feature)
   );
   if (this.selectedFeature) {

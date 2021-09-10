@@ -20,7 +20,7 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import gmfFileDropZone from 'gmf/dropfile/component.js';
+import gmfFileDropZone from 'gmf/dropfile/component';
 import './dropfile.scss';
 
 /**

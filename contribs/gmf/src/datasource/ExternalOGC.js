@@ -19,7 +19,7 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import ngeoDatasourceOGC from 'ngeo/datasource/OGC.js';
+import ngeoDatasourceOGC from 'ngeo/datasource/OGC';
 
 /**
  * Legend for external layers

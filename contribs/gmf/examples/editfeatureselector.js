@@ -22,29 +22,29 @@
 import angular from 'angular';
 import './editfeatureselector.css';
 import './gmf-hidden.inc.css';
-import 'bootstrap/js/src/tooltip.js';
-import gmfAuthenticationModule from 'gmf/authentication/module.js';
+import 'bootstrap/js/src/tooltip';
+import gmfAuthenticationModule from 'gmf/authentication/module';
 
-import gmfEditingEditFeatureSelectorComponent from 'gmf/editing/editFeatureSelectorComponent.js';
+import gmfEditingEditFeatureSelectorComponent from 'gmf/editing/editFeatureSelectorComponent';
 
-import gmfLayertreeComponent from 'gmf/layertree/component.js';
-import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
+import gmfLayertreeComponent from 'gmf/layertree/component';
+import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager';
 
-import gmfMapComponent from 'gmf/map/component.js';
+import gmfMapComponent from 'gmf/map/component';
 
-import gmfThemeThemes from 'gmf/theme/Themes.js';
-import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
-import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
-import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr.js';
-import EPSG2056 from 'ngeo/proj/EPSG_2056.js';
-import olCollection from 'ol/Collection.js';
-import olMap from 'ol/Map.js';
-import olView from 'ol/View.js';
-import olLayerTile from 'ol/layer/Tile.js';
-import olLayerVector from 'ol/layer/Vector.js';
-import olSourceOSM from 'ol/source/OSM.js';
-import olSourceVector from 'ol/source/Vector.js';
-import options from './options.js';
+import gmfThemeThemes from 'gmf/theme/Themes';
+import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper';
+import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate';
+import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr';
+import EPSG2056 from 'ngeo/proj/EPSG_2056';
+import olCollection from 'ol/Collection';
+import olMap from 'ol/Map';
+import olView from 'ol/View';
+import olLayerTile from 'ol/layer/Tile';
+import olLayerVector from 'ol/layer/Vector';
+import olSourceOSM from 'ol/source/OSM';
+import olSourceVector from 'ol/source/Vector';
+import options from './options';
 
 import user from 'ngeo/store/user.ts';
 
@@ -66,11 +66,11 @@ const myModule = angular.module('gmfapp', [
 
 /**
  * @param {angular.IScope} $scope Angular scope.
- * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes The gmf themes service.
- * @param {import("gmf/layertree/TreeManager.js").LayertreeTreeManager} gmfTreeManager gmf Tree Manager
+ * @param {import('gmf/theme/Themes').ThemesService} gmfThemes The gmf themes service.
+ * @param {import('gmf/layertree/TreeManager').LayertreeTreeManager} gmfTreeManager gmf Tree Manager
  *    service.
- * @param {import("ngeo/misc/FeatureHelper.js").FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
- * @param {import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate
+ * @param {import('ngeo/misc/FeatureHelper').FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
+ * @param {import('ngeo/misc/ToolActivateMgr').ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate
  *    manager service.
  * @ngInject
  * @class
@@ -82,7 +82,7 @@ function MainController($scope, gmfThemes, gmfTreeManager, ngeoFeatureHelper, ng
   this.scope_ = $scope;
 
   /**
-   * @type {import('gmf/authentication/Service.js').User}
+   * @type {import('gmf/authentication/Service').User}
    */
   this.gmfUser = null;
 
@@ -94,24 +94,24 @@ function MainController($scope, gmfThemes, gmfTreeManager, ngeoFeatureHelper, ng
 
   this.subscriptions_.push(
     user.getProperties().subscribe({
-      next: (value) => this.gmfUser = value
+      next: (value) => (this.gmfUser = value),
     })
   );
 
   /**
-   * @type {import("ngeo/misc/FeatureHelper.js").FeatureHelper}
+   * @type {import('ngeo/misc/FeatureHelper').FeatureHelper}
    */
   this.featureHelper_ = ngeoFeatureHelper;
 
   gmfThemes.loadThemes();
 
   /**
-   * @type {import("gmf/layertree/TreeManager.js").LayertreeTreeManager}
+   * @type {import('gmf/layertree/TreeManager').LayertreeTreeManager}
    */
   this.gmfTreeManager = gmfTreeManager;
 
   /**
-   * @type {import("ol/layer/Vector.js").default<import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>>}
+   * @type {import('ol/layer/Vector').default<import('ol/source/Vector').default<import('ol/geom/Geometry').default>>}
    */
   this.vectorLayer = new olLayerVector({
     source: new olSourceVector({
@@ -120,12 +120,12 @@ function MainController($scope, gmfThemes, gmfTreeManager, ngeoFeatureHelper, ng
     }),
     style: (feature, resolution) =>
       ngeoFeatureHelper.createEditingStyles(
-        /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>} */ (feature)
+        /** @type {import('ol/Feature').default<import('ol/geom/Geometry').default>} */ (feature)
       ),
   });
 
   /**
-   * @type {import("ol/Map.js").default}
+   * @type {import('ol/Map').default}
    */
   this.map = new olMap({
     layers: [

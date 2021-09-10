@@ -103,7 +103,7 @@ class ServiceManager {
 
   /**
    * Ask the provided service to save the data to an offline purpose
-   * @param {import("ol/extent.js").Extent} extent The extent to download.
+   * @param {import('ol/extent').Extent} extent The extent to download.
    * @param {import("ol/Map").default} map The map to work on.
    */
   save(extent, map) {
@@ -116,8 +116,8 @@ class ServiceManager {
 
   /**
    * Ask the provided service to restore the saved data on the map
-   * @param {import("ol/Map.js").default} map The map to work on.
-   * @return {Promise<import("ol/extent.js").Extent>} A promise to the extent of the downloaded area
+   * @param {import('ol/Map').default} map The map to work on.
+   * @return {Promise<import('ol/extent').Extent>} A promise to the extent of the downloaded area
    */
   restore(map) {
     if (!this.restoreService_) {

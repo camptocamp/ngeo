@@ -20,8 +20,8 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import gmfRasterComponent from 'gmf/raster/component.js';
-import gmfRasterRasterService from 'gmf/raster/RasterService.js';
+import gmfRasterComponent from 'gmf/raster/component';
+import gmfRasterRasterService from 'gmf/raster/RasterService';
 
 /**
  * @type {angular.IModule}

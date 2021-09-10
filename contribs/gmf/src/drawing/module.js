@@ -20,9 +20,9 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import gmfDrawingDrawFeatureComponent from 'gmf/drawing/drawFeatureComponent.js';
-import gmfDrawingDrawFeatureOptionsComponent from 'gmf/drawing/drawFeatureOptionsComponent.js';
-import gmfDrawingFeatureStyleComponent from 'gmf/drawing/featureStyleComponent.js';
+import gmfDrawingDrawFeatureComponent from 'gmf/drawing/drawFeatureComponent';
+import gmfDrawingDrawFeatureOptionsComponent from 'gmf/drawing/drawFeatureOptionsComponent';
+import gmfDrawingFeatureStyleComponent from 'gmf/drawing/featureStyleComponent';
 
 /**
  * @type {angular.IModule}

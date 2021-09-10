@@ -20,16 +20,16 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import './popupservice.css';
-import 'bootstrap/js/src/tooltip.js';
+import 'bootstrap/js/src/tooltip';
 import angular from 'angular';
-import ngeoMessagePopup from 'ngeo/message/Popup.js';
+import ngeoMessagePopup from 'ngeo/message/Popup';
 
 /** @type {angular.IModule} **/
 const myModule = angular.module('app', ['gettext', ngeoMessagePopup.name]);
 
 /**
  * @param {angular.ISCEService} $sce Angular sce service.
- * @param {import("ngeo/message/Popup.js").PopupFactory} ngeoCreatePopup Popup service.
+ * @param {import('ngeo/message/Popup').PopupFactory} ngeoCreatePopup Popup service.
  * @ngInject
  * @class
  */
@@ -40,7 +40,7 @@ function MainController($sce, ngeoCreatePopup) {
   this.sce_ = $sce;
 
   /**
-   * @type {import("ngeo/message/Popup.js").PopupFactory}
+   * @type {import('ngeo/message/Popup').PopupFactory}
    */
   this.createPopup_ = ngeoCreatePopup;
 

@@ -20,7 +20,7 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import gmfSpinnerDirective from 'gmf/spinner/directive.js';
+import gmfSpinnerDirective from 'gmf/spinner/directive';
 
 import './loader.scss';
 

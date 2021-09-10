@@ -20,17 +20,13 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import {
-  TimePropertyWidgetEnum,
-  TimePropertyResolutionEnum,
-  TimePropertyModeEnum,
-} from 'ngeo/datasource/OGC.js';
+import {TimePropertyWidgetEnum, TimePropertyResolutionEnum, TimePropertyModeEnum} from 'ngeo/datasource/OGC';
 
 describe('ngeo.misc.WMSTime service', () => {
-  /** @type {import("ngeo/misc/WMSTime.js").WMSTime} */
+  /** @type {import('ngeo/misc/WMSTime').WMSTime} */
   let ngeoWMSTime;
 
-  /** @type {import('ngeo/datasource/OGC.js').TimeProperty} */
+  /** @type {import('ngeo/datasource/OGC').TimeProperty} */
   const wmsTime = {
     widget: TimePropertyWidgetEnum.SLIDER,
     maxValue: '2015-12-31T00:00:00Z',

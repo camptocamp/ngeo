@@ -20,10 +20,10 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import olMap from 'ol/Map.js';
-import olStyleStyle from 'ol/style/Style.js';
-import olView from 'ol/View.js';
-import olFeature from 'ol/Feature.js';
+import olMap from 'ol/Map';
+import olStyleStyle from 'ol/style/Style';
+import olView from 'ol/View';
+import olFeature from 'ol/Feature';
 
 /**
  * Compare two list of objects using only the properties of the expected objects.
@@ -39,9 +39,9 @@ const compareGridData = function (data, expectedData) {
 };
 
 describe('gmf.query.gridComponent', () => {
-  /** @type {import('gmf/query/gridComponent.js').QueryGridController} */
+  /** @type {import('gmf/query/gridComponent').QueryGridController} */
   let queryGridController;
-  /** @type {import('ngeo/query/MapQuerent.js').QueryResult} */
+  /** @type {import('ngeo/query/MapQuerent').QueryResult} */
   let ngeoQueryResult;
   /** @type {angular.IScope} */
   let $scope;

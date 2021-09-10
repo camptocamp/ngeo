@@ -20,11 +20,11 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import ngeoDrawController from 'ngeo/draw/Controller.js';
-import ngeoGeometryType from 'ngeo/GeometryType.js';
-import ngeoInteractionMeasureArea from 'ngeo/interaction/MeasureArea.js';
-import {listen} from 'ol/events.js';
-import olStyleStyle from 'ol/style/Style.js';
+import ngeoDrawController from 'ngeo/draw/Controller';
+import ngeoGeometryType from 'ngeo/GeometryType';
+import ngeoInteractionMeasureArea from 'ngeo/interaction/MeasureArea';
+import {listen} from 'ol/events';
+import olStyleStyle from 'ol/style/Style';
 
 /**
  * @type {angular.IModule}
@@ -36,7 +36,7 @@ const myModule = angular.module('ngeoMeasurearea', [ngeoDrawController.name]);
  * @param {angular.ICompileService} $compile Angular compile service.
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext service.
  * @param {angular.IFilterService} $filter Angular filter
- * @param {import('ngeo/options.js').ngeoMeasurePrecision} ngeoMeasurePrecision The precision.
+ * @param {import('ngeo/options').ngeoMeasurePrecision} ngeoMeasurePrecision The precision.
  * @return {angular.IDirective} The directive specs.
  * @ngInject
  * @ngdoc directive
@@ -62,7 +62,7 @@ function measureAreaComponent($compile, gettextCatalog, $filter, ngeoMeasurePrec
         'Click to continue drawing<br>' + 'Double-click or click starting point to finish'
       );
 
-      /** @type {import('ngeo/interaction/Measure.js').MeasureOptions} */
+      /** @type {import('ngeo/interaction/Measure').MeasureOptions} */
       const options = {
         style: new olStyleStyle(),
         startMsg: $compile(`<div translate>${helpMsg}</div>`)($scope)[0],

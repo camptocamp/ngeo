@@ -290,8 +290,8 @@ Controller.prototype.backIfActive = function (element) {
 };
 
 /**
- * A directive to be used in conjunction with {@link import("gmf/mobile/navigation.js").default.component}.
- * The directive can be set on a slide element of {@link import("gmf/mobile/navigation.js").default.component}
+ * A directive to be used in conjunction with {@link import('gmf/mobile/navigation').default.component}.
+ * The directive can be set on a slide element of {@link import('gmf/mobile/navigation').default.component}
  * with an expression. When the value of the expression changes and becomes
  * true, the navigation returns to the previous slide, if the slide is
  * currently active.
@@ -337,9 +337,9 @@ function mobileNavigationBackComponent() {
 myModule.directive('gmfMobileNavBack', mobileNavigationBackComponent);
 
 /**
- * A directive to be used in conjunction with {@link import("gmf/mobile/navigation.js").default.component}.
+ * A directive to be used in conjunction with {@link import('gmf/mobile/navigation').default.component}.
  * The directive can be set on a slide element of
- * {@link import("gmf/mobile/navigation.js").default.component}.
+ * {@link import('gmf/mobile/navigation').default.component}.
  * When the element is clicked, the navigation returns to the previous slide if
  * the slide is currently active.
  *

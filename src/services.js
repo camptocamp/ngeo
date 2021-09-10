@@ -27,9 +27,9 @@
  */
 
 export default {
-  /** @type {import("gmf/authentication/Service.js").AuthenticationService} */
+  /** @type {import("gmf/authentication/Service").AuthenticationService} */
   auth: undefined,
 
-  /** @type {import("ngeo/message/Notification.js").MessageNotification} */
+  /** @type {import("ngeo/message/Notification").MessageNotification} */
   notification: undefined,
 };

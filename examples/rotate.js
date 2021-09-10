@@ -20,23 +20,23 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import ngeoInteractionRotate from 'ngeo/interaction/Rotate.js';
+import ngeoInteractionRotate from 'ngeo/interaction/Rotate';
 
-import olCollection from 'ol/Collection.js';
-import olFeature from 'ol/Feature.js';
-import olMap from 'ol/Map.js';
-import olView from 'ol/View.js';
-import olLayerTile from 'ol/layer/Tile.js';
-import olLayerVector from 'ol/layer/Vector.js';
-import olSourceOSM from 'ol/source/OSM.js';
-import olSourceVector from 'ol/source/Vector.js';
-import olStyleText from 'ol/style/Text.js';
-import olStyleStroke from 'ol/style/Stroke.js';
-import olStyleStyle from 'ol/style/Style.js';
-import olStyleFill from 'ol/style/Fill.js';
-import olStyleCircle from 'ol/style/Circle.js';
-import olGeomPolygon from 'ol/geom/Polygon.js';
-import ngeoMapModule from 'ngeo/map/module.js';
+import olCollection from 'ol/Collection';
+import olFeature from 'ol/Feature';
+import olMap from 'ol/Map';
+import olView from 'ol/View';
+import olLayerTile from 'ol/layer/Tile';
+import olLayerVector from 'ol/layer/Vector';
+import olSourceOSM from 'ol/source/OSM';
+import olSourceVector from 'ol/source/Vector';
+import olStyleText from 'ol/style/Text';
+import olStyleStroke from 'ol/style/Stroke';
+import olStyleStyle from 'ol/style/Style';
+import olStyleFill from 'ol/style/Fill';
+import olStyleCircle from 'ol/style/Circle';
+import olGeomPolygon from 'ol/geom/Polygon';
+import ngeoMapModule from 'ngeo/map/module';
 
 /** @type {angular.IModule} **/
 const myModule = angular.module('app', ['gettext', ngeoMapModule.name]);
@@ -50,7 +50,7 @@ const appmodule = angular.module('app', ['ngeo']);
  */
 function MainController() {
   /**
-   * @type {import("ol/Map.js").default}
+   * @type {import('ol/Map').default}
    */
   this.map = new olMap({
     layers: [
@@ -76,7 +76,7 @@ function MainController() {
   ]);
 
   /**
-   * @type {import("ol/Collection.js").default<olFeature<import("ol/geom/Geometry.js").default>>}
+   * @type {import('ol/Collection').default<olFeature<import('ol/geom/Geometry').default>>}
    */
   this.features = new olCollection();
 
@@ -97,7 +97,7 @@ function MainController() {
   // makes the vector layer "unmanaged", meaning that it is always on top.
   vectorLayer.setMap(map);
 
-  /** @type {import("ol/style/Style.js").StyleLike} */
+  /** @type {import('ol/style/Style').StyleLike} */
   const style = (function () {
     /** @type {Object<string, olStyleStyle|olStyleStyle[]>} */
     const styles = {};
@@ -135,7 +135,7 @@ function MainController() {
 
     return (
       /**
-       * @param {olFeature<import("ol/geom/Geometry.js").default>|import('ol/render/Feature.js').default} feature
+       * @param {olFeature<import('ol/geom/Geometry').default>|import('ol/render/Feature').default} feature
        * @param {number} resolution
        */
       function (feature, resolution) {
@@ -149,10 +149,10 @@ function MainController() {
   })();
 
   /**
-   * @type {import("ngeo/interaction/Rotate.js").default}
+   * @type {import('ngeo/interaction/Rotate').default}
    */
   this.interaction = new ngeoInteractionRotate(
-    /** @type {import('ol/interaction/Modify.js').Options} */ ({
+    /** @type {import('ol/interaction/Modify').Options} */ ({
       features: this.features,
       layers: [vectorLayer],
       style: style,
@@ -164,10 +164,10 @@ function MainController() {
   map.addInteraction(interaction);
 
   map.on(
-    /** @type {import('ol/Observable.js').EventTypes} */ ('singleclick'),
+    /** @type {import('ol/Observable').EventTypes} */ ('singleclick'),
     /** @type {function(?): ?} */ (
       /**
-       * @param {import('ol/MapBrowserEvent.js').default<unknown>} evt
+       * @param {import('ol/MapBrowserEvent').default<unknown>} evt
        */ (evt) => {
         const feature = this.map.forEachFeatureAtPixel(evt.pixel, (feature) => feature);
         if (feature) {

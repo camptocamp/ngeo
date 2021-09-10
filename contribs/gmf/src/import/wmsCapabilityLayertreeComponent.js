@@ -21,13 +21,13 @@
 
 import angular from 'angular';
 
-import gmfDatasourceExternalDataSourcesManager from 'gmf/datasource/ExternalDataSourcesManager.js';
+import gmfDatasourceExternalDataSourcesManager from 'gmf/datasource/ExternalDataSourcesManager';
 
-import ngeoMessagePopup from 'ngeo/message/Popup.js';
+import ngeoMessagePopup from 'ngeo/message/Popup';
 
-import {getUid as olUtilGetUid} from 'ol/util.js';
+import {getUid as olUtilGetUid} from 'ol/util';
 
-import 'bootstrap/js/src/collapse.js';
+import 'bootstrap/js/src/collapse';
 
 /**
  * @type {angular.IModule}
@@ -82,7 +82,7 @@ function gmfWmscapabilitylayertreenodeTemplateUrl($attrs, gmfWmscapabilitylayert
  */
 export class Controller {
   /**
-   * @param {import("gmf/datasource/ExternalDataSourcesManager.js").ExternalDatSourcesManager} gmfExternalDataSourcesManager
+   * @param {import('gmf/datasource/ExternalDataSourcesManager').ExternalDatSourcesManager} gmfExternalDataSourcesManager
    *     GMF service responsible of managing external data sources.
    * @ngInject
    * @ngdoc controller
@@ -113,7 +113,7 @@ export class Controller {
     // Injected properties
 
     /**
-     * @type {import("gmf/datasource/ExternalDataSourcesManager.js").ExternalDatSourcesManager}
+     * @type {import('gmf/datasource/ExternalDataSourcesManager').ExternalDatSourcesManager}
      * @private
      */
     this.gmfExternalDataSourcesManager_ = gmfExternalDataSourcesManager;

@@ -19,15 +19,15 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import {noModifierKeys, singleClick} from 'ol/events/condition.js';
-import olGeomLineString from 'ol/geom/LineString.js';
-import olGeomMultiPoint from 'ol/geom/MultiPoint.js';
-import olGeomMultiLineString from 'ol/geom/MultiLineString.js';
-import olGeomMultiPolygon from 'ol/geom/MultiPolygon.js';
-import olGeomPoint from 'ol/geom/Point.js';
-import olGeomPolygon from 'ol/geom/Polygon.js';
-import {getTopLeft, getTopRight, getBottomLeft, getBottomRight} from 'ol/extent.js';
-import {MAC} from 'ol/has.js';
+import {noModifierKeys, singleClick} from 'ol/events/condition';
+import olGeomLineString from 'ol/geom/LineString';
+import olGeomMultiPoint from 'ol/geom/MultiPoint';
+import olGeomMultiLineString from 'ol/geom/MultiLineString';
+import olGeomMultiPolygon from 'ol/geom/MultiPolygon';
+import olGeomPoint from 'ol/geom/Point';
+import olGeomPolygon from 'ol/geom/Polygon';
+import {getTopLeft, getTopRight, getBottomLeft, getBottomRight} from 'ol/extent';
+import {MAC} from 'ol/has';
 
 /**
  * Return whether the passed event has the 'ctrl' key (or 'meta' key on Mac) pressed or not.
@@ -88,12 +88,12 @@ export function getBrowserLanguage(availableLanguages) {
 /**
  * Utility method that converts a simple geometry to its multi equivalent. If
  * the geometry itself is already multi, it is returned as-is.
- * @param {import("ol/geom/Geometry.js").default} geometry A geometry
- * @return {import("ol/geom/Geometry.js").default} A multi geometry
+ * @param {import('ol/geom/Geometry').default} geometry A geometry
+ * @return {import('ol/geom/Geometry').default} A multi geometry
  * @hidden
  */
 export function toMulti(geometry) {
-  /** @type {import("ol/geom/Geometry.js").default} */
+  /** @type {import('ol/geom/Geometry').default} */
   let multiGeom;
   if (geometry instanceof olGeomPoint) {
     const multiGeomPoint = new olGeomMultiPoint([]);
@@ -199,7 +199,7 @@ export function encodeQueryString(queryData) {
 
 /**
  * Delete condition passed to the modify interaction
- * @param {import('ol/MapBrowserEvent.js').default<unknown>} event Browser event.
+ * @param {import('ol/MapBrowserEvent').default<unknown>} event Browser event.
  * @return {boolean} The result.
  * @hidden
  */
@@ -208,10 +208,10 @@ export function deleteCondition(event) {
 }
 
 /**
- * Takes an import("ol/extent.js").Extent and return an Array of
+ * Takes an import('ol/extent').Extent and return an Array of
  * ol.Coordinate representing a rectangle polygon.
- * @param {import("ol/extent.js").Extent} extent The extent.
- * @return {import("ol/coordinate.js").Coordinate[]} The Array of coordinate of the rectangle.
+ * @param {import('ol/extent').Extent} extent The extent.
+ * @return {import('ol/coordinate').Coordinate[]} The Array of coordinate of the rectangle.
  */
 export function extentToRectangle(extent) {
   const result = [

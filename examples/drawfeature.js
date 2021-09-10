@@ -21,17 +21,17 @@
 
 import './drawfeature.css';
 import angular from 'angular';
-import ngeoDrawModule from 'ngeo/draw/module.js';
+import ngeoDrawModule from 'ngeo/draw/module';
 
-import ngeoMapModule from 'ngeo/map/module.js';
-import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
-import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr.js';
-import olMap from 'ol/Map.js';
-import olView from 'ol/View.js';
-import olLayerTile from 'ol/layer/Tile.js';
-import olLayerVector from 'ol/layer/Vector.js';
-import olSourceOSM from 'ol/source/OSM.js';
-import olSourceVector from 'ol/source/Vector.js';
+import ngeoMapModule from 'ngeo/map/module';
+import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate';
+import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr';
+import olMap from 'ol/Map';
+import olView from 'ol/View';
+import olLayerTile from 'ol/layer/Tile';
+import olLayerVector from 'ol/layer/Vector';
+import olSourceOSM from 'ol/source/OSM';
+import olSourceVector from 'ol/source/Vector';
 
 /** @type {angular.IModule} **/
 const myModule = angular.module('app', [
@@ -43,9 +43,9 @@ const myModule = angular.module('app', [
 
 /**
  * @param {angular.IScope} $scope Angular scope.
- * @param {import("ol/Collection.js").default<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>} ngeoFeatures Collection
+ * @param {import('ol/Collection').default<import('ol/Feature').default<import('ol/geom/Geometry').default>>} ngeoFeatures Collection
  *    of features.
- * @param {import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate
+ * @param {import('ngeo/misc/ToolActivateMgr').ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate
  *    manager service.
  * @ngInject
  * @class
@@ -64,7 +64,7 @@ function MainController($scope, ngeoFeatures, ngeoToolActivateMgr) {
   });
 
   /**
-   * @type {import("ol/Map.js").default}
+   * @type {import('ol/Map').default}
    */
   this.map = new olMap({
     layers: [

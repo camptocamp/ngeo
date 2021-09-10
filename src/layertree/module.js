@@ -20,7 +20,7 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import ngeoLayertreeComponent from 'ngeo/layertree/component.js';
+import ngeoLayertreeComponent from 'ngeo/layertree/component';
 
 /**
  * Also related to the map but not included in the module:

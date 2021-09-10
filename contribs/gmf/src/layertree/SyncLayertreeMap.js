@@ -20,14 +20,14 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import gmfThemeThemes, {getNodeMinResolution, getNodeMaxResolution} from 'gmf/theme/Themes.js';
-import ngeoLayertreeController, {LayertreeVisitorDecision} from 'ngeo/layertree/Controller.js';
-import {DATASOURCE_ID, LAYER_NODE_NAME_KEY, NODE_IS_LEAF} from 'ngeo/map/LayerHelper.js';
-import ngeoMiscWMSTime from 'ngeo/misc/WMSTime.js';
-import {getUid as olUtilGetUid} from 'ol/util.js';
-import olLayerImage from 'ol/layer/Image.js';
-import olLayerTile from 'ol/layer/Tile.js';
-import Group from 'ol/layer/Group.js';
+import gmfThemeThemes, {getNodeMinResolution, getNodeMaxResolution} from 'gmf/theme/Themes';
+import ngeoLayertreeController, {LayertreeVisitorDecision} from 'ngeo/layertree/Controller';
+import {DATASOURCE_ID, LAYER_NODE_NAME_KEY, NODE_IS_LEAF} from 'ngeo/map/LayerHelper';
+import ngeoMiscWMSTime from 'ngeo/misc/WMSTime';
+import {getUid as olUtilGetUid} from 'ol/util';
+import olLayerImage from 'ol/layer/Image';
+import olLayerTile from 'ol/layer/Tile';
+import Group from 'ol/layer/Group';
 
 /**
  * Service to create layer based on a ngeo.layertree.Controller with a
@@ -37,9 +37,9 @@ import Group from 'ol/layer/Group.js';
  *
  * @class
  * @param {angular.IScope} $rootScope Angular rootScope.
- * @param {import("ngeo/map/LayerHelper.js").LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
- * @param {import("ngeo/misc/WMSTime.js").WMSTime} ngeoWMSTime wms time service.
- * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes The gmf Themes service.
+ * @param {import('ngeo/map/LayerHelper').LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
+ * @param {import('ngeo/misc/WMSTime').WMSTime} ngeoWMSTime wms time service.
+ * @param {import('gmf/theme/Themes').ThemesService} gmfThemes The gmf Themes service.
  * @ngInject
  * @ngdoc service
  * @ngname gmfSyncLayertreeMap
@@ -47,17 +47,17 @@ import Group from 'ol/layer/Group.js';
  */
 export function SyncLayertreeMap($rootScope, ngeoLayerHelper, ngeoWMSTime, gmfThemes) {
   /**
-   * @type {import("ngeo/map/LayerHelper.js").LayerHelper}
+   * @type {import('ngeo/map/LayerHelper').LayerHelper}
    */
   this.layerHelper_ = ngeoLayerHelper;
 
   /**
-   * @type {import("ngeo/misc/WMSTime.js").WMSTime}
+   * @type {import('ngeo/misc/WMSTime').WMSTime}
    */
   this.ngeoWMSTime_ = ngeoWMSTime;
 
   /**
-   * @type {?import('gmf/themes.js').GmfOgcServers}
+   * @type {?import('gmf/themes').GmfOgcServers}
    */
   this.ogcServersObject_ = null;
 
@@ -73,23 +73,23 @@ export function SyncLayertreeMap($rootScope, ngeoLayerHelper, ngeoWMSTime, gmfTh
 /**
  * Create, insert (or update) and return a layer from the GmfGroup or the
  * GmfLayer of the given treeCtrl.
- * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl ngeo layertree controller.
- * @param {import("ol/Map.js").default} map A map that contains the group to insert the not first
+ * @param {import('ngeo/layertree/Controller').LayertreeController} treeCtrl ngeo layertree controller.
+ * @param {import('ol/Map').default} map A map that contains the group to insert the not first
  *     level group layer.
- * @param {import("ol/layer/Group.js").default} dataLayerGroup the layer group to insert the first
+ * @param {import('ol/layer/Group').default} dataLayerGroup the layer group to insert the first
  *     level group layer.
  * @param {number} [opt_position] for first level Group, you can precise the
  *     position to add the group in the array of layers of the dataLayerGroup.
- * @return {?import("ol/layer/Base.js").default|import("ol/layer/Group.js").default} a new layer.
+ * @return {?import('ol/layer/Base').default|import('ol/layer/Group').default} a new layer.
  * @public
  */
 SyncLayertreeMap.prototype.createLayer = function (treeCtrl, map, dataLayerGroup, opt_position) {
   /**
-   * @type {?import("ol/layer/Base.js").default|import("ol/layer/Group.js").default}
+   * @type {?import('ol/layer/Base').default|import('ol/layer/Group').default}
    */
   let layer = null;
-  const gmfGroup = /** @type {import('gmf/themes.js').GmfGroup} */ (treeCtrl.node);
-  const gmfParentGroup = /** @type {import('gmf/themes.js').GmfGroup} */ (treeCtrl.parent.node);
+  const gmfGroup = /** @type {import('gmf/themes').GmfGroup} */ (treeCtrl.node);
+  const gmfParentGroup = /** @type {import('gmf/themes').GmfGroup} */ (treeCtrl.parent.node);
   if (gmfGroup.children !== undefined && gmfGroup.mixed) {
     // Mixed groups
     layer = this.createGroup_(treeCtrl, map, dataLayerGroup, opt_position);
@@ -114,14 +114,14 @@ SyncLayertreeMap.prototype.createLayer = function (treeCtrl, map, dataLayerGroup
 /**
  * Synchronise the state of each layers corresponding to the given tree and
  * all its children.
- * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl ngeo layertree controller.
+ * @param {import('ngeo/layertree/Controller').LayertreeController} treeCtrl ngeo layertree controller.
  */
 SyncLayertreeMap.prototype.sync_ = function (treeCtrl) {
   treeCtrl.traverseDepthFirst((treeCtrl) => {
-    const gmfGroup = /** @type {import('gmf/themes.js').GmfGroup} */ (treeCtrl.node);
+    const gmfGroup = /** @type {import('gmf/themes').GmfGroup} */ (treeCtrl.node);
     if (treeCtrl.layer && !gmfGroup.mixed) {
       this.updateLayerState_(
-        /** @type {import("ol/layer/Image.js").default<import("ol/source/Image.js").default>|import("ol/layer/Tile.js").default<import("ol/source/Tile.js").default>} */ (
+        /** @type {import('ol/layer/Image').default<import('ol/source/Image').default>|import('ol/layer/Tile').default<import('ol/source/Tile').default>} */ (
           treeCtrl.layer
         ),
         treeCtrl
@@ -133,12 +133,12 @@ SyncLayertreeMap.prototype.sync_ = function (treeCtrl) {
 
 /**
  * Set the active state of a layer based on its treeCtrl state.
- * @param {import("ol/layer/Tile.js").default<import("ol/source/Tile.js").default>|import("ol/layer/Image.js").default<import("ol/source/Image.js").default>} layer A layer.
- * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl ngeo layertree controller.
+ * @param {import('ol/layer/Tile').default<import('ol/source/Tile').default>|import('ol/layer/Image').default<import('ol/source/Image').default>} layer A layer.
+ * @param {import('ngeo/layertree/Controller').LayertreeController} treeCtrl ngeo layertree controller.
  */
 SyncLayertreeMap.prototype.updateLayerState_ = function (layer, treeCtrl) {
-  const gmfGroup = /** @type {import('gmf/themes.js').GmfGroup} */ (treeCtrl.node);
-  const gmfLayer = /** @type {import('gmf/themes.js').GmfLayer} */ (treeCtrl.node);
+  const gmfGroup = /** @type {import('gmf/themes').GmfGroup} */ (treeCtrl.node);
+  const gmfLayer = /** @type {import('gmf/themes').GmfLayer} */ (treeCtrl.node);
   const active = treeCtrl.getState() === 'on';
   if (gmfLayer.type === 'WMTS') {
     layer.setVisible(active);
@@ -152,9 +152,9 @@ SyncLayertreeMap.prototype.updateLayerState_ = function (layer, treeCtrl) {
     /** @type {string[]} */
     const styles = [];
     treeCtrl.traverseDepthFirst((treeCtrl) => {
-      const gmfGroup = /** @type {import('gmf/themes.js').GmfGroup} */ (treeCtrl.node);
+      const gmfGroup = /** @type {import('gmf/themes').GmfGroup} */ (treeCtrl.node);
       if (gmfGroup.children === undefined && treeCtrl.getState() === 'on') {
-        const gmfLayerWMS = /** @type {import('gmf/themes.js').GmfLayerWMS} */ (
+        const gmfLayerWMS = /** @type {import('gmf/themes').GmfLayerWMS} */ (
           /** @type {any} */ (treeCtrl.node)
         );
         names.push(gmfLayerWMS.layers);
@@ -166,7 +166,7 @@ SyncLayertreeMap.prototype.updateLayerState_ = function (layer, treeCtrl) {
     if (names.length === 0) {
       layer.setVisible(false);
     }
-    /** @type {import("ol/source/ImageWMS.js").default} */ (layer.getSource()).updateParams({
+    /** @type {import('ol/source/ImageWMS').default} */ (layer.getSource()).updateParams({
       'LAYERS': names.reverse().join(','),
       'STYLES': styles.reverse().join(','),
     });
@@ -186,17 +186,17 @@ SyncLayertreeMap.prototype.updateLayerState_ = function (layer, treeCtrl) {
  * Create insert and return a layer group (for not mixed case) or a wmsLayer (for
  * mixed case). Take care about the insertion order in the map in case of first
  * level group.
- * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl ngeo layertree controller.
- * @param {import("ol/Map.js").default} map A map that contains the group to insert the not first
+ * @param {import('ngeo/layertree/Controller').LayertreeController} treeCtrl ngeo layertree controller.
+ * @param {import('ol/Map').default} map A map that contains the group to insert the not first
  *     level group layer.
- * @param {import("ol/layer/Group.js").default} dataLayerGroup the layer group to insert the first
+ * @param {import('ol/layer/Group').default} dataLayerGroup the layer group to insert the first
  *     level group layer.
  * @param {number} [opt_position] for first level Group, you can precise the
  *     position to add the group in the array of layers of the dataLayerGroup.
- * @return {import("ol/layer/Image.js").default<import("ol/source/Image.js").default>|import("ol/layer/Group.js").default} a new layer.
+ * @return {import('ol/layer/Image').default<import('ol/source/Image').default>|import('ol/layer/Group').default} a new layer.
  */
 SyncLayertreeMap.prototype.createGroup_ = function (treeCtrl, map, dataLayerGroup, opt_position) {
-  const groupNode = /** @type {import('gmf/themes.js').GmfGroup} */ (treeCtrl.node);
+  const groupNode = /** @type {import('gmf/themes').GmfGroup} */ (treeCtrl.node);
   let layer = null;
   const isFirstLevelGroup = treeCtrl.parent.isRoot;
 
@@ -234,14 +234,14 @@ SyncLayertreeMap.prototype.createGroup_ = function (treeCtrl, map, dataLayerGrou
 /**
  * Create, insert and return a layer group (for not mixed case) or a wmsLayer
  * for mixed case).
- * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl ngeo layertree controller.
+ * @param {import('ngeo/layertree/Controller').LayertreeController} treeCtrl ngeo layertree controller.
  * @param {boolean} mixed True for a group layer, false for a WMS layer.
- * @return {import("ol/layer/Image.js").default<import("ol/source/Image.js").default>|import("ol/layer/Group.js").default} a new layer.
+ * @return {import('ol/layer/Image').default<import('ol/source/Image').default>|import('ol/layer/Group').default} a new layer.
  */
 SyncLayertreeMap.prototype.createLayerFromGroup_ = function (treeCtrl, mixed) {
-  /** @type {import("ol/layer/Image.js").default<import("ol/source/Image.js").default>|import("ol/layer/Group.js").default} */
+  /** @type {import('ol/layer/Image').default<import('ol/source/Image').default>|import('ol/layer/Group').default} */
   let layer;
-  const groupNode = /** @type {import('gmf/themes.js').GmfGroup} */ (treeCtrl.node);
+  const groupNode = /** @type {import('gmf/themes').GmfGroup} */ (treeCtrl.node);
   if (mixed) {
     // Will be one ol.layer per each node.
     layer = this.layerHelper_.createBasicGroup();
@@ -280,11 +280,11 @@ SyncLayertreeMap.prototype.createLayerFromGroup_ = function (treeCtrl, mixed) {
     let hasActiveChildren = false;
     treeCtrl.traverseDepthFirst((ctrl) => {
       // Update layer information and tree state.
-      this.updateLayerReferences_(/** @type {import('gmf/themes.js').GmfBaseNode} */ (ctrl.node), layer);
+      this.updateLayerReferences_(/** @type {import('gmf/themes').GmfBaseNode} */ (ctrl.node), layer);
       if (ctrl.node.metadata.isChecked) {
         ctrl.setState('on', false);
         this.updateLayerState_(
-          /** @type {import("ol/layer/Image.js").default<import("ol/source/Image.js").default>} */ (layer),
+          /** @type {import('ol/layer/Image').default<import('ol/source/Image').default>} */ (layer),
           ctrl
         );
         hasActiveChildren = true;
@@ -299,23 +299,23 @@ SyncLayertreeMap.prototype.createLayerFromGroup_ = function (treeCtrl, mixed) {
 
 /**
  * Create and insert a layer from a leaf in a mixed group.
- * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl ngeo layertree controller.
- * @param {import("ol/Map.js").default} map A map that contains the group to insert the layer.
- * @return {import("ol/layer/Tile.js").default<import("ol/source/Tile.js").default>|import("ol/layer/Image.js").default<import("ol/source/Image.js").default>} a new layer.
+ * @param {import('ngeo/layertree/Controller').LayertreeController} treeCtrl ngeo layertree controller.
+ * @param {import('ol/Map').default} map A map that contains the group to insert the layer.
+ * @return {import('ol/layer/Tile').default<import('ol/source/Tile').default>|import('ol/layer/Image').default<import('ol/source/Image').default>} a new layer.
  */
 SyncLayertreeMap.prototype.createLeafInAMixedGroup_ = function (treeCtrl, map) {
-  const gmfLayer = /** @type {import('gmf/themes.js').GmfLayer} */ (treeCtrl.node);
+  const gmfLayer = /** @type {import('gmf/themes').GmfLayer} */ (treeCtrl.node);
   let layer;
   // Make layer.
   if (gmfLayer.type === 'WMTS') {
     layer = this.createWMTSLayer_(
-      /** @type {import('gmf/themes.js').GmfLayerWMTS} */ (/** @type {any} */ (gmfLayer))
+      /** @type {import('gmf/themes').GmfLayerWMTS} */ (/** @type {any} */ (gmfLayer))
     );
   } else {
     if (!this.ogcServersObject_) {
       throw new Error('Missing ogcServersObject');
     }
-    const gmfLayerWMS = /** @type {import('gmf/themes.js').GmfLayerWMS} */ (/** @type {any} */ (gmfLayer));
+    const gmfLayerWMS = /** @type {import('gmf/themes').GmfLayerWMS} */ (/** @type {any} */ (gmfLayer));
     const timeParam = this.getTimeParam_(treeCtrl);
     const ogcServer = this.ogcServersObject_[gmfLayerWMS.ogcServer];
     if (!ogcServer) {
@@ -357,7 +357,7 @@ SyncLayertreeMap.prototype.createLeafInAMixedGroup_ = function (treeCtrl, map) {
   }
   layer.setVisible(checked);
   // Insert layer in the map.
-  const layerGroup = /** @type {import("ol/layer/Group.js").default} */ (getLayer(treeCtrl.parent));
+  const layerGroup = /** @type {import('ol/layer/Group').default} */ (getLayer(treeCtrl.parent));
   layerGroup.getLayers().insertAt(0, layer);
   return layer;
 };
@@ -366,11 +366,11 @@ SyncLayertreeMap.prototype.createLeafInAMixedGroup_ = function (treeCtrl, map) {
  * Update a WMS layer with the given treeCtrl node information. Assumes that
  * the first parent with ogcServer information is linked to the layer to update
  * and that this treeCtrl node is a leafNode.
- * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl ngeo layertree controller.
- * @param {import("ol/Map.js").default} map A map that contains the layer to update.
+ * @param {import('ngeo/layertree/Controller').LayertreeController} treeCtrl ngeo layertree controller.
+ * @param {import('ol/Map').default} map A map that contains the layer to update.
  */
 SyncLayertreeMap.prototype.initGmfLayerInANotMixedGroup_ = function (treeCtrl, map) {
-  const leafNode = /** @type {import('gmf/themes.js').GmfLayer} */ (treeCtrl.node);
+  const leafNode = /** @type {import('gmf/themes').GmfLayer} */ (treeCtrl.node);
   const firstLevelGroup = this.getFirstLevelGroupCtrl_(treeCtrl);
   if (!firstLevelGroup) {
     throw new Error('Missing firstLevelGroup');
@@ -394,8 +394,8 @@ SyncLayertreeMap.prototype.initGmfLayerInANotMixedGroup_ = function (treeCtrl, m
 
 /**
  * Create and return a Tile layer.
- * @param {import('gmf/themes.js').GmfLayerWMTS} gmfLayerWMTS A leaf node.
- * @return {import("ol/layer/Tile.js").default<import("ol/source/Tile.js").default>} a Tile WMTS layer. (Source and capabilities can come
+ * @param {import('gmf/themes').GmfLayerWMTS} gmfLayerWMTS A leaf node.
+ * @return {import('ol/layer/Tile').default<import('ol/source/Tile').default>} a Tile WMTS layer. (Source and capabilities can come
  *     later).
  */
 SyncLayertreeMap.prototype.createWMTSLayer_ = function (gmfLayerWMTS) {
@@ -428,8 +428,8 @@ SyncLayertreeMap.prototype.createWMTSLayer_ = function (gmfLayerWMTS) {
 
 /**
  * Update properties of a layer with the node of a given leafNode.
- * @param {import('gmf/themes.js').GmfBaseNode} node a tree node.
- * @param {import("ol/layer/Base.js").default} layer A layer.
+ * @param {import('gmf/themes').GmfBaseNode} node a tree node.
+ * @param {import('ol/layer/Base').default} layer A layer.
  */
 SyncLayertreeMap.prototype.updateLayerReferences_ = function (node, layer) {
   // Set query source
@@ -446,7 +446,7 @@ SyncLayertreeMap.prototype.updateLayerReferences_ = function (node, layer) {
     // 'all' means that the disclaimer is for all the layer.
     let layers = 'all';
     if ('layers' in node) {
-      layers = /** @type {import('gmf/themes.js').GmfLayerWMS} */ (node).layers;
+      layers = /** @type {import('gmf/themes').GmfLayerWMS} */ (node).layers;
     }
     disclaimers[layers] = disclaimer;
     layer.set('disclaimers', disclaimers);
@@ -456,18 +456,18 @@ SyncLayertreeMap.prototype.updateLayerReferences_ = function (node, layer) {
 /**
  * Get the time parameter for a WMS Layer. If it's a group and it doesn't have
  * time, get the first time parameter available in any child.
- * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl ngeo layertree controller.
+ * @param {import('ngeo/layertree/Controller').LayertreeController} treeCtrl ngeo layertree controller.
  * @return {string|undefined} A wms time param.
  */
 SyncLayertreeMap.prototype.getTimeParam_ = function (treeCtrl) {
   let wmsTime;
   let timeParam;
-  const node = /** @type {import('gmf/themes.js').GmfGroup} */ (treeCtrl.node);
+  const node = /** @type {import('gmf/themes').GmfGroup} */ (treeCtrl.node);
   if (node.time) {
     wmsTime = node.time;
   } else if (node.children) {
     treeCtrl.traverseDepthFirst((treeCtrl) => {
-      const node = /** @type {import('gmf/themes.js').GmfGroup} */ (treeCtrl.node);
+      const node = /** @type {import('gmf/themes').GmfGroup} */ (treeCtrl.node);
       if (node.children === undefined && node.time) {
         wmsTime = node.time;
         return LayertreeVisitorDecision.STOP;
@@ -488,14 +488,14 @@ SyncLayertreeMap.prototype.getTimeParam_ = function (treeCtrl) {
 
 /**
  * Return true if a parent tree is mixed, based on its node.
- * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl ngeo layertree controller.
+ * @param {import('ngeo/layertree/Controller').LayertreeController} treeCtrl ngeo layertree controller.
  * @return {boolean} True is any parent is mixed. False Otherwise.
  */
 SyncLayertreeMap.prototype.isOneParentNotMixed_ = function (treeCtrl) {
   let tree = treeCtrl.parent;
   let isOneParentNotMix = false;
   do {
-    const gmfGroup = /** @type {import('gmf/themes.js').GmfGroup} */ (tree.node);
+    const gmfGroup = /** @type {import('gmf/themes').GmfGroup} */ (tree.node);
     isOneParentNotMix = gmfGroup.mixed === false;
     tree = tree.parent;
   } while (tree.parent && !isOneParentNotMix);
@@ -504,8 +504,8 @@ SyncLayertreeMap.prototype.isOneParentNotMixed_ = function (treeCtrl) {
 
 /**
  * Return the first parent, from the root parent, that is not mixed.
- * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl ngeo layertree controller.
- * @return {import("ngeo/layertree/Controller.js").LayertreeController} The first not mixed parent.
+ * @param {import('ngeo/layertree/Controller').LayertreeController} treeCtrl ngeo layertree controller.
+ * @return {import('ngeo/layertree/Controller').LayertreeController} The first not mixed parent.
  */
 SyncLayertreeMap.prototype.getFirstLevelGroupCtrl_ = function (treeCtrl) {
   let tree = treeCtrl;
@@ -517,8 +517,8 @@ SyncLayertreeMap.prototype.getFirstLevelGroupCtrl_ = function (treeCtrl) {
 
 /**
  * Return the layer used by the given treeCtrl.
- * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl ngeo layertree controller.
- * @return {import("ol/layer/Base.js").default} The layer.
+ * @param {import('ngeo/layertree/Controller').LayertreeController} treeCtrl ngeo layertree controller.
+ * @return {import('ol/layer/Base').default} The layer.
  * @hidden
  */
 export function getLayer(treeCtrl) {

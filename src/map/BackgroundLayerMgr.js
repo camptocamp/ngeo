@@ -20,24 +20,24 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import ngeoCustomEvent from 'ngeo/CustomEvent.js';
-import {getUid as olUtilGetUid} from 'ol/util.js';
-import olObservable from 'ol/Observable.js';
-import olLayerGroup from 'ol/layer/Group.js';
-import olLayerLayer from 'ol/layer/Layer.js';
-import olSourceImageWMS from 'ol/source/ImageWMS.js';
-import olSourceTileWMS from 'ol/source/TileWMS.js';
-import olSourceWMTS from 'ol/source/WMTS.js';
-import ngeoLayerHelper from 'ngeo/map/LayerHelper.js';
+import ngeoCustomEvent from 'ngeo/CustomEvent';
+import {getUid as olUtilGetUid} from 'ol/util';
+import olObservable from 'ol/Observable';
+import olLayerGroup from 'ol/layer/Group';
+import olLayerLayer from 'ol/layer/Layer';
+import olSourceImageWMS from 'ol/source/ImageWMS';
+import olSourceTileWMS from 'ol/source/TileWMS';
+import olSourceWMTS from 'ol/source/WMTS';
+import ngeoLayerHelper from 'ngeo/map/LayerHelper';
 
 /**
  * @typedef {Object} BackgroundEventDetails
- * @property {import("ol/layer/Base.js").default} current
- * @property {?import("ol/layer/Base.js").default} previous
+ * @property {import('ol/layer/Base').default} current
+ * @property {?import('ol/layer/Base').default} previous
  */
 
 /**
- * @typedef {import("ngeo/CustomEvent.js").default<BackgroundEventDetails>} BackgroundEvent
+ * @typedef {import('ngeo/CustomEvent').default<BackgroundEventDetails>} BackgroundEvent
  */
 
 /**
@@ -87,7 +87,7 @@ const BACKGROUNDLAYERGROUP_NAME = 'background';
  */
 export class MapBackgroundLayerManager extends olObservable {
   /**
-   * @param {import("ngeo/map/LayerHelper.js").LayerHelper} ngeoLayerHelper Themes service.
+   * @param {import('ngeo/map/LayerHelper').LayerHelper} ngeoLayerHelper Themes service.
    * @ngInject
    */
   constructor(ngeoLayerHelper) {
@@ -101,7 +101,7 @@ export class MapBackgroundLayerManager extends olObservable {
     this.mapUids_ = {};
 
     /**
-     * @type {import("ngeo/map/LayerHelper.js").LayerHelper}
+     * @type {import('ngeo/map/LayerHelper').LayerHelper}
      * @private
      */
     this.ngeoLayerHelper_ = ngeoLayerHelper;
@@ -110,8 +110,8 @@ export class MapBackgroundLayerManager extends olObservable {
   /**
    * Return the current background layer of a given map. `null` is returned if
    * the map does not have a background layer.
-   * @param {import("ol/Map.js").default} map Map.
-   * @return {?import("ol/layer/Base.js").default} layer The background layer.
+   * @param {import('ol/Map').default} map Map.
+   * @return {?import('ol/layer/Base').default} layer The background layer.
    */
   get(map) {
     const mapUid = olUtilGetUid(map).toString();
@@ -123,9 +123,9 @@ export class MapBackgroundLayerManager extends olObservable {
   /**
    * Set the background layer of a map. If `layer` is `null` the background layer
    * is removed.
-   * @param {import("ol/Map.js").default} map The map.
-   * @param {import("ol/layer/Base.js").default} layer The new background layer.
-   * @return {?import("ol/layer/Base.js").default} The previous background layer.
+   * @param {import('ol/Map').default} map The map.
+   * @param {import('ol/layer/Base').default} layer The new background layer.
+   * @return {?import('ol/layer/Base').default} The previous background layer.
    */
   set(map, layer) {
     const ZIndex = -200;
@@ -163,8 +163,8 @@ export class MapBackgroundLayerManager extends olObservable {
   /**
    * Return the current background layer overlay of a given map, used by the opacity slider.
    * `null` is returned if the map does not have an opacity background layer.
-   * @param {import("ol/Map.js").default} map Map.
-   * @return {?import("ol/layer/Base.js").default} layer The opacity background layer.
+   * @param {import('ol/Map').default} map Map.
+   * @return {?import('ol/layer/Base').default} layer The opacity background layer.
    */
   getOpacityBgLayer(map) {
     const mapUid = olUtilGetUid(map).toString();
@@ -175,8 +175,8 @@ export class MapBackgroundLayerManager extends olObservable {
 
   /**
    * Set an background layer overlay, used by the opacity slider.
-   * @param {import("ol/Map.js").default} map The map.
-   * @param {import("ol/layer/Base.js").default} layer The opacity background layer.
+   * @param {import('ol/Map').default} map The map.
+   * @param {import('ol/layer/Base').default} layer The opacity background layer.
    */
   setOpacityBgLayer(map, layer) {
     const bgGroup = this.ngeoLayerHelper_.getGroupFromMap(map, BACKGROUNDLAYERGROUP_NAME);
@@ -197,7 +197,7 @@ export class MapBackgroundLayerManager extends olObservable {
   }
 
   /**
-   * @param {import("ol/Map.js").default} map The map.
+   * @param {import('ol/Map').default} map The map.
    * @param {Object<string, string>} dimensions The global dimensions object.
    */
   updateDimensions(map, dimensions) {

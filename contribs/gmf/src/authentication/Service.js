@@ -104,9 +104,9 @@ export class AuthenticationService {
    * @param {angular.IHttpService} $http Angular http service.
    * @param {angular.IScope} $rootScope The directive's scope.
    * @param {string} authenticationBaseUrl URL to "authentication" web service.
-   * @param {import('gmf/options.js').gmfAuthenticationConfig} gmfAuthenticationConfig
+   * @param {import('gmf/options').gmfAuthenticationConfig} gmfAuthenticationConfig
    *    The configuration
-   * @param {import('gmf/options.js').gmfAuthenticationNoReloadRole} gmfAuthenticationNoReloadRole
+   * @param {import('gmf/options').gmfAuthenticationNoReloadRole} gmfAuthenticationNoReloadRole
    * @param {angular.IIntervalService} $interval Angular interval service
    *    The no reload roles
    * @ngInject
@@ -152,7 +152,7 @@ export class AuthenticationService {
     /**
      * Don't request a new user object from the back-end after
      * logging out if the logged-in user's role has this role.
-     * @type {?import('gmf/options.js').gmfAuthenticationNoReloadRole}
+     * @type {?import('gmf/options').gmfAuthenticationNoReloadRole}
      * @private
      */
     this.noReloadRole_ = gmfAuthenticationNoReloadRole;

@@ -21,19 +21,19 @@
 
 import './layerorder.css';
 import angular from 'angular';
-import ngeoMapModule from 'ngeo/map/module.js';
+import ngeoMapModule from 'ngeo/map/module';
 
-import ngeoMiscSortableComponent from 'ngeo/misc/sortableComponent.js';
+import ngeoMiscSortableComponent from 'ngeo/misc/sortableComponent';
 
-import ngeoMiscSyncArrays from 'ngeo/misc/syncArrays.js';
-import ngeoSourceAsitVD from 'ngeo/source/AsitVD.js';
-import EPSG2056 from 'ngeo/proj/EPSG_2056.js';
-import olMap from 'ol/Map.js';
-import olView from 'ol/View.js';
-import olLayerTile from 'ol/layer/Tile.js';
-import olLayerImage from 'ol/layer/Image.js';
-import olSourceWMS from 'ol/source/ImageWMS.js';
-import {MAPSERVER_PROXY} from './url.js';
+import ngeoMiscSyncArrays from 'ngeo/misc/syncArrays';
+import ngeoSourceAsitVD from 'ngeo/source/AsitVD';
+import EPSG2056 from 'ngeo/proj/EPSG_2056';
+import olMap from 'ol/Map';
+import olView from 'ol/View';
+import olLayerTile from 'ol/layer/Tile';
+import olLayerImage from 'ol/layer/Image';
+import olSourceWMS from 'ol/source/ImageWMS';
+import {MAPSERVER_PROXY} from './url';
 
 /** @type {angular.IModule} **/
 const myModule = angular.module('app', ['gettext', ngeoMapModule.name, ngeoMiscSortableComponent.name]);
@@ -88,7 +88,7 @@ function MainController($scope) {
   cities.set('name', 'Cities');
 
   /**
-   * @type {import("ol/Map.js").default}
+   * @type {import('ol/Map').default}
    */
   this.map = new olMap({
     layers: [asitvd, boundaries, waterBodies, cities],
@@ -115,7 +115,7 @@ function MainController($scope) {
   this.roads_.set('name', 'Roads');
 
   /**
-   * @type {import("ol/layer/Base.js").default[]}
+   * @type {import('ol/layer/Base').default[]}
    * @const
    */
   this.selectedLayers = [];
@@ -133,7 +133,7 @@ function MainController($scope) {
   );
 
   /**
-   * @param {import("ol/layer/Base.js").default} layer Layer.
+   * @param {import('ol/layer/Base').default} layer Layer.
    * @return {boolean} `false` if the layer shouldn't be part of the selected
    *     layers.
    */

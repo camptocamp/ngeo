@@ -169,17 +169,17 @@
  * @property {View} view The view definition.
  * @property {Map} map The map definition.
  * @property {number} zoom The default zoom.
- * @property {import('ol/control/Control.js').default[]} [mapControls] The map control.
- * @property {import('ol/interaction/Interaction.js').default[]} [mapInteractions] The map interactions.
- * @property {import('ol/interaction.js').DefaultsOptions} [interationDefaults] The map interactions.
- * @property {import('ol/control/Zoom.js').Options} controlZoom The zoom control options
+ * @property {import('ol/control/Control').default[]} [mapControls] The map control.
+ * @property {import('ol/interaction/Interaction').default[]} [mapInteractions] The map interactions.
+ * @property {import('ol/interaction').DefaultsOptions} [interationDefaults] The map interactions.
+ * @property {import('ol/control/Zoom').Options} controlZoom The zoom control options
  * @property {Object<string, string>} cssVars The css variables, in particular brand-primary and
  *    brand-secondary that will set all the branding.
  */
 
 /**
  * The available projections definitions.
- * @typedef {Object<string, import('api/options.js').Projection>} gmfProjectionsOptions
+ * @typedef {Object<string, import('api/options').Projection>} gmfProjectionsOptions
  */
 
 /**
@@ -203,7 +203,7 @@
 /**
  * Configuration options for the permalink service.
  * @typedef {Object} gmfPermalinkOptions
- * @property {import('ngeo/options.js').StyleLike} [crosshairStyle] An alternate style for the crosshair feature added by the
+ * @property {import('ngeo/options').StyleLike} [crosshairStyle] An alternate style for the crosshair feature added by the
  *    permalink service.
  * @property {boolean} [crosshairEnabledByDefault] Display the crosshair, gets overridden by the
  *    `map_crosshair` parameter. Default is `false`.
@@ -309,7 +309,7 @@
  */
 
 /**
- * Configuration option for {@link import("gmf/query/gridComponent.js").default} to merge
+ * Configuration option for {@link import('gmf/query/gridComponent').default} to merge
  * grid tabs.
  *
  * E.g. `'two_wheels_park': ['velo_park', 'moto_park']}` merges the sources
@@ -326,8 +326,8 @@
 /**
  * The display querry grid component options.
  * @typedef {Object} gmfDisplayQueryGridOptions
- * @property {import('ngeo/options.js').StyleLike} featuresStyle A style object for all features from the result of the query.
- * @property {import('ngeo/options.js').StyleLike} selectedFeatureStyle A style object for the currently selected features.
+ * @property {import('ngeo/options').StyleLike} featuresStyle A style object for all features from the result of the query.
+ * @property {import('ngeo/options').StyleLike} selectedFeatureStyle A style object for the currently selected features.
  * @property {boolean} [removeEmptyColumns] Should empty columns be hidden? Default: `false`.
  * @property {number} [maxRecenterZoom] Maximum zoom-level to use when zooming to selected features.
  * @property {GridMergeTabs} [mergeTabs] Configuration to merge grids with the same attributes into
@@ -337,8 +337,8 @@
 /**
  * The display querry grid component options.
  * @typedef {Object} gmfDisplayQueryWindowOptions
- * @property {import('ngeo/options.js').StyleLike} featuresStyle A style object for all features from the result of the query.
- * @property {import('ngeo/options.js').StyleLike} selectedFeatureStyle A style object for the currently selected features.
+ * @property {import('ngeo/options').StyleLike} featuresStyle A style object for all features from the result of the query.
+ * @property {import('ngeo/options').StyleLike} selectedFeatureStyle A style object for the currently selected features.
  * @property {boolean} [collapsed] If the query result window is collapsed.
  */
 
@@ -361,7 +361,7 @@
  * The elevation (raster) options.
  * @typedef {Object} gmfProfileOptions
  * @property {number} [numberOfPoints=100] Maximum limit of points to request.
- * @property {import('ngeo/options.js').StyleLike} hoverPointStyle The hover point style.
+ * @property {import('ngeo/options').StyleLike} hoverPointStyle The hover point style.
  */
 
 /**
@@ -382,7 +382,7 @@
  * @property {SearchAction[]} [groupActions] List of allowed actions. The list may contain a
  * combination of `add_theme`, `add_group` or `add_layer`
  * @property {string} [projection] The geometry's projection for this set of data.
- * @property {Twitter.Typeahead.Dataset<import('ol/Feature.js').default<import('ol/geom/Geometry.js').default>>} [typeaheadDatasetOptions] The optional Twitter.Typeahead.
+ * @property {Twitter.Typeahead.Dataset<import('ol/Feature').default<import('ol/geom/Geometry').default>>} [typeaheadDatasetOptions] The optional Twitter.Typeahead.
  *    configuration for this dataset. See: https://github.com/twitter/typeahead.js/blob/master/
  * @property {string} [url] URL of the search service. Must contain a '%QUERY' term that will be
  * replaced by the input string.
@@ -391,7 +391,7 @@
 
 /**
  * @typedef {Object} gmfSearchOptions
- * @property {Object<string, import('ngeo/options.js').StyleLike>} styles A map of styles to apply on searched features. Keys must be the
+ * @property {Object<string, import('ngeo/options').StyleLike>} styles A map of styles to apply on searched features. Keys must be the
  *    'layer_name' property of features except for coordinates where the key ifor its style is the value of
  *    the constant 'gmf.COORDINATES_LAYER_NAME'. The 'default' key is used to apply the default style.
  * @property {string[]} coordinatesProjections codes of supported projections for coordinates search
@@ -423,13 +423,13 @@
 /**
  * @typedef {Object} gmfMobileMeasureAreaOptions
  * @property {number} [precision=2] The number of significant digits to display.
- * @property {import('ngeo/options.js').StyleLike} sketchStyle A style for the measure area.
+ * @property {import('ngeo/options').StyleLike} sketchStyle A style for the measure area.
  */
 
 /**
  * @typedef {Object} gmfMobileMeasureLengthOptions
  * @property {number} [precision=2] The number of significant digits to display.
- * @property {import('ngeo/options.js').StyleLike} sketchStyle A style for the measure length.
+ * @property {import('ngeo/options').StyleLike} sketchStyle A style for the measure length.
  */
 
 /**
@@ -445,7 +445,7 @@
  * @property {string} format The used formatter
  * @property {MeasureRasterLayer[]} rasterLayers Raster elevation layers to get
  *     information under the point and its configuration.
- * @property {import('ngeo/options.js').StyleLike} sketchStyle A style for the measure point.
+ * @property {import('ngeo/options').StyleLike} sketchStyle A style for the measure point.
  */
 
 /**
@@ -462,7 +462,7 @@
 
 /**
  * @typedef {Object} gmfEditFeatureOptions
- * @property {import('ngeo/options.js').StyleLike} highlightStyle A style object for highlighting of feature.
+ * @property {import('ngeo/options').StyleLike} highlightStyle A style object for highlighting of feature.
  * @property {number} tolerance The buffer in pixels to use when making queries to get the features.
  * @property {boolean} closeAfterSave If true,
  * immediately return to the main edit panel after save. Default is false.

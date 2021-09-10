@@ -20,9 +20,9 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import gmfThemeManager from 'gmf/theme/Manager.js';
-import gmfThemeSelectorComponent from 'gmf/theme/selectorComponent.js';
-import gmfThemeThemes from 'gmf/theme/Themes.js';
+import gmfThemeManager from 'gmf/theme/Manager';
+import gmfThemeSelectorComponent from 'gmf/theme/selectorComponent';
+import gmfThemeThemes from 'gmf/theme/Themes';
 
 /**
  * @type {angular.IModule}

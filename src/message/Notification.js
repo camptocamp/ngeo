@@ -20,10 +20,10 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import 'bootstrap/js/src/alert.js';
+import 'bootstrap/js/src/alert';
 
-import ngeoMessageMessage, {MessageType} from 'ngeo/message/Message.js';
-import {getUid as olUtilGetUid} from 'ol/util.js';
+import ngeoMessageMessage, {MessageType} from 'ngeo/message/Message';
+import {getUid as olUtilGetUid} from 'ol/util';
 
 /**
  * Default delay (in milliseconds) a message should be displayed.
@@ -78,7 +78,7 @@ export class MessageNotification extends ngeoMessageMessage {
   /**
    * Display the given message string or object or list of message strings or
    * objects.
-   * @param {string | string[] | import('ngeo/message/Message.js').Message | import('ngeo/message/Message.js').Message[]} object
+   * @param {string | string[] | import('ngeo/message/Message').Message | import('ngeo/message/Message').Message[]} object
    *     A message or list of messages as text or configuration objects.
    * @return {void}
    */
@@ -97,7 +97,7 @@ export class MessageNotification extends ngeoMessageMessage {
 
   /**
    * @override
-   * @param {import('ngeo/message/Message.js').Message} message Message.
+   * @param {import('ngeo/message/Message').Message} message Message.
    */
   showMessage(message) {
     const type = message.type;

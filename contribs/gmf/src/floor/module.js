@@ -20,7 +20,7 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import gmfFloorFloorSelectorComponent from 'gmf/floor/floorselectorComponent.js';
+import gmfFloorFloorSelectorComponent from 'gmf/floor/floorselectorComponent';
 
 import './floor.scss';
 

@@ -22,7 +22,7 @@
 // @ts-nocheck
 import angular from 'angular';
 describe('ngeo.misc.debounce', () => {
-  /** @type {import("ngeo/misc/debounce.js").miscDebounce<function(): void>} */
+  /** @type {import('ngeo/misc/debounce').miscDebounce<function(): void>} */
   let ngeoDebounce;
   /** @type {angular.ITimeoutService} */
   let $timeout;

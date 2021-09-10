@@ -20,10 +20,10 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import gmfLidarprofileComponent from 'gmf/lidarprofile/component.js';
-import gmfLidarprofilePanelComponent from 'gmf/lidarprofile/panelComponent.js';
-import gmfLidarprofileConfig from 'gmf/lidarprofile/Config.js';
-import gmfLidarprofileManager from 'gmf/lidarprofile/Manager.js';
+import gmfLidarprofileComponent from 'gmf/lidarprofile/component';
+import gmfLidarprofilePanelComponent from 'gmf/lidarprofile/panelComponent';
+import gmfLidarprofileConfig from 'gmf/lidarprofile/Config';
+import gmfLidarprofileManager from 'gmf/lidarprofile/Manager';
 
 import './lidarprofile.scss';
 

@@ -20,7 +20,7 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import ngeoGeolocation from 'ngeo/geolocation/component.js';
+import ngeoGeolocation from 'ngeo/geolocation/component';
 
 /**
  * @type {angular.IModule}

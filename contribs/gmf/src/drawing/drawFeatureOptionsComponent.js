@@ -21,20 +21,20 @@
 
 import angular from 'angular';
 
-import {listen as olEventsListen} from 'ol/events.js';
-import OLFeature from 'ol/Feature.js';
-import OLGeomCircle from 'ol/geom/Circle.js';
-import OLGeomGeometryCollection from 'ol/geom/GeometryCollection.js';
-import OLGeomLineString from 'ol/geom/LineString.js';
-import OLGeomPolygon from 'ol/geom/Polygon.js';
-import {fromExtent as olGeomPolygonFromExtent} from 'ol/geom/Polygon.js';
-import OLInteractionDraw from 'ol/interaction/Draw.js';
-import OLInteractionPointer from 'ol/interaction/Pointer.js';
-import OLInteractionSnap from 'ol/interaction/Snap.js';
-import OLMapBrowserEvent from 'ol/MapBrowserEvent.js';
-import OLSourceVector from 'ol/source/Vector.js';
+import {listen as olEventsListen} from 'ol/events';
+import OLFeature from 'ol/Feature';
+import OLGeomCircle from 'ol/geom/Circle';
+import OLGeomGeometryCollection from 'ol/geom/GeometryCollection';
+import OLGeomLineString from 'ol/geom/LineString';
+import OLGeomPolygon from 'ol/geom/Polygon';
+import {fromExtent as olGeomPolygonFromExtent} from 'ol/geom/Polygon';
+import OLInteractionDraw from 'ol/interaction/Draw';
+import OLInteractionPointer from 'ol/interaction/Pointer';
+import OLInteractionSnap from 'ol/interaction/Snap';
+import OLMapBrowserEvent from 'ol/MapBrowserEvent';
+import OLSourceVector from 'ol/source/Vector';
 
-import {unlistenByKeys as ngeoEventsUnlistenByKeys} from 'ngeo/events.js';
+import {unlistenByKeys as ngeoEventsUnlistenByKeys} from 'ngeo/events';
 
 /**
  * @type {angular.IModule}
@@ -70,24 +70,24 @@ export class DrawFeatureOptionsController {
     // === Binding properties ===
 
     /**
-     * @type {!import("ol/Map.js").default}
+     * @type {!import('ol/Map').default}
      */
     this.map;
 
     // Note: only one of the 4 interactions below should be set
 
     /**
-     * @type {?import("ngeo/interaction/MeasureLength.js").default}
+     * @type {?import('ngeo/interaction/MeasureLength').default}
      */
     this.measureLength = null;
 
     /**
-     * @type {?import("ngeo/interaction/MeasureArea.js").default}
+     * @type {?import('ngeo/interaction/MeasureArea').default}
      */
     this.measureArea = null;
 
     /**
-     * @type {?import("ngeo/interaction/MeasureAzimut.js").default}
+     * @type {?import('ngeo/interaction/MeasureAzimut').default}
      */
     this.measureAzimut = null;
 
@@ -146,13 +146,13 @@ export class DrawFeatureOptionsController {
     /**
      * The feature being drawn. Set when the 'drawstart' event is
      * fired by the draw interaction.
-     * @type {?OLFeature<import("ol/geom/Geometry.js").default>}
+     * @type {?OLFeature<import('ol/geom/Geometry').default>}
      * @private
      */
     this.feature_ = null;
 
     /**
-     * @type {import("ol/events.js").EventsKey[]}
+     * @type {import('ol/events').EventsKey[]}
      * @private
      */
     this.listenerKeys_ = [];
@@ -172,13 +172,13 @@ export class DrawFeatureOptionsController {
     this.verticesCounter_ = NaN;
 
     /**
-     * @type {!OLFeature<import("ol/geom/Geometry.js").default>}
+     * @type {!OLFeature<import('ol/geom/Geometry').default>}
      * @private
      */
     this.snapFeature_ = new OLFeature();
 
     /**
-     * @type {!OLSourceVector<import("ol/geom/Geometry.js").default>}
+     * @type {!OLSourceVector<import('ol/geom/Geometry').default>}
      * @private
      */
     this.snapSource_ = new OLSourceVector({
@@ -292,7 +292,7 @@ export class DrawFeatureOptionsController {
   /**
    * When the draw interaction starts drawing, the feature being drawn
    * is stored.
-   * @param {Event|import('ol/events/Event.js').default} evt Event.
+   * @param {Event|import('ol/events/Event').default} evt Event.
    * @private
    */
   handleDrawInteractionDrawStart_(evt) {
@@ -428,7 +428,7 @@ export class DrawFeatureOptionsController {
    * Override handler method of the map browser event for the snap
    * interaction. If the event is 'pointerup', if the following map
    * browser event is 'dblclick', then we should stop drawing.
-   * @param {import("ol/MapBrowserEvent.js").default<unknown>} evt Map browser event.
+   * @param {import('ol/MapBrowserEvent').default<unknown>} evt Map browser event.
    * @return {boolean} `false` to stop event propagation.
    * @private
    */
@@ -450,7 +450,7 @@ export class DrawFeatureOptionsController {
   /**
    * If a 'singleclick' event occur on the map after a snap, then we
    * can continue drawing.
-   * @param {Event|import('ol/events/Event.js').default} evt Event.
+   * @param {Event|import('ol/events/Event').default} evt Event.
    * @private
    */
   handleMapSingleClick_(evt) {
@@ -472,7 +472,7 @@ export class DrawFeatureOptionsController {
    * added as a consequence of the snap still being active and causing
    * an unwanted point to be added.
    *
-   * @param {Event|import('ol/events/Event.js').default} evt Event.
+   * @param {Event|import('ol/events/Event').default} evt Event.
    * @private
    */
   handleMapDoubleClick_(evt) {

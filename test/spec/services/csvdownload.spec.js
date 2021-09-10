@@ -21,7 +21,7 @@
 
 import angular from 'angular';
 describe('ngeo.download.Csv', () => {
-  /** @type {import("ngeo/download/Csv.js").DownloadCsvService} */
+  /** @type {import('ngeo/download/Csv').DownloadCsvService} */
   let ngeoCsvDownload;
 
   beforeEach(

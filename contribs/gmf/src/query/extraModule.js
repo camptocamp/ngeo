@@ -20,8 +20,8 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import gmfQueryGridComponent from 'gmf/query/gridComponent.js';
-import gmfQueryWindowComponent from 'gmf/query/windowComponent.js';
+import gmfQueryGridComponent from 'gmf/query/gridComponent';
+import gmfQueryWindowComponent from 'gmf/query/windowComponent';
 
 import './grid.scss';
 import './window.scss';

@@ -32,13 +32,13 @@ import './sass/oeedit.scss';
 import angular from 'angular';
 import gmfControllersAbstractDesktopController, {
   AbstractDesktopController,
-} from 'gmf/controllers/AbstractDesktopController.js';
-import appBase from '../appmodule.js';
-import gmfObjecteditingModule from 'gmf/objectediting/module.js';
-import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
-import olCollection from 'ol/Collection.js';
-import olLayerVector from 'ol/layer/Vector.js';
-import olSourceVector from 'ol/source/Vector.js';
+} from 'gmf/controllers/AbstractDesktopController';
+import appBase from '../appmodule';
+import gmfObjecteditingModule from 'gmf/objectediting/module';
+import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate';
+import olCollection from 'ol/Collection';
+import olLayerVector from 'ol/layer/Vector';
+import olSourceVector from 'ol/source/Vector';
 
 if (!window.requestAnimationFrame) {
   alert(
@@ -71,7 +71,7 @@ class Controller extends AbstractDesktopController {
 
     /**
      * The ngeo ToolActivate manager service.
-     * @type {import('ngeo/misc/ToolActivateMgr.js').ToolActivateMgr}
+     * @type {import('ngeo/misc/ToolActivateMgr').ToolActivateMgr}
      */
     const ngeoToolActivateMgr = $injector.get('ngeoToolActivateMgr');
 
@@ -89,7 +89,7 @@ class Controller extends AbstractDesktopController {
     });
 
     /**
-     * @type {import("ol/source/Vector.js").default<*>}
+     * @type {import('ol/source/Vector').default<*>}
      * @private
      */
     this.vectorSource_ = new olSourceVector({
@@ -97,7 +97,7 @@ class Controller extends AbstractDesktopController {
     });
 
     /**
-     * @type {import("ol/layer/Vector.js").default<import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>>}
+     * @type {import('ol/layer/Vector').default<import('ol/source/Vector').default<import('ol/geom/Geometry').default>>}
      * @private
      */
     this.vectorLayer_ = new olLayerVector({
@@ -105,12 +105,12 @@ class Controller extends AbstractDesktopController {
     });
 
     /**
-     * @type {import("ol/Collection.js").default<import("ol/Feature.js").default<import("ol/geom/Geometry.js").default>>}
+     * @type {import('ol/Collection').default<import('ol/Feature').default<import('ol/geom/Geometry').default>>}
      */
     this.sketchFeatures = new olCollection();
 
     /**
-     * @type {import("ol/layer/Vector.js").default<import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>>}
+     * @type {import('ol/layer/Vector').default<import('ol/source/Vector').default<import('ol/geom/Geometry').default>>}
      * @private
      */
     this.sketchLayer_ = new olLayerVector({
@@ -121,7 +121,7 @@ class Controller extends AbstractDesktopController {
     });
 
     /**
-     * @type {import("gmf/theme/Themes.js").ThemesService} gmfObjectEditingManager The gmf theme service
+     * @type {import('gmf/theme/Themes').ThemesService} gmfObjectEditingManager The gmf theme service
      */
     const gmfThemes = $injector.get('gmfThemes');
 
@@ -134,7 +134,7 @@ class Controller extends AbstractDesktopController {
     });
 
     /**
-     * @type {import("gmf/objectediting/Manager.js").ObjecteditingManagerService} gmfObjectEditingManager
+     * @type {import('gmf/objectediting/Manager').ObjecteditingManagerService} gmfObjectEditingManager
      *    The gmf ObjectEditing manager service.
      */
     const gmfObjectEditingManager = $injector.get('gmfObjectEditingManager');
@@ -150,7 +150,7 @@ class Controller extends AbstractDesktopController {
     this.oeLayerNodeId = gmfObjectEditingManager.getLayerNodeId();
 
     /**
-     * @type {?import("ol/Feature.js").default<import("ol/geom/Geometry.js").default>}
+     * @type {?import('ol/Feature').default<import('ol/geom/Geometry').default>}
      */
     this.oeFeature = null;
 
@@ -186,7 +186,7 @@ appModule.run(
 
 appModule.value(
   'gmfPermalinkOptions',
-  /** @type {import('gmf/options.js').gmfPermalinkOptions} */ ({
+  /** @type {import('gmf/options').gmfPermalinkOptions} */ ({
     pointRecenterZoom: 10,
   })
 );

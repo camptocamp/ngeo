@@ -20,17 +20,17 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import ngeoMapFeatureOverlay, {FeatureOverlay} from 'ngeo/map/FeatureOverlay.js';
-import {getUid as olUtilGetUid} from 'ol/util.js';
-import olLayerVector from 'ol/layer/Vector.js';
-import {isEmpty} from 'ol/obj.js';
-import olSourceVector from 'ol/source/Vector.js';
-import {toFunction as toStyleFunction, createDefaultStyle as olStyleDefaultFunction} from 'ol/style/Style.js';
+import ngeoMapFeatureOverlay, {FeatureOverlay} from 'ngeo/map/FeatureOverlay';
+import {getUid as olUtilGetUid} from 'ol/util';
+import olLayerVector from 'ol/layer/Vector';
+import {isEmpty} from 'ol/obj';
+import olSourceVector from 'ol/source/Vector';
+import {toFunction as toStyleFunction, createDefaultStyle as olStyleDefaultFunction} from 'ol/style/Style';
 
 /**
  * @typedef {Object} MapFeatureOverlayGroup
- * @property {import('ol/style/Style.js').StyleFunction} styleFunction
- * @property {Object<string, import('ol/Feature.js').default<import('ol/geom/Geometry.js').default>>} features
+ * @property {import('ol/style/Style').StyleFunction} styleFunction
+ * @property {Object<string, import('ol/Feature').default<import('ol/geom/Geometry').default>>} features
  */
 
 /**
@@ -68,14 +68,14 @@ export function FeatureOverlayMgr() {
   this.groups_ = [];
 
   /**
-   * @type {import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>}
+   * @type {import('ol/source/Vector').default<import('ol/geom/Geometry').default>}
    */
   this.source_ = new olSourceVector({
     useSpatialIndex: false,
   });
 
   /**
-   * @type {import("ol/layer/Vector.js").default<import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>>}
+   * @type {import('ol/layer/Vector').default<import('ol/source/Vector').default<import('ol/geom/Geometry').default>>}
    */
   this.layer_ = new olLayerVector({
     source: this.source_,
@@ -96,7 +96,7 @@ FeatureOverlayMgr.prototype.isEmpty = function (groupIndex) {
 };
 
 /**
- * @param {import('ol/Feature.js').default<import('ol/geom/Geometry.js').default>} feature The feature to add.
+ * @param {import('ol/Feature').default<import('ol/geom/Geometry').default>} feature The feature to add.
  * @param {number} groupIndex The group groupIndex.
  */
 FeatureOverlayMgr.prototype.addFeature = function (feature, groupIndex) {
@@ -109,7 +109,7 @@ FeatureOverlayMgr.prototype.addFeature = function (feature, groupIndex) {
 };
 
 /**
- * @param {import('ol/Feature.js').default<import('ol/geom/Geometry.js').default>} feature The feature to add.
+ * @param {import('ol/Feature').default<import('ol/geom/Geometry').default>} feature The feature to add.
  * @param {number} groupIndex The group groupIndex.
  */
 FeatureOverlayMgr.prototype.removeFeature = function (feature, groupIndex) {
@@ -135,14 +135,14 @@ FeatureOverlayMgr.prototype.clear = function (groupIndex) {
 };
 
 /**
- * @return {import("ol/layer/Vector.js").default<import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>>} The vector layer used internally.
+ * @return {import('ol/layer/Vector').default<import('ol/source/Vector').default<import('ol/geom/Geometry').default>>} The vector layer used internally.
  */
 FeatureOverlayMgr.prototype.getLayer = function () {
   return this.layer_;
 };
 
 /**
- * @return {import("ngeo/map/FeatureOverlay.js").FeatureOverlay} Feature overlay.
+ * @return {import('ngeo/map/FeatureOverlay').FeatureOverlay} Feature overlay.
  */
 FeatureOverlayMgr.prototype.getFeatureOverlay = function () {
   const groupIndex = this.groups_.length;
@@ -154,14 +154,14 @@ FeatureOverlayMgr.prototype.getFeatureOverlay = function () {
 };
 
 /**
- * @param {import("ol/Map.js").default} map Map.
+ * @param {import('ol/Map').default} map Map.
  */
 FeatureOverlayMgr.prototype.init = function (map) {
   this.layer_.setMap(map);
 };
 
 /**
- * @param {import("ol/style/Style.js").StyleLike} style
+ * @param {import('ol/style/Style').StyleLike} style
  * Style.
  * @param {number} groupIndex Group index.
  */
@@ -172,9 +172,9 @@ FeatureOverlayMgr.prototype.setStyle = function (style, groupIndex) {
 };
 
 /**
- * @param {import('ol/Feature.js').default<import('ol/geom/Geometry.js').default>|import("ol/render/Feature.js").default} feature Feature.
+ * @param {import('ol/Feature').default<import('ol/geom/Geometry').default>|import('ol/render/Feature').default} feature Feature.
  * @param {number} resolution Resolution.
- * @return {import("ol/style/Style.js").default[] | import("ol/style/Style.js").default | void} Styles.
+ * @return {import('ol/style/Style').default[] | import('ol/style/Style').default | void} Styles.
  */
 FeatureOverlayMgr.prototype.styleFunction_ = function (feature, resolution) {
   const featureUid = olUtilGetUid(feature).toString();

@@ -19,14 +19,14 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import ngeoCustomEvent from 'ngeo/CustomEvent.js';
-import {listen, unlistenByKey} from 'ol/events.js';
-import olFeature from 'ol/Feature.js';
-import {TRUE} from 'ol/functions.js';
-import olGeomCircle from 'ol/geom/Circle.js';
-import {fromCircle, makeRegular} from 'ol/geom/Polygon.js';
-import olInteractionInteraction from 'ol/interaction/Interaction.js';
-import MapBrowserEvent from 'ol/MapBrowserEvent.js';
+import ngeoCustomEvent from 'ngeo/CustomEvent';
+import {listen, unlistenByKey} from 'ol/events';
+import olFeature from 'ol/Feature';
+import {TRUE} from 'ol/functions';
+import olGeomCircle from 'ol/geom/Circle';
+import {fromCircle, makeRegular} from 'ol/geom/Polygon';
+import olInteractionInteraction from 'ol/interaction/Interaction';
+import MapBrowserEvent from 'ol/MapBrowserEvent';
 
 /**
  * DrawRegularPolygonFromClick Interaction.
@@ -71,7 +71,7 @@ export default class extends olInteractionInteraction {
     this.sides_ = options.sides !== undefined ? options.sides : 3;
 
     /**
-     * @type {import("ol/events.js").EventsKey[]}
+     * @type {import('ol/events').EventsKey[]}
      * @private
      */
     this.listenerKeys_ = [];
@@ -95,7 +95,7 @@ export default class extends olInteractionInteraction {
   }
 
   /**
-   * @param {import("ol/PluggableMap.js").default} map The map that the
+   * @param {import('ol/PluggableMap').default} map The map that the
    * overlay is part of.
    */
   setMap(map) {
@@ -137,7 +137,7 @@ export default class extends olInteractionInteraction {
   /**
    * Called the the map is clicked. Create a regular polygon at the clicked
    * location using the configuration
-   * @param {Event|import('ol/events/Event.js').default} evt Map browser event.
+   * @param {Event|import('ol/events/Event').default} evt Map browser event.
    * @private
    */
   handleMapClick_(evt) {
@@ -147,7 +147,7 @@ export default class extends olInteractionInteraction {
 
       makeRegular(geometry, center, this.radius_, this.angle_);
 
-      /** @type {import('ngeo/interaction/common.js').DrawEvent} */
+      /** @type {import('ngeo/interaction/common').DrawEvent} */
       const event = new ngeoCustomEvent('drawend', {feature: new olFeature(geometry)});
       this.dispatchEvent(event);
     }

@@ -20,12 +20,12 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import ngeoFormatXSDAttribute from 'ngeo/format/XSDAttribute.js';
+import ngeoFormatXSDAttribute from 'ngeo/format/XSDAttribute';
 
-import ngeoEditingAttributesComponent from 'ngeo/editing/attributesComponent.js';
+import ngeoEditingAttributesComponent from 'ngeo/editing/attributesComponent';
 
-import olFeature from 'ol/Feature.js';
-import ngeoMapModule from 'ngeo/map/module.js';
+import olFeature from 'ol/Feature';
+import ngeoMapModule from 'ngeo/map/module';
 
 /** @type {angular.IModule} */
 const myModule = angular.module('app', ['gettext', ngeoMapModule.name, ngeoEditingAttributesComponent.name]);
@@ -44,7 +44,7 @@ function MainController($http, $timeout, $scope) {
   this.timeout_ = $timeout;
 
   /**
-   * @type {?import('ngeo/format/Attribute.js').Attribute[]}
+   * @type {?import('ngeo/format/Attribute').Attribute[]}
    */
   this.attributes = null;
 
@@ -54,7 +54,7 @@ function MainController($http, $timeout, $scope) {
   this.disabled = false;
 
   /**
-   * @type {olFeature<import("ol/geom/Geometry.js").default>}
+   * @type {olFeature<import('ol/geom/Geometry').default>}
    */
   this.feature = new olFeature({
     'name': 'A feature',
@@ -92,7 +92,7 @@ function MainController($http, $timeout, $scope) {
 
 /**
  * @param {angular.IHttpResponse<string|Document|Element>} resp Ajax response.
- * @return {import('ngeo/format/Attribute.js').Attribute[]} List of attributes.
+ * @return {import('ngeo/format/Attribute').Attribute[]} List of attributes.
  */
 MainController.prototype.handleXSDAttributeGet_ = function (resp) {
   const format = new ngeoFormatXSDAttribute();

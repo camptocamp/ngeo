@@ -21,15 +21,15 @@
 
 import './lidarprofile.css';
 import angular from 'angular';
-import gmfMapComponent from 'gmf/map/component.js';
-import gmfLidarprofileModule from 'gmf/lidarprofile/module.js';
-import EPSG2056 from 'ngeo/proj/EPSG_2056.js';
-import ngeoMapModule from 'ngeo/map/module.js';
-import olMap from 'ol/Map.js';
-import olView from 'ol/View.js';
-import olLayerTile from 'ol/layer/Tile.js';
-import olSourceOSM from 'ol/source/OSM.js';
-import options from './options.js';
+import gmfMapComponent from 'gmf/map/component';
+import gmfLidarprofileModule from 'gmf/lidarprofile/module';
+import EPSG2056 from 'ngeo/proj/EPSG_2056';
+import ngeoMapModule from 'ngeo/map/module';
+import olMap from 'ol/Map';
+import olView from 'ol/View';
+import olLayerTile from 'ol/layer/Tile';
+import olSourceOSM from 'ol/source/OSM';
+import options from './options';
 
 /**
  * @type {angular.IModule}
@@ -51,7 +51,7 @@ myModule.value('pytreeLidarprofileJsonUrl', 'https://sitn.ne.ch/pytree');
  */
 function MainController($scope) {
   /**
-   * @type {?import("ol/geom/LineString.js").default}
+   * @type {?import('ol/geom/LineString').default}
    */
   this.profileLine = null;
 
@@ -61,7 +61,7 @@ function MainController($scope) {
   this.panelActivated = false;
 
   /**
-   * @type {import("ol/Map.js").default}
+   * @type {import('ol/Map').default}
    */
   this.map = new olMap({
     layers: [

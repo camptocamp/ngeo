@@ -21,7 +21,7 @@
 
 // @ts-nocheck
 import angular from 'angular';
-import {PermalinkShareService} from 'gmf/permalink/ShareService.js';
+import {PermalinkShareService} from 'gmf/permalink/ShareService';
 
 describe('gmf.permalink.ShareService', () => {
   /** @type {angular.IHttpBackendService} */

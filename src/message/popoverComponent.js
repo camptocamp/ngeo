@@ -20,8 +20,8 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import 'bootstrap/js/src/tooltip.js';
-import 'bootstrap/js/src/popover.js';
+import 'bootstrap/js/src/tooltip';
+import 'bootstrap/js/src/popover';
 
 /**
  * @type {angular.IModule}

@@ -20,8 +20,8 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import gmfFiltersFilterselectorComponent from 'gmf/filters/filterselectorComponent.js';
-import gmfFiltersSavedFilters from 'gmf/filters/SavedFilters.js';
+import gmfFiltersFilterselectorComponent from 'gmf/filters/filterselectorComponent';
+import gmfFiltersSavedFilters from 'gmf/filters/SavedFilters';
 
 /**
  * @type {angular.IModule}

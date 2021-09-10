@@ -20,10 +20,10 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import 'bootstrap/js/src/alert.js';
+import 'bootstrap/js/src/alert';
 
-import ngeoMessagePopup, {MessagePopup} from 'ngeo/message/Popup.js';
-import ngeoMessageMessage, {MessageType} from 'ngeo/message/Message.js';
+import ngeoMessagePopup, {MessagePopup} from 'ngeo/message/Popup';
+import ngeoMessageMessage, {MessageType} from 'ngeo/message/Message';
 import 'ngeo/sass/font.scss';
 
 /**
@@ -49,7 +49,7 @@ export class MessageDisclaimerService extends ngeoMessageMessage {
   /**
    * @param {angular.ISCEService} $sce Angular sce service.
    * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext service.
-   * @param {import('ngeo/message/Popup.js').PopupFactory} ngeoCreatePopup Popup service.
+   * @param {import('ngeo/message/Popup').PopupFactory} ngeoCreatePopup Popup service.
    * @ngInject
    */
   constructor($sce, gettextCatalog, ngeoCreatePopup) {
@@ -69,7 +69,7 @@ export class MessageDisclaimerService extends ngeoMessageMessage {
 
     /**
      * @private
-     * @type {import('ngeo/message/Popup.js').PopupFactory}
+     * @type {import('ngeo/message/Popup').PopupFactory}
      */
     this.createPopup_ = ngeoCreatePopup;
 
@@ -84,7 +84,7 @@ export class MessageDisclaimerService extends ngeoMessageMessage {
 
     /**
      * Cache of messages.
-     * @type {Object<string, JQuery|import("ngeo/message/Popup.js").MessagePopup>}
+     * @type {Object<string, JQuery|import('ngeo/message/Popup').MessagePopup>}
      * @private
      */
     this.messages_ = {};

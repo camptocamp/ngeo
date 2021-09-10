@@ -20,7 +20,7 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import ngeoGridComponent from 'ngeo/grid/component.js';
+import ngeoGridComponent from 'ngeo/grid/component';
 
 /**
  * Also related to the grid but not included in the module:

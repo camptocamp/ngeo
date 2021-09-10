@@ -20,7 +20,7 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import ngeostreetviewComponent from 'ngeo/streetview/component.js';
+import ngeostreetviewComponent from 'ngeo/streetview/component';
 
 /**
  * @type {angular.IModule}

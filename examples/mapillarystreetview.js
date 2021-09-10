@@ -21,19 +21,19 @@
 
 import './mapillarystreetview.css';
 import angular from 'angular';
-import olMap from 'ol/Map.js';
+import olMap from 'ol/Map';
 
-import olView from 'ol/View.js';
-import olLayerTile from 'ol/layer/Tile.js';
-import olSourceOSM from 'ol/source/OSM.js';
-import olStyleFill from 'ol/style/Fill.js';
-import olStyleStroke from 'ol/style/Stroke.js';
-import olStyleStyle from 'ol/style/Style.js';
-import olStyleText from 'ol/style/Text.js';
-import ngeoStreetviewModule from 'ngeo/streetview/module.js';
-import ngeoMapModule from 'ngeo/map/module.js';
-import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
-import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr.js';
+import olView from 'ol/View';
+import olLayerTile from 'ol/layer/Tile';
+import olSourceOSM from 'ol/source/OSM';
+import olStyleFill from 'ol/style/Fill';
+import olStyleStroke from 'ol/style/Stroke';
+import olStyleStyle from 'ol/style/Style';
+import olStyleText from 'ol/style/Text';
+import ngeoStreetviewModule from 'ngeo/streetview/module';
+import ngeoMapModule from 'ngeo/map/module';
+import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate';
+import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr';
 
 /** @type {angular.IModule} **/
 const myModule = angular.module('app', [
@@ -44,16 +44,16 @@ const myModule = angular.module('app', [
 ]);
 
 /**
- * @param {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr
+ * @param {import('ngeo/map/FeatureOverlayMgr').FeatureOverlayMgr} ngeoFeatureOverlayMgr
  *    Ngeo FeatureOverlay manager.
- * @param {import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr} ngeoToolActivateMgr
+ * @param {import('ngeo/misc/ToolActivateMgr').ToolActivateMgr} ngeoToolActivateMgr
  *    Ngeo ToolActivate manager service.
  * @class
  * @ngInject
  */
 function MainController(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
   /**
-   * @type {import("ol/style/Style.js").default}
+   * @type {import('ol/style/Style').default}
    */
   this.style = new olStyleStyle({
     text: new olStyleText({
@@ -66,7 +66,7 @@ function MainController(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
   });
 
   /**
-   * @type {import("ol/Map.js").default}
+   * @type {import('ol/Map').default}
    */
   this.map = new olMap({
     layers: [

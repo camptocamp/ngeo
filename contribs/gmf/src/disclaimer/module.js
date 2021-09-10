@@ -20,7 +20,7 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import gmfDisclaimerComponent from 'gmf/disclaimer/component.js';
+import gmfDisclaimerComponent from 'gmf/disclaimer/component';
 
 /**
  * @type {angular.IModule}

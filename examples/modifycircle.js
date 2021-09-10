@@ -20,20 +20,20 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties.js';
+import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties';
 
-import ngeoInteractionModifyCircle from 'ngeo/interaction/ModifyCircle.js';
-import olMap from 'ol/Map.js';
-import olView from 'ol/View.js';
-import olLayerTile from 'ol/layer/Tile.js';
-import olLayerVector from 'ol/layer/Vector.js';
-import olSourceOSM from 'ol/source/OSM.js';
-import olSourceVector from 'ol/source/Vector.js';
-import olGeomCircle from 'ol/geom/Circle.js';
-import {fromCircle} from 'ol/geom/Polygon.js';
-import olCollection from 'ol/Collection.js';
-import olFeature from 'ol/Feature.js';
-import ngeoMapModule from 'ngeo/map/module.js';
+import ngeoInteractionModifyCircle from 'ngeo/interaction/ModifyCircle';
+import olMap from 'ol/Map';
+import olView from 'ol/View';
+import olLayerTile from 'ol/layer/Tile';
+import olLayerVector from 'ol/layer/Vector';
+import olSourceOSM from 'ol/source/OSM';
+import olSourceVector from 'ol/source/Vector';
+import olGeomCircle from 'ol/geom/Circle';
+import {fromCircle} from 'ol/geom/Polygon';
+import olCollection from 'ol/Collection';
+import olFeature from 'ol/Feature';
+import ngeoMapModule from 'ngeo/map/module';
 
 /** @type {angular.IModule} **/
 const appmodule = angular.module('app', ['gettext', ngeoMapModule.name]);
@@ -44,7 +44,7 @@ const appmodule = angular.module('app', ['gettext', ngeoMapModule.name]);
  */
 function MainController() {
   /**
-   * @type {import("ol/Map.js").default}
+   * @type {import('ol/Map').default}
    */
   this.map = new olMap({
     layers: [
@@ -63,7 +63,7 @@ function MainController() {
   const circle = new olGeomCircle([-10691093, 4966327], 465000);
 
   /**
-   * @type {import("ol/Collection.js").default<olFeature<import("ol/geom/Geometry.js").default>>}
+   * @type {import('ol/Collection').default<olFeature<import('ol/geom/Geometry').default>>}
    */
   this.features = new olCollection();
 
@@ -90,10 +90,10 @@ function MainController() {
   vectorLayer.setMap(map);
 
   /**
-   * @type {import("ngeo/interaction/ModifyCircle.js").default}
+   * @type {import('ngeo/interaction/ModifyCircle').default}
    */
   this.interaction = new ngeoInteractionModifyCircle(
-    /** @type {import('ol/interaction/Modify.js').Options} */ ({
+    /** @type {import('ol/interaction/Modify').Options} */ ({
       features: this.features,
     })
   );

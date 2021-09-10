@@ -20,7 +20,7 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 /* global google */
-import {StreetviewService} from './Service.js';
+import {StreetviewService} from './Service';
 
 /**
  * Service for streetview functionality with Google Street View
@@ -28,8 +28,8 @@ import {StreetviewService} from './Service.js';
 export default class GoogleStreetviewService extends StreetviewService {
   /**
    * @param {angular.IScope} $scope Scope.
-   * @param {?import("ol/Map.js").default} map The map
-   * @param {(newCoordinates: import("ol/coordinate.js").Coordinate | null) => void}handlePanoramaPositionChange Position change handler
+   * @param {?import('ol/Map').default} map The map
+   * @param {(newCoordinates: import('ol/coordinate').Coordinate | null) => void}handlePanoramaPositionChange Position change handler
    * @param {number} radius The radius
    * @param {JQuery} $element Element
    * @ngInject
@@ -111,7 +111,7 @@ export default class GoogleStreetviewService extends StreetviewService {
 
   /**
    * Get image for the given location.
-   * @param {import("ol/coordinate.js").Coordinate} coordinates Map view projection coordinates.
+   * @param {import('ol/coordinate').Coordinate} coordinates Map view projection coordinates.
    */
   getPanorama(coordinates) {
     const lonLat = this.toLonLat_(coordinates);

@@ -20,17 +20,17 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import olCollection from 'ol/Collection.js';
-import olMap from 'ol/Map.js';
-import olLayerGroup from 'ol/layer/Group.js';
-import olLayerTile from 'ol/layer/Tile.js';
+import olCollection from 'ol/Collection';
+import olMap from 'ol/Map';
+import olLayerGroup from 'ol/layer/Group';
+import olLayerTile from 'ol/layer/Tile';
 
 describe('ngeo.map.BackgroundLayerMgr', () => {
-  /** @type {import("ngeo/map/BackgroundLayerMgr.js").MapBackgroundLayerManager} */
+  /** @type {import('ngeo/map/BackgroundLayerMgr').MapBackgroundLayerManager} */
   let ngeoBackgroundLayerMgr;
-  /** @type {import("ngeo/map/LayerHelper.js").LayerHelper} */
+  /** @type {import('ngeo/map/LayerHelper').LayerHelper} */
   let ngeoLayerHelper;
-  /** @type {import('ol/Map.js').default} */
+  /** @type {import('ol/Map').default} */
   let map;
   const BACKGROUNDLAYERGROUP_NAME = 'background';
 

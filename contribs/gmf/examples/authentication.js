@@ -21,8 +21,8 @@
 
 import angular from 'angular';
 import './authentication.css';
-import gmfAuthenticationModule from 'gmf/authentication/module.js';
-import options from './options.js';
+import gmfAuthenticationModule from 'gmf/authentication/module';
+import options from './options';
 
 /**
  * @type {angular.IModule}
@@ -43,7 +43,7 @@ function MainController(gettextCatalog) {
    *  - At least one Uppercase letter.
    *  - At least one digit.
    *  - At least one special character.
-   * @type {import('gmf/authentication/component.js').PasswordValidator} the password validator
+   * @type {import('gmf/authentication/component').PasswordValidator} the password validator
    */
   this.passwordValidator = {
     isPasswordValid: function (value) {

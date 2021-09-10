@@ -20,10 +20,10 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import {DOTS_PER_INCH, INCHES_PER_METER} from 'ngeo/print/Utils.js';
+import {DOTS_PER_INCH, INCHES_PER_METER} from 'ngeo/print/Utils';
 
 describe('ngeo.print.Utils', () => {
-  /** @type {import('ngeo/print/Utils.js').PrintUtils} */
+  /** @type {import('ngeo/print/Utils').PrintUtils} */
   let ngeoPrintUtilsService;
 
   beforeEach(() => {

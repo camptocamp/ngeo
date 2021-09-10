@@ -20,21 +20,21 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import gmfDatasourceFileGroup from 'gmf/datasource/fileGroup.js';
-import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
-import gmfThemeThemes, {ThemeNodeType, getSnappingConfig} from 'gmf/theme/Themes.js';
-import ngeoLayertreeController, {getFirstParentTree} from 'ngeo/layertree/Controller.js';
-import ngeoDatasourceFile from 'ngeo/datasource/File.js';
-import {DEFAULT_GEOMETRY_NAME} from 'ngeo/datasource/OGC.js';
-import {getUid as olUtilGetUid} from 'ol/util.js';
-import {listen, unlistenByKey} from 'ol/events.js';
-import olCollection, {CollectionEvent} from 'ol/Collection.js';
-import olFormatWFS from 'ol/format/WFS.js';
-import olInteractionSnap from 'ol/interaction/Snap.js';
+import gmfDatasourceFileGroup from 'gmf/datasource/fileGroup';
+import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager';
+import gmfThemeThemes, {ThemeNodeType, getSnappingConfig} from 'gmf/theme/Themes';
+import ngeoLayertreeController, {getFirstParentTree} from 'ngeo/layertree/Controller';
+import ngeoDatasourceFile from 'ngeo/datasource/File';
+import {DEFAULT_GEOMETRY_NAME} from 'ngeo/datasource/OGC';
+import {getUid as olUtilGetUid} from 'ol/util';
+import {listen, unlistenByKey} from 'ol/events';
+import olCollection, {CollectionEvent} from 'ol/Collection';
+import olFormatWFS from 'ol/format/WFS';
+import olInteractionSnap from 'ol/interaction/Snap';
 
 export class CustomSnap extends olInteractionSnap {
   /**
-   * @param {import('ol/interaction/Snap.js').Options} options
+   * @param {import('ol/interaction/Snap').Options} options
    */
   constructor(options) {
     super(options);
@@ -65,13 +65,13 @@ export class CustomSnap extends olInteractionSnap {
  * @param {angular.IScope} $rootScope Angular rootScope.
  * @param {angular.auto.IInjectorService} $injector Angular injector.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
- * @param {import('gmf/datasource/fileGroup.js').DatasourceFileGroup} gmfDatasourceFileGroup Group that contains file data sources.
- * @param {import('gmf/themes.js').GmfSnappingConfig} gmfSnappingConfig Snapping configuration options for the
+ * @param {import('gmf/datasource/fileGroup').DatasourceFileGroup} gmfDatasourceFileGroup Group that contains file data sources.
+ * @param {import('gmf/themes').GmfSnappingConfig} gmfSnappingConfig Snapping configuration options for the
  *     features in the Draw tool and in the "Layer Import / Local" tool.
- * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes The gmf Themes service.
- * @param {import("gmf/layertree/TreeManager.js").LayertreeTreeManager} gmfTreeManager The gmf TreeManager
+ * @param {import('gmf/theme/Themes').ThemesService} gmfThemes The gmf Themes service.
+ * @param {import('gmf/layertree/TreeManager').LayertreeTreeManager} gmfTreeManager The gmf TreeManager
  *    service.
- * @param {import("ol/Collection.js").default<import("ol/Feature.js").default<import("ol/geom/Geometry.js").default>>} ngeoFeatures Collection
+ * @param {import('ol/Collection').default<import('ol/Feature').default<import('ol/geom/Geometry').default>>} ngeoFeatures Collection
  *    of features.
  * @ngInject
  * @ngdoc service
@@ -117,27 +117,27 @@ export function EditingSnappingService(
   this.injector_ = $injector;
 
   /**
-   * @type {import('gmf/datasource/fileGroup.js').DatasourceFileGroup}
+   * @type {import('gmf/datasource/fileGroup').DatasourceFileGroup}
    */
   this.gmfDatasourceFileGroup_ = gmfDatasourceFileGroup;
 
   /**
-   * @type {import('gmf/themes.js').GmfSnappingConfig}
+   * @type {import('gmf/themes').GmfSnappingConfig}
    */
   this.gmfSnappingConfig_ = gmfSnappingConfig;
 
   /**
-   * @type {import("gmf/theme/Themes.js").ThemesService}
+   * @type {import('gmf/theme/Themes').ThemesService}
    */
   this.gmfThemes_ = gmfThemes;
 
   /**
-   * @type {import("gmf/layertree/TreeManager.js").LayertreeTreeManager}
+   * @type {import('gmf/layertree/TreeManager').LayertreeTreeManager}
    */
   this.gmfTreeManager_ = gmfTreeManager;
 
   /**
-   * @type {import("ol/Collection.js").default<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>}
+   * @type {import('ol/Collection').default<import('ol/Feature').default<import('ol/geom/Geometry').default>>}
    */
   this.ngeoFeatures_ = ngeoFeatures;
 
@@ -160,12 +160,12 @@ export function EditingSnappingService(
   this.cacheFileDataSource_ = {};
 
   /**
-   * @type {import("ol/events.js").EventsKey[]}
+   * @type {import('ol/events').EventsKey[]}
    */
   this.listenerKeys_ = [];
 
   /**
-   * @type {?import("ol/Map.js").default}
+   * @type {?import('ol/Map').default}
    */
   this.map_ = null;
 
@@ -189,12 +189,12 @@ export function EditingSnappingService(
 
   /**
    * A reference to the OGC servers loaded by the theme service.
-   * @type {import('gmf/themes.js').GmfOgcServers|null}
+   * @type {import('gmf/themes').GmfOgcServers|null}
    */
   this.ogcServers_ = null;
 
   /**
-   * @type {import('ol/source/Vector.js').default<unknown>|undefined}
+   * @type {import('ol/source/Vector').default<unknown>|undefined}
    */
   this.ngeoSnappingSource_ = this.injector_.has('ngeoSnappingSource')
     ? this.injector_.get('ngeoSnappingSource')
@@ -248,7 +248,7 @@ EditingSnappingService.prototype.ensureSnapInteractionsOnTop = function () {
 
 /**
  * Bind the snapping service to a map
- * @param {?import("ol/Map.js").default} map Map
+ * @param {?import('ol/Map').default} map Map
  */
 EditingSnappingService.prototype.setMap = function (map) {
   const keys = this.listenerKeys_;
@@ -337,20 +337,20 @@ EditingSnappingService.prototype.handleThemesChange_ = function () {
  * create and add a cache item with every configuration required to do the
  * snapping. It becomes active when its state is set to 'on'.
  *
- * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl Layertree controller to
+ * @param {import('ngeo/layertree/Controller').LayertreeController} treeCtrl Layertree controller to
  *    register
  */
 EditingSnappingService.prototype.registerTreeCtrl_ = function (treeCtrl) {
   // Skip any Layertree controller that has a node that is not a leaf
-  let node = /** @type {import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer} */ (treeCtrl.node);
-  const groupNode = /** @type {import('gmf/themes.js').GmfGroup} */ (node);
+  let node = /** @type {import('gmf/themes').GmfGroup|import('gmf/themes').GmfLayer} */ (treeCtrl.node);
+  const groupNode = /** @type {import('gmf/themes').GmfGroup} */ (node);
   if (groupNode.children) {
     return;
   }
 
   // If treeCtrl is snappable and supports WFS, listen to its state change.
   // When it becomes visible, it's added to the list of snappable tree ctrls.
-  node = /** @type {import('gmf/themes.js').GmfLayer} */ (treeCtrl.node);
+  node = /** @type {import('gmf/themes').GmfLayer} */ (treeCtrl.node);
   const snappingConfig = getSnappingConfig(node);
   if (snappingConfig) {
     const wfsConfig = this.getWFSConfig_(treeCtrl);
@@ -404,23 +404,23 @@ EditingSnappingService.prototype.unregisterAllTreeCtrl_ = function () {
 /**
  * Get the OGC server.
  *
- * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl The layer tree controller
- * @return {?import('gmf/themes.js').GmfOgcServer} The OGC server.
+ * @param {import('ngeo/layertree/Controller').LayertreeController} treeCtrl The layer tree controller
+ * @return {?import('gmf/themes').GmfOgcServer} The OGC server.
  */
 EditingSnappingService.prototype.getOGCServer_ = function (treeCtrl) {
-  const gmfLayer = /** @type {import('gmf/themes.js').GmfLayer} */ (treeCtrl.node);
+  const gmfLayer = /** @type {import('gmf/themes').GmfLayer} */ (treeCtrl.node);
   if (gmfLayer.type !== ThemeNodeType.WMS) {
     return null;
   }
-  const gmfLayerWMS = /** @type {import('gmf/themes.js').GmfLayerWMS} */ (/** @type {any} */ (gmfLayer));
+  const gmfLayerWMS = /** @type {import('gmf/themes').GmfLayerWMS} */ (/** @type {any} */ (gmfLayer));
 
   let ogcServerName;
-  const gmfGroup = /** @type {import('gmf/themes.js').GmfGroup} */ (treeCtrl.parent.node);
+  const gmfGroup = /** @type {import('gmf/themes').GmfGroup} */ (treeCtrl.parent.node);
   if (gmfGroup.mixed) {
     ogcServerName = gmfLayerWMS.ogcServer;
   } else {
     const firstTreeCtrl = getFirstParentTree(treeCtrl);
-    const firstNode = /** @type {import('gmf/themes.js').GmfGroup} */ (firstTreeCtrl.node);
+    const firstNode = /** @type {import('gmf/themes').GmfGroup} */ (firstTreeCtrl.node);
     ogcServerName = firstNode.ogcServer;
   }
   if (!ogcServerName) {
@@ -445,7 +445,7 @@ EditingSnappingService.prototype.getOGCServer_ = function (treeCtrl) {
  *    to `true`
  * 4) the ogcServer defined in 3) has the `wfsSupport` property set to `true`.
  *
- * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl The layer tree controller
+ * @param {import('ngeo/layertree/Controller').LayertreeController} treeCtrl The layer tree controller
  * @return {?WFSConfig} The configuration object.
  */
 EditingSnappingService.prototype.getWFSConfig_ = function (treeCtrl) {
@@ -454,14 +454,14 @@ EditingSnappingService.prototype.getWFSConfig_ = function (treeCtrl) {
     return null;
   }
 
-  const gmfLayer = /** @type {import('gmf/themes.js').GmfLayer} */ (treeCtrl.node);
+  const gmfLayer = /** @type {import('gmf/themes').GmfLayer} */ (treeCtrl.node);
 
   // (2)
   if (gmfLayer.type !== ThemeNodeType.WMS) {
     return null;
   }
 
-  const gmfLayerWMS = /** @type {import('gmf/themes.js').GmfLayerWMS} */ (/** @type {any} */ (gmfLayer));
+  const gmfLayerWMS = /** @type {import('gmf/themes').GmfLayerWMS} */ (/** @type {any} */ (gmfLayer));
 
   // (3)
   const featureTypes = [];
@@ -494,7 +494,7 @@ EditingSnappingService.prototype.getWFSConfig_ = function (treeCtrl) {
 };
 
 /**
- * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl The layer tree controller
+ * @param {import('ngeo/layertree/Controller').LayertreeController} treeCtrl The layer tree controller
  * @return {boolean} True if state is on and snapping is activated for that layer.
  */
 EditingSnappingService.prototype.isSnappingActiveForTreeCtrl_ = function (treeCtrl) {
@@ -509,13 +509,13 @@ EditingSnappingService.prototype.isSnappingActiveForTreeCtrl_ = function (treeCt
     }
     return treeCtrl.properties.snapping;
   }
-  const node = /** @type {import('gmf/themes.js').GmfLayer} */ (treeCtrl.node);
+  const node = /** @type {import('gmf/themes').GmfLayer} */ (treeCtrl.node);
   const config = getSnappingConfig(node);
   return config !== null && config.activated;
 };
 
 /**
- * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl The layer tree controller
+ * @param {import('ngeo/layertree/Controller').LayertreeController} treeCtrl The layer tree controller
  * @param {boolean} newVal New value for the layer
  */
 EditingSnappingService.prototype.handleTreeCtrlStateChange_ = function (treeCtrl, newVal) {
@@ -670,10 +670,9 @@ EditingSnappingService.prototype.loadItemFeatures_ = function (item) {
     item.features.clear();
 
     // (3) Read features from request response and add them to the item
-    const readFeatures =
-      /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>[]} */ (
-        new olFormatWFS().readFeatures(response.data)
-      );
+    const readFeatures = /** @type {import('ol/Feature').default<import('ol/geom/Geometry').default>[]} */ (
+      new olFormatWFS().readFeatures(response.data)
+    );
     if (readFeatures) {
       item.features.extend(readFeatures);
       this.refreshSnappingSource_();
@@ -711,7 +710,7 @@ EditingSnappingService.prototype.refreshSnappingSource_ = function () {
 /**
  * Called when a File data source is added to the File Group (imported
  * geospatial files). Make its features snappable.
- * @param {Event|import("ol/events/Event.js").default} evt Event
+ * @param {Event|import('ol/events/Event').default} evt Event
  */
 EditingSnappingService.prototype.handleFileGroupDataSourcesCollectionAdd_ = function (evt) {
   if (!(evt instanceof CollectionEvent)) {
@@ -758,7 +757,7 @@ EditingSnappingService.prototype.handleFileGroupDataSourcesCollectionAdd_ = func
 /**
  * Called when a File data source is removed from the File
  * Group. Remove the features from being snappable.
- * @param {Event|import("ol/events/Event.js").default} evt Event
+ * @param {Event|import('ol/events/Event').default} evt Event
  */
 EditingSnappingService.prototype.handleFileGroupDataSourcesCollectionRemove_ = function (evt) {
   if (!(evt instanceof CollectionEvent)) {
@@ -826,13 +825,13 @@ EditingSnappingService.prototype.handleFileDataSourceVisibleChange_ = function (
  * @property {boolean} active
  * @property {string} featureNS
  * @property {string} featurePrefix
- * @property {import("ol/Collection.js").default<import("ol/Feature.js").default<import("ol/geom/Geometry.js").default>>} features
- * @property {?import("ol/interaction/Snap.js").default} interaction
+ * @property {import('ol/Collection').default<import('ol/Feature').default<import('ol/geom/Geometry').default>>} features
+ * @property {?import('ol/interaction/Snap').default} interaction
  * @property {number} maxFeatures
  * @property {?angular.IDeferred<unknown>} requestDeferred
- * @property {import('gmf/themes.js').GmfSnappingConfig} snappingConfig
+ * @property {import('gmf/themes').GmfSnappingConfig} snappingConfig
  * @property {Function} stateWatcherUnregister
- * @property {import('ngeo/layertree/Controller.js').LayertreeController} treeCtrl
+ * @property {import('ngeo/layertree/Controller').LayertreeController} treeCtrl
  * @property {WFSConfig} wfsConfig
  */
 
@@ -844,8 +843,8 @@ EditingSnappingService.prototype.handleFileDataSourceVisibleChange_ = function (
 /**
  * @typedef {Object} CacheFileDataSourceItem
  * @property {boolean} active
- * @property {import("ngeo/datasource/File.js").default} fileDataSource
- * @property {import("ol/interaction/Snap.js").default} interaction
+ * @property {import('ngeo/datasource/File').default} fileDataSource
+ * @property {import('ol/interaction/Snap').default} interaction
  * @property {Function} visibleWatcherUnregister
  */
 

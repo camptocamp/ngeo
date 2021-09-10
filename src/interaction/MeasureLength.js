@@ -19,11 +19,11 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import ngeoInteractionMeasure, {getFormattedLength} from 'ngeo/interaction/Measure.js';
-import olInteractionDraw from 'ol/interaction/Draw.js';
-import LineString from 'ol/geom/LineString.js';
-import {distance} from 'ol/coordinate.js';
-import {containsXY} from 'ol/extent.js';
+import ngeoInteractionMeasure, {getFormattedLength} from 'ngeo/interaction/Measure';
+import olInteractionDraw from 'ol/interaction/Draw';
+import LineString from 'ol/geom/LineString';
+import {distance} from 'ol/coordinate';
+import {containsXY} from 'ol/extent';
 
 /** @type {boolean|undefined} */
 let modifierPressed;
@@ -35,9 +35,9 @@ let modifierPressed;
  */
 export default class extends ngeoInteractionMeasure {
   /**
-   * @param {import('ngeo/misc/filters.js').unitPrefix} format The format function
+   * @param {import('ngeo/misc/filters').unitPrefix} format The format function
    * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
-   * @param {import('ngeo/interaction/Measure.js').MeasureOptions} [options] Options
+   * @param {import('ngeo/interaction/Measure').MeasureOptions} [options] Options
    */
   constructor(format, gettextCatalog, options = {}) {
     super(options);
@@ -69,7 +69,7 @@ export default class extends ngeoInteractionMeasure {
 
     /**
      * The format function
-     * @type {import('ngeo/misc/filters.js').unitPrefix}
+     * @type {import('ngeo/misc/filters').unitPrefix}
      */
     this.format = format;
 
@@ -81,16 +81,16 @@ export default class extends ngeoInteractionMeasure {
 
     /**
      * The snapping source
-     * @type {import('ol/source/Vector.js').default<*>}
+     * @type {import('ol/source/Vector').default<*>}
      */
     this.source = options.source;
   }
 
   /**
-   * @param {import("ol/style/Style.js").StyleLike} style The sketchStyle used for the drawing
+   * @param {import('ol/style/Style').StyleLike} style The sketchStyle used for the drawing
    *    interaction.
-   * @param {import("ol/source/Vector.js").default<import("ol/geom/LineString.js").default>} source Vector source.
-   * @return {olInteractionDraw|import("ngeo/interaction/MobileDraw.js").default} The interaction
+   * @param {import('ol/source/Vector').default<import('ol/geom/LineString').default>} source Vector source.
+   * @return {olInteractionDraw|import('ngeo/interaction/MobileDraw').default} The interaction
    */
   createDrawInteraction(style, source) {
     return new olInteractionDraw({
@@ -110,8 +110,8 @@ export default class extends ngeoInteractionMeasure {
    * Use this with the draw interaction and `type: 'LineString'`.
    *
    * @param {number[][]} coordinates Coordinates.
-   * @param {import('ol/geom/SimpleGeometry.js').default|undefined} [opt_geometry] Geometry.
-   * @return {import('ol/geom/SimpleGeometry.js').default} Geometry.
+   * @param {import('ol/geom/SimpleGeometry').default|undefined} [opt_geometry] Geometry.
+   * @return {import('ol/geom/SimpleGeometry').default} Geometry.
    */
   linestringGeometryFunction(coordinates, opt_geometry) {
     if (modifierPressed) {
@@ -137,7 +137,7 @@ export default class extends ngeoInteractionMeasure {
           throw new Error('Missing resolution');
         }
         const delta = resolution * this.tolerance;
-        /** @type {import('ol/extent.js').Extent} */
+        /** @type {import('ol/extent').Extent} */
         const bbox = [to[0] - delta, to[1] - delta, to[0] + delta, to[1] + delta];
 
         const layerSource = this.source;
@@ -200,7 +200,7 @@ export default class extends ngeoInteractionMeasure {
    * Function implemented in inherited classes to compute measurement, determine
    * where to place the tooltip and determine which help message to display.
    *
-   * @param {function(string, ?import("ol/coordinate.js").Coordinate): void} callback The function
+   * @param {function(string, ?import('ol/coordinate').Coordinate): void} callback The function
    *     to be called.
    */
   handleMeasure(callback) {

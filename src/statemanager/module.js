@@ -20,8 +20,8 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import ngeoStatemanagerLocation from 'ngeo/statemanager/Location.js';
-import ngeoStatemanagerService from 'ngeo/statemanager/Service.js';
+import ngeoStatemanagerLocation from 'ngeo/statemanager/Location';
+import ngeoStatemanagerService from 'ngeo/statemanager/Service';
 
 /**
  * @type {angular.IModule}

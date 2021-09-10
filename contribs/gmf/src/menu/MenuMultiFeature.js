@@ -19,8 +19,8 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import menu from 'ngeo/Menu.js';
-import ngeoCustomEvent from 'ngeo/CustomEvent.js';
+import menu from 'ngeo/Menu';
+import ngeoCustomEvent from 'ngeo/CustomEvent';
 
 /**
  * An OpenLayers overlay for features extended from ngeo/Menu.js. Additionally highlightes the chosen feature on menu mouseOver
@@ -28,8 +28,8 @@ import ngeoCustomEvent from 'ngeo/CustomEvent.js';
  */
 export default class extends menu {
   /**
-   * @param {import('ngeo/Menu.js').MenuOptions} menuOptions Menu options.
-   * @param {import('ol/Overlay.js').Options} [options] Overlay options.
+   * @param {import('ngeo/Menu').MenuOptions} menuOptions Menu options.
+   * @param {import('ol/Overlay').Options} [options] Overlay options.
    */
   constructor(menuOptions, options = {}) {
     super(menuOptions, options);
@@ -45,7 +45,7 @@ export default class extends menu {
 
   /**
    * @param {string} actionName The name of the target action.
-   * @param {Event|import("ol/events/Event.js").default} evt Event.
+   * @param {Event|import('ol/events/Event').default} evt Event.
    * @private
    */
   handleMouseEnter_(actionName, evt) {
@@ -59,7 +59,7 @@ export default class extends menu {
 
   /**
    * Prevent strange, error generating, activities on mouse move
-   * @param {Event|import("ol/events/Event.js").default} evt Event.
+   * @param {Event|import('ol/events/Event').default} evt Event.
    * @private
    */
   handlePointerMove_(evt) {
@@ -69,7 +69,7 @@ export default class extends menu {
 
   /**
    * @param {string} actionName The name of the target action.
-   * @param {Event|import("ol/events/Event.js").default} evt Event.
+   * @param {Event|import('ol/events/Event').default} evt Event.
    * @private
    */
   handleMouseOut_(actionName, evt) {

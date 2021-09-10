@@ -20,10 +20,10 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import {layerLoading} from 'ngeo/misc/decorate.js';
-import olLayerImage from 'ol/layer/Image.js';
-import olLayerGroup from 'ol/layer/Group.js';
-import olSourceImage from 'ol/source/Image.js';
+import {layerLoading} from 'ngeo/misc/decorate';
+import olLayerImage from 'ol/layer/Image';
+import olLayerGroup from 'ol/layer/Group';
+import olSourceImage from 'ol/source/Image';
 
 describe('ngeo.misc.DecorateLayerLoading test suite', () => {
   /** @type {angular.IScope} */

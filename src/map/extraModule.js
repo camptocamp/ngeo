@@ -20,7 +20,7 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import ngeoMapLayerHelper from 'ngeo/map/LayerHelper.js';
+import ngeoMapLayerHelper from 'ngeo/map/LayerHelper';
 
 /**
  * @type {angular.IModule}

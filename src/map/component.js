@@ -20,8 +20,8 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import {listen} from 'ol/events.js';
-import olMap from 'ol/Map.js';
+import {listen} from 'ol/events';
+import olMap from 'ol/Map';
 
 /**
  * @type {angular.IModule}
@@ -51,7 +51,7 @@ const myModule = angular.module('ngeoMap', []);
  * [../examples/permalink.html](../examples/permalink.html)
  * [../examples/simple.html](../examples/simple.html)
  *
- * @htmlAttribute {import("ol/Map.js").default} ngeo-map The map.
+ * @htmlAttribute {import('ol/Map').default} ngeo-map The map.
  * @param {angular.IWindowService} $window The Angular $window service.
  * @return {angular.IDirective} Directive Definition Object.
  * @ngdoc directive
@@ -67,7 +67,7 @@ function mapComponent($window) {
      * @param {angular.IAttributes} attrs Attributes.
      */
     link: (scope, element, attrs) => {
-      // Get the 'import("ol/Map.js").default' object from attributes and manage it accordingly
+      // Get the 'import('ol/Map').default' object from attributes and manage it accordingly
       const attr = 'ngeoMap';
       const prop = attrs[attr];
 
@@ -94,7 +94,7 @@ function mapComponent($window) {
         listen(
           $window,
           'resize',
-          /** @type {import("ol/events.js").ListenerFunction} */
+          /** @type {import('ol/events').ListenerFunction} */
           (evt) => {
             if (resizeTransition) {
               // Resize with transition

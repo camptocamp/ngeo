@@ -20,9 +20,9 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import 'jquery-ui/ui/widgets/draggable.js';
+import 'jquery-ui/ui/widgets/draggable';
 import 'ngeo/sass/jquery-ui.scss';
-import 'bootstrap/js/src/modal.js';
+import 'bootstrap/js/src/modal';
 
 /**
  * @type {angular.IModule}

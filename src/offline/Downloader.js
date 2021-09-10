@@ -19,15 +19,15 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import {DEVICE_PIXEL_RATIO} from 'ol/has.js';
-import olSourceTileWMS from 'ol/source/TileWMS.js';
-import olSourceWMTS from 'ol/source/WMTS.js';
-import TilesDownloader from 'ngeo/offline/TilesDownloader.js';
+import {DEVICE_PIXEL_RATIO} from 'ol/has';
+import olSourceTileWMS from 'ol/source/TileWMS';
+import olSourceWMTS from 'ol/source/WMTS';
+import TilesDownloader from 'ngeo/offline/TilesDownloader';
 import angular from 'angular';
 
 /**
- * @param {import("ol/coordinate.js").Coordinate} a Some coordinates.
- * @param {import("ol/coordinate.js").Coordinate} b Some other coordinates.
+ * @param {import('ol/coordinate').Coordinate} a Some coordinates.
+ * @param {import('ol/coordinate').Coordinate} b Some other coordinates.
  * @return {number} The squared magnitude.
  */
 function magnitude2(a, b) {
@@ -41,13 +41,13 @@ function magnitude2(a, b) {
 const Downloader = class {
   /**
    * @ngInject
-   * @param {import("ngeo/offline/Configuration.js").default} ngeoOfflineConfiguration
+   * @param {import('ngeo/offline/Configuration').default} ngeoOfflineConfiguration
    * A service for customizing offline behaviour.
    */
   constructor(ngeoOfflineConfiguration) {
     /**
      * @private
-     * @type {import("ngeo/offline/Configuration.js").default}
+     * @type {import('ngeo/offline/Configuration').default}
      */
     this.configuration_ = ngeoOfflineConfiguration;
 
@@ -65,8 +65,8 @@ const Downloader = class {
   }
 
   /**
-   * @param {import("./index.js").OfflineLayerMetadata} layerMetadata Layers metadata.
-   * @param {import("./index.js").OfflineTile[]} queue Queue of tiles to download.
+   * @param {import('./index').OfflineLayerMetadata} layerMetadata Layers metadata.
+   * @param {import('./index').OfflineTile[]} queue Queue of tiles to download.
    */
   queueLayerTiles_(layerMetadata, queue) {
     const source = /** @type {olSourceTileWMS|olSourceWMTS} */ (layerMetadata.source);
@@ -85,7 +85,7 @@ const Downloader = class {
       const z = extentZoom.zoom;
       const extent = extentZoom.extent;
       /**
-       * @type {import("./index.js").OfflineTile[]}
+       * @type {import('./index').OfflineTile[]}
        */
       const queueByZ = [];
       /**
@@ -116,7 +116,7 @@ const Downloader = class {
 
         if (url) {
           /**
-           * @type {import("./index.js").OfflineTile}
+           * @type {import('./index').OfflineTile}
            */
           const tile = {coord, url, response: null};
           queueByZ.push(tile);
@@ -130,22 +130,22 @@ const Downloader = class {
   }
 
   /**
-   * @param {import("ol/extent.js").Extent} extent The extent to download.
-   * @param {import("ol/Map.js").default} map The map to work on.
+   * @param {import('ol/extent').Extent} extent The extent to download.
+   * @param {import('ol/Map').default} map The map to work on.
    * @return {Promise<*>} A promise resolving when save is finished.
    */
   save(extent, map) {
     /**
-     * @type {!import("./index.js").OfflineLayerMetadata[]}
+     * @type {!import('./index').OfflineLayerMetadata[]}
      */
     const layersMetadatas = this.configuration_.createLayerMetadatas(map, extent);
 
     /**
-     * @type {!import("./index.js").OfflinePersistentLayer[]}
+     * @type {!import('./index').OfflinePersistentLayer[]}
      */
     const persistentLayers = [];
     /**
-     * @type {import("./index.js").OfflineTile[]}
+     * @type {import('./index').OfflineTile[]}
      */
     const queue = [];
     /**
@@ -155,7 +155,7 @@ const Downloader = class {
     for (const layerItem of layersMetadatas) {
       if (layerItem.layerType === 'tile') {
         /**
-         * @type {import("./index.js").OfflineTile[]}
+         * @type {import('./index').OfflineTile[]}
          */
         const tiles = [];
         this.queueLayerTiles_(layerItem, tiles);
@@ -177,7 +177,7 @@ const Downloader = class {
     }
 
     /**
-     * @type {import("./index.js").OfflinePersistentContent}
+     * @type {import('./index').OfflinePersistentContent}
      */
     const persistentObject = {
       extent: extent,

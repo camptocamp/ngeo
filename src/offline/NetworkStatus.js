@@ -19,7 +19,7 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
+import ngeoMiscDebounce from 'ngeo/misc/debounce';
 import angular from 'angular';
 
 const Service = class {
@@ -42,7 +42,7 @@ const Service = class {
    * @param {angular.IWindowService} $window Angular window service.
    * @param {angular.ITimeoutService} $timeout Angular timeout service.
    * @param {angular.IScope} $rootScope The root scope.
-   * @param {import('ngeo/options.js').ngeoOfflineTestUrl} ngeoOfflineTestUrl URL of the test page.
+   * @param {import('ngeo/options').ngeoOfflineTestUrl} ngeoOfflineTestUrl URL of the test page.
    */
   constructor($document, $window, $timeout, $rootScope, ngeoOfflineTestUrl) {
     /**
@@ -71,7 +71,7 @@ const Service = class {
 
     /**
      * @private
-     * @type {import('ngeo/options.js').ngeoOfflineTestUrl}
+     * @type {import('ngeo/options').ngeoOfflineTestUrl}
      */
     this.ngeoOfflineTestUrl_ = ngeoOfflineTestUrl;
 
@@ -192,7 +192,7 @@ Service.module.service(name, Service);
 /**
  * @ngInject
  * @param {angular.IQService} $q The Angular $q service.
- * @param {import("ngeo/misc/debounce.js").miscDebounce<function()>} ngeoDebounce ngeo debounce service.
+ * @param {import('ngeo/misc/debounce').miscDebounce<function()>} ngeoDebounce ngeo debounce service.
  * @param {Service} ngeoNetworkStatus ngeo network status service.
  * @return {angular.IHttpInterceptor} the interceptor
  */

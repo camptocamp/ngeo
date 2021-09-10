@@ -21,28 +21,28 @@
 
 import angular from 'angular';
 import './objectediting.css';
-import gmfLayertreeComponent from 'gmf/layertree/component.js';
+import gmfLayertreeComponent from 'gmf/layertree/component';
 
-import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
+import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager';
 
-import gmfMapComponent from 'gmf/map/component.js';
+import gmfMapComponent from 'gmf/map/component';
 
-import gmfObjecteditingComponent from 'gmf/objectediting/component.js';
+import gmfObjecteditingComponent from 'gmf/objectediting/component';
 
-import gmfObjecteditingManager from 'gmf/objectediting/Manager.js';
-import gmfThemeThemes from 'gmf/theme/Themes.js';
-import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
-import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr.js';
-import EPSG2056 from 'ngeo/proj/EPSG_2056.js';
-import * as olProj from 'ol/proj.js';
-import olCollection from 'ol/Collection.js';
-import olMap from 'ol/Map.js';
-import olView from 'ol/View.js';
-import olLayerTile from 'ol/layer/Tile.js';
-import olLayerVector from 'ol/layer/Vector.js';
-import olSourceOSM from 'ol/source/OSM.js';
-import olSourceVector from 'ol/source/Vector.js';
-import options from './options.js';
+import gmfObjecteditingManager from 'gmf/objectediting/Manager';
+import gmfThemeThemes from 'gmf/theme/Themes';
+import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate';
+import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr';
+import EPSG2056 from 'ngeo/proj/EPSG_2056';
+import * as olProj from 'ol/proj';
+import olCollection from 'ol/Collection';
+import olMap from 'ol/Map';
+import olView from 'ol/View';
+import olLayerTile from 'ol/layer/Tile';
+import olLayerVector from 'ol/layer/Vector';
+import olSourceOSM from 'ol/source/OSM';
+import olSourceVector from 'ol/source/Vector';
+import options from './options';
 
 /**
  * @type {angular.IModule}
@@ -60,19 +60,19 @@ const myModule = angular.module('gmfapp', [
 ]);
 
 /**
- * @param {import("gmf/objectediting/Manager.js").ObjecteditingManagerService} gmfObjectEditingManager The gmf
+ * @param {import('gmf/objectediting/Manager').ObjecteditingManagerService} gmfObjectEditingManager The gmf
  *    ObjectEditing manager service.
- * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes The gmf themes service.
- * @param {import("gmf/layertree/TreeManager.js").LayertreeTreeManager} gmfTreeManager gmf Tree Manager
+ * @param {import('gmf/theme/Themes').ThemesService} gmfThemes The gmf themes service.
+ * @param {import('gmf/layertree/TreeManager').LayertreeTreeManager} gmfTreeManager gmf Tree Manager
  *    service.
- * @param {import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate
+ * @param {import('ngeo/misc/ToolActivateMgr').ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate
  *    manager service.
  * @class
  * @ngInject
  */
 function MainController(gmfObjectEditingManager, gmfThemes, gmfTreeManager, ngeoToolActivateMgr) {
   /**
-   * @type {import("gmf/layertree/TreeManager.js").LayertreeTreeManager}
+   * @type {import('gmf/layertree/TreeManager').LayertreeTreeManager}
    */
   this.gmfTreeManager_ = gmfTreeManager;
 
@@ -82,26 +82,26 @@ function MainController(gmfObjectEditingManager, gmfThemes, gmfTreeManager, ngeo
   projection.setExtent([485869.5728, 76443.1884, 837076.5648, 299941.7864]);
 
   /**
-   * @type {import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>}
+   * @type {import('ol/source/Vector').default<import('ol/geom/Geometry').default>}
    */
   this.vectorSource_ = new olSourceVector({
     wrapX: false,
   });
 
   /**
-   * @type {import("ol/layer/Vector.js").default<import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>>}
+   * @type {import('ol/layer/Vector').default<import('ol/source/Vector').default<import('ol/geom/Geometry').default>>}
    */
   this.vectorLayer_ = new olLayerVector({
     source: this.vectorSource_,
   });
 
   /**
-   * @type {import("ol/Collection.js").default<import("ol/Feature.js").default<import("ol/geom/Geometry.js").default>>}
+   * @type {import('ol/Collection').default<import('ol/Feature').default<import('ol/geom/Geometry').default>>}
    */
   this.sketchFeatures = new olCollection();
 
   /**
-   * @type {import("ol/layer/Vector.js").default<import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>>}
+   * @type {import('ol/layer/Vector').default<import('ol/source/Vector').default<import('ol/geom/Geometry').default>>}
    */
   this.sketchLayer_ = new olLayerVector({
     source: new olSourceVector({
@@ -111,7 +111,7 @@ function MainController(gmfObjectEditingManager, gmfThemes, gmfTreeManager, ngeo
   });
 
   /**
-   * @type {import("ol/Map.js").default}
+   * @type {import('ol/Map').default}
    */
   this.map = new olMap({
     layers: [
@@ -162,7 +162,7 @@ function MainController(gmfObjectEditingManager, gmfThemes, gmfTreeManager, ngeo
   ngeoToolActivateMgr.registerTool('mapTools', dummyToolActivate, false);
 
   /**
-   * @type {?import("ol/Feature.js").default<import("ol/geom/Geometry.js").default>}
+   * @type {?import('ol/Feature').default<import('ol/geom/Geometry').default>}
    */
   this.objectEditingFeature = null;
 

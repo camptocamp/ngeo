@@ -19,21 +19,21 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import olFeature from 'ol/Feature.js';
-import olGeomLineString from 'ol/geom/LineString.js';
-import olGeomPoint from 'ol/geom/Point.js';
-import olStyleFill from 'ol/style/Fill.js';
-import olStyleRegularShape from 'ol/style/RegularShape.js';
-import olStyleStroke from 'ol/style/Stroke.js';
-import olStyleStyle from 'ol/style/Style.js';
+import olFeature from 'ol/Feature';
+import olGeomLineString from 'ol/geom/LineString';
+import olGeomPoint from 'ol/geom/Point';
+import olStyleFill from 'ol/style/Fill';
+import olStyleRegularShape from 'ol/style/RegularShape';
+import olStyleStroke from 'ol/style/Stroke';
+import olStyleStyle from 'ol/style/Style';
 import {saveAs} from 'file-saver';
 import {select as d3select} from 'd3';
 
 /**
  * The lidar point attribute list width default option
  * @typedef {Object} LidarPointAttributeList
- * @property {import("gmf/lidarprofile/Config.js").LidarprofileServerConfigPointAttributes[]} [availableOptions]
- * @property {import("gmf/lidarprofile/Config.js").LidarprofileServerConfigPointAttribute} [selectedOption]
+ * @property {import('gmf/lidarprofile/Config').LidarprofileServerConfigPointAttributes[]} [availableOptions]
+ * @property {import('gmf/lidarprofile/Config').LidarprofileServerConfigPointAttribute} [selectedOption]
  */
 
 /**
@@ -77,16 +77,16 @@ import {select as d3select} from 'd3';
 export default class {
   /**
    * Clip a linstring with start and end measure given by D3 Chart domain
-   * @param {import("gmf/lidarprofile/Config.js").LidarprofileConfigService} config the LIDAR profile config
+   * @param {import('gmf/lidarprofile/Config').LidarprofileConfigService} config the LIDAR profile config
    *    instance
    * @param {number} map_resolution the current resolution of the map
-   * @param {import("ol/geom/LineString.js").default} linestring an OpenLayers Linestring
+   * @param {import('ol/geom/LineString').default} linestring an OpenLayers Linestring
    * @param {number} dLeft domain minimum
    * @param {number} dRight domain maximum
    * @return {{
-   *     bufferGeom: olFeature<import("ol/geom/LineString.js").default>,
+   *     bufferGeom: olFeature<import('ol/geom/LineString').default>,
    *     bufferStyle: olStyleStyle[],
-   *     clippedLine: import("ol/coordinate.js").Coordinate[],
+   *     clippedLine: import('ol/coordinate').Coordinate[],
    *     distanceOffset: number
    * }} Object with clipped lined coordinates and left domain value
    */
@@ -128,7 +128,7 @@ export default class {
       mileage_start += segLine.getLength();
     });
 
-    const feat = /** @type {olFeature<import("ol/geom/LineString.js").default>} */ (
+    const feat = /** @type {olFeature<import('ol/geom/LineString').default>} */ (
       new olFeature({
         geometry: clippedLine,
       })
@@ -217,7 +217,7 @@ export default class {
    * Get a Level Of Details and with for a given chart span
    * Configuration is set up in Pytree configuration
    * @param {number} span domain extent
-   * @param {import("gmf/lidarprofile/Config.js").LidarprofileServerConfigLevels} max_levels levels defined
+   * @param {import('gmf/lidarprofile/Config').LidarprofileServerConfigLevels} max_levels levels defined
    *    by a LIDAR server
    * @return {{maxLOD: number, width: number}} Object with optimized Level Of Details and width for this profile span
    */
@@ -367,7 +367,7 @@ export default class {
 
   /**
    * Transform OpenLayers linestring into a cPotree compatible definition
-   * @param {import("ol/geom/LineString.js").default} line the profile 2D line
+   * @param {import('ol/geom/LineString').default} line the profile 2D line
    * @return {string} linestring in a cPotree/pytree compatible string definition
    */
   getPytreeLinestring(line) {
@@ -389,7 +389,7 @@ export default class {
    * @param {number} tolerance snap sensibility
    * @param {Function} sx d3.scalelinear x scale
    * @param {Function} sy d3.scalelinear y scale
-   * @param {import("gmf/lidarprofile/Config.js").LidarprofileServerConfigClassifications} classification_colors
+   * @param {import('gmf/lidarprofile/Config').LidarprofileServerConfigClassifications} classification_colors
    *    classification colors
    * @return {?LidarPoint} closestPoint the closest point to the clicked coordinates
    */

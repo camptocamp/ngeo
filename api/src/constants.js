@@ -29,4 +29,4 @@ export const dynamicUrl = {
   dynamicUrl: undefined,
 };
 
-export default /** @type {import('api/options.js').APIConfig} */ ({});
+export default /** @type {import('api/options').APIConfig} */ ({});

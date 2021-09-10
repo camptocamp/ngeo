@@ -20,7 +20,7 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import 'jquery-ui/ui/widgets/sortable.js';
+import 'jquery-ui/ui/widgets/sortable';
 import 'ngeo/sass/jquery-ui.scss';
 import 'jquery-ui-touch-punch';
 
@@ -66,7 +66,7 @@ const myModule = angular.module('ngeoSortable', []);
  *
  * See our live example: [../examples/layerorder.html](../examples/layerorder.html)
  *
- * @htmlAttribute {import("ol/layer/Base.js").default[]} ngeo-sortable The layers to sort.
+ * @htmlAttribute {import('ol/layer/Base').default[]} ngeo-sortable The layers to sort.
  * @htmlAttribute {miscSortableOptions} ngeo-sortable-options The options.
  * @htmlAttribute {Function(JQuery, Array)?} ngeo-sortable-callback
  *     Callback function called after the move end. The Function will be called

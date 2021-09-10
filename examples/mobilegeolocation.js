@@ -21,27 +21,27 @@
 
 import './mobilegeolocation.css';
 import angular from 'angular';
-import olMap from 'ol/Map.js';
+import olMap from 'ol/Map';
 
-import olView from 'ol/View.js';
-import olLayerTile from 'ol/layer/Tile.js';
-import olSourceOSM from 'ol/source/OSM.js';
-import ngeoMapModule from 'ngeo/map/module.js';
-import ngeoGeolocation from 'ngeo/geolocation/component.js';
+import olView from 'ol/View';
+import olLayerTile from 'ol/layer/Tile';
+import olSourceOSM from 'ol/source/OSM';
+import ngeoMapModule from 'ngeo/map/module';
+import ngeoGeolocation from 'ngeo/geolocation/component';
 
 /** @type {angular.IModule} **/
 const appmodule = angular.module('app', ['gettext', ngeoGeolocation.name, ngeoMapModule.name]);
 
 /**
  * @param {angular.IScope} $scope Scope.
- * @param {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
+ * @param {import('ngeo/map/FeatureOverlayMgr').FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
  * @class
  * @ngInject
  */
 function MainController($scope, ngeoFeatureOverlayMgr) {
   /**
-   * @type {import("ol/Map.js").default}
+   * @type {import('ol/Map').default}
    */
   this.map = new olMap({
     layers: [

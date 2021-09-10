@@ -20,14 +20,14 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import ngeoDrawController from 'ngeo/draw/Controller.js';
-import ngeoMiscFilters from 'ngeo/misc/filters.js';
-import ngeoGeometryType from 'ngeo/GeometryType.js';
-import ngeoInteractionMeasureAzimut, {getAzimut} from 'ngeo/interaction/MeasureAzimut.js';
-import {listen} from 'ol/events.js';
-import olFeature from 'ol/Feature.js';
-import {fromCircle} from 'ol/geom/Polygon.js';
-import olStyleStyle from 'ol/style/Style.js';
+import ngeoDrawController from 'ngeo/draw/Controller';
+import ngeoMiscFilters from 'ngeo/misc/filters';
+import ngeoGeometryType from 'ngeo/GeometryType';
+import ngeoInteractionMeasureAzimut, {getAzimut} from 'ngeo/interaction/MeasureAzimut';
+import {listen} from 'ol/events';
+import olFeature from 'ol/Feature';
+import {fromCircle} from 'ol/geom/Polygon';
+import olStyleStyle from 'ol/style/Style';
 
 /**
  * @type {angular.IModule}
@@ -39,8 +39,8 @@ const myModule = angular.module('ngeoMeasureazimut', [ngeoDrawController.name, n
  * @param {angular.ICompileService} $compile Angular compile service.
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @param {angular.IFilterService} $filter Angular filter
- * @param {import('ngeo/options.js').ngeoMeasurePrecision} ngeoMeasurePrecision The precision.
- * @param {import('ngeo/options.js').ngeoMeasureDecimals} ngeoMeasureDecimals The decimals.
+ * @param {import('ngeo/options').ngeoMeasurePrecision} ngeoMeasurePrecision The precision.
+ * @param {import('ngeo/options').ngeoMeasureDecimals} ngeoMeasureDecimals The decimals.
  * @return {angular.IDirective} The directive specs.
  * @ngInject
  * @ngdoc directive
@@ -70,7 +70,7 @@ function measureAzimutComponent(
       const helpMsg = gettextCatalog.getString('Click to start drawing circle');
       const contMsg = gettextCatalog.getString('Click to finish');
 
-      /** @type {import('ngeo/interaction/Measure.js').MeasureOptions} */
+      /** @type {import('ngeo/interaction/Measure').MeasureOptions} */
       const options = {
         style: new olStyleStyle(),
         startMsg: $compile(`<div translate>${helpMsg}</div>`)($scope)[0],
@@ -95,25 +95,25 @@ function measureAzimutComponent(
         measureAzimut,
         'measureend',
         /**
-         * @type {import('ol/events.js').ListenerFunction}
+         * @type {import('ol/events').ListenerFunction}
          */
         (event) => {
-          const myEvent = /** @type {import('ngeo/interaction/Measure.js').MeasureEvent} */ (event);
+          const myEvent = /** @type {import('ngeo/interaction/Measure').MeasureEvent} */ (event);
           // In the case of azimut measure interaction, the feature's
           // geometry is actually a collection (line + circle)
           // For our purpose here, we only need the circle, which gets
           // transformed into a polygon with 64 sides.
           const geometry =
-            /** @type {import("ol/geom/GeometryCollection.js").default} */
+            /** @type {import('ol/geom/GeometryCollection').default} */
             (myEvent.detail.feature.getGeometry());
-          const circle = /** @type {import("ol/geom/Circle.js").default} */ (geometry.getGeometries()[1]);
+          const circle = /** @type {import('ol/geom/Circle').default} */ (geometry.getGeometries()[1]);
           const polygon = fromCircle(
             circle,
             Number.parseInt(attrs.$$element.attr('ngeo-measureazimut-nbpoints') || 64)
           );
           myEvent.detail.feature = new olFeature(polygon);
           const azimut = getAzimut(
-            /** @type {import("ol/geom/LineString.js").default} */ (geometry.getGeometries()[0])
+            /** @type {import('ol/geom/LineString').default} */ (geometry.getGeometries()[0])
           );
           myEvent.detail.feature.set('azimut', azimut);
 

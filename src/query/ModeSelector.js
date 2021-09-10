@@ -20,11 +20,11 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import ngeoQueryAction from 'ngeo/query/Action.js';
-import ngeoQueryMode from 'ngeo/query/Mode.js';
-import {isEventUsinCtrlKey} from 'ngeo/utils.js';
+import ngeoQueryAction from 'ngeo/query/Action';
+import ngeoQueryMode from 'ngeo/query/Mode';
+import {isEventUsinCtrlKey} from 'ngeo/utils';
 
-import {listen as olEventsListen} from 'ol/events.js';
+import {listen as olEventsListen} from 'ol/events';
 
 /**
  * @hidden
@@ -196,7 +196,7 @@ export class QueryModeSelector {
   // Handlers
 
   /**
-   * @param {Event|import("ol/events/Event.js").default} evt Event.
+   * @param {Event|import('ol/events/Event').default} evt Event.
    * @private
    */
   handleKeyDown_(evt) {
@@ -239,7 +239,7 @@ export class QueryModeSelector {
   }
 
   /**
-   * @param {Event|import("ol/events/Event.js").default} evt Event.
+   * @param {Event|import('ol/events/Event').default} evt Event.
    * @private
    */
   handleKeyUp_(evt) {

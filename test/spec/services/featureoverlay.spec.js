@@ -21,17 +21,17 @@
 
 // @ts-nocheck
 import angular from 'angular';
-import olMap from 'ol/Map.js';
-import olCollection from 'ol/Collection.js';
-import olFeature from 'ol/Feature.js';
-import olStyleStyle from 'ol/style/Style.js';
+import olMap from 'ol/Map';
+import olCollection from 'ol/Collection';
+import olFeature from 'ol/Feature';
+import olStyleStyle from 'ol/style/Style';
 
 describe('ngeo.map.FeatureOverlayMgr', () => {
-  /** @type {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} */
+  /** @type {import('ngeo/map/FeatureOverlayMgr').FeatureOverlayMgr} */
   let ngeoFeatureOverlayMgr;
-  /** @type {import('ol/Map.js').default} */
+  /** @type {import('ol/Map').default} */
   let map;
-  /** @type {import("ol/layer/Vector.js").default<import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>>} */
+  /** @type {import('ol/layer/Vector').default<import('ol/source/Vector').default<import('ol/geom/Geometry').default>>} */
   let layer;
 
   beforeEach(() => {

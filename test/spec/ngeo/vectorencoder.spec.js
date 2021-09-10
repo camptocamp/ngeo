@@ -37,7 +37,7 @@ import ngeoPrintVectorEncoder from 'ngeo/print/VectorEncoder';
 describe('ngeo.print.VectorEncoder', () => {
   /** @type {import('ngeo/print/VectorEncoder').default} */
   const vectorEncoder = new ngeoPrintVectorEncoder();
-  /** @type {import('ngeo/print/mapfish-print-v3.js').MapFishPrintVectorLayer[]} */
+  /** @type {import('ngeo/print/mapfish-print-v3').MapFishPrintVectorLayer[]} */
   const layersMFP = [];
   const resolution = 20;
   const dpi = 254;
@@ -100,13 +100,13 @@ describe('ngeo.print.VectorEncoder', () => {
 
     expect(style[styleKey]).toBeTruthy();
 
-    const vectorStyle = /** @type {import('ngeo/print/mapfish-print-v3.js').MapFishPrintSymbolizers} */ (
+    const vectorStyle = /** @type {import('ngeo/print/mapfish-print-v3').MapFishPrintSymbolizers} */ (
       style[styleKey]
     );
     const symbolizers = vectorStyle.symbolizers;
     expect(symbolizers.length).toBe(2);
 
-    const symbol0 = /** @type {import('ngeo/print/mapfish-print-v3.js').MapFishPrintSymbolizerPoint}*/ (
+    const symbol0 = /** @type {import('ngeo/print/mapfish-print-v3').MapFishPrintSymbolizerPoint}*/ (
       symbolizers[0]
     );
     expect(symbol0.type).toEqual('point');
@@ -117,7 +117,7 @@ describe('ngeo.print.VectorEncoder', () => {
     expect(symbol0.strokeOpacity).toEqual(1);
     expect(symbol0.strokeWidth).toEqual(2);
 
-    const symbol1 = /** @type {import('ngeo/print/mapfish-print-v3.js').MapFishPrintSymbolizerPoint}*/ (
+    const symbol1 = /** @type {import('ngeo/print/mapfish-print-v3').MapFishPrintSymbolizerPoint}*/ (
       symbolizers[1]
     );
     expect(symbol1.type).toEqual('point');
@@ -171,12 +171,12 @@ describe('ngeo.print.VectorEncoder', () => {
     expect(styleKey1).toEqual(styleKey2);
     expect(style[styleKey1]).toBeTruthy();
 
-    const vectorStyle1 = /** @type {import('ngeo/print/mapfish-print-v3.js').MapFishPrintSymbolizers} */ (
+    const vectorStyle1 = /** @type {import('ngeo/print/mapfish-print-v3').MapFishPrintSymbolizers} */ (
       style[styleKey1]
     );
     const symbolizers = vectorStyle1.symbolizers;
     expect(symbolizers.length).toBe(1);
-    const symbol0 = /** @type {import('ngeo/print/mapfish-print-v3.js').MapFishPrintSymbolizerPolygon}*/ (
+    const symbol0 = /** @type {import('ngeo/print/mapfish-print-v3').MapFishPrintSymbolizerPolygon}*/ (
       symbolizers[0]
     );
     expect(symbol0.type).toEqual('polygon');
@@ -253,11 +253,11 @@ describe('ngeo.print.VectorEncoder', () => {
     expect(style[styleKey3]).toBeTruthy();
 
     // Line style
-    const vectorStyle1 = /** @type {import('ngeo/print/mapfish-print-v3.js').MapFishPrintSymbolizers} */ (
+    const vectorStyle1 = /** @type {import('ngeo/print/mapfish-print-v3').MapFishPrintSymbolizers} */ (
       style[styleKey1]
     );
     const symbolizers = vectorStyle1.symbolizers;
-    const symbol0 = /** @type {import('ngeo/print/mapfish-print-v3.js').MapFishPrintSymbolizerLine}*/ (
+    const symbol0 = /** @type {import('ngeo/print/mapfish-print-v3').MapFishPrintSymbolizerLine}*/ (
       symbolizers[0]
     );
     expect(symbol0.type).toEqual('line');
@@ -267,7 +267,7 @@ describe('ngeo.print.VectorEncoder', () => {
 
     /**
      * Text styles (same for the two features)
-     * @param {import('ngeo/print/mapfish-print-v3.js').MapFishPrintSymbolizerText[]} symbolizers
+     * @param {import('ngeo/print/mapfish-print-v3').MapFishPrintSymbolizerText[]} symbolizers
      */
     const fnExpectSymText = (symbolizers) => {
       expect(symbolizers[0].type).toEqual('Text');
@@ -283,18 +283,18 @@ describe('ngeo.print.VectorEncoder', () => {
       expect(symbolizers[0].goodnessOfFit).toEqual(goodnessOfFit);
     };
 
-    const vectorStyle2 = /** @type {import('ngeo/print/mapfish-print-v3.js').MapFishPrintSymbolizers}*/ (
+    const vectorStyle2 = /** @type {import('ngeo/print/mapfish-print-v3').MapFishPrintSymbolizers}*/ (
       style[styleKey2]
     );
-    const vs2Symbols = /** @type {import('ngeo/print/mapfish-print-v3.js').MapFishPrintSymbolizerText[]} */ (
+    const vs2Symbols = /** @type {import('ngeo/print/mapfish-print-v3').MapFishPrintSymbolizerText[]} */ (
       vectorStyle2.symbolizers
     );
     fnExpectSymText(vs2Symbols);
 
-    const vectorStyle3 = /** @type {import('ngeo/print/mapfish-print-v3.js').MapFishPrintSymbolizers}*/ (
+    const vectorStyle3 = /** @type {import('ngeo/print/mapfish-print-v3').MapFishPrintSymbolizers}*/ (
       style[styleKey3]
     );
-    const vs3Symbols = /** @type {import('ngeo/print/mapfish-print-v3.js').MapFishPrintSymbolizerText[]} */ (
+    const vs3Symbols = /** @type {import('ngeo/print/mapfish-print-v3').MapFishPrintSymbolizerText[]} */ (
       vectorStyle3.symbolizers
     );
     fnExpectSymText(vs3Symbols);
