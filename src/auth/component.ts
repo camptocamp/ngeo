@@ -1,3 +1,24 @@
+// The MIT License (MIT)
+//
+// Copyright (c) 2021 Camptocamp SA
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy of
+// this software and associated documentation files (the "Software"), to deal in
+// the Software without restriction, including without limitation the rights to
+// use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+// the Software, and to permit persons to whom the Software is furnished to do so,
+// subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+// FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+// COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+// IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+// CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
 import {LitElement, html} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import AngularServices from 'ngeo/services';
@@ -18,7 +39,7 @@ type PasswordValidator = {
 };
 
 @customElement('ngeo-auth-component')
-class ngeoAuthComponent extends LitElement {
+export default class ngeoAuthComponent extends LitElement {
   @property({type: Boolean}) isLoading = false;
   @property({type: Boolean}) disconnectedShown = false;
   @property({type: Boolean}) resetPasswordShown = false;
@@ -266,6 +287,7 @@ class ngeoAuthComponent extends LitElement {
 
   /**
    * Calls the authentication service changePassword method.
+   * @param evt
    */
   changePassword(evt: Event) {
     evt.preventDefault();
@@ -323,9 +345,10 @@ class ngeoAuthComponent extends LitElement {
             this.setError_(['Your password has successfully been changed.'], MessageType.INFORMATION);
           })
           .catch(() => {
+            /* eslint-disable @typescript-eslint/no-unnecessary-type-assertion */
             // Reset the values cannot be done via Event values
-            let oldPwd = document.querySelector('input[name = "oldpassword"]') as HTMLInputElement;
-            let otp = document.querySelector('input[name = "otp"]') as HTMLInputElement;
+            const oldPwd = document.querySelector('input[name = "oldpassword"]') as HTMLInputElement;
+            const otp = document.querySelector('input[name = "otp"]') as HTMLInputElement;
             oldPwd.value = '';
             otp.value = '';
 
@@ -347,8 +370,8 @@ class ngeoAuthComponent extends LitElement {
     this.isLoading = true;
     const errors = [];
     const form = evt.target as HTMLFormElement;
-    const loginVal = form.login.value;
-    const pwdVal = form.password.value;
+    const loginVal = (form.login as HTMLInputElement).value;
+    const pwdVal = (form.password as HTMLInputElement).value;
 
     if (loginVal === '') {
       errors.push('The username is required.');
@@ -447,9 +470,10 @@ class ngeoAuthComponent extends LitElement {
     this.changingPassword = false;
     this.userMustChangeItsPassword = false;
 
-    let oldPwd = document.querySelector('input[name = "oldpassword"]') as HTMLInputElement;
-    let newPwd = document.querySelector('input[name = "newpassword"]') as HTMLInputElement;
-    let newPwdConf = document.querySelector('input[name = "newpasswordconfirm"]') as HTMLInputElement;
+    /* eslint-disable @typescript-eslint/no-unnecessary-type-assertion */
+    const oldPwd = document.querySelector('input[name = "oldpassword"]') as HTMLInputElement;
+    const newPwd = document.querySelector('input[name = "newpassword"]') as HTMLInputElement;
+    const newPwdConf = document.querySelector('input[name = "newpasswordconfirm"]') as HTMLInputElement;
     oldPwd.value = '';
     newPwd.value = '';
     newPwdConf.value = '';
@@ -457,8 +481,8 @@ class ngeoAuthComponent extends LitElement {
 
   /**
    * Set an error notification
-   * @param errors
-   * @param messageType
+   * @param errors List of errors
+   * @param messageType Type of message
    */
   setError_(errors: string[], messageType?: MessageType) {
     if (messageType == undefined) {
