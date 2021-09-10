@@ -1,4 +1,4 @@
-import { BehaviorSubject } from "rxjs";
+import {BehaviorSubject} from 'rxjs';
 
 export interface AuthenticationFunctionalities {
   /**
@@ -66,7 +66,11 @@ export interface User {
   /**
    * FIXME no doc
    */
-  otp_url: string;
+  otp_uri: string;
+  /**
+   * FIXME no doc
+   */
+  two_factor_totp_secret: string;
 }
 
 export enum UserState {
@@ -124,14 +128,15 @@ export class UserModel {
    */
   getEmptyUserProperties(): User {
     return {
-        email: null,
-        is_intranet: null,
-        functionalities: null,
-        is_password_changed: null,
-        roles: null,
-        username: null,
-        otp_key: null,
-        otp_url: null,
+      email: null,
+      is_intranet: null,
+      functionalities: null,
+      is_password_changed: null,
+      roles: null,
+      username: null,
+      otp_key: null,
+      otp_uri: null,
+      two_factor_totp_secret: null,
     };
   }
 
