@@ -82,7 +82,7 @@
     "bootstrap": "4.6.0",
     "chokidar": "3.5.2",
     "co": "4.6.0",
-    "commander": "8.1.0",
+    "commander": "8.2.0",
     "console-control-strings": "1.1.0",
     "copy-webpack-plugin": "6.4.1",
     "corejs-typeahead": "1.3.1",
