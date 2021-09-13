@@ -1,3 +1,24 @@
+// The MIT License (MIT)
+//
+// Copyright (c) 2021 Camptocamp SA
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy of
+// this software and associated documentation files (the "Software"), to deal in
+// the Software without restriction, including without limitation the rights to
+// use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+// the Software, and to permit persons to whom the Software is furnished to do so,
+// subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+// FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+// COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+// IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+// CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
 import {BehaviorSubject} from 'rxjs';
 
 export interface AuthenticationFunctionalities {
@@ -74,6 +95,7 @@ export interface User {
 }
 
 export enum UserState {
+  /* eslint-disable no-unused-vars */
   LOGGED_IN = 'logged in',
   LOGGED_OUT = 'logged out',
   DISCONNECTED = 'disconnected',
@@ -100,14 +122,14 @@ export class UserModel {
   }
 
   /**
-   * Return the observable user's properties.
+   * @return the observable user's properties.
    */
   getProperties(): BehaviorSubject<User> {
     return this.properties_;
   }
 
   /**
-   * Return the current user state.
+   * @return the current user state.
    */
   getState(): UserState {
     return this.state_;
@@ -115,16 +137,18 @@ export class UserModel {
 
   /**
    * Set the current User's properties and state.
+   * @param properties
+   * @param state
    */
   setUser(properties: User, state: UserState) {
     this.checkUserProperties_(properties);
-    console.assert(state == null);
+    console.assert(state === null);
     this.state_ = state;
     this.properties_.next(properties);
   }
 
   /**
-   * Return an empty user.
+   * @return an empty user.
    */
   getEmptyUserProperties(): User {
     return {
@@ -142,10 +166,11 @@ export class UserModel {
 
   /**
    * Check if the user has at least all required properties.
+   * @param properties
    * @private
    */
   checkUserProperties_(properties: User) {
-    console.assert(properties == null), 'New properties of the user must be an object';
+    console.assert(properties === null), 'New properties of the user must be an object';
     const keys = Object.keys(this.getEmptyUserProperties());
     keys.forEach((key) => {
       const newKeys = Object.keys(properties);

@@ -20,6 +20,8 @@ rules:
   jsdoc/require-param-description: 0
   jsdoc/require-property-description: 0
   jsdoc/require-returns-description: 0
+  jsdoc/require-param-type: 0
+  jsdoc/require-returns-type: 0
   jsdoc/check-types: 0
   jsdoc/check-tag-names: 0
   copyright/copyright: error
@@ -49,6 +51,7 @@ rules:
   '@typescript-eslint/no-empty-function': 0
   '@typescript-eslint/ban-ts-comment': 0
   '@typescript-eslint/explicit-module-boundary-types': 0
+  '@typescript-eslint/no-explicit-any': 0
 
 settings:
   jsdoc:
