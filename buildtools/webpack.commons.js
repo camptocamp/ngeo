@@ -125,7 +125,7 @@ module.exports = function (config) {
     test: /\.tsx?$/,
     use: 'ts-loader',
     exclude: /node_modules/,
-  }
+  };
   const files = {};
   const ngeoRule = {
     // Collect every .js file in ngeo/src/, ngeo/api/ and ngeo/contrib/.
