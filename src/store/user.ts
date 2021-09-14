@@ -141,8 +141,10 @@ export class UserModel {
    * @param state
    */
   setUser(properties: User, state: UserState) {
-    this.checkUserProperties_(properties);
-    console.assert(state === null);
+    const isValid = this.checkUserProperties_(properties);
+    if (!isValid || state === null) {
+      return;
+    }
     this.state_ = state;
     this.properties_.next(properties);
   }
@@ -167,15 +169,24 @@ export class UserModel {
   /**
    * Check if the user has at least all required properties.
    * @param properties
+   * @return true if the properties are correct.
    * @private
    */
-  checkUserProperties_(properties: User) {
-    console.assert(properties === null), 'New properties of the user must be an object';
+  checkUserProperties_(properties: User): boolean {
+    if (properties === null || properties === undefined) {
+      console.error('New properties of the user must be an object');
+      return false;
+    }
+    let isValid = true;
     const keys = Object.keys(this.getEmptyUserProperties());
     keys.forEach((key) => {
       const newKeys = Object.keys(properties);
-      console.assert(newKeys.includes(key), 'User is missing property %s', key);
+      if (!newKeys.includes(key)) {
+        console.error(`User is missing property ${key}`)
+        isValid = false;
+      }
     });
+    return isValid;
   }
 }
 

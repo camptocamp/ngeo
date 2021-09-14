@@ -67,6 +67,8 @@ jobs:
       - run: make lint
       - run: make test
       - run: make check-examples-checker
+      # Cypress tests
+      - run: npm run test-cli
       # Webpack build of ngeo/gmf examples and gmf apps
       - run: NODE_ENV=production make examples-hosted
       - run: npm run build-storybook
