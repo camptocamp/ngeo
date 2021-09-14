@@ -29,21 +29,13 @@ export default {
 
 const Template = (args: any) => {
   user.setUser(args.user, UserState.READY);
-  const optAttr = [];
-  optAttr.push(args.isLoading ? ' isLoading' : '');
-  optAttr.push(args.allowPasswordChange ? ' allowPasswordChange' : '');
-  optAttr.push(args.error ? ' error' : '');
   return `
     <ngeo-auth-component
-      ${optAttr.join(' ')}
       loginInfoMessage="${args.loginInfoMessage}">
     </ngeo-auth-component>`;
 };
 
 const defaultProperties: any = {
-  isLoading: false,
-  allowPasswordChange: false,
-  error: false,
   loginInfoMessage: '',
   user: null,
 };

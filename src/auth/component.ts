@@ -20,7 +20,7 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import {LitElement, html} from 'lit';
-import {customElement, property} from 'lit/decorators.js';
+import {customElement, property, state} from 'lit/decorators.js';
 import AngularServices from 'ngeo/services';
 import {MessageType} from 'ngeo/message/Message.js';
 import {unsafeSVG} from 'lit/directives/unsafe-svg.js';
@@ -40,21 +40,21 @@ type PasswordValidator = {
 
 @customElement('ngeo-auth-component')
 export default class ngeoAuthComponent extends LitElement {
-  @property({type: Boolean}) isLoading = false;
-  @property({type: Boolean}) disconnectedShown = false;
-  @property({type: Boolean}) resetPasswordShown = false;
-  @property({type: Boolean}) twoFactorAuth = false; // TODO: gmfTwoFactorAuth
-  @property({type: Boolean}) allowPasswordChange = false; // TODO: gmfAuthenticationConfig
-  @property({type: Boolean}) allowPasswordReset = false; // TODO: gmfAuthenticationConfig
-  @property({type: Boolean}) changingPassword = false;
-  @property({type: Boolean}) userMustChangeItsPassword = false;
-  @property({type: Boolean}) error = false;
   @property({type: String}) loginInfoMessage = '';
-  @property({type: String}) otpImage = '';
-  @property({type: Object}) passwordValidator: PasswordValidator = null;
-  @property({type: Object}) gmfUser: User = null;
-  @property({state: true, type: String}) private changingPasswordUsername_ = '';
-  @property({state: true, type: Array}) private subscriptions_: Subscription[] = [];
+  @property({type: Object}) private passwordValidator: PasswordValidator = null;
+  @state() private isLoading = false;
+  @state() private disconnectedShown = false;
+  @state() private resetPasswordShown = false;
+  @state() private twoFactorAuth = false; // TODO: gmfTwoFactorAuth
+  @state() private allowPasswordChange = false; // TODO: gmfAuthenticationConfig
+  @state() private allowPasswordReset = false; // TODO: gmfAuthenticationConfig
+  @state() private changingPassword = false;
+  @state() private userMustChangeItsPassword = false;
+  @state() private error = false;
+  @state() private otpImage = '';
+  @state() private gmfUser: User = null;
+  private changingPasswordUsername_ = '';
+  private subscriptions_: Subscription[] = [];
 
   connectedCallback() {
     super.connectedCallback();

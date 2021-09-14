@@ -5,6 +5,6 @@
     "skipLibCheck": true,
     "outDir": ".."
   },
-  "include": ["**/*.js"],
+  "include": ["**/*.js", "src/**/*.ts"],
   "exclude": []
 }

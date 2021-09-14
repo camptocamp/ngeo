@@ -13,6 +13,5 @@
     "node_modules/ol/**/*.js",
     "node_modules/olcs/**/*.js",
     "node_modules/moment/src/**/*.js"
-  ],
-  "files": ["types/dom.d.ts", "types/custom.d.ts"]
+  ]
 }
