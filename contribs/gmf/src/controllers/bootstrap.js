@@ -21,6 +21,8 @@
 
 import $ from 'jquery';
 import angular from 'angular';
+import 'regenerator-runtime/runtime'
+import {setupI18n} from 'ngeo/localize/i18n.ts';
 
 /**
  * @private
@@ -83,6 +85,7 @@ function bootstrap(module) {
       module.constant(name, dynamic.constants[name]);
     }
 
+    setupI18n();
     angular.bootstrap(document, [`App${interface_}`]);
   });
 }

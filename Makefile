@@ -491,6 +491,7 @@ clean:
 	rm -f .build/ngeo.json
 	rm -f .build/gmf.json
 	rm -f .build/app-*.json
+	rm -rf locales
 	rm -rf apidoc
 	rm -rf .build/examples-hosted
 	rm -rf .build/contribs

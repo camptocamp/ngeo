@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="{{mainCtrl.lang}}" ng-controller="AlternativeDesktopController as mainCtrl" ng-strict-di>
   <head>
-    <title ng-bind-template="{{'Alternative Desktop Application'|translate}}">GeoMapFish</title>
+    <title data-i18n="Alternative Desktop Application">GeoMapFish</title>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
     <meta name="dynamicUrl" content="https://geomapfish-demo-2-7.camptocamp.com/dynamic.json">
@@ -35,7 +35,7 @@
                 <b ng-if="!mainCtrl.gmfThemeManager.isLoading()">{{mainCtrl.gmfThemeManager.getThemeName()|translate}}</b>
               </span>
               <span ng-if="!mainCtrl.gmfThemeManager.modeFlush">
-                <b ng-if="!mainCtrl.gmfThemeManager.themeName" translate>Themes</b>
+                <b ng-if="!mainCtrl.gmfThemeManager.themeName" data-i18n="Themes"></b>
               </span>
             </a>
             <gmf-themeselector class="dropdown-menu"
@@ -68,7 +68,7 @@
               <span class="fa fa-print"></span>
             </button>
             <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.drawFeatureActive"
-              data-toggle="tooltip" data-placement="left" data-original-title="{{'Draw and Measure'|translate}}">
+              data-toggle="tooltip" data-placement="left" data-i18n="[data-original-title]Draw and Measure">
               <span class="fa fa-paint-brush"></span>
             </button>
             <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.filterSelectorActive"
