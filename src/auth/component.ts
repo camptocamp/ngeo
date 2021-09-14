@@ -26,10 +26,10 @@ import AngularServices from 'ngeo/services';
 import {MessageType} from 'ngeo/message/Message.js';
 import {unsafeSVG} from 'lit/directives/unsafe-svg.js';
 import loadingSvg from 'gmf/icons/spinner.svg';
+import {AuthenticationLoginResponsePromise} from 'gmf/authentication/Service';
 import {gmfBackgroundlayerStatus} from 'gmf/backgroundlayerselector/status.js';
 import {Subscription} from 'rxjs';
-// @ts-ignore
-import user, {User, UserState} from 'ngeo/store/user.ts';
+import user, {User, UserState} from 'ngeo/store/user';
 // @ts-ignore
 import qruri from 'qruri';
 import i18next from 'i18next';
@@ -44,6 +44,9 @@ type PasswordValidator = {
 export default class ngeoAuthComponent extends LitElementI18n {
   @property({type: String}) loginInfoMessage = '';
   @property({type: Object}) private passwordValidator: PasswordValidator = null;
+  @property({attribute: false}) onSuccessfulLogin: (
+    resp: AuthenticationLoginResponsePromise
+  ) => AuthenticationLoginResponsePromise = undefined;
   @state() private isLoading = false;
   @state() private disconnectedShown = false;
   @state() private resetPasswordShown = false;
@@ -67,6 +70,7 @@ export default class ngeoAuthComponent extends LitElementI18n {
           this.setOtpImage_();
           this.checkUserMustChangeItsPassword_();
           this.onUserStateUpdate_(user.getState());
+          this.onSucessfullLoginCallback_();
         },
       })
     );
@@ -293,6 +297,9 @@ export default class ngeoAuthComponent extends LitElementI18n {
     }
   }
 
+  /**
+   * @private
+   */
   checkUserMustChangeItsPassword_() {
     if (this.gmfUser.is_password_changed !== false) {
       return;
@@ -300,6 +307,15 @@ export default class ngeoAuthComponent extends LitElementI18n {
     this.changingPasswordUsername_ = this.gmfUser.username;
     this.changingPassword = true;
     this.userMustChangeItsPassword = true;
+  }
+
+  /**
+   * @private
+   */
+  onSucessfullLoginCallback_() {
+    if (this.onSuccessfulLogin) {
+      AngularServices.auth.onSuccessfulLogin = this.onSuccessfulLogin;
+    }
   }
 
   // METHODS THAT CALL THE AUTHENTICATION SERVICE METHODS
