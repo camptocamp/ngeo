@@ -24,7 +24,6 @@
     "cypress-ui": "cypress open",
     "test-cli": "start-server-and-test storybook-ci http://localhost:6006 cypress-cli",
     "test": "start-server-and-test storybook-ci http://localhost:6006 cypress-ui",
-
     "chromatic": "chromatic --exit-zero-on-changes",
     "cs-tots": "jscodeshift --transform=buildtools/codeshift-js2ts.js --extensions=ts --parser=ts",
     "cs-rmjs": "jscodeshift --transform=buildtools/codeshift-removejs.js --extensions=ts --parser=ts"

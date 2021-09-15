@@ -6,7 +6,7 @@ import {setupI18n} from 'ngeo/localize/i18n.ts';
 
 // Default global configuration.
 export const parameters = {
-  actions: { argTypesRegex: "^on[A-Z].*" },
+  actions: {argTypesRegex: '^on[A-Z].*'},
   controls: {
     matchers: {
       color: /(background|color)$/i,
@@ -19,6 +19,6 @@ export const parameters = {
     en: 'English',
     fr: 'Français',
   },
-}
+};
 
 setupI18n();

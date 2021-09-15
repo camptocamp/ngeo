@@ -35,7 +35,7 @@ describe('Test store user', () => {
 
   it('Set the user config', () => {
     const newUser = user.getEmptyUserProperties();
-    newUser.username = 'Simone'
+    newUser.username = 'Simone';
     user.setUser(newUser, UserState.LOGGED_IN);
     expect(user.getProperties().value).to.deep.equal(newUser);
     expect(user.getState()).to.equal(UserState.LOGGED_IN);

@@ -21,7 +21,7 @@
 
 import $ from 'jquery';
 import angular from 'angular';
-import 'regenerator-runtime/runtime'
+import 'regenerator-runtime/runtime';
 import {setupI18n} from 'ngeo/localize/i18n.ts';
 
 /**
