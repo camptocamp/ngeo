@@ -82,7 +82,7 @@ export default class ngeoAuthComponent extends LitElementI18n {
       ${this.gmfUser.is_intranet
         ? html`
             <div class="form-group">
-              <span>${i18next.t("You are recognized as an intranet user.")}</span>
+              <span>${i18next.t('You are recognized as an intranet user.')}</span>
             </div>
           `
         : ''}
@@ -90,7 +90,7 @@ export default class ngeoAuthComponent extends LitElementI18n {
         ? html`
             <div>
               <div class="form-group">
-                <span>${i18next.t("Logged in as")}</span>
+                <span>${i18next.t('Logged in as')}</span>
                 <strong>${this.gmfUser.username}</strong>.
               </div>
 
@@ -98,14 +98,14 @@ export default class ngeoAuthComponent extends LitElementI18n {
                 ? html`
                     <form name="logoutForm" role="form" @submit=${(evt: Event) => this.logout(evt)}>
                       <div class="form-group">
-                        <input type="submit" class="form-control btn prime" value=${i18next.t("Logout")} />
+                        <input type="submit" class="form-control btn prime" value=${i18next.t('Logout')} />
                       </div>
                       <div class="form-group">
                         <input
                           ?hidden="${!this.allowPasswordChange}"
                           type="button"
                           class="form-control btn btn-default"
-                          value=${i18next.t("Change password")}
+                          value=${i18next.t('Change password')}
                           @click=${() => (this.changingPassword = true)}
                         />
                       </div>
@@ -125,7 +125,7 @@ export default class ngeoAuthComponent extends LitElementI18n {
       ${this.disconnectedShown
         ? html`
             <div class="alert alert-warning">
-              ${i18next.t("You are not logged in any more. The Interface has been reloaded.")}
+              ${i18next.t('You are not logged in any more. The Interface has been reloaded.')}
             </div>
           `
         : ''}
@@ -134,27 +134,32 @@ export default class ngeoAuthComponent extends LitElementI18n {
             <div>
               <form name="loginForm" role="form" @submit=${(evt: Event) => this.login(evt)}>
                 <div class="form-group">
-                  <input type="text" class="form-control" name="login" placeholder=${i18next.t("Username")} />
+                  <input type="text" class="form-control" name="login" placeholder=${i18next.t('Username')} />
                 </div>
                 <div class="form-group">
-                  <input type="password" class="form-control" name="password" placeholder=${i18next.t("Password")} />
+                  <input
+                    type="password"
+                    class="form-control"
+                    name="password"
+                    placeholder=${i18next.t('Password')}
+                  />
                 </div>
                 ${this.twoFactorAuth
                   ? html`
                       <div class="form-group">
-                      ${i18next.t("The following field should be kept empty on first login:")}
+                        ${i18next.t('The following field should be kept empty on first login:')}
                         <input
                           type="text"
                           autocomplete="off"
                           class="form-control"
                           name="otp"
-                          placeholder=${i18next.t("Authentication code")}
+                          placeholder=${i18next.t('Authentication code')}
                         />
                       </div>
                     `
                   : ''}
                 <div class="form-group">
-                  <input type="submit" class="form-control btn prime" value=${i18next.t("Connect")} />
+                  <input type="submit" class="form-control btn prime" value=${i18next.t('Connect')} />
                 </div>
                 ${this.isLoading
                   ? html`
@@ -164,13 +169,15 @@ export default class ngeoAuthComponent extends LitElementI18n {
                     `
                   : ''}
                 <div ?hidden="${!this.allowPasswordReset}" class="form-group">
-                  <a @click=${(evt: Event) => this.resetPassword(evt)} href="">${i18next.t("Password forgotten?")}</a>
+                  <a @click=${(evt: Event) => this.resetPassword(evt)} href=""
+                    >${i18next.t('Password forgotten?')}</a
+                  >
                 </div>
               </form>
 
               ${this.resetPasswordShown
                 ? html` <div class="alert alert-info">
-                    ${i18next.t("A new password has just been sent to you by e-mail.")}
+                    ${i18next.t('A new password has just been sent to you by e-mail.')}
                   </div>`
                 : ''}
             </div>
@@ -180,28 +187,38 @@ export default class ngeoAuthComponent extends LitElementI18n {
         ? html`
             <div>
               ${this.userMustChangeItsPassword
-                ? html` <div class="alert alert-warning">${i18next.t("You must change your password")}</div>`
+                ? html` <div class="alert alert-warning">${i18next.t('You must change your password')}</div>`
                 : ''}
 
               <form name="changePasswordForm" role="form" @submit=${(evt: Event) => this.changePassword(evt)}>
                 <div class="form-group">
-                  <input type="password" class="form-control" name="oldpassword" placeholder=${i18next.t("Old password")} />
+                  <input
+                    type="password"
+                    class="form-control"
+                    name="oldpassword"
+                    placeholder=${i18next.t('Old password')}
+                  />
                 </div>
                 <div class="form-group">
-                  <input type="password" class="form-control" name="newpassword" placeholder=${i18next.t("New password")} />
+                  <input
+                    type="password"
+                    class="form-control"
+                    name="newpassword"
+                    placeholder=${i18next.t('New password')}
+                  />
                 </div>
                 <div class="form-group">
                   <input
                     type="password"
                     class="form-control"
                     name="newpasswordconfirm"
-                    placeholder=${i18next.t("Confirm new password")}
+                    placeholder=${i18next.t('Confirm new password')}
                   />
                 </div>
                 ${this.gmfUser.otp_uri
                   ? html`
                       <div class="form-group">
-                        <label>${i18next.t("Two factor authentication QR code:")}</label>
+                        <label>${i18next.t('Two factor authentication QR code:')}</label>
                         <div><img class="" src="${this.otpImage}" /></div>
                       </div>
                     `
@@ -209,7 +226,7 @@ export default class ngeoAuthComponent extends LitElementI18n {
                 ${this.gmfUser.two_factor_totp_secret
                   ? html`
                       <div class="form-group">
-                        <label>${i18next.t("Two factor authentication key:")}</label>
+                        <label>${i18next.t('Two factor authentication key:')}</label>
                         <code>${this.gmfUser.two_factor_totp_secret}</code>
                       </div>
                     `
@@ -222,14 +239,14 @@ export default class ngeoAuthComponent extends LitElementI18n {
                           autocomplete="off"
                           class="form-control"
                           name="otp"
-                          placeholder=${i18next.t("Authentication code")}
+                          placeholder=${i18next.t('Authentication code')}
                         />
                       </div>
                     `
                   : ''}
 
                 <div class="form-group">
-                  <input type="submit" class="form-control btn prime" value=${i18next.t("Change password")} />
+                  <input type="submit" class="form-control btn prime" value=${i18next.t('Change password')} />
                 </div>
                 <div class="form-group">
                   <input
@@ -344,7 +361,10 @@ export default class ngeoAuthComponent extends LitElementI18n {
           .changePassword(username, oldPwd, newPwd, confPwd, otpVal)
           .then(() => {
             this.changePasswordReset();
-            this.setError_([i18next.t('Your password has successfully been changed.')], MessageType.INFORMATION);
+            this.setError_(
+              [i18next.t('Your password has successfully been changed.')],
+              MessageType.INFORMATION
+            );
           })
           .catch(() => {
             /* eslint-disable @typescript-eslint/no-unnecessary-type-assertion */

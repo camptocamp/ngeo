@@ -52,23 +52,22 @@ export function setupI18n() {
         escapeValue: false,
       },
       backend: {
-        loadPath: '/locales/{{lng}}/{{ns}}.json'
-      }
+        loadPath: '/locales/{{lng}}/{{ns}}.json',
+      },
     });
 
-    const localize = locI18next.init(i18next);
+  const localize = locI18next.init(i18next);
 
-    i18next.on('languageChanged', (lang) => {
-      document.documentElement.lang = lang;
-      localize('[data-i18n]');
-    });
-
-  }
+  i18next.on('languageChanged', (lang) => {
+    document.documentElement.lang = lang;
+    localize('[data-i18n]');
+  });
+}
 
 /**
  * @param {import('lit-element').LitElement} Base
  */
- export class LitElementI18n extends LitElement {
+export class LitElementI18n extends LitElement {
   i18nLanguageChangedCallback_: () => void;
 
   connectedCallback() {

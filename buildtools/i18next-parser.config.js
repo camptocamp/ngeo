@@ -20,17 +20,22 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 module.exports = {
-    locales: ['en'],
-    output: '.build/locale/webcomponent.json',
-    input: ['../src/**/*.{js,ts}', '../api/**/*.{js,ts}', '../contribs/gmf/src/**/*.{js,ts}', '../contribs/gmf/apps/**/*.{js,ts,html*}'],
-    useKeysAsDefaultValue: true,
-    keySeparator: false,
-    namespaceSeparator: false,
-    lexers: {
-      html: ['HTMLLexer'],
-      ejs: ['HTMLLexer'],
-      js: ['JavascriptLexer'],
-      ts: ['JavascriptLexer'],
-      default: ['JavascriptLexer']
-    },
-  }
+  locales: ['en'],
+  output: '.build/locale/webcomponent.json',
+  input: [
+    '../src/**/*.{js,ts}',
+    '../api/**/*.{js,ts}',
+    '../contribs/gmf/src/**/*.{js,ts}',
+    '../contribs/gmf/apps/**/*.{js,ts,html*}',
+  ],
+  useKeysAsDefaultValue: true,
+  keySeparator: false,
+  namespaceSeparator: false,
+  lexers: {
+    html: ['HTMLLexer'],
+    ejs: ['HTMLLexer'],
+    js: ['JavascriptLexer'],
+    ts: ['JavascriptLexer'],
+    default: ['JavascriptLexer'],
+  },
+};

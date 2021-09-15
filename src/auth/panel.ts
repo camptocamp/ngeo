@@ -39,7 +39,7 @@ export default class AuthPanel extends LitElementI18n {
       ? html`
           <div>
             <i class="fa fa-spin svg-lit-element"> ${unsafeSVG(loadingSvg)} </i>
-            ${i18next.t("Loading themes, please wait...")}
+            ${i18next.t('Loading themes, please wait...')}
           </div>
         `
       : '';
@@ -47,7 +47,7 @@ export default class AuthPanel extends LitElementI18n {
       <div class="row">
         <div class="col-sm-12">
           <div class="gmf-app-tools-content-heading">
-          ${i18next.t("Login")}
+            ${i18next.t('Login')}
             <a class="btn close" @click=${this.closePanel}>&times;</a>
           </div>
           <ngeo-auth-component .loginInfoMessage=${this.loginInfoMessage}></ngeo-auth-component>
@@ -64,5 +64,4 @@ export default class AuthPanel extends LitElementI18n {
   closePanel() {
     this.dispatchEvent(new CustomEvent('close-panel', {detail: false}));
   }
-
 }

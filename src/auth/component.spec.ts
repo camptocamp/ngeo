@@ -20,26 +20,25 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 describe('Auth component', () => {
-
   it('displays an empty auth form', () => {
-    cy.visit('iframe.html?id=auth-component--empty')
+    cy.visit('iframe.html?id=auth-component--empty');
     cy.get('input').should('have.length', 3);
-    cy.get('input').first()
+    cy.get('input')
+      .first()
       .should('have.attr', 'type', 'text')
       .should('have.attr', 'placeholder', 'Username');
-    cy.get('input').eq(1)
+    cy.get('input')
+      .eq(1)
       .should('have.attr', 'type', 'password')
       .should('have.attr', 'placeholder', 'Password');
-    cy.get('input').last()
-      .should('have.attr', 'type', 'submit')
-      .should('have.value', 'Connect');
+    cy.get('input').last().should('have.attr', 'type', 'submit').should('have.value', 'Connect');
     cy.get('.alert').should('have.length', 0);
-  })
+  });
 
   it('displays an info message', () => {
     cy.visit('iframe.html?id=auth-component--empty&args=loginInfoMessage:a_msg');
     cy.get('.alert span').should('have.length', 1).first().should('have.text', 'a_msg');
-  })
+  });
 
   it('displays a form with a user and a message', () => {
     cy.visit('iframe.html?id=auth-component--with-user&args=loginInfoMessage:logged');
@@ -47,5 +46,5 @@ describe('Auth component', () => {
     cy.get('input').should('have.length', 2).first().should('have.value', 'Logout');
     cy.get('.form-group span').first().should('have.text', 'Logged in as');
     cy.get('.form-group strong').first().should('have.text', 'George');
-  })
+  });
 });

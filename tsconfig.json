@@ -15,9 +15,7 @@
     "sourceMap": true,
     "experimentalDecorators": true,
     "baseUrl": "./",
-    "types": [
-      "cypress"
-    ],
+    "types": ["cypress"],
     "paths": {
       "ngeo/*": ["src/*"],
       "gmf/*": ["contribs/gmf/src/*"],

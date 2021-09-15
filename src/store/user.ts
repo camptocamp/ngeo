@@ -182,7 +182,7 @@ export class UserModel {
     keys.forEach((key) => {
       const newKeys = Object.keys(properties);
       if (!newKeys.includes(key)) {
-        console.error(`User is missing property ${key}`)
+        console.error(`User is missing property ${key}`);
         isValid = false;
       }
     });
