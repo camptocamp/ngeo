@@ -23,10 +23,10 @@
  * Webpack loader to be used after `svg-inline-loader`.
  *
  * It will:
- *  * Fill the `viewBox` if it's missing (to be able to change the `width` and the `height`).
- *  * Fill the `width` and `height` (required by OpenLayers).
- *  * Allows to change the `width` and `height` (with `width` or `height` arguments).
- *  * Remove the unneeded `x` and `y` property.
+ *  - Fill the `viewBox` if it's missing (to be able to change the `width` and the `height`).
+ *  - Fill the `width` and `height` (required by OpenLayers).
+ *  - Allows to change the `width` and `height` (with `width` or `height` arguments).
+ *  - Remove the unneeded `x` and `y` property.
  *
  * See also the `svg` example.
  */

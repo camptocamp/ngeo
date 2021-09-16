@@ -160,29 +160,29 @@ function gmfLayertreeTemplate($element, $attrs, gmfLayertreeTemplate) {
  *
  * Used metadata:
  *
- *  * `isChecked`: if 'false' the layer visibility will be set to false.
- *  * `iconUrl`: layer icon full URL.
- *  * `legendRule`: WMS rule used to get a layer icon.
- *  * `isLegendExpanded: if 'true' the legend is expanded by default.
- *  * `metadataUrl`: Display a popup with the content of the given URL if
+ *  - `isChecked`: if 'false' the layer visibility will be set to false.
+ *  - `iconUrl`: layer icon full URL.
+ *  - `legendRule`: WMS rule used to get a layer icon.
+ *  - `isLegendExpanded: if 'true' the legend is expanded by default.
+ *  - `metadataUrl`: Display a popup with the content of the given URL if
  *    possible also open a new window.
- *  * `exclusiveGroup`: Whether the group contains children that have to be mutually
+ *  - `exclusiveGroup`: Whether the group contains children that have to be mutually
  *      exclusive, meaning that only one child may be ON at any time.
- *  * `legend`: Display the legend of this layer. For WMS and WMTS layers.
- *  * `legendImage`: The URL to the image used as a legend in the layer tree. For WMS and WMTS layers.
- *  * `maxResolution`: The max resolution where the layer is visible. For WMS layers.
+ *  - `legend`: Display the legend of this layer. For WMS and WMTS layers.
+ *  - `legendImage`: The URL to the image used as a legend in the layer tree. For WMS and WMTS layers.
+ *  - `maxResolution`: The max resolution where the layer is visible. For WMS layers.
  *      On WMTS layers it will have an effect on the node in the layertree but not on the layertree directly.
- *  * `minResolution`: The min resolution where the layer is visible. For WMS layers.
+ *  - `minResolution`: The min resolution where the layer is visible. For WMS layers.
  *      On WMTS layers it will have an effect on the node in the layertree but not on the layer directly.
- *  * `ogcServer`: The corresponding OGC server for a WMTS layer. For WMTS layers.
- *  * `opacity`: Layer opacity. 1.0 means fully visible, 0 means invisible, For WMS and WMTS layers.
- *  * `timeAttribute`: The name of the time attribute. For WMS(-T) layers.
- *  * `wmsLayers`: A corresponding WMS layer for WMTS layers. Used to query the WMTS layers and to print them.
+ *  - `ogcServer`: The corresponding OGC server for a WMTS layer. For WMTS layers.
+ *  - `opacity`: Layer opacity. 1.0 means fully visible, 0 means invisible, For WMS and WMTS layers.
+ *  - `timeAttribute`: The name of the time attribute. For WMS(-T) layers.
+ *  - `wmsLayers`: A corresponding WMS layer for WMTS layers. Used to query the WMTS layers and to print them.
  *      (See also printLayers and queryLayers metadata for more granularity). For WMTS Layers.
- *  * `printLayers`: A WMS layer that will be used instead of the WMTS layers in the print.
- *  * `queryLayers`: The WMS layers used as references to query the WMTS layers. For WMTS layers.
- *  * `isExpanded`: Whether the layer group is expanded by default. For layer groups (only).
- *  * `snappingConfig`: Whether the layer is used for snapping.
+ *  - `printLayers`: A WMS layer that will be used instead of the WMTS layers in the print.
+ *  - `queryLayers`: The WMS layers used as references to query the WMTS layers. For WMTS layers.
+ *  - `isExpanded`: Whether the layer group is expanded by default. For layer groups (only).
+ *  - `snappingConfig`: Whether the layer is used for snapping.
  *
  * @htmlAttribute {import('ol/Map').default} gmf-layertree-map The map.
  * @htmlAttribute {Object<string, string>|undefined} gmf-layertree-dimensions Global dimensions object.

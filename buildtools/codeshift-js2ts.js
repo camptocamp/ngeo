@@ -42,9 +42,9 @@ let count = 1;
 /**
  * Add typescript types
  * e.g.:
- * /**
- *  * @ param {MapOptions} options API options.
- *  * /
+ * /++
+ *  + @ param {MapOptions} options API options.
+ *  + /
  * constructor(options) {
  * =>
  * ...
@@ -118,13 +118,13 @@ function addTypes(j, root, path, original_path, comment) {
 /**
  * Remove types
  * e.g.:
- * /**
- *  * @ param {MapOptions} options API options.
- *  * /
+ * /++
+ *  + @ param {MapOptions} options API options.
+ *  + /
  * =>
- * /**
- *  * @ param options API options.
- *  * /
+ * /++
+ *  + @ param options API options.
+ *  + /
  *
  * @param {jscodeshift} j jscodeshift
  * @param {any} root the root node

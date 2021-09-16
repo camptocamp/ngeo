@@ -60,7 +60,7 @@ const myModule = angular.module('gmfDisclaimer', [
 /**
  * Used metadata:
  *
- *  * `disclaimer`: The disclaimer text for this element.
+ *  - `disclaimer`: The disclaimer text for this element.
  *      For WMS and WMTS layers, layer groups and themes.
  *
  * @param {JQuery} $element Element.

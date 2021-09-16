@@ -68,7 +68,7 @@ import user, {UserState} from 'ngeo/store/user.ts';
  *
  * Used functionalities:
  *
- *  * `open_panel`: When set, contains the name of the panel to open upon loading an application.
+ *  - `open_panel`: When set, contains the name of the panel to open upon loading an application.
  *      Note: although this is a list, only one can be defined.
  *
  *

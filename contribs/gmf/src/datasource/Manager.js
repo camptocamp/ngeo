@@ -72,7 +72,7 @@ import olSourceTileWMS from 'ol/source/TileWMS';
  *
  * Used metadata:
  *
- *  * `identifierAttributeField`: The field used in the 'display query window' as feature title.
+ *  - `identifierAttributeField`: The field used in the 'display query window' as feature title.
  *      For WMS layers.
  */
 export class DatasourceManager {

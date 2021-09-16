@@ -262,7 +262,7 @@ const ParamPrefix = {
  *
  * Used functionalities:
  *
- *  * `default_theme`: Theme to use by default.
+ *  - `default_theme`: Theme to use by default.
  *
  * @class
  * @param {angular.IQService} $q The Angular $q service.

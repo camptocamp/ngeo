@@ -154,9 +154,9 @@ myModule.run(
  *
  * Used metadata:
  *
- *  * `enumeratedAttributes`: List of attribute names which have enumerated attribute
+ *  - `enumeratedAttributes`: List of attribute names which have enumerated attribute
  *      values (for filters purpose). For WMS layers.
- *  * `snappingConfig`: The snapping configuration for the leaf. If set, the leaf's layer is considered to be
+ *  - `snappingConfig`: The snapping configuration for the leaf. If set, the leaf's layer is considered to be
  *      "snappable", even if the config itself is empty.
  *      Example value: {'tolerance': 50, 'edge': false} For WMS layers.
  *

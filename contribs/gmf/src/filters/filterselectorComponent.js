@@ -102,15 +102,15 @@ function gmfFilterselectorTemplateUrl($attrs, gmfFilterselectorTemplateUrl) {
  *
  * Used metadata:
  *
- *  * `directedFilterAttributes`: List of attribute names which should have rules
+ *  - `directedFilterAttributes`: List of attribute names which should have rules
  *      already ready when using the filter tools. For WMS layers.
  *
  * Used functionalities:
  *
- *  * `preset_layer_filter`: Name of the layer (data source) that should be toggled in the filter tool upon
+ *  - `preset_layer_filter`: Name of the layer (data source) that should be toggled in the filter tool upon
  *      loading an application.
  *      Note: although this is a list, only one can be defined.
- *  * `filterable_layers`: A list of layer names that can be filtered, if empty the component will be hidden.
+ *  - `filterable_layers`: A list of layer names that can be filtered, if empty the component will be hidden.
  */
 export class FilterSelectorController {
   /**
