@@ -1,12 +1,26 @@
-parser:
+extends:
+  - eslint:recommended
+
+plugins:
+  - copyright
+
 parserOptions:
-  project:
+  sourceType: module
+  ecmaVersion: 2020
+
+env:
+  es6: true
+  node: true
+
 rules:
-  '@typescript-eslint/no-unnecessary-type-assertion': 0
-  '@typescript-eslint/no-for-in-array': 0
-  '@typescript-eslint/no-this-alias': 0
-  '@typescript-eslint/no-useless-constructor': 0
-  '@typescript-eslint/prefer-for-of': 0
-  '@typescript-eslint/prefer-includes': 0
-  '@typescript-eslint/prefer-string-starts-ends-with': 0
-  '@typescript-eslint/restrict-plus-operands': 0
+  no-multi-asterisks: off
+  no-prototype-builtins: warn
+  no-case-declarations: warn
+  no-eq-null: error
+  no-multi-assign: error
+  no-negated-in-lhs: error
+  no-use-before-define:
+    - error
+    - nofunc
+  no-var: error
+  copyright/copyright: error

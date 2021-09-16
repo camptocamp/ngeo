@@ -3,11 +3,11 @@ DEMO_BRANCH ?= prod-2-7
 
 ANGULAR_VERSION := $(shell buildtools/get-version angular)
 
-ESLINT_CONFIG_FILES := $(shell find * -not -path 'node_modules/*' -type f -name '.eslintrc*')
 WEBPACK_CONFIG_FILES := $(shell find . -not -path './node_modules/*' -name 'webpack.*.js')
 
 API_JS_FILES = $(shell find api/src/ -type f -name '*.js') $(shell find api/src/ -type f -name '*.ts')
-NGEO_JS_FILES = $(shell find src/ -type f -name '*.js') $(shell find src/ -type f -name '*.ts')
+NGEO_JS_FILES = $(shell find src/ -type f -name '*.js') $(shell find lib/ -type f -name '*.js') $(shell find src/ -type f -name '*.ts')
+TS_FILES = $(shell find src/ -type f -name '*.ts')
 NGEO_PARTIALS_FILES := $(shell find src/ -name '*.html')
 NGEO_ALL_SRC_FILES := $(shell find src/ -type f)
 NGEO_TEST_JS_FILES := $(shell find test/ -type f -name '*.js')
@@ -23,7 +23,7 @@ GMF_EXAMPLES_JS_FILES := $(GMF_EXAMPLES_HTML_FILES:.html=.js)
 
 GMF_APPS += mobile desktop desktop_alt iframe_api mobile_alt oeedit
 GMF_APPS_JS_FILES = $(shell find contribs/gmf/apps/ -type f -name '*.js') $(shell find contribs/gmf/apps/ -type f -name '*.ts')
-BUILD_JS_FILES = $(shell find buildtools/ -type f -name '*.js')
+BUILD_JS_FILES = $(shell ls -1 *.js) $(shell ls -1 utils/*.js) $(shell find buildtools/ -type f -name '*.js') $(shell find .storybook/ -type f -name '*.js') $(shell find cypress/ -type f -name '*.js')
 GMF_APPS_PARTIALS_FILES = $(shell find contribs/gmf/apps/ -type f -name '*.html' -or -name '*.html.ejs')
 GMF_APPS_ALL_FILES = $(shell find contribs/gmf/apps/ -type f) $(GMF_ALL_SRC_FILES)
 
@@ -121,7 +121,7 @@ check-examples-checker: $(CHECK_EXAMPLE_CHECKER)
 check-examples: $(BUILD_EXAMPLES_CHECK_TIMESTAMP_FILES)
 
 .PHONY: lint
-lint: .build/eslint.timestamp eclint lint-extra
+lint: .build/eslint.timestamp .build/eslint-ts.timestamp eclint lint-extra
 
 .PHONY: lint-extra
 lint-extra:
@@ -129,7 +129,7 @@ lint-extra:
 	if [ "`git grep @example src contribs`" != "" ]; then echo "We don't use @example to have the example in the description"; false; fi
 
 .PHONY: eslint
-eslint: .build/eslint.timestamp
+eslint: .build/eslint.timestamp .build/eslint-ts.timestamp
 
 .PHONY: eclint
 eclint: .build/node_modules.timestamp
@@ -207,7 +207,7 @@ examples-hosted-apps: .build/gmf-apps.timestamp
 	npm install --no-save --no-optional --no-package-lock ./buildtools/copyright
 	touch $@
 
-.build/eslint.timestamp: .build/node_modules.copyright.timestamp $(ESLINT_CONFIG_FILES) \
+.build/eslint.timestamp: .build/node_modules.copyright.timestamp .eslintrc.yaml \
 		$(API_JS_FILES) \
 		$(NGEO_JS_FILES) \
 		$(NGEO_TEST_JS_FILES) \
@@ -217,11 +217,16 @@ examples-hosted-apps: .build/gmf-apps.timestamp
 		$(GMF_EXAMPLES_JS_FILES) \
 		$(GMF_APPS_JS_FILES) \
 		$(BUILD_JS_FILES)
-	./node_modules/.bin/eslint $(filter-out .build/node_modules.copyright.timestamp $(ESLINT_CONFIG_FILES), $^)
+	./node_modules/.bin/eslint $(filter-out .build/node_modules.copyright.timestamp .eslintrc.yaml, $^)
+	touch $@
+
+.build/eslint-ts.timestamp: .build/node_modules.copyright.timestamp .eslintrc.yaml .eslintrc-ts.yaml \
+		$(TS_FILES)
+	./node_modules/.bin/eslint $(filter-out .build/node_modules.copyright.timestamp .eslintrc.yaml .eslintrc-ts.yaml, $^)
 	touch $@
 
 .PHONY: eslint-fix
-eslint-fix: .build/node_modules.copyright.timestamp $(ESLINT_CONFIG_FILES) \
+eslint-fix: .build/node_modules.copyright.timestamp .eslintrc.yaml \
 		$(API_JS_FILES) \
 		$(NGEO_JS_FILES) \
 		$(NGEO_TEST_JS_FILES) \
@@ -231,7 +236,7 @@ eslint-fix: .build/node_modules.copyright.timestamp $(ESLINT_CONFIG_FILES) \
 		$(GMF_EXAMPLES_JS_FILES) \
 		$(GMF_APPS_JS_FILES) \
 		$(BUILD_JS_FILES)
-	./node_modules/.bin/eslint --fix $(filter-out .build/node_modules.copyright.timestamp $(ESLINT_CONFIG_FILES), $^)
+	./node_modules/.bin/eslint --fix $(filter-out .build/node_modules.copyright.timestamp .eslintrc.yaml, $^)
 
 .build/examples-hosted/partials: examples/partials/
 	mkdir -p $(dir $@)
@@ -486,7 +491,7 @@ jsdoc:
 clean:
 	rm -f .build/*.check.timestamp
 	rm -f .build/examples/*.js
-	rm -f .build/eslint.timestamp
+	rm -f .build/*.timestamp
 	rm -f .build/info.json
 	rm -f .build/ngeo.json
 	rm -f .build/gmf.json
