@@ -469,7 +469,7 @@ VectorEncoder.prototype.encodeTextStyle_ = function (textStyle, goodnessOfFit) {
         symbolizer.fontSize = font[1];
         const fontFamily = font.splice(2).join(' ');
         // Remove simple quotes and double quotes for fonts with spaces like "Font Awesome".
-        symbolizer.fontFamily = fontFamily.replace(/\'|\"/g, '');
+        symbolizer.fontFamily = fontFamily.replace(/'|"/g, '');
       }
     }
 

@@ -42,7 +42,7 @@
   if (iOS && webkit && platform && !chromeiOS) {
     let iosVersion = iosChecker()[0];
     if (iosVersion >= 10) {
-      var interval = setInterval(function () {
+      const interval = setInterval(function () {
         if ($('div.ol-zoom').get(0)) {
           clearInterval(interval);
           $('body').addClass('ios-margin');

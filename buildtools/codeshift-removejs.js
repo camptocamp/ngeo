@@ -28,7 +28,7 @@
 
 const prettier = require('prettier');
 
-const find_import = /import\(["']([a-zA-Z0-9/\.\-_]+)\.js["']\)/g;
+const find_import = /import\(["']([a-zA-Z0-9/.\-_]+)\.js["']\)/g;
 
 /**
  * @param file

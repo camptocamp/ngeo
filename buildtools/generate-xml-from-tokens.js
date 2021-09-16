@@ -56,8 +56,7 @@ function Generator() {
 Generator.prototype = {
   generate: function (tokens) {
     let buffer = '';
-    for (let i = 0; i < tokens.length; i++) {
-      const token = tokens[i];
+    for (const token of tokens) {
       buffer += this[token.type](token);
     }
     return buffer;
@@ -84,7 +83,7 @@ Generator.prototype = {
   },
 
   EndTag: function (token) {
-    return '</' + token.tagName + '>';
+    return `</${token.tagName}>`;
   },
 
   Chars: function (token) {
@@ -92,7 +91,7 @@ Generator.prototype = {
   },
 
   Comment: function (token) {
-    return '<!--' + token.chars + '-->';
+    return `<!--${token.chars}-->`;
   },
 
   Attributes: function (attributes) {
@@ -112,7 +111,7 @@ Generator.prototype = {
 
     if (value) {
       value = this.escape(value);
-      attrString += '="' + value + '"';
+      attrString += `="${value}"`;
     }
 
     return attrString;

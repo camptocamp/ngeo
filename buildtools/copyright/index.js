@@ -39,7 +39,7 @@ function match(actual, expected) {
  * @param textArray
  */
 function genCommentBody(textArray) {
-  return '// ' + textArray.join('\n// ') + '\n\n\n';
+  return `// ${textArray.join('\n// ')}\n\n\n`;
 }
 
 /**

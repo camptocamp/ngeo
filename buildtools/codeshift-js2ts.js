@@ -30,8 +30,8 @@ const prettier = require('prettier');
 const child_process = require('child_process');
 const fs = require('fs');
 
-const find_import = /import\(["']([a-zA-Z0-9/\.\-_]+)["']\).([a-zA-Z0-9]+)/g;
-const find_function = /function\(([^\)\(|]+)\): ?([a-zA-Z0-9\?]+)/g;
+const find_import = /import\(["']([a-zA-Z0-9/.\-_]+)["']\).([a-zA-Z0-9]+)/g;
+const find_function = /function\(([^)(|]+)\): ?([a-zA-Z0-9?]+)/g;
 const find_param = /@param {([^}]*)} ([a-zA-Z0-9]+)/g;
 const find_return = /@returns? {([^}]*)}/g;
 const find_type = /@type {([^}]*)}/g;
@@ -83,7 +83,7 @@ function addTypes(j, root, path, original_path, comment) {
       false
     );
     for (const type_ of comment.value.matchAll(find_type)) {
-      elem.typeAnnotation = ': ' + convertSingleType(type_[1]);
+      elem.typeAnnotation = `: ${convertSingleType(type_[1])}`;
     }
     path.value.body.splice(index, 0, elem);
     return;
@@ -91,7 +91,7 @@ function addTypes(j, root, path, original_path, comment) {
   if (path.value.type == 'VariableDeclaration') {
     for (const declaration of path.value.declarations) {
       for (const type_ of comment.value.matchAll(find_type)) {
-        declaration.id.typeAnnotation = ': ' + convertSingleType(type_[1]);
+        declaration.id.typeAnnotation = `: ${convertSingleType(type_[1])}`;
       }
     }
     return;
@@ -100,17 +100,17 @@ function addTypes(j, root, path, original_path, comment) {
     for (const type_ of comment.value.matchAll(find_param)) {
       for (const param of path.value.params) {
         if (type_[2] == param.name) {
-          param.typeAnnotation = ': ' + convertSingleType(type_[1]);
+          param.typeAnnotation = `: ${convertSingleType(type_[1])}`;
         }
       }
     }
   }
   for (const returnType of comment.value.matchAll(find_return)) {
-    path.value.returnType = ': ' + convertSingleType(returnType[1]);
+    path.value.returnType = `: ${convertSingleType(returnType[1])}`;
   }
   if (path.value.expression) {
     for (const type_ of comment.value.matchAll(find_type)) {
-      path.value.expression.left.property.typeAnnotation = ': ' + convertSingleType(type_[1]);
+      path.value.expression.left.property.typeAnnotation = `: ${convertSingleType(type_[1])}`;
     }
   }
 }
@@ -249,10 +249,10 @@ function convertSingleType(jsType) {
     return 'any';
   }
   jsType = jsType.replaceAll(/\*/g, 'any');
-  jsType = jsType.replaceAll(/\!/g, '');
+  jsType = jsType.replaceAll(/!/g, '');
   jsType = jsType.replaceAll(/\?([a-zA-Z0-9])/g, 'undefined|$1');
   jsType = jsType.replaceAll(/\?/g, 'any');
-  jsType = jsType.replaceAll(/\=/g, '|undefined');
+  jsType = jsType.replaceAll(/=/g, '|undefined');
   return jsType;
 }
 
@@ -273,7 +273,7 @@ function addFunction(j, root, path) {
   const comment = path.value;
 
   for (const function_ of comment.value.matchAll(find_function)) {
-    const functionName = 'Function' + count;
+    const functionName = `Function${count}`;
     count++;
     let contArg = 1;
     let statement = `type ${functionName} = {\n  (`;
@@ -316,7 +316,7 @@ function convertFunction(j, root, path) {
   const comment = path.value;
 
   for (const function_ of comment.value.matchAll(find_function)) {
-    const functionName = 'Function' + count;
+    const functionName = `Function${count}`;
     comment.value = comment.value.replace(function_[0], functionName);
   }
 }
@@ -560,7 +560,7 @@ function addStatements(j, root, ...statements) {
  */
 function rename(name, object) {
   name = name.replace(/^\.\//, '');
-  name = name.replaceAll(/[\.\-]+/g, '/');
+  name = name.replaceAll(/[.-]+/g, '/');
   if (object == 'default' || /^[A-Z]/.test(object)) {
     name = name[0].toUpperCase() + name.substring(1);
   }
@@ -592,6 +592,7 @@ export default function transformer(file, api) {
 
     j(file.source)
       .forEach((path) => {
+        // eslint-disable-next-line no-unused-vars
         visit('', path.value, (indent, node) => {
           // if (node.comments) {
           //   console.log(node.comments[0].value);
@@ -891,6 +892,7 @@ export default function transformer(file, api) {
       .toSource();
 
     // Set to false to disable this convert that take time
+    // eslint-disable-next-line no-constant-condition
     if (true) {
       console.log('Convert the @typedef by using the tsc command');
       let finish = false;
@@ -914,10 +916,9 @@ export default function transformer(file, api) {
                   .toString()
               );
 
-              result =
-                result.substring(0, path.value.start) +
-                fs.readFileSync('/tmp/typedef.d.ts') +
-                result.substring(path.value.end);
+              result = `${result.substring(0, path.value.start)}${fs.readFileSync(
+                '/tmp/typedef.d.ts'
+              )}${result.substring(path.value.end)}`;
             }
           });
       }
@@ -957,10 +958,9 @@ export default function transformer(file, api) {
                   .toString()
               );
 
-              result =
-                result.substring(0, comments[0].start) +
-                fs.readFileSync('/tmp/enum.d.ts') +
-                result.substring(path.value.end);
+              result = `${result.substring(0, comments[0].start)}${fs.readFileSync(
+                '/tmp/enum.d.ts'
+              )}${result.substring(path.value.end)}`;
               finish = false;
             }
           }
@@ -974,6 +974,7 @@ export default function transformer(file, api) {
       .filter((path) => {
         return path.value.type == 'CommentBlock' && path.value.value.replace(/[\n *]*/, '') == '';
       })
+      // eslint-disable-next-line no-unused-vars
       .replaceWith((path) => {
         return '';
       })

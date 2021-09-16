@@ -64,7 +64,9 @@ function getImportsToResolve(original, includePaths, transformers) {
     names.push(`_${basename}`);
   }
 
+  // eslint-disable-next-line @typescript-eslint/prefer-for-of
   for (let i = 0; i < names.length; i++) {
+    // eslint-disable-next-line @typescript-eslint/prefer-for-of
     for (let j = 0; j < exts.length; j++) {
       // search relative to original file
       imports.push(path.join(dirname, names[i] + exts[j]));
@@ -124,7 +126,9 @@ function* mergeSources(opts, entry, resolve, level) {
       // handle url(<loader>!<file>)
       const pos = file.lastIndexOf('!');
       if (pos >= 0) {
+        // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
         left += file.substring(0, pos + 1);
+        // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
         file = file.substring(pos + 1);
       }
 
@@ -159,6 +163,7 @@ function* mergeSources(opts, entry, resolve, level) {
    */
   function* importReplacer(total) {
     // if current import is in comments, then skip it
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
     const range = this;
     const finded = commentRanges.find((commentRange) => {
       if (range.start >= commentRange[0] && range.end <= commentRange[1]) {
@@ -190,6 +195,7 @@ function* mergeSources(opts, entry, resolve, level) {
       const imports = getImportsToResolve(originalImport, includePaths, transformers);
       let resolvedImport;
 
+      // eslint-disable-next-line @typescript-eslint/prefer-for-of
       for (let i = 0; i < imports.length; i++) {
         // if imports[i] is absolute path, then use it directly
         if (path.isAbsolute(imports[i]) && fs.existsSync(imports[i])) {
@@ -219,6 +225,7 @@ function* mergeSources(opts, entry, resolve, level) {
       if (cache.indexOf(resolvedImport) < 0) {
         cache.push(resolvedImport);
 
+        // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
         contents.push(yield mergeSources(opts, resolvedImport, resolve, level + 1));
       }
     }
@@ -284,6 +291,7 @@ function fillDependency(
                 source: () => data,
                 size: () => data.length,
               };
+              // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
               replacements[assetUrl] = name + queryString;
               resolve();
             }
@@ -304,6 +312,7 @@ function fillDependency(
             source: () => data,
             size: () => data.length,
           };
+          // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
           replacements[assetUrl] = name + queryString;
           resolve();
         }
@@ -522,6 +531,7 @@ class SassPlugin {
           (!pluginOptions.blacklistedChunks || pluginOptions.blacklistedChunks.indexOf(chunk.name) < 0) &&
           files.length > 0
         ) {
+          // eslint-disable-next-line no-unused-vars
           const promise = new Promise((resolve, reject) => {
             const usedContext = files.length > 0 ? sassLoader.entries[files[0]].ctx : undefined;
             const promise = new Promise(processAsset(files));

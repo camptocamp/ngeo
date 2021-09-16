@@ -443,7 +443,7 @@ QueryGridController.prototype.escapeValue = function (value) {
   if (typeof value == 'number') {
     return value;
   } else {
-    const toEscape = /[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\ |]/g;
+    const toEscape = /[-[\]/{}()*+?.\\^$ |]/g;
     if (value.match(toEscape) !== null) {
       return value.replace(toEscape, '_');
     } else {

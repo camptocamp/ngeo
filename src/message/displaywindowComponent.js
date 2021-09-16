@@ -289,6 +289,7 @@ export class Controller {
     if (this.url) {
       return /** @type {string} */ (this.sce_.trustAsResourceUrl(this.url));
     }
+    return undefined;
   }
 
   /**
