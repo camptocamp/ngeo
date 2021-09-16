@@ -24,6 +24,7 @@ import ngeoInteractionMobileDraw from 'ngeo/interaction/MobileDraw';
 
 /**
  * Interaction dedicated to measure Area on mobile devices.
+ *
  * @private
  * @hidden
  */
@@ -42,7 +43,7 @@ class MeasureAreaMobile extends ngeoInteractionMeasureArea {
    * @param {import('ol/style/Style').StyleLike} style The sketchStyle used for the drawing
    *    interaction.
    * @param {import('ol/source/Vector').default<import('ol/geom/Polygon').default>} source Vector source.
-   * @return {ngeoInteractionMobileDraw} The interaction
+   * @returns {ngeoInteractionMobileDraw} The interaction
    */
   createDrawInteraction(style, source) {
     return new ngeoInteractionMobileDraw({

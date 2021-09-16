@@ -55,7 +55,7 @@ let count = 1;
  * @param {any} path the current path
  * @param {any} original_path the original path or null
  * @param {any} comment the comment of the original path or null
- * @return {void}
+ * @returns {void}
  */
 function addTypes(j, root, path, original_path, comment) {
   if (!(comment || path.value.comments)) {
@@ -131,7 +131,7 @@ function addTypes(j, root, path, original_path, comment) {
  * @param {any} path the current path
  * @param {any} original_path the original path or null
  * @param {any} comment the comment of the original path or null
- * @return {void}
+ * @returns {void}
  */
 function removeTypes(j, root, path, original_path, comment) {
   if (!(comment || path.value.comments)) {
@@ -240,6 +240,9 @@ function convertImport(j, root, path) {
   comment.value = commentValue;
 }
 
+/**
+ * @param jsType
+ */
 function convertSingleType(jsType) {
   console.log(jsType);
   if (jsType == '?') {
@@ -328,7 +331,7 @@ function convertFunction(j, root, path) {
  * @param {any} parent The parent node
  * @param {any} comments Override the comments
  * @param {any} statement The statement function
- * @return {any}
+ * @returns {any}
  */
 function convertCast(node, parent, comments, statement) {
   if (
@@ -515,6 +518,10 @@ function visit(indent, node, call) {
   }
 }
 
+/**
+ * @param j
+ * @param root
+ */
 function findTopLevelImports(j, root) {
   const program = root.find(j.Program).at(0).paths()[0];
   if (!program) {
@@ -523,6 +530,11 @@ function findTopLevelImports(j, root) {
   return j(program.get('body').filter((p) => ['ImportDeclaration'].includes(p.node.type)));
 }
 
+/**
+ * @param j
+ * @param root
+ * @param {...any} statements
+ */
 function addStatements(j, root, ...statements) {
   const imports = findTopLevelImports(j, root);
   if (imports.length) {
@@ -544,7 +556,7 @@ function addStatements(j, root, ...statements) {
  *
  * @param {string} name the script name
  * @param {string} object the object we import
- * @return {string}
+ * @returns {string}
  */
 function rename(name, object) {
   name = name.replace(/^\.\//, '');
@@ -567,6 +579,10 @@ function rename(name, object) {
     .join('');
 }
 
+/**
+ * @param file
+ * @param api
+ */
 export default function transformer(file, api) {
   let result = file.source;
   let error = true;

@@ -118,7 +118,7 @@ function MainController(gmfTreeManager, gmfThemes, gmfThemeManager, ngeoLocation
 
   /**
    * @param {import('gmf/themes').GmfTheme|undefined} value A theme or undefined to get Themes.
-   * @return {import('gmf/themes').GmfTheme[]} All themes.
+   * @returns {import('gmf/themes').GmfTheme[]} All themes.
    */
   this.getSetTheme = function (value) {
     if (value) {
@@ -129,7 +129,7 @@ function MainController(gmfTreeManager, gmfThemes, gmfThemeManager, ngeoLocation
 
   /**
    * @param {import('gmf/themes').GmfGroup|undefined} value A group or undefined to get groups.
-   * @return {import('gmf/themes').GmfGroup[]} All groups in all themes.
+   * @returns {import('gmf/themes').GmfGroup[]} All groups in all themes.
    */
   this.getSetGroup = function (value) {
     if (value !== undefined) {
@@ -140,7 +140,7 @@ function MainController(gmfTreeManager, gmfThemes, gmfThemeManager, ngeoLocation
 
   /**
    * @param {import('gmf/themes').GmfLayer|undefined} value A group or undefined to get groups.
-   * @return {import('gmf/themes').GmfLayer[]} All groups in all themes.
+   * @returns {import('gmf/themes').GmfLayer[]} All groups in all themes.
    */
   this.getSetLayers = function (value) {
     if (value !== undefined) {
@@ -152,7 +152,7 @@ function MainController(gmfTreeManager, gmfThemes, gmfThemeManager, ngeoLocation
   /**
    * @param {import('gmf/themes').GmfGroup|undefined} value A GeoMapFish group node, or undefined
    *     to get the groups of the tree manager.
-   * @return {import('gmf/themes').GmfGroup[]} All groups in the tree manager.
+   * @returns {import('gmf/themes').GmfGroup[]} All groups in the tree manager.
    */
   this.getSetRemoveTree = function (value) {
     if (value !== undefined) {
@@ -186,6 +186,7 @@ function MainController(gmfTreeManager, gmfThemes, gmfThemeManager, ngeoLocation
 
   /**
    * Just for this example
+   *
    * @param {import('gmf/themes').GmfTheme|import('gmf/themes').GmfGroup|import('gmf/themes').GmfLayer} node
    *    A theme, group or layer node.
    * @param {(import('gmf/themes').GmfTheme | import('gmf/themes').GmfGroup | import('gmf/themes').GmfLayer)[]} nodes

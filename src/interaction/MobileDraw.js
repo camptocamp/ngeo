@@ -66,6 +66,7 @@ export default class extends olInteractionInteraction {
 
     /**
      * The key for view center change event.
+     *
      * @type {?import('ol/events').EventsKey}
      * @private
      */
@@ -73,6 +74,7 @@ export default class extends olInteractionInteraction {
 
     /**
      * Geometry type.
+     *
      * @type {string}
      * @private
      */
@@ -82,6 +84,7 @@ export default class extends olInteractionInteraction {
      * The number of points that must be drawn before a polygon ring or line
      * string can be finished.  The default is 3 for polygon rings and 2 for
      * line strings.
+     *
      * @type {number}
      * @private
      */
@@ -89,6 +92,7 @@ export default class extends olInteractionInteraction {
 
     /**
      * Sketch feature.
+     *
      * @type {?olFeature<import('ol/geom/Geometry').default>}
      * @private
      */
@@ -96,6 +100,7 @@ export default class extends olInteractionInteraction {
 
     /**
      * Previous sketch points, saved to be able to display them on the layer.
+     *
      * @type {olFeature<import('ol/geom/Geometry').default>[]}
      * @private
      */
@@ -103,6 +108,7 @@ export default class extends olInteractionInteraction {
 
     /**
      * Current sketch point.
+     *
      * @type {?olFeature<import('ol/geom/Geometry').default>}
      * @private
      */
@@ -110,6 +116,7 @@ export default class extends olInteractionInteraction {
 
     /**
      * Draw overlay where our sketch features are drawn.
+     *
      * @type {import('ol/layer/Vector').default<import('ol/source/Vector').default<import('ol/geom/Geometry').default>>}
      * @private
      */
@@ -156,7 +163,8 @@ export default class extends olInteractionInteraction {
    * Return whether the interaction is currently dirty. It is if the sketch
    * feature has its geometry last coordinate set to the center without the
    * use of the `addToDrawing` method.
-   * @return {boolean} `true` if the interaction is dirty, `false` otherwise.
+   *
+   * @returns {boolean} `true` if the interaction is dirty, `false` otherwise.
    * @observable
    */
   getDirty() {
@@ -165,7 +173,8 @@ export default class extends olInteractionInteraction {
 
   /**
    * Return whether the interaction is currently drawing.
-   * @return {boolean} `true` if the interaction is drawing, `false` otherwise.
+   *
+   * @returns {boolean} `true` if the interaction is drawing, `false` otherwise.
    * @observable
    */
   getDrawing() {
@@ -175,7 +184,8 @@ export default class extends olInteractionInteraction {
   /**
    * Return whether the interaction as a valid sketch feature, i.e. its geometry
    * is valid.
-   * @return {boolean} `true` if the interaction has a valid sketch feature,
+   *
+   * @returns {boolean} `true` if the interaction has a valid sketch feature,
    *     `false` otherwise.
    * @observable
    */
@@ -185,7 +195,8 @@ export default class extends olInteractionInteraction {
 
   /**
    * Returns the current sketch feature.
-   * @return {?olFeature<import('ol/geom/Geometry').default>} The sketch feature, or null if none.
+   *
+   * @returns {?olFeature<import('ol/geom/Geometry').default>} The sketch feature, or null if none.
    */
   getFeature() {
     return this.sketchFeature_;
@@ -331,6 +342,7 @@ export default class extends olInteractionInteraction {
 
   /**
    * Start drawing by adding the sketch point first.
+   *
    * @private
    */
   startDrawing_() {
@@ -346,6 +358,7 @@ export default class extends olInteractionInteraction {
   /**
    * Modify the geometry of the sketch feature to have its last coordinate
    * set to the center of the map.
+   *
    * @private
    */
   modifyDrawing_() {
@@ -382,7 +395,8 @@ export default class extends olInteractionInteraction {
 
   /**
    * Stop drawing without adding the sketch feature to the target layer.
-   * @return {?olFeature<import('ol/geom/Geometry').default>} The sketch feature (or null if none).
+   *
+   * @returns {?olFeature<import('ol/geom/Geometry').default>} The sketch feature (or null if none).
    * @private
    */
   abortDrawing_() {
@@ -454,6 +468,7 @@ export default class extends olInteractionInteraction {
 
   /**
    * Redraw the sketch features.
+   *
    * @private
    */
   updateSketchFeatures_() {
@@ -474,7 +489,8 @@ export default class extends olInteractionInteraction {
 
   /**
    * Returns the geometry of the sketch point feature.
-   * @return {import('ol/geom/Point').default} Point.
+   *
+   * @returns {import('ol/geom/Point').default} Point.
    * @private
    */
   getSketchPointGeometry_() {
@@ -491,7 +507,8 @@ export default class extends olInteractionInteraction {
 
   /**
    * Returns the center of the map view
-   * @return {import('ol/coordinate').Coordinate} Coordinate.
+   *
+   * @returns {import('ol/coordinate').Coordinate} Coordinate.
    * @private
    */
   getCenter_() {

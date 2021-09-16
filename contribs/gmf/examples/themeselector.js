@@ -39,7 +39,7 @@ const myModule = angular.module('gmfapp', ['gettext', gmfLayertreeTreeManager.na
 function MainController($http, gmfThemes, gmfThemeManager) {
   /**
    * @param {import('gmf/themes').GmfTheme} theme Theme.
-   * @return {boolean} Theme is 'Enseignement'
+   * @returns {boolean} Theme is 'Enseignement'
    */
   this.filter = function (theme) {
     return theme.name !== 'Enseignement';

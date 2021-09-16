@@ -64,7 +64,7 @@ const myModule = angular.module('gmfContextualdata', [
  * @htmlAttribute {Function} callback A function called after server
  *    (raster) data is received in case some additional computing is required.
  *    Optional.
- * @return {angular.IDirective} The directive specs.
+ * @returns {angular.IDirective} The directive specs.
  * @ngdoc directive
  * @ngname gmfContextualdata
  */
@@ -385,7 +385,7 @@ myModule.controller('GmfContextualdataController', ContextualdataController);
  * example for a usage sample.
  *
  * @param {string} gmfContextualdatacontentTemplateUrl URL to template.
- * @return {angular.IDirective} The Directive Definition Object.
+ * @returns {angular.IDirective} The Directive Definition Object.
  * @ngInject
  * @ngdoc directive
  * @ngname gmfContextualdatacontent

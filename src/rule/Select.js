@@ -24,6 +24,7 @@ import ngeoRuleRule, {RuleOperatorType} from 'ngeo/rule/Rule';
 
 /**
  * extends import('ngeo/rule/Rule').RuleOptions
+ *
  * @typedef {Object} SelectOptions
  * @property {string[]} choices List of choices available for selection.
  * @property {boolean} [active=false] (RuleOptions)
@@ -70,7 +71,7 @@ export default class extends ngeoRuleRule {
   // === Static property getters/setters ===
 
   /**
-   * @return {string[]} Choices
+   * @returns {string[]} Choices
    */
   get choices() {
     return this.choices_;
@@ -79,7 +80,7 @@ export default class extends ngeoRuleRule {
   // === Calculated property getters ===
 
   /**
-   * @return {string[]} Selected choices
+   * @returns {string[]} Selected choices
    */
   get selectedChoices() {
     /** @type {string[]} */

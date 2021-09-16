@@ -40,7 +40,7 @@ import olGeomSimpleGeometry from 'ol/geom/SimpleGeometry';
  * `gmf.objectediting.geom.isEmpty(feature.getGeometry())`.
  *
  * @param {?import('ol/geom/Geometry').default|undefined} geom Geometry.
- * @return {boolean} Whether the given geometry is empty or not. A null or
+ * @returns {boolean} Whether the given geometry is empty or not. A null or
  *     undefined geometry is considered empty.
  * @hidden
  */

@@ -37,6 +37,11 @@ const MATCH_URL_ALL = /url\(\s*(['"]?)([^ '"()]+)(\1)\s*\)/g;
 const MATCH_IMPORTS = /@import\s+(['"])([^,;'"]+)(\1)(\s*,\s*(['"])([^,;'"]+)(\1))*\s*;/g;
 const MATCH_FILES = /(['"])([^,;'"]+)(\1)/g;
 
+/**
+ * @param original
+ * @param includePaths
+ * @param transformers
+ */
 function getImportsToResolve(original, includePaths, transformers) {
   const extname = path.extname(original);
   let basename = path.basename(original, extname);
@@ -50,12 +55,12 @@ function getImportsToResolve(original, includePaths, transformers) {
   if (!extname) {
     exts = extensionPrecedence;
   }
-  if (extname && extensionPrecedence.indexOf(extname) === -1) {
+  if (extname && !extensionPrecedence.includes(extname)) {
     basename = path.basename(original);
     names = [basename];
     exts = extensionPrecedence;
   }
-  if (basename[0] !== '_') {
+  if (!basename.startsWith('_')) {
     names.push(`_${basename}`);
   }
 
@@ -76,6 +81,12 @@ function getImportsToResolve(original, includePaths, transformers) {
 
 let cache;
 
+/**
+ * @param opts
+ * @param entry
+ * @param resolve
+ * @param level
+ */
 function* mergeSources(opts, entry, resolve, level) {
   level = level || 0;
 
@@ -126,7 +137,7 @@ function* mergeSources(opts, entry, resolve, level) {
         // fix for windows path
         let relativeFile = path.relative(process.cwd(), absoluteFile).replace(/\\/g, '/');
 
-        if (relativeFile[0] !== '.') {
+        if (!relativeFile.startsWith('.')) {
           relativeFile = `./${relativeFile}`;
         }
 
@@ -143,6 +154,9 @@ function* mergeSources(opts, entry, resolve, level) {
   const commentRanges = utils.findComments(content);
 
   // replace @import "..."
+  /**
+   * @param total
+   */
   function* importReplacer(total) {
     // if current import is in comments, then skip it
     const range = this;
@@ -215,6 +229,9 @@ function* mergeSources(opts, entry, resolve, level) {
   return yield replaceAsync(content, MATCH_IMPORTS, co.wrap(importReplacer));
 }
 
+/**
+ * @param ctx
+ */
 function resolver(ctx) {
   return function (dir, importFile) {
     return new Promise((resolve, reject) => {
@@ -229,6 +246,15 @@ function resolver(ctx) {
   };
 }
 
+/**
+ * @param pluginOptions
+ * @param usedContext
+ * @param compilation
+ * @param assetName
+ * @param assetUrl
+ * @param queryString
+ * @param replacements
+ */
 function fillDependency(
   pluginOptions,
   usedContext,
@@ -286,6 +312,10 @@ function fillDependency(
   };
 }
 
+/**
+ * @param text
+ * @param replacements
+ */
 function doReplacement(text, replacements) {
   if (replacements) {
     for (const replacement of replacements) {
@@ -295,6 +325,14 @@ function doReplacement(text, replacements) {
   return text;
 }
 
+/**
+ * @param pluginOptions
+ * @param usedContext
+ * @param compilation
+ * @param chunk
+ * @param resolve
+ * @param callback
+ */
 function manageContent(pluginOptions, usedContext, compilation, chunk, resolve, callback) {
   return async (contents) => {
     if (pluginOptions.tempfile) {
@@ -397,6 +435,9 @@ function manageContent(pluginOptions, usedContext, compilation, chunk, resolve, 
   };
 }
 
+/**
+ * @param files
+ */
 function processAsset(files) {
   return (resolve, reject) => {
     try {

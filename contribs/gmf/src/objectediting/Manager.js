@@ -92,7 +92,7 @@ export function ObjecteditingManagerService($q, gmfEditFeature, ngeoLocation) {
  * is returned, otherwise one is created with empty geometry and with the
  * property set.
  *
- * @return {angular.IPromise<?olFeature<import('ol/geom/Geometry').default>>} Promise.
+ * @returns {angular.IPromise<?olFeature<import('ol/geom/Geometry').default>>} Promise.
  */
 ObjecteditingManagerService.prototype.getFeature = function () {
   if (!this.getFeatureDefered_) {
@@ -126,14 +126,14 @@ ObjecteditingManagerService.prototype.getFeature = function () {
 };
 
 /**
- * @return {string|undefined} The geometry type.
+ * @returns {string|undefined} The geometry type.
  */
 ObjecteditingManagerService.prototype.getGeomType = function () {
   return this.ngeoLocation_.getParam(ObjecteditingParam.GEOM_TYPE);
 };
 
 /**
- * @return {number|undefined} The gmf layer node id.
+ * @returns {number|undefined} The gmf layer node id.
  */
 ObjecteditingManagerService.prototype.getLayerNodeId = function () {
   return this.ngeoLocation_.getParamAsInt(ObjecteditingParam.LAYER);

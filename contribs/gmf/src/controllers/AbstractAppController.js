@@ -145,6 +145,7 @@ export function AbstractAppController($scope, $injector, mobile) {
 
   /**
    * Location service
+   *
    * @type {import('ngeo/statemanager/Location').StatemanagerLocation}
    */
   this.ngeoLocation = $injector.get('ngeoLocation');
@@ -164,6 +165,7 @@ export function AbstractAppController($scope, $injector, mobile) {
 
   /**
    * Collection of features for the draw interaction
+   *
    * @type {import('ol/Collection').default<import('ol/Feature').default<import('ol/geom/Geometry').default>>}
    */
   const ngeoFeatures = $injector.get('ngeoFeatures');
@@ -176,6 +178,7 @@ export function AbstractAppController($scope, $injector, mobile) {
 
   /**
    * Ngeo FeatureHelper service
+   *
    * @type {import('ngeo/misc/FeatureHelper').FeatureHelper}
    */
   const ngeoFeatureHelper = $injector.get('ngeoFeatureHelper');
@@ -193,12 +196,14 @@ export function AbstractAppController($scope, $injector, mobile) {
 
   /**
    * Themes service
+   *
    * @type {import('gmf/theme/Themes').ThemesService}
    */
   this.gmfThemes = $injector.get('gmfThemes');
 
   /**
    * Checks if the themes are loaded
+   *
    * @type {boolean}
    */
   this.loading = true;
@@ -209,18 +214,21 @@ export function AbstractAppController($scope, $injector, mobile) {
   /**
    * This property is set to `true` when the themes change after a
    * successful login
+   *
    * @type {boolean}
    */
   this.postLoading = false;
 
   /**
    * Permalink service
+   *
    * @type {import('gmf/permalink/Permalink').PermalinkService}
    */
   this.permalink_ = $injector.get('gmfPermalink');
 
   /**
    * Authentication service
+   *
    * @type {import('gmf/authentication/Service').AuthenticationService}
    */
   const gmfAuthentication = $injector.get('gmfAuthenticationService');
@@ -241,12 +249,14 @@ export function AbstractAppController($scope, $injector, mobile) {
 
   /**
    * URL to redirect to after login success.
+   *
    * @type {?string}
    */
   this.loginRedirectUrl = null;
 
   /**
    * Information message for the login form.
+   *
    * @type {?string}
    */
   this.loginInfoMessage = null;
@@ -385,6 +395,7 @@ export function AbstractAppController($scope, $injector, mobile) {
 
   /**
    * The active state of the ngeo query directive.
+   *
    * @type {boolean}
    */
   this.queryActive = true;
@@ -416,18 +427,21 @@ export function AbstractAppController($scope, $injector, mobile) {
 
   /**
    * Default language
+   *
    * @type {import('gmf/options').defaultLang}
    */
   this.defaultLang = $injector.get('defaultLang');
 
   /**
    * Languages URL
+   *
    * @type {import('gmf/options').langUrls}
    */
   this.langUrls = $injector.get('langUrls');
 
   /**
    * The gettext catalog
+   *
    * @type {angular.gettext.gettextCatalog}
    */
   this.gettextCatalog = $injector.get('gettextCatalog');
@@ -441,6 +455,7 @@ export function AbstractAppController($scope, $injector, mobile) {
 
   /**
    * The ngeo feature overlay manager service
+   *
    * @type {import('ngeo/map/FeatureOverlayMgr').FeatureOverlayMgr}
    */
   const ngeoFeatureOverlayMgr = $injector.get('ngeoFeatureOverlayMgr');
@@ -448,6 +463,7 @@ export function AbstractAppController($scope, $injector, mobile) {
 
   /**
    * The ngeo ToolActivate manager service.
+   *
    * @type {import('ngeo/misc/ToolActivateMgr').ToolActivateMgr}
    */
   const ngeoToolActivateMgr = $injector.get('ngeoToolActivateMgr');
@@ -491,6 +507,7 @@ export function AbstractAppController($scope, $injector, mobile) {
 
   /**
    * Static function to create a popup with an iframe.
+   *
    * @param {string} url an url.
    * @param {string} title (text).
    * @param {number} [opt_width] CSS width.
@@ -504,6 +521,7 @@ export function AbstractAppController($scope, $injector, mobile) {
 
   /**
    * Static function to create a popup with html content.
+   *
    * @param {string} content (text or html).
    * @param {string} title (text).
    * @param {number} [opt_width] CSS width in pixel.
@@ -517,6 +535,7 @@ export function AbstractAppController($scope, $injector, mobile) {
 
   /**
    * Whether to update the size of the map on browser window resize.
+   *
    * @type {boolean}
    */
   this.manageResize = false;
@@ -525,6 +544,7 @@ export function AbstractAppController($scope, $injector, mobile) {
    * The duration (milliseconds) of the animation that may occur on the div
    * containing the map. Used to smoothly resize the map while the animation
    * is in progress.
+   *
    * @type {number|undefined}
    */
   this.resizeTransition;
@@ -536,6 +556,7 @@ export function AbstractAppController($scope, $injector, mobile) {
 
   /**
    * Static function to create a popup with an iframe.
+   *
    * @param {string} url an url.
    * @param {string} title (text).
    * @param {number} [opt_width] CSS width in pixel.
@@ -609,8 +630,9 @@ export function AbstractAppController($scope, $injector, mobile) {
 
 /**
  * Allow map pan with all buttons except right click (context menu)
+ *
  * @param {import('ol/MapBrowserEvent').default<MouseEvent>} event MapBrowser event
- * @return {boolean}
+ * @returns {boolean}
  */
 function dragPanCondition(event) {
   return noModifierKeys(event) && event.originalEvent.button !== 2;
@@ -619,7 +641,7 @@ function dragPanCondition(event) {
 /**
  * @param {import('ol/layer/Base').default[]} layers Layers list.
  * @param {string[]} labels default_basemap list.
- * @return {?import('ol/layer/Base').default} layer or null
+ * @returns {?import('ol/layer/Base').default} layer or null
  * @private
  * @hidden
  */
@@ -709,7 +731,7 @@ AbstractAppController.prototype.setDefaultBackground_ = function (theme) {
 
 /**
  * @protected
- * @return {HTMLSpanElement} Span element with font-awesome inside of it
+ * @returns {HTMLSpanElement} Span element with font-awesome inside of it
  */
 export function getLocationIcon() {
   const arrow = document.createElement('span');

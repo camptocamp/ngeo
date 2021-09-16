@@ -63,6 +63,7 @@ import ngeoMessagePopupComponent from 'ngeo/message/popupComponent';
 export function MessagePopup($compile, $rootScope, $sce, $timeout) {
   /**
    * The scope the compiled element is link to.
+   *
    * @type {angular.IScope}
    */
   this.scope = $rootScope.$new(true);
@@ -92,6 +93,7 @@ export function MessagePopup($compile, $rootScope, $sce, $timeout) {
 
   /**
    * The element.
+   *
    * @type {JQuery}
    */
   this.element_ = angular.element('<div ngeo-popup></div>');
@@ -108,7 +110,8 @@ export function MessagePopup($compile, $rootScope, $sce, $timeout) {
 
 /**
  * Get the current popup state.
- * @return {boolean} `true` if the popup is currently, otherwise `false`.
+ *
+ * @returns {boolean} `true` if the popup is currently, otherwise `false`.
  */
 MessagePopup.prototype.getOpen = function () {
   // @ts-ignore: scope ...
@@ -117,6 +120,7 @@ MessagePopup.prototype.getOpen = function () {
 
 /**
  * Show/hide the popup.
+ *
  * @param {boolean} open `true` to show the popup, `false` to hide it.
  */
 MessagePopup.prototype.setOpen = function (open) {
@@ -134,6 +138,7 @@ MessagePopup.prototype.destroy = function () {
 
 /**
  * Set the popup's title.
+ *
  * @param {string} title The title.
  */
 MessagePopup.prototype.setTitle = function (title) {
@@ -146,6 +151,7 @@ MessagePopup.prototype.setTitle = function (title) {
  * Set the popup's content.
  * Note: the type of the `content` param is `*` instead of `string`, this
  * is because the content may be trusted using `$sce.trustAsHtml`.
+ *
  * @param {string} content The content.
  * @param {boolean} [opt_trusted] Whether the content can be trusted.
  *     Default is false.
@@ -157,6 +163,7 @@ MessagePopup.prototype.setContent = function (content, opt_trusted) {
 
 /**
  * Set the popup's content with an iframe using the given url.
+ *
  * @param {string} url The url of the page.
  */
 MessagePopup.prototype.setUrl = function (url) {
@@ -166,6 +173,7 @@ MessagePopup.prototype.setUrl = function (url) {
 
 /**
  * Set the popup's width.
+ *
  * @param {string} width Width the popup should have.
  */
 MessagePopup.prototype.setWidth = function (width) {
@@ -174,6 +182,7 @@ MessagePopup.prototype.setWidth = function (width) {
 
 /**
  * Set the popup's height.
+ *
  * @param {string} height Height the popup should have.
  */
 MessagePopup.prototype.setHeight = function (height) {
@@ -182,6 +191,7 @@ MessagePopup.prototype.setHeight = function (height) {
 
 /**
  * Set the popup's width and height.
+ *
  * @param {string} width Width the popup should have.
  * @param {string} height Height the popup should have.
  */
@@ -192,6 +202,7 @@ MessagePopup.prototype.setSize = function (width, height) {
 
 /**
  * Set the popup's autoDestroy property.
+ *
  * @param {boolean} autoDestroy Whether to automatically destroy the popup when
  *     being closed or not.
  */
@@ -201,6 +212,7 @@ MessagePopup.prototype.setAutoDestroy = function (autoDestroy) {
 
 /**
  * Add an extra CSS class name to the popup.
+ *
  * @param {string} cls Class name to add to the popup element.
  */
 MessagePopup.prototype.addClass = function (cls) {
@@ -209,6 +221,7 @@ MessagePopup.prototype.addClass = function (cls) {
 
 /**
  * Open a popup with the given properties.
+ *
  * @param {PopupOptions} options Options.
  */
 MessagePopup.prototype.open = function (options) {
@@ -248,14 +261,14 @@ MessagePopup.prototype.open = function (options) {
  * @param {angular.IScope} $rootScope Angular rootScope service.
  * @param {angular.ISCEService} $sce Angular sce service.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
- * @return {PopupFactory} The function to create a popup.
+ * @returns {PopupFactory} The function to create a popup.
  * @ngInject
  * @hidden
  */
 export function Factory($compile, $rootScope, $sce, $timeout) {
   return (
     /**
-     * @return {MessagePopup} The popup instance.
+     * @returns {MessagePopup} The popup instance.
      */
     function () {
       return new MessagePopup($compile, $rootScope, $sce, $timeout);

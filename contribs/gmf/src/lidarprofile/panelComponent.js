@@ -39,7 +39,7 @@ myModule.value(
   /**
    * @param {JQuery} $element Element.
    * @param {angular.IAttributes} $attrs Attributes.
-   * @return {string} Template.
+   * @returns {string} Template.
    */
   ($element, $attrs) => {
     const templateUrl = $attrs.gmfLidarprofilePanelTemplateUrl;
@@ -63,7 +63,7 @@ myModule.run(
  * @param {angular.IAttributes} $attrs Attributes.
  * @param {function(JQuery, angular.IAttributes): string} gmfLidarprofilePanelTemplateUrl
  *     Template function.
- * @return {string} Template URL.
+ * @returns {string} Template URL.
  * @ngInject
  * @private
  * @hidden
@@ -148,12 +148,14 @@ export class Controller {
 
     /**
      * The OpenLayers LineString geometry of the profle
+     *
      * @type {?import('ol/geom/LineString').default}
      */
     this.line = null;
 
     /**
      * State of the measure tool
+     *
      * @type {boolean}
      */
     this.measureActive = false;
@@ -277,7 +279,8 @@ export class Controller {
 
   /**
    * Get all available point attributes.
-   * @return {import('gmf/lidarprofile/Config').LidarprofileServerConfigPointAttributes[] | undefined}
+   *
+   * @returns {import('gmf/lidarprofile/Config').LidarprofileServerConfigPointAttributes[] | undefined}
    *    Available point attributes.
    */
   getAvailablePointAttributes() {
@@ -286,9 +289,10 @@ export class Controller {
 
   /**
    * Get / Set the selected point attribute
+   *
    * @param {import('gmf/lidarprofile/Config').LidarprofileServerConfigPointAttribute} [opt_selectedOption]
    *    The new selected point attribute.
-   * @return {import('gmf/lidarprofile/Config').LidarprofileServerConfigPointAttribute|undefined}
+   * @returns {import('gmf/lidarprofile/Config').LidarprofileServerConfigPointAttribute|undefined}
    *    Selected point attribute
    */
   getSetSelectedPointAttribute(opt_selectedOption) {
@@ -304,7 +308,8 @@ export class Controller {
 
   /**
    * Get the available classifications for this dataset
-   * @return {import('gmf/lidarprofile/Config').LidarprofileServerConfigClassifications}
+   *
+   * @returns {import('gmf/lidarprofile/Config').LidarprofileServerConfigClassifications}
    *    classification list
    */
   getClassification() {
@@ -316,6 +321,7 @@ export class Controller {
 
   /**
    * Sets the visible classification in the profile
+   *
    * @param {import('gmf/lidarprofile/Config').LidarprofileServerConfigClassification} classification
    *    selected value
    * @param {number} key of the classification code

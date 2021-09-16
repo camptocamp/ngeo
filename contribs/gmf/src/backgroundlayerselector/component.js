@@ -39,7 +39,7 @@ myModule.value(
   /**
    * @param {JQuery} $element Element.
    * @param {angular.IAttributes} $attrs Attributes.
-   * @return {string} Template URL.
+   * @returns {string} Template URL.
    */
   ($element, $attrs) => {
     const templateUrl = $attrs.gmfBackgroundlayerselectorTemplateurl;
@@ -63,7 +63,7 @@ myModule.run(
  * @param {angular.IAttributes} $attrs Attributes.
  * @param {function(JQuery, angular.IAttributes): string} gmfBackgroundlayerselectorTemplateUrl
  *    Template function.
- * @return {string} Template URL.
+ * @returns {string} Template URL.
  * @ngInject
  * @private
  * @hidden
@@ -93,7 +93,6 @@ function gmfBackgroundlayerselectorTemplateUrl($element, $attrs, gmfBackgroundla
  * @htmlAttribute {import('ol/Map').default} [gmf]-backgroundlayerselector-map The map.
  * @htmlAttribute {Function} gmf-backgroundlayerselector-select Function called
  *     when a layer was selected by the user.
- *
  * @ngdoc component
  * @ngname gmfBackgroundlayerselector
  */
@@ -133,6 +132,7 @@ export function Controller($scope, ngeoBackgroundLayerMgr, gmfThemes, gmfBackgro
 
   /**
    * Function called when a layer was selected by the user.
+   *
    * @type {?Function}
    */
   this.select = null;
@@ -216,8 +216,9 @@ Controller.prototype.handleThemesChange_ = function () {
 
 /**
  * Getter/setter for background layer overlay, used by opacity slider.
+ *
  * @param {number|undefined} val The opacity.
- * @return {number} The background layer opacity.
+ * @returns {number} The background layer opacity.
  */
 Controller.prototype.getSetBgLayerOpacity = function (val) {
   if (!this.opacityLayer) {
@@ -252,6 +253,7 @@ Controller.prototype.setLayer = function (layer, opt_silent) {
 
 /**
  * Set a background layer overlay, used by the opacity slider.
+ *
  * @param {import('ol/layer/Base').default} layer The opacity background layer.
  */
 Controller.prototype.setOpacityBgLayer = function (layer) {

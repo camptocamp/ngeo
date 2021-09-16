@@ -65,7 +65,7 @@ myModule.run(
  *    for initialization.
  * @htmlAttribute {function()} gmf-time-slider-on-date-selected Expression evaluated after
  * date(s) changed
- * @return {angular.IDirective} The directive specs.
+ * @returns {angular.IDirective} The directive specs.
  * @ngInject
  * @ngdoc directive
  * @ngname gmfTimeSlider
@@ -107,7 +107,7 @@ function layertreeTimeSliderComponent() {
         /**
          * @param {never} e
          * @param {{value: ?string, values: ?string[]}} sliderUi
-         * @return {{start: number, end?: number}}
+         * @returns {{start: number, end?: number}}
          */
         function computeDates_(e, sliderUi) {
           if (!ctrl) {
@@ -141,6 +141,7 @@ myModule.directive('gmfTimeSlider', layertreeTimeSliderComponent);
 
 /**
  * TimeSliderController - directive controller
+ *
  * @param {import('ngeo/misc/WMSTime').WMSTime} ngeoWMSTime WMSTime service.
  * @param {import('ngeo/misc/debounce').miscDebounce<function(): void>} ngeoDebounce ngeo Debounce factory.
  * @class
@@ -162,42 +163,49 @@ export function Controller(ngeoWMSTime, ngeoDebounce) {
 
   /**
    * Function called after date(s) changed/selected
+   *
    * @type {function(unknown): unknown}
    */
   this.onDateSelected = () => undefined;
 
   /**
    * A time object for directive initialization
+   *
    * @type {?import('ngeo/datasource/OGC').TimeProperty}
    */
   this.time = null;
 
   /**
    * If the component is used to select a date range
+   *
    * @type {boolean}
    */
   this.isModeRange = false;
 
   /**
    * Minimal value of the slider (time in ms)
+   *
    * @type {number}
    */
   this.minValue = -1;
 
   /**
    * Maximal value of the slider (time in ms)
+   *
    * @type {number}
    */
   this.maxValue = 999999;
 
   /**
    * Used when WMS time object has a property 'values' instead of an interval
+   *
    * @type {?number[]}
    */
   this.timeValueList = null;
 
   /**
    * Default Slider options (used by ui-slider directive)
+   *
    * @type {?{
    *  range : boolean,
    *  min : number,
@@ -208,6 +216,7 @@ export function Controller(ngeoWMSTime, ngeoDebounce) {
 
   /**
    * Model for the ui-slider directive (date in ms format)
+   *
    * @type {number[]|number}
    */
   this.dates = [];
@@ -246,7 +255,8 @@ Controller.prototype.init = function () {
 /**
  * TimeSliderController.prototype.getTimeValueList_ - Get a list of time value instead
  * of using the wmstime interval as a list of possibles values
- * @return {number[]}  - List of timestamp representing possible values
+ *
+ * @returns {number[]}  - List of timestamp representing possible values
  */
 Controller.prototype.getTimeValueList_ = function () {
   if (!this.time) {
@@ -302,8 +312,9 @@ Controller.prototype.getTimeValueList_ = function () {
 
 /**
  * Compute the closest available date from the given timestamp
+ *
  * @param  {number} timestamp selected datetime (in ms format)
- * @return {number} the closest available datetime (in ms format) from the timestamp
+ * @returns {number} the closest available datetime (in ms format) from the timestamp
  * @private
  */
 Controller.prototype.getClosestValue_ = function (timestamp) {
@@ -376,8 +387,9 @@ Controller.prototype.getClosestValue_ = function (timestamp) {
 
 /**
  * Format and localize time regarding a resolution.
+ *
  * @param {number} time (in ms format) timestamp to format and localize.
- * @return {string} Localized date string regarding the resolution.
+ * @returns {string} Localized date string regarding the resolution.
  */
 Controller.prototype.getLocalizedDate = function (time) {
   if (!this.time) {

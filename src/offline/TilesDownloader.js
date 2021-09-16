@@ -21,7 +21,7 @@
 
 /**
  * @param {!Blob} blob A blob
- * @return {Promise<string>} data URL
+ * @returns {Promise<string>} data URL
  */
 function blobToDataUrl(blob) {
   return new Promise((resolve, reject) => {
@@ -114,7 +114,7 @@ export default class TileDownloader {
   }
 
   /**
-   * @return {Promise<void>} A promise that resolves when the downloads are complete (failing or not)
+   * @returns {Promise<void>} A promise that resolves when the downloads are complete (failing or not)
    */
   download() {
     if (this.promise_) {

@@ -41,7 +41,7 @@ const SerDes = class {
   /**
    * @private
    * @param {import('ol/Object').default} olObject An OL object
-   * @return {Object<string, string|number|string[]|boolean>} The serializable properties of the object
+   * @returns {Object<string, string|number|string[]|boolean>} The serializable properties of the object
    */
   createBaseObject_(olObject) {
     const properties = olObject.getProperties();
@@ -61,7 +61,7 @@ const SerDes = class {
 
   /**
    * @param {OlTilegridTileGrid} tilegrid .
-   * @return {string} .
+   * @returns {string} .
    */
   serializeTilegrid(tilegrid) {
     /**
@@ -78,7 +78,7 @@ const SerDes = class {
 
   /**
    * @param {string} serialization .
-   * @return {OlTilegridTileGrid} tilegrid
+   * @returns {OlTilegridTileGrid} tilegrid
    */
   deserializeTilegrid(serialization) {
     /**
@@ -90,7 +90,7 @@ const SerDes = class {
 
   /**
    * @param {OlTilegridWMTS} tilegrid .
-   * @return {string|undefined} .
+   * @returns {string|undefined} .
    */
   serializeTilegridWMTS(tilegrid) {
     if (!tilegrid) {
@@ -121,7 +121,7 @@ const SerDes = class {
 
   /**
    * @param {string} serialization .
-   * @return {OlTilegridWMTS} tilegrid .
+   * @returns {OlTilegridWMTS} tilegrid .
    */
   deserializeTilegridWMTS(serialization) {
     /**
@@ -133,7 +133,7 @@ const SerDes = class {
 
   /**
    * @param {OlSourceTileWMS} source .
-   * @return {string} .
+   * @returns {string} .
    */
   serializeSourceTileWMS(source) {
     const obj = this.createBaseObject_(source);
@@ -151,7 +151,7 @@ const SerDes = class {
   /**
    * @param {string} serialization .
    * @param {function(import('ol/ImageTile').default, string): void} [tileLoadFunction] .
-   * @return {OlSourceTileWMS} source .
+   * @returns {OlSourceTileWMS} source .
    */
   deserializeSourceTileWMS(serialization, tileLoadFunction) {
     /**
@@ -169,7 +169,7 @@ const SerDes = class {
 
   /**
    * @param {OlSourceWMTS} source .
-   * @return {string} .
+   * @returns {string} .
    */
   serializeSourceWMTS(source) {
     const obj = this.createBaseObject_(source);
@@ -195,7 +195,7 @@ const SerDes = class {
   /**
    * @param {string} serialization .
    * @param {function(import('ol/ImageTile').default, string): void} [tileLoadFunction] .
-   * @return {OlSourceWMTS} .
+   * @returns {OlSourceWMTS} .
    */
   deserializeSourceWMTS(serialization, tileLoadFunction) {
     /**
@@ -213,7 +213,7 @@ const SerDes = class {
   /**
    * @private
    * @param {number} number Some number which may be Infinity
-   * @return {number} The same number or an arbitrary big number instead of Infinity
+   * @returns {number} The same number or an arbitrary big number instead of Infinity
    */
   makeInfinitySerializable_(number) {
     if (number === Infinity) {
@@ -225,7 +225,7 @@ const SerDes = class {
   /**
    * @param {!import('ol/layer/Tile').default<import('ol/source/Tile').default>|import('ol/layer/Image').default<import('ol/source/Image').default>} layer .
    * @param {import('ol/source/Source').default} [source] .
-   * @return {string} .
+   * @returns {string} .
    */
   serializeTileLayer(layer, source) {
     const obj = this.createBaseObject_(layer);
@@ -248,7 +248,7 @@ const SerDes = class {
   /**
    * @param {string} serialization .
    * @param {function(import('ol/ImageTile').default, string): void} [tileLoadFunction] .
-   * @return {!import('ol/layer/Tile').default<import('ol/source/Tile').default>} .
+   * @returns {!import('ol/layer/Tile').default<import('ol/source/Tile').default>} .
    */
   deserializeTileLayer(serialization, tileLoadFunction) {
     /**

@@ -71,6 +71,7 @@ class Controller extends AbstractDesktopController {
 
     /**
      * The ngeo ToolActivate manager service.
+     *
      * @type {import('ngeo/misc/ToolActivateMgr').ToolActivateMgr}
      */
     const ngeoToolActivateMgr = $injector.get('ngeoToolActivateMgr');

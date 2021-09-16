@@ -47,7 +47,7 @@ myModule.value(
   'ngeoRoutingNominatimInputComponentTemplateUrl',
   /**
    * @param {angular.IAttributes} $attrs Attributes.
-   * @return {string} Template URL.
+   * @returns {string} Template URL.
    */
   ($attrs) => {
     const templateUrl = $attrs.ngeoRoutingNominatimInputComponentTemplateUrl;
@@ -59,7 +59,7 @@ myModule.value(
  * @param {angular.IAttributes} $attrs Attributes.
  * @param {function(angular.IAttributes): string} ngeoRoutingNominatimInputComponentTemplateUrl
  *    Template function.
- * @return {string} Template URL.
+ * @returns {string} Template URL.
  * @ngInject
  * @private
  * @hidden

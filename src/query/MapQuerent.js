@@ -124,6 +124,7 @@ export class MapQuerent {
 
     /**
      * A hash of data source names classified by ids.
+     *
      * @type {Object<number, string>}
      * @private
      */
@@ -131,6 +132,7 @@ export class MapQuerent {
 
     /**
      * Flag turned on after clearing to make sure that we clear only once.
+     *
      * @type {boolean}
      * @private
      */
@@ -139,7 +141,7 @@ export class MapQuerent {
 
   /**
    * @param {import('ngeo/query/Querent').IssueGetFeaturesOptions} options Options.
-   * @return {angular.IPromise<void|import('ngeo/query/Querent').QuerentResult>} Promise.
+   * @returns {angular.IPromise<void|import('ngeo/query/Querent').QuerentResult>} Promise.
    */
   issue(options) {
     const action = options.action ? options.action : ngeoQueryAction.REPLACE;
@@ -172,6 +174,7 @@ export class MapQuerent {
   /**
    * Clear result, i.e. clear all 'result source' from their features and other
    * information.
+   *
    * @param {boolean} keep Whether to keep the existing features and sources
    */
   clear(keep = false) {

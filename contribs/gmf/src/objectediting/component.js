@@ -112,7 +112,7 @@ myModule.value(
   /**
    * @param {JQuery} $element Element.
    * @param {angular.IAttributes} $attrs Attributes.
-   * @return {string} Template URL.
+   * @returns {string} Template URL.
    */
   ($element, $attrs) => {
     const templateUrl = $attrs.gmfObjecteditingTemplateurl;
@@ -124,7 +124,7 @@ myModule.value(
  * @param {JQuery} $element Element.
  * @param {angular.IAttributes} $attrs Attributes.
  * @param {function(JQuery, angular.IAttributes): string} gmfObjecteditingTemplateUrl Template function.
- * @return {string} Template URL.
+ * @returns {string} Template URL.
  * @ngInject
  * @private
  * @hidden
@@ -277,6 +277,7 @@ export function Controller(
    * Whether to show or hide the queryable list of layers. It is shown only
    * when a tool requires it, which is managed in the `gmf-objecteditingtools`
    * component.
+   *
    * @type {boolean}
    */
   this.queryableLayerListShown = false;
@@ -352,6 +353,7 @@ export function Controller(
   /**
    * The state of the feature determines whether the next 'save' request
    * should be an 'insert' or 'update' one.
+   *
    * @type {?string}
    */
   this.state_ = null;
@@ -383,6 +385,7 @@ export function Controller(
 
   /**
    * Flag that is toggled while a request is pending.
+   *
    * @type {boolean}
    */
   this.pending = false;
@@ -593,7 +596,7 @@ Controller.prototype.undo = function () {
 };
 
 /**
- * @return {boolean} Whether the state is INSERT or not.
+ * @returns {boolean} Whether the state is INSERT or not.
  */
 Controller.prototype.isStateInsert = function () {
   return this.state_ === ObjecteditingState.INSERT;
@@ -603,6 +606,7 @@ Controller.prototype.isStateInsert = function () {
 
 /**
  * Called after a delete request.
+ *
  * @param {angular.IHttpResponse<ArrayBuffer|Document|Node|Object|string>} resp Ajax response.
  */
 Controller.prototype.handleDeleteFeature_ = function (resp) {
@@ -618,6 +622,7 @@ Controller.prototype.handleDeleteFeature_ = function (resp) {
 
 /**
  * Called after an 'insert' or 'update' request.
+ *
  * @param {angular.IHttpResponse<ArrayBuffer|Document|Node|Object|string>} resp Ajax response.
  */
 Controller.prototype.handleEditFeature_ = function (resp) {
@@ -680,6 +685,7 @@ Controller.prototype.unregisterInteractions_ = function () {
 
 /**
  * Activate or deactivate this component.
+ *
  * @param {boolean} active Whether to activate this component or not.
  */
 Controller.prototype.toggle_ = function (active) {
@@ -961,8 +967,9 @@ Controller.prototype.refreshWMSLayer_ = function () {
 /**
  * Called before the window unloads. Show a confirmation message if there are
  * unsaved modifications.
+ *
  * @param {Event} e Event.
- * @return {string|undefined} Message
+ * @returns {string|undefined} Message
  */
 Controller.prototype.handleWindowBeforeUnload_ = function (e) {
   const gettextCatalog = this.gettextCatalog_;
@@ -1079,9 +1086,10 @@ Controller.prototype.handleDestroy_ = function () {
  * Utility method that gets the clone of a geometry, which can be null or
  * undefined. In the latter case, a null value is returned instead of a
  * geometry.
+ *
  * @param {?import('ol/geom/Geometry').default|undefined} geometry A geometry, undefined or
  *     null value.
- * @return {?import('ol/geom/Geometry').default} A geometry clone or null value.
+ * @returns {?import('ol/geom/Geometry').default} A geometry clone or null value.
  * @private
  * @hidden
  */

@@ -69,7 +69,7 @@ import 'corejs-typeahead';
 
 /**
  * @param {LocationSearchOptions} [opt_options] Options.
- * @return {Bloodhound<olFeature<import('ol/geom/Geometry').default>[]>} The Bloodhound object.
+ * @returns {Bloodhound<olFeature<import('ol/geom/Geometry').default>[]>} The Bloodhound object.
  * @hidden
  */
 export function createLocationSearchBloodhound(opt_options) {
@@ -81,7 +81,7 @@ export function createLocationSearchBloodhound(opt_options) {
 
   /**
    * @param {string} bbox Bbox string.
-   * @return {?import('ol/extent').Extent} Parsed extent.
+   * @returns {?import('ol/extent').Extent} Parsed extent.
    */
   const parseBbox = (bbox) => {
     const regex = /BOX\((.*?) (.*?),(.*?) (.*?)\)/g;
@@ -95,13 +95,13 @@ export function createLocationSearchBloodhound(opt_options) {
 
   /**
    * @param {string} label
-   * @return {string}
+   * @returns {string}
    */
   const removeHtmlTags = (label) => label.replace(/<\/?[ib]>/g, '');
 
   /**
    * @param {string} label
-   * @return {string}
+   * @returns {string}
    */
   const extractName = (label) => {
     const regex = /<b>(.*?)<\/b>/g;
@@ -180,7 +180,7 @@ export function createLocationSearchBloodhound(opt_options) {
     options.options || {
       /**
        * @param {Results} datum
-       * @return {string[]}
+       * @returns {string[]}
        */
       datumTokenizer: (datum) => {
         return [];

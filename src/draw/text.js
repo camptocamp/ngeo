@@ -31,7 +31,7 @@ import olInteractionDraw from 'ol/interaction/Draw';
 const myModule = angular.module('ngeoDrawtext', []);
 
 /**
- * @return {angular.IDirective} The directive specs.
+ * @returns {angular.IDirective} The directive specs.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoDrawtext

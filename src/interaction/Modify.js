@@ -68,6 +68,7 @@ import {CollectionEvent} from 'ol/Collection';
  * interactions follow the `active` property of this interaction, i.e. when
  * this interaction is activated, so do the inner interactions. Since they will
  * never share the same feature, they don't collide with one an other.
+ *
  * @hidden
  */
 export default class extends olInteractionInteraction {
@@ -150,6 +151,7 @@ export default class extends olInteractionInteraction {
 
   /**
    * Activate or deactivate the interaction.
+   *
    * @param {boolean} active Active.
    * @override
    */
@@ -162,6 +164,7 @@ export default class extends olInteractionInteraction {
    * Remove the interaction from its current map and attach it to the new map.
    * Subclasses may set up event handlers to get notified about changes to
    * the map here.
+   *
    * @param {import('ol/PluggableMap').default} map Map.
    * @override
    */
@@ -188,6 +191,7 @@ export default class extends olInteractionInteraction {
 
   /**
    * Toggle interactions.
+   *
    * @private
    */
   setState_() {
@@ -263,7 +267,7 @@ export default class extends olInteractionInteraction {
 
   /**
    * @param {olFeature<import('ol/geom/Geometry').default>} feature Feature.
-   * @return {import('ol/Collection').default<olFeature<import('ol/geom/Geometry').default>>} Collection of features for
+   * @returns {import('ol/Collection').default<olFeature<import('ol/geom/Geometry').default>>} Collection of features for
    *    this feature.
    * @private
    */

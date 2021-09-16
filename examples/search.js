@@ -173,7 +173,7 @@ SearchController.prototype.$onInit = function () {
 };
 
 /**
- * @return {import('ol/layer/Vector').default<import('ol/source/Vector').default<import('ol/geom/Geometry').default>>} The vector layer.
+ * @returns {import('ol/layer/Vector').default<import('ol/source/Vector').default<import('ol/geom/Geometry').default>>} The vector layer.
  */
 SearchController.prototype.createVectorLayer_ = function () {
   if (!this.map) {
@@ -191,7 +191,7 @@ SearchController.prototype.createVectorLayer_ = function () {
 /**
  * @param {Function} ngeoSearchCreateGeoJSONBloodhound
  *    The ngeo create GeoJSON Bloodhound service.
- * @return {Bloodhound<*>} The bloodhound engine.
+ * @returns {Bloodhound<*>} The bloodhound engine.
  */
 SearchController.prototype.createAndInitBloodhound_ = function (ngeoSearchCreateGeoJSONBloodhound) {
   const url = SEARCH;

@@ -106,12 +106,14 @@ export enum UserState {
 export class UserModel {
   /**
    * The observable user's properties. The default user is empty.
+   *
    * @private
    */
   properties_: BehaviorSubject<User>;
 
   /**
    * The current state of the user. Default to NOT_INITIALIZED.
+   *
    * @private
    */
   state_: UserState;
@@ -122,14 +124,14 @@ export class UserModel {
   }
 
   /**
-   * @return the observable user's properties.
+   * @returns the observable user's properties.
    */
   getProperties(): BehaviorSubject<User> {
     return this.properties_;
   }
 
   /**
-   * @return the current user state.
+   * @returns the current user state.
    */
   getState(): UserState {
     return this.state_;
@@ -137,6 +139,7 @@ export class UserModel {
 
   /**
    * Set the current User's properties and state.
+   *
    * @param properties
    * @param state
    */
@@ -150,7 +153,7 @@ export class UserModel {
   }
 
   /**
-   * @return an empty user.
+   * @returns an empty user.
    */
   getEmptyUserProperties(): User {
     return {
@@ -168,8 +171,9 @@ export class UserModel {
 
   /**
    * Check if the user has at least all required properties.
+   *
    * @param properties
-   * @return true if the properties are correct.
+   * @returns true if the properties are correct.
    * @private
    */
   checkUserProperties_(properties: User): boolean {

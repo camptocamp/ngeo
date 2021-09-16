@@ -32,6 +32,9 @@ const escape = (function () {
     "'": '&#x27;',
     '`': '&#x60;',
   };
+  /**
+   * @param char
+   */
   function escapeChar(char) {
     return map[char];
   }
@@ -43,6 +46,9 @@ const escape = (function () {
   };
 })();
 
+/**
+ *
+ */
 function Generator() {
   this.escape = escape;
 }

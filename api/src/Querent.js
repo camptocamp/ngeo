@@ -27,13 +27,14 @@ import {buffer, createOrUpdateFromCoordinate} from 'ol/extent';
 
 /**
  * Click tolerance in pixel
+ *
  * @type {number}
  */
 const TOLERANCE = 10;
 
 /**
  * @param {import('./Themes').overlayDefinition} def Overlay definition.
- * @return {boolean} Is the overlay queryable.
+ * @returns {boolean} Is the overlay queryable.
  */
 function querable(def) {
   return def.layer.type === 'WMS' && !!def.ogcServer.wfsSupport && !!def.ogcServer.urlWfs;
@@ -51,7 +52,7 @@ function querable(def) {
  *
  * @param {string} layer Name of the layer to query
  * @param {string[]} ids List of ids
- * @return {Promise<import('ol/Feature').default<import('ol/geom/Geometry').default>[]>} Promise.
+ * @returns {Promise<import('ol/Feature').default<import('ol/geom/Geometry').default>[]>} Promise.
  * @hidden
  */
 export function getFeaturesFromIds(layer, ids) {
@@ -118,8 +119,7 @@ export function getFeaturesFromIds(layer, ids) {
  * @param {string} layer Name of the layer to query
  * @param {number[]} coordinate Coordinate.
  * @param {number} resolution Resolution
- *
- * @return {Promise<import('ol/Feature').default<import('ol/geom/Geometry').default>>} Promise.
+ * @returns {Promise<import('ol/Feature').default<import('ol/geom/Geometry').default>>} Promise.
  * @hidden
  */
 export function getFeaturesFromCoordinates(layer, coordinate, resolution) {

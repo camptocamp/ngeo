@@ -35,7 +35,7 @@ const path = require('path');
 
 /**
  * @param {string[]|string} paths Path or array of paths to iterate over
- * @return {File[]} Files found
+ * @returns {File[]} Files found
  */
 module.exports = function (paths) {
   if (!Array.isArray(paths)) {

@@ -23,7 +23,7 @@ import tinycolor from 'tinycolor2';
 
 /**
  * @param {Object<string, string>} options
- * @return {Object<string, string>}
+ * @returns {Object<string, string>}
  */
 export default function (options) {
   /** @type {Object<string, string>} */

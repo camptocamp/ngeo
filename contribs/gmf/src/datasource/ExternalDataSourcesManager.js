@@ -102,6 +102,7 @@ export class ExternalDatSourcesManager {
     /**
      * The collection of DataSources from ngeo. When this service creates
      * a data source, its gets added to that collection.
+     *
      * @type {import('ngeo/datasource/DataSource').DataSources}
      * @private
      */
@@ -136,6 +137,7 @@ export class ExternalDatSourcesManager {
 
     /**
      * File external data sources, with the key being the file name.
+     *
      * @type {Object<string, import('ngeo/datasource/File').default>}
      * @private
      */
@@ -149,6 +151,7 @@ export class ExternalDatSourcesManager {
 
     /**
      * Group that contains file data sources.
+     *
      * @type {import('ngeo/datasource/FileGroup').default}
      * @private
      */
@@ -161,6 +164,7 @@ export class ExternalDatSourcesManager {
 
     /**
      * Collection of WMS groups.
+     *
      * @type {import('ol/Collection').default<import('ngeo/datasource/WMSGroup').default>}
      * @private
      */
@@ -168,6 +172,7 @@ export class ExternalDatSourcesManager {
 
     /**
      * Collection of groups for WMTS data sources.
+     *
      * @type {import('ol/Collection').default<import('ngeo/datasource/OGCGroup').default>}
      * @private
      */
@@ -176,6 +181,7 @@ export class ExternalDatSourcesManager {
     /**
      * Cache that stores the information of a WMTS data source. The key is the
      * data source id.
+     *
      * @type {Object<number, ExternalDataSourcesManagerWMTSCacheItem>}
      * @private
      */
@@ -187,7 +193,7 @@ export class ExternalDatSourcesManager {
   // === File Group ===
 
   /**
-   * @return {import('ngeo/datasource/FileGroup').default} File group.
+   * @returns {import('ngeo/datasource/FileGroup').default} File group.
    */
   get fileGroup() {
     return this.fileGroup_;
@@ -213,7 +219,7 @@ export class ExternalDatSourcesManager {
 
   /**
    * @param {string} url Online resource url
-   * @return {?import('ngeo/datasource/WMSGroup').default} WMS group.
+   * @returns {?import('ngeo/datasource/WMSGroup').default} WMS group.
    */
   getWMSGroup(url) {
     let found = null;
@@ -227,14 +233,14 @@ export class ExternalDatSourcesManager {
   }
 
   /**
-   * @return {import('ngeo/datasource/WMSGroup').default[]} List of WMS groups.
+   * @returns {import('ngeo/datasource/WMSGroup').default[]} List of WMS groups.
    */
   get wmsGroups() {
     return this.wmsGroupsCollection_.getArray();
   }
 
   /**
-   * @return {import('ol/Collection').default<import('ngeo/datasource/WMSGroup').default>}
+   * @returns {import('ol/Collection').default<import('ngeo/datasource/WMSGroup').default>}
    *    Collection of WMS groups.
    */
   get wmsGroupsCollection() {
@@ -261,7 +267,7 @@ export class ExternalDatSourcesManager {
 
   /**
    * @param {string} url Online resource url
-   * @return {?import('ngeo/datasource/OGCGroup').default} WMTS group.
+   * @returns {?import('ngeo/datasource/OGCGroup').default} WMTS group.
    */
   getWMTSGroup(url) {
     let found = null;
@@ -275,14 +281,14 @@ export class ExternalDatSourcesManager {
   }
 
   /**
-   * @return {import('ngeo/datasource/OGCGroup').default[]} List of groups for WMTS data sources.
+   * @returns {import('ngeo/datasource/OGCGroup').default[]} List of groups for WMTS data sources.
    */
   get wmtsGroups() {
     return this.wmtsGroupsCollection_.getArray();
   }
 
   /**
-   * @return {import('ol/Collection').default<import('ngeo/datasource/OGCGroup').default>}
+   * @returns {import('ol/Collection').default<import('ngeo/datasource/OGCGroup').default>}
    *    Collection of groups for WMTS data sources.
    */
   get wmtsGroupsCollection() {
@@ -293,7 +299,7 @@ export class ExternalDatSourcesManager {
 
   /**
    * @param {import('ngeo/datasource/DataSource').default} dataSource Data source
-   * @return {boolean} Whether the given data source is external or not. To
+   * @returns {boolean} Whether the given data source is external or not. To
    *     be considered external, it needs to be in the external data source
    *     hash (cache).
    */
@@ -302,7 +308,7 @@ export class ExternalDatSourcesManager {
   }
 
   /**
-   * @return {import('ol/layer/Group').default} Layer group where to push layers created by
+   * @returns {import('ol/layer/Group').default} Layer group where to push layers created by
    *     this service.
    */
   get layerGroup() {
@@ -548,8 +554,9 @@ export class ExternalDatSourcesManager {
 
   /**
    * Get file data source from cache, else create, store and return a new one.
+   *
    * @param {File} file File.
-   * @return {angular.IPromise<ngeoDatasourceFile>} Promise
+   * @returns {angular.IPromise<ngeoDatasourceFile>} Promise
    * @private
    */
   getFileDataSource_(file) {
@@ -709,7 +716,7 @@ export class ExternalDatSourcesManager {
   }
 
   /**
-   * @return {boolean} is empty.
+   * @returns {boolean} is empty.
    */
   isEmpty() {
     return (
@@ -745,7 +752,7 @@ export class ExternalDatSourcesManager {
  * using the `ol.getUid` method, plus a million.
  *
  * @param {Object} layer WMS/WMTS Capability Layer object.
- * @return {number} Data source id.
+ * @returns {number} Data source id.
  * @private
  * @hidden
  */

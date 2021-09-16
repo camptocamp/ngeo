@@ -41,6 +41,7 @@ export function EventHelper() {
 /**
  * Utility method to add a listener key bound to a unique id. The key has
  * to come from `ol.events`.
+ *
  * @param {number|string} uid Unique id.
  * @param {import('ol/events').EventsKey} key Key.
  */
@@ -53,6 +54,7 @@ EventHelper.prototype.addListenerKey = function (uid, key) {
 
 /**
  * Clear all listener keys from the given unique id.
+ *
  * @param {number|string} uid Unique id.
  */
 EventHelper.prototype.clearListenerKey = function (uid) {
@@ -65,6 +67,7 @@ EventHelper.prototype.clearListenerKey = function (uid) {
  *   has not array set yet)
  * - unlisten any events if the array already exists for the given uid and
  *   empty the array.
+ *
  * @param {number|string} uid Unique id.
  */
 EventHelper.prototype.initListenerKey_ = function (uid) {

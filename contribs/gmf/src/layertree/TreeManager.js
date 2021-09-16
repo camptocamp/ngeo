@@ -109,6 +109,7 @@ export function LayertreeTreeManager(
   /**
    * The root node and its children used to generate the layertree (with the
    * same ordre).
+   *
    * @type {import('gmf/themes').GmfRootNode}
    * @public
    */
@@ -120,6 +121,7 @@ export function LayertreeTreeManager(
    * The controller of the (unique) root layer tree.
    * The array of top level layer trees is available through `rootCtrl.children`.
    * The order doesn't match with the ordre of the displayed layertree.
+   *
    * @type {?import('ngeo/layertree/Controller').LayertreeController}
    */
   this.rootCtrl = null;
@@ -127,6 +129,7 @@ export function LayertreeTreeManager(
   /**
    * Number of groups to add to the layertree during one single Angular
    * digest loop.
+   *
    * @type {number}
    * @public
    */
@@ -154,6 +157,7 @@ export function LayertreeTreeManager(
 
   /**
    * A reference to the OGC servers loaded by the theme service.
+   *
    * @type {?import('gmf/themes').GmfOgcServers}
    */
   this.ogcServers_ = null;
@@ -182,8 +186,9 @@ LayertreeTreeManager.prototype.handleThemesChange_ = function () {
  * Set some groups as tree's children. If the service use mode 'flush', the
  * previous tree's children will be removed. Add only groups that are not
  * already in the tree.
+ *
  * @param {import('gmf/themes').GmfGroup[]} firstLevelGroups An array of gmf theme group.
- * @return {boolean} True if the group has been added. False otherwise.
+ * @returns {boolean} True if the group has been added. False otherwise.
  */
 LayertreeTreeManager.prototype.setFirstLevelGroups = function (firstLevelGroups) {
   //Remove existing submenu if opened at theme refresh
@@ -198,11 +203,12 @@ LayertreeTreeManager.prototype.setFirstLevelGroups = function (firstLevelGroups)
  * Add some groups as tree's children. If the service use mode 'flush', the
  * previous tree's children will be removed. Add only groups that are not
  * already in the tree.
+ *
  * @param {import('gmf/themes').GmfGroup[]} firstLevelGroups An array of gmf theme
  *     group.
  * @param {boolean} [opt_add] if true, force to use the 'add' mode this time.
  * @param {boolean} [opt_silent] if true notifyCantAddGroups_ is not called.
- * @return {boolean} True if the group has been added. False otherwise.
+ * @returns {boolean} True if the group has been added. False otherwise.
  */
 LayertreeTreeManager.prototype.addFirstLevelGroups = function (firstLevelGroups, opt_add, opt_silent) {
   /** @type {import('gmf/themes').GmfGroup[]} */
@@ -268,6 +274,7 @@ LayertreeTreeManager.prototype.reorderChild_ = function (array, old_index, new_i
 
 /**
  * Update the application state with the list of first level groups in the tree.
+ *
  * @param {import('gmf/themes').GmfGroup[]} groups current firstlevel groups of the tree.
  * @param {import('gmf/themes').GmfGroup[]} removedGroups groups removed within this operation.
  */
@@ -288,8 +295,9 @@ LayertreeTreeManager.prototype.updateTreeGroupsState_ = function (groups, remove
 /**
  * Add a group as tree's children without consideration of this service 'mode'.
  * Add it only if it's not already in the tree.
+ *
  * @param {import('gmf/themes').GmfGroup} group The group to add.
- * @return {boolean} true if the group has been added.
+ * @returns {boolean} true if the group has been added.
  */
 LayertreeTreeManager.prototype.addFirstLevelGroup_ = function (group) {
   let alreadyAdded = false;
@@ -362,6 +370,7 @@ LayertreeTreeManager.prototype.addFirstLevelGroup_ = function (group) {
 /**
  * Retrieve a group (first found) by its name and add in the tree. Do nothing
  * if any corresponding group is found.
+ *
  * @param {string} groupName Name of the group to add.
  * @param {boolean} [opt_add] if true, force to use the 'add' mode this time.
  */
@@ -378,6 +387,7 @@ LayertreeTreeManager.prototype.addGroupByName = function (groupName, opt_add) {
  * Retrieve a group by the name of a layer that is contained in this group
  * (first found). This group will be added in the tree. Do nothing if any
  * corresponding group is found.
+ *
  * @param {string} layerName Name of the layer inside the group to add.
  * @param {boolean} [opt_add] if true, force to use the 'add' mode this time.
  * @param {boolean} [opt_silent] if true notifyCantAddGroups_ is not called
@@ -419,6 +429,7 @@ LayertreeTreeManager.prototype.addGroupByLayerName = function (layerName, opt_ad
 /**
  * Remove a group from this tree's children. The first group that is found (
  * based on its name) will be removed. If any is found, nothing will append.
+ *
  * @param {import('gmf/themes').GmfGroup} group The group to remove.
  */
 LayertreeTreeManager.prototype.removeGroup = function (group) {
@@ -450,10 +461,11 @@ LayertreeTreeManager.prototype.removeAll = function () {
 /**
  * Clone a group node and recursively set all child node `isChecked` using
  * the given list of layer names.
+ *
  * @param {import('gmf/themes').GmfGroup} group The original group node.
  * @param {string[]} names Array of node names to check (i.e. that
  *     should have their checkbox checked)
- * @return {import('gmf/themes').GmfGroup} Cloned node.
+ * @returns {import('gmf/themes').GmfGroup} Cloned node.
  * @private
  */
 LayertreeTreeManager.prototype.cloneGroupNode_ = function (group, names) {
@@ -468,6 +480,7 @@ LayertreeTreeManager.prototype.cloneGroupNode_ = function (group, names) {
 /**
  * Set the child nodes metadata `isChecked` if its name is among the list of
  * given names. If a child node also has children, check those instead.
+ *
  * @param {import('gmf/themes').GmfGroup|import('gmf/themes').GmfLayer} node The original node.
  * @param {string[]} names Array of node names to check (i.e. that
  *     should have their checkbox checked)
@@ -490,6 +503,7 @@ LayertreeTreeManager.prototype.toggleNodeCheck_ = function (node, names) {
 /**
  * Display a notification that informs that the given groups are already in the
  * tree.
+ *
  * @param {import('gmf/themes').GmfGroup[]} groups An array of groups that already in
  *   the tree.
  */
@@ -512,8 +526,9 @@ LayertreeTreeManager.prototype.notifyCantAddGroups_ = function (groups) {
 
 /**
  * Get a treeCtrl based on it's node id.
+ *
  * @param {number} id the id of a GMFThemesGroup or a GMFThemesLeaf.
- * @return {import('ngeo/layertree/Controller').LayertreeController?} treeCtrl The associated controller
+ * @returns {import('ngeo/layertree/Controller').LayertreeController?} treeCtrl The associated controller
  *    or null.
  * @public
  */
@@ -532,9 +547,10 @@ LayertreeTreeManager.prototype.getTreeCtrlByNodeId = function (id) {
 
 /**
  * Get the OGC server.
+ *
  * @param {import('ngeo/layertree/Controller').LayertreeController} treeCtrl ngeo layertree controller,
  *    from the current node.
- * @return {import('gmf/themes').GmfOgcServer} The OGC server.
+ * @returns {import('gmf/themes').GmfOgcServer} The OGC server.
  */
 LayertreeTreeManager.prototype.getOgcServer = function (treeCtrl) {
   if (!this.ogcServers_) {
@@ -566,6 +582,7 @@ LayertreeTreeManager.prototype.getOgcServer = function (treeCtrl) {
  * the corresponding saved state (when possible, otherwise, juste take the
  * corresponding new node).
  * FIXME: Currently doesn't save nor restore the opacity.
+ *
  * @param {import('gmf/themes').GmfTheme[]} themes the array of themes to be based on.
  */
 LayertreeTreeManager.prototype.refreshFirstLevelGroups_ = function (themes) {
@@ -612,9 +629,10 @@ LayertreeTreeManager.prototype.refreshFirstLevelGroups_ = function (themes) {
 /**
  * Return a TreeManagerFullState that keeps the state of the given
  * treeCtrl including the state of its children.
+ *
  * @param {import('ngeo/layertree/Controller').LayertreeController} treeCtrl the ngeo layertree
  *    controller to save.
- * @return {TreeManagerFullState} the fullState object.
+ * @returns {TreeManagerFullState} the fullState object.
  */
 LayertreeTreeManager.prototype.getFirstLevelGroupFullState_ = function (treeCtrl) {
   /**
@@ -660,10 +678,11 @@ LayertreeTreeManager.prototype.getFirstLevelGroupFullState_ = function (treeCtrl
 /**
  * Set a node's metadata with the given fullState. Update also its children
  * recursively with the fullState children.
+ *
  * @param {import('gmf/themes').GmfGroup|import('gmf/themes').GmfLayer} node to update.
  * @param {TreeManagerFullState|undefined} fullState the fullState object
  *     to use.
- * @return {import('gmf/themes').GmfGroup|import('gmf/themes').GmfLayer} the node with modification.
+ * @returns {import('gmf/themes').GmfGroup|import('gmf/themes').GmfLayer} the node with modification.
  */
 LayertreeTreeManager.prototype.setNodeMetadataFromFullState_ = function (node, fullState) {
   if (!fullState) {

@@ -48,6 +48,7 @@ import {CollectionEvent} from 'ol/Collection';
  * - show a small arrow icon in the middle of the features allowing a visual
  *   aspect that tells the user "this feature can be moved"
  * - pressing the ESC key automatically deactivate the interaction.
+ *
  * @hidden
  */
 export default class extends olInteractionTranslate {
@@ -109,6 +110,7 @@ export default class extends olInteractionTranslate {
 
   /**
    * Activate or deactivate the interaction.
+   *
    * @param {boolean} active Active.
    * @override
    */
@@ -131,6 +133,7 @@ export default class extends olInteractionTranslate {
    * Remove the interaction from its current map and attach it to the new map.
    * Subclasses may set up event handlers to get notified about changes to
    * the map here.
+   *
    * @param {import('ol/PluggableMap').default} map Map.
    * @override
    */
@@ -261,7 +264,7 @@ export default class extends olInteractionTranslate {
 
   /**
    * @param {import('ol/geom/Geometry').default} geometry Geometry.
-   * @return {import('ol/geom/Point').default} The center point of the geometry.
+   * @returns {import('ol/geom/Point').default} The center point of the geometry.
    * @private
    */
   getGeometryCenterPoint_(geometry) {
@@ -289,6 +292,7 @@ export default class extends olInteractionTranslate {
 
   /**
    * Deactivate this interaction if the ESC key is pressed.
+   *
    * @param {Event|import('ol/events/Event').default} evt Event.
    * @private
    */

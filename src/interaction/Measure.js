@@ -64,6 +64,7 @@ import VectorSource from 'ol/source/Vector';
 
 /**
  * Interaction that allows measuring (length, area, ...).
+ *
  * @private
  * @hidden
  */
@@ -78,18 +79,21 @@ class Measure extends olInteractionInteraction {
 
     /**
      * The help tooltip element.
+     *
      * @type {?HTMLElement}
      */
     this.helpTooltipElement_ = null;
 
     /**
      * Overlay to show the help messages.
+     *
      * @type {?import('ol/Overlay').default}
      */
     this.helpTooltipOverlay_ = null;
 
     /**
      * The measure tooltip element.
+     *
      * @type {?HTMLElement}
      * @private
      */
@@ -97,6 +101,7 @@ class Measure extends olInteractionInteraction {
 
     /**
      * Overlay to show the measurement.
+     *
      * @type {?import('ol/Overlay').default}
      * @private
      */
@@ -104,6 +109,7 @@ class Measure extends olInteractionInteraction {
 
     /**
      * The measurement overlay coordinate.
+     *
      * @type {?import('ol/coordinate').Coordinate}
      * @private
      */
@@ -111,12 +117,14 @@ class Measure extends olInteractionInteraction {
 
     /**
      * The sketch feature.
+     *
      * @type {?import('ol/Feature').default<import('ol/geom/Geometry').default>}
      */
     this.sketchFeature = null;
 
     /**
      * Message to show after the first point is clicked.
+     *
      * @type {?Element}
      */
     this.continueMsg = null;
@@ -124,6 +132,7 @@ class Measure extends olInteractionInteraction {
     /**
      * Defines the number of decimals to keep in the measurement. If not defined,
      * then the default behaviour occurs depending on the measure type.
+     *
      * @type {number|undefined}
      * @protected
      */
@@ -132,6 +141,7 @@ class Measure extends olInteractionInteraction {
     /**
      * Defines the number of precision to keep in the measurement. If not defined,
      * then the default behaviour occurs depending on the measure type.
+     *
      * @type {number|undefined}
      * @protected
      */
@@ -139,6 +149,7 @@ class Measure extends olInteractionInteraction {
 
     /**
      * Whether or not to display any tooltip
+     *
      * @type {boolean}
      */
     this.displayHelpTooltip_ = options.displayHelpTooltip !== undefined ? options.displayHelpTooltip : true;
@@ -152,12 +163,14 @@ class Measure extends olInteractionInteraction {
     }
     /**
      * The message to show when user is about to start drawing.
+     *
      * @type {Element}
      */
     this.startMsg = startMsg;
 
     /**
      * The key for geometry change event.
+     *
      * @type {?import('ol/events').EventsKey}
      * @private
      */
@@ -165,6 +178,7 @@ class Measure extends olInteractionInteraction {
 
     /**
      * The key for map postcompose event.
+     *
      * @type {?import('ol/events').EventsKey}
      * @private
      */
@@ -195,6 +209,7 @@ class Measure extends olInteractionInteraction {
 
     /**
      * The vector layer used to show final measure features.
+     *
      * @type {import('ol/layer/Vector').default<import('ol/source/Vector').default<import('ol/geom/Geometry').default>>}
      * @private
      */
@@ -216,6 +231,7 @@ class Measure extends olInteractionInteraction {
     }
     /**
      * The draw interaction to be used.
+     *
      * @type {import('ol/interaction/Draw').default|import('ngeo/interaction/DrawAzimut').default|import('ngeo/interaction/MobileDraw').default}
      * @private
      */
@@ -239,7 +255,7 @@ class Measure extends olInteractionInteraction {
   }
 
   /**
-   * @return {import('ol/interaction/Draw').default|import('ngeo/interaction/DrawAzimut').default|import('ngeo/interaction/MobileDraw').default}
+   * @returns {import('ol/interaction/Draw').default|import('ngeo/interaction/DrawAzimut').default|import('ngeo/interaction/MobileDraw').default}
    *    The draw interaction.
    */
   getDrawInteraction() {
@@ -252,7 +268,7 @@ class Measure extends olInteractionInteraction {
    * @param {import('ol/style/Style').StyleLike} style The sketchStyle used for the drawing
    *    interaction.
    * @param {VectorSource<import('ol/geom/Geometry').default>} source Vector source.
-   * @return {?import('ol/interaction/Draw').default|import('ngeo/interaction/DrawAzimut').default|import('ngeo/interaction/MobileDraw').default}
+   * @returns {?import('ol/interaction/Draw').default|import('ngeo/interaction/DrawAzimut').default|import('ngeo/interaction/MobileDraw').default}
    *    The interaction
    */
   createDrawInteraction(style, source) {
@@ -279,6 +295,7 @@ class Measure extends olInteractionInteraction {
 
   /**
    * Handle draw interaction `drawstart` event.
+   *
    * @param {import('lib/ol.interaction.Draw').DrawEvent|import('ngeo/CustomEvent').default<import('lib/ol.interaction.Draw').DrawEvent>} evt Event.
    * @private
    */
@@ -333,6 +350,7 @@ class Measure extends olInteractionInteraction {
 
   /**
    * Handle draw interaction `drawend` event.
+   *
    * @param {Event|import('ol/events/Event').default|import('ngeo/interaction/common').DrawEvent} evt Event.
    * @private
    */
@@ -357,6 +375,7 @@ class Measure extends olInteractionInteraction {
 
   /**
    * Handle unlistener events for 'end of drawing' interaction
+   *
    * @private
    */
   unlistenerEvent_() {
@@ -370,6 +389,7 @@ class Measure extends olInteractionInteraction {
 
   /**
    * Creates a new help tooltip
+   *
    * @private
    */
   createHelpTooltip_() {
@@ -389,6 +409,7 @@ class Measure extends olInteractionInteraction {
 
   /**
    * Destroy the help tooltip
+   *
    * @private
    */
   removeHelpTooltip_() {
@@ -408,6 +429,7 @@ class Measure extends olInteractionInteraction {
 
   /**
    * Creates a new measure tooltip
+   *
    * @private
    */
   createMeasureTooltip_() {
@@ -426,6 +448,7 @@ class Measure extends olInteractionInteraction {
 
   /**
    * Destroy the help tooltip
+   *
    * @private
    */
   removeMeasureTooltip_() {
@@ -484,7 +507,8 @@ class Measure extends olInteractionInteraction {
 
   /**
    * Get a reference to the tooltip element.
-   * @return {Element} Tooltip Element.
+   *
+   * @returns {Element} Tooltip Element.
    */
   getTooltipElement() {
     if (!this.measureTooltipElement_) {
@@ -511,12 +535,13 @@ class Measure extends olInteractionInteraction {
 /**
  * Calculate the area of the passed polygon and return a formatted string
  * of the area.
+ *
  * @param {import('ol/geom/Polygon').default} polygon Polygon.
  * @param {import('ol/proj/Projection').default} projection Projection of the polygon coords.
  * @param {number|undefined} precision Precision.
  * @param {import('ngeo/misc/filters').unitPrefix} format The format function.
  * @param {boolean} [spherical=false] Whether to use the spherical area.
- * @return {string} Formatted string of the area.
+ * @returns {string} Formatted string of the area.
  * @hidden
  */
 export function getFormattedArea(polygon, projection, precision, format, spherical = false) {
@@ -534,10 +559,11 @@ export function getFormattedArea(polygon, projection, precision, format, spheric
 
 /**
  * Calculate the area of the passed circle and return a formatted string of the area.
+ *
  * @param {import('ol/geom/Circle').default} circle Circle
  * @param {number|undefined} precision Precision.
  * @param {import('ngeo/misc/filters').unitPrefix} format The format function.
- * @return {string} Formatted string of the area.
+ * @returns {string} Formatted string of the area.
  * @hidden
  */
 export function getFormattedCircleArea(circle, precision, format) {
@@ -548,12 +574,13 @@ export function getFormattedCircleArea(circle, precision, format) {
 /**
  * Calculate the length of the passed line string and return a formatted
  * string of the length.
+ *
  * @param {import('ol/geom/LineString').default} lineString Line string.
  * @param {import('ol/proj/Projection').default} projection Projection of the line string coords.
  * @param {number|undefined} precision Precision.
  * @param {import('ngeo/misc/filters').unitPrefix} format The format function.
  * @param {boolean} [spherical=false] Whether to use the spherical distance.
- * @return {string} Formatted string of length.
+ * @returns {string} Formatted string of length.
  * @hidden
  */
 export function getFormattedLength(lineString, projection, precision, format, spherical = false) {
@@ -573,12 +600,13 @@ export function getFormattedLength(lineString, projection, precision, format, sp
 
 /**
  * Return a formatted string of the point.
+ *
  * @param {import('ol/geom/Point').default} point Point.
  * @param {number|undefined} decimals Decimals.
  * @param {import('ngeo/misc/filters').numberCoordinates} format A function to format coordinate into
  * text
  * @param {string} [opt_template] The template.
- * @return {string} Formatted string of coordinate.
+ * @returns {string} Formatted string of coordinate.
  * @hidden
  */
 export function getFormattedPoint(point, decimals, format, opt_template) {
@@ -587,8 +615,9 @@ export function getFormattedPoint(point, decimals, format, opt_template) {
 
 /**
  * Handle map browser event.
+ *
  * @param {import('ol/MapBrowserEvent').default<unknown>} evt Map browser event.
- * @return {boolean} `false` if event propagation should be stopped.
+ * @returns {boolean} `false` if event propagation should be stopped.
  * @private
  * @hidden
  * @this {Measure}

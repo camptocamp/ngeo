@@ -69,18 +69,21 @@ export default class extends ngeoInteractionMeasure {
 
     /**
      * The format function
+     *
      * @type {import('ngeo/misc/filters').unitPrefix}
      */
     this.format = format;
 
     /**
      * The snapping tolerance in pixels.
+     *
      * @type {number}
      */
     this.tolerance = options.tolerance;
 
     /**
      * The snapping source
+     *
      * @type {import('ol/source/Vector').default<*>}
      */
     this.source = options.source;
@@ -90,7 +93,7 @@ export default class extends ngeoInteractionMeasure {
    * @param {import('ol/style/Style').StyleLike} style The sketchStyle used for the drawing
    *    interaction.
    * @param {import('ol/source/Vector').default<import('ol/geom/LineString').default>} source Vector source.
-   * @return {olInteractionDraw|import('ngeo/interaction/MobileDraw').default} The interaction
+   * @returns {olInteractionDraw|import('ngeo/interaction/MobileDraw').default} The interaction
    */
   createDrawInteraction(style, source) {
     return new olInteractionDraw({
@@ -111,7 +114,7 @@ export default class extends ngeoInteractionMeasure {
    *
    * @param {number[][]} coordinates Coordinates.
    * @param {import('ol/geom/SimpleGeometry').default|undefined} [opt_geometry] Geometry.
-   * @return {import('ol/geom/SimpleGeometry').default} Geometry.
+   * @returns {import('ol/geom/SimpleGeometry').default} Geometry.
    */
   linestringGeometryFunction(coordinates, opt_geometry) {
     if (modifierPressed) {
@@ -223,7 +226,7 @@ export default class extends ngeoInteractionMeasure {
    *
    * @param {number[][]} line1 The coordinates of the first line.
    * @param {number[][]} line2 The coordinates of the second line.
-   * @return {number[] | undefined} The intersection point, undefined if there is no intersection point or lines are coincident.
+   * @returns {number[] | undefined} The intersection point, undefined if there is no intersection point or lines are coincident.
    */
   computeLineSegmentIntersection(line1, line2) {
     const numerator1A =

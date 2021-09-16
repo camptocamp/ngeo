@@ -30,6 +30,7 @@ import olFormatWFS from 'ol/format/WFS';
  */
 /**
  * Results for a query source.
+ *
  * @typedef {Object} QueryResultSource
  * @property {Feature<import('ol/geom/Geometry').default>[]} features The matching features for this source.
  * @property {number|string} id Identifier (can be not unique).
@@ -264,7 +265,7 @@ WfsPermalinkService.prototype.issueRequest_ = function (
 
 /**
  * @param {import('ol/Feature').FeatureLike[]} features Features.
- * @return {import('ol/extent').Extent} The extent of all features.
+ * @returns {import('ol/extent').Extent} The extent of all features.
  */
 WfsPermalinkService.prototype.getExtent_ = function (features) {
   return /** @type {import('ol/extent').Extent} */ /** @type {any[]} */ (features).reduce(
@@ -285,7 +286,7 @@ WfsPermalinkService.prototype.getExtent_ = function (features) {
  * Create OGC filters for the filter groups extracted from the query params.
  *
  * @param {WfsPermalinkFilterGroup[]} filterGroups Filter groups.
- * @return {?import('ol/format/filter/Filter').default} OGC filters.
+ * @returns {?import('ol/format/filter/Filter').default} OGC filters.
  */
 WfsPermalinkService.prototype.createFilters_ = function (filterGroups) {
   if (filterGroups.length == 0) {
@@ -293,8 +294,9 @@ WfsPermalinkService.prototype.createFilters_ = function (filterGroups) {
   }
   /**
    * The function
+   *
    * @param {WfsPermalinkFilterGroup} filterGroup The filter
-   * @return {import('ol/format/filter/Filter').default} The return
+   * @returns {import('ol/format/filter/Filter').default} The return
    */
   const createFiltersForGroup = function (filterGroup) {
     const filters = filterGroup.filters.map((filterDef) => {
@@ -318,7 +320,7 @@ WfsPermalinkService.prototype.createFilters_ = function (filterGroups) {
  * Join a list of filters with `and(...)`.
  *
  * @param {import('ol/format/filter/Filter').default[]} filters The filters to join.
- * @return {import('ol/format/filter/Filter').default} The joined filters.
+ * @returns {import('ol/format/filter/Filter').default} The joined filters.
  */
 WfsPermalinkService.and_ = function (filters) {
   return WfsPermalinkService.joinFilters_(filters, and);
@@ -328,7 +330,7 @@ WfsPermalinkService.and_ = function (filters) {
  * Join a list of filters with `or(...)`.
  *
  * @param {import('ol/format/filter/Filter').default[]} filters The filters to join.
- * @return {import('ol/format/filter/Filter').default} The joined filters.
+ * @returns {import('ol/format/filter/Filter').default} The joined filters.
  */
 WfsPermalinkService.or_ = function (filters) {
   return WfsPermalinkService.joinFilters_(filters, or);
@@ -340,7 +342,7 @@ WfsPermalinkService.or_ = function (filters) {
  * @param {import('ol/format/filter/Filter').default[]} filters The filters to join.
  * @param {function(import('ol/format/filter/Filter').default, import('ol/format/filter/Filter').default): import('ol/format/filter/Filter').default} joinFn
  *    The function to join two filters.
- * @return {import('ol/format/filter/Filter').default} The joined filters.
+ * @returns {import('ol/format/filter/Filter').default} The joined filters.
  */
 WfsPermalinkService.joinFilters_ = function (filters, joinFn) {
   return filters.reduce((combinedFilters, currentFilter) => {

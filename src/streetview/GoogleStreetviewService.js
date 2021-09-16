@@ -39,6 +39,7 @@ export default class GoogleStreetviewService extends StreetviewService {
 
     /**
      * radius for which images are searched
+     *
      * @type {number}
      * @private
      */
@@ -72,6 +73,7 @@ export default class GoogleStreetviewService extends StreetviewService {
 
   /**
    * Called when the panorama position changes. Update the location.
+   *
    * @private
    */
   positionChange_() {
@@ -111,6 +113,7 @@ export default class GoogleStreetviewService extends StreetviewService {
 
   /**
    * Get image for the given location.
+   *
    * @param {import('ol/coordinate').Coordinate} coordinates Map view projection coordinates.
    */
   getPanorama(coordinates) {
@@ -129,6 +132,7 @@ export default class GoogleStreetviewService extends StreetviewService {
 
   /**
    * Toggle visibility of streetview / add or remove its listener
+   *
    * @param {boolean} show If the streetview is to show
    */
   toggleShow(show) {

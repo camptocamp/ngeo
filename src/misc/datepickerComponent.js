@@ -42,7 +42,7 @@ myModule.value(
   /**
    * @param {JQuery} element Element.
    * @param {angular.IAttributes} attrs Attributes.
-   * @return {string} Template URL.
+   * @returns {string} Template URL.
    */
   (element, attrs) => {
     const templateUrl = attrs.ngeoDatePickerTemplateUrl;
@@ -68,7 +68,7 @@ myModule.run(
  * @param {string|function(JQuery=, angular.IAttributes=): string} ngeoDatePickerTemplateUrl
  *    Template for the directive.
  * @param {angular.ITimeoutService} $timeout angular timeout service
- * @return {angular.IDirective} The directive specs.
+ * @returns {angular.IDirective} The directive specs.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoDatePicker
@@ -140,6 +140,7 @@ myModule.directive('ngeoDatePicker', datePickerComponent);
 
 /**
  * DatePickerController - directive conttroller
+ *
  * @param {angular.IScope} $scope Angular scope.
  * @param {import('ngeo/misc/Time').Time} ngeoTime time service.
  * @param {angular.gettext.gettextCatalog} gettextCatalog service.
@@ -162,36 +163,42 @@ export function Controller($scope, ngeoTime, gettextCatalog) {
 
   /**
    * The gettext catalog
+   *
    * @type {angular.gettext.gettextCatalog}
    */
   this.gettextCatalog_ = gettextCatalog;
 
   /**
    * If the component is used to select a date range
+   *
    * @type {boolean}
    */
   this.isModeRange = false;
 
   /**
    * Function called after date(s) changed/selected
+   *
    * @type {?function({time: {start: number, end: ?number}}): void}
    */
   this.onDateSelected = null;
 
   /**
    * Initial min date for the datepicker
+   *
    * @type {?Date}
    */
   this.initialMinDate = null;
 
   /**
    * Initial max date for the datepickeronDateSelected
+   *
    * @type {?Date}
    */
   this.initialMaxDate = null;
 
   /**
    * Datepicker options for the second datepicker (only for range mode)
+   *
    * @type {unknown}
    */
   this.edateOptions = {
@@ -201,6 +208,7 @@ export function Controller($scope, ngeoTime, gettextCatalog) {
 
   /**
    * Datepicker options for the first datepicker
+   *
    * @type {unknown}
    */
   this.sdateOptions = {
@@ -210,12 +218,14 @@ export function Controller($scope, ngeoTime, gettextCatalog) {
 
   /**
    * Start date model for the first date picker
+   *
    * @type {?Date}
    */
   this.sdate = null;
 
   /**
    * End date model for the second datepicker (only for range mode)
+   *
    * @type {?Date}
    */
   this.edate = null;

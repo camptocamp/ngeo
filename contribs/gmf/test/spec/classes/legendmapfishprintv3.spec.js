@@ -88,6 +88,7 @@ describe('gmf.print.LegendMapFishPrintV3', () => {
     /**
      * Add layers in a "data" group and to the map.
      * This first "data" group is not kept in the legend. Only deeper levels are kept.
+     *
      * @param {import('ol/layer/Group').default[]} layers the array of layers to add to the map.
      */
     (layers) => {
@@ -100,10 +101,11 @@ describe('gmf.print.LegendMapFishPrintV3', () => {
   const addlayersInGroup =
     /**
      * Add layers in a group and return this group.
+     *
      * @param {import('ol/layer/Layer').default<import('ol/source/Source').default>[]} layers the
      * array of layers to add to the map.
      * @param {string} groupName The group name.
-     * @return {import('ol/layer/Group').default} a layer group.
+     * @returns {import('ol/layer/Group').default} a layer group.
      */
     (layers, groupName) => {
       const layerGroup = new olLayerGroup();

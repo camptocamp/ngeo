@@ -62,36 +62,42 @@ export function DownloadCsvService(
 
   /**
    * File encoding of the CSV file.
+   *
    * @type {import('ngeo/options').ngeoCsvEncoding}
    */
   this.encoding_ = ngeoCsvEncoding;
 
   /**
    * File extension of the CSV file.
+   *
    * @type {import('ngeo/options').ngeoCsvExtension}
    */
   this.extension_ = ngeoCsvExtension;
 
   /**
    * Whether to include the header in the exported file or not.
+   *
    * @type {import('ngeo/options').ngeoCsvIncludeHeader}
    */
   this.includeHeader_ = ngeoCsvIncludeHeader;
 
   /**
    * Quote character.
+   *
    * @type {import('ngeo/options').ngeoCsvQuote}
    */
   this.quote_ = ngeoCsvQuote;
 
   /**
    * Separator character.
+   *
    * @type {import('ngeo/options').ngeoCsvSeparator}
    */
   this.separator_ = ngeoCsvSeparator;
 
   /**
    * Download service.
+   *
    * @type {import('ngeo/download/service').Download}
    */
   this.download_ = ngeoDownload;
@@ -102,7 +108,7 @@ export function DownloadCsvService(
  *
  * @param {Object<string, any>[]} data Entries/objects to include in the CSV.
  * @param {GridColumnDef[]} columnDefs Column definitions.
- * @return {string} The CSV file as string.
+ * @returns {string} The CSV file as string.
  */
 DownloadCsvService.prototype.generateCsv = function (data, columnDefs) {
   if (data.length == 0 || columnDefs.length == 0) {
@@ -126,7 +132,7 @@ DownloadCsvService.prototype.generateCsv = function (data, columnDefs) {
 
 /**
  * @param {any[]} values Values.
- * @return {string} CSV row.
+ * @returns {string} CSV row.
  */
 DownloadCsvService.prototype.getRow_ = function (values) {
   const matchAllQuotesRegex = new RegExp(this.quote_, 'g');

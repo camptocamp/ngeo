@@ -21,6 +21,7 @@
 
 /**
  * Interactions for measure tools base class.
+ *
  * @typedef {Object} MeasueBaseOptions
  * @property {number} [decimals]
  * @property {number} [precision]

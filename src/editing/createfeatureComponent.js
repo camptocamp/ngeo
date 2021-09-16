@@ -72,8 +72,7 @@ const myModule = angular.module('ngeoCreatefeature', [ngeoMiscEventHelper.name, 
  * @htmlAttribute {string} ngeo-createfeature-geom-type Determines the type
  *     of geometry this directive should draw.
  * @htmlAttribute {import('ol/Map').default} ngeo-createfeature-map The map.
- *
- * @return {angular.IDirective} The directive specs.
+ * @returns {angular.IDirective} The directive specs.
  * @ngdoc directive
  * @ngname ngeoCreatefeature
  */
@@ -180,6 +179,7 @@ export function Controller(
   /**
    * The draw or measure interaction responsible of drawing the vector feature.
    * The actual type depends on the geometry type.
+   *
    * @type {?import('ol/interaction/Interaction').default}
    */
   this.interaction_ = null;
@@ -284,6 +284,7 @@ Controller.prototype.$onInit = function () {
 /**
  * Called when a feature is finished being drawn. Add the feature to the
  * collection.
+ *
  * @param {import('lib/ol.interaction.Draw').DrawEvent|import('ngeo/CustomEvent').default<import('lib/ol.interaction.Draw').DrawEvent>} evt
  *    Event.
  */

@@ -146,6 +146,7 @@ export function EditingSnappingService(
   /**
    * A cache containing all available snappable items, in which the listening
    * of the state of the `treeCtrl` is registered and unregistered.
+   *
    * @type {Cache}
    */
   this.cache_ = {};
@@ -155,6 +156,7 @@ export function EditingSnappingService(
    * FileGroup, i.e. for example when a KML is added, then a File data
    * source is added to the FileGroup's collection, and their features
    * need to be snappable.
+   *
    * @type {CacheFileDataSource}
    */
   this.cacheFileDataSource_ = {};
@@ -173,6 +175,7 @@ export function EditingSnappingService(
    * Reference to the promise taking care of calling all GetFeature requests
    * of the currently active cache items after the map view changed. Used
    * to cancel if the map view changes often within a short period of time.
+   *
    * @type {?angular.IPromise<void>}
    */
   this.mapViewChangePromise_ = null;
@@ -189,6 +192,7 @@ export function EditingSnappingService(
 
   /**
    * A reference to the OGC servers loaded by the theme service.
+   *
    * @type {import('gmf/themes').GmfOgcServers|null}
    */
   this.ogcServers_ = null;
@@ -248,6 +252,7 @@ EditingSnappingService.prototype.ensureSnapInteractionsOnTop = function () {
 
 /**
  * Bind the snapping service to a map
+ *
  * @param {?import('ol/Map').default} map Map
  */
 EditingSnappingService.prototype.setMap = function (map) {
@@ -405,7 +410,7 @@ EditingSnappingService.prototype.unregisterAllTreeCtrl_ = function () {
  * Get the OGC server.
  *
  * @param {import('ngeo/layertree/Controller').LayertreeController} treeCtrl The layer tree controller
- * @return {?import('gmf/themes').GmfOgcServer} The OGC server.
+ * @returns {?import('gmf/themes').GmfOgcServer} The OGC server.
  */
 EditingSnappingService.prototype.getOGCServer_ = function (treeCtrl) {
   const gmfLayer = /** @type {import('gmf/themes').GmfLayer} */ (treeCtrl.node);
@@ -446,7 +451,7 @@ EditingSnappingService.prototype.getOGCServer_ = function (treeCtrl) {
  * 4) the ogcServer defined in 3) has the `wfsSupport` property set to `true`.
  *
  * @param {import('ngeo/layertree/Controller').LayertreeController} treeCtrl The layer tree controller
- * @return {?WFSConfig} The configuration object.
+ * @returns {?WFSConfig} The configuration object.
  */
 EditingSnappingService.prototype.getWFSConfig_ = function (treeCtrl) {
   // (1)
@@ -495,7 +500,7 @@ EditingSnappingService.prototype.getWFSConfig_ = function (treeCtrl) {
 
 /**
  * @param {import('ngeo/layertree/Controller').LayertreeController} treeCtrl The layer tree controller
- * @return {boolean} True if state is on and snapping is activated for that layer.
+ * @returns {boolean} True if state is on and snapping is activated for that layer.
  */
 EditingSnappingService.prototype.isSnappingActiveForTreeCtrl_ = function (treeCtrl) {
   // Note: a snappable treeCtrl can only be a leaf, therefore the only possible
@@ -710,6 +715,7 @@ EditingSnappingService.prototype.refreshSnappingSource_ = function () {
 /**
  * Called when a File data source is added to the File Group (imported
  * geospatial files). Make its features snappable.
+ *
  * @param {Event|import('ol/events/Event').default} evt Event
  */
 EditingSnappingService.prototype.handleFileGroupDataSourcesCollectionAdd_ = function (evt) {
@@ -757,6 +763,7 @@ EditingSnappingService.prototype.handleFileGroupDataSourcesCollectionAdd_ = func
 /**
  * Called when a File data source is removed from the File
  * Group. Remove the features from being snappable.
+ *
  * @param {Event|import('ol/events/Event').default} evt Event
  */
 EditingSnappingService.prototype.handleFileGroupDataSourcesCollectionRemove_ = function (evt) {
@@ -793,6 +800,7 @@ EditingSnappingService.prototype.handleFileGroupDataSourcesCollectionRemove_ = f
  * Called when the "visible" property of a File data source
  * changes. Add or remove the Snap interaction for that data source
  * depending on the property value.
+ *
  * @param {ngeoDatasourceFile} fileDataSource
  */
 EditingSnappingService.prototype.handleFileDataSourceVisibleChange_ = function (fileDataSource) {
@@ -837,6 +845,7 @@ EditingSnappingService.prototype.handleFileDataSourceVisibleChange_ = function (
 
 /**
  * The key is: A uid string generated from the fileDataSource
+ *
  * @typedef {Object<string, CacheFileDataSourceItem>} CacheFileDataSource
  */
 

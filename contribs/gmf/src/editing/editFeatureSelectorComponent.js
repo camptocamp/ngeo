@@ -72,7 +72,7 @@ myModule.run(
  *     layer where the selected or created features are drawn.
  * @htmlAttribute {import('ngeo/layertree/Controller').default} gmf-editfeatureselector-tree The
  *     layertree controller handling the selectable editable layers list.
- * @return {angular.IDirective} The directive specs.
+ * @returns {angular.IDirective} The directive specs.
  * @ngdoc directive
  * @ngname gmfEditfeatureselector
  */
@@ -185,18 +185,21 @@ export function Controller($scope, $timeout, gmfThemes, gmfTreeManager) {
   /**
    * Flag shared with the `gmf-editfeature` directive used to determine if it
    * has unsaved changes or not.
+   *
    * @type {boolean}
    */
   this.dirty = false;
 
   /**
    * List of editable Layertree controllers.
+   *
    * @type {import('ngeo/layertree/Controller').LayertreeController[]}
    */
   this.editableTreeCtrls = [];
 
   /**
    * The currently selected Layertree controller.
+   *
    * @type {?import('ngeo/layertree/Controller').LayertreeController}
    */
   this.selectedEditableTreeCtrl = null;
@@ -215,6 +218,7 @@ export function Controller($scope, $timeout, gmfThemes, gmfTreeManager) {
    * When clicked, the according state is set and the `gmf-editfeature`
    * directive checks if it has unsaved changes and allow this directive to
    * continue the action that was made or not.
+   *
    * @type {string}
    */
   this.state = EditingState.IDLE;
@@ -246,6 +250,7 @@ Controller.prototype.stopEditing = function () {
 /**
  * Called when the active property of the this directive changes. Manage
  * the activation/deactivation accordingly.
+ *
  * @param {boolean} active Whether the directive is active or not.
  */
 Controller.prototype.handleActiveChange_ = function (active) {

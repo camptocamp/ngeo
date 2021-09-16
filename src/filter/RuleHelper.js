@@ -106,7 +106,7 @@ export class RuleHelper {
    * @param {import('ngeo/format/Attribute').Attribute[]} attributes Attributes.
    * @param {boolean} [opt_isCustom] Whether the created rules should be marked
    *     as custom or not. Defaults to `false`.
-   * @return {import('ngeo/rule/Rule').default[]} Rules.
+   * @returns {import('ngeo/rule/Rule').default[]} Rules.
    */
   createRulesFromAttributes(attributes, opt_isCustom) {
     const rules = [];
@@ -120,7 +120,7 @@ export class RuleHelper {
    * @param {import('ngeo/format/Attribute').Attribute} attribute Attribute.
    * @param {boolean} [opt_isCustom] Whether the created rule should be marked
    *     as custom or not. Defaults to `false`.
-   * @return {import('ngeo/rule/Rule').default} Rule.
+   * @returns {import('ngeo/rule/Rule').default} Rule.
    */
   createRuleFromAttribute(attribute, opt_isCustom) {
     let rule;
@@ -228,7 +228,7 @@ export class RuleHelper {
   /**
    * @param {(import('ngeo/rule/Rule').RuleOptions | import('ngeo/rule/Select').SelectOptions)[]} optionsList
    *    List of options
-   * @return {import('ngeo/rule/Rule').default[]} Rules.
+   * @returns {import('ngeo/rule/Rule').default[]} Rules.
    */
   createRules(optionsList) {
     const rules = [];
@@ -241,7 +241,7 @@ export class RuleHelper {
   /**
    * @param {import('ngeo/rule/Rule').RuleOptions|import('ngeo/rule/Select').SelectOptions} options
    *    Options
-   * @return {import('ngeo/rule/Rule').default} Rule.
+   * @returns {import('ngeo/rule/Rule').default} Rule.
    */
   createRule(options) {
     // Compatibility with filters saved before version 2.6
@@ -278,7 +278,7 @@ export class RuleHelper {
    * Create a new `import('ngeo/rule/Rule').default` object using an other given rule.
    *
    * @param {import('ngeo/rule/Rule').default} rule Original rule to clone.
-   * @return {import('ngeo/rule/Rule').default} A clone rule.
+   * @returns {import('ngeo/rule/Rule').default} A clone rule.
    */
   cloneRule(rule) {
     /** @type {AnyOptions} */
@@ -359,7 +359,7 @@ export class RuleHelper {
 
   /**
    * @param {import('ngeo/rule/Rule').default[]} rules Rules
-   * @return {AnyOptions[]} List of serialized rule options.
+   * @returns {AnyOptions[]} List of serialized rule options.
    */
   serializeRules(rules) {
     return rules.map((rule) => {
@@ -370,8 +370,9 @@ export class RuleHelper {
 
   /**
    * Selialize a rule into options to re-create it later.
+   *
    * @param {import('ngeo/rule/Rule').default} rule Rule to serialize.
-   * @return {AnyOptions} Serialized rule options.
+   * @returns {AnyOptions} Serialized rule options.
    */
   serializeRule(rule) {
     /** @type {AnyOptions} */
@@ -422,7 +423,7 @@ export class RuleHelper {
    * See the `CreateFilterOptions` to learn more.
    *
    * @param {CreateFilterOptions} options Options.
-   * @return {?import('ol/format/filter/Filter').default} Filter.
+   * @returns {?import('ol/format/filter/Filter').default} Filter.
    */
   createFilter(options) {
     const dataSource = options.dataSource;
@@ -473,7 +474,7 @@ export class RuleHelper {
 
   /**
    * @param {CreateFilterOptions} options Options.
-   * @return {?string} Filter string.
+   * @returns {?string} Filter string.
    */
   createFilterString(options) {
     let filterString = null;
@@ -499,7 +500,7 @@ export class RuleHelper {
    *     First filter.
    * @param {?import('ol/format/filter/Filter').default} filterB
    *     Second filter.
-   * @return {?import('ol/format/filter/Filter').default} Filters
+   * @returns {?import('ol/format/filter/Filter').default} Filters
    *     joined together.
    */
   joinFilters(filterA, filterB) {
@@ -519,7 +520,7 @@ export class RuleHelper {
    * @param {import('ngeo/datasource/OGC').default} dataSource Data source.
    * @param {string} [opt_srsName] SRS name. No srsName attribute will be
    *     set on geometries when this is not provided.
-   * @return {?import('ol/format/filter/Filter').default} filter Filter;
+   * @returns {?import('ol/format/filter/Filter').default} filter Filter;
    * @private
    */
   createFilterFromRule_(rule, dataSource, opt_srsName) {
@@ -642,9 +643,10 @@ export class RuleHelper {
   /**
    * Create and return an OpenLayers filter object using the available
    * dimensions filters configuration within the data source.
+   *
    * @param {import('ngeo/datasource/OGC').default} dataSource Data source from which to create the
    *     filter.
-   * @return {?import('ol/format/filter/Filter').default} Filter
+   * @returns {?import('ol/format/filter/Filter').default} Filter
    * @private
    */
   createDimensionsFilterFromDataSource_(dataSource) {
@@ -675,9 +677,10 @@ export class RuleHelper {
   /**
    * Create and return an OpenLayers filter object using the available
    * time properties within the data source.
+   *
    * @param {import('ngeo/datasource/OGC').default} dataSource Data source from which to
    *     create the filter.
-   * @return {?import('ol/format/filter/Filter').default} Filter
+   * @returns {?import('ol/format/filter/Filter').default} Filter
    * @private
    */
   createTimeFilterFromDataSource_(dataSource) {

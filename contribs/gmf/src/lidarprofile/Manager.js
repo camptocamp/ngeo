@@ -100,6 +100,7 @@ export class LidarprofileManager {
 
     /**
      * The hovered point attributes in D3 profile highlighted on the 2D map
+     *
      * @type {import('ol/Overlay').default}
      */
     this.cartoHighlight = new olOverlay({
@@ -125,6 +126,7 @@ export class LidarprofileManager {
     /**
      * The profile footpring represented as a LineString represented
      * with real mapunites stroke width
+     *
      * @type {import('ol/layer/Vector').default<import('ol/source/Vector').default<import('ol/geom/Geometry').default>>}
      */
     this.lidarBuffer = new olLayerVector({
@@ -133,6 +135,7 @@ export class LidarprofileManager {
 
     /**
      * The variable where all points of the profile are stored
+     *
      * @type {import('gmf/lidarprofile/Utils').LidarprofilePoints}
      */
     this.profilePoints = this.getEmptyProfilePoints_();
@@ -179,6 +182,7 @@ export class LidarprofileManager {
 
   /**
    * Set the line for the profile
+   *
    * @param {?import('ol/geom/LineString').default} line that defines the profile
    */
   setLine(line) {
@@ -187,6 +191,7 @@ export class LidarprofileManager {
 
   /**
    * Set the map used by the profile
+   *
    * @param {import('ol/Map').default} map The map.
    */
   setMap(map) {
@@ -197,7 +202,7 @@ export class LidarprofileManager {
   }
 
   /**
-   * @return {import('gmf/lidarprofile/Utils').LidarprofilePoints} An empty lidarprofile points object.
+   * @returns {import('gmf/lidarprofile/Utils').LidarprofilePoints} An empty lidarprofile points object.
    * @private
    */
   getEmptyProfilePoints_() {
@@ -213,6 +218,7 @@ export class LidarprofileManager {
 
   /**
    * Load profile data (lidar points) by successive Levels Of Details using asynchronous requests
+   *
    * @param {import('ol/coordinate').Coordinate[]} clippedLine an array of the clipped line coordinates
    * @param {number} distanceOffset the left side of D3 profile domain at current zoom and pan configuration
    * @param {boolean} resetPlot whether to reset D3 plot or not
@@ -313,6 +319,7 @@ export class LidarprofileManager {
 
   /**
    * Request to Pytree service for a range of Level Of Detail (LOD)
+   *
    * @param {number} minLOD minimum Level Of Detail of the request
    * @param {number} maxLOD maximum Level Of Detail of the request
    * @param {number} iter the iteration in profile requests cycle
@@ -375,6 +382,7 @@ export class LidarprofileManager {
 
   /**
    * Process the binary array return by Pytree (cPotree)
+   *
    * @param {ArrayBuffer} profile binary array returned by cPotree executable called by Pytree
    * @param {number} iter the iteration in profile requests cycle
    * @param {number} distanceOffset the left side of D3 profile domain at current zoom and pan configuration
@@ -516,7 +524,7 @@ export class LidarprofileManager {
   }
 
   /**
-   * @return {string} The html for errors.
+   * @returns {string} The html for errors.
    * @private
    */
   getHTMLError_() {

@@ -38,6 +38,7 @@ import ngeoFormatAttributeType from 'ngeo/format/AttributeType';
  * A feature attribute definition.
  *
  * extends AttributeBase
+ *
  * @typedef {Object} Attribute
  * @property {string} [geomType] (AttributeBase)
  * @property {string} [numType] (AttributeBase)
@@ -60,7 +61,7 @@ import ngeoFormatAttributeType from 'ngeo/format/AttributeType';
  *
  * @param {AttributeBase} attribute Attribute.
  * @param {string} type Type.
- * @return {boolean} Whether both attribute type and geomType were set.
+ * @returns {boolean} Whether both attribute type and geomType were set.
  * @hidden
  */
 export function setGeometryType(attribute, type) {

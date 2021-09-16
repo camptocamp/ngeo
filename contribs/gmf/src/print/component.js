@@ -44,6 +44,7 @@ import 'bootstrap/js/src/dropdown';
 /**
  * Fields that can come from a print v3 server and can be used in the partial
  * of the gmf print panel.
+ *
  * @typedef {Object} PrintLayoutInfo
  * @property {import('ngeo/print/mapfish-print-v3').MapFishPrintCapabilitiesLayoutAttribute[]} [simpleAttributes]
  *    Custom print layoutInfo.
@@ -78,7 +79,7 @@ myModule.value(
   /**
    * @param {JQuery} element Element.
    * @param {angular.IAttributes} attrs Attributes.
-   * @return {string} Template.
+   * @returns {string} Template.
    */
   (element, attrs) => {
     const templateUrl = attrs.gmfPrintTemplateurl;
@@ -141,7 +142,7 @@ myModule.value('gmfPrintState', {
  * @param {JQuery} $element Element.
  * @param {angular.IAttributes} $attrs Attributes.
  * @param {function(JQuery, angular.IAttributes): string} gmfPrintTemplateUrl Template function.
- * @return {string} Template URL.
+ * @returns {string} Template URL.
  * @ngInject
  * @private
  * @hidden
@@ -413,6 +414,7 @@ export class PrintController {
 
     /**
      * Current report reference id.
+     *
      * @type {string}
      * @private
      */
@@ -420,6 +422,7 @@ export class PrintController {
 
     /**
      * Formats availables in capabilities.
+     *
      * @type {string[]}
      * @private
      */
@@ -427,6 +430,7 @@ export class PrintController {
 
     /**
      * An array of attributes objects from capabilities.
+     *
      * @type {import('ngeo/print/mapfish-print-v3').MapFishPrintCapabilitiesLayout[]}
      * @private
      */
@@ -434,6 +438,7 @@ export class PrintController {
 
     /**
      * An attributes object from capabilities.
+     *
      * @type {?import('ngeo/print/mapfish-print-v3').MapFishPrintCapabilitiesLayout}
      * @private
      */
@@ -458,12 +463,14 @@ export class PrintController {
     /**
      * The email of the user to which send the file. Obtained from the
      * authentication service.
+     *
      * @type {?string}
      */
     this.smtpEmail = null;
 
     /**
      * Whether to send the printed file by email or not.
+     *
      * @type {boolean}
      */
     this.smtpEnabled = false;
@@ -471,6 +478,7 @@ export class PrintController {
     /**
      * Flag that determines whether to show a message notifying the
      * user about his upcomping file or not.
+     *
      * @type {boolean}
      */
     this.smtpMessage = false;
@@ -478,6 +486,7 @@ export class PrintController {
     /**
      * Whether sending file by email is supported or not. Obtained
      * from the print capabilities.
+     *
      * @type {boolean}
      */
     this.smtpSupported = false;
@@ -603,14 +612,14 @@ export class PrintController {
     );
 
     /**
-     * @return {import('ol/size').Size} Size in dots of the map to print.
+     * @returns {import('ol/size').Size} Size in dots of the map to print.
      */
     const getSizeFn = () => this.paperSize_;
 
     let getRotationFn;
     if (this.options.rotateMask) {
       /**
-       * @return {number} rotation to apply.
+       * @returns {number} rotation to apply.
        */
       getRotationFn = () => -this.rotation;
     }
@@ -622,7 +631,7 @@ export class PrintController {
 
   /**
    * @param {import('ol/PluggableMap').FrameState} frameState Frame state.
-   * @return {number} Scale of the map to print.
+   * @returns {number} Scale of the map to print.
    */
   getScaleFn(frameState) {
     // Don't compute an optimal scale if the user manually choose a value not in
@@ -708,6 +717,7 @@ export class PrintController {
 
   /**
    * Gets the print capabilities.
+   *
    * @param {string} roleId The roles ids.
    * @private
    */
@@ -724,6 +734,7 @@ export class PrintController {
   /**
    * Create the list of layouts, get the formats, get the first layout in
    * gmf print v3 capabilities and then update the print panel layout information.
+   *
    * @param {angular.IHttpResponse<import('ngeo/print/mapfish-print-v3').MapFishPrintCapabilities>} resp
    *    Response.
    * @private
@@ -750,6 +761,7 @@ export class PrintController {
    * If a field doesn't exist in the current layout, set it to undefined so the
    * view can hide it. Update also the paper size.
    * custom print templates).
+   *
    * @private
    */
   updateFields_() {
@@ -803,6 +815,7 @@ export class PrintController {
   /**
    * Update simple attributes information with Customfield to be able to generate a form
    * from a custom GMF print v3 configuration.
+   *
    * @private
    */
   updateCustomFields_() {
@@ -882,8 +895,9 @@ export class PrintController {
 
   /**
    * Return a capabilities 'attribute' object corresponding to the given name.
+   *
    * @param {string} name Name of the attribute to get.
-   * @return {?import('ngeo/print/mapfish-print-v3').MapFishPrintCapabilitiesLayoutAttribute} corresponding attribute or null.
+   * @returns {?import('ngeo/print/mapfish-print-v3').MapFishPrintCapabilitiesLayoutAttribute} corresponding attribute or null.
    * @private
    */
   isAttributeInCurrentLayout_(name) {
@@ -903,6 +917,7 @@ export class PrintController {
   /**
    * Set the current rotation value.
    * Updating the rotation will redraw the mask or rotate the map (depending on the configuration).
+   *
    * @param {number} rotation The optional new rotation value in degrees.
    */
   setRotation(rotation) {
@@ -920,6 +935,7 @@ export class PrintController {
 
   /**
    * Set the current rotation value.
+   *
    * @param {number} rotation The optional new rotation value in degrees.
    */
   updateRotation_(rotation) {
@@ -932,6 +948,7 @@ export class PrintController {
    * Calculate the angle and the sense of rotation between two lines. One from the
    * center of the map and the point of the last call to this function and one
    * from the same center and the point of the current call.
+   *
    * @param {Event|import('ol/events/Event').default} e An ol map browser pointer event.
    * @private
    */
@@ -979,6 +996,7 @@ export class PrintController {
 
   /**
    * Create a print report based on the values of the 'layoutInfo' values.
+   *
    * @param {string} format An output format corresponding to one format in the
    *     capabilities document ('pdf', 'png', etc).
    */
@@ -1155,8 +1173,9 @@ export class PrintController {
 
   /**
    * Get datasource object for print report
+   *
    * @private
-   * @return {import('ngeo/print/mapfish-print-v3').DataSourcePrintReportObject[]} the data
+   * @returns {import('ngeo/print/mapfish-print-v3').DataSourcePrintReportObject[]} the data
    *     source object for the print report
    */
   getDataSource_() {
@@ -1197,9 +1216,10 @@ export class PrintController {
   /**
    * Get the optimal scale to display the print mask. Return the lowest scale if
    * no scale matches.
+   *
    * @param {import('ol/size').Size|undefined} mapSize Size of the map on the screen (px).
    * @param {number|undefined} viewResolution Resolution of the map on the screen.
-   * @return {number} The best scale.
+   * @returns {number} The best scale.
    * @private
    */
   getOptimalScale_(mapSize, viewResolution) {
@@ -1291,6 +1311,7 @@ export class PrintController {
 
   /**
    * Set the current layout and update all layout information with this new layout parameters.
+   *
    * @param {string} layoutName A layout name as existing in the list of
    *     existing layouts.
    */
@@ -1309,8 +1330,9 @@ export class PrintController {
 
   /**
    * Get or set the print scale value and adapt the zoom to match with this new scale.
+   *
    * @param {number} [opt_scale] A scale value as existing in the scales list field.
-   * @return {number|undefined} New scale.
+   * @returns {number|undefined} New scale.
    */
   getSetScale(opt_scale) {
     if (opt_scale !== undefined) {
@@ -1333,6 +1355,7 @@ export class PrintController {
 
   /**
    * Set the print dpi value.
+   *
    * @param {number} dpi A dpi value as existing in the dpis list field.
    */
   setDpi(dpi) {
@@ -1341,8 +1364,9 @@ export class PrintController {
 
   /**
    * Check the current state of the print.
+   *
    * @param {string} stateEnumKey An enum key from import('gmf/print/component').default.PrintStateEnum.
-   * @return {boolean} True if the given state matches with the current print
+   * @returns {boolean} True if the given state matches with the current print
    *     state. False otherwise.
    */
   isState(stateEnumKey) {

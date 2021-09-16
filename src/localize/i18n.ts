@@ -38,6 +38,9 @@ const detectionOptions = {
   excludeCacheFor: ['cimode'],
 };
 
+/**
+ *
+ */
 export function setupI18n() {
   i18next
     .use(Backend)

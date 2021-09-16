@@ -60,7 +60,7 @@ myModule.value(
   'ngeoRoutingFeatureTemplateUrl',
   /**
    * @param {angular.IAttributes} $attrs Attributes.
-   * @return {string} Template URL.
+   * @returns {string} Template URL.
    */
   ($attrs) => {
     const templateUrl = $attrs.ngeoRoutingFeatureTemplateUrl;
@@ -71,7 +71,7 @@ myModule.value(
 /**
  * @param {angular.IAttributes} $attrs Attributes.
  * @param {function(angular.IAttributes): string} ngeoRoutingFeatureTemplateUrl Template function.
- * @return {string} Template URL.
+ * @returns {string} Template URL.
  * @ngInject
  * @private
  * @hidden
@@ -197,6 +197,7 @@ export class Controller {
 
     /**
      * Interaction for moving start and end.
+     *
      * @type {import('ol/interaction/Modify').default}
      * @private
      */
@@ -371,6 +372,7 @@ export class Controller {
   /**
    * Snaps a feature to the street network using the getNearest
    * function of the routing service. Replaces the feature.
+   *
    * @param {olFeature<import('ol/geom/Point').default>} feature Feature to snap
    * @private
    */
@@ -406,8 +408,9 @@ export class Controller {
 
   /**
    * Converts feature point into LonLat coordinate.
+   *
    * @param {olFeature<import('ol/geom/Point').default>} point Feature point to convert
-   * @return {?import('ol/coordinate').Coordinate} LonLat coordinate
+   * @returns {?import('ol/coordinate').Coordinate} LonLat coordinate
    * @private
    */
   getLonLatFromPoint_(point) {

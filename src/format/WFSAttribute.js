@@ -43,7 +43,7 @@ export default class {
 
   /**
    * @param {Element[]} complexTypeElements Complex type element
-   * @return {import('ngeo/format/Attribute').Attribute[]} Attributes
+   * @returns {import('ngeo/format/Attribute').Attribute[]} Attributes
    */
   read(complexTypeElements) {
     return complexTypeElements.map(this.readFromComplexTypeElement_);
@@ -75,7 +75,7 @@ export default class {
 
   /**
    * @param {Element} object Complex type element
-   * @return {import('ngeo/format/Attribute').Attribute} Attribute
+   * @returns {import('ngeo/format/Attribute').Attribute} Attribute
    * @private
    */
   readFromComplexTypeElement_(object) {

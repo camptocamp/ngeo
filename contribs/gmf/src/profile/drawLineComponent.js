@@ -54,7 +54,7 @@ const myModule = angular.module('gmfDrawProfileLine', [ngeoMapFeatureOverlayMgr.
  * @htmlAttribute {boolean} [gmf]-drawprofileline-active Active the component.
  * @htmlAttribute {import('ol/style/Style').default} [gmf]-drawprofileline-style Optional style
  *     for the drawn line.
- * @return {angular.IDirective} Directive Definition Object.
+ * @returns {angular.IDirective} Directive Definition Object.
  * @ngdoc directive
  * @ngname gmfDrawprofileline
  */

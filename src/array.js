@@ -23,9 +23,10 @@ import {includes as olArrayIncludes} from 'ol/array';
 
 /**
  * Push an object in an array, unless already there.
+ *
  * @param {*[]} arr The array to push the element.
  * @param {*} obj The object for which to test.
- * @return {boolean} The object has been pushed in the array.
+ * @returns {boolean} The object has been pushed in the array.
  */
 export function pushUnlessIncluded(arr, obj) {
   let ret = false;

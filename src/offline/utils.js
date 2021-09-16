@@ -40,11 +40,12 @@ const extractor = new RegExp('[^/]*//[^/]+/(.*)');
 
 /**
  * Extract the part after the URL authority.
+ *
  * @param {string} url A URL to normalize
- * @return {string} The normalized string.
+ * @returns {string} The normalized string.
  */
 export function normalizeURL(url) {
-  const matches = url.match(extractor);
+  const matches = extractor.exec(url);
   if (!matches) {
     throw new Error('Could not normalize url ' + url);
   }

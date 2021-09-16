@@ -61,7 +61,7 @@ export function ObjectEditingQuery($http, $q, gmfThemes) {
 }
 
 /**
- * @return {angular.IPromise<import('./toolsComponent').ObjectEditingQueryableLayerInfo[]>} Promise.
+ * @returns {angular.IPromise<import('./toolsComponent').ObjectEditingQueryableLayerInfo[]>} Promise.
  */
 ObjectEditingQuery.prototype.getQueryableLayersInfo = function () {
   if (!this.getQueryableLayerNodesDefered_) {
@@ -101,7 +101,7 @@ ObjectEditingQuery.prototype.getQueryableLayersInfo = function () {
  *
  * @param {import('gmf/themes').GmfTheme[]} themes List of theme nodes.
  * @param {import('gmf/themes').GmfOgcServers} ogcServers List of ogc servers
- * @return {import('gmf/objectediting/toolsComponent').ObjectEditingQueryableLayerInfo[]} List of
+ * @returns {import('gmf/objectediting/toolsComponent').ObjectEditingQueryableLayerInfo[]} List of
  *     queryable layers information.
  * @private
  * @hidden
@@ -149,7 +149,7 @@ function getQueryableLayersInfoFromThemes(themes, ogcServers) {
  *    Queryable layer information.
  * @param {import('ol/coordinate').Coordinate} coordinate Coordinate.
  * @param {import('ol/Map').default} map Map.
- * @return {angular.IPromise<?import('ol/Feature').default<import('ol/geom/Geometry').default>>} Promise.
+ * @returns {angular.IPromise<?import('ol/Feature').default<import('ol/geom/Geometry').default>>} Promise.
  */
 ObjectEditingQuery.prototype.getFeatureInfo = function (layerInfo, coordinate, map) {
   const view = map.getView();

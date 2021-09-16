@@ -52,6 +52,7 @@ import {padNumber} from 'ol/string';
  * - opt_template Optional template. Default to '{x} {y}'.
  *     Where "{x}" will be replaced by the easting coordinate and "{y}" by the northing one. Note:
  *     Use a html entity to use the semicolon symbol into a template.
+ *
  * @typedef {function(import('ol/coordinate').Coordinate, (number|string)=, string=, (boolean|string)=): string} numberCoordinates
  */
 
@@ -63,6 +64,7 @@ import {padNumber} from 'ol/string';
  * - opt_template Optional template. Default to '{x} {y}'.
  *     Where "{x}" will be replaced by the easting coordinate, {y} by the northing one. Note: Use a html
  *     entity to use the semicolon symbol into a template.
+ *
  * @typedef {function(import('ol/coordinate').Coordinate, (number|string)=, string=): string} dmsCoordinates
  */
 
@@ -70,6 +72,7 @@ import {padNumber} from 'ol/string';
  * Format a duration in seconds to a more readable form.
  * Arguments:
  * - duration The duration in seconds.
+ *
  * @typedef {function(number): string} duration
  */
 
@@ -91,7 +94,7 @@ const myModule = angular.module('ngeoAngularFilters', []);
  *
  *
  * @param {angular.IFilterService} $filter Angular filter
- * @return {function(number): string} A function to format number into a 'scale'
+ * @returns {function(number): string} A function to format number into a 'scale'
  *     string.
  * @ngInject
  * @ngdoc filter
@@ -102,7 +105,7 @@ export function ScalifyFilter($filter) {
   /**
    * @param {number} scale
    * @param {number} [opt_precision] The used precision, default is 2.
-   * @return {string}
+   * @returns {string}
    */
   const filterFn = function (scale, opt_precision) {
     if (opt_precision === undefined) {
@@ -132,7 +135,7 @@ myModule.filter('ngeoScalify', ScalifyFilter);
  *      {{1234 | ngeoNumber}} => 1230
  *
  * @param {angular.ILocaleService} $locale Angular locale
- * @return {formatNumber} Function used to format number into a string.
+ * @returns {formatNumber} Function used to format number into a string.
  * @ngInject
  * @ngdoc filter
  * @ngname ngeoNumber
@@ -143,7 +146,7 @@ export function NumberFilter($locale) {
   /**
    * @param {number} number The number to format.
    * @param {number} [opt_precision] The used precision, default is 3.
-   * @return {string} The formatted string.
+   * @returns {string} The formatted string.
    */
   const result = function (number, opt_precision) {
     const groupSep = formats.GROUP_SEP;
@@ -214,7 +217,7 @@ myModule.filter('ngeoNumber', NumberFilter);
  *
  *
  * @param {angular.IFilterService} $filter Angular filter
- * @return {unitPrefix} Function used to format number into a string.
+ * @returns {unitPrefix} Function used to format number into a string.
  * @ngInject
  * @ngdoc filter
  * @ngname ngeoUnitPrefix
@@ -229,7 +232,7 @@ export function UnitPrefixFilter($filter) {
    * @param {string} [opt_unit] The unit to used, default is ''.
    * @param {string} [opt_type] (unit|square|binary) the type of units, default is 'unit'.
    * @param {number} [opt_precision] The used precision, default is 3.
-   * @return {string} The formatted string.
+   * @returns {string} The formatted string.
    */
   const result = function (number, opt_unit, opt_type, opt_precision) {
     if (opt_unit === undefined) {
@@ -284,7 +287,7 @@ myModule.filter('ngeoUnitPrefix', UnitPrefixFilter);
  *      <!-- will Become 2'600'000, 1'600'000 -->
  *
  * @param {angular.IFilterService} $filter Angular filter
- * @return {numberCoordinates} A function to format numbers into coordinates string.
+ * @returns {numberCoordinates} A function to format numbers into coordinates string.
  * @ngInject
  * @ngdoc filter
  * @ngname ngeoNumberCoordinates
@@ -298,7 +301,7 @@ export function NumberCoordinatesFilter($filter) {
    *     Where "{x}" will be replaced by the easting coordinate and "{y}" by the
    *     northing one. Note: Use a html entity to use the semicolon symbol
    *     into a template.
-   * @return {string} Number formatted coordinates.
+   * @returns {string} Number formatted coordinates.
    */
   const filterFn = function (coordinates, opt_fractionDigits, opt_template) {
     const template = opt_template ? opt_template : '{x} {y}';
@@ -327,7 +330,7 @@ myModule.filter('ngeoNumberCoordinates', NumberCoordinatesFilter);
  *      <p>{{[7.1234, 46.9876] | ngeoDMSCoordinates:2:'[{y}; {x]'}}</p>
  *      <!-- will Become [46° 59' 15.36'' N; 7° 07' 24.24'' E] -->
  *
- * @return {dmsCoordinates} A function to format numbers into a DMS coordinates string.
+ * @returns {dmsCoordinates} A function to format numbers into a DMS coordinates string.
  * @ngInject
  * @ngdoc filter
  * @ngname ngeoDMSCoordinates
@@ -337,7 +340,7 @@ export function DMSCoordinatesFilter() {
    * @param {number} degrees
    * @param {string} hemispheres
    * @param {number} fractionDigits
-   * @return {string}
+   * @returns {string}
    */
   const degreesToStringHDMS = function (degrees, hemispheres, fractionDigits) {
     const normalizedDegrees = modulo(degrees + 180, 360) - 180;
@@ -358,7 +361,7 @@ export function DMSCoordinatesFilter() {
    *     '{x} {y}'. Where "{x}" will be replaced by the easting
    *     coordinate, {y} by the northing one. Note: Use a html entity to use the
    *     semicolon symbol into a template.
-   * @return {string} DMS formatted coordinates.
+   * @returns {string} DMS formatted coordinates.
    */
   const filterFn = function (coordinates, opt_fractionDigits, opt_template) {
     const fractionDigits = parseInt(/** @type {string} */ (opt_fractionDigits), 10) | 0;
@@ -384,7 +387,8 @@ myModule.filter('ngeoDMSCoordinates', DMSCoordinatesFilter);
  *    <p ng-bind-html="ctrl.someValue | ngeoTrustHtml"></p>
  *
  * If you use it, you don't require the "ngSanitize".
- * @return {function(?):string} The filter function.
+ *
+ * @returns {function(?):string} The filter function.
  * @ngInject
  * @ngdoc filter
  * @param {angular.ISCEService} $sce Angular sce service.
@@ -412,7 +416,8 @@ myModule.filter('ngeoTrustHtml', trustHtmlFilter);
  *    <p ng-bind-html="ctrl.someValue | ngeoTrustHtmlAuto"></p>
  *
  * If you use it, you don't require the "ngSanitize".
- * @return {function(?):string} The filter function.
+ *
+ * @returns {function(?):string} The filter function.
  * @ngInject
  * @ngdoc filter
  * @param {angular.ISCEService} $sce Angular sce service.
@@ -428,7 +433,7 @@ export function trustHtmlAutoFilter($sce, ngeoStringToHtmlReplacements) {
           if (replacement.compiled_expression === undefined) {
             replacement.compiled_expression = new RegExp(replacement.expression, replacement.flags);
           }
-          if (input.match(replacement.compiled_expression)) {
+          if (replacement.compiled_expression.exec(input)) {
             input = replacement.template.replace(/\$1/g, input);
             break;
           }
@@ -457,7 +462,7 @@ myModule.filter('ngeoTrustHtmlAuto', trustHtmlAutoFilter);
  *        -> Note: the remaining 10 seconds will be dropped
  *
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
- * @return {duration} Function used to format a time duration in seconds into a string.
+ * @returns {duration} Function used to format a time duration in seconds into a string.
  * @ngInject
  * @ngdoc filter
  * @ngname ngeoDuration
@@ -474,7 +479,7 @@ export function DurationFilter(gettextCatalog) {
   /**
    * @param {number} amount Amount of time.
    * @param {symbol} unit Unit of time.
-   * @return {string} formatted and translated string
+   * @returns {string} formatted and translated string
    */
   const pluralize = function (amount, unit) {
     let formattedUnit = '';
@@ -499,7 +504,7 @@ export function DurationFilter(gettextCatalog) {
 
   /**
    * @param {number} duration The duration in seconds.
-   * @return {string} The formatted string.
+   * @returns {string} The formatted string.
    */
   const result = function (duration) {
     // round to next integer
@@ -553,7 +558,7 @@ myModule.filter('ngeoDuration', DurationFilter);
 /**
  * A filter used to remove the CDATA prefix and postfix.
  *
- * @return {function(string): string|void} Result string
+ * @returns {function(string): string|void} Result string
  * @ngdoc filter
  * @ngname ngeoDuration
  * @hidden

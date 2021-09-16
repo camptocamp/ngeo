@@ -25,6 +25,7 @@ import ngeoDatasourceGroup from 'ngeo/datasource/Group';
  * The options required to create a `OGCGroup`.
  *
  * extends GroupOptions
+ *
  * @typedef {Object} OGCGroupOptions
  * @property {string} url The OGC service url. Used as a unique identifier for the group object itself.
  * @property {import('ngeo/datasource/DataSource').default[]} dataSources (GroupOptions)
@@ -51,7 +52,7 @@ export default class extends ngeoDatasourceGroup {
   }
 
   /**
-   * @return {string} URL
+   * @returns {string} URL
    */
   get url() {
     return this.url_;

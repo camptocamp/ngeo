@@ -28,6 +28,7 @@ import olLayerLayer from 'ol/layer/Layer';
 
 /**
  * The controller for the "tree node" directive.
+ *
  * @param {angular.IScope} $scope Scope.
  * @param {angular.IScope} $rootScope Angular rootScope.
  * @param {angular.IAttributes} $attrs Attributes.
@@ -202,7 +203,8 @@ export function LayertreeController($scope, $rootScope, $attrs) {
 
 /**
  * Return the current state.
- * @return {string} 'on', 'off', 'indeterminate'.
+ *
+ * @returns {string} 'on', 'off', 'indeterminate'.
  */
 LayertreeController.prototype.getState = function () {
   return this.state_;
@@ -211,6 +213,7 @@ LayertreeController.prototype.getState = function () {
 /**
  * Set the state of this treeCtrl. Update its children with its value and then
  * ask its parent to refresh its state.
+ *
  * @param {string} state 'on' or 'off'.
  * @param {boolean} [opt_broadcast] Broadcast.
  */
@@ -297,7 +300,8 @@ LayertreeController.prototype.refreshState = function (opt_onChild, opt_broadcas
 
 /**
  * Return the current state, calculate on all its children recursively.
- * @return {string} 'on', 'off' or 'indeterminate'.
+ *
+ * @returns {string} 'on', 'off' or 'indeterminate'.
  */
 LayertreeController.prototype.getCalculateState = function () {
   const group = /** @type {import('gmf/themes').GmfGroup} */ (this.node);
@@ -324,7 +328,7 @@ LayertreeController.prototype.getCalculateState = function () {
 
 /**
  * @param {boolean|undefined} val Value.
- * @return {boolean|undefined} Value.
+ * @returns {boolean|undefined} Value.
  */
 LayertreeController.prototype.getSetActive = function (val) {
   const layer = this.layer;
@@ -344,7 +348,7 @@ LayertreeController.prototype.getSetActive = function (val) {
 };
 
 /**
- * @return {?import('ngeo/datasource/DataSource').default} dataSource The data source bound to
+ * @returns {?import('ngeo/datasource/DataSource').default} dataSource The data source bound to
  *     this layer tree controller.
  */
 LayertreeController.prototype.getDataSource = function () {
@@ -361,8 +365,9 @@ LayertreeController.prototype.setDataSource = function (dataSource) {
 /**
  * Get the "top level" layertree (one of the first level child under the root
  * layertree). Can return itself.
+ *
  * @param {import('ngeo/layertree/Controller').LayertreeController} treeCtrl ngeo layertree controller.
- * @return {import('ngeo/layertree/Controller').LayertreeController} the top level layertree.
+ * @returns {import('ngeo/layertree/Controller').LayertreeController} the top level layertree.
  * @public
  * @hidden
  */
@@ -390,8 +395,9 @@ export const LayertreeVisitorDecision = {
 
 /**
  * Recursive method to traverse the layertree controller graph.
+ *
  * @param {Visitor} visitor A visitor called for each node.
- * @return {boolean} whether to stop traversing.
+ * @returns {boolean} whether to stop traversing.
  */
 LayertreeController.prototype.traverseDepthFirst = function (visitor) {
   // First visit the current controller

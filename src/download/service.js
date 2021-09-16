@@ -37,7 +37,7 @@ const myModule = angular.module('ngeoDownload', []);
 /**
  * A service to start a download for a file.
  *
- * @return {Download} The download function.
+ * @returns {Download} The download function.
  * @ngdoc service
  * @ngname ngeoDownload
  * @hidden

@@ -26,6 +26,7 @@ import ngeoDatasourceGroup from 'ngeo/datasource/Group';
  * The options required to create a `FileGroup`.
  *
  * extends GroupOptions
+ *
  * @typedef {Object} FileGroupOptions
  * @property {angular.auto.IInjectorService} injector Angular main injector.
  * @property {import('ngeo/datasource/DataSource').default[]} dataSources (GroupOptions)
@@ -59,6 +60,7 @@ export default class extends ngeoDatasourceGroup {
     /**
      * The functions to call to unregister the `watch` event on data sources
      * that are registered. Key is the id of the data source.
+     *
      * @type {Object<number, Function>}
      * @private
      */

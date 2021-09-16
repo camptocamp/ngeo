@@ -72,6 +72,7 @@ export class AbstractDesktopController extends AbstractAPIController {
 
     /**
      * To toggle the activation query grid in the HTML, shouldn't be touch (it's managed by angular).
+     *
      * @type {boolean}
      */
     this.queryGridActive = false;
@@ -124,6 +125,7 @@ export class AbstractDesktopController extends AbstractAPIController {
 
     /**
      * Set the clearing of the ngeoQuery after the deactivation of the query
+     *
      * @type {boolean}
      */
     this.queryAutoClear = true;
@@ -245,6 +247,7 @@ export class AbstractDesktopController extends AbstractAPIController {
 
     /**
      * The ngeo ToolActivate manager service.
+     *
      * @type {import('ngeo/misc/ToolActivateMgr').ToolActivateMgr}
      */
     this.ngeoToolActivateMgr = $injector.get('ngeoToolActivateMgr');
@@ -256,6 +259,7 @@ export class AbstractDesktopController extends AbstractAPIController {
 
     /**
      * The gmf layer being swipe.
+     *
      * @type {import('gmf/datasource/LayerBeingSwipe').LayerBeingSwipe}
      */
     this.gmfLayerBeingSwipe = $injector.get('gmfLayerBeingSwipe');
@@ -493,6 +497,7 @@ export class AbstractDesktopController extends AbstractAPIController {
    *
    * If, after resizing, the size of the data panel would be too big,
    * resize it as well.
+   *
    * @param {number} [opt_newToolsPanelWidth]
    * @private
    * @hidden
@@ -514,6 +519,7 @@ export class AbstractDesktopController extends AbstractAPIController {
    *
    * If, after resizing, the size of the data panel would be too big,
    * resize it as well.
+   *
    * @param {number} [opt_newDataPanelWidth]
    * @private
    * @hidden
@@ -534,7 +540,7 @@ export class AbstractDesktopController extends AbstractAPIController {
    *
    * @param {number} panelSize
    * @param {JQuery} panelToResize
-   * @return {number}
+   * @returns {number}
    * @private
    * @hidden
    */
@@ -553,10 +559,11 @@ export class AbstractDesktopController extends AbstractAPIController {
 
   /**
    * Get the new maximum size for the other panel
+   *
    * @param {JQuery} resizedPanel
    * @param {number} otherPanelMinResizableWidth
    * @param {number} newPanelWidth
-   * @return {number}
+   * @returns {number}
    * @private
    * @hidden
    */

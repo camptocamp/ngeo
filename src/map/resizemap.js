@@ -44,7 +44,7 @@ const myModule = angular.module('ngeoResizemap', []);
  * See our live example: [../examples/animation.html](../examples/animation.html)
  *
  * @param {angular.IWindowService} $window Angular window service.
- * @return {angular.IDirective} The directive specs.
+ * @returns {angular.IDirective} The directive specs.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoResizemap

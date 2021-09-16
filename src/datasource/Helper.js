@@ -81,7 +81,7 @@ export class DatasourceHelper {
   }
 
   /**
-   * @return {import('ngeo/datasource/DataSource').DataSources} Data sources collection.
+   * @returns {import('ngeo/datasource/DataSource').DataSources} Data sources collection.
    */
   get collection() {
     return this.collection_;
@@ -89,8 +89,9 @@ export class DatasourceHelper {
 
   /**
    * Return a data source using its id.
+   *
    * @param {number} id Data source id.
-   * @return {?import('ngeo/datasource/DataSource').default} Data source.
+   * @returns {?import('ngeo/datasource/DataSource').default} Data source.
    */
   getDataSource(id) {
     return this.cache_[id] || null;
@@ -105,7 +106,7 @@ export class DatasourceHelper {
    * only have 1 ogcLayer set and be queryable.
    *
    * @param {import('ngeo/datasource/OGC').default} dataSource Filtrable data source.
-   * @return {angular.IPromise<import('ngeo/format/Attribute').Attribute[]>} Promise.
+   * @returns {angular.IPromise<import('ngeo/format/Attribute').Attribute[]>} Promise.
    */
   getDataSourceAttributes(dataSource) {
     const getDataSourceAttributesDefer = this.q_.defer();
@@ -157,6 +158,7 @@ export class DatasourceHelper {
 
   /**
    * Register a data source, adding it to the cache.
+   *
    * @param {ngeoDatasourceDataSource} dataSource An ngeo data source
    * @private
    */
@@ -166,6 +168,7 @@ export class DatasourceHelper {
 
   /**
    * Unregister a data source, removing it to from cache.
+   *
    * @param {ngeoDatasourceDataSource} dataSource An ngeo data source
    * @private
    */
@@ -176,6 +179,7 @@ export class DatasourceHelper {
   /**
    * Called when a new data source is added to the ngeo collection. Add it
    * to the cache.
+   *
    * @param {Event|import('ol/events/Event').default} evt Event
    * @private
    */
@@ -190,6 +194,7 @@ export class DatasourceHelper {
   /**
    * Called when a data source is removed from the ngeo collection. Remove it
    * from the cache.
+   *
    * @param {Event|import('ol/events/Event').default} evt Event
    * @private
    */
@@ -211,7 +216,7 @@ export class DatasourceHelper {
    * ogcAttributes list, then `null` is returned.
    *
    * @param {import('ngeo/datasource/OGC').default} dataSource Filtrable data source.
-   * @return {import('ngeo/format/Attribute').Attribute[]} attributes Attributes
+   * @returns {import('ngeo/format/Attribute').Attribute[]} attributes Attributes
    */
   createDataSourceAttributesFromOGCAttributes_(dataSource) {
     let attributes = null;

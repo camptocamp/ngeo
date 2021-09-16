@@ -54,7 +54,7 @@ myModule.value(
   'gmfWmtscapabilitylayertreTemplateUrl',
   /**
    * @param {angular.IAttributes} $attrs Attributes.
-   * @return {string} The template url.
+   * @returns {string} The template url.
    */
   ($attrs) => {
     const templateUrl = $attrs.gmfWmtscapabilitylayertreTemplateUrl;
@@ -65,7 +65,7 @@ myModule.value(
 /**
  * @param {angular.IAttributes} $attrs Attributes.
  * @param {function(angular.IAttributes): string} gmfWmtscapabilitylayertreTemplateUrl Template function.
- * @return {string} Template URL.
+ * @returns {string} Template URL.
  * @ngInject
  * @private
  * @hidden
@@ -90,12 +90,14 @@ export class Controller {
 
     /**
      * WMS Capabilities definition
+     *
      * @type {Object}
      */
     this.capabilities = {};
 
     /**
      * List of WMTS Capability Layer objects.
+     *
      * @type {Object[]}
      */
     this.layers = [];
@@ -103,6 +105,7 @@ export class Controller {
     /**
      * The original WMTS GetCapabilities url that was used to fetch the
      * capability layers.
+     *
      * @type {?string}
      */
     this.url = null;
@@ -129,7 +132,7 @@ export class Controller {
 
   /**
    * @param {unknown} layer WMTS Capability Layer object
-   * @return {string} Unique id for the Capability Layer.
+   * @returns {string} Unique id for the Capability Layer.
    */
   getUid(layer) {
     return olUtilGetUid(layer);

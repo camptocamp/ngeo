@@ -131,6 +131,7 @@ export default class Rule {
     /**
      * Whether the rule is active or not. Used by the `ngeo-rule` component.
      * Defaults to `false`.
+     *
      * @type {boolean}
      */
     this.active = options.active === true;
@@ -138,6 +139,7 @@ export default class Rule {
     /**
      * The literal of the rule. The literal and boundaries are mutually
      * exclusives.
+     *
      * @type {?number|string|string[]}
      * @protected
      */
@@ -146,12 +148,14 @@ export default class Rule {
     /**
      * The lower boundary of the rule. The literal and boundaries are
      * mutually exclusives.
+     *
      * @type {?number}
      */
     this.lowerBoundary = options.lowerBoundary !== undefined ? options.lowerBoundary : null;
 
     /**
      * The rule operator.
+     *
      * @type {?string}
      */
     this.operator = options.operator || null;
@@ -159,6 +163,7 @@ export default class Rule {
     /**
      * The upper boundary of the rule. The literal and boundaries are
      * mutually exclusives.
+     *
      * @type {?number}
      */
     this.upperBoundary = options.upperBoundary !== undefined ? options.upperBoundary : null;
@@ -167,6 +172,7 @@ export default class Rule {
 
     /**
      * Whether the rule is a custom one or not.
+     *
      * @type {boolean}
      * @private
      */
@@ -174,6 +180,7 @@ export default class Rule {
 
     /**
      * The human-readable name of the rule.
+     *
      * @type {string}
      * @private
      */
@@ -181,6 +188,7 @@ export default class Rule {
 
     /**
      * A list of rule operators.
+     *
      * @type {?string[]}
      * @private
      */
@@ -188,6 +196,7 @@ export default class Rule {
 
     /**
      * The property name (a.k.a. the attribute name).
+     *
      * @type {string}
      * @private
      */
@@ -195,6 +204,7 @@ export default class Rule {
 
     /**
      * The type of rule.
+     *
      * @type {string}
      * @private
      */
@@ -210,7 +220,7 @@ export default class Rule {
   }
 
   /**
-   * @return {?number|string|string[]} Literal
+   * @returns {?number|string|string[]} Literal
    */
   get literal() {
     return this.literal_;
@@ -226,35 +236,35 @@ export default class Rule {
   // === Static property getters/setters ===
 
   /**
-   * @return {boolean} Is custom.
+   * @returns {boolean} Is custom.
    */
   get isCustom() {
     return this.isCustom_;
   }
 
   /**
-   * @return {string} name
+   * @returns {string} name
    */
   get name() {
     return this.name_;
   }
 
   /**
-   * @return {?string[]} Operators
+   * @returns {?string[]} Operators
    */
   get operators() {
     return this.operators_;
   }
 
   /**
-   * @return {string} Property name
+   * @returns {string} Property name
    */
   get propertyName() {
     return this.propertyName_;
   }
 
   /**
-   * @return {string} Type
+   * @returns {string} Type
    */
   get type() {
     return this.type_;
@@ -263,7 +273,7 @@ export default class Rule {
   // === Calculated property getters ===
 
   /**
-   * @return {?RuleSimpleValue|RuleRangeValue} Value.
+   * @returns {?RuleSimpleValue|RuleRangeValue} Value.
    */
   get value() {
     let value = null;

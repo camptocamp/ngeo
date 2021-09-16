@@ -29,6 +29,7 @@ const myModule = angular.module('gmfMobileNav', []);
 
 /**
  * CSS class names toggled by the controller.
+ *
  * @enum {string}
  * @hidden
  */
@@ -76,7 +77,7 @@ const CLASS_NAMES = {
  *
  * When an element slides in the directive changes the text in the header.
  *
- * @return {angular.IDirective} The Directive Definition Object.
+ * @returns {angular.IDirective} The Directive Definition Object.
  * @ngInject
  */
 function mobileNavigationComponent() {
@@ -112,24 +113,28 @@ myModule.directive('gmfMobileNav', mobileNavigationComponent);
 export function Controller() {
   /**
    * Stack of slid-in items.
+   *
    * @type {JQuery[]}
    */
   this.slid_ = [];
 
   /**
    * Currently active sliding box.
+   *
    * @type {?JQuery}
    */
   this.active_ = null;
 
   /**
    * The navigation header.
+   *
    * @type {?JQuery}
    */
   this.header_ = null;
 
   /**
    * The back button in the navigation header.
+   *
    * @type {?JQuery}
    */
   this.backButton_ = null;
@@ -146,6 +151,7 @@ myModule.controller('gmfMobileNavController', Controller);
 
 /**
  * Initialize the directive with the linked element.
+ *
  * @param {JQuery<HTMLElement>} element Element.
  */
 Controller.prototype.init = function (element) {
@@ -155,6 +161,7 @@ Controller.prototype.init = function (element) {
 
   /**
    * Watch for clicks on "slide-in" elements
+   *
    * @param {JQuery.ClickEvent<unknown, unknown, JQuery<HTMLElement>, HTMLElement>} evt The event
    */
   const onClick = (evt) => {
@@ -307,7 +314,7 @@ Controller.prototype.backIfActive = function (element) {
  * If `mainCtrl.gmfUser.username` becomes true and the login-slide is currently
  * active, the navigation will go back to the last slide.
  *
- * @return {angular.IDirective} The Directive Definition Object.
+ * @returns {angular.IDirective} The Directive Definition Object.
  * @ngInject
  */
 function mobileNavigationBackComponent() {
@@ -352,7 +359,7 @@ myModule.directive('gmfMobileNavBack', mobileNavigationBackComponent);
  *         gmf-themeselector-currenttheme="mainCtrl.theme">
  *      </gmf-themeselector>
  *
- * @return {angular.IDirective} The Directive Definition Object.
+ * @returns {angular.IDirective} The Directive Definition Object.
  * @ngInject
  */
 function mobileNavigationBackOnClickComponent() {

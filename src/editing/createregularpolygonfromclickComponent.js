@@ -70,8 +70,7 @@ const myModule = angular.module('ngeoCreateregularpolygonfromclick', []);
  *     size in map units.
  * @htmlAttribute {number|undefined} ngeo-createregularpolygonfromclick-sides
  *     The number of sides for the regular polygon. Default value is 3.
- *
- * @return {angular.IDirective} The directive specs.
+ * @returns {angular.IDirective} The directive specs.
  * @ngdoc directive
  * @ngname ngeoCreateregularpolygonfromclick
  */
@@ -188,6 +187,7 @@ Controller.prototype.$onInit = function () {
 /**
  * Called when a feature is finished being drawn. Add the feature to the
  * collection.
+ *
  * @param {import('ngeo/CustomEvent').default<import('lib/ol.interaction.Draw').DrawEvent>} evt Event.
  */
 Controller.prototype.handleDrawEnd_ = function (evt) {

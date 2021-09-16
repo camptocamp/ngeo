@@ -35,7 +35,7 @@ myModule.value(
   /**
    * @param {JQuery} element Element.
    * @param {angular.IAttributes} attrs Attributes.
-   * @return {string} Template URL.
+   * @returns {string} Template URL.
    */
   (element, attrs) => {
     const templateUrl = attrs['ngeoLayertreeTemplateurl'];
@@ -136,7 +136,7 @@ myModule.run(
  *      to be a {@link ngeo-layertree-listeners}.
  * @param {string|function(JQuery=, angular.IAttributes=): string} ngeoLayertreeTemplateUrl
  *     Template URL for the directive.
- * @return {angular.IDirective} The Directive Definition Object.
+ * @returns {angular.IDirective} The Directive Definition Object.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoLayertree

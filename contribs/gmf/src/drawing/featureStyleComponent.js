@@ -58,7 +58,7 @@ myModule.run(
  *     </gmf-featurestyle>
  *
  * @htmlAttribute {import('ol/Feature').default<import('ol/geom/Geometry').default>} gmf-featurestyle-feature The feature.
- * @return {angular.IDirective} The directive specs.
+ * @returns {angular.IDirective} The directive specs.
  * @ngInject
  * @ngdoc directive
  * @ngname gmfFeaturestyle
@@ -118,18 +118,21 @@ export function Controller($scope, ngeoFeatureHelper) {
 
   /**
    * Value of the measure (line length, area, ...).
+   *
    * @type {string|undefined}
    */
   this.measure = undefined;
 
   /**
    * Arrow possible direction on segments of lines.
+   *
    * @enum {string}
    */
   this.arrowDirections = ArrowDirections;
 
   /**
    * Arrow possible position on lines.
+   *
    * @enum {string}
    */
   this.arrowPositions = ArrowPositions;
@@ -143,6 +146,7 @@ export function Controller($scope, ngeoFeatureHelper) {
 
   /**
    * Type of the geometry (text, point, circle, line, multiline, ...).
+   *
    * @type {string|undefined}
    */
   this.type;
@@ -152,6 +156,7 @@ export function Controller($scope, ngeoFeatureHelper) {
 
 /**
  * Called when a new feature is set, which can also be null.
+ *
  * @param {?import('ol/Feature').default<import('ol/geom/Geometry').default>} newFeature New feature or null value.
  * @param {?import('ol/Feature').default<import('ol/geom/Geometry').default>} previousFeature Previous feature or null value.
  */
@@ -210,7 +215,7 @@ Controller.prototype.handleColorSet_ = function (newColor) {
 
 /**
  * @param {number|undefined} value A name value to set or undefined to get.
- * @return {number} The angle of the feature.
+ * @returns {number} The angle of the feature.
  */
 Controller.prototype.getSetAngle = function (value) {
   return /** @type {number} */ (this.getSetProperty_(ngeoFormatFeatureProperties.ANGLE, value));
@@ -218,7 +223,7 @@ Controller.prototype.getSetAngle = function (value) {
 
 /**
  * @param {string|undefined} value A name value to set or undefined to get.
- * @return {string} The name of the feature.
+ * @returns {string} The name of the feature.
  */
 Controller.prototype.getSetName = function (value) {
   return /** @type {string} */ (this.getSetProperty_(ngeoFormatFeatureProperties.NAME, value));
@@ -227,7 +232,7 @@ Controller.prototype.getSetName = function (value) {
 /**
  * @param {boolean|undefined} value A value to set or undefined for the
  *     purpose of showing the attribute labels or not.
- * @return {boolean} Whether to show the labels or not.
+ * @returns {boolean} Whether to show the labels or not.
  */
 Controller.prototype.getSetShowLabel = function (value) {
   return /** @type {boolean} */ (this.getSetProperty_(ngeoFormatFeatureProperties.SHOW_LABEL, value));
@@ -235,7 +240,7 @@ Controller.prototype.getSetShowLabel = function (value) {
 
 /**
  * @param {number|undefined} value A stroke value to set or undefined to get.
- * @return {number} The stroke of the feature.
+ * @returns {number} The stroke of the feature.
  */
 Controller.prototype.getSetOpacity = function (value) {
   return /** @type {number} */ (this.getSetProperty_(ngeoFormatFeatureProperties.OPACITY, value));
@@ -244,7 +249,7 @@ Controller.prototype.getSetOpacity = function (value) {
 /**
  * @param {boolean|undefined} value A value to set or undefined to get for the
  *     purpose of showing the geometry measurements or not.
- * @return {boolean} Whether to show the measurements or not.
+ * @returns {boolean} Whether to show the measurements or not.
  */
 Controller.prototype.getSetShowMeasure = function (value) {
   return /** @type {boolean} */ (this.getSetProperty_(ngeoFormatFeatureProperties.SHOW_MEASURE, value));
@@ -252,7 +257,7 @@ Controller.prototype.getSetShowMeasure = function (value) {
 
 /**
  * @param {number|undefined} value A size value to set or undefined to get.
- * @return {number} The size of the feature.
+ * @returns {number} The size of the feature.
  */
 Controller.prototype.getSetSize = function (value) {
   return /** @type {number} */ (this.getSetProperty_(ngeoFormatFeatureProperties.SIZE, value));
@@ -260,7 +265,7 @@ Controller.prototype.getSetSize = function (value) {
 
 /**
  * @param {number|undefined} value A stroke value to set or undefined to get.
- * @return {number} The stroke of the feature.
+ * @returns {number} The stroke of the feature.
  */
 Controller.prototype.getSetStroke = function (value) {
   return /** @type {number} */ (this.getSetProperty_(ngeoFormatFeatureProperties.STROKE, value));
@@ -268,7 +273,7 @@ Controller.prototype.getSetStroke = function (value) {
 
 /**
  * @param {number|undefined} value A arrow-direction value to set or undefined to get.
- * @return {number} The arrow-direction of the feature.
+ * @returns {number} The arrow-direction of the feature.
  */
 Controller.prototype.getSetArrowDirection = function (value) {
   return /** @type {number} */ (this.getSetProperty_(ngeoFormatFeatureProperties.ARROW_DIRECTION, value));
@@ -276,7 +281,7 @@ Controller.prototype.getSetArrowDirection = function (value) {
 
 /**
  * @param {number|undefined} value A arrow-position value to set or undefined to get.
- * @return {number} The arrow-position of the feature.
+ * @returns {number} The arrow-position of the feature.
  */
 Controller.prototype.getSetArrowPosition = function (value) {
   return /** @type {number} */ (this.getSetProperty_(ngeoFormatFeatureProperties.ARROW_POSITION, value));
@@ -286,7 +291,7 @@ Controller.prototype.getSetArrowPosition = function (value) {
  * @param {string} key The property name.
  * @param {boolean|number|string|undefined} value A value to set or undefined
  *     to get.
- * @return {boolean|number|string} The property value of the feature.
+ * @returns {boolean|number|string} The property value of the feature.
  */
 Controller.prototype.getSetProperty_ = function (key, value) {
   if (!this.feature) {

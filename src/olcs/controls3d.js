@@ -59,7 +59,7 @@ const myModule = angular.module('ngeoOlcsControls3d', []);
  * @hidden
  * @param {number} older Older
  * @param {number} newer Newer
- * @return {boolean} ?
+ * @returns {boolean} ?
  */
 function shouldUpdate(older, newer) {
   return Number.isFinite(newer) && (!Number.isFinite(older) || Math.abs(newer - older) > 0.05);
@@ -284,7 +284,7 @@ export const Controller = class {
 /**
  * @param {angular.IAttributes} $attrs Attributes.
  * @param {string} ngeoOlcsControls3dTemplateUrl Template function.
- * @return {string} Template URL.
+ * @returns {string} Template URL.
  * @ngInject
  * @private
  * @hidden

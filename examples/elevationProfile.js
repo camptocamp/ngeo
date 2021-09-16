@@ -43,15 +43,16 @@ const myModule = angular.module('app', ['gettext', ngeoMapModule.name, ngeoProfi
  * Factory for creating simple getter functions for extractors.
  * If the value is in a child property, the opt_childKey must be defined.
  * The type parameter is used by closure to type the returned function.
+ *
  * @param {string} key Key used for retrieving the value.
  * @param {string} [opt_childKey] Key of a child object.
- * @return {function(unknown): any} Getter function.
+ * @returns {function(unknown): any} Getter function.
  */
 const typedFunctionsFactory = function (key, opt_childKey) {
   return (
     /**
      * @param {unknown} item
-     * @return {any}
+     * @returns {any}
      */
     function (item) {
       if (opt_childKey !== undefined) {
@@ -193,7 +194,7 @@ function MainController($http, $scope) {
     /**
      * @param {Object} item POI.
      * @param {number} [opt_z] Z value.
-     * @return {number} Z value.
+     * @returns {number} Z value.
      */
     z: (item, opt_z) => {
       if (opt_z !== undefined) {

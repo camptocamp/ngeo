@@ -39,7 +39,7 @@ myModule.value(
   'ngeoStreetviewTemplateUrl',
   /**
    * @param {angular.IAttributes} $attrs Attributes.
-   * @return {string} The template url.
+   * @returns {string} The template url.
    */
   ($attrs) => {
     const templateUrl = $attrs.ngeoStreetviewTemplateUrl;
@@ -61,7 +61,7 @@ myModule.run(
 /**
  * @param {angular.IAttributes} $attrs Attributes.
  * @param {function(angular.IAttributes): string} ngeoStreetviewTemplateUrl Template function.
- * @return {string} Template URL.
+ * @returns {string} Template URL.
  * @ngInject
  * @private
  * @hidden
@@ -128,6 +128,7 @@ class StreetviewController {
 
     /**
      * Style for the feature.
+     *
      * @type {?import('ol/style/Style').StyleLike}
      */
     this.featureStyle = null;
@@ -189,6 +190,7 @@ class StreetviewController {
 
     /**
      * The current location in the OpenLayers' map view projection.
+     *
      * @type {?import('ol/coordinate').Coordinate}
      * @private
      */
@@ -221,6 +223,7 @@ class StreetviewController {
 
     /**
      * Called when the 'location' property of this component changes.
+     *
      * @param  {?import('ol/coordinate').Coordinate} newCoordinates new coordinates in the streetview.
      * @private
      */
@@ -303,6 +306,7 @@ class StreetviewController {
 
   /**
    * Init the mapillary functionality.
+   *
    * @private
    */
   initMapillary_() {
@@ -331,6 +335,7 @@ class StreetviewController {
 
   /**
    * Called when the 'active' property of this component changes.
+   *
    * @param {boolean} active Active.
    * @private
    */
@@ -351,6 +356,7 @@ class StreetviewController {
 
   /**
    * Called when the 'location' property of this component changes.
+   *
    * @param {?import('ol/coordinate').Coordinate} location Location, in OL map view projection.
    * @param {?import('ol/coordinate').Coordinate} oldLocation The previous location.
    * @private
@@ -376,6 +382,7 @@ class StreetviewController {
   /**
    * Called when the map is clicked while this component is active. Update the
    * location accordingly.
+   *
    * @param {Event|import('ol/events/Event').default} evt The map browser event being fired.
    * @private
    */

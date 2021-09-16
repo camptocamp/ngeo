@@ -50,7 +50,7 @@ const myModule = angular.module('ngeoRecenter', []);
  * See our live example: [../examples/recenter.html](../examples/recenter.html)
  *
  * @htmlAttribute {import('ol/Map').default} ngeo-recenter-map The map.
- * @return {angular.IDirective} Directive Definition Object.
+ * @returns {angular.IDirective} Directive Definition Object.
  * @ngdoc directive
  * @ngname ngeoRecenter
  */

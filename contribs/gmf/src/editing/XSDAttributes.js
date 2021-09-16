@@ -51,7 +51,7 @@ export function EditingXSDAttributeService($http, gmfLayersUrl) {
 
 /**
  * @param {number} id Layer id.
- * @return {angular.IPromise<import('ngeo/format/Attribute').Attribute[]>} Promise.
+ * @returns {angular.IPromise<import('ngeo/format/Attribute').Attribute[]>} Promise.
  */
 EditingXSDAttributeService.prototype.getAttributes = function (id) {
   if (!this.promises_[id]) {

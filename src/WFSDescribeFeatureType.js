@@ -35,13 +35,14 @@ const NAMESPACE_URIS_ = [null, 'http://www.w3.org/2001/XMLSchema'];
 
 /**
  * typedef {Object<string, parserStructure>} parsersStructure
+ *
  * @typedef {Object<string, Object<string, import('ol/xml').Parser>>} parsersStructure
  */
 
 /**
  * @param {?string[]} namespaceURIs Namespace URIs.
  * @param {parserStructure} structure Structure.
- * @return {Object<string, parserStructure>} Namespaced structure.
+ * @returns {Object<string, parserStructure>} Namespaced structure.
  * @private
  * @hidden
  */
@@ -99,6 +100,7 @@ const SEQUENCE_PARSERS_ = makeStructureNS(NAMESPACE_URIS_, {
 
 /**
  * Format for reading WFS DescribeFeatureType data.
+ *
  * @private
  * @hidden
  */
@@ -109,13 +111,13 @@ class WFSDescribeFeatureType extends olFormatXML {}
  *
  * @function
  * @param {Document|Node|string} source The XML source.
- * @return {Object} An object representing the WFS DescribeFeatureType.
+ * @returns {Object} An object representing the WFS DescribeFeatureType.
  */
 WFSDescribeFeatureType.prototype.read;
 
 /**
  * @param {Document} doc Document.
- * @return {Object} Object
+ * @returns {Object} Object
  */
 WFSDescribeFeatureType.prototype.readFromDocument = function (doc) {
   /** @type {?Node|ChildNode} */
@@ -130,7 +132,7 @@ WFSDescribeFeatureType.prototype.readFromDocument = function (doc) {
 
 /**
  * @param {Element} node Node.
- * @return {Object} Object
+ * @returns {Object} Object
  */
 WFSDescribeFeatureType.prototype.readFromNode = function (node) {
   let result = {};
@@ -143,7 +145,7 @@ WFSDescribeFeatureType.prototype.readFromNode = function (node) {
  * @hidden
  * @param {Element} node Node.
  * @param {*[]} objectStack Object stack.
- * @return {Object<string, string>} Attributes.
+ * @returns {Object<string, string>} Attributes.
  */
 function readElement_(node, objectStack) {
   /** @type {Object<string, string>} */
@@ -171,7 +173,7 @@ function readElement_(node, objectStack) {
  * @hidden
  * @param {Element} node Node.
  * @param {*[]} objectStack Object stack.
- * @return {Object<string, ?string>} Object.
+ * @returns {Object<string, ?string>} Object.
  */
 function readComplexType_(node, objectStack) {
   const name = node.getAttribute('name');
@@ -188,7 +190,7 @@ function readComplexType_(node, objectStack) {
  * @hidden
  * @param {Element} node Node.
  * @param {*[]} objectStack Object stack.
- * @return {Object<string, string>} Object.
+ * @returns {Object<string, string>} Object.
  */
 function readComplexContent_(node, objectStack) {
   return olXml.pushParseAndPop({}, COMPLEX_CONTENT_PARSERS_, node, objectStack);
@@ -199,7 +201,7 @@ function readComplexContent_(node, objectStack) {
  * @hidden
  * @param {Element} node Node.
  * @param {*[]} objectStack Object stack.
- * @return {Object<string, string>} Object.
+ * @returns {Object<string, string>} Object.
  */
 function readExtension_(node, objectStack) {
   return olXml.pushParseAndPop({}, EXTENSION_PARSERS_, node, objectStack);
@@ -210,7 +212,7 @@ function readExtension_(node, objectStack) {
  * @hidden
  * @param {Element} node Node.
  * @param {*[]} objectStack Object stack.
- * @return {Object<string, string>} Object.
+ * @returns {Object<string, string>} Object.
  */
 function readSequence_(node, objectStack) {
   return olXml.pushParseAndPop({}, SEQUENCE_PARSERS_, node, objectStack);

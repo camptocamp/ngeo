@@ -46,7 +46,7 @@ const myModule = angular.module('ngeoPopover', []);
  * @ngdoc directive
  * @ngInject
  * @ngname ngeoPopover
- * @return {angular.IDirective} The Directive Definition Object.
+ * @returns {angular.IDirective} The Directive Definition Object.
  */
 function messagePopoverComponent() {
   return {
@@ -90,7 +90,7 @@ function messagePopoverComponent() {
  * @ngdoc directive
  * @ngInject
  * @ngname ngeoPopoverAnchor
- * @return {angular.IDirective} The Directive Definition Object
+ * @returns {angular.IDirective} The Directive Definition Object
  */
 function messagePopoverAnchorComponent() {
   return {
@@ -109,7 +109,7 @@ function messagePopoverAnchorComponent() {
  * @ngdoc directive
  * @ngInject
  * @ngname ngeoPopoverContent
- * @return {angular.IDirective} The Directive Definition Object
+ * @returns {angular.IDirective} The Directive Definition Object
  */
 function messagePopoverContentComponent() {
   return {
@@ -127,6 +127,7 @@ function messagePopoverContentComponent() {
 
 /**
  * The controller for the 'popover' directive.
+ *
  * @class
  * @ngInject
  * @ngdoc controller
@@ -137,6 +138,7 @@ function messagePopoverContentComponent() {
 export function PopoverController($scope) {
   /**
    * The state of the popover (displayed or not)
+   *
    * @type {boolean}
    */
   this.shown = false;

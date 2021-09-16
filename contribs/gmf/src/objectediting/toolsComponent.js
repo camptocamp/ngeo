@@ -110,7 +110,7 @@ myModule.run(
  *     if the currently active tool requires a queryable layer or not.
  * @htmlAttribute {import('ol/Collection').default<import('ol/Feature').default<import('ol/geom/Geometry').default>>} gmf-objectediting-sketchfeatures
  *     Collection of temporary features being drawn by the tools.
- * @return {angular.IDirective} The directive specs.
+ * @returns {angular.IDirective} The directive specs.
  * @ngInject
  * @ngdoc directive
  * @ngname gmfObjecteditingtools
@@ -325,6 +325,7 @@ Controller.prototype.registerTool_ = function (toolActiveName, process, opt_requ
 
 /**
  * Called when any of the tool 'active' property changes.
+ *
  * @param {string} process The behavior the tool should use when active.
  * @param {boolean} requiresLayer Whether the tool requires the queryable
  *     layer or not.

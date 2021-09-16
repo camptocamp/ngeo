@@ -76,6 +76,7 @@ myModule.component('appQueryresult', queryresultComponent);
 
 /**
  * Demo, NOT USED.
+ *
  * @param {import('ngeo/query/MapQuerent').QueryResult} ngeoQueryResult Query service.
  * @class
  * @ngInject

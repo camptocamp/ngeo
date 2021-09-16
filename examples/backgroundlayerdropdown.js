@@ -97,6 +97,7 @@ function BackgroundlayerController($http, ngeoBackgroundLayerMgr) {
 /**
  * Function called when the user selects a new background layer in the
  * dropdown. Called by the ng-click directive used in the partial.
+ *
  * @param {Object<string, *>} layerSpec Layer specification object.
  */
 BackgroundlayerController.prototype.setLayer = function (layerSpec) {
@@ -110,7 +111,7 @@ BackgroundlayerController.prototype.setLayer = function (layerSpec) {
 
 /**
  * @param {string} layerName Layer name.
- * @return {import('ol/layer/Layer').default<*>} The layer.
+ * @returns {import('ol/layer/Layer').default<*>} The layer.
  */
 BackgroundlayerController.prototype.createLayer_ = function (layerName) {
   if (layerName === 'blank') {
@@ -155,6 +156,7 @@ function MainController($scope) {
   });
   /**
    * An overlay layer.
+   *
    * @type {import('ol/layer/Image').default<import('ol/source/Image').default>}
    */
   const overlay = new olLayerImage({

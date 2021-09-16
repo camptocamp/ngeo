@@ -47,7 +47,7 @@ myModule.value(
   'ngeoMapswipeTemplateUrl',
   /**
    * @param {angular.IAttributes} $attrs Attributes.
-   * @return {string} The template url.
+   * @returns {string} The template url.
    */
   ($attrs) => {
     const templateUrl = $attrs.ngeoMapswipeTemplateUrl;
@@ -58,7 +58,7 @@ myModule.value(
 /**
  * @param {angular.IAttributes} $attrs Attributes.
  * @param {function(angular.IAttributes): string} ngeoMapswipeTemplateUrl Template function.
- * @return {string} Template URL.
+ * @returns {string} Template URL.
  * @ngInject
  * @private
  * @hidden
@@ -205,6 +205,7 @@ export class SwipeController {
 
   /**
    * Called when the visibility of the layer changes. If it is no longer visible, deactivate the swipe component.
+   *
    * @private
    */
   handleLayerVisibleChange_() {
@@ -215,6 +216,7 @@ export class SwipeController {
 
   /**
    * Called when the rotation of the view changes. If the view is rotated, deactivate the swipe component.
+   *
    * @private
    */
   handleViewRotationChange_() {

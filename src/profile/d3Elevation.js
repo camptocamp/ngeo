@@ -79,7 +79,7 @@ import {
  *         }, ...
  *     ]
  *
- * @return {unknown} D3js component.
+ * @returns {unknown} D3js component.
  * @param {import('ngeo/options').ngeoProfileOptions} options Profile options.
  * @param {import('ngeo/profile/elevationComponent').ProfileOptions<unknown>} functions Profile options.
  * @private
@@ -87,6 +87,7 @@ import {
 function d3Elevation(options, functions) {
   /**
    * Whether the simplified profile should be shown.
+   *
    * @type {boolean}
    */
   const light = options.light !== undefined ? options.light : false;
@@ -98,12 +99,14 @@ function d3Elevation(options, functions) {
 
   /**
    * Hover callback function.
+   *
    * @type {function(Object, number, string, Object<string, number>, string): void}
    */
   const hoverCallback = functions.hoverCallback !== undefined ? functions.hoverCallback : () => {};
 
   /**
    * Out callback function.
+   *
    * @type {Function}
    */
   const outCallback = functions.outCallback !== undefined ? functions.outCallback : () => {};
@@ -165,7 +168,7 @@ function d3Elevation(options, functions) {
     /**
      * @param {number} dist Distance.
      * @param {string} units Units.
-     * @return {string} Distance.
+     * @returns {string} Distance.
      */
     xhover(dist, units) {
       return `${parseFloat(dist.toPrecision(3))} ${units}`;
@@ -173,7 +176,7 @@ function d3Elevation(options, functions) {
     /**
      * @param {number} ele Elevation.
      * @param {string} units Units.
-     * @return {string} Elevation.
+     * @returns {string} Elevation.
      */
     yhover(ele, units) {
       return ele !== null ? `${Math.round(ele)} m` : '';
@@ -181,7 +184,7 @@ function d3Elevation(options, functions) {
     /**
      * @param {number} dist Distance.
      * @param {string} units Units.
-     * @return {string|number} Distance.
+     * @returns {string|number} Distance.
      */
     xtick(dist, units) {
       return dist;
@@ -189,7 +192,7 @@ function d3Elevation(options, functions) {
     /**
      * @param {number} ele Elevation.
      * @param {string} units Units.
-     * @return {string|number} Elevation.
+     * @returns {string|number} Elevation.
      */
     ytick(ele, units) {
       return ele;
@@ -212,18 +215,21 @@ function d3Elevation(options, functions) {
 
   /**
    * D3 x scale.
+   *
    * @type {import('d3').ScaleLinear<number, number>}
    */
   let x;
 
   /**
    * D3 y scale.
+   *
    * @type {import('d3').ScaleLinear<number, number>}
    */
   let y;
 
   /**
    * Scale modifier to allow customizing the x and y scales.
+   *
    * @type {function(Function, Function, number, number): void}
    */
   const scaleModifier = functions.scaleModifier;
@@ -235,30 +241,35 @@ function d3Elevation(options, functions) {
 
   /**
    * Height of the chart in pixels
+   *
    * @type {number}
    */
   let height;
 
   /**
    * Width of the chart in pixels
+   *
    * @type {number}
    */
   let width;
 
   /**
    * Factor to determine whether to use 'm' or 'km'.
+   *
    * @type {number}
    */
   let xFactor;
 
   /**
    * Distance units. Either 'm' or 'km'.
+   *
    * @type {string}
    */
   let xUnits;
 
   /**
    * D3 extent of the distance.
+   *
    * @type {[number, number]}
    */
   let xDomain;
@@ -502,6 +513,9 @@ function d3Elevation(options, functions) {
         profile.highlight(x0);
       }
 
+      /**
+       *
+       */
       function mouseout() {
         profile.clearHighlight();
       }
@@ -521,6 +535,7 @@ function d3Elevation(options, functions) {
   /**
    * Highlight the given distance and corresponding elevation on chart.
    * Fire the hoverCallback callback with corresponding point.
+   *
    * @param {number} distance Distance.
    */
   profile.highlight = function (distance) {
@@ -650,6 +665,9 @@ function d3Elevation(options, functions) {
     poiEnterG.exit().remove();
   };
 
+  /**
+   *
+   */
   function clearPois() {
     profile.showPois([]);
   }

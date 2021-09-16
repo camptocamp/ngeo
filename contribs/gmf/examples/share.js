@@ -43,12 +43,14 @@ const myModule = angular.module('gmfapp', [
 function MainController() {
   /**
    * Model attached to the modal to toggle it
+   *
    * @type {boolean}
    */
   this.modalShareWithEmailShown = false;
 
   /**
    * Model attached to the modal to toggle it
+   *
    * @type {boolean}
    */
   this.modalShareShown = false;

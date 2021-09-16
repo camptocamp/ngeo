@@ -62,6 +62,9 @@ describe('ngeo.map.scaleselector', () => {
     it('does not throw', () => {
       const scope = element.scope();
 
+      /**
+       *
+       */
       function test() {
         scope.$apply(() => {
           map.getView().setZoom(4);

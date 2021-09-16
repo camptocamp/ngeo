@@ -28,7 +28,7 @@ import angular from 'angular';
 /**
  * @param {import('ol/coordinate').Coordinate} a Some coordinates.
  * @param {import('ol/coordinate').Coordinate} b Some other coordinates.
- * @return {number} The squared magnitude.
+ * @returns {number} The squared magnitude.
  */
 function magnitude2(a, b) {
   let magnitudeSquared = 0;
@@ -132,7 +132,7 @@ const Downloader = class {
   /**
    * @param {import('ol/extent').Extent} extent The extent to download.
    * @param {import('ol/Map').default} map The map to work on.
-   * @return {Promise<*>} A promise resolving when save is finished.
+   * @returns {Promise<*>} A promise resolving when save is finished.
    */
   save(extent, map) {
     /**

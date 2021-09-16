@@ -39,8 +39,7 @@ const myModule = angular.module('ngeoDateTimePicker', ['gettext']);
  *          ngeo-datetimepicker-options="{timepicker: false}"
  *
  * @htmlAttribute {Object} ngeo-datetimepicker-options The options.
- *
- * @return {angular.IDirective} The directive specs.
+ * @returns {angular.IDirective} The directive specs.
  * @ngdoc directive
  * @ngname ngeoDatetimepicker
  */
@@ -68,18 +67,20 @@ myModule.directive('ngeoDatetimepicker', dateTimeComponent);
  */
 export function Controller($element, gettextCatalog) {
   /**
-   * @const {JQuery}
+   * @constant {JQuery}
    */
   this.element_ = $element;
 
   /**
    * The gettext catalog
+   *
    * @type {angular.gettext.gettextCatalog}
    */
   this.gettextCatalog_ = gettextCatalog;
 
   /**
    * The options
+   *
    * @type {DateTimePickerOptions}
    */
   this.options;

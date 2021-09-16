@@ -48,7 +48,7 @@ myModule.value(
   'ngeoMessageDisplaywindowTemplateUrl',
   /**
    * @param {angular.IAttributes} $attrs Attributes.
-   * @return {string} The template url.
+   * @returns {string} The template url.
    */
   ($attrs) => {
     const templateUrl = $attrs['ngeoMessageDisplaywindowTemplateUrl'];
@@ -59,7 +59,7 @@ myModule.value(
 /**
  * @param {angular.IAttributes} $attrs Attributes.
  * @param {function(angular.IAttributes): string} ngeoMessageDisplaywindowTemplateUrl Template function.
- * @return {string} Template URL.
+ * @returns {string} Template URL.
  * @ngInject
  * @private
  * @hidden
@@ -269,7 +269,7 @@ export class Controller {
   }
 
   /**
-   * @return {Object<string, string>} CSS style when using width/height
+   * @returns {Object<string, string>} CSS style when using width/height
    */
   get style() {
     this.maxWidth = this.containingElement.clientWidth - 20;
@@ -283,7 +283,7 @@ export class Controller {
   }
 
   /**
-   * @return {string|undefined} Trusted url.
+   * @returns {string|undefined} Trusted url.
    */
   get urlTrusted() {
     if (this.url) {

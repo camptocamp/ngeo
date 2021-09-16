@@ -45,7 +45,7 @@ import gmfExternalDataSourcesManager from 'gmf/datasource/ExternalDataSourcesMan
  * @param {import('gmf/datasource/ExternalDataSourcesManager').ExternalDatSourcesManager} gmfExternalDataSourcesManager The manager of external datasources.
  * @param {import('ngeo/message/Notification').MessageNotification} ngeoNotification Ngeo notification
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
- * @return {angular.IDirective} The Directive Definition Object.
+ * @returns {angular.IDirective} The Directive Definition Object.
  * @ngdoc directive
  * @ngname gmfFileDropZone
  */

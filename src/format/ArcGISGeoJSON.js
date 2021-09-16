@@ -38,7 +38,7 @@ import olFormatGeoJSON from 'ol/format/GeoJSON';
  */
 
 /**
- * @const
+ * @constant
  * @type {string}
  */
 const layerIdentifier = 'layerName';
@@ -60,7 +60,7 @@ class ArcGISGeoJSON extends olFormatGeoJSON {
   }
 
   /**
-   * @return {string[]} layers
+   * @returns {string[]} layers
    */
   getLayers() {
     return this.layers_;
@@ -77,7 +77,7 @@ class ArcGISGeoJSON extends olFormatGeoJSON {
    * @param {import("geojson").GeoJSON} object Object.
    * @param {import('ol/format/Feature').ReadOptions} [opt_options] Read options.
    * @protected
-   * @return {import('ol/Feature').default<import('ol/geom/Geometry').default>[]} Features.
+   * @returns {import('ol/Feature').default<import('ol/geom/Geometry').default>[]} Features.
    * @override
    */
   readFeaturesFromObject(object, opt_options) {

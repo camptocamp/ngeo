@@ -64,7 +64,7 @@ const HOUR = 3600;
  * @hidden
  * @param {string} str1 String 1
  * @param {string} str2 String 2
- * @return {boolean}
+ * @returns {boolean}
  */
 function _compare(str1, str2) {
   return typeof str1 === 'string' && typeof str2 === 'string' && str1.toLowerCase() === str2.toLowerCase();
@@ -76,7 +76,7 @@ function _compare(str1, str2) {
  * @param {unknown} value Value
  * @param {number} length Length
  * @param {string} [chr] Char
- * @return {string}
+ * @returns {string}
  */
 function _lpad(value, length, chr) {
   const val = value.toString();
@@ -88,7 +88,7 @@ function _lpad(value, length, chr) {
  * @private
  * @hidden
  * @param {unknown} [out] Out
- * @return {unknown}
+ * @returns {unknown}
  */
 function _extend(out) {
   out = out || {};
@@ -115,7 +115,7 @@ function _extend(out) {
  * @hidden
  * @param {string} val Value
  * @param {string[]} arr Argument
- * @return {number}
+ * @returns {number}
  */
 function _indexOf(val, arr) {
   for (let i = 0; i < arr.length; i++) {
@@ -191,7 +191,7 @@ export default class DateFormatter {
    *
    * @param {Date|string|number} vDate
    * @param {?string} vFormat
-   * @return {?Date}
+   * @returns {?Date}
    */
   parseDate(vDate, vFormat) {
     const self = this,
@@ -410,49 +410,56 @@ export default class DateFormatter {
       /////////
       /**
        * Day of month with leading 0: `01..31`
-       * @return {string}
+       *
+       * @returns {string}
        */
       d() {
         return _lpad(fmt.j(), 2);
       },
       /**
        * Shorthand day name: `Mon...Sun`
-       * @return {string}
+       *
+       * @returns {string}
        */
       D() {
         return vSettings.daysShort[fmt.w()];
       },
       /**
        * Day of month: `1..31`
-       * @return {number}
+       *
+       * @returns {number}
        */
       j() {
         return vDate.getDate();
       },
       /**
        * Full day name: `Monday...Sunday`
-       * @return {number}
+       *
+       * @returns {number}
        */
       l() {
         return vSettings.days[fmt.w()];
       },
       /**
        * ISO-8601 day of week: `1[Mon]..7[Sun]`
-       * @return {number}
+       *
+       * @returns {number}
        */
       N() {
         return fmt.w() || 7;
       },
       /**
        * Day of week: `0[Sun]..6[Sat]`
-       * @return {number}
+       *
+       * @returns {number}
        */
       w() {
         return vDate.getDay();
       },
       /**
        * Day of year: `0..365`
-       * @return {number}
+       *
+       * @returns {number}
        */
       z() {
         const a = new Date(fmt.Y(), fmt.n() - 1, fmt.j()),
@@ -465,7 +472,8 @@ export default class DateFormatter {
       //////////
       /**
        * ISO-8601 week number
-       * @return {number}
+       *
+       * @returns {number}
        */
       W() {
         const a = new Date(fmt.Y(), fmt.n() - 1, fmt.j() - fmt.N() + 3);
@@ -478,35 +486,40 @@ export default class DateFormatter {
       ///////////
       /**
        * Full month name: `January...December`
-       * @return {string}
+       *
+       * @returns {string}
        */
       F() {
         return vSettings.months[vDate.getMonth()];
       },
       /**
        * Month w/leading 0: `01..12`
-       * @return {string}
+       *
+       * @returns {string}
        */
       m() {
         return _lpad(fmt.n(), 2);
       },
       /**
        * Shorthand month name; `Jan...Dec`
-       * @return {string}
+       *
+       * @returns {string}
        */
       M() {
         return vSettings.monthsShort[vDate.getMonth()];
       },
       /**
        * Month: `1...12`
-       * @return {number}
+       *
+       * @returns {number}
        */
       n() {
         return vDate.getMonth() + 1;
       },
       /**
        * Days in month: `28...31`
-       * @return {number}
+       *
+       * @returns {number}
        */
       t() {
         return new Date(fmt.Y(), fmt.n(), 0).getDate();
@@ -517,7 +530,8 @@ export default class DateFormatter {
       //////////
       /**
        * Is leap year? `0 or 1`
-       * @return {number}
+       *
+       * @returns {number}
        */
       L() {
         const Y = fmt.Y();
@@ -525,7 +539,8 @@ export default class DateFormatter {
       },
       /**
        * ISO-8601 year
-       * @return {number}
+       *
+       * @returns {number}
        */
       o() {
         const n = fmt.n(),
@@ -535,14 +550,16 @@ export default class DateFormatter {
       },
       /**
        * Full year: `e.g. 1980...2010`
-       * @return {number}
+       *
+       * @returns {number}
        */
       Y() {
         return vDate.getFullYear();
       },
       /**
        * Last two digits of year: `00...99`
-       * @return {string}
+       *
+       * @returns {string}
        */
       y() {
         return fmt.Y().toString().slice(-2);
@@ -553,14 +570,16 @@ export default class DateFormatter {
       //////////
       /**
        * Meridian lower: `am or pm`
-       * @return {string}
+       *
+       * @returns {string}
        */
       a() {
         return fmt.A().toLowerCase();
       },
       /**
        * Meridian upper: `AM or PM`
-       * @return {string}
+       *
+       * @returns {string}
        */
       A() {
         const n = fmt.G() < 12 ? 0 : 1;
@@ -568,7 +587,8 @@ export default class DateFormatter {
       },
       /**
        * Swatch Internet time: `000..999`
-       * @return {string}
+       *
+       * @returns {string}
        */
       B() {
         const H = vDate.getUTCHours() * HOUR;
@@ -578,49 +598,56 @@ export default class DateFormatter {
       },
       /**
        * 12-Hours: `1..12`
-       * @return {number}
+       *
+       * @returns {number}
        */
       g() {
         return fmt.G() % 12 || 12;
       },
       /**
        * 24-Hours: `0..23`
-       * @return {number}
+       *
+       * @returns {number}
        */
       G() {
         return vDate.getHours();
       },
       /**
        * 12-Hours with leading 0: `01..12`
-       * @return {string}
+       *
+       * @returns {string}
        */
       h() {
         return _lpad(fmt.g(), 2);
       },
       /**
        * 24-Hours w/leading 0: `00..23`
-       * @return {string}
+       *
+       * @returns {string}
        */
       H() {
         return _lpad(fmt.G(), 2);
       },
       /**
        * Minutes w/leading 0: `00..59`
-       * @return {string}
+       *
+       * @returns {string}
        */
       i() {
         return _lpad(vDate.getMinutes(), 2);
       },
       /**
        * Seconds w/leading 0: `00..59`
-       * @return {string}
+       *
+       * @returns {string}
        */
       s() {
         return _lpad(vDate.getSeconds(), 2);
       },
       /**
        * Microseconds: `000000-999000`
-       * @return {string}
+       *
+       * @returns {string}
        */
       u() {
         return _lpad(vDate.getMilliseconds() * 1000, 6);
@@ -631,7 +658,8 @@ export default class DateFormatter {
       //////////////
       /**
        * Timezone identifier: `e.g. Atlantic/Azores, ...`
-       * @return {string}
+       *
+       * @returns {string}
        */
       e() {
         const str = /\((.*)\)/.exec(String(vDate))[1];
@@ -639,7 +667,8 @@ export default class DateFormatter {
       },
       /**
        * DST observed? `0 or 1`
-       * @return {number}
+       *
+       * @returns {number}
        */
       I() {
         const a = new Date(fmt.Y(), 0),
@@ -650,7 +679,8 @@ export default class DateFormatter {
       },
       /**
        * Difference to GMT in hour format: `e.g. +0200`
-       * @return {string}
+       *
+       * @returns {string}
        */
       O() {
         const tzo = vDate.getTimezoneOffset(),
@@ -659,7 +689,8 @@ export default class DateFormatter {
       },
       /**
        * Difference to GMT with colon: `e.g. +02:00`
-       * @return {string}
+       *
+       * @returns {string}
        */
       P() {
         const O = fmt.O();
@@ -667,7 +698,8 @@ export default class DateFormatter {
       },
       /**
        * Timezone abbreviation: `e.g. EST, MDT, ...`
-       * @return {string}
+       *
+       * @returns {string}
        */
       T() {
         const str = (String(vDate).match(self.tzParts) || ['']).pop().replace(self.tzClip, '');
@@ -675,7 +707,8 @@ export default class DateFormatter {
       },
       /**
        * Timezone offset in seconds: `-43200...50400`
-       * @return {number}
+       *
+       * @returns {number}
        */
       Z() {
         return -vDate.getTimezoneOffset() * 60;
@@ -686,21 +719,24 @@ export default class DateFormatter {
       ////////////////////
       /**
        * ISO-8601 date
-       * @return {string}
+       *
+       * @returns {string}
        */
       c() {
         return 'Y-m-d\\TH:i:sP'.replace(backslash, doFormat);
       },
       /**
        * RFC 2822 date
-       * @return {string}
+       *
+       * @returns {string}
        */
       r() {
         return 'D, d M Y H:i:s O'.replace(backslash, doFormat);
       },
       /**
        * Seconds since UNIX epoch
-       * @return {number}
+       *
+       * @returns {number}
        */
       U() {
         return vDate.getTime() / 1000 || 0;

@@ -46,7 +46,7 @@ myModule.value(
   'gmfMapMousepositionTemplateUrl',
   /**
    * @param {angular.IAttributes} $attrs Attributes.
-   * @return {string} The template url.
+   * @returns {string} The template url.
    */
   ($attrs) => {
     const templateUrl = $attrs.gmfMapMousepositionTemplateUrl;
@@ -57,7 +57,7 @@ myModule.value(
 /**
  * @param {angular.IAttributes} $attrs Attributes.
  * @param {function(angular.IAttributes): string} gmfMapMousepositionTemplateUrl Template function.
- * @return {string} Template URL.
+ * @returns {string} Template URL.
  * @ngInject
  * @private
  * @hidden
@@ -77,7 +77,6 @@ function gmfMapMousepositionTemplateUrl($attrs, gmfMapMousepositionTemplateUrl) 
  *  </gmf-mouseposition>
  *
  * @htmlAttribute {import('ol/Map').default} gmf-mouseposition-map The map.
- *
  * @ngdoc component
  * @ngname gmfMouseposition
  */
@@ -176,7 +175,7 @@ Controller.prototype.initOlControl_ = function () {
   // function that apply the filter.
   /**
    * @param {number[]|undefined} coordinates
-   * @return {string}
+   * @returns {string}
    */
   const formatFn = (coordinates) => {
     if (!this.projection) {

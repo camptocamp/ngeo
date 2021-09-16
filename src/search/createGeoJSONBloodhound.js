@@ -35,7 +35,7 @@ import 'corejs-typeahead';
  *     undefined, the default Bloodhound config will be used.
  * @param {Bloodhound.RemoteOptions<GeoJSON.FeatureCollection>} [opt_remoteOptions] optional Bloodhound
  * remote options. Effective only if `remote` is not defined in `opt_options`.
- * @return {Bloodhound<import('ol/Feature').default<import('ol/geom/Geometry').default>[]>} The Bloodhound object.
+ * @returns {Bloodhound<import('ol/Feature').default<import('ol/geom/Geometry').default>[]>} The Bloodhound object.
  * @hidden
  */
 export function createGeoJSONBloodhound(
@@ -87,7 +87,7 @@ export function createGeoJSONBloodhound(
     opt_options || {
       /**
        * @param {GeoJSON.FeatureCollection} datum
-       * @return {string[]}
+       * @returns {string[]}
        */
       datumTokenizer: (datum) => {
         return [];

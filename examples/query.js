@@ -103,7 +103,6 @@ myModule.controller('AppQueryresultController', QueryresultController);
  * @param {import('ngeo/misc/ToolActivateMgr').ToolActivateMgr} ngeoToolActivateMgr The ngeo ToolActivate
  *     manager.
  * @param {import('ngeo/query/ModeSelector').QueryModeSelector} ngeoQueryModeSelector The ngeo QueryModeSelector service
- *
  * @class
  * @ngInject
  */
@@ -220,7 +219,7 @@ function MainController(ngeoDataSources, ngeoToolActivateMgr, ngeoQueryModeSelec
 
 /**
  * @param {boolean|undefined} val Value.
- * @return {boolean|undefined} Value.
+ * @returns {boolean|undefined} Value.
  */
 MainController.prototype.getSetQueryActive = function (val) {
   if (val !== undefined) {

@@ -30,6 +30,10 @@ const prettier = require('prettier');
 
 const find_import = /import\(["']([a-zA-Z0-9/\.\-_]+)\.js["']\)/g;
 
+/**
+ * @param file
+ * @param api
+ */
 export default function transformer(file, api) {
   let result = file.source;
   let error = true;

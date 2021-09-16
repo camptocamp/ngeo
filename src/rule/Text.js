@@ -26,6 +26,7 @@ import ngeoRuleRule, {RuleOperatorType} from 'ngeo/rule/Rule';
  * The options for creating a text style.
  *
  * extends import('ngeo/rule/Rule').RuleOptions
+ *
  * @typedef {Object} TextOptions
  * @property {string} text
  * @property {number} [size]

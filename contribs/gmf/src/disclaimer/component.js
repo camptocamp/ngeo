@@ -99,12 +99,14 @@ export function DisclaimerController(
 
   /**
    * Visibility that is set to true when a new msg is there.
+   *
    * @type {boolean}
    */
   this.visibility = false;
 
   /**
    * Trusted html messages that can be displayed as html.
+   *
    * @type {string|undefined}
    */
   this.msg;
@@ -421,7 +423,6 @@ DisclaimerController.prototype.closeDisclaimerMessage_ = function (layerUid, msg
  * @htmlAttribute {string?} gmf-disclaimer-external-msg variable that will
  *     contains the disclaimer messages. To uses it, you must set the
  *     gmf-disclaimer-external to true.
- *
  * @ngdoc component
  * @ngname gmfDisclaimer
  */

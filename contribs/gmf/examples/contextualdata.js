@@ -73,7 +73,7 @@ function MainController() {
  * @param {import('ol/coordinate').Coordinate} coordinate The coordinate for the right-clicked
  *     point.
  * @param {Object<string, number>} data The data received from the raster service.
- * @return {Object<string, number>} The additional data to add to the scope for the
+ * @returns {Object<string, number>} The additional data to add to the scope for the
  *     contextualdata popover.
  */
 MainController.prototype.onRasterData = function (coordinate, data) {

@@ -116,7 +116,7 @@ function MainController($scope) {
 
   /**
    * @type {import('ol/layer/Base').default[]}
-   * @const
+   * @constant
    */
   this.selectedLayers = [];
 
@@ -134,7 +134,7 @@ function MainController($scope) {
 
   /**
    * @param {import('ol/layer/Base').default} layer Layer.
-   * @return {boolean} `false` if the layer shouldn't be part of the selected
+   * @returns {boolean} `false` if the layer shouldn't be part of the selected
    *     layers.
    */
   function layerFilter(layer) {
@@ -145,8 +145,9 @@ function MainController($scope) {
 /**
  * Add/remove the "Roads" layer when used as a setter, and return whether
  * the "Roads" layer is in the map when used as a getter.
+ *
  * @param {boolean|undefined} val Value.
- * @return {boolean|undefined} `true` if the "Roads" layer is in the map,
+ * @returns {boolean|undefined} `true` if the "Roads" layer is in the map,
  *     `false` if the "Roads" layer is not in the map, `undefined` if the
  *     function is used as setter.
  */

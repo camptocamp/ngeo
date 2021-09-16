@@ -36,7 +36,7 @@ myModule.value(
   /**
    * @param {JQuery} element Element.
    * @param {angular.IAttributes} attrs Attributes.
-   * @return {string} The template url.
+   * @returns {string} The template url.
    */
   (element, attrs) => {
     const templateUrl = attrs.gmfMobileMeasureAreaTemplateurl;
@@ -70,7 +70,7 @@ myModule.run(
  * @htmlAttribute {import('ol/Map').default} gmf-mobile-measurearea-map The map.
  * @param {string|function(JQuery=, angular.IAttributes=):string} gmfMobileMeasureAreaTemplateUrl
  *     Template URL for the directive.
- * @return {angular.IDirective} The Directive Definition Object.
+ * @returns {angular.IDirective} The Directive Definition Object.
  * @ngInject
  * @ngdoc directive
  * @ngname gmfMobileMeasureArea

@@ -60,6 +60,7 @@ myModule.config([
   /**
    * For performance reason, only perform animation on elements that have the
    * `gmf-animatable` css class.
+   *
    * @param {angular.animate.IAnimateProvider} $animateProvider animate provider.
    */
   function ($animateProvider) {
@@ -72,7 +73,7 @@ myModule.value(
   /**
    * @param {JQuery} $element Element.
    * @param {angular.IAttributes} $attrs Attributes.
-   * @return {string} Template.
+   * @returns {string} Template.
    */
   ($element, $attrs) => {
     const templateUrl = $attrs.gmfDisplayquerywindowTemplateurl;
@@ -96,7 +97,7 @@ myModule.run(
  * @param {angular.IAttributes} $attrs Attributes.
  * @param {function(JQuery, angular.IAttributes): string} gmfDisplayquerywindowTemplateUrl Template
  *    function.
- * @return {string} Template URL.
+ * @returns {string} Template URL.
  * @ngInject
  * @private
  * @hidden
@@ -180,6 +181,7 @@ export function QueryWindowController(
   /**
    * Is the window currently collapsed?
    * When used for Desktop, it is shown non-collapsed.
+   *
    * @type {boolean}
    */
   this.collapsed = false;
@@ -205,6 +207,7 @@ export function QueryWindowController(
 
   /**
    * Filename
+   *
    * @type {import('gmf/options').gmfCsvFilename}
    */
   this.filename_ = gmfCsvFilename;
@@ -260,7 +263,7 @@ export function QueryWindowController(
   this.open = false;
 
   /**
-   * @const {JQuery}
+   * @constant {JQuery}
    */
   this.element_ = $element;
 
@@ -336,10 +339,11 @@ QueryWindowController.prototype.updateFeatures_ = function () {
 
 /**
  * Select a source and a feature depending of the given position.
+ *
  * @param {number} position The index of the feature. If the position is bigger
  * than the length of the first source, get it in the next source. Etc.
  * @param {boolean} setHighlight True to set the highlight automatically.
- * @return {boolean} True if result has changed. False else.
+ * @returns {boolean} True if result has changed. False else.
  */
 QueryWindowController.prototype.setCurrentResult_ = function (position, setHighlight) {
   let hasChanged = false;
@@ -404,6 +408,7 @@ QueryWindowController.prototype.next = function () {
 
 /**
  * Remove features without properties from the query result.
+ *
  * @param {import('ngeo/query/MapQuerent').QueryResult} queryResult ngeo query result.
  */
 QueryWindowController.prototype.updateQueryResult_ = function (queryResult) {
@@ -424,7 +429,8 @@ QueryWindowController.prototype.updateQueryResult_ = function (queryResult) {
 /**
  * Get the total count of features in the result of the query. If a source
  * has been select, only the number of features of that source are returned.
- * @return {number} Total number of features.
+ *
+ * @returns {number} Total number of features.
  */
 QueryWindowController.prototype.getResultLength = function () {
   if (this.selectedSource === null) {
@@ -435,14 +441,14 @@ QueryWindowController.prototype.getResultLength = function () {
 };
 
 /**
- * @return {boolean} If the first result is active.
+ * @returns {boolean} If the first result is active.
  */
 QueryWindowController.prototype.isFirst = function () {
   return this.currentResult == 0;
 };
 
 /**
- * @return {boolean} If the last result is active.
+ * @returns {boolean} If the last result is active.
  */
 QueryWindowController.prototype.isLast = function () {
   return this.currentResult == this.getResultLength() - 1;
@@ -451,7 +457,8 @@ QueryWindowController.prototype.isLast = function () {
 /**
  * Delete the unwanted ol3 properties from the current feature then return the
  * properties.
- * @return {Object<string, string|number|boolean>?} Filtered properties of the current feature or null.
+ *
+ * @returns {Object<string, string|number|boolean>?} Filtered properties of the current feature or null.
  */
 QueryWindowController.prototype.getFeatureValues = function () {
   if (!this.feature) {
@@ -465,6 +472,7 @@ QueryWindowController.prototype.getFeatureValues = function () {
  * "isNext" value. The aim is to wait on Angular to add a class (corresponding
  * to "isNext") on the DOM before to set the "animation" value and do the
  * animation.
+ *
  * @param {boolean} isNext used to indicate if the user wants to see the next
  * or the previous result.
  */
@@ -493,6 +501,7 @@ QueryWindowController.prototype.collectFeatures_ = function () {
 
 /**
  * Highlight the current displayed feature.
+ *
  * @param {import('ol/Feature').default<import('ol/geom/Geometry').default>} [opt_lastFeature] last highlighted feature. Require if
  * it exists because it must be added to the 'non-selected' features collection.
  */
@@ -546,6 +555,7 @@ QueryWindowController.prototype.setSelectedSource = function (source) {
 
 /**
  * Download a CSV with features of the given source.
+ *
  * @param {import('ngeo/statemanager/WfsPermalink').QueryResultSource} source The source to export as csv.
  */
 QueryWindowController.prototype.downloadCSV = function (source) {
@@ -558,7 +568,7 @@ QueryWindowController.prototype.downloadCSV = function (source) {
 
 /**
  * @param {import('ngeo/statemanager/WfsPermalink').QueryResultSource} source The source to export as csv.
- * @return {Object<string, string|number|boolean>[]} data.
+ * @returns {Object<string, string|number|boolean>[]} data.
  */
 QueryWindowController.prototype.getCSVData_ = function (source) {
   if (!source || source.features.length <= 0) {
@@ -572,7 +582,7 @@ QueryWindowController.prototype.getCSVData_ = function (source) {
 
 /**
  * @param {Object<string, string|number|boolean>[]} data where keys with at least one defined value will be used as csv column header.
- * @return {import('ngeo/download/Csv').GridColumnDef[]} columns definitions for the CSV.
+ * @returns {import('ngeo/download/Csv').GridColumnDef[]} columns definitions for the CSV.
  */
 QueryWindowController.prototype.getCSVHeaderDefinition_ = function (data) {
   if (!data) {

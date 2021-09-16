@@ -43,6 +43,7 @@ import 'ngeo/sass/font.scss';
  * Provides methods to display any sort of messages, disclaimers, errors,
  * etc. Requires Bootstrap library (both CSS and JS) to display the alerts
  * properly.
+ *
  * @hidden
  */
 export class MessageDisclaimerService extends ngeoMessageMessage {
@@ -84,6 +85,7 @@ export class MessageDisclaimerService extends ngeoMessageMessage {
 
     /**
      * Cache of messages.
+     *
      * @type {Object<string, JQuery|import('ngeo/message/Popup').MessagePopup>}
      * @private
      */
@@ -105,6 +107,7 @@ export class MessageDisclaimerService extends ngeoMessageMessage {
   /**
    * Show disclaimer message string or object or list of disclaimer message
    * strings or objects.
+   *
    * @param {string | Message | (string | Message)[]} object
    *     A message or list of messages as text or configuration objects.
    */
@@ -115,6 +118,7 @@ export class MessageDisclaimerService extends ngeoMessageMessage {
   /**
    * Close disclaimer message string or object or list of disclaimer message
    * strings or objects.
+   *
    * @param {string | Message | (string | Message)[]} object
    *     A message or list of messages as text or configuration objects.
    */
@@ -125,6 +129,7 @@ export class MessageDisclaimerService extends ngeoMessageMessage {
 
   /**
    * Show the message.
+   *
    * @param {Message} message Message.
    * @protected
    * @override
@@ -219,7 +224,7 @@ export class MessageDisclaimerService extends ngeoMessageMessage {
 
   /**
    * @param {Message} message Message.
-   * @return {string} The uid.
+   * @returns {string} The uid.
    * @private
    */
   getMessageUid_(message) {
@@ -228,7 +233,7 @@ export class MessageDisclaimerService extends ngeoMessageMessage {
 
   /**
    * @param {Message} message Message.
-   * @return {string} The uid.
+   * @returns {string} The uid.
    * @private
    */
   getCompatibleMessageUid_(message) {
@@ -237,6 +242,7 @@ export class MessageDisclaimerService extends ngeoMessageMessage {
 
   /**
    * Close the message.
+   *
    * @param {Message} message Message.
    * @param {boolean} force Force close the message.
    * @protected

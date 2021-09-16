@@ -48,7 +48,7 @@ myModule.value(
   'gmfPermalinkShareTemplateUrl',
   /**
    * @param {angular.IAttributes} $attrs Attributes.
-   * @return {string} The template url.
+   * @returns {string} The template url.
    */
   ($attrs) => {
     const templateUrl = $attrs.gmfPermalinkShareTemplateUrl;
@@ -59,7 +59,7 @@ myModule.value(
 /**
  * @param {angular.IAttributes} $attrs Attributes.
  * @param {function(angular.IAttributes): string} gmfPermalinkShareTemplateUrl Template function.
- * @return {string} Template URL.
+ * @returns {string} Template URL.
  * @ngInject
  * @private
  * @hidden
@@ -87,6 +87,7 @@ myModule.component('gmfShare', permalinkShareComponent);
 export class ShareComponentController {
   /**
    * The controller for the share component
+   *
    * @param {angular.IScope} $scope Scope.
    * @param {import('ngeo/statemanager/Location').StatemanagerLocation} ngeoLocation ngeo Location service.
    * @param {import('gmf/permalink/ShareService').PermalinkShareService} gmfShareService service for

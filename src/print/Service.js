@@ -119,9 +119,10 @@ export function PrintService(url, $http, gettextCatalog, ngeoLayerHelper) {
 
 /**
  * Cancel a report.
+ *
  * @param {string} ref Print report reference.
  * @param {angular.IRequestShortcutConfig} [opt_httpConfig] $http config object.
- * @return {angular.IHttpPromise<Object>} HTTP promise.
+ * @returns {angular.IHttpPromise<Object>} HTTP promise.
  */
 PrintService.prototype.cancel = function (ref, opt_httpConfig) {
   const httpConfig =
@@ -133,6 +134,7 @@ PrintService.prototype.cancel = function (ref, opt_httpConfig) {
 
 /**
  * Create a report specification.
+ *
  * @param {import('ol/Map').default} map Map.
  * @param {number} scale Scale.
  * @param {number} rotation Rotation.
@@ -142,7 +144,7 @@ PrintService.prototype.cancel = function (ref, opt_httpConfig) {
  * @param {Object<string, *>} customAttributes Custom attributes.
  * @param {string} [email] Email to send the file to.
  * @param {number} [goodnessOfFit] Goodness of fit.
- * @return {import('ngeo/print/mapfish-print-v3').MapFishPrintSpec} The print spec.
+ * @returns {import('ngeo/print/mapfish-print-v3').MapFishPrintSpec} The print spec.
  */
 PrintService.prototype.createSpec = function (
   map,
@@ -359,7 +361,7 @@ PrintService.prototype.encodeWmsLayer_ = function (arr, layer, url, params) {
 
 /**
  * @param {string} url URL.
- * @return {string} Absolute URL.
+ * @returns {string} Absolute URL.
  * @private
  * @hidden
  */
@@ -471,8 +473,9 @@ PrintService.prototype.encodeTileWmsLayer_ = function (arr, layer) {
 
 /**
  * Return the WMTS URL to use in the print spec.
+ *
  * @param {import('ol/source/WMTS').default} source The WMTS source.
- * @return {string} URL.
+ * @returns {string} URL.
  */
 PrintService.prototype.getWmtsUrl_ = function (source) {
   const urls = source.getUrls();
@@ -484,8 +487,9 @@ PrintService.prototype.getWmtsUrl_ = function (source) {
 
 /**
  * Return an opacity value for the specified layer.
+ *
  * @param {import('ol/layer/Base').default} layer Layer.
- * @return {number} opacity Opacity value.
+ * @returns {number} opacity Opacity value.
  */
 PrintService.prototype.getOpacityOrInherited_ = function (layer) {
   if (layer.get('inheritedOpacity') !== undefined) {
@@ -496,9 +500,10 @@ PrintService.prototype.getOpacityOrInherited_ = function (layer) {
 
 /**
  * Send a create report request to the MapFish Print service.
+ *
  * @param {import('ngeo/print/mapfish-print-v3').MapFishPrintSpec} printSpec Print specification.
  * @param {angular.IRequestShortcutConfig} [opt_httpConfig] $http config object.
- * @return {angular.IHttpPromise<import('ngeo/print/mapfish-print-v3').MapFishPrintReportResponse>} HTTP promise.
+ * @returns {angular.IHttpPromise<import('ngeo/print/mapfish-print-v3').MapFishPrintReportResponse>} HTTP promise.
  */
 PrintService.prototype.createReport = function (printSpec, opt_httpConfig) {
   const format = printSpec.format || 'pdf';
@@ -514,9 +519,10 @@ PrintService.prototype.createReport = function (printSpec, opt_httpConfig) {
 
 /**
  * Get the status of a report.
+ *
  * @param {string} ref Print report reference.
  * @param {angular.IRequestShortcutConfig} [opt_httpConfig] $http config object.
- * @return {angular.IHttpPromise<import('ngeo/print/mapfish-print-v3').MapFishPrintStatusResponse>} HTTP promise.
+ * @returns {angular.IHttpPromise<import('ngeo/print/mapfish-print-v3').MapFishPrintStatusResponse>} HTTP promise.
  */
 PrintService.prototype.getStatus = function (ref, opt_httpConfig) {
   const httpConfig =
@@ -527,8 +533,9 @@ PrintService.prototype.getStatus = function (ref, opt_httpConfig) {
 
 /**
  * Get the URL of a report.
+ *
  * @param {string} ref Print report reference.
- * @return {string} The report URL for this ref.
+ * @returns {string} The report URL for this ref.
  */
 PrintService.prototype.getReportUrl = function (ref) {
   return `${this.url_}/report/${ref}`;
@@ -536,8 +543,9 @@ PrintService.prototype.getReportUrl = function (ref) {
 
 /**
  * Get the print capabilities from MapFish Print.
+ *
  * @param {angular.IRequestShortcutConfig} [opt_httpConfig] $http config object.
- * @return {angular.IHttpPromise<import('ngeo/print/mapfish-print-v3').MapFishPrintCapabilities>} HTTP promise.
+ * @returns {angular.IHttpPromise<import('ngeo/print/mapfish-print-v3').MapFishPrintCapabilities>} HTTP promise.
  */
 PrintService.prototype.getCapabilities = function (opt_httpConfig) {
   const httpConfig =
@@ -554,7 +562,7 @@ PrintService.prototype.getCapabilities = function (opt_httpConfig) {
  * @param {angular.IHttpService} $http Angular $http service.
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext service.
  * @param {import('ngeo/map/LayerHelper').LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
- * @return {CreatePrint} The function to create a print service.
+ * @returns {CreatePrint} The function to create a print service.
  * @ngInject
  * @ngdoc service
  * @ngname ngeoCreatePrint
@@ -564,7 +572,7 @@ export function createPrintServiceFactory($http, gettextCatalog, ngeoLayerHelper
   return (
     /**
      * @param {string} url URL to MapFish print service.
-     * @return {PrintService} The print service
+     * @returns {PrintService} The print service
      */
     function (url) {
       return new PrintService(url, $http, gettextCatalog, ngeoLayerHelper);

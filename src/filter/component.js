@@ -66,7 +66,7 @@ myModule.value(
   'ngeoFilterTemplateUrl',
   /**
    * @param {angular.IAttributes} $attrs Attributes.
-   * @return {string} The template url.
+   * @returns {string} The template url.
    */
   ($attrs) => {
     const templateUrl = $attrs.ngeoFilterTemplateUrl;
@@ -77,7 +77,7 @@ myModule.value(
 /**
  * @param {angular.IAttributes} $attrs Attributes.
  * @param {function(angular.IAttributes): string} ngeoFilterTemplateUrl Template function.
- * @return {string} Template URL.
+ * @returns {string} Template URL.
  * @ngInject
  * @private
  * @hidden
@@ -214,12 +214,14 @@ export class FilterController {
 
     /**
      * List of geometry attributes.
+     *
      * @type {import('ngeo/format/Attribute').Attribute[]}
      */
     this.geometryAttributes = [];
 
     /**
      * List of other attribute names.
+     *
      * @type {import('ngeo/format/Attribute').Attribute[]}
      */
     this.otherAttributes = [];
@@ -293,7 +295,7 @@ export class FilterController {
   }
 
   /**
-   * @return {boolean} True if at least one rule is currently defined with a literal.
+   * @returns {boolean} True if at least one rule is currently defined with a literal.
    */
   hasARuleActive() {
     let customRuleActive = false;
@@ -377,7 +379,8 @@ export class FilterController {
 
   /**
    * Loop in all directed and custom rules and collect those with a value.
-   * @return {import('ngeo/rule/Rule').default[]} Rules with value.
+   *
+   * @returns {import('ngeo/rule/Rule').default[]} Rules with value.
    * @private
    */
   getRulesWithValue_() {
@@ -398,6 +401,7 @@ export class FilterController {
   /**
    * Create and add a new custom rule using an attribute. The rule is activated
    * after being created.
+   *
    * @param {import('ngeo/format/Attribute').Attribute} attribute Attribute to use to create the custom
    * rule.
    */
@@ -427,6 +431,7 @@ export class FilterController {
   /**
    * Remove a custom rule. Deactivate it first, then give time to the
    * `ngeo-rule` directive to manage the deactivation of the rule.
+   *
    * @param {import('ngeo/rule/Rule').default} rule Custom rule to remove.
    */
   removeCustomRule(rule) {
@@ -477,6 +482,7 @@ export class FilterController {
   /**
    * Called when the active property of a rule changes. Set the `aRuleIsActive`
    * property accordingly.
+   *
    * @private
    */
   handleRuleActiveChange_() {
@@ -499,6 +505,7 @@ export class FilterController {
   /**
    * Called when the `aRuleIsActive` property changes. Make sure that
    * no rule is still active if the property is `false`.
+   *
    * @private
    */
   handleARuleIsActiveChange_() {

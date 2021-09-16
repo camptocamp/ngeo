@@ -25,6 +25,7 @@ import Point from 'ol/geom/Point';
 
 /**
  * Interaction dedicated to measure by coordinate (point) on mobile devices.
+ *
  * @hidden
  */
 export default class extends ngeoInteractionMeasure {
@@ -55,7 +56,7 @@ export default class extends ngeoInteractionMeasure {
    * @param {import('ol/style/Style').StyleLike} style The sketchStyle used for the drawing
    *    interaction.
    * @param {import('ol/source/Vector').default<import('ol/geom/Point').default>} source Vector source.
-   * @return {import('ol/interaction/Draw').default|import('ngeo/interaction/DrawAzimut').default|
+   * @returns {import('ol/interaction/Draw').default|import('ngeo/interaction/DrawAzimut').default|
    *    import('ngeo/interaction/MobileDraw').default} The interaction
    */
   createDrawInteraction(style, source) {

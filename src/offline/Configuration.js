@@ -109,7 +109,7 @@ export default class extends olObservable {
 
   /**
    * @export
-   * @return {boolean} whether some offline data is available in the storage
+   * @returns {boolean} whether some offline data is available in the storage
    */
   hasOfflineData() {
     return this.hasData;
@@ -128,10 +128,11 @@ export default class extends olObservable {
 
   /**
    * Hook to allow measuring get/set item performance.
+   *
    * @param {string} msg A message
    * @param {string} key The key to work on
    * @param {Promise<?>} promise A promise
-   * @return {Promise<?>} The promise we passed
+   * @returns {Promise<?>} The promise we passed
    */
   traceGetSetItem(msg, key, promise) {
     return promise;
@@ -161,7 +162,7 @@ export default class extends olObservable {
 
   /**
    * @param {string} key The key
-   * @return {Promise<?>} A promise
+   * @returns {Promise<?>} A promise
    */
   getItem(key) {
     const promise = this.localforage_['getItem'](key);
@@ -170,7 +171,7 @@ export default class extends olObservable {
 
   /**
    * @param {string} key .
-   * @return {Promise<?>} .
+   * @returns {Promise<?>} .
    */
   removeItem(key) {
     const promise = this.localforage_['removeItem'](key);
@@ -180,7 +181,7 @@ export default class extends olObservable {
   /**
    * @param {string} key The key
    * @param {*} value A value
-   * @return {Promise<?>} A promise
+   * @returns {Promise<?>} A promise
    */
   setItem(key, value) {
     const promise = this.localforage_['setItem'](key, value);
@@ -188,7 +189,7 @@ export default class extends olObservable {
   }
 
   /**
-   * @return {Promise<void>} A promise
+   * @returns {Promise<void>} A promise
    */
   clear() {
     this.setHasOfflineData(false);
@@ -198,7 +199,7 @@ export default class extends olObservable {
 
   /**
    * @param {!import('ol/Map').default} map A map
-   * @return {number} An "estimation" of the size of the data to download
+   * @returns {number} An "estimation" of the size of the data to download
    */
   estimateLoadDataSize(map) {
     return 50;
@@ -206,7 +207,7 @@ export default class extends olObservable {
 
   /**
    * @param {import('./index').OfflineLayerMetadata} layerItem The layer metadata
-   * @return {string} A key identifying an offline layer and used during restore.
+   * @returns {string} A key identifying an offline layer and used during restore.
    */
   getLayerKey(layerItem) {
     return /** @type {string} */ (layerItem.layer.get('label'));
@@ -215,7 +216,7 @@ export default class extends olObservable {
   /**
    * @param {number} progress The download progress
    * @param {import('./index').OfflineTile} tile The tile
-   * @return {Promise<void>} A promise
+   * @returns {Promise<void>} A promise
    */
   onTileDownloadSuccess(progress, tile) {
     this.dispatchProgress_(progress);
@@ -228,7 +229,7 @@ export default class extends olObservable {
 
   /**
    * @param {number} progress The progress
-   * @return {Promise<void>} A promise
+   * @returns {Promise<void>} A promise
    */
   onTileDownloadError(progress) {
     this.dispatchProgress_(progress);
@@ -240,7 +241,7 @@ export default class extends olObservable {
    * @param {import('ol/layer/Layer').default<import('ol/source/Source').default>} layer A layer
    * @param {import('ol/layer/Group').default[]} ancestors The ancestors of that layer
    * @param {import('ol/extent').Extent} userExtent The extent selected by the user.
-   * @return {import('./index').OfflineExtentByZoom[]} The extent to download per zoom level
+   * @returns {import('./index').OfflineExtentByZoom[]} The extent to download per zoom level
    */
   getExtentByZoom(map, layer, ancestors, userExtent) {
     const currentZoom = map.getView().getZoom();
@@ -264,7 +265,7 @@ export default class extends olObservable {
    * @protected
    * @param {import('ol/source/Source').default} source An ImageWMS source
    * @param {!import('ol/proj/Projection').default} projection The projection
-   * @return {import('ol/source/Source').default} A tiled equivalent source
+   * @returns {import('ol/source/Source').default} A tiled equivalent source
    */
   sourceImageWMSToTileWMS(source, projection) {
     if (
@@ -293,7 +294,7 @@ export default class extends olObservable {
   /**
    * @param {import('ol/Map').default} map The map to work on.
    * @param {import('ol/extent').Extent} userExtent The extent selected by the user.
-   * @return {!import('./index').OfflineLayerMetadata[]} the downloadable layers and metadata.
+   * @returns {!import('./index').OfflineLayerMetadata[]} the downloadable layers and metadata.
    */
   createLayerMetadatas(map, userExtent) {
     /**
@@ -304,7 +305,7 @@ export default class extends olObservable {
     /**
      * @param {import('ol/layer/Base').default} layer .
      * @param {import('ol/layer/Group').default[]} ancestors .
-     * @return {boolean} whether to traverse this layer children.
+     * @returns {boolean} whether to traverse this layer children.
      */
     const visitLayer = (layer, ancestors) => {
       if (layer instanceof olLayerLayer) {
@@ -350,11 +351,12 @@ export default class extends olObservable {
   /**
    * @private
    * @param {import('./index').OfflinePersistentLayer} offlineLayer The offline layer
-   * @return {function(import('ol/ImageTile').default, string)} the tile function
+   * @returns {function(import('ol/ImageTile').default, string)} the tile function
    */
   createTileLoadFunction_(offlineLayer) {
     /**
      * Load the tile from persistent storage.
+     *
      * @param {import('ol/ImageTile').default} imageTile The image tile
      * @param {string} src The tile URL
      */
@@ -374,7 +376,7 @@ export default class extends olObservable {
 
   /**
    * @param {import('./index').OfflinePersistentLayer} offlineLayer The layer to recreate
-   * @return {?import('ol/layer/Layer').default<import('ol/source/Source').default>} the layer.
+   * @returns {?import('ol/layer/Layer').default<import('ol/source/Source').default>} the layer.
    */
   recreateOfflineLayer(offlineLayer) {
     if (offlineLayer.layerType === 'tile') {
@@ -390,7 +392,7 @@ export default class extends olObservable {
   }
 
   /**
-   * @return {number} The number
+   * @returns {number} The number
    */
   getMaxNumberOfParallelDownloads() {
     return 11;

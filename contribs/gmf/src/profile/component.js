@@ -53,6 +53,7 @@ import 'bootstrap/js/src/dropdown';
 /**
  * Information to display for a given point in the profile. The point is
  * typically given by the profile's hover.
+ *
  * @typedef {Object} ProfileHoverPointInformations
  * @property {import('ol/coordinate').Coordinate} [coordinate] Coordinate of the point.
  * @property {number} [distance] distance of the point on the line. Can be in meters or kilometers.
@@ -77,7 +78,7 @@ myModule.value(
   /**
    * @param {JQuery} $element Element.
    * @param {angular.IAttributes} $attrs Attributes.
-   * @return {string} Template.
+   * @returns {string} Template.
    */
   ($element, $attrs) => {
     const templateUrl = $attrs.gmfProfileTemplateurl;
@@ -100,7 +101,7 @@ myModule.run(
  * @param {JQuery} $element Element.
  * @param {angular.IAttributes} $attrs Attributes.
  * @param {function(JQuery, angular.IAttributes): string} gmfProfileTemplateUrl Template function.
- * @return {string} Template URL.
+ * @returns {string} Template URL.
  * @ngInject
  * @private
  * @hidden
@@ -138,7 +139,6 @@ function gmfProfileTemplateUrl($element, $attrs, gmfProfileTemplateUrl) {
  *     mandatory value. Will be passed to the ngeo profile component. Providing
  *     'linesConfiguration', 'distanceExtractor', hoverCallback, outCallback
  *     or i18n will override native gmf profile values.
- *
  * @ngdoc component
  * @ngname gmfProfile
  */
@@ -262,18 +262,21 @@ export function ProfileController(
 
   /**
    * Distance to highlight on the profile. (Property used in ngeo.Profile.)
+   *
    * @type {number}
    */
   this.profileHighlight = -1;
 
   /**
    * Overlay to show the measurement.
+   *
    * @type {?import('ol/Overlay').default}
    */
   this.measureTooltip_ = null;
 
   /**
    * The measure tooltip element.
+   *
    * @type {?HTMLElement}
    */
   this.measureTooltipElement_ = null;
@@ -441,8 +444,9 @@ ProfileController.prototype.updateEventsListening_ = function () {
  * Return the distance between the beginning of the line and the given point.
  * The point must be on the line. If not, this function will return the total
  * length of the line.
+ *
  * @param {import('ol/coordinate').Coordinate} pointOnLine A point on the given line.
- * @return {number} A distance.
+ * @returns {number} A distance.
  */
 ProfileController.prototype.getDistanceOnALine_ = function (pointOnLine) {
   if (!this.line) {
@@ -514,7 +518,7 @@ ProfileController.prototype.outCallback_ = function () {
 };
 
 /**
- * @return {string} A text formatted to a tooltip.
+ * @returns {string} A text formatted to a tooltip.
  */
 ProfileController.prototype.getTooltipHTML_ = function () {
   const gettextCatalog = this.gettextCatalog_;
@@ -577,8 +581,9 @@ ProfileController.prototype.removeMeasureTooltip_ = function () {
 
 /**
  * Return the styler value of a ProfileLineConfiguration.
+ *
  * @param {string} layerName name of the elevation layer.
- * @return {object} The object representation of the style.
+ * @returns {object} The object representation of the style.
  */
 ProfileController.prototype.getStyle = function (layerName) {
   const lineConfiguration = this.ngeoOptions.linesConfiguration[layerName];
@@ -592,7 +597,8 @@ ProfileController.prototype.getStyle = function (layerName) {
 
 /**
  * Return a copy of the existing layer names.
- * @return {string[]} The names of layers.
+ *
+ * @returns {string[]} The names of layers.
  */
 ProfileController.prototype.getLayersNames = function () {
   return this.layersNames_.slice(0);
@@ -600,13 +606,14 @@ ProfileController.prototype.getLayersNames = function () {
 
 /**
  * @param {string} layerName name of the elevation layer.
- * @return {function(ProfileElement): number} Z extractor function.
+ * @returns {function(ProfileElement): number} Z extractor function.
  */
 ProfileController.prototype.getZFactory_ = function (layerName) {
   /**
    * Generic GMF extractor for the 'given' value in 'values' in profileData.
+   *
    * @param {ProfileElement} item The item.
-   * @return {number|null} The elevation or `null` if the value is not present in the data.
+   * @returns {number|null} The elevation or `null` if the value is not present in the data.
    * @private
    */
   const getZFn = function (item) {
@@ -620,8 +627,9 @@ ProfileController.prototype.getZFactory_ = function (layerName) {
 
 /**
  * Extractor for the 'dist' value in profileData.
+ *
  * @param {ProfileElement} item The item.
- * @return {number} The distance.
+ * @returns {number} The distance.
  */
 ProfileController.prototype.getDist_ = function (item) {
   if ('dist' in item) {
