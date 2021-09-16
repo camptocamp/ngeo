@@ -69,7 +69,33 @@ module.exports = function (config) {
     use: {
       loader: 'expose-loader',
       options: {
-        exposes: ['Bloodhound'],
+        exposes: 'Bloodhound',
+      },
+    },
+  };
+
+  const configExpose = {
+    test: path.resolve(__dirname, '../src/store/config.ts'),
+    use: {
+      loader: 'expose-loader',
+      options: {
+        exposes: {
+          globalName: 'gmf.config',
+          moduleLocalName: 'default',
+        },
+      },
+    },
+  };
+
+  const userExpose = {
+    test: path.resolve(__dirname, '../src/store/user.ts'),
+    use: {
+      loader: 'expose-loader',
+      options: {
+        exposes: {
+          globalName: 'gmf.user',
+          moduleLocalName: 'default',
+        },
       },
     },
   };
@@ -246,7 +272,17 @@ module.exports = function (config) {
       path: path.resolve(__dirname, '../dist/'),
     },
     module: {
-      rules: [typeaheadRule, cssRule, sassRule, htmlRule, tsRule, ngeoRule, otherRule],
+      rules: [
+        typeaheadRule,
+        configExpose,
+        userExpose,
+        cssRule,
+        sassRule,
+        htmlRule,
+        tsRule,
+        ngeoRule,
+        otherRule,
+      ],
     },
     plugins: plugins,
     resolve: {
