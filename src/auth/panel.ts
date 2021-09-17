@@ -25,8 +25,6 @@ import {unsafeSVG} from 'lit/directives/unsafe-svg.js';
 import loadingSvg from 'gmf/icons/spinner.svg';
 import i18next from 'i18next';
 import {LitElementI18n} from 'ngeo/localize/i18n';
-
-import {AuthenticationLoginResponsePromise} from 'gmf/authentication/Service';
 import PasswordValidator from './component';
 
 import './component.ts';
@@ -37,9 +35,6 @@ export default class AuthPanel extends LitElementI18n {
   @property({type: String}) loginInfoMessage = '';
   @property({type: Boolean}) postLoading = false;
   @property({type: Object}) passwordValidator: PasswordValidator = null;
-  @property({attribute: false}) onSuccessfulLogin: (
-    resp: AuthenticationLoginResponsePromise
-  ) => AuthenticationLoginResponsePromise = undefined;
 
   protected render() {
     const spinnerTemplate = this.postLoading
@@ -60,7 +55,6 @@ export default class AuthPanel extends LitElementI18n {
           <ngeo-auth-component
             .loginInfoMessage=${this.loginInfoMessage}
             .passwordValidator=${this.passwordValidator}
-            .onSuccessfulLogin=${this.onSuccessfulLogin}
           ></ngeo-auth-component>
           ${spinnerTemplate}
         </div>
