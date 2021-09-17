@@ -28,8 +28,7 @@ import {unsafeSVG} from 'lit/directives/unsafe-svg.js';
 import loadingSvg from 'gmf/icons/spinner.svg';
 import {gmfBackgroundlayerStatus} from 'gmf/backgroundlayerselector/status.js';
 import {Subscription} from 'rxjs';
-// @ts-ignore
-import user, {User, UserState} from 'ngeo/store/user.ts';
+import user, {User, UserState} from 'ngeo/store/user';
 // @ts-ignore
 import qruri from 'qruri';
 import i18next from 'i18next';
@@ -293,6 +292,9 @@ export default class ngeoAuthComponent extends LitElementI18n {
     }
   }
 
+  /**
+   * @private
+   */
   checkUserMustChangeItsPassword_() {
     if (this.gmfUser.is_password_changed !== false) {
       return;
@@ -343,7 +345,7 @@ export default class ngeoAuthComponent extends LitElementI18n {
       // Custom validation - If a passwordValidaor is set, use it to validate the new password.
       if (this.passwordValidator) {
         if (!this.passwordValidator.isPasswordValid(oldPwd)) {
-          errors.push(this.passwordValidator.notValidMessage);
+          errors.push(i18next.t(this.passwordValidator.notValidMessage));
         }
       }
 
