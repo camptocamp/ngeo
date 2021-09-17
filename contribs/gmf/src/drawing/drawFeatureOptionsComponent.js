@@ -111,12 +111,14 @@ export class DrawFeatureOptionsController {
      * - the length of a line segment to draw (for length and area measurements)
      * - the width of a rectangle to draw
      * - the radius of a circle to draw (for azimut measurements)
+     *
      * @type {number}
      */
     this.length = NaN;
 
     /**
      * Measure unit for the length. Possible values are: 'm', 'km'.
+     *
      * @type {string}
      */
     this.lengthUnits = 'm';
@@ -124,12 +126,14 @@ export class DrawFeatureOptionsController {
     /**
      * The height is used to determine:
      * - the height of the rectangle to draw
+     *
      * @type {number}
      */
     this.height = NaN;
 
     /**
      * Measure unit for the height. Possible values are: 'm', 'km'.
+     *
      * @type {string}
      */
     this.heightUnits = 'm';
@@ -138,6 +142,7 @@ export class DrawFeatureOptionsController {
 
     /**
      * The draw interaction that was given.
+     *
      * @type {?OLInteractionDraw}
      * @private
      */
@@ -146,6 +151,7 @@ export class DrawFeatureOptionsController {
     /**
      * The feature being drawn. Set when the 'drawstart' event is
      * fired by the draw interaction.
+     *
      * @type {?OLFeature<import('ol/geom/Geometry').default>}
      * @private
      */
@@ -167,6 +173,7 @@ export class DrawFeatureOptionsController {
      * If at any moment, while drawing, this number becomes different
      * than the actual number of vertices in the geometry, then we
      * need to update the snap feature.
+     *
      * @type {number}
      */
     this.verticesCounter_ = NaN;
@@ -199,6 +206,7 @@ export class DrawFeatureOptionsController {
     /**
      * Flag used to manually stop drawing after a double
      * click. See explanations where used.
+     *
      * @type {boolean}
      * @private
      */
@@ -292,6 +300,7 @@ export class DrawFeatureOptionsController {
   /**
    * When the draw interaction starts drawing, the feature being drawn
    * is stored.
+   *
    * @param {Event|import('ol/events/Event').default} evt Event.
    * @private
    */
@@ -309,6 +318,7 @@ export class DrawFeatureOptionsController {
 
   /**
    * Called every time the geometry of the feature being drawn changes.
+   *
    * @private
    */
   handleFeatureGeometryChange_() {
@@ -351,6 +361,7 @@ export class DrawFeatureOptionsController {
 
   /**
    * Reset the snap feature's geometry.
+   *
    * @private
    */
   resetSnapFeature_() {
@@ -428,8 +439,9 @@ export class DrawFeatureOptionsController {
    * Override handler method of the map browser event for the snap
    * interaction. If the event is 'pointerup', if the following map
    * browser event is 'dblclick', then we should stop drawing.
+   *
    * @param {import('ol/MapBrowserEvent').default<unknown>} evt Map browser event.
-   * @return {boolean} `false` to stop event propagation.
+   * @returns {boolean} `false` to stop event propagation.
    * @private
    */
   snapInteractionHandleEvent_(evt) {
@@ -450,6 +462,7 @@ export class DrawFeatureOptionsController {
   /**
    * If a 'singleclick' event occur on the map after a snap, then we
    * can continue drawing.
+   *
    * @param {Event|import('ol/events/Event').default} evt Event.
    * @private
    */

@@ -41,6 +41,7 @@ import {CollectionEvent} from 'ol/Collection';
 
 /**
  * Interaction for modifying feature geometries.
+ *
  * @hidden
  */
 export default class extends olInteractionPointer {
@@ -60,6 +61,7 @@ export default class extends olInteractionPointer {
 
     /**
      * Editing vertex.
+     *
      * @type {?olFeature<import('ol/geom/Geometry').default>}
      * @private
      */
@@ -79,6 +81,7 @@ export default class extends olInteractionPointer {
 
     /**
      * Segment RTree for each layer
+     *
      * @type {import('ol/structs/RBush').default<import('ol/interaction/Modify').SegmentData>}
      * @private
      */
@@ -105,6 +108,7 @@ export default class extends olInteractionPointer {
     /**
      * Indicate whether the interaction is currently changing a feature's
      * coordinates.
+     *
      * @type {boolean}
      * @private
      */
@@ -118,6 +122,7 @@ export default class extends olInteractionPointer {
 
     /**
      * Draw overlay where sketch features are drawn.
+     *
      * @type {import('ol/layer/Vector').default<import('ol/source/Vector').default<import('ol/geom/Geometry').default>>}
      * @private
      */
@@ -273,7 +278,7 @@ export default class extends olInteractionPointer {
 
   /**
    * @param {import('ol/coordinate').Coordinate} coordinates Coordinates.
-   * @return {olFeature<import('ol/geom/Geometry').default>} Vertex feature.
+   * @returns {olFeature<import('ol/geom/Geometry').default>} Vertex feature.
    * @private
    */
   createOrUpdateVertexFeature_(coordinates) {
@@ -313,7 +318,7 @@ export default class extends olInteractionPointer {
     /**
      * @param {import('ol/interaction/Modify').SegmentData} a
      * @param {import('ol/interaction/Modify').SegmentData} b
-     * @return {number}
+     * @returns {number}
      */
     const sortByDistance = function (a, b) {
       return (
@@ -389,7 +394,7 @@ export default class extends olInteractionPointer {
 
   /**
    * @param {import('ol/MapBrowserEvent').default<unknown>} evt MapBrowserEvent.
-   * @return {boolean} Start drag sequence?
+   * @returns {boolean} Start drag sequence?
    * @private
    */
   handleDownEvent_(evt) {
@@ -458,7 +463,7 @@ export default class extends olInteractionPointer {
 
   /**
    * @param {import('ol/MapBrowserEvent').default<unknown>} evt MapBrowserEvent.
-   * @return {boolean} Stop drag sequence?
+   * @returns {boolean} Stop drag sequence?
    * @private
    */
   handleUpEvent_(evt) {
@@ -482,8 +487,9 @@ export default class extends olInteractionPointer {
   /**
    * Handles the {@link import('ol/MapBrowserEvent').default map browser event} and may modify the
    * geometry.
+   *
    * @param {import('ol/MapBrowserEvent').default<unknown>} mapBrowserEvent Map browser event.
-   * @return {boolean} `false` to stop event propagation.
+   * @returns {boolean} `false` to stop event propagation.
    */
   handleEvent(mapBrowserEvent) {
     if (!(mapBrowserEvent instanceof olMapBrowserEvent)) {
@@ -506,7 +512,7 @@ export default class extends olInteractionPointer {
 /**
  * @param {import('ol/interaction/Modify').SegmentData} a The first segment data.
  * @param {import('ol/interaction/Modify').SegmentData} b The second segment data.
- * @return {number} The difference in indexes.
+ * @returns {number} The difference in indexes.
  * @private
  * @hidden
  */

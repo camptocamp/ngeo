@@ -70,7 +70,7 @@ myModule.value(
   'ngeoRoutingTemplateUrl',
   /**
    * @param {angular.IAttributes} $attrs Attributes.
-   * @return {string} Template URL.
+   * @returns {string} Template URL.
    */
   ($attrs) => {
     const templateUrl = $attrs.ngeoRoutingTemplateUrl;
@@ -81,7 +81,7 @@ myModule.value(
 /**
  * @param {angular.IAttributes} $attrs Attributes.
  * @param {function(angular.IAttributes): string} ngeoRoutingTemplateUrl Template function.
- * @return {string} Template URL.
+ * @returns {string} Template URL.
  * @ngInject
  * @private
  * @hidden
@@ -92,6 +92,7 @@ function ngeoRoutingTemplateUrl($attrs, ngeoRoutingTemplateUrl) {
 
 /**
  * The controller for the routing directive.
+ *
  * @hidden
  */
 export class Controller {
@@ -140,6 +141,7 @@ export class Controller {
      *              profile: 'routed-car' // used as part of the query
      *            }
      *          ]
+     *
      * @type {import('ngeo/options').RoutingProfile[]}
      */
     this.routingProfiles = this.routingOptions_.profiles || [];
@@ -222,12 +224,14 @@ export class Controller {
 
     /**
      * Distance of route in meters
+     *
      * @type {number}
      */
     this.routeDistance = 0;
 
     /**
      * Duration of route in minutes.
+     *
      * @type {?number}
      */
     this.routeDuration = null;
@@ -249,6 +253,7 @@ export class Controller {
     /**
      * Debounced because in some cases (reverse route) multiple changes are done
      * at once and spam this function.
+     *
      * @type {function(): void}
      */
     this.handleChange = ngeoDebounce(this.calculateRoute.bind(this), debounceDelay, true);
@@ -278,8 +283,9 @@ export class Controller {
 
   /**
    * Converts feature point into LonLat coordinate.
+   *
    * @param {olFeature<import('ol/geom/Geometry').default>} point Feature point to convert
-   * @return {?import('ol/coordinate').Coordinate} LonLat coordinate
+   * @returns {?import('ol/coordinate').Coordinate} LonLat coordinate
    * @private
    */
   getLonLatFromPoint_(point) {
@@ -312,7 +318,7 @@ export class Controller {
 
   /**
    * @param {import('./RoutingService').Route} route Routes of OSRM response
-   * @return {olFeature<import('ol/geom/Geometry').default>[]} parsed route features
+   * @returns {olFeature<import('ol/geom/Geometry').default>[]} parsed route features
    * @private
    */
   parseRoute_(route) {
@@ -364,7 +370,7 @@ export class Controller {
 
     /**
      * @param {angular.IHttpResponse<import('./RoutingService').Routes>} resp
-     * @return {void}
+     * @returns {void}
      */
     const onSuccess_ = (resp) => {
       if (!this.map || !this.startFeature_ || !this.targetFeature_) {

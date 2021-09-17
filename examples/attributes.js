@@ -92,7 +92,7 @@ function MainController($http, $timeout, $scope) {
 
 /**
  * @param {angular.IHttpResponse<string|Document|Element>} resp Ajax response.
- * @return {import('ngeo/format/Attribute').Attribute[]} List of attributes.
+ * @returns {import('ngeo/format/Attribute').Attribute[]} List of attributes.
  */
 MainController.prototype.handleXSDAttributeGet_ = function (resp) {
   const format = new ngeoFormatXSDAttribute();

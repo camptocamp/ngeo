@@ -47,6 +47,7 @@ export const ThemeEventType = {
  *
  * This service's theme is a GmfTheme with only children and a name.
  * Thought to be the tree source of the gmf layertree directive.
+ *
  * @class
  * @param {angular.IScope} $rootScope Angular rootScope.
  * @param {import('gmf/theme/Themes').ThemesService} gmfThemes gmf Themes service.
@@ -100,6 +101,7 @@ export function ThemeManagerService(
 /**
  * Set the current theme name (mode 'flush' only) and add its children. Add
  * only groups that are not already in the tree.
+ *
  * @param {import('gmf/themes').GmfTheme} theme A theme object.
  * @param {boolean} [opt_silent] if true it will be no user message if
  *     the theme should be added but it's already added.
@@ -117,14 +119,14 @@ ThemeManagerService.prototype.addTheme = function (theme, opt_silent) {
 };
 
 /**
- * @return {string} The theme name. Will be empty on 'not flush' mode.
+ * @returns {string} The theme name. Will be empty on 'not flush' mode.
  */
 ThemeManagerService.prototype.getThemeName = function () {
   return this.themeName_;
 };
 
 /**
- * @return {boolean} true if the theme is loading.
+ * @returns {boolean} true if the theme is loading.
  */
 ThemeManagerService.prototype.isLoading = function () {
   return !this.gmfThemes_.loaded;

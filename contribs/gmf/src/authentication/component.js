@@ -38,6 +38,7 @@ import user, {UserState} from 'ngeo/store/user.ts';
 /**
  * Password validator function with an error message.
  * Configuration options for the permalink service.
+ *
  * @typedef {Object} PasswordValidator
  * @property {function(string): boolean} isPasswordValid
  * @property {string} notValidMessage
@@ -56,7 +57,7 @@ const myModule = angular.module('gmfAuthentication', [
 /**
  * @param {JQuery} element Element.
  * @param {angular.IAttributes} attrs Attributes.
- * @return {string} Template URL.
+ * @returns {string} Template URL.
  * @private
  * @hidden
  */
@@ -80,7 +81,7 @@ myModule.run(
  * @param {JQuery} $element Element.
  * @param {angular.IAttributes} $attrs Attributes.
  * @param {function(JQuery, angular.IAttributes): string} gmfAuthenticationTemplateUrl Template function.
- * @return {string} Template URL.
+ * @returns {string} Template URL.
  * @ngInject
  * @private
  * @hidden
@@ -113,7 +114,6 @@ function gmfAuthenticationTemplateUrl($element, $attrs, gmfAuthenticationTemplat
  *     Object to add constraint on user's new password. The `allowPasswordChange` config. To use
  *     it you must also allow the user to change its password.
  * @htmlAttribute {string} gmf-authentication-info-message Message to show above the authentication form.
- *
  * @ngdoc component
  * @ngname gmfAuthentication
  */

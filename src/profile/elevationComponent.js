@@ -103,7 +103,7 @@ const myModule = angular.module('ngeoProfile', [ngeoMiscDebounce.name]);
  * @param {import('ngeo/misc/debounce').miscDebounce<function((Event|import('ol/events/Event').default)): void>} ngeoDebounce
  *    ngeo Debounce factory.
  * @param {import('ngeo/options').ngeoProfileOptions} ngeoProfileOptions The options.
- * @return {angular.IDirective} Directive Definition Object.
+ * @returns {angular.IDirective} Directive Definition Object.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoProfile
@@ -186,6 +186,9 @@ function profileElevationComponent(ngeoDebounce, ngeoProfileOptions) {
 
       listen(window, 'resize', ngeoDebounce(refreshData, 50, true));
 
+      /**
+       *
+       */
       function refreshData() {
         if (profile !== undefined) {
           selection.datum(elevationData).call(profile);

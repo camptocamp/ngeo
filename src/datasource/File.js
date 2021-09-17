@@ -28,6 +28,7 @@ import olSourceVector from 'ol/source/Vector';
  * The options required to create a `File`.
  *
  * extends DataSourceOptions
+ *
  * @typedef {Object} FileOptions
  * @property {import('ol/Collection').default<import('ol/Feature').default<import('ol/geom/Geometry').default>>} [features]
  *    Collection of `import('ol/Feature').default<import('ol/geom/Geometry').default>` objects.
@@ -86,7 +87,7 @@ export default class extends ngeoDatasourceDataSource {
   // ========================================
 
   /**
-   * @return {import('ol/Feature').default<import('ol/geom/Geometry').default>[]} Features
+   * @returns {import('ol/Feature').default<import('ol/geom/Geometry').default>[]} Features
    */
   get features() {
     return this.featuresCollection_.getArray();
@@ -97,14 +98,14 @@ export default class extends ngeoDatasourceDataSource {
   // =======================================
 
   /**
-   * @return {import('ol/Collection').default<import('ol/Feature').default<import('ol/geom/Geometry').default>>} Features collection
+   * @returns {import('ol/Collection').default<import('ol/Feature').default<import('ol/geom/Geometry').default>>} Features collection
    */
   get featuresCollection() {
     return this.featuresCollection_;
   }
 
   /**
-   * @return {import('ol/layer/Vector').default<import('ol/source/Vector').default<import('ol/geom/Geometry').default>>} Vector layer.
+   * @returns {import('ol/layer/Vector').default<import('ol/source/Vector').default<import('ol/geom/Geometry').default>>} Vector layer.
    */
   get layer() {
     return this.layer_;
@@ -115,7 +116,7 @@ export default class extends ngeoDatasourceDataSource {
   // ===================================
 
   /**
-   * @return {import('ol/extent').Extent} Extent.
+   * @returns {import('ol/extent').Extent} Extent.
    */
   get extent() {
     return this.source_.getExtent();

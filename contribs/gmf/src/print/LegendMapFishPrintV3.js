@@ -30,6 +30,7 @@ import {getFlatNodes, findObjectByName} from 'gmf/theme/Themes';
 
 /**
  * Get the print legend for MapFishPrint V3 from the OpenLayers map and the GMF Layertree.
+ *
  * @hidden
  */
 export default class LegendMapFishPrintV3 {
@@ -82,11 +83,12 @@ export default class LegendMapFishPrintV3 {
 
   /**
    * Return a legend for MapFishPrint V3 based on the map and the GMF layertree.
+   *
    * @param {import('gmf/themes').GmfTheme[]} currentThemes the current themes.
    * @param {number} scale The scale to get the legend (for wms layers only).
    * @param {number} dpi The DPI.
    * @param {number[]} bbox The bbox.
-   * @return {unknown?} Legend object for print report or null.
+   * @returns {unknown?} Legend object for print report or null.
    */
   getLegend(currentThemes, scale, dpi, bbox) {
     /** @type {import('ngeo/print/mapfish-print-v3').MapFishPrintLegendClass[]} */
@@ -101,11 +103,12 @@ export default class LegendMapFishPrintV3 {
 
   /**
    * Get legend classes from the layertree only.
+   *
    * @param {import('gmf/themes').GmfTheme[]} currentThemes the current themes.
    * @param {number} scale The scale to get the legend.
    * @param {number} dpi The DPI.
    * @param {number[]} bbox The bbox.
-   * @return {import('ngeo/print/mapfish-print-v3').MapFishPrintLegendClass[]} Legend classes.
+   * @returns {import('ngeo/print/mapfish-print-v3').MapFishPrintLegendClass[]} Legend classes.
    * @private
    */
   getInternalLegendItems_(currentThemes, scale, dpi, bbox) {
@@ -116,12 +119,13 @@ export default class LegendMapFishPrintV3 {
 
   /**
    * Extract recursively a legend from a layer.
+   *
    * @param {import('ol/layer/Base').default} layer or layer group to extract the legend from.
    * @param {import('gmf/themes').GmfTheme[]} currentThemes the current themes.
    * @param {number} scale The scale to get the legend.
    * @param {number} dpi The DPI.
    * @param {number[]} bbox The bbox.
-   * @return {import('ngeo/print/mapfish-print-v3').MapFishPrintLegendClass} Legend classes.
+   * @returns {import('ngeo/print/mapfish-print-v3').MapFishPrintLegendClass} Legend classes.
    * @private
    */
   collectLegendClassesInTree_(layer, currentThemes, scale, dpi, bbox) {
@@ -174,8 +178,9 @@ export default class LegendMapFishPrintV3 {
 
   /**
    * Get legend classes from external datasources.
+   *
    * @param {number} scale The scale to get the legend.
-   * @return {import('ngeo/print/mapfish-print-v3').MapFishPrintLegendClass[]} Legend classes.
+   * @returns {import('ngeo/print/mapfish-print-v3').MapFishPrintLegendClass[]} Legend classes.
    * @private
    */
   getExternalLegendItems_(scale) {
@@ -210,6 +215,7 @@ export default class LegendMapFishPrintV3 {
    * Add a classItem to a classes array if the classItem to add is not null.
    * If the classItem have embedded classes, these classes must have classItem. Otherwise the given
    * classItem will be not added.
+   *
    * @param {import('ngeo/print/mapfish-print-v3').MapFishPrintLegendClass[]} classes Array to add an element.
    * @param {import('ngeo/print/mapfish-print-v3').MapFishPrintLegendClass} classItem The class to add.
    * @private
@@ -224,8 +230,9 @@ export default class LegendMapFishPrintV3 {
    * If a Legend item have only one children and the children name is identical to its name, then return
    * only the children (cut one level). Shrink also if both names are null or undefined.
    * Otherwise return the given legend item.
+   *
    * @param {import('ngeo/print/mapfish-print-v3').MapFishPrintLegendClass} legendGroupItem A legend item.
-   * @return {import('ngeo/print/mapfish-print-v3').MapFishPrintLegendClass} The same legend item or a
+   * @returns {import('ngeo/print/mapfish-print-v3').MapFishPrintLegendClass} The same legend item or a
    * shrunk one.
    * @private
    */
@@ -238,10 +245,11 @@ export default class LegendMapFishPrintV3 {
 
   /**
    * Create a legend item from the given WMTS layer.
+   *
    * @param {import('gmf/themes').GmfTheme[]} currentThemes the current themes.
    * @param {import('ol/layer/Tile').default<import('ol/source/Tile').default>} layer The layer to extract the legend from.
    * @param {number} dpi The DPI.
-   * @return {import('ngeo/print/mapfish-print-v3').MapFishPrintLegendClass} Legend object for print report
+   * @returns {import('ngeo/print/mapfish-print-v3').MapFishPrintLegendClass} Legend object for print report
    * or null.
    * @private
    */
@@ -270,13 +278,14 @@ export default class LegendMapFishPrintV3 {
 
   /**
    * Create a legend item from the given WMS layer.
+   *
    * @param {import('ol/layer/Layer').default<import('ol/source/ImageWMS').default>} layer The layer
    * to extract the legend from.
    * @param {import('gmf/themes').GmfTheme[]} currentThemes the current themes.
    * @param {number} scale The scale to get the legend.
    * @param {number} dpi The DPI.
    * @param {number[]} bbox The bbox.
-   * @return {import('ngeo/print/mapfish-print-v3').MapFishPrintLegendClass} Legend object for print report
+   * @returns {import('ngeo/print/mapfish-print-v3').MapFishPrintLegendClass} Legend object for print report
    * or null.
    * @private
    */
@@ -356,10 +365,11 @@ export default class LegendMapFishPrintV3 {
 
   /**
    * Create a legend item from the given external datasource.
+   *
    * @param {import('ngeo/datasource/DataSource').default} dataSource The datasource to extract the legend
    * from.
    * @param {number} scale The scale to get the legend.
-   * @return {import('ngeo/print/mapfish-print-v3').MapFishPrintLegendClass} Legend object for print report
+   * @returns {import('ngeo/print/mapfish-print-v3').MapFishPrintLegendClass} Legend object for print report
    * or null.
    * @private
    */
@@ -386,7 +396,7 @@ export default class LegendMapFishPrintV3 {
    * @param {import('gmf/themes').GmfTheme[]} currentThemes the current themes.
    * @param {string} layerName a layer name.
    * @param {number} [dpi=96] the image DPI.
-   * @return {LegendURLDPI|undefined} The legendImage with selected DPI or undefined.
+   * @returns {LegendURLDPI|undefined} The legendImage with selected DPI or undefined.
    * @private
    */
   getMetadataLegendImage_(currentThemes, layerName, dpi = -1) {

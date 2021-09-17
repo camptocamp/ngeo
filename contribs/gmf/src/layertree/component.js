@@ -55,6 +55,7 @@ import 'bootstrap/js/src/collapse';
 
 /**
  * Static function to create a popup with an iframe.
+ *
  * @typedef {Function} openIframePopup
  * @param {string} url an url.
  * @param {string} title (text).
@@ -89,7 +90,7 @@ myModule.value(
   /**
    * @param {JQuery} element Element.
    * @param {angular.IAttributes} attrs Attributes.
-   * @return {string} Template URL.
+   * @returns {string} Template URL.
    */
   (element, attrs) => 'gmf/layertree'
 );
@@ -110,7 +111,7 @@ myModule.value(
   /**
    * @param {JQuery} $element Element.
    * @param {angular.IAttributes} $attrs Attributes.
-   * @return {string} Template.
+   * @returns {string} Template.
    */
   ($element, $attrs) => {
     const subTemplateUrl = 'gmf/layertree';
@@ -129,7 +130,7 @@ myModule.value(
  * @param {JQuery} $element Element.
  * @param {angular.IAttributes} $attrs Attributes.
  * @param {function(JQuery, angular.IAttributes): string} gmfLayertreeTemplate Template function.
- * @return {string} Template.
+ * @returns {string} Template.
  * @ngInject
  * @private
  * @hidden
@@ -160,33 +161,32 @@ function gmfLayertreeTemplate($element, $attrs, gmfLayertreeTemplate) {
  *
  * Used metadata:
  *
- *  * `isChecked`: if 'false' the layer visibility will be set to false.
- *  * `iconUrl`: layer icon full URL.
- *  * `legendRule`: WMS rule used to get a layer icon.
- *  * `isLegendExpanded: if 'true' the legend is expanded by default.
- *  * `metadataUrl`: Display a popup with the content of the given URL if
+ *  - `isChecked`: if 'false' the layer visibility will be set to false.
+ *  - `iconUrl`: layer icon full URL.
+ *  - `legendRule`: WMS rule used to get a layer icon.
+ *  - `isLegendExpanded: if 'true' the legend is expanded by default.
+ *  - `metadataUrl`: Display a popup with the content of the given URL if
  *    possible also open a new window.
- *  * `exclusiveGroup`: Whether the group contains children that have to be mutually
+ *  - `exclusiveGroup`: Whether the group contains children that have to be mutually
  *      exclusive, meaning that only one child may be ON at any time.
- *  * `legend`: Display the legend of this layer. For WMS and WMTS layers.
- *  * `legendImage`: The URL to the image used as a legend in the layer tree. For WMS and WMTS layers.
- *  * `maxResolution`: The max resolution where the layer is visible. For WMS layers.
+ *  - `legend`: Display the legend of this layer. For WMS and WMTS layers.
+ *  - `legendImage`: The URL to the image used as a legend in the layer tree. For WMS and WMTS layers.
+ *  - `maxResolution`: The max resolution where the layer is visible. For WMS layers.
  *      On WMTS layers it will have an effect on the node in the layertree but not on the layertree directly.
- *  * `minResolution`: The min resolution where the layer is visible. For WMS layers.
+ *  - `minResolution`: The min resolution where the layer is visible. For WMS layers.
  *      On WMTS layers it will have an effect on the node in the layertree but not on the layer directly.
- *  * `ogcServer`: The corresponding OGC server for a WMTS layer. For WMTS layers.
- *  * `opacity`: Layer opacity. 1.0 means fully visible, 0 means invisible, For WMS and WMTS layers.
- *  * `timeAttribute`: The name of the time attribute. For WMS(-T) layers.
- *  * `wmsLayers`: A corresponding WMS layer for WMTS layers. Used to query the WMTS layers and to print them.
+ *  - `ogcServer`: The corresponding OGC server for a WMTS layer. For WMTS layers.
+ *  - `opacity`: Layer opacity. 1.0 means fully visible, 0 means invisible, For WMS and WMTS layers.
+ *  - `timeAttribute`: The name of the time attribute. For WMS(-T) layers.
+ *  - `wmsLayers`: A corresponding WMS layer for WMTS layers. Used to query the WMTS layers and to print them.
  *      (See also printLayers and queryLayers metadata for more granularity). For WMTS Layers.
- *  * `printLayers`: A WMS layer that will be used instead of the WMTS layers in the print.
- *  * `queryLayers`: The WMS layers used as references to query the WMTS layers. For WMTS layers.
- *  * `isExpanded`: Whether the layer group is expanded by default. For layer groups (only).
- *  * `snappingConfig`: Whether the layer is used for snapping.
+ *  - `printLayers`: A WMS layer that will be used instead of the WMTS layers in the print.
+ *  - `queryLayers`: The WMS layers used as references to query the WMTS layers. For WMTS layers.
+ *  - `isExpanded`: Whether the layer group is expanded by default. For layer groups (only).
+ *  - `snappingConfig`: Whether the layer is used for snapping.
  *
  * @htmlAttribute {import('ol/Map').default} gmf-layertree-map The map.
  * @htmlAttribute {Object<string, string>|undefined} gmf-layertree-dimensions Global dimensions object.
- *
  * @ngdoc component
  * @ngname gmfLayertreeComponent
  */
@@ -442,9 +442,10 @@ Controller.prototype.updateLayerDimensions_ = function (layer, node) {
  * treeCtrl. The layer will be inserted into the map. The layer can be null
  * if the treeCtrl is based on a node inside a mixed node. It this case, the
  * layer will be in the first parent declared as a mixed node.
+ *
  * @param {import('ngeo/layertree/Controller').LayertreeController} treeCtrl tree controller of the
  *    node.
- * @return {import('ol/layer/Base').default|import('ol/layer/Group').default|null} The OpenLayers
+ * @returns {import('ol/layer/Base').default|import('ol/layer/Group').default|null} The OpenLayers
  *    layer or group for the node.
  */
 Controller.prototype.getLayer = function (treeCtrl) {
@@ -473,6 +474,7 @@ Controller.prototype.getLayer = function (treeCtrl) {
 /**
  * Remove layer from this component's layergroup (and then, from the map) on
  * a ngeo layertree destroy event.
+ *
  * @param {angular.IScope} scope treeCtrl scope.
  * @param {import('ngeo/layertree/Controller').LayertreeController} treeCtrl ngeo layertree controller,
  *    from the current node.
@@ -492,6 +494,7 @@ Controller.prototype.listeners = function (scope, treeCtrl) {
 
 /**
  * Toggle the state of treeCtrl's node.
+ *
  * @param {import('ngeo/layertree/Controller').LayertreeController} treeCtrl ngeo layertree controller,
  *    from the current node.
  */
@@ -509,9 +512,10 @@ Controller.prototype.toggleActive = function (treeCtrl) {
 /**
  * Return the current state of the given treeCtrl's node.
  * Return a class name that match with the current node activation state.
+ *
  * @param {import('ngeo/layertree/Controller').LayertreeController} treeCtrl ngeo layertree controller,
  *    from the current node.
- * @return {string} 'on' or 'off' or 'indeterminate'.
+ * @returns {string} 'on' or 'off' or 'indeterminate'.
  */
 Controller.prototype.getNodeState = function (treeCtrl) {
   return treeCtrl.getState();
@@ -522,6 +526,7 @@ Controller.prototype.getNodeState = function (treeCtrl) {
  * given tree controller and the state of the permalink using the given time.
  *
  * LayertreeController.prototype.updateTimeData - description
+ *
  * @param {import('ngeo/layertree/Controller').LayertreeController} layertreeCtrl ngeo layertree controller
  * @param {import('ngeo/datasource/OGC').TimeRange} time The start
  * and optionally the end datetime (for time range selection) selected by user
@@ -541,6 +546,7 @@ Controller.prototype.updateTimeData = function (layertreeCtrl, time) {
  * `gmf.datasource.Manager` service
  *
  * LayertreeController.prototype.updateWMSTimeLayerState - description
+ *
  * @param {import('ngeo/layertree/Controller').LayertreeController} layertreeCtrl ngeo layertree controller
  * @param {import('ngeo/datasource/OGC').TimeRange} time The start
  * and optionally the end datetime (for time range selection) selected by user
@@ -565,9 +571,10 @@ Controller.prototype.updateWMSTimeLayerState = function (layertreeCtrl, time) {
 /**
  * Get the icon image URL for the given treeCtrl's layer. It can only return a
  * string for internal WMS layers without multiple childlayers in the node.
+ *
  * @param {import('ngeo/layertree/Controller').LayertreeController} treeCtrl ngeo layertree controller,
  *    from the current node.
- * @return {string|undefined} The icon legend URL or undefined.
+ * @returns {string|undefined} The icon legend URL or undefined.
  */
 Controller.prototype.getLegendIconURL = function (treeCtrl) {
   const iconUrl = treeCtrl.node.metadata.iconUrl;
@@ -603,9 +610,10 @@ Controller.prototype.getLegendIconURL = function (treeCtrl) {
 
 /**
  * Get the legends object (<LayerName: url> for each layer) for the given treeCtrl.
+ *
  * @param {import('ngeo/layertree/Controller').LayertreeController} treeCtrl ngeo layertree controller,
  *    from the current node.
- * @return {?Object<string, string>} A <layerName: url> object that provides a
+ * @returns {?Object<string, string>} A <layerName: url> object that provides a
  *     layer for each layer.
  */
 Controller.prototype.getLegendsObject = function (treeCtrl) {
@@ -658,9 +666,10 @@ Controller.prototype.getLegendsObject = function (treeCtrl) {
 
 /**
  * Get the number of legends object for this layertree controller.
+ *
  * @param {import('ngeo/layertree/Controller').LayertreeController} treeCtrl ngeo layertree controller,
  *    from the current node.
- * @return {number} The number of Legends object.
+ * @returns {number} The number of Legends object.
  */
 Controller.prototype.getNumberOfLegendsObject = function (treeCtrl) {
   const legendsObject = this.getLegendsObject(treeCtrl);
@@ -669,7 +678,8 @@ Controller.prototype.getNumberOfLegendsObject = function (treeCtrl) {
 
 /**
  * Return the current scale of the map.
- * @return {number} Scale.
+ *
+ * @returns {number} Scale.
  */
 Controller.prototype.getScale_ = function () {
   const view = this.map.getView();
@@ -687,8 +697,9 @@ Controller.prototype.getScale_ = function () {
 
 /**
  * Is snapping activated for this LayertreeController
+ *
  * @param {import('ngeo/layertree/Controller').LayertreeController} treeCtrl ngeo layertree controller.
- * @return {boolean} True if snapping is activated for that layer.
+ * @returns {boolean} True if snapping is activated for that layer.
  */
 Controller.prototype.isSnappingActivated = function (treeCtrl) {
   if (treeCtrl.properties.snapping !== undefined) {
@@ -705,6 +716,7 @@ Controller.prototype.isSnappingActivated = function (treeCtrl) {
 
 /**
  * Toggle snapping for this LayertreeController.
+ *
  * @param {import('ngeo/layertree/Controller').LayertreeController} treeCtrl ngeo layertree controller.
  */
 Controller.prototype.toggleSnapping = function (treeCtrl) {
@@ -713,6 +725,7 @@ Controller.prototype.toggleSnapping = function (treeCtrl) {
 
 /**
  * Opens a openIframePopup with the content of the metadata url of a node.
+ *
  * @param {import('ngeo/layertree/Controller').LayertreeController} treeCtrl ngeo layertree controller,
  *    from the current node.
  */
@@ -803,7 +816,7 @@ Controller.prototype.removeAllNodes = function () {
 };
 
 /**
- * @return {number} first level node count.
+ * @returns {number} first level node count.
  */
 Controller.prototype.nodesCount = function () {
   return this.gmfTreeManager_.root.children.length;
@@ -812,11 +825,12 @@ Controller.prototype.nodesCount = function () {
 /**
  * Return 'out-of-resolution' if the current resolution of the map is out of
  * the min/max resolution in the node.
+ *
  * @param {import('gmf/themes').GmfLayerWMS} gmfLayer the GeoMapFish Layer. WMTS layer is
  *     also allowed (the type is defined as GmfLayerWMS only to avoid some
  *     useless tests to know if a minResolutionHint property can exist
  *     on the node).
- * @return {string|undefined} 'out-of-resolution' or undefined.
+ * @returns {string|undefined} 'out-of-resolution' or undefined.
  */
 Controller.prototype.getResolutionStyle = function (gmfLayer) {
   const resolution = this.map.getView().getResolution();
@@ -836,6 +850,7 @@ Controller.prototype.getResolutionStyle = function (gmfLayer) {
 
 /**
  * Set the resolution of the map with the max or min resolution of the node.
+ *
  * @param {import('ngeo/layertree/Controller').LayertreeController} treeCtrl ngeo layertree controller,
  *    from the current node.
  */
@@ -865,6 +880,7 @@ Controller.prototype.zoomToResolution = function (treeCtrl) {
 /**
  * Set the swipe option on the map.
  *    from the current node.
+ *
  * @param {import('ngeo/layertree/Controller').LayertreeController} treeCtrl Ngeo tree controller.
  * @type {import('gmf/datasource/LayerBeingSwipe').LayerBeingSwipe}
  */
@@ -885,6 +901,7 @@ Controller.prototype.toggleSwipeLayer = function (treeCtrl) {
 
 /**
  * Toggle the legend for a node
+ *
  * @param {string} legendNodeId The DOM node legend id to toggle
  */
 Controller.prototype.toggleNodeLegend = function (legendNodeId) {
@@ -896,6 +913,7 @@ Controller.prototype.toggleNodeLegend = function (legendNodeId) {
 
 /**
  * Toggle the menu for a node
+ *
  * @param {string} menuNodeId The DOM node menu id to toggle
  */
 Controller.prototype.toggleNodeMenu = function (menuNodeId) {
@@ -914,7 +932,7 @@ Controller.prototype.toggleFiltrableDataSource = function (ds) {
 
 /**
  * @param {string} legendNodeId The DOM node legend id
- * @return {boolean} Whenever the legend is currently displayed.
+ * @returns {boolean} Whenever the legend is currently displayed.
  */
 Controller.prototype.isNodeLegendVisible = function (legendNodeId) {
   return $(legendNodeId).is(':visible');
@@ -934,7 +952,7 @@ Controller.prototype.isNodeLegendVisible = function (legendNodeId) {
  *   - it supports having the layer opacity being changed
  *
  * @param {import('ngeo/layertree/Controller').LayertreeController} treeCtrl Ngeo tree controller.
- * @return {boolean} Whether the layer tree controller supports being
+ * @returns {boolean} Whether the layer tree controller supports being
  *     "customized" or not.
  */
 Controller.prototype.supportsCustomization = function (treeCtrl) {
@@ -943,7 +961,7 @@ Controller.prototype.supportsCustomization = function (treeCtrl) {
 
 /**
  * @param {import('ngeo/layertree/Controller').LayertreeController} treeCtrl Ngeo tree controller.
- * @return {boolean} Whether the layer tree controller supports having a
+ * @returns {boolean} Whether the layer tree controller supports having a
  *     legend being shown.
  */
 Controller.prototype.supportsLegend = function (treeCtrl) {
@@ -953,7 +971,7 @@ Controller.prototype.supportsLegend = function (treeCtrl) {
 
 /**
  * @param {import('ngeo/layertree/Controller').LayertreeController} treeCtrl Ngeo tree controller.
- * @return {boolean} Whether the layer tree controller supports having its
+ * @returns {boolean} Whether the layer tree controller supports having its
  *     layer opacity being changed or not.
  */
 Controller.prototype.supportsOpacityChange = function (treeCtrl) {
@@ -970,7 +988,7 @@ Controller.prototype.supportsOpacityChange = function (treeCtrl) {
 
 /**
  * @param {import('ngeo/layertree/Controller').LayertreeController} treeCtrl Ngeo tree controller.
- * @return {boolean} Whether the layer tree controller has a filtrable datasource or not.
+ * @returns {boolean} Whether the layer tree controller has a filtrable datasource or not.
  */
 Controller.prototype.isFiltrable = function (treeCtrl) {
   const datasource = /** @type {import('ngeo/datasource/OGC').OGC} */ (treeCtrl.getDataSource());
@@ -979,7 +997,7 @@ Controller.prototype.isFiltrable = function (treeCtrl) {
 
 /**
  * @param {import('ngeo/layertree/Controller').LayertreeController} treeCtrl Ngeo tree controller.
- * @return {import('ngeo/layertree/Controller').LayertreeController} first parent that supports
+ * @returns {import('ngeo/layertree/Controller').LayertreeController} first parent that supports
  *     opacity change or is filtrable. Or null if there is any parent with layer functions.
  */
 Controller.prototype.getFirstParentWithLayerFunctions = function (treeCtrl) {

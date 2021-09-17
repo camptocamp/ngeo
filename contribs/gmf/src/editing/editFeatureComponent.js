@@ -74,24 +74,28 @@ import {buildStyle} from 'ngeo/options';
 
 /**
  * The different possible values of the `state` inner property.
+ *
  * @enum {string}
  * @hidden
  */
 export const EditingState = {
   /**
    * The default state. While idle, nothing happens.
+   *
    * @type {string}
    */
   IDLE: 'idle',
   /**
    * The state active after the deactivation of the editing tools and the
    * unsaved modifications were saved or discarded.
+   *
    * @type {string}
    */
   DEACTIVATE_EXECUTE: 'deactivate_execute',
   /**
    * The state active when the deactivation of the editing tools is in
    * progress while there are unsaved modifications.
+   *
    * @type {string}
    */
   DEACTIVATE_PENDING: 'deactivate_pending',
@@ -99,12 +103,14 @@ export const EditingState = {
    * Final state set after the "stop editing" button has been clicked while
    * no unsaved modifications were made or if the user saved them or confirmed
    * to continue without saving.
+   *
    * @type {string}
    */
   STOP_EDITING_EXECUTE: 'stop_editing_execute',
   /**
    * The state that is active while when the "stop editing" button has been
    * clicked but before any confirmation has been made to continue.
+   *
    * @type {string}
    */
   STOP_EDITING_PENDING: 'stop_editing_pending',
@@ -154,9 +160,9 @@ myModule.run(
  *
  * Used metadata:
  *
- *  * `enumeratedAttributes`: List of attribute names which have enumerated attribute
+ *  - `enumeratedAttributes`: List of attribute names which have enumerated attribute
  *      values (for filters purpose). For WMS layers.
- *  * `snappingConfig`: The snapping configuration for the leaf. If set, the leaf's layer is considered to be
+ *  - `snappingConfig`: The snapping configuration for the leaf. If set, the leaf's layer is considered to be
  *      "snappable", even if the config itself is empty.
  *      Example value: {'tolerance': 50, 'edge': false} For WMS layers.
  *
@@ -182,7 +188,7 @@ myModule.run(
  *     that directive.
  * @htmlAttribute {import('ol/layer/Vector').default<import('ol/source/Vector').default<import('ol/geom/Geometry').default>>} gmf-editfeature-vector The vector layer in
  *     which to draw the vector features.
- * @return {angular.IDirective} The directive specs.
+ * @returns {angular.IDirective} The directive specs.
  * @ngdoc directive
  * @ngname gmfEditfeature
  */
@@ -245,6 +251,7 @@ export function Controller(
   /**
    * Flag that is toggled as soon as the feature changes, i.e. if any of its
    * properties change, which includes the geometry.
+   *
    * @type {boolean}
    */
   this.dirty = false;
@@ -262,6 +269,7 @@ export function Controller(
   /**
    * The state property shared with the `gmf-editfeatureselector` directive.
    * For more info, see in that directive.
+   *
    * @type {string}
    */
   this.state = '';
@@ -359,6 +367,7 @@ export function Controller(
   /**
    * A deferred object resolved after the confirm modal "continue w/o saving" or
    * "save" buttons are clicked.
+   *
    * @type {?angular.IDeferred<never>}
    */
   this.confirmDeferred_ = null;
@@ -366,6 +375,7 @@ export function Controller(
   /**
    * Flag that controls the visibility of the modal that manages unsaved
    * modifications.
+   *
    * @type {boolean}
    */
   this.unsavedModificationsModalShown = false;
@@ -800,7 +810,8 @@ Controller.prototype.cancel = function () {
 /**
  * Check if there are unsaved modifications. If there aren't, then cancel.
  * Used by the 'cancel' button in the template.
- * @return {angular.IPromise<void>} The promise attached to the confirm deferred object.
+ *
+ * @returns {angular.IPromise<void>} The promise attached to the confirm deferred object.
  */
 Controller.prototype.confirmCancel = function () {
   return this.checkForModifications_().then(() => {
@@ -811,9 +822,10 @@ Controller.prototype.confirmCancel = function () {
 /**
  * Check if there's a feature selected and if it contains modifications
  * (a.k.a. is dirty), then the confirmation modal is shown.
+ *
  * @param {boolean} [scopeApply] Whether to force scope to refresh or not.
  *     when the confirm modal is not dismissed.
- * @return {angular.IPromise<void>} The promise attached to the confirm deferred
+ * @returns {angular.IPromise<void>} The promise attached to the confirm deferred
  *     object.
  */
 Controller.prototype.checkForModifications_ = function (scopeApply) {
@@ -892,6 +904,7 @@ Controller.prototype.submit = function () {
 
 /**
  * Called after an insert, update or delete request.
+ *
  * @param {angular.IHttpResponse<ArrayBuffer|Document|Node|string>} resp Ajax response.
  */
 Controller.prototype.handleEditFeature_ = function (resp) {
@@ -992,6 +1005,7 @@ Controller.prototype.handleFeatureAdd_ = function (evt) {
 
 /**
  * Activate or deactivate this directive.
+ *
  * @param {boolean} active Whether to activate this directive or not.
  */
 Controller.prototype.toggle_ = function (active) {
@@ -1065,6 +1079,7 @@ Controller.prototype.toggle_ = function (active) {
 
 /**
  * Called when the mapSelectActive property changes.
+ *
  * @param {boolean} active Whether the map select is active or not.
  */
 Controller.prototype.handleMapSelectActiveChange_ = function (active) {
@@ -1501,6 +1516,7 @@ Controller.prototype.handleMenuMultipleActionClick_ = function (features, evt) {
 
 /**
  * Handles mouse entering a menu item of the multiple feature menu
+ *
  * @param {olFeature<import('ol/geom/Geometry').default>[]} features Features.
  * @param {Event|import('ol/events/Event').default} evt Event.
  */

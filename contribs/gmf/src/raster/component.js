@@ -50,7 +50,7 @@ myModule.value(
   'gmfElevationwidgetTemplateUrl',
   /**
    * @param {angular.IAttributes} $attrs Attributes.
-   * @return {string} The template url.
+   * @returns {string} The template url.
    */
   ($attrs) => {
     const templateUrl = $attrs.gmfElevationwidgetTemplateUrl;
@@ -62,7 +62,7 @@ myModule.value(
  * @hidden
  * @param {angular.IAttributes} $attrs Attributes.
  * @param {function(angular.IAttributes): string} gmfElevationwidgetTemplateUrl Template function.
- * @return {string} Template URL.
+ * @returns {string} Template URL.
  * @ngInject
  * @private
  * @hidden
@@ -103,7 +103,7 @@ function gmfElevationwidgetTemplateUrl($attrs, gmfElevationwidgetTemplateUrl) {
  * @htmlAttribute {number} gmf-elevation-elevation The value to set with the elevation value.
  * @htmlAttribute {string} gmf-elevation-layer Elevation layer to use.
  * @htmlAttribute {import('ol/Map').default} gmf-elevation-map The map.
- * @return {angular.IDirective} Directive Definition Object.
+ * @returns {angular.IDirective} Directive Definition Object.
  * @ngdoc directive
  * @ngname gmfElevation
  */
@@ -213,6 +213,7 @@ export function Controller($scope, $filter, ngeoDebounce, gmfRaster, gettextCata
 
 /**
  * Activate or deactivate the listeners of the component.
+ *
  * @param {boolean} active true to make requests.
  * @private
  */
@@ -265,6 +266,7 @@ Controller.prototype.onPointerMove_ = function () {
 
 /**
  * Set the state of the component and query the raster service with the coordinate.
+ *
  * @param {Event|import('ol/events/Event').default} evt Event.
  */
 Controller.prototype.afterPointerMove_ = function (evt) {
@@ -345,7 +347,6 @@ myModule.controller('GmfElevationController', Controller);
  *
  * @htmlAttribute {import('ol/Map').default} gmf-elevationwidget-map The map.
  * @htmlAttribute {boolean} gmf-elevationwidget-active Whether to activate the elevation component.
- *
  * @ngdoc component
  * @ngname gmfElevationwidget
  */

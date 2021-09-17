@@ -24,6 +24,9 @@ const fs = require('fs');
 const options = require('commander');
 const Extractor = require('angular-gettext-tools').Extractor;
 
+/**
+ * @param inputs
+ */
 function main(inputs) {
   const extractor = new Extractor();
 

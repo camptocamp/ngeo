@@ -48,8 +48,9 @@ function GridConfig(data, columnDefs) {
 
 /**
  * Get an ID for a row.
+ *
  * @param {unknown} attributes An entry/row.
- * @return {string} Unique id for this object.
+ * @returns {string} Unique id for this object.
  * @hidden
  */
 export function getRowUid(attributes) {
@@ -58,8 +59,9 @@ export function getRowUid(attributes) {
 
 /**
  * Is the given row selected?
+ *
  * @param {unknown} attributes An entry/row.
- * @return {boolean} True if already selected. False otherwise.
+ * @returns {boolean} True if already selected. False otherwise.
  */
 GridConfig.prototype.isRowSelected = function (attributes) {
   return !!this.selectedRows[getRowUid(attributes)];
@@ -67,7 +69,8 @@ GridConfig.prototype.isRowSelected = function (attributes) {
 
 /**
  * Returns the number of selected rows.
- * @return {number} Number of selected rows.
+ *
+ * @returns {number} Number of selected rows.
  */
 GridConfig.prototype.getSelectedCount = function () {
   return Object.keys(this.selectedRows).length;
@@ -75,7 +78,8 @@ GridConfig.prototype.getSelectedCount = function () {
 
 /**
  * Returns the selected rows.
- * @return {unknown[]} Selected rows in the current ordering.
+ *
+ * @returns {unknown[]} Selected rows in the current ordering.
  */
 GridConfig.prototype.getSelectedRows = function () {
   if (!this.data) {

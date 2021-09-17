@@ -40,6 +40,7 @@
 
 /**
  * Contains the common element of all the elements of the GeoMapFish layer tree.
+ *
  * @typedef {Object} GmfBaseNode
  * @property {number} id
  * @property {GmfMetaData} metadata The related metadata.
@@ -49,6 +50,7 @@
 /**
  * The element we can select in the theme selector.
  * extends GmfBaseNode
+ *
  * @typedef {Object} GmfTheme
  * @property {number} id (GmfBaseNode)
  * @property {GmfMetaData} metadata (GmfBaseNode)
@@ -64,6 +66,7 @@
  * This represent « first level group » (Block in the layer tree),
  * or all sub nodes that's not a leaf.
  * extends GmfBaseNode
+ *
  * @typedef {Object} GmfGroup
  * @property {number} id (GmfBaseNode)
  * @property {GmfMetaData} metadata (GmfBaseNode)
@@ -90,6 +93,7 @@
  * neither a WMS layer.
  * This is also the leaf of the tree.
  * extends GmfBaseNode
+ *
  * @typedef {Object} GmfLayer
  * @property {number} id (GmfBaseNode)
  * @property {GmfMetaData} metadata (GmfBaseNode)
@@ -110,6 +114,7 @@
 
 /**
  * extends GmfLayer
+ *
  * @typedef {Object} GmfLayerWMS
  * @property {number} id (GmfBaseNode)
  * @property {GmfMetaData} metadata (GmfBaseNode)
@@ -130,6 +135,7 @@
 
 /**
  * extends GmfLayer
+ *
  * @typedef {Object} GmfLayerWMTS
  * @property {number} id (GmfBaseNode)
  * @property {GmfMetaData} metadata (GmfBaseNode)
@@ -147,6 +153,7 @@
 
 /**
  * Additional attributes related on a WMS layers (or WFS features type).
+ *
  * @typedef {Object} GmfLayerChildLayer
  * @property {boolean|undefined} [getData] If the layer is queryable and this property is set to
  *     false, then the layer won't be used in queries issued. Defaults to `true`.

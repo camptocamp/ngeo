@@ -74,7 +74,7 @@ const myModule = angular.module('ngeoSortable', []);
  * @htmlAttribute {Object?} ngeo-sortable-callback-ctx Context to apply at
  *     the call of the callback function.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
- * @return {angular.IDirective} The directive specs.
+ * @returns {angular.IDirective} The directive specs.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoSortable
@@ -169,7 +169,7 @@ function sortableComponent($timeout) {
 
       /**
        * @param {?} options Options after expression evaluation.
-       * @return {miscSortableOptions} Options object.
+       * @returns {miscSortableOptions} Options object.
        * @private
        */
       function getOptions(options) {

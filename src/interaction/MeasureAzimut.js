@@ -47,18 +47,21 @@ export default class extends ngeoInteractionMeasure {
     }
     /**
      * Message to show after the first point is clicked.
+     *
      * @type {Element}
      */
     this.continueMsg = continueMsg;
 
     /**
      * The format function
+     *
      * @type {import('ngeo/misc/filters').formatNumber}
      */
     this.numberFormat = numberFormat;
 
     /**
      * The format function
+     *
      * @type {import('ngeo/misc/filters').unitPrefix}
      */
     this.unitPrefixFormat = unitPrefixFormat;
@@ -68,7 +71,7 @@ export default class extends ngeoInteractionMeasure {
    * @param {import('ol/style/Style').StyleLike} style The sketchStyle used for the drawing
    *    interaction.
    * @param {import('ol/source/Vector').default<import('ol/geom/LineString').default>} source Vector source.
-   * @return {?import('ol/interaction/Draw').default|import('ngeo/interaction/DrawAzimut').default|
+   * @returns {?import('ol/interaction/Draw').default|import('ngeo/interaction/DrawAzimut').default|
    *    import('ngeo/interaction/MobileDraw').default} The interaction
    */
   createDrawInteraction(style, source) {
@@ -108,8 +111,9 @@ export default class extends ngeoInteractionMeasure {
 
 /**
  * Compute azimut from a 2 points line.
+ *
  * @param {import('ol/geom/LineString').default} line LineString.
- * @return {number} Azimut value.
+ * @returns {number} Azimut value.
  * @hidden
  */
 export function getAzimut(line) {
@@ -123,10 +127,11 @@ export function getAzimut(line) {
 
 /**
  * Format measure output of azimut.
+ *
  * @param {import('ol/geom/LineString').default} line LineString.
  * @param {number|undefined} decimals Decimals.
  * @param {import('ngeo/misc/filters').formatNumber} format The format function.
- * @return {string} Formatted measure.
+ * @returns {string} Formatted measure.
  * @hidden
  */
 export function getFormattedAzimut(line, decimals, format) {
@@ -136,13 +141,14 @@ export function getFormattedAzimut(line, decimals, format) {
 
 /**
  * Format measure output of azimut and radius.
+ *
  * @param {import('ol/geom/LineString').default} line LineString.
  * @param {import('ol/proj/Projection').default} projection Projection of the polygon coords.
  * @param {number|undefined} decimals Decimals.
  * @param {number|undefined} precision Precision.
  * @param {import('ngeo/misc/filters').unitPrefix} formatLength The format function.
  * @param {import('ngeo/misc/filters').formatNumber} formatAzimut The format function.
- * @return {string} Formatted measure.
+ * @returns {string} Formatted measure.
  * @hidden
  */
 export function getFormattedAzimutRadius(line, projection, decimals, precision, formatLength, formatAzimut) {

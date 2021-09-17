@@ -31,6 +31,7 @@ import {select as d3select} from 'd3';
 
 /**
  * The lidar point attribute list width default option
+ *
  * @typedef {Object} LidarPointAttributeList
  * @property {import('gmf/lidarprofile/Config').LidarprofileServerConfigPointAttributes[]} [availableOptions]
  * @property {import('gmf/lidarprofile/Config').LidarprofileServerConfigPointAttribute} [selectedOption]
@@ -38,6 +39,7 @@ import {select as d3select} from 'd3';
 
 /**
  * The object containing all points in profile
+ *
  * @typedef {Object} LidarprofileClientConfig
  * @property {boolean} [autoWidth]
  * @property {Object<string, number>} [margin]
@@ -48,6 +50,7 @@ import {select as d3select} from 'd3';
 
 /**
  * The object containing all points in profile
+ *
  * @typedef {Object} LidarprofilePoints
  * @property {number[]} [distance]
  * @property {number[]} [altitude]
@@ -59,6 +62,7 @@ import {select as d3select} from 'd3';
 
 /**
  * Profile point after measure or after parsing of the binary array returned by Pytree
+ *
  * @typedef {Object} LidarPoint
  * @property {number} [cx]
  * @property {number} [cy]
@@ -77,13 +81,14 @@ import {select as d3select} from 'd3';
 export default class {
   /**
    * Clip a linstring with start and end measure given by D3 Chart domain
+   *
    * @param {import('gmf/lidarprofile/Config').LidarprofileConfigService} config the LIDAR profile config
    *    instance
    * @param {number} map_resolution the current resolution of the map
    * @param {import('ol/geom/LineString').default} linestring an OpenLayers Linestring
    * @param {number} dLeft domain minimum
    * @param {number} dRight domain maximum
-   * @return {{
+   * @returns {{
    *     bufferGeom: olFeature<import('ol/geom/LineString').default>,
    *     bufferStyle: olStyleStyle[],
    *     clippedLine: import('ol/coordinate').Coordinate[],
@@ -216,10 +221,11 @@ export default class {
   /**
    * Get a Level Of Details and with for a given chart span
    * Configuration is set up in Pytree configuration
+   *
    * @param {number} span domain extent
    * @param {import('gmf/lidarprofile/Config').LidarprofileServerConfigLevels} max_levels levels defined
    *    by a LIDAR server
-   * @return {{maxLOD: number, width: number}} Object with optimized Level Of Details and width for this profile span
+   * @returns {{maxLOD: number, width: number}} Object with optimized Level Of Details and width for this profile span
    */
   getNiceLOD(span, max_levels) {
     let maxLOD = 0;
@@ -239,6 +245,7 @@ export default class {
 
   /**
    * Create a image file by combining SVG and canvas elements and let the user downloads it.
+   *
    * @param {LidarprofileClientConfig} profileClientConfig The profile client configuration.
    */
   downloadProfileAsImageFile(profileClientConfig) {
@@ -297,8 +304,9 @@ export default class {
 
   /**
    * Transforms a lidarprofile into multiple single points sorted by distance.
+   *
    * @param {LidarprofilePoints} profilePoints in the profile
-   * @return {LidarPoint[]} An array of Lidar Points.
+   * @returns {LidarPoint[]} An array of Lidar Points.
    */
   getFlatPointsByDistance(profilePoints) {
     const points = [];
@@ -319,8 +327,9 @@ export default class {
 
   /**
    * Get the data for a CSV export of the profile.
+   *
    * @param {LidarPoint[]} points A list of lidar profile point objects.
-   * @return {Object<string, *>[]} Objects for a csv export (column: value).
+   * @returns {Object<string, *>[]} Objects for a csv export (column: value).
    */
   getCSVData(points) {
     return points.map((point) => {
@@ -343,8 +352,9 @@ export default class {
 
   /**
    * Find the maximum value in am array of numbers
+   *
    * @param {(number[])} array of number
-   * @return {number} the maximum of input array
+   * @returns {number} the maximum of input array
    */
   arrayMax(array) {
     return array.reduce((a, b) => Math.max(a, b));
@@ -352,8 +362,9 @@ export default class {
 
   /**
    * Find the minimum value in am array of numbers
+   *
    * @param {number[]} array of number
-   * @return {number} the minimum of input array
+   * @returns {number} the minimum of input array
    */
   arrayMin(array) {
     let minVal = Infinity;
@@ -367,8 +378,9 @@ export default class {
 
   /**
    * Transform OpenLayers linestring into a cPotree compatible definition
+   *
    * @param {import('ol/geom/LineString').default} line the profile 2D line
-   * @return {string} linestring in a cPotree/pytree compatible string definition
+   * @returns {string} linestring in a cPotree/pytree compatible string definition
    */
   getPytreeLinestring(line) {
     const coords = line.getCoordinates();
@@ -383,6 +395,7 @@ export default class {
 
   /**
    * Find the profile's closest point in profile data to the chart mouse position
+   *
    * @param {LidarprofilePoints} points Object containing points properties as arrays
    * @param {number} xs mouse x coordinate on canvas element
    * @param {number} ys mouse y coordinate on canvas element
@@ -391,7 +404,7 @@ export default class {
    * @param {Function} sy d3.scalelinear y scale
    * @param {import('gmf/lidarprofile/Config').LidarprofileServerConfigClassifications} classification_colors
    *    classification colors
-   * @return {?LidarPoint} closestPoint the closest point to the clicked coordinates
+   * @returns {?LidarPoint} closestPoint the closest point to the clicked coordinates
    */
   getClosestPoint(points, xs, ys, tolerance, sx, sy, classification_colors) {
     const d = points;

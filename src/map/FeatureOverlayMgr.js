@@ -87,7 +87,7 @@ export function FeatureOverlayMgr() {
 
 /**
  * @param {number} groupIndex The group groupIndex.
- * @return {boolean} True if the group has no features. False otherwise.
+ * @returns {boolean} True if the group has no features. False otherwise.
  */
 FeatureOverlayMgr.prototype.isEmpty = function (groupIndex) {
   console.assert(groupIndex >= 0);
@@ -135,14 +135,14 @@ FeatureOverlayMgr.prototype.clear = function (groupIndex) {
 };
 
 /**
- * @return {import('ol/layer/Vector').default<import('ol/source/Vector').default<import('ol/geom/Geometry').default>>} The vector layer used internally.
+ * @returns {import('ol/layer/Vector').default<import('ol/source/Vector').default<import('ol/geom/Geometry').default>>} The vector layer used internally.
  */
 FeatureOverlayMgr.prototype.getLayer = function () {
   return this.layer_;
 };
 
 /**
- * @return {import('ngeo/map/FeatureOverlay').FeatureOverlay} Feature overlay.
+ * @returns {import('ngeo/map/FeatureOverlay').FeatureOverlay} Feature overlay.
  */
 FeatureOverlayMgr.prototype.getFeatureOverlay = function () {
   const groupIndex = this.groups_.length;
@@ -174,7 +174,7 @@ FeatureOverlayMgr.prototype.setStyle = function (style, groupIndex) {
 /**
  * @param {import('ol/Feature').default<import('ol/geom/Geometry').default>|import('ol/render/Feature').default} feature Feature.
  * @param {number} resolution Resolution.
- * @return {import('ol/style/Style').default[] | import('ol/style/Style').default | void} Styles.
+ * @returns {import('ol/style/Style').default[] | import('ol/style/Style').default | void} Styles.
  */
 FeatureOverlayMgr.prototype.styleFunction_ = function (feature, resolution) {
   const featureUid = olUtilGetUid(feature).toString();

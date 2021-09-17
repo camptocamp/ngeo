@@ -103,7 +103,7 @@ export const OlcsService = class {
   }
 
   /**
-   * @return {?import('olcs/contrib/Manager').default} the manager.
+   * @returns {?import('olcs/contrib/Manager').default} the manager.
    */
   getManager() {
     return this.manager_;
@@ -111,7 +111,7 @@ export const OlcsService = class {
 
   /**
    * @private
-   * @return {Promise<undefined>} A promise after load & enabled.
+   * @returns {Promise<undefined>} A promise after load & enabled.
    */
   initialStateToCamera_() {
     if (!this.manager_) {

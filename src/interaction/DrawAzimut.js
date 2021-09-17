@@ -40,6 +40,7 @@ import VectorSource from 'ol/source/Vector';
 
 /**
  * Interaction dedicated to measure azimut.
+ *
  * @private
  * @hidden
  */
@@ -63,6 +64,7 @@ class DrawAzimut extends olInteractionPointer {
 
     /**
      * Target source for drawn features.
+     *
      * @type {!import('ol/source/Vector').default<import('ol/geom/Geometry').default>}
      * @private
      */
@@ -70,6 +72,7 @@ class DrawAzimut extends olInteractionPointer {
 
     /**
      * Whether the drawing has started or not.
+     *
      * @type {boolean}
      * @private
      */
@@ -77,6 +80,7 @@ class DrawAzimut extends olInteractionPointer {
 
     /**
      * Sketch feature.
+     *
      * @type {Feature<import('ol/geom/GeometryCollection').default>}
      * @private
      */
@@ -84,6 +88,7 @@ class DrawAzimut extends olInteractionPointer {
 
     /**
      * Sketch point.
+     *
      * @type {Feature<import('ol/geom/Point').default>}
      * @private
      */
@@ -93,6 +98,7 @@ class DrawAzimut extends olInteractionPointer {
      * Squared tolerance for handling up events.  If the squared distance
      * between a down and up event is greater than this tolerance, up events
      * will not be handled.
+     *
      * @type {number}
      * @private
      */
@@ -100,6 +106,7 @@ class DrawAzimut extends olInteractionPointer {
 
     /**
      * Vector layer where our sketch features are drawn.
+     *
      * @type {import('ol/layer/Vector').default<import('ol/source/Vector').default<import('ol/geom/Geometry').default>>}
      * @private
      */
@@ -116,8 +123,9 @@ class DrawAzimut extends olInteractionPointer {
 
   /**
    * Handle move events.
+   *
    * @param {import('ol/MapBrowserEvent').default<unknown>} event MapBrowserEvent, a move event.
-   * @return {boolean} Pass the event to other interactions.
+   * @returns {boolean} Pass the event to other interactions.
    * @private
    */
   handlePointerMove_(event) {
@@ -146,6 +154,7 @@ class DrawAzimut extends olInteractionPointer {
 
   /**
    * Redraw the sketch features.
+   *
    * @private
    */
   updateSketchFeatures_() {
@@ -159,6 +168,7 @@ class DrawAzimut extends olInteractionPointer {
 
   /**
    * Start the drawing.
+   *
    * @param {import('ol/MapBrowserEvent').default<unknown>} event MapBrowserEvent.
    * @private
    */
@@ -177,6 +187,7 @@ class DrawAzimut extends olInteractionPointer {
 
   /**
    * Modify the drawing.
+   *
    * @param {import('ol/MapBrowserEvent').default<unknown>} event MapBrowserEvent.
    * @private
    */
@@ -209,7 +220,8 @@ class DrawAzimut extends olInteractionPointer {
 
   /**
    * Stop drawing without adding the sketch feature to the target layer.
-   * @return {Feature<import('ol/geom/Geometry').default>} The sketch feature (or null if none).
+   *
+   * @returns {Feature<import('ol/geom/Geometry').default>} The sketch feature (or null if none).
    * @private
    */
   abortDrawing_() {
@@ -239,6 +251,7 @@ class DrawAzimut extends olInteractionPointer {
 
   /**
    * Stop drawing and add the sketch feature to the target layer.
+   *
    * @private
    */
   finishDrawing_() {
@@ -260,7 +273,7 @@ class DrawAzimut extends olInteractionPointer {
 
   /**
    * @param {import('ol/MapBrowserEvent').default<unknown>} event MapBrowserEvent.
-   * @return {boolean} If the event was consumed.
+   * @returns {boolean} If the event was consumed.
    */
   handleDownEvent(event) {
     this.downPx_ = event.pixel;
@@ -269,7 +282,7 @@ class DrawAzimut extends olInteractionPointer {
 
   /**
    * @param {import('ol/MapBrowserEvent').default<unknown>} event MapBrowserEvent.
-   * @return {boolean} If the event was consumed.
+   * @returns {boolean} If the event was consumed.
    */
   handleUpEvent(event) {
     if (!this.downPx_) {
@@ -295,7 +308,7 @@ class DrawAzimut extends olInteractionPointer {
 
   /**
    * @param {import('ol/MapBrowserEvent').default<unknown>} mapBrowserEvent MapBrowserEvent.
-   * @return {boolean} If the event was consumed.
+   * @returns {boolean} If the event was consumed.
    */
   handleEvent(mapBrowserEvent) {
     let pass = true;

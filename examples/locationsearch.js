@@ -125,7 +125,7 @@ function SearchController(ngeoCreateLocationSearchBloodhound) {
  * @param {import('ngeo/search/createLocationSearchBloodhound').createLocationSearchBloodhoundFunction} ngeoCreateLocationSearchBloodhound
  *     Bloodhound service.
  * @param {number} limit Limit.
- * @return {Bloodhound<import('ol/Feature').default<import('ol/geom/Geometry').default>[]>} The bloodhound engine.
+ * @returns {Bloodhound<import('ol/Feature').default<import('ol/geom/Geometry').default>[]>} The bloodhound engine.
  */
 SearchController.prototype.createAndInitBloodhound_ = function (ngeoCreateLocationSearchBloodhound, limit) {
   const epsg3857 = olProj.get('EPSG:3857');

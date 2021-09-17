@@ -102,7 +102,7 @@ function MainController($timeout, gmfThemes, gmfXSDAttributes) {
 
 /**
  * @param {import('gmf/themes').GmfLayer|undefined} value A layer or undefined to get layers.
- * @return {import('gmf/themes').GmfLayer[]} All layers in all themes.
+ * @returns {import('gmf/themes').GmfLayer[]} All layers in all themes.
  */
 MainController.prototype.getSetLayers = function (value) {
   if (value !== undefined && value !== null) {
@@ -127,7 +127,7 @@ MainController.prototype.setAttributes_ = function (attributes) {
 };
 
 /**
- * @return {string} Type of geometry.
+ * @returns {string} Type of geometry.
  */
 MainController.prototype.getGeomType = function () {
   let type = 'N/A';
@@ -142,6 +142,7 @@ MainController.prototype.getGeomType = function () {
 
 /**
  * Just for this example
+ *
  * @param {import('gmf/themes').GmfTheme|import('gmf/themes').GmfGroup|import('gmf/themes').GmfLayer} node
  *    A theme, group or layer node.
  * @param {(import('gmf/themes').GmfTheme | import('gmf/themes').GmfGroup | import('gmf/themes').GmfLayer)[]} nodes

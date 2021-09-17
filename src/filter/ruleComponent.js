@@ -87,7 +87,7 @@ myModule.value(
   'ngeoRuleTemplateUrl',
   /**
    * @param {angular.IAttributes} $attrs Attributes.
-   * @return {string} The template url.
+   * @returns {string} The template url.
    */
   ($attrs) => {
     const templateUrl = $attrs['ngeoRuleTemplateUrl'];
@@ -98,7 +98,7 @@ myModule.value(
 /**
  * @param {angular.IAttributes} $attrs Attributes.
  * @param {function(angular.IAttributes): string} ngeoRuleTemplateUrl Template function.
- * @return {string} Template URL.
+ * @returns {string} Template URL.
  * @ngInject
  * @private
  * @hidden
@@ -139,6 +139,7 @@ export class RuleController {
 
     /**
      * The original rule.
+     *
      * @type {?import('ngeo/rule/Rule').default}
      */
     this.rule = null;
@@ -192,6 +193,7 @@ export class RuleController {
      * The cloned rule. Changes in the UI are applied to the clone 'on-the-fly'.
      * Changes in the clone are applied back in the original rule when the
      * apply button is clicked.
+     *
      * @type {?import('ngeo/rule/Rule').default}
      */
     this.clone = null;
@@ -382,6 +384,7 @@ export class RuleController {
 
     /**
      * The geometry type used by the clone feature.
+     *
      * @type {?string}
      */
     this.geomType = null;
@@ -429,7 +432,7 @@ export class RuleController {
       this.unlisteners_.push(
         this.scope_.$watch(
           /**
-           * @return {string|number}
+           * @returns {string|number}
            */
           () => {
             if (!this.clone) {
@@ -658,6 +661,7 @@ export class RuleController {
   /**
    * Called when a choice is clicked, when using a `ngeo.rule.Select` rule type.
    * Add/remove the choice to/from the `literal` of the rule.
+   *
    * @param {string} choice Choice that has been clicked.
    */
   toggleChoiceSelection(choice) {
@@ -698,7 +702,7 @@ export class RuleController {
 
   /**
    * @param {number} [opt_timeDelta] Time delta to go back in the past.
-   * @return {string} ISO string of the date
+   * @returns {string} ISO string of the date
    * @private
    */
   createDate_(opt_timeDelta) {
@@ -713,7 +717,7 @@ export class RuleController {
   }
 
   /**
-   * @return {string} ISO string of the date
+   * @returns {string} ISO string of the date
    * @private
    */
   createWeekAgoDate_() {
@@ -722,7 +726,7 @@ export class RuleController {
 
   /**
    * @param {number} time Time.
-   * @return {string} Date
+   * @returns {string} Date
    */
   timeToDate(time) {
     const date = new Date(time);
@@ -817,6 +821,7 @@ export class RuleController {
 
   /**
    * Initialize interactions by setting them inactive and decorating them
+   *
    * @private
    */
   initializeInteractions_() {
@@ -828,6 +833,7 @@ export class RuleController {
 
   /**
    * Register interactions by adding them to the map
+   *
    * @private
    */
   registerInteractions_() {
@@ -841,6 +847,7 @@ export class RuleController {
 
   /**
    * Register interactions by removing them to the map
+   *
    * @private
    */
   unregisterInteractions_() {
@@ -886,7 +893,8 @@ export class RuleController {
 
   /**
    * Return the type of geometry used by the rule feature. Used in the template.
-   * @return {?string} Geometry type.
+   *
+   * @returns {?string} Geometry type.
    */
   getRuleGeometryType() {
     const rule = this.rule;
@@ -980,6 +988,7 @@ export class RuleController {
 
   /**
    * Remove contextual menu, if any.
+   *
    * @private
    */
   removeMenu_() {

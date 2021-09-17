@@ -49,12 +49,14 @@ export default class extends ngeoInteractionMeasure {
     }
     /**
      * Message to show after the first point is clicked.
+     *
      * @type {Element}
      */
     this.continueMsg = continueMsg;
 
     /**
      * The format function
+     *
      * @type {import('ngeo/misc/filters').unitPrefix}
      */
     this.format = format;
@@ -64,7 +66,7 @@ export default class extends ngeoInteractionMeasure {
    * @param {import('ol/style/Style').StyleLike} style The sketchStyle used for the drawing
    *    interaction.
    * @param {import('ol/source/Vector').default<import('ol/geom/Polygon').default>} source Vector source.
-   * @return {olInteractionDraw|import('ngeo/interaction/MobileDraw').default} The interaction
+   * @returns {olInteractionDraw|import('ngeo/interaction/MobileDraw').default} The interaction
    */
   createDrawInteraction(style, source) {
     return new olInteractionDraw({

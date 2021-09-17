@@ -52,6 +52,7 @@ export class DrawController {
     /**
      * Alternate collection of features in which to push the drawn features.
      * If not defined, then `ngeoFeatures` is used instead.
+     *
      * @type {?import('ol/Collection').default<olFeature<import('ol/geom/Geometry').default>>}
      */
     this.features = null;
@@ -149,6 +150,7 @@ export class DrawController {
   /**
    * Register a draw|measure interaction by setting it inactive, decorating it
    * and adding it to the map
+   *
    * @param {import('ol/interaction/Interaction').default} interaction Interaction to register.
    */
   registerInteraction(interaction) {
@@ -165,6 +167,7 @@ export class DrawController {
    * Called when any of the draw or measure interaction active property changes.
    * Set the active property of this directive accordingly, i.e. if at least
    * one of the draw or measure is active then the active property is set to true.
+   *
    * @param {Event|import('ol/events/Event').default} event Event.
    */
   handleActiveChange(event) {
@@ -174,6 +177,7 @@ export class DrawController {
   /**
    * Called when a feature is finished being drawn. Set the default properties
    * for its style, then set its style and add it to the features collection.
+   *
    * @param {string} type Type of geometry being drawn.
    * @param {import('lib/ol.interaction.Draw').DrawEvent|import('ngeo/CustomEvent').default<import('lib/ol.interaction.Draw').DrawEvent>} evt
    *    Event.

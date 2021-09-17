@@ -28,6 +28,7 @@ import olFeature from 'ol/Feature';
 /**
  * Compare two list of objects using only the properties of the expected objects.
  * For example to ignore 'ol_uid'.
+ *
  * @param {any[]} data The data.
  * @param {any[]} expectedData Expected data.
  */

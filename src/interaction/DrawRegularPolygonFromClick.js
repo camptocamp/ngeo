@@ -40,6 +40,7 @@ import MapBrowserEvent from 'ol/MapBrowserEvent';
 /**
  * This interactions allows drawing regular polygons of a pre-determined number
  * of sides and size a a clicked location on the map.
+ *
  * @hidden
  */
 export default class extends olInteractionInteraction {
@@ -79,6 +80,7 @@ export default class extends olInteractionInteraction {
 
   /**
    * Activate or deactivate the interaction.
+   *
    * @param {boolean} active Active.
    * @override
    */
@@ -115,6 +117,7 @@ export default class extends olInteractionInteraction {
 
   /**
    * Enable the interaction. Called when added to a map AND active.
+   *
    * @private
    */
   enable_() {
@@ -125,6 +128,7 @@ export default class extends olInteractionInteraction {
 
   /**
    * Disable the interaction. Called when removed from a map or deactivated.
+   *
    * @private
    */
   disable_() {
@@ -137,6 +141,7 @@ export default class extends olInteractionInteraction {
   /**
    * Called the the map is clicked. Create a regular polygon at the clicked
    * location using the configuration
+   *
    * @param {Event|import('ol/events/Event').default} evt Map browser event.
    * @private
    */

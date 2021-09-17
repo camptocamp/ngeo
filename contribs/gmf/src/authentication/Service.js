@@ -26,6 +26,7 @@ import user, {UserState} from 'ngeo/store/user.ts';
 
 /**
  * Availables functionalities.
+ *
  * @typedef {Object} AuthenticationFunctionalities
  * @property {string[]} default_basemap Base maps to use by default.
  * @property {string[]} default_theme Theme to use by default.
@@ -97,6 +98,7 @@ export const RouteSuffix = {
  * - login
  * - logout
  * - resetPassword
+ *
  * @hidden
  */
 export class AuthenticationService {
@@ -133,6 +135,7 @@ export class AuthenticationService {
 
     /**
      * The authentication url without trailing slash
+     *
      * @type {string}
      * @private
      */
@@ -152,6 +155,7 @@ export class AuthenticationService {
     /**
      * Don't request a new user object from the back-end after
      * logging out if the logged-in user's role has this role.
+     *
      * @type {?import('gmf/options').gmfAuthenticationNoReloadRole}
      * @private
      */
@@ -166,6 +170,7 @@ export class AuthenticationService {
 
   /**
    * Check whether the user is connected or not like on load.
+   *
    * @private
    */
   checkConnection_() {
@@ -192,6 +197,7 @@ export class AuthenticationService {
   /**
    * Load the authentication service, which sends an asynch request to
    * determine whether the user is currently connected or not.
+   *
    * @private
    */
   load_() {
@@ -211,7 +217,7 @@ export class AuthenticationService {
    * @param {string} newPwd New password.
    * @param {string} confPwd New password confirmation.
    * @param {string} [otp]
-   * @return {angular.IPromise<void>} Promise.
+   * @returns {angular.IPromise<void>} Promise.
    */
   changePassword(login, oldPwd, newPwd, confPwd, otp = undefined) {
     const url = `${this.baseUrl_}/${RouteSuffix.CHANGE_PASSWORD}`;
@@ -242,7 +248,7 @@ export class AuthenticationService {
    * @param {string} login Login name.
    * @param {string} pwd Password.
    * @param {string} [otp]
-   * @return {angular.IPromise<AuthenticationLoginResponsePromise>} Promise.
+   * @returns {angular.IPromise<AuthenticationLoginResponsePromise>} Promise.
    */
   login(login, pwd, otp = undefined) {
     const url = `${this.baseUrl_}/${RouteSuffix.LOGIN}`;
@@ -266,8 +272,9 @@ export class AuthenticationService {
 
   /**
    * Check the user to have a user with all parameters in all cases.
+   *
    * @param {AuthenticationLoginResponsePromise} resp Ajax response.
-   * @return {AuthenticationLoginResponsePromise} Response.
+   * @returns {AuthenticationLoginResponsePromise} Response.
    */
   checkUser_(resp) {
     if (!resp.data) {
@@ -280,15 +287,16 @@ export class AuthenticationService {
 
   /**
    * Method defined in the aim to be replaced.
+   *
    * @param {AuthenticationLoginResponsePromise} resp Ajax response.
-   * @return {AuthenticationLoginResponsePromise} Response.
+   * @returns {AuthenticationLoginResponsePromise} Response.
    */
   onSuccessfulLogin(resp) {
     return resp;
   }
 
   /**
-   * @return {angular.IPromise<void>} Promise.
+   * @returns {angular.IPromise<void>} Promise.
    */
   logout() {
     const noReload = this.noReloadRole_ ? this.getRolesNames().includes(this.noReloadRole_) : false;
@@ -300,7 +308,7 @@ export class AuthenticationService {
 
   /**
    * @param {string} login Login name.
-   * @return {angular.IPromise<AuthenticationDefaultResponse>} Promise.
+   * @returns {angular.IPromise<AuthenticationDefaultResponse>} Promise.
    */
   resetPassword(login) {
     const url = `${this.baseUrl_}/${RouteSuffix.RESET_PASSWORD}`;
@@ -313,21 +321,21 @@ export class AuthenticationService {
   }
 
   /**
-   * @return {string|null} User's email
+   * @returns {string|null} User's email
    */
   getEmail() {
     return this.user_.email || null;
   }
 
   /**
-   * @return {number[]} The roles IDs.
+   * @returns {number[]} The roles IDs.
    */
   getRolesIds() {
     return this.user_.roles ? this.user_.roles.map((role) => role.id) : [];
   }
 
   /**
-   * @return {string[]} The roles names.
+   * @returns {string[]} The roles names.
    */
   getRolesNames() {
     return this.user_.roles ? this.user_.roles.map((role) => role.name) : [];
@@ -336,7 +344,7 @@ export class AuthenticationService {
   /**
    * @param {boolean} checkingLoginStatus Checking the login status?
    * @param {AuthenticationLoginResponsePromise} resp Ajax response.
-   * @return {AuthenticationLoginResponsePromise} Response.
+   * @returns {AuthenticationLoginResponsePromise} Response.
    * @private
    */
   handleLogin_(checkingLoginStatus, resp) {

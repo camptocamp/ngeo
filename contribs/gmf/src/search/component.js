@@ -60,7 +60,7 @@ const myModule = angular.module('gmfSearch', [
 /**
  * @param {JQuery} element Element.
  * @param {angular.IAttributes} attrs Attributes.
- * @return {string} Template URL.
+ * @returns {string} Template URL.
  * @private
  * @hidden
  */
@@ -84,7 +84,7 @@ myModule.run(
  * @param {JQuery} $element Element.
  * @param {angular.IAttributes} $attrs Attributes.
  * @param {function(JQuery, angular.IAttributes): string} gmfSearchTemplateUrl Template function.
- * @return {string} Template URL.
+ * @returns {string} Template URL.
  * @ngInject
  * @private
  * @hidden
@@ -292,6 +292,7 @@ export class SearchController {
 
     /**
      * Supported projections for coordinates search.
+     *
      * @type {import('ol/proj/Projection').default[]}
      * @private
      */
@@ -405,10 +406,11 @@ export class SearchController {
   /**
    * Merges the custom listeners received via the component attributes and the
    * listeners that are needed for this controller to function (close and select).
+   *
    * @param {import('ngeo/search/searchDirective').SearchDirectiveListeners<olFeature<import('ol/geom/Geometry').default>>} additionalListeners
    *    Custom provided listeners.
    * @param {import('ngeo/search/searchDirective').SearchDirectiveListeners<olFeature<import('ol/geom/Geometry').default>>} listeners Default listeners.
-   * @return {import('ngeo/search/searchDirective').SearchDirectiveListeners<olFeature<import('ol/geom/Geometry').default>>} Merged listeners.
+   * @returns {import('ngeo/search/searchDirective').SearchDirectiveListeners<olFeature<import('ol/geom/Geometry').default>>} Merged listeners.
    * @private
    */
   mergeListeners_(additionalListeners, listeners) {
@@ -440,6 +442,7 @@ export class SearchController {
 
   /**
    * Initialize datasets for the search
+   *
    * @private
    */
   initDatasets_() {
@@ -502,7 +505,7 @@ export class SearchController {
         },
         /**
          * @param {CoordinateSuggestion} suggestion
-         * @return {string}
+         * @returns {string}
          */
         suggestion: (suggestion) => {
           const coordinates = suggestion.label;
@@ -519,7 +522,7 @@ export class SearchController {
    * @param {import('gmf/options').SearchComponentDatasource} config The config of the dataset.
    * @param {(function(import("geojson").Feature): boolean)} [opt_filter] A filter function
    *     based on a GeoJSONFeaturesCollection's array.
-   * @return {Twitter.Typeahead.Dataset<olFeature<import('ol/geom/Geometry').default>>} A typeahead dataset.
+   * @returns {Twitter.Typeahead.Dataset<olFeature<import('ol/geom/Geometry').default>>} A typeahead dataset.
    * @private
    */
   createDataset_(config, opt_filter) {
@@ -565,7 +568,7 @@ export class SearchController {
 
   /**
    * @param {string} action The action to keep.
-   * @return {(function(import("geojson").Feature): boolean)} A filter function based on a
+   * @returns {(function(import("geojson").Feature): boolean)} A filter function based on a
    *     GeoJSONFeaturesCollection's array.
    * @private
    */
@@ -573,7 +576,7 @@ export class SearchController {
     return (
       /**
        * @param {import("geojson").Feature} feature
-       * @return {boolean}
+       * @returns {boolean}
        */
       function (feature) {
         const properties = feature.properties || {};
@@ -596,7 +599,7 @@ export class SearchController {
   /**
    * @param {string} [opt_layerName] The layerName to keep. If null, keep all layers
    *     (In all cases, except actions layers).
-   * @return {function(import("geojson").Feature): boolean} A filter function based on a
+   * @returns {function(import("geojson").Feature): boolean} A filter function based on a
    *     GeoJSONFeaturesCollection's array.
    * @private
    */
@@ -604,7 +607,7 @@ export class SearchController {
     return (
       /**
        * @param {import("geojson").Feature} feature
-       * @return {boolean}
+       * @returns {boolean}
        */
       function (feature) {
         const featureLayerName = (feature.properties || {}).layer_name;
@@ -624,7 +627,7 @@ export class SearchController {
    * @param {import('gmf/options').SearchComponentDatasource} config The config of the dataset.
    * @param {(function(import("geojson").Feature): boolean)} [opt_filter] Afilter function
    *     based on a GeoJSONFeaturesCollection's array.
-   * @return {Bloodhound<olFeature<import('ol/geom/Geometry').default>[]>} The bloodhound engine.
+   * @returns {Bloodhound<olFeature<import('ol/geom/Geometry').default>[]>} The bloodhound engine.
    * @private
    */
   createAndInitBloodhound_(config, opt_filter) {
@@ -646,7 +649,7 @@ export class SearchController {
   }
 
   /**
-   * @return {Bloodhound.RemoteOptions<GeoJSON.FeatureCollection>} Options.
+   * @returns {Bloodhound.RemoteOptions<GeoJSON.FeatureCollection>} Options.
    * @private
    */
   getBloodhoudRemoteOptions_() {
@@ -680,7 +683,7 @@ export class SearchController {
 
   /**
    * @param {import('ol/View').default} view View.
-   * @return {function(string, function(CoordinateSuggestion[]))} function defining parameters for the search
+   * @returns {function(string, function(CoordinateSuggestion[]))} function defining parameters for the search
    *    suggestions.
    * @private
    */
@@ -713,10 +716,11 @@ export class SearchController {
 
   /**
    * Style for search results.
+   *
    * @param {null|olFeature<import('ol/geom/Geometry').default>|import('ol/render/Feature').default} feature
    *    The searched feature.
    * @param {number} resolution The current resolution of the map.
-   * @return {import('ol/style/Style').default} A style for this kind of features.
+   * @returns {import('ol/style/Style').default} A style for this kind of features.
    * @private
    */
   getSearchStyle_(feature, resolution) {
@@ -766,6 +770,7 @@ export class SearchController {
 
   /**
    * Set a new color for the search feature style.
+   *
    * @param {string} color The color to set.
    */
   setStyleColor(color) {
@@ -971,6 +976,7 @@ export class SearchController {
 
   /**
    * Performs a full-text search and centers the map on the first search result.
+   *
    * @param {string} query Search query.
    * @param {number} resultIndex Return nth result instead.
    * @param {number} [opt_zoom] Optional zoom level.

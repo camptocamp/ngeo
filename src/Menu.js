@@ -48,6 +48,7 @@ import olOverlayPositioning from 'ol/OverlayPositioning';
  * An OpenLayers overlay that shows a contextual menu with configurable actions
  * anchored from its top left to a specific location. An event is fired when
  * any of the action is clicked.
+ *
  * @hidden
  */
 export default class extends olOverlay {
@@ -159,6 +160,7 @@ export default class extends olOverlay {
   /**
    * Opens the menu at the desited coordinate. Also starts listening for the
    * clickout if autoClose is enabled.
+   *
    * @param {import('ol/coordinate').Coordinate} coordinate Where to open the menu.
    */
   open(coordinate) {
@@ -202,6 +204,7 @@ export default class extends olOverlay {
 
   /**
    * Handles clicks out of the menu. If the menu is visible, close it.
+   *
    * @param {Event|import('ol/events/Event').default} evt Event.
    * @private
    */
@@ -218,6 +221,7 @@ export default class extends olOverlay {
    * map. This prevents behaviours such as vertex still appearing while mouse
    * hovering edges of features bound to an active modify control while the
    * cursor is on top of the menu.
+   *
    * @param {import('ol/MapBrowserEvent').default<Event>} myEvent Event.
    * @private
    */

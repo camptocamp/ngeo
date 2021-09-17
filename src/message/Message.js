@@ -77,7 +77,7 @@ export default class {
    *
    * @param {string | Message | (string | Message)[]} object
    *     A message or list of messages as text or configuration objects.
-   * @return {void}
+   * @returns {void}
    */
   show(object) {
     const msgObjects = this.getMessageObjects(object);
@@ -95,6 +95,7 @@ export default class {
 
   /**
    * Display the given info message or list of info messages.
+   *
    * @param {string|string[]} message Message or list of messages.
    */
   info(message) {
@@ -103,6 +104,7 @@ export default class {
 
   /**
    * Display the given success message or list of success messages.
+   *
    * @param {string|string[]} message Message or list of messages.
    */
   success(message) {
@@ -111,6 +113,7 @@ export default class {
 
   /**
    * Display the given warning message or list of warning messages.
+   *
    * @param {string|string[]} message Message or list of messages.
    */
   warn(message) {
@@ -122,10 +125,11 @@ export default class {
    * message strings, message object or list message objects. The type can be
    * overridden here as well OR defined (if the message(s) is/are string(s),
    * defaults to 'information').
+   *
    * @param {string | Message | (string | Message)[]}object
    *     A message or list of messages as text or configuration objects.
    * @param {string} [opt_type] The type of message to override the messages with.
-   * @return {Message[]} List of message objects.
+   * @returns {Message[]} List of message objects.
    * @protected
    */
   getMessageObjects(object, opt_type) {

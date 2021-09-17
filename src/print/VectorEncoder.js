@@ -201,8 +201,9 @@ VectorEncoder.prototype.encodeVectorLayer = function (
 
 /**
  * Transforms a style with a geometry to a new feature.
+ *
  * @param {import('ol/style/Style').default} style Style.
- * @return {olFeature<import('ol/geom/Geometry').default>} A feature from the style.
+ * @returns {olFeature<import('ol/geom/Geometry').default>} A feature from the style.
  */
 VectorEncoder.prototype.newFeatureFromStyle_ = function (style) {
   const feature = new olFeature({
@@ -225,7 +226,7 @@ VectorEncoder.prototype.newFeatureFromStyle_ = function (style) {
  * @param {import('ol/style/Style').default} style Style.
  * @param {number} destinationPrintDpi The destination print DPI.
  * @param {number} [goodnessOfFit] Goodness of fit.
- * @return {import('ngeo/print/mapfish-print-v3').MapFishPrintSymbolizer[]} The styles
+ * @returns {import('ngeo/print/mapfish-print-v3').MapFishPrintSymbolizer[]} The styles
  */
 VectorEncoder.prototype.encodeVectorStyle_ = function (
   geometryType,
@@ -287,7 +288,7 @@ VectorEncoder.prototype.encodeVectorStyleFill_ = function (symbolizer, fillStyle
 
 /**
  * @param {import('ol/style/Stroke').default} strokeStyle Stroke style.
- * @return {import('ngeo/print/mapfish-print-v3').MapFishPrintSymbolizer} The style
+ * @returns {import('ngeo/print/mapfish-print-v3').MapFishPrintSymbolizer} The style
  */
 VectorEncoder.prototype.encodeVectorStyleLine_ = function (strokeStyle) {
   const symbolizer = /** @type {import('ngeo/print/mapfish-print-v3').MapFishPrintSymbolizerLine} */ ({
@@ -301,7 +302,7 @@ VectorEncoder.prototype.encodeVectorStyleLine_ = function (strokeStyle) {
  * @param {number} resolution Resolution.
  * @param {import('ol/style/Image').default} imageStyle Image style.
  * @param {number} destinationPrintDpi The destination print DPI.
- * @return {import('ngeo/print/mapfish-print-v3').MapFishPrintSymbolizer} The style
+ * @returns {import('ngeo/print/mapfish-print-v3').MapFishPrintSymbolizer} The style
  */
 VectorEncoder.prototype.encodeVectorStyle_Point_ = function (resolution, imageStyle, destinationPrintDpi) {
   let symbolizer;
@@ -370,7 +371,7 @@ VectorEncoder.prototype.encodeVectorStyle_Point_ = function (resolution, imageSt
 /**
  * @param {import('ol/style/Fill').default} fillStyle Fill style.
  * @param {import('ol/style/Stroke').default} strokeStyle Stroke style.
- * @return {import('ngeo/print/mapfish-print-v3').MapFishPrintSymbolizer} The style
+ * @returns {import('ngeo/print/mapfish-print-v3').MapFishPrintSymbolizer} The style
  */
 VectorEncoder.prototype.encodeVectorStylePolygon_ = function (fillStyle, strokeStyle) {
   const symbolizer = /** @type {import('ngeo/print/mapfish-print-v3').MapFishPrintSymbolizerPolygon} */ ({
@@ -422,7 +423,7 @@ VectorEncoder.prototype.encodeVectorStyleStroke_ = function (symbolizer, strokeS
 /**
  * @param {import('ol/style/Text').default} textStyle Text style.
  * @param {number} [goodnessOfFit] Goodness of fit.
- * @return {import('ngeo/print/mapfish-print-v3').MapFishPrintSymbolizer} The style
+ * @returns {import('ngeo/print/mapfish-print-v3').MapFishPrintSymbolizer} The style
  */
 VectorEncoder.prototype.encodeTextStyle_ = function (textStyle, goodnessOfFit) {
   const symbolizer = /** @type {import('ngeo/print/mapfish-print-v3').MapFishPrintSymbolizerText} */ ({
@@ -468,7 +469,7 @@ VectorEncoder.prototype.encodeTextStyle_ = function (textStyle, goodnessOfFit) {
         symbolizer.fontSize = font[1];
         const fontFamily = font.splice(2).join(' ');
         // Remove simple quotes and double quotes for fonts with spaces like "Font Awesome".
-        symbolizer.fontFamily = fontFamily.replace(/\'|\"/g, '');
+        symbolizer.fontFamily = fontFamily.replace(/'|"/g, '');
       }
     }
 

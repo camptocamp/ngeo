@@ -26,6 +26,9 @@ const entries = {};
 const loaderUtils = require('loader-utils');
 const path = require('path');
 
+/**
+ * @param transformers
+ */
 function createTransformersMap(transformers) {
   if (!transformers) {
     return {};
@@ -40,6 +43,9 @@ function createTransformersMap(transformers) {
   }, {});
 }
 
+/**
+ * @param ctx
+ */
 function getLoaderConfig(ctx) {
   const options = loaderUtils.getOptions(ctx) || {};
   const includePaths = options.includePaths || [];

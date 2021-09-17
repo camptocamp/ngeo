@@ -25,7 +25,7 @@ import {INCHES_PER_METER, DOTS_PER_INCH} from 'ngeo/print/Utils';
 import {toRadians} from 'ol/math';
 
 /**
- * @extends {Layer<import("ol/source/Source").default>}
+ * @augments {Layer<import("ol/source/Source").default>}
  */
 export default class Mask extends Layer {
   constructor(options = {}) {
@@ -57,7 +57,7 @@ export default class Mask extends Layer {
 
   /**
    * @param {import("ol/PluggableMap").FrameState} frameState
-   * @return {HTMLElement}
+   * @returns {HTMLElement}
    */
   render(frameState) {
     const cwidth = frameState.size[0];

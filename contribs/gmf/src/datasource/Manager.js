@@ -72,7 +72,7 @@ import olSourceTileWMS from 'ol/source/TileWMS';
  *
  * Used metadata:
  *
- *  * `identifierAttributeField`: The field used in the 'display query window' as feature title.
+ *  - `identifierAttributeField`: The field used in the 'display query window' as feature title.
  *      For WMS layers.
  */
 export class DatasourceManager {
@@ -157,6 +157,7 @@ export class DatasourceManager {
      * The collection of DataSources from ngeo, which gets updated by this
      * service. When the theme changes, first we remove all data sources, then
      * the 'active' data source are added here.
+     *
      * @type {import('ngeo/datasource/DataSource').DataSources}
      * @private
      */
@@ -191,6 +192,7 @@ export class DatasourceManager {
     /**
      * While loading a new theme, this is where all of the created data sources
      * are put using the id as key for easier find in the future.
+     *
      * @type {Object<string, import('gmf/datasource/OGC').default>}
      * @private
      */
@@ -198,6 +200,7 @@ export class DatasourceManager {
 
     /**
      * A reference to the dimensions object.
+     *
      * @type {import('ngeo/datasource/OGC').Dimensions|undefined}
      * @private
      */
@@ -206,6 +209,7 @@ export class DatasourceManager {
     /**
      * The function to call to unregister the `watch` event on the dimensions
      * object properties.
+     *
      * @type {?Function}
      * @private
      */
@@ -215,6 +219,7 @@ export class DatasourceManager {
      * The cache of layertree leaf controller, i.e. those that are added to
      * the tree manager. When treeCtrl is added in this cache, it's given
      * a reference to its according data source.
+     *
      * @type {ManagerTreeCtrlCache}
      * @private
      */
@@ -223,6 +228,7 @@ export class DatasourceManager {
     /**
      * The function to call to unregister the `watchCollection` event on
      * the root layer tree controller children.
+     *
      * @type {?Function}
      * @private
      */
@@ -235,6 +241,7 @@ export class DatasourceManager {
 
   /**
    * Set the map to use with your datasources.
+   *
    * @param {import('ol/Map').default} map The map to use.
    * @hidden
    */
@@ -244,8 +251,9 @@ export class DatasourceManager {
 
   /**
    * Get a datasource by its id.
+   *
    * @param {string} id The id of the datasource.
-   * @return {GmfDatasourceOGC}
+   * @returns {GmfDatasourceOGC}
    * @hidden
    */
   getDatasource(id) {
@@ -274,6 +282,7 @@ export class DatasourceManager {
 
   /**
    * Called when the dimensions change. Update all affected layer's filters.
+   *
    * @private
    * @hidden
    */
@@ -313,6 +322,7 @@ export class DatasourceManager {
   /**
    * Called when the themes change. Remove any existing data sources first,
    * then create and add data sources from the loaded themes.
+   *
    * @private
    * @hidden
    */
@@ -421,6 +431,7 @@ export class DatasourceManager {
   /**
    * Remove the data sources from the ngeo collection that are in the cache,
    * i.e. those created by this service, then clear the cache.
+   *
    * @private
    * @hidden
    */
@@ -821,6 +832,7 @@ export class DatasourceManager {
    * its data source reference unset and state watcher unregistered.
    *
    * The data source gets also removed from the ngeo data sources collection.
+   *
    * @private
    * @hidden
    */
@@ -865,7 +877,7 @@ export class DatasourceManager {
    * Returns a layertree controller cache item, if it exists.
    *
    * @param {import('ngeo/layertree/Controller').LayertreeController} treeCtrl The layer tree controller
-   * @return {ManagerTreeCtrlCacheItem} Cache item
+   * @returns {ManagerTreeCtrlCacheItem} Cache item
    * @private
    * @hidden
    */
@@ -875,8 +887,9 @@ export class DatasourceManager {
 
   /**
    * Return the layer corresponding to the data source.
+   *
    * @param {import('ngeo/datasource/DataSource').default} dataSource The data source.
-   * @return {import('ol/layer/Base').default|undefined} The layer.
+   * @returns {import('ol/layer/Base').default|undefined} The layer.
    * @private
    * @hidden
    */
@@ -899,6 +912,7 @@ export class DatasourceManager {
   /**
    * Update layer filter parameter according to data sources filter rules
    * and dimensions filters.
+   *
    * @param {import('ol/layer/Base').default} layer The layer to update.
    * @private
    * @hidden

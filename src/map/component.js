@@ -53,7 +53,7 @@ const myModule = angular.module('ngeoMap', []);
  *
  * @htmlAttribute {import('ol/Map').default} ngeo-map The map.
  * @param {angular.IWindowService} $window The Angular $window service.
- * @return {angular.IDirective} Directive Definition Object.
+ * @returns {angular.IDirective} Directive Definition Object.
  * @ngdoc directive
  * @ngname ngeoMap
  * @ngInject

@@ -44,6 +44,7 @@ class MainController {
   constructor(ngeoFeatureOverlayMgr, ngeoNetworkStatus, ngeoOfflineServiceManager) {
     /**
      * Save a square of 10 km sideways (Map's unit is the meter).
+     *
      * @type {number}
      * @export
      */

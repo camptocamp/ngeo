@@ -117,6 +117,7 @@ function MainController($timeout, ngeoCreatePrint, ngeoPrintUtils) {
 
   /**
    * Text to display a "loading" message while waiting for the report.
+   *
    * @type {string}
    */
   this.printState = '';

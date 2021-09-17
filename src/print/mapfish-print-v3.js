@@ -29,6 +29,7 @@
 /**
  * Fields that can come from a print v3 server and can be used in the partial
  * of the gmf print panel.
+ *
  * @typedef {Object} MapFishPrintCapabilitiesLayout
  * @property {string} name
  * @property {MapFishPrintCapabilitiesLayoutAttribute[]} [attributes] Custom print layoutInfo.
@@ -113,6 +114,7 @@
 
 /**
  * extends {MapFishPrintLayer}
+ *
  * @typedef {Object} MapFishPrintVectorLayer
  * @property {string} type (MapFishPrintLayer)
  * @property {number} opacity (MapFishPrintLayer)
@@ -123,11 +125,13 @@
 /**
  * A MapFishPrintVectorStyle Must contains one key "version" with the version the use as value.
  * Others key-values are MapFishPrintSymbolizers.
+ *
  * @typedef {Object<string, number|import('ngeo/print/mapfish-print-v3').MapFishPrintSymbolizers>} MapFishPrintVectorStyle
  */
 
 /**
  * extends {MapFishPrintLayer}
+ *
  * @typedef {Object} MapFishPrintWmsLayer
  * @property {string} type (MapFishPrintLayer)
  * @property {number} opacity (MapFishPrintLayer)
@@ -152,6 +156,7 @@
 
 /**
  * extends {MapFishPrintLayer}
+ *
  * @typedef {Object} MapFishPrintWmtsLayer
  * @property {string} type (MapFishPrintLayer)
  * @property {number} opacity (MapFishPrintLayer)
@@ -194,6 +199,7 @@
 
 /**
  * extends {MapFishPrintSymbolizer}
+ *
  * @typedef {Object} MapFishPrintSymbolizerLine
  * @property {string} type (MapFishPrintSymbolizer)
  * @property {string} strokeColor
@@ -205,6 +211,7 @@
 
 /**
  * extends {MapFishPrintSymbolizer}
+ *
  * @typedef {Object} MapFishPrintSymbolizerPoint
  * @property {string} type (MapFishPrintSymbolizer)
  * @property {string} externalGraphic
@@ -224,6 +231,7 @@
 
 /**
  * extends {MapFishPrintSymbolizer}
+ *
  * @typedef {Object} MapFishPrintSymbolizerPolygon
  * @property {string} type (MapFishPrintSymbolizer)
  * @property {string} fillColor
@@ -236,6 +244,7 @@
 
 /**
  * extends {MapFishPrintSymbolizer}
+ *
  * @typedef {Object} MapFishPrintSymbolizerText
  * @property {string} type (MapFishPrintSymbolizer)
  * @property {string} label

@@ -42,7 +42,7 @@ myModule.value(
   /**
    * @param {JQuery} element Element.
    * @param {angular.IAttributes} attrs Attributes.
-   * @return {string} The template url.
+   * @returns {string} The template url.
    */
   (element, attrs) => {
     const templateUrl = attrs.gmfMobileMeasurePointTemplateurl;
@@ -85,7 +85,7 @@ myModule.run(
  * @htmlAttribute {import('ol/Map').default} gmf-mobile-measurepoint-map The map.
  * @param {string|function(JQuery=, angular.IAttributes=): string} gmfMobileMeasurePointTemplateUrl
  *     Template URL for the directive.
- * @return {angular.IDirective} The Directive Definition Object.
+ * @returns {angular.IDirective} The Directive Definition Object.
  * @ngInject
  * @ngdoc directive
  * @ngname gmfMobileMeasurePoint
@@ -196,6 +196,7 @@ export function MobileMeasurePointController(
 
   /**
    * The key for map view 'propertychange' event.
+   *
    * @type {?import('ol/events').EventsKey}
    */
   this.mapViewPropertyChangeEventKey_ = null;
@@ -237,7 +238,7 @@ MobileMeasurePointController.prototype.deactivate = function () {
 
 /**
  * @param {string} str String to translate.
- * @return {string} The translated text.
+ * @returns {string} The translated text.
  */
 MobileMeasurePointController.prototype.translate = function (str) {
   return this.gettextCatalog_.getString(str);
@@ -248,6 +249,7 @@ MobileMeasurePointController.prototype.translate = function (str) {
  * - on activate, listen to the map property changes to call for the elevation
  *   service.
  * - on deactivate, unlisten
+ *
  * @hidden
  */
 MobileMeasurePointController.prototype.handleMeasureActiveChange_ = function () {
@@ -275,6 +277,7 @@ MobileMeasurePointController.prototype.handleMeasureActiveChange_ = function () 
 /**
  * Call the elevation service to get information about the measure at
  * the current map center location.
+ *
  * @hidden
  */
 MobileMeasurePointController.prototype.getMeasure_ = function () {

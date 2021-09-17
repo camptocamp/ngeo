@@ -51,7 +51,7 @@ myModule.value(
   'gmfLayertreeDatasourceGroupTreeTemplateUrl',
   /**
    * @param {angular.IAttributes} $attrs Attributes.
-   * @return {string} The template url.
+   * @returns {string} The template url.
    */
   ($attrs) => {
     const templateUrl = $attrs['gmfLayertreeDatasourceGroupTreeTemplateUrl'];
@@ -63,7 +63,7 @@ myModule.value(
  * @param {angular.IAttributes} $attrs Attributes.
  * @param {function(angular.IAttributes): string} gmfLayertreeDatasourceGroupTreeTemplateUrl
  *    Template function.
- * @return {string} Template URL.
+ * @returns {string} Template URL.
  * @ngInject
  * @private
  * @hidden
@@ -119,7 +119,7 @@ export class Controller {
   }
 
   /**
-   * @return {string} Group uid.
+   * @returns {string} Group uid.
    */
   getGroupUid() {
     return `datasourcegrouptree-${olUtilGetUid(this.group)}`;
@@ -137,6 +137,7 @@ export class Controller {
 
   /**
    * Toggle visible property of a data source.
+   *
    * @param {import('ngeo/datasource/DataSource').default} dataSource Data source to toggle the
    * visibility
    */
@@ -173,6 +174,7 @@ export class Controller {
 
   /**
    * Toggle the legend for a node
+   *
    * @param {string} legendNodeId The DOM node legend id to toggle
    */
   toggleNodeLegend(legendNodeId) {
@@ -184,8 +186,9 @@ export class Controller {
 
   /**
    * Get legendUrl
+   *
    * @param {import('gmf/datasource/ExternalOGC').Legend}  legend The legend for which to get the legend url
-   * @return {string}
+   * @returns {string}
    */
   getLegendUrl(legend) {
     if (legend) {
@@ -197,6 +200,7 @@ export class Controller {
 
   /**
    * Set legend visibility
+   *
    * @param {boolean} show The DOM node legend id to toggle
    * @param {string} legendNodeId The DOM node legend id to toggle
    */

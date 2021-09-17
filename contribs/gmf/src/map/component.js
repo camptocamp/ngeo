@@ -63,7 +63,7 @@ myModule.run(
  *     (milliseconds) of the animation that may occur on the div containing
  *     the map. Used to smoothly resize the map while the animation is in
  *     progress.
- * @return {angular.IDirective} The Directive Definition Object.
+ * @returns {angular.IDirective} The Directive Definition Object.
  * @ngInject
  * @ngdoc directive
  * @ngname gmfMap

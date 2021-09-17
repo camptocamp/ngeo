@@ -63,18 +63,21 @@ export class AbstractMobileController extends AbstractAppController {
 
     /**
      * The active state of the directive responsible of area measurements.
+     *
      * @type {boolean}
      */
     this.measureAreaActive = false;
 
     /**
      * The active state of the directive responsible of point measurements.
+     *
      * @type {boolean}
      */
     this.measurePointActive = false;
 
     /**
      * The active state of the directive responsible of length measurements.
+     *
      * @type {boolean}
      */
     this.measureLengthActive = false;
@@ -91,6 +94,7 @@ export class AbstractMobileController extends AbstractAppController {
 
     /**
      * The ngeo ToolActivate manager service.
+     *
      * @type {import('ngeo/misc/ToolActivateMgr').ToolActivateMgr}
      */
     const ngeoToolActivateMgr = $injector.get('ngeoToolActivateMgr');
@@ -130,7 +134,7 @@ export class AbstractMobileController extends AbstractAppController {
     );
 
     /**
-     * @const {string}
+     * @constant {string}
      */
     this.redirectUrl = $injector.get('redirectUrl');
   }
@@ -156,7 +160,7 @@ export class AbstractMobileController extends AbstractAppController {
   }
 
   /**
-   * @return {boolean} Return true if one of the navigation menus is visible,
+   * @returns {boolean} Return true if one of the navigation menus is visible,
    * otherwise false.
    */
   navIsVisible() {
@@ -165,6 +169,7 @@ export class AbstractMobileController extends AbstractAppController {
 
   /**
    * Open the menu with corresponding to the data-target attribute value.
+   *
    * @param {string} target the data-target value.
    */
   openNavMenu(target) {

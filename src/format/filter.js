@@ -57,7 +57,7 @@ export class DateIsBetween extends olFormatFilterComparison {
  * @param {!string} propertyName Name of the context property to compare.
  * @param {!string} lowerBoundary The lower bound of the range.
  * @param {!string} upperBoundary The upper bound of the range.
- * @return {!DateIsBetween} `<PropertyIsBetween>` operator.
+ * @returns {!DateIsBetween} `<PropertyIsBetween>` operator.
  */
 export function dateBetween(propertyName, lowerBoundary, upperBoundary) {
   return new DateIsBetween(propertyName, lowerBoundary, upperBoundary);

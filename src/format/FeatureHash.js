@@ -66,7 +66,7 @@ import Geometry from 'ol/geom/Geometry';
 let LegacyProperties_ = {};
 
 /**
- * @const
+ * @constant
  * @private
  * @hidden
  */
@@ -90,14 +90,15 @@ const StyleTypes_ = {
  * Characters used to encode the coordinates. The characters "~", "'", "("
  * and ")" are not part of this character set, and used as separators (for
  * example to separate the coordinates from the feature properties).
- * @const
+ *
+ * @constant
  * @private
  * @hidden
  */
 const CHAR64_ = '.-_!*ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghjkmnpqrstuvwxyz';
 
 /**
- * @const
+ * @constant
  * @private
  * @hidden
  * @type {Object<string, function(string):Geometry>}
@@ -112,7 +113,7 @@ const GEOMETRY_READERS_ = {
 };
 
 /**
- * @const
+ * @constant
  * @private
  * @hidden
  * @type {Object<string, function(Geometry): ?string>}
@@ -209,9 +210,10 @@ class FeatureHash extends olFormatTextFeature {
    * an array of numbers. The coordinates are assumed to be in
    * two dimensions and in latitude, longitude order.
    * corresponding to a geometry's coordinates.
+   *
    * @param {string} text Text.
    * @param {number[]} [opt_flatCoordinates] Flat coordinates array.
-   * @return {number[]} Flat coordinates.
+   * @returns {number[]} Flat coordinates.
    */
   decodeCoordinates_(text, opt_flatCoordinates) {
     const len = text.length;
@@ -248,11 +250,12 @@ class FeatureHash extends olFormatTextFeature {
    * Encode an array of number (corresponding to some coordinates) into a
    * logical sequence of characters. The coordinates are assumed to be in
    * two dimensions and in latitude, longitude order.
+   *
    * @param {number[]} flatCoordinates Flat coordinates.
    * @param {number} stride Stride.
    * @param {number} offset Offset.
    * @param {number} end End.
-   * @return {string} String.
+   * @returns {string} String.
    * @hidden
    */
   encodeCoordinates_(flatCoordinates, stride, offset, end) {
@@ -273,9 +276,10 @@ class FeatureHash extends olFormatTextFeature {
 
   /**
    * Read a feature from a logical sequence of characters.
+   *
    * @param {string} text Text.
    * @param {import('ol/format/Feature').ReadOptions} [opt_options] Read options.
-   * @return {olFeature<import('ol/geom/Geometry').default>} Feature.
+   * @returns {olFeature<import('ol/geom/Geometry').default>} Feature.
    * @protected
    * @override
    */
@@ -320,9 +324,10 @@ class FeatureHash extends olFormatTextFeature {
 
   /**
    * Read multiple features from a logical sequence of characters.
+   *
    * @param {string} text Text.
    * @param {import('ol/format/Feature').ReadOptions} [opt_options] Read options.
-   * @return {olFeature<import('ol/geom/Geometry').default>[]} Features.
+   * @returns {olFeature<import('ol/geom/Geometry').default>[]} Features.
    * @protected
    * @override
    */
@@ -355,9 +360,10 @@ class FeatureHash extends olFormatTextFeature {
 
   /**
    * Read a geometry from a logical sequence of characters.
+   *
    * @param {string} text Text.
    * @param {import('ol/format/Feature').ReadOptions} [opt_options] Read options.
-   * @return {Geometry} Geometry.
+   * @returns {Geometry} Geometry.
    * @protected
    * @override
    */
@@ -369,9 +375,10 @@ class FeatureHash extends olFormatTextFeature {
 
   /**
    * Encode a feature into a logical sequence of characters.
+   *
    * @param {olFeature<import('ol/geom/Geometry').default>} feature Feature.
    * @param {import('ol/format/Feature').ReadOptions} [opt_options] Read options.
-   * @return {string} Encoded feature.
+   * @returns {string} Encoded feature.
    * @protected
    * @override
    */
@@ -445,9 +452,10 @@ class FeatureHash extends olFormatTextFeature {
 
   /**
    * Encode an array of features into a logical sequence of characters.
+   *
    * @param {olFeature<import('ol/geom/Geometry').default>[]} features Feature.
    * @param {import('ol/format/Feature').ReadOptions} [opt_options] Read options.
-   * @return {string} Encoded features.
+   * @returns {string} Encoded features.
    * @protected
    * @override
    */
@@ -466,9 +474,10 @@ class FeatureHash extends olFormatTextFeature {
 
   /**
    * Encode a geometry into a logical sequence of characters.
+   *
    * @param {Geometry} geometry Geometry.
    * @param {import('ol/format/Feature').ReadOptions} [opt_options] Read options.
-   * @return {string} Encoded geometry.
+   * @returns {string} Encoded geometry.
    * @protected
    * @override
    */
@@ -491,8 +500,9 @@ export default FeatureHash;
 
 /**
  * Get features's properties.
+ *
  * @param {olFeature<import('ol/geom/Geometry').default>} feature Feature.
- * @return {Object<string, (string|number|undefined)>} The feature properties to
+ * @returns {Object<string, (string|number|undefined)>} The feature properties to
  * serialize.
  * @private
  * @hidden
@@ -503,8 +513,9 @@ function defaultPropertiesFunction_(feature) {
 
 /**
  * Sign then encode a number.
+ *
  * @param {number} num Number.
- * @return {string} String.
+ * @returns {string} String.
  * @private
  * @hidden
  */
@@ -518,8 +529,9 @@ function encodeSignedNumber_(num) {
 
 /**
  * Transform a number into a logical sequence of characters.
+ *
  * @param {number} num Number.
- * @return {string} String.
+ * @returns {string} String.
  * @private
  * @hidden
  */
@@ -537,6 +549,7 @@ function encodeNumber_(num) {
  * For a type of geometry, transforms an array of {@link import('ol/style/Style').default} into
  * a logical sequence of characters and put the result into the given encoded
  * styles's array.
+ *
  * @param {import('ol/style/Style').default[]} styles Styles.
  * @param {string} geometryType Geometry type.
  * @param {string[]} encodedStyles Encoded styles array.
@@ -573,6 +586,7 @@ function encodeStyles_(styles, geometryType, encodedStyles) {
 /**
  * Transform an {@link import('ol/style/Stroke').default} into a logical sequence of
  * characters and put the result into the given encoded styles's array.
+ *
  * @param {import('ol/style/Stroke').default} strokeStyle Stroke style.
  * @param {string[]} encodedStyles Encoded styles array.
  * @private
@@ -585,6 +599,7 @@ function encodeStyleLine_(strokeStyle, encodedStyles) {
 /**
  * Transform an {@link import('ol/style/Circle').default} into a logical sequence of
  * characters and put the result into the given encoded styles's array.
+ *
  * @param {import('ol/style/Image').default} imageStyle Image style.
  * @param {string[]} encodedStyles Encoded styles array.
  * @private
@@ -612,6 +627,7 @@ function encodeStylePoint_(imageStyle, encodedStyles) {
  * Transform an {@link import('ol/style/Fill').default} and an
  * {@link import('ol/style/Stroke').default} into a logical sequence of characters and put the result into
  * the given encoded styles's array.
+ *
  * @param {import('ol/style/Fill').default} fillStyle Fill style.
  * @param {import('ol/style/Stroke').default} strokeStyle Stroke style.
  * @param {string[]} encodedStyles Encoded styles array.
@@ -629,6 +645,7 @@ function encodeStylePolygon_(fillStyle, strokeStyle, encodedStyles) {
  * Transform an {@link import('ol/style/Fill').default} and optionally its properties into
  * a logical sequence of characters and put the result into the given encoded
  * styles's array.
+ *
  * @param {import('ol/style/Fill').default} fillStyle Fill style.
  * @param {string[]} encodedStyles Encoded styles array.
  * @param {string} [propertyName='fillColor'] Property name.
@@ -656,6 +673,7 @@ function encodeStyleFill_(fillStyle, encodedStyles, propertyName = 'fillColor') 
 /**
  * Transform an {@link import('ol/style/Stroke').default} into a logical sequence of
  * characters and put the result into the given encoded styles's array.
+ *
  * @param {import('ol/style/Stroke').default} strokeStyle Stroke style.
  * @param {string[]} encodedStyles Encoded styles array.
  * @private
@@ -684,6 +702,7 @@ function encodeStyleStroke_(strokeStyle, encodedStyles) {
 /**
  * Transform an {@link import('ol/style/Text').default} into a logical sequence of characters and
  * put the result into the given encoded styles's array.
+ *
  * @param {import('ol/style/Text').default} textStyle Text style.
  * @param {string[]} encodedStyles Encoded styles array.
  * @private
@@ -709,8 +728,9 @@ function encodeStyleText_(textStyle, encodedStyles) {
 /**
  * Read a logical sequence of characters and return a corresponding
  * {@link import('ol/geom/LineString').default}.
+ *
  * @param {string} text Text.
- * @return {import('ol/geom/LineString').default} Line string.
+ * @returns {import('ol/geom/LineString').default} Line string.
  * @private
  * @hidden
  * @this {FeatureHash}
@@ -726,8 +746,9 @@ function readLineStringGeometry_(text) {
 /**
  * Read a logical sequence of characters and return a corresponding
  * {@link import('ol/geom/MultiLineString').default}.
+ *
  * @param {string} text Text.
- * @return {import('ol/geom/MultiLineString').default} Line string.
+ * @returns {import('ol/geom/MultiLineString').default} Line string.
  * @private
  * @hidden
  * @this {FeatureHash}
@@ -750,8 +771,9 @@ function readMultiLineStringGeometry_(text) {
 /**
  * Read a logical sequence of characters and return a corresponding
  * {@link import('ol/geom/Point').default}.
+ *
  * @param {string} text Text.
- * @return {import('ol/geom/Point').default} Point.
+ * @returns {import('ol/geom/Point').default} Point.
  * @private
  * @hidden
  * @this {FeatureHash}
@@ -768,8 +790,9 @@ function readPointGeometry_(text) {
 /**
  * Read a logical sequence of characters and return a corresponding
  * {@link import('ol/geom/MultiPoint').default}.
+ *
  * @param {string} text Text.
- * @return {import('ol/geom/MultiPoint').default} MultiPoint.
+ * @returns {import('ol/geom/MultiPoint').default} MultiPoint.
  * @private
  * @hidden
  * @this {FeatureHash}
@@ -785,8 +808,9 @@ function readMultiPointGeometry_(text) {
 /**
  * Read a logical sequence of characters and return a corresponding
  * {@link import('ol/geom/Polygon').default}.
+ *
  * @param {string} text Text.
- * @return {import('ol/geom/Polygon').default} Polygon.
+ * @returns {import('ol/geom/Polygon').default} Polygon.
  * @private
  * @hidden
  * @this {FeatureHash}
@@ -817,8 +841,9 @@ function readPolygonGeometry_(text) {
 /**
  * Read a logical sequence of characters and return a corresponding
  * {@link import('ol/geom/MultiPolygon').default}.
+ *
  * @param {string} text Text.
- * @return {import('ol/geom/MultiPolygon').default} MultiPolygon.
+ * @returns {import('ol/geom/MultiPolygon').default} MultiPolygon.
  * @private
  * @hidden
  * @this {FeatureHash}
@@ -858,6 +883,7 @@ function readMultiPolygonGeometry_(text) {
  *
  * Read a logical sequence of characters and apply the decoded style on the
  * given feature.
+ *
  * @param {string} text Text.
  * @param {olFeature<import('ol/geom/Geometry').default>} feature Feature.
  * @private
@@ -940,6 +966,7 @@ function setStyleInFeature_(text, feature) {
  * Read a logical sequence of characters and apply the decoded result as
  * style properties for the feature. Legacy keys are converted to the new ones
  * for compatibility.
+ *
  * @param {string} text Text.
  * @param {olFeature<import('ol/geom/Geometry').default>} feature Feature.
  * @private
@@ -997,9 +1024,10 @@ function setStyleProperties_(text, feature) {
 
 /**
  * Cast values in the correct type depending on the property.
+ *
  * @param {string} key Key.
  * @param {string} value Value.
- * @return {number|boolean|string} The casted value corresponding to the key.
+ * @returns {number|boolean|string} The casted value corresponding to the key.
  * @private
  * @hidden
  * @hidden
@@ -1040,9 +1068,10 @@ function castValue_(key, value) {
  * style properties for a feature. The values are cast in the correct type
  * depending on the property. Some properties are also deleted when they don't
  * match the geometry of the feature.
+ *
  * @param {string} text Text.
  * @param {olFeature<import('ol/geom/Geometry').default>} feature Feature.
- * @return {Object<string, boolean|number|string|undefined>} The style properties for the feature.
+ * @returns {Object<string, boolean|number|string|undefined>} The style properties for the feature.
  * @private
  * @hidden
  */
@@ -1067,8 +1096,9 @@ function getStyleProperties_(text, feature) {
 /**
  * Encode a {@link import('ol/geom/LineString').default} geometry into a logical sequence of
  * characters.
+ *
  * @param {Geometry} geometry Geometry.
- * @return {?string} Encoded geometry.
+ * @returns {?string} Encoded geometry.
  * @private
  * @hidden
  * @this {FeatureHash}
@@ -1086,8 +1116,9 @@ function writeLineStringGeometry_(geometry) {
 /**
  * Encode a {@link import('ol/geom/MultiLineString').default} geometry into a logical sequence
  * of characters.
+ *
  * @param {Geometry} geometry Geometry.
- * @return {?string} Encoded geometry.
+ * @returns {?string} Encoded geometry.
  * @private
  * @hidden
  * @this {FeatureHash}
@@ -1118,8 +1149,9 @@ function writeMultiLineStringGeometry_(geometry) {
 /**
  * Encode a {@link import('ol/geom/Point').default} geometry into a logical sequence of
  * characters.
+ *
  * @param {Geometry} geometry Geometry.
- * @return {?string} Encoded geometry.
+ * @returns {?string} Encoded geometry.
  * @private
  * @hidden
  * @this {FeatureHash}
@@ -1137,8 +1169,9 @@ function writePointGeometry_(geometry) {
 /**
  * Encode an {@link import('ol/geom/MultiPoint').default} geometry into a logical sequence
  * of characters.
+ *
  * @param {Geometry} geometry Geometry.
- * @return {?string} Encoded geometry.
+ * @returns {?string} Encoded geometry.
  * @private
  * @hidden
  * @this {FeatureHash}
@@ -1155,12 +1188,13 @@ function writeMultiPointGeometry_(geometry) {
 
 /**
  * Helper to encode an {@link import('ol/geom/Polygon').default} geometry.
+ *
  * @param {number[]} flatCoordinates Flat coordinates.
  * @param {number} stride Stride.
  * @param {number} offset Offset.
  * @param {number[]} ends Ends.
  * @param {string[]} textArray Text array.
- * @return {number} The new offset.
+ * @returns {number} The new offset.
  * @private
  * @hidden
  * @this {FeatureHash}
@@ -1183,8 +1217,9 @@ function encodeRings_(flatCoordinates, stride, offset, ends, textArray) {
 /**
  * Encode an {@link import('ol/geom/Polygon').default} geometry into a logical sequence
  * of characters.
+ *
  * @param {Geometry} geometry Geometry.
- * @return {?string} Encoded geometry.
+ * @returns {?string} Encoded geometry.
  * @private
  * @hidden
  * @this {FeatureHash}
@@ -1206,8 +1241,9 @@ function writePolygonGeometry_(geometry) {
 /**
  * Encode an {@link import('ol/geom/MultiPoligon').default} geometry into a logical sequence of
  * characters.
+ *
  * @param {Geometry} geometry Geometry.
- * @return {string} Encoded geometry.
+ * @returns {string} Encoded geometry.
  * @private
  * @hidden
  * @this {FeatureHash}

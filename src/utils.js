@@ -31,8 +31,9 @@ import {MAC} from 'ol/has';
 
 /**
  * Return whether the passed event has the 'ctrl' key (or 'meta' key on Mac) pressed or not.
+ *
  * @param {JQueryEventObject|KeyboardEvent} evt Event.
- * @return {boolean}
+ * @returns {boolean}
  */
 export function isEventUsinCtrlKey(evt) {
   if (!evt) {
@@ -45,8 +46,9 @@ export function isEventUsinCtrlKey(evt) {
 
 /**
  * Same as `ol.events.condition.platformModifierKeyOnly` but for JQueryEventObject.
+ *
  * @param {JQueryEventObject} evt Event.
- * @return {boolean} True if only the platform modifier key (ctrl) is pressed.
+ * @returns {boolean} True if only the platform modifier key (ctrl) is pressed.
  * @private
  */
 export function isPlatformModifierKeyOnly(evt) {
@@ -55,8 +57,9 @@ export function isPlatformModifierKeyOnly(evt) {
 
 /**
  * Same as `ol.events.condition.shiftKeyOnly` but for JQueryEventObject.
+ *
  * @param {JQueryEventObject} evt Event.
- * @return {boolean} True if only the shift key is pressed.
+ * @returns {boolean} True if only the shift key is pressed.
  * @private
  */
 export function isShiftKeyOnly(evt) {
@@ -66,7 +69,8 @@ export function isShiftKeyOnly(evt) {
 /**
  * Return whether the primary pointing device is coarse or 'false' if unsupported (Internet Explorer).
  * See https://developer.mozilla.org/en-US/docs/Web/CSS/@media/pointer
- * @return {boolean}
+ *
+ * @returns {boolean}
  */
 export function hasCoarsePointingDevice() {
   return matchMedia('(pointer: coarse)').matches;
@@ -74,7 +78,7 @@ export function hasCoarsePointingDevice() {
 
 /**
  * @param {string[]} availableLanguages Available languages.
- * @return {string} The "best" language code.
+ * @returns {string} The "best" language code.
  */
 export function getBrowserLanguage(availableLanguages) {
   let browserLanguages = window.navigator.languages || [window.navigator.language];
@@ -88,8 +92,9 @@ export function getBrowserLanguage(availableLanguages) {
 /**
  * Utility method that converts a simple geometry to its multi equivalent. If
  * the geometry itself is already multi, it is returned as-is.
+ *
  * @param {import('ol/geom/Geometry').default} geometry A geometry
- * @return {import('ol/geom/Geometry').default} A multi geometry
+ * @returns {import('ol/geom/Geometry').default} A multi geometry
  * @hidden
  */
 export function toMulti(geometry) {
@@ -115,7 +120,8 @@ export function toMulti(geometry) {
 
 /**
  * Checks if on Safari.
- * @return {boolean} True if on Safari.
+ *
+ * @returns {boolean} True if on Safari.
  * @hidden
  */
 export function isSafari() {
@@ -124,8 +130,9 @@ export function isSafari() {
 
 /**
  * Takes a hex value and prepends a zero if it's a single digit.
+ *
  * @param {string} hex Hex value to prepend if single digit.
- * @return {string} hex value prepended with zero if it was single digit,
+ * @returns {string} hex value prepended with zero if it was single digit,
  *     otherwise the same value that was passed in.
  * @hidden
  */
@@ -135,8 +142,9 @@ export function colorZeroPadding(hex) {
 
 /**
  * Converts a color from RGB to hex representation.
+ *
  * @param {number[]} rgb rgb representation of the color.
- * @return {string} hex representation of the color.
+ * @returns {string} hex representation of the color.
  * @hidden
  */
 export function rgbArrayToHex(rgb) {
@@ -154,8 +162,9 @@ export function rgbArrayToHex(rgb) {
 
 /**
  * Decode the encoded query string into a query data dictionary.
+ *
  * @param {string|undefined} queryString The queryString.
- * @return {Object<string, string>} The result.
+ * @returns {Object<string, string>} The result.
  * @hidden
  */
 export function decodeQueryString(queryString) {
@@ -184,8 +193,9 @@ export function decodeQueryString(queryString) {
 
 /**
  * Encode the query data dictionary into an encoded query string.
+ *
  * @param {Object<string, string>} queryData The queryData,
- * @return {string} The result.
+ * @returns {string} The result.
  * @hidden
  */
 export function encodeQueryString(queryData) {
@@ -199,8 +209,9 @@ export function encodeQueryString(queryData) {
 
 /**
  * Delete condition passed to the modify interaction
+ *
  * @param {import('ol/MapBrowserEvent').default<unknown>} event Browser event.
- * @return {boolean} The result.
+ * @returns {boolean} The result.
  * @hidden
  */
 export function deleteCondition(event) {
@@ -210,8 +221,9 @@ export function deleteCondition(event) {
 /**
  * Takes an import('ol/extent').Extent and return an Array of
  * ol.Coordinate representing a rectangle polygon.
+ *
  * @param {import('ol/extent').Extent} extent The extent.
- * @return {import('ol/coordinate').Coordinate[]} The Array of coordinate of the rectangle.
+ * @returns {import('ol/coordinate').Coordinate[]} The Array of coordinate of the rectangle.
  */
 export function extentToRectangle(extent) {
   const result = [
@@ -226,7 +238,8 @@ export function extentToRectangle(extent) {
 
 /**
  * Return the screen DPI.
- * @return {number} The screen DPI.
+ *
+ * @returns {number} The screen DPI.
  */
 export function dpi() {
   // See:

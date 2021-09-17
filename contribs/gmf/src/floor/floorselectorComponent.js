@@ -43,7 +43,7 @@ myModule.value(
   'gmfFloorselectorTemplateUrl',
   /**
    * @param {!angular.IAttributes} $attrs Attributes.
-   * @return {string} The template url.
+   * @returns {string} The template url.
    */
   ($attrs) => {
     const templateUrl = $attrs.gmfFloorselectorTemplateUrl;
@@ -54,7 +54,7 @@ myModule.value(
 /**
  * @param {!angular.IAttributes} $attrs Attributes.
  * @param {!function(!angular.IAttributes): string} gmfFloorselectorTemplateUrl Template function.
- * @return {string} Template URL.
+ * @returns {string} Template URL.
  * @ngInject
  * @private
  * @hidden
@@ -141,7 +141,7 @@ export class Controller {
       this.items,
       /**
        * @param {Object<string, string>} item
-       * @return {boolean}
+       * @returns {boolean}
        */
       function (item) {
         return item.value === value;
@@ -211,7 +211,6 @@ export class Controller {
  *      ];
  *
  * @htmlAttribute {string} value Current floor value.
- *
  * @ngdoc component
  * @ngname gmfFloorselector
  */

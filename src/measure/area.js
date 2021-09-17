@@ -37,7 +37,7 @@ const myModule = angular.module('ngeoMeasurearea', [ngeoDrawController.name]);
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext service.
  * @param {angular.IFilterService} $filter Angular filter
  * @param {import('ngeo/options').ngeoMeasurePrecision} ngeoMeasurePrecision The precision.
- * @return {angular.IDirective} The directive specs.
+ * @returns {angular.IDirective} The directive specs.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoDrawpoint

@@ -36,7 +36,7 @@ let themesPromise;
 
 /**
  * @hidden
- * @return {Promise<import('gmf/themes').GmfThemesResponse>} Promise
+ * @returns {Promise<import('gmf/themes').GmfThemesResponse>} Promise
  */
 function getThemesPromise() {
   if (!themesPromise) {
@@ -56,7 +56,7 @@ let localePromise;
 
 /**
  * @hidden
- * @return {Promise<Object<string, string>>} Promise
+ * @returns {Promise<Object<string, string>>} Promise
  */
 export function getLocalePromise() {
   if (!constants.localeUrl) {
@@ -83,7 +83,7 @@ let overlayDefPromise;
 
 /**
  * @hidden
- * @return {Promise<(TileLayer<import('ol/source/Tile').default>|ImageLayer<import('ol/source/Image').default>|GroupLayer)[]>} Promise
+ * @returns {Promise<(TileLayer<import('ol/source/Tile').default>|ImageLayer<import('ol/source/Image').default>|GroupLayer)[]>} Promise
  */
 export function getBackgroundLayers() {
   return getThemesPromise().then((themes) => {
@@ -160,7 +160,7 @@ const overlayDefs = new Map();
 
 /**
  * @hidden
- * @return {Promise<Map<string, overlayDefinition>>} Promise
+ * @returns {Promise<Map<string, overlayDefinition>>} Promise
  */
 export function getOverlayDefs() {
   if (!overlayDefPromise) {
@@ -202,7 +202,7 @@ export function writeOverlayDefs(config, ogcServers, opt_ogcServer) {
  * Returns a list of OpenLayers layer objects from the given layer names.
  *
  * @param {string[]} layerNames List of layer names
- * @return {Promise<(TileLayer<import('ol/source/Tile').default>|ImageLayer<import('ol/source/Image').default>)[]>} Promise.
+ * @returns {Promise<(TileLayer<import('ol/source/Tile').default>|ImageLayer<import('ol/source/Image').default>)[]>} Promise.
  * @hidden
  */
 export function getOverlayLayers(layerNames) {
@@ -238,7 +238,7 @@ export function getOverlayLayers(layerNames) {
 /**
  * @param {import('gmf/themes').GmfLayerWMS} config Layer config (i.e. gmf layer node)
  * @param {import('gmf/themes').GmfOgcServer} ogcServer OGC server configuration used to create the layer.
- * @return {Promise<ImageLayer<import('ol/source/Image').default>>} Promise.
+ * @returns {Promise<ImageLayer<import('ol/source/Image').default>>} Promise.
  * @hidden
  */
 export function createWMSLayer(config, ogcServer) {
@@ -262,7 +262,7 @@ export function createWMSLayer(config, ogcServer) {
 
 /**
  * @param {import('gmf/themes').GmfLayerWMTS} config Layer config (i.e. gmf layer node)
- * @return {Promise<?TileLayer<import('ol/source/Tile').default>>} Promise.
+ * @returns {Promise<?TileLayer<import('ol/source/Tile').default>>} Promise.
  * @hidden
  */
 export function createWMTSLayer(config) {
@@ -304,7 +304,7 @@ const capabilities = new Map();
  * @private
  * @hidden
  * @param {string} url The URL
- * @return {Promise<void>} Any
+ * @returns {Promise<void>} Any
  */
 function getWMTSCapability(url) {
   if (!capabilities.has(url)) {

@@ -46,8 +46,9 @@ myModule.component('appColorpicker', colorpickerComponent);
 function ColorPickerController() {
   /**
    * The colors set.
+   *
    * @type {string[][]}
-   * @const
+   * @constant
    */
   this.colors = [
     ['red', 'yellow', 'green', 'lightgreen', 'lightblue', 'orange', 'purple'],
@@ -65,6 +66,7 @@ myModule.controller('AppColorpickerController', ColorPickerController);
 function MainController($scope) {
   /**
    * Active color.
+   *
    * @type {string}
    */
   this.color = 'red';

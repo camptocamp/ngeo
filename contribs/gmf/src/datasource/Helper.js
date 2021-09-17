@@ -78,7 +78,7 @@ export class DatasourceHelper {
   }
 
   /**
-   * @return {import('ngeo/datasource/DataSource').DataSources} Data sources collection.
+   * @returns {import('ngeo/datasource/DataSource').DataSources} Data sources collection.
    */
   get collection() {
     return this.ngeoDataSourcesHelper_.collection;
@@ -86,8 +86,9 @@ export class DatasourceHelper {
 
   /**
    * Return a data source using its id.
+   *
    * @param {number} id Data source id.
-   * @return {?import('gmf/datasource/OGC').default} Data source.
+   * @returns {?import('gmf/datasource/OGC').default} Data source.
    */
   getDataSource(id) {
     return /** @type {?import('gmf/datasource/OGC').default} */ this.ngeoDataSourcesHelper_.getDataSource(id);
@@ -95,7 +96,7 @@ export class DatasourceHelper {
 
   /**
    * @param {import('gmf/datasource/OGC').default} dataSource Filtrable data source.
-   * @return {angular.IPromise<import('gmf/datasource/OGC').default>} Promise.
+   * @returns {angular.IPromise<import('gmf/datasource/OGC').default>} Promise.
    */
   prepareFiltrableDataSource(dataSource) {
     const prepareFiltrableDataSourceDefer = this.q_.defer();

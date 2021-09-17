@@ -83,6 +83,7 @@ const BACKGROUNDLAYERGROUP_NAME = 'background';
  * See our live examples:
  * [../examples/backgroundlayer.html](../examples/backgroundlayer.html)
  * [../examples/backgroundlayerdropdown.html](../examples/backgroundlayerdropdown.html)
+ *
  * @hidden
  */
 export class MapBackgroundLayerManager extends olObservable {
@@ -95,6 +96,7 @@ export class MapBackgroundLayerManager extends olObservable {
 
     /**
      * Object used to track if maps have background layers.
+     *
      * @type {Object<string, boolean>}
      * @private
      */
@@ -110,8 +112,9 @@ export class MapBackgroundLayerManager extends olObservable {
   /**
    * Return the current background layer of a given map. `null` is returned if
    * the map does not have a background layer.
+   *
    * @param {import('ol/Map').default} map Map.
-   * @return {?import('ol/layer/Base').default} layer The background layer.
+   * @returns {?import('ol/layer/Base').default} layer The background layer.
    */
   get(map) {
     const mapUid = olUtilGetUid(map).toString();
@@ -123,9 +126,10 @@ export class MapBackgroundLayerManager extends olObservable {
   /**
    * Set the background layer of a map. If `layer` is `null` the background layer
    * is removed.
+   *
    * @param {import('ol/Map').default} map The map.
    * @param {import('ol/layer/Base').default} layer The new background layer.
-   * @return {?import('ol/layer/Base').default} The previous background layer.
+   * @returns {?import('ol/layer/Base').default} The previous background layer.
    */
   set(map, layer) {
     const ZIndex = -200;
@@ -163,8 +167,9 @@ export class MapBackgroundLayerManager extends olObservable {
   /**
    * Return the current background layer overlay of a given map, used by the opacity slider.
    * `null` is returned if the map does not have an opacity background layer.
+   *
    * @param {import('ol/Map').default} map Map.
-   * @return {?import('ol/layer/Base').default} layer The opacity background layer.
+   * @returns {?import('ol/layer/Base').default} layer The opacity background layer.
    */
   getOpacityBgLayer(map) {
     const mapUid = olUtilGetUid(map).toString();
@@ -175,6 +180,7 @@ export class MapBackgroundLayerManager extends olObservable {
 
   /**
    * Set an background layer overlay, used by the opacity slider.
+   *
    * @param {import('ol/Map').default} map The map.
    * @param {import('ol/layer/Base').default} layer The opacity background layer.
    */

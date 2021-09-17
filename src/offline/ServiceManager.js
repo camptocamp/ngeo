@@ -52,7 +52,7 @@ class ServiceManager {
   /**
    * @param {string|unknown} serviceLike A service like.
    * @param {string} method A method.
-   * @return {unknown} A returned object.
+   * @returns {unknown} A returned object.
    */
   getOfflineService_(serviceLike, method) {
     if (typeof serviceLike === 'string') {
@@ -77,6 +77,7 @@ class ServiceManager {
 
   /**
    * Set the service to call on 'save'.
+   *
    * @param {string|{save: Function}} saveLikeService
    * A service name that can be injected or an object that have a 'save' method.
    */
@@ -86,6 +87,7 @@ class ServiceManager {
 
   /**
    * Set the service to call on 'restore'
+   *
    * @param {string|{restore: Function}} restoreLikeService
    * A service name that can be injected or an object that have a 'restore' method.
    */
@@ -103,6 +105,7 @@ class ServiceManager {
 
   /**
    * Ask the provided service to save the data to an offline purpose
+   *
    * @param {import('ol/extent').Extent} extent The extent to download.
    * @param {import("ol/Map").default} map The map to work on.
    */
@@ -116,8 +119,9 @@ class ServiceManager {
 
   /**
    * Ask the provided service to restore the saved data on the map
+   *
    * @param {import('ol/Map').default} map The map to work on.
-   * @return {Promise<import('ol/extent').Extent>} A promise to the extent of the downloaded area
+   * @returns {Promise<import('ol/extent').Extent>} A promise to the extent of the downloaded area
    */
   restore(map) {
     if (!this.restoreService_) {

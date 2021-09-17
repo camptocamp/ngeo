@@ -32,6 +32,7 @@ class Mode {
   constructor(ngeoOfflineConfiguration) {
     /**
      * Offline mode is enabled or not.
+     *
      * @type {boolean}
      * @private
      */
@@ -39,6 +40,7 @@ class Mode {
 
     /**
      * Offline component.
+     *
      * @type {?import('ngeo/offline/component').Controller}
      * @private
      */
@@ -53,7 +55,8 @@ class Mode {
 
   /**
    * Return if we are in offline mode.
-   * @return {boolean} whether offline mode is enabled
+   *
+   * @returns {boolean} whether offline mode is enabled
    * @export
    */
   isEnabled() {
@@ -62,6 +65,7 @@ class Mode {
 
   /**
    * Enable offline mode. ATM we cannot escape from the offline mode.
+   *
    * @export
    */
   enable() {
@@ -88,7 +92,7 @@ class Mode {
   }
 
   /**
-   * @return {boolean} True if data are accessible offline.
+   * @returns {boolean} True if data are accessible offline.
    * @export
    */
   hasData() {

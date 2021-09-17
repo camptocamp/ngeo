@@ -68,6 +68,7 @@ export const OpenLayersLayerProperties = {
 
 /**
  * External data source separators
+ *
  * @enum {string}
  * @hidden
  */
@@ -262,7 +263,7 @@ const ParamPrefix = {
  *
  * Used functionalities:
  *
- *  * `default_theme`: Theme to use by default.
+ *  - `default_theme`: Theme to use by default.
  *
  * @class
  * @param {angular.IQService} $q The Angular $q service.
@@ -318,6 +319,7 @@ export function PermalinkService(
 
   /**
    * The key for map view 'propertychange' event.
+   *
    * @type {?import('ol/events').EventsKey}
    */
   this.mapViewPropertyChangeEventKey_ = null;
@@ -474,6 +476,7 @@ export function PermalinkService(
 
   /**
    * A list of projections that the coordinates in the permalink can be in.
+   *
    * @type {?import('ol/proj/Projection').default[]}
    */
   this.sourceProjections_ = null;
@@ -687,6 +690,7 @@ export function PermalinkService(
 
 /**
  * Called when layer being swipe
+ *
  * @param {?import('ol/layer/Layer').default<import('ol/source/Source').default>|import('ol/layer/Group').default} layer layer object.
  * @param {?import('ol/layer/Layer').default<import('ol/source/Source').default>|import('ol/layer/Group').default} oldLayer  old layer object.
  */
@@ -728,7 +732,8 @@ PermalinkService.prototype.handleMapSwipeValue_ = function () {
 
 /**
  * Get the coordinate to use to initialize the map view from the state manager.
- * @return {?import('ol/coordinate').Coordinate} The coordinate for the map view center.
+ *
+ * @returns {?import('ol/coordinate').Coordinate} The coordinate for the map view center.
  */
 PermalinkService.prototype.getMapCenter = function () {
   const x = this.ngeoStateManager_.getInitialNumberValue(PermalinkParam.MAP_X);
@@ -758,7 +763,8 @@ PermalinkService.prototype.getMapCenter = function () {
 
 /**
  * Get the zoom level to use to initialize the map view from the state manager.
- * @return {number|undefined} The zoom for the map view.
+ *
+ * @returns {number|undefined} The zoom for the map view.
  */
 PermalinkService.prototype.getMapZoom = function () {
   const zoom = this.ngeoStateManager_.getInitialNumberValue(PermalinkParam.MAP_Z);
@@ -769,7 +775,8 @@ PermalinkService.prototype.getMapZoom = function () {
 
 /**
  * Get the map crosshair property from the state manager, if defined.
- * @return {boolean} Whether map crosshair property is set or not.
+ *
+ * @returns {boolean} Whether map crosshair property is set or not.
  */
 PermalinkService.prototype.getMapCrosshair = function () {
   const crosshair = this.ngeoStateManager_.getInitialBooleanValue(PermalinkParam.MAP_CROSSHAIR);
@@ -779,6 +786,7 @@ PermalinkService.prototype.getMapCrosshair = function () {
 /**
  * Sets the map crosshair to the center (or the map center if nothing provided).
  * Overwrites an existing map crosshair.
+ *
  * @param {?import('ol/coordinate').Coordinate} [opt_center] Optional center coordinate.
  */
 PermalinkService.prototype.setMapCrosshair = function (opt_center) {
@@ -814,7 +822,8 @@ PermalinkService.prototype.setMapCrosshair = function (opt_center) {
 
 /**
  * Get the tooltip text from the state manager.
- * @return {string|undefined} Tooltip text.
+ *
+ * @returns {string|undefined} Tooltip text.
  */
 PermalinkService.prototype.getMapTooltip = function () {
   return this.ngeoStateManager_.getInitialStringValue(PermalinkParam.MAP_TOOLTIP);
@@ -823,6 +832,7 @@ PermalinkService.prototype.getMapTooltip = function () {
 /**
  * Sets the map tooltip to the center (or the map center if nothing provided).
  * Overwrites an existing map tooltip.
+ *
  * @param {string} tooltipText Text to display in tooltip.
  * @param {?import('ol/coordinate').Coordinate} [opt_center] Optional center coordinate.
  */
@@ -866,7 +876,8 @@ PermalinkService.prototype.setMapTooltip = function (tooltipText, opt_center) {
 
 /**
  * Get the ngeo features from the state manager for initialization purpose
- * @return {olFeature<import('ol/geom/Geometry').default>[]} The features read from the state manager.
+ *
+ * @returns {olFeature<import('ol/geom/Geometry').default>[]} The features read from the state manager.
  */
 PermalinkService.prototype.getFeatures = function () {
   const f = this.ngeoStateManager_.getInitialStringValue(PermalinkParam.FEATURES);
@@ -938,6 +949,7 @@ PermalinkService.prototype.setMap = function (map) {
 
 /**
  * Listen to the map view property change and update the state accordingly.
+ *
  * @param {import('ol/Map').default} map The ol3 map object.
  * @param {?olFeature<import('ol/geom/Geometry').default>} oeFeature ObjectEditing feature
  */
@@ -1040,8 +1052,9 @@ PermalinkService.prototype.unregisterMap_ = function () {
 
 /**
  * Get the background layer object to use to initialize the map from the state manager.
+ *
  * @param {import('ol/layer/Base').default[]} layers Array of background layer objects.
- * @return {?import('ol/layer/Base').default} Background layer.
+ * @returns {?import('ol/layer/Base').default} Background layer.
  */
 PermalinkService.prototype.getBackgroundLayer = function (layers) {
   const layerName = this.ngeoStateManager_.getInitialStringValue(PermalinkParam.BG_LAYER);
@@ -1057,7 +1070,8 @@ PermalinkService.prototype.getBackgroundLayer = function (layers) {
 
 /**
  * Get the background layer opacity to use to initialize the map from the state manager.
- * @return {?number} Opacity.
+ *
+ * @returns {?number} Opacity.
  */
 PermalinkService.prototype.getBackgroundLayerOpacity = function () {
   const opacity_ = this.ngeoStateManager_.getInitialNumberValue(PermalinkParam.BG_LAYER_OPACITY);
@@ -1143,6 +1157,7 @@ PermalinkService.prototype.refreshFirstLevelGroups = function () {
 
 /**
  * Update the time values in the state.
+ *
  * @param {import('ngeo/layertree/Controller').LayertreeController} treeCtrl Controller.
  * @param {import('ngeo/datasource/OGC').TimeRange} time The start
  * and optionally the end datetime (for time range selection) selected by user
@@ -1161,8 +1176,9 @@ PermalinkService.prototype.refreshLayerTime = function (treeCtrl, time) {
 
 /**
  * Return true if there is a theme specified in the URL path.
+ *
  * @param {string[]} pathElements Array of path elements.
- * @return {boolean} theme in path.
+ * @returns {boolean} theme in path.
  */
 PermalinkService.prototype.themeInUrl_ = function (pathElements) {
   const indexOfTheme = pathElements.indexOf('theme');
@@ -1198,7 +1214,8 @@ PermalinkService.prototype.setThemeInUrl_ = function (themeName) {
 /**
  * Get the default theme from url, local storage, user functionalities or
  * defaultTheme constant.
- * @return {?string} default theme name.
+ *
+ * @returns {?string} default theme name.
  */
 PermalinkService.prototype.defaultThemeName = function () {
   const path = this.ngeoLocation_.getPath();
@@ -1232,7 +1249,8 @@ PermalinkService.prototype.defaultThemeName = function () {
 
 /**
  * Get the default theme from user functionalities.
- * @return {?string} default theme name.
+ *
+ * @returns {?string} default theme name.
  */
 PermalinkService.prototype.defaultThemeNameFromFunctionalities = function () {
   //check if we have a theme in the user functionalities
@@ -1304,8 +1322,9 @@ PermalinkService.prototype.initLayers_ = function () {
       const mapSwipeValue = this.ngeoStateManager_.getInitialNumberValue(PermalinkParam.MAP_SWIPE_VALUE);
       /**
        * Enable the layers and set the opacity
+       *
        * @param {import('ngeo/layertree/Controller').LayertreeController} treeCtrl Controller
-       * @return {LayertreeVisitorDecision|undefined} the result
+       * @returns {LayertreeVisitorDecision|undefined} the result
        */
       const visitor = (treeCtrl) => {
         if (treeCtrl.isRoot) {
@@ -1359,8 +1378,9 @@ PermalinkService.prototype.initLayers_ = function () {
 
             /**
              * Enable the layers and set the opacity
+             *
              * @param {import('ngeo/layertree/Controller').LayertreeController} treeCtrl Controller
-             * @return {LayertreeVisitorDecision|undefined} the result
+             * @returns {LayertreeVisitorDecision|undefined} the result
              */
             const visitor = (treeCtrl) => {
               const groupNode = /** @type {import('gmf/themes').GmfGroup} */ (treeCtrl.node);
@@ -1429,6 +1449,7 @@ PermalinkService.prototype.handleNgeoFeaturesRemove_ = function (event) {
 /**
  * Listen to any changes that may occur within the feature in order to
  * update the state of the permalink accordingly.
+ *
  * @param {olFeature<import('ol/geom/Geometry').default>} feature Feature.
  */
 PermalinkService.prototype.addNgeoFeature_ = function (feature) {
@@ -1441,6 +1462,7 @@ PermalinkService.prototype.addNgeoFeature_ = function (feature) {
 
 /**
  * Unregister any event listener from the feature.
+ *
  * @param {olFeature<import('ol/geom/Geometry').default>} feature Feature.
  */
 PermalinkService.prototype.removeNgeoFeature_ = function (feature) {
@@ -1473,7 +1495,8 @@ PermalinkService.prototype.handleNgeoFeaturesChange_ = function () {
 
 /**
  * Get the query data for a WFS permalink.
- * @return {?import('ngeo/statemanager/WfsPermalink').WfsPermalinkData} The query data.
+ *
+ * @returns {?import('ngeo/statemanager/WfsPermalink').WfsPermalinkData} The query data.
  */
 PermalinkService.prototype.getWfsPermalinkData_ = function () {
   const wfsLayer = this.ngeoLocation_.getParam(PermalinkParam.WFS_LAYER);
@@ -1519,9 +1542,10 @@ PermalinkService.prototype.getWfsPermalinkData_ = function () {
 
 /**
  * Create a filter group for a given prefix from the query params.
+ *
  * @param {string} prefix E.g. `wfs_` or `wfs_0_`.
  * @param {string[]} paramKeys All param keys starting with `wfs_`.
- * @return {import('ngeo/statemanager/WfsPermalink').WfsPermalinkFilterGroup|null} A filter group.
+ * @returns {import('ngeo/statemanager/WfsPermalink').WfsPermalinkFilterGroup|null} A filter group.
  */
 PermalinkService.prototype.createFilterGroup_ = function (prefix, paramKeys) {
   /**
@@ -1557,7 +1581,7 @@ PermalinkService.prototype.createFilterGroup_ = function (prefix, paramKeys) {
 // === External Data Sources management ===
 
 /**
- * @return {angular.IPromise<void>} Promise
+ * @returns {angular.IPromise<void>} Promise
  */
 
 PermalinkService.prototype.initExternalDataSources_ = function () {
@@ -1721,9 +1745,10 @@ PermalinkService.prototype.registerExternalDSGroup_ = function (group) {
 
 /**
  * Contains the layer name
+ *
  * @param {import('ol/layer/Base').default} layer The layer to inspect
  * @param {string} name The layer name to find
- * @return {boolean} The containing status
+ * @returns {boolean} The containing status
  */
 PermalinkService.prototype.containsLayerName = function (layer, name) {
   if (layer instanceof olLayerGroup) {
@@ -1827,6 +1852,7 @@ PermalinkService.prototype.setExternalDataSourcesState_ = function () {
 
 /**
  * Clean the permalink parameters
+ *
  * @param {import('gmf/themes').GmfGroup[]} groups firstlevel groups of the tree
  */
 PermalinkService.prototype.cleanParams = function (groups) {
@@ -1878,6 +1904,7 @@ PermalinkService.prototype.cleanParams = function (groups) {
 
 /**
  * Set the time from permalink in datasource and widget.
+ *
  * @param {import('ngeo/layertree/Controller').LayertreeController} treeCtrl Controller
  */
 PermalinkService.prototype.setNodeTime_ = function (treeCtrl) {

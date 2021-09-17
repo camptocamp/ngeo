@@ -54,6 +54,7 @@ export class SavedFilter {
     /**
      * This service can have a data source id bound to it, which automatically
      * populates an array of items that are only bound to this data source.
+     *
      * @type {?number}
      * @private
      */
@@ -67,6 +68,7 @@ export class SavedFilter {
 
     /**
      * The used by this service to save in the local storage.
+     *
      * @type {string}
      * @private
      */
@@ -109,7 +111,7 @@ export class SavedFilter {
   }
 
   /**
-   * @return {SavedFilterItem[]} Items
+   * @returns {SavedFilterItem[]} Items
    */
   get currentDataSourceItems() {
     return this.currentDataSourceItems_;
@@ -124,7 +126,7 @@ export class SavedFilter {
   }
 
   /**
-   * @return {SavedFilterItem[]} Items
+   * @returns {SavedFilterItem[]} Items
    */
   get items() {
     return this.items_;
@@ -133,6 +135,7 @@ export class SavedFilter {
   /**
    * Read the filter items that are saved in the local storage and set them
    * as this service's items.
+   *
    * @private
    */
   loadItemsFromLocalStorage_() {
@@ -148,9 +151,10 @@ export class SavedFilter {
   /**
    * Search for an item using a given name and data source id. Returns the
    * index if it exists, otherwise -1 is returned.
+   *
    * @param {string} name Name.
    * @param {number} id Data source id.
-   * @return {number} The index of the item, if it exists.
+   * @returns {number} The index of the item, if it exists.
    */
   indexOfItem(name, id) {
     let item;
@@ -199,6 +203,7 @@ export class SavedFilter {
 
   /**
    * Save all items in the local storage.
+   *
    * @private
    */
   saveItemsInLocalStorage_() {
@@ -233,6 +238,7 @@ myModule.service('gmfSavedFilters', SavedFilter);
 
 /**
  * The definition of a saved filter item.
+ *
  * @class
  * @hidden
  */
@@ -240,30 +246,35 @@ export function SavedFilterItem() {}
 
 /**
  * The condition of the saved filter item.
+ *
  * @type {string}
  */
 SavedFilterItem.prototype.condition;
 
 /**
  * The list of custom rules of the saved filter item.
+ *
  * @type {import('ngeo/filter/RuleHelper').AnyOptions[]}
  */
 SavedFilterItem.prototype.customRules;
 
 /**
  * The data source id related to the filter.
+ *
  * @type {number}
  */
 SavedFilterItem.prototype.dataSourceId;
 
 /**
  * The list of directed rules of the saved filter item.
+ *
  * @type {import('ngeo/filter/RuleHelper').AnyOptions[]}
  */
 SavedFilterItem.prototype.directedRules;
 
 /**
  * A human-readable name given to the saved filter item.
+ *
  * @type {string}
  */
 SavedFilterItem.prototype.name;

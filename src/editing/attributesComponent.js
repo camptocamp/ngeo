@@ -51,7 +51,7 @@ myModule.value(
   'ngeoAttributesTemplateUrl',
   /**
    * @param {angular.IAttributes} $attrs Attributes.
-   * @return {string} The template url.
+   * @returns {string} The template url.
    */
   ($attrs) => {
     const templateUrl = $attrs.ngeoAttributesTemplateUrl;
@@ -62,7 +62,7 @@ myModule.value(
 /**
  * @param {angular.IAttributes} $attrs Attributes.
  * @param {function(angular.IAttributes): string} ngeoAttributesTemplateUrl Template function.
- * @return {string} Template URL.
+ * @returns {string} Template URL.
  * @ngInject
  * @private
  * @hidden
@@ -86,7 +86,6 @@ function ngeoAttributesTemplateUrl($attrs, ngeoAttributesTemplateUrl) {
  * @htmlAttribute {boolean} ngeo-attributes-disabled Whether the fieldset should
  *     be disabled or not.
  * @htmlAttribute {import('ol/Feature').default<import('ol/geom/Geometry').default>} ngeo-attributes-feature The feature.
- *
  * @ngdoc component
  * @ngname ngeoAttributes
  */
@@ -117,18 +116,21 @@ myModule.component('ngeoAttributes', editingAttributeComponent);
 export function Controller($scope, ngeoEventHelper) {
   /**
    * The list of attributes to create the form with.
+   *
    * @type {import('ngeo/format/Attribute').Attribute[]}
    */
   this.attributes = [];
 
   /**
    * Whether the fieldset should be disabled or not.
+   *
    * @type {boolean}
    */
   this.disabled = false;
 
   /**
    * The feature containing the values.
+   *
    * @type {?import('ol/Feature').default<import('ol/geom/Geometry').default>}
    */
   this.feature = null;
@@ -136,6 +138,7 @@ export function Controller($scope, ngeoEventHelper) {
   /**
    * The properties bound to the form, initialized with the inner properties
    * of the feature.
+   *
    * @type {Object<string, *>}
    */
   this.properties = {};
@@ -157,6 +160,7 @@ export function Controller($scope, ngeoEventHelper) {
    * changes and apply them to the form. To prevent circular issues, while
    * applying changes coming from the form, this flag is set. While set, changes
    * from the feature inner properties are ignored.
+   *
    * @type {boolean}
    */
   this.updating_ = false;
@@ -193,6 +197,7 @@ Controller.prototype.$onInit = function () {
 
 /**
  * Called when an input node value changes
+ *
  * @param {string} name Attribute name
  */
 Controller.prototype.handleInputChange = function (name) {

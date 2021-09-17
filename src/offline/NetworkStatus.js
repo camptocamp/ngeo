@@ -176,7 +176,7 @@ const Service = class {
   }
 
   /**
-   * @return {boolean} True if we are disconnected.
+   * @returns {boolean} True if we are disconnected.
    * @export
    */
   isDisconnected() {
@@ -194,7 +194,7 @@ Service.module.service(name, Service);
  * @param {angular.IQService} $q The Angular $q service.
  * @param {import('ngeo/misc/debounce').miscDebounce<function()>} ngeoDebounce ngeo debounce service.
  * @param {Service} ngeoNetworkStatus ngeo network status service.
- * @return {angular.IHttpInterceptor} the interceptor
+ * @returns {angular.IHttpInterceptor} the interceptor
  */
 const httpInterceptor = function ($q, ngeoDebounce, ngeoNetworkStatus) {
   const debouncedCheck = ngeoDebounce(() => ngeoNetworkStatus.check(undefined), 2000, false);

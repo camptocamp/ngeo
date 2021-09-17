@@ -35,7 +35,7 @@ myModule.value(
   /**
    * @param {JQuery} element Element.
    * @param {angular.IAttributes} attrs Attributes.
-   * @return {string} Template URL.
+   * @returns {string} Template URL.
    */
   (element, attrs) => {
     const templateUrl = attrs.ngeoScaleselectorTemplateurl;
@@ -93,7 +93,7 @@ myModule.run(
  * @htmlAttribute {import('ol/Map').default} ngeo-scaleselector-map The map.
  * @param {string|function(JQuery=, angular.IAttributes=): string} ngeoScaleselectorTemplateUrl Template URL
  *    for the directive.
- * @return {angular.IDirective} Directive Definition Object.
+ * @returns {angular.IDirective} Directive Definition Object.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoScaleselector
@@ -122,6 +122,7 @@ export class ScaleselectorController {
   constructor($scope, $attrs, ngeoScaleSelectorOptions) {
     /**
      * The zoom level/scale map object.
+     *
      * @type {number[]}
      */
     this.scales = ngeoScaleSelectorOptions.values;
@@ -204,7 +205,7 @@ export class ScaleselectorController {
   }
 
   /**
-   * @return {number[]}
+   * @returns {number[]}
    */
   getZooms() {
     return Object.keys(this.scales).map(Number);
@@ -212,7 +213,7 @@ export class ScaleselectorController {
 
   /**
    * @param {number} zoom Zoom level.
-   * @return {number} Scale.
+   * @returns {number} Scale.
    */
   getScale(zoom) {
     if (zoom === undefined) {

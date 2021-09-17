@@ -24,6 +24,7 @@ import ngeoCustomEvent from 'ngeo/CustomEvent';
 
 /**
  * An OpenLayers overlay for features extended from ngeo/Menu.js. Additionally highlightes the chosen feature on menu mouseOver
+ *
  * @hidden
  */
 export default class extends menu {
@@ -59,6 +60,7 @@ export default class extends menu {
 
   /**
    * Prevent strange, error generating, activities on mouse move
+   *
    * @param {Event|import('ol/events/Event').default} evt Event.
    * @private
    */

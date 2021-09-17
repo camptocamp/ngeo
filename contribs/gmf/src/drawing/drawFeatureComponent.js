@@ -90,7 +90,7 @@ myModule.run(
  * @htmlAttribute {boolean} gmf-drawfeature-active Whether the directive is
  *     active or not.
  * @htmlAttribute {import('ol/Map').default} gmf-drawfeature-map The map.
- * @return {angular.IDirective} The directive specs.
+ * @returns {angular.IDirective} The directive specs.
  * @ngInject
  * @ngdoc directive
  * @ngname gmfDrawfeature
@@ -309,6 +309,7 @@ export function Controller(
    * Flag used to determine whether the selection of a feature was made
    * from the selection of an item from the list or not (the map, contextual
    * menu, etc.)
+   *
    * @type {boolean}
    */
   this.listSelectionInProgress_ = false;
@@ -417,6 +418,7 @@ Controller.prototype.$onDestroy = function () {
 
 /**
  * Close menu, if it exists.
+ *
  * @hidden
  */
 Controller.prototype.closeMenu_ = function () {
@@ -470,6 +472,7 @@ Controller.prototype.unregisterInteractions_ = function () {
 /**
  * Called when the active property of the this directive changes. Manage
  * the activation/deactivation accordingly (event management, etc.)
+ *
  * @param {boolean} active Whether the directive is active or not.
  */
 Controller.prototype.handleActiveChange_ = function (active) {
@@ -523,6 +526,7 @@ Controller.prototype.handleActiveChange_ = function (active) {
  * Method called when a selection occurs from the list, i.e. when an item in
  * the list of features is clicked. Called from the template, so no need to
  * update Angular's scope.
+ *
  * @param {Feature<import('ol/geom/Geometry').default>} feature Feature to select.
  */
 Controller.prototype.selectFeatureFromList = function (feature) {
@@ -532,7 +536,7 @@ Controller.prototype.selectFeatureFromList = function (feature) {
 };
 
 /**
- * @return {Feature<import('ol/geom/Geometry').default>[]} Array.
+ * @returns {Feature<import('ol/geom/Geometry').default>[]} Array.
  */
 Controller.prototype.getFeaturesArray = function () {
   return this.features.getArray();
@@ -582,6 +586,7 @@ Controller.prototype.handleFeaturesRemove_ = function (evt) {
 
 /**
  * Called when the mapSelectActive property changes.
+ *
  * @param {boolean} active Whether the map select is active or not.
  */
 Controller.prototype.handleMapSelectActiveChange_ = function (active) {

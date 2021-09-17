@@ -58,7 +58,7 @@ myModule.value(
   'gmfImportdatasourceTemplateUrl',
   /**
    * @param {angular.IAttributes} $attrs Attributes.
-   * @return {string} The template url.
+   * @returns {string} The template url.
    */
   ($attrs) => {
     const templateUrl = $attrs.gmfImportdatasourceTemplateUrl;
@@ -69,7 +69,7 @@ myModule.value(
 /**
  * @param {angular.IAttributes} $attrs Attributes.
  * @param {function(angular.IAttributes): string} gmfImportdatasourceTemplateUrl Template function.
- * @return {string} Template URL.
+ * @returns {string} Template URL.
  * @ngInject
  * @private
  * @hidden
@@ -218,12 +218,14 @@ export class Controller {
 
     /**
      * Current WMS Capabilities that were connected.
+     *
      * @type {?any}
      */
     this.wmsCapabilities = null;
 
     /**
      * Current WTMS Capabilities that were connected.
+     *
      * @type {?any}
      */
     this.wmtsCapabilities = null;
@@ -392,7 +394,7 @@ export class Controller {
   }
 
   /**
-   * @return {string} The name of the file and human-readable size.
+   * @returns {string} The name of the file and human-readable size.
    */
   get fileNameAndSize() {
     if (!this.file) {
@@ -431,6 +433,7 @@ export class Controller {
    * - _searchPrefix: substring before searchText in layer.Title.
    * - _searchMatch: substring matching searchText in layer.Title.
    * - _searchSuffix: substring after searchText in layer.Title.
+   *
    * @param {any} layer WMS Capability Layer object.
    * @param {boolean} visible Force layer to be visible.
    */

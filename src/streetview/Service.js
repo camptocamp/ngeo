@@ -23,6 +23,7 @@ import * as olProj from 'ol/proj';
 
 /**
  * Abstract service for streetview
+ *
  * @hidden
  */
 export class StreetviewService {
@@ -40,18 +41,21 @@ export class StreetviewService {
 
   /**
    * Get image for the given location.
+   *
    * @param {import('ol/coordinate').Coordinate} coordinates Map view projection coordinates.
    */
   getPanorama(coordinates) {}
 
   /**
    * Toggle visibility of streetview / add or remove its event handler
+   *
    * @param {boolean} show If the streetview is to show
    */
   toggleShow(show) {}
 
   /**
    * Set new position on the map.
+   *
    * @param {import('ol/coordinate').Coordinate} newCoordinates array of longitude and latitude.
    */
   panoramaPositionChange(newCoordinates) {
@@ -62,7 +66,7 @@ export class StreetviewService {
 
   /**
    * @param {import('ol/coordinate').Coordinate} lonLat LonLat coordinate.
-   * @return {import('ol/coordinate').Coordinate} Map view projection coordinate.
+   * @returns {import('ol/coordinate').Coordinate} Map view projection coordinate.
    */
   fromLonLat_(lonLat) {
     if (!this.map_) {
@@ -73,7 +77,7 @@ export class StreetviewService {
 
   /**
    * @param {import('ol/coordinate').Coordinate} coordinate Map view projection coordinate.
-   * @return {import('ol/coordinate').Coordinate} LonLat coordinate.
+   * @returns {import('ol/coordinate').Coordinate} LonLat coordinate.
    */
   toLonLat_(coordinate) {
     if (!this.map_) {

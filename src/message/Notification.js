@@ -27,6 +27,7 @@ import {getUid as olUtilGetUid} from 'ol/util';
 
 /**
  * Default delay (in milliseconds) a message should be displayed.
+ *
  * @type {number}
  * @private
  * @hidden
@@ -37,6 +38,7 @@ const DEFAULT_DELAY = 7000;
  * Provides methods to display any sort of messages, notifications, errors,
  * etc. Requires Bootstrap library (both CSS and JS) to display the alerts
  * properly.
+ *
  * @abstract
  * @hidden
  */
@@ -45,6 +47,7 @@ export class MessageNotification extends ngeoMessageMessage {
    * Provides methods to display any sort of messages, notifications, errors,
    * etc. Requires Bootstrap library (both CSS and JS) to display the alerts
    * properly.
+   *
    * @param {angular.ITimeoutService} $timeout Angular timeout service.
    * @ngInject
    */
@@ -78,9 +81,10 @@ export class MessageNotification extends ngeoMessageMessage {
   /**
    * Display the given message string or object or list of message strings or
    * objects.
+   *
    * @param {string | string[] | import('ngeo/message/Message').Message | import('ngeo/message/Message').Message[]} object
    *     A message or list of messages as text or configuration objects.
-   * @return {void}
+   * @returns {void}
    */
   notify(object) {
     this.show(object);
@@ -152,6 +156,7 @@ export class MessageNotification extends ngeoMessageMessage {
 
   /**
    * Clear a message using its cache item.
+   *
    * @param {CacheItem} item Cache item.
    * @private
    */

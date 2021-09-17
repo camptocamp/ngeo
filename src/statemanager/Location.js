@@ -95,7 +95,8 @@ function replaceState(history, state) {
 
 /**
  * Get the location's current path.
- * @return {string|undefined} The path.
+ *
+ * @returns {string|undefined} The path.
  */
 StatemanagerLocation.prototype.getPath = function () {
   return this.path_;
@@ -103,7 +104,8 @@ StatemanagerLocation.prototype.getPath = function () {
 
 /**
  * Get the location's URI as a string
- * @return {string} The URI.
+ *
+ * @returns {string} The URI.
  */
 StatemanagerLocation.prototype.getUriString = function () {
   const out = [];
@@ -143,8 +145,9 @@ StatemanagerLocation.prototype.getUriString = function () {
 
 /**
  * Check if a param exists in the location's URI.
+ *
  * @param {string} key Param key.
- * @return {boolean} True if the param exists.
+ * @returns {boolean} True if the param exists.
  */
 StatemanagerLocation.prototype.hasParam = function (key) {
   return key in this.queryData_;
@@ -152,8 +155,9 @@ StatemanagerLocation.prototype.hasParam = function (key) {
 
 /**
  * Check if a param exists in the fragment of the location's URI.
+ *
  * @param {string} key Param key.
- * @return {boolean} True if the param exists.
+ * @returns {boolean} True if the param exists.
  */
 StatemanagerLocation.prototype.hasFragmentParam = function (key) {
   return key in this.fragment_;
@@ -161,8 +165,9 @@ StatemanagerLocation.prototype.hasFragmentParam = function (key) {
 
 /**
  * Get a param in the location's URI.
+ *
  * @param {string} key Param key.
- * @return {string|undefined} Param value.
+ * @returns {string|undefined} Param value.
  */
 StatemanagerLocation.prototype.getParam = function (key) {
   return this.queryData_[key];
@@ -170,8 +175,9 @@ StatemanagerLocation.prototype.getParam = function (key) {
 
 /**
  * Get a param from the fragment of the location's URI.
+ *
  * @param {string} key Param key.
- * @return {string|undefined} Param value.
+ * @returns {string|undefined} Param value.
  */
 StatemanagerLocation.prototype.getFragmentParam = function (key) {
   return this.fragment_[key];
@@ -180,8 +186,9 @@ StatemanagerLocation.prototype.getFragmentParam = function (key) {
 /**
  * Get a param in the location's URI as integer. If the entry does not exist,
  * or if the value can not be parsed as integer, `undefined` is returned.
+ *
  * @param {string} key Param key.
- * @return {number|undefined} Param value.
+ * @returns {number|undefined} Param value.
  */
 StatemanagerLocation.prototype.getParamAsInt = function (key) {
   const value = this.getParam(key);
@@ -197,8 +204,9 @@ StatemanagerLocation.prototype.getParamAsInt = function (key) {
  * Get a param in the location's URI as a floating point number.
  * If the entry does not exist, or if the value can not be parsed,
  * `undefined` is returned.
+ *
  * @param {string} key Param key.
- * @return {number|undefined} Param value.
+ * @returns {number|undefined} Param value.
  */
 StatemanagerLocation.prototype.getParamAsFloat = function (key) {
   const value = this.getParam(key);
@@ -213,8 +221,9 @@ StatemanagerLocation.prototype.getParamAsFloat = function (key) {
 /**
  * Get a param from the fragment of the location's URI as integer. If the entry
  * does not exist, or if the value can not be parsed as integer, `undefined` is returned.
+ *
  * @param {string} key Param key.
- * @return {number|undefined} Param value.
+ * @returns {number|undefined} Param value.
  */
 StatemanagerLocation.prototype.getFragmentParamAsInt = function (key) {
   const value = this.getFragmentParam(key);
@@ -228,7 +237,8 @@ StatemanagerLocation.prototype.getFragmentParamAsInt = function (key) {
 
 /**
  * Get an array with all existing param's keys in the location's URI.
- * @return {string[]} Param keys.
+ *
+ * @returns {string[]} Param keys.
  */
 StatemanagerLocation.prototype.getParamKeys = function () {
   const keys = [];
@@ -240,7 +250,8 @@ StatemanagerLocation.prototype.getParamKeys = function () {
 
 /**
  * Get an array with all existing param's keys from the fragment of the location's URI.
- * @return {string[]} Param keys.
+ *
+ * @returns {string[]} Param keys.
  */
 StatemanagerLocation.prototype.getFragmentParamKeys = function () {
   const keys = [];
@@ -253,8 +264,9 @@ StatemanagerLocation.prototype.getFragmentParamKeys = function () {
 /**
  * Get an array with all existing param's keys in the location's URI that start
  * with the given prefix.
+ *
  * @param {string} prefix Key prefix.
- * @return {string[]} Param keys.
+ * @returns {string[]} Param keys.
  */
 StatemanagerLocation.prototype.getParamKeysWithPrefix = function (prefix) {
   const keys = [];
@@ -269,8 +281,9 @@ StatemanagerLocation.prototype.getParamKeysWithPrefix = function (prefix) {
 /**
  * Get an array with all existing param's keys from the fragment of the location's URI
  * that start with the given prefix.
+ *
  * @param {string} prefix Key prefix.
- * @return {string[]} Param keys.
+ * @returns {string[]} Param keys.
  */
 StatemanagerLocation.prototype.getFragmentParamKeysWithPrefix = function (prefix) {
   const keys = [];
@@ -284,6 +297,7 @@ StatemanagerLocation.prototype.getFragmentParamKeysWithPrefix = function (prefix
 
 /**
  * Set or create a param in the location's URI.
+ *
  * @param {Object<string, string>} params Parameters.
  */
 StatemanagerLocation.prototype.updateParams = function (params) {
@@ -294,6 +308,7 @@ StatemanagerLocation.prototype.updateParams = function (params) {
 
 /**
  * Set or create a param in the fragment of the location's URI.
+ *
  * @param {Object<string, string>} params Parameters.
  */
 StatemanagerLocation.prototype.updateFragmentParams = function (params) {
@@ -304,6 +319,7 @@ StatemanagerLocation.prototype.updateFragmentParams = function (params) {
 
 /**
  * Delete a param in the location's URI.
+ *
  * @param {string} key Param key.
  */
 StatemanagerLocation.prototype.deleteParam = function (key) {
@@ -312,6 +328,7 @@ StatemanagerLocation.prototype.deleteParam = function (key) {
 
 /**
  * Delete a param int the fragment of the location's URI.
+ *
  * @param {string} key Param key.
  */
 StatemanagerLocation.prototype.deleteFragmentParam = function (key) {
@@ -327,6 +344,7 @@ StatemanagerLocation.prototype.refresh = function () {
 
 /**
  * Set a new path for this location.
+ *
  * @param {string} path Path.
  */
 StatemanagerLocation.prototype.setPath = function (path) {
@@ -338,7 +356,7 @@ StatemanagerLocation.prototype.setPath = function (path) {
  *
  * @param {angular.IScope} $rootScope The root scope.
  * @param {angular.IWindowService} $window Angular window service.
- * @return {StatemanagerLocation} The ngeo location service.
+ * @returns {StatemanagerLocation} The ngeo location service.
  * @ngInject
  * @hidden
  */

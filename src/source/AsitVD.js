@@ -51,6 +51,7 @@ const asitVDTileGrid = new olTilegridWMTS({
 
 /**
  * Layer source for the ASIT VD tile server.
+ *
  * @see https://www.asitvd.ch/chercher/geoservices/fond-de-plan-asit-vd.html
  * @hidden
  */

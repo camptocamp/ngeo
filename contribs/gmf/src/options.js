@@ -25,56 +25,67 @@
 
 /**
  * URL to the theme web service.
+ *
  * @typedef {string} gmfTreeUrl
  */
 
 /**
  * URL to the authentication web service.
+ *
  * @typedef {string} authenticationBaseUrl
  */
 
 /**
  * URL to the full-text search web service.
+ *
  * @typedef {string} fulltextsearchUrl
  */
 
 /**
  * URL to the shortener web service.
+ *
  * @typedef {string} gmfShortenerCreateUrl
  */
 
 /**
  * URL to the raster web service.
+ *
  * @typedef {string} gmfRasterUrl
  */
 
 /**
  * URL to the profile web service.
+ *
  * @typedef {string} gmfProfileJsonUrl
  */
 
 /**
  * URL to the layers web service.
+ *
  * @typedef {string} gmfLayersUrl
  */
 
 /**
  * URL to MapFishPrint.
+ *
  * @typedef {string} gmfPrintUrl
  */
 
 /**
  * Default language
+ *
  * @typedef {string} defaultLang
  */
 
 /**
  * Languages URL
+ *
  * @typedef {Object<string, string>} langUrls
  */
 
 /**
  * The view definition.
+ *
  * @typedef {Object} View
  * @property {string} projection The main projection.
  * @property {number[]} [center] The initial center for
@@ -152,6 +163,7 @@
 
 /**
  * The map definition.
+ *
  * @typedef {Object} Map
  * @property {string} projection The main projection.
  * @property {number} [pixelRatio] The ratio between physical pixels and device-independent pixels (dips)
@@ -163,6 +175,7 @@
 
 /**
  * The application wide options.
+ *
  * @typedef {Object} gmfOptions
  * @property {boolean} [showInfobar=false] Show the information bar.
  * @property {boolean} [geolocalisation=false] Show the geolocalisation button.
@@ -179,11 +192,13 @@
 
 /**
  * The available projections definitions.
+ *
  * @typedef {Object<string, import('api/options').Projection>} gmfProjectionsOptions
  */
 
 /**
  * Flush mode active?
+ *
  * @typedef {boolean} gmfTreeManagerModeFlush
  */
 
@@ -195,6 +210,7 @@
 
 /**
  * Additional configuration options for the object editing tools directive.
+ *
  * @typedef {Object} gmfObjectEditingToolsOptions
  * @property {number} [regularPolygonRadius=100] The radius of the shapes created by the regular polygon
  * radius creation tool. The value is in map units.
@@ -202,6 +218,7 @@
 
 /**
  * Configuration options for the permalink service.
+ *
  * @typedef {Object} gmfPermalinkOptions
  * @property {import('ngeo/options').StyleLike} [crosshairStyle] An alternate style for the crosshair feature added by the
  *    permalink service.
@@ -245,6 +262,7 @@
 
 /**
  * Configuration options for the themes service.
+ *
  * @typedef {Object} gmfThemesOptions
  * @property {boolean} [addBlankBackgroundLayer] Whether to add a blank background layer to the list of
  *    available backgrounds.
@@ -252,11 +270,13 @@
 
 /**
  * Floor dimension values and labels.
+ *
  * @typedef {Array<Object<string, string>>} gmfFloors
  */
 
 /**
  * The Authentication configuration.
+ *
  * @typedef {Object} gmfAuthenticationConfig
  * @property {boolean} allowPasswordReset Whether to show the password forgotten link. Default to true.
  * @property {boolean} allowPasswordChange Whether to show the change password button. Default to true.
@@ -265,6 +285,7 @@
 
 /**
  * The definition of an external OGC server
+ *
  * @typedef {Object} ExternalOGCServer
  * @property {string} name
  * @property {string} type
@@ -283,22 +304,26 @@
 /**
  * Don't request a new user object from the back-end after
  * logging out if the logged-in user's role has this role.
+ *
  * @typedef {?string} gmfAuthenticationNoReloadRole
  */
 
 /**
  * The CSV file name.
+ *
  * @typedef {string} gmfCsvFilename
  */
 
 /**
  * The background layer selector options
+ *
  * @typedef {Object} gmfBackgroundLayerSelectorOptions
  * @property {string} [opacityLayer] The background layer with an opacity slider.
  */
 
 /**
  * The disclaimers options
+ *
  * @typedef {Object} gmfDisclaimerOptions
  * @property {boolean} [popup] Whether to show the disclaimer messages in popups or not.
  * Defaults to `false`.
@@ -320,11 +345,13 @@
 
 /**
  * Use the query grid instead the query window to display the query result.
+ *
  * @typedef {boolean} gmfQueryGrid
  */
 
 /**
  * The display querry grid component options.
+ *
  * @typedef {Object} gmfDisplayQueryGridOptions
  * @property {import('ngeo/options').StyleLike} featuresStyle A style object for all features from the result of the query.
  * @property {import('ngeo/options').StyleLike} selectedFeatureStyle A style object for the currently selected features.
@@ -336,6 +363,7 @@
 
 /**
  * The display querry grid component options.
+ *
  * @typedef {Object} gmfDisplayQueryWindowOptions
  * @property {import('ngeo/options').StyleLike} featuresStyle A style object for all features from the result of the query.
  * @property {import('ngeo/options').StyleLike} selectedFeatureStyle A style object for the currently selected features.
@@ -352,6 +380,7 @@
 
 /**
  * The elevation (raster) options.
+ *
  * @typedef {Object} gmfElevationOptions
  * @property {string[]} layers Elevation layers to use.
  * @property {Object<string, LayerConfig>} layersConfig Elevation layers configurations.
@@ -359,6 +388,7 @@
 
 /**
  * The elevation (raster) options.
+ *
  * @typedef {Object} gmfProfileOptions
  * @property {number} [numberOfPoints=100] Maximum limit of points to request.
  * @property {import('ngeo/options').StyleLike} hoverPointStyle The hover point style.
@@ -372,6 +402,7 @@
 
 /**
  * Datasource configuration options for the search directive.
+ *
  * @typedef {Object} SearchComponentDatasource
  * @property {Bloodhound.BloodhoundOptions<GeoJSON.FeatureCollection>} [bloodhoundOptions] The optional Bloodhound configuration for this
  * data set. See: https://github.com/twitter/typeahead.js/blob/master/doc/bloodhound.md
@@ -408,6 +439,7 @@
 /**
  * Projection object for the MousePositionDirective. Define a label and a filter
  * to use to display coordinates for a projection.
+ *
  * @typedef {Object} MousePositionProjection
  * @property {string} code The epsg name of a projection.
  * @property {string} label The label to display with this projection.
@@ -470,11 +502,13 @@
 
 /**
  * Use to inject custom javascript from an URL.
+ *
  * @typedef {string} gmfCustomJavascriptUrl
  */
 
 /**
  * Use to inject custom stylesheet from an URL.
+ *
  * @typedef {string} gmfCustomStylesheetUrl
  */
 

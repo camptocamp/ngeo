@@ -24,6 +24,7 @@ import ngeoRuleRule from 'ngeo/rule/Rule';
 
 /**
  * extends import('ngeo/rule/Rule').RuleOptions
+ *
  * @typedef {Object} DateOptions
  * @property {boolean} [active=false] (RuleOptions)
  * @property {number|string} [expression] (RuleOptions)

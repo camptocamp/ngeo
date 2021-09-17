@@ -23,6 +23,7 @@ import ngeoDatasourceOGC from 'ngeo/datasource/OGC';
 
 /**
  * Legend for external layers
+ *
  * @typedef {Object} Legend
  * @property {string} name
  * @property {string} url
@@ -47,7 +48,7 @@ class GmfExternalDatasourceOGC extends ngeoDatasourceOGC {
   }
 
   /**
-   * @return {Legend}  legend objects
+   * @returns {Legend}  legend objects
    */
   get legend() {
     return this.legend_;

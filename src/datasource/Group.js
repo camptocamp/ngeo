@@ -83,14 +83,14 @@ class Group {
   // ========================================
 
   /**
-   * @return {import('ngeo/datasource/DataSource').default[]} Data sources
+   * @returns {import('ngeo/datasource/DataSource').default[]} Data sources
    */
   get dataSources() {
     return this.dataSourcesCollection_.getArray();
   }
 
   /**
-   * @return {import('ol/Collection').default<import('ngeo/datasource/DataSource').default>}
+   * @returns {import('ol/Collection').default<import('ngeo/datasource/DataSource').default>}
    *    Data sources
    */
   get dataSourcesCollection() {
@@ -102,7 +102,7 @@ class Group {
   // =======================================
 
   /**
-   * @return {string} Title
+   * @returns {string} Title
    */
   get title() {
     return this.title_;
@@ -113,7 +113,7 @@ class Group {
   // ===================================
 
   /**
-   * @return {string} Visibility state
+   * @returns {string} Visibility state
    */
   get visibilityState() {
     let state;
@@ -144,7 +144,7 @@ class Group {
 
   /**
    * @param {import('ngeo/datasource/DataSource').default} dataSource Data source.
-   * @return {string} Visible state of a data source
+   * @returns {string} Visible state of a data source
    */
   getDataSourceState(dataSource) {
     return dataSource.visible ? VisibilityState.ON : VisibilityState.OFF;

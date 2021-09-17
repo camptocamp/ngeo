@@ -68,6 +68,7 @@ export class DataSource {
 
   /**
    * Set a map to this service. Null can be given to unset the map.
+   *
    * @param {?import('ol/Map').default} map Map.
    */
   set map(map) {
@@ -92,6 +93,7 @@ export class DataSource {
 
   /**
    * Bind a map to this service.
+   *
    * @param {import('ol/Map').default} map Map.
    * @private
    */
@@ -110,6 +112,7 @@ export class DataSource {
 
   /**
    * Unbind a map to this service.
+   *
    * @param {import('ol/Map').default} map Map.
    * @private
    */
@@ -121,6 +124,7 @@ export class DataSource {
   /**
    * Called when the resolution of the map view changes. Synchronize the
    * datasources to current resolution of the view.
+   *
    * @param {Event|import('ol/events/Event').default} evt Event.
    * @private
    */
@@ -137,6 +141,7 @@ export class DataSource {
 
   /**
    * Synchronize all datasources in the ngeo collection with a given resolution.
+   *
    * @param {number} resolution Resolution
    * @private
    */
@@ -148,6 +153,7 @@ export class DataSource {
 
   /**
    * Synchronize a data source `inRange` property with a given resolution.
+   *
    * @param {import('ngeo/datasource/DataSource').default} dataSource Data source
    * @param {number} resolution Resolution
    * @private
@@ -172,6 +178,7 @@ export class DataSource {
   /**
    * Called when a new data source is added to the ngeo collection. If there's
    * map bound, update its `inRange` right away.
+   *
    * @param {Event|import('ol/events/Event').default} event Event
    * @private
    */

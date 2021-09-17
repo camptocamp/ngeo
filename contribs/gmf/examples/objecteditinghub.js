@@ -253,7 +253,7 @@ MainController.prototype.runEditor = function () {
 
 /**
  * @param {import('gmf/themes').GmfLayerWMS} gmfLayerNode Layer node.
- * @return {angular.IPromise<void>} The promise attached to the deferred object.
+ * @returns {angular.IPromise<void>} The promise attached to the deferred object.
  */
 MainController.prototype.getFeatures_ = function (gmfLayerNode) {
   this.getFeaturesDeferred_ = this.q_.defer();
@@ -310,7 +310,7 @@ MainController.prototype.handleGetFeatures_ = function (gmfLayerNode) {
 
 /**
  * @param {import('gmf/themes').GmfLayerWMS} gmfLayerNode Layer node.
- * @return {?import('ol/Feature').default<import('ol/geom/Geometry').default>[]} List of features
+ * @returns {?import('ol/Feature').default<import('ol/geom/Geometry').default>[]} List of features
  */
 MainController.prototype.getFeaturesFromCache_ = function (gmfLayerNode) {
   const id = gmfLayerNode.id;
@@ -320,7 +320,7 @@ MainController.prototype.getFeaturesFromCache_ = function (gmfLayerNode) {
 
 /**
  * @param {import('gmf/themes').GmfLayerWMS} gmfLayerNode Layer node.
- * @return {angular.IPromise<void>} The promise attached to the deferred object.
+ * @returns {angular.IPromise<void>} The promise attached to the deferred object.
  */
 MainController.prototype.getGeometryType_ = function (gmfLayerNode) {
   this.getGeometryTypeDeferred_ = this.q_.defer();
@@ -370,7 +370,7 @@ MainController.prototype.handleGetGeometryType_ = function (gmfLayerNode) {
 
 /**
  * @param {import('gmf/themes').GmfLayerWMS} gmfLayerNode Layer node.
- * @return {string|undefined} The type of geometry.
+ * @returns {string|undefined} The type of geometry.
  */
 MainController.prototype.getGeometryTypeFromCache_ = function (gmfLayerNode) {
   const id = gmfLayerNode.id;
@@ -384,7 +384,7 @@ MainController.prototype.getGeometryTypeFromCache_ = function (gmfLayerNode) {
  * @param {string} uri The original URI, which may already have query data.
  * @param {Object<string, string>} params An object where keys are URI-encoded parameter keys,
  *     and the values are arbitrary types or arrays.
- * @return {string} The new URI.
+ * @returns {string} The new URI.
  */
 MainController.appendParams = function (uri, params) {
   /** @type {string[]} */

@@ -65,7 +65,7 @@ export function layerDecoration(layer) {
   Object.defineProperty(layer, 'visible', {
     configurable: true,
     /**
-     * @return {boolean} Visible.
+     * @returns {boolean} Visible.
      */
     get: () => layer.getVisible(),
     /**
@@ -79,7 +79,7 @@ export function layerDecoration(layer) {
   Object.defineProperty(layer, 'opacity', {
     configurable: true,
     /**
-     * @return {number} Opacity.
+     * @returns {number} Opacity.
      */
     get: () => layer.getOpacity(),
     /**

@@ -63,13 +63,13 @@
  * @callback onTileDownloadSuccess
  * @param {number} progress
  * @param {OfflineTile} tile
- * @return {Promise}
+ * @returns {Promise}
  */
 
 /**
  * @callback onTileDownloadError
  * @param {number} progress
- * @return {Promise}
+ * @returns {Promise}
  */
 
 /**

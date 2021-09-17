@@ -46,7 +46,7 @@ class Restorer {
 
   /**
    * @param {import('ol/Map').default} map The map to work on.
-   * @return {Promise<import('ol/extent').Extent>} A promise to the extent of the restored area.
+   * @returns {Promise<import('ol/extent').Extent>} A promise to the extent of the restored area.
    */
   restore(map) {
     return this.configuration_
@@ -58,7 +58,7 @@ class Restorer {
    * @protected
    * @param {import('ol/Map').default} map A map
    * @param {import('./index').OfflinePersistentContent} offlineContent The offline content
-   * @return {import('ol/extent').Extent} The extent of the restored area
+   * @returns {import('ol/extent').Extent} The extent of the restored area
    */
   doRestore(map, offlineContent) {
     map.getLayerGroup().getLayers().clear();

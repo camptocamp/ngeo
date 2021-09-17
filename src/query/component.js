@@ -245,6 +245,7 @@ export class QueryController {
   /**
    * Disable the current mode, i.e. remove any interaction of that
    * mode from the map.
+   *
    * @private
    */
   disableMode_() {
@@ -290,7 +291,8 @@ export class QueryController {
   /**
    * The maximum number of features a query should return. Obtained
    * from the options.
-   * @return {number|undefined}
+   *
+   * @returns {number|undefined}
    * @private
    */
   getLimitOption_() {
@@ -301,6 +303,7 @@ export class QueryController {
 
   /**
    * Called when active property changes
+   *
    * @param {boolean} active Whether this component is active or not.
    * @private
    */
@@ -314,6 +317,7 @@ export class QueryController {
 
   /**
    * Called when a box is drawn on the map. Use it to issue a query.
+   *
    * @param {import('lib/ol.interaction.Draw').DrawEvent} evt The draw interaction drawend event being fired.
    * @private
    */
@@ -345,6 +349,7 @@ export class QueryController {
 
   /**
    * Called when a polygon is drawn on the map. Use it to issue a query.
+   *
    * @param {import('lib/ol.interaction.Draw').DrawEvent} evt The draw interaction drawend event being fired.
    * @private
    */
@@ -377,6 +382,7 @@ export class QueryController {
   /**
    * Called when the map is clicked while this component is active and the mode is "click". Issue a request
    * to the query service using the coordinate that was clicked.
+   *
    * @param {Event|import('ol/events/Event').default} evt The map browser event being fired.
    * @private
    */
@@ -410,7 +416,7 @@ export class QueryController {
    * Change the mouse pointer when hovering a non-transparent pixel on the map.
    *
    * @param {Event|import('ol/events/Event').default} evt The map browser event being fired.
-   * @return {boolean}
+   * @returns {boolean}
    */
   handleMapPointerMove_(evt) {
     // No need to do anything if user is dragging the map
@@ -422,7 +428,7 @@ export class QueryController {
 
     /**
      * @param {import('ol/layer/Base').default} layer
-     * @return {boolean}
+     * @returns {boolean}
      */
     const queryable = function (layer) {
       const visible = layer.get('visible');

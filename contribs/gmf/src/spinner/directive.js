@@ -24,7 +24,7 @@ import angular from 'angular';
 /**
  * @ngInject
  * @param {angular.IHttpService} $http Angular HTTP service.
- * @return {angular.IDirective} The Directive Definition Object.
+ * @returns {angular.IDirective} The Directive Definition Object.
  * @ngdoc directive
  * @ngname gmfLoaderSpinner
  */

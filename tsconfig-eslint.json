@@ -1,17 +1,18 @@
 {
   "extends": "./tsconfig.json",
   "include": [
+    "*.js",
     "src/**/*.js",
     "src/**/*.ts",
+    "utils/**/*.js",
+    "buildtools/**/*.js",
+    "cypress/**/*.js",
+    "test/spec/**/*.js",
+    "examples/*.js",
     "api/src/**/*.js",
     "contribs/gmf/src/**/*.js",
     "contribs/gmf/apps/**/*.js",
-    "test/spec/**/*.js",
     "contribs/gmf/test/spec/**/*.js",
-    "examples/*.js",
-    "contribs/gmf/examples/*.js",
-    "node_modules/ol/**/*.js",
-    "node_modules/olcs/**/*.js",
-    "node_modules/moment/src/**/*.js"
+    "contribs/gmf/examples/*.js"
   ]
 }

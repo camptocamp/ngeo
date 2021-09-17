@@ -27,6 +27,7 @@ import olFormatGeoJSON from 'ol/format/GeoJSON';
 
 /**
  * extends import('ngeo/rule/Rule').RuleOptions
+ *
  * @typedef {Object} GeometryOptions
  * @property {Object<string, *>} [featureProperties] Properties for the feature.
  * @property {boolean} [active=false] (RuleOptions)
@@ -105,14 +106,14 @@ export default class extends ngeoRuleRule {
   // === Static property getters/setters ===
 
   /**
-   * @return {olFeature<import('ol/geom/Geometry').default>} Feature.
+   * @returns {olFeature<import('ol/geom/Geometry').default>} Feature.
    */
   get feature() {
     return this.feature_;
   }
 
   /**
-   * @return {?number|string|string[]} Literal
+   * @returns {?number|string|string[]} Literal
    */
   get literal() {
     return this.literal_;
@@ -137,7 +138,7 @@ export default class extends ngeoRuleRule {
   // === Calculated property getters/setters ===
 
   /**
-   * @return {?import('ol/geom/Geometry').default} Geometry
+   * @returns {?import('ol/geom/Geometry').default} Geometry
    */
   get geometry() {
     return this.feature_.getGeometry() || null;
@@ -154,7 +155,8 @@ export default class extends ngeoRuleRule {
 
   /**
    * Called when the geometry property in the feature changes. Update the literal accordingly.
-   * @return {void}
+   *
+   * @returns {void}
    * @private
    */
   handleFeatureGeometryChange_() {
@@ -184,6 +186,7 @@ export default class extends ngeoRuleRule {
   /**
    * Called when the geometry of the features changes. Update the literal
    * accordingly.
+   *
    * @param {Event|import('ol/events/Event').default} evt Event
    * @private
    */
@@ -201,6 +204,7 @@ export default class extends ngeoRuleRule {
 
   /**
    * Set geometry property using the literal property.
+   *
    * @private
    */
   setGeometryFromLiteral_() {
@@ -216,6 +220,7 @@ export default class extends ngeoRuleRule {
   /**
    * Unlisten the feature geometry change event, then listen to it if the
    * feature has a geometry.
+   *
    * @private
    */
   registerGeometryChange_() {

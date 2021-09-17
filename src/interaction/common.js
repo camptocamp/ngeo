@@ -31,7 +31,7 @@ import {createEditingStyle} from 'ol/style/Style';
  */
 
 /**
- * @return {import('ol/style/Style').StyleFunction} Styles.
+ * @returns {import('ol/style/Style').StyleFunction} Styles.
  * @hidden
  */
 export function getDefaultDrawStyleFunction() {
@@ -45,7 +45,7 @@ export function getDefaultDrawStyleFunction() {
 }
 
 /**
- * @return {import('ol/style/Style').StyleFunction} Styles.
+ * @returns {import('ol/style/Style').StyleFunction} Styles.
  * @hidden
  */
 export function getDefaultModifyStyleFunction() {

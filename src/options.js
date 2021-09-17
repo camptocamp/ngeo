@@ -50,6 +50,7 @@ import {createDefaultStyle} from 'ol/style/Style';
 /**
  * Specify radius for regular polygons, or radius1 and radius2 for stars.
  * See also: https://openlayers.org/en/latest/examples/regularshape.html
+ *
  * @typedef {Object} RegularShape
  * @property {Fill} [fill] Fill style.
  * @property {number} points Number of points for stars and regular polygons. In case of a polygon, the number of points
@@ -74,6 +75,7 @@ import {createDefaultStyle} from 'ol/style/Style';
 
 /**
  * The style description.
+ *
  * @typedef {Object} Style
  * @property {Fill} [fill] The fill color.
  * @property {Stroke} [stroke] The stoke config.
@@ -84,7 +86,7 @@ import {createDefaultStyle} from 'ol/style/Style';
 
 /**
  * @param {StyleLike} styleDescriptor The description of the style
- * @return {import('ol/style/Style').StyleLike}
+ * @returns {import('ol/style/Style').StyleLike}
  */
 export function buildStyle(styleDescriptor) {
   if (styleDescriptor instanceof olStyle) {
@@ -153,11 +155,13 @@ export function buildStyle(styleDescriptor) {
 
 /**
  * URL of the test page to detect online/offline.
+ *
  * @typedef {string} ngeoOfflineTestUrl
  */
 
 /**
  * URL to the WFS server.
+ *
  * @typedef {string} ngeoPermalinkOgcserverUrl
  */
 
@@ -212,6 +216,7 @@ export function buildStyle(styleDescriptor) {
 
 /**
  * List of replacements for string to html.
+ *
  * @typedef {StringToHtmlReplacement[]} ngeoStringToHtmlReplacements
  */
 
@@ -220,11 +225,13 @@ export function buildStyle(styleDescriptor) {
  * By default preload is Infinity,
  * which means load all tiles on the top of the visible level. See also preload value
  * in documentation for ol.Layer.Tile.
+ *
  * @typedef {number} ngeoTilesPreloadingLimit
  */
 
 /**
  * Regexp used to identify the used keys.
+ *
  * @typedef {string[]} ngeoUsedKeyRegexp
  */
 
@@ -278,31 +285,37 @@ export function buildStyle(styleDescriptor) {
 
 /**
  * File encoding of the CSV file.
+ *
  * @typedef {string} ngeoCsvEncoding
  */
 
 /**
  * File extension of the CSV file.
+ *
  * @typedef {string} ngeoCsvExtension
  */
 
 /**
  * Whether to include the header in the exported file or not.
+ *
  * @typedef {boolean} ngeoCsvIncludeHeader
  */
 
 /**
  * Quote character.
+ *
  * @typedef {string} ngeoCsvQuote
  */
 
 /**
  * Separator character.
+ *
  * @typedef {string} ngeoCsvSeparator
  */
 
 /**
  * The scale selector options
+ *
  * @typedef {Object} ngeoScaleSelectorOptions
  * @property {number[]} values The available scales
  * @property {boolean} [dropup] True to get a drop menu that opens imself to the top, instead of the bottom.

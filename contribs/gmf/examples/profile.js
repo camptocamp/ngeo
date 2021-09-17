@@ -101,6 +101,7 @@ function MainController($scope, ngeoFeatureOverlayMgr) {
 
   /**
    * Draw line interaction.
+   *
    * @type {import('ol/interaction/Draw').default}
    */
   this.drawLine = new olInteractionDraw({

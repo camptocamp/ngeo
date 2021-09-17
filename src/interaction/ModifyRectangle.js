@@ -33,6 +33,7 @@ import {CollectionEvent} from 'ol/Collection';
 
 /**
  * Interaction for modifying feature geometries.
+ *
  * @private
  * @hidden
  */
@@ -76,6 +77,7 @@ class ModifyRectangle extends olInteractionPointer {
 
     /**
      * The feature currently modified.
+     *
      * @type {?olFeature<import('ol/geom/Geometry').default>}
      * @private
      */
@@ -204,7 +206,7 @@ class ModifyRectangle extends olInteractionPointer {
   }
 
   /**
-   * @return {ModifyParams} The initialised params
+   * @returns {ModifyParams} The initialised params
    * @private
    */
   initializeParams_() {
@@ -322,7 +324,7 @@ class ModifyRectangle extends olInteractionPointer {
 
   /**
    * @param {import('ol/MapBrowserEvent').default<unknown>} evt MapBrowserEvent.
-   * @return {boolean} Start drag sequence?
+   * @returns {boolean} Start drag sequence?
    * @private
    */
   handleDown_(evt) {
@@ -391,10 +393,11 @@ class ModifyRectangle extends olInteractionPointer {
   /**
    * Calculate the new position of a point as projected on a vector from origin to
    * destination.
+   *
    * @param {import('ol/pixel').Pixel} origin Pixel of origin (opposite of the drag handle)
    * @param {import('ol/pixel').Pixel} destination Pixel of destination (the handle we dragged)
    * @param {import('ol/pixel').Pixel} vector The normalized vector to the point
-   * @return {import('ol/pixel').Pixel} The new pixel of the point
+   * @returns {import('ol/pixel').Pixel} The new pixel of the point
    * @private
    */
   calculateNewPixel_(origin, destination, vector) {
@@ -409,7 +412,7 @@ class ModifyRectangle extends olInteractionPointer {
 
   /**
    * @param {import('ol/MapBrowserEvent').default<unknown>} evt MapBrowserEvent.
-   * @return {boolean} Stop drag sequence?
+   * @returns {boolean} Stop drag sequence?
    * @private
    */
   handleUp_(evt) {

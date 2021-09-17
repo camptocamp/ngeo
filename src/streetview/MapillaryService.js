@@ -75,6 +75,7 @@ export default class MapillaryService extends StreetviewService {
 
   /**
    * Get image for the given location.
+   *
    * @param {import('ol/coordinate').Coordinate} coordinates Map view projection coordinates.
    */
   getPanorama(coordinates) {
@@ -99,6 +100,7 @@ export default class MapillaryService extends StreetviewService {
 
   /**
    * Toggle visibility of streetview / add or remove its event handler
+   *
    * @param {boolean} show If the streetview is to show
    */
   toggleShow(show) {

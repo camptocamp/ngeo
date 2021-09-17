@@ -48,6 +48,7 @@ export function FeatureOverlay(manager, index) {
 
 /**
  * Add a feature to the feature overlay.
+ *
  * @param {import('ol/Feature').default<import('ol/geom/Geometry').default>} feature The feature to add.
  */
 FeatureOverlay.prototype.addFeature = function (feature) {
@@ -56,6 +57,7 @@ FeatureOverlay.prototype.addFeature = function (feature) {
 
 /**
  * Remove a feature from the feature overlay.
+ *
  * @param {import('ol/Feature').default<import('ol/geom/Geometry').default>} feature The feature to remove.
  */
 FeatureOverlay.prototype.removeFeature = function (feature) {
@@ -64,7 +66,8 @@ FeatureOverlay.prototype.removeFeature = function (feature) {
 
 /**
  * Check if featureOverlay has no features.
- * @return {boolean} True if there is no features. False otherwise.
+ *
+ * @returns {boolean} True if there is no features. False otherwise.
  */
 FeatureOverlay.prototype.isEmpty = function () {
   return this.manager_.isEmpty(this.index_);
@@ -83,6 +86,7 @@ FeatureOverlay.prototype.clear = function () {
  * configure the feature overlay with a feature collection you will use the
  * collection to add and remove features instead of using the overlay's
  * `addFeature`, `removeFeature` and `clear` functions.
+ *
  * @param {import('ol/Collection').default<import('ol/Feature').default<import('ol/geom/Geometry').default>>} features Feature collection.
  */
 FeatureOverlay.prototype.setFeatures = function (features) {
@@ -103,6 +107,7 @@ FeatureOverlay.prototype.setFeatures = function (features) {
 
 /**
  * Set a style for the feature overlay.
+ *
  * @param {import('ol/style/Style').default | import('ol/style/Style').default[] | import('ol/style/Style').StyleFunction} style
  * Style.
  */

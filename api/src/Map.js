@@ -329,7 +329,7 @@ class Map {
 
   /**
    * @private
-   * @return {HTMLElement} overlay container element.
+   * @returns {HTMLElement} overlay container element.
    */
   createOverlayDomTree_() {
     const overlayContainer = document.createElement('div');
@@ -350,7 +350,7 @@ class Map {
   }
 
   /**
-   * @return {OLMap}
+   * @returns {OLMap}
    */
   getMap() {
     return this.map_;
@@ -464,7 +464,7 @@ class Map {
                 .map(
                   /**
                    * @param {number} val
-                   * @return {number}
+                   * @returns {number}
                    */
                   (val) => val * Math.sign(val)
                 );
@@ -560,7 +560,7 @@ class Map {
 /**
  * @param {string[]} keys Keys.
  * @param {T[]} values Values.
- * @return {Object<string, T>} Object.
+ * @returns {Object<string, T>} Object.
  * @template T
  * @private
  * @hidden
@@ -577,7 +577,7 @@ function zip(keys, values) {
 /**
  * @param {Object<string, T>} obj Object.
  * @param {string[]} keys keys.
- * @return {Object<string, T>} Object.
+ * @returns {Object<string, T>} Object.
  * @template T
  * @private
  * @hidden

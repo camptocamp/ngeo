@@ -306,6 +306,7 @@ export default class ngeoAuthComponent extends LitElementI18n {
 
   /**
    * Calls the authentication service changePassword method.
+   *
    * @param evt
    */
   changePassword(evt: Event) {
@@ -382,6 +383,7 @@ export default class ngeoAuthComponent extends LitElementI18n {
 
   /**
    * Calls the authentication service login method.
+   *
    * @param evt Event from the form submit action.
    */
   login(evt: Event) {
@@ -422,6 +424,7 @@ export default class ngeoAuthComponent extends LitElementI18n {
 
   /**
    * Calls the authentication service logout method.
+   *
    * @param evt Event from the form submit action.
    */
   logout(evt: Event) {
@@ -453,6 +456,7 @@ export default class ngeoAuthComponent extends LitElementI18n {
 
   /**
    * Calls the authentication service resetPassword method.
+   *
    * @param evt Event from the form submit action.
    */
   resetPassword(evt: Event) {
@@ -503,6 +507,7 @@ export default class ngeoAuthComponent extends LitElementI18n {
 
   /**
    * Set an error notification
+   *
    * @param errors List of errors
    * @param messageType Type of message
    */

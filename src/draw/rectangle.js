@@ -32,7 +32,7 @@ import olGeomPolygon from 'ol/geom/Polygon';
 const myModule = angular.module('ngeoDrawrectangle', []);
 
 /**
- * @return {angular.IDirective} The directive specs.
+ * @returns {angular.IDirective} The directive specs.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoDrawrectangle

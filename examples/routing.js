@@ -40,6 +40,7 @@ const myModule = angular.module('app', ['gettext', ngeoMapModule.name, ngeoRouti
 
 /**
  * The application's main directive.
+ *
  * @class
  * @ngInject
  */

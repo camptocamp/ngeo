@@ -30,7 +30,7 @@ import {DEVICE_PIXEL_RATIO} from 'ol/has';
  */
 
 /**
- * @extends {Layer<import('ol/source/Source').default>}
+ * @augments {Layer<import('ol/source/Source').default>}
  */
 export default class Mask extends Layer {
   /**
@@ -55,7 +55,7 @@ export default class Mask extends Layer {
   /**
    * @param {import('ol/coordinate').Coordinate} center center, a xy point.
    * @param {number} halfLength a half length of a square's side.
-   * @return {import('ol/extent').Extent} an extent.
+   * @returns {import('ol/extent').Extent} an extent.
    */
   createExtent(center, halfLength) {
     const minx = center[0] - halfLength;
@@ -67,7 +67,7 @@ export default class Mask extends Layer {
 
   /**
    * @param {import("ol/PluggableMap").FrameState} frameState
-   * @return {HTMLElement}
+   * @returns {HTMLElement}
    */
   render(frameState) {
     const context = this.context_;

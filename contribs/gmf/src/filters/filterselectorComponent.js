@@ -77,7 +77,7 @@ myModule.value(
   'gmfFilterselectorTemplateUrl',
   /**
    * @param {angular.IAttributes} $attrs Attributes.
-   * @return {string} The template url.
+   * @returns {string} The template url.
    */
   ($attrs) => {
     const templateUrl = $attrs.gmfFilterselectorTemplateUrl;
@@ -88,7 +88,7 @@ myModule.value(
 /**
  * @param {angular.IAttributes} $attrs Attributes.
  * @param {function(angular.IAttributes): string} gmfFilterselectorTemplateUrl Template function.
- * @return {string} Template URL.
+ * @returns {string} Template URL.
  * @ngInject
  * @private
  * @hidden
@@ -102,15 +102,15 @@ function gmfFilterselectorTemplateUrl($attrs, gmfFilterselectorTemplateUrl) {
  *
  * Used metadata:
  *
- *  * `directedFilterAttributes`: List of attribute names which should have rules
+ *  - `directedFilterAttributes`: List of attribute names which should have rules
  *      already ready when using the filter tools. For WMS layers.
  *
  * Used functionalities:
  *
- *  * `preset_layer_filter`: Name of the layer (data source) that should be toggled in the filter tool upon
+ *  - `preset_layer_filter`: Name of the layer (data source) that should be toggled in the filter tool upon
  *      loading an application.
  *      Note: although this is a list, only one can be defined.
- *  * `filterable_layers`: A list of layer names that can be filtered, if empty the component will be hidden.
+ *  - `filterable_layers`: A list of layer names that can be filtered, if empty the component will be hidden.
  */
 export class FilterSelectorController {
   /**
@@ -177,6 +177,7 @@ export class FilterSelectorController {
      * The data source that can either be selected from the list or have
      * its value set from an external source (for example: the layertree)
      * and that requires to be ready before it can be filtered.
+     *
      * @type {import('gmf/datasource/DataSourceBeingFiltered').DataSourceBeingFiltered}
      */
     this.gmfDataSourceBeingFiltered = gmfDataSourceBeingFiltered;
@@ -291,6 +292,7 @@ export class FilterSelectorController {
     /**
      * The data source ready to be filtered, after it has been selected and
      * prepared.
+     *
      * @type {?import('gmf/datasource/OGC').default}
      */
     this.readyDataSource = null;
@@ -337,6 +339,7 @@ export class FilterSelectorController {
     /**
      * The name of the data source that should be automatically selected
      * by this component.
+     *
      * @type {?string}
      * @private
      */
@@ -474,6 +477,7 @@ export class FilterSelectorController {
   /**
    * Unregister a data source if it's filtrable. Also, if it's the one
    * that was currently selected, deselect it.
+   *
    * @param {import('gmf/datasource/OGC').default} dataSource Data source
    * @private
    * @hidden
@@ -507,7 +511,7 @@ export class FilterSelectorController {
    *     in case of a data source that has its name is in the list of
    *     filtrable layer node names but it doesn't match the other requirements.
    *     Defaults to `true.`
-   * @return {boolean} Whether the data source is valid to add to the list or
+   * @returns {boolean} Whether the data source is valid to add to the list or
    *     not.
    * @private
    * @hidden
@@ -625,7 +629,7 @@ export class FilterSelectorController {
 
   /**
    * @param {import('ngeo/datasource/DataSource').default} dataSource Data source.
-   * @return {?RuleCacheItem} Rule cache item.
+   * @returns {?RuleCacheItem} Rule cache item.
    * @private
    * @hidden
    */

@@ -23,6 +23,7 @@ import ngeoDatasourceOGC from 'ngeo/datasource/OGC';
 
 /**
  * The options required to create a `gmf.datasource.OGC`.
+ *
  * @typedef {Object} OGCOptions
  * @property {import('gmf/themes').GmfLayer} gmfLayer A reference to the GMF layer node that was used to
  *    create the data source. It may contains additional information, such as metadata, about the data
@@ -124,7 +125,7 @@ class GmfDatasourceOGC extends ngeoDatasourceOGC {
   // === Static property getters/setters ===
 
   /**
-   * @return {import('gmf/themes').GmfLayer} GMF layer
+   * @returns {import('gmf/themes').GmfLayer} GMF layer
    */
   get gmfLayer() {
     return this.gmfLayer_;

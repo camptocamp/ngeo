@@ -44,6 +44,7 @@ import {CollectionEvent} from 'ol/Collection';
 
 /**
  * Interaction to rotate features.
+ *
  * @hidden
  */
 export default class extends olInteractionPointer {
@@ -79,6 +80,7 @@ export default class extends olInteractionPointer {
     /**
      * Indicate whether the interaction is currently changing a feature's
      * coordinates.
+     *
      * @type {boolean}
      * @private
      */
@@ -98,6 +100,7 @@ export default class extends olInteractionPointer {
 
     /**
      * The feature currently modified.
+     *
      * @type {?olFeature<import('ol/geom/Geometry').default>}
      * @private
      */
@@ -117,6 +120,7 @@ export default class extends olInteractionPointer {
 
     /**
      * Draw overlay where sketch features are drawn.
+     *
      * @type {import('ol/layer/Vector').default<import('ol/source/Vector').default<import('ol/geom/Geometry').default>>}
      * @private
      */
@@ -139,6 +143,7 @@ export default class extends olInteractionPointer {
 
   /**
    * Activate or deactivate the interaction.
+   *
    * @param {boolean} active Active.
    * @override
    */
@@ -259,7 +264,7 @@ export default class extends olInteractionPointer {
 
   /**
    * @param {import('ol/MapBrowserEvent').default<unknown>} evt MapBrowserEvent.
-   * @return {boolean} Start drag sequence?
+   * @returns {boolean} Start drag sequence?
    * @private
    */
   handleDown_(evt) {
@@ -294,7 +299,7 @@ export default class extends olInteractionPointer {
 
   /**
    * @param {import('ol/geom/Geometry').default} geometry Geometry.
-   * @return {import('ol/coordinate').Coordinate} The center coordinate of the geometry.
+   * @returns {import('ol/coordinate').Coordinate} The center coordinate of the geometry.
    * @private
    */
   getCenterCoordinate_(geometry) {
@@ -356,7 +361,7 @@ export default class extends olInteractionPointer {
 
   /**
    * @param {import('ol/MapBrowserEvent').default<unknown>} evt MapBrowserEvent.
-   * @return {boolean} Stop drag sequence?
+   * @returns {boolean} Stop drag sequence?
    * @private
    */
   handleUp_(evt) {
@@ -375,6 +380,7 @@ export default class extends olInteractionPointer {
 
   /**
    * Deactivate this interaction if the ESC key is pressed.
+   *
    * @param {Event|import('ol/events/Event').default} evt Event.
    * @private
    */

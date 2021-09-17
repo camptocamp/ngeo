@@ -65,7 +65,7 @@ const GeolocationEventType = {
  *
  * @htmlAttribute {import('ol/Map').default} ngeo-geolocation-map The map.
  * @htmlAttribute {GeolocationDirectiveOptions} ngeo-geolocation-options The options.
- * @return {angular.IDirective} The Directive Definition Object.
+ * @returns {angular.IDirective} The Directive Definition Object.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoGeolocation
@@ -138,6 +138,7 @@ export function Controller(
 
   /**
    * A flag used to determine if the application has finished loading.
+   *
    * @type {boolean}
    */
   this.loading;
@@ -218,6 +219,7 @@ Controller.prototype.$onInit = function () {
 
   /**
    * Whether to recenter the map at the position it gets updated
+   *
    * @type {boolean}
    */
   this.follow_ = false;
@@ -225,6 +227,7 @@ Controller.prototype.$onInit = function () {
   /**
    * A flag used to determine whether the view was changed by me or something
    * else. In the latter case, stop following.
+   *
    * @type {boolean}
    */
   this.viewChangedByMe_ = false;
@@ -394,9 +397,10 @@ Controller.prototype.autoRotateListener = function () {
 
 /**
  * Handle rotation.
+ *
  * @param {number} eventAlpha
  * @param {number} currentAlpha
- * @return {number}
+ * @returns {number}
  */
 Controller.prototype.handleRotate_ = function (eventAlpha, currentAlpha) {
   if (this.geolocation_.getTracking() && Math.abs(eventAlpha - currentAlpha) > 0.2) {

@@ -267,6 +267,7 @@ MainController.prototype.deleteFeature = function () {
 
 /**
  * Called after an insert, update or delete request.
+ *
  * @param {angular.IHttpResponse<ArrayBuffer|Document|Node|Object|string>} resp Ajax response.
  */
 MainController.prototype.handleEditFeature_ = function (resp) {

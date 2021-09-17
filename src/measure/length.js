@@ -40,7 +40,7 @@ const myModule = angular.module('ngeoMeasurelength', [ngeoDrawController.name, n
  * @param {angular.auto.IInjectorService} $injector Main injector.
  * @param {import('ngeo/options').ngeoMeasurePrecision} ngeoMeasurePrecision The precision.
  * @param {import('ngeo/options').ngeoSnappingTolerance} ngeoSnappingTolerance The tolerance.
- * @return {angular.IDirective} The directive specs.
+ * @returns {angular.IDirective} The directive specs.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoDrawpoint

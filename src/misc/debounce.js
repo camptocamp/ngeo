@@ -29,6 +29,7 @@ const myModule = angular.module('ngeoDebounce', []);
 
 /**
  * Provides a debounce function used to debounce calls to a user-provided function.
+ *
  * @template {function(?): void} T args
  * @typedef {function(T, number, boolean): T} miscDebounce
  */
@@ -39,7 +40,7 @@ const myModule = angular.module('ngeoDebounce', []);
  * @param {number} wait The wait time in ms.
  * @param {boolean} invokeApply Whether the call to `func` is wrapped into an `$apply` call.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
- * @return {T} The wrapper function.
+ * @returns {T} The wrapper function.
  * @private
  * @hidden
  */
@@ -71,10 +72,9 @@ export function debounce(func, wait, invokeApply, $timeout) {
  * Provides a debounce service. That service is a function
  * used to debounce calls to a user-provided function.
  *
- * @template {function(?): void} T args
+ * @template {function(?): void} Targs
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
- * @return {import('ngeo/misc/debounce').miscDebounce<T>} The debounce function.
- *
+ * @returns {import('ngeo/misc/debounce').miscDebounce<T>} The debounce function.
  * @ngInject
  * @private
  * @hidden

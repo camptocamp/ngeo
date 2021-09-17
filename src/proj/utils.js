@@ -27,7 +27,7 @@ import proj4 from 'proj4';
  * @param {string} code
  * @param {string} def
  * @param {number[]} extent
- * @return {import('ol/proj/Projection').default}
+ * @returns {import('ol/proj/Projection').default}
  */
 export default function create(code, def, extent) {
   proj4.defs(code, def.trim());

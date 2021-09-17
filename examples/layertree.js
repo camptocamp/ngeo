@@ -127,8 +127,9 @@ function LayertreeController($http, $sce, appGetLayer, ngeoCreatePopup) {
  * Function called by the ngeo-layertree directives to create a layer
  * from a tree node. The function should return `null` if no layer should
  * be associated to the node (because it's not a leaf).
+ *
  * @param {Object} node Node object.
- * @return {import('ol/layer/Layer').default<import('ol/source/Source').default>} The layer for this
+ * @returns {import('ol/layer/Layer').default<import('ol/source/Source').default>} The layer for this
  *    node.
  */
 LayertreeController.prototype.getLayer = function (node) {
@@ -164,7 +165,7 @@ myModule.controller('AppLayertreeController', LayertreeController);
  * function returns `null` when no layer should be created for the node.
  *
  * @param {import('gmf/themes').GmfLayer} node Layer tree node.
- * @return {import('ol/layer/Layer').default} Layer.
+ * @returns {import('ol/layer/Layer').default} Layer.
  */
 const getLayer = (function () {
   /**
@@ -174,7 +175,7 @@ const getLayer = (function () {
   return (
     /**
      * @param {import('gmf/themes').GmfLayer} node Tree node.
-     * @return {?import('ol/layer/Layer').default<import('ol/source/Source').default>} Layer.
+     * @returns {?import('ol/layer/Layer').default<import('ol/source/Source').default>} Layer.
      */
     function (node) {
       if (!('layerType' in node)) {
@@ -222,6 +223,7 @@ myModule.value('appGetLayer', getLayer);
 
 /**
  * The application's main directive.
+ *
  * @class
  * @ngInject
  */

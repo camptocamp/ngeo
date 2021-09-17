@@ -25,6 +25,7 @@
 
 /**
  * A projection definitions.
+ *
  * @typedef {Object} Projection
  * @property {string[]} definition The definition.
  * @property {number[]} extent The extent.

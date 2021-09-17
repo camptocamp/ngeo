@@ -66,7 +66,7 @@ describe('ngeo.layertree.component', () => {
 
     /**
      * @param {*} node
-     * @return {olLayerImage<import('ol/source/Image').default>}
+     * @returns {olLayerImage<import('ol/source/Image').default>}
      */
     const getLayer = function (node) {
       return new olLayerImage();

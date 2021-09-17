@@ -267,6 +267,7 @@ describe('ngeo.print.VectorEncoder', () => {
 
     /**
      * Text styles (same for the two features)
+     *
      * @param {import('ngeo/print/mapfish-print-v3').MapFishPrintSymbolizerText[]} symbolizers
      */
     const fnExpectSymText = (symbolizers) => {

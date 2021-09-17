@@ -27,6 +27,7 @@ import {mouse as d3mouse, select as d3select} from 'd3';
 export default class {
   /**
    * Measure tool for the d3 chart
+   *
    * @param {import('gmf/lidarprofile/Manager').LidarprofileManager} gmfLidarprofileManagerInstance
    *    gmf lidar profile manager instance
    */

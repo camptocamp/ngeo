@@ -24,6 +24,9 @@ const fs = require('fs');
 const options = require('commander');
 const Compiler = require('angular-gettext-tools').Compiler;
 
+/**
+ * @param inputs
+ */
 function main(inputs) {
   const compiler = new Compiler({format: 'json'});
 

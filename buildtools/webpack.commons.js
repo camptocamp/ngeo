@@ -98,6 +98,10 @@ module.exports = function (config) {
     },
   };
 
+  /**
+   * @param firsts
+   * @param lasts
+   */
   function get_comp(firsts, lasts) {
     return (f1, f2) => {
       for (const pattern of firsts) {
