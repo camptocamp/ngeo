@@ -157,7 +157,7 @@ serve-gmf: contribs/dist $(ANGULAR_LOCALES_FILES)
 	npm run serve-gmf-examples
 
 .PHONY: serve-gmf-apps
-serve-gmf-apps: .build/build-dll.timestamp $(ANGULAR_LOCALES_FILES)
+serve-gmf-apps: .build/build-dll.timestamp $(ANGULAR_LOCALES_FILES) .build/locale/webcomponent/en/app.json
 	npm run serve-gmf-apps
 
 .PHONY: serve-api
@@ -399,6 +399,9 @@ contribs/gmf/apps/.tx/config: contribs/gmf/apps/.tx/config.mako .build/python-ve
 		$(GMF_APPS_PARTIALS_FILES) $(GMF_APPS_JS_FILES)
 	mkdir -p $(dir $@)
 	node buildtools/extract-messages $(GMF_APPS_PARTIALS_FILES) $(GMF_APPS_JS_FILES) > $@
+
+.build/locale/webcomponent/en/app.json:
+	i18next --config buildtools/i18next-parser.config.js
 
 .PHONY: transifex-get
 transifex-get: $(L10N_PO_FILES) \
