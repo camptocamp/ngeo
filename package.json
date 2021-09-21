@@ -39,7 +39,7 @@
     "@fortawesome/fontawesome-free": "5.15.4",
     "@sentry/browser": "6.13.1",
     "@sentry/integrations": "6.13.2",
-    "@sentry/tracing": "6.13.1",
+    "@sentry/tracing": "6.13.2",
     "@sentry/types": "6.13.2",
     "@trevoreyre/autocomplete-js": "2.2.0",
     "@types/angular": "1.8.2",
