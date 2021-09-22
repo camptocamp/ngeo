@@ -401,7 +401,7 @@ contribs/gmf/apps/.tx/config: contribs/gmf/apps/.tx/config.mako .build/python-ve
 	node buildtools/extract-messages $(GMF_APPS_PARTIALS_FILES) $(GMF_APPS_JS_FILES) > $@
 
 .build/locale/webcomponent/en/app.json:
-	i18next --config buildtools/i18next-parser.config.js
+	npm run i18next-parse
 
 .PHONY: transifex-get
 transifex-get: $(L10N_PO_FILES) \

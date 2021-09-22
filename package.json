@@ -26,7 +26,8 @@
     "test": "start-server-and-test storybook-ci http://localhost:6006 cypress-ui",
     "chromatic": "chromatic --exit-zero-on-changes",
     "cs-tots": "jscodeshift --transform=buildtools/codeshift-js2ts.js --extensions=ts --parser=ts",
-    "cs-rmjs": "jscodeshift --transform=buildtools/codeshift-removejs.js --extensions=ts --parser=ts"
+    "cs-rmjs": "jscodeshift --transform=buildtools/codeshift-removejs.js --extensions=ts --parser=ts",
+    "i18next-parse": "i18next --config buildtools/i18next-parser.config.js"
   },
   "sideEffects": false,
   "repository": {
@@ -120,6 +121,7 @@
     "html-webpack-plugin": "4.5.2",
     "i18next": "20.4.0",
     "i18next-browser-languagedetector": "6.1.2",
+    "i18next-parser": "4.0.1",
     "i18next-xhr-backend": "3.2.2",
     "jasmine-core": "3.9.0",
     "jquery": "3.6.0",
