@@ -4,3 +4,4 @@ htmlmin==0.1.12
 Mako==1.1.5
 requests==2.26.0
 transifex-client==0.14.3
+polib==1.1.1
