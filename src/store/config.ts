@@ -1354,6 +1354,7 @@ export type gmfTwoFactorAuth = boolean;
  * The full configuration
  */
 export type Configuration = {
+  authenticationBaseUrl: authenticationBaseUrl;
   ngeoOfflineTestUrl: ngeoOfflineTestUrl;
   ngeoPermalinkOgcserverUrl: ngeoPermalinkOgcserverUrl;
   ngeoNominatimSearchDefaultParams: ngeoNominatimSearchDefaultParams;

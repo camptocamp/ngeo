@@ -52,8 +52,8 @@ appModule.config([
  * @ngInject
  */
 appModule.run(($injector) => {
-  AngularServices.auth = $injector.get('gmfAuthenticationService');
-  AngularServices.notification = $injector.get('ngeoNotification');
+  //AngularServices.auth = $injector.get('gmfAuthenticationService');
+  //AngularServices.notification = $injector.get('ngeoNotification');
 });
 
 export default appModule;

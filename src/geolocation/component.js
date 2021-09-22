@@ -35,10 +35,7 @@ import {buildStyle} from 'ngeo/options';
  * @type {angular.IModule}
  * @hidden
  */
-const myModule = angular.module('ngeoGeolocation', [
-  ngeoMapFeatureOverlayMgr.name,
-  ngeoMessageNotification.name,
-]);
+const myModule = angular.module('ngeoGeolocation', [ngeoMapFeatureOverlayMgr.name]);
 
 /**
  * @enum {string}
@@ -92,21 +89,12 @@ myModule.directive('ngeoGeolocation', geolocationComponent);
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext service.
  * @param {import('ngeo/map/FeatureOverlayMgr').FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *    overlay manager service.
- * @param {import('ngeo/message/Notification').MessageNotification} ngeoNotification Ngeo notification
- *    service.
  * @param {import('ngeo/options').ngeoGeolocationOptions} ngeoGeolocationOptions The options.
  * @ngInject
  * @ngdoc controller
  * @ngname ngeoGeolocationController
  */
-export function Controller(
-  $scope,
-  $element,
-  gettextCatalog,
-  ngeoFeatureOverlayMgr,
-  ngeoNotification,
-  ngeoGeolocationOptions
-) {
+export function Controller($scope, $element, gettextCatalog, ngeoFeatureOverlayMgr, ngeoGeolocationOptions) {
   this.options = ngeoGeolocationOptions;
 
   $element.on('click', this.toggleTracking.bind(this));
@@ -115,11 +103,6 @@ export function Controller(
    * @type {angular.IScope}
    */
   this.$scope_ = $scope;
-
-  /**
-   * @type {import('ngeo/message/Notification').MessageNotification}
-   */
-  this.notification_ = ngeoNotification;
 
   /**
    * @type {import('ngeo/map/FeatureOverlayMgr').FeatureOverlayMgr}
@@ -197,7 +180,7 @@ Controller.prototype.$onInit = function () {
             msg = gettextCatalog.getString('Geolocation: An unknown error occurred.');
             break;
         }
-        this.notification_.error(msg);
+        ngeoMessageNotification.error(msg);
         this.$scope_.$emit(GeolocationEventType.ERROR, error);
       }
     )
@@ -316,7 +299,7 @@ Controller.prototype.untrack_ = function () {
   this.featureOverlay_.clear();
   this.follow_ = false;
   this.geolocation_.setTracking(false);
-  this.notification_.clear();
+  ngeoMessageNotification.clear();
 };
 
 Controller.prototype.setPosition_ = function () {

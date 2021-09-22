@@ -50,7 +50,6 @@ import user, {UserState} from 'ngeo/store/user.ts';
  */
 const myModule = angular.module('gmfAuthentication', [
   gmfAuthenticationService.name,
-  ngeoMessageNotification.name,
   ngeoMessageModalComponent.name,
 ]);
 
@@ -142,8 +141,6 @@ export class AuthenticationController {
    * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
    * @param {import('gmf/authentication/Service').AuthenticationService} gmfAuthenticationService
    *    GMF Authentication service
-   * @param {import('ngeo/message/Notification').MessageNotification} ngeoNotification Ngeo notification
-   *    service.
    * @param {import('gmf/options').gmfAuthenticationConfig} gmfAuthenticationConfig The configuration
    * @ngInject
    * @ngdoc controller
@@ -155,7 +152,6 @@ export class AuthenticationController {
     gmfTwoFactorAuth,
     gettextCatalog,
     gmfAuthenticationService,
-    ngeoNotification,
     gmfAuthenticationConfig
   ) {
     /**
@@ -175,12 +171,6 @@ export class AuthenticationController {
      * @private
      */
     this.gmfAuthenticationService_ = gmfAuthenticationService;
-
-    /**
-     * @type {import('ngeo/message/Notification').MessageNotification}
-     * @private
-     */
-    this.notification_ = ngeoNotification;
 
     /**
      * @type {boolean}
@@ -553,11 +543,12 @@ export class AuthenticationController {
       const options = {
         msg: error,
         target: container,
+        delay: 7000,
       };
       if (messageType) {
         options.type = messageType;
       }
-      this.notification_.notify(options);
+      ngeoMessageNotification.notify(options);
     });
   }
 
@@ -565,7 +556,7 @@ export class AuthenticationController {
    * @private
    */
   resetError_() {
-    this.notification_.clear();
+    ngeoMessageNotification.clear();
     this.error = false;
   }
 }

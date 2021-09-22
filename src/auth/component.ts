@@ -22,8 +22,8 @@
 import {html, TemplateResult} from 'lit';
 import {customElement, property, state} from 'lit/decorators.js';
 import {LitElementI18n} from 'ngeo/localize/i18n';
-import AngularServices from 'ngeo/services';
-import {MessageType} from 'ngeo/message/Message';
+import {Message, MessageType} from 'ngeo/message/Message';
+import ngeoMessageNotification from 'ngeo/message/Notification';
 import {unsafeSVG} from 'lit/directives/unsafe-svg';
 import loadingSvg from 'gmf/icons/spinner.svg';
 import {gmfBackgroundlayerStatus} from 'gmf/backgroundlayerselector/status';
@@ -33,6 +33,7 @@ import user, {User, UserState} from 'ngeo/store/user';
 import qruri from 'qruri';
 import i18next from 'i18next';
 import configuration, {Configuration, gmfAuthenticationConfig} from 'ngeo/store/config';
+import authenticationService from './Service';
 
 /** Type definition for PasswordValidator */
 type PasswordValidator = {
@@ -371,8 +372,8 @@ export default class ngeoAuthComponent extends LitElementI18n {
         } else {
           username = this.gmfUser.username;
         }
-        console.assert(username);
-        AngularServices.auth
+        console.assert(!username);
+        authenticationService
           .changePassword(username, oldPwd, newPwd, confPwd, otpVal)
           .then(() => {
             this.changePasswordReset();
@@ -421,7 +422,7 @@ export default class ngeoAuthComponent extends LitElementI18n {
       this.isLoading = false;
       this.setError_(errors);
     } else {
-      AngularServices.auth
+      authenticationService
         .login(loginVal, pwdVal)
         .then(() => {
           this.resetError_();
@@ -447,7 +448,7 @@ export default class ngeoAuthComponent extends LitElementI18n {
     this.manualLoginLogout_();
 
     this.isLoading = true;
-    AngularServices.auth
+    authenticationService
       .logout()
       .then(() => {
         this.resetError_();
@@ -486,7 +487,7 @@ export default class ngeoAuthComponent extends LitElementI18n {
       return;
     }
 
-    AngularServices.auth
+    authenticationService
       .resetPassword(login)
       .then(() => {
         this.resetPasswordShown = true;
@@ -536,14 +537,15 @@ export default class ngeoAuthComponent extends LitElementI18n {
     const container = document.querySelector('.auth-error');
 
     errors.forEach((error) => {
-      const options: import('ngeo/message/Message.js').Message = {
+      const options: Message = {
         msg: error,
         target: container,
+        delay: 7000,
       };
       if (messageType) {
         options.type = messageType;
       }
-      AngularServices.notification.notify(options);
+      ngeoMessageNotification.notify(options);
     });
   }
 
@@ -551,7 +553,7 @@ export default class ngeoAuthComponent extends LitElementI18n {
    * Reset the error notification
    */
   resetError_(): void {
-    AngularServices.notification.clear();
+    ngeoMessageNotification.clear();
     this.error = false;
   }
 }

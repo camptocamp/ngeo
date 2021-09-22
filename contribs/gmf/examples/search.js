@@ -45,19 +45,16 @@ const myModule = angular.module('gmfapp', [
   gmfSearchModule.name,
   gmfThemeThemes.name,
   ngeoMapModule.name, // for ngeo.map.FeatureOverlay, perhaps remove me
-  ngeoMessageNotification.name,
 ]);
 
 /**
  * @param {import('gmf/theme/Themes').ThemesService} gmfThemes Themes service.
  * @param {import('ngeo/map/FeatureOverlayMgr').FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo
  *    feature overlay manager service.
- * @param {import('ngeo/message/Notification').MessageNotification} ngeoNotification Ngeo notification
- *    service.
  * @class
  * @ngInject
  */
-function MainController(gmfThemes, ngeoFeatureOverlayMgr, ngeoNotification) {
+function MainController(gmfThemes, ngeoFeatureOverlayMgr) {
   gmfThemes.loadThemes();
 
   ngeoFeatureOverlayMgr.init(this.map);
@@ -93,10 +90,11 @@ function MainController(gmfThemes, ngeoFeatureOverlayMgr, ngeoNotification) {
    * @type {function(): void}
    */
   this.searchIsReady = () => {
-    ngeoNotification.notify({
+    ngeoMessageNotification.notify({
       msg: 'gmf-search initialized',
-      target: '#message',
+      target: document.querySelector('#message'),
       type: MessageType.SUCCESS,
+      delay: 7000,
     });
   };
 }
