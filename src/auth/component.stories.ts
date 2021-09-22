@@ -19,15 +19,29 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+
 import './component.ts';
-import user, {UserState} from 'ngeo/store/user';
+import user, {UserState, User} from 'ngeo/store/user';
 
 export default {
   title: 'Auth component',
   component: 'ngeo-auth-component',
 };
 
-const Template = (args: any) => {
+type Args = {
+  /**
+   * The user.
+   */
+  user: User;
+  /**
+   * The info message.
+   */
+  loginInfoMessage: string;
+};
+
+const Template = (args: Args) => {
   user.setUser(args.user, UserState.READY);
   return `
     <ngeo-auth-component
@@ -35,7 +49,7 @@ const Template = (args: any) => {
     </ngeo-auth-component>`;
 };
 
-const defaultProperties: any = {
+const defaultProperties: Args = {
   loginInfoMessage: '',
   user: null,
 };

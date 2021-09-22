@@ -140,10 +140,10 @@ export class UserModel {
   /**
    * Set the current User's properties and state.
    *
-   * @param properties
-   * @param state
+   * @param properties The new user
+   * @param state The new state
    */
-  setUser(properties: User, state: UserState) {
+  setUser(properties: User, state: UserState): void {
     const isValid = this.checkUserProperties_(properties);
     if (!isValid || state === null) {
       return;
@@ -172,7 +172,7 @@ export class UserModel {
   /**
    * Check if the user has at least all required properties.
    *
-   * @param properties
+   * @param properties The new user
    * @returns true if the properties are correct.
    * @private
    */

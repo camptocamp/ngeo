@@ -19,7 +19,7 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import {html} from 'lit';
+import {html, TemplateResult} from 'lit';
 import {customElement, property, state} from 'lit/decorators.js';
 import {LitElementI18n} from 'ngeo/localize/i18n';
 import AngularServices from 'ngeo/services';
@@ -57,7 +57,7 @@ export default class ngeoAuthComponent extends LitElementI18n {
   private changingPasswordUsername_ = '';
   private subscriptions_: Subscription[] = [];
 
-  connectedCallback() {
+  connectedCallback(): void {
     super.connectedCallback();
     this.subscriptions_.push(
       user.getProperties().subscribe({
@@ -71,12 +71,12 @@ export default class ngeoAuthComponent extends LitElementI18n {
     );
   }
 
-  disconnectedCallback() {
+  disconnectedCallback(): void {
     super.disconnectedCallback();
     this.subscriptions_.forEach((sub) => sub.unsubscribe());
   }
 
-  render() {
+  render(): TemplateResult {
     return html`
       ${this.gmfUser.is_intranet
         ? html`
@@ -264,15 +264,16 @@ export default class ngeoAuthComponent extends LitElementI18n {
     `;
   }
   // Disable shadow DOM
-  protected createRenderRoot() {
+  protected createRenderRoot(): LitElementI18n {
     return this;
   }
 
   /**
    * @private
    */
-  setOtpImage_() {
+  setOtpImage_(): void {
     if (this.gmfUser.otp_uri) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-assignment
       this.otpImage = qruri(this.gmfUser.otp_uri, {
         margin: 2,
       });
@@ -283,7 +284,7 @@ export default class ngeoAuthComponent extends LitElementI18n {
    * @param {UserState} userState state of the user.
    * @private
    */
-  onUserStateUpdate_(userState: UserState) {
+  onUserStateUpdate_(userState: UserState): void {
     if (userState === UserState.LOGGED_IN) {
       this.changingPassword = false;
       this.userMustChangeItsPassword = false;
@@ -295,7 +296,7 @@ export default class ngeoAuthComponent extends LitElementI18n {
   /**
    * @private
    */
-  checkUserMustChangeItsPassword_() {
+  checkUserMustChangeItsPassword_(): void {
     if (this.gmfUser.is_password_changed !== false) {
       return;
     }
@@ -309,17 +310,17 @@ export default class ngeoAuthComponent extends LitElementI18n {
   /**
    * Calls the authentication service changePassword method.
    *
-   * @param evt
+   * @param evt the event
    */
-  changePassword(evt: Event) {
+  changePassword(evt: Event): void {
     evt.preventDefault();
 
     const errors = [];
     const form = evt.target as HTMLFormElement;
-    const oldPwd = form.oldPwdVal.value;
-    const newPwd = form.newPwdVal.value;
-    const confPwd = form.newPwdConfVal.value;
-    const otpVal = form.otp.value;
+    const oldPwd = (form.oldPwdVal as HTMLInputElement).value;
+    const newPwd = (form.newPwdVal as HTMLInputElement).value;
+    const confPwd = (form.newPwdConfVal as HTMLInputElement).value;
+    const otpVal = (form.otp as HTMLInputElement).value;
 
     // Validation - Passwords are required.
     if (oldPwd === '') {
@@ -388,7 +389,7 @@ export default class ngeoAuthComponent extends LitElementI18n {
    *
    * @param evt Event from the form submit action.
    */
-  login(evt: Event) {
+  login(evt: Event): void {
     evt.preventDefault();
 
     this.manualLoginLogout_();
@@ -429,7 +430,7 @@ export default class ngeoAuthComponent extends LitElementI18n {
    *
    * @param evt Event from the form submit action.
    */
-  logout(evt: Event) {
+  logout(evt: Event): void {
     evt.preventDefault();
 
     this.manualLoginLogout_();
@@ -451,7 +452,7 @@ export default class ngeoAuthComponent extends LitElementI18n {
   /**
    * Effects on manual try to login/logout.
    */
-  manualLoginLogout_() {
+  manualLoginLogout_(): void {
     // Set the user could lead to a new background.
     gmfBackgroundlayerStatus.touchedByUser = true;
   }
@@ -461,12 +462,12 @@ export default class ngeoAuthComponent extends LitElementI18n {
    *
    * @param evt Event from the form submit action.
    */
-  resetPassword(evt: Event) {
+  resetPassword(evt: Event): void {
     this.isLoading = true;
 
     const resetBtn = evt.target as HTMLFormElement;
     const form = resetBtn.parentNode.parentNode as HTMLFormElement;
-    const login = form.login.value;
+    const login = (form.login as HTMLInputElement).value;
 
     if (login === '') {
       this.isLoading = false;
@@ -493,7 +494,7 @@ export default class ngeoAuthComponent extends LitElementI18n {
   /**
    * Reset the changePassword values and error.
    */
-  changePasswordReset() {
+  changePasswordReset(): void {
     this.resetError_();
     this.changingPassword = false;
     this.userMustChangeItsPassword = false;
@@ -513,7 +514,7 @@ export default class ngeoAuthComponent extends LitElementI18n {
    * @param errors List of errors
    * @param messageType Type of message
    */
-  setError_(errors: string[], messageType?: MessageType) {
+  setError_(errors: string[], messageType?: MessageType): void {
     if (messageType == undefined) {
       messageType = MessageType.ERROR;
     }
@@ -538,7 +539,7 @@ export default class ngeoAuthComponent extends LitElementI18n {
   /**
    * Reset the error notification
    */
-  resetError_() {
+  resetError_(): void {
     AngularServices.notification.clear();
     this.error = false;
   }

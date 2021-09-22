@@ -19,7 +19,7 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import {html} from 'lit';
+import {html, TemplateResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {unsafeSVG} from 'lit/directives/unsafe-svg.js';
 import loadingSvg from 'gmf/icons/spinner.svg';
@@ -36,7 +36,7 @@ export default class AuthPanel extends LitElementI18n {
   @property({type: Boolean}) postLoading = false;
   @property({type: Object}) passwordValidator: PasswordValidator = null;
 
-  protected render() {
+  protected render(): TemplateResult {
     const spinnerTemplate = this.postLoading
       ? html`
           <div>
@@ -50,7 +50,7 @@ export default class AuthPanel extends LitElementI18n {
         <div class="col-sm-12">
           <div class="gmf-app-tools-content-heading">
             ${i18next.t('Login')}
-            <a class="btn close" @click=${this.closePanel}>&times;</a>
+            <a class="btn close" @click=${this.closePanel.bind(this)}>&times;</a>
           </div>
           <ngeo-auth-component
             .loginInfoMessage=${this.loginInfoMessage}
@@ -62,11 +62,11 @@ export default class AuthPanel extends LitElementI18n {
     `;
   }
   // Disable shadow DOM
-  protected createRenderRoot() {
+  protected createRenderRoot(): LitElementI18n {
     return this;
   }
 
-  closePanel() {
+  closePanel(): void {
     this.dispatchEvent(new CustomEvent('close-panel', {detail: false}));
   }
 }
