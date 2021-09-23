@@ -19,6 +19,13 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+
 /**
  * Test with:
  * find api/src -name '*.js' -exec npm run cs-tots -- --dry {} \;
@@ -50,7 +57,7 @@ let count = 1;
  * ...
  * constructor(options: MapOptions) {
  *
- * @param {jscodeshift} j jscodeshift
+ * @param {j} j jscodeshift
  * @param {any} root the root node
  * @param {any} path the current path
  * @param {any} original_path the original path or null
@@ -126,7 +133,7 @@ function addTypes(j, root, path, original_path, comment) {
  *  + @ param options API options.
  *  + /
  *
- * @param {jscodeshift} j jscodeshift
+ * @param {j} j jscodeshift
  * @param {any} root the root node
  * @param {any} path the current path
  * @param {any} original_path the original path or null
@@ -177,7 +184,7 @@ function removeTypes(j, root, path, original_path, comment) {
  * => add
  * import olGeomGeometry from 'ol/geom/Geometry.js';
  *
- * @param {jscodeshift} j jscodeshift
+ * @param {j} j jscodeshift
  * @param {any} root the root node
  * @param {any} path the current path
  */
@@ -219,7 +226,7 @@ function addImport(j, root, path) {
  * =>
  * @ type {VectorSource<olGeomGeometry>}
  *
- * @param {jscodeshift} j jscodeshift
+ * @param {j} j jscodeshift
  * @param {any} root the root node
  * @param {any} path the current path
  */
@@ -241,10 +248,10 @@ function convertImport(j, root, path) {
 }
 
 /**
- * @param jsType
+ * @param jsType the javascript type as string
+ * @returns the typescript type as string
  */
 function convertSingleType(jsType) {
-  console.log(jsType);
   if (jsType == '?') {
     return 'any';
   }
@@ -265,7 +272,7 @@ function convertSingleType(jsType) {
  *   (arg1: string): string;
  * };
  *
- * @param {jscodeshift} j jscodeshift
+ * @param {j} j jscodeshift
  * @param {any} root the root node
  * @param {any} path the current path
  */
@@ -308,7 +315,7 @@ function addFunction(j, root, path) {
  * =>
  * @ type {Function1}}
  *
- * @param {jscodeshift} j jscodeshift
+ * @param {j} j jscodeshift
  * @param {any} root the root node
  * @param {any} path the current path
  */
@@ -331,7 +338,7 @@ function convertFunction(j, root, path) {
  * @param {any} parent The parent node
  * @param {any} comments Override the comments
  * @param {any} statement The statement function
- * @returns {any}
+ * @returns {any} the converted statements
  */
 function convertCast(node, parent, comments, statement) {
   if (
@@ -377,8 +384,8 @@ function removeTypeInComments(comments) {
 /**
  * Visit all node
  *
- * @param {string} indent
- * @param {any} node
+ * @param {string} indent the spaces for the indentations
+ * @param {any} node the current node
  * @param {function(string, any): void} call function to do on all the nodes
  */
 function visit(indent, node, call) {
@@ -519,8 +526,9 @@ function visit(indent, node, call) {
 }
 
 /**
- * @param j
- * @param root
+ * @param j jscodeshift
+ * @param root the root element
+ * @returns the new jscodeshift ast
  */
 function findTopLevelImports(j, root) {
   const program = root.find(j.Program).at(0).paths()[0];
@@ -531,9 +539,9 @@ function findTopLevelImports(j, root) {
 }
 
 /**
- * @param j
- * @param root
- * @param {...any} statements
+ * @param j jscodeshift
+ * @param root the root element
+ * @param {...any} statements the statements to add
  */
 function addStatements(j, root, ...statements) {
   const imports = findTopLevelImports(j, root);
@@ -556,7 +564,7 @@ function addStatements(j, root, ...statements) {
  *
  * @param {string} name the script name
  * @param {string} object the object we import
- * @returns {string}
+ * @returns {string} the new name
  */
 function rename(name, object) {
   name = name.replace(/^\.\//, '');
@@ -580,8 +588,9 @@ function rename(name, object) {
 }
 
 /**
- * @param file
- * @param api
+ * @param file the file to transfrm
+ * @param api the jscodshift api
+ * @returns {string} the new content
  */
 export default function transformer(file, api) {
   let result = file.source;
@@ -592,7 +601,7 @@ export default function transformer(file, api) {
 
     j(file.source)
       .forEach((path) => {
-        // eslint-disable-next-line no-unused-vars
+        // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
         visit('', path.value, (indent, node) => {
           // if (node.comments) {
           //   console.log(node.comments[0].value);
@@ -974,7 +983,7 @@ export default function transformer(file, api) {
       .filter((path) => {
         return path.value.type == 'CommentBlock' && path.value.value.replace(/[\n *]*/, '') == '';
       })
-      // eslint-disable-next-line no-unused-vars
+      // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
       .replaceWith((path) => {
         return '';
       })
