@@ -41,7 +41,8 @@ const detectionOptions = {
 /**
  *
  */
-export function setupI18n() {
+export function setupI18n(): void {
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   i18next
     .use(Backend)
     .use(LanguageDetector)
@@ -59,10 +60,12 @@ export function setupI18n() {
       },
     });
 
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
   const localize = locI18next.init(i18next);
 
   i18next.on('languageChanged', (lang) => {
     document.documentElement.lang = lang;
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
     localize('[data-i18n]');
   });
 }
@@ -73,13 +76,13 @@ export function setupI18n() {
 export class LitElementI18n extends LitElement {
   i18nLanguageChangedCallback_: () => void;
 
-  connectedCallback() {
+  connectedCallback(): void {
     this.i18nLanguageChangedCallback_ = () => this.requestUpdate();
     i18next.on('languageChanged', this.i18nLanguageChangedCallback_);
     super.connectedCallback();
   }
 
-  disconnectedCallback() {
+  disconnectedCallback(): void {
     i18next.off('languageChanged', this.i18nLanguageChangedCallback_);
     super.disconnectedCallback();
   }

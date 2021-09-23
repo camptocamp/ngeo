@@ -222,7 +222,7 @@ examples-hosted-apps: .build/gmf-apps.timestamp
 
 .build/eslint-ts.timestamp: .build/node_modules.copyright.timestamp .eslintrc.yaml .eslintrc-ts.yaml \
 		$(TS_FILES)
-	./node_modules/.bin/eslint $(filter-out .build/node_modules.copyright.timestamp .eslintrc.yaml .eslintrc-ts.yaml, $^)
+	./node_modules/.bin/eslint --config=.eslintrc-ts.yaml $(filter-out .build/node_modules.copyright.timestamp .eslintrc.yaml .eslintrc-ts.yaml, $^)
 	touch $@
 
 .PHONY: eslint-fix
