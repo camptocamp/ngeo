@@ -103,7 +103,7 @@
     "file-saver": "2.0.5",
     "floatthead": "2.2.4",
     "fs-extra": "10.0.0",
-    "glob": "7.1.7",
+    "glob": "7.2.0",
     "html-webpack-plugin": "4.5.2",
     "jasmine-core": "3.9.0",
     "jquery": "3.6.0",
