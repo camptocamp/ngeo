@@ -10,6 +10,8 @@ rules:
   jsdoc/require-returns-description: error
   jsdoc/require-param-description: error
   jsdoc/require-property-description: error
+  jsdoc/require-returns: error
+  jsdoc/newline-after-description: error
   '@typescript-eslint/explicit-module-boundary-types': error
   '@typescript-eslint/no-unsafe-member-access': error
   '@typescript-eslint/no-unsafe-assignment': error

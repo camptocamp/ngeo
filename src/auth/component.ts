@@ -23,15 +23,16 @@ import {html, TemplateResult} from 'lit';
 import {customElement, property, state} from 'lit/decorators.js';
 import {LitElementI18n} from 'ngeo/localize/i18n';
 import AngularServices from 'ngeo/services';
-import {MessageType} from 'ngeo/message/Message.js';
-import {unsafeSVG} from 'lit/directives/unsafe-svg.js';
+import {MessageType} from 'ngeo/message/Message';
+import {unsafeSVG} from 'lit/directives/unsafe-svg';
 import loadingSvg from 'gmf/icons/spinner.svg';
-import {gmfBackgroundlayerStatus} from 'gmf/backgroundlayerselector/status.js';
+import {gmfBackgroundlayerStatus} from 'gmf/backgroundlayerselector/status';
 import {Subscription} from 'rxjs';
 import user, {User, UserState} from 'ngeo/store/user';
 // @ts-ignore
 import qruri from 'qruri';
 import i18next from 'i18next';
+import configuration, {Configuration, gmfAuthenticationConfig} from 'ngeo/store/config';
 
 /** Type definition for PasswordValidator */
 type PasswordValidator = {
@@ -46,9 +47,9 @@ export default class ngeoAuthComponent extends LitElementI18n {
   @state() private isLoading = false;
   @state() private disconnectedShown = false;
   @state() private resetPasswordShown = false;
-  @state() private twoFactorAuth = false; // TODO: gmfTwoFactorAuth
-  @state() private allowPasswordChange = false; // TODO: gmfAuthenticationConfig
-  @state() private allowPasswordReset = false; // TODO: gmfAuthenticationConfig
+  @state() private twoFactorAuth = false;
+  @state() private allowPasswordChange = false;
+  @state() private allowPasswordReset = false;
   @state() private changingPassword = false;
   @state() private userMustChangeItsPassword = false;
   @state() private error = false;
@@ -66,6 +67,16 @@ export default class ngeoAuthComponent extends LitElementI18n {
           this.setOtpImage_();
           this.checkUserMustChangeItsPassword_();
           this.onUserStateUpdate_(user.getState());
+        },
+      })
+    );
+    this.subscriptions_.push(
+      configuration.getConfig().subscribe({
+        next: (configuration: Configuration) => {
+          this.twoFactorAuth = configuration.gmfTwoFactorAuth;
+          const config: gmfAuthenticationConfig = configuration.gmfAuthenticationConfig;
+          this.allowPasswordChange = config.allowPasswordChange;
+          this.allowPasswordReset = config.allowPasswordReset;
         },
       })
     );

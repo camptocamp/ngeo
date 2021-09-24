@@ -902,7 +902,7 @@ export default function transformer(file, api) {
         root
           .find(j.Comment)
           .filter((path) => {
-            return path.value.value.replace(/^[\n *]*/, '').startsWith('@typedef {');
+            return path.value.value.replace(/^[\n *]*/, '').includes('@typedef {');
           })
           .forEach((path) => {
             if (finish) {

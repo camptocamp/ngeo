@@ -23,6 +23,7 @@ import $ from 'jquery';
 import angular from 'angular';
 import 'regenerator-runtime/runtime';
 import {setupI18n} from 'ngeo/localize/i18n.ts';
+import config from 'ngeo/store/config';
 
 /**
  * @private
@@ -80,6 +81,8 @@ function bootstrap(module) {
       style.crossOrigin = 'anonymous';
       document.head.append(style);
     }
+
+    config.setConfig(dynamic.constants);
 
     for (const name in dynamic.constants) {
       module.constant(name, dynamic.constants[name]);

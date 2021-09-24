@@ -265,6 +265,8 @@ module.exports = function (config) {
         'jquery-ui/datepicker': 'jquery-ui/ui/widgets/datepicker', // For angular-ui-date
         'mapillary-js/src/Mapillary': 'mapillary-js/dist/mapillary.min.js',
         '@sentry/integrations': '@sentry/integrations/dist/angular.js',
+        // required to bake it working with types
+        'typeahead': 'corejs-typeahead',
       },
     },
     optimization: {
