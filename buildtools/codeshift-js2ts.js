@@ -19,6 +19,13 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+
 /**
  * Test with:
  * find api/src -name '*.js' -exec npm run cs-tots -- --dry {} \;
@@ -32,7 +39,7 @@ const fs = require('fs');
 
 const find_import = /import\(["']([a-zA-Z0-9/.\-_]+)["']\).([a-zA-Z0-9]+)/g;
 const find_function = /function\(([^)(|]+)\): ?([a-zA-Z0-9?]+)/g;
-const find_param = /@param {([^}]*)} ([a-zA-Z0-9]+)/g;
+const find_param = /@param {([^}]*)} ([a-zA-Z0-9$]+)/g;
 const find_return = /@returns? {([^}]*)}/g;
 const find_type = /@type {([^}]*)}/g;
 
@@ -50,24 +57,32 @@ let count = 1;
  * ...
  * constructor(options: MapOptions) {
  *
- * @param {jscodeshift} j jscodeshift
+ * @param {j} j jscodeshift
  * @param {any} root the root node
  * @param {any} path the current path
  * @param {any} original_path the original path or null
- * @param {any} comment the comment of the original path or null
+ * @param {any} comments the comments of the original path or null
+ * @param comments
  * @returns {void}
  */
-function addTypes(j, root, path, original_path, comment) {
-  if (!(comment || path.value.comments)) {
+function addTypes(j, root, path, original_path, comments) {
+  if (!(comments || path.value.comments)) {
     return;
   }
-  comment = comment || path.value.comments[0];
+  comments = comments || path.value.comments;
 
-  if (['ExpressionStatement', 'BlockStatement', 'ClassMethod'].includes(path.value.type)) {
-    return addTypes(j, root, path.parent, original_path || path, comment);
+  if (['ExpressionStatement', 'BlockStatement'].includes(path.value.type)) {
+    return addTypes(j, root, path.parent, original_path || path, comments);
+  }
+  if (path.value.type == 'ClassMethod' && original_path) {
+    return addTypes(j, root, path.parent, original_path || path, comments);
   }
 
-  if (path.value.type == 'ClassBody' && path.value.expression) {
+  if (
+    path.value.type == 'ClassBody' &&
+    original_path.value.expression &&
+    original_path.value.expression.left
+  ) {
     let index = 0;
     for (const e of path.value.body) {
       if (e.type == 'ClassProperty') {
@@ -82,35 +97,46 @@ function addTypes(j, root, path, original_path, comment) {
       null,
       false
     );
-    for (const type_ of comment.value.matchAll(find_type)) {
-      elem.typeAnnotation = `: ${convertSingleType(type_[1])}`;
+    for (const comment of comments) {
+      for (const type_ of comment.value.matchAll(find_type)) {
+        elem.typeAnnotation = `: ${convertSingleType(type_[1])}`;
+        elem.comments = comments;
+      }
     }
     path.value.body.splice(index, 0, elem);
     return;
   }
   if (path.value.type == 'VariableDeclaration') {
     for (const declaration of path.value.declarations) {
-      for (const type_ of comment.value.matchAll(find_type)) {
-        declaration.id.typeAnnotation = `: ${convertSingleType(type_[1])}`;
+      for (const comment of comments) {
+        for (const type_ of comment.value.matchAll(find_type)) {
+          declaration.id.typeAnnotation = `: ${convertSingleType(type_[1])}`;
+        }
       }
     }
     return;
   }
   if (path.value.params) {
-    for (const type_ of comment.value.matchAll(find_param)) {
-      for (const param of path.value.params) {
-        if (type_[2] == param.name) {
-          param.typeAnnotation = `: ${convertSingleType(type_[1])}`;
+    for (const comment of comments) {
+      for (const type_ of comment.value.matchAll(find_param)) {
+        for (const param of path.value.params) {
+          if (type_[2] == param.name) {
+            param.typeAnnotation = `: ${convertSingleType(type_[1])}`;
+          }
         }
       }
     }
   }
-  for (const returnType of comment.value.matchAll(find_return)) {
-    path.value.returnType = `: ${convertSingleType(returnType[1])}`;
+  for (const comment of comments) {
+    for (const returnType of comment.value.matchAll(find_return)) {
+      path.value.returnType = `: ${convertSingleType(returnType[1])}`;
+    }
   }
   if (path.value.expression) {
-    for (const type_ of comment.value.matchAll(find_type)) {
-      path.value.expression.left.property.typeAnnotation = `: ${convertSingleType(type_[1])}`;
+    for (const comment of comments) {
+      for (const type_ of comment.value.matchAll(find_type)) {
+        path.value.expression.left.property.typeAnnotation = `: ${convertSingleType(type_[1])}`;
+      }
     }
   }
 }
@@ -126,48 +152,69 @@ function addTypes(j, root, path, original_path, comment) {
  *  + @ param options API options.
  *  + /
  *
- * @param {jscodeshift} j jscodeshift
+ * @param {j} j jscodeshift
  * @param {any} root the root node
  * @param {any} path the current path
  * @param {any} original_path the original path or null
- * @param {any} comment the comment of the original path or null
+ * @param {any} comments the comments of the original path or null
  * @returns {void}
  */
-function removeTypes(j, root, path, original_path, comment) {
-  if (!(comment || path.value.comments)) {
+function removeTypes(j, root, path, original_path, comments) {
+  if (!(comments || path.value.comments)) {
     return;
   }
-  comment = comment || path.value.comments[0];
+  comments = comments || path.value.comments;
 
-  if (['ExpressionStatement', 'BlockStatement', 'ClassMethod'].includes(path.value.type)) {
-    return removeTypes(j, root, path.parent, original_path || path, comment);
+  if (['ExpressionStatement', 'BlockStatement'].includes(path.value.type)) {
+    return removeTypes(j, root, path.parent, original_path || path, comments);
+  }
+  if (path.value.type == 'ClassMethod' && original_path) {
+    return removeTypes(j, root, path.parent, original_path || path, comments);
   }
 
-  let commentValue = comment.value;
+  for (const comment of comments) {
+    let commentValue = comment.value;
 
-  if (path.value.type == 'ClassBody') {
-    for (const type_ of commentValue.matchAll(find_type)) {
-      commentValue = commentValue.replace(type_[0], '');
+    if (
+      path.value.type == 'ClassBody' &&
+      original_path.value.expression &&
+      original_path.value.expression.left
+    ) {
+      for (const type_ of commentValue.matchAll(find_type)) {
+        commentValue = commentValue.replace(type_[0], '');
+      }
     }
-  }
-  if (path.value.type == 'VariableDeclaration') {
-    for (const type_ of commentValue.matchAll(find_type)) {
-      commentValue = commentValue.replace(type_[0], '');
+    if (path.value.type == 'ClassMethod') {
+      for (const type_ of commentValue.matchAll(find_param)) {
+        commentValue = commentValue.replace(type_[0], `@param ${type_[2]}`);
+      }
     }
-  }
-  if (!['ClassBody', 'VariableDeclaration'].includes(path.value.type)) {
-    for (const returnType of commentValue.matchAll(find_return)) {
-      commentValue = commentValue.replace(returnType[0], '@returns');
+    if (['VariableDeclaration', 'ClassProperty'].includes(path.value.type)) {
+      for (const type_ of commentValue.matchAll(find_type)) {
+        commentValue = commentValue.replace(type_[0], '');
+      }
     }
+    if (!['ClassBody', 'VariableDeclaration'].includes(path.value.type)) {
+      for (const returnType of commentValue.matchAll(find_return)) {
+        commentValue = commentValue.replace(returnType[0], '@returns');
+      }
+    }
+
+    commentValue = commentValue.replaceAll(' @hidden ', ' ');
+    commentValue = commentValue.replaceAll(' @ngInject ', ' ');
+    commentValue = commentValue.replaceAll(/[\n ]@hidden[\n ]/g, '\n');
+    commentValue = commentValue.replaceAll(/[\n ]@ngInject[\n ]/g, '\n');
+
+    if (comment.type == 'CommentBlock') {
+      commentValue = commentValue.replaceAll(/\n *\* *\n *\* *\n/g, '\n*\n');
+      commentValue = commentValue.replace(/^[\n *]+/, '*\n* ');
+      commentValue = commentValue.replace(/[\n *]+$/, '\n');
+    } else {
+      commentValue = commentValue.replace(/^[\n *]+/, ' ');
+      commentValue = commentValue.replace(/[\n *]+$/, '');
+    }
+    comment.value = commentValue;
   }
-  if (comment.type == 'CommentBlock') {
-    commentValue = commentValue.replace(/^[\n *]+/, '*\n* ');
-    commentValue = commentValue.replace(/[\n *]+$/, '\n');
-  } else {
-    commentValue = commentValue.replace(/^[\n *]+/, ' ');
-    commentValue = commentValue.replace(/[\n *]+$/, '');
-  }
-  comment.value = commentValue;
 }
 
 /**
@@ -177,7 +224,7 @@ function removeTypes(j, root, path, original_path, comment) {
  * => add
  * import olGeomGeometry from 'ol/geom/Geometry.js';
  *
- * @param {jscodeshift} j jscodeshift
+ * @param {j} j jscodeshift
  * @param {any} root the root node
  * @param {any} path the current path
  */
@@ -219,7 +266,7 @@ function addImport(j, root, path) {
  * =>
  * @ type {VectorSource<olGeomGeometry>}
  *
- * @param {jscodeshift} j jscodeshift
+ * @param {j} j jscodeshift
  * @param {any} root the root node
  * @param {any} path the current path
  */
@@ -241,10 +288,10 @@ function convertImport(j, root, path) {
 }
 
 /**
- * @param jsType
+ * @param jsType the javascript type as string
+ * @returns the typescript type as string
  */
 function convertSingleType(jsType) {
-  console.log(jsType);
   if (jsType == '?') {
     return 'any';
   }
@@ -265,7 +312,7 @@ function convertSingleType(jsType) {
  *   (arg1: string): string;
  * };
  *
- * @param {jscodeshift} j jscodeshift
+ * @param {j} j jscodeshift
  * @param {any} root the root node
  * @param {any} path the current path
  */
@@ -308,7 +355,7 @@ function addFunction(j, root, path) {
  * =>
  * @ type {Function1}}
  *
- * @param {jscodeshift} j jscodeshift
+ * @param {j} j jscodeshift
  * @param {any} root the root node
  * @param {any} path the current path
  */
@@ -331,7 +378,7 @@ function convertFunction(j, root, path) {
  * @param {any} parent The parent node
  * @param {any} comments Override the comments
  * @param {any} statement The statement function
- * @returns {any}
+ * @returns {any} the converted statements
  */
 function convertCast(node, parent, comments, statement) {
   if (
@@ -377,8 +424,8 @@ function removeTypeInComments(comments) {
 /**
  * Visit all node
  *
- * @param {string} indent
- * @param {any} node
+ * @param {string} indent the spaces for the indentations
+ * @param {any} node the current node
  * @param {function(string, any): void} call function to do on all the nodes
  */
 function visit(indent, node, call) {
@@ -489,6 +536,14 @@ function visit(indent, node, call) {
     done = true;
     visit(indent + ' ', node.id, call);
   }
+  if (node.key && node.key.type) {
+    done = true;
+    visit(indent + ' ', node.key, call);
+  }
+  if (node.value && node.value.type) {
+    done = true;
+    visit(indent + ' ', node.value, call);
+  }
   if (
     [
       'ImportDeclaration',
@@ -519,8 +574,9 @@ function visit(indent, node, call) {
 }
 
 /**
- * @param j
- * @param root
+ * @param j jscodeshift
+ * @param root the root element
+ * @returns the new jscodeshift ast
  */
 function findTopLevelImports(j, root) {
   const program = root.find(j.Program).at(0).paths()[0];
@@ -531,9 +587,9 @@ function findTopLevelImports(j, root) {
 }
 
 /**
- * @param j
- * @param root
- * @param {...any} statements
+ * @param j jscodeshift
+ * @param root the root element
+ * @param {...any} statements the statements to add
  */
 function addStatements(j, root, ...statements) {
   const imports = findTopLevelImports(j, root);
@@ -556,7 +612,7 @@ function addStatements(j, root, ...statements) {
  *
  * @param {string} name the script name
  * @param {string} object the object we import
- * @returns {string}
+ * @returns {string} the new name
  */
 function rename(name, object) {
   name = name.replace(/^\.\//, '');
@@ -580,8 +636,9 @@ function rename(name, object) {
 }
 
 /**
- * @param file
- * @param api
+ * @param file the file to transfrm
+ * @param api the jscodshift api
+ * @returns {string} the new content
  */
 export default function transformer(file, api) {
   let result = file.source;
@@ -592,7 +649,7 @@ export default function transformer(file, api) {
 
     j(file.source)
       .forEach((path) => {
-        // eslint-disable-next-line no-unused-vars
+        // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
         visit('', path.value, (indent, node) => {
           // if (node.comments) {
           //   console.log(node.comments[0].value);
@@ -677,21 +734,21 @@ export default function transformer(file, api) {
       })
       .toSource();
 
+    console.log('Add types for class property');
+    root = j(result);
+    result = root
+      .find(j.ClassProperty)
+      .forEach((path) => {
+        addTypes(j, root, path);
+      })
+      .toSource();
+
     console.log('Add types for function');
     root = j(result);
     result = root
       .find(j.FunctionDeclaration)
       .forEach((path) => {
         addTypes(j, root, path);
-      })
-      .toSource();
-
-    console.log('Remove types for function');
-    root = j(result);
-    result = root
-      .find(j.FunctionDeclaration)
-      .forEach((path) => {
-        removeTypes(j, root, path);
       })
       .toSource();
 
@@ -704,15 +761,6 @@ export default function transformer(file, api) {
       })
       .toSource();
 
-    console.log('Remove types for arrow function');
-    root = j(result);
-    result = root
-      .find(j.ArrowFunctionExpression)
-      .forEach((path) => {
-        removeTypes(j, root, path);
-      })
-      .toSource();
-
     console.log('Add types for expression');
     root = j(result);
     result = root
@@ -722,30 +770,12 @@ export default function transformer(file, api) {
       })
       .toSource();
 
-    console.log('Remove types for expression');
-    root = j(result);
-    result = root
-      .find(j.ExpressionStatement)
-      .forEach((path) => {
-        removeTypes(j, root, path);
-      })
-      .toSource();
-
     console.log('Add types for variable');
     root = j(result);
     result = root
       .find(j.VariableStatement)
       .forEach((path) => {
         addTypes(j, root, path);
-      })
-      .toSource();
-
-    console.log('Remove types for variable');
-    root = j(result);
-    result = root
-      .find(j.VariableStatement)
-      .forEach((path) => {
-        removeTypes(j, root, path);
       })
       .toSource();
 
@@ -758,30 +788,12 @@ export default function transformer(file, api) {
       })
       .toSource();
 
-    console.log('Remove types for class body');
-    root = j(result);
-    result = root
-      .find(j.ClassBody)
-      .forEach((path) => {
-        removeTypes(j, root, path);
-      })
-      .toSource();
-
     console.log('Add types for call');
     root = j(result);
     result = root
       .find(j.CallExpression)
       .forEach((path) => {
         addTypes(j, root, path);
-      })
-      .toSource();
-
-    console.log('Remove types for call');
-    root = j(result);
-    result = root
-      .find(j.CallExpression)
-      .forEach((path) => {
-        removeTypes(j, root, path);
       })
       .toSource();
 
@@ -794,11 +806,114 @@ export default function transformer(file, api) {
       })
       .toSource();
 
+    console.log('Add types for class method');
+    root = j(result);
+    result = root
+      .find(j.ClassMethod)
+      .forEach((path) => {
+        addTypes(j, root, path);
+      })
+      .toSource();
+
+    console.log('Remove types for class property');
+    root = j(result);
+    result = root
+      .find(j.ClassProperty)
+      .forEach((path) => {
+        removeTypes(j, root, path);
+      })
+      .toSource();
+
+    console.log('Remove types for function');
+    root = j(result);
+    result = root
+      .find(j.FunctionDeclaration)
+      .forEach((path) => {
+        removeTypes(j, root, path);
+      })
+      .toSource();
+
+    console.log('Remove types for arrow function');
+    root = j(result);
+    result = root
+      .find(j.ArrowFunctionExpression)
+      .forEach((path) => {
+        removeTypes(j, root, path);
+      })
+      .toSource();
+
+    console.log('Remove types for expression');
+    root = j(result);
+    result = root
+      .find(j.ExpressionStatement)
+      .forEach((path) => {
+        removeTypes(j, root, path);
+      })
+      .toSource();
+
+    console.log('Remove types for variable');
+    root = j(result);
+    result = root
+      .find(j.VariableStatement)
+      .forEach((path) => {
+        removeTypes(j, root, path);
+      })
+      .toSource();
+
+    console.log('Remove types for class body');
+    root = j(result);
+    result = root
+      .find(j.ClassBody)
+      .forEach((path) => {
+        removeTypes(j, root, path);
+      })
+      .toSource();
+
+    console.log('Remove types for call');
+    root = j(result);
+    result = root
+      .find(j.CallExpression)
+      .forEach((path) => {
+        removeTypes(j, root, path);
+      })
+      .toSource();
+
     console.log('Remove types for variable');
     root = j(result);
     result = root
       .find(j.VariableDeclaration)
       .forEach((path) => {
+        removeTypes(j, root, path);
+      })
+      .toSource();
+
+    console.log('Remove types for class method');
+    root = j(result);
+    result = root
+      .find(j.ClassMethod)
+      .forEach((path) => {
+        removeTypes(j, root, path);
+      })
+      .toSource();
+
+    console.log('Remove types for class declaration');
+    root = j(result);
+    result = root
+      .find(j.ClassDeclaration)
+      .forEach((path) => {
+        console.log(path.value);
+        console.log(path.parent.value.type);
+        removeTypes(j, root, path);
+      })
+      .toSource();
+
+    console.log('Remove types for export');
+    root = j(result);
+    result = root
+      .find(j.ExportNamedDeclaration)
+      .forEach((path) => {
+        console.log(path.value);
+        console.log(path.parent.value.type);
         removeTypes(j, root, path);
       })
       .toSource();
@@ -974,7 +1089,7 @@ export default function transformer(file, api) {
       .filter((path) => {
         return path.value.type == 'CommentBlock' && path.value.value.replace(/[\n *]*/, '') == '';
       })
-      // eslint-disable-next-line no-unused-vars
+      // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
       .replaceWith((path) => {
         return '';
       })
@@ -1000,7 +1115,7 @@ export default function transformer(file, api) {
     }
   } finally {
     if (error) {
-      console.log(result);
+      // console.log(result);
     }
   }
 }
