@@ -138,7 +138,7 @@
     "simple-html-tokenizer": "0.5.11",
     "sinon": "11.1.2",
     "svg-inline-loader": "0.8.2",
-    "svgo": "2.6.1",
+    "svgo": "2.7.0",
     "svgo-loader": "3.0.0",
     "terser": "5.9.0",
     "terser-webpack-plugin": "4.2.3",
