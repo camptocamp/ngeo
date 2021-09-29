@@ -33,6 +33,7 @@ import ngeoMapFeatureOverlay from 'ngeo/map/FeatureOverlay';
 import {getUid as olUtilGetUid} from 'ol/util';
 import {remove as removeFromArray} from 'ol/array';
 import 'ngeo/sass/font.scss';
+import panels from 'gmfapi/store/panels';
 
 /**
  * @typedef {Object} FilterCondition
@@ -290,6 +291,7 @@ export class FilterController {
     }
     if (this.datasource.filterRules !== null) {
       this.datasource.filterRules = null;
+      panels.setFilterActive(false);
     }
     this.featureOverlay.clear();
   }
@@ -323,6 +325,7 @@ export class FilterController {
     }
     // (1) Reset
     this.datasource.filterRules = null;
+    panels.setFilterActive(false);
 
     // (2) Then set if there are filter rules with value.
     this.timeout_(() => {
@@ -332,6 +335,8 @@ export class FilterController {
           throw new Error('Missing datasource');
         }
         this.datasource.filterRules = filterRules;
+        panels.setFilterActive(true);
+
         // The current query results are cleared when we apply a filter.
         this.ngeoMapQuerent_.clear();
       }

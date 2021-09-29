@@ -21,16 +21,22 @@
 
 import i18next from 'i18next';
 import {LitElement, unsafeCSS, css, CSSResult} from 'lit';
-import configuration, {Configuration} from 'ngeo/store/config';
+import configuration, {Configuration} from 'gmfapi/store/config';
 import {Subscription} from 'rxjs';
 
 /**
- * @param {import('lit-element').LitElement} Base
+ * This is a base element.
+ *
+ * That includes:
+ * - i18next initialization.
+ * - Bootstrap (custom build + color in vars), Font Awesome, reset and some custom style.
+ * - Configuration directly available by overriding the `initConfig` method.
+ * - RXJS subscription added to subscriptions are unsubscribe on element removal.
  */
 export default class GmfBaseElement extends LitElement {
   i18nLanguageChangedCallback_: () => void;
 
-  protected subscriptions_: Subscription[] = [];
+  protected subscriptions: Subscription[] = [];
 
   // bootstrap/font-awesome
 
@@ -129,7 +135,7 @@ export default class GmfBaseElement extends LitElement {
     super.connectedCallback();
 
     // config
-    this.subscriptions_.push(
+    this.subscriptions.push(
       configuration.getConfig().subscribe({
         next: (configuration: Configuration) => {
           if (configuration) {
@@ -147,7 +153,7 @@ export default class GmfBaseElement extends LitElement {
     super.disconnectedCallback();
 
     // config
-    this.subscriptions_.forEach((sub) => sub.unsubscribe());
+    this.subscriptions.forEach((sub) => sub.unsubscribe());
   }
 
   /**

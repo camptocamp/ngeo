@@ -35,6 +35,7 @@ import ngeoProfileElevationComponent from 'ngeo/profile/elevationComponent';
 import {buildStyle} from 'ngeo/options';
 
 import 'bootstrap/js/src/dropdown';
+import panels from 'gmfapi/store/panels';
 
 /**
  * @typedef {Object} ProfileElement
@@ -396,6 +397,7 @@ ProfileController.prototype.update_ = function () {
     this.profileData = [];
   }
   this.active = !!this.line;
+  panels.openFooterPanel('profileresult', this.active, true);
 };
 
 ProfileController.prototype.updateEventsListening_ = function () {

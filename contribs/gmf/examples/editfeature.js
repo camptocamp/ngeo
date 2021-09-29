@@ -40,7 +40,7 @@ import olSourceOSM from 'ol/source/OSM';
 import olSourceImageWMS from 'ol/source/ImageWMS';
 import options, {MAPSERVER_PROXY} from './options';
 
-import user from 'ngeo/store/user.ts';
+import user from 'gmfapi/store/user.ts';
 
 /**
  * @type {angular.IModule}

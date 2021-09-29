@@ -21,17 +21,17 @@
 
 import {html, TemplateResult, unsafeCSS} from 'lit';
 import {customElement, property, state} from 'lit/decorators.js';
-import GmfBaseElement from 'ngeo/BaseElement';
+import GmfBaseElement from 'gmfapi/elements/BaseElement';
 import {Message, MessageType} from 'ngeo/message/Message';
 import ngeoMessageNotification from 'ngeo/message/Notification';
 import {unsafeSVG} from 'lit/directives/unsafe-svg';
 import loadingSvg from 'gmf/icons/spinner.svg';
 import {gmfBackgroundlayerStatus} from 'gmf/backgroundlayerselector/status';
-import user, {User, UserState} from 'ngeo/store/user';
+import user, {User, UserState} from 'gmfapi/store/user';
 // @ts-ignore
 import qruri from 'qruri';
 import i18next from 'i18next';
-import {Configuration, PasswordValidator} from 'ngeo/store/config';
+import {Configuration, PasswordValidator} from 'gmfapi/store/config';
 import authenticationService from './Service';
 
 @customElement('gmf-auth-component')
@@ -54,7 +54,7 @@ export default class GmfAuthComponent extends GmfBaseElement {
 
   connectedCallback(): void {
     super.connectedCallback();
-    this.subscriptions_.push(
+    this.subscriptions.push(
       user.getProperties().subscribe({
         next: (properties: User) => {
           this.gmfUser = properties;

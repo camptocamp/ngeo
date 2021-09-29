@@ -1,6 +1,8 @@
 // Storybook global configuration for stories.
 
 import '../node_modules/@fortawesome/fontawesome-free/css/all.min.css';
+import './vars.css';
+
 import i18next from 'i18next';
 import {setupI18n} from 'ngeo/localize/i18n.ts';
 

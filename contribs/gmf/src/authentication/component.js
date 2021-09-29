@@ -29,7 +29,7 @@ import ngeoMessageModalComponent from 'ngeo/message/modalComponent';
 // @ts-ignore
 import qruri from 'qruri';
 
-import user, {UserState} from 'ngeo/store/user.ts';
+import user, {UserState} from 'gmfapi/store/user.ts';
 
 /**
  * @typedef {import("gmf/authentication/Service").AuthenticationLoginResponsePromise} AuthenticationLoginResponsePromise

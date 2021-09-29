@@ -22,7 +22,7 @@
 import angular from 'angular';
 import * as Sentry from '@sentry/browser';
 
-import user, {UserState} from 'ngeo/store/user.ts';
+import user, {UserState} from 'gmfapi/store/user.ts';
 
 /**
  * Availables functionalities.

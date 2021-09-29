@@ -115,6 +115,58 @@ main {
 
 $footer-height: $input-height-base + 2 * $padding-base-vertical;
 
+.gmf-app-footer-div {
+  display: inline-block;
+}
+
+.gmf-map,
+.gmf-map > div {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+button[ngeo-geolocation] {
+  position: absolute;
+  height: $map-tools-size;
+  width: $map-tools-size;
+  left: $app-margin;
+  top: 2 * $map-tools-size + $app-margin + 2 * $micro-app-margin;
+  z-index: $below-content-index;
+}
+
+[ngeo-scaleselector] .btn > span {
+  min-width: 5rem;
+  display: inline-block;
+}
+
+#scaleline {
+  vertical-align: middle;
+  .ol-scale-line,
+  .ol-scale-line-inner {
+    background-color: transparent;
+    bottom: auto;
+    position: relative;
+  }
+}
+
+gmf-mouseposition {
+  display: inline-block;
+}
+.gmf-mouseposition-control {
+  display: inline-block;
+  min-width: 11.25rem;
+}
+gmf-elevationwidget {
+  display: inline-block;
+}
+.gmf-elevationwidget-value {
+  display: inline-block;
+  min-width: 5rem;
+}
+
 .gmf-app-map-container {
   width: auto;
   height: 100%;
@@ -267,6 +319,19 @@ gmf-search {
   opacity: 0.4;
 }
 
+.gmf-app-header {
+  flex: 0 1 auto;
+  padding: $app-margin $app-margin 0 $app-margin;
+}
+
+.gmf-app-content {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  position: relative;
+  margin-top: $app-margin;
+  margin-bottom: $app-margin;
+}
+
 .gmf-app-data-panel {
   display: block;
   float: left;
@@ -276,19 +341,6 @@ gmf-search {
   height: 100%;
   display: flex;
   flex-flow: column;
-
-  .gmf-app-header {
-    flex: 0 1 auto;
-    padding: $app-margin $app-margin 0 $app-margin;
-  }
-
-  .gmf-app-content {
-    flex: 1 1 auto;
-    overflow-y: auto;
-    position: relative;
-    margin-top: $app-margin;
-    margin-bottom: $app-margin;
-  }
 
   &.gmf-app-inactive {
     width: 0 !important;
@@ -366,6 +418,39 @@ gmf-backgroundlayerselector {
 
 .authentication-lost-dialog .modal-dialog {
   top: 40%;
+}
+
+.gmf-close {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.31rem;
+}
+
+.gmf-app-tools-content-heading {
+  color: $color-light;
+  color: var(--color-light);
+  padding-bottom: $app-margin;
+  margin-bottom: $app-margin;
+  margin-top: $grid-gutter-width / 2;
+  border-bottom: 0.06rem solid;
+  border-bottom-color: $color-light;
+  border-bottom-color: var(--color-light);
+  .close {
+    padding: 0;
+  }
+}
+
+.gmf-app-tools-bar.btn {
+  width: 100%;
+  border-width: 0;
+  background-color: $brand-primary;
+  background-color: var(--brand-primary);
+  margin-left: 0;
+  border-radius: 0 !important;
+  &:hover {
+    background-color: $hover-background-color;
+    background-color: var(--hover-background-color);
+  }
 }
 
 .gmf-app-tools {
@@ -449,20 +534,6 @@ gmf-backgroundlayerselector {
     textarea {
       resize: vertical;
       min-height: $input-height;
-    }
-
-    .gmf-app-tools-content-heading {
-      color: $color-light;
-      color: var(--color-light);
-      padding-bottom: $app-margin;
-      margin-bottom: $app-margin;
-      margin-top: $grid-gutter-width / 2;
-      border-bottom: 0.06rem solid;
-      border-bottom-color: $color-light;
-      border-bottom-color: var(--color-light);
-      .close {
-        padding: 0;
-      }
     }
 
     .profile-panel button {

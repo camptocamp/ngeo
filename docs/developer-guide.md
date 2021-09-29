@@ -6,6 +6,14 @@ This document provides information for developers working on ngeo.
 
 Type `make help` to display available targets.
 
+## Code structure
+
+We have 3 repository with sources code:
+
+- `src`: this folder contain the major part of source code.
+- `srcapi`: this folder contain the source code witch we offer a more stable API.
+- `api`: this folder contain the JavaScript api of the project.
+
 ## Publish examples to GitHub Pages
 
 Let's say you're working on a new feature in a specific branch and want to
@@ -68,7 +76,7 @@ Checkout the latest version
 ```
 git checkout <release-branch>
 git fetch origin
-git reset --hard origin/<release-branche>
+git reset --hard origin/<release-branch>
 ```
 
 Where `<release-branch>` stand for `2.x`.
@@ -95,9 +103,9 @@ git push origin bump
 
 Do the pull request on branch `<release-branche>`
 
-## Create a new stabilisation branch
+## Create a new stabilization branch
 
-When we create a new stabilisation branch we should also duplicate the localisation.
+When we create a new stabilization branch we should also duplicate the localization.
 
 Go on master:
 
@@ -134,7 +142,7 @@ Back on master:
 git checkout master
 ```
 
-Get the actual localisation:
+Get the actual localization:
 
 ```bash
 make transifex-get
@@ -181,7 +189,7 @@ git commit -m "Start the version x.y+1"
 git push origin master
 ```
 
-Create the new localisation resource:
+Create the new localization resource:
 
 ```bash
 rm .tx/config contribs/gmf/apps/.tx/config

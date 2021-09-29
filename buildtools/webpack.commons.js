@@ -74,39 +74,13 @@ module.exports = function (config) {
     },
   };
 
-  const configExpose = {
-    test: path.resolve(__dirname, '../src/store/config.ts'),
+  const gmfapiExpose = {
+    test: path.resolve(__dirname, '../srcapi/index.ts'),
     use: {
       loader: 'expose-loader',
       options: {
         exposes: {
-          globalName: 'gmf.config',
-          moduleLocalName: 'default',
-        },
-      },
-    },
-  };
-
-  const mapExpose = {
-    test: path.resolve(__dirname, '../src/store/map.ts'),
-    use: {
-      loader: 'expose-loader',
-      options: {
-        exposes: {
-          globalName: 'gmf.map',
-          moduleLocalName: 'default',
-        },
-      },
-    },
-  };
-
-  const userExpose = {
-    test: path.resolve(__dirname, '../src/store/user.ts'),
-    use: {
-      loader: 'expose-loader',
-      options: {
-        exposes: {
-          globalName: 'gmf.user',
+          globalName: 'gmfapi',
           moduleLocalName: 'default',
         },
       },
@@ -292,18 +266,7 @@ module.exports = function (config) {
       path: path.resolve(__dirname, '../dist/'),
     },
     module: {
-      rules: [
-        typeaheadRule,
-        configExpose,
-        mapExpose,
-        userExpose,
-        cssRule,
-        sassRule,
-        htmlRule,
-        tsRule,
-        ngeoRule,
-        otherRule,
-      ],
+      rules: [typeaheadRule, gmfapiExpose, cssRule, sassRule, htmlRule, tsRule, ngeoRule, otherRule],
     },
     plugins: plugins,
     resolve: {
@@ -314,6 +277,7 @@ module.exports = function (config) {
         'ngeo/test': path.resolve(__dirname, '../test/spec'),
         'gmf/test': path.resolve(__dirname, '../contribs/gmf/test/spec'),
         ngeo: path.resolve(__dirname, '../src'),
+        gmfapi: path.resolve(__dirname, '../srcapi'),
         api: path.resolve(__dirname, '../api/src'),
         lib: path.resolve(__dirname, '../lib'),
         gmf: path.resolve(__dirname, '../contribs/gmf/src'),

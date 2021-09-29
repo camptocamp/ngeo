@@ -46,7 +46,7 @@ import olSourceOSM from 'ol/source/OSM';
 import olSourceVector from 'ol/source/Vector';
 import options from './options';
 
-import user from 'ngeo/store/user.ts';
+import user from 'gmfapi/store/user.ts';
 
 /**
  * @type {angular.IModule}

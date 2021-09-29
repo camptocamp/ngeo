@@ -41,10 +41,11 @@ import ngeoFilterComponent from 'ngeo/filter/component';
 import {listen, unlistenByKey} from 'ol/events';
 import {remove as removeFromArray} from 'ol/array';
 import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr';
+import panels from 'gmfapi/store/panels';
 
 import 'bootstrap/js/src/dropdown';
 
-import user from 'ngeo/store/user.ts';
+import user from 'gmfapi/store/user.ts';
 
 /**
  * @type {angular.IModule}
@@ -570,6 +571,7 @@ export class FilterSelectorController {
    * @hidden
    */
   handleSelectedDataSourceChange_(dataSource) {
+    panels.setFilterActive(false);
     this.aRuleIsActive = false;
     this.customRules = null;
     this.directedRules = null;

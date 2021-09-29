@@ -21,11 +21,11 @@
 
 import * as Sentry from '@sentry/browser';
 
-import user, {User, UserState} from 'ngeo/store/user';
+import user, {User, UserState} from 'gmfapi/store/user';
 import configuration, {
   Configuration,
   gmfAuthenticationNoReloadRole as gmfOptionsGmfAuthenticationNoReloadRole,
-} from 'ngeo/store/config';
+} from 'gmfapi/store/config';
 
 type AuthenticationDefaultResponse = {
   success: boolean;

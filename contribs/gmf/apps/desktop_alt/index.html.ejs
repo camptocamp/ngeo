@@ -11,378 +11,363 @@
     <link href="<%= htmlWebpackPlugin.files.css[css] %>" rel="stylesheet" crossorigin="anonymous">
     <% } %>
   </head>
-  <body ng-class="{'gmf-profile-chart-active': !!profileChartActive, 'gmf-lidarprofile-chart-active': !!lidarProfileChartActive, 'gmf-query-grid-active': !!mainCtrl.queryGridActive}" ng-keydown="mainCtrl.onKeydown($event)">
-    <div ng-show="mainCtrl.loading" class="loading-mask">
-      <i class="fa custom-spinner-loading fa-spin spinner-loading-mask">
-        <%=require('gmf/icons/spinner.svg?viewbox&height=1em')%>
-      </i>
-    </div>
-    <gmf-header gmf-header-template-url="desktop_alt/header.html"></gmf-header>
-    <main>
-      <div class="gmf-app-data-panel"
-           ngeo-resizemap="mainCtrl.map"
-           ngeo-resizemap-state="mainCtrl.dataPanelActive"
-           ng-class="{'gmf-app-inactive': !mainCtrl.dataPanelActive}">
-        <div class="gmf-app-header">
-          <div class="dropdown">
-            <a href
-               class="btn btn-block prime dropdown-toggle"
-               data-toggle="dropdown">
-              <span class="fa fa-grid"></span>
-              <span ng-if="mainCtrl.gmfThemeManager.modeFlush">
-                <span translate>Theme:</span>
-                <b ng-if="mainCtrl.gmfThemeManager.isLoading()" translate>Loading...</b>
-                <b ng-if="!mainCtrl.gmfThemeManager.isLoading()">{{mainCtrl.gmfThemeManager.getThemeName()|translate}}</b>
-              </span>
-              <span ng-if="!mainCtrl.gmfThemeManager.modeFlush">
-                <b ng-if="!mainCtrl.gmfThemeManager.themeName" data-i18n="Themes"></b>
-              </span>
-            </a>
-            <gmf-themeselector class="dropdown-menu"
-              gmf-themeselector-currenttheme="mainCtrl.theme"
-              gmf-themeselector-filter="::mainCtrl.filter">
-            </gmf-themeselector>
-          </div>
-        </div>
-        <div class="gmf-app-content">
-          <gmf-layertree
-            gmf-layertree-dimensions="mainCtrl.dimensions"
-            gmf-layertree-map="::mainCtrl.map">
-          </gmf-layertree>
+  <body ng-keydown="mainCtrl.onKeydown($event)">
+  <div ng-show="mainCtrl.loading" class="loading-mask">
+    <i class="fa custom-spinner-loading fa-spin spinner-loading-mask">
+      <%=require('gmf/icons/spinner.svg?viewbox&height=1em')%>
+    </i>
+  </div>
+    <gmf-desktop-canvas toolPanels="auth,print,draw,filter,editing,profile,lidarprofile,googlestreetview,mapillary,query,import,routing">
+      <div slot="header" class="logo">
+        <span></span>
+      </div>
+      <div slot="header" class="logo-right">
+        <span></span>
+      </div>
+
+      <div slot="data" class="gmf-app-header">
+        <div class="dropdown">
+          <a href
+             class="btn btn-block prime dropdown-toggle"
+             data-toggle="dropdown">
+            <span class="fa fa-grid"></span>
+            <span ng-if="mainCtrl.gmfThemeManager.modeFlush">
+              <span translate>Theme:</span>
+              <b ng-if="mainCtrl.gmfThemeManager.isLoading()" translate>Loading...</b>
+              <b ng-if="!mainCtrl.gmfThemeManager.isLoading()">{{mainCtrl.gmfThemeManager.getThemeName() | translate}}</b>
+            </span>
+            <span ng-if="!mainCtrl.gmfThemeManager.modeFlush">
+              <b ng-if="!mainCtrl.gmfThemeManager.themeName" data-i18n="Themes"></b>
+            </span>
+          </a>
+          <gmf-themeselector class="dropdown-menu"
+            gmf-themeselector-currenttheme="mainCtrl.theme"
+            gmf-themeselector-filter="::mainCtrl.filter">
+          </gmf-themeselector>
         </div>
       </div>
-      <div class="gmf-app-tools" ngeo-resizemap="mainCtrl.map"
-        ngeo-resizemap-state="mainCtrl.toolsActive" ng-class="{'gmf-app-inactive' : !mainCtrl.toolsActive}">
-        <div class="gmf-app-bar">
-          <div ngeo-btn-group class="btn-group-vertical" ngeo-btn-group-active="mainCtrl.toolsActive">
-            <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.loginActive"
-              data-toggle="tooltip" data-placement="left" data-original-title="{{'Login'|translate}}">
-              <span class="fa fa-user" ng-class="mainCtrl.gmfUser.username ? 'fa-user-times' : 'fa-user'"></span>
-            </button>
-            <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.printPanelActive"
-              data-toggle="tooltip" data-placement="left" data-original-title="{{'Print'|translate}}">
-              <span class="fa fa-print"></span>
-            </button>
-            <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.drawFeatureActive"
-              data-toggle="tooltip" data-placement="left" data-i18n="[data-original-title]Draw and Measure">
-              <span class="fa fa-paint-brush"></span>
-            </button>
-            <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.filterSelectorActive"
-              data-toggle="tooltip" data-placement="left" data-original-title="{{'Filter'|translate}}">
-              <span
-                class="fa"
-                ng-class="mainCtrl.gmfDataSourceBeingFiltered.dataSource && mainCtrl.gmfDataSourceBeingFiltered.dataSource.filterRules ? 'fa-funnel-dollar' : 'fa-filter'"></span>
-            </button>
-            <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.editFeatureActive"
-              data-toggle="tooltip" data-placement="left" data-original-title="{{'Editing'|translate}}"
-              ng-show="mainCtrl.hasEditableLayers">
-              <span class="fa fa-edit"></span>
-            </button>
-            <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.drawProfilePanelActive"
-              data-toggle="tooltip" data-placement="left" data-original-title="{{'Elevation profile'|translate}}">
-              <span class="fa fa-chart-area"></span>
-            </button>
-            <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.drawLidarprofilePanelActive"
-              data-toggle="tooltip" data-placement="left" data-original-title="{{'LIDAR profile'|translate}}">
-              <span class="fa fa-chart-line"></span>
-            </button>
-            <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.googleStreetViewActive"
-              data-toggle="tooltip" data-placement="left" data-original-title="{{'Google Street View'|translate}}">
-              <span class="fa fa-street-view"></span>
-            </button>
-            <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.mapillaryStreetViewActive"
-              data-toggle="tooltip" data-placement="left" data-original-title="{{'Mapillary'|translate}}">
-              <span class="fa fa-street-view"></span>
-            </button>
-            <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.queryPanelActive"
-              data-toggle="tooltip" data-placement="left" data-original-title="{{'Selection'|translate}}">
-              <span>
-                <i class="fa fa-mouse-pointer"></i>
-                <i class="fa fa-info fa-xs offset-info-icon"></i>
-              </span>
-            </button>
-            <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.importDataSourceActive"
-                    data-toggle="tooltip" data-placement="left" data-original-title="{{'Import Layer'|translate}}">
-              <span class="fa fa-upload"></span>
-            </button>
-            <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.routingPanelActive"
-                    data-toggle="tooltip" data-placement="left" data-original-title="{{'Routing'|translate}}">
-              <span class="fa fa-map-signs"></span>
-            </button>
+      <div slot="data" class="gmf-app-content">
+        <gmf-layertree
+          gmf-layertree-dimensions="mainCtrl.dimensions"
+          gmf-layertree-map="::mainCtrl.map">
+        </gmf-layertree>
+      </div>
+
+      <!-- Login -->
+      <gmf-button-auth slot="tool-button"></gmf-button-auth>
+      <gmf-auth-panel  slot="tool-panel-auth"></gmf-auth-panel>
+
+      <!-- Print -->
+      <gmf-button-print slot="tool-button"></gmf-button-print>
+      <div slot="tool-panel-print" class="row">
+        <div class="col-sm-12">
+          <div class="gmf-app-tools-content-heading">
+            {{ 'Print' | translate }}
           </div>
-          <br/>
-          <br/>
-          <span data-toggle="tooltip" data-placement="left" data-original-title="{{'Share this map'|translate}}">
-            <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.modalShareShown">
-              <span class="fa fa-share-alt"></span>
-            </button>
-          </span>
+          <gmf-print
+            gmf-print-map="::mainCtrl.map"
+            gmf-print-active="mainCtrl.printActive"
+            gmf-print-attributes-out="::attributes">
+            <span ng-if="mainCtrl.gmfUser.username">
+              <div ng-repeat="attribute in ::attributes">
+                <label ng-if="attribute.name == 'debug'">
+                  <input ng-model="attribute.value" type="checkbox" />
+                  <span translate>debug</span>
+                </label>
+              </div>
+            </span>
+          </gmf-print>
         </div>
-        <div
-            class="gmf-app-tools-content container-fluid"
-            ng-class="{'gmf-app-active': mainCtrl.toolsActive,'gmf-app-streetview-active': mainCtrl.googleStreetViewActive || mainCtrl.mapillaryStreetViewActive , 'gmf-app-inactive' : !mainCtrl.toolsActive}">
-          <gmf-auth-panel ng-show="mainCtrl.loginActive"
-          ng-on-close-panel="mainCtrl.loginActive = $event.detail"
-          ng-prop-login_info_message="mainCtrl.loginInfoMessage"
-          ng-prop-post_loading="mainCtrl.postLoading"
-          ng-prop-password_validator="mainCtrl.passwordValidator"
-          ></gmf-auth-panel>
-          <div ng-show="mainCtrl.printPanelActive" class="row">
-            <div class="col-sm-12">
-              <div class="gmf-app-tools-content-heading">
-                {{'Print' | translate}}
-                <a class="btn close" ng-click="mainCtrl.printPanelActive = false">&times;</a>
-              </div>
-              <gmf-print
-                gmf-print-map="::mainCtrl.map"
-                gmf-print-active="mainCtrl.printActive"
-                gmf-print-attributes-out="::attributes">
-                  <span ng-if="mainCtrl.gmfUser.username">
-                    <div ng-repeat="attribute in ::attributes">
-                      <label ng-if="attribute.name == 'debug'">
-                        <input ng-model="attribute.value" type="checkbox">
-                        <span translate>debug</span>
-                      </label>
-                    </div>
-                  </span>
-              </gmf-print>
-            </div>
+      </div>
+
+      <!-- Drawing -->
+      <gmf-button-drawing slot="tool-button"></gmf-button-drawing>
+      <div slot="tool-panel-draw" class="row">
+        <div class="col-sm-12">
+          <div class="gmf-app-tools-content-heading">
+            {{ 'Draw and Measure' | translate }}
           </div>
-          <div ng-show="mainCtrl.drawFeatureActive" class="row">
-            <div class="col-sm-12">
-              <div class="gmf-app-tools-content-heading">
-                {{'Draw and Measure'|translate}}
-                <a class="btn close" ng-click="mainCtrl.drawFeatureActive = false">&times;</a>
-              </div>
-              <gmf-drawfeature
-                  gmf-drawfeature-active="mainCtrl.drawFeatureActive"
-                  gmf-drawfeature-layer="::mainCtrl.drawFeatureLayer"
-                  gmf-drawfeature-map="::mainCtrl.map">
-              </gmf-drawfeature>
-            </div>
+          <gmf-drawfeature
+            gmf-drawfeature-active="mainCtrl.drawFeatureActive"
+            gmf-drawfeature-layer="::mainCtrl.drawFeatureLayer"
+            gmf-drawfeature-map="::mainCtrl.map">
+          </gmf-drawfeature>
+        </div>
+      </div>
+
+      <!-- Filter -->
+      <gmf-button-filter slot="tool-button">
+        <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.filterSelectorActive"
+        data-toggle="tooltip" data-placement="left" data-original-title="{{'Filter'|translate}}">
+        <span
+          class="fa"
+          ng-class="mainCtrl.gmfDataSourceBeingFiltered.dataSource && mainCtrl.gmfDataSourceBeingFiltered.dataSource.filterRules ? 'fa-funnel-dollar' : 'fa-filter'"></span>
+      </button>
+
+      </gmf-button-filter>
+      <div slot="tool-panel-filter" class="row">
+        <div class="col-sm-12">
+          <div class="gmf-app-tools-content-heading">
+            {{ 'Filter' | translate }}
           </div>
-          <div ng-show="mainCtrl.filterSelectorActive" class="row">
-            <div class="col-sm-12">
-              <div class="gmf-app-tools-content-heading">
-                {{'Filter'|translate}}
-                <a class="btn close" ng-click="mainCtrl.filterSelectorActive = false">&times;</a>
-              </div>
-              <gmf-filterselector
-                  active="mainCtrl.filterSelectorActive"
-                  map="mainCtrl.map"
-                  tool-group="::mainCtrl.mapToolsGroup"
-                  filter-is-applied="mainCtrl.filterIsApplied">
-              </gmf-filterselector>
-            </div>
+          <gmf-filterselector
+            active="mainCtrl.filterSelectorActive"
+            map="mainCtrl.map"
+            tool-group="::mainCtrl.mapToolsGroup"
+            filter-is-applied="mainCtrl.filterIsApplied">
+          </gmf-filterselector>
+        </div>
+      </div>
+
+      <!-- Editing -->
+      <gmf-button-editing slot="tool-button"></gmf-button-editing>
+      <div slot="tool-panel-editing" class="row">
+        <div class="col-sm-12">
+          <div class="gmf-app-tools-content-heading">
+            {{ 'Editing' | translate }}
           </div>
-          <div ng-show="mainCtrl.editFeatureActive" class="row">
-            <div class="col-sm-12">
-              <div class="gmf-app-tools-content-heading">
-                {{'Editing'|translate}}
-                <a class="btn close" ng-click="mainCtrl.editFeatureActive = false">&times;</a>
-              </div>
-              <div ng-switch="mainCtrl.gmfUser.username">
-                <div ng-switch-when="null">
-                  {{'In order to use the editing tool, you must log in first.' | translate}}
-                </div>
-                <gmf-editfeatureselector
-                    ng-switch-default
-                    gmf-editfeatureselector-active="mainCtrl.editFeatureActive"
-                    gmf-editfeatureselector-map="::mainCtrl.map"
-                    gmf-editfeatureselector-vector="::mainCtrl.editFeatureVectorLayer">
-                </gmf-editfeatureselector>
-              </div>
+          <div ng-switch="mainCtrl.gmfUser.username">
+            <div ng-switch-when="null">
+              {{ 'In order to use the editing tool, you must log in first.' | translate }}
             </div>
-          </div>
-          <div ng-show="mainCtrl.drawProfilePanelActive" class="row profile-panel">
-            <div class="col-sm-12">
-              <div class="gmf-app-tools-content-heading">
-                {{'Elevation profile'|translate}}
-                <a class="btn close" ng-click="mainCtrl.drawProfilePanelActive = false">&times;</a>
-              </div>
-              <div gmf-drawprofileline
-                   gmf-drawprofileline-active="mainCtrl.drawProfilePanelActive"
-                   gmf-drawprofileline-map="::mainCtrl.map"
-                   gmf-drawprofileline-line="mainCtrl.profileLine">
-                 <p>
-                  <button class="btn prime"
-                    ngeo-btn ng-model="ctrl.interaction.active"
-                    translate>
-                    Draw profile line
-                  </button>
-                </p>
-                <p>
-                  <em translate ng-if="ctrl.interaction.active" class="text-muted small">
-                    Draw a line on the map to display the corresponding elevation profile.
-                    Use double-click to finish the drawing.
-                  </em>
-                </p>
-              </div>
-            </div>
-          </div>
-          <div ng-show="mainCtrl.drawLidarprofilePanelActive" class="row lidar-profile-panel">
-            <div class="col-sm-12">
-              <div class="gmf-app-tools-content-heading">
-                {{'Lidar profile (only on the canton of Neuchâtel)'|translate}}
-                <a class="btn close" ng-click="mainCtrl.drawLidarprofilePanelActive = false">&times;</a>
-              </div>
-              <gmf-lidarprofile-panel
-                   gmf-lidarprofile-panel-active="mainCtrl.drawLidarprofilePanelActive"
-                   gmf-lidarprofile-panel-map="::mainCtrl.map"
-                   gmf-lidarprofile-panel-line="mainCtrl.lidarProfileLine">
-              </gmf-lidarprofile-panel>
-            </div>
-          </div>
-          <div ng-show="mainCtrl.googleStreetViewActive" class="row">
-            <div class="col-sm-12">
-              <div class="gmf-app-tools-content-heading">
-                {{'Google Street View'|translate}}
-                <a class="btn close" ng-click="mainCtrl.googleStreetViewActive = false">&times;</a>
-              </div>
-              <ngeo-streetview
-                  active="mainCtrl.googleStreetViewActive"
-                  feature-style="mainCtrl.streetViewStyle"
-                  map="mainCtrl.map"
-                  panel-width="mainCtrl.toolsPanelWidth"
-                  options-name="ngeoGoogleStreetviewOptions">
-              </ngeo-streetview>
-            </div>
-          </div>
-          <div ng-show="mainCtrl.mapillaryStreetViewActive" class="row">
-            <div class="col-sm-12">
-              <div class="gmf-app-tools-content-heading">
-                {{'Mapillary Street View'|translate}}
-                <a class="btn close" ng-click="mainCtrl.mapillaryStreetViewActive = false">&times;</a>
-              </div>
-              <ngeo-streetview
-                  active="mainCtrl.mapillaryStreetViewActive"
-                  feature-style="mainCtrl.streetViewStyle"
-                  map="mainCtrl.map"
-                  panel-width="mainCtrl.toolsPanelWidth"
-                  options-name="ngeoStreetviewOptions">
-              </ngeo-streetview>
-            </div>
-          </div>
-          <div ng-show="mainCtrl.queryPanelActive" class="row">
-            <div class="col-sm-12">
-              <div class="gmf-app-tools-content-heading">
-                {{'Selection'|translate}}
-                <a class="btn close" ng-click="mainCtrl.queryPanelActive = false">&times;</a>
-              </div>
-              <ngeo-query-panel></ngeo-query-panel>
-            </div>
-          </div>
-          <div ng-show="mainCtrl.importDataSourceActive" class="row">
-            <div class="col-sm-12">
-              <div class="gmf-app-tools-content-heading">
-                {{'Import Layer'|translate}}
-                <a class="btn close" ng-click="mainCtrl.importDataSourceActive = false">&times;</a>
-              </div>
-              <gmf-importdatasource map="mainCtrl.map">
-              </gmf-importdatasource>
-            </div>
-          </div>
-          <div ng-show="mainCtrl.routingPanelActive" class="row">
-            <div class="col-sm-12">
-              <div class="gmf-app-tools-content-heading">
-                {{'Routing'|translate}}
-                <a class="btn close" ng-click="mainCtrl.routingPanelActive = false">&times;</a>
-              </div>
-              <ngeo-routing
-                  ngeo-routing-map="mainCtrl.map">
-              </ngeo-routing>
-            </div>
+            <gmf-editfeatureselector
+              ng-switch-default
+              gmf-editfeatureselector-active="mainCtrl.editFeatureActive"
+              gmf-editfeatureselector-map="::mainCtrl.map"
+              gmf-editfeatureselector-vector="::mainCtrl.editFeatureVectorLayer">
+            </gmf-editfeatureselector>
           </div>
         </div>
       </div>
-      <div class="gmf-app-map-container" ng-class="{'gmf-app-infobar-active': mainCtrl.options.showInfobar}">
-        <gmf-search gmf-search-map="::mainCtrl.map"></gmf-search>
-        <ngeo-mapswipe
-          ng-if="mainCtrl.gmfLayerBeingSwipe.layer != null"
-          map="::mainCtrl.map"
-          layer="mainCtrl.gmfLayerBeingSwipe.layer"
-          swipe-value="mainCtrl.gmfLayerBeingSwipe.swipeValue">
-        </ngeo-mapswipe>
-        <div id="ol-zoom-control"></div>
-        <ngeo-displaywindow
-          content="mainCtrl.displaywindowContent"
-          desktop="true"
-          draggable-containment="mainCtrl.displaywindowDraggableContainment"
-          height="mainCtrl.displaywindowHeight"
-          open="mainCtrl.displaywindowOpen"
-          title="mainCtrl.displaywindowTitle"
-          url="mainCtrl.displaywindowUrl"
-          width="mainCtrl.displaywindowWidth"
-        ></ngeo-displaywindow>
-        <button ngeo-geolocation=""
-            ngeo-geolocation-map="::mainCtrl.map"
-            ngeo-geolocation-loading="mainCtrl.loading"
-            ng-if="::mainCtrl.options.geolocalisation">
-            <span class="far fa-dot-circle"></span>
+
+      <!-- Profile -->
+      <gmf-button-profile slot="tool-button"></gmf-button-profile>
+      <div slot="tool-panel-profile" class="row profile-panel">
+        <div class="col-sm-12">
+          <div class="gmf-app-tools-content-heading">
+            {{ 'Elevation profile' | translate }}
+          </div>
+          <div gmf-drawprofileline
+            gmf-drawprofileline-active="mainCtrl.drawProfilePanelActive"
+            gmf-drawprofileline-map="::mainCtrl.map"
+            gmf-drawprofileline-line="mainCtrl.profileLine">
+            <p>
+              <button class="btn prime"
+                ngeo-btn ng-model="ctrl.interaction.active"
+                translate>
+                Draw profile line
+              </button>
+            </p>
+            <p>
+              <em translate ng-if="ctrl.interaction.active" class="text-muted small">
+                Draw a line on the map to display the corresponding elevation profile.
+                Use double-click to finish the drawing.
+              </em>
+            </p>
+          </div>
+        </div>
+      </div>
+      <gmf-profile
+        slot="footer-profileresult"
+        gmf-profile-active="profileChartActive"
+        gmf-profile-line="mainCtrl.profileLine"
+        gmf-profile-map="::mainCtrl.map"
+        ngeo-resizemap="mainCtrl.map"
+        ngeo-resizemap-state="profileChartActive"
+      >
+      </gmf-profile>
+
+      <!-- LIDAR -->
+      <gmf-button-lidarprofile slot="tool-button"></gmf-button-lidarprofile>
+      <div
+        slot="tool-panel-lidarprofile"
+        class="row lidar-profile-panel"
+      >
+        <div class="col-sm-12">
+          <div class="gmf-app-tools-content-heading">
+            {{ 'Lidar profile (only on the canton of Neuchâtel)' | translate }}
+          </div>
+          <gmf-lidarprofile-panel
+            gmf-lidarprofile-panel-active="mainCtrl.drawLidarprofilePanelActive"
+            gmf-lidarprofile-panel-map="::mainCtrl.map"
+            gmf-lidarprofile-panel-line="mainCtrl.lidarProfileLine">
+          </gmf-lidarprofile-panel>
+        </div>
+      </div>
+      <gmf-lidarprofile
+        slot="footer-profileresult"
+        gmf-lidarprofile-active="lidarProfileChartActive"
+        gmf-lidarprofile-line="mainCtrl.lidarProfileLine"
+        ngeo-resizemap="mainCtrl.map"
+        ngeo-resizemap-state="lidarProfileChartActive"
+      >
+      </gmf-lidarprofile>
+
+      <!-- Google Street View -->
+      <gmf-button-googlestreetview slot="tool-button"></gmf-button-googlestreetview>
+      <div slot="tool-panel-googlestreetview" class="row">
+        <div class="col-sm-12">
+          <div class="gmf-app-tools-content-heading">
+            {{ 'Google Street View' | translate }}
+          </div>
+          <ngeo-streetview
+            active="mainCtrl.googleStreetViewActive"
+            feature-style="mainCtrl.streetViewStyle"
+            map="mainCtrl.map"
+            panel-width="mainCtrl.toolsPanelWidth"
+            options-name="ngeoGoogleStreetviewOptions">
+          </ngeo-streetview>
+        </div>
+      </div>
+
+      <!-- Mapillary -->
+      <gmf-button-mapillary slot="tool-button"></gmf-button-mapillary>
+      <div slot="tool-panel-mapillary" class="row">
+        <div class="col-sm-12">
+          <div class="gmf-app-tools-content-heading">
+            {{ 'Mapillary Street View' | translate }}
+          </div>
+          <ngeo-streetview
+            active="mainCtrl.mapillaryStreetViewActive"
+            feature-style="mainCtrl.streetViewStyle"
+            map="mainCtrl.map"
+            panel-width="mainCtrl.toolsPanelWidth"
+            options-name="ngeoStreetviewOptions">
+          </ngeo-streetview>
+        </div>
+      </div>
+
+      <!-- Selection -->
+      <gmf-button-selection slot="tool-button"></gmf-button-selection>
+      <div slot="tool-panel-query"  class="row">
+        <div class="col-sm-12">
+          <div class="gmf-app-tools-content-heading">
+            {{ 'Selection' | translate }}
+          </div>
+          <ngeo-query-panel></ngeo-query-panel>
+        </div>
+      </div>
+
+      <!-- Import Layer -->
+      <gmf-button-import slot="tool-button"></gmf-button-import>
+      <div slot="tool-panel-import" class="row">
+        <div class="col-sm-12">
+          <div class="gmf-app-tools-content-heading">
+            {{ 'Import Layer' | translate }}
+          </div>
+          <gmf-importdatasource map="mainCtrl.map">
+          </gmf-importdatasource>
+        </div>
+      </div>
+
+      <!-- Routing -->
+      <gmf-button-routing slot="tool-button"></gmf-button-routing>
+      <div slot="tool-panel-routing" class="row">
+        <div class="col-sm-12">
+          <div class="gmf-app-tools-content-heading">
+            {{ 'Routing' | translate }}
+          </div>
+          <ngeo-routing
+            ngeo-routing-map="mainCtrl.map">
+          </ngeo-routing>
+        </div>
+      </div>
+
+      <!-- Permalink -->
+      <span slot="tool-button-separate">
+        <button ngeo-btn class="btn btn-default gmf-app-tools-bar" ng-model="mainCtrl.modalShareShown"  data-toggle="tooltip" data-placement="left" data-original-title="{{'Share this map'|translate}}">
+          <span class="fa fa-share-alt"></span>
         </button>
-        <div class="gmf-app-map-bottom-controls">
-          <div class="gmf-backgroundlayerbutton btn-group dropup">
-            <button
-                class="btn btn-default dropdown-toggle"
-                data-toggle="dropdown">
-              <img src="<%=require('./image/background-layer-button.png')%>" alt="" crossorigin="anonymous" />
-            </button>
-            <gmf-backgroundlayerselector
-              gmf-backgroundlayerselector-map="::mainCtrl.map"
-              class="dropdown-menu">
-            </gmf-backgroundlayerselector>
-          </div>
-          <div class="gmf-app-map-messages">
-            <gmf-disclaimer
-              gmf-disclaimer-map="::mainCtrl.map"
-              gmf-disclaimer-external-msg="disclaimerMsg"
-              gmf-disclaimer-external-visibility="disclaimerVisibility">
-            </gmf-disclaimer>
-          </div>
-          <gmf-displayquerywindow
-            ng-if="!mainCtrl.queryGrid"
-            gmf-displayquerywindow-draggable-containment="::mainCtrl.displaywindowDraggableContainment"
-            gmf-displayquerywindow-desktop="::true">
-          </gmf-displayquerywindow>
-        </div>
-        <gmf-map
-          class="gmf-map"
-          gmf-map-map="mainCtrl.map"
-          gmf-map-manage-resize="mainCtrl.manageResize"
-          gmf-map-resize-transition="mainCtrl.resizeTransition">
-        </gmf-map>
-        <ngeo-query
-          active="mainCtrl.queryActive"
-          autoclear="mainCtrl.queryAutoClear"
-          map="::mainCtrl.map">
-        </ngeo-query>
-        <gmf-floorselector class="gmf-floorselector ol-unselectable ol-control"
-          value="mainCtrl.dimensions.FLOOR">
-        </gmf-floorselector>
+      </span>
 
-        <!--infobar-->
-        <div class="gmf-app-footer" ng-class="{'gmf-app-active': mainCtrl.options.showInfobar}">
-          <button class="btn fa gmf-app-map-info" ng-click="mainCtrl.options.showInfobar = !mainCtrl.options.showInfobar"
-                  ng-class="{'fa-angle-double-up': !mainCtrl.options.showInfobar, 'fa-angle-double-down': mainCtrl.options.showInfobar}"></button>
-
-          <div ngeo-scaleselector ngeo-scaleselector-map="mainCtrl.map"></div>
-          <div id="scaleline"></div>
-          <div class="pull-right">
-            <gmf-elevationwidget
-                gmf-elevationwidget-map="::mainCtrl.map"
-                gmf-elevationwidget-active="::mainCtrl.options.showInfobar">
-            </gmf-elevationwidget>
-            <gmf-mouseposition
-                 gmf-mouseposition-map="mainCtrl.map"
-                 class="text-center">
-            </gmf-mouseposition>
-          </div>
+      <gmf-search slot="map" gmf-search-map="::mainCtrl.map"></gmf-search>
+      <ngeo-mapswipe
+        slot="map"
+        ng-if="mainCtrl.gmfLayerBeingSwipe.layer != null"
+        map="::mainCtrl.map"
+        layer="mainCtrl.gmfLayerBeingSwipe.layer"
+        swipe-value="mainCtrl.gmfLayerBeingSwipe.swipeValue">
+      </ngeo-mapswipe>
+      <div id="ol-zoom-control" slot="map"></div>
+      <ngeo-displaywindow
+        slot="map"
+        content="mainCtrl.displaywindowContent"
+        desktop="true"
+        draggable-containment="mainCtrl.displaywindowDraggableContainment"
+        height="mainCtrl.displaywindowHeight"
+        open="mainCtrl.displaywindowOpen"
+        title="mainCtrl.displaywindowTitle"
+        url="mainCtrl.displaywindowUrl"
+        width="mainCtrl.displaywindowWidth"
+      ></ngeo-displaywindow>
+      <!--  -->
+      <button
+        slot="map"
+        ngeo-geolocation=""
+        ngeo-geolocation-map="::mainCtrl.map"
+        ngeo-geolocation-loading="mainCtrl.loading"
+        ng-if="::mainCtrl.options.geolocalisation">
+        <span class="far fa-dot-circle"></span>
+      </button>
+      <div slot="map" class="gmf-app-map-bottom-controls">
+        <div class="gmf-backgroundlayerbutton btn-group dropup">
+          <!--  -->
+          <button
+              class="btn btn-default dropdown-toggle"
+              data-toggle="dropdown">
+            <img src="<%=require('./image/background-layer-button.png')%>" alt="" crossorigin="anonymous" />
+          </button>
+          <gmf-backgroundlayerselector
+            gmf-backgroundlayerselector-map="::mainCtrl.map"
+            class="dropdown-menu">
+          </gmf-backgroundlayerselector>
         </div>
+        <div class="gmf-app-map-messages">
+          <gmf-disclaimer
+            gmf-disclaimer-map="::mainCtrl.map"
+            gmf-disclaimer-external-msg="disclaimerMsg"
+            gmf-disclaimer-external-visibility="disclaimerVisibility">
+          </gmf-disclaimer>
+        </div>
+        <gmf-displayquerywindow
+          ng-if="!mainCtrl.queryGrid"
+          gmf-displayquerywindow-draggable-containment="::mainCtrl.displaywindowDraggableContainment"
+          gmf-displayquerywindow-desktop="::true">
+        </gmf-displayquerywindow>
+        <gmf-map-entrypoint></gmf-map-entrypoint>
       </div>
-      <ngeo-modal ng-model="mainCtrl.modalShareShown">
+      <gmf-map
+        slot="map"
+        class="gmf-map"
+        gmf-map-map="mainCtrl.map"
+        gmf-map-manage-resize="mainCtrl.manageResize"
+        gmf-map-resize-transition="mainCtrl.resizeTransition">
+      </gmf-map>
+      <ngeo-query
+        slot="map"
+        active="mainCtrl.queryActive"
+        autoclear="mainCtrl.queryAutoClear"
+        map="::mainCtrl.map">
+      </ngeo-query>
+      <gmf-floorselector
+        slot="map"
+        class="gmf-floorselector ol-unselectable ol-control"
+        value="mainCtrl.dimensions.FLOOR">
+      </gmf-floorselector>
+
+      <div slot="infobar-left" ngeo-scaleselector ngeo-scaleselector-map="mainCtrl.map" class="gmf-app-footer-div"></div>
+      <div slot="infobar-left" id="scaleline" class="gmf-app-footer-div"></div>
+      <gmf-elevationwidget
+        slot="infobar-right"
+        gmf-elevationwidget-map="::mainCtrl.map"
+        gmf-elevationwidget-active="::mainCtrl.options.showInfobar">
+      </gmf-elevationwidget>
+      <gmf-mouseposition slot="infobar-right" gmf-mouseposition-map="mainCtrl.map" class="text-center" class="gmf-app-footer-div">
+      </gmf-mouseposition>
+      <ngeo-modal slot="modal" ng-model="mainCtrl.modalShareShown">
         <gmf-share ng-if="mainCtrl.modalShareShown"></gmf-share>
       </ngeo-modal>
-      <ngeo-modal ng-model="disclaimerVisibility">
+      <ngeo-modal slot="modal" ng-model="disclaimerVisibility">
         <div class="modal-header ui-draggable-handle">
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
         </div>
@@ -390,30 +375,14 @@
           <div ng-bind-html="disclaimerMsg"></div>
         </div>
       </ngeo-modal>
-    </main>
-    <footer>
-      <gmf-profile
-        gmf-profile-active="profileChartActive"
-        gmf-profile-line="mainCtrl.profileLine"
-        gmf-profile-map="::mainCtrl.map"
-        ngeo-resizemap="mainCtrl.map"
-        ngeo-resizemap-state="profileChartActive">
-      </gmf-profile>
       <gmf-displayquerygrid
-        ng-if="mainCtrl.queryGrid"
+        slot="footer-queryresult"
         gmf-displayquerygrid-active="mainCtrl.queryGridActive"
         gmf-displayquerygrid-map="::mainCtrl.map"
         ngeo-resizemap="mainCtrl.map"
         ngeo-resizemap-state="mainCtrl.queryGridActive">
       </gmf-displayquerygrid>
-      <gmf-lidarprofile
-        gmf-lidarprofile-active="lidarProfileChartActive"
-        gmf-lidarprofile-line="mainCtrl.lidarProfileLine"
-        ngeo-resizemap="mainCtrl.map"
-        ngeo-resizemap-state="lidarProfileChartActive">
-      </gmf-lidarprofile>
-      </div>
-    </footer>
+    </gmf-desktop-canvas>
     <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=es6,default-3.6,Array.prototype.includes,Object.entries,Object.values" crossorigin="anonymous"></script>
     <script src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyA3NVIy-HOYT0a0CkChA6nFwqEFqHYWBVk"></script>
     <script src="../../../dist/vendor.js?${htmlWebpackPlugin.options.vars.version}" crossorigin="anonymous"></script>

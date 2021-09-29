@@ -36,6 +36,7 @@ import olCollection from 'ol/Collection';
 import * as olExtent from 'ol/extent';
 import olMap from 'ol/Map';
 import {buildStyle} from 'ngeo/options';
+import panels from 'gmfapi/store/panels';
 
 import 'bootstrap/js/src/dropdown';
 
@@ -295,6 +296,7 @@ export function QueryGridController(
       if (ngeoQueryResult.pending) {
         this.active = true;
         this.pending = true;
+        panels.openFooterPanel('queryresult', true);
       }
 
       if (newQueryResult !== oldQueryResult) {
@@ -365,6 +367,7 @@ QueryGridController.prototype.updateData_ = function () {
     if (oldActive) {
       // don't close if there are pending queries
       this.active = this.ngeoQueryResult.pending;
+      panels.openFooterPanel('queryresult', this.active);
       this.pending = this.ngeoQueryResult.pending;
     }
     return;
@@ -388,6 +391,7 @@ QueryGridController.prototype.updateData_ = function () {
   });
 
   this.active = true;
+  panels.openFooterPanel('queryresult', true);
   this.pending = false;
   let sources = this.ngeoQueryResult.sources;
   // merge sources if requested
@@ -411,6 +415,7 @@ QueryGridController.prototype.updateData_ = function () {
   if (this.loadedGridSources.length === 0) {
     // if no grids were created, do not show
     this.active = false;
+    panels.openFooterPanel('queryresult', false);
     return;
   }
 
@@ -735,6 +740,7 @@ QueryGridController.prototype.getActiveGridSource = function () {
  */
 QueryGridController.prototype.clear = function () {
   this.active = false;
+  panels.openFooterPanel('queryresult', false);
   this.pending = false;
   this.gridSources = {};
   this.loadedGridSources = [];

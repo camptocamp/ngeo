@@ -22,7 +22,7 @@
 // @ts-nocheck
 import angular from 'angular';
 import {RouteSuffix} from 'gmf/authentication/Service';
-import user, {UserState} from 'ngeo/store/user.ts';
+import user, {UserState} from 'gmfapi/store/user.ts';
 
 describe('gmf.authentication.Service', () => {
   let gmfAuthentication;

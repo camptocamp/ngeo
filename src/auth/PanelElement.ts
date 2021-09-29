@@ -19,23 +19,37 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import {html, TemplateResult, unsafeCSS} from 'lit';
+import {html, TemplateResult, unsafeCSS, css} from 'lit';
 import {customElement, property, state} from 'lit/decorators.js';
 import {unsafeSVG} from 'lit/directives/unsafe-svg.js';
 import loadingSvg from 'gmf/icons/spinner.svg';
 import i18next from 'i18next';
-import GmfBaseElement from 'ngeo/BaseElement';
-import {Configuration, PasswordValidator} from 'ngeo/store/config';
+import GmfBaseElement from 'gmfapi/elements/BaseElement';
+import {Configuration, PasswordValidator} from 'gmfapi/store/config';
+import ToolPanelElement from 'gmfapi/elements/ToolPanelElement';
 
 import './ComponentElement.ts';
-import './auth.css';
 
 @customElement('gmf-auth-panel')
-export default class AuthPanel extends GmfBaseElement {
+export default class AuthPanel extends ToolPanelElement {
   @property({type: String}) loginInfoMessage = '';
   @property({type: Boolean}) postLoading = false;
   @property({type: Object}) passwordValidator: PasswordValidator = null;
   @state() private customCSS_ = '';
+
+  static style = [
+    ...GmfBaseElement.styles,
+    css`
+      .svg-lit-element {
+        width: 1rem;
+        margin-right: 5px;
+      }
+
+      [hidden] {
+        display: none !important;
+      }
+    `,
+  ];
 
   // override default initConfig
   initConfig(configuration: Configuration): void {
@@ -47,33 +61,22 @@ export default class AuthPanel extends GmfBaseElement {
   protected render(): TemplateResult {
     const spinnerTemplate = this.postLoading
       ? html`
-          <style>
-            ${unsafeCSS(this.customCSS_)}
-          </style>
           <div>
-            <i class="fa fa-spin svg-lit-element"> ${unsafeSVG(loadingSvg)} </i>
+            <i class="fa fa-spin svg-lit-element">${unsafeSVG(loadingSvg)}</i>
             ${i18next.t('Loading themes, please wait...')}
           </div>
         `
       : '';
     return html`
-      <div class="row">
-        <div class="col-sm-12">
-          <div class="gmf-app-tools-content-heading">
-            ${i18next.t('Login')}
-            <a class="btn close" @click=${this.closePanel.bind(this)}>&times;</a>
-          </div>
-          <gmf-auth-component
-            .loginInfoMessage=${this.loginInfoMessage}
-            .passwordValidator=${this.passwordValidator}
-          ></gmf-auth-component>
-          ${spinnerTemplate}
-        </div>
-      </div>
+      <style>
+        ${unsafeCSS(this.customCSS_)}
+      </style>
+      ${this.getTitle(i18next.t('Login'))}
+      <gmf-auth-component
+        .loginInfoMessage=${this.loginInfoMessage}
+        .passwordValidator=${this.passwordValidator}
+      ></gmf-auth-component>
+      ${spinnerTemplate}
     `;
-  }
-
-  closePanel(): void {
-    this.dispatchEvent(new CustomEvent('close-panel', {detail: false}));
   }
 }
