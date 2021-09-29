@@ -59,7 +59,6 @@ import olControlRotate from 'ol/control/Rotate';
 import {defaults as interactionsDefaults} from 'ol/interaction';
 import olInteractionDragPan from 'ol/interaction/DragPan';
 import {noModifierKeys} from 'ol/events/condition';
-import 'regenerator-runtime/runtime';
 import storeMap from 'ngeo/store/map';
 
 import user, {UserState} from 'ngeo/store/user.ts';
