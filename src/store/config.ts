@@ -1433,7 +1433,7 @@ export type APIConfig = {
 
 export class ConfigModel {
   /**
-   * The observable user's properties. The default user is empty.
+   * The observable config's properties.
    *
    * @private
    */
