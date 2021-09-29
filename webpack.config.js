@@ -22,10 +22,22 @@
 const {merge} = require('webpack-merge');
 
 module.exports = (env, args) => {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-assignment
   const nodeEnv = args.mode || 'production';
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   process.env['NODE_ENV'] = nodeEnv;
 
-  let config = require('./buildtools/webpack.commons')();
+  let config = {};
+
+  switch (process.env.TARGET) {
+    case 'libdesktop':
+    case 'libmobile':
+    case 'libiframeapi':
+      config = require('./buildtools/webpack.commons')({'nodll': true});
+      break;
+    default:
+      config = require('./buildtools/webpack.commons')();
+  }
 
   switch (nodeEnv) {
     case 'development':
@@ -48,6 +60,12 @@ module.exports = (env, args) => {
       break;
     case 'gmf-apps':
       config = merge(config, require('./buildtools/webpack.gmfapps'));
+      break;
+    case 'libdesktop':
+    case 'libmobile':
+    case 'libiframeapi':
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      config = merge(config, require(`./buildtools/webpack.${process.env.TARGET}`));
       break;
     default:
       console.log(`The 'TARGET' environment variable is set to an invalid value: ${process.env.TARGET}.`);

@@ -19,57 +19,40 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-
-import './FormElement';
-import './PanelElement';
-import user, {UserState, User} from 'gmfapi/store/user';
-
-export default {
-  title: 'Auth Form',
-  component: 'gmf-auth-form',
-};
-
-type Args = {
-  /**
-   * The user.
-   */
-  user: User;
-  /**
-   * The info message.
-   */
-  loginInfoMessage: string;
-};
-
-const Template = (args: Args) => {
-  user.setUser(args.user, UserState.READY);
-  return `
-    <gmf-auth-component
-      loginInfoMessage="${args.loginInfoMessage}">
-    </gmf-auth-component>`;
-};
-
-const defaultProperties: Args = {
-  loginInfoMessage: '',
-  user: null,
-};
-
-export const Empty: any = Template.bind({});
-Empty.args = {...defaultProperties};
-Empty.args.user = user.getEmptyUserProperties();
-
-export const WithUser: any = Template.bind({});
-WithUser.args = {...defaultProperties};
-const login = user.getEmptyUserProperties();
-login.username = 'George';
-WithUser.args.user = login;
+import BaseElement from 'gmfapi/elements/BaseElement';
+import {css, html, TemplateResult} from 'lit';
 
 /**
- * @returns The HTML of the story
+ * Base element to the application tools panel.
+ *
+ * Include the style for the header.
+ *
+ * Example:
+ *
+ *    export default class MyToolPanel extent gmfapi.elements.ToolPanelElement {
+ *      render(): TemplateResult {
+ *        return html`${this.getTitle(i18next.t('Title'))}
+ *          your template`
+ *      }
+ *    }
  */
-export function Panel(): string {
-  return `
-    <gmf-auth-panel>
-    </gmf-auth-panel>`;
+export default class PanelElement extends BaseElement {
+  static styles = [
+    ...BaseElement.styles,
+    css`
+      .gmf-app-tools-content-heading {
+        color: var(--color-light);
+        padding-bottom: var(--app-margin);
+        margin-bottom: var(--app-margin);
+        margin-top: calc(var(--grid-gutter-width) / 2);
+        border-bottom: 0.06rem solid;
+        border-bottom-color: var(--color-light);
+        font-size: 0.8rem;
+      }
+    `,
+  ];
+
+  getTitle(panelName: string): TemplateResult {
+    return html` <div class="gmf-app-tools-content-heading">${panelName}</div> `;
+  }
 }

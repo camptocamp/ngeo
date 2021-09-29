@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2020-2021 Camptocamp SA
+// Copyright (c) 2018-2021 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -19,33 +19,13 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import {BehaviorSubject} from 'rxjs';
-import OlMap from 'ol/Map';
-
-export class MapModel {
-  /**
-   * The observable map's properties.
-   *
-   * @private
-   */
-  map_: BehaviorSubject<OlMap> = new BehaviorSubject<OlMap>(null);
-
-  /**
-   * @returns the OpenLayers map.
-   */
-  getMap(): BehaviorSubject<OlMap> {
-    return this.map_;
-  }
-
-  /**
-   * Set the OpenLayers map.
-   *
-   * @param map the OpenLayers map
-   */
-  setMap(map: OlMap): void {
-    this.map_.next(map);
-  }
-}
-
-const map = new MapModel();
-export default map;
+module.exports = {
+  entry: './contribs/gmf/apps/desktop_alt/Controller.js',
+  output: {
+    libraryTarget: 'umd',
+    globalObject: 'this',
+    libraryExport: 'default',
+    library: 'desktop',
+    filename: 'desktop.[hash:6].js',
+  },
+};

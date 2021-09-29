@@ -19,57 +19,5 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-
-import './FormElement';
 import './PanelElement';
-import user, {UserState, User} from 'gmfapi/store/user';
-
-export default {
-  title: 'Auth Form',
-  component: 'gmf-auth-form',
-};
-
-type Args = {
-  /**
-   * The user.
-   */
-  user: User;
-  /**
-   * The info message.
-   */
-  loginInfoMessage: string;
-};
-
-const Template = (args: Args) => {
-  user.setUser(args.user, UserState.READY);
-  return `
-    <gmf-auth-component
-      loginInfoMessage="${args.loginInfoMessage}">
-    </gmf-auth-component>`;
-};
-
-const defaultProperties: Args = {
-  loginInfoMessage: '',
-  user: null,
-};
-
-export const Empty: any = Template.bind({});
-Empty.args = {...defaultProperties};
-Empty.args.user = user.getEmptyUserProperties();
-
-export const WithUser: any = Template.bind({});
-WithUser.args = {...defaultProperties};
-const login = user.getEmptyUserProperties();
-login.username = 'George';
-WithUser.args.user = login;
-
-/**
- * @returns The HTML of the story
- */
-export function Panel(): string {
-  return `
-    <gmf-auth-panel>
-    </gmf-auth-panel>`;
-}
+import './ButtonElement';

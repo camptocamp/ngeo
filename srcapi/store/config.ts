@@ -1356,6 +1356,7 @@ export type gmfTwoFactorAuth = boolean;
 export type gmfCustomCSS = {
   authentication: string;
   authenticationPanel: string;
+  desktopCanvas: string;
 };
 
 /**
@@ -1441,6 +1442,22 @@ export type APIConfig = {
   queryableLayers?: string[];
 };
 
+/**
+ * Object used to expose all the Configurations we get from the dynamic.json.
+ *
+ * If you are in an element that extends BaseElement you just need to implement
+ * the ``initConfig`` to get the configuration.
+ *
+ * Example of usage:
+ *
+ *    gmfapi.store.config.getConfig().subscribe({
+ *      next: (configuration: Configuration) => {
+ *        if (configuration) {
+ *          ...
+ *        }
+ *      },
+ *    })
+ */
 export class ConfigModel {
   /**
    * The observable config's properties.

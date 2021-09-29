@@ -54,7 +54,7 @@ import olLayerGroup from 'ol/layer/Group';
 import {CollectionEvent} from 'ol/Collection';
 import {buildStyle} from 'ngeo/options';
 
-import user from 'ngeo/store/user';
+import user from 'gmfapi/store/user';
 
 /**
  * @enum {string}

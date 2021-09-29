@@ -19,20 +19,33 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import configuration, {Configuration} from 'ngeo/store/config';
+import user, {UserState} from './user';
 
-describe('Test store config', () => {
-  it('Init the config', () => {
-    let config: Configuration;
-    configuration.getConfig().subscribe({
-      next: (configuration: Configuration) => {
-        config = configuration;
-      },
-    });
+describe('Test store user', () => {
+  beforeEach(() => {
+    const newUser = user.getEmptyUserProperties();
+    user.setUser(newUser, UserState.NOT_INITIALIZED);
+  });
 
-    configuration.setConfig({ngeoOfflineTestUrl: 'test'} as Configuration);
-    expect(config.ngeoOfflineTestUrl).to.equal('test');
-    configuration.setConfig({ngeoOfflineTestUrl: 'test2'} as Configuration);
-    expect(config.ngeoOfflineTestUrl).to.equal('test2');
+  it('Get instance of the user', () => {
+    expect(user).not.to.be.undefined;
+    expect(user.getProperties().value).to.deep.equal(user.getEmptyUserProperties());
+    expect(user.getState()).to.equal(UserState.NOT_INITIALIZED);
+  });
+
+  it('Set the user config', () => {
+    const newUser = user.getEmptyUserProperties();
+    newUser.username = 'Simone';
+    user.setUser(newUser, UserState.LOGGED_IN);
+    expect(user.getProperties().value).to.deep.equal(newUser);
+    expect(user.getState()).to.equal(UserState.LOGGED_IN);
+  });
+
+  it('Set a wrong config', () => {
+    const newUser = user.getEmptyUserProperties();
+    delete newUser.email; // To test the case where the server gives a not complete user.
+    user.setUser(newUser, UserState.LOGGED_OUT);
+    expect(user.getState()).to.equal(UserState.NOT_INITIALIZED);
+    expect(user.getProperties().value).to.deep.equal(user.getEmptyUserProperties());
   });
 });

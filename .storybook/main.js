@@ -5,7 +5,7 @@ const {merge} = require('webpack-merge');
 module.exports = (env, args) => {
   const storybookConfig = {
     stories: ['../src/**/*.stories.@(ts|tsx)'],
-    addons: ['@storybook/addon-essentials'],
+    addons: ['@storybook/addon-essentials', '@storybook/preset-scss'],
     webpackFinal: (config) => {
       const projectConfig = require('../webpack.config.js')(env, args);
 
