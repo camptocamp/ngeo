@@ -17,12 +17,13 @@
         <%=require('gmf/icons/spinner.svg?viewbox&height=1em')%>
       </i>
     </div>
-    <gmf-header gmf-header-template-url="desktop_alt/header.html"></gmf-header>
+    <gmf-header-entrypoint></gmf-header-entrypoint>
     <main>
       <div class="gmf-app-data-panel"
            ngeo-resizemap="mainCtrl.map"
            ngeo-resizemap-state="mainCtrl.dataPanelActive"
            ng-class="{'gmf-app-inactive': !mainCtrl.dataPanelActive}">
+           <gmf-theme-header-entrypoint></gmf-theme-header-entrypoint>
         <div class="gmf-app-header">
           <div class="dropdown">
             <a href
@@ -113,6 +114,7 @@
                     data-toggle="tooltip" data-placement="left" data-original-title="{{'Routing'|translate}}">
               <span class="fa fa-map-signs"></span>
             </button>
+            <gmf-tools-button-entrypoint></gmf-tools-button-entrypoint>
           </div>
           <br/>
           <br/>
@@ -313,6 +315,7 @@
               </ngeo-routing>
             </div>
           </div>
+          <gmf-tools-panel-entrypoint></gmf-tools-panel-entrypoint>
         </div>
       </div>
       <div class="gmf-app-map-container" ng-class="{'gmf-app-infobar-active': mainCtrl.options.showInfobar}">
@@ -364,6 +367,7 @@
             gmf-displayquerywindow-draggable-containment="::mainCtrl.displaywindowDraggableContainment"
             gmf-displayquerywindow-desktop="::true">
           </gmf-displayquerywindow>
+          <gmf-map-entrypoint></gmf-map-entrypoint>
         </div>
         <gmf-map
           class="gmf-map"
@@ -387,6 +391,7 @@
 
           <div ngeo-scaleselector ngeo-scaleselector-map="mainCtrl.map"></div>
           <div id="scaleline"></div>
+          <gmf-infobar-entrypoint></gmf-infobar-entrypoint>
           <div class="pull-right">
             <gmf-elevationwidget
                 gmf-elevationwidget-map="::mainCtrl.map"
@@ -433,6 +438,7 @@
         ngeo-resizemap-state="lidarProfileChartActive">
       </gmf-lidarprofile>
       </div>
+      <gmf-footer-panel-entrypoint></gmf-footer-panel-entrypoint>
     </footer>
     <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=es6,default-3.6,Array.prototype.includes,Object.entries,Object.values" crossorigin="anonymous"></script>
     <script src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyA3NVIy-HOYT0a0CkChA6nFwqEFqHYWBVk"></script>

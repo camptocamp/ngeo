@@ -28,7 +28,7 @@ import OlStyleCircle, {Options as OlStyleCircleOptions} from 'ol/style/Circle';
 import OlStyleRegularShape, {Options as OlStyleRegularShapeOptions} from 'ol/style/RegularShape';
 import OlStyleFill from 'ol/style/Fill';
 import OlStyleStroke from 'ol/style/Stroke';
-import {Subject} from 'rxjs';
+import {BehaviorSubject} from 'rxjs';
 import OlControlControl from 'ol/control/Control';
 import OlInteractionInteraction from 'ol/interaction/Interaction';
 import {DefaultsOptions as OlInteractionDefaultsOptions} from 'ol/interaction';
@@ -1415,6 +1415,62 @@ export type Configuration = {
   gmfCustomJavascriptUrl: gmfCustomJavascriptUrl;
   gmfCustomStylesheetUrl: gmfCustomStylesheetUrl;
   gmfTwoFactorAuth: gmfTwoFactorAuth;
+  /**
+   * The header content
+   */
+  gmfHeaderEntrypoint: string;
+  /**
+   * The URL where to get the header
+   */
+  gmfHeaderEntrypointUrl: string;
+  /**
+   * The header content
+   */
+  gmfThemeHeaderEntrypoint: string;
+  /**
+   * The URL where to get the header
+   */
+  gmfThemeHeaderEntrypointUrl: string;
+  /**
+   * The header content
+   */
+  gmfToolsButtonEntrypoint: string;
+  /**
+   * The URL where to get the header
+   */
+  gmfToolsButtonEntrypointUrl: string;
+  /**
+   * The header content
+   */
+  gmfToolsPanelEntrypoint: string;
+  /**
+   * The URL where to get the header
+   */
+  gmfToolsPanelEntrypointUrl: string;
+  /**
+   * The header content
+   */
+  gmfMapEntrypoint: string;
+  /**
+   * The URL where to get the header
+   */
+  gmfMapEntrypointUrl: string;
+  /**
+   * The header content
+   */
+  gmfInfobarEntrypoint: string;
+  /**
+   * The URL where to get the header
+   */
+  gmfInfobarEntrypointUrl: string;
+  /**
+   * The header content
+   */
+  gmfFooterPanelEntrypoint: string;
+  /**
+   * The URL where to get the header
+   */
+  gmfFooterPanelEntrypointUrl: string;
 };
 
 export type APIConfig = {
@@ -1437,12 +1493,12 @@ export class ConfigModel {
    *
    * @private
    */
-  configuration_: Subject<Configuration> = new Subject<Configuration>();
+  configuration_: BehaviorSubject<Configuration> = new BehaviorSubject<Configuration>(null);
 
   /**
    * @returns the configuration.
    */
-  getConfig(): Subject<Configuration> {
+  getConfig(): BehaviorSubject<Configuration> {
     return this.configuration_;
   }
 

@@ -73,10 +73,12 @@ export default class ngeoAuthComponent extends LitElementI18n {
     this.subscriptions_.push(
       configuration.getConfig().subscribe({
         next: (configuration: Configuration) => {
-          this.twoFactorAuth = configuration.gmfTwoFactorAuth;
-          const config: gmfAuthenticationConfig = configuration.gmfAuthenticationConfig;
-          this.allowPasswordChange = config.allowPasswordChange;
-          this.allowPasswordReset = config.allowPasswordReset;
+          if (configuration) {
+            this.twoFactorAuth = configuration.gmfTwoFactorAuth;
+            const config: gmfAuthenticationConfig = configuration.gmfAuthenticationConfig;
+            this.allowPasswordChange = config.allowPasswordChange;
+            this.allowPasswordReset = config.allowPasswordReset;
+          }
         },
       })
     );

@@ -28,7 +28,6 @@ import gmfDatasourceDataSourceBeingFiltered from 'gmf/datasource/DataSourceBeing
 import gmfDrawingModule from 'gmf/drawing/module';
 import gmfEditingModule from 'gmf/editing/module';
 import gmfFiltersModule from 'gmf/filters/module';
-import gmfHeaderModule from 'gmf/header/module';
 import gmfPermalinkShareComponent from 'gmf/permalink/shareComponent';
 import gmfPrintModule from 'gmf/print/module';
 import gmfProfileModule from 'gmf/profile/module';
@@ -590,7 +589,6 @@ const myModule = angular.module('GmfAbstractDesktopControllerModule', [
   gmfDrawingModule.name,
   gmfEditingModule.name,
   gmfFiltersModule.name,
-  gmfHeaderModule.name,
   gmfImportModule.name,
   gmfPermalinkShareComponent.name,
   gmfPrintModule.name,

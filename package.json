@@ -149,7 +149,7 @@
     "karma-sinon": "1.0.5",
     "karma-sourcemap-loader": "0.3.8",
     "karma-webpack": "4.0.2",
-    "lit": "2.0.0-rc.3",
+    "lit": "2.0.0",
     "loader-utils": "2.0.0",
     "loc-i18next": "0.1.4",
     "localforage": "1.10.0",

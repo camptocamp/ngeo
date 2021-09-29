@@ -19,10 +19,45 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import angular from 'angular';
-import gmfHeaderComponent from 'gmf/header/component';
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
-/**
- * @type {angular.IModule}
- */
-export default angular.module('gmfHeaderModule', [gmfHeaderComponent.name]);
+import './entrypoint.ts';
+import configuration, {Configuration} from 'ngeo/store/config';
+
+export default {
+  title: 'Entry points',
+  component: 'gmf-header',
+};
+
+type Args = {
+  /**
+   * The content.
+   */
+  gmfHeaderEntrypoint: string;
+  /**
+   * The content URL
+   */
+  gmfHeaderEntrypointUrl: string;
+  /**
+   * The content.
+   */
+  gmfThemeHeaderEntrypoint: string;
+  /**
+   * The content URL
+   */
+  gmfThemeHeaderEntrypointUrl: string;
+};
+
+const Template = (args: Args) => {
+  configuration.setConfig(args as unknown as Configuration);
+  return '<gmf-header-entrypoint></gmf-header-entrypoint>';
+};
+
+export const Story: any = Template.bind({});
+Story.args = {
+  gmfHeaderEntrypoint: 'inner: <gmf-theme-header-entrypoint></gmf-theme-header-entrypoint>',
+  gmfHeaderEntrypointUrl: null,
+  gmfThemeHeaderEntrypoint: '<b>text</b>',
+  gmfThemeHeaderEntrypointUrl: null,
+};
