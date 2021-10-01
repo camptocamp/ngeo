@@ -276,12 +276,7 @@ function convertImport(j, root, path) {
 
   for (const import_ of comment.value.matchAll(find_import)) {
     const importName = import_[1].replace(/.js$/, '');
-    let importAs = '';
-    if (import_[2] == 'default') {
-      importAs = rename(importName, import_[2]);
-    } else {
-      importAs = rename(importName, import_[2]);
-    }
+    const importAs = rename(importName, import_[2]);
     commentValue = commentValue.replace(import_[0], importAs);
   }
   comment.value = commentValue;
@@ -617,7 +612,8 @@ function addStatements(j, root, ...statements) {
 function rename(name, object) {
   name = name.replace(/^\.\//, '');
   name = name.replaceAll(/[.-]+/g, '/');
-  if (object == 'default' || /^[A-Z]/.test(object)) {
+  const nameSplit = name.split('/');
+  if (object == 'default' ? /^[A-Z]/.test(nameSplit[nameSplit.length - 1]) : /^[A-Z]/.test(object)) {
     name = name[0].toUpperCase() + name.substring(1);
   }
   if (object != 'default') {
