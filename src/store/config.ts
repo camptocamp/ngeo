@@ -1429,6 +1429,7 @@ export type APIConfig = {
   extent?: number[];
   backgroundLayer?: string;
   queryableLayers?: string[];
+  package?: string;
 };
 
 export class ConfigModel {

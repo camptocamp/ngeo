@@ -36,8 +36,8 @@ const babelPresetEnv = [
   },
 ];
 
+// eslint-disable-next-line no-unused-vars
 module.exports = (env, argv) => {
-  const library = argv.library ? argv.library : 'demo';
   return {
     entry: './api/index.js',
     devtool: 'source-map',
@@ -62,7 +62,6 @@ module.exports = (env, argv) => {
       libraryTarget: 'umd',
       globalObject: 'this',
       libraryExport: 'default',
-      library: library,
     },
     optimization: {
       minimizer: [

@@ -53,7 +53,7 @@ import {
 } from 'ol/extent';
 import {get as getProjection} from 'ol/proj';
 
-import constants, {dynamicUrl} from './constants';
+import constants from './constants';
 
 import {getFeaturesFromIds, getFeaturesFromCoordinates} from './Querent';
 import * as themes from 'api/Themes';
@@ -100,15 +100,6 @@ class Map {
    * @param {MapOptions} options API options.
    */
   constructor(options) {
-    const request = new XMLHttpRequest();
-    request.open('GET', dynamicUrl.dynamicUrl, false);
-    request.send(null);
-
-    if (request.status !== 200) {
-      throw new Error('Error on getting the dynamic configuration');
-    }
-
-    Object.assign(constants, JSON.parse(request.responseText)['constants']);
     for (const code in constants.projections) {
       createProjection(
         code,
@@ -589,6 +580,13 @@ function filterByKeys(obj, keys) {
     filtered[key] = obj[key];
   });
   return filtered;
+}
+
+if (constants.package) {
+  if (!window[constants.package]) {
+    window[constants.package] = {};
+  }
+  window[constants.package].Map = Map;
 }
 
 export default Map;

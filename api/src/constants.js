@@ -29,4 +29,20 @@ export const dynamicUrl = {
   dynamicUrl: undefined,
 };
 
-export default /** @type {import('api/options').APIConfig} */ ({});
+/** @type {import('api/options').APIConfig} */
+let constants = {};
+
+setTimeout(() => {
+  fetch(new Request(dynamicUrl.dynamicUrl))
+    .then((response) => {
+      return response.json();
+    })
+    .then((dynamic) => {
+      Object.assign(constants, dynamic['constants']);
+    })
+    .catch((error) => {
+      throw new Error(`Error on getting the dynamic configuration: ${error.message}`);
+    });
+}, 100);
+
+export default constants;

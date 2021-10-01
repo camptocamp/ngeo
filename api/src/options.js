@@ -42,6 +42,7 @@
  * @property {number[]} [extent]
  * @property {string} [backgroundLayer]
  * @property {string[]} [queryableLayers]
+ * @property {string} [package]
  */
 
 export default undefined;
