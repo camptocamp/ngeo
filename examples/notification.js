@@ -100,7 +100,6 @@ MainController.prototype.notifyTarget = function () {
     msg: 'Error in an other target',
     target: document.querySelector('#my-messages'),
     type: MessageType.ERROR,
-    delay: 7000,
   });
 };
 

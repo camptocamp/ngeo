@@ -555,7 +555,6 @@ export class FilterSelectorController {
         ngeoMessageNotification.notify({
           msg: msgs.join(' '),
           type: MessageType.WARNING,
-          delay: 7000,
         });
       }
     } else {

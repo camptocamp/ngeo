@@ -513,8 +513,6 @@ LayertreeTreeManager.prototype.notifyCantAddGroups_ = function (groups) {
   ngeoMessageNotification.notify({
     msg: `${names.join(', ')} ${msg}`,
     type: MessageType.INFORMATION,
-    delay: 7000,
-    popup: false,
   });
 };
 

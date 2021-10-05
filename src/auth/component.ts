@@ -540,7 +540,6 @@ export default class ngeoAuthComponent extends LitElementI18n {
       const options: Message = {
         msg: error,
         target: container,
-        delay: 7000,
       };
       if (messageType) {
         options.type = messageType;

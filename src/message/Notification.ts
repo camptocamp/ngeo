@@ -85,7 +85,6 @@ export class MessageNotification extends ngeoMessageMessage {
    *
    * @param object
    *     A message or list of messages as text or configuration objects.
-   * @returns
    */
   notify(object: string | string[] | Message | Message[]): void {
     this.show(object);
@@ -94,7 +93,7 @@ export class MessageNotification extends ngeoMessageMessage {
   /**
    * Clears all messages that are currently being shown.
    */
-  clear() {
+  clear(): void {
     for (const uid in this.cache_) {
       this.clearMessageByCacheItem_(this.cache_[parseInt(uid, 10)]);
     }
@@ -104,7 +103,7 @@ export class MessageNotification extends ngeoMessageMessage {
    * @override
    * @param message Message.
    */
-  showMessage(message: Message) {
+  showMessage(message: Message): void {
     const type = message.type;
     console.assert(typeof type == 'string', 'Type should be set.');
 
@@ -167,7 +166,7 @@ export class MessageNotification extends ngeoMessageMessage {
    * @param item Cache item.
    * @private
    */
-  clearMessageByCacheItem_(item: CacheItem) {
+  clearMessageByCacheItem_(item: CacheItem): void {
     const el = item.el;
     const promise = item.promise;
     const uid = olUtilGetUid(el);

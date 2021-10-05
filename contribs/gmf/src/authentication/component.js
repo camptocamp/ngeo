@@ -543,7 +543,6 @@ export class AuthenticationController {
       const options = {
         msg: error,
         target: container,
-        delay: 7000,
       };
       if (messageType) {
         options.type = messageType;

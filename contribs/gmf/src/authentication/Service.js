@@ -184,7 +184,7 @@ export class AuthenticationService {
           }
         })
         .catch((err) => {
-          console.error(`Error on connection check: ${err.statusText}`);
+          throw `Error on connection check: ${err.statusText}`;
         });
     }
   }
@@ -207,7 +207,9 @@ export class AuthenticationService {
       .then((resp) => this.checkUser_(resp))
       .then(
         (resp) => this.handleLogin_(true, resp),
-        (resp) => console.error('Login fail.')
+        (resp) => {
+          throw 'Login fail.';
+        }
       );
   }
 
@@ -240,7 +242,9 @@ export class AuthenticationService {
       .then((resp) => this.checkUser_(resp))
       .then(
         (resp) => this.setUser_(resp.data, UserState.LOGGED_IN),
-        (resp) => console.error('Change password fail.')
+        (resp) => {
+          throw 'Change password fail.';
+        }
       );
   }
 
@@ -266,7 +270,9 @@ export class AuthenticationService {
       .then((resp) => this.onSuccessfulLogin(resp))
       .then(
         (resp) => this.handleLogin_(false, resp),
-        (resp) => console.error('Login fail.')
+        (resp) => {
+          throw 'Login fail.';
+        }
       );
   }
 

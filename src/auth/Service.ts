@@ -131,24 +131,24 @@ export class AuthenticationService {
    *
    * @private
    */
-  checkConnection_() {
+  checkConnection_(): void {
     if (this.user_.username) {
       const url = `${this.baseUrl_}/${RouteSuffix.IS_LOGGED_IN}`;
       const options = {method: 'GET', withCredentials: true};
       fetch(url, options)
         .then((resp) => resp.json())
-        .then((data) => {
+        .then((data: User) => {
           if (this.user_.username !== data.username) {
             this.handleDisconnection();
           }
         })
-        .catch((err) => {
-          console.error(`Error on connection check: ${err.statusText}`);
+        .catch((err: Response) => {
+          throw `Error on connection check: ${err.statusText}`;
         });
     }
   }
 
-  handleDisconnection() {
+  handleDisconnection(): void {
     const noReload = this.noReloadRole_ ? this.getRolesNames().includes(this.noReloadRole_) : false;
     this.resetUser_(UserState.DISCONNECTED, noReload);
   }
@@ -159,7 +159,7 @@ export class AuthenticationService {
    *
    * @private
    */
-  load_() {
+  load_(): void {
     const url = `${this.baseUrl_}/${RouteSuffix.IS_LOGGED_IN}`;
     const options = {method: 'GET', withCredentials: true};
     fetch(url, options)
@@ -167,7 +167,9 @@ export class AuthenticationService {
       .then((data) => this.checkUser_(data))
       .then(
         (data) => this.handleLogin_(true, data),
-        (data) => console.error('Login fail.')
+        (data) => {
+          throw 'Login fail.';
+        }
       );
   }
 
@@ -205,7 +207,9 @@ export class AuthenticationService {
       .then((data) => this.checkUser_(data))
       .then(
         (data) => this.setUser_(data, UserState.LOGGED_IN),
-        (data) => console.error('Change password fail.')
+        (data) => {
+          throw 'Change password fail.';
+        }
       );
   }
 
@@ -215,7 +219,7 @@ export class AuthenticationService {
    * @param {string} [otp] One-time password.
    * @returns Promise.
    */
-  login(login: string, pwd: string, otp: string = undefined): Promise<void | Response> {
+  login(login: string, pwd: string, otp: string = undefined): Promise<void | User> {
     const url = `${this.baseUrl_}/${RouteSuffix.LOGIN}`;
     const params = {'login': login, 'password': pwd};
     if (otp) {
@@ -234,7 +238,9 @@ export class AuthenticationService {
       .then((data) => this.onSuccessfulLogin(data))
       .then(
         (data) => this.handleLogin_(false, data),
-        (data) => console.error('Login fail.')
+        (data) => {
+          throw 'Login fail.';
+        }
       );
   }
 
@@ -243,9 +249,8 @@ export class AuthenticationService {
    *
    * @param data Ajax response.
    * @returns Response.
-   * FIXME: typing and doc
    */
-  checkUser_(data: any): any {
+  checkUser_(data: User): User {
     if (!data) {
       return data;
     }
@@ -259,9 +264,8 @@ export class AuthenticationService {
    *
    * @param data Ajax response.
    * @returns Response.
-   * FIXME: typing and doc
    */
-  onSuccessfulLogin(data: any): any {
+  onSuccessfulLogin(data: User): User {
     return data;
   }
 
@@ -281,7 +285,7 @@ export class AuthenticationService {
    * @param login Login name.
    * @returns Promise.
    */
-  resetPassword(login: string): Promise<Response> {
+  resetPassword(login: string): Promise<AuthenticationDefaultResponse> {
     const url = `${this.baseUrl_}/${RouteSuffix.RESET_PASSWORD}`;
     const options = {
       method: 'POST',
@@ -290,7 +294,9 @@ export class AuthenticationService {
       body: $.param({'login': login}),
     };
 
-    return fetch(url, options).then((resp) => resp.json().then((data) => data));
+    return fetch(url, options).then((resp) =>
+      resp.json().then((data: AuthenticationDefaultResponse) => data)
+    );
   }
 
   /**
@@ -319,9 +325,8 @@ export class AuthenticationService {
    * @param data Ajax response.
    * @returns Response.
    * @private
-   * FIXME: typing and doc
    */
-  handleLogin_(checkingLoginStatus: boolean, data: any): any {
+  handleLogin_(checkingLoginStatus: boolean, data: User): User {
     const userState = checkingLoginStatus ? UserState.READY : UserState.LOGGED_IN;
     this.setUser_(data, userState);
     return data;

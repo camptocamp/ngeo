@@ -94,7 +94,6 @@ function MainController(gmfThemes, ngeoFeatureOverlayMgr) {
       msg: 'gmf-search initialized',
       target: document.querySelector('#message'),
       type: MessageType.SUCCESS,
-      delay: 7000,
     });
   };
 }

@@ -58,7 +58,6 @@ export enum MessageType {
  *
  * @class
  * @abstract
- * @hidden
  */
 export default class {
   /**
@@ -66,7 +65,6 @@ export default class {
    *
    * @abstract
    * @param message Message.
-   * @returns
    * @protected
    */
   showMessage(message: Message): void {}
@@ -76,18 +74,16 @@ export default class {
    * strings or objects.
    *
    * @param object A message or list of messages as text or configuration objects.
-   * @returns
    */
   show(object: string | Message | (string | Message)[]): void {
     const msgObjects = this.getMessageObjects(object);
-    msgObjects.forEach(this.showMessage, this);
+    msgObjects.forEach((msg) => this.showMessage(msg));
   }
 
   /**
    * Display the given error message or list of error messages.
    *
    * @param message Message or list of messages.
-   * @returns
    */
   error(message: string | string[]): void {
     this.show(this.getMessageObjects(message, MessageType.ERROR));
@@ -97,7 +93,6 @@ export default class {
    * Display the given info message or list of info messages.
    *
    * @param message Message or list of messages.
-   * @returns
    */
   info(message: string | string[]): void {
     this.show(this.getMessageObjects(message, MessageType.INFORMATION));
@@ -107,7 +102,6 @@ export default class {
    * Display the given success message or list of success messages.
    *
    * @param message Message or list of messages.
-   * @returns
    */
   success(message: string | string[]): void {
     this.show(this.getMessageObjects(message, MessageType.SUCCESS));
@@ -117,7 +111,6 @@ export default class {
    * Display the given warning message or list of warning messages.
    *
    * @param message Message or list of messages.
-   * @returns
    */
   warn(message: string | string[]): void {
     this.show(this.getMessageObjects(message, MessageType.WARNING));
@@ -131,7 +124,7 @@ export default class {
    *
    * @param object
    *     A message or list of messages as text or configuration objects.
-   * @param {string} [opt_type] The type of message to override the messages with.
+   * @param opt_type The type of message to override the messages with.
    * @returns List of message objects.
    * @protected
    */
@@ -145,9 +138,7 @@ export default class {
         type: opt_type !== undefined ? opt_type : defaultType,
       });
     } else if (Array.isArray(object)) {
-      /**
-       * @type {(string | Message)[]}
-       */ object.forEach((msg) => {
+      object.forEach((msg) => {
         if (typeof object === 'string') {
           msgObjects.push({
             msg: msg as string,
