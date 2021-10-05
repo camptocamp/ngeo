@@ -87,6 +87,19 @@ module.exports = function (config) {
     },
   };
 
+  const mapExpose = {
+    test: path.resolve(__dirname, '../src/store/map.ts'),
+    use: {
+      loader: 'expose-loader',
+      options: {
+        exposes: {
+          globalName: 'gmf.map',
+          moduleLocalName: 'default',
+        },
+      },
+    },
+  };
+
   const userExpose = {
     test: path.resolve(__dirname, '../src/store/user.ts'),
     use: {
@@ -275,6 +288,7 @@ module.exports = function (config) {
       rules: [
         typeaheadRule,
         configExpose,
+        mapExpose,
         userExpose,
         cssRule,
         sassRule,
