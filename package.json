@@ -42,7 +42,7 @@
     "@sentry/tracing": "6.13.2",
     "@sentry/types": "6.13.2",
     "@trevoreyre/autocomplete-js": "2.2.0",
-    "@types/angular": "1.8.2",
+    "@types/angular": "1.8.3",
     "@types/angular-animate": "1.5.11",
     "@types/angular-dynamic-locale": "0.1.34",
     "@types/angular-gettext": "2.1.34",
