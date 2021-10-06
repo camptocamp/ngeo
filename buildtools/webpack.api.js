@@ -29,7 +29,7 @@ const babelPresetEnv = [
   '@babel/preset-env',
   {
     targets: {
-      browsers: ['> 0.5% in CH', '> 0.5% in FR', 'Firefox ESR', 'ie 11'],
+      browsers: ['> 0.5% in CH', '> 0.5% in FR', 'Firefox ESR'],
     },
     modules: false,
     loose: true,
