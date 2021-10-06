@@ -54,8 +54,8 @@ module.exports = function (config) {
       require.resolve('@babel/preset-env'),
       {
         targets: {
-          // See browser list on: https://browserl.ist/
-          browsers: ['> 0.5% in CH', '> 0.5% in FR', 'Firefox ESR', 'ie 11'],
+          // see: npx browserslist '> 0.5% in CH or > 0.5% in FR or Firefox ESR'
+          browsers: ['> 0.5% in CH', '> 0.5% in FR', 'Firefox ESR'],
         },
         modules: false,
         loose: true,
@@ -208,11 +208,6 @@ module.exports = function (config) {
         babelrc: false,
         comments: false,
         presets: babelPresets,
-        plugins: [
-          require.resolve('@babel/plugin-syntax-object-rest-spread'),
-          require.resolve('@babel/plugin-transform-spread'),
-          require.resolve('@babel/plugin-proposal-class-properties'),
-        ],
       },
     },
   };
