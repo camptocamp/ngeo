@@ -53,9 +53,9 @@ module.exports = function (config) {
     require.resolve('@babel/preset-env'),
     {
       targets: {
-        // see: npx browserslist '> 0.5% in CH or > 0.5% in FR or Firefox ESR'
-        browsers: ['> 0.7% in CH', '> 0.7% in FR', 'Firefox ESR'],
+        browsers: config.browsers || require('./webpack.share').browsers,
       },
+      loose: true,
     },
   ];
 
@@ -66,6 +66,16 @@ module.exports = function (config) {
       loader: 'expose-loader',
       options: {
         exposes: 'Bloodhound',
+      },
+    },
+  };
+
+  const jqueryRule = {
+    test: require.resolve('jquery'),
+    use: {
+      loader: 'expose-loader',
+      options: {
+        exposes: '$',
       },
     },
   };
@@ -172,18 +182,7 @@ module.exports = function (config) {
       options: {
         babelrc: false,
         comments: false,
-        presets: [
-          [
-            require.resolve('@babel/preset-env'),
-            {
-              targets: {
-                // babel-plugin-angularjs-annotate looks to don't works with classes
-                // see: npx browserslist '> 0.5% in CH or > 0.5% in FR or Firefox ESR'
-                browsers: ['> 0.7% in CH', '> 0.7% in FR', 'Firefox ESR', 'ie 11'],
-              },
-            },
-          ],
-        ],
+        presets: [babelPresetEnv],
         plugins: [require.resolve('babel-plugin-angularjs-annotate')],
       },
     },
@@ -292,7 +291,17 @@ module.exports = function (config) {
       path: path.resolve(__dirname, '../dist/'),
     },
     module: {
-      rules: [typeaheadRule, gmfapiExpose, cssRule, sassRule, htmlRule, tsRule, ngeoRule, otherRule],
+      rules: [
+        typeaheadRule,
+        jqueryRule,
+        gmfapiExpose,
+        cssRule,
+        sassRule,
+        htmlRule,
+        tsRule,
+        ngeoRule,
+        otherRule,
+      ],
     },
     plugins: plugins,
     resolve: {

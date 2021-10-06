@@ -21,6 +21,7 @@
 
 import $ from 'jquery';
 import angular from 'angular';
+import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import {setupI18n} from 'ngeo/localize/i18n';
 import config from 'gmfapi/store/config';

@@ -29,10 +29,12 @@ const babelPresetEnv = [
   '@babel/preset-env',
   {
     targets: {
-      browsers: ['> 0.7% in CH', '> 0.7% in FR', 'Firefox ESR'],
+      browsers: require('./webpack.share').browsers,
     },
     modules: false,
     loose: true,
+    useBuiltIns: 'usage',
+    corejs: 3,
   },
 ];
 
@@ -59,8 +61,6 @@ module.exports = (env, argv) => {
     output: {
       filename: 'api.js',
       path: dest,
-      libraryTarget: 'umd',
-      globalObject: 'this',
       libraryExport: 'default',
       library: library,
     },
