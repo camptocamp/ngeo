@@ -37,7 +37,7 @@
     "@babel/plugin-transform-spread": "7.14.6",
     "@babel/preset-env": "7.15.6",
     "@fortawesome/fontawesome-free": "5.15.4",
-    "@sentry/browser": "6.13.2",
+    "@sentry/browser": "6.13.3",
     "@sentry/integrations": "6.13.2",
     "@sentry/tracing": "6.13.3",
     "@sentry/types": "6.13.2",
