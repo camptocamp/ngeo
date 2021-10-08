@@ -9,5 +9,11 @@ checks:
 audit:
   npm:
     cwe_ignore:
-      - CWE-400 # Uncontrolled Resource Consumption
       - CWE-22 # Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')
+      - CWE-59 # Improper Link Resolution Before File Access ('Link Following')
+      - CWE-61 # UNIX Symbolic Link (Symlink) Following
+      - CWE-77 # Improper Neutralization of Special Elements used in a Command ('Command Injection')
+      - CWE-331 # Insufficient Entropy
+      - CWE-400 # Uncontrolled Resource Consumption
+      - CWE-532 # Insertion of Sensitive Information into Log File
+      - CWE-918 # Server-Side Request Forgery (SSRF)
