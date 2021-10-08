@@ -126,11 +126,11 @@ describe('gmf.authentication.Service', () => {
       },
     });
 
-    $httpBackend.when('POST', loginUrl).respond(401);
+    $httpBackend.when('POST', loginUrl).respond('Login fail.');
 
     gmfAuthentication.login('user', 'wrong-pwd');
     $httpBackend.flush();
-    expect(spy.calls.count()).toBe(0);
+    expect(spy.calls.count()).toBe(1);
   });
 
   it('logs out', () => {

@@ -55,7 +55,6 @@ const myModule = angular.module('gmfFilterselector', [
   gmfDatasourceDataSourceBeingFiltered.name,
   gmfDatasourceHelper.name,
   ngeoMapFeatureOverlayMgr.name,
-  ngeoMessageNotification.name,
   ngeoMessageModalComponent.name,
   ngeoFilterRuleHelper.name,
   ngeoFilterComponent.name,
@@ -122,8 +121,6 @@ export class FilterSelectorController {
    * @param {import('gmf/datasource/Helper').DatasourceHelper} gmfDataSourcesHelper Gmf data
    *     sources helper service.
    * @param {import('gmf/filters/SavedFilters').SavedFilter} gmfSavedFilters Gmf saved filters service.
-   * @param {import('ngeo/message/Notification').MessageNotification} ngeoNotification Ngeo notification
-   *    service.
    * @param {import('ngeo/map/FeatureOverlayMgr').FeatureOverlayMgr} ngeoFeatureOverlayMgr Ngeo
    *    FeatureOverlay manager
    * @param {import('ngeo/filter/RuleHelper').RuleHelper} ngeoRuleHelper Ngeo rule helper service.
@@ -138,7 +135,6 @@ export class FilterSelectorController {
     gmfDataSourceBeingFiltered,
     gmfDataSourcesHelper,
     gmfSavedFilters,
-    ngeoNotification,
     ngeoFeatureOverlayMgr,
     ngeoRuleHelper
   ) {
@@ -228,12 +224,6 @@ export class FilterSelectorController {
         },
       })
     );
-
-    /**
-     * @type {import('ngeo/message/Notification').MessageNotification}
-     * @private
-     */
-    this.ngeoNotification_ = ngeoNotification;
 
     /**
      * @type {import('ngeo/map/FeatureOverlay').FeatureOverlay}
@@ -562,7 +552,7 @@ export class FilterSelectorController {
         );
         msgs.unshift(`${p1} ${p2} ${p3}`);
         console.warn(msgs.join(' '));
-        this.ngeoNotification_.notify({
+        ngeoMessageNotification.notify({
           msg: msgs.join(' '),
           type: MessageType.WARNING,
         });

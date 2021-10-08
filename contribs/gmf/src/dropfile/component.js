@@ -22,6 +22,7 @@
 import angular from 'angular';
 import {MessageType} from 'ngeo/message/Message';
 import gmfExternalDataSourcesManager from 'gmf/datasource/ExternalDataSourcesManager';
+import ngeoMessageNotification from 'ngeo/message/Notification';
 
 /**
  * This function handles drag and drop on the element. It is used on the map
@@ -43,13 +44,12 @@ import gmfExternalDataSourcesManager from 'gmf/datasource/ExternalDataSourcesMan
  *
  * @ngInject
  * @param {import('gmf/datasource/ExternalDataSourcesManager').ExternalDatSourcesManager} gmfExternalDataSourcesManager The manager of external datasources.
- * @param {import('ngeo/message/Notification').MessageNotification} ngeoNotification Ngeo notification
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @returns {angular.IDirective} The Directive Definition Object.
  * @ngdoc directive
  * @ngname gmfFileDropZone
  */
-const fileDrop = function (gmfExternalDataSourcesManager, ngeoNotification, gettextCatalog) {
+const fileDrop = function (gmfExternalDataSourcesManager, gettextCatalog) {
   return {
     restrict: 'A',
     template: '<div class="drop-zone-off" id="drop-zone"><p>{{"Drop file here." | translate}}</p></div>',
@@ -68,10 +68,7 @@ const fileDrop = function (gmfExternalDataSourcesManager, ngeoNotification, gett
       element.bind('dragenter', processDrag_);
       element.bind('dragleave', processDrag_);
 
-      element.bind(
-        'drop',
-        processDrop_.bind(this, element, gmfExternalDataSourcesManager, ngeoNotification, gettextCatalog)
-      );
+      element.bind('drop', processDrop_.bind(this, element, gmfExternalDataSourcesManager, gettextCatalog));
     },
   };
 };
@@ -108,13 +105,12 @@ function processDrag_() {
  *
  * @param {JQuery} element Element.
  * @param {import('gmf/datasource/ExternalDataSourcesManager').ExternalDatSourcesManager} gmfExternalDataSourcesManager The manager of external datasources.
- * @param {import('ngeo/message/Notification').MessageNotification} ngeoNotification Ngeo notification
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog
  * @param {JQuery.DropEvent} event drop event.
  * @private
  * @hidden
  */
-function processDrop_(element, gmfExternalDataSourcesManager, ngeoNotification, gettextCatalog, event) {
+function processDrop_(element, gmfExternalDataSourcesManager, gettextCatalog, event) {
   if (event !== null) {
     event.preventDefault();
   }
@@ -136,10 +132,10 @@ function processDrop_(element, gmfExternalDataSourcesManager, ngeoNotification, 
         element[0].appendChild(div);
       }
       const delay = 4000;
-      ngeoNotification.notify({
+      ngeoMessageNotification.notify({
         msg: gettextCatalog.getString('This file can not be imported!'),
         type: MessageType.ERROR,
-        target: '#file-alert',
+        target: document.querySelector('#file-alert'),
         delay: delay,
       });
 

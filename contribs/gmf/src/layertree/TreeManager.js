@@ -57,8 +57,6 @@ import {listen} from 'ol/events';
  * @param {angular.auto.IInjectorService} $injector Angular injector service.
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @param {import('ngeo/map/LayerHelper').LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
- * @param {import('ngeo/message/Notification').MessageNotification} ngeoNotification
- *    Ngeo notification service.
  * @param {import('gmf/theme/Themes').ThemesService} gmfThemes gmf Themes service.
  * @param {import('ngeo/statemanager/Service').StatemanagerService} ngeoStateManager The ngeo
  *    statemanager service.
@@ -72,7 +70,6 @@ export function LayertreeTreeManager(
   $injector,
   gettextCatalog,
   ngeoLayerHelper,
-  ngeoNotification,
   gmfThemes,
   ngeoStateManager
 ) {
@@ -95,11 +92,6 @@ export function LayertreeTreeManager(
    * @type {import('ngeo/map/LayerHelper').LayerHelper}
    */
   this.layerHelper_ = ngeoLayerHelper;
-
-  /**
-   * @type {import('ngeo/message/Notification').MessageNotification}
-   */
-  this.ngeoNotification_ = ngeoNotification;
 
   /**
    * @type {import('gmf/theme/Themes').ThemesService}
@@ -518,7 +510,7 @@ LayertreeTreeManager.prototype.notifyCantAddGroups_ = function (groups) {
     names.length < 2
       ? gettextCatalog.getString('group is already loaded.')
       : gettextCatalog.getString('groups are already loaded.');
-  this.ngeoNotification_.notify({
+  ngeoMessageNotification.notify({
     msg: `${names.join(', ')} ${msg}`,
     type: MessageType.INFORMATION,
   });
@@ -713,7 +705,6 @@ LayertreeTreeManager.prototype.setNodeMetadataFromFullState_ = function (node, f
 const myModule = angular.module('gmfTreeManager', [
   gmfThemeThemes.name,
   ngeoLayertreeController.name,
-  ngeoMessageNotification.name,
   ngeoStatemanagerService.name,
 ]);
 myModule.service('gmfTreeManager', LayertreeTreeManager);
