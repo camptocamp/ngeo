@@ -168,10 +168,12 @@
           </li>
         </ul>
       </div>
-      <gmf-authentication id="login" class="gmf-mobile-nav-slide" data-header-title="{{'Login' | translate}}"
-        gmf-authentication-info-message="mainCtrl.loginInfoMessage"
-        gmf-mobile-nav-back="mainCtrl.gmfUser.username !== null">
-      </gmf-authentication>
+      <gmf-auth-component
+        id="login"
+        class="gmf-mobile-nav-slide"
+        data-header-title="{{ 'Login' | translate }}"
+        ng-prop-login_info_message="mainCtrl.loginInfoMessage"
+      ></gmf-auth-component>
     </nav>
     <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=es6,default-3.6,Array.prototype.includes,Object.entries,Object.values" crossorigin="anonymous"></script>
     <script src="../../../dist/vendor.js?${htmlWebpackPlugin.options.vars.version}" crossorigin="anonymous"></script>

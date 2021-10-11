@@ -19,26 +19,37 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import {html, TemplateResult} from 'lit';
-import {customElement, property} from 'lit/decorators.js';
+import {html, TemplateResult, unsafeCSS} from 'lit';
+import {customElement, property, state} from 'lit/decorators.js';
 import {unsafeSVG} from 'lit/directives/unsafe-svg.js';
 import loadingSvg from 'gmf/icons/spinner.svg';
 import i18next from 'i18next';
-import {LitElementI18n} from 'ngeo/localize/i18n';
-import PasswordValidator from './component';
+import GmfBaseElement from 'ngeo/BaseElement';
+import {Configuration, PasswordValidator} from 'ngeo/store/config';
 
-import './component.ts';
+import './ComponentElement.ts';
 import './auth.css';
 
-@customElement('ngeo-auth-panel')
-export default class AuthPanel extends LitElementI18n {
+@customElement('gmf-auth-panel')
+export default class AuthPanel extends GmfBaseElement {
   @property({type: String}) loginInfoMessage = '';
   @property({type: Boolean}) postLoading = false;
   @property({type: Object}) passwordValidator: PasswordValidator = null;
+  @state() private customCSS_ = '';
+
+  // override default initConfig
+  initConfig(configuration: Configuration): void {
+    if (configuration.gmfCustomCSS && configuration.gmfCustomCSS.authenticationPanel !== undefined) {
+      this.customCSS_ = configuration.gmfCustomCSS.authenticationPanel;
+    }
+  }
 
   protected render(): TemplateResult {
     const spinnerTemplate = this.postLoading
       ? html`
+          <style>
+            ${unsafeCSS(this.customCSS_)}
+          </style>
           <div>
             <i class="fa fa-spin svg-lit-element"> ${unsafeSVG(loadingSvg)} </i>
             ${i18next.t('Loading themes, please wait...')}
@@ -52,18 +63,14 @@ export default class AuthPanel extends LitElementI18n {
             ${i18next.t('Login')}
             <a class="btn close" @click=${this.closePanel.bind(this)}>&times;</a>
           </div>
-          <ngeo-auth-component
+          <gmf-auth-component
             .loginInfoMessage=${this.loginInfoMessage}
             .passwordValidator=${this.passwordValidator}
-          ></ngeo-auth-component>
+          ></gmf-auth-component>
           ${spinnerTemplate}
         </div>
       </div>
     `;
-  }
-  // Disable shadow DOM
-  protected createRenderRoot(): LitElementI18n {
-    return this;
   }
 
   closePanel(): void {

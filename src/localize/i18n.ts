@@ -23,7 +23,6 @@ import i18next from 'i18next';
 //@ts-ignore
 import locI18next from 'loc-i18next';
 import Backend from 'i18next-xhr-backend';
-import {LitElement} from 'lit';
 import LanguageDetector from 'i18next-browser-languagedetector';
 
 const detectionOptions = {
@@ -68,22 +67,4 @@ export function setupI18n(): void {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-call
     localize('[data-i18n]');
   });
-}
-
-/**
- * @param {import('lit-element').LitElement} Base
- */
-export class LitElementI18n extends LitElement {
-  i18nLanguageChangedCallback_: () => void;
-
-  connectedCallback(): void {
-    this.i18nLanguageChangedCallback_ = () => this.requestUpdate();
-    i18next.on('languageChanged', this.i18nLanguageChangedCallback_);
-    super.connectedCallback();
-  }
-
-  disconnectedCallback(): void {
-    i18next.off('languageChanged', this.i18nLanguageChangedCallback_);
-    super.disconnectedCallback();
-  }
 }

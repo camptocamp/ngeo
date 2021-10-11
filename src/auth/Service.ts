@@ -104,9 +104,11 @@ export class AuthenticationService {
 
     configuration.getConfig().subscribe({
       next: (configuration: Configuration) => {
-        this.noReloadRole_ = configuration.gmfAuthenticationNoReloadRole;
-        this.baseUrl_ = configuration.authenticationBaseUrl.replace(/\/$/, '');
-        this.load_();
+        if (configuration) {
+          this.noReloadRole_ = configuration.gmfAuthenticationNoReloadRole;
+          this.baseUrl_ = configuration.authenticationBaseUrl.replace(/\/$/, '');
+          this.load_();
+        }
       },
     });
 

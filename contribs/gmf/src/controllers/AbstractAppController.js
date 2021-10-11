@@ -24,7 +24,6 @@ import angular from 'angular';
 import 'angular-gettext';
 import 'angular-dynamic-locale';
 import bootstrap from 'gmf/controllers/bootstrap';
-import gmfAuthenticationModule from 'gmf/authentication/module';
 import gmfBackgroundlayerselectorComponent from 'gmf/backgroundlayerselector/component';
 import {gmfBackgroundlayerStatus} from 'gmf/backgroundlayerselector/status';
 import gmfDatasourceModule from 'gmf/datasource/module';
@@ -768,7 +767,6 @@ const myModule = angular.module('GmfAbstractAppControllerModule', [
   'gettext',
   'tmh.dynamicLocale',
   //'ngSentry',
-  gmfAuthenticationModule.name,
   gmfBackgroundlayerselectorComponent.name,
   gmfDatasourceModule.name,
   gmfDisclaimerComponent.name,
