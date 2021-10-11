@@ -27,7 +27,6 @@ import './controllers/calculateCssVars.spec';
 import './services/share.spec';
 import './services/themesservice.spec';
 import './services/syncLayertreeMap.spec';
-import './services/authenticationservice.spec';
 import './services/treemanager.spec';
 import './services/thememanager.spec';
 import './services/permalinkservice.spec';

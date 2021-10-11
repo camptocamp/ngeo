@@ -10,6 +10,7 @@ checks:
       - ^contribs/gmf/test/spec/data/themes\.js$
       - ^buildtools/asitvd.capabilities\.xml$
       - ^examples/measure\.js$
+      - ^src/bootstrap-custom\.css\.map$
   dependabot_config:
     update_ignore:
       - directory: /

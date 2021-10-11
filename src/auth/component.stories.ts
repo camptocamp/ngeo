@@ -22,12 +22,12 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
-import './component.ts';
+import './FormElement.ts';
 import user, {UserState, User} from 'ngeo/store/user';
 
 export default {
-  title: 'Auth component',
-  component: 'ngeo-auth-component',
+  title: 'Auth Form',
+  component: 'gmf-auth-form',
 };
 
 type Args = {
@@ -44,9 +44,20 @@ type Args = {
 const Template = (args: Args) => {
   user.setUser(args.user, UserState.READY);
   return `
-    <ngeo-auth-component
+    <style>
+    .gmf-app-tools-content-heading {
+      color: var(--color-light);
+      padding-bottom: var(--app-margin);
+      margin-bottom: var(--app-margin);
+      margin-top: calc(var(--grid-gutter-width) / 2);
+      border-bottom: 0.06rem solid;
+      border-bottom-color: var(--color-light);
+      font-size: 0.8em;
+    }
+    </style>
+    <gmf-auth-form
       loginInfoMessage="${args.loginInfoMessage}">
-    </ngeo-auth-component>`;
+    </gmf-auth-form>`;
 };
 
 const defaultProperties: Args = {

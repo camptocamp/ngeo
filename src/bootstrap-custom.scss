@@ -1,0 +1,13 @@
+// Use npm run bootstrap-custom to update the bootstrap.css file
+
+$border-radius-base: 0 !default;
+
+// Bootstrap 4 customization
+$border-radius: $border-radius-base !default;
+$border-radius-lg: $border-radius-base !default;
+$border-radius-sm: $border-radius-base !default;
+$font-size-base: 0.8rem !default;
+$input-btn-padding-y: 0.25rem !default;
+$input-btn-padding-x: 0.5rem !default;
+
+@import '../node_modules/bootstrap/scss/bootstrap.scss';

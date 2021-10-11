@@ -28,7 +28,7 @@ import OlStyleCircle, {Options as OlStyleCircleOptions} from 'ol/style/Circle';
 import OlStyleRegularShape, {Options as OlStyleRegularShapeOptions} from 'ol/style/RegularShape';
 import OlStyleFill from 'ol/style/Fill';
 import OlStyleStroke from 'ol/style/Stroke';
-import {Subject} from 'rxjs';
+import {BehaviorSubject} from 'rxjs';
 import OlControlControl from 'ol/control/Control';
 import OlInteractionInteraction from 'ol/interaction/Interaction';
 import {DefaultsOptions as OlInteractionDefaultsOptions} from 'ol/interaction';
@@ -1351,6 +1351,14 @@ export type gmfCustomStylesheetUrl = string;
 export type gmfTwoFactorAuth = boolean;
 
 /**
+ * Additional CSS for the different elements
+ */
+export type gmfCustomCSS = {
+  authentication: string;
+  authenticationPanel: string;
+};
+
+/**
  * The full configuration
  */
 export type Configuration = {
@@ -1416,6 +1424,7 @@ export type Configuration = {
   gmfCustomJavascriptUrl: gmfCustomJavascriptUrl;
   gmfCustomStylesheetUrl: gmfCustomStylesheetUrl;
   gmfTwoFactorAuth: gmfTwoFactorAuth;
+  gmfCustomCSS: gmfCustomCSS;
 };
 
 export type APIConfig = {
@@ -1438,12 +1447,12 @@ export class ConfigModel {
    *
    * @private
    */
-  configuration_: Subject<Configuration> = new Subject<Configuration>();
+  configuration_: BehaviorSubject<Configuration> = new BehaviorSubject<Configuration>(null);
 
   /**
    * @returns the configuration.
    */
-  getConfig(): Subject<Configuration> {
+  getConfig(): BehaviorSubject<Configuration> {
     return this.configuration_;
   }
 

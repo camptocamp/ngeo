@@ -20,6 +20,7 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import * as Sentry from '@sentry/browser';
+import * as $ from 'jquery';
 
 import user, {User, UserState} from 'ngeo/store/user';
 import configuration, {
@@ -104,9 +105,11 @@ export class AuthenticationService {
 
     configuration.getConfig().subscribe({
       next: (configuration: Configuration) => {
-        this.noReloadRole_ = configuration.gmfAuthenticationNoReloadRole;
-        this.baseUrl_ = configuration.authenticationBaseUrl.replace(/\/$/, '');
-        this.load_();
+        if (configuration) {
+          this.noReloadRole_ = configuration.gmfAuthenticationNoReloadRole;
+          this.baseUrl_ = configuration.authenticationBaseUrl.replace(/\/$/, '');
+          this.load_();
+        }
       },
     });
 
@@ -123,7 +126,7 @@ export class AuthenticationService {
   checkConnection_(): void {
     if (this.user_.username) {
       const url = `${this.baseUrl_}/${RouteSuffix.IS_LOGGED_IN}`;
-      const options = {method: 'GET', withCredentials: true};
+      const options: RequestInit = {method: 'GET', credentials: 'include'};
       fetch(url, options)
         .then((resp) => resp.json())
         .then((data: User) => {
@@ -150,7 +153,7 @@ export class AuthenticationService {
    */
   load_(): void {
     const url = `${this.baseUrl_}/${RouteSuffix.IS_LOGGED_IN}`;
-    const options = {method: 'GET', withCredentials: true};
+    const options: RequestInit = {method: 'GET', credentials: 'include'};
     fetch(url, options)
       .then((resp) => resp.json())
       .then((data) => this.checkUser_(data))
@@ -178,10 +181,10 @@ export class AuthenticationService {
     otp: string = undefined
   ): Promise<void> {
     const url = `${this.baseUrl_}/${RouteSuffix.CHANGE_PASSWORD}`;
-    const options = {
+    const options: RequestInit = {
       method: 'POST',
       headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-      withCredentials: true,
+      credentials: 'include',
       body: $.param({
         'login': login,
         'oldPassword': oldPwd,
@@ -214,10 +217,10 @@ export class AuthenticationService {
     if (otp) {
       Object.assign(params, {'otp': otp});
     }
-    const options = {
+    const options: RequestInit = {
       method: 'POST',
       headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-      withCredentials: true,
+      credentials: 'include',
       body: $.param(params),
     };
 
@@ -264,7 +267,7 @@ export class AuthenticationService {
   logout(): Promise<void> {
     const noReload = this.noReloadRole_ ? this.getRolesNames().includes(this.noReloadRole_) : false;
     const url = `${this.baseUrl_}/${RouteSuffix.LOGOUT}`;
-    const options = {method: 'GET', withCredentials: true};
+    const options: RequestInit = {method: 'GET', credentials: 'include'};
     return fetch(url, options).then(() => {
       this.resetUser_(UserState.LOGGED_OUT, noReload);
     });
@@ -276,9 +279,9 @@ export class AuthenticationService {
    */
   resetPassword(login: string): Promise<AuthenticationDefaultResponse> {
     const url = `${this.baseUrl_}/${RouteSuffix.RESET_PASSWORD}`;
-    const options = {
+    const options: RequestInit = {
       method: 'POST',
-      withCredentials: true,
+      credentials: 'include',
       headers: {'Content-Type': 'application/x-www-form-urlencoded'},
       body: $.param({'login': login}),
     };

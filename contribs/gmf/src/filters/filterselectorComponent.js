@@ -21,7 +21,6 @@
 
 import angular from 'angular';
 import {CollectionEvent} from 'ol/Collection';
-import gmfAuthenticationService from 'gmf/authentication/Service';
 
 import gmfDatasourceDataSourceBeingFiltered from 'gmf/datasource/DataSourceBeingFiltered';
 
@@ -44,14 +43,13 @@ import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr';
 
 import 'bootstrap/js/src/dropdown';
 
-import user from 'ngeo/store/user.ts';
+import user from 'ngeo/store/user';
 
 /**
  * @type {angular.IModule}
  * @hidden
  */
 const myModule = angular.module('gmfFilterselector', [
-  gmfAuthenticationService.name,
   gmfDatasourceDataSourceBeingFiltered.name,
   gmfDatasourceHelper.name,
   ngeoMapFeatureOverlayMgr.name,
@@ -205,7 +203,7 @@ export class FilterSelectorController {
     );
 
     /**
-     * @type {import('gmf/authentication/Service').User}
+     * @type {import('ngeo/store/user').User}
      * @private
      */
     this.gmfUser_ = null;

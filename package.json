@@ -27,7 +27,8 @@
     "chromatic": "chromatic --exit-zero-on-changes",
     "cs-tots": "jscodeshift --transform=buildtools/codeshift-js2ts.js --extensions=ts --parser=ts",
     "cs-rmjs": "jscodeshift --transform=buildtools/codeshift-removejs.js --extensions=ts --parser=ts",
-    "i18next-parse": "i18next --config buildtools/i18next-parser.config.js"
+    "i18next-parse": "i18next --config buildtools/i18next-parser.config.js",
+    "bootstrap-custom": "sass src/bootstrap-custom.scss src/bootstrap-custom.css"
   },
   "sideEffects": false,
   "repository": {
@@ -149,7 +150,7 @@
     "karma-sinon": "1.0.5",
     "karma-sourcemap-loader": "0.3.8",
     "karma-webpack": "4.0.2",
-    "lit": "2.0.0-rc.3",
+    "lit": "2.0.2",
     "loader-utils": "2.0.0",
     "loc-i18next": "0.1.4",
     "localforage": "1.10.0",
@@ -170,6 +171,7 @@
     "react-dom": "16.14.0",
     "resize-observer-polyfill": "1.5.1",
     "rxjs": "7.3.0",
+    "sass": "1.43.2",
     "simple-html-tokenizer": "0.5.11",
     "sinon": "11.1.2",
     "start-server-and-test": "1.14.0",

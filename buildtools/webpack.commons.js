@@ -220,9 +220,21 @@ module.exports = function (config) {
       // tempfile: '/tmp/t.scss',
       blacklistedChunks: ['commons'],
       filesOrder: (chunk, chunksFiles) => {
-        const files = chunksFiles.commons
+        let files = chunksFiles.commons
           ? chunksFiles[chunk.name].concat(chunksFiles.commons)
           : chunksFiles[chunk.name];
+        files = files.filter((file) => {
+          if (file.endsWith('node_modules/@fortawesome/fontawesome-free/css/all.min.css')) {
+            return false;
+          }
+          if (file.endsWith('src/bootstrap-custom.css')) {
+            return false;
+          }
+          if (file.endsWith('contribs/gmf/src/css/reset.css')) {
+            return false;
+          }
+          return true;
+        });
         files.sort(
           get_comp(
             config.fist_scss || [

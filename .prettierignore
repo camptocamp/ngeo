@@ -1,1 +1,3 @@
 *.min.js
+contribs/gmf/apps/*/index.html.ejs
+src/bootstrap-custom.css

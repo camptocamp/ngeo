@@ -20,7 +20,6 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import gmfAuthenticationModule from 'gmf/authentication/module';
 import gmfBackgroundlayerselectorModule from 'gmf/backgroundlayerselector/module';
 import gmfContextualdataModule from 'gmf/contextualdata/module';
 import gmfDatasourceModule from 'gmf/datasource/module';
@@ -43,7 +42,6 @@ import gmfThemeModule from 'gmf/theme/module';
 import ngeoMainmodule from 'ngeo/mainmodule';
 
 export default angular.module('gmf', [
-  gmfAuthenticationModule.name,
   gmfBackgroundlayerselectorModule.name,
   gmfContextualdataModule.name,
   gmfDatasourceModule.name,
