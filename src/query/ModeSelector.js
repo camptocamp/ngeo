@@ -210,30 +210,42 @@ export class QueryModeSelector {
     }
 
     const key = evt.key;
-    if (this.keysAction_.includes(key) && !this.previousAction_) {
-      // An 'action' key was pressed and none were already previously
-      // pressed. In other words, only the first 'action key' is handled.
-      this.previousAction_ = this.action;
-      let newAction;
-      switch (key) {
-        case this.keyActionAdd_:
-          newAction = ngeoQueryAction.ADD;
-          break;
-        case this.keyActionRemove_:
-          newAction = ngeoQueryAction.REMOVE;
-          break;
-        default:
-          break;
+    let updateScope = false;
+
+    if (this.previousMode_) {
+      // TODO
+      if (isEventUsinCtrlKey(evt) && !this.keysAction_.includes(key)) {
+        updateScope = this.reset_();
       }
-      if (newAction) {
-        this.action = newAction;
-        this.activeActionKey_ = key;
-        this.rootScope_.$apply();
+    } else {
+      if (this.keysAction_.includes(key)) {
+        // An 'action' key was pressed and none were already previously
+        // pressed. In other words, only the first 'action key' is handled.
+        this.previousAction_ = this.action;
+        let newAction;
+        switch (key) {
+          case this.keyActionAdd_:
+            newAction = ngeoQueryAction.ADD;
+            break;
+          case this.keyActionRemove_:
+            newAction = ngeoQueryAction.REMOVE;
+            break;
+          default:
+            break;
+        }
+        if (newAction) {
+          this.action = newAction;
+          this.activeActionKey_ = key;
+          updateScope = true;
+        }
+      } else if (isEventUsinCtrlKey(evt)) {
+        // The 'ctrl' (or 'meta' key) on mac was pressed
+        this.previousMode_ = this.mode;
+        this.mode = ngeoQueryMode.DRAW_BOX;
+        updateScope = true;
       }
-    } else if (isEventUsinCtrlKey(evt) && !this.previousMode_) {
-      // The 'ctrl' (or 'meta' key) on mac was pressed
-      this.previousMode_ = this.mode;
-      this.mode = ngeoQueryMode.DRAW_BOX;
+    }
+    if (updateScope) {
       this.rootScope_.$apply();
     }
   }
@@ -252,13 +264,7 @@ export class QueryModeSelector {
     // On any 'keyup', if it comes from a 'ctrl' (or 'meta' on mac) release and
     // there is a previous mode set, then set it as new active mode.
     if (isEventUsinCtrlKey(evt) && this.previousMode_) {
-      if (this.pending) {
-        this.wasPending_ = true;
-      } else {
-        this.mode = this.previousMode_;
-        this.previousMode_ = null;
-        updateScope = true;
-      }
+      updateScope = this.reset_();
     }
 
     // If the active action key was released, then restore the
@@ -274,6 +280,21 @@ export class QueryModeSelector {
     if (updateScope) {
       this.rootScope_.$apply();
     }
+  }
+
+  /**
+   * Reset the mode to the default one.
+   * @return {boolean} true if the scope should be updated.
+   * @private
+   */
+  reset_() {
+    if (this.pending) {
+      this.wasPending_ = true;
+      return false;
+    }
+    this.mode = this.previousMode_;
+    this.previousMode_ = null;
+    return true;
   }
 }
 
