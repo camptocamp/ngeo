@@ -24,18 +24,8 @@ import * as Sentry from '@sentry/browser';
 import user, {User, UserState} from 'ngeo/store/user';
 import configuration, {
   Configuration,
-  gmfAuthenticationConfig as gmfOptionsGmfAuthenticationConfig,
   gmfAuthenticationNoReloadRole as gmfOptionsGmfAuthenticationNoReloadRole,
 } from 'ngeo/store/config';
-
-type AuthenticationLoginResponse = {
-  functionalities?: any;
-  is_password_changed?: boolean;
-  roles?: any[];
-  username?: string;
-  otp_key?: string;
-  otp_uri?: string;
-};
 
 type AuthenticationDefaultResponse = {
   success: boolean;
@@ -114,7 +104,6 @@ export class AuthenticationService {
 
     configuration.getConfig().subscribe({
       next: (configuration: Configuration) => {
-        const config: gmfOptionsGmfAuthenticationConfig = configuration.gmfAuthenticationConfig;
         this.noReloadRole_ = configuration.gmfAuthenticationNoReloadRole;
         this.baseUrl_ = configuration.authenticationBaseUrl.replace(/\/$/, '');
         this.load_();
@@ -154,7 +143,7 @@ export class AuthenticationService {
   }
 
   /**
-   * Load the authentication service, which sends an asynch request to
+   * Load the authentication service, which sends an async request to
    * determine whether the user is currently connected or not.
    *
    * @private
@@ -167,7 +156,7 @@ export class AuthenticationService {
       .then((data) => this.checkUser_(data))
       .then(
         (data) => this.handleLogin_(true, data),
-        (data) => {
+        () => {
           throw 'Login fail.';
         }
       );
@@ -207,7 +196,7 @@ export class AuthenticationService {
       .then((data) => this.checkUser_(data))
       .then(
         (data) => this.setUser_(data, UserState.LOGGED_IN),
-        (data) => {
+        () => {
           throw 'Change password fail.';
         }
       );
@@ -238,7 +227,7 @@ export class AuthenticationService {
       .then((data) => this.onSuccessfulLogin(data))
       .then(
         (data) => this.handleLogin_(false, data),
-        (data) => {
+        () => {
           throw 'Login fail.';
         }
       );

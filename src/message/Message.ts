@@ -67,6 +67,7 @@ export default class {
    * @param message Message.
    * @protected
    */
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   showMessage(message: Message): void {}
 
   /**
