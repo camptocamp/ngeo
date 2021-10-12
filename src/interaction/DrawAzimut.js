@@ -26,6 +26,7 @@ import {listen} from 'ol/events';
 import {FALSE} from 'ol/functions';
 import olGeomCircle from 'ol/geom/Circle';
 import olGeomGeometryCollection from 'ol/geom/GeometryCollection';
+import olGeomGeometryType from 'ol/geom/GeometryType.js';
 import olGeomLineString from 'ol/geom/LineString';
 import olGeomPoint from 'ol/geom/Point';
 import olInteractionPointer from 'ol/interaction/Draw';
@@ -44,14 +45,13 @@ import VectorSource from 'ol/source/Vector';
  * @private
  * @hidden
  */
-// @ts-ignore: error «error TS2415: Class 'DrawAzimut' incorrectly extends base class 'Draw'.» is unclear...
 class DrawAzimut extends olInteractionPointer {
   /**
    * @param {Options} options Options.
    */
   constructor(options) {
     super({
-      type: '',
+      type: olGeomGeometryType.CIRCLE,
     });
 
     this.shouldStopEvent = FALSE;
