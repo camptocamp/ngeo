@@ -56,7 +56,7 @@ jobs:
         if: >
           github.ref == format('refs/heads/{0}', env.MAIN_BRANCH)
       - run: make examples-hosted
-      - run: buildtools/test_examples.py 1/1
+      #- run: buildtools/test_examples.py 1/1
       # - run: npm run typecheck
       # Generate API doc
       - run: npm install --prefix openlayers_src https://api.github.com/repos/openlayers/openlayers/tarball/v5.3.1
