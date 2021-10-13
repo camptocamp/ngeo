@@ -64,6 +64,8 @@ jobs:
       # Lint
       - run: npx tsc --version
       - run: npm run typecheck
+      # First do the lint on TypeScript files to see the error in the many warnings messages
+      - run: make .build/eslint-ts.timestamp
       - run: make lint
       - run: make test
       - run: make check-examples-checker
