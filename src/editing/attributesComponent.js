@@ -200,7 +200,7 @@ Controller.prototype.sanitize_ = function() {
           jsonFormat = 'H:i:s';
         } else if (attribute.type === 'datetime') {
           // Time zone correction
-          formattedValue.setMinutes(value.getMinutes() + formattedValue.getTimezoneOffset());
+          formattedValue.setMinutes(formattedValue.getMinutes() + formattedValue.getTimezoneOffset());
         }
         this.properties[attribute.name] = dateFormatter.formatDate(formattedValue, jsonFormat);
       } else {
@@ -210,7 +210,6 @@ Controller.prototype.sanitize_ = function() {
     }
   });
 };
-
 
 /**
  * Cleanup event listeners.
