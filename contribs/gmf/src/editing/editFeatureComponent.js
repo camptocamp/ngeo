@@ -679,30 +679,6 @@ Controller.prototype.save = function() {
 
   this.pending = true;
 
-  const dateFormatter = new DateFormatter();
-  for (const attribute of this.attributes) {
-    if (attribute.format) {
-      if (this.feature.get(attribute.name)) {
-        const name = this.feature.get(attribute.name);
-        console.assert(typeof name == 'string');
-        const value = dateFormatter.parseDate(name, attribute.format);
-        let jsonFormat = 'Y-m-d\\TH:i:s';
-        if (attribute.type === 'date') {
-          jsonFormat = 'Y-m-d';
-        } else if (attribute.type === 'time') {
-          jsonFormat = 'H:i:s';
-        } else if (attribute.type === 'datetime') {
-          // Time zone correction
-          value.setMinutes(value.getMinutes() + value.getTimezoneOffset());
-        }
-        feature.set(attribute.name, dateFormatter.formatDate(value, jsonFormat));
-      } else {
-        // Shouldn't be set to an empty string
-        feature.set(attribute.name, null);
-      }
-    }
-  }
-
   const promise = id ?
     this.gmfEditFeature_.updateFeature(
       this.editableNode_.id,
