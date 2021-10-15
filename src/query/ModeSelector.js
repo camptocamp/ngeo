@@ -141,6 +141,7 @@ export class QueryModeSelector {
     // Event listeners
     olEventsListen(document, 'keydown', this.handleKeyDown_, this);
     olEventsListen(document, 'keyup', this.handleKeyUp_, this);
+    setInterval(this.checkPageFocus_.bind(this), 200);
   }
 
   /**
@@ -213,7 +214,8 @@ export class QueryModeSelector {
     let updateScope = false;
 
     if (this.previousMode_) {
-      // TODO
+      // If the ctrl key is pressed with another key (but not an action key), reset to
+      // the default mode. (For instance to avoid to keep a previous mode after a ctrl+p.)
       if (isEventUsinCtrlKey(evt) && !this.keysAction_.includes(key)) {
         updateScope = this.reset_();
       }
@@ -279,6 +281,19 @@ export class QueryModeSelector {
 
     if (updateScope) {
       this.rootScope_.$apply();
+    }
+  }
+
+  /**
+   * Check the focus on the page determined by the browser.
+   * If the page is not anymore focus then reset the mode.
+   * @private
+   */
+  checkPageFocus_() {
+    if (!document.hasFocus() && this.previousMode_) {
+      if (this.reset_()) {
+        this.rootScope_.$apply();
+      }
     }
   }
 
