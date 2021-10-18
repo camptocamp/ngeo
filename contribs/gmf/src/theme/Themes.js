@@ -126,190 +126,19 @@ export class ThemesService extends olEventsEventTarget {
    * @returns {angular.IPromise<import('ol/layer/Base').default[]>} Promise.
    */
   getBgLayers() {
-    const gettextCatalog = this.gettextCatalog;
     if (this.bgLayerPromise_) {
       return this.bgLayerPromise_;
     }
-    const $q = this.$q_;
-    const layerHelper = this.layerHelper_;
-
-    /**
-     * @param {import('gmf/themes').GmfGroup|import('gmf/themes').GmfLayer} item A group or a leaf.
-     * @param {string[]} array Array of ids;
-     */
-    const getIds = function (item, array) {
-      array.push(olUtilGetUid(item));
-      const groupItem = /** @type {import('gmf/themes').GmfGroup} */ (item);
-      const children = groupItem.children || [];
-      children.forEach((child) => {
-        getIds(child, array);
-      });
-    };
-
-    /**
-     * @param {import('gmf/themes').GmfGroup|import('gmf/themes').GmfLayer} item The item.
-     * @param {import('ol/layer/Base').default} layer The layer.
-     * @returns {import('ol/layer/Base').default} the provided layer.
-     */
-    const callback = function (item, layer) {
-      layer.set('label', item.name);
-      layer.set('metadata', item.metadata);
-      layer.set('dimensions', item.dimensions);
-      /** @type {string[]} */
-      const ids = [];
-      getIds(item, ids);
-      layer.set('querySourceIds', ids);
-      layer.set(DATASOURCE_ID, item.id);
-      return layer;
-    };
-
-    /**
-     * @param {import('gmf/themes').GmfOgcServers} ogcServers The ogc servers.
-     * @param {import('gmf/themes').GmfLayer} gmfLayer The item.
-     * @returns {angular.IPromise<import('ol/layer/Base').default>|import('ol/layer/Base').default}
-     *    The created layer.
-     */
-    const layerLayerCreationFn = function (ogcServers, gmfLayer) {
-      if (gmfLayer.type === 'WMTS') {
-        const gmfLayerWMTS = /** @type {import('gmf/themes').GmfLayerWMTS} */ (/** @type {any} */ (gmfLayer));
-        if (!gmfLayerWMTS.url) {
-          throw 'Layer URL is required';
-        }
-        const minResolution = getNodeMinResolution(gmfLayerWMTS);
-        const maxResolution = getNodeMaxResolution(gmfLayerWMTS);
-        const layer = layerHelper
-          .createWMTSLayerFromCapabilitites(
-            gmfLayerWMTS.url,
-            gmfLayerWMTS.layer || '',
-            gmfLayerWMTS.matrixSet,
-            gmfLayer.dimensions,
-            gmfLayerWMTS.metadata.customOpenLayersOptions,
-            minResolution,
-            maxResolution,
-            gmfLayerWMTS.metadata.opacity
-          )
-          .then(callback.bind(null, gmfLayer))
-          .then(null, (response) => {
-            let message =
-              `Unable to build layer "${gmfLayerWMTS.layer}" ` +
-              `from WMTSCapabilities: ${gmfLayerWMTS.url}\n`;
-            message += `OpenLayers error is "${response.message}`;
-            console.error(message);
-            // Continue even if some layers have failed loading.
-            return $q.resolve(undefined);
-          });
-        return /** @type {angular.IPromise<import('ol/layer/Base').default>} */ layer;
-      } else if (gmfLayer.type === 'WMS') {
-        const gmfLayerWMS = /** @type {import('gmf/themes').GmfLayerWMS} */ (/** @type {any} */ (gmfLayer));
-        if (!gmfLayerWMS.ogcServer) {
-          throw new Error('Missing gmfLayerWMS.ogcServer');
-        }
-        const server = ogcServers[gmfLayerWMS.ogcServer];
-        if (!server) {
-          throw new Error('Missing server');
-        }
-        if (!server.url) {
-          throw new Error('Missing server.url');
-        }
-        if (!server.imageType) {
-          throw new Error('Missing server.imageType');
-        }
-
-        // Manage WMS styles
-        /** @type {Object<string, string>} */
-        const opt_params = {STYLES: gmfLayerWMS.style};
-        if (gmfLayer.dimensions) {
-          for (const [key, value] of Object.entries(gmfLayer.dimensions)) {
-            if (value !== null) {
-              opt_params[key] = value;
-            }
-          }
-        }
-
-        return callback(
-          gmfLayer,
-          layerHelper.createBasicWMSLayer(
-            server.url,
-            gmfLayerWMS.layers || '',
-            server.imageType,
-            server.type,
-            undefined, // time
-            opt_params,
-            server.credential ? 'use-credentials' : 'anonymous',
-            gmfLayerWMS.metadata.customOpenLayersOptions
-          )
-        );
-      }
-      throw `Unsupported type: ${gmfLayer.type}`;
-    };
-
-    /**
-     * @param {import('gmf/themes').GmfOgcServers} ogcServers The ogc servers.
-     * @param {import('gmf/themes').GmfGroup} item The item.
-     * @returns {angular.IPromise<import('ol/layer/Base').default>} the created layer.
-     */
-    const layerGroupCreationFn = (ogcServers, item) => {
-      // We assume no child is a layer group.
-      // The order of insertion in OL3 is the contrary of the theme
-      const orderedChildren = item.children.map((x) => x).reverse();
-      const promises = orderedChildren.map((item) =>
-        layerLayerCreationFn(ogcServers, /** @type {import('gmf/themes').GmfLayer} */ (item))
-      );
-      return $q.all(promises).then((layers) => {
-        let collection;
-        if (layers) {
-          layers = layers.filter((l) => l);
-          collection = new olCollection(layers);
-        }
-        const group = layerHelper.createBasicGroup(collection);
-        callback(item, group);
-        return group;
-      });
-    };
-
-    /**
-     * @param {import('gmf/themes').GmfThemesResponse} data The "themes" web service
-     *     response.
-     * @returns {angular.IPromise<import('ol/layer/Base').default[]>} Promise.
-     */
-    const promiseSuccessFn = (data) => {
-      const promises = /** @type {angular.IPromise<unknown>} */ (
-        /** @type {*} */ (
-          data.background_layers.map((item) => {
-            const itemLayer = /** @type {import('gmf/themes').GmfLayer} */ (item);
-            const itemGroup = /** @type {import('gmf/themes').GmfGroup} */ (item);
-            const itemType = itemLayer.type;
-            if (itemType === 'WMTS' || itemType === 'WMS') {
-              return layerLayerCreationFn(data.ogcServers, itemLayer);
-            } else if (itemGroup.children) {
-              // group of layers
-              return layerGroupCreationFn(data.ogcServers, itemGroup);
-            } else {
-              return undefined;
-            }
-          })
-        )
-      );
-      return /** @type {angular.IPromise<import('ol/layer/Base').default[]>} */ /** @type {*} */ $q.all(
-        promises
-      );
-    };
 
     this.bgLayerPromise_ = /** @type {angular.IPromise<import('ol/layer/Base').default[]>} */ (
-      this.promise_.then(promiseSuccessFn).then((values) => {
+      this.promise_.then(this.bgLayerPromiseSuccessFn_.bind(this)).then((values) => {
         /** @type {import('ol/layer/Base').default[]} */
         const layers = [];
 
         // (1) add a blank layer
         if (this.addBlankBackgroundLayer_) {
-          // For i18n string collection
-          gettextCatalog.getString('blank');
-          const layer = new VectorLayer({
-            source: new VectorSource(),
-          });
-          layer.set('label', 'blank');
-          layer.set('metadata', {thumbnail: ''});
-          layers.push(layer);
+          const blankLayer = this.getBgBlankLayer_();
+          layers.push(blankLayer);
         }
 
         // (2) add layers that were returned
@@ -323,6 +152,212 @@ export class ThemesService extends olEventsEventTarget {
     );
 
     return this.bgLayerPromise_;
+  }
+
+  /**
+   * @param {import('gmf/themes').GmfGroup|import('gmf/themes').GmfLayer} item A group or a leaf.
+   * @param {string[]} array Array of ids;
+   */
+  getLayerGroupIds_(item, array) {
+    array.push(olUtilGetUid(item));
+    const groupItem = /** @type {import('gmf/themes').GmfGroup} */ (item);
+    const children = groupItem.children || [];
+    children.forEach((child) => {
+      this.getLayerGroupIds_(child, array);
+    });
+  }
+
+  /**
+   * @param {import('gmf/themes').GmfGroup|import('gmf/themes').GmfLayer} item The item.
+   * @param {import('ol/layer/Base').default} layer The layer.
+   * @returns {import('ol/layer/Base').default} the provided layer.
+   */
+  setLayerProperties_(item, layer) {
+    layer.set('label', item.name);
+    layer.set('metadata', item.metadata);
+    layer.set('dimensions', item.dimensions);
+    /** @type {string[]} */
+    const ids = [];
+    this.getLayerGroupIds_(item, ids);
+    layer.set('querySourceIds', ids);
+    layer.set(DATASOURCE_ID, item.id);
+    return layer;
+  }
+
+  /**
+   * @param {import('gmf/themes').GmfOgcServers} ogcServers The ogc servers.
+   * @param {import('gmf/themes').GmfLayer} gmfLayer The item.
+   * @returns {angular.IPromise<import('ol/layer/Base').default>|import('ol/layer/Base').default}
+   *    The created layer.
+   */
+  layerLayerCreationFn_(ogcServers, gmfLayer) {
+    if (gmfLayer.type === 'WMTS') {
+      const gmfLayerWMTS = /** @type {import('gmf/themes').GmfLayerWMTS} */ (/** @type {any} */ (gmfLayer));
+      return this.layerLayerWMTSCreationFn_(gmfLayerWMTS);
+    }
+    if (gmfLayer.type === 'WMS') {
+      const gmfLayerWMS = /** @type {import('gmf/themes').GmfLayerWMS} */ (/** @type {any} */ (gmfLayer));
+      return this.layerLayerWMSCreationFn_(ogcServers, gmfLayerWMS);
+    }
+    if (gmfLayer.type === 'VectorTiles') {
+      return this.layerLayerVectorTilesCreationFn_();
+    }
+    throw `Unsupported type: ${gmfLayer.type}`;
+  }
+
+  /**
+   * @param {import('gmf/themes').GmfLayerWMTS} gmfLayerWMTS
+   * @return {angular.IPromise<import('ol/layer/Base').default>} the new layer.
+   */
+  layerLayerWMTSCreationFn_(gmfLayerWMTS) {
+    if (!gmfLayerWMTS.url) {
+      throw 'Layer URL is required';
+    }
+    const minResolution = getNodeMinResolution(gmfLayerWMTS);
+    const maxResolution = getNodeMaxResolution(gmfLayerWMTS);
+    const layer = this.layerHelper_
+      .createWMTSLayerFromCapabilitites(
+        gmfLayerWMTS.url,
+        gmfLayerWMTS.layer || '',
+        gmfLayerWMTS.matrixSet,
+        gmfLayerWMTS.layer.dimensions,
+        gmfLayerWMTS.metadata.customOpenLayersOptions,
+        minResolution,
+        maxResolution,
+        gmfLayerWMTS.metadata.opacity
+      )
+      .then(this.setLayerProperties_.bind(this, gmfLayerWMTS))
+      .then(null, (response) => {
+        let message =
+          `Unable to build layer "${gmfLayerWMTS.layer}" ` +
+          `from WMTSCapabilities: ${gmfLayerWMTS.url}\n`;
+        message += `OpenLayers error is "${response.message}`;
+        console.error(message);
+        // Continue even if some layers have failed loading.
+        return this.$q_.resolve(undefined);
+      });
+    return /** @type {angular.IPromise<import('ol/layer/Base').default>} */ layer;
+  }
+
+  /**
+   * @param {import('gmf/themes').GmfOgcServers} ogcServers The ogc servers.
+   * @param {import('gmf/themes').GmfLayerWMS} gmfLayerWMS
+   * @return {angular.IPromise<import('ol/layer/Base').default>} the new layer.
+   */
+  layerLayerWMSCreationFn_(ogcServers, gmfLayerWMS) {
+    if (!gmfLayerWMS.ogcServer) {
+      throw new Error('Missing gmfLayerWMS.ogcServer');
+    }
+    const server = ogcServers[gmfLayerWMS.ogcServer];
+    if (!server) {
+      throw new Error('Missing server');
+    }
+    if (!server.url) {
+      throw new Error('Missing server.url');
+    }
+    if (!server.imageType) {
+      throw new Error('Missing server.imageType');
+    }
+
+    // Manage WMS styles
+    /** @type {Object<string, string>} */
+    const opt_params = {STYLES: gmfLayerWMS.style};
+    if (gmfLayerWMS.dimensions) {
+      for (const [key, value] of Object.entries(gmfLayerWMS.dimensions)) {
+        if (value !== null) {
+          opt_params[key] = value;
+        }
+      }
+    }
+
+    return this.setLayerProperties_(
+      gmfLayerWMS,
+      this.layerHelper_.createBasicWMSLayer(
+        server.url,
+        gmfLayerWMS.layers || '',
+        server.imageType,
+        server.type,
+        undefined, // time
+        opt_params,
+        server.credential ? 'use-credentials' : 'anonymous',
+        gmfLayerWMS.metadata.customOpenLayersOptions
+      )
+    );
+  }
+
+  /**
+   *
+   */
+  layerLayerVectorTilesCreationFn_() {
+    console.log('TODO');
+  }
+
+
+
+  /**
+   * @param {import('gmf/themes').GmfOgcServers} ogcServers The ogc servers.
+   * @param {import('gmf/themes').GmfGroup} item The item.
+   * @returns {angular.IPromise<import('ol/layer/Base').default>} the created layer.
+   */
+  layerGroupCreationFn_(ogcServers, item) {
+    // We assume no child is a layer group.
+    // The order of insertion in OL3 is the contrary of the theme
+    const orderedChildren = item.children.map((x) => x).reverse();
+    const promises = orderedChildren.map((item) =>
+      this.layerLayerCreationFn_(ogcServers, /** @type {import('gmf/themes').GmfLayer} */ (item))
+    );
+    return this.$q_.all(promises).then((layers) => {
+      let collection;
+      if (layers) {
+        layers = layers.filter((l) => l);
+        collection = new olCollection(layers);
+      }
+      const group = this.layerHelper_.createBasicGroup(collection);
+      this.setLayerProperties_(item, group);
+      return group;
+    });
+  }
+
+  /**
+   * @param {import('gmf/themes').GmfThemesResponse} data The "themes" web service
+   *     response.
+   * @returns {angular.IPromise<import('ol/layer/Base').default[]>} Promise.
+   */
+  bgLayerPromiseSuccessFn_(data) {
+    const promises = /** @type {angular.IPromise<unknown>} */ (
+      /** @type {*} */ (
+        data.background_layers.map((item) => {
+          const itemLayer = /** @type {import('gmf/themes').GmfLayer} */ (item);
+          const itemGroup = /** @type {import('gmf/themes').GmfGroup} */ (item);
+          if (['WMS', 'WMTS', 'VectorTiles'].includes(itemLayer.type)) {
+            return this.layerLayerCreationFn_(data.ogcServers, itemLayer);
+          } else if (itemGroup.children) {
+            // group of layers
+            return this.layerGroupCreationFn_(data.ogcServers, itemGroup);
+          } else {
+            return undefined;
+          }
+        })
+      )
+    );
+    return /** @type {angular.IPromise<import('ol/layer/Base').default[]>} */ /** @type {*} */ this.$q_.all(
+      promises
+    );
+  }
+
+  /**
+   * @return {import('ol/layer/VectorLayer').default>}} a blank vector layer.
+   */
+  getBgBlankLayer_() {
+    // For i18n string collection
+    const gettextCatalog = this.gettextCatalog;
+    gettextCatalog.getString('blank');
+    const layer = new VectorLayer({
+      source: new VectorSource(),
+    });
+    layer.set('label', 'blank');
+    layer.set('metadata', {thumbnail: ''});
+    return layer;
   }
 
   /**
