@@ -27,6 +27,7 @@ import olCollection from 'ol/Collection';
 import olEventsEventTarget from 'ol/events/Target';
 import VectorLayer from 'ol/layer/Vector';
 import VectorSource from 'ol/source/Vector';
+import olTileGridTileGrid from 'ol/tilegrid/TileGrid.js';
 
 /**
  * The Themes service. This service interacts
@@ -44,9 +45,21 @@ export class ThemesService extends olEventsEventTarget {
    * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
    * @param {import('gmf/options').gmfThemesOptions} gmfThemesOptions Themes options.
    * @param {string} gmfTreeUrl The tree URL.
+   * @param {string} gmfVectorTilesUrl The Vector Tiles URL.
+   * @param {import('gmf/options').gmfVectorTilesOptions} gmfVectorTilesOptions the VectorTiles options.
    * @ngInject
    */
-  constructor($http, $injector, $q, ngeoLayerHelper, gettextCatalog, gmfThemesOptions, gmfTreeUrl) {
+  constructor(
+    $http,
+    $injector,
+    $q,
+    ngeoLayerHelper,
+    gettextCatalog,
+    gmfThemesOptions,
+    gmfTreeUrl,
+    gmfVectorTilesUrl,
+    gmfVectorTilesOptions,
+  ) {
     super();
 
     /**
@@ -75,6 +88,19 @@ export class ThemesService extends olEventsEventTarget {
      * @private
      */
     this.treeUrl_ = gmfTreeUrl;
+
+    /**
+     * @type {string}
+     * @private
+     */
+    this.gmfVectorTilesUrl_ = gmfVectorTilesUrl;
+
+    /**
+     * @type {import('gmf/options').gmfVectorTilesOptions}
+     * @private
+     */
+    this.gmfVectorTilesOptions_ = gmfVectorTilesOptions
+
     /**
      * @type {?import('ngeo/statemanager/Location').StatemanagerLocation}
      * @private
@@ -200,14 +226,17 @@ export class ThemesService extends olEventsEventTarget {
       return this.layerLayerWMSCreationFn_(ogcServers, gmfLayerWMS);
     }
     if (gmfLayer.type === 'VectorTiles') {
-      return this.layerLayerVectorTilesCreationFn_();
+      const gmfLayerVectorTiles = /** @type {import('gmf/themes').GmfLayerVectorTiles} */ (
+        /** @type {any} */ (gmfLayer)
+      );
+      return this.layerLayerVectorTilesCreationFn_(gmfLayerVectorTiles);
     }
     throw `Unsupported type: ${gmfLayer.type}`;
   }
 
   /**
    * @param {import('gmf/themes').GmfLayerWMTS} gmfLayerWMTS
-   * @return {angular.IPromise<import('ol/layer/Base').default>} the new layer.
+   * @returns {angular.IPromise<import('ol/layer/Base').default>} the new layer.
    */
   layerLayerWMTSCreationFn_(gmfLayerWMTS) {
     if (!gmfLayerWMTS.url) {
@@ -229,8 +258,7 @@ export class ThemesService extends olEventsEventTarget {
       .then(this.setLayerProperties_.bind(this, gmfLayerWMTS))
       .then(null, (response) => {
         let message =
-          `Unable to build layer "${gmfLayerWMTS.layer}" ` +
-          `from WMTSCapabilities: ${gmfLayerWMTS.url}\n`;
+          `Unable to build layer "${gmfLayerWMTS.layer}" ` + `from WMTSCapabilities: ${gmfLayerWMTS.url}\n`;
         message += `OpenLayers error is "${response.message}`;
         console.error(message);
         // Continue even if some layers have failed loading.
@@ -242,7 +270,7 @@ export class ThemesService extends olEventsEventTarget {
   /**
    * @param {import('gmf/themes').GmfOgcServers} ogcServers The ogc servers.
    * @param {import('gmf/themes').GmfLayerWMS} gmfLayerWMS
-   * @return {angular.IPromise<import('ol/layer/Base').default>} the new layer.
+   * @returns {angular.IPromise<import('ol/layer/Base').default>} the new layer.
    */
   layerLayerWMSCreationFn_(ogcServers, gmfLayerWMS) {
     if (!gmfLayerWMS.ogcServer) {
@@ -286,13 +314,37 @@ export class ThemesService extends olEventsEventTarget {
   }
 
   /**
-   *
+   * @param {import('gmf/themes').GmfLayerVectorTiles} gmfLayerVectorTiles
+   * @returns {angular.IPromise<import('ol/layer/Base').default>} the new VectorTiles layer.
    */
-  layerLayerVectorTilesCreationFn_() {
-    console.log('TODO');
+  layerLayerVectorTilesCreationFn_(gmfLayerVectorTiles) {
+    const deferred = this.$q_.defer();
+    const promise = deferred.promise;
+    const layername = gmfLayerVectorTiles.name;
+    const minResolution = getNodeMinResolution(gmfLayerVectorTiles);
+    const maxResolution = getNodeMaxResolution(gmfLayerVectorTiles);
+    this.$http_.get(gmfLayerVectorTiles.style).then(
+      (response) => {
+        const url = `${this.gmfVectorTilesUrl_}/${layername}/{z}/{x}/{y}.pbf`;
+        const tileGrid = new olTileGridTileGrid(this.gmfVectorTilesOptions_.tileGrid);
+        const layer = this.layerHelper_.createBasicVectorTilesLayer(
+          url,
+          response.data,
+          layername,
+          this.gmfVectorTilesOptions_.projection,
+          tileGrid,
+          minResolution,
+          maxResolution,
+          gmfLayerVectorTiles.metadata.opacity,
+        );
+        deferred.resolve(this.setLayerProperties_(gmfLayerVectorTiles, layer));
+      },
+      (response) => {
+        deferred.reject(response);
+      }
+    );
+    return promise;
   }
-
-
 
   /**
    * @param {import('gmf/themes').GmfOgcServers} ogcServers The ogc servers.
@@ -346,7 +398,7 @@ export class ThemesService extends olEventsEventTarget {
   }
 
   /**
-   * @return {import('ol/layer/VectorLayer').default>}} a blank vector layer.
+   * @returns {import('ol/layer/VectorLayer').default>}} a blank vector layer.
    */
   getBgBlankLayer_() {
     // For i18n string collection
@@ -658,7 +710,7 @@ export function getSnappingConfig(node) {
  * Get the maximal resolution defined for this layer. Looks in the
  *     layer itself before to look into its metadata.
  *
- * @param {import('gmf/themes').GmfLayerWMS|import('gmf/themes').GmfLayerWMTS} gmfLayer the GeoMapFish Layer.
+ * @param {import('gmf/themes').GmfLayerWMS|import('gmf/themes').GmfLayerWMTS|import('gmf/themes').GmfLayerVectorTiles} gmfLayer the GeoMapFish Layer.
  * @returns {number|undefined} the max resolution or undefined if any.
  * @hidden
  */
@@ -676,7 +728,7 @@ export function getNodeMaxResolution(gmfLayer) {
  * Get the minimal resolution defined for this layer. Looks in the
  *     layer itself before to look into its metadata.
  *
- * @param {import('gmf/themes').GmfLayerWMS|import('gmf/themes').GmfLayerWMTS} gmfLayer the GeoMapFish Layer.
+ * @param {import('gmf/themes').GmfLayerWMS|import('gmf/themes').GmfLayerWMTS|import('gmf/themes').GmfLayerVectorTiles} gmfLayer the GeoMapFish Layer.
  * @returns {number|undefined} the min resolution or undefined if any.
  * @hidden
  */
@@ -708,5 +760,14 @@ export const ThemeNodeType = {
 const myModule = angular.module('gmfThemes', [ngeoMapLayerHelper.name]);
 
 myModule.service('gmfThemes', ThemesService);
+// FIXME useless once in the demo
+myModule.value('gmfVectorTilesOptions', {
+  projection: 'EPSG:2056',
+  tileGrid: {
+    extent: [2485071.54, 175346.36, 2828515.78, 1299941.84],
+    origin: [2485071.54, 1299941.84],
+    resolutions: [250, 100, 50, 20, 10, 5, 2, 1, 0.5, 0.25, 0.1, 0.05],
+  }
+});
 
 export default myModule;

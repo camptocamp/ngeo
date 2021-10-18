@@ -152,6 +152,18 @@
  */
 
 /**
+ * extends GmfLayer
+ *
+ * @typedef {Object} GmfLayerVectorTiles
+ * @property {number} id (GmfBaseNode)
+ * @property {GmfMetaData} metadata (GmfBaseNode)
+ * @property {string} name (GmfBaseNode)
+ * @property {boolean} [editable] (GmfLayer)
+ * @property {string} style (GmfLayer)
+ * @property {string} type (GmfLayer)
+ */
+
+/**
  * Additional attributes related on a WMS layers (or WFS features type).
  *
  * @typedef {Object} GmfLayerChildLayer
