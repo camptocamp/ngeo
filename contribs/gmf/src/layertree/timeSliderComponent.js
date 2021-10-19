@@ -227,13 +227,17 @@ Controller.prototype.init = function () {
   this.minValue = initialOptions_.minDate;
   this.maxValue = initialOptions_.maxDate;
   const values = initialOptions_.values;
+  const currentTime = {};
   if (this.isModeRange) {
     if (!Array.isArray(values)) {
       throw new Error('Wrong Options values');
     }
-    this.dates = [values[0], values[1]];
+    currentTime.start = values[0];
+    currentTime.end = values[1];
+    this.dates = [currentTime.start, currentTime.end];
   } else {
-    this.dates = initialOptions_.values;
+    currentTime.start = initialOptions_.values;
+    this.dates = currentTime.start;
   }
   this.timeValueList = this.getTimeValueList_();
   this.sliderOptions = {
@@ -241,6 +245,8 @@ Controller.prototype.init = function () {
     min: this.minValue,
     max: this.maxValue,
   };
+  // Call the callback with the current slider time.
+  this.onDateSelected({time: currentTime});
 };
 
 /**
