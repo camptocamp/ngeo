@@ -21,7 +21,7 @@
 
 module.exports = {
   locales: ['en'],
-  output: '.build/locale/webcomponent/en/app.json',
+  output: 'contribs/gmf/apps/build/locale/webcomponent/en/app.json',
   input: [
     '../src/**/*.{js,ts}',
     '../api/**/*.{js,ts}',

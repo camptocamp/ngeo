@@ -56,7 +56,7 @@ export function setupI18n(): void {
         escapeValue: false,
       },
       backend: {
-        loadPath: '/.build/locale/webcomponent/{{lng}}/{{ns}}.json',
+        loadPath: 'build/locale/webcomponent/{{lng}}/{{ns}}.json',
       },
     });
 

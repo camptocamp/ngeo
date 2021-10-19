@@ -18,9 +18,9 @@ trans.${lang} = .build/locale/${lang}/LC_MESSAGES/gmf.po
 % endfor
 
 [ngeo.webcomponent-${tx_version.strip()}]
-source_file = .build/locale/webcomponent/en/app.json
+source_file = contribs/gmf/apps/build/locale/webcomponent/en/app.json
 source_lang = en
 type = KEYVALUEJSON
 % for lang in languages.split():
-trans.${lang} = .build/locale/webcomponent/${lang}/app.json
+trans.${lang} = contribs/gmf/apps/build/locale/webcomponent/${lang}/app.json
 % endfor

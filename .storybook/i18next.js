@@ -21,7 +21,11 @@ i18next
 
 supportedLngs.forEach((lang) => {
   ns.forEach((n) => {
-    i18next.addResources(lang, n, require(`../.build/locale/webcomponent/${lang}/${n}.json`));
+    i18next.addResources(
+      lang,
+      n,
+      require(`../contribs/gmf/apps/build/locale/webcomponent/${lang}/${n}.json`)
+    );
   });
 });
 
