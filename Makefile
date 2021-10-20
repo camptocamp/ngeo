@@ -157,7 +157,7 @@ serve-gmf: contribs/dist $(ANGULAR_LOCALES_FILES)
 	npm run serve-gmf-examples
 
 .PHONY: serve-gmf-apps
-serve-gmf-apps: .build/build-dll.timestamp $(ANGULAR_LOCALES_FILES) .build/locale/webcomponent/en/app.json
+serve-gmf-apps: .build/build-dll.timestamp $(ANGULAR_LOCALES_FILES) contribs/gmf/apps/build/locale/webcomponent/en/app.json
 	npm run serve-gmf-apps
 
 .PHONY: serve-api
@@ -258,13 +258,14 @@ contribs/dist: .build/build-dll.timestamp
 	touch $@
 
 .build/examples-hosted-gmf-apps-deps.timestamp: \
+		$(addprefix contribs/gmf/apps/build/locale/webcomponent/, $(addsuffix /app.json, $(LANGUAGES))) \
 		$(addprefix contribs/gmf/build/gmf-, $(addsuffix .json, $(LANGUAGES))) \
 		$(addprefix contribs/gmf/build/angular-locale_, $(addsuffix .js, $(LANGUAGES)))
 	mkdir -p .build/examples-hosted/contribs/gmf
 	# We need the files for each app
 	# To simplify processing, we first copy them in gmfappsdeps directory, then from there to each app
 	$(foreach f,$^,mkdir -p .build/examples-hosted/gmfappsdeps/`dirname $(f)`; cp $(f) .build/examples-hosted/gmfappsdeps/$(f);)
-	rsync --recursive .build/examples-hosted/gmfappsdeps/contribs/gmf/ .build/examples-hosted/contribs/gmf/apps/
+	rsync --recursive .build/examples-hosted/gmfappsdeps/contribs/gmf/apps/ .build/examples-hosted/contribs/gmf/apps/
 	mkdir -p .build/examples-hosted/contribs/gmf/apps/desktop
 	cp ./contribs/gmf/apps/desktop/header.html .build/examples-hosted/contribs/gmf/apps/desktop
 	mkdir -p .build/examples-hosted/contribs/gmf/apps/desktop_alt
@@ -400,7 +401,7 @@ contribs/gmf/apps/.tx/config: contribs/gmf/apps/.tx/config.mako .build/python-ve
 	mkdir -p $(dir $@)
 	node buildtools/extract-messages $(GMF_APPS_PARTIALS_FILES) $(GMF_APPS_JS_FILES) > $@
 
-.build/locale/webcomponent/en/app.json:
+contribs/gmf/apps/build/locale/webcomponent/en/app.json:
 	npm run i18next-parse
 
 .PHONY: transifex-get
@@ -440,6 +441,10 @@ transifex-init: .build/python-venv.timestamp \
 	$(TOUCHBACK_TXRC)
 
 .build/locale/%/LC_MESSAGES/gmf.po: .tx/config $(HOME)/.transifexrc .build/python-venv.timestamp
+	$(PY_VENV_BIN)/tx pull -l $* --force --mode=reviewed
+	$(TOUCHBACK_TXRC)
+
+contribs/gmf/apps/build/locale/webcomponent/%/app.json: .tx/config $(HOME)/.transifexrc .build/python-venv.timestamp
 	$(PY_VENV_BIN)/tx pull -l $* --force --mode=reviewed
 	$(TOUCHBACK_TXRC)
 
