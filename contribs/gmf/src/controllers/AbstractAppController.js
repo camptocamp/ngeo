@@ -24,7 +24,6 @@ import angular from 'angular';
 import 'angular-gettext';
 import 'angular-dynamic-locale';
 import bootstrap from 'gmf/controllers/bootstrap';
-import gmfAuthenticationModule from 'gmf/authentication/module';
 import gmfBackgroundlayerselectorComponent from 'gmf/backgroundlayerselector/component';
 import {gmfBackgroundlayerStatus} from 'gmf/backgroundlayerselector/status';
 import gmfDatasourceModule from 'gmf/datasource/module';
@@ -61,7 +60,8 @@ import olInteractionDragPan from 'ol/interaction/DragPan';
 import {noModifierKeys} from 'ol/events/condition';
 import storeMap from 'ngeo/store/map';
 
-import user, {UserState} from 'ngeo/store/user.ts';
+import user, {UserState} from 'ngeo/store/user';
+import gmfAuthenticationService from 'ngeo/auth/service';
 
 /**
  * Application abstract controller.
@@ -229,13 +229,6 @@ export function AbstractAppController($scope, $injector, mobile) {
   this.permalink_ = $injector.get('gmfPermalink');
 
   /**
-   * Authentication service
-   *
-   * @type {import('gmf/authentication/Service').AuthenticationService}
-   */
-  const gmfAuthentication = $injector.get('gmfAuthenticationService');
-
-  /**
    * @type {boolean}
    */
   this.hasEditableLayers = false;
@@ -293,7 +286,7 @@ export function AbstractAppController($scope, $injector, mobile) {
       window.location.href = this.loginRedirectUrl;
       return;
     }
-    const roleId = gmfAuthentication.getRolesIds().join(',');
+    const roleId = gmfAuthenticationService.getRolesIds().join(',');
 
     const functionalities = this.gmfUser.functionalities;
 
@@ -329,7 +322,7 @@ export function AbstractAppController($scope, $injector, mobile) {
   };
 
   /**
-   * @type {import('gmf/authentication/Service').User}
+   * @type {import('ngeo/store/user').User}
    */
   this.gmfUser = null;
 
@@ -768,7 +761,6 @@ const myModule = angular.module('GmfAbstractAppControllerModule', [
   'gettext',
   'tmh.dynamicLocale',
   //'ngSentry',
-  gmfAuthenticationModule.name,
   gmfBackgroundlayerselectorComponent.name,
   gmfDatasourceModule.name,
   gmfDisclaimerComponent.name,

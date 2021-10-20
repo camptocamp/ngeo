@@ -59,10 +59,6 @@
               data-toggle="tooltip" data-placement="left" data-original-title="{{'Login'|translate}}">
               <span class="fa fa-user" ng-class="mainCtrl.gmfUser.username ? 'fa-user-times' : 'fa-user'"></span>
             </button>
-            <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.ngeoAuthActive"
-              data-toggle="tooltip" data-placement="left" data-original-title="{{'Login'|translate}}">
-              <span class="fa fa-users" ng-class="mainCtrl.gmfUser.username ? 'fa-user-times' : 'fa-users'"></span>
-            </button>
             <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.printPanelActive"
               data-toggle="tooltip" data-placement="left" data-original-title="{{'Print'|translate}}">
               <span class="fa fa-print"></span>
@@ -125,28 +121,12 @@
         <div
             class="gmf-app-tools-content container-fluid"
             ng-class="{'gmf-app-active': mainCtrl.toolsActive,'gmf-app-streetview-active': mainCtrl.googleStreetViewActive || mainCtrl.mapillaryStreetViewActive , 'gmf-app-inactive' : !mainCtrl.toolsActive}">
-          <div ng-show="mainCtrl.loginActive" class="row">
-            <div class="col-sm-12">
-              <div class="gmf-app-tools-content-heading">
-                {{'Login' | translate}}
-                <a class="btn close" ng-click="mainCtrl.loginActive = false">&times;</a>
-              </div>
-              <gmf-authentication gmf-authentication-info-message="mainCtrl.loginInfoMessage">
-              </gmf-authentication>
-              <div ng-if="mainCtrl.postLoading">
-                <i class="fa custom-spinner-connect fa-spin">
-                  <%=require('gmf/icons/spinner.svg?viewbox&height=1em')%>
-                </i>
-                {{'Loading themes, please wait...' | translate}}
-              </div>
-            </div>
-          </div>
-          <ngeo-auth-panel ng-show="mainCtrl.ngeoAuthActive"
-          ng-on-close-panel="mainCtrl.ngeoAuthActive = $event.detail"
+          <gmf-auth-panel ng-show="mainCtrl.loginActive"
+          ng-on-close-panel="mainCtrl.loginActive = $event.detail"
           ng-prop-login_info_message="mainCtrl.loginInfoMessage"
           ng-prop-post_loading="mainCtrl.postLoading"
           ng-prop-password_validator="mainCtrl.passwordValidator"
-          ></ngeo-auth-panel>
+          ></gmf-auth-panel>
           <div ng-show="mainCtrl.printPanelActive" class="row">
             <div class="col-sm-12">
               <div class="gmf-app-tools-content-heading">

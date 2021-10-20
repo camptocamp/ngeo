@@ -23,8 +23,6 @@ import angular from 'angular';
 
 import {PermalinkParam} from 'gmf/index';
 
-import gmfAuthenticationService from 'gmf/authentication/Service';
-
 import gmfLayerBeingSwipe from 'gmf/datasource/LayerBeingSwipe';
 
 import gmfThemeManager, {ThemeEventType} from 'gmf/theme/Manager';
@@ -56,7 +54,7 @@ import olLayerGroup from 'ol/layer/Group';
 import {CollectionEvent} from 'ol/Collection';
 import {buildStyle} from 'ngeo/options';
 
-import user from 'ngeo/store/user.ts';
+import user from 'ngeo/store/user';
 
 /**
  * @enum {string}
@@ -452,7 +450,7 @@ export function PermalinkService(
   this.ngeoWfsPermalink_ = $injector.has('ngeoWfsPermalink') ? $injector.get('ngeoWfsPermalink') : null;
 
   /**
-   * @type {import('gmf/authentication/Service').User}
+   * @type {import('ngeo/store/user').User}
    */
   this.gmfUser = null;
   user.getProperties().subscribe({
@@ -1941,7 +1939,6 @@ PermalinkService.prototype.setNodeTime_ = function (treeCtrl) {
  * @hidden
  */
 const myModule = angular.module('gmfPermalink', [
-  gmfAuthenticationService.name,
   gmfThemeManager.name,
   gmfThemeThemes.name,
   gmfDataSourcesManager.name,

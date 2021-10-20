@@ -21,7 +21,7 @@
 
 import angular from 'angular';
 
-import gmfAuthenticationService from 'gmf/authentication/Service';
+import gmfAuthenticationService from 'ngeo/auth/service';
 
 import gmfThemeThemes from 'gmf/theme/Themes';
 import LegendMapFishPrintV3 from 'gmf/print/LegendMapFishPrintV3';
@@ -64,7 +64,6 @@ import 'bootstrap/js/src/dropdown';
  * @hidden
  */
 const myModule = angular.module('gmfPrintComponent', [
-  gmfAuthenticationService.name,
   gmfThemeThemes.name,
   ngeoMapLayerHelper.name,
   ngeoMapFeatureOverlayMgr.name,
@@ -223,8 +222,6 @@ export class PrintController {
    * @param {import('ngeo/print/Utils').PrintUtils} ngeoPrintUtils The ngeo PrintUtils service.
    * @param {import('ngeo/print/Service').CreatePrint} ngeoCreatePrint The ngeo Create Print function.
    * @param {string} gmfPrintUrl The MapFishPrint URL.
-   * @param {import('gmf/authentication/Service').AuthenticationService} gmfAuthenticationService
-   *    The authentication service.
    * @param {import('ngeo/query/MapQuerent').QueryResult} ngeoQueryResult ngeo query result.
    * @param {angular.IFilterService} $filter Angular $filter service.
    * @param {PrintState} gmfPrintState GMF print state.
@@ -248,7 +245,6 @@ export class PrintController {
     ngeoPrintUtils,
     ngeoCreatePrint,
     gmfPrintUrl,
-    gmfAuthenticationService,
     ngeoQueryResult,
     $filter,
     gmfPrintState,
@@ -350,12 +346,6 @@ export class PrintController {
      * @private
      */
     this.ngeoQueryResult_ = ngeoQueryResult;
-
-    /**
-     * @type {import('gmf/authentication/Service').AuthenticationService}
-     * @private
-     */
-    this.gmfAuthenticationService_ = gmfAuthenticationService;
 
     /**
      * @type {import('gmf/theme/Themes').ThemesService}
@@ -564,7 +554,7 @@ export class PrintController {
 
     // Clear the capabilities if the roles changes
     this.$scope_.$watch(
-      () => this.gmfAuthenticationService_.getRolesIds().join(','),
+      () => gmfAuthenticationService.getRolesIds().join(','),
       () => {
         this.gmfPrintState_.state = PrintStateEnum.CAPABILITIES_NOT_LOADED;
         this.capabilities_ = null;
@@ -573,7 +563,7 @@ export class PrintController {
 
     // Store user email
     this.$scope_.$watch(
-      () => this.gmfAuthenticationService_.getEmail(),
+      () => gmfAuthenticationService.getEmail(),
       (newValue) => {
         this.smtpEmail = newValue;
       }
@@ -661,7 +651,7 @@ export class PrintController {
   togglePrintPanel_(active) {
     if (active) {
       if (!this.capabilities_) {
-        this.getCapabilities_(this.gmfAuthenticationService_.getRolesIds().join(','));
+        this.getCapabilities_(gmfAuthenticationService.getRolesIds().join(','));
       }
       if (!this.capabilities_) {
         throw new Error('Missing capabilities');

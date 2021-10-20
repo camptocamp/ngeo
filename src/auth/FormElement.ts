@@ -19,30 +19,31 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import {html, TemplateResult} from 'lit';
+import {html, TemplateResult, unsafeCSS, CSSResult, css} from 'lit';
 import {customElement, property, state} from 'lit/decorators.js';
-import {LitElementI18n} from 'ngeo/localize/i18n';
+import GmfBaseElement from 'ngeo/BaseElement';
 import {Message, MessageType} from 'ngeo/message/Message';
 import ngeoMessageNotification from 'ngeo/message/Notification';
 import {unsafeSVG} from 'lit/directives/unsafe-svg';
 import loadingSvg from 'gmf/icons/spinner.svg';
 import {gmfBackgroundlayerStatus} from 'gmf/backgroundlayerselector/status';
-import {Subscription} from 'rxjs';
 import user, {User, UserState} from 'ngeo/store/user';
 // @ts-ignore
 import qruri from 'qruri';
 import i18next from 'i18next';
-import configuration, {Configuration, gmfAuthenticationConfig} from 'ngeo/store/config';
-import authenticationService from './Service';
+import {Configuration} from 'ngeo/store/config';
+import authenticationService from './service';
 
-/** Type definition for PasswordValidator */
-type PasswordValidator = {
+/**
+ * The definition of a PasswordValidator
+ */
+export type PasswordValidator = {
   isPasswordValid: (val: string) => boolean;
   notValidMessage: string;
 };
 
-@customElement('ngeo-auth-component')
-export default class ngeoAuthComponent extends LitElementI18n {
+@customElement('gmf-auth-form')
+export default class GmfAuthFormElement extends GmfBaseElement {
   @property({type: String}) loginInfoMessage = '';
   @property({type: Object}) private passwordValidator: PasswordValidator = null;
   @state() private isLoading = false;
@@ -56,8 +57,8 @@ export default class ngeoAuthComponent extends LitElementI18n {
   @state() private error = false;
   @state() private otpImage = '';
   @state() private gmfUser: User = null;
+  @state() private customCSS_ = '';
   private changingPasswordUsername_ = '';
-  private subscriptions_: Subscription[] = [];
 
   connectedCallback(): void {
     super.connectedCallback();
@@ -71,25 +72,33 @@ export default class ngeoAuthComponent extends LitElementI18n {
         },
       })
     );
-    this.subscriptions_.push(
-      configuration.getConfig().subscribe({
-        next: (configuration: Configuration) => {
-          this.twoFactorAuth = configuration.gmfTwoFactorAuth;
-          const config: gmfAuthenticationConfig = configuration.gmfAuthenticationConfig;
-          this.allowPasswordChange = config.allowPasswordChange;
-          this.allowPasswordReset = config.allowPasswordReset;
-        },
-      })
-    );
   }
 
-  disconnectedCallback(): void {
-    super.disconnectedCallback();
-    this.subscriptions_.forEach((sub) => sub.unsubscribe());
+  // override default initConfig
+  initConfig(configuration: Configuration): void {
+    this.twoFactorAuth = configuration.gmfTwoFactorAuth;
+    this.allowPasswordChange = configuration.gmfAuthenticationConfig.allowPasswordChange;
+    this.allowPasswordReset = configuration.gmfAuthenticationConfig.allowPasswordReset;
+    if (configuration.gmfCustomCSS && configuration.gmfCustomCSS.authentication !== undefined) {
+      this.customCSS_ = configuration.gmfCustomCSS.authentication;
+    }
   }
 
-  render(): TemplateResult {
+  static styles: CSSResult[] = [
+    ...GmfBaseElement.styles,
+    css`
+      [hidden] {
+        display: none !important;
+      }
+    `,
+  ];
+
+  protected render(): TemplateResult {
     return html`
+      <style>
+        ${unsafeCSS(this.customCSS_)}
+      </style>
+
       ${this.gmfUser.is_intranet
         ? html`
             <div class="form-group">
@@ -275,10 +284,6 @@ export default class ngeoAuthComponent extends LitElementI18n {
       <div ?hidden="${!this.error}" class="auth-error help-block"></div>
     `;
   }
-  // Disable shadow DOM
-  protected createRenderRoot(): LitElementI18n {
-    return this;
-  }
 
   /**
    * @private
@@ -385,8 +390,8 @@ export default class ngeoAuthComponent extends LitElementI18n {
           .catch(() => {
             /* eslint-disable @typescript-eslint/no-unnecessary-type-assertion */
             // Reset the values cannot be done via Event values
-            const oldPwd = document.querySelector('input[name = "oldpassword"]') as HTMLInputElement;
-            const otp = document.querySelector('input[name = "otp"]') as HTMLInputElement;
+            const oldPwd = this.renderRoot.querySelector('input[name = "oldpassword"]') as HTMLInputElement;
+            const otp = this.renderRoot.querySelector('input[name = "otp"]') as HTMLInputElement;
             oldPwd.value = '';
             otp.value = '';
 
@@ -512,9 +517,11 @@ export default class ngeoAuthComponent extends LitElementI18n {
     this.userMustChangeItsPassword = false;
 
     /* eslint-disable @typescript-eslint/no-unnecessary-type-assertion */
-    const oldPwd = document.querySelector('input[name = "oldpassword"]') as HTMLInputElement;
-    const newPwd = document.querySelector('input[name = "newpassword"]') as HTMLInputElement;
-    const newPwdConf = document.querySelector('input[name = "newpasswordconfirm"]') as HTMLInputElement;
+    const oldPwd = this.renderRoot.querySelector('input[name = "oldpassword"]') as HTMLInputElement;
+    const newPwd = this.renderRoot.querySelector('input[name = "newpassword"]') as HTMLInputElement;
+    const newPwdConf = this.renderRoot.querySelector(
+      'input[name = "newpasswordconfirm"]'
+    ) as HTMLInputElement;
     oldPwd.value = '';
     newPwd.value = '';
     newPwdConf.value = '';
@@ -534,7 +541,7 @@ export default class ngeoAuthComponent extends LitElementI18n {
       this.resetError_();
     }
     this.error = true;
-    const container = document.querySelector('.auth-error');
+    const container = this.renderRoot.querySelector('.auth-error');
 
     errors.forEach((error) => {
       const options: Message = {
