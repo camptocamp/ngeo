@@ -21,14 +21,14 @@
 
 import './simple3d.css';
 import angular from 'angular';
-import olMap from 'ol/Map.js';
+import olMap from 'ol/Map';
 
-import olView from 'ol/View.js';
-import olLayerTile from 'ol/layer/Tile.js';
-import olSourceOSM from 'ol/source/OSM.js';
-import ngeoOlcsOlcsModule from 'ngeo/olcs/olcsModule.js';
-import ngeoMapModule from 'ngeo/map/module.js';
-import ngeoOlcsManager from 'ngeo/olcs/Manager.js';
+import olView from 'ol/View';
+import olLayerTile from 'ol/layer/Tile';
+import olSourceOSM from 'ol/source/OSM';
+import ngeoOlcsOlcsModule from 'ngeo/olcs/olcsModule';
+import ngeoMapModule from 'ngeo/map/module';
+import ngeoOlcsManager from 'ngeo/olcs/Manager';
 
 /** @type {angular.IModule} **/
 const myModule = angular.module('app', ['gettext', ngeoMapModule.name, ngeoOlcsOlcsModule.name]);
@@ -37,11 +37,11 @@ const myModule = angular.module('app', ['gettext', ngeoMapModule.name, ngeoOlcsO
  * @class
  * @ngInject
  * @param {angular.IScope} $rootScope Root scope.
- * @param {import("ngeo/olcs/Service.js").OlcsService} ngeoOlcsService The service.
+ * @param {import('ngeo/olcs/Service').OlcsService} ngeoOlcsService The service.
  */
 function MainController($rootScope, ngeoOlcsService) {
   /**
-   * @type {import("ol/Map.js").default}
+   * @type {import('ol/Map').default}
    */
   this.map = new olMap({
     layers: [

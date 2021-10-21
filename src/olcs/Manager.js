@@ -41,7 +41,7 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import olcsContribManager from 'olcs/contrib/Manager.js';
+import olcsContribManager from 'olcs/contrib/Manager';
 
 /**
  * @hidden
@@ -50,7 +50,7 @@ class Manager extends olcsContribManager {
   /**
    * @param {string} url .
    * @param {angular.IScope} $rootScope .
-   * @param {import('olcs/contrib/Manager.js').ManagerOptions} options .
+   * @param {import('olcs/contrib/Manager').ManagerOptions} options .
    */
   constructor(url, $rootScope, options) {
     super(url, options);

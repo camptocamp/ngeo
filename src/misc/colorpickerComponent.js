@@ -32,7 +32,7 @@ myModule.value(
   /**
    * @param {JQuery} element Element.
    * @param {angular.IAttributes} attrs Attributes.
-   * @return {string} Template URL.
+   * @returns {string} Template URL.
    */
   (element, attrs) => {
     const templateUrl = attrs['ngeoColorpickerTemplateurl'];
@@ -63,7 +63,7 @@ myModule.run(
  *
  * @param {string|function(JQuery=, angular.IAttributes=): string} ngeoColorpickerTemplateUrl
  *     Template URL for the directive.
- * @return {angular.IDirective} Directive Definition Object.
+ * @returns {angular.IDirective} Directive Definition Object.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoColorpicker
@@ -85,6 +85,7 @@ myModule.directive('ngeoColorpicker', colorPickerComponent);
 
 /**
  * Default colors for the colorpicker
+ *
  * @type {string[][]}
  * @private
  * @hidden
@@ -133,12 +134,14 @@ const DEFAULT_COLORS = [
 export function Controller() {
   /**
    * The set of color
+   *
    * @type {string[][]}
    */
   this.colors = this.colors || DEFAULT_COLORS;
 
   /**
    * The selected color
+   *
    * @type {undefined|string}
    */
   this.color;

@@ -23,7 +23,7 @@ import angular from 'angular';
 
 class Mode {
   /**
-   * @param {import("ngeo/offline/Configuration.js").default} ngeoOfflineConfiguration
+   * @param {import('ngeo/offline/Configuration').default} ngeoOfflineConfiguration
    * ngeo offline configuration service.
    * @ngInject
    * @ngdoc service
@@ -32,6 +32,7 @@ class Mode {
   constructor(ngeoOfflineConfiguration) {
     /**
      * Offline mode is enabled or not.
+     *
      * @type {boolean}
      * @private
      */
@@ -39,21 +40,23 @@ class Mode {
 
     /**
      * Offline component.
-     * @type {?import("ngeo/offline/component.js").Controller}
+     *
+     * @type {?import('ngeo/offline/component').Controller}
      * @private
      */
     this.component_ = null;
 
     /**
      * @private
-     * @type {import("ngeo/offline/Configuration.js").default}
+     * @type {import('ngeo/offline/Configuration').default}
      */
     this.ngeoOfflineConfiguration_ = ngeoOfflineConfiguration;
   }
 
   /**
    * Return if we are in offline mode.
-   * @return {boolean} whether offline mode is enabled
+   *
+   * @returns {boolean} whether offline mode is enabled
    * @export
    */
   isEnabled() {
@@ -62,6 +65,7 @@ class Mode {
 
   /**
    * Enable offline mode. ATM we cannot escape from the offline mode.
+   *
    * @export
    */
   enable() {
@@ -70,7 +74,7 @@ class Mode {
 
   /**
    *
-   * @param {import("ngeo/offline/component.js").Controller} component Offline component.
+   * @param {import('ngeo/offline/component').Controller} component Offline component.
    * @export
    */
   registerComponent(component) {
@@ -88,7 +92,7 @@ class Mode {
   }
 
   /**
-   * @return {boolean} True if data are accessible offline.
+   * @returns {boolean} True if data are accessible offline.
    * @export
    */
   hasData() {

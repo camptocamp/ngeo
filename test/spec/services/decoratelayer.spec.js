@@ -19,9 +19,9 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import {layerDecoration as ngeoMiscDecorateLayer} from 'ngeo/misc/decorate.js';
-import olLayerTile from 'ol/layer/Tile.js';
-import olSourceOSM from 'ol/source/OSM.js';
+import {layerDecoration as ngeoMiscDecorateLayer} from 'ngeo/misc/decorate';
+import olLayerTile from 'ol/layer/Tile';
+import olSourceOSM from 'ol/source/OSM';
 
 describe('ngeo.misc.DecorateLayer', () => {
   it('can change the visibility', () => {

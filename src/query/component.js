@@ -21,17 +21,17 @@
 
 import angular from 'angular';
 
-import {unlistenByKeys as ngeoEventsUnlistenByKeys} from 'ngeo/events.js';
-import ngeoQueryMode from 'ngeo/query/Mode.js';
-import ngeoQueryModeSelector from 'ngeo/query/ModeSelector.js';
-import ngeoQueryMapQuerent from 'ngeo/query/MapQuerent.js';
+import {unlistenByKeys as ngeoEventsUnlistenByKeys} from 'ngeo/events';
+import ngeoQueryMode from 'ngeo/query/Mode';
+import ngeoQueryModeSelector from 'ngeo/query/ModeSelector';
+import ngeoQueryMapQuerent from 'ngeo/query/MapQuerent';
 
-import {listen as olEventsListen} from 'ol/events.js';
-import {always as olEventsConditionAlways} from 'ol/events/condition.js';
-import olInteractionDraw, {createBox as olInteractionDrawCreateBox} from 'ol/interaction/Draw.js';
-import olLayerVector from 'ol/layer/Vector.js';
-import MapBrowserEvent from 'ol/MapBrowserEvent.js';
-import olSourceVector from 'ol/source/Vector.js';
+import {listen as olEventsListen} from 'ol/events';
+import {always as olEventsConditionAlways} from 'ol/events/condition';
+import olInteractionDraw, {createBox as olInteractionDrawCreateBox} from 'ol/interaction/Draw';
+import olLayerVector from 'ol/layer/Vector';
+import MapBrowserEvent from 'ol/MapBrowserEvent';
+import olSourceVector from 'ol/source/Vector';
 
 /**
  * @type {angular.IModule}
@@ -44,12 +44,12 @@ const myModule = angular.module('ngeoQuery', [ngeoQueryModeSelector.name, ngeoQu
  */
 export class QueryController {
   /**
-   * @param {import("ngeo/query/MapQuerent.js").MapQuerent} ngeoMapQuerent
+   * @param {import('ngeo/query/MapQuerent').MapQuerent} ngeoMapQuerent
    *    The ngeo map querent service.
-   * @param {import("ngeo/query/ModeSelector.js").QueryModeSelector} ngeoQueryModeSelector
+   * @param {import('ngeo/query/ModeSelector').QueryModeSelector} ngeoQueryModeSelector
    *    The ngeo query modeSelector service.
    * @param {angular.IScope} $scope Scope.
-   * @param {import('ngeo/options.js').ngeoQueryOptions} ngeoQueryOptions The options.
+   * @param {import('ngeo/options').ngeoQueryOptions} ngeoQueryOptions The options.
    * @ngInject
    * @ngdoc controller
    * @ngname NgeoQueryController
@@ -68,26 +68,26 @@ export class QueryController {
     this.autoclear;
 
     /**
-     * @type {!import("ol/Map.js").default}
+     * @type {!import('ol/Map').default}
      */
     this.map;
 
     // === Injected properties ===
 
     /**
-     * @type {import("ngeo/query/MapQuerent.js").MapQuerent}
+     * @type {import('ngeo/query/MapQuerent').MapQuerent}
      * @private
      */
     this.ngeoMapQuerent_ = ngeoMapQuerent;
 
     /**
-     * @type {import("ngeo/query/ModeSelector.js").QueryModeSelector}
+     * @type {import('ngeo/query/ModeSelector').QueryModeSelector}
      * @private
      */
     this.ngeoQueryModeSelector_ = ngeoQueryModeSelector;
 
     /**
-     * @type {import('ngeo/options.js').ngeoQueryOptions}
+     * @type {import('ngeo/options').ngeoQueryOptions}
      * @private
      */
     this.ngeoQueryOptions_ = ngeoQueryOptions;
@@ -101,7 +101,7 @@ export class QueryController {
     // === Inner properties ===
 
     /**
-     * @type {olSourceVector<import("ol/geom/Polygon.js").default>}
+     * @type {olSourceVector<import('ol/geom/Polygon').default>}
      * @private
      */
     this.vectorSource_ = new olSourceVector({
@@ -109,7 +109,7 @@ export class QueryController {
     });
 
     /**
-     * @type {olLayerVector<olSourceVector<import("ol/geom/Polygon.js").default>>}
+     * @type {olLayerVector<olSourceVector<import('ol/geom/Polygon').default>>}
      * @private
      */
     this.vectorLayer_ = new olLayerVector({
@@ -142,7 +142,7 @@ export class QueryController {
     /**
      * The event keys of the currently active "mode".
      *
-     * @type {import('ol/events.js').EventsKey[]}
+     * @type {import('ol/events').EventsKey[]}
      * @private
      */
     this.listenerKeys_ = [];
@@ -216,7 +216,7 @@ export class QueryController {
           olEventsListen(
             this.drawBoxInteraction_,
             'drawend',
-            /** @type {import('ol/events.js').ListenerFunction} */ (this.handleDrawBoxInteractionDrawEnd_),
+            /** @type {import('ol/events').ListenerFunction} */ (this.handleDrawBoxInteractionDrawEnd_),
             this
           )
         );
@@ -229,9 +229,7 @@ export class QueryController {
           olEventsListen(
             this.drawPolygonInteraction_,
             'drawend',
-            /** @type {import('ol/events.js').ListenerFunction} */ (
-              this.handleDrawPolygonInteractionDrawEnd_
-            ),
+            /** @type {import('ol/events').ListenerFunction} */ (this.handleDrawPolygonInteractionDrawEnd_),
             this
           )
         );
@@ -247,6 +245,7 @@ export class QueryController {
   /**
    * Disable the current mode, i.e. remove any interaction of that
    * mode from the map.
+   *
    * @private
    */
   disableMode_() {
@@ -292,7 +291,8 @@ export class QueryController {
   /**
    * The maximum number of features a query should return. Obtained
    * from the options.
-   * @return {number|undefined}
+   *
+   * @returns {number|undefined}
    * @private
    */
   getLimitOption_() {
@@ -303,6 +303,7 @@ export class QueryController {
 
   /**
    * Called when active property changes
+   *
    * @param {boolean} active Whether this component is active or not.
    * @private
    */
@@ -316,7 +317,8 @@ export class QueryController {
 
   /**
    * Called when a box is drawn on the map. Use it to issue a query.
-   * @param {import('lib/ol.interaction.Draw.js').DrawEvent} evt The draw interaction drawend event being fired.
+   *
+   * @param {import('lib/ol.interaction.Draw').DrawEvent} evt The draw interaction drawend event being fired.
    * @private
    */
   handleDrawBoxInteractionDrawEnd_(evt) {
@@ -347,7 +349,8 @@ export class QueryController {
 
   /**
    * Called when a polygon is drawn on the map. Use it to issue a query.
-   * @param {import('lib/ol.interaction.Draw.js').DrawEvent} evt The draw interaction drawend event being fired.
+   *
+   * @param {import('lib/ol.interaction.Draw').DrawEvent} evt The draw interaction drawend event being fired.
    * @private
    */
   handleDrawPolygonInteractionDrawEnd_(evt) {
@@ -379,7 +382,8 @@ export class QueryController {
   /**
    * Called when the map is clicked while this component is active and the mode is "click". Issue a request
    * to the query service using the coordinate that was clicked.
-   * @param {Event|import("ol/events/Event.js").default} evt The map browser event being fired.
+   *
+   * @param {Event|import('ol/events/Event').default} evt The map browser event being fired.
    * @private
    */
   handleMapClick_(evt) {
@@ -411,8 +415,8 @@ export class QueryController {
    * Called when the pointer is moved over the map while this component is active and the mode is "click".
    * Change the mouse pointer when hovering a non-transparent pixel on the map.
    *
-   * @param {Event|import("ol/events/Event.js").default} evt The map browser event being fired.
-   * @return {boolean}
+   * @param {Event|import('ol/events/Event').default} evt The map browser event being fired.
+   * @returns {boolean}
    */
   handleMapPointerMove_(evt) {
     // No need to do anything if user is dragging the map
@@ -424,7 +428,7 @@ export class QueryController {
 
     /**
      * @param {import('ol/layer/Base').default} layer
-     * @return {boolean}
+     * @returns {boolean}
      */
     const queryable = function (layer) {
       const visible = layer.get('visible');

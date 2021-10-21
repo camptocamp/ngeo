@@ -20,18 +20,19 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import ngeoMapLayerHelper, {DATASOURCE_ID} from 'ngeo/map/LayerHelper.js';
-import {getUid as olUtilGetUid} from 'ol/util.js';
-import * as olArray from 'ol/array.js';
-import olCollection from 'ol/Collection.js';
-import olEventsEventTarget from 'ol/events/Target.js';
-import VectorLayer from 'ol/layer/Vector.js';
-import VectorSource from 'ol/source/Vector.js';
+import ngeoMapLayerHelper, {DATASOURCE_ID} from 'ngeo/map/LayerHelper';
+import {getUid as olUtilGetUid} from 'ol/util';
+import * as olArray from 'ol/array';
+import olCollection from 'ol/Collection';
+import olEventsEventTarget from 'ol/events/Target';
+import VectorLayer from 'ol/layer/Vector';
+import VectorSource from 'ol/source/Vector';
 
 /**
  * The Themes service. This service interacts
  * with c2cgeoportal's "themes" web service and exposes functions that return
  * objects in the tree returned by the "themes" web service.
+ *
  * @hidden
  */
 export class ThemesService extends olEventsEventTarget {
@@ -39,9 +40,9 @@ export class ThemesService extends olEventsEventTarget {
    * @param {angular.IHttpService} $http Angular http service.
    * @param {angular.auto.IInjectorService} $injector Main injector.
    * @param {angular.IQService} $q Angular q service
-   * @param {import("ngeo/map/LayerHelper.js").LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
+   * @param {import('ngeo/map/LayerHelper').LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
    * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
-   * @param {import('gmf/options.js').gmfThemesOptions} gmfThemesOptions Themes options.
+   * @param {import('gmf/options').gmfThemesOptions} gmfThemesOptions Themes options.
    * @param {string} gmfTreeUrl The tree URL.
    * @ngInject
    */
@@ -75,7 +76,7 @@ export class ThemesService extends olEventsEventTarget {
      */
     this.treeUrl_ = gmfTreeUrl;
     /**
-     * @type {?import("ngeo/statemanager/Location.js").StatemanagerLocation}
+     * @type {?import('ngeo/statemanager/Location').StatemanagerLocation}
      * @private
      */
     this.ngeoLocation_ = null;
@@ -84,7 +85,7 @@ export class ThemesService extends olEventsEventTarget {
     }
 
     /**
-     * @type {import("ngeo/map/LayerHelper.js").LayerHelper}
+     * @type {import('ngeo/map/LayerHelper').LayerHelper}
      * @private
      */
     this.layerHelper_ = ngeoLayerHelper;
@@ -113,7 +114,7 @@ export class ThemesService extends olEventsEventTarget {
     this.loaded = false;
 
     /**
-     * @type {?angular.IPromise<import("ol/layer/Base.js").default[]>}
+     * @type {?angular.IPromise<import('ol/layer/Base').default[]>}
      * @private
      */
     this.bgLayerPromise_ = null;
@@ -121,7 +122,8 @@ export class ThemesService extends olEventsEventTarget {
 
   /**
    * Get background layers.
-   * @return {angular.IPromise<import("ol/layer/Base.js").default[]>} Promise.
+   *
+   * @returns {angular.IPromise<import('ol/layer/Base').default[]>} Promise.
    */
   getBgLayers() {
     const gettextCatalog = this.gettextCatalog;
@@ -132,12 +134,12 @@ export class ThemesService extends olEventsEventTarget {
     const layerHelper = this.layerHelper_;
 
     /**
-     * @param {import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer} item A group or a leaf.
+     * @param {import('gmf/themes').GmfGroup|import('gmf/themes').GmfLayer} item A group or a leaf.
      * @param {string[]} array Array of ids;
      */
     const getIds = function (item, array) {
       array.push(olUtilGetUid(item));
-      const groupItem = /** @type {import('gmf/themes.js').GmfGroup} */ (item);
+      const groupItem = /** @type {import('gmf/themes').GmfGroup} */ (item);
       const children = groupItem.children || [];
       children.forEach((child) => {
         getIds(child, array);
@@ -145,9 +147,9 @@ export class ThemesService extends olEventsEventTarget {
     };
 
     /**
-     * @param {import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer} item The item.
-     * @param {import("ol/layer/Base.js").default} layer The layer.
-     * @return {import("ol/layer/Base.js").default} the provided layer.
+     * @param {import('gmf/themes').GmfGroup|import('gmf/themes').GmfLayer} item The item.
+     * @param {import('ol/layer/Base').default} layer The layer.
+     * @returns {import('ol/layer/Base').default} the provided layer.
      */
     const callback = function (item, layer) {
       layer.set('label', item.name);
@@ -162,16 +164,14 @@ export class ThemesService extends olEventsEventTarget {
     };
 
     /**
-     * @param {import('gmf/themes.js').GmfOgcServers} ogcServers The ogc servers.
-     * @param {import('gmf/themes.js').GmfLayer} gmfLayer The item.
-     * @return {angular.IPromise<import("ol/layer/Base.js").default>|import("ol/layer/Base.js").default}
+     * @param {import('gmf/themes').GmfOgcServers} ogcServers The ogc servers.
+     * @param {import('gmf/themes').GmfLayer} gmfLayer The item.
+     * @returns {angular.IPromise<import('ol/layer/Base').default>|import('ol/layer/Base').default}
      *    The created layer.
      */
     const layerLayerCreationFn = function (ogcServers, gmfLayer) {
       if (gmfLayer.type === 'WMTS') {
-        const gmfLayerWMTS = /** @type {import('gmf/themes.js').GmfLayerWMTS} */ (
-          /** @type {any} */ (gmfLayer)
-        );
+        const gmfLayerWMTS = /** @type {import('gmf/themes').GmfLayerWMTS} */ (/** @type {any} */ (gmfLayer));
         if (!gmfLayerWMTS.url) {
           throw 'Layer URL is required';
         }
@@ -198,11 +198,9 @@ export class ThemesService extends olEventsEventTarget {
             // Continue even if some layers have failed loading.
             return $q.resolve(undefined);
           });
-        return /** @type {angular.IPromise<import("ol/layer/Base.js").default>} */ (layer);
+        return /** @type {angular.IPromise<import('ol/layer/Base').default>} */ layer;
       } else if (gmfLayer.type === 'WMS') {
-        const gmfLayerWMS = /** @type {import('gmf/themes.js').GmfLayerWMS} */ (
-          /** @type {any} */ (gmfLayer)
-        );
+        const gmfLayerWMS = /** @type {import('gmf/themes').GmfLayerWMS} */ (/** @type {any} */ (gmfLayer));
         if (!gmfLayerWMS.ogcServer) {
           throw new Error('Missing gmfLayerWMS.ogcServer');
         }
@@ -246,16 +244,16 @@ export class ThemesService extends olEventsEventTarget {
     };
 
     /**
-     * @param {import('gmf/themes.js').GmfOgcServers} ogcServers The ogc servers.
-     * @param {import('gmf/themes.js').GmfGroup} item The item.
-     * @return {angular.IPromise<import("ol/layer/Base.js").default>} the created layer.
+     * @param {import('gmf/themes').GmfOgcServers} ogcServers The ogc servers.
+     * @param {import('gmf/themes').GmfGroup} item The item.
+     * @returns {angular.IPromise<import('ol/layer/Base').default>} the created layer.
      */
     const layerGroupCreationFn = (ogcServers, item) => {
       // We assume no child is a layer group.
       // The order of insertion in OL3 is the contrary of the theme
       const orderedChildren = item.children.map((x) => x).reverse();
       const promises = orderedChildren.map((item) =>
-        layerLayerCreationFn(ogcServers, /** @type {import('gmf/themes.js').GmfLayer} */ (item))
+        layerLayerCreationFn(ogcServers, /** @type {import('gmf/themes').GmfLayer} */ (item))
       );
       return $q.all(promises).then((layers) => {
         let collection;
@@ -270,16 +268,16 @@ export class ThemesService extends olEventsEventTarget {
     };
 
     /**
-     * @param {import('gmf/themes.js').GmfThemesResponse} data The "themes" web service
+     * @param {import('gmf/themes').GmfThemesResponse} data The "themes" web service
      *     response.
-     * @return {angular.IPromise<import("ol/layer/Base.js").default[]>} Promise.
+     * @returns {angular.IPromise<import('ol/layer/Base').default[]>} Promise.
      */
     const promiseSuccessFn = (data) => {
       const promises = /** @type {angular.IPromise<unknown>} */ (
         /** @type {*} */ (
           data.background_layers.map((item) => {
-            const itemLayer = /** @type {import('gmf/themes.js').GmfLayer} */ (item);
-            const itemGroup = /** @type {import('gmf/themes.js').GmfGroup} */ (item);
+            const itemLayer = /** @type {import('gmf/themes').GmfLayer} */ (item);
+            const itemGroup = /** @type {import('gmf/themes').GmfGroup} */ (item);
             const itemType = itemLayer.type;
             if (itemType === 'WMTS' || itemType === 'WMS') {
               return layerLayerCreationFn(data.ogcServers, itemLayer);
@@ -292,14 +290,14 @@ export class ThemesService extends olEventsEventTarget {
           })
         )
       );
-      return /** @type {angular.IPromise<import("ol/layer/Base.js").default[]>} */ (
-        /** @type {*} */ ($q.all(promises))
+      return /** @type {angular.IPromise<import('ol/layer/Base').default[]>} */ /** @type {*} */ $q.all(
+        promises
       );
     };
 
-    this.bgLayerPromise_ = /** @type {angular.IPromise<import("ol/layer/Base.js").default[]>} */ (
+    this.bgLayerPromise_ = /** @type {angular.IPromise<import('ol/layer/Base').default[]>} */ (
       this.promise_.then(promiseSuccessFn).then((values) => {
-        /** @type {import('ol/layer/Base.js').default[]} */
+        /** @type {import('ol/layer/Base').default[]} */
         const layers = [];
 
         // (1) add a blank layer
@@ -329,14 +327,15 @@ export class ThemesService extends olEventsEventTarget {
 
   /**
    * Get a theme object by its name.
+   *
    * @param {string} themeName Theme name.
-   * @return {angular.IPromise<?import('gmf/themes.js').GmfTheme>} Promise.
+   * @returns {angular.IPromise<?import('gmf/themes').GmfTheme>} Promise.
    */
   getThemeObject(themeName) {
     return this.promise_.then(
       /**
-       * @param {import('gmf/themes.js').GmfThemesResponse} data The "themes" web service response.
-       * @return {?import('gmf/themes.js').GmfTheme} The theme object for themeName, or null if not found.
+       * @param {import('gmf/themes').GmfThemesResponse} data The "themes" web service response.
+       * @returns {?import('gmf/themes').GmfTheme} The theme object for themeName, or null if not found.
        */
       (data) => findThemeByName(data.themes, themeName)
     );
@@ -344,13 +343,14 @@ export class ThemesService extends olEventsEventTarget {
 
   /**
    * Get an array of theme objects.
-   * @return {angular.IPromise<import('gmf/themes.js').GmfTheme[]>} Promise.
+   *
+   * @returns {angular.IPromise<import('gmf/themes').GmfTheme[]>} Promise.
    */
   getThemesObject() {
     return this.promise_.then(
       /**
-       * @param {import('gmf/themes.js').GmfThemesResponse} data The "themes" web service response.
-       * @return {import('gmf/themes.js').GmfTheme[]} The themes object.
+       * @param {import('gmf/themes').GmfThemesResponse} data The "themes" web service response.
+       * @returns {import('gmf/themes').GmfTheme[]} The themes object.
        */
       (data) => data.themes
     );
@@ -358,7 +358,8 @@ export class ThemesService extends olEventsEventTarget {
 
   /**
    * Get an array of background layer objects.
-   * @return {angular.IPromise<(import('gmf/themes.js').GmfLayer | import('gmf/themes.js').GmfGroup)[]>}
+   *
+   * @returns {angular.IPromise<(import('gmf/themes').GmfLayer | import('gmf/themes').GmfGroup)[]>}
    *   Promise.
    */
   getBackgroundLayersObject() {
@@ -367,8 +368,8 @@ export class ThemesService extends olEventsEventTarget {
     }
     return this.promise_.then(
       /**
-       * @param {import('gmf/themes.js').GmfThemesResponse} data The "themes" web service response.
-       * @return {(import('gmf/themes.js').GmfLayer | import('gmf/themes.js').GmfGroup)[]}
+       * @param {import('gmf/themes').GmfThemesResponse} data The "themes" web service response.
+       * @returns {(import('gmf/themes').GmfLayer | import('gmf/themes').GmfGroup)[]}
        *    The background layers object.
        */
       (data) => data.background_layers
@@ -377,7 +378,8 @@ export class ThemesService extends olEventsEventTarget {
 
   /**
    * Get the `ogcServers` object.
-   * @return {angular.IPromise<import('gmf/themes.js').GmfOgcServers>} Promise.
+   *
+   * @returns {angular.IPromise<import('gmf/themes').GmfOgcServers>} Promise.
    */
   getOgcServersObject() {
     if (this.promise_ === null) {
@@ -385,8 +387,8 @@ export class ThemesService extends olEventsEventTarget {
     }
     return this.promise_.then(
       /**
-       * @param {import('gmf/themes.js').GmfThemesResponse} data The "themes" web service response.
-       * @return {import('gmf/themes.js').GmfOgcServers} The `ogcServers` object.
+       * @param {import('gmf/themes').GmfThemesResponse} data The "themes" web service response.
+       * @returns {import('gmf/themes').GmfOgcServers} The `ogcServers` object.
        */
       (data) => data.ogcServers
     );
@@ -394,7 +396,8 @@ export class ThemesService extends olEventsEventTarget {
 
   /**
    * Returns a promise to check if one of the layers in the themes is editable.
-   * @return {angular.IPromise<boolean>} Promise.
+   *
+   * @returns {angular.IPromise<boolean>} Promise.
    */
   hasEditableLayers() {
     if (this.promise_ === null) {
@@ -405,8 +408,9 @@ export class ThemesService extends olEventsEventTarget {
 
   /**
    * Returns if one of the layers in the themes is editable.
-   * @param {import('gmf/themes.js').GmfThemesResponse} data The "themes" web service response.
-   * @return {boolean} Editable layers?
+   *
+   * @param {import('gmf/themes').GmfThemesResponse} data The "themes" web service response.
+   * @returns {boolean} Editable layers?
    */
   hasEditableLayers_(data) {
     return data.themes.some((theme) => {
@@ -416,12 +420,12 @@ export class ThemesService extends olEventsEventTarget {
   }
 
   /**
-   * @param {import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer} node Theme node
-   * @return {boolean} Editable layers?
+   * @param {import('gmf/themes').GmfGroup|import('gmf/themes').GmfLayer} node Theme node
+   * @returns {boolean} Editable layers?
    */
   hasNodeEditableLayers_(node) {
-    const gmfGroup = /** @type {import('gmf/themes.js').GmfGroup} */ (node);
-    const gmfLayer = /** @type {import('gmf/themes.js').GmfLayer} */ (node);
+    const gmfGroup = /** @type {import('gmf/themes').GmfGroup} */ (node);
+    const gmfLayer = /** @type {import('gmf/themes').GmfLayer} */ (node);
     if (gmfLayer.editable) {
       return true;
     }
@@ -489,9 +493,9 @@ export class ThemesService extends olEventsEventTarget {
 }
 
 /**
- * @param {import('gmf/themes.js').GmfTheme[]} themes Array of "theme" objects.
+ * @param {import('gmf/themes').GmfTheme[]} themes Array of "theme" objects.
  * @param {string} name The layer name.
- * @return {?import('gmf/themes.js').GmfGroup} The group.
+ * @returns {?import('gmf/themes').GmfGroup} The group.
  * @hidden
  */
 export function findGroupByLayerNodeName(themes, name) {
@@ -512,9 +516,10 @@ export function findGroupByLayerNodeName(themes, name) {
 
 /**
  * Find a layer group object by its name. Return null if not found.
- * @param {import('gmf/themes.js').GmfTheme[]} themes Array of "theme" objects.
+ *
+ * @param {import('gmf/themes').GmfTheme[]} themes Array of "theme" objects.
  * @param {string} name The group name.
- * @return {?import('gmf/themes.js').GmfGroup} The group.
+ * @returns {?import('gmf/themes').GmfGroup} The group.
  * @hidden
  */
 export function findGroupByName(themes, name) {
@@ -535,10 +540,11 @@ export function findGroupByName(themes, name) {
 
 /**
  * Find an object by its name. Return null if not found.
- * @param {(import('gmf/themes.js').GmfTheme|import("gmf/themes").GmfGroup|import("gmf/themes").GmfLayer)[]} objects
+ *
+ * @param {(import('gmf/themes').GmfTheme|import("gmf/themes").GmfGroup|import("gmf/themes").GmfLayer)[]} objects
  *    Array of objects with a 'name' attribute.
  * @param {string} objectName The object name.
- * @return {?(import('gmf/themes.js').GmfTheme|import("gmf/themes").GmfGroup|import("gmf/themes").GmfLayer)}
+ * @returns {?(import('gmf/themes').GmfTheme|import("gmf/themes").GmfGroup|import("gmf/themes").GmfLayer)}
  *    The object or null.
  * @hidden
  */
@@ -548,28 +554,29 @@ export function findObjectByName(objects, objectName) {
 
 /**
  * Find a theme object by its name. Return null if not found.
- * @param {import('gmf/themes.js').GmfTheme[]} themes Array of "theme" objects.
+ *
+ * @param {import('gmf/themes').GmfTheme[]} themes Array of "theme" objects.
  * @param {string} themeName The theme name.
- * @return {?import('gmf/themes.js').GmfTheme} The theme object or null.
+ * @returns {?import('gmf/themes').GmfTheme} The theme object or null.
  * @hidden
  */
 export function findThemeByName(themes, themeName) {
-  return /** @type {import('gmf/themes.js').GmfTheme} */ (findObjectByName(themes, themeName));
+  return /** @type {import('gmf/themes').GmfTheme} */ findObjectByName(themes, themeName);
 }
 
 /**
  * Fill the given "nodes" array with all internal nodes (non-leaf nones) in the given node.
  *
- * @param {import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer} node Layertree node.
- * @param {import('gmf/themes.js').GmfGroup[]} nodes An array.
+ * @param {import('gmf/themes').GmfGroup|import('gmf/themes').GmfLayer} node Layertree node.
+ * @param {import('gmf/themes').GmfGroup[]} nodes An array.
  * @private
  * @hidden
  */
 function getFlatInternalNodes(node, nodes) {
-  const gmfGroup = /** @type {import('gmf/themes.js').GmfGroup} */ (node);
+  const gmfGroup = /** @type {import('gmf/themes').GmfGroup} */ (node);
   const children = gmfGroup.children;
   if (children !== undefined) {
-    nodes.push(/** @type {import('gmf/themes.js').GmfGroup} */ (node));
+    nodes.push(/** @type {import('gmf/themes').GmfGroup} */ (node));
     for (const child of children) {
       getFlatInternalNodes(child, nodes);
     }
@@ -579,26 +586,27 @@ function getFlatInternalNodes(node, nodes) {
 /**
  * Fill the given "nodes" array with all leaf nodes in the given node.
  *
- * @param {import('gmf/themes.js').GmfTheme|import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer} node Layertree node.
- * @param {import('gmf/themes.js').GmfLayer[]} nodes An array.
+ * @param {import('gmf/themes').GmfTheme|import('gmf/themes').GmfGroup|import('gmf/themes').GmfLayer} node Layertree node.
+ * @param {import('gmf/themes').GmfLayer[]} nodes An array.
  * @hidden
  */
 export function getFlatNodes(node, nodes) {
-  const gmfGroup = /** @type {import('gmf/themes.js').GmfTheme|import('gmf/themes.js').GmfGroup} */ (node);
+  const gmfGroup = /** @type {import('gmf/themes').GmfTheme|import('gmf/themes').GmfGroup} */ (node);
   const children = gmfGroup.children;
   if (children !== undefined) {
     for (const child of children) {
       getFlatNodes(child, nodes);
     }
   } else {
-    nodes.push(/** @type {import('gmf/themes.js').GmfLayer} */ (node));
+    nodes.push(/** @type {import('gmf/themes').GmfLayer} */ (node));
   }
 }
 
 /**
  * Get the snapping configuration object from a Layertree controller
- * @param {import('gmf/themes.js').GmfLayer} node Layer node from the theme.
- * @return {?import('gmf/themes.js').GmfSnappingConfig} Snapping configuration, if found.
+ *
+ * @param {import('gmf/themes').GmfLayer} node Layer node from the theme.
+ * @returns {?import('gmf/themes').GmfSnappingConfig} Snapping configuration, if found.
  * @hidden
  */
 export function getSnappingConfig(node) {
@@ -614,13 +622,14 @@ export function getSnappingConfig(node) {
 /**
  * Get the maximal resolution defined for this layer. Looks in the
  *     layer itself before to look into its metadata.
- * @param {import('gmf/themes.js').GmfLayerWMS|import('gmf/themes.js').GmfLayerWMTS} gmfLayer the GeoMapFish Layer.
- * @return {number|undefined} the max resolution or undefined if any.
+ *
+ * @param {import('gmf/themes').GmfLayerWMS|import('gmf/themes').GmfLayerWMTS} gmfLayer the GeoMapFish Layer.
+ * @returns {number|undefined} the max resolution or undefined if any.
  * @hidden
  */
 export function getNodeMaxResolution(gmfLayer) {
   const metadata = gmfLayer.metadata;
-  const gmfLayerWMS = /** @type {import('gmf/themes.js').GmfLayerWMS} */ (gmfLayer);
+  const gmfLayerWMS = /** @type {import('gmf/themes').GmfLayerWMS} */ (gmfLayer);
   let maxResolution = gmfLayerWMS.maxResolutionHint;
   if (maxResolution === undefined && metadata !== undefined) {
     maxResolution = metadata.maxResolution;
@@ -631,13 +640,14 @@ export function getNodeMaxResolution(gmfLayer) {
 /**
  * Get the minimal resolution defined for this layer. Looks in the
  *     layer itself before to look into its metadata.
- * @param {import('gmf/themes.js').GmfLayerWMS|import('gmf/themes.js').GmfLayerWMTS} gmfLayer the GeoMapFish Layer.
- * @return {number|undefined} the min resolution or undefined if any.
+ *
+ * @param {import('gmf/themes').GmfLayerWMS|import('gmf/themes').GmfLayerWMTS} gmfLayer the GeoMapFish Layer.
+ * @returns {number|undefined} the min resolution or undefined if any.
  * @hidden
  */
 export function getNodeMinResolution(gmfLayer) {
   const metadata = gmfLayer.metadata;
-  const gmfLayerWMS = /** @type {import('gmf/themes.js').GmfLayerWMS} */ (gmfLayer);
+  const gmfLayerWMS = /** @type {import('gmf/themes').GmfLayerWMS} */ (gmfLayer);
   let minResolution = gmfLayerWMS.minResolutionHint;
   if (minResolution === undefined && metadata !== undefined) {
     minResolution = metadata.minResolution;

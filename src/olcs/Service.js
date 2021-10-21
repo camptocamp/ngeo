@@ -42,11 +42,11 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
-import ngeoStatemanagerLocation from 'ngeo/statemanager/Location.js';
-import {Permalink3dParam} from 'ngeo/olcs/constants.js';
-import ngeoStatemanagerService from 'ngeo/statemanager/Service.js';
-import {toDegrees} from 'ol/math.js';
+import ngeoMiscDebounce from 'ngeo/misc/debounce';
+import ngeoStatemanagerLocation from 'ngeo/statemanager/Location';
+import {Permalink3dParam} from 'ngeo/olcs/constants';
+import ngeoStatemanagerService from 'ngeo/statemanager/Service';
+import {toDegrees} from 'ol/math';
 
 /**
  * @hidden
@@ -54,41 +54,41 @@ import {toDegrees} from 'ol/math.js';
 export const OlcsService = class {
   /**
    * @ngInject
-   * @param {import("ngeo/misc/debounce.js").miscDebounce<function(): void>} ngeoDebounce ngeo debounce
+   * @param {import('ngeo/misc/debounce').miscDebounce<function(): void>} ngeoDebounce ngeo debounce
    *    service.
-   * @param {import("ngeo/statemanager/Location.js").StatemanagerLocation} ngeoLocation ngeo location
+   * @param {import('ngeo/statemanager/Location').StatemanagerLocation} ngeoLocation ngeo location
    *    service.
-   * @param {import("ngeo/statemanager/Service.js").StatemanagerService} ngeoStateManager The ngeo
+   * @param {import('ngeo/statemanager/Service').StatemanagerService} ngeoStateManager The ngeo
    *    StateManager service.
    */
   constructor(ngeoDebounce, ngeoLocation, ngeoStateManager) {
     /**
      * @private
-     * @type {?import('olcs/contrib/Manager.js').default}
+     * @type {?import('olcs/contrib/Manager').default}
      */
     this.manager_ = null;
 
     /**
      * @private
-     * @type {import("ngeo/misc/debounce.js").miscDebounce<function(): void>}
+     * @type {import('ngeo/misc/debounce').miscDebounce<function(): void>}
      */
     this.ngeoDebounce_ = ngeoDebounce;
 
     /**
      * @private
-     * @type {import("ngeo/statemanager/Location.js").StatemanagerLocation}
+     * @type {import('ngeo/statemanager/Location').StatemanagerLocation}
      */
     this.ngeoLocation_ = ngeoLocation;
 
     /**
      * @private
-     * @type {import("ngeo/statemanager/Service.js").StatemanagerService}
+     * @type {import('ngeo/statemanager/Service').StatemanagerService}
      */
     this.ngeoStateManager_ = ngeoStateManager;
   }
 
   /**
-   * @param {import('olcs/contrib/Manager.js').default} manager Manager.
+   * @param {import('olcs/contrib/Manager').default} manager Manager.
    */
   initialize(manager) {
     this.manager_ = manager;
@@ -103,7 +103,7 @@ export const OlcsService = class {
   }
 
   /**
-   * @return {?import('olcs/contrib/Manager.js').default} the manager.
+   * @returns {?import('olcs/contrib/Manager').default} the manager.
    */
   getManager() {
     return this.manager_;
@@ -111,7 +111,7 @@ export const OlcsService = class {
 
   /**
    * @private
-   * @return {Promise<undefined>} A promise after load & enabled.
+   * @returns {Promise<undefined>} A promise after load & enabled.
    */
   initialStateToCamera_() {
     if (!this.manager_) {

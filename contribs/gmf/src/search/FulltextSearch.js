@@ -20,10 +20,11 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import {encodeQueryString, decodeQueryString} from 'ngeo/utils.js';
+import {encodeQueryString, decodeQueryString} from 'ngeo/utils';
 
 /**
  * Provides the c2c-geoportal full-text search.
+ *
  * @param {angular.IHttpService} $http Angular http service.
  * @param {string} fulltextsearchUrl The service URL.
  * @class
@@ -57,9 +58,10 @@ export function FulltextSearchService($http, fulltextsearchUrl) {
 
 /**
  * Perform a search query on the c2c-geoportal full-text search.
+ *
  * @param {string} query Search query.
  * @param {Object<string, string>} params Additional parameters.
- * @return {Promise<import('geojson').FeatureCollection>} Request promise with data array.
+ * @returns {Promise<import('geojson').FeatureCollection>} Request promise with data array.
  */
 FulltextSearchService.prototype.search = function (query, params) {
   const queryParams = Object.assign({}, this.defaultParams_, params);

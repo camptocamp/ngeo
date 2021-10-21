@@ -21,15 +21,11 @@
 
 import angular from 'angular';
 import './datepicker.css';
-import ngeoMiscDatepickerComponent from 'ngeo/misc/datepickerComponent.js';
+import ngeoMiscDatepickerComponent from 'ngeo/misc/datepickerComponent';
 
-import ngeoMiscWMSTime from 'ngeo/misc/WMSTime.js';
-import {
-  TimePropertyWidgetEnum,
-  TimePropertyResolutionEnum,
-  TimePropertyModeEnum,
-} from 'ngeo/datasource/OGC.js';
-import options from './options.js';
+import ngeoMiscWMSTime from 'ngeo/misc/WMSTime';
+import {TimePropertyWidgetEnum, TimePropertyResolutionEnum, TimePropertyModeEnum} from 'ngeo/datasource/OGC';
+import options from './options';
 
 /**
  * @type {angular.IModule}
@@ -43,17 +39,17 @@ const myModule = angular.module('gmfapp', [
 
 /**
  * @class
- * @param {import("ngeo/misc/WMSTime.js").WMSTime} ngeoWMSTime wmstime service.
+ * @param {import('ngeo/misc/WMSTime').WMSTime} ngeoWMSTime wmstime service.
  * @ngInject
  */
 function MainController(ngeoWMSTime) {
   /**
-   * @type {import("ngeo/misc/WMSTime.js").WMSTime}
+   * @type {import('ngeo/misc/WMSTime').WMSTime}
    */
   this.ngeoWMSTime_ = ngeoWMSTime;
 
   /**
-   * @type {import('ngeo/datasource/OGC.js').TimeProperty}
+   * @type {import('ngeo/datasource/OGC').TimeProperty}
    */
   this.wmsTimeRangeMode = {
     widget: TimePropertyWidgetEnum.DATEPICKER,
@@ -65,7 +61,7 @@ function MainController(ngeoWMSTime) {
   };
 
   /**
-   * @type {import('ngeo/datasource/OGC.js').TimeProperty}
+   * @type {import('ngeo/datasource/OGC').TimeProperty}
    */
   this.wmsTimeValueMode = {
     widget: /** @type {TimePropertyWidgetEnum} */ ('datepicker'),
@@ -87,7 +83,7 @@ function MainController(ngeoWMSTime) {
   this.rangeValue = '';
 
   /**
-   * @param {import('ngeo/datasource/OGC.js').TimeRange} date
+   * @param {import('ngeo/datasource/OGC').TimeRange} date
    * @this {MainController}
    */
   this.onDateSelected = function (date) {
@@ -95,7 +91,7 @@ function MainController(ngeoWMSTime) {
   };
 
   /**
-   * @param {import('ngeo/datasource/OGC.js').TimeRange} date
+   * @param {import('ngeo/datasource/OGC').TimeRange} date
    * @this {MainController}
    */
   this.onDateRangeSelected = function (date) {

@@ -19,14 +19,15 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import ngeoFormatAttributeType from 'ngeo/format/AttributeType.js';
-import ngeoRuleRule from 'ngeo/rule/Rule.js';
-import {listen, unlistenByKey} from 'ol/events.js';
-import olFeature from 'ol/Feature.js';
-import olFormatGeoJSON from 'ol/format/GeoJSON.js';
+import ngeoFormatAttributeType from 'ngeo/format/AttributeType';
+import ngeoRuleRule from 'ngeo/rule/Rule';
+import {listen, unlistenByKey} from 'ol/events';
+import olFeature from 'ol/Feature';
+import olFormatGeoJSON from 'ol/format/GeoJSON';
 
 /**
- * extends import('ngeo/rule/Rule.js').RuleOptions
+ * extends import('ngeo/rule/Rule').RuleOptions
+ *
  * @typedef {Object} GeometryOptions
  * @property {Object<string, *>} [featureProperties] Properties for the feature.
  * @property {boolean} [active=false] (RuleOptions)
@@ -67,7 +68,7 @@ export default class extends ngeoRuleRule {
     this.feature_ = new olFeature(properties);
 
     /**
-     * @type {import("ol/format/GeoJSON.js").default}
+     * @type {import('ol/format/GeoJSON').default}
      * @private
      */
     this.format_ = new olFormatGeoJSON();
@@ -85,7 +86,7 @@ export default class extends ngeoRuleRule {
     this.updatingGeometry_ = false;
 
     /**
-     * @type {?import("ol/events.js").EventsKey}
+     * @type {?import('ol/events').EventsKey}
      * @private
      */
     this.geometryChangeListenerKey_ = null;
@@ -105,14 +106,14 @@ export default class extends ngeoRuleRule {
   // === Static property getters/setters ===
 
   /**
-   * @return {olFeature<import("ol/geom/Geometry.js").default>} Feature.
+   * @returns {olFeature<import('ol/geom/Geometry').default>} Feature.
    */
   get feature() {
     return this.feature_;
   }
 
   /**
-   * @return {?number|string|string[]} Literal
+   * @returns {?number|string|string[]} Literal
    */
   get literal() {
     return this.literal_;
@@ -137,14 +138,14 @@ export default class extends ngeoRuleRule {
   // === Calculated property getters/setters ===
 
   /**
-   * @return {?import("ol/geom/Geometry.js").default} Geometry
+   * @returns {?import('ol/geom/Geometry').default} Geometry
    */
   get geometry() {
     return this.feature_.getGeometry() || null;
   }
 
   /**
-   * @param {?import("ol/geom/Geometry.js").default} geometry Geometry
+   * @param {?import('ol/geom/Geometry').default} geometry Geometry
    */
   set geometry(geometry) {
     this.feature_.setGeometry(geometry || undefined);
@@ -154,7 +155,8 @@ export default class extends ngeoRuleRule {
 
   /**
    * Called when the geometry property in the feature changes. Update the literal accordingly.
-   * @return {void}
+   *
+   * @returns {void}
    * @private
    */
   handleFeatureGeometryChange_() {
@@ -184,11 +186,12 @@ export default class extends ngeoRuleRule {
   /**
    * Called when the geometry of the features changes. Update the literal
    * accordingly.
-   * @param {Event|import("ol/events/Event.js").default} evt Event
+   *
+   * @param {Event|import('ol/events/Event').default} evt Event
    * @private
    */
   handleGeometryChange_(evt) {
-    const geometry = /** @type {import("ol/geom/Geometry.js").default} */ (evt.target);
+    const geometry = /** @type {import('ol/geom/Geometry').default} */ (evt.target);
     this.updatingGeometry_ = true;
     const literal = this.format_.writeGeometry(geometry);
     if (typeof literal == 'string') {
@@ -201,6 +204,7 @@ export default class extends ngeoRuleRule {
 
   /**
    * Set geometry property using the literal property.
+   *
    * @private
    */
   setGeometryFromLiteral_() {
@@ -216,6 +220,7 @@ export default class extends ngeoRuleRule {
   /**
    * Unlisten the feature geometry change event, then listen to it if the
    * feature has a geometry.
+   *
    * @private
    */
   registerGeometryChange_() {

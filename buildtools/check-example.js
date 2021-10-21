@@ -34,6 +34,10 @@ const screenshot = !arg.startsWith('http');
 const screenshotPath = screenshot ? `${arg}.png` : undefined;
 const page_url = screenshot ? `http://localhost:3001/${arg}` : arg;
 
+/**
+ * @param name
+ * @param contentType
+ */
 function fileMock(name, contentType) {
   return {
     status: 200,
@@ -64,6 +68,10 @@ process.on('unhandledRejection', async (error) => {
 const requestsURL = new Set();
 const start = new Date();
 let timeout = undefined;
+/**
+ * @param page
+ * @param browser
+ */
 function loaded(page, browser) {
   if (timeout !== undefined) {
     clearTimeout(timeout);

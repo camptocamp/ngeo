@@ -19,33 +19,33 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import olObservable from 'ol/Observable.js';
-import olLayerLayer from 'ol/layer/Layer.js';
-import olLayerVector from 'ol/layer/Vector.js';
-import olLayerTile from 'ol/layer/Tile.js';
-import olLayerImage from 'ol/layer/Image.js';
-import * as olProj from 'ol/proj.js';
-import {defaultImageLoadFunction} from 'ol/source/Image.js';
-import olSourceImageWMS from 'ol/source/ImageWMS.js';
-import olSourceTileWMS from 'ol/source/TileWMS.js';
-import {createForProjection as createTileGridForProjection} from 'ol/tilegrid.js';
-import SerializerDeserializer from 'ngeo/offline/SerializerDeserializer.js';
-import LocalforageCordovaWrapper from 'ngeo/offline/LocalforageCordovaWrapper.js';
-import LocalforageAndroidWrapper from 'ngeo/offline/LocalforageAndroidWrapper.js';
-import LocalforageIosWrapper from 'ngeo/offline/LocalforageIosWrapper.js';
-import ngeoCustomEvent from 'ngeo/CustomEvent.js';
-import {normalizeURL, traverseLayer} from 'ngeo/offline/utils.js';
+import olObservable from 'ol/Observable';
+import olLayerLayer from 'ol/layer/Layer';
+import olLayerVector from 'ol/layer/Vector';
+import olLayerTile from 'ol/layer/Tile';
+import olLayerImage from 'ol/layer/Image';
+import * as olProj from 'ol/proj';
+import {defaultImageLoadFunction} from 'ol/source/Image';
+import olSourceImageWMS from 'ol/source/ImageWMS';
+import olSourceTileWMS from 'ol/source/TileWMS';
+import {createForProjection as createTileGridForProjection} from 'ol/tilegrid';
+import SerializerDeserializer from 'ngeo/offline/SerializerDeserializer';
+import LocalforageCordovaWrapper from 'ngeo/offline/LocalforageCordovaWrapper';
+import LocalforageAndroidWrapper from 'ngeo/offline/LocalforageAndroidWrapper';
+import LocalforageIosWrapper from 'ngeo/offline/LocalforageIosWrapper';
+import ngeoCustomEvent from 'ngeo/CustomEvent';
+import {normalizeURL, traverseLayer} from 'ngeo/offline/utils';
 // @ts-ignore
-import localforage from 'localforage/src/localforage.js';
+import localforage from 'localforage/src/localforage';
 
 /**
- * implements {import('ngeo/offline/index.js').OfflineOnTileDownload}
+ * implements {import('ngeo/offline/index').OfflineOnTileDownload}
  */
 export default class extends olObservable {
   /**
    * @ngInject
    * @param {!angular.IScope} $rootScope The rootScope provider.
-   * @param {!import("ngeo/map/BackgroundLayerMgr.js").MapBackgroundLayerManager} ngeoBackgroundLayerMgr
+   * @param {!import('ngeo/map/BackgroundLayerMgr').MapBackgroundLayerManager} ngeoBackgroundLayerMgr
    *    Background layer manager.
    * @param {number} ngeoOfflineGutter A gutter around the tiles to download (to avoid cut symbols)
    */
@@ -70,7 +70,7 @@ export default class extends olObservable {
 
     /**
      * @private
-     * @type {!import("ngeo/map/BackgroundLayerMgr.js").MapBackgroundLayerManager}
+     * @type {!import('ngeo/map/BackgroundLayerMgr').MapBackgroundLayerManager}
      */
     this.ngeoBackgroundLayerMgr_ = ngeoBackgroundLayerMgr;
 
@@ -109,7 +109,7 @@ export default class extends olObservable {
 
   /**
    * @export
-   * @return {boolean} whether some offline data is available in the storage
+   * @returns {boolean} whether some offline data is available in the storage
    */
   hasOfflineData() {
     return this.hasData;
@@ -128,10 +128,11 @@ export default class extends olObservable {
 
   /**
    * Hook to allow measuring get/set item performance.
+   *
    * @param {string} msg A message
    * @param {string} key The key to work on
    * @param {Promise<?>} promise A promise
-   * @return {Promise<?>} The promise we passed
+   * @returns {Promise<?>} The promise we passed
    */
   traceGetSetItem(msg, key, promise) {
     return promise;
@@ -161,7 +162,7 @@ export default class extends olObservable {
 
   /**
    * @param {string} key The key
-   * @return {Promise<?>} A promise
+   * @returns {Promise<?>} A promise
    */
   getItem(key) {
     const promise = this.localforage_['getItem'](key);
@@ -170,7 +171,7 @@ export default class extends olObservable {
 
   /**
    * @param {string} key .
-   * @return {Promise<?>} .
+   * @returns {Promise<?>} .
    */
   removeItem(key) {
     const promise = this.localforage_['removeItem'](key);
@@ -180,7 +181,7 @@ export default class extends olObservable {
   /**
    * @param {string} key The key
    * @param {*} value A value
-   * @return {Promise<?>} A promise
+   * @returns {Promise<?>} A promise
    */
   setItem(key, value) {
     const promise = this.localforage_['setItem'](key, value);
@@ -188,7 +189,7 @@ export default class extends olObservable {
   }
 
   /**
-   * @return {Promise<void>} A promise
+   * @returns {Promise<void>} A promise
    */
   clear() {
     this.setHasOfflineData(false);
@@ -197,16 +198,16 @@ export default class extends olObservable {
   }
 
   /**
-   * @param {!import("ol/Map.js").default} map A map
-   * @return {number} An "estimation" of the size of the data to download
+   * @param {!import('ol/Map').default} map A map
+   * @returns {number} An "estimation" of the size of the data to download
    */
   estimateLoadDataSize(map) {
     return 50;
   }
 
   /**
-   * @param {import("./index.js").OfflineLayerMetadata} layerItem The layer metadata
-   * @return {string} A key identifying an offline layer and used during restore.
+   * @param {import('./index').OfflineLayerMetadata} layerItem The layer metadata
+   * @returns {string} A key identifying an offline layer and used during restore.
    */
   getLayerKey(layerItem) {
     return /** @type {string} */ (layerItem.layer.get('label'));
@@ -214,8 +215,8 @@ export default class extends olObservable {
 
   /**
    * @param {number} progress The download progress
-   * @param {import("./index.js").OfflineTile} tile The tile
-   * @return {Promise<void>} A promise
+   * @param {import('./index').OfflineTile} tile The tile
+   * @returns {Promise<void>} A promise
    */
   onTileDownloadSuccess(progress, tile) {
     this.dispatchProgress_(progress);
@@ -228,7 +229,7 @@ export default class extends olObservable {
 
   /**
    * @param {number} progress The progress
-   * @return {Promise<void>} A promise
+   * @returns {Promise<void>} A promise
    */
   onTileDownloadError(progress) {
     this.dispatchProgress_(progress);
@@ -236,11 +237,11 @@ export default class extends olObservable {
   }
 
   /**
-   * @param {import("ol/Map.js").default} map A map
-   * @param {import("ol/layer/Layer.js").default<import("ol/source/Source.js").default>} layer A layer
-   * @param {import("ol/layer/Group.js").default[]} ancestors The ancestors of that layer
-   * @param {import("ol/extent.js").Extent} userExtent The extent selected by the user.
-   * @return {import("./index.js").OfflineExtentByZoom[]} The extent to download per zoom level
+   * @param {import('ol/Map').default} map A map
+   * @param {import('ol/layer/Layer').default<import('ol/source/Source').default>} layer A layer
+   * @param {import('ol/layer/Group').default[]} ancestors The ancestors of that layer
+   * @param {import('ol/extent').Extent} userExtent The extent selected by the user.
+   * @returns {import('./index').OfflineExtentByZoom[]} The extent to download per zoom level
    */
   getExtentByZoom(map, layer, ancestors, userExtent) {
     const currentZoom = map.getView().getZoom();
@@ -248,7 +249,7 @@ export default class extends olObservable {
       throw new Error('Missing currentZoom');
     }
     /**
-     * @type {import("./index.js").OfflineExtentByZoom[]}
+     * @type {import('./index').OfflineExtentByZoom[]}
      */
     const results = [];
     [0, 1, 2, 3, 4].forEach((dz) => {
@@ -262,9 +263,9 @@ export default class extends olObservable {
 
   /**
    * @protected
-   * @param {import("ol/source/Source.js").default} source An ImageWMS source
-   * @param {!import("ol/proj/Projection.js").default} projection The projection
-   * @return {import("ol/source/Source.js").default} A tiled equivalent source
+   * @param {import('ol/source/Source').default} source An ImageWMS source
+   * @param {!import('ol/proj/Projection').default} projection The projection
+   * @returns {import('ol/source/Source').default} A tiled equivalent source
    */
   sourceImageWMSToTileWMS(source, projection) {
     if (
@@ -291,20 +292,20 @@ export default class extends olObservable {
   }
 
   /**
-   * @param {import("ol/Map.js").default} map The map to work on.
-   * @param {import("ol/extent.js").Extent} userExtent The extent selected by the user.
-   * @return {!import("./index.js").OfflineLayerMetadata[]} the downloadable layers and metadata.
+   * @param {import('ol/Map').default} map The map to work on.
+   * @param {import('ol/extent').Extent} userExtent The extent selected by the user.
+   * @returns {!import('./index').OfflineLayerMetadata[]} the downloadable layers and metadata.
    */
   createLayerMetadatas(map, userExtent) {
     /**
-     * @type {import("./index.js").OfflineLayerMetadata[]}
+     * @type {import('./index').OfflineLayerMetadata[]}
      */
     const layersItems = [];
 
     /**
-     * @param {import("ol/layer/Base.js").default} layer .
-     * @param {import("ol/layer/Group.js").default[]} ancestors .
-     * @return {boolean} whether to traverse this layer children.
+     * @param {import('ol/layer/Base').default} layer .
+     * @param {import('ol/layer/Group').default[]} ancestors .
+     * @returns {boolean} whether to traverse this layer children.
      */
     const visitLayer = (layer, ancestors) => {
       if (layer instanceof olLayerLayer) {
@@ -349,13 +350,14 @@ export default class extends olObservable {
 
   /**
    * @private
-   * @param {import("./index.js").OfflinePersistentLayer} offlineLayer The offline layer
-   * @return {function(import("ol/ImageTile.js").default, string)} the tile function
+   * @param {import('./index').OfflinePersistentLayer} offlineLayer The offline layer
+   * @returns {function(import('ol/ImageTile').default, string)} the tile function
    */
   createTileLoadFunction_(offlineLayer) {
     /**
      * Load the tile from persistent storage.
-     * @param {import("ol/ImageTile.js").default} imageTile The image tile
+     *
+     * @param {import('ol/ImageTile').default} imageTile The image tile
      * @param {string} src The tile URL
      */
     const tileLoadFunction = (imageTile, src) => {
@@ -373,8 +375,8 @@ export default class extends olObservable {
   }
 
   /**
-   * @param {import("./index.js").OfflinePersistentLayer} offlineLayer The layer to recreate
-   * @return {?import("ol/layer/Layer.js").default<import("ol/source/Source.js").default>} the layer.
+   * @param {import('./index').OfflinePersistentLayer} offlineLayer The layer to recreate
+   * @returns {?import('ol/layer/Layer').default<import('ol/source/Source').default>} the layer.
    */
   recreateOfflineLayer(offlineLayer) {
     if (offlineLayer.layerType === 'tile') {
@@ -390,7 +392,7 @@ export default class extends olObservable {
   }
 
   /**
-   * @return {number} The number
+   * @returns {number} The number
    */
   getMaxNumberOfParallelDownloads() {
     return 11;

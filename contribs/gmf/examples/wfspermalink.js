@@ -21,17 +21,17 @@
 
 import angular from 'angular';
 import './wfspermalink.css';
-import gmfMapModule from 'gmf/map/module.js';
+import gmfMapModule from 'gmf/map/module';
 
-import gmfQueryWindowComponent from 'gmf/query/windowComponent.js';
-import ngeoStatemanagerWfsPermalink from 'ngeo/statemanager/WfsPermalink.js';
+import gmfQueryWindowComponent from 'gmf/query/windowComponent';
+import ngeoStatemanagerWfsPermalink from 'ngeo/statemanager/WfsPermalink';
 
-import EPSG2056 from 'ngeo/proj/EPSG_2056.js';
-import olMap from 'ol/Map.js';
-import olView from 'ol/View.js';
-import olLayerTile from 'ol/layer/Tile.js';
-import olSourceOSM from 'ol/source/OSM.js';
-import options from './options.js';
+import EPSG2056 from 'ngeo/proj/EPSG_2056';
+import olMap from 'ol/Map';
+import olView from 'ol/View';
+import olLayerTile from 'ol/layer/Tile';
+import olSourceOSM from 'ol/source/OSM';
+import options from './options';
 
 /** @type {angular.IModule} **/
 const myModule = angular.module('gmfapp', [
@@ -47,7 +47,7 @@ const myModule = angular.module('gmfapp', [
  */
 function MainController() {
   /**
-   * @type {import("ol/Map.js").default}
+   * @type {import('ol/Map').default}
    */
   this.map = new olMap({
     layers: [

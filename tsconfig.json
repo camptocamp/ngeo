@@ -6,15 +6,16 @@
     "lib": ["es2020", "dom"],
     "esModuleInterop": true,
     "allowJs": true,
-    "checkJs": true,
-    "noEmit": true,
     "noImplicitAny": true,
     "noImplicitThis": true,
     "alwaysStrict": true,
     "strictBindCallApply": true,
     "strictFunctionTypes": true,
     "skipLibCheck": true,
+    "sourceMap": true,
+    "experimentalDecorators": true,
     "baseUrl": "./",
+    "types": ["cypress"],
     "paths": {
       "ngeo/*": ["src/*"],
       "gmf/*": ["contribs/gmf/src/*"],
@@ -29,6 +30,7 @@
   },
   "include": [
     "src/**/*.js",
+    "src/**/*.ts",
     "lib/**/*.js",
     "api/src/**/*.js",
     "contribs/gmf/src/**/*.js",
@@ -38,5 +40,5 @@
     "examples/*.js",
     "contribs/gmf/examples/*.js"
   ],
-  "files": ["types/dom.d.ts"]
+  "files": ["types/dom.d.ts", "types/custom.d.ts"]
 }

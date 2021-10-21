@@ -20,12 +20,12 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import {gmfBackgroundlayerStatus} from 'gmf/backgroundlayerselector/status.js';
-import gmfThemeManager from 'gmf/theme/Manager.js';
-import gmfThemeThemes from 'gmf/theme/Themes.js';
-import {listen, unlistenByKey} from 'ol/events.js';
+import {gmfBackgroundlayerStatus} from 'gmf/backgroundlayerselector/status';
+import gmfThemeManager from 'gmf/theme/Manager';
+import gmfThemeThemes from 'gmf/theme/Themes';
+import {listen, unlistenByKey} from 'ol/events';
 
-import 'bootstrap/js/src/dropdown.js';
+import 'bootstrap/js/src/dropdown';
 
 /**
  * @type {angular.IModule}
@@ -48,7 +48,7 @@ myModule.value(
   'gmfThemeSelectorTemplateUrl',
   /**
    * @param {angular.IAttributes} $attrs Attributes.
-   * @return {string} The template url.
+   * @returns {string} The template url.
    */
   ($attrs) => {
     const templateUrl = $attrs.gmfThemeSelectorTemplateUrl;
@@ -59,7 +59,7 @@ myModule.value(
 /**
  * @param {angular.IAttributes} $attrs Attributes.
  * @param {function(angular.IAttributes): string} gmfThemeSelectorTemplateUrl Template function.
- * @return {string} Template URL.
+ * @returns {string} Template URL.
  * @ngInject
  * @private
  * @hidden
@@ -70,9 +70,9 @@ function gmfThemeSelectorTemplateUrl($attrs, gmfThemeSelectorTemplateUrl) {
 
 /**
  * Note that this component works with the
- * {@link import("gmf/layertree/TreeManager.js").LayertreeTreeManager}.
+ * {@link import('gmf/layertree/TreeManager').LayertreeTreeManager}.
  * Setting the theme will update the "tree" object of
- * this {@link import("gmf/layertree/TreeManager.js").LayertreeTreeManager}.
+ * this {@link import('gmf/layertree/TreeManager').LayertreeTreeManager}.
  *
  * Example:
  *
@@ -96,14 +96,13 @@ function gmfThemeSelectorTemplateUrl($attrs, gmfThemeSelectorTemplateUrl) {
  *
  * The theme selector can operate in a 'flush' (as above) or 'add' mode. For more information
  * about these modes, refer to the documentation of
- * {@link import("gmf/layertree/TreeManager.js").LayertreeTreeManager}.
+ * {@link import('gmf/layertree/TreeManager').LayertreeTreeManager}.
  *
  * To use the 'add' mode just add the constants:
  *
  *    gmfTreeManagerModeFlush: false
  *
  * @htmlAttribute {Function} gmf-themeselector-filter The themes filter.
- *
  * @type {angular.IComponentOptions}
  */
 const themeSelectorComponent = {
@@ -118,8 +117,8 @@ myModule.component('gmfThemeselector', themeSelectorComponent);
 
 /**
  * @param {angular.IScope} $scope Angular scope.
- * @param {import("gmf/theme/Manager.js").ThemeManagerService} gmfThemeManager Tree manager service.
- * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes Themes service.
+ * @param {import('gmf/theme/Manager').ThemeManagerService} gmfThemeManager Tree manager service.
+ * @param {import('gmf/theme/Themes').ThemesService} gmfThemes Themes service.
  * @class
  * @hidden
  * @ngInject
@@ -128,12 +127,12 @@ myModule.component('gmfThemeselector', themeSelectorComponent);
  */
 export function Controller($scope, gmfThemeManager, gmfThemes) {
   /**
-   * @type {import("gmf/theme/Manager.js").ThemeManagerService}
+   * @type {import('gmf/theme/Manager').ThemeManagerService}
    */
   this.gmfThemeManager = gmfThemeManager;
 
   /**
-   * @type {import("gmf/theme/Themes.js").ThemesService}
+   * @type {import('gmf/theme/Themes').ThemesService}
    */
   this.gmfThemes_ = gmfThemes;
 
@@ -143,12 +142,12 @@ export function Controller($scope, gmfThemeManager, gmfThemes) {
   this.themes = [];
 
   /**
-   * @type {function(import('gmf/themes.js').GmfTheme): boolean|undefined}
+   * @type {function(import('gmf/themes').GmfTheme): boolean|undefined}
    */
   this.filter = (theme) => undefined;
 
   /**
-   * @type {import("ol/events.js").EventsKey[]}
+   * @type {import('ol/events').EventsKey[]}
    */
   this.listenerKeys_ = [];
 
@@ -168,7 +167,7 @@ Controller.prototype.setThemes_ = function () {
 };
 
 /**
- * @param {import('gmf/themes.js').GmfTheme} theme Theme.
+ * @param {import('gmf/themes').GmfTheme} theme Theme.
  * @param {boolean} [opt_silent] if true it will be no user message if
  *     the theme should be added but it's already added.
  */

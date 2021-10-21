@@ -21,15 +21,11 @@
 
 import './timeslider.css';
 import angular from 'angular';
-import gmfLayertreeTimeSliderComponent from 'gmf/layertree/timeSliderComponent.js';
+import gmfLayertreeTimeSliderComponent from 'gmf/layertree/timeSliderComponent';
 
-import ngeoMiscWMSTime from 'ngeo/misc/WMSTime.js';
-import {
-  TimePropertyWidgetEnum,
-  TimePropertyResolutionEnum,
-  TimePropertyModeEnum,
-} from 'ngeo/datasource/OGC.js';
-import options from './options.js';
+import ngeoMiscWMSTime from 'ngeo/misc/WMSTime';
+import {TimePropertyWidgetEnum, TimePropertyResolutionEnum, TimePropertyModeEnum} from 'ngeo/datasource/OGC';
+import options from './options';
 
 /** @type {angular.IModule} **/
 const myModule = angular.module('gmfapp', [
@@ -41,17 +37,17 @@ const myModule = angular.module('gmfapp', [
 /**
  * @class
  * @param {angular.IScope} $scope Angular scope.
- * @param {import("ngeo/misc/WMSTime.js").WMSTime} ngeoWMSTime wmstime service.
+ * @param {import('ngeo/misc/WMSTime').WMSTime} ngeoWMSTime wmstime service.
  * @ngInject
  */
 function MainController($scope, ngeoWMSTime) {
   /**
-   * @type {import("ngeo/misc/WMSTime.js").WMSTime}
+   * @type {import('ngeo/misc/WMSTime').WMSTime}
    */
   this.ngeoWMSTime_ = ngeoWMSTime;
 
   /**
-   * @type {import('ngeo/datasource/OGC.js').TimeProperty}
+   * @type {import('ngeo/datasource/OGC').TimeProperty}
    */
   this.wmsTimeRangeMode = {
     widget: TimePropertyWidgetEnum.SLIDER,
@@ -63,7 +59,7 @@ function MainController($scope, ngeoWMSTime) {
   };
 
   /**
-   * @type {import('ngeo/datasource/OGC.js').TimeProperty}
+   * @type {import('ngeo/datasource/OGC').TimeProperty}
    */
   this.wmsTimeValueMode = {
     widget: TimePropertyWidgetEnum.SLIDER,
@@ -85,7 +81,7 @@ function MainController($scope, ngeoWMSTime) {
   this.sliderRangeValue = '';
 
   /**
-   * @param {import('ngeo/datasource/OGC.js').TimeRange} date
+   * @param {import('ngeo/datasource/OGC').TimeRange} date
    * @this {MainController}
    */
   this.onDateSelected = function (date) {
@@ -94,7 +90,7 @@ function MainController($scope, ngeoWMSTime) {
   };
 
   /**
-   * @param {import('ngeo/datasource/OGC.js').TimeRange} date
+   * @param {import('ngeo/datasource/OGC').TimeRange} date
    * @this {MainController}
    */
   this.onDateRangeSelected = function (date) {

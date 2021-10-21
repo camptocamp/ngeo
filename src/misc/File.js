@@ -33,7 +33,7 @@ export function FileService($q, $http, gettext) {
   // Test the validity of the file size
   /**
    * @param {number} fileSize
-   * @return {boolean}
+   * @returns {boolean}
    */
   this.isValidFileSize = function (fileSize) {
     return fileSize <= 20000000; // 20 Mo
@@ -41,7 +41,7 @@ export function FileService($q, $http, gettext) {
 
   /**
    * @param {string} fileContent
-   * @return {boolean}
+   * @returns {boolean}
    */
   this.isWmsGetCap = function (fileContent) {
     return /<(WMT_MS_Capabilities|WMS_Capabilities)/.test(fileContent);
@@ -49,7 +49,7 @@ export function FileService($q, $http, gettext) {
 
   /**
    * @param {string} fileContent
-   * @return {boolean}
+   * @returns {boolean}
    */
   this.isWmtsGetCap = function (fileContent) {
     return fileContent.includes('<Capabilities');
@@ -57,7 +57,7 @@ export function FileService($q, $http, gettext) {
 
   /**
    * @param {string} fileContent
-   * @return {boolean}
+   * @returns {boolean}
    */
   this.isKml = function (fileContent) {
     return fileContent.includes('<kml') && fileContent.includes('</kml>');
@@ -65,7 +65,7 @@ export function FileService($q, $http, gettext) {
 
   /**
    * @param {string} fileContent
-   * @return {boolean}
+   * @returns {boolean}
    */
   this.isGpx = function (fileContent) {
     return fileContent.includes('<gpx') && fileContent.includes('</gpx>');
@@ -75,7 +75,7 @@ export function FileService($q, $http, gettext) {
   let fileReader = null;
   /**
    * @param {Blob} file .
-   * @return {angular.IPromise<string>} .
+   * @returns {angular.IPromise<string>} .
    */
   this.read = function (file) {
     const defer = $q.defer();
@@ -118,7 +118,7 @@ export function FileService($q, $http, gettext) {
   /**
    * @param {string} url .
    * @param {angular.IDeferred<unknown>} [opt_cancelP] .
-   * @return {angular.IPromise<Blob>} .
+   * @returns {angular.IPromise<Blob>} .
    */
   this.load = function (url, opt_cancelP) {
     if (canceler) {

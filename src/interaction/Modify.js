@@ -19,36 +19,36 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import {deleteCondition} from 'ngeo/utils.js';
-import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties.js';
-import ngeoInteractionModifyCircle from 'ngeo/interaction/ModifyCircle.js';
-import ngeoInteractionModifyRectangle from 'ngeo/interaction/ModifyRectangle.js';
-import {listen, unlistenByKey} from 'ol/events.js';
-import {TRUE} from 'ol/functions.js';
-import olInteractionInteraction from 'ol/interaction/Interaction.js';
-import olCollection from 'ol/Collection.js';
-import olInteractionModify from 'ol/interaction/Modify.js';
-import olFeature from 'ol/Feature.js';
-import {CollectionEvent} from 'ol/Collection.js';
+import {deleteCondition} from 'ngeo/utils';
+import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties';
+import ngeoInteractionModifyCircle from 'ngeo/interaction/ModifyCircle';
+import ngeoInteractionModifyRectangle from 'ngeo/interaction/ModifyRectangle';
+import {listen, unlistenByKey} from 'ol/events';
+import {TRUE} from 'ol/functions';
+import olInteractionInteraction from 'ol/interaction/Interaction';
+import olCollection from 'ol/Collection';
+import olInteractionModify from 'ol/interaction/Modify';
+import olFeature from 'ol/Feature';
+import {CollectionEvent} from 'ol/Collection';
 
 /**
  * @typedef {Object} ModifyEventItem
- * @property {olFeature<import("ol/geom/Geometry.js").default>} features
+ * @property {olFeature<import('ol/geom/Geometry').default>} features
  */
 
 /**
- * @typedef {import("ngeo/CustomEvent.js").default<ModifyEventItem>} ModifyEvent
+ * @typedef {import('ngeo/CustomEvent').default<ModifyEventItem>} ModifyEvent
  */
 
 /**
  * @typedef {Object} Options
- * @property {import("ol/events/condition.js").Condition} [condition] From ol/interaction/Modify.Options.
- * @property {import("ol/events/condition.js").Condition} [deleteCondition] From ol/interaction/Modify.Options.
- * @property {import("ol/events/condition.js").Condition} [insertVertexCondition] From ol/interaction/Modify.Options.
+ * @property {import('ol/events/condition').Condition} [condition] From ol/interaction/Modify.Options.
+ * @property {import('ol/events/condition').Condition} [deleteCondition] From ol/interaction/Modify.Options.
+ * @property {import('ol/events/condition').Condition} [insertVertexCondition] From ol/interaction/Modify.Options.
  * @property {number} [pixelTolerance=10] From ol/interaction/Modify.Options.
- * @property {import("ol/style/Style.js").StyleLike} [style] From ol/interaction/Modify.Options.
- * @property {import('ol/source/Vector.js').default<unknown>} [source] From ol/interaction/Modify.Options.
- * @property {import('ol/Collection.js').default<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>} [features] From ol/interaction/Modify.Options.
+ * @property {import('ol/style/Style').StyleLike} [style] From ol/interaction/Modify.Options.
+ * @property {import('ol/source/Vector').default<unknown>} [source] From ol/interaction/Modify.Options.
+ * @property {import('ol/Collection').default<import('ol/Feature').default<import('ol/geom/Geometry').default>>} [features] From ol/interaction/Modify.Options.
  * @property {boolean} [wrapX=false] From ol/interaction/Modify.Options.
  * @property {number} [nbPoints=64] The number of points in the circle.
  */
@@ -68,6 +68,7 @@ import {CollectionEvent} from 'ol/Collection.js';
  * interactions follow the `active` property of this interaction, i.e. when
  * this interaction is activated, so do the inner interactions. Since they will
  * never share the same feature, they don't collide with one an other.
+ *
  * @hidden
  */
 export default class extends olInteractionInteraction {
@@ -81,25 +82,25 @@ export default class extends olInteractionInteraction {
     console.assert(options.features);
 
     /**
-     * @type {import("ol/Collection.js").default<olFeature<import("ol/geom/Geometry.js").default>>}
+     * @type {import('ol/Collection').default<olFeature<import('ol/geom/Geometry').default>>}
      * @private
      */
     this.features_ = options.features;
 
     /**
-     * @type {import("ol/events.js").EventsKey[]}
+     * @type {import('ol/events').EventsKey[]}
      * @private
      */
     this.listenerKeys_ = [];
 
     /**
-     * @type {import("ol/interaction/Interaction.js").default[]}
+     * @type {import('ol/interaction/Interaction').default[]}
      * @private
      */
     this.interactions_ = [];
 
     /**
-     * @type {import("ol/Collection.js").default<olFeature<import("ol/geom/Geometry.js").default>>}
+     * @type {import('ol/Collection').default<olFeature<import('ol/geom/Geometry').default>>}
      * @private
      */
     this.otherFeatures_ = new olCollection();
@@ -115,7 +116,7 @@ export default class extends olInteractionInteraction {
     );
 
     /**
-     * @type {import("ol/Collection.js").default<olFeature<import("ol/geom/Geometry.js").default>>}
+     * @type {import('ol/Collection').default<olFeature<import('ol/geom/Geometry').default>>}
      * @private
      */
     this.circleFeatures_ = new olCollection();
@@ -133,7 +134,7 @@ export default class extends olInteractionInteraction {
     );
 
     /**
-     * @type {import("ol/Collection.js").default<olFeature<import("ol/geom/Geometry.js").default>>}
+     * @type {import('ol/Collection').default<olFeature<import('ol/geom/Geometry').default>>}
      * @private
      */
     this.rectangleFeatures_ = new olCollection();
@@ -150,6 +151,7 @@ export default class extends olInteractionInteraction {
 
   /**
    * Activate or deactivate the interaction.
+   *
    * @param {boolean} active Active.
    * @override
    */
@@ -162,7 +164,8 @@ export default class extends olInteractionInteraction {
    * Remove the interaction from its current map and attach it to the new map.
    * Subclasses may set up event handlers to get notified about changes to
    * the map here.
-   * @param {import("ol/PluggableMap.js").default} map Map.
+   *
+   * @param {import('ol/PluggableMap').default} map Map.
    * @override
    */
   setMap(map) {
@@ -188,6 +191,7 @@ export default class extends olInteractionInteraction {
 
   /**
    * Toggle interactions.
+   *
    * @private
    */
   setState_() {
@@ -218,7 +222,7 @@ export default class extends olInteractionInteraction {
   }
 
   /**
-   * @param {Event|import('ol/events/Event.js').default} evt Event.
+   * @param {Event|import('ol/events/Event').default} evt Event.
    * @private
    */
   handleFeaturesAdd_(evt) {
@@ -230,13 +234,13 @@ export default class extends olInteractionInteraction {
   }
 
   /**
-   * @param {Event|import('ol/events/Event.js').default} evt Event.
+   * @param {Event|import('ol/events/Event').default} evt Event.
    * @private
    */
   handleFeaturesRemove_(evt) {
     if (evt instanceof CollectionEvent) {
       /**
-       * @type {olFeature<import("ol/geom/Geometry.js").default>}
+       * @type {olFeature<import('ol/geom/Geometry').default>}
        */
       const feature = evt.element;
       this.removeFeature_(feature);
@@ -244,7 +248,7 @@ export default class extends olInteractionInteraction {
   }
 
   /**
-   * @param {olFeature<import("ol/geom/Geometry.js").default>} feature Feature.
+   * @param {olFeature<import('ol/geom/Geometry').default>} feature Feature.
    * @private
    */
   addFeature_(feature) {
@@ -253,7 +257,7 @@ export default class extends olInteractionInteraction {
   }
 
   /**
-   * @param {olFeature<import("ol/geom/Geometry.js").default>} feature Feature.
+   * @param {olFeature<import('ol/geom/Geometry').default>} feature Feature.
    * @private
    */
   removeFeature_(feature) {
@@ -262,8 +266,8 @@ export default class extends olInteractionInteraction {
   }
 
   /**
-   * @param {olFeature<import("ol/geom/Geometry.js").default>} feature Feature.
-   * @return {import("ol/Collection.js").default<olFeature<import("ol/geom/Geometry.js").default>>} Collection of features for
+   * @param {olFeature<import('ol/geom/Geometry').default>} feature Feature.
+   * @returns {import('ol/Collection').default<olFeature<import('ol/geom/Geometry').default>>} Collection of features for
    *    this feature.
    * @private
    */

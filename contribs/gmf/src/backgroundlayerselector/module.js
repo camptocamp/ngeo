@@ -20,7 +20,7 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import gmfBackgroundlayerselectorComponent from 'gmf/backgroundlayerselector/component.js';
+import gmfBackgroundlayerselectorComponent from 'gmf/backgroundlayerselector/component';
 
 /**
  * @type {angular.IModule}

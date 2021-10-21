@@ -19,37 +19,38 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import {getDefaultModifyStyleFunction} from 'ngeo/interaction/common.js';
-import ngeoCustomEvent from 'ngeo/CustomEvent.js';
-import {getUid as olUtilGetUid} from 'ol/util.js';
-import * as olExtent from 'ol/extent.js';
-import olFeature from 'ol/Feature.js';
-import {listen, unlistenByKey} from 'ol/events.js';
-import olInteractionPointer from 'ol/interaction/Pointer.js';
-import olGeomPoint from 'ol/geom/Point.js';
-import olGeomLineString from 'ol/geom/LineString.js';
-import olGeomPolygon from 'ol/geom/Polygon.js';
-import olLayerVector from 'ol/layer/Vector.js';
-import olSourceVector from 'ol/source/Vector.js';
-import {CollectionEvent} from 'ol/Collection.js';
+import {getDefaultModifyStyleFunction} from 'ngeo/interaction/common';
+import ngeoCustomEvent from 'ngeo/CustomEvent';
+import {getUid as olUtilGetUid} from 'ol/util';
+import * as olExtent from 'ol/extent';
+import olFeature from 'ol/Feature';
+import {listen, unlistenByKey} from 'ol/events';
+import olInteractionPointer from 'ol/interaction/Pointer';
+import olGeomPoint from 'ol/geom/Point';
+import olGeomLineString from 'ol/geom/LineString';
+import olGeomPolygon from 'ol/geom/Polygon';
+import olLayerVector from 'ol/layer/Vector';
+import olSourceVector from 'ol/source/Vector';
+import {CollectionEvent} from 'ol/Collection';
 
 /**
  * @typedef {Object} RotateEventItem
- * @property {olFeature<import("ol/geom/Geometry.js").default>} feature
+ * @property {olFeature<import('ol/geom/Geometry').default>} feature
  */
 
 /**
- * @typedef {import("ngeo/CustomEvent.js").default<RotateEventItem>} RotateEvent
+ * @typedef {import('ngeo/CustomEvent').default<RotateEventItem>} RotateEvent
  */
 
 /**
  * Interaction to rotate features.
+ *
  * @hidden
  */
 export default class extends olInteractionPointer {
   /**
-   * @param {import('ol/interaction/Modify.js').Options} options Options.
-   * @fires import("ngeo/interaction/ModifyCircleEvent.js").default
+   * @param {import('ol/interaction/Modify').Options} options Options.
+   * @fires import('ngeo/interaction/ModifyCircleEvent').default
    */
   constructor(options) {
     super();
@@ -59,7 +60,7 @@ export default class extends olInteractionPointer {
     this.handleUpEvent = this.handleUp_;
 
     /**
-     * @type {import("ol/events.js").EventsKey[]}
+     * @type {import('ol/events').EventsKey[]}
      * @private
      */
     this.listenerKeys_ = [];
@@ -71,7 +72,7 @@ export default class extends olInteractionPointer {
     this.modified_ = false;
 
     /**
-     * @type {?import("ol/events.js").EventsKey}
+     * @type {?import('ol/events').EventsKey}
      * @private
      */
     this.keyPressListenerKey_ = null;
@@ -79,6 +80,7 @@ export default class extends olInteractionPointer {
     /**
      * Indicate whether the interaction is currently changing a feature's
      * coordinates.
+     *
      * @type {boolean}
      * @private
      */
@@ -91,33 +93,35 @@ export default class extends olInteractionPointer {
     this.pixelTolerance_ = options.pixelTolerance !== undefined ? options.pixelTolerance : 10;
 
     /**
-     * @type {import("ol/Collection.js").default<olFeature<import("ol/geom/Geometry.js").default>>}
+     * @type {import('ol/Collection').default<olFeature<import('ol/geom/Geometry').default>>}
      * @private
      */
     this.features_ = options.features;
 
     /**
      * The feature currently modified.
-     * @type {?olFeature<import("ol/geom/Geometry.js").default>}
+     *
+     * @type {?olFeature<import('ol/geom/Geometry').default>}
      * @private
      */
     this.feature_ = null;
 
     /**
-     * @type {?import("ol/pixel.js").Pixel}
+     * @type {?import('ol/pixel').Pixel}
      * @private
      */
     this.coordinate_ = null;
 
     /**
-     * @type {?import("ol/coordinate.js").Coordinate}
+     * @type {?import('ol/coordinate').Coordinate}
      * @private
      */
     this.centerCoordinate_ = null;
 
     /**
      * Draw overlay where sketch features are drawn.
-     * @type {import("ol/layer/Vector.js").default<import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>>}
+     *
+     * @type {import('ol/layer/Vector').default<import('ol/source/Vector').default<import('ol/geom/Geometry').default>>}
      * @private
      */
     this.overlay_ = new olLayerVector({
@@ -131,7 +135,7 @@ export default class extends olInteractionPointer {
     });
 
     /**
-     * @type {Object<string, olFeature<import("ol/geom/Geometry.js").default>>}
+     * @type {Object<string, olFeature<import('ol/geom/Geometry').default>>}
      * @private
      */
     this.centerFeatures_ = {};
@@ -139,6 +143,7 @@ export default class extends olInteractionPointer {
 
   /**
    * Activate or deactivate the interaction.
+   *
    * @param {boolean} active Active.
    * @override
    */
@@ -168,7 +173,7 @@ export default class extends olInteractionPointer {
   }
 
   /**
-   * @param {olFeature<import("ol/geom/Geometry.js").default>} feature Feature.
+   * @param {olFeature<import('ol/geom/Geometry').default>} feature Feature.
    * @private
    */
   addFeature_(feature) {
@@ -184,13 +189,13 @@ export default class extends olInteractionPointer {
     const point = new olGeomPoint(this.getCenterCoordinate_(geometry));
     const centerFeature = new olFeature(point);
     this.centerFeatures_[uid] = centerFeature;
-    /** @type {olSourceVector<import("ol/geom/Geometry.js").default>} */ (
-      this.overlay_.getSource()
-    ).addFeature(centerFeature);
+    /** @type {olSourceVector<import('ol/geom/Geometry').default>} */ (this.overlay_.getSource()).addFeature(
+      centerFeature
+    );
   }
 
   /**
-   * @param {import("ol/MapBrowserEvent.js").default<unknown>} evt MapBrowserEvent
+   * @param {import('ol/MapBrowserEvent').default<unknown>} evt MapBrowserEvent
    * @private
    */
   willModifyFeatures_(evt) {
@@ -202,7 +207,7 @@ export default class extends olInteractionPointer {
   }
 
   /**
-   * @param {olFeature<import("ol/geom/Geometry.js").default>} feature Feature.
+   * @param {olFeature<import('ol/geom/Geometry').default>} feature Feature.
    * @private
    */
   removeFeature_(feature) {
@@ -223,7 +228,7 @@ export default class extends olInteractionPointer {
   }
 
   /**
-   * @param {import("ol/PluggableMap.js").default} map The map that the
+   * @param {import('ol/PluggableMap').default} map The map that the
    * overlay is part of.
    */
   setMap(map) {
@@ -232,7 +237,7 @@ export default class extends olInteractionPointer {
   }
 
   /**
-   * @param {Event|import('ol/events/Event.js').default} evt Event.
+   * @param {Event|import('ol/events/Event').default} evt Event.
    * @private
    */
   handleFeatureAdd_(evt) {
@@ -244,13 +249,13 @@ export default class extends olInteractionPointer {
   }
 
   /**
-   * @param {Event|import('ol/events/Event.js').default} evt Event.
+   * @param {Event|import('ol/events/Event').default} evt Event.
    * @private
    */
   handleFeatureRemove_(evt) {
     if (evt instanceof CollectionEvent) {
       /**
-       * @type {olFeature<import("ol/geom/Geometry.js").default>}
+       * @type {olFeature<import('ol/geom/Geometry').default>}
        */
       const feature = evt.element;
       this.removeFeature_(feature);
@@ -258,8 +263,8 @@ export default class extends olInteractionPointer {
   }
 
   /**
-   * @param {import("ol/MapBrowserEvent.js").default<unknown>} evt MapBrowserEvent.
-   * @return {boolean} Start drag sequence?
+   * @param {import('ol/MapBrowserEvent').default<unknown>} evt MapBrowserEvent.
+   * @returns {boolean} Start drag sequence?
    * @private
    */
   handleDown_(evt) {
@@ -281,7 +286,7 @@ export default class extends olInteractionPointer {
 
     if (feature) {
       this.coordinate_ = evt.coordinate;
-      this.feature_ = /** @type {olFeature<import("ol/geom/Geometry.js").default>} */ (feature);
+      this.feature_ = /** @type {olFeature<import('ol/geom/Geometry').default>} */ (feature);
       const geometry = this.feature_.getGeometry();
       if (geometry !== undefined) {
         this.centerCoordinate_ = this.getCenterCoordinate_(geometry);
@@ -293,8 +298,8 @@ export default class extends olInteractionPointer {
   }
 
   /**
-   * @param {import("ol/geom/Geometry.js").default} geometry Geometry.
-   * @return {import("ol/coordinate.js").Coordinate} The center coordinate of the geometry.
+   * @param {import('ol/geom/Geometry').default} geometry Geometry.
+   * @returns {import('ol/coordinate').Coordinate} The center coordinate of the geometry.
    * @private
    */
   getCenterCoordinate_(geometry) {
@@ -313,7 +318,7 @@ export default class extends olInteractionPointer {
   }
 
   /**
-   * @param {import("ol/MapBrowserEvent.js").default<unknown>} evt MapBrowserEvent.
+   * @param {import('ol/MapBrowserEvent').default<unknown>} evt MapBrowserEvent.
    * @private
    */
   handleDrag_(evt) {
@@ -355,8 +360,8 @@ export default class extends olInteractionPointer {
   }
 
   /**
-   * @param {import("ol/MapBrowserEvent.js").default<unknown>} evt MapBrowserEvent.
-   * @return {boolean} Stop drag sequence?
+   * @param {import('ol/MapBrowserEvent').default<unknown>} evt MapBrowserEvent.
+   * @returns {boolean} Stop drag sequence?
    * @private
    */
   handleUp_(evt) {
@@ -375,7 +380,8 @@ export default class extends olInteractionPointer {
 
   /**
    * Deactivate this interaction if the ESC key is pressed.
-   * @param {Event|import('ol/events/Event.js').default} evt Event.
+   *
+   * @param {Event|import('ol/events/Event').default} evt Event.
    * @private
    */
   handleKeyUp_(evt) {

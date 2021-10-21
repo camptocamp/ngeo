@@ -25,56 +25,67 @@
 
 /**
  * URL to the theme web service.
+ *
  * @typedef {string} gmfTreeUrl
  */
 
 /**
  * URL to the authentication web service.
+ *
  * @typedef {string} authenticationBaseUrl
  */
 
 /**
  * URL to the full-text search web service.
+ *
  * @typedef {string} fulltextsearchUrl
  */
 
 /**
  * URL to the shortener web service.
+ *
  * @typedef {string} gmfShortenerCreateUrl
  */
 
 /**
  * URL to the raster web service.
+ *
  * @typedef {string} gmfRasterUrl
  */
 
 /**
  * URL to the profile web service.
+ *
  * @typedef {string} gmfProfileJsonUrl
  */
 
 /**
  * URL to the layers web service.
+ *
  * @typedef {string} gmfLayersUrl
  */
 
 /**
  * URL to MapFishPrint.
+ *
  * @typedef {string} gmfPrintUrl
  */
 
 /**
  * Default language
+ *
  * @typedef {string} defaultLang
  */
 
 /**
  * Languages URL
+ *
  * @typedef {Object<string, string>} langUrls
  */
 
 /**
  * The view definition.
+ *
  * @typedef {Object} View
  * @property {string} projection The main projection.
  * @property {number[]} [center] The initial center for
@@ -152,6 +163,7 @@
 
 /**
  * The map definition.
+ *
  * @typedef {Object} Map
  * @property {string} projection The main projection.
  * @property {number} [pixelRatio] The ratio between physical pixels and device-independent pixels (dips)
@@ -163,27 +175,30 @@
 
 /**
  * The application wide options.
+ *
  * @typedef {Object} gmfOptions
  * @property {boolean} [showInfobar=false] Show the information bar.
  * @property {boolean} [geolocalisation=false] Show the geolocalisation button.
  * @property {View} view The view definition.
  * @property {Map} map The map definition.
  * @property {number} zoom The default zoom.
- * @property {import('ol/control/Control.js').default[]} [mapControls] The map control.
- * @property {import('ol/interaction/Interaction.js').default[]} [mapInteractions] The map interactions.
- * @property {import('ol/interaction.js').DefaultsOptions} [interationDefaults] The map interactions.
- * @property {import('ol/control/Zoom.js').Options} controlZoom The zoom control options
+ * @property {import('ol/control/Control').default[]} [mapControls] The map control.
+ * @property {import('ol/interaction/Interaction').default[]} [mapInteractions] The map interactions.
+ * @property {import('ol/interaction').DefaultsOptions} [interationDefaults] The map interactions.
+ * @property {import('ol/control/Zoom').Options} controlZoom The zoom control options
  * @property {Object<string, string>} cssVars The css variables, in particular brand-primary and
  *    brand-secondary that will set all the branding.
  */
 
 /**
  * The available projections definitions.
- * @typedef {Object<string, import('api/options.js').Projection>} gmfProjectionsOptions
+ *
+ * @typedef {Object<string, import('api/options').Projection>} gmfProjectionsOptions
  */
 
 /**
  * Flush mode active?
+ *
  * @typedef {boolean} gmfTreeManagerModeFlush
  */
 
@@ -195,6 +210,7 @@
 
 /**
  * Additional configuration options for the object editing tools directive.
+ *
  * @typedef {Object} gmfObjectEditingToolsOptions
  * @property {number} [regularPolygonRadius=100] The radius of the shapes created by the regular polygon
  * radius creation tool. The value is in map units.
@@ -202,8 +218,9 @@
 
 /**
  * Configuration options for the permalink service.
+ *
  * @typedef {Object} gmfPermalinkOptions
- * @property {import('ngeo/options.js').StyleLike} [crosshairStyle] An alternate style for the crosshair feature added by the
+ * @property {import('ngeo/options').StyleLike} [crosshairStyle] An alternate style for the crosshair feature added by the
  *    permalink service.
  * @property {boolean} [crosshairEnabledByDefault] Display the crosshair, gets overridden by the
  *    `map_crosshair` parameter. Default is `false`.
@@ -245,6 +262,7 @@
 
 /**
  * Configuration options for the themes service.
+ *
  * @typedef {Object} gmfThemesOptions
  * @property {boolean} [addBlankBackgroundLayer] Whether to add a blank background layer to the list of
  *    available backgrounds.
@@ -252,11 +270,13 @@
 
 /**
  * Floor dimension values and labels.
+ *
  * @typedef {Array<Object<string, string>>} gmfFloors
  */
 
 /**
  * The Authentication configuration.
+ *
  * @typedef {Object} gmfAuthenticationConfig
  * @property {boolean} allowPasswordReset Whether to show the password forgotten link. Default to true.
  * @property {boolean} allowPasswordChange Whether to show the change password button. Default to true.
@@ -265,6 +285,7 @@
 
 /**
  * The definition of an external OGC server
+ *
  * @typedef {Object} ExternalOGCServer
  * @property {string} name
  * @property {string} type
@@ -283,22 +304,26 @@
 /**
  * Don't request a new user object from the back-end after
  * logging out if the logged-in user's role has this role.
+ *
  * @typedef {?string} gmfAuthenticationNoReloadRole
  */
 
 /**
  * The CSV file name.
+ *
  * @typedef {string} gmfCsvFilename
  */
 
 /**
  * The background layer selector options
+ *
  * @typedef {Object} gmfBackgroundLayerSelectorOptions
  * @property {string} [opacityLayer] The background layer with an opacity slider.
  */
 
 /**
  * The disclaimers options
+ *
  * @typedef {Object} gmfDisclaimerOptions
  * @property {boolean} [popup] Whether to show the disclaimer messages in popups or not.
  * Defaults to `false`.
@@ -309,7 +334,7 @@
  */
 
 /**
- * Configuration option for {@link import("gmf/query/gridComponent.js").default} to merge
+ * Configuration option for {@link import('gmf/query/gridComponent').default} to merge
  * grid tabs.
  *
  * E.g. `'two_wheels_park': ['velo_park', 'moto_park']}` merges the sources
@@ -320,14 +345,16 @@
 
 /**
  * Use the query grid instead the query window to display the query result.
+ *
  * @typedef {boolean} gmfQueryGrid
  */
 
 /**
  * The display querry grid component options.
+ *
  * @typedef {Object} gmfDisplayQueryGridOptions
- * @property {import('ngeo/options.js').StyleLike} featuresStyle A style object for all features from the result of the query.
- * @property {import('ngeo/options.js').StyleLike} selectedFeatureStyle A style object for the currently selected features.
+ * @property {import('ngeo/options').StyleLike} featuresStyle A style object for all features from the result of the query.
+ * @property {import('ngeo/options').StyleLike} selectedFeatureStyle A style object for the currently selected features.
  * @property {boolean} [removeEmptyColumns] Should empty columns be hidden? Default: `false`.
  * @property {number} [maxRecenterZoom] Maximum zoom-level to use when zooming to selected features.
  * @property {GridMergeTabs} [mergeTabs] Configuration to merge grids with the same attributes into
@@ -336,9 +363,10 @@
 
 /**
  * The display querry grid component options.
+ *
  * @typedef {Object} gmfDisplayQueryWindowOptions
- * @property {import('ngeo/options.js').StyleLike} featuresStyle A style object for all features from the result of the query.
- * @property {import('ngeo/options.js').StyleLike} selectedFeatureStyle A style object for the currently selected features.
+ * @property {import('ngeo/options').StyleLike} featuresStyle A style object for all features from the result of the query.
+ * @property {import('ngeo/options').StyleLike} selectedFeatureStyle A style object for the currently selected features.
  * @property {boolean} [collapsed] If the query result window is collapsed.
  */
 
@@ -352,6 +380,7 @@
 
 /**
  * The elevation (raster) options.
+ *
  * @typedef {Object} gmfElevationOptions
  * @property {string[]} layers Elevation layers to use.
  * @property {Object<string, LayerConfig>} layersConfig Elevation layers configurations.
@@ -359,9 +388,10 @@
 
 /**
  * The elevation (raster) options.
+ *
  * @typedef {Object} gmfProfileOptions
  * @property {number} [numberOfPoints=100] Maximum limit of points to request.
- * @property {import('ngeo/options.js').StyleLike} hoverPointStyle The hover point style.
+ * @property {import('ngeo/options').StyleLike} hoverPointStyle The hover point style.
  */
 
 /**
@@ -372,6 +402,7 @@
 
 /**
  * Datasource configuration options for the search directive.
+ *
  * @typedef {Object} SearchComponentDatasource
  * @property {Bloodhound.BloodhoundOptions<GeoJSON.FeatureCollection>} [bloodhoundOptions] The optional Bloodhound configuration for this
  * data set. See: https://github.com/twitter/typeahead.js/blob/master/doc/bloodhound.md
@@ -382,7 +413,7 @@
  * @property {SearchAction[]} [groupActions] List of allowed actions. The list may contain a
  * combination of `add_theme`, `add_group` or `add_layer`
  * @property {string} [projection] The geometry's projection for this set of data.
- * @property {Twitter.Typeahead.Dataset<import('ol/Feature.js').default<import('ol/geom/Geometry.js').default>>} [typeaheadDatasetOptions] The optional Twitter.Typeahead.
+ * @property {Twitter.Typeahead.Dataset<import('ol/Feature').default<import('ol/geom/Geometry').default>>} [typeaheadDatasetOptions] The optional Twitter.Typeahead.
  *    configuration for this dataset. See: https://github.com/twitter/typeahead.js/blob/master/
  * @property {string} [url] URL of the search service. Must contain a '%QUERY' term that will be
  * replaced by the input string.
@@ -391,7 +422,7 @@
 
 /**
  * @typedef {Object} gmfSearchOptions
- * @property {Object<string, import('ngeo/options.js').StyleLike>} styles A map of styles to apply on searched features. Keys must be the
+ * @property {Object<string, import('ngeo/options').StyleLike>} styles A map of styles to apply on searched features. Keys must be the
  *    'layer_name' property of features except for coordinates where the key ifor its style is the value of
  *    the constant 'gmf.COORDINATES_LAYER_NAME'. The 'default' key is used to apply the default style.
  * @property {string[]} coordinatesProjections codes of supported projections for coordinates search
@@ -408,6 +439,7 @@
 /**
  * Projection object for the MousePositionDirective. Define a label and a filter
  * to use to display coordinates for a projection.
+ *
  * @typedef {Object} MousePositionProjection
  * @property {string} code The epsg name of a projection.
  * @property {string} label The label to display with this projection.
@@ -423,13 +455,13 @@
 /**
  * @typedef {Object} gmfMobileMeasureAreaOptions
  * @property {number} [precision=2] The number of significant digits to display.
- * @property {import('ngeo/options.js').StyleLike} sketchStyle A style for the measure area.
+ * @property {import('ngeo/options').StyleLike} sketchStyle A style for the measure area.
  */
 
 /**
  * @typedef {Object} gmfMobileMeasureLengthOptions
  * @property {number} [precision=2] The number of significant digits to display.
- * @property {import('ngeo/options.js').StyleLike} sketchStyle A style for the measure length.
+ * @property {import('ngeo/options').StyleLike} sketchStyle A style for the measure length.
  */
 
 /**
@@ -445,7 +477,7 @@
  * @property {string} format The used formatter
  * @property {MeasureRasterLayer[]} rasterLayers Raster elevation layers to get
  *     information under the point and its configuration.
- * @property {import('ngeo/options.js').StyleLike} sketchStyle A style for the measure point.
+ * @property {import('ngeo/options').StyleLike} sketchStyle A style for the measure point.
  */
 
 /**
@@ -462,7 +494,7 @@
 
 /**
  * @typedef {Object} gmfEditFeatureOptions
- * @property {import('ngeo/options.js').StyleLike} highlightStyle A style object for highlighting of feature.
+ * @property {import('ngeo/options').StyleLike} highlightStyle A style object for highlighting of feature.
  * @property {number} tolerance The buffer in pixels to use when making queries to get the features.
  * @property {boolean} closeAfterSave If true,
  * immediately return to the main edit panel after save. Default is false.
@@ -470,11 +502,13 @@
 
 /**
  * Use to inject custom javascript from an URL.
+ *
  * @typedef {string} gmfCustomJavascriptUrl
  */
 
 /**
  * Use to inject custom stylesheet from an URL.
+ *
  * @typedef {string} gmfCustomStylesheetUrl
  */
 

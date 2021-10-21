@@ -21,7 +21,7 @@
 
 import './colorpicker.css';
 import angular from 'angular';
-import ngeoMiscColorpickerComponent from 'ngeo/misc/colorpickerComponent.js';
+import ngeoMiscColorpickerComponent from 'ngeo/misc/colorpickerComponent';
 
 /** @type {angular.IModule} **/
 const myModule = angular.module('app', ['gettext', ngeoMiscColorpickerComponent.name]);
@@ -46,8 +46,9 @@ myModule.component('appColorpicker', colorpickerComponent);
 function ColorPickerController() {
   /**
    * The colors set.
+   *
    * @type {string[][]}
-   * @const
+   * @constant
    */
   this.colors = [
     ['red', 'yellow', 'green', 'lightgreen', 'lightblue', 'orange', 'purple'],
@@ -65,6 +66,7 @@ myModule.controller('AppColorpickerController', ColorPickerController);
 function MainController($scope) {
   /**
    * Active color.
+   *
    * @type {string}
    */
   this.color = 'red';

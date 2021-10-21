@@ -25,8 +25,9 @@ import angular from 'angular';
  * Service to provide access to a
  * [Open Source Routing Machine (OSRM) backend](https://github.com/Project-OSRM/osrm-backend)
  * of version 5.8 and higher and its features.
+ *
  * @param {angular.IHttpService} $http Angular http service.
- * @param {import('ngeo/options.js').ngeoRoutingOptions} ngeoRoutingOptions The options.
+ * @param {import('ngeo/options').ngeoRoutingOptions} ngeoRoutingOptions The options.
  * @class
  * @ngdoc service
  * @ngInject
@@ -40,13 +41,14 @@ export function RoutingService($http, ngeoRoutingOptions) {
   this.$http_ = $http;
 
   /**
-   * @type {import('ngeo/options.js').ngeoRoutingOptions}
+   * @type {import('ngeo/options').ngeoRoutingOptions}
    */
   this.routingOptions_ = ngeoRoutingOptions;
 
   /**
    * URL for OSRM backend API.
    * Defaults to demo backend.
+   *
    * @type {string}
    */
   this.ngeoOsrmBackendUrl_ = this.routingOptions_.backendUrl || 'https://router.project-osrm.org/';
@@ -59,6 +61,7 @@ export function RoutingService($http, ngeoRoutingOptions) {
   /**
    * Version of the protocol implemented by the service.
    * see: https://github.com/Project-OSRM/osrm-backend/blob/master/docs/http.md
+   *
    * @type {string}
    */
   this.protocolVersion_ = 'v1';
@@ -97,9 +100,10 @@ export function RoutingService($http, ngeoRoutingOptions) {
 
 /**
  * Route request
- * @param {import("ol/coordinate.js").Coordinate[]} coordinates coordinates of the route (at least two!)
+ *
+ * @param {import('ol/coordinate').Coordinate[]} coordinates coordinates of the route (at least two!)
  * @param {?Config} config optional configuration
- * @return {angular.IHttpPromise<Routes>} promise of the OSRM API request
+ * @returns {angular.IHttpPromise<Routes>} promise of the OSRM API request
  */
 RoutingService.prototype.getRoute = function (coordinates, config) {
   config = config || {};
@@ -152,9 +156,10 @@ RoutingService.prototype.getRoute = function (coordinates, config) {
 
 /**
  * Snaps a coordinate to the street network and returns the nearest match
- * @param {import("ol/coordinate.js").Coordinate} coordinate coordinate to query
+ *
+ * @param {import('ol/coordinate').Coordinate} coordinate coordinate to query
  * @param {?Config} config optional configuration
- * @return {angular.IHttpPromise<Object>} promise of the OSRM API request
+ * @returns {angular.IHttpPromise<Object>} promise of the OSRM API request
  * @see https://github.com/Project-OSRM/osrm-backend/blob/master/docs/http.md#nearest-service
  */
 RoutingService.prototype.getNearest = function (coordinate, config) {

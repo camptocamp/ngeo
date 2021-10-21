@@ -20,7 +20,7 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import {isSafari} from 'ngeo/utils.js';
+import {isSafari} from 'ngeo/utils';
 
 import {saveAs} from 'file-saver';
 
@@ -37,7 +37,7 @@ const myModule = angular.module('ngeoDownload', []);
 /**
  * A service to start a download for a file.
  *
- * @return {Download} The download function.
+ * @returns {Download} The download function.
  * @ngdoc service
  * @ngname ngeoDownload
  * @hidden

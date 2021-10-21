@@ -26,7 +26,8 @@
  */
 
 import angular from 'angular';
-import {decodeQueryString} from 'ngeo/utils.js';
+import {decodeQueryString} from 'ngeo/utils';
+import AngularServices from 'ngeo/services';
 
 /**
  * @type {angular.IModule}
@@ -46,5 +47,13 @@ appModule.config([
     }
   },
 ]);
+
+/**
+ * @ngInject
+ */
+appModule.run(($injector) => {
+  //AngularServices.auth = $injector.get('gmfAuthenticationService');
+  //AngularServices.notification = $injector.get('ngeoNotification');
+});
 
 export default appModule;

@@ -20,7 +20,7 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import 'jquery-ui/ui/widgets/sortable.js';
+import 'jquery-ui/ui/widgets/sortable';
 import 'ngeo/sass/jquery-ui.scss';
 import 'jquery-ui-touch-punch';
 
@@ -66,7 +66,7 @@ const myModule = angular.module('ngeoSortable', []);
  *
  * See our live example: [../examples/layerorder.html](../examples/layerorder.html)
  *
- * @htmlAttribute {import("ol/layer/Base.js").default[]} ngeo-sortable The layers to sort.
+ * @htmlAttribute {import('ol/layer/Base').default[]} ngeo-sortable The layers to sort.
  * @htmlAttribute {miscSortableOptions} ngeo-sortable-options The options.
  * @htmlAttribute {Function(JQuery, Array)?} ngeo-sortable-callback
  *     Callback function called after the move end. The Function will be called
@@ -74,7 +74,7 @@ const myModule = angular.module('ngeoSortable', []);
  * @htmlAttribute {Object?} ngeo-sortable-callback-ctx Context to apply at
  *     the call of the callback function.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
- * @return {angular.IDirective} The directive specs.
+ * @returns {angular.IDirective} The directive specs.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoSortable
@@ -169,7 +169,7 @@ function sortableComponent($timeout) {
 
       /**
        * @param {?} options Options after expression evaluation.
-       * @return {miscSortableOptions} Options object.
+       * @returns {miscSortableOptions} Options object.
        * @private
        */
       function getOptions(options) {

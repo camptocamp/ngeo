@@ -19,21 +19,22 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import {getOverlayDefs} from 'api/Themes.js';
-import {appendParams as olUriAppendParams} from 'ol/uri.js';
-import olFormatGML2 from 'ol/format/GML2.js';
-import olFormatWFS from 'ol/format/WFS.js';
-import {buffer, createOrUpdateFromCoordinate} from 'ol/extent.js';
+import {getOverlayDefs} from 'api/Themes';
+import {appendParams as olUriAppendParams} from 'ol/uri';
+import olFormatGML2 from 'ol/format/GML2';
+import olFormatWFS from 'ol/format/WFS';
+import {buffer, createOrUpdateFromCoordinate} from 'ol/extent';
 
 /**
  * Click tolerance in pixel
+ *
  * @type {number}
  */
 const TOLERANCE = 10;
 
 /**
- * @param {import('./Themes.js').overlayDefinition} def Overlay definition.
- * @return {boolean} Is the overlay queryable.
+ * @param {import('./Themes').overlayDefinition} def Overlay definition.
+ * @returns {boolean} Is the overlay queryable.
  */
 function querable(def) {
   return def.layer.type === 'WMS' && !!def.ogcServer.wfsSupport && !!def.ogcServer.urlWfs;
@@ -51,13 +52,13 @@ function querable(def) {
  *
  * @param {string} layer Name of the layer to query
  * @param {string[]} ids List of ids
- * @return {Promise<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>[]>} Promise.
+ * @returns {Promise<import('ol/Feature').default<import('ol/geom/Geometry').default>[]>} Promise.
  * @hidden
  */
 export function getFeaturesFromIds(layer, ids) {
   return new Promise((resolve, reject) => {
     getOverlayDefs().then((overlayDefs) => {
-      /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>[]} */
+      /** @type {import('ol/Feature').default<import('ol/geom/Geometry').default>[]} */
       let features = [];
       const overlayDef = overlayDefs.get(layer);
 
@@ -71,7 +72,7 @@ export function getFeaturesFromIds(layer, ids) {
         return;
       }
 
-      const gmfLayer = /** @type {import('gmf/themes.js').GmfLayerWMS} */ (
+      const gmfLayer = /** @type {import('gmf/themes').GmfLayerWMS} */ (
         /** @type {any} */ (overlayDef.layer)
       );
       const childLayerNames = [];
@@ -118,8 +119,7 @@ export function getFeaturesFromIds(layer, ids) {
  * @param {string} layer Name of the layer to query
  * @param {number[]} coordinate Coordinate.
  * @param {number} resolution Resolution
- *
- * @return {Promise<import('ol/Feature.js').default<import('ol/geom/Geometry.js').default>>} Promise.
+ * @returns {Promise<import('ol/Feature').default<import('ol/geom/Geometry').default>>} Promise.
  * @hidden
  */
 export function getFeaturesFromCoordinates(layer, coordinate, resolution) {
@@ -149,7 +149,7 @@ export function getFeaturesFromCoordinates(layer, coordinate, resolution) {
       };
       const url = olUriAppendParams(overlayDef.ogcServer.urlWfs, params);
 
-      /** @type {?import('ol/Feature.js').default<import('ol/geom/Geometry.js').default>} */
+      /** @type {?import('ol/Feature').default<import('ol/geom/Geometry').default>} */
       let feature;
       fetch(url)
         .then((response) =>

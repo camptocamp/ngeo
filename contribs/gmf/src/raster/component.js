@@ -20,14 +20,14 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import gmfRasterRasterService from 'gmf/raster/RasterService.js';
+import gmfRasterRasterService from 'gmf/raster/RasterService';
 
-import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
+import ngeoMiscDebounce from 'ngeo/misc/debounce';
 
-import {listen, unlistenByKey} from 'ol/events.js';
-import MapBrowserEvent from 'ol/MapBrowserEvent.js';
+import {listen, unlistenByKey} from 'ol/events';
+import MapBrowserEvent from 'ol/MapBrowserEvent';
 
-import 'bootstrap/js/src/dropdown.js';
+import 'bootstrap/js/src/dropdown';
 
 /**
  * @type {angular.IModule}
@@ -50,7 +50,7 @@ myModule.value(
   'gmfElevationwidgetTemplateUrl',
   /**
    * @param {angular.IAttributes} $attrs Attributes.
-   * @return {string} The template url.
+   * @returns {string} The template url.
    */
   ($attrs) => {
     const templateUrl = $attrs.gmfElevationwidgetTemplateUrl;
@@ -62,7 +62,7 @@ myModule.value(
  * @hidden
  * @param {angular.IAttributes} $attrs Attributes.
  * @param {function(angular.IAttributes): string} gmfElevationwidgetTemplateUrl Template function.
- * @return {string} Template URL.
+ * @returns {string} Template URL.
  * @ngInject
  * @private
  * @hidden
@@ -102,8 +102,8 @@ function gmfElevationwidgetTemplateUrl($attrs, gmfElevationwidgetTemplateUrl) {
  * @htmlAttribute {boolean} gmf-elevation-active A boolean to set active or deactivate the component.
  * @htmlAttribute {number} gmf-elevation-elevation The value to set with the elevation value.
  * @htmlAttribute {string} gmf-elevation-layer Elevation layer to use.
- * @htmlAttribute {import("ol/Map.js").default} gmf-elevation-map The map.
- * @return {angular.IDirective} Directive Definition Object.
+ * @htmlAttribute {import('ol/Map').default} gmf-elevation-map The map.
+ * @returns {angular.IDirective} Directive Definition Object.
  * @ngdoc directive
  * @ngname gmfElevation
  */
@@ -149,10 +149,10 @@ myModule.directive('gmfElevation', rasterComponent);
  * @hidden
  * @param {angular.IScope} $scope Scope.
  * @param {angular.IFilterService} $filter Angular filter.
- * @param {import("ngeo/misc/debounce.js").miscDebounce<function(Event|import('ol/events/Event.js').default): void>} ngeoDebounce Ngeo debounce factory
- * @param {import("gmf/raster/RasterService.js").RasterService} gmfRaster Gmf Raster service
+ * @param {import('ngeo/misc/debounce').miscDebounce<function(Event|import('ol/events/Event').default): void>} ngeoDebounce Ngeo debounce factory
+ * @param {import('gmf/raster/RasterService').RasterService} gmfRaster Gmf Raster service
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
- * @param {import('gmf/options.js').gmfElevationOptions} gmfElevationOptions The options
+ * @param {import('gmf/options').gmfElevationOptions} gmfElevationOptions The options
  * @class
  * @hidden
  * @ngInject
@@ -161,7 +161,7 @@ myModule.directive('gmfElevation', rasterComponent);
  */
 export function Controller($scope, $filter, ngeoDebounce, gmfRaster, gettextCatalog, gmfElevationOptions) {
   /**
-   * @type {import('gmf/options.js').gmfElevationOptions}
+   * @type {import('gmf/options').gmfElevationOptions}
    */
   this.options = gmfElevationOptions;
 
@@ -186,12 +186,12 @@ export function Controller($scope, $filter, ngeoDebounce, gmfRaster, gettextCata
   this.layer = '';
 
   /**
-   * @type {?import("ol/Map.js").default}
+   * @type {?import('ol/Map').default}
    */
   this.map = null;
 
   /**
-   * @type {import("ol/events.js").EventsKey[]}
+   * @type {import('ol/events').EventsKey[]}
    */
   this.listenerKeys_ = [];
 
@@ -213,6 +213,7 @@ export function Controller($scope, $filter, ngeoDebounce, gmfRaster, gettextCata
 
 /**
  * Activate or deactivate the listeners of the component.
+ *
  * @param {boolean} active true to make requests.
  * @private
  */
@@ -265,7 +266,8 @@ Controller.prototype.onPointerMove_ = function () {
 
 /**
  * Set the state of the component and query the raster service with the coordinate.
- * @param {Event|import('ol/events/Event.js').default} evt Event.
+ *
+ * @param {Event|import('ol/events/Event').default} evt Event.
  */
 Controller.prototype.afterPointerMove_ = function (evt) {
   if (this.inViewport_ && evt instanceof MapBrowserEvent) {
@@ -343,9 +345,8 @@ myModule.controller('GmfElevationController', Controller);
  *      gmf-elevationwidget-active="mainCtrl.showInfobar">
  *  </gmf-elevationwidget>
  *
- * @htmlAttribute {import("ol/Map.js").default} gmf-elevationwidget-map The map.
+ * @htmlAttribute {import('ol/Map').default} gmf-elevationwidget-map The map.
  * @htmlAttribute {boolean} gmf-elevationwidget-active Whether to activate the elevation component.
- *
  * @ngdoc component
  * @ngname gmfElevationwidget
  */
@@ -364,12 +365,12 @@ myModule.component('gmfElevationwidget', rasterWidgetComponent);
  * @hidden
  * @nginject
  * @ngdoc controller
- * @param {import('gmf/options.js').gmfElevationOptions} gmfElevationOptions The options.
+ * @param {import('gmf/options').gmfElevationOptions} gmfElevationOptions The options.
  */
 export function WidgetController(gmfElevationOptions) {
   this.options = gmfElevationOptions;
   /**
-   * @type {?import("ol/Map.js").default}
+   * @type {?import('ol/Map').default}
    */
   this.map = null;
 

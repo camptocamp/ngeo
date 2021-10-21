@@ -19,12 +19,13 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import ngeoDatasourceOGC from 'ngeo/datasource/OGC.js';
+import ngeoDatasourceOGC from 'ngeo/datasource/OGC';
 
 /**
  * The options required to create a `gmf.datasource.OGC`.
+ *
  * @typedef {Object} OGCOptions
- * @property {import('gmf/themes.js').GmfLayer} gmfLayer A reference to the GMF layer node that was used to
+ * @property {import('gmf/themes').GmfLayer} gmfLayer A reference to the GMF layer node that was used to
  *    create the data source. It may contains additional information, such as metadata, about the data
  *    source.
  *
@@ -32,28 +33,28 @@ import ngeoDatasourceOGC from 'ngeo/datasource/OGC.js';
  *
  * TODO - inherit typedef properly once TypeScript supports it
  * Extends (ngeo/datasource/OGC.js).OGCOptions
- * @property {import('ngeo/datasource/OGC.js').Dimensions} [activeDimensions] The dimensions that are
+ * @property {import('ngeo/datasource/OGC').Dimensions} [activeDimensions] The dimensions that are
  *    currently active on the data source.
  * @property {boolean} [copyable] Whether the geometry from this data source can be copied to other data
  *  sources or not. Defaults to `false`.
- * @property {import('ngeo/datasource/OGC.js').Dimensions} [dimensions] A reference to the dimensions.
- * @property {import('ngeo/datasource/OGC.js').Dimensions} [dimensionsConfig] The dimensions configuration,
+ * @property {import('ngeo/datasource/OGC').Dimensions} [dimensions] A reference to the dimensions.
+ * @property {import('ngeo/datasource/OGC').Dimensions} [dimensionsConfig] The dimensions configuration,
  *    which determines those supported by this data source and whether they should use a static value or
  *    the one defined in the dimensions.
  * @property {string} [filterCondition] The filter condition to apply to the filter rules (if any).
  *    Defaults to `ngeo.filter.Condition.AND`.
- * @property {import('ngeo/rule/Rule.js').default[]} [filterRules] A list of filter rules to apply
+ * @property {import('ngeo/rule/Rule').default[]} [filterRules] A list of filter rules to apply
  *    to this data source using the filter condition.
  * @property {boolean} [filtrable] Whether the data source is filtrable or not.
  * @property {string} [ogcImageType] The type of images to fetch by queries by the (WMS) or (WMTS).
- * @property {import('ngeo/datasource/OGC.js').WMSLayer[]} [wmsLayers] A list of layer definitions that are used by WMS queries.
+ * @property {import('ngeo/datasource/OGC').WMSLayer[]} [wmsLayers] A list of layer definitions that are used by WMS queries.
  *    These are **not** used by the (WMTS) queries (the wmtsLayers is used by WMTS queries).
- * @property {import('ngeo/datasource/OGC.js').WFSLayer[]} [wfsLayers] A list of layer definitions that
+ * @property {import('ngeo/datasource/OGC').WFSLayer[]} [wfsLayers] A list of layer definitions that
  *    are used by WFS queries.
  *    These are **not** used by the (WMTS) queries (the wmtsLayers is used by WMTS queries).
  * @property {string} [ogcServerType] The type of OGC server.
  * @property {string} [ogcType] The type data source. Can be: 'WMS' or 'WMTS'.
- * @property {?Object<string, Object<string, import('gmf/themes.js').GmfOgcServerAttribute>>} [ogcAttributes]
+ * @property {?Object<string, Object<string, import('gmf/themes').GmfOgcServerAttribute>>} [ogcAttributes]
  *    The attributes of the OGC server.
  * @property {number[]} [queryIconPosition] values to define the shape (bbox) to use to query
  *    the layer. The values are used like a padding in css with 1, 2, 3 or 4 comma separated
@@ -68,7 +69,7 @@ import ngeoDatasourceOGC from 'ngeo/datasource/OGC.js';
  * @property {string} [timeAttributeName]  The name of the time attribute.
  * @property {number} [timeLowerValue] The time lower value, which can be combined with the time upper value
  *    to determine a range.
- * @property {import('ngeo/datasource/OGC.js').TimeProperty} [timeProperty] The time property for the data
+ * @property {import('ngeo/datasource/OGC').TimeProperty} [timeProperty] The time property for the data
  *    source. Used to apply time filters.
  * @property {number} [timeUpperValue] The time upper value, which can be combined with the time lower value
  *    to determine a range.
@@ -87,8 +88,8 @@ import ngeoDatasourceOGC from 'ngeo/datasource/OGC.js';
  *
  * TODO - inherit typedef properly once TypeScript supports it
  * Extends (ngeo/datasource/OGC.js).DataSourceOptions
- * @property {import('ngeo/format/Attribute.js').Attribute[]} [attributes] (DataSourceOptions)
- * @property {import('ngeo/datasource/OGC.js').DimensionsFiltersConfig} [dimensionsFiltersConfig]
+ * @property {import('ngeo/format/Attribute').Attribute[]} [attributes] (DataSourceOptions)
+ * @property {import('ngeo/datasource/OGC').DimensionsFiltersConfig} [dimensionsFiltersConfig]
  *    (DataSourceOptions)
  * @property {number} id (DataSourceOptions)
  * @property {string} [identifierAttribute] (DataSourceOptions)
@@ -115,7 +116,7 @@ class GmfDatasourceOGC extends ngeoDatasourceOGC {
     // === STATIC properties (i.e. that never change) ===
 
     /**
-     * @type {import('gmf/themes.js').GmfLayer}
+     * @type {import('gmf/themes').GmfLayer}
      * @private
      */
     this.gmfLayer_ = options.gmfLayer;
@@ -124,7 +125,7 @@ class GmfDatasourceOGC extends ngeoDatasourceOGC {
   // === Static property getters/setters ===
 
   /**
-   * @return {import('gmf/themes.js').GmfLayer} GMF layer
+   * @returns {import('gmf/themes').GmfLayer} GMF layer
    */
   get gmfLayer() {
     return this.gmfLayer_;

@@ -20,7 +20,7 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
+import ngeoMiscDebounce from 'ngeo/misc/debounce';
 
 /**
  * @typedef {Object} NominatimSearchResult
@@ -39,11 +39,12 @@ import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
 /**
  * Service to provide access to Nominatim, which allows to search for
  * OSM data by name and address.
+ *
  * @param {angular.IHttpService} $http Angular http service.
- * @param {import("ngeo/misc/debounce.js").miscDebounce<function(string, function(NominatimSearchResult[]): void, (function(NominatimSearchResult[]): void)|undefined): void>}  ngeoDebounce
+ * @param {import('ngeo/misc/debounce').miscDebounce<function(string, function(NominatimSearchResult[]): void, (function(NominatimSearchResult[]): void)|undefined): void>}  ngeoDebounce
  *    ngeo Debounce service.
  * @param {string} ngeoNominatimUrl The nominatim URL.
- * @param {import('ngeo/options.js').ngeoNominatimSearchDefaultParams} ngeoNominatimSearchDefaultParams The search parameters
+ * @param {import('ngeo/options').ngeoNominatimSearchDefaultParams} ngeoNominatimSearchDefaultParams The search parameters
  * @class
  * @ngdoc service
  * @ngInject
@@ -58,13 +59,14 @@ export function NominatimService($http, ngeoDebounce, ngeoNominatimUrl, ngeoNomi
   this.$http_ = $http;
 
   /**
-   * @type {import("ngeo/misc/debounce.js").miscDebounce<function(string, function(NominatimSearchResult[]): void, (function(NominatimSearchResult[]): void)|undefined): void>}
+   * @type {import('ngeo/misc/debounce').miscDebounce<function(string, function(NominatimSearchResult[]): void, (function(NominatimSearchResult[]): void)|undefined): void>}
    */
   this.ngeoDebounce_ = ngeoDebounce;
 
   /**
    * URL for Nominatim backend
    * Defaults openstreetmap instance.
+   *
    * @type {string}
    */
   this.nominatimUrl_ = ngeoNominatimUrl;
@@ -75,7 +77,7 @@ export function NominatimService($http, ngeoDebounce, ngeoNominatimUrl, ngeoNomi
   }
 
   /**
-   * @type {import('ngeo/options.js').ngeoNominatimSearchDefaultParams}
+   * @type {import('ngeo/options').ngeoNominatimSearchDefaultParams}
    */
   this.searchDefaultParams_ = ngeoNominatimSearchDefaultParams;
 
@@ -83,6 +85,7 @@ export function NominatimService($http, ngeoDebounce, ngeoNominatimUrl, ngeoNomi
    * Delay (in milliseconds) to avoid calling the API too often.
    * Only if there were no calls for that many milliseconds,
    * the last call will be executed.
+   *
    * @type {number}
    */
   this.typeaheadDebounceDelay_ = 500;
@@ -99,9 +102,10 @@ export function NominatimService($http, ngeoDebounce, ngeoNominatimUrl, ngeoNomi
 
 /**
  * Search by name
+ *
  * @param {string} query Search query
  * @param {?Object<string, string>} params Optional parameters
- * @return {angular.IHttpPromise<NominatimSearchResponseResult[]>} promise of the Nominatim API request
+ * @returns {angular.IHttpPromise<NominatimSearchResponseResult[]>} promise of the Nominatim API request
  * @see https://wiki.openstreetmap.org/wiki/Nominatim#Search
  */
 NominatimService.prototype.search = function (query, params) {
@@ -127,9 +131,10 @@ NominatimService.prototype.search = function (query, params) {
 
 /**
  * Reverse Geocoding
- * @param {import("ol/coordinate.js").Coordinate} coordinate Search coordinate in LonLat projection
+ *
+ * @param {import('ol/coordinate').Coordinate} coordinate Search coordinate in LonLat projection
  * @param {(Object<string, string>|undefined)} params Optional parameters
- * @return {angular.IHttpPromise<import('./NominatimService').NominatimSearchResponseResult>} promise of the Nominatim API request
+ * @returns {angular.IHttpPromise<import('./NominatimService').NominatimSearchResponseResult>} promise of the Nominatim API request
  * @see https://wiki.openstreetmap.org/wiki/Nominatim#Reverse_Geocoding
  */
 NominatimService.prototype.reverse = function (coordinate, params) {
@@ -168,8 +173,9 @@ NominatimService.prototype.typeaheadSource_ = function (query, syncResults, asyn
   const onSuccess_ = function (resp) {
     /**
      * Parses result response.
+     *
      * @param {NominatimSearchResponseResult} result Result
-     * @return {NominatimSearchResult} Parsed result
+     * @returns {NominatimSearchResult} Parsed result
      */
     const parse = function (result) {
       return {

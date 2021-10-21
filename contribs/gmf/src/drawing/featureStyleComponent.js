@@ -20,13 +20,13 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import {getUid as olUtilGetUid} from 'ol/util.js';
-import {listen, unlistenByKey} from 'ol/events.js';
-import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties.js';
+import {getUid as olUtilGetUid} from 'ol/util';
+import {listen, unlistenByKey} from 'ol/events';
+import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties';
 
-import ngeoMiscColorpickerComponent from 'ngeo/misc/colorpickerComponent.js';
+import ngeoMiscColorpickerComponent from 'ngeo/misc/colorpickerComponent';
 
-import ngeoMiscFeatureHelper, {ArrowDirections, ArrowPositions} from 'ngeo/misc/FeatureHelper.js';
+import ngeoMiscFeatureHelper, {ArrowDirections, ArrowPositions} from 'ngeo/misc/FeatureHelper';
 
 /**
  * @type {angular.IModule}
@@ -57,8 +57,8 @@ myModule.run(
  *         gmf-featurestyle-feature="ctrl.selectedFeature">
  *     </gmf-featurestyle>
  *
- * @htmlAttribute {import("ol/Feature.js").default<import("ol/geom/Geometry.js").default>} gmf-featurestyle-feature The feature.
- * @return {angular.IDirective} The directive specs.
+ * @htmlAttribute {import('ol/Feature').default<import('ol/geom/Geometry').default>} gmf-featurestyle-feature The feature.
+ * @returns {angular.IDirective} The directive specs.
  * @ngInject
  * @ngdoc directive
  * @ngname gmfFeaturestyle
@@ -78,7 +78,7 @@ myModule.directive('gmfFeaturestyle', drawingDrawFeatureComponent);
 
 /**
  * @param {angular.IScope} $scope Angular scope.
- * @param {import("ngeo/misc/FeatureHelper.js").FeatureHelper} ngeoFeatureHelper Gmf feature helper service.
+ * @param {import('ngeo/misc/FeatureHelper').FeatureHelper} ngeoFeatureHelper Gmf feature helper service.
  * @class
  * @hidden
  * @ngInject
@@ -92,7 +92,7 @@ export function Controller($scope, ngeoFeatureHelper) {
   this.uid = olUtilGetUid(this);
 
   /**
-   * @type {?import("ol/Feature.js").default<import("ol/geom/Geometry.js").default>}
+   * @type {?import('ol/Feature').default<import('ol/geom/Geometry').default>}
    */
   this.feature = null;
 
@@ -102,7 +102,7 @@ export function Controller($scope, ngeoFeatureHelper) {
   this.scope_ = $scope;
 
   /**
-   * @type {import("ngeo/misc/FeatureHelper.js").FeatureHelper}
+   * @type {import('ngeo/misc/FeatureHelper').FeatureHelper}
    */
   this.featureHelper_ = ngeoFeatureHelper;
 
@@ -118,18 +118,21 @@ export function Controller($scope, ngeoFeatureHelper) {
 
   /**
    * Value of the measure (line length, area, ...).
+   *
    * @type {string|undefined}
    */
   this.measure = undefined;
 
   /**
    * Arrow possible direction on segments of lines.
+   *
    * @enum {string}
    */
   this.arrowDirections = ArrowDirections;
 
   /**
    * Arrow possible position on lines.
+   *
    * @enum {string}
    */
   this.arrowPositions = ArrowPositions;
@@ -137,12 +140,13 @@ export function Controller($scope, ngeoFeatureHelper) {
   $scope.$watch(() => this.color, this.handleColorSet_.bind(this));
 
   /**
-   * @type {import("ol/events.js").EventsKey[]}
+   * @type {import('ol/events').EventsKey[]}
    */
   this.featureListenerKeys_ = [];
 
   /**
    * Type of the geometry (text, point, circle, line, multiline, ...).
+   *
    * @type {string|undefined}
    */
   this.type;
@@ -152,8 +156,9 @@ export function Controller($scope, ngeoFeatureHelper) {
 
 /**
  * Called when a new feature is set, which can also be null.
- * @param {?import("ol/Feature.js").default<import("ol/geom/Geometry.js").default>} newFeature New feature or null value.
- * @param {?import("ol/Feature.js").default<import("ol/geom/Geometry.js").default>} previousFeature Previous feature or null value.
+ *
+ * @param {?import('ol/Feature').default<import('ol/geom/Geometry').default>} newFeature New feature or null value.
+ * @param {?import('ol/Feature').default<import('ol/geom/Geometry').default>} previousFeature Previous feature or null value.
  */
 Controller.prototype.handleFeatureSet_ = function (newFeature, previousFeature) {
   const keys = this.featureListenerKeys_;
@@ -210,7 +215,7 @@ Controller.prototype.handleColorSet_ = function (newColor) {
 
 /**
  * @param {number|undefined} value A name value to set or undefined to get.
- * @return {number} The angle of the feature.
+ * @returns {number} The angle of the feature.
  */
 Controller.prototype.getSetAngle = function (value) {
   return /** @type {number} */ (this.getSetProperty_(ngeoFormatFeatureProperties.ANGLE, value));
@@ -218,7 +223,7 @@ Controller.prototype.getSetAngle = function (value) {
 
 /**
  * @param {string|undefined} value A name value to set or undefined to get.
- * @return {string} The name of the feature.
+ * @returns {string} The name of the feature.
  */
 Controller.prototype.getSetName = function (value) {
   return /** @type {string} */ (this.getSetProperty_(ngeoFormatFeatureProperties.NAME, value));
@@ -227,7 +232,7 @@ Controller.prototype.getSetName = function (value) {
 /**
  * @param {boolean|undefined} value A value to set or undefined for the
  *     purpose of showing the attribute labels or not.
- * @return {boolean} Whether to show the labels or not.
+ * @returns {boolean} Whether to show the labels or not.
  */
 Controller.prototype.getSetShowLabel = function (value) {
   return /** @type {boolean} */ (this.getSetProperty_(ngeoFormatFeatureProperties.SHOW_LABEL, value));
@@ -235,7 +240,7 @@ Controller.prototype.getSetShowLabel = function (value) {
 
 /**
  * @param {number|undefined} value A stroke value to set or undefined to get.
- * @return {number} The stroke of the feature.
+ * @returns {number} The stroke of the feature.
  */
 Controller.prototype.getSetOpacity = function (value) {
   return /** @type {number} */ (this.getSetProperty_(ngeoFormatFeatureProperties.OPACITY, value));
@@ -244,7 +249,7 @@ Controller.prototype.getSetOpacity = function (value) {
 /**
  * @param {boolean|undefined} value A value to set or undefined to get for the
  *     purpose of showing the geometry measurements or not.
- * @return {boolean} Whether to show the measurements or not.
+ * @returns {boolean} Whether to show the measurements or not.
  */
 Controller.prototype.getSetShowMeasure = function (value) {
   return /** @type {boolean} */ (this.getSetProperty_(ngeoFormatFeatureProperties.SHOW_MEASURE, value));
@@ -252,7 +257,7 @@ Controller.prototype.getSetShowMeasure = function (value) {
 
 /**
  * @param {number|undefined} value A size value to set or undefined to get.
- * @return {number} The size of the feature.
+ * @returns {number} The size of the feature.
  */
 Controller.prototype.getSetSize = function (value) {
   return /** @type {number} */ (this.getSetProperty_(ngeoFormatFeatureProperties.SIZE, value));
@@ -260,7 +265,7 @@ Controller.prototype.getSetSize = function (value) {
 
 /**
  * @param {number|undefined} value A stroke value to set or undefined to get.
- * @return {number} The stroke of the feature.
+ * @returns {number} The stroke of the feature.
  */
 Controller.prototype.getSetStroke = function (value) {
   return /** @type {number} */ (this.getSetProperty_(ngeoFormatFeatureProperties.STROKE, value));
@@ -268,7 +273,7 @@ Controller.prototype.getSetStroke = function (value) {
 
 /**
  * @param {number|undefined} value A arrow-direction value to set or undefined to get.
- * @return {number} The arrow-direction of the feature.
+ * @returns {number} The arrow-direction of the feature.
  */
 Controller.prototype.getSetArrowDirection = function (value) {
   return /** @type {number} */ (this.getSetProperty_(ngeoFormatFeatureProperties.ARROW_DIRECTION, value));
@@ -276,7 +281,7 @@ Controller.prototype.getSetArrowDirection = function (value) {
 
 /**
  * @param {number|undefined} value A arrow-position value to set or undefined to get.
- * @return {number} The arrow-position of the feature.
+ * @returns {number} The arrow-position of the feature.
  */
 Controller.prototype.getSetArrowPosition = function (value) {
   return /** @type {number} */ (this.getSetProperty_(ngeoFormatFeatureProperties.ARROW_POSITION, value));
@@ -286,7 +291,7 @@ Controller.prototype.getSetArrowPosition = function (value) {
  * @param {string} key The property name.
  * @param {boolean|number|string|undefined} value A value to set or undefined
  *     to get.
- * @return {boolean|number|string} The property value of the feature.
+ * @returns {boolean|number|string} The property value of the feature.
  */
 Controller.prototype.getSetProperty_ = function (key, value) {
   if (!this.feature) {

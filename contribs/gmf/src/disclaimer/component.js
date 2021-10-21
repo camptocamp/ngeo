@@ -20,21 +20,21 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import {getUid as olUtilGetUid} from 'ol/util.js';
-import {listen} from 'ol/events.js';
-import olLayerBase from 'ol/layer/Base.js';
-import olLayerGroup from 'ol/layer/Group.js';
-import {DATALAYERGROUP_NAME} from 'gmf/index.js';
-import ngeoMapLayerHelper from 'ngeo/map/LayerHelper.js';
-import {MessageType} from 'ngeo/message/Message.js';
-import ngeoMessageDisclaimer from 'ngeo/message/Disclaimer.js';
-import ngeoMiscEventHelper from 'ngeo/misc/EventHelper.js';
-import {CollectionEvent} from 'ol/Collection.js';
+import {getUid as olUtilGetUid} from 'ol/util';
+import {listen} from 'ol/events';
+import olLayerBase from 'ol/layer/Base';
+import olLayerGroup from 'ol/layer/Group';
+import {DATALAYERGROUP_NAME} from 'gmf/index';
+import ngeoMapLayerHelper from 'ngeo/map/LayerHelper';
+import {MessageType} from 'ngeo/message/Message';
+import ngeoMessageDisclaimer from 'ngeo/message/Disclaimer';
+import ngeoMiscEventHelper from 'ngeo/misc/EventHelper';
+import {CollectionEvent} from 'ol/Collection';
 
 import 'angular-sanitize';
 
 /**
- * Extension of type {import('ngeo/message/Message.js').Message}
+ * Extension of type {import('ngeo/message/Message').Message}
  *
  * @typedef {Object} Message
  * @property {number} [delay=7000] The delay in milliseconds the message is shown
@@ -60,18 +60,18 @@ const myModule = angular.module('gmfDisclaimer', [
 /**
  * Used metadata:
  *
- *  * `disclaimer`: The disclaimer text for this element.
+ *  - `disclaimer`: The disclaimer text for this element.
  *      For WMS and WMTS layers, layer groups and themes.
  *
  * @param {JQuery} $element Element.
  * @param {angular.ISCEService} $sce Angular sce service.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
- * @param {import("ngeo/message/Disclaimer.js").MessageDisclaimerService} ngeoDisclaimer Ngeo Disclaimer
+ * @param {import('ngeo/message/Disclaimer').MessageDisclaimerService} ngeoDisclaimer Ngeo Disclaimer
  *    service.
- * @param {import("ngeo/misc/EventHelper.js").EventHelper} ngeoEventHelper Ngeo Event Helper.
- * @param {import("ngeo/map/LayerHelper.js").LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
- * @param {import('gmf/options.js').gmfDisclaimerOptions} gmfDisclaimerOptions The options.
+ * @param {import('ngeo/misc/EventHelper').EventHelper} ngeoEventHelper Ngeo Event Helper.
+ * @param {import('ngeo/map/LayerHelper').LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
+ * @param {import('gmf/options').gmfDisclaimerOptions} gmfDisclaimerOptions The options.
  * @ngInject
  * @class
  * @ngdoc controller
@@ -88,23 +88,25 @@ export function DisclaimerController(
   gmfDisclaimerOptions
 ) {
   /**
-   * @type {import('gmf/options.js').gmfDisclaimerOptions}
+   * @type {import('gmf/options').gmfDisclaimerOptions}
    */
   this.options = gmfDisclaimerOptions;
 
   /**
-   * @type {?import("ol/Map.js").default}
+   * @type {?import('ol/Map').default}
    */
   this.map = null;
 
   /**
    * Visibility that is set to true when a new msg is there.
+   *
    * @type {boolean}
    */
   this.visibility = false;
 
   /**
    * Trusted html messages that can be displayed as html.
+   *
    * @type {string|undefined}
    */
   this.msg;
@@ -135,22 +137,22 @@ export function DisclaimerController(
   this.element_ = $element;
 
   /**
-   * @type {import("ngeo/message/Disclaimer.js").MessageDisclaimerService}
+   * @type {import('ngeo/message/Disclaimer').MessageDisclaimerService}
    */
   this.disclaimer_ = ngeoDisclaimer;
 
   /**
-   * @type {import("ngeo/misc/EventHelper.js").EventHelper}
+   * @type {import('ngeo/misc/EventHelper').EventHelper}
    */
   this.eventHelper_ = ngeoEventHelper;
 
   /**
-   * @type {import("ngeo/map/LayerHelper.js").LayerHelper}
+   * @type {import('ngeo/map/LayerHelper').LayerHelper}
    */
   this.ngeoLayerHelper_ = ngeoLayerHelper;
 
   /**
-   * @type {?import("ol/layer/Group.js").default}
+   * @type {?import('ol/layer/Group').default}
    */
   this.dataLayerGroup_ = null;
 }
@@ -168,7 +170,7 @@ DisclaimerController.prototype.$onInit = function () {
 };
 
 /**
- * @param {Event|import('ol/events/Event.js').default} evt Event.
+ * @param {Event|import('ol/events/Event').default} evt Event.
  */
 DisclaimerController.prototype.handleLayersAdd_ = function (evt) {
   if (evt instanceof CollectionEvent) {
@@ -183,7 +185,7 @@ DisclaimerController.prototype.handleLayersAdd_ = function (evt) {
 };
 
 /**
- * @param {Event|import('ol/events/Event.js').default} evt Event.
+ * @param {Event|import('ol/events/Event').default} evt Event.
  */
 DisclaimerController.prototype.handleLayersRemove_ = function (evt) {
   if (evt instanceof CollectionEvent) {
@@ -197,7 +199,7 @@ DisclaimerController.prototype.handleLayersRemove_ = function (evt) {
 };
 
 /**
- * @param {import("ol/layer/Base.js").default} layer Layer.
+ * @param {import('ol/layer/Base').default} layer Layer.
  */
 DisclaimerController.prototype.registerLayer_ = function (layer) {
   const layerUid = olUtilGetUid(layer);
@@ -226,7 +228,7 @@ DisclaimerController.prototype.registerLayer_ = function (layer) {
       const listenerKey = listen(
         layer,
         'propertychange',
-        /** @type {import("ol/events.js").ListenerFunction} */
+        /** @type {import('ol/events').ListenerFunction} */
         (event) => {
           if (layer.getVisible()) {
             this.update_(layer);
@@ -244,7 +246,7 @@ DisclaimerController.prototype.registerLayer_ = function (layer) {
 };
 
 /**
- * @param {import("ol/layer/Base.js").default} layer Layer.
+ * @param {import('ol/layer/Base').default} layer Layer.
  */
 DisclaimerController.prototype.unregisterLayer_ = function (layer) {
   const layerUid = olUtilGetUid(layer);
@@ -296,7 +298,7 @@ DisclaimerController.prototype.showDisclaimerMessage_ = function (layerUid, msg)
 };
 
 /**
- * @param {import("ol/layer/Base.js").default} layer Layer
+ * @param {import('ol/layer/Base').default} layer Layer
  */
 DisclaimerController.prototype.closeAll_ = function (layer) {
   const disclaimers = layer.get('disclaimers');
@@ -310,7 +312,7 @@ DisclaimerController.prototype.closeAll_ = function (layer) {
 };
 
 /**
- * @param {import("ol/layer/Base.js").default} layer Layer
+ * @param {import('ol/layer/Base').default} layer Layer
  */
 DisclaimerController.prototype.showAll_ = function (layer) {
   const disclaimers = layer.get('disclaimers');
@@ -325,7 +327,7 @@ DisclaimerController.prototype.showAll_ = function (layer) {
 };
 
 /**
- * @param {import("ol/layer/Base.js").default} layer Layer
+ * @param {import('ol/layer/Base').default} layer Layer
  */
 DisclaimerController.prototype.update_ = function (layer) {
   const disclaimers = layer.get('disclaimers');
@@ -337,8 +339,9 @@ DisclaimerController.prototype.update_ = function (layer) {
     console.assert(Object.keys(disclaimers).length === 1);
     this.showAll_(layer);
   } else {
-    const layerWMS =
-      /** @type {import("ol/layer/Layer.js").default<import("ol/source/ImageWMS.js").default>} */ (layer);
+    const layerWMS = /** @type {import('ol/layer/Layer').default<import('ol/source/ImageWMS').default>} */ (
+      layer
+    );
     const sourceWMS = layerWMS.getSource();
     if (sourceWMS.getParams) {
       const layers = sourceWMS.getParams()['LAYERS'];
@@ -413,14 +416,13 @@ DisclaimerController.prototype.closeDisclaimerMessage_ = function (layerUid, msg
  *       </div>
  *     </ngeo-modal>
  *
- * @htmlAttribute {import("ol/Map.js").default} [gmf]-disclaimer-map The map.
+ * @htmlAttribute {import('ol/Map').default} [gmf]-disclaimer-map The map.
  * @htmlAttribute {boolean?} gmf-disclaimer-external-visibility variable that
  *     will be set to true if the disclaimers contain a new message. To uses it,
  *     you must set the gmf-disclaimer-external to true.
  * @htmlAttribute {string?} gmf-disclaimer-external-msg variable that will
  *     contains the disclaimer messages. To uses it, you must set the
  *     gmf-disclaimer-external to true.
- *
  * @ngdoc component
  * @ngname gmfDisclaimer
  */

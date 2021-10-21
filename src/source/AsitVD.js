@@ -19,8 +19,8 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import olSourceWMTS from 'ol/source/WMTS.js';
-import olTilegridWMTS from 'ol/tilegrid/WMTS.js';
+import olSourceWMTS from 'ol/source/WMTS';
+import olTilegridWMTS from 'ol/tilegrid/WMTS';
 
 /**
  * @typedef {Object} AsitVDOptions
@@ -39,7 +39,7 @@ const asitVDResolutions = [
 ];
 
 /**
- * @type {import("ol/tilegrid/WMTS.js").default}
+ * @type {import('ol/tilegrid/WMTS').default}
  * @private
  * @hidden
  */
@@ -51,6 +51,7 @@ const asitVDTileGrid = new olTilegridWMTS({
 
 /**
  * Layer source for the ASIT VD tile server.
+ *
  * @see https://www.asitvd.ch/chercher/geoservices/fond-de-plan-asit-vd.html
  * @hidden
  */

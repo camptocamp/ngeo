@@ -19,7 +19,7 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import GeoJSON from 'ol/format/GeoJSON.js';
+import GeoJSON from 'ol/format/GeoJSON';
 // @ts-ignore
 import Autocomplete from '@trevoreyre/autocomplete-js';
 
@@ -60,7 +60,7 @@ export default class Search {
 
   /**
    * @param {string} input
-   * @return {Promise<import("geojson").Feature[]>}
+   * @returns {Promise<import("geojson").Feature[]>}
    */
   search_(input) {
     return new Promise((resolve) => {
@@ -78,7 +78,7 @@ export default class Search {
 
   /**
    * @param {import("geojson").Feature} feature
-   * @return {boolean}
+   * @returns {boolean}
    */
   hasGeometry_(feature) {
     return feature.geometry !== null;
@@ -86,7 +86,7 @@ export default class Search {
 
   /**
    * @param {import("geojson").Feature} result
-   * @return {string}
+   * @returns {string}
    */
   getResultValue_(result) {
     return result.properties.label;

@@ -20,11 +20,11 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import gmfObjecteditingComponent from 'gmf/objectediting/component.js';
-import gmfObjecteditingGetWMSFeatureComponent from 'gmf/objectediting/getWMSFeatureComponent.js';
-import gmfObjecteditingManager from 'gmf/objectediting/Manager.js';
-import gmfObjecteditingQuery from 'gmf/objectediting/Query.js';
-import gmfObjecteditingToolsComponent from 'gmf/objectediting/toolsComponent.js';
+import gmfObjecteditingComponent from 'gmf/objectediting/component';
+import gmfObjecteditingGetWMSFeatureComponent from 'gmf/objectediting/getWMSFeatureComponent';
+import gmfObjecteditingManager from 'gmf/objectediting/Manager';
+import gmfObjecteditingQuery from 'gmf/objectediting/Query';
+import gmfObjecteditingToolsComponent from 'gmf/objectediting/toolsComponent';
 
 /**
  * @type {angular.IModule}

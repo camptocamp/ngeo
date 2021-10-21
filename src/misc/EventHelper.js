@@ -20,7 +20,7 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import {unlistenByKey} from 'ol/events.js';
+import {unlistenByKey} from 'ol/events';
 
 /**
  * Provides methods to manage the listening/unlistening of OpenLayers events
@@ -33,7 +33,7 @@ import {unlistenByKey} from 'ol/events.js';
  */
 export function EventHelper() {
   /**
-   * @type {Object<number | string, import("ol/events.js").EventsKey[]>}
+   * @type {Object<number | string, import('ol/events').EventsKey[]>}
    */
   this.listenerKeys_ = {};
 }
@@ -41,18 +41,20 @@ export function EventHelper() {
 /**
  * Utility method to add a listener key bound to a unique id. The key has
  * to come from `ol.events`.
+ *
  * @param {number|string} uid Unique id.
- * @param {import("ol/events.js").EventsKey} key Key.
+ * @param {import('ol/events').EventsKey} key Key.
  */
 EventHelper.prototype.addListenerKey = function (uid, key) {
   if (!this.listenerKeys_[uid]) {
     this.initListenerKey_(uid);
   }
-  this.listenerKeys_[uid].push(/** @type {import("ol/events.js").EventsKey} */ (key));
+  this.listenerKeys_[uid].push(/** @type {import('ol/events').EventsKey} */ (key));
 };
 
 /**
  * Clear all listener keys from the given unique id.
+ *
  * @param {number|string} uid Unique id.
  */
 EventHelper.prototype.clearListenerKey = function (uid) {
@@ -65,6 +67,7 @@ EventHelper.prototype.clearListenerKey = function (uid) {
  *   has not array set yet)
  * - unlisten any events if the array already exists for the given uid and
  *   empty the array.
+ *
  * @param {number|string} uid Unique id.
  */
 EventHelper.prototype.initListenerKey_ = function (uid) {

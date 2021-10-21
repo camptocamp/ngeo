@@ -20,9 +20,9 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import gmfEditingEnumerateAttribute from 'gmf/editing/EnumerateAttribute.js';
-import ngeoDatasourceHelper from 'ngeo/datasource/Helper.js';
-import ngeoFormatAttributeType from 'ngeo/format/AttributeType.js';
+import gmfEditingEnumerateAttribute from 'gmf/editing/EnumerateAttribute';
+import ngeoDatasourceHelper from 'ngeo/datasource/Helper';
+import ngeoFormatAttributeType from 'ngeo/format/AttributeType';
 
 /**
  * @hidden
@@ -33,9 +33,9 @@ export class DatasourceHelper {
    * sources.
    *
    * @param {angular.IQService} $q The Angular $q service.
-   * @param {import("gmf/editing/EnumerateAttribute.js").EditingEnumerateAttributeService} gmfEnumerateAttribute
+   * @param {import('gmf/editing/EnumerateAttribute').EditingEnumerateAttributeService} gmfEnumerateAttribute
    *    The Gmf enumerate attribute service.
-   * @param {import("ngeo/datasource/Helper.js").DatasourceHelper} ngeoDataSourcesHelper Ngeo data
+   * @param {import('ngeo/datasource/Helper').DatasourceHelper} ngeoDataSourcesHelper Ngeo data
    *     source helper service.
    * @ngdoc service
    * @ngname gmfDataSourcesHelper
@@ -51,13 +51,13 @@ export class DatasourceHelper {
     this.q_ = $q;
 
     /**
-     * @type {import("gmf/editing/EnumerateAttribute.js").EditingEnumerateAttributeService}
+     * @type {import('gmf/editing/EnumerateAttribute').EditingEnumerateAttributeService}
      * @private
      */
     this.gmfEnumerateAttribute_ = gmfEnumerateAttribute;
 
     /**
-     * @type {import("ngeo/datasource/Helper.js").DatasourceHelper}
+     * @type {import('ngeo/datasource/Helper').DatasourceHelper}
      * @private
      */
     this.ngeoDataSourcesHelper_ = ngeoDataSourcesHelper;
@@ -65,20 +65,20 @@ export class DatasourceHelper {
     // === Other properties ===
 
     /**
-     * @type {?import('ngeo/datasource/DataSource.js').DataSources}
+     * @type {?import('ngeo/datasource/DataSource').DataSources}
      * @protected
      */
     this.collection_ = null;
 
     /**
-     * @type {Object<number, import("gmf/datasource/OGC.js").default>}
+     * @type {Object<number, import('gmf/datasource/OGC').default>}
      * @protected
      */
     this.cache_ = {};
   }
 
   /**
-   * @return {import('ngeo/datasource/DataSource.js').DataSources} Data sources collection.
+   * @returns {import('ngeo/datasource/DataSource').DataSources} Data sources collection.
    */
   get collection() {
     return this.ngeoDataSourcesHelper_.collection;
@@ -86,18 +86,17 @@ export class DatasourceHelper {
 
   /**
    * Return a data source using its id.
+   *
    * @param {number} id Data source id.
-   * @return {?import("gmf/datasource/OGC.js").default} Data source.
+   * @returns {?import('gmf/datasource/OGC').default} Data source.
    */
   getDataSource(id) {
-    return /** @type {?import("gmf/datasource/OGC.js").default} */ (
-      this.ngeoDataSourcesHelper_.getDataSource(id)
-    );
+    return /** @type {?import('gmf/datasource/OGC').default} */ this.ngeoDataSourcesHelper_.getDataSource(id);
   }
 
   /**
-   * @param {import("gmf/datasource/OGC.js").default} dataSource Filtrable data source.
-   * @return {angular.IPromise<import("gmf/datasource/OGC.js").default>} Promise.
+   * @param {import('gmf/datasource/OGC').default} dataSource Filtrable data source.
+   * @returns {angular.IPromise<import('gmf/datasource/OGC').default>} Promise.
    */
   prepareFiltrableDataSource(dataSource) {
     const prepareFiltrableDataSourceDefer = this.q_.defer();

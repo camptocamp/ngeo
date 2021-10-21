@@ -20,9 +20,9 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import ngeoFilterComponent from 'ngeo/filter/component.js';
-import ngeoFilterRuleHelper from 'ngeo/filter/RuleHelper.js';
-import ngeoFilterRuleComponent from 'ngeo/filter/ruleComponent.js';
+import ngeoFilterComponent from 'ngeo/filter/component';
+import ngeoFilterRuleHelper from 'ngeo/filter/RuleHelper';
+import ngeoFilterRuleComponent from 'ngeo/filter/ruleComponent';
 
 /**
  * @type {angular.IModule}

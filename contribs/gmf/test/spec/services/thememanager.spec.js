@@ -21,7 +21,7 @@
 
 // @ts-nocheck
 import angular from 'angular';
-import gmfTestDataThemes from '../data/themes.js';
+import gmfTestDataThemes from '../data/themes';
 
 describe('gmf.theme.Manager', () => {
   let gmfThemeManager_;

@@ -21,8 +21,8 @@
 
 // @ts-nocheck
 import angular from 'angular';
-import olMap from 'ol/Map.js';
-import olView from 'ol/View.js';
+import olMap from 'ol/Map';
+import olView from 'ol/View';
 
 describe('gmf.contextualdata.component', () => {
   let $compile;

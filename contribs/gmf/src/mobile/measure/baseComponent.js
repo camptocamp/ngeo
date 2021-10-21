@@ -20,10 +20,10 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import {interactionDecoration} from 'ngeo/misc/decorate.js';
-import ngeoMiscFilters from 'ngeo/misc/filters.js';
-import {listen} from 'ol/events.js';
-import MobileDraw from 'ngeo/interaction/MobileDraw.js';
+import {interactionDecoration} from 'ngeo/misc/decorate';
+import ngeoMiscFilters from 'ngeo/misc/filters';
+import {listen} from 'ol/events';
+import MobileDraw from 'ngeo/interaction/MobileDraw';
 
 /**
  * @type {angular.IModule}
@@ -60,7 +60,7 @@ export function MeasueMobileBaseController($scope, $filter, gettextCatalog) {
   this.gettextCatalog = gettextCatalog;
 
   /**
-   * @type {?import("ol/Map.js").default}
+   * @type {?import('ol/Map').default}
    */
   this.map = null;
 
@@ -80,12 +80,12 @@ export function MeasueMobileBaseController($scope, $filter, gettextCatalog) {
   );
 
   /**
-   * @type {?import("ngeo/interaction/Measure.js").default}
+   * @type {?import('ngeo/interaction/Measure').default}
    */
   this.measure = null;
 
   /**
-   * @type {?import("ngeo/interaction/MobileDraw.js").default}
+   * @type {?import('ngeo/interaction/MobileDraw').default}
    */
   this.drawInteraction = null;
 
@@ -135,7 +135,7 @@ MeasueMobileBaseController.prototype.init = function () {
   listen(
     drawInteraction,
     'change:dirty',
-    /** @type {import("ol/events.js").ListenerFunction} */
+    /** @type {import('ol/events').ListenerFunction} */
     (evt) => {
       this.dirty = drawInteraction.getDirty();
 
@@ -152,7 +152,7 @@ MeasueMobileBaseController.prototype.init = function () {
   listen(
     drawInteraction,
     'change:drawing',
-    /** @type {import("ol/events.js").ListenerFunction} */
+    /** @type {import('ol/events').ListenerFunction} */
     (evt) => {
       this.drawing = drawInteraction.getDrawing();
     },
@@ -162,7 +162,7 @@ MeasueMobileBaseController.prototype.init = function () {
   listen(
     drawInteraction,
     'change:valid',
-    /** @type {import("ol/events.js").ListenerFunction} */
+    /** @type {import('ol/events').ListenerFunction} */
     (evt) => {
       this.valid = drawInteraction.getValid();
     },

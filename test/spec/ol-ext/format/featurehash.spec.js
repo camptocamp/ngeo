@@ -20,20 +20,20 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 // @ts-nocheck
-import olFeature from 'ol/Feature.js';
-import olGeomMultiLineString from 'ol/geom/MultiLineString.js';
-import olGeomMultiPoint from 'ol/geom/MultiPoint.js';
-import olGeomMultiPolygon from 'ol/geom/MultiPolygon.js';
-import olGeomLineString from 'ol/geom/LineString.js';
-import olGeomPoint from 'ol/geom/Point.js';
-import olGeomPolygon from 'ol/geom/Polygon.js';
-import olStyleCircle from 'ol/style/Circle.js';
-import olStyleFill from 'ol/style/Fill.js';
-import olStyleStroke from 'ol/style/Stroke.js';
-import olStyleStyle from 'ol/style/Style.js';
-import olStyleText from 'ol/style/Text.js';
-import olStyleImage from 'ol/style/Image.js';
-import ngeoFormatFeatureHash from 'ngeo/format/FeatureHash.js';
+import olFeature from 'ol/Feature';
+import olGeomMultiLineString from 'ol/geom/MultiLineString';
+import olGeomMultiPoint from 'ol/geom/MultiPoint';
+import olGeomMultiPolygon from 'ol/geom/MultiPolygon';
+import olGeomLineString from 'ol/geom/LineString';
+import olGeomPoint from 'ol/geom/Point';
+import olGeomPolygon from 'ol/geom/Polygon';
+import olStyleCircle from 'ol/style/Circle';
+import olStyleFill from 'ol/style/Fill';
+import olStyleStroke from 'ol/style/Stroke';
+import olStyleStyle from 'ol/style/Style';
+import olStyleText from 'ol/style/Text';
+import olStyleImage from 'ol/style/Image';
+import ngeoFormatFeatureHash from 'ngeo/format/FeatureHash';
 
 describe('ngeo.format.FeatureHash', () => {
   /** @type {ngeoFormatFeatureHash} */

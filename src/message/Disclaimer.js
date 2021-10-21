@@ -20,10 +20,10 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import 'bootstrap/js/src/alert.js';
+import 'bootstrap/js/src/alert';
 
-import ngeoMessagePopup, {MessagePopup} from 'ngeo/message/Popup.js';
-import ngeoMessageMessage, {MessageType} from 'ngeo/message/Message.js';
+import ngeoMessagePopup, {MessagePopup} from 'ngeo/message/Popup';
+import ngeoMessageMessage, {MessageType} from 'ngeo/message/Message_OLD'; // TODO: Use new ts file when convert done
 import 'ngeo/sass/font.scss';
 
 /**
@@ -43,13 +43,14 @@ import 'ngeo/sass/font.scss';
  * Provides methods to display any sort of messages, disclaimers, errors,
  * etc. Requires Bootstrap library (both CSS and JS) to display the alerts
  * properly.
+ *
  * @hidden
  */
 export class MessageDisclaimerService extends ngeoMessageMessage {
   /**
    * @param {angular.ISCEService} $sce Angular sce service.
    * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext service.
-   * @param {import('ngeo/message/Popup.js').PopupFactory} ngeoCreatePopup Popup service.
+   * @param {import('ngeo/message/Popup').PopupFactory} ngeoCreatePopup Popup service.
    * @ngInject
    */
   constructor($sce, gettextCatalog, ngeoCreatePopup) {
@@ -69,7 +70,7 @@ export class MessageDisclaimerService extends ngeoMessageMessage {
 
     /**
      * @private
-     * @type {import('ngeo/message/Popup.js').PopupFactory}
+     * @type {import('ngeo/message/Popup').PopupFactory}
      */
     this.createPopup_ = ngeoCreatePopup;
 
@@ -84,7 +85,8 @@ export class MessageDisclaimerService extends ngeoMessageMessage {
 
     /**
      * Cache of messages.
-     * @type {Object<string, JQuery|import("ngeo/message/Popup.js").MessagePopup>}
+     *
+     * @type {Object<string, JQuery|import('ngeo/message/Popup').MessagePopup>}
      * @private
      */
     this.messages_ = {};
@@ -105,6 +107,7 @@ export class MessageDisclaimerService extends ngeoMessageMessage {
   /**
    * Show disclaimer message string or object or list of disclaimer message
    * strings or objects.
+   *
    * @param {string | Message | (string | Message)[]} object
    *     A message or list of messages as text or configuration objects.
    */
@@ -115,6 +118,7 @@ export class MessageDisclaimerService extends ngeoMessageMessage {
   /**
    * Close disclaimer message string or object or list of disclaimer message
    * strings or objects.
+   *
    * @param {string | Message | (string | Message)[]} object
    *     A message or list of messages as text or configuration objects.
    */
@@ -125,6 +129,7 @@ export class MessageDisclaimerService extends ngeoMessageMessage {
 
   /**
    * Show the message.
+   *
    * @param {Message} message Message.
    * @protected
    * @override
@@ -219,7 +224,7 @@ export class MessageDisclaimerService extends ngeoMessageMessage {
 
   /**
    * @param {Message} message Message.
-   * @return {string} The uid.
+   * @returns {string} The uid.
    * @private
    */
   getMessageUid_(message) {
@@ -228,7 +233,7 @@ export class MessageDisclaimerService extends ngeoMessageMessage {
 
   /**
    * @param {Message} message Message.
-   * @return {string} The uid.
+   * @returns {string} The uid.
    * @private
    */
   getCompatibleMessageUid_(message) {
@@ -237,6 +242,7 @@ export class MessageDisclaimerService extends ngeoMessageMessage {
 
   /**
    * Close the message.
+   *
    * @param {Message} message Message.
    * @param {boolean} force Force close the message.
    * @protected

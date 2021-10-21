@@ -19,15 +19,15 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr.js';
-import ngeoMessageModalComponent from 'ngeo/message/modalComponent.js';
-import {extentToRectangle} from 'ngeo/utils.js';
-import olCollection from 'ol/Collection.js';
-import Feature from 'ol/Feature.js';
-import Polygon from 'ol/geom/Polygon.js';
-import {DEVICE_PIXEL_RATIO} from 'ol/has.js';
+import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr';
+import ngeoMessageModalComponent from 'ngeo/message/modalComponent';
+import {extentToRectangle} from 'ngeo/utils';
+import olCollection from 'ol/Collection';
+import Feature from 'ol/Feature';
+import Polygon from 'ol/geom/Polygon';
+import {DEVICE_PIXEL_RATIO} from 'ol/has';
 import angular from 'angular';
-import MaskLayer from './Mask.js';
+import MaskLayer from './Mask';
 
 /**
  * @type {!angular.IModule}
@@ -42,7 +42,7 @@ myModule.value(
   /**
    * @param {JQuery} element Element.
    * @param {angular.IAttributes} attrs Attributes.
-   * @return {string} Template URL.
+   * @returns {string} Template URL.
    */
   (element, attrs) => {
     const templateUrl = attrs['ngeoOfflineTemplateurl'];
@@ -65,7 +65,7 @@ myModule.run(
  * @param {!JQuery} $element Element.
  * @param {!angular.IAttributes} $attrs Attributes.
  * @param {!function(!JQuery, !angular.IAttributes): string} ngeoOfflineTemplateUrl Template function.
- * @return {string} Template URL.
+ * @returns {string} Template URL.
  * @ngInject
  */
 function ngeoOfflineTemplateUrl($element, $attrs, ngeoOfflineTemplateUrl) {
@@ -87,7 +87,7 @@ function ngeoOfflineTemplateUrl($element, $attrs, ngeoOfflineTemplateUrl) {
  *
  * See our live example: [../examples/offline.html](../examples/offline.html)
  *
- * @htmlAttribute {import("ol/Map.js").default} ngeo-offline-map The map.
+ * @htmlAttribute {import('ol/Map').default} ngeo-offline-map The map.
  * @htmlAttribute {number} ngeo-offline-extentsize The size, in map units, of a side of the extent.
  * @private
  * @ngdoc component
@@ -110,14 +110,14 @@ myModule.component('ngeoOffline', component);
 export const Controller = class {
   /**
    * @param {angular.ITimeoutService} $timeout Angular timeout service.
-   * @param {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr
+   * @param {import('ngeo/map/FeatureOverlayMgr').FeatureOverlayMgr} ngeoFeatureOverlayMgr
    * ngeo feature overlay manager service.
-   * @param {import("ngeo/offline/ServiceManager.js").default} ngeoOfflineServiceManager
+   * @param {import('ngeo/offline/ServiceManager').default} ngeoOfflineServiceManager
    * ngeo offline service Manager.
-   * @param {import("ngeo/offline/Configuration.js").default} ngeoOfflineConfiguration
+   * @param {import('ngeo/offline/Configuration').default} ngeoOfflineConfiguration
    * ngeo offline configuration service.
-   * @param {import("ngeo/offline/Mode.js").default} ngeoOfflineMode Offline mode manager.
-   * @param {import("ngeo/offline/NetworkStatus.js").default} ngeoNetworkStatus ngeo network status service.
+   * @param {import('ngeo/offline/Mode').default} ngeoOfflineMode Offline mode manager.
+   * @param {import('ngeo/offline/NetworkStatus').default} ngeoNetworkStatus ngeo network status service.
    * @ngInject
    * @ngdoc controller
    * @ngname ngeoOfflineController
@@ -142,31 +142,32 @@ export const Controller = class {
     this.maskLayer_ = undefined;
 
     /**
-     * @type {import("ngeo/offline/ServiceManager.js").default}
+     * @type {import('ngeo/offline/ServiceManager').default}
      * @private
      */
     this.ngeoOfflineServiceManager_ = ngeoOfflineServiceManager;
 
     /**
      * @private
-     * @type {import("ngeo/offline/Configuration.js").default}
+     * @type {import('ngeo/offline/Configuration').default}
      */
     this.ngeoOfflineConfiguration_ = ngeoOfflineConfiguration;
 
     /**
-     * @type {import("ngeo/offline/Mode.js").default}
+     * @type {import('ngeo/offline/Mode').default}
      * @export
      */
     this.offlineMode = ngeoOfflineMode;
 
     /**
-     * @type {import("ngeo/offline/NetworkStatus.js").default}
+     * @type {import('ngeo/offline/NetworkStatus').default}
      * @export
      */
     this.networkStatus = ngeoNetworkStatus;
 
     /**
      * The map.
+     *
      * @type {!import("ol/Map").default}
      * @export
      */
@@ -174,19 +175,20 @@ export const Controller = class {
 
     /**
      * The size, in map units, of a side of the extent.
+     *
      * @type {number}
      * @export
      */
     this.extentSize = 0;
 
     /**
-     * @type {import("ngeo/map/FeatureOverlay.js").FeatureOverlay}
+     * @type {import('ngeo/map/FeatureOverlay').FeatureOverlay}
      * @private
      */
     this.featuresOverlay_ = ngeoFeatureOverlayMgr.getFeatureOverlay();
 
     /**
-     * @type {!olCollection<Feature<import('ol/geom/Geometry.js').default>>}
+     * @type {!olCollection<Feature<import('ol/geom/Geometry').default>>}
      * @private
      */
     this.overlayCollection_ = new olCollection();
@@ -201,6 +203,7 @@ export const Controller = class {
 
     /**
      * Whether the current view is the extent selection.
+     *
      * @type {boolean}
      * @export
      */
@@ -208,6 +211,7 @@ export const Controller = class {
 
     /**
      * Whether the current view is downloading one.
+     *
      * @type {boolean}
      * @export
      */
@@ -215,6 +219,7 @@ export const Controller = class {
 
     /**
      * The progression of the data loading (0-100%).
+     *
      * @type {number}
      * @export
      */
@@ -222,6 +227,7 @@ export const Controller = class {
 
     /**
      * Whether the menu is currently displayed.
+     *
      * @type {boolean}
      * @export
      */
@@ -229,6 +235,7 @@ export const Controller = class {
 
     /**
      * Whether the cancel download modal is displayed.
+     *
      * @type {boolean}
      * @export
      */
@@ -236,6 +243,7 @@ export const Controller = class {
 
     /**
      * Whether the load data modal is displayed.
+     *
      * @type {boolean}
      * @export
      */
@@ -243,6 +251,7 @@ export const Controller = class {
 
     /**
      * Whether the "no layer" modal is displayed.
+     *
      * @type {boolean}
      * @export
      */
@@ -250,6 +259,7 @@ export const Controller = class {
 
     /**
      * Offline mask minimum margin in pixels.
+     *
      * @type {number}
      * @export
      */
@@ -257,6 +267,7 @@ export const Controller = class {
 
     /**
      * Minimum zoom where offline is enable.
+     *
      * @type {number}
      * @export
      */
@@ -264,6 +275,7 @@ export const Controller = class {
 
     /**
      * Maximum zoom where offline is enable.
+     *
      * @type {number}
      * @export
      */
@@ -271,6 +283,7 @@ export const Controller = class {
 
     /**
      * Map view max zoom constraint.
+     *
      * @type {number}
      * @export
      */
@@ -278,6 +291,7 @@ export const Controller = class {
 
     /**
      * Map view min zoom constraint.
+     *
      * @type {number}
      * @export
      */
@@ -311,7 +325,7 @@ export const Controller = class {
   $onInit() {
     this.offlineMode.registerComponent(this);
     this.ngeoOfflineConfiguration_.on(
-      /** @type {import('ol/Observable.js').EventTypes} */ ('progress'),
+      /** @type {import('ol/Observable').EventTypes} */ ('progress'),
       /** @type {function(?): ?} */ (this.progressCallback_)
     );
     this.maskMargin = this.maskMargin || 100;
@@ -323,13 +337,13 @@ export const Controller = class {
 
   $onDestroy() {
     this.ngeoOfflineConfiguration_.un(
-      /** @type {import('ol/Observable.js').EventTypes} */ ('progress'),
+      /** @type {import('ol/Observable').EventTypes} */ ('progress'),
       /** @type {function(?): ?} */ (this.progressCallback_)
     );
   }
 
   /**
-   * @return {boolean} True if data are accessible offline.
+   * @returns {boolean} True if data are accessible offline.
    * @export
    */
   hasData() {
@@ -349,6 +363,7 @@ export const Controller = class {
   }
   /**
    * Toggle the selecting extent view.
+   *
    * @param {boolean} [finished] If just finished downloading.
    * @export
    */
@@ -368,6 +383,7 @@ export const Controller = class {
 
   /**
    * Validate the current extent and download data.
+   *
    * @export
    */
   validateExtent() {
@@ -387,6 +403,7 @@ export const Controller = class {
 
   /**
    * Ask to abort the download of data.
+   *
    * @export
    */
   askAbortDownload() {
@@ -395,6 +412,7 @@ export const Controller = class {
 
   /**
    * Abort the download of data.
+   *
    * @export
    */
   abortDownload() {
@@ -405,6 +423,7 @@ export const Controller = class {
 
   /**
    * Show the main menu.
+   *
    * @export
    */
   showMenu() {
@@ -414,6 +433,7 @@ export const Controller = class {
   /**
    * Activate offline mode.
    * Zoom to the extent of that data and restore the data.
+   *
    * @export
    */
   activateOfflineMode() {
@@ -434,6 +454,7 @@ export const Controller = class {
    *
    * Deactivate offline mode.
    * Reload the page.
+   *
    * @export
    */
   deactivateOfflineMode() {
@@ -442,6 +463,7 @@ export const Controller = class {
 
   /**
    * Toggle the visibility of the data's extent.
+   *
    * @export
    */
   toggleExtentVisibility() {
@@ -453,7 +475,7 @@ export const Controller = class {
   }
 
   /**
-   * @return {boolean} True if the extent is currently visible. False otherwise.
+   * @returns {boolean} True if the extent is currently visible. False otherwise.
    * @export
    */
   isExtentVisible() {
@@ -462,6 +484,7 @@ export const Controller = class {
 
   /**
    * Delete the saved data.
+   *
    * @export
    */
   deleteData() {
@@ -492,6 +515,7 @@ export const Controller = class {
   /**
    * When enabling mask extent, zoom the view to the defined zoom range and
    * add constraints to the view to not allow user to move out of this range.
+   *
    * @private
    */
   addZoomConstraints_() {
@@ -523,8 +547,9 @@ export const Controller = class {
 
   /**
    * A polygon on the whole extent of the projection, with a hole for the offline extent.
-   * @param {import("ol/extent.js").Extent} extent An extent
-   * @return {Polygon} Polygon to save, based on the projection extent, the center of the map and
+   *
+   * @param {import('ol/extent').Extent} extent An extent
+   * @returns {Polygon} Polygon to save, based on the projection extent, the center of the map and
    *     the extentSize property.
    * @private
    */
@@ -534,7 +559,7 @@ export const Controller = class {
   }
 
   /**
-   * @return {import("ol/extent.js").Extent} the download extent.
+   * @returns {import('ol/extent').Extent} the download extent.
    * @private
    */
   getDowloadExtent_() {

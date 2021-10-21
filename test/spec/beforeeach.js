@@ -22,7 +22,7 @@
 // @ts-nocheck
 /* eslint valid-jsdoc: 0 */
 import angular from 'angular';
-import ngeoMainmodule from 'ngeo/mainmodule.js';
+import ngeoMainmodule from 'ngeo/mainmodule';
 
 const myModule = angular.module('app', []);
 
@@ -50,9 +50,10 @@ beforeEach(() => {
     /**
      * A matcher similar to `expect(...).toBeCloseTo(...)` to check that
      * numbers in two arrays are almost equal.
+     *
      * @param {?} util
      * @param {?} customEqualityTesters
-     * @return {jasmine.CustomMatcherFactory}
+     * @returns {jasmine.CustomMatcherFactory}
      */
     arrayToBeCloseTo(util, customEqualityTesters) {
       return {

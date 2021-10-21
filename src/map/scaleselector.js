@@ -20,9 +20,9 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import olMap from 'ol/Map.js';
-import {listen, unlistenByKey} from 'ol/events.js';
-import 'bootstrap/js/src/dropdown.js';
+import olMap from 'ol/Map';
+import {listen, unlistenByKey} from 'ol/events';
+import 'bootstrap/js/src/dropdown';
 
 /**
  * @type {angular.IModule}
@@ -35,7 +35,7 @@ myModule.value(
   /**
    * @param {JQuery} element Element.
    * @param {angular.IAttributes} attrs Attributes.
-   * @return {string} Template URL.
+   * @returns {string} Template URL.
    */
   (element, attrs) => {
     const templateUrl = attrs.ngeoScaleselectorTemplateurl;
@@ -90,10 +90,10 @@ myModule.run(
  *
  * See our live example: [../examples/scaleselector.html](../examples/scaleselector.html)
  *
- * @htmlAttribute {import("ol/Map.js").default} ngeo-scaleselector-map The map.
+ * @htmlAttribute {import('ol/Map').default} ngeo-scaleselector-map The map.
  * @param {string|function(JQuery=, angular.IAttributes=): string} ngeoScaleselectorTemplateUrl Template URL
  *    for the directive.
- * @return {angular.IDirective} Directive Definition Object.
+ * @returns {angular.IDirective} Directive Definition Object.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoScaleselector
@@ -116,12 +116,13 @@ export class ScaleselectorController {
   /**
    * @param {angular.IScope} $scope Directive scope.
    * @param {angular.IAttributes} $attrs Attributes.
-   * @param {import('ngeo/options.js').ngeoScaleSelectorOptions} ngeoScaleSelectorOptions The options.
+   * @param {import('ngeo/options').ngeoScaleSelectorOptions} ngeoScaleSelectorOptions The options.
    * @ngInject
    */
   constructor($scope, $attrs, ngeoScaleSelectorOptions) {
     /**
      * The zoom level/scale map object.
+     *
      * @type {number[]}
      */
     this.scales = ngeoScaleSelectorOptions.values;
@@ -129,14 +130,14 @@ export class ScaleselectorController {
     const mapExpr = $attrs.ngeoScaleselectorMap;
 
     /**
-     * @type {import("ol/Map.js").default}
+     * @type {import('ol/Map').default}
      * @private
      */
-    this.map_ = /** @type {import("ol/Map.js").default} */ ($scope.$eval(mapExpr));
+    this.map_ = /** @type {import('ol/Map').default} */ ($scope.$eval(mapExpr));
     console.assert(this.map_ instanceof olMap);
 
     /**
-     * @type {import('ngeo/options.js').ngeoScaleSelectorOptions}
+     * @type {import('ngeo/options').ngeoScaleSelectorOptions}
      */
     this.options = ngeoScaleSelectorOptions;
 
@@ -147,7 +148,7 @@ export class ScaleselectorController {
     this.$scope_ = $scope;
 
     /**
-     * @type {?import("ol/events.js").EventsKey}
+     * @type {?import('ol/events').EventsKey}
      * @private
      */
     this.resolutionChangeKey_ = null;
@@ -204,7 +205,7 @@ export class ScaleselectorController {
   }
 
   /**
-   * @return {number[]}
+   * @returns {number[]}
    */
   getZooms() {
     return Object.keys(this.scales).map(Number);
@@ -212,7 +213,7 @@ export class ScaleselectorController {
 
   /**
    * @param {number} zoom Zoom level.
-   * @return {number} Scale.
+   * @returns {number} Scale.
    */
   getScale(zoom) {
     if (zoom === undefined) {
@@ -241,7 +242,7 @@ export class ScaleselectorController {
   }
 
   /**
-   * @param {?Event|import("ol/events/Event.js").default} e OpenLayers object event.
+   * @param {?Event|import('ol/events/Event').default} e OpenLayers object event.
    * @private
    */
   handleResolutionChange_(e) {
@@ -267,7 +268,7 @@ export class ScaleselectorController {
   }
 
   /**
-   * @param {Event|import("ol/events/Event.js").default} e OpenLayers object event.
+   * @param {Event|import('ol/events/Event').default} e OpenLayers object event.
    * @private
    */
   handleViewChange_(e) {

@@ -19,18 +19,18 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import {getDefaultDrawStyleFunction} from 'ngeo/interaction/common.js';
-import ngeoCustomEvent from 'ngeo/CustomEvent.js';
-import {listen, unlistenByKey} from 'ol/events.js';
-import olFeature from 'ol/Feature.js';
-import {TRUE} from 'ol/functions.js';
-import olGeomLineString from 'ol/geom/LineString.js';
-import olGeomPoint from 'ol/geom/Point.js';
-import olGeomPolygon from 'ol/geom/Polygon.js';
-import olGeomSimpleGeometry from 'ol/geom/SimpleGeometry.js';
-import olInteractionInteraction from 'ol/interaction/Interaction.js';
-import olLayerVector from 'ol/layer/Vector.js';
-import olSourceVector from 'ol/source/Vector.js';
+import {getDefaultDrawStyleFunction} from 'ngeo/interaction/common';
+import ngeoCustomEvent from 'ngeo/CustomEvent';
+import {listen, unlistenByKey} from 'ol/events';
+import olFeature from 'ol/Feature';
+import {TRUE} from 'ol/functions';
+import olGeomLineString from 'ol/geom/LineString';
+import olGeomPoint from 'ol/geom/Point';
+import olGeomPolygon from 'ol/geom/Polygon';
+import olGeomSimpleGeometry from 'ol/geom/SimpleGeometry';
+import olInteractionInteraction from 'ol/interaction/Interaction';
+import olLayerVector from 'ol/layer/Vector';
+import olSourceVector from 'ol/source/Vector';
 
 /**
  * MobileDraw Interaction.
@@ -38,7 +38,7 @@ import olSourceVector from 'ol/source/Vector.js';
  * @typedef {Object} MobileDrawOptions
  * @property {number} [minPoints] The number of points that must be drawn before a polygon ring or line
  * string can be finished. Default is `3` for polygon rings and `2` for line strings.
- * @property {import("ol/style/Style.js").StyleLike} [style] Style for sketch features.
+ * @property {import('ol/style/Style').StyleLike} [style] Style for sketch features.
  * @property {string} type Drawing type ('Point' or 'LineString'.
  * @property {boolean} [wrapX] Wrap the world horizontally on the sketch overlay. Default is `false`.
  */
@@ -66,13 +66,15 @@ export default class extends olInteractionInteraction {
 
     /**
      * The key for view center change event.
-     * @type {?import("ol/events.js").EventsKey}
+     *
+     * @type {?import('ol/events').EventsKey}
      * @private
      */
     this.changeEventKey_ = null;
 
     /**
      * Geometry type.
+     *
      * @type {string}
      * @private
      */
@@ -82,6 +84,7 @@ export default class extends olInteractionInteraction {
      * The number of points that must be drawn before a polygon ring or line
      * string can be finished.  The default is 3 for polygon rings and 2 for
      * line strings.
+     *
      * @type {number}
      * @private
      */
@@ -89,28 +92,32 @@ export default class extends olInteractionInteraction {
 
     /**
      * Sketch feature.
-     * @type {?olFeature<import("ol/geom/Geometry.js").default>}
+     *
+     * @type {?olFeature<import('ol/geom/Geometry').default>}
      * @private
      */
     this.sketchFeature_ = null;
 
     /**
      * Previous sketch points, saved to be able to display them on the layer.
-     * @type {olFeature<import("ol/geom/Geometry.js").default>[]}
+     *
+     * @type {olFeature<import('ol/geom/Geometry').default>[]}
      * @private
      */
     this.sketchPoints_ = [];
 
     /**
      * Current sketch point.
-     * @type {?olFeature<import("ol/geom/Geometry.js").default>}
+     *
+     * @type {?olFeature<import('ol/geom/Geometry').default>}
      * @private
      */
     this.sketchPoint_ = null;
 
     /**
      * Draw overlay where our sketch features are drawn.
-     * @type {import("ol/layer/Vector.js").default<import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>>}
+     *
+     * @type {import('ol/layer/Vector').default<import('ol/source/Vector').default<import('ol/geom/Geometry').default>>}
      * @private
      */
     this.overlay_ = new olLayerVector({
@@ -131,7 +138,7 @@ export default class extends olInteractionInteraction {
   }
 
   /**
-   * @param {import("ol/PluggableMap.js").default} map Map.
+   * @param {import('ol/PluggableMap').default} map Map.
    */
   setMap(map) {
     const currentMap = this.getMap();
@@ -156,7 +163,8 @@ export default class extends olInteractionInteraction {
    * Return whether the interaction is currently dirty. It is if the sketch
    * feature has its geometry last coordinate set to the center without the
    * use of the `addToDrawing` method.
-   * @return {boolean} `true` if the interaction is dirty, `false` otherwise.
+   *
+   * @returns {boolean} `true` if the interaction is dirty, `false` otherwise.
    * @observable
    */
   getDirty() {
@@ -165,7 +173,8 @@ export default class extends olInteractionInteraction {
 
   /**
    * Return whether the interaction is currently drawing.
-   * @return {boolean} `true` if the interaction is drawing, `false` otherwise.
+   *
+   * @returns {boolean} `true` if the interaction is drawing, `false` otherwise.
    * @observable
    */
   getDrawing() {
@@ -175,7 +184,8 @@ export default class extends olInteractionInteraction {
   /**
    * Return whether the interaction as a valid sketch feature, i.e. its geometry
    * is valid.
-   * @return {boolean} `true` if the interaction has a valid sketch feature,
+   *
+   * @returns {boolean} `true` if the interaction has a valid sketch feature,
    *     `false` otherwise.
    * @observable
    */
@@ -185,7 +195,8 @@ export default class extends olInteractionInteraction {
 
   /**
    * Returns the current sketch feature.
-   * @return {?olFeature<import("ol/geom/Geometry.js").default>} The sketch feature, or null if none.
+   *
+   * @returns {?olFeature<import('ol/geom/Geometry').default>} The sketch feature, or null if none.
    */
   getFeature() {
     return this.sketchFeature_;
@@ -331,6 +342,7 @@ export default class extends olInteractionInteraction {
 
   /**
    * Start drawing by adding the sketch point first.
+   *
    * @private
    */
   startDrawing_() {
@@ -346,6 +358,7 @@ export default class extends olInteractionInteraction {
   /**
    * Modify the geometry of the sketch feature to have its last coordinate
    * set to the center of the map.
+   *
    * @private
    */
   modifyDrawing_() {
@@ -382,7 +395,8 @@ export default class extends olInteractionInteraction {
 
   /**
    * Stop drawing without adding the sketch feature to the target layer.
-   * @return {?olFeature<import("ol/geom/Geometry.js").default>} The sketch feature (or null if none).
+   *
+   * @returns {?olFeature<import('ol/geom/Geometry').default>} The sketch feature (or null if none).
    * @private
    */
   abortDrawing_() {
@@ -390,7 +404,7 @@ export default class extends olInteractionInteraction {
     if (sketchFeature || this.sketchPoints_.length > 0) {
       this.sketchFeature_ = null;
       this.sketchPoint_ = null;
-      /** @type {olSourceVector<import("ol/geom/Geometry.js").default>} */ (this.overlay_.getSource()).clear(
+      /** @type {olSourceVector<import('ol/geom/Geometry').default>} */ (this.overlay_.getSource()).clear(
         true
       );
     }
@@ -416,7 +430,7 @@ export default class extends olInteractionInteraction {
   }
 
   /**
-   * @param {Event|import('ol/events/Event.js').default} evt Event.
+   * @param {Event|import('ol/events/Event').default} evt Event.
    * @private
    */
   handleViewCenterChange_(evt) {
@@ -454,6 +468,7 @@ export default class extends olInteractionInteraction {
 
   /**
    * Redraw the sketch features.
+   *
    * @private
    */
   updateSketchFeatures_() {
@@ -464,7 +479,7 @@ export default class extends olInteractionInteraction {
     if (this.sketchPoint_) {
       sketchFeatures.push(this.sketchPoint_);
     }
-    const overlaySource = /** @type {olSourceVector<import("ol/geom/Geometry.js").default>} */ (
+    const overlaySource = /** @type {olSourceVector<import('ol/geom/Geometry').default>} */ (
       this.overlay_.getSource()
     );
     overlaySource.clear(true);
@@ -474,7 +489,8 @@ export default class extends olInteractionInteraction {
 
   /**
    * Returns the geometry of the sketch point feature.
-   * @return {import("ol/geom/Point.js").default} Point.
+   *
+   * @returns {import('ol/geom/Point').default} Point.
    * @private
    */
   getSketchPointGeometry_() {
@@ -491,7 +507,8 @@ export default class extends olInteractionInteraction {
 
   /**
    * Returns the center of the map view
-   * @return {import("ol/coordinate.js").Coordinate} Coordinate.
+   *
+   * @returns {import('ol/coordinate').Coordinate} Coordinate.
    * @private
    */
   getCenter_() {

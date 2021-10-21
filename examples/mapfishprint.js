@@ -20,20 +20,20 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import {MAPSERVER_PROXY, PRINT_PROXY} from './url.js';
-import EPSG2056 from 'ngeo/proj/EPSG_2056.js';
+import {MAPSERVER_PROXY, PRINT_PROXY} from './url';
+import EPSG2056 from 'ngeo/proj/EPSG_2056';
 
-import ngeoPrintService from 'ngeo/print/Service.js';
-import ngeoPrintUtils from 'ngeo/print/Utils.js';
-import MaskLayer from 'ngeo/print/Mask.js';
-import olMap from 'ol/Map.js';
-import olView from 'ol/View.js';
-import olFormatGeoJSON from 'ol/format/GeoJSON.js';
-import olLayerImage from 'ol/layer/Image.js';
-import olLayerVector from 'ol/layer/Vector.js';
-import olSourceImageWMS from 'ol/source/ImageWMS.js';
-import olSourceVector from 'ol/source/Vector.js';
-import ngeoMapModule from 'ngeo/map/module.js';
+import ngeoPrintService from 'ngeo/print/Service';
+import ngeoPrintUtils from 'ngeo/print/Utils';
+import MaskLayer from 'ngeo/print/Mask';
+import olMap from 'ol/Map';
+import olView from 'ol/View';
+import olFormatGeoJSON from 'ol/format/GeoJSON';
+import olLayerImage from 'ol/layer/Image';
+import olLayerVector from 'ol/layer/Vector';
+import olSourceImageWMS from 'ol/source/ImageWMS';
+import olSourceVector from 'ol/source/Vector';
+import ngeoMapModule from 'ngeo/map/module';
 
 /** @type {angular.IModule} **/
 const appmodule = angular.module('app', [
@@ -70,15 +70,15 @@ const PRINT_DPI_ = 72;
 /**
  * @private
  * @hidden
- * @type {import('ol/size.js').Size}
+ * @type {import('ol/size').Size}
  */
 const PRINT_PAPER_SIZE_ = [555, 675];
 
 /**
  * @class
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
- * @param {import("ngeo/print/Service.js").CreatePrint} ngeoCreatePrint The ngeo Create Print function.
- * @param {import("ngeo/print/Utils.js").PrintUtils} ngeoPrintUtils The ngeo PrintUtils service.
+ * @param {import('ngeo/print/Service').CreatePrint} ngeoCreatePrint The ngeo Create Print function.
+ * @param {import('ngeo/print/Utils').PrintUtils} ngeoPrintUtils The ngeo PrintUtils service.
  * @ngInject
  * @hidden
  */
@@ -91,7 +91,7 @@ function MainController($timeout, ngeoCreatePrint, ngeoPrintUtils) {
     serverType: 'mapserver',
   });
   /**
-   * @type {import("ol/Map.js").default}
+   * @type {import('ol/Map').default}
    */
   this.map = new olMap({
     layers: [
@@ -117,6 +117,7 @@ function MainController($timeout, ngeoCreatePrint, ngeoPrintUtils) {
 
   /**
    * Text to display a "loading" message while waiting for the report.
+   *
    * @type {string}
    */
   this.printState = '';
@@ -127,12 +128,12 @@ function MainController($timeout, ngeoCreatePrint, ngeoPrintUtils) {
   this.$timeout_ = $timeout;
 
   /**
-   * @type {import("ngeo/print/Service.js").PrintService}
+   * @type {import('ngeo/print/Service').PrintService}
    */
   this.print_ = ngeoCreatePrint(PRINT_PROXY);
 
   /**
-   * @type {import("ngeo/print/Utils.js").PrintUtils}
+   * @type {import('ngeo/print/Utils').PrintUtils}
    */
   this.printUtils_ = ngeoPrintUtils;
 
@@ -186,7 +187,7 @@ MainController.prototype.print = function () {
 };
 
 /**
- * @param {angular.IHttpResponse<import('ngeo/print/mapfish-print-v3.js').MapFishPrintReportResponse>} resp
+ * @param {angular.IHttpResponse<import('ngeo/print/mapfish-print-v3').MapFishPrintReportResponse>} resp
  *    Response.
  */
 MainController.prototype.handleCreateReportSuccess_ = function (resp) {
@@ -203,7 +204,7 @@ MainController.prototype.getStatus_ = function (ref) {
 };
 
 /**
- * @param {angular.IHttpResponse<import('ngeo/print/mapfish-print-v3.js').MapFishPrintStatusResponse>} resp
+ * @param {angular.IHttpResponse<import('ngeo/print/mapfish-print-v3').MapFishPrintStatusResponse>} resp
  *    Response.
  */
 MainController.prototype.handleCreateReportError_ = function (resp) {
@@ -212,7 +213,7 @@ MainController.prototype.handleCreateReportError_ = function (resp) {
 
 /**
  * @param {string} ref Ref.
- * @param {angular.IHttpResponse<import('ngeo/print/mapfish-print-v3.js').MapFishPrintStatusResponse>} resp
+ * @param {angular.IHttpResponse<import('ngeo/print/mapfish-print-v3').MapFishPrintStatusResponse>} resp
  *    Response.
  */
 MainController.prototype.handleGetStatusSuccess_ = function (ref, resp) {
@@ -235,7 +236,7 @@ MainController.prototype.handleGetStatusSuccess_ = function (ref, resp) {
 };
 
 /**
- * @param {angular.IHttpResponse<import('ngeo/print/mapfish-print-v3.js').MapFishPrintStatusResponse>} resp
+ * @param {angular.IHttpResponse<import('ngeo/print/mapfish-print-v3').MapFishPrintStatusResponse>} resp
  *    Response.
  */
 MainController.prototype.handleGetStatusError_ = function (resp) {

@@ -20,16 +20,16 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import ngeoMiscTime from 'ngeo/misc/Time.js';
+import ngeoMiscTime from 'ngeo/misc/Time';
 
 import 'angular-ui-date';
 import 'ngeo/sass/jquery-ui.scss';
 
 // FIXME: import the locales in the applications
-import 'jquery-ui/ui/i18n/datepicker-fr.js';
-import 'jquery-ui/ui/i18n/datepicker-en-GB.js';
-import 'jquery-ui/ui/i18n/datepicker-de.js';
-import 'jquery-ui/ui/i18n/datepicker-it.js';
+import 'jquery-ui/ui/i18n/datepicker-fr';
+import 'jquery-ui/ui/i18n/datepicker-en-GB';
+import 'jquery-ui/ui/i18n/datepicker-de';
+import 'jquery-ui/ui/i18n/datepicker-it';
 
 /**
  * @type {angular.IModule}
@@ -42,7 +42,7 @@ myModule.value(
   /**
    * @param {JQuery} element Element.
    * @param {angular.IAttributes} attrs Attributes.
-   * @return {string} Template URL.
+   * @returns {string} Template URL.
    */
   (element, attrs) => {
     const templateUrl = attrs.ngeoDatePickerTemplateUrl;
@@ -68,7 +68,7 @@ myModule.run(
  * @param {string|function(JQuery=, angular.IAttributes=): string} ngeoDatePickerTemplateUrl
  *    Template for the directive.
  * @param {angular.ITimeoutService} $timeout angular timeout service
- * @return {angular.IDirective} The directive specs.
+ * @returns {angular.IDirective} The directive specs.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoDatePicker
@@ -140,8 +140,9 @@ myModule.directive('ngeoDatePicker', datePickerComponent);
 
 /**
  * DatePickerController - directive conttroller
+ *
  * @param {angular.IScope} $scope Angular scope.
- * @param {import("ngeo/misc/Time.js").Time} ngeoTime time service.
+ * @param {import('ngeo/misc/Time').Time} ngeoTime time service.
  * @param {angular.gettext.gettextCatalog} gettextCatalog service.
  * @class
  * @hidden
@@ -151,47 +152,53 @@ myModule.directive('ngeoDatePicker', datePickerComponent);
  */
 export function Controller($scope, ngeoTime, gettextCatalog) {
   /**
-   * @type {import("ngeo/misc/Time.js").Time}
+   * @type {import('ngeo/misc/Time').Time}
    */
   this.ngeoTime_ = ngeoTime;
 
   /**
-   * @type {?import('ngeo/datasource/OGC.js').TimeProperty}
+   * @type {?import('ngeo/datasource/OGC').TimeProperty}
    */
   this.time = null;
 
   /**
    * The gettext catalog
+   *
    * @type {angular.gettext.gettextCatalog}
    */
   this.gettextCatalog_ = gettextCatalog;
 
   /**
    * If the component is used to select a date range
+   *
    * @type {boolean}
    */
   this.isModeRange = false;
 
   /**
    * Function called after date(s) changed/selected
+   *
    * @type {?function({time: {start: number, end: ?number}}): void}
    */
   this.onDateSelected = null;
 
   /**
    * Initial min date for the datepicker
+   *
    * @type {?Date}
    */
   this.initialMinDate = null;
 
   /**
    * Initial max date for the datepickeronDateSelected
+   *
    * @type {?Date}
    */
   this.initialMaxDate = null;
 
   /**
    * Datepicker options for the second datepicker (only for range mode)
+   *
    * @type {unknown}
    */
   this.edateOptions = {
@@ -201,6 +208,7 @@ export function Controller($scope, ngeoTime, gettextCatalog) {
 
   /**
    * Datepicker options for the first datepicker
+   *
    * @type {unknown}
    */
   this.sdateOptions = {
@@ -210,12 +218,14 @@ export function Controller($scope, ngeoTime, gettextCatalog) {
 
   /**
    * Start date model for the first date picker
+   *
    * @type {?Date}
    */
   this.sdate = null;
 
   /**
    * End date model for the second datepicker (only for range mode)
+   *
    * @type {?Date}
    */
   this.edate = null;

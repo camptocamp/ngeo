@@ -22,20 +22,20 @@
 import angular from 'angular';
 import './print.css';
 import './gmf-hidden.inc.css';
-import gmfLayertreeComponent from 'gmf/layertree/component.js';
+import gmfLayertreeComponent from 'gmf/layertree/component';
 
-import gmfMapComponent from 'gmf/map/component.js';
+import gmfMapComponent from 'gmf/map/component';
 
-import gmfPrintComponent from 'gmf/print/component.js';
+import gmfPrintComponent from 'gmf/print/component';
 
-import gmfThemeThemes from 'gmf/theme/Themes.js';
-import ngeoMapModule from 'ngeo/map/module.js';
-import EPSG2056 from 'ngeo/proj/EPSG_2056.js';
-import olMap from 'ol/Map.js';
-import olView from 'ol/View.js';
-import olLayerTile from 'ol/layer/Tile.js';
-import olSourceOSM from 'ol/source/OSM.js';
-import options from './options.js';
+import gmfThemeThemes from 'gmf/theme/Themes';
+import ngeoMapModule from 'ngeo/map/module';
+import EPSG2056 from 'ngeo/proj/EPSG_2056';
+import olMap from 'ol/Map';
+import olView from 'ol/View';
+import olLayerTile from 'ol/layer/Tile';
+import olSourceOSM from 'ol/source/OSM';
+import options from './options';
 
 /**
  * @type {angular.IModule}
@@ -52,8 +52,8 @@ const myModule = angular.module('gmfapp', [
 
 /**
  * @class
- * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes The gmf themes service.
- * @param {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
+ * @param {import('gmf/theme/Themes').ThemesService} gmfThemes The gmf themes service.
+ * @param {import('ngeo/map/FeatureOverlayMgr').FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *   overlay manager service.
  * @ngInject
  */
@@ -61,7 +61,7 @@ function MainController(gmfThemes, ngeoFeatureOverlayMgr) {
   gmfThemes.loadThemes();
 
   /**
-   * @type {import("ol/Map.js").default}
+   * @type {import('ol/Map').default}
    */
   this.map = new olMap({
     layers: [

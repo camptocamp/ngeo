@@ -23,6 +23,7 @@ import angular from 'angular';
 
 /**
  * ngeo - Time service
+ *
  * @class
  * @ngInject
  * @ngdoc service
@@ -34,7 +35,7 @@ export function Time() {}
 /**
  * @param {?number|string|undefined} value The value
  * @param {?Date} defaultValue The default value
- * @return {?Date} the date
+ * @returns {?Date} the date
  */
 Time.prototype.createDate = function (value, defaultValue = null) {
   return value !== null && value != undefined ? new Date(value) : defaultValue;
@@ -43,7 +44,7 @@ Time.prototype.createDate = function (value, defaultValue = null) {
 /**
  * @param {?Date} date The date
  * @param {?number} defaultValue The default value
- * @return {?number} the time
+ * @returns {?number} the time
  */
 Time.prototype.getTime = function (date, defaultValue = null) {
   return date ? date.getTime() : defaultValue;
@@ -52,8 +53,8 @@ Time.prototype.getTime = function (date, defaultValue = null) {
 /**
  * Get options regarding the time property of a node;
  *
- * @param {import('ngeo/datasource/OGC.js').TimeProperty} time the time property of a node
- * @return {{
+ * @param {import('ngeo/datasource/OGC').TimeProperty} time the time property of a node
+ * @returns {{
  *  minDate: number,
  *  maxDate: number,
  *  values: (number[]|number)
@@ -100,7 +101,7 @@ Time.prototype.getOptions = function (time) {
  * Time.prototype.getUTCDate - Get UTC date from a local date object
  *
  * @param  {Date} localDate loacl date object in
- * @return {Date} UTC date
+ * @returns {Date} UTC date
  */
 Time.prototype.getUTCDate = function (localDate) {
   return new Date(localDate.getUTCFullYear(), localDate.getUTCMonth(), localDate.getUTCDate());

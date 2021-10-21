@@ -49,7 +49,7 @@ import angular from 'angular';
  * @htmlAttribute {Twitter.Typeahead.Options} ngeo-search The options.
  * @htmlAttribute {Twitter.Typeahead.Dataset[]} ngeo-search-datasets The sources datasets.
  * @htmlAttribute {SearchDirectiveListeners} ngeo-search-listeners The listeners.
- * @return {angular.IDirective} Directive Definition Object.
+ * @returns {angular.IDirective} Directive Definition Object.
  * @ngInject
  * @template T
  */
@@ -184,8 +184,9 @@ function searchComponent() {
 /**
  * Create a real SearchDirectiveListeners object out of the object
  * returned by $eval.
+ *
  * @param {SearchDirectiveListeners<T>} object Object.
- * @return {SearchDirectiveListeners<T>} The listeners object.
+ * @returns {SearchDirectiveListeners<T>} The listeners object.
  * @private
  * @hidden
  * @template T

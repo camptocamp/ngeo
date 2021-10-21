@@ -21,13 +21,13 @@
 
 import angular from 'angular';
 
-import ngeoDrawController from 'ngeo/draw/Controller.js';
-import ngeoDrawPoint from 'ngeo/draw/point.js';
-import ngeoDrawRectangle from 'ngeo/draw/rectangle.js';
-import ngeoDrawText from 'ngeo/draw/text.js';
-import ngeoMeasureArea from 'ngeo/measure/area.js';
-import ngeoMeasureAzimut from 'ngeo/measure/azimut.js';
-import ngeoMeasureLength from 'ngeo/measure/length.js';
+import ngeoDrawController from 'ngeo/draw/Controller';
+import ngeoDrawPoint from 'ngeo/draw/point';
+import ngeoDrawRectangle from 'ngeo/draw/rectangle';
+import ngeoDrawText from 'ngeo/draw/text';
+import ngeoMeasureArea from 'ngeo/measure/area';
+import ngeoMeasureAzimut from 'ngeo/measure/azimut';
+import ngeoMeasureLength from 'ngeo/measure/length';
 
 /**
  * @type {angular.IModule}
@@ -104,10 +104,10 @@ const myModule = angular.module('ngeoDrawfeature', [
  *
  * @htmlAttribute {boolean} ngeo-drawfeature-active Whether the directive is
  *     active or not.
- * @htmlAttribute {import("ol/Collection.js").default} [ngeo]-drawfeature-features The features
+ * @htmlAttribute {import('ol/Collection').default} [ngeo]-drawfeature-features The features
  *     collection in which to push the drawn features. If none is provided,
  *     then the `ngeoFeatures` collection is used.
- * @htmlAttribute {import("ol/Map.js").default} ngeo-drawfeature-map The map.
+ * @htmlAttribute {import('ol/Map').default} ngeo-drawfeature-map The map.
  * @htmlAttribute {boolean} ngeo-drawfeature-showmeasure. Checks the
  *      checkbox in order to display the feature measurements as a label.
  *      Default to false.
@@ -115,7 +115,7 @@ const myModule = angular.module('ngeoDrawfeature', [
  *      create unique ids for each created draw interaction as
  *      property. Used to find those draw interactions later on from the
  *      map, using the property set.
- * @return {angular.IDirective} The directive specs.
+ * @returns {angular.IDirective} The directive specs.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoDrawfeature

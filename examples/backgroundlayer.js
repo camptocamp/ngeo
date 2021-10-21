@@ -21,18 +21,18 @@
 
 import './backgroundlayer.css';
 import angular from 'angular';
-import ngeoSourceAsitVD from 'ngeo/source/AsitVD.js';
-import {MAPSERVER_PROXY} from './url.js';
+import ngeoSourceAsitVD from 'ngeo/source/AsitVD';
+import {MAPSERVER_PROXY} from './url';
 
-import EPSG2056 from 'ngeo/proj/EPSG_2056.js';
-import olMap from 'ol/Map.js';
-import olView from 'ol/View.js';
-import olLayerImage from 'ol/layer/Image.js';
-import olLayerTile from 'ol/layer/Tile.js';
-import VectorLayer from 'ol/layer/Vector.js';
-import VectorSource from 'ol/source/Vector.js';
-import olSourceImageWMS from 'ol/source/ImageWMS.js';
-import ngeoMapModule from 'ngeo/map/module.js';
+import EPSG2056 from 'ngeo/proj/EPSG_2056';
+import olMap from 'ol/Map';
+import olView from 'ol/View';
+import olLayerImage from 'ol/layer/Image';
+import olLayerTile from 'ol/layer/Tile';
+import VectorLayer from 'ol/layer/Vector';
+import VectorSource from 'ol/source/Vector';
+import olSourceImageWMS from 'ol/source/ImageWMS';
+import ngeoMapModule from 'ngeo/map/module';
 
 /** @type {angular.IModule} **/
 const myModule = angular.module('app', ['gettext', ngeoMapModule.name]);
@@ -74,23 +74,23 @@ myModule.component('appBackgroundlayer', backgroundlayerComponent);
 /**
  * @class
  * @param {angular.IHttpService} $http Angular http service.
- * @param {import("ngeo/map/BackgroundLayerMgr.js").MapBackgroundLayerManager} ngeoBackgroundLayerMgr
+ * @param {import('ngeo/map/BackgroundLayerMgr').MapBackgroundLayerManager} ngeoBackgroundLayerMgr
  *    Background layer manager.
  * @ngInject
  */
 function BackgroundlayerController($http, ngeoBackgroundLayerMgr) {
   /**
-   * @type {?import("ol/Map.js").default}
+   * @type {?import('ol/Map').default}
    */
   this.map = null;
 
   /**
-   * @type {import('gmf/themes.js').GmfLayer[]|undefined}
+   * @type {import('gmf/themes').GmfLayer[]|undefined}
    */
   this.bgLayers = undefined;
 
   /**
-   * @type {import('gmf/themes.js').GmfLayer}
+   * @type {import('gmf/themes').GmfLayer}
    */
   this.bgLayer = null;
 
@@ -104,7 +104,7 @@ function BackgroundlayerController($http, ngeoBackgroundLayerMgr) {
   });
 
   /**
-   * @type {import("ngeo/map/BackgroundLayerMgr.js").MapBackgroundLayerManager}
+   * @type {import('ngeo/map/BackgroundLayerMgr').MapBackgroundLayerManager}
    */
   this.backgroundLayerMgr_ = ngeoBackgroundLayerMgr;
 }
@@ -125,7 +125,7 @@ BackgroundlayerController.prototype.change = function () {
 
 /**
  * @param {string} layerName Layer name.
- * @return {import("ol/layer/Layer.js").default<*>} The layer.
+ * @returns {import('ol/layer/Layer').default<*>} The layer.
  */
 BackgroundlayerController.prototype.getLayer_ = function (layerName) {
   if (layerName === 'blank') {
@@ -151,7 +151,7 @@ myModule.controller('AppBackgroundlayerController', BackgroundlayerController);
  */
 function MainController($scope) {
   /**
-   * @type {import("ol/Map.js").default}
+   * @type {import('ol/Map').default}
    */
   this.map = new olMap({
     view: new olView({
@@ -169,7 +169,8 @@ function MainController($scope) {
   });
   /**
    * An overlay layer.
-   * @type {import("ol/layer/Image.js").default<import("ol/source/Image.js").default>}
+   *
+   * @type {import('ol/layer/Image').default<import('ol/source/Image').default>}
    */
   const overlay = new olLayerImage({
     source,

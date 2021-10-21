@@ -21,14 +21,14 @@
 
 import angular from 'angular';
 import './xsdattributes.css';
-import gmfThemeThemes from 'gmf/theme/Themes.js';
+import gmfThemeThemes from 'gmf/theme/Themes';
 
-import gmfEditingXSDAttributes from 'gmf/editing/XSDAttributes.js';
-import ngeoEditingAttributesComponent from 'ngeo/editing/attributesComponent.js';
-import {getGeometryAttribute} from 'ngeo/format/XSDAttribute.js';
-import olFeature from 'ol/Feature.js';
+import gmfEditingXSDAttributes from 'gmf/editing/XSDAttributes';
+import ngeoEditingAttributesComponent from 'ngeo/editing/attributesComponent';
+import {getGeometryAttribute} from 'ngeo/format/XSDAttribute';
+import olFeature from 'ol/Feature';
 import 'jquery-datetimepicker/jquery.datetimepicker.css';
-import options from './options.js';
+import options from './options';
 
 /** @type {angular.IModule} **/
 const myModule = angular.module('gmfapp', [
@@ -40,8 +40,8 @@ const myModule = angular.module('gmfapp', [
 
 /**
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
- * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes The gmf themes service.
- * @param {import("gmf/editing/XSDAttributes.js").EditingXSDAttributeService} gmfXSDAttributes
+ * @param {import('gmf/theme/Themes').ThemesService} gmfThemes The gmf themes service.
+ * @param {import('gmf/editing/XSDAttributes').EditingXSDAttributeService} gmfXSDAttributes
  *    The gmf XSDAttributes service.
  * @class
  * @ngInject
@@ -53,22 +53,22 @@ function MainController($timeout, gmfThemes, gmfXSDAttributes) {
   this.timeout_ = $timeout;
 
   /**
-   * @type {import("gmf/editing/XSDAttributes.js").EditingXSDAttributeService}
+   * @type {import('gmf/editing/XSDAttributes').EditingXSDAttributeService}
    */
   this.xsdAttributes_ = gmfXSDAttributes;
 
   /**
-   * @type {?import('ngeo/format/Attribute.js').Attribute[]}
+   * @type {?import('ngeo/format/Attribute').Attribute[]}
    */
   this.attributes = null;
 
   /**
-   * @type {?olFeature<import("ol/geom/Geometry.js").default>}
+   * @type {?olFeature<import('ol/geom/Geometry').default>}
    */
   this.feature = null;
 
   /**
-   * @type {import('gmf/themes.js').GmfLayer[]}
+   * @type {import('gmf/themes').GmfLayer[]}
    */
   this.layers = [];
 
@@ -83,7 +83,7 @@ function MainController($timeout, gmfThemes, gmfXSDAttributes) {
       return;
     }
     // Get an array with all nodes entities existing in "themes".
-    /** @type {(import('gmf/themes.js').GmfTheme | import('gmf/themes.js').GmfGroup | import('gmf/themes.js').GmfLayer)[]} */
+    /** @type {(import('gmf/themes').GmfTheme | import('gmf/themes').GmfGroup | import('gmf/themes').GmfLayer)[]} */
     const flatNodes = [];
     themes.forEach((theme) => {
       theme.children.forEach((group) => {
@@ -91,18 +91,18 @@ function MainController($timeout, gmfThemes, gmfXSDAttributes) {
       });
     });
     flatNodes.forEach((node) => {
-      const groupNode = /** @type {import('gmf/themes.js').GmfGroup} */ (node);
+      const groupNode = /** @type {import('gmf/themes').GmfGroup} */ (node);
       // Get an array of all layers
       if (groupNode.children === undefined && layerNames.includes(node.name)) {
-        this.layers.push(/** @type {import('gmf/themes.js').GmfLayer} */ (node));
+        this.layers.push(/** @type {import('gmf/themes').GmfLayer} */ (node));
       }
     });
   });
 }
 
 /**
- * @param {import('gmf/themes.js').GmfLayer|undefined} value A layer or undefined to get layers.
- * @return {import('gmf/themes.js').GmfLayer[]} All layers in all themes.
+ * @param {import('gmf/themes').GmfLayer|undefined} value A layer or undefined to get layers.
+ * @returns {import('gmf/themes').GmfLayer[]} All layers in all themes.
  */
 MainController.prototype.getSetLayers = function (value) {
   if (value !== undefined && value !== null) {
@@ -112,7 +112,7 @@ MainController.prototype.getSetLayers = function (value) {
 };
 
 /**
- * @param {import('ngeo/format/Attribute.js').Attribute[]} attributes Attributes.
+ * @param {import('ngeo/format/Attribute').Attribute[]} attributes Attributes.
  */
 MainController.prototype.setAttributes_ = function (attributes) {
   // (1) Reset first
@@ -127,7 +127,7 @@ MainController.prototype.setAttributes_ = function (attributes) {
 };
 
 /**
- * @return {string} Type of geometry.
+ * @returns {string} Type of geometry.
  */
 MainController.prototype.getGeomType = function () {
   let type = 'N/A';
@@ -142,14 +142,15 @@ MainController.prototype.getGeomType = function () {
 
 /**
  * Just for this example
- * @param {import('gmf/themes.js').GmfTheme|import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer} node
+ *
+ * @param {import('gmf/themes').GmfTheme|import('gmf/themes').GmfGroup|import('gmf/themes').GmfLayer} node
  *    A theme, group or layer node.
- * @param {(import('gmf/themes.js').GmfTheme | import('gmf/themes.js').GmfGroup | import('gmf/themes.js').GmfLayer)[]} nodes
+ * @param {(import('gmf/themes').GmfTheme | import('gmf/themes').GmfGroup | import('gmf/themes').GmfLayer)[]} nodes
  *    An Array of nodes.
  */
 MainController.prototype.getDistinctFlatNodes_ = function (node, nodes) {
   let i;
-  const children = /** @type {import('gmf/themes.js').GmfGroup} */ (node).children;
+  const children = /** @type {import('gmf/themes').GmfGroup} */ (node).children;
   if (children !== undefined) {
     for (i = 0; i < children.length; i++) {
       this.getDistinctFlatNodes_(children[i], nodes);

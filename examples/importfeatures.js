@@ -20,18 +20,18 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import ngeoMapModule from 'ngeo/map/module.js';
+import ngeoMapModule from 'ngeo/map/module';
 
-import ngeoMiscFilereaderComponent from 'ngeo/misc/filereaderComponent.js';
+import ngeoMiscFilereaderComponent from 'ngeo/misc/filereaderComponent';
 
-import olMap from 'ol/Map.js';
-import olView from 'ol/View.js';
-import * as olExtent from 'ol/extent.js';
-import olFormatKML from 'ol/format/KML.js';
-import olLayerTile from 'ol/layer/Tile.js';
-import olLayerVector from 'ol/layer/Vector.js';
-import olSourceOSM from 'ol/source/OSM.js';
-import olSourceVector from 'ol/source/Vector.js';
+import olMap from 'ol/Map';
+import olView from 'ol/View';
+import * as olExtent from 'ol/extent';
+import olFormatKML from 'ol/format/KML';
+import olLayerTile from 'ol/layer/Tile';
+import olLayerVector from 'ol/layer/Vector';
+import olSourceOSM from 'ol/source/OSM';
+import olSourceVector from 'ol/source/Vector';
 
 /** @type {angular.IModule} **/
 const myModule = angular.module('app', ['gettext', ngeoMapModule.name, ngeoMiscFilereaderComponent.name]);
@@ -43,17 +43,17 @@ const myModule = angular.module('app', ['gettext', ngeoMapModule.name, ngeoMiscF
  */
 function MainController($scope) {
   /**
-   * @type {import("ol/format/KML.js").default}
+   * @type {import('ol/format/KML').default}
    */
   this.kmlFormat_ = new olFormatKML();
 
   /**
-   * @type {import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>}
+   * @type {import('ol/source/Vector').default<import('ol/geom/Geometry').default>}
    */
   this.vectorSource_ = new olSourceVector();
 
   /**
-   * @type {import("ol/Map.js").default}
+   * @type {import('ol/Map').default}
    */
   this.map = new olMap({
     layers: [
@@ -89,7 +89,7 @@ function MainController($scope) {
 MainController.prototype.importKml_ = function (kml) {
   const map = this.map;
   const vectorSource = this.vectorSource_;
-  const features = /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>[]} */ (
+  const features = /** @type {import('ol/Feature').default<import('ol/geom/Geometry').default>[]} */ (
     this.kmlFormat_.readFeatures(kml, {
       featureProjection: 'EPSG:3857',
     })

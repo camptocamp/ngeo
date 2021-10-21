@@ -19,15 +19,16 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import ngeoDatasourceGroup from 'ngeo/datasource/Group.js';
+import ngeoDatasourceGroup from 'ngeo/datasource/Group';
 
 /**
  * The options required to create a `OGCGroup`.
  *
  * extends GroupOptions
+ *
  * @typedef {Object} OGCGroupOptions
  * @property {string} url The OGC service url. Used as a unique identifier for the group object itself.
- * @property {import('ngeo/datasource/DataSource.js').default[]} dataSources (GroupOptions)
+ * @property {import('ngeo/datasource/DataSource').default[]} dataSources (GroupOptions)
  * @property {string} title (GroupOptions)
  */
 
@@ -51,7 +52,7 @@ export default class extends ngeoDatasourceGroup {
   }
 
   /**
-   * @return {string} URL
+   * @returns {string} URL
    */
   get url() {
     return this.url_;

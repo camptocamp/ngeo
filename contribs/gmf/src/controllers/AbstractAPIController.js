@@ -22,8 +22,8 @@
 import angular from 'angular';
 import gmfControllersAbstractAppController, {
   AbstractAppController,
-} from 'gmf/controllers/AbstractAppController.js';
-import ngeoMapResizemap from 'ngeo/map/resizemap.js';
+} from 'gmf/controllers/AbstractAppController';
+import ngeoMapResizemap from 'ngeo/map/resizemap';
 
 /**
  * API application abstract controller.

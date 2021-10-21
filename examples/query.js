@@ -20,29 +20,29 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import {MAPSERVER_PROXY, MAPSERVER_WFS_FEATURE_NS} from './url.js';
+import {MAPSERVER_PROXY, MAPSERVER_WFS_FEATURE_NS} from './url';
 import './base.css';
 import './query.css';
-import EPSG2056 from 'ngeo/proj/EPSG_2056.js';
+import EPSG2056 from 'ngeo/proj/EPSG_2056';
 
-import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources.js';
-import ngeoDatasourceOGC from 'ngeo/datasource/OGC.js';
-import ngeoMapModule from 'ngeo/map/module.js';
+import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources';
+import ngeoDatasourceOGC from 'ngeo/datasource/OGC';
+import ngeoMapModule from 'ngeo/map/module';
 
-import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent.js';
+import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent';
 
-import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
-import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr.js';
-import ngeoQueryComponent from 'ngeo/query/component.js';
-import ngeoQueryPanelComponent from 'ngeo/query/panelComponent.js';
-import ngeoQueryModule from 'ngeo/query/module.js';
+import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate';
+import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr';
+import ngeoQueryComponent from 'ngeo/query/component';
+import ngeoQueryPanelComponent from 'ngeo/query/panelComponent';
+import ngeoQueryModule from 'ngeo/query/module';
 
-import olMap from 'ol/Map.js';
-import olView from 'ol/View.js';
-import olLayerImage from 'ol/layer/Image.js';
-import olLayerTile from 'ol/layer/Tile.js';
-import olSourceImageWMS from 'ol/source/ImageWMS.js';
-import olSourceOSM from 'ol/source/OSM.js';
+import olMap from 'ol/Map';
+import olView from 'ol/View';
+import olLayerImage from 'ol/layer/Image';
+import olLayerTile from 'ol/layer/Tile';
+import olSourceImageWMS from 'ol/source/ImageWMS';
+import olSourceOSM from 'ol/source/OSM';
 
 /** @type {angular.IModule} **/
 const myModule = angular.module('app', [
@@ -85,13 +85,13 @@ const queryresultComponent = {
 myModule.component('appQueryresult', queryresultComponent);
 
 /**
- * @param {import('ngeo/query/MapQuerent.js').QueryResult} ngeoQueryResult The ngeo query service.
+ * @param {import('ngeo/query/MapQuerent').QueryResult} ngeoQueryResult The ngeo query service.
  * @class
  * @ngInject
  */
 function QueryresultController(ngeoQueryResult) {
   /**
-   * @type {import('ngeo/query/MapQuerent.js').QueryResult}
+   * @type {import('ngeo/query/MapQuerent').QueryResult}
    */
   this.result = ngeoQueryResult;
 }
@@ -99,11 +99,10 @@ function QueryresultController(ngeoQueryResult) {
 myModule.controller('AppQueryresultController', QueryresultController);
 
 /**
- * @param {import("ngeo/datasource/DataSources.js").DataSource} ngeoDataSources Ngeo data sources service.
- * @param {import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr} ngeoToolActivateMgr The ngeo ToolActivate
+ * @param {import('ngeo/datasource/DataSources').DataSource} ngeoDataSources Ngeo data sources service.
+ * @param {import('ngeo/misc/ToolActivateMgr').ToolActivateMgr} ngeoToolActivateMgr The ngeo ToolActivate
  *     manager.
- * @param {import("ngeo/query/ModeSelector.js").QueryModeSelector} ngeoQueryModeSelector The ngeo QueryModeSelector service
- *
+ * @param {import('ngeo/query/ModeSelector').QueryModeSelector} ngeoQueryModeSelector The ngeo QueryModeSelector service
  * @class
  * @ngInject
  */
@@ -124,7 +123,7 @@ function MainController(ngeoDataSources, ngeoToolActivateMgr, ngeoQueryModeSelec
   this.queryAutoClear = true;
 
   /**
-   * @type {import("ngeo/query/ModeSelector.js").QueryModeSelector}
+   * @type {import('ngeo/query/ModeSelector').QueryModeSelector}
    */
   this.ngeoQueryModeSelector = ngeoQueryModeSelector;
 
@@ -145,7 +144,7 @@ function MainController(ngeoDataSources, ngeoToolActivateMgr, ngeoQueryModeSelec
   });
 
   /**
-   * @type {import("ol/Map.js").default}
+   * @type {import('ol/Map').default}
    */
   this.map = new olMap({
     layers: [
@@ -220,7 +219,7 @@ function MainController(ngeoDataSources, ngeoToolActivateMgr, ngeoQueryModeSelec
 
 /**
  * @param {boolean|undefined} val Value.
- * @return {boolean|undefined} Value.
+ * @returns {boolean|undefined} Value.
  */
 MainController.prototype.getSetQueryActive = function (val) {
   if (val !== undefined) {

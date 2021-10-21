@@ -1,0 +1,56 @@
+#!.build/python-venv/bin/python
+import argparse
+import json
+from pathlib import Path
+
+import polib
+
+
+def main() -> None:
+
+    parser = argparse.ArgumentParser(
+        description="""
+Script to convert .po and .pot translation files to .json files for i18next.
+Output files are saved to contribs/gmf/apps/build/locale/webcomponent/{language}/app.json.
+Existing app.json files are overwritten
+""",
+        epilog="""
+To convert one (or more) specific file:
+    buildtools/convert-translations .build/locale/gmf.pot
+To convert all .po and .pot files in the project:
+    buildtools/convert-translations `find .build -name "*.po*"`
+""",
+        formatter_class=argparse.RawTextHelpFormatter,
+    )
+
+    parser.add_argument(
+        "input_file",
+        nargs="+",
+    )
+    args = parser.parse_args()
+    input_files = args.input_file
+    i18n = {}
+
+    for input_file in input_files:
+
+        print(f"Reading Login {input_file}")
+        pofile = polib.pofile(input_file)
+        lang = pofile.metadata.get("Language") or "en"
+        if lang not in i18n:
+            i18n[lang] = {}
+
+        for entry in pofile:
+            if entry.msgstr:
+                i18n[lang][entry.msgid] = entry.msgstr
+
+    for lang, values in i18n.items():
+        output_dir = f"contribs/gmf/apps/build/locale/webcomponent/{lang}"
+        output_file = f"{output_dir}/app.json"
+        Path(output_dir).mkdir(parents=True, exist_ok=True)
+        print(f"Writing {output_file}")
+        with open(output_file, "w", encoding="utf-8") as f:
+            f.write(json.dumps(values, indent=2))
+
+
+if __name__ == "__main__":
+    main()

@@ -19,19 +19,20 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import ngeoFormatAttributeType from 'ngeo/format/AttributeType.js';
-import ngeoRuleRule, {RuleOperatorType} from 'ngeo/rule/Rule.js';
+import ngeoFormatAttributeType from 'ngeo/format/AttributeType';
+import ngeoRuleRule, {RuleOperatorType} from 'ngeo/rule/Rule';
 
 /**
  * The options for creating a text style.
  *
- * extends import('ngeo/rule/Rule.js').RuleOptions
+ * extends import('ngeo/rule/Rule').RuleOptions
+ *
  * @typedef {Object} TextOptions
  * @property {string} text
  * @property {number} [size]
  * @property {number} [angle]
  * @property {boolean} [rotateWithView=false]
- * @property {import('ol/color.js').Color} [color]
+ * @property {import('ol/color').Color} [color]
  * @property {number} [width]
  * @property {number} [offsetX]
  * @property {number} [offsetY]

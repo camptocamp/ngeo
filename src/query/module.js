@@ -20,11 +20,11 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import ngeoQueryModeSelector from 'ngeo/query/ModeSelector.js';
-import ngeoQueryQuerent from 'ngeo/query/Querent.js';
-import ngeoQueryMapQuerent from 'ngeo/query/MapQuerent.js';
-import ngeoQueryComponent from 'ngeo/query/component.js';
-import ngeoQueryPanelComponent from 'ngeo/query/panelComponent.js';
+import ngeoQueryModeSelector from 'ngeo/query/ModeSelector';
+import ngeoQueryQuerent from 'ngeo/query/Querent';
+import ngeoQueryMapQuerent from 'ngeo/query/MapQuerent';
+import ngeoQueryComponent from 'ngeo/query/component';
+import ngeoQueryPanelComponent from 'ngeo/query/panelComponent';
 
 /**
  * @type {angular.IModule}

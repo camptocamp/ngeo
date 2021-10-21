@@ -44,9 +44,9 @@
 /* global Cesium */
 
 import angular from 'angular';
-import * as olEasing from 'ol/easing.js';
-import {toRadians} from 'ol/math.js';
-import olcsCore from 'olcs/core.js';
+import * as olEasing from 'ol/easing';
+import {toRadians} from 'ol/math';
+import olcsCore from 'olcs/core';
 
 /**
  * @type {angular.IModule}
@@ -59,7 +59,7 @@ const myModule = angular.module('ngeoOlcsControls3d', []);
  * @hidden
  * @param {number} older Older
  * @param {number} newer Newer
- * @return {boolean} ?
+ * @returns {boolean} ?
  */
 function shouldUpdate(older, newer) {
   return Number.isFinite(newer) && (!Number.isFinite(older) || Math.abs(newer - older) > 0.05);
@@ -72,7 +72,7 @@ export const Controller = class {
   /**
    * @ngInject
    * @param {JQuery} $element The element
-   * @param {import("ngeo/olcs/Service.js").OlcsService} ngeoOlcsService The ol-cesium service.
+   * @param {import('ngeo/olcs/Service').OlcsService} ngeoOlcsService The ol-cesium service.
    */
   constructor($element, ngeoOlcsService) {
     /**
@@ -82,7 +82,7 @@ export const Controller = class {
     this.element_ = $element;
 
     /**
-     * @type {?import('olcs/contrib/Manager.js').default}
+     * @type {?import('olcs/contrib/Manager').default}
      */
     this.ol3dm = null;
 
@@ -140,7 +140,7 @@ export const Controller = class {
     this.animationFrameRequestId_ = -1;
 
     /**
-     * @type {import("ngeo/olcs/Service.js").OlcsService}
+     * @type {import('ngeo/olcs/Service').OlcsService}
      * @private
      */
     this.olcsService_ = ngeoOlcsService;
@@ -284,7 +284,7 @@ export const Controller = class {
 /**
  * @param {angular.IAttributes} $attrs Attributes.
  * @param {string} ngeoOlcsControls3dTemplateUrl Template function.
- * @return {string} Template URL.
+ * @returns {string} Template URL.
  * @ngInject
  * @private
  * @hidden

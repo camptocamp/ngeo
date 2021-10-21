@@ -55,7 +55,7 @@ const myModule = angular.module('ngeoBtnComponent', []);
  * @htmlAttribute {*} ngeo-btn-group-active Any property of the scope.
  * Tells whether at least one button of the group is active.
  * @param {angular.IParseService} $parse Angular parse service.
- * @return {angular.IDirective} The directive specs.
+ * @returns {angular.IDirective} The directive specs.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoBtnGroup
@@ -83,7 +83,7 @@ function buttonGroupComponent($parse) {
             controller.buttons_.some(
               /**
                * @param {function(angular.IScope): boolean} buttonModel
-               * @return {boolean}
+               * @returns {boolean}
                */
               (buttonModel) => buttonModel(scope) === true
             ),
@@ -135,7 +135,7 @@ export class BtnGroupController {
 
   /**
    * @param {angular.ICompiledExpression} expressionFn Expression function.
-   * @return {number} Index of the pushed setter.
+   * @returns {number} Index of the pushed setter.
    */
   addButton(expressionFn) {
     this.buttons_.push(expressionFn);
@@ -158,7 +158,7 @@ myModule.controller('ngeoBtnGroupController', BtnGroupController);
  *
  * @htmlAttribute {*} ng-model Any property on the scope. Ideally a boolean.
  * @param {angular.IParseService} $parse Angular parse service.
- * @return {angular.IDirective} The directive specs.
+ * @returns {angular.IDirective} The directive specs.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoBtn

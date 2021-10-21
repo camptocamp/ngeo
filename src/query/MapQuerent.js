@@ -20,18 +20,18 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import {hasCoarsePointingDevice} from 'ngeo/utils.js';
-import ngeoQueryAction from 'ngeo/query/Action.js';
-import ngeoQueryQuerent from 'ngeo/query/Querent.js';
-import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources.js';
-import ngeoDatasourceHelper from 'ngeo/datasource/Helper.js';
-import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
+import {hasCoarsePointingDevice} from 'ngeo/utils';
+import ngeoQueryAction from 'ngeo/query/Action';
+import ngeoQueryQuerent from 'ngeo/query/Querent';
+import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources';
+import ngeoDatasourceHelper from 'ngeo/datasource/Helper';
+import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper';
 
 /**
  * Results of the query source.
  *
  * @typedef {Object} QueryResult
- * @property {import('ngeo/statemanager/WfsPermalink.js').QueryResultSource[]} sources Results for
+ * @property {import('ngeo/statemanager/WfsPermalink').QueryResultSource[]} sources Results for
  *    each query source.
  * @property {number} total The number of results for all sources.
  * @property {boolean} pending If at least one source is pending.
@@ -46,14 +46,14 @@ export class MapQuerent {
    * queries using the Querent service. The result is stored inside this
    * service.
    *
-   * @param {import("ngeo/datasource/DataSources.js").DataSource} ngeoDataSources Ngeo data sources service.
-   * @param {import("ngeo/datasource/Helper.js").DatasourceHelper} ngeoDataSourcesHelper Ngeo data
+   * @param {import('ngeo/datasource/DataSources').DataSource} ngeoDataSources Ngeo data sources service.
+   * @param {import('ngeo/datasource/Helper').DatasourceHelper} ngeoDataSourcesHelper Ngeo data
    *     sources helper service.
-   * @param {import("ngeo/misc/FeatureHelper.js").FeatureHelper} ngeoFeatureHelper Ngeo feature
+   * @param {import('ngeo/misc/FeatureHelper').FeatureHelper} ngeoFeatureHelper Ngeo feature
    *     helper service.
-   * @param {import("ngeo/query/Querent.js").Querent} ngeoQuerent The ngeo querent service.
+   * @param {import('ngeo/query/Querent').Querent} ngeoQuerent The ngeo querent service.
    * @param {QueryResult} ngeoQueryResult The ngeo query result service.
-   * @param {import('ngeo/options.js').ngeoQueryOptions} ngeoQueryOptions The options.
+   * @param {import('ngeo/options').ngeoQueryOptions} ngeoQueryOptions The options.
    * @ngdoc service
    * @ngname ngeoQuerent
    * @ngInject
@@ -69,25 +69,25 @@ export class MapQuerent {
     const options = ngeoQueryOptions;
 
     /**
-     * @type {import("ngeo/datasource/DataSource.js").DataSources}
+     * @type {import('ngeo/datasource/DataSource').DataSources}
      * @private
      */
     this.dataSources_ = ngeoDataSources.collection;
 
     /**
-     * @type {import("ngeo/misc/FeatureHelper.js").FeatureHelper}
+     * @type {import('ngeo/misc/FeatureHelper').FeatureHelper}
      * @private
      */
     this.featureHelper_ = ngeoFeatureHelper;
 
     /**
-     * @type {import("ngeo/datasource/Helper.js").DatasourceHelper}
+     * @type {import('ngeo/datasource/Helper').DatasourceHelper}
      * @private
      */
     this.ngeoDataSourcesHelper_ = ngeoDataSourcesHelper;
 
     /**
-     * @type {import("ngeo/query/Querent.js").Querent}
+     * @type {import('ngeo/query/Querent').Querent}
      * @private
      */
     this.ngeoQuerent_ = ngeoQuerent;
@@ -124,6 +124,7 @@ export class MapQuerent {
 
     /**
      * A hash of data source names classified by ids.
+     *
      * @type {Object<number, string>}
      * @private
      */
@@ -131,6 +132,7 @@ export class MapQuerent {
 
     /**
      * Flag turned on after clearing to make sure that we clear only once.
+     *
      * @type {boolean}
      * @private
      */
@@ -138,8 +140,8 @@ export class MapQuerent {
   }
 
   /**
-   * @param {import('ngeo/query/Querent.js').IssueGetFeaturesOptions} options Options.
-   * @return {angular.IPromise<void|import('ngeo/query/Querent.js').QuerentResult>} Promise.
+   * @param {import('ngeo/query/Querent').IssueGetFeaturesOptions} options Options.
+   * @returns {angular.IPromise<void|import('ngeo/query/Querent').QuerentResult>} Promise.
    */
   issue(options) {
     const action = options.action ? options.action : ngeoQueryAction.REPLACE;
@@ -172,6 +174,7 @@ export class MapQuerent {
   /**
    * Clear result, i.e. clear all 'result source' from their features and other
    * information.
+   *
    * @param {boolean} keep Whether to keep the existing features and sources
    */
   clear(keep = false) {
@@ -201,7 +204,7 @@ export class MapQuerent {
    * Called after a request to the querent service. Update the result.
    *
    * @param {string} action Query action
-   * @param {import('ngeo/query/Querent.js').QuerentResult} response Response
+   * @param {import('ngeo/query/Querent').QuerentResult} response Response
    * @private
    */
   handleResult_(action, response) {
@@ -224,7 +227,7 @@ export class MapQuerent {
       const totalFeatureCount = querentResultItem.totalFeatureCount;
       const requestPartners = querentResultItem.requestPartners;
 
-      /** @type {Object<string, import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>[]>} */
+      /** @type {Object<string, import('ol/Feature').default<import('ol/geom/Geometry').default>[]>} */
       const typeSeparatedFeatures = {};
       features.forEach((feature) => {
         /** @type {string} */

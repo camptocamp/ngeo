@@ -23,28 +23,28 @@
 // TODO - MinScaleDenominator
 
 import angular from 'angular';
-import {EXTERNALLAYERGROUP_NAME} from 'gmf/index.js';
-import ngeoMapLayerHelper from 'ngeo/map/LayerHelper.js';
-import ngeoMiscFile from 'ngeo/misc/File.js';
-import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources.js';
-import ngeoDatasourceFile from 'ngeo/datasource/File.js';
-import ngeoDatasourceFileGroup from 'ngeo/datasource/FileGroup.js';
-import ngeoDatasourceOGC, {Type, WMSInfoFormat} from 'ngeo/datasource/OGC.js';
-import gmfDatasourceFileGroup from 'gmf/datasource/fileGroup.js';
-import gmfExternalDatasourceOGC from 'gmf/datasource/ExternalOGC.js';
-import ngeoDatasourceOGCGroup from 'ngeo/datasource/OGCGroup.js';
-import ngeoDatasourceWMSGroup from 'ngeo/datasource/WMSGroup.js';
-import {getUid as olUtilGetUid} from 'ol/util.js';
-import {isEmpty} from 'ol/extent.js';
-import {listen} from 'ol/events.js';
-import olCollection from 'ol/Collection.js';
-import olFormatGPX from 'ol/format/GPX.js';
-import olFormatKML from 'ol/format/KML.js';
-import {CollectionEvent} from 'ol/Collection.js';
+import {EXTERNALLAYERGROUP_NAME} from 'gmf/index';
+import ngeoMapLayerHelper from 'ngeo/map/LayerHelper';
+import ngeoMiscFile from 'ngeo/misc/File';
+import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources';
+import ngeoDatasourceFile from 'ngeo/datasource/File';
+import ngeoDatasourceFileGroup from 'ngeo/datasource/FileGroup';
+import ngeoDatasourceOGC, {Type, WMSInfoFormat} from 'ngeo/datasource/OGC';
+import gmfDatasourceFileGroup from 'gmf/datasource/fileGroup';
+import gmfExternalDatasourceOGC from 'gmf/datasource/ExternalOGC';
+import ngeoDatasourceOGCGroup from 'ngeo/datasource/OGCGroup';
+import ngeoDatasourceWMSGroup from 'ngeo/datasource/WMSGroup';
+import {getUid as olUtilGetUid} from 'ol/util';
+import {isEmpty} from 'ol/extent';
+import {listen} from 'ol/events';
+import olCollection from 'ol/Collection';
+import olFormatGPX from 'ol/format/GPX';
+import olFormatKML from 'ol/format/KML';
+import {CollectionEvent} from 'ol/Collection';
 
 /**
  * @typedef {Object} ExternalDataSourcesManagerWMTSCacheItem
- * @property {import("ol/layer/Tile.js").default<import("ol/source/Tile.js").default>} layerObj
+ * @property {import('ol/layer/Tile').default<import('ol/source/Tile').default>} layerObj
  * @property {Function} unregister
  */
 
@@ -61,10 +61,10 @@ export class ExternalDatSourcesManager {
    * @param {angular.auto.IInjectorService} $injector Main injector.
    * @param {angular.IQService} $q The Angular $q service.
    * @param {angular.IScope} $rootScope The rootScope provider.
-   * @param {import('gmf/datasource/fileGroup.js').DatasourceFileGroup} gmfDatasourceFileGroup Group that contains file data sources.
-   * @param {import("ngeo/datasource/DataSources.js").DataSource} ngeoDataSources Ngeo data sources service.
-   * @param {import("ngeo/misc/File.js").FileService} ngeoFile Ngeo file.
-   * @param {import("ngeo/map/LayerHelper.js").LayerHelper} ngeoLayerHelper Ngeo layer helper service.
+   * @param {import('gmf/datasource/fileGroup').DatasourceFileGroup} gmfDatasourceFileGroup Group that contains file data sources.
+   * @param {import('ngeo/datasource/DataSources').DataSource} ngeoDataSources Ngeo data sources service.
+   * @param {import('ngeo/misc/File').FileService} ngeoFile Ngeo file.
+   * @param {import('ngeo/map/LayerHelper').LayerHelper} ngeoLayerHelper Ngeo layer helper service.
    * @ngInject
    * @ngdoc service
    * @ngname gmfExternalDataSourcesManager
@@ -102,19 +102,20 @@ export class ExternalDatSourcesManager {
     /**
      * The collection of DataSources from ngeo. When this service creates
      * a data source, its gets added to that collection.
-     * @type {import('ngeo/datasource/DataSource.js').DataSources}
+     *
+     * @type {import('ngeo/datasource/DataSource').DataSources}
      * @private
      */
     this.dataSources_ = ngeoDataSources.collection;
 
     /**
-     * @type {import("ngeo/misc/File.js").FileService}
+     * @type {import('ngeo/misc/File').FileService}
      * @private
      */
     this.ngeoFile_ = ngeoFile;
 
     /**
-     * @type {import("ngeo/map/LayerHelper.js").LayerHelper}
+     * @type {import('ngeo/map/LayerHelper').LayerHelper}
      * @private
      */
     this.ngeoLayerHelper_ = ngeoLayerHelper;
@@ -129,27 +130,29 @@ export class ExternalDatSourcesManager {
      * If a data source with an id already exists in this cache, it is used
      * instead of being re-created.
      *
-     * @type {Object<number, import("ngeo/datasource/OGC.js").default|import("ngeo/datasource/File.js").default>}
+     * @type {Object<number, import('ngeo/datasource/OGC').default|import('ngeo/datasource/File').default>}
      * @private
      */
     this.extDataSources_ = {};
 
     /**
      * File external data sources, with the key being the file name.
-     * @type {Object<string, import("ngeo/datasource/File.js").default>}
+     *
+     * @type {Object<string, import('ngeo/datasource/File').default>}
      * @private
      */
     this.files_ = {};
 
     /**
-     * @type {?import("ol/Map.js").default}
+     * @type {?import('ol/Map').default}
      * @private
      */
     this.map_ = null;
 
     /**
      * Group that contains file data sources.
-     * @type {import("ngeo/datasource/FileGroup.js").default}
+     *
+     * @type {import('ngeo/datasource/FileGroup').default}
      * @private
      */
     this.fileGroup_ = new ngeoDatasourceFileGroup({
@@ -161,14 +164,16 @@ export class ExternalDatSourcesManager {
 
     /**
      * Collection of WMS groups.
-     * @type {import("ol/Collection.js").default<import("ngeo/datasource/WMSGroup.js").default>}
+     *
+     * @type {import('ol/Collection').default<import('ngeo/datasource/WMSGroup').default>}
      * @private
      */
     this.wmsGroupsCollection_ = new olCollection();
 
     /**
      * Collection of groups for WMTS data sources.
-     * @type {import("ol/Collection.js").default<import("ngeo/datasource/OGCGroup.js").default>}
+     *
+     * @type {import('ol/Collection').default<import('ngeo/datasource/OGCGroup').default>}
      * @private
      */
     this.wmtsGroupsCollection_ = new olCollection();
@@ -176,6 +181,7 @@ export class ExternalDatSourcesManager {
     /**
      * Cache that stores the information of a WMTS data source. The key is the
      * data source id.
+     *
      * @type {Object<number, ExternalDataSourcesManagerWMTSCacheItem>}
      * @private
      */
@@ -187,7 +193,7 @@ export class ExternalDatSourcesManager {
   // === File Group ===
 
   /**
-   * @return {import("ngeo/datasource/FileGroup.js").default} File group.
+   * @returns {import('ngeo/datasource/FileGroup').default} File group.
    */
   get fileGroup() {
     return this.fileGroup_;
@@ -196,7 +202,7 @@ export class ExternalDatSourcesManager {
   // === WMS Groups ===
 
   /**
-   * @param {import("ngeo/datasource/WMSGroup.js").default} wmsGroup WMS group.
+   * @param {import('ngeo/datasource/WMSGroup').default} wmsGroup WMS group.
    * @private
    */
   addWMSGroup_(wmsGroup) {
@@ -204,7 +210,7 @@ export class ExternalDatSourcesManager {
   }
 
   /**
-   * @param {import("ngeo/datasource/WMSGroup.js").default} wmsGroup WMS group.
+   * @param {import('ngeo/datasource/WMSGroup').default} wmsGroup WMS group.
    * @private
    */
   removeWMSGroup_(wmsGroup) {
@@ -213,7 +219,7 @@ export class ExternalDatSourcesManager {
 
   /**
    * @param {string} url Online resource url
-   * @return {?import("ngeo/datasource/WMSGroup.js").default} WMS group.
+   * @returns {?import('ngeo/datasource/WMSGroup').default} WMS group.
    */
   getWMSGroup(url) {
     let found = null;
@@ -227,14 +233,14 @@ export class ExternalDatSourcesManager {
   }
 
   /**
-   * @return {import("ngeo/datasource/WMSGroup.js").default[]} List of WMS groups.
+   * @returns {import('ngeo/datasource/WMSGroup').default[]} List of WMS groups.
    */
   get wmsGroups() {
     return this.wmsGroupsCollection_.getArray();
   }
 
   /**
-   * @return {import("ol/Collection.js").default<import("ngeo/datasource/WMSGroup.js").default>}
+   * @returns {import('ol/Collection').default<import('ngeo/datasource/WMSGroup').default>}
    *    Collection of WMS groups.
    */
   get wmsGroupsCollection() {
@@ -244,7 +250,7 @@ export class ExternalDatSourcesManager {
   // === WMTS Groups ===
 
   /**
-   * @param {import("ngeo/datasource/OGCGroup.js").default} wmtsGroup Group for WMTS data sources.
+   * @param {import('ngeo/datasource/OGCGroup').default} wmtsGroup Group for WMTS data sources.
    * @private
    */
   addWMTSGroup_(wmtsGroup) {
@@ -252,7 +258,7 @@ export class ExternalDatSourcesManager {
   }
 
   /**
-   * @param {import("ngeo/datasource/OGCGroup.js").default} wmtsGroup Group for WMTS data sources.
+   * @param {import('ngeo/datasource/OGCGroup').default} wmtsGroup Group for WMTS data sources.
    * @private
    */
   removeWMTSGroup_(wmtsGroup) {
@@ -261,7 +267,7 @@ export class ExternalDatSourcesManager {
 
   /**
    * @param {string} url Online resource url
-   * @return {?import("ngeo/datasource/OGCGroup.js").default} WMTS group.
+   * @returns {?import('ngeo/datasource/OGCGroup').default} WMTS group.
    */
   getWMTSGroup(url) {
     let found = null;
@@ -275,14 +281,14 @@ export class ExternalDatSourcesManager {
   }
 
   /**
-   * @return {import("ngeo/datasource/OGCGroup.js").default[]} List of groups for WMTS data sources.
+   * @returns {import('ngeo/datasource/OGCGroup').default[]} List of groups for WMTS data sources.
    */
   get wmtsGroups() {
     return this.wmtsGroupsCollection_.getArray();
   }
 
   /**
-   * @return {import("ol/Collection.js").default<import("ngeo/datasource/OGCGroup.js").default>}
+   * @returns {import('ol/Collection').default<import('ngeo/datasource/OGCGroup').default>}
    *    Collection of groups for WMTS data sources.
    */
   get wmtsGroupsCollection() {
@@ -292,8 +298,8 @@ export class ExternalDatSourcesManager {
   // === Other methods ===
 
   /**
-   * @param {import("ngeo/datasource/DataSource.js").default} dataSource Data source
-   * @return {boolean} Whether the given data source is external or not. To
+   * @param {import('ngeo/datasource/DataSource').default} dataSource Data source
+   * @returns {boolean} Whether the given data source is external or not. To
    *     be considered external, it needs to be in the external data source
    *     hash (cache).
    */
@@ -302,7 +308,7 @@ export class ExternalDatSourcesManager {
   }
 
   /**
-   * @return {import("ol/layer/Group.js").default} Layer group where to push layers created by
+   * @returns {import('ol/layer/Group').default} Layer group where to push layers created by
    *     this service.
    */
   get layerGroup() {
@@ -313,14 +319,14 @@ export class ExternalDatSourcesManager {
   }
 
   /**
-   * @param {?import("ol/Map.js").default} map Map
+   * @param {?import('ol/Map').default} map Map
    */
   set map(map) {
     this.map_ = map;
   }
 
   /**
-   * @param {import("ol/layer/Layer.js").default<import('ol/source/Source.js').default>} layer Layer.
+   * @param {import('ol/layer/Layer').default<import('ol/source/Source').default>} layer Layer.
    * @private
    */
   addLayer_(layer) {
@@ -328,7 +334,7 @@ export class ExternalDatSourcesManager {
   }
 
   /**
-   * @param {import("ol/layer/Layer.js").default<import('ol/source/Source.js').default>} layer Layer.
+   * @param {import('ol/layer/Layer').default<import('ol/source/Source').default>} layer Layer.
    * @private
    */
   removeLayer_(layer) {
@@ -401,7 +407,7 @@ export class ExternalDatSourcesManager {
     }
 
     // (2) Add data source in WMS group, unless it's already in there.
-    //     Will also add the data source to the `import('ngeo/datasource/DataSource.js').DataSources`
+    //     Will also add the data source to the `import('ngeo/datasource/DataSource').DataSources`
     //     collection.
     //     If the group is created, its inner OL layer is also added to the map.
     let wmsGroup = this.getWMSGroup(url);
@@ -548,8 +554,9 @@ export class ExternalDatSourcesManager {
 
   /**
    * Get file data source from cache, else create, store and return a new one.
+   *
    * @param {File} file File.
-   * @return {angular.IPromise<ngeoDatasourceFile>} Promise
+   * @returns {angular.IPromise<ngeoDatasourceFile>} Promise
    * @private
    */
   getFileDataSource_(file) {
@@ -563,18 +570,18 @@ export class ExternalDatSourcesManager {
         if (!this.map_) {
           throw new Error('Missing map');
         }
-        /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>[]} */
+        /** @type {import('ol/Feature').default<import('ol/geom/Geometry').default>[]} */
         let features;
         const readOptions = {
           featureProjection: this.map_.getView().getProjection(),
         };
 
         if (ngeoFile.isKml(content)) {
-          features = /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>[]} */ (
+          features = /** @type {import('ol/Feature').default<import('ol/geom/Geometry').default>[]} */ (
             new olFormatKML().readFeatures(content, readOptions)
           );
         } else if (ngeoFile.isGpx(content)) {
-          features = /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>[]} */ (
+          features = /** @type {import('ol/Feature').default<import('ol/geom/Geometry').default>[]} */ (
             new olFormatGPX().readFeatures(content, readOptions)
           );
         }
@@ -604,7 +611,7 @@ export class ExternalDatSourcesManager {
   }
 
   /**
-   * @param {import("ol/layer/Tile.js").default<import("ol/source/Tile.js").default>} layer WMTS layer
+   * @param {import('ol/layer/Tile').default<import('ol/source/Tile').default>} layer WMTS layer
    * @param {boolean|undefined} value Current visible property of the DS
    * @param {boolean|undefined} oldValue Old visible property of the DS
    * @private
@@ -619,7 +626,7 @@ export class ExternalDatSourcesManager {
    * Called when a data source is removed from the collection of ngeo data
    * sources. If it's an external data source, remove it from its WMS Group
    *
-   * @param {Event|import('ol/events/Event.js').default} evt Collection event.
+   * @param {Event|import('ol/events/Event').default} evt Collection event.
    * @private
    */
   handleDataSourcesRemove_(evt) {
@@ -641,7 +648,7 @@ export class ExternalDatSourcesManager {
    * Note: it is expected that the data source has already been removed
    * from the ngeo collection.
    *
-   * @param {import("ngeo/datasource/File.js").default} dataSource External File data source.
+   * @param {import('ngeo/datasource/File').default} dataSource External File data source.
    * @private
    */
   removeFileDataSource_(dataSource) {
@@ -657,7 +664,7 @@ export class ExternalDatSourcesManager {
    * Note: it is expected that the data source has already been removed
    * from the ngeo collection.
    *
-   * @param {import("ngeo/datasource/OGC.js").default} dataSource External OGC data source.
+   * @param {import('ngeo/datasource/OGC').default} dataSource External OGC data source.
    * @private
    */
   removeOGCDataSource_(dataSource) {
@@ -709,7 +716,7 @@ export class ExternalDatSourcesManager {
   }
 
   /**
-   * @return {boolean} is empty.
+   * @returns {boolean} is empty.
    */
   isEmpty() {
     return (
@@ -745,7 +752,7 @@ export class ExternalDatSourcesManager {
  * using the `ol.getUid` method, plus a million.
  *
  * @param {Object} layer WMS/WMTS Capability Layer object.
- * @return {number} Data source id.
+ * @returns {number} Data source id.
  * @private
  * @hidden
  */

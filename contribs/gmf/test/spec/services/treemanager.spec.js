@@ -20,12 +20,12 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import gmfTestDataThemes from '../data/themes.js';
+import gmfTestDataThemes from '../data/themes';
 
 describe('gmf.layertree.TreeManager', () => {
-  /** @type {import("gmf/layertree/TreeManager.js").LayertreeTreeManager} */
+  /** @type {import('gmf/layertree/TreeManager').LayertreeTreeManager} */
   let gmfTreeManager;
-  /** @type {import("gmf/theme/Themes.js").ThemesService} */
+  /** @type {import('gmf/theme/Themes').ThemesService} */
   let gmfThemes;
   /** @type {string} */
   let treeUrl;
@@ -46,10 +46,10 @@ describe('gmf.layertree.TreeManager', () => {
   });
 
   it('Add some groups', () => {
-    const group0 = /** @type {import('gmf/themes.js').GmfGroup} */ (
+    const group0 = /** @type {import('gmf/themes').GmfGroup} */ (
       /** @type {unknown} */ (gmfTestDataThemes.themes[0].children[0])
     );
-    const group1 = /** @type {import('gmf/themes.js').GmfGroup} */ (
+    const group1 = /** @type {import('gmf/themes').GmfGroup} */ (
       /** @type {unknown} */ (gmfTestDataThemes.themes[1].children[0])
     );
     // Add a group
@@ -75,10 +75,10 @@ describe('gmf.layertree.TreeManager', () => {
 
   it('Add a group by name', () => {
     const spy = jasmine.createSpy();
-    const group0 = /** @type {import('gmf/themes.js').GmfGroup} */ (
+    const group0 = /** @type {import('gmf/themes').GmfGroup} */ (
       /** @type {unknown} */ (gmfTestDataThemes.themes[0].children[0])
     );
-    const group1 = /** @type {import('gmf/themes.js').GmfGroup} */ (
+    const group1 = /** @type {import('gmf/themes').GmfGroup} */ (
       /** @type {unknown} */ (gmfTestDataThemes.themes[1].children[0])
     );
     gmfTreeManager.addGroupByName(group0.name);
@@ -97,10 +97,10 @@ describe('gmf.layertree.TreeManager', () => {
 
   it('Add a group by layer name', () => {
     const spy = jasmine.createSpy();
-    const group0 = /** @type {import('gmf/themes.js').GmfGroup} */ (
+    const group0 = /** @type {import('gmf/themes').GmfGroup} */ (
       /** @type {unknown} */ (gmfTestDataThemes.themes[0].children[0])
     );
-    const group1 = /** @type {import('gmf/themes.js').GmfGroup} */ (
+    const group1 = /** @type {import('gmf/themes').GmfGroup} */ (
       /** @type {unknown} */ (gmfTestDataThemes.themes[1].children[0])
     );
     gmfTreeManager.addGroupByLayerName(group0.children[0].name);
@@ -118,10 +118,10 @@ describe('gmf.layertree.TreeManager', () => {
   });
 
   it('Remove a group', () => {
-    const group0 = /** @type {import('gmf/themes.js').GmfGroup} */ (
+    const group0 = /** @type {import('gmf/themes').GmfGroup} */ (
       /** @type {unknown} */ (gmfTestDataThemes.themes[0].children[0])
     );
-    const group1 = /** @type {import('gmf/themes.js').GmfGroup} */ (
+    const group1 = /** @type {import('gmf/themes').GmfGroup} */ (
       /** @type {unknown} */ (gmfTestDataThemes.themes[1].children[0])
     );
     gmfTreeManager.setFirstLevelGroups([group0, group1]);

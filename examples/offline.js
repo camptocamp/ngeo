@@ -21,29 +21,30 @@
 
 import '@fortawesome/fontawesome-free/css/fontawesome.min.css';
 import './offline.css';
-import './common_dependencies.js';
-import olMap from 'ol/Map.js';
+import './common_dependencies';
+import olMap from 'ol/Map';
 
-import olView from 'ol/View.js';
-import olLayerTile from 'ol/layer/Tile.js';
-import olSourceOSM from 'ol/source/OSM.js';
-import ngeoMapModule from 'ngeo/map/module.js';
-import ngeoOfflineModule from 'ngeo/offline/module.js';
-import ngeoOfflineConfiguration from 'ngeo/offline/Configuration.js';
-import NgeoOfflineServiceManager from 'ngeo/offline/ServiceManager.js';
+import olView from 'ol/View';
+import olLayerTile from 'ol/layer/Tile';
+import olSourceOSM from 'ol/source/OSM';
+import ngeoMapModule from 'ngeo/map/module';
+import ngeoOfflineModule from 'ngeo/offline/module';
+import ngeoOfflineConfiguration from 'ngeo/offline/Configuration';
+import NgeoOfflineServiceManager from 'ngeo/offline/ServiceManager';
 import angular from 'angular';
 
 class MainController {
   /**
-   * @param {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr
+   * @param {import('ngeo/map/FeatureOverlayMgr').FeatureOverlayMgr} ngeoFeatureOverlayMgr
    * ngeo feature overlay manager service.
-   * @param {import("ngeo/offline/NetworkStatus.js").default} ngeoNetworkStatus ngeo network status service.
+   * @param {import('ngeo/offline/NetworkStatus').default} ngeoNetworkStatus ngeo network status service.
    * @param {NgeoOfflineServiceManager} ngeoOfflineServiceManager ngeo offline service.
    * @ngInject
    */
   constructor(ngeoFeatureOverlayMgr, ngeoNetworkStatus, ngeoOfflineServiceManager) {
     /**
      * Save a square of 10 km sideways (Map's unit is the meter).
+     *
      * @type {number}
      * @export
      */

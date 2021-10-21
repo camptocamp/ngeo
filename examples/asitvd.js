@@ -20,13 +20,13 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import ngeoSourceAsitVD from 'ngeo/source/AsitVD.js';
-import EPSG2056 from 'ngeo/proj/EPSG_2056.js';
+import ngeoSourceAsitVD from 'ngeo/source/AsitVD';
+import EPSG2056 from 'ngeo/proj/EPSG_2056';
 
-import olMap from 'ol/Map.js';
-import olView from 'ol/View.js';
-import olLayerTile from 'ol/layer/Tile.js';
-import ngeoMapModule from 'ngeo/map/module.js';
+import olMap from 'ol/Map';
+import olView from 'ol/View';
+import olLayerTile from 'ol/layer/Tile';
+import ngeoMapModule from 'ngeo/map/module';
 
 /** @type {angular.IModule} */
 const myModule = angular.module('app', ['gettext', ngeoMapModule.name]);
@@ -37,7 +37,7 @@ const myModule = angular.module('app', ['gettext', ngeoMapModule.name]);
  */
 function MainController() {
   /**
-   * @type {import("ol/Map.js").default}
+   * @type {import('ol/Map').default}
    */
   this.map = new olMap({
     layers: [

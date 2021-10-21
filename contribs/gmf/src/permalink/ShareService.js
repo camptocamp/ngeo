@@ -41,6 +41,7 @@ import angular from 'angular';
 
 /**
  * Service to handle the sharing of the permalink.
+ *
  * @param {angular.IHttpService} $http Angular http service.
  * @param {string} gmfShortenerCreateUrl URL for the shortener API
  * @class
@@ -63,8 +64,9 @@ export function PermalinkShareService($http, gmfShortenerCreateUrl) {
 /**
  * Get a short URL of the permalink by calling the url shortener service.
  * - If no shortener API url have been specified, it returns the permalink itself.
+ *
  * @param  {string} url the permalink
- * @return {ShortenerAPIResponse|angular.IHttpPromise<void>} an object containing the permalink not
+ * @returns {ShortenerAPIResponse|angular.IHttpPromise<void>} an object containing the permalink not
  *    shortened or the promise attached to the shortener API request
  */
 PermalinkShareService.prototype.getShortUrl = function (url) {
@@ -87,10 +89,11 @@ PermalinkShareService.prototype.getShortUrl = function (url) {
 /**
  * Send the short permalink to the email provided
  * - If email is provided, the short permalink will be sent to this email
+ *
  * @param  {string} shortUrl the short permalink to send
  * @param  {string} email the email to which the short url must be send
  * @param  {string} [opt_message] message for the email
- * @return {angular.IHttpPromise<void>} the promise attached to the shortener API request
+ * @returns {angular.IHttpPromise<void>} the promise attached to the shortener API request
  */
 PermalinkShareService.prototype.sendShortUrl = function (shortUrl, email, opt_message) {
   const params = /** @type {ShortenerAPIRequestParams} */ ({
@@ -107,7 +110,7 @@ PermalinkShareService.prototype.sendShortUrl = function (shortUrl, email, opt_me
 
 /**
  * @param {ShortenerAPIRequestParams} params parameters for the request
- * @return {angular.IHttpPromise<void>} the promise attached to the shortener API request
+ * @returns {angular.IHttpPromise<void>} the promise attached to the shortener API request
  */
 PermalinkShareService.prototype.postShortUrl_ = function (params) {
   // Override default behavior of $http.post method (sending data in json format)
@@ -119,6 +122,7 @@ PermalinkShareService.prototype.postShortUrl_ = function (params) {
 /**
  * Max length defined for the complete url.
  * Check IE limits, see {@link http://support.microsoft.com/kb/208427}
+ *
  * @type {number}
  * @hidden
  */
@@ -127,6 +131,7 @@ export const URL_MAX_LEN = 2083;
 /**
  * Max length defined for the url parth section.
  * Check IE limits, see {@link http://support.microsoft.com/kb/208427}
+ *
  * @type {number}
  * @hidden
  */

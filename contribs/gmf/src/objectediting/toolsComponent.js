@@ -21,24 +21,24 @@
 
 import angular from 'angular';
 
-import gmfObjecteditingGetWMSFeatureComponent from 'gmf/objectediting/getWMSFeatureComponent.js';
+import gmfObjecteditingGetWMSFeatureComponent from 'gmf/objectediting/getWMSFeatureComponent';
 
-import ngeoEditingCreatefeatureComponent from 'ngeo/editing/createfeatureComponent.js';
+import ngeoEditingCreatefeatureComponent from 'ngeo/editing/createfeatureComponent';
 
-import ngeoEditingCreateregularpolygonfromclickComponent from 'ngeo/editing/createregularpolygonfromclickComponent.js';
+import ngeoEditingCreateregularpolygonfromclickComponent from 'ngeo/editing/createregularpolygonfromclickComponent';
 
-import ngeoGeometryType from 'ngeo/GeometryType.js';
+import ngeoGeometryType from 'ngeo/GeometryType';
 
-import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent.js';
+import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent';
 
-import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
-import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr.js';
-import {getUid as olUtilGetUid} from 'ol/util.js';
+import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate';
+import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr';
+import {getUid as olUtilGetUid} from 'ol/util';
 
 /**
  * @typedef {Object} ObjectEditingQueryableLayerInfo
- * @property {import('gmf/themes.js').GmfOgcServer} ogcServer
- * @property {import('gmf/themes.js').GmfLayerWMS} layerNode
+ * @property {import('gmf/themes').GmfOgcServer} ogcServer
+ * @property {import('gmf/themes').GmfLayerWMS} layerNode
  */
 
 /**
@@ -98,19 +98,19 @@ myModule.run(
  *     'Copy from' tool is active or not.
  * @htmlAttribute {boolean} gmf-objecteditingtools-deletefromactive Whether the
  *     'Delete from' tool is active or not.
- * @htmlAttribute {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>} gmf-objecteditingtools-feature The feature to
+ * @htmlAttribute {import('ol/Feature').default<import('ol/geom/Geometry').default>} gmf-objecteditingtools-feature The feature to
  *     edit.
  * @htmlAttribute {string} gmf-objecteditingtools-geomtype The geometry type.
- * @htmlAttribute {import("ol/Map.js").default} gmf-objecteditingtools-map The map.
+ * @htmlAttribute {import('ol/Map').default} gmf-objecteditingtools-map The map.
  * @htmlAttribute {string} gmf-objectediting-process Determines the
  *     behavior to adopt when sketch features are added.
  * @htmlAttribute {ObjectEditingQueryableLayerInfo} gmf-objectediting-queryablelayerinfo
  *     Queryable layer information.
  * @htmlAttribute {boolean} gmf-objectediting-requireslayer Flag that determines
  *     if the currently active tool requires a queryable layer or not.
- * @htmlAttribute {import("ol/Collection.js").default<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>} gmf-objectediting-sketchfeatures
+ * @htmlAttribute {import('ol/Collection').default<import('ol/Feature').default<import('ol/geom/Geometry').default>>} gmf-objectediting-sketchfeatures
  *     Collection of temporary features being drawn by the tools.
- * @return {angular.IDirective} The directive specs.
+ * @returns {angular.IDirective} The directive specs.
  * @ngInject
  * @ngdoc directive
  * @ngname gmfObjecteditingtools
@@ -145,9 +145,9 @@ const NAMESPACE = 'oet';
 
 /**
  * @param {angular.IScope} $scope Scope.
- * @param {import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate
+ * @param {import('ngeo/misc/ToolActivateMgr').ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate
  *    manager service.
- * @param {import('gmf/options.js').gmfObjectEditingToolsOptions} gmfObjectEditingToolsOptions The options.
+ * @param {import('gmf/options').gmfObjectEditingToolsOptions} gmfObjectEditingToolsOptions The options.
  * @class
  * @hidden
  * @ngInject
@@ -173,7 +173,7 @@ export function Controller($scope, ngeoToolActivateMgr, gmfObjectEditingToolsOpt
   this.deleteFromActive = false;
 
   /**
-   * @type {?import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>}
+   * @type {?import('ol/Feature').default<import('ol/geom/Geometry').default>}
    */
   this.feature = null;
 
@@ -183,7 +183,7 @@ export function Controller($scope, ngeoToolActivateMgr, gmfObjectEditingToolsOpt
   this.geomType = null;
 
   /**
-   * @type {?import("ol/Map.js").default}
+   * @type {?import('ol/Map').default}
    */
   this.map = null;
 
@@ -203,7 +203,7 @@ export function Controller($scope, ngeoToolActivateMgr, gmfObjectEditingToolsOpt
   this.requiresLayer = false;
 
   /**
-   * @type {?import("ol/Collection.js").default<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>}
+   * @type {?import('ol/Collection').default<import('ol/Feature').default<import('ol/geom/Geometry').default>>}
    */
   this.sketchFeatures = null;
 
@@ -215,7 +215,7 @@ export function Controller($scope, ngeoToolActivateMgr, gmfObjectEditingToolsOpt
   this.scope_ = $scope;
 
   /**
-   * @type {import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr}
+   * @type {import('ngeo/misc/ToolActivateMgr').ToolActivateMgr}
    */
   this.ngeoToolActivateMgr_ = ngeoToolActivateMgr;
 
@@ -325,6 +325,7 @@ Controller.prototype.registerTool_ = function (toolActiveName, process, opt_requ
 
 /**
  * Called when any of the tool 'active' property changes.
+ *
  * @param {string} process The behavior the tool should use when active.
  * @param {boolean} requiresLayer Whether the tool requires the queryable
  *     layer or not.

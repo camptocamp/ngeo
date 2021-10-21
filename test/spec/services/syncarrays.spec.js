@@ -21,7 +21,7 @@
 
 // @ts-nocheck
 import angular from 'angular';
-import ngeoMiscSyncArrays from 'ngeo/misc/syncArrays.js';
+import ngeoMiscSyncArrays from 'ngeo/misc/syncArrays';
 
 describe('ngeo.misc.syncArrays', () => {
   /** @type {angular.IScope} */

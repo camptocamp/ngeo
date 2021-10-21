@@ -20,10 +20,11 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import ngeoMiscTime, {Time} from 'ngeo/misc/Time.js';
+import ngeoMiscTime, {Time} from 'ngeo/misc/Time';
 
 /**
  * ngeo - WMS time service
+ *
  * @ngdoc service
  * @ngname ngeoWMSTime
  * @hidden
@@ -52,13 +53,14 @@ export class WMSTime extends Time {
 
   /**
    * Format time regarding a resolution
+   *
    * @param  {number} time (in ms format) timestamp to format
-   * @param  {import('ngeo/datasource/OGC.js').TimePropertyResolutionEnum|undefined} resolution resolution to
+   * @param  {import('ngeo/datasource/OGC').TimePropertyResolutionEnum|undefined} resolution resolution to
    *    use.
    * @param  {boolean} [opt_useISOFormat] True to a ISO-8601 date string that can be used
    *     as a WMS-T Parameter. Otherwise, use a localized date format.
    * @param  {boolean} [opt_toUTC] to get the UTC date
-   * @return {string} Date string regarding the resolution.
+   * @returns {string} Date string regarding the resolution.
    */
   formatTimeValue(time, resolution, opt_useISOFormat, opt_toUTC) {
     const date = new Date(time);
@@ -101,10 +103,11 @@ export class WMSTime extends Time {
 
   /**
    * Format time to be used as a WMS Time query parameter
-   * @param  {import('ngeo/datasource/OGC.js').TimeProperty} wmsTimeProperty a wmstime property from a node
-   * @param  {import('ngeo/datasource/OGC.js').TimeRange} times start & end time selected (in ms format)
+   *
+   * @param  {import('ngeo/datasource/OGC').TimeProperty} wmsTimeProperty a wmstime property from a node
+   * @param  {import('ngeo/datasource/OGC').TimeRange} times start & end time selected (in ms format)
    * @param  {boolean} [opt_toUTC] to get the UTC date
-   * @return {string} ISO-8601 date string ready to be used as a query parameter for a
+   * @returns {string} ISO-8601 date string ready to be used as a query parameter for a
    * WMS request
    */
   formatWMSTimeParam(wmsTimeProperty, times, opt_toUTC) {

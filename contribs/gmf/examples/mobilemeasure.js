@@ -21,21 +21,21 @@
 
 import angular from 'angular';
 import './mobilemeasure.css';
-import gmfMapComponent from 'gmf/map/component.js';
+import gmfMapComponent from 'gmf/map/component';
 
-import gmfPermalinkPermalink from 'gmf/permalink/Permalink.js';
+import gmfPermalinkPermalink from 'gmf/permalink/Permalink';
 
-import gmfMobileMeasureAreaComponent from 'gmf/mobile/measure/areaComponent.js';
-import gmfMobileMeasureLengthComponent from 'gmf/mobile/measure/lengthComponent.js';
-import gmfMobileMeasurePointComponent from 'gmf/mobile/measure/pointComponent.js';
-import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent.js';
-import EPSG2056 from 'ngeo/proj/EPSG_2056.js';
-import olMap from 'ol/Map.js';
-import olView from 'ol/View.js';
-import olControlScaleLine from 'ol/control/ScaleLine.js';
-import olLayerTile from 'ol/layer/Tile.js';
-import olSourceOSM from 'ol/source/OSM.js';
-import options from './options.js';
+import gmfMobileMeasureAreaComponent from 'gmf/mobile/measure/areaComponent';
+import gmfMobileMeasureLengthComponent from 'gmf/mobile/measure/lengthComponent';
+import gmfMobileMeasurePointComponent from 'gmf/mobile/measure/pointComponent';
+import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent';
+import EPSG2056 from 'ngeo/proj/EPSG_2056';
+import olMap from 'ol/Map';
+import olView from 'ol/View';
+import olControlScaleLine from 'ol/control/ScaleLine';
+import olLayerTile from 'ol/layer/Tile';
+import olSourceOSM from 'ol/source/OSM';
+import options from './options';
 
 /**
  * @type {angular.IModule}
@@ -52,7 +52,7 @@ const myModule = angular.module('gmfapp', [
 ]);
 
 /**
- * @param {import("gmf/permalink/Permalink.js").PermalinkService} gmfPermalink The gmf permalink service.
+ * @param {import('gmf/permalink/Permalink').PermalinkService} gmfPermalink The gmf permalink service.
  * @class
  * @ngInject
  */
@@ -61,7 +61,7 @@ function MainController(gmfPermalink) {
   const zoom = gmfPermalink.getMapZoom() || 3;
 
   /**
-   * @type {import("ol/Map.js").default}
+   * @type {import('ol/Map').default}
    */
   this.map = new olMap({
     layers: [

@@ -64,11 +64,16 @@ jobs:
       # Lint
       - run: npx tsc --version
       - run: npm run typecheck
+      # First do the lint on TypeScript files to see the error in the many warnings messages
+      - run: make .build/eslint-ts.timestamp
       - run: make lint
       - run: make test
       - run: make check-examples-checker
+      # Cypress tests
+      - run: npm run test-cli
       # Webpack build of ngeo/gmf examples and gmf apps
       - run: NODE_ENV=production make examples-hosted
+      - run: npm run build-storybook
       - run: make check-examples
       - uses: actions/upload-artifact@v2
         with:
@@ -98,6 +103,9 @@ jobs:
         if: env.HAS_SECRETS == 'HAS_SECRETS'
       - run: buildtools/npm-publish
         if: env.HAS_SECRETS == 'HAS_SECRETS'
+
+      - name: Publish Storybook to Chromatic to run visual tests
+        run: npm run chromatic -- --project-token=$(gopass show gs/ci/chromatic/ngeo_token)
 
       - name: Notify c2cgeoportal
         run: >

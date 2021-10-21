@@ -19,7 +19,7 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import ngeoFormatAttributeType from 'ngeo/format/AttributeType.js';
+import ngeoFormatAttributeType from 'ngeo/format/AttributeType';
 
 /**
  * geomType: Set only if the attribute is a geometry type. Determines the type of geometry.
@@ -38,6 +38,7 @@ import ngeoFormatAttributeType from 'ngeo/format/AttributeType.js';
  * A feature attribute definition.
  *
  * extends AttributeBase
+ *
  * @typedef {Object} Attribute
  * @property {string} [geomType] (AttributeBase)
  * @property {string} [numType] (AttributeBase)
@@ -60,7 +61,7 @@ import ngeoFormatAttributeType from 'ngeo/format/AttributeType.js';
  *
  * @param {AttributeBase} attribute Attribute.
  * @param {string} type Type.
- * @return {boolean} Whether both attribute type and geomType were set.
+ * @returns {boolean} Whether both attribute type and geomType were set.
  * @hidden
  */
 export function setGeometryType(attribute, type) {

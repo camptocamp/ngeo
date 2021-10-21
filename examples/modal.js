@@ -20,7 +20,7 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import ngeoMessageModalComponent from 'ngeo/message/modalComponent.js';
+import ngeoMessageModalComponent from 'ngeo/message/modalComponent';
 
 /** @type {angular.IModule} **/
 const myModule = angular.module('app', ['gettext', ngeoMessageModalComponent.name]);

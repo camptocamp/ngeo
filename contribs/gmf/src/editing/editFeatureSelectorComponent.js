@@ -21,10 +21,10 @@
 
 import angular from 'angular';
 
-import gmfEditingEditFeatureComponent, {EditingState} from 'gmf/editing/editFeatureComponent.js';
+import gmfEditingEditFeatureComponent, {EditingState} from 'gmf/editing/editFeatureComponent';
 
-import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
-import gmfThemeThemes from 'gmf/theme/Themes.js';
+import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager';
+import gmfThemeThemes from 'gmf/theme/Themes';
 
 /**
  * @type {angular.IModule}
@@ -67,12 +67,12 @@ myModule.run(
  *
  * @htmlAttribute {boolean} gmf-editfeatureselector-active Whether the
  *     directive is active or not.
- * @htmlAttribute {import("ol/Map.js").default} gmf-editfeatureselector-map The map.
- * @htmlAttribute {import("ol/layer/Vector.js").default<import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>>} gmf-editfeatureselector-vector The vector
+ * @htmlAttribute {import('ol/Map').default} gmf-editfeatureselector-map The map.
+ * @htmlAttribute {import('ol/layer/Vector').default<import('ol/source/Vector').default<import('ol/geom/Geometry').default>>} gmf-editfeatureselector-vector The vector
  *     layer where the selected or created features are drawn.
- * @htmlAttribute {import("ngeo/layertree/Controller.js").default} gmf-editfeatureselector-tree The
+ * @htmlAttribute {import('ngeo/layertree/Controller').default} gmf-editfeatureselector-tree The
  *     layertree controller handling the selectable editable layers list.
- * @return {angular.IDirective} The directive specs.
+ * @returns {angular.IDirective} The directive specs.
  * @ngdoc directive
  * @ngname gmfEditfeatureselector
  */
@@ -95,8 +95,8 @@ myModule.directive('gmfEditfeatureselector', editingEditFeatureComponent);
 /**
  * @param {angular.IScope} $scope Angular scope.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
- * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes The gmf Themes service.
- * @param {import("gmf/layertree/TreeManager.js").LayertreeTreeManager} gmfTreeManager The gmf TreeManager
+ * @param {import('gmf/theme/Themes').ThemesService} gmfThemes The gmf Themes service.
+ * @param {import('gmf/layertree/TreeManager').LayertreeTreeManager} gmfTreeManager The gmf TreeManager
  *    service.
  * @class
  * @hidden
@@ -115,12 +115,12 @@ export function Controller($scope, $timeout, gmfThemes, gmfTreeManager) {
   $scope.$watch(() => this.active, this.handleActiveChange_.bind(this));
 
   /**
-   * @type {?import("ol/Map.js").default}
+   * @type {?import('ol/Map').default}
    */
   this.map = null;
 
   /**
-   * @type {?import("ol/layer/Vector.js").default<import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>>}
+   * @type {?import('ol/layer/Vector').default<import('ol/source/Vector').default<import('ol/geom/Geometry').default>>}
    */
   this.vectorLayer = null;
 
@@ -137,17 +137,17 @@ export function Controller($scope, $timeout, gmfThemes, gmfTreeManager) {
   this.$timeout_ = $timeout;
 
   /**
-   * @type {import("gmf/theme/Themes.js").ThemesService}
+   * @type {import('gmf/theme/Themes').ThemesService}
    */
   this.gmfThemes_ = gmfThemes;
 
   /**
-   * @type {import("gmf/layertree/TreeManager.js").LayertreeTreeManager}
+   * @type {import('gmf/layertree/TreeManager').LayertreeTreeManager}
    */
   this.gmfTreeManager_ = gmfTreeManager;
 
   /**
-   * @param {import("ngeo/layertree/Controller.js").LayertreeController[]} value First level
+   * @param {import('ngeo/layertree/Controller').LayertreeController[]} value First level
    *    controllers.
    */
   const updateEditableTreeCtrls = (value) => {
@@ -160,7 +160,7 @@ export function Controller($scope, $timeout, gmfThemes, gmfTreeManager) {
         editables.length = 0;
         if (this.gmfTreeManager_.rootCtrl) {
           this.gmfTreeManager_.rootCtrl.traverseDepthFirst((treeCtrl) => {
-            const gmfLayer = /** @type {import('gmf/themes.js').GmfLayer} */ (treeCtrl.node);
+            const gmfLayer = /** @type {import('gmf/themes').GmfLayer} */ (treeCtrl.node);
             if (gmfLayer.editable) {
               editables.push(treeCtrl);
             }
@@ -185,19 +185,22 @@ export function Controller($scope, $timeout, gmfThemes, gmfTreeManager) {
   /**
    * Flag shared with the `gmf-editfeature` directive used to determine if it
    * has unsaved changes or not.
+   *
    * @type {boolean}
    */
   this.dirty = false;
 
   /**
    * List of editable Layertree controllers.
-   * @type {import("ngeo/layertree/Controller.js").LayertreeController[]}
+   *
+   * @type {import('ngeo/layertree/Controller').LayertreeController[]}
    */
   this.editableTreeCtrls = [];
 
   /**
    * The currently selected Layertree controller.
-   * @type {?import("ngeo/layertree/Controller.js").LayertreeController}
+   *
+   * @type {?import('ngeo/layertree/Controller').LayertreeController}
    */
   this.selectedEditableTreeCtrl = null;
 
@@ -215,6 +218,7 @@ export function Controller($scope, $timeout, gmfThemes, gmfTreeManager) {
    * When clicked, the according state is set and the `gmf-editfeature`
    * directive checks if it has unsaved changes and allow this directive to
    * continue the action that was made or not.
+   *
    * @type {string}
    */
   this.state = EditingState.IDLE;
@@ -246,6 +250,7 @@ Controller.prototype.stopEditing = function () {
 /**
  * Called when the active property of the this directive changes. Manage
  * the activation/deactivation accordingly.
+ *
  * @param {boolean} active Whether the directive is active or not.
  */
 Controller.prototype.handleActiveChange_ = function (active) {

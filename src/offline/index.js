@@ -22,19 +22,19 @@
 /**
  * @typedef {Object} OfflineExtentByZoom
  * @property {number} zoom
- * @property {import("ol/extent.js").Extent} extent
+ * @property {import('ol/extent').Extent} extent
  */
 
 /**
  * @typedef {Object} OfflineLayerMetadata
- * @property {import("ol/Map.js").default} map
+ * @property {import('ol/Map').default} map
  * @property {OfflineExtentByZoom[]} extentByZoom
- * @property {import('ol/layer/Layer.js').default<unknown>} layer
- * @property {import('ol/source/Source.js').default} source
+ * @property {import('ol/layer/Layer').default<unknown>} layer
+ * @property {import('ol/source/Source').default} source
  * @property {string|undefined} layerType
  * @property {string|undefined} layerSerialization
  * @property {boolean} backgroundLayer
- * @property {import("ol/layer/Group.js").default[]} ancestors
+ * @property {import('ol/layer/Group').default[]} ancestors
  */
 
 /**
@@ -47,14 +47,14 @@
 
 /**
  * @typedef {Object} OfflinePersistentContent
- * @property {import("ol/extent.js").Extent} extent
+ * @property {import('ol/extent').Extent} extent
  * @property {!OfflinePersistentLayer[]} layers
  * @property {!number[]} zooms
  */
 
 /**
  * @typedef {Object} OfflineTile
- * @property {import("ol/coordinate.js").Coordinate} coord
+ * @property {import('ol/coordinate').Coordinate} coord
  * @property {string} url
  * @property {?string} response
  */
@@ -63,13 +63,13 @@
  * @callback onTileDownloadSuccess
  * @param {number} progress
  * @param {OfflineTile} tile
- * @return {Promise}
+ * @returns {Promise}
  */
 
 /**
  * @callback onTileDownloadError
  * @param {number} progress
- * @return {Promise}
+ * @returns {Promise}
  */
 
 /**

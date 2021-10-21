@@ -20,18 +20,18 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import {listen, unlistenByKey} from 'ol/events.js';
-import {CollectionEvent} from 'ol/Collection.js';
+import {listen, unlistenByKey} from 'ol/events';
+import {CollectionEvent} from 'ol/Collection';
 
 /**
  * @class
- * @param {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} manager The feature overlay manager.
+ * @param {import('ngeo/map/FeatureOverlayMgr').FeatureOverlayMgr} manager The feature overlay manager.
  * @param {number} index This feature overlay's index.
  * @hidden
  */
 export function FeatureOverlay(manager, index) {
   /**
-   * @type {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr}
+   * @type {import('ngeo/map/FeatureOverlayMgr').FeatureOverlayMgr}
    */
   this.manager_ = manager;
 
@@ -41,14 +41,15 @@ export function FeatureOverlay(manager, index) {
   this.index_ = index;
 
   /**
-   * @type {import("ol/events.js").EventsKey[]}
+   * @type {import('ol/events').EventsKey[]}
    */
   this.listenerKeys_ = [];
 }
 
 /**
  * Add a feature to the feature overlay.
- * @param {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>} feature The feature to add.
+ *
+ * @param {import('ol/Feature').default<import('ol/geom/Geometry').default>} feature The feature to add.
  */
 FeatureOverlay.prototype.addFeature = function (feature) {
   this.manager_.addFeature(feature, this.index_);
@@ -56,7 +57,8 @@ FeatureOverlay.prototype.addFeature = function (feature) {
 
 /**
  * Remove a feature from the feature overlay.
- * @param {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>} feature The feature to remove.
+ *
+ * @param {import('ol/Feature').default<import('ol/geom/Geometry').default>} feature The feature to remove.
  */
 FeatureOverlay.prototype.removeFeature = function (feature) {
   this.manager_.removeFeature(feature, this.index_);
@@ -64,7 +66,8 @@ FeatureOverlay.prototype.removeFeature = function (feature) {
 
 /**
  * Check if featureOverlay has no features.
- * @return {boolean} True if there is no features. False otherwise.
+ *
+ * @returns {boolean} True if there is no features. False otherwise.
  */
 FeatureOverlay.prototype.isEmpty = function () {
   return this.manager_.isEmpty(this.index_);
@@ -83,7 +86,8 @@ FeatureOverlay.prototype.clear = function () {
  * configure the feature overlay with a feature collection you will use the
  * collection to add and remove features instead of using the overlay's
  * `addFeature`, `removeFeature` and `clear` functions.
- * @param {import("ol/Collection.js").default<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>} features Feature collection.
+ *
+ * @param {import('ol/Collection').default<import('ol/Feature').default<import('ol/geom/Geometry').default>>} features Feature collection.
  */
 FeatureOverlay.prototype.setFeatures = function (features) {
   // Remove old features collection.
@@ -103,7 +107,8 @@ FeatureOverlay.prototype.setFeatures = function (features) {
 
 /**
  * Set a style for the feature overlay.
- * @param {import("ol/style/Style.js").default | import("ol/style/Style.js").default[] | import('ol/style/Style.js').StyleFunction} style
+ *
+ * @param {import('ol/style/Style').default | import('ol/style/Style').default[] | import('ol/style/Style').StyleFunction} style
  * Style.
  */
 FeatureOverlay.prototype.setStyle = function (style) {
@@ -111,11 +116,11 @@ FeatureOverlay.prototype.setStyle = function (style) {
 };
 
 /**
- * @param {Event|import('ol/events/Event.js').default} evt Feature collection event.
+ * @param {Event|import('ol/events/Event').default} evt Feature collection event.
  */
 FeatureOverlay.prototype.handleFeatureAdd_ = function (evt) {
   if (evt instanceof CollectionEvent) {
-    const feature = /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>} */ (
+    const feature = /** @type {import('ol/Feature').default<import('ol/geom/Geometry').default>} */ (
       evt.element
     );
     this.addFeature(feature);
@@ -123,11 +128,11 @@ FeatureOverlay.prototype.handleFeatureAdd_ = function (evt) {
 };
 
 /**
- * @param {Event|import('ol/events/Event.js').default} evt Feature collection event.
+ * @param {Event|import('ol/events/Event').default} evt Feature collection event.
  */
 FeatureOverlay.prototype.handleFeatureRemove_ = function (evt) {
   if (evt instanceof CollectionEvent) {
-    const feature = /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>} */ (
+    const feature = /** @type {import('ol/Feature').default<import('ol/geom/Geometry').default>} */ (
       evt.element
     );
     this.removeFeature(feature);

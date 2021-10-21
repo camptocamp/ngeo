@@ -40,7 +40,7 @@ const exports = class AbstractLocalforageWrapper {
 
   /**
    * @param  {...unknown} args Some arguments.
-   * @return {Promise<void>}
+   * @returns {Promise<void>}
    */
   setItem(...args) {
     return this.createAction('setItem', ...args);
@@ -48,14 +48,14 @@ const exports = class AbstractLocalforageWrapper {
 
   /**
    * @param  {...unknown} args Some arguments.
-   * @return {Promise<void>}
+   * @returns {Promise<void>}
    */
   getItem(...args) {
     return this.createAction('getItem', ...args);
   }
 
   /**
-   * @return {Promise<void>}
+   * @returns {Promise<void>}
    */
   clear() {
     return this.createAction('clear');
@@ -63,7 +63,7 @@ const exports = class AbstractLocalforageWrapper {
 
   /**
    * @param  {...unknown} args Some arguments.
-   * @return {Promise<void>}
+   * @returns {Promise<void>}
    */
   config(...args) {
     return this.createAction('config', ...args);
@@ -73,7 +73,7 @@ const exports = class AbstractLocalforageWrapper {
    * @export
    * @param {string} command .
    * @param  {...unknown} args .
-   * @return {Promise<void>} .
+   * @returns {Promise<void>} .
    */
   createAction(command, ...args) {
     const id = ++this.currentId_;

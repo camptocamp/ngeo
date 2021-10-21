@@ -20,25 +20,22 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr.js';
-import ngeoMessageNotification from 'ngeo/message/Notification.js';
-import * as olEasing from 'ol/easing.js';
-import {listen} from 'ol/events.js';
-import olFeature from 'ol/Feature.js';
-import olGeolocation from 'ol/Geolocation.js';
-import olMap from 'ol/Map.js';
-import olGeomPoint from 'ol/geom/Point.js';
-import Polygon from 'ol/geom/Polygon.js';
-import {buildStyle} from 'ngeo/options.js';
+import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr';
+import ngeoMessageNotification from 'ngeo/message/Notification';
+import * as olEasing from 'ol/easing';
+import {listen} from 'ol/events';
+import olFeature from 'ol/Feature';
+import olGeolocation from 'ol/Geolocation';
+import olMap from 'ol/Map';
+import olGeomPoint from 'ol/geom/Point';
+import Polygon from 'ol/geom/Polygon';
+import {buildStyle} from 'ngeo/options';
 
 /**
  * @type {angular.IModule}
  * @hidden
  */
-const myModule = angular.module('ngeoGeolocation', [
-  ngeoMapFeatureOverlayMgr.name,
-  ngeoMessageNotification.name,
-]);
+const myModule = angular.module('ngeoGeolocation', [ngeoMapFeatureOverlayMgr.name]);
 
 /**
  * @enum {string}
@@ -63,9 +60,9 @@ const GeolocationEventType = {
  *
  * See our live example: [../examples/mobilegeolocation.html](../examples/mobilegeolocation.html)
  *
- * @htmlAttribute {import("ol/Map.js").default} ngeo-geolocation-map The map.
+ * @htmlAttribute {import('ol/Map').default} ngeo-geolocation-map The map.
  * @htmlAttribute {GeolocationDirectiveOptions} ngeo-geolocation-options The options.
- * @return {angular.IDirective} The Directive Definition Object.
+ * @returns {angular.IDirective} The Directive Definition Object.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoGeolocation
@@ -90,23 +87,14 @@ myModule.directive('ngeoGeolocation', geolocationComponent);
  * @param {angular.IScope} $scope The directive's scope.
  * @param {JQuery} $element Element.
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext service.
- * @param {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
+ * @param {import('ngeo/map/FeatureOverlayMgr').FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *    overlay manager service.
- * @param {import("ngeo/message/Notification.js").MessageNotification} ngeoNotification Ngeo notification
- *    service.
- * @param {import('ngeo/options.js').ngeoGeolocationOptions} ngeoGeolocationOptions The options.
+ * @param {import('ngeo/options').ngeoGeolocationOptions} ngeoGeolocationOptions The options.
  * @ngInject
  * @ngdoc controller
  * @ngname ngeoGeolocationController
  */
-export function Controller(
-  $scope,
-  $element,
-  gettextCatalog,
-  ngeoFeatureOverlayMgr,
-  ngeoNotification,
-  ngeoGeolocationOptions
-) {
+export function Controller($scope, $element, gettextCatalog, ngeoFeatureOverlayMgr, ngeoGeolocationOptions) {
   this.options = ngeoGeolocationOptions;
 
   $element.on('click', this.toggleTracking.bind(this));
@@ -117,12 +105,7 @@ export function Controller(
   this.$scope_ = $scope;
 
   /**
-   * @type {import("ngeo/message/Notification.js").MessageNotification}
-   */
-  this.notification_ = ngeoNotification;
-
-  /**
-   * @type {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr}
+   * @type {import('ngeo/map/FeatureOverlayMgr').FeatureOverlayMgr}
    */
   this.ngeoFeatureOverlayMgr_ = ngeoFeatureOverlayMgr;
 
@@ -132,12 +115,13 @@ export function Controller(
   this.gettextCatalog_ = gettextCatalog;
 
   /**
-   * @type {import("ol/Map.js").default}
+   * @type {import('ol/Map').default}
    */
   this.map;
 
   /**
    * A flag used to determine if the application has finished loading.
+   *
    * @type {boolean}
    */
   this.loading;
@@ -151,12 +135,12 @@ Controller.prototype.$onInit = function () {
   }
 
   /**
-   * @type {import("ngeo/map/FeatureOverlay.js").FeatureOverlay}
+   * @type {import('ngeo/map/FeatureOverlay').FeatureOverlay}
    */
   this.featureOverlay_ = this.ngeoFeatureOverlayMgr_.getFeatureOverlay();
 
   /**
-   * @type {import("ol/Geolocation.js").default}
+   * @type {import('ol/Geolocation').default}
    */
   this.geolocation_ = new olGeolocation({
     projection: this.map.getView().getProjection(),
@@ -196,21 +180,21 @@ Controller.prototype.$onInit = function () {
             msg = gettextCatalog.getString('Geolocation: An unknown error occurred.');
             break;
         }
-        this.notification_.error(msg);
+        ngeoMessageNotification.error(msg);
         this.$scope_.$emit(GeolocationEventType.ERROR, error);
       }
     )
   );
 
   /**
-   * @type {olFeature<import("ol/geom/Geometry.js").default>}
+   * @type {olFeature<import('ol/geom/Geometry').default>}
    */
   this.positionFeature_ = new olFeature();
 
   this.positionFeature_.setStyle(buildStyle(this.options.positionFeatureStyle));
 
   /**
-   * @type {olFeature<import("ol/geom/Geometry.js").default>}
+   * @type {olFeature<import('ol/geom/Geometry').default>}
    */
   this.accuracyFeature_ = new olFeature();
 
@@ -218,6 +202,7 @@ Controller.prototype.$onInit = function () {
 
   /**
    * Whether to recenter the map at the position it gets updated
+   *
    * @type {boolean}
    */
   this.follow_ = false;
@@ -225,6 +210,7 @@ Controller.prototype.$onInit = function () {
   /**
    * A flag used to determine whether the view was changed by me or something
    * else. In the latter case, stop following.
+   *
    * @type {boolean}
    */
   this.viewChangedByMe_ = false;
@@ -232,7 +218,7 @@ Controller.prototype.$onInit = function () {
   listen(
     this.geolocation_,
     'change:accuracyGeometry',
-    /** @type {import("ol/events.js").ListenerFunction} */
+    /** @type {import('ol/events').ListenerFunction} */
     (evt) => {
       const geometry = this.geolocation_.getAccuracyGeometry();
       if (!geometry) {
@@ -246,7 +232,7 @@ Controller.prototype.$onInit = function () {
   listen(
     this.geolocation_,
     'change:position',
-    /** @type {import("ol/events.js").ListenerFunction} */
+    /** @type {import('ol/events').ListenerFunction} */
     () => {
       this.setPosition_();
     }
@@ -313,7 +299,7 @@ Controller.prototype.untrack_ = function () {
   this.featureOverlay_.clear();
   this.follow_ = false;
   this.geolocation_.setTracking(false);
-  this.notification_.clear();
+  ngeoMessageNotification.clear();
 };
 
 Controller.prototype.setPosition_ = function () {
@@ -344,7 +330,7 @@ Controller.prototype.setPosition_ = function () {
 };
 
 /**
- * @param {Event|import("ol/events/Event.js").default} event Event.
+ * @param {Event|import('ol/events/Event').default} event Event.
  */
 Controller.prototype.handleViewChange_ = function (event) {
   if (this.follow_ && !this.viewChangedByMe_) {
@@ -394,9 +380,10 @@ Controller.prototype.autoRotateListener = function () {
 
 /**
  * Handle rotation.
+ *
  * @param {number} eventAlpha
  * @param {number} currentAlpha
- * @return {number}
+ * @returns {number}
  */
 Controller.prototype.handleRotate_ = function (eventAlpha, currentAlpha) {
   if (this.geolocation_.getTracking() && Math.abs(eventAlpha - currentAlpha) > 0.2) {

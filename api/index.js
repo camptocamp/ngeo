@@ -1,5 +1,5 @@
-import {dynamicUrl} from './src/constants.js';
-import Map from './src/Map.js';
+import {dynamicUrl} from './src/constants';
+import Map from './src/Map';
 
 dynamicUrl.dynamicUrl = 'https://geomapfish-demo-2-7.camptocamp.com/dynamic.json?interface=api';
 

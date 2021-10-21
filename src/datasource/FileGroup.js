@@ -19,16 +19,17 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import ngeoDatasourceFile from 'ngeo/datasource/File.js';
-import ngeoDatasourceGroup from 'ngeo/datasource/Group.js';
+import ngeoDatasourceFile from 'ngeo/datasource/File';
+import ngeoDatasourceGroup from 'ngeo/datasource/Group';
 
 /**
  * The options required to create a `FileGroup`.
  *
  * extends GroupOptions
+ *
  * @typedef {Object} FileGroupOptions
  * @property {angular.auto.IInjectorService} injector Angular main injector.
- * @property {import('ngeo/datasource/DataSource.js').default[]} dataSources (GroupOptions)
+ * @property {import('ngeo/datasource/DataSource').default[]} dataSources (GroupOptions)
  * @property {string} title (GroupOptions)
  */
 
@@ -59,6 +60,7 @@ export default class extends ngeoDatasourceGroup {
     /**
      * The functions to call to unregister the `watch` event on data sources
      * that are registered. Key is the id of the data source.
+     *
      * @type {Object<number, Function>}
      * @private
      */
@@ -66,7 +68,7 @@ export default class extends ngeoDatasourceGroup {
   }
 
   /**
-   * @param {import("ngeo/datasource/DataSource.js").default} dataSource Data source to add.
+   * @param {import('ngeo/datasource/DataSource').default} dataSource Data source to add.
    */
   addDataSource(dataSource) {
     super.addDataSource(dataSource);
@@ -77,7 +79,7 @@ export default class extends ngeoDatasourceGroup {
   }
 
   /**
-   * @param {import("ngeo/datasource/File.js").default} dataSource File data source to register.
+   * @param {import('ngeo/datasource/File').default} dataSource File data source to register.
    * @private
    */
   registerDataSource_(dataSource) {
@@ -88,7 +90,7 @@ export default class extends ngeoDatasourceGroup {
   }
 
   /**
-   * @param {import("ngeo/datasource/File.js").default} dataSource File data source.
+   * @param {import('ngeo/datasource/File').default} dataSource File data source.
    * @param {boolean|undefined} value Current visible property of the DS
    * @param {boolean|undefined} oldValue Old visible property of the DS
    * @private
@@ -100,7 +102,7 @@ export default class extends ngeoDatasourceGroup {
   }
 
   /**
-   * @param {import("ngeo/datasource/DataSource.js").default} dataSource Data source to remove.
+   * @param {import('ngeo/datasource/DataSource').default} dataSource Data source to remove.
    */
   removeDataSource(dataSource) {
     super.removeDataSource(dataSource);
@@ -114,7 +116,7 @@ export default class extends ngeoDatasourceGroup {
   }
 
   /**
-   * @param {import("ngeo/datasource/File.js").default} dataSource File data source to unregister.
+   * @param {import('ngeo/datasource/File').default} dataSource File data source to unregister.
    * @private
    */
   unregisterDataSource_(dataSource) {

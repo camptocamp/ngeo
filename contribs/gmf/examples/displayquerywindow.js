@@ -22,25 +22,25 @@
 import angular from 'angular';
 import './displayquerywindow.css';
 import './gmf-hidden.inc.css';
-import gmfDatasourceManager from 'gmf/datasource/Manager.js';
+import gmfDatasourceManager from 'gmf/datasource/Manager';
 
-import gmfLayertreeComponent from 'gmf/layertree/component.js';
+import gmfLayertreeComponent from 'gmf/layertree/component';
 
-import gmfMapComponent from 'gmf/map/component.js';
+import gmfMapComponent from 'gmf/map/component';
 
-import gmfQueryWindowComponent from 'gmf/query/windowComponent.js';
+import gmfQueryWindowComponent from 'gmf/query/windowComponent';
 
-import gmfThemeManager from 'gmf/theme/Manager.js';
-import gmfThemeThemes from 'gmf/theme/Themes.js';
-import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent.js';
-import EPSG2056 from 'ngeo/proj/EPSG_2056.js';
-import ngeoQueryComponent from 'ngeo/query/component.js';
-import olMap from 'ol/Map.js';
-import olView from 'ol/View.js';
-import olLayerTile from 'ol/layer/Tile.js';
-import olSourceOSM from 'ol/source/OSM.js';
-import ngeoMapModule from 'ngeo/map/module.js';
-import options from './options.js';
+import gmfThemeManager from 'gmf/theme/Manager';
+import gmfThemeThemes from 'gmf/theme/Themes';
+import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent';
+import EPSG2056 from 'ngeo/proj/EPSG_2056';
+import ngeoQueryComponent from 'ngeo/query/component';
+import olMap from 'ol/Map';
+import olView from 'ol/View';
+import olLayerTile from 'ol/layer/Tile';
+import olSourceOSM from 'ol/source/OSM';
+import ngeoMapModule from 'ngeo/map/module';
+import options from './options';
 
 /**
  * @type {angular.IModule}
@@ -76,13 +76,14 @@ myModule.component('appQueryresult', queryresultComponent);
 
 /**
  * Demo, NOT USED.
- * @param {import('ngeo/query/MapQuerent.js').QueryResult} ngeoQueryResult Query service.
+ *
+ * @param {import('ngeo/query/MapQuerent').QueryResult} ngeoQueryResult Query service.
  * @class
  * @ngInject
  */
 function QueryresultController(ngeoQueryResult) {
   /**
-   * @type {import('ngeo/query/MapQuerent.js').QueryResult}
+   * @type {import('ngeo/query/MapQuerent').QueryResult}
    */
   this.result = ngeoQueryResult;
 }
@@ -91,12 +92,12 @@ myModule.controller('AppQueryresultController', QueryresultController);
 
 /**
  * @class
- * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes The gmf themes service.
- * @param {import("gmf/datasource/Manager.js").DatasourceManager} gmfDataSourcesManager The gmf
+ * @param {import('gmf/theme/Themes').ThemesService} gmfThemes The gmf themes service.
+ * @param {import('gmf/datasource/Manager').DatasourceManager} gmfDataSourcesManager The gmf
  *     data sources manager service.
- * @param {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
+ * @param {import('ngeo/map/FeatureOverlayMgr').FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *   overlay manager service.
- * @param {import("gmf/theme/Manager.js").ThemeManagerService} gmfThemeManager gmf Theme Manager service.
+ * @param {import('gmf/theme/Manager').ThemeManagerService} gmfThemeManager gmf Theme Manager service.
  * @param {string} defaultTheme The default theme.
  * @ngInject
  */
@@ -110,7 +111,7 @@ function MainController(
   gmfThemes.loadThemes();
 
   /**
-   * @type {import("ol/Map.js").default}
+   * @type {import('ol/Map').default}
    */
   this.map = new olMap({
     layers: [
@@ -148,7 +149,7 @@ function MainController(
   this.themes = undefined;
 
   /**
-   * @type {import('gmf/themes.js').GmfTheme} The selected theme.
+   * @type {import('gmf/themes').GmfTheme} The selected theme.
    */
   this.selectedTheme = null;
 

@@ -20,21 +20,21 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import {listen, unlistenByKey} from 'ol/events.js';
-import olFeature from 'ol/Feature.js';
-import olOverlay from 'ol/Overlay.js';
-import olGeomLineString from 'ol/geom/LineString.js';
-import olGeomPoint from 'ol/geom/Point.js';
+import {listen, unlistenByKey} from 'ol/events';
+import olFeature from 'ol/Feature';
+import olOverlay from 'ol/Overlay';
+import olGeomLineString from 'ol/geom/LineString';
+import olGeomPoint from 'ol/geom/Point';
 
-import ngeoDownloadCsv from 'ngeo/download/Csv.js';
+import ngeoDownloadCsv from 'ngeo/download/Csv';
 
-import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr.js';
+import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr';
 
-import ngeoProfileElevationComponent from 'ngeo/profile/elevationComponent.js';
+import ngeoProfileElevationComponent from 'ngeo/profile/elevationComponent';
 
-import {buildStyle} from 'ngeo/options.js';
+import {buildStyle} from 'ngeo/options';
 
-import 'bootstrap/js/src/dropdown.js';
+import 'bootstrap/js/src/dropdown';
 
 /**
  * @typedef {Object} ProfileElement
@@ -53,8 +53,9 @@ import 'bootstrap/js/src/dropdown.js';
 /**
  * Information to display for a given point in the profile. The point is
  * typically given by the profile's hover.
+ *
  * @typedef {Object} ProfileHoverPointInformations
- * @property {import("ol/coordinate.js").Coordinate} [coordinate] Coordinate of the point.
+ * @property {import('ol/coordinate').Coordinate} [coordinate] Coordinate of the point.
  * @property {number} [distance] distance of the point on the line. Can be in meters or kilometers.
  * @property {Object<string, number>} [elevations] Elevations of the point (example:
  *    {aster: 556.5, srtm: 560}).
@@ -77,7 +78,7 @@ myModule.value(
   /**
    * @param {JQuery} $element Element.
    * @param {angular.IAttributes} $attrs Attributes.
-   * @return {string} Template.
+   * @returns {string} Template.
    */
   ($element, $attrs) => {
     const templateUrl = $attrs.gmfProfileTemplateurl;
@@ -100,7 +101,7 @@ myModule.run(
  * @param {JQuery} $element Element.
  * @param {angular.IAttributes} $attrs Attributes.
  * @param {function(JQuery, angular.IAttributes): string} gmfProfileTemplateUrl Template function.
- * @return {string} Template URL.
+ * @returns {string} Template URL.
  * @ngInject
  * @private
  * @hidden
@@ -128,17 +129,16 @@ function gmfProfileTemplateUrl($element, $attrs, gmfProfileTemplateUrl) {
  *
  *
  * @htmlAttribute {boolean} gmf-profile-active Active the component.
- * @htmlAttribute {import("ol/geom/LineString.js").default} gmf-profile-line The linestring geometry
+ * @htmlAttribute {import('ol/geom/LineString').default} gmf-profile-line The linestring geometry
  *     to use to draw the profile.
- * @htmlAttribute {import("ol/Map.js").default?} gmf-profile-map An optional map.
- * @htmlAttribute {import("ol/style/Style.js").default?} gmf-profile-hoverpointstyle Optional style
+ * @htmlAttribute {import('ol/Map').default?} gmf-profile-map An optional map.
+ * @htmlAttribute {import('ol/style/Style').default?} gmf-profile-hoverpointstyle Optional style
  *     for the 'on Hover' point on the line.
  * @htmlAttribute {Object<string, *>?} gmf-profile-options Optional options
- *     object like {@link import('ngeo/profile/elevationComponent.js').ProfileOptions} but without any
+ *     object like {@link import('ngeo/profile/elevationComponent').ProfileOptions} but without any
  *     mandatory value. Will be passed to the ngeo profile component. Providing
  *     'linesConfiguration', 'distanceExtractor', hoverCallback, outCallback
  *     or i18n will override native gmf profile values.
- *
  * @ngdoc component
  * @ngname gmfProfile
  */
@@ -161,12 +161,12 @@ myModule.component('gmfProfile', profileComponent);
  * @param {JQuery} $element Element.
  * @param {angular.IFilterService} $filter Angular filter
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
- * @param {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr Feature overlay
+ * @param {import('ngeo/map/FeatureOverlayMgr').FeatureOverlayMgr} ngeoFeatureOverlayMgr Feature overlay
  *     manager.
  * @param {string} gmfProfileJsonUrl URL of GMF service JSON profile.
- * @param {import("ngeo/download/Csv.js").DownloadCsvService} ngeoCsvDownload CSV Download service.
- * @param {import('gmf/options.js').gmfProfileOptions} gmfProfileOptions The options.
- * @param {import('ngeo/options.js').ngeoProfileOptions} ngeoProfileOptions The options.
+ * @param {import('ngeo/download/Csv').DownloadCsvService} ngeoCsvDownload CSV Download service.
+ * @param {import('gmf/options').gmfProfileOptions} gmfProfileOptions The options.
+ * @param {import('ngeo/options').ngeoProfileOptions} ngeoProfileOptions The options.
  * @class
  * @hidden
  * @ngInject
@@ -214,7 +214,7 @@ export function ProfileController(
   this.gettextCatalog_ = gettextCatalog;
 
   /**
-   * @type {import("ngeo/map/FeatureOverlay.js").FeatureOverlay}
+   * @type {import('ngeo/map/FeatureOverlay').FeatureOverlay}
    */
   this.pointHoverOverlay_ = ngeoFeatureOverlayMgr.getFeatureOverlay();
 
@@ -224,12 +224,12 @@ export function ProfileController(
   this.gmfProfileJsonUrl_ = gmfProfileJsonUrl;
 
   /**
-   * @type {import("ngeo/download/Csv.js").DownloadCsvService}
+   * @type {import('ngeo/download/Csv').DownloadCsvService}
    */
   this.ngeoCsvDownload_ = ngeoCsvDownload;
 
   /**
-   * @type {?import("ol/Map.js").default}
+   * @type {?import('ol/Map').default}
    */
   this.map_ = null;
 
@@ -244,7 +244,7 @@ export function ProfileController(
   this.nbPoints_ = 100;
 
   /**
-   * @type {?import("ol/geom/LineString.js").default}
+   * @type {?import('ol/geom/LineString').default}
    */
   this.line = null;
 
@@ -262,30 +262,33 @@ export function ProfileController(
 
   /**
    * Distance to highlight on the profile. (Property used in ngeo.Profile.)
+   *
    * @type {number}
    */
   this.profileHighlight = -1;
 
   /**
    * Overlay to show the measurement.
-   * @type {?import("ol/Overlay.js").default}
+   *
+   * @type {?import('ol/Overlay').default}
    */
   this.measureTooltip_ = null;
 
   /**
    * The measure tooltip element.
+   *
    * @type {?HTMLElement}
    */
   this.measureTooltipElement_ = null;
 
   /**
-   * @type {olFeature<import("ol/geom/Geometry.js").default>}
+   * @type {olFeature<import('ol/geom/Geometry').default>}
    */
   this.snappedPoint_ = new olFeature();
   this.pointHoverOverlay_.addFeature(this.snappedPoint_);
 
   /**
-   * @type {import('ngeo/profile/elevationComponent.js').I18n}
+   * @type {import('ngeo/profile/elevationComponent').I18n}
    */
   this.profileLabels_ = {
     xAxis: gettextCatalog.getString('Distance'),
@@ -293,7 +296,7 @@ export function ProfileController(
   };
 
   /**
-   * @type {?import('ngeo/profile/elevationComponent.js').ProfileOptions<ProfileElement>}
+   * @type {?import('ngeo/profile/elevationComponent').ProfileOptions<ProfileElement>}
    */
   this.profileOptions = null;
 
@@ -303,7 +306,7 @@ export function ProfileController(
   this.active = false;
 
   /**
-   * @type {?import("ol/events.js").EventsKey}
+   * @type {?import('ol/events').EventsKey}
    */
   this.pointerMoveKey_ = null;
 
@@ -318,7 +321,7 @@ export function ProfileController(
   this.isLoading = false;
 
   /**
-   * @type {function():import("ol/Map.js").default}
+   * @type {function():import('ol/Map').default}
    */
   this.getMapFn = () => null;
   this.getOptionsFn = () => ({});
@@ -367,7 +370,7 @@ ProfileController.prototype.$onInit = function () {
   }
 
   this.profileOptions =
-    /** @type {import('ngeo/profile/elevationComponent.js').ProfileOptions<ProfileElement>} */ ({
+    /** @type {import('ngeo/profile/elevationComponent').ProfileOptions<ProfileElement>} */ ({
       linesConfiguration: this.ngeoOptions.linesConfiguration,
       distanceExtractor: this.getDist_,
       hoverCallback: this.hoverCallback_.bind(this),
@@ -400,9 +403,9 @@ ProfileController.prototype.updateEventsListening_ = function () {
     this.pointerMoveKey_ = listen(
       this.map_,
       'pointermove',
-      /** @type {import('ol/events.js').ListenerFunction} */ (
+      /** @type {import('ol/events').ListenerFunction} */ (
         /**
-         * @param {import('ol/MapBrowserEvent.js').default<MouseEvent>} mapBrowserEvent
+         * @param {import('ol/MapBrowserEvent').default<MouseEvent>} mapBrowserEvent
          */
         (mapBrowserEvent) => {
           if (!this.map_) {
@@ -441,8 +444,9 @@ ProfileController.prototype.updateEventsListening_ = function () {
  * Return the distance between the beginning of the line and the given point.
  * The point must be on the line. If not, this function will return the total
  * length of the line.
- * @param {import("ol/coordinate.js").Coordinate} pointOnLine A point on the given line.
- * @return {number} A distance.
+ *
+ * @param {import('ol/coordinate').Coordinate} pointOnLine A point on the given line.
+ * @returns {number} A distance.
  */
 ProfileController.prototype.getDistanceOnALine_ = function (pointOnLine) {
   if (!this.line) {
@@ -514,7 +518,7 @@ ProfileController.prototype.outCallback_ = function () {
 };
 
 /**
- * @return {string} A text formatted to a tooltip.
+ * @returns {string} A text formatted to a tooltip.
  */
 ProfileController.prototype.getTooltipHTML_ = function () {
   const gettextCatalog = this.gettextCatalog_;
@@ -577,8 +581,9 @@ ProfileController.prototype.removeMeasureTooltip_ = function () {
 
 /**
  * Return the styler value of a ProfileLineConfiguration.
+ *
  * @param {string} layerName name of the elevation layer.
- * @return {object} The object representation of the style.
+ * @returns {object} The object representation of the style.
  */
 ProfileController.prototype.getStyle = function (layerName) {
   const lineConfiguration = this.ngeoOptions.linesConfiguration[layerName];
@@ -592,7 +597,8 @@ ProfileController.prototype.getStyle = function (layerName) {
 
 /**
  * Return a copy of the existing layer names.
- * @return {string[]} The names of layers.
+ *
+ * @returns {string[]} The names of layers.
  */
 ProfileController.prototype.getLayersNames = function () {
   return this.layersNames_.slice(0);
@@ -600,13 +606,14 @@ ProfileController.prototype.getLayersNames = function () {
 
 /**
  * @param {string} layerName name of the elevation layer.
- * @return {function(ProfileElement): number} Z extractor function.
+ * @returns {function(ProfileElement): number} Z extractor function.
  */
 ProfileController.prototype.getZFactory_ = function (layerName) {
   /**
    * Generic GMF extractor for the 'given' value in 'values' in profileData.
+   *
    * @param {ProfileElement} item The item.
-   * @return {number|null} The elevation or `null` if the value is not present in the data.
+   * @returns {number|null} The elevation or `null` if the value is not present in the data.
    * @private
    */
   const getZFn = function (item) {
@@ -620,8 +627,9 @@ ProfileController.prototype.getZFactory_ = function (layerName) {
 
 /**
  * Extractor for the 'dist' value in profileData.
+ *
  * @param {ProfileElement} item The item.
- * @return {number} The distance.
+ * @returns {number} The distance.
  */
 ProfileController.prototype.getDist_ = function (item) {
   if ('dist' in item) {
@@ -690,7 +698,7 @@ ProfileController.prototype.downloadCsv = function () {
     return;
   }
 
-  /** @type {import('ngeo/download/Csv.js').GridColumnDef[]} */
+  /** @type {import('ngeo/download/Csv').GridColumnDef[]} */
   const headers = [];
   let hasDistance = false;
   const firstPoint = this.profileData[0];

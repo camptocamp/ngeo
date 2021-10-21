@@ -26,15 +26,15 @@
 
 import './layertree.css';
 import angular from 'angular';
-import olMap from 'ol/Map.js';
+import olMap from 'ol/Map';
 
-import olView from 'ol/View.js';
-import olLayerTile from 'ol/layer/Tile.js';
-import olSourceOSM from 'ol/source/OSM.js';
-import olSourceStamen from 'ol/source/Stamen.js';
-import ngeoLayertreeModule from 'ngeo/layertree/module.js';
-import ngeoMapModule from 'ngeo/map/module.js';
-import ngeoMessagePopup from 'ngeo/message/Popup.js';
+import olView from 'ol/View';
+import olLayerTile from 'ol/layer/Tile';
+import olSourceOSM from 'ol/source/OSM';
+import olSourceStamen from 'ol/source/Stamen';
+import ngeoLayertreeModule from 'ngeo/layertree/module';
+import ngeoMapModule from 'ngeo/map/module';
+import ngeoMessagePopup from 'ngeo/message/Popup';
 
 /** @type {angular.IModule} **/
 const myModule = angular.module('app', [
@@ -82,9 +82,9 @@ myModule.component('appLayertree', layertreeComponent);
  * @class
  * @param {angular.IHttpService} $http Angular http service.
  * @param {angular.ISCEService} $sce Angular sce service.
- * @param {function(Object):import("ol/layer/Layer.js").default<import('ol/source/Source.js').default>} appGetLayer
+ * @param {function(Object):import('ol/layer/Layer').default<import('ol/source/Source').default>} appGetLayer
  *    Get layer service.
- * @param {import("ngeo/message/Popup.js").PopupFactory} ngeoCreatePopup Popup service.
+ * @param {import('ngeo/message/Popup').PopupFactory} ngeoCreatePopup Popup service.
  * @ngInject
  */
 function LayertreeController($http, $sce, appGetLayer, ngeoCreatePopup) {
@@ -108,12 +108,12 @@ function LayertreeController($http, $sce, appGetLayer, ngeoCreatePopup) {
   this.sce_ = $sce;
 
   /**
-   * @type {function(Object):import("ol/layer/Layer.js").default<import('ol/source/Source.js').default>}
+   * @type {function(Object):import('ol/layer/Layer').default<import('ol/source/Source').default>}
    */
   this.getLayer_ = appGetLayer;
 
   /**
-   * @type {import("ngeo/message/Popup.js").MessagePopup}
+   * @type {import('ngeo/message/Popup').MessagePopup}
    */
   this.infoPopup_ = ngeoCreatePopup();
 
@@ -127,8 +127,9 @@ function LayertreeController($http, $sce, appGetLayer, ngeoCreatePopup) {
  * Function called by the ngeo-layertree directives to create a layer
  * from a tree node. The function should return `null` if no layer should
  * be associated to the node (because it's not a leaf).
+ *
  * @param {Object} node Node object.
- * @return {import("ol/layer/Layer.js").default<import('ol/source/Source.js').default>} The layer for this
+ * @returns {import('ol/layer/Layer').default<import('ol/source/Source').default>} The layer for this
  *    node.
  */
 LayertreeController.prototype.getLayer = function (node) {
@@ -136,8 +137,8 @@ LayertreeController.prototype.getLayer = function (node) {
 };
 
 /**
- * @param {import('gmf/themes.js').GmfLayer} node Tree node.
- * @param {import("ol/layer/Layer.js").default<import('ol/source/Source.js').default>} layer Layer.
+ * @param {import('gmf/themes').GmfLayer} node Tree node.
+ * @param {import('ol/layer/Layer').default<import('ol/source/Source').default>} layer Layer.
  */
 LayertreeController.prototype.onButtonClick = function (node, layer) {
   const layerType = node.layerType;
@@ -163,18 +164,18 @@ myModule.controller('AppLayertreeController', LayertreeController);
  * the ngeoLayertree directive for creating layers from tree nodes. The
  * function returns `null` when no layer should be created for the node.
  *
- * @param {import('gmf/themes.js').GmfLayer} node Layer tree node.
- * @return {import("ol/layer/Layer.js").default} Layer.
+ * @param {import('gmf/themes').GmfLayer} node Layer tree node.
+ * @returns {import('ol/layer/Layer').default} Layer.
  */
 const getLayer = (function () {
   /**
-   * @type {Object<string, import("ol/layer/Layer.js").default<import('ol/source/Source.js').default>>}
+   * @type {Object<string, import('ol/layer/Layer').default<import('ol/source/Source').default>>}
    */
   const layerCache = {};
   return (
     /**
-     * @param {import('gmf/themes.js').GmfLayer} node Tree node.
-     * @return {?import("ol/layer/Layer.js").default<import('ol/source/Source.js').default>} Layer.
+     * @param {import('gmf/themes').GmfLayer} node Tree node.
+     * @returns {?import('ol/layer/Layer').default<import('ol/source/Source').default>} Layer.
      */
     function (node) {
       if (!('layerType' in node)) {
@@ -222,12 +223,13 @@ myModule.value('appGetLayer', getLayer);
 
 /**
  * The application's main directive.
+ *
  * @class
  * @ngInject
  */
 function MainController() {
   /**
-   * @type {import("ol/Map.js").default}
+   * @type {import('ol/Map').default}
    */
   this.map = new olMap({
     layers: [

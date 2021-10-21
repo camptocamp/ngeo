@@ -54,8 +54,8 @@ module.exports = function (config) {
       require.resolve('@babel/preset-env'),
       {
         targets: {
-          // See browser list on: https://browserl.ist/
-          browsers: ['> 0.5% in CH', '> 0.5% in FR', 'Firefox ESR', 'ie 11'],
+          // see: npx browserslist '> 0.5% in CH or > 0.5% in FR or Firefox ESR'
+          browsers: ['> 0.5% in CH', '> 0.5% in FR', 'Firefox ESR'],
         },
         modules: false,
         loose: true,
@@ -69,7 +69,46 @@ module.exports = function (config) {
     use: {
       loader: 'expose-loader',
       options: {
-        exposes: ['Bloodhound'],
+        exposes: 'Bloodhound',
+      },
+    },
+  };
+
+  const configExpose = {
+    test: path.resolve(__dirname, '../src/store/config.ts'),
+    use: {
+      loader: 'expose-loader',
+      options: {
+        exposes: {
+          globalName: 'gmf.config',
+          moduleLocalName: 'default',
+        },
+      },
+    },
+  };
+
+  const mapExpose = {
+    test: path.resolve(__dirname, '../src/store/map.ts'),
+    use: {
+      loader: 'expose-loader',
+      options: {
+        exposes: {
+          globalName: 'gmf.map',
+          moduleLocalName: 'default',
+        },
+      },
+    },
+  };
+
+  const userExpose = {
+    test: path.resolve(__dirname, '../src/store/user.ts'),
+    use: {
+      loader: 'expose-loader',
+      options: {
+        exposes: {
+          globalName: 'gmf.user',
+          moduleLocalName: 'default',
+        },
       },
     },
   };
@@ -98,6 +137,10 @@ module.exports = function (config) {
     },
   };
 
+  /**
+   * @param firsts
+   * @param lasts
+   */
   function get_comp(firsts, lasts) {
     return (f1, f2) => {
       for (const pattern of firsts) {
@@ -120,6 +163,12 @@ module.exports = function (config) {
     };
   }
 
+  // Collect every ts(x) files.
+  const tsRule = {
+    test: /\.tsx?$/,
+    use: 'ts-loader',
+    exclude: /node_modules/,
+  };
   const files = {};
   const ngeoRule = {
     // Collect every .js file in ngeo/src/, ngeo/api/ and ngeo/contrib/.
@@ -159,11 +208,6 @@ module.exports = function (config) {
         babelrc: false,
         comments: false,
         presets: babelPresets,
-        plugins: [
-          require.resolve('@babel/plugin-syntax-object-rest-spread'),
-          require.resolve('@babel/plugin-transform-spread'),
-          require.resolve('@babel/plugin-proposal-class-properties'),
-        ],
       },
     },
   };
@@ -176,9 +220,21 @@ module.exports = function (config) {
       // tempfile: '/tmp/t.scss',
       blacklistedChunks: ['commons'],
       filesOrder: (chunk, chunksFiles) => {
-        const files = chunksFiles.commons
+        let files = chunksFiles.commons
           ? chunksFiles[chunk.name].concat(chunksFiles.commons)
           : chunksFiles[chunk.name];
+        files = files.filter((file) => {
+          if (file.endsWith('node_modules/@fortawesome/fontawesome-free/css/all.min.css')) {
+            return false;
+          }
+          if (file.endsWith('src/bootstrap-custom.css')) {
+            return false;
+          }
+          if (file.endsWith('contribs/gmf/src/css/reset.css')) {
+            return false;
+          }
+          return true;
+        });
         files.sort(
           get_comp(
             config.fist_scss || [
@@ -236,11 +292,23 @@ module.exports = function (config) {
       path: path.resolve(__dirname, '../dist/'),
     },
     module: {
-      rules: [typeaheadRule, cssRule, sassRule, htmlRule, ngeoRule, otherRule],
+      rules: [
+        typeaheadRule,
+        configExpose,
+        mapExpose,
+        userExpose,
+        cssRule,
+        sassRule,
+        htmlRule,
+        tsRule,
+        ngeoRule,
+        otherRule,
+      ],
     },
     plugins: plugins,
     resolve: {
       modules: ['../node_modules', '../node_modules/d3/node_modules'],
+      extensions: ['.ts', '.tsx', '.js'],
       mainFields: ['geoblocks_src', 'module', 'jsnext:main', 'main'],
       alias: {
         'ngeo/test': path.resolve(__dirname, '../test/spec'),
@@ -254,6 +322,8 @@ module.exports = function (config) {
         'jquery-ui/datepicker': 'jquery-ui/ui/widgets/datepicker', // For angular-ui-date
         'mapillary-js/src/Mapillary': 'mapillary-js/dist/mapillary.min.js',
         '@sentry/integrations': '@sentry/integrations/dist/angular.js',
+        // required to bake it working with types
+        'typeahead': 'corejs-typeahead',
       },
     },
     optimization: {

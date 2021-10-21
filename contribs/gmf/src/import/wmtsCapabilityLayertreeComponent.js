@@ -21,11 +21,11 @@
 
 import angular from 'angular';
 
-import gmfDatasourceExternalDataSourcesManager from 'gmf/datasource/ExternalDataSourcesManager.js';
+import gmfDatasourceExternalDataSourcesManager from 'gmf/datasource/ExternalDataSourcesManager';
 
-import ngeoMessagePopup from 'ngeo/message/Popup.js';
+import ngeoMessagePopup from 'ngeo/message/Popup';
 
-import {getUid as olUtilGetUid} from 'ol/util.js';
+import {getUid as olUtilGetUid} from 'ol/util';
 
 /**
  * @type {angular.IModule}
@@ -54,7 +54,7 @@ myModule.value(
   'gmfWmtscapabilitylayertreTemplateUrl',
   /**
    * @param {angular.IAttributes} $attrs Attributes.
-   * @return {string} The template url.
+   * @returns {string} The template url.
    */
   ($attrs) => {
     const templateUrl = $attrs.gmfWmtscapabilitylayertreTemplateUrl;
@@ -65,7 +65,7 @@ myModule.value(
 /**
  * @param {angular.IAttributes} $attrs Attributes.
  * @param {function(angular.IAttributes): string} gmfWmtscapabilitylayertreTemplateUrl Template function.
- * @return {string} Template URL.
+ * @returns {string} Template URL.
  * @ngInject
  * @private
  * @hidden
@@ -79,7 +79,7 @@ function gmfWmtscapabilitylayertreTemplateUrl($attrs, gmfWmtscapabilitylayertreT
  */
 export class Controller {
   /**
-   * @param {import("gmf/datasource/ExternalDataSourcesManager.js").ExternalDatSourcesManager} gmfExternalDataSourcesManager
+   * @param {import('gmf/datasource/ExternalDataSourcesManager').ExternalDatSourcesManager} gmfExternalDataSourcesManager
    *     GMF service responsible of managing external data sources.
    * @ngInject
    * @ngdoc controller
@@ -90,12 +90,14 @@ export class Controller {
 
     /**
      * WMS Capabilities definition
+     *
      * @type {Object}
      */
     this.capabilities = {};
 
     /**
      * List of WMTS Capability Layer objects.
+     *
      * @type {Object[]}
      */
     this.layers = [];
@@ -103,6 +105,7 @@ export class Controller {
     /**
      * The original WMTS GetCapabilities url that was used to fetch the
      * capability layers.
+     *
      * @type {?string}
      */
     this.url = null;
@@ -110,7 +113,7 @@ export class Controller {
     // Injected properties
 
     /**
-     * @type {import("gmf/datasource/ExternalDataSourcesManager.js").ExternalDatSourcesManager}
+     * @type {import('gmf/datasource/ExternalDataSourcesManager').ExternalDatSourcesManager}
      * @private
      */
     this.gmfExternalDataSourcesManager_ = gmfExternalDataSourcesManager;
@@ -129,7 +132,7 @@ export class Controller {
 
   /**
    * @param {unknown} layer WMTS Capability Layer object
-   * @return {string} Unique id for the Capability Layer.
+   * @returns {string} Unique id for the Capability Layer.
    */
   getUid(layer) {
     return olUtilGetUid(layer);

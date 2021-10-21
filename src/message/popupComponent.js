@@ -33,7 +33,7 @@ myModule.value(
   /**
    * @param {JQuery} element Element.
    * @param {angular.IAttributes} attrs Attributes.
-   * @return {string} Template URL.
+   * @returns {string} Template URL.
    */
   (element, attrs) => {
     const templateUrl = attrs['ngeoPopupTemplateurl'];
@@ -68,7 +68,7 @@ myModule.run(
  *   Properties like 'content', 'title' or 'open' come from the parent scope.
  *
  * @param {string} ngeoPopupTemplateUrl URL to popup template.
- * @return {angular.IDirective} Directive Definition Object.
+ * @returns {angular.IDirective} Directive Definition Object.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoPopup

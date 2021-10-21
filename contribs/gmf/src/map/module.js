@@ -20,8 +20,8 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import gmfMapComponent from 'gmf/map/component.js';
-import gmfMapMousepositionComponent from 'gmf/map/mousepositionComponent.js';
+import gmfMapComponent from 'gmf/map/component';
+import gmfMapMousepositionComponent from 'gmf/map/mousepositionComponent';
 
 /**
  * @type {angular.IModule}

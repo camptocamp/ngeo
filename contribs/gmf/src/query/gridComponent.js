@@ -21,29 +21,30 @@
 
 import angular from 'angular';
 
-import ngeoDownloadCsv from 'ngeo/download/Csv.js';
+import ngeoDownloadCsv from 'ngeo/download/Csv';
 
-import ngeoDownloadService from 'ngeo/download/service.js';
+import ngeoDownloadService from 'ngeo/download/service';
 
-import ngeoGridComponent from 'ngeo/grid/component.js';
+import ngeoGridComponent from 'ngeo/grid/component';
 
-import ngeoGridConfig, {getRowUid} from 'ngeo/grid/Config.js';
-import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr.js';
+import ngeoGridConfig, {getRowUid} from 'ngeo/grid/Config';
+import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr';
 
-import ngeoQueryMapQuerent from 'ngeo/query/MapQuerent.js';
+import ngeoQueryMapQuerent from 'ngeo/query/MapQuerent';
 
-import olCollection from 'ol/Collection.js';
-import * as olExtent from 'ol/extent.js';
-import olMap from 'ol/Map.js';
-import {buildStyle} from 'ngeo/options.js';
+import olCollection from 'ol/Collection';
+import * as olExtent from 'ol/extent';
+import olMap from 'ol/Map';
+import {buildStyle} from 'ngeo/options';
 
-import 'bootstrap/js/src/dropdown.js';
+import 'bootstrap/js/src/dropdown';
 
 /**
  * Configuration for a grid tab.
+ *
  * @typedef {Object} GridSource
- * @property {import("ngeo/grid/Config.js").default} [configuration] Configuration used to initialize a grid.
- * @property {import('ngeo/statemanager/WfsPermalink.js').QueryResultSource} source Results of the query
+ * @property {import('ngeo/grid/Config').default} [configuration] Configuration used to initialize a grid.
+ * @property {import('ngeo/statemanager/WfsPermalink').QueryResultSource} source Results of the query
  *    source.
  */
 
@@ -64,7 +65,7 @@ myModule.value(
   /**
    * @param {JQuery} $element Element.
    * @param {angular.IAttributes} $attrs Attributes.
-   * @return {string} Template URL.
+   * @returns {string} Template URL.
    */
   ($element, $attrs) => {
     const templateUrl = $attrs.gmfDisplayquerygridTemplateurl;
@@ -87,7 +88,7 @@ myModule.run(
  * @param {JQuery} $element Element.
  * @param {angular.IAttributes} $attrs Attributes.
  * @param {function(JQuery, angular.IAttributes): string} gmfDisplayquerygridTemplateUrl Template function.
- * @return {string} Template URL.
+ * @returns {string} Template URL.
  * @ngInject
  * @private
  * @hidden
@@ -97,9 +98,9 @@ function gmfDisplayquerygridTemplateUrl($element, $attrs, gmfDisplayquerygridTem
 }
 
 /**
- * Provides a component to display results of the {@link import("ngeo/queryResult.js").default} in a
+ * Provides a component to display results of the {@link import('ngeo/queryResult').default} in a
  * grid and shows related features on the map using
- * the {@link import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr}.
+ * the {@link import('ngeo/map/FeatureOverlayMgr').FeatureOverlayMgr}.
  *
  * You can override the default component's template by setting the
  * value `gmfDisplayquerygridTemplateUrl`.
@@ -119,8 +120,7 @@ function gmfDisplayquerygridTemplateUrl($element, $attrs, gmfDisplayquerygridTem
  *      <gmf-displayquerygrid gmf-displayquerygrid-map="ctrl.map"></gmf-displayquerygrid>
  *
  * @htmlAttribute {boolean} gmf-displayquerygrid-active The active state of the component.
- * @htmlAttribute {import("ol/Map.js").default} gmf-displayquerygrid-map The map.
- *
+ * @htmlAttribute {import('ol/Map').default} gmf-displayquerygrid-map The map.
  * @ngdoc component
  * @ngname gmfDisplayquerygrid
  */
@@ -139,16 +139,16 @@ myModule.component('gmfDisplayquerygrid', queryGridComponent);
  * Controller for the query grid.
  *
  * @param {angular.IScope} $scope Angular scope.
- * @param {import('ngeo/query/MapQuerent.js').QueryResult} ngeoQueryResult ngeo query result.
- * @param {import("ngeo/query/MapQuerent.js").MapQuerent} ngeoMapQuerent ngeo map querent service.
- * @param {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
+ * @param {import('ngeo/query/MapQuerent').QueryResult} ngeoQueryResult ngeo query result.
+ * @param {import('ngeo/query/MapQuerent').MapQuerent} ngeoMapQuerent ngeo map querent service.
+ * @param {import('ngeo/map/FeatureOverlayMgr').FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
- * @param {import("ngeo/download/Csv.js").DownloadCsvService} ngeoCsvDownload CSV download service.
- * @param {import('ngeo/options.js').ngeoQueryOptions} ngeoQueryOptions The options.
- * @param {import('gmf/options.js').gmfCsvFilename} gmfCsvFilename The CSV file name.
+ * @param {import('ngeo/download/Csv').DownloadCsvService} ngeoCsvDownload CSV download service.
+ * @param {import('ngeo/options').ngeoQueryOptions} ngeoQueryOptions The options.
+ * @param {import('gmf/options').gmfCsvFilename} gmfCsvFilename The CSV file name.
  * @param {JQuery} $element Element.
- * @param {import('gmf/options.js').gmfDisplayQueryGridOptions} gmfDisplayQueryGridOptions The options.
+ * @param {import('gmf/options').gmfDisplayQueryGridOptions} gmfDisplayQueryGridOptions The options.
  * @class
  * @hidden
  * @ngInject
@@ -168,7 +168,7 @@ export function QueryGridController(
   gmfDisplayQueryGridOptions
 ) {
   /**
-   * @type {import('gmf/options.js').gmfDisplayQueryGridOptions}
+   * @type {import('gmf/options').gmfDisplayQueryGridOptions}
    */
   this.options = gmfDisplayQueryGridOptions;
 
@@ -183,17 +183,17 @@ export function QueryGridController(
   this.$timeout_ = $timeout;
 
   /**
-   * @type {import('ngeo/query/MapQuerent.js').QueryResult}
+   * @type {import('ngeo/query/MapQuerent').QueryResult}
    */
   this.ngeoQueryResult = ngeoQueryResult;
 
   /**
-   * @type {import("ngeo/query/MapQuerent.js").MapQuerent}
+   * @type {import('ngeo/query/MapQuerent').MapQuerent}
    */
   this.ngeoMapQuerent_ = ngeoMapQuerent;
 
   /**
-   * @type {import("ngeo/download/Csv.js").DownloadCsvService}
+   * @type {import('ngeo/download/Csv').DownloadCsvService}
    */
   this.ngeoCsvDownload_ = ngeoCsvDownload;
 
@@ -224,12 +224,14 @@ export function QueryGridController(
 
   /**
    * IDs of the grid sources in the order they were loaded.
+   *
    * @type {string[]}
    */
   this.loadedGridSources = [];
 
   /**
    * The id of the currently shown query source.
+   *
    * @type {?string|number}
    */
   this.selectedTab = null;
@@ -237,46 +239,50 @@ export function QueryGridController(
   /**
    * A mapping between row uid and the corresponding feature for each
    * source.
-   * @type {Object<string, Object<string, import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>>}
+   *
+   * @type {Object<string, Object<string, import('ol/Feature').default<import('ol/geom/Geometry').default>>>}
    */
   this.featuresForSources_ = {};
 
   // Styles for displayed features (features) and selected features
   // (highlightFeatures_) (user can set both styles).
   /**
-   * @type {import("ol/Collection.js").default<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>}
+   * @type {import('ol/Collection').default<import('ol/Feature').default<import('ol/geom/Geometry').default>>}
    */
   this.features_ = new olCollection();
 
   /**
-   * @type {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr}
+   * @type {import('ngeo/map/FeatureOverlayMgr').FeatureOverlayMgr}
    */
   this.ngeoFeatureOverlayMgr_ = ngeoFeatureOverlayMgr;
 
   /**
-   * @type {import("ol/Collection.js").default<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>}
+   * @type {import('ol/Collection').default<import('ol/Feature').default<import('ol/geom/Geometry').default>>}
    */
   this.highlightFeatures_ = new olCollection();
 
   /**
    * Filename
-   * @type {import('gmf/options.js').gmfCsvFilename}
+   *
+   * @type {import('gmf/options').gmfCsvFilename}
    */
   this.filename_ = gmfCsvFilename;
 
   /**
-   * @type {?import("ol/Map.js").default}
+   * @type {?import('ol/Map').default}
    */
   this.map_ = null;
 
   /**
    * Sum over all tabs of the obtained results
+   *
    * @type {number}
    */
   this.sumOfFeatures = 0;
 
   /**
    * Sum over all tabs of the available results
+   *
    * @type {number}
    */
   this.sumOfAvailableResults = 0;
@@ -300,6 +306,7 @@ export function QueryGridController(
   /**
    * An unregister function returned from `$scope.$watchCollection` for
    * "on-select" changes (when rows are selected/unselected).
+   *
    * @type {?function(): void}
    */
   this.unregisterSelectWatcher_ = null;
@@ -340,7 +347,8 @@ QueryGridController.prototype.$onInit = function () {
 
 /**
  * Returns a list of grid sources in the order they were loaded.
- * @return {GridSource[]} Grid sources.
+ *
+ * @returns {GridSource[]} Grid sources.
  */
 QueryGridController.prototype.getGridSources = function () {
   return this.loadedGridSources.map((sourceLabel) => this.gridSources[sourceLabel]);
@@ -418,7 +426,7 @@ QueryGridController.prototype.updateData_ = function () {
 };
 
 /**
- * @return {boolean} If one of the source has too many results.
+ * @returns {boolean} If one of the source has too many results.
  */
 QueryGridController.prototype.hasOneWithTooManyResults_ = function () {
   return this.ngeoQueryResult.sources.some((source) => source.tooManyResults);
@@ -426,15 +434,16 @@ QueryGridController.prototype.hasOneWithTooManyResults_ = function () {
 
 /**
  * Returns the value with all symbols and spaces replaced by an underscore.
+ *
  * @param {string|number} value A value to escape.
- * @return {string|number} value An escaped value.
+ * @returns {string|number} value An escaped value.
  */
 QueryGridController.prototype.escapeValue = function (value) {
   // Work-around for Number.isInteger() when not always getting a number ...
   if (typeof value == 'number') {
     return value;
   } else {
-    const toEscape = /[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\ |]/g;
+    const toEscape = /[-[\]/{}()*+?.\\^$ |]/g;
     if (value.match(toEscape) !== null) {
       return value.replace(toEscape, '_');
     } else {
@@ -445,8 +454,9 @@ QueryGridController.prototype.escapeValue = function (value) {
 
 /**
  * Returns if the given grid source is selected?
+ *
  * @param {GridSource} gridSource Grid source.
- * @return {boolean} Is selected?
+ * @returns {boolean} Is selected?
  */
 QueryGridController.prototype.isSelected = function (gridSource) {
   return this.selectedTab === gridSource.source.label;
@@ -454,13 +464,14 @@ QueryGridController.prototype.isSelected = function (gridSource) {
 
 /**
  * Try to merge the mergeable sources.
- * @param {import('ngeo/statemanager/WfsPermalink.js').QueryResultSource[]} sources Sources.
- * @return {import('ngeo/statemanager/WfsPermalink.js').QueryResultSource[]} The merged sources.
+ *
+ * @param {import('ngeo/statemanager/WfsPermalink').QueryResultSource[]} sources Sources.
+ * @returns {import('ngeo/statemanager/WfsPermalink').QueryResultSource[]} The merged sources.
  */
 QueryGridController.prototype.getMergedSources_ = function (sources) {
   /** @type {import('ngeo/statemanager/WfsPermalink').QueryResultSource[]} */
   const allSources = [];
-  /** @type {Object<string, import('ngeo/statemanager/WfsPermalink.js').QueryResultSource>} */
+  /** @type {Object<string, import('ngeo/statemanager/WfsPermalink').QueryResultSource>} */
   const mergedSources = {};
 
   sources.forEach((source) => {
@@ -484,10 +495,11 @@ QueryGridController.prototype.getMergedSources_ = function (sources) {
  * Check if the given source should be merged. If so, an artificial source
  * that will contain the features of all mergeable sources is returned. If not,
  * `null` is returned.
- * @param {import('ngeo/statemanager/WfsPermalink.js').QueryResultSource} source Source.
- * @param {Object<string, import('ngeo/statemanager/WfsPermalink.js').QueryResultSource>} mergedSources
+ *
+ * @param {import('ngeo/statemanager/WfsPermalink').QueryResultSource} source Source.
+ * @param {Object<string, import('ngeo/statemanager/WfsPermalink').QueryResultSource>} mergedSources
  *    Merged sources.
- * @return {?import('ngeo/statemanager/WfsPermalink.js').QueryResultSource} A merged source of null if the
+ * @returns {?import('ngeo/statemanager/WfsPermalink').QueryResultSource} A merged source of null if the
  *    source should not be merged.
  */
 QueryGridController.prototype.getMergedSource_ = function (source, mergedSources) {
@@ -510,7 +522,7 @@ QueryGridController.prototype.getMergedSource_ = function (source, mergedSources
   /** @type {boolean} */
   let newRequest = true;
 
-  /** @type {import('ngeo/statemanager/WfsPermalink.js').QueryResultSource} */
+  /** @type {import('ngeo/statemanager/WfsPermalink').QueryResultSource} */
   let mergeSource;
   if (mergeSourceId in mergedSources) {
     mergeSource = mergedSources[mergeSourceId];
@@ -557,7 +569,8 @@ QueryGridController.prototype.getMergedSource_ = function (source, mergedSources
 
 /**
  * Collect all features in the queryResult object.
- * @param {import('ngeo/statemanager/WfsPermalink.js').QueryResultSource} source Result source.
+ *
+ * @param {import('ngeo/statemanager/WfsPermalink').QueryResultSource} source Result source.
  */
 QueryGridController.prototype.collectData_ = function (source) {
   const features = source.features;
@@ -565,7 +578,7 @@ QueryGridController.prototype.collectData_ = function (source) {
   const allProperties = [];
   /** @type {string[]} */
   const featureGeometriesNames = [];
-  /** @type {Object<string, import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>} */
+  /** @type {Object<string, import('ol/Feature').default<import('ol/geom/Geometry').default>>} */
   const featuresForSource = {};
   let properties, featureGeometryName;
   features.forEach((feature) => {
@@ -593,6 +606,7 @@ QueryGridController.prototype.collectData_ = function (source) {
 
 /**
  * Remove all unwanted columns.
+ *
  * @param {Object<string, string|number|boolean>[]} allProperties A row.
  * @param {string[]} featureGeometriesNames Geometry names.
  */
@@ -612,6 +626,7 @@ QueryGridController.prototype.cleanProperties_ = function (allProperties, featur
 
 /**
  * Remove columns that will be completely empty between each properties.
+ *
  * @param {Object<string, string|number|boolean>[]} allProperties A row.
  */
 QueryGridController.prototype.removeEmptyColumnsFn_ = function (allProperties) {
@@ -645,8 +660,8 @@ QueryGridController.prototype.removeEmptyColumnsFn_ = function (allProperties) {
 
 /**
  * @param {?Object<string, string|number|boolean>[]} data Grid rows.
- * @param {import('ngeo/statemanager/WfsPermalink.js').QueryResultSource} source Query source.
- * @return {boolean} Returns true if a grid was created.
+ * @param {import('ngeo/statemanager/WfsPermalink').QueryResultSource} source Query source.
+ * @returns {boolean} Returns true if a grid was created.
  */
 QueryGridController.prototype.makeGrid_ = function (data, source) {
   const sourceLabel = `${source.label}`;
@@ -671,7 +686,7 @@ QueryGridController.prototype.makeGrid_ = function (data, source) {
 
 /**
  * @param {Object<string, string|number|boolean>[]} data Grid rows.
- * @return {?import("ngeo/grid/Config.js").default} Grid config.
+ * @returns {?import('ngeo/grid/Config').default} Grid config.
  */
 QueryGridController.prototype.getGridConfiguration_ = function (data) {
   if (!data.length) {
@@ -683,11 +698,11 @@ QueryGridController.prototype.getGridConfiguration_ = function (data) {
   delete clone.ol_uid;
   const columns = Object.keys(clone);
 
-  /** @type {import('ngeo/download/Csv.js').GridColumnDef[]} */
+  /** @type {import('ngeo/download/Csv').GridColumnDef[]} */
   const columnDefs = [];
   columns.forEach((column) => {
     columnDefs.push(
-      /** @type {import('ngeo/download/Csv.js').GridColumnDef} */ ({
+      /** @type {import('ngeo/download/Csv').GridColumnDef} */ ({
         name: column,
       })
     );
@@ -703,7 +718,8 @@ QueryGridController.prototype.getGridConfiguration_ = function (data) {
 
 /**
  * Get the currently shown grid source.
- * @return {GridSource|null} Grid source.
+ *
+ * @returns {GridSource|null} Grid source.
  */
 QueryGridController.prototype.getActiveGridSource = function () {
   if (this.selectedTab === null) {
@@ -735,6 +751,7 @@ QueryGridController.prototype.clear = function () {
 
 /**
  * Select the tab for the given grid source.
+ *
  * @param {GridSource} gridSource Grid source.
  */
 QueryGridController.prototype.selectTab = function (gridSource) {
@@ -814,7 +831,8 @@ QueryGridController.prototype.updateFeatures_ = function (gridSource) {
 
 /**
  * Returns if a row of the currently active grid is selected?
- * @return {boolean} Is one selected?
+ *
+ * @returns {boolean} Is one selected?
  */
 QueryGridController.prototype.isOneSelected = function () {
   const source = this.getActiveGridSource();
@@ -827,7 +845,8 @@ QueryGridController.prototype.isOneSelected = function () {
 
 /**
  * Returns the number of selected rows of the currently active grid.
- * @return {number} The number of selected rows.
+ *
+ * @returns {number} The number of selected rows.
  */
 QueryGridController.prototype.getSelectedRowCount = function () {
   const source = this.getActiveGridSource();

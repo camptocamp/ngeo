@@ -20,10 +20,10 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import gmfThemeThemes, {getFlatNodes} from 'gmf/theme/Themes.js';
-import {WMSInfoFormat} from 'ngeo/datasource/OGC.js';
-import olFormatWMSGetFeatureInfo from 'ol/format/WMSGetFeatureInfo.js';
-import olSourceImageWMS from 'ol/source/ImageWMS.js';
+import gmfThemeThemes, {getFlatNodes} from 'gmf/theme/Themes';
+import {WMSInfoFormat} from 'ngeo/datasource/OGC';
+import olFormatWMSGetFeatureInfo from 'ol/format/WMSGetFeatureInfo';
+import olSourceImageWMS from 'ol/source/ImageWMS';
 
 /**
  * A service that collects all queryable layer nodes from all themes, stores
@@ -33,7 +33,7 @@ import olSourceImageWMS from 'ol/source/ImageWMS.js';
  *
  * @param {angular.IHttpService} $http Angular $http service.
  * @param {angular.IQService} $q Angular $q service.
- * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes The gmf themes service.
+ * @param {import('gmf/theme/Themes').ThemesService} gmfThemes The gmf themes service.
  * @class
  * @ngInject
  * @hidden
@@ -50,7 +50,7 @@ export function ObjectEditingQuery($http, $q, gmfThemes) {
   this.q_ = $q;
 
   /**
-   * @type {import("gmf/theme/Themes.js").ThemesService}
+   * @type {import('gmf/theme/Themes').ThemesService}
    */
   this.gmfThemes_ = gmfThemes;
 
@@ -61,7 +61,7 @@ export function ObjectEditingQuery($http, $q, gmfThemes) {
 }
 
 /**
- * @return {angular.IPromise<import('./toolsComponent').ObjectEditingQueryableLayerInfo[]>} Promise.
+ * @returns {angular.IPromise<import('./toolsComponent').ObjectEditingQueryableLayerInfo[]>} Promise.
  */
 ObjectEditingQuery.prototype.getQueryableLayersInfo = function () {
   if (!this.getQueryableLayerNodesDefered_) {
@@ -99,9 +99,9 @@ ObjectEditingQuery.prototype.getQueryableLayersInfo = function () {
  * A list of OGC servers is given in order to bind each queryable layer node
  * to its associated server and be able to build requests.
  *
- * @param {import('gmf/themes.js').GmfTheme[]} themes List of theme nodes.
- * @param {import('gmf/themes.js').GmfOgcServers} ogcServers List of ogc servers
- * @return {import('gmf/objectediting/toolsComponent.js').ObjectEditingQueryableLayerInfo[]} List of
+ * @param {import('gmf/themes').GmfTheme[]} themes List of theme nodes.
+ * @param {import('gmf/themes').GmfOgcServers} ogcServers List of ogc servers
+ * @returns {import('gmf/objectediting/toolsComponent').ObjectEditingQueryableLayerInfo[]} List of
  *     queryable layers information.
  * @private
  * @hidden
@@ -119,12 +119,12 @@ function getQueryableLayersInfoFromThemes(themes, ogcServers) {
         continue;
       }
 
-      /** @type {import('gmf/themes.js').GmfLayer[]} */
+      /** @type {import('gmf/themes').GmfLayer[]} */
       const nodes = [];
       getFlatNodes(group, nodes);
 
       for (let k = 0, kk = nodes.length; k < kk; k++) {
-        const nodeWMS = /** @type {import('gmf/themes.js').GmfLayerWMS} */ (/** @type {any} */ (nodes[k]));
+        const nodeWMS = /** @type {import('gmf/themes').GmfLayerWMS} */ (/** @type {any} */ (nodes[k]));
 
         if (nodeWMS.childLayers && nodeWMS.childLayers[0] && nodeWMS.childLayers[0].queryable) {
           queryableLayersInfo.push({
@@ -145,11 +145,11 @@ function getQueryableLayersInfoFromThemes(themes, ogcServers) {
  * specific map to fetch a single feature. If no feature is found, a `null`
  * value is returned.
  *
- * @param {import('gmf/objectediting/toolsComponent.js').ObjectEditingQueryableLayerInfo} layerInfo
+ * @param {import('gmf/objectediting/toolsComponent').ObjectEditingQueryableLayerInfo} layerInfo
  *    Queryable layer information.
- * @param {import("ol/coordinate.js").Coordinate} coordinate Coordinate.
- * @param {import("ol/Map.js").default} map Map.
- * @return {angular.IPromise<?import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>} Promise.
+ * @param {import('ol/coordinate').Coordinate} coordinate Coordinate.
+ * @param {import('ol/Map').default} map Map.
+ * @returns {angular.IPromise<?import('ol/Feature').default<import('ol/geom/Geometry').default>>} Promise.
  */
 ObjectEditingQuery.prototype.getFeatureInfo = function (layerInfo, coordinate, map) {
   const view = map.getView();
@@ -183,7 +183,7 @@ ObjectEditingQuery.prototype.getFeatureInfo = function (layerInfo, coordinate, m
   );
 
   return this.http_.get(url).then((response) => {
-    const features = /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>[]} */ (
+    const features = /** @type {import('ol/Feature').default<import('ol/geom/Geometry').default>[]} */ (
       format.readFeatures(response.data)
     );
     return features && features[0] ? features[0] : null;

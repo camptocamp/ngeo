@@ -20,13 +20,13 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import olMap from 'ol/Map.js';
-import olView from 'ol/View.js';
+import olMap from 'ol/Map';
+import olView from 'ol/View';
 
 describe('ngeo.map.scaleselector', () => {
   /** @type {JQuery<HTMLElement>} */
   let element;
-  /** @type {import('ol/Map.js').default} */
+  /** @type {import('ol/Map').default} */
   let map;
 
   beforeEach(() => {
@@ -62,6 +62,9 @@ describe('ngeo.map.scaleselector', () => {
     it('does not throw', () => {
       const scope = element.scope();
 
+      /**
+       *
+       */
       function test() {
         scope.$apply(() => {
           map.getView().setZoom(4);

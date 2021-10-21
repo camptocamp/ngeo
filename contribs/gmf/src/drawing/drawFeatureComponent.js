@@ -20,37 +20,37 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import gmfDrawingDrawFeatureOptionsComponent from 'gmf/drawing/drawFeatureOptionsComponent.js';
-import gmfDrawingFeatureStyleComponent from 'gmf/drawing/featureStyleComponent.js';
+import gmfDrawingDrawFeatureOptionsComponent from 'gmf/drawing/drawFeatureOptionsComponent';
+import gmfDrawingFeatureStyleComponent from 'gmf/drawing/featureStyleComponent';
 
-import ngeoGeometryType from 'ngeo/GeometryType.js';
-import ngeoMenu from 'ngeo/Menu.js';
+import ngeoGeometryType from 'ngeo/GeometryType';
+import ngeoMenu from 'ngeo/Menu';
 
-import ngeoEditingExportfeaturesComponent from 'ngeo/editing/exportfeaturesComponent.js';
+import ngeoEditingExportfeaturesComponent from 'ngeo/editing/exportfeaturesComponent';
 
-import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent.js';
+import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent';
 
-import ngeoDrawComponent from 'ngeo/draw/component.js';
+import ngeoDrawComponent from 'ngeo/draw/component';
 
-import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties.js';
-import ngeoInteractionModify from 'ngeo/interaction/Modify.js';
-import ngeoInteractionRotate from 'ngeo/interaction/Rotate.js';
-import ngeoInteractionTranslate from 'ngeo/interaction/Translate.js';
-import {interactionDecoration as ngeoMiscDecorateInteraction} from 'ngeo/misc/decorate.js';
-import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
-import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
-import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr.js';
-import {getUid as olUtilGetUid} from 'ol/util.js';
-import {listen, unlistenByKey} from 'ol/events.js';
-import olCollection from 'ol/Collection.js';
-import olStyleFill from 'ol/style/Fill.js';
-import olStyleStyle from 'ol/style/Style.js';
-import olStyleText from 'ol/style/Text.js';
-import {CollectionEvent} from 'ol/Collection.js';
-import MapBrowserEvent from 'ol/MapBrowserEvent.js';
-import Feature from 'ol/Feature.js';
+import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties';
+import ngeoInteractionModify from 'ngeo/interaction/Modify';
+import ngeoInteractionRotate from 'ngeo/interaction/Rotate';
+import ngeoInteractionTranslate from 'ngeo/interaction/Translate';
+import {interactionDecoration as ngeoMiscDecorateInteraction} from 'ngeo/misc/decorate';
+import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper';
+import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate';
+import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr';
+import {getUid as olUtilGetUid} from 'ol/util';
+import {listen, unlistenByKey} from 'ol/events';
+import olCollection from 'ol/Collection';
+import olStyleFill from 'ol/style/Fill';
+import olStyleStyle from 'ol/style/Style';
+import olStyleText from 'ol/style/Text';
+import {CollectionEvent} from 'ol/Collection';
+import MapBrowserEvent from 'ol/MapBrowserEvent';
+import Feature from 'ol/Feature';
 
-import 'bootstrap/js/src/dropdown.js';
+import 'bootstrap/js/src/dropdown';
 
 /**
  * @type {angular.IModule}
@@ -89,8 +89,8 @@ myModule.run(
  *
  * @htmlAttribute {boolean} gmf-drawfeature-active Whether the directive is
  *     active or not.
- * @htmlAttribute {import("ol/Map.js").default} gmf-drawfeature-map The map.
- * @return {angular.IDirective} The directive specs.
+ * @htmlAttribute {import('ol/Map').default} gmf-drawfeature-map The map.
+ * @returns {angular.IDirective} The directive specs.
  * @ngInject
  * @ngdoc directive
  * @ngname gmfDrawfeature
@@ -114,11 +114,11 @@ myModule.directive('gmfDrawfeature', drawinfDrawFeatureComponent);
  * @param {angular.IScope} $scope Angular scope.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
- * @param {import("gmf/editing/Snapping.js").EditingSnappingService} gmfSnapping The gmf snapping service.
- * @param {import("ngeo/misc/FeatureHelper.js").FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
- * @param {import("ol/Collection.js").default<Feature<import("ol/geom/Geometry.js").default>>} ngeoFeatures Collection
+ * @param {import('gmf/editing/Snapping').EditingSnappingService} gmfSnapping The gmf snapping service.
+ * @param {import('ngeo/misc/FeatureHelper').FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
+ * @param {import('ol/Collection').default<Feature<import('ol/geom/Geometry').default>>} ngeoFeatures Collection
  *    of features.
- * @param {import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate
+ * @param {import('ngeo/misc/ToolActivateMgr').ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate
  *    manager service.
  * @class
  * @hidden
@@ -136,7 +136,7 @@ export function Controller(
   ngeoToolActivateMgr
 ) {
   /**
-   * @type {?import("ol/Map.js").default}
+   * @type {?import('ol/Map').default}
    */
   this.map = null;
 
@@ -151,7 +151,7 @@ export function Controller(
   this.drawActive = false;
 
   /**
-   * @type {import("ngeo/misc/ToolActivate.js").default}
+   * @type {import('ngeo/misc/ToolActivate').default}
    */
   this.drawToolActivate = new ngeoMiscToolActivate(this, 'drawActive');
 
@@ -171,7 +171,7 @@ export function Controller(
   this.longPressTimeout_ = null;
 
   /**
-   * @type {import("ngeo/misc/ToolActivate.js").default}
+   * @type {import('ngeo/misc/ToolActivate').default}
    */
   this.mapSelectToolActivate = new ngeoMiscToolActivate(this, 'mapSelectActive');
 
@@ -186,42 +186,42 @@ export function Controller(
   this.timeout_ = $timeout;
 
   /**
-   * @type {import("gmf/editing/Snapping.js").EditingSnappingService}
+   * @type {import('gmf/editing/Snapping').EditingSnappingService}
    */
   this.gmfSnapping_ = gmfSnapping;
 
   /**
-   * @type {import("ngeo/misc/FeatureHelper.js").FeatureHelper}
+   * @type {import('ngeo/misc/FeatureHelper').FeatureHelper}
    */
   this.featureHelper_ = ngeoFeatureHelper;
 
   /**
-   * @type {import("ol/Collection.js").default<Feature<import("ol/geom/Geometry.js").default>>}
+   * @type {import('ol/Collection').default<Feature<import('ol/geom/Geometry').default>>}
    */
   this.features = ngeoFeatures;
 
   /**
-   * @type {import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr}
+   * @type {import('ngeo/misc/ToolActivateMgr').ToolActivateMgr}
    */
   this.ngeoToolActivateMgr_ = ngeoToolActivateMgr;
 
   /**
-   * @type {?Feature<import("ol/geom/Geometry.js").default>}
+   * @type {?Feature<import('ol/geom/Geometry').default>}
    */
   this.selectedFeature = null;
 
   /**
-   * @type {import("ol/Collection.js").default<Feature<import("ol/geom/Geometry.js").default>>}
+   * @type {import('ol/Collection').default<Feature<import('ol/geom/Geometry').default>>}
    */
   this.selectedFeatures = new olCollection();
 
   /**
-   * @type {import("ol/Collection.js").default<import('ol/interaction/Interaction.js').default>}
+   * @type {import('ol/Collection').default<import('ol/interaction/Interaction').default>}
    */
   this.interactions_ = new olCollection();
 
   /**
-   * @type {import("ngeo/interaction/Modify.js").default}
+   * @type {import('ngeo/interaction/Modify').default}
    */
   this.modify_ = new ngeoInteractionModify({
     features: this.selectedFeatures,
@@ -230,22 +230,22 @@ export function Controller(
   this.interactions_.push(this.modify_);
 
   /**
-   * @type {?import("ngeo/Menu.js").default}
+   * @type {?import('ngeo/Menu').default}
    */
   this.menu_ = null;
 
   /**
-   * @type {?import("ol/events.js").EventsKey}
+   * @type {?import('ol/events').EventsKey}
    */
   this.menuListenerKey_ = null;
 
   /**
-   * @type {import("ngeo/misc/ToolActivate.js").default}
+   * @type {import('ngeo/misc/ToolActivate').default}
    */
   this.modifyToolActivate = new ngeoMiscToolActivate(this.modify_, 'active');
 
   /**
-   * @type {import("ngeo/interaction/Translate.js").default}
+   * @type {import('ngeo/interaction/Translate').default}
    */
   this.translate_ = new ngeoInteractionTranslate({
     features: this.selectedFeatures,
@@ -262,7 +262,7 @@ export function Controller(
   this.interactions_.push(this.translate_);
 
   /**
-   * @type {import("ngeo/interaction/Rotate.js").default}
+   * @type {import('ngeo/interaction/Rotate').default}
    */
   this.rotate_ = new ngeoInteractionRotate({
     features: this.selectedFeatures,
@@ -281,27 +281,27 @@ export function Controller(
   this.initializeInteractions_();
 
   /**
-   * @type {import("ngeo/misc/ToolActivate.js").default}
+   * @type {import('ngeo/misc/ToolActivate').default}
    */
   this.rotateToolActivate = new ngeoMiscToolActivate(this.rotate_, 'active');
 
   /**
-   * @type {import("ngeo/misc/ToolActivate.js").default}
+   * @type {import('ngeo/misc/ToolActivate').default}
    */
   this.translateToolActivate = new ngeoMiscToolActivate(this.translate_, 'active');
 
   /**
-   * @type {import("ol/events.js").EventsKey[]}
+   * @type {import('ol/events').EventsKey[]}
    */
   this.listenerKeys_ = [];
 
   /**
-   * @type {import("ol/events.js").EventsKey[]}
+   * @type {import('ol/events').EventsKey[]}
    */
   this.mainListenerKeys_ = [];
 
   /**
-   * @type {import("ol/events.js").EventsKey[]}
+   * @type {import('ol/events').EventsKey[]}
    */
   this.mapListenerKeys_ = [];
 
@@ -309,6 +309,7 @@ export function Controller(
    * Flag used to determine whether the selection of a feature was made
    * from the selection of an item from the list or not (the map, contextual
    * menu, etc.)
+   *
    * @type {boolean}
    */
   this.listSelectionInProgress_ = false;
@@ -364,32 +365,32 @@ export function Controller(
   // using the uid set...
 
   /**
-   * @type {?import("ol/interaction/Draw.js").default}
+   * @type {?import('ol/interaction/Draw').default}
    */
   this.drawPoint = null;
 
   /**
-   * @type {?import("ngeo/interaction/MeasureLength.js").default}
+   * @type {?import('ngeo/interaction/MeasureLength').default}
    */
   this.measureLength = null;
 
   /**
-   * @type {?import("ngeo/interaction/MeasureArea.js").default}
+   * @type {?import('ngeo/interaction/MeasureArea').default}
    */
   this.measureArea = null;
 
   /**
-   * @type {?import("ngeo/interaction/MeasureAzimut.js").default}
+   * @type {?import('ngeo/interaction/MeasureAzimut').default}
    */
   this.measureAzimut = null;
 
   /**
-   * @type {?import("ol/interaction/Draw.js").default}
+   * @type {?import('ol/interaction/Draw').default}
    */
   this.drawRectangle = null;
 
   /**
-   * @type {?import("ol/interaction/Draw.js").default}
+   * @type {?import('ol/interaction/Draw').default}
    */
   this.drawText = null;
 }
@@ -417,6 +418,7 @@ Controller.prototype.$onDestroy = function () {
 
 /**
  * Close menu, if it exists.
+ *
  * @hidden
  */
 Controller.prototype.closeMenu_ = function () {
@@ -470,6 +472,7 @@ Controller.prototype.unregisterInteractions_ = function () {
 /**
  * Called when the active property of the this directive changes. Manage
  * the activation/deactivation accordingly (event management, etc.)
+ *
  * @param {boolean} active Whether the directive is active or not.
  */
 Controller.prototype.handleActiveChange_ = function (active) {
@@ -523,7 +526,8 @@ Controller.prototype.handleActiveChange_ = function (active) {
  * Method called when a selection occurs from the list, i.e. when an item in
  * the list of features is clicked. Called from the template, so no need to
  * update Angular's scope.
- * @param {Feature<import("ol/geom/Geometry.js").default>} feature Feature to select.
+ *
+ * @param {Feature<import('ol/geom/Geometry').default>} feature Feature to select.
  */
 Controller.prototype.selectFeatureFromList = function (feature) {
   this.listSelectionInProgress_ = true;
@@ -532,7 +536,7 @@ Controller.prototype.selectFeatureFromList = function (feature) {
 };
 
 /**
- * @return {Feature<import("ol/geom/Geometry.js").default>[]} Array.
+ * @returns {Feature<import('ol/geom/Geometry').default>[]} Array.
  */
 Controller.prototype.getFeaturesArray = function () {
   return this.features.getArray();
@@ -549,7 +553,7 @@ Controller.prototype.clearFeatures = function () {
 };
 
 /**
- * @param {Feature<import("ol/geom/Geometry.js").default>} feature The feature to remove from the selection.
+ * @param {Feature<import('ol/geom/Geometry').default>} feature The feature to remove from the selection.
  */
 Controller.prototype.removeFeature = function (feature) {
   const gettextCatalog = this.gettextCatalog_;
@@ -560,13 +564,13 @@ Controller.prototype.removeFeature = function (feature) {
 };
 
 /**
- * @param {Event|import('ol/events/Event.js').default} evt Event.
+ * @param {Event|import('ol/events/Event').default} evt Event.
  */
 Controller.prototype.handleFeaturesAdd_ = function (evt) {
   if (evt instanceof CollectionEvent) {
     // timeout to prevent double-click to zoom the map
     this.timeout_(() => {
-      this.selectedFeature = /** @type {Feature<import("ol/geom/Geometry.js").default>} */ (evt.element);
+      this.selectedFeature = /** @type {Feature<import('ol/geom/Geometry').default>} */ (evt.element);
       this.drawActive = false;
       this.scope_.$apply();
     });
@@ -574,7 +578,7 @@ Controller.prototype.handleFeaturesAdd_ = function (evt) {
 };
 
 /**
- * @param {Event|import('ol/events/Event.js').default} evt Event.
+ * @param {Event|import('ol/events/Event').default} evt Event.
  */
 Controller.prototype.handleFeaturesRemove_ = function (evt) {
   this.selectedFeature = null;
@@ -582,6 +586,7 @@ Controller.prototype.handleFeaturesRemove_ = function (evt) {
 
 /**
  * Called when the mapSelectActive property changes.
+ *
  * @param {boolean} active Whether the map select is active or not.
  */
 Controller.prototype.handleMapSelectActiveChange_ = function (active) {
@@ -606,7 +611,7 @@ Controller.prototype.handleMapSelectActiveChange_ = function (active) {
 };
 
 /**
- * @param {Event|import('ol/events/Event.js').default} evt Event.
+ * @param {Event|import('ol/events/Event').default} evt Event.
  */
 Controller.prototype.handleMapClick_ = function (evt) {
   if (evt instanceof MapBrowserEvent) {
@@ -646,7 +651,7 @@ Controller.prototype.handleMapClick_ = function (evt) {
 };
 
 /**
- * @param {Event|import('ol/events/Event.js').default} evt Event.
+ * @param {Event|import('ol/events/Event').default} evt Event.
  */
 Controller.prototype.handleMapTouchStart_ = function (evt) {
   this.longPressTimeout_ = window.setTimeout(() => {
@@ -655,7 +660,7 @@ Controller.prototype.handleMapTouchStart_ = function (evt) {
 };
 
 /**
- * @param {Event|import('ol/events/Event.js').default} evt Event.
+ * @param {Event|import('ol/events/Event').default} evt Event.
  */
 Controller.prototype.handleMapTouchEnd_ = function (evt) {
   if (!this.longPressTimeout_) {
@@ -665,7 +670,7 @@ Controller.prototype.handleMapTouchEnd_ = function (evt) {
 };
 
 /**
- * @param {Event|import('ol/events/Event.js').default} evt Event.
+ * @param {Event|import('ol/events/Event').default} evt Event.
  */
 Controller.prototype.handleMapContextMenu_ = function (evt) {
   if (evt instanceof UIEvent) {
@@ -676,7 +681,7 @@ Controller.prototype.handleMapContextMenu_ = function (evt) {
     const pixel = this.map.getEventPixel(evt);
     const coordinate = this.map.getCoordinateFromPixel(pixel);
 
-    let feature = /** @type {?import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>} */ (
+    let feature = /** @type {?import('ol/Feature').default<import('ol/geom/Geometry').default>} */ (
       this.map.forEachFeatureAtPixel(
         pixel,
         (feature) => {
@@ -773,10 +778,10 @@ Controller.prototype.handleMapContextMenu_ = function (evt) {
 /**
  * @param {?number[]} vertexInfo Vertex information, in case a
  *     vertex was clicked using the right button.
- * @param {Event|import('ol/events/Event.js').default} evt Event.
+ * @param {Event|import('ol/events/Event').default} evt Event.
  */
 Controller.prototype.handleMenuActionClick_ = function (vertexInfo, evt) {
-  const action = /** @type {import('ngeo/filter/ruleComponent.js').MenuEvent} */ (evt).detail.action;
+  const action = /** @type {import('ngeo/filter/ruleComponent').MenuEvent} */ (evt).detail.action;
   if (!this.selectedFeature) {
     throw new Error('Missing selectedFeature');
   }
@@ -809,7 +814,7 @@ Controller.prototype.handleMenuActionClick_ = function (vertexInfo, evt) {
 };
 
 /**
- * @param {Event|import('ol/events/Event.js').default} evt Event.
+ * @param {Event|import('ol/events/Event').default} evt Event.
  */
 Controller.prototype.handleTranslateEnd_ = function (evt) {
   this.translate_.setActive(false);
@@ -817,7 +822,7 @@ Controller.prototype.handleTranslateEnd_ = function (evt) {
 };
 
 /**
- * @param {Event|import('ol/events/Event.js').default} evt Event.
+ * @param {Event|import('ol/events/Event').default} evt Event.
  */
 Controller.prototype.handleRotateEnd_ = function (evt) {
   this.rotate_.setActive(false);
@@ -825,7 +830,7 @@ Controller.prototype.handleRotateEnd_ = function (evt) {
 };
 
 /**
- * @param {Event|import('ol/events/Event.js').default} evt Event.
+ * @param {Event|import('ol/events/Event').default} evt Event.
  */
 Controller.prototype.handleMapInteractionsAdd_ = function (evt) {
   if (!(evt instanceof CollectionEvent)) {
@@ -834,28 +839,28 @@ Controller.prototype.handleMapInteractionsAdd_ = function (evt) {
 
   // If the added interaction is a draw one registered with a unique
   // id, bind it to the according property.
-  const interaction = /** @type {import('ol/interaction/Interaction.js').default} */ (evt.element);
+  const interaction = /** @type {import('ol/interaction/Interaction').default} */ (evt.element);
   const drawFeatureUid = interaction.get('ngeo-interaction-draw-uid');
 
   switch (drawFeatureUid) {
     case `${this.ngeoDrawFeatureUid}-point`:
-      this.drawPoint = /** @type {import("ol/interaction/Draw.js").default} */ (interaction);
+      this.drawPoint = /** @type {import('ol/interaction/Draw').default} */ (interaction);
       break;
     case `${this.ngeoDrawFeatureUid}-length`:
-      this.measureLength = /** @type {import("ngeo/interaction/MeasureLength.js").default} */ (interaction);
+      this.measureLength = /** @type {import('ngeo/interaction/MeasureLength').default} */ (interaction);
       this.measureLength.spherical = this.featureHelper_.spherical;
       break;
     case `${this.ngeoDrawFeatureUid}-area`:
-      this.measureArea = /** @type {import("ngeo/interaction/MeasureArea.js").default} */ (interaction);
+      this.measureArea = /** @type {import('ngeo/interaction/MeasureArea').default} */ (interaction);
       break;
     case `${this.ngeoDrawFeatureUid}-azimut`:
-      this.measureAzimut = /** @type {import("ngeo/interaction/MeasureAzimut.js").default} */ (interaction);
+      this.measureAzimut = /** @type {import('ngeo/interaction/MeasureAzimut').default} */ (interaction);
       break;
     case `${this.ngeoDrawFeatureUid}-rectangle`:
-      this.drawRectangle = /** @type {import("ol/interaction/Draw.js").default} */ (interaction);
+      this.drawRectangle = /** @type {import('ol/interaction/Draw').default} */ (interaction);
       break;
     case `${this.ngeoDrawFeatureUid}-text`:
-      this.drawText = /** @type {import("ol/interaction/Draw.js").default} */ (interaction);
+      this.drawText = /** @type {import('ol/interaction/Draw').default} */ (interaction);
       break;
     default:
       break;

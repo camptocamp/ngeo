@@ -19,12 +19,12 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import ngeoOfflineComponent from 'ngeo/offline/component.js';
-import ngeoOfflineNetworkStatus from 'ngeo/offline/NetworkStatus.js';
-import ngeoOfflineServiceManager from 'ngeo/offline/ServiceManager.js';
-import downloader from 'ngeo/offline/Downloader.js';
-import restorer from 'ngeo/offline/Restorer.js';
-import mode from 'ngeo/offline/Mode.js';
+import ngeoOfflineComponent from 'ngeo/offline/component';
+import ngeoOfflineNetworkStatus from 'ngeo/offline/NetworkStatus';
+import ngeoOfflineServiceManager from 'ngeo/offline/ServiceManager';
+import downloader from 'ngeo/offline/Downloader';
+import restorer from 'ngeo/offline/Restorer';
+import mode from 'ngeo/offline/Mode';
 import angular from 'angular';
 
 /**

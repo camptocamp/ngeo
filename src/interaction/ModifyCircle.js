@@ -19,35 +19,36 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import ngeoCustomEvent from 'ngeo/CustomEvent.js';
-import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties.js';
-import {getDefaultModifyStyleFunction} from 'ngeo/interaction/common.js';
-import {getAzimut} from 'ngeo/interaction/MeasureAzimut.js';
-import {getUid as olUtilGetUid} from 'ol/util.js';
-import olFeature from 'ol/Feature.js';
-import olMapBrowserEvent from 'ol/MapBrowserEvent.js';
-import * as olCoordinate from 'ol/coordinate.js';
-import {listen} from 'ol/events.js';
-import * as olExtent from 'ol/extent.js';
-import olGeomCircle from 'ol/geom/Circle.js';
-import olGeomLineString from 'ol/geom/LineString.js';
-import olGeomPoint from 'ol/geom/Point.js';
-import Polygon, {fromCircle} from 'ol/geom/Polygon.js';
-import olInteractionPointer from 'ol/interaction/Pointer.js';
-import olLayerVector from 'ol/layer/Vector.js';
-import olSourceVector from 'ol/source/Vector.js';
-import olStructsRBush from 'ol/structs/RBush.js';
-import {CollectionEvent} from 'ol/Collection.js';
+import ngeoCustomEvent from 'ngeo/CustomEvent';
+import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties';
+import {getDefaultModifyStyleFunction} from 'ngeo/interaction/common';
+import {getAzimut} from 'ngeo/interaction/MeasureAzimut';
+import {getUid as olUtilGetUid} from 'ol/util';
+import olFeature from 'ol/Feature';
+import olMapBrowserEvent from 'ol/MapBrowserEvent';
+import * as olCoordinate from 'ol/coordinate';
+import {listen} from 'ol/events';
+import * as olExtent from 'ol/extent';
+import olGeomCircle from 'ol/geom/Circle';
+import olGeomLineString from 'ol/geom/LineString';
+import olGeomPoint from 'ol/geom/Point';
+import Polygon, {fromCircle} from 'ol/geom/Polygon';
+import olInteractionPointer from 'ol/interaction/Pointer';
+import olLayerVector from 'ol/layer/Vector';
+import olSourceVector from 'ol/source/Vector';
+import olStructsRBush from 'ol/structs/RBush';
+import {CollectionEvent} from 'ol/Collection';
 
 /**
  * Interaction for modifying feature geometries.
+ *
  * @hidden
  */
 export default class extends olInteractionPointer {
   /**
-   * @param {import('ol/interaction/Modify.js').Options} options Options.
+   * @param {import('ol/interaction/Modify').Options} options Options.
    * @param {number} [nbPoints]
-   * @fires import("ngeo/interaction/ModifyCircleEvent.js").default
+   * @fires import('ngeo/interaction/ModifyCircleEvent').default
    */
   constructor(options, nbPoints) {
     super();
@@ -60,13 +61,14 @@ export default class extends olInteractionPointer {
 
     /**
      * Editing vertex.
-     * @type {?olFeature<import("ol/geom/Geometry.js").default>}
+     *
+     * @type {?olFeature<import('ol/geom/Geometry').default>}
      * @private
      */
     this.vertexFeature_ = null;
 
     /**
-     * @type {import("ol/pixel.js").Pixel}
+     * @type {import('ol/pixel').Pixel}
      * @private
      */
     this.lastPixel_ = [0, 0];
@@ -79,7 +81,8 @@ export default class extends olInteractionPointer {
 
     /**
      * Segment RTree for each layer
-     * @type {import("ol/structs/RBush.js").default<import("ol/interaction/Modify.js").SegmentData>}
+     *
+     * @type {import('ol/structs/RBush').default<import('ol/interaction/Modify').SegmentData>}
      * @private
      */
     this.rBush_ = new olStructsRBush();
@@ -105,20 +108,22 @@ export default class extends olInteractionPointer {
     /**
      * Indicate whether the interaction is currently changing a feature's
      * coordinates.
+     *
      * @type {boolean}
      * @private
      */
     this.changingFeature_ = false;
 
     /**
-     * @type {[import("ol/interaction/Modify.js").SegmentData, number][]}
+     * @type {[import('ol/interaction/Modify').SegmentData, number][]}
      * @private
      */
     this.dragSegments_ = [];
 
     /**
      * Draw overlay where sketch features are drawn.
-     * @type {import("ol/layer/Vector.js").default<import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>>}
+     *
+     * @type {import('ol/layer/Vector').default<import('ol/source/Vector').default<import('ol/geom/Geometry').default>>}
      * @private
      */
     this.overlay_ = new olLayerVector({
@@ -132,7 +137,7 @@ export default class extends olInteractionPointer {
     });
 
     /**
-     * @type {import("ol/Collection.js").default<olFeature<import("ol/geom/Geometry.js").default>>}
+     * @type {import('ol/Collection').default<olFeature<import('ol/geom/Geometry').default>>}
      * @private
      */
     this.features_ = options.features;
@@ -143,7 +148,7 @@ export default class extends olInteractionPointer {
   }
 
   /**
-   * @param {olFeature<import("ol/geom/Geometry.js").default>} feature Feature.
+   * @param {olFeature<import('ol/geom/Geometry').default>} feature Feature.
    * @private
    */
   addFeature_(feature) {
@@ -152,7 +157,7 @@ export default class extends olInteractionPointer {
       throw new Error('Missing geometry');
     }
     if (geometry.getType() === 'Polygon' && !!feature.get(ngeoFormatFeatureProperties.IS_CIRCLE)) {
-      const geometry = /** @type {import("ol/geom/Polygon.js").default}*/ (feature.getGeometry());
+      const geometry = /** @type {import('ol/geom/Polygon').default}*/ (feature.getGeometry());
       this.writeCircleGeometry_(feature, geometry);
 
       const map = this.getMap();
@@ -163,7 +168,7 @@ export default class extends olInteractionPointer {
   }
 
   /**
-   * @param {import("ol/MapBrowserEvent.js").default<unknown>} evt MapBrowserEvent
+   * @param {import('ol/MapBrowserEvent').default<unknown>} evt MapBrowserEvent
    * @private
    */
   willModifyFeatures_(evt) {
@@ -175,7 +180,7 @@ export default class extends olInteractionPointer {
   }
 
   /**
-   * @param {olFeature<import("ol/geom/Geometry.js").default>} feature Feature.
+   * @param {olFeature<import('ol/geom/Geometry').default>} feature Feature.
    * @private
    */
   removeFeature_(feature) {
@@ -183,7 +188,7 @@ export default class extends olInteractionPointer {
     // Remove the vertex feature if the collection of canditate features
     // is empty.
     if (this.vertexFeature_ && this.features_.getLength() === 0) {
-      /** @type {olSourceVector<import("ol/geom/Geometry.js").default>} */ (
+      /** @type {olSourceVector<import('ol/geom/Geometry').default>} */ (
         this.overlay_.getSource()
       ).removeFeature(this.vertexFeature_);
       this.vertexFeature_ = null;
@@ -191,16 +196,16 @@ export default class extends olInteractionPointer {
   }
 
   /**
-   * @param {olFeature<import("ol/geom/Geometry.js").default>} feature Feature.
+   * @param {olFeature<import('ol/geom/Geometry').default>} feature Feature.
    * @private
    */
   removeFeatureSegmentData_(feature) {
     const rBush = this.rBush_;
-    /** @type {import("ol/interaction/Modify.js").SegmentData[]} */
+    /** @type {import('ol/interaction/Modify').SegmentData[]} */
     const nodesToRemove = [];
     rBush.forEach(
       /**
-       * @param {import("ol/interaction/Modify.js").SegmentData} node RTree node.
+       * @param {import('ol/interaction/Modify').SegmentData} node RTree node.
        */
       (node) => {
         if (feature === node.feature) {
@@ -214,7 +219,7 @@ export default class extends olInteractionPointer {
   }
 
   /**
-   * @param {import("ol/PluggableMap.js").default} map Map.
+   * @param {import('ol/PluggableMap').default} map Map.
    */
   setMap(map) {
     this.overlay_.setMap(map);
@@ -222,7 +227,7 @@ export default class extends olInteractionPointer {
   }
 
   /**
-   * @param {Event|import('ol/events/Event.js').default} evt Event.
+   * @param {Event|import('ol/events/Event').default} evt Event.
    * @private
    */
   handleFeatureAdd_(evt) {
@@ -234,13 +239,13 @@ export default class extends olInteractionPointer {
   }
 
   /**
-   * @param {Event|import('ol/events/Event.js').default} evt Event.
+   * @param {Event|import('ol/events/Event').default} evt Event.
    * @private
    */
   handleFeatureRemove_(evt) {
     if (evt instanceof CollectionEvent) {
       /**
-       * @type {olFeature<import("ol/geom/Geometry.js").default>}
+       * @type {olFeature<import('ol/geom/Geometry').default>}
        */
       const feature = evt.element;
       this.removeFeature_(feature);
@@ -248,8 +253,8 @@ export default class extends olInteractionPointer {
   }
 
   /**
-   * @param {olFeature<import("ol/geom/Geometry.js").default>} feature Feature
-   * @param {import("ol/geom/Polygon.js").default} geometry Geometry.
+   * @param {olFeature<import('ol/geom/Geometry').default>} feature Feature
+   * @param {import('ol/geom/Polygon').default} geometry Geometry.
    * @private
    */
   writeCircleGeometry_(feature, geometry) {
@@ -258,7 +263,7 @@ export default class extends olInteractionPointer {
       const coordinates = rings[j];
       for (let i = 0, ii = coordinates.length - 1; i < ii; ++i) {
         const segment = /** @type {[number, number, number, number][]} */ (coordinates.slice(i, i + 2));
-        /** @type {import("ol/interaction/Modify.js").SegmentData} */
+        /** @type {import('ol/interaction/Modify').SegmentData} */
         const segmentData = {
           feature: feature,
           geometry: geometry,
@@ -272,8 +277,8 @@ export default class extends olInteractionPointer {
   }
 
   /**
-   * @param {import("ol/coordinate.js").Coordinate} coordinates Coordinates.
-   * @return {olFeature<import("ol/geom/Geometry.js").default>} Vertex feature.
+   * @param {import('ol/coordinate').Coordinate} coordinates Coordinates.
+   * @returns {olFeature<import('ol/geom/Geometry').default>} Vertex feature.
    * @private
    */
   createOrUpdateVertexFeature_(coordinates) {
@@ -281,7 +286,7 @@ export default class extends olInteractionPointer {
     if (!vertexFeature) {
       vertexFeature = new olFeature(new olGeomPoint(coordinates));
       this.vertexFeature_ = vertexFeature;
-      /** @type {olSourceVector<import("ol/geom/Geometry.js").default>} */ (
+      /** @type {olSourceVector<import('ol/geom/Geometry').default>} */ (
         this.overlay_.getSource()
       ).addFeature(vertexFeature);
     } else {
@@ -295,7 +300,7 @@ export default class extends olInteractionPointer {
   }
 
   /**
-   * @param {import("ol/MapBrowserEvent.js").default<unknown>} evt Event.
+   * @param {import('ol/MapBrowserEvent').default<unknown>} evt Event.
    * @private
    */
   handlePointerMove_(evt) {
@@ -304,16 +309,16 @@ export default class extends olInteractionPointer {
   }
 
   /**
-   * @param {import("ol/pixel.js").Pixel} pixel Pixel
-   * @param {import("ol/PluggableMap.js").default} map Map.
+   * @param {import('ol/pixel').Pixel} pixel Pixel
+   * @param {import('ol/PluggableMap').default} map Map.
    * @private
    */
   handlePointerAtPixel_(pixel, map) {
     const pixelCoordinate = map.getCoordinateFromPixel(pixel);
     /**
-     * @param {import("ol/interaction/Modify.js").SegmentData} a
-     * @param {import("ol/interaction/Modify.js").SegmentData} b
-     * @return {number}
+     * @param {import('ol/interaction/Modify').SegmentData} a
+     * @param {import('ol/interaction/Modify').SegmentData} b
+     * @returns {number}
      */
     const sortByDistance = function (a, b) {
       return (
@@ -377,7 +382,7 @@ export default class extends olInteractionPointer {
   }
 
   /**
-   * @param {import("ol/geom/SimpleGeometry.js").default} geometry Geometry.
+   * @param {import('ol/geom/SimpleGeometry').default} geometry Geometry.
    * @param {number[][]|number[][][]} coordinates Coordinates.
    * @private
    */
@@ -388,8 +393,8 @@ export default class extends olInteractionPointer {
   }
 
   /**
-   * @param {import("ol/MapBrowserEvent.js").default<unknown>} evt MapBrowserEvent.
-   * @return {boolean} Start drag sequence?
+   * @param {import('ol/MapBrowserEvent').default<unknown>} evt MapBrowserEvent.
+   * @returns {boolean} Start drag sequence?
    * @private
    */
   handleDownEvent_(evt) {
@@ -405,7 +410,7 @@ export default class extends olInteractionPointer {
       const vertex = geometry.getCoordinates();
       const vertexExtent = olExtent.boundingExtent([vertex]);
       const segmentDataMatches = this.rBush_.getInExtent(vertexExtent);
-      /** @type {Object<string, import("ol/interaction/Modify.js").SegmentData[]>} */
+      /** @type {Object<string, import('ol/interaction/Modify').SegmentData[]>} */
       const componentSegments = {};
       segmentDataMatches.sort(compareIndexes);
       for (let i = 0, ii = segmentDataMatches.length; i < ii; ++i) {
@@ -432,7 +437,7 @@ export default class extends olInteractionPointer {
   }
 
   /**
-   * @param {import("ol/MapBrowserEvent.js").default<unknown>} evt MapBrowserEvent.
+   * @param {import('ol/MapBrowserEvent').default<unknown>} evt MapBrowserEvent.
    * @private
    */
   handleDragEvent_(evt) {
@@ -444,7 +449,7 @@ export default class extends olInteractionPointer {
     const line = new olGeomLineString([center, vertex]);
 
     /**
-     * @type {import("ol/geom/Circle.js").default}
+     * @type {import('ol/geom/Circle').default}
      */
     const circle = new olGeomCircle(center, line.getLength());
     const coordinates = fromCircle(circle, this.nbPoints).getCoordinates();
@@ -457,8 +462,8 @@ export default class extends olInteractionPointer {
   }
 
   /**
-   * @param {import("ol/MapBrowserEvent.js").default<unknown>} evt MapBrowserEvent.
-   * @return {boolean} Stop drag sequence?
+   * @param {import('ol/MapBrowserEvent').default<unknown>} evt MapBrowserEvent.
+   * @returns {boolean} Stop drag sequence?
    * @private
    */
   handleUpEvent_(evt) {
@@ -466,7 +471,7 @@ export default class extends olInteractionPointer {
     const geometry = this.dragSegments_[0][0].geometry;
     if (geometry instanceof Polygon) {
       this.writeCircleGeometry_(
-        /** @type {olFeature<import("ol/geom/Geometry.js").default>} */ (this.dragSegments_[0][0].feature),
+        /** @type {olFeature<import('ol/geom/Geometry').default>} */ (this.dragSegments_[0][0].feature),
         geometry
       );
     }
@@ -480,10 +485,11 @@ export default class extends olInteractionPointer {
   }
 
   /**
-   * Handles the {@link import("ol/MapBrowserEvent.js").default map browser event} and may modify the
+   * Handles the {@link import('ol/MapBrowserEvent').default map browser event} and may modify the
    * geometry.
-   * @param {import("ol/MapBrowserEvent.js").default<unknown>} mapBrowserEvent Map browser event.
-   * @return {boolean} `false` to stop event propagation.
+   *
+   * @param {import('ol/MapBrowserEvent').default<unknown>} mapBrowserEvent Map browser event.
+   * @returns {boolean} `false` to stop event propagation.
    */
   handleEvent(mapBrowserEvent) {
     if (!(mapBrowserEvent instanceof olMapBrowserEvent)) {
@@ -504,9 +510,9 @@ export default class extends olInteractionPointer {
 }
 
 /**
- * @param {import("ol/interaction/Modify.js").SegmentData} a The first segment data.
- * @param {import("ol/interaction/Modify.js").SegmentData} b The second segment data.
- * @return {number} The difference in indexes.
+ * @param {import('ol/interaction/Modify').SegmentData} a The first segment data.
+ * @param {import('ol/interaction/Modify').SegmentData} b The second segment data.
+ * @returns {number} The difference in indexes.
  * @private
  * @hidden
  */

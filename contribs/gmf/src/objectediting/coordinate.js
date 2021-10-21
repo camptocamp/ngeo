@@ -20,7 +20,7 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 /**
- * @typedef {import("ol/coordinate.js").Coordinate} Coordinate
+ * @typedef {import('ol/coordinate').Coordinate} Coordinate
  */
 
 /**
@@ -28,7 +28,7 @@
  * to XY, i.e. remove any extra dimensions to the coordinates and keep only 2.
  *
  * @param {Coordinate} coordinates Coordinates
- * @return {Coordinate} Converted coordinates.
+ * @returns {Coordinate} Converted coordinates.
  * @hidden
  */
 export function coordinatesToXY0(coordinates) {
@@ -46,7 +46,7 @@ export function coordinatesToXY0(coordinates) {
  * @template {number|Coordinate|Coordinate[]|Coordinate[][]} T
  * @param {T[]} coordinates Coordinates
  * @param {number} nesting Nesting level.
- * @return {T[]} Converted coordinates.
+ * @returns {T[]} Converted coordinates.
  * @hidden
  */
 export function toXY(coordinates, nesting) {
@@ -66,7 +66,7 @@ export function toXY(coordinates, nesting) {
  * to XY, i.e. remove any extra dimensions to the coordinates and keep only 2.
  *
  * @param {Coordinate[]} coordinates Coordinates
- * @return {Coordinate[]} Converted coordinates.
+ * @returns {Coordinate[]} Converted coordinates.
  * @hidden
  */
 export function coordinatesToXY1(coordinates) {
@@ -78,7 +78,7 @@ export function coordinatesToXY1(coordinates) {
  * to XY, i.e. remove any extra dimensions to the coordinates and keep only 2.
  *
  * @param {Coordinate[][]} coordinates Coordinates
- * @return {Coordinate[][]} Converted coordinates.
+ * @returns {Coordinate[][]} Converted coordinates.
  * @hidden
  */
 export function coordinatesToXY2(coordinates) {
@@ -90,7 +90,7 @@ export function coordinatesToXY2(coordinates) {
  * to XY, i.e. remove any extra dimensions to the coordinates and keep only 2.
  *
  * @param {Coordinate[][][]} coordinates Coordinates
- * @return {Coordinate[][][]} Converted coordinates.
+ * @returns {Coordinate[][][]} Converted coordinates.
  * @hidden
  */
 export function coordinatesToXY3(coordinates) {

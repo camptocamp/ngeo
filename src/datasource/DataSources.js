@@ -20,10 +20,10 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import olCollection from 'ol/Collection.js';
-import {listen, unlistenByKey} from 'ol/events.js';
-import olView from 'ol/View.js';
-import {CollectionEvent} from 'ol/Collection.js';
+import olCollection from 'ol/Collection';
+import {listen, unlistenByKey} from 'ol/events';
+import olView from 'ol/View';
+import {CollectionEvent} from 'ol/Collection';
 
 /**
  * @hidden
@@ -46,19 +46,19 @@ export class DataSource {
    */
   constructor() {
     /**
-     * @type {import('ngeo/datasource/DataSource.js').DataSources}
+     * @type {import('ngeo/datasource/DataSource').DataSources}
      * @private
      */
     this.collection_ = new olCollection();
 
     /**
-     * @type {?import("ol/Map.js").default}
+     * @type {?import('ol/Map').default}
      * @private
      */
     this.map_ = null;
 
     /**
-     * @type {import("ol/events.js").EventsKey[]}
+     * @type {import('ol/events').EventsKey[]}
      * @private
      */
     this.listenerKeys_ = [];
@@ -68,7 +68,8 @@ export class DataSource {
 
   /**
    * Set a map to this service. Null can be given to unset the map.
-   * @param {?import("ol/Map.js").default} map Map.
+   *
+   * @param {?import('ol/Map').default} map Map.
    */
   set map(map) {
     if (this.map_ === map) {
@@ -92,7 +93,8 @@ export class DataSource {
 
   /**
    * Bind a map to this service.
-   * @param {import("ol/Map.js").default} map Map.
+   *
+   * @param {import('ol/Map').default} map Map.
    * @private
    */
   bindMap_(map) {
@@ -110,7 +112,8 @@ export class DataSource {
 
   /**
    * Unbind a map to this service.
-   * @param {import("ol/Map.js").default} map Map.
+   *
+   * @param {import('ol/Map').default} map Map.
    * @private
    */
   unbindMap_(map) {
@@ -121,7 +124,8 @@ export class DataSource {
   /**
    * Called when the resolution of the map view changes. Synchronize the
    * datasources to current resolution of the view.
-   * @param {Event|import("ol/events/Event.js").default} evt Event.
+   *
+   * @param {Event|import('ol/events/Event').default} evt Event.
    * @private
    */
   handleViewResolutionChange_(evt) {
@@ -137,6 +141,7 @@ export class DataSource {
 
   /**
    * Synchronize all datasources in the ngeo collection with a given resolution.
+   *
    * @param {number} resolution Resolution
    * @private
    */
@@ -148,7 +153,8 @@ export class DataSource {
 
   /**
    * Synchronize a data source `inRange` property with a given resolution.
-   * @param {import("ngeo/datasource/DataSource.js").default} dataSource Data source
+   *
+   * @param {import('ngeo/datasource/DataSource').default} dataSource Data source
    * @param {number} resolution Resolution
    * @private
    */
@@ -172,7 +178,8 @@ export class DataSource {
   /**
    * Called when a new data source is added to the ngeo collection. If there's
    * map bound, update its `inRange` right away.
-   * @param {Event|import("ol/events/Event.js").default} event Event
+   *
+   * @param {Event|import('ol/events/Event').default} event Event
    * @private
    */
   handleDataSourcesAdd_(event) {

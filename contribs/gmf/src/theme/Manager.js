@@ -20,9 +20,9 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
-import gmfThemeThemes, {findThemeByName} from 'gmf/theme/Themes.js';
-import ngeoStatemanagerService from 'ngeo/statemanager/Service.js';
+import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager';
+import gmfThemeThemes, {findThemeByName} from 'gmf/theme/Themes';
+import ngeoStatemanagerService from 'ngeo/statemanager/Service';
 
 /**
  * @enum {string}
@@ -47,12 +47,13 @@ export const ThemeEventType = {
  *
  * This service's theme is a GmfTheme with only children and a name.
  * Thought to be the tree source of the gmf layertree directive.
+ *
  * @class
  * @param {angular.IScope} $rootScope Angular rootScope.
- * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes gmf Themes service.
- * @param {import('gmf/options.js').gmfTreeManagerModeFlush} gmfTreeManagerModeFlush Flush mode active?
- * @param {import("gmf/layertree/TreeManager.js").LayertreeTreeManager} gmfTreeManager the tree manager.
- * @param {import("ngeo/statemanager/Service.js").StatemanagerService} ngeoStateManager The ngeo statemanager
+ * @param {import('gmf/theme/Themes').ThemesService} gmfThemes gmf Themes service.
+ * @param {import('gmf/options').gmfTreeManagerModeFlush} gmfTreeManagerModeFlush Flush mode active?
+ * @param {import('gmf/layertree/TreeManager').LayertreeTreeManager} gmfTreeManager the tree manager.
+ * @param {import('ngeo/statemanager/Service').StatemanagerService} ngeoStateManager The ngeo statemanager
  *    service.
  * @ngInject
  * @ngdoc service
@@ -72,22 +73,22 @@ export function ThemeManagerService(
   this.$rootScope_ = $rootScope;
 
   /**
-   * @type {import("gmf/theme/Themes.js").ThemesService}
+   * @type {import('gmf/theme/Themes').ThemesService}
    */
   this.gmfThemes_ = gmfThemes;
 
   /**
-   * @type {import('gmf/options.js').gmfTreeManagerModeFlush}
+   * @type {import('gmf/options').gmfTreeManagerModeFlush}
    */
   this.modeFlush = gmfTreeManagerModeFlush;
 
   /**
-   * @type {import("gmf/layertree/TreeManager.js").LayertreeTreeManager}
+   * @type {import('gmf/layertree/TreeManager').LayertreeTreeManager}
    */
   this.gmfTreeManager_ = gmfTreeManager;
 
   /**
-   * @type {import("ngeo/statemanager/Service.js").StatemanagerService}
+   * @type {import('ngeo/statemanager/Service').StatemanagerService}
    */
   this.ngeoStateManager_ = ngeoStateManager;
 
@@ -100,7 +101,8 @@ export function ThemeManagerService(
 /**
  * Set the current theme name (mode 'flush' only) and add its children. Add
  * only groups that are not already in the tree.
- * @param {import('gmf/themes.js').GmfTheme} theme A theme object.
+ *
+ * @param {import('gmf/themes').GmfTheme} theme A theme object.
  * @param {boolean} [opt_silent] if true it will be no user message if
  *     the theme should be added but it's already added.
  */
@@ -117,14 +119,14 @@ ThemeManagerService.prototype.addTheme = function (theme, opt_silent) {
 };
 
 /**
- * @return {string} The theme name. Will be empty on 'not flush' mode.
+ * @returns {string} The theme name. Will be empty on 'not flush' mode.
  */
 ThemeManagerService.prototype.getThemeName = function () {
   return this.themeName_;
 };
 
 /**
- * @return {boolean} true if the theme is loading.
+ * @returns {boolean} true if the theme is loading.
  */
 ThemeManagerService.prototype.isLoading = function () {
   return !this.gmfThemes_.loaded;

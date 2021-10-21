@@ -19,9 +19,9 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import {setGeometryType} from 'ngeo/format/Attribute.js';
-import ngeoFormatAttributeType from 'ngeo/format/AttributeType.js';
-import olFormatXML from 'ol/format/XML.js';
+import {setGeometryType} from 'ngeo/format/Attribute';
+import ngeoFormatAttributeType from 'ngeo/format/AttributeType';
+import olFormatXML from 'ol/format/XML';
 
 /**
  * @enum {string}
@@ -40,17 +40,18 @@ export const FormatNumberType = {
 
 /**
  * Reads attributes that are defined in XSD format and return them as a list.
+ *
  * @private
  * @hidden
  */
 class XSDAttribute extends olFormatXML {
   /**
    * @param {Document|Element|string} source Source.
-   * @return {import('ngeo/format/Attribute.js').Attribute[]} The parsed result.
+   * @returns {import('ngeo/format/Attribute').Attribute[]} The parsed result.
    * @override
    */
   read(source) {
-    return /** @type {import('ngeo/format/Attribute.js').Attribute[]} */ olFormatXML.prototype.read.call(
+    return /** @type {import('ngeo/format/Attribute').Attribute[]} */ olFormatXML.prototype.read.call(
       this,
       source
     );
@@ -58,7 +59,7 @@ class XSDAttribute extends olFormatXML {
 
   /**
    * @param {Document} doc Document.
-   * @return {?import('ngeo/format/Attribute.js').Attribute[]} List of attributes.
+   * @returns {?import('ngeo/format/Attribute').Attribute[]} List of attributes.
    * @override
    */
   readFromDocument(doc) {
@@ -80,7 +81,7 @@ class XSDAttribute extends olFormatXML {
 
   /**
    * @param {Element} node Node.
-   * @return {import('ngeo/format/Attribute.js').Attribute[]} List of attributes.
+   * @returns {import('ngeo/format/Attribute').Attribute[]} List of attributes.
    * @override
    */
   readFromNode(node) {
@@ -105,7 +106,7 @@ class XSDAttribute extends olFormatXML {
 
   /**
    * @param {Node} node Node.
-   * @return {?import('ngeo/format/Attribute.js').Attribute} An attribute object.
+   * @returns {?import('ngeo/format/Attribute').Attribute} An attribute object.
    * @private
    */
   readFromElementNode_(node) {
@@ -124,7 +125,7 @@ class XSDAttribute extends olFormatXML {
     const readonlyEls = elementNode.getElementsByTagName('readonly');
     const readonly = readonlyEls[0] ? readonlyEls[0].getAttribute('value') === 'true' : false;
 
-    /** @type {import('ngeo/format/Attribute.js').Attribute} */
+    /** @type {import('ngeo/format/Attribute').Attribute} */
     const attribute = {
       name,
       readonly,
@@ -196,7 +197,7 @@ class XSDAttribute extends olFormatXML {
    * Set the `type` and `numType` properties of an attribute depending on the
    * given xsdType.
    *
-   * @param {import('ngeo/format/Attribute.js').AttributeBase} attribute Attribute.
+   * @param {import('ngeo/format/Attribute').AttributeBase} attribute Attribute.
    * @param {string} type The xsd type.
    * @private
    */
@@ -223,8 +224,9 @@ class XSDAttribute extends olFormatXML {
 
 /**
  * Returns the first geometry attribute among a given list of attributes.
- * @param {import('ngeo/format/Attribute.js').Attribute[]} attributes The list of attributes.
- * @return {?import('ngeo/format/Attribute.js').Attribute} A geometry attribute object.
+ *
+ * @param {import('ngeo/format/Attribute').Attribute[]} attributes The list of attributes.
+ * @returns {?import('ngeo/format/Attribute').Attribute} A geometry attribute object.
  * @hidden
  */
 export function getGeometryAttribute(attributes) {

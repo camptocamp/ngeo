@@ -28,24 +28,25 @@ import 'bootstrap/dist/css/bootstrap.css';
 import '@fortawesome/fontawesome-free/css/fontawesome.min.css';
 
 import angular from 'angular';
-import ngeoMapModule from 'ngeo/map/module.js';
-import ngeoRoutingModule from 'ngeo/routing/module.js';
-import olMap from 'ol/Map.js';
-import olView from 'ol/View.js';
-import olLayerTile from 'ol/layer/Tile.js';
-import olSourceOSM from 'ol/source/OSM.js';
+import ngeoMapModule from 'ngeo/map/module';
+import ngeoRoutingModule from 'ngeo/routing/module';
+import olMap from 'ol/Map';
+import olView from 'ol/View';
+import olLayerTile from 'ol/layer/Tile';
+import olSourceOSM from 'ol/source/OSM';
 
 /** @type {angular.IModule} **/
 const myModule = angular.module('app', ['gettext', ngeoMapModule.name, ngeoRoutingModule.name]);
 
 /**
  * The application's main directive.
+ *
  * @class
  * @ngInject
  */
 function MainController() {
   /**
-   * @type {import("ol/Map.js").default}
+   * @type {import('ol/Map').default}
    */
   this.map = new olMap({
     layers: [

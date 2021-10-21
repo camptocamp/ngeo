@@ -20,10 +20,10 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import gmfRasterRasterService from 'gmf/raster/RasterService.js';
-import ngeoMiscAutoProjection from 'ngeo/misc/AutoProjection.js';
-import olOverlay from 'ol/Overlay.js';
-import * as olProj from 'ol/proj.js';
+import gmfRasterRasterService from 'gmf/raster/RasterService';
+import ngeoMiscAutoProjection from 'ngeo/misc/AutoProjection';
+import olOverlay from 'ol/Overlay';
+import * as olProj from 'ol/proj';
 
 /**
  * @type {angular.IModule}
@@ -49,7 +49,7 @@ const myModule = angular.module('gmfContextualdata', [
  *
  * The content of the popover is managed in a partial that must be defined
  * using the `gmfContextualdatacontentTemplateUrl` value. See
- * {@link import("gmf/contextualdatacontentDirective.js").default} for more details.
+ * {@link import('gmf/contextualdatacontentDirective').default} for more details.
  *
  * One can also provide a `gmf-contextualdata-callback` attribute in order to
  * do some additional computing on the coordinate or the values received for
@@ -60,11 +60,11 @@ const myModule = angular.module('gmfContextualdata', [
  * See the [../examples/contribs/gmf/contextualdata.html](../examples/contribs/gmf/contextualdata.html)
  * example for a usage sample.
  *
- * @htmlAttribute {import("ol/Map.js").default} map The map.
+ * @htmlAttribute {import('ol/Map').default} map The map.
  * @htmlAttribute {Function} callback A function called after server
  *    (raster) data is received in case some additional computing is required.
  *    Optional.
- * @return {angular.IDirective} The directive specs.
+ * @returns {angular.IDirective} The directive specs.
  * @ngdoc directive
  * @ngname gmfContextualdata
  */
@@ -99,9 +99,9 @@ myModule.directive('gmfContextualdata', contextualDataComponent);
  * @param {angular.ICompileService} $compile Angular compile service.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @param {angular.IScope} $scope Scope.
- * @param {import('gmf/raster/RasterService.js').RasterService} gmfRaster Gmf Raster service
- * @param {import('gmf/options.js').gmfContextualDataOptions} gmfContextualDataOptions The options.
- * @param {import("ngeo/misc/AutoProjection.js").AutoProjectionService} ngeoAutoProjection The
+ * @param {import('gmf/raster/RasterService').RasterService} gmfRaster Gmf Raster service
+ * @param {import('gmf/options').gmfContextualDataOptions} gmfContextualDataOptions The options.
+ * @param {import('ngeo/misc/AutoProjection').AutoProjectionService} ngeoAutoProjection The
  *    ngeo auto projection service
  * @class
  * @hidden
@@ -117,17 +117,17 @@ export function ContextualdataController(
   ngeoAutoProjection
 ) {
   /**
-   * @type {?import("ol/Map.js").default}
+   * @type {?import('ol/Map').default}
    */
   this.map = null;
 
   /**
-   * @type {import('gmf/options.js').gmfContextualDataOptions}
+   * @type {import('gmf/options').gmfContextualDataOptions}
    */
   this.options = gmfContextualDataOptions;
 
   /**
-   * @type {import('ol/proj/Projection.js').default[]}
+   * @type {import('ol/proj/Projection').default[]}
    */
   this.projections = [];
 
@@ -137,12 +137,12 @@ export function ContextualdataController(
   this.displayed = false;
 
   /**
-   * @type {function(import("ol/coordinate.js").Coordinate, unknown): unknown}
+   * @type {function(import('ol/coordinate').Coordinate, unknown): unknown}
    */
   this.callback = (c, o) => ({});
 
   /**
-   * @type {?import("ol/Overlay.js").default}
+   * @type {?import('ol/Overlay').default}
    */
   this.overlay_ = null;
 
@@ -167,17 +167,17 @@ export function ContextualdataController(
   this.$scope_ = $scope;
 
   /**
-   * @type {import("gmf/raster/RasterService.js").RasterService}
+   * @type {import('gmf/raster/RasterService').RasterService}
    */
   this.gmfRaster_ = gmfRaster;
 
   /**
-   * @type {import('gmf/options.js').gmfContextualDataOptions}
+   * @type {import('gmf/options').gmfContextualDataOptions}
    */
   this.gmfContextualDataOptions_ = gmfContextualDataOptions;
 
   /**
-   * @type {import("ngeo/misc/AutoProjection.js").AutoProjectionService}
+   * @type {import('ngeo/misc/AutoProjection').AutoProjectionService}
    */
   this.ngeoAutoProjection = ngeoAutoProjection;
 
@@ -218,7 +218,7 @@ ContextualdataController.prototype.init = function () {
   mapDiv.addEventListener('touchmove', this.handleMapTouchEnd_.bind(this));
   mapDiv.addEventListener('touchend', this.handleMapTouchEnd_.bind(this));
 
-  this.map.on(/** @type {import('ol/Observable.js').EventTypes} */ ('pointerdown'), () => {
+  this.map.on(/** @type {import('ol/Observable').EventTypes} */ ('pointerdown'), () => {
     this.$scope_.$apply(() => {
       this.hidePopover();
     });
@@ -385,7 +385,7 @@ myModule.controller('GmfContextualdataController', ContextualdataController);
  * example for a usage sample.
  *
  * @param {string} gmfContextualdatacontentTemplateUrl URL to template.
- * @return {angular.IDirective} The Directive Definition Object.
+ * @returns {angular.IDirective} The Directive Definition Object.
  * @ngInject
  * @ngdoc directive
  * @ngname gmfContextualdatacontent

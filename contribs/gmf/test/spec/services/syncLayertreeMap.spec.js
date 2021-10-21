@@ -21,13 +21,13 @@
 
 // @ts-nocheck
 import angular from 'angular';
-import {getLayer as gmfLayertreeSyncLayertreeMapGetLayer} from 'gmf/layertree/SyncLayertreeMap.js';
-import gmfTestDataThemes from '../data/themes.js';
-import gmfTestDataThemescapabilities from '../data/themescapabilities.js';
-import olMap from 'ol/Map.js';
-import olView from 'ol/View.js';
-import olLayerGroup from 'ol/layer/Group.js';
-import olLayerImage from 'ol/layer/Image.js';
+import {getLayer as gmfLayertreeSyncLayertreeMapGetLayer} from 'gmf/layertree/SyncLayertreeMap';
+import gmfTestDataThemes from '../data/themes';
+import gmfTestDataThemescapabilities from '../data/themescapabilities';
+import olMap from 'ol/Map';
+import olView from 'ol/View';
+import olLayerGroup from 'ol/layer/Group';
+import olLayerImage from 'ol/layer/Image';
 
 describe('gmf.layertree.SyncLayertreeMap', () => {
   /** @type {angular.IHttpBackendService} */

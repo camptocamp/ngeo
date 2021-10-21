@@ -40,6 +40,7 @@
 
 /**
  * Contains the common element of all the elements of the GeoMapFish layer tree.
+ *
  * @typedef {Object} GmfBaseNode
  * @property {number} id
  * @property {GmfMetaData} metadata The related metadata.
@@ -49,6 +50,7 @@
 /**
  * The element we can select in the theme selector.
  * extends GmfBaseNode
+ *
  * @typedef {Object} GmfTheme
  * @property {number} id (GmfBaseNode)
  * @property {GmfMetaData} metadata (GmfBaseNode)
@@ -64,12 +66,13 @@
  * This represent « first level group » (Block in the layer tree),
  * or all sub nodes that's not a leaf.
  * extends GmfBaseNode
+ *
  * @typedef {Object} GmfGroup
  * @property {number} id (GmfBaseNode)
  * @property {GmfMetaData} metadata (GmfBaseNode)
  * @property {string} name (GmfBaseNode)
  * @property {Array<GmfGroup | GmfLayer>} children
- * @property {import('ngeo/datasource/OGC.js').Dimensions} dimensions The dimensions managed by the
+ * @property {import('ngeo/datasource/OGC').Dimensions} dimensions The dimensions managed by the
  *      OpenLayers layer, if the value is null we will take the dimension from the application.
  *      This is present only on non mixed first level group.
  * @property {boolean} mixed A mixed group is a group on which one the layers comes from different sources,
@@ -79,7 +82,7 @@
  *      All the group child will have the same value of his parent,
  *      In other word, all the group of a first level group will have the same value.
  * @property {string} [ogcServer] On non mixed first level group it is the ogc server to use.
- * @property {import('ngeo/datasource/OGC.js').TimeProperty} [time] On non mixed first level group with more
+ * @property {import('ngeo/datasource/OGC').TimeProperty} [time] On non mixed first level group with more
  *      then one time layer, it is the time information.
  * @property {string} [popupId] a popup identifier for the associate submenu.
  */
@@ -90,14 +93,15 @@
  * neither a WMS layer.
  * This is also the leaf of the tree.
  * extends GmfBaseNode
+ *
  * @typedef {Object} GmfLayer
  * @property {number} id (GmfBaseNode)
  * @property {GmfMetaData} metadata (GmfBaseNode)
  * @property {string} name (GmfBaseNode)
- * @property {import('ngeo/datasource/OGC.js').Dimensions} dimensions The dimensions managed by the layer,
+ * @property {import('ngeo/datasource/OGC').Dimensions} dimensions The dimensions managed by the layer,
  *      if the value is null we will take the dimension from the application.
  *      Present only on layer in a mixed group.
- * @property {import('ngeo/datasource/OGC.js').DimensionsFiltersConfig} dimensionsFilters The dimensions
+ * @property {import('ngeo/datasource/OGC').DimensionsFiltersConfig} dimensionsFilters The dimensions
  *      applied by filters on the layer configuration, if the value is null we will take the dimension from
  *      the application.
  * @property {boolean} [editable]
@@ -110,12 +114,13 @@
 
 /**
  * extends GmfLayer
+ *
  * @typedef {Object} GmfLayerWMS
  * @property {number} id (GmfBaseNode)
  * @property {GmfMetaData} metadata (GmfBaseNode)
  * @property {string} name (GmfBaseNode)
- * @property {import('ngeo/datasource/OGC.js').Dimensions} dimensions (GmfLayer)
- * @property {import('ngeo/datasource/OGC.js').DimensionsFiltersConfig} dimensionsFilters (GmfLayer)
+ * @property {import('ngeo/datasource/OGC').Dimensions} dimensions (GmfLayer)
+ * @property {import('ngeo/datasource/OGC').DimensionsFiltersConfig} dimensionsFilters (GmfLayer)
  * @property {boolean} [editable] (GmfLayer)
  * @property {string} [style] (GmfLayer)
  * @property {string} type (GmfLayer)
@@ -124,18 +129,19 @@
  * @property {number} maxResolutionHint The max resolution where the layer is visible.
  * @property {number} minResolutionHint The min resolution where the layer is visible.
  * @property {string} [ogcServer]
- * @property {import('ngeo/datasource/OGC.js').TimeProperty} [time] The time information if the layer
+ * @property {import('ngeo/datasource/OGC').TimeProperty} [time] The time information if the layer
  *      directly manage it, see also `{GmfGroup.time}`.
  */
 
 /**
  * extends GmfLayer
+ *
  * @typedef {Object} GmfLayerWMTS
  * @property {number} id (GmfBaseNode)
  * @property {GmfMetaData} metadata (GmfBaseNode)
  * @property {string} name (GmfBaseNode)
- * @property {import('ngeo/datasource/OGC.js').Dimensions} dimensions (GmfLayer)
- * @property {import('ngeo/datasource/OGC.js').DimensionsFiltersConfig} dimensionsFilters (GmfLayer)
+ * @property {import('ngeo/datasource/OGC').Dimensions} dimensions (GmfLayer)
+ * @property {import('ngeo/datasource/OGC').DimensionsFiltersConfig} dimensionsFilters (GmfLayer)
  * @property {boolean} [editable] (GmfLayer)
  * @property {string} [style] (GmfLayer)
  * @property {string} type (GmfLayer)
@@ -147,6 +153,7 @@
 
 /**
  * Additional attributes related on a WMS layers (or WFS features type).
+ *
  * @typedef {Object} GmfLayerChildLayer
  * @property {boolean|undefined} [getData] If the layer is queryable and this property is set to
  *     false, then the layer won't be used in queries issued. Defaults to `true`.

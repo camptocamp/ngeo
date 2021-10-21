@@ -20,11 +20,11 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import ngeoQueryAction from 'ngeo/query/Action.js';
-import ngeoQueryMode from 'ngeo/query/Mode.js';
-import {isEventUsinCtrlKey} from 'ngeo/utils.js';
+import ngeoQueryAction from 'ngeo/query/Action';
+import ngeoQueryMode from 'ngeo/query/Mode';
+import {isEventUsinCtrlKey} from 'ngeo/utils';
 
-import {listen as olEventsListen} from 'ol/events.js';
+import {listen as olEventsListen} from 'ol/events';
 
 /**
  * @hidden
@@ -50,6 +50,7 @@ export class QueryModeSelector {
 
     /**
      * The key to press to temporarily set the action to "ADD"
+     *
      * @type {string}
      * @private
      */
@@ -57,6 +58,7 @@ export class QueryModeSelector {
 
     /**
      * The key to press to temporarily set the action to "REMOVE"
+     *
      * @type {string}
      * @private
      */
@@ -72,6 +74,7 @@ export class QueryModeSelector {
 
     /**
      * The action currently active.
+     *
      * @type {string}
      * @private
      */
@@ -92,6 +95,7 @@ export class QueryModeSelector {
     /**
      * A flag than handles the change of mode while a request was
      * still pending.
+     *
      * @type {boolean}
      * @private
      */
@@ -102,6 +106,7 @@ export class QueryModeSelector {
      * active action. When that happens, the currently active action
      * is stored here to be restored later, after the key has been
      * released.
+     *
      * @type {?string}
      * @private
      */
@@ -109,6 +114,7 @@ export class QueryModeSelector {
 
     /**
      * The mode currently active.
+     *
      * @type {string}
      * @private
      */
@@ -119,6 +125,7 @@ export class QueryModeSelector {
      * active mode. When that happens, the currently active mode is
      * stored here to be restored later, after the key has been
      * released.
+     *
      * @type {?string}
      * @private
      */
@@ -127,6 +134,7 @@ export class QueryModeSelector {
     /**
      * The action key currently being pressed. Only those registered
      * in `this.keysAction_` can be active.
+     *
      * @type {?string}
      * @private
      */
@@ -145,7 +153,7 @@ export class QueryModeSelector {
   }
 
   /**
-   * @return {string} The query action currently active
+   * @returns {string} The query action currently active
    */
   get action() {
     return this.action_;
@@ -159,7 +167,7 @@ export class QueryModeSelector {
   }
 
   /**
-   * @return {string} The query mode currently active
+   * @returns {string} The query mode currently active
    */
   get mode() {
     return this.mode_;
@@ -173,7 +181,7 @@ export class QueryModeSelector {
   }
 
   /**
-   * @return {boolean} Whether a request is currently pending or not.
+   * @returns {boolean} Whether a request is currently pending or not.
    */
   get pending() {
     return this.pending_;
@@ -197,7 +205,7 @@ export class QueryModeSelector {
   // Handlers
 
   /**
-   * @param {Event|import("ol/events/Event.js").default} evt Event.
+   * @param {Event|import('ol/events/Event').default} evt Event.
    * @private
    */
   handleKeyDown_(evt) {
@@ -253,7 +261,7 @@ export class QueryModeSelector {
   }
 
   /**
-   * @param {Event|import("ol/events/Event.js").default} evt Event.
+   * @param {Event|import('ol/events/Event').default} evt Event.
    * @private
    */
   handleKeyUp_(evt) {

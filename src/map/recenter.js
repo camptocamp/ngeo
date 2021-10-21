@@ -49,8 +49,8 @@ const myModule = angular.module('ngeoRecenter', []);
  *
  * See our live example: [../examples/recenter.html](../examples/recenter.html)
  *
- * @htmlAttribute {import("ol/Map.js").default} ngeo-recenter-map The map.
- * @return {angular.IDirective} Directive Definition Object.
+ * @htmlAttribute {import('ol/Map').default} ngeo-recenter-map The map.
+ * @returns {angular.IDirective} Directive Definition Object.
  * @ngdoc directive
  * @ngname ngeoRecenter
  */
@@ -60,7 +60,7 @@ function mapResenterComponent() {
     link: ($scope, $element, $attrs) => {
       const mapExpr = $attrs.ngeoRecenterMap;
       /**
-       * @type {import("ol/Map.js").default}
+       * @type {import('ol/Map').default}
        */
       const map = $scope.$eval(mapExpr);
 

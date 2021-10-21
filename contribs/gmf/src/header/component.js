@@ -43,7 +43,7 @@ myModule.value(
   /**
    * @param {JQuery} $element Element.
    * @param {angular.IAttributes} $attrs Attributes.
-   * @return {string} Template URL.
+   * @returns {string} Template URL.
    */
   ($element, $attrs) => {
     const templateUrl = $attrs.gmfHeaderTemplateUrl;
@@ -56,7 +56,7 @@ myModule.value(
  * @param {angular.IAttributes} $attrs Attributes.
  * @param {function(JQuery, angular.IAttributes): string} gmfHeaderTemplateUrl
  *    Template function.
- * @return {string} Template URL.
+ * @returns {string} Template URL.
  * @ngInject
  * @private
  * @hidden

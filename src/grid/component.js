@@ -20,9 +20,9 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import {isPlatformModifierKeyOnly, isShiftKeyOnly} from 'ngeo/utils.js';
-import ngeoMiscFilters from 'ngeo/misc/filters.js';
-import {getRowUid} from 'ngeo/grid/Config.js';
+import {isPlatformModifierKeyOnly, isShiftKeyOnly} from 'ngeo/utils';
+import ngeoMiscFilters from 'ngeo/misc/filters';
+import {getRowUid} from 'ngeo/grid/Config';
 
 import 'floatthead';
 import 'angular-float-thead';
@@ -49,7 +49,7 @@ myModule.value(
   'ngeoGridTemplateUrl',
   /**
    * @param {angular.IAttributes} $attrs Attributes.
-   * @return {string} Template URL.
+   * @returns {string} Template URL.
    */
   ($attrs) => {
     const templateUrl = $attrs.ngeoGridTemplateurl;
@@ -60,7 +60,7 @@ myModule.value(
 /**
  * @param {angular.IAttributes} $attrs Attributes.
  * @param {function(angular.IAttributes): string} ngeoGridTemplateUrl Template function.
- * @return {string} Template URL.
+ * @returns {string} Template URL.
  * @ngInject
  * @private
  * @hidden
@@ -80,9 +80,8 @@ function ngeoGridTemplateUrl($attrs, ngeoGridTemplateUrl) {
  *       ngeo-grid-configuration="::ctrl.gridConfiguration"
  *     </ngeo-grid>
  *
- * @htmlAttribute {import("ngeo/grid/Config.js").default} ngeo-grid-configuration The
+ * @htmlAttribute {import('ngeo/grid/Config').default} ngeo-grid-configuration The
  * configuration to use.
- *
  * @ngdoc component
  * @ngname ngeoGrid
  */
@@ -112,7 +111,7 @@ export function GridController($scope) {
   this.scope_ = $scope;
 
   /**
-   * @type {?import("ngeo/grid/Config.js").default}
+   * @type {?import('ngeo/grid/Config').default}
    */
   this.configuration = null;
 
@@ -123,6 +122,7 @@ export function GridController($scope) {
 
   /**
    * The name of the column used to sort the grid.
+   *
    * @type {string}
    */
   this.sortedBy = '';
@@ -134,12 +134,13 @@ export function GridController($scope) {
 
   /**
    * Configuration object for float-thead.
+   *
    * @type {unknown}
    */
   this.floatTheadConfig = {
     /**
      * @param {JQuery} $table
-     * @return {JQuery<HTMLElement>}
+     * @returns {JQuery<HTMLElement>}
      */
     scrollContainer: function ($table) {
       return $table.closest('.ngeo-grid-table-container');
@@ -161,6 +162,7 @@ GridController.prototype.$onInit = function () {
  * Sort function that always puts undefined values to the bottom of the grid.
  * A new call will sort ascending. A next one will sort descending (and so
  * on).
+ *
  * @param {string} columnName The name of the column that should be used to
  *    sort the data.
  */
@@ -188,6 +190,7 @@ GridController.prototype.sort = function (columnName) {
 
 /**
  * Handler for clicks on a row.
+ *
  * @param {unknown} attributes An entry/row.
  * @param {JQueryEventObject} event Event.
  */
@@ -223,6 +226,7 @@ GridController.prototype.clickRow_ = function (attributes, shiftKey, platformMod
 
 /**
  * Selects all rows between the given row and the closest already selected row.
+ *
  * @param {unknown} attributes An entry/row.
  */
 GridController.prototype.selectRange_ = function (attributes) {
@@ -284,6 +288,7 @@ GridController.prototype.selectRange_ = function (attributes) {
 /**
  * Prevent the default browser behaviour of selecting text
  * when selecting multiple rows with SHIFT or CTRL/Meta.
+ *
  * @param {JQueryEventObject} event Event.
  */
 GridController.prototype.preventTextSelection = function (event) {

@@ -1,51 +1,68 @@
 extends:
-  - openlayers
+  - eslint:recommended
+  - plugin:jsdoc/recommended
   - plugin:@typescript-eslint/recommended
-env:
-  jquery: true
-parserOptions:
-  ecmaVersion: 2017
-  project: ./tsconfig-eslint.json
+  - plugin:@typescript-eslint/recommended-requiring-type-checking
+
 plugins:
+  - jsdoc
   - copyright
+  - '@typescript-eslint'
+
+parser: '@typescript-eslint/parser'
+parserOptions:
+  sourceType: module
+  ecmaVersion: 2020
+  project:
+    - tsconfig-eslint.json
+
+env:
+  es6: true
+  node: true
+  browser: true
+  jquery: true
+
 rules:
-  no-console: 0
-  import/no-unresolved: 0
-  no-unused-vars: error
-  prettier/prettier: 0
-  sort-imports-es6-autofix/sort-imports-es6: 0
-  jsdoc/require-param-description: 0
-  jsdoc/require-property-description: 0
-  jsdoc/require-returns-description: 0
-  jsdoc/check-types: 0
-  jsdoc/check-tag-names: 0
+  no-multi-asterisks: off
+  no-prototype-builtins: warn
+  no-case-declarations: warn
+  no-eq-null: error
+  no-multi-assign: error
+  no-negated-in-lhs: error
+  no-use-before-define:
+    - error
+    - nofunc
+  no-var: error
   copyright/copyright: error
-  '@typescript-eslint/indent': 0
-  '@typescript-eslint/no-unused-vars': 0
-  '@typescript-eslint/no-use-before-define': 0
-  '@typescript-eslint/camelcase': 0
-  '@typescript-eslint/no-unnecessary-type-assertion':
-    - error
-  '@typescript-eslint/no-for-in-array':
-    - error
-  '@typescript-eslint/no-this-alias':
-    - error
-  '@typescript-eslint/no-useless-constructor':
-    - error
-  '@typescript-eslint/prefer-for-of':
-    - error
-  '@typescript-eslint/prefer-includes':
-    - error
-  '@typescript-eslint/prefer-string-starts-ends-with':
-    - error
-  '@typescript-eslint/restrict-plus-operands':
-    - error
-  '@typescript-eslint/ban-ts-ignore': 0
-  '@typescript-eslint/explicit-function-return-type': 0
-  '@typescript-eslint/no-var-requires': 0
-  '@typescript-eslint/no-empty-function': 0
-  '@typescript-eslint/ban-ts-comment': 0
-  '@typescript-eslint/explicit-module-boundary-types': 0
+  jsdoc/require-param-type: off
+  jsdoc/require-property-type: off
+  jsdoc/require-returns-type: off
+  jsdoc/check-tag-names: warn
+  # not compatible with jsdoc
+  jsdoc/check-types: off
+  jsdoc/no-undefined-types: warn
+  jsdoc/require-returns-description: warn
+  jsdoc/require-param-description: warn
+  jsdoc/require-property-description: warn
+  '@typescript-eslint/no-var-requires': off
+  '@typescript-eslint/ban-ts-comment': off
+  '@typescript-eslint/no-explicit-any': off
+  '@typescript-eslint/no-empty-function': off
+  '@typescript-eslint/no-non-null-assertion': off
+  '@typescript-eslint/explicit-module-boundary-types': warn
+  '@typescript-eslint/no-unsafe-member-access': warn
+  '@typescript-eslint/no-unsafe-assignment': warn
+  '@typescript-eslint/no-unsafe-return': warn
+  '@typescript-eslint/no-unsafe-call': warn
+  '@typescript-eslint/no-floating-promises': warn
+  '@typescript-eslint/unbound-method': warn
+  '@typescript-eslint/restrict-template-expressions': warn
+  '@typescript-eslint/no-misused-promises': warn
+  '@typescript-eslint/require-await': warn
+  '@typescript-eslint/no-useless-constructor': error
+  '@typescript-eslint/prefer-for-of': error
+  '@typescript-eslint/prefer-includes': error
+  '@typescript-eslint/prefer-string-starts-ends-with': error
 
 settings:
   jsdoc:

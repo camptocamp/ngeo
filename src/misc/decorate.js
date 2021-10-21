@@ -19,12 +19,12 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import olInteractionInteraction from 'ol/interaction/Interaction.js';
-import olLayerBase from 'ol/layer/Base.js';
-import olLayerGroup from 'ol/layer/Group.js';
-import olLayerLayer from 'ol/layer/Layer.js';
-import olSourceImage from 'ol/source/Image.js';
-import olSourceTile from 'ol/source/Tile.js';
+import olInteractionInteraction from 'ol/interaction/Interaction';
+import olLayerBase from 'ol/layer/Base';
+import olLayerGroup from 'ol/layer/Group';
+import olLayerLayer from 'ol/layer/Layer';
+import olSourceImage from 'ol/source/Image';
+import olSourceTile from 'ol/source/Tile';
 
 /**
  * Provides a function that adds an "active" property (using
@@ -35,7 +35,7 @@ import olSourceTile from 'ol/source/Tile.js';
  *
  *      <input type="checkbox" ngModel="interaction.active" />
  *
- * @param {import("ol/interaction/Interaction.js").default} interaction Interaction to decorate.
+ * @param {import('ol/interaction/Interaction').default} interaction Interaction to decorate.
  */
 export function interactionDecoration(interaction) {
   console.assert(interaction instanceof olInteractionInteraction);
@@ -57,7 +57,7 @@ export function interactionDecoration(interaction) {
  *
  *      <input type="checkbox" ngModel="layer.visible" />
  *
- * @param {import("ol/layer/Base.js").default} layer Layer to decorate.
+ * @param {import('ol/layer/Base').default} layer Layer to decorate.
  */
 export function layerDecoration(layer) {
   console.assert(layer instanceof olLayerBase);
@@ -65,7 +65,7 @@ export function layerDecoration(layer) {
   Object.defineProperty(layer, 'visible', {
     configurable: true,
     /**
-     * @return {boolean} Visible.
+     * @returns {boolean} Visible.
      */
     get: () => layer.getVisible(),
     /**
@@ -79,7 +79,7 @@ export function layerDecoration(layer) {
   Object.defineProperty(layer, 'opacity', {
     configurable: true,
     /**
-     * @return {number} Opacity.
+     * @returns {number} Opacity.
      */
     get: () => layer.getOpacity(),
     /**
@@ -101,7 +101,7 @@ export function layerDecoration(layer) {
  *
  *      <span ng-if="layer.loading">please wait</span>
  *
- * @param {import("ol/layer/Base.js").default} layer layer.
+ * @param {import('ol/layer/Base').default} layer layer.
  * @param {angular.IScope} $scope Scope.
  */
 export function layerLoading(layer, $scope) {
@@ -133,10 +133,10 @@ export function layerLoading(layer, $scope) {
 
   if (layer instanceof olLayerGroup) {
     layer.getLayers().on(
-      /** @type {import('ol/Observable.js').EventTypes} */ ('add'),
+      /** @type {import('ol/Observable').EventTypes} */ ('add'),
       /** @type {function(?): ?} */ (
         /**
-         * @param {import("ol/Collection.js").CollectionEvent} olEvent the progress event.
+         * @param {import('ol/Collection').CollectionEvent} olEvent the progress event.
          */
         (olEvent) => {
           const newLayer = olEvent.element;
@@ -178,13 +178,13 @@ export function layerLoading(layer, $scope) {
 
   /**
    * @function
-   * @param {import("ol/layer/Base.js").default} layer Layer
+   * @param {import('ol/layer/Base').default} layer Layer
    * @private
    */
   function increment_(layer) {
     let load_count = /** @type {number} */ (layer.get('load_count'));
     /**
-     * @type {import("ol/layer/Base.js").default}
+     * @type {import('ol/layer/Base').default}
      */
     const parent = layer.get('parent_group');
     layer.set('load_count', ++load_count, true);
@@ -195,13 +195,13 @@ export function layerLoading(layer, $scope) {
 
   /**
    * @function
-   * @param {import("ol/layer/Base.js").default} layer Layer
+   * @param {import('ol/layer/Base').default} layer Layer
    * @private
    */
   function decrement_(layer) {
     let load_count = /** @type {number} */ (layer.get('load_count'));
     /**
-     * @type {import("ol/layer/Base.js").default}
+     * @type {import('ol/layer/Base').default}
      */
     const parent = layer.get('parent_group');
     layer.set('load_count', --load_count, true);

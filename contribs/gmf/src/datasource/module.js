@@ -20,12 +20,12 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import gmfDatasourceDataSourceBeingFiltered from 'gmf/datasource/DataSourceBeingFiltered.js';
-import gmfDatasourceExternalDataSourcesManager from 'gmf/datasource/ExternalDataSourcesManager.js';
-import gmfDatasourceFileGroup from 'gmf/datasource/fileGroup.js';
-import gmfDatasourceHelper from 'gmf/datasource/Helper.js';
-import gmfDatasourceManager from 'gmf/datasource/Manager.js';
-import gmfDatasourceWFSAliases from 'gmf/datasource/WFSAliases.js';
+import gmfDatasourceDataSourceBeingFiltered from 'gmf/datasource/DataSourceBeingFiltered';
+import gmfDatasourceExternalDataSourcesManager from 'gmf/datasource/ExternalDataSourcesManager';
+import gmfDatasourceFileGroup from 'gmf/datasource/fileGroup';
+import gmfDatasourceHelper from 'gmf/datasource/Helper';
+import gmfDatasourceManager from 'gmf/datasource/Manager';
+import gmfDatasourceWFSAliases from 'gmf/datasource/WFSAliases';
 
 /**
  * @type {angular.IModule}

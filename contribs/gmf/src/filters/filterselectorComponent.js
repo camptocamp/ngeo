@@ -20,40 +20,39 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import {CollectionEvent} from 'ol/Collection.js';
-import gmfAuthenticationService from 'gmf/authentication/Service.js';
+import {CollectionEvent} from 'ol/Collection';
 
-import gmfDatasourceDataSourceBeingFiltered from 'gmf/datasource/DataSourceBeingFiltered.js';
+import gmfDatasourceDataSourceBeingFiltered from 'gmf/datasource/DataSourceBeingFiltered';
 
-import gmfDatasourceHelper from 'gmf/datasource/Helper.js';
+import gmfDatasourceHelper from 'gmf/datasource/Helper';
 
-import GmfDatasourceOGC from 'gmf/datasource/OGC.js';
-import gmfFiltersSavedFilters from 'gmf/filters/SavedFilters.js';
+import GmfDatasourceOGC from 'gmf/datasource/OGC';
+import gmfFiltersSavedFilters from 'gmf/filters/SavedFilters';
 
-import ngeoMessageModalComponent from 'ngeo/message/modalComponent.js';
+import ngeoMessageModalComponent from 'ngeo/message/modalComponent';
 
-import ngeoMessageNotification from 'ngeo/message/Notification.js';
-import {MessageType} from 'ngeo/message/Message.js';
+import ngeoMessageNotification from 'ngeo/message/Notification';
+import {MessageType} from 'ngeo/message/Message';
 
-import ngeoFilterRuleHelper from 'ngeo/filter/RuleHelper.js';
+import ngeoFilterRuleHelper from 'ngeo/filter/RuleHelper';
 
-import ngeoFilterComponent from 'ngeo/filter/component.js';
-import {listen, unlistenByKey} from 'ol/events.js';
-import {remove as removeFromArray} from 'ol/array.js';
-import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr.js';
+import ngeoFilterComponent from 'ngeo/filter/component';
+import {listen, unlistenByKey} from 'ol/events';
+import {remove as removeFromArray} from 'ol/array';
+import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr';
 
-import 'bootstrap/js/src/dropdown.js';
+import 'bootstrap/js/src/dropdown';
+
+import user from 'ngeo/store/user';
 
 /**
  * @type {angular.IModule}
  * @hidden
  */
 const myModule = angular.module('gmfFilterselector', [
-  gmfAuthenticationService.name,
   gmfDatasourceDataSourceBeingFiltered.name,
   gmfDatasourceHelper.name,
   ngeoMapFeatureOverlayMgr.name,
-  ngeoMessageNotification.name,
   ngeoMessageModalComponent.name,
   ngeoFilterRuleHelper.name,
   ngeoFilterComponent.name,
@@ -75,7 +74,7 @@ myModule.value(
   'gmfFilterselectorTemplateUrl',
   /**
    * @param {angular.IAttributes} $attrs Attributes.
-   * @return {string} The template url.
+   * @returns {string} The template url.
    */
   ($attrs) => {
     const templateUrl = $attrs.gmfFilterselectorTemplateUrl;
@@ -86,7 +85,7 @@ myModule.value(
 /**
  * @param {angular.IAttributes} $attrs Attributes.
  * @param {function(angular.IAttributes): string} gmfFilterselectorTemplateUrl Template function.
- * @return {string} Template URL.
+ * @returns {string} Template URL.
  * @ngInject
  * @private
  * @hidden
@@ -100,32 +99,29 @@ function gmfFilterselectorTemplateUrl($attrs, gmfFilterselectorTemplateUrl) {
  *
  * Used metadata:
  *
- *  * `directedFilterAttributes`: List of attribute names which should have rules
+ *  - `directedFilterAttributes`: List of attribute names which should have rules
  *      already ready when using the filter tools. For WMS layers.
  *
  * Used functionalities:
  *
- *  * `preset_layer_filter`: Name of the layer (data source) that should be toggled in the filter tool upon
+ *  - `preset_layer_filter`: Name of the layer (data source) that should be toggled in the filter tool upon
  *      loading an application.
  *      Note: although this is a list, only one can be defined.
- *  * `filterable_layers`: A list of layer names that can be filtered, if empty the component will be hidden.
+ *  - `filterable_layers`: A list of layer names that can be filtered, if empty the component will be hidden.
  */
 export class FilterSelectorController {
   /**
    * @param {angular.IScope} $scope Angular scope.
    * @param {angular.ITimeoutService} $timeout Angular timeout service.
    * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
-   * @param {import('gmf/datasource/DataSourceBeingFiltered.js').DataSourceBeingFiltered} gmfDataSourceBeingFiltered
+   * @param {import('gmf/datasource/DataSourceBeingFiltered').DataSourceBeingFiltered} gmfDataSourceBeingFiltered
    *     The Gmf value service that determines the data source currently being filtered.
-   * @param {import("gmf/datasource/Helper.js").DatasourceHelper} gmfDataSourcesHelper Gmf data
+   * @param {import('gmf/datasource/Helper').DatasourceHelper} gmfDataSourcesHelper Gmf data
    *     sources helper service.
-   * @param {import("gmf/filters/SavedFilters.js").SavedFilter} gmfSavedFilters Gmf saved filters service.
-   * @param {import('gmf/authentication/Service.js').User} gmfUser User.
-   * @param {import("ngeo/message/Notification.js").MessageNotification} ngeoNotification Ngeo notification
-   *    service.
-   * @param {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr Ngeo
+   * @param {import('gmf/filters/SavedFilters').SavedFilter} gmfSavedFilters Gmf saved filters service.
+   * @param {import('ngeo/map/FeatureOverlayMgr').FeatureOverlayMgr} ngeoFeatureOverlayMgr Ngeo
    *    FeatureOverlay manager
-   * @param {import("ngeo/filter/RuleHelper.js").RuleHelper} ngeoRuleHelper Ngeo rule helper service.
+   * @param {import('ngeo/filter/RuleHelper').RuleHelper} ngeoRuleHelper Ngeo rule helper service.
    * @ngInject
    * @ngdoc controller
    * @ngname GmfFilterselectorController
@@ -137,8 +133,6 @@ export class FilterSelectorController {
     gmfDataSourceBeingFiltered,
     gmfDataSourcesHelper,
     gmfSavedFilters,
-    gmfUser,
-    ngeoNotification,
     ngeoFeatureOverlayMgr,
     ngeoRuleHelper
   ) {
@@ -150,7 +144,7 @@ export class FilterSelectorController {
     this.active = false;
 
     /**
-     * @type {?import("ol/Map.js").default}
+     * @type {?import('ol/Map').default}
      */
     this.map = null;
 
@@ -177,7 +171,8 @@ export class FilterSelectorController {
      * The data source that can either be selected from the list or have
      * its value set from an external source (for example: the layertree)
      * and that requires to be ready before it can be filtered.
-     * @type {import('gmf/datasource/DataSourceBeingFiltered.js').DataSourceBeingFiltered}
+     *
+     * @type {import('gmf/datasource/DataSourceBeingFiltered').DataSourceBeingFiltered}
      */
     this.gmfDataSourceBeingFiltered = gmfDataSourceBeingFiltered;
 
@@ -187,13 +182,13 @@ export class FilterSelectorController {
     );
 
     /**
-     * @type {import("gmf/datasource/Helper.js").DatasourceHelper}
+     * @type {import('gmf/datasource/Helper').DatasourceHelper}
      * @private
      */
     this.gmfDataSourcesHelper_ = gmfDataSourcesHelper;
 
     /**
-     * @type {import("gmf/filters/SavedFilters.js").SavedFilter}
+     * @type {import('gmf/filters/SavedFilters').SavedFilter}
      */
     this.gmfSavedFilters = gmfSavedFilters;
 
@@ -208,26 +203,33 @@ export class FilterSelectorController {
     );
 
     /**
-     * @type {import('gmf/authentication/Service.js').User}
+     * @type {import('ngeo/store/user').User}
      * @private
      */
-    this.gmfUser_ = gmfUser;
-
-    $scope.$watch(() => this.gmfUser_.functionalities, this.handleGmfUserFunctionalitiesChange_.bind(this));
+    this.gmfUser_ = null;
 
     /**
-     * @type {import("ngeo/message/Notification.js").MessageNotification}
+     * @type {Subscription[]}
      * @private
      */
-    this.ngeoNotification_ = ngeoNotification;
+    this.subscriptions_ = [];
+
+    this.subscriptions_.push(
+      user.getProperties().subscribe({
+        next: (value) => {
+          this.gmfUser_ = value;
+          this.handleGmfUserFunctionalitiesChange_();
+        },
+      })
+    );
 
     /**
-     * @type {import("ngeo/map/FeatureOverlay.js").FeatureOverlay}
+     * @type {import('ngeo/map/FeatureOverlay').FeatureOverlay}
      */
     this.featureOverlay = ngeoFeatureOverlayMgr.getFeatureOverlay();
 
     /**
-     * @type {import("ngeo/filter/RuleHelper.js").RuleHelper}
+     * @type {import('ngeo/filter/RuleHelper').RuleHelper}
      * @private
      */
     this.ngeoRuleHelper_ = ngeoRuleHelper;
@@ -240,17 +242,17 @@ export class FilterSelectorController {
     this.aRuleIsActive = false;
 
     /**
-     * @type {?import("ngeo/rule/Rule.js").default[]}
+     * @type {?import('ngeo/rule/Rule').default[]}
      */
     this.customRules = null;
 
     /**
-     * @type {?import("ngeo/rule/Rule.js").default[]}
+     * @type {?import('ngeo/rule/Rule').default[]}
      */
     this.directedRules = null;
 
     /**
-     * @type {import("gmf/datasource/OGC.js").default[]}
+     * @type {import('gmf/datasource/OGC').default[]}
      */
     this.filtrableDataSources = [];
 
@@ -261,16 +263,16 @@ export class FilterSelectorController {
     this.filtrableLayerNodeNames_ = null;
 
     /**
-     * @type {import("ol/Collection.js").default<import("gmf/datasource/OGC.js").default>}
+     * @type {import('ol/Collection').default<import('gmf/datasource/OGC').default>}
      * @private
      */
     this.gmfDataSources_ =
-      /** @type {import("ol/Collection.js").default<import("gmf/datasource/OGC.js").default>} */ (
+      /** @type {import('ol/Collection').default<import('gmf/datasource/OGC').default>} */ (
         gmfDataSourcesHelper.collection
       );
 
     /**
-     * @type {import("ol/events.js").EventsKey[]}
+     * @type {import('ol/events').EventsKey[]}
      * @private
      */
     this.listenerKeys_ = [];
@@ -278,7 +280,8 @@ export class FilterSelectorController {
     /**
      * The data source ready to be filtered, after it has been selected and
      * prepared.
-     * @type {?import("gmf/datasource/OGC.js").default}
+     *
+     * @type {?import('gmf/datasource/OGC').default}
      */
     this.readyDataSource = null;
 
@@ -324,6 +327,7 @@ export class FilterSelectorController {
     /**
      * The name of the data source that should be automatically selected
      * by this component.
+     *
      * @type {?string}
      * @private
      */
@@ -331,6 +335,13 @@ export class FilterSelectorController {
 
     // Initialize the data sources registration
     this.toggleDataSourceRegistration_();
+  }
+
+  /**
+   * Clear subscriptions.
+   */
+  $onDestroy() {
+    this.subscriptions_.forEach((sub) => sub.unsubscribe());
   }
 
   /**
@@ -394,7 +405,7 @@ export class FilterSelectorController {
    * If the data source is 'valid', add it to the list of filtrable data
    * sources.
    *
-   * @param {Event|import('ol/events/Event.js').default} evt Collection event.
+   * @param {Event|import('ol/events/Event').default} evt Collection event.
    * @private
    * @hidden
    */
@@ -412,7 +423,7 @@ export class FilterSelectorController {
    * sources. If the data source is 'valid', remove it from the list of
    * filtrable data sources.
    *
-   * @param {Event|import('ol/events/Event.js').default} evt Collection event.
+   * @param {Event|import('ol/events/Event').default} evt Collection event.
    * @private
    * @hidden
    */
@@ -430,7 +441,7 @@ export class FilterSelectorController {
    * data source is about to be registered, then the `filtrable` property
    * is set. Otherwise, it's used.
    *
-   * @param {import("gmf/datasource/OGC.js").default} dataSource Data source
+   * @param {import('gmf/datasource/OGC').default} dataSource Data source
    * @private
    * @hidden
    */
@@ -454,7 +465,8 @@ export class FilterSelectorController {
   /**
    * Unregister a data source if it's filtrable. Also, if it's the one
    * that was currently selected, deselect it.
-   * @param {import("gmf/datasource/OGC.js").default} dataSource Data source
+   *
+   * @param {import('gmf/datasource/OGC').default} dataSource Data source
    * @private
    * @hidden
    */
@@ -482,12 +494,12 @@ export class FilterSelectorController {
    * If 1) is true but not any of the others, then the server has not been
    * configured properly. In this case, a warning notification can be shown.
    *
-   * @param {import("gmf/datasource/OGC.js").default} dataSource GMF data source object
+   * @param {import('gmf/datasource/OGC').default} dataSource GMF data source object
    * @param {boolean} [opt_notify] Whether to show a warning notification or not
    *     in case of a data source that has its name is in the list of
    *     filtrable layer node names but it doesn't match the other requirements.
    *     Defaults to `true.`
-   * @return {boolean} Whether the data source is valid to add to the list or
+   * @returns {boolean} Whether the data source is valid to add to the list or
    *     not.
    * @private
    * @hidden
@@ -538,7 +550,7 @@ export class FilterSelectorController {
         );
         msgs.unshift(`${p1} ${p2} ${p3}`);
         console.warn(msgs.join(' '));
-        this.ngeoNotification_.notify({
+        ngeoMessageNotification.notify({
           msg: msgs.join(' '),
           type: MessageType.WARNING,
         });
@@ -551,7 +563,7 @@ export class FilterSelectorController {
   }
 
   /**
-   * @param {?import("gmf/datasource/OGC.js").default} dataSource Newly selected data source object.
+   * @param {?import('gmf/datasource/OGC').default} dataSource Newly selected data source object.
    * @private
    * @hidden
    */
@@ -604,8 +616,8 @@ export class FilterSelectorController {
   }
 
   /**
-   * @param {import("ngeo/datasource/DataSource.js").default} dataSource Data source.
-   * @return {?RuleCacheItem} Rule cache item.
+   * @param {import('ngeo/datasource/DataSource').default} dataSource Data source.
+   * @returns {?RuleCacheItem} Rule cache item.
    * @private
    * @hidden
    */
@@ -614,7 +626,7 @@ export class FilterSelectorController {
   }
 
   /**
-   * @param {import("ngeo/datasource/DataSource.js").default} dataSource Data source.
+   * @param {import('ngeo/datasource/DataSource').default} dataSource Data source.
    * @param {RuleCacheItem} item Rule cache item.
    * @private
    * @hidden
@@ -654,7 +666,7 @@ export class FilterSelectorController {
       const directedRules = this.directedRules ? this.ngeoRuleHelper_.serializeRules(this.directedRules) : [];
 
       // (2) Ask the service to save it
-      const item = /** @type {import("gmf/filters/SavedFilters.js").SavedFilterItem} */ ({
+      const item = /** @type {import('gmf/filters/SavedFilters').SavedFilterItem} */ ({
         condition,
         customRules,
         dataSourceId,
@@ -671,7 +683,7 @@ export class FilterSelectorController {
   /**
    * Load a saved filter item, replacing the current rules.
    *
-   * @param {import("gmf/filters/SavedFilters.js").SavedFilterItem} filterItem Filter item.
+   * @param {import('gmf/filters/SavedFilters').SavedFilterItem} filterItem Filter item.
    * @hidden
    */
   saveFilterLoadItem(filterItem) {
@@ -717,7 +729,7 @@ export class FilterSelectorController {
   /**
    * Remove a saved filter item.
    *
-   * @param {import("gmf/filters/SavedFilters.js").SavedFilterItem} item Filter item.
+   * @param {import('gmf/filters/SavedFilters').SavedFilterItem} item Filter item.
    * @hidden
    */
   saveFilterRemoveItem(item) {
@@ -731,8 +743,8 @@ export class FilterSelectorController {
 
 /**
  * @typedef {Object} RuleCacheItem
- * @property {import('ngeo/rule/Rule.js').default[]} customRules
- * @property {import('ngeo/rule/Rule.js').default[]} directedRules
+ * @property {import('ngeo/rule/Rule').default[]} customRules
+ * @property {import('ngeo/rule/Rule').default[]} directedRules
  */
 
 myModule.component('gmfFilterselector', {

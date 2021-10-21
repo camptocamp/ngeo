@@ -23,6 +23,10 @@
 
 const spawnSync = require('child_process').spawnSync;
 
+/**
+ * @param actual
+ * @param expected
+ */
 function match(actual, expected) {
   if (expected.test) {
     return expected.test(actual);
@@ -31,10 +35,19 @@ function match(actual, expected) {
   }
 }
 
+/**
+ * @param textArray
+ */
 function genCommentBody(textArray) {
-  return '// ' + textArray.join('\n// ') + '\n\n\n';
+  return `// ${textArray.join('\n// ')}\n\n\n`;
 }
 
+/**
+ * @param context
+ * @param leadingComments
+ * @param fixLines
+ * @param headerLines
+ */
 function genReplaceFixer(context, leadingComments, fixLines, headerLines) {
   return function (fixer) {
     const start = leadingComments[0].range[0];
@@ -56,6 +69,9 @@ function genReplaceFixer(context, leadingComments, fixLines, headerLines) {
   };
 }
 
+/**
+ * @param context
+ */
 function check(context) {
   const headerLines1 = ['The MIT License (MIT)', ''];
   const headerLines3 = [

@@ -19,34 +19,34 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import ngeoMapBackgroundLayerMgr from 'ngeo/map/BackgroundLayerMgr.js';
+import ngeoMapBackgroundLayerMgr from 'ngeo/map/BackgroundLayerMgr';
 import angular from 'angular';
 
 class Restorer {
   /**
    * @ngInject
-   * @param {import("ngeo/offline/Configuration.js").default} ngeoOfflineConfiguration
+   * @param {import('ngeo/offline/Configuration').default} ngeoOfflineConfiguration
    *    A service for customizing offline behaviour.
-   * @param {import("ngeo/map/BackgroundLayerMgr.js").MapBackgroundLayerManager} ngeoBackgroundLayerMgr
+   * @param {import('ngeo/map/BackgroundLayerMgr').MapBackgroundLayerManager} ngeoBackgroundLayerMgr
    *    The background layer manager.
    */
   constructor(ngeoOfflineConfiguration, ngeoBackgroundLayerMgr) {
     /**
      * @private
-     * @type {import("ngeo/offline/Configuration.js").default}
+     * @type {import('ngeo/offline/Configuration').default}
      */
     this.configuration_ = ngeoOfflineConfiguration;
 
     /**
      * @private
-     * @type {import("ngeo/map/BackgroundLayerMgr.js").MapBackgroundLayerManager}
+     * @type {import('ngeo/map/BackgroundLayerMgr').MapBackgroundLayerManager}
      */
     this.ngeoBackgroundLayerMgr_ = ngeoBackgroundLayerMgr;
   }
 
   /**
-   * @param {import("ol/Map.js").default} map The map to work on.
-   * @return {Promise<import("ol/extent.js").Extent>} A promise to the extent of the restored area.
+   * @param {import('ol/Map').default} map The map to work on.
+   * @returns {Promise<import('ol/extent').Extent>} A promise to the extent of the restored area.
    */
   restore(map) {
     return this.configuration_
@@ -56,9 +56,9 @@ class Restorer {
 
   /**
    * @protected
-   * @param {import("ol/Map.js").default} map A map
-   * @param {import("./index.js").OfflinePersistentContent} offlineContent The offline content
-   * @return {import("ol/extent.js").Extent} The extent of the restored area
+   * @param {import('ol/Map').default} map A map
+   * @param {import('./index').OfflinePersistentContent} offlineContent The offline content
+   * @returns {import('ol/extent').Extent} The extent of the restored area
    */
   doRestore(map, offlineContent) {
     map.getLayerGroup().getLayers().clear();

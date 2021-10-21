@@ -24,14 +24,14 @@ import {
   coordinatesToXY1,
   coordinatesToXY2,
   coordinatesToXY3,
-} from 'gmf/objectediting/coordinate.js';
-import olGeomLineString from 'ol/geom/LineString.js';
-import olGeomMultiLineString from 'ol/geom/MultiLineString.js';
-import olGeomMultiPoint from 'ol/geom/MultiPoint.js';
-import olGeomMultiPolygon from 'ol/geom/MultiPolygon.js';
-import olGeomPoint from 'ol/geom/Point.js';
-import olGeomPolygon from 'ol/geom/Polygon.js';
-import olGeomSimpleGeometry from 'ol/geom/SimpleGeometry.js';
+} from 'gmf/objectediting/coordinate';
+import olGeomLineString from 'ol/geom/LineString';
+import olGeomMultiLineString from 'ol/geom/MultiLineString';
+import olGeomMultiPoint from 'ol/geom/MultiPoint';
+import olGeomMultiPolygon from 'ol/geom/MultiPolygon';
+import olGeomPoint from 'ol/geom/Point';
+import olGeomPolygon from 'ol/geom/Polygon';
+import olGeomSimpleGeometry from 'ol/geom/SimpleGeometry';
 
 /**
  * Determines whether a given geometry is empty or not. A null or undefined
@@ -39,8 +39,8 @@ import olGeomSimpleGeometry from 'ol/geom/SimpleGeometry.js';
  * return a geometry or not, for example:
  * `gmf.objectediting.geom.isEmpty(feature.getGeometry())`.
  *
- * @param {?import("ol/geom/Geometry.js").default|undefined} geom Geometry.
- * @return {boolean} Whether the given geometry is empty or not. A null or
+ * @param {?import('ol/geom/Geometry').default|undefined} geom Geometry.
+ * @returns {boolean} Whether the given geometry is empty or not. A null or
  *     undefined geometry is considered empty.
  * @hidden
  */
@@ -56,7 +56,7 @@ export function isEmpty(geom) {
  * Convert all coordinates within a geometry object to XY, i.e. remove any
  * extra dimension other than X and Y to the coordinates of a geometry.
  *
- * @param {import("ol/geom/Geometry.js").default} geom Geometry
+ * @param {import('ol/geom/Geometry').default} geom Geometry
  * @hidden
  */
 export function toXY(geom) {

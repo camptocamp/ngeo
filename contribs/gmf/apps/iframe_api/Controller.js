@@ -32,8 +32,8 @@ import 'gmf/controllers/vars_desktop.scss';
 import angular from 'angular';
 import gmfControllersAbstractAPIController, {
   AbstractAPIController,
-} from 'gmf/controllers/AbstractAPIController.js';
-import appBase from '../appmodule.js';
+} from 'gmf/controllers/AbstractAPIController';
+import appBase from '../appmodule';
 
 if (!window.requestAnimationFrame) {
   alert(

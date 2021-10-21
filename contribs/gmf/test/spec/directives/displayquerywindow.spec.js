@@ -20,20 +20,20 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import olStyleStyle from 'ol/style/Style.js';
-import olFeature from 'ol/Feature.js';
+import olStyleStyle from 'ol/style/Style';
+import olFeature from 'ol/Feature';
 
 describe('gmf.query.windowComponent', () => {
-  /** @type {import('gmf/query/windowComponent.js').QueryWindowController} */
+  /** @type {import('gmf/query/windowComponent').QueryWindowController} */
   let displayQueriesController;
-  /** @type {import('ngeo/query/MapQuerent.js').QueryResult} */
+  /** @type {import('ngeo/query/MapQuerent').QueryResult} */
   let ngeoQueryResult;
   let $element;
   /** @type {angular.IScope} */
   let $scope;
   /** @type {angular.IScope} */
   let $rootScope;
-  /** @type {import('ngeo/statemanager/WfsPermalink.js').QueryResultSource[]} */
+  /** @type {import('ngeo/statemanager/WfsPermalink').QueryResultSource[]} */
   let sources;
 
   beforeEach(

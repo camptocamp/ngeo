@@ -21,7 +21,7 @@
 
 /**
  * @param {!Blob} blob A blob
- * @return {Promise<string>} data URL
+ * @returns {Promise<string>} data URL
  */
 function blobToDataUrl(blob) {
   return new Promise((resolve, reject) => {
@@ -36,8 +36,8 @@ function blobToDataUrl(blob) {
 
 export default class TileDownloader {
   /**
-   * @param {import("./index.js").OfflineTile[]} tiles An array of tiles to download.
-   * @param {import("./index.js").OfflineOnTileDownload} callbacks The callbacks.
+   * @param {import('./index').OfflineTile[]} tiles An array of tiles to download.
+   * @param {import('./index').OfflineOnTileDownload} callbacks The callbacks.
    * @param {number} workers The maximum number of workers.
    */
   constructor(tiles, callbacks, workers) {
@@ -53,14 +53,14 @@ export default class TileDownloader {
     this.wasStarted_ = false;
 
     /**
-     * @type {import("./index.js").OfflineTile[]}
+     * @type {import('./index').OfflineTile[]}
      * @private
      */
     this.tiles_ = tiles;
 
     /**
      * @private
-     * @type {import("./index.js").OfflineOnTileDownload}
+     * @type {import('./index').OfflineOnTileDownload}
      */
     this.callbacks_ = callbacks;
 
@@ -114,7 +114,7 @@ export default class TileDownloader {
   }
 
   /**
-   * @return {Promise<void>} A promise that resolves when the downloads are complete (failing or not)
+   * @returns {Promise<void>} A promise that resolves when the downloads are complete (failing or not)
    */
   download() {
     if (this.promise_) {

@@ -35,7 +35,8 @@
 export default function (toolContext, activePropertyName) {
   /**
    * A getter function to get the active state of the tool.
-   * @return {boolean} Is active.
+   *
+   * @returns {boolean} Is active.
    */
   this.getActive = function () {
     // @ts-ignore
@@ -44,6 +45,7 @@ export default function (toolContext, activePropertyName) {
 
   /**
    * A setter function to set the active state of the tool.
+   *
    * @param {boolean} newVal New active state.
    */
   this.setActive = function (newVal) {

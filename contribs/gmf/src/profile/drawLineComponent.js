@@ -20,13 +20,13 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import olCollection from 'ol/Collection.js';
-import olInteractionDraw from 'ol/interaction/Draw.js';
-import olMap from 'ol/Map.js';
-import olStyleStyle from 'ol/style/Style.js';
-import olStyleStroke from 'ol/style/Stroke.js';
-import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr.js';
-import {interactionDecoration} from 'ngeo/misc/decorate.js';
+import olCollection from 'ol/Collection';
+import olInteractionDraw from 'ol/interaction/Draw';
+import olMap from 'ol/Map';
+import olStyleStyle from 'ol/style/Style';
+import olStyleStroke from 'ol/style/Stroke';
+import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr';
+import {interactionDecoration} from 'ngeo/misc/decorate';
 
 /**
  * @type {angular.IModule}
@@ -48,13 +48,13 @@ const myModule = angular.module('gmfDrawProfileLine', [ngeoMapFeatureOverlayMgr.
  *      </gmf-drawprofileline>
  *
  *
- * @htmlAttribute {import("ol/Map.js").default} gmf-drawprofileline-map The map.
- * @htmlAttribute {import("ol/geom/LineString.js").default} gmf-drawprofileline-line The variable to
+ * @htmlAttribute {import('ol/Map').default} gmf-drawprofileline-map The map.
+ * @htmlAttribute {import('ol/geom/LineString').default} gmf-drawprofileline-line The variable to
  *     connect with the drawn line.
  * @htmlAttribute {boolean} [gmf]-drawprofileline-active Active the component.
- * @htmlAttribute {import("ol/style/Style.js").default} [gmf]-drawprofileline-style Optional style
+ * @htmlAttribute {import('ol/style/Style').default} [gmf]-drawprofileline-style Optional style
  *     for the drawn line.
- * @return {angular.IDirective} Directive Definition Object.
+ * @returns {angular.IDirective} Directive Definition Object.
  * @ngdoc directive
  * @ngname gmfDrawprofileline
  */
@@ -77,7 +77,7 @@ myModule.directive('gmfDrawprofileline', profileDrawLineComponent);
 /**
  * @param {angular.IScope} $scope Scope.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
- * @param {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr Feature overlay
+ * @param {import('ngeo/map/FeatureOverlayMgr').FeatureOverlayMgr} ngeoFeatureOverlayMgr Feature overlay
  *    manager.
  * @class
  * @hidden
@@ -87,12 +87,12 @@ myModule.directive('gmfDrawprofileline', profileDrawLineComponent);
  */
 export function Controller($scope, $timeout, ngeoFeatureOverlayMgr) {
   /**
-   * @type {?import("ol/geom/LineString.js").default}
+   * @type {?import('ol/geom/LineString').default}
    */
   this.line = null;
 
   /**
-   * @type {?import("ol/Map.js").default}
+   * @type {?import('ol/Map').default}
    */
   this.map_ = null;
 
@@ -102,7 +102,7 @@ export function Controller($scope, $timeout, ngeoFeatureOverlayMgr) {
   this.active = false;
 
   /**
-   * @type {import("ol/Collection.js").default<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>}
+   * @type {import('ol/Collection').default<import('ol/Feature').default<import('ol/geom/Geometry').default>>}
    */
   this.features_ = new olCollection();
 
@@ -128,7 +128,7 @@ export function Controller($scope, $timeout, ngeoFeatureOverlayMgr) {
   overlay.setStyle(style);
 
   /**
-   * @type {import("ol/interaction/Draw.js").default}
+   * @type {import('ol/interaction/Draw').default}
    */
   this.interaction = new olInteractionDraw({
     type: 'LineString',
@@ -138,19 +138,19 @@ export function Controller($scope, $timeout, ngeoFeatureOverlayMgr) {
   interactionDecoration(this.interaction);
 
   // Clear the line as soon as a new drawing is started.
-  this.interaction.on(/** @type {import('ol/Observable.js').EventTypes} */ ('drawstart'), (event) => {
+  this.interaction.on(/** @type {import('ol/Observable').EventTypes} */ ('drawstart'), (event) => {
     this.features_.clear();
   });
 
   // Update the profile with the new geometry.
   this.interaction.on(
-    /** @type {import('ol/Observable.js').EventTypes} */ ('drawend'),
+    /** @type {import('ol/Observable').EventTypes} */ ('drawend'),
     /** @type {function(?): ?} */ (
       /**
-       * @param {import('lib/ol.interaction.Draw.js').DrawEvent} event
+       * @param {import('lib/ol.interaction.Draw').DrawEvent} event
        */
       (event) => {
-        this.line = /** @type {import('ol/geom/LineString.js').default} */ (event.feature.getGeometry());
+        this.line = /** @type {import('ol/geom/LineString').default} */ (event.feature.getGeometry());
         // using timeout to prevent double click to zoom the map
         $timeout(() => {
           this.interaction.setActive(false);

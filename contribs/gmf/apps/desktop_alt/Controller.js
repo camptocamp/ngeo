@@ -32,15 +32,15 @@ import './sass/vars_desktop_alt.scss';
 import angular from 'angular';
 import gmfControllersAbstractDesktopController, {
   AbstractDesktopController,
-} from 'gmf/controllers/AbstractDesktopController.js';
-import appBase from '../appmodule.js';
-import gmfImportModule from 'gmf/import/module.js';
-import gmfFloorModule from 'gmf/floor/module.js';
-import gmfLidarprofileModule from 'gmf/lidarprofile/module.js';
-import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
-import ngeoStreetviewModule from 'ngeo/streetview/module.js';
-import ngeoRoutingModule from 'ngeo/routing/module.js';
-import ngeoStatemanagerWfsPermalink from 'ngeo/statemanager/WfsPermalink.js';
+} from 'gmf/controllers/AbstractDesktopController';
+import appBase from '../appmodule';
+import gmfImportModule from 'gmf/import/module';
+import gmfFloorModule from 'gmf/floor/module';
+import gmfLidarprofileModule from 'gmf/lidarprofile/module';
+import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate';
+import ngeoStreetviewModule from 'ngeo/streetview/module';
+import ngeoRoutingModule from 'ngeo/routing/module';
+import ngeoStatemanagerWfsPermalink from 'ngeo/statemanager/WfsPermalink';
 
 if (!window.requestAnimationFrame) {
   alert(

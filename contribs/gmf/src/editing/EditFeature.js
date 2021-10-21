@@ -20,8 +20,8 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import olFormatGeoJSON from 'ol/format/GeoJSON.js';
-import {appendParams as olUriAppendParams} from 'ol/uri.js';
+import olFormatGeoJSON from 'ol/format/GeoJSON';
+import {appendParams as olUriAppendParams} from 'ol/uri';
 
 /**
  * @typedef {Object} ComparisonFilter
@@ -64,8 +64,8 @@ export function EditingEditFeature($http, gmfLayersUrl) {
  * of layer ids inside a specified extent.
  *
  * @param {number[]} layerIds List of layer ids to get the features from.
- * @param {import("ol/extent.js").Extent} extent The extent where to get the features from.
- * @return {angular.IPromise<import("ol/Feature.js").default<import("ol/geom/Geometry.js").default>[]>} Promise.
+ * @param {import('ol/extent').Extent} extent The extent where to get the features from.
+ * @returns {angular.IPromise<import('ol/Feature').default<import('ol/geom/Geometry').default>[]>} Promise.
  */
 EditingEditFeature.prototype.getFeaturesInExtent = function (layerIds, extent) {
   const url = olUriAppendParams(`${this.baseUrl_}/${layerIds.join(',')}`, {
@@ -75,7 +75,7 @@ EditingEditFeature.prototype.getFeaturesInExtent = function (layerIds, extent) {
     .get(url)
     .then(
       (response) =>
-        /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>[]} */ (
+        /** @type {import('ol/Feature').default<import('ol/geom/Geometry').default>[]} */ (
           new olFormatGeoJSON().readFeatures(response.data)
         )
     );
@@ -92,7 +92,7 @@ EditingEditFeature.prototype.getFeaturesInExtent = function (layerIds, extent) {
  *
  * @param {string[]} layerIds List of layer ids to get the features from.
  * @param {ComparisonFilter[]} filters List of comparison filters
- * @return {angular.IPromise<import("ol/Feature.js").default<import("ol/geom/Geometry.js").default>[]>} Promise.
+ * @returns {angular.IPromise<import('ol/Feature').default<import('ol/geom/Geometry').default>[]>} Promise.
  */
 EditingEditFeature.prototype.getFeaturesWithComparisonFilters = function (layerIds, filters) {
   const properties = [];
@@ -112,7 +112,7 @@ EditingEditFeature.prototype.getFeaturesWithComparisonFilters = function (layerI
     .get(url)
     .then(
       (response) =>
-        /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>[]} */ (
+        /** @type {import('ol/Feature').default<import('ol/geom/Geometry').default>[]} */ (
           new olFormatGeoJSON().readFeatures(response.data)
         )
     );
@@ -120,8 +120,8 @@ EditingEditFeature.prototype.getFeaturesWithComparisonFilters = function (layerI
 
 /**
  * @param {number} layerId The layer id that contains the feature.
- * @param {import("ol/Feature.js").default<import("ol/geom/Geometry.js").default>[]} features List of features to insert.
- * @return {angular.IHttpPromise<ArrayBuffer|Document|Node|string>} Promise.
+ * @param {import('ol/Feature').default<import('ol/geom/Geometry').default>[]} features List of features to insert.
+ * @returns {angular.IHttpPromise<ArrayBuffer|Document|Node|string>} Promise.
  */
 EditingEditFeature.prototype.insertFeatures = function (layerId, features) {
   const url = `${this.baseUrl_}/${layerId}`;
@@ -134,8 +134,8 @@ EditingEditFeature.prototype.insertFeatures = function (layerId, features) {
 
 /**
  * @param {number} layerId The layer id that contains the feature.
- * @param {import("ol/Feature.js").default<import("ol/geom/Geometry.js").default>} feature The feature to update.
- * @return {angular.IHttpPromise<ArrayBuffer|Document|Node|string>} Promise.
+ * @param {import('ol/Feature').default<import('ol/geom/Geometry').default>} feature The feature to update.
+ * @returns {angular.IHttpPromise<ArrayBuffer|Document|Node|string>} Promise.
  */
 EditingEditFeature.prototype.updateFeature = function (layerId, feature) {
   const url = `${this.baseUrl_}/${layerId.toString()}/${feature.getId()}`;
@@ -148,8 +148,8 @@ EditingEditFeature.prototype.updateFeature = function (layerId, feature) {
 
 /**
  * @param {number} layerId The layer id that contains the feature.
- * @param {import("ol/Feature.js").default<import("ol/geom/Geometry.js").default>} feature The feature to delete.
- * @return {angular.IHttpPromise<ArrayBuffer|Document|Node|string>} Promise.
+ * @param {import('ol/Feature').default<import('ol/geom/Geometry').default>} feature The feature to delete.
+ * @returns {angular.IHttpPromise<ArrayBuffer|Document|Node|string>} Promise.
  */
 EditingEditFeature.prototype.deleteFeature = function (layerId, feature) {
   const url = `${this.baseUrl_}/${layerId.toString()}/${feature.getId()}`;

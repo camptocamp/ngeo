@@ -23,14 +23,14 @@
 
 import angular from 'angular';
 
-import gmfDatasourceExternalDataSourcesManager from 'gmf/datasource/ExternalDataSourcesManager.js';
+import gmfDatasourceExternalDataSourcesManager from 'gmf/datasource/ExternalDataSourcesManager';
 
-import gmfImportWmsCapabilityLayertreeComponent from 'gmf/import/wmsCapabilityLayertreeComponent.js';
+import gmfImportWmsCapabilityLayertreeComponent from 'gmf/import/wmsCapabilityLayertreeComponent';
 
-import gmfImportWmtsCapabilityLayertreeComponent from 'gmf/import/wmtsCapabilityLayertreeComponent.js';
+import gmfImportWmtsCapabilityLayertreeComponent from 'gmf/import/wmtsCapabilityLayertreeComponent';
 
-import ngeoQueryQuerent from 'ngeo/query/Querent.js';
-import {guessServiceTypeByUrl, Type} from 'ngeo/datasource/OGC.js';
+import ngeoQueryQuerent from 'ngeo/query/Querent';
+import {guessServiceTypeByUrl, Type} from 'ngeo/datasource/OGC';
 
 /**
  * @type {angular.IModule}
@@ -58,7 +58,7 @@ myModule.value(
   'gmfImportdatasourceTemplateUrl',
   /**
    * @param {angular.IAttributes} $attrs Attributes.
-   * @return {string} The template url.
+   * @returns {string} The template url.
    */
   ($attrs) => {
     const templateUrl = $attrs.gmfImportdatasourceTemplateUrl;
@@ -69,7 +69,7 @@ myModule.value(
 /**
  * @param {angular.IAttributes} $attrs Attributes.
  * @param {function(angular.IAttributes): string} gmfImportdatasourceTemplateUrl Template function.
- * @return {string} Template URL.
+ * @returns {string} Template URL.
  * @ngInject
  * @private
  * @hidden
@@ -96,10 +96,10 @@ export class Controller {
    * @param {angular.IFilterService} $filter Angular filter.
    * @param {angular.IScope} $scope Angular scope.
    * @param {angular.ITimeoutService} $timeout Angular timeout service.
-   * @param {import("gmf/datasource/ExternalDataSourcesManager.js").ExternalDatSourcesManager} gmfExternalDataSourcesManager
+   * @param {import('gmf/datasource/ExternalDataSourcesManager').ExternalDatSourcesManager} gmfExternalDataSourcesManager
    *     GMF service responsible of managing external data sources.
-   * @param {import("ngeo/query/Querent.js").Querent} ngeoQuerent Ngeo querent service.
-   * @param {import('gmf/options.js').gmfExternalOGCServers} gmfExternalOGCServers The options.
+   * @param {import('ngeo/query/Querent').Querent} ngeoQuerent Ngeo querent service.
+   * @param {import('gmf/options').gmfExternalOGCServers} gmfExternalOGCServers The options.
    * @param {angular.gettext.gettextCatalog} gettextCatalog The gettextCatalog service.
    * @ngInject
    * @ngdoc controller
@@ -118,7 +118,7 @@ export class Controller {
     // Binding properties
 
     /**
-     * @type {?import("ol/Map.js").default}
+     * @type {?import('ol/Map').default}
      */
     this.map = null;
 
@@ -143,13 +143,13 @@ export class Controller {
     this.timeout_ = $timeout;
 
     /**
-     * @type {import("gmf/datasource/ExternalDataSourcesManager.js").ExternalDatSourcesManager}
+     * @type {import('gmf/datasource/ExternalDataSourcesManager').ExternalDatSourcesManager}
      * @private
      */
     this.gmfExternalDataSourcesManager_ = gmfExternalDataSourcesManager;
 
     /**
-     * @type {import("ngeo/query/Querent.js").Querent}
+     * @type {import('ngeo/query/Querent').Querent}
      * @private
      */
     this.ngeoQuerent_ = ngeoQuerent;
@@ -209,27 +209,29 @@ export class Controller {
     this.pending = false;
 
     /**
-     * @type {import('ngeo/misc/filters.js').unitPrefix}
+     * @type {import('ngeo/misc/filters').unitPrefix}
      * @private
      */
-    this.unitPrefixFormat_ = /** @type {import('ngeo/misc/filters.js').unitPrefix} */ (
+    this.unitPrefixFormat_ = /** @type {import('ngeo/misc/filters').unitPrefix} */ (
       $filter('ngeoUnitPrefix')
     );
 
     /**
      * Current WMS Capabilities that were connected.
+     *
      * @type {?any}
      */
     this.wmsCapabilities = null;
 
     /**
      * Current WTMS Capabilities that were connected.
+     *
      * @type {?any}
      */
     this.wmtsCapabilities = null;
 
     /**
-     * @type {?Bloodhound<import('gmf/options.js').ExternalOGCServer>}
+     * @type {?Bloodhound<import('gmf/options').ExternalOGCServer>}
      * @private
      */
     this.serversEngine_ = null;
@@ -239,7 +241,7 @@ export class Controller {
      */
     this.isLoading = false;
 
-    /** @type {import('gmf/options.js').gmfExternalOGCServers} */
+    /** @type {import('gmf/options').gmfExternalOGCServers} */
     const servers = gmfExternalOGCServers;
 
     if (servers) {
@@ -277,7 +279,7 @@ export class Controller {
     if (this.serversEngine_) {
       /**
        * @param {string} query Query string.
-       * @param {function(import('gmf/options.js').ExternalOGCServer[]):void} sync
+       * @param {function(import('gmf/options').ExternalOGCServer[]):void} sync
        */
       const serversEngineWithDefaults = (query, sync) => {
         if (!this.serversEngine_) {
@@ -313,7 +315,7 @@ export class Controller {
             'typeahead:select',
             /**
              * @param {unknown} ev
-             * @param {import('gmf/options.js').ExternalOGCServer} suggestion
+             * @param {import('gmf/options').ExternalOGCServer} suggestion
              */
             (ev, suggestion) => {
               this.timeout_(() => {
@@ -392,7 +394,7 @@ export class Controller {
   }
 
   /**
-   * @return {string} The name of the file and human-readable size.
+   * @returns {string} The name of the file and human-readable size.
    */
   get fileNameAndSize() {
     if (!this.file) {
@@ -431,6 +433,7 @@ export class Controller {
    * - _searchPrefix: substring before searchText in layer.Title.
    * - _searchMatch: substring matching searchText in layer.Title.
    * - _searchSuffix: substring after searchText in layer.Title.
+   *
    * @param {any} layer WMS Capability Layer object.
    * @param {boolean} visible Force layer to be visible.
    */

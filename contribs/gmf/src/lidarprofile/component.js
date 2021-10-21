@@ -32,7 +32,7 @@ myModule.value(
   /**
    * @param {JQuery} $element Element.
    * @param {angular.IAttributes} $attrs Attributes.
-   * @return {string} Template.
+   * @returns {string} Template.
    */
   ($element, $attrs) => {
     const templateUrl = $attrs.gmfLidarprofileTemplateUrl;
@@ -55,7 +55,7 @@ myModule.run(
  * @param {JQuery} $element Element.
  * @param {angular.IAttributes} $attrs Attributes.
  * @param {function(JQuery, angular.IAttributes): string} gmfLidarprofileTemplateUrl Template function.
- * @return {string} Template URL.
+ * @returns {string} Template URL.
  * @ngInject
  * @private
  * @hidden
@@ -102,12 +102,14 @@ export class Controller {
   constructor($scope) {
     /**
      * The OpenLayers LineStringt that defines the profile
-     * @type {?import("ol/geom/LineString.js").default}
+     *
+     * @type {?import('ol/geom/LineString').default}
      */
     this.line = null;
 
     /**
      * The profile active state
+     *
      * @type {boolean}
      */
     this.active = false;

@@ -20,9 +20,9 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import gmfObjecteditingQuery from 'gmf/objectediting/Query.js';
-import {listen, unlistenByKey} from 'ol/events.js';
-import MapBrowserEvent from 'ol/MapBrowserEvent.js';
+import gmfObjecteditingQuery from 'gmf/objectediting/Query';
+import {listen, unlistenByKey} from 'ol/events';
+import MapBrowserEvent from 'ol/MapBrowserEvent';
 
 /**
  * @type {angular.IModule}
@@ -46,12 +46,12 @@ const myModule = angular.module('gmfObjecteditingGetWMSFeatureComponent', [gmfOb
  *
  * @htmlAttribute {boolean} gmf-objecteditinggetwmsfeature-active Whether the
  *     directive is active or not.
- * @htmlAttribute {import("ol/Collection.js").default} gmf-objecteditinggetwmsfeature-features
+ * @htmlAttribute {import('ol/Collection').default} gmf-objecteditinggetwmsfeature-features
  *     The collection of features where to add those created by this directive.
- * @htmlAttribute {import('gmf/objectediting/toolsComponent.js').ObjectEditingQueryableLayerInfo}
+ * @htmlAttribute {import('gmf/objectediting/toolsComponent').ObjectEditingQueryableLayerInfo}
  *     gmf-objecteditinggetwmsfeature-layerinfo Queryable layer info.
- * @htmlAttribute {import("ol/Map.js").default} gmf-objecteditinggetwmsfeature-map The map.
- * @return {angular.IDirective} The directive specs.
+ * @htmlAttribute {import('ol/Map').default} gmf-objecteditinggetwmsfeature-map The map.
+ * @returns {angular.IDirective} The directive specs.
  * @ngInject
  * @ngdoc directive
  * @ngname gmfObjecteditinggetwmsfeature
@@ -73,7 +73,7 @@ myModule.directive('gmfObjecteditinggetwmsfeature', objectEditingGetWMSFeatureCo
 
 /**
  * @param {angular.IScope} $scope Scope.
- * @param {import("gmf/objectediting/Query.js").ObjectEditingQuery} gmfObjectEditingQuery GMF ObjectEditing
+ * @param {import('gmf/objectediting/Query').ObjectEditingQuery} gmfObjectEditingQuery GMF ObjectEditing
  *     query service.
  * @class
  * @hidden
@@ -92,29 +92,29 @@ export function Controller($scope, gmfObjectEditingQuery) {
   $scope.$watch(() => this.active, this.handleActiveChange_.bind(this));
 
   /**
-   * @type {?import("ol/Collection.js").default<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>}
+   * @type {?import('ol/Collection').default<import('ol/Feature').default<import('ol/geom/Geometry').default>>}
    */
   this.features = null;
 
   /**
-   * @type {?import('gmf/objectediting/toolsComponent.js').ObjectEditingQueryableLayerInfo}
+   * @type {?import('gmf/objectediting/toolsComponent').ObjectEditingQueryableLayerInfo}
    */
   this.layerInfo = null;
 
   /**
-   * @type {?import("ol/Map.js").default}
+   * @type {?import('ol/Map').default}
    */
   this.map = null;
 
   // Injected properties
 
   /**
-   * @type {import("gmf/objectediting/Query.js").ObjectEditingQuery}
+   * @type {import('gmf/objectediting/Query').ObjectEditingQuery}
    */
   this.gmfObjectEditingQuery_ = gmfObjectEditingQuery;
 
   /**
-   * @type {import("ol/events.js").EventsKey[]}
+   * @type {import('ol/events').EventsKey[]}
    */
   this.listenerKeys_ = [];
 }
@@ -134,7 +134,7 @@ Controller.prototype.handleActiveChange_ = function (active) {
 };
 
 /**
- * @param {Event|import('ol/events/Event.js').default} evt Event.
+ * @param {Event|import('ol/events/Event').default} evt Event.
  */
 Controller.prototype.handleMapClick_ = function (evt) {
   if (evt instanceof MapBrowserEvent) {

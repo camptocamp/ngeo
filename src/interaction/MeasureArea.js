@@ -19,9 +19,9 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import ngeoInteractionMeasure, {getFormattedArea} from 'ngeo/interaction/Measure.js';
-import olInteractionDraw from 'ol/interaction/Draw.js';
-import Polygon from 'ol/geom/Polygon.js';
+import ngeoInteractionMeasure, {getFormattedArea} from 'ngeo/interaction/Measure';
+import olInteractionDraw from 'ol/interaction/Draw';
+import Polygon from 'ol/geom/Polygon';
 
 /**
  * Interaction dedicated to measure length.
@@ -30,9 +30,9 @@ import Polygon from 'ol/geom/Polygon.js';
  */
 export default class extends ngeoInteractionMeasure {
   /**
-   * @param {import('ngeo/misc/filters.js').unitPrefix} format The format function
+   * @param {import('ngeo/misc/filters').unitPrefix} format The format function
    * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
-   * @param {import('ngeo/interaction/Measure.js').MeasureOptions} [options] Options
+   * @param {import('ngeo/interaction/Measure').MeasureOptions} [options] Options
    */
   constructor(format, gettextCatalog, options = {}) {
     super(options);
@@ -49,22 +49,24 @@ export default class extends ngeoInteractionMeasure {
     }
     /**
      * Message to show after the first point is clicked.
+     *
      * @type {Element}
      */
     this.continueMsg = continueMsg;
 
     /**
      * The format function
-     * @type {import('ngeo/misc/filters.js').unitPrefix}
+     *
+     * @type {import('ngeo/misc/filters').unitPrefix}
      */
     this.format = format;
   }
 
   /**
-   * @param {import("ol/style/Style.js").StyleLike} style The sketchStyle used for the drawing
+   * @param {import('ol/style/Style').StyleLike} style The sketchStyle used for the drawing
    *    interaction.
-   * @param {import("ol/source/Vector.js").default<import("ol/geom/Polygon.js").default>} source Vector source.
-   * @return {olInteractionDraw|import("ngeo/interaction/MobileDraw.js").default} The interaction
+   * @param {import('ol/source/Vector').default<import('ol/geom/Polygon').default>} source Vector source.
+   * @returns {olInteractionDraw|import('ngeo/interaction/MobileDraw').default} The interaction
    */
   createDrawInteraction(style, source) {
     return new olInteractionDraw({
@@ -75,7 +77,7 @@ export default class extends ngeoInteractionMeasure {
   }
 
   /**
-   * @param {function(string, ?import("ol/coordinate.js").Coordinate): void} callback The function
+   * @param {function(string, ?import('ol/coordinate').Coordinate): void} callback The function
    *     to be called.
    */
   handleMeasure(callback) {

@@ -19,10 +19,10 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import ngeoCustomEvent from 'ngeo/CustomEvent.js';
-import {listen, unlistenByKey} from 'ol/events.js';
-import olOverlay from 'ol/Overlay.js';
-import olOverlayPositioning from 'ol/OverlayPositioning.js';
+import ngeoCustomEvent from 'ngeo/CustomEvent';
+import {listen, unlistenByKey} from 'ol/events';
+import olOverlay from 'ol/Overlay';
+import olOverlayPositioning from 'ol/OverlayPositioning';
 
 /**
  * The options for an action item for the contextual menu overlay.
@@ -48,12 +48,13 @@ import olOverlayPositioning from 'ol/OverlayPositioning.js';
  * An OpenLayers overlay that shows a contextual menu with configurable actions
  * anchored from its top left to a specific location. An event is fired when
  * any of the action is clicked.
+ *
  * @hidden
  */
 export default class extends olOverlay {
   /**
    * @param {MenuOptions} [menuOptions] Menu options.
-   * @param {import('ol/Overlay.js').Options} [options] Overlay options.
+   * @param {import('ol/Overlay').Options} [options] Overlay options.
    */
   constructor(menuOptions, options = {}) {
     options.positioning = olOverlayPositioning.TOP_LEFT;
@@ -64,13 +65,13 @@ export default class extends olOverlay {
     super(options);
 
     /**
-     * @type {import("ol/events.js").EventsKey[]}
+     * @type {import('ol/events').EventsKey[]}
      * @private
      */
     this.listenerKeys_ = [];
 
     /**
-     * @type {?import("ol/events.js").EventsKey}
+     * @type {?import('ol/events').EventsKey}
      * @private
      */
     this.clickOutListenerKey_ = null;
@@ -126,7 +127,7 @@ export default class extends olOverlay {
   }
 
   /**
-   * @param {import("ol/PluggableMap.js").default|undefined} map Map.
+   * @param {import('ol/PluggableMap').default|undefined} map Map.
    * @override
    */
   setMap(map) {
@@ -149,7 +150,7 @@ export default class extends olOverlay {
         listen(
           map,
           'pointermove',
-          /** @type {import("ol/events.js").ListenerFunction} */ (this.handleMapPointerMove_),
+          /** @type {import('ol/events').ListenerFunction} */ (this.handleMapPointerMove_),
           this
         )
       );
@@ -159,7 +160,8 @@ export default class extends olOverlay {
   /**
    * Opens the menu at the desited coordinate. Also starts listening for the
    * clickout if autoClose is enabled.
-   * @param {import("ol/coordinate.js").Coordinate} coordinate Where to open the menu.
+   *
+   * @param {import('ol/coordinate').Coordinate} coordinate Where to open the menu.
    */
   open(coordinate) {
     this.setPosition(coordinate);
@@ -183,7 +185,7 @@ export default class extends olOverlay {
 
   /**
    * @param {string} action The action name that was clicked.
-   * @param {Event|import("ol/events/Event.js").default} evt Event.
+   * @param {Event|import('ol/events/Event').default} evt Event.
    * @private
    */
   handleActionClick_(action, evt) {
@@ -202,7 +204,8 @@ export default class extends olOverlay {
 
   /**
    * Handles clicks out of the menu. If the menu is visible, close it.
-   * @param {Event|import("ol/events/Event.js").default} evt Event.
+   *
+   * @param {Event|import('ol/events/Event').default} evt Event.
    * @private
    */
   handleClickOut_(evt) {
@@ -218,7 +221,8 @@ export default class extends olOverlay {
    * map. This prevents behaviours such as vertex still appearing while mouse
    * hovering edges of features bound to an active modify control while the
    * cursor is on top of the menu.
-   * @param {import('ol/MapBrowserEvent.js').default<Event>} myEvent Event.
+   *
+   * @param {import('ol/MapBrowserEvent').default<Event>} myEvent Event.
    * @private
    */
   handleMapPointerMove_(myEvent) {

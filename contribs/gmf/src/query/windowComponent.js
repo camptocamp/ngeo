@@ -20,25 +20,25 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import ngeoDownloadCsv from 'ngeo/download/Csv.js';
-import ngeoDownloadService from 'ngeo/download/service.js';
-import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr.js';
-import ngeoMiscFeatureHelper, {getFilteredFeatureValues} from 'ngeo/misc/FeatureHelper.js';
+import ngeoDownloadCsv from 'ngeo/download/Csv';
+import ngeoDownloadService from 'ngeo/download/service';
+import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr';
+import ngeoMiscFeatureHelper, {getFilteredFeatureValues} from 'ngeo/misc/FeatureHelper';
 
-import ngeoMiscSwipe from 'ngeo/misc/swipe.js';
+import ngeoMiscSwipe from 'ngeo/misc/swipe';
 
-import ngeoQueryMapQuerent from 'ngeo/query/MapQuerent.js';
+import ngeoQueryMapQuerent from 'ngeo/query/MapQuerent';
 
-import olCollection from 'ol/Collection.js';
-import {isEmpty} from 'ol/obj.js';
-import {buildStyle} from 'ngeo/options.js';
+import olCollection from 'ol/Collection';
+import {isEmpty} from 'ol/obj';
+import {buildStyle} from 'ngeo/options';
 
-import 'jquery-ui/ui/widgets/resizable.js';
+import 'jquery-ui/ui/widgets/resizable';
 import 'ngeo/sass/jquery-ui.scss';
 import 'angular-animate';
 import 'angular-touch';
-import 'bootstrap/js/src/collapse.js';
-import 'bootstrap/js/src/dropdown.js';
+import 'bootstrap/js/src/collapse';
+import 'bootstrap/js/src/dropdown';
 
 /**
  * @type {angular.IModule}
@@ -60,6 +60,7 @@ myModule.config([
   /**
    * For performance reason, only perform animation on elements that have the
    * `gmf-animatable` css class.
+   *
    * @param {angular.animate.IAnimateProvider} $animateProvider animate provider.
    */
   function ($animateProvider) {
@@ -72,7 +73,7 @@ myModule.value(
   /**
    * @param {JQuery} $element Element.
    * @param {angular.IAttributes} $attrs Attributes.
-   * @return {string} Template.
+   * @returns {string} Template.
    */
   ($element, $attrs) => {
     const templateUrl = $attrs.gmfDisplayquerywindowTemplateurl;
@@ -96,7 +97,7 @@ myModule.run(
  * @param {angular.IAttributes} $attrs Attributes.
  * @param {function(JQuery, angular.IAttributes): string} gmfDisplayquerywindowTemplateUrl Template
  *    function.
- * @return {string} Template URL.
+ * @returns {string} Template URL.
  * @ngInject
  * @private
  * @hidden
@@ -106,9 +107,9 @@ function gmfDisplayquerywindowTemplateUrl($element, $attrs, gmfDisplayquerywindo
 }
 
 /**
- * Provide a component to display results of the {@link import("ngeo/queryResult.js").default}
+ * Provide a component to display results of the {@link import('ngeo/queryResult').default}
  * and shows related features on the map using the
- * {@link import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr}.
+ * {@link import('ngeo/map/FeatureOverlayMgr').FeatureOverlayMgr}.
  *
  * You can override the default component's template by setting the
  * value `gmfDisplayquerywindowTemplateUrl`.
@@ -139,13 +140,13 @@ myModule.component('gmfDisplayquerywindow', queryWindowComponent);
 /**
  * @param {JQuery} $element Element.
  * @param {angular.IScope} $scope Angular scope.
- * @param {import('ngeo/query/MapQuerent.js').QueryResult} ngeoQueryResult ngeo query result.
- * @param {import("ngeo/query/MapQuerent.js").MapQuerent} ngeoMapQuerent ngeo map querent service.
- * @param {import("ngeo/download/Csv.js").DownloadCsvService} ngeoCsvDownload CSV download service.
- * @param {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
+ * @param {import('ngeo/query/MapQuerent').QueryResult} ngeoQueryResult ngeo query result.
+ * @param {import('ngeo/query/MapQuerent').MapQuerent} ngeoMapQuerent ngeo map querent service.
+ * @param {import('ngeo/download/Csv').DownloadCsvService} ngeoCsvDownload CSV download service.
+ * @param {import('ngeo/map/FeatureOverlayMgr').FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
- * @param {import('gmf/options.js').gmfCsvFilename} gmfCsvFilename The CSV file name.
- * @param {import('gmf/options.js').gmfDisplayQueryWindowOptions} gmfDisplayQueryWindowOptions The options.
+ * @param {import('gmf/options').gmfCsvFilename} gmfCsvFilename The CSV file name.
+ * @param {import('gmf/options').gmfDisplayQueryWindowOptions} gmfDisplayQueryWindowOptions The options.
  * @class
  * @hidden
  * @ngInject
@@ -163,7 +164,7 @@ export function QueryWindowController(
   gmfDisplayQueryWindowOptions
 ) {
   /**
-   * @type {import('gmf/options.js').gmfDisplayQueryWindowOptions}
+   * @type {import('gmf/options').gmfDisplayQueryWindowOptions}
    */
   this.options = gmfDisplayQueryWindowOptions;
 
@@ -180,12 +181,13 @@ export function QueryWindowController(
   /**
    * Is the window currently collapsed?
    * When used for Desktop, it is shown non-collapsed.
+   *
    * @type {boolean}
    */
   this.collapsed = false;
 
   /**
-   * @type {import('ngeo/query/MapQuerent.js').QueryResult}
+   * @type {import('ngeo/query/MapQuerent').QueryResult}
    */
   this.ngeoQueryResult = {
     sources: [],
@@ -194,48 +196,49 @@ export function QueryWindowController(
   };
 
   /**
-   * @type {import("ngeo/query/MapQuerent.js").MapQuerent}
+   * @type {import('ngeo/query/MapQuerent').MapQuerent}
    */
   this.ngeoMapQuerent_ = ngeoMapQuerent;
 
   /**
-   * @type {import("ngeo/download/Csv.js").DownloadCsvService}
+   * @type {import('ngeo/download/Csv').DownloadCsvService}
    */
   this.ngeoCsvDownload_ = ngeoCsvDownload;
 
   /**
    * Filename
-   * @type {import('gmf/options.js').gmfCsvFilename}
+   *
+   * @type {import('gmf/options').gmfCsvFilename}
    */
   this.filename_ = gmfCsvFilename;
 
   /**
-   * @type {?import('ngeo/statemanager/WfsPermalink.js').QueryResultSource}
+   * @type {?import('ngeo/statemanager/WfsPermalink').QueryResultSource}
    */
   this.selectedSource = null;
 
   /**
-   * @type {import("ol/Collection.js").default<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>}
+   * @type {import('ol/Collection').default<import('ol/Feature').default<import('ol/geom/Geometry').default>>}
    */
   this.features_ = new olCollection();
 
   /**
-   * @type {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr}
+   * @type {import('ngeo/map/FeatureOverlayMgr').FeatureOverlayMgr}
    */
   this.ngeoFeatureOverlayMgr_ = ngeoFeatureOverlayMgr;
 
   /**
-   * @type {import("ol/Collection.js").default<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>}
+   * @type {import('ol/Collection').default<import('ol/Feature').default<import('ol/geom/Geometry').default>>}
    */
   this.highlightFeatures_ = new olCollection();
 
   /**
-   * @type {?import('ngeo/statemanager/WfsPermalink.js').QueryResultSource}
+   * @type {?import('ngeo/statemanager/WfsPermalink').QueryResultSource}
    */
   this.source = null;
 
   /**
-   * @type {?import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>}
+   * @type {?import('ol/Feature').default<import('ol/geom/Geometry').default>}
    */
   this.feature = null;
 
@@ -260,7 +263,7 @@ export function QueryWindowController(
   this.open = false;
 
   /**
-   * @const {JQuery}
+   * @constant {JQuery}
    */
   this.element_ = $element;
 
@@ -336,10 +339,11 @@ QueryWindowController.prototype.updateFeatures_ = function () {
 
 /**
  * Select a source and a feature depending of the given position.
+ *
  * @param {number} position The index of the feature. If the position is bigger
  * than the length of the first source, get it in the next source. Etc.
  * @param {boolean} setHighlight True to set the highlight automatically.
- * @return {boolean} True if result has changed. False else.
+ * @returns {boolean} True if result has changed. False else.
  */
 QueryWindowController.prototype.setCurrentResult_ = function (position, setHighlight) {
   let hasChanged = false;
@@ -404,7 +408,8 @@ QueryWindowController.prototype.next = function () {
 
 /**
  * Remove features without properties from the query result.
- * @param {import('ngeo/query/MapQuerent.js').QueryResult} queryResult ngeo query result.
+ *
+ * @param {import('ngeo/query/MapQuerent').QueryResult} queryResult ngeo query result.
  */
 QueryWindowController.prototype.updateQueryResult_ = function (queryResult) {
   this.ngeoQueryResult.total = 0;
@@ -424,7 +429,8 @@ QueryWindowController.prototype.updateQueryResult_ = function (queryResult) {
 /**
  * Get the total count of features in the result of the query. If a source
  * has been select, only the number of features of that source are returned.
- * @return {number} Total number of features.
+ *
+ * @returns {number} Total number of features.
  */
 QueryWindowController.prototype.getResultLength = function () {
   if (this.selectedSource === null) {
@@ -435,14 +441,14 @@ QueryWindowController.prototype.getResultLength = function () {
 };
 
 /**
- * @return {boolean} If the first result is active.
+ * @returns {boolean} If the first result is active.
  */
 QueryWindowController.prototype.isFirst = function () {
   return this.currentResult == 0;
 };
 
 /**
- * @return {boolean} If the last result is active.
+ * @returns {boolean} If the last result is active.
  */
 QueryWindowController.prototype.isLast = function () {
   return this.currentResult == this.getResultLength() - 1;
@@ -451,7 +457,8 @@ QueryWindowController.prototype.isLast = function () {
 /**
  * Delete the unwanted ol3 properties from the current feature then return the
  * properties.
- * @return {Object<string, string|number|boolean>?} Filtered properties of the current feature or null.
+ *
+ * @returns {Object<string, string|number|boolean>?} Filtered properties of the current feature or null.
  */
 QueryWindowController.prototype.getFeatureValues = function () {
   if (!this.feature) {
@@ -465,6 +472,7 @@ QueryWindowController.prototype.getFeatureValues = function () {
  * "isNext" value. The aim is to wait on Angular to add a class (corresponding
  * to "isNext") on the DOM before to set the "animation" value and do the
  * animation.
+ *
  * @param {boolean} isNext used to indicate if the user wants to see the next
  * or the previous result.
  */
@@ -493,7 +501,8 @@ QueryWindowController.prototype.collectFeatures_ = function () {
 
 /**
  * Highlight the current displayed feature.
- * @param {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>} [opt_lastFeature] last highlighted feature. Require if
+ *
+ * @param {import('ol/Feature').default<import('ol/geom/Geometry').default>} [opt_lastFeature] last highlighted feature. Require if
  * it exists because it must be added to the 'non-selected' features collection.
  */
 QueryWindowController.prototype.highlightCurrentFeature_ = function (opt_lastFeature) {
@@ -532,7 +541,7 @@ QueryWindowController.prototype.clear = function () {
 };
 
 /**
- * @param {import('ngeo/statemanager/WfsPermalink.js').QueryResultSource} source The source to select.
+ * @param {import('ngeo/statemanager/WfsPermalink').QueryResultSource} source The source to select.
  */
 QueryWindowController.prototype.setSelectedSource = function (source) {
   if (source !== null && source.features.length <= 0) {
@@ -546,7 +555,8 @@ QueryWindowController.prototype.setSelectedSource = function (source) {
 
 /**
  * Download a CSV with features of the given source.
- * @param {import('ngeo/statemanager/WfsPermalink.js').QueryResultSource} source The source to export as csv.
+ *
+ * @param {import('ngeo/statemanager/WfsPermalink').QueryResultSource} source The source to export as csv.
  */
 QueryWindowController.prototype.downloadCSV = function (source) {
   const data = this.getCSVData_(source);
@@ -557,8 +567,8 @@ QueryWindowController.prototype.downloadCSV = function (source) {
 };
 
 /**
- * @param {import('ngeo/statemanager/WfsPermalink.js').QueryResultSource} source The source to export as csv.
- * @return {Object<string, string|number|boolean>[]} data.
+ * @param {import('ngeo/statemanager/WfsPermalink').QueryResultSource} source The source to export as csv.
+ * @returns {Object<string, string|number|boolean>[]} data.
  */
 QueryWindowController.prototype.getCSVData_ = function (source) {
   if (!source || source.features.length <= 0) {
@@ -572,7 +582,7 @@ QueryWindowController.prototype.getCSVData_ = function (source) {
 
 /**
  * @param {Object<string, string|number|boolean>[]} data where keys with at least one defined value will be used as csv column header.
- * @return {import('ngeo/download/Csv.js').GridColumnDef[]} columns definitions for the CSV.
+ * @returns {import('ngeo/download/Csv').GridColumnDef[]} columns definitions for the CSV.
  */
 QueryWindowController.prototype.getCSVHeaderDefinition_ = function (data) {
   if (!data) {
@@ -587,7 +597,7 @@ QueryWindowController.prototype.getCSVHeaderDefinition_ = function (data) {
   });
 
   // From Set (distinct values) to array.
-  /** @type {import('ngeo/download/Csv.js').GridColumnDef[]} */
+  /** @type {import('ngeo/download/Csv').GridColumnDef[]} */
   const columnDefs = [];
   distinctKeys.forEach((key) => columnDefs.push({name: key}));
 

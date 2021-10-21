@@ -23,50 +23,52 @@ import 'jquery';
 import angular from 'angular';
 import 'angular-gettext';
 import 'angular-dynamic-locale';
-import bootstrap from 'gmf/controllers/bootstrap.js';
-import gmfAuthenticationModule from 'gmf/authentication/module.js';
-import gmfBackgroundlayerselectorComponent from 'gmf/backgroundlayerselector/component.js';
-import {gmfBackgroundlayerStatus} from 'gmf/backgroundlayerselector/status.js';
-import gmfDatasourceModule from 'gmf/datasource/module.js';
-import gmfDisclaimerComponent from 'gmf/disclaimer/component.js';
-import gmfLayertreeModule from 'gmf/layertree/module.js';
-import gmfMapModule from 'gmf/map/module.js';
-import gmfQueryExtraModule from 'gmf/query/extraModule.js';
-import gmfSearchModule from 'gmf/search/module.js';
-import gmfThemeModule from 'gmf/theme/module.js';
+import bootstrap from 'gmf/controllers/bootstrap';
+import gmfBackgroundlayerselectorComponent from 'gmf/backgroundlayerselector/component';
+import {gmfBackgroundlayerStatus} from 'gmf/backgroundlayerselector/status';
+import gmfDatasourceModule from 'gmf/datasource/module';
+import gmfDisclaimerComponent from 'gmf/disclaimer/component';
+import gmfLayertreeModule from 'gmf/layertree/module';
+import gmfMapModule from 'gmf/map/module';
+import gmfQueryExtraModule from 'gmf/query/extraModule';
+import gmfSearchModule from 'gmf/search/module';
+import gmfThemeModule from 'gmf/theme/module';
 import calculateCssVars from 'gmf/controllers/calculateCssVars';
-import ngeoMessageDisplaywindowComponent from 'ngeo/message/displaywindowComponent.js';
-import ngeoMiscExtraModule from 'ngeo/misc/extraModule.js';
-import ngeoMiscFeatureHelper, {FeatureFormatType} from 'ngeo/misc/FeatureHelper.js';
-import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
-import ngeoQueryMapQuerent from 'ngeo/query/MapQuerent.js';
-import ngeoQueryComponent from 'ngeo/query/component.js';
-import ngeoStatemanagerModule from 'ngeo/statemanager/module.js';
-import ngeoStatemanagerWfsPermalink from 'ngeo/statemanager/WfsPermalink.js';
-import ngeoGeolocation from 'ngeo/geolocation/component.js';
-import * as olArray from 'ol/array.js';
-import {listen} from 'ol/events.js';
-import {ThemeEventType} from 'gmf/theme/Manager.js';
-import {getBrowserLanguage} from 'ngeo/utils.js';
+import ngeoMessageDisplaywindowComponent from 'ngeo/message/displaywindowComponent';
+import ngeoMiscExtraModule from 'ngeo/misc/extraModule';
+import ngeoMiscFeatureHelper, {FeatureFormatType} from 'ngeo/misc/FeatureHelper';
+import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate';
+import ngeoQueryMapQuerent from 'ngeo/query/MapQuerent';
+import ngeoQueryComponent from 'ngeo/query/component';
+import ngeoStatemanagerModule from 'ngeo/statemanager/module';
+import ngeoStatemanagerWfsPermalink from 'ngeo/statemanager/WfsPermalink';
+import ngeoGeolocation from 'ngeo/geolocation/component';
+import * as olArray from 'ol/array';
+import {ThemeEventType} from 'gmf/theme/Manager';
+import {getBrowserLanguage} from 'ngeo/utils';
 import * as Sentry from '@sentry/browser';
 import {Integrations} from '@sentry/tracing';
 import {Angular as AngularIntegration} from '@sentry/integrations';
-import createProjection from 'ngeo/proj/utils.js';
-import olMap from 'ol/Map.js';
-import olView from 'ol/View.js';
-import olControlScaleLine from 'ol/control/ScaleLine.js';
-import olControlZoom from 'ol/control/Zoom.js';
-import olControlRotate from 'ol/control/Rotate.js';
-import {defaults as interactionsDefaults} from 'ol/interaction.js';
-import olInteractionDragPan from 'ol/interaction/DragPan.js';
-import {noModifierKeys} from 'ol/events/condition.js';
+import createProjection from 'ngeo/proj/utils';
+import olMap from 'ol/Map';
+import olView from 'ol/View';
+import olControlScaleLine from 'ol/control/ScaleLine';
+import olControlZoom from 'ol/control/Zoom';
+import olControlRotate from 'ol/control/Rotate';
+import {defaults as interactionsDefaults} from 'ol/interaction';
+import olInteractionDragPan from 'ol/interaction/DragPan';
+import {noModifierKeys} from 'ol/events/condition';
+import storeMap from 'ngeo/store/map';
+
+import user, {UserState} from 'ngeo/store/user';
+import gmfAuthenticationService from 'ngeo/auth/service';
 
 /**
  * Application abstract controller.
  *
  * Used functionalities:
  *
- *  * `open_panel`: When set, contains the name of the panel to open upon loading an application.
+ *  - `open_panel`: When set, contains the name of the panel to open upon loading an application.
  *      Note: although this is a list, only one can be defined.
  *
  *
@@ -78,12 +80,12 @@ import {noModifierKeys} from 'ol/events/condition.js';
  * @ngInject
  */
 export function AbstractAppController($scope, $injector, mobile) {
-  /** @type {import('gmf/options.js').gmfProjectionsOptions} */
+  /** @type {import('gmf/options').gmfProjectionsOptions} */
   const projections = $injector.get('gmfProjectionsOptions');
   for (const code in projections) {
     createProjection(code, projections[code].definition.join(' '), projections[code].extent);
   }
-  /** @type {import('gmf/options.js').gmfOptions} */
+  /** @type {import('gmf/options').gmfOptions} */
   this.options = $injector.get('gmfOptions');
 
   if (this.options.cssVars) {
@@ -141,9 +143,12 @@ export function AbstractAppController($scope, $injector, mobile) {
     );
   }
 
+  storeMap.setMap(map);
+
   /**
    * Location service
-   * @type {import("ngeo/statemanager/Location.js").StatemanagerLocation}
+   *
+   * @type {import('ngeo/statemanager/Location').StatemanagerLocation}
    */
   this.ngeoLocation = $injector.get('ngeoLocation');
   if (this.ngeoLocation.hasParam('debug')) {
@@ -153,7 +158,7 @@ export function AbstractAppController($scope, $injector, mobile) {
   }
 
   /**
-   * @type {import("ol/Map.js").default}
+   * @type {import('ol/Map').default}
    */
   this.map = map;
   if (!(this.map instanceof olMap)) {
@@ -162,41 +167,45 @@ export function AbstractAppController($scope, $injector, mobile) {
 
   /**
    * Collection of features for the draw interaction
-   * @type {import("ol/Collection.js").default<import("ol/Feature.js").default<import("ol/geom/Geometry.js").default>>}
+   *
+   * @type {import('ol/Collection').default<import('ol/Feature').default<import('ol/geom/Geometry').default>>}
    */
   const ngeoFeatures = $injector.get('ngeoFeatures');
 
   /**
-   * @type {import("ngeo/map/FeatureOverlay.js").FeatureOverlay}
+   * @type {import('ngeo/map/FeatureOverlay').FeatureOverlay}
    */
   this.drawFeatureLayer = $injector.get('ngeoFeatureOverlayMgr').getFeatureOverlay();
   this.drawFeatureLayer.setFeatures(ngeoFeatures);
 
   /**
    * Ngeo FeatureHelper service
-   * @type {import("ngeo/misc/FeatureHelper.js").FeatureHelper}
+   *
+   * @type {import('ngeo/misc/FeatureHelper').FeatureHelper}
    */
   const ngeoFeatureHelper = $injector.get('ngeoFeatureHelper');
   ngeoFeatureHelper.setProjection(this.map.getView().getProjection());
 
   /**
-   * @type {import("gmf/theme/Manager.js").ThemeManagerService}
+   * @type {import('gmf/theme/Manager').ThemeManagerService}
    */
   this.gmfThemeManager = $injector.get('gmfThemeManager');
 
   /**
-   * @type {import("gmf/layertree/TreeManager.js").LayertreeTreeManager}
+   * @type {import('gmf/layertree/TreeManager').LayertreeTreeManager}
    */
   this.gmfTreeManager_ = $injector.get('gmfTreeManager');
 
   /**
    * Themes service
-   * @type {import("gmf/theme/Themes.js").ThemesService}
+   *
+   * @type {import('gmf/theme/Themes').ThemesService}
    */
   this.gmfThemes = $injector.get('gmfThemes');
 
   /**
    * Checks if the themes are loaded
+   *
    * @type {boolean}
    */
   this.loading = true;
@@ -207,21 +216,17 @@ export function AbstractAppController($scope, $injector, mobile) {
   /**
    * This property is set to `true` when the themes change after a
    * successful login
+   *
    * @type {boolean}
    */
   this.postLoading = false;
 
   /**
    * Permalink service
-   * @type {import("gmf/permalink/Permalink.js").PermalinkService}
+   *
+   * @type {import('gmf/permalink/Permalink').PermalinkService}
    */
   this.permalink_ = $injector.get('gmfPermalink');
-
-  /**
-   * Authentication service
-   * @type {import("gmf/authentication/Service.js").AuthenticationService}
-   */
-  const gmfAuthentication = $injector.get('gmfAuthenticationService');
 
   /**
    * @type {boolean}
@@ -239,12 +244,14 @@ export function AbstractAppController($scope, $injector, mobile) {
 
   /**
    * URL to redirect to after login success.
+   *
    * @type {?string}
    */
   this.loginRedirectUrl = null;
 
   /**
    * Information message for the login form.
+   *
    * @type {?string}
    */
   this.loginInfoMessage = null;
@@ -272,14 +279,14 @@ export function AbstractAppController($scope, $injector, mobile) {
   });
 
   /**
-   * @param {Event|import('ol/events/Event.js').default} evt Event.
+   * Update the page with the user settings.
    */
-  const userChange = (evt) => {
+  const userChange = () => {
     if (this.loginRedirectUrl) {
       window.location.href = this.loginRedirectUrl;
       return;
     }
-    const roleId = gmfAuthentication.getRolesIds().join(',');
+    const roleId = gmfAuthenticationService.getRolesIds().join(',');
 
     const functionalities = this.gmfUser.functionalities;
 
@@ -306,7 +313,7 @@ export function AbstractAppController($scope, $injector, mobile) {
     // Reload themes and background layer when login status changes.
     this.gmfThemes.loadThemes(roleId);
 
-    if (evt.type !== 'ready') {
+    if (user.getState() !== UserState.READY) {
       const themeName = this.permalink_.defaultThemeNameFromFunctionalities();
       this.gmfThemeManager.updateCurrentTheme(themeName, previousThemeName, true);
     }
@@ -315,17 +322,24 @@ export function AbstractAppController($scope, $injector, mobile) {
   };
 
   /**
-   * @param {Event|import('ol/events/Event.js').default} evt Event.
+   * @type {import('ngeo/store/user').User}
    */
-  const connectionLost = (evt) => {
-    this.loginActive = true;
-    userChange(evt);
-  };
+  this.gmfUser = null;
 
-  listen(gmfAuthentication, 'ready', userChange);
-  listen(gmfAuthentication, 'login', userChange);
-  listen(gmfAuthentication, 'logout', userChange);
-  listen(gmfAuthentication, 'disconnected', connectionLost);
+  // On user update, set features user based.
+  user.getProperties().subscribe({
+    next: (properties) => {
+      this.gmfUser = properties;
+      const userState = user.getState();
+      if (userState === UserState.NOT_INITIALIZED) {
+        return;
+      }
+      if (userState === UserState.DISCONNECTED) {
+        this.loginActive = true;
+      }
+      userChange();
+    },
+  });
 
   /**
    * @type {Object<string, string>}
@@ -353,7 +367,7 @@ export function AbstractAppController($scope, $injector, mobile) {
   }
 
   /**
-   * @type {import("ngeo/map/BackgroundLayerMgr.js").MapBackgroundLayerManager}
+   * @type {import('ngeo/map/BackgroundLayerMgr').MapBackgroundLayerManager}
    */
   this.backgroundLayerMgr_ = $injector.get('ngeoBackgroundLayerMgr');
 
@@ -376,22 +390,18 @@ export function AbstractAppController($scope, $injector, mobile) {
 
   /**
    * The active state of the ngeo query directive.
+   *
    * @type {boolean}
    */
   this.queryActive = true;
 
   /**
-   * @type {import("ngeo/query/MapQuerent.js").MapQuerent}
+   * @type {import('ngeo/query/MapQuerent').MapQuerent}
    */
   this.ngeoMapQuerent_ = $injector.get('ngeoMapQuerent');
 
   /**
-   * @type {import('gmf/authentication/Service.js').User}
-   */
-  this.gmfUser = $injector.get('gmfUser');
-
-  /**
-   * @type {import("ngeo/statemanager/Service.js").StatemanagerService}
+   * @type {import('ngeo/statemanager/Service').StatemanagerService}
    */
   this.stateManager = $injector.get('ngeoStateManager');
 
@@ -412,18 +422,21 @@ export function AbstractAppController($scope, $injector, mobile) {
 
   /**
    * Default language
-   * @type {import('gmf/options.js').defaultLang}
+   *
+   * @type {import('gmf/options').defaultLang}
    */
   this.defaultLang = $injector.get('defaultLang');
 
   /**
    * Languages URL
-   * @type {import('gmf/options.js').langUrls}
+   *
+   * @type {import('gmf/options').langUrls}
    */
   this.langUrls = $injector.get('langUrls');
 
   /**
    * The gettext catalog
+   *
    * @type {angular.gettext.gettextCatalog}
    */
   this.gettextCatalog = $injector.get('gettextCatalog');
@@ -437,14 +450,16 @@ export function AbstractAppController($scope, $injector, mobile) {
 
   /**
    * The ngeo feature overlay manager service
-   * @type {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr}
+   *
+   * @type {import('ngeo/map/FeatureOverlayMgr').FeatureOverlayMgr}
    */
   const ngeoFeatureOverlayMgr = $injector.get('ngeoFeatureOverlayMgr');
   ngeoFeatureOverlayMgr.init(this.map);
 
   /**
    * The ngeo ToolActivate manager service.
-   * @type {import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr}
+   *
+   * @type {import('ngeo/misc/ToolActivateMgr').ToolActivateMgr}
    */
   const ngeoToolActivateMgr = $injector.get('ngeoToolActivateMgr');
 
@@ -487,6 +502,7 @@ export function AbstractAppController($scope, $injector, mobile) {
 
   /**
    * Static function to create a popup with an iframe.
+   *
    * @param {string} url an url.
    * @param {string} title (text).
    * @param {number} [opt_width] CSS width.
@@ -500,6 +516,7 @@ export function AbstractAppController($scope, $injector, mobile) {
 
   /**
    * Static function to create a popup with html content.
+   *
    * @param {string} content (text or html).
    * @param {string} title (text).
    * @param {number} [opt_width] CSS width in pixel.
@@ -513,6 +530,7 @@ export function AbstractAppController($scope, $injector, mobile) {
 
   /**
    * Whether to update the size of the map on browser window resize.
+   *
    * @type {boolean}
    */
   this.manageResize = false;
@@ -521,6 +539,7 @@ export function AbstractAppController($scope, $injector, mobile) {
    * The duration (milliseconds) of the animation that may occur on the div
    * containing the map. Used to smoothly resize the map while the animation
    * is in progress.
+   *
    * @type {number|undefined}
    */
   this.resizeTransition;
@@ -532,6 +551,7 @@ export function AbstractAppController($scope, $injector, mobile) {
 
   /**
    * Static function to create a popup with an iframe.
+   *
    * @param {string} url an url.
    * @param {string} title (text).
    * @param {number} [opt_width] CSS width in pixel.
@@ -605,17 +625,18 @@ export function AbstractAppController($scope, $injector, mobile) {
 
 /**
  * Allow map pan with all buttons except right click (context menu)
- * @param {import("ol/MapBrowserEvent.js").default<MouseEvent>} event MapBrowser event
- * @return {boolean}
+ *
+ * @param {import('ol/MapBrowserEvent').default<MouseEvent>} event MapBrowser event
+ * @returns {boolean}
  */
 function dragPanCondition(event) {
   return noModifierKeys(event) && event.originalEvent.button !== 2;
 }
 
 /**
- * @param {import("ol/layer/Base.js").default[]} layers Layers list.
+ * @param {import('ol/layer/Base').default[]} layers Layers list.
  * @param {string[]} labels default_basemap list.
- * @return {?import("ol/layer/Base.js").default} layer or null
+ * @returns {?import('ol/layer/Base').default} layer or null
  * @private
  * @hidden
  */
@@ -670,7 +691,7 @@ AbstractAppController.prototype.initLanguage = function () {
 };
 
 /**
- * @param {?import('gmf/themes.js').GmfTheme} theme Theme.
+ * @param {?import('gmf/themes').GmfTheme} theme Theme.
  */
 AbstractAppController.prototype.setDefaultBackground_ = function (theme) {
   this.gmfThemes.getBgLayers().then((layers) => {
@@ -705,7 +726,7 @@ AbstractAppController.prototype.setDefaultBackground_ = function (theme) {
 
 /**
  * @protected
- * @return {HTMLSpanElement} Span element with font-awesome inside of it
+ * @returns {HTMLSpanElement} Span element with font-awesome inside of it
  */
 export function getLocationIcon() {
   const arrow = document.createElement('span');
@@ -740,7 +761,6 @@ const myModule = angular.module('GmfAbstractAppControllerModule', [
   'gettext',
   'tmh.dynamicLocale',
   //'ngSentry',
-  gmfAuthenticationModule.name,
   gmfBackgroundlayerselectorComponent.name,
   gmfDatasourceModule.name,
   gmfDisclaimerComponent.name,

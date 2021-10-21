@@ -21,19 +21,19 @@
 
 import angular from 'angular';
 import './search.css';
-import gmfMapComponent from 'gmf/map/component.js';
+import gmfMapComponent from 'gmf/map/component';
 
-import gmfSearchModule from 'gmf/search/module.js';
-import gmfThemeThemes from 'gmf/theme/Themes.js';
-import ngeoMessageNotification from 'ngeo/message/Notification.js';
-import {MessageType} from 'ngeo/message/Message.js';
-import EPSG2056 from 'ngeo/proj/EPSG_2056.js';
-import ngeoMapModule from 'ngeo/map/module.js';
-import olMap from 'ol/Map.js';
-import olView from 'ol/View.js';
-import olLayerTile from 'ol/layer/Tile.js';
-import olSourceOSM from 'ol/source/OSM.js';
-import options, {SEARCH} from './options.js';
+import gmfSearchModule from 'gmf/search/module';
+import gmfThemeThemes from 'gmf/theme/Themes';
+import ngeoMessageNotification from 'ngeo/message/Notification';
+import {MessageType} from 'ngeo/message/Message';
+import EPSG2056 from 'ngeo/proj/EPSG_2056';
+import ngeoMapModule from 'ngeo/map/module';
+import olMap from 'ol/Map';
+import olView from 'ol/View';
+import olLayerTile from 'ol/layer/Tile';
+import olSourceOSM from 'ol/source/OSM';
+import options, {SEARCH} from './options';
 
 /**
  * @type {angular.IModule}
@@ -45,19 +45,16 @@ const myModule = angular.module('gmfapp', [
   gmfSearchModule.name,
   gmfThemeThemes.name,
   ngeoMapModule.name, // for ngeo.map.FeatureOverlay, perhaps remove me
-  ngeoMessageNotification.name,
 ]);
 
 /**
- * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes Themes service.
- * @param {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo
+ * @param {import('gmf/theme/Themes').ThemesService} gmfThemes Themes service.
+ * @param {import('ngeo/map/FeatureOverlayMgr').FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo
  *    feature overlay manager service.
- * @param {import("ngeo/message/Notification.js").MessageNotification} ngeoNotification Ngeo notification
- *    service.
  * @class
  * @ngInject
  */
-function MainController(gmfThemes, ngeoFeatureOverlayMgr, ngeoNotification) {
+function MainController(gmfThemes, ngeoFeatureOverlayMgr) {
   gmfThemes.loadThemes();
 
   ngeoFeatureOverlayMgr.init(this.map);
@@ -75,7 +72,7 @@ function MainController(gmfThemes, ngeoFeatureOverlayMgr, ngeoNotification) {
   this.inputValue = '';
 
   /**
-   * @type {import("ol/Map.js").default}
+   * @type {import('ol/Map').default}
    */
   this.map = new olMap({
     layers: [
@@ -93,9 +90,9 @@ function MainController(gmfThemes, ngeoFeatureOverlayMgr, ngeoNotification) {
    * @type {function(): void}
    */
   this.searchIsReady = () => {
-    ngeoNotification.notify({
+    ngeoMessageNotification.notify({
       msg: 'gmf-search initialized',
-      target: '#message',
+      target: document.querySelector('#message'),
       type: MessageType.SUCCESS,
     });
   };

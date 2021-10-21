@@ -20,7 +20,7 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import ngeoDownloadService from 'ngeo/download/service.js';
+import ngeoDownloadService from 'ngeo/download/service';
 
 /**
  * Definition for grid columns.
@@ -34,12 +34,12 @@ import ngeoDownloadService from 'ngeo/download/service.js';
  * Column headers are translated using {@link angular.gettext.gettextCatalog}.
  *
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext service.
- * @param {import('ngeo/download/service.js').Download} ngeoDownload The download service.
- * @param {import('ngeo/options.js').ngeoCsvEncoding} ngeoCsvEncoding The encoding.
- * @param {import('ngeo/options.js').ngeoCsvExtension} ngeoCsvExtension The extension.
- * @param {import('ngeo/options.js').ngeoCsvIncludeHeader} ngeoCsvIncludeHeader Has headers.
- * @param {import('ngeo/options.js').ngeoCsvQuote} ngeoCsvQuote The quote.
- * @param {import('ngeo/options.js').ngeoCsvSeparator} ngeoCsvSeparator The separator.
+ * @param {import('ngeo/download/service').Download} ngeoDownload The download service.
+ * @param {import('ngeo/options').ngeoCsvEncoding} ngeoCsvEncoding The encoding.
+ * @param {import('ngeo/options').ngeoCsvExtension} ngeoCsvExtension The extension.
+ * @param {import('ngeo/options').ngeoCsvIncludeHeader} ngeoCsvIncludeHeader Has headers.
+ * @param {import('ngeo/options').ngeoCsvQuote} ngeoCsvQuote The quote.
+ * @param {import('ngeo/options').ngeoCsvSeparator} ngeoCsvSeparator The separator.
  * @class
  * @ngdoc service
  * @ngname ngeoCsvDownload
@@ -62,37 +62,43 @@ export function DownloadCsvService(
 
   /**
    * File encoding of the CSV file.
-   * @type {import('ngeo/options.js').ngeoCsvEncoding}
+   *
+   * @type {import('ngeo/options').ngeoCsvEncoding}
    */
   this.encoding_ = ngeoCsvEncoding;
 
   /**
    * File extension of the CSV file.
-   * @type {import('ngeo/options.js').ngeoCsvExtension}
+   *
+   * @type {import('ngeo/options').ngeoCsvExtension}
    */
   this.extension_ = ngeoCsvExtension;
 
   /**
    * Whether to include the header in the exported file or not.
-   * @type {import('ngeo/options.js').ngeoCsvIncludeHeader}
+   *
+   * @type {import('ngeo/options').ngeoCsvIncludeHeader}
    */
   this.includeHeader_ = ngeoCsvIncludeHeader;
 
   /**
    * Quote character.
-   * @type {import('ngeo/options.js').ngeoCsvQuote}
+   *
+   * @type {import('ngeo/options').ngeoCsvQuote}
    */
   this.quote_ = ngeoCsvQuote;
 
   /**
    * Separator character.
-   * @type {import('ngeo/options.js').ngeoCsvSeparator}
+   *
+   * @type {import('ngeo/options').ngeoCsvSeparator}
    */
   this.separator_ = ngeoCsvSeparator;
 
   /**
    * Download service.
-   * @type {import('ngeo/download/service.js').Download}
+   *
+   * @type {import('ngeo/download/service').Download}
    */
   this.download_ = ngeoDownload;
 }
@@ -102,7 +108,7 @@ export function DownloadCsvService(
  *
  * @param {Object<string, any>[]} data Entries/objects to include in the CSV.
  * @param {GridColumnDef[]} columnDefs Column definitions.
- * @return {string} The CSV file as string.
+ * @returns {string} The CSV file as string.
  */
 DownloadCsvService.prototype.generateCsv = function (data, columnDefs) {
   if (data.length == 0 || columnDefs.length == 0) {
@@ -126,7 +132,7 @@ DownloadCsvService.prototype.generateCsv = function (data, columnDefs) {
 
 /**
  * @param {any[]} values Values.
- * @return {string} CSV row.
+ * @returns {string} CSV row.
  */
 DownloadCsvService.prototype.getRow_ = function (values) {
   const matchAllQuotesRegex = new RegExp(this.quote_, 'g');

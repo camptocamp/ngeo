@@ -20,30 +20,28 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import gmfAuthenticationModule from 'gmf/authentication/module.js';
-import gmfBackgroundlayerselectorModule from 'gmf/backgroundlayerselector/module.js';
-import gmfContextualdataModule from 'gmf/contextualdata/module.js';
-import gmfDatasourceModule from 'gmf/datasource/module.js';
-import gmfDisclaimerModule from 'gmf/disclaimer/module.js';
-import gmfDrawingModule from 'gmf/drawing/module.js';
-import gmfEditingModule from 'gmf/editing/module.js';
-import gmfFiltersModule from 'gmf/filters/module.js';
-import gmfHeaderModule from 'gmf/header/module.js';
-import gmfImportModule from 'gmf/import/module.js';
-import gmfLayertreeModule from 'gmf/layertree/module.js';
-import gmfLidarprofileModule from 'gmf/lidarprofile/module.js';
-import gmfMapModule from 'gmf/map/module.js';
-import gmfObjecteditingModule from 'gmf/objectediting/module.js';
-import gmfPermalinkModule from 'gmf/permalink/module.js';
-import gmfPrintModule from 'gmf/print/module.js';
-import gmfProfileModule from 'gmf/profile/module.js';
-import gmfRasterModule from 'gmf/raster/module.js';
-import gmfSearchModule from 'gmf/search/module.js';
-import gmfThemeModule from 'gmf/theme/module.js';
-import ngeoMainmodule from 'ngeo/mainmodule.js';
+import gmfBackgroundlayerselectorModule from 'gmf/backgroundlayerselector/module';
+import gmfContextualdataModule from 'gmf/contextualdata/module';
+import gmfDatasourceModule from 'gmf/datasource/module';
+import gmfDisclaimerModule from 'gmf/disclaimer/module';
+import gmfDrawingModule from 'gmf/drawing/module';
+import gmfEditingModule from 'gmf/editing/module';
+import gmfFiltersModule from 'gmf/filters/module';
+import gmfHeaderModule from 'gmf/header/module';
+import gmfImportModule from 'gmf/import/module';
+import gmfLayertreeModule from 'gmf/layertree/module';
+import gmfLidarprofileModule from 'gmf/lidarprofile/module';
+import gmfMapModule from 'gmf/map/module';
+import gmfObjecteditingModule from 'gmf/objectediting/module';
+import gmfPermalinkModule from 'gmf/permalink/module';
+import gmfPrintModule from 'gmf/print/module';
+import gmfProfileModule from 'gmf/profile/module';
+import gmfRasterModule from 'gmf/raster/module';
+import gmfSearchModule from 'gmf/search/module';
+import gmfThemeModule from 'gmf/theme/module';
+import ngeoMainmodule from 'ngeo/mainmodule';
 
 export default angular.module('gmf', [
-  gmfAuthenticationModule.name,
   gmfBackgroundlayerselectorModule.name,
   gmfContextualdataModule.name,
   gmfDatasourceModule.name,

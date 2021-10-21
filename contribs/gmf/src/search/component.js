@@ -20,27 +20,27 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import {COORDINATES_LAYER_NAME} from 'gmf/index.js';
-import {gmfBackgroundlayerStatus} from 'gmf/backgroundlayerselector/status.js';
-import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
-import gmfSearchFulltextSearch from 'gmf/search/FulltextSearch.js';
-import gmfThemeThemes, {findThemeByName} from 'gmf/theme/Themes.js';
-import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr.js';
-import ngeoMiscAutoProjection from 'ngeo/misc/AutoProjection.js';
+import {COORDINATES_LAYER_NAME} from 'gmf/index';
+import {gmfBackgroundlayerStatus} from 'gmf/backgroundlayerselector/status';
+import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager';
+import gmfSearchFulltextSearch from 'gmf/search/FulltextSearch';
+import gmfThemeThemes, {findThemeByName} from 'gmf/theme/Themes';
+import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr';
+import ngeoMiscAutoProjection from 'ngeo/misc/AutoProjection';
 
-import ngeoMiscColorpickerComponent from 'ngeo/misc/colorpickerComponent.js';
+import ngeoMiscColorpickerComponent from 'ngeo/misc/colorpickerComponent';
 
-import ngeoMessagePopoverComponent from 'ngeo/message/popoverComponent.js';
+import ngeoMessagePopoverComponent from 'ngeo/message/popoverComponent';
 
-import ngeoSearchModule from 'ngeo/search/module.js';
-import olFeature from 'ol/Feature.js';
-import {asArray as asColorArray} from 'ol/color.js';
-import olGeomPoint from 'ol/geom/Point.js';
-import olFormatGeoJSON from 'ol/format/GeoJSON.js';
-import * as olProj from 'ol/proj.js';
-import {appendParams as olUriAppendParams} from 'ol/uri.js';
-import SimpleGeometry from 'ol/geom/SimpleGeometry.js';
-import {buildStyle} from 'ngeo/options.js';
+import ngeoSearchModule from 'ngeo/search/module';
+import olFeature from 'ol/Feature';
+import {asArray as asColorArray} from 'ol/color';
+import olGeomPoint from 'ol/geom/Point';
+import olFormatGeoJSON from 'ol/format/GeoJSON';
+import * as olProj from 'ol/proj';
+import {appendParams as olUriAppendParams} from 'ol/uri';
+import SimpleGeometry from 'ol/geom/SimpleGeometry';
+import {buildStyle} from 'ngeo/options';
 
 /**
  * @type {angular.IModule}
@@ -60,7 +60,7 @@ const myModule = angular.module('gmfSearch', [
 /**
  * @param {JQuery} element Element.
  * @param {angular.IAttributes} attrs Attributes.
- * @return {string} Template URL.
+ * @returns {string} Template URL.
  * @private
  * @hidden
  */
@@ -84,7 +84,7 @@ myModule.run(
  * @param {JQuery} $element Element.
  * @param {angular.IAttributes} $attrs Attributes.
  * @param {function(JQuery, angular.IAttributes): string} gmfSearchTemplateUrl Template function.
- * @return {string} Template URL.
+ * @returns {string} Template URL.
  * @ngInject
  * @private
  * @hidden
@@ -99,9 +99,9 @@ function gmfSearchTemplateUrl($element, $attrs, gmfSearchTemplateUrl) {
  * It can search in multiple GeoJSON datasources.
  * It can filter and group results by a feature's property.
  *
- * This component uses the {@link import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} to create a
+ * This component uses the {@link import('ngeo/map/FeatureOverlayMgr').FeatureOverlayMgr} to create a
  * feature overlay for drawing features on the map. The application
- * is responsible to initialize the {@link import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr}
+ * is responsible to initialize the {@link import('ngeo/map/FeatureOverlayMgr').FeatureOverlayMgr}
  * with the map.
  *
  * Example:
@@ -120,7 +120,7 @@ function gmfSearchTemplateUrl($element, $attrs, gmfSearchTemplateUrl) {
  * allows you to have multiples configurations on one search component.
  *
  * @htmlAttribute {string} gmf-search-input-value The input value (read only).
- * @htmlAttribute {import("ol/Map.js").default} gmf-search-map The map.
+ * @htmlAttribute {import('ol/Map').default} gmf-search-map The map.
  * @htmlAttribute {Twitter.Typeahead.Options|undefined} gmf-search-options Addition Twitter.Typeahead.
  *    options.
  * @htmlAttribute {SearchComponentListeners} gmf-search-listeners The listeners.
@@ -157,20 +157,20 @@ export class SearchController {
    * @param {angular.ICompileService} $compile Angular compile service.
    * @param {angular.ITimeoutService} $timeout Angular timeout service.
    * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
-   * @param {import("ngeo/misc/AutoProjection.js").AutoProjectionService} ngeoAutoProjection The ngeo
+   * @param {import('ngeo/misc/AutoProjection').AutoProjectionService} ngeoAutoProjection The ngeo
    *    coordinates service.
    * @param {Function} ngeoSearchCreateGeoJSONBloodhound
    *    The ngeo create GeoJSON Bloodhound service.
-   * @param {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
+   * @param {import('ngeo/map/FeatureOverlayMgr').FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
    *     overlay manager service.
-   * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes gmf Themes service.
-   * @param {import("gmf/layertree/TreeManager.js").LayertreeTreeManager} gmfTreeManager gmf Tree Manager
+   * @param {import('gmf/theme/Themes').ThemesService} gmfThemes gmf Themes service.
+   * @param {import('gmf/layertree/TreeManager').LayertreeTreeManager} gmfTreeManager gmf Tree Manager
    *    service.
-   * @param {import("gmf/search/FulltextSearch.js").FulltextSearchService} gmfSearchFulltextSearch
+   * @param {import('gmf/search/FulltextSearch').FulltextSearchService} gmfSearchFulltextSearch
    *    gmf Full text search service.
-   * @param {import("ngeo/statemanager/Location.js").StatemanagerLocation} ngeoLocation The location service.
-   * @param {import('gmf/options.js').gmfSearchOptions} gmfSearchOptions The options.
-   * @param {import('gmf/options.js').gmfSearchGroups} gmfSearchGroups The groups.
+   * @param {import('ngeo/statemanager/Location').StatemanagerLocation} ngeoLocation The location service.
+   * @param {import('gmf/options').gmfSearchOptions} gmfSearchOptions The options.
+   * @param {import('gmf/options').gmfSearchGroups} gmfSearchGroups The groups.
    * @param {string} fulltextsearchUrl The service URL.
    * @ngInject
    * @ngdoc controller
@@ -228,19 +228,19 @@ export class SearchController {
     this.gettextCatalog_ = gettextCatalog;
 
     /**
-     * @type {import("gmf/theme/Themes.js").ThemesService}
+     * @type {import('gmf/theme/Themes').ThemesService}
      * @private
      */
     this.gmfThemes_ = gmfThemes;
 
     /**
-     * @type {import("gmf/layertree/TreeManager.js").LayertreeTreeManager}
+     * @type {import('gmf/layertree/TreeManager').LayertreeTreeManager}
      * @private
      */
     this.gmfTreeManager_ = gmfTreeManager;
 
     /**
-     * @type {import("gmf/search/FulltextSearch.js").FulltextSearchService}
+     * @type {import('gmf/search/FulltextSearch').FulltextSearchService}
      * @private
      */
     this.fullTextSearch_ = gmfSearchFulltextSearch;
@@ -252,25 +252,25 @@ export class SearchController {
     this.ngeoSearchCreateGeoJSONBloodhound_ = ngeoSearchCreateGeoJSONBloodhound;
 
     /**
-     * @type {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr}
+     * @type {import('ngeo/map/FeatureOverlayMgr').FeatureOverlayMgr}
      * @private
      */
     this.ngeoFeatureOverlayMgr = ngeoFeatureOverlayMgr;
 
     /**
-     * @type {import("ngeo/statemanager/Location.js").StatemanagerLocation|undefined}
+     * @type {import('ngeo/statemanager/Location').StatemanagerLocation|undefined}
      * @private
      */
     this.ngeoLocation_ = ngeoLocation;
 
     /**
-     * @type {import("ngeo/misc/AutoProjection.js").AutoProjectionService}
+     * @type {import('ngeo/misc/AutoProjection').AutoProjectionService}
      * @private
      */
     this.ngeoAutoProjection_ = ngeoAutoProjection;
 
     /**
-     * @type {?import("ol/Map.js").default}
+     * @type {?import('ol/Map').default}
      */
     this.map = null;
 
@@ -292,13 +292,14 @@ export class SearchController {
 
     /**
      * Supported projections for coordinates search.
-     * @type {import('ol/proj/Projection.js').default[]}
+     *
+     * @type {import('ol/proj/Projection').default[]}
      * @private
      */
     this.coordinatesProjectionsInstances_ = [];
 
     /**
-     * @type {import("ngeo/map/FeatureOverlay.js").FeatureOverlay}
+     * @type {import('ngeo/map/FeatureOverlay').FeatureOverlay}
      * @private
      */
     this.featureOverlay_ = ngeoFeatureOverlayMgr.getFeatureOverlay();
@@ -311,7 +312,7 @@ export class SearchController {
     });
 
     /**
-     * @type {(Twitter.Typeahead.Dataset<olFeature<import('ol/geom/Geometry.js').default>>|Twitter.Typeahead.Dataset<CoordinateSuggestion>)[]}
+     * @type {(Twitter.Typeahead.Dataset<olFeature<import('ol/geom/Geometry').default>>|Twitter.Typeahead.Dataset<CoordinateSuggestion>)[]}
      */
     this.datasets = [];
 
@@ -331,12 +332,12 @@ export class SearchController {
     this.displayColorPicker = false;
 
     /**
-     * @type {?import('ngeo/search/searchDirective.js').SearchDirectiveListeners<olFeature<import('ol/geom/Geometry.js').default>>}
+     * @type {?import('ngeo/search/searchDirective').SearchDirectiveListeners<olFeature<import('ol/geom/Geometry').default>>}
      */
     this.listeners = null;
 
     /**
-     * @type {import('ngeo/search/searchDirective.js').SearchDirectiveListeners<olFeature<import('ol/geom/Geometry.js').default>>}
+     * @type {import('ngeo/search/searchDirective').SearchDirectiveListeners<olFeature<import('ol/geom/Geometry').default>>}
      */
     this.additionalListeners = {};
 
@@ -405,10 +406,11 @@ export class SearchController {
   /**
    * Merges the custom listeners received via the component attributes and the
    * listeners that are needed for this controller to function (close and select).
-   * @param {import('ngeo/search/searchDirective.js').SearchDirectiveListeners<olFeature<import('ol/geom/Geometry.js').default>>} additionalListeners
+   *
+   * @param {import('ngeo/search/searchDirective').SearchDirectiveListeners<olFeature<import('ol/geom/Geometry').default>>} additionalListeners
    *    Custom provided listeners.
-   * @param {import('ngeo/search/searchDirective.js').SearchDirectiveListeners<olFeature<import('ol/geom/Geometry.js').default>>} listeners Default listeners.
-   * @return {import('ngeo/search/searchDirective.js').SearchDirectiveListeners<olFeature<import('ol/geom/Geometry.js').default>>} Merged listeners.
+   * @param {import('ngeo/search/searchDirective').SearchDirectiveListeners<olFeature<import('ol/geom/Geometry').default>>} listeners Default listeners.
+   * @returns {import('ngeo/search/searchDirective').SearchDirectiveListeners<olFeature<import('ol/geom/Geometry').default>>} Merged listeners.
    * @private
    */
   mergeListeners_(additionalListeners, listeners) {
@@ -440,6 +442,7 @@ export class SearchController {
 
   /**
    * Initialize datasets for the search
+   *
    * @private
    */
   initDatasets_() {
@@ -447,7 +450,7 @@ export class SearchController {
     for (const datasource of this.options.datasources || []) {
       /** @type {string[]} */
       const groupValues = datasource.groupValues !== undefined ? datasource.groupValues : this.groups;
-      /** @type {import('gmf/options.js').SearchAction[]} */
+      /** @type {import('gmf/options').SearchAction[]} */
       const groupActions = datasource.groupActions || [];
       /** @type {{title: string, filter: function(import("geojson").Feature): boolean}[]} */
       const filters = [];
@@ -502,7 +505,7 @@ export class SearchController {
         },
         /**
          * @param {CoordinateSuggestion} suggestion
-         * @return {string}
+         * @returns {string}
          */
         suggestion: (suggestion) => {
           const coordinates = suggestion.label;
@@ -516,10 +519,10 @@ export class SearchController {
   }
 
   /**
-   * @param {import('gmf/options.js').SearchComponentDatasource} config The config of the dataset.
+   * @param {import('gmf/options').SearchComponentDatasource} config The config of the dataset.
    * @param {(function(import("geojson").Feature): boolean)} [opt_filter] A filter function
    *     based on a GeoJSONFeaturesCollection's array.
-   * @return {Twitter.Typeahead.Dataset<olFeature<import('ol/geom/Geometry.js').default>>} A typeahead dataset.
+   * @returns {Twitter.Typeahead.Dataset<olFeature<import('ol/geom/Geometry').default>>} A typeahead dataset.
    * @private
    */
   createDataset_(config, opt_filter) {
@@ -527,7 +530,7 @@ export class SearchController {
     const componentScope = this.scope_;
     const compile = this.compile_;
     const bloodhoundEngine = this.createAndInitBloodhound_(config, opt_filter);
-    /** @type {Twitter.Typeahead.Dataset<olFeature<import('ol/geom/Geometry.js').default>>} */
+    /** @type {Twitter.Typeahead.Dataset<olFeature<import('ol/geom/Geometry').default>>} */
     const typeaheadDataset = {
       limit: Infinity,
       source: bloodhoundEngine.ttAdapter(),
@@ -565,7 +568,7 @@ export class SearchController {
 
   /**
    * @param {string} action The action to keep.
-   * @return {(function(import("geojson").Feature): boolean)} A filter function based on a
+   * @returns {(function(import("geojson").Feature): boolean)} A filter function based on a
    *     GeoJSONFeaturesCollection's array.
    * @private
    */
@@ -573,7 +576,7 @@ export class SearchController {
     return (
       /**
        * @param {import("geojson").Feature} feature
-       * @return {boolean}
+       * @returns {boolean}
        */
       function (feature) {
         const properties = feature.properties || {};
@@ -582,7 +585,7 @@ export class SearchController {
           // add it to the corresponding group
           return (
             !properties.layer_name &&
-            /** @type {import('gmf/options.js').SearchAction[]} */ (properties.actions).some(
+            /** @type {import('gmf/options').SearchAction[]} */ (properties.actions).some(
               (act) => act.action === action
             )
           );
@@ -596,7 +599,7 @@ export class SearchController {
   /**
    * @param {string} [opt_layerName] The layerName to keep. If null, keep all layers
    *     (In all cases, except actions layers).
-   * @return {function(import("geojson").Feature): boolean} A filter function based on a
+   * @returns {function(import("geojson").Feature): boolean} A filter function based on a
    *     GeoJSONFeaturesCollection's array.
    * @private
    */
@@ -604,7 +607,7 @@ export class SearchController {
     return (
       /**
        * @param {import("geojson").Feature} feature
-       * @return {boolean}
+       * @returns {boolean}
        */
       function (feature) {
         const featureLayerName = (feature.properties || {}).layer_name;
@@ -621,10 +624,10 @@ export class SearchController {
   }
 
   /**
-   * @param {import('gmf/options.js').SearchComponentDatasource} config The config of the dataset.
+   * @param {import('gmf/options').SearchComponentDatasource} config The config of the dataset.
    * @param {(function(import("geojson").Feature): boolean)} [opt_filter] Afilter function
    *     based on a GeoJSONFeaturesCollection's array.
-   * @return {Bloodhound<olFeature<import('ol/geom/Geometry.js').default>[]>} The bloodhound engine.
+   * @returns {Bloodhound<olFeature<import('ol/geom/Geometry').default>[]>} The bloodhound engine.
    * @private
    */
   createAndInitBloodhound_(config, opt_filter) {
@@ -646,7 +649,7 @@ export class SearchController {
   }
 
   /**
-   * @return {Bloodhound.RemoteOptions<GeoJSON.FeatureCollection>} Options.
+   * @returns {Bloodhound.RemoteOptions<GeoJSON.FeatureCollection>} Options.
    * @private
    */
   getBloodhoudRemoteOptions_() {
@@ -679,8 +682,8 @@ export class SearchController {
    */
 
   /**
-   * @param {import("ol/View.js").default} view View.
-   * @return {function(string, function(CoordinateSuggestion[]))} function defining parameters for the search
+   * @param {import('ol/View').default} view View.
+   * @returns {function(string, function(CoordinateSuggestion[]))} function defining parameters for the search
    *    suggestions.
    * @private
    */
@@ -713,10 +716,11 @@ export class SearchController {
 
   /**
    * Style for search results.
-   * @param {null|olFeature<import('ol/geom/Geometry.js').default>|import("ol/render/Feature.js").default} feature
+   *
+   * @param {null|olFeature<import('ol/geom/Geometry').default>|import('ol/render/Feature').default} feature
    *    The searched feature.
    * @param {number} resolution The current resolution of the map.
-   * @return {import("ol/style/Style.js").default} A style for this kind of features.
+   * @returns {import('ol/style/Style').default} A style for this kind of features.
    * @private
    */
   getSearchStyle_(feature, resolution) {
@@ -726,7 +730,7 @@ export class SearchController {
     const style = buildStyle(
       this.options.styles[feature.get('layer_name')] || this.options.styles['default']
     );
-    const trueStyle = /** @type {import('ol/style/Style.js').default} */ (style);
+    const trueStyle = /** @type {import('ol/style/Style').default} */ (style);
     if (this.color) {
       const color = asColorArray(this.color);
 
@@ -747,7 +751,7 @@ export class SearchController {
 
       let imageStyle = trueStyle.getImage();
       if (imageStyle) {
-        const circleStyle = /** @type {import('ol/style/Circle.js').default} */ (imageStyle);
+        const circleStyle = /** @type {import('ol/style/Circle').default} */ (imageStyle);
         const imageStrokeStyle = circleStyle.getStroke();
         if (imageStrokeStyle) {
           imageStrokeStyle.setColor(strokeColor);
@@ -766,6 +770,7 @@ export class SearchController {
 
   /**
    * Set a new color for the search feature style.
+   *
    * @param {string} color The color to set.
    */
   setStyleColor(color) {
@@ -819,8 +824,8 @@ export class SearchController {
 
   /**
    * @param {JQueryEventObject} event Event.
-   * @param {olFeature<import('ol/geom/Geometry.js').default>|CoordinateSuggestion} suggestion Suggestion.
-   * @param {Twitter.Typeahead.Dataset<olFeature<import('ol/geom/Geometry.js').default>>} dataset Dataset.
+   * @param {olFeature<import('ol/geom/Geometry').default>|CoordinateSuggestion} suggestion Suggestion.
+   * @param {Twitter.Typeahead.Dataset<olFeature<import('ol/geom/Geometry').default>>} dataset Dataset.
    * @private
    */
   select_(event, suggestion, dataset) {
@@ -851,8 +856,8 @@ export class SearchController {
 
   /**
    * @param {JQueryEventObject} event Event.
-   * @param {olFeature<import('ol/geom/Geometry.js').default>} feature Feature.
-   * @param {Twitter.Typeahead.Dataset<olFeature<import('ol/geom/Geometry.js').default>>} dataset Dataset.
+   * @param {olFeature<import('ol/geom/Geometry').default>} feature Feature.
+   * @param {Twitter.Typeahead.Dataset<olFeature<import('ol/geom/Geometry').default>>} dataset Dataset.
    * @private
    */
   selectFromGMF_(event, feature, dataset) {
@@ -877,7 +882,7 @@ export class SearchController {
         } else if (actionName == 'add_group') {
           this.gmfTreeManager_.addGroupByName(actionData, true);
         } else if (actionName == 'add_layer') {
-          const groupActions = /** @type {import('gmf/options.js').SearchAction[]} */ (
+          const groupActions = /** @type {import('gmf/options').SearchAction[]} */ (
             this.options.datasources[0].groupActions
           );
           let datasourcesActionsHaveAddLayer;
@@ -971,6 +976,7 @@ export class SearchController {
 
   /**
    * Performs a full-text search and centers the map on the first search result.
+   *
    * @param {string} query Search query.
    * @param {number} resultIndex Return nth result instead.
    * @param {number} [opt_zoom] Optional zoom level.
@@ -987,13 +993,12 @@ export class SearchController {
       }
       if (data && data.features[resultIndex - 1]) {
         const format = new olFormatGeoJSON();
-        const feature =
-          /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>} */ (
-            format.readFeature(data.features[resultIndex - 1])
-          );
+        const feature = /** @type {import('ol/Feature').default<import('ol/geom/Geometry').default>} */ (
+          format.readFeature(data.features[resultIndex - 1])
+        );
         this.featureOverlay_.addFeature(feature);
         /**
-         * @type {import('ol/View.js').FitOptions}
+         * @type {import('ol/View').FitOptions}
          */
         const fitOptions = {};
         if (opt_zoom !== undefined) {

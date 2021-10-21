@@ -21,14 +21,14 @@
 
 import angular from 'angular';
 
-import ngeoDrawFeatures from 'ngeo/draw/features.js';
+import ngeoDrawFeatures from 'ngeo/draw/features';
 
-import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties.js';
-import ngeoGeometryType from 'ngeo/GeometryType.js';
-import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent.js';
-import {interactionDecoration as ngeoMiscDecorateInteraction} from 'ngeo/misc/decorate.js';
-import ngeoMiscFeatureHelper, {ArrowDirections, ArrowPositions} from 'ngeo/misc/FeatureHelper.js';
-import olFeature from 'ol/Feature.js';
+import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties';
+import ngeoGeometryType from 'ngeo/GeometryType';
+import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent';
+import {interactionDecoration as ngeoMiscDecorateInteraction} from 'ngeo/misc/decorate';
+import ngeoMiscFeatureHelper, {ArrowDirections, ArrowPositions} from 'ngeo/misc/FeatureHelper';
+import olFeature from 'ol/Feature';
 
 /**
  * @hidden
@@ -37,9 +37,9 @@ export class DrawController {
   /**
    * @param {angular.IScope} $scope Scope.
    * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext service.
-   * @param {import("ngeo/misc/FeatureHelper.js").FeatureHelper} ngeoFeatureHelper Ngeo feature helper
+   * @param {import('ngeo/misc/FeatureHelper').FeatureHelper} ngeoFeatureHelper Ngeo feature helper
    *    service.
-   * @param {import("ol/Collection.js").default<olFeature<import("ol/geom/Geometry.js").default>>} ngeoFeatures Collection of
+   * @param {import('ol/Collection').default<olFeature<import('ol/geom/Geometry').default>>} ngeoFeatures Collection of
    *    features.
    * @ngInject
    */
@@ -52,12 +52,13 @@ export class DrawController {
     /**
      * Alternate collection of features in which to push the drawn features.
      * If not defined, then `ngeoFeatures` is used instead.
-     * @type {?import("ol/Collection.js").default<olFeature<import("ol/geom/Geometry.js").default>>}
+     *
+     * @type {?import('ol/Collection').default<olFeature<import('ol/geom/Geometry').default>>}
      */
     this.features = null;
 
     /**
-     * @type {?import("ol/Map.js").default}
+     * @type {?import('ol/Map').default}
      */
     this.map = null;
 
@@ -85,50 +86,50 @@ export class DrawController {
     gettextCatalog.getString('Text');
 
     /**
-     * @type {import("ngeo/misc/FeatureHelper.js").FeatureHelper}
+     * @type {import('ngeo/misc/FeatureHelper').FeatureHelper}
      * @private
      */
     this.featureHelper_ = ngeoFeatureHelper;
 
     /**
-     * @type {import("ol/Collection.js").default<olFeature<import("ol/geom/Geometry.js").default>>}
+     * @type {import('ol/Collection').default<olFeature<import('ol/geom/Geometry').default>>}
      * @private
      */
     this.ngeoFeatures_ = ngeoFeatures;
 
     /**
-     * @type {import("ol/interaction/Interaction.js").default[]}
+     * @type {import('ol/interaction/Interaction').default[]}
      * @private
      */
     this.interactions_ = [];
 
     /**
-     * @type {?import("ol/interaction/Draw.js").default}
+     * @type {?import('ol/interaction/Draw').default}
      */
     this.drawPoint = null;
 
     /**
-     * @type {?import("ngeo/interaction/MeasureLength.js").default}
+     * @type {?import('ngeo/interaction/MeasureLength').default}
      */
     this.measureLength = null;
 
     /**
-     * @type {?import("ngeo/interaction/MeasureArea.js").default}
+     * @type {?import('ngeo/interaction/MeasureArea').default}
      */
     this.measureArea = null;
 
     /**
-     * @type {?import("ngeo/interaction/MeasureAzimut.js").default}
+     * @type {?import('ngeo/interaction/MeasureAzimut').default}
      */
     this.measureAzimut = null;
 
     /**
-     * @type {?import("ol/interaction/Draw.js").default}
+     * @type {?import('ol/interaction/Draw').default}
      */
     this.drawRectangle = null;
 
     /**
-     * @type {?import("ol/interaction/Draw.js").default}
+     * @type {?import('ol/interaction/Draw').default}
      */
     this.drawText = null;
 
@@ -149,7 +150,8 @@ export class DrawController {
   /**
    * Register a draw|measure interaction by setting it inactive, decorating it
    * and adding it to the map
-   * @param {import("ol/interaction/Interaction.js").default} interaction Interaction to register.
+   *
+   * @param {import('ol/interaction/Interaction').default} interaction Interaction to register.
    */
   registerInteraction(interaction) {
     if (!this.map) {
@@ -165,7 +167,8 @@ export class DrawController {
    * Called when any of the draw or measure interaction active property changes.
    * Set the active property of this directive accordingly, i.e. if at least
    * one of the draw or measure is active then the active property is set to true.
-   * @param {Event|import("ol/events/Event.js").default} event Event.
+   *
+   * @param {Event|import('ol/events/Event').default} event Event.
    */
   handleActiveChange(event) {
     this.active = this.interactions_.some((interaction) => interaction.getActive(), this);
@@ -174,12 +177,13 @@ export class DrawController {
   /**
    * Called when a feature is finished being drawn. Set the default properties
    * for its style, then set its style and add it to the features collection.
+   *
    * @param {string} type Type of geometry being drawn.
-   * @param {import('lib/ol.interaction.Draw.js').DrawEvent|import('ngeo/CustomEvent.js').default<import('lib/ol.interaction.Draw.js').DrawEvent>} evt
+   * @param {import('lib/ol.interaction.Draw').DrawEvent|import('ngeo/CustomEvent').default<import('lib/ol.interaction.Draw').DrawEvent>} evt
    *    Event.
    */
   handleDrawEnd(type, evt) {
-    /** @type {import('lib/ol.interaction.Draw.js').DrawEvent} */
+    /** @type {import('lib/ol.interaction.Draw').DrawEvent} */
     // @ts-ignore
     const event = evt.detail ? evt.detail : evt;
     const sketch = event.feature;

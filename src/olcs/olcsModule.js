@@ -20,8 +20,8 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import Service from 'ngeo/olcs/Service.js';
-import control from 'ngeo/olcs/controls3d.js';
+import Service from 'ngeo/olcs/Service';
+import control from 'ngeo/olcs/controls3d';
 
 /**
  * @type {angular.IModule}

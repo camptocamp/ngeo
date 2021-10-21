@@ -20,11 +20,11 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import gmfLayertreeComponent from 'gmf/layertree/component.js';
-import gmfLayertreeDatasourceGroupTreeComponent from 'gmf/layertree/datasourceGroupTreeComponent.js';
-import gmfLayertreeSyncLayertreeMap from 'gmf/layertree/SyncLayertreeMap.js';
-import gmfLayertreeTimeSliderComponent from 'gmf/layertree/timeSliderComponent.js';
-import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
+import gmfLayertreeComponent from 'gmf/layertree/component';
+import gmfLayertreeDatasourceGroupTreeComponent from 'gmf/layertree/datasourceGroupTreeComponent';
+import gmfLayertreeSyncLayertreeMap from 'gmf/layertree/SyncLayertreeMap';
+import gmfLayertreeTimeSliderComponent from 'gmf/layertree/timeSliderComponent';
+import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager';
 
 import './common.scss';
 

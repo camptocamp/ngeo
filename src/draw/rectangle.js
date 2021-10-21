@@ -20,10 +20,10 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import ngeoGeometryType from 'ngeo/GeometryType.js';
-import {listen} from 'ol/events.js';
-import olInteractionDraw from 'ol/interaction/Draw.js';
-import olGeomPolygon from 'ol/geom/Polygon.js';
+import ngeoGeometryType from 'ngeo/GeometryType';
+import {listen} from 'ol/events';
+import olInteractionDraw from 'ol/interaction/Draw';
+import olGeomPolygon from 'ol/geom/Polygon';
 
 /**
  * @type {angular.IModule}
@@ -32,7 +32,7 @@ import olGeomPolygon from 'ol/geom/Polygon.js';
 const myModule = angular.module('ngeoDrawrectangle', []);
 
 /**
- * @return {angular.IDirective} The directive specs.
+ * @returns {angular.IDirective} The directive specs.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoDrawrectangle

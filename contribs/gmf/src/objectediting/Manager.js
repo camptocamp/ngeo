@@ -20,9 +20,9 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import gmfEditingEditFeature from 'gmf/editing/EditFeature.js';
-import ngeoStatemanagerLocation from 'ngeo/statemanager/Location.js';
-import olFeature from 'ol/Feature.js';
+import gmfEditingEditFeature from 'gmf/editing/EditFeature';
+import ngeoStatemanagerLocation from 'ngeo/statemanager/Location';
+import olFeature from 'ol/Feature';
 
 /**
  * @enum {string}
@@ -56,8 +56,8 @@ export const ObjecteditingParam = {
  * a feature using the GMF protocol.
  *
  * @param {angular.IQService} $q Angular $q service.
- * @param {import("gmf/editing/EditFeature.js").EditingEditFeature} gmfEditFeature Gmf edit feature service.
- * @param {import("ngeo/statemanager/Location.js").StatemanagerLocation} ngeoLocation ngeo location service.
+ * @param {import('gmf/editing/EditFeature').EditingEditFeature} gmfEditFeature Gmf edit feature service.
+ * @param {import('ngeo/statemanager/Location').StatemanagerLocation} ngeoLocation ngeo location service.
  * @class
  * @ngInject
  * @hidden
@@ -69,17 +69,17 @@ export function ObjecteditingManagerService($q, gmfEditFeature, ngeoLocation) {
   this.q_ = $q;
 
   /**
-   * @type {import("gmf/editing/EditFeature.js").EditingEditFeature}
+   * @type {import('gmf/editing/EditFeature').EditingEditFeature}
    */
   this.gmfEditFeature_ = gmfEditFeature;
 
   /**
-   * @type {import("ngeo/statemanager/Location.js").StatemanagerLocation}
+   * @type {import('ngeo/statemanager/Location').StatemanagerLocation}
    */
   this.ngeoLocation_ = ngeoLocation;
 
   /**
-   * @type {?angular.IDeferred<?olFeature<import("ol/geom/Geometry.js").default>>}
+   * @type {?angular.IDeferred<?olFeature<import('ol/geom/Geometry').default>>}
    */
   this.getFeatureDefered_ = null;
 }
@@ -92,7 +92,7 @@ export function ObjecteditingManagerService($q, gmfEditFeature, ngeoLocation) {
  * is returned, otherwise one is created with empty geometry and with the
  * property set.
  *
- * @return {angular.IPromise<?olFeature<import("ol/geom/Geometry.js").default>>} Promise.
+ * @returns {angular.IPromise<?olFeature<import('ol/geom/Geometry').default>>} Promise.
  */
 ObjecteditingManagerService.prototype.getFeature = function () {
   if (!this.getFeatureDefered_) {
@@ -126,14 +126,14 @@ ObjecteditingManagerService.prototype.getFeature = function () {
 };
 
 /**
- * @return {string|undefined} The geometry type.
+ * @returns {string|undefined} The geometry type.
  */
 ObjecteditingManagerService.prototype.getGeomType = function () {
   return this.ngeoLocation_.getParam(ObjecteditingParam.GEOM_TYPE);
 };
 
 /**
- * @return {number|undefined} The gmf layer node id.
+ * @returns {number|undefined} The gmf layer node id.
  */
 ObjecteditingManagerService.prototype.getLayerNodeId = function () {
   return this.ngeoLocation_.getParamAsInt(ObjecteditingParam.LAYER);
@@ -147,7 +147,7 @@ ObjecteditingManagerService.prototype.getLayerNodeId = function () {
  *
  * @param {string} key Property key.
  * @param {string} value Property value.
- * @param {olFeature<import("ol/geom/Geometry.js").default>[]} features List of features.
+ * @param {olFeature<import('ol/geom/Geometry').default>[]} features List of features.
  */
 ObjecteditingManagerService.prototype.handleGetFeatures_ = function (key, value, features) {
   let feature;

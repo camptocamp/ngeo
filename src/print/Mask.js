@@ -19,13 +19,13 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import Layer from 'ol/layer/Layer.js';
-import {createCanvasContext2D} from 'ol/dom.js';
-import {INCHES_PER_METER, DOTS_PER_INCH} from 'ngeo/print/Utils.js';
-import {toRadians} from 'ol/math.js';
+import Layer from 'ol/layer/Layer';
+import {createCanvasContext2D} from 'ol/dom';
+import {INCHES_PER_METER, DOTS_PER_INCH} from 'ngeo/print/Utils';
+import {toRadians} from 'ol/math';
 
 /**
- * @extends {Layer<import("ol/source/Source").default>}
+ * @augments {Layer<import("ol/source/Source").default>}
  */
 export default class Mask extends Layer {
   constructor(options = {}) {
@@ -40,12 +40,12 @@ export default class Mask extends Layer {
     this.context_.canvas.style.position = 'absolute';
 
     /**
-     * @type {function(import("ol/PluggableMap.js").FrameState):number}
+     * @type {function(import('ol/PluggableMap').FrameState):number}
      */
     this.getScale;
 
     /**
-     * @type {function():import("ol/size.js").Size}
+     * @type {function():import('ol/size').Size}
      */
     this.getSize;
 
@@ -57,7 +57,7 @@ export default class Mask extends Layer {
 
   /**
    * @param {import("ol/PluggableMap").FrameState} frameState
-   * @return {HTMLElement}
+   * @returns {HTMLElement}
    */
   render(frameState) {
     const cwidth = frameState.size[0];

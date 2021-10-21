@@ -20,8 +20,8 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import DateFormatter from 'ngeo/misc/php-date-formatter.js';
-import 'jquery-datetimepicker/jquery.datetimepicker.js';
+import DateFormatter from 'ngeo/misc/php-date-formatter';
+import 'jquery-datetimepicker/jquery.datetimepicker';
 import 'jquery-datetimepicker/jquery.datetimepicker.css';
 
 /**
@@ -39,8 +39,7 @@ const myModule = angular.module('ngeoDateTimePicker', ['gettext']);
  *          ngeo-datetimepicker-options="{timepicker: false}"
  *
  * @htmlAttribute {Object} ngeo-datetimepicker-options The options.
- *
- * @return {angular.IDirective} The directive specs.
+ * @returns {angular.IDirective} The directive specs.
  * @ngdoc directive
  * @ngname ngeoDatetimepicker
  */
@@ -68,18 +67,20 @@ myModule.directive('ngeoDatetimepicker', dateTimeComponent);
  */
 export function Controller($element, gettextCatalog) {
   /**
-   * @const {JQuery}
+   * @constant {JQuery}
    */
   this.element_ = $element;
 
   /**
    * The gettext catalog
+   *
    * @type {angular.gettext.gettextCatalog}
    */
   this.gettextCatalog_ = gettextCatalog;
 
   /**
    * The options
+   *
    * @type {DateTimePickerOptions}
    */
   this.options;

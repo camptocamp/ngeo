@@ -19,19 +19,20 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import ngeoInteractionMeasureArea from 'ngeo/interaction/MeasureArea.js';
-import ngeoInteractionMobileDraw from 'ngeo/interaction/MobileDraw.js';
+import ngeoInteractionMeasureArea from 'ngeo/interaction/MeasureArea';
+import ngeoInteractionMobileDraw from 'ngeo/interaction/MobileDraw';
 
 /**
  * Interaction dedicated to measure Area on mobile devices.
+ *
  * @private
  * @hidden
  */
 class MeasureAreaMobile extends ngeoInteractionMeasureArea {
   /**
-   * @param {import('ngeo/misc/filters.js').unitPrefix} format The format function
+   * @param {import('ngeo/misc/filters').unitPrefix} format The format function
    * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
-   * @param {import('ngeo/interaction/Measure.js').MeasureOptions} [options] Options
+   * @param {import('ngeo/interaction/Measure').MeasureOptions} [options] Options
    */
   constructor(format, gettextCatalog, options = {}) {
     Object.assign(options, {displayHelpTooltip: false});
@@ -39,10 +40,10 @@ class MeasureAreaMobile extends ngeoInteractionMeasureArea {
   }
 
   /**
-   * @param {import("ol/style/Style.js").StyleLike} style The sketchStyle used for the drawing
+   * @param {import('ol/style/Style').StyleLike} style The sketchStyle used for the drawing
    *    interaction.
-   * @param {import("ol/source/Vector.js").default<import("ol/geom/Polygon.js").default>} source Vector source.
-   * @return {ngeoInteractionMobileDraw} The interaction
+   * @param {import('ol/source/Vector').default<import('ol/geom/Polygon').default>} source Vector source.
+   * @returns {ngeoInteractionMobileDraw} The interaction
    */
   createDrawInteraction(style, source) {
     return new ngeoInteractionMobileDraw({

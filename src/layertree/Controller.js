@@ -20,14 +20,15 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import {layerLoading, layerDecoration} from 'ngeo/misc/decorate.js';
-import {getUid as olUtilGetUid} from 'ol/util.js';
-import {listen} from 'ol/events.js';
-import olLayerGroup from 'ol/layer/Group.js';
-import olLayerLayer from 'ol/layer/Layer.js';
+import {layerLoading, layerDecoration} from 'ngeo/misc/decorate';
+import {getUid as olUtilGetUid} from 'ol/util';
+import {listen} from 'ol/events';
+import olLayerGroup from 'ol/layer/Group';
+import olLayerLayer from 'ol/layer/Layer';
 
 /**
  * The controller for the "tree node" directive.
+ *
  * @param {angular.IScope} $scope Scope.
  * @param {angular.IScope} $rootScope Angular rootScope.
  * @param {angular.IAttributes} $attrs Attributes.
@@ -71,25 +72,25 @@ export function LayertreeController($scope, $rootScope, $attrs) {
     node = $scope.$eval(nodeExpr);
   }
   /**
-   * @type {import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer}
+   * @type {import('gmf/themes').GmfGroup|import('gmf/themes').GmfLayer}
    */
   this.node = node;
 
   const mapExpr = $attrs.ngeoLayertreeMap;
   /**
-   * @type {import("ol/Map.js").default}
+   * @type {import('ol/Map').default}
    */
   const map = $scope.$eval(mapExpr);
   console.assert(map !== undefined);
 
   /**
-   * @type {import("ngeo/layertree/Controller.js").LayertreeController}
+   * @type {import('ngeo/layertree/Controller').LayertreeController}
    */
   // @ts-ignore: scope ...
   this.parent = $scope.$parent.layertreeCtrl;
 
   /**
-   * @type {import("ngeo/layertree/Controller.js").LayertreeController[]}
+   * @type {import('ngeo/layertree/Controller').LayertreeController[]}
    */
   this.children = [];
 
@@ -124,7 +125,7 @@ export function LayertreeController($scope, $rootScope, $attrs) {
   $scope.depth = this.depth;
 
   /**
-   * @type {import("ol/Map.js").default}
+   * @type {import('ol/Map').default}
    */
   this.map = map;
 
@@ -143,8 +144,8 @@ export function LayertreeController($scope, $rootScope, $attrs) {
   this.nodelayerExpr = nodelayerExpr;
 
   /**
-   * @type {?import("ol/layer/Layer.js").default<import('ol/source/Source.js').default>|
-   *    import("ol/layer/Group.js").default}
+   * @type {?import('ol/layer/Layer').default<import('ol/source/Source').default>|
+   *    import('ol/layer/Group').default}
    */
   this.layer = null;
   if (!isRoot) {
@@ -156,7 +157,7 @@ export function LayertreeController($scope, $rootScope, $attrs) {
   }
 
   /**
-   * @type {?import("ngeo/datasource/DataSource.js").default}
+   * @type {?import('ngeo/datasource/DataSource').default}
    */
   this.dataSource_ = null;
 
@@ -168,7 +169,7 @@ export function LayertreeController($scope, $rootScope, $attrs) {
       this.layer,
       'change:opacity',
       /**
-       * @param {Event|import("ol/events/Event.js").default} evt
+       * @param {Event|import('ol/events/Event').default} evt
        */
       (evt) => {
         this.rootScope_.$broadcast('ngeo-layertree-opacity', this);
@@ -202,7 +203,8 @@ export function LayertreeController($scope, $rootScope, $attrs) {
 
 /**
  * Return the current state.
- * @return {string} 'on', 'off', 'indeterminate'.
+ *
+ * @returns {string} 'on', 'off', 'indeterminate'.
  */
 LayertreeController.prototype.getState = function () {
   return this.state_;
@@ -211,6 +213,7 @@ LayertreeController.prototype.getState = function () {
 /**
  * Set the state of this treeCtrl. Update its children with its value and then
  * ask its parent to refresh its state.
+ *
  * @param {string} state 'on' or 'off'.
  * @param {boolean} [opt_broadcast] Broadcast.
  */
@@ -263,13 +266,13 @@ LayertreeController.prototype.setStateInternal_ = function (state) {
  * Refresh the state of this treeCtrl based on it's children value. The call its
  * parent to do the same.
  *
- * @param {import("ngeo/layertree/Controller.js").LayertreeController} [opt_onChild] Child tree
+ * @param {import('ngeo/layertree/Controller').LayertreeController} [opt_onChild] Child tree
  *     controller that had its state changed to 'on'.
  * @param {boolean} [opt_broadcast] Broadcast.
  * @public
  */
 LayertreeController.prototype.refreshState = function (opt_onChild, opt_broadcast) {
-  const group = /** @type {import('gmf/themes.js').GmfGroup} */ (this.node);
+  const group = /** @type {import('gmf/themes').GmfGroup} */ (this.node);
   if (
     group.children &&
     opt_onChild &&
@@ -297,10 +300,11 @@ LayertreeController.prototype.refreshState = function (opt_onChild, opt_broadcas
 
 /**
  * Return the current state, calculate on all its children recursively.
- * @return {string} 'on', 'off' or 'indeterminate'.
+ *
+ * @returns {string} 'on', 'off' or 'indeterminate'.
  */
 LayertreeController.prototype.getCalculateState = function () {
-  const group = /** @type {import('gmf/themes.js').GmfGroup} */ (this.node);
+  const group = /** @type {import('gmf/themes').GmfGroup} */ (this.node);
   if (group.children === undefined) {
     return this.state_;
   }
@@ -324,7 +328,7 @@ LayertreeController.prototype.getCalculateState = function () {
 
 /**
  * @param {boolean|undefined} val Value.
- * @return {boolean|undefined} Value.
+ * @returns {boolean|undefined} Value.
  */
 LayertreeController.prototype.getSetActive = function (val) {
   const layer = this.layer;
@@ -344,7 +348,7 @@ LayertreeController.prototype.getSetActive = function (val) {
 };
 
 /**
- * @return {?import("ngeo/datasource/DataSource.js").default} dataSource The data source bound to
+ * @returns {?import('ngeo/datasource/DataSource').default} dataSource The data source bound to
  *     this layer tree controller.
  */
 LayertreeController.prototype.getDataSource = function () {
@@ -352,7 +356,7 @@ LayertreeController.prototype.getDataSource = function () {
 };
 
 /**
- * @param {?import("ngeo/datasource/DataSource.js").default} dataSource Data source or null.
+ * @param {?import('ngeo/datasource/DataSource').default} dataSource Data source or null.
  */
 LayertreeController.prototype.setDataSource = function (dataSource) {
   this.dataSource_ = dataSource;
@@ -361,8 +365,9 @@ LayertreeController.prototype.setDataSource = function (dataSource) {
 /**
  * Get the "top level" layertree (one of the first level child under the root
  * layertree). Can return itself.
- * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl ngeo layertree controller.
- * @return {import("ngeo/layertree/Controller.js").LayertreeController} the top level layertree.
+ *
+ * @param {import('ngeo/layertree/Controller').LayertreeController} treeCtrl ngeo layertree controller.
+ * @returns {import('ngeo/layertree/Controller').LayertreeController} the top level layertree.
  * @public
  * @hidden
  */
@@ -390,8 +395,9 @@ export const LayertreeVisitorDecision = {
 
 /**
  * Recursive method to traverse the layertree controller graph.
+ *
  * @param {Visitor} visitor A visitor called for each node.
- * @return {boolean} whether to stop traversing.
+ * @returns {boolean} whether to stop traversing.
  */
 LayertreeController.prototype.traverseDepthFirst = function (visitor) {
   // First visit the current controller

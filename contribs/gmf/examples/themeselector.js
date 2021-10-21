@@ -21,10 +21,10 @@
 
 import angular from 'angular';
 import './themeselector.css';
-import gmfThemeModule from 'gmf/theme/module.js';
+import gmfThemeModule from 'gmf/theme/module';
 
-import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
-import options from './options.js';
+import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager';
+import options from './options';
 
 /** @type {angular.IModule} **/
 const myModule = angular.module('gmfapp', ['gettext', gmfLayertreeTreeManager.name, gmfThemeModule.name]);
@@ -32,21 +32,21 @@ const myModule = angular.module('gmfapp', ['gettext', gmfLayertreeTreeManager.na
 /**
  * @class
  * @param {angular.IHttpService} $http Angular's $http service.
- * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes Themes service.
- * @param {import("gmf/theme/Manager.js").ThemeManagerService} gmfThemeManager gmf Tree Manager service.
+ * @param {import('gmf/theme/Themes').ThemesService} gmfThemes Themes service.
+ * @param {import('gmf/theme/Manager').ThemeManagerService} gmfThemeManager gmf Tree Manager service.
  * @ngInject
  */
 function MainController($http, gmfThemes, gmfThemeManager) {
   /**
-   * @param {import('gmf/themes.js').GmfTheme} theme Theme.
-   * @return {boolean} Theme is 'Enseignement'
+   * @param {import('gmf/themes').GmfTheme} theme Theme.
+   * @returns {boolean} Theme is 'Enseignement'
    */
   this.filter = function (theme) {
     return theme.name !== 'Enseignement';
   };
 
   /**
-   * @type {import("gmf/theme/Manager.js").ThemeManagerService}
+   * @type {import('gmf/theme/Manager').ThemeManagerService}
    */
   this.manager = gmfThemeManager;
 

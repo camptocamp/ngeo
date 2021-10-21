@@ -45,7 +45,7 @@
  * @param {angular.IScope} scope Angular scope. Used to watch arr1 and arr2
  *     using $watchCollection.
  * @param {function(T):boolean} filter Filter function.
- * @return {function()} Function to call to stop synchronization
+ * @returns {function()} Function to call to stop synchronization
  * @template T
  * @hidden
  */

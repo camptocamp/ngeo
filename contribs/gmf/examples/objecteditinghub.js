@@ -22,12 +22,12 @@
 import angular from 'angular';
 import './objecteditinghub.css';
 
-import gmfEditingXSDAttributes from 'gmf/editing/XSDAttributes.js';
-import gmfObjecteditingManager, {ObjecteditingParam} from 'gmf/objectediting/Manager.js';
-import gmfThemeThemes from 'gmf/theme/Themes.js';
-import olFormatWFS from 'ol/format/WFS.js';
-import {getGeometryAttribute} from 'ngeo/format/XSDAttribute.js';
-import options from './options.js';
+import gmfEditingXSDAttributes from 'gmf/editing/XSDAttributes';
+import gmfObjecteditingManager, {ObjecteditingParam} from 'gmf/objectediting/Manager';
+import gmfThemeThemes from 'gmf/theme/Themes';
+import olFormatWFS from 'ol/format/WFS';
+import {getGeometryAttribute} from 'ngeo/format/XSDAttribute';
+import options from './options';
 
 /**
  * @type {angular.IModule}
@@ -44,8 +44,8 @@ const myModule = angular.module('gmfapp', [
  * @param {angular.IHttpService} $http Angular $http service.
  * @param {angular.IQService} $q Angular $q service.
  * @param {angular.IScope} $scope Angular scope.
- * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes The gmf themes service.
- * @param {import("gmf/editing/XSDAttributes.js").EditingXSDAttributeService} gmfXSDAttributes
+ * @param {import('gmf/theme/Themes').ThemesService} gmfThemes The gmf themes service.
+ * @param {import('gmf/editing/XSDAttributes').EditingXSDAttributeService} gmfXSDAttributes
  *    The gmf XSDAttributes service.
  * @class
  * @ngInject
@@ -62,12 +62,12 @@ function MainController($http, $q, $scope, gmfThemes, gmfXSDAttributes) {
   this.q_ = $q;
 
   /**
-   * @type {import("gmf/theme/Themes.js").ThemesService}
+   * @type {import('gmf/theme/Themes').ThemesService}
    */
   this.gmfThemes_ = gmfThemes;
 
   /**
-   * @type {import("gmf/editing/XSDAttributes.js").EditingXSDAttributeService}
+   * @type {import('gmf/editing/XSDAttributes').EditingXSDAttributeService}
    */
   this.gmfXSDAttributes_ = gmfXSDAttributes;
 
@@ -96,37 +96,37 @@ function MainController($http, $q, $scope, gmfThemes, gmfXSDAttributes) {
   this.selectedUrl = this.urls[0];
 
   /**
-   * @type {?import('gmf/themes.js').GmfOgcServers} ogcServers OGC servers.
+   * @type {?import('gmf/themes').GmfOgcServers} ogcServers OGC servers.
    */
   this.gmfServers_ = null;
 
   /**
-   * @type {?import('gmf/themes.js').GmfOgcServer} ogcServer OGC server to use.
+   * @type {?import('gmf/themes').GmfOgcServer} ogcServer OGC server to use.
    */
   this.gmfServer_ = null;
 
   /**
-   * @type {import('gmf/themes.js').GmfLayerWMS[]}
+   * @type {import('gmf/themes').GmfLayerWMS[]}
    */
   this.gmfLayerNodes = [];
 
   /**
-   * @type {?import('gmf/themes.js').GmfLayerWMS}
+   * @type {?import('gmf/themes').GmfLayerWMS}
    */
   this.selectedGmfLayerNode = null;
 
   /**
-   * @type {Object<number, import("ol/Feature.js").default<import("ol/geom/Geometry.js").default>[]>}
+   * @type {Object<number, import('ol/Feature').default<import('ol/geom/Geometry').default>[]>}
    */
   this.featuresCache_ = {};
 
   /**
-   * @type {import("ol/Feature.js").default<import("ol/geom/Geometry.js").default>[]}
+   * @type {import('ol/Feature').default<import('ol/geom/Geometry').default>[]}
    */
   this.features = [];
 
   /**
-   * @type {?import("ol/Feature.js").default<import("ol/geom/Geometry.js").default>}
+   * @type {?import('ol/Feature').default<import('ol/geom/Geometry').default>}
    */
   this.selectedFeature = null;
 
@@ -171,7 +171,7 @@ function MainController($http, $q, $scope, gmfThemes, gmfXSDAttributes) {
       let i, ii;
 
       // (2) Find OE theme
-      /** @type {?import('gmf/themes.js').GmfTheme} */
+      /** @type {?import('gmf/themes').GmfTheme} */
       let theme = null;
       for (i = 0, ii = themes.length; i < ii; i++) {
         if (themes[i].name === this.themeName) {
@@ -201,12 +201,12 @@ function MainController($http, $q, $scope, gmfThemes, gmfXSDAttributes) {
         return;
       }
 
-      /** @type {import('gmf/themes.js').GmfLayerWMS[]} */
+      /** @type {import('gmf/themes').GmfLayerWMS[]} */
       const gmfLayerNodes = [];
       for (i = 0, ii = groupNode.children.length; i < ii; i++) {
         if (groupNode.children[i].metadata.identifierAttributeField) {
           gmfLayerNodes.push(
-            /** @type {import('gmf/themes.js').GmfLayerWMS} */ (/** @type {any} */ (groupNode.children[i]))
+            /** @type {import('gmf/themes').GmfLayerWMS} */ (/** @type {any} */ (groupNode.children[i]))
           );
         }
       }
@@ -252,8 +252,8 @@ MainController.prototype.runEditor = function () {
 };
 
 /**
- * @param {import('gmf/themes.js').GmfLayerWMS} gmfLayerNode Layer node.
- * @return {angular.IPromise<void>} The promise attached to the deferred object.
+ * @param {import('gmf/themes').GmfLayerWMS} gmfLayerNode Layer node.
+ * @returns {angular.IPromise<void>} The promise attached to the deferred object.
  */
 MainController.prototype.getFeatures_ = function (gmfLayerNode) {
   this.getFeaturesDeferred_ = this.q_.defer();
@@ -270,7 +270,7 @@ MainController.prototype.getFeatures_ = function (gmfLayerNode) {
 };
 
 /**
- * @param {import('gmf/themes.js').GmfLayerWMS} gmfLayerNode Layer node.
+ * @param {import('gmf/themes').GmfLayerWMS} gmfLayerNode Layer node.
  */
 MainController.prototype.issueGetFeatures_ = function (gmfLayerNode) {
   if (!this.gmfServer_) {
@@ -290,7 +290,7 @@ MainController.prototype.issueGetFeatures_ = function (gmfLayerNode) {
     if (!this.getFeaturesDeferred_) {
       throw new Error('Missing getFeaturesDeferred');
     }
-    const features = /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>[]} */ (
+    const features = /** @type {import('ol/Feature').default<import('ol/geom/Geometry').default>[]} */ (
       new olFormatWFS().readFeatures(response.data)
     );
     this.featuresCache_[id] = features;
@@ -299,18 +299,18 @@ MainController.prototype.issueGetFeatures_ = function (gmfLayerNode) {
 };
 
 /**
- * @param {import('gmf/themes.js').GmfLayerWMS} gmfLayerNode Layer node.
+ * @param {import('gmf/themes').GmfLayerWMS} gmfLayerNode Layer node.
  */
 MainController.prototype.handleGetFeatures_ = function (gmfLayerNode) {
-  this.features = /** @type {import("ol/Feature.js").default<import("ol/geom/Geometry.js").default>[]} */ (
+  this.features = /** @type {import('ol/Feature').default<import('ol/geom/Geometry').default>[]} */ (
     this.getFeaturesFromCache_(gmfLayerNode)
   );
   this.selectedFeature = this.features[0];
 };
 
 /**
- * @param {import('gmf/themes.js').GmfLayerWMS} gmfLayerNode Layer node.
- * @return {?import("ol/Feature.js").default<import("ol/geom/Geometry.js").default>[]} List of features
+ * @param {import('gmf/themes').GmfLayerWMS} gmfLayerNode Layer node.
+ * @returns {?import('ol/Feature').default<import('ol/geom/Geometry').default>[]} List of features
  */
 MainController.prototype.getFeaturesFromCache_ = function (gmfLayerNode) {
   const id = gmfLayerNode.id;
@@ -319,8 +319,8 @@ MainController.prototype.getFeaturesFromCache_ = function (gmfLayerNode) {
 };
 
 /**
- * @param {import('gmf/themes.js').GmfLayerWMS} gmfLayerNode Layer node.
- * @return {angular.IPromise<void>} The promise attached to the deferred object.
+ * @param {import('gmf/themes').GmfLayerWMS} gmfLayerNode Layer node.
+ * @returns {angular.IPromise<void>} The promise attached to the deferred object.
  */
 MainController.prototype.getGeometryType_ = function (gmfLayerNode) {
   this.getGeometryTypeDeferred_ = this.q_.defer();
@@ -337,14 +337,14 @@ MainController.prototype.getGeometryType_ = function (gmfLayerNode) {
 };
 
 /**
- * @param {import('gmf/themes.js').GmfLayerWMS} gmfLayerNode Layer node.
+ * @param {import('gmf/themes').GmfLayerWMS} gmfLayerNode Layer node.
  */
 MainController.prototype.issueGetAttributesRequest_ = function (gmfLayerNode) {
   this.gmfXSDAttributes_.getAttributes(gmfLayerNode.id).then(
     /**
      * @this {MainController}
-     * @param {import('gmf/themes.js').GmfLayerWMS} gmfLayerNode The layer node
-     * @param {import('ngeo/format/Attribute.js').Attribute[]} attributes The attributes
+     * @param {import('gmf/themes').GmfLayerWMS} gmfLayerNode The layer node
+     * @param {import('ngeo/format/Attribute').Attribute[]} attributes The attributes
      */
     function (gmfLayerNode, attributes) {
       if (!this.getGeometryTypeDeferred_) {
@@ -361,7 +361,7 @@ MainController.prototype.issueGetAttributesRequest_ = function (gmfLayerNode) {
 };
 
 /**
- * @param {import('gmf/themes.js').GmfLayerWMS} gmfLayerNode Layer node.
+ * @param {import('gmf/themes').GmfLayerWMS} gmfLayerNode Layer node.
  */
 MainController.prototype.handleGetGeometryType_ = function (gmfLayerNode) {
   const geomType = this.getGeometryTypeFromCache_(gmfLayerNode);
@@ -369,8 +369,8 @@ MainController.prototype.handleGetGeometryType_ = function (gmfLayerNode) {
 };
 
 /**
- * @param {import('gmf/themes.js').GmfLayerWMS} gmfLayerNode Layer node.
- * @return {string|undefined} The type of geometry.
+ * @param {import('gmf/themes').GmfLayerWMS} gmfLayerNode Layer node.
+ * @returns {string|undefined} The type of geometry.
  */
 MainController.prototype.getGeometryTypeFromCache_ = function (gmfLayerNode) {
   const id = gmfLayerNode.id;
@@ -384,7 +384,7 @@ MainController.prototype.getGeometryTypeFromCache_ = function (gmfLayerNode) {
  * @param {string} uri The original URI, which may already have query data.
  * @param {Object<string, string>} params An object where keys are URI-encoded parameter keys,
  *     and the values are arbitrary types or arrays.
- * @return {string} The new URI.
+ * @returns {string} The new URI.
  */
 MainController.appendParams = function (uri, params) {
   /** @type {string[]} */

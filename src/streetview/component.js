@@ -20,14 +20,14 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr.js';
-import * as olArray from 'ol/array.js';
-import {listen, unlistenByKey} from 'ol/events.js';
-import olFeature from 'ol/Feature.js';
-import olGeomPoint from 'ol/geom/Point.js';
-import MapBrowserEvent from 'ol/MapBrowserEvent.js';
-import GoogleStreetviewService from './GoogleStreetviewService.js';
-import MapillaryService from './MapillaryService.js';
+import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr';
+import * as olArray from 'ol/array';
+import {listen, unlistenByKey} from 'ol/events';
+import olFeature from 'ol/Feature';
+import olGeomPoint from 'ol/geom/Point';
+import MapBrowserEvent from 'ol/MapBrowserEvent';
+import GoogleStreetviewService from './GoogleStreetviewService';
+import MapillaryService from './MapillaryService';
 
 /**
  * @type {angular.IModule}
@@ -39,7 +39,7 @@ myModule.value(
   'ngeoStreetviewTemplateUrl',
   /**
    * @param {angular.IAttributes} $attrs Attributes.
-   * @return {string} The template url.
+   * @returns {string} The template url.
    */
   ($attrs) => {
     const templateUrl = $attrs.ngeoStreetviewTemplateUrl;
@@ -61,7 +61,7 @@ myModule.run(
 /**
  * @param {angular.IAttributes} $attrs Attributes.
  * @param {function(angular.IAttributes): string} ngeoStreetviewTemplateUrl Template function.
- * @return {string} Template URL.
+ * @returns {string} Template URL.
  * @ngInject
  * @private
  * @hidden
@@ -98,7 +98,7 @@ class StreetviewController {
   /**
    * @param {JQuery} $element Element.
    * @param {angular.IScope} $scope Scope.
-   * @param {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr Ngeo
+   * @param {import('ngeo/map/FeatureOverlayMgr').FeatureOverlayMgr} ngeoFeatureOverlayMgr Ngeo
    * @param {angular.auto.IInjectorService} $injector Main injector.
    * @param {angular.ITimeoutService} $timeout
    *    FeatureOverlay manager.
@@ -128,7 +128,8 @@ class StreetviewController {
 
     /**
      * Style for the feature.
-     * @type {?import("ol/style/Style.js").StyleLike}
+     *
+     * @type {?import('ol/style/Style').StyleLike}
      */
     this.featureStyle = null;
 
@@ -138,7 +139,7 @@ class StreetviewController {
     this.panelWidth = null;
 
     /**
-     * @type {?import("ol/Map.js").default}
+     * @type {?import('ol/Map').default}
      */
     this.map = null;
 
@@ -170,32 +171,33 @@ class StreetviewController {
     // Inner properties
 
     /**
-     * @type {olFeature<import("ol/geom/Geometry.js").default>}
+     * @type {olFeature<import('ol/geom/Geometry').default>}
      * @private
      */
     this.feature_ = new olFeature();
 
     /**
-     * @type {import("ngeo/map/FeatureOverlay.js").FeatureOverlay}
+     * @type {import('ngeo/map/FeatureOverlay').FeatureOverlay}
      * @private
      */
     this.featureOverlay_ = ngeoFeatureOverlayMgr.getFeatureOverlay();
 
     /**
-     * @type {import("ol/events.js").EventsKey[]}
+     * @type {import('ol/events').EventsKey[]}
      * @private
      */
     this.listenerKeys_ = [];
 
     /**
      * The current location in the OpenLayers' map view projection.
-     * @type {?import("ol/coordinate.js").Coordinate}
+     *
+     * @type {?import('ol/coordinate').Coordinate}
      * @private
      */
     this.location = null;
 
     /**
-     * @type {import("ol/geom/Point.js").default}
+     * @type {import('ol/geom/Point').default}
      * @private
      */
     this.point_ = new olGeomPoint([0, 0]);
@@ -203,7 +205,7 @@ class StreetviewController {
     this.feature_.setGeometry(this.point_);
 
     /**
-     * @type {import("./Service.js").StreetviewService}
+     * @type {import('./Service').StreetviewService}
      * @private
      */
     this.streetViewService_ = null;
@@ -221,13 +223,14 @@ class StreetviewController {
 
     /**
      * Called when the 'location' property of this component changes.
-     * @param  {?import("ol/coordinate.js").Coordinate} newCoordinates new coordinates in the streetview.
+     *
+     * @param  {?import('ol/coordinate').Coordinate} newCoordinates new coordinates in the streetview.
      * @private
      */
     this.handlePanoramaPositionChange_ = (newCoordinates) => {
       this.panoramaPositionChanging_ = true;
       this.map.getView().setCenter(newCoordinates);
-      const point = /** @type  {import('ol/geom/Point.js').default} */ (this.feature_.getGeometry());
+      const point = /** @type  {import('ol/geom/Point').default} */ (this.feature_.getGeometry());
       point.setCoordinates(newCoordinates);
       this.location = newCoordinates;
       this.scope_.$apply();
@@ -250,7 +253,7 @@ class StreetviewController {
     const config = this.optionsName || 'ngeoStreetviewOptions';
 
     /**
-     * @type {import('ngeo/options.js').ngeoStreetviewOptions}
+     * @type {import('ngeo/options').ngeoStreetviewOptions}
      */
     this.options = this.injector_.has(config) ? this.injector_.get(config) : null;
 
@@ -303,6 +306,7 @@ class StreetviewController {
 
   /**
    * Init the mapillary functionality.
+   *
    * @private
    */
   initMapillary_() {
@@ -331,6 +335,7 @@ class StreetviewController {
 
   /**
    * Called when the 'active' property of this component changes.
+   *
    * @param {boolean} active Active.
    * @private
    */
@@ -351,8 +356,9 @@ class StreetviewController {
 
   /**
    * Called when the 'location' property of this component changes.
-   * @param {?import("ol/coordinate.js").Coordinate} location Location, in OL map view projection.
-   * @param {?import("ol/coordinate.js").Coordinate} oldLocation The previous location.
+   *
+   * @param {?import('ol/coordinate').Coordinate} location Location, in OL map view projection.
+   * @param {?import('ol/coordinate').Coordinate} oldLocation The previous location.
    * @private
    */
   handleLocationChange_(location, oldLocation) {
@@ -376,7 +382,8 @@ class StreetviewController {
   /**
    * Called when the map is clicked while this component is active. Update the
    * location accordingly.
-   * @param {Event|import('ol/events/Event.js').default} evt The map browser event being fired.
+   *
+   * @param {Event|import('ol/events/Event').default} evt The map browser event being fired.
    * @private
    */
   handleMapClick_(evt) {

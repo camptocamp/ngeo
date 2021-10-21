@@ -21,29 +21,30 @@
 
 import angular from 'angular';
 
-import gmfAuthenticationService from 'gmf/authentication/Service.js';
+import gmfAuthenticationService from 'ngeo/auth/service';
 
-import gmfThemeThemes from 'gmf/theme/Themes.js';
-import LegendMapFishPrintV3 from 'gmf/print/LegendMapFishPrintV3.js';
-import MaskLayer from 'ngeo/print/Mask.js';
-import ngeoMapLayerHelper from 'ngeo/map/LayerHelper.js';
-import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr.js';
-import ngeoMiscFeatureHelper, {getFilteredFeatureValues} from 'ngeo/misc/FeatureHelper.js';
-import ngeoPrintService from 'ngeo/print/Service.js';
-import ngeoPrintUtils, {INCHES_PER_METER, DOTS_PER_INCH} from 'ngeo/print/Utils.js';
-import ngeoQueryMapQuerent from 'ngeo/query/MapQuerent.js';
-import {listen, unlistenByKey} from 'ol/events.js';
-import olLayerImage from 'ol/layer/Image.js';
-import olLayerGroup from 'ol/layer/Group.js';
-import olMap from 'ol/Map.js';
-import olView from 'ol/View.js';
-import {toDegrees, toRadians, clamp} from 'ol/math.js';
-import MapBrowserEvent from 'ol/MapBrowserEvent.js';
-import 'bootstrap/js/src/dropdown.js';
+import gmfThemeThemes from 'gmf/theme/Themes';
+import LegendMapFishPrintV3 from 'gmf/print/LegendMapFishPrintV3';
+import MaskLayer from 'ngeo/print/Mask';
+import ngeoMapLayerHelper from 'ngeo/map/LayerHelper';
+import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr';
+import ngeoMiscFeatureHelper, {getFilteredFeatureValues} from 'ngeo/misc/FeatureHelper';
+import ngeoPrintService from 'ngeo/print/Service';
+import ngeoPrintUtils, {INCHES_PER_METER, DOTS_PER_INCH} from 'ngeo/print/Utils';
+import ngeoQueryMapQuerent from 'ngeo/query/MapQuerent';
+import {listen, unlistenByKey} from 'ol/events';
+import olLayerImage from 'ol/layer/Image';
+import olLayerGroup from 'ol/layer/Group';
+import olMap from 'ol/Map';
+import olView from 'ol/View';
+import {toDegrees, toRadians, clamp} from 'ol/math';
+import MapBrowserEvent from 'ol/MapBrowserEvent';
+import 'bootstrap/js/src/dropdown';
 
 /**
  * Fields that can come from a print v3 server and can be used in the partial
  * of the gmf print panel.
+ *
  * @typedef {Object} PrintLayoutInfo
  * @property {import('ngeo/print/mapfish-print-v3').MapFishPrintCapabilitiesLayoutAttribute[]} [simpleAttributes]
  *    Custom print layoutInfo.
@@ -63,7 +64,6 @@ import 'bootstrap/js/src/dropdown.js';
  * @hidden
  */
 const myModule = angular.module('gmfPrintComponent', [
-  gmfAuthenticationService.name,
   gmfThemeThemes.name,
   ngeoMapLayerHelper.name,
   ngeoMapFeatureOverlayMgr.name,
@@ -78,7 +78,7 @@ myModule.value(
   /**
    * @param {JQuery} element Element.
    * @param {angular.IAttributes} attrs Attributes.
-   * @return {string} Template.
+   * @returns {string} Template.
    */
   (element, attrs) => {
     const templateUrl = attrs.gmfPrintTemplateurl;
@@ -141,7 +141,7 @@ myModule.value('gmfPrintState', {
  * @param {JQuery} $element Element.
  * @param {angular.IAttributes} $attrs Attributes.
  * @param {function(JQuery, angular.IAttributes): string} gmfPrintTemplateUrl Template function.
- * @return {string} Template URL.
+ * @returns {string} Template URL.
  * @ngInject
  * @private
  * @hidden
@@ -181,11 +181,11 @@ function gmfPrintTemplateUrl($element, $attrs, gmfPrintTemplateUrl) {
  *
  * Used metadata:
  *
- *  * hiDPILegendImages: The URLs to the hi DPI images used as a legend in the layer tree. For WMS and
+ *  - hiDPILegendImages: The URLs to the hi DPI images used as a legend in the layer tree. For WMS and
  *      WMTS layers.
- *  * printNativeAngle: Whether the print should rotate the symbols. For layer groups (only).
+ *  - printNativeAngle: Whether the print should rotate the symbols. For layer groups (only).
  *
- * @htmlAttribute {import("ol/Map.js").default} gmf-print-map The map.
+ * @htmlAttribute {import('ol/Map').default} gmf-print-map The map.
  * @htmlAttribute {boolean} gmf-print-active A boolean that informs if the
  *     panel is open or not.
  * @ngdoc component
@@ -216,20 +216,18 @@ export class PrintController {
    * @param {angular.ITimeoutService} $timeout Angular timeout service.
    * @param {angular.IQService} $q The Angular $q service.
    * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
-   * @param {import("ngeo/map/LayerHelper.js").LayerHelper} ngeoLayerHelper The ngeo Layer Helper service.
-   * @param {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr Ngeo Feature
+   * @param {import('ngeo/map/LayerHelper').LayerHelper} ngeoLayerHelper The ngeo Layer Helper service.
+   * @param {import('ngeo/map/FeatureOverlayMgr').FeatureOverlayMgr} ngeoFeatureOverlayMgr Ngeo Feature
    *    Overlay Manager service.
-   * @param {import("ngeo/print/Utils.js").PrintUtils} ngeoPrintUtils The ngeo PrintUtils service.
-   * @param {import("ngeo/print/Service.js").CreatePrint} ngeoCreatePrint The ngeo Create Print function.
+   * @param {import('ngeo/print/Utils').PrintUtils} ngeoPrintUtils The ngeo PrintUtils service.
+   * @param {import('ngeo/print/Service').CreatePrint} ngeoCreatePrint The ngeo Create Print function.
    * @param {string} gmfPrintUrl The MapFishPrint URL.
-   * @param {import("gmf/authentication/Service.js").AuthenticationService} gmfAuthenticationService
-   *    The authentication service.
-   * @param {import('ngeo/query/MapQuerent.js').QueryResult} ngeoQueryResult ngeo query result.
+   * @param {import('ngeo/query/MapQuerent').QueryResult} ngeoQueryResult ngeo query result.
    * @param {angular.IFilterService} $filter Angular $filter service.
    * @param {PrintState} gmfPrintState GMF print state.
-   * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes The gmf Themes service.
-   * @param {import("gmf/datasource/ExternalDataSourcesManager.js").ExternalDatSourcesManager} gmfExternalDataSourcesManager The manager of external datasources.
-   * @param {import('gmf/options.js').gmfPrintOptions} gmfPrintOptions The options.
+   * @param {import('gmf/theme/Themes').ThemesService} gmfThemes The gmf Themes service.
+   * @param {import('gmf/datasource/ExternalDataSourcesManager').ExternalDatSourcesManager} gmfExternalDataSourcesManager The manager of external datasources.
+   * @param {import('gmf/options').gmfPrintOptions} gmfPrintOptions The options.
    * @param {string} cacheVersion The cache version
    * @ngInject
    * @ngdoc controller
@@ -247,7 +245,6 @@ export class PrintController {
     ngeoPrintUtils,
     ngeoCreatePrint,
     gmfPrintUrl,
-    gmfAuthenticationService,
     ngeoQueryResult,
     $filter,
     gmfPrintState,
@@ -271,7 +268,7 @@ export class PrintController {
     this.translate_ = $filter('translate');
 
     /**
-     * @type {?import("ol/Map.js").default}
+     * @type {?import('ol/Map').default}
      */
     this.map = null;
 
@@ -321,49 +318,43 @@ export class PrintController {
     this.gettextCatalog_ = gettextCatalog;
 
     /**
-     * @type {import("ngeo/map/LayerHelper.js").LayerHelper}
+     * @type {import('ngeo/map/LayerHelper').LayerHelper}
      * @private
      */
     this.ngeoLayerHelper_ = ngeoLayerHelper;
 
     /**
-     * @type {import("ol/layer/Vector.js").default<import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>>}
+     * @type {import('ol/layer/Vector').default<import('ol/source/Vector').default<import('ol/geom/Geometry').default>>}
      * @private
      */
     this.featureOverlayLayer_ = ngeoFeatureOverlayMgr.getLayer();
 
     /**
-     * @type {import("ngeo/print/Utils.js").PrintUtils}
+     * @type {import('ngeo/print/Utils').PrintUtils}
      * @private
      */
     this.ngeoPrintUtils_ = ngeoPrintUtils;
 
     /**
-     * @type {import("ngeo/print/Service.js").PrintService}
+     * @type {import('ngeo/print/Service').PrintService}
      * @private
      */
     this.ngeoPrint_ = ngeoCreatePrint(gmfPrintUrl);
 
     /**
-     * @type {import('ngeo/query/MapQuerent.js').QueryResult}
+     * @type {import('ngeo/query/MapQuerent').QueryResult}
      * @private
      */
     this.ngeoQueryResult_ = ngeoQueryResult;
 
     /**
-     * @type {import("gmf/authentication/Service.js").AuthenticationService}
-     * @private
-     */
-    this.gmfAuthenticationService_ = gmfAuthenticationService;
-
-    /**
-     * @type {import("gmf/theme/Themes.js").ThemesService}
+     * @type {import('gmf/theme/Themes').ThemesService}
      * @private
      */
     this.gmfThemes_ = gmfThemes;
 
     /**
-     * @type {import("gmf/datasource/ExternalDataSourcesManager.js").ExternalDatSourcesManager}
+     * @type {import('gmf/datasource/ExternalDataSourcesManager').ExternalDatSourcesManager}
      * @private
      */
     this.gmfExternalDataSourcesManager_ = gmfExternalDataSourcesManager;
@@ -400,19 +391,20 @@ export class PrintController {
     this.rotationTimeoutPromise_ = null;
 
     /**
-     * @type {?import("ol/events.js").EventsKey}
+     * @type {?import('ol/events').EventsKey}
      * @private
      */
     this.pointerDragListenerKey_ = null;
 
     /**
-     * @type {?import("ol/events.js").EventsKey}
+     * @type {?import('ol/events').EventsKey}
      * @private
      */
     this.mapViewResolutionChangeKey_ = null;
 
     /**
      * Current report reference id.
+     *
      * @type {string}
      * @private
      */
@@ -420,6 +412,7 @@ export class PrintController {
 
     /**
      * Formats availables in capabilities.
+     *
      * @type {string[]}
      * @private
      */
@@ -427,6 +420,7 @@ export class PrintController {
 
     /**
      * An array of attributes objects from capabilities.
+     *
      * @type {import('ngeo/print/mapfish-print-v3').MapFishPrintCapabilitiesLayout[]}
      * @private
      */
@@ -434,13 +428,14 @@ export class PrintController {
 
     /**
      * An attributes object from capabilities.
+     *
      * @type {?import('ngeo/print/mapfish-print-v3').MapFishPrintCapabilitiesLayout}
      * @private
      */
     this.layout_ = null;
 
     /**
-     * @type {import("ol/size.js").Size}
+     * @type {import('ol/size').Size}
      * @private
      */
     this.paperSize_ = null;
@@ -458,12 +453,14 @@ export class PrintController {
     /**
      * The email of the user to which send the file. Obtained from the
      * authentication service.
+     *
      * @type {?string}
      */
     this.smtpEmail = null;
 
     /**
      * Whether to send the printed file by email or not.
+     *
      * @type {boolean}
      */
     this.smtpEnabled = false;
@@ -471,6 +468,7 @@ export class PrintController {
     /**
      * Flag that determines whether to show a message notifying the
      * user about his upcomping file or not.
+     *
      * @type {boolean}
      */
     this.smtpMessage = false;
@@ -478,6 +476,7 @@ export class PrintController {
     /**
      * Whether sending file by email is supported or not. Obtained
      * from the print capabilities.
+     *
      * @type {boolean}
      */
     this.smtpSupported = false;
@@ -502,7 +501,7 @@ export class PrintController {
     });
 
     /**
-     * @type {function((Event|import("ol/events/Event.js").default)): (void|boolean)}
+     * @type {function((Event|import('ol/events/Event').default)): (void|boolean)}
      */
     this.postcomposeListener_ = (e) => false;
 
@@ -513,13 +512,13 @@ export class PrintController {
     this.capabilities_ = null;
 
     /**
-     * @type {?import('gmf/themes.js').GmfOgcServers}
+     * @type {?import('gmf/themes').GmfOgcServers}
      * @private
      */
     this.ogcServers_ = null;
 
     /**
-     * @type {import('gmf/themes.js').GmfTheme[]}
+     * @type {import('gmf/themes').GmfTheme[]}
      * @private
      */
     this.currentThemes_ = [];
@@ -544,7 +543,7 @@ export class PrintController {
     listen(
       this.map.getView(),
       'change:rotation',
-      /** @type {import("ol/events.js").ListenerFunction} */
+      /** @type {import('ol/events').ListenerFunction} */
       (event) => {
         const target = event.target;
         if (target instanceof olView) {
@@ -555,7 +554,7 @@ export class PrintController {
 
     // Clear the capabilities if the roles changes
     this.$scope_.$watch(
-      () => this.gmfAuthenticationService_.getRolesIds().join(','),
+      () => gmfAuthenticationService.getRolesIds().join(','),
       () => {
         this.gmfPrintState_.state = PrintStateEnum.CAPABILITIES_NOT_LOADED;
         this.capabilities_ = null;
@@ -564,7 +563,7 @@ export class PrintController {
 
     // Store user email
     this.$scope_.$watch(
-      () => this.gmfAuthenticationService_.getEmail(),
+      () => gmfAuthenticationService.getEmail(),
       (newValue) => {
         this.smtpEmail = newValue;
       }
@@ -594,7 +593,7 @@ export class PrintController {
     listen(
       this.gmfThemes_,
       'change',
-      /** @type {import("ol/events.js").ListenerFunction} */
+      /** @type {import('ol/events').ListenerFunction} */
       () => {
         this.gmfThemes_.getThemesObject().then((currentThemes) => {
           this.currentThemes_ = currentThemes;
@@ -603,14 +602,14 @@ export class PrintController {
     );
 
     /**
-     * @return {import("ol/size.js").Size} Size in dots of the map to print.
+     * @returns {import('ol/size').Size} Size in dots of the map to print.
      */
     const getSizeFn = () => this.paperSize_;
 
     let getRotationFn;
     if (this.options.rotateMask) {
       /**
-       * @return {number} rotation to apply.
+       * @returns {number} rotation to apply.
        */
       getRotationFn = () => -this.rotation;
     }
@@ -621,8 +620,8 @@ export class PrintController {
   }
 
   /**
-   * @param {import('ol/PluggableMap.js').FrameState} frameState Frame state.
-   * @return {number} Scale of the map to print.
+   * @param {import('ol/PluggableMap').FrameState} frameState Frame state.
+   * @returns {number} Scale of the map to print.
    */
   getScaleFn(frameState) {
     // Don't compute an optimal scale if the user manually choose a value not in
@@ -652,7 +651,7 @@ export class PrintController {
   togglePrintPanel_(active) {
     if (active) {
       if (!this.capabilities_) {
-        this.getCapabilities_(this.gmfAuthenticationService_.getRolesIds().join(','));
+        this.getCapabilities_(gmfAuthenticationService.getRolesIds().join(','));
       }
       if (!this.capabilities_) {
         throw new Error('Missing capabilities');
@@ -677,7 +676,7 @@ export class PrintController {
           this.mapViewResolutionChangeKey_ = listen(
             this.map.getView(),
             'change:resolution',
-            /** @type {import("ol/events.js").ListenerFunction} */
+            /** @type {import('ol/events').ListenerFunction} */
             () => {
               this.scaleManuallySelected_ = false;
             }
@@ -708,6 +707,7 @@ export class PrintController {
 
   /**
    * Gets the print capabilities.
+   *
    * @param {string} roleId The roles ids.
    * @private
    */
@@ -724,6 +724,7 @@ export class PrintController {
   /**
    * Create the list of layouts, get the formats, get the first layout in
    * gmf print v3 capabilities and then update the print panel layout information.
+   *
    * @param {angular.IHttpResponse<import('ngeo/print/mapfish-print-v3').MapFishPrintCapabilities>} resp
    *    Response.
    * @private
@@ -750,6 +751,7 @@ export class PrintController {
    * If a field doesn't exist in the current layout, set it to undefined so the
    * view can hide it. Update also the paper size.
    * custom print templates).
+   *
    * @private
    */
   updateFields_() {
@@ -803,6 +805,7 @@ export class PrintController {
   /**
    * Update simple attributes information with Customfield to be able to generate a form
    * from a custom GMF print v3 configuration.
+   *
    * @private
    */
   updateCustomFields_() {
@@ -882,8 +885,9 @@ export class PrintController {
 
   /**
    * Return a capabilities 'attribute' object corresponding to the given name.
+   *
    * @param {string} name Name of the attribute to get.
-   * @return {?import('ngeo/print/mapfish-print-v3.js').MapFishPrintCapabilitiesLayoutAttribute} corresponding attribute or null.
+   * @returns {?import('ngeo/print/mapfish-print-v3').MapFishPrintCapabilitiesLayoutAttribute} corresponding attribute or null.
    * @private
    */
   isAttributeInCurrentLayout_(name) {
@@ -903,6 +907,7 @@ export class PrintController {
   /**
    * Set the current rotation value.
    * Updating the rotation will redraw the mask or rotate the map (depending on the configuration).
+   *
    * @param {number} rotation The optional new rotation value in degrees.
    */
   setRotation(rotation) {
@@ -920,6 +925,7 @@ export class PrintController {
 
   /**
    * Set the current rotation value.
+   *
    * @param {number} rotation The optional new rotation value in degrees.
    */
   updateRotation_(rotation) {
@@ -932,7 +938,8 @@ export class PrintController {
    * Calculate the angle and the sense of rotation between two lines. One from the
    * center of the map and the point of the last call to this function and one
    * from the same center and the point of the current call.
-   * @param {Event|import("ol/events/Event.js").default} e An ol map browser pointer event.
+   *
+   * @param {Event|import('ol/events/Event').default} e An ol map browser pointer event.
    * @private
    */
   onPointerDrag_(e) {
@@ -979,6 +986,7 @@ export class PrintController {
 
   /**
    * Create a print report based on the values of the 'layoutInfo' values.
+   *
    * @param {string} format An output format corresponding to one format in the
    *     capabilities document ('pdf', 'png', etc).
    */
@@ -1102,7 +1110,7 @@ export class PrintController {
     );
 
     // Add feature overlay layer to print spec.
-    /** @type {import('ngeo/print/mapfish-print-v3.js').MapFishPrintLayer[]} */
+    /** @type {import('ngeo/print/mapfish-print-v3').MapFishPrintLayer[]} */
     const layers = [];
     this.ngeoPrint_.encodeLayer(layers, this.featureOverlayLayer_, viewResolution, this.layoutInfo.dpi);
     if (layers.length > 0) {
@@ -1155,8 +1163,9 @@ export class PrintController {
 
   /**
    * Get datasource object for print report
+   *
    * @private
-   * @return {import('ngeo/print/mapfish-print-v3').DataSourcePrintReportObject[]} the data
+   * @returns {import('ngeo/print/mapfish-print-v3').DataSourcePrintReportObject[]} the data
    *     source object for the print report
    */
   getDataSource_() {
@@ -1197,9 +1206,10 @@ export class PrintController {
   /**
    * Get the optimal scale to display the print mask. Return the lowest scale if
    * no scale matches.
-   * @param {import("ol/size.js").Size|undefined} mapSize Size of the map on the screen (px).
+   *
+   * @param {import('ol/size').Size|undefined} mapSize Size of the map on the screen (px).
    * @param {number|undefined} viewResolution Resolution of the map on the screen.
-   * @return {number} The best scale.
+   * @returns {number} The best scale.
    * @private
    */
   getOptimalScale_(mapSize, viewResolution) {
@@ -1219,7 +1229,7 @@ export class PrintController {
   }
 
   /**
-   * @param {angular.IHttpResponse<import('ngeo/print/mapfish-print-v3.js').MapFishPrintReportResponse>} resp
+   * @param {angular.IHttpResponse<import('ngeo/print/mapfish-print-v3').MapFishPrintReportResponse>} resp
    *    Response.
    * @private
    */
@@ -1254,7 +1264,7 @@ export class PrintController {
 
   /**
    * @param {string} ref Ref.
-   * @param {angular.IHttpResponse<import('ngeo/print/mapfish-print-v3.js').MapFishPrintStatusResponse>} resp
+   * @param {angular.IHttpResponse<import('ngeo/print/mapfish-print-v3').MapFishPrintStatusResponse>} resp
    *    Response.
    * @private
    */
@@ -1291,6 +1301,7 @@ export class PrintController {
 
   /**
    * Set the current layout and update all layout information with this new layout parameters.
+   *
    * @param {string} layoutName A layout name as existing in the list of
    *     existing layouts.
    */
@@ -1309,8 +1320,9 @@ export class PrintController {
 
   /**
    * Get or set the print scale value and adapt the zoom to match with this new scale.
+   *
    * @param {number} [opt_scale] A scale value as existing in the scales list field.
-   * @return {number|undefined} New scale.
+   * @returns {number|undefined} New scale.
    */
   getSetScale(opt_scale) {
     if (opt_scale !== undefined) {
@@ -1333,6 +1345,7 @@ export class PrintController {
 
   /**
    * Set the print dpi value.
+   *
    * @param {number} dpi A dpi value as existing in the dpis list field.
    */
   setDpi(dpi) {
@@ -1341,8 +1354,9 @@ export class PrintController {
 
   /**
    * Check the current state of the print.
-   * @param {string} stateEnumKey An enum key from import("gmf/print/component.js").default.PrintStateEnum.
-   * @return {boolean} True if the given state matches with the current print
+   *
+   * @param {string} stateEnumKey An enum key from import('gmf/print/component').default.PrintStateEnum.
+   * @returns {boolean} True if the given state matches with the current print
    *     state. False otherwise.
    */
   isState(stateEnumKey) {

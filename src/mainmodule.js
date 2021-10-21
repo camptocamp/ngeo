@@ -20,24 +20,24 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import ngeoDatasourceModule from 'ngeo/datasource/module.js';
-import ngeoDownloadModule from 'ngeo/download/module.js';
-import ngeoDrawModule from 'ngeo/draw/module.js';
-import ngeoEditingModule from 'ngeo/editing/module.js';
-import ngeoFilterModule from 'ngeo/filter/module.js';
-import ngeoStreetviewModule from 'ngeo/streetview/module.js';
-import ngeoGridModule from 'ngeo/grid/module.js';
-import ngeoLayertreeModule from 'ngeo/layertree/module.js';
-import ngeoMapModule from 'ngeo/map/module.js';
-import ngeoMapLayerHelper from 'ngeo/map/LayerHelper.js';
-import ngeoMeasureModule from 'ngeo/measure/module.js';
-import ngeoPrintModule from 'ngeo/print/module.js';
-import ngeoProfileModule from 'ngeo/profile/module.js';
-import ngeoQueryModule from 'ngeo/query/module.js';
-import ngeoSearchModule from 'ngeo/search/module.js';
-import ngeoStatemanagerModule from 'ngeo/statemanager/module.js';
-import ngeoStatemanagerWfsPermalink from 'ngeo/statemanager/WfsPermalink.js';
-import ngeoMiscExtraModule from 'ngeo/misc/extraModule.js';
+import ngeoDatasourceModule from 'ngeo/datasource/module';
+import ngeoDownloadModule from 'ngeo/download/module';
+import ngeoDrawModule from 'ngeo/draw/module';
+import ngeoEditingModule from 'ngeo/editing/module';
+import ngeoFilterModule from 'ngeo/filter/module';
+import ngeoStreetviewModule from 'ngeo/streetview/module';
+import ngeoGridModule from 'ngeo/grid/module';
+import ngeoLayertreeModule from 'ngeo/layertree/module';
+import ngeoMapModule from 'ngeo/map/module';
+import ngeoMapLayerHelper from 'ngeo/map/LayerHelper';
+import ngeoMeasureModule from 'ngeo/measure/module';
+import ngeoPrintModule from 'ngeo/print/module';
+import ngeoProfileModule from 'ngeo/profile/module';
+import ngeoQueryModule from 'ngeo/query/module';
+import ngeoSearchModule from 'ngeo/search/module';
+import ngeoStatemanagerModule from 'ngeo/statemanager/module';
+import ngeoStatemanagerWfsPermalink from 'ngeo/statemanager/WfsPermalink';
+import ngeoMiscExtraModule from 'ngeo/misc/extraModule';
 
 export default angular.module('ngeo', [
   ngeoDatasourceModule.name,

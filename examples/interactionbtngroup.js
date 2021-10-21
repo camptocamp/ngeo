@@ -21,27 +21,27 @@
 
 import './interactionbtngroup.css';
 import angular from 'angular';
-import ngeoMapModule from 'ngeo/map/module.js';
+import ngeoMapModule from 'ngeo/map/module';
 
-import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent.js';
+import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent';
 
-import {interactionDecoration} from 'ngeo/misc/decorate.js';
-import olCollection from 'ol/Collection.js';
-import olMap from 'ol/Map.js';
-import olView from 'ol/View.js';
-import olInteractionDraw from 'ol/interaction/Draw.js';
-import olLayerTile from 'ol/layer/Tile.js';
-import olSourceOSM from 'ol/source/OSM.js';
-import olStyleCircle from 'ol/style/Circle.js';
-import olStyleFill from 'ol/style/Fill.js';
-import olStyleStroke from 'ol/style/Stroke.js';
-import olStyleStyle from 'ol/style/Style.js';
+import {interactionDecoration} from 'ngeo/misc/decorate';
+import olCollection from 'ol/Collection';
+import olMap from 'ol/Map';
+import olView from 'ol/View';
+import olInteractionDraw from 'ol/interaction/Draw';
+import olLayerTile from 'ol/layer/Tile';
+import olSourceOSM from 'ol/source/OSM';
+import olStyleCircle from 'ol/style/Circle';
+import olStyleFill from 'ol/style/Fill';
+import olStyleStroke from 'ol/style/Stroke';
+import olStyleStyle from 'ol/style/Style';
 
 /** @type {angular.IModule} **/
 const myModule = angular.module('app', ['gettext', ngeoMapModule.name, ngeoMiscBtnComponent.name]);
 
 /**
- * @param {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr Feature overlay
+ * @param {import('ngeo/map/FeatureOverlayMgr').FeatureOverlayMgr} ngeoFeatureOverlayMgr Feature overlay
  *     manager.
  * @class
  * @ngInject
@@ -50,7 +50,8 @@ function MainController(ngeoFeatureOverlayMgr) {
   /**
    * Collection shared between the drawing interactions and the feature
    * overlay used to render the drawn features.
-   * @type {import("ol/Collection.js").default<import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>>}
+   *
+   * @type {import('ol/Collection').default<import('ol/Feature').default<import('ol/geom/Geometry').default>>}
    */
   const features = new olCollection();
 
@@ -75,7 +76,7 @@ function MainController(ngeoFeatureOverlayMgr) {
   );
 
   /**
-   * @type {import("ol/Map.js").default}
+   * @type {import('ol/Map').default}
    */
   this.map = new olMap({
     layers: [
@@ -95,10 +96,10 @@ function MainController(ngeoFeatureOverlayMgr) {
   ngeoFeatureOverlayMgr.init(map);
 
   /**
-   * @type {import("ol/interaction/Draw.js").default}
+   * @type {import('ol/interaction/Draw').default}
    */
   this.drawPolygon = new olInteractionDraw(
-    /** @type {import('ol/interaction/Draw.js').Options} */ ({
+    /** @type {import('ol/interaction/Draw').Options} */ ({
       type: 'Polygon',
       features: features,
     })
@@ -111,10 +112,10 @@ function MainController(ngeoFeatureOverlayMgr) {
   map.addInteraction(drawPolygon);
 
   /**
-   * @type {import("ol/interaction/Draw.js").default}
+   * @type {import('ol/interaction/Draw').default}
    */
   this.drawPoint = new olInteractionDraw(
-    /** @type {import('ol/interaction/Draw.js').Options} */ ({
+    /** @type {import('ol/interaction/Draw').Options} */ ({
       type: 'Point',
       features: features,
     })
@@ -126,10 +127,10 @@ function MainController(ngeoFeatureOverlayMgr) {
   map.addInteraction(drawPoint);
 
   /**
-   * @type {import("ol/interaction/Draw.js").default}
+   * @type {import('ol/interaction/Draw').default}
    */
   this.drawLine = new olInteractionDraw(
-    /** @type {import('ol/interaction/Draw.js').Options} */ ({
+    /** @type {import('ol/interaction/Draw').Options} */ ({
       type: 'LineString',
       features: features,
     })

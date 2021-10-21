@@ -21,6 +21,10 @@
 
 import $ from 'jquery';
 import angular from 'angular';
+import 'regenerator-runtime/runtime';
+import {setupI18n} from 'ngeo/localize/i18n.ts';
+import config from 'ngeo/store/config';
+import 'ngeo/auth/PanelElement';
 
 /**
  * @private
@@ -79,10 +83,13 @@ function bootstrap(module) {
       document.head.append(style);
     }
 
+    config.setConfig(dynamic.constants);
+
     for (const name in dynamic.constants) {
       module.constant(name, dynamic.constants[name]);
     }
 
+    setupI18n();
     angular.bootstrap(document, [`App${interface_}`]);
   });
 }

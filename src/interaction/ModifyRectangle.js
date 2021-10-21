@@ -19,27 +19,28 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import {getDefaultModifyStyleFunction} from 'ngeo/interaction/common.js';
-import ngeoCustomEvent from 'ngeo/CustomEvent.js';
-import {getUid as olUtilGetUid} from 'ol/util.js';
-import olFeature from 'ol/Feature.js';
-import {listen} from 'ol/events.js';
-import olGeomPoint from 'ol/geom/Point.js';
-import olGeomPolygon from 'ol/geom/Polygon.js';
-import olInteractionPointer from 'ol/interaction/Pointer.js';
-import olLayerVector from 'ol/layer/Vector.js';
-import olSourceVector from 'ol/source/Vector.js';
-import {CollectionEvent} from 'ol/Collection.js';
+import {getDefaultModifyStyleFunction} from 'ngeo/interaction/common';
+import ngeoCustomEvent from 'ngeo/CustomEvent';
+import {getUid as olUtilGetUid} from 'ol/util';
+import olFeature from 'ol/Feature';
+import {listen} from 'ol/events';
+import olGeomPoint from 'ol/geom/Point';
+import olGeomPolygon from 'ol/geom/Polygon';
+import olInteractionPointer from 'ol/interaction/Pointer';
+import olLayerVector from 'ol/layer/Vector';
+import olSourceVector from 'ol/source/Vector';
+import {CollectionEvent} from 'ol/Collection';
 
 /**
  * Interaction for modifying feature geometries.
+ *
  * @private
  * @hidden
  */
 class ModifyRectangle extends olInteractionPointer {
   /**
-   * @param {import('ol/interaction/Modify.js').Options} options Options.
-   * @fires import("ngeo/interaction/ModifyCircleEvent.js").default
+   * @param {import('ol/interaction/Modify').Options} options Options.
+   * @fires import('ngeo/interaction/ModifyCircleEvent').default
    */
   constructor(options) {
     super();
@@ -55,7 +56,7 @@ class ModifyRectangle extends olInteractionPointer {
     this.modified_ = false;
 
     /**
-     * @type {import("ol/layer/Vector.js").default<import("ol/source/Vector.js").default<import("ol/geom/Geometry.js").default>>}
+     * @type {import('ol/layer/Vector').default<import('ol/source/Vector').default<import('ol/geom/Geometry').default>>}
      * @private
      */
     this.vectorPoints_ = new olLayerVector({
@@ -69,14 +70,15 @@ class ModifyRectangle extends olInteractionPointer {
     });
 
     /**
-     * @type {import("ol/Collection.js").default<olFeature<import("ol/geom/Geometry.js").default>>}
+     * @type {import('ol/Collection').default<olFeature<import('ol/geom/Geometry').default>>}
      * @private
      */
     this.features_ = options.features;
 
     /**
      * The feature currently modified.
-     * @type {?olFeature<import("ol/geom/Geometry.js").default>}
+     *
+     * @type {?olFeature<import('ol/geom/Geometry').default>}
      * @private
      */
     this.feature_ = null;
@@ -113,7 +115,7 @@ class ModifyRectangle extends olInteractionPointer {
   }
 
   /**
-   * @param {olFeature<import("ol/geom/Geometry.js").default>} feature Feature.
+   * @param {olFeature<import('ol/geom/Geometry').default>} feature Feature.
    * @private
    */
   addFeature_(feature) {
@@ -127,7 +129,7 @@ class ModifyRectangle extends olInteractionPointer {
       }
 
       /**
-       * @type {olSourceVector<import("ol/geom/Geometry.js").default>}
+       * @type {olSourceVector<import('ol/geom/Geometry').default>}
        */
       const pointSource = this.vectorPoints_.getSource();
 
@@ -144,7 +146,7 @@ class ModifyRectangle extends olInteractionPointer {
           corners.shift();
         }
       }
-      /** @type {olFeature<import("ol/geom/Geometry.js").default>[]} */
+      /** @type {olFeature<import('ol/geom/Geometry').default>[]} */
       const pointFeatures = [];
       let cornerPoint;
       let cornerFeature;
@@ -191,7 +193,7 @@ class ModifyRectangle extends olInteractionPointer {
   }
 
   /**
-   * @param {import("ol/MapBrowserEvent.js").default<unknown>} evt MapBrowserEvent
+   * @param {import('ol/MapBrowserEvent').default<unknown>} evt MapBrowserEvent
    * @private
    */
   willModifyFeatures_(evt) {
@@ -204,7 +206,7 @@ class ModifyRectangle extends olInteractionPointer {
   }
 
   /**
-   * @return {ModifyParams} The initialised params
+   * @returns {ModifyParams} The initialised params
    * @private
    */
   initializeParams_() {
@@ -269,7 +271,7 @@ class ModifyRectangle extends olInteractionPointer {
   }
 
   /**
-   * @param {olFeature<import("ol/geom/Geometry.js").default>} feature Feature.
+   * @param {olFeature<import('ol/geom/Geometry').default>} feature Feature.
    * @private
    */
   removeFeature_(feature) {
@@ -277,7 +279,7 @@ class ModifyRectangle extends olInteractionPointer {
     const item = this.cache_[uid];
     const corners = item.corners;
     for (const corner of corners) {
-      /** @type {olSourceVector<import("ol/geom/Geometry.js").default>} */ (
+      /** @type {olSourceVector<import('ol/geom/Geometry').default>} */ (
         this.vectorPoints_.getSource()
       ).removeFeature(corner);
     }
@@ -287,7 +289,7 @@ class ModifyRectangle extends olInteractionPointer {
   }
 
   /**
-   * @param {import("ol/PluggableMap.js").default} map Map.
+   * @param {import('ol/PluggableMap').default} map Map.
    */
   setMap(map) {
     this.vectorPoints_.setMap(map);
@@ -295,7 +297,7 @@ class ModifyRectangle extends olInteractionPointer {
   }
 
   /**
-   * @param {Event|import('ol/events/Event.js').default} evt Event.
+   * @param {Event|import('ol/events/Event').default} evt Event.
    * @private
    */
   handleFeatureAdd_(evt) {
@@ -307,13 +309,13 @@ class ModifyRectangle extends olInteractionPointer {
   }
 
   /**
-   * @param {Event|import('ol/events/Event.js').default} evt Event.
+   * @param {Event|import('ol/events/Event').default} evt Event.
    * @private
    */
   handleFeatureRemove_(evt) {
     if (evt instanceof CollectionEvent) {
       /**
-       * @type {olFeature<import("ol/geom/Geometry.js").default>}
+       * @type {olFeature<import('ol/geom/Geometry').default>}
        */
       const feature = evt.element;
       this.removeFeature_(feature);
@@ -321,14 +323,14 @@ class ModifyRectangle extends olInteractionPointer {
   }
 
   /**
-   * @param {import("ol/MapBrowserEvent.js").default<unknown>} evt MapBrowserEvent.
-   * @return {boolean} Start drag sequence?
+   * @param {import('ol/MapBrowserEvent').default<unknown>} evt MapBrowserEvent.
+   * @returns {boolean} Start drag sequence?
    * @private
    */
   handleDown_(evt) {
     const map = evt.map;
 
-    const feature = /** @type {olFeature<import("ol/geom/Geometry.js").default>} */ (
+    const feature = /** @type {olFeature<import('ol/geom/Geometry').default>} */ (
       map.forEachFeatureAtPixel(evt.pixel, (feature) =>
         feature.get('siblingX') && feature.get('siblingY') ? feature : undefined
       )
@@ -344,7 +346,7 @@ class ModifyRectangle extends olInteractionPointer {
   }
 
   /**
-   * @param {import("ol/MapBrowserEvent.js").default<unknown>} evt MapBrowserEvent.
+   * @param {import('ol/MapBrowserEvent').default<unknown>} evt MapBrowserEvent.
    * @private
    */
   handleDrag_(evt) {
@@ -354,7 +356,7 @@ class ModifyRectangle extends olInteractionPointer {
     }
     const feature = this.feature_;
 
-    const geometry = /** @type {import("ol/geom/SimpleGeometry.js").default} */ (feature.getGeometry());
+    const geometry = /** @type {import('ol/geom/SimpleGeometry').default} */ (feature.getGeometry());
 
     if (geometry instanceof olGeomPoint) {
       geometry.setCoordinates(evt.coordinate);
@@ -391,10 +393,11 @@ class ModifyRectangle extends olInteractionPointer {
   /**
    * Calculate the new position of a point as projected on a vector from origin to
    * destination.
-   * @param {import("ol/pixel.js").Pixel} origin Pixel of origin (opposite of the drag handle)
-   * @param {import("ol/pixel.js").Pixel} destination Pixel of destination (the handle we dragged)
-   * @param {import("ol/pixel.js").Pixel} vector The normalized vector to the point
-   * @return {import("ol/pixel.js").Pixel} The new pixel of the point
+   *
+   * @param {import('ol/pixel').Pixel} origin Pixel of origin (opposite of the drag handle)
+   * @param {import('ol/pixel').Pixel} destination Pixel of destination (the handle we dragged)
+   * @param {import('ol/pixel').Pixel} vector The normalized vector to the point
+   * @returns {import('ol/pixel').Pixel} The new pixel of the point
    * @private
    */
   calculateNewPixel_(origin, destination, vector) {
@@ -408,8 +411,8 @@ class ModifyRectangle extends olInteractionPointer {
   }
 
   /**
-   * @param {import("ol/MapBrowserEvent.js").default<unknown>} evt MapBrowserEvent.
-   * @return {boolean} Stop drag sequence?
+   * @param {import('ol/MapBrowserEvent').default<unknown>} evt MapBrowserEvent.
+   * @returns {boolean} Stop drag sequence?
    * @private
    */
   handleUp_(evt) {
@@ -425,15 +428,15 @@ class ModifyRectangle extends olInteractionPointer {
 
 /**
  * @typedef {Object} CacheItem
- * @property {olFeature<import("ol/geom/Geometry.js").default>[]} corners
+ * @property {olFeature<import('ol/geom/Geometry').default>[]} corners
  */
 
 /**
  * @typedef {Object} ModifyParams
- * @property {import("ol/coordinate.js").Coordinate} originCoordinate
- * @property {import("ol/pixel.js").Pixel} originPixel
- * @property {import("ol/geom/Point.js").default} siblingXPoint
- * @property {import("ol/geom/Point.js").default} siblingYPoint
+ * @property {import('ol/coordinate').Coordinate} originCoordinate
+ * @property {import('ol/pixel').Pixel} originPixel
+ * @property {import('ol/geom/Point').default} siblingXPoint
+ * @property {import('ol/geom/Point').default} siblingYPoint
  * @property {number[]} vectorX
  * @property {number[]} vectorY
  */

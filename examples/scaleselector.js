@@ -21,13 +21,13 @@
 
 import './scaleselector.css';
 import angular from 'angular';
-import ngeoMiscFilters from 'ngeo/misc/filters.js';
+import ngeoMiscFilters from 'ngeo/misc/filters';
 
-import olMap from 'ol/Map.js';
-import olView from 'ol/View.js';
-import olLayerTile from 'ol/layer/Tile.js';
-import olSourceOSM from 'ol/source/OSM.js';
-import ngeoMapModule from 'ngeo/map/module.js';
+import olMap from 'ol/Map';
+import olView from 'ol/View';
+import olLayerTile from 'ol/layer/Tile';
+import olSourceOSM from 'ol/source/OSM';
+import ngeoMapModule from 'ngeo/map/module';
 
 /** @type {angular.IModule} **/
 const myModule = angular.module('app', ['gettext', ngeoMapModule.name, ngeoMiscFilters.name]);
@@ -39,7 +39,7 @@ const myModule = angular.module('app', ['gettext', ngeoMapModule.name, ngeoMiscF
  */
 function MainController($scope) {
   /**
-   * @type {import("ol/Map.js").default}
+   * @type {import('ol/Map').default}
    */
   this.map = new olMap({
     layers: [

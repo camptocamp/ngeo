@@ -19,11 +19,12 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import ngeoFormatAttributeType from 'ngeo/format/AttributeType.js';
-import ngeoRuleRule, {RuleOperatorType} from 'ngeo/rule/Rule.js';
+import ngeoFormatAttributeType from 'ngeo/format/AttributeType';
+import ngeoRuleRule, {RuleOperatorType} from 'ngeo/rule/Rule';
 
 /**
- * extends import('ngeo/rule/Rule.js').RuleOptions
+ * extends import('ngeo/rule/Rule').RuleOptions
+ *
  * @typedef {Object} SelectOptions
  * @property {string[]} choices List of choices available for selection.
  * @property {boolean} [active=false] (RuleOptions)
@@ -70,7 +71,7 @@ export default class extends ngeoRuleRule {
   // === Static property getters/setters ===
 
   /**
-   * @return {string[]} Choices
+   * @returns {string[]} Choices
    */
   get choices() {
     return this.choices_;
@@ -79,7 +80,7 @@ export default class extends ngeoRuleRule {
   // === Calculated property getters ===
 
   /**
-   * @return {string[]} Selected choices
+   * @returns {string[]} Selected choices
    */
   get selectedChoices() {
     /** @type {string[]} */

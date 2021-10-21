@@ -20,12 +20,12 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import ngeoDrawController from 'ngeo/draw/Controller.js';
-import ngeoMiscFilters from 'ngeo/misc/filters.js';
-import ngeoGeometryType from 'ngeo/GeometryType.js';
-import ngeoInteractionMeasureLength from 'ngeo/interaction/MeasureLength.js';
-import {listen} from 'ol/events.js';
-import olStyleStyle from 'ol/style/Style.js';
+import ngeoDrawController from 'ngeo/draw/Controller';
+import ngeoMiscFilters from 'ngeo/misc/filters';
+import ngeoGeometryType from 'ngeo/GeometryType';
+import ngeoInteractionMeasureLength from 'ngeo/interaction/MeasureLength';
+import {listen} from 'ol/events';
+import olStyleStyle from 'ol/style/Style';
 
 /**
  * @type {angular.IModule}
@@ -38,9 +38,9 @@ const myModule = angular.module('ngeoMeasurelength', [ngeoDrawController.name, n
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @param {angular.IFilterService} $filter Angular filter.
  * @param {angular.auto.IInjectorService} $injector Main injector.
- * @param {import('ngeo/options.js').ngeoMeasurePrecision} ngeoMeasurePrecision The precision.
- * @param {import('ngeo/options.js').ngeoSnappingTolerance} ngeoSnappingTolerance The tolerance.
- * @return {angular.IDirective} The directive specs.
+ * @param {import('ngeo/options').ngeoMeasurePrecision} ngeoMeasurePrecision The precision.
+ * @param {import('ngeo/options').ngeoSnappingTolerance} ngeoSnappingTolerance The tolerance.
+ * @returns {angular.IDirective} The directive specs.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoDrawpoint
@@ -72,7 +72,7 @@ function measureLengthComponent(
         'Click to continue drawing<br>' + 'Double-click or click last point to finish'
       );
 
-      /** @type {import('ngeo/interaction/Measure.js').MeasureOptions} */
+      /** @type {import('ngeo/interaction/Measure').MeasureOptions} */
       const options = {
         style: new olStyleStyle(),
         startMsg: $compile(`<div translate>${helpMsg}</div>`)($scope)[0],

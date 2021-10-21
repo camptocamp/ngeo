@@ -66,11 +66,11 @@ const myModule = angular.module('ngeoMiscSwipe', []);
  * The `$verticalSwipe` service is an object with a single method: `bind`. `bind` takes an element
  * which is to be watched for swipes, and an object with four handler functions. See the
  * documentation for `bind` below.
- * @return {void}
+ * @returns {void}
  */
 myModule.factory('$verticalSwipe', [
   /**
-   * @return {{ bind(element: JQuery<HTMLElement>, eventHandlers: EventHandlers, pointerTypes: string[]): void; }}
+   * @returns {{ bind(element: JQuery<HTMLElement>, eventHandlers: EventHandlers, pointerTypes: string[]): void; }}
    */
   function () {
     // The total distance in any direction before we make the call on swipe vs. scroll.
@@ -99,7 +99,7 @@ myModule.factory('$verticalSwipe', [
 
     /**
      * @param {JQueryEventObject} event
-     * @return {Coordinates}
+     * @returns {Coordinates}
      */
     function getCoordinates(event) {
       let uiEvent;
@@ -118,7 +118,7 @@ myModule.factory('$verticalSwipe', [
     /**
      * @param {string[]} pointerTypes
      * @param {string} eventType
-     * @return {string}
+     * @returns {string}
      */
     function getEvents(pointerTypes, eventType) {
       /** @type {string[]} */
@@ -139,7 +139,7 @@ myModule.factory('$verticalSwipe', [
        * @param {JQuery} element Element.
        * @param {EventHandlers} eventHandlers Event handlers object with callbacks
        * @param {string[]} pointerTypes Types of pointer
-       * @return {void}
+       * @returns {void}
        *
        * The main method of `$verticalSwipe`. It takes an element to be watched for swipe motions, and an
        * object containing event handlers.
@@ -307,7 +307,7 @@ function makeSwipeDirective_(directiveName, direction, eventName) {
 
         /**
          * @param {{x: number, y: number}} coords
-         * @return {boolean}
+         * @returns {boolean}
          */
         function validSwipe(coords) {
           // Check that it's within the coordinates.

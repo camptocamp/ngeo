@@ -3,11 +3,11 @@ DEMO_BRANCH ?= prod-2-7
 
 ANGULAR_VERSION := $(shell buildtools/get-version angular)
 
-ESLINT_CONFIG_FILES := $(shell find * -not -path 'node_modules/*' -type f -name '.eslintrc*')
 WEBPACK_CONFIG_FILES := $(shell find . -not -path './node_modules/*' -name 'webpack.*.js')
 
-API_JS_FILES = $(shell find api/src/ -type f -name '*.js')
-NGEO_JS_FILES = $(shell find src/ -type f -name '*.js')
+API_JS_FILES = $(shell find api/src/ -type f -name '*.js') $(shell find api/src/ -type f -name '*.ts')
+NGEO_JS_FILES = $(shell find src/ -type f -name '*.js') $(shell find lib/ -type f -name '*.js') $(shell find src/ -type f -name '*.ts')
+TS_FILES = $(shell find src/ -type f -name '*.ts')
 NGEO_PARTIALS_FILES := $(shell find src/ -name '*.html')
 NGEO_ALL_SRC_FILES := $(shell find src/ -type f)
 NGEO_TEST_JS_FILES := $(shell find test/ -type f -name '*.js')
@@ -15,15 +15,15 @@ NGEO_EXAMPLES_HTML_FILES := $(shell ls -1 examples/*.html)
 NGEO_EXAMPLES_JS_FILES := $(NGEO_EXAMPLES_HTML_FILES:.html=.js)
 
 GMF_PARTIALS_FILES := $(shell find contribs/gmf/src/ -name *.html)
-GMF_JS_FILES := $(shell find contribs/gmf/src/ -type f -name '*.js')
+GMF_JS_FILES := $(shell find contribs/gmf/src/ -type f -name '*.js') $(shell find contribs/gmf/src/ -type f -name '*.ts')
 GMF_ALL_SRC_FILES := $(shell find contribs/gmf/src/ -type f) $(NGEO_ALL_SRC_FILES)
-GMF_TEST_JS_FILES := $(shell find contribs/gmf/test/ -type f -name '*.js')
+GMF_TEST_JS_FILES := $(shell find contribs/gmf/test/ -type f -name '*.js') $(shell find contribs/gmf/test/ -type f -name '*.ts')
 GMF_EXAMPLES_HTML_FILES := $(shell ls -1 contribs/gmf/examples/*.html)
 GMF_EXAMPLES_JS_FILES := $(GMF_EXAMPLES_HTML_FILES:.html=.js)
 
 GMF_APPS += mobile desktop desktop_alt iframe_api mobile_alt oeedit
-GMF_APPS_JS_FILES = $(shell find contribs/gmf/apps/ -type f -name '*.js')
-BUILD_JS_FILES = $(shell find buildtools/ -type f -name '*.js')
+GMF_APPS_JS_FILES = $(shell find contribs/gmf/apps/ -type f -name '*.js') $(shell find contribs/gmf/apps/ -type f -name '*.ts')
+BUILD_JS_FILES = $(shell ls -1 *.js) $(shell ls -1 utils/*.js) $(shell find buildtools/ -type f -name '*.js') $(shell find .storybook/ -type f -name '*.js') $(shell find cypress/ -type f -name '*.js')
 GMF_APPS_PARTIALS_FILES = $(shell find contribs/gmf/apps/ -type f -name '*.html' -or -name '*.html.ejs')
 GMF_APPS_ALL_FILES = $(shell find contribs/gmf/apps/ -type f) $(GMF_ALL_SRC_FILES)
 
@@ -109,7 +109,6 @@ help:
 	@echo "Secondary targets:"
 	@echo
 	@echo "- lint                    Check the code with the linter"
-	@echo "- gh-pages                Update the GitHub pages"
 	@echo
 
 .PHONY: check
@@ -122,7 +121,7 @@ check-examples-checker: $(CHECK_EXAMPLE_CHECKER)
 check-examples: $(BUILD_EXAMPLES_CHECK_TIMESTAMP_FILES)
 
 .PHONY: lint
-lint: .build/eslint.timestamp eclint lint-extra
+lint: .build/eslint.timestamp .build/eslint-ts.timestamp eclint lint-extra
 
 .PHONY: lint-extra
 lint-extra:
@@ -130,7 +129,7 @@ lint-extra:
 	if [ "`git grep @example src contribs`" != "" ]; then echo "We don't use @example to have the example in the description"; false; fi
 
 .PHONY: eslint
-eslint: .build/eslint.timestamp
+eslint: .build/eslint.timestamp .build/eslint-ts.timestamp
 
 .PHONY: eclint
 eclint: .build/node_modules.timestamp
@@ -158,7 +157,7 @@ serve-gmf: contribs/dist $(ANGULAR_LOCALES_FILES)
 	npm run serve-gmf-examples
 
 .PHONY: serve-gmf-apps
-serve-gmf-apps: .build/build-dll.timestamp $(ANGULAR_LOCALES_FILES)
+serve-gmf-apps: .build/build-dll.timestamp $(ANGULAR_LOCALES_FILES) contribs/gmf/apps/build/locale/webcomponent/en/app.json
 	npm run serve-gmf-apps
 
 .PHONY: serve-api
@@ -204,15 +203,11 @@ examples-hosted-apps: .build/gmf-apps.timestamp
 	npm run build-gmf-apps
 	touch $@
 
-.PHONY: gh-pages
-gh-pages: .build/python-venv.timestamp
-	buildtools/deploy.sh
-
 .build/node_modules.copyright.timestamp: .build/node_modules.timestamp
 	npm install --no-save --no-optional --no-package-lock ./buildtools/copyright
 	touch $@
 
-.build/eslint.timestamp: .build/node_modules.copyright.timestamp $(ESLINT_CONFIG_FILES) \
+.build/eslint.timestamp: .build/node_modules.copyright.timestamp .eslintrc.yaml \
 		$(API_JS_FILES) \
 		$(NGEO_JS_FILES) \
 		$(NGEO_TEST_JS_FILES) \
@@ -222,11 +217,16 @@ gh-pages: .build/python-venv.timestamp
 		$(GMF_EXAMPLES_JS_FILES) \
 		$(GMF_APPS_JS_FILES) \
 		$(BUILD_JS_FILES)
-	./node_modules/.bin/eslint $(filter-out .build/node_modules.copyright.timestamp $(ESLINT_CONFIG_FILES), $^)
+	./node_modules/.bin/eslint $(filter-out .build/node_modules.copyright.timestamp .eslintrc.yaml, $^)
+	touch $@
+
+.build/eslint-ts.timestamp: .build/node_modules.copyright.timestamp .eslintrc.yaml \
+		$(TS_FILES)
+	./node_modules/.bin/eslint --max-warnings=0 $(filter-out .build/node_modules.copyright.timestamp .eslintrc.yaml .eslintrc-ts.yaml, $^)
 	touch $@
 
 .PHONY: eslint-fix
-eslint-fix: .build/node_modules.copyright.timestamp $(ESLINT_CONFIG_FILES) \
+eslint-fix: .build/node_modules.copyright.timestamp .eslintrc.yaml \
 		$(API_JS_FILES) \
 		$(NGEO_JS_FILES) \
 		$(NGEO_TEST_JS_FILES) \
@@ -236,7 +236,7 @@ eslint-fix: .build/node_modules.copyright.timestamp $(ESLINT_CONFIG_FILES) \
 		$(GMF_EXAMPLES_JS_FILES) \
 		$(GMF_APPS_JS_FILES) \
 		$(BUILD_JS_FILES)
-	./node_modules/.bin/eslint --fix $(filter-out .build/node_modules.copyright.timestamp $(ESLINT_CONFIG_FILES), $^)
+	./node_modules/.bin/eslint --fix $(filter-out .build/node_modules.copyright.timestamp .eslintrc.yaml, $^)
 
 .build/examples-hosted/partials: examples/partials/
 	mkdir -p $(dir $@)
@@ -258,13 +258,14 @@ contribs/dist: .build/build-dll.timestamp
 	touch $@
 
 .build/examples-hosted-gmf-apps-deps.timestamp: \
+		$(addprefix contribs/gmf/apps/build/locale/webcomponent/, $(addsuffix /app.json, $(LANGUAGES))) \
 		$(addprefix contribs/gmf/build/gmf-, $(addsuffix .json, $(LANGUAGES))) \
 		$(addprefix contribs/gmf/build/angular-locale_, $(addsuffix .js, $(LANGUAGES)))
 	mkdir -p .build/examples-hosted/contribs/gmf
 	# We need the files for each app
 	# To simplify processing, we first copy them in gmfappsdeps directory, then from there to each app
 	$(foreach f,$^,mkdir -p .build/examples-hosted/gmfappsdeps/`dirname $(f)`; cp $(f) .build/examples-hosted/gmfappsdeps/$(f);)
-	rsync --recursive .build/examples-hosted/gmfappsdeps/contribs/gmf/ .build/examples-hosted/contribs/gmf/apps/
+	rsync --recursive .build/examples-hosted/gmfappsdeps/contribs/gmf/apps/ .build/examples-hosted/contribs/gmf/apps/
 	mkdir -p .build/examples-hosted/contribs/gmf/apps/desktop
 	cp ./contribs/gmf/apps/desktop/header.html .build/examples-hosted/contribs/gmf/apps/desktop
 	mkdir -p .build/examples-hosted/contribs/gmf/apps/desktop_alt
@@ -400,6 +401,9 @@ contribs/gmf/apps/.tx/config: contribs/gmf/apps/.tx/config.mako .build/python-ve
 	mkdir -p $(dir $@)
 	node buildtools/extract-messages $(GMF_APPS_PARTIALS_FILES) $(GMF_APPS_JS_FILES) > $@
 
+contribs/gmf/apps/build/locale/webcomponent/en/app.json:
+	npm run i18next-parse
+
 .PHONY: transifex-get
 transifex-get: $(L10N_PO_FILES) \
 	.build/locale/ngeo.pot \
@@ -437,6 +441,10 @@ transifex-init: .build/python-venv.timestamp \
 	$(TOUCHBACK_TXRC)
 
 .build/locale/%/LC_MESSAGES/gmf.po: .tx/config $(HOME)/.transifexrc .build/python-venv.timestamp
+	$(PY_VENV_BIN)/tx pull -l $* --force --mode=reviewed
+	$(TOUCHBACK_TXRC)
+
+contribs/gmf/apps/build/locale/webcomponent/%/app.json: .tx/config $(HOME)/.transifexrc .build/python-venv.timestamp
 	$(PY_VENV_BIN)/tx pull -l $* --force --mode=reviewed
 	$(TOUCHBACK_TXRC)
 
@@ -491,11 +499,12 @@ jsdoc:
 clean:
 	rm -f .build/*.check.timestamp
 	rm -f .build/examples/*.js
-	rm -f .build/eslint.timestamp
+	rm -f .build/*.timestamp
 	rm -f .build/info.json
 	rm -f .build/ngeo.json
 	rm -f .build/gmf.json
 	rm -f .build/app-*.json
+	rm -rf locales
 	rm -rf apidoc
 	rm -rf .build/examples-hosted
 	rm -rf .build/contribs

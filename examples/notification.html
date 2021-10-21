@@ -15,7 +15,7 @@
     </p>
     <div class="buttons">
       <button
-        ng-click="ctrl.notification.success('A success message')"
+        ng-click="ctrl.success('A success message')"
         title="Displays a single success message using default options."
         type="button"
         class="btn btn-success"
@@ -23,7 +23,7 @@
         Success
       </button>
       <button
-        ng-click="ctrl.notification.info('An information')"
+        ng-click="ctrl.info('An information')"
         title="Displays a single info message using default options."
         type="button"
         class="btn btn-info"
@@ -31,7 +31,7 @@
         Info
       </button>
       <button
-        ng-click="ctrl.notification.warn('A warning')"
+        ng-click="ctrl.warn('A warning')"
         title="Displays a single warning message using default options."
         type="button"
         class="btn btn-warning"
@@ -39,7 +39,7 @@
         Warning
       </button>
       <button
-        ng-click="ctrl.notification.error('An error')"
+        ng-click="ctrl.error('An error')"
         title="Displays a single error message using default options."
         type="button"
         class="btn btn-danger"
@@ -70,12 +70,7 @@
       >
         1 sec.
       </button>
-      <button
-        ng-click="ctrl.notification.clear()"
-        title="Clears all messages."
-        type="button"
-        class="btn btn-danger"
-      >
+      <button ng-click="ctrl.clear()" title="Clears all messages." type="button" class="btn btn-danger">
         Clear
       </button>
     </div>

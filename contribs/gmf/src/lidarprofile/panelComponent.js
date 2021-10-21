@@ -20,9 +20,9 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import gmfLidarprofileConfig from 'gmf/lidarprofile/Config.js';
-import gmfLidarprofileManager from 'gmf/lidarprofile/Manager.js';
-import ngeoDownloadCsv from 'ngeo/download/Csv.js';
+import gmfLidarprofileConfig from 'gmf/lidarprofile/Config';
+import gmfLidarprofileManager from 'gmf/lidarprofile/Manager';
+import ngeoDownloadCsv from 'ngeo/download/Csv';
 
 /**
  * @type {angular.IModule}
@@ -39,7 +39,7 @@ myModule.value(
   /**
    * @param {JQuery} $element Element.
    * @param {angular.IAttributes} $attrs Attributes.
-   * @return {string} Template.
+   * @returns {string} Template.
    */
   ($element, $attrs) => {
     const templateUrl = $attrs.gmfLidarprofilePanelTemplateUrl;
@@ -63,7 +63,7 @@ myModule.run(
  * @param {angular.IAttributes} $attrs Attributes.
  * @param {function(JQuery, angular.IAttributes): string} gmfLidarprofilePanelTemplateUrl
  *     Template function.
- * @return {string} Template URL.
+ * @returns {string} Template URL.
  * @ngInject
  * @private
  * @hidden
@@ -108,13 +108,13 @@ myModule.component('gmfLidarprofilePanel', lidarprofilePanelComponent);
 export class Controller {
   /**
    * @param {angular.IScope} $scope Angular scope.
-   * @param {import("gmf/lidarprofile/Manager.js").LidarprofileManager} gmfLidarprofileManager gmf
+   * @param {import('gmf/lidarprofile/Manager').LidarprofileManager} gmfLidarprofileManager gmf
    *    gmfLidarprofileManager.
-   * @param {import("gmf/lidarprofile/Config.js").LidarprofileConfigService} gmfLidarprofileConfig gmf Lidar
+   * @param {import('gmf/lidarprofile/Config').LidarprofileConfigService} gmfLidarprofileConfig gmf Lidar
    *    profile config.
-   * @param {import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate
+   * @param {import('ngeo/misc/ToolActivateMgr').ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate
    *    manager service
-   * @param {import("ngeo/download/Csv.js").DownloadCsvService} ngeoCsvDownload CSV Download service.
+   * @param {import('ngeo/download/Csv').DownloadCsvService} ngeoCsvDownload CSV Download service.
    * @ngInject
    * @ngdoc controller
    * @ngname gmfLidarprofilePanelController
@@ -126,13 +126,13 @@ export class Controller {
     this.ready = false;
 
     /**
-     * @type {import("gmf/lidarprofile/Config.js").LidarprofileConfigService}
+     * @type {import('gmf/lidarprofile/Config').LidarprofileConfigService}
      * @private
      */
     this.profileConfig_ = gmfLidarprofileConfig;
 
     /**
-     * @type {import("gmf/lidarprofile/Manager.js").LidarprofileManager}
+     * @type {import('gmf/lidarprofile/Manager').LidarprofileManager}
      */
     this.profile = gmfLidarprofileManager;
 
@@ -142,24 +142,26 @@ export class Controller {
     this.active = false;
 
     /**
-     * @type {?import("ol/Map.js").default}
+     * @type {?import('ol/Map').default}
      */
     this.map = null;
 
     /**
      * The OpenLayers LineString geometry of the profle
-     * @type {?import("ol/geom/LineString.js").default}
+     *
+     * @type {?import('ol/geom/LineString').default}
      */
     this.line = null;
 
     /**
      * State of the measure tool
+     *
      * @type {boolean}
      */
     this.measureActive = false;
 
     /**
-     * @type {import("ngeo/download/Csv.js").DownloadCsvService}
+     * @type {import('ngeo/download/Csv').DownloadCsvService}
      * @private
      */
     this.ngeoCsvDownload_ = ngeoCsvDownload;
@@ -277,7 +279,8 @@ export class Controller {
 
   /**
    * Get all available point attributes.
-   * @return {import("gmf/lidarprofile/Config.js").LidarprofileServerConfigPointAttributes[] | undefined}
+   *
+   * @returns {import('gmf/lidarprofile/Config').LidarprofileServerConfigPointAttributes[] | undefined}
    *    Available point attributes.
    */
   getAvailablePointAttributes() {
@@ -286,9 +289,10 @@ export class Controller {
 
   /**
    * Get / Set the selected point attribute
-   * @param {import("gmf/lidarprofile/Config.js").LidarprofileServerConfigPointAttribute} [opt_selectedOption]
+   *
+   * @param {import('gmf/lidarprofile/Config').LidarprofileServerConfigPointAttribute} [opt_selectedOption]
    *    The new selected point attribute.
-   * @return {import("gmf/lidarprofile/Config.js").LidarprofileServerConfigPointAttribute|undefined}
+   * @returns {import('gmf/lidarprofile/Config').LidarprofileServerConfigPointAttribute|undefined}
    *    Selected point attribute
    */
   getSetSelectedPointAttribute(opt_selectedOption) {
@@ -304,7 +308,8 @@ export class Controller {
 
   /**
    * Get the available classifications for this dataset
-   * @return {import("gmf/lidarprofile/Config.js").LidarprofileServerConfigClassifications}
+   *
+   * @returns {import('gmf/lidarprofile/Config').LidarprofileServerConfigClassifications}
    *    classification list
    */
   getClassification() {
@@ -316,7 +321,8 @@ export class Controller {
 
   /**
    * Sets the visible classification in the profile
-   * @param {import("gmf/lidarprofile/Config.js").LidarprofileServerConfigClassification} classification
+   *
+   * @param {import('gmf/lidarprofile/Config').LidarprofileServerConfigClassification} classification
    *    selected value
    * @param {number} key of the classification code
    */

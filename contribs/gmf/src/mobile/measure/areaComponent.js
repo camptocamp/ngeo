@@ -20,10 +20,10 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import ngeoMiscFilters from 'ngeo/misc/filters.js';
-import ngeoInteractionMeasureAreaMobile from 'ngeo/interaction/MeasureAreaMobile.js';
-import {MeasueMobileBaseController} from 'gmf/mobile/measure/baseComponent.js';
-import {buildStyle} from 'ngeo/options.js';
+import ngeoMiscFilters from 'ngeo/misc/filters';
+import ngeoInteractionMeasureAreaMobile from 'ngeo/interaction/MeasureAreaMobile';
+import {MeasueMobileBaseController} from 'gmf/mobile/measure/baseComponent';
+import {buildStyle} from 'ngeo/options';
 
 /**
  * @type {angular.IModule}
@@ -36,7 +36,7 @@ myModule.value(
   /**
    * @param {JQuery} element Element.
    * @param {angular.IAttributes} attrs Attributes.
-   * @return {string} The template url.
+   * @returns {string} The template url.
    */
   (element, attrs) => {
     const templateUrl = attrs.gmfMobileMeasureAreaTemplateurl;
@@ -67,10 +67,10 @@ myModule.run(
  *
  * @htmlAttribute {boolean} gmf-mobile-measurearea-active Used to active
  * or deactivate the component.
- * @htmlAttribute {import("ol/Map.js").default} gmf-mobile-measurearea-map The map.
+ * @htmlAttribute {import('ol/Map').default} gmf-mobile-measurearea-map The map.
  * @param {string|function(JQuery=, angular.IAttributes=):string} gmfMobileMeasureAreaTemplateUrl
  *     Template URL for the directive.
- * @return {angular.IDirective} The Directive Definition Object.
+ * @returns {angular.IDirective} The Directive Definition Object.
  * @ngInject
  * @ngdoc directive
  * @ngname gmfMobileMeasureArea
@@ -110,18 +110,18 @@ export class Controller extends MeasueMobileBaseController {
    * @param {angular.IScope} $scope Angular scope.
    * @param {angular.IFilterService} $filter Angular filter
    * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
-   * @param {import('gmf/options.js').gmfMobileMeasureAreaOptions} gmfMobileMeasureAreaOptions The options.
+   * @param {import('gmf/options').gmfMobileMeasureAreaOptions} gmfMobileMeasureAreaOptions The options.
    * @ngInject
    */
   constructor($scope, $filter, gettextCatalog, gmfMobileMeasureAreaOptions) {
     super($scope, $filter, gettextCatalog);
     /**
-     * @type {import('gmf/options.js').gmfMobileMeasureAreaOptions}
+     * @type {import('gmf/options').gmfMobileMeasureAreaOptions}
      */
     this.options = gmfMobileMeasureAreaOptions;
 
     /**
-     * @type {?import("ngeo/interaction/MeasureAreaMobile.js").default}
+     * @type {?import('ngeo/interaction/MeasureAreaMobile').default}
      */
     this.measure = null;
   }

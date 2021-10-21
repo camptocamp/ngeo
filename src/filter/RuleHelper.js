@@ -20,27 +20,27 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import ngeoFilterCondition from 'ngeo/filter/Condition.js';
-import ngeoFormatAttributeType from 'ngeo/format/AttributeType.js';
-import * as ngeoFormatFilter from 'ngeo/format/filter.js';
-import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
-import ngeoMiscWMSTime from 'ngeo/misc/WMSTime.js';
-import ngeoRuleDate from 'ngeo/rule/Date.js';
-import ngeoRuleGeometry from 'ngeo/rule/Geometry.js';
+import ngeoFilterCondition from 'ngeo/filter/Condition';
+import ngeoFormatAttributeType from 'ngeo/format/AttributeType';
+import * as ngeoFormatFilter from 'ngeo/format/filter';
+import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper';
+import ngeoMiscWMSTime from 'ngeo/misc/WMSTime';
+import ngeoRuleDate from 'ngeo/rule/Date';
+import ngeoRuleGeometry from 'ngeo/rule/Geometry';
 import ngeoRuleRule, {
   RuleOperatorType,
   RuleSpatialOperatorType,
   RuleTemporalOperatorType,
-} from 'ngeo/rule/Rule.js';
-import ngeoRuleSelect from 'ngeo/rule/Select.js';
-import ngeoRuleText from 'ngeo/rule/Text.js';
-import {writeFilter} from 'ol/format/WFS.js';
-import * as olFormatFilter from 'ol/format/filter.js';
+} from 'ngeo/rule/Rule';
+import ngeoRuleSelect from 'ngeo/rule/Select';
+import ngeoRuleText from 'ngeo/rule/Text';
+import {writeFilter} from 'ol/format/WFS';
+import * as olFormatFilter from 'ol/format/filter';
 
 import moment from 'moment';
 
 /**
- * @typedef {import('ngeo/rule/Rule.js').RuleOptions|import('ngeo/rule/Geometry.js').GeometryOptions|import('ngeo/rule/Select.js').SelectOptions|import('ngeo/rule/Text.js').TextOptions} AnyOptions
+ * @typedef {import('ngeo/rule/Rule').RuleOptions|import('ngeo/rule/Geometry').GeometryOptions|import('ngeo/rule/Select').SelectOptions|import('ngeo/rule/Text').TextOptions} AnyOptions
  */
 
 /**
@@ -48,7 +48,7 @@ import moment from 'moment';
  * service.
  *
  * @typedef {Object} CreateFilterOptions
- * @property {import('ngeo/datasource/OGC.js').default} dataSource The data source from which to get
+ * @property {import('ngeo/datasource/OGC').default} dataSource The data source from which to get
  *    the filterRules that will be used to create the OL filter object.
  * @property {boolean} [incDimensions] Whether to include the dimensions related filters. Default to `true`.
  * @property {boolean} [incTime] Whether to include the data source's time values in the filter created. The
@@ -56,10 +56,10 @@ import moment from 'moment';
  *    When building a filter for WMS, it should not be included as it is given as
  *    the TIME parameter of the query instead. When used for a WFS request, it
  *    should be included in the filter.
- * @property {import("ol/format/filter/Filter.js").default} [filter] A filter that is directly given the
+ * @property {import('ol/format/filter/Filter').default} [filter] A filter that is directly given the
  *    method instead of creating one.
  *    Useful to automatically combine the time values.
- * @property {import('ngeo/rule/Rule.js').default[]} [filterRules] An alternative list of filter rules
+ * @property {import('ngeo/rule/Rule').default[]} [filterRules] An alternative list of filter rules
  *    to use instead of those that are defined within the data source. Useful when one wants to get the data
  *    of a given filter without applying it to the data source.
  * @property {string} [projCode] Projection code.
@@ -71,13 +71,13 @@ import moment from 'moment';
  */
 export class RuleHelper {
   /**
-   * A service that provides utility methods to create `import('ngeo/rule/Rule.js').default`
+   * A service that provides utility methods to create `import('ngeo/rule/Rule').default`
    * objects.
    *
    * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext service.
-   * @param {import("ngeo/misc/FeatureHelper.js").FeatureHelper} ngeoFeatureHelper Ngeo feature helper
+   * @param {import('ngeo/misc/FeatureHelper').FeatureHelper} ngeoFeatureHelper Ngeo feature helper
    *    service.
-   * @param {import("ngeo/misc/WMSTime.js").WMSTime} ngeoWMSTime wms time service.
+   * @param {import('ngeo/misc/WMSTime').WMSTime} ngeoWMSTime wms time service.
    * @ngdoc service
    * @ngname ngeoRuleHelper
    * @ngInject
@@ -90,23 +90,23 @@ export class RuleHelper {
     this.gettextCatalog_ = gettextCatalog;
 
     /**
-     * @type {import("ngeo/misc/FeatureHelper.js").FeatureHelper}
+     * @type {import('ngeo/misc/FeatureHelper').FeatureHelper}
      * @private
      */
     this.ngeoFeatureHelper_ = ngeoFeatureHelper;
 
     /**
-     * @type {import("ngeo/misc/WMSTime.js").WMSTime}
+     * @type {import('ngeo/misc/WMSTime').WMSTime}
      * @private
      */
     this.ngeoWMSTime_ = ngeoWMSTime;
   }
 
   /**
-   * @param {import('ngeo/format/Attribute.js').Attribute[]} attributes Attributes.
+   * @param {import('ngeo/format/Attribute').Attribute[]} attributes Attributes.
    * @param {boolean} [opt_isCustom] Whether the created rules should be marked
    *     as custom or not. Defaults to `false`.
-   * @return {import("ngeo/rule/Rule.js").default[]} Rules.
+   * @returns {import('ngeo/rule/Rule').default[]} Rules.
    */
   createRulesFromAttributes(attributes, opt_isCustom) {
     const rules = [];
@@ -117,10 +117,10 @@ export class RuleHelper {
   }
 
   /**
-   * @param {import('ngeo/format/Attribute.js').Attribute} attribute Attribute.
+   * @param {import('ngeo/format/Attribute').Attribute} attribute Attribute.
    * @param {boolean} [opt_isCustom] Whether the created rule should be marked
    *     as custom or not. Defaults to `false`.
-   * @return {import("ngeo/rule/Rule.js").default} Rule.
+   * @returns {import('ngeo/rule/Rule').default} Rule.
    */
   createRuleFromAttribute(attribute, opt_isCustom) {
     let rule;
@@ -226,9 +226,9 @@ export class RuleHelper {
   }
 
   /**
-   * @param {(import('ngeo/rule/Rule.js').RuleOptions | import('ngeo/rule/Select.js').SelectOptions)[]} optionsList
+   * @param {(import('ngeo/rule/Rule').RuleOptions | import('ngeo/rule/Select').SelectOptions)[]} optionsList
    *    List of options
-   * @return {import("ngeo/rule/Rule.js").default[]} Rules.
+   * @returns {import('ngeo/rule/Rule').default[]} Rules.
    */
   createRules(optionsList) {
     const rules = [];
@@ -239,9 +239,9 @@ export class RuleHelper {
   }
 
   /**
-   * @param {import('ngeo/rule/Rule.js').RuleOptions|import('ngeo/rule/Select.js').SelectOptions} options
+   * @param {import('ngeo/rule/Rule').RuleOptions|import('ngeo/rule/Select').SelectOptions} options
    *    Options
-   * @return {import("ngeo/rule/Rule.js").default} Rule.
+   * @returns {import('ngeo/rule/Rule').default} Rule.
    */
   createRule(options) {
     // Compatibility with filters saved before version 2.6
@@ -263,7 +263,7 @@ export class RuleHelper {
           const expression = /** @type {string} */ (options.expression);
           options.literal = expression.split(',');
         }
-        const selectOptions = /** @type {import('ngeo/rule/Select.js').SelectOptions} */ (options);
+        const selectOptions = /** @type {import('ngeo/rule/Select').SelectOptions} */ (options);
         console.assert(selectOptions.choices);
         rule = new ngeoRuleSelect(selectOptions);
         break;
@@ -275,10 +275,10 @@ export class RuleHelper {
   }
 
   /**
-   * Create a new `import('ngeo/rule/Rule.js').default` object using an other given rule.
+   * Create a new `import('ngeo/rule/Rule').default` object using an other given rule.
    *
-   * @param {import("ngeo/rule/Rule.js").default} rule Original rule to clone.
-   * @return {import("ngeo/rule/Rule.js").default} A clone rule.
+   * @param {import('ngeo/rule/Rule').default} rule Original rule to clone.
+   * @returns {import('ngeo/rule/Rule').default} A clone rule.
    */
   cloneRule(rule) {
     /** @type {AnyOptions} */
@@ -312,7 +312,7 @@ export class RuleHelper {
       clone = new ngeoRuleGeometry(options);
       clone.feature.setProperties(this.ngeoFeatureHelper_.getNonSpatialProperties(rule.feature));
     } else if (rule instanceof ngeoRuleSelect) {
-      const opt = /** @type {import('ngeo/rule/Select.js').SelectOptions} */ (options);
+      const opt = /** @type {import('ngeo/rule/Select').SelectOptions} */ (options);
       opt.choices = rule.choices.slice(0);
       clone = new ngeoRuleSelect(opt);
     } else if (rule instanceof ngeoRuleText) {
@@ -329,9 +329,9 @@ export class RuleHelper {
    * Extend the dynamic properties from a source rule to destination rule.
    * The source rule remains unchanged, while the destination rule changes.
    *
-   * @param {import("ngeo/rule/Rule.js").default} sourceRule Source rule to collect the dynamic
+   * @param {import('ngeo/rule/Rule').default} sourceRule Source rule to collect the dynamic
    *     properties from.
-   * @param {import("ngeo/rule/Rule.js").default} destRule Destination rule where the dynamic
+   * @param {import('ngeo/rule/Rule').default} destRule Destination rule where the dynamic
    *     properties are set.
    */
   extendRule(sourceRule, destRule) {
@@ -358,8 +358,8 @@ export class RuleHelper {
   }
 
   /**
-   * @param {import("ngeo/rule/Rule.js").default[]} rules Rules
-   * @return {AnyOptions[]} List of serialized rule options.
+   * @param {import('ngeo/rule/Rule').default[]} rules Rules
+   * @returns {AnyOptions[]} List of serialized rule options.
    */
   serializeRules(rules) {
     return rules.map((rule) => {
@@ -370,8 +370,9 @@ export class RuleHelper {
 
   /**
    * Selialize a rule into options to re-create it later.
-   * @param {import("ngeo/rule/Rule.js").default} rule Rule to serialize.
-   * @return {AnyOptions} Serialized rule options.
+   *
+   * @param {import('ngeo/rule/Rule').default} rule Rule to serialize.
+   * @returns {AnyOptions} Serialized rule options.
    */
   serializeRule(rule) {
     /** @type {AnyOptions} */
@@ -403,14 +404,14 @@ export class RuleHelper {
 
     if (rule instanceof ngeoRuleGeometry) {
       /**
-       * @type {import('ngeo/rule/Geometry.js').GeometryOptions}
+       * @type {import('ngeo/rule/Geometry').GeometryOptions}
        */
       const opt = obj;
       opt.featureProperties = this.ngeoFeatureHelper_.getNonSpatialProperties(rule.feature);
     }
 
     if (rule instanceof ngeoRuleSelect) {
-      const opt = /** @type {import('ngeo/rule/Select.js').SelectOptions} */ (obj);
+      const opt = /** @type {import('ngeo/rule/Select').SelectOptions} */ (obj);
       opt.choices = rule.choices;
     }
 
@@ -422,7 +423,7 @@ export class RuleHelper {
    * See the `CreateFilterOptions` to learn more.
    *
    * @param {CreateFilterOptions} options Options.
-   * @return {?import("ol/format/filter/Filter.js").default} Filter.
+   * @returns {?import('ol/format/filter/Filter').default} Filter.
    */
   createFilter(options) {
     const dataSource = options.dataSource;
@@ -473,7 +474,7 @@ export class RuleHelper {
 
   /**
    * @param {CreateFilterOptions} options Options.
-   * @return {?string} Filter string.
+   * @returns {?string} Filter string.
    */
   createFilterString(options) {
     let filterString = null;
@@ -495,11 +496,11 @@ export class RuleHelper {
    *
    * If none are set, return null.
    *
-   * @param {?import("ol/format/filter/Filter.js").default} filterA
+   * @param {?import('ol/format/filter/Filter').default} filterA
    *     First filter.
-   * @param {?import("ol/format/filter/Filter.js").default} filterB
+   * @param {?import('ol/format/filter/Filter').default} filterB
    *     Second filter.
-   * @return {?import("ol/format/filter/Filter.js").default} Filters
+   * @returns {?import('ol/format/filter/Filter').default} Filters
    *     joined together.
    */
   joinFilters(filterA, filterB) {
@@ -515,11 +516,11 @@ export class RuleHelper {
   }
 
   /**
-   * @param {import("ngeo/rule/Rule.js").default} rule Rule.
-   * @param {import("ngeo/datasource/OGC.js").default} dataSource Data source.
+   * @param {import('ngeo/rule/Rule').default} rule Rule.
+   * @param {import('ngeo/datasource/OGC').default} dataSource Data source.
    * @param {string} [opt_srsName] SRS name. No srsName attribute will be
    *     set on geometries when this is not provided.
-   * @return {?import("ol/format/filter/Filter.js").default} filter Filter;
+   * @returns {?import('ol/format/filter/Filter').default} filter Filter;
    * @private
    */
   createFilterFromRule_(rule, dataSource, opt_srsName) {
@@ -530,11 +531,11 @@ export class RuleHelper {
       return null;
     }
 
-    const literal = /** @type {import("ngeo/rule/Rule.js").RuleOptions} */ (value).literal;
-    const lowerBoundary = /** @type {import("ngeo/rule/Rule.js").RuleOptions} */ (value).lowerBoundary;
+    const literal = /** @type {import('ngeo/rule/Rule').RuleOptions} */ (value).literal;
+    const lowerBoundary = /** @type {import('ngeo/rule/Rule').RuleOptions} */ (value).lowerBoundary;
     const operator = value.operator;
     const propertyName = value.propertyName;
-    const upperBoundary = /** @type {import("ngeo/rule/Rule.js").RuleOptions} */ (value).upperBoundary;
+    const upperBoundary = /** @type {import('ngeo/rule/Rule').RuleOptions} */ (value).upperBoundary;
 
     const rot = RuleOperatorType;
     const rsot = RuleSpatialOperatorType;
@@ -642,9 +643,10 @@ export class RuleHelper {
   /**
    * Create and return an OpenLayers filter object using the available
    * dimensions filters configuration within the data source.
-   * @param {import("ngeo/datasource/OGC.js").default} dataSource Data source from which to create the
+   *
+   * @param {import('ngeo/datasource/OGC').default} dataSource Data source from which to create the
    *     filter.
-   * @return {?import("ol/format/filter/Filter.js").default} Filter
+   * @returns {?import('ol/format/filter/Filter').default} Filter
    * @private
    */
   createDimensionsFilterFromDataSource_(dataSource) {
@@ -675,9 +677,10 @@ export class RuleHelper {
   /**
    * Create and return an OpenLayers filter object using the available
    * time properties within the data source.
-   * @param {import("ngeo/datasource/OGC.js").default} dataSource Data source from which to
+   *
+   * @param {import('ngeo/datasource/OGC').default} dataSource Data source from which to
    *     create the filter.
-   * @return {?import("ol/format/filter/Filter.js").default} Filter
+   * @returns {?import('ol/format/filter/Filter').default} Filter
    * @private
    */
   createTimeFilterFromDataSource_(dataSource) {

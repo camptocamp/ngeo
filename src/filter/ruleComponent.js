@@ -20,34 +20,34 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import ngeoMenu from 'ngeo/Menu.js';
-import ngeoDrawComponent from 'ngeo/draw/component.js';
+import ngeoMenu from 'ngeo/Menu';
+import ngeoDrawComponent from 'ngeo/draw/component';
 
-import ngeoFilterRuleHelper from 'ngeo/filter/RuleHelper.js';
+import ngeoFilterRuleHelper from 'ngeo/filter/RuleHelper';
 
-import ngeoFormatAttributeType from 'ngeo/format/AttributeType.js';
-import ngeoGeometryType from 'ngeo/GeometryType.js';
-import ngeoInteractionModify from 'ngeo/interaction/Modify.js';
-import ngeoInteractionRotate from 'ngeo/interaction/Rotate.js';
-import ngeoInteractionTranslate from 'ngeo/interaction/Translate.js';
-import ngeoMapFeatureOverlay from 'ngeo/map/FeatureOverlay.js';
+import ngeoFormatAttributeType from 'ngeo/format/AttributeType';
+import ngeoGeometryType from 'ngeo/GeometryType';
+import ngeoInteractionModify from 'ngeo/interaction/Modify';
+import ngeoInteractionRotate from 'ngeo/interaction/Rotate';
+import ngeoInteractionTranslate from 'ngeo/interaction/Translate';
+import ngeoMapFeatureOverlay from 'ngeo/map/FeatureOverlay';
 
-import ngeoMiscDatepickerComponent from 'ngeo/misc/datepickerComponent.js';
+import ngeoMiscDatepickerComponent from 'ngeo/misc/datepickerComponent';
 
-import {interactionDecoration as ngeoMiscDecorateInteraction} from 'ngeo/misc/decorate.js';
-import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
-import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
-import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr.js';
-import {RuleOperatorType, RuleSpatialOperatorType, RuleTemporalOperatorType} from 'ngeo/rule/Rule.js';
-import ngeoRuleGeometry from 'ngeo/rule/Geometry.js';
-import {getUid as olUtilGetUid} from 'ol/util.js';
-import olCollection from 'ol/Collection.js';
-import {listen, unlistenByKey} from 'ol/events.js';
-import olStyleStyle from 'ol/style/Style.js';
-import olStyleText from 'ol/style/Text.js';
-import olStyleFill from 'ol/style/Fill.js';
-import {CollectionEvent} from 'ol/Collection.js';
-import Feature from 'ol/Feature.js';
+import {interactionDecoration as ngeoMiscDecorateInteraction} from 'ngeo/misc/decorate';
+import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper';
+import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate';
+import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr';
+import {RuleOperatorType, RuleSpatialOperatorType, RuleTemporalOperatorType} from 'ngeo/rule/Rule';
+import ngeoRuleGeometry from 'ngeo/rule/Geometry';
+import {getUid as olUtilGetUid} from 'ol/util';
+import olCollection from 'ol/Collection';
+import {listen, unlistenByKey} from 'ol/events';
+import olStyleStyle from 'ol/style/Style';
+import olStyleText from 'ol/style/Text';
+import olStyleFill from 'ol/style/Fill';
+import {CollectionEvent} from 'ol/Collection';
+import Feature from 'ol/Feature';
 import 'ngeo/sass/font.scss';
 
 /**
@@ -56,7 +56,7 @@ import 'ngeo/sass/font.scss';
  */
 
 /**
- * @typedef {import("ngeo/CustomEvent.js").default<MenuEventTarget>} MenuEvent
+ * @typedef {import('ngeo/CustomEvent').default<MenuEventTarget>} MenuEvent
  */
 
 /**
@@ -87,7 +87,7 @@ myModule.value(
   'ngeoRuleTemplateUrl',
   /**
    * @param {angular.IAttributes} $attrs Attributes.
-   * @return {string} The template url.
+   * @returns {string} The template url.
    */
   ($attrs) => {
     const templateUrl = $attrs['ngeoRuleTemplateUrl'];
@@ -98,7 +98,7 @@ myModule.value(
 /**
  * @param {angular.IAttributes} $attrs Attributes.
  * @param {function(angular.IAttributes): string} ngeoRuleTemplateUrl Template function.
- * @return {string} Template URL.
+ * @returns {string} Template URL.
  * @ngInject
  * @private
  * @hidden
@@ -115,10 +115,10 @@ export class RuleController {
    * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext service.
    * @param {angular.IScope} $scope Angular scope.
    * @param {angular.ITimeoutService} $timeout Angular timeout service.
-   * @param {import("ngeo/misc/FeatureHelper.js").FeatureHelper} ngeoFeatureHelper Ngeo feature helper
+   * @param {import('ngeo/misc/FeatureHelper').FeatureHelper} ngeoFeatureHelper Ngeo feature helper
    *    service.
-   * @param {import("ngeo/filter/RuleHelper.js").RuleHelper} ngeoRuleHelper Ngeo rule helper service.
-   * @param {import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate
+   * @param {import('ngeo/filter/RuleHelper').RuleHelper} ngeoRuleHelper Ngeo rule helper service.
+   * @param {import('ngeo/misc/ToolActivateMgr').ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate
    *     manager service.
    * @ngInject
    * @ngdoc controller
@@ -128,18 +128,19 @@ export class RuleController {
     // Binding properties
 
     /**
-     * @type {?import("ngeo/map/FeatureOverlay.js").FeatureOverlay}
+     * @type {?import('ngeo/map/FeatureOverlay').FeatureOverlay}
      */
     this.featureOverlay = null;
 
     /**
-     * @type {?import("ol/Map.js").default}
+     * @type {?import('ol/Map').default}
      */
     this.map = null;
 
     /**
      * The original rule.
-     * @type {?import("ngeo/rule/Rule.js").default}
+     *
+     * @type {?import('ngeo/rule/Rule').default}
      */
     this.rule = null;
 
@@ -169,19 +170,19 @@ export class RuleController {
     this.timeout_ = $timeout;
 
     /**
-     * @type {import("ngeo/misc/FeatureHelper.js").FeatureHelper}
+     * @type {import('ngeo/misc/FeatureHelper').FeatureHelper}
      * @private
      */
     this.ngeoFeatureHelper_ = ngeoFeatureHelper;
 
     /**
-     * @type {import("ngeo/filter/RuleHelper.js").RuleHelper}
+     * @type {import('ngeo/filter/RuleHelper').RuleHelper}
      * @private
      */
     this.ngeoRuleHelper_ = ngeoRuleHelper;
 
     /**
-     * @type {import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr}
+     * @type {import('ngeo/misc/ToolActivateMgr').ToolActivateMgr}
      * @private
      */
     this.ngeoToolActivateMgr_ = ngeoToolActivateMgr;
@@ -192,7 +193,8 @@ export class RuleController {
      * The cloned rule. Changes in the UI are applied to the clone 'on-the-fly'.
      * Changes in the clone are applied back in the original rule when the
      * apply button is clicked.
-     * @type {?import("ngeo/rule/Rule.js").default}
+     *
+     * @type {?import('ngeo/rule/Rule').default}
      */
     this.clone = null;
 
@@ -265,7 +267,7 @@ export class RuleController {
     };
 
     /**
-     * @type {?import("ngeo/misc/ToolActivate.js").default}
+     * @type {?import('ngeo/misc/ToolActivate').default}
      * @private
      */
     this.toolActivate_ = null; // = new ngeo.misc.ToolActivate(this.rule, 'active');
@@ -284,34 +286,34 @@ export class RuleController {
     this.drawActive = false;
 
     /**
-     * @type {import("ngeo/misc/ToolActivate.js").default}
+     * @type {import('ngeo/misc/ToolActivate').default}
      */
     this.drawToolActivate = new ngeoMiscToolActivate(this, 'drawActive');
 
     /**
-     * @type {import("ol/Collection.js").default<Feature<import("ol/geom/Geometry.js").default>>}
+     * @type {import('ol/Collection').default<Feature<import('ol/geom/Geometry').default>>}
      */
     this.drawnFeatures = new olCollection();
 
     /**
-     * @type {?import("ngeo/Menu.js").default}
+     * @type {?import('ngeo/Menu').default}
      * @private
      */
     this.menu_ = null;
 
     /**
-     * @type {import("ol/Collection.js").default<Feature<import("ol/geom/Geometry.js").default>>}
+     * @type {import('ol/Collection').default<Feature<import('ol/geom/Geometry').default>>}
      */
     this.selectedFeatures = new olCollection();
 
     /**
-     * @type {import("ol/Collection.js").default<import("ol/interaction/Interaction.js").default>}
+     * @type {import('ol/Collection').default<import('ol/interaction/Interaction').default>}
      * @private
      */
     this.interactions_ = new olCollection();
 
     /**
-     * @type {import("ngeo/interaction/Modify.js").default}
+     * @type {import('ngeo/interaction/Modify').default}
      * @private
      */
     this.modify_ = new ngeoInteractionModify({
@@ -322,7 +324,7 @@ export class RuleController {
     this.interactions_.push(this.modify_);
 
     /**
-     * @type {import("ngeo/interaction/Rotate.js").default}
+     * @type {import('ngeo/interaction/Rotate').default}
      * @private
      */
     this.rotate_ = new ngeoInteractionRotate({
@@ -340,7 +342,7 @@ export class RuleController {
     this.interactions_.push(this.rotate_);
 
     /**
-     * @type {import("ngeo/interaction/Translate.js").default}
+     * @type {import('ngeo/interaction/Translate').default}
      * @private
      */
     this.translate_ = new ngeoInteractionTranslate({
@@ -358,7 +360,7 @@ export class RuleController {
     this.interactions_.push(this.translate_);
 
     /**
-     * @type {import("ol/events.js").EventsKey[]}
+     * @type {import('ol/events').EventsKey[]}
      * @private
      */
     this.listenerKeys_ = [];
@@ -366,28 +368,29 @@ export class RuleController {
     this.initializeInteractions_();
 
     /**
-     * @type {import("ngeo/misc/ToolActivate.js").default}
+     * @type {import('ngeo/misc/ToolActivate').default}
      */
     this.modifyToolActivate = new ngeoMiscToolActivate(this.modify_, 'active');
 
     /**
-     * @type {import("ngeo/misc/ToolActivate.js").default}
+     * @type {import('ngeo/misc/ToolActivate').default}
      */
     this.rotateToolActivate = new ngeoMiscToolActivate(this.rotate_, 'active');
 
     /**
-     * @type {import("ngeo/misc/ToolActivate.js").default}
+     * @type {import('ngeo/misc/ToolActivate').default}
      */
     this.translateToolActivate = new ngeoMiscToolActivate(this.translate_, 'active');
 
     /**
      * The geometry type used by the clone feature.
+     *
      * @type {?string}
      */
     this.geomType = null;
 
     /**
-     * @type {import("ol/events.js").EventsKey[]}
+     * @type {import('ol/events').EventsKey[]}
      */
     this.listenerKeys_ = [];
   }
@@ -429,7 +432,7 @@ export class RuleController {
       this.unlisteners_.push(
         this.scope_.$watch(
           /**
-           * @return {string|number}
+           * @returns {string|number}
            */
           () => {
             if (!this.clone) {
@@ -658,6 +661,7 @@ export class RuleController {
   /**
    * Called when a choice is clicked, when using a `ngeo.rule.Select` rule type.
    * Add/remove the choice to/from the `literal` of the rule.
+   *
    * @param {string} choice Choice that has been clicked.
    */
   toggleChoiceSelection(choice) {
@@ -698,7 +702,7 @@ export class RuleController {
 
   /**
    * @param {number} [opt_timeDelta] Time delta to go back in the past.
-   * @return {string} ISO string of the date
+   * @returns {string} ISO string of the date
    * @private
    */
   createDate_(opt_timeDelta) {
@@ -713,7 +717,7 @@ export class RuleController {
   }
 
   /**
-   * @return {string} ISO string of the date
+   * @returns {string} ISO string of the date
    * @private
    */
   createWeekAgoDate_() {
@@ -722,7 +726,7 @@ export class RuleController {
 
   /**
    * @param {number} time Time.
-   * @return {string} Date
+   * @returns {string} Date
    */
   timeToDate(time) {
     const date = new Date(time);
@@ -817,6 +821,7 @@ export class RuleController {
 
   /**
    * Initialize interactions by setting them inactive and decorating them
+   *
    * @private
    */
   initializeInteractions_() {
@@ -828,6 +833,7 @@ export class RuleController {
 
   /**
    * Register interactions by adding them to the map
+   *
    * @private
    */
   registerInteractions_() {
@@ -841,6 +847,7 @@ export class RuleController {
 
   /**
    * Register interactions by removing them to the map
+   *
    * @private
    */
   unregisterInteractions_() {
@@ -853,7 +860,7 @@ export class RuleController {
   }
 
   /**
-   * @param {Event|import("ol/events/Event.js").default} evt Event.
+   * @param {Event|import('ol/events/Event').default} evt Event.
    * @private
    */
   handleFeaturesAdd_(evt) {
@@ -886,7 +893,8 @@ export class RuleController {
 
   /**
    * Return the type of geometry used by the rule feature. Used in the template.
-   * @return {?string} Geometry type.
+   *
+   * @returns {?string} Geometry type.
    */
   getRuleGeometryType() {
     const rule = this.rule;
@@ -897,7 +905,7 @@ export class RuleController {
   }
 
   /**
-   * @param {Event|import("ol/events/Event.js").default} evt Event.
+   * @param {Event|import('ol/events/Event').default} evt Event.
    * @private
    */
   handleMapContextMenu_(evt) {
@@ -913,7 +921,7 @@ export class RuleController {
       const coordinate = this.map.getCoordinateFromPixel(pixel);
 
       const feature = this.map.forEachFeatureAtPixel(pixel, (feature) => {
-        /** @type {?Feature<import("ol/geom/Geometry.js").default>} */
+        /** @type {?Feature<import('ol/geom/Geometry').default>} */
         let ret = null;
         if (!(feature instanceof Feature)) {
           throw new Error('Wrong feature type');
@@ -980,6 +988,7 @@ export class RuleController {
 
   /**
    * Remove contextual menu, if any.
+   *
    * @private
    */
   removeMenu_() {
@@ -994,7 +1003,7 @@ export class RuleController {
   }
 
   /**
-   * @param {Event|import("ol/events/Event.js").default|MenuEvent} evt Event.
+   * @param {Event|import('ol/events/Event').default|MenuEvent} evt Event.
    * @private
    */
   handleMenuActionClick_(evt) {
@@ -1016,7 +1025,7 @@ export class RuleController {
   }
 
   /**
-   * @param {Event|import("ol/events/Event.js").default} evt Event.
+   * @param {Event|import('ol/events/Event').default} evt Event.
    * @private
    */
   handleRotateEnd_(evt) {
@@ -1025,7 +1034,7 @@ export class RuleController {
   }
 
   /**
-   * @param {Event|import("ol/events/Event.js").default} evt Event.
+   * @param {Event|import('ol/events/Event').default} evt Event.
    * @private
    */
   handleTranslateEnd_(evt) {
@@ -1035,7 +1044,7 @@ export class RuleController {
 }
 
 /**
- * The rule component is bound to a `import('ngeo/rule/Rule.js').default` object and shows UI
+ * The rule component is bound to a `import('ngeo/rule/Rule').default` object and shows UI
  * components to be able to edit its properties, such as: operator, literal,
  * etc. The actual properties depend on the type of rule.
  *

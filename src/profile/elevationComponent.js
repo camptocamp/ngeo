@@ -20,9 +20,9 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import {listen} from 'ol/events.js';
-import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
-import ngeoProfileD3Elevation from 'ngeo/profile/d3Elevation.js';
+import {listen} from 'ol/events';
+import ngeoMiscDebounce from 'ngeo/misc/debounce';
+import ngeoProfileD3Elevation from 'ngeo/profile/d3Elevation';
 
 import {select as d3select} from 'd3';
 
@@ -100,10 +100,10 @@ const myModule = angular.module('ngeoProfile', [ngeoMiscDebounce.name]);
  * @htmlAttribute {?Array} ngeo-profile-pois The data for POIs.
  * @htmlAttribute {*} ngeo-profile-highlight Any property on the scope which
  *    evaluated value may correspond to distance from origin.
- * @param {import("ngeo/misc/debounce.js").miscDebounce<function((Event|import('ol/events/Event.js').default)): void>} ngeoDebounce
+ * @param {import('ngeo/misc/debounce').miscDebounce<function((Event|import('ol/events/Event').default)): void>} ngeoDebounce
  *    ngeo Debounce factory.
- * @param {import('ngeo/options.js').ngeoProfileOptions} ngeoProfileOptions The options.
- * @return {angular.IDirective} Directive Definition Object.
+ * @param {import('ngeo/options').ngeoProfileOptions} ngeoProfileOptions The options.
+ * @returns {angular.IDirective} Directive Definition Object.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoProfile
@@ -186,6 +186,9 @@ function profileElevationComponent(ngeoDebounce, ngeoProfileOptions) {
 
       listen(window, 'resize', ngeoDebounce(refreshData, 50, true));
 
+      /**
+       *
+       */
       function refreshData() {
         if (profile !== undefined) {
           selection.datum(elevationData).call(profile);

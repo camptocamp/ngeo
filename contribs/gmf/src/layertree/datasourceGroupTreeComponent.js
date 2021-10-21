@@ -20,9 +20,9 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources.js';
-import ngeoMapLayerHelper from 'ngeo/map/LayerHelper.js';
-import {getUid as olUtilGetUid} from 'ol/util.js';
+import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources';
+import ngeoMapLayerHelper from 'ngeo/map/LayerHelper';
+import {getUid as olUtilGetUid} from 'ol/util';
 
 /**
  * @type {angular.IModule}
@@ -51,7 +51,7 @@ myModule.value(
   'gmfLayertreeDatasourceGroupTreeTemplateUrl',
   /**
    * @param {angular.IAttributes} $attrs Attributes.
-   * @return {string} The template url.
+   * @returns {string} The template url.
    */
   ($attrs) => {
     const templateUrl = $attrs['gmfLayertreeDatasourceGroupTreeTemplateUrl'];
@@ -63,7 +63,7 @@ myModule.value(
  * @param {angular.IAttributes} $attrs Attributes.
  * @param {function(angular.IAttributes): string} gmfLayertreeDatasourceGroupTreeTemplateUrl
  *    Template function.
- * @return {string} Template URL.
+ * @returns {string} Template URL.
  * @ngInject
  * @private
  * @hidden
@@ -78,8 +78,8 @@ function gmfLayertreeDatasourceGroupTreeTemplateUrl($attrs, gmfLayertreeDatasour
 export class Controller {
   /**
    * @param {angular.IScope} $scope Angular scope.
-   * @param {import("ngeo/datasource/DataSources.js").DataSource} ngeoDataSources Ngeo data sources service.
-   * @param {import("ngeo/map/LayerHelper.js").LayerHelper} ngeoLayerHelper Ngeo data sources service.
+   * @param {import('ngeo/datasource/DataSources').DataSource} ngeoDataSources Ngeo data sources service.
+   * @param {import('ngeo/map/LayerHelper').LayerHelper} ngeoLayerHelper Ngeo data sources service.
    * @ngInject
    * @ngdoc controller
    * @ngname GmfDatasourcegrouptreeController
@@ -88,7 +88,7 @@ export class Controller {
     // Binding properties
 
     /**
-     * @type {?import("ngeo/datasource/Group.js").default}
+     * @type {?import('ngeo/datasource/Group').default}
      */
     this.group = null;
 
@@ -101,13 +101,13 @@ export class Controller {
     this.scope_ = $scope;
 
     /**
-     * @type {import('ngeo/datasource/DataSource.js').DataSources}
+     * @type {import('ngeo/datasource/DataSource').DataSources}
      * @private
      */
     this.dataSources_ = ngeoDataSources.collection;
 
     /**
-     * @type {import("ngeo/map/LayerHelper.js").LayerHelper}
+     * @type {import('ngeo/map/LayerHelper').LayerHelper}
      * @private
      */
     this.layerHelper_ = ngeoLayerHelper;
@@ -119,7 +119,7 @@ export class Controller {
   }
 
   /**
-   * @return {string} Group uid.
+   * @returns {string} Group uid.
    */
   getGroupUid() {
     return `datasourcegrouptree-${olUtilGetUid(this.group)}`;
@@ -137,7 +137,8 @@ export class Controller {
 
   /**
    * Toggle visible property of a data source.
-   * @param {import("ngeo/datasource/DataSource.js").default} dataSource Data source to toggle the
+   *
+   * @param {import('ngeo/datasource/DataSource').default} dataSource Data source to toggle the
    * visibility
    */
   toggleDataSource(dataSource) {
@@ -150,7 +151,7 @@ export class Controller {
   }
 
   /**
-   * Remove all data sources from the `import('ngeo/datasource/DataSource.js').DataSources` collection, which
+   * Remove all data sources from the `import('ngeo/datasource/DataSource').DataSources` collection, which
    * will automatically remove them from the Group. The group itself
    * is going to be removed as well, destroying this component in the process.
    */
@@ -164,8 +165,8 @@ export class Controller {
   }
 
   /**
-   * @param {import("ngeo/datasource/DataSource.js").default} dataSource Data source to remove from
-   *     the `import('ngeo/datasource/DataSource.js').DataSources` collection.
+   * @param {import('ngeo/datasource/DataSource').default} dataSource Data source to remove from
+   *     the `import('ngeo/datasource/DataSource').DataSources` collection.
    */
   removeDataSource(dataSource) {
     this.dataSources_.remove(dataSource);
@@ -173,6 +174,7 @@ export class Controller {
 
   /**
    * Toggle the legend for a node
+   *
    * @param {string} legendNodeId The DOM node legend id to toggle
    */
   toggleNodeLegend(legendNodeId) {
@@ -184,8 +186,9 @@ export class Controller {
 
   /**
    * Get legendUrl
-   * @param {import('gmf/datasource/ExternalOGC.js').Legend}  legend The legend for which to get the legend url
-   * @return {string}
+   *
+   * @param {import('gmf/datasource/ExternalOGC').Legend}  legend The legend for which to get the legend url
+   * @returns {string}
    */
   getLegendUrl(legend) {
     if (legend) {
@@ -197,6 +200,7 @@ export class Controller {
 
   /**
    * Set legend visibility
+   *
    * @param {boolean} show The DOM node legend id to toggle
    * @param {string} legendNodeId The DOM node legend id to toggle
    */

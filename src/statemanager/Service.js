@@ -20,28 +20,30 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import ngeoStatemanagerLocation from 'ngeo/statemanager/Location.js';
+import ngeoStatemanagerLocation from 'ngeo/statemanager/Location';
 
 /**
  * Provides a service for managing the application state.
  * The application state is written to both the URL and the local storage.
+ *
  * @hidden
  */
 export class StatemanagerService {
   /**
-   * @param {import("ngeo/statemanager/Location.js").StatemanagerLocation} ngeoLocation ngeo location service.
-   * @param {import('ngeo/options.js').ngeoUsedKeyRegexp} ngeoUsedKeyRegexp regexp used to identify the used keys.
+   * @param {import('ngeo/statemanager/Location').StatemanagerLocation} ngeoLocation ngeo location service.
+   * @param {import('ngeo/options').ngeoUsedKeyRegexp} ngeoUsedKeyRegexp regexp used to identify the used keys.
    * @ngInject
    */
   constructor(ngeoLocation, ngeoUsedKeyRegexp) {
     /**
      * Object representing the application's initial state.
+     *
      * @type {Object<string, string>}
      */
     this.initialState = {};
 
     /**
-     * @type {import("ngeo/statemanager/Location.js").StatemanagerLocation}
+     * @type {import('ngeo/statemanager/Location').StatemanagerLocation}
      */
     this.ngeoLocation = ngeoLocation;
 
@@ -73,7 +75,7 @@ export class StatemanagerService {
           console.assert(key);
 
           this.usedKeyRegexp.some((keyRegexp) => {
-            if (key.match(keyRegexp)) {
+            if (keyRegexp.exec(key)) {
               const value = window.localStorage[key];
               if (value !== undefined || value !== null) {
                 this.initialState[key] = value;
@@ -89,7 +91,7 @@ export class StatemanagerService {
     } else {
       paramKeys.forEach((key) => {
         this.usedKeyRegexp.some((keyRegexp) => {
-          if (key.match(keyRegexp)) {
+          if (keyRegexp.exec(key)) {
             const value = this.ngeoLocation.getParam(key);
             if (value !== undefined) {
               this.initialState[key] = value;
@@ -104,7 +106,7 @@ export class StatemanagerService {
 
   /**
    * @param {boolean} value Use localStorage
-   * @return {boolean} localStorage will be used.
+   * @returns {boolean} localStorage will be used.
    */
   setUseLocalStorage(value) {
     this.useLocalStorage_ = value;
@@ -128,8 +130,9 @@ export class StatemanagerService {
 
   /**
    * Get the state value for `key`.
+   *
    * @param {string} key State key.
-   * @return {string|undefined} State value.
+   * @returns {string|undefined} State value.
    */
   getInitialStringValue(key) {
     return this.initialState[key];
@@ -137,8 +140,9 @@ export class StatemanagerService {
 
   /**
    * Get the state value for `key`.
+   *
    * @param {string} key State key.
-   * @return {number|undefined} State value.
+   * @returns {number|undefined} State value.
    */
   getInitialNumberValue(key) {
     const value = this.initialState[key];
@@ -150,8 +154,9 @@ export class StatemanagerService {
 
   /**
    * Get the state value for `key`.
+   *
    * @param {string} key State key.
-   * @return {boolean|undefined} State value.
+   * @returns {boolean|undefined} State value.
    */
   getInitialBooleanValue(key) {
     const value = this.initialState[key];
@@ -163,6 +168,7 @@ export class StatemanagerService {
 
   /**
    * Update the application state with the values in `object`.
+   *
    * @param {Object<string, string>} object Object.
    */
   updateState(object) {
@@ -179,6 +185,7 @@ export class StatemanagerService {
 
   /**
    * Delete a parameter
+   *
    * @param {string} key Key.
    */
   deleteParam(key) {

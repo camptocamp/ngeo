@@ -20,10 +20,10 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import {gmfBackgroundlayerStatus} from 'gmf/backgroundlayerselector/status.js';
-import gmfThemeThemes from 'gmf/theme/Themes.js';
-import ngeoMapBackgroundLayerMgr from 'ngeo/map/BackgroundLayerMgr.js';
-import {listen, unlistenByKey} from 'ol/events.js';
+import {gmfBackgroundlayerStatus} from 'gmf/backgroundlayerselector/status';
+import gmfThemeThemes from 'gmf/theme/Themes';
+import ngeoMapBackgroundLayerMgr from 'ngeo/map/BackgroundLayerMgr';
+import {listen, unlistenByKey} from 'ol/events';
 
 /**
  * @type {angular.IModule}
@@ -39,7 +39,7 @@ myModule.value(
   /**
    * @param {JQuery} $element Element.
    * @param {angular.IAttributes} $attrs Attributes.
-   * @return {string} Template URL.
+   * @returns {string} Template URL.
    */
   ($element, $attrs) => {
     const templateUrl = $attrs.gmfBackgroundlayerselectorTemplateurl;
@@ -63,7 +63,7 @@ myModule.run(
  * @param {angular.IAttributes} $attrs Attributes.
  * @param {function(JQuery, angular.IAttributes): string} gmfBackgroundlayerselectorTemplateUrl
  *    Template function.
- * @return {string} Template URL.
+ * @returns {string} Template URL.
  * @ngInject
  * @private
  * @hidden
@@ -84,16 +84,15 @@ function gmfBackgroundlayerselectorTemplateUrl($element, $attrs, gmfBackgroundla
  *
  * Used metadata:
  *
- *  * `thumbnail`: The URL used for the icon.
+ *  - `thumbnail`: The URL used for the icon.
  *
  * Used functionalities:
  *
- *  * `default_basemap`: Base maps to use by default.
+ *  - `default_basemap`: Base maps to use by default.
  *
- * @htmlAttribute {import("ol/Map.js").default} [gmf]-backgroundlayerselector-map The map.
+ * @htmlAttribute {import('ol/Map').default} [gmf]-backgroundlayerselector-map The map.
  * @htmlAttribute {Function} gmf-backgroundlayerselector-select Function called
  *     when a layer was selected by the user.
- *
  * @ngdoc component
  * @ngname gmfBackgroundlayerselector
  */
@@ -112,60 +111,61 @@ myModule.component('gmfBackgroundlayerselector', backgroundlayerselectorComponen
  * @class
  * @hidden
  * @param {angular.IScope} $scope Angular scope.
- * @param {import("ngeo/map/BackgroundLayerMgr.js").MapBackgroundLayerManager} ngeoBackgroundLayerMgr
+ * @param {import('ngeo/map/BackgroundLayerMgr').MapBackgroundLayerManager} ngeoBackgroundLayerMgr
  *    Background layer manager.
- * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes Themes service.
- * @param {import('gmf/options.js').gmfBackgroundLayerSelectorOptions} gmfBackgroundLayerSelectorOptions The options
+ * @param {import('gmf/theme/Themes').ThemesService} gmfThemes Themes service.
+ * @param {import('gmf/options').gmfBackgroundLayerSelectorOptions} gmfBackgroundLayerSelectorOptions The options
  * @ngInject
  * @ngdoc controller
  * @ngname GmfBackgroundlayerselectorController
  */
 export function Controller($scope, ngeoBackgroundLayerMgr, gmfThemes, gmfBackgroundLayerSelectorOptions) {
   /**
-   * @type {?import("ol/Map.js").default}
+   * @type {?import('ol/Map').default}
    */
   this.map = null;
 
   /**
-   * @type {import('gmf/options.js').gmfBackgroundLayerSelectorOptions}
+   * @type {import('gmf/options').gmfBackgroundLayerSelectorOptions}
    */
   this.options = gmfBackgroundLayerSelectorOptions;
 
   /**
    * Function called when a layer was selected by the user.
+   *
    * @type {?Function}
    */
   this.select = null;
 
   /**
-   * @type {?import("ol/layer/Base.js").default}
+   * @type {?import('ol/layer/Base').default}
    */
   this.bgLayer = null;
 
   /**
-   * @type {?import("ol/layer/Base.js").default[]}
+   * @type {?import('ol/layer/Base').default[]}
    */
   this.bgLayers = null;
 
   /**
-   * @type {?import("ol/layer/Base.js").default}
+   * @type {?import('ol/layer/Base').default}
    */
   this.opacityLayer = null;
 
   /**
-   * @type {import("gmf/theme/Themes.js").ThemesService}
+   * @type {import('gmf/theme/Themes').ThemesService}
    */
   this.gmfThemes_ = gmfThemes;
 
   /**
-   * @type {import("ol/events.js").EventsKey[]}
+   * @type {import('ol/events').EventsKey[]}
    */
   this.listenerKeys_ = [];
 
   this.listenerKeys_.push(listen(gmfThemes, 'change', this.handleThemesChange_, this));
 
   /**
-   * @type {import("ngeo/map/BackgroundLayerMgr.js").MapBackgroundLayerManager}
+   * @type {import('ngeo/map/BackgroundLayerMgr').MapBackgroundLayerManager}
    */
   this.backgroundLayerMgr_ = ngeoBackgroundLayerMgr;
 
@@ -173,10 +173,10 @@ export function Controller($scope, ngeoBackgroundLayerMgr, gmfThemes, gmfBackgro
     listen(
       this.backgroundLayerMgr_,
       'change',
-      /** @type {import("ol/events.js").ListenerFunction} */
+      /** @type {import('ol/events').ListenerFunction} */
       (event) => {
         this.bgLayer =
-          /** @type {import('ngeo/map/BackgroundLayerMgr.js').BackgroundEvent} */
+          /** @type {import('ngeo/map/BackgroundLayerMgr').BackgroundEvent} */
           (event).detail.current;
       }
     )
@@ -216,8 +216,9 @@ Controller.prototype.handleThemesChange_ = function () {
 
 /**
  * Getter/setter for background layer overlay, used by opacity slider.
+ *
  * @param {number|undefined} val The opacity.
- * @return {number} The background layer opacity.
+ * @returns {number} The background layer opacity.
  */
 Controller.prototype.getSetBgLayerOpacity = function (val) {
   if (!this.opacityLayer) {
@@ -232,7 +233,7 @@ Controller.prototype.getSetBgLayerOpacity = function (val) {
 };
 
 /**
- * @param {import("ol/layer/Base.js").default} layer Layer.
+ * @param {import('ol/layer/Base').default} layer Layer.
  * @param {boolean} [opt_silent] Do not notify listeners.
  */
 Controller.prototype.setLayer = function (layer, opt_silent) {
@@ -252,7 +253,8 @@ Controller.prototype.setLayer = function (layer, opt_silent) {
 
 /**
  * Set a background layer overlay, used by the opacity slider.
- * @param {import("ol/layer/Base.js").default} layer The opacity background layer.
+ *
+ * @param {import('ol/layer/Base').default} layer The opacity background layer.
  */
 Controller.prototype.setOpacityBgLayer = function (layer) {
   const opacity = this.opacityLayer ? this.opacityLayer.getOpacity() : 0;

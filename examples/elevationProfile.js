@@ -21,20 +21,20 @@
 
 import './elevationProfile.css';
 import angular from 'angular';
-import EPSG2056 from 'ngeo/proj/EPSG_2056.js';
-import {MAPSERVER_PROXY} from './url.js';
+import EPSG2056 from 'ngeo/proj/EPSG_2056';
+import {MAPSERVER_PROXY} from './url';
 
-import olFeature from 'ol/Feature.js';
-import olMap from 'ol/Map.js';
-import olView from 'ol/View.js';
-import olGeomLineString from 'ol/geom/LineString.js';
-import olGeomPoint from 'ol/geom/Point.js';
-import olLayerImage from 'ol/layer/Image.js';
-import olLayerVector from 'ol/layer/Vector.js';
-import olSourceImageWMS from 'ol/source/ImageWMS.js';
-import olSourceVector from 'ol/source/Vector.js';
-import ngeoMapModule from 'ngeo/map/module.js';
-import ngeoProfileElevationComponent from 'ngeo/profile/elevationComponent.js';
+import olFeature from 'ol/Feature';
+import olMap from 'ol/Map';
+import olView from 'ol/View';
+import olGeomLineString from 'ol/geom/LineString';
+import olGeomPoint from 'ol/geom/Point';
+import olLayerImage from 'ol/layer/Image';
+import olLayerVector from 'ol/layer/Vector';
+import olSourceImageWMS from 'ol/source/ImageWMS';
+import olSourceVector from 'ol/source/Vector';
+import ngeoMapModule from 'ngeo/map/module';
+import ngeoProfileElevationComponent from 'ngeo/profile/elevationComponent';
 
 /** @type {angular.IModule} **/
 const myModule = angular.module('app', ['gettext', ngeoMapModule.name, ngeoProfileElevationComponent.name]);
@@ -43,15 +43,16 @@ const myModule = angular.module('app', ['gettext', ngeoMapModule.name, ngeoProfi
  * Factory for creating simple getter functions for extractors.
  * If the value is in a child property, the opt_childKey must be defined.
  * The type parameter is used by closure to type the returned function.
+ *
  * @param {string} key Key used for retrieving the value.
  * @param {string} [opt_childKey] Key of a child object.
- * @return {function(unknown): any} Getter function.
+ * @returns {function(unknown): any} Getter function.
  */
 const typedFunctionsFactory = function (key, opt_childKey) {
   return (
     /**
      * @param {unknown} item
-     * @return {any}
+     * @returns {any}
      */
     function (item) {
       if (opt_childKey !== undefined) {
@@ -88,7 +89,7 @@ function MainController($http, $scope) {
   });
 
   /**
-   * @type {import("ol/Map.js").default}
+   * @type {import('ol/Map').default}
    */
   this.map = new olMap({
     layers: [
@@ -111,7 +112,7 @@ function MainController($http, $scope) {
   });
 
   this.snappedPoint_ = new olFeature();
-  /** @type {olSourceVector<import("ol/geom/Geometry.js").default>} */ (vectorLayer.getSource()).addFeature(
+  /** @type {olSourceVector<import('ol/geom/Geometry').default>} */ (vectorLayer.getSource()).addFeature(
     this.snappedPoint_
   );
 
@@ -153,10 +154,10 @@ function MainController($http, $scope) {
   });
 
   map.on(
-    /** @type {import('ol/Observable.js').EventTypes} */ ('pointermove'),
+    /** @type {import('ol/Observable').EventTypes} */ ('pointermove'),
     /** @type {function(?): ?} */ (
       /**
-       * @param {import('ol/MapBrowserEvent.js').default<MouseEvent>} evt
+       * @param {import('ol/MapBrowserEvent').default<MouseEvent>} evt
        */ (evt) => {
         if (evt.dragging) {
           return;
@@ -183,7 +184,7 @@ function MainController($http, $scope) {
   const title = typedFunctionsFactory('title');
 
   /**
-   * @type {import('ngeo/profile/elevationComponent.js').PoiExtractor}
+   * @type {import('ngeo/profile/elevationComponent').PoiExtractor}
    */
   const poiExtractor = {
     sort,
@@ -193,7 +194,7 @@ function MainController($http, $scope) {
     /**
      * @param {Object} item POI.
      * @param {number} [opt_z] Z value.
-     * @return {number} Z value.
+     * @returns {number} Z value.
      */
     z: (item, opt_z) => {
       if (opt_z !== undefined) {
@@ -242,8 +243,8 @@ function MainController($http, $scope) {
 }
 
 /**
- * @param {import("ol/coordinate.js").Coordinate} coordinate The current pointer coordinate.
- * @param {import("ol/geom/Geometry.js").default} geometry The geometry to snap to.
+ * @param {import('ol/coordinate').Coordinate} coordinate The current pointer coordinate.
+ * @param {import('ol/geom/Geometry').default} geometry The geometry to snap to.
  */
 MainController.prototype.snapToGeometry = function (coordinate, geometry) {
   if (!this.map) {
