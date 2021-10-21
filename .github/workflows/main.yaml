@@ -4,6 +4,8 @@ name: Continuous integration
 on:
   push:
   pull_request:
+  pull_request_target:
+    types: [labeled]
 
 env:
   HAS_SECRETS: ${{ secrets.HAS_SECRETS }}
