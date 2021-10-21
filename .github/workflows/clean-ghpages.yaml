@@ -20,7 +20,7 @@ jobs:
           if [ -d $(cat ${GITHUB_EVENT_PATH}|jq --raw-output .ref) ]
           then
             git rm -r $(cat ${GITHUB_EVENT_PATH}|jq --raw-output .ref)
-            git commit -m "Clean branch $(cat ${GITHUB_EVENT_PATH}|jq --raw-output .ref)"
+            git commit --amend --no-edit
             remote_repo="https://${GITHUB_ACTOR}:${{ github.token }}@github.com/camptocamp/ngeo.git"
             git push "${remote_repo}" gh-pages --force
           fi

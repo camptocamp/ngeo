@@ -22,6 +22,7 @@
 import angular from 'angular';
 import {getUid as olUtilGetUid} from 'ol/util';
 import {listen} from 'ol/events';
+import DateFormatter from 'ngeo/misc/php-date-formatter';
 import ngeoMiscEventHelper from 'ngeo/misc/EventHelper';
 import ngeoMiscDatetimepickerComponent from 'ngeo/misc/datetimepickerComponent';
 import {ObjectEvent} from 'ol/Object';
@@ -174,6 +175,7 @@ Controller.prototype.$onInit = function () {
     throw new Error('Missing feature');
   }
   this.properties = this.feature.getProperties();
+  this.sanitize_();
 
   // Listen to the feature inner properties change and apply them to the form
   const uid = olUtilGetUid(this);
@@ -208,9 +210,47 @@ Controller.prototype.handleInputChange = function (name) {
     throw new Error('Missing feature');
   }
   this.updating_ = true;
+  this.sanitize_();
   const value = this.properties[name];
   this.feature.set(name, value);
   this.updating_ = false;
+};
+
+/**
+ * Never keep a undefined values, use null.
+ * On boolean, replace null by false.
+ * On date, datetime and time replace empty string by null.
+ */
+Controller.prototype.sanitize_ = function () {
+  const dateFormatter = new DateFormatter();
+  this.attributes.forEach((attribute) => {
+    const value = this.properties[attribute.name];
+    if (value === undefined) {
+      this.properties[attribute.name] = null;
+    }
+    if (attribute.type === 'boolean' && value === null) {
+      this.properties[attribute.name] = false;
+    } else if (attribute.format) {
+      // Case of date, datetime or time.
+      if (value) {
+        console.assert(typeof value == 'string');
+        const formattedValue = dateFormatter.parseDate(value, attribute.format);
+        let jsonFormat = 'Y-m-d\\TH:i:s';
+        if (attribute.type === 'date') {
+          jsonFormat = 'Y-m-d';
+        } else if (attribute.type === 'time') {
+          jsonFormat = 'H:i:s';
+        } else if (attribute.type === 'datetime') {
+          // Time zone correction
+          formattedValue.setMinutes(formattedValue.getMinutes() + formattedValue.getTimezoneOffset());
+        }
+        this.properties[attribute.name] = dateFormatter.formatDate(formattedValue, jsonFormat);
+      } else {
+        // Shouldn't be set to an empty string
+        this.properties[attribute.name] = null;
+      }
+    }
+  });
 };
 
 /**

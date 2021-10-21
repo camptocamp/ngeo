@@ -147,7 +147,7 @@ export default class LegendMapFishPrintV3 {
       }
       legendGroupItem.classes = groupClasses;
       // Iterate with a "reverse" to have top-level layers at the top of the legend.
-      const sublayers = layer.getLayers().getArray().reverse();
+      const sublayers = [...layer.getLayers().getArray()].reverse();
       sublayers.forEach((sublayer) => {
         const child = this.collectLegendClassesInTree_(sublayer, currentThemes, scale, dpi, bbox);
         this.addClassItemToArray_(groupClasses, child);
