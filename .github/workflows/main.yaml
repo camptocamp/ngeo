@@ -108,6 +108,7 @@ jobs:
 
       - name: Publish Storybook to Chromatic to run visual tests
         run: npm run chromatic -- --project-token=$(gopass show gs/ci/chromatic/ngeo_token)
+        if: env.HAS_SECRETS == 'HAS_SECRETS'
 
       - name: Notify c2cgeoportal
         run: >
