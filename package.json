@@ -64,7 +64,7 @@
     "@sentry/integrations": "6.13.3",
     "@sentry/tracing": "6.13.3",
     "@sentry/types": "6.13.3",
-    "@storybook/addon-essentials": "6.3.7",
+    "@storybook/addon-essentials": "6.3.12",
     "@storybook/web-components": "6.3.7",
     "@trevoreyre/autocomplete-js": "2.2.0",
     "@types/angular": "1.8.3",
