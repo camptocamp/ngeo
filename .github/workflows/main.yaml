@@ -22,7 +22,7 @@ jobs:
   main:
     runs-on: ubuntu-20.04
     name: Continuous integration
-    timeout-minutes: 30
+    timeout-minutes: 40
     if: "!startsWith(github.event.head_commit.message, '[skip ci] ')"
 
     env:
@@ -108,6 +108,7 @@ jobs:
 
       - name: Publish Storybook to Chromatic to run visual tests
         run: npm run chromatic -- --project-token=$(gopass show gs/ci/chromatic/ngeo_token)
+        if: env.HAS_SECRETS == 'HAS_SECRETS'
 
       - name: Notify c2cgeoportal
         run: >
