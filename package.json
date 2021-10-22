@@ -170,7 +170,7 @@
     "react": "16.14.0",
     "react-dom": "16.14.0",
     "resize-observer-polyfill": "1.5.1",
-    "rxjs": "7.3.0",
+    "rxjs": "7.4.0",
     "sass": "1.43.2",
     "simple-html-tokenizer": "0.5.11",
     "sinon": "11.1.2",
