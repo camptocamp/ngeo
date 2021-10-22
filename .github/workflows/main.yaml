@@ -110,7 +110,7 @@ jobs:
         run: npm run chromatic -- --project-token=$(gopass show gs/ci/chromatic/ngeo_token)
         if: env.HAS_SECRETS == 'HAS_SECRETS' && github.event_name != 'pull_request_target'
       - name: Publish Storybook to Chromatic to run visual tests
-        run: npm run chromatic -- --project-token=$(gopass show gs/ci/chromatic/ngeo_token) --branch-name=${{ env.GITHUB_HEAD_REF }}
+        run: npm run chromatic -- --project-token=$(gopass show gs/ci/chromatic/ngeo_token) --branch-name=${GITHUB_HEAD_REF}
         if: env.HAS_SECRETS == 'HAS_SECRETS' && github.event_name == 'pull_request_target'
 
       - name: Notify c2cgeoportal
