@@ -104,7 +104,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         if: env.HAS_SECRETS == 'HAS_SECRETS'
       - run: buildtools/npm-publish
-        if: env.HAS_SECRETS == 'HAS_SECRETS' && github.action != 'labeled'
+        if: env.HAS_SECRETS == 'HAS_SECRETS' && github.event_name == 'push'
 
       - name: Publish Storybook to Chromatic to run visual tests
         run: npm run chromatic -- --project-token=$(gopass show gs/ci/chromatic/ngeo_token)
