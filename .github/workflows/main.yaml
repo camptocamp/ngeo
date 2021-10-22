@@ -55,6 +55,10 @@ jobs:
       - name: Checks
         run: c2cciutils-checks
 
+      - run: echo ${{ env.GITHUB_HEAD_REF }}
+      - run: echo ${GITHUB_HEAD_REF}
+      - run: 'false'
+
       - run: |
           sudo rm /etc/apt/sources.list.d/*.list
           sudo apt update
