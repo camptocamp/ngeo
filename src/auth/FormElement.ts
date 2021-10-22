@@ -33,6 +33,7 @@ import qruri from 'qruri';
 import i18next from 'i18next';
 import {Configuration} from 'ngeo/store/config';
 import authenticationService from './service';
+import './PanelElement.ts';
 
 /**
  * The definition of a PasswordValidator
