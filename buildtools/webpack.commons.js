@@ -49,18 +49,14 @@ module.exports = function (config) {
     $: 'jquery',
   });
 
-  const babelPresets = [
-    [
-      require.resolve('@babel/preset-env'),
-      {
-        targets: {
-          // see: npx browserslist '> 0.5% in CH or > 0.5% in FR or Firefox ESR'
-          browsers: ['> 0.5% in CH', '> 0.5% in FR', 'Firefox ESR'],
-        },
-        modules: false,
-        loose: true,
+  const babelPresetEnv = [
+    require.resolve('@babel/preset-env'),
+    {
+      targets: {
+        // see: npx browserslist '> 0.5% in CH or > 0.5% in FR or Firefox ESR'
+        browsers: ['> 0.5% in CH', '> 0.5% in FR', 'Firefox ESR'],
       },
-    ],
+    },
   ];
 
   // Expose corejs-typeahead as window.Bloodhound
@@ -166,9 +162,28 @@ module.exports = function (config) {
   // Collect every ts(x) files.
   const tsRule = {
     test: /\.tsx?$/,
-    use: 'ts-loader',
-    exclude: /node_modules/,
+    use: {
+      loader: 'babel-loader',
+      options: {
+        presets: [babelPresetEnv, require.resolve('@babel/preset-typescript')],
+        babelrc: false,
+        comments: false,
+        assumptions: {
+          setPublicClassFields: true,
+        },
+        plugins: [
+          [
+            require.resolve('@babel/plugin-transform-typescript'),
+            // TODO remove allowDeclareFields with Babel 8
+            {allowDeclareFields: true},
+          ],
+          [require.resolve('@babel/plugin-proposal-decorators'), {decoratorsBeforeExport: true}],
+          [require.resolve('@babel/plugin-proposal-class-properties')],
+        ],
+      },
+    },
   };
+
   const files = {};
   const ngeoRule = {
     // Collect every .js file in ngeo/src/, ngeo/api/ and ngeo/contrib/.
@@ -183,7 +198,7 @@ module.exports = function (config) {
       options: {
         babelrc: false,
         comments: false,
-        presets: babelPresets,
+        presets: [babelPresetEnv],
         plugins: [require.resolve('babel-plugin-angularjs-annotate')],
       },
     },
@@ -207,7 +222,7 @@ module.exports = function (config) {
       options: {
         babelrc: false,
         comments: false,
-        presets: babelPresets,
+        presets: [babelPresetEnv],
       },
     },
   };

@@ -26,9 +26,10 @@ import loadingSvg from 'gmf/icons/spinner.svg';
 import i18next from 'i18next';
 import GmfBaseElement from 'ngeo/BaseElement';
 import {Configuration} from 'ngeo/store/config';
-import {PasswordValidator} from './FormElement';
+import GmfAuthFormElement, {PasswordValidator} from './FormElement';
 
-import './FormElement.ts';
+// Mark as used
+console.assert(GmfAuthFormElement);
 
 @customElement('gmf-auth-panel')
 export default class GmfAuthPanelElement extends GmfBaseElement {
