@@ -132,7 +132,7 @@
     "html-webpack-plugin": "4.5.2",
     "i18next": "20.4.0",
     "i18next-browser-languagedetector": "6.1.2",
-    "i18next-parser": "4.0.1",
+    "i18next-parser": "5.0.0",
     "i18next-xhr-backend": "3.2.2",
     "jasmine-core": "3.10.0",
     "jquery": "3.6.0",
