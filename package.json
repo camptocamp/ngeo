@@ -106,7 +106,7 @@
     "babel-plugin-angularjs-annotate": "0.10.0",
     "bootstrap": "4.6.0",
     "chokidar": "3.5.2",
-    "chromatic": "5.9.2",
+    "chromatic": "6.0.4",
     "co": "4.6.0",
     "commander": "8.2.0",
     "console-control-strings": "1.1.0",
