@@ -54,7 +54,7 @@ module.exports = function (config) {
     {
       targets: {
         // see: npx browserslist '> 0.5% in CH or > 0.5% in FR or Firefox ESR'
-        browsers: ['> 0.5% in CH', '> 0.5% in FR', 'Firefox ESR'],
+        browsers: ['> 0.7% in CH', '> 0.7% in FR', 'Firefox ESR'],
       },
     },
   ];
@@ -198,7 +198,18 @@ module.exports = function (config) {
       options: {
         babelrc: false,
         comments: false,
-        presets: [babelPresetEnv],
+        presets: [
+          [
+            require.resolve('@babel/preset-env'),
+            {
+              targets: {
+                // babel-plugin-angularjs-annotate looks to don't works with classes
+                // see: npx browserslist '> 0.5% in CH or > 0.5% in FR or Firefox ESR'
+                browsers: ['> 0.7% in CH', '> 0.7% in FR', 'Firefox ESR', 'ie 11'],
+              },
+            },
+          ],
+        ],
         plugins: [require.resolve('babel-plugin-angularjs-annotate')],
       },
     },
