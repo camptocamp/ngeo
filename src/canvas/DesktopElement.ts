@@ -29,8 +29,31 @@ import {Configuration} from 'gmfapi/store/config';
 // TODO:
 //
 // ngeo-resizemap
-// .ui-resizable-* => Lit-Draggable
+// .ui-resizable-* for right panel
+// collapse panels
 // and related
+
+/**
+ * Store the offset of a drag event for panel resizing
+ */
+export interface SeparatorDrag {
+  /**
+   * Drag event to store coordinates from
+   */
+  evt: MouseEvent;
+  /**
+   * Horizontal offset
+   */
+  offsetLeft: number;
+  /**
+   * Initial width of left element
+   */
+  leftWidth: number;
+  /**
+   * Initial width of right element
+   */
+  rightWidth: number;
+}
 
 @customElement('gmf-desktop-canvas')
 export default class GmfDesktopCanvas extends BaseElement {
@@ -70,7 +93,29 @@ export default class GmfDesktopCanvas extends BaseElement {
         opacity: 0.4;
       }
 
-      .gmf-app-data-panel {
+      .gmf-app-desktop-splitter {
+        width: 100%;
+        height: 100%;
+        display: flex;
+      }
+
+      .ui-resizable-e {
+        width: 7px;
+        height: 100%;
+        background-color: $brand-secondary-dark;
+        background-color: var(--brand-secondary-dark);
+        cursor: ew-resize;
+        border: {
+          left: $border;
+          left-color: $border-color;
+          left-color: var(--border-color);
+          right: $border;
+          right-color: $border-color;
+          right-color: var(--border-color);
+        }
+      }
+
+      #gmf-app-data-panel {
         display: block;
         float: left;
         background-color: var(--brand-secondary);
@@ -105,8 +150,12 @@ export default class GmfDesktopCanvas extends BaseElement {
         border-right-color: var(--border-color);
       }
 
+      #gmf-app-data-panel-separator {
+        float: left;
+      }
+
       .gmf-app-map-container {
-        width: auto;
+        width: 100%;
         height: 100%;
         overflow: hidden;
         position: relative;
@@ -316,6 +365,12 @@ export default class GmfDesktopCanvas extends BaseElement {
         },
       })
     );
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    window.addEventListener('mousedown', (event: MouseEvent) => {
+      this.dragElement(
+        document.querySelector('gmf-desktop-canvas').shadowRoot.getElementById('gmf-app-data-panel-separator')
+      );
+    });
   }
 
   initConfig(configuration: Configuration): void {
@@ -331,6 +386,58 @@ export default class GmfDesktopCanvas extends BaseElement {
     this.showInfobar_ = !this.showInfobar_;
   }
 
+  /**
+   * Resize the data (left) panel when dragging the separator
+   *
+   * @param {HTMLElement} separator The element separating the panel from the map
+   */
+  dragElement(separator: HTMLElement): void {
+    let md: SeparatorDrag; // Store drag infos
+    const leftElement = document
+      .querySelector('gmf-desktop-canvas')
+      .shadowRoot.getElementById('gmf-app-data-panel');
+    const rightElement = document
+      .querySelector('gmf-desktop-canvas')
+      .shadowRoot.getElementById('gmf-app-map-container');
+
+    separator.onmousedown = onMouseDown;
+
+    /**
+     * Store mouse offset and resize elements
+     *
+     * @param {MouseEvent} evt Drag event
+     */
+    function onMouseDown(evt: MouseEvent) {
+      md = {
+        evt,
+        offsetLeft: separator.offsetLeft,
+        leftWidth: leftElement.offsetWidth,
+        rightWidth: rightElement.offsetWidth,
+      };
+
+      document.onmousemove = onMouseMove;
+      document.onmouseup = () => {
+        document.onmousemove = null;
+        document.onmouseup = null;
+      };
+    }
+
+    /**
+     * Compute drag offset and change element widths accordingly
+     *
+     * @param {MouseEvent} evt Drag event
+     */
+    function onMouseMove(evt: MouseEvent) {
+      const delta = {x: evt.clientX - md.evt.clientX, y: evt.clientY - md.evt.clientY};
+      // Prevent negative-sized elements
+      delta.x = Math.min(Math.max(delta.x, -md.leftWidth), md.rightWidth);
+
+      separator.style.left = `${md.offsetLeft + delta.x}px`;
+      leftElement.style.width = `${md.leftWidth + delta.x}px`;
+      rightElement.style.width = `${md.rightWidth - delta.x}px`;
+    }
+  }
+
   render(): TemplateResult {
     return html`
       <style>
@@ -342,72 +449,83 @@ export default class GmfDesktopCanvas extends BaseElement {
       </header>
 
       <main
-        class="${this.toolPanel_ ? `gmf-tool-active gmf-tool-${this.toolPanel_}-active` : ''} ${this
-          .footerPanel_
-          ? `gmf-footer-active gmf-footer-${this.footerPanel_}-active`
-          : ''}"
+        class="${this.toolPanel_ ? `gmf-tool-active gmf-tool-${this.toolPanel_}-active` : ''} ${
+      this.footerPanel_ ? `gmf-footer-active gmf-footer-${this.footerPanel_}-active` : ''
+    }"
       >
-        <div
-          class="gmf-app-data-panel ui-resizable"
-          ngeo-resizemap="mainCtrl.map"
-          ngeo-resizemap-state="mainCtrl.dataPanelActive"
-        >
-          <slot name="data"></slot>
-        </div>
 
-        <div class="gmf-app-tools" ngeo-resizemap="mainCtrl.map" ngeo-resizemap-state="mainCtrl.toolsActive">
-          <div class="gmf-app-bar">
-            <div class="btn-group-vertical">
-              <slot name="tool-button"></slot>
-            </div>
-            <br />
-            <br />
-            <span
-              data-toggle="tooltip"
-              data-placement="left"
-              data-original-title="${i18next.t('Share this map')}"
-            >
-              <div class="container-fluid">
-                <slot name="tool-button-separate"></slot>
-              </div>
-            </span>
-          </div>
-
+        <div class="gmf-app-desktop-splitter">
           <div
-            class="gmf-app-tools-content container-fluid ${this.toolPanel_
-              ? `gmf-app-tools-content-${this.toolPanel_}`
-              : 'hide'}"
+            id="gmf-app-data-panel"
+            class="gmf-app-data-panel ui-resizable"
+            ngeo-resizemap="mainCtrl.map"
+            ngeo-resizemap-state="mainCtrl.dataPanelActive"
           >
-            <div class="row">
-              <div class="col-sm-12">
-                <a class="btn close" @click=${() => panels.closeToolPanel()}>×</a>
-                <slot name="tool-panel-${this.toolPanel_}"></slot>
+            <slot name="data"></slot>
+          </div>
+
+          <div id="gmf-app-data-panel-separator" class="ui-resizable-e" ></div>
+
+          <div id="gmf-app-map-container" class="gmf-app-map-container" ${
+            this.showInfobar_ ? 'gmf-app-infobar-active' : ''
+          }">
+            <div class="gmf-app-map ${this.showInfobar_ ? 'gmf-app-infobar-active' : ''}">
+              <slot name="map"></slot>
+            </div>
+            <!--infobar-->
+            <div class="gmf-app-footer ${this.showInfobar_ ? 'gmf-app-active' : ''}">
+              <button
+                class="btn fa gmf-app-map-info ${
+                  this.showInfobar_ ? 'fa-angle-double-down' : 'fa-angle-double-up'
+                }"
+                @click=${() => this.toggleShowInfobar_()}
+              ></button>
+              <slot name="infobar-left"></slot>
+              <div class="pull-right">
+                <slot name="infobar-right"></slot>
+              </div>
+              <div class="footer">
+                <slot name="infobar-footer"></slot>
               </div>
             </div>
           </div>
-        </div>
-        <div class="gmf-app-map-container ${this.showInfobar_ ? 'gmf-app-infobar-active' : ''}">
-          <div class="gmf-app-map ${this.showInfobar_ ? 'gmf-app-infobar-active' : ''}">
-            <slot name="map"></slot>
-          </div>
-          <!--infobar-->
-          <div class="gmf-app-footer ${this.showInfobar_ ? 'gmf-app-active' : ''}">
-            <button
-              class="btn fa gmf-app-map-info ${this.showInfobar_
-                ? 'fa-angle-double-down'
-                : 'fa-angle-double-up'}"
-              @click=${() => this.toggleShowInfobar_()}
-            ></button>
-            <slot name="infobar-left"></slot>
-            <div class="pull-right">
-              <slot name="infobar-right"></slot>
+          <slot name="modal"></slot>
+
+          <div id="gmf-apptool-panel-separator" class="ui-resizable-e" ></div>
+
+          <div id="gmf-app-tools" class="gmf-app-tools" ngeo-resizemap="mainCtrl.map" ngeo-resizemap-state="mainCtrl.toolsActive">
+            <div class="gmf-app-bar">
+              <div class="btn-group-vertical">
+                <slot name="tool-button"></slot>
+              </div>
+              <br />
+              <br />
+              <span
+                data-toggle="tooltip"
+                data-placement="left"
+                data-original-title="${i18next.t('Share this map')}"
+              >
+                <div class="container-fluid">
+                  <slot name="tool-button-separate"></slot>
+                </div>
+              </span>
             </div>
-            <div class="footer">
-              <slot name="infobar-footer"></slot>
+
+            <div
+              class="gmf-app-tools-content container-fluid ${
+                this.toolPanel_ ? `gmf-app-tools-content-${this.toolPanel_}` : 'hide'
+              }"
+            >
+              <div class="row">
+                <div class="col-sm-12">
+                  <a class="btn close" @click=${() => panels.closeToolPanel()}>×</a>
+                  <slot name="tool-panel-${this.toolPanel_}"></slot>
+                </div>
+              </div>
             </div>
           </div>
+
         </div>
-        <slot name="modal"></slot>
       </main>
       <footer><slot name="footer-${this.footerPanel_}"></slot></footer>
     `;
