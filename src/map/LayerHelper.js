@@ -238,12 +238,12 @@ LayerHelper.prototype.createBasicWMSLayerFromDataSource = function (dataSource, 
  * @param {number} maximum resolution.
  * @return {number} fixed maximum resolution.
  */
-LayerHelper.prototype.fixResolution_ = function(opt_maxResolution) {
+LayerHelper.prototype.fixResolution_ = function (opt_maxResolution) {
   if (opt_maxResolution) {
     opt_maxResolution = opt_maxResolution * 1.0000001;
   }
   return opt_maxResolution;
-}
+};
 
 /**
  * Create and return a promise that provides a WMTS layer with source on

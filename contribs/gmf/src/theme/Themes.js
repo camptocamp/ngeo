@@ -58,7 +58,7 @@ export class ThemesService extends olEventsEventTarget {
     gmfThemesOptions,
     gmfTreeUrl,
     gmfVectorTilesUrl,
-    gmfVectorTilesOptions,
+    gmfVectorTilesOptions
   ) {
     super();
 
@@ -99,7 +99,7 @@ export class ThemesService extends olEventsEventTarget {
      * @type {import('gmf/options').gmfVectorTilesOptions}
      * @private
      */
-    this.gmfVectorTilesOptions_ = gmfVectorTilesOptions
+    this.gmfVectorTilesOptions_ = gmfVectorTilesOptions;
 
     /**
      * @type {?import('ngeo/statemanager/Location').StatemanagerLocation}
@@ -335,7 +335,7 @@ export class ThemesService extends olEventsEventTarget {
           tileGrid,
           minResolution,
           maxResolution,
-          gmfLayerVectorTiles.metadata.opacity,
+          gmfLayerVectorTiles.metadata.opacity
         );
         deferred.resolve(this.setLayerProperties_(gmfLayerVectorTiles, layer));
       },
@@ -749,6 +749,7 @@ export function getNodeMinResolution(gmfLayer) {
 export const ThemeNodeType = {
   MIXED_GROUP: 'MixedGroup',
   NOT_MIXED_GROUP: 'NotMixedGroup',
+  VECTOR_TILES: 'VectorTiles',
   WMTS: 'WMTS',
   WMS: 'WMS',
 };
@@ -767,7 +768,7 @@ myModule.value('gmfVectorTilesOptions', {
     extent: [2485071.54, 175346.36, 2828515.78, 1299941.84],
     origin: [2485071.54, 1299941.84],
     resolutions: [250, 100, 50, 20, 10, 5, 2, 1, 0.5, 0.25, 0.1, 0.05],
-  }
+  },
 });
 
 export default myModule;

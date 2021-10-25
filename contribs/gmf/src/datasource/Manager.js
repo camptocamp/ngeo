@@ -509,13 +509,8 @@ export class DatasourceManager {
     /** @type {import('gmf/themes').GmfOgcServer} */
     let ogcServer;
 
-    if (ogcType === ThemeNodeType.WMTS) {
-      // (3) Manage WMTS
-      const gmfLayerWMTS = /** @type {import('gmf/themes').GmfLayerWMTS} */ (/** @type {any} */ (gmfLayer));
-
-      // Common options for WMTS
-      wmtsLayer = gmfLayerWMTS.layer;
-      wmtsUrl = gmfLayerWMTS.url;
+    if (ogcType === ThemeNodeType.WMTS || ogcType === ThemeNodeType.VECTOR_TILES) {
+      // (3) Manage WMTS / Vector tiles
       maxResolution = meta.maxQueryResolution !== undefined ? meta.maxQueryResolution : meta.maxResolution;
       minResolution = meta.minQueryResolution !== undefined ? meta.minQueryResolution : meta.minResolution;
 
@@ -542,9 +537,20 @@ export class DatasourceManager {
       if (meta.ogcServer && ogcServers[meta.ogcServer]) {
         ogcServer = ogcServers[meta.ogcServer];
       }
+    }
+
+    if (ogcType === ThemeNodeType.WMTS) {
+      // (4) Manage WMTS
+      const gmfLayerWMTS = /** @type {import('gmf/themes').GmfLayerWMTS} */ (/** @type {any} */ (gmfLayer));
+
+      // Common options for WMTS
+      wmtsLayer = gmfLayerWMTS.layer;
+      wmtsUrl = gmfLayerWMTS.url;
+
+      // OGC Server
       ogcImageType = gmfLayerWMTS.imageType;
     } else if (ogcType === ThemeNodeType.WMS) {
-      // (4) Manage WMS
+      // (5) Manage WMS
       const gmfLayerWMS = /** @type {import('gmf/themes').GmfLayerWMS} */ (/** @type {any} */ (gmfLayer));
 
       // Common options for WMS
@@ -611,7 +617,7 @@ export class DatasourceManager {
       }
     }
 
-    // (5) ogcServer
+    // (6) ogcServer
     const ogcServerType = ogcServer ? ogcServer.type : undefined;
     const wfsFeatureNS = ogcServer ? ogcServer.namespace : undefined;
     const wmsIsSingleTile = ogcServer ? ogcServer.isSingleTile : undefined;
@@ -624,18 +630,18 @@ export class DatasourceManager {
       wfsOutputFormat = WFSOutputFormat.GML2;
     }
 
-    // (6) Snapping
+    // (7) Snapping
     const snappable = !!meta.snappingConfig;
     const snappingTolerance = meta.snappingConfig ? meta.snappingConfig.tolerance : undefined;
     const snappingToEdges = meta.snappingConfig ? meta.snappingConfig.edge : undefined;
     const snappingToVertice = meta.snappingConfig ? meta.snappingConfig.vertex : undefined;
 
-    // (7) Dimensions
+    // (8) Dimensions
     const dimensions = this.dimensions_;
     const dimensionsConfig = node.dimensions || firstLevelGroup === null ? {} : firstLevelGroup.dimensions;
     const dimensionsFiltersConfig = gmfLayer.dimensionsFilters;
 
-    // (8) Time values (lower or lower/upper)
+    // (9) Time values (lower or lower/upper)
     let timeLowerValue;
     let timeUpperValue;
 
@@ -649,7 +655,7 @@ export class DatasourceManager {
       }
     }
 
-    // (9) Common options
+    // (10) Common options
     const copyable = meta.copyable;
     const identifierAttribute = meta.identifierAttributeField;
     const name = gmfLayer.name;
