@@ -22,6 +22,7 @@
       "api/*": ["api/src/*"],
       "lib/*": ["lib/*"],
       "olcs/*": ["node_modules/ol-cesium/src/olcs/*"],
+      "mapillary-js/*": ["node_modules/mapillary-js/dist/mapillary.d.ts"],
       "moment": ["node_modules/moment/moment.d.ts"],
       "jsts/*": ["node_modules/@types/jsts/index.d.ts"],
       "localforage/*": ["node_modules/localforage/*"],

@@ -19,7 +19,10 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 import {StreetviewService} from './Service';
-import 'mapillary-js/dist/mapillary.min.css';
+import 'mapillary-js/dist/mapillary.css';
+import {buffer} from 'ol/extent';
+
+const MLY_METADATA_ENDPOINT = 'https://graph.mapillary.com';
 
 /**
  * Service for streetview functionality with Mapillary
@@ -27,38 +30,64 @@ import 'mapillary-js/dist/mapillary.min.css';
 export default class MapillaryService extends StreetviewService {
   /**
    * @param {angular.IScope} $scope Scope.
+   * @param {angular.ITimeoutService} $timeout
+   * @param {angular.IHttpService} $http Angular $http service.
    * @param {?import('ol/Map').default} map The map
    * @param {(newCoordinates: import('ol/coordinate').Coordinate | null) => void} handlePanoramaPositionChange Position change handler
    * @param {string} clientId The key to access the mapillary api
    * @ngInject
    */
-  constructor($scope, map, handlePanoramaPositionChange, clientId) {
+  constructor($scope, $timeout, $http, map, handlePanoramaPositionChange, accessToken) {
     super($scope, map, handlePanoramaPositionChange);
-    const config = {
-      component: {
-        cover: false,
-        sequence: {
-          visible: false,
-        },
-      },
-    };
+
+    /**
+     * @type {angular.ITimeoutService}
+     * @private
+     */
+    this.$timeout_ = $timeout;
+
+    /**
+     * Angular $http service.
+     * @private
+     */
+    this.$http_ = $http;
+
+    /**
+     * The key to access the mapillary api.
+     * @private
+     */
+    this.accessToken_ = accessToken;
+
+    /**
+     * Container of the mapillary viewer.
+     */
     this.mapillaryElement = document.getElementById('mly');
     this.mapillaryElement.hidden = true;
 
     import(/* webpackChunkName: "mapillary" */ 'mapillary-js/src/Mapillary').then((Mapillary) => {
       this.Mapillary = Mapillary;
 
-      this.mly = new Mapillary.Viewer('mly', clientId, null, config);
+      this.mly = new Mapillary.Viewer({
+        accessToken: this.accessToken_,
+        container: 'mly',
+        component: {
+          cover: false,
+          sequence: {
+            visible: false,
+          },
+        },
+      });
       window.addEventListener('resize', () => {
-        this.mly.resize();
+        this.resize();
       });
     });
 
     /**
-     * @param {import('mapillary-js/src/graph/Node').default} node
+     * @param {import('mapillary-js/src/viewer/events/ViewerImageEvent').ViewerImageEvent} evt
      */
-    this.mapillaryEventHandler_ = (node) => {
-      const newCoordinates = this.fromLonLat_([node.originalLatLon.lon, node.originalLatLon.lat]);
+    this.mapillaryEventHandler_ = (evt) => {
+      const coordinates = evt.image.computedLngLat;
+      const newCoordinates = this.fromLonLat_([coordinates.lng, coordinates.lat]);
       super.panoramaPositionChange(newCoordinates);
       this.mly.resize();
     };
@@ -69,7 +98,9 @@ export default class MapillaryService extends StreetviewService {
    */
   resize() {
     if (this.mly) {
-      this.mly.resize();
+      this.$timeout_(() => {
+        this.mly.resize();
+      }, 20);
     }
   }
 
@@ -79,21 +110,17 @@ export default class MapillaryService extends StreetviewService {
    * @param {import('ol/coordinate').Coordinate} coordinates Map view projection coordinates.
    */
   getPanorama(coordinates) {
-    const lonLat = this.toLonLat_(coordinates);
-    this.mly.moveCloseTo(lonLat[1], lonLat[0]).then(
+    const [lng, lat] = this.toLonLat_(coordinates);
+    this.searchImage_(lng, lat).then(
       /**
-       * @param {any} node
+       * @param {string} imageId
        */
-      (node) => {
-        this.noDataAtLocation = false;
-        this.scope_.$apply();
+      (imageId) => {
+        this.noDataAtLocation = !imageId;
       },
-      /**
-       * @param {any} error
-       */
-      (error) => {
+      () => {
+        // On error
         this.noDataAtLocation = true;
-        this.scope_.$apply();
       }
     );
   }
@@ -105,10 +132,43 @@ export default class MapillaryService extends StreetviewService {
    */
   toggleShow(show) {
     if (show) {
-      this.mly.on(this.Mapillary.Viewer.nodechanged, this.mapillaryEventHandler_);
+      this.mly.on('image', this.mapillaryEventHandler_);
     } else {
-      this.mly.off(this.Mapillary.Viewer.nodechanged, this.mapillaryEventHandler_);
+      this.mly.off('image', this.mapillaryEventHandler_);
     }
     this.mapillaryElement.hidden = !show;
+  }
+
+  /**
+   * @param {number} lng A longitude value.
+   * @param {number} lat A latitude value.
+   * @return {angular.IPromise<string>} Promise with the first imageId found or null.
+   * @private
+   */
+  searchImage_(lng, lat) {
+    const bbox = buffer([lng, lat, lng, lat], 0.001);
+    const baseUrl = `${MLY_METADATA_ENDPOINT}/images`;
+    const path = `${baseUrl}?access_token=${this.accessToken_}&fields=id&bbox=${bbox}&limit=1`;
+    return this.$http_.get(path).then(
+      /**
+       * @param {any} response object.
+       */
+      (response) => {
+        const firstImage = response.data.data[0];
+        if (!firstImage) {
+          return null;
+        }
+        const imageId = firstImage['id'];
+        this.mly.moveTo(imageId);
+        return imageId;
+      },
+      /**
+       * @param {any} error object.
+       */
+      (error) => {
+        console.error(error);
+        return null;
+      }
+    );
   }
 }
