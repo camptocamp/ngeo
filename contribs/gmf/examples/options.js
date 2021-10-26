@@ -40,6 +40,12 @@ const GMF_LAYERS = `${GMF_DEMO}layers`;
 const GMF_THEMES = `${GMF_DEMO}themes?version=2&background=background`;
 
 /**
+ * Base url for the GeoMapFish demo vector tiles.
+ * @type {string}
+ */
+const GMF_VECTOR_TILES = `${GMF_DEMO}/vector_tiles`;
+
+/**
  * WFS feature namespace for MapServer
  * @type {string}
  */
@@ -90,6 +96,7 @@ export default function (module) {
   module.constant('cacheVersion', '0');
 
   module.constant('gmfTreeUrl', GMF_THEMES);
+  module.constant('gmfVectorTilesUrl', GMF_VECTOR_TILES);
   module.constant('authenticationBaseUrl', GMF_DEMO);
   module.constant('gmfLayersUrl', GMF_LAYERS);
   module.constant('gmfPrintUrl', PRINT_PROXY);
@@ -115,6 +122,7 @@ export default function (module) {
   module.constant('gmfCsvFilename', 'query-results.csv');
   module.constant('ngeoTilesPreloadingLimit', 0);
 
+  module.constant('gmfVectorTilesOptions', {});
   module.constant('gmfAuthenticationConfig', {});
   module.constant('gmfSnappingConfig', {});
   module.constant('gmfThemesOptions', {});

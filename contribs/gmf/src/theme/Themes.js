@@ -323,6 +323,10 @@ export class ThemesService extends olEventsEventTarget {
     const layername = gmfLayerVectorTiles.name;
     const minResolution = getNodeMinResolution(gmfLayerVectorTiles);
     const maxResolution = getNodeMaxResolution(gmfLayerVectorTiles);
+    const tileGridOptions = this.gmfVectorTilesOptions_.tileGrid;
+    if (!tileGridOptions || !tileGridOptions.resolutions) {
+      return null;
+    }
     this.$http_.get(gmfLayerVectorTiles.style).then(
       (response) => {
         const url = `${this.gmfVectorTilesUrl_}/${layername}/{z}/{x}/{y}.pbf`;
@@ -761,14 +765,5 @@ export const ThemeNodeType = {
 const myModule = angular.module('gmfThemes', [ngeoMapLayerHelper.name]);
 
 myModule.service('gmfThemes', ThemesService);
-// FIXME useless once in the demo
-myModule.value('gmfVectorTilesOptions', {
-  projection: 'EPSG:2056',
-  tileGrid: {
-    extent: [2485071.54, 175346.36, 2828515.78, 1299941.84],
-    origin: [2485071.54, 1299941.84],
-    resolutions: [250, 100, 50, 20, 10, 5, 2, 1, 0.5, 0.25, 0.1, 0.05],
-  },
-});
 
 export default myModule;

@@ -327,14 +327,14 @@ export class DatasourceManager {
    * @hidden
    */
   handleThemesChange_() {
-    // (1) Clear
+    // Clear
     this.clearDataSources_();
     if (this.treeCtrlsUnregister_) {
       this.treeCtrlsUnregister_();
     }
     this.clearTreeCtrlCache_();
 
-    // (2) Re-create data sources and event listeners
+    // Re-create data sources and event listeners
     this.gmfThemes_.getOgcServersObject().then((ogcServers) => {
       const promiseThemes = this.gmfThemes_.getThemesObject().then((themes) => {
         // Create a DataSources for each theme
@@ -383,12 +383,12 @@ export class DatasourceManager {
    */
   handleTreeManagerRootChildrenChange_(value) {
     this.timeout_(() => {
-      // (1) No need to do anything if the value is not set
+      // No need to do anything if the value is not set
       if (!value) {
         return;
       }
 
-      // (2) Collect 'leaf' treeCtrls
+      // Collect 'leaf' treeCtrls
       /** @type {import('ngeo/layertree/Controller').LayertreeController[]} */
       const newTreeCtrls = [];
       /**
@@ -408,7 +408,7 @@ export class DatasourceManager {
         value[i].traverseDepthFirst(visitor);
       }
 
-      // (3) Add new 'treeCtrls'
+      // Add new 'treeCtrls'
       for (let i = 0, ii = newTreeCtrls.length; i < ii; i++) {
         const newTreeCtrl = newTreeCtrls[i];
         const cacheItem = this.getTreeCtrlCacheItem_(newTreeCtrl);
@@ -417,7 +417,7 @@ export class DatasourceManager {
         }
       }
 
-      // (4) Remove treeCtrls that are no longer in the newTreeCtrl
+      // Remove treeCtrls that are no longer in the newTreeCtrl
       const cache = this.treeCtrlCache_;
       for (const id in this.treeCtrlCache_) {
         const item = cache[id];
@@ -436,7 +436,7 @@ export class DatasourceManager {
    * @hidden
    */
   clearDataSources_() {
-    // (1) Remove data sources from ngeo collection
+    // Remove data sources from ngeo collection
     const dataSources = this.dataSources_.getArray();
     for (let i = dataSources.length - 1, ii = 0; i >= ii; i--) {
       if (this.dataSourcesCache_[dataSources[i].id]) {
@@ -447,7 +447,7 @@ export class DatasourceManager {
       }
     }
 
-    // (2) Clear the cache
+    // Clear the cache
     clearObject(this.dataSourcesCache_);
   }
 
@@ -470,9 +470,9 @@ export class DatasourceManager {
     const groupNode = /** @type {import('gmf/themes').GmfGroup} */ (node);
     const children = groupNode.children;
 
-    // (1) Group node (node that has children). Loop in the children
-    //     individually and create a data source for each one of them. The
-    //     group node itself is **skipped**.
+    // Group node (node that has children). Loop in the children
+    // individually and create a data source for each one of them. The
+    // group node itself is **skipped**.
     if (children) {
       for (const child of children) {
         this.createDataSource_(firstLevelGroup, child, ogcServers);
@@ -483,7 +483,7 @@ export class DatasourceManager {
     // From there on, the node is a layer node.
     const gmfLayer = /** @type {import('gmf/themes').GmfLayer} */ (node);
 
-    // (2) Skip layer node if a data source with the same id exists
+    // Skip layer node if a data source with the same id exists
     const id = Number(olUtilGetUid(gmfLayer));
     if (this.dataSourcesCache_[id]) {
       return;
@@ -510,7 +510,7 @@ export class DatasourceManager {
     let ogcServer;
 
     if (ogcType === ThemeNodeType.WMTS || ogcType === ThemeNodeType.VECTOR_TILES) {
-      // (3) Manage WMTS / Vector tiles
+      // Manage WMTS / Vector tiles
       maxResolution = meta.maxQueryResolution !== undefined ? meta.maxQueryResolution : meta.maxResolution;
       minResolution = meta.minQueryResolution !== undefined ? meta.minQueryResolution : meta.minResolution;
 
@@ -540,7 +540,7 @@ export class DatasourceManager {
     }
 
     if (ogcType === ThemeNodeType.WMTS) {
-      // (4) Manage WMTS
+      // Manage WMTS
       const gmfLayerWMTS = /** @type {import('gmf/themes').GmfLayerWMTS} */ (/** @type {any} */ (gmfLayer));
 
       // Common options for WMTS
@@ -550,7 +550,7 @@ export class DatasourceManager {
       // OGC Server
       ogcImageType = gmfLayerWMTS.imageType;
     } else if (ogcType === ThemeNodeType.WMS) {
-      // (5) Manage WMS
+      // Manage WMS
       const gmfLayerWMS = /** @type {import('gmf/themes').GmfLayerWMS} */ (/** @type {any} */ (gmfLayer));
 
       // Common options for WMS
@@ -617,7 +617,7 @@ export class DatasourceManager {
       }
     }
 
-    // (6) ogcServer
+    // ogcServer
     const ogcServerType = ogcServer ? ogcServer.type : undefined;
     const wfsFeatureNS = ogcServer ? ogcServer.namespace : undefined;
     const wmsIsSingleTile = ogcServer ? ogcServer.isSingleTile : undefined;
@@ -630,18 +630,18 @@ export class DatasourceManager {
       wfsOutputFormat = WFSOutputFormat.GML2;
     }
 
-    // (7) Snapping
+    // Snapping
     const snappable = !!meta.snappingConfig;
     const snappingTolerance = meta.snappingConfig ? meta.snappingConfig.tolerance : undefined;
     const snappingToEdges = meta.snappingConfig ? meta.snappingConfig.edge : undefined;
     const snappingToVertice = meta.snappingConfig ? meta.snappingConfig.vertex : undefined;
 
-    // (8) Dimensions
+    // Dimensions
     const dimensions = this.dimensions_;
     const dimensionsConfig = node.dimensions || firstLevelGroup === null ? {} : firstLevelGroup.dimensions;
     const dimensionsFiltersConfig = gmfLayer.dimensionsFilters;
 
-    // (9) Time values (lower or lower/upper)
+    // Time values (lower or lower/upper)
     let timeLowerValue;
     let timeUpperValue;
 
@@ -655,7 +655,7 @@ export class DatasourceManager {
       }
     }
 
-    // (10) Common options
+    // Common options
     const copyable = meta.copyable;
     const identifierAttribute = meta.identifierAttributeField;
     const name = gmfLayer.name;
@@ -813,14 +813,14 @@ export class DatasourceManager {
    * @hidden
    */
   removeTreeCtrlCacheItem_(item) {
-    // (1) Remove data source
+    // Remove data source
     const dataSource = item.treeCtrl.getDataSource();
     if (!dataSource) {
       throw new Error('DataSource should be set');
     }
     this.dataSources_.remove(dataSource);
 
-    // (2) Remove item and clear event listeners
+    // Remove item and clear event listeners
     item.treeCtrl.setDataSource(null);
     item.filterRulesWatcherUnregister();
     item.stateWatcherUnregister();

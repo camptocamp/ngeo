@@ -64,6 +64,7 @@ beforeEach(() => {
     ($provide) => {
       $provide.value('gmfTreeUrl', 'http://fake/gmf/themes');
       $provide.value('gmfVectorTilesUrl', 'http://fake/gmf/themes');
+      $provide.value('gmfVectorTilesOptions', {});
       $provide.value('gmfShortenerCreateUrl', 'http://fake/gmf/short/create');
       $provide.value('authenticationBaseUrl', 'https://fake/gmf/authentication');
       $provide.value('gmfRasterUrl', 'https://fake/gmf/raster');
