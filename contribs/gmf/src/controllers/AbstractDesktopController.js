@@ -166,10 +166,12 @@ export class AbstractDesktopController extends AbstractAPIController {
 
     panels.getActiveToolPanel().subscribe({
       next: (panels) => {
-        const newVal = panels.includes('print');
-        if (newVal != this.printPanelActive) {
-          this.printPanelActive = newVal;
-          // TODO: Chatouille Angular :-(
+        if (panels) {
+          const newVal = panels.includes('print');
+          if (newVal != this.printPanelActive) {
+            this.printPanelActive = newVal;
+            // TODO: Chatouille Angular :-(
+          }
         }
       },
     });
