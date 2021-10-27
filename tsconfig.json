@@ -37,6 +37,9 @@
       "@geoblocks/proj/*": [
         "node_modules/@geoblocks/proj/*"
       ],
+      "mapillary-js/*": [
+        "node_modules/mapillary-js/dist/mapillary.d.ts"
+      ],
       "moment": [
         "node_modules/moment/moment.d.ts"
       ],

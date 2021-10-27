@@ -73,7 +73,7 @@ function ngeoStreetviewTemplateUrl($attrs, ngeoStreetviewTemplateUrl) {
 /**
  * This component is used to integrate a streetview tool (googlestreetview or mapillary)
  * The tool has to be declared in the constant 'ngeoStreetviewOptions'. For mapillary
- * the key (clientId) is needed as well.
+ * the key (accessToken) is needed as well.
  *
  * module.constant('ngeoStreetviewOptions', {
  *  'viewer': 'google',
@@ -98,6 +98,7 @@ class StreetviewController {
   /**
    * @param {JQuery} $element Element.
    * @param {angular.IScope} $scope Scope.
+   * @param {angular.IHttpService} $http Angular $http service.
    * @param {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr Ngeo
    * @param {angular.auto.IInjectorService} $injector Main injector.
    * @param {angular.ITimeoutService} $timeout
@@ -106,7 +107,7 @@ class StreetviewController {
    * @ngdoc controller
    * @ngname NgeoStreetviewController
    */
-  constructor($element, $scope, ngeoFeatureOverlayMgr, $injector, $timeout) {
+  constructor($element, $scope, $http, ngeoFeatureOverlayMgr, $injector, $timeout) {
     // Binding properties
 
     /**
@@ -166,6 +167,12 @@ class StreetviewController {
      * @private
      */
     this.element_ = $element;
+
+    /**
+     * Angular $http service.
+     * @private
+     */
+    this.http_ = $http;
 
     // Inner properties
 
@@ -309,14 +316,16 @@ class StreetviewController {
     if (!this.options || !this.options.key) {
       throw new Error('Missing mapillary key');
     }
-    const clientId = this.options.key;
+    const accessToken = this.options.key;
     //wait for the mly div to be there before making the service which needs it
     this.timeout_(() => {
       const mapillaryService = new MapillaryService(
         this.scope_,
+        this.timeout_,
+        this.http_,
         this.map,
         this.handlePanoramaPositionChange_,
-        clientId
+        accessToken
       );
       this.scope_.$watch(
         () => this.panelWidth,
