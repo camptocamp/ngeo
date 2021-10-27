@@ -740,7 +740,7 @@ QueryGridController.prototype.getActiveGridSource = function () {
  */
 QueryGridController.prototype.clear = function () {
   this.active = false;
-  panels.openFooterPanel('queryresult', false);
+  panels.closeFooterPanel();
   this.pending = false;
   this.gridSources = {};
   this.loadedGridSources = [];
