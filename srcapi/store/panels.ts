@@ -91,7 +91,7 @@ export class PanelsModel {
    * Open a panel, or close if already open
    *
    * @param panel the panel
-   * @param state true to open the panel, false to cose, undefined to toggle
+   * @param state true to open the panel, false to close, undefined to toggle
    */
   openToolPanel(panel: string, state?: boolean): void {
     if (state === undefined) {
@@ -113,7 +113,7 @@ export class PanelsModel {
    * Open a panel, or close if already open
    *
    * @param panel the panel
-   * @param state true to open the panel, false to cose, undefined to toggle
+   * @param state true to open the panel, false to close, undefined to toggle
    * @param autoClose automatically close the panel on tool panel change.
    */
   openFooterPanel(panel: string, state?: boolean, autoClose?: boolean): void {
@@ -139,7 +139,7 @@ export class PanelsModel {
   }
 
   /**
-   * Close the tool panel.
+   * Close the footer panel.
    */
   closeFooterPanel(): void {
     if (this.activeFooterPanelState_) {
