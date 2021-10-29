@@ -1,0 +1,27 @@
+---
+# UI tests are not launched by dependabot (because it has no access
+# to the secrets. Run this check to send a valid "UI tests" signal.
+
+name: Fake UI tests
+
+# Same as "main" workflow except the name and the steps.
+on:
+  push:
+  pull_request:
+  pull_request_target:
+    types: [labeled]
+
+env:
+  HAS_SECRETS: ${{ secrets.HAS_SECRETS }}
+
+jobs:
+  main:
+    runs-on: ubuntu-20.04
+    name: UI tests
+    timeout-minutes: 1
+    if: "!startsWith(github.event.head_commit.message, '[skip ci] ')"
+
+    steps:
+      - name: No UI tests
+        run: exit 0
+        if: env.HAS_SECRETS != 'HAS_SECRETS'
