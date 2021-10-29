@@ -4,7 +4,7 @@
 
 name: Fake UI Tests
 
-# Same as "main" workflow except the name and the steps.
+# Same as "main" workflow except the name, the "if" in the jobs and the steps.
 on:
   push:
   pull_request:
@@ -15,13 +15,12 @@ env:
   HAS_SECRETS: ${{ secrets.HAS_SECRETS }}
 
 jobs:
-  main:
+  ui-tests:
     runs-on: ubuntu-20.04
     name: UI Tests
     timeout-minutes: 1
-    if: "!startsWith(github.event.head_commit.message, '[skip ci] ')"
+    if: "!startsWith(github.event.head_commit.message, '[skip ci] ') && env.HAS_SECRETS != 'HAS_SECRETS'"
 
     steps:
       - name: No UI Tests
         run: exit 0
-        if: env.HAS_SECRETS != 'HAS_SECRETS'
