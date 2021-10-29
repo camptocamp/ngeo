@@ -1,8 +1,8 @@
 ---
 # UI tests are not launched by dependabot (because it has no access
-# to the secrets. Run this check to send a valid "UI tests" signal.
+# to the secrets. Run this check to send a valid "UI Tests" signal.
 
-name: Fake UI tests
+name: Fake UI Tests
 
 # Same as "main" workflow except the name and the steps.
 on:
@@ -17,11 +17,11 @@ env:
 jobs:
   main:
     runs-on: ubuntu-20.04
-    name: UI tests
+    name: UI Tests
     timeout-minutes: 1
     if: "!startsWith(github.event.head_commit.message, '[skip ci] ')"
 
     steps:
-      - name: No UI tests
+      - name: No UI Tests
         run: exit 0
         if: env.HAS_SECRETS != 'HAS_SECRETS'
