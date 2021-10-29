@@ -349,12 +349,6 @@ contribs/dist: .build/build-dll.timestamp
 	npm install --no-optional
 	# Installed from peer dependency from ol-layerswitcher and that breaks our types
 	rm -rf ./node_modules/@types/openlayers
-
-	[ -e node_modules/mapillary-js/gen-ts ] || (cd node_modules/mapillary-js; npm install --no-optional --ignore-scripts)
-	[ -e node_modules/mapillary-js/gen-ts ] || (cd node_modules/mapillary-js; node_modules/.bin/tsc --declaration)
-	[ -e node_modules/mapillary-js/gen-ts ] || find node_modules/mapillary-js/src -name '*.ts'|grep -v .d.ts| while read f; do rm "$$f"; done
-	touch node_modules/mapillary-js/gen-ts
-
 	mkdir -p $(dir $@)
 	touch $@
 
