@@ -197,7 +197,10 @@ export class QueryModeSelector {
   // Handlers
 
   /**
-   * @param {Event|import("ol/events/Event.js").default} evt Event.
+   * Handle key down events.
+   * Watch out, some computer or OS (not browser) trigger a pressed key event only once, but
+   * some others trigger it infinitely every x milliseconds.
+   * @param {Event|import('ol/events/Event.js').default} evt Event.
    * @private
    */
   handleKeyDown_(evt) {
@@ -213,47 +216,48 @@ export class QueryModeSelector {
     const key = evt.key;
     let updateScope = false;
 
-    if (this.previousMode_) {
-      // If the ctrl key is pressed with another key (but not an action key), reset to
-      // the default mode. (For instance to avoid to keep a previous mode after a ctrl+p.)
-      if (isEventUsinCtrlKey(evt) && !this.keysAction_.includes(key)) {
-        updateScope = this.reset_();
+    if (this.keysAction_.includes(key) && !this.previousAction_) {
+      // An 'action' key was pressed and none were already previously
+      // pressed. In other words, only the first 'action key' is handled.
+      this.previousAction_ = this.action;
+      let newAction;
+      switch (key) {
+        case this.keyActionAdd_:
+          newAction = ngeoQueryAction.ADD;
+          break;
+        case this.keyActionRemove_:
+          newAction = ngeoQueryAction.REMOVE;
+          break;
+        default:
+          break;
       }
-    } else {
-      if (this.keysAction_.includes(key)) {
-        // An 'action' key was pressed and none were already previously
-        // pressed. In other words, only the first 'action key' is handled.
-        this.previousAction_ = this.action;
-        let newAction;
-        switch (key) {
-          case this.keyActionAdd_:
-            newAction = ngeoQueryAction.ADD;
-            break;
-          case this.keyActionRemove_:
-            newAction = ngeoQueryAction.REMOVE;
-            break;
-          default:
-            break;
-        }
-        if (newAction) {
-          this.action = newAction;
-          this.activeActionKey_ = key;
-          updateScope = true;
-        }
-      } else if (isEventUsinCtrlKey(evt)) {
-        // The 'ctrl' (or 'meta' key) on mac was pressed
-        this.previousMode_ = this.mode;
-        this.mode = ngeoQueryMode.DRAW_BOX;
+      if (newAction) {
+        this.action = newAction;
+        this.activeActionKey_ = key;
         updateScope = true;
       }
+    } else if (isEventUsinCtrlKey(evt) && !this.previousMode_) {
+      // The 'ctrl' (or 'meta' key) on mac was pressed
+      this.previousMode_ = this.mode;
+      this.mode = ngeoQueryMode.DRAW_BOX;
+      updateScope = true;
+    } else if (!isEventUsinCtrlKey(evt) && !this.keysAction_.includes(key) && this.previousMode_) {
+      // If the ctrl key was pressed and now another key (but not an action key) is pressed,
+      // reset to the default mode. (For instance to avoid to keep a previous mode
+      // after a ctrl+p.)
+      updateScope = this.reset_();
     }
+
     if (updateScope) {
       this.rootScope_.$apply();
     }
   }
 
   /**
-   * @param {Event|import("ol/events/Event.js").default} evt Event.
+   * Handle key up events.
+   * Watch out, some computer or OS (not browser) trigger a pressed key event only once, but
+   * some others trigger it infinitely every x milliseconds.
+   * @param {Event|import('ol/events/Event.js').default} evt Event.
    * @private
    */
   handleKeyUp_(evt) {
