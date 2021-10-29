@@ -158,7 +158,7 @@
     "lit": "2.0.2",
     "lit-element": "3.0.1",
     "lit-html": "2.0.1",
-    "loader-utils": "2.0.0",
+    "loader-utils": "3.0.0",
     "loc-i18next": "0.1.4",
     "localforage": "1.10.0",
     "mapillary-js": "4.0.0",
