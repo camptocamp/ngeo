@@ -121,7 +121,7 @@ function loaded(page, browser) {
   });
   const page = await browser.newPage();
 
-  await page.setViewport({width: 1920, height: 1080});
+  await page.setViewport({width: 900, height: 1080});
   await page.setRequestInterception(true);
   page.on('pageerror', async (e) => {
     console.log('Page error');
