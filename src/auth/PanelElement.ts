@@ -72,7 +72,12 @@ export default class GmfAuthPanelElement extends GmfBaseElement {
     const spinnerTemplate = this.postLoading
       ? html`
           <div>
-            <i class="fa fa-spin svg-spinner"> ${unsafeSVG(loadingSvg)} </i>
+            <i class="fa fa-spin svg-spinner"
+              >${
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+                unsafeSVG(loadingSvg)
+              }</i
+            >
             ${i18next.t('Loading themes, please wait...')}
           </div>
         `

@@ -184,7 +184,12 @@ export default class GmfAuthFormElement extends GmfBaseElement {
                 ${this.isLoading
                   ? html`
                       <div class="login-spinner">
-                        <i class="fa fa-spin svg-lit-element"> ${unsafeSVG(loadingSvg)} </i>
+                        <i class="fa fa-spin svg-lit-element"
+                          >${
+                            // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+                            unsafeSVG(loadingSvg)
+                          }</i
+                        >
                       </div>
                     `
                   : ''}
