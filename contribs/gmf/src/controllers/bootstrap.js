@@ -24,10 +24,7 @@ import angular from 'angular';
 import 'regenerator-runtime/runtime';
 import {setupI18n} from 'ngeo/localize/i18n.ts';
 import config from 'ngeo/store/config';
-import GmfAuthPanelElement from 'ngeo/auth/PanelElement';
-
-// Mark as used
-console.assert(GmfAuthPanelElement);
+import 'ngeo/auth/PanelElement';
 
 /**
  * @private

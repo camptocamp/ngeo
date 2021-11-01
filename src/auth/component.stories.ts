@@ -22,11 +22,8 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
-import GmfAuthFormElement from './FormElement';
+import './FormElement';
 import user, {UserState, User} from 'ngeo/store/user';
-
-// Mark as used
-console.assert(GmfAuthFormElement);
 
 export default {
   title: 'Auth Form',
