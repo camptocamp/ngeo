@@ -156,9 +156,9 @@ export class AuthenticationService {
     const options: RequestInit = {method: 'GET', credentials: 'include'};
     fetch(url, options)
       .then((resp) => resp.json())
-      .then((data) => this.checkUser_(data))
+      .then((data: User) => this.checkUser_(data))
       .then(
-        (data) => this.handleLogin_(true, data),
+        (data: User) => this.handleLogin_(true, data),
         () => {
           throw 'Login fail.';
         }
@@ -196,7 +196,7 @@ export class AuthenticationService {
 
     return fetch(url, options)
       .then((resp) => resp.json())
-      .then((data) => this.checkUser_(data))
+      .then((data: User) => this.checkUser_(data))
       .then(
         (data) => this.setUser_(data, UserState.LOGGED_IN),
         () => {
@@ -226,8 +226,8 @@ export class AuthenticationService {
 
     return fetch(url, options)
       .then((resp) => resp.json())
-      .then((data) => this.checkUser_(data))
-      .then((data) => this.onSuccessfulLogin(data))
+      .then((data: User) => this.checkUser_(data))
+      .then((data: User) => this.onSuccessfulLogin(data))
       .then(
         (data) => this.handleLogin_(false, data),
         () => {
