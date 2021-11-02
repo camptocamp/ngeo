@@ -21,16 +21,20 @@
 
 import angular from 'angular';
 import * as olArray from 'ol/array';
+import olFormatMVT from 'ol/format/MVT';
 import olFormatWMTSCapabilities from 'ol/format/WMTSCapabilities';
 import olLayerGroup from 'ol/layer/Group';
 import olLayerImage from 'ol/layer/Image';
 import olLayerTile from 'ol/layer/Tile';
 import olLayerLayer from 'ol/layer/Layer';
+import olLayerVectorTile from 'ol/layer/VectorTile';
 import {isEmpty} from 'ol/obj';
 import olSourceImageWMS from 'ol/source/ImageWMS';
 import olSourceTileWMS from 'ol/source/TileWMS';
+import olSourceVectorTile from 'ol/source/VectorTile';
 import olSourceWMTS, {optionsFromCapabilities} from 'ol/source/WMTS';
 import {appendParams as olUriAppendParams} from 'ol/uri';
+import olMapboxStyleStylefunction from 'ol-mapbox-style/dist/stylefunction';
 import {ServerType} from 'ngeo/datasource/OGC';
 
 /**
@@ -230,6 +234,18 @@ LayerHelper.prototype.createBasicWMSLayerFromDataSource = function (dataSource, 
 };
 
 /**
+ * Small hack to get perfect sync with the on resolution status and the zoom to resolution.
+ * @param {number} maximum resolution.
+ * @return {number} fixed maximum resolution.
+ */
+LayerHelper.prototype.fixResolution_ = function (opt_maxResolution) {
+  if (opt_maxResolution) {
+    opt_maxResolution = opt_maxResolution * 1.0000001;
+  }
+  return opt_maxResolution;
+};
+
+/**
  * Create and return a promise that provides a WMTS layer with source on
  * success, no layer else.
  * The WMTS layer source will be configured by the capabilities that are
@@ -258,10 +274,7 @@ LayerHelper.prototype.createWMTSLayerFromCapabilitites = function (
   opt_maxResolution,
   opt_opacity
 ) {
-  // Small hack to get perfect sync with the on resolution status and the zoom to resolution
-  if (opt_maxResolution) {
-    opt_maxResolution = opt_maxResolution * 1.0000001;
-  }
+  opt_maxResolution = this.fixResolution_(opt_maxResolution);
   const parser = new olFormatWMTSCapabilities();
   const layer = new olLayerTile({
     preload: this.tilesPreloadingLimit_,
@@ -340,6 +353,52 @@ LayerHelper.prototype.createWMTSLayerFromCapabilititesObj = function (
   });
   result.set('capabilitiesStyles', layerCap.Style);
   return result;
+};
+
+/**
+ * @param {string} url URL template. Must include {x}, {y} or {-y}, and {z} placeholders.
+ * A {?-?} template pattern, for example subdomain{a-f}.domain.com, may be used instead.
+ * of defining each one separately in the urls option.
+ * @param {string|Object} style a Mapbox Style object.
+ * @param {string} layername the name of the url as identified in the style.
+ * @param {string} projection The projection code.
+ * @param {import('ol/tilegrid/TileGrid').default} tileGrid The tile grid to define the source with.
+ * @param {number} [opt_minResolution] WMTS minimum resolution.
+ * @param {number} [opt_maxResolution] WMTS maximum resolution.
+ * @param {number} [opt_opacity] The opacity.
+ * @returns {import('ol/layer/VectorTile').default<import('ol/source/VectorTile').default>} Vector
+ * tile layer.
+ */
+LayerHelper.prototype.createBasicVectorTilesLayer = function (
+  url,
+  style,
+  layername,
+  projection,
+  tileGrid,
+  opt_minResolution,
+  opt_maxResolution,
+  opt_opacity
+) {
+  opt_maxResolution = this.fixResolution_(opt_maxResolution);
+  const format = new olFormatMVT();
+  const layer = new olLayerVectorTile({
+    declutter: true,
+    minResolution: opt_minResolution,
+    maxResolution: opt_maxResolution,
+    source: new olSourceVectorTile({
+      format,
+      projection,
+      tileGrid,
+      url,
+    }),
+  });
+  // Create and apply the style function.
+  olMapboxStyleStylefunction(layer, style, layername);
+  // Set the opacity.
+  if (opt_opacity !== undefined) {
+    layer.setOpacity(opt_opacity);
+  }
+  return layer;
 };
 
 /**

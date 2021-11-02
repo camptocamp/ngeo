@@ -13,6 +13,7 @@
 /contribs/gmf/apps/.tx/ngeo.gmf-*
 /examples/simple.min.js
 /contribs/gmf/build/
+/contribs/gmf/apps/build/
 /contribs/gmf/examples/https.js
 /dist/
 /test/check-example/*.html.png

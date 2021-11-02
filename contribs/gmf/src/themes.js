@@ -106,7 +106,7 @@
  *      the application.
  * @property {boolean} [editable]
  * @property {string} [style]
- * @property {string} type WMS or WMTS.
+ * @property {string} type WMS, WMTS or VectorTiles.
  * @property {string} [ogcServer]
  * @property {string} [popupId] A popup identifier for the associate submenu.
  * @property {string} layerType The layer type.
@@ -149,6 +149,18 @@
  * @property {string} layer
  * @property {string} matrixSet
  * @property {string} url
+ */
+
+/**
+ * extends GmfLayer
+ *
+ * @typedef {Object} GmfLayerVectorTiles
+ * @property {number} id (GmfBaseNode)
+ * @property {GmfMetaData} metadata (GmfBaseNode)
+ * @property {string} name (GmfBaseNode)
+ * @property {boolean} [editable] (GmfLayer)
+ * @property {string} style (GmfLayer)
+ * @property {string} type (GmfLayer)
  */
 
 /**
@@ -208,12 +220,12 @@
  * @property {string[]} [directedFilterAttributes] List of attribute names which should have rules
  *      already ready when using the filter tools. For WMS layers.
  * @property {string} [disclaimer] The disclaimer text for this element.
- *      For WMS and WMTS layers, layer groups and themes.
+ *      For every kind of layer, layer groups and themes.
  * @property {string[]} [enumeratedAttributes] List of attribute names which have enumerated attribute
  *      values (for filters purpose). For WMS layers.
  * @property {boolean} [exclusiveGroup=false] Whether the group contains children that have to be mutually
  *      exclusive, meaning that only one child may be ON at any time.
- * @property {string} [iconUrl] The URL of the icon to display in the layer tree. For WMS and WMTS layers.
+ * @property {string} [iconUrl] The URL of the icon to display in the layer tree. For every kind of layer.
  * @property {string} identifierAttributeField The field used in the 'display query window' as feature title.
  *      For WMS layers.
  * @property {boolean|undefined} [isChecked=false] Is the layer checked by default. For WMS and WMTS layers.
@@ -230,34 +242,39 @@
  *      in the layer tree. For WMS and WMTS layers.
  * @property {string} [legendRule] The WMS 'RULE' parameter used to display the icon in the layer tree.
  *      "Short version" of the 'iconURL' metadata for WMS layers. For WMS layers.
- * @property {number} [maxQueryResolution] The max resolution where the layer is queryable. For WMTS layers.
+ * @property {number} [maxQueryResolution] The max resolution where the layer is queryable. For WMTS and
+ *     vector tiles layers.
  * @property {number} [maxResolution] The max resolution where the layer is visible. For WMS layers.
- *      On WMTS layers it will have an effect on the node in the layertree but not on the layertree directly.
+ *      On WMTS and vector tiles layers it will have an effect on the node in the layertree but not on
+ *      the layertree directly.
  * @property {string} [metadataUrl] The URL to the information on this layer. For WMS and WMTS layers.
- * @property {number} [minQueryResolution] The min resolution where the layer is queryable. For WMTS layers.
+ * @property {number} [minQueryResolution] The min resolution where the layer is queryable. For WMTS and
+ *      vector tiles layers.
  * @property {number} [minResolution] The min resolution where the layer is visible. For WMS layers.
- *      On WMTS layers it will have an effect on the node in the layertree but not on the layer directly.
+ *      On WMTS and vector tiles layers it will have an effect on the node in the layertree but not on
+ *      the layer directly.
  * @property {number[]} [queryIconPosition] values to define the shape (bbox) to use to query
  *      the layer. The values are used like a padding in css with 1, 2, 3 or 4 comma separated
  *      values: all / top-bottom, left-right / top, right-left, bottom / top, right, bottom, left.
- * @property {string} [ogcServer] The corresponding OGC server for a WMTS layer. For WMTS layers.
- * @property {number} [opacity=1.0] Layer opacity. 1.0 means fully visible, 0 means invisible, For WMS and
- *      WMTS layers.
+ * @property {string} [ogcServer] The corresponding OGC server. For WMTS and vector tiles layers.
+ * @property {number} [opacity=1.0] Layer opacity. 1.0 means fully visible, 0 means invisible, for every
+ *      kind of layers.
  * @property {string} [printLayers] A WMS layers (comma separated) that will be used instead of the WMTS
  *      layer in the print. Used to increase quality of printed WMTS layer. An OGCServer metadata must be set
  *      with the name of the OGC server to use for these wms layers. For WMTS layers.
  * @property {string} [queryLayers] Layers names separate by a comma. For WMTS layers: The WMS layers used as
- *      references to query the WMTS layers. An OGCServer metadata must be set with the name of the OGC
- *      server to use for this wms layer. For WFS GetFeature request: The WFS layers that should be queried.
- * @property {string} [thumbnail] The icon visible in the background selector. For WMS and WMTS layers.
+ *      references to query the WMTS or vector tiles layers. An OGCServer metadata must be set with the
+ *      name of the OGC server to use for this wms layer. For WFS GetFeature request: The WFS layers
+ *      that should be queried.
+ * @property {string} [thumbnail] The icon visible in the background selector. For every kind of layers.
  * @property {string} [timeAttribute] The name of the time attribute. For WMS(-T) layers.
  * @property {GmfSnappingConfig} [snappingConfig] The snapping configuration for the leaf. If set, the
  *      leaf's layer is considered to be "snappable", even if the config itself is empty.
  *      Example value: {'tolerance': 50, 'edge': false} For WMS layers.
- * @property {string} [wmsLayers] A corresponding WMS layers (comma separated) for WMTS layer. Used to query
- *      the WMTS layer and to print them. See also printLayers and queryLayers metadata for more
- *      granularity. An OGCServer metadata must be set with the name of the OGC server to use for these
- *      wms layers. For WMTS Layers.
+ * @property {string} [wmsLayers] A corresponding WMS layers (comma separated) for WMTS and vector tiles
+ *      layers. Used to query the WMTS or vector tiles layers and to print them. See also printLayers and
+ *      queryLayers metadata for more granularity. An OGCServer metadata must be set with the name
+ *      of the OGC server to use for these wms layers. For WMTS and vector tiles Layers.
  * @property {Object} [customOpenLayersOptions] The custom OpenLayers WMS layer options.
  */
 
