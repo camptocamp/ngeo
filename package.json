@@ -62,7 +62,7 @@
     "@babel/plugin-proposal-decorators": "7.15.8",
     "@babel/plugin-transform-typescript": "7.16.1",
     "@babel/preset-env": "7.16.0",
-    "@babel/preset-typescript": "7.15.0",
+    "@babel/preset-typescript": "7.16.0",
     "@fortawesome/fontawesome-free": "5.15.4",
     "@lit/reactive-element": "1.0.1",
     "@sentry/browser": "6.13.3",
