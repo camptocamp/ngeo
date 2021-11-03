@@ -195,7 +195,7 @@ Controller.prototype.handleElementClick_ = function () {
  * format.
  *
  * @param {string} format Format.
- * @param {JQueryEventObject} event Event.
+ * @param {JQuery.Event} event Event.
  */
 Controller.prototype.handleMenuItemClick_ = function (format, event) {
   if (!this.features) {

@@ -86,7 +86,7 @@ function messagePopopComponent(ngeoPopupTemplateUrl) {
       element.addClass('popover');
 
       /**
-       * @param {JQueryEventObject} evt Event.
+       * @param {JQuery.Event} evt Event.
        */
       // @ts-ignore: scope ...
       scope.close = function (evt) {

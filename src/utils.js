@@ -32,7 +32,7 @@ import {MAC} from 'ol/has';
 /**
  * Return whether the passed event has the 'ctrl' key (or 'meta' key on Mac) pressed or not.
  *
- * @param {JQueryEventObject|KeyboardEvent} evt Event.
+ * @param {JQuery.Event|KeyboardEvent} evt Event.
  * @returns {boolean}
  */
 export function isEventUsinCtrlKey(evt) {
@@ -45,9 +45,9 @@ export function isEventUsinCtrlKey(evt) {
 }
 
 /**
- * Same as `ol.events.condition.platformModifierKeyOnly` but for JQueryEventObject.
+ * Same as `ol.events.condition.platformModifierKeyOnly` but for JQuery.Event.
  *
- * @param {JQueryEventObject} evt Event.
+ * @param {JQuery.Event} evt Event.
  * @returns {boolean} True if only the platform modifier key (ctrl) is pressed.
  * @private
  */
@@ -56,9 +56,9 @@ export function isPlatformModifierKeyOnly(evt) {
 }
 
 /**
- * Same as `ol.events.condition.shiftKeyOnly` but for JQueryEventObject.
+ * Same as `ol.events.condition.shiftKeyOnly` but for JQuery.Event.
  *
- * @param {JQueryEventObject} evt Event.
+ * @param {JQuery.Event} evt Event.
  * @returns {boolean} True if only the shift key is pressed.
  * @private
  */

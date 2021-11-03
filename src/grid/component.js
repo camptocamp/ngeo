@@ -192,7 +192,7 @@ GridController.prototype.sort = function (columnName) {
  * Handler for clicks on a row.
  *
  * @param {unknown} attributes An entry/row.
- * @param {JQueryEventObject} event Event.
+ * @param {JQuery.Event} event Event.
  */
 GridController.prototype.clickRow = function (attributes, event) {
   const shiftKey = isShiftKeyOnly(event);
@@ -289,7 +289,7 @@ GridController.prototype.selectRange_ = function (attributes) {
  * Prevent the default browser behaviour of selecting text
  * when selecting multiple rows with SHIFT or CTRL/Meta.
  *
- * @param {JQueryEventObject} event Event.
+ * @param {JQuery.Event} event Event.
  */
 GridController.prototype.preventTextSelection = function (event) {
   const shiftKey = isShiftKeyOnly(event);
