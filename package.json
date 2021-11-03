@@ -150,7 +150,7 @@
     "jsdoc": "3.6.7",
     "jsdoc-plugin-typescript": "2.0.6",
     "jsts": "2.7.3",
-    "karma": "6.3.6",
+    "karma": "6.3.7",
     "karma-chrome-launcher": "3.1.0",
     "karma-jasmine": "4.0.1",
     "karma-sinon": "1.0.5",
