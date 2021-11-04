@@ -40,17 +40,6 @@ import olCollection from 'ol/Collection';
 import olLayerVector from 'ol/layer/Vector';
 import olSourceVector from 'ol/source/Vector';
 
-if (!window.requestAnimationFrame) {
-  alert(
-    'Your browser is not supported, please update it or use another one. You will be redirected.\n\n' +
-      "Votre navigateur n'est pas supporté, veuillez le mettre à jour ou en utiliser un autre. " +
-      'Vous allez être redirigé.\n\n' +
-      'Ihr Browser wird nicht unterstützt, bitte aktualisieren Sie ihn oder verwenden Sie einen anderen. ' +
-      'Sie werden weitergeleitet.'
-  );
-  window.location.href = 'https://geomapfish.org/';
-}
-
 /**
  * @private
  */
