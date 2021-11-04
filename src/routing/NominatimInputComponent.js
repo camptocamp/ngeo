@@ -138,7 +138,7 @@ export function Controller($element, $scope, ngeoNominatimService) {
 }
 
 /**
- * @param {JQueryEventObject} event Event.
+ * @param {JQuery.Event} event Event.
  * @param {import('ngeo/routing/NominatimService').NominatimSearchResult} suggestion Suggestion.
  * @param {Twitter.Typeahead.Dataset<import('ngeo/routing/NominatimService').NominatimSearchResult>} dataset Dataset.
  * @hidden

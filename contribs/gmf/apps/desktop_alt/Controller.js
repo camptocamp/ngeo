@@ -79,7 +79,7 @@ class Controller extends AbstractDesktopController {
   }
 
   /**
-   * @param {JQueryEventObject} event keydown event.
+   * @param {JQuery.Event} event keydown event.
    */
   onKeydown(event) {}
 }

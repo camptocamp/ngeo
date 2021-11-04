@@ -823,7 +823,7 @@ export class SearchController {
   }
 
   /**
-   * @param {JQueryEventObject} event Event.
+   * @param {JQuery.Event} event Event.
    * @param {olFeature<import('ol/geom/Geometry').default>|CoordinateSuggestion} suggestion Suggestion.
    * @param {Twitter.Typeahead.Dataset<olFeature<import('ol/geom/Geometry').default>>} dataset Dataset.
    * @private
@@ -855,7 +855,7 @@ export class SearchController {
   }
 
   /**
-   * @param {JQueryEventObject} event Event.
+   * @param {JQuery.Event} event Event.
    * @param {olFeature<import('ol/geom/Geometry').default>} feature Feature.
    * @param {Twitter.Typeahead.Dataset<olFeature<import('ol/geom/Geometry').default>>} dataset Dataset.
    * @private
@@ -940,7 +940,7 @@ export class SearchController {
   }
 
   /**
-   * @param {JQueryEventObject} event Event.
+   * @param {JQuery.Event} event Event.
    * @param {string} query Query.
    * @param {boolean} empty Empty.
    * @private
@@ -1016,7 +1016,7 @@ export class SearchController {
   }
 
   /**
-   * @param {JQueryEventObject} event Event.
+   * @param {JQuery.Event} event Event.
    * @param {string} query Query.
    * @private
    */

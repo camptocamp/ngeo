@@ -25,11 +25,11 @@ import angular from 'angular';
  * @typedef {Object} SearchDirectiveListeners
  * @property {function(): void} [open]
  * @property {function(): void} [close]
- * @property {function(JQueryEventObject, T, Twitter.Typeahead.Dataset<T>): void} [cursorchange]
- * @property {function(JQueryEventObject, T, Twitter.Typeahead.Dataset<T>): void} [select]
- * @property {function(JQueryEventObject, T, Twitter.Typeahead.Dataset<T>): void} [autocomplete]
- * @property {function(JQueryEventObject, string, boolean): void} [datasetsempty]
- * @property {function(JQueryEventObject, string): void} [change]
+ * @property {function(JQuery.Event, T, Twitter.Typeahead.Dataset<T>): void} [cursorchange]
+ * @property {function(JQuery.Event, T, Twitter.Typeahead.Dataset<T>): void} [select]
+ * @property {function(JQuery.Event, T, Twitter.Typeahead.Dataset<T>): void} [autocomplete]
+ * @property {function(JQuery.Event, string, boolean): void} [datasetsempty]
+ * @property {function(JQuery.Event, string): void} [change]
  * @template T
  */
 
@@ -96,7 +96,7 @@ function searchComponent() {
       element.on(
         'typeahead:cursorchange',
         /**
-         * @param {JQueryEventObject} event Event.
+         * @param {JQuery.Event} event Event.
          * @param {T} suggestion Suggestion.
          * @param {Twitter.Typeahead.Dataset<T>} dataset Dataset.
          */
@@ -110,7 +110,7 @@ function searchComponent() {
       element.on(
         'typeahead:select',
         /**
-         * @param {JQueryEventObject} event Event.
+         * @param {JQuery.Event} event Event.
          * @param {T} suggestion Suggestion.
          * @param {Twitter.Typeahead.Dataset<T>} dataset Dataset.
          */
@@ -124,7 +124,7 @@ function searchComponent() {
       element.on(
         'typeahead:autocomplete',
         /**
-         * @param {JQueryEventObject} event Event.
+         * @param {JQuery.Event} event Event.
          * @param {T} suggestion Suggestion.
          * @param {Twitter.Typeahead.Dataset<T>} dataset Dataset.
          */
@@ -138,7 +138,7 @@ function searchComponent() {
       element.on(
         'typeahead:asyncreceive',
         /**
-         * @param {JQueryEventObject} event Event.
+         * @param {JQuery.Event} event Event.
          * @param {Twitter.Typeahead.Dataset<T>} dataset Dataset.
          * @param {string} query Query.
          */
@@ -153,7 +153,7 @@ function searchComponent() {
       element.on(
         'typeahead:change',
         /**
-         * @param {JQueryEventObject} event Event.
+         * @param {JQuery.Event} event Event.
          */
         (event) => {
           scope.$apply(() => {

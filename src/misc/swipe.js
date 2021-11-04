@@ -29,10 +29,10 @@ import angular from 'angular';
 
 /**
  * @typedef {Object} EventHandlers
- * @property {function(Coordinates, JQueryEventObject): void} [start]
- * @property {function(Coordinates, JQueryEventObject): void} [end]
- * @property {function(JQuery.TriggeredEvent<?, undefined, ?, ?>|JQueryEventObject): void} [cancel]
- * @property {function(Coordinates, JQueryEventObject): void} [move]
+ * @property {function(Coordinates, JQuery.Event): void} [start]
+ * @property {function(Coordinates, JQuery.Event): void} [end]
+ * @property {function(JQuery.TriggeredEvent<?, undefined, ?, ?>|JQuery.Event): void} [cancel]
+ * @property {function(Coordinates, JQuery.Event): void} [move]
  */
 
 /**
@@ -98,7 +98,7 @@ myModule.factory('$verticalSwipe', [
     };
 
     /**
-     * @param {JQueryEventObject} event
+     * @param {JQuery.Event} event
      * @returns {Coordinates}
      */
     function getCoordinates(event) {
@@ -187,7 +187,7 @@ myModule.factory('$verticalSwipe', [
         element.on(
           getEvents(pointerTypes, 'start'),
           /**
-           * @param {JQueryEventObject} event
+           * @param {JQuery.Event} event
            */
           (event) => {
             startCoords = getCoordinates(event);
@@ -213,7 +213,7 @@ myModule.factory('$verticalSwipe', [
         element.on(
           getEvents(pointerTypes, 'move'),
           /**
-           * @param {JQueryEventObject} event
+           * @param {JQuery.Event} event
            */
           (event) => {
             if (!active) {
@@ -261,7 +261,7 @@ myModule.factory('$verticalSwipe', [
         element.on(
           getEvents(pointerTypes, 'end'),
           /**
-           * @param {JQueryEventObject} event
+           * @param {JQuery.Event} event
            */
           (event) => {
             if (!active) {
