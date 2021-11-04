@@ -27,6 +27,27 @@ import config from 'gmfapi/store/config';
 import 'ngeo/auth/index';
 
 /**
+ * @param {string} scriptUrl The script URL
+ */
+function addScript(scriptUrl) {
+  const script = document.createElement('script');
+  script.src = scriptUrl;
+  script.crossOrigin = 'anonymous';
+  document.body.append(script);
+}
+
+/**
+ * @param {string} stylesheetUrl The stylesheet URL
+ */
+function addStylesheet(stylesheetUrl) {
+  const style = document.createElement('link');
+  style.href = stylesheetUrl;
+  style.rel = 'stylesheet';
+  style.crossOrigin = 'anonymous';
+  document.head.append(style);
+}
+
+/**
  * @private
  * @hidden
  * @param {angular.IModule} module The module
@@ -58,40 +79,47 @@ function bootstrap(module) {
       withCredentials: false,
     },
   });
-  request.fail((jqXHR, textStatus) => {
-    window.alert(`Failed to get the dynamic: ${textStatus}`);
-  });
-  request.done((dynamic) => {
-    if (dynamic.doRedirect) {
-      const small_screen = window.matchMedia ? window.matchMedia('(max-width: 1024px)') : false;
-      if (small_screen && 'ontouchstart' in window) {
-        window.location.href = dynamic.redirectUrl;
+  request
+    .fail((jqXHR, textStatus) => {
+      window.alert(`Failed to get the dynamic: ${textStatus}`);
+    })
+    .done((dynamic) => {
+      if (dynamic.doRedirect) {
+        const small_screen = window.matchMedia ? window.matchMedia('(max-width: 1024px)') : false;
+        if (small_screen && 'ontouchstart' in window) {
+          window.location.href = dynamic.redirectUrl;
+        }
       }
-    }
 
-    if ('gmfCustomJavascriptUrl' in dynamic.constants) {
-      const script = document.createElement('script');
-      script.src = dynamic.constants.gmfCustomJavascriptUrl;
-      script.crossOrigin = 'anonymous';
-      document.body.append(script);
-    }
-    if ('gmfCustomStylesheetUrl' in dynamic.constants) {
-      const style = document.createElement('link');
-      style.href = dynamic.constants.gmfCustomStylesheetUrl;
-      style.rel = 'stylesheet';
-      style.crossOrigin = 'anonymous';
-      document.head.append(style);
-    }
+      if ('gmfCustomJavascriptUrl' in dynamic.constants) {
+        const gmfCustomJavascriptUrl = dynamic.constants.gmfCustomJavascriptUrl;
+        (Array.isArray(gmfCustomJavascriptUrl) ? gmfCustomJavascriptUrl : [gmfCustomJavascriptUrl]).forEach(
+          (url) => {
+            addScript(url);
+          }
+        );
+      }
+      if ('gmfCustomStylesheetUrl' in dynamic.constants) {
+        const gmfCustomStylesheetUrl = dynamic.constants.gmfCustomStylesheetUrl;
+        (Array.isArray(gmfCustomStylesheetUrl) ? gmfCustomStylesheetUrl : [gmfCustomStylesheetUrl]).forEach(
+          (url) => {
+            addStylesheet(url);
+          }
+        );
+      }
 
-    config.setConfig(dynamic.constants);
+      config.setConfig(dynamic.constants);
 
-    for (const name in dynamic.constants) {
-      module.constant(name, dynamic.constants[name]);
-    }
+      for (const name in dynamic.constants) {
+        module.constant(name, dynamic.constants[name]);
+      }
 
-    setupI18n();
-    angular.bootstrap(document, [`App${interface_}`]);
-  });
+      setupI18n();
+      angular.bootstrap(document, [`App${interface_}`]);
+    })
+    .catch((error) => {
+      window.alert(`Failed to get the dynamic: ${error}`);
+    });
 }
 
 export default bootstrap;

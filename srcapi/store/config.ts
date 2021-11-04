@@ -1338,12 +1338,12 @@ export type gmfEditFeatureOptions = {
 /**
  * Use to inject custom javascript from an URL.
  */
-export type gmfCustomJavascriptUrl = string;
+export type gmfCustomJavascriptUrl = string | string[];
 
 /**
  * Use to inject custom stylesheet from an URL.
  */
-export type gmfCustomStylesheetUrl = string;
+export type gmfCustomStylesheetUrl = string | string[];
 
 /**
  * Does the application use tow factor authentication
