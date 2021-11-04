@@ -145,9 +145,9 @@ jobs:
               repo: github.context.issue.repo,
               pull_number: github.context.issue.number,
               body: [
-                "This build can't have the Chromatic status because the secrets are missing.",
-                "To get the Chromatic status check you should assign one label, e.-g. `get-chromatic-on-dependabot`.",
-                "You can also check the status on https://www.chromatic.com/pullrequests?appId=612f928164063b003a629e5b."
+                \"This build can't have the Chromatic status because the secrets are missing.\",
+                \"To get the Chromatic status check you should assign one label, e.-g. \`get-chromatic-on-dependabot\`.\",
+                \"You can also check the status on https://www.chromatic.com/pullrequests?appId=612f928164063b003a629e5b.\"
               ].join('\n'),
               event: 'COMMENT'
             });
