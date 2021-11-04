@@ -35,7 +35,7 @@ import {MAC} from 'ol/has';
  * @param {JQueryEventObject|KeyboardEvent} evt Event.
  * @returns {boolean}
  */
-export function isEventUsinCtrlKey(evt) {
+export function isEventUsingCtrlKey(evt) {
   if (!evt) {
     return false;
   }
@@ -52,7 +52,7 @@ export function isEventUsinCtrlKey(evt) {
  * @private
  */
 export function isPlatformModifierKeyOnly(evt) {
-  return !evt.altKey && isEventUsinCtrlKey(evt) && !evt.shiftKey;
+  return !evt.altKey && isEventUsingCtrlKey(evt) && !evt.shiftKey;
 }
 
 /**
@@ -63,7 +63,7 @@ export function isPlatformModifierKeyOnly(evt) {
  * @private
  */
 export function isShiftKeyOnly(evt) {
-  return !evt.altKey && !isEventUsinCtrlKey(evt) && evt.shiftKey;
+  return !evt.altKey && !isEventUsingCtrlKey(evt) && evt.shiftKey;
 }
 
 /**
