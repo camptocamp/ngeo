@@ -22,7 +22,7 @@
 import angular from 'angular';
 import ngeoQueryAction from 'ngeo/query/Action';
 import ngeoQueryMode from 'ngeo/query/Mode';
-import {isEventUsinCtrlKey} from 'ngeo/utils';
+import {isEventUsingCtrlKey} from 'ngeo/utils';
 
 import {listen as olEventsListen} from 'ol/events';
 
@@ -244,12 +244,12 @@ export class QueryModeSelector {
         this.activeActionKey_ = key;
         updateScope = true;
       }
-    } else if (isEventUsinCtrlKey(evt) && !this.previousMode_) {
+    } else if (isEventUsingCtrlKey(evt) && !this.previousMode_) {
       // The 'ctrl' (or 'meta' key) on mac was pressed
       this.previousMode_ = this.mode;
       this.mode = ngeoQueryMode.DRAW_BOX;
       updateScope = true;
-    } else if (!isEventUsinCtrlKey(evt) && !this.keysAction_.includes(key) && this.previousMode_) {
+    } else if (!isEventUsingCtrlKey(evt) && !this.keysAction_.includes(key) && this.previousMode_) {
       // If the ctrl key was pressed and now another key (but not an action key) is pressed,
       // reset to the default mode. (For instance to avoid to keep a previous mode
       // after a ctrl+p.)
@@ -277,7 +277,7 @@ export class QueryModeSelector {
 
     // On any 'keyup', if it comes from a 'ctrl' (or 'meta' on mac) release and
     // there is a previous mode set, then set it as new active mode.
-    if (isEventUsinCtrlKey(evt) && this.previousMode_) {
+    if (isEventUsingCtrlKey(evt) && this.previousMode_) {
       updateScope = this.reset_();
     }
 
