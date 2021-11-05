@@ -2,7 +2,7 @@
 name: Add message on pull requests with the related examples
 
 on:
-  pull_request:
+  pull_request_target:
     types:
       - opened
 
@@ -14,6 +14,7 @@ jobs:
 
     steps:
       - run: npm install --production @actions/github
+
       - run: |
           echo "
           const github = require('@actions/github');
@@ -37,6 +38,33 @@ jobs:
 
           run();
           " > pr-message.js
+        if: github.actor != 'dependabot[bot]'
+
+      - run: |
+          echo "
+          const github = require('@actions/github');
+
+          async function run() {
+            // Get client and context
+            const client = new github.getOctokit(process.env.GITHUB_TOKEN);
+
+            await client.rest.pulls.createReview({
+              owner: github.context.issue.owner,
+              repo: github.context.issue.repo,
+              pull_number: github.context.issue.number,
+              body: [
+                \"This build can't have the Chromatic status because the secrets are missing.\",
+                \"To get the Chromatic status check you should assign one label, e.-g. \`get-chromatic-on-dependabot\`.\",
+                \"You can also check the status on https://www.chromatic.com/pullrequests?appId=612f928164063b003a629e5b.\"
+              ].join('\n'),
+              event: 'COMMENT'
+            });
+          }
+
+          run();
+          " > pr-message.js
+        if: github.actor == 'dependabot[bot]'
+
       - run: node pr-message.js
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
