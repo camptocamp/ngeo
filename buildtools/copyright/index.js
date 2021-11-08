@@ -168,6 +168,9 @@ function check(context) {
 module.exports = {
   rules: {
     'copyright': {
+      meta: {
+        fixable: 'code',
+      },
       create: check,
     },
   },

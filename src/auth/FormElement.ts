@@ -21,18 +21,18 @@
 
 import {html, TemplateResult, unsafeCSS, CSSResult, css} from 'lit';
 import {customElement, property, state} from 'lit/decorators.js';
-import GmfBaseElement from 'ngeo/BaseElement';
+import GmfBaseElement from 'gmfapi/elements/BaseElement';
 import {Message, MessageType} from 'ngeo/message/Message';
 import ngeoMessageNotification from 'ngeo/message/Notification';
 import {unsafeSVG} from 'lit/directives/unsafe-svg';
 import loadingSvg from 'gmf/icons/spinner.svg';
 import {gmfBackgroundlayerStatus} from 'gmf/backgroundlayerselector/status';
-import user, {User, UserState} from 'ngeo/store/user';
+import user, {User, UserState} from 'gmfapi/store/user';
 // @ts-ignore
 import qruri from 'qruri';
 import i18next from 'i18next';
-import {Configuration} from 'ngeo/store/config';
 import authenticationService from './service';
+import {Configuration} from 'gmfapi/store/config';
 
 /**
  * The definition of a PasswordValidator
@@ -42,8 +42,8 @@ export type PasswordValidator = {
   notValidMessage: string;
 };
 
-@customElement('gmf-auth-form')
-export default class GmfAuthFormElement extends GmfBaseElement {
+@customElement('gmf-auth-component')
+export default class GmfAuthComponent extends GmfBaseElement {
   @property({type: String}) loginInfoMessage = '';
   @property({type: Object}) private passwordValidator: PasswordValidator = null;
   @state() private isLoading = false;
@@ -62,7 +62,7 @@ export default class GmfAuthFormElement extends GmfBaseElement {
 
   connectedCallback(): void {
     super.connectedCallback();
-    this.subscriptions_.push(
+    this.subscriptions.push(
       user.getProperties().subscribe({
         next: (properties: User) => {
           this.gmfUser = properties;

@@ -38,6 +38,8 @@ import ngeoDrawFeatures from 'ngeo/draw/features';
 import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate';
 import ngeoQueryPanelComponent from 'ngeo/query/panelComponent';
 import gmfImportModule from 'gmf/import/module';
+import 'ngeo/canvas/DesktopElement';
+import 'ngeo/canvas/ToolButtonsImplElements';
 import olCollection from 'ol/Collection';
 import {listen} from 'ol/events';
 import olLayerVector from 'ol/layer/Vector';
@@ -46,6 +48,9 @@ import olStyleFill from 'ol/style/Fill';
 import olStyleStroke from 'ol/style/Stroke';
 import olStyleStyle from 'ol/style/Style';
 import olStyleText from 'ol/style/Text';
+
+import 'gmfapi/index';
+import panels from 'gmfapi/store/panels';
 
 import 'gmf/controllers/vars_desktop.scss';
 import 'gmf/controllers/desktop.scss';
@@ -160,6 +165,16 @@ export class AbstractDesktopController extends AbstractAPIController {
      */
     this.routingPanelActive = false;
 
+    panels.getActiveToolPanel().subscribe({
+      next: (panels) => {
+        if (panels !== null) {
+          const newVal = panels.includes('print');
+          if (newVal != this.printPanelActive) {
+            this.printPanelActive = newVal;
+          }
+        }
+      },
+    });
     // Don't deactivate ngeoQuery on print activation
     $scope.$watch(
       () => this.printPanelActive,

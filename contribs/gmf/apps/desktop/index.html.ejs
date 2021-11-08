@@ -104,12 +104,17 @@
         <div
             class="gmf-app-tools-content container-fluid"
             ng-class="{'gmf-app-active': mainCtrl.toolsActive, 'gmf-app-inactive': !mainCtrl.toolsActive }">
-          <gmf-auth-panel ng-show="mainCtrl.loginActive"
-          ng-on-close-panel="mainCtrl.loginActive = $event.detail"
-          ng-prop-login_info_message="mainCtrl.loginInfoMessage"
-          ng-prop-post_loading="mainCtrl.postLoading"
-          ng-prop-password_validator="mainCtrl.passwordValidator"
-          ></gmf-auth-panel>
+            <div class="row"
+                ng-show="mainCtrl.loginActive">
+              <div class="col-sm-12">
+                <a class="btn close gmf-close" ng-click="mainCtrl.loginActive = false">&times;</a>
+                <gmf-auth-panel ng-show="mainCtrl.loginActive"
+                  ng-prop-login_info_message="mainCtrl.loginInfoMessage"
+                  ng-prop-post_loading="mainCtrl.postLoading"
+                  ng-prop-password_validator="mainCtrl.passwordValidator"
+                ></gmf-auth-panel>
+            </div>
+          </div>
           <div ng-show="mainCtrl.printPanelActive" class="row">
             <div class="col-sm-12">
               <div class="gmf-app-tools-content-heading">

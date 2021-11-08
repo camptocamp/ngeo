@@ -6,7 +6,7 @@ ANGULAR_VERSION := $(shell buildtools/get-version angular)
 WEBPACK_CONFIG_FILES := $(shell find . -not -path './node_modules/*' -name 'webpack.*.js')
 
 API_JS_FILES = $(shell find api/src/ -type f -name '*.js') $(shell find api/src/ -type f -name '*.ts')
-NGEO_JS_FILES = $(shell find src/ -type f -name '*.js') $(shell find lib/ -type f -name '*.js') $(shell find src/ -type f -name '*.ts')
+NGEO_JS_FILES = $(shell find src/ -type f -name '*.js') $(shell find srcapi/ -type f -name '*.js') $(shell find lib/ -type f -name '*.js') $(shell find src/ -type f -name '*.ts')
 TS_FILES = $(shell find src/ -type f -name '*.ts')
 NGEO_PARTIALS_FILES := $(shell find src/ -name '*.html')
 NGEO_ALL_SRC_FILES := $(shell find src/ -type f)
@@ -268,8 +268,6 @@ contribs/dist: .build/build-dll.timestamp
 	rsync --recursive .build/examples-hosted/gmfappsdeps/contribs/gmf/apps/ .build/examples-hosted/contribs/gmf/apps/
 	mkdir -p .build/examples-hosted/contribs/gmf/apps/desktop
 	cp ./contribs/gmf/apps/desktop/header.html .build/examples-hosted/contribs/gmf/apps/desktop
-	mkdir -p .build/examples-hosted/contribs/gmf/apps/desktop_alt
-	cp ./contribs/gmf/apps/desktop_alt/header.html .build/examples-hosted/contribs/gmf/apps/desktop_alt
 	mkdir -p .build/examples-hosted/contribs/gmf/apps/oeedit
 	cp ./contribs/gmf/apps/oeedit/header.html .build/examples-hosted/contribs/gmf/apps/oeedit
 	touch $@

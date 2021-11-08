@@ -19,33 +19,43 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import user, {UserState} from '../../src/store/user';
+import {TemplateResult, html} from 'lit';
+import {customElement} from 'lit/decorators';
+import ToolButtonElement from 'gmfapi/elements/ToolButtonElement';
+import i18next from 'i18next';
+import 'bootstrap/js/src/tooltip';
+import user, {User} from 'gmfapi/store/user';
+import {state} from 'lit/decorators';
 
-describe('Test store user', () => {
-  beforeEach(() => {
-    const newUser = user.getEmptyUserProperties();
-    user.setUser(newUser, UserState.NOT_INITIALIZED);
-  });
+@customElement('gmf-button-auth')
+export class ToolButtonAuth extends ToolButtonElement {
+  constructor() {
+    super('auth');
+  }
+  @state() private login_ = false;
 
-  it('Get instance of the user', () => {
-    expect(user).not.to.be.undefined;
-    expect(user.getProperties().value).to.deep.equal(user.getEmptyUserProperties());
-    expect(user.getState()).to.equal(UserState.NOT_INITIALIZED);
-  });
+  connectedCallback(): void {
+    super.connectedCallback();
+    this.subscriptions.push(
+      user.getProperties().subscribe({
+        next: (properties: User) => {
+          this.login_ = !!properties.username;
+        },
+      })
+    );
+  }
 
-  it('Set the user config', () => {
-    const newUser = user.getEmptyUserProperties();
-    newUser.username = 'Simone';
-    user.setUser(newUser, UserState.LOGGED_IN);
-    expect(user.getProperties().value).to.deep.equal(newUser);
-    expect(user.getState()).to.equal(UserState.LOGGED_IN);
-  });
-
-  it('Set a wrong config', () => {
-    const newUser = user.getEmptyUserProperties();
-    delete newUser.email; // To test the case where the server gives a not complete user.
-    user.setUser(newUser, UserState.LOGGED_OUT);
-    expect(user.getState()).to.equal(UserState.NOT_INITIALIZED);
-    expect(user.getProperties().value).to.deep.equal(user.getEmptyUserProperties());
-  });
-});
+  render(): TemplateResult {
+    return html`
+      <button
+        @click=${() => this.click_()}
+        class="btn btn-default ${this.active_ ? 'active' : ''}"
+        data-toggle="tooltip"
+        data-placement="left"
+        data-original-title="${i18next.t('Login')}"
+      >
+        <span class="fa fa-user ${this.login_ ? 'fa-user-times' : 'fa-user'}"></span>
+      </button>
+    `;
+  }
+}

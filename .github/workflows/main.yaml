@@ -91,10 +91,14 @@ jobs:
           retention-days: 5
         if: failure()
 
-      # Generate API doc
+      # Generate API doc, api, lib
       - run: npm run doc
       - run: make jsdoc
       - run: npm run build-api
+      - run: npm run dist-desktop
+      - run: npm run dist-mobile
+      - run: npm run dist-iframeapi
+
       - uses: actions/upload-artifact@v2
         with:
           name: Npm logs

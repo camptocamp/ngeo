@@ -19,9 +19,10 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import configuration, {Configuration} from 'ngeo/store/config';
 import gmfAuthenticationService from 'ngeo/auth/service';
-import user, {UserState} from 'ngeo/store/user';
+
+import configuration, {Configuration} from 'gmfapi/store/config';
+import user, {UserState} from 'gmfapi/store/user';
 
 describe('Auth component', () => {
   context('panel', () => {

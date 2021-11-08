@@ -43,7 +43,8 @@ import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr';
 
 import 'bootstrap/js/src/dropdown';
 
-import user from 'ngeo/store/user';
+import panels from 'gmfapi/store/panels';
+import user from 'gmfapi/store/user';
 
 /**
  * @type {angular.IModule}
@@ -568,6 +569,7 @@ export class FilterSelectorController {
    * @hidden
    */
   handleSelectedDataSourceChange_(dataSource) {
+    panels.setFilterActive(false);
     this.aRuleIsActive = false;
     this.customRules = null;
     this.directedRules = null;

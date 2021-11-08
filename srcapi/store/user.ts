@@ -103,6 +103,17 @@ export enum UserState {
   NOT_INITIALIZED = 'not initialized',
 }
 
+/**
+ * Object used to expose the login user information.
+ *
+ * Example of usage:
+ *
+ *    gmfapi.store.user.getProperties().subscribe({
+ *      next: (user: User) => {
+ *        ...
+ *      },
+ *    })
+ */
 export class UserModel {
   /**
    * The observable user's properties. The default user is empty.

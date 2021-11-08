@@ -19,44 +19,35 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import {html, TemplateResult, unsafeCSS, css, CSSResult} from 'lit';
+import {html, TemplateResult, unsafeCSS, css} from 'lit';
 import {customElement, property, state} from 'lit/decorators.js';
 import {unsafeSVG} from 'lit/directives/unsafe-svg.js';
 import loadingSvg from 'gmf/icons/spinner.svg';
 import i18next from 'i18next';
-import GmfBaseElement from 'ngeo/BaseElement';
-import {Configuration} from 'ngeo/store/config';
 import {PasswordValidator} from './FormElement';
+import './FormElement';
+
+import {Configuration} from 'gmfapi/store/config';
+import GmfBaseElement from 'gmfapi/elements/BaseElement';
+import ToolPanelElement from 'gmfapi/elements/ToolPanelElement';
 
 @customElement('gmf-auth-panel')
-export default class GmfAuthPanelElement extends GmfBaseElement {
+export default class AuthPanel extends ToolPanelElement {
   @property({type: String}) loginInfoMessage = '';
   @property({type: Boolean}) postLoading = false;
   @property({type: Object}) passwordValidator: PasswordValidator = null;
   @state() private customCSS_ = '';
 
-  static styles: CSSResult[] = [
+  static style = [
     ...GmfBaseElement.styles,
     css`
-      .row {
-        padding: 0 0.62rem;
-      }
-
-      .gmf-app-tools-content-heading {
-        color: var(--color-light);
-        padding-bottom: 0.62rem;
-        margin-bottom: 0.62rem;
-        margin-top: calc(30px / 2);
-        border-bottom: 0.06rem solid;
-        border-bottom-color: var(--color-light);
-      }
-      .gmf-app-tools-content-heading .close {
-        padding: 0;
-      }
-
-      .svg-spinner {
+      .svg-lit-element {
         width: 1rem;
         margin-right: 5px;
+      }
+
+      [hidden] {
+        display: none !important;
       }
     `,
   ];
@@ -86,23 +77,12 @@ export default class GmfAuthPanelElement extends GmfBaseElement {
       <style>
         ${unsafeCSS(this.customCSS_)}
       </style>
-      <div class="row">
-        <div class="col-sm-12">
-          <div class="gmf-app-tools-content-heading">
-            ${i18next.t('Login')}
-            <a class="btn close" @click=${() => this.closePanel()}>&times;</a>
-          </div>
-          <gmf-auth-form
-            .loginInfoMessage=${this.loginInfoMessage}
-            .passwordValidator=${this.passwordValidator}
-          ></gmf-auth-form>
-          ${spinnerTemplate}
-        </div>
-      </div>
+      ${this.getTitle(i18next.t('Login'))}
+      <gmf-auth-component
+        .loginInfoMessage=${this.loginInfoMessage}
+        .passwordValidator=${this.passwordValidator}
+      ></gmf-auth-component>
+      ${spinnerTemplate}
     `;
-  }
-
-  closePanel(): void {
-    this.dispatchEvent(new CustomEvent('close-panel', {detail: false}));
   }
 }
