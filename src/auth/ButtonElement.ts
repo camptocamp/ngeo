@@ -27,7 +27,7 @@ import 'bootstrap/js/src/tooltip';
 import user, {User} from 'gmfapi/store/user';
 import {state} from 'lit/decorators';
 
-@customElement('gmf-button-auth')
+@customElement('gmf-auth-button')
 export class ToolButtonAuth extends ToolButtonElement {
   constructor() {
     super('auth');

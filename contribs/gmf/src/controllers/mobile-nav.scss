@@ -233,6 +233,11 @@ nav.gmf-mobile-nav-right {
     }
   }
 
+  gmf-auth-form.gmf-mobile-nav-slide {
+    padding: $app-margin;
+    margin: 0;
+  }
+
   .gmf-mobile-nav-slide {
     position: fixed;
     height: calc(100% - #{$nav-bar-height});

@@ -54,11 +54,11 @@
       </div>
 
       <!-- Login -->
-      <gmf-button-auth slot="tool-button"></gmf-button-auth>
+      <gmf-auth-button slot="tool-button"></gmf-auth-button>
       <gmf-auth-panel slot="tool-panel-auth"></gmf-auth-panel>
 
       <!-- Print -->
-      <gmf-button-print slot="tool-button"></gmf-button-print>
+      <gmf-print-button slot="tool-button"></gmf-print-button>
       <div slot="tool-panel-print" class="row">
         <div class="col-sm-12">
           <div class="gmf-app-tools-content-heading">
@@ -81,7 +81,7 @@
       </div>
 
       <!-- Drawing -->
-      <gmf-button-draw slot="tool-button"></gmf-button-draw>
+      <gmf-draw-button slot="tool-button"></gmf-draw-button>
       <div slot="tool-panel-draw" class="row">
         <div class="col-sm-12">
           <div class="gmf-app-tools-content-heading">
@@ -96,15 +96,15 @@
       </div>
 
       <!-- Filter -->
-      <gmf-button-filter slot="tool-button">
+      <gmf-filter-button slot="tool-button">
         <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.filterSelectorActive"
         data-toggle="tooltip" data-placement="left" data-original-title="{{'Filter'|translate}}">
-        <span
-          class="fa"
-          ng-class="mainCtrl.gmfDataSourceBeingFiltered.dataSource && mainCtrl.gmfDataSourceBeingFiltered.dataSource.filterRules ? 'fa-funnel-dollar' : 'fa-filter'"></span>
-      </button>
-
-      </gmf-button-filter>
+          <span
+            class="fa"
+            ng-class="mainCtrl.gmfDataSourceBeingFiltered.dataSource && mainCtrl.gmfDataSourceBeingFiltered.dataSource.filterRules ? 'fa-funnel-dollar' : 'fa-filter'">
+          </span>
+        </button>
+      </gmf-filter-button>
       <div slot="tool-panel-filter" class="row">
         <div class="col-sm-12">
           <div class="gmf-app-tools-content-heading">
@@ -120,7 +120,7 @@
       </div>
 
       <!-- Editing -->
-      <gmf-button-editing slot="tool-button"></gmf-button-editing>
+      <gmf-editing-button slot="tool-button"></gmf-editing-button>
       <div slot="tool-panel-editing" class="row">
         <div class="col-sm-12">
           <div class="gmf-app-tools-content-heading">
@@ -141,7 +141,7 @@
       </div>
 
       <!-- Profile -->
-      <gmf-button-profile slot="tool-button"></gmf-button-profile>
+      <gmf-profile-button slot="tool-button"></gmf-profile-button>
       <div slot="tool-panel-profile" class="row profile-panel">
         <div class="col-sm-12">
           <div class="gmf-app-tools-content-heading">
@@ -178,7 +178,7 @@
       </gmf-profile>
 
       <!-- LIDAR -->
-      <gmf-button-lidarprofile slot="tool-button"></gmf-button-lidarprofile>
+      <gmf-lidarprofile-button slot="tool-button"></gmf-lidarprofile-button>
       <div
         slot="tool-panel-lidarprofile"
         class="row lidar-profile-panel"
@@ -204,7 +204,7 @@
       </gmf-lidarprofile>
 
       <!-- Google Street View -->
-      <gmf-button-googlestreetview slot="tool-button"></gmf-button-googlestreetview>
+      <gmf-googlestreetview-button slot="tool-button"></gmf-googlestreetview-button>
       <div slot="tool-panel-googlestreetview" class="row">
         <div class="col-sm-12">
           <div class="gmf-app-tools-content-heading">
@@ -221,7 +221,7 @@
       </div>
 
       <!-- Mapillary -->
-      <gmf-button-mapillary slot="tool-button"></gmf-button-mapillary>
+      <gmf-mapillary-button slot="tool-button"></gmf-mapillary-button>
       <div slot="tool-panel-mapillary" class="row">
         <div class="col-sm-12">
           <div class="gmf-app-tools-content-heading">
@@ -238,7 +238,7 @@
       </div>
 
       <!-- Selection -->
-      <gmf-button-selection slot="tool-button"></gmf-button-selection>
+      <gmf-selection-button slot="tool-button"></gmf-selection-button>
       <div slot="tool-panel-query"  class="row">
         <div class="col-sm-12">
           <div class="gmf-app-tools-content-heading">
@@ -249,7 +249,7 @@
       </div>
 
       <!-- Import Layer -->
-      <gmf-button-import slot="tool-button"></gmf-button-import>
+      <gmf-import-button slot="tool-button"></gmf-import-button>
       <div slot="tool-panel-import" class="row">
         <div class="col-sm-12">
           <div class="gmf-app-tools-content-heading">
@@ -261,7 +261,7 @@
       </div>
 
       <!-- Routing -->
-      <gmf-button-routing slot="tool-button"></gmf-button-routing>
+      <gmf-routing-button slot="tool-button"></gmf-routing-button>
       <div slot="tool-panel-routing" class="row">
         <div class="col-sm-12">
           <div class="gmf-app-tools-content-heading">

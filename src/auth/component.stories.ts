@@ -45,9 +45,9 @@ type Args = {
 const Template = (args: Args) => {
   user.setUser(args.user, UserState.READY);
   return `
-    <gmf-auth-component
+    <gmf-auth-form
       loginInfoMessage="${args.loginInfoMessage}">
-    </gmf-auth-component>`;
+    </gmf-auth-form>`;
 };
 
 const defaultProperties: Args = {
