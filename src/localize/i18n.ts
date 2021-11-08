@@ -24,39 +24,21 @@ import i18next from 'i18next';
 import locI18next from 'loc-i18next';
 import Backend from 'i18next-xhr-backend';
 import LanguageDetector from 'i18next-browser-languagedetector';
-
-const detectionOptions = {
-  order: ['querystring', 'cookie', 'localStorage', 'sessionStorage', 'navigator', 'htmlTag'],
-  lookupQuerystring: 'lang',
-  lookupCookie: 'i18next',
-  lookupLocalStorage: 'i18nextLng',
-  lookupSessionStorage: 'i18nextLng',
-
-  // cache user language
-  caches: ['localStorage'],
-  excludeCacheFor: ['cimode'],
-};
+import {InitOptions} from 'i18next';
+import {Configuration} from 'gmfapi/store/config';
 
 /**
- *
+ * @param config The GeoMapFish configuration
  */
-export function setupI18n(): void {
-  // eslint-disable-next-line @typescript-eslint/no-floating-promises
+export function setupI18n(config: Configuration): void {
+  const gmfI18nextConfiguration: InitOptions = config.gmfI18nextConfiguration || {};
+
   i18next
     .use(Backend)
     .use(LanguageDetector)
-    .init({
-      ns: ['app'],
-      defaultNS: 'app',
-      debug: true,
-      detection: detectionOptions,
-      fallbackLng: false,
-      interpolation: {
-        escapeValue: false,
-      },
-      backend: {
-        loadPath: 'build/locale/webcomponent/{{lng}}/{{ns}}.json',
-      },
+    .init(gmfI18nextConfiguration)
+    .catch((error: string) => {
+      console.error(`Unable to initialize the i18next: ${error}`);
     });
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call

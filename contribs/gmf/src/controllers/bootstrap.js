@@ -114,7 +114,7 @@ function bootstrap(module) {
         module.constant(name, dynamic.constants[name]);
       }
 
-      setupI18n();
+      setupI18n(dynamic.constants);
       angular.bootstrap(document, [`App${interface_}`]);
     })
     .catch((error) => {

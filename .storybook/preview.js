@@ -23,4 +23,25 @@ export const parameters = {
   },
 };
 
-setupI18n();
+setupI18n({
+  ns: ['app'],
+  defaultNS: 'app',
+  debug: true,
+  detection: {
+    order: ['querystring', 'cookie', 'localStorage', 'sessionStorage', 'navigator', 'htmlTag'],
+    lookupQuerystring: 'lang',
+    lookupCookie: 'i18next',
+    lookupLocalStorage: 'i18nextLng',
+    lookupSessionStorage: 'i18nextLng',
+    // cache user language
+    caches: ['localStorage'],
+    excludeCacheFor: ['cimode'],
+  },
+  fallbackLng: false,
+  interpolation: {
+    escapeValue: false,
+  },
+  backend: {
+    loadPath: 'build/locale/webcomponent/{{lng}}/{{ns}}.json',
+  },
+});
