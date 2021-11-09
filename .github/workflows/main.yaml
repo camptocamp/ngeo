@@ -72,17 +72,24 @@ jobs:
       # Lint
       - run: npx tsc --version
       - run: npm run typecheck
+        if: github.event_name != 'pull_request_target'
       # First do the lint on TypeScript files to see the error in the many warnings messages
       - run: make .build/eslint-ts.timestamp
+        if: github.event_name != 'pull_request_target'
       - run: make lint
+        if: github.event_name != 'pull_request_target'
       - run: make test
+        if: github.event_name != 'pull_request_target'
       - run: make check-examples-checker
+        if: github.event_name != 'pull_request_target'
       # Cypress tests
       - run: npm run test-cli
+        if: github.event_name != 'pull_request_target'
       # Webpack build of ngeo/gmf examples and gmf apps
       - run: NODE_ENV=production make examples-hosted
       - run: npm run build-storybook
       - run: make check-examples
+        if: github.event_name != 'pull_request_target'
       - uses: actions/upload-artifact@v2
         with:
           name: Examples hosted
