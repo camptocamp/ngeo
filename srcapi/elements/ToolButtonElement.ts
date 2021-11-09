@@ -32,7 +32,7 @@ import 'bootstrap/js/src/tooltip';
  *
  * Example:
  *
- *    @customElement('gmf-button-my')
+ *    @customElement('gmf-my-button')
  *    export class MyToolButtonElement extends gmfapi.elements.ToolButtonElement {
  *      constructor() {
  *        super(panelName);

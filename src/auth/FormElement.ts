@@ -42,8 +42,8 @@ export type PasswordValidator = {
   notValidMessage: string;
 };
 
-@customElement('gmf-auth-component')
-export default class GmfAuthComponent extends GmfBaseElement {
+@customElement('gmf-auth-form')
+export default class GmfAuthForm extends GmfBaseElement {
   @property({type: String}) loginInfoMessage = '';
   @property({type: Object}) private passwordValidator: PasswordValidator = null;
   @state() private isLoading = false;

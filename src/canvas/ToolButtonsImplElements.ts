@@ -27,7 +27,7 @@ import 'bootstrap/js/src/tooltip';
 import {state} from 'lit/decorators';
 import panels from 'gmfapi/store/panels';
 
-@customElement('gmf-button-print')
+@customElement('gmf-print-button')
 export class ToolButtonPrint extends ToolButtonElement {
   constructor() {
     super('print');
@@ -48,7 +48,7 @@ export class ToolButtonPrint extends ToolButtonElement {
   }
 }
 
-@customElement('gmf-button-draw')
+@customElement('gmf-draw-button')
 export class ToolButtonDraw extends ToolButtonElement {
   constructor() {
     super('draw');
@@ -69,7 +69,7 @@ export class ToolButtonDraw extends ToolButtonElement {
   }
 }
 
-@customElement('gmf-button-filter')
+@customElement('gmf-filter-button')
 export class ToolButtonFilter extends ToolButtonElement {
   @state() private filter_ = false;
 
@@ -103,7 +103,7 @@ export class ToolButtonFilter extends ToolButtonElement {
   }
 }
 
-@customElement('gmf-button-editing')
+@customElement('gmf-editing-button')
 export class ToolButtonEditing extends ToolButtonElement {
   constructor() {
     super('editing');
@@ -124,7 +124,7 @@ export class ToolButtonEditing extends ToolButtonElement {
   }
 }
 
-@customElement('gmf-button-profile')
+@customElement('gmf-profile-button')
 export class ToolButtonProfile extends ToolButtonElement {
   constructor() {
     super('profile');
@@ -145,7 +145,7 @@ export class ToolButtonProfile extends ToolButtonElement {
   }
 }
 
-@customElement('gmf-button-lidarprofile')
+@customElement('gmf-lidarprofile-button')
 export class ToolButtonLidarprofile extends ToolButtonElement {
   constructor() {
     super('lidarprofile');
@@ -166,7 +166,7 @@ export class ToolButtonLidarprofile extends ToolButtonElement {
   }
 }
 
-@customElement('gmf-button-googlestreetview')
+@customElement('gmf-googlestreetview-button')
 export class ToolButtonGooglestreetview extends ToolButtonElement {
   constructor() {
     super('googlestreetview');
@@ -187,7 +187,7 @@ export class ToolButtonGooglestreetview extends ToolButtonElement {
   }
 }
 
-@customElement('gmf-button-mapillary')
+@customElement('gmf-mapillary-button')
 export class ToolButtonMapillary extends ToolButtonElement {
   constructor() {
     super('mapillary');
@@ -208,7 +208,7 @@ export class ToolButtonMapillary extends ToolButtonElement {
   }
 }
 
-@customElement('gmf-button-select')
+@customElement('gmf-select-button')
 export class ToolButtonSelect extends ToolButtonElement {
   constructor() {
     super('selection');
@@ -232,7 +232,7 @@ export class ToolButtonSelect extends ToolButtonElement {
   }
 }
 
-@customElement('gmf-button-import')
+@customElement('gmf-import-button')
 export class ToolButtonImport extends ToolButtonElement {
   constructor() {
     super('import');
@@ -253,7 +253,7 @@ export class ToolButtonImport extends ToolButtonElement {
   }
 }
 
-@customElement('gmf-button-routing')
+@customElement('gmf-routing-button')
 export class ToolButtonRouting extends ToolButtonElement {
   constructor() {
     super('routing');
