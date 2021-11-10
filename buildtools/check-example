@@ -1,0 +1,79 @@
+#!/usr/bin/env python3
+
+# The MIT License (MIT)
+#
+# Copyright (c) Camptocamp SA
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy of
+# this software and associated documentation files (the "Software"), to deal in
+# the Software without restriction, including without limitation the rights to
+# use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+# the Software, and to permit persons to whom the Software is furnished to do so,
+# subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+# FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+# COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+# IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+# CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+import os
+import subprocess
+import sys
+import tempfile
+
+
+def main():
+    """
+    Compare similarity of tow images, we can use an optional mash file.
+    On error a diff image is generated.
+
+    Usage: check-example <generated image> <reference image>
+
+    ex:
+    Generated image (should ends with .html.png): .build/examples-hosted/simple.html.png
+    Reference image (should ends with -ref.png): examples/simple-ref.png
+    =>
+    Optional mask image (name from Reference image): examples/simple-mask.png
+    Generate diff image (name from Generated image): .build/examples-hosted/simple-diff.png
+    """
+    current = sys.argv[1]
+    ref = sys.argv[2]
+    mask = ref.replace("-ref", "-mask")
+    diff = current.replace(".html.png", "-diff.png")
+
+    if os.path.exists(mask):
+        print("Apply mask: " + mask)
+        old_current = current
+        old_ref = ref
+        current = tempfile.NamedTemporaryFile(suffix="-current.png").name
+        ref = tempfile.NamedTemporaryFile(suffix="-ref.png").name
+        subprocess.check_call(["gm", "composite", "-compose", "Multiply", old_current, mask, current])
+        subprocess.check_call(["gm", "composite", "-compose", "Multiply", old_ref, mask, ref])
+
+    result = subprocess.check_output(
+        [
+            "gm",
+            "compare",
+            "-metric",
+            "RMSE",
+            "-highlight-style",
+            "assign",
+            current,
+            ref,
+            "-file",
+            diff,
+        ]
+    )
+    result = float(result.decode().split("\n")[-2].split()[1])
+    if result > 0.01:
+        print(f"{result} > 0.01 => {diff}")
+        sys.exit(1)
+
+
+if __name__ == "__main__":
+    main()
