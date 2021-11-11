@@ -81,15 +81,15 @@ export interface User {
    */
   username: string;
   /**
-   * FIXME no doc
+   * The one-time-password Key
    */
   otp_key: string;
   /**
-   * FIXME no doc
+   * The one-time-password URI
    */
   otp_uri: string;
   /**
-   * FIXME no doc
+   * The two-factor authentication secret on first login
    */
   two_factor_totp_secret: string;
 }
