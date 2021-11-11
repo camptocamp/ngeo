@@ -27,6 +27,8 @@
   --padding-small-vertical: 0.36rem;
   --border-radius-base: 0;
   --right-panel-width: 17.5rem;
+  --right-panel-width-googlestreetview: 25rem;
+  --right-panel-width-mapillary: 25rem;
   --input-height: calc(1.5em + 0.5rem + 2px);
   --grid-gutter-width: 1.88rem;
   --infobar-height: 3rem;

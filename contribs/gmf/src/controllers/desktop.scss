@@ -790,7 +790,7 @@ gmf-featurestyle {
   }
   transition: 0.2s ease-out bottom;
   position: absolute;
-  bottom: var(--current-footer-height);
+  bottom: var(--current-infobar-height);
   z-index: 1;
   width: 100%;
 }

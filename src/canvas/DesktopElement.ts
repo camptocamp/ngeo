@@ -20,19 +20,14 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import {TemplateResult, html, css, unsafeCSS} from 'lit';
-import {state, customElement} from 'lit/decorators.js';
+import {state, customElement, query} from 'lit/decorators.js';
+import {classMap} from 'lit/directives/class-map.js';
 import OlMap from 'ol/Map';
 import i18next from 'i18next';
 import panels from 'gmfapi/store/panels';
 import map from 'gmfapi/store/map';
 import BaseElement from 'gmfapi/elements/BaseElement';
 import {Configuration} from 'gmfapi/store/config';
-
-// TODO:
-//
-// ngeo-resizemap
-// .ui-resizable-* => Lit-Draggable
-// and related
 
 @customElement('gmf-desktop-canvas')
 export default class GmfDesktopCanvas extends BaseElement {
@@ -42,6 +37,10 @@ export default class GmfDesktopCanvas extends BaseElement {
   @state() private showInfobar_ = false;
   @state() private customCSS_ = '';
   private map_: OlMap;
+  private resizeObserver_: ResizeObserver;
+  private mapElement_: HTMLElement;
+  @query('gmf-app-map')
+  private mapElementQuery_: HTMLElement;
 
   static styles = [
     ...BaseElement.styles,
@@ -164,7 +163,7 @@ export default class GmfDesktopCanvas extends BaseElement {
         font-weight: 900;
       }
 
-      .gmf-app-map {
+      #gmf-app-map {
         transition: 0.2s ease-out all;
         bottom: 0;
         position: absolute;
@@ -180,20 +179,20 @@ export default class GmfDesktopCanvas extends BaseElement {
         width: fit-content;
       }
 
-      .gmf-app-tools-content {
-        min-width: var(--right-panel-width);
+      #gmf-app-tools-content {
+        min-width: var(--current-right-panel-width);
         padding: 0 0;
         transition: margin-right 0.2s ease, width 0.001s ease;
         height: 100%;
         flex-grow: 1;
         order: 1;
-        width: var(--right-panel-width);
+        width: var(--current-right-panel-width);
         left: 0 !important;
       }
-      .gmf-app-tools-content .row {
+      #gmf-app-tools-content .row {
         padding: 0 var(--app-margin);
       }
-      .gmf-app-tools-content .close {
+      #gmf-app-tools-content .close {
         font-size: 1.2rem;
         padding: 0;
         position: absolute;
@@ -201,7 +200,7 @@ export default class GmfDesktopCanvas extends BaseElement {
         right: 1rem;
       }
 
-      .gmf-app-tools-content .gmf-app-tools-content-toggle-btn {
+      #gmf-app-tools-content .gmf-app-tools-content-toggle-btn {
         height: 1.5 * var(--icon-font-size) !important;
         right: 9px;
         padding: 0.5rem 0.1rem;
@@ -211,7 +210,7 @@ export default class GmfDesktopCanvas extends BaseElement {
         z-index: 5;
       }
 
-      .gmf-app-tools-content .ui-resizable-w {
+      #gmf-app-tools-content .ui-resizable-w {
         background-color: var(--brand-secondary-dark);
         cursor: ew-resize;
         left: 5px;
@@ -221,33 +220,33 @@ export default class GmfDesktopCanvas extends BaseElement {
         border-right-color: var(--border-color);
       }
 
-      .gmf-app-tools-content .gmf-app-tools-content-collapse-btn {
+      #gmf-app-tools-content .gmf-app-tools-content-collapse-btn {
         display: block;
       }
-      .gmf-app-tools-content .gmf-app-tools-content-expand-btn {
+      #gmf-app-tools-content .gmf-app-tools-content-expand-btn {
         display: none;
       }
 
-      .gmf-app-tools-content > div {
+      #gmf-app-tools-content > div {
         height: 100%;
         margin-right: calc(var(--app-margin) * -1);
         margin-left: calc(var(--app-margin) * -1);
       }
-      .gmf-app-tools-content > div > div {
+      #gmf-app-tools-content > div > div {
         height: 100%;
         overflow-x: hidden;
         overflow-y: auto;
       }
 
-      .gmf-app-tools-content.gmf-app-active {
+      #gmf-app-tools-content.gmf-app-active {
         margin-right: 0;
       }
 
-      .gmf-app-tools-content .profile-panel button {
+      #gmf-app-tools-content .profile-panel button {
         width: 100%;
       }
 
-      .gmf-app-tools-content .widget-scene-canvas {
+      #gmf-app-tools-content .widget-scene-canvas {
         width: 100% !important;
       }
 
@@ -286,14 +285,6 @@ export default class GmfDesktopCanvas extends BaseElement {
       footer {
         height: 10rem;
       }
-
-      .gmf-app-tools-content-googlestreetview {
-        width: 25rem;
-      }
-
-      .gmf-app-tools-content-mapillary {
-        width: 25rem;
-      }
     `,
   ];
 
@@ -311,6 +302,16 @@ export default class GmfDesktopCanvas extends BaseElement {
     this.subscriptions.push(
       panels.getActiveToolPanel().subscribe({
         next: (panel: string) => {
+          const styles = getComputedStyle(document.documentElement);
+          let width = styles.getPropertyValue(`--right-panel-width-${panel}`);
+          if (!width) {
+            width = styles.getPropertyValue(`--right-panel-width`);
+          }
+          if (!width) {
+            width = '17.5rem';
+          }
+          document.documentElement.style.setProperty('--current-right-panel-width', width);
+
           this.toolPanel_ = panel;
         },
       })
@@ -322,6 +323,19 @@ export default class GmfDesktopCanvas extends BaseElement {
         },
       })
     );
+    this.resizeObserver_ = new ResizeObserver(() => {
+      if (this.map_) {
+        this.map_.updateSize();
+        this.map_.renderSync();
+      }
+    });
+  }
+
+  disconnectedCallback(): void {
+    super.disconnectedCallback();
+    if (this.mapElement_) {
+      this.resizeObserver_.disconnect();
+    }
   }
 
   initConfig(configuration: Configuration): void {
@@ -341,9 +355,9 @@ export default class GmfDesktopCanvas extends BaseElement {
 
   toggleBackgroundSelector(): void {
     if (this.showInfobar_) {
-      document.documentElement.style.setProperty(`--current-footer-height`, 'var(--infobar-height)');
+      document.documentElement.style.setProperty(`--current-infobar-height`, 'var(--infobar-height)');
     } else {
-      document.documentElement.style.setProperty(`--current-footer-height`, '0px');
+      document.documentElement.style.setProperty(`--current-infobar-height`, '0px');
     }
   }
 
@@ -358,10 +372,10 @@ export default class GmfDesktopCanvas extends BaseElement {
       </header>
 
       <main
-        class="${this.toolPanel_ ? `gmf-tool-active gmf-tool-${this.toolPanel_}-active` : ''} ${this
-          .footerPanel_
-          ? `gmf-footer-active gmf-footer-${this.footerPanel_}-active`
-          : ''}"
+        class="${classMap({
+          'gmf-tool-active': !!this.toolPanel_,
+          'gmf-footer-active': !!this.footerPanel_,
+        })}"
       >
         <div
           class="gmf-app-data-panel ui-resizable"
@@ -390,9 +404,10 @@ export default class GmfDesktopCanvas extends BaseElement {
           </div>
 
           <div
-            class="gmf-app-tools-content container-fluid ${this.toolPanel_
-              ? `gmf-app-tools-content-${this.toolPanel_}`
-              : 'hide'}"
+            id="gmf-app-tools-content"
+            class="container-fluid ${classMap({
+              'hide': !this.toolPanel_,
+            })}"
           >
             <div class="row">
               <div class="col-sm-12">
@@ -403,11 +418,11 @@ export default class GmfDesktopCanvas extends BaseElement {
           </div>
         </div>
         <div class="gmf-app-map-container">
-          <div class="gmf-app-map">
+          <div id="gmf-app-map">
             <slot name="map"></slot>
           </div>
           <!--infobar-->
-          <div class="gmf-app-footer ${this.showInfobar_ ? 'gmf-app-active' : ''}">
+          <div class="gmf-app-footer ${classMap({'gmf-app-active': !!this.showInfobar_})}">
             <button
               class="btn fa gmf-app-map-info ${this.showInfobar_
                 ? 'fa-angle-double-down'
@@ -430,6 +445,11 @@ export default class GmfDesktopCanvas extends BaseElement {
   }
 
   updated(): void {
+    if (this.mapElementQuery_ != this.mapElement_) {
+      this.resizeObserver_.disconnect();
+      this.resizeObserver_.observe(this.mapElementQuery_);
+      this.mapElement_ = this.mapElementQuery_;
+    }
     if (this.map_) {
       this.map_.updateSize();
       this.map_.renderSync();
