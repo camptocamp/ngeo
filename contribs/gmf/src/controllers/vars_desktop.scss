@@ -47,4 +47,7 @@ $notification-width: 12.5rem !default;
 :root {
   --theme-selector-columns: #{$theme-selector-columns};
   --theme-selector-column-width: #{$theme-selector-column-width};
+  --right-panel-width: #{$right-panel-width};
+  --right-panel-width-googlestreetview: 25rem;
+  --right-panel-width-mapillary: 25rem;
 }
