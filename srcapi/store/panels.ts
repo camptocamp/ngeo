@@ -164,7 +164,7 @@ export class PanelsModel {
   }
 
   /**
-   * Close the tool panel.
+   * Close the footer panel.
    */
   closeFooterPanel(): void {
     if (this.activeFooterPanelState_) {
