@@ -36,6 +36,7 @@ import {Options as OlControlZoomOptions} from 'ol/control/Zoom';
 import OlFeature from 'ol/Feature';
 import OlGeomGeometry from 'ol/geom/Geometry';
 import 'typeahead';
+import {InitOptions} from 'i18next';
 
 /**
  * A projection definitions.
@@ -1426,6 +1427,7 @@ export type Configuration = {
   gmfCustomStylesheetUrl: gmfCustomStylesheetUrl;
   gmfTwoFactorAuth: gmfTwoFactorAuth;
   gmfCustomCSS: gmfCustomCSS;
+  gmfI18nextConfiguration: InitOptions;
 };
 
 export type APIConfig = {
