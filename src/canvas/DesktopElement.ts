@@ -29,6 +29,41 @@ import map from 'gmfapi/store/map';
 import BaseElement from 'gmfapi/elements/BaseElement';
 import {Configuration} from 'gmfapi/store/config';
 
+/**
+ * Interface for panel resizing:
+ * Store mouse initial position, handles of the elements to move or resize
+ * and their original width
+ */
+export interface PanelResize {
+  /**
+   * Mouse down event to store coordinates from
+   */
+  event: MouseEvent;
+  /**
+   * Initial mouse horizontal offset
+   */
+  offsetLeft: number;
+  /**
+   * Element separating the elements to resize
+   */
+  separator: HTMLElement;
+  /**
+   * Left element to resize
+   */
+  leftElement: HTMLElement;
+  /**
+   * Right element to resize
+   */
+  rightElement: HTMLElement;
+  /**
+   * Initial width of left element
+   */
+  leftWidth: number;
+  /**
+   * Initial width of right element
+   */
+  rightWidth: number;
+}
 @customElement('gmf-desktop-canvas')
 export default class GmfDesktopCanvas extends BaseElement {
   @state() private toolPanel_: string = null;
@@ -41,6 +76,7 @@ export default class GmfDesktopCanvas extends BaseElement {
   private mapElement_: HTMLElement;
   @query('gmf-app-map')
   private mapElementQuery_: HTMLElement;
+  private datapanelWidth_: string;
 
   static styles = [
     ...BaseElement.styles,
@@ -72,7 +108,26 @@ export default class GmfDesktopCanvas extends BaseElement {
         opacity: 0.4;
       }
 
-      .gmf-app-data-panel {
+      .gmf-app-desktop-splitter {
+        width: 100%;
+        height: 100%;
+        display: flex;
+      }
+
+      .ui-resizable-e {
+        width: 7px;
+        height: 100%;
+        background-color: $brand-secondary-dark;
+        background-color: var(--brand-secondary-dark);
+        cursor: ew-resize;
+        z-index: 3;
+        border-left: var(--border);
+        border-left-color: var(--border-color);
+        border-right: var(--border);
+        border-right-color: var(--border-color);
+      }
+
+      #gmf-app-data-panel {
         display: block;
         float: left;
         background-color: var(--brand-secondary);
@@ -80,16 +135,17 @@ export default class GmfDesktopCanvas extends BaseElement {
         height: 100%;
         display: flex;
         flex-flow: column;
+        flex-shrink: 0;
       }
 
-      .gmf-app-data-panel .gmf-app-data-panel-collapse-btn {
+      #gmf-app-data-panel-separator .gmf-app-data-panel-collapse-btn {
         display: block;
       }
-      .gmf-app-data-panel .gmf-app-data-panel-expand-btn {
-        display: none;
+      #gmf-app-data-panel-separator .gmf-app-data-panel-expand-btn {
+        display: block;
       }
 
-      .gmf-app-data-panel .gmf-app-data-panel-toggle-btn {
+      #gmf-app-data-panel-separator .gmf-app-data-panel-toggle-btn {
         height: calc(1.5 * var(--icon-font-size));
         left: -1px;
         padding: 0.5rem 0.1rem;
@@ -98,9 +154,17 @@ export default class GmfDesktopCanvas extends BaseElement {
         cursor: pointer;
       }
 
-      .gmf-app-data-panel .ui-resizable-e {
+      #gmf-app-data-panel-separator {
+        float: left;
+      }
+      #gmf-app-tool-panel-separator {
+        float: right;
+      }
+      .ui-resizable-w {
+        width: 7px;
         background-color: var(--brand-secondary-dark);
         cursor: ew-resize;
+        z-index: 3;
         border-left: var(--border);
         border-left-color: var(--border-color);
         border-right: var(--border);
@@ -108,7 +172,7 @@ export default class GmfDesktopCanvas extends BaseElement {
       }
 
       .gmf-app-map-container {
-        width: auto;
+        width: 100%;
         height: 100%;
         overflow: hidden;
         position: relative;
@@ -200,7 +264,7 @@ export default class GmfDesktopCanvas extends BaseElement {
         right: 1rem;
       }
 
-      #gmf-app-tools-content .gmf-app-tools-content-toggle-btn {
+      #gmf-app-tool-panel-separator .gmf-app-tools-content-toggle-btn {
         height: 1.5 * var(--icon-font-size) !important;
         right: 9px;
         padding: 0.5rem 0.1rem;
@@ -210,7 +274,7 @@ export default class GmfDesktopCanvas extends BaseElement {
         z-index: 5;
       }
 
-      #gmf-app-tools-content .ui-resizable-w {
+      #gmf-app-tool-panel-separator .ui-resizable-w {
         background-color: var(--brand-secondary-dark);
         cursor: ew-resize;
         left: 5px;
@@ -220,10 +284,10 @@ export default class GmfDesktopCanvas extends BaseElement {
         border-right-color: var(--border-color);
       }
 
-      #gmf-app-tools-content .gmf-app-tools-content-collapse-btn {
+      #gmf-app-tool-panel-separator .gmf-app-tools-content-collapse-btn {
         display: block;
       }
-      #gmf-app-tools-content .gmf-app-tools-content-expand-btn {
+      #gmf-app-tool-panel-separator .gmf-app-tools-content-expand-btn {
         display: none;
       }
 
@@ -329,6 +393,13 @@ export default class GmfDesktopCanvas extends BaseElement {
         this.map_.renderSync();
       }
     });
+    const desktopCanvas = document.querySelector('gmf-desktop-canvas').shadowRoot;
+    desktopCanvas.addEventListener('mousedown', ((event: MouseEvent) => {
+      this.resizeDataPanel(event, desktopCanvas);
+    }) as EventListener);
+    desktopCanvas.addEventListener('mousedown', ((event: MouseEvent) => {
+      this.resizeToolPanel(event, desktopCanvas);
+    }) as EventListener);
   }
 
   disconnectedCallback(): void {
@@ -361,6 +432,122 @@ export default class GmfDesktopCanvas extends BaseElement {
     }
   }
 
+  toggleShowDatapanel_(): void {
+    this.showDatapanel_ = !this.showDatapanel_;
+    if (this.showDatapanel_) {
+      // Set panel width to width before collapse
+      document.documentElement.style.setProperty(`--left-panel-width`, this.datapanelWidth_);
+    } else {
+      // Store current panel width to use it in case the panel it reponened
+      const styles = getComputedStyle(document.documentElement);
+      this.datapanelWidth_ = styles.getPropertyValue(`--left-panel-width`);
+      // Close panel
+      document.documentElement.style.setProperty(`--left-panel-width`, '0px');
+    }
+  }
+
+  /**
+   * Panel resizing:
+   * Store initial mouse position, listen to drag event and resize elements
+   *
+   * @param {PanelResize} panelResizeEvent Interface to store the details of the drag event
+   * @param {HTMLElement} separator Element separating the elements to resize
+   * @param {HTMLElement} leftElement Left element to resize
+   * @param {HTMLElement} rightElement Right element to resize
+   * @returns {void}
+   */
+  onMouseDown =
+    (
+      panelResizeEvent: PanelResize,
+      separator: HTMLElement,
+      leftElement: HTMLElement,
+      rightElement: HTMLElement
+    ) =>
+    (event: MouseEvent): void => {
+      panelResizeEvent = {
+        event,
+        offsetLeft: separator.offsetLeft,
+        separator: separator,
+        leftElement: leftElement,
+        rightElement: rightElement,
+        leftWidth: leftElement.offsetWidth,
+        rightWidth: rightElement.offsetWidth,
+      };
+
+      document.onmousemove = this.onMouseMove(panelResizeEvent);
+      document.onmouseup = () => {
+        document.onmousemove = null;
+        document.onmouseup = null;
+      };
+    };
+
+  /**
+   * Panel resizing:
+   * Compute drag offset, change element position or width accordingly
+   *
+   * @param {PanelResize} panelResizeEvent Interface to store the details of the mouse down event
+   * @returns {MouseEvent} The drag event
+   */
+  onMouseMove =
+    (panelResizeEvent: PanelResize) =>
+    (event: MouseEvent): MouseEvent => {
+      // Compute offset and prevent negative-sized elements
+      let deltaX = event.clientX - panelResizeEvent.event.clientX;
+      deltaX = Math.min(Math.max(deltaX, -panelResizeEvent.leftWidth), panelResizeEvent.rightWidth);
+      const newLeftWidth = `${panelResizeEvent.leftWidth + deltaX}px`;
+      const newRightWidth = `${panelResizeEvent.rightWidth - deltaX}px`;
+
+      // Move panel separator
+      panelResizeEvent.separator.style.left = `${panelResizeEvent.offsetLeft + deltaX}px`;
+
+      // Resize panels
+      if (panelResizeEvent.leftElement.id === 'gmf-app-data-panel') {
+        document.documentElement.style.setProperty(`--left-panel-width`, newLeftWidth);
+        panelResizeEvent.rightElement.style.width = newRightWidth;
+      } else if (panelResizeEvent.rightElement.id === 'gmf-app-tools-content') {
+        panelResizeEvent.leftElement.style.width = newLeftWidth;
+        document.documentElement.style.setProperty(`--current-right-panel-width`, newRightWidth);
+      }
+
+      return event;
+    };
+
+  /**
+   * Resize the data (left) panel when dragging the separator
+   *
+   * @param {MouseEvent} event The mouse down event
+   * @param {ShadowRoot} desktopCanvas The desktop canvas
+   * @returns {MouseEvent} The mouse down event
+   */
+  resizeDataPanel(event: MouseEvent, desktopCanvas: ShadowRoot): MouseEvent {
+    let panelResizeEvent: PanelResize; // Store mouse down infos
+    const separator = desktopCanvas.getElementById('gmf-app-data-panel-separator');
+    const leftElement = desktopCanvas.getElementById('gmf-app-data-panel');
+    const rightElement = desktopCanvas.getElementById('gmf-app-map');
+
+    separator.onmousedown = this.onMouseDown(panelResizeEvent, separator, leftElement, rightElement);
+
+    return event;
+  }
+
+  /**
+   * Resize the tool (right) panel when dragging the separator
+   *
+   * @param {MouseEvent} event The mouse down event
+   * @param {ShadowRoot} desktopCanvas The desktop canvas
+   * @returns {MouseEvent} The mouse down event
+   */
+  resizeToolPanel(event: MouseEvent, desktopCanvas: ShadowRoot): MouseEvent {
+    let panelResizeEvent: PanelResize; // Store mouse down infos
+    const separator = desktopCanvas.getElementById('gmf-app-tool-panel-separator');
+    const leftElement = desktopCanvas.getElementById('gmf-app-map');
+    const rightElement = desktopCanvas.getElementById('gmf-app-tools-content');
+
+    separator.onmousedown = this.onMouseDown(panelResizeEvent, separator, leftElement, rightElement);
+
+    return event;
+  }
+
   render(): TemplateResult {
     return html`
       <style>
@@ -377,68 +564,100 @@ export default class GmfDesktopCanvas extends BaseElement {
           'gmf-footer-active': !!this.footerPanel_,
         })}"
       >
-        <div
-          class="gmf-app-data-panel ui-resizable"
-          ngeo-resizemap="mainCtrl.map"
-          ngeo-resizemap-state="mainCtrl.dataPanelActive"
-        >
-          <slot name="data"></slot>
-        </div>
-
-        <div class="gmf-app-tools" ngeo-resizemap="mainCtrl.map" ngeo-resizemap-state="mainCtrl.toolsActive">
-          <div class="gmf-app-bar">
-            <div class="btn-group-vertical">
-              <slot name="tool-button"></slot>
-            </div>
-            <br />
-            <br />
-            <span
-              data-toggle="tooltip"
-              data-placement="left"
-              data-original-title="${i18next.t('Share this map')}"
-            >
-              <div class="container-fluid">
-                <slot name="tool-button-separate"></slot>
-              </div>
-            </span>
+        <div class="gmf-app-desktop-splitter">
+          <div
+            id="gmf-app-data-panel"
+            class="gmf-app-data-panel ui-resizable"
+            ngeo-resizemap="mainCtrl.map"
+            ngeo-resizemap-state="mainCtrl.dataPanelActive"
+          >
+            <slot name="data"></slot>
           </div>
+
+          <div id="gmf-app-data-panel-separator" class="ui-resizable-e">
+            <div class="gmf-app-data-panel-toggle-btn btn prime btn-sm">
+              <span
+                class="${this.showDatapanel_
+                  ? 'fa fa-angle-double-left gmf-app-data-panel-collapse-btn'
+                  : 'fa fa-angle-double-right gmf-app-data-panel-expand-btn'}"
+                @click=${() => this.toggleShowDatapanel_()}
+              ></span>
+            </div>
+          </div>
+
+          <div class="gmf-app-map-container">
+            <div id="gmf-app-map">
+              <slot name="map"></slot>
+            </div>
+            <!--infobar-->
+            <div class="gmf-app-footer ${classMap({'gmf-app-active': !!this.showInfobar_})}">
+              <button
+                class="btn fa gmf-app-map-info ${this.showInfobar_
+                  ? 'fa-angle-double-down'
+                  : 'fa-angle-double-up'}"
+                @click=${() => this.toggleShowInfobar_()}
+              ></button>
+              <slot name="infobar-left"></slot>
+              <div class="pull-right">
+                <slot name="infobar-right"></slot>
+              </div>
+              <div class="footer">
+                <slot name="infobar-footer"></slot>
+              </div>
+            </div>
+          </div>
+          <slot name="modal"></slot>
 
           <div
-            id="gmf-app-tools-content"
-            class="container-fluid ${classMap({
-              'hide': !this.toolPanel_,
-            })}"
+            class="gmf-app-tools"
+            ngeo-resizemap="mainCtrl.map"
+            ngeo-resizemap-state="mainCtrl.toolsActive"
           >
-            <div class="row">
-              <div class="col-sm-12">
-                <a class="btn close" @click=${() => panels.closeToolPanel()}>×</a>
-                <slot name="tool-panel-${this.toolPanel_}"></slot>
+            <div class="gmf-app-bar">
+              <div class="btn-group-vertical">
+                <slot name="tool-button"></slot>
+              </div>
+              <br />
+              <br />
+              <span
+                data-toggle="tooltip"
+                data-placement="left"
+                data-original-title="${i18next.t('Share this map')}"
+              >
+                <div class="container-fluid">
+                  <slot name="tool-button-separate"></slot>
+                </div>
+              </span>
+            </div>
+
+            <div
+              id="gmf-app-tool-panel-separator"
+              class="ui-resizable-w ${this.toolPanel_ ? `gmf-app-tools-content-${this.toolPanel_}` : 'hide'}"
+            >
+              <div class="gmf-app-tools-content-toggle-btn btn prime btn-sm">
+                <span
+                  class="fa fa-angle-double-right gmf-app-tools-content-collapse-btn"
+                  @click=${() => panels.closeToolPanel()}
+                >
+                </span>
+              </div>
+            </div>
+
+            <div
+              id="gmf-app-tools-content"
+              class="container-fluid ${classMap({
+                'hide': !this.toolPanel_,
+              })}"
+            >
+              <div class="row">
+                <div class="col-sm-12">
+                  <a class="btn close" @click=${() => panels.closeToolPanel()}>×</a>
+                  <slot name="tool-panel-${this.toolPanel_}"></slot>
+                </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="gmf-app-map-container">
-          <div id="gmf-app-map">
-            <slot name="map"></slot>
-          </div>
-          <!--infobar-->
-          <div class="gmf-app-footer ${classMap({'gmf-app-active': !!this.showInfobar_})}">
-            <button
-              class="btn fa gmf-app-map-info ${this.showInfobar_
-                ? 'fa-angle-double-down'
-                : 'fa-angle-double-up'}"
-              @click=${() => this.toggleShowInfobar_()}
-            ></button>
-            <slot name="infobar-left"></slot>
-            <div class="pull-right">
-              <slot name="infobar-right"></slot>
-            </div>
-            <div class="footer">
-              <slot name="infobar-footer"></slot>
-            </div>
-          </div>
-        </div>
-        <slot name="modal"></slot>
       </main>
       <footer><slot name="footer-${this.footerPanel_}"></slot></footer>
     `;

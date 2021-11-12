@@ -338,6 +338,7 @@ gmf-search {
   background-color: $brand-secondary;
   background-color: var(--brand-secondary);
   width: $left-panel-width;
+  width: var(--left-panel-width);
   height: 100%;
   display: flex;
   flex-flow: column;
