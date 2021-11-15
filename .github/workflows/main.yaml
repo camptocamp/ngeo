@@ -102,9 +102,7 @@ jobs:
       - run: npm run doc
       - run: make jsdoc
       - run: npm run build-api
-      - run: npm run dist-desktop
-      - run: npm run dist-mobile
-      - run: npm run dist-iframeapi
+      - run: npm run dist
 
       - uses: actions/upload-artifact@v2
         with:
