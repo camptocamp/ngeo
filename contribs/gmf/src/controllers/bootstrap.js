@@ -34,6 +34,7 @@ function addScript(scriptUrl) {
   const script = document.createElement('script');
   script.src = scriptUrl;
   script.crossOrigin = 'anonymous';
+  script.type = 'module';
   document.body.append(script);
 }
 
