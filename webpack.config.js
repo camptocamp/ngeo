@@ -27,15 +27,16 @@ module.exports = (env, args) => {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   process.env['NODE_ENV'] = nodeEnv;
 
-  let config = {};
-
+  let common_config = {};
   switch (process.env.TARGET) {
     case 'dist':
-      config = require('./buildtools/webpack.commons')({'nodll': true});
+      common_config.nodll = true;
       break;
-    default:
-      config = require('./buildtools/webpack.commons')();
+    case 'ngeo-examples':
+    case 'gmf-examples':
+      common_config.browsers = ['> 0.5% in CH', '> 0.5% in FR', 'Firefox ESR', 'ie 11'];
   }
+  let config = require('./buildtools/webpack.commons')(common_config);
 
   switch (nodeEnv) {
     case 'development':

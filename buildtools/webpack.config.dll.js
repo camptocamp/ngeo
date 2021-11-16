@@ -46,7 +46,7 @@ module.exports = {
                 require.resolve('@babel/preset-env'),
                 {
                   targets: {
-                    browsers: ['> 0.7% in CH', '> 0.7% in FR', 'Firefox ESR'],
+                    browsers: require('./webpack.share').browsers,
                   },
                   modules: false,
                   loose: true,
