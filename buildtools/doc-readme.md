@@ -1,12 +1,12 @@
 API documentation of ngeo.
 
-[ngeo constants definitions](../jsdoc/module-src_options.html)
+[Application constants definitions](modules/srcapi_store_config.html#Configuration)
 
-[GMF constants definitions](../jsdoc/module-contribs_gmf_src_options.html)
+[API constants definitions](modules/srcapi_store_config.html#APIConfig)
 
-[API constants definitions](../jsdoc/module-api_src_options.html)
+[Themes API](modules/contribs_gmf_src_theme_Themes.html)
 
-[Themes API](../jsdoc/module-contribs_gmf_src_themes.html)
+Note that the stable API is in [srcapi](modules/srcapi.html) and will be available directly on `window`. The rest of the API can change without any notice.
 
 [GitHub project page](https://github.com/camptocamp/ngeo/)
 
