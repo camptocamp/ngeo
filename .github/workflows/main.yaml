@@ -103,6 +103,7 @@ jobs:
       - run: make jsdoc
       - run: npm run build-api
       - run: npm run dist
+      - run: npm run dist-spinner
 
       - uses: actions/upload-artifact@v2
         with:

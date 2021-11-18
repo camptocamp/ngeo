@@ -14,6 +14,7 @@
     "serve-gmf-apps": "DEV_SERVER=1 TARGET=gmf-apps webpack-dev-server --https --cert=private.crt --key=private.key --port=3000 --mode=development --progress --debug",
     "serve-api": "webpack-dev-server --content-base=api/dist/apihelp/ --config=buildtools/webpack.api.js --https --cert=private.crt --key=private.key --port=3000 --mode=development --progress --watch --debug",
     "dist": "TARGET=dist webpack --mode=production --progress --debug",
+    "dist-spinner": "svgo --config=svgo.js contribs/gmf/src/icons/spinner.svg --output=dist/spinner.svg",
     "build-gmf-apps-profile": "TARGET=gmf-apps webpack --profile --json > profile.json",
     "typecheck": "tsc --noEmit",
     "doc": "typedoc",
