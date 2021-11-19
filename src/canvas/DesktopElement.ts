@@ -117,7 +117,6 @@ export default class GmfDesktopCanvas extends BaseElement {
       .ui-resizable-e {
         width: 7px;
         height: 100%;
-        background-color: $brand-secondary-dark;
         background-color: var(--brand-secondary-dark);
         cursor: ew-resize;
         z-index: 3;
