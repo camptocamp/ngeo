@@ -245,8 +245,8 @@ export default class LegendMapFishPrintV3 {
    */
   getLegendItemFromTileLayer_(currentThemes, layer, dpi) {
     const gettextCatalog = this.gettextCatalog_;
-    const layerName = layer.get(LAYER_NODE_NAME_KEY);
-    let icon_dpi = this.getMetadataLegendImage_(currentThemes, layerName, dpi);
+    const layerNodeName = layer.get(LAYER_NODE_NAME_KEY);
+    let icon_dpi = this.getMetadataLegendImage_(currentThemes, layerNodeName, dpi);
     if (!icon_dpi) {
       const url = this.ngeoLayerHelper_.getWMTSLegendURL(layer);
       if (url) {
@@ -259,7 +259,7 @@ export default class LegendMapFishPrintV3 {
     // Add only classes without legend url.
     if (icon_dpi) {
       return {
-        name: gettextCatalog.getString(layerName),
+        name: gettextCatalog.getString(layerNodeName),
         icons: [icon_dpi.url],
       };
     }
@@ -294,8 +294,9 @@ export default class LegendMapFishPrintV3 {
     const legendGroupItem = {
       classes: legendLayerClasses,
     };
+    const layerNodeName = layer.get(LAYER_NODE_NAME_KEY);
     if (this.gmfLegendOptions_.showGroupsTitle) {
-      legendGroupItem.name = gettextCatalog.getString(layer.get(LAYER_NODE_NAME_KEY));
+      legendGroupItem.name = gettextCatalog.getString(layerNodeName);
     }
     // For each name in a WMS layer.
     const layerNames = /** @type {string} */ (source.getParams().LAYERS).split(',');
@@ -304,7 +305,7 @@ export default class LegendMapFishPrintV3 {
       // Don't add classes without legend url or from layers without any
       // active name.
       if (name.length !== 0) {
-        let icon_dpi = this.getMetadataLegendImage_(currentThemes, name, dpi);
+        let icon_dpi = this.getMetadataLegendImage_(currentThemes, layerNodeName, dpi);
         // @ts-ignore: private...
         const type = icon_dpi ? 'image' : source.serverType_;
         if (!icon_dpi) {
@@ -380,13 +381,13 @@ export default class LegendMapFishPrintV3 {
   /**
    * Return the metadata legendImage of a layer from the found corresponding node
    * or undefined.
-   * @param {string} layerName a layer name.
+   * @param {string} layerNodeName the layer name of the node.
    * @param {number} [dpi=96] the image DPI.
    * @param {Array<import('gmf/themes.js').GmfTheme>} currentThemes the current themes.
    * @return {LegendURLDPI|undefined} The legendImage with selected DPI or undefined.
    * @private
    */
-  getMetadataLegendImage_(currentThemes, layerName, dpi = -1) {
+  getMetadataLegendImage_(currentThemes, layerNodeName, dpi = -1) {
     if (dpi == -1) {
       dpi = screenDpi();
     }
@@ -395,7 +396,7 @@ export default class LegendMapFishPrintV3 {
     for (const theme of currentThemes) {
       getFlatNodes(theme, nodes);
     }
-    const node = findObjectByName(nodes, layerName);
+    const node = findObjectByName(nodes, layerNodeName);
 
     let found_dpi = dpi;
     let legendImage;
