@@ -473,6 +473,8 @@ export default class GmfDesktopCanvas extends BaseElement {
         rightWidth: rightElement.offsetWidth,
       };
 
+      event.preventDefault();
+
       document.onmousemove = this.onMouseMove(panelResizeEvent);
       document.onmouseup = () => {
         document.onmousemove = null;
@@ -490,6 +492,8 @@ export default class GmfDesktopCanvas extends BaseElement {
   onMouseMove =
     (panelResizeEvent: PanelResize) =>
     (event: MouseEvent): MouseEvent => {
+      event.preventDefault();
+
       // Compute offset and prevent negative-sized elements
       let deltaX = event.clientX - panelResizeEvent.event.clientX;
       deltaX = Math.min(Math.max(deltaX, -panelResizeEvent.leftWidth), panelResizeEvent.rightWidth);
