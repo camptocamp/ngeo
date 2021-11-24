@@ -473,6 +473,8 @@ export default class GmfDesktopCanvas extends BaseElement {
         rightWidth: rightElement.offsetWidth,
       };
 
+      event.preventDefault();
+
       document.onmousemove = this.onMouseMove(panelResizeEvent);
       document.onmouseup = () => {
         document.onmousemove = null;
@@ -490,6 +492,8 @@ export default class GmfDesktopCanvas extends BaseElement {
   onMouseMove =
     (panelResizeEvent: PanelResize) =>
     (event: MouseEvent): MouseEvent => {
+      event.preventDefault();
+
       // Compute offset and prevent negative-sized elements
       let deltaX = event.clientX - panelResizeEvent.event.clientX;
       deltaX = Math.min(Math.max(deltaX, -panelResizeEvent.leftWidth), panelResizeEvent.rightWidth);
@@ -574,12 +578,14 @@ export default class GmfDesktopCanvas extends BaseElement {
           </div>
 
           <div id="gmf-app-data-panel-separator" class="ui-resizable-e">
-            <div class="gmf-app-data-panel-toggle-btn btn prime btn-sm">
+            <div
+              class="gmf-app-data-panel-toggle-btn btn prime btn-sm"
+              @click=${() => this.toggleShowDatapanel_()}
+            >
               <span
                 class="${this.showDatapanel_
                   ? 'fa fa-angle-double-left gmf-app-data-panel-collapse-btn'
                   : 'fa fa-angle-double-right gmf-app-data-panel-expand-btn'}"
-                @click=${() => this.toggleShowDatapanel_()}
               ></span>
             </div>
           </div>
@@ -633,12 +639,11 @@ export default class GmfDesktopCanvas extends BaseElement {
               id="gmf-app-tool-panel-separator"
               class="ui-resizable-w ${this.toolPanel_ ? `gmf-app-tools-content-${this.toolPanel_}` : 'hide'}"
             >
-              <div class="gmf-app-tools-content-toggle-btn btn prime btn-sm">
-                <span
-                  class="fa fa-angle-double-right gmf-app-tools-content-collapse-btn"
-                  @click=${() => panels.closeToolPanel()}
-                >
-                </span>
+              <div
+                class="gmf-app-tools-content-toggle-btn btn prime btn-sm"
+                @click=${() => panels.closeToolPanel()}
+              >
+                <span class="fa fa-angle-double-right gmf-app-tools-content-collapse-btn"> </span>
               </div>
             </div>
 
