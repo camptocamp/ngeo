@@ -24,7 +24,7 @@
 
 import './FormElement';
 import './PanelElement';
-import user, {UserState, User} from 'gmfapi/store/user';
+import user, {UserState, User, LoginMessageState} from 'gmfapi/store/user';
 
 export default {
   title: 'Auth Form',
@@ -39,19 +39,17 @@ type Args = {
   /**
    * The info message.
    */
-  loginInfoMessage: string;
+  loginInfoMessage: boolean;
 };
 
 const Template = (args: Args) => {
   user.setUser(args.user, UserState.READY);
-  return `
-    <gmf-auth-form
-      loginInfoMessage="${args.loginInfoMessage}">
-    </gmf-auth-form>`;
+  user.setLoginMessage(args.loginInfoMessage ? LoginMessageState.REQUIRED : LoginMessageState.EMPTY);
+  return '<gmf-auth-form></gmf-auth-form>';
 };
 
 const defaultProperties: Args = {
-  loginInfoMessage: '',
+  loginInfoMessage: false,
   user: null,
 };
 

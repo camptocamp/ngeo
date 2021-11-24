@@ -103,6 +103,12 @@ export enum UserState {
   NOT_INITIALIZED = 'not initialized',
 }
 
+export enum LoginMessageState {
+  EMPTY = '',
+  REQUIRED = 'Some layers in this link are not accessible to unauthenticated users. ' +
+    'Please log in to see whole data.',
+}
+
 /**
  * Object used to expose the login user information.
  *
@@ -129,8 +135,16 @@ export class UserModel {
    */
   state_: UserState;
 
+  /**
+   * The login message when a private layer is opened in the permalink
+   *
+   * @private
+   */
+  loginMessage_: BehaviorSubject<string>;
+
   constructor() {
     this.properties_ = new BehaviorSubject<User>(this.getEmptyUserProperties());
+    this.loginMessage_ = new BehaviorSubject<string>(LoginMessageState.EMPTY);
     this.state_ = UserState.NOT_INITIALIZED;
   }
 
@@ -146,6 +160,22 @@ export class UserModel {
    */
   getState(): UserState {
     return this.state_;
+  }
+
+  /**
+   * @returns The observable login message.
+   */
+  getLoginMessage(): BehaviorSubject<string> {
+    return this.loginMessage_;
+  }
+
+  /**
+   * Set the current login message
+   *
+   * @param messageState The new login message.
+   */
+  setLoginMessage(messageState: LoginMessageState): void {
+    this.loginMessage_.next(messageState);
   }
 
   /**

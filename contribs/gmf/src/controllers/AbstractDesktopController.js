@@ -51,6 +51,7 @@ import olStyleText from 'ol/style/Text';
 
 import 'gmfapi/index';
 import panels from 'gmfapi/store/panels';
+import user, {LoginMessageState} from 'gmfapi/store/user';
 
 import 'gmf/controllers/vars_desktop.scss';
 import 'gmf/controllers/desktop.scss';
@@ -173,8 +174,22 @@ export class AbstractDesktopController extends AbstractAPIController {
             this.printPanelActive = newVal;
           }
         }
+        if (panels === null || !panels.includes('auth')) {
+          user.setLoginMessage(LoginMessageState.EMPTY);
+        }
       },
     });
+
+    user.getLoginMessage().subscribe({
+      next: (message) => {
+        this.loginInfoMessage = message;
+        if (message) {
+          // Open the auth panel if a message is displayed
+          panels.openToolPanel('auth');
+        }
+      },
+    });
+
     // Don't deactivate ngeoQuery on print activation
     $scope.$watch(
       () => this.printPanelActive,
