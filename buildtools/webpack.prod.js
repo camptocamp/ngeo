@@ -92,7 +92,7 @@ module.exports = function () {
     optimization: {
       minimizer: [
         new TerserPlugin({
-          exclude: /^(?!.*mapillary\.js$).*$/,
+          exclude: /.*mapillary\.js$/,
           parallel: true,
           sourceMap: true,
           terserOptions: {
