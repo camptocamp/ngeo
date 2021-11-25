@@ -79,6 +79,8 @@ export default class GmfDesktopCanvas extends BaseElement {
   private datapanelWidth_: string;
   // Minimum data panel width in px
   private minDatapanelWidth_ = 320;
+  // Minimum tool panel width in px
+  private minToolpanelWidth_ = 280;
 
   static styles = [
     ...BaseElement.styles,
@@ -512,7 +514,10 @@ export default class GmfDesktopCanvas extends BaseElement {
         document.documentElement.style.setProperty(`--left-panel-width`, newLeftWidth);
         panelResizeEvent.rightElement.style.width = newRightWidth;
       } else if (panelResizeEvent.rightElement.id === 'gmf-app-tools-content') {
-        deltaX = Math.min(Math.max(deltaX, -panelResizeEvent.leftWidth), panelResizeEvent.rightWidth);
+        deltaX = Math.max(
+          -panelResizeEvent.leftWidth,
+          Math.min(deltaX, panelResizeEvent.rightWidth - this.minToolpanelWidth_)
+        );
         // Move panel separator
         panelResizeEvent.separator.style.left = `${panelResizeEvent.offsetLeft + deltaX}px`;
         const newLeftWidth = `${panelResizeEvent.leftWidth + deltaX}px`;
