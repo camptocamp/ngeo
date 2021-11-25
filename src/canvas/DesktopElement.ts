@@ -441,7 +441,7 @@ export default class GmfDesktopCanvas extends BaseElement {
       // Set panel width to width before collapse
       document.documentElement.style.setProperty(`--left-panel-width`, this.datapanelWidth_);
     } else {
-      // Store current panel width to use it in case the panel it reponened
+      // Store current panel width to use it in case the panel is reponened
       const styles = getComputedStyle(document.documentElement);
       this.datapanelWidth_ = styles.getPropertyValue(`--left-panel-width`);
       // Close panel
@@ -501,7 +501,9 @@ export default class GmfDesktopCanvas extends BaseElement {
       // Compute mouse offset
       let deltaX = event.clientX - panelResizeEvent.event.clientX;
 
+      // Resize data panel
       if (panelResizeEvent.leftElement.id === 'gmf-app-data-panel') {
+        // Take into account the minimum panel width
         deltaX = Math.min(
           Math.max(deltaX, this.minDatapanelWidth_ - panelResizeEvent.leftWidth),
           panelResizeEvent.rightWidth
@@ -513,10 +515,24 @@ export default class GmfDesktopCanvas extends BaseElement {
         const newRightWidth = `${panelResizeEvent.rightWidth - deltaX}px`;
         document.documentElement.style.setProperty(`--left-panel-width`, newLeftWidth);
         panelResizeEvent.rightElement.style.width = newRightWidth;
-      } else if (panelResizeEvent.rightElement.id === 'gmf-app-tools-content') {
+      }
+
+      // Resize tool panel
+      else if (panelResizeEvent.rightElement.id === 'gmf-app-tools-content') {
+        const styles = getComputedStyle(document.documentElement);
+        // Take into account the minimum panel width:
+        // The StreetView and Mapillary panels have a specific minimum width
+        let minToolpanelWidth = parseFloat(styles.getPropertyValue(`--right-panel-width-${this.toolPanel_}`));
+        if (minToolpanelWidth) {
+          minToolpanelWidth *= parseFloat(styles.fontSize);
+        }
+        // Else use standard tool panel width
+        else {
+          minToolpanelWidth = this.minToolpanelWidth_;
+        }
         deltaX = Math.max(
           -panelResizeEvent.leftWidth,
-          Math.min(deltaX, panelResizeEvent.rightWidth - this.minToolpanelWidth_)
+          Math.min(deltaX, panelResizeEvent.rightWidth - minToolpanelWidth)
         );
         // Move panel separator
         panelResizeEvent.separator.style.left = `${panelResizeEvent.offsetLeft + deltaX}px`;
