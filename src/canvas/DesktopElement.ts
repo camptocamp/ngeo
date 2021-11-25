@@ -77,6 +77,8 @@ export default class GmfDesktopCanvas extends BaseElement {
   @query('gmf-app-map')
   private mapElementQuery_: HTMLElement;
   private datapanelWidth_: string;
+  // Minimum data panel width in px
+  private minDatapanelWidth_ = 320;
 
   static styles = [
     ...BaseElement.styles,
@@ -494,20 +496,27 @@ export default class GmfDesktopCanvas extends BaseElement {
     (event: MouseEvent): MouseEvent => {
       event.preventDefault();
 
-      // Compute offset and prevent negative-sized elements
+      // Compute mouse offset
       let deltaX = event.clientX - panelResizeEvent.event.clientX;
-      deltaX = Math.min(Math.max(deltaX, -panelResizeEvent.leftWidth), panelResizeEvent.rightWidth);
-      const newLeftWidth = `${panelResizeEvent.leftWidth + deltaX}px`;
-      const newRightWidth = `${panelResizeEvent.rightWidth - deltaX}px`;
 
-      // Move panel separator
-      panelResizeEvent.separator.style.left = `${panelResizeEvent.offsetLeft + deltaX}px`;
-
-      // Resize panels
       if (panelResizeEvent.leftElement.id === 'gmf-app-data-panel') {
+        deltaX = Math.min(
+          Math.max(deltaX, this.minDatapanelWidth_ - panelResizeEvent.leftWidth),
+          panelResizeEvent.rightWidth
+        );
+        // Move panel separator
+        panelResizeEvent.separator.style.left = `${panelResizeEvent.offsetLeft + deltaX}px`;
+        // Resize panels
+        const newLeftWidth = `${panelResizeEvent.leftWidth + deltaX}px`;
+        const newRightWidth = `${panelResizeEvent.rightWidth - deltaX}px`;
         document.documentElement.style.setProperty(`--left-panel-width`, newLeftWidth);
         panelResizeEvent.rightElement.style.width = newRightWidth;
       } else if (panelResizeEvent.rightElement.id === 'gmf-app-tools-content') {
+        deltaX = Math.min(Math.max(deltaX, -panelResizeEvent.leftWidth), panelResizeEvent.rightWidth);
+        // Move panel separator
+        panelResizeEvent.separator.style.left = `${panelResizeEvent.offsetLeft + deltaX}px`;
+        const newLeftWidth = `${panelResizeEvent.leftWidth + deltaX}px`;
+        const newRightWidth = `${panelResizeEvent.rightWidth - deltaX}px`;
         panelResizeEvent.leftElement.style.width = newLeftWidth;
         document.documentElement.style.setProperty(`--current-right-panel-width`, newRightWidth);
       }
