@@ -107,12 +107,13 @@ export enum UserState {
  * Object used to expose the login user information.
  *
  * Example of usage:
- *
+ * ```js
  *    gmfapi.store.user.getProperties().subscribe({
  *      next: (user: User) => {
  *        ...
  *      },
  *    })
+ * ```
  */
 export class UserModel {
   /**
