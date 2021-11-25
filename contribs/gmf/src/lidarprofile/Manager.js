@@ -41,7 +41,6 @@ export class LidarprofileManager {
    * Requires access to a Pytree webservice: https://github.com/sitn/pytree
    *
    * @param {angular.IHttpService} $http Angular http service.
-   * @param {angular.IFilterService} $filter Angular filter.
    * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
    * @param {import('ngeo/misc/debounce').miscDebounce<function(): void>} ngeoDebounce ngeo debounce
    *    service.
@@ -49,16 +48,11 @@ export class LidarprofileManager {
    * @ngdoc service
    * @ngname gmflidarprofileManager
    */
-  constructor($http, $filter, gettextCatalog, ngeoDebounce) {
+  constructor($http, gettextCatalog, ngeoDebounce) {
     /**
      * @type {angular.IHttpService}
      */
     this.$http = $http;
-
-    /**
-     * @type {angular.IFilterService}
-     */
-    this.$filter = $filter;
 
     /**
      * @type {angular.gettext.gettextCatalog}

@@ -147,7 +147,7 @@ export class Controller {
     this.map = null;
 
     /**
-     * The OpenLayers LineString geometry of the profle
+     * The OpenLayers LineString geometry of the profile
      *
      * @type {?import('ol/geom/LineString').default}
      */

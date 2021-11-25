@@ -96,12 +96,12 @@ export class Controller {
   /**
    * @param {angular.IScope} $scope Angular scope.
    * @ngInject
-   * @ngdo controller
+   * @ngdoc controller
    * @ngname GmfLidarprofileController
    */
   constructor($scope) {
     /**
-     * The OpenLayers LineStringt that defines the profile
+     * The OpenLayers LineString that defines the profile
      *
      * @type {?import('ol/geom/LineString').default}
      */
