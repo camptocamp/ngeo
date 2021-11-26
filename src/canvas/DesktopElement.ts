@@ -427,7 +427,7 @@ export default class GmfDesktopCanvas extends BaseElement {
     if (this.showInfobar_) {
       document.documentElement.style.setProperty(`--current-infobar-height`, 'var(--infobar-height)');
     } else {
-      document.documentElement.style.setProperty(`--current-infobar-height`, '0px');
+      document.documentElement.style.setProperty(`--current-infobar-height`, '0');
     }
   }
 
@@ -441,7 +441,7 @@ export default class GmfDesktopCanvas extends BaseElement {
       const styles = getComputedStyle(document.documentElement);
       this.datapanelWidth_ = styles.getPropertyValue(`--left-panel-width`);
       // Close panel
-      document.documentElement.style.setProperty(`--left-panel-width`, '0px');
+      document.documentElement.style.setProperty(`--left-panel-width`, '0');
     }
   }
 
