@@ -34,9 +34,10 @@ jobs:
       - run: '! ls BACKPORT_TODO'
       - run: /opt/google/chrome/chrome --version
 
-      - uses: actions/setup-node@v1
-        with:
-          node-version: '16.x'
+      - name: Get sha
+        id: sha
+        run: echo "::set-output name=sha::$(jq -r .pull_request.head.sha < ${GITHUB_EVENT_PATH})"
+        if: env.HAS_SECRETS == 'HAS_SECRETS' && github.event_name == 'pull_request_target'
 
       - uses: actions/checkout@v2
         with:
@@ -45,8 +46,12 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
-          ref: ${{ env.GITHUB_HEAD_REF }}
+          ref: ${{ steps.sha.outputs.sha }}
         if: github.event_name == 'pull_request_target'
+
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '16.x'
 
       - uses: camptocamp/initialise-gopass-summon-action@v2
         with:
@@ -125,10 +130,6 @@ jobs:
       - name: Publish Storybook to Chromatic to run visual tests
         run: npm run chromatic -- --project-token=$(gopass show gs/ci/chromatic/ngeo_token)
         if: env.HAS_SECRETS == 'HAS_SECRETS' && github.event_name != 'pull_request_target'
-      - name: Get sha
-        id: sha
-        run: echo "::set-output name=sha::$(git rev-parse HEAD)"
-        if: env.HAS_SECRETS == 'HAS_SECRETS' && github.event_name == 'pull_request_target'
       - name: Publish Storybook to Chromatic to run visual tests
         run: GITHUB_SHA=${GITHUB_SHA_} npm run chromatic -- --project-token=$(gopass show gs/ci/chromatic/ngeo_token) --branch-name=${GITHUB_HEAD_REF}
         if: env.HAS_SECRETS == 'HAS_SECRETS' && github.event_name == 'pull_request_target'
