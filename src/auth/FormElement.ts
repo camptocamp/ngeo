@@ -44,8 +44,8 @@ export type PasswordValidator = {
 
 @customElement('gmf-auth-form')
 export default class GmfAuthForm extends GmfBaseElement {
-  @property({type: String}) loginInfoMessage = '';
   @property({type: Object}) private passwordValidator: PasswordValidator = null;
+  @state() private loginInfoMessage = '';
   @state() private isLoading = false;
   @state() private disconnectedShown = false;
   @state() private resetPasswordShown = false;
@@ -69,6 +69,11 @@ export default class GmfAuthForm extends GmfBaseElement {
           this.setOtpImage_();
           this.checkUserMustChangeItsPassword_();
           this.onUserStateUpdate_(user.getState());
+        },
+      }),
+      user.getLoginMessage().subscribe({
+        next: (message: string) => {
+          this.loginInfoMessage = message;
         },
       })
     );

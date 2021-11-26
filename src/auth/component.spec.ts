@@ -22,7 +22,7 @@
 import gmfAuthenticationService from 'ngeo/auth/service';
 
 import configuration, {Configuration} from 'gmfapi/store/config';
-import user, {UserState} from 'gmfapi/store/user';
+import user, {UserState, LoginMessageState} from 'gmfapi/store/user';
 
 describe('Auth component', () => {
   context('panel', () => {
@@ -42,13 +42,12 @@ describe('Auth component', () => {
     });
 
     it('displays an info message', () => {
-      cy.visit('iframe.html?id=auth-form--empty&args=loginInfoMessage:a_msg');
-      cy.get('.alert span').should('have.length', 1).first().should('have.text', 'a_msg');
+      cy.visit('iframe.html?id=auth-form--empty&args=loginInfoMessage:true');
+      cy.get('.alert span').should('have.length', 1).first().should('have.text', LoginMessageState.REQUIRED);
     });
 
     it('displays a form with a user and a message', () => {
-      cy.visit('iframe.html?id=auth-form--with-user&args=loginInfoMessage:logged');
-      cy.get('.alert span').should('have.length', 1).first().should('have.text', 'logged');
+      cy.visit('iframe.html?id=auth-form--with-user&args=loginInfoMessage:false');
       cy.get('input').should('have.length', 2).first().should('have.value', 'Logout');
       cy.get('.form-group span').first().should('have.text', 'Logged in as');
       cy.get('.form-group strong').first().should('have.text', 'George');

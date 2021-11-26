@@ -54,7 +54,7 @@ import olLayerGroup from 'ol/layer/Group';
 import {CollectionEvent} from 'ol/Collection';
 import {buildStyle} from 'ngeo/options';
 
-import user from 'gmfapi/store/user';
+import user, {LoginMessageState} from 'gmfapi/store/user';
 
 /**
  * @enum {string}
@@ -641,46 +641,48 @@ export function PermalinkService(
 
   if (this.ngeoQuerent_ && this.gmfExternalDataSourcesManager_) {
     // First, load the external data sources that are defined in the url
-    this.initExternalDataSources_().then(() => {
-      if (!this.gmfExternalDataSourcesManager_) {
-        throw new Error('Missing gmfExternalDataSourcesManager');
-      }
-      // Then, listen to the changes made to the external data sources to
-      // update the url accordingly.
-      listen(
-        this.gmfExternalDataSourcesManager_.wmsGroupsCollection,
-        'add',
-        this.handleExternalDSGroupCollectionAdd_,
-        this
-      );
-      listen(
-        this.gmfExternalDataSourcesManager_.wmsGroupsCollection,
-        'remove',
-        this.handleExternalDSGroupCollectionRemove_,
-        this
-      );
-      listen(
-        this.gmfExternalDataSourcesManager_.wmtsGroupsCollection,
-        'add',
-        this.handleExternalDSGroupCollectionAdd_,
-        this
-      );
-      listen(
-        this.gmfExternalDataSourcesManager_.wmtsGroupsCollection,
-        'remove',
-        this.handleExternalDSGroupCollectionRemove_,
-        this
-      );
+    this.initExternalDataSources_()
+      .then(() => {
+        if (!this.gmfExternalDataSourcesManager_) {
+          throw new Error('Missing gmfExternalDataSourcesManager');
+        }
+        // Then, listen to the changes made to the external data sources to
+        // update the url accordingly.
+        listen(
+          this.gmfExternalDataSourcesManager_.wmsGroupsCollection,
+          'add',
+          this.handleExternalDSGroupCollectionAdd_,
+          this
+        );
+        listen(
+          this.gmfExternalDataSourcesManager_.wmsGroupsCollection,
+          'remove',
+          this.handleExternalDSGroupCollectionRemove_,
+          this
+        );
+        listen(
+          this.gmfExternalDataSourcesManager_.wmtsGroupsCollection,
+          'add',
+          this.handleExternalDSGroupCollectionAdd_,
+          this
+        );
+        listen(
+          this.gmfExternalDataSourcesManager_.wmtsGroupsCollection,
+          'remove',
+          this.handleExternalDSGroupCollectionRemove_,
+          this
+        );
 
-      // We also need to 'register' the existing groups as well, i.e. those
-      // that were created by the Permalink
-      for (const wmsGroup of this.gmfExternalDataSourcesManager_.wmsGroups) {
-        this.registerExternalDSGroup_(wmsGroup);
-      }
-      for (const wmtsGroup of this.gmfExternalDataSourcesManager_.wmtsGroups) {
-        this.registerExternalDSGroup_(wmtsGroup);
-      }
-    });
+        // We also need to 'register' the existing groups as well, i.e. those
+        // that were created by the Permalink
+        for (const wmsGroup of this.gmfExternalDataSourcesManager_.wmsGroups) {
+          this.registerExternalDSGroup_(wmsGroup);
+        }
+        for (const wmtsGroup of this.gmfExternalDataSourcesManager_.wmtsGroups) {
+          this.registerExternalDSGroup_(wmtsGroup);
+        }
+      })
+      .catch((err) => console.error(err));
   }
 
   this.initLayers_();
@@ -1252,10 +1254,10 @@ PermalinkService.prototype.defaultThemeName = function () {
  */
 PermalinkService.prototype.defaultThemeNameFromFunctionalities = function () {
   //check if we have a theme in the user functionalities
-  if (!this.gmfUser_) {
+  if (!this.gmfUser) {
     return null;
   }
-  const functionalities = this.gmfUser_.functionalities;
+  const functionalities = this.gmfUser.functionalities;
   if (functionalities && 'default_theme' in functionalities) {
     const defaultTheme = functionalities.default_theme;
     if (defaultTheme.length > 0) {
@@ -1272,148 +1274,153 @@ PermalinkService.prototype.initLayers_ = function () {
   if (!this.gmfThemes_) {
     return;
   }
-  this.gmfThemes_.getThemesObject().then((themes) => {
-    const themeName = this.defaultThemeName();
+  this.gmfThemes_
+    .getThemesObject()
+    .then((themes) => {
+      const themeName = this.defaultThemeName();
 
-    if (this.gmfThemeManager_) {
-      this.gmfThemeManager_.setThemeName(this.gmfThemeManager_.modeFlush ? themeName : '');
-    }
-
-    /**
-     * @type {(import('gmf/themes').GmfGroup)[]}
-     */
-    let firstLevelGroups = [];
-    let theme;
-    // Check if we have the groups in the permalink
-    const groupsNames = this.ngeoLocation_.getParam(PermalinkParam.TREE_GROUPS);
-    if (groupsNames === undefined) {
-      theme = findThemeByName(themes, themeName);
-      if (theme) {
-        firstLevelGroups = theme.children;
+      if (this.gmfThemeManager_) {
+        this.gmfThemeManager_.setThemeName(this.gmfThemeManager_.modeFlush ? themeName : '');
       }
-    } else {
-      groupsNames.split(',').forEach((groupName) => {
-        const group = findGroupByName(themes, groupName);
-        if (group) {
-          firstLevelGroups.push(group);
-        } else {
-          authenticationRequired = true;
-        }
-      });
-    }
 
-    if (this.gmfTreeManager_) {
-      this.gmfTreeManager_.setFirstLevelGroups(firstLevelGroups);
-    }
-
-    this.$timeout_(() => {
-      if (!this.gmfTreeManager_ || !this.gmfTreeManager_.rootCtrl) {
-        // we don't have any layertree
-        if (authenticationRequired && this.gmfUser_ && this.gmfUser_.roles === null) {
-          this.rootScope_.$broadcast('authenticationrequired', {url: initialUri});
-        }
-        return;
-      }
-      // Get the layerBeingSwipe value from Permalink.
-      const layerBeingSwipeValue = this.ngeoStateManager_.getInitialNumberValue(PermalinkParam.MAP_SWIPE);
-      // Get the map swipe value from Permalink.
-      const mapSwipeValue = this.ngeoStateManager_.getInitialNumberValue(PermalinkParam.MAP_SWIPE_VALUE);
       /**
-       * Enable the layers and set the opacity
-       *
-       * @param {import('ngeo/layertree/Controller').LayertreeController} treeCtrl Controller
-       * @returns {LayertreeVisitorDecision|undefined} the result
+       * @type {(import('gmf/themes').GmfGroup)[]}
        */
-      const visitor = (treeCtrl) => {
-        if (treeCtrl.isRoot) {
-          return undefined;
+      let firstLevelGroups = [];
+      let theme;
+      // Check if we have the groups in the permalink
+      const groupsNames = this.ngeoLocation_.getParam(PermalinkParam.TREE_GROUPS);
+      if (groupsNames === undefined) {
+        theme = findThemeByName(themes, themeName);
+        if (theme) {
+          firstLevelGroups = theme.children;
         }
-        const groupNode = /** @type {import('gmf/themes').GmfGroup} */ (treeCtrl.node);
-        const parentGroupNode = /** @type {import('gmf/themes').GmfGroup} */ (treeCtrl.parent.node);
-        const opacity = this.ngeoStateManager_.getInitialNumberValue(
-          (parentGroupNode.mixed ? ParamPrefix.TREE_OPACITY : ParamPrefix.TREE_GROUP_OPACITY) +
-            treeCtrl.node.name
-        );
-
-        if (treeCtrl.layer) {
-          if (opacity !== undefined) {
-            treeCtrl.layer.setOpacity(opacity);
-          }
-          // === Set the gmfLayerBeingSwipe layer ===
-          if (
-            layerBeingSwipeValue !== null &&
-            layerBeingSwipeValue !== undefined &&
-            treeCtrl.layer.get('dataSourceId') === layerBeingSwipeValue
-          ) {
-            if (mapSwipeValue !== null && mapSwipeValue !== undefined) {
-              this.gmfLayerBeingSwipe_.swipeValue = mapSwipeValue;
-            }
-            this.gmfLayerBeingSwipe_.layer = treeCtrl.layer;
-          }
-        }
-        const timenode = /** @type {import('gmf/themes').GmfGroup|!import('gmf/themes').GmfLayerWMS} */ (
-          treeCtrl.node
-        );
-        if (timenode && timenode.time) {
-          this.setNodeTime_(treeCtrl);
-        }
-
-        if (treeCtrl.parent.node && parentGroupNode.mixed && groupNode.children == undefined) {
-          // Layer of a mixed group
-          const enable = this.ngeoStateManager_.getInitialBooleanValue(
-            ParamPrefix.TREE_ENABLE + treeCtrl.node.name
-          );
-          if (enable !== undefined) {
-            treeCtrl.setState(enable ? 'on' : 'off', false);
-          }
-        } else if (!groupNode.mixed && treeCtrl.depth == 1) {
-          // First level non mixed group
-          const groupLayers = this.ngeoStateManager_.getInitialStringValue(
-            ParamPrefix.TREE_GROUP_LAYERS + treeCtrl.node.name
-          );
-          if (groupLayers !== undefined) {
-            const groupLayersArray = groupLayers == '' ? [] : groupLayers.split(',');
-
-            /**
-             * Enable the layers and set the opacity
-             *
-             * @param {import('ngeo/layertree/Controller').LayertreeController} treeCtrl Controller
-             * @returns {LayertreeVisitorDecision|undefined} the result
-             */
-            const visitor = (treeCtrl) => {
-              const groupNode = /** @type {import('gmf/themes').GmfGroup} */ (treeCtrl.node);
-              if (groupNode.children === undefined) {
-                const enable = groupLayersArray.includes(treeCtrl.node.name);
-                if (enable) {
-                  groupLayersArray.splice(groupLayersArray.indexOf(treeCtrl.node.name), 1);
-                }
-                treeCtrl.setState(enable ? 'on' : 'off', false);
-              }
-              return undefined;
-            };
-            treeCtrl.traverseDepthFirst(visitor);
-            if (groupLayersArray.length > 0) {
-              authenticationRequired = true;
-            }
-          }
-        }
-      };
-      this.gmfTreeManager_.rootCtrl.traverseDepthFirst(visitor);
-      const firstParents = this.gmfTreeManager_.rootCtrl.children;
-      firstParents.forEach((firstParent) => {
-        firstParent.traverseDepthFirst((treeCtrl) => {
-          if (treeCtrl.getState() !== 'indeterminate') {
-            this.rootScope_.$broadcast('ngeo-layertree-state', treeCtrl, firstParent);
-            return LayertreeVisitorDecision.STOP;
+      } else {
+        groupsNames.split(',').forEach((groupName) => {
+          const group = findGroupByName(themes, groupName);
+          if (group) {
+            firstLevelGroups.push(group);
+          } else {
+            authenticationRequired = true;
           }
         });
-      });
-
-      if (authenticationRequired && this.gmfUser_ && this.gmfUser_.roles === null) {
-        this.rootScope_.$broadcast('authenticationrequired', {url: initialUri});
       }
-    });
-  });
+
+      if (this.gmfTreeManager_) {
+        this.gmfTreeManager_.setFirstLevelGroups(firstLevelGroups);
+      }
+
+      this.$timeout_(() => {
+        if (!this.gmfTreeManager_ || !this.gmfTreeManager_.rootCtrl) {
+          // we don't have any layertree
+          if (authenticationRequired && this.gmfUser && this.gmfUser.roles === null) {
+            this.rootScope_.$broadcast('authenticationrequired', {url: initialUri});
+            user.setLoginMessage(LoginMessageState.REQUIRED);
+          }
+          return;
+        }
+        // Get the layerBeingSwipe value from Permalink.
+        const layerBeingSwipeValue = this.ngeoStateManager_.getInitialNumberValue(PermalinkParam.MAP_SWIPE);
+        // Get the map swipe value from Permalink.
+        const mapSwipeValue = this.ngeoStateManager_.getInitialNumberValue(PermalinkParam.MAP_SWIPE_VALUE);
+        /**
+         * Enable the layers and set the opacity
+         *
+         * @param {import('ngeo/layertree/Controller').LayertreeController} treeCtrl Controller
+         * @returns {LayertreeVisitorDecision|undefined} the result
+         */
+        const visitor = (treeCtrl) => {
+          if (treeCtrl.isRoot) {
+            return undefined;
+          }
+          const groupNode = /** @type {import('gmf/themes').GmfGroup} */ (treeCtrl.node);
+          const parentGroupNode = /** @type {import('gmf/themes').GmfGroup} */ (treeCtrl.parent.node);
+          const opacity = this.ngeoStateManager_.getInitialNumberValue(
+            (parentGroupNode.mixed ? ParamPrefix.TREE_OPACITY : ParamPrefix.TREE_GROUP_OPACITY) +
+              treeCtrl.node.name
+          );
+
+          if (treeCtrl.layer) {
+            if (opacity !== undefined) {
+              treeCtrl.layer.setOpacity(opacity);
+            }
+            // === Set the gmfLayerBeingSwipe layer ===
+            if (
+              layerBeingSwipeValue !== null &&
+              layerBeingSwipeValue !== undefined &&
+              treeCtrl.layer.get('dataSourceId') === layerBeingSwipeValue
+            ) {
+              if (mapSwipeValue !== null && mapSwipeValue !== undefined) {
+                this.gmfLayerBeingSwipe_.swipeValue = mapSwipeValue;
+              }
+              this.gmfLayerBeingSwipe_.layer = treeCtrl.layer;
+            }
+          }
+          const timenode = /** @type {import('gmf/themes').GmfGroup|!import('gmf/themes').GmfLayerWMS} */ (
+            treeCtrl.node
+          );
+          if (timenode && timenode.time) {
+            this.setNodeTime_(treeCtrl);
+          }
+
+          if (treeCtrl.parent.node && parentGroupNode.mixed && groupNode.children == undefined) {
+            // Layer of a mixed group
+            const enable = this.ngeoStateManager_.getInitialBooleanValue(
+              ParamPrefix.TREE_ENABLE + treeCtrl.node.name
+            );
+            if (enable !== undefined) {
+              treeCtrl.setState(enable ? 'on' : 'off', false);
+            }
+          } else if (!groupNode.mixed && treeCtrl.depth == 1) {
+            // First level non mixed group
+            const groupLayers = this.ngeoStateManager_.getInitialStringValue(
+              ParamPrefix.TREE_GROUP_LAYERS + treeCtrl.node.name
+            );
+            if (groupLayers !== undefined) {
+              const groupLayersArray = groupLayers == '' ? [] : groupLayers.split(',');
+
+              /**
+               * Enable the layers and set the opacity
+               *
+               * @param {import('ngeo/layertree/Controller').LayertreeController} treeCtrl Controller
+               * @returns {LayertreeVisitorDecision|undefined} the result
+               */
+              const visitor = (treeCtrl) => {
+                const groupNode = /** @type {import('gmf/themes').GmfGroup} */ (treeCtrl.node);
+                if (groupNode.children === undefined) {
+                  const enable = groupLayersArray.includes(treeCtrl.node.name);
+                  if (enable) {
+                    groupLayersArray.splice(groupLayersArray.indexOf(treeCtrl.node.name), 1);
+                  }
+                  treeCtrl.setState(enable ? 'on' : 'off', false);
+                }
+                return undefined;
+              };
+              treeCtrl.traverseDepthFirst(visitor);
+              if (groupLayersArray.length > 0) {
+                authenticationRequired = true;
+              }
+            }
+          }
+        };
+        this.gmfTreeManager_.rootCtrl.traverseDepthFirst(visitor);
+        const firstParents = this.gmfTreeManager_.rootCtrl.children;
+        firstParents.forEach((firstParent) => {
+          firstParent.traverseDepthFirst((treeCtrl) => {
+            if (treeCtrl.getState() !== 'indeterminate') {
+              this.rootScope_.$broadcast('ngeo-layertree-state', treeCtrl, firstParent);
+              return LayertreeVisitorDecision.STOP;
+            }
+          });
+        });
+
+        if (authenticationRequired && this.gmfUser && this.gmfUser.roles === null) {
+          this.rootScope_.$broadcast('authenticationrequired', {url: initialUri});
+          user.setLoginMessage(LoginMessageState.REQUIRED);
+        }
+      }).catch((err) => console.error(err));
+    })
+    .catch((err) => console.error(err));
 };
 
 // === ngeoFeatures, A.K.A features from the DrawFeature, RedLining  ===
@@ -1897,7 +1904,7 @@ PermalinkService.prototype.cleanParams = function (groups) {
         }
       }
     }
-  });
+  }).catch((err) => console.error(err));
 };
 
 /**

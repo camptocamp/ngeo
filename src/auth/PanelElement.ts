@@ -33,7 +33,6 @@ import ToolPanelElement from 'gmfapi/elements/ToolPanelElement';
 
 @customElement('gmf-auth-panel')
 export default class GmfAuthPanel extends ToolPanelElement {
-  @property({type: String}) loginInfoMessage = '';
   @property({type: Boolean}) postLoading = false;
   @property({type: Object}) passwordValidator: PasswordValidator = null;
   @state() private customCSS_ = '';
@@ -78,10 +77,7 @@ export default class GmfAuthPanel extends ToolPanelElement {
         ${unsafeCSS(this.customCSS_)}
       </style>
       ${this.getTitle(i18next.t('Login'))}
-      <gmf-auth-form
-        .loginInfoMessage=${this.loginInfoMessage}
-        .passwordValidator=${this.passwordValidator}
-      ></gmf-auth-form>
+      <gmf-auth-form .passwordValidator=${this.passwordValidator}></gmf-auth-form>
       ${spinnerTemplate}
     `;
   }
