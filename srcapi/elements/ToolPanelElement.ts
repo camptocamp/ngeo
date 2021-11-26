@@ -28,13 +28,14 @@ import {css, html, TemplateResult} from 'lit';
  * Include the style for the header.
  *
  * Example:
- *
+ * ```js
  *    export default class MyToolPanel extent gmfapi.elements.ToolPanelElement {
  *      render(): TemplateResult {
  *        return html`${this.getTitle(i18next.t('Title'))}
  *          your template`
  *      }
  *    }
+ * ```
  */
 export default class PanelElement extends BaseElement {
   static styles = [

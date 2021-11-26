@@ -26,7 +26,7 @@ import OlMap from 'ol/Map';
  * Object used to expose the OpenLayer map.
  *
  * Example of usage:
- *
+ * ```js
  *    gmfapi.store.map.getMap().subscribe({
  *      next: (map: Map) => {
  *        if (map) {
@@ -34,6 +34,7 @@ import OlMap from 'ol/Map';
  *        }
  *      },
  *    })
+ * ```
  */
 export class MapModel {
   /**

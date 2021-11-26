@@ -31,7 +31,7 @@ import 'bootstrap/js/src/tooltip';
  * Base element of the application tools icon.
  *
  * Example:
- *
+ * ```js
  *    @customElement('gmf-my-button')
  *    export class MyToolButtonElement extends gmfapi.elements.ToolButtonElement {
  *      constructor() {
@@ -52,6 +52,7 @@ import 'bootstrap/js/src/tooltip';
  *        `;
  *      }
  *    }
+ * ```
  */
 export default class ToolButtonElement extends BaseElement {
   @state() protected active_ = false;
@@ -151,16 +152,18 @@ export default class ToolButtonElement extends BaseElement {
  * Default implementation of the application tools icon.
  *
  * Example with an icon classes:
- *
- *    <gmf-tool-button slot="tool-button" iconClasses="fa fa-print" panelName="2"></gmf-tool-button>
+ * ```js
+ *    <gmf-tool-button slot="tool-button" iconClasses="fa fa-print" panelName="my-panel"></gmf-tool-button>
+ * ```
  *
  * Example with a slot:
- *
- *    <gmf-tool-button slot="tool-button" panelName="1">
+ * ```js
+ *    <gmf-tool-button slot="tool-button" panelName="my-panel">
  *      <span>
  *        <i class="fa fa-mouse-pointer"></i>
  *      </span>
  *    </gmf-tool-button>
+ * ```
  */
 @customElement('gmf-tool-button')
 export class ToolButtonDefault extends ToolButtonElement {

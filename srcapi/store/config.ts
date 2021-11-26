@@ -1451,7 +1451,7 @@ export type APIConfig = {
  * the ``initConfig`` to get the configuration.
  *
  * Example of usage:
- *
+ * ```js
  *    gmfapi.store.config.getConfig().subscribe({
  *      next: (configuration: Configuration) => {
  *        if (configuration) {
@@ -1459,6 +1459,7 @@ export type APIConfig = {
  *        }
  *      },
  *    })
+ * ```
  */
 export class ConfigModel {
   /**
