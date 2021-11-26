@@ -81,6 +81,7 @@ function Template(args: Args): string {
     '<style>',
     ':root {',
     '  --infobar-height: 3.5rem;',
+    '  --right-panel-width-2: 20rem;',
     '}',
     '</style>',
     '<gmf-desktop-canvas style="height: 20rem; display: block;">',
