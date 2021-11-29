@@ -155,7 +155,7 @@
     "jscodeshift": "0.13.0",
     "jsdoc": "3.6.7",
     "jsdoc-plugin-typescript": "2.0.6",
-    "jsts": "2.7.3",
+    "jsts": "2.8.1",
     "karma": "6.3.9",
     "karma-chrome-launcher": "3.1.0",
     "karma-jasmine": "4.0.1",
