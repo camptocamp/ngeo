@@ -19,7 +19,7 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import {html, TemplateResult, unsafeCSS, css} from 'lit';
+import {html, TemplateResult, unsafeCSS} from 'lit';
 import {customElement, property, state} from 'lit/decorators.js';
 import {unsafeSVG} from 'lit/directives/unsafe-svg.js';
 import loadingSvg from 'gmf/icons/spinner.svg';
@@ -28,7 +28,6 @@ import {PasswordValidator} from './FormElement';
 import './FormElement';
 
 import {Configuration} from 'gmfapi/store/config';
-import GmfBaseElement from 'gmfapi/elements/BaseElement';
 import ToolPanelElement from 'gmfapi/elements/ToolPanelElement';
 
 @customElement('gmf-auth-panel')
@@ -36,20 +35,6 @@ export default class GmfAuthPanel extends ToolPanelElement {
   @property({type: Boolean}) postLoading = false;
   @property({type: Object}) passwordValidator: PasswordValidator = null;
   @state() private customCSS_ = '';
-
-  static style = [
-    ...GmfBaseElement.styles,
-    css`
-      .svg-lit-element {
-        width: 1rem;
-        margin-right: 5px;
-      }
-
-      [hidden] {
-        display: none !important;
-      }
-    `,
-  ];
 
   // override default initConfig
   initConfig(configuration: Configuration): void {
