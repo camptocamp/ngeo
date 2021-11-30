@@ -32,8 +32,34 @@ import {Subscription} from 'rxjs';
  * - Bootstrap (custom build + color in vars), Font Awesome, reset and some custom style.
  * - Configuration directly available by overriding the `initConfig` method.
  * - RXJS subscription added to subscriptions are unsubscribe on element removal.
+ * Example:
+ * ```js
+ *    import {html, css} from 'lit';
+ *    import {customElement} from 'lit/decorators.js';
+ *
+ *    // @ts-ignore
+ *    @customElement('my-element')
+ *    export default class MyElement extent (window as any).gmfapi.elements.BaseElement {
+ *      static styles = [
+ *        ...(window as any).gmfapi.elements.BaseElement.styles,
+ *        css`...`
+ *      ];
+ *
+ *      initConfig(configuration: Any): void {
+ *        ...
+ *      };
+ *
+ *      render(): TemplateResult {
+ *        return html`${this.getTitle(i18next.t('Title'))}
+ *          your template`
+ *      }
+ *    }
+ * ```
  */
 export default class GmfBaseElement extends LitElement {
+  /**
+   * @private
+   */
   i18nLanguageChangedCallback_: () => void;
 
   protected subscriptions: Subscription[] = [];

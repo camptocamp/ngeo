@@ -29,7 +29,17 @@ import {css, html, TemplateResult} from 'lit';
  *
  * Example:
  * ```js
- *    export default class MyToolPanel extent gmfapi.elements.ToolPanelElement {
+ *    import {html, css} from 'lit';
+ *    import {customElement} from 'lit/decorators.js';
+ *
+ *    // @ts-ignore
+ *    @customElement('my-panel')
+ *    export default class MyToolPanel extent (window as any).gmfapi.elements.ToolPanelElement {
+ *      static styles = [
+ *        ...(window as any).gmfapi.elements.ToolPanelElement.styles,
+ *        css`...`
+ *      ];
+ *
  *      render(): TemplateResult {
  *        return html`${this.getTitle(i18next.t('Title'))}
  *          your template`

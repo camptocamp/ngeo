@@ -39,6 +39,17 @@ export type OpenPanelOptions = {
   noError?: boolean;
 };
 
+/**
+ * Manage the panels of the DesktopCanvas.
+ *
+ * Example of usage:
+ * ```js
+ *    (window as any).gmfapi.store.panels.openToolPanel('name');
+ *    (window as any).gmfapi.store.panels.openFooterPanel('name');
+ *    (window as any).gmfapi.store.panels.closeToolPanel();
+ *    (window as any).gmfapi.store.panels.closeFooterPanel();
+ * ```
+ */
 export class PanelsModel {
   /**
    * The observable active tool panel.
