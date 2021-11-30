@@ -16,7 +16,6 @@
 /.storybook/
 /.tx/
 /.vscode/
-/api/dist/
 /private.crt
 /private.key
 /pyproject.toml
