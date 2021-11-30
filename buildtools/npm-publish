@@ -30,25 +30,24 @@ if [ "${GITHUB_REPOSITORY}" = "camptocamp/ngeo" ]
 then
     if [[ "${GITHUB_REF}" =~ ^refs/tags/.* ]]
     then
-        GIT_TAG=$(echo ${GITHUB_REF}|sed 's|refs/tags/||g')
+        GIT_TAG="${GITHUB_REF//refs\/tags\//}"
         echo "The tag ${GIT_TAG} should be published to npm"
-        if [[ ${GIT_TAG} =~ ^[0-9]+\.[0-9]+\.[0-9]+-[a-z]+\.[0-9]+$ ]]
+        if [[ "${GIT_TAG}" =~ ^[0-9]+\.[0-9]+\.[0-9]+-[a-z]+\.[0-9]+$ ]]
         then
             echo "This is a regular version (not a dev version)"
-            export TAG="--tag version-$(echo ${GIT_TAG} | awk -F[.-] '{print $4}')"
+            TAG="--tag version-$(echo "${GIT_TAG}" | awk -F[.-] '{print $4}')"
         else
             echo "This is not a regular version"
         fi
         if [ "${PACKAGE_VERSION}" = "${GIT_TAG}" ]
         then
-            $RUN npm publish --tag=version-${MAIN_BRANCH} ${TAG}
+            $RUN npm publish --tag="version-${MAIN_BRANCH}" "${TAG}"
         else
             echo "Skipping publication, the Git tag and package version differ"
         fi
     else
         if [ "${GITHUB_REF}" = "refs/heads/${MAIN_BRANCH}" ]
         then
-            GIT_BRANCH=$(echo ${GITHUB_REF}|sed 's|refs/heads/||g')
             echo "Publish daily version"
             $RUN npm install --no-save fluid-publish
             if [ "${MAIN_BRANCH}" = "master" ]

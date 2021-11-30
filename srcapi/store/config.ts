@@ -1452,7 +1452,7 @@ export type APIConfig = {
  *
  * Example of usage:
  * ```js
- *    gmfapi.store.config.getConfig().subscribe({
+ *    (window as any).gmfapi.store.config.getConfig().subscribe({
  *      next: (configuration: Configuration) => {
  *        if (configuration) {
  *          ...

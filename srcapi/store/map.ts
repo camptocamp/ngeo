@@ -27,7 +27,7 @@ import OlMap from 'ol/Map';
  *
  * Example of usage:
  * ```js
- *    gmfapi.store.map.getMap().subscribe({
+ *    (window as any).gmfapi.store.map.getMap().subscribe({
  *      next: (map: Map) => {
  *        if (map) {
  *          ...

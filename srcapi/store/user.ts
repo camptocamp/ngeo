@@ -114,7 +114,7 @@ export enum LoginMessageState {
  *
  * Example of usage:
  * ```js
- *    gmfapi.store.user.getProperties().subscribe({
+ *    (window as any).gmfapi.store.user.getProperties().subscribe({
  *      next: (user: User) => {
  *        ...
  *      },
