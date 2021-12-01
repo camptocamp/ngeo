@@ -343,8 +343,11 @@ export default class GmfDesktopCanvas extends BaseElement {
         position: relative;
       }
 
+      header {
+        height: var(--header-height);
+      }
       main {
-        height: 100%;
+        height: calc(100% - var(--header-height));
       }
       main.gmf-footer-active {
         height: calc(100% - 10rem);
