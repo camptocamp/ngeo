@@ -19,6 +19,9 @@
   --border: solid 0.1rem;
 
   --left-panel-width: 20rem;
+  --panel-separator-width: 7px;
+  --current-left-panel-separator-width: var(--panel-separator-width);
+  --current-left-panel-border-width: var(--border);
   --app-margin: 0.62rem;
   --icon-font-size: 1.25rem;
   --border: 0.06rem solid;
