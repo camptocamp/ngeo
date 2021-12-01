@@ -75,7 +75,7 @@
     "@sentry/types": "6.15.0",
     "@storybook/addon-essentials": "6.4.1",
     "@storybook/preset-scss": "1.0.3",
-    "@storybook/web-components": "6.4.1",
+    "@storybook/web-components": "6.4.3",
     "@trevoreyre/autocomplete-js": "2.2.0",
     "@types/angular": "1.8.3",
     "@types/angular-animate": "1.5.11",
