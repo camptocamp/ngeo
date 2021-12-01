@@ -25,7 +25,4 @@ module.exports = {
     mobile: './contribs/gmf/apps/mobile/Controller.js',
     iframe_api: './contribs/gmf/apps/iframe_api/Controller.js',
   },
-  output: {
-    publicPath: 'auto',
-  },
 };
