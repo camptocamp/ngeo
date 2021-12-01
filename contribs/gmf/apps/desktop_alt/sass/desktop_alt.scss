@@ -21,6 +21,11 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+html {
+  body {
+    padding: 0;
+  }
+}
 header {
   .logo {
     background-image: url('../image/logo.svg');
