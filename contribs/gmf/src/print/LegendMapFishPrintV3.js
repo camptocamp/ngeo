@@ -300,15 +300,17 @@ export default class LegendMapFishPrintV3 {
     }
     // For each name in a WMS layer.
     const layerNames = /** @type {string} */ (source.getParams().LAYERS).split(',');
-    // Iterate with a "reverse" to have top-level layers at the top of the legend.
-    layerNames.reverse().forEach((name) => {
-      // Don't add classes without legend url or from layers without any
-      // active name.
-      if (name.length !== 0) {
-        let icon_dpi = this.getMetadataLegendImage_(currentThemes, layerNodeName, dpi);
-        // @ts-ignore: private...
-        const type = icon_dpi ? 'image' : source.serverType_;
-        if (!icon_dpi) {
+
+    let icon_dpi = this.getMetadataLegendImage_(currentThemes, layerNodeName, dpi);
+    if (!icon_dpi) {
+
+      // Iterate with a "reverse" to have top-level layers at the top of the legend.
+      layerNames.reverse().forEach((name) => {
+        // Don't add classes without legend url or from layers without any
+        // active name.
+        if (name.length !== 0) {
+          // @ts-ignore: private...
+          const type = icon_dpi ? 'image' : source.serverType_;
           const url = this.ngeoLayerHelper_.getWMSLegendURL(
             source.getUrl(),
             name,
@@ -340,8 +342,17 @@ export default class LegendMapFishPrintV3 {
           Object.assign(legendLayerItem, {dpi: icon_dpi.dpi});
         }
         legendLayerClasses.push(legendLayerItem);
+      });
+    } else {
+      const legendLayerItem = {
+        name: this.gmfLegendOptions_.label[type] === false ? '' : gettextCatalog.getString(layerNodeName),
+        icons: [icon_dpi.url],
+      };
+      if (icon_dpi.dpi != screenDpi()) {
+        Object.assign(legendLayerItem, {dpi: icon_dpi.dpi});
       }
-    });
+      legendLayerClasses.push(legendLayerItem);
+    }
     // For wms layer in a mixed wms-group with only one element, do not show the name of the wms but only
     // the name of the tree leaf node.
     if (layer.get(NODE_IS_LEAF) && legendLayerClasses.length == 1) {
