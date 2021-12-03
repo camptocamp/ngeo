@@ -302,6 +302,8 @@ export default class LegendMapFishPrintV3 {
     const layerNames = /** @type {string} */ (source.getParams().LAYERS).split(',');
 
     let icon_dpi = this.getMetadataLegendImage_(currentThemes, layerNodeName, dpi);
+    // @ts-ignore: private...
+    const type = icon_dpi ? 'image' : source.serverType_;
     if (!icon_dpi) {
 
       // Iterate with a "reverse" to have top-level layers at the top of the legend.
@@ -309,8 +311,6 @@ export default class LegendMapFishPrintV3 {
         // Don't add classes without legend url or from layers without any
         // active name.
         if (name.length !== 0) {
-          // @ts-ignore: private...
-          const type = icon_dpi ? 'image' : source.serverType_;
           const url = this.ngeoLayerHelper_.getWMSLegendURL(
             source.getUrl(),
             name,
