@@ -169,7 +169,7 @@
     "localforage": "1.10.0",
     "mapillary-js": "4.0.0",
     "moment": "2.29.1",
-    "node-sass": "6.0.1",
+    "node-sass": "7.0.0",
     "node-sass-importer": "2.0.2",
     "ol": "6.9.0",
     "ol-cesium": "2.13.0",
