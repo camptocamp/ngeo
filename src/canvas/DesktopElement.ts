@@ -119,14 +119,13 @@ export default class GmfDesktopCanvas extends BaseElement {
       }
 
       .ui-resizable-e {
-        width: 7px;
         height: 100%;
         background-color: var(--brand-secondary-dark);
         cursor: ew-resize;
         z-index: 3;
-        border-left: var(--border);
+        border-left: var(--current-left-panel-border-width);
         border-left-color: var(--border-color);
-        border-right: var(--border);
+        border-right: var(--current-left-panel-border-width);
         border-right-color: var(--border-color);
       }
 
@@ -139,26 +138,34 @@ export default class GmfDesktopCanvas extends BaseElement {
         display: flex;
         flex-flow: column;
         flex-shrink: 0;
+        padding: 0;
       }
 
-      #gmf-app-data-panel-separator .gmf-app-data-panel-collapse-btn {
+      .gmf-app-data-panel-collapse-btn {
         display: block;
       }
-      #gmf-app-data-panel-separator .gmf-app-data-panel-expand-btn {
+      .gmf-app-data-panel-expand-btn {
         display: block;
       }
 
-      #gmf-app-data-panel-separator .gmf-app-data-panel-toggle-btn {
+      .gmf-app-data-panel-toggle-btn {
         height: calc(1.5 * var(--icon-font-size));
-        left: -1px;
         padding: 0.5rem 0.1rem;
-        position: relative;
+        position: absolute;
         top: calc(50% - var(--icon-font-size));
         cursor: pointer;
+        z-index: 5;
+      }
+
+      #gmf-app-panel-separator-container {
+        width: var(--current-left-panel-separator-width);
+        position: relative;
       }
 
       #gmf-app-data-panel-separator {
+        width: var(--current-left-panel-separator-width);
         float: left;
+        position: absolute;
       }
       #gmf-app-tool-panel-separator {
         float: right;
@@ -269,7 +276,7 @@ export default class GmfDesktopCanvas extends BaseElement {
 
       #gmf-app-tool-panel-separator .gmf-app-tools-content-toggle-btn {
         height: 1.5 * var(--icon-font-size) !important;
-        right: 9px;
+        right: 10px;
         padding: 0.5rem 0.1rem;
         position: relative;
         top: calc(50% - var(--icon-font-size));
@@ -443,12 +450,19 @@ export default class GmfDesktopCanvas extends BaseElement {
     if (this.showDatapanel_) {
       // Set panel width to width before collapse
       document.documentElement.style.setProperty(`--left-panel-width`, this.datapanelWidth_);
+      document.documentElement.style.setProperty(
+        `--current-left-panel-separator-width`,
+        'var(--panel-separator-width)'
+      );
+      document.documentElement.style.setProperty(`--current-left-panel-border-width`, 'var(--border)');
     } else {
       // Store current panel width to use it in case the panel is reponened
       const styles = getComputedStyle(document.documentElement);
       this.datapanelWidth_ = styles.getPropertyValue(`--left-panel-width`);
       // Close panel
       document.documentElement.style.setProperty(`--left-panel-width`, '0');
+      document.documentElement.style.setProperty(`--current-left-panel-separator-width`, '0');
+      document.documentElement.style.setProperty(`--current-left-panel-border-width`, '0');
     }
   }
 
@@ -511,8 +525,6 @@ export default class GmfDesktopCanvas extends BaseElement {
           Math.max(deltaX, this.minDatapanelWidth_ - panelResizeEvent.leftWidth),
           panelResizeEvent.rightWidth
         );
-        // Move panel separator
-        panelResizeEvent.separator.style.left = `${panelResizeEvent.offsetLeft + deltaX}px`;
         // Resize panels
         const newLeftWidth = `${panelResizeEvent.leftWidth + deltaX}px`;
         const newRightWidth = `${panelResizeEvent.rightWidth - deltaX}px`;
@@ -557,7 +569,7 @@ export default class GmfDesktopCanvas extends BaseElement {
    */
   resizeDataPanel(event: MouseEvent, desktopCanvas: ShadowRoot): MouseEvent {
     let panelResizeEvent: PanelResize; // Store mouse down infos
-    const separator = desktopCanvas.getElementById('gmf-app-data-panel-separator');
+    const separator = desktopCanvas.getElementById('gmf-app-panel-separator-container');
     const leftElement = desktopCanvas.getElementById('gmf-app-data-panel');
     const rightElement = desktopCanvas.getElementById('gmf-app-map');
 
@@ -610,7 +622,7 @@ export default class GmfDesktopCanvas extends BaseElement {
             <slot name="data"></slot>
           </div>
 
-          <div id="gmf-app-data-panel-separator" class="ui-resizable-e">
+          <div id="gmf-app-panel-separator-container">
             <div
               class="gmf-app-data-panel-toggle-btn btn prime btn-sm"
               @click=${() => this.toggleShowDatapanel_()}
@@ -621,6 +633,7 @@ export default class GmfDesktopCanvas extends BaseElement {
                   : 'fa fa-angle-double-right gmf-app-data-panel-expand-btn'}"
               ></span>
             </div>
+            <div id="gmf-app-data-panel-separator" class="ui-resizable-e"></div>
           </div>
 
           <div class="gmf-app-map-container">

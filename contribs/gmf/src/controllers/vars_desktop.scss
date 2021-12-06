@@ -24,6 +24,7 @@
 $map-tools-size: 1.9rem !default;
 $left-panel-width: 20rem !default;
 $right-panel-width: 17.5rem !default;
+$panel-separator-width: 7px !default;
 $streetview-width: 25rem !default;
 $topbar-height: 2.8rem !default;
 $search-width: 8 * $map-tools-size !default;
@@ -52,4 +53,7 @@ $notification-width: 12.5rem !default;
   --right-panel-width-mapillary: 25rem;
   --left-panel-width: #{$left-panel-width};
   --header-height: #{$topbar-height};
+  --panel-separator-width: #{$panel-separator-width};
+  --current-left-panel-separator-width: #{$panel-separator-width};
+  --current-left-panel-border-width: #{$border};
 }
