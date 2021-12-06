@@ -150,7 +150,6 @@ export default class GmfDesktopCanvas extends BaseElement {
 
       .gmf-app-data-panel-toggle-btn {
         height: calc(1.5 * var(--icon-font-size));
-        left: -1px;
         padding: 0.5rem 0.1rem;
         position: absolute;
         top: calc(50% - var(--icon-font-size));
@@ -277,7 +276,7 @@ export default class GmfDesktopCanvas extends BaseElement {
 
       #gmf-app-tool-panel-separator .gmf-app-tools-content-toggle-btn {
         height: 1.5 * var(--icon-font-size) !important;
-        right: 9px;
+        right: 10px;
         padding: 0.5rem 0.1rem;
         position: relative;
         top: calc(50% - var(--icon-font-size));
