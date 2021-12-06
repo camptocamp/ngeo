@@ -515,6 +515,11 @@ export default class GmfDesktopCanvas extends BaseElement {
     (event: MouseEvent): MouseEvent => {
       event.preventDefault();
 
+      // Don't move the panel when it is already closed
+      if (!this.showDatapanel_) {
+        return;
+      }
+
       // Compute mouse offset
       let deltaX = event.clientX - panelResizeEvent.event.clientX;
 
