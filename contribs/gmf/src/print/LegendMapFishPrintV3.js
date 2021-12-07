@@ -39,8 +39,17 @@ export default class LegendMapFishPrintV3 {
    * @param {import("gmf/datasource/ExternalDataSourcesManager.js").ExternalDatSourcesManager} gmfExternalDataSourcesManager The manager of external datasources.
    * @param {import("gmf/options.js").OptionsLegendType} legendOptions The options for the legend.
    * @param {import("ol/Map.js").default} map the map to extract the legend from.
+   * @param {import("gmf/datasource/Manager.js").DatasourceManager} gmfDataSourcesManager The gmf
+   *    Datasources manager.
    */
-  constructor(gettextCatalog, ngeoLayerHelper, gmfExternalDataSourcesManager, legendOptions, map) {
+  constructor(
+    gettextCatalog,
+    ngeoLayerHelper,
+    gmfExternalDataSourcesManager,
+    legendOptions,
+    map,
+    gmfDataSourcesManager
+  ) {
     /**
      * @type {angular.gettext.gettextCatalog}
      * @private
@@ -52,6 +61,12 @@ export default class LegendMapFishPrintV3 {
      * @private
      */
     this.ngeoLayerHelper_ = ngeoLayerHelper;
+
+    /*
+     * @type {import("gmf/datasource/Manager.js").DatasourceManager}
+     * @private
+     */
+    this.gmfDataSourcesManager_ = gmfDataSourcesManager;
 
     /**
      * @type {import("gmf/datasource/ExternalDataSourcesManager.js").ExternalDatSourcesManager}
@@ -152,7 +167,9 @@ export default class LegendMapFishPrintV3 {
     }
 
     // Case of leaf layer: Create a legend class item matching the layer.
-    const leafLayer = /** @type {import('ol/layer/Layer').default<import("ol/source/Source.js").default>} */ (layer);
+    const leafLayer = /** @type {import('ol/layer/Layer').default<import("ol/source/Source.js").default>} */ (
+      layer
+    );
     if (leafLayer.getVisible() && leafLayer.getSource()) {
       // For WMTS layers.
       if (leafLayer instanceof olLayerTile) {
@@ -160,7 +177,9 @@ export default class LegendMapFishPrintV3 {
       }
 
       return this.getLegendItemFromWMSLayer_(
-        /** @type {import("ol/layer/Layer.js").default<import("ol/source/ImageWMS.js").default>} */ (leafLayer),
+        /** @type {import("ol/layer/Layer.js").default<import("ol/source/ImageWMS.js").default>} */ (
+          leafLayer
+        ),
         currentThemes,
         scale,
         dpi,
@@ -300,6 +319,23 @@ export default class LegendMapFishPrintV3 {
     }
     // For each name in a WMS layer.
     const layerNames = /** @type {string} */ (source.getParams().LAYERS).split(',');
+
+    const dataSourceId = layer.get('dataSourceId'); // 596
+    /**
+     *  @type {import("gmf/datasource/OGC.js").default}
+     */
+    const dataSource = gmfDataSourcesManager_.getDatasource(dataSourceId);
+    // gmfDataSourcesManager_.getDatasource(596);
+
+    if (dataSource.gmfLayer.type === 'WMS') {
+      if (dataSource.visible) {
+      let icon_dpi = this.getMetadataLegendImage_([dataSource.gmfLayer], dataSource.gmfLayer.name, dpi);
+      }
+    }
+    else {
+      for ( )
+    }
+
 
     let icon_dpi = this.getMetadataLegendImage_(currentThemes, layerNodeName, dpi);
     // @ts-ignore: private...
