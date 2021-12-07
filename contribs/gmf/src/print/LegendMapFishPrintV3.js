@@ -305,7 +305,6 @@ export default class LegendMapFishPrintV3 {
     // @ts-ignore: private...
     const type = icon_dpi ? 'image' : source.serverType_;
     if (!icon_dpi) {
-
       // Iterate with a "reverse" to have top-level layers at the top of the legend.
       layerNames.reverse().forEach((name) => {
         // Don't add classes without legend url or from layers without any
