@@ -74,7 +74,7 @@ export default class GmfDesktopCanvas extends BaseElement {
   private map_: OlMap;
   private resizeObserver_: ResizeObserver;
   private mapElement_: HTMLElement;
-  @query('gmf-app-map')
+  @query('#gmf-app-map')
   private mapElementQuery_: HTMLElement;
   private datapanelWidth_: string;
   // Minimum data panel width in px
@@ -160,6 +160,7 @@ export default class GmfDesktopCanvas extends BaseElement {
       #gmf-app-panel-separator-container {
         width: var(--current-left-panel-separator-width);
         position: relative;
+        flex-shrink: 0;
       }
 
       #gmf-app-data-panel-separator {
@@ -532,9 +533,7 @@ export default class GmfDesktopCanvas extends BaseElement {
         );
         // Resize panels
         const newLeftWidth = `${panelResizeEvent.leftWidth + deltaX}px`;
-        const newRightWidth = `${panelResizeEvent.rightWidth - deltaX}px`;
         document.documentElement.style.setProperty(`--left-panel-width`, newLeftWidth);
-        panelResizeEvent.rightElement.style.width = newRightWidth;
       }
 
       // Resize tool panel
@@ -556,9 +555,7 @@ export default class GmfDesktopCanvas extends BaseElement {
         );
         // Move panel separator
         panelResizeEvent.separator.style.left = `${panelResizeEvent.offsetLeft + deltaX}px`;
-        const newLeftWidth = `${panelResizeEvent.leftWidth + deltaX}px`;
         const newRightWidth = `${panelResizeEvent.rightWidth - deltaX}px`;
-        panelResizeEvent.leftElement.style.width = newLeftWidth;
         document.documentElement.style.setProperty(`--current-right-panel-width`, newRightWidth);
       }
 
