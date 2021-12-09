@@ -1,0 +1,11 @@
+#!/bin/bash -eu
+
+gopass list --flat | grep -v /username$ | grep -v /url$ | grep -v /readme$ | grep -v /email$ | while read key; do
+    pass=$(gopass show ${key})
+    echo $key
+    for p in ${pass}; do
+        if [ ${#p} -gt 3 ]; then
+          echo "::add-mask::${p}"
+        fi
+    done
+done
