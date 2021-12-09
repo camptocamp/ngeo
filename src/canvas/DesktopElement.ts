@@ -160,6 +160,7 @@ export default class GmfDesktopCanvas extends BaseElement {
       #gmf-app-panel-separator-container {
         width: var(--current-left-panel-separator-width);
         position: relative;
+        flex-shrink: 0;
       }
 
       #gmf-app-data-panel-separator {
