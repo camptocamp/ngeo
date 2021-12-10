@@ -21,6 +21,13 @@ jobs:
           - master
 
     steps:
+      - run: sudo npm install -g npm@6
+
+      - run: |
+          sudo rm /etc/apt/sources.list.d/*.list
+          sudo apt update
+          sudo apt install g++-10 libgbm1 graphicsmagick fonts-liberation2
+
       - uses: actions/checkout@v2
         with:
           ref: ${{ matrix.branch }}
@@ -30,12 +37,8 @@ jobs:
           ci-gpg-private-key: ${{secrets.CI_GPG_PRIVATE_KEY}}
           github-gopass-ci-token: ${{secrets.GOPASS_CI_GITHUB_TOKEN}}
 
-      - uses: asdf-vm/actions/install@v1
-        with:
-          tool_versions: python 3.8.0
-
       - run: echo "${HOME}/.local/bin" >> ${GITHUB_PATH}
-      - run: python3 -m pip install --user --requirement=ci/requirements.txt
+      - run: python3 -m pip install --user --pre c2cciutils
 
       - name: Audit
         run: c2cciutils-audit --branch=${{ matrix.branch }}
