@@ -168,12 +168,8 @@ export class AbstractDesktopController extends AbstractAPIController {
 
     panels.getActiveToolPanel().subscribe({
       next: (panels) => {
-        if (panels !== null) {
-          const newVal = panels.includes('print');
-          if (newVal != this.printPanelActive) {
-            this.printPanelActive = newVal;
-          }
-        }
+        panels === 'print' ? (this.printPanelActive = true) : (this.printPanelActive = false);
+        $scope.$apply();
         if (panels === null || !panels.includes('auth')) {
           user.setLoginMessage(LoginMessageState.EMPTY);
         }
