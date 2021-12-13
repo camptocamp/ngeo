@@ -59,9 +59,8 @@ jobs:
           github-gopass-ci-token: ${{secrets.GOPASS_CI_GITHUB_TOKEN}}
           patterns: npm transifex
         if: env.HAS_SECRETS == 'HAS_SECRETS'
-      - run: buildtools/addmask
-        if: env.HAS_SECRETS == 'HAS_SECRETS'
       - run: gopass show gs/ci/test-mask
+        if: env.HAS_SECRETS == 'HAS_SECRETS'
 
       - run: echo "${HOME}/.local/bin" >> ${GITHUB_PATH}
       - run: python3 -m pip install --user --requirement=ci/requirements.txt
