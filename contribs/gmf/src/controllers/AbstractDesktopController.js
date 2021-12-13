@@ -166,10 +166,13 @@ export class AbstractDesktopController extends AbstractAPIController {
      */
     this.routingPanelActive = false;
 
+    const $timeout = $injector.get('$timeout');
+
     panels.getActiveToolPanel().subscribe({
       next: (panels) => {
         panels === 'print' ? (this.printPanelActive = true) : (this.printPanelActive = false);
-        $scope.$apply();
+        $timeout(() => {}); // this triggered on DOM click, we call $timeout to force Angular diggest
+
         if (panels === null || !panels.includes('auth')) {
           user.setLoginMessage(LoginMessageState.EMPTY);
         }
