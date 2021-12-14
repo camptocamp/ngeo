@@ -46,7 +46,7 @@ export default class {
    * @returns {import('ngeo/format/Attribute').Attribute[]} Attributes
    */
   read(complexTypeElements) {
-    return complexTypeElements.map(this.readFromComplexTypeElement_);
+    return complexTypeElements.map((o) => this.readFromComplexTypeElement_(o));
   }
 
   /**
