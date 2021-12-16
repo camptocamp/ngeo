@@ -30,7 +30,7 @@ import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources';
 import ngeoDatasourceFile from 'ngeo/datasource/File';
 import ngeoDatasourceFileGroup from 'ngeo/datasource/FileGroup';
 import ngeoDatasourceOGC, {Type, WMSInfoFormat} from 'ngeo/datasource/OGC';
-import gmfDatasourceFileGroup from 'gmf/datasource/fileGroup';
+import gmfDatasourceFileGroup from 'gmf/datasource/fileGroupModule';
 import gmfExternalDatasourceOGC from 'gmf/datasource/ExternalOGC';
 import ngeoDatasourceOGCGroup from 'ngeo/datasource/OGCGroup';
 import ngeoDatasourceWMSGroup from 'ngeo/datasource/WMSGroup';
@@ -61,7 +61,7 @@ export class ExternalDatSourcesManager {
    * @param {angular.auto.IInjectorService} $injector Main injector.
    * @param {angular.IQService} $q The Angular $q service.
    * @param {angular.IScope} $rootScope The rootScope provider.
-   * @param {import('gmf/datasource/fileGroup').DatasourceFileGroup} gmfDatasourceFileGroup Group that contains file data sources.
+   * @param {import('gmf/datasource/fileGroupModule').DatasourceFileGroup} gmfDatasourceFileGroup Group that contains file data sources.
    * @param {import('ngeo/datasource/DataSources').DataSource} ngeoDataSources Ngeo data sources service.
    * @param {import('ngeo/misc/File').FileService} ngeoFile Ngeo file.
    * @param {import('ngeo/map/LayerHelper').LayerHelper} ngeoLayerHelper Ngeo layer helper service.

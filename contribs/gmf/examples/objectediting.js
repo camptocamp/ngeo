@@ -21,11 +21,11 @@
 
 import angular from 'angular';
 import './objectediting.css';
-import gmfLayertreeComponent from 'gmf/layertree/component';
+import gmfLayertreeComponent from 'gmfold/layertree/component';
 
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager';
 
-import gmfMapComponent from 'gmf/map/component';
+import gmfMapComponent from 'gmfold/map/component';
 
 import gmfObjecteditingComponent from 'gmf/objectediting/component';
 

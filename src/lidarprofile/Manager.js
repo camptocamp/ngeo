@@ -508,6 +508,7 @@ export class LidarprofileManager {
           this.profilePoints.altitude.push(z);
           this.profilePoints.coords.push([x, y]);
         }
+        // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
         aoffset = aoffset + attribute.bytes;
       }
     }

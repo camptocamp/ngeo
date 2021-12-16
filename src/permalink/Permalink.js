@@ -558,7 +558,7 @@ export function PermalinkService(
         (ctrl) => {
           const groupNode = /** @type {import('gmf/themes').GmfGroup} */ (ctrl.node);
           if (groupNode.children === undefined) {
-            const param = ParamPrefix.TREE_ENABLE + ctrl.node.name;
+            const param = `${ParamPrefix.TREE_ENABLE}${ctrl.node.name}`;
             newState[param] = `${visible}`;
           }
         }
@@ -1336,10 +1336,10 @@ PermalinkService.prototype.initLayers_ = function () {
           const groupNode = /** @type {import('gmf/themes').GmfGroup} */ (treeCtrl.node);
           const parentGroupNode = /** @type {import('gmf/themes').GmfGroup} */ (treeCtrl.parent.node);
           const opacity = this.ngeoStateManager_.getInitialNumberValue(
-            (parentGroupNode.mixed ? ParamPrefix.TREE_OPACITY : ParamPrefix.TREE_GROUP_OPACITY) +
-              treeCtrl.node.name
+            parentGroupNode.mixed
+              ? `${ParamPrefix.TREE_OPACITY}${treeCtrl.node.name}`
+              : `${ParamPrefix.TREE_GROUP_OPACITY}${treeCtrl.node.name}`
           );
-
           if (treeCtrl.layer) {
             if (opacity !== undefined) {
               treeCtrl.layer.setOpacity(opacity);
@@ -1366,7 +1366,7 @@ PermalinkService.prototype.initLayers_ = function () {
           if (treeCtrl.parent.node && parentGroupNode.mixed && groupNode.children == undefined) {
             // Layer of a mixed group
             const enable = this.ngeoStateManager_.getInitialBooleanValue(
-              ParamPrefix.TREE_ENABLE + treeCtrl.node.name
+              `${ParamPrefix.TREE_ENABLE}${treeCtrl.node.name}`
             );
             if (enable !== undefined) {
               treeCtrl.setState(enable ? 'on' : 'off', false);
@@ -1374,7 +1374,7 @@ PermalinkService.prototype.initLayers_ = function () {
           } else if (!groupNode.mixed && treeCtrl.depth == 1) {
             // First level non mixed group
             const groupLayers = this.ngeoStateManager_.getInitialStringValue(
-              ParamPrefix.TREE_GROUP_LAYERS + treeCtrl.node.name
+              `${ParamPrefix.TREE_GROUP_LAYERS}${treeCtrl.node.name}`
             );
             if (groupLayers !== undefined) {
               const groupLayersArray = groupLayers == '' ? [] : groupLayers.split(',');
@@ -1913,7 +1913,7 @@ PermalinkService.prototype.cleanParams = function (groups) {
  * @param {import('ngeo/layertree/Controller').LayertreeController} treeCtrl Controller
  */
 PermalinkService.prototype.setNodeTime_ = function (treeCtrl) {
-  const time = this.ngeoStateManager_.getInitialStringValue(ParamPrefix.TREE_TIME + treeCtrl.node.name);
+  const time = this.ngeoStateManager_.getInitialStringValue(`${ParamPrefix.TREE_TIME}${treeCtrl.node.name}`);
   if (time) {
     const bounds = time.split('/');
     const node = /** @type {import('gmf/themes').GmfGroup|!import('gmf/themes').GmfLayerWMS} */ (

@@ -22,6 +22,12 @@
 import angular from 'angular';
 import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources';
 import ngeoDatasourceHelper from 'ngeo/datasource/Helper';
+import gmfDatasourceDataSourceBeingFiltered from 'gmf/datasource/DataSourceBeingFiltered';
+import gmfDatasourceExternalDataSourcesManager from 'gmf/datasource/ExternalDataSourcesManager';
+import gmfDatasourceFileGroup from 'gmf/datasource/fileGroupModule';
+import gmfDatasourceHelper from 'gmfold/datasource/Helper';
+import gmfDatasourceManager from 'gmf/datasource/Manager';
+import gmfDatasourceWFSAliases from 'gmf/datasource/WFSAliases';
 
 /**
  * @type {angular.IModule}
@@ -29,4 +35,10 @@ import ngeoDatasourceHelper from 'ngeo/datasource/Helper';
 export default angular.module('ngeoDatasourceModule', [
   ngeoDatasourceDataSources.name,
   ngeoDatasourceHelper.name,
+  gmfDatasourceDataSourceBeingFiltered.name,
+  gmfDatasourceExternalDataSourcesManager.name,
+  gmfDatasourceFileGroup.name,
+  gmfDatasourceHelper.name,
+  gmfDatasourceManager.name,
+  gmfDatasourceWFSAliases.name,
 ]);

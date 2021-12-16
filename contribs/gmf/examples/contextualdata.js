@@ -23,7 +23,7 @@ import angular from 'angular';
 import './contextualdata.css';
 import gmfContextualdataModule from 'gmf/contextualdata/module';
 
-import gmfMapComponent from 'gmf/map/component';
+import gmfMapComponent from 'gmfold/map/component';
 import ngeoMiscFilters from 'ngeo/misc/filters';
 import EPSG2056 from 'ngeo/proj/EPSG_2056';
 import 'ngeo/proj/EPSG_21781';

@@ -26,10 +26,10 @@ import 'bootstrap/js/src/tooltip';
 import gmfDatasourceManager from 'gmf/datasource/Manager';
 
 import gmfImportImportdatasourceComponent from 'gmf/import/importdatasourceComponent';
-import gmfLayertreeComponent from 'gmf/layertree/component';
+import gmfLayertreeComponent from 'gmfold/layertree/component';
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager';
 
-import gmfMapComponent from 'gmf/map/component';
+import gmfMapComponent from 'gmfold/map/component';
 
 import gmfThemeThemes from 'gmf/theme/Themes';
 import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources';

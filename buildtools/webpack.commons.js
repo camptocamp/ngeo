@@ -229,7 +229,7 @@ module.exports = function (config) {
           if (file.endsWith('src/bootstrap-custom.css')) {
             return false;
           }
-          if (file.endsWith('contribs/gmf/src/css/reset.css')) {
+          if (file.endsWith('/src/css/reset.css')) {
             return false;
           }
           return true;
@@ -315,7 +315,8 @@ module.exports = function (config) {
         gmfapi: path.resolve(__dirname, '../srcapi'),
         api: path.resolve(__dirname, '../api/src'),
         lib: path.resolve(__dirname, '../lib'),
-        gmf: path.resolve(__dirname, '../contribs/gmf/src'),
+        gmf: path.resolve(__dirname, '../src'),
+        gmfold: path.resolve(__dirname, '../contribs/gmf/src'),
         jsts: 'jsts/org/locationtech/jts',
         olcs: 'ol-cesium/src/olcs',
         'jquery-ui/datepicker': 'jquery-ui/ui/widgets/datepicker', // For angular-ui-date

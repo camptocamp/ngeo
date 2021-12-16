@@ -23,7 +23,7 @@ import angular from 'angular';
 import './profile.css';
 import gmfPermalinkPermalink from 'gmf/permalink/Permalink';
 
-import gmfMapComponent from 'gmf/map/component';
+import gmfMapComponent from 'gmfold/map/component';
 
 import gmfProfileModule from 'gmf/profile/module';
 import ngeoMapModule from 'ngeo/map/module';

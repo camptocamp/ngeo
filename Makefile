@@ -469,24 +469,6 @@ build-dll: .build/build-dll.timestamp
 	mkdir -p $(dir $@)
 	touch $@
 
-.PHONY: jsdoc
-jsdoc:
-	npm run jsdoc
-
-	sed -i 's/JSDoc: Module: src\/options/ngeo constants definitions/' jsdoc/build/module-src_options.html
-	sed -i 's/Module: src\/options/ngeo constants definitions/' jsdoc/build/module-src_options.html
-	sed -i 's/module:src\/options~//g' jsdoc/build/module-src_options.html
-
-	sed -i 's/JSDoc: Module: contribs\/gmf\/src\/options/GMF constants definitions/' jsdoc/build/module-contribs_gmf_src_options.html
-	sed -i 's/Module: contribs\/gmf\/src\/options/GMF constants definitions/' jsdoc/build/module-contribs_gmf_src_options.html
-	sed -i 's/module:contribs\/gmf\/src\/options~//g' jsdoc/build/module-contribs_gmf_src_options.html
-
-	sed -i 's/JSDoc: Module: api\/src\/options/API constants definitions/' jsdoc/build/module-api_src_options.html
-	sed -i 's/Module: api\/src\/options/API constants definitions/' jsdoc/build/module-api_src_options.html
-	sed -i 's/module:api\/src\/options~//g' jsdoc/build/module-api_src_options.html
-
-	echo 'nav { display: none; }' >> jsdoc/build/styles/jsdoc-default.css
-
 .PHONY: clean
 clean:
 	rm -f .build/*.check.timestamp

@@ -32,7 +32,6 @@ import ngeoMiscColorpickerComponent from 'ngeo/misc/colorpickerComponent';
 
 import ngeoMessagePopoverComponent from 'ngeo/message/popoverComponent';
 
-import ngeoSearchModule from 'ngeo/search/module';
 import olFeature from 'ol/Feature';
 import {asArray as asColorArray} from 'ol/color';
 import olGeomPoint from 'ol/geom/Point';
@@ -52,7 +51,6 @@ const myModule = angular.module('gmfSearch', [
   gmfThemeThemes.name,
   ngeoMiscAutoProjection.name,
   ngeoMiscColorpickerComponent.name,
-  ngeoSearchModule.name,
   ngeoMapFeatureOverlayMgr.name,
   ngeoMessagePopoverComponent.name,
 ]);

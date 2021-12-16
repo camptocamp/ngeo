@@ -5,7 +5,6 @@ extends:
   - plugin:@typescript-eslint/recommended-requiring-type-checking
 
 plugins:
-  - jsdoc
   - copyright
   - '@typescript-eslint'
 

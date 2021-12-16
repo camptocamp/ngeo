@@ -23,6 +23,10 @@ import angular from 'angular';
 import ngeoSearchSearchDirective from 'ngeo/search/searchDirective';
 import ngeoSearchCreateGeoJSONBloodhound from 'ngeo/search/createGeoJSONBloodhound';
 import ngeoSearchCreateLocationSearchBloodhound from 'ngeo/search/createLocationSearchBloodhound';
+import gmfSearchComponent from 'gmf/search/component';
+import gmfSearchFulltextSearch from 'gmf/search/FulltextSearch';
+
+import './search.scss';
 
 /**
  * @type {angular.IModule}
@@ -31,4 +35,6 @@ export default angular.module('ngeoSearchModule', [
   ngeoSearchSearchDirective.name,
   ngeoSearchCreateGeoJSONBloodhound.name,
   ngeoSearchCreateLocationSearchBloodhound.name,
+  gmfSearchComponent.name,
+  gmfSearchFulltextSearch.name,
 ]);

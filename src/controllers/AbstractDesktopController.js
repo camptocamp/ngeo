@@ -26,12 +26,12 @@ import gmfControllersAbstractAPIController, {
 import gmfContextualdataModule from 'gmf/contextualdata/module';
 import gmfDatasourceDataSourceBeingFiltered from 'gmf/datasource/DataSourceBeingFiltered';
 import gmfDrawingModule from 'gmf/drawing/module';
-import gmfEditingModule from 'gmf/editing/module';
+import ngeoEditingModule from 'ngeo/editing/module';
 import gmfFiltersModule from 'gmf/filters/module';
 import gmfHeaderModule from 'gmf/header/module';
 import gmfPermalinkShareComponent from 'gmf/permalink/shareComponent';
-import gmfPrintModule from 'gmf/print/module';
-import gmfProfileModule from 'gmf/profile/module';
+import ngeoPrintModule from 'ngeo/print/module';
+import ngeoProfileModule from 'ngeo/profile/module';
 import gmfRasterComponent from 'gmf/raster/component';
 import ngeoMapswipeModule from 'ngeo/map/swipe';
 import ngeoDrawFeatures from 'ngeo/draw/features';
@@ -624,13 +624,13 @@ const myModule = angular.module('GmfAbstractDesktopControllerModule', [
   gmfContextualdataModule.name,
   gmfDatasourceDataSourceBeingFiltered.name,
   gmfDrawingModule.name,
-  gmfEditingModule.name,
+  ngeoEditingModule.name,
   gmfFiltersModule.name,
   gmfHeaderModule.name,
   gmfImportModule.name,
   gmfPermalinkShareComponent.name,
-  gmfPrintModule.name,
-  gmfProfileModule.name,
+  ngeoPrintModule.name,
+  ngeoProfileModule.name,
   gmfRasterComponent.name,
   ngeoDrawFeatures.name,
   ngeoMapswipeModule.name,
