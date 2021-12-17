@@ -41,6 +41,7 @@ import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate';
 import ngeoStreetviewModule from 'ngeo/streetview/module';
 import ngeoRoutingModule from 'ngeo/routing/module';
 import ngeoStatemanagerWfsPermalink from 'ngeo/statemanager/WfsPermalink';
+import panels from 'gmfapi/store/panels';
 
 /**
  * @private
@@ -65,6 +66,16 @@ class Controller extends AbstractDesktopController {
 
     const drawLidarprofilePanelActive = new ngeoMiscToolActivate(this, 'drawLidarprofilePanelActive');
     this.ngeoToolActivateMgr.registerTool('mapTools', drawLidarprofilePanelActive, false);
+
+    const $timeout = $injector.get('$timeout');
+
+    panels.getActiveToolPanel().subscribe({
+      next: (panel) => {
+        this.drawLidarprofilePanelActive = panel === 'lidarprofile';
+
+        $timeout(() => {}); // this triggered on DOM click, we call $timeout to force Angular diggest
+      },
+    });
   }
 
   /**
