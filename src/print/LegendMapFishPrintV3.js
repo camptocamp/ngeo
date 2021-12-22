@@ -84,15 +84,15 @@ export default class LegendMapFishPrintV3 {
   /**
    * Return a legend for MapFishPrint V3 based on the map and the GMF layertree.
    *
-   * @param {import('gmf/themes').GmfTheme[]} currentThemes the current themes.
+   * @param {import('gmf/themes').GmfTheme[]} nodesThemes all the nodes of the themes object.
    * @param {number} scale The scale to get the legend (for wms layers only).
    * @param {number} dpi The DPI.
    * @param {number[]} bbox The bbox.
    * @returns {unknown?} Legend object for print report or null.
    */
-  getLegend(currentThemes, scale, dpi, bbox) {
+  getLegend(nodesThemes, scale, dpi, bbox) {
     /** @type {import('ngeo/print/mapfish-print-v3').MapFishPrintLegendClass[]} */
-    const internalLegend = this.getInternalLegendItems_(currentThemes, scale, dpi, bbox);
+    const internalLegend = this.getInternalLegendItems_(nodesThemes, scale, dpi, bbox);
     /** @type {import('ngeo/print/mapfish-print-v3').MapFishPrintLegendClass[]} */
     const externalLegend = this.getExternalLegendItems_(scale);
     /** @type {import('ngeo/print/mapfish-print-v3').MapFishPrintLegend} */
@@ -104,76 +104,101 @@ export default class LegendMapFishPrintV3 {
   /**
    * Get legend classes from the layertree only.
    *
-   * @param {import('gmf/themes').GmfTheme[]} currentThemes the current themes.
+   * @param {import('gmf/themes').GmfTheme[]} nodesThemes the current themes.
    * @param {number} scale The scale to get the legend.
    * @param {number} dpi The DPI.
    * @param {number[]} bbox The bbox.
    * @returns {import('ngeo/print/mapfish-print-v3').MapFishPrintLegendClass[]} Legend classes.
    * @private
    */
-  getInternalLegendItems_(currentThemes, scale, dpi, bbox) {
+  getInternalLegendItems_(nodesThemes, scale, dpi, bbox) {
     const dataLayerGroup = this.ngeoLayerHelper_.getGroupFromMap(this.map_, DATALAYERGROUP_NAME);
-    const legend = this.collectLegendClassesInTree_(dataLayerGroup, currentThemes, scale, dpi, bbox);
-    return legend ? legend.classes : [];
+    /** @type {import('ngeo/print/mapfish-print-v3').MapFishPrintLegendClass[]} */
+    const groupClasses = [];
+    // Iter first on layers to preserve the user order. Use reverse to have a top to bottom order.
+    dataLayerGroup.getLayers().getArray().reverse().forEach(layer => {
+      let nodeFirstLevel;
+      // Get the node that match this layer
+      nodesThemes.some(nodeTheme => {
+        nodeFirstLevel = nodeTheme.children.find(node => node.name === layer.get(LAYER_NODE_NAME_KEY))
+        return nodeFirstLevel !== undefined;
+      });
+      if (nodeFirstLevel) {
+        // Collect the legend classes for this node and this layer.
+        const item = this.collectLegendClassesInTree_(nodeFirstLevel, layer, scale, dpi, bbox);
+        this.addClassItemToArray_(groupClasses, item);
+      }
+    });
+    return groupClasses;
   }
 
   /**
-   * Extract recursively a legend from a layer.
+   * Extract recursively a legend from a node and regardings activated layers.
    *
-   * @param {import('ol/layer/Base').default} layer or layer group to extract the legend from.
-   * @param {import('gmf/themes').GmfTheme[]} currentThemes the current themes.
+   * @param {import('gmf/themes').GmfGroup|import('gmf/themes').GmfLayer} node the current themes node.
+   * @param {import("ol/layer/Base").default} layer or layer group to extract the legend from.
    * @param {number} scale The scale to get the legend.
    * @param {number} dpi The DPI.
    * @param {number[]} bbox The bbox.
    * @returns {import('ngeo/print/mapfish-print-v3').MapFishPrintLegendClass} Legend classes.
    * @private
    */
-  collectLegendClassesInTree_(layer, currentThemes, scale, dpi, bbox) {
-    /*
-     * Case of layer group:
-     * - Create a legend item for the group (with a name if the layer has a name, which should be the case
-     *   except for the tree's top-level group).
-     * - Call this function on layer's children and try to add the resulting legendItem to the group.
-     * - Return the group item (simplified if possible).
-     */
-    if (layer instanceof olLayerGroup) {
-      const gettextCatalog = this.gettextCatalog_;
+  collectLegendClassesInTree_(node, layer, scale, dpi, bbox) {
+    const gettextCatalog = this.gettextCatalog_;
+    /** @type {import('ngeo/print/mapfish-print-v3').MapFishPrintLegendClass} */
+    const legendGroupItem = {};
+
+    // Case of parent node: create a new legend class with the node title and iter on children.
+    if (node.hasOwnProperty('children')) {
+      const nodeGroup = /** @type {import('gmf/themes.js').GmfGroup} */ (node);
+      if (this.gmfLegendOptions_.showGroupsTitle) {
+        legendGroupItem.name = gettextCatalog.getString(nodeGroup.name);
+      }
       /** @type {import('ngeo/print/mapfish-print-v3').MapFishPrintLegendClass[]} */
       const groupClasses = [];
-      /** @type {import('ngeo/print/mapfish-print-v3').MapFishPrintLegendClass} */
-      const legendGroupItem = {};
-      if (layer.get(LAYER_NODE_NAME_KEY) && this.gmfLegendOptions_.showGroupsTitle) {
-        legendGroupItem.name = gettextCatalog.getString(layer.get(LAYER_NODE_NAME_KEY));
-      }
       legendGroupItem.classes = groupClasses;
-      // Iterate with a "reverse" to have top-level layers at the top of the legend.
-      const sublayers = [...layer.getLayers().getArray()].reverse();
-      sublayers.forEach((sublayer) => {
-        const child = this.collectLegendClassesInTree_(sublayer, currentThemes, scale, dpi, bbox);
+      nodeGroup.children.forEach((nodeChild) => {
+        const associatedLayer = this.ngeoLayerHelper_.getLayerByNodeName(nodeChild.name, [layer]) || layer;
+        const child = this.collectLegendClassesInTree_(nodeChild, associatedLayer, scale, dpi, bbox);
         this.addClassItemToArray_(groupClasses, child);
       });
       return this.tryToSimplifyLegendGroup_(legendGroupItem);
     }
 
-    // Case of leaf layer: Create a legend class item matching the layer.
-    const leafLayer = /** @type {import('ol/layer/Layer').default<import('ol/source/Source').default>} */ (
+    if (layer instanceof olLayerGroup) {
+      return;
+    }
+
+    // Case of leaf node: Create a legend class item matching the layer.
+    const nodeLeaf = /** @type {import('gmf/themes').GmfLayer} */ (node);
+    const layerLeaf = /** @type {import('ol/layer/Layer').default<import('ol/source/Source').default>} */ (
       layer
     );
-    if (leafLayer.getVisible() && leafLayer.getSource()) {
-      // For WMTS layers.
-      if (leafLayer instanceof olLayerTile) {
-        return this.getLegendItemFromTileLayer_(currentThemes, leafLayer, dpi);
-      }
-
-      return this.getLegendItemFromWMSLayer_(
-        /** @type {import('ol/layer/Layer').default<import('ol/source/ImageWMS').default>} */ (leafLayer),
-        currentThemes,
-        scale,
-        dpi,
-        bbox
-      );
+    // Layer is not visible then return nothing.
+    if (!layerLeaf.getVisible()) {
+      return null;
     }
-    return null;
+    // Layer is a tile, get the legend for this tile layer.
+    if (layerLeaf instanceof olLayerTile) {
+      return this.getLegendItemFromTileLayer_(nodeLeaf, layerLeaf, dpi);
+    }
+    // Layer is a wms layer get the legend if it has activated (visible) layer names.
+    const NodeWms = /** @type {import('gmf/themes').GmfLayerWMS} */ (
+      /** @type {any} */ (nodeLeaf));
+    const layerWms = /** @type {import('ol/layer/Layer').default<import('ol/source/ImageWMS').default>} */ (
+      layerLeaf
+    );
+    const layerNames = layerWms.getSource().getParams().LAYERS;
+    if (!layerNames.contains(NodeWms.layers)) {
+      return null;
+    }
+    return this.getLegendItemFromlayerWms_(
+      NodeWms,
+      layerWms,
+      scale,
+      dpi,
+      bbox
+    );
   }
 
   /**
@@ -245,18 +270,16 @@ export default class LegendMapFishPrintV3 {
 
   /**
    * Create a legend item from the given WMTS layer.
-   *
-   * @param {import('gmf/themes').GmfTheme[]} currentThemes the current themes.
-   * @param {import('ol/layer/Tile').default<import('ol/source/Tile').default>} layer The layer to extract the legend from.
+   * @param {import('gmf/themes').GmfLayer} node the current themes node.
+   * @param {import("ol/layer/Tile").default} layer The layer to extract the legend from.
    * @param {number} dpi The DPI.
    * @returns {import('ngeo/print/mapfish-print-v3').MapFishPrintLegendClass} Legend object for print report
    * or null.
    * @private
    */
-  getLegendItemFromTileLayer_(currentThemes, layer, dpi) {
+  getLegendItemFromTileLayer_(node, layer, dpi) {
     const gettextCatalog = this.gettextCatalog_;
-    const layerName = layer.get(LAYER_NODE_NAME_KEY);
-    let icon_dpi = this.getMetadataLegendImage_(currentThemes, layerName, dpi);
+    let icon_dpi = this.getMetadataLegendImage_(node, dpi);
     if (!icon_dpi) {
       const url = this.ngeoLayerHelper_.getWMTSLegendURL(layer);
       if (url) {
@@ -269,7 +292,7 @@ export default class LegendMapFishPrintV3 {
     // Add only classes without legend url.
     if (icon_dpi) {
       return {
-        name: gettextCatalog.getString(layerName),
+        name: gettextCatalog.getString(node.name),
         icons: [icon_dpi.url],
       };
     }
@@ -277,11 +300,10 @@ export default class LegendMapFishPrintV3 {
   }
 
   /**
-   * Create a legend item from the given WMS layer.
-   *
-   * @param {import('ol/layer/Layer').default<import('ol/source/ImageWMS').default>} layer The layer
-   * to extract the legend from.
-   * @param {import('gmf/themes').GmfTheme[]} currentThemes the current themes.
+   * Create a legend item from the given WMS layer and from the given node.
+   * @param {import('gmf/themes').GmfLayerWMS} node the current themes node.
+   * @param {import("ol/layer/Layer").default<import("ol/source/ImageWMS").default>} layer the layer
+   * that match the given node.
    * @param {number} scale The scale to get the legend.
    * @param {number} dpi The DPI.
    * @param {number[]} bbox The bbox.
@@ -289,7 +311,7 @@ export default class LegendMapFishPrintV3 {
    * or null.
    * @private
    */
-  getLegendItemFromWMSLayer_(layer, currentThemes, scale, dpi, bbox) {
+  getLegendItemFromlayerWms_(node, layer, scale, dpi, bbox) {
     const gettextCatalog = this.gettextCatalog_;
     const source = layer.getSource();
     if (!(source instanceof ImageWMS)) {
@@ -299,6 +321,33 @@ export default class LegendMapFishPrintV3 {
     if (!source.serverType_) {
       throw new Error('Missing source.serverType_');
     }
+    // @ts-ignore: private...
+    const serverType = source.serverType_;
+
+    /**
+     * @param {string} nodeName
+     * @param {LegendURLDPI} icon_dpi
+     * @param {string} serverType
+     * @return {import('ngeo/print/mapfish-print-v3').MapFishPrintLegendClass}
+     */
+    const getLegendItem = (nodeName, icon_dpi, serverType) => {
+      const legendItem = {
+        name: this.gmfLegendOptions_.label[serverType] === false ? '' : gettextCatalog.getString(nodeName),
+        icons: [icon_dpi.url],
+      };
+      if (icon_dpi.dpi != screenDpi()) {
+        Object.assign(legendItem, {dpi: icon_dpi.dpi});
+      }
+      return legendItem;
+    }
+
+    // Case node as a legend image
+    let icon_dpi = this.getMetadataLegendImage_(node, dpi);
+    if (icon_dpi) {
+      return getLegendItem(node.name, icon_dpi, serverType);
+    }
+
+    // Case node has no legend image => Get the url for each WMS layer.
     /** @type {import('ngeo/print/mapfish-print-v3').MapFishPrintLegendClass[]} */
     const legendLayerClasses = [];
     /** @type {import('ngeo/print/mapfish-print-v3').MapFishPrintLegendClass} */
@@ -306,55 +355,35 @@ export default class LegendMapFishPrintV3 {
       classes: legendLayerClasses,
     };
     if (this.gmfLegendOptions_.showGroupsTitle) {
-      legendGroupItem.name = gettextCatalog.getString(layer.get(LAYER_NODE_NAME_KEY));
+      legendGroupItem.name = gettextCatalog.getString(node.name);
     }
-    // For each name in a WMS layer.
-    const layerNames = /** @type {string} */ (source.getParams().LAYERS).split(',');
-    // Iterate with a "reverse" to have top-level layers at the top of the legend.
-    layerNames.reverse().forEach((name) => {
-      // Don't add classes without legend url or from layers without any
-      // active name.
-      if (name.length !== 0) {
-        let icon_dpi = this.getMetadataLegendImage_(currentThemes, name, dpi);
-        // @ts-ignore: private...
-        const type = icon_dpi ? 'image' : source.serverType_;
-        if (!icon_dpi) {
-          const url = this.ngeoLayerHelper_.getWMSLegendURL(
-            source.getUrl(),
-            name,
-            scale,
-            undefined,
-            undefined,
-            undefined,
-            // @ts-ignore: private...
-            source.serverType_,
-            dpi,
-            this.gmfLegendOptions_.useBbox ? bbox : undefined,
-            this.map_.getView().getProjection().getCode(),
-            // @ts-ignore: private...
-            this.gmfLegendOptions_.params[source.serverType_]
-          );
-          if (!url) {
-            throw new Error('Missing url');
-          }
-          icon_dpi = {
-            url: url,
-            dpi: type === 'qgis' ? dpi : screenDpi(),
-          };
+    const layerNames = node.layers.split(',');
+    layerNames.forEach((name) => {
+      if (!icon_dpi) {
+        const url = this.ngeoLayerHelper_.getWMSLegendURL(
+          source.getUrl(),
+          name,
+          scale,
+          undefined,
+          undefined,
+          undefined,
+          serverType,
+          dpi,
+          this.gmfLegendOptions_.useBbox ? bbox : undefined,
+          this.map_.getView().getProjection().getCode(),
+          this.gmfLegendOptions_.params[serverType]
+        );
+        if (!url) {
+          throw new Error('Missing url');
         }
-        const legendLayerItem = {
-          name: this.gmfLegendOptions_.label[type] === false ? '' : gettextCatalog.getString(name),
-          icons: [icon_dpi.url],
+        icon_dpi = {
+          url: url,
+          dpi: serverType === 'qgis' ? dpi : screenDpi(),
         };
-        if (icon_dpi.dpi != screenDpi()) {
-          Object.assign(legendLayerItem, {dpi: icon_dpi.dpi});
-        }
-        legendLayerClasses.push(legendLayerItem);
       }
+      legendLayerClasses.push(getLegendItem(name, icon_dpi, serverType));
     });
-    // For wms layer in a mixed wms-group with only one element, do not show the name of the wms but only
-    // the name of the tree leaf node.
-    if (layer.get(NODE_IS_LEAF) && legendLayerClasses.length == 1) {
+    if (legendLayerClasses.length == 1) {
       const firstLegendLayer = legendLayerClasses[0];
       firstLegendLayer.name = legendGroupItem.name;
       delete firstLegendLayer.classes;
@@ -390,25 +419,17 @@ export default class LegendMapFishPrintV3 {
    */
 
   /**
-   * Return the metadata legendImage of a layer from the found corresponding node
+   * Return the metadata legendImage of a layer from the given node
    * or undefined.
-   *
-   * @param {import('gmf/themes').GmfTheme[]} currentThemes the current themes.
-   * @param {string} layerName a layer name.
    * @param {number} [dpi=96] the image DPI.
-   * @returns {LegendURLDPI|undefined} The legendImage with selected DPI or undefined.
+   * @param {import('gmf/themes').GmfLayer|import('gmf/themes').GmfLayerWMS} node the node to extract metadata from.
+   * @return {LegendURLDPI|undefined} The legendImage with selected DPI or undefined.
    * @private
    */
-  getMetadataLegendImage_(currentThemes, layerName, dpi = -1) {
+  getMetadataLegendImage_(node, dpi = -1) {
     if (dpi == -1) {
       dpi = screenDpi();
     }
-    /** @type {import("gmf/themes").GmfLayer[]} */
-    const nodes = [];
-    for (const theme of currentThemes) {
-      getFlatNodes(theme, nodes);
-    }
-    const node = findObjectByName(nodes, layerName);
 
     let found_dpi = dpi;
     let legendImage;
