@@ -22,6 +22,7 @@
 import './mouseposition.css';
 import angular from 'angular';
 import gmfMapModule from 'gmf/map/module';
+import gmfMapComponent from 'gmfold/map/component';
 
 import EPSG2056 from 'ngeo/proj/EPSG_2056';
 import EPSG21781 from 'ngeo/proj/EPSG_21781';
@@ -35,7 +36,7 @@ import options from './options';
  * @type {angular.IModule}
  * @hidden
  */
-const myModule = angular.module('gmfapp', ['gettext', gmfMapModule.name]);
+const myModule = angular.module('gmfapp', ['gettext', gmfMapModule.name, gmfMapComponent.name]);
 
 /**
  * @class

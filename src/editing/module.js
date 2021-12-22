@@ -23,6 +23,12 @@ import angular from 'angular';
 import ngeoEditingAttributesComponent from 'ngeo/editing/attributesComponent';
 import ngeoEditingCreatefeatureComponent from 'ngeo/editing/createfeatureComponent';
 import ngeoEditingCreateregularpolygonfromclickComponent from 'ngeo/editing/createregularpolygonfromclickComponent';
+import gmfEditingEditFeature from 'gmf/editing/EditFeature';
+import gmfEditingEditFeatureComponent from 'gmf/editing/editFeatureComponent';
+import gmfEditingEditFeatureSelectorComponent from 'gmf/editing/editFeatureSelectorComponent';
+import gmfEditingEnumerateAttribute from 'gmf/editing/EnumerateAttribute';
+import gmfEditingSnapping from 'gmf/editing/Snapping';
+import gmfEditingXSDAttributes from 'gmf/editing/XSDAttributes';
 
 /**
  * @type {angular.IModule}
@@ -31,4 +37,10 @@ export default angular.module('ngeoEditingModule', [
   ngeoEditingAttributesComponent.name,
   ngeoEditingCreatefeatureComponent.name,
   ngeoEditingCreateregularpolygonfromclickComponent.name,
+  gmfEditingEditFeature.name,
+  gmfEditingEditFeatureComponent.name,
+  gmfEditingEditFeatureSelectorComponent.name,
+  gmfEditingEnumerateAttribute.name,
+  gmfEditingSnapping.name,
+  gmfEditingXSDAttributes.name,
 ]);

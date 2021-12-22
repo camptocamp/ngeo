@@ -21,7 +21,7 @@
 
 import './simple.css';
 import angular from 'angular';
-import gmfMapComponent from 'gmf/map/component';
+import gmfMapComponent from 'gmfold/map/component';
 
 import olMap from 'ol/Map';
 import olView from 'ol/View';

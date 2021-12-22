@@ -45,7 +45,7 @@ myModule.run(
    */
   ($templateCache) => {
     // @ts-ignore: webpack
-    $templateCache.put('gmf/map', require('./component.html'));
+    $templateCache.put('gmf/map', require('gmf/map/component.html'));
   }
 );
 

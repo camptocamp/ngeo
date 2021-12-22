@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2018-2021 Camptocamp SA
+// Copyright (c) 2017-2021 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -20,21 +20,20 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import gmfDatasourceDataSourceBeingFiltered from 'gmf/datasource/DataSourceBeingFiltered';
-import gmfDatasourceExternalDataSourcesManager from 'gmf/datasource/ExternalDataSourcesManager';
-import gmfDatasourceFileGroup from 'gmf/datasource/fileGroup';
-import gmfDatasourceHelper from 'gmf/datasource/Helper';
-import gmfDatasourceManager from 'gmf/datasource/Manager';
-import gmfDatasourceWFSAliases from 'gmf/datasource/WFSAliases';
+
+/**
+ * @typedef {Object} DataSourceBeingFiltered
+ * @property {import('gmfold/datasource/OGC').default|null} dataSource
+ */
 
 /**
  * @type {angular.IModule}
+ * @hidden
  */
-export default angular.module('gmfDatasourceModule', [
-  gmfDatasourceDataSourceBeingFiltered.name,
-  gmfDatasourceExternalDataSourcesManager.name,
-  gmfDatasourceFileGroup.name,
-  gmfDatasourceHelper.name,
-  gmfDatasourceManager.name,
-  gmfDatasourceWFSAliases.name,
-]);
+const myModule = angular.module('gmfDataSourceBeingFiltered', []);
+// type DataSourceBeingFiltered
+myModule.value('gmfDataSourceBeingFiltered', {
+  dataSource: null,
+});
+
+export default myModule;

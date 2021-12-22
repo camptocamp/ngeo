@@ -21,7 +21,7 @@
 
 import angular from 'angular';
 import './search.css';
-import gmfMapComponent from 'gmf/map/component';
+import gmfMapComponent from 'gmfold/map/component';
 
 import gmfSearchModule from 'gmf/search/module';
 import gmfThemeThemes from 'gmf/theme/Themes';

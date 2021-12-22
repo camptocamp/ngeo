@@ -20,7 +20,7 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import gmfDatasourceFileGroup from 'gmf/datasource/fileGroup';
+import gmfDatasourceFileGroup from 'gmf/datasource/fileGroupModule';
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager';
 import gmfThemeThemes, {ThemeNodeType, getSnappingConfig} from 'gmf/theme/Themes';
 import ngeoLayertreeController, {getFirstParentTree} from 'ngeo/layertree/Controller';
@@ -65,7 +65,7 @@ export class CustomSnap extends olInteractionSnap {
  * @param {angular.IScope} $rootScope Angular rootScope.
  * @param {angular.auto.IInjectorService} $injector Angular injector.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
- * @param {import('gmf/datasource/fileGroup').DatasourceFileGroup} gmfDatasourceFileGroup Group that contains file data sources.
+ * @param {import('gmf/datasource/fileGroupModule').DatasourceFileGroup} gmfDatasourceFileGroup Group that contains file data sources.
  * @param {import('gmf/themes').GmfSnappingConfig} gmfSnappingConfig Snapping configuration options for the
  *     features in the Draw tool and in the "Layer Import / Local" tool.
  * @param {import('gmf/theme/Themes').ThemesService} gmfThemes The gmf Themes service.
@@ -117,7 +117,7 @@ export function EditingSnappingService(
   this.injector_ = $injector;
 
   /**
-   * @type {import('gmf/datasource/fileGroup').DatasourceFileGroup}
+   * @type {import('gmf/datasource/fileGroupModule').DatasourceFileGroup}
    */
   this.gmfDatasourceFileGroup_ = gmfDatasourceFileGroup;
 

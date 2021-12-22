@@ -24,9 +24,9 @@ import {CollectionEvent} from 'ol/Collection';
 
 import gmfDatasourceDataSourceBeingFiltered from 'gmf/datasource/DataSourceBeingFiltered';
 
-import gmfDatasourceHelper from 'gmf/datasource/Helper';
+import gmfDatasourceHelper from 'gmfold/datasource/Helper';
 
-import GmfDatasourceOGC from 'gmf/datasource/OGC';
+import GmfDatasourceOGC from 'gmfold/datasource/OGC';
 import gmfFiltersSavedFilters from 'gmf/filters/SavedFilters';
 
 import ngeoMessageModalComponent from 'ngeo/message/modalComponent';
@@ -117,7 +117,7 @@ export class FilterSelectorController {
    * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
    * @param {import('gmf/datasource/DataSourceBeingFiltered').DataSourceBeingFiltered} gmfDataSourceBeingFiltered
    *     The Gmf value service that determines the data source currently being filtered.
-   * @param {import('gmf/datasource/Helper').DatasourceHelper} gmfDataSourcesHelper Gmf data
+   * @param {import('gmfold/datasource/Helper').DatasourceHelper} gmfDataSourcesHelper Gmf data
    *     sources helper service.
    * @param {import('gmf/filters/SavedFilters').SavedFilter} gmfSavedFilters Gmf saved filters service.
    * @param {import('ngeo/map/FeatureOverlayMgr').FeatureOverlayMgr} ngeoFeatureOverlayMgr Ngeo
@@ -183,7 +183,7 @@ export class FilterSelectorController {
     );
 
     /**
-     * @type {import('gmf/datasource/Helper').DatasourceHelper}
+     * @type {import('gmfold/datasource/Helper').DatasourceHelper}
      * @private
      */
     this.gmfDataSourcesHelper_ = gmfDataSourcesHelper;
@@ -253,7 +253,7 @@ export class FilterSelectorController {
     this.directedRules = null;
 
     /**
-     * @type {import('gmf/datasource/OGC').default[]}
+     * @type {import('gmfold/datasource/OGC').default[]}
      */
     this.filtrableDataSources = [];
 
@@ -264,11 +264,11 @@ export class FilterSelectorController {
     this.filtrableLayerNodeNames_ = null;
 
     /**
-     * @type {import('ol/Collection').default<import('gmf/datasource/OGC').default>}
+     * @type {import('ol/Collection').default<import('gmfold/datasource/OGC').default>}
      * @private
      */
     this.gmfDataSources_ =
-      /** @type {import('ol/Collection').default<import('gmf/datasource/OGC').default>} */ (
+      /** @type {import('ol/Collection').default<import('gmfold/datasource/OGC').default>} */ (
         gmfDataSourcesHelper.collection
       );
 
@@ -282,7 +282,7 @@ export class FilterSelectorController {
      * The data source ready to be filtered, after it has been selected and
      * prepared.
      *
-     * @type {?import('gmf/datasource/OGC').default}
+     * @type {?import('gmfold/datasource/OGC').default}
      */
     this.readyDataSource = null;
 
@@ -442,7 +442,7 @@ export class FilterSelectorController {
    * data source is about to be registered, then the `filtrable` property
    * is set. Otherwise, it's used.
    *
-   * @param {import('gmf/datasource/OGC').default} dataSource Data source
+   * @param {import('gmfold/datasource/OGC').default} dataSource Data source
    * @private
    * @hidden
    */
@@ -467,7 +467,7 @@ export class FilterSelectorController {
    * Unregister a data source if it's filtrable. Also, if it's the one
    * that was currently selected, deselect it.
    *
-   * @param {import('gmf/datasource/OGC').default} dataSource Data source
+   * @param {import('gmfold/datasource/OGC').default} dataSource Data source
    * @private
    * @hidden
    */
@@ -495,7 +495,7 @@ export class FilterSelectorController {
    * If 1) is true but not any of the others, then the server has not been
    * configured properly. In this case, a warning notification can be shown.
    *
-   * @param {import('gmf/datasource/OGC').default} dataSource GMF data source object
+   * @param {import('gmfold/datasource/OGC').default} dataSource GMF data source object
    * @param {boolean} [opt_notify] Whether to show a warning notification or not
    *     in case of a data source that has its name is in the list of
    *     filtrable layer node names but it doesn't match the other requirements.
@@ -564,7 +564,7 @@ export class FilterSelectorController {
   }
 
   /**
-   * @param {?import('gmf/datasource/OGC').default} dataSource Newly selected data source object.
+   * @param {?import('gmfold/datasource/OGC').default} dataSource Newly selected data source object.
    * @private
    * @hidden
    */

@@ -22,8 +22,15 @@
 import angular from 'angular';
 import ngeoPrintService from 'ngeo/print/Service';
 import ngeoPrintUtils from 'ngeo/print/Utils';
+import gmfPrintComponent from 'gmf/print/component';
+
+import './print.scss';
 
 /**
  * @type {angular.IModule}
  */
-export default angular.module('ngeoPrintModule', [ngeoPrintService.name, ngeoPrintUtils.name]);
+export default angular.module('ngeoPrintModule', [
+  ngeoPrintService.name,
+  ngeoPrintUtils.name,
+  gmfPrintComponent.name,
+]);

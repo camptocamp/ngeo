@@ -26,7 +26,7 @@ import {Message, MessageType} from 'ngeo/message/Message';
 import ngeoMessageNotification from 'ngeo/message/Notification';
 import {unsafeSVG} from 'lit/directives/unsafe-svg';
 import loadingSvg from 'gmf/icons/spinner.svg';
-import {gmfBackgroundlayerStatus} from 'gmf/backgroundlayerselector/status';
+import {gmfBackgroundlayerStatus} from 'ngeo/backgroundlayerselector/status';
 import user, {User, UserState} from 'gmfapi/store/user';
 // @ts-ignore
 import qruri from 'qruri';

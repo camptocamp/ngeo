@@ -21,6 +21,13 @@
 
 import angular from 'angular';
 import ngeoLayertreeComponent from 'ngeo/layertree/component';
+import gmfLayertreeComponent from 'gmfold/layertree/component';
+import gmfLayertreeDatasourceGroupTreeComponent from 'gmf/layertree/datasourceGroupTreeComponent';
+import gmfLayertreeSyncLayertreeMap from 'gmf/layertree/SyncLayertreeMap';
+import gmfLayertreeTimeSliderComponent from 'gmf/layertree/timeSliderComponent';
+import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager';
+
+import './common.scss';
 
 /**
  * Also related to the map but not included in the module:
@@ -28,4 +35,11 @@ import ngeoLayertreeComponent from 'ngeo/layertree/component';
  *
  * @type {angular.IModule}
  */
-export default angular.module('ngeoLayertreeModule', [ngeoLayertreeComponent.name]);
+export default angular.module('ngeoLayertreeModule', [
+  ngeoLayertreeComponent.name,
+  gmfLayertreeComponent.name,
+  gmfLayertreeDatasourceGroupTreeComponent.name,
+  gmfLayertreeSyncLayertreeMap.name,
+  gmfLayertreeTimeSliderComponent.name,
+  gmfLayertreeTreeManager.name,
+]);

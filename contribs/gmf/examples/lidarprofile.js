@@ -21,7 +21,7 @@
 
 import './lidarprofile.css';
 import angular from 'angular';
-import gmfMapComponent from 'gmf/map/component';
+import gmfMapComponent from 'gmfold/map/component';
 import gmfLidarprofileModule from 'gmf/lidarprofile/module';
 import EPSG2056 from 'ngeo/proj/EPSG_2056';
 import ngeoMapModule from 'ngeo/map/module';

@@ -52,7 +52,6 @@ mkdir -p ${GIT_BRANCH}/examples
 cp -r .build/examples-hosted/* ${GIT_BRANCH}/examples/
 cp -r .build/storybook ${GIT_BRANCH}/
 mv apidoc ${GIT_BRANCH}/
-cp -r jsdoc/build ${GIT_BRANCH}/jsdoc
 mv api/dist_ ${GIT_BRANCH}/api
 
 # Rewrite root commit and force push

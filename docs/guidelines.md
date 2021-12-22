@@ -140,9 +140,9 @@ component, should start with the prefix `ngeo` or `gmf` and should be described 
 files with a type name who is the same as the injected name.
 
 The styles should use the type
-[StyleLike](https://camptocamp.github.io/ngeo/master/jsdoc/module-contribs_gmf_src_options.html#~StyleLike)
+[StyleLike](https://camptocamp.github.io/ngeo/master/apidoc/modules/srcapi_store_config.html#StyleLike)
 and be build with the function
-[buildStyle](https://camptocamp.github.io/ngeo/master/jsdoc/module-contribs_gmf_src_options.html#.buildStyle).
+[buildStyle](https://camptocamp.github.io/ngeo/master/apidoc/modules/srcapi_store_config.html#buildStyle).
 
 For this kind of options we don't have to provide a default value. It uses the standard injection mechanism,
 then the application should provide a value normally through the `dynamic.json`.

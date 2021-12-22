@@ -119,7 +119,9 @@ export default class {
       if (p !== null) {
         this.pStart_.distance = p.distance;
         this.pStart_.altitude = p.altitude;
+        // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
         this.pStart_.cx = sx(p.distance) + margin.left;
+        // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
         this.pStart_.cy = sy(p.altitude) + margin.top;
       } else {
         // @ts-ignore
@@ -142,7 +144,9 @@ export default class {
       if (p !== null) {
         this.pEnd_.distance = p.distance;
         this.pEnd_.altitude = p.altitude;
+        // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
         this.pEnd_.cx = sx(p.distance) + margin.left;
+        // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
         this.pEnd_.cy = sy(p.altitude) + margin.top;
       } else {
         // @ts-ignore
@@ -183,7 +187,9 @@ export default class {
         svg
           .append('text')
           .attr('id', 'text_m')
+          // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
           .attr('x', 10 + (this.pStart_.cx + this.pEnd_.cx) / 2)
+          // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
           .attr('y', (this.pStart_.cy + this.pEnd_.cy) / 2)
           .text(`${height} m`)
           .attr('font-family', 'sans-serif')
