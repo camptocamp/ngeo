@@ -30,6 +30,7 @@ jobs:
               body: [
                 \`Examples: https://camptocamp.github.io/ngeo/\${process.env.GITHUB_HEAD_REF}/examples/\`,
                 \`Storybook: https://camptocamp.github.io/ngeo/\${process.env.GITHUB_HEAD_REF}/storybook/\`,
+                \`API help: https://camptocamp.github.io/ngeo/\${process.env.GITHUB_HEAD_REF}/api/apihelp/apihelp.html\`,
                 \`API documentation: https://camptocamp.github.io/ngeo/\${process.env.GITHUB_HEAD_REF}/apidoc/\`,
               ].join('\n'),
               event: 'COMMENT'

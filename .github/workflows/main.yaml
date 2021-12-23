@@ -9,6 +9,8 @@ on:
 
 env:
   HAS_SECRETS: ${{ secrets.HAS_SECRETS }}
+  MAIN_BRANCH: master
+  CI: true
 
 jobs:
   not-failed-backport:
@@ -26,8 +28,6 @@ jobs:
     if: "!startsWith(github.event.head_commit.message, '[skip ci] ')"
 
     env:
-      MAIN_BRANCH: master
-      CI: true
       PATH: /bin:/usr/bin:/usr/local/bin:/home/runner/.local/bin
 
     steps:
@@ -121,16 +121,12 @@ jobs:
 
       - run: make transifex-send
         if: env.HAS_SECRETS == 'HAS_SECRETS' && github.ref == format('refs/heads/{0}', env.MAIN_BRANCH)
-      - run: buildtools/publish
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        if: env.HAS_SECRETS == 'HAS_SECRETS'
       - run: buildtools/npm-publish
         if: env.HAS_SECRETS == 'HAS_SECRETS' && github.event_name == 'push'
 
       - name: Publish Storybook to Chromatic to run visual tests
         run: npm run chromatic -- --project-token=$(gopass show gs/ci/chromatic/ngeo_token)
-        if: env.HAS_SECRETS == 'HAS_SECRETS' && github.event_name != 'pull_request_target'
+        if: env.HAS_SECRETS == 'HAS_SECRETS' && github.event_name == 'push'
       - name: Publish Storybook to Chromatic to run visual tests
         run: GITHUB_SHA=${GITHUB_SHA_} npm run chromatic -- --project-token=$(gopass show gs/ci/chromatic/ngeo_token) --branch-name=${GITHUB_HEAD_REF}
         if: env.HAS_SECRETS == 'HAS_SECRETS' && github.event_name == 'pull_request_target'
@@ -147,3 +143,51 @@ jobs:
         if: >
           github.ref == format('refs/heads/{0}', env.MAIN_BRANCH)
           && env.HAS_SECRETS == 'HAS_SECRETS'
+
+      - name: Prepare gh-pages
+        run: |
+          mkdir -p gh-pages
+          cp -ar api/dist gh-pages/api
+          cp -ar apidoc gh-pages/apidoc
+          cp -ar .build/examples-hosted gh-pages/examples
+          cp -ar .build/storybook gh-pages/storybook
+        if: startsWith(github.ref, 'refs/heads/') && ! contains(github.ref_name, '/') && env.HAS_SECRETS == 'HAS_SECRETS'
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: gh-pages
+          path: gh-pages
+        if: startsWith(github.ref, 'refs/heads/') && ! contains(github.ref_name, '/') && env.HAS_SECRETS == 'HAS_SECRETS'
+
+  gh-pages:
+    runs-on: ubuntu-20.04
+    name: Github Pages
+    timeout-minutes: 10
+    if: startsWith(github.ref, 'refs/heads/') && ! contains(github.ref_name, '/')
+    concurrency: gh-pages
+    needs:
+      - main
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: gh-pages
+          fetch-depth: 0
+        if: env.HAS_SECRETS == 'HAS_SECRETS'
+
+      - uses: actions/download-artifact@v2
+        with:
+          name: gh-pages
+          path: ${{ github.ref_name }}
+        if: env.HAS_SECRETS == 'HAS_SECRETS'
+
+      - name: Rewrite root commit and force push
+        run: |
+          git config --global user.name "Continuous integration"
+          git config --global user.email "ci@comptocamp.org"
+          FIRST_COMMIT=$(git log --format='%H' | tail -1)
+          git reset --quiet --mixed $FIRST_COMMIT
+          git add ${{ github.ref_name }}
+          git commit --quiet --amend --message="Update GitHub pages"
+          git push --force
+        if: env.HAS_SECRETS == 'HAS_SECRETS'
