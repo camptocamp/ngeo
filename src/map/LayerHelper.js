@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2021 Camptocamp SA
+// Copyright (c) 2016-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -236,6 +236,7 @@ LayerHelper.prototype.createBasicWMSLayerFromDataSource = function (dataSource, 
  * as key 'capabilitiesStyles' as param of the new layer.
  * @param {string} capabilitiesURL The getCapabilities url.
  * @param {string} layerName The name of the layer.
+ * @param {number} timeout The request timeout in seconds.
  * @param {string=} opt_matrixSet Optional WMTS matrix set.
  * @param {Object<string, ?string>=} opt_dimensions WMTS dimensions.
  * @param {Object=} opt_customOptions Some initial options.
@@ -248,6 +249,7 @@ LayerHelper.prototype.createBasicWMSLayerFromDataSource = function (dataSource, 
 LayerHelper.prototype.createWMTSLayerFromCapabilitites = function (
   capabilitiesURL,
   layerName,
+  timeout,
   opt_matrixSet,
   opt_dimensions,
   opt_customOptions,
@@ -267,7 +269,7 @@ LayerHelper.prototype.createWMTSLayerFromCapabilitites = function (
   });
   const $q = this.$q_;
 
-  return this.$http_.get(capabilitiesURL, {cache: true}).then((response) => {
+  return this.$http_.get(capabilitiesURL, {cache: true, timeout: timeout * 1000}).then((response) => {
     let result;
     if (response.data) {
       result = parser.read(response.data);

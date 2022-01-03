@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2019-2021 Camptocamp SA
+// Copyright (c) 2019-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -256,6 +256,7 @@
  *      granularity. An OGCServer metadata must be set with the name of the OGC server to use for these
  *      wms layers. For WMTS Layers.
  * @property {Object} [customOpenLayersOptions] The custom OpenLayers WMS layer options.
+ * @property {number} [timeout] The fetch capabilities timeout in seconds. For WMTS Layers.
  */
 
 /**
