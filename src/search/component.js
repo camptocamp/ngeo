@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2021 Camptocamp SA
+// Copyright (c) 2015-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -124,6 +124,7 @@ function gmfSearchTemplateUrl($element, $attrs, gmfSearchTemplateUrl) {
  * @htmlAttribute {SearchComponentListeners} gmf-search-listeners The listeners.
  * @htmlAttribute {Function} [gmf]-search-on-init Optional function called when the component is initialized.
  * @htmlAttribute {Function} [gmf]-search-action Optional function called when no default action is defined.
+ * @htmlAttribute {string} gmf-search-options-name Optional options name when multiple search component are defined.
  * @ngdoc component
  * @ngname gmfSearch
  */
@@ -135,6 +136,7 @@ const searchComponent = {
     'additionalListeners': '<gmfSearchListeners',
     'onInitCallback': '<?gmfSearchOnInit',
     'searchActionCallback': '&?gmfSearchAction',
+    'optionsName': '@?gmfSearchOptionsName',
   },
   controller: 'gmfSearchController',
   templateUrl: gmfSearchTemplateUrl,
@@ -154,6 +156,7 @@ export class SearchController {
    * @param {angular.IScope} $scope The component's scope.
    * @param {angular.ICompileService} $compile Angular compile service.
    * @param {angular.ITimeoutService} $timeout Angular timeout service.
+   * @param {angular.auto.IInjectorService} $injector Angular injector service.
    * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
    * @param {import('ngeo/misc/AutoProjection').AutoProjectionService} ngeoAutoProjection The ngeo
    *    coordinates service.
@@ -179,6 +182,7 @@ export class SearchController {
     $scope,
     $compile,
     $timeout,
+    $injector,
     gettextCatalog,
     ngeoAutoProjection,
     ngeoSearchCreateGeoJSONBloodhound,
@@ -218,6 +222,11 @@ export class SearchController {
      * @private
      */
     this.timeout_ = $timeout;
+
+    /**
+     * @type {angular.auto.IInjectorService}
+     */
+    this.injector_ = $injector;
 
     /**
      * @type {angular.gettext.gettextCatalog}
@@ -344,6 +353,11 @@ export class SearchController {
      */
     this.clearButton = this.options.clearButton !== false;
 
+    /**
+     * @type {string}
+     */
+    this.optionsName = null;
+
     if (!this.clearButton) {
       // Empty the search field on focus and blur.
       this.element_.find('input').on('focus blur', () => {
@@ -377,6 +391,13 @@ export class SearchController {
    * Called on initialization of the controller.
    */
   $onInit() {
+    const config = this.optionsName || 'gmfSearchOptions';
+
+    /**
+     * @type {import('gmf/options.js').gmfSearchOptions}
+     */
+    this.options = this.injector_.get(config);
+
     this.coordinatesProjectionsInstances_ =
       this.options.coordinatesProjections === undefined
         ? [this.map.getView().getProjection()]
