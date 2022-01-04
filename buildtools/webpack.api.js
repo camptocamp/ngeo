@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2018-2021 Camptocamp SA
+// Copyright (c) 2018-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -47,6 +47,7 @@ module.exports = (env, argv) => {
       rules: [
         {
           test: /\.js$/,
+          exclude: [/(core-js|strip-ansi)/],
           use: {
             loader: 'babel-loader',
             options: {
@@ -61,6 +62,7 @@ module.exports = (env, argv) => {
     output: {
       filename: 'api.js',
       path: dest,
+      libraryTarget: 'umd',
       libraryExport: 'default',
       library: library,
     },
