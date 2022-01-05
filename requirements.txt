@@ -2,6 +2,6 @@ beautifulsoup4==4.10.0
 glob2==0.7
 htmlmin==0.1.12
 Mako==1.1.6
-requests==2.27.0
+requests==2.27.1
 transifex-client==0.14.3
 polib==1.1.1
