@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2018-2021 Camptocamp SA
+// Copyright (c) 2018-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -111,7 +111,7 @@ RoutingService.prototype.getRoute = function (coordinates, config) {
   // Service
   // see: https://github.com/Project-OSRM/osrm-backend/blob/master/docs/http.md#requests
   if (!config.service) {
-    config.service = 'route'; // default to route
+    config.service = 'route'; // default is route
   }
 
   // Mode of transportation,
@@ -121,7 +121,7 @@ RoutingService.prototype.getRoute = function (coordinates, config) {
   // As of version 5.8.0, OSRM (server) does not support multiple profiles simultaneously.
   // This means the value actually does not matter.
   if (!config.profile) {
-    config.profile = 'car'; // default to car
+    config.profile = 'car'; // default is car
   }
 
   // build request URL
@@ -171,7 +171,7 @@ RoutingService.prototype.getNearest = function (coordinate, config) {
   // Mode of transportation
   // If used in combination with a getRoute request, choose the same profile.
   if (!config.profile) {
-    config.profile = 'car'; // default to car
+    config.profile = 'car'; // default is car
   }
 
   // build request URL
