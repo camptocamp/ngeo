@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2020-2021 Camptocamp SA
+// Copyright (c) 2020-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -589,7 +589,7 @@ export function buildStyle(styleDescriptor) {
  * @property {Object<string, Object<string, string>>} params The key is the server type (`mapserver`,
  *    `qgis`, ...) or `image` for an URL from a metadata. The value is some additional parameters set in the
  *    query string.
- * @property {boolean} [showGroupsTitle] Display or not groups title in the legend. default to
+ * @property {boolean} [showGroupsTitle] Display or not groups title in the legend. default is
  *    true. Switching to false is useful to obtains a "flat" legend.
  */
 
