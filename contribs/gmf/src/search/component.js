@@ -138,7 +138,7 @@ const searchComponent = {
     'additionalListeners': '<gmfSearchListeners',
     'onInitCallback': '<?gmfSearchOnInit',
     'searchActionCallback': '&?gmfSearchAction',
-    'optionsName': '@?gmfSearchOptionsName',
+    'optionsName': '<?gmfSearchOptionsName',
   },
   controller: 'gmfSearchController',
   templateUrl: gmfSearchTemplateUrl,
@@ -294,12 +294,6 @@ export class SearchController {
     this.searchActionCallback;
 
     /**
-     * @type {string}
-     */
-    this.placeholder = this.options.placeholder || 'Search…';
-    gettextCatalog.getString('Search…');
-
-    /**
      * Supported projections for coordinates search.
      * @type {import('ol/proj/Projection.js').default[]}
      * @private
@@ -393,11 +387,15 @@ export class SearchController {
    */
   $onInit() {
     const config = this.optionsName || 'gmfSearchOptions';
+    const gettextCatalog = this.gettextCatalog_;
 
     /**
+     * FIXME: dynamic typing when the config key is different
      * @type {import('gmf/options.js').gmfSearchOptions}
      */
     this.options = this.injector_.get(config);
+    this.placeholder = this.options.placeholder || 'Search…';
+    gettextCatalog.getString('Search…');
 
     this.coordinatesProjectionsInstances_ =
       this.options.coordinatesProjections === undefined
