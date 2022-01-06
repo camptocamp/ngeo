@@ -33,8 +33,6 @@ const babelPresetEnv = [
     },
     modules: false,
     loose: true,
-    useBuiltIns: 'usage',
-    corejs: 3,
   },
 ];
 
@@ -47,7 +45,6 @@ module.exports = (env, argv) => {
       rules: [
         {
           test: /\.js$/,
-          exclude: [/(core-js|strip-ansi)/],
           use: {
             loader: 'babel-loader',
             options: {
@@ -62,7 +59,6 @@ module.exports = (env, argv) => {
     output: {
       filename: 'api.js',
       path: dest,
-      libraryTarget: 'umd',
       libraryExport: 'default',
       library: library,
     },
