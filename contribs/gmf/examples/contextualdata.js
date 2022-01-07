@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2021 Camptocamp SA
+// Copyright (c) 2016-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -23,7 +23,7 @@ import angular from 'angular';
 import './contextualdata.css';
 import gmfContextualdataModule from 'gmf/contextualdata/module';
 
-import gmfMapComponent from 'gmfold/map/component';
+import gmfMapComponent from 'gmf/map/gmfComponent';
 import ngeoMiscFilters from 'ngeo/misc/filters';
 import EPSG2056 from 'ngeo/proj/EPSG_2056';
 import 'ngeo/proj/EPSG_21781';

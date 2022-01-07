@@ -24,7 +24,7 @@ import './print.css';
 import './gmf-hidden.inc.css';
 import gmfLayertreeComponent from 'gmf/layertree/gmfComponent';
 
-import gmfMapComponent from 'gmfold/map/component';
+import gmfMapComponent from 'gmf/map/gmfComponent';
 
 import gmfPrintComponent from 'gmf/print/component';
 

@@ -25,7 +25,7 @@ import gmfLayertreeComponent from 'gmf/layertree/gmfComponent';
 
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager';
 
-import gmfMapComponent from 'gmfold/map/component';
+import gmfMapComponent from 'gmf/map/gmfComponent';
 
 import gmfObjecteditingComponent from 'gmf/objectediting/component';
 
