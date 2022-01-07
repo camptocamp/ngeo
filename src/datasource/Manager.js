@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2017-2021 Camptocamp SA
+// Copyright (c) 2017-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -20,12 +20,12 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import GmfDatasourceOGC from 'gmfold/datasource/OGC';
+import GmfDatasourceOGC from 'gmf/datasource/gmfOGC';
 import gmfDatasourceWFSAliases from 'gmf/datasource/WFSAliases';
 import gmfLayertreeSyncLayertreeMap, {getLayer} from 'gmf/layertree/SyncLayertreeMap';
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager';
 import gmfThemeThemes, {ThemeNodeType} from 'gmf/theme/Themes';
-import gmfOGC from 'gmfold/datasource/OGC';
+import gmfOGC from 'gmf/datasource/gmfOGC';
 
 import OGC, {ServerType, WFSOutputFormat, Type} from 'ngeo/datasource/OGC';
 import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources';
@@ -44,7 +44,7 @@ import olSourceImageWMS from 'ol/source/ImageWMS';
 import olSourceTileWMS from 'ol/source/TileWMS';
 
 /**
- * @typedef {import('ol/Collection').default<import('gmfold/datasource/OGC').default>} DataSources
+ * @typedef {import('ol/Collection').default<import('gmf/datasource/gmfOGC').default>} DataSources
  */
 
 /**
@@ -193,7 +193,7 @@ export class DatasourceManager {
      * While loading a new theme, this is where all of the created data sources
      * are put using the id as key for easier find in the future.
      *
-     * @type {Object<string, import('gmfold/datasource/OGC').default>}
+     * @type {Object<string, import('gmf/datasource/gmfOGC').default>}
      * @private
      */
     this.dataSourcesCache_ = {};
@@ -664,7 +664,7 @@ export class DatasourceManager {
     const visible = meta.isChecked === true;
     const ogcAttributes = ogcServer ? ogcServer.attributes : null;
 
-    /** @type {import('gmfold/datasource/OGC').OGCOptions} */
+    /** @type {import('gmf/datasource/gmfOGC').OGCOptions} */
     const options = {
       copyable,
       dimensionsConfig,
@@ -1003,7 +1003,7 @@ export class DatasourceManager {
    * set to apply them as OGC filters to the OpenLayers layer, more precisely
    * as a `FILTER` parameter in the layer's source parameters.
    *
-   * @param {import('gmfold/datasource/OGC').default} dataSource Data source.
+   * @param {import('gmf/datasource/gmfOGC').default} dataSource Data source.
    * @private
    * @hidden
    */
@@ -1029,7 +1029,7 @@ export class DatasourceManager {
    * Get the range value from the data source, then update the WMS layer
    * thereafter.
    *
-   * @param {import('gmfold/datasource/OGC').default} dataSource Data source.
+   * @param {import('gmf/datasource/gmfOGC').default} dataSource Data source.
    * @private
    * @hidden
    */
