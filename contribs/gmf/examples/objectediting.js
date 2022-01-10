@@ -21,7 +21,7 @@
 
 import angular from 'angular';
 import './objectediting.css';
-import gmfLayertreeComponent from 'gmfold/layertree/component';
+import gmfLayertreeComponent from 'gmf/layertree/gmfComponent';
 
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager';
 
