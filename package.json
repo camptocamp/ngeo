@@ -183,7 +183,7 @@
     "regenerator-runtime": "0.13.9",
     "resize-observer-polyfill": "1.5.1",
     "rxjs": "7.5.1",
-    "sass": "1.46.0",
+    "sass": "1.47.0",
     "sass-loader": "10.2.0",
     "simple-html-tokenizer": "0.5.11",
     "sinon": "12.0.1",
