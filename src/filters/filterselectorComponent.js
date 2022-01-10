@@ -24,7 +24,7 @@ import {CollectionEvent} from 'ol/Collection';
 
 import gmfDatasourceDataSourceBeingFiltered from 'gmf/datasource/DataSourceBeingFiltered';
 
-import gmfDatasourceHelper from 'gmfold/datasource/Helper';
+import gmfDatasourceHelper from 'gmf/datasource/gmfHelper';
 
 import GmfDatasourceOGC from 'gmf/datasource/gmfOGC';
 import gmfFiltersSavedFilters from 'gmf/filters/SavedFilters';
@@ -117,7 +117,7 @@ export class FilterSelectorController {
    * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
    * @param {import('gmf/datasource/DataSourceBeingFiltered').DataSourceBeingFiltered} gmfDataSourceBeingFiltered
    *     The Gmf value service that determines the data source currently being filtered.
-   * @param {import('gmfold/datasource/Helper').DatasourceHelper} gmfDataSourcesHelper Gmf data
+   * @param {import('gmf/datasource/gmfHelper').DatasourceHelper} gmfDataSourcesHelper Gmf data
    *     sources helper service.
    * @param {import('gmf/filters/SavedFilters').SavedFilter} gmfSavedFilters Gmf saved filters service.
    * @param {import('ngeo/map/FeatureOverlayMgr').FeatureOverlayMgr} ngeoFeatureOverlayMgr Ngeo
@@ -183,7 +183,7 @@ export class FilterSelectorController {
     );
 
     /**
-     * @type {import('gmfold/datasource/Helper').DatasourceHelper}
+     * @type {import('gmf/datasource/gmfHelper').DatasourceHelper}
      * @private
      */
     this.gmfDataSourcesHelper_ = gmfDataSourcesHelper;
