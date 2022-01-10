@@ -23,6 +23,7 @@ jobs:
       MAIN_BRANCH: 2.6
       CI: true
       PATH: /bin:/usr/bin:/usr/local/bin:/home/runner/.local/bin
+      NODE_OPTIONS: --max-old-space-size=4096
 
     steps:
       - run: '! ls BACKPORT_TODO'
