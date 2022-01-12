@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2017-2021 Camptocamp SA
+// Copyright (c) 2017-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -71,7 +71,7 @@ export class DatasourceHelper {
     this.collection_ = null;
 
     /**
-     * @type {Object<number, import('gmfold/datasource/OGC').default>}
+     * @type {Object<number, import('gmf/datasource/gmfOGC').default>}
      * @protected
      */
     this.cache_ = {};
@@ -88,17 +88,17 @@ export class DatasourceHelper {
    * Return a data source using its id.
    *
    * @param {number} id Data source id.
-   * @returns {?import('gmfold/datasource/OGC').default} Data source.
+   * @returns {?import('gmf/datasource/gmfOGC').default} Data source.
    */
   getDataSource(id) {
-    return /** @type {?import('gmfold/datasource/OGC').default} */ this.ngeoDataSourcesHelper_.getDataSource(
+    return /** @type {?import('gmf/datasource/gmfOGC').default} */ this.ngeoDataSourcesHelper_.getDataSource(
       id
     );
   }
 
   /**
-   * @param {import('gmfold/datasource/OGC').default} dataSource Filtrable data source.
-   * @returns {angular.IPromise<import('gmfold/datasource/OGC').default>} Promise.
+   * @param {import('gmf/datasource/gmfOGC').default} dataSource Filtrable data source.
+   * @returns {angular.IPromise<import('gmf/datasource/gmfOGC').default>} Promise.
    */
   prepareFiltrableDataSource(dataSource) {
     const prepareFiltrableDataSourceDefer = this.q_.defer();

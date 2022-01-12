@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2021 Camptocamp SA
+// Copyright (c) 2016-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -24,7 +24,7 @@ import './displayquerywindow.css';
 import './gmf-hidden.inc.css';
 import gmfDatasourceManager from 'gmf/datasource/Manager';
 
-import gmfLayertreeComponent from 'gmfold/layertree/component';
+import gmfLayertreeComponent from 'gmf/layertree/gmfComponent';
 
 import gmfMapComponent from 'gmfold/map/component';
 

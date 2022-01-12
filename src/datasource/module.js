@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2018-2021 Camptocamp SA
+// Copyright (c) 2018-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -25,7 +25,7 @@ import ngeoDatasourceHelper from 'ngeo/datasource/Helper';
 import gmfDatasourceDataSourceBeingFiltered from 'gmf/datasource/DataSourceBeingFiltered';
 import gmfDatasourceExternalDataSourcesManager from 'gmf/datasource/ExternalDataSourcesManager';
 import gmfDatasourceFileGroup from 'gmf/datasource/fileGroupModule';
-import gmfDatasourceHelper from 'gmfold/datasource/Helper';
+import gmfDatasourceHelper from 'gmf/datasource/gmfHelper';
 import gmfDatasourceManager from 'gmf/datasource/Manager';
 import gmfDatasourceWFSAliases from 'gmf/datasource/WFSAliases';
 

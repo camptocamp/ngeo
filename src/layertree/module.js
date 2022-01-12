@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2017-2021 Camptocamp SA
+// Copyright (c) 2017-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -21,7 +21,7 @@
 
 import angular from 'angular';
 import ngeoLayertreeComponent from 'ngeo/layertree/component';
-import gmfLayertreeComponent from 'gmfold/layertree/component';
+import gmfLayertreeComponent from 'gmf/layertree/gmfComponent';
 import gmfLayertreeDatasourceGroupTreeComponent from 'gmf/layertree/datasourceGroupTreeComponent';
 import gmfLayertreeSyncLayertreeMap from 'gmf/layertree/SyncLayertreeMap';
 import gmfLayertreeTimeSliderComponent from 'gmf/layertree/timeSliderComponent';

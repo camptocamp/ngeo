@@ -23,66 +23,77 @@ import './vars.scss';
 
 /**
  * Base url for the GeoMapFish demo server.
+ *
  * @type {string}
  */
 const GMF_DEMO = 'https://geomapfish-demo-2-7.camptocamp.com/';
 
 /**
  * Base url for the GeoMapFish demo server.
+ *
  * @type {string}
  */
 const GMF_LAYERS = `${GMF_DEMO}layers`;
 
 /**
  * Base url for the GeoMapFish demo server.
+ *
  * @type {string}
  */
 const GMF_THEMES = `${GMF_DEMO}themes?version=2&background=background`;
 
 /**
  * Base url for the GeoMapFish demo vector tiles.
+ *
  * @type {string}
  */
 const GMF_VECTOR_TILES = `${GMF_DEMO}/vector_tiles`;
 
 /**
  * WFS feature namespace for MapServer
+ *
  * @type {string}
  */
 const MAPSERVER_WFS_FEATURE_NS = 'http://mapserver.gis.umn.edu/mapserver';
 
 /**
  * MapServer proxy
+ *
  * @type {string}
  */
 export const MAPSERVER_PROXY = `${GMF_DEMO}mapserv_proxy?ogcserver=Main+PNG`;
 
 /**
  * MapServer proxy
+ *
  * @type {string}
  */
 const PRINT_PROXY = `${GMF_DEMO}printproxy`;
 
 /**
  * Search service
+ *
  * @type {string}
  */
 const PROFILE = `${GMF_DEMO}profile.json`;
 
 /**
  * Search service
+ *
  * @type {string}
  */
 const RASTER = `${GMF_DEMO}raster`;
 
 /**
  * Search service
+ *
  * @type {string}
  */
 export const SEARCH = `${GMF_DEMO}search`;
 
 /**
  * Search service
+ *
  * @type {string}
  */
 const SHORT_CREATE = `${GMF_DEMO}short/create`;
