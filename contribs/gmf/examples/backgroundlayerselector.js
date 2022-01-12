@@ -30,6 +30,7 @@ import EPSG2056 from 'ngeo/proj/EPSG_2056';
 import olMap from 'ol/Map';
 import olView from 'ol/View';
 import options from './options';
+import ngeoMapModule from 'ngeo/map/module';
 
 /**
  * @type {angular.IModule}
@@ -40,6 +41,7 @@ const myModule = angular.module('gmfapp', [
   gmfBackgroundlayerselectorModule.name,
   gmfMapComponent.name,
   gmfThemeThemes.name,
+  ngeoMapModule.name,
 ]);
 
 /**
