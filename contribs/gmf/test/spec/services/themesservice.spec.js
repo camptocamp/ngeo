@@ -55,7 +55,7 @@ describe('gmf.theme.Themes', () => {
     $httpBackend.expectGET(treeUrl);
     gmfTestDataThemes.background_layers.forEach((bgLayer) => {
       const response =
-        bgLayer.name == 'OSM' ? gmfTestDataThemescapabilities.map : gmfTestDataThemescapabilities.asitvd;
+        bgLayer.name.includes('asitvd') ? gmfTestDataThemescapabilities.asitvd : gmfTestDataThemescapabilities.map;
       $httpBackend.when('GET', bgLayer.url).respond(response);
       if (!urls.includes(bgLayer.url)) {
         urls.push(bgLayer.url);
