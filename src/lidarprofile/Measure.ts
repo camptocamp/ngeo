@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2018-2021 Camptocamp SA
+// Copyright (c) 2018-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -19,33 +19,49 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import {mouse as d3mouse, select as d3select} from 'd3';
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
-/**
- * @hidden
- */
+import {pointer as d3pointer, select as d3select} from 'd3';
+
+import {LidarprofileManager as GmfLidarprofileManagerLidarprofileManager} from 'ngeo/lidarprofile/Manager';
+import {LidarPoint as GmfLidarprofileUtilsLidarPoint} from 'ngeo/lidarprofile/Utils';
+
 export default class {
+  /**
+   * @private
+   */
+  manager_: GmfLidarprofileManagerLidarprofileManager;
+
+  /**
+   * @private
+   */
+  pStart_: GmfLidarprofileUtilsLidarPoint;
+
+  /**
+   * @private
+   */
+  pEnd_: GmfLidarprofileUtilsLidarPoint;
+
   /**
    * Measure tool for the d3 chart
    *
-   * @param {import('gmf/lidarprofile/Manager').LidarprofileManager} gmfLidarprofileManagerInstance
+   * @param gmfLidarprofileManagerInstance
    *    gmf lidar profile manager instance
    */
-  constructor(gmfLidarprofileManagerInstance) {
+  constructor(gmfLidarprofileManagerInstance: GmfLidarprofileManagerLidarprofileManager) {
     /**
-     * @type {import('gmf/lidarprofile/Manager').LidarprofileManager}
      * @private
      */
     this.manager_ = gmfLidarprofileManagerInstance;
 
     /**
-     * @type {import("gmf/lidarprofile/Utils").LidarPoint}
      * @private
      */
     this.pStart_ = {};
 
     /**
-     * @type {import("gmf/lidarprofile/Utils").LidarPoint}
      * @private
      */
     this.pEnd_ = {};
@@ -54,7 +70,7 @@ export default class {
   /**
    * Clear the current measure
    */
-  clearMeasure() {
+  clearMeasure(): void {
     this.pStart_ = {};
     this.pEnd_ = {};
 
@@ -72,16 +88,18 @@ export default class {
   /**
    * Activate the measure tool
    */
-  setMeasureActive() {
+  setMeasureActive(): void {
     const svg = d3select('#gmf-lidarprofile-container svg.lidar-svg');
     svg.style('cursor', 'pointer');
-    svg.on('click', this.measureHeigt.bind(this));
+    svg.on('click', (event) => this.measureHeigt(event));
   }
 
   /**
    * Measure and display height after two click on the profile.
+   *
+   * @param event Event .
    */
-  measureHeigt() {
+  measureHeigt(event: MouseEvent): void {
     if (!this.manager_.config) {
       throw new Error('Missing manager.config');
     }
@@ -89,12 +107,12 @@ export default class {
       throw new Error('Missing manager.plot');
     }
     const svg = d3select('#gmf-lidarprofile-container svg.lidar-svg');
-    const svgEl = /** @type {HTMLElement} */ (svg.node());
+    const svgEl = svg.node();
     const canvas = d3select('#gmf-lidarprofile-container .lidar-canvas');
-    const canvasEl = /** @type {HTMLCanvasElement} */ (canvas.node());
+    const canvasEl = canvas.node();
 
-    const svgCoordinates = d3mouse(svgEl);
-    const canvasCoordinates = d3mouse(canvasEl);
+    const svgCoordinates = d3pointer(event, svgEl);
+    const canvasCoordinates = d3pointer(event, canvasEl);
     const margin = this.manager_.config.clientConfig.margin;
     const xs = svgCoordinates[0];
     const ys = svgCoordinates[1];

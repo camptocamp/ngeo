@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2021 Camptocamp SA
+// Copyright (c) 2021-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -38,7 +38,7 @@ const child_process = require('child_process');
 const fs = require('fs');
 
 const find_import = /import\(["']([a-zA-Z0-9/.\-_]+)["']\).([a-zA-Z0-9]+)/g;
-const find_function = /function\(([^)(|]+)\): ?([a-zA-Z0-9?]+)/g;
+const find_function = /function\(([^)(|]*)\): ?([a-zA-Z0-9?]+)/g;
 const find_param = /@param {([^}]*)} ([a-zA-Z0-9$]+)/g;
 const find_return = /@returns? {([^}]*)}/g;
 const find_type = /@type {([^}]*)}/g;
@@ -287,6 +287,9 @@ function convertImport(j, root, path) {
  * @returns the typescript type as string
  */
 function convertSingleType(jsType) {
+  if (jsType[0] == '{') {
+    throw new Error('type {{ ... }} should be manually converted to typedef first.');
+  }
   if (jsType == '?') {
     return 'any';
   }
@@ -1019,17 +1022,24 @@ export default function transformer(file, api) {
             if (finish) {
               finish = false;
               fs.writeFileSync('/tmp/typedef.js', `/**${path.value.value}*/`);
-              console.log(
-                child_process
-                  .execSync(
-                    'npx -p typescript tsc /tmp/typedef.js --declaration --allowJs --emitDeclarationOnly --outDir /tmp/'
-                  )
-                  .toString()
-              );
+              try {
+                child_process.execSync(
+                  'npx -p typescript tsc /tmp/typedef.js --declaration --allowJs --emitDeclarationOnly --outDir /tmp/',
+                  {
+                    stdio: 'pipe',
+                  }
+                );
 
-              result = `${result.substring(0, path.value.start)}${fs.readFileSync(
-                '/tmp/typedef.d.ts'
-              )}${result.substring(path.value.end)}`;
+                result = `${result.substring(0, path.value.start)}${fs.readFileSync(
+                  '/tmp/typedef.d.ts'
+                )}${result.substring(path.value.end)}`;
+              } catch (e) {
+                console.error("To know what's wrong run:");
+                console.error(
+                  'npx -p typescript tsc /tmp/typedef.js --declaration --allowJs --emitDeclarationOnly --outDir /tmp/'
+                );
+                throw e;
+              }
             }
           });
       }

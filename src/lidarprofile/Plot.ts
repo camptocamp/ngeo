@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2018-2021 Camptocamp SA
+// Copyright (c) 2018-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -19,6 +19,11 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+
 import olFeature from 'ol/Feature';
 import olGeomPoint from 'ol/geom/Point';
 import olStyleCircle from 'ol/style/Circle';
@@ -28,84 +33,128 @@ import {
   axisBottom as d3axisBottom,
   axisLeft as d3axisLeft,
   scaleLinear as d3scaleLinear,
-  event as d3event,
-  mouse as d3mouse,
+  pointer as d3pointer,
   select as d3select,
   zoom as d3zoom,
 } from 'd3';
 
-/**
- * @hidden
- */
+import {LidarprofileManager as GmfLidarprofileManagerLidarprofileManager} from 'ngeo/lidarprofile/Manager';
+import {LidarprofilePoints as GmfLidarprofileUtilsLidarprofilePoints} from 'ngeo/lidarprofile/Utils';
+import {LidarPoint as GmfLidarprofileUtilsLidarPoint} from 'ngeo/lidarprofile/Utils';
+import {LidarprofileServerConfigClassification as GmfLidarprofileConfigLidarprofileServerConfigClassification} from 'ngeo/lidarprofile/Config';
+import {LidarprofileServerConfigClassifications as GmfLidarprofileConfigLidarprofileServerConfigClassifications} from 'ngeo/lidarprofile/Config';
+
+import i18next from 'i18next';
+
+export type updateScaleFunction = {
+  (arg1: number): number;
+};
+
 export default class {
+  /**
+   * @private
+   */
+  manager_: GmfLidarprofileManagerLidarprofileManager;
+
+  /**
+   * d3.scaleLinear X scale.
+   */
+  scaleX: undefined | d3.ScaleLinear<number, number>;
+
+  /**
+   * d3.scaleLinear X scale.
+   */
+  updateScaleX: updateScaleFunction;
+
+  /**
+   * d3.scaleLinear Y scale.
+   */
+  scaleY: undefined | d3.ScaleLinear<number, number>;
+
+  /**
+   * d3.scaleLinear Y scale.
+   */
+  updateScaleY: updateScaleFunction;
+
+  /**
+   * The material used for the drawing process. Initialized in the setup
+   */
+  material: undefined | string;
+
+  /**
+   * @private
+   */
+  width_: number;
+
+  /**
+   * @private
+   */
+  height_: number;
+
+  previousDomainX: number[];
+
+  /**
+   * @private
+   */
+  moved_: boolean;
+
   /**
    * Provides a service to create an SVG element with defined axis and a LIDAR
    * point drawing mechanism.
    *
-   * @param {import('gmf/lidarprofile/Manager').LidarprofileManager} gmfLidarprofileManagerInstance
+   * @param gmfLidarprofileManagerInstance
    *    gmf lidar profile manager instance
    */
-  constructor(gmfLidarprofileManagerInstance) {
+  constructor(gmfLidarprofileManagerInstance: GmfLidarprofileManagerLidarprofileManager) {
     /**
-     * @type {import('gmf/lidarprofile/Manager').LidarprofileManager}
      * @private
      */
     this.manager_ = gmfLidarprofileManagerInstance;
 
     /**
      * d3.scaleLinear X scale.
-     *
-     * @type {?d3.ScaleLinear<number, number>}
      */
     this.scaleX = null;
 
     /**
      * d3.scaleLinear X scale.
      *
-     * @type {function(number): number}
+     * @param x .
+     * @returns x .
      */
     this.updateScaleX = (x) => x;
 
     /**
      * d3.scaleLinear Y scale.
-     *
-     * @type {?d3.ScaleLinear<number, number>}
      */
     this.scaleY = null;
 
     /**
      * d3.scaleLinear Y scale.
      *
-     * @type {function(number): number}
+     * @param y .
+     * @returns y .
      */
     this.updateScaleY = (y) => y;
 
     /**
      * The material used for the drawing process. Initialized in the setup
-     *
-     * @type {?string}
      */
     this.material = null;
 
     /**
-     * @type {number}
      * @private
      */
     this.width_ = 0;
 
     /**
-     * @type {number}
      * @private
      */
     this.height_ = 0;
 
-    /**
-     * @type {number[]}
-     */
     this.previousDomainX = [];
 
     /**
-     * @type {boolean}
      * @private
      */
     this.moved_ = false;
@@ -114,9 +163,9 @@ export default class {
   /**
    * Draw the points to the canvas element
    *
-   * @param {import('gmf/lidarprofile/Utils').LidarprofilePoints} points of the profile
+   * @param points of the profile
    */
-  drawPoints(points) {
+  drawPoints(points: GmfLidarprofileUtilsLidarprofilePoints): void {
     if (!this.manager_.config) {
       throw new Error('Missing manager.config');
     }
@@ -126,8 +175,8 @@ export default class {
     let i = -1;
     const nPoints = points.distance.length;
     let cx, cy;
-    const canvas = d3select('#gmf-lidarprofile-container .lidar-canvas');
-    const canvasEl = /** @type {HTMLCanvasElement} */ (canvas.node());
+    const canvas: any = d3select('#gmf-lidarprofile-container .lidar-canvas');
+    const canvasEl: HTMLCanvasElement = canvas.node();
     const ctx = canvasEl.getContext('2d');
     if (ctx === null) {
       throw new Error('Missing ctx');
@@ -168,18 +217,18 @@ export default class {
   /**
    * Setup the SVG components of the D3 chart
    *
-   * @param {number[]} rangeX range of the x scale
-   * @param {number[]} rangeY range of the y scale
+   * @param rangeX range of the x scale
+   * @param rangeY range of the y scale
    */
-  setupPlot(rangeX, rangeY) {
+  setupPlot(rangeX: number[], rangeY: number[]): void {
     if (!this.manager_.config) {
       throw new Error('Missing manager.config');
     }
     if (!this.manager_.config.serverConfig) {
       throw new Error('Missing manager_.config.serverConfig');
     }
-    const canvas = d3select('#gmf-lidarprofile-container .lidar-canvas');
-    const canvasEl = /** @type {HTMLCanvasElement} */ (canvas.node());
+    const canvas: any = d3select('#gmf-lidarprofile-container .lidar-canvas');
+    const canvasEl: HTMLCanvasElement = canvas.node();
     const ctx = canvasEl.getContext('2d');
     if (ctx === null) {
       throw new Error('Missing ctx');
@@ -187,8 +236,8 @@ export default class {
     ctx.clearRect(0, 0, canvasEl.getBoundingClientRect().width, canvasEl.getBoundingClientRect().height);
 
     const margin = this.manager_.config.clientConfig.margin;
-    const container = d3select('#gmf-lidarprofile-container');
-    const containerEl = /** @type {HTMLElement} */ (container.node());
+    const container: any = d3select('#gmf-lidarprofile-container');
+    const containerEl = container.node();
     const containerWidth = containerEl.getBoundingClientRect().width;
     const containerHeight = containerEl.getBoundingClientRect().height;
     // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
@@ -259,15 +308,16 @@ export default class {
 
     const svg = d3select('#gmf-lidarprofile-container svg.lidar-svg');
 
-    svg.call(/** @type {any} */ (zoom)).on('dblclick.zoom', null);
+    // @ts-ignore
+    svg.call(zoom).on('dblclick.zoom', null);
 
     svg.selectAll('*').remove();
 
     // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
     svg.attr('width', this.width_ + margin.left).attr('height', this.height_ + margin.top + margin.bottom);
 
-    svg.on('mousemove', () => {
-      this.pointHighlight.bind(this)();
+    svg.on('mousemove', (event: MouseEvent) => {
+      this.pointHighlight(event);
     });
 
     const xAxis = d3axisBottom(this.scaleX);
@@ -291,14 +341,17 @@ export default class {
 
   /**
    * Update the plot data at the end of the zoom process
+   *
+   * @param event Event .
    */
-  zoomEnd() {
-    if (d3event.sourceEvent && this.moved_ === false) {
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  zoomEnd(event: any): void {
+    if (event.sourceEvent && this.moved_ === false) {
       return;
     }
     this.moved_ = false;
-    const canvas = d3select('#gmf-lidarprofile-container .lidar-canvas');
-    const canvasEl = /** @type {HTMLCanvasElement} */ (canvas.node());
+    const canvas: any = d3select('#gmf-lidarprofile-container .lidar-canvas');
+    const canvasEl: HTMLCanvasElement = canvas.node();
     const ctx = canvasEl.getContext('2d');
     if (ctx === null) {
       throw new Error('Missing ctx');
@@ -309,8 +362,11 @@ export default class {
 
   /**
    * Update the plot axis during the zoom process
+   *
+   * @param event Event .
    */
-  zoomed() {
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  zoomed(event: any): void {
     if (!this.manager_.measure) {
       throw new Error('Missing manager.measure');
     }
@@ -320,28 +376,28 @@ export default class {
     if (!this.scaleY) {
       throw new Error('Missing scaleY');
     }
-    if (d3event.sourceEvent && d3event.sourceEvent.type === 'mousemove') {
+    if (event.sourceEvent && event.sourceEvent.type === 'mousemove') {
       this.moved_ = true;
-      if (d3event.sourceEvent.movementX == 0 && d3event.sourceEvent.movementY == 0) {
+      if (event.sourceEvent.movementX == 0 && event.sourceEvent.movementY == 0) {
         return;
       }
     }
 
     this.manager_.measure.clearMeasure();
 
-    const tr = d3event.transform;
+    const tr = event.transform;
     const svg = d3select('#gmf-lidarprofile-container svg.lidar-svg');
-    const xAxis = d3axisBottom(this.scaleX);
-    const yAxis = d3axisLeft(this.scaleY).tickSize(-this.width_);
+    const xAxis: any = d3axisBottom(this.scaleX);
+    const yAxis: any = d3axisLeft(this.scaleY).tickSize(-this.width_);
 
     const newScaleX = tr.rescaleX(this.scaleX);
     const newScaleY = tr.rescaleY(this.scaleY);
 
-    svg.select('.x.axis').call(/** @type {any} */ (xAxis.scale(newScaleX)));
-    svg.select('.y.axis').call(/** @type {any} */ (yAxis.scale(newScaleY)));
+    svg.select('.x.axis').call(xAxis.scale(newScaleX));
+    svg.select('.y.axis').call(yAxis.scale(newScaleY));
 
-    const canvas = d3select('#gmf-lidarprofile-container .lidar-canvas');
-    const canvasEl = /** @type {HTMLCanvasElement} */ (canvas.node());
+    const canvas: any = d3select('#gmf-lidarprofile-container .lidar-canvas');
+    const canvasEl: HTMLCanvasElement = canvas.node();
     const ctx = canvasEl.getContext('2d');
     if (ctx === null) {
       throw new Error('Missing ctx');
@@ -356,8 +412,10 @@ export default class {
 
   /**
    * Update the OpenLayers overlay that displays point position and attributes values
+   *
+   * @param event Event .
    */
-  pointHighlight() {
+  pointHighlight(event: MouseEvent): void {
     if (!this.manager_.config) {
       throw new Error('Missing manager.config');
     }
@@ -372,8 +430,8 @@ export default class {
     const tolerance = this.manager_.config.clientConfig.tolerance || 0;
 
     const canvas = d3select('#gmf-lidarprofile-container .lidar-canvas');
-    const canvasEl = /** @type {HTMLCanvasElement} */ (canvas.node());
-    const canvasCoordinates = d3mouse(canvasEl);
+    const canvasEl = canvas.node();
+    const canvasCoordinates = d3pointer(event, canvasEl);
     const classification_colors = this.manager_.config.serverConfig.classification_colors;
 
     let cx, cy;
@@ -444,55 +502,60 @@ export default class {
   }
 
   /**
-   * @param {import('gmf/lidarprofile/Utils').LidarPoint} point the concerned point.
-   * @param {import('gmf/lidarprofile/Config').LidarprofileServerConfigClassification} classification_color
+   * @param point the concerned point.
+   * @param classification_color
    *    the classification object concerning this point.
-   * @param {number} distDecimal the number of decimal to keep.
-   * @returns {string} the text for the html info.
+   * @param distDecimal the number of decimal to keep.
+   * @returns the text for the html info.
    */
-  getInfoHTML(point, classification_color, distDecimal) {
-    const gettextCatalog = this.manager_.gettextCatalog;
+  getInfoHTML(
+    point: GmfLidarprofileUtilsLidarPoint,
+    classification_color: GmfLidarprofileConfigLidarprofileServerConfigClassification,
+    distDecimal: number
+  ): string {
     const html = [];
-    const number = this.manager_.$filter('number');
-
     const distance = point.distance;
     const altitude = point.altitude;
-    const classification = gettextCatalog.getString(classification_color.name);
+    const classification = i18next.t(classification_color.name);
     const intensity = point.intensity;
 
     if (distance !== undefined) {
-      const distanceTxt = gettextCatalog.getString('Distance: ');
+      const distanceTxt = i18next.t('Distance: ');
       // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-      html.push(`${distanceTxt + number(distance, distDecimal)}`);
+      html.push(`${distanceTxt + this.formatDecimals(distance, distDecimal)}`);
     }
     if (altitude !== undefined) {
-      const altitudeTxt = gettextCatalog.getString('Altitude: ');
+      const altitudeTxt = i18next.t('Altitude: ');
       // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-      html.push(`${altitudeTxt + number(altitude, distDecimal)}`);
+      html.push(`${altitudeTxt + this.formatDecimals(altitude, distDecimal)}`);
     }
     if (classification.length > 0) {
-      const classificationTxt = gettextCatalog.getString('Classification: ');
+      const classificationTxt = i18next.t('Classification: ');
       // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
       html.push(`${classificationTxt + classification}`);
     }
     if (intensity !== undefined) {
-      const intensityTxt = gettextCatalog.getString('Intensity: ');
+      const intensityTxt = i18next.t('Intensity: ');
       // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-      html.push(`${intensityTxt + number(intensity, 0)}`);
+      html.push(`${intensityTxt + this.formatDecimals(intensity, 0)}`);
     }
 
     return html.join('</br>');
   }
 
+  formatDecimals(num: number, decimals: number): number {
+    return Number((Math.round(num * 100) / 100).toFixed(decimals));
+  }
+
   /**
    * Change the profile style according to the material color
    *
-   * @param {string} material value as defined in Pytree attribute configuration
+   * @param material value as defined in Pytree attribute configuration
    */
-  changeStyle(material) {
+  changeStyle(material: string): void {
     this.material = material;
-    const canvas = d3select('#gmf-lidarprofile-container .lidar-canvas');
-    const canvasEl = /** @type {HTMLCanvasElement} */ (canvas.node());
+    const canvas: any = d3select('#gmf-lidarprofile-container .lidar-canvas');
+    const canvasEl: HTMLCanvasElement = canvas.node();
     const ctx = canvasEl.getContext('2d');
     if (ctx === null) {
       throw new Error('Missing ctx');
@@ -504,11 +567,14 @@ export default class {
   /**
    * Show/Hide classes in the profile
    *
-   * @param {import('gmf/lidarprofile/Config').LidarprofileServerConfigClassifications} classification
+   * @param classification
    *   value as defined in the Pytree classification_colors configuration
-   * @param {string} material  value as defined in Pytree attribute configuration
+   * @param material  value as defined in Pytree attribute configuration
    */
-  setClassActive(classification, material) {
+  setClassActive(
+    classification: GmfLidarprofileConfigLidarprofileServerConfigClassifications,
+    material: string
+  ): void {
     if (!this.manager_.config) {
       throw new Error('Missing manager.config');
     }

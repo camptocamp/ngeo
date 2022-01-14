@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2018-2022 Camptocamp SA
+// Copyright (c) 2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -19,16 +19,23 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import angular from 'angular';
-import gmfLidarprofileComponent from 'gmf/lidarprofile/component';
-import gmfLidarprofilePanelComponent from 'gmf/lidarprofile/panelComponent';
-
-import './lidarprofile.scss';
-
 /**
- * @type {angular.IModule}
+ * @param {T} func The function to debounce.
+ * @param {number} wait The wait time in ms.
+ * @returns {T} The wrapper function.
+ * @template T
  */
-export default angular.module('gmfLidarprofileModule', [
-  gmfLidarprofileComponent.name,
-  gmfLidarprofilePanelComponent.name,
-]);
+export function debounce<T>(func: T, wait: number): T {
+  let timeout: number = null;
+  return function (...args: any) {
+    const later = () => {
+      timeout = null;
+      // @ts-ignore
+      func.apply(this, args); // eslint-disable-line @typescript-eslint/no-unsafe-call
+    };
+    if (timeout !== null) {
+      clearTimeout(timeout);
+    }
+    timeout = window.setTimeout(later, wait);
+  } as unknown as T;
+}

@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2018-2021 Camptocamp SA
+// Copyright (c) 2018-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -23,16 +23,13 @@ import angular from 'angular';
 import gmfLidarprofileConfig from 'gmf/lidarprofile/Config';
 import gmfLidarprofileManager from 'gmf/lidarprofile/Manager';
 import ngeoDownloadCsv from 'ngeo/download/Csv';
+import panels from 'gmfapi/store/panels';
 
 /**
  * @type {angular.IModule}
  * @hidden
  */
-const myModule = angular.module('gmfLidarprofilePanel', [
-  gmfLidarprofileConfig.name,
-  gmfLidarprofileManager.name,
-  ngeoDownloadCsv.name,
-]);
+const myModule = angular.module('gmfLidarprofilePanel', [ngeoDownloadCsv.name]);
 
 myModule.value(
   'gmfLidarprofilePanelTemplateUrl',
@@ -108,18 +105,12 @@ myModule.component('gmfLidarprofilePanel', lidarprofilePanelComponent);
 export class Controller {
   /**
    * @param {angular.IScope} $scope Angular scope.
-   * @param {import('gmf/lidarprofile/Manager').LidarprofileManager} gmfLidarprofileManager gmf
-   *    gmfLidarprofileManager.
-   * @param {import('gmf/lidarprofile/Config').LidarprofileConfigService} gmfLidarprofileConfig gmf Lidar
-   *    profile config.
-   * @param {import('ngeo/misc/ToolActivateMgr').ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate
-   *    manager service
    * @param {import('ngeo/download/Csv').DownloadCsvService} ngeoCsvDownload CSV Download service.
    * @ngInject
    * @ngdoc controller
    * @ngname gmfLidarprofilePanelController
    */
-  constructor($scope, gmfLidarprofileManager, gmfLidarprofileConfig, ngeoToolActivateMgr, ngeoCsvDownload) {
+  constructor($scope, ngeoCsvDownload) {
     /**
      * @type {boolean}
      */
@@ -226,9 +217,14 @@ export class Controller {
       if (!this.profileConfig_.serverConfig) {
         throw new Error('Missing profileConfig_.serverConfig');
       }
+      const panelOptions = {
+        state: true,
+      };
+      panels.openFooterPanel('lidarresult', panelOptions);
       this.profile.setLine(this.line);
       this.profile.getProfileByLOD([], 0, true, this.profileConfig_.serverConfig.minLOD);
     } else {
+      panels.closeFooterPanel();
       this.clearAll();
     }
   }
