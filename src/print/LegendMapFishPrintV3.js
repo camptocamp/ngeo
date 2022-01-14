@@ -182,12 +182,13 @@ export default class LegendMapFishPrintV3 {
     if (layerLeaf instanceof olLayerTile) {
       return this.getLegendItemFromTileLayer_(nodeLeaf, layerLeaf, dpi);
     }
-    // Layer is a wms layer get the legend if it has activated (visible) layer names.
+    // Layer is a wms layer.
     const NodeWms = /** @type {import('gmf/themes').GmfLayerWMS} */ (
       /** @type {any} */ (nodeLeaf));
     const layerWms = /** @type {import('ol/layer/Layer').default<import('ol/source/ImageWMS').default>} */ (
       layerLeaf
     );
+    // Get the legend if it has activated (visible) layer names.
     const layerNames = layerWms.getSource().getParams().LAYERS;
     if (!layerNames.contains(NodeWms.layers)) {
       return null;
