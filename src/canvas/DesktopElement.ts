@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2021 Camptocamp SA
+// Copyright (c) 2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -360,6 +360,9 @@ export default class GmfDesktopCanvas extends BaseElement {
       main.gmf-footer-active {
         height: calc(100% - var(--header-height) - 12.5rem);
       }
+      main.lidar-footer-active {
+        height: calc(100% - var(--header-height) - 21.88rem);
+      }
       footer {
         height: 12.5rem;
       }
@@ -611,7 +614,8 @@ export default class GmfDesktopCanvas extends BaseElement {
       <main
         class="${classMap({
           'gmf-tool-active': !!this.toolPanel_,
-          'gmf-footer-active': !!this.footerPanel_,
+          'gmf-footer-active': this.footerPanel_ === 'profileresult',
+          'lidar-footer-active': this.footerPanel_ === 'lidarresult',
         })}"
       >
         <div class="gmf-app-desktop-splitter">

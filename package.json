@@ -94,6 +94,7 @@
     "@types/jqueryui": "1.12.16",
     "@types/jsts": "0.17.10",
     "@types/node": "17.0.13",
+    "@types/offscreencanvas": "2019.6.4",
     "@types/proj4": "2.5.2",
     "@types/sinon": "10.0.9",
     "@types/tinycolor2": "1.4.3",
