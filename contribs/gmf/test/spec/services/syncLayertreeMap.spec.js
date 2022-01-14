@@ -29,6 +29,59 @@ import olView from 'ol/View.js';
 import olLayerGroup from 'ol/layer/Group.js';
 import olLayerImage from 'ol/layer/Image.js';
 
+export const setupSyncLayertreeMap = () => {
+  const map = new olMap({
+    view: new olView({
+      center: [0, 0],
+      zoom: 0,
+    }),
+  });
+
+  const group = new olLayerGroup();
+  map.getLayers().push(group);
+
+  const element = angular.element(
+    '<div ngeo-layertree="tree"' +
+      'ngeo-layertree-map="map"' +
+      'ngeo-layertree-nodelayer="getLayer(treeCtrl)"' +
+      '</div>'
+  );
+
+  let $httpBackend_;
+  let gmfSyncLayertreeMap_;
+  let getLayer;
+
+  angular.mock.inject(($rootScope, $compile, $httpBackend, gmfSyncLayertreeMap, gmfThemes, gmfTreeUrl) => {
+    $httpBackend_ = $httpBackend;
+    gmfSyncLayertreeMap_ = gmfSyncLayertreeMap;
+
+    const reGmfTreeUrl = new RegExp(`^${gmfTreeUrl}`);
+    // Prepare request simulation
+    $httpBackend.when('GET', reGmfTreeUrl).respond(gmfTestDataThemes);
+    $httpBackend
+      .when('GET', 'https://wmts.geo.admin.ch/EPSG/2056/1.0.0/WMTSCapabilities.xml?lang=fr')
+      .respond(gmfTestDataThemescapabilities.swisstopo);
+    $httpBackend
+      .when('GET', 'https://geomapfish-demo-2-6.camptocamp.com/tiles/1.0.0/WMTSCapabilities.xml')
+      .respond(gmfTestDataThemescapabilities.demo);
+    $httpBackend
+      .when('GET', 'https://ows.asitvd.ch/wmts/1.0.0/WMTSCapabilities.xml')
+      .respond(gmfTestDataThemescapabilities.asitvd);
+
+    // Prepare themes
+    $httpBackend.expectGET(reGmfTreeUrl);
+    gmfThemes.loadThemes();
+    $httpBackend.flush();
+
+    // Prepare layertree
+    getLayer = function (treeCtrl) {
+      const layer = gmfSyncLayertreeMap.createLayer(treeCtrl, map, group);
+      return layer;
+    };
+  });
+  return [$httpBackend_, gmfSyncLayertreeMap_, element, map, getLayer];
+}
+
 describe('gmf.layertree.SyncLayertreeMap', () => {
   /** @type {angular.IHttpBackendService} */
   let $httpBackend_;
@@ -38,51 +91,7 @@ describe('gmf.layertree.SyncLayertreeMap', () => {
   let getLayer;
 
   beforeEach(() => {
-    map = new olMap({
-      view: new olView({
-        center: [0, 0],
-        zoom: 0,
-      }),
-    });
-
-    const group = new olLayerGroup();
-    map.getLayers().push(group);
-
-    element = angular.element(
-      '<div ngeo-layertree="tree"' +
-        'ngeo-layertree-map="map"' +
-        'ngeo-layertree-nodelayer="getLayer(treeCtrl)"' +
-        '</div>'
-    );
-
-    angular.mock.inject(($rootScope, $compile, $httpBackend, gmfSyncLayertreeMap, gmfThemes, gmfTreeUrl) => {
-      $httpBackend_ = $httpBackend;
-      gmfSyncLayertreeMap_ = gmfSyncLayertreeMap;
-
-      const reGmfTreeUrl = new RegExp(`^${gmfTreeUrl}`);
-      // Prepare request simulation
-      $httpBackend.when('GET', reGmfTreeUrl).respond(gmfTestDataThemes);
-      $httpBackend
-        .when('GET', 'https://wmts.geo.admin.ch/EPSG/2056/1.0.0/WMTSCapabilities.xml?lang=fr')
-        .respond(gmfTestDataThemescapabilities.swisstopo);
-      $httpBackend
-        .when('GET', 'https://geomapfish-demo-2-6.camptocamp.com/tiles/1.0.0/WMTSCapabilities.xml')
-        .respond(gmfTestDataThemescapabilities.demo);
-      $httpBackend
-        .when('GET', 'https://ows.asitvd.ch/wmts/1.0.0/WMTSCapabilities.xml')
-        .respond(gmfTestDataThemescapabilities.asitvd);
-
-      // Prepare themes
-      $httpBackend.expectGET(reGmfTreeUrl);
-      gmfThemes.loadThemes();
-      $httpBackend.flush();
-
-      // Prepare layertree
-      getLayer = function (treeCtrl) {
-        const layer = gmfSyncLayertreeMap.createLayer(treeCtrl, map, group);
-        return layer;
-      };
-    });
+    [$httpBackend_, gmfSyncLayertreeMap_, element, map, getLayer] = setupSyncLayertreeMap();
   });
 
   // ================== miscellaneous ================
