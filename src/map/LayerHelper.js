@@ -90,10 +90,9 @@ export const NODE_IS_LEAF = 'layerIsLeaf';
 export const DATASOURCE_ID = 'dataSourceId';
 
 /**
- * @private
- * @hidden
+ * Name key for layer groups in the map.
  */
-const GROUP_KEY = 'groupName';
+export const GROUP_KEY = 'groupName';
 
 /**
  * @private
