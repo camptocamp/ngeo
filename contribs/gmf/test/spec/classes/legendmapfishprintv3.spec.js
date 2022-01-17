@@ -46,6 +46,7 @@ describe('gmf.print.LegendMapFishPrintV3', () => {
   let $httpBackend_;
   let gmfSyncLayertreeMap_;
   let element;
+  /** @type {import("ol/Map.js").default} */
   let map;
   let getLayer;
 

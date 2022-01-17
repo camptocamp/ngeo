@@ -24,11 +24,15 @@ import angular from 'angular';
 import {getLayer as gmfLayertreeSyncLayertreeMapGetLayer} from 'gmf/layertree/SyncLayertreeMap.js';
 import gmfTestDataThemes from '../data/themes.js';
 import gmfTestDataThemescapabilities from '../data/themescapabilities.js';
+import {uncheckAllNodes} from '../data/manipulateThemes.js';
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
 import olLayerGroup from 'ol/layer/Group.js';
 import olLayerImage from 'ol/layer/Image.js';
 
+/**
+ * @return {[angular.IHttpBackendService, import('gmf/layertree/SyncLayertreeMap.js).default', Element, import("ol/Map.js").default, (treeCtrl: import("ngeo/layertree/Controller.js").LayertreeController) => import("ol/layer/Base").default)]}
+ */
 export const setupSyncLayertreeMap = () => {
   const map = new olMap({
     view: new olView({
@@ -56,6 +60,8 @@ export const setupSyncLayertreeMap = () => {
     gmfSyncLayertreeMap_ = gmfSyncLayertreeMap;
 
     const reGmfTreeUrl = new RegExp(`^${gmfTreeUrl}`);
+    // Deactivate all layers in themes.json
+    uncheckAllNodes(gmfTestDataThemes.themes);
     // Prepare request simulation
     $httpBackend.when('GET', reGmfTreeUrl).respond(gmfTestDataThemes);
     $httpBackend
@@ -136,6 +142,10 @@ describe('gmf.layertree.SyncLayertreeMap', () => {
   });
 
   it('Create WMS Layer in a not mixed group', () => {
+    // Activate some layers (see matching tree in GMF admin) in theme "demo", group "layers"
+    gmfTestDataThemes.themes[1].children[1].children[0].children[0].metadata.isChecked = true; // cinema
+    gmfTestDataThemes.themes[1].children[1].children[1].metadata.isChecked = true; // police
+    gmfTestDataThemes.themes[1].children[1].children[2].metadata.isChecked = true; // post_office
     angular.mock.inject(($rootScope, $compile) => {
       // Init, compile layertree
       $rootScope.tree = gmfTestDataThemes.themes[1]; // Theme 'Demo'
