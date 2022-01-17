@@ -186,7 +186,7 @@ export default class LegendMapFishPrintV3 {
     );
     // Get the legend if it has activated (visible) layer names.
     const layerNames = layerWms.getSource().getParams().LAYERS;
-    if (!layerNames.contains(NodeWms.layers)) {
+    if (!layerNames.includes(NodeWms.layers)) {
       return null;
     }
     return this.getLegendItemFromlayerWms_(
@@ -319,27 +319,10 @@ export default class LegendMapFishPrintV3 {
     // @ts-ignore: private...
     const serverType = source.serverType_;
 
-    /**
-     * @param {string} nodeName
-     * @param {LegendURLDPI} icon_dpi
-     * @param {string} serverType
-     * @return {import('ngeo/print/mapfish-print-v3').MapFishPrintLegendClass}
-     */
-    const getLegendItem = (nodeName, icon_dpi, serverType) => {
-      const legendItem = {
-        name: this.gmfLegendOptions_.label[serverType] === false ? '' : gettextCatalog.getString(nodeName),
-        icons: [icon_dpi.url],
-      };
-      if (icon_dpi.dpi != screenDpi()) {
-        Object.assign(legendItem, {dpi: icon_dpi.dpi});
-      }
-      return legendItem;
-    }
-
     // Case node as a legend image
     let icon_dpi = this.getMetadataLegendImage_(node, dpi);
     if (icon_dpi) {
-      return getLegendItem(node.name, icon_dpi, serverType);
+      return this.getLegendItemForWMSNode_(node.name, icon_dpi, serverType);
     }
 
     // Case node has no legend image => Get the url for each WMS layer.
@@ -354,37 +337,56 @@ export default class LegendMapFishPrintV3 {
     }
     const layerNames = node.layers.split(',');
     layerNames.forEach((name) => {
-      if (!icon_dpi) {
-        const url = this.ngeoLayerHelper_.getWMSLegendURL(
-          source.getUrl(),
-          name,
-          scale,
-          undefined,
-          undefined,
-          undefined,
-          serverType,
-          dpi,
-          this.gmfLegendOptions_.useBbox ? bbox : undefined,
-          this.map_.getView().getProjection().getCode(),
-          this.gmfLegendOptions_.params[serverType]
-        );
-        if (!url) {
-          throw new Error('Missing url');
-        }
-        icon_dpi = {
-          url: url,
-          dpi: serverType === 'qgis' ? dpi : screenDpi(),
-        };
+      const url = this.ngeoLayerHelper_.getWMSLegendURL(
+        source.getUrl(),
+        name,
+        scale,
+        undefined,
+        undefined,
+        undefined,
+        serverType,
+        dpi,
+        this.gmfLegendOptions_.useBbox ? bbox : undefined,
+        this.map_.getView().getProjection().getCode(),
+        this.gmfLegendOptions_.params[serverType]
+      );
+      if (!url) {
+        throw new Error('Missing url');
       }
-      legendLayerClasses.push(getLegendItem(name, icon_dpi, serverType));
+      icon_dpi = {
+        url: url,
+        dpi: serverType === 'qgis' ? dpi : screenDpi(),
+      };
+      legendLayerClasses.push(this.getLegendItemForWMSNode_(name, icon_dpi, serverType));
     });
-    if (legendLayerClasses.length == 1) {
+    // Case of wms layer with only one layer, use the node name and remove the useless class level.
+    if (legendLayerClasses.length === 1) {
       const firstLegendLayer = legendLayerClasses[0];
-      firstLegendLayer.name = legendGroupItem.name;
       delete firstLegendLayer.classes;
+      firstLegendLayer.name = gettextCatalog.getString(node.name);
       return firstLegendLayer;
     }
     return this.tryToSimplifyLegendGroup_(legendGroupItem);
+  }
+
+  /**
+   * TODO
+   * @param {string} nodeName
+   * @param {LegendURLDPI} icon_dpi
+   * @param {string} serverType
+   * @return {import('ngeo/print/mapfish-print-v3').MapFishPrintLegendClass}
+   * @private
+   */
+  getLegendItemForWMSNode_(nodeName, icon_dpi, serverType) {
+    const gettextCatalog = this.gettextCatalog_;
+    const legendItem = {
+      name: this.gmfLegendOptions_.label[serverType] === false ? '' : gettextCatalog.getString(nodeName),
+      icons: [icon_dpi.url],
+    };
+    if (icon_dpi.dpi != screenDpi()) {
+      Object.assign(legendItem, {dpi: icon_dpi.dpi});
+    }
+    return legendItem;
   }
 
   /**
@@ -421,7 +423,7 @@ export default class LegendMapFishPrintV3 {
    * @private
    */
   getMetadataLegendImage_(node, dpi = -1) {
-    if (dpi == -1) {
+    if (dpi === -1) {
       dpi = screenDpi();
     }
 

@@ -21,17 +21,19 @@
 
 // @ts-nocheck
 import angular from 'angular';
-import {getLayer as gmfLayertreeSyncLayertreeMapGetLayer} from 'gmf/layertree/SyncLayertreeMap.js';
-import gmfTestDataThemes from '../data/themes.js';
-import gmfTestDataThemescapabilities from '../data/themescapabilities.js';
-import {uncheckAllNodes} from '../data/manipulateThemes.js';
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
 import olLayerGroup from 'ol/layer/Group.js';
 import olLayerImage from 'ol/layer/Image.js';
+import {DATALAYERGROUP_NAME} from 'gmf/index.js';
+import {getLayer as gmfLayertreeSyncLayertreeMapGetLayer} from 'gmf/layertree/SyncLayertreeMap.js';
+import {GROUP_KEY} from 'ngeo/map/LayerHelper.js';
+import gmfTestDataThemes from '../data/themes.js';
+import gmfTestDataThemescapabilities from '../data/themescapabilities.js';
+import {uncheckAllNodes} from '../data/manipulateThemes.js';
 
 /**
- * @return {[angular.IHttpBackendService, import('gmf/layertree/SyncLayertreeMap.js).default', Element, import("ol/Map.js").default, (treeCtrl: import("ngeo/layertree/Controller.js").LayertreeController) => import("ol/layer/Base").default)]}
+ * @return {[angular.IHttpBackendService, import('gmf/layertree/SyncLayertreeMap.js').default, JQuery, import("ol/Map.js").default, (treeCtrl: import("ngeo/layertree/Controller.js").LayertreeController) => import("ol/layer/Base").default)]}
  */
 export const setupSyncLayertreeMap = () => {
   const map = new olMap({
@@ -42,6 +44,7 @@ export const setupSyncLayertreeMap = () => {
   });
 
   const group = new olLayerGroup();
+  group.set(GROUP_KEY, DATALAYERGROUP_NAME);
   map.getLayers().push(group);
 
   const element = angular.element(
