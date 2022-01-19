@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2021 Camptocamp SA
+// Copyright (c) 2016-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -33,7 +33,7 @@ import gmfTestDataThemescapabilities from '../data/themescapabilities';
 import {uncheckAllNodes} from '../data/manipulateThemes';
 
 /**
- * @return {[angular.IHttpBackendService, import('gmf/layertree/SyncLayertreeMap.js').default, JQuery, import("ol/Map.js").default, (treeCtrl: import("ngeo/layertree/Controller.js").LayertreeController) => import("ol/layer/Base").default)]}
+ * @return {[angular.IHttpBackendService, import('gmf/layertree/SyncLayertreeMap').default, JQuery, import("ol/Map").default, (treeCtrl: import("ngeo/layertree/Controller").LayertreeController) => import("ol/layer/Base").default)]}
  */
 export const setupSyncLayertreeMap = () => {
   const map = new olMap({
@@ -89,7 +89,7 @@ export const setupSyncLayertreeMap = () => {
     };
   });
   return [$httpBackend_, gmfSyncLayertreeMap_, element, map, getLayer];
-}
+};
 
 describe('gmf.layertree.SyncLayertreeMap', () => {
   /** @type {angular.IHttpBackendService} */

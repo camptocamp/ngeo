@@ -22,26 +22,26 @@
 /* eslint max-len: 0 */
 
 /**
- * Deactivate all layers in the theme.json
- * @param {Array<import('gmf/themes.js').GmfTheme>} themes
- */
-export const uncheckAllNodes = (themes) => {
-  themes.forEach((theme) => {
-    const node = /** @type {import('gmf/themes.js').GmfGroup} */ (/** @type {any} */ (theme));
-    uncheckNodeRecursively(node);
-  })
-};
-
-/**
- * @param {import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer} node
+ * @param {import('gmf/themes').GmfGroup|import('gmf/themes').GmfLayer} node
  */
 const uncheckNodeRecursively = (node) => {
   if (node.hasOwnProperty('children')) {
-    const nodeGroup = /** @type {import('gmf/themes.js').GmfGroup} */ (node);
-    nodeGroup.children.forEach(child => uncheckNodeRecursively(child))
+    const nodeGroup = /** @type {import('gmf/themes').GmfGroup} */ (node);
+    nodeGroup.children.forEach((child) => uncheckNodeRecursively(child));
   }
-  const nodeLayer = /** @type {import('gmf/themes.js').GmfLayer} */ (node);
+  const nodeLayer = /** @type {import('gmf/themes').GmfLayer} */ (node);
   if (nodeLayer.hasOwnProperty('metadata')) {
     nodeLayer.metadata.isChecked = false;
   }
+};
+
+/**
+ * Deactivate all layers in the theme.json
+ * @param {import('gmf/themes').GmfTheme[]} themes
+ */
+export const uncheckAllNodes = (themes) => {
+  themes.forEach((theme) => {
+    const node = /** @type {import('gmf/themes').GmfGroup} */ (/** @type {any} */ (theme));
+    uncheckNodeRecursively(node);
+  });
 };
