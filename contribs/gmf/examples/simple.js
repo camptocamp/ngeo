@@ -22,6 +22,7 @@
 import './simple.css';
 import angular from 'angular';
 import gmfMapComponent from 'gmf/map/gmfComponent';
+import ngeoMapModule from 'ngeo/map/module';
 
 import olMap from 'ol/Map';
 import olView from 'ol/View';
@@ -33,7 +34,7 @@ import options from './options';
  * @type {angular.IModule}
  * @hidden
  */
-const myModule = angular.module('gmfapp', ['gettext', gmfMapComponent.name]);
+const myModule = angular.module('gmfapp', ['gettext', gmfMapComponent.name, ngeoMapModule.name]);
 
 /**
  * @class

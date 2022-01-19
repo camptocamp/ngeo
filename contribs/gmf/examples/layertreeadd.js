@@ -33,6 +33,7 @@ import gmfThemeThemes from 'gmf/theme/Themes';
 import gmfThemeManager from 'gmf/theme/Manager';
 import EPSG2056 from 'ngeo/proj/EPSG_2056';
 import ngeoStatemanagerLocation from 'ngeo/statemanager/Location';
+import ngeoMapModule from 'ngeo/map/module';
 import olMap from 'ol/Map';
 import olView from 'ol/View';
 import olLayerTile from 'ol/layer/Tile';
@@ -52,6 +53,7 @@ const myModule = angular.module('gmfapp', [
   gmfThemeThemes.name,
   ngeoStatemanagerLocation.name,
   gmfDisclaimerModule.name,
+  ngeoMapModule.name,
 ]);
 
 /**

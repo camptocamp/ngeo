@@ -25,6 +25,7 @@ import gmfContextualdataModule from 'gmf/contextualdata/module';
 
 import gmfMapComponent from 'gmf/map/gmfComponent';
 import ngeoMiscFilters from 'ngeo/misc/filters';
+import ngeoMapModule from 'ngeo/map/module';
 import EPSG2056 from 'ngeo/proj/EPSG_2056';
 import 'ngeo/proj/EPSG_21781';
 import olMap from 'ol/Map';
@@ -42,6 +43,7 @@ const myModule = angular.module('gmfapp', [
   gmfContextualdataModule.name,
   gmfMapComponent.name,
   ngeoMiscFilters.name,
+  ngeoMapModule.name,
 ]);
 
 myModule.value('gmfContextualdatacontentTemplateUrl', 'partials/contextualdata.html');

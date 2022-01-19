@@ -27,6 +27,7 @@ import gmfMapComponent from 'gmf/map/gmfComponent';
 
 import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties';
 import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper';
+import ngeoMapModule from 'ngeo/map/module';
 import olFeature from 'ol/Feature';
 import olMap from 'ol/Map';
 import olView from 'ol/View';
@@ -52,6 +53,7 @@ const myModule = angular.module('gmfapp', [
   gmfDrawingFeatureStyleComponent.name,
   gmfMapComponent.name,
   ngeoMiscFeatureHelper.name,
+  ngeoMapModule.name,
 ]);
 
 /**

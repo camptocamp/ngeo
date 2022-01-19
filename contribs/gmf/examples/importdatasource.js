@@ -35,6 +35,7 @@ import gmfThemeThemes from 'gmf/theme/Themes';
 import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources';
 
 import ngeoQueryComponent from 'ngeo/query/component';
+import ngeoMapModule from 'ngeo/map/module';
 
 import EPSG2056 from 'ngeo/proj/EPSG_2056';
 import olMap from 'ol/Map';
@@ -57,6 +58,7 @@ const myModule = angular.module('gmfapp', [
   gmfThemeThemes.name,
   ngeoDatasourceDataSources.name,
   ngeoQueryComponent.name,
+  ngeoMapModule.name,
 ]);
 
 /**

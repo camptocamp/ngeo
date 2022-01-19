@@ -30,6 +30,7 @@ import gmfMobileMeasureLengthComponent from 'gmf/mobile/measure/lengthComponent'
 import gmfMobileMeasurePointComponent from 'gmf/mobile/measure/pointComponent';
 import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent';
 import EPSG2056 from 'ngeo/proj/EPSG_2056';
+import ngeoMapModule from 'ngeo/map/module';
 import olMap from 'ol/Map';
 import olView from 'ol/View';
 import olControlScaleLine from 'ol/control/ScaleLine';
@@ -49,6 +50,7 @@ const myModule = angular.module('gmfapp', [
   gmfMobileMeasureLengthComponent.name,
   gmfMobileMeasurePointComponent.name,
   ngeoMiscBtnComponent.name,
+  ngeoMapModule.name,
 ]);
 
 /**

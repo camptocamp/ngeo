@@ -25,6 +25,7 @@ import gmfMapComponent from 'gmf/map/gmfComponent';
 
 import gmfRasterModule from 'gmf/raster/module';
 import EPSG2056 from 'ngeo/proj/EPSG_2056';
+import ngeoMapModule from 'ngeo/map/module';
 import olMap from 'ol/Map';
 import olView from 'ol/View';
 import olLayerTile from 'ol/layer/Tile';
@@ -35,7 +36,12 @@ import options from './options';
  * @type {angular.IModule}
  * @hidden
  */
-const myModule = angular.module('gmfapp', ['gettext', gmfMapComponent.name, gmfRasterModule.name]);
+const myModule = angular.module('gmfapp', [
+  'gettext',
+  gmfMapComponent.name,
+  gmfRasterModule.name,
+  ngeoMapModule.name,
+]);
 
 /**
  * @class
