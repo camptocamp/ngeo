@@ -174,7 +174,9 @@ export default class LegendMapFishPrintV3 {
 
     // Case of leaf node: Create a legend class item matching the layer.
     const nodeLeaf = /** @type {import('gmf/themes').GmfLayer} */ (node);
-    const layerLeaf = /** @type {import('ol/layer/Layer').default<import('ol/source/Source').default>} */ (layer);
+    const layerLeaf = /** @type {import('ol/layer/Layer').default<import('ol/source/Source').default>} */ (
+      layer
+    );
     // Layer is not visible then return nothing.
     if (!layerLeaf.getVisible()) {
       return null;
@@ -185,7 +187,9 @@ export default class LegendMapFishPrintV3 {
     }
     // Layer is a wms layer.
     const NodeWms = /** @type {import('gmf/themes').GmfLayerWMS} */ (/** @type {any} */ (nodeLeaf));
-    const layerWms = /** @type {import('ol/layer/Layer').default<import('ol/source/ImageWMS').default>} */ (layerLeaf);
+    const layerWms = /** @type {import('ol/layer/Layer').default<import('ol/source/ImageWMS').default>} */ (
+      layerLeaf
+    );
     // Get the legend if it has activated (visible) layer names.
     const layerNames = layerWms.getSource().getParams().LAYERS;
     if (!layerNames.includes(NodeWms.layers)) {

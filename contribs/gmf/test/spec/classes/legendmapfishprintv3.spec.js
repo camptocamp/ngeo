@@ -77,9 +77,7 @@ describe('gmf.print.LegendMapFishPrintV3', () => {
    * @return {import('gmf/themes').GmfTheme[]}
    */
   const getThemes = () => {
-    return /** @type {import('gmf/themes').GmfTheme[]} */ (
-      /** @type any */ (gmfTestDataThemes.themes)
-    );
+    return /** @type {import('gmf/themes').GmfTheme[]} */ (/** @type any */ (gmfTestDataThemes.themes));
   };
 
   /**
