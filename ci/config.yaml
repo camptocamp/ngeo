@@ -30,3 +30,6 @@ audit:
       - CWE-295 # Improper Certificate Validation
       - CWE-346 # Origin Validation Error
       - CWE-125 # Out-of-bounds Read
+    package_ignore:
+      - webpack-dev-server
+      - typedoc
