@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2021 Camptocamp SA
+// Copyright (c) 2016-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -191,7 +191,7 @@ Controller.prototype.$onInit = function () {
   }
   const map = this.getMapFn();
   if (!(map instanceof olMap)) {
-    throw 'Wrong map';
+    throw new Error('Wrong map');
   }
   this.map_ = map;
   this.map_.addInteraction(this.interaction);

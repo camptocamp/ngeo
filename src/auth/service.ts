@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2021 Camptocamp SA
+// Copyright (c) 2016-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -135,7 +135,7 @@ export class AuthenticationService {
           }
         })
         .catch((err: Response) => {
-          throw `Error on connection check: ${err.statusText}`;
+          throw new Error(`Error on connection check: ${err.statusText}`);
         });
     }
   }
@@ -160,7 +160,7 @@ export class AuthenticationService {
       .then(
         (data: User) => this.handleLogin_(true, data),
         () => {
-          throw 'Login fail.';
+          throw new Error('Login fail.');
         }
       );
   }
@@ -200,7 +200,7 @@ export class AuthenticationService {
       .then(
         (data) => this.setUser_(data, UserState.LOGGED_IN),
         () => {
-          throw 'Change password fail.';
+          throw new Error('Change password fail.');
         }
       );
   }
@@ -231,7 +231,7 @@ export class AuthenticationService {
       .then(
         (data) => this.handleLogin_(false, data),
         () => {
-          throw 'Login fail.';
+          throw new Error('Login fail.');
         }
       );
   }

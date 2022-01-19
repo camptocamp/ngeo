@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2017-2021 Camptocamp SA
+// Copyright (c) 2017-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -73,6 +73,6 @@ export function toXY(geom) {
   } else if (geom instanceof olGeomMultiPolygon) {
     geom.setCoordinates(coordinatesToXY3(geom.getCoordinates()));
   } else {
-    throw 'gmf.objectediting.geom.toXY - unsupported geometry type';
+    throw new Error('gmf.objectediting.geom.toXY - unsupported geometry type');
   }
 }

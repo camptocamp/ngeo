@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2019-2021 Camptocamp SA
+// Copyright (c) 2019-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -235,7 +235,7 @@ export class DrawFeatureOptionsController {
     if (drawInteraction instanceof OLInteractionDraw) {
       this.drawInteraction_ = /** @type {OLInteractionDraw} */ (drawInteraction);
     } else {
-      throw 'No draw interaction given to DrawFeatureOptions component';
+      throw new Error('No draw interaction given to DrawFeatureOptions component');
     }
 
     this.map.addInteraction(this.snapInteraction_);

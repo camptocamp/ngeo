@@ -231,7 +231,7 @@ export class ThemesService extends olEventsEventTarget {
       );
       return this.layerLayerVectorTilesCreationFn_(gmfLayerVectorTiles);
     }
-    throw `Unsupported type: ${gmfLayer.type}`;
+    throw new Error(`Unsupported type: ${gmfLayer.type}`);
   }
 
   /**
@@ -240,7 +240,7 @@ export class ThemesService extends olEventsEventTarget {
    */
   layerLayerWMTSCreationFn_(gmfLayerWMTS) {
     if (!gmfLayerWMTS.url) {
-      throw 'Layer URL is required';
+      throw new Error('Layer URL is required');
     }
     const minResolution = getNodeMinResolution(gmfLayerWMTS);
     const maxResolution = getNodeMaxResolution(gmfLayerWMTS);
@@ -535,7 +535,7 @@ export class ThemesService extends olEventsEventTarget {
    */
   loadThemes(opt_roleId) {
     if (!this.treeUrl_) {
-      throw 'gmfTreeUrl should be defined.';
+      throw new Error('gmfTreeUrl should be defined.');
     }
 
     if (this.loaded) {
