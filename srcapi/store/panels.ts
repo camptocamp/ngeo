@@ -131,7 +131,7 @@ export class PanelsModel {
       return;
     } else if (!state && this.activeToolPanelState_ != panel) {
       if (options.noError !== true) {
-        throw "You try to close a tool panel that's not open";
+        throw new Error("You try to close a tool panel that's not open");
       }
     }
     this.activeToolPanelState_ = state ? panel : null;
@@ -157,7 +157,7 @@ export class PanelsModel {
       return;
     } else if (!state && this.activeFooterPanelState_ != panel) {
       if (options.noError !== true) {
-        throw "You try to close a footer panel that's not open";
+        throw new Error("You try to close a footer panel that's not open");
       }
     }
     this.activeFooterPanelState_ = state ? panel : null;
