@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2021 Camptocamp SA
+// Copyright (c) 2021-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -23,10 +23,9 @@ import olLayerGroup from 'ol/layer/Group.js';
 import olLayerTile from 'ol/layer/Tile.js';
 import ImageWMS from 'ol/source/ImageWMS.js';
 import {dpi as screenDpi} from 'ngeo/utils.js';
-import {NODE_IS_LEAF, LAYER_NODE_NAME_KEY} from 'ngeo/map/LayerHelper.js';
+import {LAYER_NODE_NAME_KEY} from 'ngeo/map/LayerHelper.js';
 import {DATALAYERGROUP_NAME} from 'gmf/index.js';
 import ExternalOGC from 'gmf/datasource/ExternalOGC.js';
-import {getFlatNodes, findObjectByName} from 'gmf/theme/Themes.js';
 
 /**
  * Get the print legend for MapFishPrint V3 from the OpenLayers map and the GMF Layertree.
@@ -113,19 +112,23 @@ export default class LegendMapFishPrintV3 {
     /** @type {import('ngeo/print/mapfish-print-v3').MapFishPrintLegendClass[]} */
     const groupClasses = [];
     // Iter first on layers to preserve the user order. Use reverse to have a top to bottom order.
-    dataLayerGroup.getLayers().getArray().reverse().forEach(layer => {
-      let nodeFirstLevel;
-      // Get the node that match this layer
-      nodesThemes.some(nodeTheme => {
-        nodeFirstLevel = nodeTheme.children.find(node => node.name === layer.get(LAYER_NODE_NAME_KEY))
-        return nodeFirstLevel !== undefined;
+    dataLayerGroup
+      .getLayers()
+      .getArray()
+      .reverse()
+      .forEach((layer) => {
+        let nodeFirstLevel;
+        // Get the node that match this layer
+        nodesThemes.some((nodeTheme) => {
+          nodeFirstLevel = nodeTheme.children.find((node) => node.name === layer.get(LAYER_NODE_NAME_KEY));
+          return nodeFirstLevel !== undefined;
+        });
+        if (nodeFirstLevel) {
+          // Collect the legend classes for this node and this layer.
+          const item = this.collectLegendClassesInTree_(nodeFirstLevel, layer, scale, dpi, bbox);
+          this.addClassItemToArray_(groupClasses, item);
+        }
       });
-      if (nodeFirstLevel) {
-        // Collect the legend classes for this node and this layer.
-        const item = this.collectLegendClassesInTree_(nodeFirstLevel, layer, scale, dpi, bbox);
-        this.addClassItemToArray_(groupClasses, item);
-      }
-    });
     return groupClasses;
   }
 
@@ -167,9 +170,7 @@ export default class LegendMapFishPrintV3 {
 
     // Case of leaf node: Create a legend class item matching the layer.
     const nodeLeaf = /** @type {import('gmf/themes.js').GmfLayer} */ (node);
-    const layerLeaf = /** @type {import('ol/layer/Layer').default<import('ol/source/Source').default>} */ (
-      layer
-    );
+    const layerLeaf = /** @type {import('ol/layer/Layer').default<import('ol/source/Source').default>} */ (layer);
     // Layer is not visible then return nothing.
     if (!layerLeaf.getVisible()) {
       return null;
@@ -179,25 +180,15 @@ export default class LegendMapFishPrintV3 {
       return this.getLegendItemFromTileLayer_(nodeLeaf, layerLeaf, dpi);
     }
     // Layer is a wms layer.
-    const NodeWms = /** @type {import('gmf/themes.js').GmfLayerWMS} */ (
-      /** @type {any} */ (nodeLeaf));
-    const layerWms = /** @type {import('ol/layer/Layer').default<import('ol/source/ImageWMS').default>} */ (
-      layerLeaf
-    );
+    const NodeWms = /** @type {import('gmf/themes.js').GmfLayerWMS} */ (/** @type {any} */ (nodeLeaf));
+    const layerWms = /** @type {import('ol/layer/Layer').default<import('ol/source/ImageWMS').default>} */ (layerLeaf);
     // Get the legend if it has activated (visible) layer names.
     const layerNames = layerWms.getSource().getParams().LAYERS;
     if (!layerNames.includes(NodeWms.layers)) {
       return null;
     }
-    return this.getLegendItemFromlayerWms_(
-      NodeWms,
-      layerWms,
-      scale,
-      dpi,
-      bbox
-    );
+    return this.getLegendItemFromlayerWms_(NodeWms, layerWms, scale, dpi, bbox);
   }
-
 
   /**
    * Get legend classes from external datasources.

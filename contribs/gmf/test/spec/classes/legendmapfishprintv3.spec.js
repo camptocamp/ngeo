@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2021 Camptocamp SA
+// Copyright (c) 2021-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -36,10 +36,6 @@ describe('gmf.print.LegendMapFishPrintV3', () => {
   let ngeoLayerHelper;
   /** @type {import('gmf/datasource/ExternalDataSourcesManager.js').ExternalDatSourcesManager} */
   let gmfExternalDataSourcesManager;
-  /** @type {angular.IHttpBackendService} */
-  let $httpBackend_;
-  /** @type {import('gmf/layertree/SyncLayertreeMap.js').default} */
-  let gmfSyncLayertreeMap_;
   /** @type {JQuery} */
   let element;
   /** @type {import("ol/Map.js").default} */
@@ -60,7 +56,8 @@ describe('gmf.print.LegendMapFishPrintV3', () => {
   };
 
   beforeEach(() => {
-    [$httpBackend_, gmfSyncLayertreeMap_, element, map, getLayer] = setupSyncLayertreeMap();
+    // @ts-ignore
+    [element, map, getLayer] = setupSyncLayertreeMap().slice(2);
 
     angular.mock.inject(($injector) => {
       injector = $injector;
@@ -80,8 +77,10 @@ describe('gmf.print.LegendMapFishPrintV3', () => {
    * @return {Array<import('gmf/themes.js').GmfTheme>}
    */
   const getThemes = () => {
-    return /** @type {Array<import('gmf/themes.js').GmfTheme>} */ (/** @type any */ (gmfTestDataThemes.themes));
-  }
+    return /** @type {Array<import('gmf/themes.js').GmfTheme>} */ (
+      /** @type any */ (gmfTestDataThemes.themes)
+    );
+  };
 
   /**
    * Create a layer and add it in the layer group of the map.
@@ -115,25 +114,25 @@ describe('gmf.print.LegendMapFishPrintV3', () => {
 
     const legend = legendMapFishPrintV3.getLegend(getThemes(), 25000, 254, [0, 0]);
     expect(legend).toEqual({
-      "classes": [
+      'classes': [
         {
-          "name": "Layers",
-          "classes": [
+          'name': 'Layers',
+          'classes': [
             {
-              "name": "police_stations",
-              "icons": [
-                "https://geomapfish-demo-2-6.camptocamp.com/static/cf85fcea5f7a4f6c866fd76a6da3da11/images/railways.png"
-              ]
+              'name': 'police_stations',
+              'icons': [
+                'https://geomapfish-demo-2-6.camptocamp.com/static/cf85fcea5f7a4f6c866fd76a6da3da11/images/railways.png',
+              ],
             },
             {
-              "name": "post_office",
-              "icons": [
-                "https://geomapfish-demo-2-6.camptocamp.com/mapserv_proxy?ogcserver=Main+PNG&cache_version=cf85fcea5f7a4f6c866fd76a6da3da11&username=admin&FORMAT=image%2Fpng&TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&LAYER=post_office&SCALE=25000"
-              ]
-            }
-          ]
-        }
-      ]
+              'name': 'post_office',
+              'icons': [
+                'https://geomapfish-demo-2-6.camptocamp.com/mapserv_proxy?ogcserver=Main+PNG&cache_version=cf85fcea5f7a4f6c866fd76a6da3da11&username=admin&FORMAT=image%2Fpng&TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&LAYER=post_office&SCALE=25000',
+              ],
+            },
+          ],
+        },
+      ],
     });
   });
 
@@ -149,24 +148,24 @@ describe('gmf.print.LegendMapFishPrintV3', () => {
 
     const legend = legendMapFishPrintV3.getLegend(getThemes(), 25000, 254, [0, 0]);
     expect(legend).toEqual({
-      "classes": [
+      'classes': [
         {
-          "classes": [
+          'classes': [
             {
-              "name": "police_stations",
-              "icons": [
-                "https://geomapfish-demo-2-6.camptocamp.com/static/cf85fcea5f7a4f6c866fd76a6da3da11/images/railways.png"
-              ]
+              'name': 'police_stations',
+              'icons': [
+                'https://geomapfish-demo-2-6.camptocamp.com/static/cf85fcea5f7a4f6c866fd76a6da3da11/images/railways.png',
+              ],
             },
             {
-              "name": "post_office",
-              "icons": [
-                "https://geomapfish-demo-2-6.camptocamp.com/mapserv_proxy?ogcserver=Main+PNG&cache_version=cf85fcea5f7a4f6c866fd76a6da3da11&username=admin&FORMAT=image%2Fpng&TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&LAYER=post_office&SCALE=25000"
-              ]
-            }
-          ]
-        }
-      ]
+              'name': 'post_office',
+              'icons': [
+                'https://geomapfish-demo-2-6.camptocamp.com/mapserv_proxy?ogcserver=Main+PNG&cache_version=cf85fcea5f7a4f6c866fd76a6da3da11&username=admin&FORMAT=image%2Fpng&TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&LAYER=post_office&SCALE=25000',
+              ],
+            },
+          ],
+        },
+      ],
     });
   });
 
@@ -181,26 +180,26 @@ describe('gmf.print.LegendMapFishPrintV3', () => {
 
     const legend = legendMapFishPrintV3.getLegend(getThemes(), 25000, 254, [0, 0]);
     expect(legend).toEqual({
-      "classes": [
+      'classes': [
         {
-          "name": "QGIS server",
-          "classes": [
+          'name': 'QGIS server',
+          'classes': [
             {
-              "name": "points",
-              "icons": [
-                "https://geomapfish-demo-2-6.camptocamp.com/mapserv_proxy?ogcserver=QGIS+server&cache_version=cf85fcea5f7a4f6c866fd76a6da3da11&username=admin&FORMAT=image%2Fpng&TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&LAYER=points&DPI=254&BBOX=0%2C0&SRS=EPSG%3A3857&SRCWIDTH=NaN&SRCHEIGHT=NaN&ITEMFONTFAMILY=DejaVu%20Sans&ITEMFONTSIZE=8&LAYERFONTFAMILY=DejaVu%20Sans&LAYERFONTSIZE=10"
+              'name': 'points',
+              'icons': [
+                'https://geomapfish-demo-2-6.camptocamp.com/mapserv_proxy?ogcserver=QGIS+server&cache_version=cf85fcea5f7a4f6c866fd76a6da3da11&username=admin&FORMAT=image%2Fpng&TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&LAYER=points&DPI=254&BBOX=0%2C0&SRS=EPSG%3A3857&SRCWIDTH=NaN&SRCHEIGHT=NaN&ITEMFONTFAMILY=DejaVu%20Sans&ITEMFONTSIZE=8&LAYERFONTFAMILY=DejaVu%20Sans&LAYERFONTSIZE=10',
               ],
-              "dpi": 254
+              'dpi': 254,
             },
             {
-              "name": "railways",
-              "icons": [
-                "https://geomapfish-demo-2-6.camptocamp.com/static/cf85fcea5f7a4f6c866fd76a6da3da11/images/railways.png"
-              ]
-            }
-          ]
-        }
-      ]
+              'name': 'railways',
+              'icons': [
+                'https://geomapfish-demo-2-6.camptocamp.com/static/cf85fcea5f7a4f6c866fd76a6da3da11/images/railways.png',
+              ],
+            },
+          ],
+        },
+      ],
     });
   });
 
@@ -214,30 +213,30 @@ describe('gmf.print.LegendMapFishPrintV3', () => {
 
     const legend = legendMapFishPrintV3.getLegend(getThemes(), 25000, 254, [0, 0]);
     expect(legend).toEqual({
-      "classes": [
+      'classes': [
         {
-          "name": "OSM functions",
-          "classes": [
+          'name': 'OSM functions',
+          'classes': [
             {
-              "name": "two_layers",
-              "classes": [
+              'name': 'two_layers',
+              'classes': [
                 {
-                  "name": "sustenance",
-                  "icons": [
-                    "https://geomapfish-demo-2-6.camptocamp.com/mapserv_proxy?ogcserver=Main+PNG&cache_version=cf85fcea5f7a4f6c866fd76a6da3da11&username=admin&FORMAT=image%2Fpng&TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&LAYER=sustenance&SCALE=25000"
-                  ]
+                  'name': 'sustenance',
+                  'icons': [
+                    'https://geomapfish-demo-2-6.camptocamp.com/mapserv_proxy?ogcserver=Main+PNG&cache_version=cf85fcea5f7a4f6c866fd76a6da3da11&username=admin&FORMAT=image%2Fpng&TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&LAYER=sustenance&SCALE=25000',
+                  ],
                 },
                 {
-                  "name": "entertainment",
-                  "icons": [
-                    "https://geomapfish-demo-2-6.camptocamp.com/mapserv_proxy?ogcserver=Main+PNG&cache_version=cf85fcea5f7a4f6c866fd76a6da3da11&username=admin&FORMAT=image%2Fpng&TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&LAYER=entertainment&SCALE=25000"
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      ]
+                  'name': 'entertainment',
+                  'icons': [
+                    'https://geomapfish-demo-2-6.camptocamp.com/mapserv_proxy?ogcserver=Main+PNG&cache_version=cf85fcea5f7a4f6c866fd76a6da3da11&username=admin&FORMAT=image%2Fpng&TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&LAYER=entertainment&SCALE=25000',
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      ],
     });
   });
 
@@ -249,14 +248,14 @@ describe('gmf.print.LegendMapFishPrintV3', () => {
 
     const legend = legendMapFishPrintV3.getLegend(getThemes(), 25000, 254, [0, 0]);
     expect(legend).toEqual({
-      "classes": [
+      'classes': [
         {
-          "name": "fuel",
-          "icons": [
-            "https://geomapfish-demo-2-6.camptocamp.com/mapserv_proxy?ogcserver=Main+PNG&cache_version=cf85fcea5f7a4f6c866fd76a6da3da11&username=admin&FORMAT=image%2Fpng&TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&LAYER=fuel&SCALE=25000"
-          ]
-        }
-      ]
+          'name': 'fuel',
+          'icons': [
+            'https://geomapfish-demo-2-6.camptocamp.com/mapserv_proxy?ogcserver=Main+PNG&cache_version=cf85fcea5f7a4f6c866fd76a6da3da11&username=admin&FORMAT=image%2Fpng&TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&LAYER=fuel&SCALE=25000',
+          ],
+        },
+      ],
     });
   });
 
@@ -269,19 +268,19 @@ describe('gmf.print.LegendMapFishPrintV3', () => {
 
     const legend = legendMapFishPrintV3.getLegend(getThemes(), 25000, 254, [0, 0]);
     expect(legend).toEqual({
-      "classes": [
+      'classes': [
         {
-          "name": "Cadastre",
-          "classes": [
+          'name': 'Cadastre',
+          'classes': [
             {
-              "name": "ch.astra.hauptstrassennetz",
-              "icons": [
-                "https://geomapfish-demo-2-6.camptocamp.com/static/cf85fcea5f7a4f6c866fd76a6da3da11/images/railways.png"
-              ]
+              'name': 'ch.astra.hauptstrassennetz',
+              'icons': [
+                'https://geomapfish-demo-2-6.camptocamp.com/static/cf85fcea5f7a4f6c866fd76a6da3da11/images/railways.png',
+              ],
             },
-          ]
-        }
-      ]
+          ],
+        },
+      ],
     });
   });
 
