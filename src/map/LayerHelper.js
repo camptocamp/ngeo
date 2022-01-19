@@ -84,10 +84,9 @@ export const NODE_IS_LEAF = 'layerIsLeaf';
 export const DATASOURCE_ID = 'dataSourceId';
 
 /**
- * @private
- * @hidden
+ * Name key for layer groups in the map.
  */
-const GROUP_KEY = 'groupName';
+export const GROUP_KEY = 'groupName';
 
 /**
  * @private
@@ -439,19 +438,19 @@ LayerHelper.prototype.getFlatLayers_ = function (layer, array, computedOpacity) 
  * Get a layer that has the LAYER_NODE_NAME_KEY property equal to a given layer name from
  * an array of layers. If one of the layers in the array is a group, then the
  * layers contained in that group are searched as well.
- * @param {string} layerName The name of the layer we're looking for.
+ * @param {string} nodeName The node name of the layer we're looking for.
  * @param {Array<import("ol/layer/Base.js").default>} layers Layers.
  * @return {?import("ol/layer/Base.js").default} Layer.
  */
-LayerHelper.prototype.getLayerByName = function (layerName, layers) {
+LayerHelper.prototype.getLayerByNodeName = function (nodeName, layers) {
   /** @type {?import("ol/layer/Base.js").default} */
   let found = null;
   layers.some((layer) => {
-    if (layer instanceof olLayerGroup) {
-      const sublayers = layer.getLayers().getArray();
-      found = this.getLayerByName(layerName, sublayers);
-    } else if (layer.get(LAYER_NODE_NAME_KEY) === layerName) {
+    if (layer.get(LAYER_NODE_NAME_KEY) === nodeName) {
       found = layer;
+    } else if (layer instanceof olLayerGroup) {
+      const sublayers = layer.getLayers().getArray();
+      found = this.getLayerByNodeName(nodeName, sublayers);
     }
     return !!found;
   });
